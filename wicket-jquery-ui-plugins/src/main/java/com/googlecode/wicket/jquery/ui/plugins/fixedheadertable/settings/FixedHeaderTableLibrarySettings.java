@@ -33,9 +33,6 @@ public class FixedHeaderTableLibrarySettings extends JavaScriptLibrarySettings i
 {
 	private static IFixedHeaderTableLibrarySettings instance = null;
 
-	private ResourceReference javascriptReference = FixedHeaderTableJavaScriptResourceReference.get();
-	private ResourceReference stylesheetReference = FixedHeaderTableStyleSheetResourceReference.get();
-
 	/**
 	 * INTERNAL USE<br/>
 	 * Gets the {@link FixedHeaderTableLibrarySettings} instance
@@ -62,12 +59,12 @@ public class FixedHeaderTableLibrarySettings extends JavaScriptLibrarySettings i
 	@Override
 	public ResourceReference getFixedHeaderTableStyleSheetReference()
 	{
-		return this.stylesheetReference;
+		return FixedHeaderTableStyleSheetResourceReference.get();
 	}
 
 	@Override
 	public ResourceReference getFixedHeaderTableJavaScriptReference()
 	{
-		return this.javascriptReference;
+		return FixedHeaderTableJavaScriptResourceReference.get();
 	}
 }

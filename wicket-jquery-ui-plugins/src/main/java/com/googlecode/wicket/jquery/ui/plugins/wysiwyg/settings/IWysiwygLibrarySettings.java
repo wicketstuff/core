@@ -14,23 +14,21 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.googlecode.wicket.jquery.ui.plugins.wysiwyg.toolbar;
+package com.googlecode.wicket.jquery.ui.plugins.wysiwyg.settings;
 
-import org.apache.wicket.Component;
+import org.apache.wicket.request.resource.CssResourceReference;
+import org.apache.wicket.request.resource.JavaScriptResourceReference;
+import org.apache.wicket.settings.IJavaScriptLibrarySettings;
 
-/**
- * Specifies a toolbar to be used by a {@link com.googlecode.wicket.jquery.ui.plugins.wysiwyg.WysiwygEditor}
- *
- * @author sebfz1
- * @author solomax
- * @author andunslg
- */
-public interface IWysiwygToolbar
+public interface IWysiwygLibrarySettings extends IJavaScriptLibrarySettings
 {
-	/**
-	 * Attaches the {@link IWysiwygToolbar} to the editor {@link org.apache.wicket.Component}
-	 *
-	 * @param editor the {@link org.apache.wicket.Component} to attach the {@link IWysiwygToolbar} to
-	 */
-	void attachToEditor(Component editor);
+
+	CssResourceReference getBootstrapCombinedNoIconsStyleSheetReference();
+	CssResourceReference getBootstrapResponsiveStyleSheetReference();
+	CssResourceReference getEditorStyleSheetReference();
+
+	JavaScriptResourceReference getBootstrapJavaScriptReference();
+	JavaScriptResourceReference getBootstrapWysiwygJavaScriptReference();
+	JavaScriptResourceReference getJQueryHotKeysJavaScriptReference();
+	JavaScriptResourceReference getPrettifyJavaScriptReference();
 }

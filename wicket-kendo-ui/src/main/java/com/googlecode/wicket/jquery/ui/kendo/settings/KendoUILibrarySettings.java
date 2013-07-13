@@ -31,10 +31,6 @@ public class KendoUILibrarySettings extends JavaScriptLibrarySettings implements
 {
 	private static KendoUILibrarySettings instance = null;
 
-	private ResourceReference kendoUIJavaScriptReference = KendoUIJavaScriptResourceReference.get();
-	private ResourceReference kendoUICommonStyleSheetReference = null;
-	private ResourceReference kendoUIThemeStyleSheetReference = null;
-
 	/**
 	 * INTERNAL USE<br/>
 	 * Gets the {@link KendoUILibrarySettings} instance
@@ -61,18 +57,18 @@ public class KendoUILibrarySettings extends JavaScriptLibrarySettings implements
 	@Override
 	public ResourceReference getKendoUIJavaScriptReference()
 	{
-		return this.kendoUIJavaScriptReference;
+		return KendoUIJavaScriptResourceReference.get();
 	}
 
 	@Override
 	public ResourceReference getKendoUICommonStyleSheetReference()
 	{
-		return this.kendoUICommonStyleSheetReference;
+		return null;
 	}
 
 	@Override
 	public ResourceReference getKendoUIThemeStyleSheetReference()
 	{
-		return this.kendoUIThemeStyleSheetReference;
+		return null;
 	}
 }

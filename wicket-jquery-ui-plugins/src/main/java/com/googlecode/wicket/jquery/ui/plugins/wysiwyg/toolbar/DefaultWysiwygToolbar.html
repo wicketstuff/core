@@ -17,46 +17,88 @@
 -->
 <html xmlns:wicket="http://wicket.apache.org">
 <wicket:panel>
+
     <div wicket:id="toolbar" class="btn-toolbar" data-role="editor-toolbar">
+
         <div class="btn-group">
-            <a class="btn dropdown-toggle" data-toggle="dropdown" title="Font Size"><i class="icon-text-height"></i>&nbsp;<b
-                    class="caret"></b></a>
+            <a wicket:id="fontSize" class="btn dropdown-toggle" data-toggle="dropdown" title="">
+                <wicket:link><img src="font.png"></wicket:link>
+                <b class="caret"></b></a>
             <ul class="dropdown-menu">
-                <li><a data-edit="fontSize 5"><font size="5">Huge</font></a></li>
-                <li><a data-edit="fontSize 3"><font size="3">Normal</font></a></li>
-                <li><a data-edit="fontSize 1"><font size="1">Small</font></a></li>
+                <li><a data-edit="fontSize 5">
+                    <div wicket:id="huge" style="font-size: 20pt"></div>
+                </a></li>
+                <li><a data-edit="fontSize 3">
+                    <div wicket:id="medium" style="font-size: 15pt"></div>
+                </a></li>
+                <li><a data-edit="fontSize 1">
+                    <div wicket:id="small" style="font-size: 10pt"></div>
+                </a></li>
             </ul>
         </div>
         <div class="btn-group">
-            <a class="btn" data-edit="bold" title="Bold (Ctrl/Cmd+B)"><i class="icon-bold"></i></a> <a class="btn"
-	            data-edit="italic" title="Italic (Ctrl/Cmd+I)"><i class="icon-italic"></i></a> <a class="btn"
-	            data-edit="strikethrough" title="Strikethrough"><i class="icon-strikethrough"></i></a> <a class="btn"
-	            data-edit="underline" title="Underline (Ctrl/Cmd+U)"><i class="icon-underline"></i></a>
+            <a wicket:id="bold" class="btn" data-edit="bold" title="">
+                <wicket:link><img src="text_bold.png"></wicket:link>
+            </a>
+            <a wicket:id="italic" class="btn" data-edit="italic" title="">
+                <wicket:link><img src="text_italic.png"></wicket:link>
+            </a>
+            <a wicket:id="strikethrough" class="btn" data-edit="strikethrough" title="">
+                <wicket:link><img src="text_strikethrough.png"></wicket:link>
+            </a>
+            <a wicket:id="underline" class="btn" data-edit="underline" title="">
+                <wicket:link><img src="text_underline.png"></wicket:link>
+            </a>
         </div>
         <div class="btn-group">
-            <a class="btn" data-edit="insertunorderedlist" title="Bullet list"><i class="icon-list-ul"></i></a> <a class="btn"
-	            data-edit="insertorderedlist" title="Number list"><i class="icon-list-ol"></i></a> <a class="btn"
-	            data-edit="outdent" title="Reduce indent (Shift+Tab)"><i class="icon-indent-left"></i></a> <a class="btn"
-	            data-edit="indent" title="Indent (Tab)"><i class="icon-indent-right"></i></a>
+            <a wicket:id="bullets" class="btn" data-edit="insertunorderedlist" title="">
+                <wicket:link><img src="text_list_bullets.png"></wicket:link>
+            </a>
+            <a wicket:id="numbers" class="btn" data-edit="insertorderedlist" title="">
+                <wicket:link><img src="text_list_numbers.png"></wicket:link>
+            </a>
+            <a wicket:id="reduceIndent" class="btn" data-edit="outdent" title="">
+                <wicket:link><img src="text_indent_remove.png"></wicket:link>
+            </a>
+            <a wicket:id="indent" class="btn" data-edit="indent" title="">
+                <wicket:link><img src="text_indent.png"></wicket:link>
+            </a>
         </div>
         <div class="btn-group">
-            <a class="btn" data-edit="justifyleft" title="Align Left (Ctrl/Cmd+L)"><i class="icon-align-left"></i></a> <a
-                class="btn" data-edit="justifycenter" title="Center (Ctrl/Cmd+E)"><i class="icon-align-center"></i></a> <a
-                class="btn" data-edit="justifyright" title="Align Right (Ctrl/Cmd+R)"><i class="icon-align-right"></i></a> <a
-                class="btn" data-edit="justifyfull" title="Justify (Ctrl/Cmd+J)"><i class="icon-align-justify"></i></a>
+            <a wicket:id="justifyLeft" class="btn" data-edit="justifyleft" title="">
+                <wicket:link><img src="text_align_left.png"></wicket:link>
+            </a>
+            <a wicket:id="justifyCenter" class="btn" data-edit="justifycenter" title="">
+                <wicket:link><img src="text_align_center.png"></wicket:link>
+            </a>
+            <a wicket:id="justifyRight" class="btn" data-edit="justifyright" title="">
+                <wicket:link><img src="text_align_right.png"></wicket:link>
+            </a>
+            <a wicket:id="justifyFull" class="btn" data-edit="justifyfull" title="">
+                <wicket:link><img src="text_align_justify.png"></wicket:link>
+            </a>
         </div>
         <div class="btn-group">
-            <a class="btn dropdown-toggle" data-toggle="dropdown" title="Hyperlink"><i class="icon-link"></i></a>
+            <a wicket:id="hyperlink" class="btn dropdown-toggle" data-toggle="dropdown" title="">
+                <wicket:link><img src="link.png"></wicket:link>
+            </a>
+
             <div class="dropdown-menu input-append">
-                <input class="span2" placeholder="URL" type="text" data-edit="createLink" />
+                <input class="span2" placeholder="URL" type="text" data-edit="createLink"/>
                 <button class="btn" type="button">Add</button>
             </div>
-            <a class="btn" data-edit="unlink" title="Remove Hyperlink"><i class="icon-cut"></i></a>
+            <a wicket:id="removeHyperlink" class="btn" data-edit="unlink" title="">
+                <wicket:link><img src="link_delete.png"></wicket:link>
+            </a>
         </div>
 
         <div class="btn-group">
-            <a class="btn" data-edit="undo" title="Undo (Ctrl/Cmd+Z)"><i class="icon-undo"></i></a> <a class="btn"
-            data-edit="redo" title="Redo (Ctrl/Cmd+Y)"><i class="icon-repeat"></i></a>
+            <a wicket:id="undo" class="btn" data-edit="undo" title="">
+                <wicket:link><img src="arrow_undo.png"></wicket:link>
+            </a>
+            <a wicket:id="redo" class="btn" data-edit="redo" title="">
+                <wicket:link><img src="arrow_redo.png"></wicket:link>
+            </a>
         </div>
     </div>
 </wicket:panel>

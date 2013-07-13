@@ -32,9 +32,6 @@ public class EmoticonsLibrarySettings extends JavaScriptLibrarySettings implemen
 {
 	private static EmoticonsLibrarySettings instance = null;
 
-	private ResourceReference javascriptReference = EmoticonsJavaScriptResourceReference.get();
-	private ResourceReference stylesheetReference = EmoticonsStyleSheetResourceReference.get();
-
 	/**
 	 * INTERNAL USE<br/>
 	 * Gets the {@link EmoticonsLibrarySettings} instance
@@ -61,12 +58,12 @@ public class EmoticonsLibrarySettings extends JavaScriptLibrarySettings implemen
 	@Override
 	public ResourceReference getEmoticonsStyleSheetReference()
 	{
-		return this.stylesheetReference;
+		return EmoticonsStyleSheetResourceReference.get();
 	}
 
 	@Override
 	public ResourceReference getEmoticonsJavaScriptReference()
 	{
-		return this.javascriptReference;
+		return EmoticonsJavaScriptResourceReference.get();
 	}
 }

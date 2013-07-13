@@ -37,7 +37,7 @@ public class EmoticonsBehavior extends JQueryBehavior
 	/**
 	 * Gets the {@link IEmoticonsLibrarySettings}
 	 *
-	 * @return null if Application's {@link IJavaScriptLibrarySettings} is not an instance of {@link IEmoticonsLibrarySettings}
+	 * @return Default {@link IEmoticonsLibrarySettings} if Application's {@link IJavaScriptLibrarySettings} is not an instance of {@link IEmoticonsLibrarySettings}
 	 */
 	private static IEmoticonsLibrarySettings getLibrarySettings()
 	{

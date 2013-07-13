@@ -1,12 +1,12 @@
 /*
  * Licensed to the Apache Software Foundation (ASF) under one or more
- * contributor license agreements.  See the NOTICE file distributed with
+ * contributor license agreements. See the NOTICE file distributed with
  * this work for additional information regarding copyright ownership.
  * The ASF licenses this file to You under the Apache License, Version 2.0
  * (the "License"); you may not use this file except in compliance with
- * the License.  You may obtain a copy of the License at
+ * the License. You may obtain a copy of the License at
  *
- *      http://www.apache.org/licenses/LICENSE-2.0
+ * http://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -20,48 +20,57 @@ import org.apache.wicket.Application;
 import org.apache.wicket.markup.html.IPackageResourceGuard;
 import org.apache.wicket.markup.html.SecurePackageResourceGuard;
 import org.apache.wicket.markup.html.SecurePackageResourceGuard.SearchPattern;
-import org.apache.wicket.request.resource.CssResourceReference;
-import org.apache.wicket.request.resource.JavaScriptResourceReference;
+import org.apache.wicket.settings.IJavaScriptLibrarySettings;
 
 import com.googlecode.wicket.jquery.core.JQueryBehavior;
 import com.googlecode.wicket.jquery.core.Options;
+import com.googlecode.wicket.jquery.ui.plugins.wysiwyg.settings.IWysiwygLibrarySettings;
+import com.googlecode.wicket.jquery.ui.plugins.wysiwyg.settings.WysiwygLibrarySettings;
 
 public class WysiwygBehavior extends JQueryBehavior
 {
 	private static final long serialVersionUID = 1L;
 	private static final String METHOD = "wysiwyg";
 
-	// Bootstrap resources //
-	private static final JavaScriptResourceReference BOOTSTRAP = new JavaScriptResourceReference(WysiwygBehavior.class, "js/bootstrap.min.js");
-	private static final CssResourceReference BOOTSTRAP_COMBINED = new CssResourceReference(WysiwygBehavior.class, "css/bootstrap-combined.no-icons.min.css");
-	private static final CssResourceReference BOOTSTRAP_RESPONSIVE = new CssResourceReference(WysiwygBehavior.class, "css/bootstrap-responsive.min.css");
+	/**
+	 * Gets the {@link IWysiwygLibrarySettings}
+	 *
+	 * @return Default {@link IWysiwygLibrarySettings} if Application's {@link IJavaScriptLibrarySettings} is not an instance of {@link IWysiwygLibrarySettings}
+	 */
+	private static IWysiwygLibrarySettings getLibrarySettings()
+	{
+		if (Application.exists() && (Application.get().getJavaScriptLibrarySettings() instanceof IWysiwygLibrarySettings))
+		{
+			return (IWysiwygLibrarySettings) Application.get().getJavaScriptLibrarySettings();
+		}
 
-	// Wysiwyg resources //
-	private static final JavaScriptResourceReference WYSIWYG = new JavaScriptResourceReference(WysiwygBehavior.class, "js/bootstrap-wysiwyg.js");
-	private static final JavaScriptResourceReference HOTKEYS = new JavaScriptResourceReference(WysiwygBehavior.class, "js/jquery.hotkeys.js");
-	private static final JavaScriptResourceReference PRETTIFY = new JavaScriptResourceReference(WysiwygBehavior.class, "js/prettify.js");
-	private static final CssResourceReference FONT_AWESOME = new CssResourceReference(WysiwygBehavior.class, "css/font-awesome.css");
-	private static final CssResourceReference EDITOR = new CssResourceReference(WysiwygBehavior.class, "css/editor.css");
+		return WysiwygLibrarySettings.get();
+	}
 
+
+	/**
+	 * Constructor
+	 * @param selector the html selector (ie: "#myId")
+	 */
 	public WysiwygBehavior(String selector)
 	{
 		this(selector, new Options());
 	}
 
-	//TODO: andunslg / solomax - Configurable resource references should be created
+	/**
+	 * Constructor
+	 * @param selector the html selector (ie: "#myId")
+	 * @param options the {@link Options}
+	 */
 	public WysiwygBehavior(String selector, Options options)
 	{
 		super(selector, METHOD, options);
 
-		this.initReferences();
-
-		// init resource guard //
 		IPackageResourceGuard packageResourceGuard = Application.get().getResourceSettings().getPackageResourceGuard();
 
 		if (packageResourceGuard instanceof SecurePackageResourceGuard)
 		{
 			SecurePackageResourceGuard guard = (SecurePackageResourceGuard) packageResourceGuard;
-
 			if (!guard.getPattern().contains(new SearchPattern("+*.eot")))
 			{
 				guard.addPattern("+*.eot");
@@ -69,17 +78,57 @@ public class WysiwygBehavior extends JQueryBehavior
 				guard.addPattern("+*.ttf");
 			}
 		}
+
+		this.initReferences();
 	}
 
+	/**
+	 * Initializes CSS & JavaScript resource references
+	 */
 	private void initReferences()
 	{
-		this.add(BOOTSTRAP_COMBINED);
-		this.add(BOOTSTRAP_RESPONSIVE);
-		this.add(FONT_AWESOME);
-		this.add(EDITOR);
-		this.add(WYSIWYG);
-		this.add(BOOTSTRAP);
-		this.add(HOTKEYS);
-		this.add(PRETTIFY);
+		IWysiwygLibrarySettings settings = getLibrarySettings();
+
+		// Bootstrap combined CSS
+		if (settings.getBootstrapCombinedNoIconsStyleSheetReference() != null)
+		{
+			this.add(settings.getBootstrapCombinedNoIconsStyleSheetReference());
+		}
+
+		// Bootstrap Responsive CSS
+		if (settings.getBootstrapResponsiveStyleSheetReference() != null)
+		{
+			this.add(settings.getBootstrapResponsiveStyleSheetReference());
+		}
+
+		// Editor CSS
+		if (settings.getEditorStyleSheetReference() != null)
+		{
+			this.add(settings.getEditorStyleSheetReference());
+		}
+
+		// Bootstrap Wysiwyg
+		if (settings.getBootstrapWysiwygJavaScriptReference() != null)
+		{
+			this.add(settings.getBootstrapWysiwygJavaScriptReference());
+		}
+
+		// Bootstrap
+		if (settings.getBootstrapJavaScriptReference() != null)
+		{
+			this.add(settings.getBootstrapJavaScriptReference());
+		}
+
+		// JQuery Hot Keys
+		if (settings.getJQueryHotKeysJavaScriptReference() != null)
+		{
+			this.add(settings.getJQueryHotKeysJavaScriptReference());
+		}
+
+		// Prettify
+		if (settings.getPrettifyJavaScriptReference() != null)
+		{
+			this.add(settings.getPrettifyJavaScriptReference());
+		}
 	}
 }

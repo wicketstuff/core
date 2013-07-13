@@ -14,23 +14,25 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.googlecode.wicket.jquery.ui.plugins.wysiwyg.toolbar;
+package com.googlecode.wicket.jquery.ui.plugins.wysiwyg.resource;
 
-import org.apache.wicket.Component;
+import org.apache.wicket.request.resource.CssResourceReference;
 
-/**
- * Specifies a toolbar to be used by a {@link com.googlecode.wicket.jquery.ui.plugins.wysiwyg.WysiwygEditor}
- *
- * @author sebfz1
- * @author solomax
- * @author andunslg
- */
-public interface IWysiwygToolbar
+
+public class BootstrapCombinedNoIconsStyleSheetResourceReference extends CssResourceReference
 {
-	/**
-	 * Attaches the {@link IWysiwygToolbar} to the editor {@link org.apache.wicket.Component}
-	 *
-	 * @param editor the {@link org.apache.wicket.Component} to attach the {@link IWysiwygToolbar} to
-	 */
-	void attachToEditor(Component editor);
+	private static final long serialVersionUID = 1L;
+
+	private static final BootstrapCombinedNoIconsStyleSheetResourceReference INSTANCE = new BootstrapCombinedNoIconsStyleSheetResourceReference();
+
+
+	public static BootstrapCombinedNoIconsStyleSheetResourceReference get()
+	{
+		return INSTANCE;
+	}
+
+	private BootstrapCombinedNoIconsStyleSheetResourceReference()
+	{
+		super(BootstrapCombinedNoIconsStyleSheetResourceReference.class, "css/bootstrap-combined.no-icons.min.css");
+	}
 }

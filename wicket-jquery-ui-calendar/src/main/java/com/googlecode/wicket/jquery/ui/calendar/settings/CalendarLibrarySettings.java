@@ -33,10 +33,6 @@ public class CalendarLibrarySettings extends JQueryLibrarySettings implements IC
 {
 	private static CalendarLibrarySettings instance = null;
 
-	private ResourceReference calendarStyleSheetReference = CalendarStyleSheetResourceReference.get();
-	private ResourceReference calendarJavaScriptReference = CalendarJavaScriptResourceReference.get();
-	private ResourceReference gcalJavaScriptReference = GCalJavaScriptResourceReference.get();
-
 	/**
 	 * INTERNAL USE<br/>
 	 * Gets the {@link CalendarLibrarySettings} instance
@@ -63,18 +59,18 @@ public class CalendarLibrarySettings extends JQueryLibrarySettings implements IC
 	@Override
 	public ResourceReference getCalendarStyleSheetReference()
 	{
-		return this.calendarStyleSheetReference;
+		return CalendarStyleSheetResourceReference.get();
 	}
 
 	@Override
 	public ResourceReference getCalendarJavaScriptReference()
 	{
-		return this.calendarJavaScriptReference;
+		return CalendarJavaScriptResourceReference.get();
 	}
 
 	@Override
 	public ResourceReference getGCalJavaScriptReference()
 	{
-		return this.gcalJavaScriptReference;
+		return GCalJavaScriptResourceReference.get();
 	}
 }

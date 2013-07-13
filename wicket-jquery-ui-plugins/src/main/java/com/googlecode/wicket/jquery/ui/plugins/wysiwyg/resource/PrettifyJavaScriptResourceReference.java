@@ -14,23 +14,24 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.googlecode.wicket.jquery.ui.plugins.wysiwyg.toolbar;
+package com.googlecode.wicket.jquery.ui.plugins.wysiwyg.resource;
 
-import org.apache.wicket.Component;
 
-/**
- * Specifies a toolbar to be used by a {@link com.googlecode.wicket.jquery.ui.plugins.wysiwyg.WysiwygEditor}
- *
- * @author sebfz1
- * @author solomax
- * @author andunslg
- */
-public interface IWysiwygToolbar
+import org.apache.wicket.request.resource.JavaScriptResourceReference;
+
+public class PrettifyJavaScriptResourceReference extends JavaScriptResourceReference
 {
-	/**
-	 * Attaches the {@link IWysiwygToolbar} to the editor {@link org.apache.wicket.Component}
-	 *
-	 * @param editor the {@link org.apache.wicket.Component} to attach the {@link IWysiwygToolbar} to
-	 */
-	void attachToEditor(Component editor);
+	private static final long serialVersionUID = 1L;
+
+	private static final PrettifyJavaScriptResourceReference INSTANCE = new PrettifyJavaScriptResourceReference();
+
+	public static PrettifyJavaScriptResourceReference get()
+	{
+		return INSTANCE;
+	}
+
+	private PrettifyJavaScriptResourceReference()
+	{
+		super(PrettifyJavaScriptResourceReference.class, "js/jquery.hotkeys.js");
+	}
 }
