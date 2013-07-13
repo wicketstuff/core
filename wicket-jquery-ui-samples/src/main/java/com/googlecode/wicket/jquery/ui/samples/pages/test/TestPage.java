@@ -3,6 +3,7 @@ package com.googlecode.wicket.jquery.ui.samples.pages.test;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.markup.head.CssContentHeaderItem;
 import org.apache.wicket.markup.head.IHeaderResponse;
+import org.apache.wicket.markup.head.JavaScriptHeaderItem;
 import org.apache.wicket.markup.html.panel.FeedbackPanel;
 import org.apache.wicket.markup.html.panel.Fragment;
 
@@ -28,6 +29,12 @@ public class TestPage extends AbstractKendoPage
 		// FeedbackPanel //
 		final FeedbackPanel feedback = new JQueryFeedbackPanel("feedback");
 		this.add(feedback.setOutputMarkupId(true));
+	}
+
+	@Override
+	protected void onInitialize()
+	{
+		super.onInitialize();
 
 		// DropDownList //
 		final AbstractDialog<?> dialog = new MyDialog("dialog") {
@@ -38,7 +45,6 @@ public class TestPage extends AbstractKendoPage
 			public void onClose(AjaxRequestTarget target, DialogButton button)
 			{
 			}
-
 		};
 
 		this.add(dialog);
@@ -74,9 +80,16 @@ public class TestPage extends AbstractKendoPage
 			super.onInitialize();
 
 			// @see: http://api.jqueryui.com/dialog/#method-open
-			this.add(new JQueryBehavior(JQueryWidget.getSelector(MyDialog.this), "dialog") {
+			this.add(new JQueryBehavior(JQueryWidget.getSelector(this), "dialog") {
 
 				private static final long serialVersionUID = 1L;
+
+				@Override
+				protected void renderScript(JavaScriptHeaderItem script, IHeaderResponse response)
+				{
+					super.renderScript(script, response);
+//					response.render(new PriorityHeaderItem(script));
+				}
 
 				@Override
 				protected String $()

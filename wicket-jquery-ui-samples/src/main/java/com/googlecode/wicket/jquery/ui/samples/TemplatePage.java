@@ -31,7 +31,7 @@ public abstract class TemplatePage extends WebPage
 	{
 		super.onInitialize();
 
-		this.add(new GoogleAnalyticsBehavior(this));
+//		this.add(new GoogleAnalyticsBehavior(this)); //TODO: restore
 	}
 }
 

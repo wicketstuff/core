@@ -18,8 +18,8 @@ package com.googlecode.wicket.jquery.ui.kendo;
 
 import org.apache.wicket.Component;
 
-import com.googlecode.wicket.jquery.core.JQueryBehavior;
 import com.googlecode.wicket.jquery.core.IJQueryWidget.JQueryWidget;
+import com.googlecode.wicket.jquery.core.JQueryBehavior;
 
 
 /**
@@ -45,7 +45,7 @@ public final class KendoBehaviorFactory
 			@Override
 			protected String $()
 			{
-				return String.format("jQuery(function() { jQuery('%s').closest('.k-widget').show(); });", this.selector);
+				return String.format("jQuery(function() { jQuery('%s').closest('.k-widget').show(); });", this.getSelector());
 			}
 
 		};
@@ -77,7 +77,7 @@ public final class KendoBehaviorFactory
 			@Override
 			protected String $()
 			{
-				return String.format("jQuery(function() { jQuery('%s').closest('.k-widget').hide(); });", this.selector);
+				return String.format("jQuery(function() { jQuery('%s').closest('.k-widget').hide(); });", this.getSelector());
 			}
 		};
 	}

@@ -15,22 +15,22 @@ import com.googlecode.wicket.jquery.ui.panel.JQueryFeedbackPanel;
 public class DefaultSelectablePage extends AbstractSelectablePage
 {
 	private static final long serialVersionUID = 1L;
-	
+
 	public DefaultSelectablePage()
 	{
 		List<String> list = Arrays.asList("item #1", "item #2", "item #3", "item #4", "item #5", "item #6");
-		
+
 		// FeedbackPanel //
 		final FeedbackPanel feedback = new JQueryFeedbackPanel("feedback");
 		this.add(feedback.setOutputMarkupId(true));
 
 		// Selectable //
 		final Selectable<String> selectable = new Selectable<String>("selectable", list) {
-			
+
 			private static final long serialVersionUID = 1L;
 
 			@Override
-			protected void onSelect(AjaxRequestTarget target, List<String> items)
+			public void onSelect(AjaxRequestTarget target, List<String> items)
 			{
 				this.info("items: " + items.toString());
 				target.add(feedback);
@@ -38,7 +38,7 @@ public class DefaultSelectablePage extends AbstractSelectablePage
 		};
 
 		this.add(selectable);
-		
+
 		// ListView //
 		selectable.add(new ListView<String>("items", list) {
 

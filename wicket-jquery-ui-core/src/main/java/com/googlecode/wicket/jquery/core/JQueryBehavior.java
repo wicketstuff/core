@@ -38,9 +38,9 @@ public class JQueryBehavior extends JQueryAbstractBehavior
 	private static final long serialVersionUID = 1L;
 	private static final String NULL_OPTIONS = "Options have not been defined (null has been supplied to the constructor)";
 
-	protected final String selector;
-	protected final String method;
-	protected final Options options;
+	private final String selector;
+	private final String method;
+	private final Options options;
 
 	private List<String> events = null;
 
@@ -102,6 +102,26 @@ public class JQueryBehavior extends JQueryAbstractBehavior
 
 	// Properties //
 	/**
+	 * Gets the selector
+	 * @return the selector
+	 */
+	//XXX: report as new (and this.selector private)
+	public String getSelector()
+	{
+		return this.selector;
+	}
+
+	/**
+	 * Gets the jQuery method
+	 * @return the method
+	 */
+	//XXX: report as new (and this.method private)
+	public String getMethod()
+	{
+		return this.method;
+	}
+
+	/**
 	 * Gets a behavior option, referenced by its key
 	 * @param key the option key
 	 * @return null if the key does not exists
@@ -132,6 +152,16 @@ public class JQueryBehavior extends JQueryAbstractBehavior
 		this.options.set(key, value);
 
 		return this;
+	}
+
+	/**
+	 * Gets the {@link Options}
+	 * @return the {@link Options}
+	 */
+	//XXX: report as new (and this.options private)
+	public Options getOptions()
+	{
+		return this.options;
 	}
 
 	/**

@@ -100,19 +100,19 @@ public abstract class JQueryAbstractBehavior extends Behavior
 		// Gets the library settings //
 		IJQueryLibrarySettings settings = getJQueryLibrarySettings();
 
-		// Adds jQuery UI javascript resource reference //
+		// jQuery UI resource reference //
 		if (settings.getJQueryUIReference() != null)
 		{
 			response.render(new PriorityHeaderItem(JavaScriptHeaderItem.forReference(settings.getJQueryUIReference())));
 		}
 
-		// Adds jQuery Globalize javascript resource reference //
+		// jQuery Globalize resource reference //
 		if (settings.getJQueryGlobalizeReference() != null)
 		{
 			response.render(new PriorityHeaderItem(JavaScriptHeaderItem.forReference(settings.getJQueryGlobalizeReference())));
 		}
 
-		// Adds additional resource references //
+		// Additional resource references //
 		for(ResourceReference reference : this.references)
 		{
 			if (reference instanceof CssResourceReference)
@@ -135,8 +135,21 @@ public abstract class JQueryAbstractBehavior extends Behavior
 		}
 		else
 		{
-			response.render(JavaScriptHeaderItem.forScript(this.toString(), this.getToken()));
+			this.renderScript(JavaScriptHeaderItem.forScript(this.toString(), this.getToken()), response);
 		}
+	}
+
+	/**
+	 * Renders the {@link Behavior}'s javascript<br/>
+	 * This can be overridden to provides a priority:</br>
+	 * <code>response.render(new PriorityHeaderItem(item));</code>
+	 *
+	 * @param script the {@link JavaScriptHeaderItem}
+	 * @param response the {@link IHeaderResponse}
+	 */
+	protected void renderScript(JavaScriptHeaderItem script, IHeaderResponse response)
+	{
+		response.render(script);
 	}
 
 	/**

@@ -32,6 +32,7 @@ import com.googlecode.wicket.jquery.ui.samples.pages.progressbar.ButtonProgressB
 import com.googlecode.wicket.jquery.ui.samples.pages.resizable.DefaultResizablePage;
 import com.googlecode.wicket.jquery.ui.samples.pages.selectable.DefaultSelectablePage;
 import com.googlecode.wicket.jquery.ui.samples.pages.slider.DefaultSliderPage;
+import com.googlecode.wicket.jquery.ui.samples.pages.sortable.DefaultSortablePage;
 import com.googlecode.wicket.jquery.ui.samples.pages.spinner.DefaultSpinnerPage;
 import com.googlecode.wicket.jquery.ui.samples.pages.tabs.DefaultTabsPage;
 import com.googlecode.wicket.jquery.ui.samples.pages.test.TestPage;
@@ -77,6 +78,7 @@ public class SampleApplication extends WebApplication
 		this.mountPackage("/droppable", DefaultDroppablePage.class);
 		this.mountPackage("/resizable", DefaultResizablePage.class);
 		this.mountPackage("/selectable", DefaultSelectablePage.class);
+		this.mountPackage("/sortable", DefaultSortablePage.class);
 
 		// Effects //
 		this.mountPackage("/effect", DefaultEffectPage.class);

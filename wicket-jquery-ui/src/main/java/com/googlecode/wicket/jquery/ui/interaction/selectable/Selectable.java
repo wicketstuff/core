@@ -19,6 +19,7 @@ package com.googlecode.wicket.jquery.ui.interaction.selectable;
 import java.io.Serializable;
 import java.util.Collections;
 import java.util.List;
+
 import org.apache.wicket.AttributeModifier;
 import org.apache.wicket.Component;
 import org.apache.wicket.ajax.AjaxRequestTarget;
@@ -62,7 +63,7 @@ import com.googlecode.wicket.jquery.ui.interaction.draggable.Draggable;
  * @author Sebastien Briquet - sebfz1
  *
  */
-public class Selectable<T extends Serializable> extends JQueryContainer
+public class Selectable<T extends Serializable> extends JQueryContainer implements ISelectableListener<T>
 {
 	private static final long serialVersionUID = 1L;
 
@@ -137,7 +138,8 @@ public class Selectable<T extends Serializable> extends JQueryContainer
 	 * @param target the {@link AjaxRequestTarget}
 	 * @param items the {@link List} of selected items
 	 */
-	protected void onSelect(AjaxRequestTarget target, List<T> items)
+	@Override
+	public void onSelect(AjaxRequestTarget target, List<T> items)
 	{
 	}
 

@@ -184,11 +184,11 @@ public abstract class CalendarBehavior extends JQueryBehavior implements IJQuery
 	{
 		super.onConfigure(component);
 
-		this.options.set("editable", this.isEditable());
-		this.options.set("selectable", this.isSelectable());
-		this.options.set("selectHelper", this.isSelectable());
-		this.options.set("disableDragging", !this.isEventDropEnabled());
-		this.options.set("disableResizing", !this.isEventResizeEnabled());
+		this.setOption("editable", this.isEditable());
+		this.setOption("selectable", this.isSelectable());
+		this.setOption("selectHelper", this.isSelectable());
+		this.setOption("disableDragging", !this.isEventDropEnabled());
+		this.setOption("disableResizing", !this.isEventResizeEnabled());
 
 		if (this.onDayClickBehavior != null)
 		{

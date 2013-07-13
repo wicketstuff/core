@@ -23,7 +23,7 @@ public class DefaultDroppablePage extends AbstractDroppablePage
 	}
 
 
-	final FeedbackPanel feedback;
+	private final FeedbackPanel feedback;
 
 	public DefaultDroppablePage()
 	{

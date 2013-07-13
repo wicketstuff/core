@@ -130,7 +130,7 @@ public abstract class DataTableBehavior extends KendoAbstractBehavior implements
 		source.set("transport", String.format("{ \"read\": \"%s\" }", this.getSourceCallbackUrl()));
 		source.set("schema", "{ \"data\": \"results\", \"total\": \"__count\" }");
 
-		this.options.set("dataSource", source);
+		this.setOption("dataSource", source);
 
 		// columns //
 		StringBuilder builder = new StringBuilder("[ ");
@@ -183,7 +183,7 @@ public abstract class DataTableBehavior extends KendoAbstractBehavior implements
 
 		builder.append(" ]");
 
-		this.options.set("columns", builder.toString());
+		this.setOption("columns", builder.toString());
 	}
 
 	@Override

@@ -43,7 +43,7 @@ public class TableDraggableSelectablePage extends AbstractSelectablePage
 			}
 
 			@Override
-			protected void onSelect(AjaxRequestTarget target, List<Genre> items)
+			public void onSelect(AjaxRequestTarget target, List<Genre> items)
 			{
 				this.info("items: " + items.toString());
 				target.add(feedback);

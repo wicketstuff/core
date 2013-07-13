@@ -37,7 +37,7 @@ public class DraggableSelectablePage extends AbstractSelectablePage
 			private static final long serialVersionUID = 1L;
 
 			@Override
-			protected void onSelect(AjaxRequestTarget target, List<String> items)
+			public void onSelect(AjaxRequestTarget target, List<String> items)
 			{
 				this.info("items: " + items.toString());
 				target.add(feedback);
