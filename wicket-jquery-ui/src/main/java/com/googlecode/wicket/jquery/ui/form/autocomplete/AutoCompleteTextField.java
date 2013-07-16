@@ -20,7 +20,6 @@ import java.io.Serializable;
 import java.util.List;
 import java.util.Locale;
 
-import org.apache.wicket.Component;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.markup.ComponentTag;
 import org.apache.wicket.markup.html.form.TextField;
@@ -223,13 +222,14 @@ public abstract class AutoCompleteTextField<T extends Serializable> extends Text
 	}
 
 
-	/**
-	 * Called immediately after the onConfigure method in a behavior. Since this is before the rendering
-	 * cycle has begun, the behavior can modify the configuration of the component (i.e. {@link Options})
-	 *
-	 * @param behavior the {@link JQueryBehavior}
-	 */
-	protected void onConfigure(JQueryBehavior behavior)
+	@Override
+	public void onConfigure(JQueryBehavior behavior)
+	{
+		behavior.setOption("source", Options.asString(this.sourceBehavior.getCallbackUrl()));
+	}
+
+	@Override
+	public void onBeforeRender(JQueryBehavior behavior)
 	{
 	}
 
@@ -269,16 +269,6 @@ public abstract class AutoCompleteTextField<T extends Serializable> extends Text
 		return new AutoCompleteBehavior(selector) {
 
 			private static final long serialVersionUID = 1L;
-
-			@Override
-			public void onConfigure(Component component)
-			{
-				super.onConfigure(component);
-
-				this.setOption("source", Options.asString(AutoCompleteTextField.this.sourceBehavior.getCallbackUrl()));
-
-				AutoCompleteTextField.this.onConfigure(this);
-			}
 
 			@Override
 			public void onSelect(AjaxRequestTarget target, int index)

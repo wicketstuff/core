@@ -18,14 +18,12 @@ package com.googlecode.wicket.jquery.ui.kendo.dropdown;
 
 import java.util.List;
 
-import org.apache.wicket.Component;
 import org.apache.wicket.markup.html.form.DropDownChoice;
 import org.apache.wicket.markup.html.form.IChoiceRenderer;
 import org.apache.wicket.model.IModel;
 
 import com.googlecode.wicket.jquery.core.IJQueryWidget;
 import com.googlecode.wicket.jquery.core.JQueryBehavior;
-import com.googlecode.wicket.jquery.core.Options;
 import com.googlecode.wicket.jquery.ui.kendo.KendoAbstractBehavior;
 
 /**
@@ -173,35 +171,24 @@ public class DropDownList<T> extends DropDownChoice<T> implements IJQueryWidget
 		this.add(JQueryWidget.newWidgetBehavior(this));
 	}
 
-	/**
-	 * Called immediately after the onConfigure method in a behavior. Since this is before the rendering
-	 * cycle has begun, the behavior can modify the configuration of the component (i.e. {@link Options})
-	 *
-	 * @param behavior the {@link JQueryBehavior}
-	 */
-	protected void onConfigure(JQueryBehavior behavior)
+	@Override
+	public void onConfigure(JQueryBehavior behavior)
 	{
+		if (this.getListWidth() > 0)
+		{
+			behavior.setOption("open", String.format("function(e) { e.sender.list.width(%d); }", this.getListWidth()));
+		}
 	}
 
+	@Override
+	public void onBeforeRender(JQueryBehavior behavior)
+	{
+	}
 
 	// IJQueryWidget //
 	@Override
 	public JQueryBehavior newWidgetBehavior(String selector)
 	{
-		return new KendoAbstractBehavior(selector, DropDownList.METHOD) {
-
-			private static final long serialVersionUID = 1L;
-
-			@Override
-			public void onConfigure(Component component)
-			{
-				DropDownList.this.onConfigure(this);
-
-				if (DropDownList.this.getListWidth() > 0)
-				{
-					this.setOption("open", String.format("function(e) { e.sender.list.width(%d); }", DropDownList.this.getListWidth()));
-				}
-			}
-		};
+		return new KendoAbstractBehavior(selector, DropDownList.METHOD);
 	}
 }

@@ -19,7 +19,6 @@ package com.googlecode.wicket.jquery.ui.widget.accordion;
 import java.util.Collections;
 import java.util.List;
 
-import org.apache.wicket.Component;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.extensions.markup.html.tabs.ITab;
 import org.apache.wicket.markup.html.basic.Label;
@@ -28,7 +27,6 @@ import org.apache.wicket.markup.html.list.LoopItem;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
 
-import com.googlecode.wicket.jquery.core.JQueryBehavior;
 import com.googlecode.wicket.jquery.core.JQueryPanel;
 import com.googlecode.wicket.jquery.core.Options;
 
@@ -164,16 +162,6 @@ public class AccordionPanel extends JQueryPanel implements IAccordionListener
 		this.add(this.widgetBehavior = this.newWidgetBehavior(JQueryWidget.getSelector(this)));
 	}
 
-	/**
-	 * Called immediately after the onConfigure method in a behavior. Since this is before the rendering cycle has begun, the behavior can modify the
-	 * configuration of the component (i.e. {@link Options})
-	 *
-	 * @param behavior the {@link JQueryBehavior}
-	 */
-	protected void onConfigure(JQueryBehavior behavior)
-	{
-	}
-
 	@Override
 	public void onActivate(AjaxRequestTarget target, int index, ITab tab)
 	{
@@ -204,14 +192,6 @@ public class AccordionPanel extends JQueryPanel implements IAccordionListener
 			protected List<ITab> getTabs()
 			{
 				return AccordionPanel.this.getModelObject();
-			}
-
-			@Override
-			public void onConfigure(Component component)
-			{
-				super.onConfigure(component);
-
-				AccordionPanel.this.onConfigure(this);
 			}
 
 			@Override

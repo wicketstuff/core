@@ -137,6 +137,16 @@ public class WysiwygEditor extends FormComponentPanel<String> implements IJQuery
 	}
 
 	@Override
+	public void onConfigure(JQueryBehavior behavior)
+	{
+	}
+
+	@Override
+	public void onBeforeRender(JQueryBehavior behavior)
+	{
+	}
+
+	@Override
 	protected void onModelChanged()
 	{
 		super.onModelChanged();

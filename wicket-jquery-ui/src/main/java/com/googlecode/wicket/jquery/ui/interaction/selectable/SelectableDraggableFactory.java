@@ -57,7 +57,7 @@ public class SelectableDraggableFactory extends AbstractDraggableFactory
 			private static final long serialVersionUID = 1L;
 
 			@Override
-			protected void onConfigure(JQueryBehavior behavior)
+			public void onConfigure(JQueryBehavior behavior)
 			{
 				super.onConfigure(behavior);
 

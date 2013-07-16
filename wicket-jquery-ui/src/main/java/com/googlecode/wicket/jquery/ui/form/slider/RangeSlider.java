@@ -173,7 +173,7 @@ public class RangeSlider extends AbstractSlider<RangeValue>
 	}
 
 	@Override
-	protected void onConfigure(JQueryBehavior behavior)
+	public void onConfigure(JQueryBehavior behavior)
 	{
 		super.onConfigure(behavior);
 

@@ -16,7 +16,6 @@
  */
 package com.googlecode.wicket.jquery.ui.form.button;
 
-import org.apache.wicket.Component;
 import org.apache.wicket.model.IModel;
 
 import com.googlecode.wicket.jquery.core.IJQueryWidget;
@@ -71,13 +70,8 @@ public class Button extends org.apache.wicket.markup.html.form.Button implements
 		this.add(JQueryWidget.newWidgetBehavior(this)); //cannot be in ctor as the markupId may be set manually afterward
 	}
 
-	/**
-	 * Called immediately after the onConfigure method in a behavior. Since this is before the rendering
-	 * cycle has begun, the behavior can modify the configuration of the component (i.e. {@link Options})
-	 *
-	 * @param behavior the {@link JQueryBehavior}
-	 */
-	protected void onConfigure(ButtonBehavior behavior)
+	@Override
+	public void onConfigure(JQueryBehavior behavior)
 	{
 		if (!JQueryIcon.NONE.equals(this.getIcon()))
 		{
@@ -85,20 +79,16 @@ public class Button extends org.apache.wicket.markup.html.form.Button implements
 		}
 	}
 
+	@Override
+	public void onBeforeRender(JQueryBehavior behavior)
+	{
+	}
+
 	// IJQueryWidget //
 	@Override
 	public ButtonBehavior newWidgetBehavior(String selector)
 	{
-		return new ButtonBehavior(selector) {
-
-			private static final long serialVersionUID = 1L;
-
-			@Override
-			public void onConfigure(Component component)
-			{
-				Button.this.onConfigure(this);
-			}
-		};
+		return new ButtonBehavior(selector);
 	}
 
 	/**

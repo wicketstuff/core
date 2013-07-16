@@ -16,14 +16,12 @@
  */
 package com.googlecode.wicket.jquery.ui.form.button;
 
-import org.apache.wicket.Component;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.model.IModel;
 
 import com.googlecode.wicket.jquery.core.IJQueryWidget;
 import com.googlecode.wicket.jquery.core.JQueryBehavior;
-import com.googlecode.wicket.jquery.core.Options;
 
 /**
  * Provides a jQuery button based on the built-in AjaxButton
@@ -94,18 +92,18 @@ public abstract class AjaxButton extends org.apache.wicket.ajax.markup.html.form
 		this.add(JQueryWidget.newWidgetBehavior(this)); //cannot be in ctor as the markupId may be set manually afterward
 	}
 
-	/**
-	 * Called immediately after the onConfigure method in a behavior. Since this is before the rendering
-	 * cycle has begun, the behavior can modify the configuration of the component (i.e. {@link Options})
-	 *
-	 * @param behavior the {@link JQueryBehavior}
-	 */
-	protected void onConfigure(JQueryBehavior behavior)
+	@Override
+	public void onConfigure(JQueryBehavior behavior)
 	{
 		if (this.getIcon() != null)
 		{
 			behavior.setOption("icons", String.format("{ primary: '%s' }", this.getIcon()));
 		}
+	}
+
+	@Override
+	public void onBeforeRender(JQueryBehavior behavior)
+	{
 	}
 
 	@Override
@@ -117,15 +115,6 @@ public abstract class AjaxButton extends org.apache.wicket.ajax.markup.html.form
 	@Override
 	public JQueryBehavior newWidgetBehavior(String selector)
 	{
-		return new JQueryBehavior(selector, METHOD) {
-
-			private static final long serialVersionUID = 1L;
-
-			@Override
-			public void onConfigure(Component component)
-			{
-				AjaxButton.this.onConfigure(this);
-			}
-		};
+		return new JQueryBehavior(selector, METHOD);
 	}
 }

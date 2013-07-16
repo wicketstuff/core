@@ -16,7 +16,6 @@
  */
 package com.googlecode.wicket.jquery.ui.interaction.resizable;
 
-import org.apache.wicket.Component;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.model.IModel;
 
@@ -98,16 +97,6 @@ public abstract class ResizablePanel extends JQueryPanel implements IResizableLi
 		this.add(JQueryWidget.newWidgetBehavior(this));
 	}
 
-	/**
-	 * Called immediately after the onConfigure method in a behavior. Since this is before the rendering
-	 * cycle has begun, the behavior can modify the configuration of the component (i.e. {@link Options})
-	 *
-	 * @param behavior the {@link JQueryBehavior}
-	 */
-	protected void onConfigure(JQueryBehavior behavior)
-	{
-	}
-
 	@Override
 	public void onResizeStart(AjaxRequestTarget target, int top, int left, int width, int height)
 	{
@@ -125,14 +114,6 @@ public abstract class ResizablePanel extends JQueryPanel implements IResizableLi
 		return new ResizableBehavior(selector, this.options) {
 
 			private static final long serialVersionUID = 1L;
-
-			@Override
-			public void onConfigure(Component component)
-			{
-				super.onConfigure(component);
-
-				ResizablePanel.this.onConfigure(this);
-			}
 
 			@Override
 			public boolean isResizeStartEventEnabled()

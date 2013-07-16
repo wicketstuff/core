@@ -20,7 +20,6 @@ import java.util.Collections;
 import java.util.List;
 
 import org.apache.wicket.AttributeModifier;
-import org.apache.wicket.Component;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.extensions.markup.html.tabs.ITab;
 import org.apache.wicket.markup.html.basic.Label;
@@ -29,7 +28,7 @@ import org.apache.wicket.markup.html.list.ListView;
 import org.apache.wicket.markup.repeater.RepeatingView;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
-import com.googlecode.wicket.jquery.core.JQueryBehavior;
+
 import com.googlecode.wicket.jquery.core.JQueryPanel;
 import com.googlecode.wicket.jquery.core.Options;
 
@@ -188,16 +187,6 @@ public class TabbedPanel extends JQueryPanel implements ITabsListener
 		this.add(this.widgetBehavior = this.newWidgetBehavior(JQueryWidget.getSelector(this)));
 	}
 
-	/**
-	 * Called immediately after the onConfigure method in a behavior. Since this is before the rendering
-	 * cycle has begun, the behavior can modify the configuration of the component (i.e. {@link Options})
-	 *
-	 * @param behavior the {@link JQueryBehavior}
-	 */
-	protected void onConfigure(JQueryBehavior behavior)
-	{
-	}
-
 	@Override
 	public void onActivating(AjaxRequestTarget target, int index, ITab tab)
 	{
@@ -239,14 +228,6 @@ public class TabbedPanel extends JQueryPanel implements ITabsListener
 			public boolean isOnActivatingEventEnabled()
 			{
 				return TabbedPanel.this.isOnActivatingEventEnabled();
-			}
-
-			@Override
-			public void onConfigure(Component component)
-			{
-				super.onConfigure(component);
-
-				TabbedPanel.this.onConfigure(this);
 			}
 
 			@Override

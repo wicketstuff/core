@@ -16,7 +16,6 @@
  */
 package com.googlecode.wicket.jquery.ui.form.spinner;
 
-import org.apache.wicket.Component;
 import org.apache.wicket.markup.html.form.TextField;
 import org.apache.wicket.model.IModel;
 
@@ -142,13 +141,13 @@ public class Spinner<T extends Number> extends TextField<T> implements IJQueryCu
 		this.setDisabled(!this.isEnabled());
 	}
 
-	/**
-	 * Called immediately after the onConfigure method in a behavior. Since this is before the rendering
-	 * cycle has begun, the behavior can modify the configuration of the component (i.e. {@link Options})
-	 *
-	 * @param behavior the {@link JQueryBehavior}
-	 */
-	protected void onConfigure(JQueryBehavior behavior)
+	@Override
+	public void onConfigure(JQueryBehavior behavior)
+	{
+	}
+
+	@Override
+	public void onBeforeRender(JQueryBehavior behavior)
 	{
 	}
 
@@ -292,16 +291,7 @@ public class Spinner<T extends Number> extends TextField<T> implements IJQueryCu
 	@Override
 	public SpinnerBehavior newWidgetBehavior(String selector)
 	{
-		return new SpinnerBehavior(selector, this.options) {
-
-			private static final long serialVersionUID = 1L;
-
-			@Override
-			public void onConfigure(Component component)
-			{
-				Spinner.this.onConfigure(this);
-			}
-		};
+		return new SpinnerBehavior(selector, this.options);
 	}
 
 

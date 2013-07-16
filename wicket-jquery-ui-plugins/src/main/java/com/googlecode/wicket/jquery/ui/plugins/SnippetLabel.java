@@ -45,6 +45,16 @@ public class SnippetLabel extends Label implements IJQueryWidget
 		//this.add(this.newWidgetBehavior("#" + this.setOutputMarkupId(true).getMarkupId()));
 	}
 
+	@Override
+	public void onConfigure(JQueryBehavior behavior)
+	{
+	}
+
+	@Override
+	public void onBeforeRender(JQueryBehavior behavior)
+	{
+	}
+
 	// IJQueryWidget //
 	@Override
 	public JQueryBehavior newWidgetBehavior(String selector)

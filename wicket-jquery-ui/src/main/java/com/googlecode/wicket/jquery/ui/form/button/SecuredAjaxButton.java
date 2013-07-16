@@ -21,7 +21,6 @@ import org.apache.wicket.model.IModel;
 import org.apache.wicket.protocol.http.WebSession;
 
 import com.googlecode.wicket.jquery.core.IJQuerySecurityProvider;
-import com.googlecode.wicket.jquery.core.JQueryBehavior;
 import com.googlecode.wicket.jquery.ui.JQueryIcon;
 
 /**
@@ -173,11 +172,5 @@ public abstract class SecuredAjaxButton extends AjaxButton
 		super.onConfigure();
 
 		this.setEnabled(!this.isLocked());
-	}
-
-	@Override
-	protected void onConfigure(JQueryBehavior behavior)
-	{
-		super.onConfigure(behavior);
 	}
 }

@@ -120,10 +120,4 @@ public abstract class SecuredButton extends Button
 
 		this.setEnabled(!this.isLocked());
 	}
-
-	@Override
-	protected void onConfigure(ButtonBehavior behavior)
-	{
-		super.onConfigure(behavior);
-	}
 }

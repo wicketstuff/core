@@ -149,7 +149,7 @@ public class Slider extends AbstractSlider<Integer>
 	}
 
 	@Override
-	protected void onConfigure(JQueryBehavior behavior)
+	public void onConfigure(JQueryBehavior behavior)
 	{
 		super.onConfigure(behavior);
 

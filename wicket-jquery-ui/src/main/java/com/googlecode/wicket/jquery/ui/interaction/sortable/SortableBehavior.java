@@ -25,7 +25,6 @@ import com.googlecode.wicket.jquery.core.JQueryEvent;
 import com.googlecode.wicket.jquery.core.Options;
 import com.googlecode.wicket.jquery.core.ajax.IJQueryAjaxAware;
 import com.googlecode.wicket.jquery.core.ajax.JQueryAjaxBehavior;
-import com.googlecode.wicket.jquery.core.utils.RequestCycleUtils;
 
 /**
  * Provides a jQuery sortable behavior
@@ -151,8 +150,8 @@ public abstract class SortableBehavior extends JQueryBehavior implements IJQuery
 	{
 		public StopEvent()
 		{
-			int index = RequestCycleUtils.getQueryParameterValue("index").toInt(0);
-			int position = RequestCycleUtils.getQueryParameterValue("position").toInt(0);
+//			int index = RequestCycleUtils.getQueryParameterValue("index").toInt(0);
+//			int position = RequestCycleUtils.getQueryParameterValue("position").toInt(0);
 		}
 	}
 }

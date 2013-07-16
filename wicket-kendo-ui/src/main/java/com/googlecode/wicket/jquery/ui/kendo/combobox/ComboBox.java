@@ -18,7 +18,6 @@ package com.googlecode.wicket.jquery.ui.kendo.combobox;
 
 import java.util.List;
 
-import org.apache.wicket.Component;
 import org.apache.wicket.markup.html.form.TextField;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
@@ -185,13 +184,8 @@ public class ComboBox<T> extends TextField<String> implements IJQueryWidget
 		}
 	}
 
-	/**
-	 * Called immediately after the onConfigure method in a behavior. Since this is before the rendering
-	 * cycle has begun, the behavior can modify the configuration of the component (i.e. {@link Options})
-	 *
-	 * @param behavior the {@link JQueryBehavior}
-	 */
-	protected void onConfigure(JQueryBehavior behavior)
+	@Override
+	public void onConfigure(JQueryBehavior behavior)
 	{
 		// set template (if any) //
 		if (this.template != null)
@@ -239,27 +233,24 @@ public class ComboBox<T> extends TextField<String> implements IJQueryWidget
 		dataSource.append("]");
 
 		behavior.setOption("dataSource", dataSource.toString());
+
+		// set list-width //
+		if (this.getListWidth() > 0)
+		{
+			behavior.setOption("open", String.format("function(e) { e.sender.list.width(%d); }", this.getListWidth()));
+		}
+	}
+
+	@Override
+	public void onBeforeRender(JQueryBehavior behavior)
+	{
 	}
 
 	// IJQueryWidget //
 	@Override
 	public JQueryBehavior newWidgetBehavior(String selector)
 	{
-		return new KendoAbstractBehavior(selector, ComboBox.METHOD) {
-
-			private static final long serialVersionUID = 1L;
-
-			@Override
-			public void onConfigure(Component component)
-			{
-				ComboBox.this.onConfigure(this);
-
-				if (ComboBox.this.getListWidth() > 0)
-				{
-					this.setOption("open", String.format("function(e) { e.sender.list.width(%d); }", ComboBox.this.getListWidth()));
-				}
-			}
-		};
+		return new KendoAbstractBehavior(selector, ComboBox.METHOD);
 	}
 
 	// Factories //

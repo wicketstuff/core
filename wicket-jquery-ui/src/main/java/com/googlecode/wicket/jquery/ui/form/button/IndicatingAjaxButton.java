@@ -101,6 +101,16 @@ public abstract class IndicatingAjaxButton extends AjaxButton implements IJQuery
 	}
 
 	@Override
+	public void onConfigure(JQueryBehavior behavior)
+	{
+	}
+
+	@Override
+	public void onBeforeRender(JQueryBehavior behavior)
+	{
+	}
+
+	@Override
 	protected void onError(AjaxRequestTarget target, Form<?> form)
 	{
 	}

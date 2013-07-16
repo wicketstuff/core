@@ -21,14 +21,12 @@ import java.util.Collections;
 import java.util.List;
 
 import org.apache.wicket.AttributeModifier;
-import org.apache.wicket.Component;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.util.ListModel;
 
 import com.googlecode.wicket.jquery.core.JQueryBehavior;
 import com.googlecode.wicket.jquery.core.JQueryContainer;
-import com.googlecode.wicket.jquery.core.Options;
 import com.googlecode.wicket.jquery.ui.JQueryIcon;
 import com.googlecode.wicket.jquery.ui.interaction.draggable.Draggable;
 
@@ -123,16 +121,6 @@ public class Selectable<T extends Serializable> extends JQueryContainer implemen
 
 	// Events //
 	/**
-	 * Called immediately after the onConfigure method in a behavior. Since this is before the rendering
-	 * cycle has begun, the behavior can modify the configuration of the component (i.e. {@link Options})
-	 *
-	 * @param behavior the {@link JQueryBehavior}
-	 */
-	protected void onConfigure(JQueryBehavior behavior)
-	{
-	}
-
-	/**
 	 * Triggered when a selection has been made (stops)
 	 *
 	 * @param target the {@link AjaxRequestTarget}
@@ -161,14 +149,6 @@ public class Selectable<T extends Serializable> extends JQueryContainer implemen
 			protected String getItemSelector()
 			{
 				return Selectable.this.getItemSelector();
-			}
-
-			@Override
-			public void onConfigure(Component component)
-			{
-				super.onConfigure(component);
-
-				Selectable.this.onConfigure(this);
 			}
 
 			@Override
@@ -222,7 +202,7 @@ public class Selectable<T extends Serializable> extends JQueryContainer implemen
 				private static final long serialVersionUID = 1L;
 
 				@Override
-				protected void onConfigure(JQueryBehavior behavior)
+				public void onConfigure(JQueryBehavior behavior)
 				{
 					super.onConfigure(behavior);
 

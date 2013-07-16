@@ -22,7 +22,6 @@ import org.apache.wicket.model.IModel;
 
 import com.googlecode.wicket.jquery.core.JQueryBehavior;
 import com.googlecode.wicket.jquery.core.JQueryContainer;
-import com.googlecode.wicket.jquery.core.Options;
 import com.googlecode.wicket.jquery.ui.interaction.draggable.Draggable;
 
 /**
@@ -68,16 +67,6 @@ public abstract class Droppable<T> extends JQueryContainer implements IDroppable
 	}
 
 	// Events //
-	/**
-	 * Called immediately after the onConfigure method in a behavior. Since this is before the rendering
-	 * cycle has begun, the behavior can modify the configuration of the component (i.e. {@link Options})
-	 *
-	 * @param behavior the {@link JQueryBehavior}
-	 */
-	protected void onConfigure(JQueryBehavior behavior)
-	{
-	}
-
 	@Override
 	public abstract void onDrop(AjaxRequestTarget target, Component component);
 
@@ -98,14 +87,6 @@ public abstract class Droppable<T> extends JQueryContainer implements IDroppable
 		return new DroppableBehavior(selector) {
 
 			private static final long serialVersionUID = 1L;
-
-			@Override
-			public void onConfigure(Component component)
-			{
-				super.onConfigure(component);
-
-				Droppable.this.onConfigure(this);
-			}
 
 			@Override
 			public boolean isOverEventEnabled()

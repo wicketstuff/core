@@ -16,7 +16,6 @@
  */
 package com.googlecode.wicket.jquery.ui.kendo.editor;
 
-import org.apache.wicket.Component;
 import org.apache.wicket.markup.html.form.TextArea;
 import org.apache.wicket.model.IModel;
 
@@ -102,13 +101,13 @@ public class Editor<T> extends TextArea<T> implements IJQueryWidget
 		this.add(JQueryWidget.newWidgetBehavior(this));
 	}
 
-	/**
-	 * Called immediately after the onConfigure method in a behavior. Since this is before the rendering
-	 * cycle has begun, the behavior can modify the configuration of the component (i.e. {@link Options})
-	 *
-	 * @param behavior the {@link JQueryBehavior}
-	 */
-	protected void onConfigure(JQueryBehavior behavior)
+	@Override
+	public void onConfigure(JQueryBehavior behavior)
+	{
+	}
+
+	@Override
+	public void onBeforeRender(JQueryBehavior behavior)
 	{
 	}
 
@@ -116,16 +115,7 @@ public class Editor<T> extends TextArea<T> implements IJQueryWidget
 	@Override
 	public JQueryBehavior newWidgetBehavior(String selector)
 	{
-		return new KendoAbstractBehavior(selector, Editor.METHOD, this.options) {
-
-			private static final long serialVersionUID = 1L;
-
-			@Override
-			public void onConfigure(Component component)
-			{
-				Editor.this.onConfigure(this);
-			}
-		};
+		return new KendoAbstractBehavior(selector, Editor.METHOD, this.options);
 	}
 
 }

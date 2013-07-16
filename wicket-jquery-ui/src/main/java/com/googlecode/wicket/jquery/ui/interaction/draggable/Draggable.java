@@ -136,16 +136,6 @@ public class Draggable<T> extends JQueryContainer implements IDraggableListener
 	}
 
 	// Events //
-	/**
-	 * Called immediately after the onConfigure method in a behavior. Since this is before the rendering
-	 * cycle has begun, the behavior can modify the configuration of the component (i.e. {@link Options})
-	 *
-	 * @param behavior the {@link JQueryBehavior}
-	 */
-	protected void onConfigure(JQueryBehavior behavior)
-	{
-	}
-
 	@Override
 	public void onDragStart(AjaxRequestTarget target)
 	{
@@ -233,14 +223,6 @@ public class Draggable<T> extends JQueryContainer implements IDraggableListener
 		return new DraggableBehavior(selector, this.options) {
 
 			private static final long serialVersionUID = 1L;
-
-			@Override
-			public void onConfigure(Component component)
-			{
-				super.onConfigure(component);
-
-				Draggable.this.onConfigure(this);
-			}
 
 			@Override
 			public boolean isStopEventEnabled()

@@ -20,7 +20,6 @@ import java.io.Serializable;
 import java.util.Arrays;
 import java.util.List;
 
-import org.apache.wicket.Component;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
@@ -167,14 +166,16 @@ public abstract class AbstractDialog<T extends Serializable> extends JQueryPanel
 		this.add(this.widgetBehavior = this.newWidgetBehavior(JQueryWidget.getSelector(this))); //warning: ButtonAjaxBehavior(s) should be set at this point!
 	}
 
-	/**
-	 * Called immediately after the onConfigure method in a behavior. Since this is before the rendering
-	 * cycle has begun, the behavior can modify the configuration of the component (i.e. {@link Options})
-	 *
-	 * @param behavior the {@link JQueryBehavior}
-	 */
-	protected void onConfigure(JQueryBehavior behavior)
+
+	@Override
+	public void onConfigure(JQueryBehavior behavior)
 	{
+		// class options //
+		behavior.setOption("autoOpen", false);
+		behavior.setOption("title", Options.asString(this.title.getObject()));
+		behavior.setOption("modal", this.modal);
+		behavior.setOption("resizable", this.isResizable());
+		behavior.setOption("width", this.getWidth());
 	}
 
 	/**
@@ -376,22 +377,6 @@ public abstract class AbstractDialog<T extends Serializable> extends JQueryPanel
 			protected List<DialogButton> getButtons()
 			{
 				return AbstractDialog.this.getButtons();
-			}
-
-			@Override
-			public void onConfigure(Component component)
-			{
-				super.onConfigure(component);
-
-				// class options //
-				this.setOption("autoOpen", false);
-				this.setOption("title", Options.asString(AbstractDialog.this.title.getObject()));
-				this.setOption("modal", AbstractDialog.this.modal);
-				this.setOption("resizable", AbstractDialog.this.isResizable());
-				this.setOption("width", AbstractDialog.this.getWidth());
-
-				// lazy options //
-				AbstractDialog.this.onConfigure(this);
 			}
 
 			@Override

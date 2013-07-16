@@ -21,7 +21,6 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
 
-import org.apache.wicket.Component;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 
 import com.googlecode.wicket.jquery.core.JQueryBehavior;
@@ -162,14 +161,25 @@ public class Calendar extends JQueryContainer implements ICalendarListener
 		this.add(this.modelBehavior = new CalendarModelBehavior(this.getModel()));
 	}
 
-	/**
-	 * Called immediately after the onConfigure method in a behavior. Since this is before the rendering
-	 * cycle has begun, the behavior can modify the configuration of the component (i.e. {@link Options})
-	 *
-	 * @param behavior the {@link JQueryBehavior}
-	 */
-	protected void onConfigure(JQueryBehavior behavior)
+	@Override
+	public void onConfigure(JQueryBehavior behavior)
 	{
+		super.onConfigure(behavior);
+
+		// builds sources //
+		StringBuilder sourceBuilder = new StringBuilder();
+		sourceBuilder.append("'").append(Calendar.this.modelBehavior.getCallbackUrl()).append("'");
+
+		if (Calendar.this.gcals != null)
+		{
+			for (Entry<CharSequence, String> gcal : Calendar.this.gcals.entrySet())
+			{
+				sourceBuilder.append(", ");
+				sourceBuilder.append("jQuery.fullCalendar.gcalFeed('").append(gcal.getKey()).append("', { className: '").append(gcal.getValue()).append("' })");
+			}
+		}
+
+		behavior.setOption("eventSources", String.format("[%s]", sourceBuilder.toString()));
 	}
 
 	@Override
@@ -242,30 +252,6 @@ public class Calendar extends JQueryContainer implements ICalendarListener
 			public boolean isViewDisplayEnabled()
 			{
 				return Calendar.this.isViewDisplayEnabled();
-			}
-
-			@Override
-			public void onConfigure(Component component)
-			{
-				super.onConfigure(component);
-
-				// lazy options //
-				Calendar.this.onConfigure(this);
-
-				// builds sources //
-				StringBuilder sourceBuilder = new StringBuilder();
-				sourceBuilder.append("'").append(Calendar.this.modelBehavior.getCallbackUrl()).append("'");
-
-				if (Calendar.this.gcals != null)
-				{
-					for (Entry<CharSequence, String> gcal : Calendar.this.gcals.entrySet())
-					{
-						sourceBuilder.append(", ");
-						sourceBuilder.append("jQuery.fullCalendar.gcalFeed('").append(gcal.getKey()).append("', { className: '").append(gcal.getValue()).append("' })");
-					}
-				}
-
-				this.setOption("eventSources", String.format("[%s]", sourceBuilder.toString()));
 			}
 
 			@Override

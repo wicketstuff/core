@@ -242,4 +242,27 @@ public class JQueryBehavior extends JQueryAbstractBehavior
 	{
 		return String.format("jQuery(function() { jQuery('%s').%s(%s); });", selector, method, options);
 	}
+
+	// Events //
+	@Override
+	public void onConfigure(Component component)
+	{
+		super.onConfigure(component);
+
+		if (component instanceof IJQueryWidget)
+		{
+			((IJQueryWidget)component).onConfigure(this);
+		}
+	}
+
+	@Override
+	public void beforeRender(Component component)
+	{
+		super.beforeRender(component);
+
+		if (component instanceof IJQueryWidget)
+		{
+			((IJQueryWidget)component).onBeforeRender(this);
+		}
+	}
 }

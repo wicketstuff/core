@@ -18,14 +18,12 @@ package com.googlecode.wicket.jquery.ui.interaction.sortable;
 
 import java.util.List;
 
-import org.apache.wicket.Component;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.util.ListModel;
 
 import com.googlecode.wicket.jquery.core.JQueryBehavior;
 import com.googlecode.wicket.jquery.core.JQueryContainer;
-import com.googlecode.wicket.jquery.core.Options;
 
 /**
  * Provides a jQuery UI sortable {@link JQueryContainer}.<br/>
@@ -82,14 +80,10 @@ public abstract class Sortable<T> extends JQueryContainer implements ISortableLi
 
 
 	// Events //
-	/**
-	 * Called immediately after the onConfigure method in a behavior. Since this is before the rendering
-	 * cycle has begun, the behavior can modify the configuration of the component (i.e. {@link Options})
-	 *
-	 * @param behavior the {@link JQueryBehavior}
-	 */
-	protected void onConfigure(JQueryBehavior behavior)
+	@Override
+	public void onConfigure(JQueryBehavior behavior)
 	{
+		//WIP
 	}
 
 
@@ -100,14 +94,6 @@ public abstract class Sortable<T> extends JQueryContainer implements ISortableLi
 		return new SortableBehavior(selector) {
 
 			private static final long serialVersionUID = 1L;
-
-			@Override
-			public void onConfigure(Component component)
-			{
-				super.onConfigure(component);
-
-				Sortable.this.onConfigure(this);
-			}
 
 			@Override
 			public void onSort(AjaxRequestTarget target, int index, int position)

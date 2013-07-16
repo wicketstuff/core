@@ -33,6 +33,16 @@ public class MyJQueryLabel extends Label implements IJQueryWidget, IMyJQueryList
 	}
 
 	@Override
+	public void onConfigure(JQueryBehavior behavior)
+	{
+	}
+
+	@Override
+	public void onBeforeRender(JQueryBehavior behavior)
+	{
+	}
+
+	@Override
 	public void onMyEvent(AjaxRequestTarget target)
 	{
 		// do something here

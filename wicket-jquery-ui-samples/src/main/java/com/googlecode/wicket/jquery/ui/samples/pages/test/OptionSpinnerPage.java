@@ -117,7 +117,7 @@ public class OptionSpinnerPage extends AbstractKendoPage
 		}
 
 		@Override
-		protected void onConfigure(JQueryBehavior behavior)
+		public void onConfigure(JQueryBehavior behavior)
 		{
 			super.onConfigure(behavior);
 

@@ -19,7 +19,6 @@ package com.googlecode.wicket.jquery.ui.kendo.datatable;
 import java.util.Collections;
 import java.util.List;
 
-import org.apache.wicket.Component;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.behavior.AbstractAjaxBehavior;
 import org.apache.wicket.markup.ComponentTag;
@@ -98,13 +97,13 @@ public class DataTable<T> extends WebComponent implements IJQueryWidget, IDataTa
 		this.add(JQueryWidget.newWidgetBehavior(this)); //cannot be in ctor as the markupId may be set manually afterward
 	}
 
-	/**
-	 * Called immediately after the onConfigure method in a behavior. Since this is before the rendering
-	 * cycle has begun, the behavior can modify the configuration of the component (i.e. {@link Options})
-	 *
-	 * @param behavior the {@link JQueryBehavior}
-	 */
-	protected void onConfigure(JQueryBehavior behavior)
+	@Override
+	public void onConfigure(JQueryBehavior behavior)
+	{
+	}
+
+	@Override
+	public void onBeforeRender(JQueryBehavior behavior)
 	{
 	}
 
@@ -147,15 +146,6 @@ public class DataTable<T> extends WebComponent implements IJQueryWidget, IDataTa
 			}
 
 			// Events //
-
-			@Override
-			public void onConfigure(Component component)
-			{
-				super.onConfigure(component);
-
-				DataTable.this.onConfigure(this);
-			}
-
 			@Override
 			public void onClick(AjaxRequestTarget target, ColumnButton button, String value)
 			{

@@ -73,4 +73,16 @@ public abstract class JQueryPanel extends Panel implements IJQueryWidget
 
 		this.options = options;
 	}
+
+
+	// Events //
+	@Override
+	public void onConfigure(JQueryBehavior behavior)
+	{
+	}
+
+	@Override
+	public void onBeforeRender(JQueryBehavior behavior)
+	{
+	}
 }

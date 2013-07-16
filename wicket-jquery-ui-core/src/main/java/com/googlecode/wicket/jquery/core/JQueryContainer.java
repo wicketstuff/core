@@ -62,4 +62,14 @@ public abstract class JQueryContainer extends WebMarkupContainer implements IJQu
 
 		this.add(this.widgetBehavior = JQueryWidget.newWidgetBehavior(this));  //cannot be in ctor as the markupId may be set manually afterward
 	}
+
+	@Override
+	public void onConfigure(JQueryBehavior behavior)
+	{
+	}
+
+	@Override
+	public void onBeforeRender(JQueryBehavior behavior)
+	{
+	}
 }

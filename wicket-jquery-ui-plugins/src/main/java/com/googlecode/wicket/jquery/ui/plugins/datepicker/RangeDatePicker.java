@@ -16,7 +16,6 @@
  */
 package com.googlecode.wicket.jquery.ui.plugins.datepicker;
 
-import org.apache.wicket.Component;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.model.IModel;
 
@@ -92,14 +91,33 @@ public class RangeDatePicker extends JQueryContainer implements IRangeDatePicker
 
 
 	// Events //
-	/**
-	 * Called immediately after the onConfigure method in a behavior. Since this is before the rendering
-	 * cycle has begun, the behavior can modify the configuration of the component (i.e. {@link Options})
-	 *
-	 * @param behavior the {@link JQueryBehavior}
-	 */
-	protected void onConfigure(JQueryBehavior behavior)
+	@Override
+	public void onConfigure(JQueryBehavior behavior)
 	{
+		// build date array
+		StringBuilder builder = new StringBuilder("[");
+		DateRange dateRange = this.getModelObject();
+
+		if (dateRange != null)
+		{
+			if (dateRange.getStart() != null)
+			{
+				builder.append("new Date(").append(dateRange.getStart().getTime()).append(")");
+			}
+
+			builder.append(",");
+
+			if (dateRange.getEnd() != null)
+			{
+				builder.append("new Date(").append(dateRange.getEnd().getTime()).append(")");
+			}
+		}
+
+		builder.append("]");
+
+		// set options
+		behavior.setOption("date", builder.toString());
+		behavior.setOption("mode", Options.asString("range")); //immutable
 	}
 
 	@Override
@@ -114,39 +132,6 @@ public class RangeDatePicker extends JQueryContainer implements IRangeDatePicker
 		return new RangeDatePickerBehavior(selector, this.options) {
 
 			private static final long serialVersionUID = 1L;
-
-			@Override
-			public void onConfigure(Component component)
-			{
-				super.onConfigure(component);
-
-				RangeDatePicker.this.onConfigure(this);
-
-				// build date array
-				StringBuilder builder = new StringBuilder("[");
-				DateRange dateRange = RangeDatePicker.this.getModelObject();
-
-				if (dateRange != null)
-				{
-					if (dateRange.getStart() != null)
-					{
-						builder.append("new Date(").append(dateRange.getStart().getTime()).append(")");
-					}
-
-					builder.append(",");
-
-					if (dateRange.getEnd() != null)
-					{
-						builder.append("new Date(").append(dateRange.getEnd().getTime()).append(")");
-					}
-				}
-
-				builder.append("]");
-
-				// set options
-				this.setOption("date", builder.toString());
-				this.setOption("mode", Options.asString("range")); //immutable
-			}
 
 			@Override
 			public void onValueChanged(AjaxRequestTarget target, DateRange range)
