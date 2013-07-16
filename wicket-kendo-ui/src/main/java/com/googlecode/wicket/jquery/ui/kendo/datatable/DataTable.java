@@ -22,10 +22,13 @@ import java.util.List;
 import org.apache.wicket.Component;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.behavior.AbstractAjaxBehavior;
+import org.apache.wicket.markup.ComponentTag;
+import org.apache.wicket.markup.MarkupStream;
+import org.apache.wicket.markup.html.WebComponent;
 import org.apache.wicket.markup.repeater.data.IDataProvider;
 
+import com.googlecode.wicket.jquery.core.IJQueryWidget;
 import com.googlecode.wicket.jquery.core.JQueryBehavior;
-import com.googlecode.wicket.jquery.core.JQueryContainer;
 import com.googlecode.wicket.jquery.core.Options;
 import com.googlecode.wicket.jquery.ui.kendo.datatable.column.IColumn;
 
@@ -35,7 +38,7 @@ import com.googlecode.wicket.jquery.ui.kendo.datatable.column.IColumn;
  * @param <T> the model object type
  * @author Sebastien Briquet - sebfz1
  */
-public class DataTable<T> extends JQueryContainer implements IDataTableListener
+public class DataTable<T> extends WebComponent implements IJQueryWidget, IDataTableListener
 {
 	private static final long serialVersionUID = 1L;
 
@@ -92,6 +95,7 @@ public class DataTable<T> extends JQueryContainer implements IDataTableListener
 		super.onInitialize();
 
 		this.add(this.sourceBehavior = this.newDataSourceBehavior(this.columns, this.provider, this.rows));
+		this.add(JQueryWidget.newWidgetBehavior(this)); //cannot be in ctor as the markupId may be set manually afterward
 	}
 
 	/**
@@ -102,6 +106,12 @@ public class DataTable<T> extends JQueryContainer implements IDataTableListener
 	 */
 	protected void onConfigure(JQueryBehavior behavior)
 	{
+	}
+
+	@Override
+	public void onComponentTagBody(final MarkupStream markupStream, final ComponentTag openTag)
+	{
+		this.replaceComponentTagBody(markupStream, openTag, ""); //Empty tag body; Fixes #45
 	}
 
 	@Override
