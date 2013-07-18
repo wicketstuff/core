@@ -49,7 +49,7 @@ public class InputBehavior extends Behavior {
 
 	private static final long serialVersionUID = 1L;
 	private final ResourceReference SHORTCUTS_JAVASCRIPT = new PackageResourceReference(
-			InputBehavior.class, "shortcuts.js");
+			InputBehavior.class, "shortcut.js");
 	private final KeyType[] keyCombo;
 	private EventType eventType;
 
