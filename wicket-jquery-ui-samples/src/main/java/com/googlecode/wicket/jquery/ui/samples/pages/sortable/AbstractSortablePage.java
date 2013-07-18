@@ -20,7 +20,8 @@ abstract class AbstractSortablePage extends SamplePage
 	protected List<DemoLink> getDemoLinks()
 	{
 		return Arrays.asList(
-				new DemoLink(DefaultSortablePage.class, "Sortable")
+				new DemoLink(DefaultSortablePage.class, "Sortable"),
+				new DemoLink(CustomSortablePage.class, "Sortable: custom beans")
 			);
 	}
 }

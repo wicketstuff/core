@@ -21,16 +21,17 @@ import org.apache.wicket.ajax.AjaxRequestTarget;
 /**
  * Event listener shared by the {@link Sortable} widget and the {@link SortableBehavior}
  *
+ * @param <T> the type of the model object
  * @author Sebastien Briquet - sebfz1
  */
-interface ISortableListener //TODO remove <T>
+interface ISortableListener<T>
 {
 	/**
 	 * Triggered when a selection has been made (stops)
 	 *
 	 * @param target the {@link AjaxRequestTarget}
-	 * @param index the index if the item that has been sorted
-	 * @param position the item's new position
+	 * @param item the item that has been sorted
+	 * @param index the item's new index (zero based)
 	 */
-	void onSort(AjaxRequestTarget target, int index, int position);
+	void onSort(AjaxRequestTarget target, T item, int index);
 }

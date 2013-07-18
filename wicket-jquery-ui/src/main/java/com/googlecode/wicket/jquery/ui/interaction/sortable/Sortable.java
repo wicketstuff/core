@@ -18,7 +18,10 @@ package com.googlecode.wicket.jquery.ui.interaction.sortable;
 
 import java.util.List;
 
+import org.apache.wicket.AttributeModifier;
 import org.apache.wicket.ajax.AjaxRequestTarget;
+import org.apache.wicket.markup.html.list.ListItem;
+import org.apache.wicket.markup.html.list.ListView;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.util.ListModel;
 
@@ -33,7 +36,7 @@ import com.googlecode.wicket.jquery.core.JQueryContainer;
  * @author Sebastien Briquet - sebfz1
  *
  */
-public abstract class Sortable<T> extends JQueryContainer implements ISortableListener
+public abstract class Sortable<T> extends JQueryContainer implements ISortableListener<T>
 {
 	private static final long serialVersionUID = 1L;
 
@@ -57,6 +60,15 @@ public abstract class Sortable<T> extends JQueryContainer implements ISortableLi
 		super(id, model);
 	}
 
+	@Override
+	protected void onInitialize()
+	{
+		super.onInitialize();
+
+		this.add(this.newListView(this.getModel()));
+	}
+
+
 	// Properties //
 	/**
 	 * Gets the {@link IModel}
@@ -79,27 +91,79 @@ public abstract class Sortable<T> extends JQueryContainer implements ISortableLi
 	}
 
 
-	// Events //
-	@Override
-	public void onConfigure(JQueryBehavior behavior)
-	{
-		//WIP
-	}
-
-
 	// IJQueryWidget //
 	@Override
 	public JQueryBehavior newWidgetBehavior(String selector)
 	{
-		return new SortableBehavior(selector) {
+		return new SortableBehavior<T>(selector) {
 
 			private static final long serialVersionUID = 1L;
 
 			@Override
-			public void onSort(AjaxRequestTarget target, int index, int position)
+			protected List<T> getItemList()
 			{
-				Sortable.this.onSort(target, index, position);
+				return Sortable.this.getModelObject();
+			}
+
+			@Override
+			public void onSort(AjaxRequestTarget target, T item, int position)
+			{
+				Sortable.this.onSort(target, item, position);
 			}
 		};
+	}
+
+	/**
+	 * Gets a new {@link SortableListView}
+	 * @param model the {@link IModel} that <i>should</i> be used
+	 * @return the {@link SortableListView}
+	 */
+	protected abstract SortableListView<T> newListView(IModel<List<T>> model);
+
+	/**
+	 * Provides the {@link ListView} to be used by the {@link Sortable}
+	 *
+	 * @param <T> the type of the model object
+	 */
+	protected static abstract class SortableListView<T> extends ListView<T>
+	{
+		private static final long serialVersionUID = 1L;
+
+		/**
+		 * Constructor
+		 * @param id the markup-id
+		 */
+		public SortableListView(String id)
+		{
+			super(id);
+		}
+
+		/**
+		 * Constructor
+		 * @param id the markup-id
+		 * @param list the {@link List}
+		 */
+		public SortableListView(String id, List<? extends T> list)
+		{
+			super(id, list);
+		}
+
+		/**
+		 * Constructor
+		 * @param id the markup-id
+		 * @param model the {@link IModel}
+		 */
+		public SortableListView(String id, IModel<? extends List<? extends T>> model)
+		{
+			super(id, model);
+		}
+
+		@Override
+		protected void onBeginPopulateItem(ListItem<T> item)
+		{
+			super.onBeginPopulateItem(item);
+
+			item.add(AttributeModifier.replace("data-hash", item.getModelObject().hashCode()));
+		}
 	}
 }

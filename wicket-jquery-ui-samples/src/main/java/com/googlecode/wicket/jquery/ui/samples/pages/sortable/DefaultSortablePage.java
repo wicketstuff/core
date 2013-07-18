@@ -1,15 +1,16 @@
 package com.googlecode.wicket.jquery.ui.samples.pages.sortable;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 import org.apache.wicket.AttributeModifier;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.list.ListItem;
-import org.apache.wicket.markup.html.list.ListView;
 import org.apache.wicket.markup.html.panel.EmptyPanel;
 import org.apache.wicket.markup.html.panel.FeedbackPanel;
+import org.apache.wicket.model.IModel;
 
 import com.googlecode.wicket.jquery.ui.JQueryIcon;
 import com.googlecode.wicket.jquery.ui.interaction.sortable.Sortable;
@@ -34,35 +35,48 @@ public class DefaultSortablePage extends AbstractSortablePage
 			private static final long serialVersionUID = 1L;
 
 			@Override
-			public void onSort(AjaxRequestTarget target, int index, int position)
+			protected SortableListView<String> newListView(IModel<List<String>> model)
 			{
-				List<String> list = this.getModelObject();
+				return new SortableListView<String>("items", model) {
 
-				if (index < list.size())
-				{
-					this.info(String.format("'%s' has moved to position %d", list.get(index), position));
-				}
+					private static final long serialVersionUID = 1L;
+
+					@Override
+					protected void populateItem(ListItem<String> item)
+					{
+						item.add(new EmptyPanel("icon").add(AttributeModifier.append("class", "ui-icon " + JQueryIcon.ARROW_2_N_S)));
+						item.add(new Label("item", item.getModelObject()));
+						item.add(AttributeModifier.append("class", "ui-state-default"));
+					}
+				};
+			}
+
+			@Override
+			public void onSort(AjaxRequestTarget target, String item, int position)
+			{
+				this.move(item, position);
+				this.info(String.format("'%s' has moved to position %d", item, position + 1));
+				this.info("The list order is now: " + this.getModelObject());
 
 				target.add(feedback);
+			}
+
+			/**
+			 * Helper method to move the item at its new position in the list
+			 *
+			 * @param item the item
+			 * @param position the position to move to
+			 */
+			private void move(String item, int position)
+			{
+				if (item != null)
+				{
+					List<String> list = this.getModelObject();
+					Collections.rotate(list.subList(list.indexOf(item), position + 1), -1);
+				}
 			}
 		};
 
 		this.add(sortable);
-
-		// ListView //
-		final ListView<String> listView = new ListView<String>("items", list) {
-
-			private static final long serialVersionUID = 1L;
-
-			@Override
-			protected void populateItem(ListItem<String> item)
-			{
-				item.add(new EmptyPanel("icon").add(AttributeModifier.append("class", "ui-icon " + JQueryIcon.ARROW_2_N_S)));
-				item.add(new Label("item", item.getModelObject()));
-				item.add(AttributeModifier.append("class", "ui-state-default"));
-			}
-		};
-
-		sortable.add(listView);
 	}
 }

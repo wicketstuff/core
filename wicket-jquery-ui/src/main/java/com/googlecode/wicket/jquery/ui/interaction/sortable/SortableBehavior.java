@@ -16,6 +16,8 @@
  */
 package com.googlecode.wicket.jquery.ui.interaction.sortable;
 
+import java.util.List;
+
 import org.apache.wicket.Component;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.attributes.CallbackParameter;
@@ -25,13 +27,16 @@ import com.googlecode.wicket.jquery.core.JQueryEvent;
 import com.googlecode.wicket.jquery.core.Options;
 import com.googlecode.wicket.jquery.core.ajax.IJQueryAjaxAware;
 import com.googlecode.wicket.jquery.core.ajax.JQueryAjaxBehavior;
+import com.googlecode.wicket.jquery.core.utils.RequestCycleUtils;
+import com.googlecode.wicket.jquery.ui.interaction.selectable.SelectableBehavior;
 
 /**
  * Provides a jQuery sortable behavior
  *
+ * @param <T> the type of the model object
  * @author Sebastien Briquet - sebfz1
  */
-public abstract class SortableBehavior extends JQueryBehavior implements IJQueryAjaxAware, ISortableListener
+public abstract class SortableBehavior<T> extends JQueryBehavior implements IJQueryAjaxAware, ISortableListener<T>
 {
 	private static final long serialVersionUID = 1L;
 	private static final String METHOD = "sortable";
@@ -57,13 +62,13 @@ public abstract class SortableBehavior extends JQueryBehavior implements IJQuery
 		super(selector, METHOD, options);
 	}
 
-//	/**
-//	 * Gets the reference list of all sortable items.<br/>
-//	 * Usually the model object of the component on which this {@link SelectableBehavior} is bound to.
-//	 *
-//	 * @return the {@link List}
-//	 */
-//	protected abstract List<T> getItemList();
+	/**
+	 * Gets the reference list of all sortable items.<br/>
+	 * Usually the model object of the component on which this {@link SelectableBehavior} is bound to.
+	 *
+	 * @return the {@link List}
+	 */
+	protected abstract List<T> getItemList();
 
 
 	// Methods //
@@ -90,21 +95,24 @@ public abstract class SortableBehavior extends JQueryBehavior implements IJQuery
 	{
 		if (event instanceof StopEvent)
 		{
-			int index = 0; //TODO get the item index
-			int position = 0; //TODO get the new position
+			T item = null;
 
-//			T item = null;
-//			List<T> list = this.getItemList();
-//
-//			// defensive, if the item-selector is miss-configured, this can result in an OutOfBoundException
-//			if (index < list.size())
-//			{
-//				item = list.get(index);
-//			}
+			StopEvent ev = (StopEvent)event;
+			int hash = ev.getHash();
+			int index = ev.getIndex();
 
-			this.onSort(target, index, position);
+			for (T t : this.getItemList())
+			{
+				if (hash == t.hashCode())
+				{
+					item = t;
+				}
+			}
+
+			this.onSort(target, item, index);
 		}
 	}
+
 
 	// Factories //
 	/**
@@ -124,8 +132,8 @@ public abstract class SortableBehavior extends JQueryBehavior implements IJQuery
 				return new CallbackParameter[] {
 						CallbackParameter.context("event"),
 						CallbackParameter.context("ui"),
-						CallbackParameter.resolved("index", "ui.index"),
-						CallbackParameter.resolved("posision", "ui.position") };
+						CallbackParameter.resolved("hash", "ui.item.data('hash')"),
+						CallbackParameter.resolved("index", "ui.item.index()") };
 			}
 
 			@Override
@@ -142,16 +150,30 @@ public abstract class SortableBehavior extends JQueryBehavior implements IJQuery
 		};
 	}
 
+
 	// Event Objects //
 	/**
 	 * Provides an event object that will be broadcasted by the {@link JQueryAjaxBehavior} 'stop' callback
 	 */
 	protected static class StopEvent extends JQueryEvent
 	{
+		private final int hash;
+		private final int index;
+
 		public StopEvent()
 		{
-//			int index = RequestCycleUtils.getQueryParameterValue("index").toInt(0);
-//			int position = RequestCycleUtils.getQueryParameterValue("position").toInt(0);
+			this.hash = RequestCycleUtils.getQueryParameterValue("hash").toInt(0);
+			this.index = RequestCycleUtils.getQueryParameterValue("index").toInt(0);
+		}
+
+		public int getHash()
+		{
+			return this.hash;
+		}
+
+		public int getIndex()
+		{
+			return this.index;
 		}
 	}
 }
