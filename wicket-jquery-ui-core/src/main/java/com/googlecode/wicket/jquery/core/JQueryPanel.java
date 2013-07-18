@@ -51,6 +51,7 @@ public abstract class JQueryPanel extends Panel implements IJQueryWidget
 
 		this.options = options;
 	}
+
 	/**
 	 * Constructor
 	 * @param id the markup id

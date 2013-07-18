@@ -1,7 +1,6 @@
 package com.googlecode.wicket.jquery.ui.samples.pages.autocomplete;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import org.apache.wicket.ajax.AjaxRequestTarget;
@@ -13,6 +12,7 @@ import com.googlecode.wicket.jquery.core.renderer.TextRenderer;
 import com.googlecode.wicket.jquery.ui.form.autocomplete.AutoCompleteTextField;
 import com.googlecode.wicket.jquery.ui.form.button.AjaxButton;
 import com.googlecode.wicket.jquery.ui.panel.JQueryFeedbackPanel;
+import com.googlecode.wicket.jquery.ui.samples.data.GenresDAO;
 import com.googlecode.wicket.jquery.ui.samples.data.bean.Genre;
 
 public class ConverterAutoCompletePage extends AbstractAutoCompletePage
@@ -27,7 +27,7 @@ public class ConverterAutoCompletePage extends AbstractAutoCompletePage
 	private void init()
 	{
 		// Form //
-		final Form<Genre> form = new Form<Genre>("form", new Model<Genre>(GENRES.get(0))); //test default value
+		final Form<Genre> form = new Form<Genre>("form", new Model<Genre>(GenresDAO.get(0))); //test default value
 		this.add(form);
 
 		// FeedbackPanel //
@@ -45,7 +45,7 @@ public class ConverterAutoCompletePage extends AbstractAutoCompletePage
 				List<Genre> choices = new ArrayList<Genre>();
 
 				int count = 0;
-				for (Genre genre: GENRES)
+				for (Genre genre: GenresDAO.all())
 				{
 					if (genre.getName().toLowerCase().contains(input.toLowerCase()))
 					{
@@ -91,17 +91,4 @@ public class ConverterAutoCompletePage extends AbstractAutoCompletePage
 			}
 		});
 	}
-
-	// List of Genre(s) //
-	static final List<Genre> GENRES = Arrays.asList(
-			new Genre(1, "Black Metal"),
-			new Genre(2, "Death Metal"),
-			new Genre(3, "Doom Metal"),
-			new Genre(4, "Folk Metal"),
-			new Genre(5, "Gothic Metal"),
-			new Genre(6, "Heavy Metal"),
-			new Genre(7, "Power Metal"),
-			new Genre(8, "Symphonic Metal"),
-			new Genre(9, "Trash Metal"),
-			new Genre(10, "Vicking Metal"));
 }

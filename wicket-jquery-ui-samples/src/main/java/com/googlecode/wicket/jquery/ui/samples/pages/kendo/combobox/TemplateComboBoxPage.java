@@ -13,6 +13,7 @@ import com.googlecode.wicket.jquery.ui.kendo.button.AjaxButton;
 import com.googlecode.wicket.jquery.ui.kendo.button.Button;
 import com.googlecode.wicket.jquery.ui.kendo.combobox.ComboBox;
 import com.googlecode.wicket.jquery.ui.panel.JQueryFeedbackPanel;
+import com.googlecode.wicket.jquery.ui.samples.data.GenresDAO;
 import com.googlecode.wicket.jquery.ui.samples.data.bean.Genre;
 
 public class TemplateComboBoxPage extends AbstractComboBoxPage
@@ -29,7 +30,7 @@ public class TemplateComboBoxPage extends AbstractComboBoxPage
 		form.add(feedback.setOutputMarkupId(true));
 
 		// ComboBox //
-		final ComboBox<Genre> combobox = new ComboBox<Genre>("combobox", new Model<String>(), GENRES) {
+		final ComboBox<Genre> combobox = new ComboBox<Genre>("combobox", new Model<String>(), GenresDAO.all()) {
 
 			private static final long serialVersionUID = 1L;
 
@@ -98,18 +99,4 @@ public class TemplateComboBoxPage extends AbstractComboBoxPage
 
 		this.info(choice != null ? choice : "no choice");
 	}
-
-
-	// List of Genre(s) //
-	private static final List<Genre> GENRES = Arrays.asList(
-			new Genre("Black Metal", "cover-black-metal.png"),
-			new Genre("Death Metal", "cover-death-metal.png"),
-			new Genre("Doom Metal", "cover-doom-metal.png"),
-			new Genre("Folk Metal", "cover-folk-metal.png"),
-			new Genre("Gothic Metal", "cover-gothic-metal.png"),
-			new Genre("Heavy Metal", "cover-heavy-metal.png"),
-			new Genre("Power Metal", "cover-power-metal.png"),
-			new Genre("Symphonic Metal", "cover-symphonic-metal.png"),
-			new Genre("Trash Metal", "cover-trash-metal.png"),
-			new Genre("Vicking Metal", "cover-vicking-metal.png"));
 }

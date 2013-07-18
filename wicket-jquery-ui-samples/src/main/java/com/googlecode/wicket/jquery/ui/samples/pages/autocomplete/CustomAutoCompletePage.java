@@ -1,6 +1,5 @@
 package com.googlecode.wicket.jquery.ui.samples.pages.autocomplete;
 
-import java.util.Arrays;
 import java.util.List;
 
 import org.apache.wicket.ajax.AjaxRequestTarget;
@@ -14,6 +13,7 @@ import org.apache.wicket.model.PropertyModel;
 
 import com.googlecode.wicket.jquery.ui.form.autocomplete.AutoCompleteTextField;
 import com.googlecode.wicket.jquery.ui.form.autocomplete.AutoCompleteUtils;
+import com.googlecode.wicket.jquery.ui.samples.data.GenresDAO;
 import com.googlecode.wicket.jquery.ui.samples.data.bean.Genre;
 
 public class CustomAutoCompletePage extends AbstractAutoCompletePage
@@ -28,7 +28,7 @@ public class CustomAutoCompletePage extends AbstractAutoCompletePage
 	private void init()
 	{
 		// Model //
-		final IModel<Genre> model = new Model<Genre>(Genre.emptyGenre());
+		final IModel<Genre> model = new Model<Genre>(GenresDAO.newGenre());
 
 		// Form //
 		final Form<Void> form = new Form<Void>("form");
@@ -49,7 +49,7 @@ public class CustomAutoCompletePage extends AbstractAutoCompletePage
 			@Override
 			protected List<Genre> getChoices(String input)
 			{
-				return AutoCompleteUtils.contains(input, GENRES);
+				return AutoCompleteUtils.contains(input, GenresDAO.all());
 			}
 
 			@Override
@@ -59,17 +59,4 @@ public class CustomAutoCompletePage extends AbstractAutoCompletePage
 			}
 		});
 	}
-
-	// List of Genre(s) //
-	static final List<Genre> GENRES = Arrays.asList(
-			new Genre("Black Metal", "cover-black-metal.png"),
-			new Genre("Death Metal", "cover-death-metal.png"),
-			new Genre("Doom Metal", "cover-doom-metal.png"),
-			new Genre("Folk Metal", "cover-folk-metal.png"),
-			new Genre("Gothic Metal", "cover-gothic-metal.png"),
-			new Genre("Heavy Metal", "cover-heavy-metal.png"),
-			new Genre("Power Metal", "cover-power-metal.png"),
-			new Genre("Symphonic Metal", "cover-symphonic-metal.png"),
-			new Genre("Trash Metal", "cover-trash-metal.png"),
-			new Genre("Vicking Metal", "cover-vicking-metal.png"));
 }

@@ -30,11 +30,6 @@ public class ProductsDAO
 	public ProductsDAO()
 	{
 		this.list = new ArrayList<Product>();
-		this.initList();
-	}
-
-	private void initList()
-	{
 		this.list.add(new Product(1, "Chai", "10 boxes x 20 bags", 18.0000));
 		this.list.add(new Product(2, "Chang", "24 - 12 oz bottles", 19.0000));
 		this.list.add(new Product(3, "Aniseed Syrup", "12 - 550 ml bottles", 10.0000));
