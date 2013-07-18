@@ -114,18 +114,18 @@ public abstract class Sortable<T> extends JQueryContainer implements ISortableLi
 	}
 
 	/**
-	 * Gets a new {@link SortableListView}
+	 * Gets a new {@link HashListView}
 	 * @param model the {@link IModel} that <i>should</i> be used
-	 * @return the {@link SortableListView}
+	 * @return the {@link HashListView}
 	 */
-	protected abstract SortableListView<T> newListView(IModel<List<T>> model);
+	protected abstract HashListView<T> newListView(IModel<List<T>> model);
 
 	/**
 	 * Provides the {@link ListView} to be used by the {@link Sortable}
 	 *
 	 * @param <T> the type of the model object
 	 */
-	protected static abstract class SortableListView<T> extends ListView<T>
+	protected static abstract class HashListView<T> extends ListView<T>
 	{
 		private static final long serialVersionUID = 1L;
 
@@ -133,7 +133,7 @@ public abstract class Sortable<T> extends JQueryContainer implements ISortableLi
 		 * Constructor
 		 * @param id the markup-id
 		 */
-		public SortableListView(String id)
+		public HashListView(String id)
 		{
 			super(id);
 		}
@@ -143,7 +143,7 @@ public abstract class Sortable<T> extends JQueryContainer implements ISortableLi
 		 * @param id the markup-id
 		 * @param list the {@link List}
 		 */
-		public SortableListView(String id, List<? extends T> list)
+		public HashListView(String id, List<? extends T> list)
 		{
 			super(id, list);
 		}
@@ -153,7 +153,7 @@ public abstract class Sortable<T> extends JQueryContainer implements ISortableLi
 		 * @param id the markup-id
 		 * @param model the {@link IModel}
 		 */
-		public SortableListView(String id, IModel<? extends List<? extends T>> model)
+		public HashListView(String id, IModel<? extends List<? extends T>> model)
 		{
 			super(id, model);
 		}

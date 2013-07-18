@@ -33,9 +33,9 @@ public class CustomSortablePage extends AbstractSortablePage
 			private static final long serialVersionUID = 1L;
 
 			@Override
-			protected SortableListView<Item> newListView(IModel<List<Item>> model)
+			protected HashListView<Item> newListView(IModel<List<Item>> model)
 			{
-				return new SortableListView<Item>("items", model) {
+				return new HashListView<Item>("items", model) {
 
 					private static final long serialVersionUID = 1L;
 
@@ -50,11 +50,11 @@ public class CustomSortablePage extends AbstractSortablePage
 			}
 
 			@Override
-			public void onSort(AjaxRequestTarget target, Item item, int position)
+			public void onSort(AjaxRequestTarget target, Item item, int index)
 			{
 				if (item != null)
 				{
-					this.info(String.format("'%s' has moved to position %d", item, position + 1));
+					this.info(String.format("'%s' has moved to position %d", item, index + 1));
 				}
 
 				target.add(feedback);

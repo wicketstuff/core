@@ -35,9 +35,9 @@ public class DefaultSortablePage extends AbstractSortablePage
 			private static final long serialVersionUID = 1L;
 
 			@Override
-			protected SortableListView<String> newListView(IModel<List<String>> model)
+			protected HashListView<String> newListView(IModel<List<String>> model)
 			{
-				return new SortableListView<String>("items", model) {
+				return new HashListView<String>("items", model) {
 
 					private static final long serialVersionUID = 1L;
 
@@ -52,10 +52,10 @@ public class DefaultSortablePage extends AbstractSortablePage
 			}
 
 			@Override
-			public void onSort(AjaxRequestTarget target, String item, int position)
+			public void onSort(AjaxRequestTarget target, String item, int index)
 			{
-				this.move(item, position);
-				this.info(String.format("'%s' has moved to position %d", item, position + 1));
+				this.move(item, index);
+				this.info(String.format("'%s' has moved to position %d", item, index + 1));
 				this.info("The list order is now: " + this.getModelObject());
 
 				target.add(feedback);
@@ -65,14 +65,14 @@ public class DefaultSortablePage extends AbstractSortablePage
 			 * Helper method to move the item at its new position in the list
 			 *
 			 * @param item the item
-			 * @param position the position to move to
+			 * @param index the position to move to
 			 */
-			private void move(String item, int position)
+			private void move(String item, int index)
 			{
 				if (item != null)
 				{
 					List<String> list = this.getModelObject();
-					Collections.rotate(list.subList(list.indexOf(item), position + 1), -1);
+					Collections.rotate(list.subList(list.indexOf(item), index + 1), -1);
 				}
 			}
 		};
