@@ -27,6 +27,13 @@ import org.apache.wicket.ajax.AjaxRequestTarget;
 interface ISortableListener<T>
 {
 	/**
+	 * Indicates whether the 'receive' event is enabled.<br />
+	 * If true, the {@link #onReceive(AjaxRequestTarget, Object, int)} event will be triggered.
+	 * @return true or false
+	 */
+	boolean isOnReceiveEnabled();
+
+	/**
 	 * Triggered when a selection has been made (stops)
 	 *
 	 * @param target the {@link AjaxRequestTarget}
@@ -34,4 +41,12 @@ interface ISortableListener<T>
 	 * @param index the item's new index (zero based)
 	 */
 	void onSort(AjaxRequestTarget target, T item, int index);
+
+	/**
+	 * Triggered when a connected sortable list has received an item from another list.
+	 * @param target the {@link AjaxRequestTarget}
+	 * @param item the item that has been received
+	 * @param index the item's new index (zero based)
+	 */
+	void onReceive(AjaxRequestTarget target, T item, int index);
 }

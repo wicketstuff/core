@@ -1,2 +1,5 @@
+The provided list should be modifiable for the new order to be reflected on 'sort' event. That means, the use of Arrays.asList or Collections.unmodifiableList should be avoided.
+If you do not want that the new order is reflected to the model object, simply remove the call to <code>super.onSort(AjaxRequestTarget, String, int)</code>
+ 
 <h4>Since</h4>
 wicket-jquery-ui-6.9.1-SNAPSHOT

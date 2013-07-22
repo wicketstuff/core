@@ -27,6 +27,8 @@ import org.apache.wicket.model.util.ListModel;
 
 import com.googlecode.wicket.jquery.core.JQueryBehavior;
 import com.googlecode.wicket.jquery.core.JQueryContainer;
+import com.googlecode.wicket.jquery.core.Options;
+import com.googlecode.wicket.jquery.core.utils.ListUtils;
 
 /**
  * Provides a jQuery UI sortable {@link JQueryContainer}.<br/>
@@ -40,6 +42,13 @@ public abstract class Sortable<T> extends JQueryContainer implements ISortableLi
 {
 	private static final long serialVersionUID = 1L;
 
+	private final Options options;
+
+	/**
+	 * The {@link Sortable} that requested to be connected to this (which called {@link #connectWith(Sortable)}
+	 */
+	private Sortable<T> connectedSortable = null;
+
 	/**
 	 * Constructor
 	 * @param id the markup id
@@ -47,7 +56,18 @@ public abstract class Sortable<T> extends JQueryContainer implements ISortableLi
 	 */
 	public Sortable(String id, List<T> list)
 	{
-		this(id, new ListModel<T>(list));
+		this(id, new ListModel<T>(list), new Options());
+	}
+
+	/**
+	 * Constructor
+	 * @param id the markup id
+	 * @param list the list the {@link Sortable} should observe.
+	 * @param options the {@link Options}
+	 */
+	public Sortable(String id, List<T> list, Options options)
+	{
+		this(id, new ListModel<T>(list), options);
 	}
 
 	/**
@@ -57,7 +77,20 @@ public abstract class Sortable<T> extends JQueryContainer implements ISortableLi
 	 */
 	public Sortable(String id, IModel<List<T>> model)
 	{
+		this(id, model, new Options());
+	}
+
+	/**
+	 * Constructor
+	 * @param id the markup id
+	 * @param model the list the {@link Sortable} should observe.
+	 * @param options the {@link Options}
+	 */
+	public Sortable(String id, IModel<List<T>> model, Options options)
+	{
 		super(id, model);
+
+		this.options = options;
 	}
 
 	@Override
@@ -66,6 +99,17 @@ public abstract class Sortable<T> extends JQueryContainer implements ISortableLi
 		super.onInitialize();
 
 		this.add(this.newListView(this.getModel()));
+	}
+
+	@Override
+	public void onSort(AjaxRequestTarget target, T item, int index)
+	{
+		this.setModelObject(ListUtils.move(this.getModelObject(), item, index)); // will trigger #onModelChanging() / #onModelChanged()
+	}
+
+	@Override
+	public void onReceive(AjaxRequestTarget target, T item, int index)
+	{
 	}
 
 
@@ -90,14 +134,69 @@ public abstract class Sortable<T> extends JQueryContainer implements ISortableLi
 		return (List<T>) this.getDefaultModelObject();
 	}
 
+	/**
+	 * Sets the model object
+	 * @param list the {@link List}
+	 */
+	public void setModelObject(List<T> list)
+	{
+		this.setDefaultModelObject(list);
+	}
+
+	@Override
+	public boolean isOnReceiveEnabled()
+	{
+		return (this.connectedSortable != null);
+	}
+
+	/**
+	 * TODO javadoc
+	 * @param sortable
+	 */
+	private void connect(Sortable<T> sortable)
+	{
+		this.connectedSortable = sortable;
+	}
+
+	// Methods //
+	/**
+	 * TODO jadavoc
+	 * @param sortable
+	 * @return this, for chaining
+	 */
+	public Sortable<T> connectWith(Sortable<T> sortable)
+	{
+		sortable.connect(this); //eq. to sortable.connectedSortable = this;
+
+		return this.connectWith(JQueryWidget.getSelector(sortable));
+	}
+
+	/**
+	 * TODO javadoc
+	 * @param selector
+	 * @return this, for chaining
+	 */
+	private Sortable<T> connectWith(String selector)
+	{
+		this.options.set("connectWith", Options.asString(selector));
+
+		return this;
+	}
+
 
 	// IJQueryWidget //
 	@Override
 	public JQueryBehavior newWidgetBehavior(String selector)
 	{
-		return new SortableBehavior<T>(selector) {
+		return new SortableBehavior<T>(selector, this.options) {
 
 			private static final long serialVersionUID = 1L;
+
+			@Override
+			public boolean isOnReceiveEnabled()
+			{
+				return Sortable.this.isOnReceiveEnabled();
+			}
 
 			@Override
 			protected List<T> getItemList()
@@ -106,9 +205,26 @@ public abstract class Sortable<T> extends JQueryContainer implements ISortableLi
 			}
 
 			@Override
+			protected List<T> getConnectedList()
+			{
+				if (Sortable.this.connectedSortable != null)
+				{
+					return Sortable.this.connectedSortable.getModelObject();
+				}
+
+				return null;
+			}
+
+			@Override
 			public void onSort(AjaxRequestTarget target, T item, int position)
 			{
 				Sortable.this.onSort(target, item, position);
+			}
+
+			@Override
+			public void onReceive(AjaxRequestTarget target, T item, int index)
+			{
+				Sortable.this.onReceive(target, item, index);
 			}
 		};
 	}
@@ -121,11 +237,11 @@ public abstract class Sortable<T> extends JQueryContainer implements ISortableLi
 	protected abstract HashListView<T> newListView(IModel<List<T>> model);
 
 	/**
-	 * Provides the {@link ListView} to be used by the {@link Sortable}
+	 * Provides the {@link ListView} to be used within the {@link Sortable}
 	 *
 	 * @param <T> the type of the model object
 	 */
-	protected static abstract class HashListView<T> extends ListView<T>
+	public static abstract class HashListView<T> extends ListView<T>
 	{
 		private static final long serialVersionUID = 1L;
 

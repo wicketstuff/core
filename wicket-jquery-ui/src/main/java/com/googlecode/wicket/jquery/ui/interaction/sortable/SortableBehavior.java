@@ -42,6 +42,7 @@ public abstract class SortableBehavior<T> extends JQueryBehavior implements IJQu
 	private static final String METHOD = "sortable";
 
 	private JQueryAjaxBehavior onStopBehavior;
+	private JQueryAjaxBehavior onReceiveBehavior = null;
 
 	/**
 	 * Constructor
@@ -70,6 +71,15 @@ public abstract class SortableBehavior<T> extends JQueryBehavior implements IJQu
 	 */
 	protected abstract List<T> getItemList();
 
+	/**
+	 * TODO javadoc
+	 * @return
+	 */
+	protected List<T> getConnectedList()
+	{
+		return null;
+	}
+
 
 	// Methods //
 	@Override
@@ -78,8 +88,37 @@ public abstract class SortableBehavior<T> extends JQueryBehavior implements IJQu
 		super.bind(component);
 
 		component.add(this.onStopBehavior = this.newOnStopBehavior());
+
+		if (this.isOnReceiveEnabled())
+		{
+			component.add(this.onReceiveBehavior = this.newOnReceiveBehavior());
+		}
 	}
 
+	/**
+	 * TODO javadoc
+	 * @param hash
+	 * @return
+	 */
+	private T fromHash(int hash)
+	{
+		return this.fromHash(hash, this.getItemList());
+	}
+
+	private T fromHash(int hash, List<T> list)
+	{
+		T item = null;
+
+		for (T t : list)
+		{
+			if (hash == t.hashCode())
+			{
+				item = t;
+			}
+		}
+
+		return item;
+	}
 
 	// Events //
 	@Override
@@ -88,28 +127,35 @@ public abstract class SortableBehavior<T> extends JQueryBehavior implements IJQu
 		super.onConfigure(component);
 
 		this.setOption("stop", this.onStopBehavior.getCallbackFunction());
+
+		if (this.onReceiveBehavior != null)
+		{
+			this.setOption("receive", this.onReceiveBehavior.getCallbackFunction());
+		}
 	}
 
 	@Override
 	public void onAjax(AjaxRequestTarget target, JQueryEvent event)
 	{
-		if (event instanceof StopEvent)
+		if (event instanceof AbstractEvent)
 		{
-			T item = null;
-
-			StopEvent ev = (StopEvent)event;
+			AbstractEvent ev = (AbstractEvent)event;
 			int hash = ev.getHash();
 			int index = ev.getIndex();
 
-			for (T t : this.getItemList())
+			if (event instanceof StopEvent)
 			{
-				if (hash == t.hashCode())
+				this.onSort(target, this.fromHash(hash), index);
+			}
+			else if (event instanceof ReceiveEvent)
+			{
+				List<T> list = this.getConnectedList();
+
+				if (list != null)
 				{
-					item = t;
+					this.onReceive(target, this.fromHash(hash, list), index);
 				}
 			}
-
-			this.onSort(target, item, index);
 		}
 	}
 
@@ -150,17 +196,52 @@ public abstract class SortableBehavior<T> extends JQueryBehavior implements IJQu
 		};
 	}
 
+	/**
+	 * Gets the ajax behavior that will be triggered when a connected sortable list has received an item from another list.
+	 *
+	 * @return the {@link JQueryAjaxBehavior}
+	 */
+	protected JQueryAjaxBehavior newOnReceiveBehavior()
+	{
+		return new JQueryAjaxBehavior(this) {
+
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			protected CallbackParameter[] getCallbackParameters()
+			{
+				return new CallbackParameter[] {
+						CallbackParameter.context("event"),
+						CallbackParameter.context("ui"),
+						CallbackParameter.resolved("hash", "ui.item.data('hash')"),
+						CallbackParameter.resolved("index", "ui.item.index()") };
+			}
+
+			@Override
+			public CharSequence getCallbackFunctionBody(CallbackParameter... parameters)
+			{
+				return super.getCallbackFunctionBody(parameters);
+			}
+
+			@Override
+			protected JQueryEvent newEvent()
+			{
+				return new ReceiveEvent();
+			}
+		};
+	}
+
 
 	// Event Objects //
 	/**
 	 * Provides an event object that will be broadcasted by the {@link JQueryAjaxBehavior} 'stop' callback
 	 */
-	protected static class StopEvent extends JQueryEvent
+	protected static abstract class AbstractEvent extends JQueryEvent
 	{
 		private final int hash;
 		private final int index;
 
-		public StopEvent()
+		public AbstractEvent()
 		{
 			this.hash = RequestCycleUtils.getQueryParameterValue("hash").toInt(0);
 			this.index = RequestCycleUtils.getQueryParameterValue("index").toInt(0);
@@ -175,5 +256,13 @@ public abstract class SortableBehavior<T> extends JQueryBehavior implements IJQu
 		{
 			return this.index;
 		}
+	}
+
+	protected static class StopEvent extends AbstractEvent
+	{
+	}
+
+	protected static class ReceiveEvent extends AbstractEvent
+	{
 	}
 }

@@ -10,10 +10,11 @@ import org.apache.wicket.markup.html.list.ListItem;
 import org.apache.wicket.markup.html.panel.EmptyPanel;
 import org.apache.wicket.markup.html.panel.FeedbackPanel;
 import org.apache.wicket.model.IModel;
-import org.apache.wicket.model.LoadableDetachableModel;
+import org.apache.wicket.util.io.IClusterable;
 
 import com.googlecode.wicket.jquery.ui.JQueryIcon;
 import com.googlecode.wicket.jquery.ui.interaction.sortable.Sortable;
+import com.googlecode.wicket.jquery.ui.interaction.sortable.Sortable.HashListView;
 import com.googlecode.wicket.jquery.ui.panel.JQueryFeedbackPanel;
 
 //XXX remove wicket-jquery-ui-6.9.1-SNAPSHOT (description)
@@ -23,38 +24,34 @@ public class CustomSortablePage extends AbstractSortablePage
 
 	public CustomSortablePage()
 	{
+		final List<Item> list = newList("item #1", "item #2", "item #3", "item #4", "item #5", "item #6");
+
 		// FeedbackPanel //
 		final FeedbackPanel feedback = new JQueryFeedbackPanel("feedback");
 		this.add(feedback.setOutputMarkupId(true));
 
 		// Sortable //
-		final Sortable<Item> sortable = new Sortable<Item>("sortable", newSortableModel()) {
+		final Sortable<Item> sortable = new Sortable<Item>("sortable", list) {
 
 			private static final long serialVersionUID = 1L;
 
 			@Override
 			protected HashListView<Item> newListView(IModel<List<Item>> model)
 			{
-				return new HashListView<Item>("items", model) {
-
-					private static final long serialVersionUID = 1L;
-
-					@Override
-					protected void populateItem(ListItem<Item> item)
-					{
-						item.add(new EmptyPanel("icon").add(AttributeModifier.append("class", "ui-icon " + JQueryIcon.ARROW_2_N_S)));
-						item.add(new Label("item", item.getDefaultModelObjectAsString()));
-						item.add(AttributeModifier.append("class", "ui-state-default"));
-					}
-				};
+				return CustomSortablePage.newListView("items", model);
 			}
 
 			@Override
 			public void onSort(AjaxRequestTarget target, Item item, int index)
 			{
+				// Will update the model object with the new order
+				// Remove the call to super if you do not want your model to be updated (or you use a LDM)
+				super.onSort(target, item, index);
+
 				if (item != null)
 				{
 					this.info(String.format("'%s' has moved to position %d", item, index + 1));
+					this.info("The list order is now: " + this.getModelObject());
 				}
 
 				target.add(feedback);
@@ -64,41 +61,42 @@ public class CustomSortablePage extends AbstractSortablePage
 		this.add(sortable);
 	}
 
-	private static IModel<List<Item>> newSortableModel()
+	protected static HashListView<Item> newListView(String id, IModel<List<Item>> model)
 	{
-		return new LoadableDetachableModel<List<Item>>() {
+		return new HashListView<Item>(id, model) {
 
 			private static final long serialVersionUID = 1L;
 
 			@Override
-			protected List<Item> load()
+			protected void populateItem(ListItem<Item> item)
 			{
-				return Items.asList("item #1", "item #2", "item #3", "item #4", "item #5", "item #6");
+				item.add(new EmptyPanel("icon").add(AttributeModifier.append("class", "ui-icon " + JQueryIcon.ARROW_2_N_S)));
+				item.add(new Label("item", item.getDefaultModelObjectAsString()));
+				item.add(AttributeModifier.append("class", "ui-state-default"));
 			}
 		};
 	}
 
-	private static class Items
+
+	private static List<Item> newList(String... names)
 	{
-		static List<Item> asList(String... names)
+		List<Item> list = new ArrayList<Item>();
+
+		for (String name : names)
 		{
-			List<Item> list = new ArrayList<Item>();
-
-			for (String name : names)
-			{
-				list.add(new Item(name));
-			}
-
-			return list;
-
+			list.add(new Item(name));
 		}
+
+		return list;
 	}
 
 	/**
-	 * non-serializable item
+	 * custom bean
 	 */
-	private static class Item
+	private static class Item implements IClusterable
 	{
+		private static final long serialVersionUID = 1L;
+
 		final String name;
 
 		public Item(String name)
@@ -109,7 +107,7 @@ public class CustomSortablePage extends AbstractSortablePage
 		@Override
 		public int hashCode()
 		{
-			return this.name.hashCode(); //String hashCode is predictable
+			return this.name.hashCode(); //String#hashCode() is deterministic
 		}
 
 		@Override

@@ -1,5 +1,4 @@
-If the bean used in/by the <code>Sortable</code> is not <code>Serializable</code>, <code>#hashCode()</code> should be implemented in a predictable manner.<br/>
-In other words, <code>#hashCode()</code> should always returns the same value for a given bean.
+If the bean used in/by the <code>Sortable</code> is not <code>Serializable</code>, <code>#hashCode()</code> should be deterministic (i.e.: it should always returns the same value for a given bean).
 
 <h4>Since</h4>
 wicket-jquery-ui-6.9.1-SNAPSHOT
