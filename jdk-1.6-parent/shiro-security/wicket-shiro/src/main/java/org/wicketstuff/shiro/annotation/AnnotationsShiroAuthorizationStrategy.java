@@ -127,7 +127,7 @@ public class AnnotationsShiroAuthorizationStrategy implements IAuthorizationStra
 		final Class<? extends Component> clazz = component.getClass();
 		Annotation[] componentClassAnnotations = clazz.getAnnotations();
 		ShiroSecurityConstraint fail = checkInvalidInstantiation(
-				findShiroSecurityConstraintAnnotations(componentClassAnnotations), ShiroAction.INSTANTIATE);
+				findShiroSecurityConstraintAnnotations(componentClassAnnotations), _action );
 		if (fail == null)
 		{
 			//TODO: Allow ShiroSecurityConstraint annotations on packages OR remove this check as the annotation is
