@@ -23,6 +23,7 @@
                 <module>jqplot-parent</module>
 		<module>annotation</module> 
 		<module>annotationeventdispatcher-parent</module>
+        <module>async-tasks-parent</module>
 		<module>autocomplete-tagit-parent</module>
 		<module>browserid-parent</module>
 		<module>datatables-parent</module>
