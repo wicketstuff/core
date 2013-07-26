@@ -20,6 +20,8 @@
  */
 package org.wicketstuff.pageserializer.kryo2.examples;
 
+import java.io.File;
+
 import org.apache.wicket.protocol.http.WebApplication;
 import org.apache.wicket.util.file.Files;
 import org.apache.wicket.util.lang.Bytes;
@@ -36,6 +38,8 @@ import org.wicketstuff.pageserializer.kryo2.inspecting.analyze.report.SortedTree
 import org.wicketstuff.pageserializer.kryo2.inspecting.analyze.report.TreeTransformator;
 import org.wicketstuff.pageserializer.kryo2.inspecting.analyze.report.TypeSizeReport;
 import org.wicketstuff.pageserializer.kryo2.inspecting.analyze.report.filter.TypeFilter;
+import org.wicketstuff.pageserializer.kryo2.inspecting.analyze.report.io.DirectoryBasedReportOutput;
+import org.wicketstuff.pageserializer.kryo2.inspecting.analyze.report.io.Keys;
 import org.wicketstuff.pageserializer.kryo2.inspecting.listener.ISerializationListener;
 import org.wicketstuff.pageserializer.kryo2.inspecting.listener.SerializationListeners;
 import org.wicketstuff.pageserializer.kryo2.inspecting.validation.DefaultJavaSerializationValidator;
