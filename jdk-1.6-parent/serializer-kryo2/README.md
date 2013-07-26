@@ -202,6 +202,53 @@ You can customize a lot if you want to, but maybe this is a good start for some 
 
 ### Single file for each report instead of logging
 
+Change Application.init() like this:
+
+	public class Application extends WebApplication
+	{
+    ...
+
+		@Override
+		public void init()
+		{
+			super.init();
+
+			File outputDirectory = tempDirectory("kryo2-reports");
+
+			DirectoryBasedReportOutput output = new DirectoryBasedReportOutput(outputDirectory);
+			
+			// output of report of type sizes, sorted tree report (by size), aggregated tree 
+			ISerializedObjectTreeProcessor typeAndSortedTreeAndCollapsedSortedTreeProcessors = TreeProcessors.listOf(
+				new TypeSizeReport(output.with(Keys.withNameAndFileExtension("typesize", "txt"))),
+				new SortedTreeSizeReport(output.with(Keys.withNameAndFileExtension("treesize", "txt"))),
+				new SimilarNodeTreeTransformator(new SortedTreeSizeReport(output.with(Keys.withNameAndFileExtension("sorted-treesize", "txt")))),
+				new RenderTreeProcessor(output.with(Keys.withNameAndFileExtension("d3js-chart", "html")),new D3DataFileRenderer()));
+
+			// strips class object writes from tree
+			TreeTransformator treeProcessors = new TreeTransformator(
+				typeAndSortedTreeAndCollapsedSortedTreeProcessors,
+				TreeTransformator.strip(new TypeFilter(Class.class)));
+
+			// serialization listener notified on every written object
+			ISerializationListener serializationListener = SerializationListeners.listOf(
+				new DefaultJavaSerializationValidator(), new AnalyzingSerializationListener(
+					new NativeTypesAsLabel(new ComponentIdAsLabel()), treeProcessors));
+
+
+			InspectingKryoSerializer serializer = new InspectingKryoSerializer(Bytes.megabytes(1L),
+				serializationListener);
+
+			getFrameworkSettings().setSerializer(serializer);
+		}
+	}
+
+... you will get the Reports in separate files in the configured directory:
+
+	org-wicketstuff-pageserializer-kryo2-examples-SamplePage-d3js-chart-2013-07-26--055104-640-.html
+	org-wicketstuff-pageserializer-kryo2-examples-SamplePage-sorted-treesize-2013-07-26--055104-633-.txt
+	org-wicketstuff-pageserializer-kryo2-examples-SamplePage-treesize-2013-07-26--055104-618-.txt
+	org-wicketstuff-pageserializer-kryo2-examples-SamplePage-typesize-2013-07-26--055104-585-.txt
+
 
 
 
