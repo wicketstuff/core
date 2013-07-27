@@ -183,12 +183,6 @@ public abstract class SortableBehavior<T> extends JQueryBehavior implements IJQu
 			}
 
 			@Override
-			public CharSequence getCallbackFunctionBody(CallbackParameter... parameters)
-			{
-				return super.getCallbackFunctionBody(parameters);
-			}
-
-			@Override
 			protected JQueryEvent newEvent()
 			{
 				return new StopEvent();
@@ -215,12 +209,6 @@ public abstract class SortableBehavior<T> extends JQueryBehavior implements IJQu
 						CallbackParameter.context("ui"),
 						CallbackParameter.resolved("hash", "ui.item.data('hash')"),
 						CallbackParameter.resolved("index", "ui.item.index()") };
-			}
-
-			@Override
-			public CharSequence getCallbackFunctionBody(CallbackParameter... parameters)
-			{
-				return super.getCallbackFunctionBody(parameters);
 			}
 
 			@Override

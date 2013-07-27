@@ -34,7 +34,7 @@ public class ConnectSortablePage extends AbstractSortablePage
 		this.feedback = new JQueryFeedbackPanel("feedback");
 		this.add(this.feedback.setOutputMarkupId(true));
 
-		// Sortable //
+		// Sortables //
 		this.sortable1 = this.newSortable("sortable1", list1);
 		this.add(this.sortable1);
 

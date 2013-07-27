@@ -16,6 +16,9 @@
  */
 package com.googlecode.wicket.jquery.ui.kendo.datatable.column;
 
+import org.apache.wicket.model.IModel;
+import org.apache.wicket.model.Model;
+
 import com.googlecode.wicket.jquery.core.Options;
 
 /**
@@ -32,7 +35,7 @@ public abstract class AbstractColumn<T> implements IColumn<T>
 	static final int WIDTH = -1;
 
 	private final String field;
-	private final String title;
+	private final IModel<String> title;
 	private Integer width;
 
 	/**
@@ -41,7 +44,7 @@ public abstract class AbstractColumn<T> implements IColumn<T>
 	 */
 	public AbstractColumn(String title)
 	{
-		this(title, "", WIDTH);
+		this(Model.of(title), "", WIDTH);
 	}
 
 	/**
@@ -51,7 +54,7 @@ public abstract class AbstractColumn<T> implements IColumn<T>
 	 */
 	public AbstractColumn(String title, int width)
 	{
-		this(title, "", width);
+		this(Model.of(title), "", width);
 	}
 
 	/**
@@ -61,7 +64,7 @@ public abstract class AbstractColumn<T> implements IColumn<T>
 	 */
 	public AbstractColumn(String title, String field)
 	{
-		this(title, field, AbstractColumn.WIDTH);
+		this(Model.of(title), field, WIDTH);
 	}
 
 	/**
@@ -72,6 +75,47 @@ public abstract class AbstractColumn<T> implements IColumn<T>
 	 */
 	public AbstractColumn(String title, String field, int width)
 	{
+		this(Model.of(title), field, width);
+	}
+
+
+	/**
+	 * Constructor
+	 * @param title the text of the column header
+	 */
+	public AbstractColumn(IModel<String> title)
+	{
+		this(title, "", WIDTH);
+	}
+
+	/**
+	 * Constructor
+	 * @param title the text of the column header
+	 * @param width the desired width of the column
+	 */
+	public AbstractColumn(IModel<String> title, int width)
+	{
+		this(title, "", width);
+	}
+
+	/**
+	 * Constructor
+	 * @param title the text of the column header
+	 * @param field the object field name
+	 */
+	public AbstractColumn(IModel<String> title, String field)
+	{
+		this(title, field, WIDTH);
+	}
+
+	/**
+	 * Constructor
+	 * @param title the text of the column header
+	 * @param field the object field name
+	 * @param width the desired width of the column
+	 */
+	public AbstractColumn(IModel<String> title, String field, int width)
+	{
 		this.title = title;
 		this.field = field;
 		this.width = width;
@@ -80,7 +124,7 @@ public abstract class AbstractColumn<T> implements IColumn<T>
 	@Override
 	public final String getTitle()
 	{
-		return this.title;
+		return this.title.getObject();
 	}
 
 	@Override

@@ -16,6 +16,9 @@
  */
 package com.googlecode.wicket.jquery.ui.kendo.datatable.column;
 
+import org.apache.wicket.model.IModel;
+import org.apache.wicket.model.Model;
+
 import com.googlecode.wicket.jquery.core.renderer.ITextRenderer;
 import com.googlecode.wicket.jquery.core.renderer.TextRenderer;
 import com.googlecode.wicket.jquery.ui.kendo.datatable.DataTable;
@@ -38,7 +41,7 @@ public class PropertyColumn<T> extends AbstractColumn<T>
 	 */
 	public PropertyColumn(String title)
 	{
-		this(title, title, AbstractColumn.WIDTH);
+		this(Model.of(title), title, WIDTH);
 	}
 
 	/**
@@ -48,7 +51,7 @@ public class PropertyColumn<T> extends AbstractColumn<T>
 	 */
 	public PropertyColumn(String title, int width)
 	{
-		this(title, title, width);
+		this(Model.of(title), title, width);
 	}
 
 	/**
@@ -58,7 +61,7 @@ public class PropertyColumn<T> extends AbstractColumn<T>
 	 */
 	public PropertyColumn(String title, String property)
 	{
-		this(title, property, AbstractColumn.WIDTH);
+		this(Model.of(title), property, WIDTH);
 	}
 
 	/**
@@ -68,6 +71,27 @@ public class PropertyColumn<T> extends AbstractColumn<T>
 	 * @param width the desired width of the column
 	 */
 	public PropertyColumn(String title, String property, int width)
+	{
+		this(Model.of(title), property, width);
+	}
+
+	/**
+	 * Constructor
+	 * @param title the text of the column header
+	 * @param property the object property name
+	 */
+	public PropertyColumn(IModel<String> title, String property)
+	{
+		this(title, property, WIDTH);
+	}
+
+	/**
+	 * Constructor
+	 * @param title the text of the column header
+	 * @param property the object property name
+	 * @param width the desired width of the column
+	 */
+	public PropertyColumn(IModel<String> title, String property, int width)
 	{
 		super(title, property, width);
 

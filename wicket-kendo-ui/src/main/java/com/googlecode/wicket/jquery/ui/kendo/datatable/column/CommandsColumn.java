@@ -18,6 +18,8 @@ package com.googlecode.wicket.jquery.ui.kendo.datatable.column;
 
 import java.util.List;
 
+import org.apache.wicket.model.IModel;
+
 import com.googlecode.wicket.jquery.ui.kendo.datatable.ColumnButton;
 import com.googlecode.wicket.jquery.ui.kendo.datatable.DataTable;
 
@@ -48,6 +50,26 @@ public abstract class CommandsColumn<T> extends AbstractColumn<T>
 	 * @param width the desired width of the column
 	 */
 	public CommandsColumn(String title, int width)
+	{
+		super(title, width);
+	}
+
+
+	/**
+	 * Constructor
+	 * @param title the text of the column header
+	 */
+	public CommandsColumn(IModel<String> title)
+	{
+		super(title);
+	}
+
+	/**
+	 * Constructor
+	 * @param title the text of the column header
+	 * @param width the desired width of the column
+	 */
+	public CommandsColumn(IModel<String> title, int width)
 	{
 		super(title, width);
 	}

@@ -80,6 +80,16 @@ public class DataTable<T> extends WebComponent implements IJQueryWidget, IDataTa
 	}
 
 
+	// Methods //
+	/**
+	 * Reloads data and refreshes the {@link DataTable}
+	 * @param target the {@link AjaxRequestTarget}
+	 */
+	public void refresh(AjaxRequestTarget target)
+	{
+		target.appendJavaScript(String.format("var grid = jQuery('%s').data('kendoGrid'); grid.dataSource.read(); grid.refresh();", JQueryWidget.getSelector(this)));
+	}
+
 	// Properties //
 	protected List<ColumnButton> getButtons()
 	{
