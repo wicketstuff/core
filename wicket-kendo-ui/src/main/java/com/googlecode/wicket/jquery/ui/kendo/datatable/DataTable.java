@@ -29,6 +29,8 @@ import org.apache.wicket.markup.repeater.data.IDataProvider;
 import com.googlecode.wicket.jquery.core.IJQueryWidget;
 import com.googlecode.wicket.jquery.core.JQueryBehavior;
 import com.googlecode.wicket.jquery.core.Options;
+import com.googlecode.wicket.jquery.core.ajax.IJQueryAjaxAware;
+import com.googlecode.wicket.jquery.ui.kendo.datatable.ButtonAjaxBehavior.ClickEvent;
 import com.googlecode.wicket.jquery.ui.kendo.datatable.column.IColumn;
 
 /**
@@ -89,6 +91,7 @@ public class DataTable<T> extends WebComponent implements IJQueryWidget, IDataTa
 	{
 		target.appendJavaScript(String.format("var grid = jQuery('%s').data('kendoGrid'); grid.dataSource.read(); grid.refresh();", JQueryWidget.getSelector(this)));
 	}
+
 
 	// Properties //
 	protected List<ColumnButton> getButtons()
@@ -161,6 +164,12 @@ public class DataTable<T> extends WebComponent implements IJQueryWidget, IDataTa
 			{
 				DataTable.this.onClick(target, button, value);
 			}
+
+			@Override
+			protected ButtonAjaxBehavior newButtonAjaxBehavior(IJQueryAjaxAware source, ColumnButton button)
+			{
+				return DataTable.this.newButtonAjaxBehavior(source, button);
+			}
 		};
 	}
 
@@ -177,5 +186,18 @@ public class DataTable<T> extends WebComponent implements IJQueryWidget, IDataTa
 	protected AbstractAjaxBehavior newDataSourceBehavior(final List<? extends IColumn<T>> columns, final IDataProvider<T> provider, final long rows)
 	{
 		return new DataSourceBehavior<T>(columns, provider, rows);
+	}
+
+	/**
+	 * Gets a new {@link ButtonAjaxBehavior} that will be called by the corresponding {@link ColumnButton}.<br/>
+	 * This method mays be overridden to provide additional behaviors
+	 *
+	 * @param source the {@link IJQueryAjaxAware} source
+	 * @param button the button that is passed to the behavior so it can be retrieved via the {@link ClickEvent}
+	 * @return the {@link ButtonAjaxBehavior}
+	 */
+	protected ButtonAjaxBehavior newButtonAjaxBehavior(IJQueryAjaxAware source, ColumnButton button)
+	{
+		return new ButtonAjaxBehavior(source, button);
 	}
 }

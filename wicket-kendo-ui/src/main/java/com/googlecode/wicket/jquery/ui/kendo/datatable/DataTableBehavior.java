@@ -21,14 +21,12 @@ import java.util.List;
 
 import org.apache.wicket.Component;
 import org.apache.wicket.ajax.AjaxRequestTarget;
-import org.apache.wicket.ajax.attributes.CallbackParameter;
 
 import com.googlecode.wicket.jquery.core.JQueryEvent;
 import com.googlecode.wicket.jquery.core.Options;
 import com.googlecode.wicket.jquery.core.ajax.IJQueryAjaxAware;
-import com.googlecode.wicket.jquery.core.ajax.JQueryAjaxBehavior;
-import com.googlecode.wicket.jquery.core.utils.RequestCycleUtils;
 import com.googlecode.wicket.jquery.ui.kendo.KendoAbstractBehavior;
+import com.googlecode.wicket.jquery.ui.kendo.datatable.ButtonAjaxBehavior.ClickEvent;
 import com.googlecode.wicket.jquery.ui.kendo.datatable.column.CommandsColumn;
 import com.googlecode.wicket.jquery.ui.kendo.datatable.column.IColumn;
 
@@ -207,96 +205,5 @@ public abstract class DataTableBehavior extends KendoAbstractBehavior implements
 	 * @param button the button that is passed to the behavior so it can be retrieved via the {@link ClickEvent}
 	 * @return the {@link ButtonAjaxBehavior}
 	 */
-	protected ButtonAjaxBehavior newButtonAjaxBehavior(IJQueryAjaxAware source, ColumnButton button)
-	{
-		return new ButtonAjaxBehavior(source, button);
-	}
-
-
-	// Ajax behaviors //
-
-	/**
-	 * Provides the {@link JQueryAjaxBehavior} being called by the button(s).
-	 */
-	protected static class ButtonAjaxBehavior extends JQueryAjaxBehavior
-	{
-		private static final long serialVersionUID = 1L;
-
-		private final ColumnButton button;
-
-		/**
-		 * Constructor
-		 * @param source the {@link IJQueryAjaxAware}
-		 * @param button the {@link ColumnButton} to attach to the {@link ClickEvent}
-		 */
-		public ButtonAjaxBehavior(IJQueryAjaxAware source, ColumnButton button)
-		{
-			super(source);
-
-			this.button = button;
-		}
-
-
-		@Override
-		protected CallbackParameter[] getCallbackParameters()
-		{
-			return new CallbackParameter[] {
-					CallbackParameter.context("e"),
-					CallbackParameter.resolved("value", String.format("this.dataItem($(e.currentTarget).closest('tr'))['%s']", this.button.getProperty()))
-			};
-		}
-
-		/**
-		 * Gets the {@link ColumnButton}
-		 * @return the {@link ColumnButton}
-		 */
-		public ColumnButton getButton()
-		{
-			return this.button;
-		}
-
-		@Override
-		protected JQueryEvent newEvent()
-		{
-			return new ClickEvent(this.button);
-		}
-	}
-
-
-	// Events classes //
-
-	/**
-	 * Provides a click event that will be transmitted to the {@link DataTable}
-	 */
-	protected static class ClickEvent extends JQueryEvent
-	{
-		private final ColumnButton button;
-		private final String value;
-
-		public ClickEvent(ColumnButton button)
-		{
-			super();
-
-			this.button = button;
-			this.value = RequestCycleUtils.getQueryParameterValue("value").toString();
-		}
-
-		/**
-		 * Gets the button that has been attached to this event object
-		 * @return the button
-		 */
-		public ColumnButton getButton()
-		{
-			return this.button;
-		}
-
-		/**
-		 * Gets the value from the row
-		 * @return the value from the row
-		 */
-		public String getValue()
-		{
-			return this.value;
-		}
-	}
+	protected abstract ButtonAjaxBehavior newButtonAjaxBehavior(IJQueryAjaxAware source, ColumnButton button);
 }

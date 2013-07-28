@@ -30,7 +30,7 @@ import com.googlecode.wicket.jquery.core.JQueryPanel;
 import com.googlecode.wicket.jquery.core.Options;
 import com.googlecode.wicket.jquery.core.ajax.IJQueryAjaxAware;
 import com.googlecode.wicket.jquery.ui.interaction.behavior.DisplayNoneBehavior;
-import com.googlecode.wicket.jquery.ui.widget.dialog.DialogBehavior.ButtonAjaxBehavior;
+import com.googlecode.wicket.jquery.ui.widget.dialog.ButtonAjaxBehavior.ClickEvent;
 
 /**
  * Base class for implementing jQuery dialogs
@@ -399,13 +399,12 @@ public abstract class AbstractDialog<T extends Serializable> extends JQueryPanel
 		};
 	}
 
-
 	/**
 	 * Gets a new {@link ButtonAjaxBehavior} that will be called by the corresponding {@link DialogButton}.<br/>
-	 * This method mays be overridden internally to provide another behavior
+	 * This method mays be overridden to provide additional behaviors
 	 *
 	 * @param source the {@link IJQueryAjaxAware} source
-	 * @param button the button that is passed to the behavior so it can be retrieved via the <code>DialogBehavior#ClickEvent</code>
+	 * @param button the button that is passed to the behavior so it can be retrieved via the {@link ClickEvent}
 	 * @return the {@link ButtonAjaxBehavior}
 	 */
 	protected ButtonAjaxBehavior newButtonAjaxBehavior(IJQueryAjaxAware source, DialogButton button)

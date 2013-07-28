@@ -19,14 +19,11 @@ package com.googlecode.wicket.jquery.ui.widget.dialog;
 import java.io.Serializable;
 
 import org.apache.wicket.ajax.AjaxRequestTarget;
-import org.apache.wicket.ajax.attributes.AjaxRequestAttributes;
-import org.apache.wicket.ajax.attributes.AjaxRequestAttributes.Method;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.form.IFormSubmitter;
 import org.apache.wicket.model.IModel;
 
 import com.googlecode.wicket.jquery.core.ajax.IJQueryAjaxAware;
-import com.googlecode.wicket.jquery.ui.widget.dialog.DialogBehavior.ButtonAjaxBehavior;
 
 /**
  * Provides the base class for form-based dialogs
@@ -217,14 +214,14 @@ public abstract class AbstractFormDialog<T extends Serializable> extends Abstrac
 
 	// Factories //
 	/**
-	 * Gets the {@link FormButtonAjaxBehavior} associated to the specified button.
+	 * Gets the {@link ButtonAjaxPostBehavior} associated to the specified button.
 	 *
 	 * @return the {@link ButtonAjaxBehavior}
 	 */
 	@Override
 	protected ButtonAjaxBehavior newButtonAjaxBehavior(IJQueryAjaxAware source, DialogButton button)
 	{
-		return new FormButtonAjaxBehavior(source, button, this.getForm(button));
+		return new ButtonAjaxPostBehavior(source, button, this.getForm(button));
 	}
 
 
@@ -273,44 +270,6 @@ public abstract class AbstractFormDialog<T extends Serializable> extends Abstrac
 		public void onAfterSubmit()
 		{
 			//wicket6
-		}
-	}
-
-	/**
-	 * Provides the button's form-submit behavior
-	 */
-	protected static class FormButtonAjaxBehavior extends ButtonAjaxBehavior
-	{
-		private static final long serialVersionUID = 1L;
-
-		private final Form<?> form;
-
-		/**
-		 * Constructor
-		 * @param source the {@link IJQueryAjaxAware}
-		 * @param button the {@link DialogButton}
-		 * @param form the {@link Form}
-		 */
-		public FormButtonAjaxBehavior(IJQueryAjaxAware source, DialogButton button, Form<?> form)
-		{
-			super(source, button);
-
-			this.form = form;
-		}
-
-		/**
-		 * The formId may intentionally be null
-		 */
-		@Override
-		protected void updateAjaxAttributes(AjaxRequestAttributes attributes)
-		{
-			super.updateAjaxAttributes(attributes);
-
-			if (this.form != null)
-			{
-				attributes.setMethod(Method.POST);
-				attributes.setFormId(this.form.getMarkupId());
-			}
 		}
 	}
 }

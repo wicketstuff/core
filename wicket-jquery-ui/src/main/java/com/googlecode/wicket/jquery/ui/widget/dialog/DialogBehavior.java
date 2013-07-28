@@ -27,6 +27,7 @@ import com.googlecode.wicket.jquery.core.Options;
 import com.googlecode.wicket.jquery.core.ajax.IJQueryAjaxAware;
 import com.googlecode.wicket.jquery.core.ajax.JQueryAjaxBehavior;
 import com.googlecode.wicket.jquery.ui.form.button.Button;
+import com.googlecode.wicket.jquery.ui.widget.dialog.ButtonAjaxBehavior.ClickEvent;
 
 /**
  * Provides a jQuery dialog behavior.
@@ -156,8 +157,8 @@ public abstract class DialogBehavior extends JQueryBehavior implements IJQueryAj
 
 	// Factories //
 	/**
-	 * Gets a new ButtonAjaxBehavior that will be called by the corresponding dialog's button.<br/>
-	 * This method mays be overridden internally to provide another behavior;
+	 * Gets a new {@link ButtonAjaxBehavior} that will be called by the corresponding {@link DialogButton}.<br/>
+	 * This method mays be overridden to provide additional behaviors
 	 *
 	 * @param source the {@link IJQueryAjaxAware} source
 	 * @param button the button that is passed to the behavior so it can be retrieved via the {@link ClickEvent}
@@ -191,70 +192,7 @@ public abstract class DialogBehavior extends JQueryBehavior implements IJQueryAj
 	}
 
 
-	// Ajax behaviors //
-	/**
-	 * Provides the {@link JQueryAjaxBehavior} being called by the button(s).
-	 */
-	protected static class ButtonAjaxBehavior extends JQueryAjaxBehavior
-	{
-		private static final long serialVersionUID = 1L;
-
-		private final DialogButton button;
-
-		/**
-		 * Constructor
-		 * @param source the {@link IJQueryAjaxAware}
-		 * @param button the {@link DialogButton} to attach to the {@link ClickEvent}
-		 */
-		public ButtonAjaxBehavior(IJQueryAjaxAware source, DialogButton button)
-		{
-			super(source);
-
-			this.button = button;
-		}
-
-		/**
-		 * Gets the {@link DialogButton}
-		 * @return the {@link DialogButton}
-		 */
-		public DialogButton getButton()
-		{
-			return this.button;
-		}
-
-		@Override
-		protected JQueryEvent newEvent()
-		{
-			return new ClickEvent(this.button);
-		}
-	}
-
-
-	// Events classes //
-	/**
-	 * Provides a dialog event that will be transmitted to the {@link AbstractDialog}
-	 */
-	protected static class ClickEvent extends JQueryEvent
-	{
-		private final DialogButton button;
-
-		public ClickEvent(DialogButton button)
-		{
-			super();
-
-			this.button = button;
-		}
-
-		/**
-		 * Get the button that has been attached to this event object
-		 * @return the button
-		 */
-		public DialogButton getButton()
-		{
-			return this.button;
-		}
-	}
-
+	// Event class //
 	/**
 	 * An event object that will be broadcasted when the user clicks on the X-icon
 	 */
