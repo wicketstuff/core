@@ -59,9 +59,37 @@ public class DefaultTaskManagerTest {
         taskManager.makeOrRenewModel(testId, removalMilliseconds, TimeUnit.MILLISECONDS);
 
         Thread.sleep((long) (removalMilliseconds * sleepMultiplier));
+
+        // Same problem as above
         taskManager.cleanUp();
+        System.gc();
 
         taskManager.getModelOrFail(testId);
+    }
+
+    @Test
+    public void testTaskExtension() throws Exception {
+
+        final String testId = "test";
+        final long removalMilliseconds = 200L;
+        final double sleepMultiplier1 = 0.5d;
+        final double sleepMultiplier2 = 2d;
+
+        assertTrue(sleepMultiplier1 < 1d);
+        assertTrue(sleepMultiplier2 > 1d);
+
+        taskManager.makeOrRenewModel(testId, (long) (removalMilliseconds * sleepMultiplier1), TimeUnit.MILLISECONDS);
+        taskManager.makeOrRenewModel(testId, (long) (removalMilliseconds * sleepMultiplier2), TimeUnit.MILLISECONDS);
+
+        Thread.sleep(removalMilliseconds);
+
+        // Same problem as above
+        taskManager.cleanUp();
+        System.gc();
+
+        taskManager.getModelOrFail(testId);
+
+
     }
 
     @Test
