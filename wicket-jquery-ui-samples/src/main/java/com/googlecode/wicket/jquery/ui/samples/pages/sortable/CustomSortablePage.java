@@ -42,11 +42,11 @@ public class CustomSortablePage extends AbstractSortablePage
 			}
 
 			@Override
-			public void onSort(AjaxRequestTarget target, Item item, int index)
+			public void onUpdate(AjaxRequestTarget target, Item item, int index)
 			{
 				// Will update the model object with the new order
 				// Remove the call to super if you do not want your model to be updated (or you use a LDM)
-				super.onSort(target, item, index);
+				super.onUpdate(target, item, index);
 
 				if (item != null)
 				{
@@ -78,6 +78,9 @@ public class CustomSortablePage extends AbstractSortablePage
 	}
 
 
+	/**
+	 * Gets a new <i>modifiable</i> list
+	 */
 	private static List<Item> newList(String... names)
 	{
 		List<Item> list = new ArrayList<Item>();

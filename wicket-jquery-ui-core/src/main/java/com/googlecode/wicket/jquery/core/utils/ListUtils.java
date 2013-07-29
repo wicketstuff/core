@@ -16,12 +16,11 @@
  */
 package com.googlecode.wicket.jquery.core.utils;
 
-import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
 /**
- * Utility class for {@link List}
+ * Utility class for {@link List}(<tt>s</tt>)
  *
  * @author Sebastien Briquet - sebfz1
  *
@@ -29,20 +28,21 @@ import java.util.List;
 public class ListUtils
 {
 	/**
-	 * Utility method to move a list-item at a new position<br/>
-	 * This method will use the hashcode of the list-item to retrieve it against the list.
-	 *
-	 * @param list the {@link List}
-	 * @param item the item
-	 * @param index the position to move to
-	 * @return a new {@link List} reflecting the new order
+	 * Gets the list-item matching the given hash against the list
+	 * @param hash the hashcode to match
+	 * @param list the {@link List} to search in
+	 * @return the list-item or <code>null</code> if not found
 	 */
-	public static <T> List<T> move(final List<T> list, final T item, int index)
+	public static synchronized <T> T fromHash(int hash, List<T> list)
 	{
-		List<T> l = new ArrayList<T>(list); //shadow copy the list, but not the mutable items, if any (refs will be kept)
-		l.add(index, l.remove(ListUtils.indexOf(l, item.hashCode())));
+		int index = ListUtils.indexOf(hash, list);
 
-		return l;
+		if (index > -1)
+		{
+			return list.get(index);
+		}
+
+		return null;
 	}
 
 	/**
@@ -51,7 +51,7 @@ public class ListUtils
 	 * @param hash the hashcode to match
 	 * @return the index of the item matching the hashcode or -1 if not found
 	 */
-	public static int indexOf(List<?> list, int hash)
+	private static synchronized int indexOf(int hash, List<?> list)
 	{
 		Iterator<?> iterator = list.iterator();
 
@@ -64,6 +64,29 @@ public class ListUtils
 		}
 
 		return -1;
+	}
+
+	/**
+	 * Utility method to move a list-item at a new position in the specified list<br/>
+	 * This method will use the hashcode of the list-item to retrieve it against the list.
+	 *
+	 * @param list the {@link List}
+	 * @param item the item
+	 * @param index the position to move to
+	 */
+	public static synchronized <T> void move(final T item, int index, final List<T> list)
+	{
+		list.add(index, list.remove(ListUtils.indexOf(item.hashCode(), list)));
+
+
+//		int i = ListUtils.indexOf(item.hashCode(), list);
+//
+//		if (i > -1)
+//		{
+//			list.add(index, list.remove(i));
+//		}
+//		else
+//			System.out.println(item + " was not found !!"); //TODO to remove
 	}
 
 	/**

@@ -27,6 +27,7 @@ import com.googlecode.wicket.jquery.core.JQueryEvent;
 import com.googlecode.wicket.jquery.core.Options;
 import com.googlecode.wicket.jquery.core.ajax.IJQueryAjaxAware;
 import com.googlecode.wicket.jquery.core.ajax.JQueryAjaxBehavior;
+import com.googlecode.wicket.jquery.core.utils.ListUtils;
 import com.googlecode.wicket.jquery.core.utils.RequestCycleUtils;
 import com.googlecode.wicket.jquery.ui.interaction.selectable.SelectableBehavior;
 
@@ -41,8 +42,9 @@ public abstract class SortableBehavior<T> extends JQueryBehavior implements IJQu
 	private static final long serialVersionUID = 1L;
 	private static final String METHOD = "sortable";
 
-	private JQueryAjaxBehavior onStopBehavior;
+	private JQueryAjaxBehavior onUpdateBehavior;
 	private JQueryAjaxBehavior onReceiveBehavior = null;
+	private JQueryAjaxBehavior onRemoveBehavior = null;
 
 	/**
 	 * Constructor
@@ -72,8 +74,9 @@ public abstract class SortableBehavior<T> extends JQueryBehavior implements IJQu
 	protected abstract List<T> getItemList();
 
 	/**
-	 * TODO javadoc
-	 * @return
+	 * Gets the list of the connected sortable
+	 *
+	 * @return null by default
 	 */
 	protected List<T> getConnectedList()
 	{
@@ -87,37 +90,17 @@ public abstract class SortableBehavior<T> extends JQueryBehavior implements IJQu
 	{
 		super.bind(component);
 
-		component.add(this.onStopBehavior = this.newOnStopBehavior());
+		component.add(this.onUpdateBehavior = this.newOnUpdateBehavior());
 
 		if (this.isOnReceiveEnabled())
 		{
 			component.add(this.onReceiveBehavior = this.newOnReceiveBehavior());
 		}
-	}
 
-	/**
-	 * TODO javadoc
-	 * @param hash
-	 * @return
-	 */
-	private T fromHash(int hash)
-	{
-		return this.fromHash(hash, this.getItemList());
-	}
-
-	private T fromHash(int hash, List<T> list)
-	{
-		T item = null;
-
-		for (T t : list)
+		if (this.isOnRemoveEnabled())
 		{
-			if (hash == t.hashCode())
-			{
-				item = t;
-			}
+			component.add(this.onRemoveBehavior = this.newOnRemoveBehavior());
 		}
-
-		return item;
 	}
 
 	// Events //
@@ -126,11 +109,16 @@ public abstract class SortableBehavior<T> extends JQueryBehavior implements IJQu
 	{
 		super.onConfigure(component);
 
-		this.setOption("stop", this.onStopBehavior.getCallbackFunction());
+		this.setOption("update", this.onUpdateBehavior.getCallbackFunction());
 
 		if (this.onReceiveBehavior != null)
 		{
 			this.setOption("receive", this.onReceiveBehavior.getCallbackFunction());
+		}
+
+		if (this.onRemoveBehavior != null)
+		{
+			this.setOption("remove", this.onRemoveBehavior.getCallbackFunction());
 		}
 	}
 
@@ -143,9 +131,19 @@ public abstract class SortableBehavior<T> extends JQueryBehavior implements IJQu
 			int hash = ev.getHash();
 			int index = ev.getIndex();
 
-			if (event instanceof StopEvent)
+			if (event instanceof UpdateEvent)
 			{
-				this.onSort(target, this.fromHash(hash), index);
+				List<T> list = this.getItemList();
+
+				if (list != null)
+				{
+					T item = ListUtils.fromHash(hash, list);
+
+					if (item != null)
+					{
+						this.onUpdate(target, item, index);
+					}
+				}
 			}
 			else if (event instanceof ReceiveEvent)
 			{
@@ -153,7 +151,26 @@ public abstract class SortableBehavior<T> extends JQueryBehavior implements IJQu
 
 				if (list != null)
 				{
-					this.onReceive(target, this.fromHash(hash, list), index);
+					T item = ListUtils.fromHash(hash, list);
+
+					if (item != null)
+					{
+						this.onReceive(target, ListUtils.fromHash(hash, list), index);
+					}
+				}
+			}
+			else if (event instanceof RemoveEvent)
+			{
+				List<T> list = this.getItemList();
+
+				if (list != null)
+				{
+					T item = ListUtils.fromHash(hash, list);
+
+					if (item != null)
+					{
+						this.onRemove(target, ListUtils.fromHash(hash, list));
+					}
 				}
 			}
 		}
@@ -166,7 +183,7 @@ public abstract class SortableBehavior<T> extends JQueryBehavior implements IJQu
 	 *
 	 * @return the {@link JQueryAjaxBehavior}
 	 */
-	protected JQueryAjaxBehavior newOnStopBehavior()
+	protected JQueryAjaxBehavior newOnUpdateBehavior()
 	{
 		return new JQueryAjaxBehavior(this) {
 
@@ -185,7 +202,7 @@ public abstract class SortableBehavior<T> extends JQueryBehavior implements IJQu
 			@Override
 			protected JQueryEvent newEvent()
 			{
-				return new StopEvent();
+				return new UpdateEvent();
 			}
 		};
 	}
@@ -219,6 +236,34 @@ public abstract class SortableBehavior<T> extends JQueryBehavior implements IJQu
 		};
 	}
 
+	/**
+	 * Gets the ajax behavior that will be triggered when a sortable item has been dragged out from the list and into another.
+	 *
+	 * @return the {@link JQueryAjaxBehavior}
+	 */
+	protected JQueryAjaxBehavior newOnRemoveBehavior()
+	{
+		return new JQueryAjaxBehavior(this) {
+
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			protected CallbackParameter[] getCallbackParameters()
+			{
+				return new CallbackParameter[] {
+						CallbackParameter.context("event"),
+						CallbackParameter.context("ui"),
+						CallbackParameter.resolved("hash", "ui.item.data('hash')") };
+			}
+
+			@Override
+			protected JQueryEvent newEvent()
+			{
+				return new RemoveEvent();
+			}
+		};
+	}
+
 
 	// Event Objects //
 	/**
@@ -232,7 +277,7 @@ public abstract class SortableBehavior<T> extends JQueryBehavior implements IJQu
 		public AbstractEvent()
 		{
 			this.hash = RequestCycleUtils.getQueryParameterValue("hash").toInt(0);
-			this.index = RequestCycleUtils.getQueryParameterValue("index").toInt(0);
+			this.index = RequestCycleUtils.getQueryParameterValue("index").toInt(-1); //'remove' behavior will default to -1
 		}
 
 		public int getHash()
@@ -246,11 +291,15 @@ public abstract class SortableBehavior<T> extends JQueryBehavior implements IJQu
 		}
 	}
 
-	protected static class StopEvent extends AbstractEvent
+	protected static class UpdateEvent extends AbstractEvent
 	{
 	}
 
 	protected static class ReceiveEvent extends AbstractEvent
+	{
+	}
+
+	protected static class RemoveEvent extends AbstractEvent
 	{
 	}
 }

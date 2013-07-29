@@ -22,8 +22,6 @@ public class ConnectSortablePage extends AbstractSortablePage
 	private static final long serialVersionUID = 1L;
 
 	private final FeedbackPanel feedback;
-	private final Sortable<String> sortable1;
-	private final Sortable<String> sortable2;
 
 	public ConnectSortablePage()
 	{
@@ -35,11 +33,15 @@ public class ConnectSortablePage extends AbstractSortablePage
 		this.add(this.feedback.setOutputMarkupId(true));
 
 		// Sortables //
-		this.sortable1 = this.newSortable("sortable1", list1);
-		this.add(this.sortable1);
+		final Sortable<String> sortable1 = this.newSortable("sortable1", list1);
+		this.add(sortable1);
 
-		this.sortable2 = this.newSortable("sortable2", list2);
-		this.add(this.sortable2.connectWith(this.sortable1));
+		final Sortable<String> sortable2 = this.newSortable("sortable2", list2);
+		this.add(sortable2);
+
+		// Dual connect the sortables
+		sortable1.connectWith(sortable2);
+		sortable2.connectWith(sortable1);
 	}
 
 	private Sortable<String> newSortable(final String id, List<String> list)
@@ -55,13 +57,13 @@ public class ConnectSortablePage extends AbstractSortablePage
 			}
 
 			@Override
-			public void onSort(AjaxRequestTarget target, String item, int index)
+			public void onUpdate(AjaxRequestTarget target, String item, int index)
 			{
 				// Will update the model object with the new order
-				// Remove the call to super if you do not want your model to be updated (or you use a LDM)
-				super.onSort(target, item, index);
+				// Remove the call to super if you do not want your model to be updated (is read-only or you use a LDM)
+				super.onUpdate(target, item, index);
 
-				this.info(String.format("'%s' of %s moved to position %d", item, id, index + 1));
+				this.info(String.format("%s updated %s to position %d", id, item, index + 1));
 				this.info(String.format("%s list order is now: %s", id, this.getModelObject()));
 
 				target.add(feedback);
@@ -70,9 +72,21 @@ public class ConnectSortablePage extends AbstractSortablePage
 			@Override
 			public void onReceive(AjaxRequestTarget target, String item, int index)
 			{
-				this.getModelObject().add(index, item); //TODO move to super
+				// Will update the model object with the new received item
+				// Remove the call to super if you do not want your model to be updated
+				super.onReceive(target, item, index);
 
-				this.info(String.format("'%s' received in %s at position %d", item, id, index + 1));
+				this.info(String.format("%s received %s at position %d", id, item, index + 1));
+			}
+
+			@Override
+			public void onRemove(AjaxRequestTarget target, String item)
+			{
+				// Will removes the item from the model object
+				// Remove the call to super if you do not want your model to be updated
+				super.onRemove(target, item);
+
+				this.info(String.format("%s has removed %s", id, item));
 				this.info(String.format("%s list order is now: %s", id, this.getModelObject()));
 			}
 		};
@@ -94,6 +108,9 @@ public class ConnectSortablePage extends AbstractSortablePage
 		};
 	}
 
+	/**
+	 * Gets a new <i>modifiable</i> list
+	 */
 	private static List<String> newList(String... items)
 	{
 		ArrayList<String> list = new ArrayList<String>();

@@ -24,6 +24,7 @@ import org.apache.wicket.markup.html.list.ListItem;
 import org.apache.wicket.markup.html.list.ListView;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.util.ListModel;
+import org.apache.wicket.util.lang.Args;
 
 import com.googlecode.wicket.jquery.core.JQueryBehavior;
 import com.googlecode.wicket.jquery.core.JQueryContainer;
@@ -45,7 +46,8 @@ public abstract class Sortable<T> extends JQueryContainer implements ISortableLi
 	private final Options options;
 
 	/**
-	 * The {@link Sortable} that requested to be connected to this (which called {@link #connectWith(Sortable)}
+	 * The {@link Sortable} that requested to be connected to this {@link Sortable}<br/>
+	 * In other words, the {@link Sortable} that called {@link #connectWith(Sortable)}
 	 */
 	private Sortable<T> connectedSortable = null;
 
@@ -101,15 +103,49 @@ public abstract class Sortable<T> extends JQueryContainer implements ISortableLi
 		this.add(this.newListView(this.getModel()));
 	}
 
+	//TODO: clean
+//	@Override
+//	public void onEvent(IEvent<?> event)
+//	{
+//		if (event.getSource() instanceof Sortable<?>)
+//		{
+//			AjaxRequestTarget target = RequestCycle.get().find(AjaxRequestTarget.class);
+//
+//			if (target != null)
+//			{
+//				@SuppressWarnings("unchecked")
+//				T item = (T)event.getPayload();
+//
+//				this.onRemove(target, item);
+//			}
+//		}
+//	}
+
 	@Override
-	public void onSort(AjaxRequestTarget target, T item, int index)
+	public void onUpdate(AjaxRequestTarget target, T item, int index)
 	{
-		this.setModelObject(ListUtils.move(this.getModelObject(), item, index)); // will trigger #onModelChanging() / #onModelChanged()
+		this.modelChanging();
+		ListUtils.move(item, index, this.getModelObject());
+		this.modelChanged();
 	}
 
 	@Override
 	public void onReceive(AjaxRequestTarget target, T item, int index)
 	{
+		this.modelChanging();
+		this.getModelObject().add(index, item);
+		this.modelChanged();
+
+		// broadcast to the connected sortable
+//		this.send(this.connectedSortable, Broadcast.EXACT, item);
+	}
+
+	@Override
+	public void onRemove(AjaxRequestTarget target, T item)
+	{
+		this.modelChanging();
+		this.getModelObject().remove(item);
+		this.modelChanged();
 	}
 
 
@@ -149,31 +185,33 @@ public abstract class Sortable<T> extends JQueryContainer implements ISortableLi
 		return (this.connectedSortable != null);
 	}
 
-	/**
-	 * TODO javadoc
-	 * @param sortable
-	 */
-	private void connect(Sortable<T> sortable)
+	@Override
+	public boolean isOnRemoveEnabled()
 	{
-		this.connectedSortable = sortable;
+		//TODO: reactivate this
+		//(this.connectedSortable != null);
+		return false;
 	}
 
 	// Methods //
 	/**
-	 * TODO jadavoc
-	 * @param sortable
+	 * Connects with another {@link Sortable}<br/>
+	 * The specified {@link Sortable} will keep a reference to the caller (<code>this</code>).
+	 * @param sortable the {@link Sortable} to connect with
 	 * @return this, for chaining
 	 */
 	public Sortable<T> connectWith(Sortable<T> sortable)
 	{
+		Args.notNull(sortable, "sortable");
+
 		sortable.connect(this); //eq. to sortable.connectedSortable = this;
 
 		return this.connectWith(JQueryWidget.getSelector(sortable));
 	}
 
 	/**
-	 * TODO javadoc
-	 * @param selector
+	 * Sets the '<code>connectWith</code>' options
+	 * @param selector the html selector
 	 * @return this, for chaining
 	 */
 	private Sortable<T> connectWith(String selector)
@@ -181,6 +219,17 @@ public abstract class Sortable<T> extends JQueryContainer implements ISortableLi
 		this.options.set("connectWith", Options.asString(selector));
 
 		return this;
+	}
+
+	/**
+	 * Sets the connected {@link Sortable} reference.<br/>
+	 * Suppling a non-null {@link Sortable} will activate {@link #isOnReceiveEnabled()}
+	 * @param sortable the {@link Sortable}
+	 * @see #isOnReceiveEnabled()
+	 */
+	private void connect(Sortable<T> sortable)
+	{
+		this.connectedSortable = sortable;
 	}
 
 
@@ -196,6 +245,12 @@ public abstract class Sortable<T> extends JQueryContainer implements ISortableLi
 			public boolean isOnReceiveEnabled()
 			{
 				return Sortable.this.isOnReceiveEnabled();
+			}
+
+			@Override
+			public boolean isOnRemoveEnabled()
+			{
+				return Sortable.this.isOnRemoveEnabled();
 			}
 
 			@Override
@@ -216,15 +271,21 @@ public abstract class Sortable<T> extends JQueryContainer implements ISortableLi
 			}
 
 			@Override
-			public void onSort(AjaxRequestTarget target, T item, int position)
+			public void onUpdate(AjaxRequestTarget target, T item, int position)
 			{
-				Sortable.this.onSort(target, item, position);
+				Sortable.this.onUpdate(target, item, position);
 			}
 
 			@Override
 			public void onReceive(AjaxRequestTarget target, T item, int index)
 			{
 				Sortable.this.onReceive(target, item, index);
+			}
+
+			@Override
+			public void onRemove(AjaxRequestTarget target, T item)
+			{
+				Sortable.this.onRemove(target, item);
 			}
 		};
 	}

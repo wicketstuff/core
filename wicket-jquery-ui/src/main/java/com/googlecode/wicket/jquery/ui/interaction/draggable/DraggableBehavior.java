@@ -83,7 +83,6 @@ public abstract class DraggableBehavior extends JQueryBehavior implements IJQuer
 		{
 			this.component.add(this.onDragStopBehavior = this.newOnDragStopBehavior());
 		}
-
 	}
 
 	// Events //

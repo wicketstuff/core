@@ -64,6 +64,7 @@ The base template page is the following: (you might change the CSS href accordin
 <!DOCTYPE html>
 <html xmlns:wicket="http://wicket.apache.org">
     <head>
+        <!-- jQuery UI -->
         <link rel="stylesheet" type="text/css" href="css/ui-lightness/jquery-ui-1.10.3.custom.min.css" />
     </head>
     <body>
@@ -96,10 +97,6 @@ The base template page is then the following: (you might change the CSS href acc
 <!DOCTYPE html>
 <html xmlns:wicket="http://wicket.apache.org">
     <head>
-
-        <!-- jQuery UI -->
-        <link rel="stylesheet" type="text/css" href="css/ui-lightness/jquery-ui-1.10.3.custom.min.css" />
-
         <!-- Kendo UI -->
         <link rel="stylesheet" type="text/css" href="css/kendo/kendo.common.min.css" media="all" />
         <link rel="stylesheet" type="text/css" href="css/kendo/kendo.default.min.css" media="all" />
@@ -110,5 +107,5 @@ The base template page is then the following: (you might change the CSS href acc
 ```
 
 ## You are now ready to use wicket-jquery-ui!
-Look at the samples provided in the demo site to get started with the code...
+Look at the samples provided in the demo site to get started with the code...  
 <http://www.7thweb.net/wicket-jquery-ui>

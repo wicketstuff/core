@@ -1,6 +1,6 @@
 package com.googlecode.wicket.jquery.ui.samples.pages.sortable;
 
-import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.wicket.AttributeModifier;
@@ -23,7 +23,7 @@ public class DefaultSortablePage extends AbstractSortablePage
 
 	public DefaultSortablePage()
 	{
-		final List<String> list = Arrays.asList("item #1", "item #2", "item #3", "item #4", "item #5", "item #6");
+		final List<String> list = newList("item #1", "item #2", "item #3", "item #4", "item #5", "item #6");
 
 		// FeedbackPanel //
 		final FeedbackPanel feedback = new JQueryFeedbackPanel("feedback");
@@ -41,11 +41,11 @@ public class DefaultSortablePage extends AbstractSortablePage
 			}
 
 			@Override
-			public void onSort(AjaxRequestTarget target, String item, int index)
+			public void onUpdate(AjaxRequestTarget target, String item, int index)
 			{
 				// Will update the model object with the new order
 				// Remove the call to super if you do not want your model to be updated (or you use a LDM)
-				super.onSort(target, item, index);
+				super.onUpdate(target, item, index);
 
 				this.info(String.format("'%s' has moved to position %d", item, index + 1));
 				this.info("The list order is now: " + this.getModelObject());
@@ -71,5 +71,20 @@ public class DefaultSortablePage extends AbstractSortablePage
 				item.add(AttributeModifier.append("class", "ui-state-default"));
 			}
 		};
+	}
+
+	/**
+	 * Gets a new <i>modifiable</i> list
+	 */
+	private static List<String> newList(String... items)
+	{
+		ArrayList<String> list = new ArrayList<String>();
+
+		for (String item : items)
+		{
+			list.add(item);
+		}
+
+		return list;
 	}
 }

@@ -34,13 +34,20 @@ interface ISortableListener<T>
 	boolean isOnReceiveEnabled();
 
 	/**
-	 * Triggered when a selection has been made (stops)
+	 * Indicates whether the 'remove' event is enabled.<br />
+	 * If true, the {@link #onRemove(AjaxRequestTarget, Object)} event will be triggered.
+	 * @return true or false
+	 */
+	boolean isOnRemoveEnabled();
+
+	/**
+	 * Triggered when the user stopped sorting and the DOM position has changed.
 	 *
 	 * @param target the {@link AjaxRequestTarget}
 	 * @param item the item that has been sorted
 	 * @param index the item's new index (zero based)
 	 */
-	void onSort(AjaxRequestTarget target, T item, int index);
+	void onUpdate(AjaxRequestTarget target, T item, int index);
 
 	/**
 	 * Triggered when a connected sortable list has received an item from another list.
@@ -49,4 +56,11 @@ interface ISortableListener<T>
 	 * @param index the item's new index (zero based)
 	 */
 	void onReceive(AjaxRequestTarget target, T item, int index);
+
+	/**
+	 * Triggered when a sortable item has been dragged out from the list and into another.
+	 * @param target the {@link AjaxRequestTarget}
+	 * @param item the item that has been received
+	 */
+	void onRemove(AjaxRequestTarget target, T item);
 }
