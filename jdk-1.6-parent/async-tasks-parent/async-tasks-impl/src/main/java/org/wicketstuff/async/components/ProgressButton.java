@@ -124,10 +124,9 @@ public class ProgressButton extends AjaxFallbackButton {
 
         if (canStart() || canRestart()) {
             taskModel.submit(runnableFactory.getRunnable());
-            onTaskStart(taskModel);
+            onTaskStart(target);
         } else if (canInterrupt()) {
             taskModel.cancel();
-            onTaskCancel(taskModel);
         } else {
             return;
         }
@@ -136,6 +135,7 @@ public class ProgressButton extends AjaxFallbackButton {
             activateRefresh(target);
             renderAll(target);
         }
+
         concludeIfApplicable(target);
     }
 
@@ -167,9 +167,11 @@ public class ProgressButton extends AjaxFallbackButton {
                 refreshBehavior.stop(target);
             }
             if (taskModel.isFailed()) {
-                onTaskError(taskModel);
+                onTaskError(target);
             } else if (!taskModel.isCancelled()) {
-                onTaskSuccess(taskModel);
+                onTaskSuccess(target);
+            } else {
+                onTaskCancel(target);
             }
         }
     }
@@ -342,34 +344,39 @@ public class ProgressButton extends AjaxFallbackButton {
 
     /**
      * Override to trigger a custom action whenever a task is started.
-     * @param taskModel The model of this task.
+     *
+     * @param ajaxRequestTarget The Ajax request target. Might be {@code null}.
      */
-    protected void onTaskStart(AbstractTaskModel taskModel) {
+    protected void onTaskStart(AjaxRequestTarget ajaxRequestTarget) {
     }
 
     /**
      * Override to trigger a custom action whenever a task succeeded.
      * <p/>
-     * <b>Note:</b> This trigger is only called if Ajax is enabled at the client.
-     * @param taskModel The model of this task.
+     * <b>Note:</b> This trigger is only called if Javascript is enabled in the client's browser.
+     *
+     * @param ajaxRequestTarget The Ajax request target.
      */
-    protected void onTaskSuccess(AbstractTaskModel taskModel) {
+    protected void onTaskSuccess(AjaxRequestTarget ajaxRequestTarget) {
     }
 
     /**
-     * Override to trigger a custom action whenever a task was canceled.
-     * @param taskModel The model of this task.
+     * Override to trigger a custom action whenever a task was canceled and halted. (A canceled task
+     * might continue to run since it is only told to interrupt. The trigger is called when the interrupted
+     * task stops running.)
+     *
+     * @param ajaxRequestTarget The Ajax request target. Might be {@code null}.
      */
-    protected void onTaskCancel(AbstractTaskModel taskModel) {
+    protected void onTaskCancel(AjaxRequestTarget ajaxRequestTarget) {
     }
 
     /**
-     * Override to trigger a custom action whenever an error is occured.
+     * Override to trigger a custom action whenever an error is occurred.
      * <p/>
-     * <b>Note:</b> This trigger is only called if Ajax is enabled at the client.
-     * @param taskModel The model of this task.
+     * <b>Note:</b> This trigger is only called if Javascript is enabled in the client's browser.
+     *
+     * @param ajaxRequestTarget The Ajax request target.
      */
-    protected void onTaskError(AbstractTaskModel taskModel) {
-
+    protected void onTaskError(AjaxRequestTarget ajaxRequestTarget) {
     }
 }
