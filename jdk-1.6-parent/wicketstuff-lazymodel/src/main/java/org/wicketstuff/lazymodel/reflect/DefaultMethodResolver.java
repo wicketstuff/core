@@ -34,9 +34,12 @@ public class DefaultMethodResolver implements IMethodResolver {
 	 */
 	@Override
 	public Method getMethod(Class<?> owner, Serializable id) {
-		for (Method method : owner.getMethods()) {
+		for (Method method : owner.getDeclaredMethods()) {
 			if (id.equals(getId(method))) {
-				method.setAccessible(true);
+				try {
+					method.setAccessible(true);
+				} catch (SecurityException accessNotAllowed) {
+				}
 				return method;
 			}
 		}
@@ -128,11 +131,19 @@ public class DefaultMethodResolver implements IMethodResolver {
 				getterParameters.length);
 		setterParameters[getterParameters.length] = getter.getReturnType();
 
+		Method setter;
 		try {
-			return getter.getDeclaringClass().getMethod(name, setterParameters);
+			setter = getter.getDeclaringClass().getDeclaredMethod(name, setterParameters);
 		} catch (Exception e) {
 			throw new WicketRuntimeException(String.format(
 					"no setter for %s#%s", getter.getClass(), name));
 		}
+
+		try {
+			setter.setAccessible(true);
+		} catch (SecurityException accessNotAllowed) {
+		}
+
+		return setter;
 	}
 }

@@ -817,11 +817,11 @@ public class LazyModelTest {
 			return b;
 		}
 
-		public int getInteger() {
+		int getInteger() {
 			return integer;
 		}
 
-		public void setInteger(int integer) {
+		void setInteger(int integer) {
 			this.integer = integer;
 		}
 
