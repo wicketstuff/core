@@ -70,6 +70,12 @@ public class GMap extends Panel implements GOverlayContainer
     private String sensor = "false";
 
     /**
+     * If said to true map loading will not produce any JavaScript errors in case
+     * google maps API cannot be found (e.g. no Internet connection)
+     */
+    private boolean failSilently = false;
+
+    /**
      * Construct.
      *
      * Default the header contributor of the component will added and the gmap will be inited directly on rendering of the map.
@@ -594,7 +600,7 @@ public class GMap extends Panel implements GOverlayContainer
      */
     public String getJSinit()
     {
-        final StringBuffer js = new StringBuffer("new WicketMap('" + map.getMarkupId() + "');\n");
+        final StringBuffer js = new StringBuffer("new WicketMap('" + map.getMarkupId() + "', "+isFailSilently() +");\n");
 
         js.append(getJSinvoke("clearOverlays()"));
         js.append(overlayListener.getJSinit());
@@ -763,7 +769,12 @@ public class GMap extends Panel implements GOverlayContainer
     {
         if (center != null)
         {
-            return getJSinvoke("setCenter(" + center.getJSconstructor() + ")");
+        	if( !failSilently )
+        	{
+        		return getJSinvoke("setCenter(" + center.getJSconstructor() + ")");
+        	} else {
+        		return getJSinvoke("setCenterFailSafe(" + center.getArguments() + ")");
+        	}
         }
         return "";
     }
@@ -985,4 +996,12 @@ public class GMap extends Panel implements GOverlayContainer
 
         }
     }
+
+	public boolean isFailSilently() {
+		return failSilently;
+	}
+
+	public void setFailSilently(boolean failSilently) {
+		this.failSilently = failSilently;
+	}
 }
