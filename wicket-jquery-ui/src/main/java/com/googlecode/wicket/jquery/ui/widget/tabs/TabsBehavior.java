@@ -16,6 +16,8 @@
  */
 package com.googlecode.wicket.jquery.ui.widget.tabs;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import org.apache.wicket.Component;
@@ -69,12 +71,31 @@ public abstract class TabsBehavior extends JQueryBehavior implements IJQueryAjax
 
 	// Properties //
 	/**
-	 * Gets the reference list of tabs.<br/>
+	 * Gets the reference {@link List} of {@link ITab}<tt>s</tt>.<br/>
 	 * Usually the model object of the component on which this {@link TabsBehavior} is bound to.
 	 *
 	 * @return a non-null {@link List}
 	 */
 	protected abstract List<ITab> getTabs();
+
+	/**
+	 * Gets a read-only {@link ITab} {@link List} having its visible flag set to true.
+	 * @return a {@link List} of {@link ITab}<tt>s</tt>
+	 */
+	protected List<ITab> getVisibleTabs()
+	{
+		List<ITab> list = new ArrayList<ITab>();
+
+		for (ITab tab : this.getTabs())
+		{
+			if (tab.isVisible())
+			{
+				list.add(tab);
+			}
+		}
+
+		return Collections.unmodifiableList(list);
+	}
 
 
 	// Methods //
@@ -89,7 +110,6 @@ public abstract class TabsBehavior extends JQueryBehavior implements IJQueryAjax
 		{
 			component.add(this.activatingEventBehavior = this.newActivatingEventBehavior());
 		}
-
 	}
 
 	/**
@@ -124,10 +144,11 @@ public abstract class TabsBehavior extends JQueryBehavior implements IJQueryAjax
 		if (event instanceof ActivateEvent)
 		{
 			int index = ((ActivateEvent) event).getIndex();
+			final List<ITab> tabs = this.getVisibleTabs();
 
-			if (-1 < index && index < this.getTabs().size()) /* index could be unknown depending on options and user action */
+			if (-1 < index && index < tabs.size()) /* index could be unknown depending on options and user action */
 			{
-				ITab tab = this.getTabs().get(index);
+				ITab tab = tabs.get(index);
 
 				if (tab instanceof AjaxTab)
 				{

@@ -132,7 +132,7 @@ public class AccordionPanel extends JQueryPanel implements IAccordionListener
 	 */
 	public void setActiveTab(int index, AjaxRequestTarget target)
 	{
-		this.widgetBehavior.activate(index, target); // sets 'active' option, that fires 'activate' event (best would be that is also fires a 'show' event)
+		this.widgetBehavior.activate(index, target); // sets 'active' option, that fires 'activate' event (best would be that it also fires a 'show' event)
 	}
 
 	/**
@@ -167,19 +167,12 @@ public class AccordionPanel extends JQueryPanel implements IAccordionListener
 			@Override
 			protected LoopItem newItem(final int index)
 			{
-				return new LoopItem(index)
-				{
-					private static final long serialVersionUID = 1L;
+				ITab tab = AccordionPanel.this.getModelObject().get(index);
 
-					@Override
-					protected void onConfigure()
-					{
-						super.onConfigure();
+				LoopItem item = super.newItem(index);
+				item.setVisible(tab.isVisible());
 
-						ITab tab = AccordionPanel.this.getModelObject().get(index);
-						this.setVisible(tab.isVisible());
-					}
-				};
+				return item;
 			}
 
 			@Override
