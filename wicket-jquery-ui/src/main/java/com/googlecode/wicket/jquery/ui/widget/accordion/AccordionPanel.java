@@ -146,16 +146,30 @@ public class AccordionPanel extends JQueryPanel implements IAccordionListener
 			private static final long serialVersionUID = 1L;
 
 			@Override
+			protected LoopItem newItem(final int index)
+			{
+				return new LoopItem(index)
+				{
+					private static final long serialVersionUID = 1L;
+
+					@Override
+					protected void onConfigure()
+					{
+						super.onConfigure();
+						ITab tab = AccordionPanel.this.getModelObject().get(index);
+						setVisible(tab.isVisible());
+					}
+				};
+			}
+
+			@Override
 			protected void populateItem(LoopItem item)
 			{
 				int index = item.getIndex();
 				final ITab tab = AccordionPanel.this.getModelObject().get(index);
 
-				if (tab.isVisible())
-				{
-					item.add(AccordionPanel.this.newTitleLabel("title", tab.getTitle()));
-					item.add(tab.getPanel("panel"));
-				}
+				item.add(AccordionPanel.this.newTitleLabel("title", tab.getTitle()));
+				item.add(tab.getPanel("panel"));
 			}
 		});
 
