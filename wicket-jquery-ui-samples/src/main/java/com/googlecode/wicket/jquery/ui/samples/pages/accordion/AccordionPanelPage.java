@@ -51,6 +51,7 @@ public class AccordionPanelPage extends AbstractAccordionPage
 
 		form.add(accordion);
 
+		// Button //
 		form.add(new AjaxButton("button") {
 
 			private static final long serialVersionUID = 1L;
@@ -58,7 +59,7 @@ public class AccordionPanelPage extends AbstractAccordionPage
 			@Override
 			protected void onSubmit(AjaxRequestTarget target, Form<?> form)
 			{
-				target.add(accordion.setActiveTab(2));
+				target.add(accordion.setActiveTab(accordion.getLastTabIndex()));
 			}
 		});
 	}
@@ -70,7 +71,18 @@ public class AccordionPanelPage extends AbstractAccordionPage
 		// tab #1, using SimpleTab //
 		tabs.add(new SimpleTab(new Model<String>("Tab (SimpleTab)"), new Model<String>("My content !")));
 
-		// tab #2, using AbstractTab //
+		tabs.add(new SimpleTab(new Model<String>("Tab (invisible)"), Model.of("")) {
+
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			public boolean isVisible()
+			{
+				return false;
+			}
+		});
+
+		// tab #3, using AbstractTab //
 		tabs.add(new AbstractTab(new Model<String>("Tab (AbstractTab)")) {
 
 			private static final long serialVersionUID = 1L;
@@ -82,7 +94,7 @@ public class AccordionPanelPage extends AbstractAccordionPage
 			}
 		});
 
-		// tab #3, using AjaxTab //
+		// tab #4, using AjaxTab //
 		tabs.add(new AjaxTab(new Model<String>("Tab (AjaxTab)")) {
 
 			private static final long serialVersionUID = 1L;
@@ -93,7 +105,7 @@ public class AccordionPanelPage extends AbstractAccordionPage
 				try
 				{
 					// sleep the thread to simulate a long load
-					Thread.sleep(750);
+					Thread.sleep(500);
 				}
 				catch (InterruptedException e)
 				{

@@ -16,6 +16,8 @@
  */
 package com.googlecode.wicket.jquery.ui.widget.accordion;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import org.apache.wicket.Component;
@@ -77,6 +79,25 @@ public abstract class AccordionBehavior extends JQueryBehavior implements IJQuer
 	 */
 	protected abstract List<ITab> getTabs();
 
+	/**
+	 * Gets a read-only {@link ITab} {@link List} having its visible flag set to true.
+	 * @return a {@link List} of {@link ITab}<tt>s</tt>
+	 */
+	protected List<ITab> getVisibleTabs()
+	{
+		List<ITab> list = new ArrayList<ITab>();
+
+		for (ITab tab : this.getTabs())
+		{
+			if (tab.isVisible())
+			{
+				list.add(tab);
+			}
+		}
+
+		return Collections.unmodifiableList(list);
+	}
+
 
 	// Methods //
 	@Override
@@ -113,10 +134,11 @@ public abstract class AccordionBehavior extends JQueryBehavior implements IJQuer
 		if (event instanceof ActivateEvent)
 		{
 			int index = ((ActivateEvent)event).getIndex();
+			List<ITab> tabs = this.getVisibleTabs();
 
-			if (-1 < index && index < this.getTabs().size()) /* index could be unknown depending on options and user action */
+			if (-1 < index && index < tabs.size()) /* index could be unknown depending on options and user action */
 			{
-				ITab tab = this.getTabs().get(index);
+				ITab tab = tabs.get(index);
 
 				if (tab instanceof AjaxTab)
 				{

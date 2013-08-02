@@ -135,6 +135,25 @@ public class AccordionPanel extends JQueryPanel implements IAccordionListener
 		this.widgetBehavior.activate(index, target); // sets 'active' option, that fires 'activate' event (best would be that is also fires a 'show' event)
 	}
 
+	/**
+	 * Gets the last <i>visible</i> tab index
+	 * @return the tab index, or -1 if none
+	 */
+	public int getLastTabIndex()
+	{
+		int count = -1;
+
+		for (ITab tab : this.getModelObject())
+		{
+			if (tab.isVisible())
+			{
+				count++;
+			}
+		}
+
+		return count;
+	}
+
 	// Events //
 	@Override
 	protected void onInitialize()
@@ -156,8 +175,9 @@ public class AccordionPanel extends JQueryPanel implements IAccordionListener
 					protected void onConfigure()
 					{
 						super.onConfigure();
+
 						ITab tab = AccordionPanel.this.getModelObject().get(index);
-						setVisible(tab.isVisible());
+						this.setVisible(tab.isVisible());
 					}
 				};
 			}
