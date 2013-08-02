@@ -77,16 +77,6 @@ public class ListUtils
 	public static synchronized <T> void move(final T item, int index, final List<T> list)
 	{
 		list.add(index, list.remove(ListUtils.indexOf(item.hashCode(), list)));
-
-
-//		int i = ListUtils.indexOf(item.hashCode(), list);
-//
-//		if (i > -1)
-//		{
-//			list.add(index, list.remove(i));
-//		}
-//		else
-//			System.out.println(item + " was not found !!"); //TODO to remove
 	}
 
 	/**
