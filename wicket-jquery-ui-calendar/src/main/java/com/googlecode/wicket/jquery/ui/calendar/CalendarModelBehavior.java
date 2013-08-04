@@ -26,19 +26,16 @@ import org.apache.wicket.request.IRequestHandler;
 import org.apache.wicket.request.IRequestParameters;
 import org.apache.wicket.request.cycle.RequestCycle;
 import org.apache.wicket.request.http.WebResponse;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
- * Provides the behavior that gets the {@link CalendarEvent}<code>s</code> from the {@link CalendarModel}
+ * Provides the behavior that loads {@link CalendarEvent}<code>s</code> according to {@link CalendarModel} start &amp; end dates
  *
  * @author Sebastien Briquet - sebfz1
  *
  */
-class CalendarModelBehavior extends AbstractAjaxBehavior
+public class CalendarModelBehavior extends AbstractAjaxBehavior
 {
 	private static final long serialVersionUID = 1L;
-	private static final Logger LOG = LoggerFactory.getLogger(CalendarModelBehavior.class);
 
 	private CalendarModel model;
 
@@ -111,7 +108,6 @@ class CalendarModelBehavior extends AbstractAjaxBehavior
 
 						builder.append(" ]");
 
-						LOG.debug(builder.toString());
 						response.write(builder);
 					}
 				}
