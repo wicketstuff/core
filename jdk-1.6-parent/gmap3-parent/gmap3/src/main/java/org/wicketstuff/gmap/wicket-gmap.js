@@ -30,7 +30,13 @@ else if (typeof(Wicket) !== "object") {
 
 function WicketClientGeocoder() {
 
-    this.coder = new google.maps.Geocoder();
+    try {
+    	this.coder = new google.maps.Geocoder();
+    } catch (e) {
+    	if( !Wicket.maps['_failSilently'] ) {
+    		throw e;
+    	}
+	}
 
     this.getLatLng = function(callBack, addressId){
 
@@ -61,11 +67,22 @@ function WicketClientGeocoder() {
 
 Wicket.maps = {}
 
-function WicketMap(id) {
+function WicketMap(id, failSilently) {
     Wicket.maps[id] = this;
 
+    if(failSilently) {
+    	Wicket.maps['_failSilently'] = failSilently;
+    }
+
     this.options = {};
-    this.map = new google.maps.Map(document.getElementById(id));
+    try {
+        this.map = new google.maps.Map(document.getElementById(id));
+    } catch (e) {
+    	if(!failSilently) {
+    		alert(failSilently);
+    		throw e;
+    	}
+	}
     this.overlays = {};
     this.singleInfoWindo = null;
     this.infoWindow = null;
@@ -205,6 +222,15 @@ function WicketMap(id) {
     this.setCenter = function(center) {
         this.map.setCenter(center);
     }
+
+    this.setCenterFailSafe = function(lat, lng, unbounded) {
+    	try {
+    		this.map.setCenter( new google.maps.LatLng(lat, lng, unbounded) );
+    	} catch (e) {
+			// do nothing
+		}
+    }
+
 
     this.panTo = function(center) {
         this.map.panTo(center);
