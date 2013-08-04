@@ -40,7 +40,7 @@ import org.apache.wicket.util.resource.ResourceStreamNotFoundException;
 
 /**
  * Parse a Wicket component and generates a {@link Sheet} based on its markup and component models.
- * 
+ *
  * @author Pedro Santos
  */
 public class TableParser
@@ -48,6 +48,7 @@ public class TableParser
 	private Row row;
 	private Cell cell;
 	private final Map<Integer, Integer> rowsToSpanByColumn = new HashMap<Integer, Integer>();
+	private final Map<Integer, Integer> columnSpan = new HashMap<Integer, Integer>();
 	private int colsToSpan;
 	private final Sheet targetSheet;
 	private CellExporter cellExporter;
@@ -61,7 +62,7 @@ public class TableParser
 
 	/**
 	 * Parse the grid component to a {@link Sheet} object
-	 * 
+	 *
 	 * @param workbook
 	 * @throws IOException
 	 * @throws ResourceStreamNotFoundException
@@ -124,9 +125,9 @@ public class TableParser
 				else if ("td".equals(tagName) || "th".equals(tagName) )
 				{
 					int index = cell == null ? 0 : cell.getColumnIndex() + 1 + colsToSpan;
-					while (skipColumn(index))
+					if (skipColumn(index))
 					{
-						index++;
+						index += columnSpan.get(index);
 					}
 					colsToSpan = 0;
 					CharSequence rowspan = tag.getAttribute("rowspan");
@@ -136,11 +137,13 @@ public class TableParser
 					{
 						int rowsToSpan = rowspan == null ? 0
 							: Integer.valueOf(rowspan.toString()) - 1;
+						colsToSpan = colspan == null ? 0 : Integer.valueOf(colspan.toString()) - 1;
+
 						if (rowsToSpan > 0)
 						{
 							rowsToSpanByColumn.put(index, rowsToSpan);
+							columnSpan.put(index, colsToSpan + 1);
 						}
-						colsToSpan = colspan == null ? 0 : Integer.valueOf(colspan.toString()) - 1;
 
 						int lastRowNum = row.getRowNum() + rowsToSpan;
 						int lastColIndex = index + colsToSpan;
@@ -173,7 +176,7 @@ public class TableParser
 
 	/**
 	 * Mock a request to table component and return its response.
-	 * 
+	 *
 	 * @param tableComponent
 	 * @return
 	 */
