@@ -22,13 +22,14 @@ import java.util.Date;
 
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.wicket.Component;
+import org.apache.wicket.markup.html.link.Link;
 import org.apache.wicket.markup.parser.XmlPullParser;
 import org.apache.wicket.markup.parser.XmlTag;
 
 /**
  * Fist try to get the most nested component in the table data tag, if not possible set the most
  * nested value in markup as a {@link String}.
- * 
+ *
  * @author Pedro Santos
  */
 public class GeneralPurposeExporter implements CellExporter
@@ -55,12 +56,29 @@ public class GeneralPurposeExporter implements CellExporter
 		{
 			Component firstMostNestedComponent = gridComponent.getPage().get(
 				possibleComponentReference.toString());
+			// exclude auto links
+			if( firstMostNestedComponent.getClass().getName().contains( "ResourceReferenceAutolink" ) )
+			{
+				cell.setCellValue( "" );
+				return;
+			}
+			// handle links
+			if( firstMostNestedComponent instanceof Link)
+			{
+				Link<?> link = (Link<?>) firstMostNestedComponent;
+				firstMostNestedComponent = getLinkInnerComponent(link);
+				if( firstMostNestedComponent == null )
+				{
+					cell.setCellValue( "" );
+					return;
+				}
+			}
 			Object modelValue = firstMostNestedComponent.getDefaultModelObject();
 			if (modelValue != null)
 			{
 				if (modelValue instanceof Number)
 				{
-					cell.setCellValue(((Number)modelValue).doubleValue());
+					handleNumber(cell, (Number)modelValue);
 				}
 				else if (modelValue instanceof CharSequence)
 				{
@@ -76,11 +94,11 @@ public class GeneralPurposeExporter implements CellExporter
 				}
 				else if (modelValue instanceof Calendar)
 				{
-					cell.setCellValue((Calendar)modelValue);
+					handleCalendar(cell, (Calendar)modelValue);
 				}
 				else if (modelValue instanceof Date)
 				{
-					cell.setCellValue((Date)modelValue);
+					handleDate(cell, (Date)modelValue);
 				}
 				else
 				{
@@ -96,5 +114,21 @@ public class GeneralPurposeExporter implements CellExporter
 				.toString();
 			cell.setCellValue(value);
 		}
+	}
+
+	protected void handleNumber(Cell cell, Number number ) {
+		cell.setCellValue(number.doubleValue());
+	}
+
+	protected void handleCalendar(Cell cell, Calendar calendar ) {
+		cell.setCellValue(calendar);
+	}
+
+	protected void handleDate(Cell cell, Date date) {
+		cell.setCellValue(date);
+	}
+
+	protected Component getLinkInnerComponent(Link<?> link) {
+		return link.get(0);
 	}
 }
