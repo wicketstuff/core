@@ -17,7 +17,7 @@
 
 	<groupId>com.googlecode.wicket-jquery-ui</groupId>
 	<artifactId>wicket-jquery-ui-parent</artifactId>
-	<version>6.9.1-SNAPSHOT</version>
+	<version>6.9.1</version>
 	<packaging>pom</packaging>
 
 	<licenses>
