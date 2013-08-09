@@ -28,7 +28,7 @@ import com.google.gson.Gson;
 /**
  * Simple test using the WicketTester
  */
-public class TestPersonResource extends Assert
+public class PersonResourceTest extends Assert
 {
 	private WicketTester tester;
 	final private Gson gson = new Gson();

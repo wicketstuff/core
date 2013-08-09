@@ -28,11 +28,6 @@
 	<packaging>pom</packaging>
 	<name>wicketstuff-restannotations-parent</name>
 	<description>The project is intended to provide support to build REST API in the Wicket enviorment </description>
-	<properties>
-		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<maven.javadoc.version>2.8.1</maven.javadoc.version>
-		<maven.surefire.version>2.12.2</maven.surefire.version>
-	</properties>
 	
 	<modules>	
 	    <module>restannotations</module>
@@ -48,66 +43,35 @@
 			<distribution>repo</distribution>
 		</license>
 	</licenses>	
-	<build>
-		<plugins>
-			<plugin>
-				<inherited>true</inherited>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-compiler-plugin</artifactId>
-				<version>2.3.2</version>
-				<configuration>
-					<source>1.5</source>
-					<target>1.5</target>
-					<optimize>true</optimize>
-					<debug>true</debug>
-				</configuration>
-			</plugin>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-eclipse-plugin</artifactId>
-				<version>2.8</version>
-				<configuration>
-					<downloadSources>true</downloadSources>
-				</configuration>
-			</plugin>			
-			<plugin>
-			    <inherited>false</inherited>
-			    <groupId>com.mycila.maven-license-plugin</groupId>
-			    <artifactId>maven-license-plugin</artifactId>   
-			    <configuration>
-				<header>./header.txt</header>
-				<failIfMissing>true</failIfMissing>
-				<aggregate>true</aggregate>
-				<excludes>
-				    <exclude>LICENSE.txt</exclude>
-				    <exclude>**/src/test/resources/**</exclude>
-				    <exclude>**/src/test/data/**</exclude>
-				    <exclude>**/jquery*</exclude>	
-				    <exclude>**/*.csv</exclude>		
-				</excludes>
-			    </configuration>
-			    <executions>
-				<execution>
-				    <id>check-headers</id>
-				    <phase>verify</phase>
-				    <goals>
-					<goal>check</goal>
-				    </goals>
-				</execution>
-			    </executions>
-			</plugin>
-		</plugins>
-	</build>	
-	<repositories>
-		<repository>
-			<id>Apache Nexus</id>
-			<url>https://repository.apache.org/content/repositories/snapshots/</url>
-			<releases>
-				<enabled>false</enabled>
-			</releases>
-			<snapshots>
-				<enabled>true</enabled>
-			</snapshots>
-		</repository>
-	</repositories>
+	<dependencies>
+		<dependency>
+			<groupId>org.apache.wicket</groupId>
+			<artifactId>wicket-auth-roles</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<scope>test</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-api</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-log4j12</artifactId>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>log4j</groupId>
+			<artifactId>log4j</artifactId>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.eclipse.jetty</groupId>
+			<artifactId>test-jetty-servlet</artifactId>
+			<scope>test</scope>
+		</dependency>
+	</dependencies>
 </project>

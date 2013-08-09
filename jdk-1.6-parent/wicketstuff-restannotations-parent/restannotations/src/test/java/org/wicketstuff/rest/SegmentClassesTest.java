@@ -28,7 +28,7 @@ import org.wicketstuff.rest.resource.urlsegments.AbstractURLSegment;
 import org.wicketstuff.rest.resource.urlsegments.MultiParamSegment;
 import org.wicketstuff.rest.resource.urlsegments.ParamSegment;
 
-public class TestSegmentClasses extends Assert {
+public class SegmentClassesTest extends Assert {
 
 	@Test
 	public void testStandardUrlSegmentPattern() {

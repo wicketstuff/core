@@ -46,7 +46,7 @@ import org.wicketstuff.rest.utils.test.BufferedMockRequest;
 /**
  * Simple test using the WicketTester
  */
-public class TestRestResources {
+public class RestResourcesTest {
 	private WicketTester tester;
 	private Roles roles = new Roles();
 
