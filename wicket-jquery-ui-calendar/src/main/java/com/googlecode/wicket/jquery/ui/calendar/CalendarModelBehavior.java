@@ -60,8 +60,11 @@ public class CalendarModelBehavior extends AbstractAjaxBehavior
 
 		if (this.model != null)
 		{
-			this.model.setStart(new Date(start  * 1000));
-			this.model.setEnd(new Date(end * 1000));
+			this.setStartDate(this.model, new Date(start  * 1000));
+			this.setEndDate(this.model, new Date(end  * 1000));
+			//TODO: 6.9.10 - remove this?
+//			this.model.setStart(new Date(start  * 1000));
+//			this.model.setEnd(new Date(end * 1000));
 		}
 
 		final IRequestHandler handler = this.newRequestHandler();
@@ -69,11 +72,36 @@ public class CalendarModelBehavior extends AbstractAjaxBehavior
 	}
 
 	/**
+	 * Sets the start date to the model<br/>
+	 * This can be overridden to perform additional operation on date before the assignment.
+	 *
+	 * @param model the {@link CalendarModel}
+	 * @param date the {@link Date}
+	 */
+	protected void setStartDate(CalendarModel model, Date date)
+	{
+		model.setStart(date);
+	}
+
+	/**
+	 * Sets the end date to the model<br/>
+	 * This can be overridden to perform additional operation on date before the assignment.
+	 *
+	 * @param model the {@link CalendarModel}
+	 * @param date the {@link Date}
+	 */
+	protected void setEndDate(CalendarModel model, Date date)
+	{
+		model.setEnd(date);
+	}
+
+	/**
 	 * Gets the new {@link IRequestHandler} that will respond the list of {@link CalendarEvent} in a json format
 	 *
 	 * @return the {@link IRequestHandler}
 	 */
-	private IRequestHandler newRequestHandler()
+	//TODO: 6.9.10 - restore to private ?
+	protected IRequestHandler newRequestHandler()
 	{
 		return new IRequestHandler()
 		{

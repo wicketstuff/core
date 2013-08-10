@@ -24,7 +24,7 @@ import org.apache.wicket.model.LoadableDetachableModel;
 /**
  * Base class for implementing the list model of {@link CalendarEvent} to be retrieved.<br/>
  * {@link Calendar} widget takes those model in constructor; the inheriting class should be able to {@link #load()} events depending on the interval defined by {@link #getStart()} and {@link #getEnd()} dates.
- * 
+ *
  * @author Sebastien Briquet - sebfz1
  *
  */
@@ -34,7 +34,7 @@ public abstract class CalendarModel extends LoadableDetachableModel<List<? exten
 
 	private Date start;
 	private Date end;
-	
+
 	/**
 	 * Constructor
 	 */
@@ -43,26 +43,26 @@ public abstract class CalendarModel extends LoadableDetachableModel<List<? exten
 		this.start = null;
 		this.end = null;
 	}
-	
+
 	/**
 	 * Gets the start date, to be used to {@link #load()} {@link CalendarEvent}<code>s</code>
 	 * @return the start date
 	 */
-	public final Date getStart()
+	public Date getStart()
 	{
 		return this.start;
 	}
-	
+
 	/**
 	 * Sets the start date.<br/>
 	 * This method has package visibility, it is only called by {@link CalendarModelBehavior}
 	 * @param date the start date
 	 */
-	void setStart(Date date)
+	public void setStart(Date date)
 	{
 		this.start = date;
 	}
-	
+
 	/**
 	 * Gets the end date, to be used to {@link #load()} {@link CalendarEvent}<code>s</code>
 	 * @return the start date
@@ -71,13 +71,13 @@ public abstract class CalendarModel extends LoadableDetachableModel<List<? exten
 	{
 		return this.end;
 	}
-	
+
 	/**
 	 * Gets the end date.<br/>
 	 * This method has package visibility, it is only called by {@link CalendarModelBehavior}
 	 * @param date the start date
 	 */
-	void setEnd(Date date)
+	public void setEnd(Date date)
 	{
 		this.end = date;
 	}
