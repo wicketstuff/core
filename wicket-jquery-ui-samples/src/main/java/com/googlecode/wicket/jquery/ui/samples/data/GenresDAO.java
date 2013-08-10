@@ -26,7 +26,7 @@ public class GenresDAO
 
 	public static Genre get(int i)
 	{
-		return GenresDAO.get(i);
+		return GenresDAO.all().get(i);
 	}
 
 	public static Genre newGenre()
