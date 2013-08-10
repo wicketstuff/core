@@ -59,6 +59,7 @@ public class ButtonAjaxPostBehavior extends ButtonAjaxBehavior
 		{
 			attributes.setMethod(Method.POST);
 			attributes.setFormId(this.form.getMarkupId());
+			attributes.setMultipart(this.form.isMultiPart());
 		}
 	}
 }
