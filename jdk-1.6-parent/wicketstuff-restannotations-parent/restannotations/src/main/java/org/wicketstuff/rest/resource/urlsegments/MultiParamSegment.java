@@ -32,18 +32,18 @@ import org.apache.wicket.util.parse.metapattern.MetaPattern;
  * 
  */
 public class MultiParamSegment extends AbstractURLSegment {
-	final private List<AbstractURLSegment> subSegments;
+	private volatile List<AbstractURLSegment> subSegments;
 
 	MultiParamSegment(String text) {
 		super(text);
-		this.subSegments = Collections.unmodifiableList(loadSubSegments(text));
 	}
 
 	/**
 	 * Split the segment in input in sub segments like fixed segments (
 	 * {@link FixedURLSegment}) or parameter segments ({@link ParamSegment}).
 	 * 
-	 * @param text the segment in input.
+	 * @param text
+	 *            the segment in input.
 	 * @return the list of sub segments.
 	 */
 	private List<AbstractURLSegment> loadSubSegments(String text) {
@@ -77,6 +77,9 @@ public class MultiParamSegment extends AbstractURLSegment {
 	protected MetaPattern loadMetaPattern() {
 		List<MetaPattern> patterns = new ArrayList<MetaPattern>();
 
+		this.subSegments = Collections
+				.unmodifiableList(loadSubSegments(toString()));
+
 		for (AbstractURLSegment segment : subSegments) {
 			patterns.add(segment.getMetaPattern());
 		}
@@ -92,7 +95,8 @@ public class MultiParamSegment extends AbstractURLSegment {
 	}
 
 	@Override
-	public void populatePathVariables(Map<String, String> variables, String segment) {
+	public void populatePathVariables(Map<String, String> variables,
+			String segment) {
 		int startingIndex = 0;
 
 		if (!getMetaPattern().matcher(segment).matches())
