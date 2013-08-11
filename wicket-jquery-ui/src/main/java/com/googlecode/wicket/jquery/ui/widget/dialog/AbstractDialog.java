@@ -253,6 +253,28 @@ public abstract class AbstractDialog<T extends Serializable> extends JQueryPanel
 	}
 
 	/**
+	 * Sets the dialog's title dynamically
+	 * @param target the {@link AjaxRequestTarget}
+	 * @param title the dialog's title
+	 */
+	public void setTitle(AjaxRequestTarget target, String title)
+	{
+		this.setTitle(target, Model.of(title));
+	}
+
+	/**
+	 * Sets the dialog's title dynamically
+	 * @param target the {@link AjaxRequestTarget}
+	 * @param title the dialog's title
+	 */
+	public void setTitle(AjaxRequestTarget target, IModel<String> title)
+	{
+		this.setTitle(title);
+
+		target.appendJavaScript(this.widgetBehavior.$(Options.asString("option"), Options.asString("title"), Options.asString(title.getObject())));
+	}
+
+	/**
 	 * Gets the modal flag
 	 * @return the modal flag supplied to the constructor by default
 	 */

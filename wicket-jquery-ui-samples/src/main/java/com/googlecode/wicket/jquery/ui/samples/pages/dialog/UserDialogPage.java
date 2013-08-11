@@ -92,10 +92,12 @@ public class UserDialogPage extends AbstractDialogPage
 					@Override
 					protected void onSubmit(AjaxRequestTarget target, Form<?> form)
 					{
-						dialog.setModelObject(item.getModelObject());
+						User user = item.getModelObject();
+
+						dialog.setTitle(target, "Update user " + user.getName());
+						dialog.setModelObject(user);
 						dialog.open(target);
 					}
-
 				});
 			}
 		});
@@ -108,6 +110,7 @@ public class UserDialogPage extends AbstractDialogPage
 			@Override
 			protected void onSubmit(AjaxRequestTarget target, Form<?> form)
 			{
+				dialog.setTitle(target, "Create new user");
 				dialog.setModelObject(new User()); //Provides a new model object to the dialog
 				dialog.open(target); //Important: onOpen() event has been overridden in UserDialog to re-attach the inner form, in order to reflect the updated model
 			}

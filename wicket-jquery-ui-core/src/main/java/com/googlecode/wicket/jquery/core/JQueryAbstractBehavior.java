@@ -142,7 +142,7 @@ public abstract class JQueryAbstractBehavior extends Behavior
 	/**
 	 * Renders the {@link Behavior}'s javascript<br/>
 	 * This can be overridden to provides a priority:</br>
-	 * <code>response.render(new PriorityHeaderItem(item));</code>
+	 * <code>response.render(new PriorityHeaderItem(script));</code>
 	 *
 	 * @param script the {@link JavaScriptHeaderItem}
 	 * @param response the {@link IHeaderResponse}
