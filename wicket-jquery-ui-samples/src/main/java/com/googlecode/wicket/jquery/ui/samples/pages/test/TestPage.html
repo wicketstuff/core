@@ -8,14 +8,10 @@
 <body>
 <wicket:extend>
 	<div id="wrapper-panel-frame" class="ui-corner-all">
-		<div wicket:id="feedback" style="width: 360px;"></div>
-		<div wicket:id="dialog"></div>
+		<form wicket:id="form">
+			<button wicket:id="button">Ajax button</button>
+		</form>
 	</div>
-	
-	
-	<wicket:fragment wicket:id="dialog-fragment">
-		simple dialog
-	</wicket:fragment>
 </wicket:extend>
 </body>
 </html>

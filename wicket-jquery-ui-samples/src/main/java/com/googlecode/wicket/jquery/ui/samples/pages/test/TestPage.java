@@ -1,19 +1,13 @@
 package com.googlecode.wicket.jquery.ui.samples.pages.test;
 
-import org.apache.wicket.ajax.AjaxRequestTarget;
-import org.apache.wicket.markup.head.CssContentHeaderItem;
-import org.apache.wicket.markup.head.IHeaderResponse;
-import org.apache.wicket.markup.head.JavaScriptHeaderItem;
+import org.apache.wicket.Component;
+import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.panel.FeedbackPanel;
-import org.apache.wicket.markup.html.panel.Fragment;
 
 import com.googlecode.wicket.jquery.core.JQueryBehavior;
-import com.googlecode.wicket.jquery.core.Options;
+import com.googlecode.wicket.jquery.ui.form.button.AjaxButton;
 import com.googlecode.wicket.jquery.ui.panel.JQueryFeedbackPanel;
 import com.googlecode.wicket.jquery.ui.samples.pages.kendo.AbstractKendoPage;
-import com.googlecode.wicket.jquery.ui.widget.dialog.AbstractDialog;
-import com.googlecode.wicket.jquery.ui.widget.dialog.DialogButton;
-import com.googlecode.wicket.jquery.ui.widget.dialog.FragmentDialog;
 
 public class TestPage extends AbstractKendoPage
 {
@@ -36,78 +30,67 @@ public class TestPage extends AbstractKendoPage
 	{
 		super.onInitialize();
 
-		// DropDownList //
-		final AbstractDialog<?> dialog = new MyDialog("dialog") {
+		final Form<?> form = new Form<Void>("form");
+		// this.form.setMultiPart(true);
+		this.add(form);
+
+//		WebApplication.get().
+
+		// Ajax Button //
+		AjaxButton button = new AjaxButton("button") {
 
 			private static final long serialVersionUID = 1L;
 
 			@Override
-			public void onClose(AjaxRequestTarget target, DialogButton button)
+			protected void onConfigure()
 			{
+				super.onConfigure();
+
+				System.out.println("Component#onConfigure()");
+				// this.setEnabled(false);
+
+				this.add(new JQueryBehavior(JQueryWidget.getSelector(this)) {
+
+					private static final long serialVersionUID = 1L;
+
+					@Override
+					public void onConfigure(Component component)
+					{
+						component.setEnabled(false);
+
+						// super should be called in last, for #onConfigure(JQueryBehavior) to be called after component.setEnabled(false);
+						super.onConfigure(component);
+					}
+				});
+			}
+
+			@Override
+			public void onConfigure(JQueryBehavior behavior)
+			{
+				super.onConfigure(behavior);
+
+				System.out.println("Component#onConfigure(JQueryBehavior)");
+				System.out.println(this.isEnabledInHierarchy());
+				behavior.setOption("active", this.isEnabledInHierarchy());
+			}
+
+			@Override
+			protected void onBeforeRender()
+			{
+				super.onBeforeRender();
+
+				System.out.println("Component#onBeforeRender()");
+			}
+
+			@Override
+			public void onBeforeRender(JQueryBehavior behavior)
+			{
+				super.onBeforeRender(behavior);
+				System.out.println("Component#onBeforeRender(JQueryBehavior)");
 			}
 		};
 
-		this.add(dialog);
+		form.add(button);
 	}
 
-	abstract class MyDialog extends FragmentDialog<String> {
-
-		private static final long serialVersionUID = 1L;
-
-		public MyDialog(String id)
-		{
-			super(id, "title");
-		}
-
-		@Override
-		protected Fragment newFragment(String id)
-		{
-			return new Fragment(id, "dialog-fragment", TestPage.this);
-		}
-
-		@Override
-		public void renderHead(IHeaderResponse response)
-		{
-			super.renderHead(response);
-
-			// @see: http://api.jqueryui.com/dialog/
-			response.render(new CssContentHeaderItem(".no-close .ui-dialog-titlebar-close { display: none; }", "dialog-noclose", ""));
-		}
-
-		@Override
-		protected void onInitialize()
-		{
-			super.onInitialize();
-
-			// @see: http://api.jqueryui.com/dialog/#method-open
-			this.add(new JQueryBehavior(JQueryWidget.getSelector(this), "dialog") {
-
-				private static final long serialVersionUID = 1L;
-
-				@Override
-				protected void renderScript(JavaScriptHeaderItem script, IHeaderResponse response)
-				{
-					super.renderScript(script, response);
-//					response.render(new PriorityHeaderItem(script));
-				}
-
-				@Override
-				protected String $()
-				{
-					return this.$(Options.asString("open"));
-				}
-			});
-		}
-
-
-		@Override
-		public void onConfigure(JQueryBehavior behavior)
-		{
-			super.onConfigure(behavior);
-
-//			behavior.setOption("autoOpen", true);
-			behavior.setOption("closeOnEscape", false);
-			behavior.setOption("dialogClass", Options.asString("no-close"));
-		}
-	}
 }
