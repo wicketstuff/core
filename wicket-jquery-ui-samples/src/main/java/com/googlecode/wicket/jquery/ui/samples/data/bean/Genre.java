@@ -23,11 +23,6 @@ public class Genre implements IClusterable
 		this(0, name, EMPTY_COVER);
 	}
 
-	public Genre(final String name, final String cover)
-	{
-		this(0, name, cover);
-	}
-
 	public Genre(final int id, final String name)
 	{
 		this(id, name, EMPTY_COVER);

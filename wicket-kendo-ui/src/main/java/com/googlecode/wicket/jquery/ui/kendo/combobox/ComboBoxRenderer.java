@@ -73,14 +73,28 @@ public class ComboBoxRenderer<T> extends TextRenderer<T>
 	 */
 	public String getTextField()
 	{
-		String testExpression = super.getExpression();
+		String textExpression = super.getExpression();
 
-		if (testExpression != null)
+		if (textExpression != null)
 		{
-			return testExpression;
+			return textExpression;
 		}
 
 		return TEXT_FIELD;
+	}
+
+	/**
+	 * Gets the name of the field that acts as the 'dataValueField' in the JSON response.
+	 * @return the name of the value field
+	 */
+	public String getValueField()
+	{
+		if (this.valueExpression != null)
+		{
+			return this.valueExpression;
+		}
+
+		return VALUE_FIELD;
 	}
 
 	/**
@@ -101,19 +115,5 @@ public class ComboBoxRenderer<T> extends TextRenderer<T>
 		}
 
 		return this.getText(object);
-	}
-
-	/**
-	 * Gets the name of the field that acts as the 'dataValueField' in the JSON response.
-	 * @return the name of the value field
-	 */
-	public String getValueField()
-	{
-		if (this.valueExpression != null)
-		{
-			return this.valueExpression;
-		}
-
-		return VALUE_FIELD;
 	}
 }

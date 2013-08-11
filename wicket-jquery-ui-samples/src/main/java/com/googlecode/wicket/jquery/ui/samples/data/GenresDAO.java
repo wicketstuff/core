@@ -39,15 +39,15 @@ public class GenresDAO
 	public GenresDAO()
 	{
 		this.list = new ArrayList<Genre>();
-		this.list.add(new Genre("Black Metal", "cover-black-metal.png"));
-		this.list.add(new Genre("Death Metal", "cover-death-metal.png"));
-		this.list.add(new Genre("Doom Metal", "cover-doom-metal.png"));
-		this.list.add(new Genre("Folk Metal", "cover-folk-metal.png"));
-		this.list.add(new Genre("Gothic Metal", "cover-gothic-metal.png"));
-		this.list.add(new Genre("Heavy Metal", "cover-heavy-metal.png"));
-		this.list.add(new Genre("Power Metal", "cover-power-metal.png"));
-		this.list.add(new Genre("Symphonic Metal", "cover-symphonic-metal.png"));
-		this.list.add(new Genre("Trash Metal", "cover-trash-metal.png"));
-		this.list.add(new Genre("Vicking Metal", "cover-vicking-metal.png"));
+		this.list.add(new Genre(0, "Black Metal", "cover-black-metal.png"));
+		this.list.add(new Genre(1, "Death Metal", "cover-death-metal.png"));
+		this.list.add(new Genre(2, "Doom Metal", "cover-doom-metal.png"));
+		this.list.add(new Genre(3, "Folk Metal", "cover-folk-metal.png"));
+		this.list.add(new Genre(4, "Gothic Metal", "cover-gothic-metal.png"));
+		this.list.add(new Genre(5, "Heavy Metal", "cover-heavy-metal.png"));
+		this.list.add(new Genre(6, "Power Metal", "cover-power-metal.png"));
+		this.list.add(new Genre(7, "Symphonic Metal", "cover-symphonic-metal.png"));
+		this.list.add(new Genre(8, "Trash Metal", "cover-trash-metal.png"));
+		this.list.add(new Genre(9, "Vicking Metal", "cover-vicking-metal.png"));
 	}
 }

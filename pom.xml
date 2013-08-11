@@ -43,7 +43,7 @@
 	</scm>
 
 	<properties>
-		<wicket.version>6.9.0</wicket.version>
+		<wicket.version>6.9.1</wicket.version>
 		<junit.version>4.8.2</junit.version>
 		<jetty.version>7.6.3.v20120416</jetty.version>
 	</properties>
@@ -58,7 +58,7 @@
 		</repository>
 		<repository>
 			<id>Wicket Nexus Staging</id>
-			<url>https://repository.apache.org/content/repositories/orgapachewicket-061/</url>
+			<url>https://repository.apache.org/content/repositories/orgapachewicket-082/</url>
 		</repository>
 	</repositories>
 
