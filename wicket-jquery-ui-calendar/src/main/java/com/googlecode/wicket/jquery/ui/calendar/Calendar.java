@@ -112,7 +112,7 @@ public class Calendar extends JQueryContainer implements ICalendarListener
 	}
 
 	/**
-	 * Refreshes the events currently available in the selected view.
+	 * Refetches and refreshes the events currently available in the selected view.
 	 *
 	 * @param target the {@link AjaxRequestTarget}
 	 */

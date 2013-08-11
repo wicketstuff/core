@@ -29,7 +29,8 @@ public enum CalendarView
     agendaWeek,
     agendaDay,
 
-    // ResourceViews (fork, not merged as of June 2013) //
+    // ResourceViews (fork, not merged as of Aug. 2013) //
+    // https://github.com/arshaw/fullcalendar/pull/99 //
     resourceDay,		// Shows a single day in calendar.
     resourceWeek,		// Shows a single week in calendar.
     resourceNextWeeks,	// Shows ongoing week and 3 weeks after that in same calendar.

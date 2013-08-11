@@ -32,7 +32,7 @@ public class FixedHeaderTableBehavior extends JQueryBehavior
 	/**
 	 * Gets the {@link IFixedHeaderTableLibrarySettings}
 	 *
-	 * @return null if Application's {@link IJavaScriptLibrarySettings} is not an instance of {@link IFixedHeaderTableLibrarySettings}
+	 * @return Default internal {@link IFixedHeaderTableLibrarySettings} if {@link Application}'s {@link IJavaScriptLibrarySettings} is not an instance of {@link IFixedHeaderTableLibrarySettings}
 	 */
 	private static IFixedHeaderTableLibrarySettings getLibrarySettings()
 	{

@@ -31,6 +31,7 @@ import org.apache.wicket.request.resource.CssResourceReference;
 import org.apache.wicket.request.resource.JavaScriptResourceReference;
 import org.apache.wicket.request.resource.ResourceReference;
 import org.apache.wicket.resource.JQueryPluginResourceReference;
+import org.apache.wicket.settings.IJavaScriptLibrarySettings;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -50,7 +51,8 @@ public abstract class JQueryAbstractBehavior extends Behavior
 
 	/**
 	 * Gets the {@link IJQueryLibrarySettings}
-	 * @return the {@link IJQueryLibrarySettings}
+	 *
+	 * @return Default internal {@link IJQueryLibrarySettings} if {@link Application}'s {@link IJavaScriptLibrarySettings} is not an instance of {@link IJQueryLibrarySettings}
 	 */
 	public static IJQueryLibrarySettings getJQueryLibrarySettings()
 	{

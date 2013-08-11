@@ -36,7 +36,7 @@ public class KendoAbstractBehavior extends JQueryBehavior
 	/**
 	 * Gets the {@link IKendoUILibrarySettings}
 	 *
-	 * @return null if Application's {@link IJavaScriptLibrarySettings} is not an instance of {@link IKendoUILibrarySettings}
+	 * @return Default internal {@link KendoUILibrarySettings} instance if {@link Application}'s {@link IJavaScriptLibrarySettings} is not an instance of {@link IKendoUILibrarySettings}
 	 */
 	private static IKendoUILibrarySettings getLibrarySettings()
 	{

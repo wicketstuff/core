@@ -54,7 +54,7 @@ public abstract class CalendarBehavior extends JQueryBehavior implements IJQuery
 	/**
 	 * Gets the {@link ICalendarLibrarySettings}
 	 *
-	 * @return null if Application's {@link IJavaScriptLibrarySettings} is not an instance of {@link ICalendarLibrarySettings}
+	 * @return Default internal {@link ICalendarLibrarySettings} instance if {@link Application}'s {@link IJavaScriptLibrarySettings} is not an instance of {@link ICalendarLibrarySettings}
 	 */
 	private static ICalendarLibrarySettings getLibrarySettings()
 	{
@@ -74,7 +74,7 @@ public abstract class CalendarBehavior extends JQueryBehavior implements IJQuery
 	private JQueryAjaxBehavior onEventDropBehavior = null; // event drop
 	private JQueryAjaxBehavior onEventResizeBehavior = null; // event resize
 
-	private JQueryAjaxBehavior onViewDisplayBehavior = null; // view displays
+	private JQueryAjaxBehavior onViewRenderBehavior = null; // view render
 
 
 	/**
@@ -154,7 +154,7 @@ public abstract class CalendarBehavior extends JQueryBehavior implements IJQuery
 
 		if (this.isViewDisplayEnabled())
 		{
-			component.add(this.onViewDisplayBehavior = this.newOnViewDisplayBehavior());
+			component.add(this.onViewRenderBehavior = this.newOnViewRenderBehavior());
 		}
 	}
 
@@ -215,9 +215,9 @@ public abstract class CalendarBehavior extends JQueryBehavior implements IJQuery
 			this.setOption("eventResize", this.onEventResizeBehavior.getCallbackFunction());
 		}
 
-		if (this.onViewDisplayBehavior != null)
+		if (this.onViewRenderBehavior != null)
 		{
-			this.setOption("viewDisplay", this.onViewDisplayBehavior.getCallbackFunction());
+			this.setOption("viewRender", this.onViewRenderBehavior.getCallbackFunction());
 		}
 	}
 
@@ -254,10 +254,10 @@ public abstract class CalendarBehavior extends JQueryBehavior implements IJQuery
 			this.onEventResize(target, resizeEvent.getEventId(), resizeEvent.getDelta());
 		}
 
-		else if (event instanceof ViewDisplayEvent)
+		else if (event instanceof ViewRenderEvent)
 		{
-			ViewDisplayEvent displayEvent = (ViewDisplayEvent) event;
-			this.onViewDisplay(target, displayEvent.getView());
+			ViewRenderEvent renderEvent = (ViewRenderEvent) event;
+			this.onViewDisplay(target, renderEvent.getView());
 		}
 	}
 
@@ -437,11 +437,11 @@ public abstract class CalendarBehavior extends JQueryBehavior implements IJQuery
 	}
 
 	/**
-	 * Gets the ajax behavior that will be triggered when the calendar loads and every time a different date-range is displayed.
+	 * Gets the ajax behavior that will be triggered when the user changes the view, or when any of the date navigation methods are called.
 	 *
 	 * @return the {@link JQueryAjaxBehavior}
 	 */
-	protected JQueryAjaxBehavior newOnViewDisplayBehavior()
+	protected JQueryAjaxBehavior newOnViewRenderBehavior()
 	{
 		return new JQueryAjaxBehavior(this) {
 
@@ -450,10 +450,11 @@ public abstract class CalendarBehavior extends JQueryBehavior implements IJQuery
 			@Override
 			protected CallbackParameter[] getCallbackParameters()
 			{
-				//http://arshaw.com/fullcalendar/docs/display/viewDisplay/
-				//function(view) { }
+				//http://arshaw.com/fullcalendar/docs/display/viewRender/
+				//function(view, element) { }
 				return new CallbackParameter[] {
 						CallbackParameter.context("view"),
+						CallbackParameter.context("element"),
 						CallbackParameter.resolved("viewName", "view.name")
 				};
 			}
@@ -461,7 +462,7 @@ public abstract class CalendarBehavior extends JQueryBehavior implements IJQuery
 			@Override
 			protected JQueryEvent newEvent()
 			{
-				return new ViewDisplayEvent();
+				return new ViewRenderEvent();
 			}
 		};
 	}
@@ -604,14 +605,14 @@ public abstract class CalendarBehavior extends JQueryBehavior implements IJQuery
 	/**
 	 * An event object that will be broadcasted when the calendar loads and every time a different date-range is displayed.
 	 */
-	protected static class ViewDisplayEvent extends JQueryEvent
+	protected static class ViewRenderEvent extends JQueryEvent
 	{
 		private final String viewName;
 
 		/**
 		 * Constructor
 		 */
-		public ViewDisplayEvent()
+		public ViewRenderEvent()
 		{
 			this.viewName = RequestCycleUtils.getQueryParameterValue("viewName").toString();
 		}
