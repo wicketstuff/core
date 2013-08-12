@@ -62,6 +62,7 @@ public class RestResourcesTest {
 	public void tearDown(){
 		//session must remain temporary.
 		Assert.assertTrue(Session.get().isTemporary());
+		tester.destroy();
 	}
 	
 	@Test

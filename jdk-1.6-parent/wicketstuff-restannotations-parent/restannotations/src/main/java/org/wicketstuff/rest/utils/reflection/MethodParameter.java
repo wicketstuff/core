@@ -18,6 +18,7 @@ package org.wicketstuff.rest.utils.reflection;
 
 import java.lang.annotation.Annotation;
 
+import org.apache.wicket.util.lang.Args;
 import org.wicketstuff.rest.resource.MethodMappingInfo;
 
 // TODO: Auto-generated Javadoc
@@ -56,6 +57,9 @@ public class MethodParameter {
 	 *            parameters.
 	 */
 	public MethodParameter(Class<?> type, MethodMappingInfo ownerMethod, int paramIndex) {
+		Args.notNull(type, "type");
+		Args.notNull(ownerMethod, "ownerMethod");
+		
 		this.parameterClass = type;
 		this.ownerMethod = ownerMethod;
 		this.paramIndex = paramIndex;

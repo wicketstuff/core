@@ -37,6 +37,7 @@ import org.apache.wicket.request.mapper.parameter.PageParameters;
 import org.apache.wicket.request.resource.IResource;
 import org.apache.wicket.util.collections.MultiMap;
 import org.apache.wicket.util.convert.IConverter;
+import org.apache.wicket.util.lang.Args;
 import org.wicketstuff.rest.annotations.AuthorizeInvocation;
 import org.wicketstuff.rest.annotations.MethodMapping;
 import org.wicketstuff.rest.annotations.parameters.CookieParam;
@@ -95,6 +96,9 @@ public abstract class AbstractRestResource<T extends IObjectSerialDeserial> impl
 	 *            the role-checking strategy.
 	 */
 	public AbstractRestResource(T serialDeserial, IRoleCheckingStrategy roleCheckingStrategy) {
+		Args.notNull(serialDeserial, "serialDeserial");
+		Args.notNull(roleCheckingStrategy, "roleCheckingStrategy");
+		
 		this.objSerialDeserial = serialDeserial;
 		this.roleCheckingStrategy = roleCheckingStrategy;
 
