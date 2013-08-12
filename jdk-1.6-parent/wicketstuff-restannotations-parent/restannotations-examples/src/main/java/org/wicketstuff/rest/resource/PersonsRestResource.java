@@ -46,7 +46,8 @@ public class PersonsRestResource extends GsonRestResource {
 	}
 	
 	@MethodMapping(value = "/persons", httpMethod = HttpMethod.POST)
-	public void createPerson(@RequestBody PersonPojo personPojo) {
+	public PersonPojo createPerson(@RequestBody PersonPojo personPojo) {
 		persons.add(personPojo);
+		return personPojo;
 	}
 }

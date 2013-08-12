@@ -17,6 +17,7 @@
 package org.wicketstuff.rest;
 
 import org.apache.wicket.util.tester.WicketTester;
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -38,7 +39,12 @@ public class PersonResourceTest extends Assert
 	{
 		tester = new WicketTester(new WicketApplication());
 	}
-
+	
+	@After
+	public void tearDown() {
+		tester.destroy();
+	}
+	
 	@Test
 	public void testCreatePerson()
 	{
@@ -50,6 +56,8 @@ public class PersonResourceTest extends Assert
 		
 		tester.setRequest(mockRequest);
 		tester.executeUrl("./personsmanager/persons");
+		
+		assertEquals(jsonObj, tester.getLastResponseAsString());
 		
 		tester.getRequest().setMethod("GET");
 		tester.executeUrl("./personsmanager/persons");

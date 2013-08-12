@@ -56,7 +56,7 @@ public class WicketApplication extends WebApplication implements IRoleCheckingSt
 	@Override
 	public Class<? extends WebPage> getHomePage()
 	{
-		return HomePage.class;
+		return WebPage.class;
 	}
 
 	@Override
