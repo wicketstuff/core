@@ -55,6 +55,13 @@
 			<version>${project.version}</version>
 		</dependency>
 		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<scope>test</scope>
+		</dependency>
+		
+		<!-- DEPENDENCIES REQUIRED TO RUN EXAMPLES WITH JETTY -->
+		<dependency>
 			<groupId>com.google.code.gson</groupId>
 			<artifactId>gson</artifactId>
 			<version>2.2.4</version>

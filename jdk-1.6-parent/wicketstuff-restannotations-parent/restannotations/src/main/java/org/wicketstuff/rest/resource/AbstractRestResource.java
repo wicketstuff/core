@@ -97,7 +97,6 @@ public abstract class AbstractRestResource<T extends IObjectSerialDeserial> impl
 	 */
 	public AbstractRestResource(T serialDeserial, IRoleCheckingStrategy roleCheckingStrategy) {
 		Args.notNull(serialDeserial, "serialDeserial");
-		Args.notNull(roleCheckingStrategy, "roleCheckingStrategy");
 		
 		this.objSerialDeserial = serialDeserial;
 		this.roleCheckingStrategy = roleCheckingStrategy;
