@@ -791,6 +791,30 @@ public class LazyModelTest {
 		assertEquals("b.cs.size()", path(from(A.class).getB().getCs().size()));
 	}
 
+	@Test
+	public void propertyReflectionAwareModel() throws Exception {
+		A a = new A();
+		a.b = new B();
+		
+		LazyModel<Character> model = model(from(a).getB().getCharacter());
+		
+		assertNull(model.getPropertyField());
+		assertEquals(B.class.getMethod("getCharacter"), model.getPropertyGetter());
+		assertEquals(B.class.getMethod("setCharacter", Character.TYPE), model.getPropertySetter());
+	}
+	
+	@Test
+	public void propertyReflectionAwareModelNoProperty() throws Exception {
+		A a = new A();
+		a.b = new B();
+		
+		LazyModel<C> model = model(from(a).getB().getC(0));
+		
+		assertNull(model.getPropertyField());
+		assertNull(model.getPropertyGetter());
+		assertNull(model.getPropertySetter());
+	}
+	
 	public static class A implements Serializable {
 
 		B b;

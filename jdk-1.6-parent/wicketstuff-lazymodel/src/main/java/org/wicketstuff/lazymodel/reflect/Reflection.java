@@ -16,18 +16,19 @@
  */
 package org.wicketstuff.lazymodel.reflect;
 
+import java.lang.reflect.Method;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 import java.lang.reflect.TypeVariable;
 
 /**
- * Generics utilities.
+ * Reflection utilities.
  * 
  * @author svenmeier
  */
-public final class Generics {
+public final class Reflection {
 
-	private Generics() {
+	private Reflection() {
 	}
 
 	/**
@@ -80,5 +81,35 @@ public final class Generics {
 		}
 
 		return clazz;
+	}
+
+	/**
+	 * Is the given method a JavaBeans getter.
+	 * 
+	 * @param method
+	 *            method to test
+	 * @return {@code true} if method is a getter
+	 */
+	public static boolean isGetter(Method method) {
+		String name = method.getName();
+		
+		if (method.getParameterTypes().length == 0) {
+			Class<?> returnType = method.getReturnType();
+
+			if (name.startsWith("get") && name.length() > 3
+					&& Character.isUpperCase(name.charAt(3))
+					&& returnType != Void.TYPE) {
+				return true;
+			}
+
+			if (name.startsWith("is")
+					&& name.length() > 2
+					&& Character.isUpperCase(name.charAt(2))
+					&& (returnType == Boolean.TYPE || returnType == Boolean.class)) {
+				return true;
+			}
+		}
+
+		return false;
 	}
 }

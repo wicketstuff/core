@@ -17,6 +17,7 @@
 package org.wicketstuff.lazymodel;
 
 import java.io.Serializable;
+import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
@@ -28,6 +29,7 @@ import org.apache.wicket.WicketRuntimeException;
 import org.apache.wicket.model.IDetachable;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.IObjectClassAwareModel;
+import org.apache.wicket.model.IPropertyReflectionAwareModel;
 import org.apache.wicket.model.LoadableDetachableModel;
 import org.apache.wicket.model.PropertyModel;
 import org.apache.wicket.util.lang.Objects;
@@ -35,7 +37,7 @@ import org.wicketstuff.lazymodel.reflect.CachingMethodResolver;
 import org.wicketstuff.lazymodel.reflect.CachingProxyFactory;
 import org.wicketstuff.lazymodel.reflect.DefaultMethodResolver;
 import org.wicketstuff.lazymodel.reflect.DefaultProxyFactory;
-import org.wicketstuff.lazymodel.reflect.Generics;
+import org.wicketstuff.lazymodel.reflect.Reflection;
 import org.wicketstuff.lazymodel.reflect.IMethodResolver;
 import org.wicketstuff.lazymodel.reflect.IProxyFactory;
 import org.wicketstuff.lazymodel.reflect.IProxyFactory.Callback;
@@ -64,7 +66,7 @@ import org.wicketstuff.lazymodel.reflect.IProxyFactory.Callback;
  */
 @SuppressWarnings("unchecked")
 public class LazyModel<T> implements IModel<T>, IObjectClassAwareModel<T>,
-		IObjectTypeAwareModel<T> {
+		IObjectTypeAwareModel<T>, IPropertyReflectionAwareModel<T> {
 
 	private static final long serialVersionUID = 1L;
 
@@ -125,7 +127,7 @@ public class LazyModel<T> implements IModel<T>, IObjectClassAwareModel<T>,
 		if (type == null) {
 			return null;
 		}
-		return (Class<T>) Generics.getClass(type);
+		return (Class<T>) Reflection.getClass(type);
 	}
 
 	/**
@@ -142,13 +144,13 @@ public class LazyModel<T> implements IModel<T>, IObjectClassAwareModel<T>,
 		if (type != null) {
 			StackIterator iterator = new StackIterator();
 			while (iterator.hasNext()) {
-				iterator.next(Generics.getClass(type));
+				iterator.next(Reflection.getClass(type));
 
 				Type previousType = type;
 				type = iterator.getType();
 				if (type instanceof TypeVariable) {
 					if (previousType instanceof ParameterizedType) {
-						type = Generics.variableType(
+						type = Reflection.variableType(
 								(ParameterizedType) previousType,
 								(TypeVariable<?>) type);
 					} else {
@@ -161,6 +163,69 @@ public class LazyModel<T> implements IModel<T>, IObjectClassAwareModel<T>,
 		return type;
 	}
 
+	/**
+	 * LazyModel does not support field access.
+	 * 
+	 * @return always {@code null}
+	 */
+	@Override
+	public Field getPropertyField() {
+		return null;
+	}
+	
+	/**
+	 * Get the final getter of the evaluation.
+	 * 
+	 * @return method representing a JavaBeans getter or {@code null}
+	 */
+	@Override
+	public Method getPropertyGetter() {
+		checkBound();
+
+		Type type = getTargetType();
+		if (type != null) {
+			StackIterator iterator = new StackIterator();
+			while (iterator.hasNext()) {
+				iterator.next(Reflection.getClass(type));
+
+				Type previousType = type;
+				type = iterator.getType();
+				if (type instanceof TypeVariable) {
+					if (previousType instanceof ParameterizedType) {
+						type = Reflection.variableType(
+								(ParameterizedType) previousType,
+								(TypeVariable<?>) type);
+					} else {
+						type = Object.class;
+					}
+				}
+			}
+
+			if (Reflection.isGetter(iterator.method)) {
+				return iterator.method;
+			}
+		}
+		
+		return null;
+	}
+	
+	/**
+	 * Get the final setter of the evaluation.
+	 * 
+	 * @return method representing a JavaBeans setter or {@code null}
+	 */
+	@Override
+	public Method getPropertySetter() {
+		checkBound();
+
+		Method getter = getPropertyGetter();
+		if (getter == null) {
+			return null;
+		}
+		
+		return methodResolver.getSetter(getter);
+	}
+	
 	@Override
 	public void detach() {
 		if (target instanceof IDetachable) {
@@ -195,11 +260,11 @@ public class LazyModel<T> implements IModel<T>, IObjectClassAwareModel<T>,
 			result = ((IModel<T>) result).getObject();
 		}
 
-		StackIterator invocations = new StackIterator();
-		while (result != null && invocations.hasNext()) {
-			invocations.next(result.getClass());
+		StackIterator iterator = new StackIterator();
+		while (result != null && iterator.hasNext()) {
+			iterator.next(result.getClass());
 
-			result = invocations.get(result);
+			result = iterator.get(result);
 		}
 
 		return (T) result;
@@ -218,8 +283,8 @@ public class LazyModel<T> implements IModel<T>, IObjectClassAwareModel<T>,
 
 		Object target = this.target;
 
-		StackIterator invocations = new StackIterator();
-		if (!invocations.hasNext()) {
+		StackIterator iterator = new StackIterator();
+		if (!iterator.hasNext()) {
 			if (target instanceof IModel) {
 				((IModel<T>) target).setObject(result);
 				return;
@@ -231,15 +296,15 @@ public class LazyModel<T> implements IModel<T>, IObjectClassAwareModel<T>,
 		if (target instanceof IModel) {
 			target = ((IModel<T>) target).getObject();
 		}
-		invocations.next(target.getClass());
+		iterator.next(target.getClass());
 
-		while (target != null && invocations.hasNext()) {
-			target = invocations.get(target);
+		while (target != null && iterator.hasNext()) {
+			target = iterator.get(target);
 
-			invocations.next(target.getClass());
+			iterator.next(target.getClass());
 		}
 
-		invocations.set(target, result);
+		iterator.set(target, result);
 	}
 
 	/**
@@ -300,7 +365,7 @@ public class LazyModel<T> implements IModel<T>, IObjectClassAwareModel<T>,
 
 		StackIterator iterator = new StackIterator();
 		while (iterator.hasNext()) {
-			iterator.next(Generics.getClass(type));
+			iterator.next(Reflection.getClass(type));
 
 			if (string.length() > 0) {
 				string.append(".");
@@ -479,7 +544,7 @@ public class LazyModel<T> implements IModel<T>, IObjectClassAwareModel<T>,
 				throw new WicketRuntimeException(ex);
 			}
 		}
-
+		
 		/**
 		 * Fill the arguments of the current method in the given array.
 		 * 
@@ -630,7 +695,7 @@ public class LazyModel<T> implements IModel<T>, IObjectClassAwareModel<T>,
 			Type candidate = method.getGenericReturnType();
 			if (candidate instanceof TypeVariable) {
 				if (type instanceof ParameterizedType) {
-					candidate = Generics.variableType((ParameterizedType) type,
+					candidate = Reflection.variableType((ParameterizedType) type,
 							(TypeVariable) candidate);
 				} else {
 					candidate = Object.class;
@@ -650,7 +715,7 @@ public class LazyModel<T> implements IModel<T>, IObjectClassAwareModel<T>,
 		 * @return proxy or {@code null} if evaluation result cannot be proxied
 		 */
 		public Object proxy() {
-			Class clazz = Generics.getClass(type);
+			Class clazz = Reflection.getClass(type);
 
 			if (clazz.isPrimitive()) {
 				lastNonProxyableEvaluation.set(this);
@@ -807,7 +872,7 @@ public class LazyModel<T> implements IModel<T>, IObjectClassAwareModel<T>,
 
 		@Override
 		public Class<T> getObjectClass() {
-			return (Class<T>) Generics.getClass(getObjectType());
+			return (Class<T>) Reflection.getClass(getObjectType());
 		}
 
 		@Override

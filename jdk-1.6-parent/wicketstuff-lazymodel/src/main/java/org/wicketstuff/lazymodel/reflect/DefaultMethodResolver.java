@@ -55,29 +55,18 @@ public class DefaultMethodResolver implements IMethodResolver {
 	 */
 	@Override
 	public Serializable getId(Method method) {
-		Class<?>[] parameters = method.getParameterTypes();
 		String name = method.getName();
 
 		StringBuilder id = new StringBuilder();
 
-		if (parameters.length == 0) {
-			// possible getter
-			Class<?> returnType = method.getReturnType();
-
-			if (name.startsWith("get") && name.length() > 3
-					&& Character.isUpperCase(name.charAt(3))
-					&& returnType != Void.TYPE) {
-
+		if (Reflection.isGetter(method)) {
+			if (name.startsWith("get")) {
 				id.append(Character.toLowerCase(name.charAt(3)));
 				id.append(name.substring(4));
 
 				return id.toString();
 			}
-
-			if (name.startsWith("is")
-					&& name.length() > 2
-					&& Character.isUpperCase(name.charAt(2))
-					&& (returnType == Boolean.TYPE || returnType == Boolean.class)) {
+			if (name.startsWith("is")) {
 
 				id.append(Character.toLowerCase(name.charAt(2)));
 				id.append(name.substring(3));
@@ -86,6 +75,8 @@ public class DefaultMethodResolver implements IMethodResolver {
 			}
 		}
 
+		Class<?>[] parameters = method.getParameterTypes();
+		
 		id.append(method.getName());
 		id.append("(");
 		for (int p = 0; p < parameters.length; p++) {
