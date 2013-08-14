@@ -1,34 +1,47 @@
 package org.wicketstuff.async.task;
 
+import org.apache.wicket.model.IDetachable;
 import org.apache.wicket.model.LoadableDetachableModel;
 
+import java.io.Serializable;
 import java.util.concurrent.*;
 
 /**
- * A model representing a hook into a task manager.
+ * A serializable representation of a task that is hooked into a task manager.
  * <p/>
- * <b>Note:</b> Never create a inner class implementation of this class within a custom implementation of
+ * <b>Note:</b> Never create a non-static inner subclass of this class within a custom implementation of
  * a {@link ITaskManager}. A task manager is in general not serializable and this would therefore break the Wicket
- * contract of a model.
+ * contract of a model this representation is based on.
  */
-public abstract class AbstractTaskModel extends LoadableDetachableModel<ITaskManagerHook> {
+public abstract class AbstractTaskContainer implements Serializable, IDetachable {
 
     private final String id;
 
-    protected AbstractTaskModel(String id) {
+    private final LoadableDetachableModel<ITaskManagerHook> taskManagerHook;
+
+    protected AbstractTaskContainer(String id) {
         this.id = id;
+        // This model must be implemented as an inner instead of by inheritance to avoid Wicket's model chaining.
+        taskManagerHook = new LoadableDetachableModel<ITaskManagerHook>() {
+            @Override
+            protected ITaskManagerHook load() {
+                return AbstractTaskContainer.this.load();
+            }
+        };
     }
+
+    protected abstract ITaskManagerHook load();
 
     public String getId() {
         return id;
     }
 
     private Future<?> getFuture() {
-        return getObject().getFuture();
+        return taskManagerHook.getObject().getFuture();
     }
 
     private Runnable getRunnable() {
-        return getObject().getRunnable();
+        return taskManagerHook.getObject().getRunnable();
     }
 
     private IProgressObservableRunnable getProgressObservableRunnable() {
@@ -66,7 +79,7 @@ public abstract class AbstractTaskModel extends LoadableDetachableModel<ITaskMan
     }
 
     public void submit(Runnable runnable) {
-        getObject().submit(runnable, true);
+        taskManagerHook.getObject().submit(runnable, true);
     }
 
     public void cancel() {
@@ -78,9 +91,9 @@ public abstract class AbstractTaskModel extends LoadableDetachableModel<ITaskMan
             getFuture().get(1L, TimeUnit.MICROSECONDS);
             return null;
         } catch (InterruptedException e) {
-            /* this should never happen since this call
-            should only occur non-blocking */
-            throw new AssertionError(e);
+            /* the chances for this scenario are considerably small
+             since this call should only occur quasi-non-blocking */
+            return null;
         } catch (ExecutionException e) {
             return e.getCause();
         } catch (CancellationException e) {
@@ -107,5 +120,10 @@ public abstract class AbstractTaskModel extends LoadableDetachableModel<ITaskMan
         } else {
             return null;
         }
+    }
+
+    @Override
+    public void detach() {
+        taskManagerHook.detach();
     }
 }

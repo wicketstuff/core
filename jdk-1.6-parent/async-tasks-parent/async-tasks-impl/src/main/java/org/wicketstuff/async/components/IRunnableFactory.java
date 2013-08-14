@@ -9,6 +9,7 @@ public interface IRunnableFactory extends Serializable {
 
     /**
      * Returns the runnable to be processed by a {@link ProgressButton}.
+     *
      * @return The runnable instance to be processed.
      */
     Runnable getRunnable();

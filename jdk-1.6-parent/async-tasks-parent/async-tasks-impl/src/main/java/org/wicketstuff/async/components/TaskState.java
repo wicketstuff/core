@@ -1,6 +1,6 @@
 package org.wicketstuff.async.components;
 
-import org.wicketstuff.async.task.AbstractTaskModel;
+import org.wicketstuff.async.task.AbstractTaskContainer;
 
 /**
  * Describes the state of a task.
@@ -32,17 +32,17 @@ public enum TaskState {
      */
     CANCELED_NON_RUNNING;
 
-    static TaskState findRunningState(AbstractTaskModel taskModel) {
-        if (taskModel.isRunning()) {
-            if (taskModel.isCancelled()) {
+    static TaskState findRunningState(AbstractTaskContainer taskContainer) {
+        if (taskContainer.isRunning()) {
+            if (taskContainer.isCancelled()) {
                 return CANCELED_RUNNING;
             } else {
                 return PLAIN_RUNNING;
             }
         } else {
-            if (taskModel.isFailed()) {
+            if (taskContainer.isFailed()) {
                 return ERROR_NON_RUNNING;
-            } else if (taskModel.isCancelled()) {
+            } else if (taskContainer.isCancelled()) {
                 return CANCELED_NON_RUNNING;
             } else {
                 return PLAIN_NON_RUNNING;
