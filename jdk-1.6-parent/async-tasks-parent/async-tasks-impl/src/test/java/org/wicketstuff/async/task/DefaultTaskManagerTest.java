@@ -15,7 +15,7 @@ public class DefaultTaskManagerTest {
     public void setUp() throws Exception {
         taskManager = new DefaultTaskManager() {
             @Override
-            protected AbstractTaskContainer makeTaskModel(final String id) {
+            protected AbstractTaskContainer makeTaskContainer(final String id) {
                 return new AbstractTaskContainer(id) {
                     @Override
                     protected ITaskManagerHook load() {

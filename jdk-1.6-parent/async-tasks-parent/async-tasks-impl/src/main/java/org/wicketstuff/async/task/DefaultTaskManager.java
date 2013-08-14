@@ -9,7 +9,7 @@ public abstract class DefaultTaskManager implements ITaskManager {
 
     private static final DefaultTaskManager INSTANCE = new DefaultTaskManager() {
         @Override
-        protected AbstractTaskContainer makeTaskModel(final String id) {
+        protected AbstractTaskContainer makeTaskContainer(final String id) {
             return new SingletonTaskManagerTaskRepresentation(id);
         }
     };
@@ -54,7 +54,7 @@ public abstract class DefaultTaskManager implements ITaskManager {
         cleanUp();
         taskManagerHooks.putIfAbsent(id, makeTaskManagerHook(id));
         registerRemoval(id, lifeTime, unit);
-        return makeTaskModel(id);
+        return makeTaskContainer(id);
     }
 
     private void registerRemoval(String id, long lifeTime, TimeUnit unit) {
@@ -86,7 +86,7 @@ public abstract class DefaultTaskManager implements ITaskManager {
         if (!taskManagerHooks.containsKey(id)) {
             throw new IllegalArgumentException(String.format("Id %s is not registered", id));
         }
-        return makeTaskModel(id);
+        return makeTaskContainer(id);
     }
 
     protected ITaskManagerHook findHookForId(String id) {
@@ -97,7 +97,7 @@ public abstract class DefaultTaskManager implements ITaskManager {
         return executorService.submit(runnable);
     }
 
-    protected abstract AbstractTaskContainer makeTaskModel(String id);
+    protected abstract AbstractTaskContainer makeTaskContainer(String id);
 
     protected ITaskManagerHook makeTaskManagerHook(String id) {
         return new DefaultTaskManagerHook(id);

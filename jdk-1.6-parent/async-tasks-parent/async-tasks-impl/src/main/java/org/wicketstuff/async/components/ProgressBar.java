@@ -35,7 +35,7 @@ public class ProgressBar extends Panel {
         wrapper.add(new Label("message", new TaskProgressMessageModel()));
 
         stateCssClasses = new HashMap<StateDescription, IModel<String>>();
-        this.add(new AttributeAppender("class", progressButton.new StateDispatcherModel(new Model<String>(), stateCssClasses), " "));
+        this.add(new AttributeAppender("class", progressButton.new StateDispatcherModel<String>(new Model<String>(), stateCssClasses), " "));
 
         progressButton.addRefreshDependant(this);
 

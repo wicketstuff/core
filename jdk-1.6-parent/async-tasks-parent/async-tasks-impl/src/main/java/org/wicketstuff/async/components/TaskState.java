@@ -32,17 +32,17 @@ public enum TaskState {
      */
     CANCELED_NON_RUNNING;
 
-    static TaskState findRunningState(AbstractTaskContainer taskModel) {
-        if (taskModel.isRunning()) {
-            if (taskModel.isCancelled()) {
+    static TaskState findRunningState(AbstractTaskContainer taskContainer) {
+        if (taskContainer.isRunning()) {
+            if (taskContainer.isCancelled()) {
                 return CANCELED_RUNNING;
             } else {
                 return PLAIN_RUNNING;
             }
         } else {
-            if (taskModel.isFailed()) {
+            if (taskContainer.isFailed()) {
                 return ERROR_NON_RUNNING;
-            } else if (taskModel.isCancelled()) {
+            } else if (taskContainer.isCancelled()) {
                 return CANCELED_NON_RUNNING;
             } else {
                 return PLAIN_NON_RUNNING;
