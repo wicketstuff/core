@@ -1,12 +1,12 @@
 package org.wicketstuff.async.demo;
 
-import org.wicketstuff.async.components.*;
-import org.wicketstuff.async.task.AbstractTaskModel;
-import org.wicketstuff.async.task.DefaultTaskManager;
 import org.apache.wicket.markup.html.WebPage;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.util.time.Duration;
+import org.wicketstuff.async.components.*;
+import org.wicketstuff.async.task.AbstractTaskContainer;
+import org.wicketstuff.async.task.DefaultTaskManager;
 
 import java.util.concurrent.TimeUnit;
 
@@ -18,10 +18,10 @@ public class DemoPage extends WebPage implements IRunnableFactory {
         Form<?> form = new Form<Void>("form");
 
         // Create model of task
-        AbstractTaskModel taskModel = DefaultTaskManager.getInstance().makeModel(1000L, TimeUnit.MINUTES);
+        AbstractTaskContainer taskContainer = DefaultTaskManager.getInstance().makeContainer(1000L, TimeUnit.MINUTES);
 
         // Create a progress button.
-        ProgressButton progressButton = new ProgressButton("button", form, taskModel, this, Duration.milliseconds(500L));
+        ProgressButton progressButton = new ProgressButton("button", form, Model.of(taskContainer), this, Duration.milliseconds(500L));
 
         progressButton.registerMessageModel(Model.of("Start"), InteractionState.STARTABLE, InteractionState.RESTARTABLE);
         progressButton.registerMessageModel(Model.of("Cancel"), InteractionState.CANCELABLE);

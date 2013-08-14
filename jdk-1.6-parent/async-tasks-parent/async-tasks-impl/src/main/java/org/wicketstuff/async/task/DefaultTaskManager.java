@@ -9,14 +9,14 @@ public abstract class DefaultTaskManager implements ITaskManager {
 
     private static final DefaultTaskManager INSTANCE = new DefaultTaskManager() {
         @Override
-        protected AbstractTaskModel makeTaskModel(final String id) {
-            return new SingletonTaskManagerTaskModel(id);
+        protected AbstractTaskContainer makeTaskModel(final String id) {
+            return new SingletonTaskManagerTaskRepresentation(id);
         }
     };
 
-    private static class SingletonTaskManagerTaskModel extends AbstractTaskModel {
+    private static class SingletonTaskManagerTaskRepresentation extends AbstractTaskContainer {
 
-        private SingletonTaskManagerTaskModel(String id) {
+        private SingletonTaskManagerTaskRepresentation(String id) {
             super(id);
         }
 
@@ -45,12 +45,12 @@ public abstract class DefaultTaskManager implements ITaskManager {
     }
 
     @Override
-    public AbstractTaskModel makeModel(long lifeTime, TimeUnit unit) {
-        return makeOrRenewModel(UUID.randomUUID().toString(), lifeTime, unit);
+    public AbstractTaskContainer makeContainer(long lifeTime, TimeUnit unit) {
+        return makeOrRenewContainer(UUID.randomUUID().toString(), lifeTime, unit);
     }
 
     @Override
-    public AbstractTaskModel makeOrRenewModel(String id, long lifeTime, TimeUnit unit) {
+    public AbstractTaskContainer makeOrRenewContainer(String id, long lifeTime, TimeUnit unit) {
         cleanUp();
         taskManagerHooks.putIfAbsent(id, makeTaskManagerHook(id));
         registerRemoval(id, lifeTime, unit);
@@ -82,7 +82,7 @@ public abstract class DefaultTaskManager implements ITaskManager {
     }
 
     @Override
-    public AbstractTaskModel getModelOrFail(String id) {
+    public AbstractTaskContainer getContainerOrFail(String id) {
         if (!taskManagerHooks.containsKey(id)) {
             throw new IllegalArgumentException(String.format("Id %s is not registered", id));
         }
@@ -97,7 +97,7 @@ public abstract class DefaultTaskManager implements ITaskManager {
         return executorService.submit(runnable);
     }
 
-    protected abstract AbstractTaskModel makeTaskModel(String id);
+    protected abstract AbstractTaskContainer makeTaskModel(String id);
 
     protected ITaskManagerHook makeTaskManagerHook(String id) {
         return new DefaultTaskManagerHook(id);

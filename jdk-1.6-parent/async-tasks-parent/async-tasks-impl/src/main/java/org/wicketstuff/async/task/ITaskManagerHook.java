@@ -3,7 +3,7 @@ package org.wicketstuff.async.task;
 import java.util.concurrent.Future;
 
 /**
- * A hook into a manager instance. Allows a better reuse of {@link AbstractTaskModel}.
+ * A hook into a manager instance. Allows a better reuse of {@link AbstractTaskContainer}.
  */
 public interface ITaskManagerHook {
 

@@ -15,8 +15,8 @@ public class DefaultTaskManagerTest {
     public void setUp() throws Exception {
         taskManager = new DefaultTaskManager() {
             @Override
-            protected AbstractTaskModel makeTaskModel(final String id) {
-                return new AbstractTaskModel(id) {
+            protected AbstractTaskContainer makeTaskModel(final String id) {
+                return new AbstractTaskContainer(id) {
                     @Override
                     protected ITaskManagerHook load() {
                         return taskManager.makeTaskManagerHook(id);
@@ -35,7 +35,7 @@ public class DefaultTaskManagerTest {
 
         assertTrue(sleepMultiplier > 1d);
 
-        taskManager.makeOrRenewModel(testId, removalMilliseconds, TimeUnit.MILLISECONDS);
+        taskManager.makeOrRenewContainer(testId, removalMilliseconds, TimeUnit.MILLISECONDS);
 
         Thread.sleep((long) (removalMilliseconds * sleepMultiplier));
 
@@ -44,7 +44,7 @@ public class DefaultTaskManagerTest {
         taskManager.cleanUp();
         System.gc();
 
-        taskManager.getModelOrFail(testId);
+        taskManager.getContainerOrFail(testId);
     }
 
     @Test
@@ -56,7 +56,7 @@ public class DefaultTaskManagerTest {
 
         assertTrue(sleepMultiplier < 1d);
 
-        taskManager.makeOrRenewModel(testId, removalMilliseconds, TimeUnit.MILLISECONDS);
+        taskManager.makeOrRenewContainer(testId, removalMilliseconds, TimeUnit.MILLISECONDS);
 
         Thread.sleep((long) (removalMilliseconds * sleepMultiplier));
 
@@ -64,7 +64,7 @@ public class DefaultTaskManagerTest {
         taskManager.cleanUp();
         System.gc();
 
-        taskManager.getModelOrFail(testId);
+        taskManager.getContainerOrFail(testId);
     }
 
     @Test
@@ -78,8 +78,8 @@ public class DefaultTaskManagerTest {
         assertTrue(sleepMultiplier1 < 1d);
         assertTrue(sleepMultiplier2 > 1d);
 
-        taskManager.makeOrRenewModel(testId, (long) (removalMilliseconds * sleepMultiplier1), TimeUnit.MILLISECONDS);
-        taskManager.makeOrRenewModel(testId, (long) (removalMilliseconds * sleepMultiplier2), TimeUnit.MILLISECONDS);
+        taskManager.makeOrRenewContainer(testId, (long) (removalMilliseconds * sleepMultiplier1), TimeUnit.MILLISECONDS);
+        taskManager.makeOrRenewContainer(testId, (long) (removalMilliseconds * sleepMultiplier2), TimeUnit.MILLISECONDS);
 
         Thread.sleep(removalMilliseconds);
 
@@ -87,7 +87,7 @@ public class DefaultTaskManagerTest {
         taskManager.cleanUp();
         System.gc();
 
-        taskManager.getModelOrFail(testId);
+        taskManager.getContainerOrFail(testId);
 
 
     }
@@ -97,7 +97,7 @@ public class DefaultTaskManagerTest {
 
         final boolean[] val = new boolean[1];
 
-        AbstractTaskModel taskModel = taskManager.makeModel(1L, TimeUnit.MINUTES);
+        AbstractTaskContainer taskModel = taskManager.makeContainer(1L, TimeUnit.MINUTES);
         taskModel.submit(new Runnable() {
             @Override
             public void run() {
