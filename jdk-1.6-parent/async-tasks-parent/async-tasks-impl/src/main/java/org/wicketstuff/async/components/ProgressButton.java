@@ -1,6 +1,5 @@
 package org.wicketstuff.async.components;
 
-import org.wicketstuff.async.task.AbstractTaskModel;
 import org.apache.wicket.Component;
 import org.apache.wicket.Page;
 import org.apache.wicket.ajax.AbstractAjaxTimerBehavior;
@@ -12,6 +11,7 @@ import org.apache.wicket.model.AbstractReadOnlyModel;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.util.time.Duration;
+import org.wicketstuff.async.task.AbstractTaskContainer;
 
 import java.lang.reflect.Method;
 import java.util.Collection;
@@ -21,7 +21,7 @@ import java.util.Map;
 
 /**
  * A progress button which allows to control a {@link Runnable}. Each such button will refresh itself as given by
- * by the {@link Duration} with which it was constructed. It represents a runnable by a {@link AbstractTaskModel}.
+ * by the {@link Duration} with which it was constructed. It represents a runnable by a {@link AbstractTaskContainer}.
  * In order to create tasks, the button needs to be provided a {@link IRunnableFactory}.
  */
 public class ProgressButton extends AjaxFallbackButton {
@@ -32,26 +32,26 @@ public class ProgressButton extends AjaxFallbackButton {
     private final Collection<Component> refreshDependants;
 
     private final IRunnableFactory runnableFactory;
-    private final AbstractTaskModel taskModel;
-
     private final RefreshBehavior refreshBehavior;
 
-    public ProgressButton(String id, Form<?> form, AbstractTaskModel taskModel, Duration duration) {
-        this(id, null, form, taskModel, null, duration);
+    private IModel<? extends AbstractTaskContainer> taskContainerModel;
+
+    public ProgressButton(String id, Form<?> form, IModel<? extends AbstractTaskContainer> taskContainerModel, Duration duration) {
+        this(id, null, form, taskContainerModel, null, duration);
     }
 
-    public ProgressButton(String id, IModel<String> model, Form<?> form, AbstractTaskModel taskModel, Duration duration) {
-        this(id, model, form, taskModel, null, duration);
+    public ProgressButton(String id, IModel<String> model, Form<?> form, IModel<? extends AbstractTaskContainer> taskContainerModel, Duration duration) {
+        this(id, model, form, taskContainerModel, null, duration);
     }
 
-    public ProgressButton(String id, Form<?> form, AbstractTaskModel taskModel, IRunnableFactory runnableFactory, Duration duration) {
-        this(id, null, form, taskModel, runnableFactory, duration);
+    public ProgressButton(String id, Form<?> form, IModel<? extends AbstractTaskContainer> taskContainerModel, IRunnableFactory runnableFactory, Duration duration) {
+        this(id, null, form, taskContainerModel, runnableFactory, duration);
     }
 
-    public ProgressButton(String id, IModel<String> model, Form<?> form, AbstractTaskModel taskModel, IRunnableFactory runnableFactory, Duration duration) {
+    public ProgressButton(String id, IModel<String> model, Form<?> form, IModel<? extends AbstractTaskContainer> taskContainerModel, IRunnableFactory runnableFactory, Duration duration) {
         super(id, null, form);
 
-        this.taskModel = taskModel;
+        this.taskContainerModel = taskContainerModel;
         this.runnableFactory = runnableFactory;
 
         this.refreshDependants = new HashSet<Component>();
@@ -75,8 +75,16 @@ public class ProgressButton extends AjaxFallbackButton {
         }
     }
 
-    protected AbstractTaskModel getTaskModel() {
-        return taskModel;
+    public IModel<? extends AbstractTaskContainer> getTaskContainerModel() {
+        return taskContainerModel;
+    }
+
+    public void setTaskContainerModel(IModel<? extends AbstractTaskContainer> taskContainerModel) {
+        this.taskContainerModel = taskContainerModel;
+    }
+
+    protected AbstractTaskContainer getTaskContainer() {
+        return taskContainerModel.getObject();
     }
 
     /**
@@ -107,15 +115,15 @@ public class ProgressButton extends AjaxFallbackButton {
     }
 
     boolean canStart() {
-        return runnableFactory != null && isAllowStart() && !taskModel.isSubmitted() && !taskModel.isRunning();
+        return runnableFactory != null && isAllowStart() && !getTaskContainer().isSubmitted() && !getTaskContainer().isRunning();
     }
 
     boolean canRestart() {
-        return runnableFactory != null && isAllowRestart() && taskModel.isSubmitted() && !taskModel.isRunning();
+        return runnableFactory != null && isAllowRestart() && getTaskContainer().isSubmitted() && !getTaskContainer().isRunning();
     }
 
     boolean canInterrupt() {
-        return isAllowInterrupt() && !taskModel.isCancelled() && taskModel.isRunning();
+        return isAllowInterrupt() && !getTaskContainer().isCancelled() && getTaskContainer().isRunning();
     }
 
     @Override
@@ -123,10 +131,10 @@ public class ProgressButton extends AjaxFallbackButton {
         super.onSubmit(target, form);
 
         if (canStart() || canRestart()) {
-            taskModel.submit(runnableFactory.getRunnable());
+            getTaskContainer().submit(runnableFactory.getRunnable());
             onTaskStart(target);
         } else if (canInterrupt()) {
-            taskModel.cancel();
+            getTaskContainer().cancel();
         } else {
             return;
         }
@@ -140,7 +148,7 @@ public class ProgressButton extends AjaxFallbackButton {
     }
 
     private void activateRefresh(AjaxRequestTarget target) {
-        if (!taskModel.isRunning()) {
+        if (!getTaskContainer().isRunning()) {
             if (getBehaviors(RefreshBehavior.class).size() > 0) {
                 refreshBehavior.stop(target);
             }
@@ -162,13 +170,13 @@ public class ProgressButton extends AjaxFallbackButton {
     }
 
     private void concludeIfApplicable(AjaxRequestTarget target) {
-        if (!taskModel.isRunning()) {
+        if (!getTaskContainer().isRunning()) {
             if (target != null) {
                 refreshBehavior.stop(target);
             }
-            if (taskModel.isFailed()) {
+            if (getTaskContainer().isFailed()) {
                 onTaskError(target);
-            } else if (!taskModel.isCancelled()) {
+            } else if (!getTaskContainer().isCancelled()) {
                 onTaskSuccess(target);
             } else {
                 onTaskCancel(target);
@@ -317,7 +325,7 @@ public class ProgressButton extends AjaxFallbackButton {
         private IModel<T> getActualModel() {
             return stateValues.get(
                     new StateDescription(
-                            TaskState.findRunningState(taskModel),
+                            TaskState.findRunningState(getTaskContainer()),
                             InteractionState.findInteractionState(ProgressButton.this)
                     )
             );
