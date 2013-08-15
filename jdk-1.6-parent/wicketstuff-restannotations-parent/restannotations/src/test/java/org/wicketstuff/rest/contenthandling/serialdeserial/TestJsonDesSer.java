@@ -33,12 +33,12 @@ public class TestJsonDesSer extends TextualObjectSerialDeserial {
 	}
 
 	@Override
-	public String objectToString(Object targetObject, String mimeType) {
+	public String serializeObject(Object targetObject, String mimeType) {
 		return getJSON();
 	}
 
 	@Override
-	public <T> T stringToObject(String source, Class<T> targetClass, String mimeType) {
+	public <T> T deserializeObject(String source, Class<T> targetClass, String mimeType) {
 		return (T) getObject();
 	}
 }

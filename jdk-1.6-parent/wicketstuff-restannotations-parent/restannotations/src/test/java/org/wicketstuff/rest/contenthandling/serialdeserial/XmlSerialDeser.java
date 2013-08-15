@@ -31,7 +31,7 @@ public class XmlSerialDeser extends TextualObjectSerialDeserial {
 	}
 
 	@Override
-	public String objectToString(Object targetObject, String mimeType) {
+	public String serializeObject(Object targetObject, String mimeType) {
 		 WebResponse response = (WebResponse) RequestCycle.get().getResponse();
 		 StringWriter stringWriter = new StringWriter();
 		 JAXB.marshal(targetObject, stringWriter);
@@ -40,7 +40,7 @@ public class XmlSerialDeser extends TextualObjectSerialDeserial {
 	}
 
 	@Override
-	public <T> T stringToObject(String source, Class<T> targetClass, String mimeType) {
+	public <T> T deserializeObject(String source, Class<T> targetClass, String mimeType) {
 		return JAXB.unmarshal(source, targetClass);
 	}
 }

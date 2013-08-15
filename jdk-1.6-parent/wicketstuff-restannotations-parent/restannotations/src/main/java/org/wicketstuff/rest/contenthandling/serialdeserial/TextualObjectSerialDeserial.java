@@ -21,6 +21,7 @@ import javax.servlet.ServletResponse;
 import org.apache.wicket.request.http.WebRequest;
 import org.apache.wicket.request.http.WebResponse;
 import org.wicketstuff.rest.contenthandling.IObjectSerialDeserial;
+import org.wicketstuff.rest.contenthandling.IWebSerialDeserial;
 import org.wicketstuff.rest.contenthandling.RestMimeTypes;
 import org.wicketstuff.rest.utils.http.HttpUtils;
 
@@ -31,7 +32,7 @@ import org.wicketstuff.rest.utils.http.HttpUtils;
  * @author andrea del bene
  * 
  */
-public abstract class TextualObjectSerialDeserial implements IObjectSerialDeserial {
+public abstract class TextualObjectSerialDeserial implements IWebSerialDeserial, IObjectSerialDeserial<String> {
 	
 	/** the supported charset. */
 	private final String charset;
@@ -63,7 +64,7 @@ public abstract class TextualObjectSerialDeserial implements IObjectSerialDeseri
 		if(RestMimeTypes.TEXT_PLAIN.equals(mimeType))
 			strOutput = targetObject == null ? "" : targetObject.toString();
 		else
-			strOutput = objectToString(targetObject, mimeType);
+			strOutput = serializeObject(targetObject, mimeType);
 		
 		response.write(strOutput);
 	}
@@ -86,7 +87,7 @@ public abstract class TextualObjectSerialDeserial implements IObjectSerialDeseri
 	@Override
 	public <T> T requestToObject(WebRequest request, Class<T> targetClass, String mimeType)
 			throws Exception {
-		return stringToObject(HttpUtils.readStringFromRequest(request), targetClass, mimeType);
+		return deserializeObject(HttpUtils.readStringFromRequest(request), targetClass, mimeType);
 	}
 
 	/* (non-Javadoc)
@@ -97,27 +98,11 @@ public abstract class TextualObjectSerialDeserial implements IObjectSerialDeseri
 		return RestMimeTypes.TEXT_PLAIN.equals(mimeType) || this.mimeType.equals(mimeType);
 	}
 
-	/**
-	 * Returns a textual representation of the target object.
-	 * 
-	 * @param targetObject
-	 *            the object to convert to string.
-	 * @param mimeType
-	 *            the target MIME type.
-	 * @return the textual representation of the object.
-	 */
-	public abstract String objectToString(Object targetObject, String mimeType);
+	@Override
+	public abstract String serializeObject(Object targetObject, String mimeType);
 
-	/**
-	 * Extract an object instance from a string value.
-	 *
-	 * @param <T> the generic type
-	 * @param source the source string.
-	 * @param targetClass the type of the returned object.
-	 * @param mimeType the target MIME type.
-	 * @return the extracted object.
-	 */
-	public abstract <T> T stringToObject(String source, Class<T> targetClass, String mimeType);
+	@Override
+	public abstract <T> T deserializeObject(String source, Class<T> targetClass, String mimeType);
 	
 	/**
 	 * Gets the supported charset.

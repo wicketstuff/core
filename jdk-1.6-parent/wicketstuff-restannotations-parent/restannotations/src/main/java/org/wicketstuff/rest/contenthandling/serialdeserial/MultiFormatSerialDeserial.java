@@ -21,7 +21,7 @@ import java.util.Map;
 
 import org.apache.wicket.request.http.WebRequest;
 import org.apache.wicket.request.http.WebResponse;
-import org.wicketstuff.rest.contenthandling.IObjectSerialDeserial;
+import org.wicketstuff.rest.contenthandling.IWebSerialDeserial;
 
 /**
  * Object serializer/deserializer that supports multiple formats.
@@ -29,15 +29,15 @@ import org.wicketstuff.rest.contenthandling.IObjectSerialDeserial;
  * @author andrea del bene
  *
  */
-public class MultiFormatSerialDeserial implements IObjectSerialDeserial {
+public class MultiFormatSerialDeserial implements IWebSerialDeserial {
 	
-	private final Map<String, IObjectSerialDeserial> serialsDeserials = new HashMap<String, IObjectSerialDeserial>();
+	private final Map<String, IWebSerialDeserial> serialsDeserials = new HashMap<String, IWebSerialDeserial>();
 	
 	@Override
 	public void objectToResponse(Object targetObject, WebResponse response, String mimeType)
 			throws Exception {
 		
-		IObjectSerialDeserial serialDeserial = serialsDeserials.get(mimeType);
+		IWebSerialDeserial serialDeserial = serialsDeserials.get(mimeType);
 		
 		if(serialDeserial != null)
 			serialDeserial.objectToResponse(targetObject, response, mimeType);
@@ -46,7 +46,7 @@ public class MultiFormatSerialDeserial implements IObjectSerialDeserial {
 	@Override
 	public <T> T requestToObject(WebRequest request, Class<T> targetClass, String mimeType)
 			throws Exception {
-		IObjectSerialDeserial serialDeserial = serialsDeserials.get(mimeType);
+		IWebSerialDeserial serialDeserial = serialsDeserials.get(mimeType);
 		
 		if(serialDeserial != null)
 			return serialDeserial.requestToObject(request, targetClass, mimeType);
@@ -61,7 +61,7 @@ public class MultiFormatSerialDeserial implements IObjectSerialDeserial {
 	 * @param mimeType
 	 * 			the MIME type we want to handle with the given serial/deserial.
 	 */
-	public void registerSerDeser(IObjectSerialDeserial serialDeserial, String mimeType){
+	public void registerSerDeser(IWebSerialDeserial serialDeserial, String mimeType){
 		serialsDeserials.put(mimeType, serialDeserial);
 	}
 	

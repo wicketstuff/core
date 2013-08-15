@@ -16,49 +16,33 @@
  */
 package org.wicketstuff.rest.contenthandling;
 
-import org.apache.wicket.request.http.WebRequest;
-import org.apache.wicket.request.http.WebResponse;
-
 /**
  * General interface to implement object serializers/deserializers.
  * 
  * @author andrea del bene
  * 
  */
-public interface IObjectSerialDeserial {
-	/**
-	 * Write the object in input to the response converting it to a given MIME type.
-	 * 
-	 * @param targetObject
-	 *            the object instance to serialize to string.
-	 * @param response
-	 * 			  the response object.	           
-	 * @param mimeType
-	 *            the MIME type of the response.
-	 * @throws Exception 
-	 */
-	public void objectToResponse(Object targetObject, WebResponse response, String mimeType) throws Exception;
-
-	/**
-	 * Extract an instance of argClass form the request.
-	 * 
-	 * @param request
-	 * 			the request object.	
-	 * @param argClass
-	 * 			the type of the object we want to extract.
-	 * @param mimeType 
-	 * 			the MIME type of the request.
-	 * 
-	 * @return the object extracted from the request.
-	 */
-	public <T> T requestToObject(WebRequest request, Class<T> argClass, String mimeType) throws Exception;
+public interface IObjectSerialDeserial<T>{
 	
 	/**
-	 * Check if a given MIME type is handled.
+	 * Returns a given representation of the target object.
 	 * 
+	 * @param targetObject
+	 *            the object to convert to the given format.
 	 * @param mimeType
-	 * 			the MIME type we want to check.
-	 * @return true if the MIME type is supported, false otherwise.
+	 *            the target MIME type.
+	 * @return the representation of the object.
 	 */
-	public boolean isMimeTypeSupported(String mimeType);
+	public T serializeObject(Object target, String mimeType);
+	
+	/**
+	 * Extract an object instance from a given source object.
+	 *
+	 * @param <T> the generic type
+	 * @param source the source object.
+	 * @param targetClass the type of the returned object.
+	 * @param mimeType the target MIME type.
+	 * @return the extracted object.
+	 */
+	public <E> E deserializeObject(T source, Class<E> targetClass, String mimeType);
 }

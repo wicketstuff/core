@@ -46,7 +46,7 @@ import org.wicketstuff.rest.annotations.parameters.MatrixParam;
 import org.wicketstuff.rest.annotations.parameters.PathParam;
 import org.wicketstuff.rest.annotations.parameters.RequestBody;
 import org.wicketstuff.rest.annotations.parameters.RequestParam;
-import org.wicketstuff.rest.contenthandling.IObjectSerialDeserial;
+import org.wicketstuff.rest.contenthandling.IWebSerialDeserial;
 import org.wicketstuff.rest.contenthandling.RestMimeTypes;
 import org.wicketstuff.rest.resource.urlsegments.AbstractURLSegment;
 import org.wicketstuff.rest.utils.http.HttpMethod;
@@ -60,12 +60,12 @@ import org.wicketstuff.rest.utils.reflection.ReflectionUtils;
  * @author andrea del bene
  * 
  */
-public abstract class AbstractRestResource<T extends IObjectSerialDeserial> implements IResource {
+public abstract class AbstractRestResource<T extends IWebSerialDeserial> implements IResource {
 	/** Multimap that stores every mapped method of the class */
 	private final MultiMap<String, MethodMappingInfo> mappedMethods = new MultiMap<String, MethodMappingInfo>();
 
 	/**
-	 * The implementation of {@link IObjectSerialDeserial} that is used to
+	 * The implementation of {@link IWebSerialDeserial} that is used to
 	 * serialize/desiarilze objects to/from string (for example to/from JSON)
 	 */
 	private final T objSerialDeserial;
