@@ -38,7 +38,7 @@ public interface IObjectSerialDeserial<T>{
 	/**
 	 * Extract an object instance from a given source object.
 	 *
-	 * @param <T> the generic type
+	 * @param <T> the source object type.
 	 * @param source the source object.
 	 * @param targetClass the type of the returned object.
 	 * @param mimeType the target MIME type.

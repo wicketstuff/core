@@ -36,12 +36,12 @@
 	</licenses>
 
 	<developers>
-	    <developer>
-	      <id>...</id>
-	      <name>Andrea Del Bene</name>
-	      <email>an.delbene@gmail.com</email>
-	    </developer>
-  	</developers>
+		<developer>
+			<id>...</id>
+			<name>Andrea Del Bene</name>
+			<email>an.delbene@gmail.com</email>
+		</developer>
+	</developers>
 
 	<dependencies>
 		<dependency>
@@ -59,7 +59,7 @@
 			<artifactId>junit</artifactId>
 			<scope>test</scope>
 		</dependency>
-		
+
 		<!-- DEPENDENCIES REQUIRED TO RUN EXAMPLES WITH JETTY -->
 		<dependency>
 			<groupId>com.google.code.gson</groupId>
@@ -71,6 +71,6 @@
 			<groupId>org.eclipse.jetty.aggregate</groupId>
 			<artifactId>jetty-all-server</artifactId>
 		</dependency>
-		
+
 	</dependencies>
 </project>

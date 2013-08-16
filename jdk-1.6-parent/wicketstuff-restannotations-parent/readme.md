@@ -55,7 +55,7 @@ public interface IWebSerialDeserial {
 }
 ````
 
-The first two methods are the operations needed to write an object to the response body and to read an object from request body. Methods `isMimeTypeSupported` is used to know if a MIME format is supported by a given object serial/deserial. To work with MIME types we can use string constants from class `RestMimeTypes`. In addition to interface `IWebSerialDeserial` our serial/deserial can also implement interface `IObjectSerialDeserial` to better separate the serial/deserial processes from web entities such as request and response. The interface is the following:<br/>
+The first two methods are the operations needed to write an object to the response body and to read an object from request body. Methods `isMimeTypeSupported` is used to know if a MIME format is supported by a given object serial/deserial. To work with MIME types we can use string constants from class `RestMimeTypes`. In addition to interface `IWebSerialDeserial` our serial/deserial can also implement interface `IObjectSerialDeserial` to better separate the serial/deserial process from web entities such as request and response. The interface is the following:<br/>
 
 ````java
 public interface IObjectSerialDeserial<T>{

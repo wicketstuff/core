@@ -20,14 +20,18 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<meta http-equiv="Content-type"  content="text/html" charset="UTF-8">
+<meta http-equiv="Content-type" content="text/html" charset="UTF-8">
 <title>Persons archive</title>
-<script type="text/javascript" src="http://knockoutjs.com/downloads/knockout-2.2.1.js"></script>
+<script type="text/javascript"
+	src="http://knockoutjs.com/downloads/knockout-2.2.1.js"></script>
 <script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
 <script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
-<link rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css" />
-<link rel="stylesheet" type="text/css" href="http://knockoutjs.com/css/styles.css"/>
-<link rel="stylesheet" type="text/css" href="http://knockoutjs.com/css/tripoli.simple.css"/>
+<link rel="stylesheet"
+	href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css" />
+<link rel="stylesheet" type="text/css"
+	href="http://knockoutjs.com/css/styles.css" />
+<link rel="stylesheet" type="text/css"
+	href="http://knockoutjs.com/css/tripoli.simple.css" />
 
 <script type="text/javascript">
 	
@@ -117,58 +121,68 @@
 
 	<div class="content sticker" style="font-size: 12px;">
 		<h1>Persons archive</h1>
-		<p style="font-weight: bold;">Simple REST application to create, delete and display instances of persons (see class PersonPojo).</p>
-		<p>Powered by <a href="http://jquery.com/">JQuery</a> and <a href="http://knockoutjs.com/">Knockoutjs</a></p>
+		<p style="font-weight: bold;">Simple REST application to create,
+			delete and display instances of persons (see class PersonPojo).</p>
+		<p>
+			Powered by <a href="http://jquery.com/">JQuery</a> and <a
+				href="http://knockoutjs.com/">Knockoutjs</a>
+		</p>
 		<button id="openNewUser">Add a person</button>
-		<br/><br/>
-		
+		<br />
+		<br />
+
 		<table class="liveExample">
-		    <thead>
-		        <tr><th>Name</th><th>Email</th><th>Password</th><th></th></tr>
-		    </thead>
+			<thead>
+				<tr>
+					<th>Name</th>
+					<th>Email</th>
+					<th>Password</th>
+					<th></th>
+				</tr>
+			</thead>
 			<tbody data-bind="foreach: people">
-		        <tr>
-		            <td data-bind="text: name"></td>
-		            <td data-bind="text: email"></td>
-		            <td data-bind="text: password"></td>
-		            <td> <a href='#' data-bind='click: $root.deletePerson'>Delete</a> </td> 
-		        </tr>
-		    </tbody>
-		</table>    
+				<tr>
+					<td data-bind="text: name"></td>
+					<td data-bind="text: email"></td>
+					<td data-bind="text: password"></td>
+					<td><a href='#' data-bind='click: $root.deletePerson'>Delete</a>
+					</td>
+				</tr>
+			</tbody>
+		</table>
 	</div>
-	
+
 	<div id="dialog-form" title="Create new person">
 		<form>
 			<fieldset style="border: 0px">
 				<div style="display: table;">
 					<div style="display: table-row;">
 						<div style="display: table-cell;">
-							<label for="name">Name</label> 
+							<label for="name">Name</label>
 						</div>
 						<div style="display: table-cell;">
-							<input type="text" name="name"
-								id="name" class="text ui-widget-content ui-corner-all" />
-						</div>		
-					</div>
-					<div style="display: table-row;">
-						<div style="display: table-cell;">
-							<label for="email">Email</label> 
-						</div>
-						<div style="display: table-cell;">
-							<input type="text" name="email"
-								id="email" value="" class="text ui-widget-content ui-corner-all" />
-						</div>	
-					</div>
-					<div style="display: table-row;">
-						<div style="display: table-cell;padding-right: 5px">
-							<label for="password">Password</label> 
-						</div>
-						<div style="display: table-cell;">
-							<input type="password"
-								name="password" id="password" value=""
+							<input type="text" name="name" id="name"
 								class="text ui-widget-content ui-corner-all" />
-						</div>	
-					</div>	
+						</div>
+					</div>
+					<div style="display: table-row;">
+						<div style="display: table-cell;">
+							<label for="email">Email</label>
+						</div>
+						<div style="display: table-cell;">
+							<input type="text" name="email" id="email" value=""
+								class="text ui-widget-content ui-corner-all" />
+						</div>
+					</div>
+					<div style="display: table-row;">
+						<div style="display: table-cell; padding-right: 5px">
+							<label for="password">Password</label>
+						</div>
+						<div style="display: table-cell;">
+							<input type="password" name="password" id="password" value=""
+								class="text ui-widget-content ui-corner-all" />
+						</div>
+					</div>
 				</div>
 			</fieldset>
 		</form>
