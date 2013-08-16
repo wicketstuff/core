@@ -42,10 +42,10 @@ Annotation `@RequestBody` is used to extract the value of a method parameter fro
 	return converter.convertToObject(value, Session.get().getLocale()); 
 ````
 
-To write/read objects to response/from request, `AbstractRestResource` uses an implementation of interface `IObjectSerialDeserial` which defines the following methods: 
+To write/read objects to response/from request, `AbstractRestResource` uses an implementation of interface `IWebSerialDeserial` which defines the following methods: 
 
 ````java
-public interface IObjectSerialDeserial {
+public interface IWebSerialDeserial {
 	
 	public void objectToResponse(Object targetObject, WebResponse response, String mimeType) throws Exception;
 
@@ -69,7 +69,7 @@ The following code is taken from class `MultiFormatRestResource` in the main mod
 		//The instance returned will be marshaled to XML.
 	}
 ````
-If we want to use multiple mime types with our REST resource, we must use an implementation of `IObjectSerialDeserial` that supports all the required types. For this special purpose we can use class `MultiFormatSerialDeserial` as base class for our custom `IObjectSerialDeserial`. The class implements a custom version of _Composite pattern_ allowing to register a given `IObjectSerialDeserial` for a specific MIME type. Utility class `RestMimeTypes` contains different MIME types as tring constants. The following is an example of usage of `MultiFormatSerialDeserial` taken from class `WicketApplication` in the main module `restannotations`:
+If we want to use multiple mime types with our REST resource, we must use an implementation of `IWebSerialDeserial` that supports all the required types. For this special purpose we can use class `MultiFormatSerialDeserial` as base class for our custom `IWebSerialDeserial`. The class implements a custom version of _Composite pattern_ allowing to register a given `IWebSerialDeserial` for a specific MIME type. Utility class `RestMimeTypes` contains different MIME types as tring constants. The following is an example of usage of `MultiFormatSerialDeserial` taken from class `WicketApplication` in the main module `restannotations`:
 
 ````java
 	MultiFormatSerialDeserial multiFormat = new MultiFormatSerialDeserial();

@@ -25,7 +25,6 @@ import org.wicketstuff.rest.contenthandling.IWebSerialDeserial;
 import org.wicketstuff.rest.contenthandling.RestMimeTypes;
 import org.wicketstuff.rest.utils.http.HttpUtils;
 
-// TODO: Auto-generated Javadoc
 /**
  * Abstract object serializer/deserializer that works with textual formats.
  * 
@@ -51,9 +50,6 @@ public abstract class TextualObjectSerialDeserial implements IWebSerialDeserial,
 		this.mimeType = mimeType;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.wicketstuff.rest.contenthandling.IObjectSerialDeserial#objectToResponse(java.lang.Object, org.apache.wicket.request.http.WebResponse, java.lang.String)
-	 */
 	@Override
 	public void objectToResponse(Object targetObject, WebResponse response, String mimeType)
 			throws Exception {
@@ -81,18 +77,12 @@ public abstract class TextualObjectSerialDeserial implements IWebSerialDeserial,
 		}
 	}
 
-	/* (non-Javadoc)
-	 * @see org.wicketstuff.rest.contenthandling.IObjectSerialDeserial#requestToObject(org.apache.wicket.request.http.WebRequest, java.lang.Class, java.lang.String)
-	 */
 	@Override
 	public <T> T requestToObject(WebRequest request, Class<T> targetClass, String mimeType)
 			throws Exception {
 		return deserializeObject(HttpUtils.readStringFromRequest(request), targetClass, mimeType);
 	}
 
-	/* (non-Javadoc)
-	 * @see org.wicketstuff.rest.contenthandling.IObjectSerialDeserial#isMimeTypeSupported(java.lang.String)
-	 */
 	@Override
 	final public boolean isMimeTypeSupported(String mimeType) {
 		return RestMimeTypes.TEXT_PLAIN.equals(mimeType) || this.mimeType.equals(mimeType);
