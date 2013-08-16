@@ -55,7 +55,19 @@ public interface IWebSerialDeserial {
 }
 ````
 
-The first two methods are the operations needed to write an object to the response body and to read an object from request body. Methods `isMimeTypeSupported` is used to know if a MIME format is supported by a given object serial/deserial. To work with MIME types we can use string constants from class `RestMimeTypes`. The main module comes with class `TextualObjectSerialDeserial` which can be used as base class to implement serial/deserial that work with a textual MIME type and that needs to know which charset encoding should be used.<br/>
+The first two methods are the operations needed to write an object to the response body and to read an object from request body. Methods `isMimeTypeSupported` is used to know if a MIME format is supported by a given object serial/deserial. To work with MIME types we can use string constants from class `RestMimeTypes`. In addition to interface `IWebSerialDeserial` our serial/deserial can also implement interface `IObjectSerialDeserial` to better separate the serial/deserial processes from web entities such as request and response. The interface is the following:<br/>
+
+````java
+public interface IObjectSerialDeserial<T>{
+	
+	public T serializeObject(Object target, String mimeType);
+	
+	public <E> E deserializeObject(T source, Class<E> targetClass, String mimeType);
+}
+````
+
+<br/>
+The main module comes with class `TextualObjectSerialDeserial` which implements both `IWebSerialDeserial` and `IObjectSerialDeserial` and that can be used as base class to implement serials/deserials that work with a textual MIME type and that need to know which charset encoding should be used.<br/>
 As JSON is de-facto standard format for REST API, the project comes also with a ready-to-use resource (`GsonRestResource`) and a serial/deserial (`GsonSerialDeserial`) that work with JSON format (both inside module 'restannotations-json'). These classes use [Gson](http://code.google.com/p/google-gson/) as Json library. Resource `PersonsRestResource` in the example module is based on `GsonRestResource`.
 
 Use multiple data format
@@ -69,7 +81,8 @@ The following code is taken from class `MultiFormatRestResource` in the main mod
 		//The instance returned will be marshaled to XML.
 	}
 ````
-If we want to use multiple mime types with our REST resource, we must use an implementation of `IWebSerialDeserial` that supports all the required types. For this special purpose we can use class `MultiFormatSerialDeserial` as base class for our custom `IWebSerialDeserial`. The class implements a custom version of _Composite pattern_ allowing to register a given `IWebSerialDeserial` for a specific MIME type. Utility class `RestMimeTypes` contains different MIME types as tring constants. The following is an example of usage of `MultiFormatSerialDeserial` taken from class `WicketApplication` in the main module `restannotations`:
+If we want to use multiple mime types with our REST resource, we must use an implementation of `IWebSerialDeserial` that supports all the required types. For this special purpose we can use class `MultiFormatSerialDeserial` as base class for our custom `IWebSerialDeserial`.<br/> 
+The class implements a custom version of _Composite pattern_ allowing to register a given `IWebSerialDeserial` for a specific MIME type. Utility class `RestMimeTypes` contains different MIME types as tring constants. The following is an example of usage of `MultiFormatSerialDeserial` taken from class `WicketApplication` in the main module `restannotations`:
 
 ````java
 	MultiFormatSerialDeserial multiFormat = new MultiFormatSerialDeserial();
