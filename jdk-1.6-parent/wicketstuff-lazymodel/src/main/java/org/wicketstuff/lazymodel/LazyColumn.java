@@ -31,7 +31,7 @@ import org.wicketstuff.lazymodel.LazyModel.Evaluation;
  * A {@link DataTable} column for lazy evaluations.
  * 
  * <pre>
- * new LazyColumn&lt;A, B&gt;(header, from(A.class).getB());
+ * new LazyColumn&lt;A, Void, B&gt;(header, from(A.class).getB());
  * </pre>
  * 
  * @param T
@@ -48,7 +48,9 @@ import org.wicketstuff.lazymodel.LazyModel.Evaluation;
 public class LazyColumn<T, S, R> extends AbstractColumn<T, S> implements
 		IExportableColumn<T, S, R> {
 
-	private final LazyModel<R> model;
+	private static final long serialVersionUID = 1L;
+	
+	private final LazyModel<R> cellModel;
 
 	/**
 	 * Creates a new non-sortable column.
@@ -60,6 +62,18 @@ public class LazyColumn<T, S, R> extends AbstractColumn<T, S> implements
 	 */
 	public LazyColumn(IModel<String> displayModel, R evaluationResult) {
 		this(displayModel, evaluationResult, null);
+	}
+
+	/**
+	 * Creates a new non-sortable column.
+	 * 
+	 * @param displayModel
+	 *            model for the header
+	 * @param cellModel
+	 *            lazy model for the cells 
+	 */
+	public LazyColumn(IModel<String> displayModel, LazyModel<R> cellModel) {
+		this(displayModel, cellModel, null);
 	}
 
 	/**
@@ -75,15 +89,31 @@ public class LazyColumn<T, S, R> extends AbstractColumn<T, S> implements
 	 */
 	public LazyColumn(IModel<String> displayModel, R evaluationResult,
 			S sortProperty) {
+		this(displayModel, model(evaluationResult), sortProperty);
+	}
+
+	/**
+	 * Creates a new column. If the {@code sortProperty} is not {@code null},
+	 * then the column will be sortable.
+	 * 
+	 * @param displayModel
+	 *            model for the header
+	 * @param cellModel
+	 *            lazy model for the cells 
+	 * @param sortProperty
+	 *            sort property to use when sorting by this column
+	 */
+	public LazyColumn(IModel<String> displayModel, LazyModel<R> cellModel,
+			S sortProperty) {
 		super(displayModel, sortProperty);
-		this.model = model(evaluationResult);
+		this.cellModel = cellModel;
 	}
 
 	@Override
 	public void detach() {
 		super.detach();
 
-		this.model.detach();
+		this.cellModel.detach();
 	}
 
 	/**
@@ -112,6 +142,6 @@ public class LazyColumn<T, S, R> extends AbstractColumn<T, S> implements
 	 */
 	@Override
 	public IModel<R> getDataModel(IModel<T> rowModel) {
-		return model.bind(rowModel);
+		return cellModel.bind(rowModel);
 	}
 }
