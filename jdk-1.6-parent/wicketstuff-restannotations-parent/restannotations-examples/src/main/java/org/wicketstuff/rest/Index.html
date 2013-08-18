@@ -1,0 +1,191 @@
+<!--
+
+     Licensed to the Apache Software Foundation (ASF) under one or more
+     contributor license agreements.  See the NOTICE file distributed with
+     this work for additional information regarding copyright ownership.
+     The ASF licenses this file to You under the Apache License, Version 2.0
+     (the "License"); you may not use this file except in compliance with
+     the License.  You may obtain a copy of the License at
+
+          http://www.apache.org/licenses/LICENSE-2.0
+
+     Unless required by applicable law or agreed to in writing, software
+     distributed under the License is distributed on an "AS IS" BASIS,
+     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     See the License for the specific language governing permissions and
+     limitations under the License.
+
+-->
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="Content-type" content="text/html" charset="UTF-8">
+<title>Persons archive</title>
+<script type="text/javascript"
+	src="http://knockoutjs.com/downloads/knockout-2.2.1.js"></script>
+<script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
+<script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
+<link rel="stylesheet"
+	href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css" />
+<link rel="stylesheet" type="text/css"
+	href="http://knockoutjs.com/css/styles.css" />
+<link rel="stylesheet" type="text/css"
+	href="http://knockoutjs.com/css/tripoli.simple.css" />
+
+<script type="text/javascript">
+	
+	$(document).ready(function() {
+		
+		function AppViewModel() {
+			 var self = this;
+			 this.people = ko.observableArray([]);
+			 
+			 this.deletePerson = function(person){
+				 var index = self.people.indexOf(person);
+				 
+				 $.ajax({
+					 type: "DELETE",
+					 contentType: "application/json; charset=utf-8",
+					 url: "./personsmanager/persons/" + index,
+					 async: false
+				 });
+				 
+				 loadAllPersons();
+			 };
+		};
+
+		var model = new AppViewModel();
+		
+		ko.applyBindings(model);
+		
+		$( "#dialog-form" ).dialog({
+			 autoOpen: false,
+			 height: 150,
+			 width: 230,
+			 modal: true,
+			 buttons: {
+				 "Create a person": function(){
+					 var personPojo = new Object();
+					 
+					 personPojo.name = $('#name').val();
+					 personPojo.email = $('#email').val();
+					 personPojo.password = $('#password').val();
+					 
+					 $.ajax({
+						 type: "POST",
+						 contentType: "application/json",
+						 url: "./personsmanager/persons",
+						 data: JSON.stringify(personPojo),
+						 async: false
+					 });
+					 
+					 $(this).find('input').val('');
+					 $(this).dialog( "close" );
+					 
+					 loadAllPersons();
+				 }
+			 },
+			 cancel: function() {
+				 $( this ).dialog( "close" );
+			 },
+		});
+		
+		$('#openNewUser').click(function(event){
+			$( "#dialog-form" ).dialog( "open" );
+		});
+		
+		loadAllPersons();
+		
+		function loadAllPersons(){
+			$.ajax({
+				 type: "GET",
+				 contentType: "application/json;charset=utf-8",
+				 url: "./personsmanager/persons",
+				 async: false,
+				 success: function(data){
+						var people = model.people;
+						people.removeAll();
+						
+						for(var i = 0; i < data.length; i++)
+							people.push(data[i]);
+						
+					}
+			});
+		}
+	})
+	
+</script>
+</head>
+<body style="padding: 1.25em 1.45em 1.25em 1.55em">
+
+	<div class="content sticker" style="font-size: 12px;">
+		<h1>Persons archive</h1>
+		<p style="font-weight: bold;">Simple REST application to create,
+			delete and display instances of persons (see class PersonPojo).</p>
+		<p>
+			Powered by <a href="http://jquery.com/">JQuery</a> and <a
+				href="http://knockoutjs.com/">Knockoutjs</a>
+		</p>
+		<button id="openNewUser">Add a person</button>
+		<br />
+		<br />
+
+		<table class="liveExample">
+			<thead>
+				<tr>
+					<th>Name</th>
+					<th>Email</th>
+					<th>Password</th>
+					<th></th>
+				</tr>
+			</thead>
+			<tbody data-bind="foreach: people">
+				<tr>
+					<td data-bind="text: name"></td>
+					<td data-bind="text: email"></td>
+					<td data-bind="text: password"></td>
+					<td><a href='#' data-bind='click: $root.deletePerson'>Delete</a>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+
+	<div id="dialog-form" title="Create new person">
+		<form>
+			<fieldset style="border: 0px">
+				<div style="display: table;">
+					<div style="display: table-row;">
+						<div style="display: table-cell;">
+							<label for="name">Name</label>
+						</div>
+						<div style="display: table-cell;">
+							<input type="text" name="name" id="name"
+								class="text ui-widget-content ui-corner-all" />
+						</div>
+					</div>
+					<div style="display: table-row;">
+						<div style="display: table-cell;">
+							<label for="email">Email</label>
+						</div>
+						<div style="display: table-cell;">
+							<input type="text" name="email" id="email" value=""
+								class="text ui-widget-content ui-corner-all" />
+						</div>
+					</div>
+					<div style="display: table-row;">
+						<div style="display: table-cell; padding-right: 5px">
+							<label for="password">Password</label>
+						</div>
+						<div style="display: table-cell;">
+							<input type="password" name="password" id="password" value=""
+								class="text ui-widget-content ui-corner-all" />
+						</div>
+					</div>
+				</div>
+			</fieldset>
+		</form>
+	</div>
+</body>
+</html>
