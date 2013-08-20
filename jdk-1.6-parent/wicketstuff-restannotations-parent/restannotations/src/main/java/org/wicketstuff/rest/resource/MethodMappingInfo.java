@@ -24,13 +24,13 @@ import java.util.List;
 
 import org.apache.wicket.authroles.authorization.strategies.role.Roles;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
+import org.apache.wicket.util.lang.Args;
 import org.wicketstuff.rest.annotations.AuthorizeInvocation;
 import org.wicketstuff.rest.annotations.MethodMapping;
 import org.wicketstuff.rest.contenthandling.RestMimeTypes;
 import org.wicketstuff.rest.resource.urlsegments.AbstractURLSegment;
 import org.wicketstuff.rest.utils.http.HttpMethod;
 
-// TODO: Auto-generated Javadoc
 /**
  * This class contains the informations of a resource mapped method (i.e. a
  * method annotated with {@link MethodMapping}). These informations are used at
@@ -61,6 +61,9 @@ public class MethodMappingInfo {
 	 * @param method the resource's method mapped.
 	 */
 	public MethodMappingInfo(MethodMapping methodMapped, Method method) {
+		Args.notNull(methodMapped, "methodMapped");
+		Args.notNull(method, "method");
+		
 		this.httpMethod = methodMapped.httpMethod();
 		this.method = method;
 		this.segments = Collections.unmodifiableList(loadSegments(methodMapped.value()));
