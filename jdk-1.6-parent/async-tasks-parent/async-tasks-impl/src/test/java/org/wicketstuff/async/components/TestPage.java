@@ -1,5 +1,7 @@
 package org.wicketstuff.async.components;
 
+import org.wicketstuff.async.task.AbstractTaskModel;
+import org.wicketstuff.async.task.DefaultTaskManager;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.markup.html.WebPage;
 import org.apache.wicket.markup.html.form.Form;
