@@ -16,7 +16,7 @@
  */
 package org.wicketstuff.rest.resource.gson;
 
-import org.wicketstuff.rest.contenthandling.RestMimeTypes;
+import org.wicketstuff.rest.contenthandling.mimetypes.RestMimeTypes;
 import org.wicketstuff.rest.contenthandling.serialdeserial.TextualObjectSerialDeserial;
 
 import com.google.gson.Gson;

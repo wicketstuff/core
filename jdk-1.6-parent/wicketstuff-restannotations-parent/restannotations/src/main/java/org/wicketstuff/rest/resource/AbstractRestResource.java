@@ -47,7 +47,9 @@ import org.wicketstuff.rest.annotations.parameters.PathParam;
 import org.wicketstuff.rest.annotations.parameters.RequestBody;
 import org.wicketstuff.rest.annotations.parameters.RequestParam;
 import org.wicketstuff.rest.contenthandling.IWebSerialDeserial;
-import org.wicketstuff.rest.contenthandling.RestMimeTypes;
+import org.wicketstuff.rest.contenthandling.mimetypes.DefaultMimeTypeResolver;
+import org.wicketstuff.rest.contenthandling.mimetypes.IMimeTypeResolver;
+import org.wicketstuff.rest.contenthandling.mimetypes.RestMimeTypes;
 import org.wicketstuff.rest.resource.urlsegments.AbstractURLSegment;
 import org.wicketstuff.rest.utils.http.HttpMethod;
 import org.wicketstuff.rest.utils.http.HttpUtils;
@@ -97,7 +99,7 @@ public abstract class AbstractRestResource<T extends IWebSerialDeserial> impleme
 	 */
 	public AbstractRestResource(T serialDeserial, IRoleCheckingStrategy roleCheckingStrategy) {
 		Args.notNull(serialDeserial, "serialDeserial");
-		
+
 		this.objSerialDeserial = serialDeserial;
 		this.roleCheckingStrategy = roleCheckingStrategy;
 
@@ -306,7 +308,8 @@ public abstract class AbstractRestResource<T extends IWebSerialDeserial> impleme
 
 			if (methodMapped != null) {
 				HttpMethod httpMethod = methodMapped.httpMethod();
-				MethodMappingInfo urlMappingInfo = new MethodMappingInfo(methodMapped, method);
+				MethodMappingInfo urlMappingInfo = new MethodMappingInfo(method,
+						getMimeTypeResolver(method));
 
 				if (!isMimeTypesSupported(urlMappingInfo.getMimeInputFormat())
 						|| !isMimeTypesSupported(urlMappingInfo.getMimeOutputFormat()))
@@ -370,13 +373,13 @@ public abstract class AbstractRestResource<T extends IWebSerialDeserial> impleme
 			MethodParameter methodParameter = new MethodParameter(parameterTypes[i], mappedMethod,
 					i);
 			Annotation annotation = ReflectionUtils.getAnnotationParam(i, method);
-			//retrieve parameter value
+			// retrieve parameter value
 			if (annotation != null)
 				paramValue = extractParameterValue(methodParameter, pathParameters, annotation,
 						pageParameters);
 			else
 				paramValue = extractParameterFromUrl(methodParameter, pathParamsIterator);
-			//try to use the default value
+			// try to use the default value
 			if (paramValue == null && !methodParameter.getDeaultValue().isEmpty())
 				paramValue = toObject(methodParameter.getParameterClass(),
 						methodParameter.getDeaultValue());
@@ -598,6 +601,20 @@ public abstract class AbstractRestResource<T extends IWebSerialDeserial> impleme
 
 			return null;
 		}
+	}
+
+	/**
+	 * Return an instance of {@link IMimeTypeResolver} that must be used as MIME
+	 * type resolver.
+	 * 
+	 * @param method
+	 *            the current mapped method.
+	 * @return the MIME type resolver to use.
+	 */
+	protected IMimeTypeResolver getMimeTypeResolver(Method method) {
+		MethodMapping methodMapped = method.getAnnotation(MethodMapping.class);
+
+		return new DefaultMimeTypeResolver(methodMapped);
 	}
 
 	/**

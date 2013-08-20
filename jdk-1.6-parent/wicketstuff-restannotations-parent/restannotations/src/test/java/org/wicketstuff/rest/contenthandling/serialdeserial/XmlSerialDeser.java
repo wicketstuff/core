@@ -22,7 +22,7 @@ import javax.xml.bind.JAXB;
 
 import org.apache.wicket.request.cycle.RequestCycle;
 import org.apache.wicket.request.http.WebResponse;
-import org.wicketstuff.rest.contenthandling.RestMimeTypes;
+import org.wicketstuff.rest.contenthandling.mimetypes.RestMimeTypes;
 
 public class XmlSerialDeser extends TextualObjectSerialDeserial {
 

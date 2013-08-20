@@ -14,31 +14,27 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-package org.wicketstuff.rest.contenthandling.serialdeserial;
+package org.wicketstuff.rest.contenthandling.mimetypes;
 
-import org.wicketstuff.rest.contenthandling.mimetypes.RestMimeTypes;
-import org.wicketstuff.rest.resource.RestResourceFullAnnotated;
+/**
+ * A generic resolver to retrieve the MIME types to use for a mapped method in
+ * input and output.
+ * 
+ * @author andrea del bene
+ * 
+ */
+public interface IMimeTypeResolver {
+	/**
+	 * Get the MIME type to use in input.
+	 * 
+	 * @return The MIME type to use in input.
+	 */
+	public String getInputFormat();
 
-public class TestJsonDesSer extends TextualObjectSerialDeserial {
-	public TestJsonDesSer() {
-		super("UTF-8", RestMimeTypes.APPLICATION_JSON);
-	}
-
-	static public Object getObject(){
-		return RestResourceFullAnnotated.createTestPerson();
-	}
-	
-	static public String getJSON(){
-		return "{\"name\" : \"Mary\", \"surname\" : \"Smith\", \"email\" : \"m.smith@gmail.com\"}";
-	}
-
-	@Override
-	public String serializeObject(Object targetObject, String mimeType) {
-		return getJSON();
-	}
-
-	@Override
-	public <T> T deserializeObject(String source, Class<T> targetClass, String mimeType) {
-		return (T) getObject();
-	}
+	/**
+	 * Get the MIME type to use in output.
+	 * 
+	 * @return The MIME type to use in output
+	 */
+	public String getOutputFormat();
 }

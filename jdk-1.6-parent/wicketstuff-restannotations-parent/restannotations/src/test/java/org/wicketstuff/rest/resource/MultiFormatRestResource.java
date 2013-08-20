@@ -19,7 +19,7 @@ package org.wicketstuff.rest.resource;
 import org.apache.wicket.authroles.authorization.strategies.role.IRoleCheckingStrategy;
 import org.wicketstuff.rest.Person;
 import org.wicketstuff.rest.annotations.MethodMapping;
-import org.wicketstuff.rest.contenthandling.RestMimeTypes;
+import org.wicketstuff.rest.contenthandling.mimetypes.RestMimeTypes;
 import org.wicketstuff.rest.contenthandling.serialdeserial.MultiFormatSerialDeserial;
 import org.wicketstuff.rest.contenthandling.serialdeserial.TestJsonDesSer;
 import org.wicketstuff.rest.resource.AbstractRestResource;

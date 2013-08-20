@@ -27,7 +27,8 @@ import org.apache.wicket.request.mapper.parameter.PageParameters;
 import org.apache.wicket.util.lang.Args;
 import org.wicketstuff.rest.annotations.AuthorizeInvocation;
 import org.wicketstuff.rest.annotations.MethodMapping;
-import org.wicketstuff.rest.contenthandling.RestMimeTypes;
+import org.wicketstuff.rest.contenthandling.mimetypes.IMimeTypeResolver;
+import org.wicketstuff.rest.contenthandling.mimetypes.RestMimeTypes;
 import org.wicketstuff.rest.resource.urlsegments.AbstractURLSegment;
 import org.wicketstuff.rest.utils.http.HttpMethod;
 
@@ -49,29 +50,30 @@ public class MethodMappingInfo {
 	private final Roles roles;
 	/** The resource method we have mapped. */
 	private final Method method;
-	/** The MIME type to use in input. */
-	private final String inputFormat;
-	/** The MIME type to use in output. */
-	private final String outputFormat;
+	/** The MIME type resolver to use. */
+	private final IMimeTypeResolver mimeTypeResolver;
 
 	/**
 	 * Class constructor.
-	 *
-	 * @param methodMapped the method mapped
-	 * @param method the resource's method mapped.
+	 * 
+	 * @param methodMapped
+	 *            the method mapped
+	 * @param method
+	 *            the resource's method mapped.
+	 * @param resolverClass
+	 *            the class for the MIME type resolver to use
 	 */
-	public MethodMappingInfo(MethodMapping methodMapped, Method method) {
-		Args.notNull(methodMapped, "methodMapped");
+	public MethodMappingInfo(Method method, IMimeTypeResolver mimeTypeResolver) {
 		Args.notNull(method, "method");
+		Args.notNull(mimeTypeResolver, "mimeTypeResolver");
+		
+		MethodMapping methodMapped = method.getAnnotation(MethodMapping.class);
 		
 		this.httpMethod = methodMapped.httpMethod();
 		this.method = method;
+		this.mimeTypeResolver = mimeTypeResolver;
 		this.segments = Collections.unmodifiableList(loadSegments(methodMapped.value()));
 		this.roles = loadRoles();
-
-		this.inputFormat = methodMapped.consumes();
-		this.outputFormat = methodMapped.produces();
-
 	}
 
 	/**
@@ -187,20 +189,20 @@ public class MethodMappingInfo {
 	}
 
 	/**
-	 * Gets the mime input format.
+	 * Gets the MIME type format to use in input.
 	 *
-	 * @return the mime input format
+	 * @return the MIME type for input format
 	 */
 	public String getMimeInputFormat() {
-		return inputFormat;
+		return mimeTypeResolver.getInputFormat();
 	}
 
 	/**
-	 * Gets the mime output format.
+	 * Gets the MIME type format to use in output
 	 *
-	 * @return the mime output format
+	 * @return the MIME type for output format
 	 */
 	public String getMimeOutputFormat() {
-		return outputFormat;
+		return mimeTypeResolver.getOutputFormat();
 	}
 }

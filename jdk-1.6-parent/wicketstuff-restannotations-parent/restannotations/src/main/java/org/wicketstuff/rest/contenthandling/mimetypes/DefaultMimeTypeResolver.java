@@ -14,31 +14,37 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-package org.wicketstuff.rest.contenthandling.serialdeserial;
 
-import org.wicketstuff.rest.contenthandling.mimetypes.RestMimeTypes;
-import org.wicketstuff.rest.resource.RestResourceFullAnnotated;
+package org.wicketstuff.rest.contenthandling.mimetypes;
 
-public class TestJsonDesSer extends TextualObjectSerialDeserial {
-	public TestJsonDesSer() {
-		super("UTF-8", RestMimeTypes.APPLICATION_JSON);
-	}
+import org.wicketstuff.rest.annotations.MethodMapping;
 
-	static public Object getObject(){
-		return RestResourceFullAnnotated.createTestPerson();
-	}
-	
-	static public String getJSON(){
-		return "{\"name\" : \"Mary\", \"surname\" : \"Smith\", \"email\" : \"m.smith@gmail.com\"}";
+/**
+ * Default implementation for interface {@link IMimeTypeResolver} that uses
+ * annotation {@link MethodMapping}.
+ * 
+ * @author andrea del bene
+ * 
+ */
+public class DefaultMimeTypeResolver implements IMimeTypeResolver {
+	/** The MIME type to use in input. */
+	private final String inputFormat;
+	/** The MIME type to use in output. */
+	private final String outputFormat;
+
+	public DefaultMimeTypeResolver(MethodMapping methodMapped) {
+		this.inputFormat = methodMapped.consumes();
+		this.outputFormat = methodMapped.produces();
 	}
 
 	@Override
-	public String serializeObject(Object targetObject, String mimeType) {
-		return getJSON();
+	public String getInputFormat() {
+		return inputFormat;
 	}
 
 	@Override
-	public <T> T deserializeObject(String source, Class<T> targetClass, String mimeType) {
-		return (T) getObject();
+	public String getOutputFormat() {
+		return outputFormat;
 	}
+
 }
