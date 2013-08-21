@@ -20,6 +20,7 @@ import javax.servlet.ServletResponse;
 
 import org.apache.wicket.request.http.WebRequest;
 import org.apache.wicket.request.http.WebResponse;
+import org.apache.wicket.util.lang.Args;
 import org.wicketstuff.rest.contenthandling.IObjectSerialDeserial;
 import org.wicketstuff.rest.contenthandling.IWebSerialDeserial;
 import org.wicketstuff.rest.contenthandling.mimetypes.RestMimeTypes;
@@ -46,6 +47,9 @@ public abstract class TextualObjectSerialDeserial implements IWebSerialDeserial,
 	 * @param mimeType the mime type
 	 */
 	public TextualObjectSerialDeserial(String charset, String mimeType) {
+		Args.notNull(charset, "charset");
+		Args.notNull(mimeType, "mimeType");
+		
 		this.charset = charset;
 		this.mimeType = mimeType;
 	}

@@ -41,6 +41,8 @@ public class MultiFormatSerialDeserial implements IWebSerialDeserial {
 		
 		if(serialDeserial != null)
 			serialDeserial.objectToResponse(targetObject, response, mimeType);
+		else
+			response.sendError(415, "MIME type not supported.");
 	}
 
 	@Override

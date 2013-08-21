@@ -17,6 +17,7 @@
 
 package org.wicketstuff.rest.contenthandling.mimetypes;
 
+import org.apache.wicket.util.lang.Args;
 import org.wicketstuff.rest.annotations.MethodMapping;
 
 /**
@@ -33,6 +34,8 @@ public class DefaultMimeTypeResolver implements IMimeTypeResolver {
 	private final String outputFormat;
 
 	public DefaultMimeTypeResolver(MethodMapping methodMapped) {
+		Args.notNull(methodMapped, "methodMapped");
+				
 		this.inputFormat = methodMapped.consumes();
 		this.outputFormat = methodMapped.produces();
 	}
