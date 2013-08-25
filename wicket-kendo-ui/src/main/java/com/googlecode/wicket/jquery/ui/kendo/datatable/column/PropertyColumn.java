@@ -98,6 +98,12 @@ public class PropertyColumn<T> extends AbstractColumn<T>
 		this.renderer = new TextRenderer<T>(property);
 	}
 
+	@Override
+	public String getField()
+	{
+		return super.getField().replace('.', '$'); //fixes #56
+	}
+
 	/**
 	 * Gets the value of the supplied object.<br/>
 	 * Implementation may call {@link #getField()}
@@ -105,9 +111,8 @@ public class PropertyColumn<T> extends AbstractColumn<T>
 	 * @param object the model object
 	 * @return the value of the object
 	 */
-	public final String getValue(T object)
+	public String getValue(T object)
 	{
 		return this.renderer.getText(object);
 	}
-
 }

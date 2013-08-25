@@ -122,13 +122,13 @@ public abstract class AbstractColumn<T> implements IColumn<T>
 	}
 
 	@Override
-	public final String getTitle()
+	public String getTitle()
 	{
 		return this.title.getObject();
 	}
 
 	@Override
-	public final String getField()
+	public String getField()
 	{
 		return this.field;
 	}

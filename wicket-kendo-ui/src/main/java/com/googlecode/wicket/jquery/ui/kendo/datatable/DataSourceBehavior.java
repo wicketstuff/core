@@ -81,6 +81,7 @@ class DataSourceBehavior<T> extends AbstractDefaultAjaxBehavior
 	private IRequestHandler newRequestHandler(final int first, final int count)
 	{
 		return new IRequestHandler() {
+
 			@Override
 			public void respond(final IRequestCycle requestCycle)
 			{
