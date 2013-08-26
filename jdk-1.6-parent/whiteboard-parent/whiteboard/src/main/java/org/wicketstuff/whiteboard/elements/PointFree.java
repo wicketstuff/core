@@ -19,105 +19,45 @@ package org.wicketstuff.whiteboard.elements;
 import org.apache.wicket.ajax.json.JSONException;
 import org.apache.wicket.ajax.json.JSONObject;
 
-public class PointFree extends Element{
-	protected double x;	//	x coordinate of the point
-	protected double y;	//	y coordinate of the point
+public class PointFree extends Element {
+	private static final long serialVersionUID = 1L;
+	protected double x; // x coordinate of the point
+	protected double y; // y coordinate of the point
 
-	public PointFree(int id, String label, String color, Boolean hidden, String type, Boolean trace,double x, double y){
-		this.id=id;
-		this.label=label;
-		this.color=color;
-		this.hidden=hidden;
-		this.type=type;
-		this.trace=trace;
-		this.x=x;
-		this.y=y;
+	public PointFree(int id, String label, String color, Boolean hidden, Type type, Boolean trace, double x, double y) {
+		super(id, label, color, hidden, type, trace);
+		this.x = x;
+		this.y = y;
 	}
 
-	public PointFree(JSONObject object) throws JSONException{
-		this.id=(Integer)object.get("id");
-
-		try{
-			this.label=(String)object.get("label");
-		}catch(JSONException e){
-			//Add Error Handling
-		}
-
-		try{
-			this.color=(String)object.get("color");
-		}catch(JSONException e){
-			//Add Error Handling
-		}
-
-		try{
-			this.trace=(Boolean)object.get("trace");
-		}catch(JSONException e){
-			//Add Error Handling
-		}
-
-		try{
-			this.hidden=(Boolean)object.get("hidden");
-		}catch(JSONException e){
-			//Add Error Handling
-		}
-
-		this.type=(String)object.get("type");
-
-		if(object.get("x") instanceof Double){
-			this.x=(Double)object.get("x");
-		}
-		else{
-			this.x=(Integer)object.get("x");
-		}
-
-		if(object.get("y") instanceof Double){
-			this.y=(Double)object.get("y");
-		}
-		else{
-			this.y=(Integer)object.get("y");
-		}
+	public PointFree(JSONObject object) throws JSONException {
+		super(object);
+		this.type = Type.PointFree;
+		this.x = object.get("x") instanceof Double ? object.getDouble("x") : object.getInt("x");
+		this.y = object.get("y") instanceof Double ? object.getDouble("y") : object.getInt("y");
 	}
 
-	public JSONObject getJSON(){
-		JSONObject jsonObject=new JSONObject();
-		try{
-			jsonObject.put("id",id);
-			jsonObject.put("type",type);
-			jsonObject.put("x",x);
-			jsonObject.put("y",y);
-			if(label!=null){
-				jsonObject.put("label",label);
-			}
-			if(color!=null){
-				jsonObject.put("color",color);
-			}
-			if(hidden!=null){
-				jsonObject.put("hidden",hidden);
-			}
-			if(trace!=null){
-				jsonObject.put("trace",trace);
-			}
-
-		}catch(JSONException e){
-			e.printStackTrace();
-		}
+	public JSONObject getJSON() throws JSONException {
+		JSONObject jsonObject = super.getJSON(new JSONObject());
+		jsonObject.put("x", x);
+		jsonObject.put("y", y);
 
 		return jsonObject;
 	}
 
-	public double getX(){
+	public double getX() {
 		return x;
 	}
 
-	public void setX(double x){
-		this.x=x;
+	public void setX(double x) {
+		this.x = x;
 	}
 
-	public double getY(){
+	public double getY() {
 		return y;
 	}
 
-	public void setY(double y){
-		this.y=y;
+	public void setY(double y) {
+		this.y = y;
 	}
 }

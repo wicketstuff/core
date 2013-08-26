@@ -19,108 +19,58 @@ package org.wicketstuff.whiteboard.elements;
 import org.apache.wicket.ajax.json.JSONException;
 import org.apache.wicket.ajax.json.JSONObject;
 
-public class PointAtCircle extends Element{
+public class PointAtCircle extends Element {
+	private static final long serialVersionUID = 1L;
 	protected int obj;
 	protected double x;
 	protected double y;
 
-	public PointAtCircle(int id, String label, String color, Boolean hidden, String type, Boolean trace, double x,double y, int obj){
-		this.id=id;
-		this.label=label;
-		this.color=color;
-		this.hidden=hidden;
-		this.type=type;
-		this.trace=trace;
-		this.x=x;
-		this.y=y;
-		this.obj=obj;
+	public PointAtCircle(int id, String label, String color, Boolean hidden, Type type, Boolean trace, double x,
+			double y, int obj) {
+		super(id, label, color, hidden, type, trace);
+		this.x = x;
+		this.y = y;
+		this.obj = obj;
 	}
 
-	public PointAtCircle(JSONObject object) throws JSONException{
-		this.id=(Integer)object.get("id");
-
-		try{
-			this.label=(String)object.get("label");
-		}catch(JSONException e){
-			//Add Error Handling
-		}
-
-		try{
-			this.color=(String)object.get("color");
-		}catch(JSONException e){
-			//Add Error Handling
-		}
-
-		try{
-			this.trace=(Boolean)object.get("trace");
-		}catch(JSONException e){
-			//Add Error Handling
-		}
-
-		try{
-			this.hidden=(Boolean)object.get("hidden");
-		}catch(JSONException e){
-			//Add Error Handling
-		}
-
-		this.type=(String)object.get("type");
-		this.obj=(Integer)object.get("obj");
-		this.x=(Double)object.get("x");
-		this.y=(Double)object.get("y");
+	public PointAtCircle(JSONObject object) throws JSONException {
+		super(object);
+		this.type = Type.PointAtCircle;
+		this.obj = object.getInt("obj");
+		this.x = object.getDouble("x");
+		this.y = object.getDouble("y");
 	}
 
-	public JSONObject getJSON(){
-
-		JSONObject jsonObject=new JSONObject();
-		try{
-			jsonObject.put("id",id);
-			jsonObject.put("type",type);
-			jsonObject.put("obj",obj);
-			jsonObject.put("x",x);
-			jsonObject.put("y",y);
-			if(label!=null){
-				jsonObject.put("label",label);
-			}
-			if(color!=null){
-				jsonObject.put("color",color);
-			}
-			if(hidden!=null){
-				jsonObject.put("hidden",hidden);
-			}
-			if(trace!=null){
-				jsonObject.put("trace",trace);
-			}
-
-		}catch(JSONException e){
-			e.printStackTrace();
-		}
+	public JSONObject getJSON() throws JSONException {
+		JSONObject jsonObject = super.getJSON(new JSONObject());
+		jsonObject.put("obj", obj);
+		jsonObject.put("x", x);
+		jsonObject.put("y", y);
 
 		return jsonObject;
 	}
 
-
-	public int getObj(){
+	public int getObj() {
 		return obj;
 	}
 
-	public void setObj(int obj){
-		this.obj=obj;
+	public void setObj(int obj) {
+		this.obj = obj;
 	}
 
-	public double getX(){
+	public double getX() {
 		return x;
 	}
 
-	public void setT(double x){
-		this.x=x;
+	public void setT(double x) {
+		this.x = x;
 	}
 
-	public double getY(){
+	public double getY() {
 		return y;
 	}
 
-	public void setY(double x){
-		this.y=y;
+	public void setY(double x) {
+		this.x = x;
 	}
-
 }

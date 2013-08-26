@@ -19,103 +19,45 @@ package org.wicketstuff.whiteboard.elements;
 import org.apache.wicket.ajax.json.JSONException;
 import org.apache.wicket.ajax.json.JSONObject;
 
-public class PencilPointer extends Element{
+public class PencilPointer extends Element {
+	private static final long serialVersionUID = 1L;
 	protected int p;
 	protected int age;
 
-	public PencilPointer(int id, String label, String color, Boolean hidden, String type, Boolean trace, int p, int age){
-		this.id=id;
-		this.label=label;
-		this.color=color;
-		this.hidden=hidden;
-		this.type=type;
-		this.trace=trace;
-		this.p=p;
-		this.age=age;
+	public PencilPointer(int id, String label, String color, Boolean hidden, Type type, Boolean trace, int p, int age) {
+		super(id, label, color, hidden, type, trace);
+		this.p = p;
+		this.age = age;
 	}
 
-	public PencilPointer(JSONObject object) throws JSONException{
-		this.id=(Integer)object.get("id");
-
-		try{
-			this.label=(String)object.get("label");
-		}catch(JSONException e){
-			//Add Error Handling
-		}
-
-		try{
-			this.color=(String)object.get("color");
-		}catch(JSONException e){
-			//Add Error Handling
-		}
-
-		try{
-			this.trace=(Boolean)object.get("trace");
-		}catch(JSONException e){
-			//Add Error Handling
-		}
-
-		try{
-			this.hidden=(Boolean)object.get("hidden");
-		}catch(JSONException e){
-			//Add Error Handling
-		}
-
-		this.type=(String)object.get("type");
-		this.p=(Integer)object.get("p");
-
-		if("undefined".equals(object.get("age")))  {
-			this.age=1000;
-		}else{
-			this.age=(Integer)object.get("age");
-		}
-
-
+	public PencilPointer(JSONObject object) throws JSONException {
+		super(object);
+		this.type = Type.PencilPointer;
+		this.p = object.getInt("p");
+		this.age = "undefined".equals(object.get("age")) ? 1000 : object.getInt("age");
 	}
 
-	public JSONObject getJSON(){
-		JSONObject jsonObject=new JSONObject();
-		try{
-			jsonObject.put("id",id);
-			jsonObject.put("type",type);
-			jsonObject.put("p",p);
-			jsonObject.put("age",age);
-			if(label!=null){
-				jsonObject.put("label",label);
-			}
-			if(color!=null){
-				jsonObject.put("color",color);
-			}
-			if(hidden!=null){
-				jsonObject.put("hidden",hidden);
-			}
-			if(trace!=null){
-				jsonObject.put("trace",trace);
-			}
-
-		}catch(JSONException e){
-			e.printStackTrace();
-		}
+	public JSONObject getJSON() throws JSONException {
+		JSONObject jsonObject = super.getJSON(new JSONObject());
+		jsonObject.put("p", p);
+		jsonObject.put("age", age);
 
 		return jsonObject;
 	}
 
-
-
-	public int getP(){
+	public int getP() {
 		return p;
 	}
 
-	public void setP(int p){
-		this.p=p;
+	public void setP(int p) {
+		this.p = p;
 	}
 
-	public int getAge(){
+	public int getAge() {
 		return age;
 	}
 
-	public void setAge(int age){
-		this.age=age;
+	public void setAge(int age) {
+		this.age = age;
 	}
-
 }
