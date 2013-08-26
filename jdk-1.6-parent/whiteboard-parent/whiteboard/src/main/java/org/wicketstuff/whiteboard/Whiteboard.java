@@ -24,41 +24,37 @@ import org.apache.wicket.protocol.ws.api.message.ConnectedMessage;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-
-public class Whiteboard extends Panel{
-	public  static final Logger log =   LoggerFactory.getLogger(Whiteboard.class);
+public class Whiteboard extends Panel {
+	private static final Logger log = LoggerFactory.getLogger(Whiteboard.class);
 	private static final long serialVersionUID = 1L;
 
 	/**
 	 * Creating a whiteboard instance for given element id
+	 * 
 	 * @param id
 	 */
-	public Whiteboard(String id,String whiteboardContent){
+	public Whiteboard(String id, String whiteboardContent) {
 		super(id);
 
-		//Adding Web Socket behaviour to handle synchronization between whiteboards
+		// Adding Web Socket behaviour to handle synchronization between whiteboards
 
-		this.add(new WebSocketBehavior(){
-			private static final long serialVersionUID=-3311970325911992958L;
+		this.add(new WebSocketBehavior() {
+			private static final long serialVersionUID = -3311970325911992958L;
 
 			@Override
-			protected void onConnect(ConnectedMessage message){
+			protected void onConnect(ConnectedMessage message) {
 				super.onConnect(message);
-				log.debug("Connecting :"+message.toString());
+				log.debug("Connecting :" + message.toString());
 			}
 
 			@Override
-			protected void onClose(ClosedMessage message){
+			protected void onClose(ClosedMessage message) {
 				super.onClose(message);
-				log.debug("Disconnecting :"+message.toString());
+				log.debug("Disconnecting :" + message.toString());
 			}
 		});
 
-		WebMarkupContainer whiteboard=new WebMarkupContainer("whiteboard");
-		this.add(whiteboard);
-
-		WhiteboardBehavior whiteboardBehavior=new WhiteboardBehavior("whiteboard",whiteboardContent);
-		this.add(whiteboardBehavior);
+		add(new WebMarkupContainer("whiteboard"));
+		add(new WhiteboardBehavior("whiteboard", whiteboardContent));
 	}
-
 }

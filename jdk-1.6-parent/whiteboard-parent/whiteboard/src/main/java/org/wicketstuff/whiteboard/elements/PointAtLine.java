@@ -19,95 +19,45 @@ package org.wicketstuff.whiteboard.elements;
 import org.apache.wicket.ajax.json.JSONException;
 import org.apache.wicket.ajax.json.JSONObject;
 
-public class PointAtLine extends Element{
+public class PointAtLine extends Element {
+	private static final long serialVersionUID = 1L;
 	protected int obj;
 	protected double t;
 
-	public PointAtLine(int id, String label, String color, Boolean hidden, String type, Boolean trace, double t, int obj){
-		this.id=id;
-		this.label=label;
-		this.color=color;
-		this.hidden=hidden;
-		this.type=type;
-		this.trace=trace;
-		this.t=t;
-		this.obj=obj;
+	public PointAtLine(int id, String label, String color, Boolean hidden, Type type, Boolean trace, double t, int obj) {
+		super(id, label, color, hidden, type, trace);
+		this.t = t;
+		this.obj = obj;
 	}
 
-	public PointAtLine(JSONObject object) throws JSONException{
-		this.id=(Integer)object.get("id");
-
-		try{
-			this.label=(String)object.get("label");
-		}catch(JSONException e){
-			//Add Error Handling
-		}
-
-		try{
-			this.color=(String)object.get("color");
-		}catch(JSONException e){
-			//Add Error Handling
-		}
-
-		try{
-			this.trace=(Boolean)object.get("trace");
-		}catch(JSONException e){
-			//Add Error Handling
-		}
-
-		try{
-			this.hidden=(Boolean)object.get("hidden");
-		}catch(JSONException e){
-			//Add Error Handling
-		}
-
-		this.type=(String)object.get("type");
-		this.obj=(Integer)object.get("obj");
-		this.t=(Double)object.get("t");
+	public PointAtLine(JSONObject object) throws JSONException {
+		super(object);
+		this.type = Type.PointAtLine;
+		this.obj = object.getInt("obj");
+		this.t = object.getDouble("t");
 	}
 
-	public JSONObject getJSON(){
-		JSONObject jsonObject=new JSONObject();
-		try{
-			jsonObject.put("id",id);
-			jsonObject.put("type",type);
-			jsonObject.put("obj",obj);
-			jsonObject.put("t",t);
-			if(label!=null){
-				jsonObject.put("label",label);
-			}
-			if(color!=null){
-				jsonObject.put("color",color);
-			}
-			if(hidden!=null){
-				jsonObject.put("hidden",hidden);
-			}
-			if(trace!=null){
-				jsonObject.put("trace",trace);
-			}
-
-		}catch(JSONException e){
-			e.printStackTrace();
-		}
+	public JSONObject getJSON() throws JSONException {
+		JSONObject jsonObject = super.getJSON(new JSONObject());
+		jsonObject.put("obj", obj);
+		jsonObject.put("t", t);
 
 		return jsonObject;
 	}
 
-
-	public int getObj(){
+	public int getObj() {
 		return obj;
 	}
 
-	public void setObj(int obj){
-		this.obj=obj;
+	public void setObj(int obj) {
+		this.obj = obj;
 	}
 
-	public double getT(){
+	public double getT() {
 		return t;
 	}
 
-	public void setT(double t){
-		this.t=t;
+	public void setT(double t) {
+		this.t = t;
 	}
-
 }
