@@ -18,7 +18,7 @@
         <filter-class>org.apache.wicket.protocol.ws.tomcat7.Tomcat7WebSocketFilter</filter-class>
         <init-param>
             <param-name>applicationClassName</param-name>
-            <param-value>com.googlecode.wicket.jquery.ui.plugins.whiteboard.sample.WicketApplication</param-value>
+            <param-value>org.wicketstuff.whiteboard.sample.WicketApplication</param-value>
         </init-param>
         <init-param>
             <param-name>ignorePaths</param-name>
