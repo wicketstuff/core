@@ -1,0 +1,248 @@
+td, canvas, button {
+  -webkit-tap-highlight-color: transparent;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  outline: none;
+}
+
+table.bwb_layout{
+  width: 100%;
+  height:100%;
+  table-layout: fixed
+}
+
+td.bwb_toolbar{
+  width: 50px;
+  height:100%;
+  vertical-align:top;
+}
+
+.bwb_toolbox{
+  position: absolute;
+}
+
+td.bwb_drawarea{
+  width: 100%;
+  height:100%;
+  border: 2px inset;
+  border-radius: 10px;
+}
+
+td.bwb_drawarea svg{
+  display: block;
+  margin: 0px;
+  padding: 0px;
+}
+
+.bwb_toolbarButton {
+  border: 2px outset;
+  border-radius: 5px;
+  background-repeat: no-repeat;
+  background-position:center;
+  background-color: WhiteSmoke;
+  background-size: 90% 90%;
+  display: inline-block;
+}
+
+.bwb_toolbarButton.info {
+  background-image: url('image/info.gif');
+}
+.bwb_infoCursor {
+  cursor: url('image/info-pointer.gif'),auto;
+}
+.bwb_toolbarButton.zoom-in {
+  background-image: url('image/zoom-in.gif');
+}
+.bwb_toolbarButton.zoom-out {
+  background-image: url('image/zoom-out.gif');
+}
+.bwb_toolbarButton.tools {
+  background-image: url('image/tools.gif');
+}
+.bwb_toolbarButton.coordinates {
+  background-image: url('image/coordinates.gif');
+}
+.bwb_toolbarButton.eraseAll {
+  background-image: url('image/trash.gif');
+}
+.bwb_toolbarButton.eraseTrace {
+  background-image: url('image/eraser.gif');
+}
+.bwb_toolbarButton.geometry {
+  background-image: url('image/ruler_compass.gif');
+}
+.bwb_toolbarButton.point {
+  background-image: url('image/point.gif');
+}
+.bwb_toolbarButton.ruler {
+  background-image: url('image/line.gif');
+}
+.bwb_toolbarButton.segment {
+  background-image: url('image/segment.gif');
+}
+.bwb_toolbarButton.compass {
+  background-image: url('image/circle1.gif');
+}
+.bwb_toolbarButton.circle {
+  background-image: url('image/circle2.gif');
+}
+.bwb_pointCursor {
+  cursor: url('image/point-pointer.gif'),auto;
+}
+.bwb_rulerCursor {
+  cursor: url('image/ruler-pointer.gif'),auto;
+}
+.bwb_compassCursor {
+  cursor: url('image/compass-pointer.gif'),auto;
+}
+
+.bwb_toolbarButton.pencil {
+  background-image: url('image/pencil.gif');
+}
+.bwb_toolbarButton.curve {
+  background-image: url('image/curve.gif');
+}
+.bwb_toolbarButton.freeline {
+  background-image: url('image/freeline.gif');
+}
+.bwb_toolbarButton.rectangle {
+  background-image: url('image/rectangle.gif');
+}
+.bwb_toolbarButton.pencilcircle {
+  background-image: url('image/circle.gif');
+}
+.bwb_toolbarButton.text {
+  background-image: url('image/text.gif');
+}
+.bwb_toolbarButton.underline {
+  background-image: url('image/underline.gif');
+}
+.bwb_toolbarButton.arrow {
+  background-image: url('image/arrow.gif');
+}
+.bwb_toolbarButton.pointer {
+  background-image: url('image/pointer.gif');
+}
+.bwb_curveCursor {
+  cursor: url('image/curve-pointer.gif'),auto;
+}
+.bwb_pencilLineCursor {
+  cursor: url('image/freeline-pointer.gif'),auto;
+}
+.bwb_rectCursor {
+  cursor: url('image/rect-pointer.gif'),auto;
+}
+.bwb_circleCursor {
+  cursor: url('image/circle-pointer.gif'),auto;
+}
+.bwb_textCursor {
+  cursor: url('image/text-pointer.gif'),auto;
+}
+.bwb_underlineCursor {
+  cursor: url('image/underline-pointer.gif'),auto;
+}
+.bwb_arrowCursor {
+  cursor: url('image/arrow-pointer.gif'),auto;
+}
+.bwb_pointerCursor {
+  cursor: url('image/pointer-pointer.gif'),auto;
+}
+
+.bwb_toolbarButton.background {
+  background-image: url('image/background.gif');
+}
+.bwb_toolbarButton.clipart {
+  background-image: url('image/clipart.gif');
+}
+.bwb_clipartCursor {
+  cursor: url('image/clipart-pointer.gif'),auto;
+}
+
+.bwb_toolbarButton.undo {
+    background-image: url('image/undo.png');
+}
+
+.bwb_toolbarButton.save {
+    background-image: url('image/save.png');
+}
+
+
+.pressedButton {
+  border-style: inset;
+}
+
+.bwb_infoDialog {
+  margin: 3px;
+  border: 3px outset;
+  border-radius: 6px;
+  background-color: WhiteSmoke;
+  position: absolute;
+}
+
+.bwb_infoDialog button{
+  border-radius: 8px;
+}
+
+.bwb_infoDialog .bwb_navigate{
+  border-radius: 8px;
+  width: 20px;
+  height: 20px;
+  font-weight: bold;
+  font-size: 10px;
+}
+
+.bwb_infoDialog .bwb_labelInput{
+  border-radius: 3px;
+  width: 80px;
+  display: block;
+  position: relative;
+  left: 3px;
+}
+
+.bwb_infoDialog .bwb_objDesc{
+  font-weight: bold;
+  font-size: 10px;
+  position: relative;
+  left: 3px;
+}
+
+.bwb_infoDialog .bwb_traceCheck{
+  font-weight: bold;
+  font-size: 10px;
+  position: relative;
+  left: 3px;
+  display: inline-block;
+}
+
+.bwb_codeArea{
+  border-radius: 6px;
+  width: 800px;
+  height: 400px;
+}
+
+
+
+.bwb_pictureUrlDialog {
+  margin: 3px;
+  width: 610px;
+  border: 3px outset;
+  border-radius: 6px;
+  background-color: WhiteSmoke;
+  position: absolute;
+}
+
+.bwb_pictureUrlDialog button{
+  border-radius: 8px;
+}
+
+.bwb_pictureUrlInput{
+  border-radius: 3px;
+  width: 600px;
+  display: block;
+  position: relative;
+  left: 3px;
+}
