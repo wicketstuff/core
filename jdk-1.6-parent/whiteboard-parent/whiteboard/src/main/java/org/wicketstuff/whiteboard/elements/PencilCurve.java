@@ -16,129 +16,73 @@
  */
 package org.wicketstuff.whiteboard.elements;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.apache.wicket.ajax.json.JSONException;
 import org.apache.wicket.ajax.json.JSONObject;
 
-import java.util.ArrayList;
-
-public class PencilCurve extends Element{
+public class PencilCurve extends Element {
+	private static final long serialVersionUID = 1L;
 	protected int p0;
-	protected ArrayList<Double[][]> points;
+	protected List<Double[][]> points;
 
-
-	public PencilCurve(int id, String label, String color, Boolean hidden, String type, Boolean trace, int p0,ArrayList<Double[][]> points){
-		this.id=id;
-		this.label=label;
-		this.color=color;
-		this.hidden=hidden;
-		this.type=type;
-		this.trace=trace;
-		this.p0=p0;
-		this.points=points;
+	public PencilCurve(int id, String label, String color, Boolean hidden, Type type, Boolean trace, int p0,
+			List<Double[][]> points) {
+		super(id, label, color, hidden, type, trace);
+		this.p0 = p0;
+		this.points = points;
 	}
 
-	public PencilCurve(JSONObject object) throws JSONException{
-		this.id=(Integer)object.get("id");
+	public PencilCurve(JSONObject object) throws JSONException {
+		super(object);
+		this.type = Type.PencilCurve;
+		this.p0 = object.getInt("p0");
 
-		try{
-			this.label=(String)object.get("label");
-		}catch(JSONException e){
-			//Add Error Handling
+		int pointCount = 0;
+
+		while (object.has("x" + (pointCount++))) {
 		}
 
-		try{
-			this.color=(String)object.get("color");
-		}catch(JSONException e){
-			//Add Error Handling
-		}
+		this.points = new ArrayList<Double[][]>();
 
-		try{
-			this.trace=(Boolean)object.get("trace");
-		}catch(JSONException e){
-			//Add Error Handling
-		}
-
-		try{
-			this.hidden=(Boolean)object.get("hidden");
-		}catch(JSONException e){
-			//Add Error Handling
-		}
-
-		this.type=(String)object.get("type");
-
-		this.p0=(Integer)object.get("p0");
-
-		int pointCount=0;
-
-		while(true){
-			try{
-				object.get("x"+pointCount);
-				pointCount++;
-			}catch(JSONException e){
-				break;
-			}
-		}
-
-		this.points=new ArrayList<Double[][]>();
-
-		for(int i=0;i<pointCount;i++){
-			if(object.get("x"+i) instanceof Double){
-				Double  [][] point= {{(Double)object.get("x"+i),(Double)object.get("y"+i)}};
+		for (int i = 0; i < pointCount; i++) {
+			if (object.get("x" + i) instanceof Double) {
+				Double[][] point = { { object.getDouble("x" + i), object.getDouble("y" + i) } };
 				points.add(point);
-			}
-			else {
-				double x= (Integer)object.get("x"+i);
-				double y=(Integer)object.get("y"+i);
-				Double  [][] point= {{x,y}};
+			} else {
+				double x = object.getInt("x" + i);
+				double y = object.getInt("y" + i);
+				Double[][] point = { { x, y } };
 				points.add(point);
 			}
 		}
 	}
 
-	public JSONObject getJSON(){
-		JSONObject jsonObject=new JSONObject();
-		try{
-			jsonObject.put("id",id);
-			jsonObject.put("type",type);
-			jsonObject.put("p0",p0);
-			for(int i=0;i<points.size();i++){
-				jsonObject.put("x"+i,points.get(i)[0][0]);
-				jsonObject.put("y"+i,points.get(i)[0][1]);
-			}
-			if(label!=null){
-				jsonObject.put("label",label);
-			}
-			if(color!=null){
-				jsonObject.put("color",color);
-			}
-			if(hidden!=null){
-				jsonObject.put("hidden",hidden);
-			}
-			if(trace!=null){
-				jsonObject.put("trace",trace);
-			}
-
-		}catch(JSONException e){
-			e.printStackTrace();
+	public JSONObject getJSON() throws JSONException {
+		JSONObject jsonObject = super.getJSON(new JSONObject());
+		jsonObject.put("p0", p0);
+		for (int i = 0; i < points.size(); i++) {
+			jsonObject.put("x" + i, points.get(i)[0][0]);
+			jsonObject.put("y" + i, points.get(i)[0][1]);
 		}
 
 		return jsonObject;
 	}
 
-	public ArrayList<Double[][]> getPoints(){
+	public List<Double[][]> getPoints() {
 		return points;
 	}
 
-	public void setPoints(ArrayList<Double[][]> points){
-		this.points=points;
+	public void setPoints(List<Double[][]> points) {
+		this.points = points;
 	}
 
-	public int getP0(){
+	public int getP0() {
 		return p0;
 	}
 
-	public void setP0(int p0){
-		this.p0=p0;
+	public void setP0(int p0) {
+		this.p0 = p0;
 	}
-
 }

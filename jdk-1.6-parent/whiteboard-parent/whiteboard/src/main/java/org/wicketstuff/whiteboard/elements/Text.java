@@ -19,85 +19,34 @@ package org.wicketstuff.whiteboard.elements;
 import org.apache.wicket.ajax.json.JSONException;
 import org.apache.wicket.ajax.json.JSONObject;
 
-public class Text extends Element{
+public class Text extends Element {
+	private static final long serialVersionUID = 1L;
 	protected int r;
 
-	public Text(int id, String label, String color, Boolean hidden, String type, Boolean trace, int r){
-		this.id=id;
-		this.label=label;
-		this.color=color;
-		this.hidden=hidden;
-		this.type=type;
-		this.trace=trace;
-		this.r=r;
+	public Text(int id, String label, String color, Boolean hidden, Type type, Boolean trace, int r) {
+		super(id, label, color, hidden, type, trace);
+		this.r = r;
 	}
 
-	public Text(JSONObject object) throws JSONException{
-		this.id=(Integer)object.get("id");
-
-		try{
-			this.label=(String)object.get("label");
-		}catch(JSONException e){
-			//Add Error Handling
-		}
-
-		try{
-			this.color=(String)object.get("color");
-		}catch(JSONException e){
-			//Add Error Handling
-		}
-
-		try{
-			this.trace=(Boolean)object.get("trace");
-		}catch(JSONException e){
-			//Add Error Handling
-		}
-
-		try{
-			this.hidden=(Boolean)object.get("hidden");
-		}catch(JSONException e){
-			//Add Error Handling
-		}
-
-		this.type=(String)object.get("type");
-
-		this.r=(Integer)object.get("r");
+	public Text(JSONObject object) throws JSONException {
+		super(object);
+		this.type = Type.Text;
+		this.r = object.getInt("r");
 	}
 
-	public JSONObject getJSON(){
-
-		JSONObject jsonObject=new JSONObject();
-		try{
-			jsonObject.put("id",id);
-			jsonObject.put("type",type);
-			jsonObject.put("r",r);
-			if(label!=null){
-				jsonObject.put("label",label);
-			}
-			if(color!=null){
-				jsonObject.put("color",color);
-			}
-			if(hidden!=null){
-				jsonObject.put("hidden",hidden);
-			}
-			if(trace!=null){
-				jsonObject.put("trace",trace);
-			}
-
-		}catch(JSONException e){
-			e.printStackTrace();
-		}
+	public JSONObject getJSON() throws JSONException {
+		JSONObject jsonObject = super.getJSON(new JSONObject());
+		jsonObject.put("r", r);
 
 		return jsonObject;
 
 	}
 
-	public int getR(){
+	public int getR() {
 		return r;
 	}
 
-	public void setR(int r){
-		this.r=r;
+	public void setR(int r) {
+		this.r = r;
 	}
-
 }
