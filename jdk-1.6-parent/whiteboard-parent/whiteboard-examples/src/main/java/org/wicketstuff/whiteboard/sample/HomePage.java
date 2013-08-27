@@ -18,6 +18,8 @@ package org.wicketstuff.whiteboard.sample;
 
 import org.apache.wicket.markup.html.WebPage;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
+import org.apache.wicket.request.resource.IResource;
+import org.apache.wicket.request.resource.ResourceReference;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.wicketstuff.whiteboard.Whiteboard;
@@ -32,11 +34,11 @@ public class HomePage extends WebPage {
 	public HomePage(final PageParameters parameters) {
 		super(parameters);
 		String content = "";
-		File savedWhiteboard = new File("Whiteboard_2013_08_12_01_28_13.json");
+		InputStream savedWhiteboard=this.getClass().getResourceAsStream("Whiteboard_Example.json");
 
 		BufferedReader reader = null;
 		try {
-			reader = new BufferedReader(new FileReader(savedWhiteboard));
+			reader = new BufferedReader(new InputStreamReader(savedWhiteboard));
 
 			String line = reader.readLine();
 			while (line != null) {
