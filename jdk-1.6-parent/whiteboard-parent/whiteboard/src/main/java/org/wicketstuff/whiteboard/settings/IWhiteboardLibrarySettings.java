@@ -20,10 +20,10 @@ import org.apache.wicket.request.resource.CssResourceReference;
 import org.apache.wicket.request.resource.JavaScriptResourceReference;
 import org.apache.wicket.settings.IJavaScriptLibrarySettings;
 
-public interface IWhiteboardLibrarySettings extends IJavaScriptLibrarySettings
-{
+public interface IWhiteboardLibrarySettings extends IJavaScriptLibrarySettings{
 
 	CssResourceReference getWhiteboardStyleSheetReference();
+
 	CssResourceReference getGoogStyleSheetReference();
 
 	JavaScriptResourceReference getWhiteboardJavaScriptReference();

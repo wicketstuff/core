@@ -19,58 +19,58 @@ package org.wicketstuff.whiteboard.elements;
 import org.apache.wicket.ajax.json.JSONException;
 import org.apache.wicket.ajax.json.JSONObject;
 
-public class Point_2c extends Element {
-	private static final long serialVersionUID = 1L;
+public class Point_2c extends Element{
+	private static final long serialVersionUID=1L;
 	protected int obj1;
 	protected int obj2;
 	protected int num;
 
 	public Point_2c(int id, String label, String color, Boolean hidden, Type type, Boolean trace, int obj1, int obj2,
-			int num) {
-		super(id, label, color, hidden, type, trace);
-		this.obj1 = obj1;
-		this.obj2 = obj2;
-		this.num = num;
+					int num){
+		super(id,label,color,hidden,type,trace);
+		this.obj1=obj1;
+		this.obj2=obj2;
+		this.num=num;
 	}
 
-	public Point_2c(JSONObject object) throws JSONException {
+	public Point_2c(JSONObject object) throws JSONException{
 		super(object);
-		this.type = Type.Point_2c;
-		this.obj1 = object.getInt("a");
-		this.obj2 = object.getInt("b");
-		this.num = object.getInt("c");
+		this.type=Type.Point_2c;
+		this.obj1=object.getInt("a");
+		this.obj2=object.getInt("b");
+		this.num=object.getInt("c");
 	}
 
-	public JSONObject getJSON() throws JSONException {
-		JSONObject jsonObject = super.getJSON(new JSONObject());
-		jsonObject.put("obj1", obj1);
-		jsonObject.put("obj2", obj2);
-		jsonObject.put("num", num);
+	public JSONObject getJSON() throws JSONException{
+		JSONObject jsonObject=super.getJSON(new JSONObject());
+		jsonObject.put("obj1",obj1);
+		jsonObject.put("obj2",obj2);
+		jsonObject.put("num",num);
 
 		return jsonObject;
 	}
 
-	public int getObj2() {
+	public int getObj2(){
 		return obj2;
 	}
 
-	public void setObj2(int obj2) {
-		this.obj2 = obj2;
+	public void setObj2(int obj2){
+		this.obj2=obj2;
 	}
 
-	public int getObj1() {
+	public int getObj1(){
 		return obj1;
 	}
 
-	public void setObj1(int obj1) {
-		this.obj1 = obj1;
+	public void setObj1(int obj1){
+		this.obj1=obj1;
 	}
 
-	public int getNum() {
+	public int getNum(){
 		return num;
 	}
 
-	public void setNum(int num) {
-		this.num = num;
+	public void setNum(int num){
+		this.num=num;
 	}
 }

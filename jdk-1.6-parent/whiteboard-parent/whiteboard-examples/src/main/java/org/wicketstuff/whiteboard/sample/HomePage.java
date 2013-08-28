@@ -18,44 +18,44 @@ package org.wicketstuff.whiteboard.sample;
 
 import org.apache.wicket.markup.html.WebPage;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
-import org.apache.wicket.request.resource.IResource;
-import org.apache.wicket.request.resource.ResourceReference;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.wicketstuff.whiteboard.Whiteboard;
 import org.wicketstuff.whiteboard.WhiteboardBehavior;
 
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 
-public class HomePage extends WebPage {
-	private static final long serialVersionUID = 1L;
-	private static final Logger log = LoggerFactory.getLogger(WhiteboardBehavior.class);
+public class HomePage extends WebPage{
+	private static final long serialVersionUID=1L;
+	private static final Logger log=LoggerFactory.getLogger(WhiteboardBehavior.class);
 
-	public HomePage(final PageParameters parameters) {
+	public HomePage(final PageParameters parameters){
 		super(parameters);
-		String content = "";
+		String content="";
 		InputStream savedWhiteboard=this.getClass().getResourceAsStream("Whiteboard_Example.json");
 
-		BufferedReader reader = null;
-		try {
-			reader = new BufferedReader(new InputStreamReader(savedWhiteboard));
+		BufferedReader reader=null;
+		try{
+			reader=new BufferedReader(new InputStreamReader(savedWhiteboard));
 
-			String line = reader.readLine();
-			while (line != null) {
-				content += line;
-				line = reader.readLine();
+			String line=reader.readLine();
+			while(line!=null){
+				content+=line;
+				line=reader.readLine();
 			}
-		} catch (Exception e) {
-			log.error("Unexpected error: ", e);
-		} finally {
-			if (reader != null) {
-				try {
+		}catch(Exception e){
+			log.error("Unexpected error: ",e);
+		}finally{
+			if(reader!=null){
+				try{
 					reader.close();
-				} catch (Exception e) {
+				}catch(Exception e){
 					// noop
 				}
 			}
-			Whiteboard whiteboard = new Whiteboard("whiteboardContainer", content);
+			Whiteboard whiteboard=new Whiteboard("whiteboardContainer",content,"ClipArts");
 			this.add(whiteboard);
 		}
 

@@ -18,12 +18,12 @@
 <html xmlns:wicket="http://wicket.apache.org">
 <wicket:head>
     <script type="text/javascript">
-        var callbackUrl='';
-        var clipArtList='';
+        var callbackUrl = '';
+        var clipArtList = '';
     </script>
 </wicket:head>
 <wicket:panel>
-    <div id="whiteboard" wicket:id="whiteboard" style = "width:100%; height:100%;"></div>
+    <div id="whiteboard" wicket:id="whiteboard" style="width:100%; height:100%;"></div>
     <script type="text/javascript">
 
         function addElement(m) {
@@ -39,33 +39,33 @@
         }
 
         function undo(m) {
-            if(JSON.stringify(m.deleteList)!='\"\"') {
-                var deleteList= JSON.stringify(m.deleteList).substring(1,JSON.stringify(m.deleteList).length-1).split(",");
+            if (JSON.stringify(m.deleteList) != '\"\"') {
+                var deleteList = JSON.stringify(m.deleteList).substring(1, JSON.stringify(m.deleteList).length - 1).split(",");
                 for (var i = 0; i < deleteList.length; i++) {
-                    console.log("Deleting------:"+deleteList[i]);
+                    console.log("Deleting------:" + deleteList[i]);
                     deleteElement(deleteList[i])
                 }
             }
 
-            var changeList= m.changeList;
+            var changeList = m.changeList;
             for (var i = 0; i < changeList.length; i++) {
-                console.log("Changing------:"+changeList[i]);
+                console.log("Changing------:" + changeList[i]);
                 addElement(JSON.stringify(changeList[i]));
             }
         }
 
 
-        Wicket.Event.subscribe("/websocket/message", function(jqEvent, msg) {
-            var message=jQuery.parseJSON(msg)
+        Wicket.Event.subscribe("/websocket/message", function (jqEvent, msg) {
+            var message = jQuery.parseJSON(msg)
             if (message && message.type == "addElement") {
                 addElement(JSON.stringify(message.json));
-            }else if(message && message.type == "parseWB"){
+            } else if (message && message.type == "parseWB") {
                 parseJson(message.json);
-            }else if(message && message.type == "undoList"){
+            } else if (message && message.type == "undoList") {
                 undo(message);
             }
-            else if(message && message.type == "clipArtList"){
-               clipArtList=message.json;
+            else if (message && message.type == "clipArtList") {
+                clipArtList = message.json;
             }
         });
     </script>

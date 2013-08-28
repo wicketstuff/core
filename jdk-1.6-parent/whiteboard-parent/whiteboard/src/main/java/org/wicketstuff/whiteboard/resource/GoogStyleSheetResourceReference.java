@@ -19,20 +19,17 @@ package org.wicketstuff.whiteboard.resource;
 import org.apache.wicket.request.resource.CssResourceReference;
 
 
-public class GoogStyleSheetResourceReference extends CssResourceReference
-{
-	private static final long serialVersionUID = 1L;
+public class GoogStyleSheetResourceReference extends CssResourceReference{
+	private static final long serialVersionUID=1L;
 
-	private static final GoogStyleSheetResourceReference INSTANCE = new GoogStyleSheetResourceReference();
+	private static final GoogStyleSheetResourceReference INSTANCE=new GoogStyleSheetResourceReference();
 
 
-	public static GoogStyleSheetResourceReference get()
-	{
+	public static GoogStyleSheetResourceReference get(){
 		return INSTANCE;
 	}
 
-	private GoogStyleSheetResourceReference()
-	{
-		super(GoogStyleSheetResourceReference.class, "goog.css");
+	private GoogStyleSheetResourceReference(){
+		super(GoogStyleSheetResourceReference.class,"goog.css");
 	}
 }

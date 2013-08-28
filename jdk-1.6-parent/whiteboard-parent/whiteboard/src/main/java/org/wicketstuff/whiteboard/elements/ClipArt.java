@@ -19,58 +19,34 @@ package org.wicketstuff.whiteboard.elements;
 import org.apache.wicket.ajax.json.JSONException;
 import org.apache.wicket.ajax.json.JSONObject;
 
-public class PointAtCircle extends Element{
+public class ClipArt extends Element{
 	private static final long serialVersionUID=1L;
-	protected int obj;
-	protected double x;
-	protected double y;
+	protected int r; // id of the rectangle object which holds the clipArt
 
-	public PointAtCircle(int id, String label, String color, Boolean hidden, Type type, Boolean trace, double x,
-						 double y, int obj){
+	public ClipArt(int id, String label, String color, Boolean hidden, Type type, Boolean trace, int r){
 		super(id,label,color,hidden,type,trace);
-		this.x=x;
-		this.y=y;
-		this.obj=obj;
+		this.r=r;
 	}
 
-	public PointAtCircle(JSONObject object) throws JSONException{
+	public ClipArt(JSONObject object) throws JSONException{
 		super(object);
-		this.type=Type.PointAtCircle;
-		this.obj=object.getInt("obj");
-		this.x=object.getDouble("x");
-		this.y=object.getDouble("y");
+		this.type=Type.ClipArt;
+		this.r=object.getInt("r");
 	}
 
 	public JSONObject getJSON() throws JSONException{
 		JSONObject jsonObject=super.getJSON(new JSONObject());
-		jsonObject.put("obj",obj);
-		jsonObject.put("x",x);
-		jsonObject.put("y",y);
+		jsonObject.put("r",r);
 
 		return jsonObject;
 	}
 
-	public int getObj(){
-		return obj;
+	public double getR(){
+		return r;
 	}
 
-	public void setObj(int obj){
-		this.obj=obj;
-	}
-
-	public double getX(){
-		return x;
-	}
-
-	public void setT(double x){
-		this.x=x;
-	}
-
-	public double getY(){
-		return y;
-	}
-
-	public void setY(double x){
-		this.x=x;
+	public void setR(int r){
+		this.r=r;
 	}
 }
+

@@ -1,21 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 
-	<modelVersion>4.0.0</modelVersion>
+    <modelVersion>4.0.0</modelVersion>
 
-	<parent>
-		<artifactId>whiteboard-parent</artifactId>
-		<groupId>org.wicketstuff</groupId>
-		<version>6.0-SNAPSHOT</version>
-	</parent>
+    <parent>
+        <artifactId>whiteboard-parent</artifactId>
+        <groupId>org.wicketstuff</groupId>
+        <version>6.0-SNAPSHOT</version>
+    </parent>
 
-	<artifactId>wicketstuff-whiteboard</artifactId>
-	<packaging>jar</packaging>
+    <artifactId>wicketstuff-whiteboard</artifactId>
+    <packaging>jar</packaging>
 
-	<name>Wicket Whiteboard</name>
+    <name>Wicket Whiteboard</name>
 
-	<licenses>
+    <licenses>
         <license>
             <name>The Apache Software License, Version 2.0</name>
             <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
@@ -48,6 +48,13 @@
             <artifactId>slf4j-log4j12</artifactId>
             <version>1.5.6</version>
         </dependency>
+        <dependency>
+            <groupId>javax.servlet</groupId>
+            <artifactId>javax.servlet-api</artifactId>
+            <version>3.0.1</version>
+            <scope>provided</scope>
+        </dependency>
+
     </dependencies>
     <build>
         <resources>

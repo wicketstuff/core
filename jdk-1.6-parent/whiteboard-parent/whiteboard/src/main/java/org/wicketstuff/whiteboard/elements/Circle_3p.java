@@ -19,57 +19,57 @@ package org.wicketstuff.whiteboard.elements;
 import org.apache.wicket.ajax.json.JSONException;
 import org.apache.wicket.ajax.json.JSONObject;
 
-public class Circle_3p extends Element {
-	private static final long serialVersionUID = 1L;
+public class Circle_3p extends Element{
+	private static final long serialVersionUID=1L;
 	protected int p1;
 	protected int p2;
 	protected int p3;
 
 	public Circle_3p(int id, String label, String color, Boolean hidden, Type type, Boolean trace, int p1, int p2,
-			int p3) {
-		super(id, label, color, hidden, type, trace);
-		this.p1 = p1;
-		this.p2 = p2;
-		this.p3 = p3;
+					 int p3){
+		super(id,label,color,hidden,type,trace);
+		this.p1=p1;
+		this.p2=p2;
+		this.p3=p3;
 	}
 
-	public Circle_3p(JSONObject object) throws JSONException {
+	public Circle_3p(JSONObject object) throws JSONException{
 		super(object);
-		this.type = Type.Circle_3p;
-		this.p1 = object.getInt("p1");
-		this.p2 = object.getInt("p2");
-		this.p3 = object.getInt("p3");
+		this.type=Type.Circle_3p;
+		this.p1=object.getInt("p1");
+		this.p2=object.getInt("p2");
+		this.p3=object.getInt("p3");
 	}
 
-	public JSONObject getJSON() throws JSONException {
-		JSONObject jsonObject = super.getJSON(new JSONObject());
-		jsonObject.put("p1", p1);
-		jsonObject.put("p2", p2);
-		jsonObject.put("p3", p3);
+	public JSONObject getJSON() throws JSONException{
+		JSONObject jsonObject=super.getJSON(new JSONObject());
+		jsonObject.put("p1",p1);
+		jsonObject.put("p2",p2);
+		jsonObject.put("p3",p3);
 		return jsonObject;
 	}
 
-	public int getP2() {
+	public int getP2(){
 		return p2;
 	}
 
-	public void setP2(int p2) {
-		this.p2 = p2;
+	public void setP2(int p2){
+		this.p2=p2;
 	}
 
-	public int getP1() {
+	public int getP1(){
 		return p1;
 	}
 
-	public void setP1(int p1) {
-		this.p1 = p1;
+	public void setP1(int p1){
+		this.p1=p1;
 	}
 
-	public int getP3() {
+	public int getP3(){
 		return p3;
 	}
 
-	public void setP3(int p3) {
-		this.p3 = p3;
+	public void setP3(int p3){
+		this.p3=p3;
 	}
 }

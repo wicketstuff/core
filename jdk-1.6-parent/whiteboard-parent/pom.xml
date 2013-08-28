@@ -1,45 +1,26 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 
-	<modelVersion>4.0.0</modelVersion>
+    <modelVersion>4.0.0</modelVersion>
 
-	<parent>
-		<groupId>org.wicketstuff</groupId>
-		<artifactId>jdk-1.6-parent</artifactId>
-		<version>6.0-SNAPSHOT</version>
-	</parent>
+    <parent>
+        <groupId>org.wicketstuff</groupId>
+        <artifactId>jdk-1.6-parent</artifactId>
+        <version>6.0-SNAPSHOT</version>
+    </parent>
 
-	<artifactId>whiteboard-parent</artifactId>
-	<packaging>pom</packaging>
+    <artifactId>whiteboard-parent</artifactId>
+    <packaging>pom</packaging>
 
-	<name>Wicket Whiteboard - Parent</name>
-	<description>
-		Wicket Components for the Whiteboard.
-	</description>
+    <name>Wicket Whiteboard - Parent</name>
+    <description>
+        Wicket Components for the Whiteboard.
+    </description>
 
-	<modules>
-		<module>whiteboard</module>
-		<module>whiteboard-examples</module>
-	</modules>
-
-	<!-- commented out so that snapshots can go into the oss.sonatype.org repo
-	<distributionManagement>
-		<snapshotRepository>
-			<id>repo</id>
-			<name>Local TeamCity/Tomcat repository</name>
-			<url>file:/home/wicket/tomcat/webapps/maven/repository/</url>
-			<uniqueVersion>false</uniqueVersion>
-		</snapshotRepository>
-		<repository>
-			<id>repo</id>
-			<name>Local TeamCity/Tomcat repository</name>
-			<url>file:/home/wicket/tomcat/webapps/maven/repository/</url>
-		</repository>
-	</distributionManagement>
-	-->
-	<!--ciManagement>
-		<system>TeamCity</system>
-		<url>http://wicketstuff.org/teamcity</url>
-	</ciManagement-->
+    <modules>
+        <module>whiteboard</module>
+        <module>whiteboard-examples</module>
+    </modules>
 </project>
 

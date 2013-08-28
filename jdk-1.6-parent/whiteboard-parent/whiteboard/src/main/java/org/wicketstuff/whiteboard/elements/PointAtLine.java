@@ -19,45 +19,45 @@ package org.wicketstuff.whiteboard.elements;
 import org.apache.wicket.ajax.json.JSONException;
 import org.apache.wicket.ajax.json.JSONObject;
 
-public class PointAtLine extends Element {
-	private static final long serialVersionUID = 1L;
+public class PointAtLine extends Element{
+	private static final long serialVersionUID=1L;
 	protected int obj;
 	protected double t;
 
-	public PointAtLine(int id, String label, String color, Boolean hidden, Type type, Boolean trace, double t, int obj) {
-		super(id, label, color, hidden, type, trace);
-		this.t = t;
-		this.obj = obj;
+	public PointAtLine(int id, String label, String color, Boolean hidden, Type type, Boolean trace, double t, int obj){
+		super(id,label,color,hidden,type,trace);
+		this.t=t;
+		this.obj=obj;
 	}
 
-	public PointAtLine(JSONObject object) throws JSONException {
+	public PointAtLine(JSONObject object) throws JSONException{
 		super(object);
-		this.type = Type.PointAtLine;
-		this.obj = object.getInt("obj");
-		this.t = object.getDouble("t");
+		this.type=Type.PointAtLine;
+		this.obj=object.getInt("obj");
+		this.t=object.getDouble("t");
 	}
 
-	public JSONObject getJSON() throws JSONException {
-		JSONObject jsonObject = super.getJSON(new JSONObject());
-		jsonObject.put("obj", obj);
-		jsonObject.put("t", t);
+	public JSONObject getJSON() throws JSONException{
+		JSONObject jsonObject=super.getJSON(new JSONObject());
+		jsonObject.put("obj",obj);
+		jsonObject.put("t",t);
 
 		return jsonObject;
 	}
 
-	public int getObj() {
+	public int getObj(){
 		return obj;
 	}
 
-	public void setObj(int obj) {
-		this.obj = obj;
+	public void setObj(int obj){
+		this.obj=obj;
 	}
 
-	public double getT() {
+	public double getT(){
 		return t;
 	}
 
-	public void setT(double t) {
-		this.t = t;
+	public void setT(double t){
+		this.t=t;
 	}
 }

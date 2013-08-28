@@ -16,73 +16,79 @@
  */
 package org.wicketstuff.whiteboard.elements;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import org.apache.wicket.ajax.json.JSONException;
 import org.apache.wicket.ajax.json.JSONObject;
 
-public class PencilCurve extends Element {
-	private static final long serialVersionUID = 1L;
+import java.util.ArrayList;
+import java.util.List;
+
+public class PencilCurve extends Element{
+	private static final long serialVersionUID=1L;
 	protected int p0;
 	protected List<Double[][]> points;
 
 	public PencilCurve(int id, String label, String color, Boolean hidden, Type type, Boolean trace, int p0,
-			List<Double[][]> points) {
-		super(id, label, color, hidden, type, trace);
-		this.p0 = p0;
-		this.points = points;
+					   List<Double[][]> points){
+		super(id,label,color,hidden,type,trace);
+		this.p0=p0;
+		this.points=points;
 	}
 
-	public PencilCurve(JSONObject object) throws JSONException {
+	public PencilCurve(JSONObject object) throws JSONException{
 		super(object);
-		this.type = Type.PencilCurve;
-		this.p0 = object.getInt("p0");
+		this.type=Type.PencilCurve;
+		this.p0=object.getInt("p0");
 
-		int pointCount = 0;
+		int pointCount=0;
 
-		while (object.has("x" + (pointCount++))) {
+		while(true){
+			try{
+				object.get("x"+pointCount);
+				pointCount++;
+			}catch(JSONException e){
+				break;
+			}
 		}
 
-		this.points = new ArrayList<Double[][]>();
+		this.points=new ArrayList<Double[][]>();
 
-		for (int i = 0; i < pointCount; i++) {
-			if (object.get("x" + i) instanceof Double) {
-				Double[][] point = { { object.getDouble("x" + i), object.getDouble("y" + i) } };
+		for(int i=0;i<pointCount;i++){
+			if(object.get("x"+i) instanceof Double){
+				Double[][] point={{object.getDouble("x"+i),object.getDouble("y"+i)}};
 				points.add(point);
-			} else {
-				double x = object.getInt("x" + i);
-				double y = object.getInt("y" + i);
-				Double[][] point = { { x, y } };
+			}else{
+				double x=object.getInt("x"+i);
+				double y=object.getInt("y"+i);
+				Double[][] point={{x,y}};
 				points.add(point);
 			}
 		}
 	}
 
-	public JSONObject getJSON() throws JSONException {
-		JSONObject jsonObject = super.getJSON(new JSONObject());
-		jsonObject.put("p0", p0);
-		for (int i = 0; i < points.size(); i++) {
-			jsonObject.put("x" + i, points.get(i)[0][0]);
-			jsonObject.put("y" + i, points.get(i)[0][1]);
+	public JSONObject getJSON() throws JSONException{
+		JSONObject jsonObject=super.getJSON(new JSONObject());
+		jsonObject.put("p0",p0);
+		for(int i=0;i<points.size();i++){
+			jsonObject.put("x"+i,points.get(i)[0][0]);
+			jsonObject.put("y"+i,points.get(i)[0][1]);
 		}
 
 		return jsonObject;
 	}
 
-	public List<Double[][]> getPoints() {
+	public List<Double[][]> getPoints(){
 		return points;
 	}
 
-	public void setPoints(List<Double[][]> points) {
-		this.points = points;
+	public void setPoints(List<Double[][]> points){
+		this.points=points;
 	}
 
-	public int getP0() {
+	public int getP0(){
 		return p0;
 	}
 
-	public void setP0(int p0) {
-		this.p0 = p0;
+	public void setP0(int p0){
+		this.p0=p0;
 	}
 }

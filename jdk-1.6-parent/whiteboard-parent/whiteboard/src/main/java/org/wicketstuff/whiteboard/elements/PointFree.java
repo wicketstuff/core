@@ -19,45 +19,45 @@ package org.wicketstuff.whiteboard.elements;
 import org.apache.wicket.ajax.json.JSONException;
 import org.apache.wicket.ajax.json.JSONObject;
 
-public class PointFree extends Element {
-	private static final long serialVersionUID = 1L;
+public class PointFree extends Element{
+	private static final long serialVersionUID=1L;
 	protected double x; // x coordinate of the point
 	protected double y; // y coordinate of the point
 
-	public PointFree(int id, String label, String color, Boolean hidden, Type type, Boolean trace, double x, double y) {
-		super(id, label, color, hidden, type, trace);
-		this.x = x;
-		this.y = y;
+	public PointFree(int id, String label, String color, Boolean hidden, Type type, Boolean trace, double x, double y){
+		super(id,label,color,hidden,type,trace);
+		this.x=x;
+		this.y=y;
 	}
 
-	public PointFree(JSONObject object) throws JSONException {
+	public PointFree(JSONObject object) throws JSONException{
 		super(object);
-		this.type = Type.PointFree;
-		this.x = object.get("x") instanceof Double ? object.getDouble("x") : object.getInt("x");
-		this.y = object.get("y") instanceof Double ? object.getDouble("y") : object.getInt("y");
+		this.type=Type.PointFree;
+		this.x=object.get("x") instanceof Double?object.getDouble("x"):object.getInt("x");
+		this.y=object.get("y") instanceof Double?object.getDouble("y"):object.getInt("y");
 	}
 
-	public JSONObject getJSON() throws JSONException {
-		JSONObject jsonObject = super.getJSON(new JSONObject());
-		jsonObject.put("x", x);
-		jsonObject.put("y", y);
+	public JSONObject getJSON() throws JSONException{
+		JSONObject jsonObject=super.getJSON(new JSONObject());
+		jsonObject.put("x",x);
+		jsonObject.put("y",y);
 
 		return jsonObject;
 	}
 
-	public double getX() {
+	public double getX(){
 		return x;
 	}
 
-	public void setX(double x) {
-		this.x = x;
+	public void setX(double x){
+		this.x=x;
 	}
 
-	public double getY() {
+	public double getY(){
 		return y;
 	}
 
-	public void setY(double y) {
-		this.y = y;
+	public void setY(double y){
+		this.y=y;
 	}
 }
