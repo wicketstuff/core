@@ -689,7 +689,19 @@ public class LazyModelTest {
 	}
 
 	@Test
-	public void getStringFromFinalfails() {
+	public void getFinalFails() {
+		final A a = new A();
+
+		try {
+			model(from(a).getFinalB().getCharacter());
+
+			fail();
+		} catch (NullPointerException expected) {
+		}
+	}
+
+	@Test
+	public void getStringFromFinalFails() {
 		final A a = new A();
 		a.f = new F();
 		a.f.string = "string";
@@ -827,6 +839,10 @@ public class LazyModelTest {
 
 		public F getF() {
 			return f;
+		}
+
+		public final B getFinalB() {
+			return b;
 		}
 
 		public B getB() {
