@@ -13140,6 +13140,7 @@ bay.whiteboard.art.chooseClipArt = function (a, b, c) {
         });
     return f
 };
+bay.whiteboard.Whiteboard.addGroup("docs", 100, "Document adding tools");
 bay.whiteboard.Whiteboard.addTool("addDoc", "docs", {action: function (a, b) {
     var c = bay.whiteboard.art.chooseBackground(a, function (b) {
         c.dispose();
