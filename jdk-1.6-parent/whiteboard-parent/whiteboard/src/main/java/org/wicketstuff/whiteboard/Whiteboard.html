@@ -20,6 +20,8 @@
     <script type="text/javascript">
         var callbackUrl = '';
         var clipArtList = '';
+        var docList='';
+        var currentDocComponentList='';
     </script>
 </wicket:head>
 <wicket:panel>
@@ -67,6 +69,15 @@
             else if (message && message.type == "clipArtList") {
                 clipArtList = message.json;
             }
+            else if (message && message.type == "documentList") {
+                docList = message.json;
+                console.log("Doc List:"+docList);
+            }
+            else if (message && message.type == "documentComponentList") {
+                currentDocComponentList = message.json;
+                console.log("Doc Component List:"+currentDocComponentList);
+            }
+
         });
     </script>
 </wicket:panel>

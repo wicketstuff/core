@@ -33,7 +33,7 @@ public class Whiteboard extends Panel{
 	 *
 	 * @param id
 	 */
-	public Whiteboard(String id, String whiteboardContent, String clipArtFolderPath){
+	public Whiteboard(String id, String whiteboardContent, String clipArtFolderPath,String docFolderPath){
 		super(id);
 
 		// Adding Web Socket behaviour to handle synchronization between whiteboards
@@ -55,6 +55,6 @@ public class Whiteboard extends Panel{
 		});
 
 		add(new WebMarkupContainer("whiteboard"));
-		add(new WhiteboardBehavior("whiteboard",whiteboardContent,clipArtFolderPath));
+		add(new WhiteboardBehavior("whiteboard",whiteboardContent,clipArtFolderPath,docFolderPath));
 	}
 }

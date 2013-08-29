@@ -70,12 +70,15 @@ public class WhiteboardBehavior extends AbstractDefaultAjaxBehavior{
 	private static ArrayList<String> clipArts=new ArrayList<String>();
 	private static String clipArtFolder;
 
+	private static Map<String,ArrayList<String>> docMap=new ConcurrentHashMap<String,ArrayList<String>>();
+	private static String documentFolder;
+
 	public WhiteboardBehavior(String whiteboardId){
 		super();
 		this.whiteboardId=whiteboardId;
 	}
 
-	public WhiteboardBehavior(String whiteboardId, String whiteboardContent, String clipArtFolder){
+	public WhiteboardBehavior(String whiteboardId, String whiteboardContent, String clipArtFolder,String documentFolder){
 		super();
 		this.whiteboardId=whiteboardId;
 		if(whiteboardContent!=null&&!whiteboardContent.equals("")){
@@ -112,6 +115,12 @@ public class WhiteboardBehavior extends AbstractDefaultAjaxBehavior{
 
 			this.clipArtFolder=clipArtFolder;
 			this.loadClipArts();
+
+		}
+		if(documentFolder!=null&&!documentFolder.equals("")){
+
+			this.documentFolder=documentFolder;
+			this.loadDocuments();
 
 		}
 	}
@@ -309,6 +318,38 @@ public class WhiteboardBehavior extends AbstractDefaultAjaxBehavior{
 				}
 			}
 		}
+		else if(webRequest.getQueryParameters().getParameterNames().contains("docList")){
+			loadDocuments();
+			IWebSocketConnectionRegistry reg=IWebSocketSettings.Holder.get(Application.get()).getConnectionRegistry();
+			for(IWebSocketConnection c : reg.getConnections(Application.get())){
+				try{
+					JSONArray jsonArray=new JSONArray();
+					Set<String> keySet=docMap.keySet();
+					for(String key:keySet){
+						jsonArray.put(docMap.get(key).get(0));
+					}
+					c.sendMessage(getDocumentListMessage(jsonArray).toString());
+				}catch(Exception e){
+					log.error("Unexpected error while sending message through the web socket",e);
+				}
+			}
+		}
+		else if(webRequest.getQueryParameters().getParameterNames().contains("docComponents")){
+			String docBaseName=webRequest.getQueryParameters().getParameterValue("docBaseName").toString();
+			loadDocuments();
+			IWebSocketConnectionRegistry reg=IWebSocketSettings.Holder.get(Application.get()).getConnectionRegistry();
+			for(IWebSocketConnection c : reg.getConnections(Application.get())){
+				try{
+					JSONArray jsonArray=new JSONArray();
+					for(String url:docMap.get(docBaseName)){
+						jsonArray.put(url);
+					}
+					c.sendMessage(getDocumentComponentListMessage(jsonArray).toString());
+				}catch(Exception e){
+					log.error("Unexpected error while sending message through the web socket",e);
+				}
+			}
+		}
 	}
 
 	private JSONObject getAddElementMessage(JSONObject element) throws JSONException{
@@ -327,6 +368,14 @@ public class WhiteboardBehavior extends AbstractDefaultAjaxBehavior{
 		return new JSONObject().put("type","clipArtList").put("json",array);
 	}
 
+	private JSONObject getDocumentListMessage(JSONArray array) throws JSONException{
+		return new JSONObject().put("type","documentList").put("json",array);
+	}
+
+	private JSONObject getDocumentComponentListMessage(JSONArray array) throws JSONException{
+		return new JSONObject().put("type","documentComponentList").put("json",array);
+	}
+
 	public void renderHead(Component component, IHeaderResponse response){
 		super.renderHead(component,response);
 
@@ -338,7 +387,11 @@ public class WhiteboardBehavior extends AbstractDefaultAjaxBehavior{
 				+"changedElement=this.getJson(element);\n"+"Wicket.Ajax.get({u:'"+callbackUrl
 				+"',ep:{editedElement:changedElement}});\n};\n"+"whiteboard.render(document.getElementById('"
 				+whiteboardId+"'));\n"+"whiteboard.setBoundaries(0, 0, 0, 0);\n" +
-				"window.onload = function () {Wicket.Ajax.get({u: callbackUrl, ep: {clipArt: \"clipArt\"}})};";
+				"window.onload = function () {" +
+				"Wicket.Ajax.get({u: callbackUrl, ep: {clipArt: \"clipArt\"}});" +
+				"Wicket.Ajax.get({u: callbackUrl, ep: {docList: \"docList\"}});" +
+				"Wicket.Ajax.get({u: callbackUrl, ep: {docComponents: \"docComponents\",docBaseName: \"gmaps\" }});" +
+				"};";
 
 		// Clearing the whiteboard for first client
 		// IWebSocketConnectionRegistry reg = IWebSocketSettings.Holder.get(Application.get()).getConnectionRegistry();
@@ -509,6 +562,46 @@ public class WhiteboardBehavior extends AbstractDefaultAjaxBehavior{
 			}
 		}
 	}
+
+	private void loadDocuments(){
+		String pictureExtension="jpg";
+		ServletContext servletContext=((WebApplication)WebApplication.get()).getServletContext();
+
+		HttpServletRequest httpReq=(HttpServletRequest)((WebRequest)RequestCycle.get().getRequest()).getContainerRequest();
+		Url relative=Url.parse(httpReq.getContextPath());
+		String basURL=RequestCycle.get().getUrlRenderer().renderFullUrl(relative);
+
+		String clipArtFolderPath=servletContext.getRealPath("")+"/"+documentFolder;
+		File folder=new File(clipArtFolderPath);
+
+		for(final File fileEntry : folder.listFiles()){
+			if(!fileEntry.isDirectory()){
+				String extension="";
+				int i=fileEntry.getAbsolutePath().lastIndexOf('.');
+				if(i>0){
+					extension=fileEntry.getAbsolutePath().substring(i+1);
+				}
+				if(pictureExtension.equals(extension)){
+					String docURL=basURL+"/"+documentFolder+"/"+fileEntry.getName();
+
+					String documentName=fileEntry.getName().substring(0,fileEntry.getName().lastIndexOf('.'));
+
+					if(-1==documentName.lastIndexOf('_')){
+						ArrayList<String> docList=new ArrayList<String>();
+						docList.add(docURL);
+						docMap.put(documentName,docList);
+					}  else{
+						String documentBaseName=documentName.substring(0,documentName.lastIndexOf('_'));
+						if(docMap.containsKey(documentBaseName)){
+							docMap.get(documentBaseName).add(docURL);
+						}
+					}
+
+				}
+			}
+		}
+	}
+
 
 	private boolean chequeEqual(JSONObject element1, JSONObject element2){
 		Iterator keyItr=element1.keys();
