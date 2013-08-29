@@ -337,7 +337,8 @@ public class WhiteboardBehavior extends AbstractDefaultAjaxBehavior{
 				+"whiteboard.getMainCollection().onChange = function(element){\n"
 				+"changedElement=this.getJson(element);\n"+"Wicket.Ajax.get({u:'"+callbackUrl
 				+"',ep:{editedElement:changedElement}});\n};\n"+"whiteboard.render(document.getElementById('"
-				+whiteboardId+"'));\n"+"whiteboard.setBoundaries(0, 0, 0, 0);\n";
+				+whiteboardId+"'));\n"+"whiteboard.setBoundaries(0, 0, 0, 0);\n" +
+				"window.onload = function () {Wicket.Ajax.get({u: callbackUrl, ep: {clipArt: \"clipArt\"}})};";
 
 		// Clearing the whiteboard for first client
 		// IWebSocketConnectionRegistry reg = IWebSocketSettings.Holder.get(Application.get()).getConnectionRegistry();
