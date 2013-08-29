@@ -13124,7 +13124,6 @@ bay.whiteboard.Whiteboard.addTool("clipart", "pencil", {toggleOn: function (a) {
         a.redrawAll()
     }
 }}, 20, "Insert picture");
-
 bay.whiteboard.art.chooseClipArt = function (a, b, c) {
     Wicket.Ajax.get({u: callbackUrl, ep: {clipArt: "clipArt"}});
     for (var f = [], g = 0; g < clipArtList.length; g++)f.push(goog.dom.createDom("img", {src: clipArtList[g]}));
@@ -13141,19 +13140,18 @@ bay.whiteboard.art.chooseClipArt = function (a, b, c) {
         });
     return f
 };
-
-
-bay.whiteboard.Whiteboard.addTool("background", "tools", {action: function (a, b) {
+bay.whiteboard.Whiteboard.addTool("addDoc", "docs", {action: function (a, b) {
     var c = bay.whiteboard.art.chooseBackground(a, function (b) {
         c.dispose();
         a.setBackground(b)
     }, function () {
         c.dispose()
     })
-}}, 20, "Change whiteboard background");
-
+}}, 20, "Add document to whiteboard");
+bay.whiteboard.Whiteboard.addTool("left", "docs", {}, 20, "Go to previous page of the Doc");
+bay.whiteboard.Whiteboard.addTool("right", "docs", {}, 20, "Go to next page of the Doc");
 bay.whiteboard.art.chooseBackground = function (a, b, c) {
-    Wicket.Ajax.get({u: callbackUrl, ep: {clipArt: "docList"}});
+    Wicket.Ajax.get({u: callbackUrl, ep: {docList: "docList"}});
     for (var f = [], g = 0; g < docList.length; g++)f.push(goog.dom.createDom("img", {src: docList[g]}));
     f.push(goog.dom.createTextNode("Cancel"));
     f = new goog.ui.Palette(f);
@@ -13164,11 +13162,10 @@ bay.whiteboard.art.chooseBackground = function (a, b, c) {
     goog.events.listen(f, goog.ui.Component.EventType.ACTION,
         function (a) {
             a = a.target.getSelectedItem();
-            a instanceof HTMLElement ? (a = a.getAttribute("src"), a = a.replace("64", "128"), b(a)) : c()
+            a instanceof HTMLElement ? (a = a.getAttribute("src"), a = a.replace("16", "32"), b(a)) : c()
         });
     return f
 };
-
 bay.whiteboard.art.chooseUrlDialog = function (a, b, c, f) {
     var g = new goog.ui.Component;
     g.render(document.body);
