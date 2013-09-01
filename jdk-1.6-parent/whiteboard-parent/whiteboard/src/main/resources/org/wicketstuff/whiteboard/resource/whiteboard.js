@@ -11962,6 +11962,7 @@ bay.whiteboard.Whiteboard.addTool("info", null, {toggleOn: function (a) {
 }, onClick: function (a, b) {
     a.showInfoDialog(b)
 }}, 10, "Show information about selected element");
+bay.whiteboard.Whiteboard.addGroup("docs", 100, "Document adding tools");
 bay.whiteboard.geometry = {};
 bay.whiteboard.Whiteboard.addGroup("geometry", 10, "Ruler-and-compass constructions");
 bay.whiteboard.geometry.PointAtLine = function (a, b) {
@@ -13140,17 +13141,41 @@ bay.whiteboard.art.chooseClipArt = function (a, b, c) {
         });
     return f
 };
-bay.whiteboard.Whiteboard.addGroup("docs", 100, "Document adding tools");
 bay.whiteboard.Whiteboard.addTool("addDoc", "docs", {action: function (a, b) {
     var c = bay.whiteboard.art.chooseBackground(a, function (b) {
         c.dispose();
+        currentDoc = b.substring(b.lastIndexOf("/") + 1, b.lastIndexOf("."));
+        currentDocPage = b;
+        currentDocComponentList = "";
         a.setBackground(b)
     }, function () {
         c.dispose()
     })
-}}, 20, "Add document to whiteboard");
-bay.whiteboard.Whiteboard.addTool("left", "docs", {}, 20, "Go to previous page of the Doc");
-bay.whiteboard.Whiteboard.addTool("right", "docs", {}, 20, "Go to next page of the Doc");
+}}, 21, "Add document to whiteboard");
+bay.whiteboard.Whiteboard.addTool("left", "docs", {action: function (a, b) {
+    "" == currentDocComponentList && Wicket.Ajax.get({u: callbackUrl, ep: {docComponents: "docComponents", docBaseName: currentDoc}});
+    if ("" != currentDocComponentList)for (var c = 0; c < currentDocComponentList.length; c++) {
+        var f = currentDocPage.substring(currentDocPage.lastIndexOf("/") + 1, currentDocPage.lastIndexOf(".")), g = currentDocComponentList[c].substring(currentDocComponentList[c].lastIndexOf("/") +
+            1, currentDocComponentList[c].lastIndexOf("."));
+        if (f == g && 0 <= c - 1) {
+            a.setBackground(currentDocComponentList[c - 1]);
+            currentDocPage = currentDocComponentList[c - 1];
+            break
+        }
+    }
+}}, 22, "Go to previous page of the Doc");
+bay.whiteboard.Whiteboard.addTool("right", "docs", {action: function (a, b) {
+    "" == currentDocComponentList && Wicket.Ajax.get({u: callbackUrl, ep: {docComponents: "docComponents", docBaseName: currentDoc}});
+    if ("" != currentDocComponentList)for (var c = 0; c < currentDocComponentList.length; c++) {
+        var f = currentDocPage.substring(currentDocPage.lastIndexOf("/") + 1, currentDocPage.lastIndexOf(".")), g = currentDocComponentList[c].substring(currentDocComponentList[c].lastIndexOf("/") +
+            1, currentDocComponentList[c].lastIndexOf("."));
+        if (f == g && c + 1 <= currentDocComponentList.length - 1) {
+            a.setBackground(currentDocComponentList[c + 1]);
+            currentDocPage = currentDocComponentList[c + 1];
+            break
+        }
+    }
+}}, 23, "Go to next page of the Doc");
 bay.whiteboard.art.chooseBackground = function (a, b, c) {
     Wicket.Ajax.get({u: callbackUrl, ep: {docList: "docList"}});
     for (var f = [], g = 0; g < docList.length; g++)f.push(goog.dom.createDom("img", {src: docList[g]}));
@@ -13192,3 +13217,4 @@ bay.whiteboard.art.chooseUrlDialog = function (a, b, c, f) {
     goog.style.showElement(g.getElement(), !0);
     return g
 };
+

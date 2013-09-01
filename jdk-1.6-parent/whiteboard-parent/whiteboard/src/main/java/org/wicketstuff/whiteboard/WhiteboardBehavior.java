@@ -381,8 +381,8 @@ public class WhiteboardBehavior extends AbstractDefaultAjaxBehavior{
 
 		initReferences(response);
 		String callbackUrl=getCallbackUrl().toString();
-		String whiteboardInitializeScript=""+"callbackUrl='"+callbackUrl+"';\n"
-				+"whiteboard = bay.whiteboard.Create();\n"+"elementCollection=whiteboard.getMainCollection();\n"
+		String whiteboardInitializeScript=""+"callbackUrl='"+callbackUrl+"';\n" +
+				"whiteboard = bay.whiteboard.Create();\n"+"elementCollection=whiteboard.getMainCollection();\n"
 				+"whiteboard.getMainCollection().onChange = function(element){\n"
 				+"changedElement=this.getJson(element);\n"+"Wicket.Ajax.get({u:'"+callbackUrl
 				+"',ep:{editedElement:changedElement}});\n};\n"+"whiteboard.render(document.getElementById('"
@@ -390,7 +390,6 @@ public class WhiteboardBehavior extends AbstractDefaultAjaxBehavior{
 				"window.onload = function () {" +
 				"Wicket.Ajax.get({u: callbackUrl, ep: {clipArt: \"clipArt\"}});" +
 				"Wicket.Ajax.get({u: callbackUrl, ep: {docList: \"docList\"}});" +
-				"Wicket.Ajax.get({u: callbackUrl, ep: {docComponents: \"docComponents\",docBaseName: \"gmaps\" }});" +
 				"};";
 
 		// Clearing the whiteboard for first client
