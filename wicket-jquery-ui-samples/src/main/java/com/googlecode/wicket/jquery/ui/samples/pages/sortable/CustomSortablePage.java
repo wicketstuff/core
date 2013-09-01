@@ -17,7 +17,6 @@ import com.googlecode.wicket.jquery.ui.interaction.sortable.Sortable;
 import com.googlecode.wicket.jquery.ui.interaction.sortable.Sortable.HashListView;
 import com.googlecode.wicket.jquery.ui.panel.JQueryFeedbackPanel;
 
-//XXX remove wicket-jquery-ui-6.9.1-SNAPSHOT (description)
 public class CustomSortablePage extends AbstractSortablePage
 {
 	private static final long serialVersionUID = 1L;

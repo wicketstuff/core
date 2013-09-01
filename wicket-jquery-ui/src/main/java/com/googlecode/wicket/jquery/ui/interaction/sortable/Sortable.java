@@ -20,11 +20,16 @@ import java.util.List;
 
 import org.apache.wicket.AttributeModifier;
 import org.apache.wicket.ajax.AjaxRequestTarget;
+import org.apache.wicket.event.Broadcast;
+import org.apache.wicket.event.IEvent;
 import org.apache.wicket.markup.html.list.ListItem;
 import org.apache.wicket.markup.html.list.ListView;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.util.ListModel;
+import org.apache.wicket.request.cycle.RequestCycle;
 import org.apache.wicket.util.lang.Args;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.googlecode.wicket.jquery.core.JQueryBehavior;
 import com.googlecode.wicket.jquery.core.JQueryContainer;
@@ -42,6 +47,7 @@ import com.googlecode.wicket.jquery.core.utils.ListUtils;
 public abstract class Sortable<T> extends JQueryContainer implements ISortableListener<T>
 {
 	private static final long serialVersionUID = 1L;
+	private static final Logger LOG = LoggerFactory.getLogger(Sortable.class);
 
 	private final Options options;
 
@@ -103,23 +109,24 @@ public abstract class Sortable<T> extends JQueryContainer implements ISortableLi
 		this.add(this.newListView(this.getModel()));
 	}
 
-	//TODO: clean
-//	@Override
-//	public void onEvent(IEvent<?> event)
-//	{
-//		if (event.getSource() instanceof Sortable<?>)
-//		{
-//			AjaxRequestTarget target = RequestCycle.get().find(AjaxRequestTarget.class);
-//
-//			if (target != null)
-//			{
-//				@SuppressWarnings("unchecked")
-//				T item = (T)event.getPayload();
-//
-//				this.onRemove(target, item);
-//			}
-//		}
-//	}
+	@Override
+	public void onEvent(IEvent<?> event)
+	{
+		if (event.getSource() instanceof Sortable<?>)
+		{
+			AjaxRequestTarget target = RequestCycle.get().find(AjaxRequestTarget.class);
+
+			if (target != null)
+			{
+				@SuppressWarnings({ "unchecked", "unused" })
+				T item = (T)event.getPayload();
+
+				//FIXME: remove may be called first, so the item becomes unavailable for adding.
+				LOG.warn("onRemove is currently disabled (connectWith should not be used yet)");
+				//this.onRemove(target, item);
+			}
+		}
+	}
 
 	@Override
 	public void onUpdate(AjaxRequestTarget target, T item, int index)
@@ -136,8 +143,8 @@ public abstract class Sortable<T> extends JQueryContainer implements ISortableLi
 		this.getModelObject().add(index, item);
 		this.modelChanged();
 
-		// broadcast to the connected sortable
-//		this.send(this.connectedSortable, Broadcast.EXACT, item);
+		// broadcast to the connected sortable for removing the item
+		this.send(this.connectedSortable, Broadcast.EXACT, item);
 	}
 
 	@Override
@@ -188,9 +195,7 @@ public abstract class Sortable<T> extends JQueryContainer implements ISortableLi
 	@Override
 	public boolean isOnRemoveEnabled()
 	{
-		//TODO: reactivate this
-		//(this.connectedSortable != null);
-		return false;
+		return (this.connectedSortable != null);
 	}
 
 	// Methods //

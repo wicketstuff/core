@@ -2,4 +2,4 @@ The bean type used by the <code>Sortable</code> should have a deterministic <cod
 (i.e.: it should always returns the same value for a given bean).
 
 <h4>Since</h4>
-wicket-jquery-ui-6.9.1-SNAPSHOT
+wicket-jquery-ui-6.9.1

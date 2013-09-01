@@ -62,9 +62,6 @@ public class CalendarModelBehavior extends AbstractAjaxBehavior
 		{
 			this.setStartDate(this.model, new Date(start  * 1000));
 			this.setEndDate(this.model, new Date(end  * 1000));
-			//TODO: 6.9.10 - remove this?
-//			this.model.setStart(new Date(start  * 1000));
-//			this.model.setEnd(new Date(end * 1000));
 		}
 
 		final IRequestHandler handler = this.newRequestHandler();
@@ -100,7 +97,7 @@ public class CalendarModelBehavior extends AbstractAjaxBehavior
 	 *
 	 * @return the {@link IRequestHandler}
 	 */
-	//TODO: 6.9.10 - restore to private ?
+	//TODO: 6.11.0 - restore to private?
 	protected IRequestHandler newRequestHandler()
 	{
 		return new IRequestHandler()

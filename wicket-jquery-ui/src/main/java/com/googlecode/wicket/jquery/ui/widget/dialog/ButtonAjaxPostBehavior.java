@@ -27,7 +27,6 @@ import com.googlecode.wicket.jquery.core.ajax.IJQueryAjaxAware;
  *
  * @author Sebastien Briquet - sebfz1
  */
-//XXX: report as renamed FormButtonAjaxBehavior > ButtonAjaxPostBehavior
 public class ButtonAjaxPostBehavior extends ButtonAjaxBehavior
 {
 	private static final long serialVersionUID = 1L;

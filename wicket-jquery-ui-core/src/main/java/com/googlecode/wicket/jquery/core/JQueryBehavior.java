@@ -105,7 +105,6 @@ public class JQueryBehavior extends JQueryAbstractBehavior
 	 * Gets the selector
 	 * @return the selector
 	 */
-	//XXX: report as new (and this.selector private)
 	public String getSelector()
 	{
 		return this.selector;
@@ -115,7 +114,6 @@ public class JQueryBehavior extends JQueryAbstractBehavior
 	 * Gets the jQuery method
 	 * @return the method
 	 */
-	//XXX: report as new (and this.method private)
 	public String getMethod()
 	{
 		return this.method;
@@ -158,7 +156,6 @@ public class JQueryBehavior extends JQueryAbstractBehavior
 	 * Gets the {@link Options}
 	 * @return the {@link Options}
 	 */
-	//XXX: report as new (and this.options private)
 	public Options getOptions()
 	{
 		return this.options;

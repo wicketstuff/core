@@ -2,4 +2,4 @@ The supplied list should be modifiable for the new order to be reflected on 'upd
 If you don't want the new order is reflected to the model object, remove the call to <code>super.onUpdate(...)</code>
 
 <h4>Since</h4>
-wicket-jquery-ui-6.9.1-SNAPSHOT
+wicket-jquery-ui-6.9.1
