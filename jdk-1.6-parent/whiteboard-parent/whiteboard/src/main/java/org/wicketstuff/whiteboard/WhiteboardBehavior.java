@@ -132,222 +132,257 @@ public class WhiteboardBehavior extends AbstractDefaultAjaxBehavior{
 
 		if(webRequest.getQueryParameters().getParameterNames().contains("editedElement")){
 			String editedElement=webRequest.getQueryParameters().getParameterValue("editedElement").toString();
-
-			try{
-				// Mapping JSON String to Objects and Adding to the Element List
-				JSONObject jsonEditedElement=new JSONObject(editedElement);
-				Element element=getElementObject(jsonEditedElement);
-
-				boolean isLoaded=false;
-
-				if(!elementMap.isEmpty()&&loadedElementMap.get(element.getId())!=null&&!loadedElementMap.isEmpty()){
-					isLoaded=chequeEqual(element.getJSON(),loadedElementMap.get(element.getId()).getJSON());
-				}
-
-				if(!isLoaded){
-
-					if(snapShot==null&&snapShotCreation==null){
-						snapShot=new ArrayList<Element>();
-						snapShotCreation=new ArrayList<Boolean>();
-					}
-
-
-					if(elementMap.containsKey(element.getId())&&!elementMap.isEmpty()){
-						snapShot.add(elementMap.get(element.getId()));
-						snapShotCreation.add(false);
-
-					}else{
-						snapShot.add(element);
-						snapShotCreation.add(true);
-					}
-
-					if(Type.PointFree!=element.getType()){
-						if(undoSnapshots.size()==20){
-							undoSnapshots.pollFirst();
-							undoSnapshotCreationList.pollFirst();
-						}
-
-						if(Type.PencilCurve==element.getType()){
-							List<Element> lastElementSnapshot=undoSnapshots.getLast();
-							Element lastSnapshotElement=lastElementSnapshot.get(lastElementSnapshot.size()-1);
-
-							if((lastSnapshotElement instanceof PencilCurve)
-									&&(lastSnapshotElement.getId()==element.getId())){
-								List<Boolean> lastCreationSnapshot=undoSnapshotCreationList.getLast();
-
-								for(int i=0;i<snapShot.size();i++){
-									lastElementSnapshot.add(snapShot.get(i));
-									lastCreationSnapshot.add(snapShotCreation.get(i));
-								}
-							}else{
-								undoSnapshots.addLast(snapShot);
-								undoSnapshotCreationList.addLast(snapShotCreation);
-							}
-
-						}else if(Type.ClipArt==element.getType()){
-							List<Element> snapShotTemp=undoSnapshots.pollLast();
-							List<Boolean> snapShotCreationTemp=undoSnapshotCreationList.pollLast();
-
-							for(int i=0;i<snapShotTemp.size();i++){
-								snapShot.add(snapShotTemp.get(i));
-								snapShotCreation.add(snapShotCreationTemp.get(i));
-							}
-							undoSnapshots.addLast(snapShot);
-							undoSnapshotCreationList.addLast(snapShotCreation);
-
-						}else{
-
-							undoSnapshots.addLast(snapShot);
-							undoSnapshotCreationList.addLast(snapShotCreation);
-						}
-
-						snapShot=null;
-						snapShotCreation=null;
-					}
-
-					// Synchronizing newly added element between whiteboards
-					if(element!=null){
-						elementMap.put(element.getId(),element);
-
-						IWebSocketConnectionRegistry reg=IWebSocketSettings.Holder.get(Application.get())
-								.getConnectionRegistry();
-						for(IWebSocketConnection c : reg.getConnections(Application.get())){
-							try{
-								JSONObject jsonObject=new JSONObject(editedElement);
-								c.sendMessage(getAddElementMessage(jsonObject).toString());
-							}catch(Exception e){
-								log.error("Unexpected error while sending message through the web socket",e);
-							}
-						}
-					}
-				}
-
-			}catch(JSONException e){
-				log.error("Unexpected error while editing element",e);
-			}
+			handleEditedElement(editedElement);
 		}else if(webRequest.getQueryParameters().getParameterNames().contains("undo")){
-			if(!undoSnapshots.isEmpty()){
-				List<Boolean> undoCreationList=undoSnapshotCreationList.pollLast();
-				List<Element> undoElement=undoSnapshots.pollLast();
-
-				String deleteList="";
-				JSONArray changeList=new JSONArray();
-
-				IWebSocketConnectionRegistry reg=IWebSocketSettings.Holder.get(Application.get())
-						.getConnectionRegistry();
-
-				for(int i=0;i<undoElement.size();i++){
-					if(undoCreationList.get(i)){
-						elementMap.remove(undoElement.get(i).getId());
-						if("".equals(deleteList)){
-							deleteList=""+undoElement.get(i).getId();
-						}else{
-							deleteList+=","+undoElement.get(i).getId();
-						}
-					}else{
-						elementMap.put(undoElement.get(i).getId(),undoElement.get(i));
-						try{
-							changeList.put(undoElement.get(i).getJSON());
-						}catch(JSONException e){
-							log.error("Unexpected error while getting JSON",e);
-						}
-					}
-				}
-
-				for(IWebSocketConnection c : reg.getConnections(Application.get())){
-					try{
-						c.sendMessage(getUndoMessage(changeList,deleteList).toString());
-					}catch(Exception e){
-						log.error("Unexpected error while sending message through the web socket",e);
-					}
-				}
-			}
-
+			handleUndo();
 		}else if(webRequest.getQueryParameters().getParameterNames().contains("eraseAll")){
-			elementMap.clear();
-			IWebSocketConnectionRegistry reg=IWebSocketSettings.Holder.get(Application.get()).getConnectionRegistry();
-			for(IWebSocketConnection c : reg.getConnections(Application.get())){
-				try{
-					JSONArray jsonArray=new JSONArray();
-					c.sendMessage(getWhiteboardMessage(jsonArray).toString());
-				}catch(Exception e){
-					log.error("Unexpected error while sending message through the web socket",e);
-				}
-			}
+			handleEraseAll();
 		}else if(webRequest.getQueryParameters().getParameterNames().contains("save")){
-			JSONArray elementArray=new JSONArray();
-			for(int elementID : elementMap.keySet()){
-				try{
-					elementArray.put(elementMap.get(elementID).getJSON());
-				}catch(JSONException e){
-					log.error("Unexpected error while getting JSON",e);
-				}
-			}
-			File whiteboardFile=new File("Whiteboard_"+dateFormat.format(new Date())+".json");
-
-			FileWriter writer=null;
-			try{
-				whiteboardFile.createNewFile();
-				log.debug("Going to dump WB to file: "+whiteboardFile.getAbsolutePath());
-				writer=new FileWriter(whiteboardFile);
-				writer.write(elementArray.toString());
-				writer.flush();
-			}catch(IOException e){
-				log.debug("Unexpected error during dumping WB to file ",e);
-			}finally{
-				if(writer!=null){
-					try{
-						writer.close();
-					}catch(IOException e){
-						log.debug("Unexpected error during closing WB file ",e);
-					}
-				}
-			}
+			handleSave();
 		}else if(webRequest.getQueryParameters().getParameterNames().contains("clipArt")){
-			loadClipArts();
-			IWebSocketConnectionRegistry reg=IWebSocketSettings.Holder.get(Application.get()).getConnectionRegistry();
-			for(IWebSocketConnection c : reg.getConnections(Application.get())){
-				try{
-					JSONArray jsonArray=new JSONArray();
-					for(String clipArtURL : clipArts){
-						jsonArray.put(clipArtURL);
-					}
-					c.sendMessage(getClipArtListMessage(jsonArray).toString());
-				}catch(Exception e){
-					log.error("Unexpected error while sending message through the web socket",e);
-				}
-			}
+			handleClipArts();
 		}
 		else if(webRequest.getQueryParameters().getParameterNames().contains("docList")){
-			loadDocuments();
-			IWebSocketConnectionRegistry reg=IWebSocketSettings.Holder.get(Application.get()).getConnectionRegistry();
-			for(IWebSocketConnection c : reg.getConnections(Application.get())){
-				try{
-					JSONArray jsonArray=new JSONArray();
-					Set<String> keySet=docMap.keySet();
-					for(String key:keySet){
-						jsonArray.put(docMap.get(key).get(0));
-					}
-					c.sendMessage(getDocumentListMessage(jsonArray).toString());
-				}catch(Exception e){
-					log.error("Unexpected error while sending message through the web socket",e);
-				}
-			}
+			handleDocs();;
 		}
 		else if(webRequest.getQueryParameters().getParameterNames().contains("docComponents")){
 			String docBaseName=webRequest.getQueryParameters().getParameterValue("docBaseName").toString();
-			loadDocuments();
-			IWebSocketConnectionRegistry reg=IWebSocketSettings.Holder.get(Application.get()).getConnectionRegistry();
+			handleDocComponents(docBaseName);
+		}
+	}
+
+	private boolean handleEditedElement(String editedElement){
+		try{
+			// Mapping JSON String to Objects and Adding to the Element List
+			JSONObject jsonEditedElement=new JSONObject(editedElement);
+			Element element=getElementObject(jsonEditedElement);
+
+			boolean isLoaded=false;
+
+			if(!elementMap.isEmpty()&&loadedElementMap.get(element.getId())!=null&&!loadedElementMap.isEmpty()){
+				isLoaded=chequeEqual(element.getJSON(),loadedElementMap.get(element.getId()).getJSON());
+			}
+
+			if(!isLoaded){
+
+				if(snapShot==null&&snapShotCreation==null){
+					snapShot=new ArrayList<Element>();
+					snapShotCreation=new ArrayList<Boolean>();
+				}
+
+
+				if(elementMap.containsKey(element.getId())&&!elementMap.isEmpty()){
+					snapShot.add(elementMap.get(element.getId()));
+					snapShotCreation.add(false);
+
+				}else{
+					snapShot.add(element);
+					snapShotCreation.add(true);
+				}
+
+				if(Type.PointFree!=element.getType()){
+					if(undoSnapshots.size()==20){
+						undoSnapshots.pollFirst();
+						undoSnapshotCreationList.pollFirst();
+					}
+
+					if(Type.PencilCurve==element.getType()){
+						List<Element> lastElementSnapshot=undoSnapshots.getLast();
+						Element lastSnapshotElement=lastElementSnapshot.get(lastElementSnapshot.size()-1);
+
+						if((lastSnapshotElement instanceof PencilCurve)
+								&&(lastSnapshotElement.getId()==element.getId())){
+							List<Boolean> lastCreationSnapshot=undoSnapshotCreationList.getLast();
+
+							for(int i=0;i<snapShot.size();i++){
+								lastElementSnapshot.add(snapShot.get(i));
+								lastCreationSnapshot.add(snapShotCreation.get(i));
+							}
+						}else{
+							undoSnapshots.addLast(snapShot);
+							undoSnapshotCreationList.addLast(snapShotCreation);
+						}
+
+					}else if(Type.ClipArt==element.getType()){
+						List<Element> snapShotTemp=undoSnapshots.pollLast();
+						List<Boolean> snapShotCreationTemp=undoSnapshotCreationList.pollLast();
+
+						for(int i=0;i<snapShotTemp.size();i++){
+							snapShot.add(snapShotTemp.get(i));
+							snapShotCreation.add(snapShotCreationTemp.get(i));
+						}
+						undoSnapshots.addLast(snapShot);
+						undoSnapshotCreationList.addLast(snapShotCreation);
+
+					}else{
+
+						undoSnapshots.addLast(snapShot);
+						undoSnapshotCreationList.addLast(snapShotCreation);
+					}
+
+					snapShot=null;
+					snapShotCreation=null;
+				}
+
+				// Synchronizing newly added element between whiteboards
+				if(element!=null){
+					elementMap.put(element.getId(),element);
+
+					IWebSocketConnectionRegistry reg=IWebSocketSettings.Holder.get(Application.get())
+							.getConnectionRegistry();
+					for(IWebSocketConnection c : reg.getConnections(Application.get())){
+						try{
+							JSONObject jsonObject=new JSONObject(editedElement);
+							c.sendMessage(getAddElementMessage(jsonObject).toString());
+						}catch(Exception e){
+							log.error("Unexpected error while sending message through the web socket",e);
+						}
+					}
+				}
+			}
+			return true;
+		}catch(JSONException e){
+			log.error("Unexpected error while editing element",e);
+		}
+		return false;
+	}
+
+	private boolean handleUndo(){
+		if(!undoSnapshots.isEmpty()){
+			List<Boolean> undoCreationList=undoSnapshotCreationList.pollLast();
+			List<Element> undoElement=undoSnapshots.pollLast();
+
+			String deleteList="";
+			JSONArray changeList=new JSONArray();
+
+			IWebSocketConnectionRegistry reg=IWebSocketSettings.Holder.get(Application.get())
+					.getConnectionRegistry();
+
+			for(int i=0;i<undoElement.size();i++){
+				if(undoCreationList.get(i)){
+					elementMap.remove(undoElement.get(i).getId());
+					if("".equals(deleteList)){
+						deleteList=""+undoElement.get(i).getId();
+					}else{
+						deleteList+=","+undoElement.get(i).getId();
+					}
+				}else{
+					elementMap.put(undoElement.get(i).getId(),undoElement.get(i));
+					try{
+						changeList.put(undoElement.get(i).getJSON());
+					}catch(JSONException e){
+						log.error("Unexpected error while getting JSON",e);
+					}
+				}
+			}
+
 			for(IWebSocketConnection c : reg.getConnections(Application.get())){
 				try{
-					JSONArray jsonArray=new JSONArray();
-					for(String url:docMap.get(docBaseName)){
-						jsonArray.put(url);
-					}
-					c.sendMessage(getDocumentComponentListMessage(jsonArray).toString());
+					c.sendMessage(getUndoMessage(changeList,deleteList).toString());
 				}catch(Exception e){
 					log.error("Unexpected error while sending message through the web socket",e);
 				}
+			}
+			return  true;
+		}
+		return false;
+	}
+
+	private boolean handleEraseAll(){
+		elementMap.clear();
+		IWebSocketConnectionRegistry reg=IWebSocketSettings.Holder.get(Application.get()).getConnectionRegistry();
+		for(IWebSocketConnection c : reg.getConnections(Application.get())){
+			try{
+				JSONArray jsonArray=new JSONArray();
+				c.sendMessage(getWhiteboardMessage(jsonArray).toString());
+				return true;
+			}catch(Exception e){
+				log.error("Unexpected error while sending message through the web socket",e);
+			}
+		}
+		return false;
+	}
+
+	private boolean handleSave(){
+		boolean result=false;
+		JSONArray elementArray=new JSONArray();
+		for(int elementID : elementMap.keySet()){
+			try{
+				elementArray.put(elementMap.get(elementID).getJSON());
+			}catch(JSONException e){
+				log.error("Unexpected error while getting JSON",e);
+			}
+		}
+		File whiteboardFile=new File("Whiteboard_"+dateFormat.format(new Date())+".json");
+
+		FileWriter writer=null;
+		try{
+			whiteboardFile.createNewFile();
+			log.debug("Going to dump WB to file: "+whiteboardFile.getAbsolutePath());
+			writer=new FileWriter(whiteboardFile);
+			writer.write(elementArray.toString());
+			writer.flush();
+			result=true;
+		}catch(IOException e){
+			log.debug("Unexpected error during dumping WB to file ",e);
+		}finally{
+			if(writer!=null){
+				try{
+					writer.close();
+				}catch(IOException e){
+					log.debug("Unexpected error during closing WB file ",e);
+					result=false;
+				}
+			}
+			return result;
+		}
+	}
+
+	private void handleClipArts(){
+		loadClipArts();
+		IWebSocketConnectionRegistry reg=IWebSocketSettings.Holder.get(Application.get()).getConnectionRegistry();
+		for(IWebSocketConnection c : reg.getConnections(Application.get())){
+			try{
+				JSONArray jsonArray=new JSONArray();
+				for(String clipArtURL : clipArts){
+					jsonArray.put(clipArtURL);
+				}
+				c.sendMessage(getClipArtListMessage(jsonArray).toString());
+			}catch(Exception e){
+				log.error("Unexpected error while sending message through the web socket",e);
+			}
+		}
+	}
+
+	private void handleDocs(){
+		loadDocuments();
+		IWebSocketConnectionRegistry reg=IWebSocketSettings.Holder.get(Application.get()).getConnectionRegistry();
+		for(IWebSocketConnection c : reg.getConnections(Application.get())){
+			try{
+				JSONArray jsonArray=new JSONArray();
+				Set<String> keySet=docMap.keySet();
+				for(String key:keySet){
+					jsonArray.put(docMap.get(key).get(0));
+				}
+				c.sendMessage(getDocumentListMessage(jsonArray).toString());
+			}catch(Exception e){
+				log.error("Unexpected error while sending message through the web socket",e);
+			}
+		}
+	}
+
+	private void handleDocComponents(String docBaseName){
+		loadDocuments();
+		IWebSocketConnectionRegistry reg=IWebSocketSettings.Holder.get(Application.get()).getConnectionRegistry();
+		for(IWebSocketConnection c : reg.getConnections(Application.get())){
+			try{
+				JSONArray jsonArray=new JSONArray();
+				for(String url:docMap.get(docBaseName)){
+					jsonArray.put(url);
+				}
+				c.sendMessage(getDocumentComponentListMessage(jsonArray).toString());
+			}catch(Exception e){
+				log.error("Unexpected error while sending message through the web socket",e);
 			}
 		}
 	}
