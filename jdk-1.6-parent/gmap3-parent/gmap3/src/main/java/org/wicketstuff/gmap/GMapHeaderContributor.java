@@ -13,7 +13,7 @@ public class GMapHeaderContributor extends Behavior
     private static final String GMAP_API_URL = "%s://maps.google.com/maps/api/js?v=3&sensor=%s";
     private static final String HTTP = "http";
     // We have some custom Javascript.
-    private String schema;
+    private String scheme;
     private String sensor = "false";
 
     public GMapHeaderContributor()
@@ -26,9 +26,9 @@ public class GMapHeaderContributor extends Behavior
         this(HTTP, sensor);
     }
 
-    public GMapHeaderContributor(final String schema)
+    public GMapHeaderContributor(final String scheme)
     {
-        this(schema, false);
+        this(scheme, false);
     }
 
     /**
@@ -36,12 +36,12 @@ public class GMapHeaderContributor extends Behavior
      *
      * Should be added to the page.
      *
-     * @param schema http or https?
+     * @param scheme http or https?
      * @param sensor
      */
-    public GMapHeaderContributor(final String schema, final boolean sensor)
+    public GMapHeaderContributor(final String scheme, final boolean sensor)
     {
-        this.schema = schema;
+        this.scheme = scheme;
         if (sensor)
         {
             this.sensor = "true";
@@ -53,7 +53,7 @@ public class GMapHeaderContributor extends Behavior
     {
         super.renderHead(component, response);
         response.render(JavaScriptHeaderItem.forReference(WicketGMapJsReference.INSTANCE));
-        response.render(JavaScriptHeaderItem.forUrl(String.format(GMAP_API_URL, schema, sensor)));
+        response.render(JavaScriptHeaderItem.forUrl(String.format(GMAP_API_URL, scheme, sensor)));
     }
 
     public String getSensor()
