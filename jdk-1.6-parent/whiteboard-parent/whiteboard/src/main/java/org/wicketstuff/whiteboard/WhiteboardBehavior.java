@@ -73,6 +73,8 @@ public class WhiteboardBehavior extends AbstractDefaultAjaxBehavior{
 	private static Map<String,ArrayList<String>> docMap=new ConcurrentHashMap<String,ArrayList<String>>();
 	private static String documentFolder;
 
+	private static Background background;
+
 	public WhiteboardBehavior(String whiteboardId){
 		super();
 		this.whiteboardId=whiteboardId;
@@ -148,6 +150,10 @@ public class WhiteboardBehavior extends AbstractDefaultAjaxBehavior{
 		else if(webRequest.getQueryParameters().getParameterNames().contains("docComponents")){
 			String docBaseName=webRequest.getQueryParameters().getParameterValue("docBaseName").toString();
 			handleDocComponents(docBaseName);
+		}
+		else if(webRequest.getQueryParameters().getParameterNames().contains("background")){
+			String backgroundString=webRequest.getQueryParameters().getParameterValue("background").toString();
+			handleBackground(backgroundString);
 		}
 	}
 
@@ -243,6 +249,31 @@ public class WhiteboardBehavior extends AbstractDefaultAjaxBehavior{
 			return true;
 		}catch(JSONException e){
 			log.error("Unexpected error while editing element",e);
+		}
+		return false;
+	}
+
+	private boolean handleBackground(String backgroundString){
+		try{
+			JSONObject backgroundJSON=new JSONObject(backgroundString);
+			Background backgroundObject=new Background(backgroundJSON);
+			background=backgroundObject;
+
+			IWebSocketConnectionRegistry reg=IWebSocketSettings.Holder.get(Application.get())
+					.getConnectionRegistry();
+			for(IWebSocketConnection c : reg.getConnections(Application.get())){
+				try{
+					JSONObject jsonObject=new JSONObject(backgroundString);
+					c.sendMessage(getAddBackgroundMessage(jsonObject).toString());
+				}catch(Exception e){
+					log.error("Unexpected error while sending message through the web socket",e);
+				}
+			}
+
+			return true;
+		}
+		catch(JSONException e){
+			e.printStackTrace();
 		}
 		return false;
 	}
@@ -389,6 +420,10 @@ public class WhiteboardBehavior extends AbstractDefaultAjaxBehavior{
 
 	private JSONObject getAddElementMessage(JSONObject element) throws JSONException{
 		return new JSONObject().put("type","addElement").put("json",element);
+	}
+
+	private JSONObject getAddBackgroundMessage(JSONObject element) throws JSONException{
+		return new JSONObject().put("type","addBackground").put("json",element);
 	}
 
 	private JSONObject getUndoMessage(JSONArray changeList, String deleteList) throws JSONException{

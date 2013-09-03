@@ -13147,7 +13147,8 @@ bay.whiteboard.Whiteboard.addTool("addDoc", "docs", {action: function (a, b) {
         currentDoc = b.substring(b.lastIndexOf("/") + 1, b.lastIndexOf("."));
         currentDocPage = b;
         currentDocComponentList = "";
-        a.setBackground(b)
+        a.setBackground(b);
+        Wicket.Ajax.get({u: callbackUrl, ep: {background: a.backgroundJson()}})
     }, function () {
         c.dispose()
     })
@@ -13159,6 +13160,7 @@ bay.whiteboard.Whiteboard.addTool("left", "docs", {action: function (a, b) {
             1, currentDocComponentList[c].lastIndexOf("."));
         if (f == g && 0 <= c - 1) {
             a.setBackground(currentDocComponentList[c - 1]);
+            Wicket.Ajax.get({u: callbackUrl, ep: {background: a.backgroundJson()}});
             currentDocPage = currentDocComponentList[c - 1];
             break
         }
@@ -13171,6 +13173,7 @@ bay.whiteboard.Whiteboard.addTool("right", "docs", {action: function (a, b) {
             1, currentDocComponentList[c].lastIndexOf("."));
         if (f == g && c + 1 <= currentDocComponentList.length - 1) {
             a.setBackground(currentDocComponentList[c + 1]);
+            Wicket.Ajax.get({u: callbackUrl, ep: {background: a.backgroundJson()}});
             currentDocPage = currentDocComponentList[c + 1];
             break
         }
@@ -13217,4 +13220,3 @@ bay.whiteboard.art.chooseUrlDialog = function (a, b, c, f) {
     goog.style.showElement(g.getElement(), !0);
     return g
 };
-

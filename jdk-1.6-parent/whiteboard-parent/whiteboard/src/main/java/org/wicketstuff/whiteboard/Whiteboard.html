@@ -73,11 +73,18 @@
             }
             else if (message && message.type == "documentList") {
                 docList = message.json;
-                console.log("Doc List:"+docList);
             }
             else if (message && message.type == "documentComponentList") {
                 currentDocComponentList = message.json;
-                console.log("Doc Component List:"+currentDocComponentList);
+            }
+            else if (message && message.type == "addBackground") {
+                if(currentDocPage!=message.json.url){
+                    whiteboard.acceptBackground(JSON.stringify(message.json));
+                    var b=message.json.url;
+                    currentDoc = b.substring(b.lastIndexOf("/") + 1, b.lastIndexOf("."));
+                    currentDocPage = b;
+                    currentDocComponentList = "";
+                }
             }
 
         });
