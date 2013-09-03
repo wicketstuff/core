@@ -15,10 +15,13 @@
  */
 package org.wicketstuff.gmap;
 
-import java.util.*;
-import org.apache.wicket.Application;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import org.apache.wicket.Component;
-import org.apache.wicket.RuntimeConfigurationType;
 import org.apache.wicket.ajax.AbstractDefaultAjaxBehavior;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.behavior.Behavior;
@@ -27,6 +30,7 @@ import org.apache.wicket.markup.head.IHeaderResponse;
 import org.apache.wicket.markup.head.OnDomReadyHeaderItem;
 import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.markup.html.panel.Panel;
+import org.apache.wicket.request.IRequestParameters;
 import org.apache.wicket.request.Request;
 import org.apache.wicket.request.cycle.RequestCycle;
 import org.slf4j.Logger;
@@ -63,14 +67,12 @@ public class GMap extends Panel implements GOverlayContainer
     private GMapType mapType = GMapType.ROADMAP;
     private int zoom = 13;
     private final Map<String, GOverlay> overlays = new HashMap<String, GOverlay>();
-    private boolean initialized = false;
     private final WebMarkupContainer map;
     private GLatLngBounds bounds;
     private OverlayListener overlayListener = null;
-    private String sensor = "false";
 
     /**
-     * If said to true map loading will not produce any JavaScript errors in case
+     * If set to true map loading will not produce any JavaScript errors in case
      * google maps API cannot be found (e.g. no Internet connection)
      */
     private boolean failSilently = false;
@@ -90,10 +92,6 @@ public class GMap extends Panel implements GOverlayContainer
     public GMap(final String id, final boolean sensor)
     {
         this(id, new GMapHeaderContributor(sensor));
-        if (sensor)
-        {
-            this.sensor = "true";
-        }
     }
 
     /**
@@ -109,7 +107,6 @@ public class GMap extends Panel implements GOverlayContainer
         if (headerContrib != null)
         {
             add(headerContrib);
-            sensor = headerContrib.getSensor();
         }
 
         map = new WebMarkupContainer("map");
@@ -129,17 +126,13 @@ public class GMap extends Panel implements GOverlayContainer
         return map.getMarkupId();
     }
 
-    /**
-     * @see org.apache.wicket.MarkupContainer#onRender(org.apache.wicket.markup.MarkupStream)
-     */
     @Override
     protected void onBeforeRender()
     {
         super.onBeforeRender();
 
-        RuntimeConfigurationType configurationType = Application.get().getConfigurationType();
-        if (configurationType.equals(RuntimeConfigurationType.DEVELOPMENT)
-                && !Application.get().getMarkupSettings().getStripWicketTags())
+        if (getApplication().usesDevelopmentConfig()
+                && !getApplication().getMarkupSettings().getStripWicketTags())
         {
             log.warn("Application is in DEVELOPMENT mode && Wicket tags are not stripped,"
                     + "Some Chrome Versions will not render the GMap."
@@ -157,7 +150,7 @@ public class GMap extends Panel implements GOverlayContainer
     /**
      * Add an overlay.
      *
-     * @see wicket.contrib.gmap.GOverlayContainer#addOverlay(wicket.contrib.gmap.api.GOverlay)
+     * @see GOverlayContainer#addOverlay(GOverlay)
      * @param overlay
      * overlay to add
      * @return This
@@ -180,7 +173,7 @@ public class GMap extends Panel implements GOverlayContainer
     /**
      * Remove an overlay.
      *
-     * @see wicket.contrib.gmap.GOverlayContainer#removeOverlay(wicket.contrib.gmap.api.GOverlay)
+     * @see GOverlayContainer#removeOverlay(GOverlay)
      * @param overlay
      * overlay to remove
      * @return This
@@ -207,7 +200,7 @@ public class GMap extends Panel implements GOverlayContainer
     /**
      * Clear all overlays.
      *
-     * @see wicket.contrib.gmap.GOverlayContainer#removeAllOverlays()
+     * @see GOverlayContainer#removeAllOverlays()
      * @return This
      */
     @Override
@@ -227,7 +220,7 @@ public class GMap extends Panel implements GOverlayContainer
     }
 
     /**
-     * @see wicket.contrib.gmap.GOverlayContainer#getOverlays()
+     * @see GOverlayContainer#getOverlays()
      */
     @Override
     public List<GOverlay> getOverlays()
@@ -600,7 +593,7 @@ public class GMap extends Panel implements GOverlayContainer
      */
     public String getJSinit()
     {
-        final StringBuffer js = new StringBuffer("new WicketMap('" + map.getMarkupId() + "', "+isFailSilently() +");\n");
+        final StringBuilder js = new StringBuilder("new WicketMap('" + map.getMarkupId() + "', "+isFailSilently() +");\n");
 
         js.append(getJSinvoke("clearOverlays()"));
         js.append(overlayListener.getJSinit());
@@ -689,7 +682,7 @@ public class GMap extends Panel implements GOverlayContainer
             return;
         }
 
-        final StringBuffer buf = new StringBuffer();
+        final StringBuilder buf = new StringBuilder();
         buf.append("var bounds = new google.maps.LatLngBounds();\n");
         buf.append("var map = " + GMap.this.getJSinvoke("map") + ";\n");
 
@@ -805,15 +798,14 @@ public class GMap extends Panel implements GOverlayContainer
      */
     public void update()
     {
-      final Request request = RequestCycle.get().getRequest();
-
-      // Attention: don't use setters as this will result in an endless
-      // AJAX request loop
-      bounds = GLatLngBounds.parse(request.getRequestParameters().getParameterValue("bounds").toString());
-      center = GLatLng.parse(request.getRequestParameters().getParameterValue("center").toString());
-      zoom = request.getRequestParameters().getParameterValue("zoom").toInt(zoom);
-      String requestMapType = request.getRequestParameters().getParameterValue("currentMapType").toString();
-      mapType = requestMapType != null ? GMapType.valueOf(request.getRequestParameters().getParameterValue("currentMapType").toString()) : mapType;
+        // Attention: don't use setters as this will result in an endless
+        // AJAX request loop
+        IRequestParameters requestParameters = getRequest().getRequestParameters();
+        bounds = GLatLngBounds.parse(requestParameters.getParameterValue("bounds").toString());
+        center = GLatLng.parse(requestParameters.getParameterValue("center").toString());
+        zoom = requestParameters.getParameterValue("zoom").toInt(zoom);
+        String requestMapType = requestParameters.getParameterValue("currentMapType").toString();
+        mapType = requestMapType != null ? GMapType.valueOf(requestParameters.getParameterValue("currentMapType").toString()) : mapType;
     }
 
     public void setOverlays(final List<GOverlay> overlays)
@@ -825,9 +817,8 @@ public class GMap extends Panel implements GOverlayContainer
         }
     }
 
-    private abstract class JSMethodBehavior extends Behavior
+    private static abstract class JSMethodBehavior extends Behavior
     {
-
         private static final long serialVersionUID = 1L;
         private final String attribute;
 
@@ -837,8 +828,7 @@ public class GMap extends Panel implements GOverlayContainer
         }
 
         /**
-         * @see org.apache.wicket.behavior.AbstractBehavior#onComponentTag(org.apache.wicket.Component,
-         * org.apache.wicket.markup.ComponentTag)
+         * @see Behavior#onComponentTag(Component, ComponentTag)
          */
         @Override
         public void onComponentTag(final Component component, final ComponentTag tag)
@@ -858,7 +848,6 @@ public class GMap extends Panel implements GOverlayContainer
 
     public class ZoomOutBehavior extends JSMethodBehavior
     {
-
         private static final long serialVersionUID = 1L;
 
         public ZoomOutBehavior(final String event)
@@ -875,7 +864,6 @@ public class GMap extends Panel implements GOverlayContainer
 
     public class ZoomInBehavior extends JSMethodBehavior
     {
-
         private static final long serialVersionUID = 1L;
 
         public ZoomInBehavior(final String event)
@@ -892,7 +880,6 @@ public class GMap extends Panel implements GOverlayContainer
 
     public class PanDirectionBehavior extends JSMethodBehavior
     {
-
         private static final long serialVersionUID = 1L;
         private final int dx;
         private final int dy;
@@ -913,7 +900,6 @@ public class GMap extends Panel implements GOverlayContainer
 
     public class SetZoomBehavior extends JSMethodBehavior
     {
-
         private static final long serialVersionUID = 1L;
         private final int zoomBehavior;
 
@@ -932,7 +918,6 @@ public class GMap extends Panel implements GOverlayContainer
 
     public class SetCenterBehavior extends JSMethodBehavior
     {
-
         private static final long serialVersionUID = 1L;
         private final GLatLng gLatLng;
 
@@ -951,7 +936,6 @@ public class GMap extends Panel implements GOverlayContainer
 
     public class SetMapTypeBehavior extends JSMethodBehavior
     {
-
         private static final long serialVersionUID = 1L;
         private final GMapType mapTypeBehavior;
 
@@ -970,12 +954,8 @@ public class GMap extends Panel implements GOverlayContainer
 
     public class OverlayListener extends AbstractDefaultAjaxBehavior
     {
-
         private static final long serialVersionUID = 1L;
 
-        /**
-         * @see org.apache.wicket.ajax.AbstractDefaultAjaxBehavior#respond(org.apache.wicket.ajax.AjaxRequestTarget)
-         */
         @Override
         protected void respond(final AjaxRequestTarget target)
         {

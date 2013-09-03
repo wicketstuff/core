@@ -54,17 +54,17 @@ public abstract class GOverlay implements Serializable
      */
     public String getJS()
     {
-        return addFunctions(addEvents(addOverlays(new StringBuffer()))).toString();
+        return addFunctions(addEvents(addOverlays(new StringBuilder()))).toString();
     }
 
-    private StringBuffer addOverlays(final StringBuffer js)
+    private StringBuilder addOverlays(final StringBuilder js)
     {
         js.append(parent.getJSinvoke("addOverlay('overlay" + getId() + "', " + getJSconstructor() + ")"));
         js.append(parent.getJSinvoke("overlays['overlay" + getId() + "'].setMap(Wicket.maps['" + parent.getMapId() + "'].map)"));
         return js;
     }
 
-    private StringBuffer addFunctions(final StringBuffer js)
+    private CharSequence addFunctions(final StringBuilder js)
     {
         for (final GEvent event : functions.keySet())
         {
@@ -74,7 +74,7 @@ public abstract class GOverlay implements Serializable
 
     }
 
-    private StringBuffer addEvents(final StringBuffer js)
+    private StringBuilder addEvents(final StringBuilder js)
     {
         for (final GEvent event : events.keySet())
         {
@@ -89,7 +89,7 @@ public abstract class GOverlay implements Serializable
      */
     public String getJSremove()
     {
-        final StringBuffer js = new StringBuffer();
+        final StringBuilder js = new StringBuilder();
         // clear the Events
         for (final GEvent event : events.keySet())
         {

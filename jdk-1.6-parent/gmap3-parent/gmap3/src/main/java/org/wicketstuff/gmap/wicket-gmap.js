@@ -31,12 +31,12 @@ else if (typeof(Wicket) !== "object") {
 function WicketClientGeocoder() {
 
     try {
-    	this.coder = new google.maps.Geocoder();
+        this.coder = new google.maps.Geocoder();
     } catch (e) {
-    	if( !Wicket.maps['_failSilently'] ) {
-    		throw e;
-    	}
-	}
+        if( !Wicket.maps['_failSilently'] ) {
+            throw e;
+        }
+    }
 
     this.getLatLng = function(callBack, addressId){
 
@@ -71,22 +71,19 @@ function WicketMap(id, failSilently) {
     Wicket.maps[id] = this;
 
     if(failSilently) {
-    	Wicket.maps['_failSilently'] = failSilently;
+        Wicket.maps['_failSilently'] = failSilently;
     }
 
     this.options = {};
     try {
-        this.map = new google.maps.Map(document.getElementById(id));
+        this.map = new google.maps.Map(Wicket.$(id));
     } catch (e) {
-    	if(!failSilently) {
-    		alert(failSilently);
-    		throw e;
-    	}
-	}
+        if(!failSilently) {
+            alert(failSilently);
+            throw e;
+        }
+    }
     this.overlays = {};
-    this.singleInfoWindo = null;
-    this.infoWindow = null;
-
 
     this.onEvent = function(callBack, params) {
         params['center'] = this.map.getCenter();
@@ -224,11 +221,11 @@ function WicketMap(id, failSilently) {
     }
 
     this.setCenterFailSafe = function(lat, lng, unbounded) {
-    	try {
-    		this.map.setCenter( new google.maps.LatLng(lat, lng, unbounded) );
-    	} catch (e) {
-			// do nothing
-		}
+        try {
+            this.map.setCenter( new google.maps.LatLng(lat, lng, unbounded) );
+        } catch (e) {
+            // do nothing
+        }
     }
 
 
@@ -274,14 +271,14 @@ function WicketMap(id, failSilently) {
     }
 
     this.triggerEvent = function(event) {
-		google.maps.event.trigger(this.map, event);
-	}
+        google.maps.event.trigger(this.map, event);
+    }
 
-	this.triggerResize = function() {
-		this.triggerEvent('resize');
-	}
+    this.triggerResize = function() {
+        this.triggerEvent('resize');
+    }
 }
 
 Wicket.Event.add(window, "load", function(event){
-	if(typeof(Wicket.geocoder) === 'undefined') Wicket.geocoder = new WicketClientGeocoder();
+    if(typeof(Wicket.geocoder) === 'undefined') Wicket.geocoder = new WicketClientGeocoder();
 });
