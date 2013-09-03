@@ -20,14 +20,11 @@ import org.wicketstuff.gmap.geocoder.GeocoderStatus;
  */
 public class HomePage extends WicketExamplePage
 {
-
     private static final long serialVersionUID = 1L;
-    private final FeedbackPanel feedback;
-    private final ServerGeocoder geocoder = new ServerGeocoder();
 
     public HomePage()
     {
-        feedback = new FeedbackPanel("feedback");
+	    final FeedbackPanel feedback = new FeedbackPanel("feedback");
         feedback.setOutputMarkupId(true);
         add(feedback);
 
@@ -78,7 +75,7 @@ public class HomePage extends WicketExamplePage
                 try
                 {
                     String address = addressTextField.getDefaultModelObjectAsString();
-                    GLatLng latLng = geocoder.findAddress(address);
+                    GLatLng latLng = new ServerGeocoder().findAddress(address);
                     bottomMap.addOverlay(new GInfoWindow(latLng, "address: " + address));
                 }
                 catch (Exception e)
