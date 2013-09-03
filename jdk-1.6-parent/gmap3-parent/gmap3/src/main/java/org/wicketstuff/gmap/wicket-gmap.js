@@ -76,7 +76,7 @@ function WicketMap(id, failSilently) {
 
     this.options = {};
     try {
-        this.map = new google.maps.Map(document.getElementById(id));
+        this.map = new google.maps.Map(Wicket.$(id));
     } catch (e) {
         if(!failSilently) {
             alert(failSilently);
@@ -84,9 +84,6 @@ function WicketMap(id, failSilently) {
         }
     }
     this.overlays = {};
-    this.singleInfoWindo = null;
-    this.infoWindow = null;
-
 
     this.onEvent = function(callBack, params) {
         params['center'] = this.map.getCenter();
