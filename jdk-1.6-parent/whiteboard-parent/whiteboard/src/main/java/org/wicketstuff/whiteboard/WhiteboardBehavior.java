@@ -460,7 +460,10 @@ public class WhiteboardBehavior extends AbstractDefaultAjaxBehavior{
 				"window.onload = function () {" +
 				"Wicket.Ajax.get({u: callbackUrl, ep: {clipArt: \"clipArt\"}});" +
 				"Wicket.Ajax.get({u: callbackUrl, ep: {docList: \"docList\"}});" +
-				"};";
+				"};" +
+				"whiteboard.onBackground = function(e){\n"+
+				"Wicket.Ajax.get({u: callbackUrl, ep: {background:whiteboard.backgroundJson()}});\n"+
+				" };";
 
 		// Clearing the whiteboard for first client
 		// IWebSocketConnectionRegistry reg = IWebSocketSettings.Holder.get(Application.get()).getConnectionRegistry();
