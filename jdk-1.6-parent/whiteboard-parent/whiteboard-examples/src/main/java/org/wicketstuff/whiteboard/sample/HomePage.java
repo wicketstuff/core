@@ -65,7 +65,7 @@ public class HomePage extends WebPage {
 					// noop
 				}
 			}
-			Whiteboard whiteboard = new Whiteboard("whiteboardContainer", content, "ClipArts", "Documents");
+			Whiteboard whiteboard = new Whiteboard("whiteboard_example_1","whiteboardContainer", content, "ClipArts", "Documents");
 			this.add(whiteboard);
 		}
 

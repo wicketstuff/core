@@ -46,14 +46,12 @@
             if (JSON.stringify(m.deleteList) != '\"\"') {
                 var deleteList = JSON.stringify(m.deleteList).substring(1, JSON.stringify(m.deleteList).length - 1).split(",");
                 for (var i = 0; i < deleteList.length; i++) {
-                    console.log("Deleting------:" + deleteList[i]);
                     deleteElement(deleteList[i])
                 }
             }
 
             var changeList = m.changeList;
             for (var i = 0; i < changeList.length; i++) {
-                console.log("Changing------:" + changeList[i]);
                 addElement(JSON.stringify(changeList[i]));
             }
         }
@@ -64,7 +62,7 @@
             if (message && message.type == "addElement") {
                 addElement(JSON.stringify(message.json));
             } else if (message && message.type == "parseWB") {
-                parseJson(message.json);
+                parseWB(message.json);
             } else if (message && message.type == "undoList") {
                 undo(message);
             }
@@ -85,6 +83,10 @@
                     currentDocPage = b;
                     currentDocComponentList = "";
                 }
+            } else if(message && message.type == "eraseElements"){
+                whiteboard.collections.main.clear();
+                whiteboard.collections.tracer.clear();
+                whiteboard.redrawAll()
             }
 
         });

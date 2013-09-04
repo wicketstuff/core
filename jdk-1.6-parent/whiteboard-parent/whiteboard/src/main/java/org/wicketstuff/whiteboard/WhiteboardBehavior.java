@@ -57,53 +57,88 @@ import java.util.concurrent.LinkedBlockingDeque;
  * @author andunslg
  */
 public class WhiteboardBehavior extends AbstractDefaultAjaxBehavior{
+	private static final Map<String,WhiteboardData> whiteboardMap=new ConcurrentHashMap<String,WhiteboardData>();
+
 	private static final Logger log=LoggerFactory.getLogger(WhiteboardBehavior.class);
 	private static final long serialVersionUID=1L;
-	private String whiteboardId;
-	private static Map<Integer,Element> elementMap=new ConcurrentHashMap<Integer,Element>();
-	private static Map<Integer,Element> loadedElementMap=new ConcurrentHashMap<Integer,Element>();
+	private String whiteboardMarkupId;
+	private String whiteboardObjectId;
 
-	private static BlockingDeque<List<Element>> undoSnapshots=new LinkedBlockingDeque<List<Element>>(20);
-	private static BlockingDeque<List<Boolean>> undoSnapshotCreationList=new LinkedBlockingDeque<List<Boolean>>(20);
+	private Map<Integer,Element> elementMap;
+	private Map<Integer,Element> loadedElementMap;
+
+	private BlockingDeque<List<Element>> undoSnapshots;
+	private BlockingDeque<List<Boolean>> undoSnapshotCreationList;
 
 	private List<Element> snapShot=null;
 	private List<Boolean> snapShotCreation=null;
 
-	private static DateFormat dateFormat=new SimpleDateFormat("yyyy_MM_dd_HH_mm_ss");
+	private DateFormat dateFormat=new SimpleDateFormat("yyyy_MM_dd_HH_mm_ss");
 
-	private static ArrayList<String> clipArts=new ArrayList<String>();
-	private static String clipArtFolder;
+	private ArrayList<String> clipArts;
+	private String clipArtFolder;
 
-	private static Map<String,ArrayList<String>> docMap=new ConcurrentHashMap<String,ArrayList<String>>();
-	private static String documentFolder;
+	private Map<String,ArrayList<String>> docMap;
+	private String documentFolder;
 
-	private static Background background;
+	private Background background;
 
-	private static String loadedContent="";
+	private String loadedContent="";
+
 	/**
 	 * Creating the behaviour using whiteboard's html element id
-	 * @param whiteboardId
+	 * @param whiteboardMarkupId
 	 */
-	public WhiteboardBehavior(String whiteboardId){
-		super();
-		this.whiteboardId=whiteboardId;
+	public WhiteboardBehavior(String whiteboardObjectId,String whiteboardMarkupId){
+		this(whiteboardObjectId,whiteboardMarkupId,null,null,null);
 	}
 
 	/**
 	 * This is the constructor which used to create a whiteboard behaviour with more features
-	 * @param whiteboardId html element id which holds the whiteboard
+	 * @param whiteboardMarkupId html element id which holds the whiteboard
 	 * @param whiteboardContent If loading from a saved whiteboard file, content should be provided as a string. Otherwise null
 	 * @param clipArtFolder  Path of the folder which holds clipArts which can be added to whiteboard. Relative to context root
 	 * @param documentFolder  Path of the folder which holds docs images which can be added to whiteboard. Relative to context root
 	 */
-	public WhiteboardBehavior(String whiteboardId, String whiteboardContent, String clipArtFolder,String documentFolder){
+	public WhiteboardBehavior(String whiteboardObjectId,String whiteboardMarkupId, String whiteboardContent, String clipArtFolder,String documentFolder){
 		super();
-		this.whiteboardId=whiteboardId;
+		this.whiteboardObjectId=whiteboardObjectId;
+		this.whiteboardMarkupId=whiteboardMarkupId;
+
+		if(!whiteboardMap.containsKey(whiteboardObjectId)){
+			elementMap=new ConcurrentHashMap<Integer,Element>();
+			loadedElementMap=new ConcurrentHashMap<Integer,Element>();
+
+			undoSnapshots=new LinkedBlockingDeque<List<Element>>(20);
+			undoSnapshotCreationList=new LinkedBlockingDeque<List<Boolean>>(20);
+
+			clipArts=new ArrayList<String>();
+		    docMap=new ConcurrentHashMap<String,ArrayList<String>>();
+
+			WhiteboardData whiteboardData=new WhiteboardData(elementMap,loadedElementMap,undoSnapshots,undoSnapshotCreationList,clipArts,null,docMap,null,null,null);
+			whiteboardMap.put(whiteboardObjectId,whiteboardData);
+		}else{
+			WhiteboardData whiteboardData=whiteboardMap.get(whiteboardObjectId);
+			elementMap=whiteboardData.getElementMap();
+			loadedElementMap=whiteboardData.getLoadedElementMap();
+
+			undoSnapshots=whiteboardData.getUndoSnapshots();
+			undoSnapshotCreationList=whiteboardData.getUndoSnapshotCreationList();
+
+			clipArts=whiteboardData.getClipArts();
+			docMap=whiteboardData.getDocMap();
+
+			clipArtFolder=whiteboardData.getClipArtFolder();
+			documentFolder=whiteboardData.getDocumentFolder();
+			background=whiteboardData.getBackground();
+            loadedContent=whiteboardData.getLoadedContent();
+		}
 
 		IWebSocketConnectionRegistry reg=IWebSocketSettings.Holder.get(Application.get()).getConnectionRegistry();
 
 		if("".equals(loadedContent)&&reg.getConnections(Application.get()).isEmpty()){
 			loadedContent=whiteboardContent;
+			whiteboardMap.get(whiteboardObjectId).setLoadedContent(loadedContent);
 			if(whiteboardContent!=null&&!whiteboardContent.equals("")){
 				try{
 					JSONObject savedContent=new JSONObject(whiteboardContent);
@@ -135,6 +170,7 @@ public class WhiteboardBehavior extends AbstractDefaultAjaxBehavior{
 					if(savedContent.has("background")){
 						JSONObject backgroundJSON=(JSONObject)savedContent.get("background");
 						background=new Background(backgroundJSON);
+						whiteboardMap.get(whiteboardObjectId).setBackground(background);
 					}
 
 				}catch(JSONException e){
@@ -147,6 +183,7 @@ public class WhiteboardBehavior extends AbstractDefaultAjaxBehavior{
 		if(clipArtFolder!=null&&!clipArtFolder.equals("")){
 
 			this.clipArtFolder=clipArtFolder;
+			whiteboardMap.get(whiteboardObjectId).setClipArtFolder(clipArtFolder);
 			this.loadClipArts();
 
 		}
@@ -155,6 +192,7 @@ public class WhiteboardBehavior extends AbstractDefaultAjaxBehavior{
 		if(documentFolder!=null&&!documentFolder.equals("")){
 
 			this.documentFolder=documentFolder;
+			whiteboardMap.get(whiteboardObjectId).setDocumentFolder(documentFolder);
 			this.loadDocuments();
 
 		}
@@ -318,6 +356,7 @@ public class WhiteboardBehavior extends AbstractDefaultAjaxBehavior{
 			JSONObject backgroundJSON=new JSONObject(backgroundString);
 			Background backgroundObject=new Background(backgroundJSON);
 			background=backgroundObject;
+			whiteboardMap.get(whiteboardObjectId).setBackground(background);
 
 			IWebSocketConnectionRegistry reg=IWebSocketSettings.Holder.get(Application.get())
 					.getConnectionRegistry();
@@ -358,6 +397,7 @@ public class WhiteboardBehavior extends AbstractDefaultAjaxBehavior{
 					elementMap.remove(undoElement.get(i).getId());
 					if(loadedElementMap.containsKey(undoElement.get(i).getId())){
 						loadedContent="";
+						whiteboardMap.get(whiteboardObjectId).setLoadedContent("");
 						loadedElementMap.remove(undoElement.get(i).getId());
 					}
 					if("".equals(deleteList)){
@@ -397,7 +437,7 @@ public class WhiteboardBehavior extends AbstractDefaultAjaxBehavior{
 		for(IWebSocketConnection c : reg.getConnections(Application.get())){
 			try{
 				JSONArray jsonArray=new JSONArray();
-				c.sendMessage(getWhiteboardMessage(jsonArray).toString());
+				c.sendMessage(getEraseAllMessage(jsonArray).toString());
 				return true;
 			}catch(Exception e){
 				log.error("Unexpected error while sending message through the web socket",e);
@@ -449,8 +489,6 @@ public class WhiteboardBehavior extends AbstractDefaultAjaxBehavior{
 		}
 
 		File whiteboardFile=new File(saveFolderPath+"/Whiteboard_"+dateFormat.format(new Date())+".json");
-
-		System.out.println(whiteboardFile.getPath());
 
 		FileWriter writer=null;
 		try{
@@ -552,6 +590,10 @@ public class WhiteboardBehavior extends AbstractDefaultAjaxBehavior{
 		return new JSONObject().put("type","parseWB").put("json",array);
 	}
 
+	private JSONObject getEraseAllMessage(JSONArray array) throws JSONException{
+		return new JSONObject().put("type","eraseElements").put("json",array);
+	}
+
 	private JSONObject getClipArtListMessage(JSONArray array) throws JSONException{
 		return new JSONObject().put("type","clipArtList").put("json",array);
 	}
@@ -574,7 +616,7 @@ public class WhiteboardBehavior extends AbstractDefaultAjaxBehavior{
 				+"whiteboard.getMainCollection().onChange = function(element){\n"
 				+"changedElement=this.getJson(element);\n"+"Wicket.Ajax.get({u:'"+callbackUrl
 				+"',ep:{editedElement:changedElement}});\n};\n"+"whiteboard.render(document.getElementById('"
-				+whiteboardId+"'));\n"+"whiteboard.setBoundaries(0, 0, 0, 0);\n" +
+				+whiteboardMarkupId+"'));\n"+"whiteboard.setBoundaries(0, 0, 0, 0);\n" +
 				"window.onload = function () {" +
 				"Wicket.Ajax.get({u: callbackUrl, ep: {clipArt: \"clipArt\"}});" +
 				"Wicket.Ajax.get({u: callbackUrl, ep: {docList: \"docList\"}});" +
