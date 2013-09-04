@@ -386,6 +386,7 @@ public class WhiteboardBehavior extends AbstractDefaultAjaxBehavior{
 
 			undoSnapshotCreationList_Background.addLast(previousBackground==null);
 			undoSnapshots_Background.addLast(previousBackground);
+			isElementSnapshotList.addLast(false);
 
 			IWebSocketConnectionRegistry reg=IWebSocketSettings.Holder.get(Application.get())
 					.getConnectionRegistry();
@@ -455,6 +456,8 @@ public class WhiteboardBehavior extends AbstractDefaultAjaxBehavior{
 				}
 			} else{
 				Background previousBackground=undoSnapshots_Background.pollLast();
+				background=previousBackground;
+				whiteboardMap.get(whiteboardObjectId).setBackground(previousBackground);
 
 				IWebSocketConnectionRegistry reg=IWebSocketSettings.Holder.get(Application.get())
 						.getConnectionRegistry();
