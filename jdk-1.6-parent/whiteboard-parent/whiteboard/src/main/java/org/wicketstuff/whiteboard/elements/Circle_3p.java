@@ -19,6 +19,11 @@ package org.wicketstuff.whiteboard.elements;
 import org.apache.wicket.ajax.json.JSONException;
 import org.apache.wicket.ajax.json.JSONObject;
 
+/**
+ * This class rep
+ * Hold common fields for each element
+ * @author andunslg
+ */
 public class Circle_3p extends Element{
 	private static final long serialVersionUID=1L;
 	protected int p1;
@@ -41,6 +46,11 @@ public class Circle_3p extends Element{
 		this.p3=object.getInt("p3");
 	}
 
+	/**
+	 * Return a JSON object which represent the Element
+	 * @return  JSON object with field values added
+	 * @throws JSONException
+	 */
 	public JSONObject getJSON() throws JSONException{
 		JSONObject jsonObject=super.getJSON(new JSONObject());
 		jsonObject.put("p1",p1);

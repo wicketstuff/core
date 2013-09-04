@@ -22,6 +22,10 @@ import org.apache.wicket.ajax.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * This class represent a curve element on Whiteboard which is represented by list of coordinate points
+ * @author andunslg
+ */
 public class PencilCurve extends Element{
 	private static final long serialVersionUID=1L;
 	protected int p0;
@@ -65,6 +69,11 @@ public class PencilCurve extends Element{
 		}
 	}
 
+	/**
+	 * Return a JSON object which represent the Element
+	 * @return  JSON object with field values added
+	 * @throws JSONException
+	 */
 	public JSONObject getJSON() throws JSONException{
 		JSONObject jsonObject=super.getJSON(new JSONObject());
 		jsonObject.put("p0",p0);

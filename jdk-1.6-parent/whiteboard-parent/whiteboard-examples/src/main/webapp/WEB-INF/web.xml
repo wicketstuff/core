@@ -15,7 +15,7 @@
     <!--</filter>-->
     <filter>
         <filter-name>wicket.Whiteboard.WebSocket</filter-name>
-        <filter-class>org.apache.wicket.protocol.ws.tomcat7.Tomcat7WebSocketFilter</filter-class>
+        <filter-class>org.apache.wicket.protocol.ws.jetty.Jetty7WebSocketFilter</filter-class>
         <init-param>
             <param-name>applicationClassName</param-name>
             <param-value>org.wicketstuff.whiteboard.sample.WicketApplication</param-value>

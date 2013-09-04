@@ -27,35 +27,45 @@ import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 
-public class HomePage extends WebPage{
-	private static final long serialVersionUID=1L;
-	private static final Logger log=LoggerFactory.getLogger(WhiteboardBehavior.class);
+/**
+ * Sample application which shows the features of the whiteboard
+ * @author andunslg
+ */
+public class HomePage extends WebPage {
+	private static final long serialVersionUID = 1L;
+	private static final Logger log = LoggerFactory.getLogger(WhiteboardBehavior.class);
 
-	public HomePage(final PageParameters parameters){
+	public HomePage() {
+		this(new PageParameters());
+	}
+
+	public HomePage(final PageParameters parameters) {
 		super(parameters);
-		String content="";
-		InputStream savedWhiteboard=this.getClass().getResourceAsStream("Whiteboard_Example.json");
 
-		BufferedReader reader=null;
-		try{
-			reader=new BufferedReader(new InputStreamReader(savedWhiteboard));
+		//Reading a json file which represent a previously saved whiteboard
+		String content = "";
+		InputStream savedWhiteboard = this.getClass().getResourceAsStream("Whiteboard_Example.json");
 
-			String line=reader.readLine();
-			while(line!=null){
-				content+=line;
-				line=reader.readLine();
+		BufferedReader reader = null;
+		try {
+			reader = new BufferedReader(new InputStreamReader(savedWhiteboard));
+
+			String line = reader.readLine();
+			while (line != null) {
+				content += line;
+				line = reader.readLine();
 			}
-		}catch(Exception e){
-			log.error("Unexpected error: ",e);
-		}finally{
-			if(reader!=null){
-				try{
+		} catch (Exception e) {
+			log.error("Unexpected error: ", e);
+		} finally {
+			if (reader != null) {
+				try {
 					reader.close();
-				}catch(Exception e){
+				} catch (Exception e) {
 					// noop
 				}
 			}
-			Whiteboard whiteboard=new Whiteboard("whiteboardContainer",content,"ClipArts","Documents");
+			Whiteboard whiteboard = new Whiteboard("whiteboardContainer", content, "ClipArts", "Documents");
 			this.add(whiteboard);
 		}
 

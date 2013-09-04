@@ -18,7 +18,10 @@ package org.wicketstuff.whiteboard.resource;
 
 import org.apache.wicket.request.resource.CssResourceReference;
 
-
+/**
+ * Reference Class for whiteboard.css which gives the stylesheet for whiteboard
+ * @author andunslg
+ */
 public class WhiteboardStyleSheetResourceReference extends CssResourceReference{
 	private static final long serialVersionUID=1L;
 

@@ -19,6 +19,11 @@ package org.wicketstuff.whiteboard.elements;
 import org.apache.wicket.ajax.json.JSONException;
 import org.apache.wicket.ajax.json.JSONObject;
 
+/**
+ * This class represent a arrow element on Whiteboard which is represented by starting point of the arrow
+ * , ending point of the arrow nad the thickness of the arrow.
+ * @author andunslg
+ */
 public class PencilArrow extends Element{
 	private static final long serialVersionUID=1L;
 	protected int p1;
@@ -41,6 +46,11 @@ public class PencilArrow extends Element{
 		this.thick=object.getInt("thick");
 	}
 
+	/**
+	 * Return a JSON object which represent the Element
+	 * @return  JSON object with field values added
+	 * @throws JSONException
+	 */
 	public JSONObject getJSON() throws JSONException{
 		JSONObject jsonObject=super.getJSON(new JSONObject());
 		jsonObject.put("p1",p1);

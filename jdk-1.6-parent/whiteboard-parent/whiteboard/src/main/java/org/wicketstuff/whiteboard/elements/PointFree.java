@@ -19,6 +19,10 @@ package org.wicketstuff.whiteboard.elements;
 import org.apache.wicket.ajax.json.JSONException;
 import org.apache.wicket.ajax.json.JSONObject;
 
+/**
+ * This class represent a point element on Whiteboard
+ * @author andunslg
+ */
 public class PointFree extends Element{
 	private static final long serialVersionUID=1L;
 	protected double x; // x coordinate of the point
@@ -37,6 +41,11 @@ public class PointFree extends Element{
 		this.y=object.get("y") instanceof Double?object.getDouble("y"):object.getInt("y");
 	}
 
+	/**
+	 * Return a JSON object which represent the Element
+	 * @return  JSON object with field values added
+	 * @throws JSONException
+	 */
 	public JSONObject getJSON() throws JSONException{
 		JSONObject jsonObject=super.getJSON(new JSONObject());
 		jsonObject.put("x",x);

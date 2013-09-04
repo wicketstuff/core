@@ -19,6 +19,10 @@ package org.wicketstuff.whiteboard;
 import org.apache.wicket.ajax.json.JSONException;
 import org.apache.wicket.ajax.json.JSONObject;
 
+/**
+ * This class represent the background image of the whiteboard
+ * @author andunslg
+ */
 public class Background{
 	private String type;
 	private String url;
@@ -45,6 +49,11 @@ public class Background{
 		this.top=object.getDouble("top");
 	}
 
+	/**
+	 * Return a JSON object which represent the Background
+	 * @return  JSON object which represent the Background
+	 * @throws JSONException
+	 */
 	public JSONObject getJSON() throws JSONException{
 		JSONObject obj=new JSONObject();
 		obj.put("url",url);

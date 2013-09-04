@@ -18,7 +18,10 @@ package org.wicketstuff.whiteboard.resource;
 
 import org.apache.wicket.request.resource.CssResourceReference;
 
-
+/**
+ * Reference Class for goog.css of Google Closure Library
+ * @author andunslg
+ */
 public class GoogStyleSheetResourceReference extends CssResourceReference{
 	private static final long serialVersionUID=1L;
 

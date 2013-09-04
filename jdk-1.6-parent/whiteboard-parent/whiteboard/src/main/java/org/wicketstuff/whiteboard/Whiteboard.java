@@ -24,14 +24,20 @@ import org.apache.wicket.protocol.ws.api.message.ConnectedMessage;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+/**
+ * This is the whiteboard main class
+ * @author andunslg
+ */
 public class Whiteboard extends Panel{
 	private static final Logger log=LoggerFactory.getLogger(Whiteboard.class);
 	private static final long serialVersionUID=1L;
 
 	/**
-	 * Creating a whiteboard instance for given element id
-	 *
-	 * @param id
+	 * This is the constructor which used to create a whiteboard in a wicket application
+	 * @param id html element id which holds the whiteboard
+	 * @param whiteboardContent If loading from a saved whiteboard file, content should be provided as a string. Otherwise null
+	 * @param clipArtFolderPath  Path of the folder which holds clipArts which can be added to whiteboard. Relative to context root
+	 * @param docFolderPath  Path of the folder which holds docs images which can be added to whiteboard. Relative to context root
 	 */
 	public Whiteboard(String id, String whiteboardContent, String clipArtFolderPath,String docFolderPath){
 		super(id);

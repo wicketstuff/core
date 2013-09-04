@@ -19,6 +19,10 @@ package org.wicketstuff.whiteboard.elements;
 import org.apache.wicket.ajax.json.JSONException;
 import org.apache.wicket.ajax.json.JSONObject;
 
+/**
+ * This class represent a pointer element on Whiteboard which is represented by a coordinate and a blinking time
+ * @author andunslg
+ */
 public class PencilPointer extends Element{
 	private static final long serialVersionUID=1L;
 	protected int p;
@@ -37,6 +41,11 @@ public class PencilPointer extends Element{
 		this.age="undefined".equals(object.get("age"))?1000:object.getInt("age");
 	}
 
+	/**
+	 * Return a JSON object which represent the Element
+	 * @return  JSON object with field values added
+	 * @throws JSONException
+	 */
 	public JSONObject getJSON() throws JSONException{
 		JSONObject jsonObject=super.getJSON(new JSONObject());
 		jsonObject.put("p",p);

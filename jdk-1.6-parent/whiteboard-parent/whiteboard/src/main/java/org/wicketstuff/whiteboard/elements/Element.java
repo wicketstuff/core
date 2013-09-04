@@ -21,6 +21,11 @@ import org.apache.wicket.ajax.json.JSONObject;
 
 import java.io.Serializable;
 
+/**
+ * This class is the parent of all the geometric and textual elements in whiteboard
+ * Hold common fields for each element
+ * @author andunslg
+ */
 public abstract class Element implements Serializable{
 	private static final long serialVersionUID=1L;
 	protected int id; // index of the element in the collection list
@@ -53,6 +58,12 @@ public abstract class Element implements Serializable{
 
 	public abstract JSONObject getJSON() throws JSONException;
 
+	/**
+	 * Return a JSON object which represent the Element
+	 * @param obj JSON object which will will be used to add field values
+	 * @return  JSON object with field values added
+	 * @throws JSONException
+	 */
 	public JSONObject getJSON(JSONObject obj) throws JSONException{
 		obj.put("id",id);
 		obj.put("type",type);
