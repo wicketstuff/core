@@ -81,7 +81,8 @@ public class HomePage extends WicketExamplePage
                 }
                 catch (Exception e)
                 {
-                    target.appendJavaScript("Unable to geocode (" + e.getMessage() + ")");
+                    error("Unable to geocode (" + e.getMessage() + ")");
+	                target.add(feedback);
                 }
             }
         });
