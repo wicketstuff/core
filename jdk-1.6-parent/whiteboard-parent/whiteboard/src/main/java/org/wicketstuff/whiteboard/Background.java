@@ -18,7 +18,6 @@ package org.wicketstuff.whiteboard;
 
 import org.apache.wicket.ajax.json.JSONException;
 import org.apache.wicket.ajax.json.JSONObject;
-import org.wicketstuff.whiteboard.elements.Element;
 
 public class Background{
 	private String type;
@@ -40,48 +39,20 @@ public class Background{
 	public Background(JSONObject object) throws JSONException{
 		this.type="Background";
 		this.url=object.getString("url");
-		if(object.isNull("width")) {
-			this.width=object.getDouble("width");
-		}
-		else {
-			width=null;
-		}
-		if(object.isNull("height")) {
-			this.height=object.getDouble("height");
-		}
-		else {
-			height=null;
-		}
-		if(object.isNull("left")) {
-			this.left=object.getDouble("left");
-		}
-		else {
-			left=null;
-		}
-		if(object.isNull("top")) {
-			this.top=object.getDouble("top");
-		}
-		else {
-			top=null;
-		}
-
+		this.width=object.getDouble("width");
+		this.height=object.getDouble("height");
+		this.left=object.getDouble("left");
+		this.top=object.getDouble("top");
 	}
 
-	public JSONObject getJSON(JSONObject obj) throws JSONException{
+	public JSONObject getJSON() throws JSONException{
+		JSONObject obj=new JSONObject();
 		obj.put("url",url);
 		obj.put("type",type);
-		if(width!=null){
-			obj.put("width",width);
-		}
-		if(height!=null){
-			obj.put("height",height);
-		}
-		if(left!=null){
-			obj.put("left",left);
-		}
-		if(top!=null){
-			obj.put("top",top);
-		}
+		obj.put("width",width);
+		obj.put("height",height);
+		obj.put("left",left);
+		obj.put("top",top);
 		return obj;
 	}
 

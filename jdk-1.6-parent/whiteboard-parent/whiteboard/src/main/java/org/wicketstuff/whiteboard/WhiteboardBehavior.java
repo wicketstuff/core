@@ -85,7 +85,9 @@ public class WhiteboardBehavior extends AbstractDefaultAjaxBehavior{
 		this.whiteboardId=whiteboardId;
 		if(whiteboardContent!=null&&!whiteboardContent.equals("")){
 			try{
-				JSONArray elementList=new JSONArray(whiteboardContent);
+				JSONObject savedContent=new JSONObject(whiteboardContent);
+
+				JSONArray elementList=(JSONArray)savedContent.get("elements");
 				snapShot=new ArrayList<Element>();
 				snapShotCreation=new ArrayList<Boolean>();
 
@@ -108,6 +110,11 @@ public class WhiteboardBehavior extends AbstractDefaultAjaxBehavior{
 
 				snapShot=null;
 				snapShotCreation=null;
+
+				if(savedContent.has("background")){
+					JSONObject backgroundJSON=(JSONObject)savedContent.get("background");
+					background=new Background(backgroundJSON);
+				}
 
 			}catch(JSONException e){
 				log.error("Unexpected error while constructing WhiteboardBehavior",e);
@@ -336,6 +343,8 @@ public class WhiteboardBehavior extends AbstractDefaultAjaxBehavior{
 
 	private boolean handleSave(){
 		boolean result=false;
+		JSONObject saveObject=new JSONObject();
+
 		JSONArray elementArray=new JSONArray();
 		for(int elementID : elementMap.keySet()){
 			try{
@@ -344,6 +353,24 @@ public class WhiteboardBehavior extends AbstractDefaultAjaxBehavior{
 				log.error("Unexpected error while getting JSON",e);
 			}
 		}
+		JSONObject backgroundJSON=null;
+		if(background!=null){
+			try{
+				backgroundJSON=background.getJSON();
+			}catch(JSONException e){
+				log.error("Unexpected error while getting JSON",e);
+			}
+		}
+
+		try{
+			saveObject.put("elements",elementArray);
+			if(backgroundJSON!=null){
+				saveObject.put("background",backgroundJSON);
+			}
+		}catch(JSONException e){
+			log.error("Unexpected error while getting JSON",e);
+		}
+
 		File whiteboardFile=new File("Whiteboard_"+dateFormat.format(new Date())+".json");
 
 		FileWriter writer=null;
@@ -351,7 +378,7 @@ public class WhiteboardBehavior extends AbstractDefaultAjaxBehavior{
 			whiteboardFile.createNewFile();
 			log.debug("Going to dump WB to file: "+whiteboardFile.getAbsolutePath());
 			writer=new FileWriter(whiteboardFile);
-			writer.write(elementArray.toString());
+			writer.write(saveObject.toString());
 			writer.flush();
 			result=true;
 		}catch(IOException e){
@@ -365,8 +392,8 @@ public class WhiteboardBehavior extends AbstractDefaultAjaxBehavior{
 					result=false;
 				}
 			}
-			return result;
 		}
+		return result;
 	}
 
 	private void handleClipArts(){
@@ -483,6 +510,18 @@ public class WhiteboardBehavior extends AbstractDefaultAjaxBehavior{
 				}
 			}
 			whiteboardInitializeScript+="elementCollection.parseJson('"+jsonArray.toString()+"');";
+		}
+
+		if(null!=background){
+			try{
+				whiteboardInitializeScript+="whiteboard.acceptBackground('"+background.getJSON().toString()+"');\n"+
+											"var b='"+background.getUrl()+"';\n"+
+											"currentDoc = b.substring(b.lastIndexOf(\"/\") + 1, b.lastIndexOf(\".\"));\n"+
+											"currentDocPage = b;\n"+
+											"currentDocComponentList = \"\";";
+			}catch(JSONException e){
+				log.error("Unexpected error while getting JSON",e);
+			}
 		}
 
 		response.render(OnDomReadyHeaderItem.forScript(whiteboardInitializeScript));
