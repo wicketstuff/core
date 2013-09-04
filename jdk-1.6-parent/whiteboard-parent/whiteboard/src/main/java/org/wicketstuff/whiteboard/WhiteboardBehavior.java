@@ -83,6 +83,11 @@ public class WhiteboardBehavior extends AbstractDefaultAjaxBehavior{
 
 	private Background background;
 
+	private  BlockingDeque<Background> undoSnapshots_Background;
+	private  BlockingDeque<Boolean> undoSnapshotCreationList_Background;
+
+	private  BlockingDeque<Boolean> isElementSnapshotList;
+
 	private String loadedContent="";
 
 	/**
@@ -112,10 +117,17 @@ public class WhiteboardBehavior extends AbstractDefaultAjaxBehavior{
 			undoSnapshots=new LinkedBlockingDeque<List<Element>>(20);
 			undoSnapshotCreationList=new LinkedBlockingDeque<List<Boolean>>(20);
 
-			clipArts=new ArrayList<String>();
-		    docMap=new ConcurrentHashMap<String,ArrayList<String>>();
+			undoSnapshots_Background=new LinkedBlockingDeque<Background>(20);
+			undoSnapshotCreationList_Background=new LinkedBlockingDeque<Boolean>(20);
 
-			WhiteboardData whiteboardData=new WhiteboardData(elementMap,loadedElementMap,undoSnapshots,undoSnapshotCreationList,clipArts,null,docMap,null,null,null);
+			isElementSnapshotList=new LinkedBlockingDeque<Boolean>(20);
+
+			clipArts=new ArrayList<String>();
+			docMap=new ConcurrentHashMap<String,ArrayList<String>>();
+
+			loadedContent=whiteboardContent;
+
+			WhiteboardData whiteboardData=new WhiteboardData(elementMap,loadedElementMap,undoSnapshots,undoSnapshotCreationList,undoSnapshots_Background,undoSnapshotCreationList_Background,isElementSnapshotList,clipArts,null,docMap,null,null,whiteboardContent);
 			whiteboardMap.put(whiteboardObjectId,whiteboardData);
 		}else{
 			WhiteboardData whiteboardData=whiteboardMap.get(whiteboardObjectId);
@@ -128,16 +140,18 @@ public class WhiteboardBehavior extends AbstractDefaultAjaxBehavior{
 			clipArts=whiteboardData.getClipArts();
 			docMap=whiteboardData.getDocMap();
 
-			clipArtFolder=whiteboardData.getClipArtFolder();
-			documentFolder=whiteboardData.getDocumentFolder();
+			this.clipArtFolder=whiteboardData.getClipArtFolder();
+			this.documentFolder=whiteboardData.getDocumentFolder();
 			background=whiteboardData.getBackground();
-            loadedContent=whiteboardData.getLoadedContent();
+			loadedContent=whiteboardData.getLoadedContent();
+
+			undoSnapshots_Background=whiteboardData.getUndoSnapshots_Background();
+			undoSnapshotCreationList_Background=whiteboardData.getUndoSnapshotCreationList_Background();
+
+			isElementSnapshotList=whiteboardData.getIsElementSnapshotList();
 		}
 
-		IWebSocketConnectionRegistry reg=IWebSocketSettings.Holder.get(Application.get()).getConnectionRegistry();
-
-		if("".equals(loadedContent)&&reg.getConnections(Application.get()).isEmpty()){
-			loadedContent=whiteboardContent;
+		if(!"".equals(loadedContent)){
 			whiteboardMap.get(whiteboardObjectId).setLoadedContent(loadedContent);
 			if(whiteboardContent!=null&&!whiteboardContent.equals("")){
 				try{
@@ -162,6 +176,7 @@ public class WhiteboardBehavior extends AbstractDefaultAjaxBehavior{
 					if(undoSnapshots.isEmpty()){
 						undoSnapshots.addLast(snapShot);
 						undoSnapshotCreationList.addLast(snapShotCreation);
+						isElementSnapshotList.addLast(true);
 					}
 
 					snapShot=null;
@@ -171,6 +186,9 @@ public class WhiteboardBehavior extends AbstractDefaultAjaxBehavior{
 						JSONObject backgroundJSON=(JSONObject)savedContent.get("background");
 						background=new Background(backgroundJSON);
 						whiteboardMap.get(whiteboardObjectId).setBackground(background);
+						undoSnapshots_Background.addLast(new Background("Background","",0.0,0.0,0.0,0.0));
+						undoSnapshotCreationList_Background.addLast(true);
+						isElementSnapshotList.addLast(false);
 					}
 
 				}catch(JSONException e){
@@ -300,6 +318,7 @@ public class WhiteboardBehavior extends AbstractDefaultAjaxBehavior{
 						}else{
 							undoSnapshots.addLast(snapShot);
 							undoSnapshotCreationList.addLast(snapShotCreation);
+							isElementSnapshotList.addLast(true);
 						}
 
 					}else if(Type.ClipArt==element.getType()){
@@ -312,11 +331,13 @@ public class WhiteboardBehavior extends AbstractDefaultAjaxBehavior{
 						}
 						undoSnapshots.addLast(snapShot);
 						undoSnapshotCreationList.addLast(snapShotCreation);
+						isElementSnapshotList.addLast(true);
 
 					}else{
 
 						undoSnapshots.addLast(snapShot);
 						undoSnapshotCreationList.addLast(snapShotCreation);
+						isElementSnapshotList.addLast(true);
 					}
 
 					snapShot=null;
@@ -356,7 +377,15 @@ public class WhiteboardBehavior extends AbstractDefaultAjaxBehavior{
 			JSONObject backgroundJSON=new JSONObject(backgroundString);
 			Background backgroundObject=new Background(backgroundJSON);
 			background=backgroundObject;
+
+			Background previousBackground=new Background("Background","",0.0,0.0,0.0,0.0);
+			if(whiteboardMap.get(whiteboardObjectId).getBackground()!=null) {
+				previousBackground= whiteboardMap.get(whiteboardObjectId).getBackground();
+			}
 			whiteboardMap.get(whiteboardObjectId).setBackground(background);
+
+			undoSnapshotCreationList_Background.addLast(previousBackground==null);
+			undoSnapshots_Background.addLast(previousBackground);
 
 			IWebSocketConnectionRegistry reg=IWebSocketSettings.Holder.get(Application.get())
 					.getConnectionRegistry();
@@ -382,45 +411,65 @@ public class WhiteboardBehavior extends AbstractDefaultAjaxBehavior{
 	 * @return
 	 */
 	private boolean handleUndo(){
-		if(!undoSnapshots.isEmpty()){
-			List<Boolean> undoCreationList=undoSnapshotCreationList.pollLast();
-			List<Element> undoElement=undoSnapshots.pollLast();
+		if(!isElementSnapshotList.isEmpty()){
 
-			String deleteList="";
-			JSONArray changeList=new JSONArray();
+			if(isElementSnapshotList.pollLast()){
+				List<Boolean> undoCreationList=undoSnapshotCreationList.pollLast();
+				List<Element> undoElement=undoSnapshots.pollLast();
 
-			IWebSocketConnectionRegistry reg=IWebSocketSettings.Holder.get(Application.get())
-					.getConnectionRegistry();
+				String deleteList="";
+				JSONArray changeList=new JSONArray();
 
-			for(int i=0;i<undoElement.size();i++){
-				if(undoCreationList.get(i)){
-					elementMap.remove(undoElement.get(i).getId());
-					if(loadedElementMap.containsKey(undoElement.get(i).getId())){
-						loadedContent="";
-						whiteboardMap.get(whiteboardObjectId).setLoadedContent("");
-						loadedElementMap.remove(undoElement.get(i).getId());
-					}
-					if("".equals(deleteList)){
-						deleteList=""+undoElement.get(i).getId();
+				IWebSocketConnectionRegistry reg=IWebSocketSettings.Holder.get(Application.get())
+						.getConnectionRegistry();
+
+				for(int i=0;i<undoElement.size();i++){
+					if(undoCreationList.get(i)){
+						elementMap.remove(undoElement.get(i).getId());
+						if(loadedElementMap.containsKey(undoElement.get(i).getId())){
+							loadedContent="";
+							whiteboardMap.get(whiteboardObjectId).setLoadedContent("");
+							loadedElementMap.remove(undoElement.get(i).getId());
+						}
+						if("".equals(deleteList)){
+							deleteList=""+undoElement.get(i).getId();
+						}else{
+							deleteList+=","+undoElement.get(i).getId();
+						}
 					}else{
-						deleteList+=","+undoElement.get(i).getId();
-					}
-				}else{
-					elementMap.put(undoElement.get(i).getId(),undoElement.get(i));
-					try{
-						changeList.put(undoElement.get(i).getJSON());
-					}catch(JSONException e){
-						log.error("Unexpected error while getting JSON",e);
+						elementMap.put(undoElement.get(i).getId(),undoElement.get(i));
+						try{
+							changeList.put(undoElement.get(i).getJSON());
+						}catch(JSONException e){
+							log.error("Unexpected error while getting JSON",e);
+						}
 					}
 				}
-			}
 
-			for(IWebSocketConnection c : reg.getConnections(Application.get())){
-				try{
-					c.sendMessage(getUndoMessage(changeList,deleteList).toString());
-				}catch(Exception e){
-					log.error("Unexpected error while sending message through the web socket",e);
+				for(IWebSocketConnection c : reg.getConnections(Application.get())){
+					try{
+						c.sendMessage(getUndoMessage(changeList,deleteList).toString());
+					}catch(Exception e){
+						log.error("Unexpected error while sending message through the web socket",e);
+					}
 				}
+			} else{
+				Background previousBackground=undoSnapshots_Background.pollLast();
+
+				IWebSocketConnectionRegistry reg=IWebSocketSettings.Holder.get(Application.get())
+						.getConnectionRegistry();
+				for(IWebSocketConnection c : reg.getConnections(Application.get())){
+					try{
+						if(previousBackground!=null){
+							c.sendMessage(getAddBackgroundMessage(previousBackground.getJSON()).toString());
+						}else{
+							c.sendMessage(getAddBackgroundMessage(new JSONObject()).toString());
+						}
+					}catch(Exception e){
+						log.error("Unexpected error while sending message through the web socket",e);
+					}
+				}
+
 			}
 			return  true;
 		}

@@ -76,6 +76,8 @@
                 currentDocComponentList = message.json;
             }
             else if (message && message.type == "addBackground") {
+                console.log("Current---"+currentDocPage);
+                console.log("Received---"+message.json.url);
                 if(currentDocPage!=message.json.url){
                     whiteboard.acceptBackground(JSON.stringify(message.json));
                     var b=message.json.url;

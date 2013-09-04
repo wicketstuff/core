@@ -43,9 +43,14 @@ public class WhiteboardData{
 
 	private  Background background;
 
+	private  BlockingDeque<Background> undoSnapshots_Background;
+	private  BlockingDeque<Boolean> undoSnapshotCreationList_Background;
+
+	private  BlockingDeque<Boolean> isElementSnapshotList;
+
 	private  String loadedContent;
 
-	public WhiteboardData(Map<Integer,Element> elementMap, Map<Integer,Element> loadedElementMap, BlockingDeque<List<Element>> undoSnapshots, BlockingDeque<List<Boolean>> undoSnapshotCreationList, ArrayList<String> clipArts, String clipArtFolder, Map<String,ArrayList<String>> docMap, String documentFolder, Background background, String loadedContent){
+	public WhiteboardData(Map<Integer,Element> elementMap, Map<Integer,Element> loadedElementMap, BlockingDeque<List<Element>> undoSnapshots, BlockingDeque<List<Boolean>> undoSnapshotCreationList, BlockingDeque<Background> undoSnapshots_Background, BlockingDeque<Boolean> undoSnapshotCreationList_Background,BlockingDeque<Boolean> isElementSnapshotList,ArrayList<String> clipArts, String clipArtFolder, Map<String,ArrayList<String>> docMap, String documentFolder, Background background, String loadedContent){
 		this.elementMap=elementMap;
 		this.loadedElementMap=loadedElementMap;
 		this.undoSnapshots=undoSnapshots;
@@ -56,6 +61,9 @@ public class WhiteboardData{
 		this.documentFolder=documentFolder;
 		this.background=background;
 		this.loadedContent=loadedContent;
+		this.undoSnapshots_Background=undoSnapshots_Background;
+		this.undoSnapshotCreationList_Background=undoSnapshotCreationList_Background;
+		this.isElementSnapshotList=isElementSnapshotList;
 	}
 
 	public Map<Integer,Element> getElementMap(){
@@ -136,5 +144,29 @@ public class WhiteboardData{
 
 	public void setLoadedContent(String loadedContent){
 		this.loadedContent=loadedContent;
+	}
+
+	public BlockingDeque<Background> getUndoSnapshots_Background(){
+		return undoSnapshots_Background;
+	}
+
+	public void setUndoSnapshots_Background(BlockingDeque<Background> undoSnapshots_Background){
+		this.undoSnapshots_Background=undoSnapshots_Background;
+	}
+
+	public BlockingDeque<Boolean> getUndoSnapshotCreationList_Background(){
+		return undoSnapshotCreationList_Background;
+	}
+
+	public void setUndoSnapshotCreationList_Background(BlockingDeque<Boolean> undoSnapshotCreationList_Background){
+		this.undoSnapshotCreationList_Background=undoSnapshotCreationList_Background;
+	}
+
+	public BlockingDeque<Boolean> getIsElementSnapshotList(){
+		return isElementSnapshotList;
+	}
+
+	public void setIsElementSnapshotList(BlockingDeque<Boolean> elementSnapshotList){
+		isElementSnapshotList=elementSnapshotList;
 	}
 }
