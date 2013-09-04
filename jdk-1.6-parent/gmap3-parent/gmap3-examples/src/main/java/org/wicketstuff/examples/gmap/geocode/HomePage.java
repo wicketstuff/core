@@ -42,7 +42,7 @@ public class HomePage extends WicketExamplePage
         Button button = new Button("client");
         // Using GClientGeocoder the geocoding request
         // is performed on the client using JavaScript
-        button.add(new GClientGeocoder("onclick", addressTextField)
+        button.add(new GClientGeocoder("click", addressTextField)
         {
             private static final long serialVersionUID = 1L;
 

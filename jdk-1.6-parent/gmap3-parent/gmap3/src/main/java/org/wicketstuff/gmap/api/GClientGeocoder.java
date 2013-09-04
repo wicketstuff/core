@@ -5,6 +5,7 @@ import org.apache.wicket.ajax.AjaxEventBehavior;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.markup.head.IHeaderResponse;
 import org.apache.wicket.markup.html.form.TextField;
+import org.apache.wicket.request.IRequestParameters;
 import org.apache.wicket.request.Request;
 import org.apache.wicket.request.cycle.RequestCycle;
 import org.wicketstuff.gmap.GMapHeaderContributor;
@@ -14,10 +15,11 @@ import org.wicketstuff.gmap.geocoder.GeocoderStatus;
  */
 public abstract class GClientGeocoder extends AjaxEventBehavior
 {
-
     private static final long serialVersionUID = 1L;
-    // the TextField providing the requested address.
-    private final TextField<?> _addressField;
+
+    // the markup id of the TextField providing the requested address.
+    private final String addressFieldMarkupId;
+
     private final GMapHeaderContributor headerContrib;
 
     /**
@@ -29,15 +31,12 @@ public abstract class GClientGeocoder extends AjaxEventBehavior
     {
         super(event);
 
-        this._addressField = addressField;
-        this._addressField.setOutputMarkupId(true);
+        addressField.setOutputMarkupId(true);
+        this.addressFieldMarkupId = addressField.getMarkupId();
 
         this.headerContrib = new GMapHeaderContributor();
     }
 
-    /**
-     * @see org.apache.wicket.ajax.AbstractDefaultAjaxBehavior#renderHead(org.apache.wicket.markup.html.IHeaderResponse)
-     */
     @Override
     public void renderHead(Component c, IHeaderResponse response)
     {
@@ -45,21 +44,19 @@ public abstract class GClientGeocoder extends AjaxEventBehavior
         headerContrib.renderHead(c, response);
     }
 
-    /**
-     * @see org.apache.wicket.ajax.AjaxEventBehavior#onEvent(org.apache.wicket.ajax.AjaxRequestTarget)
-     */
     @Override
     protected void onEvent(AjaxRequestTarget target)
     {
         Request request = RequestCycle.get().getRequest();
-        String address = request.getRequestParameters().getParameterValue("address").toString();
+        IRequestParameters requestParameters = request.getRequestParameters();
+        String address = requestParameters.getParameterValue("address").toString();
 
         if (address != null)
         {
-            GeocoderStatus status = GeocoderStatus.valueOf(request.getRequestParameters().getParameterValue("status").toString());
+            GeocoderStatus status = GeocoderStatus.valueOf(requestParameters.getParameterValue("status").toString());
             onGeoCode(target, status,
-                    request.getRequestParameters().getParameterValue("address").toString(),
-                    GLatLng.parse(request.getRequestParameters().getParameterValue("coordinates").toString()));
+                    requestParameters.getParameterValue("address").toString(),
+                    GLatLng.parse(requestParameters.getParameterValue("coordinates").toString()));
         }
         else
         {
@@ -71,12 +68,9 @@ public abstract class GClientGeocoder extends AjaxEventBehavior
 
     public abstract void onGeoCode(AjaxRequestTarget target, GeocoderStatus status, String address, GLatLng latLng);
 
-    /**
-     * @see org.apache.wicket.ajax.AjaxEventBehavior#generateCallbackScript(java.lang.CharSequence)
-     */
     @Override
     public CharSequence getCallbackScript()
     {
-        return "Wicket.geocoder.getLatLng('" + getCallbackUrl() + "', '" + _addressField.getMarkupId() + "');";
+        return "Wicket.geocoder.getLatLng('" + getCallbackUrl() + "', '" + addressFieldMarkupId + "');";
     }
 }
