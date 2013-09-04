@@ -25,7 +25,7 @@ public class HomePage extends WicketExamplePage
 
     public HomePage()
     {
-	    final FeedbackPanel feedback = new FeedbackPanel("feedback");
+        final FeedbackPanel feedback = new FeedbackPanel("feedback");
         feedback.setOutputMarkupId(true);
         add(feedback);
 
@@ -82,7 +82,7 @@ public class HomePage extends WicketExamplePage
                 catch (Exception e)
                 {
                     error("Unable to geocode (" + e.getMessage() + ")");
-	                target.add(feedback);
+                    target.add(feedback);
                 }
             }
         });

@@ -23,10 +23,10 @@ public abstract class GClientGeocoder extends AjaxEventBehavior
 
     private final GMapHeaderContributor headerContrib;
 
-	/**
-	 * The time to wait before making a new request to self
-	 */
-	private final Duration timeout;
+    /**
+     * The time to wait before making a new request to self
+     */
+    private final Duration timeout;
 
     /**
      * Construct.
@@ -35,18 +35,18 @@ public abstract class GClientGeocoder extends AjaxEventBehavior
      */
     public GClientGeocoder(String event, TextField<?> addressField)
     {
-	    this(event, addressField, Duration.milliseconds(500));
+        this(event, addressField, Duration.milliseconds(500));
     }
 
-	public GClientGeocoder(String event, TextField<?> addressField, Duration timeout)
-	{
+    public GClientGeocoder(String event, TextField<?> addressField, Duration timeout)
+    {
         super(event);
 
         addressField.setOutputMarkupId(true);
         this.addressFieldMarkupId = addressField.getMarkupId();
 
         this.headerContrib = new GMapHeaderContributor();
-		this.timeout = timeout;
+        this.timeout = timeout;
     }
 
     @Override
@@ -72,12 +72,12 @@ public abstract class GClientGeocoder extends AjaxEventBehavior
         }
         else
         {
-	        StringBuilder js = new StringBuilder();
-	        js.append("setTimeout(function() {")
-			        .append(getCallbackScript())
-			        .append("}, ")
-			        .append(timeout.getMilliseconds())
-			        .append(");");
+            StringBuilder js = new StringBuilder();
+            js.append("setTimeout(function() {")
+                    .append(getCallbackScript())
+                    .append("}, ")
+                    .append(timeout.getMilliseconds())
+                    .append(");");
             target.appendJavaScript(js);
         }
 
