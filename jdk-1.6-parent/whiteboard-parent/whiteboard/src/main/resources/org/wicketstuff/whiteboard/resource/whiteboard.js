@@ -436,7 +436,7 @@ bay.whiteboard.Point = function () {
 };
 goog.inherits(bay.whiteboard.Point, bay.whiteboard.Element);
 bay.whiteboard.Point.prototype.toString = function () {
-    return!this.exists ? "Point does not exist" : "Point: [" + this.x.toFixed(2) + ", " + this.y.toFixed(2) + "]"
+    return!this.exists ? goog.getMsg("Point does not exist") : goog.getMsg("Point: [$x},{$y}]", {x: this.x.toFixed(2), y: this.y.toFixed(2)})
 };
 bay.whiteboard.Point.prototype.distance = function (a, b) {
     var c = new bay.whiteboard.Vector(a, b);
@@ -11592,7 +11592,7 @@ bay.whiteboard.Whiteboard.prototype.linkWebSocket = function (a) {
 };
 bay.whiteboard.Whiteboard.prototype.getGraphics = function () {
     if (!this.graphics) {
-        goog.graphics.isBrowserSupported() || alert("This browser doesn''t support graphics. Please use another web browser.");
+        goog.graphics.isBrowserSupported() || alert(goog.getMsg("This browser doesn''t support graphics. Please use another web browser."));
         var a = goog.style.getSize(this.elements.drawElement), b = goog.graphics.createSimpleGraphics(a.width - 12, a.height - 12), c = this.elements.drawElement;
         goog.events.listen(new goog.dom.ViewportSizeMonitor, goog.events.EventType.RESIZE, function (a) {
             a = goog.style.getSize(c);
@@ -11642,7 +11642,7 @@ bay.whiteboard.Whiteboard.prototype.onSetTransformation = function (a) {
 };
 bay.whiteboard.Whiteboard.prototype.showCodePanel = function () {
     var a = new goog.ui.Dialog;
-    a.setTitle("JSON code for drawing");
+    a.setTitle(goog.getMsg("JSON code for drawing"));
     a.setButtonSet(goog.ui.Dialog.ButtonSet.OK_CANCEL);
     var b = new goog.ui.Textarea(this.collections.main.jsonCode());
     b.setMinHeight(this.graphics.getCoordSize().height / 2);
@@ -11813,14 +11813,14 @@ bay.whiteboard.Whiteboard.prototype.showInfo = function (a, b, c, f) {
     if (1 < c.length) {
         var h = new goog.ui.Button("<");
         g.addChild(h, !0);
-        h.setTooltip("Click to select other element");
-        goog.events.listen(h, goog.ui.Component.EventType.ACTION, function () {
-            this.showInfo(a,
-                b, c, f - 1)
-        }, null, this);
+        h.setTooltip(goog.getMsg("Click to select other element"));
+        goog.events.listen(h, goog.ui.Component.EventType.ACTION,
+            function () {
+                this.showInfo(a, b, c, f - 1)
+            }, null, this);
         goog.dom.classes.add(h.getElement(), "bwb_navigate bwb_left");
         h = new goog.ui.Button(">");
-        h.setTooltip("Click to select other element");
+        h.setTooltip(goog.getMsg("Click to select other element"));
         g.addChild(h, !0);
         goog.events.listen(h, goog.ui.Component.EventType.ACTION, function () {
             this.showInfo(a, b, c, f + 1)
@@ -11832,7 +11832,8 @@ bay.whiteboard.Whiteboard.prototype.showInfo = function (a, b, c, f) {
     element = c[f].element;
     h = new goog.ui.Control(element.toString());
     g.addChild(h, !0);
-    goog.dom.classes.add(h.getElement(), "bwb_objDesc");
+    goog.dom.classes.add(h.getElement(),
+        "bwb_objDesc");
     if (!element.noLabel) {
         var k = new goog.ui.BidiInput;
         g.addChild(k, !0);
@@ -11842,19 +11843,20 @@ bay.whiteboard.Whiteboard.prototype.showInfo = function (a, b, c, f) {
         }, null, this);
         goog.dom.classes.add(k.getElement(), "bwb_labelInput")
     }
-    h = new goog.ui.Button("Hide");
-    h.setTooltip("Click to hide element");
+    h = new goog.ui.Button(goog.getMsg("Hide"));
+    h.setTooltip(goog.getMsg("Click to hide element"));
     g.addChild(h, !0);
     goog.dom.classes.add(h.getElement(), "bwb_hideButton");
-    goog.events.listen(h, goog.ui.Component.EventType.ACTION, function (a) {
-        element.hide();
-        this.redrawAll();
-        this.elements.infoDialog.dispose();
-        this.elements.infoDialog = null
-    }, null, this);
+    goog.events.listen(h, goog.ui.Component.EventType.ACTION,
+        function (a) {
+            element.hide();
+            this.redrawAll();
+            this.elements.infoDialog.dispose();
+            this.elements.infoDialog = null
+        }, null, this);
     var l = new goog.ui.Checkbox(element.trace);
     g.addChild(l, !0);
-    h = new goog.ui.Control("Trace");
+    h = new goog.ui.Control(goog.getMsg("Trace"));
     g.addChild(h, !0);
     goog.dom.classes.add(h.getElement(), "bwb_traceCheck");
     goog.dom.classes.add(l.getElement(), "bwb_traceCheck");
@@ -11862,8 +11864,8 @@ bay.whiteboard.Whiteboard.prototype.showInfo = function (a, b, c, f) {
         element.setTrace(l.isChecked());
         this.redrawAll()
     }, null, this);
-    var m = new goog.ui.ColorMenuButton("Color");
-    m.setTooltip("Click to select color");
+    var m = new goog.ui.ColorMenuButton(goog.getMsg("Color"));
+    m.setTooltip(goog.getMsg("Click to select color"));
     element.color ? m.setSelectedColor(element.color) : m.setSelectedColor("#000000");
     g.addChild(m, !0);
     goog.dom.classes.add(m.getElement(), "bwb_colorButton");
@@ -11901,25 +11903,30 @@ bay.whiteboard.Whiteboard.prototype.drawCoordinates = function () {
 bay.whiteboard.Whiteboard.prototype.setBackground = function (a) {
     var b = this;
     this.background || (this.background = {});
-    this.background.url = a;
-    var c = new Image;
-    c.onload = function () {
-        var a = this.width, c = this.height, h = b.area.maxX - b.area.minX, k = b.area.maxY - b.area.minY, l = h / a, m = k / c;
-        b.background.imageWidth = a * Math.min(l, m);
-        b.background.imageHeight = c * Math.min(l, m);
-        b.background.imageLeft = b.area.minX + (h - b.background.imageWidth) / 2;
-        b.background.imageTop = b.area.maxY - (k - b.background.imageHeight) / 2;
+    if (this.background.url = a) {
+        var c = new Image;
+        c.onload = function () {
+            var a = this.width, c = this.height, h = b.area.maxX - b.area.minX, k = b.area.maxY - b.area.minY, l = h / a, m = k / c;
+            b.background.imageWidth = a * Math.min(l, m);
+            b.background.imageHeight = c * Math.min(l, m);
+            b.background.imageLeft = b.area.minX + (h - b.background.imageWidth) / 2;
+            b.background.imageTop = b.area.maxY - (k - b.background.imageHeight) / 2;
+            if (b.onBackground)b.onBackground();
+            b.drawBackground()
+        };
+        c.src = a
+    } else {
+        this.background = {};
         if (b.onBackground)b.onBackground();
         b.drawBackground()
-    };
-    c.src = a
+    }
 };
 bay.whiteboard.Whiteboard.prototype.drawBackground = function () {
     if (this.background && this.background.url) {
         var a = Math.round(this.background.imageWidth * this.area.transformation.getScaleX()), b = Math.round(-this.background.imageHeight * this.area.transformation.getScaleY()), c = this.transform([this.background.imageLeft, this.background.imageTop]), f = Math.round(c[0]), c = Math.round(c[1]);
-        goog.style.setStyle(this.elements.drawElement, {"background-image": "url(" + this.background.url + ")", "background-repeat": "no-repeat", "background-position": f +
-            "px " + c + "px", "background-size": a + "px " + b + "px"})
-    }
+        goog.style.setStyle(this.elements.drawElement, {"background-image": "url(" + this.background.url + ")", "background-repeat": "no-repeat",
+            "background-position": f + "px " + c + "px", "background-size": a + "px " + b + "px"})
+    } else goog.style.setStyle(this.elements.drawElement, {"background-image": ""})
 };
 bay.whiteboard.Whiteboard.prototype.backgroundJson = function () {
     return this.background ? '{"type": "Background", "url": "' + this.background.url + '", "width": ' + this.background.imageWidth + ', "height": ' + this.background.imageHeight + ', "left": ' + this.background.imageLeft + ', "top": ' + this.background.imageTop + "}" : ""
@@ -11928,32 +11935,32 @@ bay.whiteboard.Whiteboard.prototype.acceptBackground = function (a) {
     a = eval("(" + a + ")");
     "Background" == a.type && (this.background || (this.background = {}), this.background.url = a.url, this.background.imageWidth = a.width, this.background.imageHeight = a.height, this.background.imageLeft = a.left, this.background.imageTop = a.top, this.drawBackground())
 };
-bay.whiteboard.Whiteboard.addGroup("tools", 99, "Common tools");
+bay.whiteboard.Whiteboard.addGroup("tools", 99, goog.getMsg("Common tools"));
 bay.whiteboard.Whiteboard.addTool("zoom-in", "tools", {action: function (a, b) {
     a.zoomIn()
-}}, 1, "Zoom in");
+}}, 1, goog.getMsg("Zoom in"));
 bay.whiteboard.Whiteboard.addTool("zoom-out", "tools", {action: function (a, b) {
     a.zoomOut()
-}}, 2, "Zoom out");
+}}, 2, goog.getMsg("Zoom out"));
 bay.whiteboard.Whiteboard.addTool("coordinates", "tools", {action: function (a, b) {
     a.toggleCoordinate()
-}}, 3, "Show coordinates");
+}}, 3, goog.getMsg("Show coordinates"));
 bay.whiteboard.Whiteboard.addTool("eraseAll", "tools", {action: function (a, b) {
     a.collections.main.clear();
     a.collections.tracer.clear();
     a.redrawAll();
     Wicket.Ajax.get({u: callbackUrl, ep: {eraseAll: "eraseAll"}})
-}}, 4, "Clear all");
+}}, 4, goog.getMsg("Clear all"));
 bay.whiteboard.Whiteboard.addTool("eraseTrace", "tools", {action: function (a, b) {
     a.collections.tracer.clear();
     a.redrawAll()
-}}, 5, "Clear traces");
+}}, 5, goog.getMsg("Clear traces"));
 bay.whiteboard.Whiteboard.addTool("undo", null, {action: function (a, b) {
     Wicket.Ajax.get({u: callbackUrl, ep: {undo: "undo"}})
-}}, 7, "Undo");
+}}, 7, goog.getMsg("Undo"));
 bay.whiteboard.Whiteboard.addTool("save", null, {action: function (a, b) {
     Wicket.Ajax.get({u: callbackUrl, ep: {save: "save"}})
-}}, 7, "Save");
+}}, 7, goog.getMsg("Save"));
 bay.whiteboard.Whiteboard.addTool("info", null, {toggleOn: function (a) {
     goog.dom.classes.add(a.elements.drawElement, "bwb_infoCursor")
 }, toggleOff: function (a) {
@@ -11961,10 +11968,10 @@ bay.whiteboard.Whiteboard.addTool("info", null, {toggleOn: function (a) {
     a.elements.infoDialog && (a.elements.infoDialog.dispose(), a.elements.infoDialog = null)
 }, onClick: function (a, b) {
     a.showInfoDialog(b)
-}}, 10, "Show information about selected element");
-bay.whiteboard.Whiteboard.addGroup("docs", 100, "Document adding tools");
+}}, 10, goog.getMsg("Show information about selected element"));
+bay.whiteboard.Whiteboard.addGroup("docs", 100, goog.getMsg("Document adding tools"));
 bay.whiteboard.geometry = {};
-bay.whiteboard.Whiteboard.addGroup("geometry", 10, "Ruler-and-compass constructions");
+bay.whiteboard.Whiteboard.addGroup("geometry", 10, goog.getMsg("Ruler-and-compass constructions"));
 bay.whiteboard.geometry.PointAtLine = function (a, b) {
     bay.whiteboard.Point.call(this);
     this.obj = a;
@@ -12136,7 +12143,7 @@ bay.whiteboard.Whiteboard.addTool("point", "geometry", {toggleOn: function (a) {
     a.pointAtEventPosition(b);
     a.tool.current.toggleOff(a);
     a.redrawAll()
-}}, 1, "Single point");
+}}, 1, goog.getMsg("Single point"));
 bay.whiteboard.geometry.Line = function () {
     bay.whiteboard.Element.call(this);
     this.direction = this.startPoint = null;
@@ -12144,7 +12151,7 @@ bay.whiteboard.geometry.Line = function () {
 };
 goog.inherits(bay.whiteboard.geometry.Line, bay.whiteboard.Element);
 bay.whiteboard.geometry.Line.prototype.toString = function () {
-    return!this.exists ? "Line does not exist" : "Line [" + this.startPoint.x.toFixed(2) + ", " + this.startPoint.y.toFixed(2) + "] - [" + (this.startPoint.x + this.direction.x).toFixed(2) + ", " + (this.startPoint.y + this.direction.y).toFixed(2) + "]"
+    return!this.exists ? goog.getMsg("Line does not exist") : goog.getMsg("Line [{$fromx},{$fromy}] - [{$tox},{$toy}]", {fromx: this.startPoint.x.toFixed(2), fromy: this.startPoint.y.toFixed(2), tox: (this.startPoint.x + this.direction.x).toFixed(2), toy: (this.startPoint.y + this.direction.y).toFixed(2)})
 };
 bay.whiteboard.geometry.Line.prototype.distance = function (a, b) {
     var c = new bay.whiteboard.Vector(a, b);
@@ -12232,7 +12239,7 @@ bay.whiteboard.Whiteboard.addTool("ruler", "geometry", {toggleOn: function (a) {
     a.tool.current.ruler.start ? (a.collections.main.add(new bay.whiteboard.geometry.Line_2p(a.tool.current.ruler.start,
         c)), a.collections.current.clear(), a.tool.current.toggleOff(a)) : (a.collections.current.clear(), a.tool.current.ruler.start = c, a.collections.current.add(a.tool.current.ruler.endTmp = new bay.whiteboard.PointFree(c)), a.tool.current.ruler.endTmp.hide(), c = new bay.whiteboard.geometry.Line_2p(a.tool.current.ruler.start, a.tool.current.ruler.endTmp), c.current = !0, a.collections.current.add(c));
     a.redrawAll()
-}}, 2, "Line through two points");
+}}, 2, goog.getMsg("Line through two points"));
 bay.whiteboard.geometry.Line_2p.prototype.toJson = function (a, b) {
     return"{" + this.jsonHeader(b) + ', "type": "Line_2p", "p1": ' + a.indexOf(this.startPoint) + ', "p2": ' + a.indexOf(this.endPoint) + "}"
 };
@@ -12297,7 +12304,7 @@ bay.whiteboard.Whiteboard.addTool("segment", "geometry", {toggleOn: function (a)
     a.tool.current.ruler.start ? (a.collections.main.add(new bay.whiteboard.geometry.Segment(a.tool.current.ruler.start,
         c)), a.collections.current.clear(), a.tool.current.toggleOff(a)) : (a.collections.current.clear(), a.tool.current.ruler.start = c, a.collections.current.add(a.tool.current.ruler.endTmp = new bay.whiteboard.PointFree(c)), a.tool.current.ruler.endTmp.hide(), c = new bay.whiteboard.geometry.Segment(a.tool.current.ruler.start, a.tool.current.ruler.endTmp), c.current = !0, a.collections.current.add(c));
     a.redrawAll()
-}}, 3, "Line segment connecting two points");
+}}, 3, goog.getMsg("Line segment connecting two points"));
 bay.whiteboard.geometry.Circle = function () {
     bay.whiteboard.Element.call(this);
     this.radius = this.centerPoint = null;
@@ -12305,7 +12312,7 @@ bay.whiteboard.geometry.Circle = function () {
 };
 goog.inherits(bay.whiteboard.geometry.Circle, bay.whiteboard.Element);
 bay.whiteboard.geometry.Circle.prototype.toString = function () {
-    return!this.exists ? "Circle does not exist" : "Circle [" + this.centerPoint.x.toFixed(2) + ", " + this.centerPoint.y.toFixed(2) + "] -> " + this.radius.toFixed(2)
+    return!this.exists ? goog.getMsg("Circle does not exist") : goog.getMsg("Circle [{$x},{$y}] -> {$r}", {x: this.centerPoint.x.toFixed(2), y: this.centerPoint.y.toFixed(2), r: this.radius.toFixed(2)})
 };
 bay.whiteboard.geometry.Circle.prototype.distance = function (a, b) {
     var c = new bay.whiteboard.Vector(a, b);
@@ -12392,7 +12399,7 @@ bay.whiteboard.Whiteboard.addTool("compass", "geometry", {toggleOn: function (a)
     a.tool.current.compass.end ? (a.collections.main.add(new bay.whiteboard.geometry.Circle_3p(c, a.tool.current.compass.start, a.tool.current.compass.end)), a.collections.current.clear(), a.tool.current.toggleOff(a)) : (a.tool.current.compass.start ? (a.collections.current.clear(), a.tool.current.compass.end = c, a.collections.current.add(a.tool.current.compass.centerTmp = new bay.whiteboard.PointFree(c)), a.tool.current.compass.centerTmp.hide(), c = new bay.whiteboard.geometry.Circle_3p(a.tool.current.compass.centerTmp,
         a.tool.current.compass.start, a.tool.current.compass.end)) : (a.collections.current.clear(), a.tool.current.compass.start = c, a.collections.current.add(a.tool.current.compass.endTmp = new bay.whiteboard.PointFree(c)), a.tool.current.compass.endTmp.hide(), c = new bay.whiteboard.geometry.Segment(a.tool.current.compass.start, a.tool.current.compass.endTmp)), c.current = !0, a.collections.current.add(c));
     a.redrawAll()
-}}, 4, "Circle with radius equals to the given segment");
+}}, 4, goog.getMsg("Circle with radius equals to the given segment"));
 bay.whiteboard.Whiteboard.addTool("circle", "geometry", {toggleOn: function (a) {
     goog.dom.classes.add(a.elements.drawElement, "bwb_compassCursor");
     a.tool.current.compass = {}
@@ -12405,7 +12412,7 @@ bay.whiteboard.Whiteboard.addTool("circle", "geometry", {toggleOn: function (a) 
     a.tool.current.compass.start ? (a.collections.main.add(new bay.whiteboard.geometry.Circle_3p(a.tool.current.compass.start,
         a.tool.current.compass.start, c)), a.collections.current.clear(), a.tool.current.toggleOff(a)) : (a.collections.current.clear(), a.tool.current.compass.start = c, a.collections.current.add(a.tool.current.compass.endTmp = new bay.whiteboard.PointFree(c)), a.tool.current.compass.endTmp.hide(), c = new bay.whiteboard.geometry.Circle_3p(a.tool.current.compass.start, a.tool.current.compass.start, a.tool.current.compass.endTmp), c.current = !0, a.collections.current.add(c));
     a.redrawAll()
-}}, 5, "Circle with given center");
+}}, 5, goog.getMsg("Circle with given center"));
 bay.whiteboard.geometry.getIntersection = function (a, b, c, f) {
     if (a instanceof bay.whiteboard.geometry.Line && b instanceof bay.whiteboard.geometry.Line)return new bay.whiteboard.geometry.Point_2l(a, b);
     if (a instanceof bay.whiteboard.geometry.Circle && b instanceof bay.whiteboard.geometry.Circle) {
@@ -12418,7 +12425,7 @@ bay.whiteboard.geometry.getIntersection = function (a, b, c, f) {
     if (a instanceof bay.whiteboard.geometry.Line && b instanceof bay.whiteboard.geometry.Circle)return g = new bay.whiteboard.geometry.Point_lc(a, b, 0), a = new bay.whiteboard.geometry.Point_lc(a, b, 1), g.distance(c, f) < a.distance(c, f) ? g : a
 };
 bay.whiteboard.pencil = {};
-bay.whiteboard.Whiteboard.addGroup("pencil", 5, "Free hand drawing");
+bay.whiteboard.Whiteboard.addGroup("pencil", 5, goog.getMsg("Free hand drawing"));
 bay.whiteboard.pencil.Curve = function (a) {
     bay.whiteboard.Element.call(this);
     this.startPoint = a;
@@ -12440,7 +12447,7 @@ bay.whiteboard.pencil.Curve.prototype.addPoint = function (a) {
     this.onChange()
 };
 bay.whiteboard.pencil.Curve.prototype.toString = function () {
-    return!this.exists ? "Curve does not exists" : "Curve"
+    return!this.exists ? goog.getMsg("Curve does not exists") : goog.getMsg("Curve")
 };
 bay.whiteboard.pencil.Curve.prototype.distance = function (a, b) {
     for (var c = new bay.whiteboard.Vector(a, b), f = this.startPoint.distance(c), c = new bay.whiteboard.Vector(c.x - this.startPoint.x, c.y - this.startPoint.y), g = 0; g < this.points.length; g++) {
@@ -12511,7 +12518,7 @@ bay.whiteboard.Whiteboard.addTool("curve", "pencil", {toggleOn: function (a) {
         a.tool.current.curve.start = c
     }
     a.redrawAll()
-}}, 1, "Curve");
+}}, 1, goog.getMsg("Curve"));
 bay.whiteboard.pencil.FreeLine = function (a, b) {
     bay.whiteboard.geometry.Segment.call(this, a, b)
 };
@@ -12563,7 +12570,7 @@ bay.whiteboard.Whiteboard.addTool("freeline", "pencil", {toggleOn: function (a) 
     c.current = !0;
     a.collections.current.add(c);
     a.redrawAll()
-}}, 2, "Polyline");
+}}, 2, goog.getMsg("Polyline"));
 bay.whiteboard.pencil.Rectangle = function (a, b) {
     bay.whiteboard.Element.call(this);
     this.pointOne = a;
@@ -12580,7 +12587,7 @@ bay.whiteboard.pencil.Rectangle.prototype.deleteElement = function () {
     this.pointTwo.deleteDependant(this)
 };
 bay.whiteboard.pencil.Rectangle.prototype.toString = function () {
-    return!this.exists ? "Rectangle does not exist" : "Rectangle"
+    return!this.exists ? goog.getMsg("Rectangle does not exist") : goog.getMsg("Rectangle")
 };
 bay.whiteboard.pencil.Rectangle.prototype.distance = function (a, b) {
     var c = new bay.whiteboard.Vector(a, b), f = null;
@@ -12639,7 +12646,7 @@ bay.whiteboard.Whiteboard.addTool("rectangle", "pencil", {toggleOn: function (a)
     a.tool.current.text.start ? (a.collections.main.add(new bay.whiteboard.pencil.Rectangle(a.tool.current.text.start,
         c)), a.collections.current.clear(), a.tool.current.toggleOff(a)) : (a.collections.current.clear(), a.tool.current.text.start = c, a.collections.current.add(a.tool.current.text.endTmp = new bay.whiteboard.PointFree(c)), a.tool.current.text.endTmp.hide(), c = new bay.whiteboard.pencil.Rectangle(a.tool.current.text.start, a.tool.current.text.endTmp), c.current = !0, a.collections.current.add(c));
     a.redrawAll()
-}}, 3, "Rectangle");
+}}, 3, goog.getMsg("Rectangle"));
 bay.whiteboard.pencil.PointAtRect = function (a, b, c) {
     bay.whiteboard.Point.call(this);
     this.obj = a;
@@ -12727,7 +12734,7 @@ bay.whiteboard.Whiteboard.addTool("pencilcircle", "pencil", {toggleOn: function 
     a.tool.current.compass.start ? (a.collections.main.add(new bay.whiteboard.pencil.Circle(a.tool.current.compass.start,
         c)), a.collections.current.clear(), a.tool.current.toggleOff(a)) : (a.collections.current.clear(), a.tool.current.compass.start = c, a.collections.current.add(a.tool.current.compass.endTmp = new bay.whiteboard.PointFree(c)), a.tool.current.compass.endTmp.hide(), c = new bay.whiteboard.pencil.Circle(a.tool.current.compass.start, a.tool.current.compass.endTmp), c.current = !0, a.collections.current.add(c));
     a.redrawAll()
-}}, 4, "Circle");
+}}, 4, goog.getMsg("Circle"));
 bay.whiteboard.pencil.Text = function (a, b) {
     bay.whiteboard.Element.call(this);
     this.rectangle = a;
@@ -12740,7 +12747,7 @@ bay.whiteboard.pencil.Text.prototype.deleteElement = function () {
     this.rectangle.deleteDependant(this)
 };
 bay.whiteboard.pencil.Text.prototype.toString = function () {
-    return!this.exists ? "Text does not exist" : "Text [" + this.label + "]"
+    return!this.exists ? goog.getMsg("Text does not exist") : goog.getMsg("Text [{$label}]", {label: this.label})
 };
 bay.whiteboard.pencil.Text.prototype.distance = function (a, b) {
     var c = new bay.whiteboard.Vector(a, b), f = null;
@@ -12790,7 +12797,7 @@ bay.whiteboard.Whiteboard.addTool("text", "pencil", {toggleOn: function (a) {
     a.tool.current.text.start ? (c = new bay.whiteboard.pencil.Rectangle(a.tool.current.text.start, c), a.collections.main.add(c),
         a.collections.main.add(new bay.whiteboard.pencil.Text(c, "Some text")), a.collections.current.clear(), a.tool.current.toggleOff(a)) : (a.collections.current.clear(), a.tool.current.text.start = c, a.collections.current.add(a.tool.current.text.endTmp = new bay.whiteboard.PointFree(c)), a.tool.current.text.endTmp.hide(), c = new bay.whiteboard.pencil.Rectangle(a.tool.current.text.start, a.tool.current.text.endTmp), c.current = !0, a.collections.current.add(c));
     a.redrawAll()
-}}, 5, "Text box");
+}}, 5, goog.getMsg("Text box"));
 bay.whiteboard.pencil.Underline = function (a, b, c) {
     bay.whiteboard.Element.call(this);
     this.startPoint = a;
@@ -12806,7 +12813,7 @@ bay.whiteboard.pencil.Underline.prototype.deleteElement = function () {
     this.endPoint.deleteDependant(this)
 };
 bay.whiteboard.pencil.Underline.prototype.toString = function () {
-    return!this.exists ? "Underline does not exists" : "Underline"
+    return!this.exists ? goog.getMsg("Underline does not exists") : goog.getMsg("Underline")
 };
 bay.whiteboard.pencil.Underline.prototype.distance = function (a, b) {
     var c = new bay.whiteboard.Vector(a, b), f = this.startPoint.y - c.y, g = this.endPoint.y - c.y;
@@ -12871,7 +12878,7 @@ bay.whiteboard.Whiteboard.addTool("underline", "pencil", {toggleOn: function (a)
     a.tool.current.underline.start ? (a.collections.main.add(new bay.whiteboard.pencil.Underline(a.tool.current.underline.start,
         c, a.properties.underline.thickness)), a.collections.current.clear(), a.tool.current.toggleOff(a)) : (a.collections.current.clear(), a.tool.current.underline.start = c, a.collections.current.add(a.tool.current.underline.endTmp = new bay.whiteboard.PointFree(c)), a.tool.current.underline.endTmp.hide(), c = new bay.whiteboard.pencil.Underline(a.tool.current.underline.start, a.tool.current.underline.endTmp, a.properties.underline.thickness), c.current = !0, a.collections.current.add(c));
     a.redrawAll()
-}}, 7, "Highlight board area");
+}}, 7, goog.getMsg("Highlight board area"));
 bay.whiteboard.pencil.Arrow = function (a, b, c) {
     bay.whiteboard.Element.call(this);
     this.startPoint = a;
@@ -12887,7 +12894,7 @@ bay.whiteboard.pencil.Arrow.prototype.deleteElement = function () {
     this.endPoint.deleteDependant(this)
 };
 bay.whiteboard.pencil.Arrow.prototype.toString = function () {
-    return!this.exists ? "Arrow does not exists" : "Arrow"
+    return!this.exists ? goog.getMsg("Arrow does not exists") : goog.getMsg("Arrow")
 };
 bay.whiteboard.pencil.Arrow.prototype.distance = function (a, b) {
     var c = new bay.whiteboard.Vector(a, b), f = this.startPoint.y - c.y, g = this.endPoint.y - c.y;
@@ -12971,7 +12978,7 @@ bay.whiteboard.Whiteboard.addTool("arrow", "pencil", {toggleOn: function (a) {
     a.tool.current.arrow.start ? (a.collections.main.add(new bay.whiteboard.pencil.Arrow(a.tool.current.arrow.start,
         c, a.properties.arrow.thickness)), a.collections.current.clear(), a.tool.current.toggleOff(a)) : (a.collections.current.clear(), a.tool.current.arrow.start = c, a.collections.current.add(a.tool.current.arrow.endTmp = new bay.whiteboard.PointFree(c)), a.tool.current.arrow.endTmp.hide(), c = new bay.whiteboard.pencil.Arrow(a.tool.current.arrow.start, a.tool.current.arrow.endTmp, a.properties.arrow.thickness), c.current = !0, a.collections.current.add(c));
     a.redrawAll()
-}}, 6, "Draw an arrow");
+}}, 6, goog.getMsg("Draw an arrow"));
 bay.whiteboard.pencil.Pointer = function (a) {
     bay.whiteboard.Element.call(this);
     if (this.point = a) {
@@ -12988,7 +12995,7 @@ bay.whiteboard.pencil.Pointer.prototype.deleteElement = function () {
     this.point && this.point.deleteDependant(this)
 };
 bay.whiteboard.pencil.Pointer.prototype.toString = function () {
-    return!this.exists ? "Pointer does not exists" : "Pointer :[" + this.point.x.toFixed(2) + ", " + this.point.y.toFixed(2) + "]"
+    return!this.exists ? goog.getMsg("Pointer does not exists") : goog.getMsg("Pointer [{$x},{$y}]", {x: this.point.x.toFixed(2), y: this.point.y.toFixed(2)})
 };
 bay.whiteboard.pencil.Pointer.prototype.decreaseAge = function (a) {
     this.collection && this.collection.getBoard() && (this.board = this.collection.getBoard());
@@ -13049,7 +13056,7 @@ bay.whiteboard.Whiteboard.addTool("pointer", "pencil", {toggleOn: function (a) {
     a.collections.main.add(new bay.whiteboard.pencil.Pointer(c));
     a.tool.current.toggleOff(a);
     a.redrawAll()
-}}, 8, "Highlight a point at whiteboard");
+}}, 8, goog.getMsg("Highlight a point at whiteboard"));
 bay.whiteboard.art = {};
 bay.whiteboard.art.ClipArt = function (a, b) {
     bay.whiteboard.Element.call(this);
@@ -13063,7 +13070,7 @@ bay.whiteboard.art.ClipArt.prototype.deleteElement = function () {
     this.rectangle.deleteDependant(this)
 };
 bay.whiteboard.art.ClipArt.prototype.toString = function () {
-    return!this.exists ? "ClipArt does not exist" : "ClipArt from [" + this.label + "]"
+    return!this.exists ? goog.getMsg("ClipArt does not exist") : goog.getMsg("ClipArt from [{$label}]", {label: this.label})
 };
 bay.whiteboard.art.ClipArt.prototype.distance = function (a, b) {
     var c = new bay.whiteboard.Vector(a, b), f = null;
@@ -13124,7 +13131,7 @@ bay.whiteboard.Whiteboard.addTool("clipart", "pencil", {toggleOn: function (a) {
             a.tool.current.toggleOff(a)) : (a.collections.current.clear(), a.tool.current.clipart.start = c, a.collections.current.add(a.tool.current.clipart.endTmp = new bay.whiteboard.PointFree(c)), a.tool.current.clipart.endTmp.hide(), c = new bay.whiteboard.pencil.Rectangle(a.tool.current.clipart.start, a.tool.current.clipart.endTmp), c.current = !0, a.collections.current.add(c));
         a.redrawAll()
     }
-}}, 20, "Insert picture");
+}}, 20, goog.getMsg("Insert picture"));
 bay.whiteboard.art.chooseClipArt = function (a, b, c) {
     Wicket.Ajax.get({u: callbackUrl, ep: {clipArt: "clipArt"}});
     for (var f = [], g = 0; g < clipArtList.length; g++)f.push(goog.dom.createDom("img", {src: clipArtList[g]}));
@@ -13147,7 +13154,7 @@ bay.whiteboard.Whiteboard.addTool("addDoc", "docs", {action: function (a, b) {
         currentDoc = b.substring(b.lastIndexOf("/") + 1, b.lastIndexOf("."));
         currentDocPage = b;
         currentDocComponentList = "";
-        a.setBackground(b);
+        a.setBackground(b)
     }, function () {
         c.dispose()
     })

@@ -79,9 +79,15 @@
                 if(currentDocPage!=message.json.url){
                     whiteboard.acceptBackground(JSON.stringify(message.json));
                     var b=message.json.url;
-                    currentDoc = b.substring(b.lastIndexOf("/") + 1, b.lastIndexOf("."));
-                    currentDocPage = b;
-                    currentDocComponentList = "";
+                    if(b!=''){
+                        currentDoc = b.substring(b.lastIndexOf("/") + 1, b.lastIndexOf("."));
+                        currentDocPage = b;
+                        currentDocComponentList = "";
+                    }else{
+                        currentDoc = '';
+                        currentDocPage = '';
+                        currentDocComponentList = '';
+                    }
                 }
             } else if(message && message.type == "eraseElements"){
                 whiteboard.collections.main.clear();
