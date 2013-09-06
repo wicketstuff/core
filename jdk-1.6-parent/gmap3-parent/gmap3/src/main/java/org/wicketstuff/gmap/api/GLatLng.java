@@ -16,9 +16,6 @@
 package org.wicketstuff.gmap.api;
 
 import java.math.BigDecimal;
-import java.text.DecimalFormat;
-import java.text.NumberFormat;
-import java.util.Locale;
 import java.util.StringTokenizer;
 
 import org.wicketstuff.gmap.js.Constructor;
@@ -79,9 +76,6 @@ public class GLatLng implements GValue
         return getJSconstructor();
     }
 
-    /**
-     * @see wicket.contrib.gmap.api.GValue#getJSconstructor()
-     */
     @Override
     public String getJSconstructor()
     {

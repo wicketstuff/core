@@ -827,9 +827,6 @@ public class GMap extends Panel implements GOverlayContainer
             this.attribute = attribute;
         }
 
-        /**
-         * @see Behavior#onComponentTag(Component, ComponentTag)
-         */
         @Override
         public void onComponentTag(final Component component, final ComponentTag tag)
         {
