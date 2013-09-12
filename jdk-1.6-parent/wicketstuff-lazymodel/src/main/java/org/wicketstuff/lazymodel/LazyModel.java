@@ -73,13 +73,13 @@ public class LazyModel<T> implements IModel<T>, IObjectClassAwareModel<T>,
 	/**
 	 * The resolver for {@link Method}s.
 	 */
-	private static final IMethodResolver methodResolver = new CachingMethodResolver(
+	private static IMethodResolver methodResolver = new CachingMethodResolver(
 			new DefaultMethodResolver());
 
 	/**
 	 * The factory for proxies.
 	 */
-	private static final IProxyFactory proxyFactory = new CachingProxyFactory(
+	private static IProxyFactory proxyFactory = new CachingProxyFactory(
 			new DefaultProxyFactory());
 
 	/**
