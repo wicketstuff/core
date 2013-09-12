@@ -676,6 +676,47 @@ public class LazyModelTest {
 	}
 
 	@Test
+	public void getFromPrivateConstructor() {
+		final A a = new A();
+		a.p = P.P1;
+
+		LazyModel<String> model = model(from(a).getP().getString());
+
+		assertEquals(String.class, model.getObjectClass());
+		assertEquals("p.string", model.getPath());
+
+		assertEquals(a.p.getString(), model.getObject());
+	}
+
+	@Test
+	public void getInherited() {
+		final A a = new A();
+		a.b = new B();
+		a.b.d = new D();
+
+		LazyModel<String> model = model(from(a).getB().getD().getString());
+
+		assertEquals(String.class, model.getObjectClass());
+		assertEquals("b.d.string", model.getPath());
+
+		assertEquals(a.b.d.string, model.getObject());
+	}
+
+
+	@Test
+	public void getEnum() {
+		final A a = new A();
+		a.e = E.E1;
+
+		LazyModel<E> model = model(from(a).getE());
+
+		assertEquals(E.class, model.getObjectClass());
+		assertEquals("e", model.getPath());
+
+		assertEquals(a.e, model.getObject());
+	}
+
+	@Test
 	public void getFinal() {
 		final A a = new A();
 		a.f = new F();
@@ -832,11 +873,23 @@ public class LazyModelTest {
 		B b;
 
 		F f;
+		
+		E e;
+		
+		P p;
 
 		int integer;
 
 		boolean bool;
 
+		public E getE() {
+			return e;
+		}
+		
+		public P getP() {
+			return p;
+		}
+		
 		public F getF() {
 			return f;
 		}
@@ -881,6 +934,8 @@ public class LazyModelTest {
 		Map<String, String> strings = new HashMap<String, String>();
 
 		List<C> cs = new ArrayList<C>();
+		
+		D d;
 
 		B() {
 		}
@@ -903,6 +958,10 @@ public class LazyModelTest {
 
 		public List<C> getCs() {
 			return cs;
+		}
+		
+		public D getD() {
+			return d;
 		}
 
 		public void setCs(List<C> cs) {
@@ -945,6 +1004,9 @@ public class LazyModelTest {
 		}
 	}
 
+	public static class D extends C {
+	}
+
 	public static interface I<T> {
 		public List<T> getTs();
 	}
@@ -956,5 +1018,21 @@ public class LazyModelTest {
 		public String getString() {
 			return string;
 		}
+	}
+	
+	public static class P {
+		
+		public static P P1 = new P();
+		
+		private P() {
+		}
+		
+		public String getString() {
+			return "P";
+		}
+	}
+	
+	public static enum E {
+		E1;
 	}
 }
