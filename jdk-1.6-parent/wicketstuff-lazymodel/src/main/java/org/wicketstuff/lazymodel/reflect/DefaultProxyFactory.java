@@ -19,6 +19,7 @@ package org.wicketstuff.lazymodel.reflect;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 import java.lang.reflect.Proxy;
+import java.util.List;
 
 import net.sf.cglib.core.DefaultNamingPolicy;
 import net.sf.cglib.core.NamingPolicy;
@@ -67,7 +68,15 @@ public final class DefaultProxyFactory implements IProxyFactory {
 			return null;
 		}
 
-		Enhancer enhancer = new Enhancer();
+		Enhancer enhancer = new Enhancer() {
+			/**
+			 * Prevent filtering of private constructors in super implementation.
+			 */
+			@SuppressWarnings("rawtypes")
+			@Override
+			protected void filterConstructors(Class sc, List constructors) {
+			}
+		};
 		enhancer.setUseFactory(true);
 		enhancer.setSuperclass(clazz);
 		enhancer.setInterfaces(interfaces);
