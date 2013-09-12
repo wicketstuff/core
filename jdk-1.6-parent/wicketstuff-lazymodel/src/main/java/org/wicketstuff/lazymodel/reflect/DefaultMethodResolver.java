@@ -34,14 +34,19 @@ public class DefaultMethodResolver implements IMethodResolver {
 	 */
 	@Override
 	public Method getMethod(Class<?> owner, Serializable id) {
-		for (Method method : owner.getDeclaredMethods()) {
-			if (id.equals(getId(method))) {
-				try {
-					method.setAccessible(true);
-				} catch (SecurityException accessNotAllowed) {
+		Class<?> candidate = owner;
+		while (candidate != null) {
+			for (Method method : candidate.getDeclaredMethods()) {
+				if (id.equals(getId(method))) {
+					try {
+						method.setAccessible(true);
+					} catch (SecurityException accessNotAllowed) {
+					}
+					return method;
 				}
-				return method;
 			}
+			
+			candidate = candidate.getSuperclass();
 		}
 		throw new IllegalArgumentException(String.format(
 				"unknown method %s#%s", owner.getName(), id));
