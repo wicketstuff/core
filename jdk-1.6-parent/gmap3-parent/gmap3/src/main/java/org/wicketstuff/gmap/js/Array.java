@@ -20,7 +20,7 @@ package org.wicketstuff.gmap.js;
 
 public class Array
 {
-	private StringBuffer buffer = new StringBuffer("[");
+	private StringBuilder buffer = new StringBuilder('[');
 
 	private boolean first = true;
 
@@ -28,7 +28,7 @@ public class Array
 	{
 		if (!first)
 		{
-			buffer.append(", ");
+			buffer.append(',').append(' ');
 		}
 		buffer.append(value);
 
@@ -38,7 +38,7 @@ public class Array
 
 	public String toJS()
 	{
-		buffer.append("]");
+		buffer.append(']');
 
 		String string = buffer.toString();
 
