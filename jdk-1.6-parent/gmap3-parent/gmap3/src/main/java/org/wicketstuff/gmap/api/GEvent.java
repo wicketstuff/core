@@ -26,6 +26,7 @@ public enum GEvent
     domready, // Event for InfoWindow which is fired when the <div> containing the InfoWindow's content is attached to the DOM
     click, //
     dblclick, //
+    rightclick,
     dragstart, //
     dragend, //
     mouseout, //
@@ -42,7 +43,9 @@ public enum GEvent
 
     public String getJSadd(final GOverlay overlay, final String function)
     {
-        return "google.maps.event.addListener(overlay" + overlay.getId() + ", '" + name() + "'," + function + ");\n";
+	    String mapMarkupId = overlay.getParent().getMapId();
+	    return String.format("google.maps.event.addListener(Wicket.maps['%s'].overlays['overlay%s'], '%s', %s);\n",
+			    mapMarkupId, overlay.getId(), name(), function);
     }
 
     public String getJSadd(final GOverlay overlay)
