@@ -593,7 +593,7 @@ public class GMap extends Panel implements GOverlayContainer
      */
     public String getJSinit()
     {
-        final StringBuilder js = new StringBuilder("new WicketMap('" + map.getMarkupId() + "', "+isFailSilently() +");\n");
+        final StringBuilder js = new StringBuilder("new WicketMap('" + getMapId() + "', "+isFailSilently() +");\n");
 
         js.append(getJSinvoke("clearOverlays()"));
         js.append(overlayListener.getJSinit());
@@ -640,7 +640,7 @@ public class GMap extends Panel implements GOverlayContainer
      */
     public String getJsReference()
     {
-        return "Wicket.maps['" + map.getMarkupId() + "']";
+        return "Wicket.maps['" + getMapId() + "']";
     }
 
     /**
@@ -682,26 +682,25 @@ public class GMap extends Panel implements GOverlayContainer
             return;
         }
 
-        final StringBuilder buf = new StringBuilder();
-        buf.append("var bounds = new google.maps.LatLngBounds();\n");
-        buf.append("var map = " + GMap.this.getJSinvoke("map") + ";\n");
-
-        // Ask google maps to keep extending the bounds to include each
-        // point
-        for (final GLatLng point : markersToShow)
-        {
-            buf.append("bounds.extend( " + point.getJSconstructor() + " );\n");
-        }
-
-        buf.append("map.fitBounds(bounds);\n");
-
-
         AjaxRequestTarget target = getRequestCycle().find(AjaxRequestTarget.class);
         if (target != null && findPage() != null)
         {
+            final StringBuilder buf = new StringBuilder();
+            buf.append("var bounds = new google.maps.LatLngBounds();\n");
+            buf.append("var map = " + GMap.this.getJSinvoke("map") + ";\n");
+
+            // Ask google maps to keep extending the bounds to include each
+            // point
+            for (final GLatLng point : markersToShow)
+            {
+                buf.append("bounds.extend( " + point.getJSconstructor() + " );\n");
+            }
+
+            buf.append("map.fitBounds(bounds);\n");
+            buf.append("map.panToBounds(bounds);\n");
+
             target.appendJavaScript(buf.toString());
         }
-
 
         // show the markers
         if (showMarkersForPoints)
