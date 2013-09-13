@@ -49,7 +49,7 @@ public class GInfoWindow extends GOverlay
       this(latLng);
       content.setOutputMarkupId(true);
       String markupId = content.getMarkupId(true);
-      this.content = "document.getElementById('" + markupId + "')";
+      this.content = String.format("document.getElementById('%s')", markupId);
       contentIsNode = true;
     }
     
@@ -63,7 +63,7 @@ public class GInfoWindow extends GOverlay
     public String getJSconstructor()
     {
 
-        Constructor constructor = null;
+        Constructor constructor;
         if(!contentIsNode)
             constructor = new Constructor("google.maps.InfoWindow").add("{content: '" + content + "', position: " + latLng.toString() + "}");
         else
@@ -94,5 +94,10 @@ public class GInfoWindow extends GOverlay
         {
             target.appendJavaScript(super.getJSremove());
         }
+    }
+
+    public GLatLng getLatLng()
+    {
+        return latLng;
     }
 }
