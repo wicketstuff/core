@@ -161,7 +161,7 @@ public class HomePage extends WicketExamplePage
                     return ((GOverlay) getDefaultModelObject()).getListeners().containsKey(GEvent.dblclick);
                 }
             });
-            dblclickLabel.add(new AjaxEventBehavior("onclick")
+            dblclickLabel.add(new AjaxEventBehavior("click")
             {
                 private static final long serialVersionUID = 1L;
 
