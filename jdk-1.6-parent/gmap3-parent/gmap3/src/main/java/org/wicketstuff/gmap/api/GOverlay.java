@@ -144,6 +144,13 @@ public abstract class GOverlay implements Serializable
     public GOverlay addFunctionListener(final GEvent event, final String jsFunction)
     {
         functions.put(event, jsFunction);
+
+        AjaxRequestTarget target = RequestCycle.get().find(AjaxRequestTarget.class);
+        if (target != null && getParent().getPage() != null)
+        {
+            target.appendJavaScript(event.getJSadd(this, functions.get(event)));
+        }
+
         return this;
     }
 
