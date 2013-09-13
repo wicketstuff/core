@@ -67,7 +67,7 @@ public class GMarkerOptions implements GValue, Cloneable
     }
 
     /**
-     * @see wicket.contrib.gmap.api.GValue#getJSconstructor()
+     * @see GValue#getJSconstructor()
      */
     @Override
     public String getJSconstructor()
