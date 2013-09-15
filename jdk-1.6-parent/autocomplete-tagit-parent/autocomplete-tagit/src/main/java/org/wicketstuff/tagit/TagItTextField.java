@@ -10,7 +10,7 @@ import org.apache.wicket.model.IModel;
  * @param <T>
  *            the type of the possible input
  * 
- * @see https://github.com/aehlke/tag-it
+ * @see <a href="https://github.com/aehlke/tag-it">Tag It</a>
  */
 public abstract class TagItTextField<T> extends TextField<T>
 {

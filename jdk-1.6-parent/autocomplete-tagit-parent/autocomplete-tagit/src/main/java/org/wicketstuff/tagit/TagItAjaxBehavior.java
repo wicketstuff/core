@@ -11,10 +11,13 @@ import org.apache.wicket.markup.head.JavaScriptHeaderItem;
 import org.apache.wicket.markup.head.OnDomReadyHeaderItem;
 import org.apache.wicket.request.IRequestParameters;
 import org.apache.wicket.request.Request;
+import org.apache.wicket.request.Url;
 import org.apache.wicket.request.cycle.RequestCycle;
 import org.apache.wicket.request.handler.TextRequestHandler;
-import org.apache.wicket.request.resource.PackageResourceReference;
+import org.apache.wicket.request.resource.CssResourceReference;
 import org.apache.wicket.request.resource.ResourceReference;
+import org.apache.wicket.request.resource.UrlResourceReference;
+import org.apache.wicket.resource.JQueryPluginResourceReference;
 import org.apache.wicket.util.string.StringValue;
 import org.apache.wicket.util.template.PackageTextTemplate;
 import org.apache.wicket.util.template.TextTemplate;
@@ -27,10 +30,10 @@ public abstract class TagItAjaxBehavior<T> extends AbstractAjaxBehavior
 
 	private static final long serialVersionUID = 1L;
 
-	private static final ResourceReference TAG_IT_JS = new PackageResourceReference(
+	private static final ResourceReference TAG_IT_JS = new JQueryPluginResourceReference(
 		TagItAjaxBehavior.class, "res/tag-it.js");
 
-	private static final ResourceReference TAG_IT_CSS = new PackageResourceReference(
+	private static final ResourceReference TAG_IT_CSS = new CssResourceReference(
 		TagItAjaxBehavior.class, "res/jquery.tagit.css");
 
 	public final void onRequest()
@@ -88,6 +91,8 @@ public abstract class TagItAjaxBehavior<T> extends AbstractAjaxBehavior
 		super.renderHead(component, response);
 
 		response.render(CssHeaderItem.forReference(TAG_IT_CSS));
+		response.render(JavaScriptHeaderItem.forReference(getComponent().getApplication().getJavaScriptLibrarySettings().getJQueryReference()));
+		response.render(JavaScriptHeaderItem.forReference(new UrlResourceReference(Url.parse("//ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js"))));
 		response.render(JavaScriptHeaderItem.forReference(TAG_IT_JS));
 
 		component.setOutputMarkupId(true);
