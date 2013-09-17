@@ -66,8 +66,7 @@ public abstract class GClientGeocoder extends AjaxEventBehavior
         if (address != null)
         {
             GeocoderStatus status = GeocoderStatus.valueOf(requestParameters.getParameterValue("status").toString());
-            onGeoCode(target, status,
-                    requestParameters.getParameterValue("address").toString(),
+            onGeoCode(target, status, address,
                     GLatLng.parse(requestParameters.getParameterValue("coordinates").toString()));
         }
         else
