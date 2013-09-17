@@ -46,21 +46,15 @@ function WicketClientGeocoder() {
             'address': address
         }, function(results, status){
 
-            var params = {};
-            if (status == google.maps.GeocoderStatus.OK) {
-                params['address'] = results[0].formatted_address;
-                params['coordinates'] = results[0].geometry.location;
-                params['status'] = status;
-            }
+            if (status === google.maps.GeocoderStatus.OK) {
+                callBack = callBack + '&address=' + results[0].formatted_address;
+                callBack = callBack + '&coordinates=' + results[0].geometry.location;
+                callBack = callBack + '&status=' + status;
 
-            for ( var key in params) {
-                callBack = callBack + '&' + key + '=' + params[key];
+                Wicket.Ajax.ajax({
+                    'u':callBack
+                });
             }
-
-            Wicket.Ajax.ajax({
-                'u':callBack,
-                'ep': params
-            });
         });
     }
 }
