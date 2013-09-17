@@ -53,6 +53,7 @@ public class HomePage extends WicketExamplePage
                 if (status == GeocoderStatus.OK)
                 {
                     bottomMap.addOverlay(new GInfoWindow(latLng, "address: " + address));
+                    target.add(feedback);
                 }
                 else
                 {
@@ -78,6 +79,7 @@ public class HomePage extends WicketExamplePage
                     String address = addressTextField.getDefaultModelObjectAsString();
                     GLatLng latLng = new ServerGeocoder().findAddress(address);
                     bottomMap.addOverlay(new GInfoWindow(latLng, "address: " + address));
+                    target.add(feedback);
                 }
                 catch (Exception e)
                 {

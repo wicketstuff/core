@@ -61,28 +61,38 @@ public abstract class GClientGeocoder extends AjaxEventBehavior
     {
         Request request = RequestCycle.get().getRequest();
         IRequestParameters requestParameters = request.getRequestParameters();
-        String address = requestParameters.getParameterValue("address").toString();
+	    String status = requestParameters.getParameterValue("status").toString();
+	    GeocoderStatus geocoderStatus = status != null ? GeocoderStatus.valueOf(status) : null;
 
-        if (address != null)
-        {
-            GeocoderStatus status = GeocoderStatus.valueOf(requestParameters.getParameterValue("status").toString());
-            onGeoCode(target, status, address,
-                    GLatLng.parse(requestParameters.getParameterValue("coordinates").toString()));
-        }
-        else
+        String address = null;
+        GLatLng coordinates = null;
+        if (geocoderStatus == null)
         {
             StringBuilder js = new StringBuilder();
             js.append("setTimeout(function() {")
-                    .append(getCallbackScript())
-                    .append("}, ")
-                    .append(timeout.getMilliseconds())
-                    .append(");");
-            target.appendJavaScript(js);
+            .append(getCallbackScript())
+            .append("}, ")
+            .append(timeout.getMilliseconds())
+            .append(");");
+             target.appendJavaScript(js);
         }
-
-
+        else
+        {
+            if (GeocoderStatus.OK.equals(geocoderStatus))
+            {
+                address = requestParameters.getParameterValue("address").toString();
+                coordinates = GLatLng.parse(requestParameters.getParameterValue("coordinates").toString());
+            }
+            onGeoCode(target, geocoderStatus, address, coordinates);
+        }
     }
 
+	/**
+	 * @param target
+	 * @param status  The status of the client side operation.
+	 * @param address The address if the status is {@code GeocoderStatus#OK}, otherwise- {@code null}
+	 * @param latLng  The coordinates if the status is {@code GeocoderStatus#OK}, otherwise- {@code null}
+	 */
     public abstract void onGeoCode(AjaxRequestTarget target, GeocoderStatus status, String address, GLatLng latLng);
 
     @Override

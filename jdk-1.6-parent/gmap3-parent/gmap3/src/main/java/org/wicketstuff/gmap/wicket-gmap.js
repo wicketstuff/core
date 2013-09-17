@@ -49,12 +49,12 @@ function WicketClientGeocoder() {
             if (status === google.maps.GeocoderStatus.OK) {
                 callBack = callBack + '&address=' + results[0].formatted_address;
                 callBack = callBack + '&coordinates=' + results[0].geometry.location;
-                callBack = callBack + '&status=' + status;
-
-                Wicket.Ajax.ajax({
-                    'u':callBack
-                });
             }
+            callBack = callBack + '&status=' + status;
+
+            Wicket.Ajax.ajax({
+                'u':callBack
+            });
         });
     }
 }
@@ -90,8 +90,7 @@ function WicketMap(id, failSilently) {
         }
 
         Wicket.Ajax.ajax({
-            'u':callBack,
-            'ep': params
+            'u':callBack
         });
     }
 
