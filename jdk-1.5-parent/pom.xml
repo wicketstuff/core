@@ -9,7 +9,7 @@
 	<parent>
 		<groupId>org.wicketstuff</groupId>
 		<artifactId>wicketstuff-core</artifactId>
-		<version>1.5-SNAPSHOT</version>
+		<version>1.5.10</version>
 	</parent>
 
 	<artifactId>jdk-1.5-parent</artifactId>
@@ -27,14 +27,14 @@
 		<module>browserid-parent</module>
 		<module>calendarviews-parent</module>
 		<module>client-and-server-validation</module>
-		<module>console-parent</module>
+		<!--module>console-parent</module-->
 		<module>datatable-autocomplete-parent</module>
 		<module>datatables-parent</module>
 		<module>eidogo-parent</module>
 		<module>flot-parent</module>
 		<module>gae-initializer-parent</module>
 		<module>googlecharts-parent</module>
-		<module>gmap2-parent</module>
+		<!--module>gmap2-parent</module-->
 		<module>htmlcompressor-parent</module>
 		<module>inmethod-grid-parent</module>
 		<module>input-events-parent</module>
