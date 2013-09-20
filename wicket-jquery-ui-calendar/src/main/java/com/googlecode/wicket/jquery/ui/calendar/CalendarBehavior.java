@@ -227,7 +227,7 @@ public abstract class CalendarBehavior extends JQueryBehavior implements IJQuery
 		if (event instanceof DayClickEvent)
 		{
 			DayClickEvent dayClickEvent = (DayClickEvent) event;
-			this.onDayClick(target, dayClickEvent.getView(), dayClickEvent.getDate());
+			this.onDayClick(target, dayClickEvent.getView(), dayClickEvent.getDate(), dayClickEvent.isAllDay());
 		}
 
 		else if (event instanceof SelectEvent)
@@ -475,6 +475,7 @@ public abstract class CalendarBehavior extends JQueryBehavior implements IJQuery
 	protected static class DayClickEvent extends JQueryEvent
 	{
 		private final Date day;
+		private final boolean isAllDay;
 		private final String viewName;
 
 		/**
@@ -485,6 +486,7 @@ public abstract class CalendarBehavior extends JQueryBehavior implements IJQuery
 			long date = RequestCycleUtils.getQueryParameterValue("date").toLong();
 			this.day = new Date(date);
 
+			this.isAllDay = RequestCycleUtils.getQueryParameterValue("allDay").toBoolean();
 			this.viewName = RequestCycleUtils.getQueryParameterValue("viewName").toString();
 		}
 
@@ -495,6 +497,15 @@ public abstract class CalendarBehavior extends JQueryBehavior implements IJQuery
 		public Date getDate()
 		{
 			return this.day;
+		}
+
+		/**
+		 * Indicated whether this event is an 'all-day' event
+		 * @return true or false
+		 */
+		public boolean isAllDay()
+		{
+			return this.isAllDay;
 		}
 
 		/**

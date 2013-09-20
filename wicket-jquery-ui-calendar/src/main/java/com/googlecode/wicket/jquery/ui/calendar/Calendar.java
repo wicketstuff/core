@@ -188,7 +188,7 @@ public class Calendar extends JQueryContainer implements ICalendarListener
 	}
 
 	@Override
-	public void onDayClick(AjaxRequestTarget target, CalendarView view, Date date)
+	public void onDayClick(AjaxRequestTarget target, CalendarView view, Date date, boolean allDay)
 	{
 	}
 
@@ -261,9 +261,9 @@ public class Calendar extends JQueryContainer implements ICalendarListener
 			}
 
 			@Override
-			public void onDayClick(AjaxRequestTarget target, CalendarView view, Date date)
+			public void onDayClick(AjaxRequestTarget target, CalendarView view, Date date, boolean allDay)
 			{
-				Calendar.this.onDayClick(target, view, date);
+				Calendar.this.onDayClick(target, view, date, allDay);
 			}
 
 			@Override

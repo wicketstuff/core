@@ -31,7 +31,7 @@ interface ICalendarListener
 	/**
 	 * Indicates whether the event can be edited (ie, clicked).<br/>
 	 * IIF true, an event can override this global setting to false by using CalendarEvent#setEditable(boolean);<br/>
-	 * If true, the {@link #onEventClick(AjaxRequestTarget, CalendarView, int)} event and {@link #onDayClick(AjaxRequestTarget, CalendarView, Date)} event will be triggered<br/>
+	 * If true, the {@link #onEventClick(AjaxRequestTarget, CalendarView, int)} event and {@link #onDayClick(AjaxRequestTarget, CalendarView, Date, boolean)} event will be triggered<br/>
 	 *
 	 * @return false by default
 	 */
@@ -86,8 +86,9 @@ interface ICalendarListener
 	 * @param target the {@link AjaxRequestTarget}
 	 * @param view the current calendar view
 	 * @param date the day
+	 * @param allDay the event all-day property
 	 */
-	void onDayClick(AjaxRequestTarget target, CalendarView view, Date date);
+	void onDayClick(AjaxRequestTarget target, CalendarView view, Date date, boolean allDay);
 
 	/**
 	 * Triggered when an event is clicked.<br/>
