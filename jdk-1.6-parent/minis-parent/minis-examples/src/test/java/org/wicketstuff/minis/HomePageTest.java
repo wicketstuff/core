@@ -7,7 +7,7 @@ import org.apache.wicket.util.tester.WicketTester;
 /**
  * Simple test using the WicketTester
  */
-public class TestHomePage extends TestCase
+public class HomePageTest extends TestCase
 {
 	private WicketTester tester;
 
@@ -24,9 +24,5 @@ public class TestHomePage extends TestCase
 
 		// assert rendered page class
 		tester.assertRenderedPage(HomePage.class);
-
-		// assert rendered label component
-		tester.assertLabel("message",
-			"If you see this message wicket is properly configured and running");
 	}
 }
