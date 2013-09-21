@@ -1,13 +1,16 @@
 package org.wicketstuff.minis.behavior.tooltipsy;
 
+import java.io.Serializable;
+
 /**
  * 
  * Options for Tooltipsy
  * @author Ilkka Seppälä https://github.com/iluwatar
  * 
  */
-public class TooltipsyOptions {
+public class TooltipsyOptions implements Serializable {
 
+	private static final long serialVersionUID = 1L;
 	private String css = "";
 	private Offset offset = new Offset();
 	private String content = "";
