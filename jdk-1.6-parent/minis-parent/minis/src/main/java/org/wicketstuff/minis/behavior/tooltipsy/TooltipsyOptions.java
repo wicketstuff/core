@@ -2,6 +2,8 @@ package org.wicketstuff.minis.behavior.tooltipsy;
 
 import java.io.Serializable;
 
+import org.apache.wicket.util.lang.Args;
+
 /**
  * 
  * Options for Tooltipsy
@@ -49,6 +51,7 @@ public class TooltipsyOptions implements Serializable {
 	}
 
 	public void setOffset(Offset offset) {
+		Args.notNull(offset, "offset");
 		this.offset = new Offset(offset);
 	}
 
@@ -57,6 +60,7 @@ public class TooltipsyOptions implements Serializable {
 	}
 
 	public void setCss(String css) {
+		Args.notNull(css, "css");
 		this.css = css;
 	}
 
@@ -95,6 +99,7 @@ public class TooltipsyOptions implements Serializable {
 	}
 
 	public void setContent(String content) {
+		Args.notNull(content, "content");
 		this.content = content;
 	}
 
@@ -103,6 +108,7 @@ public class TooltipsyOptions implements Serializable {
 	}
 
 	public void setAlign(TooltipsyAlignment align) {
+		Args.notNull(align, "align");
 		this.align = align;
 	}
 
@@ -111,6 +117,7 @@ public class TooltipsyOptions implements Serializable {
 	}
 
 	public void setDelay(int delay) {
+		Args.notNull(delay, "delay");
 		this.delay = delay;
 	}
 
@@ -119,6 +126,7 @@ public class TooltipsyOptions implements Serializable {
 	}
 
 	public void setTooltipsyClassName(String tooltipsyClassName) {
+		Args.notNull(tooltipsyClassName, "tooltipsyClassName");
 		this.tooltipsyClassName = tooltipsyClassName;
 	}
 
@@ -127,6 +135,7 @@ public class TooltipsyOptions implements Serializable {
 	}
 
 	public void setShowJavaScript(String showJavaScript) {
+		Args.notNull(showJavaScript, "showJavaScript");
 		this.showJavaScript = showJavaScript;
 	}
 
@@ -135,6 +144,7 @@ public class TooltipsyOptions implements Serializable {
 	}
 
 	public void setHideJavaScript(String hideJavaScript) {
+		Args.notNull(hideJavaScript, "hideJavaScript");
 		this.hideJavaScript = hideJavaScript;
 	}
 

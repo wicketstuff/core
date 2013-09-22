@@ -7,6 +7,7 @@ import org.apache.wicket.markup.head.IHeaderResponse;
 import org.apache.wicket.markup.head.JavaScriptHeaderItem;
 import org.apache.wicket.markup.head.OnLoadHeaderItem;
 import org.apache.wicket.request.resource.PackageResourceReference;
+import org.apache.wicket.util.lang.Args;
 
 /**
  * 
@@ -57,6 +58,7 @@ public class TooltipsyBehavior extends Behavior {
 	}
 
 	public void setOverrideSelector(String overrideSelector) {
+		Args.notNull(overrideSelector, "overrideSelector");
 		this.overrideSelector = overrideSelector;
 	}
 	
