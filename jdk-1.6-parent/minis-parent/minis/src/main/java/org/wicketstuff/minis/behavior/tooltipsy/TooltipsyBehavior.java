@@ -44,8 +44,8 @@ public class TooltipsyBehavior extends Behavior {
 	public void renderHead(Component component, IHeaderResponse response) {
 		response.render(JavaScriptHeaderItem.forReference(Application.get().getJavaScriptLibrarySettings().getJQueryReference()));
 		response.render(JavaScriptHeaderItem.forReference(new PackageResourceReference(this.getClass(), TOOLTIPSY_JS_FILENAME)));
-		if (getHostComponent() != null) {
-			String selector = "#" + getHostComponent().getMarkupId();
+		if (component != null) {
+			String selector = "#" + component.getMarkupId();
 			if (!overrideSelector.equals("")) {
 				selector = overrideSelector;
 			}
