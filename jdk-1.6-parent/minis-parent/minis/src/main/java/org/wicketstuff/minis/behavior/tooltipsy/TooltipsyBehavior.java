@@ -67,6 +67,7 @@ public class TooltipsyBehavior extends Behavior {
 	@Override
 	public void unbind(Component component) {
 		this.hostComponent = null;
+		super.unbind(component);
 	}
 
 	public String getOverrideSelector() {
