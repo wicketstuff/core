@@ -35,7 +35,7 @@ public class TooltipsyBehavior extends Behavior {
 		return this.options;
 	}
 
-	public void setOptions(TooltipsyOptions options) {
+	public void setOptions(final TooltipsyOptions options) {
 		this.options = new TooltipsyOptions(options);
 	}
 
