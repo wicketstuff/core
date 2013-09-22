@@ -16,12 +16,6 @@ public class TooltipsyPage extends WebPage {
 	private static final String STYLE_FILENAME = "TooltipsyPageStyle.css";
 
 	public TooltipsyPage() {
-	}
-
-	@Override
-	public void onInitialize() {
-		super.onInitialize();
-
 		// sample 1
 		Label sample1 = new Label("sample1", Model.of("Without CSS"));
 		add(sample1);
@@ -52,9 +46,8 @@ public class TooltipsyPage extends WebPage {
 		builder3.setShowJavaScript("function (e, $el) { $el.fadeIn(100); }");
 		builder3.setHideJavaScript("function (e, $el) { $el.fadeOut(1000); }");
 		sample3.add(new TooltipsyBehavior(builder3.getResult()));
-		
 	}
-	
+
 	@Override
 	public void renderHead(IHeaderResponse response) {
 		super.renderHead(response);
