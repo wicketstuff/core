@@ -57,10 +57,6 @@ public class TooltipsyBehavior extends Behavior {
 	public Component getHostComponent() {
 		return hostComponent;
 	}
-
-	public void setHostComponent(Component hostComponent) {
-		this.hostComponent = hostComponent;
-	}
 	
 	@Override
 	public void bind(Component component) {
