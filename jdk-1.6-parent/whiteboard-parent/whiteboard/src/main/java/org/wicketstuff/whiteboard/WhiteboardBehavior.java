@@ -35,9 +35,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.wicketstuff.whiteboard.elements.*;
 import org.wicketstuff.whiteboard.elements.Element.Type;
-import org.wicketstuff.whiteboard.resource.GoogStyleSheetResourceReference;
-import org.wicketstuff.whiteboard.resource.WhiteboardJavaScriptResourceReference;
-import org.wicketstuff.whiteboard.resource.WhiteboardStyleSheetResourceReference;
+import org.wicketstuff.whiteboard.resource.*;
 import org.wicketstuff.whiteboard.settings.IWhiteboardLibrarySettings;
 
 import javax.servlet.ServletContext;
@@ -734,6 +732,15 @@ public class WhiteboardBehavior extends AbstractDefaultAjaxBehavior{
 			response.render(new PriorityHeaderItem(CssHeaderItem.forReference(settings.getGoogStyleSheetReference())));
 		}else{
 			response.render(new PriorityHeaderItem(CssHeaderItem.forReference(GoogStyleSheetResourceReference.get())));
+		}
+
+		// translate.js
+		if(settings!=null&&settings.getTranslateJavaScriptReference()!=null){
+			response.render(new PriorityHeaderItem(JavaScriptHeaderItem.forReference(settings
+					.getTranslateJavaScriptReference())));
+		}else{
+			response.render(new PriorityHeaderItem(JavaScriptHeaderItem
+					.forReference(TranslateJavaScriptResourceReference.get())));
 		}
 
 		// Whiteboard.js

@@ -291,6 +291,19 @@ goog.base = function (a, b, c) {
 goog.scope = function (a) {
     a.call(goog.global)
 };
+
+goog.getMsg = function(str, opt_values) {
+
+    var translation = window[lang] || {};
+    str = translation[str] || str;
+    var values = opt_values || {};
+    for (var key in values) {
+        var value = ('' + values[key]).replace(/\$/g, '$$$$');
+        str = str.replace(new RegExp('\\{\\$' + key + '\\}', 'gi'), value);
+    }
+    return str;
+};
+
 var bay = {whiteboard: {}};
 bay.whiteboard.Collection = function () {
     this.list = []
@@ -436,7 +449,7 @@ bay.whiteboard.Point = function () {
 };
 goog.inherits(bay.whiteboard.Point, bay.whiteboard.Element);
 bay.whiteboard.Point.prototype.toString = function () {
-    return!this.exists ? goog.getMsg("Point does not exist") : goog.getMsg("Point: [$x},{$y}]", {x: this.x.toFixed(2), y: this.y.toFixed(2)})
+    return!this.exists ? goog.getMsg("Point does not exist") : goog.getMsg("Point: [{$x},{$y}]", {x: this.x.toFixed(2), y: this.y.toFixed(2)})
 };
 bay.whiteboard.Point.prototype.distance = function (a, b) {
     var c = new bay.whiteboard.Vector(a, b);
@@ -13135,7 +13148,7 @@ bay.whiteboard.Whiteboard.addTool("clipart", "pencil", {toggleOn: function (a) {
 bay.whiteboard.art.chooseClipArt = function (a, b, c) {
     Wicket.Ajax.get({u: callbackUrl, ep: {clipArt: "clipArt"}});
     for (var f = [], g = 0; g < clipArtList.length; g++)f.push(goog.dom.createDom("img", {src: clipArtList[g]}));
-    f.push(goog.dom.createTextNode("Cancel"));
+    f.push(goog.dom.createTextNode(goog.getMsg("Cancel")));
     f = new goog.ui.Palette(f);
     f.render(document.body);
     a = goog.style.getPosition(a.elements.drawElement);
@@ -13158,7 +13171,7 @@ bay.whiteboard.Whiteboard.addTool("addDoc", "docs", {action: function (a, b) {
     }, function () {
         c.dispose()
     })
-}}, 21, "Add document to whiteboard");
+}}, 21, goog.getMsg("Add document to whiteboard"));
 bay.whiteboard.Whiteboard.addTool("left", "docs", {action: function (a, b) {
     "" == currentDocComponentList && Wicket.Ajax.get({u: callbackUrl, ep: {docComponents: "docComponents", docBaseName: currentDoc}});
     if ("" != currentDocComponentList)for (var c = 0; c < currentDocComponentList.length; c++) {
@@ -13170,7 +13183,7 @@ bay.whiteboard.Whiteboard.addTool("left", "docs", {action: function (a, b) {
             break
         }
     }
-}}, 22, "Go to previous page of the Doc");
+}}, 22, goog.getMsg("Go to previous page of the Doc"));
 bay.whiteboard.Whiteboard.addTool("right", "docs", {action: function (a, b) {
     "" == currentDocComponentList && Wicket.Ajax.get({u: callbackUrl, ep: {docComponents: "docComponents", docBaseName: currentDoc}});
     if ("" != currentDocComponentList)for (var c = 0; c < currentDocComponentList.length; c++) {
@@ -13182,11 +13195,11 @@ bay.whiteboard.Whiteboard.addTool("right", "docs", {action: function (a, b) {
             break
         }
     }
-}}, 23, "Go to next page of the Doc");
+}}, 23, goog.getMsg("Go to next page of the Doc"));
 bay.whiteboard.art.chooseBackground = function (a, b, c) {
     Wicket.Ajax.get({u: callbackUrl, ep: {docList: "docList"}});
     for (var f = [], g = 0; g < docList.length; g++)f.push(goog.dom.createDom("img", {src: docList[g]}));
-    f.push(goog.dom.createTextNode("Cancel"));
+    f.push(goog.dom.createTextNode(goog.getMsg("Cancel")));
     f = new goog.ui.Palette(f);
     f.render(document.body);
     a = goog.style.getPosition(a.elements.drawElement);

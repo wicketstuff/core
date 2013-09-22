@@ -78,6 +78,7 @@
 		<module>sitemap-xml-parent</module>
 		<module>urlfragment-parent</module>
 		<module>wicketstuff-restannotations-parent</module>
+                <module>whiteboard-parent</module>
 
 <!-- 
 Commented because its build fails

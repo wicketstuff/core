@@ -23,7 +23,7 @@
         </license>
     </licenses>
     <properties>
-        <wicket.version>6.6.0</wicket.version>
+        <!--<wicket.version>6.6.0</wicket.version>-->
     </properties>
     <dependencies>
         <!--  WICKET DEPENDENCIES -->
@@ -90,17 +90,4 @@
             </plugin>
         </plugins>
     </build>
-
-    <repositories>
-        <repository>
-            <id>Apache Nexus</id>
-            <url>https://repository.apache.org/content/repositories/snapshots/</url>
-            <releases>
-                <enabled>false</enabled>
-            </releases>
-            <snapshots>
-                <enabled>true</enabled>
-            </snapshots>
-        </repository>
-    </repositories>
 </project>

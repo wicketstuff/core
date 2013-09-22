@@ -14,26 +14,25 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.wicketstuff.whiteboard.settings;
+package org.wicketstuff.whiteboard.resource;
 
-import org.apache.wicket.request.resource.CssResourceReference;
+
 import org.apache.wicket.request.resource.JavaScriptResourceReference;
-import org.apache.wicket.settings.IJavaScriptLibrarySettings;
 
 /**
- * Holds the mandatory resource references for whiteboard
- * Default resources can be found in org.wicketstuff.whiteboard.resource
+ * Reference Class for whiteboard.js which handles all the client side whiteboard manipulations
  * @author andunslg
  */
-public interface IWhiteboardLibrarySettings extends IJavaScriptLibrarySettings{
+public class TranslateJavaScriptResourceReference extends JavaScriptResourceReference{
+	private static final long serialVersionUID=1L;
 
-	CssResourceReference getWhiteboardStyleSheetReference();
+	private static final TranslateJavaScriptResourceReference INSTANCE=new TranslateJavaScriptResourceReference();
 
-	CssResourceReference getGoogStyleSheetReference();
+	public static TranslateJavaScriptResourceReference get(){
+		return INSTANCE;
+	}
 
-	JavaScriptResourceReference getWhiteboardJavaScriptReference();
-
-	JavaScriptResourceReference getTranslateJavaScriptReference();
-
-	JavaScriptResourceReference getBaseJavaScriptReference();
+	private TranslateJavaScriptResourceReference(){
+		super(TranslateJavaScriptResourceReference.class,"translate.js");
+	}
 }
