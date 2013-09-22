@@ -19,8 +19,6 @@ public class TooltipsyBehavior extends Behavior {
 	private static final long serialVersionUID = 1L;
 	private static final String TOOLTIPSY_JS_FILENAME = "tooltipsy.js";
 	
-	private Component hostComponent;
-
 	private TooltipsyOptions options = new TooltipsyOptions();
 
 	private String overrideSelector = "";
@@ -52,22 +50,6 @@ public class TooltipsyBehavior extends Behavior {
 			String javascript = "$('" + selector + "').tooltipsy(" + options.getParameterString() + ");";
 			response.render(OnLoadHeaderItem.forScript(javascript));
 		}
-	}
-
-	public Component getHostComponent() {
-		return hostComponent;
-	}
-	
-	@Override
-	public void bind(Component component) {
-		super.bind(component);
-		this.hostComponent = component;
-	}
-	
-	@Override
-	public void unbind(Component component) {
-		this.hostComponent = null;
-		super.unbind(component);
 	}
 
 	public String getOverrideSelector() {
