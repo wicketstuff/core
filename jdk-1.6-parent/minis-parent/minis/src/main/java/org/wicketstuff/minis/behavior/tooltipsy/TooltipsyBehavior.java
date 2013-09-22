@@ -17,6 +17,7 @@ import org.apache.wicket.request.resource.PackageResourceReference;
 public class TooltipsyBehavior extends Behavior {
 
 	private static final long serialVersionUID = 1L;
+	private static final String TOOLTIPSY_JS_FILENAME = "tooltipsy.js";
 	
 	private Component hostComponent;
 
@@ -42,7 +43,7 @@ public class TooltipsyBehavior extends Behavior {
 	@Override
 	public void renderHead(Component component, IHeaderResponse response) {
 		response.render(JavaScriptHeaderItem.forReference(Application.get().getJavaScriptLibrarySettings().getJQueryReference()));
-		response.render(JavaScriptHeaderItem.forReference(new PackageResourceReference(this.getClass(), "tooltipsy.min.js")));
+		response.render(JavaScriptHeaderItem.forReference(new PackageResourceReference(this.getClass(), TOOLTIPSY_JS_FILENAME)));
 		if (getHostComponent() != null) {
 			String selector = "#" + getHostComponent().getMarkupId();
 			if (!overrideSelector.equals("")) {
