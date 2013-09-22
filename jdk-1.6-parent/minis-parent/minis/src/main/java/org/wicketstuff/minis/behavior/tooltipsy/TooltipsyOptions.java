@@ -31,14 +31,17 @@ public class TooltipsyOptions implements Serializable {
 	 * @param options
 	 */
 	public TooltipsyOptions(TooltipsyOptions options) {
-		this.setCss(options.getCss());
-		this.setOffset(options.getOffset());
-		this.setContent(options.getContent());
-		this.setAlign(options.getAlign());
-		this.setDelay(options.getDelay());
-		this.setTooltipsyClassName(options.getTooltipsyClassName());
-		this.setShowJavaScript(options.getShowJavaScript());
-		this.setHideJavaScript(options.getHideJavaScript());
+		this();
+		if (options != null) {
+			this.setCss(options.getCss());
+			this.setOffset(options.getOffset());
+			this.setContent(options.getContent());
+			this.setAlign(options.getAlign());
+			this.setDelay(options.getDelay());
+			this.setTooltipsyClassName(options.getTooltipsyClassName());
+			this.setShowJavaScript(options.getShowJavaScript());
+			this.setHideJavaScript(options.getHideJavaScript());
+		}
 	}
 	
 	public Offset getOffset() {
