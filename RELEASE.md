@@ -33,17 +33,19 @@ Create a new Maven settings.xml (e.g. `~/.m2/settings.wjui.xml`) file with the f
 
 ````
 
-Make sure to provide username and password of a user that is allowed to manage this project at (Sonatype OSS)[https://oss.sonatype.org]
+Make sure to provide username and password of a user that is allowed to manage this project at [Sonatype OSS](https://oss.sonatype.org)
 
 ### Deploy a Snapshot version
-mvn -s ~/.m2/settings.wjui.xml -Dpgp.passphrase=[YOUR GPG PASSPHRASE] clean deploy
+````
+$ mvn -s ~/.m2/settings.wjui.xml -Dpgp.passphrase=[YOUR GPG PASSPHRASE] clean deploy
+````
 
-After finishing the deployment you can check that the new snapshot version is at (Sonatype OSS Snapshots)[https://oss.sonatype.org/content/repositories/snapshots/com/googlecode/wicket-jquery-ui/]
+After finishing the deployment you can check that the new snapshot version is at [Sonatype OSS Snapshots](https://oss.sonatype.org/content/repositories/snapshots/com/googlecode/wicket-jquery-ui/)
 
 ### Deploy a release version
 
-mvn release:clean
-mvn release:prepare
-mvn release:perform
+* mvn release:clean
+* mvn release:prepare
+* mvn release:perform
 
 TODO: improve this section
