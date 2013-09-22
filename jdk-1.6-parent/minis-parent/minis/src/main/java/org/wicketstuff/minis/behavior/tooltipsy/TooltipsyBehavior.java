@@ -60,6 +60,7 @@ public class TooltipsyBehavior extends Behavior {
 	
 	@Override
 	public void bind(Component component) {
+		super.bind(component);
 		this.hostComponent = component;
 	}
 	
