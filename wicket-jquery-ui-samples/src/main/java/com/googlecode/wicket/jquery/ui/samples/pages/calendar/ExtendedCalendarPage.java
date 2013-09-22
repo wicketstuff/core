@@ -95,7 +95,7 @@ public class ExtendedCalendarPage extends AbstractCalendarPage
 			public void onDayClick(AjaxRequestTarget target, CalendarView view, Date date, boolean allDay)
 			{
 				DemoCalendarEvent event = DemoCalendarDAO.emptyEvent(date);
-System.out.println(allDay);
+
 				dialog.setModelObject(event);
 				dialog.open(target);
 			}
