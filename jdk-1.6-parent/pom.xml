@@ -29,7 +29,6 @@
 		<module>datatables-parent</module>
 		<module>flot-parent</module>
 		<module>gae-initializer-parent</module>
-		<module>gmap2-parent</module>
 		<module>gmap3-parent</module>
 		<module>googlecharts-parent</module>
 		<module>htmlcompressor-parent</module>
@@ -98,6 +97,11 @@ Commented because its build fails
 		<!-- <module>yav-parent</module> -->
 		<!-- <module>maven-support</module> -->
 
+		<!-- deprecated
+
+		Google Maps v2 has be stopped by Google
+		<module>gmap2-parent</module>
+		-->
 	</modules>
 
 	<build>
