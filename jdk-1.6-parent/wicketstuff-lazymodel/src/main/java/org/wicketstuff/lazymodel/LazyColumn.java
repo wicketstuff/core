@@ -25,7 +25,6 @@ import org.apache.wicket.extensions.markup.html.repeater.data.table.export.IExpo
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.repeater.Item;
 import org.apache.wicket.model.IModel;
-import org.wicketstuff.lazymodel.LazyModel.Evaluation;
 
 /**
  * A {@link DataTable} column for lazy evaluations.
@@ -40,8 +39,6 @@ import org.wicketstuff.lazymodel.LazyModel.Evaluation;
  *            sort property type
  * @param R
  *            cell object type
- * 
- * @see Evaluation#from(Class)
  * 
  * @author svenmeier
  */
@@ -59,6 +56,8 @@ public class LazyColumn<T, S, R> extends AbstractColumn<T, S> implements
 	 *            model for the header
 	 * @param evaluationResult
 	 *            result of an evaluation
+	 * 
+	 * @see LazyModel#from(Class)
 	 */
 	public LazyColumn(IModel<String> displayModel, R evaluationResult) {
 		this(displayModel, evaluationResult, null);
@@ -70,7 +69,7 @@ public class LazyColumn<T, S, R> extends AbstractColumn<T, S> implements
 	 * @param displayModel
 	 *            model for the header
 	 * @param cellModel
-	 *            lazy model for the cells 
+	 *            lazy model for the cells
 	 */
 	public LazyColumn(IModel<String> displayModel, LazyModel<R> cellModel) {
 		this(displayModel, cellModel, null);
@@ -86,6 +85,8 @@ public class LazyColumn<T, S, R> extends AbstractColumn<T, S> implements
 	 *            result of an evaluation
 	 * @param sortProperty
 	 *            sort property to use when sorting by this column
+	 * 
+	 * @see LazyModel#from(Class)
 	 */
 	public LazyColumn(IModel<String> displayModel, R evaluationResult,
 			S sortProperty) {
