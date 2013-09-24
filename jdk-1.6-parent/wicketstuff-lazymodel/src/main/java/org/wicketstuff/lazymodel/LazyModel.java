@@ -22,8 +22,6 @@ import java.lang.reflect.Method;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 import java.lang.reflect.TypeVariable;
-import java.util.ArrayList;
-import java.util.List;
 
 import org.apache.wicket.WicketRuntimeException;
 import org.apache.wicket.model.IDetachable;
@@ -32,15 +30,14 @@ import org.apache.wicket.model.IObjectClassAwareModel;
 import org.apache.wicket.model.IPropertyReflectionAwareModel;
 import org.apache.wicket.model.LoadableDetachableModel;
 import org.apache.wicket.model.PropertyModel;
-import org.apache.wicket.util.lang.Objects;
 import org.wicketstuff.lazymodel.reflect.CachingMethodResolver;
 import org.wicketstuff.lazymodel.reflect.CachingProxyFactory;
 import org.wicketstuff.lazymodel.reflect.DefaultMethodResolver;
 import org.wicketstuff.lazymodel.reflect.DefaultProxyFactory;
-import org.wicketstuff.lazymodel.reflect.Reflection;
 import org.wicketstuff.lazymodel.reflect.IMethodResolver;
 import org.wicketstuff.lazymodel.reflect.IProxyFactory;
-import org.wicketstuff.lazymodel.reflect.IProxyFactory.Callback;
+import org.wicketstuff.lazymodel.reflect.Evaluation;
+import org.wicketstuff.lazymodel.reflect.Reflection;
 
 /**
  * A model for lazy evaluations:
@@ -81,14 +78,6 @@ public class LazyModel<T> implements IModel<T>, IObjectClassAwareModel<T>,
 	 */
 	private static IProxyFactory proxyFactory = new CachingProxyFactory(
 			new DefaultProxyFactory());
-
-	/**
-	 * If not null containing the last evaluation which couldn't be proxied
-	 * (i.e. is was primitive or final).
-	 * 
-	 * @see #wrap(Object)
-	 */
-	private static final ThreadLocal<Evaluation> lastNonProxyableEvaluation = new ThreadLocal<Evaluation>();
 
 	private static final Object[] EMPTY_ARGS = new Object[0];
 
@@ -172,7 +161,7 @@ public class LazyModel<T> implements IModel<T>, IObjectClassAwareModel<T>,
 	public Field getPropertyField() {
 		return null;
 	}
-	
+
 	/**
 	 * Get the final getter of the evaluation.
 	 * 
@@ -205,10 +194,10 @@ public class LazyModel<T> implements IModel<T>, IObjectClassAwareModel<T>,
 				return iterator.method;
 			}
 		}
-		
+
 		return null;
 	}
-	
+
 	/**
 	 * Get the final setter of the evaluation.
 	 * 
@@ -222,10 +211,10 @@ public class LazyModel<T> implements IModel<T>, IObjectClassAwareModel<T>,
 		if (getter == null) {
 			return null;
 		}
-		
+
 		return methodResolver.getSetter(getter);
 	}
-	
+
 	@Override
 	public void detach() {
 		if (target instanceof IDetachable) {
@@ -544,7 +533,7 @@ public class LazyModel<T> implements IModel<T>, IObjectClassAwareModel<T>,
 				throw new WicketRuntimeException(ex);
 			}
 		}
-		
+
 		/**
 		 * Fill the arguments of the current method in the given array.
 		 * 
@@ -565,199 +554,6 @@ public class LazyModel<T> implements IModel<T>, IObjectClassAwareModel<T>,
 	}
 
 	/**
-	 * A method evaluation sequence.
-	 */
-	@SuppressWarnings("rawtypes")
-	protected static class Evaluation implements Callback {
-
-		/**
-		 * The target of the evaluation, may be {@code null}.
-		 */
-		private final Object target;
-
-		/**
-		 * Each invoked method followed by its arguments.
-		 */
-		private final List<Object> stack = new ArrayList<Object>();
-
-		/**
-		 * The current type of evaluation result.
-		 */
-		private Type type;
-
-		protected Evaluation(Object target) {
-			this.target = target;
-
-			type = target.getClass();
-		}
-
-		protected Evaluation(IModel target) {
-			this.target = target;
-
-			if (target instanceof IObjectTypeAwareModel) {
-				type = ((IObjectTypeAwareModel) target).getObjectType();
-			} else if (target instanceof IObjectClassAwareModel) {
-				type = ((IObjectClassAwareModel) target).getObjectClass();
-			}
-
-			if (type == null) {
-				try {
-					type = target.getClass().getMethod("getObject")
-							.getGenericReturnType();
-				} catch (Exception ex) {
-					throw new WicketRuntimeException(ex);
-				}
-
-				if (type instanceof TypeVariable<?>) {
-					throw new WicketRuntimeException(
-							"cannot detect target type");
-				}
-			}
-		}
-
-		protected Evaluation(Type type) {
-			this.target = null;
-
-			this.type = type;
-		}
-
-		public Object getTarget() {
-			return target;
-		}
-
-		public Object getStack() {
-			if (stack.size() == 0) {
-				return null;
-			} else if (stack.size() == 1) {
-				return methodResolver.getId((Method) stack.get(0));
-			} else {
-				Object[] array = new Object[stack.size()];
-				int index = 0;
-				while (index < array.length) {
-					Method method = (Method) stack.get(index);
-
-					array[index] = methodResolver.getId(method);
-
-					index += 1;
-
-					for (int p = 0; p < method.getParameterTypes().length; p++) {
-						array[index] = stack.get(index);
-						index++;
-					}
-				}
-				return array;
-			}
-		}
-
-		/**
-		 * Handle invocation on a result proxy.
-		 * 
-		 * @return proxy for the invocation result
-		 * 
-		 * @see #proxy()
-		 */
-		@Override
-		public Object on(Object obj, Method method, Object[] parameters)
-				throws Throwable {
-			if ("finalize".equals(method.getName())) {
-				super.finalize();
-				return null;
-			}
-
-			stack.add(method);
-
-			for (Object param : parameters) {
-				if (param == null) {
-					// could be a non-proxyable nested evaluation
-					Evaluation evaluation = lastNonProxyableEvaluation.get();
-					if (evaluation != null) {
-						lastNonProxyableEvaluation.remove();
-						stack.add(new LazyModel(evaluation.getTarget(),
-								evaluation.getStack()));
-						continue;
-					}
-				}
-
-				if (param != null) {
-					// could be a proxy of a nested evaluation
-					Evaluation evaluation = (Evaluation) proxyFactory
-							.getCallback(param);
-					if (evaluation != null) {
-						stack.add(new LazyModel(evaluation.getTarget(),
-								evaluation.getStack()));
-						continue;
-					}
-				}
-
-				stack.add(param);
-			}
-
-			Type candidate = method.getGenericReturnType();
-			if (candidate instanceof TypeVariable) {
-				if (type instanceof ParameterizedType) {
-					candidate = Reflection.variableType((ParameterizedType) type,
-							(TypeVariable) candidate);
-				} else {
-					candidate = Object.class;
-				}
-			}
-			type = candidate;
-
-			return proxy();
-		}
-
-		/**
-		 * Create a proxy.
-		 * <p>
-		 * If the result cannot be proxied, it is accessible via
-		 * {@link #lastNonProxyableEvaluation}.
-		 * 
-		 * @return proxy or {@code null} if evaluation result cannot be proxied
-		 */
-		public Object proxy() {
-			Class clazz = Reflection.getClass(type);
-
-			if (clazz.isPrimitive()) {
-				lastNonProxyableEvaluation.set(this);
-
-				return Objects.convertValue(null, clazz);
-			}
-
-			Class proxyClass = proxyFactory.createClass(clazz);
-			if (proxyClass == null) {
-				lastNonProxyableEvaluation.set(this);
-
-				return null;
-			}
-
-			return clazz.cast(proxyFactory.createInstance(proxyClass, this));
-		}
-
-		/**
-		 * Path representation.
-		 * 
-		 * @return method path
-		 */
-		public String getPath() {
-			StringBuilder path = new StringBuilder();
-
-			int index = 0;
-			while (index < stack.size()) {
-				if (path.length() > 0) {
-					path.append(".");
-				}
-
-				Method method = (Method) stack.get(index);
-				path.append(methodResolver.getId(method));
-
-				index += 1 + method.getParameterTypes().length;
-			}
-
-			return path.toString();
-		}
-	}
-
-	/**
 	 * Start a lazy evaluation.
 	 * 
 	 * @param target
@@ -769,24 +565,8 @@ public class LazyModel<T> implements IModel<T>, IObjectClassAwareModel<T>,
 			throw new WicketRuntimeException("target must not be null");
 		}
 
-		Evaluation evaluation = new Evaluation(target);
-
-		return (T) evaluation.proxy();
-	}
-
-	/**
-	 * Start a lazy evaluation.
-	 * 
-	 * @param target
-	 *            model holding the target object
-	 * @return a result proxy for further evaluation
-	 */
-	public static <T> T from(IModel<T> target) {
-		if (target == null) {
-			throw new WicketRuntimeException("target must not be null");
-		}
-
-		Evaluation evaluation = new Evaluation(target);
+		Evaluation evaluation = new BoundEvaluation(
+				proxyFactory, target.getClass(), target);
 
 		return (T) evaluation.proxy();
 	}
@@ -803,21 +583,54 @@ public class LazyModel<T> implements IModel<T>, IObjectClassAwareModel<T>,
 			throw new WicketRuntimeException("target type must not be null");
 		}
 
-		Evaluation evaluation = new Evaluation(targetType);
+		Evaluation evaluation = new Evaluation(proxyFactory,
+				targetType);
 
 		return (T) evaluation.proxy();
 	}
 
-	private static <R> Evaluation evaluation(R result) {
-		Evaluation evaluation = (Evaluation) proxyFactory.getCallback(result);
-		if (evaluation == null) {
-			evaluation = lastNonProxyableEvaluation.get();
-			lastNonProxyableEvaluation.remove();
-			if (evaluation == null) {
-				throw new WicketRuntimeException("no evaluation result given");
+	/**
+	 * Start a lazy evaluation.
+	 * 
+	 * @param target
+	 *            model holding the target object
+	 * @return a result proxy for further evaluation
+	 */
+	public static <T> T from(IModel<T> target) {
+		if (target == null) {
+			throw new WicketRuntimeException("target must not be null");
+		}
+
+		Evaluation evaluation = new BoundEvaluation(
+				proxyFactory, getType(target), target);
+
+		return (T) evaluation.proxy();
+	}
+
+	@SuppressWarnings("rawtypes")
+	private static Type getType(IModel<?> target) {
+		Type type = null;
+
+		if (target instanceof IObjectTypeAwareModel) {
+			type = ((IObjectTypeAwareModel) target).getObjectType();
+		} else if (target instanceof IObjectClassAwareModel) {
+			type = ((IObjectClassAwareModel) target).getObjectClass();
+		}
+
+		if (type == null) {
+			try {
+				type = target.getClass().getMethod("getObject")
+						.getGenericReturnType();
+			} catch (Exception ex) {
+				throw new WicketRuntimeException(ex);
+			}
+
+			if (type instanceof TypeVariable<?>) {
+				throw new WicketRuntimeException("cannot detect target type");
 			}
 		}
-		return evaluation;
+
+		return type;
 	}
 
 	/**
@@ -828,22 +641,70 @@ public class LazyModel<T> implements IModel<T>, IObjectClassAwareModel<T>,
 	 * @return lazy model
 	 */
 	public static <R> LazyModel<R> model(R result) {
-		Evaluation evaluation = evaluation(result);
+		Evaluation evaluation = Evaluation.unproxy(
+				proxyFactory, result);
 
-		return new LazyModel<R>(evaluation.getTarget(), evaluation.getStack());
+		Object target = null;
+		if (evaluation instanceof BoundEvaluation) {
+			target = ((BoundEvaluation) evaluation).target;
+		}
+
+		Object stack;
+		if (evaluation.stack.size() == 0) {
+			stack = null;
+		} else if (evaluation.stack.size() == 1) {
+			stack = methodResolver.getId((Method) evaluation.stack.get(0));
+		} else {
+			Object[] array = new Object[evaluation.stack.size()];
+			int index = 0;
+			while (index < array.length) {
+				Method method = (Method) evaluation.stack.get(index);
+
+				array[index] = methodResolver.getId(method);
+
+				index += 1;
+
+				for (int p = 0; p < method.getParameterTypes().length; p++) {
+					Object param = evaluation.stack.get(index);
+					if (param instanceof Evaluation) {
+						param = model(param);
+					}
+					array[index] = param;
+					index++;
+				}
+			}
+			stack = array;
+		}
+
+		return new LazyModel<R>(target, stack);
 	}
 
 	/**
-	 * Get the method invocation path for the given evaluation.
+	 * Get the method invocation path for an evaluation.
 	 * 
 	 * @param result
 	 *            evaluation result
 	 * @return method invocation path
 	 */
 	public static <R> String path(R result) {
-		Evaluation evaluation = evaluation(result);
+		Evaluation evaluation = Evaluation.unproxy(
+				proxyFactory, result);
 
-		return evaluation.getPath();
+		StringBuilder path = new StringBuilder();
+
+		int index = 0;
+		while (index < evaluation.stack.size()) {
+			if (path.length() > 0) {
+				path.append(".");
+			}
+
+			Method method = (Method) evaluation.stack.get(index);
+			path.append(methodResolver.getId(method));
+
+			index += 1 + method.getParameterTypes().length;
+		}
+
+		return path.toString();
 	}
 
 	/**
@@ -890,6 +751,21 @@ public class LazyModel<T> implements IModel<T>, IObjectClassAwareModel<T>,
 			type = null;
 
 			LazyModel.this.detach();
+		}
+	}
+
+	/**
+	 * An evaluation that is bound to a target.
+	 */
+	private static class BoundEvaluation extends Evaluation {
+
+		public final Object target;
+
+		public BoundEvaluation(IProxyFactory proxyFactory, Type type,
+				Object target) {
+			super(proxyFactory, type);
+
+			this.target = target;
 		}
 	}
 }
