@@ -24,6 +24,7 @@ import java.lang.reflect.Type;
 import java.lang.reflect.TypeVariable;
 
 import org.apache.wicket.WicketRuntimeException;
+import org.apache.wicket.model.IChainingModel;
 import org.apache.wicket.model.IDetachable;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.IObjectClassAwareModel;
@@ -713,7 +714,7 @@ public class LazyModel<T> implements IModel<T>, IObjectClassAwareModel<T>,
 	 * @see LoadableDetachableModel
 	 */
 	private class LoadableDetachableWrapper extends LoadableDetachableModel<T>
-			implements IObjectClassAwareModel<T>, IObjectTypeAwareModel<T> {
+			implements IObjectClassAwareModel<T>, IObjectTypeAwareModel<T>, IChainingModel<T> {
 
 		private static final long serialVersionUID = 1L;
 
@@ -733,7 +734,11 @@ public class LazyModel<T> implements IModel<T>, IObjectClassAwareModel<T>,
 
 		@Override
 		public Class<T> getObjectClass() {
-			return (Class<T>) Reflection.getClass(getObjectType());
+			Type type = getObjectType();
+			if (type == null) {
+				return null;
+			}
+			return (Class<T>) Reflection.getClass(type);
 		}
 
 		@Override
@@ -745,6 +750,16 @@ public class LazyModel<T> implements IModel<T>, IObjectClassAwareModel<T>,
 		}
 
 		@Override
+		public IModel<?> getChainedModel() {
+			return LazyModel.this;
+		}
+		
+		@Override
+		public void setChainedModel(IModel<?> model) {
+			throw new UnsupportedOperationException();
+		}
+		
+		@Override
 		public void detach() {
 			super.detach();
 
@@ -755,7 +770,7 @@ public class LazyModel<T> implements IModel<T>, IObjectClassAwareModel<T>,
 	}
 
 	/**
-	 * An evaluation that is bound to a target.
+	 * An evaluation which is bound to a target.
 	 */
 	private static class BoundEvaluation extends Evaluation {
 
