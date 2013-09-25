@@ -32,12 +32,9 @@ import org.apache.wicket.model.IPropertyReflectionAwareModel;
 import org.apache.wicket.model.LoadableDetachableModel;
 import org.apache.wicket.model.PropertyModel;
 import org.wicketstuff.lazymodel.reflect.CachingMethodResolver;
-import org.wicketstuff.lazymodel.reflect.CachingProxyFactory;
 import org.wicketstuff.lazymodel.reflect.DefaultMethodResolver;
-import org.wicketstuff.lazymodel.reflect.DefaultProxyFactory;
-import org.wicketstuff.lazymodel.reflect.IMethodResolver;
-import org.wicketstuff.lazymodel.reflect.IProxyFactory;
 import org.wicketstuff.lazymodel.reflect.Evaluation;
+import org.wicketstuff.lazymodel.reflect.IMethodResolver;
 import org.wicketstuff.lazymodel.reflect.Reflection;
 
 /**
@@ -73,12 +70,6 @@ public class LazyModel<T> implements IModel<T>, IObjectClassAwareModel<T>,
 	 */
 	private static IMethodResolver methodResolver = new CachingMethodResolver(
 			new DefaultMethodResolver());
-
-	/**
-	 * The factory for proxies.
-	 */
-	private static IProxyFactory proxyFactory = new CachingProxyFactory(
-			new DefaultProxyFactory());
 
 	private static final Object[] EMPTY_ARGS = new Object[0];
 
@@ -566,8 +557,7 @@ public class LazyModel<T> implements IModel<T>, IObjectClassAwareModel<T>,
 			throw new WicketRuntimeException("target must not be null");
 		}
 
-		Evaluation evaluation = new BoundEvaluation(
-				proxyFactory, target.getClass(), target);
+		Evaluation evaluation = new BoundEvaluation(target.getClass(), target);
 
 		return (T) evaluation.proxy();
 	}
@@ -584,8 +574,7 @@ public class LazyModel<T> implements IModel<T>, IObjectClassAwareModel<T>,
 			throw new WicketRuntimeException("target type must not be null");
 		}
 
-		Evaluation evaluation = new Evaluation(proxyFactory,
-				targetType);
+		Evaluation evaluation = new Evaluation(targetType);
 
 		return (T) evaluation.proxy();
 	}
@@ -602,8 +591,7 @@ public class LazyModel<T> implements IModel<T>, IObjectClassAwareModel<T>,
 			throw new WicketRuntimeException("target must not be null");
 		}
 
-		Evaluation evaluation = new BoundEvaluation(
-				proxyFactory, getType(target), target);
+		Evaluation evaluation = new BoundEvaluation(getType(target), target);
 
 		return (T) evaluation.proxy();
 	}
@@ -642,8 +630,7 @@ public class LazyModel<T> implements IModel<T>, IObjectClassAwareModel<T>,
 	 * @return lazy model
 	 */
 	public static <R> LazyModel<R> model(R result) {
-		Evaluation evaluation = Evaluation.unproxy(
-				proxyFactory, result);
+		Evaluation evaluation = Evaluation.evaluation(result);
 
 		Object target = null;
 		if (evaluation instanceof BoundEvaluation) {
@@ -688,8 +675,7 @@ public class LazyModel<T> implements IModel<T>, IObjectClassAwareModel<T>,
 	 * @return method invocation path
 	 */
 	public static <R> String path(R result) {
-		Evaluation evaluation = Evaluation.unproxy(
-				proxyFactory, result);
+		Evaluation evaluation = Evaluation.evaluation(result);
 
 		StringBuilder path = new StringBuilder();
 
@@ -714,7 +700,8 @@ public class LazyModel<T> implements IModel<T>, IObjectClassAwareModel<T>,
 	 * @see LoadableDetachableModel
 	 */
 	private class LoadableDetachableWrapper extends LoadableDetachableModel<T>
-			implements IObjectClassAwareModel<T>, IObjectTypeAwareModel<T>, IChainingModel<T> {
+			implements IObjectClassAwareModel<T>, IObjectTypeAwareModel<T>,
+			IChainingModel<T> {
 
 		private static final long serialVersionUID = 1L;
 
@@ -753,12 +740,12 @@ public class LazyModel<T> implements IModel<T>, IObjectClassAwareModel<T>,
 		public IModel<?> getChainedModel() {
 			return LazyModel.this;
 		}
-		
+
 		@Override
 		public void setChainedModel(IModel<?> model) {
 			throw new UnsupportedOperationException();
 		}
-		
+
 		@Override
 		public void detach() {
 			super.detach();
@@ -776,9 +763,8 @@ public class LazyModel<T> implements IModel<T>, IObjectClassAwareModel<T>,
 
 		public final Object target;
 
-		public BoundEvaluation(IProxyFactory proxyFactory, Type type,
-				Object target) {
-			super(proxyFactory, type);
+		public BoundEvaluation(Type type, Object target) {
+			super(type);
 
 			this.target = target;
 		}

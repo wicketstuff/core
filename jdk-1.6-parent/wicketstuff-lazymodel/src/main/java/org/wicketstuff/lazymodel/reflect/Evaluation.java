@@ -36,17 +36,18 @@ import org.wicketstuff.lazymodel.reflect.IProxyFactory.Callback;
 public class Evaluation implements Callback {
 
 	/**
-	 * If not null containing the last invocation result which couldn't be proxied
-	 * (i.e. is was primitive or final).
+	 * If not null containing the last invocation result which couldn't be
+	 * proxied (i.e. is was primitive or final).
 	 * 
 	 * @see #proxy()
 	 */
 	private static final ThreadLocal<Evaluation> lastNonProxyable = new ThreadLocal<Evaluation>();
 
 	/**
-	 * The factory of proxies.
+	 * The factory for proxies.
 	 */
-	private IProxyFactory proxyFactory;
+	private static IProxyFactory proxyFactory = new CachingProxyFactory(
+			new DefaultProxyFactory());
 
 	/**
 	 * Each invoked method followed by its arguments.
@@ -59,15 +60,12 @@ public class Evaluation implements Callback {
 	private Type type;
 
 	/**
-	 * Record an evaluation.
+	 * Evaluation of method invocations on the given type.
 	 * 
-	 * @param proxyFactory
-	 *            factory for proxies
 	 * @param type
 	 *            starting type
 	 */
-	public Evaluation(IProxyFactory proxyFactory, Type type) {
-		this.proxyFactory = proxyFactory;
+	public Evaluation(Type type) {
 		this.type = type;
 	}
 
@@ -117,7 +115,7 @@ public class Evaluation implements Callback {
 	}
 
 	/**
-	 * Create a proxy.
+	 * Create a proxy for the current type.
 	 * <p>
 	 * If the result cannot be proxied, it is accessible via
 	 * {@link #lastNonProxyable}.
@@ -148,13 +146,11 @@ public class Evaluation implements Callback {
 	 * Reverse operation of {@link #proxy()}, i.e. get the evaluation from an
 	 * invocation result proxy.
 	 * 
-	 * @param proxyFactory
-	 *            factory of proxies
 	 * @param result
 	 *            invocation result
 	 * @return evaluation
 	 */
-	public static Evaluation unproxy(IProxyFactory proxyFactory, Object result) {
+	public static Evaluation evaluation(Object result) {
 		Evaluation evaluation = (Evaluation) proxyFactory.getCallback(result);
 		if (evaluation == null) {
 			evaluation = lastNonProxyable.get();
