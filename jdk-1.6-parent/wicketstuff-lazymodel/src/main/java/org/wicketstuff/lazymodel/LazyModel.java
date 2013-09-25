@@ -557,7 +557,7 @@ public class LazyModel<T> implements IModel<T>, IObjectClassAwareModel<T>,
 			throw new WicketRuntimeException("target must not be null");
 		}
 
-		Evaluation evaluation = new BoundEvaluation(target.getClass(), target);
+		Evaluation<T> evaluation = new BoundEvaluation<T>(target.getClass(), target);
 
 		return (T) evaluation.proxy();
 	}
@@ -574,7 +574,7 @@ public class LazyModel<T> implements IModel<T>, IObjectClassAwareModel<T>,
 			throw new WicketRuntimeException("target type must not be null");
 		}
 
-		Evaluation evaluation = new Evaluation(targetType);
+		Evaluation<T> evaluation = new Evaluation<T>(targetType);
 
 		return (T) evaluation.proxy();
 	}
@@ -591,7 +591,7 @@ public class LazyModel<T> implements IModel<T>, IObjectClassAwareModel<T>,
 			throw new WicketRuntimeException("target must not be null");
 		}
 
-		Evaluation evaluation = new BoundEvaluation(getType(target), target);
+		Evaluation<T> evaluation = new BoundEvaluation<T>(getType(target), target);
 
 		return (T) evaluation.proxy();
 	}
@@ -623,18 +623,27 @@ public class LazyModel<T> implements IModel<T>, IObjectClassAwareModel<T>,
 	}
 
 	/**
-	 * Create a model for the given evaluation.
+	 * Create a model for the given evaluation result.
 	 * 
 	 * @param result
 	 *            evaluation result
 	 * @return lazy model
 	 */
 	public static <R> LazyModel<R> model(R result) {
-		Evaluation evaluation = Evaluation.evaluation(result);
-
+		return model(Evaluation.eval(result));
+	}
+		
+	/**
+	 * Create a model for the given evaluation.
+	 * 
+	 * @param evaluation
+	 *            evaluation result
+	 * @return lazy model
+	 */
+	private static <R> LazyModel<R> model(Evaluation<R> evaluation) {
 		Object target = null;
 		if (evaluation instanceof BoundEvaluation) {
-			target = ((BoundEvaluation) evaluation).target;
+			target = ((BoundEvaluation<R>) evaluation).target;
 		}
 
 		Object stack;
@@ -675,7 +684,7 @@ public class LazyModel<T> implements IModel<T>, IObjectClassAwareModel<T>,
 	 * @return method invocation path
 	 */
 	public static <R> String path(R result) {
-		Evaluation evaluation = Evaluation.evaluation(result);
+		Evaluation<R> evaluation = Evaluation.eval(result);
 
 		StringBuilder path = new StringBuilder();
 
@@ -759,7 +768,7 @@ public class LazyModel<T> implements IModel<T>, IObjectClassAwareModel<T>,
 	/**
 	 * An evaluation which is bound to a target.
 	 */
-	private static class BoundEvaluation extends Evaluation {
+	private static class BoundEvaluation<R> extends Evaluation<R> {
 
 		public final Object target;
 

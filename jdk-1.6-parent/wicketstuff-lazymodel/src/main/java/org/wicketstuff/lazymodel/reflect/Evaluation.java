@@ -30,10 +30,13 @@ import org.wicketstuff.lazymodel.reflect.IProxyFactory.Callback;
 /**
  * An evaluation of method invocations.
  * 
+ * @param R
+ *            result type
+ *            
  * @author svenmeier
  */
 @SuppressWarnings("rawtypes")
-public class Evaluation implements Callback {
+public class Evaluation<R> implements Callback {
 
 	/**
 	 * If not null containing the last invocation result which couldn't be
@@ -41,7 +44,7 @@ public class Evaluation implements Callback {
 	 * 
 	 * @see #proxy()
 	 */
-	private static final ThreadLocal<Evaluation> lastNonProxyable = new ThreadLocal<Evaluation>();
+	private static final ThreadLocal<Evaluation<?>> lastNonProxyable = new ThreadLocal<Evaluation<?>>();
 
 	/**
 	 * The factory for proxies.
@@ -144,21 +147,34 @@ public class Evaluation implements Callback {
 
 	/**
 	 * Reverse operation of {@link #proxy()}, i.e. get the evaluation from an
-	 * invocation result proxy.
+	 * evaluation result.
 	 * 
 	 * @param result
 	 *            invocation result
 	 * @return evaluation
 	 */
-	public static Evaluation evaluation(Object result) {
-		Evaluation evaluation = (Evaluation) proxyFactory.getCallback(result);
+	@SuppressWarnings("unchecked")
+	public static <R> Evaluation<R> eval(R result) {
+		Evaluation<R> evaluation = (Evaluation<R>) proxyFactory.getCallback(result);
 		if (evaluation == null) {
-			evaluation = lastNonProxyable.get();
+			evaluation = (Evaluation<R>) lastNonProxyable.get();
 			lastNonProxyable.remove();
 			if (evaluation == null) {
 				throw new WicketRuntimeException("no invocation result given");
 			}
 		}
 		return evaluation;
+	}
+
+	/**
+	 * Start evaluation from the give type.
+	 * 
+	 * @param type
+	 *            starting type
+	 * @return proxy
+	 */
+	@SuppressWarnings("unchecked")
+	public static <T> T of(Class<T> type) {
+		return (T) new Evaluation(type).proxy();
 	}
 }
