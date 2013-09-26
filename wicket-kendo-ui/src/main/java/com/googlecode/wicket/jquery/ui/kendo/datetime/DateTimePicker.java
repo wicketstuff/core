@@ -21,6 +21,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 
+import org.apache.wicket.WicketRuntimeException;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.markup.html.form.AbstractTextComponent.ITextFormatProvider;
 import org.apache.wicket.markup.html.form.FormComponentPanel;
@@ -38,6 +39,7 @@ import org.apache.wicket.validation.ValidationError;
 public class DateTimePicker extends FormComponentPanel<Date> implements ITextFormatProvider
 {
 	private static final long serialVersionUID = 1L;
+	private static final String ERROR_NOT_INITIALIZED = "Internal timePicker is not initialized (#onInitialize() has not yet been called).";
 
 	private DatePicker datePicker;
 	private TimePicker timePicker;
@@ -49,6 +51,7 @@ public class DateTimePicker extends FormComponentPanel<Date> implements ITextFor
 
 	/**
 	 * Constructor
+	 *
 	 * @param id the markup id
 	 */
 	public DateTimePicker(String id)
@@ -58,6 +61,7 @@ public class DateTimePicker extends FormComponentPanel<Date> implements ITextFor
 
 	/**
 	 * Constructor
+	 *
 	 * @param id the markup id
 	 * @param datePattern the SimpleDateFormat pattern for the date
 	 * @param timePattern the SimpleDateFormat pattern for the time
@@ -72,6 +76,7 @@ public class DateTimePicker extends FormComponentPanel<Date> implements ITextFor
 
 	/**
 	 * Constructor
+	 *
 	 * @param id the markup id
 	 * @param date the initial date
 	 */
@@ -82,6 +87,7 @@ public class DateTimePicker extends FormComponentPanel<Date> implements ITextFor
 
 	/**
 	 * Constructor
+	 *
 	 * @param id the markup id
 	 * @param date the initial date
 	 * @param datePattern the SimpleDateFormat pattern for the date
@@ -94,7 +100,6 @@ public class DateTimePicker extends FormComponentPanel<Date> implements ITextFor
 		this.datePattern = datePattern;
 		this.timePattern = timePattern;
 	}
-
 
 	// Methods //
 	@Override
@@ -113,7 +118,7 @@ public class DateTimePicker extends FormComponentPanel<Date> implements ITextFor
 		catch (ConversionException e)
 		{
 			ValidationError error = new ValidationError();
-			error.addKey("DateTimePicker.ConversionError"); //wicket6
+			error.addKey("DateTimePicker.ConversionError"); // wicket6
 			error.setVariable("date", dateInput);
 			error.setVariable("time", timeInput);
 
@@ -138,7 +143,6 @@ public class DateTimePicker extends FormComponentPanel<Date> implements ITextFor
 
 		return String.format("%s %s", dateInput, timeInput);
 	}
-
 
 	// Properties //
 	@Override
@@ -165,7 +169,7 @@ public class DateTimePicker extends FormComponentPanel<Date> implements ITextFor
 	 */
 	public final String getDatePattern()
 	{
-		return this.datePicker.getTextFormat();
+		return this.datePicker.getTextFormat(); // let throw a NPE if #getDatePattern() is called before #onConfigure()
 	}
 
 	/**
@@ -175,7 +179,7 @@ public class DateTimePicker extends FormComponentPanel<Date> implements ITextFor
 	 */
 	public final String getTimePattern()
 	{
-		return this.timePicker.getTextFormat();
+		return this.timePicker.getTextFormat(); // let throw a NPE if #getTimePattern() is called before #onConfigure()
 	}
 
 	/**
@@ -186,20 +190,34 @@ public class DateTimePicker extends FormComponentPanel<Date> implements ITextFor
 	 */
 	public final boolean isTimePickerEnabled()
 	{
-		return this.timePicker.isEnabled();
+		if (this.timePicker != null)
+		{
+			return this.timePicker.isEnabled();
+		}
+
+		throw new WicketRuntimeException(ERROR_NOT_INITIALIZED);
 	}
 
 	/**
 	 * Sets the time-picker enabled flag
+	 *
 	 * @param enabled the enabled flag
 	 */
 	public final void setTimePickerEnabled(boolean enabled)
 	{
-		this.timePicker.setEnabled(enabled);
+		if (this.timePicker != null)
+		{
+			this.timePicker.setEnabled(enabled);
+		}
+		else
+		{
+			throw new WicketRuntimeException(ERROR_NOT_INITIALIZED); // fixes #61
+		}
 	}
 
 	/**
 	 * Sets the time-picker enabled flag
+	 *
 	 * @param target the {@link AjaxRequestTarget}
 	 * @param enabled the enabled flag
 	 */
@@ -242,7 +260,6 @@ public class DateTimePicker extends FormComponentPanel<Date> implements ITextFor
 
 		return "";
 	}
-
 
 	// Events //
 	@Override
