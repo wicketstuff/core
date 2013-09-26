@@ -10,4 +10,9 @@
 
 	org.wicketstuff.minis.behaviour.prototip
 	Contains prototip.js, prototip.css and relevent image files
-	Licenced under terms printed in prototip.js, author Nick Stakenburg, see http://www.nickstakenburg.com/projects/prototip/ 
+	Licenced under terms printed in prototip.js, author Nick Stakenburg, see http://www.nickstakenburg.com/projects/prototip/
+	
+	org.wicketstuff.minis.behavior.tooltipsy
+	Contains tooltipsy.js (http://tooltipsy.com) javascript library released under GPLv2 license.
+	Tooltipsy.js author Brian Cray.
+	wicket-tooltipsy licensed under same terms as tooltipsy.js.
