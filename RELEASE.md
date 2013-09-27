@@ -43,7 +43,7 @@ $ mvn -s ~/.m2/settings.wjui.xml -Dpgp.passphrase=[YOUR GPG PASSPHRASE] clean de
 After finishing the deployment you can check that the new snapshot version is at [Sonatype OSS Snapshots](https://oss.sonatype.org/content/repositories/snapshots/com/googlecode/wicket-jquery-ui/)
 
 ### Deploy a release version
-* update `<version>6.x.y</version>` in **README.md** and **homepage.html** (*wicket-jquery-ui-samples*)
+* update `<version>6.x.y</version>` in **README.md** and **homepage.html** ( *wicket-jquery-ui-samples* )
 
 * mvn release:clean
 * mvn release:prepare
