@@ -162,8 +162,8 @@ public abstract class DraggableBehavior extends JQueryBehavior implements IJQuer
 						CallbackParameter.context("ui"),
 						CallbackParameter.resolved("top", "ui.position.top"),
 						CallbackParameter.resolved("left", "ui.position.left"),
-						CallbackParameter.resolved("offsetTop", "ui.offset.top"),
-						CallbackParameter.resolved("offsetLeft", "ui.offset.left")
+						CallbackParameter.resolved("offsetTop", "ui.offset.top | 0"), //cast to int, no rounding
+						CallbackParameter.resolved("offsetLeft", "ui.offset.left | 0")  //cast to int, no rounding
 				};
 			}
 
