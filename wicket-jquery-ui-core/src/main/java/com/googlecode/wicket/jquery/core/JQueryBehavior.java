@@ -26,6 +26,7 @@ import org.apache.wicket.WicketRuntimeException;
 import org.apache.wicket.markup.head.IHeaderResponse;
 import org.apache.wicket.markup.head.JavaScriptHeaderItem;
 
+import com.googlecode.wicket.jquery.core.IJQueryWidget.JQueryWidget;
 
 /**
  * Provides a default implementation of {@link JQueryAbstractBehavior}.
@@ -38,7 +39,7 @@ public class JQueryBehavior extends JQueryAbstractBehavior
 	private static final long serialVersionUID = 1L;
 	private static final String NULL_OPTIONS = "Options have not been defined (null has been supplied to the constructor)";
 
-	private final String selector;
+	private String selector = null;
 	private final String method;
 	private final Options options;
 
@@ -46,6 +47,7 @@ public class JQueryBehavior extends JQueryAbstractBehavior
 
 	/**
 	 * Constructor
+	 *
 	 * @param selector the html selector (ie: "#myId")
 	 */
 	public JQueryBehavior(String selector)
@@ -55,6 +57,7 @@ public class JQueryBehavior extends JQueryAbstractBehavior
 
 	/**
 	 * Constructor
+	 *
 	 * @param selector the html selector (ie: "#myId")
 	 * @param method the jquery method
 	 */
@@ -65,6 +68,7 @@ public class JQueryBehavior extends JQueryAbstractBehavior
 
 	/**
 	 * Constructor
+	 *
 	 * @param selector the html selector (ie: "#myId")
 	 * @param method the jquery method
 	 * @param options the {@link Options}
@@ -79,6 +83,17 @@ public class JQueryBehavior extends JQueryAbstractBehavior
 	}
 
 	// Methods //
+	@Override
+	public void bind(Component component)
+	{
+		super.bind(component);
+
+		if (this.selector == null)
+		{
+			this.selector = JQueryWidget.getSelector(component);
+		}
+	}
+
 	@Override
 	public void renderHead(Component component, IHeaderResponse response)
 	{
@@ -103,6 +118,7 @@ public class JQueryBehavior extends JQueryAbstractBehavior
 	// Properties //
 	/**
 	 * Gets the selector
+	 *
 	 * @return the selector
 	 */
 	public String getSelector()
@@ -112,6 +128,7 @@ public class JQueryBehavior extends JQueryAbstractBehavior
 
 	/**
 	 * Gets the jQuery method
+	 *
 	 * @return the method
 	 */
 	public String getMethod()
@@ -121,6 +138,7 @@ public class JQueryBehavior extends JQueryAbstractBehavior
 
 	/**
 	 * Gets a behavior option, referenced by its key
+	 *
 	 * @param key the option key
 	 * @return null if the key does not exists
 	 */
@@ -136,6 +154,7 @@ public class JQueryBehavior extends JQueryAbstractBehavior
 
 	/**
 	 * Sets a behavior option.
+	 *
 	 * @param key the option key
 	 * @param value the option value
 	 * @return the {@link JQueryBehavior} (this)
@@ -154,6 +173,7 @@ public class JQueryBehavior extends JQueryAbstractBehavior
 
 	/**
 	 * Gets the {@link Options}
+	 *
 	 * @return the {@link Options}
 	 */
 	public Options getOptions()
@@ -163,6 +183,7 @@ public class JQueryBehavior extends JQueryAbstractBehavior
 
 	/**
 	 * Adds or replace behavior options
+	 *
 	 * @param options the {@link Options}
 	 */
 	public void setOptions(Options options)
@@ -176,6 +197,7 @@ public class JQueryBehavior extends JQueryAbstractBehavior
 	// Statements //
 	/**
 	 * Registers a jQuery event callback
+	 *
 	 * @param event the jQuery event (ie: "click")
 	 * @param callback the jQuery callback
 	 */
@@ -186,6 +208,7 @@ public class JQueryBehavior extends JQueryAbstractBehavior
 
 	/**
 	 * Registers a jQuery event callback
+	 *
 	 * @param selector the html selector (ie: "#myId")
 	 * @param event the jQuery event (ie: "click")
 	 * @param callback the jQuery callback
@@ -209,6 +232,7 @@ public class JQueryBehavior extends JQueryAbstractBehavior
 	/**
 	 * Gets the jQuery statement.<br/>
 	 * <b>Warning: </b> This method is *not* called by the behavior directly (only {@link #$()} is).
+	 *
 	 * @param options the list of options to be supplied to the current method
 	 * @return Statement like 'jQuery(function() { ... })'
 	 */
@@ -220,6 +244,7 @@ public class JQueryBehavior extends JQueryAbstractBehavior
 	/**
 	 * Gets the jQuery statement.<br/>
 	 * <b>Warning: </b> This method is *not* called by the behavior directly (only {@link #$()} is).
+	 *
 	 * @param options the options to be supplied to the current method
 	 * @return Statement like 'jQuery(function() { ... })'
 	 */
@@ -230,6 +255,7 @@ public class JQueryBehavior extends JQueryAbstractBehavior
 
 	/**
 	 * Gets the jQuery statement.
+	 *
 	 * @param selector the html selector (ie: "#myId")
 	 * @param method the jQuery method to invoke
 	 * @param options the options to be applied
@@ -243,8 +269,7 @@ public class JQueryBehavior extends JQueryAbstractBehavior
 	// Events //
 
 	/**
-	 * {@inheritDoc}
-	 * <br/>
+	 * {@inheritDoc} <br/>
 	 * Also, {@link #onConfigure(Component)} will call {@link IJQueryWidget#onConfigure(JQueryBehavior)} (if the component IS-A {@link IJQueryWidget})<br/>
 	 * If a property set is in {@link #onConfigure(Component)} is needed in {@link IJQueryWidget#onConfigure(JQueryBehavior)}, <code>super.onConfigure(component)</code> should be the last statement.
 	 */
@@ -255,13 +280,12 @@ public class JQueryBehavior extends JQueryAbstractBehavior
 
 		if (component instanceof IJQueryWidget)
 		{
-			((IJQueryWidget)component).onConfigure(this);
+			((IJQueryWidget) component).onConfigure(this);
 		}
 	}
 
 	/**
-	 * {@inheritDoc}
-	 * <br/>
+	 * {@inheritDoc} <br/>
 	 * Also, {@link #beforeRender(Component)} will call {@link IJQueryWidget#onBeforeRender(JQueryBehavior)} (if the component IS-A {@link IJQueryWidget})<br/>
 	 * If a property set is in {@link #beforeRender(Component)} is needed in {@link IJQueryWidget#onBeforeRender(JQueryBehavior)}, <code>super.beforeRender(component)</code> should be the last statement.
 	 */
@@ -272,7 +296,7 @@ public class JQueryBehavior extends JQueryAbstractBehavior
 
 		if (component instanceof IJQueryWidget)
 		{
-			((IJQueryWidget)component).onBeforeRender(this);
+			((IJQueryWidget) component).onBeforeRender(this);
 		}
 	}
 }
