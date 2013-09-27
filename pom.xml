@@ -43,7 +43,7 @@
 	</scm>
 
 	<properties>
-		<wicket.version>6.10.0</wicket.version>
+		<wicket.version>6.11.0</wicket.version>
 		<junit.version>4.11</junit.version>
 		<jetty.version>7.6.13.v20130916</jetty.version>
 	</properties>
