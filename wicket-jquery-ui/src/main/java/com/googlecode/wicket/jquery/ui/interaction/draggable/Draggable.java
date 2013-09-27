@@ -137,12 +137,12 @@ public class Draggable<T> extends JQueryContainer implements IDraggableListener
 
 	// Events //
 	@Override
-	public void onDragStart(AjaxRequestTarget target)
+	public void onDragStart(AjaxRequestTarget target, int top, int left, int offsetTop, int offsetLeft)
 	{
 	}
 
 	@Override
-	public void onDragStop(AjaxRequestTarget target)
+	public void onDragStop(AjaxRequestTarget target, int top, int left, int offsetTop, int offsetLeft)
 	{
 	}
 
@@ -231,15 +231,15 @@ public class Draggable<T> extends JQueryContainer implements IDraggableListener
 			}
 
 			@Override
-			public void onDragStart(AjaxRequestTarget target)
+			public void onDragStart(AjaxRequestTarget target, int top, int left, int offsetTop, int offsetLeft)
 			{
-				Draggable.this.onDragStart(target);
+				Draggable.this.onDragStart(target, top, left, offsetTop, offsetLeft);
 			}
 
 			@Override
-			public void onDragStop(AjaxRequestTarget target)
+			public void onDragStop(AjaxRequestTarget target, int top, int left, int offsetTop, int offsetLeft)
 			{
-				Draggable.this.onDragStop(target);
+				Draggable.this.onDragStop(target, top, left, offsetTop, offsetLeft);
 			}
 		};
 	}

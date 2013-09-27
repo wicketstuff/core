@@ -28,6 +28,7 @@ import com.googlecode.wicket.jquery.core.JQueryEvent;
 import com.googlecode.wicket.jquery.core.Options;
 import com.googlecode.wicket.jquery.core.ajax.IJQueryAjaxAware;
 import com.googlecode.wicket.jquery.core.ajax.JQueryAjaxBehavior;
+import com.googlecode.wicket.jquery.core.utils.RequestCycleUtils;
 import com.googlecode.wicket.jquery.ui.interaction.droppable.DroppableBehavior;
 
 /**
@@ -102,17 +103,22 @@ public abstract class DraggableBehavior extends JQueryBehavior implements IJQuer
 	@Override
 	public void onAjax(AjaxRequestTarget target, JQueryEvent event)
 	{
-		if (event instanceof DragStartEvent)
+		if (event instanceof DraggableEvent)
 		{
-			this.onDragStart(target);
+			DraggableEvent ev = (DraggableEvent) event;
 
-			// register to all DroppableBehavior(s) //
-			target.getPage().visitChildren(this.newDroppableBehaviorVisitor());
-		}
+			if (ev instanceof DragStartEvent)
+			{
+				this.onDragStart(target, ev.getTop(), ev.getLeft(), ev.getOffsetTop(), ev.getOffsetLeft());
 
-		else if (event instanceof DragStopEvent)
-		{
-			this.onDragStop(target);
+				// register to all DroppableBehavior(s) //
+				target.getPage().visitChildren(this.newDroppableBehaviorVisitor());
+			}
+
+			else if (ev instanceof DragStopEvent)
+			{
+				this.onDragStop(target, ev.getTop(), ev.getLeft(), ev.getOffsetTop(), ev.getOffsetLeft());
+			}
 		}
 	}
 
@@ -151,7 +157,14 @@ public abstract class DraggableBehavior extends JQueryBehavior implements IJQuer
 			@Override
 			protected CallbackParameter[] getCallbackParameters()
 			{
-				return new CallbackParameter[] { CallbackParameter.context("event"), CallbackParameter.context("ui") };
+				return new CallbackParameter[] {
+						CallbackParameter.context("event"),
+						CallbackParameter.context("ui"),
+						CallbackParameter.resolved("top", "ui.position.top"),
+						CallbackParameter.resolved("left", "ui.position.left"),
+						CallbackParameter.resolved("offsetTop", "ui.offset.top"),
+						CallbackParameter.resolved("offsetLeft", "ui.offset.left")
+				};
 			}
 
 			@Override
@@ -175,7 +188,14 @@ public abstract class DraggableBehavior extends JQueryBehavior implements IJQuer
 			@Override
 			protected CallbackParameter[] getCallbackParameters()
 			{
-				return new CallbackParameter[] { CallbackParameter.context("event"), CallbackParameter.context("ui") };
+				return new CallbackParameter[] {
+						CallbackParameter.context("event"),
+						CallbackParameter.context("ui"),
+						CallbackParameter.resolved("top", "ui.position.top"),
+						CallbackParameter.resolved("left", "ui.position.left"),
+						CallbackParameter.resolved("offsetTop", "ui.offset.top | 0"), //cast to int, no rounding
+						CallbackParameter.resolved("offsetLeft", "ui.offset.left | 0")  //cast to int, no rounding
+				};
 			}
 
 			@Override
@@ -189,16 +209,74 @@ public abstract class DraggableBehavior extends JQueryBehavior implements IJQuer
 
 	// Events classes //
 	/**
+	 * Provides a base class for draggable event object
+	 */
+	protected static class DraggableEvent extends JQueryEvent
+	{
+		private final int top;
+		private final int left;
+		private final int offsetTop;
+		private final int offsetLeft;
+
+		/**
+		 * Constructor.
+		 */
+		public DraggableEvent()
+		{
+			this.top = RequestCycleUtils.getQueryParameterValue("top").toInt(-1);
+			this.left = RequestCycleUtils.getQueryParameterValue("left").toInt(-1);
+			this.offsetTop = RequestCycleUtils.getQueryParameterValue("offsetTop").toInt(-1);
+			this.offsetLeft = RequestCycleUtils.getQueryParameterValue("offsetLeft").toInt(-1);
+		}
+
+		/**
+		 * Gets the position's top value
+		 * @return the position's top value
+		 */
+		public int getTop()
+		{
+			return this.top;
+		}
+
+		/**
+		 * Gets the position's left value
+		 * @return the position's left value
+		 */
+		public int getLeft()
+		{
+			return this.left;
+		}
+
+		/**
+		 * Gets the offset's top value
+		 * @return the offset's top value
+		 */
+		public int getOffsetTop()
+		{
+			return this.offsetTop;
+		}
+
+		/**
+		 * Gets the offset's left value
+		 * @return the offset's left value
+		 */
+		public int getOffsetLeft()
+		{
+			return this.offsetLeft;
+		}
+	}
+
+	/**
 	 * Provides an event object that will be broadcasted by the {@link JQueryAjaxBehavior} 'start' callback
 	 */
-	protected static class DragStartEvent extends JQueryEvent
+	protected static class DragStartEvent extends DraggableEvent
 	{
 	}
 
 	/**
 	 * Provides an event object that will be broadcasted by the {@link JQueryAjaxBehavior} 'stop' callback
 	 */
-	protected static class DragStopEvent extends JQueryEvent
+	protected static class DragStopEvent extends DraggableEvent
 	{
 	}
 }

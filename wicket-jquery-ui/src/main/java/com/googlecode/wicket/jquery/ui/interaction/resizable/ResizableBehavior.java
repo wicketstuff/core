@@ -133,7 +133,7 @@ public abstract class ResizableBehavior extends JQueryBehavior implements IJQuer
 						CallbackParameter.resolved("top", "ui.position.top"),
 						CallbackParameter.resolved("left", "ui.position.left"),
 						CallbackParameter.resolved("width", "ui.size.width"),
-						CallbackParameter.resolved("height", "ui.size.height"),
+						CallbackParameter.resolved("height", "ui.size.height")
 				};
 			}
 
@@ -164,7 +164,7 @@ public abstract class ResizableBehavior extends JQueryBehavior implements IJQuer
 						CallbackParameter.resolved("top", "ui.position.top"),
 						CallbackParameter.resolved("left", "ui.position.left"),
 						CallbackParameter.resolved("width", "ui.size.width"),
-						CallbackParameter.resolved("height", "ui.size.height"),
+						CallbackParameter.resolved("height", "ui.size.height")
 				};
 			}
 

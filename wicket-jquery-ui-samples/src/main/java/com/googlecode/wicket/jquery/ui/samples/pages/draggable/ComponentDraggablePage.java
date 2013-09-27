@@ -28,16 +28,18 @@ public class ComponentDraggablePage extends AbstractDraggablePage
 			}
 
 			@Override
-			public void onDragStart(AjaxRequestTarget target)
+			public void onDragStart(AjaxRequestTarget target, int top, int left, int offsetTop, int offsetLeft)
 			{
-				info("Drag started");
+				this.info(String.format("Drag started - position: {%s, %s}", top, left));
+
 				target.add(feedback);
 			}
 
 			@Override
-			public void onDragStop(AjaxRequestTarget target)
+			public void onDragStop(AjaxRequestTarget target, int top, int left, int offsetTop, int offsetLeft)
 			{
-				info("Drag stoped");
+				this.info(String.format("Drag stoped - position: {%s, %s}, offset: {%s, %s}", top, left, offsetTop, offsetLeft));
+
 				target.add(feedback);
 			}
 		});

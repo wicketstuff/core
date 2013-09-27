@@ -28,7 +28,7 @@ interface IDraggableListener
 {
 	/**
 	 * Indicates whether the 'stop' event is enabled.<br />
-	 * If true, the {@link #onDragStop(AjaxRequestTarget)} event will be triggered.
+	 * If true, the {@link #onDragStop(AjaxRequestTarget, int, int, int, int)} event will be triggered.
 	 *
 	 * @return false by default
 	 */
@@ -36,14 +36,24 @@ interface IDraggableListener
 
 	/**
 	 * Triggered when the drag starts
+	 *
 	 * @param target the {@link AjaxRequestTarget}
+	 * @param top the position's top value
+	 * @param left the position's left value
+	 * @param offsetTop the offset's top value
+	 * @param offsetLeft the offset's left value
 	 */
-	void onDragStart(AjaxRequestTarget target);
+	void onDragStart(AjaxRequestTarget target, int top, int left, int offsetTop, int offsetLeft);
 
 	/**
-	 * Triggered when the drag stops<br />
+	 * Triggered when the drag stops
+	 *
 	 * @param target the {@link AjaxRequestTarget}
+	 * @param top the position's top value
+	 * @param left the position's left value
+	 * @param offsetTop the offset's top value
+	 * @param offsetLeft the offset's left value
 	 * @see #isStopEventEnabled()
 	 */
-	void onDragStop(AjaxRequestTarget target);
+	void onDragStop(AjaxRequestTarget target, int top, int left, int offsetTop, int offsetLeft);
 }
