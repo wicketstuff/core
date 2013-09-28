@@ -43,7 +43,8 @@ Open Maven settings.xml (i.e. `~/.m2/settings.xml`) file and add the needed `ser
 ````
 
 Make sure to provide username and password of a user that is allowed to manage this project at [Sonatype OSS](https://oss.sonatype.org).
-The GOG passphrase is used to sign the artefacts before uploading them to Sonatype Maven repository.
+
+The GПG passphrase is used to sign the artefacts before uploading them to Sonatype Maven repository.
 
 ### Deploy a Snapshot version
 ````
@@ -55,7 +56,7 @@ After finishing the deployment you can check that the new snapshot version is at
 ### Deploy a release version
 
 * Set the version in the master pom.xml to Apache Wicket's version with `-SNAPSHOT` suffix (e.g. `6.11.0-SNAPSHOT`)
-* update `<version>6.x.y</version>` in **README.md** and **homepage.html** ( *wicket-jquery-ui-samples* )
+* update `<version>6.x.y</version>` in **README.md** and **wicket-jquery-ui-samples/src/main/java/com/googlecode/wicket/jquery/ui/samples/HomePage.html**
 * commit and push 
 * mvn release:clean
 * mvn release:prepare
