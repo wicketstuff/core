@@ -3,6 +3,7 @@ package com.googlecode.wicket.jquery.ui.samples.pages.draggable;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.markup.html.panel.FeedbackPanel;
 
+import com.googlecode.wicket.jquery.core.utils.RequestCycleUtils;
 import com.googlecode.wicket.jquery.ui.interaction.draggable.Draggable;
 import com.googlecode.wicket.jquery.ui.panel.JQueryFeedbackPanel;
 
@@ -28,7 +29,7 @@ public class ComponentDraggablePage extends AbstractDraggablePage
 			}
 
 			@Override
-			public void onDragStart(AjaxRequestTarget target, int top, int left, int offsetTop, int offsetLeft)
+			public void onDragStart(AjaxRequestTarget target, int top, int left)
 			{
 				this.info(String.format("Drag started - position: {%s, %s}", top, left));
 
@@ -36,9 +37,12 @@ public class ComponentDraggablePage extends AbstractDraggablePage
 			}
 
 			@Override
-			public void onDragStop(AjaxRequestTarget target, int top, int left, int offsetTop, int offsetLeft)
+			public void onDragStop(AjaxRequestTarget target, int top, int left)
 			{
-				this.info(String.format("Drag stoped - position: {%s, %s}, offset: {%s, %s}", top, left, offsetTop, offsetLeft));
+				double offsetTop = RequestCycleUtils.getQueryParameterValue("offsetTop").toDouble(-1);
+				double offsetLeft = RequestCycleUtils.getQueryParameterValue("offsetLeft").toDouble(-1);
+
+				this.info(String.format("Drag stoped - position: {%d, %d}, offset: {%.1f, %.1f}", top, left, offsetTop, offsetLeft));
 
 				target.add(feedback);
 			}

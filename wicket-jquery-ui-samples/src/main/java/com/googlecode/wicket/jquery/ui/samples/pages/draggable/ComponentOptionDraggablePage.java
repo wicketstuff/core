@@ -32,14 +32,14 @@ public class ComponentOptionDraggablePage extends AbstractDraggablePage
 			}
 
 			@Override
-			public void onDragStart(AjaxRequestTarget target, int top, int left, int offsetTop, int offsetLeft)
+			public void onDragStart(AjaxRequestTarget target, int top, int left)
 			{
 				ComponentOptionDraggablePage.this.info(this, "started");
 				target.add(feedback);
 			}
 
 			@Override
-			public void onDragStop(AjaxRequestTarget target, int top, int left, int offsetTop, int offsetLeft)
+			public void onDragStop(AjaxRequestTarget target, int top, int left)
 			{
 				ComponentOptionDraggablePage.this.info(this, "stopped");
 				target.add(feedback);
@@ -60,14 +60,14 @@ public class ComponentOptionDraggablePage extends AbstractDraggablePage
 			}
 
 			@Override
-			public void onDragStart(AjaxRequestTarget target, int top, int left, int offsetTop, int offsetLeft)
+			public void onDragStart(AjaxRequestTarget target, int top, int left)
 			{
 				ComponentOptionDraggablePage.this.info(this, "started");
 				target.add(feedback);
 			}
 
 			@Override
-			public void onDragStop(AjaxRequestTarget target, int top, int left, int offsetTop, int offsetLeft)
+			public void onDragStop(AjaxRequestTarget target, int top, int left)
 			{
 				ComponentOptionDraggablePage.this.info(this, "stopped");
 				target.add(feedback);

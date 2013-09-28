@@ -109,7 +109,7 @@ public abstract class DraggableBehavior extends JQueryBehavior implements IJQuer
 
 			if (ev instanceof DragStartEvent)
 			{
-				this.onDragStart(target, ev.getTop(), ev.getLeft(), ev.getOffsetTop(), ev.getOffsetLeft());
+				this.onDragStart(target, ev.getTop(), ev.getLeft());
 
 				// register to all DroppableBehavior(s) //
 				target.getPage().visitChildren(this.newDroppableBehaviorVisitor());
@@ -117,7 +117,7 @@ public abstract class DraggableBehavior extends JQueryBehavior implements IJQuer
 
 			else if (ev instanceof DragStopEvent)
 			{
-				this.onDragStop(target, ev.getTop(), ev.getLeft(), ev.getOffsetTop(), ev.getOffsetLeft());
+				this.onDragStop(target, ev.getTop(), ev.getLeft());
 			}
 		}
 	}
