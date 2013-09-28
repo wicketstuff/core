@@ -44,7 +44,7 @@ Open Maven settings.xml (i.e. `~/.m2/settings.xml`) file and add the needed `ser
 
 Make sure to provide username and password of a user that is allowed to manage this project at [Sonatype OSS](https://oss.sonatype.org).
 
-The GПG passphrase is used to sign the artefacts before uploading them to Sonatype Maven repository.
+The GPG passphrase is used to sign the artefacts before uploading them to Sonatype Maven repository.
 
 ### Deploy a Snapshot version
 ````
