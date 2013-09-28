@@ -6,17 +6,12 @@ This document explains the steps to release a new version of this project.
 
 ### Prerequisites
 
-Create a new Maven settings.xml (e.g. `~/.m2/settings.wjui.xml`) file with the following content:
+Open Maven settings.xml (i.e. `~/.m2/settings.xml`) file and add the needed `servers` and  with the following content:
 
 ````xml
-<settings xmlns="http://maven.apache.org/SETTINGS/1.0.0"
-  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xsi:schemaLocation="http://maven.apache.org/SETTINGS/1.0.0
-                      http://maven.apache.org/xsd/settings-1.0.0.xsd">
-
-    <interactiveMode>false</interactiveMode>
-
+    <!--
     <servers>
+    -->
       <server>
         <id>sonatype-nexus-snapshots</id>
         <username>[THE USERNAME]</username>
@@ -27,26 +22,44 @@ Create a new Maven settings.xml (e.g. `~/.m2/settings.wjui.xml`) file with the f
         <username>[THE USERNAME]</username>
         <password>[THE PASSWORD]</password>
       </server>
+      <!--
     </servers>
+    -->
+    <!--
+    <profiles>
+    -->
+    <profile>
+      <id>sonatype-oss-release</id>
+      <properties>
+        <gpg.passphrase>[MY GPG PASSPHRASE]</gpg.passphrase>
+      </properties>
+    </profile>
+  <!--
+  </profiles>
+  -->
   
 </settings>
 
 ````
 
-Make sure to provide username and password of a user that is allowed to manage this project at [Sonatype OSS](https://oss.sonatype.org)
+Make sure to provide username and password of a user that is allowed to manage this project at [Sonatype OSS](https://oss.sonatype.org).
+The GOG passphrase is used to sign the artefacts before uploading them to Sonatype Maven repository.
 
 ### Deploy a Snapshot version
 ````
-$ mvn -s ~/.m2/settings.wjui.xml -Dpgp.passphrase=[YOUR GPG PASSPHRASE] clean deploy
+$ mvn clean deploy
 ````
 
 After finishing the deployment you can check that the new snapshot version is at [Sonatype OSS Snapshots](https://oss.sonatype.org/content/repositories/snapshots/com/googlecode/wicket-jquery-ui/)
 
 ### Deploy a release version
-* update `<version>6.x.y</version>` in **README.md** and **homepage.html** ( *wicket-jquery-ui-samples* )
 
+* Set the version in the master pom.xml to Apache Wicket's version with `-SNAPSHOT` suffix (e.g. `6.11.0-SNAPSHOT`)
+* update `<version>6.x.y</version>` in **README.md** and **homepage.html** ( *wicket-jquery-ui-samples* )
+* commit and push 
 * mvn release:clean
 * mvn release:prepare
 * mvn release:perform
-
-TODO: improve this section
+* Go to [Sonatype OSS](https://oss.sonatype.org) and login with the same credentials as in settings.xml's server configuration
+* Navigate to `Staging Repositories`, find the deployed bundle in the grid, select it and close it (button *Close* in the toolbar)
+* Wait few minutes until Nexus closes it and then select the bundle and release it (button *Release* in the toolbar)
