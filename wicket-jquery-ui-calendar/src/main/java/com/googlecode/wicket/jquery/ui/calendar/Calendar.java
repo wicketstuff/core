@@ -300,7 +300,7 @@ public class Calendar extends JQueryContainer implements ICalendarListener
 	 * @param model the {@link CalendarModel}
 	 * @return the {@link CalendarModelBehavior}
 	 */
-	protected CalendarModelBehavior newCalendarModelBehavior(CalendarModel model)
+	protected CalendarModelBehavior newCalendarModelBehavior(final CalendarModel model)
 	{
 		return new CalendarModelBehavior(model);
 	}

@@ -37,14 +37,14 @@ public class CalendarModelBehavior extends AbstractAjaxBehavior
 {
 	private static final long serialVersionUID = 1L;
 
-	private CalendarModel model;
+	private final CalendarModel model;
 
 	/**
 	 * Constructor
 	 *
 	 * @param model the {@link CalendarModel}
 	 */
-	public CalendarModelBehavior(CalendarModel model)
+	public CalendarModelBehavior(final CalendarModel model)
 	{
 		this.model = model;
 	}
@@ -60,12 +60,11 @@ public class CalendarModelBehavior extends AbstractAjaxBehavior
 
 		if (this.model != null)
 		{
-			this.setStartDate(this.model, new Date(start  * 1000));
-			this.setEndDate(this.model, new Date(end  * 1000));
+			this.setStartDate(this.model, new Date(start * 1000));
+			this.setEndDate(this.model, new Date(end * 1000));
 		}
 
-		final IRequestHandler handler = this.newRequestHandler();
-		requestCycle.scheduleRequestHandlerAfterCurrent(handler);
+		requestCycle.scheduleRequestHandlerAfterCurrent(this.newRequestHandler());
 	}
 
 	/**
@@ -95,17 +94,16 @@ public class CalendarModelBehavior extends AbstractAjaxBehavior
 	/**
 	 * Gets the new {@link IRequestHandler} that will respond the list of {@link CalendarEvent} in a json format
 	 *
+	 * @param model the {@link CalendarModel}
 	 * @return the {@link IRequestHandler}
 	 */
-	//TODO: 6.11.0 - restore to private?
 	protected IRequestHandler newRequestHandler()
 	{
-		return new IRequestHandler()
-		{
+		return new IRequestHandler() {
 			@Override
 			public void respond(final IRequestCycle requestCycle)
 			{
-				WebResponse response = (WebResponse)requestCycle.getResponse();
+				WebResponse response = (WebResponse) requestCycle.getResponse();
 
 				final String encoding = Application.get().getRequestCycleSettings().getResponseRequestEncoding();
 				response.setContentType("text/json; charset=" + encoding);
@@ -113,7 +111,7 @@ public class CalendarModelBehavior extends AbstractAjaxBehavior
 
 				if (model != null)
 				{
-					List<? extends CalendarEvent> list =  model.getObject(); // calls load()
+					List<? extends CalendarEvent> list = model.getObject(); // calls load()
 
 					if (list != null)
 					{
@@ -124,10 +122,13 @@ public class CalendarModelBehavior extends AbstractAjaxBehavior
 						{
 							if (model instanceof ICalendarVisitor)
 							{
-								event.accept((ICalendarVisitor) model); //last chance to set options
+								event.accept((ICalendarVisitor) model); // last chance to set options
 							}
 
-							if (count++ > 0) { builder.append(", "); }
+							if (count++ > 0)
+							{
+								builder.append(", ");
+							}
 							builder.append(event.toString());
 						}
 
