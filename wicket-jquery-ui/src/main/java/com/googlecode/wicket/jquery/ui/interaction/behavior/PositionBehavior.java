@@ -38,7 +38,7 @@ public class PositionBehavior extends JQueryAbstractBehavior
 	/**
 	 * Constructor
 	 *
-	 * @param object the position object
+	 * @param object the position json object
 	 */
 	public PositionBehavior(Object object)
 	{
