@@ -49,7 +49,7 @@ public class TabbedPanel extends JQueryPanel implements ITabsListener
 	 * @param id the markup id
 	 * @param tabs the list of {@link ITab}<code>s</code>
 	 */
-	public TabbedPanel(String id, List<ITab> tabs)
+	public TabbedPanel(String id, List<? extends ITab> tabs)
 	{
 		this(id, tabs, new Options());
 	}
