@@ -158,10 +158,10 @@ public class AdvancedTabsPage extends AbstractTabsPage
 		List<ITab> tabs = new ArrayList<ITab>();
 
 		// tab #1, using SimpleTab //
-		tabs.add(new SimpleTab(new Model<String>("Tab #1"), new Model<String>("my content")));
+		tabs.add(new SimpleTab(Model.of("Tab #1"), Model.of("my content")));
 
 		// tab #2, invisible Tab //
-		tabs.add(new SimpleTab(new Model<String>("Tab #2"), Model.of("invisible")) {
+		tabs.add(new SimpleTab(Model.of("Tab #2"), Model.of("invisible")) {
 
 			private static final long serialVersionUID = 1L;
 
@@ -173,7 +173,7 @@ public class AdvancedTabsPage extends AbstractTabsPage
 		});
 
 		// tab #3, using AbstractTab //
-		tabs.add(new AbstractTab(new Model<String>("Tab #3")) {
+		tabs.add(new AbstractTab(Model.of("Tab #3")) {
 
 			private static final long serialVersionUID = 1L;
 
@@ -185,7 +185,7 @@ public class AdvancedTabsPage extends AbstractTabsPage
 		});
 
 		// tab #4, using AjaxTab //
-		tabs.add(new AjaxTab(new Model<String>("Tab (ajax)")) {
+		tabs.add(new AjaxTab(Model.of("Tab (ajax)")) {
 
 			private static final long serialVersionUID = 1L;
 

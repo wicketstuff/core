@@ -173,7 +173,7 @@ public abstract class AbstractDialog<T extends Serializable> extends JQueryPanel
 		// class options //
 		behavior.setOption("autoOpen", false);
 		behavior.setOption("title", Options.asString(this.title.getObject()));
-		behavior.setOption("modal", this.modal);
+		behavior.setOption("modal", this.isModal());
 		behavior.setOption("resizable", this.isResizable());
 		behavior.setOption("width", this.getWidth());
 	}

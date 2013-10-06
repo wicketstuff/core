@@ -44,7 +44,7 @@ public class SimpleTab extends AbstractTab
 	 */
 	public SimpleTab(String title, String content)
 	{
-		this(new Model<String>(title), new Model<String>(content));
+		this(Model.of(title), Model.of(content));
 	}
 
 	/**
@@ -59,6 +59,21 @@ public class SimpleTab extends AbstractTab
 
 		this.content = content;
 	}
+
+
+	// Properties //
+
+	/**
+	 * Sets the text content of tab
+	 * @param content the text content of tab
+	 */
+	public void setContent(String content)
+	{
+		this.content.setObject(content);
+	}
+
+
+	// Methods //
 
 	/**
 	 * Gets the {@link LabelPanel} that contains the content supplied in the constructor

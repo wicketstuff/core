@@ -31,10 +31,10 @@ public class TabbedPanelPage extends AbstractTabsPage
 		List<ITab> tabs = new ArrayList<ITab>();
 
 		// tab #1 //
-		tabs.add(new SimpleTab(new Model<String>("Tab #1"), new Model<String>("my content")));
+		tabs.add(new SimpleTab(Model.of("Tab #1"), Model.of("my content")));
 
 		// tab #2 //
-		tabs.add(new AbstractTab(new Model<String>("Tab #2")) {
+		tabs.add(new AbstractTab(Model.of("Tab #2")) {
 
 			private static final long serialVersionUID = 1L;
 
@@ -46,7 +46,7 @@ public class TabbedPanelPage extends AbstractTabsPage
 		});
 
 		// tab #3 //
-		tabs.add(new AjaxTab(new Model<String>("Tab (ajax)")) {
+		tabs.add(new AjaxTab(Model.of("Tab (ajax)")) {
 
 			private static final long serialVersionUID = 1L;
 
