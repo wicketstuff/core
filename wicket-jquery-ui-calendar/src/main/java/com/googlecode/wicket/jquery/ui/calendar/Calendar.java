@@ -147,7 +147,7 @@ public class Calendar extends JQueryContainer implements ICalendarListener
 	}
 
 	@Override
-	public boolean isViewDisplayEnabled()
+	public boolean isViewRenderEnabled()
 	{
 		return false;
 	}
@@ -208,7 +208,7 @@ public class Calendar extends JQueryContainer implements ICalendarListener
 	}
 
 	@Override
-	public void onViewDisplay(AjaxRequestTarget target, CalendarView view)
+	public void onViewRender(AjaxRequestTarget target, CalendarView view)
 	{
 	}
 
@@ -249,9 +249,9 @@ public class Calendar extends JQueryContainer implements ICalendarListener
 			}
 
 			@Override
-			public boolean isViewDisplayEnabled()
+			public boolean isViewRenderEnabled()
 			{
-				return Calendar.this.isViewDisplayEnabled();
+				return Calendar.this.isViewRenderEnabled();
 			}
 
 			@Override
@@ -285,9 +285,9 @@ public class Calendar extends JQueryContainer implements ICalendarListener
 			}
 
 			@Override
-			public void onViewDisplay(AjaxRequestTarget target, CalendarView view)
+			public void onViewRender(AjaxRequestTarget target, CalendarView view)
 			{
-				Calendar.this.onViewDisplay(target, view);
+				Calendar.this.onViewRender(target, view);
 			}
 		};
 	}

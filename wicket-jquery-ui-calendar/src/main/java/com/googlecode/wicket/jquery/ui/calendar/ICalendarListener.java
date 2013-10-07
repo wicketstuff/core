@@ -62,11 +62,11 @@ interface ICalendarListener
 	boolean isEventResizeEnabled();
 
 	/**
-	 * Indicates whether the {@link #onViewDisplay(AjaxRequestTarget, CalendarView)} event will be triggered
+	 * Indicates whether the {@link #onViewRender(AjaxRequestTarget, CalendarView)} event will be triggered
 	 *
 	 * @return false by default
 	 */
-	boolean isViewDisplayEnabled();
+	boolean isViewRenderEnabled();
 
 
 	/**
@@ -123,10 +123,10 @@ interface ICalendarListener
 
 	/**
 	 * Triggered when the calendar loads and every time a different date-range is displayed.
-	 * {@link #isViewDisplayEnabled()} should return true for this event to be triggered.
+	 * {@link #isViewRenderEnabled()} should return true for this event to be triggered.
 	 *
 	 * @param target the {@link AjaxRequestTarget}
 	 * @param view the current calendar view
 	 */
-	void onViewDisplay(AjaxRequestTarget target, CalendarView view);
+	void onViewRender(AjaxRequestTarget target, CalendarView view);
 }

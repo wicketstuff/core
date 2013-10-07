@@ -152,7 +152,7 @@ public abstract class CalendarBehavior extends JQueryBehavior implements IJQuery
 			component.add(this.onEventResizeBehavior = this.newOnEventResizeBehavior());
 		}
 
-		if (this.isViewDisplayEnabled())
+		if (this.isViewRenderEnabled())
 		{
 			component.add(this.onViewRenderBehavior = this.newOnViewRenderBehavior());
 		}
@@ -257,7 +257,7 @@ public abstract class CalendarBehavior extends JQueryBehavior implements IJQuery
 		else if (event instanceof ViewRenderEvent)
 		{
 			ViewRenderEvent renderEvent = (ViewRenderEvent) event;
-			this.onViewDisplay(target, renderEvent.getView());
+			this.onViewRender(target, renderEvent.getView());
 		}
 	}
 
