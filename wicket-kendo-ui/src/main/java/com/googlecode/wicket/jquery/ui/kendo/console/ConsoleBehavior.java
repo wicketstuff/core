@@ -107,6 +107,6 @@ public abstract class ConsoleBehavior extends JQueryAbstractBehavior
 	 */
 	protected String format(String message)
 	{
-		return message.replace("'", "''");
+		return message.replace("'", "\\'");
 	}
 }
