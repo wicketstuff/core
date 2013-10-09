@@ -67,6 +67,7 @@ import com.googlecode.wicket.jquery.ui.samples.pages.plugins.DefaultSnippetPage;
 import com.googlecode.wicket.jquery.ui.samples.pages.plugins.FontSizePage;
 import com.googlecode.wicket.jquery.ui.samples.pages.plugins.OptionSnippetPage;
 import com.googlecode.wicket.jquery.ui.samples.pages.plugins.WidgetSnippetPage;
+import com.googlecode.wicket.jquery.ui.samples.pages.plugins.sfmenu.DefaultSfMenuPage;
 import com.googlecode.wicket.jquery.ui.samples.pages.progressbar.ButtonProgressBarPage;
 import com.googlecode.wicket.jquery.ui.samples.pages.progressbar.DefaultProgressBarPage;
 import com.googlecode.wicket.jquery.ui.samples.pages.progressbar.SliderProgressBarPage;
@@ -166,6 +167,7 @@ public class SiteMapPage extends WebPage
 			RendererComboBoxPage.class,
 			DefaultResizablePage.class,
 			SecuredButtonPage.class,
+			DefaultSfMenuPage.class,
 			ShoppingDroppablePage.class,
 			SliderProgressBarPage.class,
 			TableDraggableSelectablePage.class,
