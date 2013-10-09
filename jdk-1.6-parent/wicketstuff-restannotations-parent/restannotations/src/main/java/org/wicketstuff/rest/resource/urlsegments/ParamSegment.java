@@ -23,63 +23,70 @@ import org.apache.wicket.util.parse.metapattern.MetaPattern;
 import org.apache.wicket.util.string.StringValue;
 
 /**
- * {@link StringValue} subtype that represents a mounted segment containing a
- * parameter's value (for example '/{id}/').
+ * {@link StringValue} subtype that represents a mounted segment containing a parameter's value (for
+ * example '/{id}/').
  * 
  * @author andrea del bene
  * 
  */
-public class ParamSegment extends AbstractURLSegment {
-	
+public class ParamSegment extends AbstractURLSegment
+{
+
 	final private String paramName;
-	
-	ParamSegment(String text) {
+
+	ParamSegment(String text)
+	{
 		super(text);
-		
+
 		this.paramName = loadParamName();
 	}
-	
+
 	@Override
-	public int calculateScore(String actualSegment) {
+	public int calculateScore(String actualSegment)
+	{
 		Matcher matcher = getMetaPattern().matcher(actualSegment);
-		
+
 		return matcher.matches() ? 1 : 0;
 	}
 
-	private String loadParamName() {
+	private String loadParamName()
+	{
 		String segmentContent = this.toString();
 		Matcher matcher = MetaPattern.VARIABLE_NAME.matcher(segmentContent);
-		
+
 		matcher.find();
 		return matcher.group();
 	}
-	
+
 	@Override
-	protected MetaPattern loadMetaPattern() {
+	protected MetaPattern loadMetaPattern()
+	{
 		String segmentContent = this.toString();
 		int semicolonIndex = segmentContent.indexOf(':');
-		
-		if(semicolonIndex < 0)
+
+		if (semicolonIndex < 0)
 			return MetaPattern.ANYTHING_NON_EMPTY;
-		
+
 		String regExp = segmentContent.substring(semicolonIndex + 1, segmentContent.length() - 1);
 		Matcher matcher = REGEXP_BODY.matcher(regExp);
-		
+
 		matcher.matches();
-		
+
 		String group = matcher.group();
-		
+
 		return new MetaPattern(group);
 	}
-	
+
 	@Override
-	public void populatePathVariables(Map<String, String> variables, String segment) {
+	public void populatePathVariables(Map<String, String> variables, String segment)
+	{
 		Matcher matcher = getMetaPattern().matcher(segment);
 		matcher.matches();
 		variables.put(paramName, matcher.group());
 	}
-	
-	public String getParamName() {
+
+	public String getParamName()
+	{
 		return paramName;
 	}
 }

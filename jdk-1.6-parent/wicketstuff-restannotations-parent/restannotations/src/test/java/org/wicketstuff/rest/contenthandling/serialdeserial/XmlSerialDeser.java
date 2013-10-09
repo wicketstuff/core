@@ -22,25 +22,29 @@ import javax.xml.bind.JAXB;
 
 import org.apache.wicket.request.cycle.RequestCycle;
 import org.apache.wicket.request.http.WebResponse;
-import org.wicketstuff.rest.contenthandling.mimetypes.RestMimeTypes;
+import org.wicketstuff.rest.contenthandling.RestMimeTypes;
 
-public class XmlSerialDeser extends TextualObjectSerialDeserial {
+public class XmlSerialDeser extends TextualObjectSerialDeserial
+{
 
-	public XmlSerialDeser() {
+	public XmlSerialDeser()
+	{
 		super("UTF-8", RestMimeTypes.APPLICATION_XML);
 	}
 
 	@Override
-	public String serializeObject(Object targetObject, String mimeType) {
-		 WebResponse response = (WebResponse) RequestCycle.get().getResponse();
-		 StringWriter stringWriter = new StringWriter();
-		 JAXB.marshal(targetObject, stringWriter);
-		 
-		 return stringWriter.toString();
+	public String serializeObject(Object targetObject, String mimeType)
+	{
+		WebResponse response = (WebResponse)RequestCycle.get().getResponse();
+		StringWriter stringWriter = new StringWriter();
+		JAXB.marshal(targetObject, stringWriter);
+
+		return stringWriter.toString();
 	}
 
 	@Override
-	public <T> T deserializeObject(String source, Class<T> targetClass, String mimeType) {
+	public <T> T deserializeObject(String source, Class<T> targetClass, String mimeType)
+	{
 		return JAXB.unmarshal(source, targetClass);
 	}
 }

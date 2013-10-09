@@ -14,30 +14,41 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-package org.wicketstuff.rest.annotations.parameters;
+package org.wicketstuff.rest;
 
-import java.lang.annotation.ElementType;
-import java.lang.annotation.Retention;
-import java.lang.annotation.RetentionPolicy;
-import java.lang.annotation.Target;
 
-/**
- * This annotation indicates that the value of a method parameter must be read from a given segment
- * as <a href="http://www.w3.org/DesignIssues/MatrixURIs.html">matrix parameter</a>.
- * 
- * @author andrea del bene
- * 
- */
-@Retention(RetentionPolicy.RUNTIME)
-@Target(ElementType.PARAMETER)
-@AnnotatedParam
-public @interface MatrixParam
-{
-	String parameterName();
+public class Person{
+	private String name;
+	private String surname;
+	private String email;
+	
+	public Person(){}
+	
+	public Person(String name, String surname, String email) {
+		this.name = name;
+		this.surname = surname;
+		this.email = email;
+	}
+	
+	public String getName() {
+		return name;
+	}
+	public String getSurname() {
+		return surname;
+	}
+	public String getEmail() {
+		return email;
+	}
 
-	int segmentIndex();
+	public void setName(String name) {
+		this.name = name;
+	}
 
-	boolean required() default true;
+	public void setSurname(String surname) {
+		this.surname = surname;
+	}
 
-	String defaultValue() default "";
+	public void setEmail(String email) {
+		this.email = email;
+	}
 }

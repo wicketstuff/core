@@ -22,17 +22,19 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * This annotation indicates that the value of a method parameter
- * must be read from a cookie.
+ * This annotation indicates that the value of a method parameter must be read from a cookie.
  * 
  * @author andrea del bene
- *
+ * 
  */
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.PARAMETER)
 @AnnotatedParam
-public @interface CookieParam{
+public @interface CookieParam
+{
 	String value();
+
 	boolean required() default true;
-    String defaultValue() default "";
+
+	String defaultValue() default "";
 }

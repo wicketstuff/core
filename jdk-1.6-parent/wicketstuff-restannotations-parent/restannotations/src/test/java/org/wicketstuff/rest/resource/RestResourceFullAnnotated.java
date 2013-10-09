@@ -25,6 +25,7 @@ import junit.framework.Assert;
 
 import org.apache.wicket.authroles.authorization.strategies.role.IRoleCheckingStrategy;
 import org.apache.wicket.util.lang.Args;
+import org.apache.wicket.validation.validator.EmailAddressValidator;
 import org.wicketstuff.rest.Person;
 import org.wicketstuff.rest.annotations.AuthorizeInvocation;
 import org.wicketstuff.rest.annotations.MethodMapping;
@@ -34,69 +35,89 @@ import org.wicketstuff.rest.annotations.parameters.MatrixParam;
 import org.wicketstuff.rest.annotations.parameters.PathParam;
 import org.wicketstuff.rest.annotations.parameters.RequestBody;
 import org.wicketstuff.rest.annotations.parameters.RequestParam;
-import org.wicketstuff.rest.contenthandling.mimetypes.RestMimeTypes;
+import org.wicketstuff.rest.annotations.parameters.ValidatorKey;
+import org.wicketstuff.rest.contenthandling.RestMimeTypes;
 import org.wicketstuff.rest.contenthandling.serialdeserial.TestJsonDesSer;
 import org.wicketstuff.rest.utils.http.HttpMethod;
 
-public class RestResourceFullAnnotated extends AbstractRestResource<TestJsonDesSer> {
+public class RestResourceFullAnnotated extends AbstractRestResource<TestJsonDesSer>
+{
 	public RestResourceFullAnnotated(TestJsonDesSer jsonSerialDeserial,
-			IRoleCheckingStrategy roleCheckingStrategy) {
+		IRoleCheckingStrategy roleCheckingStrategy)
+	{
 		super(jsonSerialDeserial, roleCheckingStrategy);
 	}
 
-	public RestResourceFullAnnotated(TestJsonDesSer jsonSerialDeserial) {
+	public RestResourceFullAnnotated(TestJsonDesSer jsonSerialDeserial)
+	{
 		super(jsonSerialDeserial);
 	}
 
+	@Override
+	protected void onInitialize(TestJsonDesSer objSerialDeserial)
+	{
+		EmailAddressValidator emailValidator = EmailAddressValidator.getInstance();
+
+		registerValidator("emailvalidator", emailValidator);
+	}
+
 	/**
-	 * Method for GET requests and URLs like '<resource path>/5'. The id
-	 * parameter is automatically extracted from URL.
+	 * Method for GET requests and URLs like '<resource path>/5'. The id parameter is automatically
+	 * extracted from URL.
 	 */
 	@MethodMapping(value = "/{id}", produces = RestMimeTypes.TEXT_PLAIN)
-	public int testMethodInt(int id) {
+	public int testMethodInt(int id)
+	{
 		return id;
 	}
 
 	/**
-	 * Method invoked for GET requests and URLs like '<resource path>/5' The id
-	 * parameter is automatically extracted from URL The person parameter is
-	 * automatically deserialized from request body (which is JSON) The returned
-	 * object is automatically serialized to JSON and written in the response
+	 * Method invoked for GET requests and URLs like '<resource path>/5' The id parameter is
+	 * automatically extracted from URL The person parameter is automatically deserialized from
+	 * request body (which is JSON) The returned object is automatically serialized to JSON and
+	 * written in the response
 	 */
 	@MethodMapping(value = "/{id}", httpMethod = HttpMethod.POST)
-	public Person testMethodPostComplex(int id, @RequestBody Person person) {
+	public Person testMethodPostComplex(int id, @RequestBody Person person)
+	{
 		return person;
 	}
 
 	@MethodMapping(value = "/boolean/{boolean}", httpMethod = HttpMethod.GET, produces = RestMimeTypes.TEXT_PLAIN)
-	public String testMethodPostBoolean(boolean value) {
+	public String testMethodPostBoolean(boolean value)
+	{
 		return "testMethodPostBoolean:" + value;
 	}
 
 	@MethodMapping(value = "/monoseg", httpMethod = HttpMethod.POST, produces = RestMimeTypes.TEXT_PLAIN)
-	public String testMethodPostSegFixed() {
+	public String testMethodPostSegFixed()
+	{
 		return "testMethodPostSegFixed";
 	}
 
 	@MethodMapping(value = "/", produces = RestMimeTypes.TEXT_PLAIN)
-	public String testMethodNoArgs() {
+	public String testMethodNoArgs()
+	{
 		return "testMethodNoArgs";
 	}
 
 	@MethodMapping(value = "/", httpMethod = HttpMethod.POST)
-	public Person testMethodPost() {
+	public Person testMethodPost()
+	{
 		Person person = createTestPerson();
 		return person;
 	}
 
-	@MethodMapping(value = "/admin", httpMethod = HttpMethod.GET)
+	@MethodMapping(value = "/admin", produces = RestMimeTypes.TEXT_PLAIN)
 	@AuthorizeInvocation("ROLE_ADMIN")
-	public void testMethodAdminAuth() {
-
+	public String testMethodAdminAuth()
+	{
+		return "testMethodAdminAuth";
 	}
 
 	@MethodMapping(value = "/products/{id}", produces = RestMimeTypes.TEXT_PLAIN)
-	public String testMethodGetParameter(int productId, @RequestParam("price") float prodPrice) {
+	public String testMethodGetParameter(int productId, @RequestParam("price") float prodPrice)
+	{
 		Args.notNull(productId, "productId");
 		Args.notNull(prodPrice, "price");
 
@@ -104,7 +125,8 @@ public class RestResourceFullAnnotated extends AbstractRestResource<TestJsonDesS
 	}
 
 	@MethodMapping(value = "/book/{id}", produces = RestMimeTypes.TEXT_PLAIN)
-	public String testMethodHeaderParameter(int productId, @HeaderParam("price") float prodPrice) {
+	public String testMethodHeaderParameter(int productId, @HeaderParam("price") float prodPrice)
+	{
 		Args.notNull(productId, "productId");
 		Args.notNull(prodPrice, "price");
 
@@ -113,7 +135,8 @@ public class RestResourceFullAnnotated extends AbstractRestResource<TestJsonDesS
 
 	@MethodMapping(value = "/person/{id}", httpMethod = HttpMethod.POST, produces = RestMimeTypes.TEXT_PLAIN)
 	public String testMethodCookieParameter(@CookieParam("name") String name, int id,
-			@MatrixParam(segmentIndex = 1, parameterName = "height") float height) {
+		@MatrixParam(segmentIndex = 1, parameterName = "height") float height)
+	{
 		Args.notNull(id, "id");
 		Args.notNull(name, "name");
 		Args.notNull(height, "name");
@@ -122,7 +145,8 @@ public class RestResourceFullAnnotated extends AbstractRestResource<TestJsonDesS
 	}
 
 	@MethodMapping(value = "/book/{id}", httpMethod = HttpMethod.POST, produces = RestMimeTypes.TEXT_PLAIN)
-	public String testPostRequestParameter(int productId, @RequestParam("title") String title) {
+	public String testPostRequestParameter(int productId, @RequestParam("title") String title)
+	{
 		Args.notNull(productId, "productId");
 		Args.notNull(title, "title");
 
@@ -131,7 +155,8 @@ public class RestResourceFullAnnotated extends AbstractRestResource<TestJsonDesS
 
 	@MethodMapping(value = "/param/{id}/annotated/{name}", httpMethod = HttpMethod.POST, produces = RestMimeTypes.TEXT_PLAIN)
 	public String testAnnotatedParameters(int id, @TestAnnotation String name,
-			@TestAnnotation @RequestParam("title") String title) {
+		@TestAnnotation @RequestParam("title") String title)
+	{
 		Args.notNull(id, "id");
 		Args.notNull(name, "name");
 		Args.notNull(title, "title");
@@ -140,40 +165,53 @@ public class RestResourceFullAnnotated extends AbstractRestResource<TestJsonDesS
 	}
 
 	@MethodMapping(value = "/test/with/headerparams", httpMethod = HttpMethod.POST, produces = RestMimeTypes.TEXT_PLAIN)
-	public String testHeaderParams(@HeaderParam("credential") String credential) {
+	public String testHeaderParams(@HeaderParam("credential") String credential)
+	{
 		Args.notNull(credential, "credential");
-		
+
 		return "testHeaderParams";
 	}
-	
+
 	@MethodMapping(value = "/variable/{p1}/order/{p2}", produces = RestMimeTypes.TEXT_PLAIN)
-	public String testParamOutOfOrder(@PathParam("p2") String textParam, @PathParam("p1") int intParam) {
+	public String testParamOutOfOrder(@PathParam("p2") String textParam,
+		@PathParam("p1") int intParam)
+	{
 		Args.notNull(textParam, "textParam");
 		Args.notNull(intParam, "intParam");
-		
+
 		return "testParamOutOfOrder";
 	}
-	
+
+	@MethodMapping(value = "/emailvalidator", produces = RestMimeTypes.TEXT_PLAIN)
+	public String testEmailValidator(
+		@RequestParam("email") @ValidatorKey("emailvalidator") String email)
+	{
+		return email;
+	}
+
 	@MethodMapping(value = "/testreqdef", produces = RestMimeTypes.TEXT_PLAIN)
 	public String testRequiredDefault(
-			@RequestParam(value = "fromRequest", required = false) String request,
-			@CookieParam(value = "cookie", defaultValue = "true") boolean cookie,
-			@HeaderParam(value = "price", defaultValue = "12.6") float price,
-			@MatrixParam(parameterName = "matrixp", segmentIndex = 0, required = false, defaultValue = "0") int matrixp) {
-		
+		@RequestParam(value = "fromRequest", required = false) String request,
+		@CookieParam(value = "cookie", defaultValue = "true") boolean cookie,
+		@HeaderParam(value = "price", defaultValue = "12.6") float price,
+		@MatrixParam(parameterName = "matrixp", segmentIndex = 0, required = false, defaultValue = "0") int matrixp)
+	{
+
 		Args.isTrue(request == null, "must be null!");
 		Args.isTrue(cookie, "must be true!");
 		Assert.assertEquals(Float.parseFloat("12.6"), price);
-		
+
 		return "testRequiredDefault";
 	}
-	
-	public static Person createTestPerson() {
+
+	public static Person createTestPerson()
+	{
 		return new Person("Mary", "Smith", "m.smith@gmail.com");
 	}
 }
 
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.PARAMETER)
-@interface TestAnnotation {
+@interface TestAnnotation
+{
 }

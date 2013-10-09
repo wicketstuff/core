@@ -37,8 +37,7 @@ import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
-import org.wicketstuff.rest.annotations.parameters.RequestBody;
-import org.wicketstuff.rest.contenthandling.mimetypes.RestMimeTypes;
+import org.wicketstuff.rest.contenthandling.RestMimeTypes;
 import org.wicketstuff.rest.contenthandling.serialdeserial.TestJsonDesSer;
 import org.wicketstuff.rest.resource.RestResourceFullAnnotated;
 import org.wicketstuff.rest.utils.test.BufferedMockRequest;
@@ -46,7 +45,8 @@ import org.wicketstuff.rest.utils.test.BufferedMockRequest;
 /**
  * Simple test using the WicketTester
  */
-public class RestResourcesTest {
+public class RestResourcesTest
+{
 	private WicketTester tester;
 	private Roles roles = new Roles();
 
@@ -54,19 +54,22 @@ public class RestResourcesTest {
 	public ExpectedException exception = ExpectedException.none();
 
 	@Before
-	public void setUp() {
+	public void setUp()
+	{
 		tester = new WicketTester(new WicketApplication(roles));
 	}
-	
+
 	@After
-	public void tearDown(){
-		//session must remain temporary.
+	public void tearDown()
+	{
+		// session must remain temporary.
 		Assert.assertTrue(Session.get().isTemporary());
 		tester.destroy();
 	}
-	
+
 	@Test
-	public void testMethodParametersTypeResolving() {
+	public void testMethodParametersTypeResolving()
+	{
 		// start and render the test page
 		tester.getRequest().setMethod("GET");
 		tester.executeUrl("./api");
@@ -75,11 +78,11 @@ public class RestResourcesTest {
 		tester.getRequest().setMethod("GET");
 		tester.executeUrl("./api/12345");
 		testIfResponseStringIsEqual("12345");
-		
+
 		tester.getRequest().setMethod("GET");
 		tester.executeUrl("./api/hjjzj");
 		Assert.assertEquals(400, tester.getLastResponse().getStatus());
-		
+
 		tester.getRequest().setMethod("POST");
 		tester.executeUrl("./api/monoseg");
 		testIfResponseStringIsEqual("testMethodPostSegFixed");
@@ -102,34 +105,36 @@ public class RestResourcesTest {
 		tester.getRequest().setParameter("title", "The divine comedy.");
 		tester.executeUrl("./api/book/113");
 		testIfResponseStringIsEqual("testPostRequestParameter");
-		
+
 		tester.getRequest().setMethod("POST");
 		tester.getRequest().setHeader("credential", "bob");
 		tester.executeUrl("./api/test/with/headerparams");
 		testIfResponseStringIsEqual("testHeaderParams");
-		
+
 		tester.getRequest().setMethod("GET");
 		tester.executeUrl("./api/variable/31/order/segtext");
 		testIfResponseStringIsEqual("testParamOutOfOrder");
-		
+
 		tester.getRequest().setMethod("GET");
 		tester.executeUrl("./api/testreqdef");
 		testIfResponseStringIsEqual("testRequiredDefault");
 	}
 
 	@Test
-	public void testJsonDeserializedParamRequest() {
-		// test @RequestBody annotation 
-		BufferedMockRequest jsonMockRequest = new BufferedMockRequest(tester.getApplication(), tester.getHttpSession(),
-				tester.getServletContext(), "POST");
+	public void testJsonDeserializedParamRequest()
+	{
+		// test @RequestBody annotation
+		BufferedMockRequest jsonMockRequest = new BufferedMockRequest(tester.getApplication(),
+			tester.getHttpSession(), tester.getServletContext(), "POST");
 		jsonMockRequest.setReader(new BufferedReader(new StringReader(TestJsonDesSer.getJSON())));
-	
+
 		tester.setRequest(jsonMockRequest);
 		tester.executeUrl("./api/19");
 	}
 
 	@Test
-	public void testJsonSerializedResponse() {
+	public void testJsonSerializedResponse()
+	{
 		// test JSON response
 		tester.getRequest().setMethod("POST");
 		tester.executeUrl("./api");
@@ -138,66 +143,96 @@ public class RestResourcesTest {
 	}
 
 	@Test
-	public void rolesAuthorizationMethod() {
-		roles.add("ROLE_ADMIN");
-		tester.getRequest().setMethod("GET");
-		tester.executeUrl("./api/admin");
-		Assert.assertEquals(200, tester.getLastResponse().getStatus());
-		//without roles must get a 401 HTTP code (user unauthorized)
+	public void rolesAuthorizationMethod()
+	{
+		// without roles must get a 401 HTTP code (user unauthorized)
 		roles.clear();
 		tester.getRequest().setMethod("GET");
 		tester.executeUrl("./api/admin");
 		Assert.assertEquals(401, tester.getLastResponse().getStatus());
+		testIfResponseStringIsEqual("");
+
+		// add the role to pass the test
+		roles.add("ROLE_ADMIN");
+		tester.getRequest().setMethod("GET");
+		tester.executeUrl("./api/admin");
+		Assert.assertEquals(200, tester.getLastResponse().getStatus());
+		testIfResponseStringIsEqual("testMethodAdminAuth");
 	}
 
 	@Test
-	public void testRoleCheckinRequired() {
+	public void testValidator()
+	{
+		tester.getRequest().setMethod("GET");
+		tester.getRequest().setParameter("email", "noMailValue");
+		tester.executeUrl("./api/emailvalidator");
+		testIfResponseStringIsEqual("");
+
+		String errorMessage = tester.getLastResponse().getErrorMessage();
+		assertEquals("The value inserted as email is not valid.", errorMessage);
+
+		String email = "avalid@mail.com";
+
+		tester.getRequest().setMethod("GET");
+		tester.getRequest().setParameter("email", email);
+		tester.executeUrl("./api/emailvalidator");
+		testIfResponseStringIsEqual(email);
+
+	}
+
+	@Test
+	public void testRoleCheckinRequired()
+	{
 		// RestResourceFullAnnotated uses annotation AuthorizeInvocation
 		// hence it needs a roleCheckingStrategy to be built
 		exception.expect(WicketRuntimeException.class);
-		RestResourceFullAnnotated restResourceFullAnnotated = new RestResourceFullAnnotated(
-				new TestJsonDesSer());
+		new RestResourceFullAnnotated(new TestJsonDesSer());
 	}
 
 	@Test
-	public void testMethodParamWithOtherAnnotations() {
+	public void testMethodParamWithOtherAnnotations()
+	{
 		tester.getRequest().setMethod("POST");
 		tester.getRequest().setParameter("title", "The divine comedy.");
 		tester.executeUrl("./api/param/31/annotated/james");
 
 		testIfResponseStringIsEqual("testAnnotatedParameters");
 	}
-	
+
 	@Test
-	public void testRegExpResource() throws Exception {
+	public void testRegExpResource() throws Exception
+	{
 		tester.getRequest().setMethod("GET");
 		tester.getRequest().setCookies(new Cookie[] { new Cookie("credential", "bob") });
 		tester.executeUrl("./api2/recordlog/message/07-23-2007_success");
 
 		Assert.assertEquals(200, tester.getLastResponse().getStatus());
-		
+
 		tester.getRequest().setMethod("GET");
 		tester.getRequest().setCookies(new Cookie[] { new Cookie("credential", "bob") });
 		tester.executeUrl("./api2/recordlog/message/34xxxxx");
-		
+
 		Assert.assertEquals(400, tester.getLastResponse().getStatus());
 	}
 
 	@Test
-	public void testMultiFormat() throws Exception {
+	public void testMultiFormat() throws Exception
+	{
 		tester.getRequest().setMethod("GET");
 		tester.executeUrl("./api3/person");
-		
+
 		assertEquals(RestMimeTypes.APPLICATION_XML, tester.getLastResponse().getContentType());
-		
-		StringWriter writer = new StringWriter();  
-	    StreamResult result = new StreamResult(writer);
-	    
+
+		StringWriter writer = new StringWriter();
+		StreamResult result = new StreamResult(writer);
+
 		JAXB.marshal(RestResourceFullAnnotated.createTestPerson(), result);
-		
+
 		assertEquals(writer.toString(), tester.getLastResponseAsString());
 	}
-	protected void testIfResponseStringIsEqual(String value) {
+
+	protected void testIfResponseStringIsEqual(String value)
+	{
 		Assert.assertEquals(value, tester.getLastResponseAsString());
 	}
 }

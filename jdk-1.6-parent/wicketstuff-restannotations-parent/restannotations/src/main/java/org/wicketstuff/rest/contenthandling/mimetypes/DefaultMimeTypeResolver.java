@@ -21,32 +21,36 @@ import org.apache.wicket.util.lang.Args;
 import org.wicketstuff.rest.annotations.MethodMapping;
 
 /**
- * Default implementation for interface {@link IMimeTypeResolver} that uses
- * annotation {@link MethodMapping}.
+ * Default implementation for interface {@link IMimeTypeResolver} that uses annotation
+ * {@link MethodMapping}.
  * 
  * @author andrea del bene
  * 
  */
-public class DefaultMimeTypeResolver implements IMimeTypeResolver {
+public class DefaultMimeTypeResolver implements IMimeTypeResolver
+{
 	/** The MIME type to use in input. */
 	private final String inputFormat;
 	/** The MIME type to use in output. */
 	private final String outputFormat;
 
-	public DefaultMimeTypeResolver(MethodMapping methodMapped) {
+	public DefaultMimeTypeResolver(MethodMapping methodMapped)
+	{
 		Args.notNull(methodMapped, "methodMapped");
-				
+
 		this.inputFormat = methodMapped.consumes();
 		this.outputFormat = methodMapped.produces();
 	}
 
 	@Override
-	public String getInputFormat() {
+	public String getInputFormat()
+	{
 		return inputFormat;
 	}
 
 	@Override
-	public String getOutputFormat() {
+	public String getOutputFormat()
+	{
 		return outputFormat;
 	}
 

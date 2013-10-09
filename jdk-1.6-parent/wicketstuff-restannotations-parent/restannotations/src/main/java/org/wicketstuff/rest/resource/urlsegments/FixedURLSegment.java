@@ -25,21 +25,25 @@ import org.apache.wicket.util.parse.metapattern.MetaPattern;
  * Segment class for segments without path parameter (i.e. with a fixed value).
  * 
  * @author andrea del bene
- *
+ * 
  */
-public class FixedURLSegment extends AbstractURLSegment {
+public class FixedURLSegment extends AbstractURLSegment
+{
 
-	FixedURLSegment(String text) {
+	FixedURLSegment(String text)
+	{
 		super(text);
 	}
 
 	@Override
-	protected MetaPattern loadMetaPattern() {
+	protected MetaPattern loadMetaPattern()
+	{
 		return new MetaPattern(Pattern.quote(this.toString()));
 	}
 
 	@Override
-	public int calculateScore(String segment) {
+	public int calculateScore(String segment)
+	{
 		if (segment.equals(this.toString()))
 			return 2;
 
@@ -47,7 +51,8 @@ public class FixedURLSegment extends AbstractURLSegment {
 	}
 
 	@Override
-	public void populatePathVariables(Map<String, String> variables, String segment) {
+	public void populatePathVariables(Map<String, String> variables, String segment)
+	{
 		// I don'have path variables, I do nothing
 	}
 

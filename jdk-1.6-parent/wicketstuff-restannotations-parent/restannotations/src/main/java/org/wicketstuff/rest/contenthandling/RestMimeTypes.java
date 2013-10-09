@@ -14,30 +14,37 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-package org.wicketstuff.rest.annotations.parameters;
-
-import java.lang.annotation.ElementType;
-import java.lang.annotation.Retention;
-import java.lang.annotation.RetentionPolicy;
-import java.lang.annotation.Target;
+package org.wicketstuff.rest.contenthandling;
 
 /**
- * This annotation indicates that the value of a method parameter must be read from a given segment
- * as <a href="http://www.w3.org/DesignIssues/MatrixURIs.html">matrix parameter</a>.
+ * Utility class that contains constant values for MIME types.
  * 
  * @author andrea del bene
  * 
  */
-@Retention(RetentionPolicy.RUNTIME)
-@Target(ElementType.PARAMETER)
-@AnnotatedParam
-public @interface MatrixParam
+public class RestMimeTypes
 {
-	String parameterName();
+	public static final String APPLICATION_RSS_XML = "application/rss+xml";
 
-	int segmentIndex();
+	public static final String TEXT_CSS = "text/css";
 
-	boolean required() default true;
+	public static final String TEXT_CSV = "text/csv";
 
-	String defaultValue() default "";
+	public static final String TEXT_PLAIN = "text/plain";
+
+	public static final String TEXT_HTML = "text/html";
+
+	public static final String APPLICATION_XML = "application/xml";
+
+	public static final String TEXT_XML = "text/xml";
+
+	public static final String APPLICATION_JSON = "application/json";
+
+	public static final String IMAGE_GIF = "image/gif";
+
+	public static final String IMAGE_JPEG = "image/jpeg";
+
+	public static final String IMAGE_PNG = "image/png";
+
+	public static final String OCTET_STREAM = "application/octet-stream";
 }

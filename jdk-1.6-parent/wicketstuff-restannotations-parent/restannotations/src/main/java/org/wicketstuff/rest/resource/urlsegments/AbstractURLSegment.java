@@ -32,48 +32,49 @@ import org.apache.wicket.util.parse.metapattern.parsers.VariableAssignmentParser
 import org.apache.wicket.util.string.StringValue;
 
 /**
- * Base class to contain the informations of the segments that compose the URL
- * used to map a method. It's used to use simple segments with no path
- * parameters.
+ * Base class to contain the informations of the segments that compose the URL used to map a method.
+ * It's used to use simple segments with no path parameters.
  * 
  * @author andrea del bene
  * 
  */
-public abstract class AbstractURLSegment extends StringValue {
+public abstract class AbstractURLSegment extends StringValue
+{
 	/** MetaPattern to identify the content of a regular expression. */
 	public static final MetaPattern REGEXP_BODY = new MetaPattern("([^\\}\\{]*|(\\{[\\d]+\\}))*");
 	/** MetaPattern to identify the declaration of a regular expression. */
 	public static final MetaPattern REGEXP_DECLARATION = new MetaPattern(COLON, REGEXP_BODY);
 	/**
-	 * MetaPattern to identify a path parameter inside a segment (i.e.
-	 * "{paramName:regexp}")
+	 * MetaPattern to identify a path parameter inside a segment (i.e. "{paramName:regexp}")
 	 */
 	public static final MetaPattern SEGMENT_PARAMETER = new MetaPattern(LEFT_CURLY, VARIABLE_NAME,
-			new OptionalMetaPattern(REGEXP_DECLARATION), RIGHT_CURLY);
+		new OptionalMetaPattern(REGEXP_DECLARATION), RIGHT_CURLY);
 
 	/** The MetaPattern (i.e regular expression) corresponding to the current segment. */
 	private final MetaPattern metaPattern;
 
-	AbstractURLSegment(String text) {
+	AbstractURLSegment(String text)
+	{
 		super(text);
 		this.metaPattern = loadMetaPattern();
 	}
-	
+
 	/**
 	 * Method invoked to load the MetaPattern for the current segment.
 	 * 
-	 * @return
-	 * 		the MetaPattern for the current segment.
+	 * @return the MetaPattern for the current segment.
 	 */
 	protected abstract MetaPattern loadMetaPattern();
 
 	/**
 	 * Factory method to create new instances of AbstractURLSegment.
 	 * 
-	 * @param segment The content of the new segment.
+	 * @param segment
+	 *            The content of the new segment.
 	 * @return the new instance of AbstractURLSegment.
 	 */
-	static public AbstractURLSegment newSegment(String segment) {
+	static public AbstractURLSegment newSegment(String segment)
+	{
 		if (SEGMENT_PARAMETER.matcher(segment).matches())
 			return new ParamSegment(segment);
 
@@ -84,28 +85,25 @@ public abstract class AbstractURLSegment extends StringValue {
 	}
 
 	/**
-	 * This method checks if a given string is compatible with the current
-	 * segment.
+	 * This method checks if a given string is compatible with the current segment.
 	 * 
 	 * @param segment
-	 * @return an integer positive value if the string in input is compatible
-	 *         with the current segment, 0 otherwise. Segments of type
-	 *         FixedURLSegment have the priority over the other types of
-	 *         segment. That's why positive matches has a score of 2 if the
-	 *         method is invoked on a FixedURLSegment, while it returns 1 for
-	 *         the other types of segment.
+	 * @return an integer positive value if the string in input is compatible with the current
+	 *         segment, 0 otherwise. Segments of type FixedURLSegment have the priority over the
+	 *         other types of segment. That's why positive matches has a score of 2 if the method is
+	 *         invoked on a FixedURLSegment, while it returns 1 for the other types of segment.
 	 */
 	public abstract int calculateScore(String segment);
 
 	/**
-	 * Get the segment value without optional matrix parameters. For example
-	 * given the following value 'segment;parm=value', the function returns
-	 * 'segment'.
+	 * Get the segment value without optional matrix parameters. For example given the following
+	 * value 'segment;parm=value', the function returns 'segment'.
 	 * 
 	 * @param fullSegment
 	 * @return the value of the segment without matrix parameters.
 	 */
-	static public String getActualSegment(String fullSegment) {
+	static public String getActualSegment(String fullSegment)
+	{
 		String[] segmentParts = fullSegment.split(MetaPattern.SEMICOLON.toString());
 		return segmentParts[0];
 	}
@@ -117,14 +115,16 @@ public abstract class AbstractURLSegment extends StringValue {
 	 *            the segment in input.
 	 * @return a map containing matrix parameters.
 	 */
-	static public Map<String, String> getSegmentMatrixParameters(String fullSegment) {
+	static public Map<String, String> getSegmentMatrixParameters(String fullSegment)
+	{
 		String[] segmentParts = fullSegment.split(MetaPattern.SEMICOLON.toString());
 		HashMap<String, String> matrixParameters = new HashMap<String, String>();
 
 		if (segmentParts.length < 2)
 			return matrixParameters;
 
-		for (int i = 1; i < segmentParts.length; i++) {
+		for (int i = 1; i < segmentParts.length; i++)
+		{
 			String parameterDeclar = segmentParts[i];
 			VariableAssignmentParser parser = new VariableAssignmentParser(parameterDeclar);
 
@@ -136,20 +136,21 @@ public abstract class AbstractURLSegment extends StringValue {
 	}
 
 	/**
-	 * With this method every segment contributes to extract path parameters
-	 * from the current request URL.
+	 * With this method every segment contributes to extract path parameters from the current
+	 * request URL.
 	 * 
 	 * @param variables
-	 * 				the Map object containing the extracted parameters.
+	 *            the Map object containing the extracted parameters.
 	 * @param segment
-	 * 				the value of the current segment.
+	 *            the value of the current segment.
 	 */
 	public abstract void populatePathVariables(Map<String, String> variables, String segment);
 
 	/**
 	 * Getter method for segment MetaPattern.
 	 **/
-	public final MetaPattern getMetaPattern() {
+	public final MetaPattern getMetaPattern()
+	{
 		return metaPattern;
 	}
 }

@@ -22,17 +22,19 @@ import java.lang.annotation.Inherited;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
+
 /**
  * Annotation to apply role-based authorization to resource methods.
  * 
  * @author andrea del bene
- *
+ * 
  */
 @Retention(RetentionPolicy.RUNTIME)
-@Target({ ElementType.METHOD})
+@Target({ ElementType.METHOD })
 @Inherited
-public @interface AuthorizeInvocation {
-	
+public @interface AuthorizeInvocation
+{
+
 	/**
 	 * Gets the roles that are allowed to invoke a method.
 	 * 

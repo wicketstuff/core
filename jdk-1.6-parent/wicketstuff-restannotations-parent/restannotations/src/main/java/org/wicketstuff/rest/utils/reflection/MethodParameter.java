@@ -19,31 +19,35 @@ package org.wicketstuff.rest.utils.reflection;
 import java.lang.annotation.Annotation;
 
 import org.apache.wicket.util.lang.Args;
+import org.wicketstuff.rest.annotations.parameters.ValidatorKey;
 import org.wicketstuff.rest.resource.MethodMappingInfo;
 
 // TODO: Auto-generated Javadoc
 /**
- * The class contains the informations of a method parameter, like its type or
- * its index in the array of method parameters.
+ * The class contains the informations of a method parameter, like its type or its index in the
+ * array of method parameters.
  * 
  * @author andrea del bene
  */
-public class MethodParameter {
+public class MethodParameter<T>
+{
 
 	/** The parameter class. */
-	final private Class<?> parameterClass;
+	private final Class<T> parameterClass;
 
 	/** The owner method. */
-	final private MethodMappingInfo ownerMethod;
+	private final MethodMappingInfo ownerMethod;
 
 	/** The param index. */
-	final private int paramIndex;
+	private final int paramIndex;
 
 	/** Indicates if the parameter is required or not. */
-	final private boolean required;
-	
+	private final boolean required;
+
 	/** Default value of the method parameter. */
-	final private String deaultValue;
+	private final String deaultValue;
+
+	private final String valdatorKey;
 
 	/**
 	 * Instantiates a new method parameter.
@@ -53,45 +57,37 @@ public class MethodParameter {
 	 * @param ownerMethod
 	 *            the owner method for the parameter.
 	 * @param paramIndex
-	 *            the index of the parameter in the array of method's
-	 *            parameters.
+	 *            the index of the parameter in the array of method's parameters.
 	 */
-	public MethodParameter(Class<?> type, MethodMappingInfo ownerMethod, int paramIndex) {
+	public MethodParameter(Class<T> type, MethodMappingInfo ownerMethod, int paramIndex)
+	{
 		Args.notNull(type, "type");
 		Args.notNull(ownerMethod, "ownerMethod");
-		
+
 		this.parameterClass = type;
 		this.ownerMethod = ownerMethod;
 		this.paramIndex = paramIndex;
-		
-		this.required = loadParamAnnotationField("required", true);
-		this.deaultValue = loadParamAnnotationField("defaultValue", "");
+
+		Annotation annotation = ReflectionUtils.getAnnotationParam(paramIndex,
+			ownerMethod.getMethod());
+
+		this.required = ReflectionUtils.getAnnotationField(annotation, "required", true);
+		this.deaultValue = ReflectionUtils.getAnnotationField(annotation, "defaultValue", "");
+
+		annotation = ReflectionUtils.findMethodParameterAnnotation(ownerMethod.getMethod(),
+			paramIndex, ValidatorKey.class);
+
+		this.valdatorKey = ReflectionUtils.getAnnotationField(annotation, "value", "");
+
 	}
 
-	/**
-	 * Load param annotation field.
-	 *
-	 * @param <T> the generic type
-	 * @param fieldName the field name
-	 * @param defaultValue the default value
-	 * @return the t
-	 */
-	private <T> T loadParamAnnotationField(String fieldName, T defaultValue) {
-		Annotation annotation = ReflectionUtils.getAnnotationParam(paramIndex, ownerMethod.getMethod());
-		T methodResult = null;
-				
-		if(annotation != null)
-			methodResult = ReflectionUtils.invokeMethod(annotation, fieldName);
-		
-		return methodResult != null ? methodResult : defaultValue;
-	}
-	
 	/**
 	 * Gets the type of the method parameter.
 	 * 
 	 * @return the parameter class
 	 */
-	public Class<?> getParameterClass() {
+	public Class<?> getParameterClass()
+	{
 		return parameterClass;
 	}
 
@@ -100,7 +96,8 @@ public class MethodParameter {
 	 * 
 	 * @return the owner method
 	 */
-	public MethodMappingInfo getOwnerMethod() {
+	public MethodMappingInfo getOwnerMethod()
+	{
 		return ownerMethod;
 	}
 
@@ -109,26 +106,34 @@ public class MethodParameter {
 	 * 
 	 * @return the parameter index
 	 */
-	public int getParamIndex() {
+	public int getParamIndex()
+	{
 		return paramIndex;
 	}
 
 	/**
 	 * Checks if the parameter required.
-	 *
+	 * 
 	 * @return true, if is required
 	 */
-	public boolean isRequired() {
+	public boolean isRequired()
+	{
 		return required;
 	}
 
 	/**
 	 * Gets the deault value for the parameter.
-	 *
+	 * 
 	 * @return the deault value
 	 */
-	public String getDeaultValue() {
+	public String getDeaultValue()
+	{
 		return deaultValue;
+	}
+
+	public String getValdatorKey()
+	{
+		return valdatorKey;
 	}
 
 }

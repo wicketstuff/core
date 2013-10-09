@@ -22,18 +22,23 @@ import org.wicketstuff.rest.annotations.MethodMapping;
 import org.wicketstuff.rest.annotations.parameters.CookieParam;
 import org.wicketstuff.rest.contenthandling.serialdeserial.TestJsonDesSer;
 
-public class RegExpRestResource extends RestResourceFullAnnotated{
+public class RegExpRestResource extends RestResourceFullAnnotated
+{
 	public RegExpRestResource(TestJsonDesSer jsonSerialDeserial,
-			IRoleCheckingStrategy roleCheckingStrategy) {
+		IRoleCheckingStrategy roleCheckingStrategy)
+	{
 		super(jsonSerialDeserial, roleCheckingStrategy);
 	}
 
-	public RegExpRestResource(TestJsonDesSer jsonSerialDeserial) {
+	public RegExpRestResource(TestJsonDesSer jsonSerialDeserial)
+	{
 		super(jsonSerialDeserial);
 	}
 
 	@MethodMapping("recordlog/message/{day:\\d{2}}-{month:\\d{2}}-{year:\\d{4}}_{message}")
-	public void testLogMessage(@CookieParam("credential") String credential, int day, int month, int year, String message){
+	public void testLogMessage(@CookieParam("credential") String credential, int day, int month,
+		int year, String message)
+	{
 		Args.notNull(credential, "credential");
 		Args.notNull(day, "day");
 		Args.notNull(month, "month");

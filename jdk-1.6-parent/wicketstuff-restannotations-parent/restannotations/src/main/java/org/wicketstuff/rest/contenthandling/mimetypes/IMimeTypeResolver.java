@@ -17,13 +17,13 @@
 package org.wicketstuff.rest.contenthandling.mimetypes;
 
 /**
- * A generic resolver to retrieve the MIME types to use for a mapped method in
- * input and output.
+ * A generic resolver to retrieve the MIME types to use for a mapped method in input and output.
  * 
  * @author andrea del bene
  * 
  */
-public interface IMimeTypeResolver {
+public interface IMimeTypeResolver
+{
 	/**
 	 * Get the MIME type to use in input.
 	 * 

@@ -22,8 +22,9 @@ package org.wicketstuff.rest.contenthandling;
  * @author andrea del bene
  * 
  */
-public interface IObjectSerialDeserial<T>{
-	
+public interface IObjectSerialDeserial<T>
+{
+
 	/**
 	 * Returns a given representation of the target object.
 	 * 
@@ -34,14 +35,18 @@ public interface IObjectSerialDeserial<T>{
 	 * @return the representation of the object.
 	 */
 	public T serializeObject(Object target, String mimeType);
-	
+
 	/**
 	 * Extract an object instance from a given source object.
-	 *
-	 * @param <T> the source object type.
-	 * @param source the source object.
-	 * @param targetClass the type of the returned object.
-	 * @param mimeType the target MIME type.
+	 * 
+	 * @param <T>
+	 *            the source object type.
+	 * @param source
+	 *            the source object.
+	 * @param targetClass
+	 *            the type of the returned object.
+	 * @param mimeType
+	 *            the target MIME type.
 	 * @return the extracted object.
 	 */
 	public <E> E deserializeObject(T source, Class<E> targetClass, String mimeType);

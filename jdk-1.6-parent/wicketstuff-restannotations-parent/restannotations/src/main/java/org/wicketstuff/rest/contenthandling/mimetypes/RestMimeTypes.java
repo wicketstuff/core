@@ -20,9 +20,10 @@ package org.wicketstuff.rest.contenthandling.mimetypes;
  * Utility class that contains constant values for MIME types.
  * 
  * @author andrea del bene
- *
+ * 
  */
-public class RestMimeTypes {
+public class RestMimeTypes
+{
 	public static final String APPLICATION_RSS_XML = "application/rss+xml";
 
 	public static final String TEXT_CSS = "text/css";
@@ -34,16 +35,16 @@ public class RestMimeTypes {
 	public static final String TEXT_HTML = "text/html";
 
 	public static final String APPLICATION_XML = "application/xml";
-	
+
 	public static final String TEXT_XML = "text/xml";
-	
+
 	public static final String APPLICATION_JSON = "application/json";
-	
+
 	public static final String IMAGE_GIF = "image/gif";
-	
+
 	public static final String IMAGE_JPEG = "image/jpeg";
-	
+
 	public static final String IMAGE_PNG = "image/png";
-	
+
 	public static final String OCTET_STREAM = "application/octet-stream";
 }

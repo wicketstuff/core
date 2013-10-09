@@ -25,39 +25,42 @@ import org.apache.wicket.request.http.WebResponse;
  * @author andrea del bene
  * 
  */
-public interface IWebSerialDeserial {
+public interface IWebSerialDeserial
+{
 	/**
 	 * Write the object in input to the response converting it to a given MIME type.
 	 * 
 	 * @param targetObject
 	 *            the object instance to serialize to string.
 	 * @param response
-	 * 			  the response object.	           
+	 *            the response object.
 	 * @param mimeType
 	 *            the MIME type of the response.
-	 * @throws Exception 
+	 * @throws Exception
 	 */
-	public void objectToResponse(Object targetObject, WebResponse response, String mimeType) throws Exception;
+	public void objectToResponse(Object targetObject, WebResponse response, String mimeType)
+		throws Exception;
 
 	/**
 	 * Extract an instance of argClass form the request.
 	 * 
 	 * @param request
-	 * 			the request object.	
+	 *            the request object.
 	 * @param argClass
-	 * 			the type of the object we want to extract.
-	 * @param mimeType 
-	 * 			the MIME type of the request.
+	 *            the type of the object we want to extract.
+	 * @param mimeType
+	 *            the MIME type of the request.
 	 * 
 	 * @return the object extracted from the request.
 	 */
-	public <T> T requestToObject(WebRequest request, Class<T> argClass, String mimeType) throws Exception;
-	
+	public <T> T requestToObject(WebRequest request, Class<T> argClass, String mimeType)
+		throws Exception;
+
 	/**
 	 * Check if a given MIME type is handled.
 	 * 
 	 * @param mimeType
-	 * 			the MIME type we want to check.
+	 *            the MIME type we want to check.
 	 * @return true if the MIME type is supported, false otherwise.
 	 */
 	public boolean isMimeTypeSupported(String mimeType);

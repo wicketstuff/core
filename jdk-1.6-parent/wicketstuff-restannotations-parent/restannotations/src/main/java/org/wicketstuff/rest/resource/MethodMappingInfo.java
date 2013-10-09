@@ -24,34 +24,37 @@ import java.util.List;
 
 import org.apache.wicket.authroles.authorization.strategies.role.Roles;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
-import org.apache.wicket.util.lang.Args;
 import org.wicketstuff.rest.annotations.AuthorizeInvocation;
 import org.wicketstuff.rest.annotations.MethodMapping;
-import org.wicketstuff.rest.contenthandling.mimetypes.IMimeTypeResolver;
-import org.wicketstuff.rest.contenthandling.mimetypes.RestMimeTypes;
 import org.wicketstuff.rest.resource.urlsegments.AbstractURLSegment;
 import org.wicketstuff.rest.utils.http.HttpMethod;
+import org.wicketstuff.rest.utils.reflection.MethodParameter;
 
+// TODO: Auto-generated Javadoc
 /**
- * This class contains the informations of a resource mapped method (i.e. a
- * method annotated with {@link MethodMapping}). These informations are used at
- * runtime to select the most suited method to serve the current request.
+ * This class contains the informations of a resource mapped method (i.e. a method annotated with
+ * {@link MethodMapping}). These informations are used at runtime to select the most suited method
+ * to serve the current request.
  * 
  * @author andrea del bene
  * 
  */
-public class MethodMappingInfo {
+public class MethodMappingInfo
+{
 	/** The HTTP method used to invoke this mapped method. */
 	private final HttpMethod httpMethod;
 	/** Segments that compose the URL we mapped the method on. */
 	private final List<AbstractURLSegment> segments;
-	
 	/** Optional roles we used to annotate the method (see. {@link AuthorizeInvocation}). */
 	private final Roles roles;
 	/** The resource method we have mapped. */
 	private final Method method;
-	/** The MIME type resolver to use. */
-	private final IMimeTypeResolver mimeTypeResolver;
+	/** The MIME type to use in input. */
+	private final String inputFormat;
+	/** The MIME type to use in output. */
+	private final String outputFormat;
+	/** Method parameters list */
+	private final List<MethodParameter> methodParameters;
 
 	/**
 	 * Class constructor.
@@ -60,35 +63,47 @@ public class MethodMappingInfo {
 	 *            the method mapped
 	 * @param method
 	 *            the resource's method mapped.
-	 * @param resolverClass
-	 *            the class for the MIME type resolver to use
 	 */
-	public MethodMappingInfo(Method method, IMimeTypeResolver mimeTypeResolver) {
-		Args.notNull(method, "method");
-		Args.notNull(mimeTypeResolver, "mimeTypeResolver");
-		
-		MethodMapping methodMapped = method.getAnnotation(MethodMapping.class);
-		
+	public MethodMappingInfo(MethodMapping methodMapped, Method method)
+	{
 		this.httpMethod = methodMapped.httpMethod();
 		this.method = method;
-		this.mimeTypeResolver = mimeTypeResolver;
 		this.segments = Collections.unmodifiableList(loadSegments(methodMapped.value()));
 		this.roles = loadRoles();
+
+		this.inputFormat = methodMapped.consumes();
+		this.outputFormat = methodMapped.produces();
+		this.methodParameters = loadMethodParameters(method);
+	}
+
+	private List<MethodParameter> loadMethodParameters(Method method)
+	{
+		Class<?>[] paramsTypes = method.getParameterTypes();
+		List<MethodParameter> methodParameters = new ArrayList<MethodParameter>();
+
+		for (int i = 0; i < paramsTypes.length; i++)
+		{
+			methodParameters.add(new MethodParameter(paramsTypes[i], this, i));
+		}
+
+		return Collections.unmodifiableList(methodParameters);
 	}
 
 	/**
-	 * Loads the segment that compose the URL used to map the method. Segments
-	 * are instances of class {@link AbstractURLSegment}.
+	 * Loads the segment that compose the URL used to map the method. Segments are instances of
+	 * class {@link AbstractURLSegment}.
 	 * 
 	 * @param urlPath
 	 *            the URL path of the method.
 	 * @return a list containing the segments that compose the URL in input
 	 */
-	private List<AbstractURLSegment> loadSegments(String urlPath) {
+	private List<AbstractURLSegment> loadSegments(String urlPath)
+	{
 		String[] segArray = urlPath.split("/");
 		ArrayList<AbstractURLSegment> segments = new ArrayList<AbstractURLSegment>();
 
-		for (int i = 0; i < segArray.length; i++) {
+		for (int i = 0; i < segArray.length; i++)
+		{
 			String segment = segArray[i];
 			AbstractURLSegment segmentValue;
 
@@ -104,35 +119,38 @@ public class MethodMappingInfo {
 
 	/**
 	 * Load the optional roles used to annotate the method with.
-	 *
-	 * @return the authorization roles for the method.
-	 * {@link AuthorizeInvocation}
+	 * 
+	 * @return the authorization roles for the method. {@link AuthorizeInvocation}
 	 */
-	private Roles loadRoles() {
+	private Roles loadRoles()
+	{
 		AuthorizeInvocation authorizeInvocation = method.getAnnotation(AuthorizeInvocation.class);
 		Roles roles = new Roles();
 
-		if (authorizeInvocation != null) {
+		if (authorizeInvocation != null)
+		{
 			roles = new Roles(authorizeInvocation.value());
 		}
 		return roles;
 	}
 
 	/**
-	 * This method is invoked to populate the path parameters found in the
-	 * mapped URL with the values obtained from the current request.
+	 * This method is invoked to populate the path parameters found in the mapped URL with the
+	 * values obtained from the current request.
 	 * 
 	 * @param pageParameters
 	 *            the current PageParameters.
 	 * @return a Map containing the path parameters with their relative value.
 	 */
-	public LinkedHashMap<String, String> populatePathParameters(PageParameters pageParameters) {
+	public LinkedHashMap<String, String> populatePathParameters(PageParameters pageParameters)
+	{
 		LinkedHashMap<String, String> pathParameters = new LinkedHashMap<String, String>();
 		int indexedCount = pageParameters.getIndexedCount();
 
-		for (int i = 0; i < indexedCount; i++) {
+		for (int i = 0; i < indexedCount; i++)
+		{
 			String segmentContent = AbstractURLSegment.getActualSegment(pageParameters.get(i)
-					.toString());
+				.toString());
 			AbstractURLSegment segment = segments.get(i);
 
 			segment.populatePathVariables(pathParameters, segmentContent);
@@ -148,7 +166,8 @@ public class MethodMappingInfo {
 	 * 
 	 * @return the segments
 	 */
-	public List<AbstractURLSegment> getSegments() {
+	public List<AbstractURLSegment> getSegments()
+	{
 		return segments;
 	}
 
@@ -157,7 +176,8 @@ public class MethodMappingInfo {
 	 * 
 	 * @return the segments count
 	 */
-	public int getSegmentsCount() {
+	public int getSegmentsCount()
+	{
 		return segments.size();
 	}
 
@@ -166,7 +186,8 @@ public class MethodMappingInfo {
 	 * 
 	 * @return the HTTP method
 	 */
-	public HttpMethod getHttpMethod() {
+	public HttpMethod getHttpMethod()
+	{
 		return httpMethod;
 	}
 
@@ -175,7 +196,8 @@ public class MethodMappingInfo {
 	 * 
 	 * @return the class method
 	 */
-	public Method getMethod() {
+	public Method getMethod()
+	{
 		return method;
 	}
 
@@ -184,25 +206,33 @@ public class MethodMappingInfo {
 	 * 
 	 * @return the roles
 	 */
-	public Roles getRoles() {
+	public Roles getRoles()
+	{
 		return roles;
 	}
 
 	/**
-	 * Gets the MIME type format to use in input.
-	 *
-	 * @return the MIME type for input format
+	 * Gets the mime input format.
+	 * 
+	 * @return the mime input format
 	 */
-	public String getMimeInputFormat() {
-		return mimeTypeResolver.getInputFormat();
+	public String getMimeInputFormat()
+	{
+		return inputFormat;
 	}
 
 	/**
-	 * Gets the MIME type format to use in output
-	 *
-	 * @return the MIME type for output format
+	 * Gets the mime output format.
+	 * 
+	 * @return the mime output format
 	 */
-	public String getMimeOutputFormat() {
-		return mimeTypeResolver.getOutputFormat();
+	public String getMimeOutputFormat()
+	{
+		return outputFormat;
+	}
+
+	public List<MethodParameter> getMethodParameters()
+	{
+		return methodParameters;
 	}
 }

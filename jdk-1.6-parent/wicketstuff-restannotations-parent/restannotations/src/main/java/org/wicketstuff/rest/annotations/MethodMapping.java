@@ -21,22 +21,25 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
-import org.wicketstuff.rest.contenthandling.mimetypes.RestMimeTypes;
+import org.wicketstuff.rest.contenthandling.RestMimeTypes;
 import org.wicketstuff.rest.utils.http.HttpMethod;
 
 /**
- * Annotation used to map a resource method to a given URL.
- * The specified URL can contain parameter segment (for example '{id}') and we can
- * specify also the request method that must be used.
+ * Annotation used to map a resource method to a given URL. The specified URL can contain parameter
+ * segment (for example '{id}') and we can specify also the request method that must be used.
  * 
  * @author andrea del bene
  * @see HttpMethod
  */
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.METHOD)
-public @interface MethodMapping {
+public @interface MethodMapping
+{
 	String value();
+
 	HttpMethod httpMethod() default HttpMethod.GET;
+
 	String consumes() default RestMimeTypes.APPLICATION_JSON;
+
 	String produces() default RestMimeTypes.APPLICATION_JSON;
 }

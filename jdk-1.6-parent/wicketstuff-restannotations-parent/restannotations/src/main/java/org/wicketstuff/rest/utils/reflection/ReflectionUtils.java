@@ -25,9 +25,10 @@ import org.wicketstuff.rest.annotations.parameters.AnnotatedParam;
  * Utility methods to work with reflection entities
  * 
  * @author andrea del bene
- *
+ * 
  */
-public class ReflectionUtils {
+public class ReflectionUtils
+{
 	/**
 	 * Check if a parameter is annotated with a given annotation.
 	 * 
@@ -38,11 +39,11 @@ public class ReflectionUtils {
 	 * @param targetAnnotation
 	 *            the annotation type we want to check for.
 	 * 
-	 * @return true if the method parameter is annotated with the given
-	 *         annotation, false otherwise.
+	 * @return true if the method parameter is annotated with the given annotation, false otherwise.
 	 */
 	static public boolean isParameterAnnotatedWith(int i, Method method,
-			Class<? extends Annotation> targetAnnotation) {
+		Class<? extends Annotation> targetAnnotation)
+	{
 		Annotation[][] parametersAnnotations = method.getParameterAnnotations();
 
 		if (parametersAnnotations.length == 0)
@@ -50,7 +51,8 @@ public class ReflectionUtils {
 
 		Annotation[] parameterAnnotations = parametersAnnotations[i];
 
-		for (int j = 0; j < parameterAnnotations.length; j++) {
+		for (int j = 0; j < parameterAnnotations.length; j++)
+		{
 			Annotation annotation = parameterAnnotations[j];
 			if (targetAnnotation.isInstance(annotation))
 				return true;
@@ -69,7 +71,8 @@ public class ReflectionUtils {
 	 * @return true if such an annotation is found, false otherwise.
 	 * @see AnnotatedParam
 	 */
-	static public Annotation getAnnotationParam(int i, Method method) {
+	static public Annotation getAnnotationParam(int i, Method method)
+	{
 		Annotation[][] parametersAnnotations = method.getParameterAnnotations();
 
 		if (parametersAnnotations.length == 0)
@@ -77,10 +80,11 @@ public class ReflectionUtils {
 
 		Annotation[] parameterAnnotations = parametersAnnotations[i];
 
-		for (int j = 0; j < parameterAnnotations.length; j++) {
+		for (int j = 0; j < parameterAnnotations.length; j++)
+		{
 			Annotation annotation = parameterAnnotations[j];
 			AnnotatedParam isAnnotatedParam = annotation.annotationType().getAnnotation(
-					AnnotatedParam.class);
+				AnnotatedParam.class);
 
 			if (isAnnotatedParam != null)
 				return annotation;
@@ -90,20 +94,21 @@ public class ReflectionUtils {
 	}
 
 	/**
-	 * Utility method to find if an annotation type is present in an array of
-	 * annotations.
+	 * Utility method to find if an annotation type is present in an array of annotations.
 	 * 
 	 * @param parameterAnnotations
 	 *            the array of annotations we will look in.
 	 * @param targetAnnotation
 	 *            the type of annotation we are looking for.
-	 * @return the first occurrence of the targetAnnotation found in the array,
-	 *         null if no occurrence was found.
+	 * @return the first occurrence of the targetAnnotation found in the array, null if no
+	 *         occurrence was found.
 	 */
 	static public <T extends Annotation> T findAnnotation(Annotation[] parameterAnnotations,
-			Class<T> targetAnnotation) {
+		Class<T> targetAnnotation)
+	{
 
-		for (int i = 0; i < parameterAnnotations.length; i++) {
+		for (int i = 0; i < parameterAnnotations.length; i++)
+		{
 			Annotation annotation = parameterAnnotations[i];
 
 			if (targetAnnotation.isInstance(annotation))
@@ -112,24 +117,61 @@ public class ReflectionUtils {
 
 		return null;
 	}
-	
-	static public Method findMethod(Class<?> clazz, String name,  Class<?>... parameterTypes){
-		try {
+
+	static public <T extends Annotation> T findMethodParameterAnnotation(Method ownerMethod,
+		int paramIndex, Class<T> targetAnnotation)
+	{
+		Annotation[][] paramAnnotations = ownerMethod.getParameterAnnotations();
+		return findAnnotation(paramAnnotations[paramIndex], targetAnnotation);
+	}
+
+	static public Method findMethod(Class<?> clazz, String name, Class<?>... parameterTypes)
+	{
+		try
+		{
 			Method method = clazz.getMethod(name, parameterTypes);
 			return method;
-		} catch (Exception e) {
-			return null;
-		} 
-	}
-	
-
-	static public <T> T invokeMethod(Object target, String name,  Class<?>... parameterTypes){
-		Method method = findMethod(target.getClass(), name, parameterTypes);
-		
-		try {
-			return (T) method.invoke(target, parameterTypes);
-		} catch (Exception e) {
+		}
+		catch (Exception e)
+		{
 			return null;
 		}
+	}
+
+
+	static public <T> T invokeMethod(Object target, String name, Class<?>... parameterTypes)
+	{
+		Method method = findMethod(target.getClass(), name, parameterTypes);
+
+		try
+		{
+			return (T)method.invoke(target, parameterTypes);
+		}
+		catch (Exception e)
+		{
+			return null;
+		}
+	}
+
+	/**
+	 * 
+	 * Get the value of an annotation field.
+	 * 
+	 * @param annotation
+	 *            the target annotation
+	 * @param fieldName
+	 *            the field name
+	 * @param defaultValue
+	 *            the default value
+	 * @return the value of the field.
+	 */
+	static public <T> T getAnnotationField(Annotation annotation, String fieldName, T defaultValue)
+	{
+		T methodResult = null;
+
+		if (annotation != null)
+			methodResult = ReflectionUtils.invokeMethod(annotation, fieldName);
+
+		return methodResult != null ? methodResult : defaultValue;
 	}
 }

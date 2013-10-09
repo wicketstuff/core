@@ -22,39 +22,42 @@ package org.wicketstuff.rest.utils.http;
  * @author andrea del bene
  * 
  */
-public enum HttpMethod {
+public enum HttpMethod
+{
 	GET("GET"), POST("POST"), HEAD("HEAD"), OPTIONS("OPTIONS"), PUT("PUT"), PATCH("PATCH"), DELETE(
-			"DELETE"), TRACE("TRACE");
+		"DELETE"), TRACE("TRACE");
 
 	private String method;
 
-	private HttpMethod(String method) {
+	private HttpMethod(String method)
+	{
 		this.method = method;
 	}
 
 	/**
-	 * Converts a string (like "put", "get", "post", etc...) to the
-	 * corresponding HTTP method.
+	 * Converts a string (like "put", "get", "post", etc...) to the corresponding HTTP method.
 	 * 
 	 * @param httpMethod
-	 *            the string value we want to convert. The conversion mechanism
-	 *            is case-insensitive.
+	 *            the string value we want to convert. The conversion mechanism is case-insensitive.
 	 * @return
 	 */
-	public static HttpMethod toHttpMethod(String httpMethod) {
+	public static HttpMethod toHttpMethod(String httpMethod)
+	{
 		HttpMethod[] values = HttpMethod.values();
 		httpMethod = httpMethod.toUpperCase();
 
-		for (int i = 0; i < values.length; i++) {
+		for (int i = 0; i < values.length; i++)
+		{
 			if (values[i].method.equals(httpMethod))
 				return values[i];
 		}
 
-		throw new RuntimeException("The string value '" + httpMethod
-				+ "' does not correspond to any valid HTTP request method");
+		throw new RuntimeException("The string value '" + httpMethod +
+			"' does not correspond to any valid HTTP request method");
 	}
 
-	public String getMethod() {
+	public String getMethod()
+	{
 		return method;
 	}
 }

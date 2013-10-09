@@ -27,7 +27,7 @@ import org.apache.wicket.request.Request;
 import org.apache.wicket.request.Response;
 import org.apache.wicket.request.resource.IResource;
 import org.apache.wicket.request.resource.ResourceReference;
-import org.wicketstuff.rest.contenthandling.mimetypes.RestMimeTypes;
+import org.wicketstuff.rest.contenthandling.RestMimeTypes;
 import org.wicketstuff.rest.contenthandling.serialdeserial.MultiFormatSerialDeserial;
 import org.wicketstuff.rest.contenthandling.serialdeserial.TestJsonDesSer;
 import org.wicketstuff.rest.contenthandling.serialdeserial.XmlSerialDeser;
@@ -36,17 +36,18 @@ import org.wicketstuff.rest.resource.RegExpRestResource;
 import org.wicketstuff.rest.resource.RestResourceFullAnnotated;
 
 
-
 /**
- * Application object for your web application. If you want to run this application without deploying, run the Start class.
+ * Application object for your web application. If you want to run this application without
+ * deploying, run the Start class.
  * 
  * @see org.wicketstuff.rest.Start#main(String[])
  */
 public class WicketApplication extends WebApplication implements IRoleCheckingStrategy
-{    	
+{
 	private final Roles roles;
-	
-	public WicketApplication(Roles roles) {
+
+	public WicketApplication(Roles roles)
+	{
 		this.roles = roles;
 	}
 
@@ -60,52 +61,61 @@ public class WicketApplication extends WebApplication implements IRoleCheckingSt
 	}
 
 	@Override
-	public boolean hasAnyRole(Roles roles) {
+	public boolean hasAnyRole(Roles roles)
+	{
 		return roles.hasAnyRole(this.roles);
 	}
-	
+
 	@Override
-	public void init() {
+	public void init()
+	{
 		super.init();
-		
-		mountResource("/api", new ResourceReference("restReference"){
+
+		mountResource("/api", new ResourceReference("restReference")
+		{
 
 			@Override
-			public IResource getResource() {
+			public IResource getResource()
+			{
 				return new RestResourceFullAnnotated(new TestJsonDesSer(), WicketApplication.this);
 			}
-			
+
 		});
-		
-		mountResource("/api2", new ResourceReference("regExpRestResource"){
+
+		mountResource("/api2", new ResourceReference("regExpRestResource")
+		{
 
 			@Override
-			public IResource getResource() {
+			public IResource getResource()
+			{
 				return new RegExpRestResource(new TestJsonDesSer(), WicketApplication.this);
 			}
-			
+
 		});
-		
-		mountResource("/api3", new ResourceReference("multiFormatRestResource"){
+
+		mountResource("/api3", new ResourceReference("multiFormatRestResource")
+		{
 
 			@Override
-			public IResource getResource() {
+			public IResource getResource()
+			{
 				MultiFormatSerialDeserial multiFormat = new MultiFormatSerialDeserial();
-				
+
 				multiFormat.registerSerDeser(new TestJsonDesSer(), RestMimeTypes.APPLICATION_JSON);
 				multiFormat.registerSerDeser(new XmlSerialDeser(), RestMimeTypes.APPLICATION_XML);
-				
+
 				return new MultiFormatRestResource(multiFormat);
 			}
-			
+
 		});
 	}
-	
+
 	@Override
-	public Session newSession(Request request, Response response) {
+	public Session newSession(Request request, Response response)
+	{
 		Session session = super.newSession(request, response);
 		session.setLocale(Locale.ENGLISH);
-		
+
 		return session;
 	}
 }

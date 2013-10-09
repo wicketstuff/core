@@ -27,48 +27,52 @@ import org.wicketstuff.rest.contenthandling.IWebSerialDeserial;
  * Object serializer/deserializer that supports multiple formats.
  * 
  * @author andrea del bene
- *
+ * 
  */
-public class MultiFormatSerialDeserial implements IWebSerialDeserial {
-	
+public class MultiFormatSerialDeserial implements IWebSerialDeserial
+{
+
 	private final Map<String, IWebSerialDeserial> serialsDeserials = new HashMap<String, IWebSerialDeserial>();
-	
+
 	@Override
 	public void objectToResponse(Object targetObject, WebResponse response, String mimeType)
-			throws Exception {
-		
+		throws Exception
+	{
+
 		IWebSerialDeserial serialDeserial = serialsDeserials.get(mimeType);
-		
-		if(serialDeserial != null)
+
+		if (serialDeserial != null)
 			serialDeserial.objectToResponse(targetObject, response, mimeType);
-		else
-			response.sendError(415, "MIME type not supported.");
 	}
 
 	@Override
 	public <T> T requestToObject(WebRequest request, Class<T> targetClass, String mimeType)
-			throws Exception {
+		throws Exception
+	{
 		IWebSerialDeserial serialDeserial = serialsDeserials.get(mimeType);
-		
-		if(serialDeserial != null)
+
+		if (serialDeserial != null)
 			return serialDeserial.requestToObject(request, targetClass, mimeType);
-		
+
 		return null;
 	}
 
 	/**
 	 * Register a new serial/deserial for the given MIME type.
+	 * 
 	 * @param serialDeserial
-	 * 			the serial/deserial to use with the given MIME type.
+	 *            the serial/deserial to use with the given MIME type.
 	 * @param mimeType
-	 * 			the MIME type we want to handle with the given serial/deserial.
+	 *            the MIME type we want to handle with the given serial/deserial.
 	 */
-	public void registerSerDeser(IWebSerialDeserial serialDeserial, String mimeType){
+	public void registerSerDeser(IWebSerialDeserial serialDeserial, String mimeType)
+	{
 		serialsDeserials.put(mimeType, serialDeserial);
 	}
-	
+
 	@Override
-	public boolean isMimeTypeSupported(String mimeType){
+	public boolean isMimeTypeSupported(String mimeType)
+	{
 		return serialsDeserials.get(mimeType) != null;
 	}
 }

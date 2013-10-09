@@ -14,30 +14,33 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-package org.wicketstuff.rest.annotations.parameters;
+package org.wicketstuff.rest.utils.http;
 
-import java.lang.annotation.ElementType;
-import java.lang.annotation.Retention;
-import java.lang.annotation.RetentionPolicy;
-import java.lang.annotation.Target;
-
-/**
- * This annotation indicates that the value of a method parameter must be read from a given segment
- * as <a href="http://www.w3.org/DesignIssues/MatrixURIs.html">matrix parameter</a>.
- * 
- * @author andrea del bene
- * 
- */
-@Retention(RetentionPolicy.RUNTIME)
-@Target(ElementType.PARAMETER)
-@AnnotatedParam
-public @interface MatrixParam
+public class HttpResult
 {
-	String parameterName();
+	private final int httpCode;
+	private final String message;
 
-	int segmentIndex();
+	public static final int HTTP_OK = 200;
 
-	boolean required() default true;
+	public HttpResult(int httpCode, String message)
+	{
+		this.httpCode = httpCode;
+		this.message = message;
+	}
 
-	String defaultValue() default "";
+	public int getHttpCode()
+	{
+		return httpCode;
+	}
+
+	public String getMessage()
+	{
+		return message;
+	}
+
+	public boolean isSuccessful()
+	{
+		return httpCode < 300;
+	}
 }

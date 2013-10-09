@@ -21,23 +21,9 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
-/**
- * This annotation indicates that the value of a method parameter must be read from a given segment
- * as <a href="http://www.w3.org/DesignIssues/MatrixURIs.html">matrix parameter</a>.
- * 
- * @author andrea del bene
- * 
- */
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.PARAMETER)
-@AnnotatedParam
-public @interface MatrixParam
+public @interface ValidatorKey
 {
-	String parameterName();
-
-	int segmentIndex();
-
-	boolean required() default true;
-
-	String defaultValue() default "";
+	String value();
 }

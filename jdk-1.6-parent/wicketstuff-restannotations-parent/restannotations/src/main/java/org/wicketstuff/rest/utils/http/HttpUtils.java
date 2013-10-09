@@ -21,36 +21,38 @@ import java.io.IOException;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.wicket.request.Request;
 import org.apache.wicket.request.http.WebRequest;
 
 /**
  * Utility class for HTTP-related operations.
  * 
  * @author andrea del bene
- *
+ * 
  */
-public class HttpUtils {
+public class HttpUtils
+{
 	/**
 	 * Read the string content of the current request.
 	 * 
 	 * @param request
-	 * 			the current request
-	 * @return
-	 * 			the string inside body request.
+	 *            the current request
+	 * @return the string inside body request.
 	 * @throws IOException
 	 */
-	public static String readStringFromRequest(WebRequest request) throws IOException{
-		HttpServletRequest httpRequest = (HttpServletRequest) request.getContainerRequest();
+	public static String readStringFromRequest(WebRequest request) throws IOException
+	{
+		HttpServletRequest httpRequest = (HttpServletRequest)request.getContainerRequest();
 		BufferedReader bufReader = httpRequest.getReader();
 		StringBuilder builder = new StringBuilder();
 		String stringLine;
 
 		while ((stringLine = bufReader.readLine()) != null)
 			builder.append(stringLine);
-		
+
 		return builder.toString();
 	}
-	
+
 	/**
 	 * Utility method to extract the HTTP request method.
 	 * 
@@ -59,8 +61,22 @@ public class HttpUtils {
 	 * @return the HTTP method used for this request
 	 * @see HttpMethod
 	 */
-	public static HttpMethod getHttpMethod(WebRequest request) {
-		HttpServletRequest httpRequest = (HttpServletRequest) request.getContainerRequest();
+	public static HttpMethod getHttpMethod(Request request)
+	{
+		return getHttpMethod((WebRequest)request);
+	}
+
+	/**
+	 * Utility method to extract the HTTP request method.
+	 * 
+	 * @param request
+	 *            the current request object
+	 * @return the HTTP method used for this request
+	 * @see HttpMethod
+	 */
+	public static HttpMethod getHttpMethod(WebRequest request)
+	{
+		HttpServletRequest httpRequest = (HttpServletRequest)request.getContainerRequest();
 		return HttpMethod.toHttpMethod((httpRequest.getMethod()));
 	}
 }

@@ -22,14 +22,14 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * This annotation indicates that the target annotation is meant for extracting the
- * value of a method parameter from a specific source (like a request parameter,
- * a cookie, etc...).
+ * This annotation indicates that the target annotation is meant for extracting the value of a
+ * method parameter from a specific source (like a request parameter, a cookie, etc...).
  * 
  * @author andrea del bene
  * 
  */
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.ANNOTATION_TYPE)
-public @interface AnnotatedParam {
+public @interface AnnotatedParam
+{
 }

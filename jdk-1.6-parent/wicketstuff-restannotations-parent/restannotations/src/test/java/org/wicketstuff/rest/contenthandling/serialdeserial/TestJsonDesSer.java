@@ -16,29 +16,35 @@
  */
 package org.wicketstuff.rest.contenthandling.serialdeserial;
 
-import org.wicketstuff.rest.contenthandling.mimetypes.RestMimeTypes;
+import org.wicketstuff.rest.contenthandling.RestMimeTypes;
 import org.wicketstuff.rest.resource.RestResourceFullAnnotated;
 
-public class TestJsonDesSer extends TextualObjectSerialDeserial {
-	public TestJsonDesSer() {
+public class TestJsonDesSer extends TextualObjectSerialDeserial
+{
+	public TestJsonDesSer()
+	{
 		super("UTF-8", RestMimeTypes.APPLICATION_JSON);
 	}
 
-	static public Object getObject(){
+	static public Object getObject()
+	{
 		return RestResourceFullAnnotated.createTestPerson();
 	}
-	
-	static public String getJSON(){
+
+	static public String getJSON()
+	{
 		return "{\"name\" : \"Mary\", \"surname\" : \"Smith\", \"email\" : \"m.smith@gmail.com\"}";
 	}
 
 	@Override
-	public String serializeObject(Object targetObject, String mimeType) {
+	public String serializeObject(Object targetObject, String mimeType)
+	{
 		return getJSON();
 	}
 
 	@Override
-	public <T> T deserializeObject(String source, Class<T> targetClass, String mimeType) {
-		return (T) getObject();
+	public <T> T deserializeObject(String source, Class<T> targetClass, String mimeType)
+	{
+		return (T)getObject();
 	}
 }
