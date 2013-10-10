@@ -29,15 +29,12 @@ import org.apache.wicket.model.IModel;
  * @author Ludger Kluitmann - JavaLuigi
  *
  * @author Sebastien Briquet - sebfz1
- * @since 1.4.2
- * @since 6.2.2
  */
 public abstract class AbstractSfMenuItem implements ISfMenuItem
 {
 	private static final long serialVersionUID = 1L;
 
 	private IModel<String> title;
-	private boolean enabled = true;
 	private Class<? extends Page> pageClass;
 
 	/**
@@ -69,21 +66,6 @@ public abstract class AbstractSfMenuItem implements ISfMenuItem
 	public void setTitle(IModel<String> title)
 	{
 		this.title = title;
-	}
-
-	@Override
-	public boolean isEnabled()
-	{
-		return this.enabled;
-	}
-
-	/**
-	 * Sets whether the menu-item is enabled
-	 * @param enabled true or false
-	 */
-	public void setEnabled(boolean enabled)
-	{
-		this.enabled = enabled;
 	}
 
 	@Override
