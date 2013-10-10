@@ -414,7 +414,7 @@ public abstract class AbstractRestResource<T extends IWebSerialDeserial> impleme
 	 */
 	private void throwAmbiguousMethodsException(List<MethodMappingInfo> list)
 	{
-		WebRequest request = (WebRequest)RequestCycle.get().getRequest();
+		WebRequest request = getCurrentWebRequest();
 		String methodsNames = "";
 
 		for (MethodMappingInfo urlMappingInfo : list)
@@ -692,7 +692,7 @@ public abstract class AbstractRestResource<T extends IWebSerialDeserial> impleme
 	private Object extractParameterFromHeader(HeaderParam headerParam, Class<?> argClass)
 	{
 		String value = headerParam.value();
-		WebRequest webRequest = (WebRequest)RequestCycle.get().getRequest();
+		WebRequest webRequest = getCurrentWebRequest();
 
 		return toObject(argClass, webRequest.getHeader(value));
 	}
@@ -732,7 +732,7 @@ public abstract class AbstractRestResource<T extends IWebSerialDeserial> impleme
 	private Object extractParameterFromCookies(CookieParam cookieParam, Class<?> argClass)
 	{
 		String value = cookieParam.value();
-		WebRequest webRequest = (WebRequest)RequestCycle.get().getRequest();
+		WebRequest webRequest = getCurrentWebRequest();
 
 		if (webRequest.getCookie(value) == null)
 			return null;
@@ -749,7 +749,7 @@ public abstract class AbstractRestResource<T extends IWebSerialDeserial> impleme
 	 */
 	private Object deserializeObjectFromRequest(Class<?> argClass, String mimeType)
 	{
-		WebRequest servletRequest = (WebRequest)RequestCycle.get().getRequest();
+		WebRequest servletRequest = getCurrentWebRequest();
 		try
 		{
 			return objSerialDeserial.requestToObject(servletRequest, argClass, mimeType);
@@ -759,6 +759,10 @@ public abstract class AbstractRestResource<T extends IWebSerialDeserial> impleme
 			log.debug("Error deserializing object from request");
 			return null;
 		}
+	}
+
+	protected static WebRequest getCurrentWebRequest() {
+		return (WebRequest)RequestCycle.get().getRequest();
 	}
 
 	/***
@@ -804,7 +808,7 @@ public abstract class AbstractRestResource<T extends IWebSerialDeserial> impleme
 		}
 		catch (Exception e)
 		{
-			WebResponse response = (WebResponse)RequestCycle.get().getResponse();
+			WebResponse response = getCurrentWebResponse();
 
 			response.setStatus(400);
 			log.debug("Could not find a suitable converter for value '" + value + "' of type '" +
@@ -812,6 +816,10 @@ public abstract class AbstractRestResource<T extends IWebSerialDeserial> impleme
 
 			return null;
 		}
+	}
+
+	protected static WebResponse getCurrentWebResponse() {
+		return (WebResponse)RequestCycle.get().getResponse();
 	}
 
 	/**
@@ -824,8 +832,7 @@ public abstract class AbstractRestResource<T extends IWebSerialDeserial> impleme
 	{
 		try
 		{
-			WebResponse webResponse = (WebResponse)RequestCycle.get().getResponse();
-			webResponse.setStatus(statusCode);
+			getCurrentWebResponse().setStatus(statusCode);
 		}
 		catch (Exception e)
 		{
