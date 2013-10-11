@@ -28,7 +28,6 @@ import org.apache.wicket.markup.html.link.Link;
 import org.apache.wicket.markup.html.list.ListItem;
 import org.apache.wicket.markup.html.list.ListView;
 import org.apache.wicket.markup.html.panel.Fragment;
-import org.apache.wicket.model.Model;
 
 import com.googlecode.wicket.jquery.core.JQueryBehavior;
 import com.googlecode.wicket.jquery.core.JQueryPanel;
@@ -202,17 +201,10 @@ public class SfMenu extends JQueryPanel
 				protected void populateItem(ListItem<ISfMenuItem> item)
 				{
 					ISfMenuItem menuItem = item.getModelObject();
-					SfMenu.this.map.put(menuItem.getId(), menuItem);
 
 					item.add(new ItemFragment("item", menuItem));
 					item.add(new MenuFragment("menu", menuItem.getItems()));
 					item.add(AttributeModifier.replace("id", menuItem.getId()));
-
-					if (!menuItem.isEnabled())
-					{
-						item.add(AttributeModifier.append("class", Model.of("ui-state-disabled")));
-					}
-
 				}
 			});
 		}
@@ -240,7 +232,7 @@ public class SfMenu extends JQueryPanel
 					{
 						return urlFor(item.getPageClass(), getPage().getPageParameters());
 					}
-					return "#";
+					return "javascript:;";
 				}
 
 				// No operation. Only to satisfy the interface.

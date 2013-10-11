@@ -31,8 +31,6 @@ import org.apache.wicket.util.io.IClusterable;
  * @author Ludger Kluitmann - JavaLuigi
  *
  * @author Sebastien Briquet - sebfz1
- * @since 1.4.2
- * @since 6.2.2
  */
 public interface ISfMenuItem extends IClusterable
 {
@@ -47,12 +45,6 @@ public interface ISfMenuItem extends IClusterable
 	 * @return the menu-item title
 	 */
 	IModel<String> getTitle();
-
-	/**
-	 * Indicates whether the menu-item is enabled
-	 * @return true or false
-	 */
-	boolean isEnabled();
 
 	/**
 	 * Gets the {@link List} of submenu-items

@@ -30,8 +30,6 @@ import org.apache.wicket.model.Model;
  * @author Ludger Kluitmann - JavaLuigi
  *
  * @author Sebastien Briquet - sebfz1
- * @since 1.4.2
- * @since 6.2.2
  */
 public class SfMenuItem extends AbstractSfMenuItem
 {
