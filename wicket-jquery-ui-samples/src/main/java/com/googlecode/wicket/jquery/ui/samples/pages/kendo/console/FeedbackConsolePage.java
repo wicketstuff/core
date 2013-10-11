@@ -1,35 +1,40 @@
 package com.googlecode.wicket.jquery.ui.samples.pages.kendo.console;
 
+import java.io.Serializable;
+
 import org.apache.wicket.ajax.AjaxRequestTarget;
-import org.apache.wicket.feedback.ErrorLevelFeedbackMessageFilter;
-import org.apache.wicket.feedback.FeedbackMessage;
-import org.apache.wicket.feedback.FeedbackMessagesModel;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.form.RequiredTextField;
 import org.apache.wicket.markup.html.form.TextField;
 import org.apache.wicket.model.Model;
 
 import com.googlecode.wicket.jquery.ui.kendo.button.AjaxButton;
-import com.googlecode.wicket.jquery.ui.kendo.console.Console;
+import com.googlecode.wicket.jquery.ui.kendo.console.FeedbackConsole;
 
 //XXX: change version in description
-public class DefaultConsolePage extends AbstractConsolePage
+public class FeedbackConsolePage extends AbstractConsolePage
 {
 	private static final long serialVersionUID = 1L;
 
-	private final FeedbackMessagesModel feedbackModel;
-
-	public DefaultConsolePage()
+	public FeedbackConsolePage()
 	{
-		this.feedbackModel = this.newFeedbackMessagesModel();
+		// FeedbackConsole //
+		final FeedbackConsole console = new FeedbackConsole("console") {
 
-		this.init();
-	}
+			private static final long serialVersionUID = 1L;
 
-	private void init()
-	{
-		// Console //
-		final Console console = new Console("console");
+			@Override
+			protected String format(Serializable message, boolean error)
+			{
+				if (error)
+				{
+					return String.format("<i>%s</i>", super.format(message, error));
+				}
+
+				return super.format(message, error);
+			}
+		};
+
 		this.add(console);
 
 		// Form //
@@ -48,23 +53,16 @@ public class DefaultConsolePage extends AbstractConsolePage
 			@Override
 			protected void onSubmit(AjaxRequestTarget target, Form<?> form)
 			{
-				console.info(textField.getModelObject(), target);
+				this.info(textField.getModelObject());
+
+				console.refresh(target);
 			}
 
 			@Override
 			protected void onError(AjaxRequestTarget target, Form<?> form)
 			{
-				for (FeedbackMessage message : feedbackModel.getObject())
-				{
-					console.log(message.getMessage(), true, target);
-					message.markRendered();
-				}
+				console.refresh(target);
 			}
 		});
-	}
-
-	protected FeedbackMessagesModel newFeedbackMessagesModel()
-	{
-		return new FeedbackMessagesModel(this, new ErrorLevelFeedbackMessageFilter(FeedbackMessage.ERROR));
 	}
 }

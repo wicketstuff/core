@@ -19,7 +19,8 @@ abstract class AbstractConsolePage extends AbstractKendoPage
 	protected List<DemoLink> getDemoLinks()
 	{
 		return Arrays.asList(
-				new DemoLink(DefaultConsolePage.class, "Console")
+				new DemoLink(DefaultConsolePage.class, "Console"),
+				new DemoLink(FeedbackConsolePage.class, "FeedbackConsole")
 			);
 	}
 }
