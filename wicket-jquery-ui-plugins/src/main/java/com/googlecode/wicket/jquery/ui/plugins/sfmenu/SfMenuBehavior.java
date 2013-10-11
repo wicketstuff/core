@@ -18,11 +18,15 @@ package com.googlecode.wicket.jquery.ui.plugins.sfmenu;
 
 import java.util.Map;
 
-import org.apache.wicket.request.resource.CssResourceReference;
-import org.apache.wicket.request.resource.JavaScriptResourceReference;
+import org.apache.wicket.Application;
+import org.apache.wicket.settings.IJavaScriptLibrarySettings;
 
 import com.googlecode.wicket.jquery.core.JQueryBehavior;
 import com.googlecode.wicket.jquery.core.Options;
+import com.googlecode.wicket.jquery.ui.plugins.sfmenu.resource.HoverIntentJavaScriptResourceReference;
+import com.googlecode.wicket.jquery.ui.plugins.sfmenu.resource.SuperfishJavaScriptResourceReference;
+import com.googlecode.wicket.jquery.ui.plugins.sfmenu.settings.ISuperfishLibrarySettings;
+import com.googlecode.wicket.jquery.ui.plugins.sfmenu.settings.SuperfishLibrarySettings;
 
 
 /***
@@ -35,6 +39,21 @@ public abstract class SfMenuBehavior extends JQueryBehavior
 
 	private static final long serialVersionUID = 1L;
 	private static final String METHOD = "superfish";
+
+	/**
+	 * Gets the {@link ISuperfishLibrarySettings}
+	 *
+	 * @return Default internal {@link ISuperfishLibrarySettings} if {@link Application}'s {@link IJavaScriptLibrarySettings} is not an instance of {@link ISuperfishLibrarySettings}
+	 */
+	private static ISuperfishLibrarySettings getLibrarySettings()
+	{
+		if (Application.exists() && (Application.get().getJavaScriptLibrarySettings() instanceof ISuperfishLibrarySettings))
+		{
+			return (ISuperfishLibrarySettings) Application.get().getJavaScriptLibrarySettings();
+		}
+
+		return SuperfishLibrarySettings.get();
+	}
 
 	/***
 	 * Construtor
@@ -56,13 +75,19 @@ public abstract class SfMenuBehavior extends JQueryBehavior
 	{
 		super(selector, METHOD, options);
 
-		this.add(new CssResourceReference(SfMenuBehavior.class, "css/superfish.css"));
-		if(verticalSfMenu)
+		ISuperfishLibrarySettings settings = getLibrarySettings();
+
+		if(settings.getSuperfishStyleSheetReference() != null)
 		{
-			this.add(new CssResourceReference(SfMenuBehavior.class, "css/superfish-vertical.css"));
+			this.add(settings.getSuperfishStyleSheetReference());
 		}
-		this.add(new JavaScriptResourceReference(SfMenuBehavior.class, "js/hoverIntent.js"));
-		this.add(new JavaScriptResourceReference(SfMenuBehavior.class, "js/superfish.min.js"));
+		if(verticalSfMenu && settings.getSuperfishVerticalStyleSheetReference() != null)
+		{
+			this.add(settings.getSuperfishVerticalStyleSheetReference());
+		}
+
+		this.add(HoverIntentJavaScriptResourceReference.get());
+		this.add(SuperfishJavaScriptResourceReference.get());
 	}
 
 	// Properties //

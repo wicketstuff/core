@@ -35,12 +35,6 @@ import org.apache.wicket.util.io.IClusterable;
 public interface ISfMenuItem extends IClusterable
 {
 	/**
-	 * Gets the menu-item markup id
-	 * @return the menu-item markup id
-	 */
-	String getId();
-
-	/**
 	 * Gets the menu-item title
 	 * @return the menu-item title
 	 */

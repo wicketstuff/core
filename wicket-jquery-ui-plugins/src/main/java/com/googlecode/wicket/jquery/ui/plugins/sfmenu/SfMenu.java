@@ -204,7 +204,6 @@ public class SfMenu extends JQueryPanel
 
 					item.add(new ItemFragment("item", menuItem));
 					item.add(new MenuFragment("menu", menuItem.getItems()));
-					item.add(AttributeModifier.replace("id", menuItem.getId()));
 				}
 			});
 		}

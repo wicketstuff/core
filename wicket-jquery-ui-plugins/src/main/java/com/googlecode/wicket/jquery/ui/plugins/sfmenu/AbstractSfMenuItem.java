@@ -21,6 +21,8 @@ import java.util.List;
 
 import org.apache.wicket.Page;
 import org.apache.wicket.model.IModel;
+import org.apache.wicket.util.IProvider;
+import org.apache.wicket.util.reference.ClassReference;
 
 /**
  * Base class for {@link SfMenuItem} item
@@ -35,7 +37,8 @@ public abstract class AbstractSfMenuItem implements ISfMenuItem
 	private static final long serialVersionUID = 1L;
 
 	private IModel<String> title;
-	private Class<? extends Page> pageClass;
+	private final IProvider<Class<? extends Page>> pageClassProvider;
+
 
 	/**
 	 * Constructor
@@ -44,13 +47,15 @@ public abstract class AbstractSfMenuItem implements ISfMenuItem
 	public AbstractSfMenuItem(IModel<String> title, Class<? extends Page> pageClass)
 	{
 		this.title = title;
-		this.pageClass = pageClass;
-	}
-
-	@Override
-	public String getId()
-	{
-		return "menuitem-" + this.hashCode();
+		//this.pageClass = pageClass;
+		if(pageClass != null)
+		{
+			this.pageClassProvider = new ClassReference(pageClass);
+		}
+		else
+		{
+			this.pageClassProvider = null;
+		}
 	}
 
 	@Override
@@ -80,6 +85,10 @@ public abstract class AbstractSfMenuItem implements ISfMenuItem
 	 */
 	public Class<? extends Page> getPageClass()
 	{
-		return pageClass;
+		if(pageClassProvider != null)
+		{
+			return pageClassProvider.get();
+		}
+		return null;
 	}
 }
