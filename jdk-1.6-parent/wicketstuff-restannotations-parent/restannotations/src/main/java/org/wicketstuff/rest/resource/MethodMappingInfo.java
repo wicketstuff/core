@@ -231,6 +231,11 @@ public class MethodMappingInfo
 		return outputFormat;
 	}
 
+	/**
+	 * Gets the method parameters.
+	 *
+	 * @return the method parameters
+	 */
 	public List<MethodParameter> getMethodParameters()
 	{
 		return methodParameters;

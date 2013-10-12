@@ -17,12 +17,10 @@
 package org.wicketstuff.rest.resource;
 
 import java.io.Serializable;
-import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -50,21 +48,15 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.wicketstuff.rest.annotations.AuthorizeInvocation;
 import org.wicketstuff.rest.annotations.MethodMapping;
-import org.wicketstuff.rest.annotations.parameters.CookieParam;
-import org.wicketstuff.rest.annotations.parameters.HeaderParam;
-import org.wicketstuff.rest.annotations.parameters.MatrixParam;
-import org.wicketstuff.rest.annotations.parameters.PathParam;
-import org.wicketstuff.rest.annotations.parameters.RequestBody;
-import org.wicketstuff.rest.annotations.parameters.RequestParam;
 import org.wicketstuff.rest.contenthandling.IWebSerialDeserial;
 import org.wicketstuff.rest.contenthandling.RestMimeTypes;
 import org.wicketstuff.rest.resource.urlsegments.AbstractURLSegment;
 import org.wicketstuff.rest.utils.http.HttpMethod;
 import org.wicketstuff.rest.utils.http.HttpUtils;
 import org.wicketstuff.rest.utils.reflection.MethodParameter;
-import org.wicketstuff.rest.utils.reflection.ReflectionUtils;
 import org.wicketstuff.rest.utils.wicket.AttributesWrapper;
 import org.wicketstuff.rest.utils.wicket.DefaultBundleResolver;
+import org.wicketstuff.rest.utils.wicket.MethodParameterContext;
 
 /**
  * Base class to build a resource that serves REST requests.
@@ -72,7 +64,7 @@ import org.wicketstuff.rest.utils.wicket.DefaultBundleResolver;
  * @author andrea del bene
  * 
  */
-public abstract class AbstractRestResource<T extends IWebSerialDeserial> implements IResource
+public abstract class AbstractRestResource<T extends IWebSerialDeserial> implements IResource, IWebSerialDeserial
 {
 	private static final Logger log = LoggerFactory.getLogger(AbstractRestResource.class);
 
@@ -214,7 +206,7 @@ public abstract class AbstractRestResource<T extends IWebSerialDeserial> impleme
 		// 5-if the invoked method returns a value, it is written to response
 		if (result != null)
 		{
-			serializeObjectToResponse(response, result, mappedMethod.getMimeOutputFormat());
+			objectToResponse(result, response, mappedMethod.getMimeOutputFormat());
 		}
 	}
 
@@ -327,7 +319,8 @@ public abstract class AbstractRestResource<T extends IWebSerialDeserial> impleme
 	 *            The object to write to response.
 	 * @param restMimeFormats
 	 */
-	private void serializeObjectToResponse(WebResponse response, Object result, String mimeType)
+	@Override
+	public void objectToResponse(Object result, WebResponse response, String mimeType)
 	{
 		try
 		{
@@ -541,30 +534,16 @@ public abstract class AbstractRestResource<T extends IWebSerialDeserial> impleme
 	private List extractMethodParameters(MethodMappingInfo mappedMethod,
 		AttributesWrapper attributesWrapper)
 	{
-		Method method = mappedMethod.getMethod();
 		List parametersValues = new ArrayList();
+
 		PageParameters pageParameters = attributesWrapper.getPageParameters();
 		LinkedHashMap<String, String> pathParameters = mappedMethod.populatePathParameters(pageParameters);
-		Iterator<String> pathParamsIterator = pathParameters.values().iterator();
-		List<MethodParameter> methodParameters = mappedMethod.getMethodParameters();
+		MethodParameterContext parameterContext = new MethodParameterContext(attributesWrapper,
+			pathParameters, this);
 
-		for (MethodParameter methodParameter : methodParameters)
+		for (MethodParameter methodParameter : mappedMethod.getMethodParameters())
 		{
-			Object paramValue = null;
-			Annotation annotation = ReflectionUtils.getAnnotationParam(
-				methodParameters.indexOf(methodParameter), method);
-
-			// retrieve parameter value
-			if (annotation != null)
-				paramValue = extractParameterValue(methodParameter, pathParameters, annotation,
-					pageParameters);
-			else
-				paramValue = extractParameterFromUrl(methodParameter, pathParamsIterator);
-
-			// try to use the default value
-			if (paramValue == null && !methodParameter.getDeaultValue().isEmpty())
-				paramValue = toObject(methodParameter.getParameterClass(),
-					methodParameter.getDeaultValue());
+			Object paramValue = methodParameter.parameterValue(parameterContext);
 
 			// if parameter is null and is required, abort extraction.
 			if (paramValue == null && methodParameter.isRequired())
@@ -615,144 +594,18 @@ public abstract class AbstractRestResource<T extends IWebSerialDeserial> impleme
 	}
 
 	/**
-	 * Extract the value for an annotated-method parameter (see package
-	 * {@link org.wicketstuff.rest.annotations.parameters}).
-	 * 
-	 * @param methodParameter
-	 *            the current method parameter.
-	 * @param pathParameters
-	 *            the values of path parameters for the current request.
-	 * @param annotation
-	 *            the annotation for the current parameter that indicates how to retrieve the value
-	 *            for the current parameter.
-	 * @param pageParameters
-	 *            PageParameters for the current request.
-	 * @return the extracted value.
-	 */
-	private Object extractParameterValue(MethodParameter methodParameter,
-		LinkedHashMap<String, String> pathParameters, Annotation annotation,
-		PageParameters pageParameters)
-	{
-		Object paramValue = null;
-		Class<?> argClass = methodParameter.getParameterClass();
-		String mimeInputFormat = methodParameter.getOwnerMethod().getMimeInputFormat();
-
-		if (annotation instanceof RequestBody)
-			paramValue = deserializeObjectFromRequest(argClass, mimeInputFormat);
-		else if (annotation instanceof PathParam)
-			paramValue = toObject(argClass, pathParameters.get(((PathParam)annotation).value()));
-		else if (annotation instanceof RequestParam)
-			paramValue = extractParameterFromQuery(pageParameters, (RequestParam)annotation,
-				argClass);
-		else if (annotation instanceof HeaderParam)
-			paramValue = extractParameterFromHeader((HeaderParam)annotation, argClass);
-		else if (annotation instanceof CookieParam)
-			paramValue = extractParameterFromCookies((CookieParam)annotation, argClass);
-		else if (annotation instanceof MatrixParam)
-			paramValue = extractParameterFromMatrixParams(pageParameters, (MatrixParam)annotation,
-				argClass);
-
-		return paramValue;
-	}
-
-	/**
-	 * Extract method parameter value from matrix parameters.
-	 * 
-	 * @param pageParameters
-	 *            PageParameters for the current request.
-	 * @param matrixParam
-	 *            the {@link MatrixParam} annotation used for the current parameter.
-	 * @param argClass
-	 *            the type of the current method parameter.
-	 * @return the value obtained from query parameters and converted to argClass.
-	 */
-	private Object extractParameterFromMatrixParams(PageParameters pageParameters,
-		MatrixParam matrixParam, Class<?> argClass)
-	{
-		int segmentIndex = matrixParam.segmentIndex();
-		String variableName = matrixParam.parameterName();
-		String rawsSegment = pageParameters.get(segmentIndex).toString();
-		Map<String, String> matrixParameters = AbstractURLSegment.getSegmentMatrixParameters(rawsSegment);
-
-		if (matrixParameters.get(variableName) == null)
-			return null;
-
-		return toObject(argClass, matrixParameters.get(variableName));
-	}
-
-	/**
-	 * Extract method parameter value from request header.
-	 * 
-	 * @param headerParam
-	 *            the {@link HeaderParam} annotation used for the current method parameter.
-	 * @param argClass
-	 *            the type of the current method parameter.
-	 * @return the extracted value converted to argClass.
-	 */
-	private Object extractParameterFromHeader(HeaderParam headerParam, Class<?> argClass)
-	{
-		String value = headerParam.value();
-		WebRequest webRequest = getCurrentWebRequest();
-
-		return toObject(argClass, webRequest.getHeader(value));
-	}
-
-	/**
-	 * Extract method parameter's value from query string parameters.
-	 * 
-	 * @param pageParameters
-	 *            the PageParameters of the current request.
-	 * @param requestParam
-	 *            the {@link RequestParam} annotation used for the current method parameter.
-	 * @param argClass
-	 *            the type of the current method parameter.
-	 * @return the extracted value converted to argClass.
-	 */
-	private Object extractParameterFromQuery(PageParameters pageParameters,
-		RequestParam requestParam, Class<?> argClass)
-	{
-
-		String value = requestParam.value();
-
-		if (pageParameters.get(value) == null)
-			return null;
-
-		return toObject(argClass, pageParameters.get(value).toString());
-	}
-
-	/**
-	 * Extract method parameter's value from cookies.
-	 * 
-	 * @param annotation
-	 *            the {@link CookieParam} annotation used for the current method parameter.
-	 * @param argClass
-	 *            the type of the current method parameter.
-	 * @return the extracted value converted to argClass.
-	 */
-	private Object extractParameterFromCookies(CookieParam cookieParam, Class<?> argClass)
-	{
-		String value = cookieParam.value();
-		WebRequest webRequest = getCurrentWebRequest();
-
-		if (webRequest.getCookie(value) == null)
-			return null;
-
-		return toObject(argClass, webRequest.getCookie(value).getValue());
-	}
-
-	/**
 	 * Internal method that tries to extract an instance of the given class from the request body.
 	 * 
 	 * @param argClass
 	 *            the type we want to extract from request body.
 	 * @return the extracted object.
 	 */
-	private Object deserializeObjectFromRequest(Class<?> argClass, String mimeType)
+	@Override
+	public <T> T requestToObject(WebRequest request, Class<T> argClass, String mimeType)
 	{
-		WebRequest servletRequest = getCurrentWebRequest();
 		try
 		{
-			return objSerialDeserial.requestToObject(servletRequest, argClass, mimeType);
+			return objSerialDeserial.requestToObject(request, argClass, mimeType);
 		}
 		catch (Exception e)
 		{
@@ -761,27 +614,9 @@ public abstract class AbstractRestResource<T extends IWebSerialDeserial> impleme
 		}
 	}
 
-	protected static WebRequest getCurrentWebRequest() {
-		return (WebRequest)RequestCycle.get().getRequest();
-	}
-
-	/***
-	 * Extract a parameter values from the REST URL.
-	 * 
-	 * @param methodParameter
-	 *            the current method parameter.
-	 * @param pathParamIterator
-	 *            an iterator on the current values of path parameters.
-	 * 
-	 * @return the parameter value.
-	 */
-	private Object extractParameterFromUrl(MethodParameter methodParameter,
-		Iterator<String> pathParamIterator)
+	public static final WebRequest getCurrentWebRequest()
 	{
-		if (!pathParamIterator.hasNext())
-			return null;
-
-		return toObject(methodParameter.getParameterClass(), pathParamIterator.next());
+		return (WebRequest)RequestCycle.get().getRequest();
 	}
 
 	/**
@@ -818,10 +653,16 @@ public abstract class AbstractRestResource<T extends IWebSerialDeserial> impleme
 		}
 	}
 
-	protected static WebResponse getCurrentWebResponse() {
+	public static final WebResponse getCurrentWebResponse()
+	{
 		return (WebResponse)RequestCycle.get().getResponse();
 	}
-
+	
+	@Override
+	public boolean isMimeTypeSupported(String mimeType)
+	{
+		return objSerialDeserial.isMimeTypeSupported(mimeType);
+	}
 	/**
 	 * Set the status code for the current response.
 	 * 
