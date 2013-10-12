@@ -88,7 +88,7 @@ public class ContextMenu extends Menu
 	 */
 	protected String getPositionOption(Component component)
 	{
-		return String.format("{ my: 'left top', collision: 'fit', of: jQuery('%s') }", JQueryWidget.getSelector(component));
+		return String.format("{ my: 'left top', collision: 'none', of: jQuery('%s') }", JQueryWidget.getSelector(component));
 	}
 
 	// Events //
@@ -113,7 +113,7 @@ public class ContextMenu extends Menu
 		this.onContextMenu(target, component);
 
 		target.add(this);
-		target.appendJavaScript(String.format("jQuery(function() { jQuery('%s').position(%s).show(); });", JQueryWidget.getSelector(this), this.getPositionOption(component)));
+		target.appendJavaScript(String.format("jQuery(function() { jQuery('%s').show().position(%s); });", JQueryWidget.getSelector(this), this.getPositionOption(component)));
 	}
 
 	/**
