@@ -46,7 +46,7 @@ public class Menu extends JQueryPanel implements IMenuListener
 {
 	private static final long serialVersionUID = 1L;
 
-	private final List<IMenuItem> items; //first level
+	private final List<IMenuItem> items; // first level
 	private WebMarkupContainer root;
 
 	/**
@@ -56,6 +56,7 @@ public class Menu extends JQueryPanel implements IMenuListener
 
 	/**
 	 * Constructor
+	 *
 	 * @param id the markup id
 	 */
 	public Menu(String id)
@@ -65,6 +66,7 @@ public class Menu extends JQueryPanel implements IMenuListener
 
 	/**
 	 * Constructor
+	 *
 	 * @param id the markup id
 	 * @param items the menu-items
 	 */
@@ -78,16 +80,18 @@ public class Menu extends JQueryPanel implements IMenuListener
 
 	/**
 	 * Constructor
+	 *
 	 * @param id the markup id
 	 * @param options {@link Options}
 	 */
 	public Menu(String id, Options options)
 	{
-		this(id, new ArrayList<IMenuItem>() , options);
+		this(id, new ArrayList<IMenuItem>(), options);
 	}
 
 	/**
 	 * Constructor
+	 *
 	 * @param id the markup id
 	 * @param items the menu-items
 	 * @param options {@link Options}
@@ -111,15 +115,14 @@ public class Menu extends JQueryPanel implements IMenuListener
 		this.add(this.root);
 	}
 
-
 	/**
 	 * Gets the menu-item list
+	 *
 	 * @return the menu-item {@link List}
 	 */
 	public List<IMenuItem> getItemList()
 	{
 		return this.items;
-
 	}
 
 	// Events //
@@ -128,14 +131,13 @@ public class Menu extends JQueryPanel implements IMenuListener
 	{
 		super.onInitialize();
 
-		this.add(JQueryWidget.newWidgetBehavior(this, JQueryWidget.getSelector(this.root)));
+		this.add(JQueryWidget.newWidgetBehavior(this, this.root));
 	}
 
 	@Override
 	public void onClick(AjaxRequestTarget target, IMenuItem item)
 	{
 	}
-
 
 	// IJQueryWidget //
 	@Override
@@ -159,7 +161,6 @@ public class Menu extends JQueryPanel implements IMenuListener
 			}
 		};
 	}
-
 
 	// Fragments //
 	/**

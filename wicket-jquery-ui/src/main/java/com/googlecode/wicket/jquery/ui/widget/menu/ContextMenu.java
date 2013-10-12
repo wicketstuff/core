@@ -35,6 +35,11 @@ public class ContextMenu extends Menu
 	private static final long serialVersionUID = 1L;
 
 	/**
+	 * CSS class used to identify a {@link Menu}. It could be useful to perform some jQuery operation on all menu in the page (hiding for instance)
+	 */
+	public static final String CONTEXTMENU_CSS_CLASS = "context-menu";
+
+	/**
 	 * Constructor
 	 *
 	 * @param id the markup id
@@ -75,13 +80,13 @@ public class ContextMenu extends Menu
 	 */
 	public ContextMenu(String id, List<IMenuItem> items, Options options)
 	{
-		super(id, options);
+		super(id, items, options);
 	}
 
 	// Properties //
 
 	/**
-	 * Gets the jQuery UI position option (as string) that should be applied on the {@link ContextMenu} when 'contextmenu' event is triggered
+	 * Gets the jQuery UI position option (as json-string) that should be applied on the {@link ContextMenu} when 'contextmenu' event is triggered
 	 *
 	 * @param component the {@link Component} that fired the 'contextmenu' event
 	 * @return the jQuery position option (as string)
@@ -98,6 +103,7 @@ public class ContextMenu extends Menu
 	{
 		super.onInitialize();
 
+		this.add(AttributeModifier.append("class", CONTEXTMENU_CSS_CLASS));
 		this.add(AttributeModifier.append("style", "position: absolute; display: none;"));
 		this.add(this.newContextMenuDocumentBehavior());
 	}
@@ -145,8 +151,13 @@ public class ContextMenu extends Menu
 
 				StringBuilder builder = new StringBuilder();
 				builder.append("jQuery(function() {\n");
-				builder.append("jQuery(document).click(function(e) { if (!(jQuery(e.target).is('.").append(ContextMenuBehavior.COMPONENT_CSS).append("') && e.which == 3)) { jQuery('").append(selector).append("').hide(); } } );\n"); // hide on click (assume context-menu click is the right-click)
-				builder.append("jQuery(document).keyup(function(e) { if (e.which == 27) { jQuery('").append(selector).append("').hide(); } });\n"); // hide on escape
+
+				// hide on click (outside invoker area) //
+				builder.append("jQuery(document).click(function(e) { if (!(jQuery(e.target).is('.").append(ContextMenuBehavior.INVOKER_CSS_CLASS).append("'))) { jQuery('").append(selector).append("').hide(); } } );\n");
+
+				// hide on escape //
+				builder.append("jQuery(document).keyup(function(e) { if (e.which == 27) { jQuery('").append(selector).append("').hide(); } });\n");
+
 				builder.append("});");
 
 				return builder.toString();

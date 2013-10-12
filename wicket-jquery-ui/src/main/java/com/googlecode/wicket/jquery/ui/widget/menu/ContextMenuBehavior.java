@@ -41,10 +41,9 @@ public class ContextMenuBehavior extends JQueryAbstractBehavior implements IJQue
 	private static final long serialVersionUID = 1L;
 
 	/**
-	 * CSS class used to identify the component that invoke the context menu, in order
-	 * to avoid events conflict (with the registered click in {@link ContextMenu})
+	 * CSS class used to identify the component that invoke the context menu, in order to avoid events conflict (with the registered click in {@link ContextMenu})
 	 */
-	public static final String COMPONENT_CSS = "context-menu-invoker";
+	public static final String INVOKER_CSS_CLASS = "context-menu-invoker";
 
 	private final ContextMenu menu;
 	private Component component = null;
@@ -63,7 +62,6 @@ public class ContextMenuBehavior extends JQueryAbstractBehavior implements IJQue
 		this.menu = Args.notNull(menu, "menu");
 	}
 
-
 	// Methods //
 
 	@Override
@@ -77,7 +75,7 @@ public class ContextMenuBehavior extends JQueryAbstractBehavior implements IJQue
 		}
 
 		this.component = component;
-		this.component.add(AttributeModifier.append("class", COMPONENT_CSS));
+		this.component.add(AttributeModifier.append("class", INVOKER_CSS_CLASS));
 		this.component.add(this.onContextMenuEventBehavior = this.newOnContextMenuBehavior());
 	}
 
@@ -86,7 +84,6 @@ public class ContextMenuBehavior extends JQueryAbstractBehavior implements IJQue
 	{
 		return String.format("jQuery(function() { jQuery('%s').on('contextmenu', %s); });", JQueryWidget.getSelector(this.component), this.onContextMenuEventBehavior.getCallbackFunction());
 	}
-
 
 	// Events //
 
@@ -98,7 +95,6 @@ public class ContextMenuBehavior extends JQueryAbstractBehavior implements IJQue
 			this.menu.fireOnContextMenu(target, this.component);
 		}
 	}
-
 
 	// Factories //
 
@@ -122,7 +118,11 @@ public class ContextMenuBehavior extends JQueryAbstractBehavior implements IJQue
 			@Override
 			public CharSequence getCallbackFunctionBody(CallbackParameter... parameters)
 			{
-				return super.getCallbackFunctionBody(parameters) + " return false;"; // stop event propagation
+				String callback = String.valueOf(super.getCallbackFunctionBody(parameters));
+				String bodyHide = String.format("jQuery('.%s').each( function() { jQuery(this).hide(); } );", ContextMenu.CONTEXTMENU_CSS_CLASS); // hide all menus
+				String bodyStop = "return false;"; // stop event propagation
+
+				return String.format("%s %s %s", bodyHide, callback, bodyStop);
 			}
 
 			@Override
@@ -132,7 +132,6 @@ public class ContextMenuBehavior extends JQueryAbstractBehavior implements IJQue
 			}
 		};
 	}
-
 
 	// Event class //
 
