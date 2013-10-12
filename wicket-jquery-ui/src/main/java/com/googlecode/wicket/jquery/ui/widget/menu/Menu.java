@@ -31,6 +31,7 @@ import org.apache.wicket.markup.html.panel.EmptyPanel;
 import org.apache.wicket.markup.html.panel.Fragment;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.model.PropertyModel;
+import org.apache.wicket.util.lang.Args;
 
 import com.googlecode.wicket.jquery.core.JQueryBehavior;
 import com.googlecode.wicket.jquery.core.JQueryPanel;
@@ -71,7 +72,7 @@ public class Menu extends JQueryPanel implements IMenuListener
 	{
 		super(id);
 
-		this.items = items;
+		this.items = Args.notNull(items, "menu-items");
 		this.init();
 	}
 
@@ -95,7 +96,7 @@ public class Menu extends JQueryPanel implements IMenuListener
 	{
 		super(id, options);
 
-		this.items = items;
+		this.items = Args.notNull(items, "menu-items");
 		this.init();
 	}
 
@@ -206,7 +207,6 @@ public class Menu extends JQueryPanel implements IMenuListener
 					{
 						item.add(AttributeModifier.append("class", Model.of("ui-state-disabled")));
 					}
-
 				}
 			});
 		}

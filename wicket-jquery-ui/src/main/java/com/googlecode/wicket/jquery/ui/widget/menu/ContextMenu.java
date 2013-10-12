@@ -36,6 +36,7 @@ public class ContextMenu extends Menu
 
 	/**
 	 * Constructor
+	 *
 	 * @param id the markup id
 	 */
 	public ContextMenu(String id)
@@ -45,6 +46,7 @@ public class ContextMenu extends Menu
 
 	/**
 	 * Constructor
+	 *
 	 * @param id the markup id
 	 * @param items the menu-items
 	 */
@@ -55,6 +57,7 @@ public class ContextMenu extends Menu
 
 	/**
 	 * Constructor
+	 *
 	 * @param id the markup id
 	 * @param options {@link Options}
 	 */
@@ -65,6 +68,7 @@ public class ContextMenu extends Menu
 
 	/**
 	 * Constructor
+	 *
 	 * @param id the markup id
 	 * @param items the menu-items
 	 * @param options {@link Options}
@@ -74,8 +78,21 @@ public class ContextMenu extends Menu
 		super(id, options);
 	}
 
+	// Properties //
+
+	/**
+	 * Gets the jQuery UI position option (as string) that should be applied on the {@link ContextMenu} when 'contextmenu' event is triggered
+	 *
+	 * @param component the {@link Component} that fired the 'contextmenu' event
+	 * @return the jQuery position option (as string)
+	 */
+	protected String getPositionOption(Component component)
+	{
+		return String.format("{ my: 'left top', collision: 'fit', of: jQuery('%s') }", JQueryWidget.getSelector(component));
+	}
 
 	// Events //
+
 	@Override
 	protected void onInitialize()
 	{
@@ -87,6 +104,7 @@ public class ContextMenu extends Menu
 
 	/**
 	 * Fired by a component that holds a {@link ContextMenuBehavior}
+	 *
 	 * @param target the {@link AjaxRequestTarget}
 	 * @param component the component that holds a {@link ContextMenuBehavior}
 	 */
@@ -95,11 +113,12 @@ public class ContextMenu extends Menu
 		this.onContextMenu(target, component);
 
 		target.add(this);
-		target.appendJavaScript(String.format("jQuery(function() { jQuery('%s').show().position({ collision: 'none', my: 'left top', of: jQuery('%s') }); });", JQueryWidget.getSelector(this), JQueryWidget.getSelector(component)));
+		target.appendJavaScript(String.format("jQuery(function() { jQuery('%s').position(%s).show(); });", JQueryWidget.getSelector(this), this.getPositionOption(component)));
 	}
 
 	/**
 	 * Triggered when 'contextmenu' event is triggered by a component that holds a {@link ContextMenuBehavior}
+	 *
 	 * @param target the {@link AjaxRequestTarget}
 	 * @param component the component that holds a {@link ContextMenuBehavior}
 	 */
@@ -107,10 +126,10 @@ public class ContextMenu extends Menu
 	{
 	}
 
-
 	// Factories //
 	/**
 	 * Gets a new {@link JQueryAbstractBehavior} that handles the closing of the context-menu
+	 *
 	 * @return a {@link JQueryAbstractBehavior}
 	 */
 	protected JQueryAbstractBehavior newContextMenuDocumentBehavior()

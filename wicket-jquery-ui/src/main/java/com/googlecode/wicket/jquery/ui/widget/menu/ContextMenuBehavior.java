@@ -21,6 +21,7 @@ import org.apache.wicket.Component;
 import org.apache.wicket.WicketRuntimeException;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.attributes.CallbackParameter;
+import org.apache.wicket.util.lang.Args;
 
 import com.googlecode.wicket.jquery.core.IJQueryWidget.JQueryWidget;
 import com.googlecode.wicket.jquery.core.JQueryAbstractBehavior;
@@ -59,7 +60,7 @@ public class ContextMenuBehavior extends JQueryAbstractBehavior implements IJQue
 	{
 		super("context-menu");
 
-		this.menu = menu;
+		this.menu = Args.notNull(menu, "menu");
 	}
 
 

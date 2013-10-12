@@ -125,7 +125,7 @@ public abstract class MenuBehavior extends JQueryBehavior implements IJQueryAjax
 				return new CallbackParameter[] {
 						CallbackParameter.context("event"),
 						CallbackParameter.context("ui"),
-						CallbackParameter.resolved("id", "ui.item.context.id")
+						CallbackParameter.resolved("hash", "ui.item.context.id")
 						};
 			}
 
@@ -153,7 +153,7 @@ public abstract class MenuBehavior extends JQueryBehavior implements IJQueryAjax
 		{
 			super();
 
-			this.hash = RequestCycleUtils.getQueryParameterValue("id").toString();
+			this.hash = RequestCycleUtils.getQueryParameterValue("hash").toString();
 		}
 
 		/**
