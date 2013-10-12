@@ -7,3 +7,4 @@ target/
 META-INF
 .scala_dependencies
 nb-configuration.xml
+*~
