@@ -16,6 +16,7 @@
  */
 package org.wicketstuff.rest.contenthandling;
 
+import org.apache.wicket.WicketRuntimeException;
 import org.apache.wicket.request.http.WebRequest;
 import org.apache.wicket.request.http.WebResponse;
 
@@ -39,7 +40,7 @@ public interface IWebSerialDeserial
 	 * @throws Exception
 	 */
 	public void objectToResponse(Object targetObject, WebResponse response, String mimeType)
-		throws Exception;
+		throws WicketRuntimeException;
 
 	/**
 	 * Extract an instance of argClass form the request.
@@ -54,7 +55,7 @@ public interface IWebSerialDeserial
 	 * @return the object extracted from the request.
 	 */
 	public <T> T requestToObject(WebRequest request, Class<T> argClass, String mimeType)
-		throws Exception;
+		throws WicketRuntimeException;
 
 	/**
 	 * Check if a given MIME type is handled.

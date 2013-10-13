@@ -543,7 +543,7 @@ public abstract class AbstractRestResource<T extends IWebSerialDeserial> impleme
 
 		for (MethodParameter methodParameter : mappedMethod.getMethodParameters())
 		{
-			Object paramValue = methodParameter.parameterValue(parameterContext);
+			Object paramValue = methodParameter.extractParameterValue(parameterContext);
 
 			// if parameter is null and is required, abort extraction.
 			if (paramValue == null && methodParameter.isRequired())

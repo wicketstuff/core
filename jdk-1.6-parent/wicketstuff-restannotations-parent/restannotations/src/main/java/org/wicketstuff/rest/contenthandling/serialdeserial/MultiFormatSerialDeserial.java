@@ -36,7 +36,6 @@ public class MultiFormatSerialDeserial implements IWebSerialDeserial
 
 	@Override
 	public void objectToResponse(Object targetObject, WebResponse response, String mimeType)
-		throws Exception
 	{
 
 		IWebSerialDeserial serialDeserial = serialsDeserials.get(mimeType);
@@ -47,7 +46,6 @@ public class MultiFormatSerialDeserial implements IWebSerialDeserial
 
 	@Override
 	public <T> T requestToObject(WebRequest request, Class<T> targetClass, String mimeType)
-		throws Exception
 	{
 		IWebSerialDeserial serialDeserial = serialsDeserials.get(mimeType);
 

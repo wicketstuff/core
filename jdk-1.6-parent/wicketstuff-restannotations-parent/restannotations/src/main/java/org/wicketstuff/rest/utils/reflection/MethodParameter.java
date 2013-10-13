@@ -22,7 +22,6 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.wicket.WicketRuntimeException;
 import org.apache.wicket.request.http.WebRequest;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
 import org.apache.wicket.util.lang.Args;
@@ -104,14 +103,14 @@ public class MethodParameter<T>
 
 	}
 
-	public Object parameterValue(MethodParameterContext context)
+	public Object extractParameterValue(MethodParameterContext context)
 	{
 		Object paramValue = null;
 		
 		if (annotationParam == null)
 			paramValue = extractParameterFromUrl(context);
 		else
-			paramValue = extractParameterValue(context);
+			paramValue = extractParameterFromAnnotation(context);
 
 		// try to use the default value
 		if (paramValue == null && !deaultValue.isEmpty())
@@ -162,7 +161,7 @@ public class MethodParameter<T>
 	 *            PageParameters for the current request.
 	 * @return the extracted value.
 	 */
-	private Object extractParameterValue(MethodParameterContext context)
+	private Object extractParameterFromAnnotation(MethodParameterContext context)
 	{
 		Object paramValue = null;
 
@@ -294,14 +293,8 @@ public class MethodParameter<T>
 		IWebSerialDeserial serialDeserial)
 	{
 		WebRequest servletRequest = AbstractRestResource.getCurrentWebRequest();
-		try
-		{
-			return serialDeserial.requestToObject(servletRequest, parameterClass, mimeInputFormat);
-		}
-		catch (Exception e)
-		{
-			throw new WicketRuntimeException("Error occurred during object extraction from request.", e);
-		}
+		
+		return serialDeserial.requestToObject(servletRequest, parameterClass, mimeInputFormat);
 	}
 
 	/**

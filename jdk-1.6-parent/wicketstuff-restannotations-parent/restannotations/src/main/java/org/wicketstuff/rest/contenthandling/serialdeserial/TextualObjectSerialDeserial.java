@@ -16,8 +16,11 @@
  */
 package org.wicketstuff.rest.contenthandling.serialdeserial;
 
+import java.io.IOException;
+
 import javax.servlet.ServletResponse;
 
+import org.apache.wicket.WicketRuntimeException;
 import org.apache.wicket.request.http.WebRequest;
 import org.apache.wicket.request.http.WebResponse;
 import org.wicketstuff.rest.contenthandling.IObjectSerialDeserial;
@@ -57,7 +60,6 @@ public abstract class TextualObjectSerialDeserial implements IWebSerialDeserial,
 
 	@Override
 	public void objectToResponse(Object targetObject, WebResponse response, String mimeType)
-		throws Exception
 	{
 		setCharsetResponse(response);
 
@@ -88,9 +90,15 @@ public abstract class TextualObjectSerialDeserial implements IWebSerialDeserial,
 
 	@Override
 	public <T> T requestToObject(WebRequest request, Class<T> targetClass, String mimeType)
-		throws Exception
 	{
-		return deserializeObject(HttpUtils.readStringFromRequest(request), targetClass, mimeType);
+		try
+		{
+			return deserializeObject(HttpUtils.readStringFromRequest(request), targetClass, mimeType);
+		}
+		catch (IOException e)
+		{
+			throw new WicketRuntimeException("An error occurred during request reading.", e);
+		}
 	}
 
 	@Override
