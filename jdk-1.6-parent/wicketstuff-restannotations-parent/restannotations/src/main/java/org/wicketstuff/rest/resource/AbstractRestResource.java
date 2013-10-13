@@ -117,7 +117,7 @@ public abstract class AbstractRestResource<T extends IWebSerialDeserial> impleme
 
 		this.objSerialDeserial = serialDeserial;
 		this.roleCheckingStrategy = roleCheckingStrategy;
-		this.mappedMethods = loadAnnotatedMethods(new MultiMap<String, MethodMappingInfo>());
+		this.mappedMethods = loadAnnotatedMethods();
 
 		configureObjSerialDeserial(serialDeserial);
 		onInitialize(serialDeserial);
@@ -214,8 +214,8 @@ public abstract class AbstractRestResource<T extends IWebSerialDeserial> impleme
 	/**
 	 * Check if user is allowed to run a method annotated with {@link AuthorizeInvocation}
 	 * 
-	 * @param mappedMethod
-	 *            the target method
+	 * @param roles
+	 *            the user roles
 	 * @return true if user is allowed, else otherwise
 	 */
 	private boolean isUserAuthorized(Roles roles)
@@ -318,6 +318,7 @@ public abstract class AbstractRestResource<T extends IWebSerialDeserial> impleme
 	 * @param result
 	 *            The object to write to response.
 	 * @param restMimeFormats
+	 * 			  The MIME type to use to serialize data
 	 */
 	@Override
 	public void objectToResponse(Object result, WebResponse response, String mimeType)
@@ -336,10 +337,8 @@ public abstract class AbstractRestResource<T extends IWebSerialDeserial> impleme
 	/**
 	 * Method invoked to select the most suited method to serve the current request.
 	 * 
-	 * @param mappedMethods
-	 *            List of {@link MethodMappingInfo} containing the informations of mapped methods.
-	 * @param pageParameters
-	 *            The PageParameters of the current request.
+	 * @param attributesWrapper
+	 * 			the current attribute wrapper
 	 * @return The "best" method found to serve the request.
 	 */
 	private MethodMappingInfo selectMostSuitedMethod(AttributesWrapper attributesWrapper)
@@ -449,15 +448,16 @@ public abstract class AbstractRestResource<T extends IWebSerialDeserial> impleme
 	/***
 	 * Internal method to load class methods annotated with {@link MethodMapping}
 	 * 
-	 * @param multiMap
 	 * @return
+	 * 		a map object contained annotated method. Mapped method are stored concatenating
+	 * 		the number of the segments of their URL and their HTTP method (see annotation MethodMapping)
 	 */
-	private Map<String, List<MethodMappingInfo>> loadAnnotatedMethods(
-		MultiMap<String, MethodMappingInfo> mappedMethods)
+	private Map<String, List<MethodMappingInfo>> loadAnnotatedMethods()
 	{
 		Method[] methods = getClass().getDeclaredMethods();
+		MultiMap<String, MethodMappingInfo> mappedMethods = new MultiMap<String, MethodMappingInfo>();
 		boolean isUsingAuthAnnot = false;
-
+		
 		for (int i = 0; i < methods.length; i++)
 		{
 			Method method = methods[i];
@@ -527,8 +527,8 @@ public abstract class AbstractRestResource<T extends IWebSerialDeserial> impleme
 	 * 
 	 * @param mappedMethod
 	 *            mapping info of the method.
-	 * @param attributes
-	 *            Attributes object for the current request.
+	 * @param attributesWrapper
+	 *            Attributes wrapper for the current request.
 	 * @return the value returned by the invoked method
 	 */
 	private List extractMethodParameters(MethodMappingInfo mappedMethod,
@@ -613,7 +613,13 @@ public abstract class AbstractRestResource<T extends IWebSerialDeserial> impleme
 			return null;
 		}
 	}
-
+	
+	/**
+	 * Utility method to retrieve the current web request.
+	 * 
+	 * @return
+	 * 		the current web request
+	 */
 	public static final WebRequest getCurrentWebRequest()
 	{
 		return (WebRequest)RequestCycle.get().getRequest();
@@ -653,6 +659,12 @@ public abstract class AbstractRestResource<T extends IWebSerialDeserial> impleme
 		}
 	}
 
+	/**
+	 * Utility method to retrieve the current web response.
+	 * 
+	 * @return
+	 * 		the current web response
+	 */
 	public static final WebResponse getCurrentWebResponse()
 	{
 		return (WebResponse)RequestCycle.get().getResponse();
@@ -693,17 +705,40 @@ public abstract class AbstractRestResource<T extends IWebSerialDeserial> impleme
 	{
 		return mappedMethods;
 	}
-
+	
+	/**
+	 * Register a Wicket validator for the current resource.
+	 * 
+	 * @param key
+	 * 		the key to use to store the validator.
+	 * @param validator
+	 * 		the validator to register
+	 */
 	protected void registerValidator(String key, IValidator validator)
 	{
 		declaredValidators.put(key, validator);
 	}
 
+	/**
+	 * Unregister a Wicket validator.
+	 * 
+	 * @param key
+	 * 		the key to use to remove the validator.
+	 */
 	protected void unregisterValidator(String key)
 	{
 		declaredValidators.remove(key);
 	}
 
+	/**
+	 * Retrieve a registered validato.
+	 * 
+	 * @param key
+	 * 		the key to use to retrieve the validator.
+	 * @return the registered validator corresponding to the given key. 
+	 *         Null if no validator has been registered with the given key.
+	 * 
+	 */
 	protected IValidator getValidator(String key)
 	{
 		return declaredValidators.get(key);
