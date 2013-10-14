@@ -64,8 +64,8 @@ public abstract class MenuBehavior extends JQueryBehavior implements IJQueryAjax
 		super(selector, METHOD, options);
 	}
 
-
 	// Properties //
+
 	/**
 	 * Gets the reference map of hash/menu-item.<br/>
 	 *
@@ -73,8 +73,8 @@ public abstract class MenuBehavior extends JQueryBehavior implements IJQueryAjax
 	 */
 	protected abstract Map<String, IMenuItem> getMenuItemMap();
 
-
 	// Methods //
+
 	@Override
 	public void bind(Component component)
 	{
@@ -83,8 +83,8 @@ public abstract class MenuBehavior extends JQueryBehavior implements IJQueryAjax
 		component.add(this.onSelectBehavior = this.newOnSelectBehavior());
 	}
 
-
 	// Events //
+
 	@Override
 	public void onConfigure(Component component)
 	{
@@ -109,8 +109,10 @@ public abstract class MenuBehavior extends JQueryBehavior implements IJQueryAjax
 	}
 
 	// Factories //
+
 	/**
 	 * Gets a new {@link JQueryAjaxBehavior} that acts as the 'select' javascript callback
+	 *
 	 * @return the {@link JQueryAjaxBehavior}
 	 */
 	protected JQueryAjaxBehavior newOnSelectBehavior()
@@ -122,11 +124,7 @@ public abstract class MenuBehavior extends JQueryBehavior implements IJQueryAjax
 			@Override
 			protected CallbackParameter[] getCallbackParameters()
 			{
-				return new CallbackParameter[] {
-						CallbackParameter.context("event"),
-						CallbackParameter.context("ui"),
-						CallbackParameter.resolved("id", "ui.item.context.id")
-						};
+				return new CallbackParameter[] { CallbackParameter.context("event"), CallbackParameter.context("ui"), CallbackParameter.resolved("hash", "ui.item.context.id") };
 			}
 
 			@Override
@@ -136,7 +134,6 @@ public abstract class MenuBehavior extends JQueryBehavior implements IJQueryAjax
 			}
 		};
 	}
-
 
 	// Event objects //
 	/**
@@ -153,11 +150,12 @@ public abstract class MenuBehavior extends JQueryBehavior implements IJQueryAjax
 		{
 			super();
 
-			this.hash = RequestCycleUtils.getQueryParameterValue("id").toString();
+			this.hash = RequestCycleUtils.getQueryParameterValue("hash").toString();
 		}
 
 		/**
 		 * Gets the menu's id-hash
+		 *
 		 * @return the id-hash
 		 */
 		public String getHash()

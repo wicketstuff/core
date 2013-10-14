@@ -16,91 +16,54 @@
  */
 package com.googlecode.wicket.jquery.ui.kendo.console;
 
-import java.util.LinkedHashMap;
-import java.util.Map;
-
 import org.apache.wicket.ajax.AjaxRequestTarget;
-import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.model.IModel;
-import org.apache.wicket.model.Model;
 
 /**
  * Provides a Kendo UI console widget
+ * <b>Note about the capacity:</b> the capacity allows to define a maximum number of messages.<br/>
+ * Elder messages will be automatically removed from the model object on insertion.<br/>
+ * However, this is only reflected when the component is (re-)rendered ({@link #onBeforeRender()} has to be invoked)
  *
  * @author Sebastien Briquet - sebfz1
  */
-public class Console extends WebMarkupContainer
+public class Console extends AbstractConsole
 {
 	private static final long serialVersionUID = 1L;
 
-	private ConsoleBehavior consoleBehavior;
-
 	/**
-	 * Constructor with a default capacity ({@value ConsoleQueue#CAPACITY}) {@link ConsoleQueue}
+	 * Constructor with a default capacity ({@value ConsoleMessages#CAPACITY})
 	 *
 	 * @param id the markup id
 	 */
 	public Console(String id)
 	{
-		this(id, Model.of(new ConsoleQueue()));
+		super(id);
 	}
 
 	/**
 	 * Constructor
 	 *
 	 * @param id the markup id
-	 * @param model the {@link ConsoleQueue} model
+	 * @param capacity the max capacity
 	 */
-	public Console(String id, IModel<ConsoleQueue> model)
+	public Console(String id, int capacity)
+	{
+		super(id, capacity);
+	}
+
+	/**
+	 * Constructor
+	 *
+	 * @param id the markup id
+	 * @param model the {@link ConsoleMessages} model
+	 */
+	public Console(String id, IModel<ConsoleMessages> model)
 	{
 		super(id, model);
-
-		this.setEscapeModelStrings(false);
 	}
 
-	// Events //
-
-	@Override
-	protected void onInitialize()
-	{
-		super.onInitialize();
-
-		this.add(this.consoleBehavior = this.newConsoleBehavior());
-	}
-
-	// Properties //
-
-	public ConsoleQueue getModelObject()
-	{
-		return (ConsoleQueue) this.getDefaultModelObject();
-	}
-
-	// Methods //
-
-	/**
-	 * Logs a message
-	 *
-	 * @param message the message to log
-	 * @param error indicates whether the message is an error message
-	 */
-	public void log(String message, boolean error)
-	{
-		this.getModelObject().put(message, error);
-	}
-
-	/**
-	 * Logs a message
-	 *
-	 * @param message the message to log
-	 * @param error indicates whether the message is an error message
-	 * @param target the {@link AjaxRequestTarget}
-	 */
-	public void log(String message, boolean error, AjaxRequestTarget target)
-	{
-		this.log(message, error);
-
-		target.appendJavaScript(this.consoleBehavior.$(message, error));
-	}
+	// Method //
 
 	/**
 	 * Helper method that logs an info message
@@ -146,64 +109,5 @@ public class Console extends WebMarkupContainer
 		this.error(message);
 
 		target.appendJavaScript(this.consoleBehavior.$(message, true));
-	}
-
-	// Factories //
-
-	/**
-	 * Gets a new {@link ConsoleBehavior}
-	 *
-	 * @return a new {@link ConsoleBehavior}
-	 */
-	protected ConsoleBehavior newConsoleBehavior()
-	{
-		return new ConsoleBehavior() {
-
-			private static final long serialVersionUID = 1L;
-
-			@Override
-			protected String $()
-			{
-				StringBuilder builder = new StringBuilder("jQuery(function() {\n");
-
-				for (Map.Entry<String, Boolean> entry : Console.this.getModelObject().entrySet())
-				{
-					builder.append(this.$(entry.getKey(), entry.getValue())).append("\n");
-				}
-
-				builder.append("});");
-
-				return builder.toString();
-			}
-		};
-	}
-
-	/**
-	 * Provides the {@link Console} model-object
-	 */
-	public static class ConsoleQueue extends LinkedHashMap<String, Boolean>
-	{
-		private static final long serialVersionUID = 1L;
-
-		/** Default capacity */
-		private static final int CAPACITY = 50;
-
-		private final int capacity;
-
-		public ConsoleQueue()
-		{
-			this.capacity = CAPACITY;
-		}
-
-		public ConsoleQueue(int capacity)
-		{
-			this.capacity = capacity;
-		}
-
-		@Override
-		protected boolean removeEldestEntry(Map.Entry<String, Boolean> eldest)
-		{
-			return this.size() > this.capacity;
-		}
 	}
 }

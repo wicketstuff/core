@@ -16,6 +16,8 @@
  */
 package com.googlecode.wicket.jquery.ui.kendo.console;
 
+import java.io.Serializable;
+
 import org.apache.wicket.Application;
 import org.apache.wicket.AttributeModifier;
 import org.apache.wicket.Component;
@@ -33,6 +35,7 @@ import com.googlecode.wicket.jquery.ui.kendo.settings.IConsoleLibrarySettings;
 public abstract class ConsoleBehavior extends JQueryAbstractBehavior
 {
 	private static final long serialVersionUID = 1L;
+	private static final String CSS_CLASS = "console";
 
 	/**
 	 * Gets the {@link IConsoleLibrarySettings}
@@ -84,29 +87,28 @@ public abstract class ConsoleBehavior extends JQueryAbstractBehavior
 	{
 		super.bind(component);
 
-		component.add(AttributeModifier.append("class", "console"));
+		component.add(AttributeModifier.append("class", CSS_CLASS));
 	}
 
 	/**
-	 * Gets the jQuery statement that logs the message
+	 * Formats the message (escaping, etc)
+	 *
+	 * @param message the message to format
+	 * @param error indicates whether the message is an error message
+	 * @return the formated message
+	 */
+	protected abstract String format(Serializable message, boolean error);
+
+	/**
+	 * Gets the jQuery statement that logs the message<br/>
+	 * <b>Warning: </b> This method is *not* called by the behavior directly (only {@link #$()} is).
 	 *
 	 * @param message the message to log
 	 * @param error indicates whether the message is an error message
 	 * @return the jQuery statement
 	 */
-	public String $(String message, boolean error)
+	public String $(Serializable message, boolean error)
 	{
-		return String.format("kendoConsole.log('%s', %b);", this.format(message), error);
-	}
-
-	/**
-	 * Format the message (escaping, etc)
-	 *
-	 * @param message the message to format
-	 * @return the formated message
-	 */
-	protected String format(String message)
-	{
-		return message.replace("'", "\\'");
+		return String.format("kendoConsole.log('%s', %b);", this.format(message, error), error);
 	}
 }

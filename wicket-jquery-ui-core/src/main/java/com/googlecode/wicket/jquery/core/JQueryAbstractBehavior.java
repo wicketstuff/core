@@ -182,7 +182,7 @@ public abstract class JQueryAbstractBehavior extends Behavior
 		{
 			if (!Application.get().getMarkupSettings().getStripWicketTags())
 			{
-				LOG.warn("Application>MarkupSettings>StripWicketTags setting is currently set to false. It is highly recommended to set it to true to prevent widget misbehaviors.");
+				LOG.warn("Application > MarkupSettings > StripWicketTags: setting is currently set to false. It is highly recommended to set it to true to prevent widget misbehaviors.");
 			}
 		}
 	}
