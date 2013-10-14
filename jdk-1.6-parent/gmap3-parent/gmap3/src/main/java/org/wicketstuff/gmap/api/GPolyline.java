@@ -42,7 +42,7 @@ public class GPolyline extends GOverlay
     }
 
     /**
-     * @see wicket.contrib.gmap.api.GOverlay#getJSconstructor()
+     * @see GOverlay#getJSconstructor()
      */
     @Override
     public String getJSconstructor()
@@ -52,12 +52,11 @@ public class GPolyline extends GOverlay
         {
             array.add(gLatLng.getJSconstructor());
         }
-        return ("new google.maps.Polyline({strokeWeight: '" + weight + "', strokeColor: '" + color + "', strokeOpacity: '" + opacity + "', path: " + array.toJS() + "})");
+        return ("new google.maps.Polyline({strokeWeight: " + weight + ", strokeColor: '" + color + "', strokeOpacity: " + opacity + ", path: " + array.toJS() + "})");
     }
 
     /**
-     * @see wicket.contrib.gmap.api.GOverlay#updateOnAjaxCall(org.apache.wicket.ajax.AjaxRequestTarget,
-     * wicket.contrib.gmap.api.GEvent)
+     * @see GOverlay#updateOnAjaxCall(org.apache.wicket.ajax.AjaxRequestTarget, GEvent)
      */
     @Override
     protected void updateOnAjaxCall(AjaxRequestTarget target, GEvent overlayEvent)
