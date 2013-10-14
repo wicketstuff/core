@@ -37,7 +37,9 @@ public class DefaultSfMenuPage extends AbstractSfMenuPage
 		List<ISfMenuItem> list = new ArrayList<ISfMenuItem>();
 
 		list.add(new SfMenuItem("Sub-menu #1", HomePage.class));
-		list.add(new SfMenuItem("Sub-menu #2", HomePage.class));
+		SfMenuItem subMenuItem2 = new SfMenuItem("Disabled Menu Item", HomePage.class);
+		subMenuItem2.setEnabled(false);
+		list.add(subMenuItem2);
 		list.add(new SfMenuItem("Sub-menu #3", HomePage.class));
 
 		return list;

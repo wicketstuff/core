@@ -95,4 +95,5 @@ public class SfMenuItem extends AbstractSfMenuItem
 	{
 		return this.items.add(item);
 	}
+
 }

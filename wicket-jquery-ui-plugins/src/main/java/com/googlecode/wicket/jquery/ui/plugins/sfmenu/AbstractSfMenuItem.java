@@ -21,7 +21,6 @@ import java.util.List;
 
 import org.apache.wicket.Page;
 import org.apache.wicket.model.IModel;
-import org.apache.wicket.util.IProvider;
 import org.apache.wicket.util.reference.ClassReference;
 
 /**
@@ -37,7 +36,8 @@ public abstract class AbstractSfMenuItem implements ISfMenuItem
 	private static final long serialVersionUID = 1L;
 
 	private IModel<String> title;
-	private final IProvider<Class<? extends Page>> pageClassProvider;
+	private ClassReference <? extends Page> pageClassReference;
+	private boolean enabled = true;
 
 
 	/**
@@ -50,11 +50,11 @@ public abstract class AbstractSfMenuItem implements ISfMenuItem
 		//this.pageClass = pageClass;
 		if(pageClass != null)
 		{
-			this.pageClassProvider = new ClassReference(pageClass);
+			this.pageClassReference = ClassReference.of(pageClass);
 		}
 		else
 		{
-			this.pageClassProvider = null;
+			this.pageClassReference = null;
 		}
 	}
 
@@ -79,15 +79,26 @@ public abstract class AbstractSfMenuItem implements ISfMenuItem
 		return Collections.emptyList();
 	}
 
+	@Override
+	public boolean isEnabled()
+	{
+		return this.enabled;
+	}
+
+	public void setEnabled(boolean enabled)
+	{
+		this.enabled = enabled;
+	}
+
 	/***
 	 * Get the page class registered with the link
 	 * @return Page Class
 	 */
 	public Class<? extends Page> getPageClass()
 	{
-		if(pageClassProvider != null)
+		if(pageClassReference != null)
 		{
-			return pageClassProvider.get();
+			return pageClassReference.get();
 		}
 		return null;
 	}

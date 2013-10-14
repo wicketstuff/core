@@ -97,4 +97,5 @@ public abstract class SfMenuBehavior extends JQueryBehavior
 	 * @return the non-null {@link Map}
 	 */
 	protected abstract Map<String, ISfMenuItem> getMenuItemMap();
+
 }

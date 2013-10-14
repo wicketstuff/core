@@ -51,4 +51,10 @@ public interface ISfMenuItem extends IClusterable
 	 * @return Page Class
 	 */
 	Class<? extends Page> getPageClass();
+
+	/**
+	 * Indicates whether the menu-item is enabled
+	 * @return true or false
+	 */
+	boolean isEnabled();
 }

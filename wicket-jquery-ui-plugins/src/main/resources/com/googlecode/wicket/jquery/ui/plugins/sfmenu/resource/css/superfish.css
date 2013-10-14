@@ -111,3 +111,15 @@
 .sf-arrows ul .sfHover > .sf-with-ul:after {
 	border-left-color: white;
 }
+
+.sf-menu .disabled {
+	display: block;
+	position: relative;
+	border-left: 1px solid #fff;
+	border-top: 1px solid #dFeEFF; /* fallback colour must use full shorthand */
+	border-top: 1px solid rgba(255,255,255,.5);
+	padding: .75em 1em;
+	text-decoration: none;
+	zoom: 1; /* IE7 */
+	color: #666;
+}

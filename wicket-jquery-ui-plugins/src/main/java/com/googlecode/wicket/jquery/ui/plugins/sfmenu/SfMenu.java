@@ -27,6 +27,7 @@ import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.link.Link;
 import org.apache.wicket.markup.html.list.ListItem;
 import org.apache.wicket.markup.html.list.ListView;
+import org.apache.wicket.markup.html.panel.EmptyPanel;
 import org.apache.wicket.markup.html.panel.Fragment;
 
 import com.googlecode.wicket.jquery.core.JQueryBehavior;
@@ -202,8 +203,16 @@ public class SfMenu extends JQueryPanel
 				{
 					ISfMenuItem menuItem = item.getModelObject();
 
-					item.add(new ItemFragment("item", menuItem));
-					item.add(new MenuFragment("menu", menuItem.getItems()));
+					if(menuItem.isEnabled())
+					{
+						item.add(new ItemLinkFragment("item", menuItem));
+						item.add(new MenuFragment("menu", menuItem.getItems()));
+					}
+					else
+					{
+						item.add(new ItemDisableFragment("item", menuItem));
+						item.add(new EmptyPanel("menu"));
+					}
 				}
 			});
 		}
@@ -212,13 +221,13 @@ public class SfMenu extends JQueryPanel
 	/**
 	 * Represents a {@link Fragment} of a menu-item
 	 */
-	private class ItemFragment extends Fragment
+	private class ItemLinkFragment extends Fragment
 	{
 		private static final long serialVersionUID = 1L;
 
-		public ItemFragment(String id, final ISfMenuItem item)
+		public ItemLinkFragment(String id, final ISfMenuItem item)
 		{
-			super(id, "item-fragment", SfMenu.this);
+			super(id, "item-link-fragment", SfMenu.this);
 
 			Link<Object> itemLink = new Link<Object>("item-link") {
 
@@ -243,5 +252,17 @@ public class SfMenu extends JQueryPanel
 			itemLink.add(new Label("title", item.getTitle()));
 			add(itemLink);
 		}
+	}
+
+	private class ItemDisableFragment extends Fragment
+	{
+		private static final long serialVersionUID = 1L;
+
+		public ItemDisableFragment(String id, final ISfMenuItem item)
+		{
+			super(id,"item-disable-fragment", SfMenu.this);
+			add(new Label("title", item.getTitle()).add(new AttributeModifier("class", "disabled")));
+		}
+
 	}
 }
