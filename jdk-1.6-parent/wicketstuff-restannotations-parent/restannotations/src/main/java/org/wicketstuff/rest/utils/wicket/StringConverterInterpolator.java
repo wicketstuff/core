@@ -24,6 +24,13 @@ import org.apache.wicket.util.convert.IConverter;
 import org.apache.wicket.util.string.Strings;
 import org.apache.wicket.util.string.interpolator.MapVariableInterpolator;
 
+/**
+ * Utility class to convert strings to values and vice-versa. It relies on 
+ * the Wicket converters registered for the current application.
+ * 
+ * @author andrea del bene
+ *
+ */
 public class StringConverterInterpolator extends MapVariableInterpolator
 {
 

@@ -26,6 +26,14 @@ import org.apache.wicket.resource.loader.IStringResourceLoader;
 import org.apache.wicket.validation.IErrorMessageSource;
 import org.wicketstuff.rest.resource.AbstractRestResource;
 
+/**
+ * Wicket bundle resolver that relies on the default {@link IStringResourceLoader}S.
+ * Its constructor requires an subclass of {@link AbstractRestResource} which 
+ * is used to resolve custom bundles.
+ * 
+ * @author andrea del bene
+ *
+ */
 public class DefaultBundleResolver implements IErrorMessageSource
 {
 	private final Class<? extends AbstractRestResource> clazz;

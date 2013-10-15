@@ -41,7 +41,7 @@ public class ReflectionUtils
 	 * 
 	 * @return true if the method parameter is annotated with the given annotation, false otherwise.
 	 */
-	static public boolean isParameterAnnotatedWith(int i, Method method,
+	public static boolean isParameterAnnotatedWith(int i, Method method,
 		Class<? extends Annotation> targetAnnotation)
 	{
 		Annotation[][] parametersAnnotations = method.getParameterAnnotations();
@@ -71,7 +71,7 @@ public class ReflectionUtils
 	 * @return true if such an annotation is found, false otherwise.
 	 * @see AnnotatedParam
 	 */
-	static public Annotation getAnnotationParam(int i, Method method)
+	public static Annotation getAnnotationParam(int i, Method method)
 	{
 		Annotation[][] parametersAnnotations = method.getParameterAnnotations();
 
@@ -103,7 +103,7 @@ public class ReflectionUtils
 	 * @return the first occurrence of the targetAnnotation found in the array, null if no
 	 *         occurrence was found.
 	 */
-	static public <T extends Annotation> T findAnnotation(Annotation[] parameterAnnotations,
+	public static <T extends Annotation> T findAnnotation(Annotation[] parameterAnnotations,
 		Class<T> targetAnnotation)
 	{
 
@@ -118,14 +118,39 @@ public class ReflectionUtils
 		return null;
 	}
 
-	static public <T extends Annotation> T findMethodParameterAnnotation(Method ownerMethod,
+	/**
+	 * Return the specified annotation for the method parameter at a given position (see {@code paramIndex}).
+	 * 
+	 * @param ownerMethod
+	 * 			the parameter's method
+	 * @param paramIndex
+	 * 			the parameter index
+	 * @param targetAnnotation
+	 * 			the annotation type to search for
+	 * @return
+	 * 			return an instance of the given annotation type, 
+	 * 			or null if the method parameter it's not annotated.
+	 */
+	public static <T extends Annotation> T findMethodParameterAnnotation(Method ownerMethod,
 		int paramIndex, Class<T> targetAnnotation)
 	{
 		Annotation[][] paramAnnotations = ownerMethod.getParameterAnnotations();
 		return findAnnotation(paramAnnotations[paramIndex], targetAnnotation);
 	}
 
-	static public Method findMethod(Class<?> clazz, String name, Class<?>... parameterTypes)
+	/**
+	 * Safely search for a method with a given signature (name + parameter types) on a given class. 
+	 * 
+	 * @param clazz
+	 * 			the target class
+	 * @param name
+	 * 		   method name
+	 * @param parameterTypes
+	 * 		   method's parameters types.
+	 * @return
+	 * 		  the method corresponding to the given signature, null if such a method doesn't exist.
+	 */
+	public static Method findMethod(Class<?> clazz, String name, Class<?>... parameterTypes)
 	{
 		try
 		{
@@ -138,8 +163,19 @@ public class ReflectionUtils
 		}
 	}
 
-
-	static public <T> T invokeMethod(Object target, String name, Class<?>... parameterTypes)
+	/**
+	 * Safely invoke a method with the given signature (name + parameter types) on the given target object.
+	 * 
+	 * @param target
+	 * 			the target object
+	 * @param name
+	 * 			method name
+	 * @param parameterTypes
+	 * 			method's parameters types.
+	 * @return
+	 * 			the value returned by the method invocation.
+	 */
+	public static <T> T invokeMethod(Object target, String name, Class<?>... parameterTypes)
 	{
 		Method method = findMethod(target.getClass(), name, parameterTypes);
 
@@ -162,10 +198,11 @@ public class ReflectionUtils
 	 * @param fieldName
 	 *            the field name
 	 * @param defaultValue
-	 *            the default value
-	 * @return the value of the field.
+	 *            the default value to return
+	 * @return the value of the field or the default value
+	 *          if the filed has no value.
 	 */
-	static public <T> T getAnnotationField(Annotation annotation, String fieldName, T defaultValue)
+	public static <T> T getAnnotationField(Annotation annotation, String fieldName, T defaultValue)
 	{
 		T methodResult = null;
 
