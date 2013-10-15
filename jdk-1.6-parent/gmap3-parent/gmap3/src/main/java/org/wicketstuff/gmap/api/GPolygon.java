@@ -48,7 +48,7 @@ public class GPolygon extends GOverlay
     }
 
     /**
-     * @see wicket.contrib.gmap.api.GOverlay#getJSconstructor()
+     * @see GOverlay#getJSconstructor()
      */
     @Override
     public String getJSconstructor()
@@ -59,12 +59,11 @@ public class GPolygon extends GOverlay
             array.add(gLatLng.getJSconstructor());
         }
 
-        return ("new google.maps.Polygon({strokeWeight: '" + strokeWeight + "', strokeColor: '" + strokeColor + "', strokeOpacity: '" + strokeOpacity + "', fillColor: '" + fillColor + "', fillOpacity: '" + fillOpacity + "', paths: " + array.toJS() + "})");
+        return ("new google.maps.Polygon({strokeWeight: " + strokeWeight + ", strokeColor: '" + strokeColor + "', strokeOpacity: " + strokeOpacity + ", fillColor: '" + fillColor + "', fillOpacity: " + fillOpacity + ", paths: " + array.toJS() + "})");
     }
 
     /**
-     * @see wicket.contrib.gmap.api.GOverlay#updateOnAjaxCall(org.apache.wicket.ajax.AjaxRequestTarget,
-     * wicket.contrib.gmap.api.GEvent)
+     * @see GOverlay#updateOnAjaxCall(org.apache.wicket.ajax.AjaxRequestTarget, GEvent)
      */
     @Override
     protected void updateOnAjaxCall(AjaxRequestTarget target, GEvent overlayEvent)
