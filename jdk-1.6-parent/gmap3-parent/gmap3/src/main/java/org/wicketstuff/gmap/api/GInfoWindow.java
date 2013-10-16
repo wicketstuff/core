@@ -4,6 +4,7 @@ import org.apache.wicket.Component;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.request.cycle.RequestCycle;
 import org.wicketstuff.gmap.js.Constructor;
+import org.wicketstuff.gmap.js.ObjectLiteral;
 
 /**
  * Represents an Google Maps API's <a href= "http://www.google.com/apis/maps/documentation/reference.html#GInfoWindow"
@@ -26,6 +27,7 @@ public class GInfoWindow extends GOverlay
     private GMarker marker;
     private String content;
     private boolean contentIsNode;
+    Integer maxWidth;
 
     /**
      * Constructor.
@@ -63,11 +65,16 @@ public class GInfoWindow extends GOverlay
     public String getJSconstructor()
     {
 
-        Constructor constructor;
+        ObjectLiteral args = new ObjectLiteral();
         if(!contentIsNode)
-            constructor = new Constructor("google.maps.InfoWindow").add("{content: '" + content + "', position: " + latLng.toString() + "}");
+          args.setString("content", content);
         else
-          constructor = new Constructor("google.maps.InfoWindow").add("{'content': " + content + ", position: " + latLng.toString() + "}");
+          args.set("content", content);
+        
+        args.set("position",latLng.toString());
+        if(maxWidth !=null) args.set("maxWidth", maxWidth.toString());
+        
+        Constructor constructor = new Constructor("google.maps.InfoWindow").add(args.toJS());
         return constructor.toJS();
     }
 
@@ -77,6 +84,11 @@ public class GInfoWindow extends GOverlay
     @Override
     protected void updateOnAjaxCall(AjaxRequestTarget target, GEvent overlayEvent)
     {
+    }
+    
+    public void setMaxWidth(Integer maxWidth)
+    {
+      this.maxWidth = maxWidth;
     }
 
     public boolean isOpen()
