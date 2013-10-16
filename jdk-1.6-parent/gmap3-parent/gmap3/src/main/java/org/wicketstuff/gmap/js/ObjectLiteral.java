@@ -49,6 +49,7 @@ public class ObjectLiteral
 
 		String string = buffer.toString();
 
+		// remove the trailing ']' to be able to add more items
 		buffer.deleteCharAt(buffer.length() - 1);
 
 		return string;

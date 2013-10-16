@@ -42,6 +42,9 @@ public class Array
 
 		String string = buffer.toString();
 
+		// remove the trailing ']' to be able to add more values
+		buffer.deleteCharAt(buffer.length() - 1);
+
 		return string;
 	}
 }
