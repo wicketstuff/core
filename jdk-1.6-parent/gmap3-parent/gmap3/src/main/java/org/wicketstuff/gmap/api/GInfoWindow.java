@@ -3,6 +3,8 @@ package org.wicketstuff.gmap.api;
 import org.apache.wicket.Component;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.request.cycle.RequestCycle;
+import org.apache.wicket.util.lang.Args;
+import org.apache.wicket.util.string.Strings;
 import org.wicketstuff.gmap.js.Constructor;
 import org.wicketstuff.gmap.js.ObjectLiteral;
 
@@ -27,7 +29,9 @@ public class GInfoWindow extends GOverlay
     private GMarker marker;
     private String content;
     private boolean contentIsNode;
-    Integer maxWidth;
+    private Integer maxWidth;
+    private Boolean disableAutoPan;
+    private Integer zIndex;
 
     /**
      * Constructor.
@@ -38,7 +42,7 @@ public class GInfoWindow extends GOverlay
     public GInfoWindow(GLatLng latLng, String content)
     {
       this(latLng);
-      this.content = content.replace("'", "\\'");
+      this.content = Strings.replaceAll(content, "'", "\\'").toString();
     }
     
     /**
@@ -49,6 +53,9 @@ public class GInfoWindow extends GOverlay
     public GInfoWindow(GLatLng latLng, Component content)
     {
       this(latLng);
+
+      Args.notNull(content, "content");
+
       content.setOutputMarkupId(true);
       String markupId = content.getMarkupId(true);
       this.content = String.format("document.getElementById('%s')", markupId);
@@ -58,7 +65,7 @@ public class GInfoWindow extends GOverlay
     private GInfoWindow(GLatLng latLng)
     {
         super();
-        this.latLng = latLng;
+        this.latLng = Args.notNull(latLng, "latLng");
     }
 
     @Override
@@ -66,13 +73,31 @@ public class GInfoWindow extends GOverlay
     {
 
         ObjectLiteral args = new ObjectLiteral();
-        if(!contentIsNode)
-          args.setString("content", content);
+        if (!contentIsNode)
+        {
+            args.setString("content", content);
+        }
         else
-          args.set("content", content);
+        {
+            args.set("content", content);
+        }
         
-        args.set("position",latLng.toString());
-        if(maxWidth !=null) args.set("maxWidth", maxWidth.toString());
+        args.set("position", latLng.toString());
+
+        if (maxWidth != null)
+        {
+            args.set("maxWidth", maxWidth.toString());
+        }
+
+        if (disableAutoPan != null)
+        {
+            args.set("disableAutoPan", disableAutoPan.toString());
+        }
+
+        if (zIndex != null)
+        {
+            args.set("zIndex", zIndex.toString());
+        }
         
         Constructor constructor = new Constructor("google.maps.InfoWindow").add(args.toJS());
         return constructor.toJS();
@@ -84,11 +109,6 @@ public class GInfoWindow extends GOverlay
     @Override
     protected void updateOnAjaxCall(AjaxRequestTarget target, GEvent overlayEvent)
     {
-    }
-    
-    public void setMaxWidth(Integer maxWidth)
-    {
-      this.maxWidth = maxWidth;
     }
 
     public boolean isOpen()
@@ -111,5 +131,42 @@ public class GInfoWindow extends GOverlay
     public GLatLng getLatLng()
     {
         return latLng;
+    }
+
+    public void setMaxWidth(Integer maxWidth)
+    {
+        this.maxWidth = maxWidth;
+    }
+
+    public void setLatLng(GLatLng latLng) {
+        this.latLng = latLng;
+    }
+
+    public String getContent() {
+        return content;
+    }
+
+    public void setContent(String content) {
+        this.content = content;
+    }
+
+    public Integer getMaxWidth() {
+        return maxWidth;
+    }
+
+    public Boolean getDisableAutoPan() {
+        return disableAutoPan;
+    }
+
+    public void setDisableAutoPan(Boolean disableAutoPan) {
+        this.disableAutoPan = disableAutoPan;
+    }
+
+    public Integer getzIndex() {
+        return zIndex;
+    }
+
+    public void setzIndex(Integer zIndex) {
+        this.zIndex = zIndex;
     }
 }
