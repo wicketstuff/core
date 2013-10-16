@@ -11,19 +11,19 @@ public class GMapHeaderContributor extends Behavior
     private static final long serialVersionUID = 1L;
     // URL for Google Maps' API endpoint.
     private static final String GMAP_API_URL = "%s://maps.google.com/maps/api/js?v=3&sensor=%s";
-    private static final String HTTP = "http";
+    private static final String HTTPS = "https";
     // We have some custom Javascript.
     private String scheme;
     private String sensor = "false";
 
     public GMapHeaderContributor()
     {
-        this(HTTP, false);
+        this(HTTPS, false);
     }
 
     public GMapHeaderContributor(final boolean sensor)
     {
-        this(HTTP, sensor);
+        this(HTTPS, sensor);
     }
 
     public GMapHeaderContributor(final String scheme)
