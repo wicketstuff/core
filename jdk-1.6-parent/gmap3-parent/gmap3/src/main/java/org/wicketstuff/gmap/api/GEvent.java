@@ -29,6 +29,7 @@ public enum GEvent
     domready,            // Event for InfoWindow which is fired when the <div> containing the InfoWindow's content is attached to the DOM
     bounds_changed,      // fired when the viewport bounds have changed.
     center_changed,      // fired when the map center property changes.
+    radius_changed,      // fired when the radius property changes (Circle).
     click,               // fired when the user clicks on the map (but not when they click on a marker or infowindow).
     dblclick,            // fired when the user double-clicks on the map. Note that the click event will also fire, right before this one.
     drag,                // repeatedly fired while the user drags the map.

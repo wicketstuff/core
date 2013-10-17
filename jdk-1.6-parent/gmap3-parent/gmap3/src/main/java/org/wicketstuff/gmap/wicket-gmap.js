@@ -127,7 +127,19 @@ function WicketMap(id, failSilently) {
                 }
             }
 
-            params['overlay.latLng'] = overlay.getPosition();
+            if (overlay.getPosition) {
+                params['overlay.latLng'] = overlay.getPosition();
+            }
+            else if (overlay.getCenter) {
+                // Circle uses #getCenter() instead
+                params['overlay.latLng'] = overlay.getCenter();
+            }
+
+            if (overlay.getRadius) {
+                // Circle
+                params['overlay.radius'] = overlay.getRadius();
+            }
+
             params['overlay.overlayId'] = overlay.overlayId;
             params['overlay.event'] = event;
 
