@@ -60,6 +60,4 @@ public class GMapHeaderContributor extends Behavior
     {
         return sensor;
     }
-
-
 }

@@ -142,6 +142,15 @@
 		</filter>
 
 		<filter>
+			<filter-name>CirclesGMapApplication</filter-name>
+			<filter-class>org.apache.wicket.protocol.http.WicketFilter</filter-class>
+			<init-param>
+				<param-name>applicationClassName</param-name>
+				<param-value>org.wicketstuff.examples.gmap.circles.CirclesGMapApplication</param-value>
+			</init-param>
+		</filter>
+
+		<filter>
 				<filter-name>SimpleAjaxGMapApplication</filter-name>
 				<filter-class>org.apache.wicket.protocol.http.WicketFilter</filter-class>
 				<init-param>
@@ -233,6 +242,11 @@
 		<filter-mapping>
 				<filter-name>PolygonesGMapApplication</filter-name>
 				<url-pattern>/polygones/*</url-pattern>
+		</filter-mapping>
+
+		<filter-mapping>
+			<filter-name>CirclesGMapApplication</filter-name>
+			<url-pattern>/circles/*</url-pattern>
 		</filter-mapping>
 
 		<filter-mapping>
