@@ -19,6 +19,8 @@ import java.io.Serializable;
 import java.util.Collections;
 import java.util.EnumMap;
 import java.util.Map;
+
+import org.apache.wicket.Page;
 import org.apache.wicket.Session;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.request.cycle.RequestCycle;
@@ -120,6 +122,16 @@ public abstract class GOverlay implements Serializable
         return parent;
     }
 
+    protected Page getPage()
+    {
+        Page page = null;
+        if (getParent() != null)
+        {
+            page = getParent().getPage();
+        }
+        return page;
+    }
+
     public void setParent(final GMap parent)
     {
         this.parent = parent;
@@ -130,7 +142,7 @@ public abstract class GOverlay implements Serializable
         events.put(event, handler);
 
         AjaxRequestTarget target = RequestCycle.get().find(AjaxRequestTarget.class);
-        if (target != null && getParent().getPage() != null)
+        if (target != null && getPage() != null)
         {
             target.appendJavaScript(event.getJSadd(this));
         }
@@ -146,7 +158,7 @@ public abstract class GOverlay implements Serializable
         functions.put(event, jsFunction);
 
         AjaxRequestTarget target = RequestCycle.get().find(AjaxRequestTarget.class);
-        if (target != null && getParent().getPage() != null)
+        if (target != null && getPage() != null)
         {
             target.appendJavaScript(event.getJSadd(this, functions.get(event)));
         }
