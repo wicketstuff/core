@@ -32,7 +32,7 @@ public class GCircle extends GOverlay
      * The <a href="https://developers.google.com/maps/documentation/javascript/reference?#CircleOptions">options</a>
      */
     private final GLatLng center;
-    private final int radius;
+    private final double radius;
     private final String strokeColor;
     private final int strokeWeight;
     private final float strokeOpacity;
@@ -44,11 +44,11 @@ public class GCircle extends GOverlay
     private boolean visible = true;
     private Integer zIndex;
 
-    public GCircle(GLatLng center, int radius, String strokeColor, int strokeWeight, float strokeOpacity, String fillColor, float fillOpacity)
+    public GCircle(GLatLng center, double radius, String strokeColor, int strokeWeight, float strokeOpacity, String fillColor, float fillOpacity)
     {
         this.center = Args.notNull(center, "center");
 
-        Checks.withinRangeShort(1, Integer.MAX_VALUE, radius, "radius");
+        Checks.withinRangeShort(1d, Double.MAX_VALUE, radius, "radius");
         this.radius = radius;
 
         this.strokeColor = strokeColor;
