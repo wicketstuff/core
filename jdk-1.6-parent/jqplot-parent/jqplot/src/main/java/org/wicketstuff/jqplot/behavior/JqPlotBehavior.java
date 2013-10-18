@@ -15,8 +15,8 @@
  */
 package org.wicketstuff.jqplot.behavior;
 
-import java.util.List;
-
+import br.com.digilabs.jqplot.Chart;
+import br.com.digilabs.jqplot.JqPlotUtils;
 import org.apache.wicket.Component;
 import org.apache.wicket.behavior.Behavior;
 import org.apache.wicket.markup.head.CssHeaderItem;
@@ -24,8 +24,7 @@ import org.apache.wicket.markup.head.IHeaderResponse;
 import org.apache.wicket.markup.head.JavaScriptHeaderItem;
 import org.apache.wicket.request.resource.JavaScriptResourceReference;
 
-import br.com.digilabs.jqplot.Chart;
-import br.com.digilabs.jqplot.JqPlotUtils;
+import java.util.List;
 
 /**
  * 
@@ -52,11 +51,24 @@ public class JqPlotBehavior extends Behavior {
 		response.render(JavaScriptHeaderItem.forReference(JqPlotJavascriptResourceReference.get()));
 		response.render(CssHeaderItem.forReference(JqPlotCssResourceReference.get()));
 		for (String resource : resources) {
-			response.render(JavaScriptHeaderItem.forReference(new JavaScriptResourceReference(JqPlotBehavior.class, resource)));
+			response.render(JavaScriptHeaderItem.forReference(new JavaScriptResourceReference(JqPlotBehavior.class, removeMinified(resource))));
 		}
 		String json = JqPlotUtils.createJquery(chart, divId);
 		response.render(JavaScriptHeaderItem.forScript(json, null));
-
 	}
 
+    // remove min.* from file name
+    private String removeMinified(String name_) {
+        String name = name_;
+        int idxOfExtension = name.lastIndexOf('.');
+        if (idxOfExtension > -1) {
+            String extension = name.substring(idxOfExtension);
+            name = name.substring(0, name.length() - extension.length() + 1);
+            if (name.endsWith(".min."))
+            {
+                name = name.substring(0, name.length() - 5) + extension;
+            }
+        }
+        return name;
+    }
 }

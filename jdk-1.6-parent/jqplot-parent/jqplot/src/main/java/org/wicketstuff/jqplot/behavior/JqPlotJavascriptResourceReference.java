@@ -1,13 +1,12 @@
 package org.wicketstuff.jqplot.behavior;
 
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-
 import org.apache.wicket.Application;
 import org.apache.wicket.markup.head.HeaderItem;
 import org.apache.wicket.markup.head.JavaScriptHeaderItem;
 import org.apache.wicket.request.resource.JavaScriptResourceReference;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class JqPlotJavascriptResourceReference extends JavaScriptResourceReference {
 
@@ -22,18 +21,16 @@ public class JqPlotJavascriptResourceReference extends JavaScriptResourceReferen
 
 	private JqPlotJavascriptResourceReference()
 	{
-		super(JqPlotJavascriptResourceReference.class, "jquery.jqplot.min.js");
+		super(JqPlotJavascriptResourceReference.class, "jquery.jqplot.js");
 	}
 
 	@Override
 	public Iterable<? extends HeaderItem> getDependencies()
 	{
 		List<HeaderItem> dependencies = new ArrayList<HeaderItem>();
-		for (Iterator<? extends HeaderItem> iterator = super.getDependencies().iterator(); iterator.hasNext();)
-		{
-			HeaderItem headerItem = (HeaderItem)iterator.next();
-			dependencies.add(headerItem);
-		}
+        for (HeaderItem headerItem : super.getDependencies()) {
+            dependencies.add(headerItem);
+        }
 		dependencies.add(JavaScriptHeaderItem.forReference(Application.get()
 			.getJavaScriptLibrarySettings()
 			.getJQueryReference()));
