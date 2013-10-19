@@ -26,6 +26,7 @@ import org.apache.wicket.markup.html.list.ListItem;
 import org.apache.wicket.markup.html.list.ListView;
 import org.apache.wicket.markup.html.panel.EmptyPanel;
 import org.apache.wicket.markup.html.panel.Fragment;
+import org.apache.wicket.util.lang.Args;
 
 import com.googlecode.wicket.jquery.core.JQueryBehavior;
 import com.googlecode.wicket.jquery.core.JQueryPanel;
@@ -68,7 +69,7 @@ public class SfMenu extends JQueryPanel
 	{
 		super(id);
 
-		this.items = items;
+		this.items = Args.notNull(items, "items");
 		this.isVertical = isVertical;
 
 		this.init();
@@ -98,7 +99,7 @@ public class SfMenu extends JQueryPanel
 	{
 		super(id, options);
 
-		this.items = items;
+		this.items = Args.notNull(items, "items");
 		this.isVertical = isVertical;
 
 		this.init();

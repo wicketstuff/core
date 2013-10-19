@@ -76,7 +76,7 @@ public class Menu extends JQueryPanel implements IMenuListener
 	{
 		super(id);
 
-		this.items = Args.notNull(items, "menu-items");
+		this.items = Args.notNull(items, "items");
 		this.init();
 	}
 
@@ -102,7 +102,7 @@ public class Menu extends JQueryPanel implements IMenuListener
 	{
 		super(id, options);
 
-		this.items = Args.notNull(items, "menu-items");
+		this.items = Args.notNull(items, "items");
 		this.init();
 	}
 
