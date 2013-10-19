@@ -32,7 +32,7 @@ public class Console extends AbstractConsole
 	private static final long serialVersionUID = 1L;
 
 	/**
-	 * Constructor with a default capacity ({@value ConsoleMessages#CAPACITY})
+	 * Constructor with a default capacity ({@link ConsoleMessages#CAPACITY})
 	 *
 	 * @param id the markup id
 	 */

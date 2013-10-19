@@ -40,7 +40,7 @@ public abstract class AbstractConsole extends WebMarkupContainer
 	protected ConsoleBehavior consoleBehavior;
 
 	/**
-	 * Constructor with a default capacity ({@value ConsoleMessages#CAPACITY})
+	 * Constructor with a default capacity ({@link ConsoleMessages#CAPACITY})
 	 *
 	 * @param id the markup id
 	 */

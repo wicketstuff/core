@@ -38,7 +38,7 @@ public class FeedbackConsole extends AbstractConsole implements IFeedback
 	private FeedbackMessagesModel feedbackMessagesModel;
 
 	/**
-	 * Constructor with a default capacity ({@value ConsoleMessages#CAPACITY})
+	 * Constructor with a default capacity ({@link ConsoleMessages#CAPACITY})
 	 *
 	 * @param id the markup id
 	 */
