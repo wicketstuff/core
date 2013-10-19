@@ -16,10 +16,7 @@
  */
 package com.googlecode.wicket.jquery.ui.plugins.sfmenu;
 
-import java.awt.MenuItem;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import org.apache.wicket.AttributeModifier;
 import org.apache.wicket.markup.html.WebMarkupContainer;
@@ -35,83 +32,76 @@ import com.googlecode.wicket.jquery.core.JQueryPanel;
 import com.googlecode.wicket.jquery.core.Options;
 
 /**
- * Provides the jQuery menu based on a {@link JQueryPanel}
+ * Provides the jQuery menu based on a {@link JQueryPanel}, adapted for Superfish
  *
- * Adapted for Superfish by
  * @author Ludger Kluitmann - JavaLuigi
- *
  * @author Sebastien Briquet - sebfz1
+ * @since 6.12.0
  */
 public class SfMenu extends JQueryPanel
 {
 	private static final long serialVersionUID = 1L;
 
-	private final List<ISfMenuItem> items; //first level
+	private final List<ISfMenuItem> items; // first level
+	private final boolean isVertical;
 	private WebMarkupContainer root;
-	private Boolean verticalSfMenu = false;
-
-	/**
-	 * Keep a reference to the {@link MenuItem}<code>s</code> hash
-	 */
-	private Map<String, ISfMenuItem> map = new HashMap<String, ISfMenuItem>();
 
 	/**
 	 * Constructor
+	 *
 	 * @param id the markup id
 	 * @param items the menu-items
 	 */
 	public SfMenu(String id, List<ISfMenuItem> items)
 	{
-		super(id);
-
-		this.items = items;
-		this.init();
+		this(id, items, false);
 	}
 
 	/**
 	 * Constructor
+	 *
 	 * @param id the markup id
 	 * @param items the menu-items
-	 * @param verticalSfMenu Vertical Superfish Menu if true
+	 * @param isVertical Vertical Superfish Menu if true
 	 */
-	public SfMenu(String id, List<ISfMenuItem> items, Boolean verticalSfMenu)
+	public SfMenu(String id, List<ISfMenuItem> items, Boolean isVertical)
 	{
 		super(id);
 
 		this.items = items;
-		this.verticalSfMenu = verticalSfMenu;
+		this.isVertical = isVertical;
+
 		this.init();
 	}
 
 	/**
 	 * Constructor
+	 *
 	 * @param id the markup id
 	 * @param items the menu-items
 	 * @param options {@link Options}
 	 */
 	public SfMenu(String id, List<ISfMenuItem> items, Options options)
 	{
-		super(id, options);
-
-		this.items = items;
-		this.init();
+		this(id, items, options, false);
 	}
 
 	/**
 	 * Constructor
+	 *
 	 * @param id the markup id
 	 * @param items the menu-items
 	 * @param options {@link Options}
-	 * @param verticalSfMenu Vertical Superfish Menu if true
+	 * @param isVertical Vertical Superfish Menu if true
 	 */
-	public SfMenu(String id, List<ISfMenuItem> items, Options options, Boolean verticalSfMenu)
+	public SfMenu(String id, List<ISfMenuItem> items, Options options, Boolean isVertical)
 	{
 		super(id, options);
 
 		this.items = items;
-		this.verticalSfMenu = verticalSfMenu;
-		this.init();
+		this.isVertical = isVertical;
 
+		this.init();
 	}
 
 	/**
@@ -120,18 +110,19 @@ public class SfMenu extends JQueryPanel
 	private void init()
 	{
 		this.root = new WebMarkupContainer("root");
-		if(verticalSfMenu)
+		this.root.add(new ListFragment("list", this.items));
+
+		if (this.isVertical)
 		{
 			this.root.add(new AttributeModifier("class", "sf-menu sf-vertical"));
 		}
-		this.root.add(new ListFragment("list", this.items));
 
 		this.add(this.root);
 	}
 
-
 	/**
 	 * Gets the menu-item list
+	 *
 	 * @return the menu-item {@link List}
 	 */
 	public List<ISfMenuItem> getItemList()
@@ -153,18 +144,8 @@ public class SfMenu extends JQueryPanel
 	@Override
 	public JQueryBehavior newWidgetBehavior(String selector)
 	{
-		return new SfMenuBehavior(selector, this.options, verticalSfMenu) {
-
-			private static final long serialVersionUID = 1L;
-
-			@Override
-			protected Map<String, ISfMenuItem> getMenuItemMap()
-			{
-				return SfMenu.this.map;
-			}
-		};
+		return new SfMenuBehavior(selector, this.options, this.isVertical);
 	}
-
 
 	// Fragments //
 	/**
@@ -203,14 +184,14 @@ public class SfMenu extends JQueryPanel
 				{
 					ISfMenuItem menuItem = item.getModelObject();
 
-					if(menuItem.isEnabled())
+					if (menuItem.isEnabled())
 					{
-						item.add(new ItemLinkFragment("item", menuItem));
+						item.add(new ItemFragment("item", menuItem));
 						item.add(new MenuFragment("menu", menuItem.getItems()));
 					}
 					else
 					{
-						item.add(new ItemDisableFragment("item", menuItem));
+						item.add(new DisabledItemFragment("item", menuItem));
 						item.add(new EmptyPanel("menu"));
 					}
 				}
@@ -221,48 +202,56 @@ public class SfMenu extends JQueryPanel
 	/**
 	 * Represents a {@link Fragment} of a menu-item
 	 */
-	private class ItemLinkFragment extends Fragment
+	private class ItemFragment extends Fragment
 	{
 		private static final long serialVersionUID = 1L;
 
-		public ItemLinkFragment(String id, final ISfMenuItem item)
+		public ItemFragment(String id, final ISfMenuItem item)
 		{
 			super(id, "item-link-fragment", SfMenu.this);
 
-			Link<Object> itemLink = new Link<Object>("item-link") {
+			Link<?> itemLink = new Link<Void>("item-link") {
 
 				private static final long serialVersionUID = 1L;
 
 				@Override
 				protected CharSequence getURL()
 				{
-					if(item.getPageClass() != null)
+					if (item.getPageClass() != null)
 					{
 						return urlFor(item.getPageClass(), getPage().getPageParameters());
 					}
+
 					return "javascript:;";
 				}
 
-				// No operation. Only to satisfy the interface.
 				@Override
 				public void onClick()
 				{
+					// No operation. Only to satisfy the interface.
 				}
 			};
+
 			itemLink.add(new Label("title", item.getTitle()));
-			add(itemLink);
+			this.add(itemLink);
 		}
 	}
 
-	private class ItemDisableFragment extends Fragment
+	/**
+	 * Represents a {@link Fragment} of a disabled menu-item
+	 */
+	private class DisabledItemFragment extends Fragment
 	{
 		private static final long serialVersionUID = 1L;
 
-		public ItemDisableFragment(String id, final ISfMenuItem item)
+		public DisabledItemFragment(String id, final ISfMenuItem item)
 		{
-			super(id,"item-disable-fragment", SfMenu.this);
-			add(new Label("title", item.getTitle()).add(new AttributeModifier("class", "disabled")));
-		}
+			super(id, "item-disable-fragment", SfMenu.this);
 
+			Label label = new Label("title", item.getTitle());
+			label.add(new AttributeModifier("class", "disabled"));
+
+			this.add(label);
+		}
 	}
 }

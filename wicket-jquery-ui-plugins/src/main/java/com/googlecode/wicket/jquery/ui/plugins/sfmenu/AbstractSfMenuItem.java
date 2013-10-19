@@ -21,41 +21,48 @@ import java.util.List;
 
 import org.apache.wicket.Page;
 import org.apache.wicket.model.IModel;
+import org.apache.wicket.util.lang.Args;
 import org.apache.wicket.util.reference.ClassReference;
 
 /**
- * Base class for {@link SfMenuItem} item
+ * Base class for {@link SfMenuItem} item, adapted for Superfish
  *
- * Adapted for Superfish by
  * @author Ludger Kluitmann - JavaLuigi
- *
  * @author Sebastien Briquet - sebfz1
+ * @since 6.12.0
  */
 public abstract class AbstractSfMenuItem implements ISfMenuItem
 {
 	private static final long serialVersionUID = 1L;
 
 	private IModel<String> title;
-	private ClassReference <? extends Page> pageClassReference;
 	private boolean enabled = true;
 
+	private final ClassReference<? extends Page> pageClassReference;
 
 	/**
 	 * Constructor
+	 *
 	 * @param title {@link IModel} that represent the title of the menu-item
+	 */
+	public AbstractSfMenuItem(IModel<String> title)
+	{
+		this.title = title;
+		this.pageClassReference = null;
+	}
+
+	/**
+	 * Constructor
+	 *
+	 * @param title {@link IModel} that represent the title of the menu-item
+	 * @param pageClass the class of the page to redirect to, when menu-item is clicked
 	 */
 	public AbstractSfMenuItem(IModel<String> title, Class<? extends Page> pageClass)
 	{
+		Args.notNull(pageClass, "pageClass");
+
 		this.title = title;
-		//this.pageClass = pageClass;
-		if(pageClass != null)
-		{
-			this.pageClassReference = ClassReference.of(pageClass);
-		}
-		else
-		{
-			this.pageClassReference = null;
-		}
+		this.pageClassReference = ClassReference.of(pageClass);
 	}
 
 	@Override
@@ -66,6 +73,7 @@ public abstract class AbstractSfMenuItem implements ISfMenuItem
 
 	/**
 	 * Sets the menu-item title
+	 *
 	 * @param title the menu-item title
 	 */
 	public void setTitle(IModel<String> title)
@@ -85,6 +93,11 @@ public abstract class AbstractSfMenuItem implements ISfMenuItem
 		return this.enabled;
 	}
 
+	/**
+	 * Indicated whether the menu-item is enabled
+	 *
+	 * @param enabled
+	 */
 	public void setEnabled(boolean enabled)
 	{
 		this.enabled = enabled;
@@ -92,14 +105,17 @@ public abstract class AbstractSfMenuItem implements ISfMenuItem
 
 	/***
 	 * Get the page class registered with the link
-	 * @return Page Class
+	 *
+	 * @return the page class
 	 */
+	@Override
 	public Class<? extends Page> getPageClass()
 	{
-		if(pageClassReference != null)
+		if (this.pageClassReference != null)
 		{
-			return pageClassReference.get();
+			return this.pageClassReference.get();
 		}
+
 		return null;
 	}
 }

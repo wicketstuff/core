@@ -16,8 +16,6 @@
  */
 package com.googlecode.wicket.jquery.ui.plugins.sfmenu;
 
-import java.util.Map;
-
 import org.apache.wicket.Application;
 import org.apache.wicket.settings.IJavaScriptLibrarySettings;
 
@@ -28,15 +26,14 @@ import com.googlecode.wicket.jquery.ui.plugins.sfmenu.resource.SuperfishJavaScri
 import com.googlecode.wicket.jquery.ui.plugins.sfmenu.settings.ISuperfishLibrarySettings;
 import com.googlecode.wicket.jquery.ui.plugins.sfmenu.settings.SuperfishLibrarySettings;
 
-
 /***
+ * Provides the Superfish menu plugin behavior
  *
  * @author Ludger Kluitmann - JavaLuigi
- *
+ * @since 6.12.0
  */
-public abstract class SfMenuBehavior extends JQueryBehavior
+public class SfMenuBehavior extends JQueryBehavior
 {
-
 	private static final long serialVersionUID = 1L;
 	private static final String METHOD = "superfish";
 
@@ -56,9 +53,9 @@ public abstract class SfMenuBehavior extends JQueryBehavior
 	}
 
 	/***
-	 * Construtor
+	 * Constructor
 	 *
-	 * @param selector
+	 * @param selector the html selector (ie: "#myId")
 	 */
 	public SfMenuBehavior(String selector)
 	{
@@ -68,20 +65,22 @@ public abstract class SfMenuBehavior extends JQueryBehavior
 	/***
 	 * Constructor
 	 *
-	 * @param selector
-	 * @param options
+	 * @param selector the html selector (ie: "#myId")
+	 * @param options the {@link Options}
+	 * @param isVertical indicates whether the menu is a vertical menu
 	 */
-	public SfMenuBehavior(String selector, Options options, Boolean verticalSfMenu)
+	public SfMenuBehavior(String selector, Options options, Boolean isVertical)
 	{
 		super(selector, METHOD, options);
 
 		ISuperfishLibrarySettings settings = getLibrarySettings();
 
-		if(settings.getSuperfishStyleSheetReference() != null)
+		if (settings.getSuperfishStyleSheetReference() != null)
 		{
 			this.add(settings.getSuperfishStyleSheetReference());
 		}
-		if(verticalSfMenu && settings.getSuperfishVerticalStyleSheetReference() != null)
+
+		if (isVertical && settings.getSuperfishVerticalStyleSheetReference() != null)
 		{
 			this.add(settings.getSuperfishVerticalStyleSheetReference());
 		}
@@ -89,13 +88,4 @@ public abstract class SfMenuBehavior extends JQueryBehavior
 		this.add(HoverIntentJavaScriptResourceReference.get());
 		this.add(SuperfishJavaScriptResourceReference.get());
 	}
-
-	// Properties //
-	/**
-	 * Gets the reference map of hash/menu-item.<br/>
-	 *
-	 * @return the non-null {@link Map}
-	 */
-	protected abstract Map<String, ISfMenuItem> getMenuItemMap();
-
 }

@@ -24,9 +24,9 @@ public class DefaultSfMenuPage extends AbstractSfMenuPage
 		List<ISfMenuItem> list = new ArrayList<ISfMenuItem>();
 
 		list.add(new SfMenuItem("Home", HomePage.class));
-		list.add(new SfMenuItem("Widgets", null, widgetSubMenuList()));
+		list.add(new SfMenuItem("Widgets", widgetSubMenuList()));
 		list.add(new SfMenuItem("Another Way Home", HomePage.class));
-		list.add(new SfMenuItem("Menu item, with sub-menu", null, newSubMenuList()));
+		list.add(new SfMenuItem("Menu item, with sub-menu", newSubMenuList()));
 		list.add(new SfMenuItem("Kendo Editor", DefaultEditorPage.class));
 
 		return list;

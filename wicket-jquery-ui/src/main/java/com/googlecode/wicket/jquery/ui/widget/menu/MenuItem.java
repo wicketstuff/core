@@ -17,6 +17,7 @@
 package com.googlecode.wicket.jquery.ui.widget.menu;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import org.apache.wicket.ajax.AjaxRequestTarget;
@@ -41,6 +42,7 @@ public class MenuItem extends AbstractMenuItem
 
 	/**
 	 * Constructor
+	 *
 	 * @param title the title of the menu-item
 	 */
 	public MenuItem(String title)
@@ -50,6 +52,7 @@ public class MenuItem extends AbstractMenuItem
 
 	/**
 	 * Constructor
+	 *
 	 * @param title the title of the menu-item
 	 * @param icon the icon css class (ie: ui-my-icon)
 	 */
@@ -60,6 +63,7 @@ public class MenuItem extends AbstractMenuItem
 
 	/**
 	 * Constructor
+	 *
 	 * @param title IModel that represent the title of the menu-item
 	 */
 	public MenuItem(IModel<String> title)
@@ -69,6 +73,7 @@ public class MenuItem extends AbstractMenuItem
 
 	/**
 	 * Constructor
+	 *
 	 * @param title IModel that represent the title of the menu-item
 	 * @param icon the icon css class (ie: ui-my-icon)
 	 */
@@ -81,6 +86,7 @@ public class MenuItem extends AbstractMenuItem
 
 	/**
 	 * Constructor
+	 *
 	 * @param title the title of the menu-item
 	 * @param items the sub-menu items
 	 *
@@ -92,6 +98,7 @@ public class MenuItem extends AbstractMenuItem
 
 	/**
 	 * Constructor
+	 *
 	 * @param title the title of the menu-item
 	 * @param icon the icon css class (ie: ui-my-icon)
 	 * @param items the sub-menu items
@@ -103,6 +110,7 @@ public class MenuItem extends AbstractMenuItem
 
 	/**
 	 * Constructor
+	 *
 	 * @param title IModel that represent the title of the menu-item
 	 * @param items the sub-menu items
 	 */
@@ -113,6 +121,7 @@ public class MenuItem extends AbstractMenuItem
 
 	/**
 	 * Constructor
+	 *
 	 * @param title IModel that represent the title of the menu-item
 	 * @param icon the icon css class (ie: ui-my-icon)
 	 * @param items the sub-menu items
@@ -132,6 +141,12 @@ public class MenuItem extends AbstractMenuItem
 	}
 
 	// Methods //
+	/**
+	 * Adds an menu-item as child of this menu-item
+	 *
+	 * @param item the {@link IMenuItem}
+	 * @return true (as specified by {@link Collection#add(Object)})
+	 */
 	public boolean addItem(IMenuItem item)
 	{
 		return this.items.add(item);

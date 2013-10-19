@@ -23,37 +23,39 @@ import org.apache.wicket.model.IModel;
 import org.apache.wicket.util.io.IClusterable;
 
 /**
- * Interface used to represent a single item in a {@link SfMenu}
+ * Interface used to represent a single item in a {@link SfMenu}, adapted for Superfish
  *
  * @see AbstractSfMenuItem
- *
- * Adapted for Superfish by
  * @author Ludger Kluitmann - JavaLuigi
- *
  * @author Sebastien Briquet - sebfz1
+ * @since 6.12.0
  */
 public interface ISfMenuItem extends IClusterable
 {
 	/**
 	 * Gets the menu-item title
+	 *
 	 * @return the menu-item title
 	 */
 	IModel<String> getTitle();
 
 	/**
 	 * Gets the {@link List} of submenu-items
+	 *
 	 * @return the {@link List} of submenu-items
 	 */
 	List<ISfMenuItem> getItems();
 
 	/***
 	 * Get the page class registered with the link
+	 *
 	 * @return Page Class
 	 */
 	Class<? extends Page> getPageClass();
 
 	/**
 	 * Indicates whether the menu-item is enabled
+	 *
 	 * @return true or false
 	 */
 	boolean isEnabled();

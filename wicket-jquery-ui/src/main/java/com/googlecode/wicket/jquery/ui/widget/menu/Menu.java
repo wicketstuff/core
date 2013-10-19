@@ -41,6 +41,8 @@ import com.googlecode.wicket.jquery.core.Options;
  * Provides the jQuery menu based on a {@link JQueryPanel}
  *
  * @author Sebastien Briquet - sebfz1
+ * @since 1.4.2
+ * @since 1.6.2
  */
 public class Menu extends JQueryPanel implements IMenuListener
 {
@@ -201,11 +203,15 @@ public class Menu extends JQueryPanel implements IMenuListener
 					Menu.this.map.put(menuItem.getId(), menuItem);
 
 					item.add(new ItemFragment("item", menuItem));
-					item.add(new MenuFragment("menu", menuItem.getItems()));
 					item.add(AttributeModifier.replace("id", menuItem.getId()));
 
-					if (!menuItem.isEnabled())
+					if (menuItem.isEnabled())
 					{
+						item.add(new MenuFragment("menu", menuItem.getItems()));
+					}
+					else
+					{
+						item.add(new EmptyPanel("menu"));
 						item.add(AttributeModifier.append("class", Model.of("ui-state-disabled")));
 					}
 				}
