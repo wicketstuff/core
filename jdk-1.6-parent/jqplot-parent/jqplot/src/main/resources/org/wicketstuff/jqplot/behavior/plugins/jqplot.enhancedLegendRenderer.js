@@ -2,9 +2,10 @@
  * jqPlot
  * Pure JavaScript plotting plugin using jQuery
  *
- * Version: 1.0.0b2_r1012
+ * Version: 1.0.8
+ * Revision: 1250
  *
- * Copyright (c) 2009-2011 Chris Leonello
+ * Copyright (c) 2009-2013 Chris Leonello
  * jqPlot is currently available for use in all personal or commercial projects 
  * under both the MIT (http://www.opensource.org/licenses/mit-license.php) and GPL 
  * version 2.0 (http://www.gnu.org/licenses/gpl-2.0.html) licenses. This means that you can 
@@ -50,6 +51,12 @@
         // true or a fadein/fadeout speed (number of milliseconds or 'fast', 'normal', 'slow') 
         // to enable show/hide of series on click of legend item.
         this.seriesToggle = 'normal';
+        // prop: seriesToggleReplot
+        // True to replot the chart after toggling series on/off.
+        // This will set the series show property to false.
+        // This allows for rescaling or other maniplation of chart.
+        // Set to an options object (e.g. {resetAxes: true}) for replot options.
+        this.seriesToggleReplot = false;
         // prop: disableIEFading
         // true to toggle series with a show/hide method only and not allow fading in/out.  
         // This is to overcome poor performance of fade in some versions of IE.
@@ -62,11 +69,11 @@
     };
     
     // called with scope of legend
-    $.jqplot.EnhancedLegendRenderer.prototype.draw = function() {
+    $.jqplot.EnhancedLegendRenderer.prototype.draw = function(offsets, plot) {
         var legend = this;
         if (this.show) {
             var series = this._series;
-			var s;
+            var s;
             var ss = 'position:absolute;';
             ss += (this.background) ? 'background:'+this.background+';' : '';
             ss += (this.border) ? 'border:'+this.border+';' : '';
@@ -122,7 +129,7 @@
                     tr.appendTo(this._elem);
                 }
                 for (j=0; j<nc; j++) {
-                    if (idx < series.length && series[idx].show && series[idx].showLabel){
+                    if (idx < series.length && (series[idx].show || series[idx].showLabel)){
                         s = series[idx];
                         lt = this.labels[idx] || s.label.toString();
                         if (lt) {
@@ -189,18 +196,24 @@
                                 // tr.append(div0);
 
                                 var speed;
-                                if (typeof(this.seriesToggle) == 'string' || typeof(this.seriesToggle) == 'number') {
+                                if (typeof(this.seriesToggle) === 'string' || typeof(this.seriesToggle) === 'number') {
                                     if (!$.jqplot.use_excanvas || !this.disableIEFading) {
                                         speed = this.seriesToggle;
                                     }
                                 } 
                                 if (this.showSwatches) {
-                                    td1.bind('click', {series:s, speed:speed}, handleToggle);
+                                    td1.bind('click', {series:s, speed:speed, plot: plot, replot:this.seriesToggleReplot}, handleToggle);
                                     td1.addClass('jqplot-seriesToggle');
                                 }
                                 if (this.showLabels)  {
-                                    td2.bind('click', {series:s, speed:speed}, handleToggle);
+                                    td2.bind('click', {series:s, speed:speed, plot: plot, replot:this.seriesToggleReplot}, handleToggle);
                                     td2.addClass('jqplot-seriesToggle');
+                                }
+
+                                // for series that are already hidden, add the hidden class
+                                if (!s.show && s.showLabel) {
+                                    td1.addClass('jqplot-series-hidden');
+                                    td2.addClass('jqplot-series-hidden');
                                 }
                             }
                             
@@ -217,18 +230,69 @@
     };
 
     var handleToggle = function (ev) {
-        ev.data.series.toggleDisplay(ev);
-        if (ev.data.series.canvas._elem.hasClass('jqplot-series-hidden')) {
-            $(this).addClass('jqplot-series-hidden');
-            $(this).next('.jqplot-table-legend-label').addClass('jqplot-series-hidden');
-            $(this).prev('.jqplot-table-legend-swatch').addClass('jqplot-series-hidden');
+        var d = ev.data,
+            s = d.series,
+            replot = d.replot,
+            plot = d.plot,
+            speed = d.speed,
+            sidx = s.index,
+            showing = false;
 
+        if (s.canvas._elem.is(':hidden') || !s.show) {
+            showing = true;
         }
-        else {
-            $(this).removeClass('jqplot-series-hidden');
-            $(this).next('.jqplot-table-legend-label').removeClass('jqplot-series-hidden');
-            $(this).prev('.jqplot-table-legend-swatch').removeClass('jqplot-series-hidden');
-        }
+
+        var doLegendToggle = function() {
+
+            if (replot) {
+                var opts = {};
+
+                if ($.isPlainObject(replot)) {
+                    $.extend(true, opts, replot);
+                }
+
+                plot.replot(opts);
+                // if showing, there was no canvas element to fade in, so hide here
+                // and then do a fade in.
+                if (showing && speed) {
+                    var s = plot.series[sidx];
+
+                    if (s.shadowCanvas._elem) {
+                        s.shadowCanvas._elem.hide().fadeIn(speed);
+                    }
+                    s.canvas._elem.hide().fadeIn(speed);
+                    s.canvas._elem.nextAll('.jqplot-point-label.jqplot-series-'+s.index).hide().fadeIn(speed);
+                }
+
+            }
+
+            else {
+                var s = plot.series[sidx];
+
+                if (s.canvas._elem.is(':hidden') || !s.show) {
+                    // Not sure if there is a better way to check for showSwatches and showLabels === true.
+                    // Test for "undefined" since default values for both showSwatches and showLables is true.
+                    if (typeof plot.options.legend.showSwatches === 'undefined' || plot.options.legend.showSwatches === true) {
+                        plot.legend._elem.find('td').eq(sidx * 2).addClass('jqplot-series-hidden');
+                    }
+                    if (typeof plot.options.legend.showLabels === 'undefined' || plot.options.legend.showLabels === true) {
+                        plot.legend._elem.find('td').eq((sidx * 2) + 1).addClass('jqplot-series-hidden');
+                    }
+                }
+                else {
+                    if (typeof plot.options.legend.showSwatches === 'undefined' || plot.options.legend.showSwatches === true) {
+                        plot.legend._elem.find('td').eq(sidx * 2).removeClass('jqplot-series-hidden');
+                    }
+                    if (typeof plot.options.legend.showLabels === 'undefined' || plot.options.legend.showLabels === true) {
+                        plot.legend._elem.find('td').eq((sidx * 2) + 1).removeClass('jqplot-series-hidden');
+                    }
+                }
+
+            }
+
+        };
+
+        s.toggleDisplay(ev, doLegendToggle);
     };
     
     // called with scope of plot.

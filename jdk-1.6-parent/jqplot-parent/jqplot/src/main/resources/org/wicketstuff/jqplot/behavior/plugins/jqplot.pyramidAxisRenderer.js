@@ -2,9 +2,10 @@
  * jqPlot
  * Pure JavaScript plotting plugin using jQuery
  *
- * Version: 1.0.0b2_r1012
+ * Version: 1.0.8
+ * Revision: 1250
  *
- * Copyright (c) 2009-2011 Chris Leonello
+ * Copyright (c) 2009-2013 Chris Leonello
  * jqPlot is currently available for use in all personal or commercial projects 
  * under both the MIT (http://www.opensource.org/licenses/mit-license.php) and GPL 
  * version 2.0 (http://www.gnu.org/licenses/gpl-2.0.html) licenses. This means that you can 
@@ -110,7 +111,7 @@
             // call it within the scope of the axis.
             this.renderer.createTicks.call(this, plot);
             // fill a div with axes labels in the right direction.
-            // Need to pregenerate each axis to get it's bounds and
+            // Need to pregenerate each axis to get its bounds and
             // position it and the labels correctly on the plot.
             var dim=0;
             var temp;
@@ -348,8 +349,6 @@
                 tdim = Math.max(dim, threshold+1);
                 scalefact =  (tdim-threshold)/300.0;
                 ret = $.jqplot.LinearTickGenerator(min, max, scalefact); 
-                console.log(min, max, scalefact, ret);
-                console.log(ret[0].toString(), ret[1].toString());
                 // calculate a padded max and min, points should be less than these
                 // so that they aren't too close to the edges of the plot.
                 // User can adjust how much padding is allowed with pad, padMin and PadMax options. 
@@ -360,7 +359,6 @@
                     tumin = min - range*(this.padMin - 1);
                     tumax = max + range*(this.padMax - 1);
                     ret = $.jqplot.LinearTickGenerator(tumin, tumax, scalefact);
-                console.log(tumin, tumax, scalefact, ret);
                 }
 
                 this.min = ret[0];

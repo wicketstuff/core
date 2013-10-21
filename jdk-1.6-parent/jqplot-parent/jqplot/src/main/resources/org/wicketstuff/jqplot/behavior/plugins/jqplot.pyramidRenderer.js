@@ -2,9 +2,10 @@
  * jqPlot
  * Pure JavaScript plotting plugin using jQuery
  *
- * Version: 1.0.0b2_r1012
+ * Version: 1.0.8
+ * Revision: 1250
  *
- * Copyright (c) 2009-2011 Chris Leonello
+ * Copyright (c) 2009-2013 Chris Leonello
  * jqPlot is currently available for use in all personal or commercial projects 
  * under both the MIT (http://www.opensource.org/licenses/mit-license.php) and GPL 
  * version 2.0 (http://www.gnu.org/licenses/gpl-2.0.html) licenses. This means that you can 
@@ -79,6 +80,15 @@
         // prop: highlightColors
         // an array of colors to use when highlighting a slice.
         this.highlightColors = [];
+        // prop highlightThreshold
+        // Expand the highlightable region in the x direction.
+        // E.g. a value of 3 will highlight a bar when the mouse is
+        // within 3 pixels of the bar in the x direction.
+        this.highlightThreshold = 2;
+        // prop: synchronizeHighlight
+        // Index of another series to highlight when this series is highlighted.
+        // null or false to not synchronize.
+        this.synchronizeHighlight = false;
         // prop: offsetBars
         // False will center bars on their y value.
         // True will push bars up by 1/2 bar width to fill between their y values.
@@ -97,6 +107,14 @@
         // if (this.fill === false) {
         //     this.shadow = false;
         // }
+
+        if (this.side === 'left') {
+            this._highlightThreshold = [[-this.highlightThreshold, 0], [-this.highlightThreshold, 0], [0,0], [0,0]];
+        }
+
+        else {
+            this._highlightThreshold = [[0,0], [0,0], [this.highlightThreshold, 0], [this.highlightThreshold, 0]];
+        }
         
         this.renderer.options = options;
         // index of the currenty highlighted point, if any
@@ -448,6 +466,11 @@
         plot.plugins.pyramidRenderer.highlightedSeriesIndex = sidx;
         var opts = {fillStyle: s.highlightColors[pidx], fillRect: false};
         s.renderer.shapeRenderer.draw(canvas._ctx, points, opts);
+        if (s.synchronizeHighlight !== false && plot.series.length >= s.synchronizeHighlight && s.synchronizeHighlight !== sidx) {
+            s = plot.series[s.synchronizeHighlight];
+            opts = {fillStyle: s.highlightColors[pidx], fillRect: false};
+            s.renderer.shapeRenderer.draw(canvas._ctx, s._barPoints[pidx], opts);
+        }
         canvas = null;
     }
     
@@ -472,6 +495,7 @@
             plot.target.trigger(evt1, ins);
             if (plot.series[ins[0]].highlightMouseOver && !(ins[0] == plot.plugins.pyramidRenderer.highlightedSeriesIndex && ins[1] == plot.series[ins[0]]._highlightedPoint)) {
                 var evt = jQuery.Event('jqplotDataHighlight');
+                evt.which = ev.which;
                 evt.pageX = ev.pageX;
                 evt.pageY = ev.pageY;
                 plot.target.trigger(evt, ins);
