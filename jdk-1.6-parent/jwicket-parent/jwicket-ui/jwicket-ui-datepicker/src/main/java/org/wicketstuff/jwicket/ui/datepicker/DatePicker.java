@@ -5,6 +5,7 @@ import org.apache.wicket.Component;
 import org.apache.wicket.Session;
 import org.apache.wicket.WicketRuntimeException;
 import org.apache.wicket.ajax.AjaxRequestTarget;
+import org.apache.wicket.ajax.attributes.AjaxRequestAttributes;
 import org.apache.wicket.markup.head.IHeaderResponse;
 import org.apache.wicket.markup.head.JavaScriptHeaderItem;
 import org.apache.wicket.markup.html.form.FormComponent;
@@ -25,18 +26,12 @@ import java.util.*;
  * {@link Component}. Another {@link Component} that should have exactly the
  * same behavior needs it's own instance.
  */
-public class DatePicker extends AbstractJqueryUiEmbeddedBehavior implements IStyleResolver {
+public class DatePicker extends JQueryDurableAjaxBehavior implements IStyleResolver {
 
     private static final long serialVersionUID = 1L;
 
-    public static final JQueryResourceReference uiDatepickerJs
-            = JQuery.isDebug()
-            ? new JQueryResourceReference(DatePicker.class, "jquery.ui.datepicker.js")
-            : new JQueryResourceReference(DatePicker.class, "jquery.ui.datepicker.min.js");
-    public static final JQueryResourceReference uiDatepickerJs_de
-            = JQuery.isDebug()
-            ? new JQueryResourceReference(DatePicker.class, "jquery.ui.datepicker-de.js")
-            : new JQueryResourceReference(DatePicker.class, "jquery.ui.datepicker-de.min.js");
+    public static final JQueryResourceReference uiDatepickerJs = new JQueryResourceReference(DatePicker.class, "jquery.ui.datepicker.js");
+    public static final JQueryResourceReference uiDatepickerJs_de = new JQueryResourceReference(DatePicker.class, "jquery.ui.datepicker-de.js");
 
     public static final JQueryResourceReference datePickerDefaultShowDayState = new JQueryResourceReference(DatePicker.class, "datePickerDefaultShowDayState.js");
 
@@ -44,31 +39,37 @@ public class DatePicker extends AbstractJqueryUiEmbeddedBehavior implements ISty
     protected JsMap options = new JsMap();
 
     public DatePicker() {
-        this(null);
+        super(new JQueryResourceReference(DatePicker.class, "jquery.ui.core.js"), SpecialKeys.specialKeysJs, datePickerDefaultShowDayState,
+                uiDatepickerJs
+        );
+        initDatePicker();
+
     }
 
     public DatePicker(final ResourceReference icon) {
-        super(SpecialKeys.specialKeysJs, datePickerDefaultShowDayState,
-                uiDatepickerJs
-        );
+        this();
+        setButtonImage(icon);
+    }
+
+    public DatePicker(final CharSequence icon) {
+        this();
+        setButtonImage(icon.toString());
+    }
+
+
+    private void initDatePicker() {
         addCssResources(getCssResources());
 
 
         Locale locale = Session.get().getLocale();
         if (locale != null) {
-            if (JQuery.isDebug()) {
-                addUserProvidedResourceReferences(new JQueryResourceReference(DatePicker.class, "jquery.ui.datepicker-" + locale.getLanguage() + ".js"));
-            } else {
-                addUserProvidedResourceReferences(new JQueryResourceReference(DatePicker.class, "jquery.ui.datepicker-" + locale.getLanguage() + ".min.js"));
-            }
-        }
-
-        if (icon != null) {
-            setButtonImage(icon);
+            addUserProvidedResourceReferences(new JQueryResourceReference(DatePicker.class, "jquery.ui.datepicker-" + locale.getLanguage() + ".js"));
         }
 
         setRestoreAfterRedraw(true);
+
     }
+
 
     /**
      * Handles the event processing during resizing.
@@ -86,9 +87,9 @@ public class DatePicker extends AbstractJqueryUiEmbeddedBehavior implements ISty
                 Locale locale = Session.get().getLocale();
                 DateFormat df;
                 if (locale != null) {
-                    df = DateFormat.getDateInstance(DateFormat.MEDIUM, locale);
+                    df = DateFormat.getDateInstance(DateFormat.SHORT, locale);
                 } else {
-                    df = DateFormat.getDateInstance(DateFormat.MEDIUM);
+                    df = DateFormat.getDateInstance(DateFormat.SHORT);
                 }
 
                 Date parsedDate = null;
@@ -217,6 +218,7 @@ public class DatePicker extends AbstractJqueryUiEmbeddedBehavior implements ISty
             this.options.remove("showOn");
         } else {
 //            TODO_WICKET15
+
             this.options.put("buttonImage", "resources/" + value.getKey());
 //            this.options.put("buttonImage", "resources/" + value.getSharedResourceKey());
             this.options.put("showOn", "button");
@@ -372,15 +374,24 @@ public class DatePicker extends AbstractJqueryUiEmbeddedBehavior implements ISty
 
 
     public DatePicker setDate(final AjaxRequestTarget target, final Date date) {
+        String jsDate = getJavaScriptDateObject(date);
+        target.appendJavaScript("jQuery('#" + getComponent().getMarkupId() + "').datepicker('setDate'," + jsDate + ");");
+        return this;
+    }
+
+    public DatePicker setDefaultDate(final Date date) {
+        return addToOrRemoveOfOptions("defaultDate", date);
+    }
+
+    private DateFormat getLocalDateFormat() {
         Locale locale = Session.get().getLocale();
         DateFormat df;
         if (locale != null) {
-            df = DateFormat.getDateInstance(DateFormat.MEDIUM, locale);
+            df = DateFormat.getDateInstance(DateFormat.SHORT, locale);
         } else {
-            df = DateFormat.getDateInstance(DateFormat.MEDIUM);
+            df = DateFormat.getDateInstance(DateFormat.SHORT);
         }
-        target.appendJavaScript("jQuery('#" + getComponent().getMarkupId() + "').datepicker('setDate','" + df.format(date) + "');");
-        return this;
+        return df;
     }
 
 
@@ -444,6 +455,16 @@ public class DatePicker extends AbstractJqueryUiEmbeddedBehavior implements ISty
         return this;
     }
 
+    /**
+     * The range of years displayed in the year drop-down: either relative to today's year ("-nn:+nn"), relative to the currently selected year ("c-nn:c+nn"),
+     * absolute ("nnnn:nnnn"), or combinations of these formats ("nnnn:-nn").
+     * Note that this option only affects what appears in the drop-down, to restrict which dates may be selected use the minDate and/or maxDate options.
+     */
+
+    public DatePicker setYearRange(final String value) {
+        return addToOrRemoveOfOptions("yearRange", value);
+    }
+
 
     /**
      * Sets the 'maxDate' property for this DatePicker. Please consult the
@@ -453,18 +474,36 @@ public class DatePicker extends AbstractJqueryUiEmbeddedBehavior implements ISty
      * @return this object
      */
     public DatePicker setMaxDate(final String value) {
+        return addToOrRemoveOfOptions("maxDate", value);
+    }
+
+    private DatePicker addToOrRemoveOfOptions(String key, String value) {
         if (value == null) {
-            this.options.remove("maxDate");
+            this.options.remove(key);
         } else {
-            this.options.put("maxDate", value);
+            this.options.put(key, value);
+        }
+        return this;
+    }
+
+    private DatePicker addToOrRemoveOfOptions(String key, Date value) {
+        if (value == null) {
+            this.options.remove(key);
+        } else {
+            String jsDate = getJavaScriptDateObject(value);
+            this.options.put(key, new JsScript(jsDate));
         }
         return this;
     }
 
     public DatePicker setMaxDate(final AjaxRequestTarget target, final String value) {
         setMaxDate(value);
-        target.appendJavaScript("jQuery('#" + getComponent().getMarkupId() + "').datepicker('option','maxDate','" + value + "');");
+        addOptionToDatepicker(target, "maxDate", value);
         return this;
+    }
+
+    private void addOptionToDatepicker(AjaxRequestTarget target, String key, String value) {
+        target.appendJavaScript("jQuery('#" + getComponent().getMarkupId() + "').datepicker('option','" + key + "','" + value + "');");
     }
 
 
@@ -476,23 +515,7 @@ public class DatePicker extends AbstractJqueryUiEmbeddedBehavior implements ISty
      * @return this object
      */
     public DatePicker setMaxDate(final Date value) {
-        if (value == null) {
-            this.options.remove("maxDate");
-        } else {
-            // to avoid problems with different date formats, we use a JAvaScript Date object instead
-            Locale locale = Session.get().getLocale();
-            Calendar cal;
-            if (locale != null) {
-                cal = Calendar.getInstance(locale);
-            } else {
-                cal = Calendar.getInstance();
-            }
-            cal.setTime(value);
-
-            String jsDate = "new Date(" + cal.get(Calendar.YEAR) + "," + cal.get(Calendar.MONTH) + "," + cal.get(Calendar.DAY_OF_MONTH) + ")";
-            this.options.put("maxDate", new JsScript(jsDate));
-        }
-        return this;
+        return addToOrRemoveOfOptions("maxDate", value);
     }
 
     public DatePicker setMaxDate(final AjaxRequestTarget target, final Date value) {
@@ -500,20 +523,25 @@ public class DatePicker extends AbstractJqueryUiEmbeddedBehavior implements ISty
         if (value == null) {
             target.appendJavaScript("jQuery('#" + getComponent().getMarkupId() + "').datepicker('option','maxDate',null);");
         } else {
-            // to avoid problems with different date formats, we use a JAvaScript Date object instead
-            Locale locale = Session.get().getLocale();
-            Calendar cal;
-            if (locale != null) {
-                cal = Calendar.getInstance(locale);
-            } else {
-                cal = Calendar.getInstance();
-            }
-            cal.setTime(value);
-
-            String jsDate = "new Date(" + cal.get(Calendar.YEAR) + "," + cal.get(Calendar.MONTH) + "," + cal.get(Calendar.DAY_OF_MONTH) + ")";
+            String jsDate = getJavaScriptDateObject(value);
             target.appendJavaScript("jQuery('#" + getComponent().getMarkupId() + "').datepicker('option','maxDate'," + jsDate + ");");
         }
         return this;
+    }
+
+    private String getJavaScriptDateObject(Date value) {
+        // to avoid problems with different date formats, we use a JAvaScript Date object instead
+
+        Locale locale = Session.get().getLocale();
+        Calendar cal;
+        if (locale != null) {
+            cal = Calendar.getInstance(locale);
+        } else {
+            cal = Calendar.getInstance();
+        }
+        cal.setTime(value);
+
+        return "new Date(" + cal.get(Calendar.YEAR) + "," + cal.get(Calendar.MONTH) + "," + cal.get(Calendar.DAY_OF_MONTH) + ")";
     }
 
     public DatePicker setMaxDate(final java.sql.Date value) {
@@ -593,16 +621,7 @@ public class DatePicker extends AbstractJqueryUiEmbeddedBehavior implements ISty
             this.options.remove("minDate");
         } else {
             // to avoid problems with different date formats, we use a JAvaScript Date object instead
-            Locale locale = Session.get().getLocale();
-            Calendar cal;
-            if (locale != null) {
-                cal = Calendar.getInstance(locale);
-            } else {
-                cal = Calendar.getInstance();
-            }
-            cal.setTime(value);
-
-            String jsDate = "new Date(" + cal.get(Calendar.YEAR) + "," + cal.get(Calendar.MONTH) + "," + cal.get(Calendar.DAY_OF_MONTH) + ")";
+            String jsDate = getJavaScriptDateObject(value);
 
             this.options.put("minDate", new JsScript(jsDate));
         }
@@ -614,17 +633,7 @@ public class DatePicker extends AbstractJqueryUiEmbeddedBehavior implements ISty
         if (value == null) {
             target.appendJavaScript("jQuery('#" + getComponent().getMarkupId() + "').datepicker('option','minDate',null);");
         } else {
-            // to avoid problems with different date formats, we use a JAvaScript Date object instead
-            Locale locale = Session.get().getLocale();
-            Calendar cal;
-            if (locale != null) {
-                cal = Calendar.getInstance(locale);
-            } else {
-                cal = Calendar.getInstance();
-            }
-            cal.setTime(value);
-
-            String jsDate = "new Date(" + cal.get(Calendar.YEAR) + "," + cal.get(Calendar.MONTH) + "," + cal.get(Calendar.DAY_OF_MONTH) + ")";
+            String jsDate = getJavaScriptDateObject(value);
 
             target.appendJavaScript("jQuery('#" + getComponent().getMarkupId() + "').datepicker('option','minDate'," + jsDate + ");");
         }
@@ -795,8 +804,8 @@ public class DatePicker extends AbstractJqueryUiEmbeddedBehavior implements ISty
      * @param value {@code true} or {@code false}.
      * @return this object
      */
-    public DatePicker setShowCurrentAtPos(final boolean value) {
-        if (!value) {
+    public DatePicker setShowCurrentAtPos(final int value) {
+        if (value == 0) {
             this.options.remove("showCurrentAtPos");
         } else {
             this.options.put("showCurrentAtPos", value);
@@ -804,7 +813,7 @@ public class DatePicker extends AbstractJqueryUiEmbeddedBehavior implements ISty
         return this;
     }
 
-    public DatePicker setShowCurrentAtPos(final AjaxRequestTarget target, final boolean value) {
+    public DatePicker setShowCurrentAtPos(final AjaxRequestTarget target, final int value) {
         setShowCurrentAtPos(value);
         target.appendJavaScript("jQuery('#" + getComponent().getMarkupId() + "').datepicker('option','showCurrentAtPos'," + value + ");");
         return this;
@@ -829,10 +838,13 @@ public class DatePicker extends AbstractJqueryUiEmbeddedBehavior implements ISty
 
     public DatePicker setShowMonthAfterYear(final AjaxRequestTarget target, final boolean value) {
         setShowMonthAfterYear(value);
-        target.appendJavaScript("jQuery('#" + getComponent().getMarkupId() + "').datepicker('option','showMonthAfterYear'," + value + ");");
+        target.appendJavaScript(getJQueryObjectOfComponent(getComponent()) + ".datepicker('option','showMonthAfterYear'," + value + ");");
         return this;
     }
 
+    protected String getJQueryObjectOfComponent(Component component) {
+        return "jQuery('#" + component.getMarkupId() + "')";
+    }
 
     /**
      * Sets the 'showOn' property for this DatePicker. Please consult the
@@ -1019,14 +1031,20 @@ public class DatePicker extends AbstractJqueryUiEmbeddedBehavior implements ISty
      */
 
     @Override
+    protected void updateAjaxAttributes(AjaxRequestAttributes attributes) {
+        super.updateAjaxAttributes(attributes);
+
+    }
+
+    @Override
     protected JsBuilder getJsBuilder() {
         if (this.onBeforeShowNotificationWanted) {
             this.options.put(EventType.BEFORE_SHOW.eventName,
-                    new JsFunction("function(dateText,inst) { wicketAjaxGet('" +
+                    new JsFunction("function(dateText,inst) { Wicket.Ajax.get({ 'u':'" +
                             this.getCallbackUrl() +
-                            "&" + EventType.IDENTIFIER + "=" + EventType.BEFORE_SHOW +
-                            "&keys='+jQuery.jWicketSpecialKeysGetPressed()" +
-                            ");}"));
+                            "', 'dep': [ function() {return {'" + EventType.IDENTIFIER + "':'" + EventType.BEFORE_SHOW +
+                            "', 'keys':jQuery.jWicketSpecialKeysGetPressed()}}]" +
+                            "});}"));
         } else {
             this.options.remove(EventType.BEFORE_SHOW.getEventName());
         }
@@ -1034,12 +1052,8 @@ public class DatePicker extends AbstractJqueryUiEmbeddedBehavior implements ISty
 
         if (this.onSelectNotificationWanted) {
             this.options.put(EventType.ON_SELECT.eventName,
-                    new JsFunction("function(dateText,inst) { wicketAjaxGet('" +
-                            this.getCallbackUrl() +
-                            "&date='+dateText" +
-                            "+'&" + EventType.IDENTIFIER + "=" + EventType.ON_SELECT +
-                            "&keys='+jQuery.jWicketSpecialKeysGetPressed()" +
-                            ");}"));
+                    getOnSelectJsFunction());
+
         } else {
             this.options.remove(EventType.ON_SELECT.getEventName());
         }
@@ -1047,12 +1061,11 @@ public class DatePicker extends AbstractJqueryUiEmbeddedBehavior implements ISty
 
         if (this.onCloseNotificationWanted) {
             this.options.put(EventType.ON_CLOSE.eventName,
-                    new JsFunction("function(dateText,inst) { wicketAjaxGet('" +
+                    new JsFunction("function(dateText,inst) { Wicket.Ajax.get({ 'u':'" +
                             this.getCallbackUrl() +
-                            "&date='+dateText" +
-                            "+'&" + EventType.IDENTIFIER + "=" + EventType.ON_CLOSE +
-                            "&keys='+jQuery.jWicketSpecialKeysGetPressed()" +
-                            ");}"));
+                            "', 'dep': [ function() {return {'date': dateText ,'" + EventType.IDENTIFIER + "':'" + EventType.ON_CLOSE +
+                            "', 'keys':jQuery.jWicketSpecialKeysGetPressed()}}]" +
+                            "});}"));
         } else {
             this.options.remove(EventType.ON_CLOSE.getEventName());
         }
@@ -1060,19 +1073,21 @@ public class DatePicker extends AbstractJqueryUiEmbeddedBehavior implements ISty
 
         if (this.onChangeMonthYearNotificationWanted) {
             this.options.put(EventType.ON_CHANGE_MONTH_YEAR.eventName,
-                    new JsFunction("function(year,month,inst) { wicketAjaxGet('" +
+
+                    new JsFunction("function(year,month,inst) { Wicket.Ajax.get({ 'u':'" +
                             this.getCallbackUrl() +
-                            "&year='+year" +
-                            "+'&month='+month" +
-                            "+'&" + EventType.IDENTIFIER + "=" + EventType.ON_CHANGE_MONTH_YEAR +
-                            "&keys='+jQuery.jWicketSpecialKeysGetPressed()" +
-                            ");}"));
+                            "', 'dep': [ function() {return {" +
+                            "'year': year" +
+                            ", 'month': month" +
+                            ",'" + EventType.IDENTIFIER + "': '" + EventType.ON_CHANGE_MONTH_YEAR +
+                            "', 'keys': jQuery.jWicketSpecialKeysGetPressed()}}]" +
+                            "});}"));
         } else {
             this.options.remove(EventType.ON_CHANGE_MONTH_YEAR.getEventName());
         }
 
 
-        if (this.showDayStates != null && this.showDayStates.size() > 0) {
+        if (hasToAddBeforeShowDayToOptions()) {
             this.options.put(EventType.BEFORE_SHOW_DAY.eventName,
                     new JsFunction("function(date) {" +
                             "return " + getCheckFunctionName() + "(date);" +
@@ -1131,6 +1146,18 @@ public class DatePicker extends AbstractJqueryUiEmbeddedBehavior implements ISty
         }
 
         return builder;
+    }
+
+    protected boolean hasToAddBeforeShowDayToOptions() {
+        return this.showDayStates != null && this.showDayStates.size() > 0;
+    }
+
+    protected JsFunction getOnSelectJsFunction() {
+        return new JsFunction("function(dateText,inst) { Wicket.Ajax.get({ 'u':'" +
+                this.getCallbackUrl() +
+                "', 'dep': [ function() {return {'date': dateText ,'" + EventType.IDENTIFIER + "':'" + EventType.ON_SELECT +
+                "', 'keys':jQuery.jWicketSpecialKeysGetPressed()}}]" +
+                "});}");
     }
 
 
@@ -1337,13 +1364,54 @@ public class DatePicker extends AbstractJqueryUiEmbeddedBehavior implements ISty
     @Override
     public void renderHead(Component component, final IHeaderResponse response) {
         super.renderHead(component, response);
-        if (this.showDayStates != null && this.showDayStates.size() > 0 && !this.dayCheckerRendered) {
+        if (hasToAddBeforeShowDayToOptions() && !this.dayCheckerRendered) {
             //draggablesAcceptedByDroppable.renderJsDropAcceptFunction(response);
             this.dayCheckerRendered = true;
 
+            StringBuilder sb = getJsShowDatesVariable();
+
+            sb.append("var ");
+            sb.append(getCheckFunctionName());
+            sb.append(" = function(date) {\n");
+            sb.append("   var hash = '';\n");
+            // Day for hash
+            sb.append("   var intVal = date.getDate();\n");
+            sb.append("   if (intVal < 10)\n");
+            sb.append("      hash += '0';\n");
+            sb.append("   hash += intVal;\n");
+            // Month for Hash
+            sb.append("   intVal = date.getMonth()+1;\n");
+            sb.append("   if (intVal < 10)\n");
+            sb.append("      hash += '0';\n");
+            sb.append("   hash += intVal;\n");
+            // Year
+            sb.append("   intVal = date.getFullYear();\n");
+            sb.append("   if (intVal < 1000)\n");
+            sb.append("      hash += '0';\n");
+            sb.append("   if (intVal < 100)\n");
+            sb.append("      hash += '0';\n");
+            sb.append("   if (intVal < 10)\n");
+            sb.append("      hash += '0';\n");
+            sb.append("   hash += intVal;\n");
+            // retrieve the day from array
+            sb.append("   var found = ");
+            sb.append(getCheckFunctionName());
+            sb.append("days[hash];\n");
+            sb.append("   if (found != null)\n");
+            sb.append("      return found;\n");
+            sb.append("   else\n");
+            sb.append("      return datePickerDefaultShowDayState;\n");
+            sb.append("};");
+
+            response.render(JavaScriptHeaderItem.forScript(sb.toString(), getCheckFunctionName() + "ID"));
+        }
+    }
+
+    protected StringBuilder getJsShowDatesVariable() {
+        StringBuilder sb = new StringBuilder();
+            sb.append("window.").append(getCheckFunctionName()).append("days = {");
+        if (this.showDayStates != null && this.showDayStates.size() > 0) {
             Calendar cal = Calendar.getInstance();
-            StringBuilder sb = new StringBuilder();
-            sb.append("var ").append(getCheckFunctionName()).append("days = {");
             boolean first = true;
             for (ShowDay day : this.showDayStates) {
                 if (!first) {
@@ -1387,43 +1455,9 @@ public class DatePicker extends AbstractJqueryUiEmbeddedBehavior implements ISty
                 sb.append(day.getTooltip());
                 sb.append("')");
             }
-            sb.append("};\n");
-
-            sb.append("var ");
-            sb.append(getCheckFunctionName());
-            sb.append(" = function(date) {\n");
-            sb.append("   var hash = '';\n");
-            // Day for hash
-            sb.append("   var intVal = date.getDate();\n");
-            sb.append("   if (intVal < 10)\n");
-            sb.append("      hash += '0';\n");
-            sb.append("   hash += intVal;\n");
-            // Month for Hash
-            sb.append("   intVal = date.getMonth()+1;\n");
-            sb.append("   if (intVal < 10)\n");
-            sb.append("      hash += '0';\n");
-            sb.append("   hash += intVal;\n");
-            // Year
-            sb.append("   intVal = date.getFullYear();\n");
-            sb.append("   if (intVal < 1000)\n");
-            sb.append("      hash += '0';\n");
-            sb.append("   if (intVal < 100)\n");
-            sb.append("      hash += '0';\n");
-            sb.append("   if (intVal < 10)\n");
-            sb.append("      hash += '0';\n");
-            sb.append("   hash += intVal;\n");
-            // retrieve the day from array
-            sb.append("   var found = ");
-            sb.append(getCheckFunctionName());
-            sb.append("days[hash];\n");
-            sb.append("   if (found != null)\n");
-            sb.append("      return found;\n");
-            sb.append("   else\n");
-            sb.append("      return datePickerDefaultShowDayState;\n");
-            sb.append("};");
-
-            response.render(JavaScriptHeaderItem.forScript(sb.toString(), getCheckFunctionName() + "ID"));
         }
+        sb.append("};\n");
+        return sb;
     }
 
 
@@ -1442,6 +1476,9 @@ public class DatePicker extends AbstractJqueryUiEmbeddedBehavior implements ISty
         target.add(getComponent());
     }
 
+    public void refresh(final AjaxRequestTarget target) {
+        target.appendJavaScript("jQuery('#" + getComponent().getMarkupId() + "').datepicker( 'refresh' );");
+    }
 
     /**
      * Enable the datepicker
@@ -1531,11 +1568,12 @@ public class DatePicker extends AbstractJqueryUiEmbeddedBehavior implements ISty
         }
     }
 
-//    @Override
+    //    @Override
     public JQueryCssResourceReference[] getCssResources() {
         return new JQueryCssResourceReference[]{
-                AbstractJqueryUiEmbeddedBehavior.jQueryUiBaseCss,
-                AbstractJqueryUiEmbeddedBehavior.jQueryUiThemeCss
+                new JQueryCssResourceReference(DatePicker.class, "css/jquery-ui.css"),
+                new JQueryCssResourceReference(DatePicker.class, "css/jquery.ui.base.css"),
+                new JQueryCssResourceReference(DatePicker.class, "css/jquery.ui.theme.css")
         };
     }
 

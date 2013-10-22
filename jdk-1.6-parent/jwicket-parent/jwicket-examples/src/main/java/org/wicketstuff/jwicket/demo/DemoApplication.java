@@ -35,7 +35,7 @@ public class DemoApplication extends WebApplication
 		mountPage("jqueryuitooltip", JQueryUiTooltipPage.class);
 	}
 
-	@Override
+    @Override
 	public RuntimeConfigurationType getConfigurationType()
 	{
 		return isDevelopment() ? RuntimeConfigurationType.DEVELOPMENT

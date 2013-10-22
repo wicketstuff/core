@@ -32,7 +32,9 @@ import org.wicketstuff.menu.IMenuLink;
 import org.wicketstuff.menu.Menu;
 import org.wicketstuff.menu.MenuBarPanel;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -585,5 +587,45 @@ public class TestPage extends WebPage {
                 target.add(datecontainer);
             }
         });
+
+
+        //inline datePicker
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+        Calendar c = Calendar.getInstance();
+        c.setTime(new Date());
+        c.add(Calendar.MONTH, -5);
+
+        WebMarkupContainer inlineDatePickerContainer = new WebMarkupContainer("inlineDatePickerContainer");
+        DatePicker inlineDatePicker = new DatePicker(){
+
+            @Override
+            public void setRestoreAfterRedraw(boolean value) {
+                super.setRestoreAfterRedraw(true);
+            }
+
+            @Override
+            protected void onSelect(final AjaxRequestTarget target, final String pickedDate, final SpecialKeys specialKeys) {
+                target.appendJavaScript(
+                        "alert('Selected Date: " + pickedDate + ", Pressed keys: " +
+                                specialKeys.toString() + "');"
+                );
+
+
+            }
+        }.setWantOnSelectNotification(true)
+         .setMaxDate(new Date())
+         .setChangeMonth(true)
+         .setChangeYear(true)
+         .setNumberOfMonths(3)
+           //     .setShowCurrentAtPos(2)
+          .setShowButtonPanel(true)
+          .setYearRange("-30:+0")
+          .setDefaultDate(c.getTime()) ;
+        c.set(Calendar.DAY_OF_MONTH, 1);
+
+
+        inlineDatePickerContainer.add(inlineDatePicker);
+        add(inlineDatePickerContainer);
+
     }
 }
