@@ -169,7 +169,7 @@ public class HomePage extends WicketExamplePage
                 protected void onEvent(AjaxRequestTarget target)
                 {
                     MyMarker overlay = ((MyMarker) GOverlayPanel.this.getDefaultModelObject());
-                    if ((Boolean) dragendLabel.getDefaultModelObject())
+                    if ((Boolean) dblclickLabel.getDefaultModelObject())
                     {
                         overlay.clearListeners(GEvent.dblclick);
                     }

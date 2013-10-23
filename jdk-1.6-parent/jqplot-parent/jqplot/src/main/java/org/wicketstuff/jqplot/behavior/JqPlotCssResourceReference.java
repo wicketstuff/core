@@ -32,6 +32,6 @@ public class JqPlotCssResourceReference extends CssResourceReference
 
 	private JqPlotCssResourceReference()
 	{
-		super(JqPlotCssResourceReference.class, "jquery.jqplot.min.css");
+		super(JqPlotCssResourceReference.class, "jquery.jqplot.css");
 	}
 }

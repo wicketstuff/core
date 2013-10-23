@@ -2,9 +2,10 @@
  * jqPlot
  * Pure JavaScript plotting plugin using jQuery
  *
- * Version: 1.0.0b2_r1012
+ * Version: 1.0.8
+ * Revision: 1250
  *
- * Copyright (c) 2009-2011 Chris Leonello
+ * Copyright (c) 2009-2013 Chris Leonello
  * jqPlot is currently available for use in all personal or commercial projects 
  * under both the MIT (http://www.opensource.org/licenses/mit-license.php) and GPL 
  * version 2.0 (http://www.gnu.org/licenses/gpl-2.0.html) licenses. This means that you can 
@@ -104,7 +105,12 @@
                 for (var i = start; i < axis.max; i += 2 * pb.interval) {
                     if (axis.name.charAt(0) === 'y') {
                         x = this._left;
-                        y = axis.series_u2p(i + pb.interval) + this._top;
+                        if ((i + pb.interval) < axis.max) {
+                            y = axis.series_u2p(i + pb.interval) + this._top;
+                        }
+                        else {
+                            y = axis.series_u2p(axis.max) + this._top;
+                        }
                         w = this._right - this._left;
                         h = axis.series_u2p(start) - axis.series_u2p(start + pb.interval);
                         ctx.fillRect(x, y, w, h);
