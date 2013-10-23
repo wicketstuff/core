@@ -42,7 +42,8 @@ import org.wicketstuff.rest.utils.wicket.MethodParameterContext;
 /**
  * The class contains the informations of a method parameter, like its type or its index in the
  * array of method parameters.
- * 
+ *
+ * @param <T> the generic type
  * @author andrea del bene
  */
 public class MethodParameter<T>
@@ -66,10 +67,7 @@ public class MethodParameter<T>
 	/** Validator key for the parameter. */
 	private final String valdatorKey;
 
-	/**
-	 * The annotation used to indicate how the value 
-	 * of the parameter must be retrieved
-	 * */
+	/** The annotation used to indicate how the value of the parameter must be retrieved. */
 	private final Annotation annotationParam;
 
 	/**
@@ -102,7 +100,13 @@ public class MethodParameter<T>
 		this.valdatorKey = ReflectionUtils.getAnnotationField(validatorAnnotation, "value", "");
 
 	}
-
+	
+	/**
+	 * Extract parameter value from the current web request or other web entities (cookies, request header, etc...).
+	 *
+	 * @param context the context
+	 * @return the object
+	 */
 	public Object extractParameterValue(MethodParameterContext context)
 	{
 		Object paramValue = null;
@@ -119,14 +123,12 @@ public class MethodParameter<T>
 		return paramValue;
 	}
 	
-	/***
+	/**
+	 * *
 	 * Extract a parameter values from the REST URL.
-	 * 
-	 * @param methodParameter
-	 *            the current method parameter.
-	 * @param pathParamIterator
-	 *            an iterator on the current values of path parameters.
-	 * 
+	 *
+	 * @param 
+	 * 		context the current context.
 	 * @return the parameter value.
 	 */
 	private Object extractParameterFromUrl(MethodParameterContext context)
@@ -147,25 +149,18 @@ public class MethodParameter<T>
 	}
 
 	/**
-	 * Extract the value for an annotated-method parameter (see package
-	 * {@link org.wicketstuff.rest.annotations.parameters}).
-	 * 
-	 * @param methodParameter
-	 *            the current method parameter.
-	 * @param pathParameters
-	 *            the values of path parameters for the current request.
-	 * @param annotation
-	 *            the annotation for the current parameter that indicates how to retrieve the value
-	 *            for the current parameter.
-	 * @param pageParameters
-	 *            PageParameters for the current request.
+	 * Extract the value for an annotated-method parameter (see package.
+	 *
+	 * @param context 
+	 * 		the current context.
 	 * @return the extracted value.
+	 * {@link org.wicketstuff.rest.annotations.parameters}).
 	 */
 	private Object extractParameterFromAnnotation(MethodParameterContext context)
 	{
 		Object paramValue = null;
 
-		String mimeInputFormat = ownerMethod.getMimeInputFormat();
+		String mimeInputFormat = ownerMethod.getInputFormat();
 		PageParameters pageParameters = context.getAttributesWrapper().getPageParameters();
 
 		if (annotationParam instanceof RequestBody)
@@ -200,13 +195,9 @@ public class MethodParameter<T>
 
 	/**
 	 * Extract method parameter value from matrix parameters.
-	 * 
-	 * @param pageParameters
-	 *            PageParameters for the current request.
-	 * @param matrixParam
-	 *            the {@link MatrixParam} annotation used for the current parameter.
-	 * @param argClass
-	 *            the type of the current method parameter.
+	 *
+	 * @param pageParameters PageParameters for the current request.
+	 * @param matrixParam the {@link MatrixParam} annotation used for the current parameter.
 	 * @return the value obtained from query parameters and converted to argClass.
 	 */
 	private Object extractParameterFromMatrixParams(PageParameters pageParameters,
@@ -225,11 +216,8 @@ public class MethodParameter<T>
 
 	/**
 	 * Extract method parameter value from request header.
-	 * 
-	 * @param headerParam
-	 *            the {@link HeaderParam} annotation used for the current method parameter.
-	 * @param argClass
-	 *            the type of the current method parameter.
+	 *
+	 * @param headerParam the {@link HeaderParam} annotation used for the current method parameter.
 	 * @return the extracted value converted to argClass.
 	 */
 	private Object extractParameterFromHeader(HeaderParam headerParam)
@@ -242,13 +230,9 @@ public class MethodParameter<T>
 
 	/**
 	 * Extract method parameter's value from query string parameters.
-	 * 
-	 * @param pageParameters
-	 *            the PageParameters of the current request.
-	 * @param requestParam
-	 *            the {@link RequestParam} annotation used for the current method parameter.
-	 * @param argClass
-	 *            the type of the current method parameter.
+	 *
+	 * @param pageParameters the PageParameters of the current request.
+	 * @param requestParam the {@link RequestParam} annotation used for the current method parameter.
 	 * @return the extracted value converted to argClass.
 	 */
 	private Object extractParameterFromQuery(PageParameters pageParameters,
@@ -264,11 +248,8 @@ public class MethodParameter<T>
 
 	/**
 	 * Extract method parameter's value from cookies.
-	 * 
-	 * @param annotation
-	 *            the {@link CookieParam} annotation used for the current method parameter.
-	 * @param argClass
-	 *            the type of the current method parameter.
+	 *
+	 * @param cookieParam the cookie param
 	 * @return the extracted value converted to argClass.
 	 */
 	private Object extractParameterFromCookies(CookieParam cookieParam)
@@ -284,9 +265,9 @@ public class MethodParameter<T>
 
 	/**
 	 * Internal method that tries to extract an instance of the given class from the request body.
-	 * 
-	 * @param mimeInputFormat
-	 *            the type we want to extract from request body.
+	 *
+	 * @param mimeInputFormat the type we want to extract from request body.
+	 * @param serialDeserial the serial deserial
 	 * @return the extracted object.
 	 */
 	private Object deserializeObjectFromRequest(String mimeInputFormat,
@@ -347,14 +328,23 @@ public class MethodParameter<T>
 		return deaultValue;
 	}
 
+	/**
+	 * Gets the valdator key.
+	 *
+	 * @return the valdator key
+	 */
 	public String getValdatorKey()
 	{
 		return valdatorKey;
 	}
-
+	
+	/**
+	 * Gets the annotation for the parameter.
+	 *
+	 * @return the annotation for the parameter
+	 */
 	public Annotation getAnnotationParam()
 	{
 		return annotationParam;
 	}
-
 }

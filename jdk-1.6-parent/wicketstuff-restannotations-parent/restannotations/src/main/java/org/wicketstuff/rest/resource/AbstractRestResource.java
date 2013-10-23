@@ -206,7 +206,7 @@ public abstract class AbstractRestResource<T extends IWebSerialDeserial> impleme
 		// 5-if the invoked method returns a value, it is written to response
 		if (result != null)
 		{
-			objectToResponse(result, response, mappedMethod.getMimeOutputFormat());
+			objectToResponse(result, response, mappedMethod.getOutputFormat());
 		}
 	}
 
@@ -471,8 +471,8 @@ public abstract class AbstractRestResource<T extends IWebSerialDeserial> impleme
 				HttpMethod httpMethod = methodMapped.httpMethod();
 				MethodMappingInfo methodMappingInfo = new MethodMappingInfo(methodMapped, method);
 
-				if (!isMimeTypesSupported(methodMappingInfo.getMimeInputFormat()) ||
-					!isMimeTypesSupported(methodMappingInfo.getMimeOutputFormat()))
+				if (!isMimeTypesSupported(methodMappingInfo.getInputFormat()) ||
+					!isMimeTypesSupported(methodMappingInfo.getOutputFormat()))
 					throw new WicketRuntimeException(
 						"Mapped methods use a MIME type not supported by obj serializer/deserializer!");
 

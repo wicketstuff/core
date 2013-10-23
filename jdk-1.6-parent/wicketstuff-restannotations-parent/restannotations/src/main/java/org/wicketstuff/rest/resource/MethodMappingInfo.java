@@ -26,6 +26,7 @@ import org.apache.wicket.authroles.authorization.strategies.role.Roles;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
 import org.wicketstuff.rest.annotations.AuthorizeInvocation;
 import org.wicketstuff.rest.annotations.MethodMapping;
+import org.wicketstuff.rest.contenthandling.mimetypes.IMimeTypeResolver;
 import org.wicketstuff.rest.resource.urlsegments.AbstractURLSegment;
 import org.wicketstuff.rest.utils.http.HttpMethod;
 import org.wicketstuff.rest.utils.reflection.MethodParameter;
@@ -39,7 +40,7 @@ import org.wicketstuff.rest.utils.reflection.MethodParameter;
  * @author andrea del bene
  * 
  */
-public class MethodMappingInfo
+public class MethodMappingInfo implements IMimeTypeResolver
 {
 	/** The HTTP method used to invoke this mapped method. */
 	private final HttpMethod httpMethod;
@@ -216,7 +217,7 @@ public class MethodMappingInfo
 	 * 
 	 * @return the mime input format
 	 */
-	public String getMimeInputFormat()
+	public String getInputFormat()
 	{
 		return inputFormat;
 	}
@@ -226,7 +227,7 @@ public class MethodMappingInfo
 	 * 
 	 * @return the mime output format
 	 */
-	public String getMimeOutputFormat()
+	public String getOutputFormat()
 	{
 		return outputFormat;
 	}
