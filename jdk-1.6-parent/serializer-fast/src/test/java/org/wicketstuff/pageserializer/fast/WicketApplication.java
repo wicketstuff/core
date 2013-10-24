@@ -23,9 +23,26 @@ package org.wicketstuff.pageserializer.fast;
 import java.io.File;
 import java.util.UUID;
 
+import org.apache.wicket.Component;
 import org.apache.wicket.protocol.http.WebApplication;
 import org.apache.wicket.util.lang.Bytes;
-import org.wicketstuff.pageserializer.fast.FastWicketSerializer;
+import org.wicketstuff.pageserializer.common.analyze.AnalyzingSerializationListener;
+import org.wicketstuff.pageserializer.common.analyze.IObjectLabelizer;
+import org.wicketstuff.pageserializer.common.analyze.ISerializedObjectTree;
+import org.wicketstuff.pageserializer.common.analyze.ISerializedObjectTreeProcessor;
+import org.wicketstuff.pageserializer.common.analyze.TreeProcessors;
+import org.wicketstuff.pageserializer.common.analyze.report.Level;
+import org.wicketstuff.pageserializer.common.analyze.report.RenderTreeProcessor;
+import org.wicketstuff.pageserializer.common.analyze.report.SimilarNodeTreeTransformator;
+import org.wicketstuff.pageserializer.common.analyze.report.SortedTreeSizeReport;
+import org.wicketstuff.pageserializer.common.analyze.report.TreeTransformator;
+import org.wicketstuff.pageserializer.common.analyze.report.TypeSizeReport;
+import org.wicketstuff.pageserializer.common.analyze.report.d3js.D3DataFileRenderer;
+import org.wicketstuff.pageserializer.common.analyze.report.filter.ITreeFilter;
+import org.wicketstuff.pageserializer.common.analyze.report.io.DirectoryBasedReportOutput;
+import org.wicketstuff.pageserializer.common.analyze.report.io.Keys;
+import org.wicketstuff.pageserializer.common.listener.ISerializationListener;
+import org.wicketstuff.pageserializer.common.listener.SerializationListeners;
 
 /**
  * Application object for your web application. If you want to run this application without
@@ -46,7 +63,39 @@ public class WicketApplication extends WebApplication
 	{
 		super.init();
 		
-		getFrameworkSettings().setSerializer(new FastWicketSerializer(Bytes.bytes(1024*1024)));
+		IObjectLabelizer labelizer = new IObjectLabelizer()
+		{
+
+			@Override
+			public String labelFor(Object object)
+			{
+				if (object instanceof Component) {
+					return ((Component) object).getId();
+				}
+				return null;
+			}
+		};
+		
+		DirectoryBasedReportOutput reportOutput=new DirectoryBasedReportOutput(tempDirectory("reports"));
+		
+		ISerializedObjectTreeProcessor treeProcessor = TreeProcessors.listOf(new TypeSizeReport(reportOutput.with(Keys.withNameAndFileExtension("TypeSizeReport", "txt"))),
+				new SortedTreeSizeReport(reportOutput.with(Keys.withNameAndFileExtension("SortedTreeSizeReport", "txt"))), 
+				new RenderTreeProcessor(reportOutput.with(Keys.withNameAndFileExtension("d3js-chart", "html")),new D3DataFileRenderer()), 
+				new SimilarNodeTreeTransformator(new SortedTreeSizeReport(reportOutput.with(Keys.withNameAndFileExtension("StrippedSortedTreeSizeReport", "txt")))));
+		ITreeFilter filter = new ITreeFilter()
+		{
+			@Override
+			public boolean accept(ISerializedObjectTree source, Level current)
+			{
+				return source.type() != Class.class;
+			}
+		};
+		ISerializedObjectTreeProcessor cleanedTreeProcessor = new TreeTransformator(treeProcessor,
+			TreeTransformator.strip(filter));
+		ISerializationListener listener = SerializationListeners.listOf(
+			new AnalyzingSerializationListener(labelizer, cleanedTreeProcessor));
+		
+		getFrameworkSettings().setSerializer(new InspectingFastWicketSerializer(Bytes.bytes(1024*1024),listener));
 	}
 
 	private File tempDirectory(String prefix) {

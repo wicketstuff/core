@@ -23,6 +23,11 @@
       <artifactId>slf4j-log4j12</artifactId>
       <scope>test</scope>
     </dependency>
+    <dependency>
+	    <groupId>org.wicketstuff</groupId>
+	    <artifactId>wicketstuff-serializer-common</artifactId>
+	    <version>${parent.version}</version>
+    </dependency>
     <!--
 		<dependency>
 			<groupId>com.esotericsoftware.kryo</groupId>

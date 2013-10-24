@@ -59,6 +59,7 @@
 
 		<module>closure-compiler</module>
 		<module>scala-extensions-parent</module> 
+		<module>serializer-common</module>
 		<module>serializer-kryo</module>
 		<module>serializer-kryo2</module>
 		<module>serializer-fast</module>

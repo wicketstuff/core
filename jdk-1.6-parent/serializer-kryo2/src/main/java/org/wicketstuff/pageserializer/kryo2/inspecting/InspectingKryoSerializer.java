@@ -21,8 +21,8 @@
 package org.wicketstuff.pageserializer.kryo2.inspecting;
 
 import org.apache.wicket.util.lang.Bytes;
+import org.wicketstuff.pageserializer.common.listener.ISerializationListener;
 import org.wicketstuff.pageserializer.kryo2.KryoSerializer;
-import org.wicketstuff.pageserializer.kryo2.inspecting.listener.ISerializationListener;
 
 import com.esotericsoftware.kryo.Kryo;
 
