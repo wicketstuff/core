@@ -28,10 +28,12 @@ import org.apache.wicket.serialize.ISerializer;
 import org.apache.wicket.util.io.ByteArrayOutputStream;
 import org.apache.wicket.util.lang.Args;
 import org.apache.wicket.util.lang.Bytes;
+import org.wicketstuff.pageserializer.common.listener.ISerializationListener;
 
 import de.ruedigermoeller.serialization.FSTConfiguration;
 import de.ruedigermoeller.serialization.FSTObjectInput;
 import de.ruedigermoeller.serialization.FSTObjectOutput;
+import de.ruedigermoeller.serialization.FSTSerialisationListener;
 
 
 public class FastWicketSerializer implements ISerializer{
@@ -43,7 +45,12 @@ public class FastWicketSerializer implements ISerializer{
 
 	private final Bytes bufferSize;
 	
-	static final FSTConfiguration fastSerialConfig = FSTConfiguration.createDefaultConfiguration();
+	static final FSTConfiguration fastSerialConfig;
+	static {
+		FSTConfiguration config = FSTConfiguration.createDefaultConfiguration();
+		config.setIgnoreSerialInterfaces(false);
+		fastSerialConfig=config;
+	}
 	
 	public FastWicketSerializer(Bytes bufferSize) {
 		this.bufferSize = Args.notNull(bufferSize, "bufferSize");
@@ -54,20 +61,40 @@ public class FastWicketSerializer implements ISerializer{
 	@Override
 	public byte[] serialize(Object object) {
 		
+		RuntimeException ex=null;
+  	ISerializationListener listener = listener();
+  	
     try {
   		ByteArrayOutputStream buffer = new ByteArrayOutputStream((int) this.bufferSize.bytes());
     	FSTObjectOutput out = fastSerialConfig.getObjectOutput(buffer);
+    	
+    	if (listener!=null) {
+    		out.setListener(new ListenerAdapter(listener));
+    		listener.begin(object);
+    	}
 			out.writeObject(object);
 	    // DON'T out.close() when using factory method;
 	    out.flush();
+			out.setListener(null);
+			
 	    buffer.close();
 			return buffer.toByteArray();
     } catch (RuntimeException e) {
     	throw new FastWicketSerialException("serialize",e);
 		} catch (IOException e) {
 			throw new FastWicketSerialException("serialize",e);
+		} finally {
+			if (listener!=null) {
+				listener.end(object, ex);
+			}
 		}
 	}
+
+	protected ISerializationListener listener() {
+		return null;
+	}
+
+
 
 	@Override
 	public Object deserialize(byte[] data) {
@@ -86,5 +113,24 @@ public class FastWicketSerializer implements ISerializer{
 			throw new FastWicketSerialException("deserialize", e);
 		}
 	}
+	
+	static class ListenerAdapter implements FSTSerialisationListener {
 
+		private final ISerializationListener _listener;
+
+		public ListenerAdapter(ISerializationListener listener) {
+			_listener = listener;
+		}
+
+		@Override
+		public void objectWillBeWritten(Object obj, int streamPosition) {
+			_listener.before(streamPosition, obj);
+		}
+
+		@Override
+		public void objectHasBeenWritten(Object obj, int oldStreamPosition, int streamPosition) {
+			_listener.after(streamPosition, obj);
+		}
+		
+	}
 }

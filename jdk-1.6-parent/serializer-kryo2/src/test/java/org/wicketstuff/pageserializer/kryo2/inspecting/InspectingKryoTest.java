@@ -29,22 +29,22 @@ import junit.framework.Assert;
 
 import org.apache.wicket.util.lang.Bytes;
 import org.junit.Test;
-import org.wicketstuff.pageserializer.kryo2.inspecting.analyze.AnalyzingSerializationListener;
-import org.wicketstuff.pageserializer.kryo2.inspecting.analyze.IObjectLabelizer;
-import org.wicketstuff.pageserializer.kryo2.inspecting.analyze.ISerializedObjectTreeProcessor;
-import org.wicketstuff.pageserializer.kryo2.inspecting.analyze.TreeProcessors;
-import org.wicketstuff.pageserializer.kryo2.inspecting.analyze.report.IReportOutput;
-import org.wicketstuff.pageserializer.kryo2.inspecting.analyze.report.LoggerReportOutput;
-import org.wicketstuff.pageserializer.kryo2.inspecting.analyze.report.SimilarNodeTreeTransformator;
-import org.wicketstuff.pageserializer.kryo2.inspecting.analyze.report.SortedTreeSizeReport;
-import org.wicketstuff.pageserializer.kryo2.inspecting.analyze.report.TreeSizeReport;
-import org.wicketstuff.pageserializer.kryo2.inspecting.analyze.report.TreeTransformator;
-import org.wicketstuff.pageserializer.kryo2.inspecting.analyze.report.TypeSizeReport;
-import org.wicketstuff.pageserializer.kryo2.inspecting.analyze.report.filter.ITreeFilter;
-import org.wicketstuff.pageserializer.kryo2.inspecting.analyze.report.filter.TypeFilter;
-import org.wicketstuff.pageserializer.kryo2.inspecting.listener.ISerializationListener;
-import org.wicketstuff.pageserializer.kryo2.inspecting.listener.LoggingSerializationListener;
-import org.wicketstuff.pageserializer.kryo2.inspecting.listener.SerializationListeners;
+import org.wicketstuff.pageserializer.common.analyze.AnalyzingSerializationListener;
+import org.wicketstuff.pageserializer.common.analyze.IObjectLabelizer;
+import org.wicketstuff.pageserializer.common.analyze.ISerializedObjectTreeProcessor;
+import org.wicketstuff.pageserializer.common.analyze.TreeProcessors;
+import org.wicketstuff.pageserializer.common.analyze.report.IReportOutput;
+import org.wicketstuff.pageserializer.common.analyze.report.LoggerReportOutput;
+import org.wicketstuff.pageserializer.common.analyze.report.SimilarNodeTreeTransformator;
+import org.wicketstuff.pageserializer.common.analyze.report.SortedTreeSizeReport;
+import org.wicketstuff.pageserializer.common.analyze.report.TreeSizeReport;
+import org.wicketstuff.pageserializer.common.analyze.report.TreeTransformator;
+import org.wicketstuff.pageserializer.common.analyze.report.TypeSizeReport;
+import org.wicketstuff.pageserializer.common.analyze.report.filter.ITreeFilter;
+import org.wicketstuff.pageserializer.common.analyze.report.filter.TypeFilter;
+import org.wicketstuff.pageserializer.common.listener.ISerializationListener;
+import org.wicketstuff.pageserializer.common.listener.LoggingSerializationListener;
+import org.wicketstuff.pageserializer.common.listener.SerializationListeners;
 import org.wicketstuff.pageserializer.kryo2.inspecting.validation.DefaultJavaSerializationValidator;
 
 public class InspectingKryoTest

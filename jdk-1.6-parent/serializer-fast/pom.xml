@@ -24,9 +24,14 @@
       <scope>test</scope>
     </dependency>
     <dependency>
+	    <groupId>org.wicketstuff</groupId>
+	    <artifactId>wicketstuff-serializer-common</artifactId>
+	    <version>${parent.version}</version>
+    </dependency>
+    <dependency>
 	    <groupId>de.ruedigermoeller</groupId>
 	    <artifactId>fst</artifactId>
-	    <version>1.27</version>
+	    <version>1.28</version>
 		</dependency>
     <dependency>
       <groupId>org.eclipse.jetty.aggregate</groupId>
