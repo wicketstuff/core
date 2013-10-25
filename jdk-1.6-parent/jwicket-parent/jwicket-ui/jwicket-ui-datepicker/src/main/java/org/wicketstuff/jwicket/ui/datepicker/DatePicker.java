@@ -1052,7 +1052,11 @@ public class DatePicker extends JQueryDurableAjaxBehavior implements IStyleResol
 
         if (this.onSelectNotificationWanted) {
             this.options.put(EventType.ON_SELECT.eventName,
-                    getOnSelectJsFunction());
+                    new JsFunction("function(dateText,inst) { Wicket.Ajax." + configureOnSelectGetOrPost() +"({ 'u':'" +
+                            this.getCallbackUrl() +
+                            "', 'dep': [ function() {return {'date': dateText ,'" + EventType.IDENTIFIER + "':'" + EventType.ON_SELECT +
+                            "', 'keys':jQuery.jWicketSpecialKeysGetPressed()}}]" +
+                            "});}"));
 
         } else {
             this.options.remove(EventType.ON_SELECT.getEventName());
@@ -1074,14 +1078,7 @@ public class DatePicker extends JQueryDurableAjaxBehavior implements IStyleResol
         if (this.onChangeMonthYearNotificationWanted) {
             this.options.put(EventType.ON_CHANGE_MONTH_YEAR.eventName,
 
-                    new JsFunction("function(year,month,inst) { Wicket.Ajax.get({ 'u':'" +
-                            this.getCallbackUrl() +
-                            "', 'dep': [ function() {return {" +
-                            "'year': year" +
-                            ", 'month': month" +
-                            ",'" + EventType.IDENTIFIER + "': '" + EventType.ON_CHANGE_MONTH_YEAR +
-                            "', 'keys': jQuery.jWicketSpecialKeysGetPressed()}}]" +
-                            "});}"));
+                    onChangeMonthJsFunction());
         } else {
             this.options.remove(EventType.ON_CHANGE_MONTH_YEAR.getEventName());
         }
@@ -1148,17 +1145,40 @@ public class DatePicker extends JQueryDurableAjaxBehavior implements IStyleResol
         return builder;
     }
 
+    protected JsFunction onChangeMonthJsFunction() {
+        return new JsFunction("function(year,month,inst) { Wicket.Ajax.get({ 'u':'" +
+                this.getCallbackUrl() +
+                "', 'dep': [ function() {return {" +
+                "'year': year" +
+                ", 'month': month" +
+                ",'" + EventType.IDENTIFIER + "': '" + EventType.ON_CHANGE_MONTH_YEAR +
+                "', 'keys': jQuery.jWicketSpecialKeysGetPressed()}}]" +
+                "});}");
+    }
+
+
+    protected enum AjaxCall implements Serializable{
+        GET("get"),
+        POST("post");
+
+        private final String axajCall;
+
+         AjaxCall(String ajaxCall){
+           this.axajCall = ajaxCall;
+        }
+
+        public String getAxajCall() {
+            return this.axajCall;
+        }
+    }
+    protected String configureOnSelectGetOrPost() {
+        return AjaxCall.GET.getAxajCall();
+    }
+
     protected boolean hasToAddBeforeShowDayToOptions() {
         return this.showDayStates != null && this.showDayStates.size() > 0;
     }
 
-    protected JsFunction getOnSelectJsFunction() {
-        return new JsFunction("function(dateText,inst) { Wicket.Ajax.get({ 'u':'" +
-                this.getCallbackUrl() +
-                "', 'dep': [ function() {return {'date': dateText ,'" + EventType.IDENTIFIER + "':'" + EventType.ON_SELECT +
-                "', 'keys':jQuery.jWicketSpecialKeysGetPressed()}}]" +
-                "});}");
-    }
 
 
     protected void onBeforeShow(final AjaxRequestTarget target) {
