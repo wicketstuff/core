@@ -1,6 +1,7 @@
 package com.googlecode.wicket.jquery.ui.samples.pages.kendo.datetimepicker;
 
 import java.util.Calendar;
+
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.panel.FeedbackPanel;
@@ -26,7 +27,7 @@ public class DefaultTimePickerPage extends AbstractTimePickerPage
 
 		// TimePicker //
 		Calendar calendar = Calendar.getInstance();
-		calendar.set(0, 0, 0, 14, 0); //2:00 PM
+		calendar.set(0, 0, 0, 14, 0); // 2:00 PM
 
 		final TimePicker timepicker = new TimePicker("timepicker", Model.of(calendar.getTime()));
 		form.add(timepicker);

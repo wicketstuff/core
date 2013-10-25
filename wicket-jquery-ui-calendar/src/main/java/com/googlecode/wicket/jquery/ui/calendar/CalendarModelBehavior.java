@@ -94,7 +94,6 @@ public class CalendarModelBehavior extends AbstractAjaxBehavior
 	/**
 	 * Gets the new {@link IRequestHandler} that will respond the list of {@link CalendarEvent} in a json format
 	 *
-	 * @param model the {@link CalendarModel}
 	 * @return the {@link IRequestHandler}
 	 */
 	protected IRequestHandler newRequestHandler()

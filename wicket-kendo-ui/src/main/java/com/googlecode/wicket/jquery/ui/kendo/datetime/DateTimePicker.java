@@ -41,8 +41,8 @@ public class DateTimePicker extends FormComponentPanel<Date> implements ITextFor
 	private static final long serialVersionUID = 1L;
 	private static final String ERROR_NOT_INITIALIZED = "Internal timePicker is not initialized (#onInitialize() has not yet been called).";
 
-	private DatePicker datePicker;
-	private TimePicker timePicker;
+	DatePicker datePicker;
+	TimePicker timePicker;
 
 	private final String datePattern;
 	private final String timePattern;

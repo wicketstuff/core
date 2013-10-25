@@ -41,8 +41,6 @@ interface IDraggableListener
 	 * @param target the {@link AjaxRequestTarget}
 	 * @param top the position's top value
 	 * @param left the position's left value
-	 * @param offsetTop the offset's top value
-	 * @param offsetLeft the offset's left value
 	 */
 	void onDragStart(AjaxRequestTarget target, int top, int left);
 
@@ -53,8 +51,6 @@ interface IDraggableListener
 	 * @param target the {@link AjaxRequestTarget}
 	 * @param top the position's top value
 	 * @param left the position's left value
-	 * @param offsetTop the offset's top value
-	 * @param offsetLeft the offset's left value
 	 * @see #isStopEventEnabled()
 	 */
 	void onDragStop(AjaxRequestTarget target, int top, int left);

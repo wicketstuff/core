@@ -26,7 +26,10 @@ abstract class AbstractTimePickerPage extends AbstractKendoPage
 				new DemoLink(PatternTimePickerPage.class, "TimePicker: using pattern"),
 				new DemoLink(DateTimePickerPage.class, "DateTimePicker"),
 				new DemoLink(LocaleDateTimePickerPage.class, "DateTimePicker: using locale"),
-				new DemoLink(PatternDateTimePickerPage.class, "DateTimePicker: using pattern")
+				new DemoLink(PatternDateTimePickerPage.class, "DateTimePicker: using pattern"),
+				new DemoLink(AjaxDatePickerPage.class, "AjaxDatePicker"),
+				new DemoLink(AjaxTimePickerPage.class, "AjaxTimePicker"),
+				new DemoLink(AjaxDateTimePickerPage.class, "AjaxDateTimePicker")
 			);
 	}
 }

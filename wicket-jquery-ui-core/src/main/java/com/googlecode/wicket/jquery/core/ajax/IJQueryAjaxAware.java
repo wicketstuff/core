@@ -23,11 +23,17 @@ import com.googlecode.wicket.jquery.core.JQueryEvent;
 
 /**
  * Specifies that the implementing class, usually a {@link JQueryBehavior}, is aware of ajax calls that may be made by a {@link JQueryAjaxBehavior}<br/>
- *
+ * 
  * @author Sebastien Briquet - sebfz1
  * @see JQueryAjaxBehavior
  */
 public interface IJQueryAjaxAware
 {
+	/**
+	 * Event triggered when a {@link JQueryAjaxBehavior} receives an ajax notification from the widget
+	 * 
+	 * @param target the {@link AjaxRequestTarget}
+	 * @param event the {@link JQueryEvent}
+	 */
 	void onAjax(AjaxRequestTarget target, JQueryEvent event);
 }

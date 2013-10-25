@@ -36,9 +36,9 @@ import com.googlecode.wicket.jquery.ui.kendo.KendoAbstractBehavior;
 /**
  * Provides a Kendo UI DropDownList widget.<br/>
  * This ajax version will post the component, using a {@link JQueryAjaxChangeBehavior}, when the 'change' javascript method is called.
- *
+ * 
  * @author Sebastien Briquet - sebfz1
- *
+ * 
  * @param <T>
  */
 public class AjaxDropDownList<T> extends DropDownList<T> implements ISelectionChangedListener
@@ -47,6 +47,7 @@ public class AjaxDropDownList<T> extends DropDownList<T> implements ISelectionCh
 
 	/**
 	 * Constructor
+	 * 
 	 * @param id the markup id
 	 */
 	public AjaxDropDownList(String id)
@@ -56,6 +57,7 @@ public class AjaxDropDownList<T> extends DropDownList<T> implements ISelectionCh
 
 	/**
 	 * Constructor
+	 * 
 	 * @param id the markup id
 	 * @param choices the collection of choices in the dropdown
 	 */
@@ -66,6 +68,7 @@ public class AjaxDropDownList<T> extends DropDownList<T> implements ISelectionCh
 
 	/**
 	 * Constructor
+	 * 
 	 * @param id the markup id
 	 * @param choices the collection of choices in the dropdown
 	 * @param renderer the rendering engine
@@ -77,6 +80,7 @@ public class AjaxDropDownList<T> extends DropDownList<T> implements ISelectionCh
 
 	/**
 	 * Constructor
+	 * 
 	 * @param id the markup id
 	 * @param model the {@link IModel}
 	 * @param choices the collection of choices in the dropdown
@@ -88,6 +92,7 @@ public class AjaxDropDownList<T> extends DropDownList<T> implements ISelectionCh
 
 	/**
 	 * Constructor
+	 * 
 	 * @param id the markup id
 	 * @param model the {@link IModel}
 	 * @param choices the collection of choices in the dropdown
@@ -100,6 +105,7 @@ public class AjaxDropDownList<T> extends DropDownList<T> implements ISelectionCh
 
 	/**
 	 * Constructor
+	 * 
 	 * @param id the markup id
 	 * @param choices the collection of choices in the dropdown
 	 */
@@ -110,6 +116,7 @@ public class AjaxDropDownList<T> extends DropDownList<T> implements ISelectionCh
 
 	/**
 	 * Constructor
+	 * 
 	 * @param id the markup id
 	 * @param model the {@link IModel}
 	 * @param choices the collection of choices in the dropdown
@@ -121,6 +128,7 @@ public class AjaxDropDownList<T> extends DropDownList<T> implements ISelectionCh
 
 	/**
 	 * Constructor
+	 * 
 	 * @param id the markup id
 	 * @param choices the collection of choices in the dropdown
 	 * @param renderer the rendering engine
@@ -132,6 +140,7 @@ public class AjaxDropDownList<T> extends DropDownList<T> implements ISelectionCh
 
 	/**
 	 * Constructor
+	 * 
 	 * @param id the markup id
 	 * @param model the {@link IModel}
 	 * @param choices the collection of choices in the dropdown
@@ -151,17 +160,9 @@ public class AjaxDropDownList<T> extends DropDownList<T> implements ISelectionCh
 	@Override
 	public JQueryBehavior newWidgetBehavior(String selector)
 	{
-		return new AjaxDropDownListBehavior(selector, DropDownList.METHOD) {
+		return new AjaxDropDownListBehavior(selector) {
 
 			private static final long serialVersionUID = 1L;
-
-			@Override
-			public void onConfigure(Component component)
-			{
-				super.onConfigure(component);
-
-				AjaxDropDownList.this.onConfigure(this);
-			}
 
 			@Override
 			public void onSelectionChanged(AjaxRequestTarget target)
@@ -172,7 +173,6 @@ public class AjaxDropDownList<T> extends DropDownList<T> implements ISelectionCh
 		};
 	}
 
-
 	/**
 	 * Provides a Kendo UI DropDownList {@link JQueryBehavior}
 	 */
@@ -181,6 +181,11 @@ public class AjaxDropDownList<T> extends DropDownList<T> implements ISelectionCh
 		private static final long serialVersionUID = 1L;
 
 		private JQueryAjaxBehavior onChangeBehavior;
+
+		public AjaxDropDownListBehavior(String selector)
+		{
+			super(selector, DropDownList.METHOD);
+		}
 
 		public AjaxDropDownListBehavior(String selector, String method)
 		{
@@ -192,7 +197,7 @@ public class AjaxDropDownList<T> extends DropDownList<T> implements ISelectionCh
 		{
 			super.bind(component);
 
-			component.add(this.onChangeBehavior = new JQueryAjaxChangeBehavior(this, (FormComponent<?>)component));
+			component.add(this.onChangeBehavior = new JQueryAjaxChangeBehavior(this, (FormComponent<?>) component));
 		}
 
 		@Override

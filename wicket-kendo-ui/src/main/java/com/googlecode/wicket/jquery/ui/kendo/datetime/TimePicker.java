@@ -31,19 +31,19 @@ import com.googlecode.wicket.jquery.ui.kendo.KendoAbstractBehavior;
 import com.googlecode.wicket.jquery.ui.kendo.utils.KendoDateTimeUtils;
 
 /**
- * Provides a Kendo UI TimePicker<br/>
+ * Provides a Kendo UI time-picker<br/>
  * It should be created on a HTML &lt;input type="text" /&gt; element
- *
+ * 
  * @author Sebastien Briquet - sebfz1
  */
 public class TimePicker extends DateTextField implements IJQueryWidget
 {
 	private static final long serialVersionUID = 1L;
-	private static final String METHOD = "kendoTimePicker";
 
+	protected static final String METHOD = "kendoTimePicker";
 	protected static final String DEFAULT_PATTERN = "h:mm aa"; // default java time pattern
 
-	private Options options;
+	Options options;
 
 	/**
 	 * Constructor
@@ -206,7 +206,7 @@ public class TimePicker extends DateTextField implements IJQueryWidget
 
 		return "";
 	}
-
+	
 	// Events //
 	@Override
 	protected void onInitialize()
@@ -234,6 +234,6 @@ public class TimePicker extends DateTextField implements IJQueryWidget
 	@Override
 	public JQueryBehavior newWidgetBehavior(String selector)
 	{
-		return new KendoAbstractBehavior(selector, METHOD, this.options);
+		return new KendoAbstractBehavior(selector, TimePicker.METHOD, this.options);
 	}
 }
