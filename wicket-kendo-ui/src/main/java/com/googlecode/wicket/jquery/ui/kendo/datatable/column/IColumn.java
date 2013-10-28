@@ -23,25 +23,38 @@ import com.googlecode.wicket.jquery.ui.kendo.datatable.DataTable;
 /**
  * Specifies the column definition of a {@link DataTable}
  *
- * @param <T> the type of the model object
  * @author Sebastien Briquet - sebfz1
  */
-public interface IColumn<T> extends IClusterable
+public interface IColumn extends IClusterable
 {
 	/**
 	 * Gets the text of the column header
+	 *
 	 * @return the column title
 	 */
 	String getTitle();
 
 	/**
 	 * Get the field in the data set that this column should be bound to.
+	 *
 	 * @return the field name
 	 */
 	String getField();
 
 	/**
+	 * The format that is applied to the value before it is displayed. Takes the form "{0:format}" where "format" is a standard number format, custom number format, standard date format or a custom date format.
+	 *
+	 * @return the format or <tt>null</tt> if it does not apply
+	 * @see <a href="http://docs.kendoui.com/api/framework/kendo#standard-number-formats">standard-number-formats</a>
+	 * @see <a href="http://docs.kendoui.com/api/framework/kendo#custom-number-formats">custom-number-formats</a>
+	 * @see <a href="http://docs.kendoui.com/api/framework/kendo#standard-date-formats">standard-date-formats</a>
+	 * @see <a href="http://docs.kendoui.com/api/framework/kendo#custom-date-formats">custom-date-formats</a>
+	 */
+	String getFormat();
+
+	/**
 	 * Gets the desired width of the column.
+	 *
 	 * @return the column's width
 	 */
 	int getWidth();

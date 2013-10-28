@@ -26,10 +26,9 @@ import com.googlecode.wicket.jquery.ui.kendo.datatable.DataTable;
 /**
  * Provides a commands column for a {@link DataTable}
  *
- * @param <T> the type of the model object
  * @author Sebastien Briquet - sebfz1
  */
-public abstract class CommandsColumn<T> extends AbstractColumn<T>
+public abstract class CommandsColumn extends AbstractColumn
 {
 	private static final long serialVersionUID = 1L;
 

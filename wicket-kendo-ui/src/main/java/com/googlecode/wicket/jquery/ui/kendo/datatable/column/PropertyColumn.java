@@ -16,24 +16,22 @@
  */
 package com.googlecode.wicket.jquery.ui.kendo.datatable.column;
 
+import org.apache.wicket.core.util.lang.PropertyResolver;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
 
-import com.googlecode.wicket.jquery.core.renderer.ITextRenderer;
-import com.googlecode.wicket.jquery.core.renderer.TextRenderer;
 import com.googlecode.wicket.jquery.ui.kendo.datatable.DataTable;
 
 /**
  * Provides a property column for a {@link DataTable}
  *
- * @param <T> the type of the model object
  * @author Sebastien Briquet - sebfz1
  */
-public class PropertyColumn<T> extends AbstractColumn<T>
+public class PropertyColumn extends AbstractColumn
 {
 	private static final long serialVersionUID = 1L;
 
-	private final ITextRenderer<T> renderer;
+	private final String property;
 
 	/**
 	 * Constructor
@@ -95,7 +93,7 @@ public class PropertyColumn<T> extends AbstractColumn<T>
 	{
 		super(title, property, width);
 
-		this.renderer = new TextRenderer<T>(property);
+		this.property = property;
 	}
 
 	@Override
@@ -111,8 +109,8 @@ public class PropertyColumn<T> extends AbstractColumn<T>
 	 * @param object the model object
 	 * @return the value of the object
 	 */
-	public String getValue(T object)
+	public Object getValue(Object object)
 	{
-		return this.renderer.getText(object);
+		return PropertyResolver.getValue(this.property, object); //if the object is null, null is returned
 	}
 }

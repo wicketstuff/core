@@ -46,7 +46,7 @@ class DataSourceBehavior<T> extends AbstractDefaultAjaxBehavior
 	private static final long serialVersionUID = 1L;
 
 	private final IDataProvider<T> provider;
-	private final List<? extends IColumn<T>> columns;
+	private final List<? extends IColumn> columns;
 
 	/**
 	 * Constructor
@@ -54,7 +54,7 @@ class DataSourceBehavior<T> extends AbstractDefaultAjaxBehavior
 	 * @param provider the {@link IDataProvider}
 	 * @param rows the number of rows per page to be displayed
 	 */
-	public DataSourceBehavior(final List<? extends IColumn<T>> columns, final IDataProvider<T> provider, final long rows)
+	public DataSourceBehavior(final List<? extends IColumn> columns, final IDataProvider<T> provider, final long rows)
 	{
 		this.columns = columns;
 		this.provider = provider;
@@ -134,11 +134,11 @@ class DataSourceBehavior<T> extends AbstractDefaultAjaxBehavior
 		{
 			stringer.object();
 
-			for (IColumn<T> column : this.columns)
+			for (IColumn column : this.columns)
 			{
-				if (column instanceof PropertyColumn<?>)
+				if (column instanceof PropertyColumn)
 				{
-					PropertyColumn<T> pc = (PropertyColumn<T>) column;
+					PropertyColumn pc = (PropertyColumn) column;
 					stringer.key(pc.getField()).value(pc.getValue(bean));
 				}
 			}

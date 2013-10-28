@@ -35,7 +35,7 @@ import com.googlecode.wicket.jquery.ui.kendo.datatable.column.IColumn;
 
 /**
  * Provides a Kendo UI data-table
- * 
+ *
  * @param <T> the model object type
  * @author Sebastien Briquet - sebfz1
  */
@@ -47,33 +47,33 @@ public class DataTable<T> extends WebComponent implements IJQueryWidget, IDataTa
 	private AbstractAjaxBehavior sourceBehavior;
 
 	private final Options options;
-	private final List<? extends IColumn<T>> columns;
+	private final List<? extends IColumn> columns;
 	private final IDataProvider<T> provider;
 	private final long rows;
 
 	/**
 	 * Constructor
-	 * 
+	 *
 	 * @param id the markup id
 	 * @param columns the list of {@link IColumn}
 	 * @param provider the {@link IDataProvider}
 	 * @param rows the number of rows per page to be displayed
 	 */
-	public DataTable(String id, final List<? extends IColumn<T>> columns, final IDataProvider<T> provider, final long rows)
+	public DataTable(String id, final List<? extends IColumn> columns, final IDataProvider<T> provider, final long rows)
 	{
 		this(id, columns, provider, rows, new Options());
 	}
 
 	/**
 	 * Main constructor
-	 * 
+	 *
 	 * @param id the markup id
 	 * @param columns the list of {@link IColumn}
 	 * @param provider the {@link IDataProvider}
 	 * @param rows the number of rows per page to be displayed
 	 * @param options the {@link Options}
 	 */
-	public DataTable(String id, final List<? extends IColumn<T>> columns, final IDataProvider<T> provider, final long rows, Options options)
+	public DataTable(String id, final List<? extends IColumn> columns, final IDataProvider<T> provider, final long rows, Options options)
 	{
 		super(id);
 
@@ -86,7 +86,7 @@ public class DataTable<T> extends WebComponent implements IJQueryWidget, IDataTa
 	// Methods //
 	/**
 	 * Reloads data and refreshes the {@link DataTable}
-	 * 
+	 *
 	 * @param target the {@link AjaxRequestTarget}
 	 */
 	public void refresh(AjaxRequestTarget target)
@@ -140,7 +140,7 @@ public class DataTable<T> extends WebComponent implements IJQueryWidget, IDataTa
 			private static final long serialVersionUID = 1L;
 
 			@Override
-			protected List<? extends IColumn<T>> getColumns()
+			protected List<? extends IColumn> getColumns()
 			{
 				return DataTable.this.columns;
 			}
@@ -175,13 +175,13 @@ public class DataTable<T> extends WebComponent implements IJQueryWidget, IDataTa
 	// Factories //
 	/**
 	 * Gets a new {@link DataSourceBehavior}
-	 * 
+	 *
 	 * @param columns the list of {@link IColumn}
 	 * @param provider the {@link IDataProvider}
 	 * @param rows the number of rows per page to be displayed
 	 * @return the {@link AbstractAjaxBehavior}
 	 */
-	protected AbstractAjaxBehavior newDataSourceBehavior(final List<? extends IColumn<T>> columns, final IDataProvider<T> provider, final long rows)
+	protected AbstractAjaxBehavior newDataSourceBehavior(final List<? extends IColumn> columns, final IDataProvider<T> provider, final long rows)
 	{
 		return new DataSourceBehavior<T>(columns, provider, rows);
 	}
@@ -189,7 +189,7 @@ public class DataTable<T> extends WebComponent implements IJQueryWidget, IDataTa
 	/**
 	 * Gets a new {@link ButtonAjaxBehavior} that will be called by the corresponding {@link ColumnButton}.<br/>
 	 * This method may be overridden to provide additional behaviors
-	 * 
+	 *
 	 * @param source the {@link IJQueryAjaxAware} source
 	 * @param button the button that is passed to the behavior so it can be retrieved via the {@link ClickEvent}
 	 * @return the {@link ButtonAjaxBehavior}

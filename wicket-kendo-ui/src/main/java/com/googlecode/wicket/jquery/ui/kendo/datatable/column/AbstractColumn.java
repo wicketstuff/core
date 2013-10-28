@@ -24,10 +24,9 @@ import com.googlecode.wicket.jquery.core.Options;
 /**
  * Base class for {@link IColumn}<tt>s</tt> implementation
  *
- * @param <T> the type of the model object
  * @author Sebastien Briquet - sebfz1
  */
-public abstract class AbstractColumn<T> implements IColumn<T>
+public abstract class AbstractColumn implements IColumn
 {
 	private static final long serialVersionUID = 1L;
 
@@ -134,6 +133,12 @@ public abstract class AbstractColumn<T> implements IColumn<T>
 	}
 
 	@Override
+	public String getFormat()
+	{
+		return null;
+	}
+
+	@Override
 	public int getWidth()
 	{
 		return this.width;
@@ -147,6 +152,12 @@ public abstract class AbstractColumn<T> implements IColumn<T>
 		builder.append(Options.QUOTE).append("title").append(Options.QUOTE).append(": ").append(Options.QUOTE).append(this.getTitle()).append(Options.QUOTE);
 		builder.append(", ");
 		builder.append(Options.QUOTE).append("field").append(Options.QUOTE).append(": ").append(Options.QUOTE).append(this.getField()).append(Options.QUOTE);
+
+		if (this.getFormat() != null)
+		{
+			builder.append(", ");
+			builder.append(Options.QUOTE).append("format").append(Options.QUOTE).append(": ").append(Options.QUOTE).append(this.getFormat()).append(Options.QUOTE);
+		}
 
 		if (this.getWidth() > 0)
 		{

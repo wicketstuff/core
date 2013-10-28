@@ -28,7 +28,7 @@ public class DefaultDataTablePage extends AbstractDataTablePage
 
 		// DataTable //
 		IDataProvider<Product> provider = newDataProvider();
-		List<IColumn<Product>> columns = newColumnList();
+		List<IColumn> columns = newColumnList();
 
 		Options options = new Options();
 		options.set("height", 430);
@@ -55,15 +55,15 @@ public class DefaultDataTablePage extends AbstractDataTablePage
 		return new ListDataProvider<Product>(ProductsDAO.all());
 	}
 
-	private static List<IColumn<Product>> newColumnList()
+	private static List<IColumn> newColumnList()
 	{
-		List<IColumn<Product>> columns = new ArrayList<IColumn<Product>>();
+		List<IColumn> columns = new ArrayList<IColumn>();
 
-		columns.add(new PropertyColumn<Product>("ID", "id", 30));
-		columns.add(new PropertyColumn<Product>("Name", "name"));
-		columns.add(new PropertyColumn<Product>("Description", "description"));
-		columns.add(new PropertyColumn<Product>("Unit Price", "price"));
-		//columns.add(new PropertyColumn<Product>("Vendor", "vendor.name"));
+		columns.add(new PropertyColumn("ID", "id", 30));
+		columns.add(new PropertyColumn("Name", "name"));
+		columns.add(new PropertyColumn("Description", "description"));
+		columns.add(new PropertyColumn("Unit Price", "price"));
+//		columns.add(new PropertyColumn("Vendor", "vendor.name"));
 
 		return columns;
 	}

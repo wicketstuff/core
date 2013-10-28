@@ -31,7 +31,7 @@ public class CommandsDataTablePage extends AbstractDataTablePage
 
 		// DataTable //
 		IDataProvider<Product> provider = newDataProvider();
-		List<IColumn<Product>> columns = newColumnList();
+		List<IColumn> columns = newColumnList();
 
 		Options options = new Options();
 		options.set("height", 430);
@@ -56,15 +56,26 @@ public class CommandsDataTablePage extends AbstractDataTablePage
 		return new ListDataProvider<Product>(ProductsDAO.all());
 	}
 
-	private static List<IColumn<Product>> newColumnList()
+	private static List<IColumn> newColumnList()
 	{
-		List<IColumn<Product>> columns = new ArrayList<IColumn<Product>>();
+		List<IColumn> columns = new ArrayList<IColumn>();
 
-		columns.add(new PropertyColumn<Product>("ID", "id", 30));
-		columns.add(new PropertyColumn<Product>("Name", "name"));
-		columns.add(new PropertyColumn<Product>("Description", "description"));
-		columns.add(new PropertyColumn<Product>("Price", "price", 60));
-		columns.add(new CommandsColumn<Product>("", 160) {
+		columns.add(new PropertyColumn("ID", "id", 30));
+		columns.add(new PropertyColumn("Name", "name"));
+		columns.add(new PropertyColumn("Description", "description"));
+
+		columns.add(new PropertyColumn("Price", "price", 70) {
+
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			public String getFormat()
+			{
+				return "{0:c2}";
+			}
+		});
+
+		columns.add(new CommandsColumn("", 160) {
 
 			private static final long serialVersionUID = 1L;
 

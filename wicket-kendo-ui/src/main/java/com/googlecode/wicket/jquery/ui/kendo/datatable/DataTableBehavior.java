@@ -81,7 +81,7 @@ public abstract class DataTableBehavior extends KendoAbstractBehavior implements
 	 * Gets the {@link List} of {@link IColumn}
 	 * @return the {@link List} of {@link IColumn}
 	 */
-	protected abstract List<? extends IColumn<?>> getColumns();
+	protected abstract List<? extends IColumn> getColumns();
 
 	/**
 	 * Gets the row count
@@ -101,11 +101,11 @@ public abstract class DataTableBehavior extends KendoAbstractBehavior implements
 	 */
 	private List<ColumnButton> getButtons()
 	{
-		for (IColumn<?> column : this.getColumns())
+		for (IColumn column : this.getColumns())
 		{
 			if (column instanceof CommandsColumn)
 			{
-				return ((CommandsColumn<?>)column).getButtons();
+				return ((CommandsColumn)column).getButtons();
 			}
 		}
 
@@ -134,22 +134,22 @@ public abstract class DataTableBehavior extends KendoAbstractBehavior implements
 		StringBuilder builder = new StringBuilder("[ ");
 
 		{
-			List<? extends IColumn<?>> columns = this.getColumns();
+			List<? extends IColumn> columns = this.getColumns();
 
 			for (int i = 0; i < columns.size(); i++)
 			{
-				IColumn<?> column = columns.get(i);
+				IColumn column = columns.get(i);
 
 				if (i > 0)
 				{
 					builder.append(", ");
 				}
 
+				builder.append("{ ");
+				builder.append(column.toString()); //toJSON(component)
+
 				if (column instanceof CommandsColumn)
 				{
-					builder.append("{ ");
-					builder.append(column.toString()); //toJSON(component)
-
 					// buttons //
 					builder.append(", ");
 					builder.append(Options.QUOTE).append("command").append(Options.QUOTE).append(": ");
@@ -170,12 +170,13 @@ public abstract class DataTableBehavior extends KendoAbstractBehavior implements
 					}
 
 					builder.append(" ]");
-					builder.append(" }");
 				}
-				else
-				{
-					builder.append("{ ").append(column.toString()).append(" }"); //toJSON
-				}
+//				else
+//				{
+//					builder.append("{ ").append(column.toString()).append(" }"); //toJSON
+//				}
+
+				builder.append(" }");
 			}
 		}
 
