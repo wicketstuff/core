@@ -180,7 +180,7 @@ public abstract class AbstractFormDialog<T extends Serializable> extends Abstrac
 
 		if (form != null)
 		{
-			form.onFormSubmitted(new DialogFormSubmitter(target));
+			form.getRootForm().onFormSubmitted(new DialogFormSubmitter(target));
 
 			if (!form.hasError())
 			{

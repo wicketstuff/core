@@ -38,7 +38,7 @@ import com.googlecode.wicket.jquery.ui.kendo.KendoAbstractBehavior;
 /**
  * Provides a Kendo UI date-picker based on a {@link DateTextField}<br/>
  * This ajax version will post the {@link Component}, using a {@link JQueryAjaxPostBehavior}, when the 'change' javascript method is called.
- * 
+ *
  * @author Sebastien Briquet - sebfz1
  */
 public class AjaxDatePicker extends DatePicker implements IJQueryAjaxAware, IValueChangedListener
@@ -47,7 +47,7 @@ public class AjaxDatePicker extends DatePicker implements IJQueryAjaxAware, IVal
 
 	/**
 	 * Constructor
-	 * 
+	 *
 	 * @param id the markup id
 	 */
 	public AjaxDatePicker(String id)
@@ -57,7 +57,7 @@ public class AjaxDatePicker extends DatePicker implements IJQueryAjaxAware, IVal
 
 	/**
 	 * Constructor
-	 * 
+	 *
 	 * @param id the markup id
 	 * @param options the {@link Options}
 	 */
@@ -68,7 +68,7 @@ public class AjaxDatePicker extends DatePicker implements IJQueryAjaxAware, IVal
 
 	/**
 	 * Constructor
-	 * 
+	 *
 	 * @param id the markup id
 	 * @param pattern a <code>SimpleDateFormat</code> pattern
 	 */
@@ -79,7 +79,7 @@ public class AjaxDatePicker extends DatePicker implements IJQueryAjaxAware, IVal
 
 	/**
 	 * Main constructor
-	 * 
+	 *
 	 * @param id the markup id
 	 * @param pattern a <code>SimpleDateFormat</code> pattern
 	 * @param options the {@link Options}
@@ -91,7 +91,7 @@ public class AjaxDatePicker extends DatePicker implements IJQueryAjaxAware, IVal
 
 	/**
 	 * Constructor, which use {@link Locale} and Kengo UI Globalization
-	 * 
+	 *
 	 * @param id the markup id
 	 * @param locale the {@link Locale}
 	 */
@@ -102,7 +102,7 @@ public class AjaxDatePicker extends DatePicker implements IJQueryAjaxAware, IVal
 
 	/**
 	 * Constructor, which use {@link Locale} and Kengo UI Globalization
-	 * 
+	 *
 	 * @param id the markup id
 	 * @param locale the {@link Locale}
 	 * @param options the {@link Options}
@@ -114,7 +114,7 @@ public class AjaxDatePicker extends DatePicker implements IJQueryAjaxAware, IVal
 
 	/**
 	 * Constructor
-	 * 
+	 *
 	 * @param id the markup id
 	 * @param model the {@link IModel}
 	 */
@@ -125,7 +125,7 @@ public class AjaxDatePicker extends DatePicker implements IJQueryAjaxAware, IVal
 
 	/**
 	 * Constructor
-	 * 
+	 *
 	 * @param id the markup id
 	 * @param model the {@link IModel}
 	 * @param options {@link Options}
@@ -137,7 +137,7 @@ public class AjaxDatePicker extends DatePicker implements IJQueryAjaxAware, IVal
 
 	/**
 	 * Constructor
-	 * 
+	 *
 	 * @param id the markup id
 	 * @param model the {@link IModel}
 	 * @param pattern a <code>SimpleDateFormat</code> pattern
@@ -149,7 +149,7 @@ public class AjaxDatePicker extends DatePicker implements IJQueryAjaxAware, IVal
 
 	/**
 	 * Main constructor
-	 * 
+	 *
 	 * @param id the markup id
 	 * @param model the {@link IModel}
 	 * @param pattern a <code>SimpleDateFormat</code> pattern
@@ -162,7 +162,7 @@ public class AjaxDatePicker extends DatePicker implements IJQueryAjaxAware, IVal
 
 	/**
 	 * Constructor, which use {@link Locale} and Kengo UI Globalization
-	 * 
+	 *
 	 * @param id the markup id
 	 * @param model the {@link IModel}
 	 * @param locale the {@link Locale}
@@ -174,7 +174,7 @@ public class AjaxDatePicker extends DatePicker implements IJQueryAjaxAware, IVal
 
 	/**
 	 * Constructor, which use {@link Locale} and Kengo UI Globalization
-	 * 
+	 *
 	 * @param id the markup id
 	 * @param model the {@link IModel}
 	 * @param locale the {@link Locale}
@@ -187,8 +187,7 @@ public class AjaxDatePicker extends DatePicker implements IJQueryAjaxAware, IVal
 
 	// Events //
 	/**
-	 * {@inheritDoc}
-	 * <br/>
+	 * {@inheritDoc} <br/>
 	 * <i>Not intended to be overridden</i>
 	 */
 	@Override
@@ -230,7 +229,7 @@ public class AjaxDatePicker extends DatePicker implements IJQueryAjaxAware, IVal
 
 		/**
 		 * Constructor
-		 * 
+		 *
 		 * @param selector the html selector (ie: "#myId")
 		 */
 		public DatePickerBehavior(String selector)
@@ -240,7 +239,7 @@ public class AjaxDatePicker extends DatePicker implements IJQueryAjaxAware, IVal
 
 		/**
 		 * Constructor
-		 * 
+		 *
 		 * @param selector the html selector (ie: "#myId")
 		 * @param options the {@link Options}
 		 */
@@ -280,13 +279,13 @@ public class AjaxDatePicker extends DatePicker implements IJQueryAjaxAware, IVal
 		// Factories //
 		/**
 		 * Gets a new {@link JQueryAjaxPostBehavior} that will be called on 'change' javascript method
-		 * @param component 
-		 * 
+		 *
+		 * @param component the bound {@link Component}
 		 * @return the {@link JQueryAjaxPostBehavior}, typically a {@link OnChangeBehavior}
 		 */
 		protected JQueryAjaxPostBehavior newOnChangeBehavior(FormComponent<?> component)
 		{
 			return new OnChangeBehavior(this, component);
 		}
-	}	
+	}
 }

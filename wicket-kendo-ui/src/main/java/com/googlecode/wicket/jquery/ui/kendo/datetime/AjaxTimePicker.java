@@ -37,7 +37,7 @@ import com.googlecode.wicket.jquery.ui.kendo.KendoAbstractBehavior;
 /**
  * Provides a Kendo UI time-picker<br/>
  * This ajax version will post the {@link Component}, using a {@link JQueryAjaxPostBehavior}, when the 'change' javascript method is called.
- * 
+ *
  * @author Sebastien Briquet - sebfz1
  */
 public class AjaxTimePicker extends TimePicker implements IJQueryAjaxAware, IValueChangedListener
@@ -46,7 +46,7 @@ public class AjaxTimePicker extends TimePicker implements IJQueryAjaxAware, IVal
 
 	/**
 	 * Constructor
-	 * 
+	 *
 	 * @param id the markup id
 	 */
 	public AjaxTimePicker(String id)
@@ -56,7 +56,7 @@ public class AjaxTimePicker extends TimePicker implements IJQueryAjaxAware, IVal
 
 	/**
 	 * Constructor
-	 * 
+	 *
 	 * @param id the markup id
 	 * @param options the {@link Options}
 	 */
@@ -67,7 +67,7 @@ public class AjaxTimePicker extends TimePicker implements IJQueryAjaxAware, IVal
 
 	/**
 	 * Constructor
-	 * 
+	 *
 	 * @param id the markup id
 	 * @param pattern a <code>SimpleDateFormat</code> pattern
 	 */
@@ -78,7 +78,7 @@ public class AjaxTimePicker extends TimePicker implements IJQueryAjaxAware, IVal
 
 	/**
 	 * Main constructor
-	 * 
+	 *
 	 * @param id the markup id
 	 * @param pattern a <code>SimpleDateFormat</code> pattern
 	 * @param options the {@link Options}
@@ -90,7 +90,7 @@ public class AjaxTimePicker extends TimePicker implements IJQueryAjaxAware, IVal
 
 	/**
 	 * Constructor, which use {@link Locale} and Kengo UI Globalization
-	 * 
+	 *
 	 * @param id the markup id
 	 * @param locale the {@link Locale}
 	 */
@@ -101,7 +101,7 @@ public class AjaxTimePicker extends TimePicker implements IJQueryAjaxAware, IVal
 
 	/**
 	 * Constructor, which use {@link Locale} and Kengo UI Globalization
-	 * 
+	 *
 	 * @param id the markup id
 	 * @param locale the {@link Locale}
 	 * @param options the {@link Options}
@@ -113,7 +113,7 @@ public class AjaxTimePicker extends TimePicker implements IJQueryAjaxAware, IVal
 
 	/**
 	 * Constructor
-	 * 
+	 *
 	 * @param id the markup id
 	 * @param model the {@link IModel}
 	 */
@@ -124,7 +124,7 @@ public class AjaxTimePicker extends TimePicker implements IJQueryAjaxAware, IVal
 
 	/**
 	 * Constructor
-	 * 
+	 *
 	 * @param id the markup id
 	 * @param model the {@link IModel}
 	 * @param options {@link Options}
@@ -136,7 +136,7 @@ public class AjaxTimePicker extends TimePicker implements IJQueryAjaxAware, IVal
 
 	/**
 	 * Constructor
-	 * 
+	 *
 	 * @param id the markup id
 	 * @param model the {@link IModel}
 	 * @param pattern a <code>SimpleDateFormat</code> pattern
@@ -148,7 +148,7 @@ public class AjaxTimePicker extends TimePicker implements IJQueryAjaxAware, IVal
 
 	/**
 	 * Main constructor
-	 * 
+	 *
 	 * @param id the markup id
 	 * @param model the {@link IModel}
 	 * @param pattern a <code>SimpleDateFormat</code> pattern
@@ -161,7 +161,7 @@ public class AjaxTimePicker extends TimePicker implements IJQueryAjaxAware, IVal
 
 	/**
 	 * Constructor, which use {@link Locale} and Kengo UI Globalization
-	 * 
+	 *
 	 * @param id the markup id
 	 * @param model the {@link IModel}
 	 * @param locale the {@link Locale}
@@ -173,7 +173,7 @@ public class AjaxTimePicker extends TimePicker implements IJQueryAjaxAware, IVal
 
 	/**
 	 * Constructor, which use {@link Locale} and Kengo UI Globalization
-	 * 
+	 *
 	 * @param id the markup id
 	 * @param model the {@link IModel}
 	 * @param locale the {@link Locale}
@@ -186,8 +186,7 @@ public class AjaxTimePicker extends TimePicker implements IJQueryAjaxAware, IVal
 
 	// Events //
 	/**
-	 * {@inheritDoc}
-	 * <br/>
+	 * {@inheritDoc} <br/>
 	 * <i>Not intended to be overridden</i>
 	 */
 	@Override
@@ -229,7 +228,7 @@ public class AjaxTimePicker extends TimePicker implements IJQueryAjaxAware, IVal
 
 		/**
 		 * Constructor
-		 * 
+		 *
 		 * @param selector the html selector (ie: "#myId")
 		 */
 		public TimePickerBehavior(String selector)
@@ -239,7 +238,7 @@ public class AjaxTimePicker extends TimePicker implements IJQueryAjaxAware, IVal
 
 		/**
 		 * Constructor
-		 * 
+		 *
 		 * @param selector the html selector (ie: "#myId")
 		 * @param options the {@link Options}
 		 */
@@ -279,7 +278,8 @@ public class AjaxTimePicker extends TimePicker implements IJQueryAjaxAware, IVal
 		// Factories //
 		/**
 		 * Gets a new {@link JQueryAjaxPostBehavior} that will be called on 'change' javascript method
-		 * 
+		 *
+		 * @param component the bound {@link Component}
 		 * @return the {@link JQueryAjaxPostBehavior}, typically a {@link OnChangeBehavior}
 		 */
 		protected JQueryAjaxPostBehavior newOnChangeBehavior(FormComponent<?> component)
