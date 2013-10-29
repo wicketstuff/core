@@ -51,7 +51,7 @@ public class SfMenuItem extends AbstractSfMenuItem
 	/**
 	 * Constructor
 	 *
-	 * @param title IModel that represent the title of the menu-item
+	 * @param title IModel that represents the title of the menu-item
 	 * @param pageClass the class of the page to redirect to, when menu-item is clicked
 	 */
 	public SfMenuItem(IModel<String> title, Class<? extends WebPage> pageClass)
@@ -76,7 +76,7 @@ public class SfMenuItem extends AbstractSfMenuItem
 	/**
 	 * Constructor
 	 *
-	 * @param title IModel that represent the title of the menu-item
+	 * @param title IModel that represents the title of the menu-item
 	 * @param items the sub-menu items
 	 */
 	public SfMenuItem(IModel<String> title, List<ISfMenuItem> items)
@@ -102,7 +102,7 @@ public class SfMenuItem extends AbstractSfMenuItem
 	/**
 	 * Constructor
 	 *
-	 * @param title IModel that represent the title of the menu-item
+	 * @param title IModel that represents the title of the menu-item
 	 * @param pageClass the class of the page to redirect to, when menu-item is clicked
 	 * @param items the sub-menu items
 	 */
@@ -111,6 +111,54 @@ public class SfMenuItem extends AbstractSfMenuItem
 		super(title, pageClass);
 
 		this.items = items;
+	}
+
+	/**
+	 * Contstructor
+	 * 
+	 * @param title title of the menu-item
+	 * @param pageUrl the url of the page to redirect to when menu-item is clicked
+	 */
+	public SfMenuItem(String title, String pageUrl)
+	{
+		this(Model.of(title), pageUrl, false);
+	}
+
+	/**
+	 * Contstructor
+	 * 
+	 * @param title IModel that represents the title of the menu-item
+	 * @param pageUrl the url of the page to redirect to when menu-item is clicked
+	 */
+	public SfMenuItem(Model<String> title, String pageUrl)
+	{
+		this(title, pageUrl, false);
+	}
+	
+	/**
+	 * Contstructor
+	 * 
+	 * @param title title of the menu-item
+	 * @param pageUrl the url of the page to redirect to when menu-item is clicked
+	 * @param openInNewWindow whether the page is opened in a new window
+	 */
+	public SfMenuItem(String title, String pageUrl, boolean openInNewWindow)
+	{
+		this(Model.of(title), pageUrl, openInNewWindow);
+	}
+	
+	/**
+	 * Contstructor
+	 * 
+	 * @param title IModel that represents the title of the menu-item
+	 * @param pageUrl the url of the page to redirect to when menu-item is clicked
+	 * @param openInNewWindow whether the page is opened in a new window
+	 */
+	public SfMenuItem(IModel<String> title, String pageUrl, boolean openInNewWindow)
+	{
+		super(title, pageUrl, openInNewWindow);
+		
+		this.items = new ArrayList<ISfMenuItem>();
 	}
 
 	// Properties //

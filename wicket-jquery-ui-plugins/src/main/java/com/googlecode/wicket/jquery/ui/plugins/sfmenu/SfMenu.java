@@ -222,6 +222,11 @@ public class SfMenu extends JQueryPanel
 					{
 						return urlFor(item.getPageClass(), getPage().getPageParameters());
 					}
+					
+					if (item.getPageUrl() != null && !item.getPageUrl().isEmpty())
+					{
+						return item.getPageUrl();
+					}
 
 					return "javascript:;";
 				}
@@ -233,6 +238,10 @@ public class SfMenu extends JQueryPanel
 				}
 			};
 
+			if(item.isOpenInNewWindow())
+			{
+				itemLink.add(new AttributeModifier("target", "_blank"));
+			}
 			itemLink.add(new Label("title", item.getTitle()));
 			this.add(itemLink);
 		}

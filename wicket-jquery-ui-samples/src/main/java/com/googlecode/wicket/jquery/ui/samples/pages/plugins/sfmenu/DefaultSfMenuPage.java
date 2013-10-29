@@ -25,7 +25,7 @@ public class DefaultSfMenuPage extends AbstractSfMenuPage
 
 		list.add(new SfMenuItem("Home", HomePage.class));
 		list.add(new SfMenuItem("Widgets", widgetSubMenuList()));
-		list.add(new SfMenuItem("Another Way Home", HomePage.class));
+		list.add(new SfMenuItem("External Links", externalPagesList()));
 		list.add(new SfMenuItem("Menu item, with sub-menu", newSubMenuList()));
 		list.add(new SfMenuItem("Kendo Editor", DefaultEditorPage.class));
 
@@ -53,6 +53,16 @@ public class DefaultSfMenuPage extends AbstractSfMenuPage
 		list.add(new SfMenuItem("Button", DefaultButtonPage.class));
 		list.add(new SfMenuItem("Datepicker", DefaultDatePickerPage.class));
 
+		return list;
+	}
+	
+	static List<ISfMenuItem> externalPagesList()
+	{
+		List<ISfMenuItem> list = new ArrayList<ISfMenuItem>();
+		
+		list.add(new SfMenuItem("External Link to Google (new Window)", "http://www.google.com/", true));
+		list.add(new SfMenuItem("External Link to Yahoo (this Window)", "http://www.yahoo.com/"));
+		
 		return list;
 	}
 

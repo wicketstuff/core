@@ -37,8 +37,9 @@ public abstract class AbstractSfMenuItem implements ISfMenuItem
 
 	private IModel<String> title;
 	private boolean enabled = true;
-
+	private boolean openInNewWindow = false;
 	private final ClassReference<? extends Page> pageClassReference;
+	private final String pageUrl; 
 
 	/**
 	 * Constructor
@@ -49,13 +50,14 @@ public abstract class AbstractSfMenuItem implements ISfMenuItem
 	{
 		this.title = title;
 		this.pageClassReference = null;
+		this.pageUrl = null;
 	}
 
 	/**
 	 * Constructor
 	 *
 	 * @param title {@link IModel} that represent the title of the menu-item
-	 * @param pageClass the class of the page to redirect to, when menu-item is clicked
+	 * @param pageClass the class of the page to redirect to when menu-item is clicked
 	 */
 	public AbstractSfMenuItem(IModel<String> title, Class<? extends Page> pageClass)
 	{
@@ -63,6 +65,35 @@ public abstract class AbstractSfMenuItem implements ISfMenuItem
 
 		this.title = title;
 		this.pageClassReference = ClassReference.of(pageClass);
+		this.pageUrl = null;
+	}
+	
+	/**
+	 * Construtor
+	 * 
+	 * @param title {@link IModel} that represent the title of the menu-item
+	 * @param pageUrl the url of the page to redirect to when menu-item is clicked
+	 */
+	public AbstractSfMenuItem(IModel<String> title, String pageUrl)
+	{
+		this.title = title;
+		this.pageClassReference = null;
+		this.pageUrl = pageUrl;
+	}
+	
+	/**
+	 * Construtor
+	 * 
+	 * @param title {@link IModel} that represent the title of the menu-item
+	 * @param pageUrl the url of the page to redirect to when menu-item is clicked
+	 * @param openInNewWindow whether the page is opened in a new window
+	 */
+	public AbstractSfMenuItem(IModel<String> title, String pageUrl, boolean openInNewWindow)
+	{
+		this.title = title;
+		this.pageClassReference = null;
+		this.pageUrl = pageUrl;
+		this.openInNewWindow = openInNewWindow;
 	}
 
 	@Override
@@ -92,9 +123,15 @@ public abstract class AbstractSfMenuItem implements ISfMenuItem
 	{
 		return this.enabled;
 	}
+	
+	@Override
+	public boolean isOpenInNewWindow()
+	{
+		return this.openInNewWindow;
+	}
 
 	/**
-	 * Indicated whether the menu-item is enabled
+	 * Set whether the menu-item is enabled
 	 *
 	 * @param enabled
 	 */
@@ -102,8 +139,18 @@ public abstract class AbstractSfMenuItem implements ISfMenuItem
 	{
 		this.enabled = enabled;
 	}
+	
+	/**
+	 * Set whether a page is opened in a new window
+	 * 
+	 * @param openInNewWindow
+	 */
+	public void setOpenInNewWindow(boolean openInNewWindow)
+	{
+		this.openInNewWindow = openInNewWindow;
+	}
 
-	/***
+	/**
 	 * Get the page class registered with the link
 	 *
 	 * @return the page class
@@ -117,5 +164,16 @@ public abstract class AbstractSfMenuItem implements ISfMenuItem
 		}
 
 		return null;
+	}
+	
+	/**
+	 * Get the url for a page. In most cases this will
+	 * be an url for an external page. 
+	 * 
+	 * @return url of the page
+	 */
+	public String getPageUrl()
+	{
+		return pageUrl;
 	}
 }
