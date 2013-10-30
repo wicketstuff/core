@@ -175,7 +175,7 @@ As you can see in the code above, the syntax to write a regular expression is _{
 
 Validation
 ---------
-Class `AbstractRestResource` offers validation support through standard Wicket validators (i.e. implementations of interface `IValidator`). With method `registerValidator` we can "register" a specific validator providing it with a unique key:  
+Class `AbstractRestResource` offers validation support through standard Wicket validators (i.e. implementations of interface `IValidator`). With method `registerValidator` we can "register" a specific validator assigning a unique key:  
 
 ````java
 	@Override
@@ -187,7 +187,17 @@ Class `AbstractRestResource` offers validation support through standard Wicket v
 	}
 ````
 
+Once a validator is registered we can use annotation `ValidatorKey` to bind it to a specific method parameter:
 
+````java
+	//applay standard EmailAddressValidator to email parameter
+	@MethodMapping(value = "/emailvalidator", produces = RestMimeTypes.TEXT_PLAIN)
+	public String testEmailValidator(
+		@RequestParam("email") **@ValidatorKey("emailvalidator")** String email)
+	{
+		return email;
+	}
+````
 
 Hook methods
 ---------
