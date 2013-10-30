@@ -73,7 +73,6 @@ function WicketMap(id, failSilently) {
         this.map = new google.maps.Map(Wicket.$(id));
     } catch (e) {
         if(!failSilently) {
-            alert(failSilently);
             throw e;
         }
     }
