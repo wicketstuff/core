@@ -190,16 +190,18 @@ Class `AbstractRestResource` offers validation support through standard Wicket v
 Once a validator is registered we can use annotation `ValidatorKey` to bind it to a specific method parameter:
 
 ````java
-	//applay standard EmailAddressValidator to email parameter
+	//applay standard EmailAddressValidator to email parameter with annotation @ValidatorKey
 	@MethodMapping(value = "/emailvalidator", produces = RestMimeTypes.TEXT_PLAIN)
 	public String testEmailValidator(
-		@RequestParam("email") **@ValidatorKey("emailvalidator")** String email)
+		@RequestParam("email") @ValidatorKey("emailvalidator") String email)
 	{
 		return email;
 	}
 ````
 
-Hook methods
+To handle validators 
+
+Hook methods `AbstractRestResource` provides method `unregisterValidator(String key)` to unregister a validator and method `getValidator(String key)` to retrieve a registered validator. 
 ---------
 To customize the configuration and the behavior of our resource, the following hook methods are provided:
 
