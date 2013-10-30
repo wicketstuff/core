@@ -203,7 +203,7 @@ To handle validators `AbstractRestResource` provides method `unregisterValidator
 
 ### Localization ###
 
-Class `AbstractRestResource` uses the standard bundle lookup algorithm that comes with Wicket to resolve validation errors messages. More in detail, messages are resokved using the implementations of `IStringResourceLoader` registered 
+Class `AbstractRestResource` uses the standard bundle lookup algorithm that comes with Wicket to resolve validation errors messages. More in detail, messages are resolved using the implementations of `IStringResourceLoader` registered 
 for the current Application (see the code of class `DefaultBundleResolver` for more details). This means that we can use class-specific bundles to contain the messages for our rest resource. In the main module `restannotations` you can find 
 example resource `RestResourceFullAnnotated` with its properties file that overrides standard message for standard validator `EmailAddressValidator`.
 
