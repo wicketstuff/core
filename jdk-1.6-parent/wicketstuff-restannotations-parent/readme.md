@@ -199,9 +199,9 @@ Once a validator is registered we can use annotation `ValidatorKey` to bind it t
 	}
 ````
 
-To handle validators 
+To handle validators `AbstractRestResource` provides method `unregisterValidator(String key)` to unregister a validator and method `getValidator(String key)` to retrieve a registered validator.  
 
-Hook methods `AbstractRestResource` provides method `unregisterValidator(String key)` to unregister a validator and method `getValidator(String key)` to retrieve a registered validator. 
+Hook methods
 ---------
 To customize the configuration and the behavior of our resource, the following hook methods are provided:
 
