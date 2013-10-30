@@ -41,6 +41,29 @@ public class SfMenuItem extends AbstractSfMenuItem
 	 * Constructor
 	 *
 	 * @param title the title of the menu-item
+	 */
+	public SfMenuItem(String title)
+	{
+		this(Model.of(title));
+	}
+
+	/**
+	 * Constructor
+	 *
+	 * @param title IModel that represents the title of the menu-item
+	 * @param pageClass the class of the page to redirect to, when menu-item is clicked
+	 */
+	public SfMenuItem(IModel<String> title)
+	{
+		super(title);
+
+		this.items = new ArrayList<ISfMenuItem>();
+	}
+
+	/**
+	 * Constructor
+	 *
+	 * @param title the title of the menu-item
 	 * @param pageClass the class of the page to redirect to, when menu-item is clicked
 	 */
 	public SfMenuItem(String title, Class<? extends WebPage> pageClass)
