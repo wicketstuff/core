@@ -201,6 +201,12 @@ Once a validator is registered we can use annotation `ValidatorKey` to bind it t
 
 To handle validators `AbstractRestResource` provides method `unregisterValidator(String key)` to unregister a validator and method `getValidator(String key)` to retrieve a registered validator.  
 
+### Localization ###
+
+Class `AbstractRestResource` uses the standard bundle lookup algorithm that comes with Wicket to resolve validation errors messages. More in detail, messages are resokved using the implementations of `IStringResourceLoader` registered 
+for the current Application (see the code of class `DefaultBundleResolver` for more details). This means that we can use class-specific bundles to contain the messages for our rest resource. In the main module `restannotations` you can find 
+example resource `RestResourceFullAnnotated` with its properties file that overrides standard message for standard validator `EmailAddressValidator`.
+
 Hook methods
 ---------
 To customize the configuration and the behavior of our resource, the following hook methods are provided:
