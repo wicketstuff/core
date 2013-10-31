@@ -65,4 +65,12 @@ public interface IWebSerialDeserial
 	 * @return true if the MIME type is supported, false otherwise.
 	 */
 	public boolean isMimeTypeSupported(String mimeType);
+	
+	/**
+	 * 
+	 * 
+	 * @param mimeType
+	 * @return
+	 */
+	public <T> IObjectSerialDeserial<T> getIObjectSerialDeserial(String mimeType);
 }

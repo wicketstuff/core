@@ -14,7 +14,7 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-package org.wicketstuff.rest.utils.wicket;
+package org.wicketstuff.rest.utils.wicket.bundle;
 
 import java.util.Locale;
 import java.util.Map;

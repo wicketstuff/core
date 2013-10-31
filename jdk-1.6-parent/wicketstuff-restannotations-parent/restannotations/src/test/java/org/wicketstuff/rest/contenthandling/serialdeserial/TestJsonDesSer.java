@@ -16,6 +16,7 @@
  */
 package org.wicketstuff.rest.contenthandling.serialdeserial;
 
+import org.apache.wicket.ajax.json.JSONObject;
 import org.wicketstuff.rest.contenthandling.RestMimeTypes;
 import org.wicketstuff.rest.resource.RestResourceFullAnnotated;
 
@@ -33,13 +34,15 @@ public class TestJsonDesSer extends TextualObjectSerialDeserial
 
 	static public String getJSON()
 	{
-		return "{\"name\" : \"Mary\", \"surname\" : \"Smith\", \"email\" : \"m.smith@gmail.com\"}";
+		return "{\"email\":\"m.smith@gmail.com\",\"name\":\"Mary\",\"surname\":\"Smith\"}";
 	}
 
 	@Override
 	public String serializeObject(Object targetObject, String mimeType)
-	{
-		return getJSON();
+	{	
+		JSONObject jsonObject = new JSONObject(targetObject);
+		
+		return jsonObject.toString();	
 	}
 
 	@Override

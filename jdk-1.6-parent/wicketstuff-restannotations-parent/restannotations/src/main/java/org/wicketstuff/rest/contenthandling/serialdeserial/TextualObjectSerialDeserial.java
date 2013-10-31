@@ -108,10 +108,13 @@ public abstract class TextualObjectSerialDeserial implements IWebSerialDeserial,
 	}
 
 	@Override
-	public abstract String serializeObject(Object targetObject, String mimeType);
-
-	@Override
-	public abstract <T> T deserializeObject(String source, Class<T> targetClass, String mimeType);
+	public IObjectSerialDeserial<String> getIObjectSerialDeserial(String mimeType) 
+	{
+		if(!isMimeTypeSupported(mimeType))
+			return null;
+		
+		return this;
+	}
 
 	/**
 	 * Gets the supported charset.
@@ -132,4 +135,5 @@ public abstract class TextualObjectSerialDeserial implements IWebSerialDeserial,
 	{
 		return mimeType;
 	}
+
 }

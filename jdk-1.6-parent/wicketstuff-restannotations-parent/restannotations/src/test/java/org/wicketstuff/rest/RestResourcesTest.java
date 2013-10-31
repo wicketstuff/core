@@ -169,8 +169,8 @@ public class RestResourcesTest
 		testIfResponseStringIsEqual("");
 
 		String errorMessage = tester.getLastResponse().getErrorMessage();
-		assertEquals("The value inserted as email is not valid.", errorMessage);
-
+		Assert.assertTrue(errorMessage.contains("The value inserted as email is not valid."));
+System.out.println(errorMessage);
 		String email = "avalid@mail.com";
 
 		tester.getRequest().setMethod("GET");

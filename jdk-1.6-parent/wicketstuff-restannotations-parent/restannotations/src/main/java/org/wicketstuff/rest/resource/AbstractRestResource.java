@@ -48,15 +48,16 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.wicketstuff.rest.annotations.AuthorizeInvocation;
 import org.wicketstuff.rest.annotations.MethodMapping;
+import org.wicketstuff.rest.contenthandling.IObjectSerialDeserial;
 import org.wicketstuff.rest.contenthandling.IWebSerialDeserial;
-import org.wicketstuff.rest.contenthandling.RestMimeTypes;
 import org.wicketstuff.rest.resource.urlsegments.AbstractURLSegment;
 import org.wicketstuff.rest.utils.http.HttpMethod;
 import org.wicketstuff.rest.utils.http.HttpUtils;
 import org.wicketstuff.rest.utils.reflection.MethodParameter;
 import org.wicketstuff.rest.utils.wicket.AttributesWrapper;
-import org.wicketstuff.rest.utils.wicket.DefaultBundleResolver;
 import org.wicketstuff.rest.utils.wicket.MethodParameterContext;
+import org.wicketstuff.rest.utils.wicket.bundle.DefaultBundleResolver;
+import org.wicketstuff.rest.utils.wicket.validator.RestErrorMessage;
 
 /**
  * Base class to build a resource that serves REST requests.
@@ -64,7 +65,7 @@ import org.wicketstuff.rest.utils.wicket.MethodParameterContext;
  * @author andrea del bene
  * 
  */
-public abstract class AbstractRestResource<T extends IWebSerialDeserial> implements IResource, IWebSerialDeserial
+public abstract class AbstractRestResource<T extends IWebSerialDeserial> implements IResource
 {
 	private static final Logger log = LoggerFactory.getLogger(AbstractRestResource.class);
 
@@ -83,7 +84,7 @@ public abstract class AbstractRestResource<T extends IWebSerialDeserial> impleme
 	 * The implementation of {@link IWebSerialDeserial} that is used to serialize/desiarilze objects
 	 * to/from string (for example to/from JSON)
 	 */
-	private final T objSerialDeserial;
+	private final T webSerialDeserial;
 
 	/** Role-checking strategy. */
 	private final IRoleCheckingStrategy roleCheckingStrategy;
@@ -115,7 +116,7 @@ public abstract class AbstractRestResource<T extends IWebSerialDeserial> impleme
 	{
 		Args.notNull(serialDeserial, "serialDeserial");
 
-		this.objSerialDeserial = serialDeserial;
+		this.webSerialDeserial = serialDeserial;
 		this.roleCheckingStrategy = roleCheckingStrategy;
 		this.mappedMethods = loadAnnotatedMethods();
 
@@ -168,6 +169,7 @@ public abstract class AbstractRestResource<T extends IWebSerialDeserial> impleme
 		WebResponse response = attributesWrapper.getWebResponse();
 		HttpMethod httpMethod = attributesWrapper.getHttpMethod();
 		Attributes attributes = attributesWrapper.getOriginalAttributes();
+		String outputFormat = mappedMethod.getOutputFormat();
 
 		// 1-check if user is authorized to invoke the method
 		if (!isUserAuthorized(mappedMethod.getRoles()))
@@ -193,8 +195,13 @@ public abstract class AbstractRestResource<T extends IWebSerialDeserial> impleme
 		{
 			IValidationError error = validationErrors.get(0);
 			Serializable message = error.getErrorMessage(bundleResolver);
-
-			response.sendError(400, message.toString());
+			RestErrorMessage restErrorMessage = new RestErrorMessage(error, bundleResolver); 
+			
+			IObjectSerialDeserial objSerialDeserial = 
+					webSerialDeserial.getIObjectSerialDeserial(outputFormat);
+			Object serializedObject = objSerialDeserial.serializeObject(restErrorMessage, outputFormat);
+			
+			response.sendError(400,  serializedObject.toString());
 			return;
 		}
 
@@ -206,7 +213,7 @@ public abstract class AbstractRestResource<T extends IWebSerialDeserial> impleme
 		// 5-if the invoked method returns a value, it is written to response
 		if (result != null)
 		{
-			objectToResponse(result, response, mappedMethod.getOutputFormat());
+			objectToResponse(result, response, outputFormat);
 		}
 	}
 
@@ -320,13 +327,12 @@ public abstract class AbstractRestResource<T extends IWebSerialDeserial> impleme
 	 * @param restMimeFormats
 	 * 			  The MIME type to use to serialize data
 	 */
-	@Override
 	public void objectToResponse(Object result, WebResponse response, String mimeType)
 	{
 		try
 		{
 			response.setContentType(mimeType);
-			objSerialDeserial.objectToResponse(result, response, mimeType);
+			webSerialDeserial.objectToResponse(result, response, mimeType);
 		}
 		catch (Exception e)
 		{
@@ -471,8 +477,8 @@ public abstract class AbstractRestResource<T extends IWebSerialDeserial> impleme
 				HttpMethod httpMethod = methodMapped.httpMethod();
 				MethodMappingInfo methodMappingInfo = new MethodMappingInfo(methodMapped, method);
 
-				if (!isMimeTypesSupported(methodMappingInfo.getInputFormat()) ||
-					!isMimeTypesSupported(methodMappingInfo.getOutputFormat()))
+				if (!webSerialDeserial.isMimeTypeSupported(methodMappingInfo.getInputFormat()) ||
+					!webSerialDeserial.isMimeTypeSupported(methodMappingInfo.getOutputFormat()))
 					throw new WicketRuntimeException(
 						"Mapped methods use a MIME type not supported by obj serializer/deserializer!");
 
@@ -507,21 +513,6 @@ public abstract class AbstractRestResource<T extends IWebSerialDeserial> impleme
 		return Collections.unmodifiableMap(listMap);
 	}
 
-	/**
-	 * Checks if the given MIME type is supported by the current obj serial/deserial.
-	 * 
-	 * @param mimeType
-	 *            the MIME type we want to check.
-	 * @return true if the MIME type is supported, false otherwise.
-	 */
-	private boolean isMimeTypesSupported(String mimeType)
-	{
-		if (RestMimeTypes.TEXT_PLAIN.equals(mimeType))
-			return true;
-
-		return objSerialDeserial.isMimeTypeSupported(mimeType);
-	}
-
 	/***
 	 * Invokes one of the resource methods annotated with {@link MethodMapping}.
 	 * 
@@ -539,7 +530,7 @@ public abstract class AbstractRestResource<T extends IWebSerialDeserial> impleme
 		PageParameters pageParameters = attributesWrapper.getPageParameters();
 		LinkedHashMap<String, String> pathParameters = mappedMethod.populatePathParameters(pageParameters);
 		MethodParameterContext parameterContext = new MethodParameterContext(attributesWrapper,
-			pathParameters, this);
+			pathParameters, webSerialDeserial);
 
 		for (MethodParameter methodParameter : mappedMethod.getMethodParameters())
 		{
@@ -600,12 +591,11 @@ public abstract class AbstractRestResource<T extends IWebSerialDeserial> impleme
 	 *            the type we want to extract from request body.
 	 * @return the extracted object.
 	 */
-	@Override
 	public <T> T requestToObject(WebRequest request, Class<T> argClass, String mimeType)
 	{
 		try
 		{
-			return objSerialDeserial.requestToObject(request, argClass, mimeType);
+			return webSerialDeserial.requestToObject(request, argClass, mimeType);
 		}
 		catch (Exception e)
 		{
@@ -669,12 +659,7 @@ public abstract class AbstractRestResource<T extends IWebSerialDeserial> impleme
 	{
 		return (WebResponse)RequestCycle.get().getResponse();
 	}
-	
-	@Override
-	public boolean isMimeTypeSupported(String mimeType)
-	{
-		return objSerialDeserial.isMimeTypeSupported(mimeType);
-	}
+
 	/**
 	 * Set the status code for the current response.
 	 * 
