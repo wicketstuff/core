@@ -29,6 +29,7 @@ import org.apache.wicket.model.Model;
  *
  * @author Ludger Kluitmann - JavaLuigi
  * @author Sebastien Briquet - sebfz1
+ * @since 6.12.0
  */
 public class SfMenuItem extends AbstractSfMenuItem
 {
@@ -51,7 +52,6 @@ public class SfMenuItem extends AbstractSfMenuItem
 	 * Constructor
 	 *
 	 * @param title IModel that represents the title of the menu-item
-	 * @param pageClass the class of the page to redirect to, when menu-item is clicked
 	 */
 	public SfMenuItem(IModel<String> title)
 	{
@@ -137,8 +137,8 @@ public class SfMenuItem extends AbstractSfMenuItem
 	}
 
 	/**
-	 * Contstructor
-	 * 
+	 * Constructor
+	 *
 	 * @param title title of the menu-item
 	 * @param pageUrl the url of the page to redirect to when menu-item is clicked
 	 */
@@ -148,8 +148,8 @@ public class SfMenuItem extends AbstractSfMenuItem
 	}
 
 	/**
-	 * Contstructor
-	 * 
+	 * Constructor
+	 *
 	 * @param title IModel that represents the title of the menu-item
 	 * @param pageUrl the url of the page to redirect to when menu-item is clicked
 	 */
@@ -157,10 +157,10 @@ public class SfMenuItem extends AbstractSfMenuItem
 	{
 		this(title, pageUrl, false);
 	}
-	
+
 	/**
-	 * Contstructor
-	 * 
+	 * Constructor
+	 *
 	 * @param title title of the menu-item
 	 * @param pageUrl the url of the page to redirect to when menu-item is clicked
 	 * @param openInNewWindow whether the page is opened in a new window
@@ -169,10 +169,10 @@ public class SfMenuItem extends AbstractSfMenuItem
 	{
 		this(Model.of(title), pageUrl, openInNewWindow);
 	}
-	
+
 	/**
-	 * Contstructor
-	 * 
+	 * Constructor
+	 *
 	 * @param title IModel that represents the title of the menu-item
 	 * @param pageUrl the url of the page to redirect to when menu-item is clicked
 	 * @param openInNewWindow whether the page is opened in a new window
@@ -180,7 +180,7 @@ public class SfMenuItem extends AbstractSfMenuItem
 	public SfMenuItem(IModel<String> title, String pageUrl, boolean openInNewWindow)
 	{
 		super(title, pageUrl, openInNewWindow);
-		
+
 		this.items = new ArrayList<ISfMenuItem>();
 	}
 
@@ -204,5 +204,4 @@ public class SfMenuItem extends AbstractSfMenuItem
 	{
 		return this.items.add(item);
 	}
-
 }

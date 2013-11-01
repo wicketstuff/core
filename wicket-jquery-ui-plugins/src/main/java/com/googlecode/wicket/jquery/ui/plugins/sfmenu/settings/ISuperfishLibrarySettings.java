@@ -53,7 +53,7 @@ import org.apache.wicket.settings.IJavaScriptLibrarySettings;
  * </code></pre>
  *
  * @author Ludger Kluitmann - JavaLuigi
- *
+ * @since 6.12.0
  */
 public interface ISuperfishLibrarySettings extends IJavaScriptLibrarySettings
 {

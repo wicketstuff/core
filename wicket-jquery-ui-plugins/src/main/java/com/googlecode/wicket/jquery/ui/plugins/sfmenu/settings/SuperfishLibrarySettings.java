@@ -26,7 +26,7 @@ import com.googlecode.wicket.jquery.ui.plugins.sfmenu.resource.SuperfishVertical
  * Default implementation of {@link ISuperfishLibrarySettings}.<br/>
  *
  * @author Ludger Kluitmann - JavaLuigi
- *
+ * @since 6.12.0
  */
 public class SuperfishLibrarySettings extends JavaScriptLibrarySettings implements ISuperfishLibrarySettings
 {

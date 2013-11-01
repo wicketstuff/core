@@ -27,6 +27,7 @@ import org.apache.wicket.markup.html.list.ListView;
 import org.apache.wicket.markup.html.panel.EmptyPanel;
 import org.apache.wicket.markup.html.panel.Fragment;
 import org.apache.wicket.util.lang.Args;
+import org.apache.wicket.util.string.Strings;
 
 import com.googlecode.wicket.jquery.core.JQueryBehavior;
 import com.googlecode.wicket.jquery.core.JQueryPanel;
@@ -222,8 +223,8 @@ public class SfMenu extends JQueryPanel
 					{
 						return urlFor(item.getPageClass(), getPage().getPageParameters());
 					}
-					
-					if (item.getPageUrl() != null && !item.getPageUrl().isEmpty())
+
+					if (!Strings.isEmpty(item.getPageUrl()))
 					{
 						return item.getPageUrl();
 					}
