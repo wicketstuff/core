@@ -25,7 +25,7 @@ import com.googlecode.wicket.jquery.core.JQueryAbstractBehavior;
  * Provides a jquery position behavior
  *
  * @author Sebastien Briquet - sebfz1
- *
+ * @since 6.11.0
  */
 public class PositionBehavior extends JQueryAbstractBehavior
 {

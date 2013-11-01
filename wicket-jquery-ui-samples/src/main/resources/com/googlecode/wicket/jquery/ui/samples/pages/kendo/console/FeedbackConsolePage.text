@@ -3,7 +3,7 @@ For this reason, the style is not part of the Kendo UI's theme. It can however b
 
 <br/>
 <h4>Tip</h4>
-In order to get *only* new feedback messages (ie: not keeping the history), <code>#clear()</code> should be called in <code>#onConfigure</code> and the console should be refreshed using <code>target.add(console)</code> (rather than <code>console.add(target)</code>) 
+In order to get <i>only</i> new feedback messages (ie: not keeping the history), <code>#clear()</code> should be called in <code>#onConfigure</code> and the console should be refreshed using <code>target.add(console)</code> (rather than <code>console.add(target)</code>) 
 <pre>
 	final FeedbackConsole console = new FeedbackConsole("console") {
 	
@@ -14,7 +14,7 @@ In order to get *only* new feedback messages (ie: not keeping the history), <cod
 		{
 			super.onConfigure();
 	
-			this.clear(); //TODO: to put in description
+			this.clear();
 		}
 	};
 	
@@ -32,4 +32,4 @@ More info here: <a href="http://www.bitstorm.org/jquery/license.html">http://www
 
 <br/>
 <h4>Since</h4>
-wicket-jquery-ui-kendo-6.12.0-SNAPSHOT
+wicket-jquery-ui-kendo-6.12.0
