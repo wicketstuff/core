@@ -34,11 +34,13 @@ interface ICalendarListener
 	 * If true, the {@link #onEventClick(AjaxRequestTarget, CalendarView, int)} event and {@link #onDayClick(AjaxRequestTarget, CalendarView, Date, boolean)} event will be triggered<br/>
 	 *
 	 * @return false by default
+	 * @deprecated will be removed in next version. Use {@link #isDayClickEnabled()} and/or {@link #isEventClickEnabled()} instead
 	 */
+	@Deprecated
 	boolean isEditable();
 
 	/**
-	 * Indicated whether a cell can be selected.<br />
+	 * Indicates whether a cell can be selected.<br/>
 	 * If true, the {@link #onSelect(AjaxRequestTarget, CalendarView, Date, Date, boolean)} event will be triggered
 	 *
 	 * @return false by default
@@ -46,16 +48,41 @@ interface ICalendarListener
 	boolean isSelectable();
 
 	/**
-	 * Indicates whether the event can be dragged &#38; dropped.
-	 * If true, the {@link #onEventDrop(AjaxRequestTarget, int, long, boolean)} event will be triggered
+	 * Indicates whether a day can be clicked.<br/>
+	 * If true, the {@link #onDayClick(AjaxRequestTarget, CalendarView, Date, boolean)} event will be triggered<br/>
+	 * <b>Note:</b> <tt>true</tt> will enable the global 'editable' option to <tt>true</tt>.
+	 *
+	 * @return false by default
+	 * @see CalendarEvent#setEditable(Boolean)
+	 */
+	boolean isDayClickEnabled();
+
+	/**
+	 * Indicates whether an event can be clicked.<br/>
+	 * If true, the {@link #onEventClick(AjaxRequestTarget, CalendarView, int)} event will be triggered<br/>
+	 * <b>Note:</b> <tt>true</tt> will enable the global 'editable' option to <tt>true</tt>.
+	 *
+	 * @return false by default
+	 * @see CalendarEvent#setEditable(Boolean)
+	 */
+	boolean isEventClickEnabled();
+
+	/**
+	 * Indicates whether the {@link #onObjectDrop(AjaxRequestTarget, String, Date, boolean)} event will be triggered
+	 *
+	 * @return false by default
+	 */
+	boolean isObjectDropEnabled();
+
+	/**
+	 * Indicates whether the event can be dragged &#38; dropped. If true, the {@link #onEventDrop(AjaxRequestTarget, int, long, boolean)} event will be triggered
 	 *
 	 * @return false by default
 	 */
 	boolean isEventDropEnabled();
 
 	/**
-	 * Indicates whether the event can be resized.
-	 * If true, the {@link #onEventResize(AjaxRequestTarget, int, long)} event will be triggered
+	 * Indicates whether the event can be resized. If true, the {@link #onEventResize(AjaxRequestTarget, int, long)} event will be triggered
 	 *
 	 * @return false by default
 	 */
@@ -67,7 +94,6 @@ interface ICalendarListener
 	 * @return false by default
 	 */
 	boolean isViewRenderEnabled();
-
 
 	/**
 	 * Triggered when an cell is selected.<br/>
@@ -83,6 +109,7 @@ interface ICalendarListener
 
 	/**
 	 * Triggered when a calendar day is clicked
+	 *
 	 * @param target the {@link AjaxRequestTarget}
 	 * @param view the current calendar view
 	 * @param date the day
@@ -122,8 +149,17 @@ interface ICalendarListener
 	void onEventResize(AjaxRequestTarget target, int eventId, long delta);
 
 	/**
-	 * Triggered when the calendar loads and every time a different date-range is displayed.
-	 * {@link #isViewRenderEnabled()} should return true for this event to be triggered.
+	 * Triggered when an event-object is dropped
+	 *
+	 * @param target the {@link AjaxRequestTarget}
+	 * @param title the title
+	 * @param date the day
+	 * @param allDay the event all-day property
+	 */
+	void onObjectDrop(AjaxRequestTarget target, String title, Date date, boolean allDay);
+
+	/**
+	 * Triggered when the calendar loads and every time a different date-range is displayed. {@link #isViewRenderEnabled()} should return true for this event to be triggered.
 	 *
 	 * @param target the {@link AjaxRequestTarget}
 	 * @param view the current calendar view

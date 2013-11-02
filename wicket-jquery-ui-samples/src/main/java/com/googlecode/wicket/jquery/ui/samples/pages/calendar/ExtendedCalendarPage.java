@@ -74,6 +74,8 @@ public class ExtendedCalendarPage extends AbstractCalendarPage
 			}
 
 			@Override
+			@Deprecated
+			@SuppressWarnings("deprecation")
 			public boolean isEditable()
 			{
 				return true;
@@ -94,7 +96,7 @@ public class ExtendedCalendarPage extends AbstractCalendarPage
 			@Override
 			public void onDayClick(AjaxRequestTarget target, CalendarView view, Date date, boolean allDay)
 			{
-				DemoCalendarEvent event = DemoCalendarDAO.emptyEvent(date);
+				DemoCalendarEvent event = DemoCalendarDAO.newEvent(date);
 
 				dialog.setModelObject(event);
 				dialog.open(target);
@@ -103,7 +105,7 @@ public class ExtendedCalendarPage extends AbstractCalendarPage
 			@Override
 			public void onSelect(AjaxRequestTarget target, CalendarView view, Date start, Date end, boolean allDay)
 			{
-				DemoCalendarEvent event = DemoCalendarDAO.emptyEvent(start, end);
+				DemoCalendarEvent event = DemoCalendarDAO.newEvent(start, end);
 				event.setAllDay(allDay);
 
 				dialog.setModelObject(event);

@@ -39,11 +39,12 @@ public class Calendar extends JQueryContainer implements ICalendarListener
 	private static final long serialVersionUID = 1L;
 
 	private final Options options;
-	private Map<CharSequence, String> gcals; //TODO: move gcals to CalendarBehavior?
+	private Map<CharSequence, String> gcals; // TODO: move gcals to CalendarBehavior?
 	private CalendarModelBehavior modelBehavior; // events load
 
 	/**
 	 * Constructor
+	 *
 	 * @param id the markup id
 	 * @param options {@link Options}. Note that 'selectable' and 'selectHelper' options are set by overriding {@link #isSelectable()} (default is false)
 	 */
@@ -56,6 +57,7 @@ public class Calendar extends JQueryContainer implements ICalendarListener
 
 	/**
 	 * Constructor
+	 *
 	 * @param id the markup id
 	 * @param model the {@link CalendarModel}
 	 */
@@ -66,6 +68,7 @@ public class Calendar extends JQueryContainer implements ICalendarListener
 
 	/**
 	 * Constructor
+	 *
 	 * @param id the markup id
 	 * @param model the {@link CalendarModel}
 	 * @param options {@link Options}. Note that 'selectable' and 'selectHelper' options are set by overriding {@link #isSelectable()} (default is false)
@@ -79,6 +82,7 @@ public class Calendar extends JQueryContainer implements ICalendarListener
 
 	/**
 	 * Gets the calendar's model
+	 *
 	 * @return a {@link CalendarModel}
 	 */
 	public CalendarModel getModel()
@@ -89,6 +93,7 @@ public class Calendar extends JQueryContainer implements ICalendarListener
 	// Methods //
 	/**
 	 * Adds a Google Calendar Feed
+	 *
 	 * @param gcal url to xml feed
 	 */
 	public void addFeed(CharSequence gcal)
@@ -98,6 +103,7 @@ public class Calendar extends JQueryContainer implements ICalendarListener
 
 	/**
 	 * Adds a Google Calendar Feed
+	 *
 	 * @param gcal url to xml feed
 	 * @param className css class to be used
 	 */
@@ -123,6 +129,8 @@ public class Calendar extends JQueryContainer implements ICalendarListener
 
 	// Properties //
 	@Override
+	@Deprecated
+	@SuppressWarnings("deprecation")
 	public boolean isEditable()
 	{
 		return false;
@@ -135,6 +143,20 @@ public class Calendar extends JQueryContainer implements ICalendarListener
 	}
 
 	@Override
+	public boolean isDayClickEnabled()
+	{
+		return this.isEditable();
+		//XXX: return false; // wicket-6.12+
+	}
+
+	@Override
+	public boolean isEventClickEnabled()
+	{
+		return this.isEditable();
+		//XXX: return false; // wicket-6.12+
+	}
+
+	@Override
 	public boolean isEventDropEnabled()
 	{
 		return false;
@@ -142,6 +164,12 @@ public class Calendar extends JQueryContainer implements ICalendarListener
 
 	@Override
 	public boolean isEventResizeEnabled()
+	{
+		return false;
+	}
+
+	@Override
+	public boolean isObjectDropEnabled()
 	{
 		return false;
 	}
@@ -208,10 +236,14 @@ public class Calendar extends JQueryContainer implements ICalendarListener
 	}
 
 	@Override
-	public void onViewRender(AjaxRequestTarget target, CalendarView view)
+	public void onObjectDrop(AjaxRequestTarget target, String title, Date date, boolean allDay)
 	{
 	}
 
+	@Override
+	public void onViewRender(AjaxRequestTarget target, CalendarView view)
+	{
+	}
 
 	// IJQueryWidget //
 	/**
@@ -225,6 +257,8 @@ public class Calendar extends JQueryContainer implements ICalendarListener
 			private static final long serialVersionUID = 1L;
 
 			@Override
+			@Deprecated
+			@SuppressWarnings("deprecation")
 			public boolean isEditable()
 			{
 				return Calendar.this.isEditable();
@@ -237,6 +271,18 @@ public class Calendar extends JQueryContainer implements ICalendarListener
 			}
 
 			@Override
+			public boolean isDayClickEnabled()
+			{
+				return Calendar.this.isDayClickEnabled();
+			}
+
+			@Override
+			public boolean isEventClickEnabled()
+			{
+				return Calendar.this.isEventClickEnabled();
+			}
+
+			@Override
 			public boolean isEventDropEnabled()
 			{
 				return Calendar.this.isEventDropEnabled();
@@ -246,6 +292,12 @@ public class Calendar extends JQueryContainer implements ICalendarListener
 			public boolean isEventResizeEnabled()
 			{
 				return Calendar.this.isEventResizeEnabled();
+			}
+
+			@Override
+			public boolean isObjectDropEnabled()
+			{
+				return Calendar.this.isObjectDropEnabled();
 			}
 
 			@Override
@@ -285,13 +337,18 @@ public class Calendar extends JQueryContainer implements ICalendarListener
 			}
 
 			@Override
+			public void onObjectDrop(AjaxRequestTarget target, String title, Date date, boolean allDay)
+			{
+				Calendar.this.onObjectDrop(target, title, date, allDay);
+			}
+
+			@Override
 			public void onViewRender(AjaxRequestTarget target, CalendarView view)
 			{
 				Calendar.this.onViewRender(target, view);
 			}
 		};
 	}
-
 
 	// Factory methods //
 	/**

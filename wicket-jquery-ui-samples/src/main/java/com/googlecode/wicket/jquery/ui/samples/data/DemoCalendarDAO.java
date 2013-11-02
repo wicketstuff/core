@@ -9,7 +9,9 @@ import com.googlecode.wicket.jquery.ui.samples.data.DemoCalendarEvent.Category;
 public class DemoCalendarDAO
 {
 	private static DemoCalendarDAO instance = null;
-	public static int EMPTY_ID = -1;
+	
+	/** new event id */
+	public static int ID = -1;
 
 	private static synchronized DemoCalendarDAO get()
 	{
@@ -23,17 +25,17 @@ public class DemoCalendarDAO
 
 	public static boolean isNew(DemoCalendarEvent event)
 	{
-		return (event != null && event.getId() == EMPTY_ID);
+		return (event != null && event.getId() == ID);
 	}
 
-	public static DemoCalendarEvent emptyEvent(Date date)
+	public static DemoCalendarEvent newEvent(Date date)
 	{
-		return new DemoCalendarEvent(EMPTY_ID, "", Category.PUBLIC, date);
+		return new DemoCalendarEvent(ID, "", Category.PUBLIC, date);
 	}
 
-	public static DemoCalendarEvent emptyEvent(Date start, Date end)
+	public static DemoCalendarEvent newEvent(Date start, Date end)
 	{
-		return new DemoCalendarEvent(EMPTY_ID, "", Category.PUBLIC, start, end);
+		return new DemoCalendarEvent(ID, "", Category.PUBLIC, start, end);
 	}
 
 	public static DemoCalendarEvent getEvent(int eventId)

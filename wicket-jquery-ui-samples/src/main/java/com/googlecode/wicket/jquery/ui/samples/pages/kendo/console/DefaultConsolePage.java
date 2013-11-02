@@ -12,7 +12,6 @@ import org.apache.wicket.model.Model;
 import com.googlecode.wicket.jquery.ui.kendo.button.AjaxButton;
 import com.googlecode.wicket.jquery.ui.kendo.console.Console;
 
-//XXX: change version in description
 public class DefaultConsolePage extends AbstractConsolePage
 {
 	private static final long serialVersionUID = 1L;
