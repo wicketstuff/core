@@ -33,6 +33,7 @@ import com.googlecode.wicket.jquery.ui.interaction.droppable.DroppableBehavior;
 
 /**
  * Provides a jQuery draggable behavior<br/>
+ * <br/>
  * <b>Warning:</b> not thread-safe: the instance of this behavior should only be used once
  *
  * @author Sebastien Briquet - sebfz1

@@ -26,8 +26,6 @@ import org.apache.wicket.WicketRuntimeException;
 import org.apache.wicket.markup.head.IHeaderResponse;
 import org.apache.wicket.markup.head.JavaScriptHeaderItem;
 
-import com.googlecode.wicket.jquery.core.IJQueryWidget.JQueryWidget;
-
 /**
  * Provides a default implementation of {@link JQueryAbstractBehavior}.
  *
@@ -84,17 +82,6 @@ public class JQueryBehavior extends JQueryAbstractBehavior
 
 	// Methods //
 	@Override
-	public void bind(Component component)
-	{
-		super.bind(component);
-
-		if (this.selector == null)
-		{
-			this.selector = JQueryWidget.getSelector(component);
-		}
-	}
-
-	@Override
 	public void renderHead(Component component, IHeaderResponse response)
 	{
 		super.renderHead(component, response);
@@ -124,6 +111,16 @@ public class JQueryBehavior extends JQueryAbstractBehavior
 	public String getSelector()
 	{
 		return this.selector;
+	}
+
+	/**
+	 * Sets the selector
+	 *
+	 * @param selector the html selector (ie: "#myId")
+	 */
+	protected void setSelector(String selector)
+	{
+		this.selector = selector;
 	}
 
 	/**

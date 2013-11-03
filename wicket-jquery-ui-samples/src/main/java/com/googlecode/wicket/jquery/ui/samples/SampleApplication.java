@@ -37,6 +37,7 @@ import com.googlecode.wicket.jquery.ui.samples.pages.sortable.DefaultSortablePag
 import com.googlecode.wicket.jquery.ui.samples.pages.spinner.DefaultSpinnerPage;
 import com.googlecode.wicket.jquery.ui.samples.pages.tabs.DefaultTabsPage;
 import com.googlecode.wicket.jquery.ui.samples.pages.test.TestPage;
+import com.googlecode.wicket.jquery.ui.samples.pages.tooltip.DefaultTooltipPage;
 import com.googlecode.wicket.jquery.ui.samples.pages.wizard.DefaultWizardPage;
 
 public class SampleApplication extends WebApplication
@@ -71,7 +72,7 @@ public class SampleApplication extends WebApplication
 		this.mountPackage("/slider", DefaultSliderPage.class);
 		this.mountPackage("/spinner", DefaultSpinnerPage.class);
 		this.mountPackage("/tabs", DefaultTabsPage.class);
-//		this.mountPackage("/tooltip",
+		this.mountPackage("/tooltip", DefaultTooltipPage.class);
 		this.mountPackage("/wizard", DefaultWizardPage.class);
 
 		// interactions //

@@ -22,16 +22,17 @@ import com.googlecode.wicket.jquery.core.Options;
 /**
  * Provides the jQuery tooltip behavior.<br/>
  * The {@link TooltipBehavior} apply to a page and therefore needs to be added once:<br/>
+ *
  * <pre>
  * Java:
  * <code>
  * public class MyPage extends WebPage
  * {
- *	public DefaultAutoCompletePage()
- *	{
- *		// Tooltip Behavior //
- *		this.add(new TooltipBehavior());
- *	}
+ * public DefaultAutoCompletePage()
+ * {
+ * 	// Tooltip Behavior //
+ * 	this.add(new TooltipBehavior());
+ * }
  * }
  * </code>
  * HTML:
@@ -51,7 +52,7 @@ public class TooltipBehavior extends JQueryBehavior
 
 	/**
 	 * Default constructor<br/>
-	 * {@link TooltipBehavior} will apply on <code>document</code>
+	 * {@link TooltipBehavior} will apply on <i>document</i>
 	 */
 	public TooltipBehavior()
 	{
@@ -60,7 +61,7 @@ public class TooltipBehavior extends JQueryBehavior
 
 	/**
 	 * Constructor<br/>
-	 * {@link TooltipBehavior} will apply on <code>document</code>
+	 * {@link TooltipBehavior} will apply on <i>document</i>
 	 *
 	 * @param options the {@link Options}
 	 */
@@ -90,6 +91,8 @@ public class TooltipBehavior extends JQueryBehavior
 		super(selector, METHOD, options);
 	}
 
+	// Methods
+
 	@Override
 	protected String $()
 	{
@@ -102,7 +105,7 @@ public class TooltipBehavior extends JQueryBehavior
 	}
 
 	/**
-	 * Gets the jQuery statement.
+	 * Gets the jQuery statement for the <i>document</i> level tooltip
 	 *
 	 * @param method the jQuery method to invoke
 	 * @param options the options to be applied
