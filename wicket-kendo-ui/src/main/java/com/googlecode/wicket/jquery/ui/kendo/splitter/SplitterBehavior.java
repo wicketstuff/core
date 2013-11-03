@@ -16,7 +16,15 @@
  */
 package com.googlecode.wicket.jquery.ui.kendo.splitter;
 
+import org.apache.wicket.Component;
+import org.apache.wicket.ajax.AjaxRequestTarget;
+import org.apache.wicket.ajax.attributes.CallbackParameter;
+
+import com.googlecode.wicket.jquery.core.JQueryEvent;
 import com.googlecode.wicket.jquery.core.Options;
+import com.googlecode.wicket.jquery.core.ajax.IJQueryAjaxAware;
+import com.googlecode.wicket.jquery.core.ajax.JQueryAjaxBehavior;
+import com.googlecode.wicket.jquery.core.utils.RequestCycleUtils;
 import com.googlecode.wicket.jquery.ui.kendo.KendoAbstractBehavior;
 
 /**
@@ -25,10 +33,14 @@ import com.googlecode.wicket.jquery.ui.kendo.KendoAbstractBehavior;
  * @author Sebastien Briquet - sebfz1
  *
  */
-public class SplitterBehavior extends KendoAbstractBehavior
+//TODO: add expand(target, paneId) & collapse(target, paneId) methods
+public class SplitterBehavior extends KendoAbstractBehavior implements IJQueryAjaxAware, ISplitterListener
 {
 	private static final long serialVersionUID = 1L;
 	private static final String METHOD = "kendoSplitter";
+
+	private JQueryAjaxBehavior onExpandBehavior;
+	private JQueryAjaxBehavior onCollapseBehavior;
 
 	/**
 	 * Constructor
@@ -47,5 +59,173 @@ public class SplitterBehavior extends KendoAbstractBehavior
 	public SplitterBehavior(String selector, Options options)
 	{
 		super(selector, METHOD, options);
+	}
+
+	// Methods //
+
+	@Override
+	public void bind(Component component)
+	{
+		super.bind(component);
+
+		component.add(this.onExpandBehavior = this.newExpandBehavior());
+		component.add(this.onCollapseBehavior = this.newCollapseBehavior());
+	}
+
+	// Properties //
+
+	@Override
+	public boolean isExpandEventEnabled()
+	{
+		return false;
+	}
+
+	@Override
+	public boolean isCollapseEventEnabled()
+	{
+		return false;
+	}
+
+	// Events //
+
+	@Override
+	public void onConfigure(Component component)
+	{
+		super.onConfigure(component);
+
+		this.setOption("expand", this.onExpandBehavior.getCallbackFunction());
+		this.setOption("collapse", this.onCollapseBehavior.getCallbackFunction());
+	}
+
+	@Override
+	public void onAjax(AjaxRequestTarget target, JQueryEvent event)
+	{
+		if (event instanceof ExpandEvent)
+		{
+			this.onExpand(target, ((ExpandEvent) event).getPaneId());
+		}
+
+		if (event instanceof CollapseEvent)
+		{
+			this.onCollapse(target, ((CollapseEvent) event).getPaneId());
+		}
+	}
+
+	@Override
+	public void onExpand(AjaxRequestTarget target, String paneId)
+	{
+	}
+
+	@Override
+	public void onCollapse(AjaxRequestTarget target, String paneId)
+	{
+	}
+
+
+	// Factories //
+	/**
+	 * Gets a new {@link JQueryAjaxBehavior} that acts as the 'expand' callback
+	 *
+	 * @return the {@link JQueryAjaxBehavior}
+	 */
+	protected JQueryAjaxBehavior newExpandBehavior()
+	{
+		return new JQueryAjaxBehavior(this) {
+
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			protected CallbackParameter[] getCallbackParameters()
+			{
+				return new CallbackParameter[] {
+						CallbackParameter.context("e"),
+						CallbackParameter.resolved("id", "e.pane.id") };
+			}
+
+			@Override
+			protected JQueryEvent newEvent()
+			{
+				return new ExpandEvent();
+			}
+		};
+	}
+
+	/**
+	 * Gets a new {@link JQueryAjaxBehavior} that acts as the 'collapse' callback
+	 *
+	 * @return the {@link JQueryAjaxBehavior}
+	 */
+	protected JQueryAjaxBehavior newCollapseBehavior()
+	{
+		return new JQueryAjaxBehavior(this) {
+
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			protected CallbackParameter[] getCallbackParameters()
+			{
+				return new CallbackParameter[] {
+						CallbackParameter.context("e"),
+						CallbackParameter.resolved("id", "e.pane.id") };
+			}
+
+			@Override
+			protected JQueryEvent newEvent()
+			{
+				return new CollapseEvent();
+			}
+		};
+	}
+
+	// Events classes //
+
+	/**
+	 * An event object that will be broadcasted when a panes expands
+	 */
+	protected static class ExpandEvent extends JQueryEvent
+	{
+		private final String paneId;
+
+		public ExpandEvent()
+		{
+			super();
+
+			this.paneId = RequestCycleUtils.getQueryParameterValue("id").toString("");
+		}
+
+		/**
+		 * Gets the html-id
+		 *
+		 * @return the html-id
+		 */
+		public String getPaneId()
+		{
+			return this.paneId;
+		}
+	}
+
+	/**
+	 * An event object that will be broadcasted when a panes collapses
+	 */
+	protected static class CollapseEvent extends JQueryEvent
+	{
+		private final String paneId;
+
+		public CollapseEvent()
+		{
+			super();
+
+			this.paneId = RequestCycleUtils.getQueryParameterValue("id").toString("");
+		}
+
+		/**
+		 * Gets the html-id
+		 *
+		 * @return the html-id
+		 */
+		public String getPaneId()
+		{
+			return this.paneId;
+		}
 	}
 }

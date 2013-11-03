@@ -17,22 +17,25 @@
 package com.googlecode.wicket.jquery.ui.kendo.splitter;
 
 import org.apache.wicket.MarkupContainer;
+import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.markup.html.WebMarkupContainer;
 
+import com.googlecode.wicket.jquery.core.Options;
+
 /**
- * Provides a Border Layout {@link WebMarkupContainer} based on vertical and horizontal {@link SplitterBehavior}<pre>s</pre><br/>
+ * Provides a Border Layout {@link WebMarkupContainer} based on vertical and horizontal {@link SplitterBehavior}<tt>s</tt><br/>
  * {@link #getVerticalPanes()} and {@link #getHorizontalPanes()} may be overridden to change the default layout<br/>
  * <br/>
- * <b>Note:</b> the {@link BorderLayout} IS a {@link WebMarkupContainer}. If you wish to apply a {@link BorderLayout} on an existing Page or an existing Panel, you can implement the {@link IBorderLayout} interface.<br/>
+ * <b>Note:</b> the {@link BorderLayout} IS a {@link WebMarkupContainer}. If you wish to apply a {@link BorderLayout} on an existing Page or an existing Panel, consider implementing the {@link IBorderLayout} interface.<br/>
  * <br/>
  * Alternatively, the HTML markup look like:
  * <pre>
 &lt;div wicket:id="layout"&gt;
 	&lt;div id="vertical"&gt;
-		&lt;div&gt;
+		&lt;div id="myPaneId"&gt;
 			- top -
-		&lt;/div&gt;		
-		&lt;div id="horizontal"&gt;	
+		&lt;/div&gt;
+		&lt;div id="horizontal"&gt;
 			&lt;div&gt;
 				- left -
 			&lt;/div&gt;
@@ -49,11 +52,11 @@ import org.apache.wicket.markup.html.WebMarkupContainer;
 	&lt;/div&gt;
 &lt;/div&gt;
  * </pre>
- * 
+ *
  * @author Sebastien Briquet - sebfz1
  *
  */
-public class BorderLayout extends WebMarkupContainer implements IBorderLayout
+public class BorderLayout extends WebMarkupContainer implements IBorderLayout, ISplitterListener
 {
 	private static final long serialVersionUID = 1L;
 
@@ -65,20 +68,47 @@ public class BorderLayout extends WebMarkupContainer implements IBorderLayout
 	{
 		super(id);
 	}
-	
+
+	// Properties //
+
+	@Override
+	public boolean isExpandEventEnabled()
+	{
+		return false;
+	}
+
+	@Override
+	public boolean isCollapseEventEnabled()
+	{
+		return false;
+	}
+
+	// Methods //
+
+	@Override
+	public void addBorderLayout(MarkupContainer container)
+	{
+		container.add(this.newVerticalSplitterBehavior("#vertical", this.getVerticalPanes()));
+		container.add(this.newHorizontalSplitterBehavior("#horizontal", this.getHorizontalPanes()));
+	}
+
+	// Events //
 	@Override
 	protected void onInitialize()
 	{
 		super.onInitialize();
-		
+
 		this.addBorderLayout(this);
 	}
-	
+
 	@Override
-	public void addBorderLayout(MarkupContainer container)
+	public void onExpand(AjaxRequestTarget target, String paneId)
 	{
-		container.add(new SplitterBehavior("#vertical").setOption("panes", this.getVerticalPanes()).setOption("orientation", "'vertical'"));
-		container.add(new SplitterBehavior("#horizontal").setOption("panes", this.getHorizontalPanes()));
+	}
+
+	@Override
+	public void onCollapse(AjaxRequestTarget target, String paneId)
+	{
 	}
 
 	/**
@@ -98,11 +128,93 @@ public class BorderLayout extends WebMarkupContainer implements IBorderLayout
 	@Override
 	public String getHorizontalPanes()
 	{
-		return "[ { size: '15%' }, { }, { size: '15%' } ]"; 
+		return "[ { size: '15%' }, { }, { size: '15%' } ]";
 	}
 
-	
+	// Factories //
 
-	
+	/**
+	 * Gets a new vertical {@link SplitterBehavior}
+	 *
+	 * @param selector the splitter's html selector (ie: "#myId")
+	 * @param panes the vertical panes in a JSON array
+	 * @return a new vertical {@link SplitterBehavior}
+	 */
+	protected SplitterBehavior newVerticalSplitterBehavior(String selector, String panes)
+	{
+		Options options = new Options();
+		options.set("panes", panes);
+		options.set("orientation", Options.asString("vertical"));
 
+		return new SplitterBehavior(selector, options) {
+
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			public boolean isExpandEventEnabled()
+			{
+				return BorderLayout.this.isExpandEventEnabled();
+			}
+
+			@Override
+			public boolean isCollapseEventEnabled()
+			{
+				return BorderLayout.this.isCollapseEventEnabled();
+			}
+
+			@Override
+			public void onExpand(AjaxRequestTarget target, String paneId)
+			{
+				BorderLayout.this.onExpand(target, paneId);
+			}
+
+			@Override
+			public void onCollapse(AjaxRequestTarget target, String paneId)
+			{
+				BorderLayout.this.onCollapse(target, paneId);
+			}
+		};
+	}
+
+	/**
+	 * Gets a new horizontal {@link SplitterBehavior}
+	 *
+	 * @param selector the splitter's html selector (ie: "#myId")
+	 * @param panes the horizontal panes in a JSON array
+	 * @return a new horizontal {@link SplitterBehavior}
+	 */
+	protected SplitterBehavior newHorizontalSplitterBehavior(String selector, String panes)
+	{
+		Options options = new Options();
+		options.set("panes", panes);
+
+		return new SplitterBehavior(selector, options) {
+
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			public boolean isExpandEventEnabled()
+			{
+				return BorderLayout.this.isExpandEventEnabled();
+			}
+
+			@Override
+			public boolean isCollapseEventEnabled()
+			{
+				return BorderLayout.this.isCollapseEventEnabled();
+			}
+
+			@Override
+			public void onExpand(AjaxRequestTarget target, String paneId)
+			{
+				BorderLayout.this.onExpand(target, paneId);
+			}
+
+			@Override
+			public void onCollapse(AjaxRequestTarget target, String paneId)
+			{
+				BorderLayout.this.onCollapse(target, paneId);
+			}
+		};
+	}
 }
