@@ -26,6 +26,7 @@ import junit.framework.Assert;
 import org.apache.wicket.authroles.authorization.strategies.role.IRoleCheckingStrategy;
 import org.apache.wicket.util.lang.Args;
 import org.apache.wicket.validation.validator.EmailAddressValidator;
+import org.wicketstuff.rest.CustomValidator;
 import org.wicketstuff.rest.Person;
 import org.wicketstuff.rest.annotations.AuthorizeInvocation;
 import org.wicketstuff.rest.annotations.MethodMapping;
@@ -59,6 +60,7 @@ public class RestResourceFullAnnotated extends AbstractRestResource<TestJsonDesS
 		EmailAddressValidator emailValidator = EmailAddressValidator.getInstance();
 
 		registerValidator("emailvalidator", emailValidator);
+		registerValidator("customvalidator", new CustomValidator());
 	}
 
 	/**
@@ -187,6 +189,13 @@ public class RestResourceFullAnnotated extends AbstractRestResource<TestJsonDesS
 		@RequestParam("email") @ValidatorKey("emailvalidator") String email)
 	{
 		return email;
+	}
+	
+	@MethodMapping(value = "/customvalidator", produces = RestMimeTypes.TEXT_PLAIN)
+	public String testCustomValidator( 
+		@RequestParam("customvalidator") @ValidatorKey("customvalidator") String customfield)
+	{
+		return customfield;
 	}
 
 	@MethodMapping(value = "/testreqdef", produces = RestMimeTypes.TEXT_PLAIN)

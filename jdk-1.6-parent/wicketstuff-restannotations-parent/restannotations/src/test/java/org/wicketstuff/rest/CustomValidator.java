@@ -14,25 +14,24 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-package org.wicketstuff.rest.utils.wicket.validator;
+package org.wicketstuff.rest;
 
-import java.io.Serializable;
+import java.util.Arrays;
+import java.util.Collections;
 
-import org.apache.wicket.markup.html.form.ValidationErrorFeedback;
-import org.apache.wicket.validation.IErrorMessageSource;
-import org.apache.wicket.validation.IValidationError;
+import org.apache.wicket.validation.IValidatable;
+import org.apache.wicket.validation.IValidator;
+import org.wicketstuff.rest.utils.wicket.validator.RestValidationError;
 
-public class RestErrorMessage extends ValidationErrorFeedback {
-	private final String field;
+public class CustomValidator implements IValidator {
 
-	public RestErrorMessage(IValidationError error, Serializable message, String field) {
-		super(error, message);	
-		this.field = field;
-	}
-
-	public String getField() 
-	{
-		return field;
+	@Override
+	public void validate(IValidatable validatable) {
+		RestValidationError restValidationError = 
+				new RestValidationError(Arrays.asList("CustomValidator"), Collections.<String, Object>emptyMap(),
+						"customField");
+		
+		validatable.error(restValidationError);
 	}
 
 }

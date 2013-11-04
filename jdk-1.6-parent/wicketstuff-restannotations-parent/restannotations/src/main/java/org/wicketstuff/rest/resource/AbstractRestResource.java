@@ -195,11 +195,10 @@ public abstract class AbstractRestResource<T extends IWebSerialDeserial> impleme
 		{
 			IValidationError error = validationErrors.get(0);
 			Serializable message = error.getErrorMessage(bundleResolver);
-			RestErrorMessage restErrorMessage = new RestErrorMessage(error, bundleResolver); 
 			
 			IObjectSerialDeserial objSerialDeserial = 
 					webSerialDeserial.getIObjectSerialDeserial(outputFormat);
-			Object serializedObject = objSerialDeserial.serializeObject(restErrorMessage, outputFormat);
+			Object serializedObject = objSerialDeserial.serializeObject(message, outputFormat);
 			
 			response.sendError(400,  serializedObject.toString());
 			return;

@@ -170,14 +170,20 @@ public class RestResourcesTest
 
 		String errorMessage = tester.getLastResponse().getErrorMessage();
 		Assert.assertTrue(errorMessage.contains("The value inserted as email is not valid."));
-System.out.println(errorMessage);
+		
 		String email = "avalid@mail.com";
 
 		tester.getRequest().setMethod("GET");
 		tester.getRequest().setParameter("email", email);
 		tester.executeUrl("./api/emailvalidator");
 		testIfResponseStringIsEqual(email);
-
+		
+		tester.getRequest().setMethod("GET");
+		tester.getRequest().setParameter("customvalidator", "customvalidator");
+		tester.executeUrl("./api/customvalidator");
+		
+		errorMessage = tester.getLastResponse().getErrorMessage();
+		Assert.assertTrue(errorMessage.contains("field\":\"customField"));
 	}
 
 	@Test
