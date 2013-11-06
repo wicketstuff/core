@@ -562,7 +562,8 @@ public class TestPage extends WebPage {
             }
         }
                 .setWantOnSelectNotification(true)
-                .setWantOnChangeMonthYearNotification(true);
+                .setWantOnChangeMonthYearNotification(true)
+                ;
         datePickerInput.add(datePicker);
         datecontainer.add(datePickerInput);
 
@@ -617,9 +618,9 @@ public class TestPage extends WebPage {
          .setChangeMonth(true)
          .setChangeYear(true)
          .setNumberOfMonths(3)
-           //     .setShowCurrentAtPos(2)
           .setShowButtonPanel(true)
           .setYearRange("-30:+0")
+           .setMonthNamesShort(new String[]{ "Jan", "Feb", "Mar", "Apr", "Maj", "Jun", "Jul", "Aug", "Sep", "Okt", "Nov", "Dec"})
           .setDefaultDate(c.getTime()) ;
         c.set(Calendar.DAY_OF_MONTH, 1);
 

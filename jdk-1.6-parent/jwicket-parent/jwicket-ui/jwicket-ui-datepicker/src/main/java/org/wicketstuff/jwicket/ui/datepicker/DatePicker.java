@@ -12,7 +12,6 @@ import org.apache.wicket.markup.html.form.FormComponent;
 import org.apache.wicket.request.Request;
 import org.apache.wicket.request.resource.ResourceReference;
 import org.wicketstuff.jwicket.*;
-import org.wicketstuff.jwicket.ui.AbstractJqueryUiEmbeddedBehavior;
 
 import java.io.Serializable;
 import java.text.DateFormat;
@@ -934,6 +933,24 @@ public class DatePicker extends JQueryDurableAjaxBehavior implements IStyleResol
     public DatePicker setStepMonths(final AjaxRequestTarget target, final int value) {
         setStepMonths(value);
         target.appendJavaScript("jQuery('#" + getComponent().getMarkupId() + "').datepicker('option','stepMonths'," + value + ");");
+        return this;
+    }
+
+    /**
+     * Sets the 'monthNamesShort' property for this DatePicker. Please consult the
+     * jQuery documentation for a detailed description of this property.
+     *
+     * @param monthNamesShort The list of abbreviated month names, as used in the month header on each datepicker and as requested via the dateFormat option.
+     *                        Ex.  new String[]{ "Jan", "Feb", "Mar", "Apr", "Maj", "Jun", "Jul", "Aug", "Sep", "Okt", "Nov", "Dec"}
+     * @return this object
+     */
+
+    public DatePicker setMonthNamesShort(String[] monthNamesShort){
+        if (monthNamesShort == null) {
+            this.options.remove("monthNamesShort");
+        } else {
+            this.options.put("monthNamesShort", monthNamesShort);
+        }
         return this;
     }
 
