@@ -262,6 +262,8 @@ public abstract class AbstractWizard<T extends Serializable> extends AbstractFor
 	 * This implementation overrides the default {@link AbstractDialog#onClick(AjaxRequestTarget, DialogButton)} implementation in order to not close the dialog.
 	 */
 	@Override
+	@SuppressWarnings("deprecation")
+	// XXX: remove SuppressWarnings in wicket-6.12.0-next
 	public final void onClick(AjaxRequestTarget target, DialogButton button)
 	{
 		if (button.equals(this.getSubmitButton()))
@@ -393,6 +395,8 @@ public abstract class AbstractWizard<T extends Serializable> extends AbstractFor
 	 * @return the {@link Form} or <code>null</code>
 	 */
 	@Override
+	@SuppressWarnings("deprecation")
+	// XXX: remove SuppressWarnings in wicket-6.12.0-next
 	protected Form<?> getForm(DialogButton button)
 	{
 		//btnNext and btnLast are also form-submitter buttons (in addition to btnFinish)

@@ -188,7 +188,7 @@ public abstract class CalendarBehavior extends JQueryBehavior implements IJQuery
 	}
 
 	// Properties //
-	// XXX: wicket-6.12+
+	// XXX: enable in wicket-6.12.0-next
 //	protected boolean isEditable()
 //	{
 //		return (this.onDayClickBehavior != null) || (this.onEventClickBehavior != null);

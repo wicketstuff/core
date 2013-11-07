@@ -33,13 +33,13 @@ public class DialogButton implements IClusterable
 
 	/**
 	 * Gets the next id-sequence. This is used to generate the markupId
+	 *
 	 * @return 0x0000 to 0x7FFF
 	 */
 	private static synchronized int nextSequence()
 	{
 		return (DialogButton.sequence++ % Short.MAX_VALUE);
 	}
-
 
 	private final int id;
 	private final String text;
@@ -49,6 +49,7 @@ public class DialogButton implements IClusterable
 
 	/**
 	 * Constructor
+	 *
 	 * @param text the button's text
 	 */
 	public DialogButton(String text)
@@ -58,6 +59,7 @@ public class DialogButton implements IClusterable
 
 	/**
 	 * Constructor
+	 *
 	 * @param text the button's text
 	 * @param icon the button's icon
 	 */
@@ -68,6 +70,7 @@ public class DialogButton implements IClusterable
 
 	/**
 	 * Constructor
+	 *
 	 * @param text the button's text
 	 * @param enabled indicates whether the button is enabled
 	 */
@@ -78,6 +81,7 @@ public class DialogButton implements IClusterable
 
 	/**
 	 * Constructor
+	 *
 	 * @param text the button's text
 	 * @param icon the button's icon
 	 * @param enabled indicates whether the button is enabled
@@ -92,6 +96,7 @@ public class DialogButton implements IClusterable
 
 	/**
 	 * Constructor
+	 *
 	 * @param model the button's text model
 	 */
 	public DialogButton(final IModel<String> model)
@@ -101,6 +106,7 @@ public class DialogButton implements IClusterable
 
 	/**
 	 * Constructor
+	 *
 	 * @param model the button's text model
 	 * @param icon the button's icon
 	 */
@@ -111,6 +117,7 @@ public class DialogButton implements IClusterable
 
 	/**
 	 * Constructor
+	 *
 	 * @param model the button's text model
 	 * @param enabled indicates whether the button is enabled
 	 */
@@ -121,6 +128,7 @@ public class DialogButton implements IClusterable
 
 	/**
 	 * Constructor
+	 *
 	 * @param model the button's text model
 	 * @param icon the button's icon
 	 * @param enabled indicates whether the button is enabled
@@ -130,10 +138,10 @@ public class DialogButton implements IClusterable
 		this(model.getObject(), icon, enabled);
 	}
 
-
 	// Properties //
 	/**
 	 * Gets the button's icon
+	 *
 	 * @return the button's icon
 	 */
 	public String getIcon()
@@ -143,6 +151,7 @@ public class DialogButton implements IClusterable
 
 	/**
 	 * Sets the button's icon
+	 *
 	 * @param icon the css class (ie: ui-my-icon)
 	 */
 	public void setIcon(String icon)
@@ -152,6 +161,7 @@ public class DialogButton implements IClusterable
 
 	/**
 	 * Indicates whether the button is enabled
+	 *
 	 * @return true or false
 	 */
 	public boolean isEnabled()
@@ -161,6 +171,7 @@ public class DialogButton implements IClusterable
 
 	/**
 	 * Sets the enable state of the button
+	 *
 	 * @param enabled true or false
 	 */
 	public void setEnabled(boolean enabled)
@@ -170,6 +181,7 @@ public class DialogButton implements IClusterable
 
 	/**
 	 * Sets the enable state of the button
+	 *
 	 * @param enabled true or false
 	 * @param target the {@link AjaxRequestTarget}
 	 */
@@ -187,6 +199,7 @@ public class DialogButton implements IClusterable
 
 	/**
 	 * Sets the visible state of the button
+	 *
 	 * @param visible true or false
 	 * @param target the {@link AjaxRequestTarget}
 	 */
@@ -218,11 +231,11 @@ public class DialogButton implements IClusterable
 		return String.format("btn%02x", this.id).toLowerCase();
 	}
 
-
 	// Methods //
 
 	/**
 	 * Enables the button
+	 *
 	 * @param target the {@link AjaxRequestTarget}
 	 */
 	private void enable(AjaxRequestTarget target)
@@ -232,6 +245,7 @@ public class DialogButton implements IClusterable
 
 	/**
 	 * Disables the button
+	 *
 	 * @param target the {@link AjaxRequestTarget}
 	 */
 	private void disable(AjaxRequestTarget target)
@@ -241,6 +255,7 @@ public class DialogButton implements IClusterable
 
 	/**
 	 * Shows the button
+	 *
 	 * @param target the {@link AjaxRequestTarget}
 	 */
 	private void show(AjaxRequestTarget target)
@@ -250,13 +265,13 @@ public class DialogButton implements IClusterable
 
 	/**
 	 * Hides the button
+	 *
 	 * @param target the {@link AjaxRequestTarget}
 	 */
 	private void hide(AjaxRequestTarget target)
 	{
 		target.appendJavaScript(String.format("jQuery('#%s').hide();", this.getMarkupId()));
 	}
-
 
 	@Override
 	public int hashCode()
@@ -265,15 +280,39 @@ public class DialogButton implements IClusterable
 	}
 
 	/**
-	 * Indicates whether this {@link DialogButton} is equal to another {@link DialogButton}. Are considered equals buttons having the same text representation ({@link #toString()}), which is the text supplied to the constructor (if not overridden).
+	 * Indicates whether this {@link DialogButton} is equal to another {@link DialogButton}.<br/>
+	 * Are considered equals buttons having the same text representation, which is the text supplied to the constructor (if {@link #toString()} is not overridden).
 	 *
-	 * @param object either a {@link DialogButton} or a {@link String}
+	 * @param object the {@link DialogButton} to compare to
 	 * @return true if considered as equal
+	 * @deprecated for text comparison, use {@link #match(String)} instead. Comparison of String equality will be removed on wicket-6.12.0-next
 	 */
 	@Override
+	@Deprecated
+	// XXX: remove Deprecated in wicket-6.12.0-next
 	public boolean equals(Object object)
 	{
+		// XXX: restore in wicket-6.12.0-next
+//		if (object instanceof DialogButton)
+//		{
+//			return this.match(object.toString());
+//		}
+//
+//		return super.equals(object);
+
+		// XXX: remove in wicket-6.12.0-next
 		return (object != null) && (object.toString().equals(this.toString()));
+	}
+
+	/**
+	 * Indicates whether this {@link DialogButton} text representation ({@link #toString()}) match to the supplied text.
+	 *
+	 * @param text the text to compare to
+	 * @return true if equal
+	 */
+	public boolean match(String text)
+	{
+		return text.equals(this.toString()); // let throw a NPE
 	}
 
 	@Override

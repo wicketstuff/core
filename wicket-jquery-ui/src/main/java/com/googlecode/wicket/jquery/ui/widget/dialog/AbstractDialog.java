@@ -357,7 +357,7 @@ public abstract class AbstractDialog<T extends Serializable> extends JQueryPanel
 	{
 		for (DialogButton button : this.getButtons())
 		{
-			if (button != null && button.equals(text))
+			if (button != null && button.match(text))
 			{
 				return button;
 			}

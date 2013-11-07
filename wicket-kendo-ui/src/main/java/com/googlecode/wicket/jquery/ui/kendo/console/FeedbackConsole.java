@@ -147,7 +147,7 @@ public class FeedbackConsole extends AbstractConsole implements IFeedback
 	{
 		super.onBeforeRender();
 
-		this.log(this.feedbackMessagesModel.getObject()); // let's throw NPE as #newFeedbackMessagesModel was called just before in the request cycle
+		this.log(this.feedbackMessagesModel.getObject()); // let throw a NPE. #newFeedbackMessagesModel is called just before in the request cycle
 	}
 
 	@Override

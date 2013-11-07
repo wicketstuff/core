@@ -146,14 +146,14 @@ public class Calendar extends JQueryContainer implements ICalendarListener
 	public boolean isDayClickEnabled()
 	{
 		return this.isEditable();
-		//XXX: return false; // wicket-6.12+
+		// return false; // XXX: enable in wicket-6.12.0-next
 	}
 
 	@Override
 	public boolean isEventClickEnabled()
 	{
 		return this.isEditable();
-		//XXX: return false; // wicket-6.12+
+		// return false; // XXX: enable in wicket-6.12.0-next
 	}
 
 	@Override

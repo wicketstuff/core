@@ -277,15 +277,39 @@ public class ColumnButton implements IClusterable
 	}
 
 	/**
-	 * Indicates whether this {@link ColumnButton} is equal to another {@link ColumnButton}. Are considered equals buttons having the same text representation ({@link #toString()}), which is the text supplied to the constructor (if not overridden).
+	 * Indicates whether this {@link ColumnButton} is equal to another {@link ColumnButton}.<br/>
+	 * Are considered equals buttons having the same text representation, which is the text supplied to the constructor (if {@link #toString()} is not overridden).
 	 *
-	 * @param object either a {@link ColumnButton} or a {@link String}
+	 * @param object a {@link ColumnButton} to compare to
 	 * @return true if considered as equal
+	 * @deprecated for text comparison, use {@link #match(String)} instead. Comparison of String equality will be removed on wicket-6.12.0-next
 	 */
 	@Override
+	@Deprecated
+	// XXX: remove Deprecated in wicket-6.12.0-next
 	public boolean equals(Object object)
 	{
+		// XXX: restore in wicket-6.12.0-next
+//		if (object instanceof ColumnButton)
+//		{
+//			return this.match(object.toString());
+//		}
+//
+//		return super.equals(object);
+
+		// XXX: remove in wicket-6.12.0-next
 		return (object != null) && (object.toString().equals(this.toString()));
+	}
+
+	/**
+	 * Indicates whether this {@link ColumnButton} text representation ({@link #toString()}) match to the supplied text.
+	 *
+	 * @param text the text to compare to
+	 * @return true if equal
+	 */
+	public boolean match(String text)
+	{
+		return text.equals(this.toString()); // let throw a NPE
 	}
 
 	@Override
