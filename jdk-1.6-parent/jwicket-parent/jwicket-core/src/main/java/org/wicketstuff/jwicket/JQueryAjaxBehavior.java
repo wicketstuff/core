@@ -130,7 +130,7 @@ public abstract class JQueryAjaxBehavior extends AbstractDefaultAjaxBehavior {
 		private static final long serialVersionUID = 1L;
 
 		public JsAjaxCallbackFunction(AbstractAjaxBehavior behavior) {
-			super("function() { wicketAjaxGet('" + behavior.getCallbackUrl() + "'); }");
+			super("function() { Wicket.Ajax.get('" + behavior.getCallbackUrl() + "'); }");
 		}
 	}
 
@@ -143,30 +143,35 @@ public abstract class JQueryAjaxBehavior extends AbstractDefaultAjaxBehavior {
 
 	private void addJavascriptReference(IHeaderResponse response, JQueryResourceReference resource) {
 		if (!response.wasRendered(resource)) {
-			if (resource instanceof org.wicketstuff.jwicket.JQueryResourceReference) {
-				if (resource.hasId()) {
-					response.render(JavaScriptReferenceHeaderItem.forReference(resource, resource.getId()));
-				} else {
-					response.render(JavaScriptReferenceHeaderItem.forReference(resource));
-				}
-			} else {
-				response.render(CssReferenceHeaderItem.forReference(resource));
+            if (resource instanceof JQueryCssResourceReference) {
+                response.render(CssReferenceHeaderItem.forReference(resource));
+			} else  {
+                if (resource.hasId()) {
+                    response.render(JavaScriptReferenceHeaderItem.forReference(resource, resource.getId()));
+                } else {
+                    response.render(JavaScriptReferenceHeaderItem.forReference(resource));
+                }
 			}
 			response.markRendered(resource);
 		}
 	}
 
-	// protected int ieVersion = -1;
+
+    private void addCssResourceReference(IHeaderResponse response, JQueryCssResourceReference resource) {
+        if (!response.wasRendered(resource)) {
+            response.render(CssReferenceHeaderItem.forReference(resource));
+            response.markRendered(resource);
+        }
+    }
+
+
+    // protected int ieVersion = -1;
 
 	@Override
 	public void renderHead(Component component, IHeaderResponse response) {
 		super.renderHead(component, response);
 
 		if (userProvidedResourceReferences.size() == 0) {
-			// No user provided Resources, use internal resources
-			addJavascriptReference(response, JQueryHeaderContributor.jQueryCoreJs);
-			response.render(JavaScriptReferenceHeaderItem.forScript("jQuery.noConflict();", "noConflict"));
-
 			if (this.baseLibrary != null) {
 				addJavascriptReference(response, this.baseLibrary);
 			}
@@ -199,12 +204,12 @@ public abstract class JQueryAjaxBehavior extends AbstractDefaultAjaxBehavior {
 
 		if (this.cssResources != null) {
 			for (JQueryCssResourceReference res : this.cssResources) {
-				addJavascriptReference(response, res);
+                addCssResourceReference(response, res);
 			}
 		}
 	}
 
-	private static final List<JavaScriptResourceReference> userProvidedResourceReferences = new ArrayList<JavaScriptResourceReference>();
+    private static final List<JavaScriptResourceReference> userProvidedResourceReferences = new ArrayList<JavaScriptResourceReference>();
 
 	public static void addUserProvidedResourceReferences(final JavaScriptResourceReference... resources) {
 		userProvidedResourceReferences.addAll(Arrays.asList(resources));
