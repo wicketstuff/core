@@ -19,17 +19,33 @@ package org.wicketstuff.rest.utils.wicket.validator;
 import java.io.Serializable;
 
 import org.apache.wicket.markup.html.form.ValidationErrorFeedback;
-import org.apache.wicket.validation.IErrorMessageSource;
 import org.apache.wicket.validation.IValidationError;
 
+/**
+ * The Class RestErrorMessage.
+ */
 public class RestErrorMessage extends ValidationErrorFeedback {
+	
+	/** The field. */
 	private final String field;
 
+	/**
+	 * Instantiates a new rest error message.
+	 *
+	 * @param error the error
+	 * @param message the message
+	 * @param field the field
+	 */
 	public RestErrorMessage(IValidationError error, Serializable message, String field) {
 		super(error, message);	
 		this.field = field;
 	}
 
+	/**
+	 * Gets the field.
+	 *
+	 * @return the field
+	 */
 	public String getField() 
 	{
 		return field;

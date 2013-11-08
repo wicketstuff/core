@@ -20,25 +20,39 @@ import java.io.Serializable;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.wicket.markup.html.form.ValidationErrorFeedback;
 import org.apache.wicket.validation.IErrorMessageSource;
 import org.apache.wicket.validation.IValidationError;
 
+/**
+ * The Class RestValidationError.
+ */
 public class RestValidationError implements IValidationError {
-	/** list of message keys to try against the <code>IErrorMessageSource</code> */
+	
+	/** list of message keys to try against the <code>IErrorMessageSource</code>. */
 	private final List<String> keys;
 
-	/** variables map to use in variable substitution */
+	/** variables map to use in variable substitution. */
 	private final Map<String, Object> vars;
 	
+	/** the field that failed the validation. */
 	private final String field;
 
+	/**
+	 * Instantiates a new rest validation error.
+	 *
+	 * @param keys the keys
+	 * @param vars the vars
+	 * @param field the field
+	 */
 	public RestValidationError(List<String> keys, Map<String, Object> vars, String field) {
 		this.keys = keys;
 		this.vars = vars;
 		this.field = field;
 	}
 
+	/* (non-Javadoc)
+	 * @see org.apache.wicket.validation.IValidationError#getErrorMessage(org.apache.wicket.validation.IErrorMessageSource)
+	 */
 	@Override
 	public Serializable getErrorMessage(IErrorMessageSource messageSource) {
 		String errorMessage = null;
@@ -58,17 +72,33 @@ public class RestValidationError implements IValidationError {
 		
 		return new RestErrorMessage(this, errorMessage, field);
 	}
-
+    
+	
+	/**
+	 * Gets the keys.
+	 *
+	 * @return the keys
+	 */
 	public List<String> getKeys() 
 	{
 		return keys;
 	}
 
+	/**
+	 * Gets the vars.
+	 *
+	 * @return the vars
+	 */
 	public Map<String, Object> getVars() 
 	{
 		return vars;
 	}
 
+	/**
+	 * Gets the field.
+	 *
+	 * @return the field
+	 */
 	public String getField() 
 	{
 		return field;
