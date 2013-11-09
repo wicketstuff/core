@@ -48,6 +48,7 @@ public abstract class SortableBehavior<T> extends JQueryBehavior implements IJQu
 
 	/**
 	 * Constructor
+	 *
 	 * @param selector the html selector (ie: "#myId")
 	 */
 	public SortableBehavior(String selector)
@@ -57,6 +58,7 @@ public abstract class SortableBehavior<T> extends JQueryBehavior implements IJQu
 
 	/**
 	 * Constructor
+	 *
 	 * @param selector the html selector (ie: "#myId")
 	 * @param options the {@link Options}
 	 */
@@ -82,7 +84,6 @@ public abstract class SortableBehavior<T> extends JQueryBehavior implements IJQu
 	{
 		return null;
 	}
-
 
 	// Methods //
 	@Override
@@ -125,9 +126,9 @@ public abstract class SortableBehavior<T> extends JQueryBehavior implements IJQu
 	@Override
 	public void onAjax(AjaxRequestTarget target, JQueryEvent event)
 	{
-		if (event instanceof AbstractEvent)
+		if (event instanceof SortableEvent)
 		{
-			AbstractEvent ev = (AbstractEvent)event;
+			SortableEvent ev = (SortableEvent) event;
 			int hash = ev.getHash();
 			int index = ev.getIndex();
 
@@ -137,45 +138,31 @@ public abstract class SortableBehavior<T> extends JQueryBehavior implements IJQu
 
 				if (list != null)
 				{
-					T item = ListUtils.fromHash(hash, list);
-
-					if (item != null)
-					{
-						this.onUpdate(target, item, index);
-					}
+					this.onUpdate(target, ListUtils.fromHash(hash, list), index);
 				}
 			}
-			else if (event instanceof ReceiveEvent)
+
+			if (event instanceof ReceiveEvent)
 			{
 				List<T> list = this.getConnectedList();
 
 				if (list != null)
 				{
-					T item = ListUtils.fromHash(hash, list);
-
-					if (item != null)
-					{
-						this.onReceive(target, ListUtils.fromHash(hash, list), index);
-					}
+					this.onReceive(target, ListUtils.fromHash(hash, list), index);
 				}
 			}
-			else if (event instanceof RemoveEvent)
+
+			if (event instanceof RemoveEvent)
 			{
 				List<T> list = this.getItemList();
 
 				if (list != null)
 				{
-					T item = ListUtils.fromHash(hash, list);
-
-					if (item != null)
-					{
-						this.onRemove(target, ListUtils.fromHash(hash, list));
-					}
+					this.onRemove(target, ListUtils.fromHash(hash, list));
 				}
 			}
 		}
 	}
-
 
 	// Factories //
 	/**
@@ -192,11 +179,7 @@ public abstract class SortableBehavior<T> extends JQueryBehavior implements IJQu
 			@Override
 			protected CallbackParameter[] getCallbackParameters()
 			{
-				return new CallbackParameter[] {
-						CallbackParameter.context("event"),
-						CallbackParameter.context("ui"),
-						CallbackParameter.resolved("hash", "ui.item.data('hash')"),
-						CallbackParameter.resolved("index", "ui.item.index()") };
+				return new CallbackParameter[] { CallbackParameter.context("event"), CallbackParameter.context("ui"), CallbackParameter.resolved("hash", "ui.item.data('hash')"), CallbackParameter.resolved("index", "ui.item.index()") };
 			}
 
 			@Override
@@ -221,11 +204,7 @@ public abstract class SortableBehavior<T> extends JQueryBehavior implements IJQu
 			@Override
 			protected CallbackParameter[] getCallbackParameters()
 			{
-				return new CallbackParameter[] {
-						CallbackParameter.context("event"),
-						CallbackParameter.context("ui"),
-						CallbackParameter.resolved("hash", "ui.item.data('hash')"),
-						CallbackParameter.resolved("index", "ui.item.index()") };
+				return new CallbackParameter[] { CallbackParameter.context("event"), CallbackParameter.context("ui"), CallbackParameter.resolved("hash", "ui.item.data('hash')"), CallbackParameter.resolved("index", "ui.item.index()") };
 			}
 
 			@Override
@@ -250,10 +229,7 @@ public abstract class SortableBehavior<T> extends JQueryBehavior implements IJQu
 			@Override
 			protected CallbackParameter[] getCallbackParameters()
 			{
-				return new CallbackParameter[] {
-						CallbackParameter.context("event"),
-						CallbackParameter.context("ui"),
-						CallbackParameter.resolved("hash", "ui.item.data('hash')") };
+				return new CallbackParameter[] { CallbackParameter.context("event"), CallbackParameter.context("ui"), CallbackParameter.resolved("hash", "ui.item.data('hash')") };
 			}
 
 			@Override
@@ -264,42 +240,60 @@ public abstract class SortableBehavior<T> extends JQueryBehavior implements IJQu
 		};
 	}
 
-
 	// Event Objects //
 	/**
-	 * Provides an event object that will be broadcasted by the {@link JQueryAjaxBehavior} 'stop' callback
+	 * A base event object for sortable
 	 */
-	protected static abstract class AbstractEvent extends JQueryEvent
+	protected static class SortableEvent extends JQueryEvent
 	{
 		private final int hash;
 		private final int index;
 
-		public AbstractEvent()
+		public SortableEvent()
 		{
 			this.hash = RequestCycleUtils.getQueryParameterValue("hash").toInt(0);
-			this.index = RequestCycleUtils.getQueryParameterValue("index").toInt(-1); //'remove' behavior will default to -1
+			this.index = RequestCycleUtils.getQueryParameterValue("index").toInt(-1); // remove-behavior will default to -1
 		}
 
+		/**
+		 * Gets the hash
+		 *
+		 * @return the hash
+		 */
 		public int getHash()
 		{
 			return this.hash;
 		}
 
+		/**
+		 * Gets the index
+		 *
+		 * @return the index
+		 */
 		public int getIndex()
 		{
 			return this.index;
 		}
 	}
 
-	protected static class UpdateEvent extends AbstractEvent
+	/**
+	 * Provides an event object that will be broadcasted by the {@link JQueryAjaxBehavior} 'update' callback
+	 */
+	protected static class UpdateEvent extends SortableEvent
 	{
 	}
 
-	protected static class ReceiveEvent extends AbstractEvent
+	/**
+	 * Provides an event object that will be broadcasted by the {@link JQueryAjaxBehavior} 'receive' callback
+	 */
+	protected static class ReceiveEvent extends SortableEvent
 	{
 	}
 
-	protected static class RemoveEvent extends AbstractEvent
+	/**
+	 * Provides an event object that will be broadcasted by the {@link JQueryAjaxBehavior} 'remove' callback
+	 */
+	protected static class RemoveEvent extends SortableEvent
 	{
 	}
 }
