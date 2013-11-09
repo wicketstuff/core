@@ -63,8 +63,9 @@ public class ConnectSortablePage extends AbstractSortablePage
 				super.onUpdate(target, item, index);
 
 				this.info(String.format("%s updated %s to position %d", id, item, index + 1));
-				this.info(String.format("%s list order is now: %s", id, this.getModelObject()));
+				this.info(String.format("%s list is now: %s", id, this.getModelObject()));
 
+				//Update is always the last thrown event
 				target.add(feedback);
 			}
 
@@ -86,7 +87,7 @@ public class ConnectSortablePage extends AbstractSortablePage
 				super.onRemove(target, item);
 
 				this.info(String.format("%s has removed %s", id, item));
-				this.info(String.format("%s list order is now: %s", id, this.getModelObject()));
+				this.info(String.format("%s list is now: %s", id, this.getModelObject()));
 			}
 		};
 	}

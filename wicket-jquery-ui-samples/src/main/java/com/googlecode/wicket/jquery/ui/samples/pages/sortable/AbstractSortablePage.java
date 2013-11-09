@@ -21,9 +21,8 @@ abstract class AbstractSortablePage extends SamplePage
 	{
 		return Arrays.asList(
 				new DemoLink(DefaultSortablePage.class, "Sortable"),
-				new DemoLink(CustomSortablePage.class, "Sortable: custom beans")
-//				,
-//				new DemoLink(ConnectSortablePage.class, "Sortable: connect with")
+				new DemoLink(CustomSortablePage.class, "Sortable: custom beans"),
+				new DemoLink(ConnectSortablePage.class, "Sortable: connect with")
 			);
 	}
 }

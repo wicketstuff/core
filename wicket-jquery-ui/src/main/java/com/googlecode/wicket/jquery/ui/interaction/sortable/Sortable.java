@@ -28,8 +28,6 @@ import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.util.ListModel;
 import org.apache.wicket.request.cycle.RequestCycle;
 import org.apache.wicket.util.lang.Args;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import com.googlecode.wicket.jquery.core.JQueryBehavior;
 import com.googlecode.wicket.jquery.core.JQueryContainer;
@@ -47,7 +45,6 @@ import com.googlecode.wicket.jquery.core.utils.ListUtils;
 public abstract class Sortable<T> extends JQueryContainer implements ISortableListener<T>
 {
 	private static final long serialVersionUID = 1L;
-	private static final Logger LOG = LoggerFactory.getLogger(Sortable.class);
 
 	private final Options options;
 
@@ -59,6 +56,7 @@ public abstract class Sortable<T> extends JQueryContainer implements ISortableLi
 
 	/**
 	 * Constructor
+	 *
 	 * @param id the markup id
 	 * @param list the list the {@link Sortable} should observe.
 	 */
@@ -69,6 +67,7 @@ public abstract class Sortable<T> extends JQueryContainer implements ISortableLi
 
 	/**
 	 * Constructor
+	 *
 	 * @param id the markup id
 	 * @param list the list the {@link Sortable} should observe.
 	 * @param options the {@link Options}
@@ -80,6 +79,7 @@ public abstract class Sortable<T> extends JQueryContainer implements ISortableLi
 
 	/**
 	 * Constructor
+	 *
 	 * @param id the markup id
 	 * @param model the list the {@link Sortable} should observe.
 	 */
@@ -90,6 +90,7 @@ public abstract class Sortable<T> extends JQueryContainer implements ISortableLi
 
 	/**
 	 * Constructor
+	 *
 	 * @param id the markup id
 	 * @param model the list the {@link Sortable} should observe.
 	 * @param options the {@link Options}
@@ -118,12 +119,10 @@ public abstract class Sortable<T> extends JQueryContainer implements ISortableLi
 
 			if (target != null)
 			{
-				@SuppressWarnings({ "unchecked", "unused" })
-				T item = (T)event.getPayload();
+				@SuppressWarnings("unchecked")
+				T item = (T) event.getPayload();
 
-				//FIXME: remove may be called first, so the item becomes unavailable for adding.
-				LOG.warn("onRemove is currently disabled (connectWith should not be used yet)");
-				//this.onRemove(target, item);
+				this.onRemove(target, item);
 			}
 		}
 	}
@@ -132,7 +131,7 @@ public abstract class Sortable<T> extends JQueryContainer implements ISortableLi
 	public void onUpdate(AjaxRequestTarget target, T item, int index)
 	{
 		this.modelChanging();
-		ListUtils.move(item, index, this.getModelObject());
+		ListUtils.move(item, index, this.getModelObject()); //why is it called by sender if moving to receiver?
 		this.modelChanged();
 	}
 
@@ -155,10 +154,10 @@ public abstract class Sortable<T> extends JQueryContainer implements ISortableLi
 		this.modelChanged();
 	}
 
-
 	// Properties //
 	/**
 	 * Gets the {@link IModel}
+	 *
 	 * @return the {@link IModel}
 	 */
 	@SuppressWarnings("unchecked")
@@ -169,6 +168,7 @@ public abstract class Sortable<T> extends JQueryContainer implements ISortableLi
 
 	/**
 	 * Gets the {@link IModel}
+	 *
 	 * @return the {@link IModel}
 	 */
 	@SuppressWarnings("unchecked")
@@ -179,6 +179,7 @@ public abstract class Sortable<T> extends JQueryContainer implements ISortableLi
 
 	/**
 	 * Sets the model object
+	 *
 	 * @param list the {@link List}
 	 */
 	public void setModelObject(List<T> list)
@@ -195,13 +196,15 @@ public abstract class Sortable<T> extends JQueryContainer implements ISortableLi
 	@Override
 	public boolean isOnRemoveEnabled()
 	{
-		return (this.connectedSortable != null);
+		return false; // remove is handled after receive, by the bus event
+		// remove (this.connectedSortable != null);
 	}
 
 	// Methods //
 	/**
 	 * Connects with another {@link Sortable}<br/>
 	 * The specified {@link Sortable} will keep a reference to the caller (<code>this</code>).
+	 *
 	 * @param sortable the {@link Sortable} to connect with
 	 * @return this, for chaining
 	 */
@@ -209,13 +212,14 @@ public abstract class Sortable<T> extends JQueryContainer implements ISortableLi
 	{
 		Args.notNull(sortable, "sortable");
 
-		sortable.connect(this); //eq. to sortable.connectedSortable = this;
+		sortable.connect(this); // eq. to sortable.connectedSortable = this;
 
 		return this.connectWith(JQueryWidget.getSelector(sortable));
 	}
 
 	/**
 	 * Sets the '<code>connectWith</code>' options
+	 *
 	 * @param selector the html selector
 	 * @return this, for chaining
 	 */
@@ -229,6 +233,7 @@ public abstract class Sortable<T> extends JQueryContainer implements ISortableLi
 	/**
 	 * Sets the connected {@link Sortable} reference.<br/>
 	 * Suppling a non-null {@link Sortable} will activate {@link #isOnReceiveEnabled()}
+	 *
 	 * @param sortable the {@link Sortable}
 	 * @see #isOnReceiveEnabled()
 	 */
@@ -236,7 +241,6 @@ public abstract class Sortable<T> extends JQueryContainer implements ISortableLi
 	{
 		this.connectedSortable = sortable;
 	}
-
 
 	// IJQueryWidget //
 	@Override
@@ -297,6 +301,7 @@ public abstract class Sortable<T> extends JQueryContainer implements ISortableLi
 
 	/**
 	 * Gets a new {@link HashListView}
+	 *
 	 * @param model the {@link IModel} that <i>should</i> be used
 	 * @return the {@link HashListView}
 	 */
@@ -313,6 +318,7 @@ public abstract class Sortable<T> extends JQueryContainer implements ISortableLi
 
 		/**
 		 * Constructor
+		 *
 		 * @param id the markup-id
 		 */
 		public HashListView(String id)
@@ -322,6 +328,7 @@ public abstract class Sortable<T> extends JQueryContainer implements ISortableLi
 
 		/**
 		 * Constructor
+		 *
 		 * @param id the markup-id
 		 * @param list the {@link List}
 		 */
@@ -332,6 +339,7 @@ public abstract class Sortable<T> extends JQueryContainer implements ISortableLi
 
 		/**
 		 * Constructor
+		 *
 		 * @param id the markup-id
 		 * @param model the {@link IModel}
 		 */

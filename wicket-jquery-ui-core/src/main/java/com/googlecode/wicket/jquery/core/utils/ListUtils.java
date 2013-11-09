@@ -51,7 +51,7 @@ public class ListUtils
 	 * @param hash the hashcode to match
 	 * @return the index of the item matching the hashcode or -1 if not found
 	 */
-	private static synchronized int indexOf(int hash, List<?> list)
+	public static synchronized int indexOf(int hash, List<?> list)
 	{
 		Iterator<?> iterator = list.iterator();
 
@@ -76,7 +76,10 @@ public class ListUtils
 	 */
 	public static synchronized <T> void move(final T item, int index, final List<T> list)
 	{
-		list.add(index, list.remove(ListUtils.indexOf(item.hashCode(), list)));
+		if (index < list.size())
+		{
+			list.add(index, list.remove(ListUtils.indexOf(item.hashCode(), list)));
+		}
 	}
 
 	/**
