@@ -196,8 +196,7 @@ public abstract class Sortable<T> extends JQueryContainer implements ISortableLi
 	@Override
 	public boolean isOnRemoveEnabled()
 	{
-		return false; // remove is handled after receive, by the bus event
-		// remove (this.connectedSortable != null);
+		return false; // 'remove' will be handled after 'receive', by the event bus
 	}
 
 	// Methods //

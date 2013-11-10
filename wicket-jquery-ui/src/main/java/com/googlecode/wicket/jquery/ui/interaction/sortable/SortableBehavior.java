@@ -179,7 +179,11 @@ public abstract class SortableBehavior<T> extends JQueryBehavior implements IJQu
 			@Override
 			protected CallbackParameter[] getCallbackParameters()
 			{
-				return new CallbackParameter[] { CallbackParameter.context("event"), CallbackParameter.context("ui"), CallbackParameter.resolved("hash", "ui.item.data('hash')"), CallbackParameter.resolved("index", "ui.item.index()") };
+				return new CallbackParameter[] {
+						CallbackParameter.context("event"),
+						CallbackParameter.context("ui"),
+						CallbackParameter.resolved("hash", "ui.item.data('hash')"),
+						CallbackParameter.resolved("index", "ui.item.index()") };
 			}
 
 			@Override
@@ -204,7 +208,11 @@ public abstract class SortableBehavior<T> extends JQueryBehavior implements IJQu
 			@Override
 			protected CallbackParameter[] getCallbackParameters()
 			{
-				return new CallbackParameter[] { CallbackParameter.context("event"), CallbackParameter.context("ui"), CallbackParameter.resolved("hash", "ui.item.data('hash')"), CallbackParameter.resolved("index", "ui.item.index()") };
+				return new CallbackParameter[] {
+						CallbackParameter.context("event"),
+						CallbackParameter.context("ui"),
+						CallbackParameter.resolved("hash", "ui.item.data('hash')"),
+						CallbackParameter.resolved("index", "ui.item.index()") };
 			}
 
 			@Override
@@ -229,7 +237,10 @@ public abstract class SortableBehavior<T> extends JQueryBehavior implements IJQu
 			@Override
 			protected CallbackParameter[] getCallbackParameters()
 			{
-				return new CallbackParameter[] { CallbackParameter.context("event"), CallbackParameter.context("ui"), CallbackParameter.resolved("hash", "ui.item.data('hash')") };
+				return new CallbackParameter[] {
+						CallbackParameter.context("event"),
+						CallbackParameter.context("ui"),
+						CallbackParameter.resolved("hash", "ui.item.data('hash')") };
 			}
 
 			@Override
