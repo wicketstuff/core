@@ -29,28 +29,29 @@ import com.googlecode.wicket.jquery.core.Options;
  * <b>Note:</b> the {@link BorderLayout} IS a {@link WebMarkupContainer}. If you wish to apply a {@link BorderLayout} on an existing Page or an existing Panel, consider implementing the {@link IBorderLayout} interface.<br/>
  * <br/>
  * Alternatively, the HTML markup look like:
+ *
  * <pre>
-&lt;div wicket:id="layout"&gt;
-	&lt;div id="vertical"&gt;
-		&lt;div id="myPaneId"&gt;
-			- top -
-		&lt;/div&gt;
-		&lt;div id="horizontal"&gt;
-			&lt;div&gt;
-				- left -
-			&lt;/div&gt;
-			&lt;div&gt;
-				- center -
-			&lt;/div&gt;
-			&lt;div&gt;
-				- right -
-			&lt;/div&gt;
-		&lt;/div&gt;
-		&lt;div&gt;
-			- bottom -
-		&lt;/div&gt;
-	&lt;/div&gt;
-&lt;/div&gt;
+ * &lt;div wicket:id="layout"&gt;
+ * 	&lt;div id="vertical"&gt;
+ * 		&lt;div id="top"&gt;
+ * 			&lt;br/&gt;
+ * 		&lt;/div&gt;
+ * 		&lt;div id="horizontal"&gt;
+ * 			&lt;div id="left"&gt;
+ * 				&lt;br/&gt;
+ * 			&lt;/div&gt;
+ * 			&lt;div id="center"&gt;
+ * 				&lt;br/&gt;
+ * 			&lt;/div&gt;
+ * 			&lt;div id="right"&gt;
+ * 				&lt;br/&gt;
+ * 			&lt;/div&gt;
+ * 		&lt;/div&gt;
+ * 		&lt;div id="bottom"&gt;
+ * 			&lt;br/&gt;
+ * 		&lt;/div&gt;
+ * 	&lt;/div&gt;
+ * &lt;/div&gt;
  * </pre>
  *
  * @author Sebastien Briquet - sebfz1
@@ -62,6 +63,7 @@ public class BorderLayout extends WebMarkupContainer implements IBorderLayout, I
 
 	/**
 	 * Constructor
+	 *
 	 * @param id the markup id
 	 */
 	public BorderLayout(String id)
@@ -92,6 +94,32 @@ public class BorderLayout extends WebMarkupContainer implements IBorderLayout, I
 		container.add(this.newHorizontalSplitterBehavior("#horizontal", this.getHorizontalPanes()));
 	}
 
+	/**
+	 * Expands the specified pane<br/>
+	 * <b>Note: </b> Invoking the method will not trigger an expand event.
+	 *
+	 * @param target the {@link AjaxRequestTarget}
+	 * @param selector the splitter selector (ie: "#vertical")
+	 * @param pane the pane selector (ie: "#bottom")
+	 */
+	public void expand(AjaxRequestTarget target, String selector, String pane)
+	{
+		target.appendJavaScript(String.format("$('%s').data('%s').expand('%s');", selector, SplitterBehavior.METHOD, pane));
+	}
+
+	/**
+	 * Collapses the specified pane<br/>
+	 * <b>Note: </b> Invoking the method will not trigger a collapse event.
+	 *
+	 * @param target the {@link AjaxRequestTarget}
+	 * @param selector the splitter selector (ie: "#vertical")
+	 * @param pane the pane selector (ie: "#bottom")
+	 */
+	public void collapse(AjaxRequestTarget target, String selector, String pane)
+	{
+		target.appendJavaScript(String.format("$('%s').data('%s').collapse('%s');", selector, SplitterBehavior.METHOD, pane));
+	}
+
 	// Events //
 	@Override
 	protected void onInitialize()
@@ -113,6 +141,7 @@ public class BorderLayout extends WebMarkupContainer implements IBorderLayout, I
 
 	/**
 	 * Gets vertical panes in a JSON array
+	 *
 	 * @return by default: 15% - middle - 15%
 	 */
 	@Override
@@ -123,6 +152,7 @@ public class BorderLayout extends WebMarkupContainer implements IBorderLayout, I
 
 	/**
 	 * Gets horizontal panes in a JSON array
+	 *
 	 * @return by default: 15% - center - 15%
 	 */
 	@Override

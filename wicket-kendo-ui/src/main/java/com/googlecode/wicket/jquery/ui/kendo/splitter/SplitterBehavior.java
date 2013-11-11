@@ -37,7 +37,7 @@ import com.googlecode.wicket.jquery.ui.kendo.KendoAbstractBehavior;
 public class SplitterBehavior extends KendoAbstractBehavior implements IJQueryAjaxAware, ISplitterListener
 {
 	private static final long serialVersionUID = 1L;
-	private static final String METHOD = "kendoSplitter";
+	public static final String METHOD = "kendoSplitter";
 
 	private JQueryAjaxBehavior onExpandBehavior;
 	private JQueryAjaxBehavior onCollapseBehavior;
@@ -70,6 +70,30 @@ public class SplitterBehavior extends KendoAbstractBehavior implements IJQueryAj
 
 		component.add(this.onExpandBehavior = this.newExpandBehavior());
 		component.add(this.onCollapseBehavior = this.newCollapseBehavior());
+	}
+
+	/**
+	 * Expands the specified pane<br/>
+	 * <b>Note: </b> Invoking the method will not trigger an expand event.
+	 *
+	 * @param target the {@link AjaxRequestTarget}
+	 * @param pane the pane selector (ie: "#bottom")
+	 */
+	public void expand(AjaxRequestTarget target, String pane)
+	{
+		target.appendJavaScript(String.format("$('%s').data('%s').expand('%s');", this.getSelector(), METHOD, pane));
+	}
+
+	/**
+	 * Collapses the specified pane<br/>
+	 * <b>Note: </b> Invoking the method will not trigger a collapse event.
+	 *
+	 * @param target the {@link AjaxRequestTarget}
+	 * @param pane the pane selector (ie: "#bottom")
+	 */
+	public void collapse(AjaxRequestTarget target, String pane)
+	{
+		target.appendJavaScript(String.format("$('%s').data('%s').collapse('%s');", this.getSelector(), METHOD, pane));
 	}
 
 	// Properties //
