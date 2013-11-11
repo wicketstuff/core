@@ -15,6 +15,14 @@ public abstract class StatelessAjaxEventBehavior extends AjaxEventBehavior
     }
 
     @Override
+    protected void onBind()
+    {
+        super.onBind();
+
+        getComponent().getBehaviorId(this);
+    }
+
+    @Override
     public CharSequence getCallbackUrl()
     {
         final Url url = Url.parse(super.getCallbackUrl().toString());
