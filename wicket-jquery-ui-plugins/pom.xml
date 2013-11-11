@@ -7,7 +7,7 @@
 	<parent>
 		<groupId>com.googlecode.wicket-jquery-ui</groupId>
 		<artifactId>wicket-jquery-ui-parent</artifactId>
-		<version>6.11.1-SNAPSHOT</version>
+		<version>6.12.0</version>
 	</parent>
 
 	<artifactId>wicket-jquery-ui-plugins</artifactId>
@@ -18,7 +18,7 @@
 		<dependency>
 			<groupId>com.googlecode.wicket-jquery-ui</groupId>
 			<artifactId>wicket-jquery-ui-core</artifactId>
-			<version>6.11.1-SNAPSHOT</version>
+			<version>6.12.0</version>
 		</dependency>
 
 		<!-- WICKET DEPENDENCIES -->
