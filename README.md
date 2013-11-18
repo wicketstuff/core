@@ -1,5 +1,6 @@
 # wicket-jquery-ui
-**jQuery UI integration in Wicket 1.5.x &amp; Wicket 6.x**
+**jQuery UI integration in Wicket 1.5.x &amp; Wicket 6.x**  
+[![Build Status](https://buildhive.cloudbees.com/job/sebfz1/job/wicket-jquery-ui/badge/icon)](https://buildhive.cloudbees.com/job/sebfz1/job/wicket-jquery-ui/)
 
 ## Artifacts
 - jQuery UI `wicket-jquery-ui`
