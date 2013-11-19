@@ -35,7 +35,7 @@ public class DefaultEditorPage extends AbstractEditorPage
 			{
 				String html = editor.getModelObject();
 
-				this.info(html != null ? "Escaped HTML: " + html : "empty");
+				this.info(html != null ? html : "empty");
 			}
 		});
 	}
