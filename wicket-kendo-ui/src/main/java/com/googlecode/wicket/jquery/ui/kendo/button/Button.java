@@ -25,6 +25,7 @@ import org.apache.wicket.model.IModel;
  * @author Sebastien Briquet - sebfz1
  *
  */
+//TODO: replace with new kendoButton
 public class Button extends org.apache.wicket.markup.html.form.Button
 {
 	private static final long serialVersionUID = 1L;
