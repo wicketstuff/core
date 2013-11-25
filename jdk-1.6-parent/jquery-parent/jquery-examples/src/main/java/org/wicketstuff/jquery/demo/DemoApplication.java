@@ -22,6 +22,8 @@ import org.apache.wicket.ConverterLocator;
 import org.apache.wicket.IConverterLocator;
 import org.apache.wicket.Page;
 import org.apache.wicket.RuntimeConfigurationType;
+import org.apache.wicket.markup.html.IPackageResourceGuard;
+import org.apache.wicket.markup.html.SecurePackageResourceGuard;
 import org.apache.wicket.protocol.http.WebApplication;
 import org.apache.wicket.util.convert.converter.DateConverter;
 import org.wicketstuff.jquery.ajaxbackbutton.Page4AjaxBackButton;
@@ -41,7 +43,14 @@ public class DemoApplication extends WebApplication
 		mountPackage("/ui", Page4Slider.class);
 		super.init();
 
-// if (Application.DEVELOPMENT.equals(getConfigurationType())) {
+        IPackageResourceGuard packageResourceGuard = getResourceSettings().getPackageResourceGuard();
+        if (packageResourceGuard instanceof SecurePackageResourceGuard)
+        {
+            SecurePackageResourceGuard secureGuard = (SecurePackageResourceGuard) packageResourceGuard;
+            secureGuard.addPattern("+*.map");
+        }
+
+        // if (Application.DEVELOPMENT.equals(getConfigurationType())) {
 // getDebugSettings().setOutputMarkupContainerClassName(true);
 // }
 	}
