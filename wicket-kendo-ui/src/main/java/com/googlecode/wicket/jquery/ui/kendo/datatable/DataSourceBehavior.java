@@ -52,9 +52,8 @@ class DataSourceBehavior<T> extends AbstractDefaultAjaxBehavior
 	 * Constructor
 	 * @param columns the list of {@link IColumn}
 	 * @param provider the {@link IDataProvider}
-	 * @param rows the number of rows per page to be displayed
 	 */
-	public DataSourceBehavior(final List<? extends IColumn> columns, final IDataProvider<T> provider, final long rows)
+	public DataSourceBehavior(final List<? extends IColumn> columns, final IDataProvider<T> provider)
 	{
 		this.columns = columns;
 		this.provider = provider;

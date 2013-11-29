@@ -106,7 +106,7 @@ public class DataTable<T> extends WebComponent implements IJQueryWidget, IDataTa
 	{
 		super.onInitialize();
 
-		this.add(this.sourceBehavior = this.newDataSourceBehavior(this.columns, this.provider, this.rows));
+		this.add(this.sourceBehavior = this.newDataSourceBehavior(this.columns, this.provider));
 		this.add(JQueryWidget.newWidgetBehavior(this)); // cannot be in ctor as the markupId may be set manually afterward
 	}
 
@@ -181,9 +181,9 @@ public class DataTable<T> extends WebComponent implements IJQueryWidget, IDataTa
 	 * @param rows the number of rows per page to be displayed
 	 * @return the {@link AbstractAjaxBehavior}
 	 */
-	protected AbstractAjaxBehavior newDataSourceBehavior(final List<? extends IColumn> columns, final IDataProvider<T> provider, final long rows)
+	protected AbstractAjaxBehavior newDataSourceBehavior(final List<? extends IColumn> columns, final IDataProvider<T> provider)
 	{
-		return new DataSourceBehavior<T>(columns, provider, rows);
+		return new DataSourceBehavior<T>(columns, provider);
 	}
 
 	/**
