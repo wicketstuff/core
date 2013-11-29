@@ -147,7 +147,7 @@ public abstract class SecuredAjaxButton extends AjaxButton
 	 */
 	public void setRoles(String[] roles)
 	{
-		this.roles = roles;
+		this.roles = roles.clone();
 	}
 
 	/**

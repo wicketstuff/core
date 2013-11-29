@@ -207,11 +207,11 @@ public class RangeDatePickerTextField extends FormComponentPanel<DateRange> impl
 				}
 				catch (ParseException e)
 				{
-					throw new ConversionException(e.getMessage());
+					throw new ConversionException(e.getMessage(), e);
 				}
 				catch (IndexOutOfBoundsException e)
 				{
-					throw new ConversionException(e.getMessage());
+					throw new ConversionException(e.getMessage(), e);
 				}
 			}
 

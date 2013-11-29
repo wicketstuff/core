@@ -177,7 +177,7 @@ public class Menu extends JQueryPanel implements IMenuListener
 			super(id, "menu-fragment", Menu.this);
 
 			this.add(new ListFragment("list", items));
-			this.setVisible(items.size() > 0);
+			this.setVisible(!items.isEmpty());
 		}
 	}
 

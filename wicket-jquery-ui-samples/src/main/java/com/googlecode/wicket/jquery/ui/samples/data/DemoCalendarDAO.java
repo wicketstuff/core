@@ -9,9 +9,9 @@ import com.googlecode.wicket.jquery.ui.samples.data.DemoCalendarEvent.Category;
 public class DemoCalendarDAO
 {
 	private static DemoCalendarDAO instance = null;
-	
+
 	/** new event id */
-	public static int ID = -1;
+	private static int ID = -1;
 
 	private static synchronized DemoCalendarDAO get()
 	{

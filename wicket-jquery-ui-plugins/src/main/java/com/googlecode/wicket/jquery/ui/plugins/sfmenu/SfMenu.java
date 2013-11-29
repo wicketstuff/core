@@ -162,7 +162,7 @@ public class SfMenu extends JQueryPanel
 			super(id, "menu-fragment", SfMenu.this);
 
 			this.add(new ListFragment("list", items));
-			this.setVisible(items.size() > 0);
+			this.setVisible(!items.isEmpty());
 		}
 	}
 

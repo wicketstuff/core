@@ -94,7 +94,7 @@ public abstract class SecuredButton extends Button
 	 */
 	public void setRoles(String[] roles)
 	{
-		this.roles = roles;
+		this.roles = roles.clone();
 	}
 
 	/**
