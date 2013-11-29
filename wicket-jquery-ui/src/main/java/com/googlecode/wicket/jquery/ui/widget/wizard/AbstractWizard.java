@@ -175,7 +175,7 @@ public abstract class AbstractWizard<T extends Serializable> extends AbstractFor
 	 * Initialization
 	 * @param wizardModel the {@link IWizardModel}
 	 */
-	protected void init(final IWizardModel wizardModel)
+	protected final void init(final IWizardModel wizardModel)
 	{
 		if (wizardModel == null)
 		{
