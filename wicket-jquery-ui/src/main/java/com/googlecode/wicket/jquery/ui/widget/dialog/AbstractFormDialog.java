@@ -168,8 +168,6 @@ public abstract class AbstractFormDialog<T extends Serializable> extends Abstrac
 	 * @param button the dialog's button
 	 * @return the {@link Form} or <code>null</code>
 	 */
-	@SuppressWarnings("deprecation")
-	// XXX: remove SuppressWarnings in wicket-6.12.0-next
 	protected Form<?> getForm(DialogButton button)
 	{
 		if (button.equals(this.getSubmitButton()))

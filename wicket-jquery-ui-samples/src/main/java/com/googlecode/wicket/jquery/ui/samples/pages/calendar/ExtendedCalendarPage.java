@@ -74,9 +74,13 @@ public class ExtendedCalendarPage extends AbstractCalendarPage
 			}
 
 			@Override
-			@Deprecated
-			@SuppressWarnings("deprecation")
-			public boolean isEditable()
+			public boolean isDayClickEnabled()
+			{
+				return true;
+			}
+
+			@Override
+			public boolean isEventClickEnabled()
 			{
 				return true;
 			}

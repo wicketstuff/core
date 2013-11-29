@@ -129,14 +129,6 @@ public class Calendar extends JQueryContainer implements ICalendarListener
 
 	// Properties //
 	@Override
-	@Deprecated
-	@SuppressWarnings("deprecation")
-	public boolean isEditable()
-	{
-		return false;
-	}
-
-	@Override
 	public boolean isSelectable()
 	{
 		return false;
@@ -145,15 +137,13 @@ public class Calendar extends JQueryContainer implements ICalendarListener
 	@Override
 	public boolean isDayClickEnabled()
 	{
-		return this.isEditable();
-		// return false; // XXX: enable in wicket-6.12.0-next
+		return false;
 	}
 
 	@Override
 	public boolean isEventClickEnabled()
 	{
-		return this.isEditable();
-		// return false; // XXX: enable in wicket-6.12.0-next
+		return false;
 	}
 
 	@Override
@@ -255,14 +245,6 @@ public class Calendar extends JQueryContainer implements ICalendarListener
 		return new CalendarBehavior(selector, this.options) {
 
 			private static final long serialVersionUID = 1L;
-
-			@Override
-			@Deprecated
-			@SuppressWarnings("deprecation")
-			public boolean isEditable()
-			{
-				return Calendar.this.isEditable();
-			}
 
 			@Override
 			public boolean isSelectable()

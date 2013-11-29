@@ -282,23 +282,16 @@ public class ColumnButton implements IClusterable
 	 *
 	 * @param object a {@link ColumnButton} to compare to
 	 * @return true if considered as equal
-	 * @deprecated for text comparison, use {@link #match(String)} instead. Comparison of String equality will be removed on wicket-6.12.0-next
 	 */
 	@Override
-	@Deprecated
-	// XXX: remove Deprecated in wicket-6.12.0-next
 	public boolean equals(Object object)
 	{
-		// XXX: restore in wicket-6.12.0-next
-//		if (object instanceof ColumnButton)
-//		{
-//			return this.match(object.toString());
-//		}
-//
-//		return super.equals(object);
+		if (object instanceof ColumnButton)
+		{
+			return this.match(object.toString());
+		}
 
-		// XXX: remove in wicket-6.12.0-next
-		return (object != null) && (object.toString().equals(this.toString()));
+		return super.equals(object);
 	}
 
 	/**
