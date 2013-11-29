@@ -119,7 +119,7 @@ public abstract class DialogBehavior extends JQueryBehavior implements IJQueryAj
 		}
 
 		// buttons events //
-		StringBuffer buttons = new StringBuffer("[ ");
+		StringBuilder buttons = new StringBuilder("[ ");
 
 		int index = 0;
 		for(ButtonAjaxBehavior behavior : component.getBehaviors(ButtonAjaxBehavior.class))

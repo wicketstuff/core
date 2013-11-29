@@ -25,7 +25,7 @@ public class DemoCalendarDAO
 
 	public static boolean isNew(DemoCalendarEvent event)
 	{
-		return (event != null && event.getId() == ID);
+		return event != null && event.getId() == ID;
 	}
 
 	public static DemoCalendarEvent newEvent(Date date)
@@ -81,7 +81,6 @@ public class DemoCalendarDAO
 		}
 	}
 
-
 	private final List<DemoCalendarEvent> list;
 	private int id = 0;
 
@@ -91,7 +90,7 @@ public class DemoCalendarDAO
 		this.initList();
 	}
 
-	private void initList()
+	private final void initList()
 	{
 		this.list.add(new DemoCalendarEvent(this.newId(), "Public event", Category.PUBLIC, new Date()));
 		this.list.add(new DemoCalendarEvent(this.newId(), "Private event", Category.PRIVATE, new Date()));
@@ -114,6 +113,6 @@ public class DemoCalendarDAO
 	{
 		Date date = event.getStart();
 
-		return (date != null && start.compareTo(date) <= 0 && end.compareTo(date) >= 0);
+		return date != null && start.compareTo(date) <= 0 && end.compareTo(date) >= 0;
 	}
 }

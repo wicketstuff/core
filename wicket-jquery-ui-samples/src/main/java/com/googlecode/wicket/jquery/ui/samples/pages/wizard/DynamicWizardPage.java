@@ -63,7 +63,7 @@ public class DynamicWizardPage extends AbstractWizardPage
 			{
 				User user = this.getModelObject();
 
-				this.info(String.format("Created user: '%s' - %s [%s] with %s", user.getName(), user.getMail(), user.getRole(), (user.getAvatar() != null ? user.getAvatar() : "no avatar" )));
+				this.info(String.format("Created user: '%s' - %s [%s] with %s", user.getName(), user.getMail(), user.getRole(), user.getAvatar() != null ? user.getAvatar() : "no avatar" ));
 				target.add(feedback.setEscapeModelStrings(false));
 			}
 		};
@@ -147,7 +147,7 @@ public class DynamicWizardPage extends AbstractWizardPage
 					@Override
 					public Object getDisplayValue(Boolean bool)
 					{
-						return (bool ? "Yes" : "No");
+						return bool ? "Yes" : "No";
 					}
 
 					@Override
@@ -178,7 +178,9 @@ public class DynamicWizardPage extends AbstractWizardPage
 
 				// reset the avatar to null if the option has been changed since the avatar has been set
 				// (ie, the users chooses 'yes', set the avatar and then choose no by going steps backward)
-				if (UserWizard.this.enableAvatarStepModel.getObject() == false)
+				boolean enabled = UserWizard.this.enableAvatarStepModel.getObject();
+
+				if (!enabled)
 				{
 					User user = UserWizard.this.getModelObject();
 
@@ -244,7 +246,7 @@ public class DynamicWizardPage extends AbstractWizardPage
 			public IDynamicWizardStep next()
 			{
 				//defines if wizard goes to avatar step or finish step
-				return (UserWizard.this.enableAvatarStepModel.getObject() ? UserWizard.this.step3 : UserWizard.this.step4);
+				return UserWizard.this.enableAvatarStepModel.getObject() ? UserWizard.this.step3 : UserWizard.this.step4;
 			}
 		}
 
@@ -345,7 +347,7 @@ public class DynamicWizardPage extends AbstractWizardPage
 			@Override
 			public IDynamicWizardStep previous()
 			{
-				return (UserWizard.this.enableAvatarStepModel.getObject() ? UserWizard.this.step3 : super.previous());
+				return UserWizard.this.enableAvatarStepModel.getObject() ? UserWizard.this.step3 : super.previous();
 			}
 
 			@Override
