@@ -104,7 +104,10 @@ abstract class AutoCompleteSourceBehavior<T> extends AbstractDefaultAjaxBehavior
 					int index = 0;
 					for (T choice : choices)
 					{
-						if (index++ > 0) { builder.append(", "); }
+						if (index++ > 0)
+						{
+							builder.append(", ");
+						}
 
 						builder.append("{ ");
 						builder.append(Options.QUOTE).append("id").append(Options.QUOTE).append(": ").append(Options.QUOTE).append(Integer.toString(index)).append(Options.QUOTE); /* id is a reserved word */

@@ -21,17 +21,18 @@ import java.util.List;
 
 /**
  * Provides simple utils that can be used in {@link AutoCompleteTextField#getChoices(String)}
- * 
+ *
  * @author Sebastien Briquet - sebfz1
  *
  */
 public class AutoCompleteUtils
 {
 	private static final int MAX = 20;
-	
+
 	/**
 	 * Returns a sub list of items of type T having their textual representation (toString()) containing the search criteria<br/>
 	 * The max size of the sub list is {@link #MAX}
+	 *
 	 * @param <T> the type
 	 * @param search search criteria
 	 * @param list reference list
@@ -41,9 +42,10 @@ public class AutoCompleteUtils
 	{
 		return AutoCompleteUtils.contains(search, list, MAX);
 	}
-	
+
 	/**
 	 * Returns a sub list of items of type T having their textual representation (toString()) containing the search criteria<br/>
+	 *
 	 * @param <T> the type
 	 * @param search search criteria
 	 * @param list reference list
@@ -53,24 +55,28 @@ public class AutoCompleteUtils
 	public static <T> List<T> contains(String search, List<T> list, int max)
 	{
 		List<T> choices = new ArrayList<T>();
-	
+
 		int count = 0;
 		for (T choice : list)
 		{
 			if (choice.toString().toLowerCase().contains(search.toLowerCase()))
 			{
 				choices.add(choice);
-				
-				if (++count == max) { break; }
+
+				if (++count == max)
+				{
+					break;
+				}
 			}
 		}
-	
+
 		return choices;
 	}
-	
+
 	/**
 	 * Returns a sub list of items of type T having their textual representation (toString()) starting with the search criteria<br/>
 	 * The max size of the sub list is {@link #MAX}
+	 *
 	 * @param <T> the type
 	 * @param search search criteria
 	 * @param list reference list
@@ -83,6 +89,7 @@ public class AutoCompleteUtils
 
 	/**
 	 * Returns a sub list of items of type T having their textual representation (toString()) starting with the search criteria<br/>
+	 *
 	 * @param <T> the type
 	 * @param search search criteria
 	 * @param list reference list
@@ -92,18 +99,28 @@ public class AutoCompleteUtils
 	public static <T> List<T> startsWith(String search, List<T> list, int max)
 	{
 		List<T> choices = new ArrayList<T>();
-	
+
 		int count = 0;
 		for (T choice : list)
 		{
 			if (choice.toString().toLowerCase().startsWith(search.toLowerCase()))
 			{
 				choices.add(choice);
-				
-				if (++count == max) { break; }
+
+				if (++count == max)
+				{
+					break;
+				}
 			}
 		}
-	
+
 		return choices;
+	}
+
+	/**
+	 * Utility class
+	 */
+	private AutoCompleteUtils()
+	{
 	}
 }

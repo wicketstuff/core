@@ -311,7 +311,7 @@ public abstract class Sortable<T> extends JQueryContainer implements ISortableLi
 	 *
 	 * @param <T> the type of the model object
 	 */
-	public static abstract class HashListView<T> extends ListView<T>
+	public abstract static class HashListView<T> extends ListView<T>
 	{
 		private static final long serialVersionUID = 1L;
 

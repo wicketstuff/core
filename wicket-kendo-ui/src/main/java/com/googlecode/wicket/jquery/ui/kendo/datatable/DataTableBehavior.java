@@ -42,6 +42,7 @@ public abstract class DataTableBehavior extends KendoAbstractBehavior implements
 
 	/**
 	 * Constructor
+	 *
 	 * @param selector the html selector (ie: "#myId")
 	 */
 	public DataTableBehavior(String selector)
@@ -51,6 +52,7 @@ public abstract class DataTableBehavior extends KendoAbstractBehavior implements
 
 	/**
 	 * Constructor
+	 *
 	 * @param selector the html selector (ie: "#myId")
 	 * @param options the {@link Options}
 	 */
@@ -58,7 +60,6 @@ public abstract class DataTableBehavior extends KendoAbstractBehavior implements
 	{
 		super(selector, METHOD, options);
 	}
-
 
 	// Methods //
 
@@ -74,29 +75,32 @@ public abstract class DataTableBehavior extends KendoAbstractBehavior implements
 		}
 	}
 
-
 	// Properties //
 
 	/**
 	 * Gets the {@link List} of {@link IColumn}
+	 *
 	 * @return the {@link List} of {@link IColumn}
 	 */
 	protected abstract List<? extends IColumn> getColumns();
 
 	/**
 	 * Gets the row count
+	 *
 	 * @return the row count
 	 */
 	protected abstract long getRowCount();
 
 	/**
 	 * Gets the data-source behavior's url
+	 *
 	 * @return the data-source behavior's url
 	 */
 	protected abstract CharSequence getSourceCallbackUrl();
 
 	/**
 	 * Gets the {@link List} of {@link ColumnButton} that have may be supplied through a {@link CommandsColumn}
+	 *
 	 * @return the {@link List} of {@link ColumnButton}
 	 */
 	private List<ColumnButton> getButtons()
@@ -105,13 +109,12 @@ public abstract class DataTableBehavior extends KendoAbstractBehavior implements
 		{
 			if (column instanceof CommandsColumn)
 			{
-				return ((CommandsColumn)column).getButtons();
+				return ((CommandsColumn) column).getButtons();
 			}
 		}
 
 		return Collections.emptyList();
 	}
-
 
 	// Events //
 
@@ -133,51 +136,49 @@ public abstract class DataTableBehavior extends KendoAbstractBehavior implements
 		// columns //
 		StringBuilder builder = new StringBuilder("[ ");
 
+		List<? extends IColumn> columns = this.getColumns();
+
+		for (int i = 0; i < columns.size(); i++)
 		{
-			List<? extends IColumn> columns = this.getColumns();
+			IColumn column = columns.get(i);
 
-			for (int i = 0; i < columns.size(); i++)
+			if (i > 0)
 			{
-				IColumn column = columns.get(i);
+				builder.append(", ");
+			}
 
-				if (i > 0)
+			builder.append("{ ");
+			builder.append(column.toString()); // toJSON(component)
+
+			if (column instanceof CommandsColumn)
+			{
+				// buttons //
+				builder.append(", ");
+				builder.append(Options.QUOTE).append("command").append(Options.QUOTE).append(": ");
+				builder.append("[ ");
+
+				int n = 0;
+				for (ButtonAjaxBehavior behavior : component.getBehaviors(ButtonAjaxBehavior.class))
 				{
-					builder.append(", ");
-				}
+					ColumnButton button = behavior.getButton();
 
-				builder.append("{ ");
-				builder.append(column.toString()); //toJSON(component)
-
-				if (column instanceof CommandsColumn)
-				{
-					// buttons //
-					builder.append(", ");
-					builder.append(Options.QUOTE).append("command").append(Options.QUOTE).append(": ");
-					builder.append("[ ");
-
-					int n = 0;
-					for(ButtonAjaxBehavior behavior : component.getBehaviors(ButtonAjaxBehavior.class))
+					if (n++ > 0)
 					{
-						ColumnButton button = behavior.getButton();
-
-						if (n++ > 0) { builder.append(", "); }
-						builder.append("{ ");
-						builder.append("'name': '").append(button.getMarkupId()).append("', ");
-						builder.append("'text': '").append(button.toString()).append("', ");
-	//					builder.append("'className': '").append(button.toString()).append("', ");
-						builder.append("\n'click': ").append(behavior.getCallbackFunction());
-						builder.append(" }");
+						builder.append(", ");
 					}
 
-					builder.append(" ]");
+					builder.append("{ ");
+					builder.append("'name': '").append(button.getMarkupId()).append("', ");
+					builder.append("'text': '").append(button.toString()).append("', ");
+					// builder.append("'className': '").append(button.toString()).append("', ");
+					builder.append("\n'click': ").append(behavior.getCallbackFunction());
+					builder.append(" }");
 				}
-//				else
-//				{
-//					builder.append("{ ").append(column.toString()).append(" }"); //toJSON
-//				}
 
-				builder.append(" }");
+				builder.append(" ]");
 			}
+
+			builder.append(" }");
 		}
 
 		builder.append(" ]");
@@ -191,11 +192,10 @@ public abstract class DataTableBehavior extends KendoAbstractBehavior implements
 		if (event instanceof ClickEvent)
 		{
 			ClickEvent e = (ClickEvent) event;
-//			e.getButton().onClick(target, e.getValue()); //TODO: to implement?
+			// e.getButton().onClick(target, e.getValue()); //TODO: to implement?
 			this.onClick(target, e.getButton(), e.getValue());
 		}
 	}
-
 
 	// Factories //
 

@@ -27,7 +27,7 @@ public class ConverterAutoCompletePage extends AbstractAutoCompletePage
 	private void init()
 	{
 		// Form //
-		final Form<Genre> form = new Form<Genre>("form", new Model<Genre>(GenresDAO.get(0))); //test default value
+		final Form<Genre> form = new Form<Genre>("form", new Model<Genre>(GenresDAO.get(0))); // test default value
 		this.add(form);
 
 		// FeedbackPanel //
@@ -45,13 +45,17 @@ public class ConverterAutoCompletePage extends AbstractAutoCompletePage
 				List<Genre> choices = new ArrayList<Genre>();
 
 				int count = 0;
-				for (Genre genre: GenresDAO.all())
+				for (Genre genre : GenresDAO.all())
 				{
 					if (genre.getName().toLowerCase().contains(input.toLowerCase()))
 					{
 						choices.add(genre);
 
-						if (++count == 20) { break; } //limits the number of results
+						// limits the number of results
+						if (++count == 20)
+						{
+							break;
+						}
 					}
 				}
 

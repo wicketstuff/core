@@ -50,6 +50,7 @@ class DataSourceBehavior<T> extends AbstractDefaultAjaxBehavior
 
 	/**
 	 * Constructor
+	 *
 	 * @param columns the list of {@link IColumn}
 	 * @param provider the {@link IDataProvider}
 	 */
@@ -103,7 +104,10 @@ class DataSourceBehavior<T> extends AbstractDefaultAjaxBehavior
 
 				for (int index = 0; iterator.hasNext(); index++)
 				{
-					if (index > 0) { builder.append(", "); }
+					if (index > 0)
+					{
+						builder.append(", ");
+					}
 
 					builder.append(DataSourceBehavior.this.newJsonRow(iterator.next()));
 				}
@@ -123,6 +127,7 @@ class DataSourceBehavior<T> extends AbstractDefaultAjaxBehavior
 
 	/**
 	 * Gets a new JSON object from the bean
+	 *
 	 * @param bean T object
 	 * @return a new JSON object
 	 */

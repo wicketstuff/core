@@ -64,7 +64,7 @@ public interface IJQueryWidget
 	 */
 	JQueryBehavior newWidgetBehavior(String selector);
 
-	public static class JQueryWidget
+	static class JQueryWidget
 	{
 		/**
 		 * Helper method that returns the component's html selector (ie: '#myId').
@@ -107,6 +107,13 @@ public interface IJQueryWidget
 		public static JQueryBehavior newWidgetBehavior(IJQueryWidget widget, String selector)
 		{
 			return widget.newWidgetBehavior(selector);
+		}
+
+		/**
+		 * Utility class
+		 */
+		private JQueryWidget()
+		{
 		}
 	}
 }

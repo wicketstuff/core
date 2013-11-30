@@ -86,7 +86,7 @@ public abstract class CommandsColumn extends AbstractColumn
 	 *
 	 * @return the list of {@link ColumnButton}
 	 */
-	public synchronized final List<ColumnButton> getButtons()
+	public final synchronized List<ColumnButton> getButtons()
 	{
 		if (this.buttons == null)
 		{

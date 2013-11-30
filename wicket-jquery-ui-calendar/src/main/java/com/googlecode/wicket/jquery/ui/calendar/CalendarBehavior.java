@@ -677,7 +677,7 @@ public abstract class CalendarBehavior extends JQueryBehavior implements IJQuery
 	/**
 	 * A base event object that contains a delta time
 	 */
-	protected static abstract class DeltaEvent extends JQueryEvent
+	protected abstract static class DeltaEvent extends JQueryEvent
 	{
 		private final int eventId;
 		private long delta;

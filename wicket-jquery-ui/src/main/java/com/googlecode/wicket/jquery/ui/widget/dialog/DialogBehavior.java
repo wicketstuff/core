@@ -91,6 +91,7 @@ public abstract class DialogBehavior extends JQueryBehavior implements IJQueryAj
 
 	/**
 	 * Opens the dialogs in ajax.<br/>
+	 *
 	 * @param target the {@link AjaxRequestTarget}
 	 */
 	public void open(AjaxRequestTarget target)
@@ -100,6 +101,7 @@ public abstract class DialogBehavior extends JQueryBehavior implements IJQueryAj
 
 	/**
 	 * Closes the dialogs in ajax.<br/>
+	 *
 	 * @param target the {@link AjaxRequestTarget}
 	 */
 	public void close(AjaxRequestTarget target)
@@ -122,16 +124,29 @@ public abstract class DialogBehavior extends JQueryBehavior implements IJQueryAj
 		StringBuilder buttons = new StringBuilder("[ ");
 
 		int index = 0;
-		for(ButtonAjaxBehavior behavior : component.getBehaviors(ButtonAjaxBehavior.class))
+		for (ButtonAjaxBehavior behavior : component.getBehaviors(ButtonAjaxBehavior.class))
 		{
 			DialogButton button = behavior.getButton();
 
-			if (index++ > 0) { buttons.append(", "); }
+			if (index++ > 0)
+			{
+				buttons.append(", ");
+			}
+
 			buttons.append("{");
 			buttons.append("'id': '").append(button.getMarkupId()).append("', ");
 			buttons.append("'text': '").append(button.toString()).append("', ");
-			if (!button.isEnabled()) { buttons.append("'disabled': true, "); }
-			if (button.getIcon() != null) { buttons.append("icons: { primary: '").append(button.getIcon()).append("' }, "); }
+
+			if (!button.isEnabled())
+			{
+				buttons.append("'disabled': true, ");
+			}
+
+			if (button.getIcon() != null)
+			{
+				buttons.append("icons: { primary: '").append(button.getIcon()).append("' }, ");
+			}
+
 			buttons.append("'click': function() { ").append(behavior.getCallbackScript()).append(" }");
 			buttons.append("}");
 		}
@@ -190,7 +205,6 @@ public abstract class DialogBehavior extends JQueryBehavior implements IJQueryAj
 			}
 		};
 	}
-
 
 	// Event class //
 	/**

@@ -3,6 +3,8 @@ package com.googlecode.wicket.jquery.ui.samples.pages.test;
 import org.apache.wicket.Component;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.panel.FeedbackPanel;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.googlecode.wicket.jquery.core.JQueryBehavior;
 import com.googlecode.wicket.jquery.ui.form.button.AjaxButton;
@@ -12,6 +14,7 @@ import com.googlecode.wicket.jquery.ui.samples.pages.kendo.AbstractKendoPage;
 public class TestPage extends AbstractKendoPage
 {
 	private static final long serialVersionUID = 1L;
+	private static final Logger LOG = LoggerFactory.getLogger(TestPage.class);
 
 	public TestPage()
 	{
@@ -34,7 +37,7 @@ public class TestPage extends AbstractKendoPage
 		// this.form.setMultiPart(true);
 		this.add(form);
 
-//		WebApplication.get().
+		// WebApplication.get().
 
 		// Ajax Button //
 		AjaxButton button = new AjaxButton("button") {
@@ -46,7 +49,7 @@ public class TestPage extends AbstractKendoPage
 			{
 				super.onConfigure();
 
-				System.out.println("Component#onConfigure()");
+				LOG.info("Component#onConfigure()");
 				// this.setEnabled(false);
 
 				this.add(new JQueryBehavior(JQueryWidget.getSelector(this)) {
@@ -69,8 +72,7 @@ public class TestPage extends AbstractKendoPage
 			{
 				super.onConfigure(behavior);
 
-				System.out.println("Component#onConfigure(JQueryBehavior)");
-				System.out.println(this.isEnabledInHierarchy());
+				LOG.info("Component#onConfigure(JQueryBehavior)");
 				behavior.setOption("active", this.isEnabledInHierarchy());
 			}
 
@@ -79,18 +81,17 @@ public class TestPage extends AbstractKendoPage
 			{
 				super.onBeforeRender();
 
-				System.out.println("Component#onBeforeRender()");
+				LOG.info("Component#onBeforeRender()");
 			}
 
 			@Override
 			public void onBeforeRender(JQueryBehavior behavior)
 			{
 				super.onBeforeRender(behavior);
-				System.out.println("Component#onBeforeRender(JQueryBehavior)");
+				LOG.info("Component#onBeforeRender(JQueryBehavior)");
 			}
 		};
 
 		form.add(button);
 	}
-
 }
