@@ -46,6 +46,7 @@ public class JQueryEffectBehavior extends JQueryAbstractBehavior implements IJQu
 
 	/**
 	 * Constructor.
+	 *
 	 * @param selector the html selector (ie: '#myId')
 	 */
 	JQueryEffectBehavior(String selector)
@@ -55,6 +56,7 @@ public class JQueryEffectBehavior extends JQueryAbstractBehavior implements IJQu
 
 	/**
 	 * Constructor, with no option and a default speed of {@link #SPEED}
+	 *
 	 * @param selector the html selector (ie: '#myId')
 	 * @param effect the effect to be played
 	 */
@@ -65,6 +67,7 @@ public class JQueryEffectBehavior extends JQueryAbstractBehavior implements IJQu
 
 	/**
 	 * Constructor, with a default speed of {@link #SPEED}
+	 *
 	 * @param selector the html selector (ie: '#myId')
 	 * @param effect the effect to be played
 	 * @param options the options to be applied
@@ -76,6 +79,7 @@ public class JQueryEffectBehavior extends JQueryAbstractBehavior implements IJQu
 
 	/**
 	 * Constructor, with no option
+	 *
 	 * @param selector the html selector (ie: '#myId')
 	 * @param effect the effect to be played
 	 * @param speed the speed of the effect
@@ -87,6 +91,7 @@ public class JQueryEffectBehavior extends JQueryAbstractBehavior implements IJQu
 
 	/**
 	 * Constructor
+	 *
 	 * @param selector the html selector (ie: '#myId')
 	 * @param effect the effect to be played
 	 * @param options the options to be applied
@@ -134,6 +139,7 @@ public class JQueryEffectBehavior extends JQueryAbstractBehavior implements IJQu
 	@Override
 	public void onEffectComplete(AjaxRequestTarget target)
 	{
+		// noop
 	}
 
 	// Statements //
@@ -145,6 +151,7 @@ public class JQueryEffectBehavior extends JQueryAbstractBehavior implements IJQu
 
 	/**
 	 * Gets the jQuery statement.
+	 *
 	 * @param effect the effect to be played
 	 * @return Statement like 'jQuery(function() { ... })'
 	 */
@@ -155,17 +162,19 @@ public class JQueryEffectBehavior extends JQueryAbstractBehavior implements IJQu
 
 	/**
 	 * Gets the jQuery statement.
+	 *
 	 * @param effect the effect to be played
 	 * @param options the options to be applied
 	 * @return Statement like 'jQuery(function() { ... })'
 	 */
 	public String $(String effect, String options)
 	{
-		return JQueryEffectBehavior.$(this.selector, effect, options, this.speed, String.format("%s", (this.callback != null ? this.callback.getCallbackScript() : "")));
+		return JQueryEffectBehavior.$(this.selector, effect, options, this.speed, String.format("%s", this.callback != null ? this.callback.getCallbackScript() : ""));
 	}
 
 	/**
 	 * Gets the jQuery statement.
+	 *
 	 * @param effect the effect to be played
 	 * @param options the options to be applied
 	 * @param speed the speed of the effect
@@ -196,7 +205,6 @@ public class JQueryEffectBehavior extends JQueryAbstractBehavior implements IJQu
 			}
 		};
 	}
-
 
 	// Event class //
 	/**

@@ -163,11 +163,13 @@ public class CheckChoice<T> extends CheckBoxMultipleChoice<T> implements IJQuery
 	@Override
 	public void onConfigure(JQueryBehavior behavior)
 	{
+		// noop
 	}
 
 	@Override
 	public void onBeforeRender(JQueryBehavior behavior)
 	{
+		// noop
 	}
 
 	// IJQueryWidget //

@@ -113,11 +113,13 @@ public class DataTable<T> extends WebComponent implements IJQueryWidget, IDataTa
 	@Override
 	public void onConfigure(JQueryBehavior behavior)
 	{
+		// noop
 	}
 
 	@Override
 	public void onBeforeRender(JQueryBehavior behavior)
 	{
+		// noop
 	}
 
 	@Override
@@ -129,6 +131,7 @@ public class DataTable<T> extends WebComponent implements IJQueryWidget, IDataTa
 	@Override
 	public void onClick(AjaxRequestTarget target, ColumnButton button, String value)
 	{
+		// noop
 	}
 
 	// IJQueryWidget //

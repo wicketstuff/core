@@ -200,6 +200,7 @@ public class AjaxDatePicker extends DatePicker implements IJQueryAjaxAware, IVal
 	@Override
 	public void onValueChanged(AjaxRequestTarget target)
 	{
+		// noop
 	}
 
 	// IJQueryWidget //
@@ -221,7 +222,7 @@ public class AjaxDatePicker extends DatePicker implements IJQueryAjaxAware, IVal
 	/**
 	 * Provides a jQuery datepicker behavior
 	 */
-	protected static abstract class DatePickerBehavior extends KendoAbstractBehavior implements IJQueryAjaxAware
+	protected abstract static class DatePickerBehavior extends KendoAbstractBehavior implements IJQueryAjaxAware
 	{
 		private static final long serialVersionUID = 1L;
 

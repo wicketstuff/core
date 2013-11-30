@@ -41,6 +41,7 @@ public class ProgressBar extends JQueryContainer implements IJQueryAjaxAware, IV
 
 	/**
 	 * Constructor
+	 *
 	 * @param id the markup id
 	 */
 	public ProgressBar(String id)
@@ -50,6 +51,7 @@ public class ProgressBar extends JQueryContainer implements IJQueryAjaxAware, IV
 
 	/**
 	 * Constructor
+	 *
 	 * @param id the markup id
 	 * @param model the {@link IModel}
 	 */
@@ -58,16 +60,16 @@ public class ProgressBar extends JQueryContainer implements IJQueryAjaxAware, IV
 		super(id, model);
 	}
 
-//	public ProgressBar(String id, IModel<Integer> model, Duration duration)
-//	{
-//		super(id, model);
-//		this.init();
-//	}
-
+	// public ProgressBar(String id, IModel<Integer> model, Duration duration)
+	// {
+	// super(id, model);
+	// this.init();
+	// }
 
 	// Properties //
 	/**
 	 * Gets the model (wrapping the value)
+	 *
 	 * @return {@link IModel}
 	 */
 	@SuppressWarnings("unchecked")
@@ -78,6 +80,7 @@ public class ProgressBar extends JQueryContainer implements IJQueryAjaxAware, IV
 
 	/**
 	 * Gets the model object
+	 *
 	 * @return the progress-bar value
 	 */
 	public Integer getModelObject()
@@ -87,6 +90,7 @@ public class ProgressBar extends JQueryContainer implements IJQueryAjaxAware, IV
 
 	/**
 	 * Sets the progress-bar value
+	 *
 	 * @param value value which should be greater than or equals to {@link #MIN} and less than or equals to {@link #MAX}
 	 */
 	public void setModelObject(Integer value)
@@ -105,10 +109,10 @@ public class ProgressBar extends JQueryContainer implements IJQueryAjaxAware, IV
 		this.setDefaultModelObject(v);
 	}
 
-
 	/* Ajax Methods */
 	/**
 	 * Increments the progress-bar value by 1
+	 *
 	 * @param target the {@link AjaxRequestTarget}
 	 */
 	public void forward(AjaxRequestTarget target)
@@ -118,6 +122,7 @@ public class ProgressBar extends JQueryContainer implements IJQueryAjaxAware, IV
 
 	/**
 	 * Increments the progress-bar value by the specified step value
+	 *
 	 * @param target the {@link AjaxRequestTarget}
 	 * @param step the value
 	 */
@@ -129,6 +134,7 @@ public class ProgressBar extends JQueryContainer implements IJQueryAjaxAware, IV
 
 	/**
 	 * Decrements the progress-bar value by 1
+	 *
 	 * @param target the {@link AjaxRequestTarget}
 	 */
 	public final void backward(AjaxRequestTarget target)
@@ -138,6 +144,7 @@ public class ProgressBar extends JQueryContainer implements IJQueryAjaxAware, IV
 
 	/**
 	 * Decrements the progress-bar value by the specified step value
+	 *
 	 * @param target the {@link AjaxRequestTarget}
 	 * @param step the value
 	 */
@@ -151,11 +158,12 @@ public class ProgressBar extends JQueryContainer implements IJQueryAjaxAware, IV
 	 * Re-attaches the widget behavior to the specified target, causing the progress-bar to refresh.<br/>
 	 * This method is needed to be called after the model object changed.<br/>
 	 * But It is not required to be called when calling forward or backward methods.
+	 *
 	 * @param target the {@link AjaxRequestTarget}
 	 */
 	public final void respond(AjaxRequestTarget target)
 	{
-		target.appendJavaScript(this.widgetBehavior.toString()); //change the value ui-side so the change-event will be fired
+		target.appendJavaScript(this.widgetBehavior.toString()); // change the value ui-side so the change-event will be fired
 	}
 
 	/* Events */
@@ -166,7 +174,7 @@ public class ProgressBar extends JQueryContainer implements IJQueryAjaxAware, IV
 		{
 			this.onValueChanged(target);
 
-			if(this.getModelObject() == ProgressBar.MAX)
+			if (this.getModelObject() == ProgressBar.MAX)
 			{
 				this.onComplete(target);
 			}
@@ -175,27 +183,30 @@ public class ProgressBar extends JQueryContainer implements IJQueryAjaxAware, IV
 
 	/**
 	 * Triggered when the value changed
+	 *
 	 * @param target the {@link AjaxRequestTarget}
 	 */
 	@Override
 	public void onValueChanged(AjaxRequestTarget target)
 	{
+		// noop
 	}
 
 	/**
 	 * Triggered when the value reach {@link #MAX}
+	 *
 	 * @param target the {@link AjaxRequestTarget}
 	 */
 	protected void onComplete(AjaxRequestTarget target)
 	{
+		// noop
 	}
 
 	@Override
 	protected void onModelChanged()
 	{
-		this.widgetBehavior.setOption("value", this.getModelObject()); //cannot be null?
+		this.widgetBehavior.setOption("value", this.getModelObject()); // cannot be null?
 	}
-
 
 	// IJQueryWidget //
 	@Override

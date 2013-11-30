@@ -20,9 +20,9 @@ import org.apache.wicket.Component;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.markup.html.WebMarkupContainer;
 
+import com.googlecode.wicket.jquery.core.IJQueryWidget.JQueryWidget;
 import com.googlecode.wicket.jquery.core.JQueryBehavior;
 import com.googlecode.wicket.jquery.core.Options;
-import com.googlecode.wicket.jquery.core.IJQueryWidget.JQueryWidget;
 
 /**
  * Provides a {@link WebMarkupContainer} on which effect can be played
@@ -109,11 +109,13 @@ public class JQueryEffectContainer extends WebMarkupContainer implements IEffect
 	 */
 	protected void onConfigure(JQueryEffectBehavior behavior)
 	{
+		// noop
 	}
 
 	@Override
 	public void onEffectComplete(AjaxRequestTarget target)
 	{
+		// noop
 	}
 
 

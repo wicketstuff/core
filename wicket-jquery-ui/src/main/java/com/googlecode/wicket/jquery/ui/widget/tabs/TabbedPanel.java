@@ -201,11 +201,13 @@ public class TabbedPanel extends JQueryPanel implements ITabsListener
 	@Override
 	public void onActivating(AjaxRequestTarget target, int index, ITab tab)
 	{
+		// noop
 	}
 
 	@Override
 	public void onActivate(AjaxRequestTarget target, int index, ITab tab)
 	{
+		// noop
 	}
 
 	// Factories //

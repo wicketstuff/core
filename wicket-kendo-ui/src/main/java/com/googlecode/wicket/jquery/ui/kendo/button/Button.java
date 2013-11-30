@@ -25,7 +25,7 @@ import org.apache.wicket.model.IModel;
  * @author Sebastien Briquet - sebfz1
  *
  */
-//TODO: replace with new kendoButton
+// TODO: replace with new kendoButton
 public class Button extends org.apache.wicket.markup.html.form.Button
 {
 	private static final long serialVersionUID = 1L;
@@ -33,6 +33,7 @@ public class Button extends org.apache.wicket.markup.html.form.Button
 
 	/**
 	 * Constructor
+	 *
 	 * @param id the markup id
 	 */
 	public Button(String id)
@@ -42,6 +43,7 @@ public class Button extends org.apache.wicket.markup.html.form.Button
 
 	/**
 	 * Constructor
+	 *
 	 * @param id the markup id
 	 * @param model the {@link IModel}
 	 */

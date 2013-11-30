@@ -129,6 +129,7 @@ public class Selectable<T extends Serializable> extends JQueryContainer implemen
 	@Override
 	public void onSelect(AjaxRequestTarget target, List<T> items)
 	{
+		// noop
 	}
 
 	// IJQueryWidget //

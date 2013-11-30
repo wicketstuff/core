@@ -25,7 +25,7 @@ public class MySlider extends FormComponentPanel<RangeValue>
 		this.init();
 	}
 
-	private void init()
+	private final void init()
 	{
 		this.add(new Label("label", this.label));
 
@@ -67,7 +67,7 @@ public class MySlider extends FormComponentPanel<RangeValue>
 	 */
 	protected void onValueChanged(AjaxRequestTarget target)
 	{
-
+		// noop
 	}
 
 	/**
@@ -75,6 +75,6 @@ public class MySlider extends FormComponentPanel<RangeValue>
 	 */
 	protected void onError(AjaxRequestTarget target)
 	{
-
+		// noop
 	}
 }

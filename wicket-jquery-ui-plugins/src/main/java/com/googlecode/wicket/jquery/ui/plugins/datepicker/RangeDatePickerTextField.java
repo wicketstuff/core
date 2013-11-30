@@ -96,7 +96,7 @@ public class RangeDatePickerTextField extends FormComponentPanel<DateRange> impl
 	 * Initialization
 	 * @param options the {@link Options}
 	 */
-	private void init(final Options options)
+	private final void init(final Options options)
 	{
 		// TextField //
 		this.input = this.newTextField();
@@ -152,6 +152,7 @@ public class RangeDatePickerTextField extends FormComponentPanel<DateRange> impl
 	@Override
 	public void onValueChanged(AjaxRequestTarget target)
 	{
+		// noop
 	}
 
 	// Factories //

@@ -244,6 +244,7 @@ public class ComboBox<T> extends TextField<String> implements IJQueryWidget
 	@Override
 	public void onBeforeRender(JQueryBehavior behavior)
 	{
+		// noop
 	}
 
 	// IJQueryWidget //

@@ -203,36 +203,43 @@ public class Calendar extends JQueryContainer implements ICalendarListener
 	@Override
 	public void onSelect(AjaxRequestTarget target, CalendarView view, Date start, Date end, boolean allDay)
 	{
+		// noop
 	}
 
 	@Override
 	public void onDayClick(AjaxRequestTarget target, CalendarView view, Date date, boolean allDay)
 	{
+		// noop
 	}
 
 	@Override
 	public void onEventClick(AjaxRequestTarget target, CalendarView view, int eventId)
 	{
+		// noop
 	}
 
 	@Override
 	public void onEventDrop(AjaxRequestTarget target, int eventId, long delta, boolean allDay)
 	{
+		// noop
 	}
 
 	@Override
 	public void onEventResize(AjaxRequestTarget target, int eventId, long delta)
 	{
+		// noop
 	}
 
 	@Override
 	public void onObjectDrop(AjaxRequestTarget target, String title, Date date, boolean allDay)
 	{
+		// noop
 	}
 
 	@Override
 	public void onViewRender(AjaxRequestTarget target, CalendarView view)
 	{
+		// noop
 	}
 
 	// IJQueryWidget //

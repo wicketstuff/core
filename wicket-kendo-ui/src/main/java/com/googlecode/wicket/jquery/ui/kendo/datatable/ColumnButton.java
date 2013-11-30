@@ -37,7 +37,7 @@ public class ColumnButton implements IClusterable
 	 */
 	private static synchronized int nextSequence()
 	{
-		return (ColumnButton.sequence++ % Short.MAX_VALUE);
+		return ColumnButton.sequence++ % Short.MAX_VALUE;
 	}
 
 

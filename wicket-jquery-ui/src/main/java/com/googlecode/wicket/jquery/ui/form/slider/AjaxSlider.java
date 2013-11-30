@@ -44,6 +44,7 @@ public class AjaxSlider extends Slider implements IJQueryAjaxAware, IValueChange
 
 	/**
 	 * Constructor
+	 *
 	 * @param id the markup id
 	 */
 	public AjaxSlider(String id)
@@ -53,6 +54,7 @@ public class AjaxSlider extends Slider implements IJQueryAjaxAware, IValueChange
 
 	/**
 	 * Constructor
+	 *
 	 * @param id the markup id
 	 * @param model the {@link IModel}
 	 */
@@ -63,6 +65,7 @@ public class AjaxSlider extends Slider implements IJQueryAjaxAware, IValueChange
 
 	/**
 	 * Constructor
+	 *
 	 * @param id the markup id
 	 * @param model the {@link IModel}
 	 * @param label {@link Label} on which the current slide value will be displayed
@@ -74,6 +77,7 @@ public class AjaxSlider extends Slider implements IJQueryAjaxAware, IValueChange
 
 	/**
 	 * Constructor
+	 *
 	 * @param id the markup id
 	 * @param model the {@link IModel}
 	 * @param input the {@link TextField} that will host the value
@@ -89,7 +93,7 @@ public class AjaxSlider extends Slider implements IJQueryAjaxAware, IValueChange
 	{
 		if (event instanceof ChangeEvent)
 		{
-			//In case of issue, consider copying code from AjaxFormComponentUpdatingBehavior.onEvent
+			// In case of issue, consider copying code from AjaxFormComponentUpdatingBehavior.onEvent
 			super.input.processInput();
 			this.validate();
 
@@ -107,14 +111,17 @@ public class AjaxSlider extends Slider implements IJQueryAjaxAware, IValueChange
 	@Override
 	public void onValueChanged(AjaxRequestTarget target)
 	{
+		// noop
 	}
 
 	/**
 	 * Triggered when the validation failed (ie, not input provided)
+	 *
 	 * @param target the {@link AjaxRequestTarget}
 	 */
 	protected void onError(AjaxRequestTarget target)
 	{
+		// noop
 	}
 
 	// IJQueryWidget //
@@ -130,7 +137,7 @@ public class AjaxSlider extends Slider implements IJQueryAjaxAware, IValueChange
 			{
 				super.onConfigure(component);
 
-				AjaxSlider.this.onConfigure(this); //important, should call Slider#onConfigure(JQueryBehavior)
+				AjaxSlider.this.onConfigure(this); // important, should call Slider#onConfigure(JQueryBehavior)
 			}
 
 			@Override

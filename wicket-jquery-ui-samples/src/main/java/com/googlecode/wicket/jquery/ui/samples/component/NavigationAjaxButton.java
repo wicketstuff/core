@@ -23,12 +23,12 @@ public class NavigationAjaxButton extends Panel
 	}
 
 	// Properties //
-	public AjaxButton getBackwardButton()
+	public final AjaxButton getBackwardButton()
 	{
 		return this.backwardButton;
 	}
 
-	public AjaxButton getForwardButton()
+	public final AjaxButton getForwardButton()
 	{
 		return this.forwardButton;
 	}
@@ -81,6 +81,7 @@ public class NavigationAjaxButton extends Panel
 	 */
 	protected void onBackward(AjaxRequestTarget target, AjaxButton button)
 	{
+		// noop
 	}
 
 	/**
@@ -89,5 +90,6 @@ public class NavigationAjaxButton extends Panel
 	 */
 	protected void onForward(AjaxRequestTarget target, AjaxButton button)
 	{
+		// noop
 	}
 }

@@ -192,6 +192,7 @@ public class AccordionPanel extends JQueryPanel implements IAccordionListener
 	@Override
 	public void onActivate(AjaxRequestTarget target, int index, ITab tab)
 	{
+		// noop
 	}
 
 	// Factories //

@@ -35,6 +35,7 @@ public class Button extends org.apache.wicket.markup.html.form.Button implements
 
 	/**
 	 * Constructor
+	 *
 	 * @param id the markup id
 	 */
 	public Button(String id)
@@ -44,6 +45,7 @@ public class Button extends org.apache.wicket.markup.html.form.Button implements
 
 	/**
 	 * Constructor
+	 *
 	 * @param id the markup id
 	 * @param model the {@link IModel}
 	 */
@@ -54,6 +56,7 @@ public class Button extends org.apache.wicket.markup.html.form.Button implements
 
 	/**
 	 * Gets the icon being displayed in the button
+	 *
 	 * @return the icon class
 	 */
 	protected String getIcon()
@@ -67,7 +70,7 @@ public class Button extends org.apache.wicket.markup.html.form.Button implements
 	{
 		super.onInitialize();
 
-		this.add(JQueryWidget.newWidgetBehavior(this)); //cannot be in ctor as the markupId may be set manually afterward
+		this.add(JQueryWidget.newWidgetBehavior(this)); // cannot be in ctor as the markupId may be set manually afterward
 	}
 
 	@Override
@@ -82,6 +85,7 @@ public class Button extends org.apache.wicket.markup.html.form.Button implements
 	@Override
 	public void onBeforeRender(JQueryBehavior behavior)
 	{
+		// noop
 	}
 
 	// IJQueryWidget //

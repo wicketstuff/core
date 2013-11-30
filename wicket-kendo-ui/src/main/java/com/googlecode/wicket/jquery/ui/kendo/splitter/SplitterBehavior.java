@@ -137,11 +137,13 @@ public class SplitterBehavior extends KendoAbstractBehavior implements IJQueryAj
 	@Override
 	public void onExpand(AjaxRequestTarget target, String paneId)
 	{
+		// noop
 	}
 
 	@Override
 	public void onCollapse(AjaxRequestTarget target, String paneId)
 	{
+		// noop
 	}
 
 

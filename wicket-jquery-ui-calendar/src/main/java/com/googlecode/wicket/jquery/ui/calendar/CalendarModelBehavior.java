@@ -141,6 +141,7 @@ public class CalendarModelBehavior extends AbstractAjaxBehavior
 			@Override
 			public void detach(final IRequestCycle requestCycle)
 			{
+				// noop
 			}
 		};
 	}

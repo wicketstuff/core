@@ -199,6 +199,7 @@ public class AjaxTimePicker extends TimePicker implements IJQueryAjaxAware, IVal
 	@Override
 	public void onValueChanged(AjaxRequestTarget target)
 	{
+		// noop
 	}
 
 	// IJQueryWidget //
@@ -220,7 +221,7 @@ public class AjaxTimePicker extends TimePicker implements IJQueryAjaxAware, IVal
 	/**
 	 * Provides a jQuery timepicker behavior
 	 */
-	protected static abstract class TimePickerBehavior extends KendoAbstractBehavior implements IJQueryAjaxAware
+	protected abstract static class TimePickerBehavior extends KendoAbstractBehavior implements IJQueryAjaxAware
 	{
 		private static final long serialVersionUID = 1L;
 

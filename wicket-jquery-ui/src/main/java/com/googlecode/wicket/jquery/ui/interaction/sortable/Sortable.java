@@ -190,7 +190,7 @@ public abstract class Sortable<T> extends JQueryContainer implements ISortableLi
 	@Override
 	public boolean isOnReceiveEnabled()
 	{
-		return (this.connectedSortable != null);
+		return this.connectedSortable != null;
 	}
 
 	@Override

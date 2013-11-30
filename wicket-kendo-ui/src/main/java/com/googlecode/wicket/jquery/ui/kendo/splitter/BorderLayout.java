@@ -132,11 +132,13 @@ public class BorderLayout extends WebMarkupContainer implements IBorderLayout, I
 	@Override
 	public void onExpand(AjaxRequestTarget target, String paneId)
 	{
+		// noop
 	}
 
 	@Override
 	public void onCollapse(AjaxRequestTarget target, String paneId)
 	{
+		// noop
 	}
 
 	/**

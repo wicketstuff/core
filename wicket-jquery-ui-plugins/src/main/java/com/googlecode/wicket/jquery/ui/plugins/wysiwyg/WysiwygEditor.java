@@ -140,11 +140,13 @@ public class WysiwygEditor extends FormComponentPanel<String> implements IJQuery
 	@Override
 	public void onConfigure(JQueryBehavior behavior)
 	{
+		// noop
 	}
 
 	@Override
 	public void onBeforeRender(JQueryBehavior behavior)
 	{
+		// noop
 	}
 
 	@Override

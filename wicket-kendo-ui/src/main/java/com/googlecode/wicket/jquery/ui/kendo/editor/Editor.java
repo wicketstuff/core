@@ -102,11 +102,13 @@ public class Editor<T> extends TextArea<T> implements IJQueryWidget
 	@Override
 	public void onConfigure(JQueryBehavior behavior)
 	{
+		// noop
 	}
 
 	@Override
 	public void onBeforeRender(JQueryBehavior behavior)
 	{
+		// noop
 	}
 
 	// IJQueryWidget //

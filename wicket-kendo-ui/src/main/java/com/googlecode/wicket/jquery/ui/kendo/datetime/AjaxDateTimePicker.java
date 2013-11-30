@@ -31,7 +31,7 @@ import com.googlecode.wicket.jquery.core.event.IValueChangedListener;
 /**
  * Provides a datetime-picker based on a {@link AjaxDatePicker} and a {@link AjaxTimePicker}<br/>
  * This ajax version will post boht components, using a {@link JQueryAjaxPostBehavior}, when the 'change' javascript method is called.
- * 
+ *
  * @author Sebastien Briquet - sebfz1
  */
 public class AjaxDateTimePicker extends DateTimePicker implements IJQueryAjaxAware, IValueChangedListener
@@ -40,7 +40,7 @@ public class AjaxDateTimePicker extends DateTimePicker implements IJQueryAjaxAwa
 
 	/**
 	 * Constructor
-	 * 
+	 *
 	 * @param id the markup id
 	 */
 	public AjaxDateTimePicker(String id)
@@ -50,7 +50,7 @@ public class AjaxDateTimePicker extends DateTimePicker implements IJQueryAjaxAwa
 
 	/**
 	 * Constructor
-	 * 
+	 *
 	 * @param id the markup id
 	 * @param datePattern the SimpleDateFormat pattern for the date
 	 * @param timePattern the SimpleDateFormat pattern for the time
@@ -62,7 +62,7 @@ public class AjaxDateTimePicker extends DateTimePicker implements IJQueryAjaxAwa
 
 	/**
 	 * Constructor
-	 * 
+	 *
 	 * @param id the markup id
 	 * @param date the initial date
 	 */
@@ -73,7 +73,7 @@ public class AjaxDateTimePicker extends DateTimePicker implements IJQueryAjaxAwa
 
 	/**
 	 * Constructor
-	 * 
+	 *
 	 * @param id the markup id
 	 * @param date the initial date
 	 * @param datePattern the SimpleDateFormat pattern for the date
@@ -83,7 +83,7 @@ public class AjaxDateTimePicker extends DateTimePicker implements IJQueryAjaxAwa
 	{
 		super(id, date, datePattern, timePattern);
 	}
-	
+
 	// Events //
 	/**
 	 * {@inheritDoc}
@@ -100,6 +100,7 @@ public class AjaxDateTimePicker extends DateTimePicker implements IJQueryAjaxAwa
 	@Override
 	public void onValueChanged(AjaxRequestTarget target)
 	{
+		// noop
 	}
 
 	// Factories //
@@ -110,7 +111,7 @@ public class AjaxDateTimePicker extends DateTimePicker implements IJQueryAjaxAwa
 		return new AjaxDatePicker(id, model, datePattern) {
 
 			private static final long serialVersionUID = 1L;
-			
+
 			@Override
 			public JQueryBehavior newWidgetBehavior(String selector)
 			{
@@ -123,7 +124,7 @@ public class AjaxDateTimePicker extends DateTimePicker implements IJQueryAjaxAwa
 					{
 						AjaxDateTimePicker.this.onAjax(target, event);
 					}
-					
+
 					@Override
 					protected JQueryAjaxPostBehavior newOnChangeBehavior(FormComponent<?> component)
 					{
@@ -153,7 +154,7 @@ public class AjaxDateTimePicker extends DateTimePicker implements IJQueryAjaxAwa
 					{
 						AjaxDateTimePicker.this.onAjax(target, event);
 					}
-					
+
 					@Override
 					protected JQueryAjaxPostBehavior newOnChangeBehavior(FormComponent<?> component)
 					{

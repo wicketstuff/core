@@ -34,9 +34,7 @@ public class ContextMenu extends Menu
 {
 	private static final long serialVersionUID = 1L;
 
-	/**
-	 * CSS class used to identify a {@link Menu}. It could be useful to perform some jQuery operation on all menu in the page (hiding for instance)
-	 */
+	/** CSS class used to identify a {@link Menu}. It could be useful to perform some jQuery operation on all menu in the page (hiding for instance) */
 	public static final String CONTEXTMENU_CSS_CLASS = "context-menu";
 
 	/**
@@ -130,6 +128,7 @@ public class ContextMenu extends Menu
 	 */
 	protected void onContextMenu(AjaxRequestTarget target, Component component)
 	{
+		// noop
 	}
 
 	// Factories //

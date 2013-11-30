@@ -33,7 +33,7 @@ import com.googlecode.wicket.jquery.ui.kendo.utils.KendoDateTimeUtils;
 /**
  * Provides a Kendo UI date-picker based on a {@link DateTextField}<br/>
  * The code is quite identical to the jQuery DatePicker
- * 
+ *
  * @author Sebastien Briquet - sebfz1
  */
 public class DatePicker extends DateTextField implements IJQueryWidget
@@ -47,7 +47,7 @@ public class DatePicker extends DateTextField implements IJQueryWidget
 
 	/**
 	 * Constructor
-	 * 
+	 *
 	 * @param id the markup id
 	 */
 	public DatePicker(String id)
@@ -57,7 +57,7 @@ public class DatePicker extends DateTextField implements IJQueryWidget
 
 	/**
 	 * Constructor
-	 * 
+	 *
 	 * @param id the markup id
 	 * @param options the {@link Options}
 	 */
@@ -68,7 +68,7 @@ public class DatePicker extends DateTextField implements IJQueryWidget
 
 	/**
 	 * Constructor
-	 * 
+	 *
 	 * @param id the markup id
 	 * @param pattern a <code>SimpleDateFormat</code> pattern
 	 */
@@ -79,7 +79,7 @@ public class DatePicker extends DateTextField implements IJQueryWidget
 
 	/**
 	 * Main constructor
-	 * 
+	 *
 	 * @param id the markup id
 	 * @param pattern a <code>SimpleDateFormat</code> pattern
 	 * @param options the {@link Options}
@@ -93,7 +93,7 @@ public class DatePicker extends DateTextField implements IJQueryWidget
 
 	/**
 	 * Constructor, which use {@link Locale} and Kengo UI Globalization
-	 * 
+	 *
 	 * @param id the markup id
 	 * @param locale the {@link Locale}
 	 */
@@ -104,7 +104,7 @@ public class DatePicker extends DateTextField implements IJQueryWidget
 
 	/**
 	 * Constructor, which use {@link Locale} and Kengo UI Globalization
-	 * 
+	 *
 	 * @param id the markup id
 	 * @param locale the {@link Locale}
 	 * @param options the {@link Options}
@@ -116,7 +116,7 @@ public class DatePicker extends DateTextField implements IJQueryWidget
 
 	/**
 	 * Constructor
-	 * 
+	 *
 	 * @param id the markup id
 	 * @param model the {@link IModel}
 	 */
@@ -127,7 +127,7 @@ public class DatePicker extends DateTextField implements IJQueryWidget
 
 	/**
 	 * Constructor
-	 * 
+	 *
 	 * @param id the markup id
 	 * @param model the {@link IModel}
 	 * @param options {@link Options}
@@ -139,7 +139,7 @@ public class DatePicker extends DateTextField implements IJQueryWidget
 
 	/**
 	 * Constructor
-	 * 
+	 *
 	 * @param id the markup id
 	 * @param model the {@link IModel}
 	 * @param pattern a <code>SimpleDateFormat</code> pattern
@@ -151,7 +151,7 @@ public class DatePicker extends DateTextField implements IJQueryWidget
 
 	/**
 	 * Main constructor
-	 * 
+	 *
 	 * @param id the markup id
 	 * @param model the {@link IModel}
 	 * @param pattern a <code>SimpleDateFormat</code> pattern
@@ -166,7 +166,7 @@ public class DatePicker extends DateTextField implements IJQueryWidget
 
 	/**
 	 * Constructor, which use {@link Locale} and Kengo UI Globalization
-	 * 
+	 *
 	 * @param id the markup id
 	 * @param model the {@link IModel}
 	 * @param locale the {@link Locale}
@@ -178,7 +178,7 @@ public class DatePicker extends DateTextField implements IJQueryWidget
 
 	/**
 	 * Constructor, which use {@link Locale} and Kengo UI Globalization
-	 * 
+	 *
 	 * @param id the markup id
 	 * @param model the {@link IModel}
 	 * @param locale the {@link Locale}
@@ -201,7 +201,7 @@ public class DatePicker extends DateTextField implements IJQueryWidget
 
 	/**
 	 * Gets a string representation given the time pattern in use.
-	 * 
+	 *
 	 * @return the model object as string
 	 */
 	public String getModelObjectAsString()
@@ -237,6 +237,7 @@ public class DatePicker extends DateTextField implements IJQueryWidget
 	@Override
 	public void onBeforeRender(JQueryBehavior behavior)
 	{
+		// noop
 	}
 
 	// IJQueryWidget //

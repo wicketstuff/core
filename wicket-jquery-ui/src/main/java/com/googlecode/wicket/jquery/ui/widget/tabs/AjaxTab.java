@@ -86,20 +86,19 @@ public abstract class AjaxTab extends AbstractTab
 	protected abstract WebMarkupContainer getLazyPanel(String panelId);
 
 	/**
-	 * Replaces the loading panel's placeholder component (indicator) by the lazy-loaded component.
-	 * Warning, should be called only once!
+	 * Replaces the loading panel's placeholder component (indicator) by the lazy-loaded component. Warning, should be called only once!
 	 *
 	 * @return the lazy-loaded component
 	 */
 	private Component replaceComponent()
 	{
-		return this.panel.getPlaceholderComponent().replaceWith(this.getLazyPanel()); //warning, inner panel is detached here.
+		return this.panel.getPlaceholderComponent().replaceWith(this.getLazyPanel()); // warning, inner panel is detached here.
 	}
 
 	/**
 	 * Loads the lazy component, if not already loaded.
-	 * @param target the {@link AjaxRequestTarget}
 	 *
+	 * @param target the {@link AjaxRequestTarget}
 	 * @return True if the component has just been loaded. Otherwise false if the component has already been loaded
 	 */
 	public boolean load(AjaxRequestTarget target)
@@ -110,7 +109,7 @@ public abstract class AjaxTab extends AbstractTab
 		{
 			target.add(this.replaceComponent());
 			this.state = STATE_LOADED;
-			//this.getPage().dirty();
+			// this.getPage().dirty();
 		}
 
 		return load;

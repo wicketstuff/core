@@ -123,6 +123,7 @@ public class RangeDatePicker extends JQueryContainer implements IRangeDatePicker
 	@Override
 	public void onValueChanged(AjaxRequestTarget target, DateRange range)
 	{
+		// noop
 	}
 
 	// IJQueryWidget //

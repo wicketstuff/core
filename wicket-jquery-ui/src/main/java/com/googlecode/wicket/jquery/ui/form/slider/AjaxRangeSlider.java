@@ -32,8 +32,7 @@ import com.googlecode.wicket.jquery.core.event.JQueryAjaxChangeBehavior;
 import com.googlecode.wicket.jquery.core.event.JQueryAjaxChangeBehavior.ChangeEvent;
 
 /**
- * Provides a jQuery range slider based on a {@link FormComponentPanel}
- * This ajax version will post the {@link Component}, using a {@link JQueryAjaxPostBehavior}, when the 'change' javascript method is called.
+ * Provides a jQuery range slider based on a {@link FormComponentPanel} This ajax version will post the {@link Component}, using a {@link JQueryAjaxPostBehavior}, when the 'change' javascript method is called.
  *
  * @author Sebastien Briquet - sebfz1
  */
@@ -43,6 +42,7 @@ public class AjaxRangeSlider extends RangeSlider implements IJQueryAjaxAware, IV
 
 	/**
 	 * Constructor
+	 *
 	 * @param id the markup id
 	 */
 	public AjaxRangeSlider(String id)
@@ -52,6 +52,7 @@ public class AjaxRangeSlider extends RangeSlider implements IJQueryAjaxAware, IV
 
 	/**
 	 * Constructor
+	 *
 	 * @param id the markup id
 	 * @param model the {@link IModel}
 	 */
@@ -62,6 +63,7 @@ public class AjaxRangeSlider extends RangeSlider implements IJQueryAjaxAware, IV
 
 	/**
 	 * Constructor
+	 *
 	 * @param id the markup id
 	 * @param model the {@link IModel}
 	 * @param label {@link Label} on which the current slide value will be displayed
@@ -73,6 +75,7 @@ public class AjaxRangeSlider extends RangeSlider implements IJQueryAjaxAware, IV
 
 	/**
 	 * Constructor
+	 *
 	 * @param id the markup id
 	 * @param model the {@link IModel}
 	 * @param lower the {@link TextField} that will host the lower value
@@ -89,7 +92,7 @@ public class AjaxRangeSlider extends RangeSlider implements IJQueryAjaxAware, IV
 	{
 		if (event instanceof ChangeEvent)
 		{
-			//In case of issue, consider copying code from AjaxFormComponentUpdatingBehavior.onEvent
+			// In case of issue, consider copying code from AjaxFormComponentUpdatingBehavior.onEvent
 			this.lower.processInput();
 			this.upper.processInput();
 			this.validate();
@@ -108,14 +111,17 @@ public class AjaxRangeSlider extends RangeSlider implements IJQueryAjaxAware, IV
 	@Override
 	public void onValueChanged(AjaxRequestTarget target)
 	{
+		// noop
 	}
 
 	/**
 	 * Triggered when the validation failed (lower &gt; upper)
+	 *
 	 * @param target the {@link AjaxRequestTarget}
 	 */
 	protected void onError(AjaxRequestTarget target)
 	{
+		// noop
 	}
 
 	// Factories //
@@ -131,7 +137,7 @@ public class AjaxRangeSlider extends RangeSlider implements IJQueryAjaxAware, IV
 			{
 				super.onConfigure(component);
 
-				AjaxRangeSlider.this.onConfigure(this); //important, should call Slider#onConfigure(JQueryBehavior)
+				AjaxRangeSlider.this.onConfigure(this); // important, should call Slider#onConfigure(JQueryBehavior)
 			}
 
 			@Override

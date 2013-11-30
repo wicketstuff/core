@@ -38,7 +38,7 @@ public class DialogButton implements IClusterable
 	 */
 	private static synchronized int nextSequence()
 	{
-		return (DialogButton.sequence++ % Short.MAX_VALUE);
+		return DialogButton.sequence++ % Short.MAX_VALUE;
 	}
 
 	private final int id;

@@ -36,11 +36,13 @@ public class DefaultResizablePage extends AbstractResizablePage
 			@Override
 			public void onResizeStart(AjaxRequestTarget target, int top, int left, int width, int height)
 			{
+				// noop
 			}
 
 			@Override
 			public void onResizeStop(AjaxRequestTarget target, int top, int left, int width, int height)
 			{
+				// noop
 			}
 		});
 	}

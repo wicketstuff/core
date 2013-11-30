@@ -36,9 +36,9 @@ import com.googlecode.wicket.jquery.ui.kendo.KendoAbstractBehavior;
 /**
  * Provides a Kendo UI DropDownList widget.<br/>
  * This ajax version will post the component, using a {@link JQueryAjaxChangeBehavior}, when the 'change' javascript method is called.
- * 
+ *
  * @author Sebastien Briquet - sebfz1
- * 
+ *
  * @param <T>
  */
 public class AjaxDropDownList<T> extends DropDownList<T> implements ISelectionChangedListener
@@ -47,7 +47,7 @@ public class AjaxDropDownList<T> extends DropDownList<T> implements ISelectionCh
 
 	/**
 	 * Constructor
-	 * 
+	 *
 	 * @param id the markup id
 	 */
 	public AjaxDropDownList(String id)
@@ -57,7 +57,7 @@ public class AjaxDropDownList<T> extends DropDownList<T> implements ISelectionCh
 
 	/**
 	 * Constructor
-	 * 
+	 *
 	 * @param id the markup id
 	 * @param choices the collection of choices in the dropdown
 	 */
@@ -68,7 +68,7 @@ public class AjaxDropDownList<T> extends DropDownList<T> implements ISelectionCh
 
 	/**
 	 * Constructor
-	 * 
+	 *
 	 * @param id the markup id
 	 * @param choices the collection of choices in the dropdown
 	 * @param renderer the rendering engine
@@ -80,7 +80,7 @@ public class AjaxDropDownList<T> extends DropDownList<T> implements ISelectionCh
 
 	/**
 	 * Constructor
-	 * 
+	 *
 	 * @param id the markup id
 	 * @param model the {@link IModel}
 	 * @param choices the collection of choices in the dropdown
@@ -92,7 +92,7 @@ public class AjaxDropDownList<T> extends DropDownList<T> implements ISelectionCh
 
 	/**
 	 * Constructor
-	 * 
+	 *
 	 * @param id the markup id
 	 * @param model the {@link IModel}
 	 * @param choices the collection of choices in the dropdown
@@ -105,7 +105,7 @@ public class AjaxDropDownList<T> extends DropDownList<T> implements ISelectionCh
 
 	/**
 	 * Constructor
-	 * 
+	 *
 	 * @param id the markup id
 	 * @param choices the collection of choices in the dropdown
 	 */
@@ -116,7 +116,7 @@ public class AjaxDropDownList<T> extends DropDownList<T> implements ISelectionCh
 
 	/**
 	 * Constructor
-	 * 
+	 *
 	 * @param id the markup id
 	 * @param model the {@link IModel}
 	 * @param choices the collection of choices in the dropdown
@@ -128,7 +128,7 @@ public class AjaxDropDownList<T> extends DropDownList<T> implements ISelectionCh
 
 	/**
 	 * Constructor
-	 * 
+	 *
 	 * @param id the markup id
 	 * @param choices the collection of choices in the dropdown
 	 * @param renderer the rendering engine
@@ -140,7 +140,7 @@ public class AjaxDropDownList<T> extends DropDownList<T> implements ISelectionCh
 
 	/**
 	 * Constructor
-	 * 
+	 *
 	 * @param id the markup id
 	 * @param model the {@link IModel}
 	 * @param choices the collection of choices in the dropdown
@@ -155,6 +155,7 @@ public class AjaxDropDownList<T> extends DropDownList<T> implements ISelectionCh
 	@Override
 	public void onSelectionChanged(AjaxRequestTarget target)
 	{
+		// noop
 	}
 
 	@Override
@@ -176,7 +177,7 @@ public class AjaxDropDownList<T> extends DropDownList<T> implements ISelectionCh
 	/**
 	 * Provides a Kendo UI DropDownList {@link JQueryBehavior}
 	 */
-	protected static abstract class AjaxDropDownListBehavior extends KendoAbstractBehavior implements IJQueryAjaxAware, ISelectionChangedListener
+	protected abstract static class AjaxDropDownListBehavior extends KendoAbstractBehavior implements IJQueryAjaxAware, ISelectionChangedListener
 	{
 		private static final long serialVersionUID = 1L;
 

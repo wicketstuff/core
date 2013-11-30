@@ -183,6 +183,7 @@ public class DropDownList<T> extends DropDownChoice<T> implements IJQueryWidget
 	@Override
 	public void onBeforeRender(JQueryBehavior behavior)
 	{
+		// noop
 	}
 
 	// IJQueryWidget //

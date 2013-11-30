@@ -38,6 +38,7 @@ public class Spinner<T extends Number> extends TextField<T> implements IJQueryCu
 
 	/**
 	 * Constructor
+	 *
 	 * @param id the markup id
 	 */
 	public Spinner(final String id)
@@ -47,6 +48,7 @@ public class Spinner<T extends Number> extends TextField<T> implements IJQueryCu
 
 	/**
 	 * Constructor
+	 *
 	 * @param id the markup id
 	 * @param options {@link Options}
 	 */
@@ -57,6 +59,7 @@ public class Spinner<T extends Number> extends TextField<T> implements IJQueryCu
 
 	/**
 	 * Constructor
+	 *
 	 * @param id the markup id
 	 * @param type type for field validation
 	 */
@@ -67,6 +70,7 @@ public class Spinner<T extends Number> extends TextField<T> implements IJQueryCu
 
 	/**
 	 * Constructor
+	 *
 	 * @param id the markup id
 	 * @param options {@link Options}
 	 * @param type Type for field validation
@@ -80,6 +84,7 @@ public class Spinner<T extends Number> extends TextField<T> implements IJQueryCu
 
 	/**
 	 * Constructor
+	 *
 	 * @param id the markup id
 	 * @param model the {@link IModel}
 	 */
@@ -90,6 +95,7 @@ public class Spinner<T extends Number> extends TextField<T> implements IJQueryCu
 
 	/**
 	 * Constructor
+	 *
 	 * @param id the markup id
 	 * @param model the {@link IModel}
 	 * @param options {@link Options}
@@ -101,6 +107,7 @@ public class Spinner<T extends Number> extends TextField<T> implements IJQueryCu
 
 	/**
 	 * Constructor
+	 *
 	 * @param id the markup id
 	 * @param model the {@link IModel}
 	 * @param type type for field validation
@@ -112,6 +119,7 @@ public class Spinner<T extends Number> extends TextField<T> implements IJQueryCu
 
 	/**
 	 * Constructor
+	 *
 	 * @param id the markup id
 	 * @param model the {@link IModel}
 	 * @param options {@link Options}
@@ -130,7 +138,7 @@ public class Spinner<T extends Number> extends TextField<T> implements IJQueryCu
 	{
 		super.onInitialize();
 
-		this.add(JQueryWidget.newWidgetBehavior(this)); //cannot be in ctor as the markupId may be set manually afterward
+		this.add(JQueryWidget.newWidgetBehavior(this)); // cannot be in ctor as the markupId may be set manually afterward
 	}
 
 	@Override
@@ -144,11 +152,13 @@ public class Spinner<T extends Number> extends TextField<T> implements IJQueryCu
 	@Override
 	public void onConfigure(JQueryBehavior behavior)
 	{
+		// noop
 	}
 
 	@Override
 	public void onBeforeRender(JQueryBehavior behavior)
 	{
+		// noop
 	}
 
 	// Options //
@@ -167,7 +177,6 @@ public class Spinner<T extends Number> extends TextField<T> implements IJQueryCu
 
 		return this;
 	}
-
 
 	@Override
 	public String getCulture()
@@ -244,21 +253,21 @@ public class Spinner<T extends Number> extends TextField<T> implements IJQueryCu
 		return this;
 	}
 
-	//Not activated for now, because of currency issue in Wicket (space before the currency symbol, WICKET-4988) and an issue in Java (space as thousand separator, in fr_FR for instance).
-//	/**
-//	 * Format of numbers passed to Globalize, if available. Most common are "n" for a decimal number and "C" for a currency value. Also see the culture option.<br/>
-//	 * <b>More: </b> https://github.com/jquery/globalize
-//	 * <b>More: </b> http://api.jqueryui.com/spinner/#option-culture
-//	 *
-//	 * @param format the number format
-//	 * @return this, for chaining
-//	 */
-//	public Spinner<T> setNumberFormat(final String format)
-//	{
-//		this.options.set("numberFormat", Options.asString(format));
-//
-//		return this;
-//	}
+	// Not activated for now, because of currency issue in Wicket (space before the currency symbol, WICKET-4988) and an issue in Java (space as thousand separator, in fr_FR for instance).
+	// /**
+	// * Format of numbers passed to Globalize, if available. Most common are "n" for a decimal number and "C" for a currency value. Also see the culture option.<br/>
+	// * <b>More: </b> https://github.com/jquery/globalize
+	// * <b>More: </b> http://api.jqueryui.com/spinner/#option-culture
+	// *
+	// * @param format the number format
+	// * @return this, for chaining
+	// */
+	// public Spinner<T> setNumberFormat(final String format)
+	// {
+	// this.options.set("numberFormat", Options.asString(format));
+	//
+	// return this;
+	// }
 
 	/**
 	 * Sets the number of steps to take when paging via the pageUp/pageDown methods.
@@ -286,14 +295,12 @@ public class Spinner<T extends Number> extends TextField<T> implements IJQueryCu
 		return this;
 	}
 
-
 	// IJQueryWidget //
 	@Override
 	public SpinnerBehavior newWidgetBehavior(String selector)
 	{
 		return new SpinnerBehavior(selector, this.options);
 	}
-
 
 	/**
 	 * Provides a jQuery spinner {@link JQueryBehavior}

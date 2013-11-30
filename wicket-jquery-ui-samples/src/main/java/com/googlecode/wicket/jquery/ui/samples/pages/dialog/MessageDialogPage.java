@@ -38,6 +38,7 @@ public class MessageDialogPage extends AbstractDialogPage
 			@Override
 			public void onClose(AjaxRequestTarget target, DialogButton button)
 			{
+				// noop
 			}
 		};
 
@@ -50,6 +51,7 @@ public class MessageDialogPage extends AbstractDialogPage
 			@Override
 			public void onClose(AjaxRequestTarget target, DialogButton button)
 			{
+				// noop
 			}
 		};
 
@@ -62,6 +64,7 @@ public class MessageDialogPage extends AbstractDialogPage
 			@Override
 			public void onClose(AjaxRequestTarget target, DialogButton button)
 			{
+				// noop
 			}
 		};
 

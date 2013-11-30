@@ -156,5 +156,6 @@ public class MenuItem extends AbstractMenuItem
 	@Override
 	public void onClick(AjaxRequestTarget target)
 	{
+		// noop
 	}
 }
