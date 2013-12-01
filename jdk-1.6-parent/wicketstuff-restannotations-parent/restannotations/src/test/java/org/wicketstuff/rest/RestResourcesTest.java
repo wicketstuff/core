@@ -21,6 +21,7 @@ import static org.junit.Assert.assertEquals;
 import java.io.BufferedReader;
 import java.io.StringReader;
 import java.io.StringWriter;
+import java.util.Collections;
 
 import javax.servlet.http.Cookie;
 import javax.xml.bind.JAXB;
@@ -42,6 +43,7 @@ import org.wicketstuff.rest.contenthandling.serialdeserial.TestJsonDesSer;
 import org.wicketstuff.rest.resource.AbstractRestResource;
 import org.wicketstuff.rest.resource.RestResourceFullAnnotated;
 import org.wicketstuff.rest.utils.test.BufferedMockRequest;
+import org.wicketstuff.rest.utils.wicket.bundle.DefaultBundleResolver;
 
 /**
  * Simple test using the WicketTester
@@ -190,7 +192,8 @@ public class RestResourcesTest
 		tester.executeUrl("./api/customvalidator");
 		
 		String response = tester.getLastResponseAsString();
-		Assert.assertTrue(response.contains("field\":\"customField"));
+		DefaultBundleResolver resolver = new DefaultBundleResolver(RestResourceFullAnnotated.class); 
+		assertEquals(resolver.getMessage("CustomValidator", Collections.EMPTY_MAP), response);
 	}
 
 	@Test
