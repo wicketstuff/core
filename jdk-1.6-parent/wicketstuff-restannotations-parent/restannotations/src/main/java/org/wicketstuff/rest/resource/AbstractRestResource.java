@@ -48,7 +48,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.wicketstuff.rest.annotations.AuthorizeInvocation;
 import org.wicketstuff.rest.annotations.MethodMapping;
-import org.wicketstuff.rest.contenthandling.IObjectSerialDeserial;
 import org.wicketstuff.rest.contenthandling.IWebSerialDeserial;
 import org.wicketstuff.rest.resource.urlsegments.AbstractURLSegment;
 import org.wicketstuff.rest.utils.http.HttpMethod;
@@ -57,7 +56,6 @@ import org.wicketstuff.rest.utils.reflection.MethodParameter;
 import org.wicketstuff.rest.utils.wicket.AttributesWrapper;
 import org.wicketstuff.rest.utils.wicket.MethodParameterContext;
 import org.wicketstuff.rest.utils.wicket.bundle.DefaultBundleResolver;
-import org.wicketstuff.rest.utils.wicket.validator.RestErrorMessage;
 
 /**
  * Base class to build a resource that serves REST requests.
@@ -67,6 +65,10 @@ import org.wicketstuff.rest.utils.wicket.validator.RestErrorMessage;
  */
 public abstract class AbstractRestResource<T extends IWebSerialDeserial> implements IResource
 {
+	public static final String NO_SUITABLE_METHOD_FOUND = "No suitable method found.";
+
+	public static final String USER_IS_NOT_ALLOWED = "User is not allowed to use this resource.";
+
 	private static final Logger log = LoggerFactory.getLogger(AbstractRestResource.class);
 
 	/**
@@ -174,7 +176,8 @@ public abstract class AbstractRestResource<T extends IWebSerialDeserial> impleme
 		// 1-check if user is authorized to invoke the method
 		if (!isUserAuthorized(mappedMethod.getRoles()))
 		{
-			response.sendError(401, "User is not allowed to use this resource.");
+			response.write(USER_IS_NOT_ALLOWED);
+			response.setStatus(401);
 			return;
 		}
 
@@ -196,11 +199,9 @@ public abstract class AbstractRestResource<T extends IWebSerialDeserial> impleme
 			IValidationError error = validationErrors.get(0);
 			Serializable message = error.getErrorMessage(bundleResolver);
 			
-			IObjectSerialDeserial objSerialDeserial = 
-					webSerialDeserial.getIObjectSerialDeserial(outputFormat);
-			Object serializedObject = objSerialDeserial.serializeObject(message, outputFormat);
+			webSerialDeserial.objectToResponse(message, response, outputFormat);
+			response.setStatus(400);
 			
-			response.sendError(400,  serializedObject.toString());
 			return;
 		}
 
@@ -247,7 +248,8 @@ public abstract class AbstractRestResource<T extends IWebSerialDeserial> impleme
 	 */
 	public static void noSuitableMethodFound(WebResponse response, HttpMethod httpMethod)
 	{
-		response.sendError(400, "No suitable method found for URL '" + extractUrlFromRequest() +
+		response.setStatus(400);
+		response.write(NO_SUITABLE_METHOD_FOUND + " URL '" + extractUrlFromRequest() +
 			"' and HTTP method " + httpMethod);
 	}
 
@@ -566,7 +568,9 @@ public abstract class AbstractRestResource<T extends IWebSerialDeserial> impleme
 		}
 		catch (Exception e)
 		{
-			response.sendError(500, "General server error.");
+			response.setStatus(500);
+			response.write("General server error.");
+			
 			log.debug("Error invoking method '" + method.getName() + "'");
 		}
 

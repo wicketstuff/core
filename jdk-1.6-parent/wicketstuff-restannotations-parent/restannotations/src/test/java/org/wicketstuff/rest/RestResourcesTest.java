@@ -39,6 +39,7 @@ import org.junit.Test;
 import org.junit.rules.ExpectedException;
 import org.wicketstuff.rest.contenthandling.RestMimeTypes;
 import org.wicketstuff.rest.contenthandling.serialdeserial.TestJsonDesSer;
+import org.wicketstuff.rest.resource.AbstractRestResource;
 import org.wicketstuff.rest.resource.RestResourceFullAnnotated;
 import org.wicketstuff.rest.utils.test.BufferedMockRequest;
 
@@ -141,6 +142,15 @@ public class RestResourcesTest
 
 		Assert.assertEquals(TestJsonDesSer.getJSON(), tester.getLastResponseAsString());
 	}
+	
+	@Test
+	public void testMethodNotFound() throws Exception
+	{
+		tester.executeUrl("./api/xxxxxxx");
+		String response = tester.getLastResponseAsString();
+		
+		response.contains(AbstractRestResource.NO_SUITABLE_METHOD_FOUND);
+	}
 
 	@Test
 	public void rolesAuthorizationMethod()
@@ -150,7 +160,7 @@ public class RestResourcesTest
 		tester.getRequest().setMethod("GET");
 		tester.executeUrl("./api/admin");
 		Assert.assertEquals(401, tester.getLastResponse().getStatus());
-		testIfResponseStringIsEqual("");
+		testIfResponseStringIsEqual(AbstractRestResource.USER_IS_NOT_ALLOWED);
 
 		// add the role to pass the test
 		roles.add("ROLE_ADMIN");
@@ -166,10 +176,7 @@ public class RestResourcesTest
 		tester.getRequest().setMethod("GET");
 		tester.getRequest().setParameter("email", "noMailValue");
 		tester.executeUrl("./api/emailvalidator");
-		testIfResponseStringIsEqual("");
-
-		String errorMessage = tester.getLastResponse().getErrorMessage();
-		Assert.assertTrue(errorMessage.contains("The value inserted as email is not valid."));
+		testIfResponseStringIsEqual("The value inserted as email is not valid.");
 		
 		String email = "avalid@mail.com";
 
@@ -182,8 +189,8 @@ public class RestResourcesTest
 		tester.getRequest().setParameter("customvalidator", "customvalidator");
 		tester.executeUrl("./api/customvalidator");
 		
-		errorMessage = tester.getLastResponse().getErrorMessage();
-		Assert.assertTrue(errorMessage.contains("field\":\"customField"));
+		String response = tester.getLastResponseAsString();
+		Assert.assertTrue(response.contains("field\":\"customField"));
 	}
 
 	@Test

@@ -61,8 +61,8 @@
 		
 		$( "#dialog-form" ).dialog({
 			 autoOpen: false,
-			 height: 150,
-			 width: 230,
+			 height: 200,
+			 width: 330,
 			 modal: true,
 			 buttons: {
 				 "Create a person": function(){
@@ -72,16 +72,22 @@
 					 personPojo.email = $('#email').val();
 					 personPojo.password = $('#password').val();
 					 
+					 var modalWindow = $(this); 
+					 
 					 $.ajax({
 						 type: "POST",
 						 contentType: "application/json",
 						 url: "./personsmanager/persons",
 						 data: JSON.stringify(personPojo),
-						 async: false
+						 async: false,
+						 error: function(data){
+							 alert('Email field not valid!');
+						 },
+					 	 success: function(data){
+					 		modalWindow.find('input').val('');
+					 		modalWindow.dialog( "close" );
+					 	 }
 					 });
-					 
-					 $(this).find('input').val('');
-					 $(this).dialog( "close" );
 					 
 					 loadAllPersons();
 				 }
@@ -168,6 +174,7 @@
 					<div style="display: table-row;">
 						<div style="display: table-cell;">
 							<label for="email">Email</label>
+							<span style="color: red">*</span>
 						</div>
 						<div style="display: table-cell;">
 							<input type="text" name="email" id="email" value=""
@@ -186,6 +193,7 @@
 				</div>
 			</fieldset>
 		</form>
+		<div style="color: red">*The email will be validated.</div>
 	</div>
 </body>
 </html>
