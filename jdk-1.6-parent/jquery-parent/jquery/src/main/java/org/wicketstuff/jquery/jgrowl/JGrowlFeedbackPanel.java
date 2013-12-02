@@ -33,6 +33,7 @@ public class JGrowlFeedbackPanel extends FeedbackPanel {
 	private Options warningOptions;
 	private Options fatalOptions;
 	private Options infoOptions;
+    private Options successOptions;
 	private Options debugOptions;
 
 	/**
@@ -102,6 +103,11 @@ public class JGrowlFeedbackPanel extends FeedbackPanel {
 				return infoOptions;
 			}
 
+            @Override
+            protected Options newSuccessOptions() {
+                return successOptions;
+            }
+
 			@Override
 			protected Options newDebugOptions() {
 				return debugOptions;
@@ -121,12 +127,12 @@ public class JGrowlFeedbackPanel extends FeedbackPanel {
 
 		response.render(CssHeaderItem
 				.forReference(new PackageResourceReference(
-						JGrowlFeedbackPanel.class, "res/jquery.jgrowl.css")));
+						JGrowlFeedbackPanel.class, "res/jquery.jgrowl.min.css")));
 		response.render(JavaScriptHeaderItem
 				.forReference(JQueryResourceReference.get()));
 		response.render(JavaScriptHeaderItem
 				.forReference(new PackageResourceReference(
-						JGrowlFeedbackPanel.class, "res/jquery.jgrowl.js")));
+						JGrowlFeedbackPanel.class, "res/jquery.jgrowl.min.js")));
 	}
 
 	public JGrowlFeedbackPanel setErrorMessageOptions(final Options errorOptions) {
@@ -153,6 +159,12 @@ public class JGrowlFeedbackPanel extends FeedbackPanel {
 
 		return this;
 	}
+
+    public JGrowlFeedbackPanel setSuccessMessageOptions(final Options successOptions) {
+        this.successOptions = successOptions;
+
+        return this;
+    }
 
 	public JGrowlFeedbackPanel setDebugMessageOptions(final Options debugOptions) {
 		this.debugOptions = debugOptions;
