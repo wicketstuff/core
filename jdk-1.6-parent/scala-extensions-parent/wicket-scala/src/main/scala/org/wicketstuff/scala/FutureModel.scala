@@ -1,4 +1,4 @@
-package org.wickststuff.scala
+package org.wicketstuff.scala
 
 import java.util.concurrent.Executors
 import org.apache.wicket.model.AbstractReadOnlyModel
