@@ -79,11 +79,11 @@ public class LogoutPage extends WebPage
 		setStatelessHint(true);
 		setResponsePage(pageClass);
 
-		// this should remove the cookie...
+		// this should remove the cookie and invalidate session
 		final Subject subject = SecurityUtils.getSubject();
 		LOG.info("logout: " + subject);
 		subject.logout();
-		Session.get().invalidateNow(); // invalidate the wicket session
+		
 		return;
 	}
 
@@ -102,7 +102,7 @@ public class LogoutPage extends WebPage
 	{
 		setStatelessHint(true);
 
-		// this should remove the cookie...
+		// this should remove the cookie and invalidate session
 		final Subject subject = SecurityUtils.getSubject();
 		LOG.info("logout: " + subject);
 		subject.logout();
@@ -111,9 +111,6 @@ public class LogoutPage extends WebPage
 		final String content = waitBeforeRedirectInSeconds + ";URL=" + url;
 		redirect.add(new AttributeModifier("content", new Model<String>(content)));
 		add(redirect);
-
-		// invalidate the session
-		Session.get().invalidateNow(); // invalidate the wicket session
 
 		// HYMMMM
 		final Cookie c = new Cookie("rememberMe", "xxx");
