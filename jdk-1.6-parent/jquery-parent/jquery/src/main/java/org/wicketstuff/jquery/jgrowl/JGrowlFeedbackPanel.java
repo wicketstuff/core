@@ -33,6 +33,7 @@ public class JGrowlFeedbackPanel extends FeedbackPanel {
 	private Options warningOptions;
 	private Options fatalOptions;
 	private Options infoOptions;
+	private Options successOptions;
 	private Options debugOptions;
 
 	/**
@@ -103,6 +104,11 @@ public class JGrowlFeedbackPanel extends FeedbackPanel {
 			}
 
 			@Override
+			protected Options newSuccessOptions() {
+				return successOptions;
+			}
+
+			@Override
 			protected Options newDebugOptions() {
 				return debugOptions;
 			}
@@ -150,6 +156,12 @@ public class JGrowlFeedbackPanel extends FeedbackPanel {
 
 	public JGrowlFeedbackPanel setInfoMessageOptions(final Options infoOptions) {
 		this.infoOptions = infoOptions;
+
+		return this;
+	}
+
+	public JGrowlFeedbackPanel setSuccessMessageOptions(final Options successOptions) {
+		this.successOptions = successOptions;
 
 		return this;
 	}
