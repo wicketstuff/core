@@ -45,6 +45,9 @@ public class JGrowlFeedbackMessage implements IClusterable
 			case FeedbackMessage.INFO :
 				options = newInfoOptions();
 				break;
+			case FeedbackMessage.SUCCESS :
+				options = newSuccessOptions();
+				break;
 			default :
 				options = new Options();
 		}
@@ -74,6 +77,14 @@ public class JGrowlFeedbackMessage implements IClusterable
 		final Options infoOptions = new Options();
 
 		return infoOptions;
+	}
+
+	protected Options newSuccessOptions()
+	{
+
+		final Options successOptions = new Options();
+
+		return successOptions;
 	}
 
 	protected Options newErrorOptions()
