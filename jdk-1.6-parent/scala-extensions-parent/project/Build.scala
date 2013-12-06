@@ -4,21 +4,21 @@ import Project.Initialize
 
 object WicketScalaParent extends Build
 {
-	val WicketVersion = "6.0-SNAPSHOT"
+	val WicketVersion = "6.13.0-SNAPSHOT"
 	val Organization  = "org.wicketstuff"
-	val ScalaVersion  = "2.9.1-1"
+	val ScalaVersion  = "2.10.3"
 	val ScalacOptions = Seq("-deprecation", "-unchecked", "-optimize", "-uniqid",
 		"-no-specialization", "-encoding", "UTF-8")
 
-	val ScalaCheckDep = "org.scalacheck" % "scalacheck_2.9.1" % "1.9"
-	val JUnitDep      = "junit" % "junit" % "4.8.2" % "test->default"
-	val Specs1Dep     = "org.scala-tools.testing" % "specs_2.9.1" % "1.6.9" % "test->default"
+	val ScalaCheckDep = "org.scalacheck" % "scalacheck_2.10" % "1.11.1"
+	val JUnitDep      = "junit" % "junit" % "4.11" % "test->default"
+	val Specs1Dep     = "org.specs2" % "specs2_2.10" % "1.14" % "test->default"
 	val ServletDep    = "javax.servlet" % "servlet-api" % "2.5"
-	val Slf4jLog4jDep = "org.slf4j" % "slf4j-log4j12" % "1.6.4"
-	val WicketDep     = "org.apache.wicket" % "wicket" % WicketVersion
+	val Slf4jLog4jDep = "org.slf4j" % "slf4j-log4j12" % "1.7.5"
+	val WicketDep     = "org.apache.wicket" % "wicket-core" % WicketVersion
 	val WicketExtensionsDep = "org.apache.wicket" % "wicket-extensions" % WicketVersion
 	val WicketDatetimeDep = "org.apache.wicket" % "wicket-datetime" % WicketVersion
-	val ScalaTestDep  = "org.scalatest" % "scalatest_2.9.1-1" % "1.7.1" % "test->default"
+	val ScalaTestDep  = "org.scalatest" % "scalatest_2.10" % "2.0" % "test->default"
 
 	lazy val parent = Project("parent", file("."),
 		settings = Defaults.defaultSettings ++ Seq(

@@ -2,8 +2,8 @@ package org.wicketstuff.scala
 
 import org.apache.wicket.markup.html.WebPage
 import org.apache.wicket.markup.html.basic.Label
+import org.apache.wicket.markup.html.list.ListItem
 import org.apache.wicket.util.tester.WicketTester
-import org.apache.wicket.markup.html.list._
 
 import org.specs2.mutable.SpecificationWithJUnit
 

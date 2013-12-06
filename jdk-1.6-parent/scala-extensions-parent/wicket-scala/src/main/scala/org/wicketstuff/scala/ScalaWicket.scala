@@ -37,12 +37,12 @@ trait ScalaWicket {
   implicit def func2Fodel1[T](gtr: ⇒ T):Fodel[T] = new Fodel[T](gtr, null)
 
   /**
-   * Converts an anonymous fuction of zero arguments into a Fodel.
+   * Converts an anonymous function of zero arguments into a Fodel.
    */
   implicit def func2Fodel2[T](gtr: () ⇒ T):Fodel[T] = new Fodel[T](gtr(), null)
   
   /**
-   * Converts an anonymous fuction, typed with a List of something, into a Fodel. Useful for ListViews etc.
+   * Converts an anonymous function, typed with a List of something, into a Fodel. Useful for ListViews etc.
    */
   implicit def func2Fodel5[T](listFunc: () ⇒ List[T]):Fodel[java.util.List[T]] = new Fodel[java.util.List[T]](listFunc(), null)
   

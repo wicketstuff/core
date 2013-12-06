@@ -41,7 +41,7 @@
 			<dependency>
 				<groupId>org.specs2</groupId>
 				<artifactId>specs2_2.10</artifactId>
-				<version>1.13</version>
+				<version>1.14</version>
 				<scope>test</scope>
 			</dependency>
 			<dependency>
