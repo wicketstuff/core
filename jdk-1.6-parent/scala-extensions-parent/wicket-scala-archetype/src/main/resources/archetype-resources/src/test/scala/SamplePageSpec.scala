@@ -1,17 +1,17 @@
-package org.wicketstuff.scala.sample
+package ${package}
 
-import org.specs._
-import org.specs.runner._
 import org.apache.wicket.util.tester.WicketTester
+import org.scalatest.FunSuite
+import org.scalatest.{ShouldMatchers, FunSuite}
 
-class SamplePageSpec extends SpecificationWithJUnit with ScalaTest {
+class SamplePageSpec
+  extends FunSuite
+  with ShouldMatchers {
 
-  "HomePage" should {
-    "construct without error" in {
-      val wt = new WicketTester
-      val p = wt.startPage(classOf[${package}.HomePage])
-      p must notBeNull
-    }
+  test("construct without error") {
+    val wt = new WicketTester(new HelloWicketWorld)
+    val p = wt.startPage(classOf[com.mycompany.HomePage])
+    p should not be (null)
   }
-  
+
 }

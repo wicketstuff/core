@@ -237,7 +237,7 @@
 		<spring.version>3.0.6.RELEASE</spring.version>
 		<cglib.version>2.2.2</cglib.version>
 		<objenesis.version>1.2</objenesis.version>
-		<scala.version>2.10.2</scala.version>
+		<scala.version>2.10.3</scala.version>
 	</properties>
 
 	<!-- build contract is java 6 first then java 7 -->
