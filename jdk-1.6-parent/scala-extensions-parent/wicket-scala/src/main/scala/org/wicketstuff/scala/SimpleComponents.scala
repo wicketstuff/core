@@ -18,8 +18,7 @@ class SForm[T](id:String,
                onSubmitFunc: ⇒ Unit)
   extends Form[T](id, model:IModel[T]) {
 
-  override def onSubmit =
-    onSubmitFunc
+  override def onSubmit(): Unit = onSubmitFunc
 }
 
 
@@ -32,7 +31,7 @@ class SLink(id:String,
             onClickFunc: ⇒ Unit)
   extends Link(id) {
 
-  override def onClick = onClickFunc
+  override def onClick(): Unit = onClickFunc
 }
 
 class SListView[T](id:String,

@@ -1,8 +1,10 @@
-package ${package};
+package ${package}
 
-class SomeImplementation extends SomeInterface { 
-    def doSomething(argument: String) : Unit = {
-        println(argument)
-    }
+class SomeImplementation
+  extends SomeInterface {
+
+  def doSomething(argument: String) : Unit = {
+    println(argument)
+  }
 }
 

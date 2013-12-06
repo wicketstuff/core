@@ -28,8 +28,8 @@ import scala.language.implicitConversions
 trait DSLWicket {
   self: MarkupContainer ⇒
 
-  def homeLink(id: String): BookmarkablePageLink[_] = blink(id, Application.get().getHomePage())
-  def logoutLink(id: String): Link[_] = link(id, () ⇒ { Session.get().invalidateNow() })
+  def homeLink(id: String): BookmarkablePageLink[_] = blink(id, Application.get().getHomePage)
+  def logoutLink(id: String): Link[_] = link(id, () ⇒ { Session.get().invalidate() })
   def container(id: String): DSLMarkupContainer = { val c = new WebMarkupContainer(id) with DSLMarkupContainer; add(c); c }
   def hide() = setVisibilityAllowed(false)
   def show() = setVisibilityAllowed(true)
@@ -56,7 +56,7 @@ trait DSLWicket {
     ef.add(RfcCompliantEmailAddressValidator.getInstance()); ef
   }
   def passField(id: String): SPasswordField = {
-    val pass = new PasswordTextField(id) with SPasswordField; add(pass); pass;
+    val pass = new PasswordTextField(id) with SPasswordField; add(pass); pass
   }
   def textArea(id: String): STextArea = {
     val field = new TextArea[String](id) with STextArea; field.setType(classOf[String]); add(field); field
@@ -104,8 +104,8 @@ trait DSLWicket {
   def cmodel[T](obj: T): IModel[T] = { new CompoundPropertyModel[T](obj); }
   def scmodel[T](obj: T): IModel[T] = { val cpm = cmodel[T](obj); setDefaultModel(cpm); cpm }
   def compound[T](obj: T): IModel[T] = { val m = new CompoundPropertyModel[T](obj); setDefaultModel(m); m }
-  def blink(id: String, clazz: Class[_ <: Page], params: PageParameters = null): BookmarkablePageLink[AnyRef] = {
-    val b = new BookmarkablePageLink[AnyRef](id, clazz, params); add(b); b
+  def blink[T](id: String, clazz: Class[_ <: Page], params: PageParameters = null): BookmarkablePageLink[T] = {
+    val b = new BookmarkablePageLink[T](id, clazz, params); add(b); b
   }
   def link[T](id: String, click: () ⇒ _): SLink[T] = {
     val l = new Link[T](id) with SLink[T] { override def onClick() = click() }
@@ -149,8 +149,8 @@ trait DSLWicket {
     val p = new PagingNavigator(id, pageable); add(p); p
   }
   def mobject[T](obj: T) = setDefaultModelObject(obj)
-  def mobject[T]() = getDefaultModelObject().asInstanceOf[T]
-  def dropDownChoice[T](id: String, choices: java.util.List[_ <: T] = null)(implicit m: scala.reflect.Manifest[T]): DropDownChoice[T] = {
+  def mobject[T]() = getDefaultModelObject.asInstanceOf[T]
+  def dropDownChoice[T](id: String, choices: java.util.List[_ <: T] = null): DropDownChoice[T] = {
     val dropdown = new DropDownChoice[T](id, choices); add(dropdown); dropdown
   }
   def emailLink(id: String, email: String, label: String): ExternalLink = {
@@ -159,11 +159,8 @@ trait DSLWicket {
     el
   }
   def emailLink(id: String, email: String) { emailLink(id, email, email) }
-  def select[T](id: String) = {
-    val ddc = new DropDownChoice[T](id)
-    add(ddc); ddc
-  }
-  def select[T](id: String, elements: List[T]) = {
+  def select[T](id: String): DropDownChoice[T] = select[T](id, null)
+  def select[T](id: String, elements: List[T]): DropDownChoice[T] = {
     val ddc = new DropDownChoice[T](id, elements)
     add(ddc); ddc
   }
@@ -199,7 +196,7 @@ trait DSLWicket {
   trait RequireableTextArea extends TextArea[String] with RequireableFormComponent[String]
   trait DSLMarkupContainer extends WebMarkupContainer with DSLWicket
   trait DSLPageable[T] extends PageableListView[T] {
-    def navigator(id: String) = this.getParent().add(new PagingNavigator(id, this))
+    def navigator(id: String) = this.getParent.add(new PagingNavigator(id, this))
   }
   object OddBehavior extends AttributeAppender("class", Model.of("odd"))
 
