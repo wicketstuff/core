@@ -289,7 +289,7 @@ public abstract class CalendarBehavior extends JQueryBehavior implements IJQuery
 		else if (event instanceof ViewRenderEvent)
 		{
 			ViewRenderEvent renderEvent = (ViewRenderEvent) event;
-			this.onViewRender(target, renderEvent.getView());
+			this.onViewRender(target, renderEvent.getView(), renderEvent.getStart(), renderEvent.getEnd());
 		}
 	}
 
@@ -310,8 +310,13 @@ public abstract class CalendarBehavior extends JQueryBehavior implements IJQuery
 			{
 				// http://arshaw.com/fullcalendar/docs/selection/select_callback/
 				// function(startDate, endDate, allDay, jsEvent, view) { }
-				return new CallbackParameter[] { CallbackParameter.converted("startDate", "startDate.getTime()"), CallbackParameter.converted("endDate", "endDate.getTime()"), CallbackParameter.explicit("allDay"),
-						CallbackParameter.context("jsEvent"), CallbackParameter.context("view"), CallbackParameter.resolved("viewName", "view.name") };
+				return new CallbackParameter[] { CallbackParameter.converted("startDate", "startDate.getTime()"), // retrieved
+						CallbackParameter.converted("endDate", "endDate.getTime()"), // retrieved
+						CallbackParameter.explicit("allDay"), // retrieved
+						CallbackParameter.context("jsEvent"), // lf
+						CallbackParameter.context("view"), // lf
+						CallbackParameter.resolved("viewName", "view.name") // retrieved
+				};
 			}
 
 			@Override
@@ -338,8 +343,12 @@ public abstract class CalendarBehavior extends JQueryBehavior implements IJQuery
 			{
 				// http://arshaw.com/fullcalendar/docs/mouse/dayClick/
 				// function(date, allDay, jsEvent, view)
-				return new CallbackParameter[] { CallbackParameter.converted("date", "date.getTime()"), CallbackParameter.explicit("allDay"), CallbackParameter.context("jsEvent"), CallbackParameter.context("view"),
-						CallbackParameter.resolved("viewName", "view.name") };
+				return new CallbackParameter[] { CallbackParameter.converted("date", "date.getTime()"), // retrieved
+						CallbackParameter.explicit("allDay"), // retrieved
+						CallbackParameter.context("jsEvent"), // lf
+						CallbackParameter.context("view"),// lf
+						CallbackParameter.resolved("viewName", "view.name") // retrieved
+				};
 			}
 
 			@Override
@@ -366,8 +375,12 @@ public abstract class CalendarBehavior extends JQueryBehavior implements IJQuery
 			{
 				// http://arshaw.com/fullcalendar/docs/mouse/eventClick/
 				// function(event, jsEvent, view) { }
-				return new CallbackParameter[] { CallbackParameter.context("event"), CallbackParameter.context("jsEvent"), CallbackParameter.context("view"), CallbackParameter.resolved("eventId", "event.id"),
-						CallbackParameter.resolved("viewName", "view.name") };
+				return new CallbackParameter[] { CallbackParameter.context("event"), // lf
+						CallbackParameter.context("jsEvent"), // lf
+						CallbackParameter.context("view"), // lf
+						CallbackParameter.resolved("eventId", "event.id"),// retrieved
+						CallbackParameter.resolved("viewName", "view.name") // retrieved
+				};
 			}
 
 			@Override
@@ -394,10 +407,15 @@ public abstract class CalendarBehavior extends JQueryBehavior implements IJQuery
 			{
 				// http://arshaw.com/fullcalendar/docs/event_ui/eventResize/
 				// function(event, dayDelta, minuteDelta, allDay, revertFunc, jsEvent, ui, view) { }
-				return new CallbackParameter[] { CallbackParameter.context("event"), CallbackParameter.explicit("dayDelta"), // retrieved
+				return new CallbackParameter[] { CallbackParameter.context("event"), // lf
+						CallbackParameter.explicit("dayDelta"), // retrieved
 						CallbackParameter.explicit("minuteDelta"), // retrieved
 						CallbackParameter.explicit("allDay"), // retrieved
-						CallbackParameter.context("revertFunc"), CallbackParameter.context("jsEvent"), CallbackParameter.context("ui"), CallbackParameter.context("view"), CallbackParameter.resolved("eventId", "event.id") // retrieved
+						CallbackParameter.context("revertFunc"), // lf
+						CallbackParameter.context("jsEvent"), // lf
+						CallbackParameter.context("ui"), // lf
+						CallbackParameter.context("view"), // lf
+						CallbackParameter.resolved("eventId", "event.id") // retrieved
 				};
 			}
 
@@ -425,9 +443,14 @@ public abstract class CalendarBehavior extends JQueryBehavior implements IJQuery
 			{
 				// http://arshaw.com/fullcalendar/docs/event_ui/eventResize/
 				// function(event, dayDelta, minuteDelta, revertFunc, jsEvent, ui, view) { }
-				return new CallbackParameter[] { CallbackParameter.context("event"), CallbackParameter.explicit("dayDelta"), // retrieved
+				return new CallbackParameter[] { CallbackParameter.context("event"), // lf
+						CallbackParameter.explicit("dayDelta"), // retrieved
 						CallbackParameter.explicit("minuteDelta"), // retrieved
-						CallbackParameter.context("revertFunc"), CallbackParameter.context("jsEvent"), CallbackParameter.context("ui"), CallbackParameter.context("view"), CallbackParameter.resolved("eventId", "event.id") // retrieved
+						CallbackParameter.context("revertFunc"), // lf
+						CallbackParameter.context("jsEvent"), // lf
+						CallbackParameter.context("ui"), // lf
+						CallbackParameter.context("view"), // lf
+						CallbackParameter.resolved("eventId", "event.id") // retrieved
 				};
 			}
 
@@ -455,8 +478,12 @@ public abstract class CalendarBehavior extends JQueryBehavior implements IJQuery
 			{
 				// http://arshaw.com/fullcalendar/docs/dropping/drop/
 				// function(date, allDay, jsEvent, ui) { }
-				return new CallbackParameter[] { CallbackParameter.converted("date", "date.getTime()"), CallbackParameter.explicit("allDay"), CallbackParameter.context("jsEvent"), CallbackParameter.context("ui"),
-						CallbackParameter.resolved("title", "jQuery(this).data('title')") };
+				return new CallbackParameter[] { CallbackParameter.converted("date", "date.getTime()"), // retrieved
+						CallbackParameter.explicit("allDay"), // retrieved
+						CallbackParameter.context("jsEvent"), // lf
+						CallbackParameter.context("ui"), // lf
+						CallbackParameter.resolved("title", "jQuery(this).data('title')") // retrieved
+				};
 			}
 
 			@Override
@@ -483,7 +510,11 @@ public abstract class CalendarBehavior extends JQueryBehavior implements IJQuery
 			{
 				// http://arshaw.com/fullcalendar/docs/display/viewRender/
 				// function(view, element) { }
-				return new CallbackParameter[] { CallbackParameter.context("view"), CallbackParameter.context("element"), CallbackParameter.resolved("viewName", "view.name") };
+				return new CallbackParameter[] { CallbackParameter.context("view"),// lf
+						CallbackParameter.context("element"), // lf
+						CallbackParameter.resolved("viewName", "view.name"), // retrieved
+						CallbackParameter.resolved("startDate", "view.start.getTime()"), // retrieved
+						CallbackParameter.resolved("endDate", "view.end.getTime()") }; // retrieved
 			}
 
 			@Override
@@ -653,6 +684,8 @@ public abstract class CalendarBehavior extends JQueryBehavior implements IJQuery
 	 */
 	protected static class ViewRenderEvent extends JQueryEvent
 	{
+		private final Date start;
+		private final Date end;
 		private final String viewName;
 
 		/**
@@ -660,7 +693,33 @@ public abstract class CalendarBehavior extends JQueryBehavior implements IJQuery
 		 */
 		public ViewRenderEvent()
 		{
+			long start = RequestCycleUtils.getQueryParameterValue("startDate").toLong();
+			this.start = new Date(start);
+
+			long end = RequestCycleUtils.getQueryParameterValue("endDate").toLong();
+			this.end = new Date(end);
+
 			this.viewName = RequestCycleUtils.getQueryParameterValue("viewName").toString();
+		}
+
+		/**
+		 * Gets the event start date
+		 *
+		 * @return the start date
+		 */
+		public Date getStart()
+		{
+			return this.start;
+		}
+
+		/**
+		 * Gets the end date
+		 *
+		 * @return the end date
+		 */
+		public Date getEnd()
+		{
+			return this.end;
 		}
 
 		/**

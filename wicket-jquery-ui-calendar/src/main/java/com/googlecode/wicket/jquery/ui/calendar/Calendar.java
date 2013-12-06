@@ -237,7 +237,7 @@ public class Calendar extends JQueryContainer implements ICalendarListener
 	}
 
 	@Override
-	public void onViewRender(AjaxRequestTarget target, CalendarView view)
+	public void onViewRender(AjaxRequestTarget target, CalendarView view, Date start, Date end)
 	{
 		// noop
 	}
@@ -332,9 +332,9 @@ public class Calendar extends JQueryContainer implements ICalendarListener
 			}
 
 			@Override
-			public void onViewRender(AjaxRequestTarget target, CalendarView view)
+			public void onViewRender(AjaxRequestTarget target, CalendarView view, Date start, Date end)
 			{
-				Calendar.this.onViewRender(target, view);
+				Calendar.this.onViewRender(target, view, start, end);
 			}
 		};
 	}

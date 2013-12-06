@@ -36,7 +36,7 @@ interface IDraggableListener
 
 	/**
 	 * Triggered when the drag starts<br/>
-	 * offsetTop and offsetLeft are available as <code>RequestCycle</code> parameters
+	 * <b>Note:</b> <tt>offsetTop</tt> and <tt>offsetLeft</tt> are available as <tt>RequestCycle</tt> parameters
 	 *
 	 * @param target the {@link AjaxRequestTarget}
 	 * @param top the position's top value
