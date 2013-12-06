@@ -22,15 +22,15 @@ import org.apache.wicket.request.http.WebResponse;
 
 /**
  * General interface to serialize/deserialize an object to/from request/response.
- * 
+ *
  * @author andrea del bene
- * 
+ *
  */
 public interface IWebSerialDeserial
 {
 	/**
 	 * Write the object in input to the response converting it to a given MIME type.
-	 * 
+	 *
 	 * @param targetObject
 	 *            the object instance to serialize to string.
 	 * @param response
@@ -44,14 +44,14 @@ public interface IWebSerialDeserial
 
 	/**
 	 * Extract an instance of argClass form the request.
-	 * 
+	 *
 	 * @param request
 	 *            the request object.
 	 * @param argClass
 	 *            the type of the object we want to extract.
 	 * @param mimeType
 	 *            the MIME type of the request.
-	 * 
+	 *
 	 * @return the object extracted from the request.
 	 */
 	public <T> T requestToObject(WebRequest request, Class<T> argClass, String mimeType)
@@ -59,18 +59,19 @@ public interface IWebSerialDeserial
 
 	/**
 	 * Check if a given MIME type is handled.
-	 * 
+	 *
 	 * @param mimeType
 	 *            the MIME type we want to check.
 	 * @return true if the MIME type is supported, false otherwise.
 	 */
 	public boolean isMimeTypeSupported(String mimeType);
-	
+
 	/**
-	 * 
-	 * 
+	 * Returns the {@link IObjectSerialDeserial} for the specific MIME type
+	 *
 	 * @param mimeType
 	 * @return
+	 *     the appropriate IObjectSerialDeserial.
 	 */
 	public <T> IObjectSerialDeserial<T> getIObjectSerialDeserial(String mimeType);
 }
