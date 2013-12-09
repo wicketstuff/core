@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
 <properties>
-  <entry key="wicket.jquery.ui.wysiwyg.toolbar.fontSize">Schriftgröße</entry>
+  <entry key="wicket.jquery.ui.wysiwyg.toolbar.fontSize">Schriftgroesse</entry>
 
   <entry key="wicket.jquery.ui.wysiwyg.toolbar.huge">Gross</entry>
   <entry key="wicket.jquery.ui.wysiwyg.toolbar.medium">Mittel</entry>
@@ -25,6 +25,6 @@
   <entry key="wicket.jquery.ui.wysiwyg.toolbar.hyperlink">Hyperlink</entry>
   <entry key="wicket.jquery.ui.wysiwyg.toolbar.removeHyperlink">Hyperlink entfernen</entry>
 
-  <entry key="wicket.jquery.ui.wysiwyg.toolbar.undo">Rückgängig machen (Ctrl/Cmd+Z)</entry>
-  <entry key="wicket.jquery.ui.wysiwyg.toolbar.redo">Redo (Ctrl/Cmd+Y)</entry>
+  <entry key="wicket.jquery.ui.wysiwyg.toolbar.undo">Rueckgaengig (Ctrl/Cmd+Z)</entry>
+  <entry key="wicket.jquery.ui.wysiwyg.toolbar.redo">Wiederherstellen (Ctrl/Cmd+Y)</entry>
 </properties>
