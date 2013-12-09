@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+  <entry key="wicket.jquery.ui.wysiwyg.toolbar.fontSize">Tamaño de la letra</entry>
+
+  <entry key="wicket.jquery.ui.wysiwyg.toolbar.huge">Grande</entry>
+  <entry key="wicket.jquery.ui.wysiwyg.toolbar.medium">Medio</entry>
+  <entry key="wicket.jquery.ui.wysiwyg.toolbar.small">Pequeño</entry>
+
+  <entry key="wicket.jquery.ui.wysiwyg.toolbar.bold">Audaz (Ctrl/Cmd+B)</entry>
+  <entry key="wicket.jquery.ui.wysiwyg.toolbar.italic">Itálico (Ctrl/Cmd+I)</entry>
+  <entry key="wicket.jquery.ui.wysiwyg.toolbar.strikethrough">Tachado</entry>
+  <entry key="wicket.jquery.ui.wysiwyg.toolbar.underline">Subrayar (Ctrl/Cmd+U)</entry>
+
+  <entry key="wicket.jquery.ui.wysiwyg.toolbar.bullets">Lista de bullets</entry>
+  <entry key="wicket.jquery.ui.wysiwyg.toolbar.numbers">Lista de números</entry>
+  <entry key="wicket.jquery.ui.wysiwyg.toolbar.indent">Reducir guión (Shift+Tab)</entry>
+  <entry key="wicket.jquery.ui.wysiwyg.toolbar.reduceIndent">Hendidura (Tab)</entry>
+
+  <entry key="wicket.jquery.ui.wysiwyg.toolbar.justifyLeft">Alinear a la izquierda (Ctrl/Cmd+L)</entry>
+  <entry key="wicket.jquery.ui.wysiwyg.toolbar.justifyCenter">Centro (Ctrl/Cmd+E)</entry>
+  <entry key="wicket.jquery.ui.wysiwyg.toolbar.justifyRight">Alinear a la derecha (Ctrl/Cmd+R)</entry>
+  <entry key="wicket.jquery.ui.wysiwyg.toolbar.justifyFull">Justificar (Ctrl/Cmd+J)</entry>
+
+  <entry key="wicket.jquery.ui.wysiwyg.toolbar.hyperlink">Hiperenlace</entry>
+  <entry key="wicket.jquery.ui.wysiwyg.toolbar.removeHyperlink">Quitar hipervínculo</entry>
+
+  <entry key="wicket.jquery.ui.wysiwyg.toolbar.undo">Deshacer (Ctrl/Cmd+Z)</entry>
+  <entry key="wicket.jquery.ui.wysiwyg.toolbar.redo">Rehacer (Ctrl/Cmd+Y)</entry>
+</properties>

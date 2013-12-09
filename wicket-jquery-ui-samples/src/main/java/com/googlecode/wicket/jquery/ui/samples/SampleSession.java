@@ -23,6 +23,7 @@ public class SampleSession extends WebSession implements IJQuerySecurityProvider
 	public SampleSession(Request request)
 	{
 		super(request);
+
 		this.roles = new ArrayList<String>();
 	}
 

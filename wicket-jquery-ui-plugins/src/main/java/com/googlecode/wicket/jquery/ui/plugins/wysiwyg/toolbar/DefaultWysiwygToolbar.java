@@ -16,8 +16,6 @@
  */
 package com.googlecode.wicket.jquery.ui.plugins.wysiwyg.toolbar;
 
-import java.util.Locale;
-
 import org.apache.wicket.AttributeModifier;
 import org.apache.wicket.Component;
 import org.apache.wicket.markup.html.WebMarkupContainer;
@@ -62,8 +60,6 @@ public class DefaultWysiwygToolbar extends Panel implements IWysiwygToolbar
 	public DefaultWysiwygToolbar(String id, IModel<String> model)
 	{
 		super(id, model);
-
-		getSession().setLocale(new Locale("english"));
 
 		this.toolbar = new WebMarkupContainer("toolbar");
 		this.toolbar.setMarkupId("bToolbar");
