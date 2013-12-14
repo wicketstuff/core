@@ -181,7 +181,6 @@ public class DataTable<T> extends WebComponent implements IJQueryWidget, IDataTa
 	 *
 	 * @param columns the list of {@link IColumn}
 	 * @param provider the {@link IDataProvider}
-	 * @param rows the number of rows per page to be displayed
 	 * @return the {@link AbstractAjaxBehavior}
 	 */
 	protected AbstractAjaxBehavior newDataSourceBehavior(final List<? extends IColumn> columns, final IDataProvider<T> provider)
