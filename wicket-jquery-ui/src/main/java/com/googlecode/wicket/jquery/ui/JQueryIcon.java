@@ -204,7 +204,7 @@ public class JQueryIcon
 	public static final String GRIP_DIAGONAL_SE = "ui-icon-grip-diagonal-se";
 
 	/**
-	 * Contants class
+	 * Constants class
 	 */
 	private JQueryIcon()
 	{

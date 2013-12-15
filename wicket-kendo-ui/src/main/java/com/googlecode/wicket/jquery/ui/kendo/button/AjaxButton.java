@@ -16,10 +16,15 @@
  */
 package com.googlecode.wicket.jquery.ui.kendo.button;
 
-import org.apache.wicket.AttributeModifier;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.model.IModel;
+
+import com.googlecode.wicket.jquery.core.IJQueryWidget;
+import com.googlecode.wicket.jquery.core.JQueryBehavior;
+import com.googlecode.wicket.jquery.core.Options;
+import com.googlecode.wicket.jquery.ui.kendo.KendoIcon;
+import com.googlecode.wicket.jquery.ui.kendo.button.Button.ButtonBehavior;
 
 /**
  * Provides a jQuery button based on the built-in AjaxButton
@@ -27,10 +32,9 @@ import org.apache.wicket.model.IModel;
  * @author Sebastien Briquet - sebfz1
  *
  */
-public abstract class AjaxButton extends org.apache.wicket.ajax.markup.html.form.AjaxButton
+public abstract class AjaxButton extends org.apache.wicket.ajax.markup.html.form.AjaxButton implements IJQueryWidget
 {
 	private static final long serialVersionUID = 1L;
-	private static final String CSS_CLASS = "k-button";
 
 	/**
 	 * Constructor
@@ -73,17 +77,54 @@ public abstract class AjaxButton extends org.apache.wicket.ajax.markup.html.form
 	}
 
 	// Events //
+	// Properties //
+
+	/**
+	 * Gets the icon being displayed in the button
+	 *
+	 * @return {@link KendoIcon#NONE} by default
+	 */
+	protected String getIcon()
+	{
+		return KendoIcon.NONE; // used in #onConfigure
+	}
+
+	// Events //
+
 	@Override
 	protected void onInitialize()
 	{
 		super.onInitialize();
 
-		this.add(AttributeModifier.replace("class", CSS_CLASS));
+		this.add(JQueryWidget.newWidgetBehavior(this)); // cannot be in ctor as the markupId may be set manually afterward
+	}
+
+	@Override
+	public void onConfigure(JQueryBehavior behavior)
+	{
+		if (!KendoIcon.isNone(this.getIcon()))
+		{
+			behavior.setOption("icon", Options.asString(this.getIcon()));
+		}
+	}
+
+	@Override
+	public void onBeforeRender(JQueryBehavior behavior)
+	{
+		// noop
 	}
 
 	@Override
 	protected void onError(AjaxRequestTarget target, Form<?> form)
 	{
 		// noop
+	}
+
+	// IJQueryWidget //
+
+	@Override
+	public ButtonBehavior newWidgetBehavior(String selector)
+	{
+		return new ButtonBehavior(selector);
 	}
 }

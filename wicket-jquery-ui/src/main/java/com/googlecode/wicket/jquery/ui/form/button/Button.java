@@ -65,6 +65,7 @@ public class Button extends org.apache.wicket.markup.html.form.Button implements
 	}
 
 	// Events //
+
 	@Override
 	protected void onInitialize()
 	{
@@ -89,6 +90,7 @@ public class Button extends org.apache.wicket.markup.html.form.Button implements
 	}
 
 	// IJQueryWidget //
+
 	@Override
 	public ButtonBehavior newWidgetBehavior(String selector)
 	{

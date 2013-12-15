@@ -16,8 +16,12 @@
  */
 package com.googlecode.wicket.jquery.ui.kendo.button;
 
-import org.apache.wicket.AttributeModifier;
 import org.apache.wicket.model.IModel;
+
+import com.googlecode.wicket.jquery.core.IJQueryWidget;
+import com.googlecode.wicket.jquery.core.JQueryBehavior;
+import com.googlecode.wicket.jquery.core.Options;
+import com.googlecode.wicket.jquery.ui.kendo.KendoIcon;
 
 /**
  * Provides a Kendo-ui button based on the built-in Button
@@ -25,11 +29,9 @@ import org.apache.wicket.model.IModel;
  * @author Sebastien Briquet - sebfz1
  *
  */
-// TODO: replace with new kendoButton
-public class Button extends org.apache.wicket.markup.html.form.Button
+public class Button extends org.apache.wicket.markup.html.form.Button  implements IJQueryWidget
 {
 	private static final long serialVersionUID = 1L;
-	private static final String CSS_CLASS = "k-button";
 
 	/**
 	 * Constructor
@@ -52,12 +54,72 @@ public class Button extends org.apache.wicket.markup.html.form.Button
 		super(id, model);
 	}
 
+	// Properties //
+
+	/**
+	 * Gets the icon being displayed in the button
+	 *
+	 * @return {@link KendoIcon#NONE} by default
+	 */
+	protected String getIcon()
+	{
+		return KendoIcon.NONE; // used in #onConfigure
+	}
+
 	// Events //
+
 	@Override
 	protected void onInitialize()
 	{
 		super.onInitialize();
 
-		this.add(AttributeModifier.replace("class", CSS_CLASS));
+		this.add(JQueryWidget.newWidgetBehavior(this)); // cannot be in ctor as the markupId may be set manually afterward
+	}
+
+	@Override
+	public void onConfigure(JQueryBehavior behavior)
+	{
+		if (!KendoIcon.isNone(this.getIcon()))
+		{
+			behavior.setOption("icon", Options.asString(this.getIcon()));
+		}
+	}
+
+	@Override
+	public void onBeforeRender(JQueryBehavior behavior)
+	{
+		// noop
+	}
+
+	// IJQueryWidget //
+
+	@Override
+	public ButtonBehavior newWidgetBehavior(String selector)
+	{
+		return new ButtonBehavior(selector);
+	}
+
+	/**
+	 * Provides a jQuery button {@link JQueryBehavior}
+	 */
+	public static class ButtonBehavior extends JQueryBehavior
+	{
+		private static final long serialVersionUID = 1L;
+		private static final String METHOD = "kendoButton";
+
+		public ButtonBehavior(String selector)
+		{
+			super(selector, METHOD);
+		}
+
+		public ButtonBehavior(String selector, Options options)
+		{
+			super(selector, METHOD, options);
+		}
+
+		public ButtonBehavior(String selector, String icon)
+		{
+			super(selector, METHOD, new Options("icon", Options.asString(icon)));
+		}
 	}
 }
