@@ -146,8 +146,8 @@ public abstract class IndicatingAjaxButton extends AjaxButton implements IJQuery
 				StringBuilder builder = new StringBuilder(super.$());
 
 				builder.append("jQuery(function() {");
-				builder.append("jQuery('").append(this.getSelector()).append("')").append(".click(function() { jQuery(this).button('option', 'icons', {").append(position == Position.LEFT ? "primary" : "secondary").append(": 'ui-icon-indicator' }); }); ");
-				builder.append("jQuery(document).ajaxStop(function() { jQuery('").append(this.getSelector()).append("').button('option', 'icons', {").append(position == Position.LEFT ? "primary" : "secondary").append(": null }); }); ");
+				builder.append("jQuery('").append(this.selector).append("')").append(".click(function() { jQuery(this).button('option', 'icons', {").append(position == Position.LEFT ? "primary" : "secondary").append(": 'ui-icon-indicator' }); }); ");
+				builder.append("jQuery(document).ajaxStop(function() { jQuery('").append(this.selector).append("').button('option', 'icons', {").append(position == Position.LEFT ? "primary" : "secondary").append(": null }); }); ");
 				builder.append("});");
 
 				return builder.toString();

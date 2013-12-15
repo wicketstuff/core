@@ -37,9 +37,9 @@ public class JQueryBehavior extends JQueryAbstractBehavior
 	private static final long serialVersionUID = 1L;
 	private static final String NULL_OPTIONS = "Options have not been defined (null has been supplied to the constructor)";
 
-	private String selector = null;
-	private final String method;
-	private final Options options;
+	protected String selector = null;
+	protected final String method;
+	protected final Options options;
 
 	private List<String> events = null;
 

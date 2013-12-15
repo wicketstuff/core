@@ -146,7 +146,7 @@ public abstract class SelectableBehavior<T extends Serializable> extends JQueryB
 			public CharSequence getCallbackFunctionBody(CallbackParameter... parameters)
 			{
 				//build indexes array, ie: 'indexes=[1,2,3]'
-				String selector = String.format("%s %s", SelectableBehavior.this.getSelector(), SelectableBehavior.this.getItemSelector());
+				String selector = String.format("%s %s", SelectableBehavior.this.selector, SelectableBehavior.this.getItemSelector());
 				String indexes = "var indexes=[]; jQuery('.ui-selected', this).each( function() { indexes.push(jQuery('" + selector + "').index(this)); } ); ";
 
 				return indexes + super.getCallbackFunctionBody(parameters);

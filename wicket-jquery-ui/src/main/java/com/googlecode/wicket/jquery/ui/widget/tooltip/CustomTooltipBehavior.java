@@ -66,7 +66,7 @@ public abstract class CustomTooltipBehavior extends TooltipBehavior
 
 		component.add(AttributeModifier.replace("data-tooltip", true));
 
-		this.setSelector(JQueryWidget.getSelector(component));
+		this.selector = JQueryWidget.getSelector(component);
 		this.setOption("items", Options.asString("[data-tooltip]"));
 		this.setOption("content", String.format("function() { return \"%s\"; }", this.render(this.newContent(CONTENT_ID))));
 	}
@@ -108,9 +108,9 @@ public abstract class CustomTooltipBehavior extends TooltipBehavior
 	@Override
 	protected String $()
 	{
-		if (this.getSelector() == null)
+		if (this.selector == null)
 		{
-			return CustomTooltipBehavior.$(this.getMethod(), this.getOptions().toString());
+			return CustomTooltipBehavior.$(this.method, this.options.toString());
 		}
 
 		return super.$();

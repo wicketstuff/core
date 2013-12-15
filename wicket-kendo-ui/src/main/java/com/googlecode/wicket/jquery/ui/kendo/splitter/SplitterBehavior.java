@@ -80,7 +80,7 @@ public class SplitterBehavior extends KendoAbstractBehavior implements IJQueryAj
 	 */
 	public void expand(AjaxRequestTarget target, String pane)
 	{
-		target.appendJavaScript(String.format("$('%s').data('%s').expand('%s');", this.getSelector(), METHOD, pane));
+		target.appendJavaScript(String.format("$('%s').data('%s').expand('%s');", this.selector, METHOD, pane));
 	}
 
 	/**
@@ -92,7 +92,7 @@ public class SplitterBehavior extends KendoAbstractBehavior implements IJQueryAj
 	 */
 	public void collapse(AjaxRequestTarget target, String pane)
 	{
-		target.appendJavaScript(String.format("$('%s').data('%s').collapse('%s');", this.getSelector(), METHOD, pane));
+		target.appendJavaScript(String.format("$('%s').data('%s').collapse('%s');", this.selector, METHOD, pane));
 	}
 
 	// Properties //

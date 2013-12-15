@@ -96,9 +96,9 @@ public class TooltipBehavior extends JQueryBehavior
 	@Override
 	protected String $()
 	{
-		if (this.getSelector() == null)
+		if (this.selector == null)
 		{
-			return TooltipBehavior.$(this.getMethod(), this.getOptions().toString());
+			return TooltipBehavior.$(this.method, this.options.toString());
 		}
 
 		return super.$();
