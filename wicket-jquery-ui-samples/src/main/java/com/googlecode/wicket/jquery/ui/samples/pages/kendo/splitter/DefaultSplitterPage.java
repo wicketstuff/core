@@ -1,6 +1,6 @@
 package com.googlecode.wicket.jquery.ui.samples.pages.kendo.splitter;
 
-import com.googlecode.wicket.jquery.ui.kendo.splitter.SplitterBehavior;
+import com.googlecode.wicket.kendo.ui.widget.splitter.SplitterBehavior;
 
 public class DefaultSplitterPage extends AbstractSplitterPage
 {

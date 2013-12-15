@@ -14,10 +14,10 @@ import com.googlecode.wicket.jquery.core.JQueryBehavior;
 import com.googlecode.wicket.jquery.ui.form.button.AjaxButton;
 import com.googlecode.wicket.jquery.ui.form.button.Button;
 import com.googlecode.wicket.jquery.ui.form.spinner.Spinner;
-import com.googlecode.wicket.jquery.ui.kendo.dropdown.AjaxDropDownList;
 import com.googlecode.wicket.jquery.ui.panel.JQueryFeedbackPanel;
 import com.googlecode.wicket.jquery.ui.samples.SampleApplication;
 import com.googlecode.wicket.jquery.ui.samples.pages.kendo.AbstractKendoPage;
+import com.googlecode.wicket.kendo.ui.form.dropdown.AjaxDropDownList;
 
 public class OptionSpinnerPage extends AbstractKendoPage
 {

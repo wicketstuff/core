@@ -7,9 +7,9 @@ import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.panel.FeedbackPanel;
 import org.apache.wicket.model.Model;
 
-import com.googlecode.wicket.jquery.ui.kendo.datetime.AjaxTimePicker;
-import com.googlecode.wicket.jquery.ui.kendo.datetime.TimePicker;
 import com.googlecode.wicket.jquery.ui.panel.JQueryFeedbackPanel;
+import com.googlecode.wicket.kendo.ui.form.datetime.AjaxTimePicker;
+import com.googlecode.wicket.kendo.ui.form.datetime.TimePicker;
 
 public class AjaxTimePickerPage extends AbstractTimePickerPage
 {

@@ -13,13 +13,13 @@ import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.request.resource.JavaScriptResourceReference;
 
-import com.googlecode.wicket.jquery.ui.kendo.button.AjaxButton;
-import com.googlecode.wicket.jquery.ui.kendo.button.Button;
-import com.googlecode.wicket.jquery.ui.kendo.datetime.DatePicker;
-import com.googlecode.wicket.jquery.ui.kendo.datetime.DateTimePicker;
-import com.googlecode.wicket.jquery.ui.kendo.datetime.TimePicker;
 import com.googlecode.wicket.jquery.ui.panel.JQueryFeedbackPanel;
 import com.googlecode.wicket.jquery.ui.samples.SampleApplication;
+import com.googlecode.wicket.kendo.ui.form.button.AjaxButton;
+import com.googlecode.wicket.kendo.ui.form.button.Button;
+import com.googlecode.wicket.kendo.ui.form.datetime.DatePicker;
+import com.googlecode.wicket.kendo.ui.form.datetime.DateTimePicker;
+import com.googlecode.wicket.kendo.ui.form.datetime.TimePicker;
 
 public class LocaleDateTimePickerPage extends AbstractTimePickerPage
 {

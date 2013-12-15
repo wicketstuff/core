@@ -9,8 +9,8 @@ import org.apache.wicket.markup.html.form.RequiredTextField;
 import org.apache.wicket.markup.html.form.TextField;
 import org.apache.wicket.model.Model;
 
-import com.googlecode.wicket.jquery.ui.kendo.button.AjaxButton;
-import com.googlecode.wicket.jquery.ui.kendo.console.Console;
+import com.googlecode.wicket.kendo.ui.console.Console;
+import com.googlecode.wicket.kendo.ui.form.button.AjaxButton;
 
 public class DefaultConsolePage extends AbstractConsolePage
 {

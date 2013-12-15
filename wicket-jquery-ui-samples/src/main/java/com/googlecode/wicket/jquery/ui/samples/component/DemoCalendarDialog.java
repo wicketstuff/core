@@ -17,12 +17,12 @@ import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
 
 import com.googlecode.wicket.jquery.ui.form.RadioChoice;
-import com.googlecode.wicket.jquery.ui.kendo.datetime.DateTimePicker;
 import com.googlecode.wicket.jquery.ui.panel.JQueryFeedbackPanel;
 import com.googlecode.wicket.jquery.ui.samples.data.DemoCalendarEvent;
 import com.googlecode.wicket.jquery.ui.samples.data.DemoCalendarEvent.Category;
 import com.googlecode.wicket.jquery.ui.widget.dialog.AbstractFormDialog;
 import com.googlecode.wicket.jquery.ui.widget.dialog.DialogButton;
+import com.googlecode.wicket.kendo.ui.form.datetime.DateTimePicker;
 
 public abstract class DemoCalendarDialog extends AbstractFormDialog<DemoCalendarEvent>
 {

@@ -10,7 +10,7 @@ import com.googlecode.wicket.jquery.core.JQueryBehavior;
 import com.googlecode.wicket.jquery.ui.effect.Effect;
 import com.googlecode.wicket.jquery.ui.effect.JQueryEffectContainer;
 import com.googlecode.wicket.jquery.ui.form.button.AjaxButton;
-import com.googlecode.wicket.jquery.ui.kendo.dropdown.DropDownList;
+import com.googlecode.wicket.kendo.ui.form.dropdown.DropDownList;
 
 public class ContainerEffectPage extends AbstractEffectPage
 {

@@ -9,12 +9,12 @@ import org.apache.wicket.markup.repeater.data.IDataProvider;
 import org.apache.wicket.markup.repeater.data.ListDataProvider;
 
 import com.googlecode.wicket.jquery.core.Options;
-import com.googlecode.wicket.jquery.ui.kendo.button.AjaxButton;
-import com.googlecode.wicket.jquery.ui.kendo.datatable.DataTable;
-import com.googlecode.wicket.jquery.ui.kendo.datatable.column.IColumn;
-import com.googlecode.wicket.jquery.ui.kendo.datatable.column.PropertyColumn;
 import com.googlecode.wicket.jquery.ui.samples.data.ProductsDAO;
 import com.googlecode.wicket.jquery.ui.samples.data.bean.Product;
+import com.googlecode.wicket.kendo.ui.datatable.DataTable;
+import com.googlecode.wicket.kendo.ui.datatable.column.IColumn;
+import com.googlecode.wicket.kendo.ui.datatable.column.PropertyColumn;
+import com.googlecode.wicket.kendo.ui.form.button.AjaxButton;
 
 public class DefaultDataTablePage extends AbstractDataTablePage
 {
