@@ -35,7 +35,8 @@ import com.googlecode.wicket.jquery.ui.widget.dialog.MessageDialog;
  * <br/>
  * <b>Note: </b> this component is not an {@link Button} itself but a Panel, it should not be attached to a &lt;button /&gt;; it can be attached on a &lt;div /&gt; or a &lt;span /&gt; for instance.<br/>
  * <br/>
- * <b>Warning: </b> it is not possible to get a form component value - that is going to be changed - to be displayed in the dialog box message. The reason is that in order to get a form component (updated) model object, the form component should be validated. The dialog does not proceed to a (whole) form validation while being opened, because the form validation will occur when the user will confirm (by clicking on OK button). This the intended behavior.
+ * <b>Warning: </b> it is not possible to get a form component value - that is going to be changed - to be displayed in the dialog box message. The reason is that in order to get a form component (updated) model object, the form component
+ * should be validated. The dialog does not proceed to a (whole) form validation while being opened, because the form validation will occur when the user will confirm (by clicking on OK button). This the intended behavior.
  *
  * @author Sebastien Briquet - sebfz1
  */
@@ -45,6 +46,7 @@ public abstract class ConfirmButton extends FormSubmittingPanel<String>
 
 	/**
 	 * Constructor
+	 *
 	 * @param id markup id
 	 * @param label the button text
 	 * @param title the dialog title
@@ -57,6 +59,7 @@ public abstract class ConfirmButton extends FormSubmittingPanel<String>
 
 	/**
 	 * Constructor
+	 *
 	 * @param id markup id
 	 * @param label the button text
 	 * @param title the dialog title
@@ -86,14 +89,16 @@ public abstract class ConfirmButton extends FormSubmittingPanel<String>
 			}
 		};
 
-		this.add(button.setDefaultFormProcessing(false)); //does not validate the form before the dialog is being displayed
+		this.add(button.setDefaultFormProcessing(false)); // does not validate the form before the dialog is being displayed
 
 		button.add(new Label("label", label).setRenderBodyOnly(true));
 	}
 
 	// Properties //
+
 	/**
 	 * Gets the icon being displayed in the button
+	 *
 	 * @return the {@link JQueryIcon}
 	 */
 	protected String getIcon()
@@ -102,6 +107,7 @@ public abstract class ConfirmButton extends FormSubmittingPanel<String>
 	}
 
 	// Factories //
+
 	/**
 	 * Create the dialog instance<br/>
 	 * <b>Warning:</b> to be overridden with care!

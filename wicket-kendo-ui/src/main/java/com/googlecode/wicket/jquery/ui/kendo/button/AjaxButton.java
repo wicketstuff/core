@@ -84,5 +84,6 @@ public abstract class AjaxButton extends org.apache.wicket.ajax.markup.html.form
 	@Override
 	protected void onError(AjaxRequestTarget target, Form<?> form)
 	{
+		// noop
 	}
 }

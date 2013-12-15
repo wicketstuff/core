@@ -209,4 +209,15 @@ public class JQueryIcon
 	private JQueryIcon()
 	{
 	}
+
+	/**
+	 * Indicates whether the icon is {@link JQueryIcon#NONE}
+	 *
+	 * @param icon the icon
+	 * @return true or false
+	 */
+	public static boolean isNone(String icon)
+	{
+		return JQueryIcon.NONE.equals(icon);
+	}
 }

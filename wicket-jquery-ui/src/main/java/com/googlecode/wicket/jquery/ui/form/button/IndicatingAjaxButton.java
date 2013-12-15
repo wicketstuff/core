@@ -30,6 +30,7 @@ import org.apache.wicket.request.handler.resource.ResourceReferenceRequestHandle
 
 import com.googlecode.wicket.jquery.core.IJQueryWidget;
 import com.googlecode.wicket.jquery.core.JQueryBehavior;
+import com.googlecode.wicket.jquery.ui.form.button.Button.ButtonBehavior;
 
 /**
  * Provides a jQuery button based on the built-in AjaxButton, with an ajax indicator the time the {@link #onSubmit()} process.
@@ -103,23 +104,26 @@ public abstract class IndicatingAjaxButton extends AjaxButton implements IJQuery
 	@Override
 	public void onConfigure(JQueryBehavior behavior)
 	{
+		// noop
 	}
 
 	@Override
 	public void onBeforeRender(JQueryBehavior behavior)
 	{
+		// noop
 	}
 
 	@Override
 	protected void onError(AjaxRequestTarget target, Form<?> form)
 	{
+		// noop
 	}
 
 	// IJQueryWidget //
 	@Override
 	public JQueryBehavior newWidgetBehavior(String selector)
 	{
-		return new JQueryBehavior(selector, "button") {
+		return new ButtonBehavior(selector) {
 
 			private static final long serialVersionUID = 1L;
 
@@ -128,10 +132,11 @@ public abstract class IndicatingAjaxButton extends AjaxButton implements IJQuery
 			{
 				super.renderHead(component, response);
 
-				IRequestHandler handler = new ResourceReferenceRequestHandler(AbstractDefaultAjaxBehavior.INDICATOR);
-
 				// adds the busy indicator style //
-				response.render(CssHeaderItem.forCSS(".ui-icon.ui-icon-indicator { background-image: url(" + RequestCycle.get().urlFor(handler).toString() + ") !important; background-position: 0 0; }", "jquery-ui-icon-indicator"));
+				IRequestHandler handler = new ResourceReferenceRequestHandler(AbstractDefaultAjaxBehavior.INDICATOR);
+				String css = String.format(".ui-icon.ui-icon-indicator { background-image: url(%s) !important; background-position: 0 0; }", RequestCycle.get().urlFor(handler));
+
+				response.render(CssHeaderItem.forCSS(css, "jquery-ui-icon-indicator"));
 			}
 
 			@Override
