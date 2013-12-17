@@ -971,11 +971,6 @@ public class GMap extends Panel implements GOverlayContainer
             return GMap.this.getJSinvoke("overlayListenerCallbackUrl = '" + this.getCallbackUrl() + "'");
 
         }
-        
-        @Override
-        public boolean getStatelessHint(Component component) {
-        	return true;
-        }
     }
 
 	public boolean isFailSilently() {
@@ -984,10 +979,5 @@ public class GMap extends Panel implements GOverlayContainer
 
 	public void setFailSilently(boolean failSilently) {
 		this.failSilently = failSilently;
-	}
-	
-	@Override
-	protected boolean getStatelessHint() {
-		return true;
 	}
 }

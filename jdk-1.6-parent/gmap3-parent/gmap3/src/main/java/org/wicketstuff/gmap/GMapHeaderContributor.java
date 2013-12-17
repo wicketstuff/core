@@ -60,9 +60,4 @@ public class GMapHeaderContributor extends Behavior
     {
         return sensor;
     }
-    
-    @Override
-    public boolean getStatelessHint(Component component) {
-    	return true;
-    }
 }

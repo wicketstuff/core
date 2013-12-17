@@ -18,7 +18,6 @@
  */
 package org.wicketstuff.gmap.event;
 
-import org.apache.wicket.Component;
 import org.apache.wicket.ajax.AbstractDefaultAjaxBehavior;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.wicketstuff.gmap.GMap;
@@ -77,9 +76,4 @@ public abstract class GEventListenerBehavior extends AbstractDefaultAjaxBehavior
      * @return The name of the GMap Event that this Listener ought to listen to.
      */
     protected abstract String getEvent();
-    
-    @Override
-    public boolean getStatelessHint(Component component) {
-    	return true;
-    }
 }
