@@ -23,7 +23,6 @@ import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.form.FormComponentPanel;
 import org.apache.wicket.markup.html.form.TextArea;
 import org.apache.wicket.model.IModel;
-import org.apache.wicket.model.Model;
 
 import com.googlecode.wicket.jquery.core.IJQueryWidget;
 import com.googlecode.wicket.jquery.core.JQueryBehavior;
@@ -41,7 +40,7 @@ public class WysiwygEditor extends FormComponentPanel<String> implements IJQuery
 {
 	private static final long serialVersionUID = 1L;
 
-	private final TextArea<String> textarea;
+	private TextArea<String> textarea;
 	private final WebMarkupContainer container;
 
 	/**
@@ -87,12 +86,8 @@ public class WysiwygEditor extends FormComponentPanel<String> implements IJQuery
 	{
 		super(id, model);
 
-		this.container = new WebMarkupContainer("container"); //widget component
+		this.container = new WebMarkupContainer("container"); // widget component
 		this.add(this.container);
-
-		this.textarea = new TextArea<String>("textarea", Model.of(this.getModelObject()));
-		this.textarea.setEscapeModelStrings(false);
-		this.add(this.textarea.setOutputMarkupId(true));
 
 		if (toolbar != null)
 		{
@@ -100,17 +95,17 @@ public class WysiwygEditor extends FormComponentPanel<String> implements IJQuery
 		}
 	}
 
-
 	// Properties //
+
 	/**
 	 * Gets the editor markup-id
+	 *
 	 * @return the editor markup-id
 	 */
 	public String getEditorMarkupId()
 	{
 		return this.container.getMarkupId();
 	}
-
 
 	// Methods //
 	@Override
@@ -127,12 +122,15 @@ public class WysiwygEditor extends FormComponentPanel<String> implements IJQuery
 		response.render(OnLoadHeaderItem.forScript(String.format("addTextAreaMapper('%s', '%s');", this.container.getMarkupId(), this.textarea.getMarkupId())));
 	}
 
-
 	// Events //
 	@Override
 	protected void onInitialize()
 	{
 		super.onInitialize();
+
+		this.textarea = new TextArea<String>("textarea", this.getModel());
+		this.textarea.setEscapeModelStrings(false);
+		this.add(this.textarea.setOutputMarkupId(true));
 
 		this.add(JQueryWidget.newWidgetBehavior(this, this.container));
 	}
@@ -148,15 +146,6 @@ public class WysiwygEditor extends FormComponentPanel<String> implements IJQuery
 	{
 		// noop
 	}
-
-	@Override
-	protected void onModelChanged()
-	{
-		super.onModelChanged();
-
-		this.textarea.setModelObject(this.getDefaultModelObjectAsString());
-	}
-
 
 	// IJQueryWidget //
 	@Override
