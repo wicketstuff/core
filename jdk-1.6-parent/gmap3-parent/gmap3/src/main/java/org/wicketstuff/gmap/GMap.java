@@ -67,7 +67,7 @@ public class GMap extends Panel implements GOverlayContainer
     private GMapType mapType = GMapType.ROADMAP;
     private int zoom = 13;
     private final Map<String, GOverlay> overlays = new HashMap<String, GOverlay>();
-    private final WebMarkupContainer map;
+    protected final WebMarkupContainer map;
     private GLatLngBounds bounds;
     private OverlayListener overlayListener = null;
 
@@ -113,9 +113,14 @@ public class GMap extends Panel implements GOverlayContainer
         map.setOutputMarkupId(true);
         add(map);
 
-        overlayListener = new OverlayListener();
+        overlayListener = getOverlayListener();
         add(overlayListener);
 
+    }
+    
+    protected OverlayListener getOverlayListener()
+    {
+    	return new OverlayListener();
     }
 
     /**
