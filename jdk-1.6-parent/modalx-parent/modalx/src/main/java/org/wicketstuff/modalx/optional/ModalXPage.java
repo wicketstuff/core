@@ -19,6 +19,7 @@ import org.apache.wicket.request.mapper.parameter.PageParameters;
 import org.apache.wicket.util.string.StringValueConversionException;
 import org.wicketstuff.modalx.IWicketModalVisit;
 import org.wicketstuff.modalx.ModalContentWindow;
+import org.wicketstuff.modalx.ModalContentPanel;
 import org.wicketstuff.modalx.ModalMgr;
 
 // -[Class]-
@@ -90,14 +91,13 @@ public class ModalXPage extends WebPage implements ModalMgr
 	/**
 	 * Records a visit to the modal.
 	 */
-	public void trackModalVisit(IWicketModalVisit iWicketModalVisit)
-
+	public void preShow(ModalContentPanel modalContentPanel)
 	{
-		if (iWicketModalVisit != null)
-		{
-			// A valid IWicketModalVisit object has been passed so record it
-			// Create a tracking object if applicable
-		}
+		// Do something prior to showing the modal - perhaps set the variation etc.,
+		
+		// To implement previous trackModalVisit behaviour call
+		// modalContentPanel.createModalVisit(); and do whatever you previously did with the
+		// IWicketModalVisit object that was created
 	}
 
 
