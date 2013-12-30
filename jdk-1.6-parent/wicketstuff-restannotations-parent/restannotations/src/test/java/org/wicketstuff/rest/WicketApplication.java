@@ -16,8 +16,6 @@
  */
 package org.wicketstuff.rest;
 
-import java.util.Locale;
-
 import org.apache.wicket.Session;
 import org.apache.wicket.authroles.authorization.strategies.role.IRoleCheckingStrategy;
 import org.apache.wicket.authroles.authorization.strategies.role.Roles;
@@ -35,20 +33,25 @@ import org.wicketstuff.rest.resource.MultiFormatRestResource;
 import org.wicketstuff.rest.resource.RegExpRestResource;
 import org.wicketstuff.rest.resource.RestResourceFullAnnotated;
 
+import java.util.Locale;
+
 
 /**
  * Application object for your web application. If you want to run this application without
  * deploying, run the Start class.
- * 
+ *
  * @see org.wicketstuff.rest.Start#main(String[])
  */
 public class WicketApplication extends WebApplication implements IRoleCheckingStrategy
 {
 	private final Roles roles;
 
+	private final RestResourceFullAnnotated fullAnnotated;
+
 	public WicketApplication(Roles roles)
 	{
 		this.roles = roles;
+		this.fullAnnotated = new RestResourceFullAnnotated(new TestJsonDesSer(), WicketApplication.this);
 	}
 
 	/**
@@ -77,7 +80,7 @@ public class WicketApplication extends WebApplication implements IRoleCheckingSt
 			@Override
 			public IResource getResource()
 			{
-				return new RestResourceFullAnnotated(new TestJsonDesSer(), WicketApplication.this);
+				return fullAnnotated;
 			}
 
 		});
@@ -118,4 +121,8 @@ public class WicketApplication extends WebApplication implements IRoleCheckingSt
 
 		return session;
 	}
+
+    public RestResourceFullAnnotated getFullAnnotatedResource() {
+        return fullAnnotated;
+    }
 }

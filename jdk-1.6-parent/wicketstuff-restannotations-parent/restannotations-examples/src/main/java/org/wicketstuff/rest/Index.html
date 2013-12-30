@@ -81,7 +81,8 @@
 						 data: JSON.stringify(personPojo),
 						 async: false,
 						 error: function(data){
-							 alert('Email field not valid!');
+							 var dataJson = $.parseJSON(data.responseText);
+							 alert(dataJson.message);
 						 },
 					 	 success: function(data){
 					 		modalWindow.find('input').val('');

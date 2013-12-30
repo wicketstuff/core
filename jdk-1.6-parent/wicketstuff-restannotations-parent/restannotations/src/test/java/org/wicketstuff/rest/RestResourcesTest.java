@@ -18,16 +18,9 @@ package org.wicketstuff.rest;
 
 import static org.junit.Assert.assertEquals;
 
-import java.io.BufferedReader;
-import java.io.StringReader;
-import java.io.StringWriter;
-import java.util.Collections;
-
 import javax.servlet.http.Cookie;
 import javax.xml.bind.JAXB;
 import javax.xml.transform.stream.StreamResult;
-
-import junit.framework.Assert;
 
 import org.apache.wicket.Session;
 import org.apache.wicket.WicketRuntimeException;
@@ -45,6 +38,13 @@ import org.wicketstuff.rest.resource.RestResourceFullAnnotated;
 import org.wicketstuff.rest.utils.test.BufferedMockRequest;
 import org.wicketstuff.rest.utils.wicket.bundle.DefaultBundleResolver;
 
+import java.io.BufferedReader;
+import java.io.StringReader;
+import java.io.StringWriter;
+import java.util.Collections;
+
+import junit.framework.Assert;
+
 /**
  * Simple test using the WicketTester
  */
@@ -55,11 +55,15 @@ public class RestResourcesTest
 
 	@Rule
 	public ExpectedException exception = ExpectedException.none();
+    private RestResourceFullAnnotated fullAnnotatedResource;
 
 	@Before
 	public void setUp()
 	{
-		tester = new WicketTester(new WicketApplication(roles));
+		WicketApplication app;
+        tester = new WicketTester(app = new WicketApplication(roles));
+
+        fullAnnotatedResource = app.getFullAnnotatedResource();
 	}
 
 	@After
@@ -144,13 +148,13 @@ public class RestResourcesTest
 
 		Assert.assertEquals(TestJsonDesSer.getJSON(), tester.getLastResponseAsString());
 	}
-	
+
 	@Test
 	public void testMethodNotFound() throws Exception
 	{
 		tester.executeUrl("./api/xxxxxxx");
 		String response = tester.getLastResponseAsString();
-		
+
 		response.contains(AbstractRestResource.NO_SUITABLE_METHOD_FOUND);
 	}
 
@@ -179,20 +183,21 @@ public class RestResourcesTest
 		tester.getRequest().setParameter("email", "noMailValue");
 		tester.executeUrl("./api/emailvalidator");
 		testIfResponseStringIsEqual("The value inserted as email is not valid.");
-		
+
 		String email = "avalid@mail.com";
 
 		tester.getRequest().setMethod("GET");
 		tester.getRequest().setParameter("email", email);
 		tester.executeUrl("./api/emailvalidator");
 		testIfResponseStringIsEqual(email);
-		
+
 		tester.getRequest().setMethod("GET");
 		tester.getRequest().setParameter("customvalidator", "customvalidator");
 		tester.executeUrl("./api/customvalidator");
-		
+
 		String response = tester.getLastResponseAsString();
-		DefaultBundleResolver resolver = new DefaultBundleResolver(RestResourceFullAnnotated.class); 
+		DefaultBundleResolver resolver = new DefaultBundleResolver(fullAnnotatedResource);
+
 		assertEquals(resolver.getMessage("CustomValidator", Collections.EMPTY_MAP), response);
 	}
 

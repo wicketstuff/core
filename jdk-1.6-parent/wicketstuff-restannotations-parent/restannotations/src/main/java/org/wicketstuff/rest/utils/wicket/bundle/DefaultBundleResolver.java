@@ -16,54 +16,85 @@
  */
 package org.wicketstuff.rest.utils.wicket.bundle;
 
-import java.util.List;
-import java.util.Locale;
-import java.util.Map;
-
 import org.apache.wicket.Application;
 import org.apache.wicket.Session;
 import org.apache.wicket.resource.loader.IStringResourceLoader;
 import org.apache.wicket.validation.IErrorMessageSource;
+import org.apache.wicket.validation.IValidator;
 import org.wicketstuff.rest.resource.AbstractRestResource;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Locale;
+import java.util.Map;
+
 /**
- * Wicket bundle resolver that relies on the default {@link IStringResourceLoader}S.
- * Its constructor requires an subclass of {@link AbstractRestResource} which 
- * is used to resolve custom bundles.
- * 
+ * Wicket bundle resolver that relies on the default
+ * {@link IStringResourceLoader}S. Its constructor requires an subclass of
+ * {@link AbstractRestResource} which is used to resolve custom bundles.
+ *
  * @author andrea del bene
  *
  */
-public class DefaultBundleResolver implements IErrorMessageSource
+public class DefaultBundleResolver<T extends AbstractRestResource> implements IErrorMessageSource
 {
-	private final Class<? extends AbstractRestResource> clazz;
+    private final List<Class<?>> targetClasses;
 
-	public DefaultBundleResolver(Class<? extends AbstractRestResource> clazz)
-	{
-		this.clazz = clazz;
-	}
+    public DefaultBundleResolver(T abstractResource)
+    {
+        this.targetClasses = loadTargetClasses(abstractResource);
+    }
 
-	@Override
-	public String getMessage(String key, Map<String, Object> vars)
-	{
-		String resourceValue = null;
-		List<IStringResourceLoader> resourceLoaders = Application.get()
-			.getResourceSettings()
-			.getStringResourceLoaders();
-		Locale locale = Session.get().getLocale();
-		String style = Session.get().getStyle();
+    /**
+     * Build a list of classes to use to search for a valid bundle. This list is
+     * made of the classes of the validators registered with abstractResource
+     * and of the class of the abstractResource.
+     *
+     * @param abstractResource
+     *            the abstract REST resource that is using the validator
+     * @return the list of the classes to use.
+     */
+    private List<Class<?>> loadTargetClasses(T abstractResource)
+    {
+        List<Class<?>> targetClasses = new ArrayList<Class<?>>();
+        Map<String, IValidator> validators = abstractResource.getValidators();
 
-		for (IStringResourceLoader stringResourceLoader : resourceLoaders)
-		{
-			resourceValue = stringResourceLoader.loadStringResource(clazz, key, locale, style, null);
+        for (IValidator validator : validators.values())
+        {
+            targetClasses.add(validator.getClass());
+        }
 
-			if (resourceValue != null)
-				break;
-		}
+        targetClasses.add(abstractResource.getClass());
 
-		StringConverterInterpolator interpolator = new StringConverterInterpolator(
-			resourceValue != null ? resourceValue : "", vars, false, locale);
+        return targetClasses;
+    }
 
-		return interpolator.toString();
-	}
+    @Override
+    public String getMessage(String key, Map<String, Object> vars)
+    {
+        String resourceValue = null;
+        List<IStringResourceLoader> resourceLoaders = Application.get().getResourceSettings()
+                .getStringResourceLoaders();
+        Locale locale = Session.get().getLocale();
+        String style = Session.get().getStyle();
+
+        outerloop: for (IStringResourceLoader stringResourceLoader : resourceLoaders)
+        {
+            for(Class<?> clazz : targetClasses)
+            {
+                resourceValue = stringResourceLoader.loadStringResource(clazz, key, locale,
+                        style, null);
+
+                if (resourceValue != null)
+                {
+                    break outerloop;
+                }
+            }
+        }
+
+        StringConverterInterpolator interpolator = new StringConverterInterpolator(
+                resourceValue != null ? resourceValue : "", vars, false, locale);
+
+        return interpolator.toString();
+    }
 }
