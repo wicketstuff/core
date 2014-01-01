@@ -55,15 +55,12 @@ public class RestResourcesTest
 
 	@Rule
 	public ExpectedException exception = ExpectedException.none();
-    private RestResourceFullAnnotated fullAnnotatedResource;
 
 	@Before
 	public void setUp()
 	{
 		WicketApplication app;
         tester = new WicketTester(app = new WicketApplication(roles));
-
-        fullAnnotatedResource = app.getFullAnnotatedResource();
 	}
 
 	@After
@@ -196,7 +193,7 @@ public class RestResourcesTest
 		tester.executeUrl("./api/customvalidator");
 
 		String response = tester.getLastResponseAsString();
-		DefaultBundleResolver resolver = new DefaultBundleResolver(fullAnnotatedResource);
+		DefaultBundleResolver resolver = new DefaultBundleResolver(RestResourceFullAnnotated.class);
 
 		assertEquals(resolver.getMessage("CustomValidator", Collections.EMPTY_MAP), response);
 	}

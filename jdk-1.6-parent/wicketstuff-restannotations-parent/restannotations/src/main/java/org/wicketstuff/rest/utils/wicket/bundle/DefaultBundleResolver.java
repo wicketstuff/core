@@ -20,10 +20,10 @@ import org.apache.wicket.Application;
 import org.apache.wicket.Session;
 import org.apache.wicket.resource.loader.IStringResourceLoader;
 import org.apache.wicket.validation.IErrorMessageSource;
-import org.apache.wicket.validation.IValidator;
 import org.wicketstuff.rest.resource.AbstractRestResource;
 
-import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -36,37 +36,18 @@ import java.util.Map;
  * @author andrea del bene
  *
  */
-public class DefaultBundleResolver<T extends AbstractRestResource> implements IErrorMessageSource
+public class DefaultBundleResolver implements IErrorMessageSource
 {
     private final List<Class<?>> targetClasses;
 
-    public DefaultBundleResolver(T abstractResource)
+    public DefaultBundleResolver(Class<?>... targetClasses)
     {
-        this.targetClasses = loadTargetClasses(abstractResource);
+        this.targetClasses = Collections.unmodifiableList(Arrays.asList(targetClasses));
     }
 
-    /**
-     * Build a list of classes to use to search for a valid bundle. This list is
-     * made of the classes of the validators registered with abstractResource
-     * and of the class of the abstractResource.
-     *
-     * @param abstractResource
-     *            the abstract REST resource that is using the validator
-     * @return the list of the classes to use.
-     */
-    private List<Class<?>> loadTargetClasses(T abstractResource)
+    public DefaultBundleResolver(List<Class<?>> targetClasses)
     {
-        List<Class<?>> targetClasses = new ArrayList<Class<?>>();
-        Map<String, IValidator> validators = abstractResource.getValidators();
-
-        for (IValidator validator : validators.values())
-        {
-            targetClasses.add(validator.getClass());
-        }
-
-        targetClasses.add(abstractResource.getClass());
-
-        return targetClasses;
+        this.targetClasses = Collections.unmodifiableList(targetClasses);
     }
 
     @Override

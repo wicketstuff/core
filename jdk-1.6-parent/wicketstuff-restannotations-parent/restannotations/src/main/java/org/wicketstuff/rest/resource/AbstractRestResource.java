@@ -44,6 +44,7 @@ import org.wicketstuff.rest.resource.urlsegments.AbstractURLSegment;
 import org.wicketstuff.rest.utils.http.HttpMethod;
 import org.wicketstuff.rest.utils.http.HttpUtils;
 import org.wicketstuff.rest.utils.reflection.MethodParameter;
+import org.wicketstuff.rest.utils.reflection.ReflectionUtils;
 import org.wicketstuff.rest.utils.wicket.AttributesWrapper;
 import org.wicketstuff.rest.utils.wicket.MethodParameterContext;
 import org.wicketstuff.rest.utils.wicket.bundle.DefaultBundleResolver;
@@ -51,6 +52,7 @@ import org.wicketstuff.rest.utils.wicket.bundle.DefaultBundleResolver;
 import java.io.Serializable;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
@@ -124,10 +126,29 @@ public abstract class AbstractRestResource<T extends IWebSerialDeserial> impleme
 		this.webSerialDeserial = serialDeserial;
 		this.roleCheckingStrategy = roleCheckingStrategy;
 		this.mappedMethods = loadAnnotatedMethods();
-		this.bundleResolver = new DefaultBundleResolver(this);
+		this.bundleResolver = new DefaultBundleResolver(loadBoundleClasses());
 	}
 
-	/***
+	/**
+     * Build a list of classes to use to search for a valid bundle. This list is
+     * made of the classes of the validators registered with abstractResource
+     * and of the class of the abstractResource.
+     *
+     * @param abstractResource
+     *            the abstract REST resource that is using the validator
+     * @return the list of the classes to use.
+     */
+	private List<Class<?>> loadBoundleClasses()
+	{
+        Collection<IValidator> validators = declaredValidators.values();
+        List<Class<?>> validatorsClasses = ReflectionUtils.getElementsClasses(validators);
+
+        validatorsClasses.add(this.getClass());
+
+        return validatorsClasses;
+    }
+
+    /***
 	 * Handles a REST request invoking one of the methods annotated with {@link MethodMapping}. If
 	 * the annotated method returns a value, this latter is automatically serialized to a given
 	 * string format (like JSON, XML, etc...) and written to the web response.<br/>
@@ -732,9 +753,4 @@ public abstract class AbstractRestResource<T extends IWebSerialDeserial> impleme
 	{
 		return declaredValidators.get(key);
 	}
-
-	public Map<String, IValidator> getValidators()
-	{
-        return Collections.unmodifiableMap(declaredValidators);
-    }
 }
