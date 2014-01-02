@@ -26,6 +26,7 @@
         <module>async-tasks-parent</module>
 		<module>autocomplete-tagit-parent</module>
 		<module>browserid-parent</module>
+		<module>datastores-parent</module>
 		<module>datatables-parent</module>
 		<module>flot-parent</module>
 		<module>gae-initializer-parent</module>
