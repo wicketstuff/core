@@ -19,15 +19,13 @@ package org.wicketstuff.datastores.memcached;
 import java.io.IOException;
 import java.net.InetSocketAddress;
 import java.net.SocketAddress;
-import java.util.Collections;
 import java.util.List;
 import java.util.Set;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.ConcurrentMap;
 import java.util.concurrent.TimeUnit;
 
 import net.spy.memcached.ConnectionObserver;
 import net.spy.memcached.MemcachedClient;
+
 import org.apache.wicket.pageStore.IDataStore;
 import org.apache.wicket.util.lang.Args;
 import org.apache.wicket.util.lang.Checks;
@@ -37,22 +35,13 @@ import org.slf4j.LoggerFactory;
 
 /**
  * {@link org.apache.wicket.pageStore.IDataStore} that stores the pages' bytes in Memcached
+ *
+ * A useful read about the way Memcached works can be found
+ * <a href="http://returnfoo.com/2012/02/memcached-memory-allocation-and-optimization-2/">here</a>.
  */
 public class MemcachedDataStore implements IDataStore
 {
 	private static final Logger LOG = LoggerFactory.getLogger(MemcachedDataStore.class);
-
-	/**
-	 * A suffix for the keys to avoid duplication of entries
-	 * in Memcached entered by another process and to make
-	 * it easier to find out who put the data at the server
-	 */
-	private static final String KEY_SUFFIX = "Wicket-Memcached";
-
-	/**
-	 * A separator used for the key construction
-	 */
-	private static final String SEPARATOR = "|||";
 
 	/**
 	 * The connection to the Memcached server
@@ -64,15 +53,7 @@ public class MemcachedDataStore implements IDataStore
 	 */
 	private final IMemcachedSettings settings;
 
-	/**
-	 * Tracks the keys for all operations per session.
-	 * Used to delete all entries for a session when invalidated.
-	 *
-	 * The entries in Memcached have time-to-live so they will be
-	 * removed anyway at some point.
-	 */
-	private final ConcurrentMap<String, Set<String>> keysPerSession =
-			new ConcurrentHashMap<String, Set<String>>();
+	private final ISessionResourcesManager sessionResourcesManager = new SessionResourcesManager();
 
 	/**
 	 * Constructor.
@@ -142,11 +123,11 @@ public class MemcachedDataStore implements IDataStore
 
 	@Override
 	public byte[] getData(String sessionId, int pageId) {
-		String key = getKey(sessionId, pageId);
+		String key = sessionResourcesManager.getKey(sessionId, pageId);
 		byte[] bytes = (byte[]) client.get(key);
 
 		if (bytes == null) {
-			removeKey(sessionId, key);
+			sessionResourcesManager.removeKey(sessionId, key);
 		}
 
 		LOG.debug("Got {} for session '{}' and page id '{}'",
@@ -156,47 +137,40 @@ public class MemcachedDataStore implements IDataStore
 
 	@Override
 	public void removeData(final String sessionId, final int pageId) {
-		final String key = getKey(sessionId, pageId);
+		final String key = sessionResourcesManager.getKey(sessionId, pageId);
 		client.delete(key);
 
-		removeKey(sessionId, key);
+		sessionResourcesManager.removeKey(sessionId, key);
 
 		LOG.debug("Removed the data for session '{}' and page id '{}'", sessionId, pageId);
 	}
 
 	@Override
 	public void removeData(String sessionId) {
-		Set<String> keys = keysPerSession.get(sessionId);
+		Set<String> keys =sessionResourcesManager.removeData(sessionId);
 		if (keys != null) {
 			for (String key : keys) {
 				client.delete(key);
 			}
-			keysPerSession.remove(sessionId);
 			LOG.debug("Removed the data for session '{}'", sessionId);
 		}
 	}
 
 	@Override
 	public void storeData(final String sessionId, final int pageId, byte[] data) {
-		final String key = getKey(sessionId, pageId);
-		Set<String> keys = keysPerSession.get(sessionId);
-		if (keys == null) {
-			keys = Collections.newSetFromMap(new ConcurrentHashMap<String, Boolean>());
-			Set<String> old = keysPerSession.putIfAbsent(sessionId, keys);
-			if (old != null) {
-				keys = old;
-			}
-		}
-
+		final String key = sessionResourcesManager.getKey(sessionId, pageId);
+		sessionResourcesManager.storeData(sessionId, pageId, data, key);
+		
 		Duration expirationTime = settings.getExpirationTime();
 
 		client.set(key, (int) expirationTime.seconds(), data);
-		keys.add(key);
+		
 		LOG.debug("Stored data for session '{}' and page id '{}'", sessionId, pageId);
 	}
 
 	@Override
 	public void destroy() {
+		sessionResourcesManager.destroy();
 		if (client != null) {
 			Duration timeout = settings.getShutdownTimeout();
 			LOG.info("Shutting down gracefully for {}", timeout);
@@ -214,42 +188,5 @@ public class MemcachedDataStore implements IDataStore
 		// no need to be asynchronous
 		// MemcachedClient is asynchronous itself
 		return false;
-	}
-
-	/**
-	 * Creates a key that is used for the lookup in Memcached.
-	 * The key starts with sessionId and the pageId so
-	 * {@linkplain #keysPerSession} can be sorted faster.
-	 *
-	 * @param sessionId The id of the http session.
-	 * @param pageId    The id of the stored page
-	 * @return A key that is used for the lookup in Memcached
-	 */
-	private String getKey(String sessionId, int pageId) {
-		return new StringBuilder()
-				.append(sessionId)
-				.append(SEPARATOR)
-				.append(pageId)
-				.append(SEPARATOR)
-				.append(KEY_SUFFIX)
-				.toString();
-	}
-
-	/**
-	 * Removes a key from {@linkplain #keysPerSession}
-	 *
-	 * @param sessionId The id of the http session.
-	 * @param key       The key for Memcached lookup
-	 */
-	private void removeKey(String sessionId, String key) {
-		Set<String> keys = keysPerSession.get(sessionId);
-		if (keys != null) {
-			// maybe the entry has expired
-			keys.remove(key);
-
-			if (keys.isEmpty()) {
-				keysPerSession.remove(sessionId);
-			}
-		}
 	}
 }

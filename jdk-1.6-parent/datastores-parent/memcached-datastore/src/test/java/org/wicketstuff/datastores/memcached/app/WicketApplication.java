@@ -47,7 +47,7 @@ public class WicketApplication extends WebApplication
 		mountPage("page2", Page2.class);
 
 		// for testing IDataStore#getData().
-//		getStoreSettings().setInmemoryCacheSize(1);
+		getStoreSettings().setInmemoryCacheSize(1);
 
 		setPageManagerProvider(new DefaultPageManagerProvider(this)
 		{
