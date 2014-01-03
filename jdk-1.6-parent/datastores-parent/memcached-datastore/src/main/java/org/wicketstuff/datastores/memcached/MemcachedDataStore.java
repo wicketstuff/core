@@ -20,14 +20,15 @@ import java.io.IOException;
 import java.net.InetSocketAddress;
 import java.net.SocketAddress;
 import java.util.List;
-import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
 import net.spy.memcached.ConnectionObserver;
 import net.spy.memcached.MemcachedClient;
 
+import org.apache.wicket.Application;
 import org.apache.wicket.pageStore.IDataStore;
 import org.apache.wicket.util.lang.Args;
+import org.apache.wicket.util.lang.Bytes;
 import org.apache.wicket.util.lang.Checks;
 import org.apache.wicket.util.time.Duration;
 import org.slf4j.Logger;
@@ -53,7 +54,7 @@ public class MemcachedDataStore implements IDataStore
 	 */
 	private final IMemcachedSettings settings;
 
-	private final ISessionResourcesManager sessionResourcesManager = new SessionResourcesManager();
+	private final ISessionResourcesManager sessionResourcesManager;
 
 	/**
 	 * Constructor.
@@ -66,7 +67,7 @@ public class MemcachedDataStore implements IDataStore
 	 */
 	public MemcachedDataStore(IMemcachedSettings settings) throws IOException
 	{
-		this(createClient(settings), settings);
+		this(createClient(settings), settings, Application.get().getStoreSettings().getMaxSizePerSession());
 	}
 
 	/**
@@ -75,7 +76,7 @@ public class MemcachedDataStore implements IDataStore
 	 * @param client   The connection to Memcached
 	 * @param settings The configuration for the client
 	 */
-	public MemcachedDataStore(MemcachedClient client, IMemcachedSettings settings) {
+	public MemcachedDataStore(MemcachedClient client, IMemcachedSettings settings, Bytes maxSizePerSession) {
 		this.client = Args.notNull(client, "client");
 		this.settings = Args.notNull(settings, "settings");
 
@@ -93,6 +94,7 @@ public class MemcachedDataStore implements IDataStore
 			}
 		});
 
+		this.sessionResourcesManager  = new SessionResourcesManager(maxSizePerSession);
 	}
 
 	/**
@@ -123,31 +125,31 @@ public class MemcachedDataStore implements IDataStore
 
 	@Override
 	public byte[] getData(String sessionId, int pageId) {
-		String key = sessionResourcesManager.getKey(sessionId, pageId);
+		String key = sessionResourcesManager.makeKey(sessionId, pageId);
 		byte[] bytes = (byte[]) client.get(key);
 
 		if (bytes == null) {
-			sessionResourcesManager.removeKey(sessionId, key);
+			sessionResourcesManager.removePage(sessionId, pageId);
 		}
 
 		LOG.debug("Got {} for session '{}' and page id '{}'",
-				bytes != null ? "data" : "'null'", sessionId, pageId);
+				bytes != null ? "data>len="+bytes.length : "'null'", sessionId, pageId);
 		return bytes;
 	}
 
 	@Override
 	public void removeData(final String sessionId, final int pageId) {
-		final String key = sessionResourcesManager.getKey(sessionId, pageId);
+		final String key = sessionResourcesManager.makeKey(sessionId, pageId);
 		client.delete(key);
 
-		sessionResourcesManager.removeKey(sessionId, key);
+		sessionResourcesManager.removePage(sessionId, pageId);
 
 		LOG.debug("Removed the data for session '{}' and page id '{}'", sessionId, pageId);
 	}
 
 	@Override
 	public void removeData(String sessionId) {
-		Set<String> keys =sessionResourcesManager.removeData(sessionId);
+		Iterable<String> keys =sessionResourcesManager.removeData(sessionId);
 		if (keys != null) {
 			for (String key : keys) {
 				client.delete(key);
@@ -158,11 +160,10 @@ public class MemcachedDataStore implements IDataStore
 
 	@Override
 	public void storeData(final String sessionId, final int pageId, byte[] data) {
-		final String key = sessionResourcesManager.getKey(sessionId, pageId);
-		sessionResourcesManager.storeData(sessionId, pageId, data, key);
+		sessionResourcesManager.storeData(sessionId, pageId, data);
 		
 		Duration expirationTime = settings.getExpirationTime();
-
+		final String key = sessionResourcesManager.makeKey(sessionId, pageId);
 		client.set(key, (int) expirationTime.seconds(), data);
 		
 		LOG.debug("Stored data for session '{}' and page id '{}'", sessionId, pageId);

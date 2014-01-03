@@ -16,12 +16,12 @@
  */
 package org.wicketstuff.datastores.memcached;
 
-import com.google.common.base.Splitter;
-import com.google.common.collect.Lists;
-import org.apache.wicket.util.lang.Args;
-import org.apache.wicket.util.time.Duration;
-
 import java.util.List;
+
+import org.apache.wicket.util.lang.Args;
+import org.apache.wicket.util.lang.Generics;
+import org.apache.wicket.util.string.Strings;
+import org.apache.wicket.util.time.Duration;
 
 /**
  * Default implementation of IMemcachedSettings
@@ -55,9 +55,12 @@ public class MemcachedSettings implements IMemcachedSettings {
 	public IMemcachedSettings setServerNames(String serverNames) {
 		Args.notEmpty(serverNames, "serverNames");
 
-		Iterable<String> serverNamesIterable = Splitter.on(",").trimResults().split(serverNames);
-
-		this.servers = Lists.newArrayList(serverNamesIterable);
+		String[] ss = Strings.split(serverNames, ',');
+		this.servers = Generics.newArrayList(ss.length);
+		for (String server : ss)
+		{
+			this.servers.add(server.trim());
+		}
 		return this;
 	}
 

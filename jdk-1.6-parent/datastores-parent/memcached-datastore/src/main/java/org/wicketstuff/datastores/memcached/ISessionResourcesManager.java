@@ -1,5 +1,7 @@
 package org.wicketstuff.datastores.memcached;
 
+import java.util.Collection;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -19,13 +21,13 @@ public interface ISessionResourcesManager
 	 */
 	String SEPARATOR = "|||";
 
-	Set<String> removeData(String sessionId);
+	Iterable<String> removeData(String sessionId);
 
-	void storeData(String sessionId, int pageId, byte[] data, String key);
+	Iterable<String> storeData(String sessionId, int pageId, byte[] data);
 
-	void removeKey(String sessionId, String key);
+	void removePage(String sessionId, int key);
 
 	void destroy();
 
-	String getKey(String sessionId, int pageId);
+	String makeKey(String sessionId, int pageId);
 }

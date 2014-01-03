@@ -27,7 +27,9 @@ import java.util.concurrent.ConcurrentLinkedQueue;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
 
+import net.spy.memcached.MemcachedClient;
 import org.apache.wicket.pageStore.IDataStore;
+import org.apache.wicket.util.lang.Bytes;
 import org.junit.Assert;
 import org.junit.Test;
 import org.slf4j.Logger;
@@ -312,7 +314,8 @@ public class MemcachedDataStoreTest extends Assert {
 
 			IMemcachedSettings settings = new MemcachedSettings();
 			// settings.setServerNames("");
-			dataStore = new MemcachedDataStore(settings);
+			MemcachedClient client = MemcachedDataStore.createClient(settings);
+			dataStore = new MemcachedDataStore(client, settings, Bytes.kilobytes(10));
 
 			doTestDataStore();
 
