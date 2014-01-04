@@ -1,8 +1,8 @@
 package org.wicketstuff.datastores.common;
 
 import java.util.Iterator;
-import java.util.Queue;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ConcurrentLinkedQueue;
 import java.util.concurrent.ConcurrentMap;
 
 import org.apache.wicket.pageStore.IDataStore;
@@ -19,9 +19,9 @@ import org.slf4j.LoggerFactory;
  * client (http session). This way one client cannot add too much data
  * in the real/delegate data store and eventually drop another client's data.
  */
-public class SessionResourcesManagingDataStore implements IDataStore
-{
-	private static final Logger LOG = LoggerFactory.getLogger(SessionResourcesManagingDataStore.class);
+public class SessionQuotaManagingDataStore implements IDataStore {
+
+	private static final Logger LOG = LoggerFactory.getLogger(SessionQuotaManagingDataStore.class);
 
 	/**
 	 * Tracks the data per session.
@@ -49,48 +49,45 @@ public class SessionResourcesManagingDataStore implements IDataStore
 	 * @param delegate  The real IDataStore
 	 * @param maxSizePerSession The quota
 	 */
-	public SessionResourcesManagingDataStore(IDataStore delegate, Bytes maxSizePerSession)
-	{
+	public SessionQuotaManagingDataStore(IDataStore delegate, Bytes maxSizePerSession) {
 		this.delegate = Args.notNull(delegate, "delegate");
 		this.maxSizePerSession = Args.notNull(maxSizePerSession, "maxSizePerSession");
 	}
 
 	@Override
-	public byte[] getData(String sessionId, int pageId)
-	{
+	public byte[] getData(String sessionId, int pageId) {
 		return delegate.getData(sessionId, pageId);
 	}
 
 	@Override
-	public void removeData(String sessionId)
-	{
+	public void removeData(String sessionId) {
 		delegate.removeData(sessionId);
 		pagesPerSession.remove(sessionId);
 	}
 
 	@Override
-	public void storeData(String sessionId, int pageId, byte[] data)
-	{
+	public void storeData(String sessionId, int pageId, byte[] data) {
 		SessionData sessionData = pagesPerSession.get(sessionId);
 
 		if (sessionData == null) {
 			sessionData = new SessionData(sessionId);
 			SessionData old = pagesPerSession.putIfAbsent(sessionId, sessionData);
-			if (old != null)
-			{
+			if (old != null) {
 				sessionData = old;
 			}
 		}
 
 		int pageSize = data.length;
-		while (shouldRemove(sessionData, pageSize))
-		{
+
+		while (shouldRemove(sessionData, pageSize)) {
 			PageData page = sessionData.removePage();
 			LOG.debug("Removing page '{}' from session '{}' because the quota is reached.");
 			delegate.removeData(sessionId, page.pageId);
 		}
+
 		PageData page = new PageData(pageId, pageSize);
 		sessionData.addPage(page);
+
 		delegate.storeData(sessionId, pageId, data);
 	}
 
@@ -105,10 +102,9 @@ public class SessionResourcesManagingDataStore implements IDataStore
 	 *          or if there are no other pages in the session data, i.e. a
 	 *          single very big page should be stored
 	 */
-	protected boolean shouldRemove(SessionData sessionData, int pageSize)
-	{
+	protected boolean shouldRemove(SessionData sessionData, int pageSize) {
 		return sessionData.pages.size() > 0 && // allow a single page with size bigger than maxSizePerSession
-				maxSizePerSession.greaterThan(sessionData.size + pageSize) == false;
+				!maxSizePerSession.greaterThan(sessionData.size + pageSize);
 	}
 
 	@Override
@@ -119,15 +115,13 @@ public class SessionResourcesManagingDataStore implements IDataStore
 		SessionData sessionData = pagesPerSession.get(sessionId);
 
 		if (sessionData != null) {
-			Queue<PageData> pages = sessionData.pages;
-			// FIXME : ConcurrentModificationException may occur
+			ConcurrentLinkedQueue<PageData> pages = sessionData.pages;
 			Iterator<PageData> pageIterator = pages.iterator();
-			while (pageIterator.hasNext())
-			{
+			while (pageIterator.hasNext()) {
 				PageData page = pageIterator.next();
-				if (page.pageId == pageId)
-				{
+				if (page.pageId == pageId) {
 					pageIterator.remove();
+					break;
 				}
 			}
 
@@ -138,21 +132,18 @@ public class SessionResourcesManagingDataStore implements IDataStore
 	}
 
 	@Override
-	public void destroy()
-	{
+	public void destroy() {
 		pagesPerSession.clear();
 		delegate.destroy();
 	}
 
 	@Override
-	public boolean isReplicated()
-	{
+	public boolean isReplicated() {
 		return delegate.isReplicated();
 	}
 
 	@Override
-	public boolean canBeAsynchronous()
-	{
+	public boolean canBeAsynchronous() {
 		return delegate.canBeAsynchronous();
 	}
 }

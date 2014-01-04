@@ -34,6 +34,7 @@ import org.junit.Assert;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.wicketstuff.datastores.common.SessionQuotaManagingDataStore;
 
 /**
  * Performance and stability test for MemcachedDataStore
@@ -315,8 +316,8 @@ public class MemcachedDataStoreTest extends Assert {
 			IMemcachedSettings settings = new MemcachedSettings();
 			// settings.setServerNames("");
 			MemcachedClient client = MemcachedDataStore.createClient(settings);
-			dataStore = new MemcachedDataStore(client, settings, Bytes.kilobytes(10));
-			dataStore = new SessionResourcesManager2(dataStore, Bytes.kilobytes(10000));
+			dataStore = new MemcachedDataStore(client, settings);
+			dataStore = new SessionQuotaManagingDataStore(dataStore, Bytes.megabytes(100));
 
 			doTestDataStore();
 

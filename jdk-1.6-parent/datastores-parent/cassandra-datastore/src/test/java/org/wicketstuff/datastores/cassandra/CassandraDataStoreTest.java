@@ -27,13 +27,14 @@ import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import org.apache.wicket.pageStore.IDataStore;
+import org.apache.wicket.util.lang.Bytes;
 import org.junit.Assert;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.wicketstuff.datastores.common.SessionQuotaManagingDataStore;
 
-public class CassandraDataStoreTest extends Assert
-{
+public class CassandraDataStoreTest extends Assert {
 	/** Log for reporting. */
 	private static final Logger log = LoggerFactory.getLogger(CassandraDataStoreTest.class);
 
@@ -46,8 +47,7 @@ public class CassandraDataStoreTest extends Assert
 	private static final int THREAD_COUNT = 20;
 	private static final int READ_MODULO = 100;
 
-	private static class File
-	{
+	private static class File {
 		private final String sessionId;
 		private final int id;
 
@@ -55,24 +55,20 @@ public class CassandraDataStoreTest extends Assert
 		private byte last;
 		private int length;
 
-		public File(String sessionId, int id)
-		{
+		public File(String sessionId, int id) {
 			this.sessionId = sessionId;
 			this.id = id;
 		}
 
-		public String getSessionId()
-		{
+		public String getSessionId() {
 			return sessionId;
 		}
 
-		public int getId()
-		{
+		public int getId() {
 			return id;
 		}
 
-		public byte[] generateData()
-		{
+		public byte[] generateData() {
 			length = FILE_SIZE_MIN + random.nextInt(FILE_SIZE_MAX - FILE_SIZE_MIN);
 			byte data[] = new byte[length];
 			random.nextBytes(data);
@@ -81,25 +77,23 @@ public class CassandraDataStoreTest extends Assert
 			return data;
 		}
 
-		public boolean checkData(byte data[])
-		{
-			if (data == null)
-			{
+		public boolean checkData(byte data[]) {
+			if (data == null) {
 				log.error("data[] should never be null");
 				return false;
 			}
-			if (data.length != length)
-			{
+
+			if (data.length != length) {
 				log.error("data.length != length");
 				return false;
 			}
-			if (first != data[0])
-			{
+
+			if (first != data[0]) {
 				log.error("first != data[0]");
 				return false;
 			}
-			if (last != data[data.length - 1])
-			{
+
+			if (last != data[data.length - 1]) {
 				log.error("last != data[data.length - 1]");
 				return false;
 			}
@@ -129,26 +123,22 @@ public class CassandraDataStoreTest extends Assert
 
 	private RuntimeException exceptionThrownByThread;
 
-	private String randomSessionId()
-	{
+	private String randomSessionId() {
 		List<String> s = new ArrayList<String>(sessionCounter.keySet());
 		return s.get(random.nextInt(s.size()));
 	}
 
-	private int nextSessionId(String sessionId)
-	{
+	private int nextSessionId(String sessionId) {
 		AtomicInteger i = sessionCounter.get(sessionId);
 		return i.incrementAndGet();
 	}
 
-	private void generateFiles()
-	{
-		for (int i = 0; i < SESSION_COUNT; ++i)
-		{
+	private void generateFiles() {
+		for (int i = 0; i < SESSION_COUNT; ++i) {
 			sessionCounter.put(UUID.randomUUID().toString(), new AtomicInteger(0));
 		}
-		for (int i = 0; i < FILES_COUNT; ++i)
-		{
+
+		for (int i = 0; i < FILES_COUNT; ++i) {
 			String session = randomSessionId();
 			File file = new File(session, nextSessionId(session));
 			long now = System.nanoTime();
@@ -163,17 +153,13 @@ public class CassandraDataStoreTest extends Assert
 	/**
 	 * Stores RuntimeException into a field.
 	 */
-	private abstract class ExceptionCapturingRunnable implements Runnable
-	{
+	private abstract class ExceptionCapturingRunnable implements Runnable {
 		@Override
-		public final void run()
-		{
-			try
-			{
+		public final void run() {
+			try {
 				doRun();
 			}
-			catch (RuntimeException e)
-			{
+			catch (RuntimeException e) {
 				exceptionThrownByThread = e;
 			}
 		}
@@ -186,30 +172,24 @@ public class CassandraDataStoreTest extends Assert
 	}
 
 	// Store/Save data in DataStore
-	private class SaveRunnable extends ExceptionCapturingRunnable
-	{
+	private class SaveRunnable extends ExceptionCapturingRunnable {
 		@Override
-		protected void doRun()
-		{
+		protected void doRun() {
 			File file;
 
-			while ((file = filesToSave.poll()) != null || saveCount.get() < FILES_COUNT)
-			{
-				if (file != null)
-				{
+			while ((file = filesToSave.poll()) != null || saveCount.get() < FILES_COUNT) {
+				if (file != null) {
 					byte data[] = file.generateData();
 					dataStore.storeData(file.getSessionId(), file.getId(), data);
 
-					if (saveCount.get() % READ_MODULO == 0)
-					{
+					if (saveCount.get() % READ_MODULO == 0) {
 						filesToRead1.add(file);
 					}
 					saveCount.incrementAndGet();
 					bytesWritten.addAndGet(data.length);
 				}
 
-				try
-				{
+				try {
 					Thread.sleep(random.nextInt(SLEEP_MAX));
 				}
 				catch (InterruptedException e)
@@ -223,19 +203,14 @@ public class CassandraDataStoreTest extends Assert
 	}
 
 	// Read data from DataStore
-	private class Read1Runnable extends ExceptionCapturingRunnable
-	{
+	private class Read1Runnable extends ExceptionCapturingRunnable {
 		@Override
-		protected void doRun()
-		{
+		protected void doRun() {
 			File file;
-			while ((file = filesToRead1.poll()) != null || !saveDone.get())
-			{
-				if (file != null)
-				{
+			while ((file = filesToRead1.poll()) != null || !saveDone.get()) {
+				if (file != null) {
 					byte bytes[] = dataStore.getData(file.getSessionId(), file.getId());
-					if (!file.checkData(bytes))
-					{
+					if (!file.checkData(bytes)) {
 						failures.incrementAndGet();
 						log.error("Detected error number: " + failures.get());
 					}
@@ -244,12 +219,10 @@ public class CassandraDataStoreTest extends Assert
 					bytesRead.addAndGet(bytes.length);
 				}
 
-				try
-				{
+				try {
 					Thread.sleep(random.nextInt(SLEEP_MAX));
 				}
-				catch (InterruptedException e)
-				{
+				catch (InterruptedException e) {
 					log.error(e.getMessage(), e);
 				}
 			}
@@ -258,19 +231,14 @@ public class CassandraDataStoreTest extends Assert
 		}
 	}
 
-	private class Read2Runnable extends ExceptionCapturingRunnable
-	{
+	private class Read2Runnable extends ExceptionCapturingRunnable {
 		@Override
-		protected void doRun()
-		{
+		protected void doRun() {
 			File file;
-			while ((file = filesToRead2.poll()) != null || !read1Done.get())
-			{
-				if (file != null)
-				{
+			while ((file = filesToRead2.poll()) != null || !read1Done.get()) {
+				if (file != null) {
 					byte bytes[] = dataStore.getData(file.getSessionId(), file.getId());
-					if (!file.checkData(bytes))
-					{
+					if (!file.checkData(bytes)) {
 						failures.incrementAndGet();
 						log.error("Detected error number: " + failures.get());
 					}
@@ -278,12 +246,10 @@ public class CassandraDataStoreTest extends Assert
 					bytesRead.addAndGet(bytes.length);
 				}
 
-				try
-				{
+				try {
 					Thread.sleep(random.nextInt(SLEEP_MAX));
 				}
-				catch (InterruptedException e)
-				{
+				catch (InterruptedException e) {
 					log.error(e.getMessage(), e);
 				}
 			}
@@ -292,40 +258,32 @@ public class CassandraDataStoreTest extends Assert
 		}
 	}
 
-	private void doTestDataStore()
-	{
+	private void doTestDataStore() {
 		log.info("Starting...");
 		long start = System.currentTimeMillis();
 
-		for (int i = 0; i < THREAD_COUNT; ++i)
-		{
+		for (int i = 0; i < THREAD_COUNT; ++i) {
 			new Thread(new Read1Runnable()).start();
 		}
 
-		for (int i = 0; i < THREAD_COUNT; ++i)
-		{
+		for (int i = 0; i < THREAD_COUNT; ++i) {
 			new Thread(new Read2Runnable()).start();
 		}
 
-		for (int i = 0; i < THREAD_COUNT; ++i)
-		{
+		for (int i = 0; i < THREAD_COUNT; ++i) {
 			new Thread(new SaveRunnable()).start();
 		}
 
-		while (!(read1Done.get() && read2Done.get() && saveDone.get()))
-		{
-			try
-			{
+		while (!(read1Done.get() && read2Done.get() && saveDone.get())) {
+			try {
 				Thread.sleep(50);
 			}
-			catch (InterruptedException e)
-			{
+			catch (InterruptedException e) {
 				log.error(e.getMessage(), e);
 			}
 		}
 
-		if (exceptionThrownByThread != null)
-		{
+		if (exceptionThrownByThread != null) {
 			throw new RuntimeException("One of the worker threads failed.", exceptionThrownByThread);
 		}
 
@@ -340,8 +298,7 @@ public class CassandraDataStoreTest extends Assert
 
 		assertEquals(0, failures.get());
 
-		for (String s : sessionCounter.keySet())
-		{
+		for (String s : sessionCounter.keySet()) {
 			dataStore.removeData(s);
 		}
 	}
@@ -350,18 +307,17 @@ public class CassandraDataStoreTest extends Assert
 	 * store()
 	 */
 	@Test
-	public void store()
-	{
+	public void store() {
 		// disabled by default because requires a running Memcached server
 		// use settings.setServerNames(String) to point to a running instance
 		boolean enabled = false;
-		if (enabled)
-		{
+		if (enabled) {
 			generateFiles();
 
 			ICassandraSettings settings = new CassandraSettings();
 			settings.getContactPoints().add("127.0.0.1");
 			dataStore = new CassandraDataStore(settings);
+			dataStore = new SessionQuotaManagingDataStore(dataStore, Bytes.megabytes(100));
 
 			doTestDataStore();
 

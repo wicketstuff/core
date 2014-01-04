@@ -1,14 +1,17 @@
-package org.wicketstuff.datastores.memcached;
+package org.wicketstuff.datastores.common;
 
+import org.apache.wicket.pageStore.IDataStore;
 import org.apache.wicket.util.lang.Bytes;
 import org.junit.Assert;
 import org.junit.Test;
 
 /**
- *
+ * Tests for SessionQuotaManagingDataStore
  */
-public class SessionResourcesManagerTest extends Assert
-{
+public class SessionQuotaManagingDataStoreTest extends Assert {
+
+	private final IDataStore delegate = new NoopDataStore();
+
 	private final String sessionId = "abcd";
 	private final String sessionId2 = "efgh";
 
@@ -19,9 +22,8 @@ public class SessionResourcesManagerTest extends Assert
 	private final byte[] pageData2 = new byte[] {5, 6, 7};
 
 	@Test
-	public void removeData() throws Exception
-	{
-		SessionResourcesManager manager = new SessionResourcesManager(Bytes.bytes(100));
+	public void removeData() throws Exception {
+		SessionQuotaManagingDataStore manager = new SessionQuotaManagingDataStore(delegate, Bytes.bytes(100));
 
 		assertEquals(0, manager.pagesPerSession.size());
 		manager.removeData(sessionId);
@@ -44,10 +46,9 @@ public class SessionResourcesManagerTest extends Assert
 	}
 
 	@Test
-	public void storeDataEnoughSpace() throws Exception
-	{
+	public void storeDataEnoughSpace() throws Exception {
 		Bytes maxSizePerSession = Bytes.bytes(pageData1.length + pageData2.length + 1);
-		SessionResourcesManager manager = new SessionResourcesManager(maxSizePerSession);
+		SessionQuotaManagingDataStore manager = new SessionQuotaManagingDataStore(delegate, maxSizePerSession);
 
 		assertEquals(0, manager.pagesPerSession.size());
 
@@ -57,7 +58,7 @@ public class SessionResourcesManagerTest extends Assert
 		manager.storeData(sessionId2, pageId2, pageData2);
 		assertEquals(2, manager.pagesPerSession.size());
 
-		SessionResourcesManager.SessionData sessionData = manager.pagesPerSession.get(sessionId);
+		SessionData sessionData = manager.pagesPerSession.get(sessionId);
 
 		assertEquals(1, sessionData.pages.size());
 
@@ -68,17 +69,16 @@ public class SessionResourcesManagerTest extends Assert
 	}
 
 	@Test
-	public void storeDataInsufficientSpaceForTwoPages() throws Exception
-	{
+	public void storeDataInsufficientSpaceForTwoPages() throws Exception {
 		Bytes maxSizePerSession = Bytes.bytes(pageData1.length);
-		SessionResourcesManager manager = new SessionResourcesManager(maxSizePerSession);
+		SessionQuotaManagingDataStore manager = new SessionQuotaManagingDataStore(delegate, maxSizePerSession);
 
 		assertEquals(0, manager.pagesPerSession.size());
 
 		manager.storeData(sessionId, pageId1, pageData1);
 		assertEquals(1, manager.pagesPerSession.size());
 
-		SessionResourcesManager.SessionData sessionData = manager.pagesPerSession.get(sessionId);
+		SessionData sessionData = manager.pagesPerSession.get(sessionId);
 
 		assertEquals(1, sessionData.pages.size());
 		assertEquals(pageId1, sessionData.pages.element().pageId);
@@ -91,17 +91,16 @@ public class SessionResourcesManagerTest extends Assert
 	}
 
 	@Test
-	public void storeDataInsufficientSpaceForASinglePage() throws Exception
-	{
+	public void storeDataInsufficientSpaceForASinglePage() throws Exception {
 		Bytes maxSizePerSession = Bytes.bytes(pageData1.length - 1);
-		SessionResourcesManager manager = new SessionResourcesManager(maxSizePerSession);
+		SessionQuotaManagingDataStore manager = new SessionQuotaManagingDataStore(delegate, maxSizePerSession);
 
 		assertEquals(0, manager.pagesPerSession.size());
 
 		manager.storeData(sessionId, pageId1, pageData1);
 		assertEquals(1, manager.pagesPerSession.size());
 
-		SessionResourcesManager.SessionData sessionData = manager.pagesPerSession.get(sessionId);
+		SessionData sessionData = manager.pagesPerSession.get(sessionId);
 
 		assertEquals(1, sessionData.pages.size());
 		assertEquals(pageId1, sessionData.pages.element().pageId);
@@ -114,37 +113,35 @@ public class SessionResourcesManagerTest extends Assert
 	}
 
 	@Test
-	public void removePage() throws Exception
-	{
+	public void removePage() throws Exception {
 		Bytes maxSizePerSession = Bytes.bytes(pageData1.length + pageData2.length + 1);
-		SessionResourcesManager manager = new SessionResourcesManager(maxSizePerSession);
+		SessionQuotaManagingDataStore manager = new SessionQuotaManagingDataStore(delegate, maxSizePerSession);
 
 		assertEquals(0, manager.pagesPerSession.size());
 
 		manager.storeData(sessionId, pageId1, pageData1);
 		assertEquals(1, manager.pagesPerSession.size());
 
-		SessionResourcesManager.SessionData sessionData = manager.pagesPerSession.get(sessionId);
+		SessionData sessionData = manager.pagesPerSession.get(sessionId);
 		assertEquals(1, sessionData.pages.size());
 
 		manager.storeData(sessionId, pageId2, pageData2);
 		assertEquals(1, manager.pagesPerSession.size());
 		assertEquals(2, sessionData.pages.size());
 
-		manager.removePage(sessionId, pageId1);
+		manager.removeData(sessionId, pageId1);
 		assertEquals(1, manager.pagesPerSession.size());
 		assertEquals(1, sessionData.pages.size());
 
-		manager.removePage(sessionId, pageId2);
+		manager.removeData(sessionId, pageId2);
 		// removing the last page should remove the session data too
 		assertEquals(0, manager.pagesPerSession.size());
 	}
 
 	@Test
-	public void destroy() throws Exception
-	{
+	public void destroy() throws Exception {
 		Bytes maxSizePerSession = Bytes.bytes(pageData1.length + 1);
-		SessionResourcesManager manager = new SessionResourcesManager(maxSizePerSession);
+		SessionQuotaManagingDataStore manager = new SessionQuotaManagingDataStore(delegate, maxSizePerSession);
 
 		assertEquals(0, manager.pagesPerSession.size());
 
@@ -154,5 +151,38 @@ public class SessionResourcesManagerTest extends Assert
 		manager.destroy();
 
 		assertEquals(0, manager.pagesPerSession.size());
+	}
+
+	private static class NoopDataStore implements IDataStore {
+		@Override
+		public byte[] getData(String sessionId, int id) {
+			return new byte[0];
+		}
+
+		@Override
+		public void removeData(String sessionId, int id) {
+		}
+
+		@Override
+		public void removeData(String sessionId) {
+		}
+
+		@Override
+		public void storeData(String sessionId, int id, byte[] data) {
+		}
+
+		@Override
+		public void destroy() {
+		}
+
+		@Override
+		public boolean isReplicated() {
+			return false;
+		}
+
+		@Override
+		public boolean canBeAsynchronous() {
+			return false;
+		}
 	}
 }
