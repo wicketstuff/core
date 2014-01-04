@@ -316,6 +316,7 @@ public class MemcachedDataStoreTest extends Assert {
 			// settings.setServerNames("");
 			MemcachedClient client = MemcachedDataStore.createClient(settings);
 			dataStore = new MemcachedDataStore(client, settings, Bytes.kilobytes(10));
+			dataStore = new SessionResourcesManager2(dataStore, Bytes.kilobytes(10000));
 
 			doTestDataStore();
 

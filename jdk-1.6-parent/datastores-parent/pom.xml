@@ -14,12 +14,13 @@
 
 	<packaging>pom</packaging>
 	
-	<name>Apache Wicket IDataStore implementations</name>
+	<name>Apache Wicket IDataStore Parent</name>
 	<description>Parent project for WicketStuff IDataStore implementations</description>
 
 	<modules>
 		<module>cassandra-datastore</module>
 		<module>memcached-datastore</module>
+        <module>datastore-common</module>
 	</modules>
 
 </project>

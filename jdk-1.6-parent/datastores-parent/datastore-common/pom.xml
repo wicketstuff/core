@@ -24,33 +24,17 @@
 	</parent>
 
 	<modelVersion>4.0.0</modelVersion>
-	<artifactId>wicketstuff-datastore-memcached</artifactId>
+	<artifactId>wicketstuff-datastore-common</artifactId>
 	<packaging>jar</packaging>
-	<name>Apache Wicket IDataStore Memcached</name>
-	<description>An implementation of Apache Wicket's IDataStore that uses Memcached as a backend</description>
-
-	<properties>
-		<spymemcached.version>2.10.3</spymemcached.version>
-	</properties>
+	<name>Apache Wicket IDataStore Common</name>
+	<description>Helper classes for Apache Wicket's IDataStore implementation</description>
 
 	<dependencies>
-
-        <dependency>
-			<groupId>org.wicketstuff</groupId>
-			<artifactId>wicketstuff-datastore-common</artifactId>
-			<version>${project.version}</version>
-		</dependency>
 
 		<dependency>
 			<groupId>org.apache.wicket</groupId>
 			<artifactId>wicket-core</artifactId>
 			<version>${wicket.version}</version>
-		</dependency>
-
-		<dependency>
-			<groupId>net.spy</groupId>
-			<artifactId>spymemcached</artifactId>
-			<version>${spymemcached.version}</version>
 		</dependency>
 
 		<dependency>
@@ -78,14 +62,6 @@
 			<artifactId>junit</artifactId>
 			<version>4.11</version>
 			<scope>test</scope>
-		</dependency>
-
-		<!--  JETTY DEPENDENCIES FOR TESTING  -->
-		<dependency>
-			<groupId>org.eclipse.jetty.aggregate</groupId>
-			<artifactId>jetty-all-server</artifactId>
-			<version>${jetty.version}</version>
-			<scope>provided</scope>
 		</dependency>
 
 	</dependencies>
@@ -147,28 +123,6 @@
 					<encoding>UTF-8</encoding>
 					<showWarnings>true</showWarnings>
 					<showDeprecation>true</showDeprecation>
-				</configuration>
-			</plugin>
-			<plugin>
-				<groupId>org.mortbay.jetty</groupId>
-				<artifactId>jetty-maven-plugin</artifactId>
-				<version>${jetty.version}</version>
-				<configuration>
-					<stopKey>stop</stopKey>
-					<stopPort>18080</stopPort>
-					<connectors>
-						<connector implementation="org.eclipse.jetty.server.nio.SelectChannelConnector">
-							<port>8080</port>
-							<maxIdleTime>3600000</maxIdleTime>
-						</connector>
-						<connector implementation="org.eclipse.jetty.server.ssl.SslSocketConnector">
-							<port>8443</port>
-							<maxIdleTime>3600000</maxIdleTime>
-							<keystore>${project.build.directory}/test-classes/keystore</keystore>
-							<password>wicket</password>
-							<keyPassword>wicket</keyPassword>
-						</connector>
-					</connectors>
 				</configuration>
 			</plugin>
 		</plugins>

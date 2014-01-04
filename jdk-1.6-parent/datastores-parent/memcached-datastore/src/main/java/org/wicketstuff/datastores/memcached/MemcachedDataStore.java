@@ -133,7 +133,11 @@ public class MemcachedDataStore implements IDataStore
 		}
 
 		LOG.debug("Got {} for session '{}' and page id '{}'",
-				bytes != null ? "data>len="+bytes.length : "'null'", sessionId, pageId);
+				new Object[] {
+						bytes != null ? "data>len="+bytes.length : "'null'",
+						sessionId,
+						pageId
+				});
 		return bytes;
 	}
 

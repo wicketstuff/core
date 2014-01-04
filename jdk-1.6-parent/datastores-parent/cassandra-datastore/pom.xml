@@ -8,18 +8,25 @@
 	</parent>
 
 	<modelVersion>4.0.0</modelVersion>
-	<groupId>org.wicketstuff</groupId>
-	<artifactId>wicketstuff-cassandra-datastore</artifactId>
+	<artifactId>wicketstuff-datastore-cassandra</artifactId>
 	<packaging>jar</packaging>
-	<name>Apache Wicket Cassandra IDataStore</name>
+	<name>Apache Wicket IDataStore Cassandra </name>
 	<description>An implementation of Apache Wicket's IDataStore that uses Apache Cassandra as a backend</description>
 
 	<dependencies>
-		<dependency>
+
+        <dependency>
+            <groupId>org.wicketstuff</groupId>
+            <artifactId>wicketstuff-datastore-common</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+
+        <dependency>
 			<groupId>org.apache.wicket</groupId>
 			<artifactId>wicket-core</artifactId>
 			<version>6.13.0-SNAPSHOT</version>
 		</dependency>
+
 		<dependency>
 			<groupId>com.datastax.cassandra</groupId>
 			<artifactId>cassandra-driver-core</artifactId>
