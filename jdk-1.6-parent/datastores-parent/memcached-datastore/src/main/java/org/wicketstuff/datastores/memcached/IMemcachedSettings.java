@@ -53,18 +53,19 @@ public interface IMemcachedSettings {
 	IMemcachedSettings setPort(int port);
 
 	/**
-	 * @return the duration after which a record will be evicted by Memcached
+	 * @return the duration after which a record will be evicted by Memcached. In seconds.
 	 */
-	Duration getExpirationTime();
+	int getExpirationTime();
 
 	/**
 	 * Sets the duration after which a record will be evicted by Memcached.
+	 * In seconds.
 	 *
 	 * @param expirationTime the duration after which the record will be
 	 *                       evicted by Memcached
 	 * @return this instance, for chaining
 	 */
-	IMemcachedSettings setExpirationTime(Duration expirationTime);
+	IMemcachedSettings setExpirationTime(int expirationTime);
 
 	/**
 	 * @return the time to wait when shutting down the connection to

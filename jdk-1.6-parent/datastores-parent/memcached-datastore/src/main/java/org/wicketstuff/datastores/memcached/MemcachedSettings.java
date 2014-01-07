@@ -32,7 +32,8 @@ public class MemcachedSettings implements IMemcachedSettings {
 
 	private int port = 11211;
 
-	private Duration expirationTime = Duration.minutes(30);
+	// default is 30 minutes (in seconds)
+	private int expirationTime = 30 * 60;
 
 	private Duration shutdownTimeout = Duration.seconds(10);
 
@@ -76,13 +77,13 @@ public class MemcachedSettings implements IMemcachedSettings {
 	}
 
 	@Override
-	public Duration getExpirationTime() {
+	public int getExpirationTime() {
 		return expirationTime;
 	}
 
 	@Override
-	public IMemcachedSettings setExpirationTime(Duration expirationTime) {
-		this.expirationTime = Args.notNull(expirationTime, "expirationTime");
+	public IMemcachedSettings setExpirationTime(int expirationTime) {
+		this.expirationTime = expirationTime;
 		return this;
 	}
 

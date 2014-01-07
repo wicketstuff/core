@@ -19,11 +19,11 @@ package org.wicketstuff.datastores.memcached;
 import java.io.IOException;
 import java.net.InetSocketAddress;
 import java.net.SocketAddress;
-import java.util.Collections;
 import java.util.List;
 import java.util.Set;
-import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.Callable;
 import java.util.concurrent.ConcurrentMap;
+import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
 
 import net.spy.memcached.ConnectionObserver;
@@ -36,22 +36,31 @@ import org.apache.wicket.util.time.Duration;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.google.common.cache.Cache;
+import com.google.common.cache.CacheBuilder;
+import com.google.common.collect.Sets;
+
 /**
- * {@link org.apache.wicket.pageStore.IDataStore} that stores the pages' bytes in Memcached
+ * {@link org.apache.wicket.pageStore.IDataStore} that stores the pages' bytes in Memcached.
+ * It uses <a href="https://code.google.com/p/guava-libraries/">Google Guava</a>'s Cache
+ * as a Map with eviction functionality by last access time.
+ *
+ * To use it the application has to add: com.google.guava:guava:10+ as dependency in
+ * the classpath.
  *
  * A useful read about the way Memcached works can be found
  * <a href="http://returnfoo.com/2012/02/memcached-memory-allocation-and-optimization-2/">here</a>.
  */
-public class MemcachedDataStore implements IDataStore {
+public class GuavaMemcachedDataStore implements IDataStore {
 
-	private static final Logger LOG = LoggerFactory.getLogger(MemcachedDataStore.class);
+	private static final Logger LOG = LoggerFactory.getLogger(GuavaMemcachedDataStore.class);
 
 	/**
 	 * A suffix for the keys to avoid duplication of entries
 	 * in Memcached entered by another process and to make
 	 * it easier to find out who put the data at the server
 	 */
-	private static final String KEY_SUFFIX = "Wicket-Memcached";
+	private static final String KEY_SUFFIX = "Wicket-Memcached-Guava";
 
 	/**
 	 * A separator used for the key construction
@@ -75,8 +84,7 @@ public class MemcachedDataStore implements IDataStore {
 	 * The entries in Memcached have time-to-live so they will be
 	 * removed anyway at some point.
 	 */
-	private final ConcurrentMap<String, Set<String>> keysPerSession =
-			new ConcurrentHashMap<String, Set<String>>();
+	private final Cache<String, Set<String>> keysPerSession;
 
 	/**
 	 * Constructor.
@@ -87,7 +95,7 @@ public class MemcachedDataStore implements IDataStore {
 	 * @throws java.io.IOException when cannot connect to any of the provided
 	 *         in IMemcachedSettings Memcached servers
 	 */
-	public MemcachedDataStore(IMemcachedSettings settings) throws IOException {
+	public GuavaMemcachedDataStore(IMemcachedSettings settings) throws IOException {
 		this(createClient(settings), settings);
 	}
 
@@ -97,9 +105,13 @@ public class MemcachedDataStore implements IDataStore {
 	 * @param client   The connection to Memcached
 	 * @param settings The configuration for the client
 	 */
-	public MemcachedDataStore(MemcachedClient client, IMemcachedSettings settings) {
+	public GuavaMemcachedDataStore(MemcachedClient client, IMemcachedSettings settings) {
 		this.client = Args.notNull(client, "client");
 		this.settings = Args.notNull(settings, "settings");
+
+		this.keysPerSession  = CacheBuilder.newBuilder()
+				.expireAfterAccess(settings.getExpirationTime(), TimeUnit.SECONDS)
+				.build();
 
 		client.addObserver(new ConnectionObserver()
 		{
@@ -170,12 +182,12 @@ public class MemcachedDataStore implements IDataStore {
 
 	@Override
 	public void removeData(String sessionId) {
-		Set<String> keys = keysPerSession.get(sessionId);
+		Set<String> keys = keysPerSession.getIfPresent(sessionId);
 		if (keys != null) {
 			for (String key : keys) {
 				client.delete(key);
 			}
-			keysPerSession.remove(sessionId);
+			keysPerSession.invalidate(sessionId);
 			LOG.debug("Removed the data for session '{}'", sessionId);
 		}
 	}
@@ -183,13 +195,19 @@ public class MemcachedDataStore implements IDataStore {
 	@Override
 	public void storeData(final String sessionId, final int pageId, byte[] data) {
 		final String key = makeKey(sessionId, pageId);
-		Set<String> keys = keysPerSession.get(sessionId);
-		if (keys == null) {
-			keys = Collections.newSetFromMap(new ConcurrentHashMap<String, Boolean>());
-			Set<String> old = keysPerSession.putIfAbsent(sessionId, keys);
-			if (old != null) {
-				keys = old;
-			}
+		Set<String> keys;
+		try {
+			keys = keysPerSession.get(sessionId, new Callable<Set<String>>() {
+				@Override
+				public Set<String> call() throws Exception {
+					return Sets.newSetFromMap(createEvictingMap());
+				}
+			});
+		} catch (ExecutionException ex) {
+			LOG.warn("An error occurred while creating a new set for the keys in session '{}': {}", 
+					sessionId, ex.getMessage());
+			keys = Sets.newSetFromMap(createEvictingMap());
+			keysPerSession.put(sessionId, keys);
 		}
 
 		int expirationTime = settings.getExpirationTime();
@@ -201,7 +219,7 @@ public class MemcachedDataStore implements IDataStore {
 
 	@Override
 	public void destroy() {
-		keysPerSession.clear();
+		keysPerSession.invalidateAll();
 		if (client != null) {
 			Duration timeout = settings.getShutdownTimeout();
 			LOG.info("Shutting down gracefully for {}", timeout);
@@ -247,14 +265,28 @@ public class MemcachedDataStore implements IDataStore {
 	 * @param key       The key for Memcached lookup
 	 */
 	private void removeKey(String sessionId, String key) {
-		Set<String> keys = keysPerSession.get(sessionId);
+		Set<String> keys = keysPerSession.getIfPresent(sessionId);
 		if (keys != null) {
 			// maybe the entry has expired
 			keys.remove(key);
 
 			if (keys.isEmpty()) {
-				keysPerSession.remove(sessionId);
+				keysPerSession.invalidate(sessionId);
 			}
 		}
+	}
+
+	/**
+	 * Creates a concurrent map with eviction functionality by
+	 * access time.
+	 *
+	 * @return the evicting map
+	 */
+	private ConcurrentMap<String, Boolean> createEvictingMap() {
+		int seconds = settings.getExpirationTime();
+		Cache<String, Boolean> cache = CacheBuilder.newBuilder()
+				.expireAfterAccess(seconds, TimeUnit.SECONDS)
+				.build();
+		return cache.asMap();
 	}
 }
