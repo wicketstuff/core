@@ -33,15 +33,12 @@ class PageData {
 		PageData pageData = (PageData) o;
 
 		if (pageId != pageData.pageId) return false;
-		if (size != pageData.size) return false;
 
 		return true;
 	}
 
 	@Override
 	public int hashCode() {
-		int result = pageId;
-		result = 31 * result + size;
-		return result;
+		return pageId;
 	}
 }
