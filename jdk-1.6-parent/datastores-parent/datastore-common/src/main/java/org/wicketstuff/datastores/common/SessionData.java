@@ -21,7 +21,7 @@ class SessionData {
 	/**
 	 * The total size of the session (a sum of the sizes of all pages)
 	 */
-	long size;
+	volatile long size;
 
 	/**
 	 * Constructor.
