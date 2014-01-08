@@ -308,7 +308,7 @@ public class CassandraDataStoreTest extends Assert {
 	 */
 	@Test
 	public void store() {
-		// disabled by default because requires a running Memcached server
+		// disabled by default because requires a running Cassandra server
 		// use settings.setServerNames(String) to point to a running instance
 		boolean enabled = false;
 		if (enabled) {
