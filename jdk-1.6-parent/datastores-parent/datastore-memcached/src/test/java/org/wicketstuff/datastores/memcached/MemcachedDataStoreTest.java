@@ -309,7 +309,7 @@ public class MemcachedDataStoreTest extends Assert {
 	{
 		// disabled by default because requires a running Memcached server
 		// use settings.setServerNames(String) to point to a running instance
-		boolean enabled = true;
+		boolean enabled = false;
 		if (enabled) {
 			generateFiles();
 
