@@ -5,26 +5,30 @@ import org.apache.wicket.model.{IModel, Model}
 /**
  *
  */
-class ReactiveModel[T <: Serializable]
-  extends Model[T] {
+class ReactiveModel[T <: java.io.Serializable](obj: T)
+  extends Model[T](obj) {
 
-  def +(model: IModel[T]): ReactiveModel[T] = {
-    new ReactiveModel[T] {
+  def this() = this(null.asInstanceOf[T])
+
+  def +(right: IModel[T])(implicit ev: Plus[T]): ReactiveModel[T] = {
+    val left = this
+
+    new ReactiveModel[T](getObject) {
       private var hasCustomObject = false
 
       override def getObject = {
-        if (hasCustomObject) super.getObject
-        else (super.getObject.toString + model.getObject.toString).asInstanceOf[T]
+        if (hasCustomObject) left.getObject
+        else ev.plus(left.getObject, right.getObject)
       }
 
       override def setObject(obj: T) = {
-        super.setObject(obj)
+        left.setObject(obj)
         hasCustomObject = true
       }
 
       override def detach() = {
-        super.detach()
-        if (!hasCustomObject) model.detach()
+        left.detach()
+        if (!hasCustomObject) right.detach()
       }
     }
   }

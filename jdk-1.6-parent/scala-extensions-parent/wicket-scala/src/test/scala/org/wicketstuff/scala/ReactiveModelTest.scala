@@ -1,19 +1,26 @@
 package org.wicketstuff.scala
 
-import org.junit.{Test, Assert}
-import org.apache.wicket.model.Model
+import org.apache.wicket.model.{IModel, Model}
+import org.junit.Assert._
+import org.junit.Test
 
 /**
  *
  */
-class ReactiveModelTest extends Assert {
+class ReactiveModelTest {
 
+  /**
+   * Test concatenation of IModel[T] with implicit Plus[T] in scope
+   */
   @Test
-  def aa() {
-    val a = new Model("a")
-    val b = new Model("b")
+  def concatenateStrings() {
+    val a = Model.of("a")
+    val b = Model.of("b")
 
-    val model: ReactiveModel[String] = a + b
-    println("res: " + model.getObject)
+    val model: IModel[String] = a + b
+    assertEquals("ab", model.getObject)
+
+    b.setObject("bb")
+    assertEquals("abb", model.getObject)
   }
 }
