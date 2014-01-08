@@ -18,9 +18,9 @@
 	<description>Parent project for WicketStuff IDataStore implementations</description>
 
 	<modules>
-		<module>cassandra-datastore</module>
-		<module>memcached-datastore</module>
-        <module>datastore-common</module>
+		<module>datastore-common</module>
+		<module>datastore-cassandra</module>
+		<module>datastore-memcached</module>
 	</modules>
 
 </project>
