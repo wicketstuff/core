@@ -1,5 +1,6 @@
 package org.wicketstuff.datastores.common;
 
+import java.util.Iterator;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
 import org.apache.wicket.util.lang.Args;
@@ -37,7 +38,7 @@ class SessionData {
 	 * Appends a page to the collection of used pages in this session
 	 * @param page The page to append
 	 */
-	synchronized void addPage(PageData page) {
+	void addPage(PageData page) {
 		Args.notNull(page, "page");
 
 		pages.add(page);
@@ -48,7 +49,7 @@ class SessionData {
 	 * Removes the oldest page in the collection of used pages
 	 * @return The oldest page.
 	 */
-	synchronized PageData removePage() {
+	PageData removePage() {
 		if (pages.isEmpty()) {
 			throw new IllegalStateException(String.format("There are no used pages in session '%s'", sessionId));
 		}
@@ -56,6 +57,23 @@ class SessionData {
 		PageData page = pages.poll();
 		size -= page.size;
 		return page;
+	}
+
+	/**
+	 * Removes a page by its identifier
+	 *
+	 * @param pageId The id of the page to remove
+	 */
+	void removePage(int pageId) {
+		Iterator<PageData> pageIterator = pages.iterator();
+		while (pageIterator.hasNext()) {
+			PageData page = pageIterator.next();
+			if (page.pageId == pageId) {
+				pageIterator.remove();
+				size -= page.size;
+				break;
+			}
+		}
 	}
 
 	@Override

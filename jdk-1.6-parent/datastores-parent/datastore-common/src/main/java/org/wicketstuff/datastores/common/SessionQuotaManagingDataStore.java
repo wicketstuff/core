@@ -1,8 +1,6 @@
 package org.wicketstuff.datastores.common;
 
-import java.util.Iterator;
 import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.ConcurrentLinkedQueue;
 import java.util.concurrent.ConcurrentMap;
 
 import org.apache.wicket.pageStore.IDataStore;
@@ -116,17 +114,9 @@ public class SessionQuotaManagingDataStore implements IDataStore {
 		SessionData sessionData = pagesPerSession.get(sessionId);
 
 		if (sessionData != null) {
-			ConcurrentLinkedQueue<PageData> pages = sessionData.pages;
-			Iterator<PageData> pageIterator = pages.iterator();
-			while (pageIterator.hasNext()) {
-				PageData page = pageIterator.next();
-				if (page.pageId == pageId) {
-					pageIterator.remove();
-					break;
-				}
-			}
+			sessionData.removePage(pageId);
 
-			if (pages.isEmpty()) {
+			if (sessionData.pages.isEmpty()) {
 				pagesPerSession.remove(sessionId);
 			}
 		}
