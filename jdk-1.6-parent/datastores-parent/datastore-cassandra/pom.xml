@@ -24,14 +24,13 @@
         <dependency>
 			<groupId>org.apache.wicket</groupId>
 			<artifactId>wicket-core</artifactId>
-			<version>6.13.0-SNAPSHOT</version>
 		</dependency>
 
 		<dependency>
 			<groupId>com.datastax.cassandra</groupId>
 			<artifactId>cassandra-driver-core</artifactId>
-			<!--<version>2.0.0-rc1</version>-->
-			<version>1.0.4-dse</version>
+			<!--<version>2.0.0-rc2</version>-->
+			<version>1.0.5</version>
 			<!--
 			 the application should provide the version of the driver
 			 for version of its Cassandra installation
@@ -41,19 +40,15 @@
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
-			<version>4.11</version>
-			<scope>test</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.eclipse.jetty.aggregate</groupId>
 			<artifactId>jetty-all-server</artifactId>
-			<version>${jetty.version}</version>
 			<scope>provided</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.slf4j</groupId>
 			<artifactId>slf4j-log4j12</artifactId>
-			<version>1.7.5</version>
 			<scope>test</scope>
 		</dependency>
 	</dependencies>
@@ -110,6 +105,8 @@
 				<artifactId>jetty-maven-plugin</artifactId>
 				<version>${jetty.version}</version>
 				<configuration>
+					<stopKey>stop</stopKey>
+					<stopPort>18080</stopPort>
 					<connectors>
 						<connector implementation="org.eclipse.jetty.server.nio.SelectChannelConnector">
 							<port>8080</port>
@@ -127,9 +124,5 @@
 			</plugin>
 		</plugins>
 	</build>
-
-	<properties>
-		<jetty.version>7.6.13.v20130916</jetty.version>
-	</properties>
 
 </project>
