@@ -17,10 +17,10 @@
 package com.googlecode.wicket.kendo.ui;
 
 import org.apache.wicket.Component;
+import org.apache.wicket.ajax.AjaxRequestTarget;
 
 import com.googlecode.wicket.jquery.core.IJQueryWidget.JQueryWidget;
 import com.googlecode.wicket.jquery.core.JQueryBehavior;
-
 
 /**
  * Factory that provides {@link JQueryBehavior}<code>s</code>, which may be used in widgets.
@@ -31,28 +31,82 @@ import com.googlecode.wicket.jquery.core.JQueryBehavior;
 public final class KendoBehaviorFactory
 {
 	/**
-	 * Gets a new {@link JQueryBehavior} that shows the widgets
+	 * Shows the kendo-ui widget using its reference
+	 *
+	 * @param target the {@link AjaxRequestTarget}
+	 * @param component the {@link Component} reference
+	 */
+	public static void show(AjaxRequestTarget target, Component component)
+	{
+		KendoBehaviorFactory.show(target, JQueryWidget.getSelector(component));
+	}
+
+	/**
+	 * Shows the kendo-ui widget using its selector
+	 *
+	 * @param target the {@link AjaxRequestTarget}
+	 * @param selector the html selector (ie: '#myId')
+	 */
+	public static void show(AjaxRequestTarget target, String selector)
+	{
+		target.appendJavaScript(KendoBehaviorFactory.getShowStatement(selector));
+	}
+
+	/**
+	 * Hides the kendo-ui widget using its reference
+	 *
+	 * @param target the {@link AjaxRequestTarget}
+	 * @param component the {@link Component} reference
+	 */
+	public static void hide(AjaxRequestTarget target, Component component)
+	{
+		KendoBehaviorFactory.hide(target, JQueryWidget.getSelector(component));
+	}
+
+	/**
+	 * Hides the kendo-ui widget using its selector
+	 *
+	 * @param target the {@link AjaxRequestTarget}
+	 * @param selector the html selector (ie: '#myId')
+	 */
+	public static void hide(AjaxRequestTarget target, String selector)
+	{
+		target.appendJavaScript(KendoBehaviorFactory.getHideStatement(selector));
+	}
+
+	/**
+	 * Gets a new {@link JQueryBehavior} that shows the kendo-ui widget
 	 *
 	 * @param component the {@link Component}
 	 * @return the {@link JQueryBehavior}
 	 */
 	public static JQueryBehavior newShowBehavior(Component component)
 	{
-		return new JQueryBehavior(JQueryWidget.getSelector(component)) {
+		return KendoBehaviorFactory.newShowBehavior(JQueryWidget.getSelector(component));
+	}
+
+	/**
+	 * Gets a new {@link JQueryBehavior} that shows the kendo-ui widget
+	 *
+	 * @param selector the html selector (ie: '#myId')
+	 * @return the {@link JQueryBehavior}
+	 */
+	public static JQueryBehavior newShowBehavior(String selector)
+	{
+		return new JQueryBehavior(selector) {
 
 			private static final long serialVersionUID = 1L;
 
 			@Override
 			protected String $()
 			{
-				return String.format("jQuery(function() { jQuery('%s').closest('.k-widget').show(); });", this.selector);
+				return KendoBehaviorFactory.getShowStatement(this.selector);
 			}
-
 		};
 	}
 
 	/**
-	 * Gets a new {@link JQueryBehavior} that hides the widgets
+	 * Gets a new {@link JQueryBehavior} that hides the kendo-ui widget
 	 *
 	 * @param component the {@link Component}
 	 * @return the {@link JQueryBehavior}
@@ -63,7 +117,7 @@ public final class KendoBehaviorFactory
 	}
 
 	/**
-	 * Gets a new {@link JQueryBehavior} that hides the widgets
+	 * Gets a new {@link JQueryBehavior} that hides the kendo-ui widget
 	 *
 	 * @param selector the html selector (ie: '#myId')
 	 * @return the {@link JQueryBehavior}
@@ -77,9 +131,31 @@ public final class KendoBehaviorFactory
 			@Override
 			protected String $()
 			{
-				return String.format("jQuery(function() { jQuery('%s').closest('.k-widget').hide(); });", this.selector);
+				return KendoBehaviorFactory.getHideStatement(this.selector);
 			}
 		};
+	}
+
+	/**
+	 * Gets the jQuery 'show' statement for the component specified by the given selector
+	 *
+	 * @param selector the html selector (ie: '#myId')
+	 * @return the statement
+	 */
+	public static String getShowStatement(String selector)
+	{
+		return String.format("jQuery(function() { jQuery('%s').closest('.k-widget').show(); });", selector);
+	}
+
+	/**
+	 * Gets the jQuery 'hide' statement for the component specified by the given selector
+	 *
+	 * @param selector the html selector (ie: '#myId')
+	 * @return the statement
+	 */
+	public static String getHideStatement(String selector)
+	{
+		return String.format("jQuery(function() { jQuery('%s').closest('.k-widget').hide(); });", selector);
 	}
 
 	/**
