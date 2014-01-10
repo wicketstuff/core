@@ -310,7 +310,7 @@ public class RedisDataStoreTest extends Assert {
 	public void store() {
 		// disabled by default because requires a running Redis server
 		// use settings.setHostname(String) to point to a running instance
-		boolean enabled = true;
+		boolean enabled = false;
 		if (enabled) {
 			generateFiles();
 
