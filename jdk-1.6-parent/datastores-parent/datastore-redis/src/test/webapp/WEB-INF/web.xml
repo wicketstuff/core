@@ -10,7 +10,7 @@
     <filter-class>org.apache.wicket.protocol.http.WicketFilter</filter-class>
     <init-param>
       <param-name>applicationClassName</param-name>
-      <param-value>org.wicketstuff.datastores.redis.demo.DemoApplication</param-value>
+      <param-value>org.wicketstuff.datastores.redis.demo.RedisDataStoreApplication</param-value>
     </init-param>
   </filter>
 

@@ -10,7 +10,7 @@
     <filter-class>org.apache.wicket.protocol.http.WicketFilter</filter-class>
     <init-param>
       <param-name>applicationClassName</param-name>
-      <param-value>org.wicketstuff.datastore.cassandra.demo.DemoApplication</param-value>
+      <param-value>org.wicketstuff.datastores.cassandra.demo.CassandraDataStoreApplication</param-value>
     </init-param>
   </filter>
 

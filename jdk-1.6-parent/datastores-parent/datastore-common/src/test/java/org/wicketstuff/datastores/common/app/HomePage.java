@@ -14,17 +14,17 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.wicketstuff.datastores.memcached.app;
+package org.wicketstuff.datastores.common.app;
 
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.markup.html.AjaxLink;
 import org.apache.wicket.markup.html.WebPage;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
 
-public class Page2 extends WebPage {
+public class HomePage extends WebPage {
 	private static final long serialVersionUID = 1L;
 
-	public Page2(final PageParameters parameters) {
+	public HomePage(final PageParameters parameters) {
 		super(parameters);
 
 		add(new AjaxLink<Void>("link") {
@@ -32,7 +32,7 @@ public class Page2 extends WebPage {
 			public void onClick(AjaxRequestTarget target)
 			{
 				// create a new page
-				setResponsePage(HomePage.class);
+				setResponsePage(Page2.class);
 			}
 		});
     }
