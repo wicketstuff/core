@@ -24,21 +24,4 @@ class PageData {
 		this.pageId = pageId;
 		this.size   = size;
 	}
-
-	@Override
-	public boolean equals(Object o) {
-		if (this == o) return true;
-		if (o == null || getClass() != o.getClass()) return false;
-
-		PageData pageData = (PageData) o;
-
-		if (pageId != pageData.pageId) return false;
-
-		return true;
-	}
-
-	@Override
-	public int hashCode() {
-		return pageId;
-	}
 }
