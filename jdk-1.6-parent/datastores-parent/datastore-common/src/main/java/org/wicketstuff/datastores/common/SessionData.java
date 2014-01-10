@@ -1,8 +1,10 @@
 package org.wicketstuff.datastores.common;
 
+import java.util.Iterator;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
 import org.apache.wicket.util.lang.Args;
+import org.apache.wicket.util.lang.Bytes;
 
 /**
  * Keeps the information about a session
@@ -48,7 +50,7 @@ class SessionData {
 	 * Removes the oldest page in the collection of used pages
 	 * @return The oldest page.
 	 */
-	synchronized PageData removePage() {
+	private PageData removePage() {
 		if (pages.isEmpty()) {
 			throw new IllegalStateException(String.format("There are no used pages in session '%s'", sessionId));
 		}
@@ -56,6 +58,40 @@ class SessionData {
 		PageData page = pages.poll();
 		size -= page.size;
 		return page;
+	}
+
+	/**
+	 * Removes a page by its identifier
+	 *
+	 * @param pageId The id of the page to remove
+	 */
+	synchronized void removePage(int pageId) {
+		Iterator<PageData> pageIterator = pages.iterator();
+		while (pageIterator.hasNext()) {
+			PageData page = pageIterator.next();
+			if (page.pageId == pageId) {
+				pageIterator.remove();
+				size -= page.size;
+				break;
+			}
+		}
+	}
+
+	/**
+	 * Determines whether the data for older page in the session should
+	 * be removed because the quota has reached.
+	 *
+	 * @param pageSize           The size of the page that will be stored.
+	 * @param maxSizePerSession  The quota
+	 * @return The id of the oldest page if the quota is reached
+	 */
+	synchronized Integer removePageIfQuotaExceeded(int pageSize, Bytes maxSizePerSession) {
+		Integer removedPageId = null;
+		if (size > 0 && !maxSizePerSession.greaterThan(size + pageSize)) {
+			PageData removedPage = removePage();
+			removedPageId = removedPage.pageId;
+		}
+		return removedPageId;
 	}
 
 	@Override

@@ -1,4 +1,4 @@
-package org.wicketstuff.datastores.cassandra.demo;
+package org.wicketstuff.datastores.redis.demo;
 
 import org.apache.wicket.util.time.Duration;
 import org.eclipse.jetty.http.ssl.SslContextFactory;

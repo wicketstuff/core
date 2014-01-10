@@ -8,10 +8,10 @@
 	</parent>
 
 	<modelVersion>4.0.0</modelVersion>
-	<artifactId>wicketstuff-datastore-cassandra</artifactId>
+	<artifactId>wicketstuff-datastore-redis</artifactId>
 	<packaging>jar</packaging>
-	<name>Apache Wicket IDataStore Cassandra </name>
-	<description>An implementation of Apache Wicket's IDataStore that uses Apache Cassandra as a backend</description>
+	<name>Apache Wicket IDataStore Redis </name>
+	<description>An implementation of Apache Wicket's IDataStore that uses Redis as a backend</description>
 
 	<dependencies>
 
@@ -27,16 +27,13 @@
 		</dependency>
 
 		<dependency>
-			<groupId>com.datastax.cassandra</groupId>
-			<artifactId>cassandra-driver-core</artifactId>
-			<!--<version>2.0.0-rc2</version>-->
-			<version>1.0.5</version>
-			<!--
-			 the application should provide the version of the driver
-			 for version of its Cassandra installation
-			 -->
-			<scope>provided</scope>
+			<groupId>redis.clients</groupId>
+			<artifactId>jedis</artifactId>
+			<version>2.2.1</version>
+			<type>jar</type>
+			<scope>compile</scope>
 		</dependency>
+
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>

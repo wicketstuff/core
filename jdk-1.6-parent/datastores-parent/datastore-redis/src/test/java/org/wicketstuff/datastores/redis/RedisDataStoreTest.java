@@ -14,9 +14,8 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.wicketstuff.datastores.memcached;
+package org.wicketstuff.datastores.redis;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -27,7 +26,6 @@ import java.util.concurrent.ConcurrentLinkedQueue;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
 
-import net.spy.memcached.MemcachedClient;
 import org.apache.wicket.pageStore.IDataStore;
 import org.apache.wicket.util.lang.Bytes;
 import org.junit.Assert;
@@ -36,19 +34,16 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.wicketstuff.datastores.common.SessionQuotaManagingDataStore;
 
-/**
- * Performance and stability test for MemcachedDataStore
- */
-public class MemcachedDataStoreTest extends Assert {
+public class RedisDataStoreTest extends Assert {
 	/** Log for reporting. */
-	private static final Logger log = LoggerFactory.getLogger(MemcachedDataStoreTest.class);
+	private static final Logger log = LoggerFactory.getLogger(RedisDataStoreTest.class);
 
 	private static final Random random = new Random();
 	private static final int FILE_SIZE_MIN = 1024 * 200;
 	private static final int FILE_SIZE_MAX = 1024 * 300;
 	private static final int SESSION_COUNT = 50;
 	private static final int FILES_COUNT = 1000;
-	private static final int WAIT_TIME = 1;
+	private static final int SLEEP_MAX = 10;
 	private static final int THREAD_COUNT = 20;
 	private static final int READ_MODULO = 100;
 
@@ -87,14 +82,17 @@ public class MemcachedDataStoreTest extends Assert {
 				log.error("data[] should never be null");
 				return false;
 			}
+
 			if (data.length != length) {
 				log.error("data.length != length");
 				return false;
 			}
+
 			if (first != data[0]) {
 				log.error("first != data[0]");
 				return false;
 			}
+
 			if (last != data[data.length - 1]) {
 				log.error("last != data[data.length - 1]");
 				return false;
@@ -123,7 +121,7 @@ public class MemcachedDataStoreTest extends Assert {
 
 	private final AtomicInteger saveTime = new AtomicInteger(0);
 
-	private volatile RuntimeException exceptionThrownByThread;
+	private RuntimeException exceptionThrownByThread;
 
 	private String randomSessionId() {
 		List<String> s = new ArrayList<String>(sessionCounter.keySet());
@@ -139,6 +137,7 @@ public class MemcachedDataStoreTest extends Assert {
 		for (int i = 0; i < SESSION_COUNT; ++i) {
 			sessionCounter.put(UUID.randomUUID().toString(), new AtomicInteger(0));
 		}
+
 		for (int i = 0; i < FILES_COUNT; ++i) {
 			String session = randomSessionId();
 			File file = new File(session, nextSessionId(session));
@@ -159,10 +158,9 @@ public class MemcachedDataStoreTest extends Assert {
 		public final void run() {
 			try {
 				doRun();
-			} catch (RuntimeException e) {
-				if (exceptionThrownByThread == null) {
-					exceptionThrownByThread = e;
-				}
+			}
+			catch (RuntimeException e) {
+				exceptionThrownByThread = e;
 			}
 		}
 
@@ -192,8 +190,10 @@ public class MemcachedDataStoreTest extends Assert {
 				}
 
 				try {
-					Thread.sleep(WAIT_TIME);
-				} catch (InterruptedException e) {
+					Thread.sleep(random.nextInt(SLEEP_MAX));
+				}
+				catch (InterruptedException e)
+				{
 					log.error(e.getMessage(), e);
 				}
 			}
@@ -220,8 +220,9 @@ public class MemcachedDataStoreTest extends Assert {
 				}
 
 				try {
-					Thread.sleep(WAIT_TIME);
-				} catch (InterruptedException e) {
+					Thread.sleep(random.nextInt(SLEEP_MAX));
+				}
+				catch (InterruptedException e) {
 					log.error(e.getMessage(), e);
 				}
 			}
@@ -246,8 +247,9 @@ public class MemcachedDataStoreTest extends Assert {
 				}
 
 				try {
-					Thread.sleep(WAIT_TIME);
-				} catch (InterruptedException e) {
+					Thread.sleep(random.nextInt(SLEEP_MAX));
+				}
+				catch (InterruptedException e) {
 					log.error(e.getMessage(), e);
 				}
 			}
@@ -275,7 +277,8 @@ public class MemcachedDataStoreTest extends Assert {
 		while (!(read1Done.get() && read2Done.get() && saveDone.get())) {
 			try {
 				Thread.sleep(50);
-			} catch (InterruptedException e) {
+			}
+			catch (InterruptedException e) {
 				log.error(e.getMessage(), e);
 			}
 		}
@@ -289,7 +292,7 @@ public class MemcachedDataStoreTest extends Assert {
 		log.info("Took: " + duration + " ms");
 		log.info("Save: " + saveCount.intValue() + " files, " + bytesWritten.get() + " bytes");
 		log.info("Read: " + (read1Count.get() + read2Count.get()) + " files, " + bytesRead.get() +
-				" bytes");
+			" bytes");
 
 		log.info("Average save time (ns): " + (double)saveTime.get() / (double)saveCount.get());
 
@@ -301,24 +304,18 @@ public class MemcachedDataStoreTest extends Assert {
 	}
 
 	/**
-	 * Performance/load test for MemcachedDataStore.
-	 * Starts one thread that writes data and two that read.
-	 *
-	 * Slightly modified version of Wicket's DiskDataStoreTest
+	 * store()
 	 */
 	@Test
-	public void load() throws IOException
-	{
-		// disabled by default because requires a running Memcached server
-		// use settings.setServerNames(String) to point to a running instance
+	public void store() {
+		// disabled by default because requires a running Redis server
+		// use settings.setHostname(String) to point to a running instance
 		boolean enabled = false;
 		if (enabled) {
 			generateFiles();
 
-			IMemcachedSettings settings = new MemcachedSettings();
-			// settings.setServerNames("");
-			MemcachedClient client = MemcachedDataStore.createClient(settings);
-			dataStore = new GuavaMemcachedDataStore(client, settings);
+			IRedisSettings settings = new RedisSettings();
+			dataStore = new RedisDataStore(settings);
 			dataStore = new SessionQuotaManagingDataStore(dataStore, Bytes.megabytes(100));
 
 			doTestDataStore();

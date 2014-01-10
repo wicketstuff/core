@@ -1,8 +1,6 @@
 package org.wicketstuff.datastores.common;
 
-import java.util.Iterator;
 import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.ConcurrentLinkedQueue;
 import java.util.concurrent.ConcurrentMap;
 
 import org.apache.wicket.pageStore.IDataStore;
@@ -79,17 +77,16 @@ public class SessionQuotaManagingDataStore implements IDataStore {
 
 		int pageSize = data.length;
 
-		while (shouldRemove(sessionData, pageSize)) {
-			PageData page = sessionData.removePage();
-			LOG.debug("Removing page '{}' from session '{}' because the quota is reached.",
-					page.pageId, sessionId);
-			delegate.removeData(sessionId, page.pageId);
+		Integer removedPageId;
+		while ((removedPageId = sessionData.removePageIfQuotaExceeded(pageSize, maxSizePerSession)) != null) {
+			LOG.debug("Removing page '{}' from session '{}' because the quota is reached.", removedPageId, sessionId);
+			delegate.removeData(sessionId, removedPageId);
 		}
+
+		delegate.storeData(sessionId, pageId, data);
 
 		PageData page = new PageData(pageId, pageSize);
 		sessionData.addPage(page);
-
-		delegate.storeData(sessionId, pageId, data);
 	}
 
 	/**
@@ -116,17 +113,9 @@ public class SessionQuotaManagingDataStore implements IDataStore {
 		SessionData sessionData = pagesPerSession.get(sessionId);
 
 		if (sessionData != null) {
-			ConcurrentLinkedQueue<PageData> pages = sessionData.pages;
-			Iterator<PageData> pageIterator = pages.iterator();
-			while (pageIterator.hasNext()) {
-				PageData page = pageIterator.next();
-				if (page.pageId == pageId) {
-					pageIterator.remove();
-					break;
-				}
-			}
+			sessionData.removePage(pageId);
 
-			if (pages.isEmpty()) {
+			if (sessionData.pages.isEmpty()) {
 				pagesPerSession.remove(sessionId);
 			}
 		}

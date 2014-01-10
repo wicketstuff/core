@@ -52,30 +52,4 @@ public interface ICassandraSettings
 	 * @return A list of contact points (hostname:port) to contact to.
 	 */
 	List<String> getContactPoints();
-
-	/**
-	 * Sets time allowed for graceful shutdown of the connection
-	 *
-	 * @param sessionShutdown The time allowed for graceful shutdown of the session instance
-	 * @return this instance, for chaining
-	 */
-	ICassandraSettings setSessionShutdown(Duration sessionShutdown);
-
-	/**
-	 * @return the time allowed for graceful shutdown of the connection
-	 */
-	Duration getSessionShutdown();
-
-	/**
-	 * Sets time allowed for graceful shutdown of the connection
-	 *
-	 * @param clusterShutdown The time allowed for graceful shutdown of the cluster instance
-	 * @return this instance, for chaining
-	 */
-	ICassandraSettings setClusterShutdown(Duration clusterShutdown);
-
-	/**
-	 * @return the time allowed for graceful shutdown of the cluster instance
-	 */
-	Duration getClusterShutdown();
 }

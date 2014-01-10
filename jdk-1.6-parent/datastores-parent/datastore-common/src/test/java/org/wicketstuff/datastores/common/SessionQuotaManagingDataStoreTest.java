@@ -124,14 +124,17 @@ public class SessionQuotaManagingDataStoreTest extends Assert {
 
 		SessionData sessionData = manager.pagesPerSession.get(sessionId);
 		assertEquals(1, sessionData.pages.size());
+		assertEquals(pageData1.length, sessionData.size);
 
 		manager.storeData(sessionId, pageId2, pageData2);
 		assertEquals(1, manager.pagesPerSession.size());
 		assertEquals(2, sessionData.pages.size());
+		assertEquals(pageData1.length + pageData2.length, sessionData.size);
 
 		manager.removeData(sessionId, pageId1);
 		assertEquals(1, manager.pagesPerSession.size());
 		assertEquals(1, sessionData.pages.size());
+		assertEquals(pageData2.length, sessionData.size);
 
 		manager.removeData(sessionId, pageId2);
 		// removing the last page should remove the session data too

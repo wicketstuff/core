@@ -2,7 +2,6 @@ package org.wicketstuff.datastores.cassandra;
 
 import java.nio.ByteBuffer;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 
 import org.apache.wicket.pageStore.IDataStore;
 import org.apache.wicket.util.lang.Args;
@@ -195,12 +194,12 @@ public class CassandraDataStore implements IDataStore
 	{
 		if (session != null)
 		{
-			session.shutdown(settings.getSessionShutdown().getMilliseconds(), TimeUnit.MILLISECONDS);
+			session.shutdown();
 		}
 
 		if (cluster != null)
 		{
-			cluster.shutdown(settings.getClusterShutdown().getMilliseconds(), TimeUnit.MILLISECONDS);
+			cluster.shutdown();
 		}
 	}
 
