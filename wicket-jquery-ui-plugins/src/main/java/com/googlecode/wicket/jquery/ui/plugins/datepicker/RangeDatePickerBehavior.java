@@ -42,7 +42,7 @@ public abstract class RangeDatePickerBehavior extends JQueryBehavior implements 
 	private static final long serialVersionUID = 1L;
 	private static final String METHOD = "DatePicker";
 
-	private JQueryAjaxBehavior onChangeBehavior;
+	private JQueryAjaxBehavior onRangeChangeBehavior;
 
 	public RangeDatePickerBehavior(final String selector)
 	{
@@ -63,7 +63,7 @@ public abstract class RangeDatePickerBehavior extends JQueryBehavior implements 
 	{
 		super.bind(component);
 
-		component.add(this.onChangeBehavior = this.newOnChangeBehavior());
+		component.add(this.onRangeChangeBehavior = this.newOnRangeChangeBehavior());
 	}
 
 
@@ -73,7 +73,7 @@ public abstract class RangeDatePickerBehavior extends JQueryBehavior implements 
 	{
 		super.onConfigure(component);
 
-		this.setOption("onChange", this.onChangeBehavior.getCallbackFunction());
+		this.setOption("onRangeChange", this.onRangeChangeBehavior.getCallbackFunction());
 	}
 
 	@Override
@@ -92,7 +92,7 @@ public abstract class RangeDatePickerBehavior extends JQueryBehavior implements 
 	 * Gets a new {@link JQueryAjaxBehavior} that acts as the 'change' javascript callback
 	 * @return the {@link JQueryAjaxBehavior}
 	 */
-	private JQueryAjaxBehavior newOnChangeBehavior()
+	private JQueryAjaxBehavior newOnRangeChangeBehavior()
 	{
 		return new JQueryAjaxBehavior(this) {
 

@@ -20,7 +20,8 @@
  *   jquery.js
  */
 (function ($) {
-  var DatePicker = function () {
+  var cache = {}, tmpl,
+  DatePicker = function () {
     var ids = {},
       views = {
         years: 'datepickerViewYears',
@@ -216,14 +217,23 @@
          * @param HTMLElement el the DatePicker element, ie the element that DatePicker was invoked upon
          */
         onChange: function() { },
+        /* 
+         * Callback, invoked when a date range is selected, with 'this' referring to
+         * the HTMLElement that DatePicker was invoked upon.
+         * 
+         * @param dates: Selected date(s), ie an array containing a 'from' and 'to' Date objects. 
+         * @param HTMLElement el the DatePicker element, ie the element that DatePicker was invoked upon
+         */
+        onRangeChange: function() { },
         /**
          * Invoked before a non-inline datepicker is shown, with 'this'
          * referring to the HTMLElement that DatePicker was invoked upon, ie
          * the trigger element
          * 
-         * @param HTMLDivElement el The datepicker container element, ie the div with class 'datepicker'
+         * @param HTMLDivElement el The datepicker container element, ie the div with class 'datepicker'.
          * @return true to allow the datepicker to be shown, false to keep it hidden
          */
+
         onBeforeShow: function() { return true },
         /**
          * Invoked after a non-inline datepicker is shown, with 'this'
@@ -469,6 +479,7 @@
           var tblIndex = $('table', this).index(tblEl.get(0)) - 1;
           var tmp = new Date(options.current);
           var changed = false;
+          var changedRange = false;
           var fillIt = false;
           var currentCal = Math.floor(options.calendars/2);
           
@@ -562,11 +573,13 @@
                       // second range click < first
                       options.date[1] = options.date[0] + 86399000;  // starting date + 1 day
                       options.date[0] = val - 86399000;  // minus 1 day
+
                     } else {
                       // initial range click, or final range click >= first
                       options.date[1] = val;
                     }
                     options.lastSel = !options.lastSel;
+                    changedRange = !options.lastSel;
                     break;
                   default:
                     options.date = tmp.valueOf();
@@ -581,6 +594,9 @@
           }
           if(changed) {
             options.onChange.apply(this, prepareDate(options));
+          }
+          if(changedRange) {
+            options.onRangeChange.apply(this, prepareDate(options));
           }
         }
         return false;
@@ -977,13 +993,8 @@
     DatePickerClear: DatePicker.clear,
     DatePickerLayout: DatePicker.fixLayout
   });
-})(jQuery);
 
-(function(){
-  // within here, 'this' refers to the window object
-  var cache = {};
-  
-  this.tmpl = function tmpl(str, data){
+  tmpl = function tmpl(str, data){
     // Figure out if we're getting a template, or if we need to
     // load the template - and be sure to cache the result.
     var fn = !/\W/.test(str) ?
@@ -1012,4 +1023,5 @@
     // Provide some basic currying to the user
     return data ? fn( data ) : fn;
   };
-})();
+
+})(jQuery);
