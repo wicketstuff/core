@@ -39,7 +39,7 @@ public class LabelPanel extends Panel
 	 * @param id the markup id
 	 * @param model the label's model
 	 */
-	public LabelPanel(String id, IModel<String> model)
+	public LabelPanel(String id, IModel<?> model)
 	{
 		super(id);
 
