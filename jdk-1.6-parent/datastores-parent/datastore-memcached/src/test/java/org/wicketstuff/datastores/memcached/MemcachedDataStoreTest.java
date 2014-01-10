@@ -48,7 +48,7 @@ public class MemcachedDataStoreTest extends Assert {
 	private static final int FILE_SIZE_MAX = 1024 * 300;
 	private static final int SESSION_COUNT = 50;
 	private static final int FILES_COUNT = 1000;
-	private static final int SLEEP_MAX = 10;
+	private static final int WAIT_TIME = 1;
 	private static final int THREAD_COUNT = 20;
 	private static final int READ_MODULO = 100;
 
@@ -123,7 +123,7 @@ public class MemcachedDataStoreTest extends Assert {
 
 	private final AtomicInteger saveTime = new AtomicInteger(0);
 
-	private RuntimeException exceptionThrownByThread;
+	private volatile RuntimeException exceptionThrownByThread;
 
 	private String randomSessionId() {
 		List<String> s = new ArrayList<String>(sessionCounter.keySet());
@@ -160,7 +160,9 @@ public class MemcachedDataStoreTest extends Assert {
 			try {
 				doRun();
 			} catch (RuntimeException e) {
-				exceptionThrownByThread = e;
+				if (exceptionThrownByThread == null) {
+					exceptionThrownByThread = e;
+				}
 			}
 		}
 
@@ -190,7 +192,7 @@ public class MemcachedDataStoreTest extends Assert {
 				}
 
 				try {
-					Thread.sleep(random.nextInt(SLEEP_MAX));
+					Thread.sleep(WAIT_TIME);
 				} catch (InterruptedException e) {
 					log.error(e.getMessage(), e);
 				}
@@ -218,7 +220,7 @@ public class MemcachedDataStoreTest extends Assert {
 				}
 
 				try {
-					Thread.sleep(random.nextInt(SLEEP_MAX));
+					Thread.sleep(WAIT_TIME);
 				} catch (InterruptedException e) {
 					log.error(e.getMessage(), e);
 				}
@@ -244,7 +246,7 @@ public class MemcachedDataStoreTest extends Assert {
 				}
 
 				try {
-					Thread.sleep(random.nextInt(SLEEP_MAX));
+					Thread.sleep(WAIT_TIME);
 				} catch (InterruptedException e) {
 					log.error(e.getMessage(), e);
 				}

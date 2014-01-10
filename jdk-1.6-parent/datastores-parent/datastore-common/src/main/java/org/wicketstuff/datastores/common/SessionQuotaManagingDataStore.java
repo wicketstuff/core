@@ -77,17 +77,16 @@ public class SessionQuotaManagingDataStore implements IDataStore {
 
 		int pageSize = data.length;
 
-		while (shouldRemove(sessionData, pageSize)) {
-			PageData page = sessionData.removePage();
-			LOG.debug("Removing page '{}' from session '{}' because the quota is reached.",
-					page.pageId, sessionId);
-			delegate.removeData(sessionId, page.pageId);
+		Integer removedPageId;
+		while ((removedPageId = sessionData.removePageIfQuotaExceeded(pageSize, maxSizePerSession)) != null) {
+			LOG.debug("Removing page '{}' from session '{}' because the quota is reached.", removedPageId, sessionId);
+			delegate.removeData(sessionId, removedPageId);
 		}
+
+		delegate.storeData(sessionId, pageId, data);
 
 		PageData page = new PageData(pageId, pageSize);
 		sessionData.addPage(page);
-
-		delegate.storeData(sessionId, pageId, data);
 	}
 
 	/**
