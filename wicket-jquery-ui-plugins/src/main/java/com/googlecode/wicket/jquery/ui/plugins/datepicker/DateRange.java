@@ -16,6 +16,7 @@
  */
 package com.googlecode.wicket.jquery.ui.plugins.datepicker;
 
+import java.util.Calendar;
 import java.util.Date;
 
 import org.apache.wicket.util.io.IClusterable;
@@ -31,19 +32,36 @@ public class DateRange implements IClusterable
 
 	/**
 	 * Gets a default {@link DateRange} with start-date and end-date are set to today.
+	 *
 	 * @return the {@link DateRange}
 	 */
 	public static DateRange today()
 	{
-		return new DateRange(new Date(), new Date());
-	}
+		final Date date = new Date();
 
+		Calendar start = Calendar.getInstance();
+		start.setTime(date);
+		start.set(Calendar.HOUR_OF_DAY, 0);
+		start.set(Calendar.MINUTE, 0);
+		start.set(Calendar.SECOND, 0);
+		start.set(Calendar.MILLISECOND, 0);
+
+		Calendar end = Calendar.getInstance();
+		end.setTime(date);
+		end.set(Calendar.HOUR_OF_DAY, 23);
+		end.set(Calendar.MINUTE, 59);
+		end.set(Calendar.SECOND, 59);
+		end.set(Calendar.MILLISECOND, 999);
+
+		return new DateRange(start.getTime(), end.getTime());
+	}
 
 	private Date start;
 	private Date end;
 
 	/**
 	 * Constructor
+	 *
 	 * @param start the start date
 	 * @param end the end date
 	 */
@@ -55,6 +73,7 @@ public class DateRange implements IClusterable
 
 	/**
 	 * Gets the start date
+	 *
 	 * @return the start date
 	 */
 	public final Date getStart()
@@ -64,6 +83,7 @@ public class DateRange implements IClusterable
 
 	/**
 	 * Sets the start date.<br/>
+	 *
 	 * @param date the start date
 	 */
 	public void setStart(Date date)
@@ -73,6 +93,7 @@ public class DateRange implements IClusterable
 
 	/**
 	 * Gets the end date
+	 *
 	 * @return the end date
 	 */
 	public Date getEnd()
@@ -82,6 +103,7 @@ public class DateRange implements IClusterable
 
 	/**
 	 * Sets the end date.<br/>
+	 *
 	 * @param date the end date
 	 */
 	public void setEnd(Date date)
