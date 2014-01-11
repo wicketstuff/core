@@ -16,6 +16,9 @@
  */
 package com.googlecode.wicket.kendo.ui.datatable.column;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
 
@@ -39,6 +42,7 @@ public abstract class AbstractColumn implements IColumn
 
 	/**
 	 * Constructor
+	 *
 	 * @param title the text of the column header
 	 */
 	public AbstractColumn(String title)
@@ -48,6 +52,7 @@ public abstract class AbstractColumn implements IColumn
 
 	/**
 	 * Constructor
+	 *
 	 * @param title the text of the column header
 	 * @param width the desired width of the column
 	 */
@@ -58,6 +63,7 @@ public abstract class AbstractColumn implements IColumn
 
 	/**
 	 * Constructor
+	 *
 	 * @param title the text of the column header
 	 * @param field the object field name
 	 */
@@ -68,6 +74,7 @@ public abstract class AbstractColumn implements IColumn
 
 	/**
 	 * Constructor
+	 *
 	 * @param title the text of the column header
 	 * @param field the object field name
 	 * @param width the desired width of the column
@@ -77,9 +84,9 @@ public abstract class AbstractColumn implements IColumn
 		this(Model.of(title), field, width);
 	}
 
-
 	/**
 	 * Constructor
+	 *
 	 * @param title the text of the column header
 	 */
 	public AbstractColumn(IModel<String> title)
@@ -89,6 +96,7 @@ public abstract class AbstractColumn implements IColumn
 
 	/**
 	 * Constructor
+	 *
 	 * @param title the text of the column header
 	 * @param width the desired width of the column
 	 */
@@ -99,6 +107,7 @@ public abstract class AbstractColumn implements IColumn
 
 	/**
 	 * Constructor
+	 *
 	 * @param title the text of the column header
 	 * @param field the object field name
 	 */
@@ -109,6 +118,7 @@ public abstract class AbstractColumn implements IColumn
 
 	/**
 	 * Constructor
+	 *
 	 * @param title the text of the column header
 	 * @param field the object field name
 	 * @param width the desired width of the column
@@ -133,15 +143,62 @@ public abstract class AbstractColumn implements IColumn
 	}
 
 	@Override
+	public int getWidth()
+	{
+		return this.width;
+	}
+
+	@Override
 	public String getFormat()
 	{
 		return null;
 	}
 
 	@Override
-	public int getWidth()
+	public String getFilterable()
 	{
-		return this.width;
+		return null;
+	}
+
+	@Override
+	public String getMenu()
+	{
+		return null;
+	}
+
+	@Override
+	public List<String> getAggregates()
+	{
+		return null;
+	}
+
+	/**
+	 * Gets the list of <tt>aggregates<tt> as json array
+	 *
+	 * @return the list of <tt>aggregates<tt> as json array
+	 */
+	protected String getAggregatesAsString()
+	{
+		List<String> aggregates = new ArrayList<String>();
+
+		for (String aggregate : this.getAggregates())
+		{
+			aggregates.add(Options.asString(aggregate));
+		}
+
+		return aggregates.toString();
+	}
+
+	@Override
+	public String getGroupHeaderTemplate()
+	{
+		return null;
+	}
+
+	@Override
+	public String getGroupFooterTemplate()
+	{
+		return null;
 	}
 
 	@Override
@@ -153,16 +210,50 @@ public abstract class AbstractColumn implements IColumn
 		builder.append(", ");
 		builder.append(Options.QUOTE).append("field").append(Options.QUOTE).append(": ").append(Options.QUOTE).append(this.getField()).append(Options.QUOTE);
 
+		if (this.getWidth() > 0)
+		{
+			builder.append(", ");
+			builder.append(Options.QUOTE).append("width").append(Options.QUOTE).append(": ").append(this.getWidth());
+		}
+
+		// nullable options (string) //
+
 		if (this.getFormat() != null)
 		{
 			builder.append(", ");
 			builder.append(Options.QUOTE).append("format").append(Options.QUOTE).append(": ").append(Options.QUOTE).append(this.getFormat()).append(Options.QUOTE);
 		}
 
-		if (this.getWidth() > 0)
+		if (this.getGroupHeaderTemplate() != null)
 		{
 			builder.append(", ");
-			builder.append(Options.QUOTE).append("width").append(Options.QUOTE).append(": ").append(this.getWidth());
+			builder.append(Options.QUOTE).append("groupHeaderTemplate").append(Options.QUOTE).append(": ").append(Options.QUOTE).append(this.getGroupHeaderTemplate()).append(Options.QUOTE);
+		}
+
+		if (this.getGroupFooterTemplate() != null)
+		{
+			builder.append(", ");
+			builder.append(Options.QUOTE).append("groupFooterTemplate").append(Options.QUOTE).append(": ").append(Options.QUOTE).append(this.getGroupFooterTemplate()).append(Options.QUOTE);
+		}
+
+		// nullable options (object) //
+
+		if (this.getMenu() != null)
+		{
+			builder.append(", ");
+			builder.append(Options.QUOTE).append("menu").append(Options.QUOTE).append(": ").append(this.getMenu());
+		}
+
+		if (this.getAggregates() != null)
+		{
+			builder.append(", ");
+			builder.append(Options.QUOTE).append("aggregates").append(Options.QUOTE).append(": ").append(this.getAggregatesAsString());
+		}
+
+		if (this.getFilterable() != null)
+		{
+			builder.append(", ");
+			builder.append(Options.QUOTE).append("filterable").append(Options.QUOTE).append(": ").append(this.getFilterable());
 		}
 
 		return builder.toString();

@@ -30,6 +30,7 @@ import com.googlecode.wicket.jquery.core.IJQueryWidget;
 import com.googlecode.wicket.jquery.core.JQueryBehavior;
 import com.googlecode.wicket.jquery.core.Options;
 import com.googlecode.wicket.jquery.core.ajax.IJQueryAjaxAware;
+import com.googlecode.wicket.kendo.ui.KendoBehaviorFactory;
 import com.googlecode.wicket.kendo.ui.datatable.ButtonAjaxBehavior.ClickEvent;
 import com.googlecode.wicket.kendo.ui.datatable.column.IColumn;
 
@@ -84,6 +85,31 @@ public class DataTable<T> extends WebComponent implements IJQueryWidget, IDataTa
 	}
 
 	// Methods //
+
+	/**
+	 * Shows the {@link DataTable}
+	 *
+	 * @param target the {@link AjaxRequestTarget}
+	 */
+	public final void show(AjaxRequestTarget target)
+	{
+		this.onShow(target);
+
+		KendoBehaviorFactory.show(target, this);
+	}
+
+	/**
+	 * Hides the {@link DataTable}
+	 *
+	 * @param target the {@link AjaxRequestTarget}
+	 */
+	public final void hide(AjaxRequestTarget target)
+	{
+		KendoBehaviorFactory.hide(target, this);
+
+		this.onHide(target);
+	}
+
 	/**
 	 * Reloads data and refreshes the {@link DataTable}
 	 *
@@ -128,6 +154,26 @@ public class DataTable<T> extends WebComponent implements IJQueryWidget, IDataTa
 		this.replaceComponentTagBody(markupStream, openTag, ""); // Empty tag body; Fixes #45
 	}
 
+	/**
+	 * Triggered when the {@link DataTable} shows
+	 *
+	 * @param target the {@link AjaxRequestTarget}
+	 */
+	public void onShow(AjaxRequestTarget target)
+	{
+		// noop
+	}
+
+	/**
+	 * Triggered when the {@link DataTable} hides
+	 *
+	 * @param target the {@link AjaxRequestTarget}
+	 */
+	public void onHide(AjaxRequestTarget target)
+	{
+		// noop
+	}
+
 	@Override
 	public void onClick(AjaxRequestTarget target, ColumnButton button, String value)
 	{
@@ -135,6 +181,7 @@ public class DataTable<T> extends WebComponent implements IJQueryWidget, IDataTa
 	}
 
 	// IJQueryWidget //
+
 	@Override
 	public JQueryBehavior newWidgetBehavior(String selector)
 	{

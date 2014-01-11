@@ -120,7 +120,7 @@ class DataSourceBehavior<T> extends AbstractDefaultAjaxBehavior
 			@Override
 			public void detach(final IRequestCycle requestCycle)
 			{
-				// noop
+				provider.detach();
 			}
 		};
 	}
