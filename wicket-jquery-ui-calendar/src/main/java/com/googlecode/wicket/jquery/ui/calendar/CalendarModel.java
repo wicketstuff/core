@@ -45,7 +45,7 @@ public abstract class CalendarModel extends LoadableDetachableModel<List<? exten
 	}
 
 	/**
-	 * Gets the start date, to be used to {@link #load()} {@link CalendarEvent}<code>s</code>
+	 * Gets the start date, used to {@link #load()} {@link CalendarEvent}<code>s</code>
 	 * @return the start date
 	 */
 	public Date getStart()
@@ -54,8 +54,7 @@ public abstract class CalendarModel extends LoadableDetachableModel<List<? exten
 	}
 
 	/**
-	 * Sets the start date.<br/>
-	 * This method has package visibility, it is only called by {@link CalendarModelBehavior}
+	 * Sets the start date.
 	 * @param date the start date
 	 */
 	public void setStart(Date date)
@@ -64,7 +63,7 @@ public abstract class CalendarModel extends LoadableDetachableModel<List<? exten
 	}
 
 	/**
-	 * Gets the end date, to be used to {@link #load()} {@link CalendarEvent}<code>s</code>
+	 * Gets the end date, used to {@link #load()} {@link CalendarEvent}<code>s</code>
 	 * @return the start date
 	 */
 	public Date getEnd()
@@ -73,8 +72,7 @@ public abstract class CalendarModel extends LoadableDetachableModel<List<? exten
 	}
 
 	/**
-	 * Gets the end date.<br/>
-	 * This method has package visibility, it is only called by {@link CalendarModelBehavior}
+	 * Gets the end date.
 	 * @param date the start date
 	 */
 	public void setEnd(Date date)
