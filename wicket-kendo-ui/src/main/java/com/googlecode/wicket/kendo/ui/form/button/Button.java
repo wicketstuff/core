@@ -21,6 +21,7 @@ import org.apache.wicket.model.IModel;
 import com.googlecode.wicket.jquery.core.IJQueryWidget;
 import com.googlecode.wicket.jquery.core.JQueryBehavior;
 import com.googlecode.wicket.jquery.core.Options;
+import com.googlecode.wicket.kendo.ui.KendoAbstractBehavior;
 import com.googlecode.wicket.kendo.ui.KendoIcon;
 
 /**
@@ -102,7 +103,7 @@ public class Button extends org.apache.wicket.markup.html.form.Button  implement
 	/**
 	 * Provides a jQuery button {@link JQueryBehavior}
 	 */
-	public static class ButtonBehavior extends JQueryBehavior
+	public static class ButtonBehavior extends KendoAbstractBehavior
 	{
 		private static final long serialVersionUID = 1L;
 		private static final String METHOD = "kendoButton";
