@@ -17,9 +17,6 @@
 package com.googlecode.wicket.jquery.ui.plugins.wysiwyg;
 
 import org.apache.wicket.Application;
-import org.apache.wicket.markup.html.IPackageResourceGuard;
-import org.apache.wicket.markup.html.SecurePackageResourceGuard;
-import org.apache.wicket.markup.html.SecurePackageResourceGuard.SearchPattern;
 import org.apache.wicket.settings.IJavaScriptLibrarySettings;
 
 import com.googlecode.wicket.jquery.core.JQueryBehavior;
@@ -65,19 +62,6 @@ public class WysiwygBehavior extends JQueryBehavior
 	public WysiwygBehavior(String selector, Options options)
 	{
 		super(selector, METHOD, options);
-
-		IPackageResourceGuard packageResourceGuard = Application.get().getResourceSettings().getPackageResourceGuard();
-
-		if (packageResourceGuard instanceof SecurePackageResourceGuard)
-		{
-			SecurePackageResourceGuard guard = (SecurePackageResourceGuard) packageResourceGuard;
-			if (!guard.getPattern().contains(new SearchPattern("+*.eot")))
-			{
-				guard.addPattern("+*.eot");
-				guard.addPattern("+*.woff");
-				guard.addPattern("+*.ttf");
-			}
-		}
 
 		this.initReferences();
 	}
