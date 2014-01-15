@@ -13,7 +13,7 @@ class SessionData {
 	/**
 	 * The session identifier
 	 */
-	final String sessionId;
+	private final String sessionId;
 
 	/**
 	 * An ordered collection of used pages in this session
@@ -23,7 +23,7 @@ class SessionData {
 	/**
 	 * The total size of the session (a sum of the sizes of all pages)
 	 */
-	volatile long size;
+	long size;
 
 	/**
 	 * Constructor.
