@@ -112,6 +112,37 @@ public class SessionQuotaManagingDataStoreTest extends Assert {
 		assertEquals(pageId2, sessionData.pages.element().pageId);
 	}
 
+	/**
+	 * Tests that storing a page with id that already exists will override
+	 * the older entry
+	 *
+	 * @throws Exception
+	 */
+	@Test
+	public void storeDataSamePageTwice() throws Exception {
+		byte[] pageData1_2 = new byte[] { 1 };
+		Bytes maxSizePerSession = Bytes.bytes(pageData1.length + pageData1_2.length + 1);
+		SessionQuotaManagingDataStore manager = new SessionQuotaManagingDataStore(delegate, maxSizePerSession);
+
+		assertEquals(0, manager.pagesPerSession.size());
+
+		manager.storeData(sessionId, pageId1, pageData1);
+		assertEquals(1, manager.pagesPerSession.size());
+
+		SessionData sessionData = manager.pagesPerSession.get(sessionId);
+
+		assertEquals(1, sessionData.pages.size());
+		assertEquals(pageId1, sessionData.pages.element().pageId);
+		assertEquals(pageData1.length, sessionData.size);
+
+		manager.storeData(sessionId, pageId1, pageData1_2);
+		assertEquals(1, manager.pagesPerSession.size());
+
+		assertEquals(1, sessionData.pages.size());
+		assertEquals(pageId1, sessionData.pages.element().pageId);
+		assertEquals(pageData1_2.length, sessionData.size);
+	}
+
 	@Test
 	public void removePage() throws Exception {
 		Bytes maxSizePerSession = Bytes.bytes(pageData1.length + pageData2.length + 1);

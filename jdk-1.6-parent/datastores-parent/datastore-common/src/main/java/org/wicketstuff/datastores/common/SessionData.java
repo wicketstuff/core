@@ -42,6 +42,7 @@ class SessionData {
 	synchronized void addPage(PageData page) {
 		Args.notNull(page, "page");
 
+		removePage(page.pageId);
 		pages.add(page);
 		size += page.size;
 	}
