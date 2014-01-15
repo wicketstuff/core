@@ -153,8 +153,10 @@ public class MemcachedDataStore implements IDataStore {
 			removeKey(sessionId, key);
 		}
 
-		LOG.debug("Got {} for session '{}' and page id '{}'",
-				new Object[] {bytes != null ? "data" : "'null'", sessionId, pageId});
+		if (LOG.isDebugEnabled()) {
+			LOG.debug("Got {} for session '{}' and page id '{}'",
+					new Object[] {bytes != null ? "data" : "'null'", sessionId, pageId});
+		}
 		return bytes;
 	}
 
