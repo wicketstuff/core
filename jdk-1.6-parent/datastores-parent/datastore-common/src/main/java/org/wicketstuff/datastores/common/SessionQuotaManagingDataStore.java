@@ -59,8 +59,14 @@ public class SessionQuotaManagingDataStore implements IDataStore {
 
 	@Override
 	public void removeData(String sessionId) {
-		delegate.removeData(sessionId);
-		pagesPerSession.remove(sessionId);
+		SessionData sessionData = pagesPerSession.get(sessionId);
+
+		if (sessionData != null) {
+			synchronized (sessionData) {
+				delegate.removeData(sessionId);
+				pagesPerSession.remove(sessionId);
+			}
+		}
 	}
 
 	@Override
@@ -83,40 +89,28 @@ public class SessionQuotaManagingDataStore implements IDataStore {
 			delegate.removeData(sessionId, removedPageId);
 		}
 
-		delegate.storeData(sessionId, pageId, data);
+		synchronized (sessionData) {
+			delegate.storeData(sessionId, pageId, data);
 
-		PageData page = new PageData(pageId, pageSize);
-		sessionData.addPage(page);
-	}
-
-	/**
-	 * Determines whether the data for older page in the session should
-	 * be removed because the quota has reached.
-	 *
-	 * @param sessionData  The data for the current session (size, pages)
-	 * @param pageSize     The size of the page that will be stored.
-	 * @return {@code true} if adding the new page will exceed the quota.
-	 *          {@code false} if there is enough space to add the new page
-	 *          or if there are no other pages in the session data, i.e. a
-	 *          single very big page should be stored
-	 */
-	protected boolean shouldRemove(SessionData sessionData, int pageSize) {
-		return sessionData.pages.size() > 0 && // allow a single page with size bigger than maxSizePerSession
-				!maxSizePerSession.greaterThan(sessionData.size + pageSize);
+			PageData page = new PageData(pageId, pageSize);
+			sessionData.addPage(page);
+		}
 	}
 
 	@Override
 	public void removeData(String sessionId, int pageId) {
 
-		delegate.removeData(sessionId, pageId);
-
 		SessionData sessionData = pagesPerSession.get(sessionId);
 
 		if (sessionData != null) {
-			sessionData.removePage(pageId);
+			synchronized (sessionData) {
+				delegate.removeData(sessionId, pageId);
 
-			if (sessionData.pages.isEmpty()) {
-				pagesPerSession.remove(sessionId);
+				sessionData.removePage(pageId);
+
+				if (sessionData.pages.isEmpty()) {
+					pagesPerSession.remove(sessionId);
+				}
 			}
 		}
 	}
