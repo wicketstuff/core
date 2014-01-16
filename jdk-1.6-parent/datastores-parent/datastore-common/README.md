@@ -1,4 +1,4 @@
-wicket-memcached-data-store
+wicketstuff-datastore-hazelcast
 ===========================
 
-IDataStore based on Memcached
+Apache Wicket IDataStore implementation that stores the data in Hazelcast
