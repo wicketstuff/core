@@ -1,4 +1,4 @@
-wicket-memcached-data-store
-===========================
+wicketstuff-datastore-memcached
+===============================
 
-IDataStore based on Memcached
+This project provides an org.apache.wicket.pageStore.IDataStore implementation that writes pages to Memcached.
