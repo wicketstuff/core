@@ -129,6 +129,7 @@ public abstract class DataTableBehavior extends KendoAbstractBehavior implements
 		source.set("pageSize", this.getRowCount());
 		source.set("serverPaging", true);
 		source.set("serverSorting", true);
+		source.set("serverFiltering", true);
 		source.set("transport", String.format("{ \"read\": \"%s\" }", this.getSourceCallbackUrl()));
 		source.set("schema", "{ \"data\": \"results\", \"total\": \"__count\" }");
 
