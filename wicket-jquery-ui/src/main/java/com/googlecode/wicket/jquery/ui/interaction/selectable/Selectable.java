@@ -34,41 +34,43 @@ import com.googlecode.wicket.jquery.ui.interaction.draggable.Draggable;
  * Provides a jQuery UI selectable {@link JQueryContainer}.<br/>
  * Children of that container can be selected using the mouse or by pressing ctrl+click<br/>
  * Usage:
+ * 
  * <pre>
  * &lt;ul wicket:id="selectable"&gt;
  * 	&lt;li wicket:id="items"&gt;
  * 		&lt;span wicket:id="item"&gt;[label]&lt;/span&gt;
  * 	&lt;/li&gt;
  * &lt;/ul&gt;
- *
- *
+ * 
+ * 
  * final Selectable&lt;String&gt; selectable = new Selectable&lt;String&gt;("selectable", list) {
- *
+ * 
  * 	protected void onSelect(AjaxRequestTarget target, List&lt;String&gt; items)
  * 	{
  * 		//items: gets the selected item
  * 	}
  * };
- *
+ * 
  * this.add(selectable);
- *
+ * 
  * // ... //
- *
+ * 
  * //selectable.getSelectedItems(): gets the selected items
  * </pre>
- *
+ * 
  * @param <T> the type of the model object
  * @author Sebastien Briquet - sebfz1
- *
+ * 
  */
 public class Selectable<T extends Serializable> extends JQueryContainer implements ISelectableListener<T>
 {
 	private static final long serialVersionUID = 1L;
 
-	private List<T> items = null; //selected items
+	private List<T> items = null; // selected items
 
 	/**
 	 * Constructor
+	 * 
 	 * @param id the markup id
 	 * @param list the list the {@link Selectable} should observe.
 	 */
@@ -79,6 +81,7 @@ public class Selectable<T extends Serializable> extends JQueryContainer implemen
 
 	/**
 	 * Constructor
+	 * 
 	 * @param id the markup id
 	 * @param model the list the {@link Selectable} should observe.
 	 */
@@ -87,7 +90,8 @@ public class Selectable<T extends Serializable> extends JQueryContainer implemen
 		super(id, model);
 	}
 
-	// Getters //
+	// Properties //
+	
 	@SuppressWarnings("unchecked")
 	public List<T> getModelObject()
 	{
@@ -97,7 +101,7 @@ public class Selectable<T extends Serializable> extends JQueryContainer implemen
 	/**
 	 * Gets the selector that identifies the selectable item within a {@link Selectable}<br/>
 	 * The selector should be the path from the {@link Selectable} to the item (for instance '#myUL LI', where '#myUL' is the {@link Selectable}'s selector)
-	 *
+	 * 
 	 * @return "li" by default
 	 */
 	protected String getItemSelector()
@@ -107,6 +111,7 @@ public class Selectable<T extends Serializable> extends JQueryContainer implemen
 
 	/**
 	 * Gets the selected items
+	 * 
 	 * @return selected items
 	 */
 	public List<T> getSelectedItems()
@@ -119,10 +124,16 @@ public class Selectable<T extends Serializable> extends JQueryContainer implemen
 		return Collections.emptyList();
 	}
 
+	public void setSelectedItems(List<T> items)
+	{
+		this.items = items;
+	}
+
 	// Events //
+
 	/**
 	 * Triggered when a selection has been made (stops)
-	 *
+	 * 
 	 * @param target the {@link AjaxRequestTarget}
 	 * @param items the {@link List} of selected items
 	 */
@@ -133,6 +144,7 @@ public class Selectable<T extends Serializable> extends JQueryContainer implemen
 	}
 
 	// IJQueryWidget //
+	
 	@Override
 	public JQueryBehavior newWidgetBehavior(String selector)
 	{
@@ -155,18 +167,18 @@ public class Selectable<T extends Serializable> extends JQueryContainer implemen
 			@Override
 			public void onSelect(AjaxRequestTarget target, List<T> items)
 			{
-				Selectable.this.items = items;
+				Selectable.this.setSelectedItems(items);
 				Selectable.this.onSelect(target, items);
 			}
-
 		};
 	}
 
 	// DraggableFactory methods //
+
 	/**
 	 * Creates a {@link Draggable} object that is related to this {@link Selectable}.<br/>
 	 * Uses a default factory that will create a {@link Draggable} with a <code>ui-icon-arrow-4-diag</code> icon
-	 *
+	 * 
 	 * @param id the markup id
 	 * @return the {@link Draggable}
 	 */
@@ -177,17 +189,18 @@ public class Selectable<T extends Serializable> extends JQueryContainer implemen
 
 	/**
 	 * Creates a {@link Draggable} object that is related to this {@link Selectable}
-	 *
+	 * 
 	 * @param id the markup id
 	 * @param factory the {@link SelectableDraggableFactory} instance
 	 * @return the {@link Draggable}
 	 */
 	public Draggable<?> createDraggable(String id, SelectableDraggableFactory factory)
 	{
-		return factory.create(id, JQueryWidget.getSelector(this)); //let throw a NPE if no factory is defined
+		return factory.create(id, JQueryWidget.getSelector(this)); // let throw a NPE if no factory is defined
 	}
 
 	// Default Draggable Factory //
+	
 	/**
 	 * Default {@link SelectableDraggableFactory} implementation which will create a {@link Draggable} with a {@link JQueryIcon#ARROW_4_DIAG} icon
 	 */
