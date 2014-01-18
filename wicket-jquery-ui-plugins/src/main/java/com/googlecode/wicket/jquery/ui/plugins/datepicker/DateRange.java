@@ -16,22 +16,29 @@
  */
 package com.googlecode.wicket.jquery.ui.plugins.datepicker;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.TimeZone;
 
 import org.apache.wicket.util.io.IClusterable;
 
 /**
- * Provides the value type to be used as model object for {@link RangeDatePicker} and {@link RangeDatePickerTextField}
+ * Provides the value type to be used as model object for {@link RangeDatePicker} and {@link RangeDatePickerTextField}<br/>
+ * <br/>
+ * <tt>start</tt> and <tt>end</tt> dates are UTC based, the JSON array ({@link #toString()}) is timezone agnostic
  *
  * @author Sebastien Briquet - sebfz1
  */
 public class DateRange implements IClusterable
 {
 	private static final long serialVersionUID = 1L;
+	
+	public static final TimeZone UTC = TimeZone.getTimeZone("UTC");
 
 	/**
-	 * Gets a default {@link DateRange} with start-date and end-date are set to today.
+	 * Gets a default {@link DateRange} with start-date and end-date are set to today (UTC).
 	 *
 	 * @return the {@link DateRange}
 	 */
@@ -41,6 +48,7 @@ public class DateRange implements IClusterable
 
 		Calendar start = Calendar.getInstance();
 		start.setTime(date);
+		start.setTimeZone(UTC);
 		start.set(Calendar.HOUR_OF_DAY, 0);
 		start.set(Calendar.MINUTE, 0);
 		start.set(Calendar.SECOND, 0);
@@ -48,6 +56,7 @@ public class DateRange implements IClusterable
 
 		Calendar end = Calendar.getInstance();
 		end.setTime(date);
+		end.setTimeZone(UTC);
 		end.set(Calendar.HOUR_OF_DAY, 23);
 		end.set(Calendar.MINUTE, 59);
 		end.set(Calendar.SECOND, 59);
@@ -109,5 +118,14 @@ public class DateRange implements IClusterable
 	public void setEnd(Date date)
 	{
 		this.end = date;
+	}
+	
+	@Override
+	public String toString()
+	{
+		DateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss"); // ISO8601, no time zone
+		df.setTimeZone(UTC);
+		
+		return String.format("[new Date('%s'),new Date('%s')]", df.format(this.getStart()), df.format(this.getEnd()));
 	}
 }

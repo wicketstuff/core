@@ -86,8 +86,8 @@ public abstract class RangeDatePickerBehavior extends JQueryBehavior implements 
 		}
 	}
 
-
 	// Factories //
+
 	/**
 	 * Gets a new {@link JQueryAjaxBehavior} that acts as the 'change' javascript callback
 	 * @return the {@link JQueryAjaxBehavior}
@@ -105,8 +105,10 @@ public abstract class RangeDatePickerBehavior extends JQueryBehavior implements 
 				return new CallbackParameter[] {
 						CallbackParameter.context("dates"),
 						CallbackParameter.context("el"),
-						CallbackParameter.resolved("start", "dates[0].getTime()"),
-						CallbackParameter.resolved("end", "dates[1].getTime()")
+						CallbackParameter.resolved("startTime", "dates[0].getTime()"),
+						CallbackParameter.resolved("startOffset", "dates[0].getTimezoneOffset()"), /* offset from UTC in minutes */
+						CallbackParameter.resolved("endTime", "dates[1].getTime()"),
+						CallbackParameter.resolved("endOffset", "dates[1].getTimezoneOffset()") /* offset from UTC in minutes */
 				};
 			}
 
@@ -119,8 +121,12 @@ public abstract class RangeDatePickerBehavior extends JQueryBehavior implements 
 	}
 
 	// Event class //
+
 	/**
-	 * Provides an event object that will be broadcasted by the {@link JQueryAjaxBehavior} 'change' callback
+	 * Provides an event object that will be broadcasted by the {@link JQueryAjaxBehavior} 'change' callback<br/>
+	 * <br/>
+	 * <b>Note</b>: The <tt>start</tt> and <tt>end</tt> dates will be translated to GMT.<br/>
+	 * ie: if the behavior receives 10/10/2010 0:00:00 CET, it will be translated to 10/10/2010 0:00:00 UTC 
 	 */
 	protected static class DateChangeEvent extends JQueryEvent
 	{
@@ -129,11 +135,13 @@ public abstract class RangeDatePickerBehavior extends JQueryBehavior implements 
 
 		public DateChangeEvent()
 		{
-			long start = RequestCycleUtils.getQueryParameterValue("start").toLong();
-			this.start = new Date(start);
+			long startTime = RequestCycleUtils.getQueryParameterValue("startTime").toLong();
+			int startOffset = RequestCycleUtils.getQueryParameterValue("startOffset").toInt(0) * 60 * 1000; // minutes to milliseconds
+			this.start = new Date(startTime - startOffset);
 
-			long end = RequestCycleUtils.getQueryParameterValue("end").toLong();
-			this.end = new Date(end);
+			long endTime = RequestCycleUtils.getQueryParameterValue("endTime").toLong();
+			int endOffset = RequestCycleUtils.getQueryParameterValue("endOffset").toInt(0) * 60 * 1000; // minutes to milliseconds
+			this.end = new Date(endTime - endOffset);
 		}
 
 		/**
