@@ -6,11 +6,10 @@ import java.util.List;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.repeater.data.IDataProvider;
-import org.apache.wicket.markup.repeater.data.ListDataProvider;
 
 import com.googlecode.wicket.jquery.core.Options;
 import com.googlecode.wicket.jquery.ui.samples.data.bean.Product;
-import com.googlecode.wicket.jquery.ui.samples.data.dao.ProductsDAO;
+import com.googlecode.wicket.jquery.ui.samples.data.provider.ProductDataProvider;
 import com.googlecode.wicket.kendo.ui.datatable.DataTable;
 import com.googlecode.wicket.kendo.ui.datatable.column.IColumn;
 import com.googlecode.wicket.kendo.ui.datatable.column.PropertyColumn;
@@ -53,7 +52,7 @@ public class DefaultDataTablePage extends AbstractDataTablePage
 
 	private static IDataProvider<Product> newDataProvider()
 	{
-		return new ListDataProvider<Product>(ProductsDAO.all());
+		return new ProductDataProvider();
 	}
 
 	private static List<IColumn> newColumnList()
