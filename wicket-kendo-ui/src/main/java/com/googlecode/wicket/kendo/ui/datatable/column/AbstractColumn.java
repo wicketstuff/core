@@ -141,11 +141,16 @@ public abstract class AbstractColumn implements IColumn
 	{
 		return this.field;
 	}
-
+	
 	@Override
 	public int getWidth()
 	{
 		return this.width;
+	}
+
+	public boolean isVisible()
+	{
+		return true;
 	}
 
 	@Override
@@ -209,6 +214,9 @@ public abstract class AbstractColumn implements IColumn
 		builder.append(Options.QUOTE).append("title").append(Options.QUOTE).append(": ").append(Options.QUOTE).append(this.getTitle()).append(Options.QUOTE);
 		builder.append(", ");
 		builder.append(Options.QUOTE).append("field").append(Options.QUOTE).append(": ").append(Options.QUOTE).append(this.getField()).append(Options.QUOTE);
+
+		builder.append(", ");
+		builder.append(Options.QUOTE).append("hidden").append(Options.QUOTE).append(": ").append(!this.isVisible());
 
 		if (this.getWidth() > 0)
 		{

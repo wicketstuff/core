@@ -110,7 +110,7 @@ class DataSourceBehavior<T> extends AbstractDefaultAjaxBehavior
 			String logicPattern = "filter[logic]";
 			@SuppressWarnings("unused")
 			String operatorPattern = "filter[filters][%d][operator]";
-			// TODO: create FilterStateWrapper class (for logic & operator)
+			// TODO: implement logic & operator (new IFilterStateLocator interface?)
 
 			@SuppressWarnings("unchecked")
 			T object = ((IFilterStateLocator<T>) this.provider).getFilterState();
