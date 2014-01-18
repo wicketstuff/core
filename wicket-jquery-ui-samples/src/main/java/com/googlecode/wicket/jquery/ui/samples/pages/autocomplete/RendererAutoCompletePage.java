@@ -12,8 +12,8 @@ import org.apache.wicket.model.Model;
 import com.googlecode.wicket.jquery.core.renderer.TextRenderer;
 import com.googlecode.wicket.jquery.ui.form.autocomplete.AutoCompleteTextField;
 import com.googlecode.wicket.jquery.ui.panel.JQueryFeedbackPanel;
-import com.googlecode.wicket.jquery.ui.samples.data.GenresDAO;
 import com.googlecode.wicket.jquery.ui.samples.data.bean.Genre;
+import com.googlecode.wicket.jquery.ui.samples.data.dao.GenresDAO;
 
 public class RendererAutoCompletePage extends AbstractAutoCompletePage
 {

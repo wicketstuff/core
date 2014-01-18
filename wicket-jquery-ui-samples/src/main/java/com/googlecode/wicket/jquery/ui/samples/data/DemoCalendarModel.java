@@ -6,6 +6,7 @@ import java.util.List;
 import com.googlecode.wicket.jquery.ui.calendar.CalendarEvent;
 import com.googlecode.wicket.jquery.ui.calendar.CalendarModel;
 import com.googlecode.wicket.jquery.ui.calendar.ICalendarVisitor;
+import com.googlecode.wicket.jquery.ui.samples.data.dao.CalendarDAO;
 
 public class DemoCalendarModel extends CalendarModel implements ICalendarVisitor
 {
@@ -17,7 +18,7 @@ public class DemoCalendarModel extends CalendarModel implements ICalendarVisitor
 		 Date start = this.getStart();
 		 Date end = this.getEnd();
 		
-		return DemoCalendarDAO.getEvents(start, end);
+		return CalendarDAO.getEvents(start, end);
 	}
 
 	// ICalendarVisitor //

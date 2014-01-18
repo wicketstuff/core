@@ -13,8 +13,8 @@ import org.apache.wicket.model.PropertyModel;
 
 import com.googlecode.wicket.jquery.ui.form.autocomplete.AutoCompleteTextField;
 import com.googlecode.wicket.jquery.ui.form.autocomplete.AutoCompleteUtils;
-import com.googlecode.wicket.jquery.ui.samples.data.GenresDAO;
 import com.googlecode.wicket.jquery.ui.samples.data.bean.Genre;
+import com.googlecode.wicket.jquery.ui.samples.data.dao.GenresDAO;
 
 public class CustomAutoCompletePage extends AbstractAutoCompletePage
 {

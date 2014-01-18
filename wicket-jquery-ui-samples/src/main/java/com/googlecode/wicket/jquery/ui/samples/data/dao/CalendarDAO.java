@@ -1,23 +1,24 @@
-package com.googlecode.wicket.jquery.ui.samples.data;
+package com.googlecode.wicket.jquery.ui.samples.data.dao;
 
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import com.googlecode.wicket.jquery.ui.samples.data.DemoCalendarEvent;
 import com.googlecode.wicket.jquery.ui.samples.data.DemoCalendarEvent.Category;
 
-public class DemoCalendarDAO
+public class CalendarDAO
 {
-	private static DemoCalendarDAO instance = null;
+	private static CalendarDAO instance = null;
 
 	/** new event id */
 	private static int ID = -1;
 
-	private static synchronized DemoCalendarDAO get()
+	private static synchronized CalendarDAO get()
 	{
 		if (instance == null)
 		{
-			instance = new DemoCalendarDAO();
+			instance = new CalendarDAO();
 		}
 
 		return instance;
@@ -55,7 +56,7 @@ public class DemoCalendarDAO
 	{
 		List<DemoCalendarEvent> events = new ArrayList<DemoCalendarEvent>();
 
-		DemoCalendarDAO dao = get();
+		CalendarDAO dao = get();
 
 		for (DemoCalendarEvent event : dao.list)
 		{
@@ -84,7 +85,7 @@ public class DemoCalendarDAO
 	private final List<DemoCalendarEvent> list;
 	private int id = 0;
 
-	public DemoCalendarDAO()
+	public CalendarDAO()
 	{
 		this.list = new ArrayList<DemoCalendarEvent>();
 		this.initList();

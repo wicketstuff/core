@@ -11,8 +11,8 @@ import org.apache.wicket.markup.repeater.data.ListDataProvider;
 
 import com.googlecode.wicket.jquery.core.Options;
 import com.googlecode.wicket.jquery.ui.panel.JQueryFeedbackPanel;
-import com.googlecode.wicket.jquery.ui.samples.data.ProductsDAO;
 import com.googlecode.wicket.jquery.ui.samples.data.bean.Product;
+import com.googlecode.wicket.jquery.ui.samples.data.dao.ProductsDAO;
 import com.googlecode.wicket.kendo.ui.datatable.ColumnButton;
 import com.googlecode.wicket.kendo.ui.datatable.DataTable;
 import com.googlecode.wicket.kendo.ui.datatable.column.CommandsColumn;

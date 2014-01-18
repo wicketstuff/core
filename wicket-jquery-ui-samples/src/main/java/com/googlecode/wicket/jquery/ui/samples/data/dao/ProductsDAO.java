@@ -1,4 +1,4 @@
-package com.googlecode.wicket.jquery.ui.samples.data;
+package com.googlecode.wicket.jquery.ui.samples.data.dao;
 
 import java.util.ArrayList;
 import java.util.List;

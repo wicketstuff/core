@@ -16,8 +16,8 @@ import com.googlecode.wicket.jquery.ui.interaction.droppable.Droppable;
 import com.googlecode.wicket.jquery.ui.interaction.selectable.Selectable;
 import com.googlecode.wicket.jquery.ui.interaction.selectable.SelectableDraggableFactory;
 import com.googlecode.wicket.jquery.ui.panel.JQueryFeedbackPanel;
-import com.googlecode.wicket.jquery.ui.samples.data.GenresDAO;
 import com.googlecode.wicket.jquery.ui.samples.data.bean.Genre;
+import com.googlecode.wicket.jquery.ui.samples.data.dao.GenresDAO;
 
 public class TableDraggableSelectablePage extends AbstractSelectablePage
 {

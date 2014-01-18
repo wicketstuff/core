@@ -11,9 +11,9 @@ import com.googlecode.wicket.jquery.ui.calendar.Calendar;
 import com.googlecode.wicket.jquery.ui.calendar.CalendarView;
 import com.googlecode.wicket.jquery.ui.panel.JQueryFeedbackPanel;
 import com.googlecode.wicket.jquery.ui.samples.component.DemoCalendarDialog;
-import com.googlecode.wicket.jquery.ui.samples.data.DemoCalendarDAO;
 import com.googlecode.wicket.jquery.ui.samples.data.DemoCalendarEvent;
 import com.googlecode.wicket.jquery.ui.samples.data.DemoCalendarModel;
+import com.googlecode.wicket.jquery.ui.samples.data.dao.CalendarDAO;
 
 public class ExtendedCalendarPage extends AbstractCalendarPage
 {
@@ -47,9 +47,9 @@ public class ExtendedCalendarPage extends AbstractCalendarPage
 				DemoCalendarEvent event = this.getModelObject();
 
 				// new event //
-				if (DemoCalendarDAO.isNew(event))
+				if (CalendarDAO.isNew(event))
 				{
-					DemoCalendarDAO.addEvent(event);
+					CalendarDAO.addEvent(event);
 				}
 
 				calendar.refresh(target); //use calendar.refresh(target) instead of target.add(calendar)
@@ -100,7 +100,7 @@ public class ExtendedCalendarPage extends AbstractCalendarPage
 			@Override
 			public void onDayClick(AjaxRequestTarget target, CalendarView view, Date date, boolean allDay)
 			{
-				DemoCalendarEvent event = DemoCalendarDAO.newEvent(date);
+				DemoCalendarEvent event = CalendarDAO.newEvent(date);
 
 				dialog.setModelObject(event);
 				dialog.open(target);
@@ -109,7 +109,7 @@ public class ExtendedCalendarPage extends AbstractCalendarPage
 			@Override
 			public void onSelect(AjaxRequestTarget target, CalendarView view, Date start, Date end, boolean allDay)
 			{
-				DemoCalendarEvent event = DemoCalendarDAO.newEvent(start, end);
+				DemoCalendarEvent event = CalendarDAO.newEvent(start, end);
 				event.setAllDay(allDay);
 
 				dialog.setModelObject(event);
@@ -119,7 +119,7 @@ public class ExtendedCalendarPage extends AbstractCalendarPage
 			@Override
 			public void onEventClick(AjaxRequestTarget target, CalendarView view, int eventId)
 			{
-				DemoCalendarEvent event = DemoCalendarDAO.getEvent(eventId);
+				DemoCalendarEvent event = CalendarDAO.getEvent(eventId);
 
 				if (event != null)
 				{
@@ -131,7 +131,7 @@ public class ExtendedCalendarPage extends AbstractCalendarPage
 			@Override
 			public void onEventDrop(AjaxRequestTarget target, int eventId, long delta, boolean allDay)
 			{
-				DemoCalendarEvent event = DemoCalendarDAO.getEvent(eventId);
+				DemoCalendarEvent event = CalendarDAO.getEvent(eventId);
 
 				if (event != null)
 				{
@@ -147,7 +147,7 @@ public class ExtendedCalendarPage extends AbstractCalendarPage
 			@Override
 			public void onEventResize(AjaxRequestTarget target, int eventId, long delta)
 			{
-				DemoCalendarEvent event = DemoCalendarDAO.getEvent(eventId);
+				DemoCalendarEvent event = CalendarDAO.getEvent(eventId);
 
 				if (event != null)
 				{
