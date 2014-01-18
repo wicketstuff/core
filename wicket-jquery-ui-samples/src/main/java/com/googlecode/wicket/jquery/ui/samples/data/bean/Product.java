@@ -15,11 +15,16 @@ public class Product implements IClusterable
 
 	public Product(final int id, final String name, final String description, final double price)
 	{
+		this(id, name, description, price, new Vendor());
+	}
+
+	public Product(final int id, final String name, final String description, final double price, Vendor vendor)
+	{
 		this.id = id;
 		this.name = name;
 		this.desc = description;
 		this.price = price;
-		this.vendor = new Vendor();
+		this.vendor = vendor;
 	}
 
 	public int getId()
@@ -53,7 +58,7 @@ public class Product implements IClusterable
 		return this.name;
 	}
 
-	public class Vendor implements IClusterable
+	public static class Vendor implements IClusterable
 	{
 		private static final long serialVersionUID = 1L;
 

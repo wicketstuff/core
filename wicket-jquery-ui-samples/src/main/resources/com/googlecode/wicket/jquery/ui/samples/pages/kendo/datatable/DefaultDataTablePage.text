@@ -1,3 +1,9 @@
+This sample shows some of the Kendo UI's grid capabilities, you can for instance sort and/or group columns.<br/>
+<br/>
+<b>Note 1:</b> The sort is performed server side if the <tt>IDataProvider</tt> implements <tt>ISortStateLocator&lt;String&gt;</tt><br/>
+<b>Note 2:</b> At this stage, the grouping is performed client side. That means that only data on the current page are grouped.<br/>
+
+<br/>
 <h4>Licensing</h4>
 Kendo UI is licensed under GPLv3, which is compatible with Apache License 2.0<br/>
 <br/>

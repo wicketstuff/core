@@ -31,10 +31,12 @@ public class DefaultDataTablePage extends AbstractDataTablePage
 
 		Options options = new Options();
 		options.set("height", 430);
-		options.set("pageable", "{ pageSizes: [ 10, 20, 30 ] }");
+		options.set("pageable", "{ pageSizes: [ 25, 50, 100 ] }");
 		options.set("sortable", true);
+		options.set("groupable", true);
+		options.set("columnMenu", true);
 
-		final DataTable<Product> table = new DataTable<Product>("datatable", columns, provider, 20, options);
+		final DataTable<Product> table = new DataTable<Product>("datatable", columns, provider, 25, options);
 		form.add(table);
 
 		// Button //
@@ -59,11 +61,11 @@ public class DefaultDataTablePage extends AbstractDataTablePage
 	{
 		List<IColumn> columns = new ArrayList<IColumn>();
 
-		columns.add(new PropertyColumn("ID", "id", 30));
+		columns.add(new PropertyColumn("ID", "id", 50));
 		columns.add(new PropertyColumn("Name", "name"));
 		columns.add(new PropertyColumn("Description", "description"));
-		columns.add(new PropertyColumn("Unit Price", "price"));
-//		columns.add(new PropertyColumn("Vendor", "vendor.name"));
+		columns.add(new PropertyColumn("Price", "price", 70));
+		columns.add(new PropertyColumn("Vendor", "vendor.name"));
 
 		return columns;
 	}

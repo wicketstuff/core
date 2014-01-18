@@ -61,8 +61,8 @@ public class ProductDataProvider extends ListDataProvider<Product> implements IS
 		@Override
 		public int compare(Product p1, Product p2)
 		{
-			Object o1 = PropertyResolver.getValue(property, p1);
-			Object o2 = PropertyResolver.getValue(property, p2);
+			Object o1 = PropertyResolver.getValue(this.property, p1);
+			Object o2 = PropertyResolver.getValue(this.property, p2);
 
 			if (o1 != null && o2 != null)
 			{
