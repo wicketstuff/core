@@ -223,6 +223,7 @@ public class DataTable<T> extends WebComponent implements IJQueryWidget, IDataTa
 	}
 
 	// Factories //
+	
 	/**
 	 * Gets a new {@link DataSourceBehavior}
 	 *

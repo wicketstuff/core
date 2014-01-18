@@ -24,9 +24,13 @@ import org.apache.wicket.ajax.AbstractDefaultAjaxBehavior;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.json.JSONException;
 import org.apache.wicket.ajax.json.JSONStringer;
+import org.apache.wicket.extensions.markup.html.repeater.data.sort.ISortStateLocator;
+import org.apache.wicket.extensions.markup.html.repeater.data.sort.SortOrder;
+import org.apache.wicket.extensions.markup.html.repeater.util.SortableDataProvider;
 import org.apache.wicket.markup.repeater.data.IDataProvider;
 import org.apache.wicket.request.IRequestCycle;
 import org.apache.wicket.request.IRequestHandler;
+import org.apache.wicket.request.Request;
 import org.apache.wicket.request.cycle.RequestCycle;
 import org.apache.wicket.request.http.WebResponse;
 import org.apache.wicket.util.convert.ConversionException;
@@ -44,6 +48,7 @@ import com.googlecode.wicket.kendo.ui.datatable.column.PropertyColumn;
 class DataSourceBehavior<T> extends AbstractDefaultAjaxBehavior
 {
 	private static final long serialVersionUID = 1L;
+	private static final String ASC = "asc";
 
 	private final IDataProvider<T> provider;
 	private final List<? extends IColumn> columns;
@@ -60,12 +65,34 @@ class DataSourceBehavior<T> extends AbstractDefaultAjaxBehavior
 		this.provider = provider;
 	}
 
+	@SuppressWarnings("unchecked")
+	protected void setSort(String property, SortOrder order)
+	{
+		ISortStateLocator<String> locator = ((ISortStateLocator<String>)this.provider);
+		
+		locator.getSortState().setPropertySortOrder(property, order);
+	}
+
 	@Override
 	protected void respond(AjaxRequestTarget target)
 	{
 		final RequestCycle requestCycle = RequestCycle.get();
-		final int first = requestCycle.getRequest().getQueryParameters().getParameterValue("skip").toInt(0);
-		final int count = requestCycle.getRequest().getQueryParameters().getParameterValue("take").toInt(0);
+		final Request request = requestCycle.getRequest();
+		
+		final int first = request.getQueryParameters().getParameterValue("skip").toInt(0);
+		final int count = request.getQueryParameters().getParameterValue("take").toInt(0);
+		
+		// ISortStateLocator //
+		if (this.provider instanceof ISortStateLocator)
+		{
+			String property = request.getQueryParameters().getParameterValue("sort[0][field]").toOptionalString();
+			String direction = request.getQueryParameters().getParameterValue("sort[0][dir]").toOptionalString();
+
+			if (property != null)
+			{
+				this.setSort(property, direction == null ? SortOrder.NONE : direction.equals(ASC) ? SortOrder.ASCENDING : SortOrder.DESCENDING);
+			}
+		}
 
 		final IRequestHandler handler = this.newRequestHandler(first, count);
 		requestCycle.scheduleRequestHandlerAfterCurrent(handler);
