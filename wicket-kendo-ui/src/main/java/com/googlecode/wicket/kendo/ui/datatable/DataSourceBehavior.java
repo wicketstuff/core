@@ -44,7 +44,7 @@ import com.googlecode.wicket.kendo.ui.datatable.column.PropertyColumn;
 
 /**
  * Provides the {@link DataTable} data source {@link AbstractDefaultAjaxBehavior}
- * 
+ *
  * @param <T> the type of the model object
  * @author Sebastien Briquet - sebfz1
  */
@@ -61,7 +61,7 @@ class DataSourceBehavior<T> extends AbstractDefaultAjaxBehavior
 
 	/**
 	 * Constructor
-	 * 
+	 *
 	 * @param columns the list of {@link IColumn}
 	 * @param provider the {@link IDataProvider}
 	 */
@@ -138,9 +138,9 @@ class DataSourceBehavior<T> extends AbstractDefaultAjaxBehavior
 	}
 
 	/**
-	 * TODO javadoc
-	 * 
-	 * @return
+	 * Get a new {@link PropertyResolverConverter}
+	 *
+	 * @return a new {@link PropertyResolverConverter}
 	 */
 	protected PropertyResolverConverter newPropertyResolverConverter()
 	{
@@ -149,7 +149,7 @@ class DataSourceBehavior<T> extends AbstractDefaultAjaxBehavior
 
 	/**
 	 * Gets the new {@link IRequestHandler} that will respond the data in a json format
-	 * 
+	 *
 	 * @param first the first row number
 	 * @param count the count of rows
 	 * @return a new {@link IRequestHandler}
@@ -203,7 +203,7 @@ class DataSourceBehavior<T> extends AbstractDefaultAjaxBehavior
 
 	/**
 	 * Gets a new JSON object from the bean
-	 * 
+	 *
 	 * @param bean T object
 	 * @return a new JSON object
 	 */
