@@ -31,7 +31,7 @@ import com.googlecode.wicket.jquery.core.JQueryBehavior;
 import com.googlecode.wicket.jquery.core.Options;
 import com.googlecode.wicket.jquery.core.ajax.IJQueryAjaxAware;
 import com.googlecode.wicket.kendo.ui.KendoBehaviorFactory;
-import com.googlecode.wicket.kendo.ui.datatable.ButtonAjaxBehavior.ClickEvent;
+import com.googlecode.wicket.kendo.ui.datatable.ColumnButtonAjaxBehavior.ClickEvent;
 import com.googlecode.wicket.kendo.ui.datatable.column.IColumn;
 
 /**
@@ -121,12 +121,59 @@ public class DataTable<T> extends WebComponent implements IJQueryWidget, IDataTa
 	}
 
 	// Properties //
-	protected List<ColumnButton> getButtons()
+
+	/**
+	 * Gets the number of rows per page to be displayed
+	 *
+	 * @return the number of rows per page to be displayed
+	 */
+	protected final long getRowCount()
 	{
-		return Collections.emptyList();
+		return this.rows;
+	}
+
+	/**
+	 * Gets the read-only {@link List} of {@link IColumn}<tt>s</tt>
+	 *
+	 * @return the {@link List} of {@link IColumn}<tt>s</tt>
+	 */
+	protected final List<? extends IColumn> getColumns()
+	{
+		return Collections.unmodifiableList(this.columns);
+	}
+
+	/**
+	 * Get the JSON model of the datasource's schema
+	 *
+	 * @return the model, as JSON object
+	 */
+	protected Options getSchemaModel()
+	{
+		Options fields = new Options();
+
+		for (IColumn column : this.getColumns())
+		{
+			if (column.getType() != null)
+			{
+				fields.set(column.getField(), new Options("type", Options.asString(column.getType())));
+			}
+		}
+
+		return new Options("fields", fields);
+	}
+
+	/**
+	 * Gets the data-source behavior's url
+	 *
+	 * @return the data-source behavior's url
+	 */
+	protected final CharSequence getSourceCallbackUrl()
+	{
+		return this.sourceBehavior.getCallbackUrl();
 	}
 
 	// Events //
+
 	@Override
 	protected void onInitialize()
 	{
@@ -185,37 +232,41 @@ public class DataTable<T> extends WebComponent implements IJQueryWidget, IDataTa
 	@Override
 	public JQueryBehavior newWidgetBehavior(String selector)
 	{
-		return new DataTableBehavior(selector, this.options) {
+		return new DataTableBehavior(selector, this.options, this.columns) {
 
 			private static final long serialVersionUID = 1L;
 
-			@Override
-			protected List<? extends IColumn> getColumns()
-			{
-				return DataTable.this.columns;
-			}
+			// Properties //
 
 			@Override
 			protected long getRowCount()
 			{
-				return DataTable.this.rows;
+				return DataTable.this.getRowCount();
+			}
+
+			@Override
+			protected Options getSchemaModel()
+			{
+				return DataTable.this.getSchemaModel();
 			}
 
 			@Override
 			protected CharSequence getSourceCallbackUrl()
 			{
-				return DataTable.this.sourceBehavior.getCallbackUrl();
+				return DataTable.this.getSourceCallbackUrl();
 			}
 
 			// Events //
+
 			@Override
 			public void onClick(AjaxRequestTarget target, ColumnButton button, String value)
 			{
 				DataTable.this.onClick(target, button, value);
 			}
 
+			// Factories //
 			@Override
-			protected ButtonAjaxBehavior newButtonAjaxBehavior(IJQueryAjaxAware source, ColumnButton button)
+			protected ColumnButtonAjaxBehavior newButtonAjaxBehavior(IJQueryAjaxAware source, ColumnButton button)
 			{
 				return DataTable.this.newButtonAjaxBehavior(source, button);
 			}
@@ -223,7 +274,7 @@ public class DataTable<T> extends WebComponent implements IJQueryWidget, IDataTa
 	}
 
 	// Factories //
-	
+
 	/**
 	 * Gets a new {@link DataSourceBehavior}
 	 *
@@ -237,15 +288,15 @@ public class DataTable<T> extends WebComponent implements IJQueryWidget, IDataTa
 	}
 
 	/**
-	 * Gets a new {@link ButtonAjaxBehavior} that will be called by the corresponding {@link ColumnButton}.<br/>
+	 * Gets a new {@link ColumnButtonAjaxBehavior} that will be called by the corresponding {@link ColumnButton}.<br/>
 	 * This method may be overridden to provide additional behaviors
 	 *
 	 * @param source the {@link IJQueryAjaxAware} source
 	 * @param button the button that is passed to the behavior so it can be retrieved via the {@link ClickEvent}
-	 * @return the {@link ButtonAjaxBehavior}
+	 * @return the {@link ColumnButtonAjaxBehavior}
 	 */
-	protected ButtonAjaxBehavior newButtonAjaxBehavior(IJQueryAjaxAware source, ColumnButton button)
+	protected ColumnButtonAjaxBehavior newButtonAjaxBehavior(IJQueryAjaxAware source, ColumnButton button)
 	{
-		return new ButtonAjaxBehavior(source, button);
+		return new ColumnButtonAjaxBehavior(source, button);
 	}
 }

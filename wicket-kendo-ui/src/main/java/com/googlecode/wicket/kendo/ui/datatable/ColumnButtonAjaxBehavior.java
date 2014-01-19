@@ -26,7 +26,7 @@ import com.googlecode.wicket.jquery.core.utils.RequestCycleUtils;
 /**
  * Provides the {@link JQueryAjaxBehavior} being called by the button(s).
  */
-public class ButtonAjaxBehavior extends JQueryAjaxBehavior
+public class ColumnButtonAjaxBehavior extends JQueryAjaxBehavior
 {
 	private static final long serialVersionUID = 1L;
 
@@ -37,7 +37,7 @@ public class ButtonAjaxBehavior extends JQueryAjaxBehavior
 	 * @param source the {@link IJQueryAjaxAware}
 	 * @param button the {@link ColumnButton} to attach to the {@link ClickEvent}
 	 */
-	public ButtonAjaxBehavior(IJQueryAjaxAware source, ColumnButton button)
+	public ColumnButtonAjaxBehavior(IJQueryAjaxAware source, ColumnButton button)
 	{
 		super(source);
 
@@ -68,7 +68,6 @@ public class ButtonAjaxBehavior extends JQueryAjaxBehavior
 	{
 		return new ClickEvent(this.button);
 	}
-
 
 	// Event class //
 

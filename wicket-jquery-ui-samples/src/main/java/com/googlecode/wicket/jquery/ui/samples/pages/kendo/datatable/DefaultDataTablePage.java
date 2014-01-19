@@ -65,6 +65,7 @@ public class DefaultDataTablePage extends AbstractDataTablePage
 		columns.add(new PropertyColumn("Name", "name"));
 		columns.add(new PropertyColumn("Description", "description"));
 		columns.add(new PropertyColumn("Price", "price", 70));
+//		columns.add(new DatePropertyColumn("Date", "date"));
 		columns.add(new PropertyColumn("Vendor", "vendor.name"));
 
 		return columns;

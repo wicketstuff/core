@@ -21,6 +21,7 @@ import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
 
 import com.googlecode.wicket.kendo.ui.datatable.DataTable;
+import com.googlecode.wicket.kendo.ui.utils.PropertyUtils;
 
 /**
  * Provides a property column for a {@link DataTable}
@@ -35,6 +36,7 @@ public class PropertyColumn extends AbstractColumn
 
 	/**
 	 * Constructor
+	 *
 	 * @param title the text of the column header
 	 */
 	public PropertyColumn(String title)
@@ -44,6 +46,7 @@ public class PropertyColumn extends AbstractColumn
 
 	/**
 	 * Constructor
+	 *
 	 * @param title the text of the column header
 	 * @param width the desired width of the column
 	 */
@@ -54,6 +57,7 @@ public class PropertyColumn extends AbstractColumn
 
 	/**
 	 * Constructor
+	 *
 	 * @param title the text of the column header
 	 * @param property the object property name
 	 */
@@ -64,6 +68,7 @@ public class PropertyColumn extends AbstractColumn
 
 	/**
 	 * Constructor
+	 *
 	 * @param title the text of the column header
 	 * @param property the object property name
 	 * @param width the desired width of the column
@@ -75,6 +80,7 @@ public class PropertyColumn extends AbstractColumn
 
 	/**
 	 * Constructor
+	 *
 	 * @param title the text of the column header
 	 * @param property the object property name
 	 */
@@ -85,6 +91,7 @@ public class PropertyColumn extends AbstractColumn
 
 	/**
 	 * Constructor
+	 *
 	 * @param title the text of the column header
 	 * @param property the object property name
 	 * @param width the desired width of the column
@@ -99,7 +106,7 @@ public class PropertyColumn extends AbstractColumn
 	@Override
 	public String getField()
 	{
-		return super.getField().replace('.', '$'); //fixes #56
+		return PropertyUtils.escape(super.getField()); // fixes #56
 	}
 
 	/**
@@ -111,6 +118,6 @@ public class PropertyColumn extends AbstractColumn
 	 */
 	public Object getValue(Object object)
 	{
-		return PropertyResolver.getValue(this.property, object); //if the object is null, null is returned
+		return PropertyResolver.getValue(this.property, object); // if the object is null, null is returned
 	}
 }

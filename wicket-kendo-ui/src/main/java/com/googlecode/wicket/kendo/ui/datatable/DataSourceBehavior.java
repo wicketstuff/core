@@ -41,6 +41,7 @@ import org.apache.wicket.util.convert.ConversionException;
 import com.googlecode.wicket.jquery.core.Options;
 import com.googlecode.wicket.kendo.ui.datatable.column.IColumn;
 import com.googlecode.wicket.kendo.ui.datatable.column.PropertyColumn;
+import com.googlecode.wicket.kendo.ui.utils.PropertyUtils;
 
 /**
  * Provides the {@link DataTable} data source {@link AbstractDefaultAjaxBehavior}
@@ -96,7 +97,7 @@ class DataSourceBehavior<T> extends AbstractDefaultAjaxBehavior
 
 			if (property != null)
 			{
-				this.setSort(property, direction == null ? SortOrder.NONE : direction.equals(ASC) ? SortOrder.ASCENDING : SortOrder.DESCENDING);
+				this.setSort(PropertyUtils.unescape(property), direction == null ? SortOrder.NONE : direction.equals(ASC) ? SortOrder.ASCENDING : SortOrder.DESCENDING);
 			}
 		}
 
@@ -123,13 +124,12 @@ class DataSourceBehavior<T> extends AbstractDefaultAjaxBehavior
 
 				if (field != null)
 				{
-					PropertyResolver.setValue(field, object, value, converter);
+					PropertyResolver.setValue(PropertyUtils.unescape(field), object, value, converter);
 				}
 				else
 				{
 					break;
 				}
-
 			}
 		}
 

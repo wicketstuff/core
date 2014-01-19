@@ -26,7 +26,7 @@ import com.googlecode.wicket.jquery.core.JQueryEvent;
 import com.googlecode.wicket.jquery.core.Options;
 import com.googlecode.wicket.jquery.core.ajax.IJQueryAjaxAware;
 import com.googlecode.wicket.kendo.ui.KendoAbstractBehavior;
-import com.googlecode.wicket.kendo.ui.datatable.ButtonAjaxBehavior.ClickEvent;
+import com.googlecode.wicket.kendo.ui.datatable.ColumnButtonAjaxBehavior.ClickEvent;
 import com.googlecode.wicket.kendo.ui.datatable.column.CommandsColumn;
 import com.googlecode.wicket.kendo.ui.datatable.column.IColumn;
 
@@ -40,14 +40,17 @@ public abstract class DataTableBehavior extends KendoAbstractBehavior implements
 	private static final long serialVersionUID = 1L;
 	private static final String METHOD = "kendoGrid";
 
+	protected final List<? extends IColumn> columns;
+
 	/**
 	 * Constructor
 	 *
 	 * @param selector the html selector (ie: "#myId")
+	 * @param columns the list of {@link IColumn}
 	 */
-	public DataTableBehavior(String selector)
+	public DataTableBehavior(String selector, List<? extends IColumn> columns)
 	{
-		this(selector, new Options());
+		this(selector, new Options(), columns);
 	}
 
 	/**
@@ -55,10 +58,13 @@ public abstract class DataTableBehavior extends KendoAbstractBehavior implements
 	 *
 	 * @param selector the html selector (ie: "#myId")
 	 * @param options the {@link Options}
+	 * @param columns the list of {@link IColumn}
 	 */
-	public DataTableBehavior(String selector, Options options)
+	public DataTableBehavior(String selector, Options options, List<? extends IColumn> columns)
 	{
 		super(selector, METHOD, options);
+
+		this.columns = columns;
 	}
 
 	// Methods //
@@ -69,20 +75,13 @@ public abstract class DataTableBehavior extends KendoAbstractBehavior implements
 		super.bind(component);
 
 		// buttons //
-		for (ColumnButton button : this.getButtons())
+		for (ColumnButton button : this.getColumnButtons())
 		{
 			component.add(this.newButtonAjaxBehavior(this, button));
 		}
 	}
 
 	// Properties //
-
-	/**
-	 * Gets the {@link List} of {@link IColumn}
-	 *
-	 * @return the {@link List} of {@link IColumn}
-	 */
-	protected abstract List<? extends IColumn> getColumns();
 
 	/**
 	 * Gets the row count
@@ -99,13 +98,23 @@ public abstract class DataTableBehavior extends KendoAbstractBehavior implements
 	protected abstract CharSequence getSourceCallbackUrl();
 
 	/**
-	 * Gets the {@link List} of {@link ColumnButton} that have may be supplied through a {@link CommandsColumn}
+	 * Get the JSON model of the datasource's schema
+	 *
+	 * @return the model, as JSON string
+	 */
+	protected Options getSchemaModel()
+	{
+		return new Options();
+	}
+
+	/**
+	 * Gets the read-only {@link List} of {@link ColumnButton}
 	 *
 	 * @return the {@link List} of {@link ColumnButton}
 	 */
-	private List<ColumnButton> getButtons()
+	protected List<ColumnButton> getColumnButtons()
 	{
-		for (IColumn column : this.getColumns())
+		for (IColumn column : this.columns)
 		{
 			if (column instanceof CommandsColumn)
 			{
@@ -125,24 +134,30 @@ public abstract class DataTableBehavior extends KendoAbstractBehavior implements
 
 		Options source = new Options();
 		Options schema = new Options();
-		Options fields = new Options();
+
+		// schema //
+		schema.set("data", Options.asString("results"));
+		schema.set("total", Options.asString("__count"));
+		schema.set("model", this.getSchemaModel());
+
+		// source //
+		source.set("type", Options.asString("jsonp"));
+		source.set("pageSize", this.getRowCount());
+		source.set("serverPaging", true);
+		source.set("serverSorting", true);
+		source.set("serverFiltering", true);
+		source.set("transport", new Options("read", Options.asString(this.getSourceCallbackUrl())));
+		source.set("schema", schema);
+
+		this.setOption("dataSource", source);
 
 		// columns //
 		StringBuilder builder = new StringBuilder("[ ");
 
-		List<? extends IColumn> columns = this.getColumns();
-
-		for (int i = 0; i < columns.size(); i++)
+		for (int i = 0; i < this.columns.size(); i++)
 		{
-			IColumn column = columns.get(i);
+			IColumn column = this.columns.get(i);
 
-			// schema model field //
-			if (column.getType() != null)
-			{
-				fields.set(column.getField(), new Options("type", Options.asString(column.getType())));
-			}
-
-			// build JSON //
 			if (i > 0)
 			{
 				builder.append(", ");
@@ -159,7 +174,7 @@ public abstract class DataTableBehavior extends KendoAbstractBehavior implements
 				builder.append("[ ");
 
 				int n = 0;
-				for (ButtonAjaxBehavior behavior : component.getBehaviors(ButtonAjaxBehavior.class))
+				for (ColumnButtonAjaxBehavior behavior : component.getBehaviors(ColumnButtonAjaxBehavior.class))
 				{
 					ColumnButton button = behavior.getButton();
 
@@ -183,22 +198,6 @@ public abstract class DataTableBehavior extends KendoAbstractBehavior implements
 		}
 
 		this.setOption("columns", builder.append(" ]").toString());
-
-		// schema //
-		schema.set("data", Options.asString("results"));
-		schema.set("total", Options.asString("__count"));
-		schema.set("model", new Options("fields", fields));
-
-		// source //
-		source.set("type", Options.asString("jsonp"));
-		source.set("pageSize", this.getRowCount());
-		source.set("serverPaging", true);
-		source.set("serverSorting", true);
-		source.set("serverFiltering", true);
-		source.set("transport", String.format("{ \"read\": \"%s\" }", this.getSourceCallbackUrl()));
-		source.set("schema", schema);
-
-		this.setOption("dataSource", source);
 	}
 
 	@Override
@@ -215,11 +214,11 @@ public abstract class DataTableBehavior extends KendoAbstractBehavior implements
 	// Factories //
 
 	/**
-	 * Gets a new {@link ButtonAjaxBehavior} that will be called by the corresponding table's button.<br/>
+	 * Gets a new {@link ColumnButtonAjaxBehavior} that will be called by the corresponding table's button.<br/>
 	 *
 	 * @param source the {@link IJQueryAjaxAware}
 	 * @param button the button that is passed to the behavior so it can be retrieved via the {@link ClickEvent}
-	 * @return the {@link ButtonAjaxBehavior}
+	 * @return the {@link ColumnButtonAjaxBehavior}
 	 */
-	protected abstract ButtonAjaxBehavior newButtonAjaxBehavior(IJQueryAjaxAware source, ColumnButton button);
+	protected abstract ColumnButtonAjaxBehavior newButtonAjaxBehavior(IJQueryAjaxAware source, ColumnButton button);
 }
