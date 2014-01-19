@@ -16,6 +16,7 @@
  */
 package com.googlecode.wicket.jquery.core;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map.Entry;
@@ -155,7 +156,7 @@ public class JQueryBehavior extends JQueryAbstractBehavior
 	 * @param value the option value
 	 * @return the {@link JQueryBehavior} (this)
 	 */
-	public JQueryBehavior setOption(String key, Object value)
+	public JQueryBehavior setOption(String key, Serializable value)
 	{
 		if (this.options == null)
 		{
@@ -184,13 +185,14 @@ public class JQueryBehavior extends JQueryAbstractBehavior
 	 */
 	public void setOptions(Options options)
 	{
-		for (Entry<String, Object> option : options.entries())
+		for (Entry<String, Serializable> option : options.entries())
 		{
 			this.setOption(option.getKey(), option.getValue());
 		}
 	}
 
 	// Statements //
+
 	/**
 	 * Registers a jQuery event callback
 	 *

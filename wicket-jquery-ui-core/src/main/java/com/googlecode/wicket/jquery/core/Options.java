@@ -16,6 +16,7 @@
  */
 package com.googlecode.wicket.jquery.core;
 
+import java.io.Serializable;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
@@ -96,15 +97,14 @@ public class Options implements IClusterable
 		return builder.toString();
 	}
 
-	// XXX: report as change (Serializable > Object)
-	private final Map<String, Object> map;
+	private final Map<String, Serializable> map;
 
 	/**
 	 * Constructor.
 	 */
 	public Options()
 	{
-		this.map = new HashMap<String, Object>();
+		this.map = new HashMap<String, Serializable>();
 	}
 
 	/**
@@ -113,7 +113,7 @@ public class Options implements IClusterable
 	 * @param key the option name
 	 * @param value the option value
 	 */
-	public Options(String key, Object value)
+	public Options(String key, Serializable value)
 	{
 		this();
 		this.set(key, value);
@@ -138,7 +138,7 @@ public class Options implements IClusterable
 	 * @param value - value to be associated with the specified key
 	 * @return this
 	 */
-	public final Options set(String key, Object value)
+	public final Options set(String key, Serializable value)
 	{
 		if (value != null)
 		{
@@ -157,7 +157,7 @@ public class Options implements IClusterable
 	 *
 	 * @return an unmodifiable set of internal map entries
 	 */
-	public Set<Entry<String, Object>> entries()
+	public Set<Entry<String, Serializable>> entries()
 	{
 		return Collections.unmodifiableSet(this.map.entrySet());
 	}
@@ -171,7 +171,7 @@ public class Options implements IClusterable
 		StringBuilder builder = new StringBuilder("{ ");
 
 		int i = 0;
-		for (Entry<String, Object> entry : this.map.entrySet())
+		for (Entry<String, Serializable> entry : this.map.entrySet())
 		{
 			if (i++ > 0)
 			{
