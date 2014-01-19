@@ -123,17 +123,9 @@ public abstract class DataTableBehavior extends KendoAbstractBehavior implements
 	{
 		super.onConfigure(component);
 
-		// source //
 		Options source = new Options();
-		source.set("type", Options.asString("jsonp"));
-		source.set("pageSize", this.getRowCount());
-		source.set("serverPaging", true);
-		source.set("serverSorting", true);
-		source.set("serverFiltering", true);
-		source.set("transport", String.format("{ \"read\": \"%s\" }", this.getSourceCallbackUrl()));
-		source.set("schema", "{ \"data\": \"results\", \"total\": \"__count\" }");
-
-		this.setOption("dataSource", source);
+		Options schema = new Options();
+		Options fields = new Options();
 
 		// columns //
 		StringBuilder builder = new StringBuilder("[ ");
@@ -144,13 +136,20 @@ public abstract class DataTableBehavior extends KendoAbstractBehavior implements
 		{
 			IColumn column = columns.get(i);
 
+			// schema model field //
+			if (column.getType() != null)
+			{
+				fields.set(column.getField(), new Options("type", Options.asString(column.getType())));
+			}
+
+			// build JSON //
 			if (i > 0)
 			{
 				builder.append(", ");
 			}
 
 			builder.append("{ ");
-			builder.append(column.toString()); // toJSON(component)
+			builder.append(column.toString());
 
 			if (column instanceof CommandsColumn)
 			{
@@ -183,9 +182,23 @@ public abstract class DataTableBehavior extends KendoAbstractBehavior implements
 			builder.append(" }");
 		}
 
-		builder.append(" ]");
+		this.setOption("columns", builder.append(" ]").toString());
 
-		this.setOption("columns", builder.toString());
+		// schema //
+		schema.set("data", Options.asString("results"));
+		schema.set("total", Options.asString("__count"));
+		schema.set("model", new Options("fields", fields));
+
+		// source //
+		source.set("type", Options.asString("jsonp"));
+		source.set("pageSize", this.getRowCount());
+		source.set("serverPaging", true);
+		source.set("serverSorting", true);
+		source.set("serverFiltering", true);
+		source.set("transport", String.format("{ \"read\": \"%s\" }", this.getSourceCallbackUrl()));
+		source.set("schema", schema);
+
+		this.setOption("dataSource", source);
 	}
 
 	@Override

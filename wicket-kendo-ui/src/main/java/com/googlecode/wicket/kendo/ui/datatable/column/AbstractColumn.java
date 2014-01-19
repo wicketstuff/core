@@ -141,7 +141,7 @@ public abstract class AbstractColumn implements IColumn
 	{
 		return this.field;
 	}
-	
+
 	@Override
 	public int getWidth()
 	{
@@ -151,6 +151,12 @@ public abstract class AbstractColumn implements IColumn
 	public boolean isVisible()
 	{
 		return true;
+	}
+
+	@Override
+	public String getType()
+	{
+		return null;
 	}
 
 	@Override

@@ -16,9 +16,6 @@
  */
 package com.googlecode.wicket.jquery.core;
 
-import java.io.Serializable;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
@@ -27,6 +24,8 @@ import java.util.Map.Entry;
 import java.util.Set;
 
 import org.apache.wicket.util.io.IClusterable;
+
+import com.googlecode.wicket.jquery.core.utils.DateUtils;
 
 /**
  * Provides a wrapper on a {@link Map} that will contains jQuery behavior options (key/value).<br/>
@@ -59,7 +58,8 @@ public class Options implements IClusterable
 	 */
 	public static String asString(String value)
 	{
-		return String.format("%s%s%s", QUOTE, value, QUOTE);
+		// XXX: mark as API Break
+		return String.format("%s%s%s", QUOTE, value.replace(QUOTE, "\\" + QUOTE), QUOTE);
 	}
 
 	/**
@@ -70,8 +70,7 @@ public class Options implements IClusterable
 	 */
 	public static String asDate(Date date)
 	{
-		DateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mmZ");
-		return Options.asString(df.format(date));
+		return Options.asString(DateUtils.toISO8601(date));
 	}
 
 	/**
@@ -97,14 +96,15 @@ public class Options implements IClusterable
 		return builder.toString();
 	}
 
-	private final Map<String, Serializable> map;
+	// XXX: report as change (Serializable > Object)
+	private final Map<String, Object> map;
 
 	/**
 	 * Constructor.
 	 */
 	public Options()
 	{
-		this.map = new HashMap<String, Serializable>();
+		this.map = new HashMap<String, Object>();
 	}
 
 	/**
@@ -113,7 +113,7 @@ public class Options implements IClusterable
 	 * @param key the option name
 	 * @param value the option value
 	 */
-	public Options(String key, Serializable value)
+	public Options(String key, Object value)
 	{
 		this();
 		this.set(key, value);
@@ -125,7 +125,7 @@ public class Options implements IClusterable
 	 * @param key the key whose associated value is to be returned
 	 * @return the value to which the specified key is mapped, or null if this map contains no mapping for the key
 	 */
-	public Serializable get(String key)
+	public Object get(String key)
 	{
 		return this.map.get(key);
 	}
@@ -138,7 +138,7 @@ public class Options implements IClusterable
 	 * @param value - value to be associated with the specified key
 	 * @return this
 	 */
-	public final Options set(String key, Serializable value)
+	public final Options set(String key, Object value)
 	{
 		if (value != null)
 		{
@@ -157,7 +157,7 @@ public class Options implements IClusterable
 	 *
 	 * @return an unmodifiable set of internal map entries
 	 */
-	public Set<Entry<String, Serializable>> entries()
+	public Set<Entry<String, Object>> entries()
 	{
 		return Collections.unmodifiableSet(this.map.entrySet());
 	}
@@ -171,7 +171,7 @@ public class Options implements IClusterable
 		StringBuilder builder = new StringBuilder("{ ");
 
 		int i = 0;
-		for (Entry<String, Serializable> entry : this.map.entrySet())
+		for (Entry<String, Object> entry : this.map.entrySet())
 		{
 			if (i++ > 0)
 			{

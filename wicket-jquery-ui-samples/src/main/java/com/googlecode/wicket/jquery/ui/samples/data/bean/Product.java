@@ -1,5 +1,7 @@
 package com.googlecode.wicket.jquery.ui.samples.data.bean;
 
+import java.util.Date;
+
 import org.apache.wicket.util.io.IClusterable;
 
 public class Product implements IClusterable
@@ -9,6 +11,7 @@ public class Product implements IClusterable
 	private int id;
 	private String name;
 	private String desc;
+	private Date date;
 	private double price;
 
 	private Vendor vendor;
@@ -23,6 +26,7 @@ public class Product implements IClusterable
 		this.id = id;
 		this.name = name;
 		this.desc = description;
+		this.date = new Date();
 		this.price = price;
 		this.vendor = vendor;
 	}
@@ -40,6 +44,11 @@ public class Product implements IClusterable
 	public String getDescription()
 	{
 		return this.desc;
+	}
+
+	public Date getDate()
+	{
+		return this.date;
 	}
 
 	public double getPrice()

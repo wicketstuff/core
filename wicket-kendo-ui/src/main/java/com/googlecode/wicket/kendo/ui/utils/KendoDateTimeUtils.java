@@ -16,6 +16,9 @@
  */
 package com.googlecode.wicket.kendo.ui.utils;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 /**
  * Utility class for Kendo UI datetime formats
  *
@@ -24,8 +27,10 @@ package com.googlecode.wicket.kendo.ui.utils;
  */
 public class KendoDateTimeUtils
 {
+	static final String PATTERN = "yyyy-MM-dd'T'HH:mm:sszzz";
+
 	static final String j_chars = "GyMdkHmsSEDFwWahKzZ";
-	static final String k_chars = "GyMdkHmsfEDFwWthKzZ"; //'S' > 'f', 'a' > 't'
+	static final String k_chars = "GyMdkHmsfEDFwWthKzZ"; // 'S' > 'f', 'a' > 't'
 	static final int chars_lenth = 19;
 
 	/**
@@ -50,6 +55,17 @@ public class KendoDateTimeUtils
 		}
 
 		return converted;
+	}
+
+	/**
+	 * Converts a {@link Date} to a compatible kendo-ui date-string format
+	 *
+	 * @param date the date
+	 * @return the compatible kendo ui date string
+	 */
+	public static String toString(Date date)
+	{
+		return new SimpleDateFormat(PATTERN).format(date);
 	}
 
 	/**

@@ -51,6 +51,13 @@ public interface IColumn extends IClusterable
 	int getWidth();
 
 	/**
+	 * Get the field's type
+	 *
+	 * @return the the field's type
+	 */
+	String getType();
+
+	/**
 	 * The format that is applied to the value before it is displayed. Takes the form "{0:format}" where "format" is a standard number format, custom number format, standard date format or a custom date format.
 	 *
 	 * @return the format or <tt>null</tt> if it does not apply

@@ -24,7 +24,7 @@ import org.apache.wicket.Session;
 import org.apache.wicket.ajax.AbstractDefaultAjaxBehavior;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.json.JSONException;
-import org.apache.wicket.ajax.json.JSONStringer;
+import org.apache.wicket.ajax.json.JSONObject;
 import org.apache.wicket.core.util.lang.PropertyResolver;
 import org.apache.wicket.core.util.lang.PropertyResolverConverter;
 import org.apache.wicket.extensions.markup.html.repeater.data.sort.ISortStateLocator;
@@ -209,28 +209,24 @@ class DataSourceBehavior<T> extends AbstractDefaultAjaxBehavior
 	 */
 	protected String newJsonRow(T bean)
 	{
-		JSONStringer stringer = new JSONStringer();
+		JSONObject object = new JSONObject();
 
 		try
 		{
-			stringer.object();
-
 			for (IColumn column : this.columns)
 			{
 				if (column instanceof PropertyColumn)
 				{
 					PropertyColumn pc = (PropertyColumn) column;
-					stringer.key(pc.getField()).value(pc.getValue(bean));
+					object.put(pc.getField(), pc.getValue(bean));
 				}
 			}
-
-			stringer.endObject();
 		}
 		catch (JSONException e)
 		{
 			throw new ConversionException(e);
 		}
 
-		return stringer.toString();
+		return object.toString();
 	}
 }
