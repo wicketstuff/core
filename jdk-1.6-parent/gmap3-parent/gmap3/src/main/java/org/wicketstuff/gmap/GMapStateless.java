@@ -3,8 +3,7 @@ package org.wicketstuff.gmap;
 import org.apache.wicket.Component;
 
 /**
- * 
- * @author robsonke
+ * A stateless version of the GMap component. This can be used in stateless pages.
  * 
  */
 public class GMapStateless extends GMap {
@@ -23,7 +22,7 @@ public class GMapStateless extends GMap {
 		
 	}
 	
-	private class StatelessOverlayListener extends OverlayListener
+	public static class StatelessOverlayListener extends OverlayListener
 	{
 		private static final long serialVersionUID = 1L;
 		
