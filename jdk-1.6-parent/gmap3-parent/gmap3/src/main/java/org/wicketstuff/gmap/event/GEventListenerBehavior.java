@@ -34,10 +34,12 @@ public abstract class GEventListenerBehavior extends AbstractDefaultAjaxBehavior
     @Override
     protected void onBind()
     {
+    	super.onBind();
         if (!(getComponent() instanceof GMap))
         {
             throw new IllegalArgumentException("must be bound to GMap");
         }
+        getComponent().getBehaviorId(this);
     }
 
     public String getJSaddListener()

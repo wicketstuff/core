@@ -31,6 +31,13 @@ public class GMapStateless extends GMap {
         public boolean getStatelessHint(Component component) {
         	return true;
         }
+		
+		@Override
+	    protected void onBind()
+	    {
+	        super.onBind();
+	        getComponent().getBehaviorId(this);
+	    }
 	}
 	
 	@Override
