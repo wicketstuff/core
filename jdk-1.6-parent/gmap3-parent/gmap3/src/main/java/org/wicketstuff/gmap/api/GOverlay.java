@@ -50,6 +50,14 @@ public abstract class GOverlay implements Serializable
         // id is session unique
         id = String.valueOf(Session.get().nextSequenceValue());
     }
+    
+    /**
+     * Used in stateless environment as session id's are changing continuously without state.
+     */
+    public GOverlay(String id)
+    {
+        this.id = id;
+    }
 
     /**
      * @return String representing the JavaScript add command for the corresponding JavaScript object.

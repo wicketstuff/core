@@ -35,6 +35,12 @@ public class GMarker extends GOverlay
         super();
         this.options = options;
     }
+    
+    public GMarker(String id, GMarkerOptions options)
+    {
+        super(id);
+        this.options = options;
+    }
 
     public GLatLng getLatLng()
     {
