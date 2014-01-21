@@ -22,7 +22,7 @@ public class GMapStateless extends GMap {
 		
 	}
 	
-	public static class StatelessOverlayListener extends OverlayListener
+	private class StatelessOverlayListener extends OverlayListener
 	{
 		private static final long serialVersionUID = 1L;
 		
