@@ -19,6 +19,7 @@ package com.googlecode.wicket.kendo.ui.datatable.column;
 import org.apache.wicket.core.util.lang.PropertyResolver;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
+import org.apache.wicket.model.PropertyModel;
 
 import com.googlecode.wicket.kendo.ui.datatable.DataTable;
 import com.googlecode.wicket.kendo.ui.utils.PropertyUtils;
@@ -28,7 +29,7 @@ import com.googlecode.wicket.kendo.ui.utils.PropertyUtils;
  *
  * @author Sebastien Briquet - sebfz1
  */
-public class PropertyColumn extends AbstractColumn
+public class PropertyColumn extends AbstractColumn implements IExportableColumn
 {
 	private static final long serialVersionUID = 1L;
 
@@ -119,5 +120,11 @@ public class PropertyColumn extends AbstractColumn
 	public Object getValue(Object object)
 	{
 		return PropertyResolver.getValue(this.property, object); // if the object is null, null is returned
+	}
+
+	@Override
+	public IModel<Object> newDataModel(IModel<?> rowModel)
+	{
+		return new PropertyModel<Object>(rowModel, this.property);
 	}
 }

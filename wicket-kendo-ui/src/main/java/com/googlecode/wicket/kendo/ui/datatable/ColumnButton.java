@@ -24,7 +24,6 @@ import org.apache.wicket.util.io.IClusterable;
  *
  * @author Sebastien Briquet - sebfz1
  */
-//rename to button?
 public class ColumnButton implements IClusterable
 {
 	private static final long serialVersionUID = 1L;

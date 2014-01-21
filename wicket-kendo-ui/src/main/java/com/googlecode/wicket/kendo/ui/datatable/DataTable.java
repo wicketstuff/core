@@ -36,7 +36,7 @@ import com.googlecode.wicket.kendo.ui.datatable.column.IColumn;
 
 /**
  * Provides a Kendo UI data-table
- *
+ * 
  * @param <T> the model object type
  * @author Sebastien Briquet - sebfz1
  */
@@ -54,7 +54,7 @@ public class DataTable<T> extends WebComponent implements IJQueryWidget, IDataTa
 
 	/**
 	 * Constructor
-	 *
+	 * 
 	 * @param id the markup id
 	 * @param columns the list of {@link IColumn}
 	 * @param provider the {@link IDataProvider}
@@ -67,7 +67,7 @@ public class DataTable<T> extends WebComponent implements IJQueryWidget, IDataTa
 
 	/**
 	 * Main constructor
-	 *
+	 * 
 	 * @param id the markup id
 	 * @param columns the list of {@link IColumn}
 	 * @param provider the {@link IDataProvider}
@@ -88,7 +88,7 @@ public class DataTable<T> extends WebComponent implements IJQueryWidget, IDataTa
 
 	/**
 	 * Shows the {@link DataTable}
-	 *
+	 * 
 	 * @param target the {@link AjaxRequestTarget}
 	 */
 	public final void show(AjaxRequestTarget target)
@@ -100,7 +100,7 @@ public class DataTable<T> extends WebComponent implements IJQueryWidget, IDataTa
 
 	/**
 	 * Hides the {@link DataTable}
-	 *
+	 * 
 	 * @param target the {@link AjaxRequestTarget}
 	 */
 	public final void hide(AjaxRequestTarget target)
@@ -112,7 +112,7 @@ public class DataTable<T> extends WebComponent implements IJQueryWidget, IDataTa
 
 	/**
 	 * Reloads data and refreshes the {@link DataTable}
-	 *
+	 * 
 	 * @param target the {@link AjaxRequestTarget}
 	 */
 	public void refresh(AjaxRequestTarget target)
@@ -123,8 +123,18 @@ public class DataTable<T> extends WebComponent implements IJQueryWidget, IDataTa
 	// Properties //
 
 	/**
+	 * Gets the {@link IDataProvider}
+	 * 
+	 * @return the {@link IDataProvider}
+	 */
+	public IDataProvider<T> getDataProvider()
+	{
+		return this.provider;
+	}
+
+	/**
 	 * Gets the number of rows per page to be displayed
-	 *
+	 * 
 	 * @return the number of rows per page to be displayed
 	 */
 	protected final long getRowCount()
@@ -134,17 +144,17 @@ public class DataTable<T> extends WebComponent implements IJQueryWidget, IDataTa
 
 	/**
 	 * Gets the read-only {@link List} of {@link IColumn}<tt>s</tt>
-	 *
+	 * 
 	 * @return the {@link List} of {@link IColumn}<tt>s</tt>
 	 */
-	protected final List<? extends IColumn> getColumns()
+	public final List<? extends IColumn> getColumns()
 	{
 		return Collections.unmodifiableList(this.columns);
 	}
 
 	/**
 	 * Get the JSON model of the datasource's schema
-	 *
+	 * 
 	 * @return the model, as JSON object
 	 */
 	protected Options getSchemaModel()
@@ -164,7 +174,7 @@ public class DataTable<T> extends WebComponent implements IJQueryWidget, IDataTa
 
 	/**
 	 * Gets the data-source behavior's url
-	 *
+	 * 
 	 * @return the data-source behavior's url
 	 */
 	protected final CharSequence getSourceCallbackUrl()
@@ -203,7 +213,7 @@ public class DataTable<T> extends WebComponent implements IJQueryWidget, IDataTa
 
 	/**
 	 * Triggered when the {@link DataTable} shows
-	 *
+	 * 
 	 * @param target the {@link AjaxRequestTarget}
 	 */
 	public void onShow(AjaxRequestTarget target)
@@ -213,7 +223,7 @@ public class DataTable<T> extends WebComponent implements IJQueryWidget, IDataTa
 
 	/**
 	 * Triggered when the {@link DataTable} hides
-	 *
+	 * 
 	 * @param target the {@link AjaxRequestTarget}
 	 */
 	public void onHide(AjaxRequestTarget target)
@@ -277,7 +287,7 @@ public class DataTable<T> extends WebComponent implements IJQueryWidget, IDataTa
 
 	/**
 	 * Gets a new {@link DataSourceBehavior}
-	 *
+	 * 
 	 * @param columns the list of {@link IColumn}
 	 * @param provider the {@link IDataProvider}
 	 * @return the {@link AbstractAjaxBehavior}
@@ -290,7 +300,7 @@ public class DataTable<T> extends WebComponent implements IJQueryWidget, IDataTa
 	/**
 	 * Gets a new {@link ColumnButtonAjaxBehavior} that will be called by the corresponding {@link ColumnButton}.<br/>
 	 * This method may be overridden to provide additional behaviors
-	 *
+	 * 
 	 * @param source the {@link IJQueryAjaxAware} source
 	 * @param button the button that is passed to the behavior so it can be retrieved via the {@link ClickEvent}
 	 * @return the {@link ColumnButtonAjaxBehavior}

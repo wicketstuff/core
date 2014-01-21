@@ -124,7 +124,7 @@ public class Options implements IClusterable
 	 * @param key the key whose associated value is to be returned
 	 * @return the value to which the specified key is mapped, or null if this map contains no mapping for the key
 	 */
-	public Object get(String key)
+	public Serializable get(String key)
 	{
 		return this.map.get(key);
 	}
