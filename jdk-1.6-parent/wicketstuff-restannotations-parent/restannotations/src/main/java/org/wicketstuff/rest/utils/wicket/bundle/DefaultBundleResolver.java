@@ -16,54 +16,66 @@
  */
 package org.wicketstuff.rest.utils.wicket.bundle;
 
-import java.util.List;
-import java.util.Locale;
-import java.util.Map;
-
 import org.apache.wicket.Application;
 import org.apache.wicket.Session;
 import org.apache.wicket.resource.loader.IStringResourceLoader;
 import org.apache.wicket.validation.IErrorMessageSource;
 import org.wicketstuff.rest.resource.AbstractRestResource;
 
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+import java.util.Locale;
+import java.util.Map;
+
 /**
- * Wicket bundle resolver that relies on the default {@link IStringResourceLoader}S.
- * Its constructor requires an subclass of {@link AbstractRestResource} which 
- * is used to resolve custom bundles.
- * 
+ * Wicket bundle resolver that relies on the default
+ * {@link IStringResourceLoader}S. Its constructor requires an subclass of
+ * {@link AbstractRestResource} which is used to resolve custom bundles.
+ *
  * @author andrea del bene
  *
  */
 public class DefaultBundleResolver implements IErrorMessageSource
 {
-	private final Class<? extends AbstractRestResource> clazz;
+    private final List<Class<?>> targetClasses;
 
-	public DefaultBundleResolver(Class<? extends AbstractRestResource> clazz)
-	{
-		this.clazz = clazz;
-	}
+    public DefaultBundleResolver(Class<?>... targetClasses)
+    {
+        this.targetClasses = Collections.unmodifiableList(Arrays.asList(targetClasses));
+    }
 
-	@Override
-	public String getMessage(String key, Map<String, Object> vars)
-	{
-		String resourceValue = null;
-		List<IStringResourceLoader> resourceLoaders = Application.get()
-			.getResourceSettings()
-			.getStringResourceLoaders();
-		Locale locale = Session.get().getLocale();
-		String style = Session.get().getStyle();
+    public DefaultBundleResolver(List<Class<?>> targetClasses)
+    {
+        this.targetClasses = Collections.unmodifiableList(targetClasses);
+    }
 
-		for (IStringResourceLoader stringResourceLoader : resourceLoaders)
-		{
-			resourceValue = stringResourceLoader.loadStringResource(clazz, key, locale, style, null);
+    @Override
+    public String getMessage(String key, Map<String, Object> vars)
+    {
+        String resourceValue = null;
+        List<IStringResourceLoader> resourceLoaders = Application.get().getResourceSettings()
+                .getStringResourceLoaders();
+        Locale locale = Session.get().getLocale();
+        String style = Session.get().getStyle();
 
-			if (resourceValue != null)
-				break;
-		}
+        outerloop: for (IStringResourceLoader stringResourceLoader : resourceLoaders)
+        {
+            for(Class<?> clazz : targetClasses)
+            {
+                resourceValue = stringResourceLoader.loadStringResource(clazz, key, locale,
+                        style, null);
 
-		StringConverterInterpolator interpolator = new StringConverterInterpolator(
-			resourceValue != null ? resourceValue : "", vars, false, locale);
+                if (resourceValue != null)
+                {
+                    break outerloop;
+                }
+            }
+        }
 
-		return interpolator.toString();
-	}
+        StringConverterInterpolator interpolator = new StringConverterInterpolator(
+                resourceValue != null ? resourceValue : "", vars, false, locale);
+
+        return interpolator.toString();
+    }
 }

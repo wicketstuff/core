@@ -30,6 +30,9 @@ public class ModalContentPanel extends Panel
 {
 // -[KeepWithinClass]-
 
+	// Varation which can be configured during by ModalMgr during call to
+	// ModalMgr.preShow(ModalContentPanel)
+	private String variation;
 
 // -[Fields]-
 
@@ -61,15 +64,17 @@ public class ModalContentPanel extends Panel
 
 // -[Methods]-
 
-	/**
-	 * Creates an IWicketModalVisit. Override this in derived Modal's to create a different class of
-	 * WicketModalVisit for each type of modal you want to track.
-	 */
-	public IWicketModalVisit createModalVisit()
+	public String getVariation()
 	{
-		return null;
+		if ( variation != null )
+			return variation;
+		return super.getVariation();
 	}
-
+	
+	public void setVariation(String variation)
+	{
+		this.variation = variation;
+	}
 
 	/**
 	 * Closes the modal windows that contains this panel.
@@ -170,11 +175,13 @@ public class ModalContentPanel extends Panel
 			});
 		}
 
-		modalContentWindow.show(target);
-
-		// Notifies the ModalMgr that a modal has been visited
+		// Notifies the ModalMgr that a ModalContentPanel is about to be opened in a ModalContentWindow
+		// ModalMgr can do things like set the variation if required or register the fact that the modal is being
+		// opened in some traffic tracking system
 		if (modalContentWindow.getModalMgr() != null)
-			modalContentWindow.getModalMgr().trackModalVisit(createModalVisit());
+			modalContentWindow.getModalMgr().preShow(this);
+		
+		modalContentWindow.show(target);
 	}
 
 	/**

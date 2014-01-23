@@ -16,29 +16,32 @@
  */
 package org.wicketstuff.rest.utils.reflection;
 
+import org.wicketstuff.rest.annotations.parameters.AnnotatedParam;
+
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
-
-import org.wicketstuff.rest.annotations.parameters.AnnotatedParam;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 
 /**
  * Utility methods to work with reflection entities
- * 
+ *
  * @author andrea del bene
- * 
+ *
  */
 public class ReflectionUtils
 {
 	/**
 	 * Check if a parameter is annotated with a given annotation.
-	 * 
+	 *
 	 * @param i
 	 *            method parameter index.
 	 * @param method
 	 *            the method the parameter belongs to.
 	 * @param targetAnnotation
 	 *            the annotation type we want to check for.
-	 * 
+	 *
 	 * @return true if the method parameter is annotated with the given annotation, false otherwise.
 	 */
 	public static boolean isParameterAnnotatedWith(int i, Method method,
@@ -62,12 +65,12 @@ public class ReflectionUtils
 
 	/**
 	 * Check if a parameter is annotated with an {@link AnnotatedParam} annotation.
-	 * 
+	 *
 	 * @param i
 	 *            method parameter index.
 	 * @param method
 	 *            the method the parameter belongs to.
-	 * 
+	 *
 	 * @return true if such an annotation is found, false otherwise.
 	 * @see AnnotatedParam
 	 */
@@ -95,7 +98,7 @@ public class ReflectionUtils
 
 	/**
 	 * Utility method to find if an annotation type is present in an array of annotations.
-	 * 
+	 *
 	 * @param parameterAnnotations
 	 *            the array of annotations we will look in.
 	 * @param targetAnnotation
@@ -120,7 +123,7 @@ public class ReflectionUtils
 
 	/**
 	 * Return the specified annotation for the method parameter at a given position (see {@code paramIndex}).
-	 * 
+	 *
 	 * @param ownerMethod
 	 * 			the parameter's method
 	 * @param paramIndex
@@ -128,7 +131,7 @@ public class ReflectionUtils
 	 * @param targetAnnotation
 	 * 			the annotation type to search for
 	 * @return
-	 * 			return an instance of the given annotation type, 
+	 * 			return an instance of the given annotation type,
 	 * 			or null if the method parameter it's not annotated.
 	 */
 	public static <T extends Annotation> T findMethodParameterAnnotation(Method ownerMethod,
@@ -139,8 +142,8 @@ public class ReflectionUtils
 	}
 
 	/**
-	 * Safely search for a method with a given signature (name + parameter types) on a given class. 
-	 * 
+	 * Safely search for a method with a given signature (name + parameter types) on a given class.
+	 *
 	 * @param clazz
 	 * 			the target class
 	 * @param name
@@ -165,7 +168,7 @@ public class ReflectionUtils
 
 	/**
 	 * Safely invoke a method with the given signature (name + parameter types) on the given target object.
-	 * 
+	 *
 	 * @param target
 	 * 			the target object
 	 * @param name
@@ -190,9 +193,9 @@ public class ReflectionUtils
 	}
 
 	/**
-	 * 
+	 *
 	 * Get the value of an annotation field.
-	 * 
+	 *
 	 * @param annotation
 	 *            the target annotation
 	 * @param fieldName
@@ -211,4 +214,24 @@ public class ReflectionUtils
 
 		return methodResult != null ? methodResult : defaultValue;
 	}
+
+	/**
+	 * Extract the list of types of every element of a given collection.
+	 *
+	 * @param
+	 *     collection the collection in input.
+	 * @return
+	 *     the list containing the type of list elements.
+	 */
+    public static List<Class<?>> getElementsClasses(Collection<?> collection)
+    {
+        List<Class<?>> targetClasses = new ArrayList<Class<?>>();
+
+        for (Object element : collection)
+        {
+            targetClasses.add(element.getClass());
+        }
+
+        return targetClasses;
+    }
 }

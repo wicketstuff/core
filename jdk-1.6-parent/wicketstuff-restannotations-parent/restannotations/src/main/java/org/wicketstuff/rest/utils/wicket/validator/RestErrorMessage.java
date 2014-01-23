@@ -16,16 +16,16 @@
  */
 package org.wicketstuff.rest.utils.wicket.validator;
 
-import java.io.Serializable;
-
 import org.apache.wicket.markup.html.form.ValidationErrorFeedback;
 import org.apache.wicket.validation.IValidationError;
+
+import java.io.Serializable;
 
 /**
  * The Class RestErrorMessage.
  */
 public class RestErrorMessage extends ValidationErrorFeedback {
-	
+
 	/** The field. */
 	private final String field;
 
@@ -36,8 +36,9 @@ public class RestErrorMessage extends ValidationErrorFeedback {
 	 * @param message the message
 	 * @param field the field
 	 */
-	public RestErrorMessage(IValidationError error, Serializable message, String field) {
-		super(error, message);	
+	public RestErrorMessage(IValidationError error, Serializable message, String field)
+	{
+		super(error, message);
 		this.field = field;
 	}
 
@@ -46,9 +47,8 @@ public class RestErrorMessage extends ValidationErrorFeedback {
 	 *
 	 * @return the field
 	 */
-	public String getField() 
+	public String getField()
 	{
 		return field;
 	}
-
 }

@@ -16,15 +16,6 @@
  */
 package org.wicketstuff.rest.resource;
 
-import java.io.Serializable;
-import java.lang.reflect.Method;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
-
 import org.apache.wicket.Application;
 import org.apache.wicket.Session;
 import org.apache.wicket.WicketRuntimeException;
@@ -53,15 +44,26 @@ import org.wicketstuff.rest.resource.urlsegments.AbstractURLSegment;
 import org.wicketstuff.rest.utils.http.HttpMethod;
 import org.wicketstuff.rest.utils.http.HttpUtils;
 import org.wicketstuff.rest.utils.reflection.MethodParameter;
+import org.wicketstuff.rest.utils.reflection.ReflectionUtils;
 import org.wicketstuff.rest.utils.wicket.AttributesWrapper;
 import org.wicketstuff.rest.utils.wicket.MethodParameterContext;
 import org.wicketstuff.rest.utils.wicket.bundle.DefaultBundleResolver;
 
+import java.io.Serializable;
+import java.lang.reflect.Method;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
+
 /**
  * Base class to build a resource that serves REST requests.
- * 
+ *
  * @author andrea del bene
- * 
+ *
  */
 public abstract class AbstractRestResource<T extends IWebSerialDeserial> implements IResource
 {
@@ -92,11 +94,11 @@ public abstract class AbstractRestResource<T extends IWebSerialDeserial> impleme
 	private final IRoleCheckingStrategy roleCheckingStrategy;
 
 	/** Bundle resolver */
-	private final IErrorMessageSource bundleResolver = new DefaultBundleResolver(getClass());
+	private final IErrorMessageSource bundleResolver;
 
 	/**
 	 * Constructor with no role-checker (i.e we don't use annotation {@link AuthorizeInvocation}).
-	 * 
+	 *
 	 * @param serialDeserial
 	 *            General class that is used to serialize/desiarilze objects to string.
 	 */
@@ -108,7 +110,7 @@ public abstract class AbstractRestResource<T extends IWebSerialDeserial> impleme
 	/**
 	 * Main constructor that takes in input the object serializer/deserializer and the role-checking
 	 * strategy to use.
-	 * 
+	 *
 	 * @param serialDeserial
 	 *            General class that is used to serialize/desiarilze objects to string
 	 * @param roleCheckingStrategy
@@ -118,22 +120,42 @@ public abstract class AbstractRestResource<T extends IWebSerialDeserial> impleme
 	{
 		Args.notNull(serialDeserial, "serialDeserial");
 
+		configureObjSerialDeserial(serialDeserial);
+		onInitialize(serialDeserial);
+
 		this.webSerialDeserial = serialDeserial;
 		this.roleCheckingStrategy = roleCheckingStrategy;
 		this.mappedMethods = loadAnnotatedMethods();
-
-		configureObjSerialDeserial(serialDeserial);
-		onInitialize(serialDeserial);
+		this.bundleResolver = new DefaultBundleResolver(loadBoundleClasses());
 	}
 
-	/***
+	/**
+     * Build a list of classes to use to search for a valid bundle. This list is
+     * made of the classes of the validators registered with abstractResource
+     * and of the class of the abstractResource.
+     *
+     * @param abstractResource
+     *            the abstract REST resource that is using the validator
+     * @return the list of the classes to use.
+     */
+	private List<Class<?>> loadBoundleClasses()
+	{
+        Collection<IValidator> validators = declaredValidators.values();
+        List<Class<?>> validatorsClasses = ReflectionUtils.getElementsClasses(validators);
+
+        validatorsClasses.add(this.getClass());
+
+        return validatorsClasses;
+    }
+
+    /***
 	 * Handles a REST request invoking one of the methods annotated with {@link MethodMapping}. If
 	 * the annotated method returns a value, this latter is automatically serialized to a given
 	 * string format (like JSON, XML, etc...) and written to the web response.<br/>
 	 * If no method is found to serve the current request, a 400 HTTP code is returned to the
 	 * client. Similarly, a 401 HTTP code is return if the user doesn't own one of the roles
 	 * required to execute an annotated method (See {@link AuthorizeInvocation}).
-	 * 
+	 *
 	 * @param attributes
 	 *            the Attribute object of the current request
 	 */
@@ -159,7 +181,7 @@ public abstract class AbstractRestResource<T extends IWebSerialDeserial> impleme
 
 	/**
 	 * Handle the different steps (authorization, validation, etc...) involved in method execution.
-	 * 
+	 *
 	 * @param attributesWrapper
 	 *            wrapper for the current Attributes
 	 * @param mappedMethod
@@ -198,10 +220,10 @@ public abstract class AbstractRestResource<T extends IWebSerialDeserial> impleme
 		{
 			IValidationError error = validationErrors.get(0);
 			Serializable message = error.getErrorMessage(bundleResolver);
-			
+
 			webSerialDeserial.objectToResponse(message, response, outputFormat);
 			response.setStatus(400);
-			
+
 			return;
 		}
 
@@ -220,7 +242,7 @@ public abstract class AbstractRestResource<T extends IWebSerialDeserial> impleme
 
 	/**
 	 * Check if user is allowed to run a method annotated with {@link AuthorizeInvocation}
-	 * 
+	 *
 	 * @param roles
 	 *            the user roles
 	 * @return true if user is allowed, else otherwise
@@ -240,7 +262,7 @@ public abstract class AbstractRestResource<T extends IWebSerialDeserial> impleme
 	/**
 	 * This method can be used to write a standard error message to the current response object when
 	 * no mapped method has been found for the current request.
-	 * 
+	 *
 	 * @param response
 	 *            the current response object
 	 * @param httpMethod
@@ -255,7 +277,7 @@ public abstract class AbstractRestResource<T extends IWebSerialDeserial> impleme
 
 	/**
 	 * Validate parameter values of the mapped method we want to execute.
-	 * 
+	 *
 	 * @param mappedMethod
 	 *            the target mapped methos
 	 * @param parametersValues
@@ -292,7 +314,7 @@ public abstract class AbstractRestResource<T extends IWebSerialDeserial> impleme
 
 	/**
 	 * Invoked just before a mapped method is invoked to serve the current request.
-	 * 
+	 *
 	 * @param mappedMethod
 	 *            the mapped method.
 	 * @param attributes
@@ -304,7 +326,7 @@ public abstract class AbstractRestResource<T extends IWebSerialDeserial> impleme
 
 	/**
 	 * Invoked just after a mapped method has been invoked to serve the current request.
-	 * 
+	 *
 	 * @param mappedMethod
 	 *            the mapped method.
 	 * @param attributes
@@ -320,7 +342,7 @@ public abstract class AbstractRestResource<T extends IWebSerialDeserial> impleme
 	/**
 	 * Method invoked to serialize the result of the invoked method and write this value to the
 	 * response.
-	 * 
+	 *
 	 * @param response
 	 *            The current response object.
 	 * @param result
@@ -343,7 +365,7 @@ public abstract class AbstractRestResource<T extends IWebSerialDeserial> impleme
 
 	/**
 	 * Method invoked to select the most suited method to serve the current request.
-	 * 
+	 *
 	 * @param attributesWrapper
 	 * 			the current attribute wrapper
 	 * @return The "best" method found to serve the request.
@@ -407,7 +429,7 @@ public abstract class AbstractRestResource<T extends IWebSerialDeserial> impleme
 	/**
 	 * Throw an exception if two o more methods have the same "score" for the current request. See
 	 * method selectMostSuitedMethod.
-	 * 
+	 *
 	 * @param list
 	 *            the list of ambiguous methods.
 	 */
@@ -431,9 +453,9 @@ public abstract class AbstractRestResource<T extends IWebSerialDeserial> impleme
 
 	/**
 	 * Method called to initialize and configure the object serializer/deserializer.
-	 * 
+	 *
 	 * @deprecated use {@link onConfigure(T objSerialDeserial)} instead.
-	 * 
+	 *
 	 * @param objSerialDeserial
 	 *            the object serializer/deserializer
 	 */
@@ -444,7 +466,7 @@ public abstract class AbstractRestResource<T extends IWebSerialDeserial> impleme
 
 	/**
 	 * Method called to initialize and configure the resource.
-	 * 
+	 *
 	 * @param objSerialDeserial
 	 *            the object serializer/deserializer
 	 */
@@ -454,7 +476,7 @@ public abstract class AbstractRestResource<T extends IWebSerialDeserial> impleme
 
 	/***
 	 * Internal method to load class methods annotated with {@link MethodMapping}
-	 * 
+	 *
 	 * @return
 	 * 		a map object contained annotated method. Mapped method are stored concatenating
 	 * 		the number of the segments of their URL and their HTTP method (see annotation MethodMapping)
@@ -464,7 +486,7 @@ public abstract class AbstractRestResource<T extends IWebSerialDeserial> impleme
 		Method[] methods = getClass().getDeclaredMethods();
 		MultiMap<String, MethodMappingInfo> mappedMethods = new MultiMap<String, MethodMappingInfo>();
 		boolean isUsingAuthAnnot = false;
-		
+
 		for (int i = 0; i < methods.length; i++)
 		{
 			Method method = methods[i];
@@ -499,7 +521,7 @@ public abstract class AbstractRestResource<T extends IWebSerialDeserial> impleme
 
 	/**
 	 * Make a list map immutable.
-	 * 
+	 *
 	 * @param listMap
 	 *            the list map in input.
 	 * @return the immutable list map.
@@ -516,7 +538,7 @@ public abstract class AbstractRestResource<T extends IWebSerialDeserial> impleme
 
 	/***
 	 * Invokes one of the resource methods annotated with {@link MethodMapping}.
-	 * 
+	 *
 	 * @param mappedMethod
 	 *            mapping info of the method.
 	 * @param attributesWrapper
@@ -551,7 +573,7 @@ public abstract class AbstractRestResource<T extends IWebSerialDeserial> impleme
 
 	/**
 	 * Execute a method implemented in the current resource class
-	 * 
+	 *
 	 * @param method
 	 *            the method that must be executed.
 	 * @param parametersValues
@@ -570,7 +592,7 @@ public abstract class AbstractRestResource<T extends IWebSerialDeserial> impleme
 		{
 			response.setStatus(500);
 			response.write("General server error.");
-			
+
 			log.debug("Error invoking method '" + method.getName() + "'");
 		}
 
@@ -579,7 +601,7 @@ public abstract class AbstractRestResource<T extends IWebSerialDeserial> impleme
 
 	/**
 	 * Utility method to extract the client URL from the current request.
-	 * 
+	 *
 	 * @return the URL for the current request.
 	 */
 	static public Url extractUrlFromRequest()
@@ -589,7 +611,7 @@ public abstract class AbstractRestResource<T extends IWebSerialDeserial> impleme
 
 	/**
 	 * Internal method that tries to extract an instance of the given class from the request body.
-	 * 
+	 *
 	 * @param argClass
 	 *            the type we want to extract from request body.
 	 * @return the extracted object.
@@ -606,10 +628,10 @@ public abstract class AbstractRestResource<T extends IWebSerialDeserial> impleme
 			return null;
 		}
 	}
-	
+
 	/**
 	 * Utility method to retrieve the current web request.
-	 * 
+	 *
 	 * @return
 	 * 		the current web request
 	 */
@@ -620,7 +642,7 @@ public abstract class AbstractRestResource<T extends IWebSerialDeserial> impleme
 
 	/**
 	 * Utility method to convert string values to the corresponding objects.
-	 * 
+	 *
 	 * @param clazz
 	 *            the type of the object we want to obtain.
 	 * @param value
@@ -654,7 +676,7 @@ public abstract class AbstractRestResource<T extends IWebSerialDeserial> impleme
 
 	/**
 	 * Utility method to retrieve the current web response.
-	 * 
+	 *
 	 * @return
 	 * 		the current web response
 	 */
@@ -665,7 +687,7 @@ public abstract class AbstractRestResource<T extends IWebSerialDeserial> impleme
 
 	/**
 	 * Set the status code for the current response.
-	 * 
+	 *
 	 * @param statusCode
 	 *            the status code we want to set on the current response.
 	 */
@@ -686,17 +708,17 @@ public abstract class AbstractRestResource<T extends IWebSerialDeserial> impleme
 	 * Return mapped methods grouped by number of segments and HTTP method. So for example, to get
 	 * all methods mapped on a path with three segments and with GET method, the key to use will be
 	 * "3_GET" (underscore-separated)
-	 * 
+	 *
 	 * @return the immutable map containing mapped methods.
 	 */
 	protected Map<String, List<MethodMappingInfo>> getMappedMethods()
 	{
 		return mappedMethods;
 	}
-	
+
 	/**
 	 * Register a Wicket validator for the current resource.
-	 * 
+	 *
 	 * @param key
 	 * 		the key to use to store the validator.
 	 * @param validator
@@ -709,7 +731,7 @@ public abstract class AbstractRestResource<T extends IWebSerialDeserial> impleme
 
 	/**
 	 * Unregister a Wicket validator.
-	 * 
+	 *
 	 * @param key
 	 * 		the key to use to remove the validator.
 	 */
@@ -720,12 +742,12 @@ public abstract class AbstractRestResource<T extends IWebSerialDeserial> impleme
 
 	/**
 	 * Retrieve a registered validato.
-	 * 
+	 *
 	 * @param key
 	 * 		the key to use to retrieve the validator.
-	 * @return the registered validator corresponding to the given key. 
+	 * @return the registered validator corresponding to the given key.
 	 *         Null if no validator has been registered with the given key.
-	 * 
+	 *
 	 */
 	protected IValidator getValidator(String key)
 	{
