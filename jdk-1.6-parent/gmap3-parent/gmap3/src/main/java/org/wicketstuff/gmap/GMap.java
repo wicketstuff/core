@@ -70,7 +70,7 @@ public class GMap extends Panel implements GOverlayContainer
     protected final WebMarkupContainer map;
     private GLatLngBounds bounds;
     private OverlayListener overlayListener = null;
-    private List<GLatLng> markersToShow;
+    private List<GLatLng> markersToShow = new ArrayList<GLatLng>();
     private boolean showMarkersForPoints = false;
     
     /**
