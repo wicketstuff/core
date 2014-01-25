@@ -718,46 +718,6 @@ public class GMap extends Panel implements GOverlayContainer
         return buf.toString();
 	}
     
-    
-//    public void fitMarkers(final List<GLatLng> markersToShow, final boolean showMarkersForPoints,
-//            final double zoomAdjustment)
-//    {
-//        if (markersToShow.isEmpty())
-//        {
-//            log.warn("Empty list provided to GMap.fitMarkers method.");
-//            return;
-//        }
-//
-//        AjaxRequestTarget target = getRequestCycle().find(AjaxRequestTarget.class);
-//        if (target != null && findPage() != null)
-//        {
-//            final StringBuilder buf = new StringBuilder();
-//            buf.append("var bounds = new google.maps.LatLngBounds();\n");
-//            buf.append("var map = " + GMap.this.getJSinvoke("map") + ";\n");
-//
-//            // Ask google maps to keep extending the bounds to include each
-//            // point
-//            for (final GLatLng point : markersToShow)
-//            {
-//                buf.append("bounds.extend( " + point.getJSconstructor() + " );\n");
-//            }
-//
-//            buf.append("map.fitBounds(bounds);\n");
-//            buf.append("map.panToBounds(bounds);\n");
-//
-//            target.appendJavaScript(buf.toString());
-//        }
-//
-//        // show the markers
-//        if (showMarkersForPoints)
-//        {
-//            for (final GLatLng location : markersToShow)
-//            {
-//                this.addOverlay(new GMarker(new GMarkerOptions(this, location)));
-//            }
-//        }
-//    }
-
     private String getJSsetDraggingEnabled(final boolean enabled)
     {
         return getJSinvoke("setDraggingEnabled(" + enabled + ")");
