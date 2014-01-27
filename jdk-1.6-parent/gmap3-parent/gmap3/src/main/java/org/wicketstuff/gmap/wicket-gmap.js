@@ -191,6 +191,18 @@ function WicketMap(id, failSilently) {
         this.options.panControl = enabled;
         this.map.setOptions(this.options);
     }
+    
+    this.fitBounds = function(bounds) {
+    	this.options.bounds = bounds;
+        this.map.setOptions(this.options);
+    	this.map.fitBounds(bounds);
+    }
+    
+    this.panToBounds = function(bounds) {
+    	this.options.bounds = bounds;
+        this.map.setOptions(this.options);
+        this.map.panToBounds(bounds);
+    }
 
     this.getMapTypeString = function(mapType) {
         switch (mapType) {

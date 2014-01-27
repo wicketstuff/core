@@ -70,7 +70,9 @@ public class GMap extends Panel implements GOverlayContainer
     protected final WebMarkupContainer map;
     private GLatLngBounds bounds;
     private OverlayListener overlayListener = null;
-
+    private List<GLatLng> markersToShow = new ArrayList<GLatLng>();
+    private boolean showMarkersForPoints = false;
+    
     /**
      * If set to true map loading will not produce any JavaScript errors in case
      * google maps API cannot be found (e.g. no Internet connection)
@@ -612,6 +614,7 @@ public class GMap extends Panel implements GOverlayContainer
         js.append(getJSsetScaleControlEnabled(scaleControlEnabled));
         js.append(getJSsetMapTypeControlEnabled(mapTypeControlEnabled));
         js.append(getJSsetPanControlEnabled(panControlEnabled));
+        js.append(getJSFitMarkers());
 
         js.append(mapType.getJSsetMapType(this));
 
@@ -681,33 +684,10 @@ public class GMap extends Panel implements GOverlayContainer
     public void fitMarkers(final List<GLatLng> markersToShow, final boolean showMarkersForPoints,
             final double zoomAdjustment)
     {
-        if (markersToShow.isEmpty())
-        {
-            log.warn("Empty list provided to GMap.fitMarkers method.");
-            return;
-        }
-
-        AjaxRequestTarget target = getRequestCycle().find(AjaxRequestTarget.class);
-        if (target != null && findPage() != null)
-        {
-            final StringBuilder buf = new StringBuilder();
-            buf.append("var bounds = new google.maps.LatLngBounds();\n");
-            buf.append("var map = " + GMap.this.getJSinvoke("map") + ";\n");
-
-            // Ask google maps to keep extending the bounds to include each
-            // point
-            for (final GLatLng point : markersToShow)
-            {
-                buf.append("bounds.extend( " + point.getJSconstructor() + " );\n");
-            }
-
-            buf.append("map.fitBounds(bounds);\n");
-            buf.append("map.panToBounds(bounds);\n");
-
-            target.appendJavaScript(buf.toString());
-        }
-
-        // show the markers
+        this.markersToShow = markersToShow;
+        this.showMarkersForPoints = showMarkersForPoints;
+    	
+    	// show the markers
         if (showMarkersForPoints)
         {
             for (final GLatLng location : markersToShow)
@@ -716,7 +696,28 @@ public class GMap extends Panel implements GOverlayContainer
             }
         }
     }
-
+    
+    private String getJSFitMarkers() {
+    	if (markersToShow.isEmpty())
+        {
+            log.warn("Empty list provided to GMap.fitMarkers method.");
+            return "";
+        }
+        
+        final StringBuilder buf = new StringBuilder();
+        buf.append("var bounds = new google.maps.LatLngBounds();\n");
+        // Ask google maps to keep extending the bounds to include each point
+		for (final GLatLng point : markersToShow)
+		{
+		    buf.append("bounds.extend( " + point.getJSconstructor() + " );\n");
+		}
+        
+		buf.append(getJSinvoke("fitBounds(bounds)"));
+		buf.append(getJSinvoke("panToBounds(bounds)"));
+        
+        return buf.toString();
+	}
+    
     private String getJSsetDraggingEnabled(final boolean enabled)
     {
         return getJSinvoke("setDraggingEnabled(" + enabled + ")");
