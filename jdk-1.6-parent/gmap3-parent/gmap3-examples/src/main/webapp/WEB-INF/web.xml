@@ -176,6 +176,15 @@
 						<param-value>org.wicketstuff.examples.gmap.bounds.BoundsGMapApplication</param-value>
 				</init-param>
 		</filter>
+		
+		<filter>
+				<filter-name>ClusteringGMapApplication</filter-name>
+				<filter-class>org.apache.wicket.protocol.http.WicketFilter</filter-class>
+				<init-param>
+						<param-name>applicationClassName</param-name>
+						<param-value>org.wicketstuff.examples.gmap.clustering.ClusteringGMapApplication</param-value>
+				</init-param>
+		</filter>
 
 		<filter-mapping>
 				<filter-name>GeoCodeGMapApplication</filter-name>
@@ -271,6 +280,11 @@
 		<filter-mapping>
 				<filter-name>BoundsGMapApplication</filter-name>
 				<url-pattern>/bounds/*</url-pattern>
+		</filter-mapping>
+		
+		<filter-mapping>
+				<filter-name>ClusteringGMapApplication</filter-name>
+				<url-pattern>/clustering/*</url-pattern>
 		</filter-mapping>
 		
 

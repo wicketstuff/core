@@ -42,6 +42,7 @@ import org.wicketstuff.gmap.api.GMapType;
 import org.wicketstuff.gmap.api.GMarker;
 import org.wicketstuff.gmap.api.GMarkerOptions;
 import org.wicketstuff.gmap.api.GOverlay;
+import org.wicketstuff.gmap.api.GMarkerCluster;
 import org.wicketstuff.gmap.event.GEventListenerBehavior;
 
 /**
@@ -71,13 +72,13 @@ public class GMap extends Panel implements GOverlayContainer
     private GLatLngBounds bounds;
     private OverlayListener overlayListener = null;
     private List<GLatLng> markersToShow = new ArrayList<GLatLng>();
-    private boolean showMarkersForPoints = false;
     
     /**
      * If set to true map loading will not produce any JavaScript errors in case
      * google maps API cannot be found (e.g. no Internet connection)
      */
     private boolean failSilently = false;
+    private GMarkerCluster markerCluster;
 
     /**
      * Construct.
@@ -592,7 +593,23 @@ public class GMap extends Panel implements GOverlayContainer
             }
         }
     }
+    
+    public void setMarkerCluster(GMarkerCluster markerCluster)
+    {
+        if(markerCluster == null)
+            throw new IllegalArgumentException("GMarkerCluster argument should not be null.");
+        this.markerCluster = markerCluster;
+        if (getBehaviors(GMapMarkerClustererHeaderContributor.class).isEmpty()) 
+        {
+            add(new GMapMarkerClustererHeaderContributor());
+        }
+    }
 
+    public boolean isMarkerClusterEnabled()
+    {
+        return markerCluster != null;
+    }
+    
     /**
      * Generates the JavaScript used to instantiate this GMap3 as an JavaScript class on the client side.
      *
@@ -615,7 +632,6 @@ public class GMap extends Panel implements GOverlayContainer
         js.append(getJSsetMapTypeControlEnabled(mapTypeControlEnabled));
         js.append(getJSsetPanControlEnabled(panControlEnabled));
         js.append(getJSFitMarkers());
-
         js.append(mapType.getJSsetMapType(this));
 
         // Add the overlays.
@@ -627,6 +643,8 @@ public class GMap extends Panel implements GOverlayContainer
         {
             js.append(((GEventListenerBehavior) behavior).getJSaddListener());
         }
+        
+        js.append(getJSMarkerCluster());
 
         return js.toString();
     }
@@ -685,8 +703,7 @@ public class GMap extends Panel implements GOverlayContainer
             final double zoomAdjustment)
     {
         this.markersToShow = markersToShow;
-        this.showMarkersForPoints = showMarkersForPoints;
-
+        
         // show the markers
         if (showMarkersForPoints)
         {
@@ -700,7 +717,6 @@ public class GMap extends Panel implements GOverlayContainer
     private String getJSFitMarkers() {
         if (markersToShow.isEmpty())
         {
-            log.warn("Empty list provided to GMap.fitMarkers method.");
             return "";
         }
         
@@ -796,6 +812,18 @@ public class GMap extends Panel implements GOverlayContainer
     {
         return getJSinvoke("zoomIn()");
     }
+    
+    private String getJSMarkerCluster()
+    {
+    	if(markerCluster != null)
+    	{
+    		
+    		return markerCluster.getJSconstructor();
+    	}
+    	return "";
+    }
+    
+    
 
     /**
      * Update state from a request to an AJAX target.
