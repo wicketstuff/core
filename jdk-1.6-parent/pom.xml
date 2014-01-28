@@ -64,6 +64,7 @@
 		<module>serializer-kryo</module>
 		<module>serializer-kryo2</module>
 		<module>serializer-fast</module>
+		<module>serializer-ui</module>
 		<module>stateless-parent</module>
 		<module>shiro-security</module>
 		<module>wicket-facebook-parent</module>
