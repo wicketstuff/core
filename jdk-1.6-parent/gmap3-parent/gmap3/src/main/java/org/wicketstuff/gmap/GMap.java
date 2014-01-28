@@ -78,7 +78,7 @@ public class GMap extends Panel implements GOverlayContainer
      * google maps API cannot be found (e.g. no Internet connection)
      */
     private boolean failSilently = false;
-	private GMarkerCluster markerCluster;
+    private GMarkerCluster markerCluster;
 
     /**
      * Construct.
