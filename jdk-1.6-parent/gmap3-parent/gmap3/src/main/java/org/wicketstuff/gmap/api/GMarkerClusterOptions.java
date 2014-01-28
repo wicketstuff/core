@@ -1,0 +1,138 @@
+package org.wicketstuff.gmap.api;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import org.wicketstuff.gmap.js.Array;
+import org.wicketstuff.gmap.js.ObjectLiteral;
+
+/**
+ * Options object for using specific settings in marker clustering. 
+ * Like custom icons or zoom restrictions.
+ * 
+ * http://google-maps-utility-library-v3.googlecode.com/svn/trunk/markerclusterer/docs/reference.html
+ * 
+ * Docs from the js file:
+ *  'gridSize': (number) The grid size of a cluster in pixels.
+ *  'maxZoom': (number) The maximum zoom level that a marker can be part of a cluster.
+ *  'zoomOnClick': (boolean) Whether the default behaviour of clicking on a cluster is to zoom into it.
+ *  'averageCenter': (boolean) Wether the center of each cluster should be
+ *                   the average of all markers in the cluster.
+ *  'minimumClusterSize': (number) The minimum number of markers to be in a
+ *                        cluster before the markers are hidden and a count is shown.
+ *  'styles': (object) An object that has style properties:
+ *    'url': (string) The image url.
+ *    'height': (number) The image height.
+ *    'width': (number) The image width.
+ *    'anchor': (Array) The anchor position of the label text.
+ *    'textColor': (string) The text color.
+ *    'textSize': (number) The text size.
+ *    'backgroundPosition': (string) The position of the backgound x, y.
+ * 
+ * @author Rob Sonke
+ */
+public class GMarkerClusterOptions implements GValue
+{
+    private static final long serialVersionUID = 1L;
+    
+    private Integer gridSize = 60;
+    private Integer maxZoom = 100;
+    private boolean zoomOnClick = true;
+    private boolean averageCenter = false;
+    private Integer minimumClusterSize = 2;
+    private List<GMarkerClusterStyle> styles = new ArrayList<GMarkerClusterStyle>();
+
+    public GMarkerClusterOptions()
+    {
+        
+    }
+
+    /**
+     * @see GValue#getJSconstructor()
+     */
+    @Override
+    public String getJSconstructor()
+    {
+        ObjectLiteral literal = new ObjectLiteral();
+        
+        literal.set("gridSize", getGridSize().toString());
+        literal.set("maxZoom", getMaxZoom().toString());
+        literal.setString("zoomOnClick", (isZoomOnClick())?"true":"false");
+        literal.setString("averageCenter", (isAverageCenter())?"true":"false");
+        literal.set("minimumClusterSize", getMinimumClusterSize().toString());
+
+        if(getStyles().isEmpty())
+        	literal.set("styles", "[]");
+        else
+        {
+        	Array array = new Array();
+            for (GMarkerClusterStyle style : getStyles())
+            {
+                array.add(style.getJSconstructor());
+            }
+        	literal.set("styles", array.toJS());
+        }
+
+        return literal.toJS();
+    }
+    
+    public Integer getGridSize() 
+    {
+		return gridSize;
+	}
+
+	public void setGridSize(Integer gridSize) 
+	{
+		this.gridSize = gridSize;
+	}
+
+	public Integer getMaxZoom() 
+	{
+		return maxZoom;
+	}
+
+	public void setMaxZoom(Integer maxZoom) 
+	{
+		this.maxZoom = maxZoom;
+	}
+
+	public boolean isZoomOnClick() 
+	{
+		return zoomOnClick;
+	}
+
+	public void setZoomOnClick(boolean zoomOnClick) 
+	{
+		this.zoomOnClick = zoomOnClick;
+	}
+
+	public boolean isAverageCenter() 
+	{
+		return averageCenter;
+	}
+
+	public void setAverageCenter(boolean averageCenter) 
+	{
+		this.averageCenter = averageCenter;
+	}
+
+	public Integer getMinimumClusterSize() 
+	{
+		return minimumClusterSize;
+	}
+
+	public void setMinimumClusterSize(Integer minimumClusterSize) 
+	{
+		this.minimumClusterSize = minimumClusterSize;
+	}
+
+	public List<GMarkerClusterStyle> getStyles() 
+	{
+		return styles;
+	}
+
+	public void setStyles(List<GMarkerClusterStyle> styles) 
+	{
+		this.styles = styles;
+	}
+}
