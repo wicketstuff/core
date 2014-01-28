@@ -599,7 +599,10 @@ public class GMap extends Panel implements GOverlayContainer
         if(markerCluster == null)
             throw new IllegalArgumentException("GMarkerCluster argument should not be null.");
         this.markerCluster = markerCluster;
-        add(new GMapMarkerClustererHeaderContributor());
+        if (getBehaviors(GMapMarkerClustererHeaderContributor.class).isEmpty()) 
+        {
+            add(new GMapMarkerClustererHeaderContributor());
+        }
     }
 
     public boolean isMarkerClusterEnabled()
