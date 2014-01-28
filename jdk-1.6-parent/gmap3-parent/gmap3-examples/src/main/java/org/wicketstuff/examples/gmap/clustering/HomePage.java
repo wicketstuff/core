@@ -42,11 +42,11 @@ public class HomePage extends WicketExamplePage
         // generate a bunch of random markers
         for(int i=0; i<1000; i++)
         {
-        	double latitude = minLat + (double)(Math.random() * ((maxLat - minLat) + 1));
+            double latitude = minLat + (double)(Math.random() * ((maxLat - minLat) + 1));
             double longitude = minLon + (double)(Math.random() * ((maxLon - minLon) + 1));
         	
-        	GLatLng glatlng = new GLatLng(latitude, longitude);
-        	markersToShow.add(glatlng);
+            GLatLng glatlng = new GLatLng(latitude, longitude);
+            markersToShow.add(glatlng);
             
             map.addOverlay(new GMarker("marker"+i, new GMarkerOptions(map, glatlng)));
             mapDefault.addOverlay(new GMarker("marker"+i, new GMarkerOptions(mapDefault, glatlng)));
@@ -58,17 +58,11 @@ public class HomePage extends WicketExamplePage
         List<GMarkerClusterStyle> styles = new ArrayList<GMarkerClusterStyle>();
         
         GMarkerClusterStyle style1 = new GMarkerClusterStyle();
-        style1.setUrl(image1);
-        style1.setHeight(26);
-        style1.setWidth(30);
+        style1.setUrl(image1).setHeight(26).setWidth(30);
         GMarkerClusterStyle style2 = new GMarkerClusterStyle();
-        style2.setUrl(image2);
-        style2.setHeight(35);
-        style2.setWidth(40);
+        style2.setUrl(image2).setHeight(35).setWidth(40);
         GMarkerClusterStyle style3 = new GMarkerClusterStyle();
-        style3.setUrl(image3);
-        style3.setHeight(44);
-        style3.setWidth(50);
+        style3.setUrl(image3).setHeight(44).setWidth(50);
         
         styles.add(style1);
         styles.add(style2);

@@ -81,9 +81,10 @@ public class GMarkerClusterOptions implements GValue
 		return gridSize;
 	}
 
-	public void setGridSize(Integer gridSize) 
+	public GMarkerClusterOptions setGridSize(Integer gridSize) 
 	{
 		this.gridSize = gridSize;
+		return this;
 	}
 
 	public Integer getMaxZoom() 
@@ -91,9 +92,10 @@ public class GMarkerClusterOptions implements GValue
 		return maxZoom;
 	}
 
-	public void setMaxZoom(Integer maxZoom) 
+	public GMarkerClusterOptions setMaxZoom(Integer maxZoom) 
 	{
 		this.maxZoom = maxZoom;
+		return this;
 	}
 
 	public boolean isZoomOnClick() 
@@ -101,9 +103,10 @@ public class GMarkerClusterOptions implements GValue
 		return zoomOnClick;
 	}
 
-	public void setZoomOnClick(boolean zoomOnClick) 
+	public GMarkerClusterOptions setZoomOnClick(boolean zoomOnClick) 
 	{
 		this.zoomOnClick = zoomOnClick;
+		return this;
 	}
 
 	public boolean isAverageCenter() 
@@ -111,9 +114,10 @@ public class GMarkerClusterOptions implements GValue
 		return averageCenter;
 	}
 
-	public void setAverageCenter(boolean averageCenter) 
+	public GMarkerClusterOptions setAverageCenter(boolean averageCenter) 
 	{
 		this.averageCenter = averageCenter;
+		return this;
 	}
 
 	public Integer getMinimumClusterSize() 
@@ -121,9 +125,10 @@ public class GMarkerClusterOptions implements GValue
 		return minimumClusterSize;
 	}
 
-	public void setMinimumClusterSize(Integer minimumClusterSize) 
+	public GMarkerClusterOptions setMinimumClusterSize(Integer minimumClusterSize) 
 	{
 		this.minimumClusterSize = minimumClusterSize;
+		return this;
 	}
 
 	public List<GMarkerClusterStyle> getStyles() 
@@ -131,8 +136,9 @@ public class GMarkerClusterOptions implements GValue
 		return styles;
 	}
 
-	public void setStyles(List<GMarkerClusterStyle> styles) 
+	public GMarkerClusterOptions setStyles(List<GMarkerClusterStyle> styles) 
 	{
 		this.styles = styles;
+		return this;
 	}
 }

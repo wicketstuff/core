@@ -65,9 +65,10 @@ public class GMarkerClusterStyle implements GValue
 		return url;
 	}
 	
-	public void setUrl(String url) 
+	public GMarkerClusterStyle setUrl(String url) 
 	{
 		this.url = url;
+		return this;
 	}
 	
 	public Integer getHeight() 
@@ -75,9 +76,10 @@ public class GMarkerClusterStyle implements GValue
 		return height;
 	}
 	
-	public void setHeight(Integer height) 
+	public GMarkerClusterStyle setHeight(Integer height) 
 	{
 		this.height = height;
+		return this;
 	}
 	
 	public Integer getWidth() 
@@ -85,9 +87,10 @@ public class GMarkerClusterStyle implements GValue
 		return width;
 	}
 	
-	public void setWidth(Integer width) 
+	public GMarkerClusterStyle setWidth(Integer width) 
 	{
 		this.width = width;
+		return this;
 	}
 	
 	public Integer[] getAnchor() 
@@ -95,9 +98,10 @@ public class GMarkerClusterStyle implements GValue
 		return anchor;
 	}
 	
-	public void setAnchor(Integer[] anchor) 
+	public GMarkerClusterStyle setAnchor(Integer[] anchor) 
 	{
 		this.anchor = anchor;
+		return this;
 	}
 	
 	public String getTextColor() 
@@ -105,9 +109,10 @@ public class GMarkerClusterStyle implements GValue
 		return textColor;
 	}
 	
-	public void setTextColor(String textColor) 
+	public GMarkerClusterStyle setTextColor(String textColor) 
 	{
 		this.textColor = textColor;
+		return this;
 	}
 	
 	public Integer getTextSize() 
@@ -115,9 +120,10 @@ public class GMarkerClusterStyle implements GValue
 		return textSize;
 	}
 	
-	public void setTextSize(Integer textSize) 
+	public GMarkerClusterStyle setTextSize(Integer textSize) 
 	{
 		this.textSize = textSize;
+		return this;
 	}
 	
 	public String getBackgroundPosition() 
@@ -125,9 +131,10 @@ public class GMarkerClusterStyle implements GValue
 		return backgroundPosition;
 	}
 	
-	public void setBackgroundPosition(String backgroundPosition) 
+	public GMarkerClusterStyle setBackgroundPosition(String backgroundPosition) 
 	{
 		this.backgroundPosition = backgroundPosition;
+		return this;
 	}
 
 }
