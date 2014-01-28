@@ -596,8 +596,10 @@ public class GMap extends Panel implements GOverlayContainer
     
     public void setMarkerCluster(GMarkerCluster markerCluster)
     {
-    	this.markerCluster = markerCluster;
-		add(new GMapMarkerClustererHeaderContributor());
+        if(markerCluster == null)
+            throw new IllegalArgumentException("GMarkerCluster argument should not be null.");
+        this.markerCluster = markerCluster;
+        add(new GMapMarkerClustererHeaderContributor());
     }
 
     public boolean isMarkerClusterEnabled()
@@ -699,7 +701,7 @@ public class GMap extends Panel implements GOverlayContainer
     {
         this.markersToShow = markersToShow;
         
-    	// show the markers
+        // show the markers
         if (showMarkersForPoints)
         {
             for (final GLatLng location : markersToShow)
