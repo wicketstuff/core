@@ -17,7 +17,6 @@
 package org.wicketstuff.security.components.markup.html.links;
 
 import org.apache.wicket.Page;
-import org.apache.wicket.markup.html.link.IPageLink;
 import org.apache.wicket.markup.html.link.Link;
 import org.wicketstuff.security.actions.WaspAction;
 import org.wicketstuff.security.checks.ISecurityCheck;
@@ -30,7 +29,7 @@ import org.wicketstuff.security.components.SecureComponentHelper;
  * visible, and enable rights to be clickable. This class is by default outfitted with a
  * {@link LinkSecurityCheck}, please see its documentation on how to enable the alternative security
  * check
- * 
+ *
  * @author marrink
  * @see LinkSecurityCheck
  */
@@ -73,6 +72,17 @@ public class SecurePageLink<T> extends Link<T> implements ISecureComponent
 	}
 
 	/**
+	 * @deprecated use {@link SecurePageLink#SecurePageLink(String, IPageLink)}
+	 * @param id
+	 * @param pageLink
+	 */
+	@Deprecated
+	public SecurePageLink(String id, org.apache.wicket.markup.html.link.IPageLink pageLink)
+	{
+		this(id, new OldPageLinkWrapper(pageLink));
+	}
+
+	/**
 	 * @param id
 	 * @param pageLink
 	 */
@@ -86,7 +96,7 @@ public class SecurePageLink<T> extends Link<T> implements ISecureComponent
 	/**
 	 * Handles a link click by asking for a concrete Page instance through the IPageLink.getPage()
 	 * delayed linking interface. This call will normally cause the destination page to be created.
-	 * 
+	 *
 	 * @see org.apache.wicket.markup.html.link.Link#onClick()
 	 */
 	@Override
