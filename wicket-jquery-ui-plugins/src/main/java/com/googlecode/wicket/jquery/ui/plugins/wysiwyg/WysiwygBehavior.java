@@ -98,9 +98,9 @@ public class WysiwygBehavior extends JQueryBehavior
 		}
 
 		// Bootstrap
-		if (settings.getBootstrapJavaScriptReference() != null)
+		if (settings.getBootstrapDropDownJavaScriptReference() != null)
 		{
-			this.add(settings.getBootstrapJavaScriptReference());
+			this.add(settings.getBootstrapDropDownJavaScriptReference());
 		}
 
 		// JQuery Hot Keys

@@ -19,19 +19,19 @@ package com.googlecode.wicket.jquery.ui.plugins.wysiwyg.resource;
 
 import org.apache.wicket.request.resource.JavaScriptResourceReference;
 
-public class BootstrapJavaScriptResourceReference extends JavaScriptResourceReference
+public class BootstrapDropDownJavaScriptResourceReference extends JavaScriptResourceReference
 {
 	private static final long serialVersionUID = 1L;
 
-	private static final BootstrapJavaScriptResourceReference INSTANCE = new BootstrapJavaScriptResourceReference();
+	private static final BootstrapDropDownJavaScriptResourceReference INSTANCE = new BootstrapDropDownJavaScriptResourceReference();
 
-	public static BootstrapJavaScriptResourceReference get()
+	public static BootstrapDropDownJavaScriptResourceReference get()
 	{
 		return INSTANCE;
 	}
 
-	private BootstrapJavaScriptResourceReference()
+	private BootstrapDropDownJavaScriptResourceReference()
 	{
-		super(BootstrapJavaScriptResourceReference.class, "js/bootstrap-wysiwyg.js");
+		super(BootstrapDropDownJavaScriptResourceReference.class, "js/bootstrap-dropdown.js");
 	}
 }

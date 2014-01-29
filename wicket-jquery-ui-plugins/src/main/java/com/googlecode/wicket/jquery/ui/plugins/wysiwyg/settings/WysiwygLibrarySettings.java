@@ -21,7 +21,7 @@ import org.apache.wicket.request.resource.JavaScriptResourceReference;
 import org.apache.wicket.settings.def.JavaScriptLibrarySettings;
 
 import com.googlecode.wicket.jquery.ui.plugins.wysiwyg.resource.BootstrapCombinedNoIconsStyleSheetResourceReference;
-import com.googlecode.wicket.jquery.ui.plugins.wysiwyg.resource.BootstrapJavaScriptResourceReference;
+import com.googlecode.wicket.jquery.ui.plugins.wysiwyg.resource.BootstrapDropDownJavaScriptResourceReference;
 import com.googlecode.wicket.jquery.ui.plugins.wysiwyg.resource.BootstrapResponsiveStyleSheetResourceReference;
 import com.googlecode.wicket.jquery.ui.plugins.wysiwyg.resource.BootstrapWysiwygJavaScriptResourceReference;
 import com.googlecode.wicket.jquery.ui.plugins.wysiwyg.resource.EditorStyleSheetResourceReference;
@@ -83,9 +83,9 @@ public class WysiwygLibrarySettings extends JavaScriptLibrarySettings implements
 
 	// JavaScripts //
 	@Override
-	public JavaScriptResourceReference getBootstrapJavaScriptReference()
+	public JavaScriptResourceReference getBootstrapDropDownJavaScriptReference()
 	{
-		return BootstrapJavaScriptResourceReference.get();
+		return BootstrapDropDownJavaScriptResourceReference.get();
 	}
 
 	@Override

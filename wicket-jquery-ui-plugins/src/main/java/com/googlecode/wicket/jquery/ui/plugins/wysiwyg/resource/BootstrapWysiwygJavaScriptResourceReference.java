@@ -32,6 +32,6 @@ public class BootstrapWysiwygJavaScriptResourceReference extends JavaScriptResou
 
 	private BootstrapWysiwygJavaScriptResourceReference()
 	{
-		super(BootstrapWysiwygJavaScriptResourceReference.class, "js/bootstrap.min.js");
+		super(BootstrapWysiwygJavaScriptResourceReference.class, "js/bootstrap-wysiwyg.js");
 	}
 }
