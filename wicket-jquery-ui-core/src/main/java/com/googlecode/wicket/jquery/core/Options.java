@@ -59,7 +59,6 @@ public class Options implements IClusterable
 	 */
 	public static String asString(String value)
 	{
-		// XXX: mark as API Break
 		return String.format("%s%s%s", QUOTE, value.replace(QUOTE, "\\" + QUOTE), QUOTE);
 	}
 

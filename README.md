@@ -46,6 +46,7 @@ If the version you specified is *snapshot*, you might define this repository:
 
 <table>
 <tr><th>wicket-jquery-ui</th><th>Wicket</th><th>jQuery UI</th></tr>
+<tr><td>6.13.1</td><td>6.13.0</td><td>1.10.4</td></tr>
 <tr><td>6.13.0</td><td>6.13.0</td><td>1.10.3</td></tr>
 <tr><td>6.12.0</td><td>6.12.0</td><td>1.10.3</td></tr>
 <tr><td>6.11.0</td><td>6.11.0</td><td>1.10.3</td></tr>
