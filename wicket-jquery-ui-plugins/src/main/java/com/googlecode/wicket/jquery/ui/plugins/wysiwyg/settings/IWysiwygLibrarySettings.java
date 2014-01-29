@@ -27,7 +27,7 @@ public interface IWysiwygLibrarySettings extends IJavaScriptLibrarySettings
 	CssResourceReference getBootstrapResponsiveStyleSheetReference();
 	CssResourceReference getEditorStyleSheetReference();
 
-	JavaScriptResourceReference getBootstrapJavaScriptReference();
+	JavaScriptResourceReference getBootstrapDropDownJavaScriptReference();
 	JavaScriptResourceReference getBootstrapWysiwygJavaScriptReference();
 	JavaScriptResourceReference getJQueryHotKeysJavaScriptReference();
 	JavaScriptResourceReference getPrettifyJavaScriptReference();
