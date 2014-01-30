@@ -57,8 +57,6 @@ class FodelSpecs
     }
   }
   "Setter only Fodel" should {
-    "return the backing property by using the setter function" in {
-    }
     "assign the backing property" in {
       var bound = tony
       val f = new FodelString(null, bound = _)

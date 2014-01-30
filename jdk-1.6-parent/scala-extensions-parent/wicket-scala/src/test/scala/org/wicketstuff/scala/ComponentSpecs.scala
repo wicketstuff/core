@@ -47,6 +47,7 @@ class ComponentSpecs
       val slk = new SLink("clicker", clickCount += 1)
       clickCountUpdatingFunction(slk.onClick)
       tester.destroy()
+      ok("passed")
     }
   }
   "SLabel component" should {
@@ -66,6 +67,7 @@ class ComponentSpecs
       n = n + karyn
       sl.getDefaultModelObject aka "scala label" must be equalTo(tony+karyn)
       tester.destroy()
+      ok("passed")
     }
   }
   "Label component" should {
@@ -77,6 +79,7 @@ class ComponentSpecs
       n = n + karyn
       l.getDefaultModelObject aka "label with explicit fodel" must be equalTo(tony+karyn)
       tester.destroy()
+      ok("passed")
     }
   }
   "STextField component" should {
@@ -90,6 +93,7 @@ class ComponentSpecs
       stf.setModelObject(karyn)
       n aka "baking model object after textfield update" mustEqual karyn
       tester.destroy()
+      ok("passed")
     }
     "can be used with an Int" in {
       val tester = new WicketTester()
@@ -106,12 +110,14 @@ class ComponentSpecs
       def fx = sf.onSubmit
       clickCountUpdatingFunction(fx)
       tester.destroy()
+      ok("passed")
     }
     "pass model to a super-class" in {
       val tester = new WicketTester()
       val sf = new SForm("form", new Fodel[String]("test"), {})
       sf.getModelObject mustEqual "test"
       tester.destroy()
+      ok("passed")
     }
   }
   "SListView component" should {
@@ -125,6 +131,7 @@ class ComponentSpecs
       def curry = slv.populateItem(null)
       clickCountUpdatingFunction(curry)
       tester.destroy()
+      ok("passed")
     }
   }
   "SPropertyListView component" should {
@@ -137,6 +144,7 @@ class ComponentSpecs
       def curry = splv.populateItem(null)
       clickCountUpdatingFunction(curry)
       tester.destroy()
+      ok("passed")
     }
     "take a partially applied function for the #populateItem method" in {
       val tester = new WicketTester()
@@ -148,6 +156,7 @@ class ComponentSpecs
       def curry = splv.populateItem(null)
       clickCountUpdatingFunction(curry)
       tester.destroy()
+      ok("passed")
     }
     "be able to be constructed with a static Scala type List" in {
       val tester = new WicketTester()
