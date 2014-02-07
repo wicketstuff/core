@@ -50,6 +50,16 @@ public class Html5Video extends Html5Media
 	}
 
 	/**
+	 * Poster of the video (optional)
+	 * 
+	 * @return
+	 */
+	protected String getPoster()
+	{
+		return null;
+	}
+
+	/**
 	 * Processes the component tag.
 	 * 
 	 * @param tag
@@ -67,6 +77,11 @@ public class Html5Video extends Html5Media
 		if (getHeight() > 0)
 		{
 			tag.put("height", getHeight());
+		}
+
+		if (getPoster() != null && getPoster().trim().length() > 0)
+		{
+			tag.put("poster", getPoster());
 		}
 
 		// Default handling for component tag
