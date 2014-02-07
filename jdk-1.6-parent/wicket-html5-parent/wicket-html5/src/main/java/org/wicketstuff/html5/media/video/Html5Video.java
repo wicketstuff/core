@@ -6,6 +6,7 @@
  */
 package org.wicketstuff.html5.media.video;
 
+import static org.apache.wicket.util.string.Strings.isEmpty;
 import java.util.List;
 
 import org.apache.wicket.markup.ComponentTag;
@@ -79,7 +80,7 @@ public class Html5Video extends Html5Media
 			tag.put("height", getHeight());
 		}
 
-		if (getPoster() != null && getPoster().trim().length() > 0)
+		if (!isEmpty(getPoster()))
 		{
 			tag.put("poster", getPoster());
 		}
