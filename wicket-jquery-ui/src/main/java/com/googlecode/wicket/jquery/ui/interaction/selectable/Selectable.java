@@ -17,14 +17,15 @@
 package com.googlecode.wicket.jquery.ui.interaction.selectable;
 
 import java.io.Serializable;
-import java.util.Collections;
 import java.util.List;
 
 import org.apache.wicket.AttributeModifier;
+import org.apache.wicket.Component;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.util.ListModel;
 
+import com.googlecode.wicket.jquery.core.JQueryAbstractBehavior;
 import com.googlecode.wicket.jquery.core.JQueryBehavior;
 import com.googlecode.wicket.jquery.core.JQueryContainer;
 import com.googlecode.wicket.jquery.ui.JQueryIcon;
@@ -34,64 +35,98 @@ import com.googlecode.wicket.jquery.ui.interaction.draggable.Draggable;
  * Provides a jQuery UI selectable {@link JQueryContainer}.<br/>
  * Children of that container can be selected using the mouse or by pressing ctrl+click<br/>
  * Usage:
- * 
+ *
  * <pre>
  * &lt;ul wicket:id="selectable"&gt;
  * 	&lt;li wicket:id="items"&gt;
  * 		&lt;span wicket:id="item"&gt;[label]&lt;/span&gt;
  * 	&lt;/li&gt;
  * &lt;/ul&gt;
- * 
- * 
+ *
+ *
  * final Selectable&lt;String&gt; selectable = new Selectable&lt;String&gt;("selectable", list) {
- * 
+ *
  * 	protected void onSelect(AjaxRequestTarget target, List&lt;String&gt; items)
  * 	{
  * 		//items: gets the selected item
  * 	}
  * };
- * 
+ *
  * this.add(selectable);
- * 
+ *
  * // ... //
- * 
- * //selectable.getSelectedItems(): gets the selected items
+ *
+ * //selectable.getModelObject(): gets the selected items
  * </pre>
- * 
+ *
  * @param <T> the type of the model object
  * @author Sebastien Briquet - sebfz1
- * 
+ *
  */
 public class Selectable<T extends Serializable> extends JQueryContainer implements ISelectableListener<T>
 {
 	private static final long serialVersionUID = 1L;
 
-	private List<T> items = null; // selected items
+	/** The list of selectable items */
+	private IModel<? extends List<T>> items;
 
 	/**
 	 * Constructor
-	 * 
+	 *
 	 * @param id the markup id
-	 * @param list the list the {@link Selectable} should observe.
+	 * @param items the list the {@link Selectable} should observe.
 	 */
-	public Selectable(String id, List<T> list)
+	public Selectable(String id, List<T> items)
 	{
-		this(id, new ListModel<T>(list));
+		this(id, new ListModel<T>(items));
 	}
 
 	/**
 	 * Constructor
-	 * 
+	 *
 	 * @param id the markup id
-	 * @param model the list the {@link Selectable} should observe.
+	 * @param items the list the {@link Selectable} should observe.
 	 */
-	public Selectable(String id, IModel<List<T>> model)
+	public Selectable(String id, IModel<? extends List<T>> items)
+	{
+		super(id, new ListModel<T>());
+
+		this.items = wrap(items);
+	}
+
+	/**
+	 * Constructor
+	 *
+	 * @param id the markup id
+	 * @param model the list of selected items
+	 * @param items the list the {@link Selectable} should observe.
+	 */
+	public Selectable(String id, IModel<? extends List<T>> model, List<T> items)
+	{
+		this(id, model, new ListModel<T>(items));
+	}
+
+	/**
+	 * Constructor
+	 *
+	 * @param id the markup id
+	 * @param model the list of selected items
+	 * @param items the list the {@link Selectable} should observe.
+	 */
+	public Selectable(String id, IModel<? extends List<T>> model, IModel<? extends List<T>> items)
 	{
 		super(id, model);
+
+		this.items = wrap(items);
 	}
 
 	// Properties //
-	
+
+	/**
+	 * Gets the model object
+	 *
+	 * @return the list of selected items
+	 */
 	@SuppressWarnings("unchecked")
 	public List<T> getModelObject()
 	{
@@ -99,9 +134,42 @@ public class Selectable<T extends Serializable> extends JQueryContainer implemen
 	}
 
 	/**
+	 * Sets the model object
+	 *
+	 * @param list the list of selected items
+	 */
+	public void setModelObject(List<T> list)
+	{
+		this.setDefaultModelObject(list);
+	}
+
+	/**
+	 * Gets the list of selected items
+	 *
+	 * @return the list of selected items
+	 * @deprecated use {@link #getModelObject()} instead
+	 */
+	// XXX: to be removed in next version
+	@Deprecated
+	public List<T> getSelectedItems()
+	{
+		return this.getModelObject();
+	}
+
+	/**
+	 * Gets the reference list of all selectable items.
+	 *
+	 * @return the list of all selectable items.
+	 */
+	protected List<T> getItemList()
+	{
+		return this.items.getObject();
+	}
+
+	/**
 	 * Gets the selector that identifies the selectable item within a {@link Selectable}<br/>
 	 * The selector should be the path from the {@link Selectable} to the item (for instance '#myUL LI', where '#myUL' is the {@link Selectable}'s selector)
-	 * 
+	 *
 	 * @return "li" by default
 	 */
 	protected String getItemSelector()
@@ -109,31 +177,19 @@ public class Selectable<T extends Serializable> extends JQueryContainer implemen
 		return "li";
 	}
 
-	/**
-	 * Gets the selected items
-	 * 
-	 * @return selected items
-	 */
-	public List<T> getSelectedItems()
-	{
-		if (this.items != null)
-		{
-			return this.items;
-		}
-
-		return Collections.emptyList();
-	}
-
-	public void setSelectedItems(List<T> items)
-	{
-		this.items = items;
-	}
-
 	// Events //
+
+	@Override
+	protected void onConfigure()
+	{
+		super.onConfigure();
+
+		this.add(this.newSelectedBehavior());
+	}
 
 	/**
 	 * Triggered when a selection has been made (stops)
-	 * 
+	 *
 	 * @param target the {@link AjaxRequestTarget}
 	 * @param items the {@link List} of selected items
 	 */
@@ -143,8 +199,66 @@ public class Selectable<T extends Serializable> extends JQueryContainer implemen
 		// noop
 	}
 
+	@Override
+	protected void onDetach()
+	{
+		super.onDetach();
+
+		this.items.detach();
+	}
+
+	// Factories //
+
+	/**
+	 * Gets the JQueryAbstractBehavior in charge of selecting default items (matching model object)
+	 *
+	 * @return the {@link JQueryAbstractBehavior}
+	 */
+	protected JQueryAbstractBehavior newSelectedBehavior()
+	{
+		return new JQueryAbstractBehavior("selected") {
+
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			public boolean isTemporary(Component component)
+			{
+				return true;
+			}
+
+			private String getSelector()
+			{
+				return String.format("%s %s", JQueryWidget.getSelector(Selectable.this), Selectable.this.getItemSelector());
+			}
+
+			@Override
+			protected String $()
+			{
+				StringBuilder statement = new StringBuilder("jQuery(function() { ");
+				List<T> list = Selectable.this.getModelObject();
+
+				if (list != null)
+				{
+					List<T> items = Selectable.this.getItemList();
+
+					for (T item : list)
+					{
+						int index = items.indexOf(item); // use #equals
+
+						if (index > -1)
+						{
+							statement.append("jQuery('").append(this.getSelector()).append("').eq(").append(index).append(").addClass('ui-selected');");
+						}
+					}
+				}
+
+				return statement.append(" });").toString();
+			}
+		};
+	}
+
 	// IJQueryWidget //
-	
+
 	@Override
 	public JQueryBehavior newWidgetBehavior(String selector)
 	{
@@ -155,7 +269,7 @@ public class Selectable<T extends Serializable> extends JQueryContainer implemen
 			@Override
 			protected List<T> getItemList()
 			{
-				return Selectable.this.getModelObject();
+				return Selectable.this.getItemList();
 			}
 
 			@Override
@@ -167,7 +281,7 @@ public class Selectable<T extends Serializable> extends JQueryContainer implemen
 			@Override
 			public void onSelect(AjaxRequestTarget target, List<T> items)
 			{
-				Selectable.this.setSelectedItems(items);
+				Selectable.this.setModelObject(items);
 				Selectable.this.onSelect(target, items);
 			}
 		};
@@ -178,7 +292,7 @@ public class Selectable<T extends Serializable> extends JQueryContainer implemen
 	/**
 	 * Creates a {@link Draggable} object that is related to this {@link Selectable}.<br/>
 	 * Uses a default factory that will create a {@link Draggable} with a <code>ui-icon-arrow-4-diag</code> icon
-	 * 
+	 *
 	 * @param id the markup id
 	 * @return the {@link Draggable}
 	 */
@@ -189,7 +303,7 @@ public class Selectable<T extends Serializable> extends JQueryContainer implemen
 
 	/**
 	 * Creates a {@link Draggable} object that is related to this {@link Selectable}
-	 * 
+	 *
 	 * @param id the markup id
 	 * @param factory the {@link SelectableDraggableFactory} instance
 	 * @return the {@link Draggable}
@@ -200,7 +314,7 @@ public class Selectable<T extends Serializable> extends JQueryContainer implemen
 	}
 
 	// Default Draggable Factory //
-	
+
 	/**
 	 * Default {@link SelectableDraggableFactory} implementation which will create a {@link Draggable} with a {@link JQueryIcon#ARROW_4_DIAG} icon
 	 */
@@ -225,7 +339,8 @@ public class Selectable<T extends Serializable> extends JQueryContainer implemen
 			};
 
 			draggable.add(AttributeModifier.append("class", "ui-icon " + JQueryIcon.ARROW_4_DIAG));
-			draggable.add(AttributeModifier.append("style", "display: inline-block; background-position: -16px -80px !important;")); // The background position is the same as ui-icon-arrow-4-diag. It is marked as important for the icon to not disappear while selecting over it.
+			draggable.add(AttributeModifier.append("style", "display: inline-block; background-position: -16px -80px !important;")); // The background position is the same as ui-icon-arrow-4-diag. It is marked as important for the icon to
+																																		// not disappear while selecting over it.
 
 			return draggable;
 		}

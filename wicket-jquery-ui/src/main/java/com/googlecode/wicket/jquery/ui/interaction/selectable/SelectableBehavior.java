@@ -69,10 +69,9 @@ public abstract class SelectableBehavior<T extends Serializable> extends JQueryB
 
 	// Properties //
 	/**
-	 * Gets the reference list of all selectable items.<br/>
-	 * Usually the model object of the component on which this {@link SelectableBehavior} is bound to.
+	 * Gets the reference list of all selectable items.
 	 *
-	 * @return the {@link List}
+	 * @return the list of all selectable items.
 	 */
 	protected abstract List<T> getItemList();
 

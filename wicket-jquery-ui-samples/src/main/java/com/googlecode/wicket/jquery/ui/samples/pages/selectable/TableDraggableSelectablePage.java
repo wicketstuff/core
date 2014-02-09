@@ -105,7 +105,7 @@ public class TableDraggableSelectablePage extends AbstractSelectablePage
 			@Override
 			public void onDrop(AjaxRequestTarget target, Component component)
 			{
-				info(String.format("Dropped %s", selectable.getSelectedItems()));
+				info(String.format("Dropped %s", selectable.getModelObject()));
 
 				target.add(feedback);
 				target.add(this); //refresh the listview
