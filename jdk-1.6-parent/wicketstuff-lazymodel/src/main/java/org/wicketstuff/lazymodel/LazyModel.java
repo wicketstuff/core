@@ -22,6 +22,7 @@ import java.lang.reflect.Method;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 import java.lang.reflect.TypeVariable;
+import java.util.List;
 
 import org.apache.wicket.WicketRuntimeException;
 import org.apache.wicket.model.IChainingModel;
@@ -499,6 +500,12 @@ public class LazyModel<T> implements IModel<T>, IObjectClassAwareModel<T>,
 			}
 
 			try {
+				if ((target instanceof List) && Reflection.isListIndex(method)) {
+					if (((List<?>) target).size() <= (Integer)args[0]) {
+						// evaluate invalid index as null as PropertyModel does it 
+						return null;
+					}
+				}
 				return method.invoke(target, args);
 			} catch (Exception ex) {
 				throw new WicketRuntimeException(ex);

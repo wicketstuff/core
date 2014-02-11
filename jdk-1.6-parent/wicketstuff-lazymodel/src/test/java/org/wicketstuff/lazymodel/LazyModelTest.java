@@ -43,6 +43,7 @@ import org.junit.Test;
  * 
  * @author svenmeier
  */
+@SuppressWarnings("serial")
 public class LazyModelTest {
 
 	@Test
@@ -462,6 +463,18 @@ public class LazyModelTest {
 		assertEquals("b.getC(i)", model.getPath());
 
 		assertEquals(c, model.getObject());
+	}
+
+	@Test
+	public void getOutOfBoundsFromGenericList() {
+		B b = new B();
+
+		LazyModel<C> model = model(from(b).getCs().get(0));
+
+		assertEquals(C.class, model.getObjectClass());
+		assertEquals("cs.get(i)", model.getPath());
+
+		assertEquals(null, model.getObject());
 	}
 
 	@Test

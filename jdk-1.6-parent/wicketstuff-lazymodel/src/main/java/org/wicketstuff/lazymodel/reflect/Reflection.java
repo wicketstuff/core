@@ -20,6 +20,7 @@ import java.lang.reflect.Method;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 import java.lang.reflect.TypeVariable;
+import java.util.List;
 
 /**
  * Reflection utilities.
@@ -110,6 +111,24 @@ public final class Reflection {
 			}
 		}
 
+		return false;
+	}
+
+	/**
+	 * Does the given method represent a {@link List} index.
+	 * 
+	 * @param method
+	 *            method to test
+	 * @return {@code true} if list index
+	 */
+	public static boolean isListIndex(Method method) {
+		if ("get".equals(method.getName())) {
+			Class<?>[] parameters = method.getParameterTypes();
+			if (parameters.length == 1 && parameters[0] == Integer.TYPE) {
+				return true;
+			}
+		}
+		
 		return false;
 	}
 }
