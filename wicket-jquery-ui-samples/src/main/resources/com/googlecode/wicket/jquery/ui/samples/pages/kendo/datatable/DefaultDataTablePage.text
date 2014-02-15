@@ -4,6 +4,10 @@ This sample shows some of the Kendo UI's grid capabilities, you can for instance
 <b>Note 2:</b> At this stage, the grouping is performed client side. That means that only data on the current page are grouped.<br/>
 
 <br/>
+<h4>Since</h4>
+wicket-kendo-ui-6.9.0
+
+<br/>
 <h4>Licensing</h4>
 Kendo UI is licensed under GPLv3, which is compatible with Apache License 2.0<br/>
 <br/>
@@ -12,7 +16,3 @@ GPLv3 is also newly compatible with a few other licenses. The Apache License 2.0
 </cite>
 <br/><br/>
 More info here: <a href="http://www.gnu.org/licenses/quick-guide-gplv3.html">http://www.gnu.org/licenses/quick-guide-gplv3.html</a> 
-
-<br/>
-<h4>Since</h4>
-wicket-kendo-ui-6.9.0

@@ -24,12 +24,12 @@ In order to get <i>only</i> new feedback messages (ie: not keeping the history),
 </pre>
 
 <br/>
+<h4>Since</h4>
+wicket-jquery-ui-kendo-6.12.0
+
+<br/>
 <h4>Licensing</h4>
 Kendo UI Console does not belongs to the Kendo UI Web framework.<br/>
 A part of the underlying javascript is licensed under the MIT and GPL licenses.
 <br/><br/>
 More info here: <a href="http://www.bitstorm.org/jquery/license.html">http://www.bitstorm.org/jquery/license.html</a> 
-
-<br/>
-<h4>Since</h4>
-wicket-jquery-ui-kendo-6.12.0
