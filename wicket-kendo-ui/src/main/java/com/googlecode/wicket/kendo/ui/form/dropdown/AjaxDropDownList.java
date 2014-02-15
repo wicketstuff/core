@@ -59,7 +59,7 @@ public class AjaxDropDownList<T> extends DropDownList<T> implements ISelectionCh
 	 * Constructor
 	 *
 	 * @param id the markup id
-	 * @param choices the collection of choices in the dropdown
+	 * @param choices the list of choices
 	 */
 	public AjaxDropDownList(String id, List<? extends T> choices)
 	{
@@ -70,7 +70,7 @@ public class AjaxDropDownList<T> extends DropDownList<T> implements ISelectionCh
 	 * Constructor
 	 *
 	 * @param id the markup id
-	 * @param choices the collection of choices in the dropdown
+	 * @param choices the list of choices
 	 * @param renderer the rendering engine
 	 */
 	public AjaxDropDownList(String id, List<? extends T> choices, IChoiceRenderer<? super T> renderer)
@@ -83,7 +83,7 @@ public class AjaxDropDownList<T> extends DropDownList<T> implements ISelectionCh
 	 *
 	 * @param id the markup id
 	 * @param model the {@link IModel}
-	 * @param choices the collection of choices in the dropdown
+	 * @param choices the list of choices
 	 */
 	public AjaxDropDownList(String id, IModel<T> model, List<? extends T> choices)
 	{
@@ -95,7 +95,7 @@ public class AjaxDropDownList<T> extends DropDownList<T> implements ISelectionCh
 	 *
 	 * @param id the markup id
 	 * @param model the {@link IModel}
-	 * @param choices the collection of choices in the dropdown
+	 * @param choices the list of choices
 	 * @param renderer the rendering engine
 	 */
 	public AjaxDropDownList(String id, IModel<T> model, List<? extends T> choices, IChoiceRenderer<? super T> renderer)
@@ -107,7 +107,7 @@ public class AjaxDropDownList<T> extends DropDownList<T> implements ISelectionCh
 	 * Constructor
 	 *
 	 * @param id the markup id
-	 * @param choices the collection of choices in the dropdown
+	 * @param choices the list of choices
 	 */
 	public AjaxDropDownList(String id, IModel<? extends List<? extends T>> choices)
 	{
@@ -119,7 +119,7 @@ public class AjaxDropDownList<T> extends DropDownList<T> implements ISelectionCh
 	 *
 	 * @param id the markup id
 	 * @param model the {@link IModel}
-	 * @param choices the collection of choices in the dropdown
+	 * @param choices the list of choices
 	 */
 	public AjaxDropDownList(String id, IModel<T> model, IModel<? extends List<? extends T>> choices)
 	{
@@ -130,7 +130,7 @@ public class AjaxDropDownList<T> extends DropDownList<T> implements ISelectionCh
 	 * Constructor
 	 *
 	 * @param id the markup id
-	 * @param choices the collection of choices in the dropdown
+	 * @param choices the list of choices
 	 * @param renderer the rendering engine
 	 */
 	public AjaxDropDownList(String id, IModel<? extends List<? extends T>> choices, IChoiceRenderer<? super T> renderer)
@@ -143,7 +143,7 @@ public class AjaxDropDownList<T> extends DropDownList<T> implements ISelectionCh
 	 *
 	 * @param id the markup id
 	 * @param model the {@link IModel}
-	 * @param choices the collection of choices in the dropdown
+	 * @param choices the list of choices
 	 * @param renderer the rendering engine
 	 */
 	public AjaxDropDownList(String id, IModel<T> model, IModel<? extends List<? extends T>> choices, IChoiceRenderer<? super T> renderer)
@@ -152,6 +152,7 @@ public class AjaxDropDownList<T> extends DropDownList<T> implements ISelectionCh
 	}
 
 	// Events //
+
 	@Override
 	public void onSelectionChanged(AjaxRequestTarget target)
 	{
