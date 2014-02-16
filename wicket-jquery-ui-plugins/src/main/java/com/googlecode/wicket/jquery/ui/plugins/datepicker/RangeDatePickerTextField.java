@@ -163,7 +163,10 @@ public class RangeDatePickerTextField extends FormComponentPanel<DateRange> impl
 	 */
 	protected DateFormat newDateFormat(Locale locale)
 	{
-		return new SimpleDateFormat("dd MMM yyyy", locale);
+		DateFormat df = new SimpleDateFormat("dd MMM yyyy", locale);
+		df.setTimeZone(DateRange.UTC);
+
+		return df;
 	}
 
 	/**

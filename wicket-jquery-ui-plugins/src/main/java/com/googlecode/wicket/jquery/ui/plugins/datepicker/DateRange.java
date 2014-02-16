@@ -34,7 +34,8 @@ import org.apache.wicket.util.io.IClusterable;
 public class DateRange implements IClusterable
 {
 	private static final long serialVersionUID = 1L;
-	
+
+	public static final String PATTERN = "yyyy-MM-dd'T'HH:mm:ss";
 	public static final TimeZone UTC = TimeZone.getTimeZone("UTC");
 
 	/**
@@ -119,13 +120,13 @@ public class DateRange implements IClusterable
 	{
 		this.end = date;
 	}
-	
+
 	@Override
 	public String toString()
 	{
-		DateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss"); // ISO8601, no time zone
+		DateFormat df = new SimpleDateFormat(PATTERN); // ISO8601, no time zone
 		df.setTimeZone(UTC);
-		
+
 		return String.format("[new Date('%s'),new Date('%s')]", df.format(this.getStart()), df.format(this.getEnd()));
 	}
 }

@@ -44,12 +44,14 @@ public class RangeDatePickerTextFieldPage extends AbstractRangeDatePickerPage
 			@Override
 			public void onSubmit()
 			{
-				DateRange dateRange = datepicker.getModelObject();
+				DateRange range = datepicker.getModelObject();
 
-				if (dateRange != null)
+				if (range != null)
 				{
-					DateFormat df = new SimpleDateFormat("dd MMMM yyyy");
-					info(String.format("From %s to %s", df.format(dateRange.getStart()), df.format(dateRange.getEnd())));
+					DateFormat df = new SimpleDateFormat("dd MMM yyyy");
+					df.setTimeZone(DateRange.UTC); //important
+
+					this.info(String.format("%s - %s", df.format(range.getStart()), df.format(range.getEnd())));
 				}
 				else
 				{
