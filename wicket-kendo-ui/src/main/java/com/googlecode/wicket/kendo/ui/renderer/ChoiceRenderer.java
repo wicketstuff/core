@@ -14,32 +14,31 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.googlecode.wicket.kendo.ui.form.combobox;
+package com.googlecode.wicket.kendo.ui.renderer;
 
 import org.apache.wicket.core.util.lang.PropertyResolver;
 
 import com.googlecode.wicket.jquery.core.renderer.TextRenderer;
 
 /**
- * Provides the default ComboBox renderer.
+ * Default implementation of {@link IChoiceRenderer}.
+ *
+ * @author Sebastien Briquet - sebfz1
  *
  * @param <T> the model object type
- * @author Sebastien Briquet - sebfz1
  */
-// TODO move to .form and rename
-// TODO create interface?
-public class ComboBoxRenderer<T> extends TextRenderer<T>
+public class ChoiceRenderer<T> extends TextRenderer<T> implements IChoiceRenderer<T>
 {
 	private static final long serialVersionUID = 1L;
-	private static final String TEXT_FIELD = "cb_text";
-	private static final String VALUE_FIELD = "cb_value";
+	private static final String TEXT_FIELD = "ds_text";
+	private static final String VALUE_FIELD = "ds_value";
 
 	private String valueExpression;
 
 	/**
 	 * Constructor
 	 */
-	public ComboBoxRenderer()
+	public ChoiceRenderer()
 	{
 		super();
 
@@ -51,7 +50,7 @@ public class ComboBoxRenderer<T> extends TextRenderer<T>
 	 *
 	 * @param textExpression the property expression that will be resolved for the bean supplied to {@link #getText(Object)}
 	 */
-	public ComboBoxRenderer(String textExpression)
+	public ChoiceRenderer(String textExpression)
 	{
 		super(textExpression);
 
@@ -64,18 +63,14 @@ public class ComboBoxRenderer<T> extends TextRenderer<T>
 	 * @param textExpression the property expression that will be resolved for the bean supplied to {@link #getText(Object)}
 	 * @param valueExpression the property expression that will be resolved for the bean supplied to {@link #getValue(Object)}
 	 */
-	public ComboBoxRenderer(String textExpression, String valueExpression)
+	public ChoiceRenderer(String textExpression, String valueExpression)
 	{
 		super(textExpression);
 
 		this.valueExpression = valueExpression;
 	}
 
-	/**
-	 * Gets the name of the field that acts as the 'dataTextField' in the JSON response.
-	 *
-	 * @return the name of the text field
-	 */
+	@Override
 	public String getTextField()
 	{
 		String textExpression = super.getExpression();
@@ -88,11 +83,7 @@ public class ComboBoxRenderer<T> extends TextRenderer<T>
 		return TEXT_FIELD;
 	}
 
-	/**
-	 * Gets the name of the field that acts as the 'dataValueField' in the JSON response.
-	 *
-	 * @return the name of the value field
-	 */
+	@Override
 	public String getValueField()
 	{
 		if (this.valueExpression != null)
@@ -103,12 +94,7 @@ public class ComboBoxRenderer<T> extends TextRenderer<T>
 		return VALUE_FIELD;
 	}
 
-	/**
-	 * Gets the value that should be renderer for the supplied object
-	 *
-	 * @param object the T object
-	 * @return the value
-	 */
+	@Override
 	public String getValue(T object)
 	{
 		if (this.valueExpression != null)
@@ -124,13 +110,8 @@ public class ComboBoxRenderer<T> extends TextRenderer<T>
 		return this.getText(object);
 	}
 
-	/**
-	 * Gets the JSON representation of the supplied object
-	 *
-	 * @param object the object
-	 * @return the JSON representation of the object
-	 */
-	public String toJSON(T object)
+	@Override
+	public String toJson(T object)
 	{
 		return String.format("{ \"%s\": \"%s\", \"%s\": \"%s\" }", this.getTextField(), this.getText(object), this.getValueField(), this.getValue(object));
 	}

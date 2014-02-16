@@ -29,7 +29,7 @@ import com.googlecode.wicket.jquery.core.JQueryBehavior;
 import com.googlecode.wicket.jquery.core.Options;
 import com.googlecode.wicket.jquery.core.data.IChoiceProvider;
 import com.googlecode.wicket.kendo.ui.behavior.ChoiceModelBehavior;
-import com.googlecode.wicket.kendo.ui.form.combobox.ComboBoxRenderer;
+import com.googlecode.wicket.kendo.ui.renderer.ChoiceRenderer;
 
 /**
  * Provides a Kendo UI MultiSelect widget.<br/>
@@ -49,7 +49,7 @@ public abstract class MultiSelect<T> extends FormComponent<Collection<T>> implem
 	private List<T> choices = null;
 
 	/** the datasource renderer */
-	private ComboBoxRenderer<? super T> renderer;
+	private ChoiceRenderer<? super T> renderer;
 
 	/** inner list width. 0 means that it will not be handled */
 	private int width = 0;
@@ -68,9 +68,9 @@ public abstract class MultiSelect<T> extends FormComponent<Collection<T>> implem
 	 * Constructor
 	 *
 	 * @param id the markup id
-	 * @param renderer the {@link ComboBoxRenderer}
+	 * @param renderer the {@link ChoiceRenderer}
 	 */
-	public MultiSelect(String id, ComboBoxRenderer<? super T> renderer)
+	public MultiSelect(String id, ChoiceRenderer<? super T> renderer)
 	{
 		super(id);
 
@@ -85,7 +85,7 @@ public abstract class MultiSelect<T> extends FormComponent<Collection<T>> implem
 	 */
 	public MultiSelect(String id, IModel<? extends Collection<T>> model)
 	{
-		this(id, model, new ComboBoxRenderer<T>());
+		this(id, model, new ChoiceRenderer<T>());
 	}
 
 	/**
@@ -93,10 +93,10 @@ public abstract class MultiSelect<T> extends FormComponent<Collection<T>> implem
 	 *
 	 * @param id the markup id
 	 * @param model the {@link IModel}
-	 * @param renderer the {@link ComboBoxRenderer}
+	 * @param renderer the {@link ChoiceRenderer}
 	 */
 	@SuppressWarnings("unchecked")
-	public MultiSelect(String id, IModel<? extends Collection<T>> model, ComboBoxRenderer<? super T> renderer)
+	public MultiSelect(String id, IModel<? extends Collection<T>> model, ChoiceRenderer<? super T> renderer)
 	{
 		super(id, (IModel<Collection<T>>) model);
 
@@ -203,7 +203,7 @@ public abstract class MultiSelect<T> extends FormComponent<Collection<T>> implem
 
 		for (T value : this.getModelObject())
 		{
-			values.add(this.renderer.toJSON(value));
+			values.add(this.renderer.toJson(value));
 		}
 
 		return values.toString();

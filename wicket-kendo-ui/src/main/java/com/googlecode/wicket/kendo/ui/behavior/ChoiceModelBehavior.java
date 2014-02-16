@@ -25,7 +25,7 @@ import org.apache.wicket.request.IRequestHandler;
 import org.apache.wicket.request.cycle.RequestCycle;
 import org.apache.wicket.request.http.WebResponse;
 
-import com.googlecode.wicket.kendo.ui.form.combobox.ComboBoxRenderer;
+import com.googlecode.wicket.kendo.ui.renderer.IChoiceRenderer;
 
 /**
  * Provides the choice ajax loading behavior
@@ -38,9 +38,9 @@ public abstract class ChoiceModelBehavior<T> extends AbstractAjaxBehavior
 {
 	private static final long serialVersionUID = 1L;
 
-	private final ComboBoxRenderer<? super T> renderer;
+	private final IChoiceRenderer<? super T> renderer;
 
-	public ChoiceModelBehavior(ComboBoxRenderer<? super T> renderer)
+	public ChoiceModelBehavior(IChoiceRenderer<? super T> renderer)
 	{
 		super();
 
@@ -84,7 +84,7 @@ public abstract class ChoiceModelBehavior<T> extends AbstractAjaxBehavior
 							builder.append(",");
 						}
 
-						builder.append(ChoiceModelBehavior.this.renderer.toJSON(object));
+						builder.append(ChoiceModelBehavior.this.renderer.toJson(object));
 					}
 
 					builder.append("]");

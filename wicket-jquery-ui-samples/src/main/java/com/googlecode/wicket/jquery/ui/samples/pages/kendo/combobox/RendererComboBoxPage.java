@@ -11,7 +11,7 @@ import com.googlecode.wicket.jquery.ui.samples.data.dao.GenresDAO;
 import com.googlecode.wicket.kendo.ui.form.button.AjaxButton;
 import com.googlecode.wicket.kendo.ui.form.button.Button;
 import com.googlecode.wicket.kendo.ui.form.combobox.ComboBox;
-import com.googlecode.wicket.kendo.ui.form.combobox.ComboBoxRenderer;
+import com.googlecode.wicket.kendo.ui.renderer.ChoiceRenderer;
 
 public class RendererComboBoxPage extends AbstractComboBoxPage
 {
@@ -27,7 +27,7 @@ public class RendererComboBoxPage extends AbstractComboBoxPage
 		form.add(feedback.setOutputMarkupId(true));
 
 		// ComboBox //
-		final ComboBox<Genre> dropdown = new ComboBox<Genre>("combobox", new Model<String>(), GenresDAO.all(), new ComboBoxRenderer<Genre>("name", "id"));
+		final ComboBox<Genre> dropdown = new ComboBox<Genre>("combobox", new Model<String>(), GenresDAO.all(), new ChoiceRenderer<Genre>("name", "id"));
 		form.add(dropdown); //.setRequired(true)
 
 		// Buttons //
