@@ -28,9 +28,9 @@ import com.googlecode.wicket.jquery.core.JQueryBehavior;
 import com.googlecode.wicket.jquery.core.JQueryEvent;
 import com.googlecode.wicket.jquery.core.ajax.IJQueryAjaxAware;
 import com.googlecode.wicket.jquery.core.ajax.JQueryAjaxBehavior;
+import com.googlecode.wicket.jquery.core.ajax.JQueryAjaxChangeBehavior;
+import com.googlecode.wicket.jquery.core.ajax.JQueryAjaxChangeBehavior.ChangeEvent;
 import com.googlecode.wicket.jquery.core.event.ISelectionChangedListener;
-import com.googlecode.wicket.jquery.core.event.JQueryAjaxChangeBehavior;
-import com.googlecode.wicket.jquery.core.event.JQueryAjaxChangeBehavior.ChangeEvent;
 import com.googlecode.wicket.kendo.ui.KendoAbstractBehavior;
 
 /**

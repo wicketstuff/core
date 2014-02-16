@@ -39,7 +39,7 @@ import com.googlecode.wicket.kendo.ui.datatable.column.IExportableColumn;
 
 /**
  * Provides export capability for the {@link DataTable}
- * 
+ *
  * @author Sebastien Briquet - sebfz1
  */
 public class CSVDataExporter
@@ -49,7 +49,7 @@ public class CSVDataExporter
 
 	/**
 	 * Exports {@link DataTable} data to a CSV file
-	 * 
+	 *
 	 * @param cycle the {@link RequestCycle}
 	 * @param table the {@link DataTable}
 	 * @param filename the file name of the output
@@ -71,7 +71,7 @@ public class CSVDataExporter
 
 	/**
 	 * Exports {@link DataTable} data to a CSV file
-	 * 
+	 *
 	 * @param cycle the {@link RequestCycle}
 	 * @param provider the {@link IDataProvider}
 	 * @param columns the list of {@link IExportableColumn}
@@ -79,11 +79,14 @@ public class CSVDataExporter
 	 */
 	public static void export(RequestCycle cycle, final IDataProvider<?> provider, final List<IExportableColumn> columns, String filename)
 	{
+		@SuppressWarnings("resource")
 		CSVDataExporterResourceStream writer = new CSVDataExporterResourceStream(provider, columns);
 		ResourceStreamRequestHandler handler = new ResourceStreamRequestHandler(writer, filename);
 		handler.setContentDisposition(ContentDisposition.ATTACHMENT);
 
 		cycle.scheduleRequestHandlerAfterCurrent(handler);
+
+		// TODO writer.close(); ???
 	}
 
 	private String contentType;
@@ -102,7 +105,7 @@ public class CSVDataExporter
 
 	/**
 	 * Constructor
-	 * 
+	 *
 	 * @param contentType the content-type, ie: text/csv
 	 */
 	public CSVDataExporter(String contentType)
@@ -114,7 +117,7 @@ public class CSVDataExporter
 
 	/**
 	 * Gets the content type
-	 * 
+	 *
 	 * @return the content type
 	 */
 	public String getContentType()
@@ -124,7 +127,7 @@ public class CSVDataExporter
 
 	/**
 	 * Indicates whether headers will be written to the output
-	 * 
+	 *
 	 * @return true or false
 	 */
 	public boolean isExportHeadersEnabled()
@@ -137,7 +140,7 @@ public class CSVDataExporter
 	/**
 	 * Quotes a value for export to CSV.<br/>
 	 * According to RFC4180, this should just duplicate all occurrences of the quote character and wrap the result in the quote character.
-	 * 
+	 *
 	 * @param value The value to be quoted.
 	 * @return a quoted copy of the value.
 	 */
@@ -148,7 +151,7 @@ public class CSVDataExporter
 
 	/**
 	 * Writes the headers to the output
-	 * 
+	 *
 	 * @param provider the {@link IDataProvider}
 	 * @param columns the list of {@link IColumn}
 	 * @param writer the {@link PrintWriter}
@@ -176,7 +179,7 @@ public class CSVDataExporter
 
 	/**
 	 * Exports a row to the output
-	 * 
+	 *
 	 * @param provider the {@link IDataProvider}
 	 * @param columns the list of {@link IColumn}
 	 * @param row the row of typed objects
@@ -211,7 +214,7 @@ public class CSVDataExporter
 
 	/**
 	 * Exports all data provided by the {@link IDataProvider} to the {@link OutputStream}.
-	 * 
+	 *
 	 * @param provider the {@link IDataProvider}
 	 * @param columns the list of {@link IColumn}
 	 * @param output the {@link OutputStream}
@@ -224,7 +227,7 @@ public class CSVDataExporter
 
 	/**
 	 * Exports the data provided by the {@link IDataProvider} to the {@link OutputStream}.
-	 * 
+	 *
 	 * @param provider the {@link IDataProvider}
 	 * @param columns the list of {@link IColumn}
 	 * @param output the {@link OutputStream}

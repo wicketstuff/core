@@ -14,15 +14,13 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.googlecode.wicket.jquery.core.event;
+package com.googlecode.wicket.jquery.core.ajax;
 
 import org.apache.wicket.ajax.attributes.CallbackParameter;
 import org.apache.wicket.behavior.Behavior;
 import org.apache.wicket.markup.html.form.FormComponent;
 
 import com.googlecode.wicket.jquery.core.JQueryEvent;
-import com.googlecode.wicket.jquery.core.ajax.IJQueryAjaxAware;
-import com.googlecode.wicket.jquery.core.ajax.JQueryAjaxPostBehavior;
 
 /**
  * Provides a new {@link JQueryAjaxPostBehavior} that is designed to be called on 'change' jQuery event<br/>
