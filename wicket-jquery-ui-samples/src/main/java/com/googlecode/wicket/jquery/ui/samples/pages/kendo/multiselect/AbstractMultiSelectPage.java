@@ -19,7 +19,8 @@ abstract class AbstractMultiSelectPage extends AbstractKendoPage
 	protected List<DemoLink> getDemoLinks()
 	{
 		return Arrays.asList(
-				new DemoLink(DefaultMultiSelectPage.class, "MultiSelect")
+				new DemoLink(DefaultMultiSelectPage.class, "MultiSelect"),
+				new DemoLink(LazyMultiSelectPage.class, "MultiSelect: lazy load")
 			);
 	}
 }

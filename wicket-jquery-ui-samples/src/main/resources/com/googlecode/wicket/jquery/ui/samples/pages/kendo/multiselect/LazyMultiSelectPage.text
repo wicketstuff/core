@@ -1,8 +1,8 @@
-This sample shows how to use the Kendo UI <tt>MultiSelect</tt>.
+This sample shows how to use the Kendo UI <tt>MultiSelect</tt> with lazy loading choices.
 
 <br/>
 <h4>Note</h4>
-<tt>MultiSelect</tt> inherits from <tt>ListMultipleChoice</tt>, but <tt>#setMaxRows(int)</tt> has not effect with this widget. The <tt>height</tt> option can be used instead.
+This <tt>MultiSelect</tt> implementation - in the "lazy" package - differs from the other one as it does not inherit from <tt>ListMultipleChoice</tt> built-in component.
 
 <br/>
 <h4>Warning</h4>

@@ -26,6 +26,8 @@ import com.googlecode.wicket.jquery.core.renderer.TextRenderer;
  * @param <T> the model object type
  * @author Sebastien Briquet - sebfz1
  */
+// TODO move to .form and rename
+// TODO create interface?
 public class ComboBoxRenderer<T> extends TextRenderer<T>
 {
 	private static final long serialVersionUID = 1L;
@@ -46,6 +48,7 @@ public class ComboBoxRenderer<T> extends TextRenderer<T>
 
 	/**
 	 * Constructor
+	 *
 	 * @param textExpression the property expression that will be resolved for the bean supplied to {@link #getText(Object)}
 	 */
 	public ComboBoxRenderer(String textExpression)
@@ -57,6 +60,7 @@ public class ComboBoxRenderer<T> extends TextRenderer<T>
 
 	/**
 	 * Constructor
+	 *
 	 * @param textExpression the property expression that will be resolved for the bean supplied to {@link #getText(Object)}
 	 * @param valueExpression the property expression that will be resolved for the bean supplied to {@link #getValue(Object)}
 	 */
@@ -69,6 +73,7 @@ public class ComboBoxRenderer<T> extends TextRenderer<T>
 
 	/**
 	 * Gets the name of the field that acts as the 'dataTextField' in the JSON response.
+	 *
 	 * @return the name of the text field
 	 */
 	public String getTextField()
@@ -85,6 +90,7 @@ public class ComboBoxRenderer<T> extends TextRenderer<T>
 
 	/**
 	 * Gets the name of the field that acts as the 'dataValueField' in the JSON response.
+	 *
 	 * @return the name of the value field
 	 */
 	public String getValueField()
@@ -99,6 +105,7 @@ public class ComboBoxRenderer<T> extends TextRenderer<T>
 
 	/**
 	 * Gets the value that should be renderer for the supplied object
+	 *
 	 * @param object the T object
 	 * @return the value
 	 */
@@ -106,7 +113,7 @@ public class ComboBoxRenderer<T> extends TextRenderer<T>
 	{
 		if (this.valueExpression != null)
 		{
-			Object value = PropertyResolver.getValue(this.valueExpression, object); //if the object is null, null is returned
+			Object value = PropertyResolver.getValue(this.valueExpression, object); // if the object is null, null is returned
 
 			if (value != null)
 			{
@@ -115,5 +122,16 @@ public class ComboBoxRenderer<T> extends TextRenderer<T>
 		}
 
 		return this.getText(object);
+	}
+
+	/**
+	 * Gets the JSON representation of the supplied object
+	 *
+	 * @param object the object
+	 * @return the JSON representation of the object
+	 */
+	public String toJSON(T object)
+	{
+		return String.format("{ \"%s\": \"%s\", \"%s\": \"%s\" }", this.getTextField(), this.getText(object), this.getValueField(), this.getValue(object));
 	}
 }
