@@ -91,7 +91,10 @@ public class DefaultMethodResolver implements IMethodResolver {
 			if (parameters[p].isArray()) {
 				id.append("[");
 			}
-			id.append(parameters[p].getSimpleName().charAt(0));
+			String simpleName = parameters[p].getSimpleName();
+			if (!simpleName.isEmpty()) {
+				id.append(simpleName.charAt(0));
+			}
 		}
 		id.append(")");
 

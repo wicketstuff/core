@@ -17,6 +17,7 @@
 package org.wicketstuff.lazymodel.reflect;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.fail;
 
 import java.lang.reflect.Method;
 
@@ -156,8 +157,35 @@ public class DefaultMethodResolverTest {
 				setter);
 	}
 
-	public static class Foo {
+	@Test
+	public void syntheticMethodOnAnonymousClass() {
 
+		// this nested construct results in the generation of a synthetic accessor for {@code accessed},
+		// whose first parameter type (the anonymous outer subclass) has {@code #getSimpleName()} returning an empty String
+		@SuppressWarnings("unused")
+		Object outer = new Object()
+		{
+			private boolean accessed;
+			
+			private Object inner = new Object() {
+				{
+					accessed = true;
+				}
+			};
+		};
+
+		try {
+			// check that resolver does not fail on the synthetic method
+			resolver.getMethod(outer.getClass(), "notExistingMethod");
+			
+			// there is no method "notExistingMethod"
+			fail();
+		} catch (IllegalArgumentException expected) {
+		}
+	}
+	
+	public static class Foo {
+		
 		public Object method() {
 			return null;
 		}
