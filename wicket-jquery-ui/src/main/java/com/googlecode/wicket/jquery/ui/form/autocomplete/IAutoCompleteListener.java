@@ -26,5 +26,11 @@ import org.apache.wicket.ajax.AjaxRequestTarget;
  */
 interface IAutoCompleteListener
 {
+	/**
+	 * Triggered when a selection has been made
+	 *
+	 * @param target the {@link AjaxRequestTarget}
+	 * @param index the index of the selected item
+	 */
 	void onSelect(AjaxRequestTarget target, int index);
 }

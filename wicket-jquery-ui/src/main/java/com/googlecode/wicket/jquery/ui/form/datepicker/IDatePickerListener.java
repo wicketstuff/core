@@ -26,6 +26,19 @@ import org.apache.wicket.ajax.AjaxRequestTarget;
  */
 interface IDatePickerListener
 {
+	/**
+	 * Indicates whether the 'onSelect' event is enabled.<br/>
+	 * If true, the {@link #onSelect(AjaxRequestTarget, String)} event will be triggered
+	 *
+	 * @return false by default
+	 */
 	boolean isOnSelectEventEnabled();
+
+	/**
+	 * Triggered when a selection has been made
+	 *
+	 * @param target the {@link AjaxRequestTarget}
+	 * @param date the selected date
+	 */
 	void onSelect(AjaxRequestTarget target, String date);
 }

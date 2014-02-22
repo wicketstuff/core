@@ -28,6 +28,14 @@ import org.apache.wicket.extensions.markup.html.tabs.ITab;
 interface IAccordionListener
 {
 	/**
+	 * Indicates whether the 'activate' (and 'create') event are enabled.<br/>
+	 * If true, the {@link #onActivate(AjaxRequestTarget, int, ITab)} event will be triggered
+	 *
+	 * @return true by default
+	 */
+	boolean isActivateEventEnabled();
+
+	/**
 	 * Triggered when an accordion tab has been activated ('activate' event).<br/>
 	 *
 	 * @param target the {@link AjaxRequestTarget}

@@ -46,7 +46,7 @@ public abstract class AccordionBehavior extends JQueryBehavior implements IJQuer
 	private static final long serialVersionUID = 1L;
 	private static final String METHOD = "accordion";
 
-	private JQueryAjaxBehavior activateEventBehavior;
+	private JQueryAjaxBehavior activateEventBehavior = null;
 
 	/**
 	 * Constructor
@@ -69,7 +69,6 @@ public abstract class AccordionBehavior extends JQueryBehavior implements IJQuer
 		super(selector, METHOD, options);
 	}
 
-
 	// Properties //
 	/**
 	 * Gets the reference {@link List} of {@link ITab}<tt>s</tt>.<br/>
@@ -81,6 +80,7 @@ public abstract class AccordionBehavior extends JQueryBehavior implements IJQuer
 
 	/**
 	 * Gets a read-only {@link ITab} {@link List} having its visible flag set to true.
+	 *
 	 * @return a {@link List} of {@link ITab}<tt>s</tt>
 	 */
 	protected List<ITab> getVisibleTabs()
@@ -98,18 +98,21 @@ public abstract class AccordionBehavior extends JQueryBehavior implements IJQuer
 		return Collections.unmodifiableList(list);
 	}
 
-
 	// Methods //
 	@Override
 	public void bind(Component component)
 	{
 		super.bind(component);
 
-		component.add(this.activateEventBehavior = this.newActivateEventBehavior());
+		if (this.isActivateEventEnabled())
+		{
+			component.add(this.activateEventBehavior = this.newActivateEventBehavior());
+		}
 	}
 
 	/**
 	 * Activates the selected tab, identified by the index
+	 *
 	 * @param target the {@link AjaxRequestTarget}
 	 * @param index the tab's index
 	 */
@@ -124,8 +127,11 @@ public abstract class AccordionBehavior extends JQueryBehavior implements IJQuer
 	{
 		super.onConfigure(component);
 
-		this.setOption("create", this.activateEventBehavior.getCallbackFunction());
-		this.setOption("activate", this.activateEventBehavior.getCallbackFunction());
+		if (this.activateEventBehavior != null)
+		{
+			this.setOption("create", this.activateEventBehavior.getCallbackFunction());
+			this.setOption("activate", this.activateEventBehavior.getCallbackFunction());
+		}
 	}
 
 	@Override
@@ -133,7 +139,7 @@ public abstract class AccordionBehavior extends JQueryBehavior implements IJQuer
 	{
 		if (event instanceof ActivateEvent)
 		{
-			int index = ((ActivateEvent)event).getIndex();
+			int index = ((ActivateEvent) event).getIndex();
 			final List<ITab> tabs = this.getVisibleTabs();
 
 			if (-1 < index && index < tabs.size()) /* index could be unknown depending on options and user action */
@@ -165,11 +171,7 @@ public abstract class AccordionBehavior extends JQueryBehavior implements IJQuer
 			@Override
 			protected CallbackParameter[] getCallbackParameters()
 			{
-				return new CallbackParameter[] {
-						CallbackParameter.context("event"),
-						CallbackParameter.context("ui"),
-						CallbackParameter.resolved("index", "jQuery(event.target).accordion('option', 'active')")
-						};
+				return new CallbackParameter[] { CallbackParameter.context("event"), CallbackParameter.context("ui"), CallbackParameter.resolved("index", "jQuery(event.target).accordion('option', 'active')") };
 			}
 
 			@Override
@@ -179,7 +181,6 @@ public abstract class AccordionBehavior extends JQueryBehavior implements IJQuer
 			}
 		};
 	}
-
 
 	// Events classes //
 	/**
