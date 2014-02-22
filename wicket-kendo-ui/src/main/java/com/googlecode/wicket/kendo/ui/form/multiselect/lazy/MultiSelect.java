@@ -22,7 +22,6 @@ import java.util.List;
 
 import org.apache.wicket.markup.html.form.FormComponent;
 import org.apache.wicket.model.IModel;
-import org.apache.wicket.util.convert.ConversionException;
 
 import com.googlecode.wicket.jquery.core.IJQueryWidget;
 import com.googlecode.wicket.jquery.core.JQueryBehavior;
@@ -144,7 +143,7 @@ public abstract class MultiSelect<T> extends FormComponent<Collection<T>> implem
 	}
 
 	@Override
-	protected Collection<T> convertValue(String[] values) throws ConversionException
+	protected Collection<T> convertValue(String[] values)
 	{
 		List<T> list = new ArrayList<T>(values.length);
 

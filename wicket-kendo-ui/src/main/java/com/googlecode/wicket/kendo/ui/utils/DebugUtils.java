@@ -24,7 +24,7 @@ package com.googlecode.wicket.kendo.ui.utils;
 public class DebugUtils
 {
 	/** error callback */
-	public static String errorCallback = "function (xhr, error) { var dw = Wicket.Ajax.DebugWindow; if (typeof dw !== 'undefined') { dw.logError(kendo.stringify(xhr)); } }";
+	public static final String errorCallback = "function (xhr, error) { var dw = Wicket.Ajax.DebugWindow; if (typeof dw !== 'undefined') { dw.logError(kendo.stringify(xhr)); } }";
 
 	/**
 	 * Utility class

@@ -149,7 +149,7 @@ public class Selectable<T extends Serializable> extends JQueryContainer implemen
 	 * @return the list of selected items
 	 * @deprecated use {@link #getModelObject()} instead
 	 */
-	// XXX: to be removed in next version
+	// XXX: to be removed in next version (6.15.0)
 	@Deprecated
 	public List<T> getSelectedItems()
 	{
