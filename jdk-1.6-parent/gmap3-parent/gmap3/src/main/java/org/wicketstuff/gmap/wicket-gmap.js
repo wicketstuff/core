@@ -1,4 +1,4 @@
-/*
+﻿/*
  * Licensed to the Apache Software Foundation (ASF) under one or more
  * contributor license agreements.  See the NOTICE file distributed with
  * this work for additional information regarding copyright ownership.
@@ -204,12 +204,12 @@ function WicketMap(id, failSilently) {
         this.map.panToBounds(bounds);
     }
 	
-	this.setMinZoom = function(minZoom) {
+    this.setMinZoom = function(minZoom) {
         this.options.minZoom = minZoom;
         this.map.setOptions(this.options);
     }
 	
-	this.setMaxZoom = function(maxZoom) {
+    this.setMaxZoom = function(maxZoom) {
         this.options.maxZoom = maxZoom;
         this.map.setOptions(this.options);
     }

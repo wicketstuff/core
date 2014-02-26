@@ -18,8 +18,8 @@ public class ZoomLimitPage extends WicketExamplePage
         map.setScaleControlEnabled(true);
         map.setScrollWheelZoomEnabled(true);
         map.setCenter(new GLatLng(52.47649, 13.228573));        
-		map.setMinZoom(6);
-		map.setMaxZoom(10);
+	map.setMinZoom(6);
+	map.setMaxZoom(10);
         add(map);
     }
 }

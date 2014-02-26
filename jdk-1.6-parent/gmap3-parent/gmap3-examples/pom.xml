@@ -3,11 +3,21 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 
 	<modelVersion>4.0.0</modelVersion>
-	<parent>
-		<groupId>org.wicketstuff</groupId>
-		<artifactId>gmap3-parent</artifactId>
-		<version>6.0-SNAPSHOT</version>
-	</parent>
+	<repositories>
+	<repository>
+    <id>wicketstuff-core-releases</id>
+    <url>https://oss.sonatype.org/content/repositories/releases</url>
+    <releases>
+        <enabled>true</enabled>
+    </releases>     
+</repository>
+	</repositories>
+
+	    <parent>
+        <groupId>org.wicketstuff</groupId>
+        <artifactId>jdk-1.6-parent</artifactId>
+        <version>6.0-SNAPSHOT</version>
+    </parent>
 
 	<artifactId>wicketstuff-gmap3-examples</artifactId>
 	<packaging>war</packaging>
@@ -29,6 +39,9 @@
 			<artifactId>wicketstuff-gmap3</artifactId>
 			<version>${project.version}</version>
 		</dependency>
+		
+		
+
 		<dependency>
 			<groupId>org.eclipse.jetty</groupId>
 			<artifactId>jetty-server</artifactId>
