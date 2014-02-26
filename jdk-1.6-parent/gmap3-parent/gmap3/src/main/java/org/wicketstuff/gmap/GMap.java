@@ -677,8 +677,8 @@ public class GMap extends Panel implements GOverlayContainer
         js.append(overlayListener.getJSinit());
         js.append(getJSsetCenter(getCenter()));
         js.append(getJSsetZoom(getZoom()));
-	js.append(getJSsetMinZoom(getMinZoom()));
-	js.append(getJSsetMaxZoom(getMaxZoom()));
+        js.append(getJSsetMinZoom(getMinZoom()));
+        js.append(getJSsetMaxZoom(getMaxZoom()));
         js.append(getJSsetDraggingEnabled(draggingEnabled));
         js.append(getJSsetDoubleClickZoomEnabled(doubleClickZoomEnabled));
         js.append(getJSsetScrollWheelZoomEnabled(scrollWheelZoomEnabled));
