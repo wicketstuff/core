@@ -571,7 +571,7 @@ public class GMap extends Panel implements GOverlayContainer
     {
         if (this.minZoom != level)
         {
-            this.minZoom = level;
+            this.minZoom = level >= 0 ? level : 0;
 
             AjaxRequestTarget target = getRequestCycle().find(AjaxRequestTarget.class);
             if (target != null && findPage() != null)
@@ -589,7 +589,7 @@ public class GMap extends Panel implements GOverlayContainer
     {
         if (this.maxZoom != level)
         {
-            this.maxZoom = level;
+            this.maxZoom = level >= 0 ? level : 0;
 
             AjaxRequestTarget target = getRequestCycle().find(AjaxRequestTarget.class);
             if (target != null && findPage() != null)
