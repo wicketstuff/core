@@ -203,6 +203,16 @@ function WicketMap(id, failSilently) {
         this.map.setOptions(this.options);
         this.map.panToBounds(bounds);
     }
+	
+	this.setMinZoom = function(minZoom) {
+        this.options.minZoom = minZoom;
+        this.map.setOptions(this.options);
+    }
+	
+	this.setMaxZoom = function(maxZoom) {
+        this.options.maxZoom = maxZoom;
+        this.map.setOptions(this.options);
+    }
 
     this.getMapTypeString = function(mapType) {
         switch (mapType) {

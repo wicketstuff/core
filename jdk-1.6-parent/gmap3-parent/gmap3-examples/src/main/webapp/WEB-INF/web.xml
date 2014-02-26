@@ -124,6 +124,15 @@
 		</filter>
 
 		<filter>
+				<filter-name>ZoomLimitGMapApplication</filter-name>
+				<filter-class>org.apache.wicket.protocol.http.WicketFilter</filter-class>
+				<init-param>
+						<param-name>applicationClassName</param-name>
+						<param-value>org.wicketstuff.examples.gmap.zoomlimit.ZoomLimitGMapApplication</param-value>
+				</init-param>
+		</filter>
+		
+		<filter>
 				<filter-name>GGroundOverlayGMapApplication</filter-name>
 				<filter-class>org.apache.wicket.protocol.http.WicketFilter</filter-class>
 				<init-param>
@@ -252,6 +261,11 @@
 				<url-pattern>/simple/*</url-pattern>
 		</filter-mapping>
 
+		<filter-mapping>
+				<filter-name>ZoomLimitGMapApplication</filter-name>
+				<url-pattern>/zoomlimit/*</url-pattern>
+		</filter-mapping>
+		
 		<filter-mapping>
 				<filter-name>GGroundOverlayGMapApplication</filter-name>
 				<url-pattern>/overlay/*</url-pattern>
