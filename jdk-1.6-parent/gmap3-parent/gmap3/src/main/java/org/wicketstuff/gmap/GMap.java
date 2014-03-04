@@ -67,6 +67,8 @@ public class GMap extends Panel implements GOverlayContainer
     private boolean panControlEnabled = true;
     private GMapType mapType = GMapType.ROADMAP;
     private int zoom = 13;
+    private int minZoom = 0;
+    private int maxZoom = 0;
     private final Map<String, GOverlay> overlays = new HashMap<String, GOverlay>();
     protected final WebMarkupContainer map;
     private GLatLngBounds bounds;
@@ -526,6 +528,22 @@ public class GMap extends Panel implements GOverlayContainer
     {
         return zoom;
     }
+	
+    /**
+     * @return the minZoom level
+     */
+    public int getMinZoom()
+    {
+        return minZoom;
+    }
+	
+    /**
+     * @return the maxZoom level
+     */
+    public int getMaxZoom()
+    {
+        return maxZoom;
+    }
 
     /**
      * Sets a new zoom level.
@@ -541,6 +559,42 @@ public class GMap extends Panel implements GOverlayContainer
             if (target != null && findPage() != null)
             {
                 target.appendJavaScript(getJSsetZoom(zoom));
+            }
+        }
+    }
+	
+    /**
+     * Sets a new minZoom limit.
+     * @param level the new minZoom level
+     */
+    public void setMinZoom(final int level)
+    {
+        if (this.minZoom != level)
+        {
+            this.minZoom = level >= 0 ? level : 0;
+
+            AjaxRequestTarget target = getRequestCycle().find(AjaxRequestTarget.class);
+            if (target != null && findPage() != null)
+            {
+                target.appendJavaScript(getJSsetMinZoom(minZoom));
+            }
+        }
+    }
+	
+    /**
+     * Sets a new maxZoom limit.
+     * @param level the new maxZoom level
+     */
+    public void setMaxZoom(final int level)
+    {
+        if (this.maxZoom != level)
+        {
+            this.maxZoom = level >= 0 ? level : 0;
+
+            AjaxRequestTarget target = getRequestCycle().find(AjaxRequestTarget.class);
+            if (target != null && findPage() != null)
+            {
+                target.appendJavaScript(getJSsetMaxZoom(maxZoom));
             }
         }
     }
@@ -623,6 +677,8 @@ public class GMap extends Panel implements GOverlayContainer
         js.append(overlayListener.getJSinit());
         js.append(getJSsetCenter(getCenter()));
         js.append(getJSsetZoom(getZoom()));
+        js.append(getJSsetMinZoom(getMinZoom()));
+        js.append(getJSsetMaxZoom(getMaxZoom()));
         js.append(getJSsetDraggingEnabled(draggingEnabled));
         js.append(getJSsetDoubleClickZoomEnabled(doubleClickZoomEnabled));
         js.append(getJSsetScrollWheelZoomEnabled(scrollWheelZoomEnabled));
@@ -777,6 +833,16 @@ public class GMap extends Panel implements GOverlayContainer
     private String getJSsetZoom(final int zoom)
     {
         return getJSinvoke("setZoom(" + zoom + ")");
+    }
+	
+    private String getJSsetMinZoom(final int minZoom)
+    {
+        return getJSinvoke("setMinZoom(" + minZoom + ")");
+    }
+	
+    private String getJSsetMaxZoom(final int maxZoom)
+    {
+        return getJSinvoke("setMaxZoom(" + maxZoom + ")");
     }
 
     private String getJSsetCenter(final GLatLng center)
