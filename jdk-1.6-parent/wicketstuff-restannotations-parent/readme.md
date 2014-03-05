@@ -31,11 +31,11 @@ Subclassing `AbstractRestResource` we can create custom resources and map their 
 ````
 
 `@MethodMapping` requires to specify the subpath we want to map the method to. In addition we can specify also the HTTP method that must be used to invoke the method via REST (GET, POST, DELETE, etc...). This value can be specified with enum class `HttpMethod` and is GET by default. For more details on `@MethodMapping` see the section 'Annotations and advanced mapping'.<br/>
-To promote the principle of *convention over configuration*, we don't need to use any annotation to map method parameters to path parameters if they are declared in the same order. If we need to manually bind method parameters to path parameters we can use annotation `PathParam`. See section 'Annotations and advanced mapping' to know how to use it.<br/>
+In order to promote the principle of *convention over configuration*, we don't need to use any annotation to map method parameters to path parameters if they are declared in the same order. If we need to manually bind method parameters to path parameters we can use annotation `PathParam`. See section 'Annotations and advanced mapping' to know how to use it.<br/>
 If the mapped method returns a value, this last is automatically serialized to the supported data format and written to response object (we will shortly see how to work with data formats).<br/>
 Annotation `@RequestBody` is used to extract the value of a method parameter from the request body.
 
-**Note:** to convert strings to Java type, `AbstractRestResource` uses the standard Wicket mechanism based on the application converter locator:
+To convert strings to Java type, `AbstractRestResource` uses the standard Wicket mechanism based on the application converter locator:
 ````java
 	IConverter converter = Application.get().getConverterLocator().getConverter(clazz);
 
