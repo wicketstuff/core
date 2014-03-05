@@ -35,7 +35,7 @@ In order to promote the principle of *convention over configuration*, we don't n
 If the mapped method returns a value, this last is automatically serialized to the supported data format and written to response object (we will shortly see how to work with data formats).<br/>
 Annotation `@RequestBody` is used to extract the value of a method parameter from the request body.
 
-To convert strings to Java type, `AbstractRestResource` uses the standard Wicket mechanism based on the application converter locator:
+To convert segments value (which are strings) to parameters type, `AbstractRestResource` uses the standard Wicket mechanism based on the application converter locator:
 ````java
 	IConverter converter = Application.get().getConverterLocator().getConverter(clazz);
 
