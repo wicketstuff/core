@@ -17,13 +17,10 @@ package org.wicketstuff.wicket.mount.example.ui;
 
 import java.util.UUID;
 
-import org.apache.wicket.Application;
 import org.apache.wicket.markup.html.WebPage;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.link.Link;
-import org.apache.wicket.request.flow.RedirectToUrlException;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
-import org.wicketstuff.wicket.mount.AutoMountWebApplication;
 import org.wicketstuff.wicket.mount.core.annotation.MountPath;
 import org.wicketstuff.wicket.mount.example.ui.pkgmount.PackageMountPage1;
 import org.wicketstuff.wicket.mount.example.ui.pkgmount.PackageMountPage2;
@@ -75,28 +72,6 @@ public class HomePage extends WebPage
 				setResponsePage(ParamTestPage.class, new PageParameters().add("testParam", random));
 			}
 		}.add(new Label("randomParam", "Goto mounted page with pageparameter mounted as part of url. Parameter = " + random)));
-
-		final String redirectUrl;
-		final String exampleName;
-		if (Application.get() instanceof AutoMountWebApplication)
-		{
-			redirectUrl = "/rt";
-			exampleName = "Goto Runtime Mounted Example";
-		} else
-		{
-			redirectUrl = "/";
-			exampleName = "Goto Compile Time Mounted Example";
-		}
-
-		add(new Link("next-example")
-		{
-
-			@Override
-			public void onClick()
-			{
-				throw new RedirectToUrlException(redirectUrl);
-			}
-		}.add(new Label("exampleName", exampleName)));
-
+		
 	}
 }

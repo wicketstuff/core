@@ -17,6 +17,7 @@ package org.wicketstuff.wicket.mount.core;
 
 import org.apache.wicket.core.util.lang.WicketObjects;
 import org.apache.wicket.protocol.http.WebApplication;
+import org.apache.wicket.request.IRequestMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -35,7 +36,11 @@ public class AutoMounter
 		try
 		{                        
 			final MountInfo mountInfo = (MountInfo) WicketObjects.newInstance(mapInfoClassName);
-			mountInfo.getMountList().mount(app);
+			for(IRequestMapper mapper: mountInfo.getMountList()) 
+			{
+				app.mount(mapper);
+			}
+			
 			return true;
 		} catch (Exception ex)
 		{

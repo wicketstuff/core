@@ -25,7 +25,6 @@
         <module>wicket-mount-core</module>
         <module>wicket-mount</module>
         <module>wicket-mount-example</module>
-        <module>wicket-mount-runtime</module>
     </modules>
 
     <dependencyManagement>

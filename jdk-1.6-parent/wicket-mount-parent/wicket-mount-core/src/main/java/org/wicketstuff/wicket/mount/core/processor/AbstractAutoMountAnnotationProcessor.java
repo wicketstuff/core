@@ -250,7 +250,11 @@ public abstract class AbstractAutoMountAnnotationProcessor extends AbstractProce
 		bw.newLine();
 		bw.append("import org.wicketstuff.wicket.mount.core.*;");
 		bw.newLine();
+		bw.append("import org.apache.wicket.request.IRequestMapper;");
+		bw.newLine();
 		bw.append("import org.apache.wicket.core.request.mapper.MountedMapper;");
+		bw.newLine();
+		bw.append("import java.util.*;");
 		bw.newLine();
 		bw.newLine();
 		bw.append("public class " + infoClassName + " implements MountInfo");
@@ -259,9 +263,9 @@ public abstract class AbstractAutoMountAnnotationProcessor extends AbstractProce
 		bw.newLine();
 		bw.append("\t@Override");
 		bw.newLine();
-		bw.append("\tpublic AnnotatedMountList getMountList() {");
+		bw.append("\tpublic List<IRequestMapper> getMountList() {");
 		bw.newLine();
-		bw.append("\t\tAnnotatedMountList ret = new AnnotatedMountList();");
+		bw.append("\t\tList<IRequestMapper> ret = new ArrayList<IRequestMapper>();");
 		bw.newLine();
 		for (TypeElement ele : mountPoints.keySet())
 		{

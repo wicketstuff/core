@@ -15,6 +15,9 @@
  */
 package org.wicketstuff.wicket.mount.core;
 
+import java.util.List;
+import org.apache.wicket.request.IRequestMapper;
+
 /**
  * Interface class for retrieving a List of Mounts
  *
@@ -23,6 +26,6 @@ package org.wicketstuff.wicket.mount.core;
 public interface MountInfo
 {
 
-	AnnotatedMountList getMountList();
+	List<IRequestMapper> getMountList();
 
 }
