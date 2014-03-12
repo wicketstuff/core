@@ -82,7 +82,7 @@
 		<module>urlfragment-parent</module>
 		<module>wicketstuff-restannotations-parent</module>
         <module>whiteboard-parent</module>
-
+		<module>wicket-mount-parent</module>
 <!-- 
 Commented because its build fails
 <module>console-parent</module>

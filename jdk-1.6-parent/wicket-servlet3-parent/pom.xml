@@ -31,6 +31,7 @@
 	<modules>
 		<module>wicket-servlet3</module>
 		<module>wicket-servlet3-examples</module>
+		<module>wicket-servlet3-auth</module>                
 	</modules>
 
 	<dependencyManagement>
@@ -38,6 +39,12 @@
 			<dependency>
 				<groupId>${project.groupId}</groupId>
 				<artifactId>wicketstuff-servlet3</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>${project.groupId}</groupId>
+				<artifactId>wicketstuff-servlet3-auth</artifactId>
 				<version>${project.version}</version>
 			</dependency>
 
