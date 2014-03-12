@@ -15,7 +15,10 @@
  */
 package org.wicketstuff.wicket.mount.core;
 
+import org.apache.wicket.core.util.lang.WicketObjects;
 import org.apache.wicket.protocol.http.WebApplication;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Convenience class to auto mount pages from generated code.
@@ -24,17 +27,19 @@ import org.apache.wicket.protocol.http.WebApplication;
  */
 public class AutoMounter
 {
+	private final static Logger LOG = LoggerFactory.getLogger(AutoMounter.class);
 
 	public static boolean mountAll(WebApplication app)
 	{
-		String mapInfoClassName = app.getClass().getCanonicalName() + "MountInfo";
+		final String mapInfoClassName = app.getClass().getCanonicalName() + "MountInfo";
 		try
-		{
-			MountInfo mountInfo = (MountInfo) Class.forName(mapInfoClassName).newInstance();
+		{                        
+			final MountInfo mountInfo = (MountInfo) WicketObjects.newInstance(mapInfoClassName);
 			mountInfo.getMountList().mount(app);
 			return true;
 		} catch (Exception ex)
 		{
+			LOG.warn("Failed to automount pages.",ex);
 			return false;
 		}
 	}

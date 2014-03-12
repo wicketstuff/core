@@ -75,8 +75,7 @@ public class SecureMountAnnotationProcessor extends AbstractAutoMountAnnotationP
 
 				generateSource(context);
 			}
-
-			return true;
+			
 		} catch (IOException ex)
 		{
 			Logger.getLogger(SecureMountAnnotationProcessor.class.getName()).log(Level.SEVERE, null, ex);

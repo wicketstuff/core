@@ -63,9 +63,10 @@ public abstract class ServletContainerAuthenticatedWebApplication extends Authen
 		autoMountPages();
 	}
 
-	protected void autoMountPages()
+	protected boolean autoMountPages()
 	{
-		if (!AutoMounter.mountAll(this))
+		final boolean mountOk = AutoMounter.mountAll(this);
+		if (!mountOk)
 		{
 			LOG.warn("Unable to Automount pages.");
 		}
@@ -92,6 +93,7 @@ public abstract class ServletContainerAuthenticatedWebApplication extends Authen
 				mountPage(loginPagePath, authPage);
 			}
 		}
+		return mountOk;
 	}
 
 	@Override
