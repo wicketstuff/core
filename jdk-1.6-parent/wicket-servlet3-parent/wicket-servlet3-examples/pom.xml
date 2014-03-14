@@ -105,6 +105,7 @@
 							<maxIdleTime>60000</maxIdleTime>
 						</connector>
 					</connectors>
+                                       <webAppXml>src/test/resources/jetty-test.xml</webAppXml>
 				</configuration>
 			</plugin>
 		</plugins>
