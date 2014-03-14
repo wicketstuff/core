@@ -43,6 +43,8 @@
     <login-config>
         <auth-method>FORM</auth-method>
         <realm-name>UserDatabaseRealm</realm-name>
+        <!--<realm-name>file</realm-name>  Glassfish Realm if it is not set to default realm -->
+        <!--<realm-name>ApplicationRealm</realm-name>  WildFly 8 Realm -->
         <form-login-config>
             <form-login-page>/cms/login.html</form-login-page>
             <form-error-page>/cms/index.html</form-error-page>
