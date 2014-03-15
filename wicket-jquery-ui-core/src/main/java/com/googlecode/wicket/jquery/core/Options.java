@@ -41,25 +41,27 @@ public class Options implements IClusterable
 	public static final String QUOTE = "\"";
 
 	/**
-	 * Converts a string representation of an object to its javascript representation. ie: "myvalue" (with the double quotes)
+	 * Converts a string representation of an object to its javascript representation. ie: "myvalue" (with the double quotes)<br/>
+	 * If the supplied value is null, "null" is returned
 	 *
 	 * @param value the object
 	 * @return the JSON value
 	 */
 	public static String asString(Object value)
 	{
-		return Options.asString(value.toString());
+		return Options.asString(String.valueOf(value));
 	}
 
 	/**
-	 * Converts a string to its javascript representation. ie: "myvalue" (with the double quotes)
+	 * Converts a string to its javascript representation. ie: "myvalue" (with the double quotes)<br/>
+	 * If the supplied value is null, "null" is returned
 	 *
 	 * @param value the object
 	 * @return the JSON value
 	 */
 	public static String asString(String value)
 	{
-		return String.format("%s%s%s", QUOTE, value.replace(QUOTE, "\\" + QUOTE), QUOTE);
+		return String.format("%s%s%s", QUOTE, String.valueOf(value).replace(QUOTE, "\\" + QUOTE), QUOTE);
 	}
 
 	/**
