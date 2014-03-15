@@ -30,6 +30,7 @@ import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.panel.EmptyPanel;
 import org.apache.wicket.markup.html.panel.FeedbackPanel;
 import org.apache.wicket.model.IModel;
+import org.apache.wicket.util.lang.Args;
 
 import com.googlecode.wicket.jquery.ui.panel.JQueryFeedbackPanel;
 import com.googlecode.wicket.jquery.ui.widget.dialog.AbstractDialog;
@@ -38,6 +39,7 @@ import com.googlecode.wicket.jquery.ui.widget.dialog.DialogButton;
 
 /**
  * Provides the base class for wizard-based dialogs
+ *
  * @author Sebastien Briquet - sebfz1
  *
  * @param <T> the model object type
@@ -59,6 +61,7 @@ public abstract class AbstractWizard<T extends Serializable> extends AbstractFor
 
 	/**
 	 * Constructor
+	 *
 	 * @param id the markup id
 	 * @param title the dialog's title
 	 */
@@ -69,6 +72,7 @@ public abstract class AbstractWizard<T extends Serializable> extends AbstractFor
 
 	/**
 	 * Constructor
+	 *
 	 * @param id the markup id
 	 * @param title the dialog's title
 	 */
@@ -79,6 +83,7 @@ public abstract class AbstractWizard<T extends Serializable> extends AbstractFor
 
 	/**
 	 * Constructor
+	 *
 	 * @param id the markup id
 	 * @param title the dialog's title
 	 * @param wizardModel the {@link IWizardModel}
@@ -92,6 +97,7 @@ public abstract class AbstractWizard<T extends Serializable> extends AbstractFor
 
 	/**
 	 * Constructor
+	 *
 	 * @param id the markup id
 	 * @param title the dialog's title
 	 * @param wizardModel the {@link IWizardModel}
@@ -105,6 +111,7 @@ public abstract class AbstractWizard<T extends Serializable> extends AbstractFor
 
 	/**
 	 * Constructor
+	 *
 	 * @param id the markup id
 	 * @param title the dialog's title
 	 * @param modal indicates whether the dialog is modal
@@ -116,6 +123,7 @@ public abstract class AbstractWizard<T extends Serializable> extends AbstractFor
 
 	/**
 	 * Constructor
+	 *
 	 * @param id the markup id
 	 * @param title the dialog's title
 	 * @param modal indicates whether the dialog is modal
@@ -127,6 +135,7 @@ public abstract class AbstractWizard<T extends Serializable> extends AbstractFor
 
 	/**
 	 * Constructor
+	 *
 	 * @param id the markup id
 	 * @param title the dialog's title
 	 * @param model the dialog's model
@@ -139,6 +148,7 @@ public abstract class AbstractWizard<T extends Serializable> extends AbstractFor
 
 	/**
 	 * Constructor
+	 *
 	 * @param id the markup id
 	 * @param title the dialog's title
 	 * @param model the dialog's model
@@ -151,6 +161,7 @@ public abstract class AbstractWizard<T extends Serializable> extends AbstractFor
 
 	/**
 	 * Constructor
+	 *
 	 * @param id the markup id
 	 * @param title the dialog's title
 	 * @param model the dialog's model
@@ -162,6 +173,7 @@ public abstract class AbstractWizard<T extends Serializable> extends AbstractFor
 
 	/**
 	 * Constructor
+	 *
 	 * @param id the markup id
 	 * @param title the dialog's title
 	 * @param model the dialog's model
@@ -173,14 +185,12 @@ public abstract class AbstractWizard<T extends Serializable> extends AbstractFor
 
 	/**
 	 * Initialization
+	 *
 	 * @param wizardModel the {@link IWizardModel}
 	 */
 	protected final void init(final IWizardModel wizardModel)
 	{
-		if (wizardModel == null)
-		{
-			throw new IllegalArgumentException("argument wizardModel must be not null");
-		}
+		Args.notNull(wizardModel, "wizardModel");
 
 		this.wizardModel = wizardModel;
 		this.wizardModel.addListener(this);
@@ -198,12 +208,28 @@ public abstract class AbstractWizard<T extends Serializable> extends AbstractFor
 
 		// dummy view to be replaced //
 		this.form.add(new EmptyPanel(Wizard.VIEW_ID));
-//		this.form.add(newOverviewBar(Wizard.OVERVIEW_ID)); //OverviewBar not handled
+		// this.form.add(newOverviewBar(Wizard.OVERVIEW_ID)); //OverviewBar not handled
+	}
+
+	/**
+	 * Refreshes the wizard, by calling {@link #onConfigure(AjaxRequestTarget)} and re-attaching the form<br/>
+	 * This method is called when, for instance, the wizard opens or the step changes.
+	 *
+	 * @param target the {@link AjaxRequestTarget}
+	 */
+	protected void refresh(AjaxRequestTarget target)
+	{
+		this.onConfigure(target);
+
+		// update form //
+		target.add(this.form);
 	}
 
 	// Properties //
+
 	/**
 	 * Gets the wizard {@link FeedbackPanel}
+	 *
 	 * @return the {@link FeedbackPanel}
 	 */
 	public FeedbackPanel getFeedbackPanel()
@@ -212,6 +238,7 @@ public abstract class AbstractWizard<T extends Serializable> extends AbstractFor
 	}
 
 	// Events //
+
 	@Override
 	protected void onInitialize()
 	{
@@ -227,7 +254,8 @@ public abstract class AbstractWizard<T extends Serializable> extends AbstractFor
 	}
 
 	/**
-	 * Called when the wizard needs to be configured. For instance when the wizard opens or when the step changes.
+	 * Called when the wizard needs to be configured.
+	 *
 	 * @param target the {@link AjaxRequestTarget}
 	 */
 	protected void onConfigure(AjaxRequestTarget target)
@@ -241,10 +269,7 @@ public abstract class AbstractWizard<T extends Serializable> extends AbstractFor
 
 		boolean enabled = this.wizardModel.isLastStep(this.wizardModel.getActiveStep());
 		this.btnFinish.setEnabled(enabled, target);
-		//TODO: WizardModelStrategy#isLastStepEnabled()
-
-		// update form //
-		target.add(this.form);
+		// TODO: WizardModelStrategy#isLastStepEnabled()
 	}
 
 	@Override
@@ -253,13 +278,12 @@ public abstract class AbstractWizard<T extends Serializable> extends AbstractFor
 		super.onOpen(target);
 
 		this.wizardModel.reset(); // reset model to prepare for action
-		this.onConfigure(target);
+		this.refresh(target);
 	}
 
 	/**
-	 * Triggered when a wizard button is clicked.
-	 * If the button is a form-submitter button, the validation should have succeeded for this event to be triggered.
-	 * This implementation overrides the default {@link AbstractDialog#onClick(AjaxRequestTarget, DialogButton)} implementation in order to not close the dialog.
+	 * Triggered when a wizard button is clicked. If the button is a form-submitter button, the validation should have succeeded for this event to be triggered. This implementation overrides the default
+	 * {@link AbstractDialog#onClick(AjaxRequestTarget, DialogButton)} implementation in order to not close the dialog.
 	 */
 	@Override
 	public final void onClick(AjaxRequestTarget target, DialogButton button)
@@ -293,7 +317,7 @@ public abstract class AbstractWizard<T extends Serializable> extends AbstractFor
 			}
 
 			// reconfigure buttons and refresh the form //
-			AbstractWizard.this.onConfigure(target);
+			AbstractWizard.this.refresh(target);
 		}
 	}
 
@@ -325,28 +349,30 @@ public abstract class AbstractWizard<T extends Serializable> extends AbstractFor
 
 	/**
 	 * Triggered when the wizard completes
+	 *
 	 * @param target the {@link AjaxRequestTarget}
 	 */
 	protected abstract void onFinish(AjaxRequestTarget target);
 
 	/**
 	 * Triggered when the wizard has been canceled
+	 *
 	 * @param target the {@link AjaxRequestTarget}
 	 */
 	protected void onCancel(AjaxRequestTarget target)
 	{
 	}
 
-
 	// IWizard //
+
 	@Override
 	public IWizardModel getWizardModel()
 	{
 		return this.wizardModel;
 	}
 
-
 	// IWizardModelListener //
+
 	@Override
 	public void onActiveStepChanged(IWizardStep step)
 	{
@@ -354,8 +380,8 @@ public abstract class AbstractWizard<T extends Serializable> extends AbstractFor
 		this.form.replace(step.getView(Wizard.VIEW_ID, this, this));
 	}
 
-
 	// AbstractFormDialog //
+
 	@Override
 	protected List<DialogButton> getButtons()
 	{
@@ -370,6 +396,7 @@ public abstract class AbstractWizard<T extends Serializable> extends AbstractFor
 
 	/**
 	 * Gets the button that is in charge to cancel to wizard.<br/>
+	 *
 	 * @return the cancel button
 	 */
 	protected DialogButton getCancelButton()
@@ -385,8 +412,7 @@ public abstract class AbstractWizard<T extends Serializable> extends AbstractFor
 
 	/**
 	 * Returns the form associated to the button.<br/>
-	 * It means that it will return the form if the supplied button is considered as a form submitter and null otherwise.
-	 * <br/>
+	 * It means that it will return the form if the supplied button is considered as a form submitter and null otherwise. <br/>
 	 * This method may be overridden to specify other form-submitter buttons (ie: btnPrev)
 	 *
 	 * @param button the dialog's button
@@ -395,7 +421,7 @@ public abstract class AbstractWizard<T extends Serializable> extends AbstractFor
 	@Override
 	protected Form<?> getForm(DialogButton button)
 	{
-		//btnNext and btnLast are also form-submitter buttons (in addition to btnFinish)
+		// btnNext and btnLast are also form-submitter buttons (in addition to btnFinish)
 		if (button.equals(this.btnNext) || button.equals(this.btnLast))
 		{
 			return this.getForm();
