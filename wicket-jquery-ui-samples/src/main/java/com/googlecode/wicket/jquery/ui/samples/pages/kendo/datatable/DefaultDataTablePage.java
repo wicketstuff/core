@@ -32,7 +32,7 @@ public class DefaultDataTablePage extends AbstractDataTablePage
 		Options options = new Options();
 		options.set("height", 430);
 		options.set("pageable", "{ pageSizes: [ 25, 50, 100 ] }");
-		options.set("sortable", true);
+		//options.set("sortable", true); // already set, as provider IS-A ISortStateLocator
 		options.set("groupable", true);
 		options.set("columnMenu", true);
 

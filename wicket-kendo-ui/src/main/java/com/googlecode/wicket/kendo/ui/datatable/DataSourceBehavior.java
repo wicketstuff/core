@@ -90,7 +90,7 @@ class DataSourceBehavior<T> extends AbstractDefaultAjaxBehavior
 		final int count = parameters.getParameterValue("take").toInt(0);
 
 		// ISortStateLocator //
-		if (this.provider instanceof ISortStateLocator)
+		if (this.provider instanceof ISortStateLocator<?>)
 		{
 			String property = parameters.getParameterValue("sort[0][field]").toOptionalString();
 			String direction = parameters.getParameterValue("sort[0][dir]").toOptionalString();
@@ -102,7 +102,7 @@ class DataSourceBehavior<T> extends AbstractDefaultAjaxBehavior
 		}
 
 		// IFilterStateLocator //
-		if (this.provider instanceof IFilterStateLocator)
+		if (this.provider instanceof IFilterStateLocator<?>)
 		{
 			String fieldPattern = "filter[filters][%d][field]";
 			String valuePattern = "filter[filters][%d][value]";
