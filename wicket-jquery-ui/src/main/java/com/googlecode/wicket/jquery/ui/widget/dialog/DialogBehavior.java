@@ -106,7 +106,7 @@ public abstract class DialogBehavior extends JQueryBehavior implements IJQueryAj
 	 */
 	public void close(AjaxRequestTarget target)
 	{
-		target.appendJavaScript(this.$("'close'"));
+		target.prependJavaScript(this.$("'close'")); //fixes #88
 	}
 
 	// Events //
