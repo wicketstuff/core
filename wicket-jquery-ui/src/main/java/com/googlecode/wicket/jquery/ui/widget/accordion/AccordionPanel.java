@@ -158,6 +158,12 @@ public class AccordionPanel extends JQueryPanel implements IAccordionListener
 	}
 
 	@Override
+	public boolean isCreateEventEnabled()
+	{
+		return true;
+	}
+
+	@Override
 	public boolean isActivateEventEnabled()
 	{
 		return true;
@@ -206,6 +212,7 @@ public class AccordionPanel extends JQueryPanel implements IAccordionListener
 	}
 
 	// Factories //
+
 	/**
 	 * Gets a new {@link Label} for the tab's title
 	 *
@@ -226,6 +233,12 @@ public class AccordionPanel extends JQueryPanel implements IAccordionListener
 		return new AccordionBehavior(selector, this.options) {
 
 			private static final long serialVersionUID = 1L;
+
+			@Override
+			public boolean isCreateEventEnabled()
+			{
+				return AccordionPanel.this.isCreateEventEnabled();
+			}
 
 			@Override
 			public boolean isActivateEventEnabled()

@@ -46,6 +46,7 @@ public abstract class AccordionBehavior extends JQueryBehavior implements IJQuer
 	private static final long serialVersionUID = 1L;
 	private static final String METHOD = "accordion";
 
+	private JQueryAjaxBehavior createEventBehavior = null;
 	private JQueryAjaxBehavior activateEventBehavior = null;
 
 	/**
@@ -104,6 +105,11 @@ public abstract class AccordionBehavior extends JQueryBehavior implements IJQuer
 	{
 		super.bind(component);
 
+		if (this.isCreateEventEnabled())
+		{
+			component.add(this.createEventBehavior = this.newActivateEventBehavior());
+		}
+
 		if (this.isActivateEventEnabled())
 		{
 			component.add(this.activateEventBehavior = this.newActivateEventBehavior());
@@ -127,9 +133,13 @@ public abstract class AccordionBehavior extends JQueryBehavior implements IJQuer
 	{
 		super.onConfigure(component);
 
+		if (this.createEventBehavior != null)
+		{
+			this.setOption("create", this.createEventBehavior.getCallbackFunction());
+		}
+
 		if (this.activateEventBehavior != null)
 		{
-			this.setOption("create", this.activateEventBehavior.getCallbackFunction());
 			this.setOption("activate", this.activateEventBehavior.getCallbackFunction());
 		}
 	}
