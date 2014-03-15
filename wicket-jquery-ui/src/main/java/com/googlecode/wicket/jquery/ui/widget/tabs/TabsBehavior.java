@@ -44,7 +44,8 @@ public abstract class TabsBehavior extends JQueryBehavior implements IJQueryAjax
 	private static final long serialVersionUID = 1L;
 	private static final String METHOD = "tabs";
 
-	private JQueryAjaxBehavior activateEventBehavior;
+	private JQueryAjaxBehavior createEventBehavior = null;
+	private JQueryAjaxBehavior activateEventBehavior = null;
 	private JQueryAjaxBehavior activatingEventBehavior = null;
 
 	/**
@@ -80,6 +81,7 @@ public abstract class TabsBehavior extends JQueryBehavior implements IJQueryAjax
 
 	/**
 	 * Gets a read-only {@link ITab} {@link List} having its visible flag set to true.
+	 *
 	 * @return a {@link List} of {@link ITab}<tt>s</tt>
 	 */
 	protected List<ITab> getVisibleTabs()
@@ -104,9 +106,17 @@ public abstract class TabsBehavior extends JQueryBehavior implements IJQueryAjax
 	{
 		super.bind(component);
 
-		component.add(this.activateEventBehavior = this.newActivateEventBehavior());
+		if (this.isCreateEventEnabled())
+		{
+			component.add(this.createEventBehavior = this.newActivateEventBehavior());
+		}
 
-		if (this.isOnActivatingEventEnabled())
+		if (this.isActivateEventEnabled())
+		{
+			component.add(this.activateEventBehavior = this.newActivateEventBehavior());
+		}
+
+		if (this.isActivatingEventEnabled())
 		{
 			component.add(this.activatingEventBehavior = this.newActivatingEventBehavior());
 		}
@@ -114,6 +124,7 @@ public abstract class TabsBehavior extends JQueryBehavior implements IJQueryAjax
 
 	/**
 	 * Activates the selected tab, identified by the index
+	 *
 	 * @param target the {@link AjaxRequestTarget}
 	 * @param index the tab's index
 	 */
@@ -129,8 +140,15 @@ public abstract class TabsBehavior extends JQueryBehavior implements IJQueryAjax
 	{
 		super.onConfigure(component);
 
-		this.setOption("create", this.activateEventBehavior.getCallbackFunction());
-		this.setOption("activate", this.activateEventBehavior.getCallbackFunction());
+		if (this.createEventBehavior != null)
+		{
+			this.setOption("create", this.createEventBehavior.getCallbackFunction());
+		}
+
+		if (this.activateEventBehavior != null)
+		{
+			this.setOption("activate", this.activateEventBehavior.getCallbackFunction());
+		}
 
 		if (this.activatingEventBehavior != null)
 		{
@@ -171,6 +189,7 @@ public abstract class TabsBehavior extends JQueryBehavior implements IJQueryAjax
 	// Factories //
 	/**
 	 * Gets a new {@link JQueryAjaxBehavior} that acts as the 'activate' javascript callback
+	 *
 	 * @return the {@link JQueryAjaxBehavior}
 	 */
 	protected JQueryAjaxBehavior newActivateEventBehavior()
@@ -199,6 +218,7 @@ public abstract class TabsBehavior extends JQueryBehavior implements IJQueryAjax
 
 	/**
 	 * Gets a new {@link JQueryAjaxBehavior} that acts as the 'beforeActivate' javascript callback
+	 *
 	 * @return the {@link JQueryAjaxBehavior}
 	 */
 	protected JQueryAjaxBehavior newActivatingEventBehavior()
@@ -225,8 +245,8 @@ public abstract class TabsBehavior extends JQueryBehavior implements IJQueryAjax
 		};
 	}
 
-
 	// Event objects //
+
 	/**
 	 * Provides an event object that will be broadcasted by the {@link JQueryAjaxBehavior} 'activate' callback
 	 */
@@ -246,6 +266,7 @@ public abstract class TabsBehavior extends JQueryBehavior implements IJQueryAjax
 
 		/**
 		 * Gets the tab's index
+		 *
 		 * @return the index
 		 */
 		public int getIndex()
@@ -254,6 +275,9 @@ public abstract class TabsBehavior extends JQueryBehavior implements IJQueryAjax
 		}
 	}
 
+	/**
+	 * Provides an event object that will be broadcasted by the {@link JQueryAjaxBehavior} 'beforeActivate' callback
+	 */
 	protected static class ActivatingEvent extends ActivateEvent
 	{
 	}

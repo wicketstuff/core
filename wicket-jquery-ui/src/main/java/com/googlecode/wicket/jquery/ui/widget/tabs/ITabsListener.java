@@ -28,21 +28,32 @@ import org.apache.wicket.extensions.markup.html.tabs.ITab;
 interface ITabsListener
 {
 	/**
+	 * Indicates whether the 'create' event is enabled.<br/>
+	 * If true, the {@link #onActivate(AjaxRequestTarget, int, ITab)} event will be triggered on 'create'<br/>
+	 * <br/>
+	 * <b>Warning: </b> 'create' event is required to be enabled for the {@link AjaxTab} to load
+	 *
+	 * @return true by default
+	 */
+	boolean isCreateEventEnabled();
+
+	/**
+	 * Indicates whether the 'activate' event is enabled.<br/>
+	 * If true, the {@link #onActivate(AjaxRequestTarget, int, ITab)} event will be triggered on 'activate'<br/>
+	 * <br/>
+	 * <b>Warning: </b> 'activate' event is required to be enabled for the {@link AjaxTab} to load
+	 *
+	 * @return true by default
+	 */
+	boolean isActivateEventEnabled();
+
+	/**
 	 * Indicates whether the 'beforeActivate' event is enabled.<br />
 	 * If true, the {@link #onActivating(AjaxRequestTarget, int, ITab)} event will be triggered.
 	 *
 	 * @return false by default
 	 */
-	boolean isOnActivatingEventEnabled();
-
-	/**
-	 * Triggered when a tab is being activated ('beforeActivate' event).<br/>
-	 *
-	 * @param target the {@link AjaxRequestTarget}
-	 * @param index the previously selected tab index
-	 * @param tab the {@link ITab} that corresponds to the index
-	 */
-	void onActivating(AjaxRequestTarget target, int index, ITab tab);
+	boolean isActivatingEventEnabled();
 
 	/**
 	 * Triggered when a tab has been activated ('activate' event).<br/>
@@ -52,4 +63,13 @@ interface ITabsListener
 	 * @param tab the {@link ITab} that corresponds to the index
 	 */
 	void onActivate(AjaxRequestTarget target, int index, ITab tab);
+
+	/**
+	 * Triggered when a tab is being activated ('beforeActivate' event).<br/>
+	 *
+	 * @param target the {@link AjaxRequestTarget}
+	 * @param index the previously selected tab index
+	 * @param tab the {@link ITab} that corresponds to the index
+	 */
+	void onActivating(AjaxRequestTarget target, int index, ITab tab);
 }

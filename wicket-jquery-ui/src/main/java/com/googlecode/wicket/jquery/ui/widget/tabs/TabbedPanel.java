@@ -118,7 +118,19 @@ public class TabbedPanel extends JQueryPanel implements ITabsListener
 	}
 
 	@Override
-	public boolean isOnActivatingEventEnabled()
+	public boolean isCreateEventEnabled()
+	{
+		return true;
+	}
+
+	@Override
+	public boolean isActivateEventEnabled()
+	{
+		return true;
+	}
+
+	@Override
+	public boolean isActivatingEventEnabled()
 	{
 		return false;
 	}
@@ -199,18 +211,19 @@ public class TabbedPanel extends JQueryPanel implements ITabsListener
 	}
 
 	@Override
-	public void onActivating(AjaxRequestTarget target, int index, ITab tab)
-	{
-		// noop
-	}
-
-	@Override
 	public void onActivate(AjaxRequestTarget target, int index, ITab tab)
 	{
 		// noop
 	}
 
+	@Override
+	public void onActivating(AjaxRequestTarget target, int index, ITab tab)
+	{
+		// noop
+	}
+
 	// Factories //
+
 	/**
 	 * Gets a new {@link Label} for the tab's title
 	 *
@@ -224,6 +237,7 @@ public class TabbedPanel extends JQueryPanel implements ITabsListener
 	}
 
 	// IJQueryWidget //
+
 	@Override
 	public TabsBehavior newWidgetBehavior(String selector)
 	{
@@ -238,21 +252,33 @@ public class TabbedPanel extends JQueryPanel implements ITabsListener
 			}
 
 			@Override
-			public boolean isOnActivatingEventEnabled()
+			public boolean isCreateEventEnabled()
 			{
-				return TabbedPanel.this.isOnActivatingEventEnabled();
+				return TabbedPanel.this.isCreateEventEnabled();
 			}
 
 			@Override
-			public void onActivating(AjaxRequestTarget target, int index, ITab tab)
+			public boolean isActivateEventEnabled()
 			{
-				TabbedPanel.this.onActivating(target, index, tab);
+				return TabbedPanel.this.isActivateEventEnabled();
+			}
+
+			@Override
+			public boolean isActivatingEventEnabled()
+			{
+				return TabbedPanel.this.isActivatingEventEnabled();
 			}
 
 			@Override
 			public void onActivate(AjaxRequestTarget target, int index, ITab tab)
 			{
 				TabbedPanel.this.onActivate(target, index, tab);
+			}
+
+			@Override
+			public void onActivating(AjaxRequestTarget target, int index, ITab tab)
+			{
+				TabbedPanel.this.onActivating(target, index, tab);
 			}
 		};
 	}
