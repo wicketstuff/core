@@ -120,7 +120,7 @@ public abstract class MultiSelect<T> extends FormComponent<Collection<T>> implem
 	 * @param width the list width
 	 * @return this, for chaining
 	 */
-	public MultiSelect<?> setListWidth(int width)
+	public MultiSelect<T> setListWidth(int width)
 	{
 		this.width = width;
 

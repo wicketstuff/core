@@ -166,7 +166,7 @@ public class MultiSelect<T> extends ListMultipleChoice<T> implements IJQueryWidg
 	 * @param width the list width
 	 * @return this, for chaining
 	 */
-	public MultiSelect<?> setListWidth(int width)
+	public MultiSelect<T> setListWidth(int width)
 	{
 		this.width = width;
 
