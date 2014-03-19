@@ -42,7 +42,7 @@ import javax.portlet.ResourceResponse;
 import javax.servlet.RequestDispatcher;
 
 import org.apache.wicket.protocol.http.WicketFilter;
-import org.apache.wicket.settings.IRequestCycleSettings;
+import org.apache.wicket.settings.RequestCycleSettings;
 import org.apache.wicket.util.file.File;
 import org.apache.wicket.util.string.Strings;
 import org.slf4j.Logger;

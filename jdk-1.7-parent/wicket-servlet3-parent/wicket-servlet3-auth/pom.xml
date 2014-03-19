@@ -24,7 +24,7 @@
     <dependencies>
         <dependency>
             <groupId>org.mortbay.jetty</groupId>
-            <artifactId>servlet-api</artifactId>
+            <artifactId>javax.servlet-api</artifactId>
             <scope>provided</scope>
         </dependency>
         <dependency>

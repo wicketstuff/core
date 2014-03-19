@@ -19,33 +19,21 @@ import java.net.URLConnection;
 import java.util.Set;
 
 import junit.framework.TestCase;
+import org.junit.Assert;
+import org.junit.Test;
 
-public class CDNTest extends TestCase
+public class CDNTest extends Assert
 {
-
-	@Override
-	protected void setUp() throws Exception
-	{
-		super.setUp();
-	}
-
-	@Override
-	protected void tearDown() throws Exception
-	{
-		super.tearDown();
-	}
-
+    @Test
 	public void testCDNs() throws Exception
 	{
 
-		IterateAllRegistered(false);
-		IterateAllRegistered(true);
-
+		iterateAllRegistered(false);
+		iterateAllRegistered(true);
 	}
 
-	private void IterateAllRegistered(final boolean production) throws IOException
+	private void iterateAllRegistered(final boolean production) throws IOException
 	{
-
 		final CDN[] cdns = CDN.values();
 		for (int j = 0; j < cdns.length; j++)
 		{

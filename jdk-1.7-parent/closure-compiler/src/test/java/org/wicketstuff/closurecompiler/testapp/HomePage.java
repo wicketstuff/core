@@ -6,7 +6,7 @@ import java.util.List;
 import org.apache.wicket.markup.html.WebPage;
 import org.apache.wicket.markup.html.form.DropDownChoice;
 import org.apache.wicket.markup.html.form.Form;
-import org.apache.wicket.markup.html.form.IChoiceRenderer;
+import org.apache.wicket.markup.html.form.ChoiceRenderer;
 import org.apache.wicket.markup.html.form.TextArea;
 import org.apache.wicket.markup.html.panel.FeedbackPanel;
 import org.apache.wicket.model.IModel;
@@ -89,7 +89,7 @@ public class HomePage extends WebPage
 
 		final List<CompilationLevel> choices = Arrays.asList(CompilationLevel.values());
 
-		final IChoiceRenderer<CompilationLevel> renderer = new IChoiceRenderer<CompilationLevel>()
+		final ChoiceRenderer<CompilationLevel> renderer = new ChoiceRenderer<CompilationLevel>()
 		{
 			private static final long serialVersionUID = 1958044399469404529L;
 

@@ -20,7 +20,7 @@ import ch.qos.logback.classic.Logger;
 import ch.qos.logback.classic.spi.ILoggingEvent;
 
 /**
- * Tests for {@link LogbackConfigListener} and {@link WicketWebPatternEncoder}.
+ * Tests for {@link LogbackConfigListener}.
  * 
  * @author akiraly
  */

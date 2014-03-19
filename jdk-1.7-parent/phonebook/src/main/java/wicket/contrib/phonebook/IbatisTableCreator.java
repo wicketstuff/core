@@ -19,7 +19,6 @@
 package wicket.contrib.phonebook;
 
 import org.springframework.beans.factory.InitializingBean;
-import org.springframework.orm.ibatis.support.SqlMapClientDaoSupport;
 
 /**
  * @author gwyeva1

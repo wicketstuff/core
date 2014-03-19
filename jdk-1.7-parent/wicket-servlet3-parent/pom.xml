@@ -64,7 +64,7 @@
 				<exclusions>
 					<exclusion>
 						<groupId>javax.servlet</groupId>
-						<artifactId>servlet-api</artifactId>
+						<artifactId>javax.servlet-api</artifactId>
 					</exclusion>
 				</exclusions>
 			</dependency>
@@ -85,7 +85,7 @@
 
 			<dependency>
 				<groupId>org.mortbay.jetty</groupId>
-				<artifactId>servlet-api</artifactId>
+				<artifactId>javax.servlet-api</artifactId>
 				<version>3.0.20100224</version>
 				<scope>provided</scope>
 			</dependency>

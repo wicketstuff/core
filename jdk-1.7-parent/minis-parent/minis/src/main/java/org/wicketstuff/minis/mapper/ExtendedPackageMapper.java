@@ -6,12 +6,11 @@ import java.util.List;
 
 import org.apache.wicket.Application;
 import org.apache.wicket.Page;
+import org.apache.wicket.core.request.mapper.PackageMapper;
 import org.apache.wicket.request.IRequestHandler;
 import org.apache.wicket.request.Request;
 import org.apache.wicket.request.Url;
 import org.apache.wicket.request.mapper.AbstractMapper;
-import org.apache.wicket.core.request.mapper.PackageMapper;
-import org.apache.wicket.request.mapper.mount.MountMapper;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
 import org.apache.wicket.util.lang.PackageName;
 
@@ -51,7 +50,7 @@ import org.apache.wicket.util.lang.PackageName;
 public class ExtendedPackageMapper extends AbstractMapper
 {
 
-	private MountMapper mountedMapper;
+	private PackageMapper mountedMapper;
 	private String mountedPath;
 	private String[] mountedSegments;
 	private String packageName;
@@ -80,7 +79,7 @@ public class ExtendedPackageMapper extends AbstractMapper
 
 		PackageName pkgNameObj = PackageName.forClass(homePage);
 		packageName = pkgNameObj.getName();
-		mountedMapper = new MountMapper(packageName, new PackageMapper(pkgNameObj));
+		mountedMapper = new PackageMapper(packageName, pkgNameObj);
 	}
 
 	public Url mapHandler(IRequestHandler requestHandler)

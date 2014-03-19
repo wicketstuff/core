@@ -26,7 +26,6 @@ import javax.portlet.ResourceURL;
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.wicket.Application;
-import org.apache.wicket.IRedirectListener;
 import org.apache.wicket.IResourceListener;
 import org.apache.wicket.RequestListenerInterface;
 import org.apache.wicket.SystemMapper;
@@ -108,14 +107,6 @@ public class PortletRequestMapper extends AbstractComponentMapper {
 
 			if ((IResourceListener.class.isAssignableFrom(listenerClass)) || (IBehaviorListener.class.isAssignableFrom(listenerClass))) {
 				url = encodeResourceUrl(url);
-			}
-			else if (IRedirectListener.class.isAssignableFrom(listenerClass)) {
-				if (ThreadPortletContext.isAjax()) {
-					url = encodeRenderUrl(url, true);
-				}
-				else {
-					url = encodeRenderUrl(url, false);
-				}
 			}
 			else {
 				if (ThreadPortletContext.isAjax()) {

@@ -4,6 +4,8 @@
 package org.wicketstuff.menu;
 
 
+import java.util.List;
+
 import org.apache.wicket.AttributeModifier;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.core.request.ClientInfo;
@@ -11,7 +13,6 @@ import org.apache.wicket.markup.head.CssHeaderItem;
 import org.apache.wicket.markup.head.IHeaderResponse;
 import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.markup.html.basic.Label;
-import org.apache.wicket.markup.html.internal.HtmlHeaderContainer;
 import org.apache.wicket.markup.html.list.Loop;
 import org.apache.wicket.markup.html.list.LoopItem;
 import org.apache.wicket.markup.html.panel.Panel;
@@ -20,8 +21,6 @@ import org.apache.wicket.protocol.http.WebSession;
 import org.apache.wicket.protocol.http.request.WebClientInfo;
 import org.wicketstuff.jwicket.IStyleResolver;
 import org.wicketstuff.jwicket.JQueryCssResourceReference;
-
-import java.util.List;
 
 
 /**
@@ -337,13 +336,12 @@ public class MenuBarPanel extends Panel implements IStyleResolver {
 
 
     @Override
-    public void renderHead(HtmlHeaderContainer container) {
-        super.renderHead(container);
+    public void renderHead(IHeaderResponse response) {
+        super.renderHead(response);
         JQueryCssResourceReference[] cssResources = getCssResources();
         if (cssResources != null) {
-            IHeaderResponse headerResponse = container.getHeaderResponse();
             for (JQueryCssResourceReference cssResource : cssResources) {
-                headerResponse.render(CssHeaderItem.forReference(cssResource));
+                response.render(CssHeaderItem.forReference(cssResource));
             }
         }
     }

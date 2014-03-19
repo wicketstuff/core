@@ -32,7 +32,7 @@ import javax.servlet.http.HttpSession;
 import org.apache.wicket.protocol.http.IWebApplicationFactory;
 import org.apache.wicket.protocol.http.WebApplication;
 import org.apache.wicket.protocol.http.WicketFilter;
-import org.apache.wicket.settings.IRequestCycleSettings.RenderStrategy;
+import org.apache.wicket.settings.RequestCycleSettings.RenderStrategy;
 import org.apache.wicket.util.crypt.Base64;
 
 /**

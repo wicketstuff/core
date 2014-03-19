@@ -25,19 +25,17 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpServletResponseWrapper;
 
-import org.apache.wicket.settings.IRequestCycleSettings;
-
 /**
  * General class for all Portal responses, wrapping Servlet responses with
  * Portal specific functionality. Records various settings in the
  * {@link ResponseState}, like the redirect location, which as when running as a
- * portlet wicket uses the {@link IRequestCycleSettings#REDIRECT_TO_RENDER}
+ * portlet wicket uses the {@link org.apache.wicket.settings.RequestCycleSettings.RenderStrategy#REDIRECT_TO_RENDER}
  * strategy, is used in the render phase to know what Wicket url to request
  * Wicket Core to render.
  * 
  * @see WicketPortlet#processActionResponseState
  * @see WicketPortlet#processMimeResponseRequest
- * @see IRequestCycleSettings#REDIRECT_TO_RENDER
+ * @see org.apache.wicket.settings.RequestCycleSettings.RenderStrategy#REDIRECT_TO_RENDER
  * 
  * @author Ate Douma
  * @author <a href="http://sebthom.de/">Sebastian Thomschke</a>
