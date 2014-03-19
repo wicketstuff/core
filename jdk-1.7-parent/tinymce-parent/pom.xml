@@ -102,17 +102,13 @@
 			<scope>test</scope>
 		</dependency>
 		<dependency>
-			<groupId>commons-collections</groupId>
-			<artifactId>commons-collections</artifactId>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-collections4</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>net.sf.jazzy</groupId>
 			<artifactId>jazzy</artifactId>
 			<version>0.5.2-rtext-1.4.1</version>
-		</dependency>
-		<dependency>
-			<groupId>org.json</groupId>
-			<artifactId>json</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>javax.servlet</groupId>

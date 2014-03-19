@@ -1,8 +1,7 @@
 package wicket.contrib.gmap.util;
 
-import junit.framework.Assert;
+import org.junit.Assert;
 import org.junit.Test;
-import org.junit.Ignore;
 import org.wicketstuff.gmap.api.GLatLng;
 import org.wicketstuff.gmap.geocoder.Geocoder;
 

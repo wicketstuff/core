@@ -20,11 +20,8 @@
  */
 package org.wicketstuff.pageserializer.common.analyze;
 
-import junit.framework.Assert;
-
+import org.junit.Assert;
 import org.junit.Test;
-import org.wicketstuff.pageserializer.common.analyze.ObjectId;
-import org.wicketstuff.pageserializer.common.analyze.ObjectIdFactory;
 
 public class TestObjectIdFactory
 {

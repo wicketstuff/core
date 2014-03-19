@@ -20,12 +20,9 @@
  */
 package org.wicketstuff.pageserializer.common.analyze;
 
-import junit.framework.Assert;
 
+import org.junit.Assert;
 import org.junit.Test;
-import org.wicketstuff.pageserializer.common.analyze.IObjectLabelizer;
-import org.wicketstuff.pageserializer.common.analyze.ISerializedObjectTree;
-import org.wicketstuff.pageserializer.common.analyze.ObjectTreeTracker;
 
 public class TestObjectTreeTracker
 {

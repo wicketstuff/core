@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import com.google.javascript.jscomp.SourceFile;
 import org.apache.wicket.javascript.IJavaScriptCompressor;
 import org.apache.wicket.util.lang.Args;
 import org.slf4j.Logger;
@@ -62,7 +63,7 @@ public class ClosureCompilerJavaScriptCompressor implements IJavaScriptCompresso
 	public final String compressSource(String uncompressed) throws Exception
 	{
 		// environment for compilation
-		final List<JSSourceFile> externs = CommandLineRunner.getDefaultExterns();
+		final List<SourceFile> externs = CommandLineRunner.getDefaultExterns();
 
 		// create compiler + options
 		final Compiler compiler = new Compiler();
@@ -96,7 +97,7 @@ public class ClosureCompilerJavaScriptCompressor implements IJavaScriptCompresso
 		return compiler.toSource();
 	}
 
-	protected void configure(Compiler compiler, CompilerOptions options, List<JSSourceFile> externs)
+	protected void configure(Compiler compiler, CompilerOptions options, List<SourceFile> externs)
 	{
 		// for overriding + configuring
 	}

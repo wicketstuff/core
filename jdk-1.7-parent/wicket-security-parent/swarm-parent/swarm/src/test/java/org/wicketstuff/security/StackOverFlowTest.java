@@ -16,8 +16,6 @@
  */
 package org.wicketstuff.security;
 
-import static junit.framework.Assert.fail;
-
 import java.net.MalformedURLException;
 
 import org.apache.wicket.Page;
@@ -27,6 +25,7 @@ import org.apache.wicket.request.Request;
 import org.apache.wicket.request.Response;
 import org.apache.wicket.util.tester.WicketTester;
 import org.junit.After;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.slf4j.Logger;
@@ -43,7 +42,7 @@ import org.wicketstuff.security.swarm.SwarmWebApplication;
 /**
  * @author marrink
  */
-public class StackOverFlowTest
+public class StackOverFlowTest extends Assert
 {
 	private static final class MyWebApplication extends SwarmWebApplication
 	{

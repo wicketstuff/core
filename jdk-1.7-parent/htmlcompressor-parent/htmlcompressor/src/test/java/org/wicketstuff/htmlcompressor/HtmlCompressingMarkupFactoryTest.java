@@ -1,12 +1,12 @@
 package org.wicketstuff.htmlcompressor;
 
-import junit.framework.Assert;
 
 import org.apache.wicket.RuntimeConfigurationType;
 import org.apache.wicket.mock.MockApplication;
 import org.apache.wicket.protocol.http.WebApplication;
 import org.apache.wicket.util.crypt.CharEncoding;
 import org.apache.wicket.util.tester.WicketTester;
+import org.junit.Assert;
 import org.junit.Test;
 
 /**
@@ -61,8 +61,8 @@ public class HtmlCompressingMarkupFactoryTest
 		});
 
 		Assert.assertTrue("Length of compressed html (" + compressed.length() +
-			") should be smaller than not compressed one (" + notCompressed.length() + ").",
-			notCompressed.length() > compressed.length());
+                          ") should be smaller than not compressed one (" + notCompressed.length() + ").",
+                          notCompressed.length() > compressed.length());
 	}
 
 	/**

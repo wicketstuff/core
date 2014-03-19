@@ -16,13 +16,6 @@
  */
 package org.wicketstuff.security;
 
-import static junit.framework.Assert.assertEquals;
-import static junit.framework.Assert.assertFalse;
-import static junit.framework.Assert.assertNotNull;
-import static junit.framework.Assert.assertNotSame;
-import static junit.framework.Assert.assertTrue;
-import static junit.framework.Assert.fail;
-
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -36,6 +29,7 @@ import org.apache.wicket.protocol.http.WebApplication;
 import org.apache.wicket.util.tester.FormTester;
 import org.apache.wicket.util.tester.WicketTester;
 import org.junit.After;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
@@ -56,7 +50,7 @@ import org.wicketstuff.security.swarm.SwarmWebApplication;
 /**
  * @author marrink
  */
-public class GeneralTest
+public class GeneralTest extends Assert
 {
 	private static final Logger log = LoggerFactory.getLogger(GeneralTest.class);
 

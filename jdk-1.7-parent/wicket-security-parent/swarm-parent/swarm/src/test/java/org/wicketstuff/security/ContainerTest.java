@@ -16,8 +16,6 @@
  */
 package org.wicketstuff.security;
 
-import static junit.framework.Assert.assertTrue;
-
 import java.net.MalformedURLException;
 
 import org.apache.wicket.Page;
@@ -26,6 +24,7 @@ import org.apache.wicket.util.tester.FormTester;
 import org.apache.wicket.util.tester.TagTester;
 import org.apache.wicket.util.tester.WicketTester;
 import org.junit.After;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.slf4j.Logger;
@@ -41,7 +40,7 @@ import org.wicketstuff.security.swarm.SwarmWebApplication;
 /**
  * @author marrink
  */
-public class ContainerTest
+public class ContainerTest extends Assert
 {
 	private static final Logger log = LoggerFactory.getLogger(ContainerTest.class);
 

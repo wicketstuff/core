@@ -21,11 +21,10 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
-import junit.framework.Assert;
-
 import org.apache.wicket.authroles.authorization.strategies.role.IRoleCheckingStrategy;
 import org.apache.wicket.util.lang.Args;
 import org.apache.wicket.validation.validator.EmailAddressValidator;
+import org.junit.Assert;
 import org.wicketstuff.rest.CustomValidator;
 import org.wicketstuff.rest.Person;
 import org.wicketstuff.rest.annotations.AuthorizeInvocation;
@@ -206,9 +205,9 @@ public class RestResourceFullAnnotated extends AbstractRestResource<TestJsonDesS
 		@MatrixParam(parameterName = "matrixp", segmentIndex = 0, required = false, defaultValue = "0") int matrixp)
 	{
 
-		Args.isTrue(request == null, "must be null!");
-		Args.isTrue(cookie, "must be true!");
-		Assert.assertEquals(Float.parseFloat("12.6"), price);
+		Assert.assertNull("request must be null!", request);
+		Assert.assertTrue("must be true!", cookie);
+		Assert.assertEquals(Float.parseFloat("12.6"), price, 0.01d);
 
 		return "testRequiredDefault";
 	}

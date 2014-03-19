@@ -23,12 +23,9 @@ package org.wicketstuff.pageserializer.common.analyze.report;
 import java.io.IOException;
 import java.util.ArrayList;
 
-import junit.framework.Assert;
-
+import org.junit.Assert;
 import org.junit.Test;
 import org.wicketstuff.pageserializer.common.analyze.ISerializedObjectTree;
-import org.wicketstuff.pageserializer.common.analyze.report.SimilarNodeTreeTransformator;
-import org.wicketstuff.pageserializer.common.analyze.report.TreeTypeMap;
 
 public class TreeTypeMapTest {
 

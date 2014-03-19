@@ -24,8 +24,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import junit.framework.Assert;
-
+import org.junit.Assert;
 import org.wicketstuff.pageserializer.common.analyze.ISerializedObjectTree;
 import org.wicketstuff.pageserializer.common.analyze.ImmutableTree;
 import org.wicketstuff.pageserializer.common.analyze.ObjectId;
@@ -51,7 +50,7 @@ public class Trees
 	public static void assertEqualsTree(ISerializedObjectTree expected, ISerializedObjectTree result)
 	{
 		Assert.assertEquals(expected+":id", expected.id(), result.id());
-		Assert.assertEquals(expected+":type", expected.type(), result.type());
+		Assert.assertEquals(expected + ":type", expected.type(), result.type());
 		Assert.assertEquals(expected+":label", expected.label(), result.label());
 		Assert.assertEquals(expected+":size", expected.size(), result.size());
 		Assert.assertEquals(expected+":childSize", expected.childSize(), result.childSize());

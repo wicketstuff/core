@@ -6,22 +6,29 @@ import java.util.Iterator;
 import org.apache.wicket.Component;
 import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.util.tester.WicketTester;
-import org.testng.Assert;
-import org.testng.annotations.BeforeClass;
-import org.testng.annotations.Test;
+import org.junit.After;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
 import org.wicketstuff.jquery.dnd.DnDSortableHandler;
 
-@Test
 public class Page4SimpleListTest
 {
 
 	private WicketTester tester_;
 
-	@BeforeClass
+	@Before
 	public void setUp()
 	{
 		tester_ = new WicketTester();
 	}
+
+    @After
+    public void tearDown()
+    {
+        tester_.destroy();
+        tester_ = null;
+    }
 
 	@Test
 	public void testOnDnD() throws Exception

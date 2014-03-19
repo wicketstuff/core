@@ -20,12 +20,8 @@
  */
 package org.wicketstuff.pageserializer.common.analyze.reportbuilder;
 
-import junit.framework.Assert;
-
+import org.junit.Assert;
 import org.junit.Test;
-import org.wicketstuff.pageserializer.common.analyze.reportbuilder.AttributeBuilder;
-import org.wicketstuff.pageserializer.common.analyze.reportbuilder.Column;
-import org.wicketstuff.pageserializer.common.analyze.reportbuilder.Report;
 import org.wicketstuff.pageserializer.common.analyze.reportbuilder.Report.Row;
 
 public class ReportTest

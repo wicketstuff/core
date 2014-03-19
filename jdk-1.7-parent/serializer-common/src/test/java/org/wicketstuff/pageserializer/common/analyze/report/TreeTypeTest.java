@@ -22,11 +22,9 @@ package org.wicketstuff.pageserializer.common.analyze.report;
 
 import java.io.IOException;
 
-import junit.framework.Assert;
-
+import org.junit.Assert;
 import org.junit.Test;
 import org.wicketstuff.pageserializer.common.analyze.ISerializedObjectTree;
-import org.wicketstuff.pageserializer.common.analyze.report.TreeType;
 
 
 public class TreeTypeTest {

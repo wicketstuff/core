@@ -25,9 +25,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import junit.framework.Assert;
-
 import org.apache.wicket.util.lang.Bytes;
+import org.junit.Assert;
 import org.junit.Test;
 import org.wicketstuff.pageserializer.common.analyze.AnalyzingSerializationListener;
 import org.wicketstuff.pageserializer.common.analyze.IObjectLabelizer;

@@ -16,14 +16,9 @@
  */
 package org.wicketstuff.security;
 
-import static junit.framework.Assert.assertFalse;
-import static junit.framework.Assert.fail;
-
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
-
-import junit.framework.TestCase;
 
 import org.apache.wicket.Page;
 import org.apache.wicket.Session;
@@ -31,6 +26,7 @@ import org.apache.wicket.authorization.Action;
 import org.apache.wicket.util.tester.FormTester;
 import org.apache.wicket.util.tester.WicketTester;
 import org.junit.After;
+import org.junit.Assert;
 import org.junit.Before;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -50,9 +46,8 @@ import org.wicketstuff.security.strategies.WaspAuthorizationStrategy;
  * @author marrink
  * @author Olger Warnier
  */
-public abstract class WaspAbstractTestBase
+public abstract class WaspAbstractTestBase extends Assert
 {
-
 	protected static final Logger log = LoggerFactory.getLogger(GeneralTest.class);
 
 	protected WicketTester mock = null;
@@ -65,9 +60,6 @@ public abstract class WaspAbstractTestBase
 
 	private Class<? extends ISecureComponent> secureClass = ISecureComponent.class;
 
-	/**
-	 * @see TestCase#setUp()
-	 */
 	@Before
 	public void setUp()
 	{
@@ -191,10 +183,6 @@ public abstract class WaspAbstractTestBase
 		mock.setExposeExceptions(false);
 	}
 
-	/**
-	 * 
-	 * @see TestCase#tearDown()
-	 */
 	@After
 	public void tearDown()
 	{

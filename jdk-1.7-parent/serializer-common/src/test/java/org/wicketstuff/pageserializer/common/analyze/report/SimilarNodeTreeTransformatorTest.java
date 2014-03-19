@@ -24,25 +24,11 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import junit.framework.Assert;
-
-import org.apache.wicket.request.mapper.parameter.PageParameters;
-import org.apache.wicket.util.lang.Bytes;
-import org.apache.wicket.util.tester.WicketTester;
+import org.junit.Assert;
 import org.junit.Test;
-import org.wicketstuff.pageserializer.common.analyze.AnalyzingSerializationListener;
-import org.wicketstuff.pageserializer.common.analyze.ComponentIdAsLabel;
 import org.wicketstuff.pageserializer.common.analyze.ISerializedObjectTree;
 import org.wicketstuff.pageserializer.common.analyze.ImmutableTree;
 import org.wicketstuff.pageserializer.common.analyze.ObjectId;
-import org.wicketstuff.pageserializer.common.analyze.TreeProcessors;
-import org.wicketstuff.pageserializer.common.analyze.report.IReportOutput;
-import org.wicketstuff.pageserializer.common.analyze.report.LoggerReportOutput;
-import org.wicketstuff.pageserializer.common.analyze.report.SimilarNodeTreeTransformator;
-import org.wicketstuff.pageserializer.common.analyze.report.TreeSizeReport;
-import org.wicketstuff.pageserializer.common.analyze.report.TreeTransformator;
-import org.wicketstuff.pageserializer.common.analyze.report.TreeType;
-import org.wicketstuff.pageserializer.common.analyze.report.filter.TypeFilter;
 
 public class SimilarNodeTreeTransformatorTest
 {	

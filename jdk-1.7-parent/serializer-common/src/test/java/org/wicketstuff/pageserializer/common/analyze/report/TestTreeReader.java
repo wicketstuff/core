@@ -22,10 +22,9 @@ package org.wicketstuff.pageserializer.common.analyze.report;
 
 import java.io.IOException;
 
-import junit.framework.Assert;
-
 import org.apache.wicket.markup.html.list.ListView;
 import org.apache.wicket.model.util.WildcardListModel;
+import org.junit.Assert;
 import org.junit.Test;
 import org.wicketstuff.pageserializer.common.analyze.ISerializedObjectTree;
 import org.wicketstuff.pageserializer.common.components.ListViewPage;

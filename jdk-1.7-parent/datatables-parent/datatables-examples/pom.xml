@@ -25,14 +25,14 @@
 
 	<dependencies>
 		<dependency>
-	                <groupId>${project.groupId}</groupId>
-	                <artifactId>wicketstuff-datatables</artifactId>
-        	        <version>${project.version}</version>
-	        </dependency>
+			<groupId>${project.groupId}</groupId>
+			<artifactId>wicketstuff-datatables</artifactId>
+			<version>${project.version}</version>
+		</dependency>
 
 		<dependency>
-			<groupId>commons-lang</groupId>
-			<artifactId>commons-lang</artifactId>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-lang3</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>ch.qos.logback</groupId>
@@ -54,7 +54,6 @@
 		<dependency>
 			<groupId>org.testng</groupId>
 			<artifactId>testng</artifactId>
-			<classifier>jdk15</classifier>
 		</dependency>
 		<dependency>
 			<groupId>javax.servlet</groupId>
