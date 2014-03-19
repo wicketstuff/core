@@ -242,7 +242,6 @@
 
 	<!-- build contract is java 6 first then java 7 -->
 	<modules>
-		<module>jdk-1.6-parent</module>
 		<module>jdk-1.7-parent</module>
     </modules>
 
