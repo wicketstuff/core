@@ -19,7 +19,7 @@
 	</description>
 
 	<modules>
-				<module>lightbox2-parent</module>
+		<module>lightbox2-parent</module>
         <module>jqplot-parent</module>
 		<module>annotation</module> 
 		<module>annotationeventdispatcher-parent</module>

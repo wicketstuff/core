@@ -43,12 +43,12 @@ public class LightboxJavascriptResourceReference extends JavaScriptResourceRefer
 	}
 
 	@Override
-	public Iterable<? extends HeaderItem> getDependencies()
+	public List<HeaderItem> getDependencies()
 	{
-		List<HeaderItem> dependencies = new ArrayList<HeaderItem>();
+		List<HeaderItem> dependencies = new ArrayList<>();
 		for (Iterator<? extends HeaderItem> iterator = super.getDependencies().iterator(); iterator.hasNext();)
 		{
-			HeaderItem headerItem = (HeaderItem)iterator.next();
+			HeaderItem headerItem = iterator.next();
 			dependencies.add(headerItem);
 		}
 		dependencies.add(JavaScriptHeaderItem.forReference(Application.get()

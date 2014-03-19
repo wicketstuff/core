@@ -25,9 +25,9 @@ public class JqPlotJavascriptResourceReference extends JavaScriptResourceReferen
 	}
 
 	@Override
-	public Iterable<? extends HeaderItem> getDependencies()
+	public List<HeaderItem> getDependencies()
 	{
-		List<HeaderItem> dependencies = new ArrayList<HeaderItem>();
+		List<HeaderItem> dependencies = new ArrayList<>();
         for (HeaderItem headerItem : super.getDependencies()) {
             dependencies.add(headerItem);
         }

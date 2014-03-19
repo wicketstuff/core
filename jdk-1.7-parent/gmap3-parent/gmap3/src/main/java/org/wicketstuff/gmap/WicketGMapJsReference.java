@@ -25,9 +25,9 @@ public class WicketGMapJsReference extends JavaScriptResourceReference {
 	}
 
 	@Override
-	public Iterable<? extends HeaderItem> getDependencies()
+	public List<HeaderItem> getDependencies()
 	{
-		List<HeaderItem> dependencies = new ArrayList<HeaderItem>();
+		List<HeaderItem> dependencies = new ArrayList<>();
 		Iterable<? extends HeaderItem> superDeps = super.getDependencies();
 		for (HeaderItem dep : superDeps) {
 			dependencies.add(dep);

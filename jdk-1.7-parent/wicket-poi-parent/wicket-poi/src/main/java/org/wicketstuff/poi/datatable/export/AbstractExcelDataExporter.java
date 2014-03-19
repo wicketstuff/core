@@ -78,7 +78,7 @@ public abstract class AbstractExcelDataExporter
 	 * @throws IOException If an error occurs while exporting the data.
 	 */
 	@Override
-	public <T> void exportData(IDataProvider<T> dataProvider, List<IExportableColumn<T, ?, ?>> columns, OutputStream outputStream)
+	public <T> void exportData(IDataProvider<T> dataProvider, List<IExportableColumn<T, ?>> columns, OutputStream outputStream)
 		throws IOException
 	{
 		Workbook workbook = createWorkbook();
@@ -92,7 +92,7 @@ public abstract class AbstractExcelDataExporter
 		rowNumber++;
 
 		int columnNumber = 0;
-		for (IExportableColumn<T, ?, ?> column : columns)
+		for (IExportableColumn<T, ?> column : columns)
 		{
 			Cell cell = row.createCell(columnNumber);
 			IModel<String> headerModel = column.getDisplayModel();
@@ -118,7 +118,7 @@ public abstract class AbstractExcelDataExporter
 			rowNumber++;
 
 			columnNumber = 0;
-			for (IExportableColumn<T, ?, ?> column : columns)
+			for (IExportableColumn<T, ?> column : columns)
 			{
 				Cell cell = row.createCell(columnNumber);
 				// rowNumber - 1 because 
@@ -142,7 +142,7 @@ public abstract class AbstractExcelDataExporter
 	 * @param workbook The {@link Workbook} in which the cell is created. This is included to than it may be used to create
 	 * formatting objects etc.
 	 */
-	protected void populateHeaderCell(Cell cell, String value, int columnIndex, IExportableColumn<?, ?, ?> column, Workbook workbook)
+	protected void populateHeaderCell(Cell cell, String value, int columnIndex, IExportableColumn<?, ?> column, Workbook workbook)
 	{
 		if (value != null)
 		{
@@ -165,7 +165,7 @@ public abstract class AbstractExcelDataExporter
 	 * formatting objects etc.
 	 */
 	@SuppressWarnings("unchecked")
-	protected <T> void populateCell(Cell cell, IModel<T> rowModel, IExportableColumn<T, ?, ?> column, int rowIndex, int columnIndex, Workbook workbook)
+	protected <T> void populateCell(Cell cell, IModel<T> rowModel, IExportableColumn<T, ?> column, int rowIndex, int columnIndex, Workbook workbook)
 	{
 		IModel<?> cellModel = column.getDataModel(rowModel);
 		if (cellModel != null)
