@@ -35,11 +35,6 @@
 			<artifactId>wicketstuff-servlet3-auth</artifactId>
 		</dependency>
 
-		<dependency>
-			<groupId>org.mortbay.jetty</groupId>
-			<artifactId>javax.servlet-api</artifactId>
-		</dependency>
-
 		<!-- LOGGING DEPENDENCIES - LOG4J -->
 
 		<dependency>
@@ -93,7 +88,7 @@
 			<plugin>
 				<groupId>org.mortbay.jetty</groupId>
 				<artifactId>jetty-maven-plugin</artifactId>
-				<version>${eclipse.jetty.version}</version><!--$NO-MVN-MAN-VER$-->
+				<version>${jetty.version}</version><!--$NO-MVN-MAN-VER$-->
 				<configuration>
 					<scanIntervalSeconds>10</scanIntervalSeconds>
 					<webAppConfig>
@@ -105,7 +100,7 @@
 							<maxIdleTime>60000</maxIdleTime>
 						</connector>
 					</connectors>
-                                       <webAppXml>src/test/resources/jetty-test.xml</webAppXml>
+				    <webAppXml>src/test/resources/jetty-test.xml</webAppXml>
 				</configuration>
 			</plugin>
 		</plugins>
