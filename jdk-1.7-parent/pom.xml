@@ -59,7 +59,7 @@
 		<module>wicketstuff-logback-parent</module>
 
 		<module>closure-compiler</module>
-		<!--<module>scala-extensions-parent</module> TEMPORARY -->
+		<module>scala-extensions-parent</module>
 		<module>serializer-common</module>
 		<module>serializer-kryo</module>
 		<module>serializer-kryo2</module>
@@ -93,7 +93,6 @@ Commented because its build fails
         <!-- <module>calendarviews-parent</module> -->
         <!-- <module>client-and-server-validation</module> -->
 		<!-- <module>eidogo-parent</module> -->
-		<!-- <module>jasperreports-parent</module> -->
 
 		<!-- <module>theme-parent</module> -->
 		<!-- <module>mootools-meiomask-parent</module> -->
@@ -101,11 +100,6 @@ Commented because its build fails
 		<!-- <module>yav-parent</module> -->
 		<!-- <module>maven-support</module> -->
 
-		<!-- deprecated
-
-		Google Maps v2 has be stopped by Google
-		<module>gmap2-parent</module>
-		-->
 		<module>wicketstuff-wicket7</module>
 		<module>wicketstuff-glassfish4-integration</module>
 	</modules>
