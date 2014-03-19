@@ -14,7 +14,6 @@
 
 	<properties>
 		<portlet-api.version>2.0</portlet-api.version>
-		<servlet-api.version>2.5</servlet-api.version>
 	</properties>
 
 	<dependencies>
@@ -32,7 +31,6 @@
 		<dependency>
 			<groupId>javax.servlet</groupId>
 			<artifactId>javax.servlet-api</artifactId>
-			<version>${servlet-api.version}</version>
 			<scope>provided</scope>
 		</dependency>
 

@@ -16,6 +16,8 @@
  */
 package org.wicketstuff.rest;
 
+import org.apache.wicket.ajax.json.JSONObject;
+import org.junit.Assert;
 import static org.junit.Assert.assertEquals;
 
 import javax.servlet.http.Cookie;
@@ -43,7 +45,6 @@ import java.io.StringReader;
 import java.io.StringWriter;
 import java.util.Collections;
 
-import junit.framework.Assert;
 
 /**
  * Simple test using the WicketTester
@@ -59,8 +60,7 @@ public class RestResourcesTest
 	@Before
 	public void setUp()
 	{
-		WicketApplication app;
-        tester = new WicketTester(app = new WicketApplication(roles));
+        tester = new WicketTester(new WicketApplication(roles));
 	}
 
 	@After
@@ -143,7 +143,10 @@ public class RestResourcesTest
 		tester.getRequest().setMethod("POST");
 		tester.executeUrl("./api");
 
-		Assert.assertEquals(TestJsonDesSer.getJSON(), tester.getLastResponseAsString());
+        JSONObject actual = new JSONObject(tester.getLastResponseAsString());
+        Assert.assertEquals("Smith", actual.getString("surname"));
+        Assert.assertEquals("Mary", actual.getString("name"));
+        Assert.assertEquals("m.smith@gmail.com", actual.getString("email"));
 	}
 
 	@Test

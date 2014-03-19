@@ -42,7 +42,7 @@ public class TestJsonDesSer extends TextualObjectSerialDeserial
 	{	
 		JSONObject jsonObject = new JSONObject(targetObject);
 		
-		return jsonObject.toString();	
+		return jsonObject.toString();
 	}
 
 	@Override

@@ -33,17 +33,17 @@ import org.apache.wicket.model.IModel;
  * new LazyColumn&lt;A, Void, B&gt;(header, from(A.class).getB());
  * </pre>
  * 
- * @param T
+ * @param <T>
  *            row object type
- * @param S
+ * @param <S>
  *            sort property type
- * @param R
+ * @param <R>
  *            cell object type
  * 
  * @author svenmeier
  */
 public class LazyColumn<T, S, R> extends AbstractColumn<T, S> implements
-		IExportableColumn<T, S, R> {
+		IExportableColumn<T, S> {
 
 	private static final long serialVersionUID = 1L;
 	
