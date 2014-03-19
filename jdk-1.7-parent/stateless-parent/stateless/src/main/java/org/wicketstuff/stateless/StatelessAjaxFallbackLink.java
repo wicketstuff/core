@@ -58,11 +58,10 @@ public abstract class StatelessAjaxFallbackLink<T> extends StatelessLink<T>
             }
 
             @Override
-            @SuppressWarnings("synthetic-access")
             protected void onComponentTag(final ComponentTag tag)
             {
                 // only render handler if link is enabled
-                if (isLinkEnabled())
+                if (isEnabledInHierarchy())
                 {
                     super.onComponentTag(tag);
                 }

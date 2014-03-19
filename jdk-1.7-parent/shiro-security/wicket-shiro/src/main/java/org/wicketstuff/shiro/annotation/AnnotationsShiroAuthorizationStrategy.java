@@ -22,6 +22,8 @@ import org.apache.wicket.Component;
 import org.apache.wicket.authorization.Action;
 import org.apache.wicket.authorization.IAuthorizationStrategy;
 import org.apache.wicket.request.component.IRequestableComponent;
+import org.apache.wicket.request.mapper.parameter.PageParameters;
+import org.apache.wicket.request.resource.IResource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.wicketstuff.shiro.ShiroAction;
@@ -36,8 +38,6 @@ public class AnnotationsShiroAuthorizationStrategy implements IAuthorizationStra
 	private static final Logger LOG = LoggerFactory.getLogger(AnnotationsShiroAuthorizationStrategy.class);
 
 	/**
-	 * @param <T>
-	 * @param clazz
 	 * @return null if ok, or the Annotation that failed
 	 */
 	protected ShiroSecurityConstraint checkInvalidInstantiation(final Annotation[] annotations,
@@ -138,7 +138,12 @@ public class AnnotationsShiroAuthorizationStrategy implements IAuthorizationStra
 		return fail == null;
 	}
 
-	/**
+    @Override
+    public boolean isResourceAuthorized(IResource resource, PageParameters parameters) {
+        return true;
+    }
+
+    /**
 	 * {@inheritDoc}
 	 */
 	public <T extends IRequestableComponent> boolean isInstantiationAuthorized(

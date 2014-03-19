@@ -31,14 +31,14 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * An {@link org.apache.wicket.protocol.http.SecondLevelCacheSessionStore.IPageStore IPageStore}
+ * An {@link IPageStore IPageStore}
  * implementation that stores serialized Pages in JSecurity's
  * {@link org.apache.shiro.session.Session Session}. This implementation exists to support
  * applications that use JSecurity's Enterprise Sessions instead of HTTP-only sessions.
  * <p/>
  * In a distributed application, the JSecurity Session data might not reside on the same host that
  * runs the Wicket application. In these cases the default
- * {@link org.apache.wicket.protocol.http.pagestore.DiskPageStore DiskPageStore} used by Wicket is
+ * {@link org.apache.wicket.pageStore.DiskDataStore} used by Wicket is
  * not suitable. Instead Page state must be serialized to a mechanism that is 'cluster-friendly'.
  * <p/>
  * JSecurity's enterprise {@code Session}s are cluster-friendly, so storing pages in the
@@ -86,9 +86,7 @@ public class SessionPageStore implements IPageStore
 		return getPageCacheManager(sessionId).getPageCache().containsPage(pageId);
 	}
 
-	/**
-	 * {@inheritDoc}
-	 */
+    @Override
 	public IManageablePage convertToPage(final Object page)
 	{
 		if (page == null)
@@ -115,9 +113,7 @@ public class SessionPageStore implements IPageStore
 			.deserialize(data);
 	}
 
-	/**
-	 * {@inheritDoc}
-	 */
+    @Override
 	public void destroy()
 	{
 		// do nothing - session timeout will cleanup automatically
@@ -128,9 +124,7 @@ public class SessionPageStore implements IPageStore
 		return MAX_PAGE_MAP_SIZE;
 	}
 
-	/**
-	 * {@inheritDoc}
-	 */
+    @Override
 	public Page getPage(final String sessionId, final int pageId)
 	{
 		final SerializedPageWrapper wrapper = getPageCacheManager(sessionId).getPageCache()
@@ -191,18 +185,14 @@ public class SessionPageStore implements IPageStore
 		// nothing to do
 	}
 
-	/**
-	 * {@inheritDoc}
-	 */
-	public Serializable prepareForSerialization(final String sessionId, final Object page)
+    @Override
+	public Serializable prepareForSerialization(final String sessionId, final Serializable page)
 	{
 		return null;
 	}
 
-	/**
-	 * {@inheritDoc}
-	 */
-	public void removePage(final String sessionId, final int pageId)
+    @Override
+    public void removePage(final String sessionId, final int pageId)
 	{
 		if (pageId != -1)
 		{
@@ -211,9 +201,7 @@ public class SessionPageStore implements IPageStore
 		}
 	}
 
-	/**
-	 * {@inheritDoc}
-	 */
+    @Override
 	public Object restoreAfterSerialization(final Serializable serializable)
 	{
 		return null;
@@ -240,9 +228,7 @@ public class SessionPageStore implements IPageStore
 		return data;
 	}
 
-	/**
-	 * {@inheritDoc}
-	 */
+    @Override
 	public void storePage(final String sessionId, final IManageablePage page)
 	{
 		final SerializedPageWrapper wrapper = serialize(sessionId, page);
@@ -251,9 +237,7 @@ public class SessionPageStore implements IPageStore
 			LOG.debug("storePage {}", page.toString());
 	}
 
-	/**
-	 * {@inheritDoc}
-	 */
+    @Override
 	public void unbind(final String sessionId)
 	{
 		final Session active = getSession(sessionId);

@@ -1,7 +1,6 @@
 package wicket.contrib.tinymce.image;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
 
@@ -14,7 +13,6 @@ import org.apache.wicket.markup.html.form.upload.FileUploadField;
 import org.apache.wicket.markup.html.panel.FeedbackPanel;
 import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.model.ResourceModel;
-import org.apache.wicket.util.string.Strings;
 import org.apache.wicket.validation.IValidatable;
 import org.apache.wicket.validation.IValidator;
 import org.apache.wicket.validation.ValidationError;
@@ -67,7 +65,7 @@ public class ImageUploadContentPanel extends Panel
 					}
 					fileUpload.writeTo(new File(currentEngineerDir, fileName));
 				}
-				catch (IOException ex)
+				catch (Exception ex)
 				{
 					log.error("Can't upload attachment: " + ex.getMessage(), ex);
 					ImageUploadContentPanel.this.error("Can't upload attachment");
@@ -112,7 +110,7 @@ public class ImageUploadContentPanel extends Panel
 				if (extension != null && !extensions.contains(extension.toLowerCase()))
 				{
 					ValidationError error = new ValidationError();
-					error.addMessageKey("WrongExtensionValidator");
+					error.addKey("WrongExtensionValidator");
 					error.setVariable("extensions", extensions.toString());
 					pValidatables.error(error);
 				}

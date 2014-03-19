@@ -19,6 +19,8 @@ package org.wicketstuff.security.swarm.strategies;
 import java.util.Collections;
 import java.util.Set;
 
+import org.apache.wicket.request.mapper.parameter.PageParameters;
+import org.apache.wicket.request.resource.IResource;
 import org.wicketstuff.security.actions.WaspAction;
 import org.wicketstuff.security.authentication.LoginException;
 import org.wicketstuff.security.components.ISecureComponent;
@@ -200,4 +202,9 @@ public class SwarmStrategy extends AbstractSwarmStrategy
 	{
 		return getSubject() != null;
 	}
+
+    @Override
+    public boolean isResourceAuthorized(IResource resource, PageParameters parameters) {
+        return true;
+    }
 }

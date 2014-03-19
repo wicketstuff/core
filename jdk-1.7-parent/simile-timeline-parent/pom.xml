@@ -53,18 +53,4 @@
 			<artifactId>junit</artifactId>
 		</dependency>
 	</dependencies>
-
-	<!-- 2011.04.13. akiraly: keeping it disabled because license checking fails. 
-		The header.txt is not existing. -->
-	<!--build>
-		<plugins>
-			<plugin>
-				<groupId>com.mycila.maven-license-plugin</groupId>
-				<artifactId>maven-license-plugin</artifactId>
-				<configuration>
-					<header>src/main/etc/header.txt</header>
-				</configuration>
-			</plugin>
-		</plugins>
-	</build-->
 </project>

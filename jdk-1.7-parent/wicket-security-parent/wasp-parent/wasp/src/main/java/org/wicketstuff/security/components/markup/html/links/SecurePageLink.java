@@ -17,6 +17,7 @@
 package org.wicketstuff.security.components.markup.html.links;
 
 import org.apache.wicket.Page;
+import org.apache.wicket.markup.html.link.BookmarkablePageLink;
 import org.apache.wicket.markup.html.link.Link;
 import org.wicketstuff.security.actions.WaspAction;
 import org.wicketstuff.security.checks.ISecurityCheck;
@@ -77,7 +78,7 @@ public class SecurePageLink<T> extends Link<T> implements ISecureComponent
 	 * @param pageLink
 	 */
 	@Deprecated
-	public SecurePageLink(String id, org.apache.wicket.markup.html.link.IPageLink pageLink)
+	public SecurePageLink(String id, BookmarkablePageLink pageLink)
 	{
 		this(id, new OldPageLinkWrapper(pageLink));
 	}

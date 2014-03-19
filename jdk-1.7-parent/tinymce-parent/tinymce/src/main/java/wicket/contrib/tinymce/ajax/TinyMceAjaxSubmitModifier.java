@@ -24,7 +24,7 @@ public class TinyMceAjaxSubmitModifier extends AttributeModifier
 	 */
 	public TinyMceAjaxSubmitModifier()
 	{
-		super("onclick", true, new Model(SAVE_TRIGGER));
+		super("onclick", Model.of(SAVE_TRIGGER));
 	}
 
 	/**

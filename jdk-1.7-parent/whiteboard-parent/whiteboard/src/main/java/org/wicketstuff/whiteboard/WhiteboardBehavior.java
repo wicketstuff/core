@@ -36,7 +36,7 @@ import org.slf4j.LoggerFactory;
 import org.wicketstuff.whiteboard.elements.*;
 import org.wicketstuff.whiteboard.elements.Element.Type;
 import org.wicketstuff.whiteboard.resource.*;
-import org.wicketstuff.whiteboard.settings.IWhiteboardLibrarySettings;
+import org.wicketstuff.whiteboard.settings.WhiteboardLibrarySettings;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
@@ -716,7 +716,7 @@ public class WhiteboardBehavior extends AbstractDefaultAjaxBehavior{
 	 * @param response
 	 */
 	private void initReferences(IHeaderResponse response){
-		IWhiteboardLibrarySettings settings=getLibrarySettings();
+		WhiteboardLibrarySettings settings=getLibrarySettings();
 
 		// Whiteboard.css
 		if(settings!=null&&settings.getWhiteboardStyleSheetReference()!=null){
@@ -754,10 +754,10 @@ public class WhiteboardBehavior extends AbstractDefaultAjaxBehavior{
 
 	}
 
-	private static IWhiteboardLibrarySettings getLibrarySettings(){
+	private static WhiteboardLibrarySettings getLibrarySettings(){
 		if(Application.exists()
-				&&(Application.get().getJavaScriptLibrarySettings() instanceof IWhiteboardLibrarySettings)){
-			return (IWhiteboardLibrarySettings)Application.get().getJavaScriptLibrarySettings();
+				&&(Application.get().getJavaScriptLibrarySettings() instanceof WhiteboardLibrarySettings)){
+			return (WhiteboardLibrarySettings)Application.get().getJavaScriptLibrarySettings();
 		}
 
 		return null;

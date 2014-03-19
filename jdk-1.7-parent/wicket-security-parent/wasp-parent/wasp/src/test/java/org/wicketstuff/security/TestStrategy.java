@@ -23,6 +23,8 @@ import java.util.Map;
 import org.apache.wicket.Component;
 import org.apache.wicket.Page;
 import org.apache.wicket.model.IModel;
+import org.apache.wicket.request.mapper.parameter.PageParameters;
+import org.apache.wicket.request.resource.IResource;
 import org.wicketstuff.security.actions.WaspAction;
 import org.wicketstuff.security.authentication.LoginException;
 import org.wicketstuff.security.components.ISecureComponent;
@@ -201,4 +203,9 @@ public class TestStrategy extends ClassAuthorizationStrategy
 	{
 		return loggedin;
 	}
+
+    @Override
+    public boolean isResourceAuthorized(IResource resource, PageParameters parameters) {
+        return true;
+    }
 }
