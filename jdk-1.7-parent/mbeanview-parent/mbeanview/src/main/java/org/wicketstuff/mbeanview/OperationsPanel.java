@@ -37,7 +37,6 @@ import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.form.TextField;
 import org.apache.wicket.markup.html.list.ListItem;
 import org.apache.wicket.markup.html.list.ListView;
-import org.apache.wicket.markup.html.panel.FeedbackPanel;
 import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
@@ -111,12 +110,35 @@ public class OperationsPanel extends Panel
 					private static final long serialVersionUID = 1L;
 
 					@Override
-					protected void onSuccessful(Object returnObj, AjaxRequestTarget target)
+					protected void onFailure(Exception e, AjaxRequestTarget target)
+					{
+						List<String> returnList = new ArrayList<String>();
+						returnList.add(e.getMessage());
+						StringWriter sw = new StringWriter();
+						PrintWriter pw = new PrintWriter(sw);
+						e.printStackTrace(pw);
+						returnList.add(sw.toString());
+
+						modalOutput.setTitle("Failure");
+						modalOutput.setContent(new DataViewPanel(modalOutput.getContentId(),
+							Model.of(returnList)));
+						modalOutput.show(target);
+					}
+
+					@Override
+					protected void onSuccess(Object returnObj, AjaxRequestTarget target)
 					{
 						if (returnObj == null)
 						{
-							item.info("Successful call");
+							item.info("Success");
 							target.add(feedback);
+						}
+						else
+						{
+							modalOutput.setTitle("Success");
+							modalOutput.setContent(new DataViewPanel(modalOutput.getContentId(),
+								Model.of((Serializable)returnObj)));
+							modalOutput.show(target);
 						}
 					}
 				});
@@ -182,34 +204,17 @@ public class OperationsPanel extends Panel
 			{
 				returnObj = server.getObject().invoke(objectName, info.getName(),
 					values.getObject(), getSignatures());
-				onSuccessful(returnObj, target);
+				onSuccess(returnObj, target);
 			}
 			catch (Exception e)
 			{
-				List<String> returnList = new ArrayList<String>();
-				returnList.add(e.getMessage());
-				StringWriter sw = new StringWriter();
-				PrintWriter pw = new PrintWriter(sw);
-				e.printStackTrace(pw);
-				returnList.add(sw.toString());
-				returnObj = returnList;
-			}
-			if (returnObj != null)
-			{
-				modalOutput.setContent(new DataViewPanel(modalOutput.getContentId(),
-					Model.of((Serializable)returnObj)));
-				modalOutput.show(target);
+				onFailure(e, target);
 			}
 		}
 
-		protected abstract void onSuccessful(Object returnObj, AjaxRequestTarget target);
+		protected abstract void onFailure(Exception e, AjaxRequestTarget target);
 
-		@Override
-		protected void onError(AjaxRequestTarget target, Form<?> form)
-		{
-
-		}
-
+		protected abstract void onSuccess(Object returnObj, AjaxRequestTarget target);
 	}
 
 	private static class ParameterRepeater extends ListView<MBeanParameterInfo>
@@ -233,7 +238,7 @@ public class OperationsPanel extends Panel
 
 			parameterValues.detach();
 		}
-		
+
 		@Override
 		protected void populateItem(final ListItem<MBeanParameterInfo> item)
 		{
@@ -241,8 +246,10 @@ public class OperationsPanel extends Panel
 
 			item.add(new Label("parameterName", param.getName()));
 
-			item.add(new TextField("parameterValue", new IModel<Object>()
+			item.add(new TextField<Object>("parameterValue", new IModel<Object>()
 			{
+				private static final long serialVersionUID = 1L;
+
 				@Override
 				public void detach()
 				{
@@ -261,6 +268,9 @@ public class OperationsPanel extends Panel
 				}
 			}, Object.class)
 			{
+				private static final long serialVersionUID = 1L;
+
+				@SuppressWarnings("unchecked")
 				@Override
 				public <C> IConverter<C> getConverter(Class<C> type)
 				{

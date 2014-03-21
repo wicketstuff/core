@@ -99,6 +99,8 @@ public class MBeansPanel extends Panel
 		{
 			return new Folder<MbeanNode>(id, this, node)
 			{
+				private static final long serialVersionUID = 1L;
+
 				@Override
 				protected boolean isSelected()
 				{
@@ -110,6 +112,28 @@ public class MBeansPanel extends Panel
 				{
 					return true;
 				}
+				
+				@Override
+				protected String getOpenStyleClass()
+				{
+					String styleClass = getModelObject().getStyleClass();
+					if (styleClass == null) {
+						return super.getOpenStyleClass();
+					} else {
+						return styleClass;
+					}
+				}
+
+				@Override
+				protected String getClosedStyleClass()
+				{
+					String styleClass = getModelObject().getStyleClass();
+					if (styleClass == null) {
+						return super.getClosedStyleClass();
+					} else {
+						return styleClass;
+					}
+				}
 
 				@Override
 				protected void onClick(AjaxRequestTarget target)
@@ -120,38 +144,12 @@ public class MBeansPanel extends Panel
 					selected = getModelObject();
 					updateNode(selected, target);
 						
-					Component newView = getModelObject().getView(VIEW_PANEL_ID);
+					Component newView = getModelObject().newView(VIEW_PANEL_ID);
 					newView.setOutputMarkupId(true);
 					MBeansPanel.this.replace(newView);
 					target.add(newView);
 				}
 			};
-		}
-	}
-
-	private class MBeansTreeNameComparator implements Comparator<String>
-	{
-		public int compare(String o1, String o2)
-		{
-			String p1 = o1.split("=")[0];
-			String p2 = o2.split("=")[0];
-			if ("name".equals(p1))
-			{
-				return 1;
-			}
-			else if ("name".equals(p2))
-			{
-				return -1;
-			}
-			if ("application".equals(p1) || "type".equals(p1))
-			{
-				return 1;
-			}
-			else if ("application".equals(p2) || "type".equals(p2))
-			{
-				return -1;
-			}
-			return p1.compareTo(p2);
 		}
 	}
 
@@ -161,9 +159,14 @@ public class MBeansPanel extends Panel
 
 		private List<MbeanNode> children;
 
-		public Component getView(String wicketId)
+		public Component newView(String wicketId)
 		{
 			return new EmptyPanel(wicketId);
+		}
+
+		public String getStyleClass()
+		{
+			return null;
 		}
 
 		public List<MbeanNode> getChildren()
@@ -216,7 +219,13 @@ public class MBeansPanel extends Panel
 		}
 
 		@Override
-		public Component getView(String wicketId)
+		public String getStyleClass()
+		{
+			return "failure";
+		}
+		
+		@Override
+		public Component newView(String wicketId)
 		{
 			return new Label(wicketId, new AbstractReadOnlyModel<String>()
 			{
@@ -286,42 +295,42 @@ public class MBeansPanel extends Panel
 		 */
 		private List<MbeanNode> createKeyNodes(String query, List<KeyPath> paths) throws Exception
 		{
-			Map<Key, List<KeyPath>> groups = new HashMap<>();
+			Map<Key, List<KeyPath>> head2Tails = new HashMap<>();
 
 			for (KeyPath path : paths)
 			{
 				Key head = path.head();
 
-				List<KeyPath> group = groups.get(head);
-				if (group == null)
+				List<KeyPath> tails = head2Tails.get(head);
+				if (tails == null)
 				{
-					group = new ArrayList<>();
-					groups.put(head, group);
+					tails = new ArrayList<>();
+					head2Tails.put(head, tails);
 				}
 
 				KeyPath tail = path.tail();
 				if (tail.isEmpty() == false)
 				{
-					group.add(tail);
+					tails.add(tail);
 				}
 			}
 
 			List<MbeanNode> children = new ArrayList<>();
 
-			for (Entry<Key, List<KeyPath>> entry : groups.entrySet())
+			for (Key head : new TreeSet<>(head2Tails.keySet()))
 			{
-				KeyNode child = new KeyNode(entry.getKey());
+				KeyNode child = new KeyNode(head);
 
 				children.add(child);
 
-				String temp = query + (query.endsWith(":") ? "" : ",") + entry.getKey();
+				String temp = query + (query.endsWith(":") ? "" : ",") + head;
 				for (ObjectInstance instance : getModel().getObject().queryMBeans(null,
 					new ObjectName(temp)))
 				{
 					child.setInstance(instance);
 				}
 
-				child.getChildren().addAll(createKeyNodes(temp, entry.getValue()));
+				child.getChildren().addAll(createKeyNodes(temp, head2Tails.get(head)));
 			}
 
 			return children;
@@ -432,7 +441,12 @@ public class MBeansPanel extends Panel
 				return 1;
 			}
 
-			return this.name.compareTo(key.name);
+			int byName = this.name.compareTo(key.name);
+			if (byName == 0) {
+				return this.value.compareTo(key.value);
+			} else {
+				return byName;
+			}
 		}
 	}
 
@@ -475,9 +489,28 @@ public class MBeansPanel extends Panel
 		}
 
 		@Override
+		public String getStyleClass()
+		{
+			if (instance == null) {
+				return null;
+			} else {
+				return "tree-folder-instance";
+			}
+		}
+		
+		@Override
 		public String toString()
 		{
 			return key.value;
+		}
+		
+		@Override
+		public Component newView(String wicketId)
+		{
+			if (instance != null) {
+				return new InstancePanel(wicketId, getModel(), instance);
+			}
+			return super.newView(wicketId);
 		}
 	}
 
@@ -497,7 +530,7 @@ public class MBeansPanel extends Panel
 		}
 
 		@Override
-		public Component getView(String id)
+		public Component newView(String id)
 		{
 			return new AttributeValuesPanel(id, getModel(), instance.getObjectName(), attributes);
 		}
@@ -543,7 +576,7 @@ public class MBeansPanel extends Panel
 		}
 
 		@Override
-		public Component getView(String wicketId)
+		public Component newView(String wicketId)
 		{
 			return new AttributeValuesPanel(wicketId, getModel(), instance.getObjectName(),
 				new MBeanAttributeInfo[] { attribute });
@@ -571,7 +604,7 @@ public class MBeansPanel extends Panel
 		}
 
 		@Override
-		public Component getView(String id)
+		public Component newView(String id)
 		{
 			return new OperationsPanel(id, getModel(), instance.getObjectName(), operations);
 		}
@@ -612,7 +645,7 @@ public class MBeansPanel extends Panel
 		}
 
 		@Override
-		public Component getView(String wicketId)
+		public Component newView(String wicketId)
 		{
 			return new OperationsPanel(wicketId, getModel(), instance.getObjectName(),
 				new MBeanOperationInfo[] { operation });

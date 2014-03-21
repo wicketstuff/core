@@ -83,3 +83,10 @@ a.none {
 	background: transparent;
 	padding-right: 0px;
 }
+
+.tree-folder-instance {
+  padding-left: 18px;
+  background-image: url(instance.png);
+  background-position: 0px 50%;
+  background-repeat: no-repeat;
+}
