@@ -1,6 +1,12 @@
 package org.wicketstuff.mbeanview.examples;
 
+import java.lang.management.ManagementFactory;
+
+import javax.management.MBeanServer;
+
 import org.apache.wicket.markup.html.WebPage;
+import org.apache.wicket.model.IModel;
+import org.apache.wicket.model.LoadableDetachableModel;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
 import org.wicketstuff.mbeanview.MBeansPanel;
 
@@ -12,8 +18,6 @@ public class HomePage extends WebPage
 
 	private static final long serialVersionUID = 1L;
 
-	// TODO Add any page properties or variables here
-
 	/**
 	 * Constructor that is invoked when page is invoked without a session.
 	 * 
@@ -22,10 +26,13 @@ public class HomePage extends WebPage
 	 */
 	public HomePage(final PageParameters parameters)
 	{
+		IModel<MBeanServer> reachMbeanServer = new LoadableDetachableModel<MBeanServer>() {
+			@Override
+			protected MBeanServer load() {
+				return ManagementFactory.getPlatformMBeanServer();
+			}
+		};
 
-		// Add the simplest type of label
-		add(new MBeansPanel("example"));
-
-		// TODO Add your page's components here
+		add(new MBeansPanel("example", reachMbeanServer));
 	}
 }

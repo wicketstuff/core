@@ -24,7 +24,11 @@
 			<artifactId>wicketstuff-mbeanview</artifactId>
 			<version>${project.version}</version>
 		</dependency>
-				<!-- logging -->
+		<dependency>
+			<groupId>org.apache.wicket</groupId>
+			<artifactId>wicket-jmx</artifactId>
+		</dependency>
+						<!-- logging -->
 		<dependency>
 			<groupId>log4j</groupId>
 			<artifactId>log4j</artifactId>

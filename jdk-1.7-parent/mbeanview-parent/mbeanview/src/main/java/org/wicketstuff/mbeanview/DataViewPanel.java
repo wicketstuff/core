@@ -24,6 +24,8 @@ import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.list.ListItem;
 import org.apache.wicket.markup.html.list.ListView;
 import org.apache.wicket.markup.html.panel.Panel;
+import org.apache.wicket.model.AbstractReadOnlyModel;
+import org.apache.wicket.model.IModel;
 
 /**
  * @author Pedro Henrique Oliveira dos Santos
@@ -32,38 +34,14 @@ import org.apache.wicket.markup.html.panel.Panel;
 public class DataViewPanel extends Panel
 {
 	private static final long serialVersionUID = 1L;
+
 	private static final String OUTPUT_ID = "output";
 
-	public DataViewPanel(String id, Object param)
+	public DataViewPanel(String id, IModel<?> value)
 	{
 		super(id);
-		List<Object> contents = null;
-		if (param == null)
-		{
-			//
-		}
-		else if (param instanceof List)
-		{
-			contents = (List<Object>)param;
-		}
-		else if (param.getClass().isArray())
-		{
-			int lenght = Array.getLength(param);
-			if (lenght > 0)
-			{
-				contents = new ArrayList<Object>();
-				for (int i = 0; i < lenght; i++)
-				{
-					contents.add(Array.get(param, i));
-				}
-			}
-		}
-		else
-		{
-			contents = new ArrayList<Object>();
-			contents.add(param);
-		}
-		ListView<Object> contentsRepeater = new ListView<Object>("contents", contents)
+
+		ListView<Object> contentsRepeater = new ListView<Object>("contents", new ValueModel(value))
 		{
 			private static final long serialVersionUID = 1L;
 
@@ -82,5 +60,59 @@ public class DataViewPanel extends Panel
 			}
 		};
 		add(contentsRepeater);
+	}
+
+	private static class ValueModel extends AbstractReadOnlyModel<List<Object>>
+	{
+
+		private IModel<?> value;
+
+		public ValueModel(IModel<?> value)
+		{
+			this.value = value;
+		}
+
+		@Override
+		public void detach()
+		{
+			super.detach();
+
+			this.value.detach();
+		}
+
+		@Override
+		public List<Object> getObject()
+		{
+			List<Object> contents = null;
+
+			Object temp = value.getObject();
+			if (temp == null)
+			{
+				//
+			}
+			else if (temp instanceof List)
+			{
+				contents = (List<Object>)temp;
+			}
+			else if (temp.getClass().isArray())
+			{
+				int length = Array.getLength(temp);
+				if (length > 0)
+				{
+					contents = new ArrayList<Object>();
+					for (int i = 0; i < length; i++)
+					{
+						contents.add(Array.get(temp, i));
+					}
+				}
+			}
+			else
+			{
+				contents = new ArrayList<Object>();
+				contents.add(temp);
+			}
+
+			return contents;
+		}
 	}
 }

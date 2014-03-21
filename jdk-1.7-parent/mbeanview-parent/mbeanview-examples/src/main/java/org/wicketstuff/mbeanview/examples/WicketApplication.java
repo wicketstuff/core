@@ -26,4 +26,11 @@ public class WicketApplication extends WebApplication
 		return HomePage.class;
 	}
 
+	@Override
+	protected void init()
+	{
+		super.init();
+		
+		getRequestLoggerSettings().setRequestLoggerEnabled(true);
+	}
 }

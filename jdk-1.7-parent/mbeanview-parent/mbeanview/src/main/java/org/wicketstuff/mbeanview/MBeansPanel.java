@@ -16,42 +16,40 @@
  */
 package org.wicketstuff.mbeanview;
 
-import java.lang.management.ManagementFactory;
+import java.io.PrintWriter;
+import java.io.Serializable;
+import java.io.StringWriter;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
-import java.util.Enumeration;
 import java.util.HashMap;
-import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
+import java.util.Map.Entry;
+import java.util.TreeSet;
 
-import javax.management.InstanceNotFoundException;
-import javax.management.IntrospectionException;
 import javax.management.MBeanAttributeInfo;
 import javax.management.MBeanInfo;
 import javax.management.MBeanNotificationInfo;
 import javax.management.MBeanOperationInfo;
 import javax.management.MBeanServer;
-import javax.management.MalformedObjectNameException;
 import javax.management.ObjectInstance;
 import javax.management.ObjectName;
-import javax.management.ReflectionException;
-import javax.swing.tree.DefaultMutableTreeNode;
-import javax.swing.tree.DefaultTreeModel;
-import javax.swing.tree.TreeModel;
-import javax.swing.tree.TreeNode;
 
-import org.apache.wicket.AttributeModifier;
 import org.apache.wicket.Component;
-import org.apache.wicket.MarkupContainer;
 import org.apache.wicket.ajax.AjaxRequestTarget;
-import org.apache.wicket.extensions.markup.html.tree.Tree;
+import org.apache.wicket.extensions.markup.html.repeater.tree.DefaultNestedTree;
+import org.apache.wicket.extensions.markup.html.repeater.tree.ITreeProvider;
+import org.apache.wicket.extensions.markup.html.repeater.tree.content.Folder;
 import org.apache.wicket.markup.head.CssHeaderItem;
 import org.apache.wicket.markup.head.IHeaderResponse;
+import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.panel.EmptyPanel;
 import org.apache.wicket.markup.html.panel.Panel;
+import org.apache.wicket.model.AbstractReadOnlyModel;
+import org.apache.wicket.model.IModel;
+import org.apache.wicket.model.Model;
 import org.apache.wicket.request.resource.PackageResourceReference;
 import org.apache.wicket.request.resource.ResourceReference;
 
@@ -70,151 +68,64 @@ public class MBeansPanel extends Panel
 	private static final ResourceReference CSS = new PackageResourceReference(MBeansPanel.class,
 		"css/MBeansPanel.css");
 
-	public MBeansPanel(String id)
+	private MbeanNode selected;
+	
+	public MBeansPanel(String id, IModel<MBeanServer> server)
 	{
-		super(id);
-		try
-		{
-			MbeanServerLocator reachMbeanServer = new MbeanServerLocator()
-			{
-				private static final long serialVersionUID = 1L;
+		super(id, server);
 
-				public MBeanServer get()
-				{
-					return ManagementFactory.getPlatformMBeanServer();
-				}
-			};
-			MBeanTree mBeansTree = new MBeanTree("mBeansTree", getTreeModel(reachMbeanServer));
-			add(mBeansTree);
-			add(new EmptyPanel(VIEW_PANEL_ID).setOutputMarkupId(true));
-		}
-		catch (Exception e)
-		{
-			e.printStackTrace();
-		}
+		MBeanTree mBeansTree = new MBeanTree("mBeansTree", new MbeanTreeProvider(server));
+		add(mBeansTree);
+		add(new EmptyPanel(VIEW_PANEL_ID).setOutputMarkupId(true));
 	}
 
-	private class MBeanTree extends Tree
+	@SuppressWarnings("unchecked")
+	public IModel<MBeanServer> getModel()
+	{
+		return (IModel<MBeanServer>)getDefaultModel();
+	}
+
+	private class MBeanTree extends DefaultNestedTree<MbeanNode>
 	{
 		private static final long serialVersionUID = 1L;
 
-		public MBeanTree(String id, TreeModel model)
+		public MBeanTree(String id, ITreeProvider<MbeanNode> provider)
 		{
-			super(id, model);
-			getTreeState().expandNode(getModelObject().getRoot());
+			super(id, provider);
 		}
 
 		@Override
-		protected ResourceReference getCSS()
+		protected Component newContentComponent(String id, IModel<MbeanNode> node)
 		{
-			return CSS;
-		}
-
-		@Override
-		protected void onNodeLinkClicked(AjaxRequestTarget target, TreeNode node)
-		{
-			if (node instanceof MbeanNode)
+			return new Folder<MbeanNode>(id, this, node)
 			{
-				Component newView = ((MbeanNode)node).getView(VIEW_PANEL_ID);
-				newView.setOutputMarkupId(true);
-				MBeansPanel.this.replace(newView);
-				target.add(newView);
-			}
-		}
-
-		@Override
-		protected Component newNodeIcon(MarkupContainer parent, String id, TreeNode node)
-		{
-			if (node instanceof DefaultMutableTreeNode)
-			{
-				DefaultMutableTreeNode mutableNode = (DefaultMutableTreeNode)node;
-				if (mutableNode.getChildCount() > 0 &&
-					(mutableNode.getChildAt(0) instanceof AttributeNode ||
-						mutableNode.getChildAt(0) instanceof OperationNode || mutableNode.getChildAt(0) instanceof NotificationNode))
+				@Override
+				protected boolean isSelected()
 				{
-					return new EmptyPanel(id).add(AttributeModifier.replace("style", "width:0;"));
+					return getModelObject() == selected;
 				}
-			}
-			return super.newNodeIcon(parent, id, node);
-		}
-	}
-
-	private TreeModel getTreeModel(MbeanServerLocator reachMbeanServer)
-		throws MalformedObjectNameException, NullPointerException, InstanceNotFoundException,
-		IntrospectionException, ReflectionException
-	{
-		DefaultMutableTreeNode rootNode = new DefaultMutableTreeNode("root");
-		TreeModel model = new DefaultTreeModel(rootNode);
-		String[] domains = reachMbeanServer.get().getDomains();
-		for (String domain : domains)
-		{
-			MbeanNode domainNode = new MbeanNode(domain);
-			rootNode.add(domainNode);
-
-			// expand the domain by querying its names
-			Set<ObjectName> domainNames = reachMbeanServer.get().queryNames(null,
-				new ObjectName(domain + ":*"));
-			addDomainsCildrens(domainNode, DataUtil.parseToPropsSet(domainNames));
-
-			// iterating domain names and to set their related objects instance
-			Enumeration<DefaultMutableTreeNode> enumeration = domainNode.postorderEnumeration();
-			while (enumeration.hasMoreElements())
-			{
-				DefaultMutableTreeNode node = enumeration.nextElement();
-				StringBuilder query = new StringBuilder(domain).append(':');
-				TreeNode[] path = node.getPath();
-				if (path.length > 2)
+				
+				@Override
+				protected boolean isClickable()
 				{
-					for (int j = 2; j < path.length; j++)
-					{
-						if (path[j] instanceof MbeanNode)
-						{
-							query.append(((MbeanNode)path[j]).getKeyValue());
-						}
-						if (j < path.length - 1)
-						{
-							query.append(',');
-						}
+					return true;
+				}
+
+				@Override
+				protected void onClick(AjaxRequestTarget target)
+				{
+					if (selected != null) {
+						updateNode(selected, target);
 					}
-					Set<ObjectInstance> mBeans = reachMbeanServer.get().queryMBeans(null,
-						new ObjectName(query.toString()));
-					for (ObjectInstance objectInstance : mBeans)
-					{
-						((MbeanNode)node).setObjectInstance(objectInstance, reachMbeanServer);
-					}
+					selected = getModelObject();
+					updateNode(selected, target);
+						
+					Component newView = getModelObject().getView(VIEW_PANEL_ID);
+					newView.setOutputMarkupId(true);
+					MBeansPanel.this.replace(newView);
+					target.add(newView);
 				}
-			}
-		}
-		return model;
-	}
-
-	/**
-	 * @param rootNode
-	 * @param domainNames
-	 */
-	private void addDomainsCildrens(DefaultMutableTreeNode rootNode, Set<Set<String>> domainNames)
-	{
-		Map<String, Set<Set<String>>> parentProps = new HashMap<String, Set<Set<String>>>();
-		for (Set<String> names : domainNames)
-		{
-			List<String> namesList = new ArrayList<String>(names);
-			Collections.sort(namesList, new MBeansTreeNameComparator());
-			if (namesList.size() > 0)
-			{
-				if (parentProps.get(namesList.get(0)) == null)
-				{
-					parentProps.put(namesList.get(0), new HashSet<Set<String>>());
-				}
-				names.remove(namesList.get(0));
-				parentProps.get(namesList.get(0)).add(names);
-			}
-		}
-
-		for (Map.Entry<String, Set<Set<String>>> entry : parentProps.entrySet())
-		{
-			MbeanNode newNode = new MbeanNode(null, entry.getKey());
-			rootNode.add(newNode);
-			addDomainsCildrens(newNode, entry.getValue());
+			};
 		}
 	}
 
@@ -244,101 +155,351 @@ public class MBeansPanel extends Panel
 		}
 	}
 
-	private class MbeanNode extends DefaultMutableTreeNode
+	private abstract class MbeanNode implements Serializable
 	{
 		private static final long serialVersionUID = 1L;
-		protected ObjectInstance objectInstance;
-		protected MbeanServerLocator mBeanServerLocator;
-		protected String name;
-		protected String keyValue;
 
-		public MbeanNode(String domainName)
+		private List<MbeanNode> children;
+
+		public Component getView(String wicketId)
 		{
-			super(domainName);
+			return new EmptyPanel(wicketId);
 		}
 
-		public MbeanNode(ObjectInstance objectInstance, String keyValue)
+		public List<MbeanNode> getChildren()
 		{
-			this.objectInstance = objectInstance;
-			this.keyValue = keyValue;
-			name = keyValue.split("=")[1];
-		}
-
-		public MbeanNode(MbeanNode parent)
-		{
-			objectInstance = parent.objectInstance;
-			mBeanServerLocator = parent.mBeanServerLocator;
-			name = parent.name;
-			keyValue = parent.keyValue;
-		}
-
-		public void setObjectInstance(ObjectInstance objectInstance,
-			MbeanServerLocator reachMbeanServer) throws InstanceNotFoundException,
-			IntrospectionException, ReflectionException
-		{
-			this.objectInstance = objectInstance;
-			mBeanServerLocator = reachMbeanServer;
-			MBeanInfo info = reachMbeanServer.get().getMBeanInfo(objectInstance.getObjectName());
-			MBeanAttributeInfo[] beanAttributeInfos = info.getAttributes();
-			MBeanOperationInfo[] beanOperationInfos = info.getOperations();
-			MBeanNotificationInfo[] beanNotificationInfos = info.getNotifications();
-			if (beanAttributeInfos.length > 0)
+			if (children == null)
 			{
-				add(new AttributesNode(this, beanAttributeInfos));
-			}
-			if (beanOperationInfos.length > 0)
-			{
-				add(new OperationsNode(this, beanOperationInfos));
-			}
-			if (beanNotificationInfos.length > 0)
-			{
-				DefaultMutableTreeNode notificationsNode = new DefaultMutableTreeNode(
-					"Notification");
-				add(notificationsNode);
-				for (MBeanNotificationInfo beanNotificationInfo : beanNotificationInfos)
+				try
 				{
-					notificationsNode.add(new NotificationNode(this, beanNotificationInfo));
+					setChildren(createChildren());
 				}
+				catch (Exception e)
+				{
+					setChildren(Collections.<MbeanNode> singletonList(new FailureNode(e)));
+				}
+			}
+
+			return children;
+		}
+
+		protected void setChildren(List<MbeanNode> children)
+		{
+			this.children = children;
+		}
+
+		protected List<MbeanNode> createChildren() throws Exception
+		{
+			return new ArrayList<>();
+		}
+
+		public boolean hasChildren()
+		{
+			return getChildren().isEmpty() == false;
+		}
+	}
+
+	private class FailureNode extends MbeanNode
+	{
+
+		private Exception ex;
+
+		public FailureNode(Exception ex)
+		{
+			this.ex = ex;
+		}
+
+		@Override
+		public String toString()
+		{
+			return ex.getMessage();
+		}
+
+		@Override
+		public Component getView(String wicketId)
+		{
+			return new Label(wicketId, new AbstractReadOnlyModel<String>()
+			{
+				@Override
+				public String getObject()
+				{
+					StringWriter stringWriter = new StringWriter();
+
+					PrintWriter writer = new PrintWriter(stringWriter);
+					ex.printStackTrace(writer);
+
+					return stringWriter.toString();
+				}
+			});
+		}
+	}
+
+	private class DomainNode extends MbeanNode
+	{
+
+		private String name;
+
+		public DomainNode(String name)
+		{
+			this.name = name;
+		}
+
+		@Override
+		public String toString()
+		{
+			return name;
+		}
+
+		public Component getView(String wicketId, IModel<MBeanServer> server)
+		{
+			return new MBeanTree(wicketId, new MbeanTreeProvider(server,
+				Collections.<MbeanNode> singletonList(this)));
+		}
+
+		@Override
+		public boolean hasChildren()
+		{
+			return true;
+		}
+
+		@Override
+		protected List<MbeanNode> createChildren() throws Exception
+		{
+			List<KeyPath> paths = new ArrayList<>();
+
+			for (ObjectName objectName : getModel().getObject().queryNames(null,
+				new ObjectName(this.name + ":*")))
+			{
+				KeyPath path = new KeyPath();
+				for (Entry<String, String> entry : objectName.getKeyPropertyList().entrySet())
+				{
+					path.add(new Key(entry.getKey(), entry.getValue()));
+				}
+				paths.add(path);
+			}
+
+			return createKeyNodes(name + ":", paths);
+		}
+
+		/**
+		 * @see https://blogs.oracle.com/lmalventosa/entry/jconsole_mbeans_tab_mbean_tree
+		 */
+		private List<MbeanNode> createKeyNodes(String query, List<KeyPath> paths) throws Exception
+		{
+			Map<Key, List<KeyPath>> groups = new HashMap<>();
+
+			for (KeyPath path : paths)
+			{
+				Key head = path.head();
+
+				List<KeyPath> group = groups.get(head);
+				if (group == null)
+				{
+					group = new ArrayList<>();
+					groups.put(head, group);
+				}
+
+				KeyPath tail = path.tail();
+				if (tail.isEmpty() == false)
+				{
+					group.add(tail);
+				}
+			}
+
+			List<MbeanNode> children = new ArrayList<>();
+
+			for (Entry<Key, List<KeyPath>> entry : groups.entrySet())
+			{
+				KeyNode child = new KeyNode(entry.getKey());
+
+				children.add(child);
+
+				String temp = query + (query.endsWith(":") ? "" : ",") + entry.getKey();
+				for (ObjectInstance instance : getModel().getObject().queryMBeans(null,
+					new ObjectName(temp)))
+				{
+					child.setInstance(instance);
+				}
+
+				child.getChildren().addAll(createKeyNodes(temp, entry.getValue()));
+			}
+
+			return children;
+		}
+	}
+
+	private class KeyPath extends TreeSet<Key>
+	{
+
+		public Key head()
+		{
+			Iterator<Key> iterator = iterator();
+			return iterator.next();
+		}
+
+		public KeyPath append(Key key)
+		{
+			KeyPath copy = new KeyPath();
+			copy.addAll(this);
+			copy.add(key);
+			return copy;
+		}
+
+		public KeyPath tail()
+		{
+			KeyPath tail = new KeyPath();
+
+			Iterator<Key> iterator = iterator();
+			// skip head
+			iterator.next();
+
+			while (iterator.hasNext())
+			{
+				tail.add(iterator.next());
+			}
+
+			return tail;
+		}
+
+		@Override
+		public String toString()
+		{
+			StringBuilder string = new StringBuilder();
+
+			for (Key key : this)
+			{
+				if (string.length() > 0)
+				{
+					string.append(',');
+				}
+				string.append(key);
+			}
+
+			return string.toString();
+		}
+	}
+
+	private class Key implements Comparable<Key>, Serializable
+	{
+		public final String name;
+		public final String value;
+
+		public Key(String name, String value)
+		{
+			this.name = name;
+			this.value = value;
+		}
+
+		@Override
+		public String toString()
+		{
+			return name + "=" + value;
+		}
+
+		@Override
+		public int hashCode()
+		{
+			return name.hashCode() + value.hashCode();
+		}
+
+		@Override
+		public boolean equals(Object obj)
+		{
+			if (obj instanceof Key)
+			{
+				Key key = (Key)obj;
+
+				return this.name.equals(key.name) && this.value.equals(key.value);
+			}
+			return false;
+		}
+
+		@Override
+		public int compareTo(Key key)
+		{
+			if (equals(key))
+			{
+				return 0;
+			}
+
+			if ("type".equals(this.name) || "name".equals(key.name))
+			{
+				return -1;
+			}
+
+			if ("name".equals(this.name) || "type".equals(key.name))
+			{
+				return 1;
+			}
+
+			return this.name.compareTo(key.name);
+		}
+	}
+
+	private class KeyNode extends MbeanNode
+	{
+
+		private Key key;
+
+		// optional instance for this key
+		private ObjectInstance instance;
+
+		public KeyNode(Key key)
+		{
+			this.key = key;
+		}
+
+		public void setInstance(ObjectInstance instance) throws Exception
+		{
+			this.instance = instance;
+
+			MBeanInfo info = getModel().getObject().getMBeanInfo(instance.getObjectName());
+
+			MBeanAttributeInfo[] attributes = info.getAttributes();
+			if (attributes.length > 0)
+			{
+				getChildren().add(new AttributesNode(instance, attributes));
+			}
+
+			MBeanOperationInfo[] operations = info.getOperations();
+			if (operations.length > 0)
+			{
+				getChildren().add(new OperationsNode(instance, operations));
+			}
+
+			MBeanNotificationInfo[] notifications = info.getNotifications();
+			if (notifications.length > 0)
+			{
+				getChildren().add(new NotificationsNode(instance, notifications));
 			}
 		}
 
 		@Override
 		public String toString()
 		{
-			return name != null && !"".equals(name.trim()) ? name : super.toString();
-		}
-
-		public String getKeyValue()
-		{
-			return keyValue;
-		}
-
-		public Component getView(String wicketId)
-		{
-			return new MBeanTree(wicketId, new DefaultTreeModel(this));
+			return key.value;
 		}
 	}
 
 	private class AttributesNode extends MbeanNode
 	{
 		private static final long serialVersionUID = 1L;
-		private final MBeanAttributeInfo[] beanAttributeInfos;
 
-		public AttributesNode(MbeanNode parent, MBeanAttributeInfo[] beanAttributeInfos)
+		private ObjectInstance instance;
+
+		private final MBeanAttributeInfo[] attributes;
+
+		public AttributesNode(ObjectInstance instance, MBeanAttributeInfo[] attributes)
 		{
-			super(parent);
-			this.beanAttributeInfos = beanAttributeInfos;
-			for (MBeanAttributeInfo beanAttributeInfo : beanAttributeInfos)
-			{
-				add(new AttributeNode(this, beanAttributeInfo));
-			}
+			this.instance = instance;
+
+			this.attributes = attributes;
 		}
 
 		@Override
 		public Component getView(String id)
 		{
-			return new AttributeValuesPanel(id, objectInstance.getObjectName(), beanAttributeInfos,
-				mBeanServerLocator);
+			return new AttributeValuesPanel(id, getModel(), instance.getObjectName(), attributes);
 		}
 
 		@Override
@@ -346,53 +507,73 @@ public class MBeansPanel extends Panel
 		{
 			return "Attributes";
 		}
+
+		@Override
+		public boolean hasChildren()
+		{
+			return true;
+		}
+
+		@Override
+		protected List<MbeanNode> createChildren() throws Exception
+		{
+			List<MbeanNode> children = new ArrayList<>();
+
+			for (MBeanAttributeInfo attribute : attributes)
+			{
+				children.add(new AttributeNode(instance, attribute));
+			}
+
+			return children;
+		}
 	}
 
 	private class AttributeNode extends MbeanNode
 	{
 		private static final long serialVersionUID = 1L;
-		private final MBeanAttributeInfo attributeInfo;
 
-		public AttributeNode(MbeanNode parent, MBeanAttributeInfo mBeanAttributeInfo)
+		private ObjectInstance instance;
+
+		private final MBeanAttributeInfo attribute;
+
+		public AttributeNode(ObjectInstance instance, MBeanAttributeInfo attribute)
 		{
-			super(parent);
-			attributeInfo = mBeanAttributeInfo;
+			this.instance = instance;
+			this.attribute = attribute;
 		}
 
 		@Override
 		public Component getView(String wicketId)
 		{
-			return new AttributeValuesPanel(wicketId, objectInstance.getObjectName(),
-				new MBeanAttributeInfo[] { attributeInfo }, mBeanServerLocator);
+			return new AttributeValuesPanel(wicketId, getModel(), instance.getObjectName(),
+				new MBeanAttributeInfo[] { attribute });
 		}
 
 		@Override
 		public String toString()
 		{
-			return attributeInfo.getName();
+			return attribute.getName();
 		}
 	}
 
 	private class OperationsNode extends MbeanNode
 	{
 		private static final long serialVersionUID = 1L;
-		private final MBeanOperationInfo[] beanOperationInfos;
 
-		public OperationsNode(MbeanNode parent, MBeanOperationInfo[] beanOperationInfos)
+		private ObjectInstance instance;
+
+		private final MBeanOperationInfo[] operations;
+
+		public OperationsNode(ObjectInstance instance, MBeanOperationInfo[] operations)
 		{
-			super(parent);
-			this.beanOperationInfos = beanOperationInfos;
-			for (MBeanOperationInfo beanOperationInfo : beanOperationInfos)
-			{
-				add(new OperationNode(this, beanOperationInfo));
-			}
+			this.instance = instance;
+			this.operations = operations;
 		}
 
 		@Override
 		public Component getView(String id)
 		{
-			return new OperationsPanel(id, objectInstance.getObjectName(), beanOperationInfos,
-				mBeanServerLocator);
+			return new OperationsPanel(id, getModel(), instance.getObjectName(), operations);
 		}
 
 		@Override
@@ -400,48 +581,103 @@ public class MBeansPanel extends Panel
 		{
 			return "Operations";
 		}
+
+		@Override
+		protected List<MbeanNode> createChildren() throws Exception
+		{
+			List<MbeanNode> children = new ArrayList<>();
+
+			for (MBeanOperationInfo operation : operations)
+			{
+				children.add(new OperationNode(instance, operation));
+			}
+
+			return children;
+		}
 	}
 
 	private class OperationNode extends MbeanNode
 	{
 		private static final long serialVersionUID = 1L;
-		private final MBeanOperationInfo beanOperationInfo;
 
-		public OperationNode(OperationsNode parent, MBeanOperationInfo mBeanOperationInfo)
+		private final MBeanOperationInfo operation;
+
+		private ObjectInstance instance;
+
+		public OperationNode(ObjectInstance instance, MBeanOperationInfo operation)
 		{
-			super(parent);
-			beanOperationInfo = mBeanOperationInfo;
+			this.instance = instance;
+
+			this.operation = operation;
 		}
 
 		@Override
 		public Component getView(String wicketId)
 		{
-			return new OperationsPanel(wicketId, objectInstance.getObjectName(),
-				new MBeanOperationInfo[] { beanOperationInfo }, mBeanServerLocator);
+			return new OperationsPanel(wicketId, getModel(), instance.getObjectName(),
+				new MBeanOperationInfo[] { operation });
 		}
 
 		@Override
 		public String toString()
 		{
-			return beanOperationInfo.getName();
+			return operation.getName();
+		}
+	}
+
+	private class NotificationsNode extends MbeanNode
+	{
+		private static final long serialVersionUID = 1L;
+
+		private ObjectInstance instance;
+
+		private final MBeanNotificationInfo[] notifications;
+
+		public NotificationsNode(ObjectInstance instance, MBeanNotificationInfo[] notifications)
+		{
+			this.instance = instance;
+			this.notifications = notifications;
+		}
+
+		@Override
+		public String toString()
+		{
+			return "Notifications";
+		}
+
+		@Override
+		protected List<MbeanNode> createChildren() throws Exception
+		{
+			List<MbeanNode> children = new ArrayList<>();
+
+			for (MBeanNotificationInfo notification : notifications)
+			{
+				children.add(new NotificationNode(instance, notification));
+			}
+
+			return children;
 		}
 	}
 
 	private class NotificationNode extends MbeanNode
 	{
 		private static final long serialVersionUID = 1L;
-		private final MBeanNotificationInfo beanNotificationInfo;
 
-		public NotificationNode(MbeanNode parent, MBeanNotificationInfo mBeanNotificationInfo)
+		private ObjectInstance instance;
+
+		private final MBeanNotificationInfo notification;
+
+		public NotificationNode(ObjectInstance instance, MBeanNotificationInfo notification)
 		{
-			super(parent);
-			beanNotificationInfo = mBeanNotificationInfo;
+			this.instance = instance;
+
+			this.notification = notification;
 		}
 
 		@Override
 		public String toString()
 		{
-			return beanNotificationInfo.getName();
+			return notification.getName();
 		}
 	}
 
@@ -451,4 +687,61 @@ public class MBeansPanel extends Panel
 		res.render(CssHeaderItem.forReference(CSS));
 	}
 
+	private class MbeanTreeProvider implements ITreeProvider<MbeanNode>
+	{
+
+		private IModel<MBeanServer> server;
+
+		private List<MbeanNode> roots;
+
+		public MbeanTreeProvider(IModel<MBeanServer> server)
+		{
+			this.server = server;
+
+			roots = new ArrayList<>();
+
+			String[] domains = server.getObject().getDomains();
+			for (String domain : domains)
+			{
+				roots.add(new DomainNode(domain));
+			}
+		}
+
+		public MbeanTreeProvider(IModel<MBeanServer> server, List<MbeanNode> roots)
+		{
+			this.server = server;
+
+			this.roots = roots;
+		}
+
+		@Override
+		public void detach()
+		{
+			server.detach();
+		}
+
+		@Override
+		public Iterator<? extends MbeanNode> getRoots()
+		{
+			return roots.iterator();
+		}
+
+		@Override
+		public boolean hasChildren(MbeanNode node)
+		{
+			return node.hasChildren();
+		}
+
+		@Override
+		public Iterator<? extends MbeanNode> getChildren(MbeanNode node)
+		{
+			return node.getChildren().iterator();
+		}
+
+		@Override
+		public IModel<MbeanNode> model(MbeanNode object)
+		{
+			return Model.of(object);
+		}
+	}
 }

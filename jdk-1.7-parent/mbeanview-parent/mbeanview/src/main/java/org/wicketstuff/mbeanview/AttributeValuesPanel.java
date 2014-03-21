@@ -16,34 +16,26 @@
  */
 package org.wicketstuff.mbeanview;
 
-import java.io.PrintWriter;
-import java.io.Serializable;
-import java.io.StringWriter;
 import java.util.Arrays;
 import java.util.Collection;
 
-import javax.management.Attribute;
-import javax.management.AttributeNotFoundException;
-import javax.management.InstanceNotFoundException;
 import javax.management.MBeanAttributeInfo;
-import javax.management.MBeanException;
+import javax.management.MBeanServer;
 import javax.management.ObjectName;
-import javax.management.ReflectionException;
-import javax.management.RuntimeMBeanException;
 
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.markup.html.AjaxLink;
 import org.apache.wicket.extensions.ajax.markup.html.modal.ModalWindow;
+import org.apache.wicket.feedback.FencedFeedbackPanel;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.form.Button;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.form.TextField;
 import org.apache.wicket.markup.html.list.ListItem;
 import org.apache.wicket.markup.html.list.ListView;
-import org.apache.wicket.markup.html.panel.FeedbackPanel;
 import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.model.IModel;
-import org.apache.wicket.model.Model;
+import org.apache.wicket.util.convert.IConverter;
 
 /**
  * @author Pedro Henrique Oliveira dos Santos
@@ -53,180 +45,92 @@ public class AttributeValuesPanel extends Panel
 {
 
 	private static final long serialVersionUID = 1L;
+
 	private ModalWindow modalOutput;
 
-	public AttributeValuesPanel(String id, final ObjectName objectName,
-		MBeanAttributeInfo[] beanAttributeInfos, final MbeanServerLocator mbeanServerLocator)
+	public AttributeValuesPanel(String id, final IModel<MBeanServer> server,
+		final ObjectName objectName, MBeanAttributeInfo[] beanAttributeInfos)
 	{
-		super(id);
+		super(id, server);
+
 		add(modalOutput = new ModalWindow("modalOutput"));
 		modalOutput.setCookieName("modalOutput");
+
 		Form<Void> form = new Form<Void>("form");
 		add(form);
-		form.add(new ListView<MBeanAttributeInfo>("attributes", Arrays.asList(beanAttributeInfos))
+
+		ListView<MBeanAttributeInfo> attributes = new ListView<MBeanAttributeInfo>("attributes", Arrays.asList(beanAttributeInfos))
 		{
 
 			private static final long serialVersionUID = 1L;
 
 			@Override
-			protected void populateItem(ListItem<MBeanAttributeInfo> item)
+			protected void populateItem(final ListItem<MBeanAttributeInfo> item)
 			{
 				final MBeanAttributeInfo info = item.getModelObject();
+
 				item.add(new Label("name", info.getName()));
-				try
+
+				final AttributeModel model = new AttributeModel(server, objectName, info)
 				{
-					Object value = null;
-					// UnsupportedOperationException
-					if (info.isReadable())
+					@Override
+					protected void onError(Throwable throwable)
 					{
-						try
-						{
-							value = mbeanServerLocator.get().getAttribute(objectName,
-								info.getName());
-						}
-						catch (RuntimeMBeanException e)
-						{
-							StringWriter sw = new StringWriter();
-							PrintWriter pw = new PrintWriter(sw);
-							e.printStackTrace(pw);
-							item.error(sw.toString());
-						}
+						item.error(throwable.toString());
 					}
-					AjaxLink<Serializable> link = null;
-					item.add(link = new AjaxLink<Serializable>("value",
-						Model.of((Serializable)value))
+				};
+
+				AjaxLink<Void> link = new AjaxLink<Void>("value")
+				{
+					private static final long serialVersionUID = 1L;
+
+					@Override
+					public void onClick(AjaxRequestTarget target)
 					{
-						private static final long serialVersionUID = 1L;
+						modalOutput.setContent(new DataViewPanel(modalOutput.getContentId(), model));
+						modalOutput.setTitle(info.getName());
+						modalOutput.show(target);
+					}
 
-						@Override
-						public void onClick(AjaxRequestTarget target)
-						{
-							modalOutput.setContent(new DataViewPanel(modalOutput.getContentId(),
-								getModelObject()));
-							modalOutput.setTitle(info.getName());
-							modalOutput.show(target);
-						}
-
-						@Override
-						public boolean isEnabled()
-						{
-							return getModelObject() instanceof Collection ||
-								getModelObject() != null && getModelObject().getClass().isArray();
-						}
-
-						@Override
-						public boolean isVisible()
-						{
-							return !info.isWritable();
-						}
-
-					});
-					link.add(new Label("label", value == null ? null : value.toString()));
-					item.add(new TextField<Object>("editableValue", new AttributeModel(info,
-						mbeanServerLocator, objectName))
+					@Override
+					public boolean isEnabled()
 					{
-						private static final long serialVersionUID = 1L;
+						return model.getObject() instanceof Collection ||
+							model.getObject() != null && model.getObject().getClass().isArray();
+					}
 
-						@Override
-						public boolean isVisible()
-						{
-							return info.isWritable();
-						}
-					});
-					item.add(new Button("submit", Model.of("Submit"))
+					@Override
+					public boolean isVisible()
 					{
-						private static final long serialVersionUID = 1L;
+						return !info.isWritable();
+					}
 
-						@Override
-						public boolean isVisible()
-						{
-							return info.isWritable();
-						}
-					});
-					item.add(new FeedbackPanel("feedback"));
-				}
-				catch (Exception e)
+				};
+				item.add(link);
+				link.add(new Label("label", model));
+
+				item.add(new TextField<Object>("editableValue", model, Object.class)
 				{
-					e.printStackTrace();
-				}
+					private static final long serialVersionUID = 1L;
 
+					@Override
+					public boolean isVisible()
+					{
+						return info.isWritable();
+					}
+
+					@Override
+					public <C> IConverter<C> getConverter(Class<C> type)
+					{
+						return new ValueConverter(item.getModelObject().getType());
+					}
+				});
+				item.add(new FencedFeedbackPanel("feedback", item));
 			}
-		});
-	}
+		};
+		attributes.setReuseItems(true);
+		form.add(attributes);
 
-	public static class AttributeModel implements IModel<Object>
-	{
-		private static final long serialVersionUID = 1L;
-		private final MBeanAttributeInfo attributeInfo;
-		private final MbeanServerLocator mbeanServerLocator;
-		private final ObjectName objectName;
-
-		public AttributeModel(MBeanAttributeInfo attributeInfo,
-			MbeanServerLocator mbeanServerLocator, ObjectName objectName)
-		{
-			this.attributeInfo = attributeInfo;
-			this.mbeanServerLocator = mbeanServerLocator;
-			this.objectName = objectName;
-		}
-
-		public Object getObject()
-		{
-			if (attributeInfo.isReadable())
-			{
-				try
-				{
-					return mbeanServerLocator.get().getAttribute(objectName,
-						attributeInfo.getName());
-				}
-				catch (AttributeNotFoundException e)
-				{
-					e.printStackTrace();
-				}
-				catch (InstanceNotFoundException e)
-				{
-					e.printStackTrace();
-				}
-				catch (MBeanException e)
-				{
-					e.printStackTrace();
-				}
-				catch (ReflectionException e)
-				{
-					e.printStackTrace();
-				}
-				catch (RuntimeMBeanException e)
-				{
-					e.printStackTrace();
-					return null;
-				}
-			}
-			return null;
-		}
-
-		public void setObject(Object object)
-		{
-			Attribute attribute = null;
-			try
-			{
-				Object paramWithCorrectType = null;
-				if (object != null)
-				{
-					Class<?> clazz = DataUtil.getClassFromInfo(attributeInfo);
-					paramWithCorrectType = DataUtil.tryParseToType(object, clazz);
-				}
-				attribute = new Attribute(attributeInfo.getName(), object == null ? null
-					: paramWithCorrectType);
-				mbeanServerLocator.get().setAttribute(objectName, attribute);
-			}
-			catch (Exception e)
-			{
-				throw new RuntimeException(e);
-			}
-		}
-
-		public void detach()
-		{
-		}
-
-	}
+		form.add(new Button("submit"));
+	};
 }

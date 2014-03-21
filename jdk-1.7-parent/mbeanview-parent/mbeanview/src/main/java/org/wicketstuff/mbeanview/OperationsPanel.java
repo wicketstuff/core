@@ -17,32 +17,31 @@
 package org.wicketstuff.mbeanview;
 
 import java.io.PrintWriter;
+import java.io.Serializable;
 import java.io.StringWriter;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
-import javax.management.MBeanFeatureInfo;
 import javax.management.MBeanOperationInfo;
 import javax.management.MBeanParameterInfo;
+import javax.management.MBeanServer;
 import javax.management.ObjectName;
 
-import org.apache.wicket.WicketRuntimeException;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.markup.html.form.AjaxButton;
 import org.apache.wicket.extensions.ajax.markup.html.modal.ModalWindow;
+import org.apache.wicket.feedback.FencedFeedbackPanel;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.form.TextField;
 import org.apache.wicket.markup.html.list.ListItem;
 import org.apache.wicket.markup.html.list.ListView;
-import org.apache.wicket.markup.html.panel.ComponentFeedbackPanel;
 import org.apache.wicket.markup.html.panel.FeedbackPanel;
 import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
+import org.apache.wicket.util.convert.IConverter;
 
 /**
  * @author Pedro Henrique Oliveira dos Santos
@@ -52,21 +51,25 @@ public class OperationsPanel extends Panel
 {
 
 	private static final long serialVersionUID = 1L;
-	private final MbeanServerLocator beanServerLocator;
+
 	private final ObjectName objectName;
+
 	private ModalWindow modalOutput;
 
-	public OperationsPanel(String id, final ObjectName objectName,
-		MBeanOperationInfo[] beanOperationInfos, final MbeanServerLocator beanServerLocator)
+	public OperationsPanel(String id, final IModel<MBeanServer> server,
+		final ObjectName objectName, MBeanOperationInfo[] beanOperationInfos)
 	{
 		super(id);
-		this.beanServerLocator = beanServerLocator;
+
 		this.objectName = objectName;
+
 		add(modalOutput = new ModalWindow("modalOutput"));
 		modalOutput.setTitle("Operation result view.");
 		modalOutput.setCookieName("modalOutput");
+
 		Form<Void> form = new Form<Void>("form");
 		add(form);
+
 		ListView<MBeanOperationInfo> operations = new ListView<MBeanOperationInfo>("operations",
 			Arrays.asList(beanOperationInfos))
 		{
@@ -93,13 +96,17 @@ public class OperationsPanel extends Panel
 				{
 				}
 				item.add(new Label("return", returnLbl));
-				final ParameterRepeater parameterRepeater = new ParameterRepeater("parameters",
-					info.getSignature());
+
+				IModel<Object[]> values = Model.of(new Object[info.getSignature().length]);
+
+				ParameterRepeater parameterRepeater = new ParameterRepeater("parameters",
+					info.getSignature(), values);
 				item.add(parameterRepeater);
-				final FeedbackPanel feedback = new ComponentFeedbackPanel("feedback", item);
+
+				final FencedFeedbackPanel feedback = new FencedFeedbackPanel("feedback", item);
 				feedback.setOutputMarkupId(true);
 				item.add(feedback);
-				item.add(new OperationButton("method", parameterRepeater, info)
+				item.add(new OperationButton("method", server, info, values)
 				{
 					private static final long serialVersionUID = 1L;
 
@@ -116,22 +123,55 @@ public class OperationsPanel extends Panel
 			}
 
 		};
+		operations.setReuseItems(true);
 		form.add(operations);
+	}
 
+	@SuppressWarnings("unchecked")
+	public IModel<MBeanServer> getModel()
+	{
+		return (IModel<MBeanServer>)getDefaultModel();
 	}
 
 	private abstract class OperationButton extends AjaxButton
 	{
 		private static final long serialVersionUID = 1L;
-		private final ParameterRepeater parameterRepeater;
-		private final MBeanFeatureInfo info;
 
-		public OperationButton(String id, ParameterRepeater parameterRepeater, MBeanFeatureInfo info)
+		private IModel<MBeanServer> server;
+
+		private final MBeanOperationInfo info;
+
+		private IModel<Object[]> values;
+
+		public OperationButton(String id, IModel<MBeanServer> server, MBeanOperationInfo info,
+			IModel<Object[]> values)
 		{
 			super(id);
+
 			setModel(Model.of(info.getName()));
-			this.parameterRepeater = parameterRepeater;
+
+			this.server = server;
 			this.info = info;
+			this.values = values;
+		}
+
+		@Override
+		public void detachModels()
+		{
+			super.detachModels();
+
+			server.detach();
+			values.detach();
+		}
+
+		public String[] getSignatures()
+		{
+			String[] params = new String[info.getSignature().length];
+			for (int i = 0; i < params.length; i++)
+			{
+				params[i] = info.getSignature()[i].getType();
+			}
+			return params;
 		}
 
 		@Override
@@ -140,8 +180,8 @@ public class OperationsPanel extends Panel
 			Object returnObj = null;
 			try
 			{
-				returnObj = beanServerLocator.get().invoke(objectName, info.getName(),
-					parameterRepeater.getParams(), parameterRepeater.getSignatures());
+				returnObj = server.getObject().invoke(objectName, info.getName(),
+					values.getObject(), getSignatures());
 				onSuccessful(returnObj, target);
 			}
 			catch (Exception e)
@@ -156,7 +196,8 @@ public class OperationsPanel extends Panel
 			}
 			if (returnObj != null)
 			{
-				modalOutput.setContent(new DataViewPanel(modalOutput.getContentId(), returnObj));
+				modalOutput.setContent(new DataViewPanel(modalOutput.getContentId(),
+					Model.of((Serializable)returnObj)));
 				modalOutput.show(target);
 			}
 		}
@@ -174,51 +215,58 @@ public class OperationsPanel extends Panel
 	private static class ParameterRepeater extends ListView<MBeanParameterInfo>
 	{
 		private static final long serialVersionUID = 1L;
-		private final Map<MBeanParameterInfo, IModel<?>> parametersValues = new HashMap<MBeanParameterInfo, IModel<?>>();
-		private final MBeanParameterInfo[] beanParameterInfos;
 
-		public ParameterRepeater(String id, MBeanParameterInfo[] beanParameterInfos)
+		private final IModel<Object[]> parameterValues;
+
+		public ParameterRepeater(String id, MBeanParameterInfo[] beanParameterInfos,
+			IModel<Object[]> values)
 		{
 			super(id, Arrays.asList(beanParameterInfos));
-			this.beanParameterInfos = beanParameterInfos;
+
+			this.parameterValues = values;
 		}
 
 		@Override
-		protected void populateItem(ListItem<MBeanParameterInfo> item)
+		public void detachModels()
+		{
+			super.detachModels();
+
+			parameterValues.detach();
+		}
+		
+		@Override
+		protected void populateItem(final ListItem<MBeanParameterInfo> item)
 		{
 			MBeanParameterInfo param = item.getModelObject();
+
 			item.add(new Label("parameterName", param.getName()));
-			parametersValues.put(param, new Model());
-			item.add(new TextField("parameterValue", parametersValues.get(param)));
-		}
 
-		public Object[] getParams()
-		{
-			Object[] params = new Object[beanParameterInfos.length];
-			for (int i = 0; i < params.length; i++)
+			item.add(new TextField("parameterValue", new IModel<Object>()
 			{
-				try
+				@Override
+				public void detach()
 				{
-					params[i] = DataUtil.getCompatibleData(
-						parametersValues.get(beanParameterInfos[i]).getObject(),
-						beanParameterInfos[i]);
 				}
-				catch (ClassNotFoundException e)
-				{
-					throw new WicketRuntimeException(e);
-				}
-			}
-			return params;
-		}
 
-		public String[] getSignatures()
-		{
-			String[] params = new String[beanParameterInfos.length];
-			for (int i = 0; i < params.length; i++)
+				@Override
+				public Object getObject()
+				{
+					return parameterValues.getObject()[item.getIndex()];
+				}
+
+				@Override
+				public void setObject(Object object)
+				{
+					parameterValues.getObject()[item.getIndex()] = object;
+				}
+			}, Object.class)
 			{
-				params[i] = beanParameterInfos[i].getType();
-			}
-			return params;
+				@Override
+				public <C> IConverter<C> getConverter(Class<C> type)
+				{
+					return new ValueConverter(item.getModelObject().getType());
+				}
+			});
 		}
 	}
 }

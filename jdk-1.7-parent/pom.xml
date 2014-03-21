@@ -40,7 +40,7 @@
 		<module>jslibraries</module>
 		<!--<module>jsr303-parent</module> Deprecated in favour of wicket-beanvalidation module -->
 		<module>jwicket-parent</module>
-		<!--<module>mbeanview-parent</module> Need migration to the new Tree component (wicket-extensions) -->
+		<module>mbeanview-parent</module>
 		<module>minis-parent</module>
 		<module>modalx-parent</module>
 		<module>objectautocomplete-parent</module>
