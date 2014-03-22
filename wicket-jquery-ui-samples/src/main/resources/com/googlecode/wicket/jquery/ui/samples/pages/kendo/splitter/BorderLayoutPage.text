@@ -1,4 +1,4 @@
-This sample shows how to use the <code>BorderLayer</code> based on Kendo UI <code>SplitterBehavior(s)</code>. Look at the HTML source to see how to set the layout.<br/>
+This sample shows how to use the <code>BorderLayout</code> based on Kendo UI <code>SplitterBehavior(s)</code>. Look at the HTML source to see how to set the layout.<br/>
 <br/>
 You may override <code>getVerticalPanes()</code> and <code>getHorizontalPanes()</code>, which return panes definitions in a JSON format.<br/>
 
