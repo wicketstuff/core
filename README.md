@@ -96,7 +96,7 @@ public void init()
 ```
 
 ### Setting up the HTML markup, for Kendo UI
-Kendo UI also needs CSSs to work. You need to download your own copy of Kendo UI: <http://www.kendoui.com/get-kendo-ui.aspx>.
+Kendo UI also needs CSSs to work. You need to download your own copy of Kendo UI: <http://www.telerik.com/download/kendo-ui-web-open-source>.
 
 Once done, you have to copy `kendo.common.min.css` and `kendo.choosen_theme.min.css` in into you webapp,
 as well as the `texture` folder and the corresponding `choosen_theme` folder.
