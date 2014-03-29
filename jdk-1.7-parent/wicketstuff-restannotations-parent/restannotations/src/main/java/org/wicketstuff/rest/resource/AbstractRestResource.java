@@ -16,6 +16,16 @@
  */
 package org.wicketstuff.rest.resource;
 
+import java.io.Serializable;
+import java.lang.reflect.Method;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
+
 import org.apache.wicket.Application;
 import org.apache.wicket.Session;
 import org.apache.wicket.WicketRuntimeException;
@@ -48,16 +58,6 @@ import org.wicketstuff.rest.utils.reflection.ReflectionUtils;
 import org.wicketstuff.rest.utils.wicket.AttributesWrapper;
 import org.wicketstuff.rest.utils.wicket.MethodParameterContext;
 import org.wicketstuff.rest.utils.wicket.bundle.DefaultBundleResolver;
-
-import java.io.Serializable;
-import java.lang.reflect.Method;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
 
 /**
  * Base class to build a resource that serves REST requests.
@@ -120,7 +120,6 @@ public abstract class AbstractRestResource<T extends IWebSerialDeserial> impleme
 	{
 		Args.notNull(serialDeserial, "serialDeserial");
 
-		configureObjSerialDeserial(serialDeserial);
 		onInitialize(serialDeserial);
 
 		this.webSerialDeserial = serialDeserial;
@@ -449,19 +448,6 @@ public abstract class AbstractRestResource<T extends IWebSerialDeserial> impleme
 		throw new WicketRuntimeException("Ambiguous methods mapped for the current request: URL '" +
 			request.getClientUrl() + "', HTTP method " + HttpUtils.getHttpMethod(request) + ". " +
 			"Mapped methods: " + methodsNames);
-	}
-
-	/**
-	 * Method called to initialize and configure the object serializer/deserializer.
-	 *
-	 * @deprecated use {@link onConfigure(T objSerialDeserial)} instead.
-	 *
-	 * @param objSerialDeserial
-	 *            the object serializer/deserializer
-	 */
-	@Deprecated
-	protected void configureObjSerialDeserial(T objSerialDeserial)
-	{
 	}
 
 	/**
