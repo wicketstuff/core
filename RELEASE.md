@@ -2,7 +2,8 @@
 **jQuery UI integration in Wicket 1.5.x &amp; Wicket 6.x**
 
 ## Release process
-This document explains the steps to release a new version of this project.
+This document explains the steps to release a new version of this project.  
+More info: http://central.sonatype.org/pages/apache-maven.html
 
 ### Prerequisites
 
