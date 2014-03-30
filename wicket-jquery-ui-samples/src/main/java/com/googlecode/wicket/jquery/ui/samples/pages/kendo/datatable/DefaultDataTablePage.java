@@ -11,6 +11,7 @@ import com.googlecode.wicket.jquery.core.Options;
 import com.googlecode.wicket.jquery.ui.samples.data.bean.Product;
 import com.googlecode.wicket.jquery.ui.samples.data.provider.ProductDataProvider;
 import com.googlecode.wicket.kendo.ui.datatable.DataTable;
+import com.googlecode.wicket.kendo.ui.datatable.column.CurrencyPropertyColumn;
 import com.googlecode.wicket.kendo.ui.datatable.column.IColumn;
 import com.googlecode.wicket.kendo.ui.datatable.column.PropertyColumn;
 import com.googlecode.wicket.kendo.ui.form.button.AjaxButton;
@@ -64,7 +65,7 @@ public class DefaultDataTablePage extends AbstractDataTablePage
 		columns.add(new PropertyColumn("ID", "id", 50));
 		columns.add(new PropertyColumn("Name", "name"));
 		columns.add(new PropertyColumn("Description", "description"));
-		columns.add(new PropertyColumn("Price", "price", 70));
+		columns.add(new CurrencyPropertyColumn("Price", "price", 70));
 //		columns.add(new DatePropertyColumn("Date", "date"));
 		columns.add(new PropertyColumn("Vendor", "vendor.name"));
 

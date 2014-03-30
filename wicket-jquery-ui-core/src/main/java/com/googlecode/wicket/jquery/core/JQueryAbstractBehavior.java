@@ -167,7 +167,7 @@ public abstract class JQueryAbstractBehavior extends Behavior
 	 * Get the unique behavior token that act as the script id.
 	 * @return the token
 	 */
-	String getToken()
+	protected String getToken()
 	{
 		return String.format("jquery-%s-%d", this.name, this.hashCode());
 	}

@@ -21,7 +21,7 @@ import org.apache.wicket.util.io.IClusterable;
 
 /**
  * Provides the button object that can be used in {@link DataTable}
- *
+ * TODO: complete implementation
  * @author Sebastien Briquet - sebfz1
  */
 public class ColumnButton implements IClusterable
@@ -38,7 +38,6 @@ public class ColumnButton implements IClusterable
 	{
 		return ColumnButton.sequence++ % Short.MAX_VALUE;
 	}
-
 
 	private final int id;
 	private final String text;

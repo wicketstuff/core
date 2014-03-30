@@ -25,8 +25,10 @@ import org.apache.wicket.ajax.AjaxRequestTarget;
 import com.googlecode.wicket.jquery.core.JQueryEvent;
 import com.googlecode.wicket.jquery.core.Options;
 import com.googlecode.wicket.jquery.core.ajax.IJQueryAjaxAware;
+import com.googlecode.wicket.jquery.core.ajax.JQueryAjaxBehavior;
 import com.googlecode.wicket.kendo.ui.KendoAbstractBehavior;
-import com.googlecode.wicket.kendo.ui.datatable.ColumnButtonAjaxBehavior.ClickEvent;
+import com.googlecode.wicket.kendo.ui.datatable.ColumnAjaxBehavior.ClickEvent;
+import com.googlecode.wicket.kendo.ui.datatable.ToolbarAjaxBehavior.ToolbarClickEvent;
 import com.googlecode.wicket.kendo.ui.datatable.column.CommandsColumn;
 import com.googlecode.wicket.kendo.ui.datatable.column.IColumn;
 
@@ -41,6 +43,8 @@ public abstract class DataTableBehavior extends KendoAbstractBehavior implements
 	private static final String METHOD = "kendoGrid";
 
 	protected final List<? extends IColumn> columns;
+
+	private JQueryAjaxBehavior onToolbarClickBehavior; // toolbar buttons
 
 	/**
 	 * Constructor
@@ -74,10 +78,18 @@ public abstract class DataTableBehavior extends KendoAbstractBehavior implements
 	{
 		super.bind(component);
 
-		// buttons //
+		// column buttons //
 		for (ColumnButton button : this.getColumnButtons())
 		{
-			component.add(this.newButtonAjaxBehavior(this, button));
+			component.add(this.newButtonAjaxBehavior(button));
+		}
+
+		// toolbar buttons //
+		this.onToolbarClickBehavior = this.newToolbarAjaxBehavior();
+
+		if (this.onToolbarClickBehavior != null)
+		{
+			component.add(this.onToolbarClickBehavior);
 		}
 	}
 
@@ -126,12 +138,18 @@ public abstract class DataTableBehavior extends KendoAbstractBehavior implements
 	}
 
 	// Events //
-
 	@Override
 	public void onConfigure(Component component)
 	{
 		super.onConfigure(component);
 
+		// events //
+		if (this.onToolbarClickBehavior != null)
+		{
+			this.on(this.selector + " .k-grid-toolbar .k-button", "click", this.onToolbarClickBehavior.getCallbackFunction());
+		}
+
+		// options //
 		Options source = new Options();
 		Options schema = new Options();
 
@@ -141,7 +159,7 @@ public abstract class DataTableBehavior extends KendoAbstractBehavior implements
 		schema.set("model", this.getSchemaModel());
 
 		// source //
-		source.set("type", Options.asString("jsonp"));
+		source.set("type", Options.asString("json"));
 		source.set("pageSize", this.getRowCount());
 		source.set("serverPaging", true);
 		source.set("serverSorting", true);
@@ -174,7 +192,7 @@ public abstract class DataTableBehavior extends KendoAbstractBehavior implements
 				builder.append("[ ");
 
 				int n = 0;
-				for (ColumnButtonAjaxBehavior behavior : component.getBehaviors(ColumnButtonAjaxBehavior.class))
+				for (ColumnAjaxBehavior behavior : component.getBehaviors(ColumnAjaxBehavior.class))
 				{
 					ColumnButton button = behavior.getButton();
 
@@ -187,7 +205,7 @@ public abstract class DataTableBehavior extends KendoAbstractBehavior implements
 					builder.append("'name': '").append(button.getMarkupId()).append("', ");
 					builder.append("'text': '").append(button.toString()).append("', ");
 					// builder.append("'className': '").append(button.toString()).append("', ");
-					builder.append("\n'click': ").append(behavior.getCallbackFunction());
+					builder.append("'click': ").append(behavior.getCallbackFunction());
 					builder.append(" }");
 				}
 
@@ -209,16 +227,28 @@ public abstract class DataTableBehavior extends KendoAbstractBehavior implements
 			// e.getButton().onClick(target, e.getValue()); //TODO: to implement?
 			this.onClick(target, e.getButton(), e.getValue());
 		}
+		else if (event instanceof ToolbarClickEvent)
+		{
+			ToolbarClickEvent e = (ToolbarClickEvent) event;
+			this.onClick(target, e.getButton(), e.getValues());
+		}
 	}
 
 	// Factories //
 
 	/**
-	 * Gets a new {@link ColumnButtonAjaxBehavior} that will be called by the corresponding table's button.<br/>
+	 * Gets the {@link JQueryAjaxBehavior} that will be called when the user clicks a toolbar button
 	 *
-	 * @param source the {@link IJQueryAjaxAware}
-	 * @param button the button that is passed to the behavior so it can be retrieved via the {@link ClickEvent}
-	 * @return the {@link ColumnButtonAjaxBehavior}
+	 * @return the {@link JQueryAjaxBehavior}
 	 */
-	protected abstract ColumnButtonAjaxBehavior newButtonAjaxBehavior(IJQueryAjaxAware source, ColumnButton button);
+	protected abstract JQueryAjaxBehavior newToolbarAjaxBehavior();
+
+	/**
+	 * Gets a new {@link JQueryAjaxBehavior} that will be called by a table's button.
+	 * This method may be overridden to provide additional behaviors
+	 *
+	 * @param button the button that is passed to the behavior so it can be retrieved via the {@link ClickEvent}
+	 * @return the {@link JQueryAjaxBehavior}
+	 */
+	protected abstract JQueryAjaxBehavior newButtonAjaxBehavior(ColumnButton button);
 }

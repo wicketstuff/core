@@ -24,9 +24,10 @@ import com.googlecode.wicket.jquery.core.ajax.JQueryAjaxBehavior;
 import com.googlecode.wicket.jquery.core.utils.RequestCycleUtils;
 
 /**
- * Provides the {@link JQueryAjaxBehavior} being called by the button(s).
+ * Provides the {@link JQueryAjaxBehavior} being called by the column button(s).
  */
-public class ColumnButtonAjaxBehavior extends JQueryAjaxBehavior
+//XXX: ColumnButtonAjaxBehavior > ColumnAjaxBehavior
+public class ColumnAjaxBehavior extends JQueryAjaxBehavior
 {
 	private static final long serialVersionUID = 1L;
 
@@ -34,28 +35,26 @@ public class ColumnButtonAjaxBehavior extends JQueryAjaxBehavior
 
 	/**
 	 * Constructor
+	 *
 	 * @param source the {@link IJQueryAjaxAware}
 	 * @param button the {@link ColumnButton} to attach to the {@link ClickEvent}
 	 */
-	public ColumnButtonAjaxBehavior(IJQueryAjaxAware source, ColumnButton button)
+	public ColumnAjaxBehavior(IJQueryAjaxAware source, ColumnButton button)
 	{
 		super(source);
 
 		this.button = button;
 	}
 
-
 	@Override
 	protected CallbackParameter[] getCallbackParameters()
 	{
-		return new CallbackParameter[] {
-				CallbackParameter.context("e"),
-				CallbackParameter.resolved("value", String.format("this.dataItem($(e.currentTarget).closest('tr'))['%s']", this.button.getProperty()))
-		};
+		return new CallbackParameter[] { CallbackParameter.context("e"), CallbackParameter.resolved("value", String.format("this.dataItem(jQuery(e.currentTarget).closest('tr'))['%s']", this.button.getProperty())) };
 	}
 
 	/**
 	 * Gets the {@link ColumnButton}
+	 *
 	 * @return the {@link ColumnButton}
 	 */
 	public ColumnButton getButton()
@@ -89,6 +88,7 @@ public class ColumnButtonAjaxBehavior extends JQueryAjaxBehavior
 
 		/**
 		 * Gets the button that has been attached to this event object
+		 *
 		 * @return the button
 		 */
 		public ColumnButton getButton()
@@ -98,6 +98,7 @@ public class ColumnButtonAjaxBehavior extends JQueryAjaxBehavior
 
 		/**
 		 * Gets the value from the row
+		 *
 		 * @return the value from the row
 		 */
 		public String getValue()

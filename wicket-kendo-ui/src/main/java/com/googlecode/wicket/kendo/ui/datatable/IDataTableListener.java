@@ -16,6 +16,8 @@
  */
 package com.googlecode.wicket.kendo.ui.datatable;
 
+import java.util.List;
+
 import org.apache.wicket.ajax.AjaxRequestTarget;
 
 /**
@@ -26,7 +28,16 @@ import org.apache.wicket.ajax.AjaxRequestTarget;
 interface IDataTableListener
 {
 	/**
-	 * Triggered when a button is clicked.
+	 * Triggered when a toolbar button is clicked.
+	 *
+	 * @param target the {@link AjaxRequestTarget}
+	 * @param button the button text (warning, it is not the 'name' property)
+	 * @param values the list of retrieved values
+	 */
+	void onClick(AjaxRequestTarget target, String button, List<String> values);
+
+	/**
+	 * Triggered when a column button is clicked.
 	 *
 	 * @param target the {@link AjaxRequestTarget}
 	 * @param button the button being clicked

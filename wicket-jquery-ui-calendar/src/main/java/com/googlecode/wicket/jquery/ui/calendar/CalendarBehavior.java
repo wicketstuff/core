@@ -184,7 +184,7 @@ public abstract class CalendarBehavior extends JQueryBehavior implements IJQuery
 		builder.append("jQuery(document).ajaxStop(function() { jQuery('#calendar-indicator').hide(); });\n");
 		builder.append("});\n");
 
-		response.render(JavaScriptHeaderItem.forScript(builder, this.getClass().getSimpleName() + "-indicator"));
+		response.render(JavaScriptHeaderItem.forScript(builder, this.getToken() + "-indicator"));
 	}
 
 	// Properties //

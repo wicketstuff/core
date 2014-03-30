@@ -19,7 +19,7 @@ package com.googlecode.wicket.kendo.ui.datatable.column;
 import org.apache.wicket.model.IModel;
 
 /**
- * Specifies that a {@link IColumn} has the exportable capability
+ * Specifies that a {@link IColumn} has an export capability
  *
  * @author Sebastien Briquet - sebfz1
  */
@@ -27,7 +27,7 @@ public interface IExportableColumn extends IColumn
 {
 	/**
 	 * Gets a new {@link IModel} of the data represented by this {@link IExportableColumn}, for the supplied row model
-	 * 
+	 *
 	 * @param rowModel the row model
 	 * @return a new {@link IModel} of the data represented by this {@link IExportableColumn}
 	 */

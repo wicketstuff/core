@@ -31,8 +31,9 @@ import com.googlecode.wicket.jquery.core.IJQueryWidget;
 import com.googlecode.wicket.jquery.core.JQueryBehavior;
 import com.googlecode.wicket.jquery.core.Options;
 import com.googlecode.wicket.jquery.core.ajax.IJQueryAjaxAware;
+import com.googlecode.wicket.jquery.core.ajax.JQueryAjaxBehavior;
 import com.googlecode.wicket.kendo.ui.KendoBehaviorFactory;
-import com.googlecode.wicket.kendo.ui.datatable.ColumnButtonAjaxBehavior.ClickEvent;
+import com.googlecode.wicket.kendo.ui.datatable.ColumnAjaxBehavior.ClickEvent;
 import com.googlecode.wicket.kendo.ui.datatable.column.IColumn;
 
 /**
@@ -238,6 +239,12 @@ public class DataTable<T> extends WebComponent implements IJQueryWidget, IDataTa
 		// noop
 	}
 
+	@Override
+	public void onClick(AjaxRequestTarget target, String button, List<String> values)
+	{
+		// noop
+	}
+
 	// IJQueryWidget //
 
 	@Override
@@ -275,11 +282,24 @@ public class DataTable<T> extends WebComponent implements IJQueryWidget, IDataTa
 				DataTable.this.onClick(target, button, value);
 			}
 
-			// Factories //
 			@Override
-			protected ColumnButtonAjaxBehavior newButtonAjaxBehavior(IJQueryAjaxAware source, ColumnButton button)
+			public void onClick(AjaxRequestTarget target, String button, List<String> values)
 			{
-				return DataTable.this.newButtonAjaxBehavior(source, button);
+				DataTable.this.onClick(target, button, values);
+			}
+
+			// Factories //
+
+			@Override
+			protected JQueryAjaxBehavior newToolbarAjaxBehavior()
+			{
+				return DataTable.this.newToolbarAjaxBehavior(this);
+			}
+
+			@Override
+			protected JQueryAjaxBehavior newButtonAjaxBehavior(ColumnButton button)
+			{
+				return DataTable.this.newColumnAjaxBehavior(this, button);
 			}
 		};
 	}
@@ -299,15 +319,27 @@ public class DataTable<T> extends WebComponent implements IJQueryWidget, IDataTa
 	}
 
 	/**
-	 * Gets a new {@link ColumnButtonAjaxBehavior} that will be called by the corresponding {@link ColumnButton}.<br/>
+	 * Gets the {@link JQueryAjaxBehavior} that will be called when the user clicks a toolbar button
+	 *
+	 * @param source the {@link IJQueryAjaxAware}
+	 * @return the {@link JQueryAjaxBehavior}
+	 */
+	protected JQueryAjaxBehavior newToolbarAjaxBehavior(IJQueryAjaxAware source)
+	{
+		return null;
+	}
+
+	/**
+	 * Gets a new {@link JQueryAjaxBehavior} that will be called by the corresponding table's button.
 	 * This method may be overridden to provide additional behaviors
 	 *
-	 * @param source the {@link IJQueryAjaxAware} source
+	 * @param source the {@link IJQueryAjaxAware}
 	 * @param button the button that is passed to the behavior so it can be retrieved via the {@link ClickEvent}
-	 * @return the {@link ColumnButtonAjaxBehavior}
+	 * @return the {@link JQueryAjaxBehavior}
 	 */
-	protected ColumnButtonAjaxBehavior newButtonAjaxBehavior(IJQueryAjaxAware source, ColumnButton button)
+	///XXX: signature changed ColumnButtonAjaxBehavior > JQueryAjaxBehavior
+	protected JQueryAjaxBehavior newColumnAjaxBehavior(IJQueryAjaxAware source, ColumnButton button)
 	{
-		return new ColumnButtonAjaxBehavior(source, button);
+		return new ColumnAjaxBehavior(source, button);
 	}
 }

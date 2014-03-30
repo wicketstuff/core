@@ -5,19 +5,26 @@ import java.util.Arrays;
 import java.util.List;
 
 import org.apache.wicket.ajax.AjaxRequestTarget;
+import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.panel.FeedbackPanel;
 import org.apache.wicket.markup.repeater.data.IDataProvider;
-import org.apache.wicket.markup.repeater.data.ListDataProvider;
 
 import com.googlecode.wicket.jquery.core.Options;
+import com.googlecode.wicket.jquery.core.ajax.IJQueryAjaxAware;
+import com.googlecode.wicket.jquery.core.ajax.JQueryAjaxBehavior;
 import com.googlecode.wicket.jquery.ui.panel.JQueryFeedbackPanel;
 import com.googlecode.wicket.jquery.ui.samples.data.bean.Product;
-import com.googlecode.wicket.jquery.ui.samples.data.dao.ProductsDAO;
+import com.googlecode.wicket.jquery.ui.samples.data.provider.ProductDataProvider;
+import com.googlecode.wicket.kendo.ui.KendoIcon;
 import com.googlecode.wicket.kendo.ui.datatable.ColumnButton;
 import com.googlecode.wicket.kendo.ui.datatable.DataTable;
+import com.googlecode.wicket.kendo.ui.datatable.ToolbarAjaxBehavior;
 import com.googlecode.wicket.kendo.ui.datatable.column.CommandsColumn;
+import com.googlecode.wicket.kendo.ui.datatable.column.CurrencyPropertyColumn;
 import com.googlecode.wicket.kendo.ui.datatable.column.IColumn;
 import com.googlecode.wicket.kendo.ui.datatable.column.PropertyColumn;
+import com.googlecode.wicket.kendo.ui.datatable.export.CSVDataExporter;
+import com.googlecode.wicket.kendo.ui.form.button.Button;
 
 public class CommandsDataTablePage extends AbstractDataTablePage
 {
@@ -35,45 +42,79 @@ public class CommandsDataTablePage extends AbstractDataTablePage
 
 		Options options = new Options();
 		options.set("height", 430);
-		options.set("pageable", true);
+		options.set("pageable", "{ pageSizes: [ 25, 50, 100 ] }");
+		options.set("columnMenu", true);
+		options.set("selectable", Options.asString("multiple"));
+		options.set("toolbar", "[ { text: 'edit' } ]");
 
 		final DataTable<Product> table = new DataTable<Product>("datatable", columns, provider, 20, options) {
 
 			private static final long serialVersionUID = 1L;
 
+			/**
+			 * Triggered when a toolbar button is clicked.
+			 */
 			@Override
-			public void onClick(AjaxRequestTarget target, ColumnButton button, String value) {
+			public void onClick(AjaxRequestTarget target, String button, List<String> values)
+			{
+				this.info(button + " " + values);
+				target.add(feedback);
+			}
 
+			/**
+			 * Triggered when a column button is clicked.
+			 */
+			@Override
+			public void onClick(AjaxRequestTarget target, ColumnButton button, String value)
+			{
 				this.info(button + " #" + value);
 				target.add(feedback);
 			}
+
+			@Override
+			protected JQueryAjaxBehavior newToolbarAjaxBehavior(IJQueryAjaxAware source)
+			{
+				return new ToolbarAjaxBehavior(source, "id");
+			}
 		};
+
 		this.add(table);
+
+		// form & button//
+		final Form<?> form = new Form<Void>("form");
+		this.add(form);
+
+		form.add(new Button("export") {
+
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			protected String getIcon()
+			{
+				return KendoIcon.TICK;
+			}
+
+			@Override
+			public void onSubmit()
+			{
+				CSVDataExporter.export(this.getRequestCycle(), table, "export.csv");
+			}
+		});
 	}
 
 	private static IDataProvider<Product> newDataProvider()
 	{
-		return new ListDataProvider<Product>(ProductsDAO.all());
+		return new ProductDataProvider();
 	}
 
 	private static List<IColumn> newColumnList()
 	{
 		List<IColumn> columns = new ArrayList<IColumn>();
 
-		columns.add(new PropertyColumn("ID", "id", 30));
+		columns.add(new PropertyColumn("ID", "id", 50));
 		columns.add(new PropertyColumn("Name", "name"));
 		columns.add(new PropertyColumn("Description", "description"));
-
-		columns.add(new PropertyColumn("Price", "price", 70) {
-
-			private static final long serialVersionUID = 1L;
-
-			@Override
-			public String getFormat()
-			{
-				return "{0:c2}";
-			}
-		});
+		columns.add(new CurrencyPropertyColumn("Price", "price", 70));
 
 		columns.add(new CommandsColumn("", 160) {
 

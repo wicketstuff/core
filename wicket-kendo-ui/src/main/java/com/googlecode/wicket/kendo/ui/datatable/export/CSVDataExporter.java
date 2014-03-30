@@ -28,7 +28,6 @@ import java.util.List;
 import org.apache.wicket.markup.repeater.data.IDataProvider;
 import org.apache.wicket.request.cycle.RequestCycle;
 import org.apache.wicket.request.handler.resource.ResourceStreamRequestHandler;
-import org.apache.wicket.request.resource.ContentDisposition;
 import org.apache.wicket.util.resource.AbstractResourceStreamWriter;
 import org.apache.wicket.util.resource.IResourceStreamWriter;
 
@@ -42,10 +41,16 @@ import com.googlecode.wicket.kendo.ui.datatable.column.IExportableColumn;
  *
  * @author Sebastien Briquet - sebfz1
  */
-public class CSVDataExporter
+public class CSVDataExporter implements IDataExporter
 {
+	private static final char QUOTE = '"';
 	private static final String CRLF = "\r\n";
 	private static final String MIME = "text/csv";
+
+	public static void export(DataTable<?> table, String filename)
+	{
+		CSVDataExporter.export(RequestCycle.get(), table, filename);
+	}
 
 	/**
 	 * Exports {@link DataTable} data to a CSV file
@@ -80,19 +85,14 @@ public class CSVDataExporter
 	public static void export(RequestCycle cycle, final IDataProvider<?> provider, final List<IExportableColumn> columns, String filename)
 	{
 		@SuppressWarnings("resource")
-		CSVDataExporterResourceStream writer = new CSVDataExporterResourceStream(provider, columns);
-		ResourceStreamRequestHandler handler = new ResourceStreamRequestHandler(writer, filename);
-		handler.setContentDisposition(ContentDisposition.ATTACHMENT);
+		DataExporterResourceStreamWriter writer = new DataExporterResourceStreamWriter(new CSVDataExporter(), provider, columns);
 
-		cycle.scheduleRequestHandlerAfterCurrent(handler);
-
-		// TODO writer.close(); ???
+		cycle.scheduleRequestHandlerAfterCurrent(new ResourceStreamRequestHandler(writer, filename));
 	}
 
-	private String contentType;
-	private char delimiter = ',';
-	private String characterSet = "utf-8";
-	private char quoteCharacter = '"';
+	private final String contentType;
+	private final char delimiter = ',';
+	private final String characterSet = "utf-8";
 	private boolean exportHeadersEnabled = true;
 
 	/**
@@ -120,9 +120,10 @@ public class CSVDataExporter
 	 *
 	 * @return the content type
 	 */
+	@Override
 	public String getContentType()
 	{
-		return this.contentType;
+		return this.contentType + "; charset=" + characterSet + "; header=" + (this.exportHeadersEnabled ? "present" : "absent");
 	}
 
 	/**
@@ -130,6 +131,7 @@ public class CSVDataExporter
 	 *
 	 * @return true or false
 	 */
+	@Override
 	public boolean isExportHeadersEnabled()
 	{
 		return this.exportHeadersEnabled;
@@ -146,7 +148,7 @@ public class CSVDataExporter
 	 */
 	protected String quoteValue(String value)
 	{
-		return quoteCharacter + value.replace("" + quoteCharacter, "" + quoteCharacter + quoteCharacter) + quoteCharacter;
+		return QUOTE + value.replace("" + QUOTE, "" + QUOTE + QUOTE) + QUOTE;
 	}
 
 	/**
@@ -200,11 +202,11 @@ public class CSVDataExporter
 				writer.print(this.delimiter);
 			}
 
-			Object o = column.newDataModel(provider.model(row)).getObject();
+			Object object = column.newDataModel(provider.model(row)).getObject();
 
-			if (o != null)
+			if (object != null)
 			{
-				String value = ConverterUtils.toString(o);
+				String value = ConverterUtils.toString(object);
 				writer.print(this.quoteValue(value));
 			}
 		}
@@ -220,6 +222,7 @@ public class CSVDataExporter
 	 * @param output the {@link OutputStream}
 	 * @throws IOException
 	 */
+	@Override
 	public <T> void exportData(IDataProvider<T> provider, List<IExportableColumn> columns, OutputStream output) throws IOException
 	{
 		this.exportData(provider, columns, output, 0, provider.size());
@@ -241,12 +244,14 @@ public class CSVDataExporter
 
 		try
 		{
+			// headers //
 			if (this.isExportHeadersEnabled())
 			{
 				this.exportHeaders(columns, writer);
 			}
 
-			Iterator<? extends T> iterator = provider.iterator(0, count);
+			// rows //
+			Iterator<? extends T> iterator = provider.iterator(first, count);
 
 			while (iterator.hasNext())
 			{
@@ -262,17 +267,17 @@ public class CSVDataExporter
 	/**
 	 * Provides the {@link IResourceStreamWriter} for the {@link CSVDataExporter}
 	 */
-	public static class CSVDataExporterResourceStream extends AbstractResourceStreamWriter
+	public static class DataExporterResourceStreamWriter extends AbstractResourceStreamWriter
 	{
 		private static final long serialVersionUID = 1L;
 
-		private final CSVDataExporter exporter;
+		private final IDataExporter exporter;
 		private final IDataProvider<?> provider;
 		private final List<IExportableColumn> columns;
 
-		public CSVDataExporterResourceStream(final IDataProvider<?> provider, final List<IExportableColumn> columns)
+		public DataExporterResourceStreamWriter(IDataExporter exporter, final IDataProvider<?> provider, final List<IExportableColumn> columns)
 		{
-			this.exporter = new CSVDataExporter();
+			this.exporter = exporter;
 			this.provider = provider;
 			this.columns = columns;
 		}
@@ -286,7 +291,7 @@ public class CSVDataExporter
 		@Override
 		public void write(OutputStream output) throws IOException
 		{
-			this.exporter.exportData(provider, columns, output);
+			this.exporter.exportData(this.provider, this.columns, output);
 		}
 	}
 }
