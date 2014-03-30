@@ -46,7 +46,7 @@ public class ToolbarAjaxBehavior extends JQueryAjaxBehavior
 	 */
 	public static String getValuesFunction(String grid, String property)
 	{
-		return String.format("function() { var values = []; var grid = %s; grid.select().each(function(index, row) { values.push(grid.dataItem(row)['%s']); });" + "return values;" + " }()", grid, property);
+		return String.format("function() { var values = []; var grid = %s; grid.select().each(function(index, row) { values.push(grid.dataItem(row)['%s']); }); return values; }()", grid, property);
 	}
 
 	private String property;
@@ -70,7 +70,7 @@ public class ToolbarAjaxBehavior extends JQueryAjaxBehavior
 		return new CallbackParameter[] { // lf
 				CallbackParameter.context("e"), // lf
 				CallbackParameter.resolved("button", "jQuery(e.currentTarget).text()"), // lf
-				CallbackParameter.resolved("values", getValuesFunction("jQuery(e.currentTarget).closest('.k-grid').data('kendoGrid')", this.property)) // lf
+				CallbackParameter.resolved("values", getValuesFunction("jQuery(e.target).closest('.k-grid').data('kendoGrid')", this.property)) // lf
 		};
 	}
 

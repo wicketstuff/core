@@ -337,7 +337,6 @@ public class DataTable<T> extends WebComponent implements IJQueryWidget, IDataTa
 	 * @param button the button that is passed to the behavior so it can be retrieved via the {@link ClickEvent}
 	 * @return the {@link JQueryAjaxBehavior}
 	 */
-	///XXX: signature changed ColumnButtonAjaxBehavior > JQueryAjaxBehavior
 	protected JQueryAjaxBehavior newColumnAjaxBehavior(IJQueryAjaxAware source, ColumnButton button)
 	{
 		return new ColumnAjaxBehavior(source, button);

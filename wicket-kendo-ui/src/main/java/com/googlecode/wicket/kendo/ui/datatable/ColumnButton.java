@@ -21,7 +21,7 @@ import org.apache.wicket.util.io.IClusterable;
 
 /**
  * Provides the button object that can be used in {@link DataTable}
- * TODO: complete implementation
+ *
  * @author Sebastien Briquet - sebfz1
  */
 public class ColumnButton implements IClusterable
@@ -42,9 +42,6 @@ public class ColumnButton implements IClusterable
 	private final int id;
 	private final String text;
 	private final String property;
-//	private String icon;
-//	private boolean enabled;
-//	private boolean visible = true;
 
 	/**
 	 * Constructor
@@ -53,165 +50,22 @@ public class ColumnButton implements IClusterable
 	 */
 	public ColumnButton(String text, String property)
 	{
-//		this(text, property, null, true);
 		this.id = ColumnButton.nextSequence();
 		this.text = text;
 		this.property = property;
 	}
-
-//	/**
-//	 * Constructor
-//	 * @param text the button's text
-//	 * @param icon the button's icon
-//	 */
-//	public ColumnButton(String text, String property, String icon)
-//	{
-//		this(text, property, icon, true);
-//	}
-
-//	/**
-//	 * Constructor
-//	 * @param text the button's text
-//	 * @param enabled indicates whether the button is enabled
-//	 */
-//	public ColumnButton(String text, String property, boolean enabled)
-//	{
-//		this(text, property, null, enabled);
-//	}
-
-//	/**
-//	 * Main constructor
-//	 * @param text the button's text
-//	 * @param icon the button's icon
-//	 * @param enabled indicates whether the button is enabled
-//	 */
-//	public ColumnButton(String text, String property, String icon, boolean enabled)
-//	{
-//		this.id = ColumnButton.nextSequence();
-//		this.text = text;
-//		this.property = property;
-//		this.icon = icon;
-//		this.enabled = enabled;
-//	}
 
 	/**
 	 * Constructor
 	 * @param model the button's text model
 	 * @param property the property used to retrieve the row's object value
 	 */
+	@Deprecated
+	//XXX: to be removed in next version
 	public ColumnButton(final IModel<String> model, String property)
 	{
-//		this(model.getObject(), property, null, true);
 		this(model.getObject(), property);
 	}
-
-//	/**
-//	 * Constructor
-//	 * @param model the button's text model
-//	 * @param icon the button's icon
-//	 */
-//	public ColumnButton(final IModel<String> model, String property, String icon)
-//	{
-//		this(model.getObject(), property, icon, true);
-//	}
-//
-//	/**
-//	 * Constructor
-//	 * @param model the button's text model
-//	 * @param enabled indicates whether the button is enabled
-//	 */
-//	public ColumnButton(final IModel<String> model, String property, boolean enabled)
-//	{
-//		this(model.getObject(), property, null, enabled);
-//	}
-//
-//	/**
-//	 * Constructor
-//	 * @param model the button's text model
-//	 * @param icon the button's icon
-//	 * @param enabled indicates whether the button is enabled
-//	 */
-//	public ColumnButton(final IModel<String> model, String property, String icon, boolean enabled)
-//	{
-//		this(model.getObject(), icon, enabled);
-//	}
-
-
-	// Properties //
-//	/**
-//	 * Gets the button's icon
-//	 * @return the button's icon
-//	 */
-//	public String getIcon()
-//	{
-//		return this.icon;
-//	}
-//
-//	/**
-//	 * Sets the button's icon
-//	 * @param icon the css class (ie: ui-my-icon)
-//	 */
-//	public void setIcon(String icon)
-//	{
-//		this.icon = icon;
-//	}
-//
-//	/**
-//	 * Indicates whether the button is enabled
-//	 * @return true or false
-//	 */
-//	public boolean isEnabled()
-//	{
-//		return this.enabled;
-//	}
-//
-//	/**
-//	 * Sets the enable state of the button
-//	 * @param enabled true or false
-//	 */
-//	public void setEnabled(boolean enabled)
-//	{
-//		this.enabled = enabled;
-//	}
-//
-//	/**
-//	 * Sets the enable state of the button
-//	 * @param enabled true or false
-//	 * @param target the {@link AjaxRequestTarget}
-//	 */
-//	public void setEnabled(boolean enabled, AjaxRequestTarget target)
-//	{
-//		if (enabled)
-//		{
-//			this.enable(target);
-//		}
-//		else
-//		{
-//			this.disable(target);
-//		}
-//	}
-//
-//	/**
-//	 * Sets the visible state of the button
-//	 * @param visible true or false
-//	 * @param target the {@link AjaxRequestTarget}
-//	 */
-//	public void setVisible(boolean visible, AjaxRequestTarget target)
-//	{
-//		if (this.visible != visible)
-//		{
-//			this.visible = visible;
-//
-//			if (this.visible)
-//			{
-//				this.show(target);
-//			}
-//			else
-//			{
-//				this.hide(target);
-//			}
-//		}
-//	}
 
 	public String getProperty()
 	{
@@ -219,8 +73,7 @@ public class ColumnButton implements IClusterable
 	}
 
 	/**
-	 * Gets the markupId of the specified button.<br/>
-	 * This can be used to enable/disable the button
+	 * Gets the markupId of the row button.
 	 *
 	 * @return the markupId
 	 */
@@ -229,44 +82,12 @@ public class ColumnButton implements IClusterable
 		return String.format("btn%02x", this.id).toLowerCase();
 	}
 
+	protected String getCSSClass()
+	{
+		return this.getMarkupId();
+	}
 
 	// Methods //
-
-//	/**
-//	 * Enables the button
-//	 * @param target the {@link AjaxRequestTarget}
-//	 */
-//	private void enable(AjaxRequestTarget target)
-//	{
-//		target.appendJavaScript(String.format("jQuery('#%s').button('enable');", this.getMarkupId()));
-//	}
-//
-//	/**
-//	 * Disables the button
-//	 * @param target the {@link AjaxRequestTarget}
-//	 */
-//	private void disable(AjaxRequestTarget target)
-//	{
-//		target.appendJavaScript(String.format("jQuery('#%s').button('disable');", this.getMarkupId()));
-//	}
-//
-//	/**
-//	 * Shows the button
-//	 * @param target the {@link AjaxRequestTarget}
-//	 */
-//	private void show(AjaxRequestTarget target)
-//	{
-//		target.appendJavaScript(String.format("jQuery('#%s').show();", this.getMarkupId()));
-//	}
-//
-//	/**
-//	 * Hides the button
-//	 * @param target the {@link AjaxRequestTarget}
-//	 */
-//	private void hide(AjaxRequestTarget target)
-//	{
-//		target.appendJavaScript(String.format("jQuery('#%s').hide();", this.getMarkupId()));
-//	}
 
 	@Override
 	public int hashCode()

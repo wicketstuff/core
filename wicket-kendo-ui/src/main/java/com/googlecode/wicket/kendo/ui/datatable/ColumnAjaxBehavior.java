@@ -26,7 +26,6 @@ import com.googlecode.wicket.jquery.core.utils.RequestCycleUtils;
 /**
  * Provides the {@link JQueryAjaxBehavior} being called by the column button(s).
  */
-//XXX: ColumnButtonAjaxBehavior > ColumnAjaxBehavior
 public class ColumnAjaxBehavior extends JQueryAjaxBehavior
 {
 	private static final long serialVersionUID = 1L;
@@ -49,7 +48,7 @@ public class ColumnAjaxBehavior extends JQueryAjaxBehavior
 	@Override
 	protected CallbackParameter[] getCallbackParameters()
 	{
-		return new CallbackParameter[] { CallbackParameter.context("e"), CallbackParameter.resolved("value", String.format("this.dataItem(jQuery(e.currentTarget).closest('tr'))['%s']", this.button.getProperty())) };
+		return new CallbackParameter[] { CallbackParameter.context("e"), CallbackParameter.resolved("value", String.format("this.dataItem(jQuery(e.target).closest('tr'))['%s']", this.button.getProperty())) };
 	}
 
 	/**

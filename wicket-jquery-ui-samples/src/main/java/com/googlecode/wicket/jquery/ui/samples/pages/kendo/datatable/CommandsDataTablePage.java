@@ -45,7 +45,7 @@ public class CommandsDataTablePage extends AbstractDataTablePage
 		options.set("pageable", "{ pageSizes: [ 25, 50, 100 ] }");
 		options.set("columnMenu", true);
 		options.set("selectable", Options.asString("multiple"));
-		options.set("toolbar", "[ { text: 'edit' } ]");
+		options.set("toolbar", "[ { text: 'edit' }, { text: 'enable' } ]");
 
 		final DataTable<Product> table = new DataTable<Product>("datatable", columns, provider, 20, options) {
 

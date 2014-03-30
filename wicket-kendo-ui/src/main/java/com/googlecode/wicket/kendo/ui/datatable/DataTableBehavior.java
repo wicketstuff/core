@@ -138,6 +138,7 @@ public abstract class DataTableBehavior extends KendoAbstractBehavior implements
 	}
 
 	// Events //
+
 	@Override
 	public void onConfigure(Component component)
 	{
@@ -204,7 +205,7 @@ public abstract class DataTableBehavior extends KendoAbstractBehavior implements
 					builder.append("{ ");
 					builder.append("'name': '").append(button.getMarkupId()).append("', ");
 					builder.append("'text': '").append(button.toString()).append("', ");
-					// builder.append("'className': '").append(button.toString()).append("', ");
+					builder.append("'className': '").append(button.getCSSClass()).append("', ");
 					builder.append("'click': ").append(behavior.getCallbackFunction());
 					builder.append(" }");
 				}
