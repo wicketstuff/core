@@ -317,7 +317,7 @@ public abstract class AbstractWizard<T extends Serializable> extends AbstractFor
 			}
 
 			// reconfigure buttons and refresh the form //
-			AbstractWizard.this.refresh(target);
+			this.refresh(target);
 		}
 	}
 
