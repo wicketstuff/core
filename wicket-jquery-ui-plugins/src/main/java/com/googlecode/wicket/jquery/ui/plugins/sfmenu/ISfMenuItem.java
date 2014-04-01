@@ -20,6 +20,7 @@ import java.util.List;
 
 import org.apache.wicket.Page;
 import org.apache.wicket.model.IModel;
+import org.apache.wicket.request.mapper.parameter.PageParameters;
 import org.apache.wicket.util.io.IClusterable;
 
 /**
@@ -52,6 +53,12 @@ public interface ISfMenuItem extends IClusterable
 	 * @return Page Class
 	 */
 	Class<? extends Page> getPageClass();
+	
+	/**
+	 * TODO javadoc
+	 * @return
+	 */
+	PageParameters getPageParameters();
 	
 	/**
 	 * Get the url for a page. In most cases this will

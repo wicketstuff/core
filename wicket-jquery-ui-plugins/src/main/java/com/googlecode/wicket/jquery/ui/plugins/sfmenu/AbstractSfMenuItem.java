@@ -21,6 +21,7 @@ import java.util.List;
 
 import org.apache.wicket.Page;
 import org.apache.wicket.model.IModel;
+import org.apache.wicket.request.mapper.parameter.PageParameters;
 import org.apache.wicket.util.lang.Args;
 import org.apache.wicket.util.reference.ClassReference;
 
@@ -38,7 +39,10 @@ public abstract class AbstractSfMenuItem implements ISfMenuItem
 	private IModel<String> title;
 	private boolean enabled = true;
 	private boolean openInNewWindow = false;
+	
 	private final ClassReference<? extends Page> pageClassReference;
+	private final PageParameters pageParameters;
+	
 	private final String pageUrl;
 
 	/**
@@ -50,6 +54,7 @@ public abstract class AbstractSfMenuItem implements ISfMenuItem
 	{
 		this.title = title;
 		this.pageClassReference = null;
+		this.pageParameters = null;
 		this.pageUrl = null;
 	}
 
@@ -65,6 +70,24 @@ public abstract class AbstractSfMenuItem implements ISfMenuItem
 
 		this.title = title;
 		this.pageClassReference = ClassReference.of(pageClass);
+		this.pageParameters = new PageParameters();
+		this.pageUrl = null;
+	}
+
+	/**
+	 * Constructor
+	 *
+	 * @param title {@link IModel} that represent the title of the menu-item
+	 * @param pageClass the class of the page to redirect to when menu-item is clicked
+	 * @param pageParameters the {@link PageParameters}
+	 */
+	public AbstractSfMenuItem(IModel<String> title, Class<? extends Page> pageClass, PageParameters pageParameters)
+	{
+		Args.notNull(pageClass, "pageClass");
+
+		this.title = title;
+		this.pageClassReference = ClassReference.of(pageClass);
+		this.pageParameters = pageParameters;
 		this.pageUrl = null;
 	}
 
@@ -78,6 +101,7 @@ public abstract class AbstractSfMenuItem implements ISfMenuItem
 	{
 		this.title = title;
 		this.pageClassReference = null;
+		this.pageParameters = null;
 		this.pageUrl = pageUrl;
 	}
 
@@ -92,6 +116,7 @@ public abstract class AbstractSfMenuItem implements ISfMenuItem
 	{
 		this.title = title;
 		this.pageClassReference = null;
+		this.pageParameters = null;
 		this.pageUrl = pageUrl;
 		this.openInNewWindow = openInNewWindow;
 	}
@@ -164,6 +189,12 @@ public abstract class AbstractSfMenuItem implements ISfMenuItem
 		}
 
 		return null;
+	}
+	
+	@Override
+	public PageParameters getPageParameters()
+	{
+		return this.pageParameters;
 	}
 
 	/**

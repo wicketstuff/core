@@ -20,9 +20,10 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-import org.apache.wicket.markup.html.WebPage;
+import org.apache.wicket.Page;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
+import org.apache.wicket.request.mapper.parameter.PageParameters;
 
 /**
  * Provides a standard menu-item that supports sub-menus, adapted for Superfish
@@ -65,8 +66,9 @@ public class SfMenuItem extends AbstractSfMenuItem
 	 *
 	 * @param title the title of the menu-item
 	 * @param pageClass the class of the page to redirect to, when menu-item is clicked
+	 * @param pageParameters the {@link PageParameters}
 	 */
-	public SfMenuItem(String title, Class<? extends WebPage> pageClass)
+	public SfMenuItem(String title, Class<? extends Page> pageClass)
 	{
 		this(Model.of(title), pageClass);
 	}
@@ -77,9 +79,34 @@ public class SfMenuItem extends AbstractSfMenuItem
 	 * @param title IModel that represents the title of the menu-item
 	 * @param pageClass the class of the page to redirect to, when menu-item is clicked
 	 */
-	public SfMenuItem(IModel<String> title, Class<? extends WebPage> pageClass)
+	public SfMenuItem(IModel<String> title, Class<? extends Page> pageClass)
 	{
 		super(title, pageClass);
+
+		this.items = new ArrayList<ISfMenuItem>();
+	}
+
+	/**
+	 * Constructor
+	 *
+	 * @param title the title of the menu-item
+	 * @param pageClass the class of the page to redirect to, when menu-item is clicked
+	 * @param pageParameters the {@link PageParameters}
+	 */
+	public SfMenuItem(String title, Class<? extends Page> pageClass, PageParameters pageParameters)
+	{
+		this(Model.of(title), pageClass, pageParameters);
+	}
+
+	/**
+	 * Constructor
+	 *
+	 * @param title IModel that represents the title of the menu-item
+	 * @param pageClass the class of the page to redirect to, when menu-item is clicked
+	 */
+	public SfMenuItem(IModel<String> title, Class<? extends Page> pageClass, PageParameters pageParameters)
+	{
+		super(title, pageClass, pageParameters);
 
 		this.items = new ArrayList<ISfMenuItem>();
 	}
@@ -117,7 +144,7 @@ public class SfMenuItem extends AbstractSfMenuItem
 	 * @param items the sub-menu items
 	 *
 	 */
-	public SfMenuItem(String title, Class<? extends WebPage> pageClass, List<ISfMenuItem> items)
+	public SfMenuItem(String title, Class<? extends Page> pageClass, List<ISfMenuItem> items)
 	{
 		this(Model.of(title), pageClass, items);
 	}
@@ -129,7 +156,7 @@ public class SfMenuItem extends AbstractSfMenuItem
 	 * @param pageClass the class of the page to redirect to, when menu-item is clicked
 	 * @param items the sub-menu items
 	 */
-	public SfMenuItem(IModel<String> title, Class<? extends WebPage> pageClass, List<ISfMenuItem> items)
+	public SfMenuItem(IModel<String> title, Class<? extends Page> pageClass, List<ISfMenuItem> items)
 	{
 		super(title, pageClass);
 

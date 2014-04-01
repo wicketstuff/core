@@ -221,7 +221,7 @@ public class SfMenu extends JQueryPanel
 				{
 					if (item.getPageClass() != null)
 					{
-						return urlFor(item.getPageClass(), getPage().getPageParameters());
+						return urlFor(item.getPageClass(), item.getPageParameters());
 					}
 
 					if (!Strings.isEmpty(item.getPageUrl()))
