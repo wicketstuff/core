@@ -47,6 +47,15 @@ import org.junit.Test;
 public class LazyModelTest {
 
 	@Test
+	public void toStringNeverFails() {
+		IModel<B> model = model(from(A.class).getB()).bind(Model.of((A)null));
+		
+		// targetType is unknown, thus #getPath() fails - but #toString()
+		// catches all exceptions anyway
+		assertEquals("", model.toString());
+	}
+
+	@Test
 	public void loadableDetachable() {
 		final int[] got = new int[1];
 

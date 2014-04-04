@@ -114,14 +114,18 @@ public class FormComponentTest {
 		IModel<Long> model = LazyModel.model(
 				LazyModel.from(Target.class).getValue()).bind(wrapper);
 
+		TestPage<Long> page = tester.startPage(new TestPage<Long>(model));
+
+		assertEquals(null, page.text.getType());
+		assertEquals("", page.text.getDefaultModelObjectAsString());
+
+		tester.getRequest().setParameter("text", "42");
 		try {
-			tester.startPage(new TestPage<Long>(model));
+			tester.submitForm(page.form);
 
 			fail();
-		} catch (Exception typeErased) {
-			assertEquals("cannot detect target type", typeErased.getMessage());
+		} catch (Exception expected) {
 		}
-
 	}
 
 	public static class Target implements Serializable {
