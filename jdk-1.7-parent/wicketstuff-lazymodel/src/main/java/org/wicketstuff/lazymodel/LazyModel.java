@@ -278,6 +278,9 @@ public class LazyModel<T> implements IModel<T>, IObjectClassAwareModel<T>,
 		if (target instanceof IModel) {
 			target = ((IModel<T>) target).getObject();
 		}
+		if (target == null) {
+			throw new WicketRuntimeException("no target");
+		}
 		iterator.next(target.getClass());
 
 		while (target != null && iterator.hasNext()) {
@@ -317,11 +320,17 @@ public class LazyModel<T> implements IModel<T>, IObjectClassAwareModel<T>,
 	 */
 	@Override
 	public String toString() {
-		if (target == null) {
-			return "";
+		if (target != null) {
+			try
+			{
+				return getPath();
+			}
+			catch (WicketRuntimeException noPath)
+			{
+			}
 		}
 
-		return getPath();
+		return "";
 	}
 
 	/**
