@@ -367,22 +367,10 @@ public class LazyModel<T> implements IModel<T>, IObjectClassAwareModel<T>,
 		Type type = null;
 
 		if (target instanceof IModel) {
-			if (target instanceof IObjectTypeAwareModel) {
-				type = ((IObjectTypeAwareModel<?>) target).getObjectType();
-			} else if (target instanceof IObjectClassAwareModel) {
-				type = ((IObjectClassAwareModel<?>) target).getObjectClass();
-			}
+			type = getType((IModel<?>)target);
 
-			if (type == null) {
-				try {
-					type = target.getClass().getMethod("getObject")
-							.getGenericReturnType();
-
-					if (type instanceof TypeVariable) {
-						type = null;
-					}
-				} catch (Exception ex) {
-				}
+			if (type instanceof TypeVariable<?>) {
+				type = null;
 			}
 
 			if (type == null) {
@@ -598,31 +586,34 @@ public class LazyModel<T> implements IModel<T>, IObjectClassAwareModel<T>,
 			throw new WicketRuntimeException("target must not be null");
 		}
 
-		Evaluation<T> evaluation = new BoundEvaluation<T>(getType(target), target);
+		Type type = getType(target);
+		if (type instanceof TypeVariable<?>) {
+			throw new WicketRuntimeException("cannot detect target type");
+		}
+		Evaluation<T> evaluation = new BoundEvaluation<T>(type, target);
 
 		return (T) evaluation.proxy();
 	}
-
+	
+	/**
+	 * @return {@code null} if type cannot be detected
+	 */
 	@SuppressWarnings("rawtypes")
-	private static Type getType(IModel<?> target) {
+	private static Type getType(IModel<?> model) {
 		Type type = null;
 
-		if (target instanceof IObjectTypeAwareModel) {
-			type = ((IObjectTypeAwareModel) target).getObjectType();
-		} else if (target instanceof IObjectClassAwareModel) {
-			type = ((IObjectClassAwareModel) target).getObjectClass();
+		if (model instanceof IObjectTypeAwareModel) {
+			type = ((IObjectTypeAwareModel) model).getObjectType();
+		} else if (model instanceof IObjectClassAwareModel) {
+			type = ((IObjectClassAwareModel) model).getObjectClass();
 		}
 
 		if (type == null) {
 			try {
-				type = target.getClass().getMethod("getObject")
+				type = model.getClass().getMethod("getObject")
 						.getGenericReturnType();
 			} catch (Exception ex) {
 				throw new WicketRuntimeException(ex);
-			}
-
-			if (type instanceof TypeVariable<?>) {
-				throw new WicketRuntimeException("cannot detect target type");
 			}
 		}
 
