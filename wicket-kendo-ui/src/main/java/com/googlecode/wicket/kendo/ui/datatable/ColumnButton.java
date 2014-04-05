@@ -17,6 +17,7 @@
 package com.googlecode.wicket.kendo.ui.datatable;
 
 import org.apache.wicket.model.IModel;
+import org.apache.wicket.model.Model;
 import org.apache.wicket.util.io.IClusterable;
 
 /**
@@ -32,6 +33,7 @@ public class ColumnButton implements IClusterable
 
 	/**
 	 * Gets the next id-sequence. This is used to generate the markupId
+	 *
 	 * @return 0x0000 to 0x7FFF
 	 */
 	private static synchronized int nextSequence()
@@ -40,51 +42,74 @@ public class ColumnButton implements IClusterable
 	}
 
 	private final int id;
-	private final String text;
+	private final String name;
+	private final IModel<String> text;
 	private final String property;
 
 	/**
 	 * Constructor
+	 *
+	 * @param name the button's name
+	 * @param property the property used to retrieve the row's object value
+	 */
+	public ColumnButton(String name, String property)
+	{
+		this(name, Model.of(name), property);
+	}
+
+	/**
+	 * Constructor
+	 *
+	 * @param name the button's name
 	 * @param text the button's text
 	 * @param property the property used to retrieve the row's object value
 	 */
-	public ColumnButton(String text, String property)
+	public ColumnButton(String name, IModel<String> text, String property)
 	{
 		this.id = ColumnButton.nextSequence();
+		this.name = name;
 		this.text = text;
 		this.property = property;
 	}
 
 	/**
-	 * Constructor
-	 * @param model the button's text model
-	 * @param property the property used to retrieve the row's object value
+	 * Gets the button name
+	 *
+	 * @return the button name
 	 */
-	@Deprecated
-	//XXX: to be removed in next version
-	public ColumnButton(final IModel<String> model, String property)
+	public String getName()
 	{
-		this(model.getObject(), property);
+		return this.name;
 	}
 
+	/**
+	 * Gets the button text
+	 *
+	 * @return the button text
+	 */
+	public IModel<String> getText()
+	{
+		return this.text;
+	}
+
+	/**
+	 * Gets the button property
+	 *
+	 * @return the button property
+	 */
 	public String getProperty()
 	{
 		return this.property;
 	}
 
 	/**
-	 * Gets the markupId of the row button.
+	 * Gets the CSS class to be applied on the button
 	 *
-	 * @return the markupId
+	 * @return the CSS class
 	 */
-	protected String getMarkupId()
-	{
-		return String.format("btn%02x", this.id).toLowerCase();
-	}
-
 	protected String getCSSClass()
 	{
-		return this.getMarkupId();
+		return "";
 	}
 
 	// Methods //
@@ -127,6 +152,6 @@ public class ColumnButton implements IClusterable
 	@Override
 	public String toString()
 	{
-		return this.text;
+		return this.text.getObject();
 	}
 }

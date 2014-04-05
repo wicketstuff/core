@@ -21,6 +21,7 @@ import java.util.List;
 
 import org.apache.wicket.Component;
 import org.apache.wicket.ajax.AjaxRequestTarget;
+import org.apache.wicket.util.string.Strings;
 
 import com.googlecode.wicket.jquery.core.JQueryEvent;
 import com.googlecode.wicket.jquery.core.Options;
@@ -196,6 +197,7 @@ public abstract class DataTableBehavior extends KendoAbstractBehavior implements
 				for (ColumnAjaxBehavior behavior : component.getBehaviors(ColumnAjaxBehavior.class))
 				{
 					ColumnButton button = behavior.getButton();
+					String css = button.getCSSClass();
 
 					if (n++ > 0)
 					{
@@ -203,9 +205,14 @@ public abstract class DataTableBehavior extends KendoAbstractBehavior implements
 					}
 
 					builder.append("{ ");
-					builder.append("'name': '").append(button.getMarkupId()).append("', ");
+					builder.append("'name': '").append(button.getName()).append("', ");
 					builder.append("'text': '").append(button.toString()).append("', ");
-					builder.append("'className': '").append(button.getCSSClass()).append("', ");
+
+					if (!Strings.isEmpty(css)) /* important */
+					{
+						builder.append("'className': '").append(css).append("', ");
+					}
+
 					builder.append("'click': ").append(behavior.getCallbackFunction());
 					builder.append(" }");
 				}

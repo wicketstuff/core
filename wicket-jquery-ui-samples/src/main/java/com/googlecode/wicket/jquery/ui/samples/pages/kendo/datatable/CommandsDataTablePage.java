@@ -8,6 +8,7 @@ import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.panel.FeedbackPanel;
 import org.apache.wicket.markup.repeater.data.IDataProvider;
+import org.apache.wicket.model.Model;
 
 import com.googlecode.wicket.jquery.core.Options;
 import com.googlecode.wicket.jquery.core.ajax.IJQueryAjaxAware;
@@ -45,7 +46,7 @@ public class CommandsDataTablePage extends AbstractDataTablePage
 		options.set("pageable", "{ pageSizes: [ 25, 50, 100 ] }");
 		options.set("columnMenu", true);
 		options.set("selectable", Options.asString("multiple"));
-		options.set("toolbar", "[ { text: 'edit' }, { text: 'enable' } ]");
+		options.set("toolbar", "[ { name: 'view', text: 'View' }, { name: 'save', text: 'Save' } ]");
 
 		final DataTable<Product> table = new DataTable<Product>("datatable", columns, provider, 20, options) {
 
@@ -67,7 +68,7 @@ public class CommandsDataTablePage extends AbstractDataTablePage
 			@Override
 			public void onClick(AjaxRequestTarget target, ColumnButton button, String value)
 			{
-				this.info(button + " #" + value);
+				this.info(button.getName() + " #" + value);
 				target.add(feedback);
 			}
 
@@ -116,14 +117,14 @@ public class CommandsDataTablePage extends AbstractDataTablePage
 		columns.add(new PropertyColumn("Description", "description"));
 		columns.add(new CurrencyPropertyColumn("Price", "price", 70));
 
-		columns.add(new CommandsColumn("", 160) {
+		columns.add(new CommandsColumn("", 100) {
 
 			private static final long serialVersionUID = 1L;
 
 			@Override
 			public List<ColumnButton> newButtons()
 			{
-				return Arrays.asList(new ColumnButton("view", "id"), new ColumnButton("edit", "id"));
+				return Arrays.asList(new ColumnButton("edit", Model.of("Edit"), "id"));
 			}
 		});
 

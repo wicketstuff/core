@@ -69,7 +69,7 @@ public class ToolbarAjaxBehavior extends JQueryAjaxBehavior
 	{
 		return new CallbackParameter[] { // lf
 				CallbackParameter.context("e"), // lf
-				CallbackParameter.resolved("button", "jQuery(e.currentTarget).text()"), // lf
+				CallbackParameter.resolved("button", "jQuery(e.target).attr('class').match(/k-grid-(\\w+)/)[1]"), // lf
 				CallbackParameter.resolved("values", getValuesFunction("jQuery(e.target).closest('.k-grid').data('kendoGrid')", this.property)) // lf
 		};
 	}
@@ -103,7 +103,7 @@ public class ToolbarAjaxBehavior extends JQueryAjaxBehavior
 
 			if (values != null)
 			{
-				Pattern pattern = Pattern.compile("(\\w+)");
+				Pattern pattern = Pattern.compile("(\\S+)");
 				Matcher matcher = pattern.matcher(values.toString());
 
 				while (matcher.find())
