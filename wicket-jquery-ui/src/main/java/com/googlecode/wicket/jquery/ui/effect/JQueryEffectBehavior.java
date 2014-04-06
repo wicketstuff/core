@@ -153,7 +153,7 @@ public class JQueryEffectBehavior extends JQueryAbstractBehavior implements IJQu
 	 * Gets the jQuery statement.
 	 *
 	 * @param effect the effect to be played
-	 * @return statement like 'jQuery(function() { ... })'
+	 * @return the jQuery statement
 	 */
 	public String $(String effect)
 	{
@@ -165,7 +165,7 @@ public class JQueryEffectBehavior extends JQueryAbstractBehavior implements IJQu
 	 *
 	 * @param effect the effect to be played
 	 * @param options the options to be applied
-	 * @return statement like 'jQuery(function() { ... })'
+	 * @return the jQuery statement
 	 */
 	public String $(String effect, String options)
 	{
@@ -179,11 +179,11 @@ public class JQueryEffectBehavior extends JQueryAbstractBehavior implements IJQu
 	 * @param options the options to be applied
 	 * @param speed the speed of the effect
 	 * @param callback the callback script to run once the effect completes
-	 * @return statement like 'jQuery(function() { ... })'
+	 * @return the jQuery statement
 	 */
 	private static String $(String selector, String effect, String options, int speed, String callback)
 	{
-		return String.format("jQuery(function() { jQuery('%s').%s('%s', %s, %d, function() { %s }); });", selector, METHOD, effect, options, speed, callback);
+		return String.format("jQuery('%s').%s('%s', %s, %d, function() { %s });", selector, METHOD, effect, options, speed, callback);
 	}
 
 	// Factories //

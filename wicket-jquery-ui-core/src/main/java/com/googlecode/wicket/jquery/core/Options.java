@@ -81,7 +81,8 @@ public class Options implements IClusterable
 	 * @param objects options
 	 * @return a comma delimited string
 	 */
-	public static String fromList(Object... objects)
+	//XXX: renamed fromList to fromArray
+	public static String fromArray(Object... objects)
 	{
 		StringBuilder builder = new StringBuilder();
 

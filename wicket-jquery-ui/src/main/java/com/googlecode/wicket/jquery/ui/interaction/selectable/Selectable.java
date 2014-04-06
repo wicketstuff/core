@@ -234,7 +234,7 @@ public class Selectable<T extends Serializable> extends JQueryContainer implemen
 			@Override
 			protected String $()
 			{
-				StringBuilder statement = new StringBuilder("jQuery(function() { ");
+				StringBuilder statement = new StringBuilder("");
 				List<T> list = Selectable.this.getModelObject();
 
 				if (list != null)
@@ -252,7 +252,7 @@ public class Selectable<T extends Serializable> extends JQueryContainer implemen
 					}
 				}
 
-				return statement.append(" });").toString();
+				return statement.toString();
 			}
 		};
 	}

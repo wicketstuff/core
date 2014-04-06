@@ -82,7 +82,7 @@ public class ContextMenuBehavior extends JQueryAbstractBehavior implements IJQue
 	@Override
 	protected String $()
 	{
-		return String.format("jQuery(function() { jQuery('%s').on('contextmenu', %s); });", JQueryWidget.getSelector(this.component), this.onContextMenuEventBehavior.getCallbackFunction());
+		return String.format("jQuery('%s').on('contextmenu', %s);", JQueryWidget.getSelector(this.component), this.onContextMenuEventBehavior.getCallbackFunction());
 	}
 
 	// Events //

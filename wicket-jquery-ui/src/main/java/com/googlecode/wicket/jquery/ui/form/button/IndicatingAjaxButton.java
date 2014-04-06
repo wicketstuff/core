@@ -145,10 +145,8 @@ public abstract class IndicatingAjaxButton extends AjaxButton implements IJQuery
 				// configure the busy indicator start & stop //
 				StringBuilder builder = new StringBuilder(super.$());
 
-				builder.append("jQuery(function() {");
 				builder.append("jQuery('").append(this.selector).append("')").append(".click(function() { jQuery(this).button('option', 'icons', {").append(position == Position.LEFT ? "primary" : "secondary").append(": 'ui-icon-indicator' }); }); ");
 				builder.append("jQuery(document).ajaxStop(function() { jQuery('").append(this.selector).append("').button('option', 'icons', {").append(position == Position.LEFT ? "primary" : "secondary").append(": null }); }); ");
-				builder.append("});");
 
 				return builder.toString();
 			}

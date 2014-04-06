@@ -109,10 +109,10 @@ public class TooltipBehavior extends JQueryBehavior
 	 *
 	 * @param method the jQuery method to invoke
 	 * @param options the options to be applied
-	 * @return statement like 'jQuery(function() { ... })'
+	 * @return the jQuery statement
 	 */
 	private static String $(String method, String options)
 	{
-		return String.format("jQuery(function() { jQuery(document).%s(%s); });", method, options);
+		return String.format("jQuery(document).%s(%s);", method, options);
 	}
 }

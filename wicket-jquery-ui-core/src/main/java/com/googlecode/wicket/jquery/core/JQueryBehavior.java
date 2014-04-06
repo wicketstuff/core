@@ -232,11 +232,11 @@ public class JQueryBehavior extends JQueryAbstractBehavior
 	 * <b>Warning: </b> This method is *not* called by the behavior directly (only {@link #$()} is).
 	 *
 	 * @param options the list of options to be supplied to the current method
-	 * @return statement like 'jQuery(function() { ... })'
+	 * @return the jQuery statement
 	 */
 	public String $(Object... options)
 	{
-		return this.$(Options.fromList(options));
+		return this.$(Options.fromArray(options));
 	}
 
 	/**
@@ -244,7 +244,7 @@ public class JQueryBehavior extends JQueryAbstractBehavior
 	 * <b>Warning: </b> This method is *not* called by the behavior directly (only {@link #$()} is).
 	 *
 	 * @param options the options to be supplied to the current method
-	 * @return statement like 'jQuery(function() { ... })'
+	 * @return the jQuery statement
 	 */
 	public String $(String options)
 	{
@@ -257,11 +257,11 @@ public class JQueryBehavior extends JQueryAbstractBehavior
 	 * @param selector the html selector (ie: "#myId")
 	 * @param method the jQuery method to invoke
 	 * @param options the options to be applied
-	 * @return statement like 'jQuery(function() { ... })'
+	 * @return the jQuery statement
 	 */
 	private static String $(String selector, String method, String options)
 	{
-		return String.format("jQuery(function() { jQuery('%s').%s(%s); });", selector, method, options);
+		return String.format("jQuery('%s').%s(%s);", selector, method, options);
 	}
 
 	// Events //

@@ -164,14 +164,12 @@ public abstract class AbstractConsole extends WebMarkupContainer
 			@Override
 			protected String $()
 			{
-				StringBuilder builder = new StringBuilder("jQuery(function() {\n");
+				StringBuilder builder = new StringBuilder();
 
 				for (Map.Entry<Serializable, Boolean> entry : AbstractConsole.this.getModelObject().entrySet())
 				{
 					builder.append(this.$(entry.getKey(), entry.getValue())).append("\n");
 				}
-
-				builder.append("});");
 
 				return builder.toString();
 			}

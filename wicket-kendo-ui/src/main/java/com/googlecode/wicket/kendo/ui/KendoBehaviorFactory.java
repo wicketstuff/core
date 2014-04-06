@@ -144,7 +144,7 @@ public final class KendoBehaviorFactory
 	 */
 	public static String getShowStatement(String selector)
 	{
-		return String.format("jQuery(function() { jQuery('%s').closest('.k-widget').show(); });", selector);
+		return String.format("jQuery('%s').closest('.k-widget').show();", selector);
 	}
 
 	/**
@@ -155,7 +155,7 @@ public final class KendoBehaviorFactory
 	 */
 	public static String getHideStatement(String selector)
 	{
-		return String.format("jQuery(function() { jQuery('%s').closest('.k-widget').hide(); });", selector);
+		return String.format("jQuery('%s').closest('.k-widget').hide();", selector);
 	}
 
 	/**

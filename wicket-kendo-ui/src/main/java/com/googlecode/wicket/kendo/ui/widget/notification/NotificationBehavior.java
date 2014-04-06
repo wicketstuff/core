@@ -96,10 +96,10 @@ public class NotificationBehavior extends KendoAbstractBehavior
 	 *
 	 * @param message the message to log
 	 * @param level the level of the message
-	 * @return statement like 'jQuery(function() { ... })'
+	 * @return the jQuery statement
 	 */
 	protected String $(Serializable message, String level)
 	{
-		return String.format("jQuery(function() { jQuery('%s').data('%s').show('%s', '%s'); });", this.selector, METHOD, this.format(message, level), level);
+		return String.format("jQuery('%s').data('%s').show('%s', '%s');", this.selector, METHOD, this.format(message, level), level);
 	}
 }

@@ -64,7 +64,6 @@ public abstract class JQueryAbstractBehavior extends Behavior
 		return JQueryLibrarySettings.get();
 	}
 
-
 	/**
 	 * Behavior name
 	 */
@@ -77,6 +76,7 @@ public abstract class JQueryAbstractBehavior extends Behavior
 
 	/**
 	 * Constructor.
+	 *
 	 * @param name the name of the behavior. It is used in the token so the behavior can be identified in the generated page.
 	 */
 	public JQueryAbstractBehavior(final String name)
@@ -85,9 +85,9 @@ public abstract class JQueryAbstractBehavior extends Behavior
 		this.references = new ArrayList<ResourceReference>();
 	}
 
-
 	/**
 	 * Adds a reference to be added at {@link #renderHead(Component, IHeaderResponse)} time.
+	 *
 	 * @param reference a {@link CssResourceReference}, a {@link JavaScriptResourceReference} or a {@link JQueryPluginResourceReference}
 	 * @return true (as specified by Collection.add(E))
 	 */
@@ -115,7 +115,7 @@ public abstract class JQueryAbstractBehavior extends Behavior
 		}
 
 		// Additional resource references //
-		for(ResourceReference reference : this.references)
+		for (ResourceReference reference : this.references)
 		{
 			if (reference instanceof CssResourceReference)
 			{
@@ -133,7 +133,7 @@ public abstract class JQueryAbstractBehavior extends Behavior
 
 		if (target != null)
 		{
-			target.appendJavaScript(this.toString());
+			target.appendJavaScript(this.$());
 		}
 		else
 		{
@@ -143,8 +143,7 @@ public abstract class JQueryAbstractBehavior extends Behavior
 
 	/**
 	 * Renders the {@link Behavior}'s javascript<br/>
-	 * This can be overridden to provides a priority:</br>
-	 * <code>response.render(new PriorityHeaderItem(script));</code>
+	 * This can be overridden to provides a priority:</br> <code>response.render(new PriorityHeaderItem(script));</code>
 	 *
 	 * @param script the {@link JavaScriptHeaderItem}
 	 * @param response the {@link IHeaderResponse}
@@ -156,15 +155,16 @@ public abstract class JQueryAbstractBehavior extends Behavior
 
 	/**
 	 * Gets the jQuery statement.
-	 * @return statement like 'jQuery(function() { ... })'
+	 *
+	 * @return the jQuery statement
 	 */
 	protected abstract String $();
-
 
 	// Properties //
 
 	/**
 	 * Get the unique behavior token that act as the script id.
+	 *
 	 * @return the token
 	 */
 	protected String getToken()
@@ -187,9 +187,13 @@ public abstract class JQueryAbstractBehavior extends Behavior
 		}
 	}
 
+	/**
+	 * Gets the jQuery statement.
+	 * @return statement like 'jQuery(function() { ... });'
+	 */
 	@Override
-	public final String toString()
+	public String toString()
 	{
-		return this.$();
+		return String.format("jQuery(function() { %s });", this.$());
 	}
 }

@@ -247,10 +247,10 @@ public class RangeDatePickerTextField extends FormComponentPanel<DateRange> impl
 				StringBuilder statements = new StringBuilder();
 
 				statements.append("jQuery('#").append(input.getMarkupId()).append("').on('click', function() { ");
-				statements.append("jQuery('#").append(datepicker.getMarkupId()).append("').DatePickerShow(); ");
+				statements.append("		jQuery('#").append(datepicker.getMarkupId()).append("').DatePickerShow(); ");
 				statements.append("} );");
 
-				return String.format("jQuery(function() { %s });", statements);
+				return statements.toString();
 			}
 		};
 	}

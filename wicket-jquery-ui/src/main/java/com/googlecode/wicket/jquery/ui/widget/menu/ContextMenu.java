@@ -117,7 +117,7 @@ public class ContextMenu extends Menu
 		this.onContextMenu(target, component);
 
 		target.add(this);
-		target.appendJavaScript(String.format("jQuery(function() { jQuery('%s').show().position(%s); });", JQueryWidget.getSelector(this), this.getPositionOption(component)));
+		target.appendJavaScript(String.format("jQuery('%s').show().position(%s);", JQueryWidget.getSelector(this), this.getPositionOption(component)));
 	}
 
 	/**
@@ -146,18 +146,14 @@ public class ContextMenu extends Menu
 			@Override
 			protected String $()
 			{
-				String selector = JQueryWidget.getSelector(ContextMenu.this);
-
 				StringBuilder builder = new StringBuilder();
-				builder.append("jQuery(function() {\n");
+				String selector = JQueryWidget.getSelector(ContextMenu.this);
 
 				// hide on click (outside invoker area) //
 				builder.append("jQuery(document).click(function(e) { if (!(jQuery(e.target).is('.").append(ContextMenuBehavior.INVOKER_CSS_CLASS).append("'))) { jQuery('").append(selector).append("').hide(); } } );\n");
 
 				// hide on escape //
 				builder.append("jQuery(document).keyup(function(e) { if (e.which == 27) { jQuery('").append(selector).append("').hide(); } });\n");
-
-				builder.append("});");
 
 				return builder.toString();
 			}
