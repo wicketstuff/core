@@ -156,7 +156,7 @@ public abstract class JQueryAbstractBehavior extends Behavior
 
 	/**
 	 * Gets the jQuery statement.
-	 * @return Statement like 'jQuery(function() { ... })'
+	 * @return statement like 'jQuery(function() { ... })'
 	 */
 	protected abstract String $();
 

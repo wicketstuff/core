@@ -22,6 +22,7 @@ import com.googlecode.wicket.jquery.ui.samples.pages.kendo.datetimepicker.KendoD
 import com.googlecode.wicket.jquery.ui.samples.pages.kendo.dropdown.DefaultDropDownPage;
 import com.googlecode.wicket.jquery.ui.samples.pages.kendo.editor.DefaultEditorPage;
 import com.googlecode.wicket.jquery.ui.samples.pages.kendo.multiselect.DefaultMultiSelectPage;
+import com.googlecode.wicket.jquery.ui.samples.pages.kendo.notification.DefaultNotificationPage;
 import com.googlecode.wicket.jquery.ui.samples.pages.kendo.splitter.DefaultSplitterPage;
 import com.googlecode.wicket.jquery.ui.samples.pages.menu.DefaultMenuPage;
 import com.googlecode.wicket.jquery.ui.samples.pages.plugins.FontSizePage;
@@ -92,6 +93,7 @@ public class SampleApplication extends WebApplication
 		this.mountPackage("/kendo/datatable", DefaultDataTablePage.class);
 		this.mountPackage("/kendo/datetimepicker", KendoDatePickerPage.class);
 		this.mountPackage("/kendo/splitter", DefaultSplitterPage.class);
+		this.mountPackage("/kendo/notification", DefaultNotificationPage.class);
 		this.mountPackage("/kendo/console", DefaultConsolePage.class);
 
 		// Calendar //

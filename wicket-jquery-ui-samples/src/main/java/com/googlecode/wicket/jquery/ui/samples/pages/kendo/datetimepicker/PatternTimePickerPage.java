@@ -4,13 +4,12 @@ import java.util.Calendar;
 
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.markup.html.form.Form;
-import org.apache.wicket.markup.html.panel.FeedbackPanel;
 import org.apache.wicket.model.Model;
 
-import com.googlecode.wicket.jquery.ui.panel.JQueryFeedbackPanel;
 import com.googlecode.wicket.kendo.ui.form.button.AjaxButton;
 import com.googlecode.wicket.kendo.ui.form.button.Button;
 import com.googlecode.wicket.kendo.ui.form.datetime.TimePicker;
+import com.googlecode.wicket.kendo.ui.panel.KendoFeedbackPanel;
 
 public class PatternTimePickerPage extends AbstractTimePickerPage
 {
@@ -22,8 +21,8 @@ public class PatternTimePickerPage extends AbstractTimePickerPage
 		this.add(form);
 
 		// FeedbackPanel //
-		final FeedbackPanel feedback = new JQueryFeedbackPanel("feedback");
-		form.add(feedback.setOutputMarkupId(true));
+		final KendoFeedbackPanel feedback = new KendoFeedbackPanel("feedback");
+		form.add(feedback);
 
 		// TimePicker //
 		Calendar calendar = Calendar.getInstance();

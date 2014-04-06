@@ -5,13 +5,12 @@ import java.util.List;
 
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.markup.html.form.Form;
-import org.apache.wicket.markup.html.panel.FeedbackPanel;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.model.util.ListModel;
 
-import com.googlecode.wicket.jquery.ui.panel.JQueryFeedbackPanel;
 import com.googlecode.wicket.kendo.ui.form.dropdown.AjaxDropDownList;
 import com.googlecode.wicket.kendo.ui.form.dropdown.DropDownList;
+import com.googlecode.wicket.kendo.ui.panel.KendoFeedbackPanel;
 
 public class AjaxDropDownPage extends AbstractDropDownPage
 {
@@ -24,8 +23,8 @@ public class AjaxDropDownPage extends AbstractDropDownPage
 		this.add(form);
 
 		// FeedbackPanel //
-		final FeedbackPanel feedback = new JQueryFeedbackPanel("feedback");
-		form.add(feedback.setOutputMarkupId(true));
+		final KendoFeedbackPanel feedback = new KendoFeedbackPanel("feedback");
+		form.add(feedback);
 
 		// ComboBox //
 		final DropDownList<String> dropdown = new AjaxDropDownList<String>("select", new Model<String>(), new ListModel<String>(GENRES)) {

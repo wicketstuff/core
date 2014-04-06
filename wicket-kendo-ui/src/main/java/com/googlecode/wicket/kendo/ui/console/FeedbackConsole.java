@@ -58,13 +58,40 @@ public class FeedbackConsole extends AbstractConsole implements IFeedback
 		super(id, capacity);
 	}
 
+	// Events //
+
+	@Override
+	protected void onInitialize()
+	{
+		super.onInitialize();
+
+		this.feedbackMessagesModel = this.newFeedbackMessagesModel();
+	}
+
+	@Override
+	protected void onBeforeRender()
+	{
+		super.onBeforeRender();
+
+		this.log(this.feedbackMessagesModel.getObject()); // let throw a NPE. #newFeedbackMessagesModel is called just before in the request cycle
+	}
+
+	@Override
+	protected void onDetach()
+	{
+		super.onDetach();
+
+		this.feedbackMessagesModel.detach();
+	}
+
 	// Methods //
+
 	/**
 	 * Logs a list of {@link FeedbackMessage}
 	 *
 	 * @param messages the list of {@link FeedbackMessage}
 	 */
-	private void log(List<FeedbackMessage> messages)
+	protected final void log(List<FeedbackMessage> messages)
 	{
 		for (FeedbackMessage message : messages)
 		{
@@ -78,7 +105,7 @@ public class FeedbackConsole extends AbstractConsole implements IFeedback
 	 * @param messages the list of {@link FeedbackMessage}
 	 * @param target the {@link AjaxRequestTarget}
 	 */
-	private void log(List<FeedbackMessage> messages, AjaxRequestTarget target)
+	protected final void log(List<FeedbackMessage> messages, AjaxRequestTarget target)
 	{
 		for (FeedbackMessage message : messages)
 		{
@@ -130,32 +157,6 @@ public class FeedbackConsole extends AbstractConsole implements IFeedback
 	public void refresh(AjaxRequestTarget target)
 	{
 		this.log(this.feedbackMessagesModel.getObject(), target);
-	}
-
-	// Events //
-
-	@Override
-	protected void onInitialize()
-	{
-		super.onInitialize();
-
-		this.feedbackMessagesModel = this.newFeedbackMessagesModel();
-	}
-
-	@Override
-	protected void onBeforeRender()
-	{
-		super.onBeforeRender();
-
-		this.log(this.feedbackMessagesModel.getObject()); // let throw a NPE. #newFeedbackMessagesModel is called just before in the request cycle
-	}
-
-	@Override
-	protected void onDetach()
-	{
-		super.onDetach();
-
-		this.feedbackMessagesModel.detach();
 	}
 
 	// Factories //

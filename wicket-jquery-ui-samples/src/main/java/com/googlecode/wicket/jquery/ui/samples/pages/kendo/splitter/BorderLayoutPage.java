@@ -2,9 +2,8 @@ package com.googlecode.wicket.jquery.ui.samples.pages.kendo.splitter;
 
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.markup.html.AjaxLink;
-import org.apache.wicket.markup.html.panel.FeedbackPanel;
 
-import com.googlecode.wicket.jquery.ui.panel.JQueryFeedbackPanel;
+import com.googlecode.wicket.kendo.ui.panel.KendoFeedbackPanel;
 import com.googlecode.wicket.kendo.ui.widget.splitter.BorderLayout;
 
 public class BorderLayoutPage extends AbstractSplitterPage
@@ -13,8 +12,8 @@ public class BorderLayoutPage extends AbstractSplitterPage
 
 	public BorderLayoutPage()
 	{
-		final FeedbackPanel feedback = new JQueryFeedbackPanel("feedback");
-		this.add(feedback.setOutputMarkupId(true));
+		final KendoFeedbackPanel feedback = new KendoFeedbackPanel("feedback");
+		this.add(feedback);
 
 		this.add(new MyBorderLayout("layout") {
 

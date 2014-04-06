@@ -47,11 +47,12 @@ public class JQueryFeedbackPanel extends FeedbackPanel
 	public static final String LIGHT_ICO = "ui-icon " + JQueryIcon.LIGHTBULB;
 	public static final String LIGHT_CSS = "ui-state-highlight ui-corner-all";
 
-	public static final String ERROR_ICO = "ui-icon " + JQueryIcon.ALERT; //ui-icon-closethick
+	public static final String ERROR_ICO = "ui-icon " + JQueryIcon.ALERT; // ui-icon-closethick
 	public static final String ERROR_CSS = "ui-state-error ui-corner-all";
 
 	/**
 	 * Constructor
+	 *
 	 * @param id the markup id
 	 */
 	public JQueryFeedbackPanel(String id)
@@ -63,6 +64,7 @@ public class JQueryFeedbackPanel extends FeedbackPanel
 
 	/**
 	 * Constructor
+	 *
 	 * @param id the markup id
 	 * @param filter the component to filter on
 	 */
@@ -75,6 +77,7 @@ public class JQueryFeedbackPanel extends FeedbackPanel
 
 	/**
 	 * Constructor
+	 *
 	 * @param id the markup id
 	 * @param filter the container that message reporters must be a child of
 	 */
@@ -94,7 +97,8 @@ public class JQueryFeedbackPanel extends FeedbackPanel
 	}
 
 	@Override
-	protected Component newMessageDisplayComponent(String id, FeedbackMessage message) {
+	protected Component newMessageDisplayComponent(String id, FeedbackMessage message)
+	{
 
 		WebMarkupContainer container = new WebMarkupContainer(id);
 		container.add(AttributeModifier.replace("class", this.getMessageClass(message)));
@@ -107,11 +111,12 @@ public class JQueryFeedbackPanel extends FeedbackPanel
 	@Override
 	protected String getCSSClass(FeedbackMessage message)
 	{
-		return ""; //not used, because it would be applied onto both 'message' and 'label'
+		return ""; // not used, because it would be applied onto both 'message' and 'label'
 	}
 
 	/**
 	 * Gets the icon CSS class for the given message.
+	 *
 	 * @param message the {@link FeedbackMessage}
 	 * @return the icon class
 	 */
@@ -121,6 +126,9 @@ public class JQueryFeedbackPanel extends FeedbackPanel
 		{
 			case FeedbackMessage.INFO:
 				return INFO_ICO;
+
+			case FeedbackMessage.SUCCESS:
+				return LIGHT_ICO;
 
 			case FeedbackMessage.WARNING:
 				return WARN_ICO;
@@ -135,6 +143,7 @@ public class JQueryFeedbackPanel extends FeedbackPanel
 
 	/**
 	 * Gets the CSS class for the given message.
+	 *
 	 * @param message the {@link FeedbackMessage}
 	 * @return the label class
 	 */
@@ -144,6 +153,9 @@ public class JQueryFeedbackPanel extends FeedbackPanel
 		{
 			case FeedbackMessage.INFO:
 				return INFO_CSS;
+
+			case FeedbackMessage.SUCCESS:
+				return LIGHT_CSS;
 
 			case FeedbackMessage.WARNING:
 				return WARN_CSS;

@@ -6,14 +6,12 @@ import java.util.List;
 
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.markup.html.form.Form;
-import org.apache.wicket.markup.html.panel.FeedbackPanel;
 import org.apache.wicket.markup.repeater.data.IDataProvider;
 import org.apache.wicket.model.Model;
 
 import com.googlecode.wicket.jquery.core.Options;
 import com.googlecode.wicket.jquery.core.ajax.IJQueryAjaxAware;
 import com.googlecode.wicket.jquery.core.ajax.JQueryAjaxBehavior;
-import com.googlecode.wicket.jquery.ui.panel.JQueryFeedbackPanel;
 import com.googlecode.wicket.jquery.ui.samples.data.bean.Product;
 import com.googlecode.wicket.jquery.ui.samples.data.provider.ProductDataProvider;
 import com.googlecode.wicket.kendo.ui.KendoIcon;
@@ -26,6 +24,7 @@ import com.googlecode.wicket.kendo.ui.datatable.column.IColumn;
 import com.googlecode.wicket.kendo.ui.datatable.column.PropertyColumn;
 import com.googlecode.wicket.kendo.ui.datatable.export.CSVDataExporter;
 import com.googlecode.wicket.kendo.ui.form.button.Button;
+import com.googlecode.wicket.kendo.ui.panel.KendoFeedbackPanel;
 
 public class CommandsDataTablePage extends AbstractDataTablePage
 {
@@ -34,8 +33,8 @@ public class CommandsDataTablePage extends AbstractDataTablePage
 	public CommandsDataTablePage()
 	{
 		// FeedbackPanel //
-		final FeedbackPanel feedback = new JQueryFeedbackPanel("feedback");
-		this.add(feedback.setOutputMarkupId(true));
+		final KendoFeedbackPanel feedback = new KendoFeedbackPanel("feedback");
+		this.add(feedback);
 
 		// DataTable //
 		IDataProvider<Product> provider = newDataProvider();

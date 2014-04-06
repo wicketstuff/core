@@ -139,7 +139,7 @@ public abstract class AbstractConsole extends WebMarkupContainer
 	 */
 	public void clear()
 	{
-		AbstractConsole.this.getModelObject().clear();
+		this.getModelObject().clear();
 	}
 
 	// Factories //
