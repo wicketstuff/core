@@ -29,6 +29,7 @@ import com.googlecode.wicket.jquery.core.Options;
  * Provides a Kendo UI notification widget
  *
  * @author Sebastien Briquet - sebfz1
+ * @since 6.15.0
  */
 public class Notification extends WebMarkupContainer implements IJQueryWidget
 {

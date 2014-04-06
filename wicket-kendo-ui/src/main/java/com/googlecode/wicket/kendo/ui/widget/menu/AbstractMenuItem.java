@@ -25,8 +25,7 @@ import org.apache.wicket.model.IModel;
  * Base class for {@link Menu} item
  *
  * @author Sebastien Briquet - sebfz1
- * @since 1.4.2
- * @since 6.2.2
+ * @since 6.15.0
  */
 public abstract class AbstractMenuItem implements IMenuItem
 {

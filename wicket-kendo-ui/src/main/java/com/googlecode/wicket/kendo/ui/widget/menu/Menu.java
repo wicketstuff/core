@@ -42,8 +42,7 @@ import com.googlecode.wicket.kendo.ui.KendoIcon;
  * Provides the jQuery menu based on a {@link JQueryPanel}
  *
  * @author Sebastien Briquet - sebfz1
- * @since 1.4.2
- * @since 1.6.2
+ * @since 6.15.0
  */
 public class Menu extends JQueryPanel implements IMenuListener
 {

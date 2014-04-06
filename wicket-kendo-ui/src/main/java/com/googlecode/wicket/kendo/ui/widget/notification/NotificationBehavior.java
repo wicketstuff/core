@@ -27,6 +27,7 @@ import com.googlecode.wicket.kendo.ui.KendoAbstractBehavior;
  * Provides a Kendo UI notification behavior
  *
  * @author Sebastien Briquet - sebfz1
+ * @since 6.15.0
  */
 public class NotificationBehavior extends KendoAbstractBehavior
 {

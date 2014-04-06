@@ -33,7 +33,7 @@ import com.googlecode.wicket.kendo.ui.KendoAbstractBehavior;
  * Provides a Kendo UI menu widget
  *
  * @author Sebastien Briquet - sebfz1
- * @since 1.6.15
+ * @since 6.15.0
  */
 public abstract class MenuBehavior extends KendoAbstractBehavior implements IJQueryAjaxAware, IMenuListener
 {

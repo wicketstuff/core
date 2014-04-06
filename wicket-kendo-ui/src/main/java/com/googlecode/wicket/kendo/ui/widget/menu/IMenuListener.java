@@ -22,7 +22,7 @@ import org.apache.wicket.ajax.AjaxRequestTarget;
  * Event listener shared by the {@link Menu} widget and the {@link MenuBehavior}
  *
  * @author Sebastien Briquet - sebfz1
- *
+ * @since 6.15.0
  */
 interface IMenuListener
 {

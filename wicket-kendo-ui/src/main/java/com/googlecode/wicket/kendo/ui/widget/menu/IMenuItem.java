@@ -28,8 +28,7 @@ import org.apache.wicket.util.io.IClusterable;
  * @see AbstractMenuItem
  *
  * @author Sebastien Briquet - sebfz1
- * @since 1.4.2
- * @since 6.2.2
+ * @since 6.15.0
  */
 public interface IMenuItem extends IClusterable
 {

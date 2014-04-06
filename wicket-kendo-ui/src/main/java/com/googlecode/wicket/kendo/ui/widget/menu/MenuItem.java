@@ -30,8 +30,7 @@ import com.googlecode.wicket.kendo.ui.KendoIcon;
  * Provides a standard menu-item that supports sub-menus
  *
  * @author Sebastien Briquet - sebfz1
- * @since 1.4.2
- * @since 6.2.2
+ * @since 6.15.0
  */
 public class MenuItem extends AbstractMenuItem
 {
