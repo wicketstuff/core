@@ -92,4 +92,20 @@ public class KendoIcon
 	{
 		return KendoIcon.NONE.equals(icon);
 	}
+
+	/**
+	 * Gets the full css-class of the icon
+	 *
+	 * @param icon the {@link KendoIcon}
+	 * @return the full css-class
+	 */
+	public static String getCssClass(String icon)
+	{
+		if (!isNone(icon))
+		{
+			return "k-icon k-i-" + icon;
+		}
+
+		return "";
+	}
 }

@@ -14,14 +14,12 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.googlecode.wicket.jquery.ui.widget.menu;
+package com.googlecode.wicket.kendo.ui.widget.menu;
 
 import java.util.Collections;
 import java.util.List;
 
 import org.apache.wicket.model.IModel;
-
-import com.googlecode.wicket.jquery.ui.JQueryIcon;
 
 /**
  * Base class for {@link Menu} item
@@ -40,8 +38,9 @@ public abstract class AbstractMenuItem implements IMenuItem
 
 	/**
 	 * Constructor
+	 *
 	 * @param title {@link IModel} that represent the title of the menu-item
-	 * @param icon the icon css class; <code>'ui-icon-blank'</code> or {@link JQueryIcon#BLANK} may be used to display no icon.
+	 * @param icon the kendo icon class
 	 */
 	public AbstractMenuItem(IModel<String> title, String icon)
 	{
@@ -63,6 +62,7 @@ public abstract class AbstractMenuItem implements IMenuItem
 
 	/**
 	 * Sets the menu-item title
+	 *
 	 * @param title the menu-item title
 	 */
 	public void setTitle(IModel<String> title)
@@ -78,6 +78,7 @@ public abstract class AbstractMenuItem implements IMenuItem
 
 	/**
 	 * Sets the icon css class being displayed in the {@link Menu} (ie: ui-my-icon)
+	 *
 	 * @param icon the icon css class
 	 */
 	public void setIcon(String icon)
@@ -93,6 +94,7 @@ public abstract class AbstractMenuItem implements IMenuItem
 
 	/**
 	 * Sets whether the menu-item is enabled
+	 *
 	 * @param enabled true or false
 	 */
 	public void setEnabled(boolean enabled)
