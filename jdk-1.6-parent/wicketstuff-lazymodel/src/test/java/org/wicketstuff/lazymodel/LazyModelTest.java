@@ -55,6 +55,27 @@ public class LazyModelTest {
 		assertEquals("", model.toString());
 	}
 
+	/**
+	 * If a type-erased model is mocked with Mockito, the resulting model
+	 * has a {@link Serializable} generic argument
+	 */
+	@Test
+	public void serializableIsNoValidTargetType() {
+		IModel<Serializable> target = new AbstractReadOnlyModel<Serializable>()
+		{
+			@Override
+			public Serializable getObject()
+			{
+				return new A();
+			}
+		};
+		
+		IObjectClassAwareModel<B> model = model(from(A.class).getB()).bind(target);
+		
+		// see LazyModel#getTargetType()
+		assertEquals(B.class, model.getObjectClass());
+	}
+	
 	@Test
 	public void loadableDetachable() {
 		final int[] got = new int[1];
