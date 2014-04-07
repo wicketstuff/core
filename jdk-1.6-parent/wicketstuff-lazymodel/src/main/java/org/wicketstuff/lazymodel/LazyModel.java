@@ -383,9 +383,9 @@ public class LazyModel<T> implements IModel<T>, IObjectClassAwareModel<T>,
 			}
 
 			/*
-			 * Serializable is no valid target type
+			 * try to improve if no type available or just a non-generic class
 			 */
-			if (type == null || type == Serializable.class) {
+			if (type == null || type instanceof Class) {
 				Object object = ((IModel<?>) target).getObject();
 				if (object != null) {
 					type = object.getClass();
