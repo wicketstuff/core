@@ -135,7 +135,7 @@ public class DefaultMethodResolver implements IMethodResolver {
 			setter = getter.getDeclaringClass().getDeclaredMethod(name, setterParameters);
 		} catch (Exception e) {
 			throw new WicketRuntimeException(String.format(
-					"no setter for %s#%s", getter.getClass(), name));
+					"no setter for %s#%s", getter.getDeclaringClass(), name));
 		}
 
 		try {
