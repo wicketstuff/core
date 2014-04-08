@@ -158,6 +158,20 @@ public class DefaultMethodResolverTest {
 	}
 
 	@Test
+	public void getterWithoutSetter() throws Exception {
+
+		Method getter = Foo.class.getMethod("getQuux");
+
+		try {
+			resolver.getSetter(getter);
+			
+			fail();
+		} catch (Exception ex) {
+			assertEquals("no setter for class org.wicketstuff.lazymodel.reflect.DefaultMethodResolverTest$Foo#setQuux", ex.getMessage());
+		}
+	}
+
+	@Test
 	public void syntheticMethodOnAnonymousClass() {
 
 		// this nested construct results in the generation of a synthetic accessor for {@code accessed},
