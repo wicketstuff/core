@@ -18,8 +18,6 @@ package com.googlecode.wicket.kendo.ui.datatable;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import org.apache.wicket.ajax.attributes.CallbackParameter;
 import org.apache.wicket.util.string.StringValue;
@@ -103,12 +101,9 @@ public class ToolbarAjaxBehavior extends JQueryAjaxBehavior
 
 			if (values != null)
 			{
-				Pattern pattern = Pattern.compile("(\\S+)");
-				Matcher matcher = pattern.matcher(values.toString());
-
-				while (matcher.find())
+				for (String value : values.toString().split(","))
 				{
-					this.values.add(matcher.group());
+					this.values.add(value);
 				}
 			}
 		}
