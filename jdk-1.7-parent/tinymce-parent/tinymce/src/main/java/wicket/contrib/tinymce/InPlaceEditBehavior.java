@@ -18,18 +18,11 @@
  */
 package wicket.contrib.tinymce;
 
-import java.util.Collections;
-import java.util.UUID;
-
 import org.apache.wicket.Component;
-import org.apache.wicket.behavior.Behavior;
-import org.apache.wicket.markup.ComponentTag;
 import org.apache.wicket.markup.head.HeaderItem;
-import org.apache.wicket.markup.head.IHeaderResponse;
 import org.apache.wicket.markup.head.OnEventHeaderItem;
 
 import wicket.contrib.tinymce.settings.TinyMCESettings;
-import wicket.contrib.tinymce.settings.TinyMCESettings.Mode;
 
 /**
  * This behavior adds in-place editing functionality to wicket components. In
@@ -65,23 +58,7 @@ public class InPlaceEditBehavior extends TinyMceBehavior
 	@Override
 	protected HeaderItem wrapTinyMceSettingsScript(String settingScript,
 			Component component) {
-		//workaround for issue https://issues.apache.org/jira/browse/WICKET-5248
-		OnEventHeaderItem headerItem = new OnEventHeaderItem("'" + componentMarkupId + "'", "click", settingScript){
-			@Override
-			public CharSequence getJavaScript()
-			{
-				StringBuilder result = new StringBuilder();
-				result.append("Wicket.Event.add(")
-				.append(getTarget())
-				.append(", \"")
-				.append(getEvent())
-				.append("\", function(event) { ")
-				.append(super.getJavaScript())
-				.append(";});");
-				return result;
-			} 
-		};
-		
-		return headerItem;
+		return new OnEventHeaderItem("'" + componentMarkupId + "'",
+				"click", settingScript);
 	}
 }
