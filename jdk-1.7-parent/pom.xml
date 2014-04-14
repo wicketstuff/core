@@ -51,7 +51,8 @@
 		<module>progressbar-parent</module>
 		<module>push-parent</module>
 		<module>simile-timeline-parent</module>
-		<module>tinymce-parent</module>
+		<module>tinymce4-parent</module>
+		<module>tinymce3-parent</module>
 		<module>twitter-parent</module> 
 		<module>wicket-bundle-parent</module>
 		<module>wicket-osgi-parent</module>
