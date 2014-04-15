@@ -28,17 +28,26 @@ import org.apache.wicket.protocol.http.WebApplication;
 import org.apache.wicket.request.resource.IResource;
 import org.apache.wicket.request.resource.ResourceReference;
 import org.apache.wicket.util.lang.Args;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.wicketstuff.rest.annotations.ResourcePath;
 
 public class PackageScanner
 {
+	private static final Logger log = LoggerFactory.getLogger(PackageScanner.class);
+
 	public static void scanPackage(String... packageNames)
 	{
+		Args.notNull(packageNames, "packageNames");
+
 		scanPackage(WebApplication.get(), packageNames);
 	}
 
 	public static void scanPackage(WebApplication application, String... packageNames)
 	{
+		Args.notNull(application, "application");
+		Args.notNull(packageNames, "packageNames");
+
 		for (String packageName : packageNames)
 		{
 			scanPackage(application, packageName);
@@ -48,6 +57,7 @@ public class PackageScanner
 	public static void scanPackage(WebApplication application, String packageName)
 	{
 		Args.notNull(application, "application");
+		Args.notNull(packageName, "packageName");
 
 		try
 		{
@@ -85,6 +95,9 @@ public class PackageScanner
 				return resourceInstance;
 			}
 		});
+
+		log.info("Resource '" + clazz.getSimpleName() + "' has been mounted on path '" + path
+				+ "'");
 	}
 
 	/**
