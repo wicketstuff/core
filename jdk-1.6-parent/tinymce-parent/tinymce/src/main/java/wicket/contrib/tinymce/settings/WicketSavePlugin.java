@@ -29,21 +29,19 @@ import wicket.contrib.tinymce.InPlaceSaveBehavior;
 public class WicketSavePlugin extends Plugin
 {
 	private static final long serialVersionUID = 1L;
-	private PluginButton saveButton;
-	private PluginButton cancelButton;
-	private String saveCallbackname;
-	private String cancelCallbackname;
-	private StringResourceModel saveMessage;
+	private final PluginButton saveButton;
+	private final PluginButton cancelButton;
+	private final StringResourceModel saveMessage;
+	private final InPlaceSaveBehavior behavior;
 
 	public WicketSavePlugin(InPlaceSaveBehavior behavior)
 	{
 		super("wicketsave");
-		saveButton = new PluginButton("save", this);
-		cancelButton = new PluginButton("cancel", this);
-		saveCallbackname = behavior.getSaveCallbackName();
-		cancelCallbackname = behavior.getCancelCallbackName();
-		saveMessage = new StringResourceModel("wicket_updating_mess", behavior.getTheComponent(),
+		this.saveButton = new PluginButton("save", this);
+		this.cancelButton = new PluginButton("cancel", this);
+		this.saveMessage = new StringResourceModel("wicket_updating_mess", behavior.getTheComponent(),
 			null);
+		this.behavior = behavior;
 	}
 
 	public PluginButton getSaveButton()
@@ -60,8 +58,12 @@ public class WicketSavePlugin extends Plugin
 	protected void definePluginSettings(StringBuffer buffer)
 	{
 		super.definePluginSettings(buffer);
-		buffer.append(",\n\tsave_onwicketsavecallback: '" + saveCallbackname + "'");
-		buffer.append(",\n\tsave_onwicketcancelcallback: '" + cancelCallbackname + "'");
+		
+		String saveCallback = behavior.getSaveCallback();
+		String cancelCallback = behavior.getCancelCallback();
+		
+		buffer.append(",\n\tsave_onwicketsavecallback: " + saveCallback);
+		buffer.append(",\n\tsave_onwicketcancelcallback: " + cancelCallback);
 		buffer.append(",\n\twicket_updating_mess: '" +
 			JavaScriptUtils.escapeQuotes(saveMessage.getString()) + "'");
 	}
