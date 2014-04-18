@@ -122,17 +122,7 @@ public class InPlaceSaveBehavior extends AbstractDefaultAjaxBehavior
 		return newContent;
 	}
 
-	@Override
-	public void renderHead(Component c, IHeaderResponse response)
-	{
-		super.renderHead(c, response);
-		// Don't pass an id, since every EditableComponent will have its own
-		// submit script:
-		response.render(JavaScriptHeaderItem.forScript(createSaveScript(), null));
-		response.render(JavaScriptHeaderItem.forScript(createCancelScript(), null));
-	}
-
-	private String createSaveScript()
+	public String getSaveCallback()
 	{
 		CharSequence callback = getWicketPostScript();
 		String markupId = getComponent().getMarkupId();
@@ -152,7 +142,7 @@ public class InPlaceSaveBehavior extends AbstractDefaultAjaxBehavior
 			+ "}";
 	}
 
-	private String createCancelScript()
+	public String getCancelCallback()
 	{
 		return "function " + getCancelCallbackName()
 			+ "(inst) {\n" //

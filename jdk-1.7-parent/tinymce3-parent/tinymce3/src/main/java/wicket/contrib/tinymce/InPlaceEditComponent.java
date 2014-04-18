@@ -37,46 +37,44 @@ public class InPlaceEditComponent extends AbstractTextComponent
 	private static final long serialVersionUID = 1L;
 	private InPlaceSaveBehavior inPlaceSaveBehavior;
 	private InPlaceEditBehavior inPlaceEditBehavior;
-	private TinyMCESettings settings;
+	private final Component triggerComponent;
 
 	public InPlaceEditComponent(String id, IModel model)
 	{
 		super(id, model);
-		init(this);
+		this.triggerComponent = this;
 	}
 
 	public InPlaceEditComponent(String id, IModel model, Component triggerComponent)
 	{
 		super(id, model);
-		init(triggerComponent);
+		this.triggerComponent = triggerComponent;
 	}
 
 	public InPlaceEditComponent(String id, String text)
 	{
 		super(id, new Model(text));
-		init(this);
+		this.triggerComponent = this;
 	}
 
 	public InPlaceEditComponent(String id, String text, Component triggerComponent)
 	{
 		super(id, new Model(text));
-		init(triggerComponent);
+		this.triggerComponent = triggerComponent;
 	}
 
-	private void init(Component triggerComponent)
+	@Override
+	protected void onInitialize() 
 	{
+		// TODO Auto-generated method stub
+		super.onInitialize();
 		setEscapeModelStrings(false);
 		setOutputMarkupId(true);
-		settings = new TinyMCESettings(Theme.advanced);
 		// advanced theme required to add save/cancel buttons to toolbar
 		inPlaceSaveBehavior = createSaveBehavior();
 		if (inPlaceSaveBehavior != null)
 		{
-			add(inPlaceSaveBehavior);
-			WicketSavePlugin savePlugin = new WicketSavePlugin(inPlaceSaveBehavior);
-			settings.add(savePlugin.getSaveButton(), Toolbar.first, Position.before);
-			settings.add(savePlugin.getCancelButton(), Toolbar.first, Position.before);
-			settings.add(Button.separator, Toolbar.first, Position.before);
+			add(inPlaceSaveBehavior);			
 		}
 		inPlaceEditBehavior = createEditBehavior(triggerComponent);
 		if (inPlaceEditBehavior != null)
@@ -85,19 +83,16 @@ public class InPlaceEditComponent extends AbstractTextComponent
 
 	protected InPlaceEditBehavior createEditBehavior(Component triggerComponent)
 	{
-		return new InPlaceEditBehavior(getSettings(), triggerComponent);
+		TinyMCESettings settings = new TinyMCESettings(Theme.advanced);
+		WicketSavePlugin savePlugin = new WicketSavePlugin(inPlaceSaveBehavior);
+		
+		return new InPlaceEditBehavior(settings, triggerComponent, savePlugin);
 	}
 
 	protected InPlaceSaveBehavior createSaveBehavior()
 	{
 		return new InPlaceSaveBehavior();
 	}
-
-	public TinyMCESettings getSettings()
-	{
-		return settings;
-	}
-
 
 	@Override
 	protected void onComponentTag(ComponentTag tag)

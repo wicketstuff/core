@@ -19,10 +19,16 @@
 package wicket.contrib.tinymce;
 
 import org.apache.wicket.Component;
+import org.apache.wicket.behavior.Behavior;
 import org.apache.wicket.markup.head.HeaderItem;
 import org.apache.wicket.markup.head.OnEventHeaderItem;
 
+import wicket.contrib.tinymce.settings.Button;
 import wicket.contrib.tinymce.settings.TinyMCESettings;
+import wicket.contrib.tinymce.settings.WicketSavePlugin;
+import wicket.contrib.tinymce.settings.TinyMCESettings.Position;
+import wicket.contrib.tinymce.settings.TinyMCESettings.Theme;
+import wicket.contrib.tinymce.settings.TinyMCESettings.Toolbar;
 
 /**
  * This behavior adds in-place editing functionality to wicket components. In
@@ -32,11 +38,13 @@ import wicket.contrib.tinymce.settings.TinyMCESettings;
 public class InPlaceEditBehavior extends TinyMceBehavior
 {
 	private static final long serialVersionUID = 1L;
-	private String componentMarkupId;
+	private final String componentMarkupId;
 
 	/**
 	 * Construct in-place-editing behavior to a component. It makes the content
 	 * of the component editable with a TinyMce WYSIWYG editor.
+	 * @param settings 
+	 * @param inPlaceSaveBehavior 
 	 * 
 	 * @param settings
 	 *            TinyMceSettings for the editor when opened.
@@ -47,14 +55,18 @@ public class InPlaceEditBehavior extends TinyMceBehavior
 	 *            button. If set to null, you will have to start the editable
 	 *            state via a call to the javascriptfunction with name:
 	 *            {@link #getStartEditorScriptName()}
+	 * @param savePlugin 
 	 */
-	public InPlaceEditBehavior(TinyMCESettings settings, Component triggerComponent)
+	public InPlaceEditBehavior(TinyMCESettings settings, Component triggerComponent, WicketSavePlugin savePlugin)
 	{
 		super(settings);	
 		componentMarkupId = triggerComponent.getMarkupId();
+
+		settings.add(savePlugin.getSaveButton(), Toolbar.first, Position.before);
+		settings.add(savePlugin.getCancelButton(), Toolbar.first, Position.before);
+		settings.add(Button.separator, Toolbar.first, Position.before);
 	}
-	
-	
+
 	@Override
 	protected HeaderItem wrapTinyMceSettingsScript(String settingScript,
 			Component component) {
