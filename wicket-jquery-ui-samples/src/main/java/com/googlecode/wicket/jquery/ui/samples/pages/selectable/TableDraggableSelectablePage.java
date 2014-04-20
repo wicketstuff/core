@@ -80,7 +80,7 @@ public class TableDraggableSelectablePage extends AbstractSelectablePage
 		this.add(droppable);
 
 		// Droppable ListView //
-		droppable.add(new ListView<Genre>("items", new PropertyModel<List<Genre>>(this.selectable, "selectedItems")) {
+		droppable.add(new ListView<Genre>("items", this.selectable.getModel()) {
 
 			private static final long serialVersionUID = 1L;
 

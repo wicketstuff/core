@@ -128,6 +128,17 @@ public class Selectable<T extends Serializable> extends JQueryContainer implemen
 	 * @return the list of selected items
 	 */
 	@SuppressWarnings("unchecked")
+	public IModel<? extends List<T>> getModel()
+	{
+		return (IModel<? extends List<T>>) this.getDefaultModel();
+	}
+
+	/**
+	 * Gets the model object
+	 *
+	 * @return the list of selected items
+	 */
+	@SuppressWarnings("unchecked")
 	public List<T> getModelObject()
 	{
 		return (List<T>) this.getDefaultModelObject();

@@ -10,7 +10,6 @@ import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.list.ListItem;
 import org.apache.wicket.markup.html.list.ListView;
 import org.apache.wicket.markup.html.panel.FeedbackPanel;
-import org.apache.wicket.model.PropertyModel;
 
 import com.googlecode.wicket.jquery.ui.interaction.draggable.Draggable;
 import com.googlecode.wicket.jquery.ui.interaction.droppable.Droppable;
@@ -70,7 +69,7 @@ public class DraggableSelectablePage extends AbstractSelectablePage
 		this.add(droppable);
 
 		// Droppable ListView //
-		droppable.add(new ListView<String>("items", new PropertyModel<List<String>>(this.selectable, "selectedItems")) {
+		droppable.add(new ListView<String>("items", this.selectable.getModel()) {
 
 			private static final long serialVersionUID = 1L;
 
