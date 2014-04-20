@@ -1,27 +1,32 @@
 <!DOCTYPE html>
 <html xmlns:wicket="http://wicket.apache.org">
-	<head>
-	</head>
-	<body>
-		<wicket:panel>
-			<table cellpadding="5">
-				<tr>
-					<td colspan="3" wicket:id="label">
-						[label]
-					</td>
-				</tr>
-				<tr>
-					<td width="100" align="center">
-						<input wicket:id="lower" type="text" size="4" />
-					</td>
-					<td width="240">
-						<div wicket:id="slider"></div>
-					</td>
-					<td width="100" align="center">
-						<input wicket:id="upper" type="text" size="4" />
-					</td>
-				</tr>
-			</table>
-		</wicket:panel>
-	</body>
+<head>
+	<wicket:head>
+		<style type="text/css">
+			th, td { padding: 5px; }
+		</style>
+	</wicket:head>
+</head>
+<body>
+	<wicket:panel>
+		<table>
+			<tr>
+				<td colspan="3" wicket:id="label">
+					[label]
+				</td>
+			</tr>
+			<tr>
+				<td width="100" align="center">
+					<input wicket:id="lower" type="text" size="4" />
+				</td>
+				<td width="240">
+					<div wicket:id="slider"></div>
+				</td>
+				<td width="100" align="center">
+					<input wicket:id="upper" type="text" size="4" />
+				</td>
+			</tr>
+		</table>
+	</wicket:panel>
+</body>
 </html>

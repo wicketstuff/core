@@ -1,12 +1,18 @@
 <!DOCTYPE html>
 <html xmlns:wicket="http://wicket.apache.org">
 <head>
+	<wicket:head>
+		<style type="text/css">
+			table { width: 100%; }
+			th, td { padding: 5px; }
+		</style>
+	</wicket:head>
 </head>
 <body>
 	<wicket:panel>
-			Please select a value equal or greater than 10:<br />
+		Please select a value equal or greater than 10:<br />
 		<form wicket:id="form">
-			<table width="100%" cellpadding="5">
+			<table>
 				<tr>
 					<td width="80%">
 						<div wicket:id="slider"></div>

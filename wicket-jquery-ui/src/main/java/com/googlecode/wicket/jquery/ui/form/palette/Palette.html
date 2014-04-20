@@ -19,6 +19,15 @@
 <head>
 	<wicket:head>
 		<style type="text/css">
+			table.palette {
+				border-spacing: 0;
+				border-collapse: collapse;
+			}
+
+			table.palette td {
+				padding: 2px;
+			}
+		
 			table.palette td.buttons button.ui-button {
 				height: 28px;
 				width: 32px;
@@ -30,7 +39,7 @@
 <body>
 	<wicket:panel>
 		<input type="hidden" wicket:id="recorder" />
-		<table cellspacing="0" cellpadding="2" class="palette">
+		<table class="palette">
 			<tr>
 				<td class="ui-widget-header">
 					<span wicket:id="availableHeader">[available header]</span>

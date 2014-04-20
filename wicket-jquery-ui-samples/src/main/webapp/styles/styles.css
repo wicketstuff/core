@@ -29,6 +29,15 @@ hr {
     width: 956px;
 }
 
+table#wrapper {
+	border-spacing: 0;
+	border-collapse: collapse;
+}
+
+table#wrapper td {
+	padding: 0;
+}
+
 #wrapper-header {
 	margin: 4px;
 	padding: 10px;

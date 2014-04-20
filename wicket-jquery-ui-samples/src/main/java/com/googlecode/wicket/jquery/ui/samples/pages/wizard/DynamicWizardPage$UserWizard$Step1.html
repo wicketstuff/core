@@ -1,27 +1,40 @@
 <!DOCTYPE html>
 <html xmlns:wicket="http://wicket.apache.org">
-	<head>
-	</head>
-	<body>
-		<wicket:panel>
-			<table width="70%" cellpadding="2" cellspacing="0">
-				<tr>
-					<td width="20%">
-						Name:
-					</td>
-					<td width="80%">
-						<input wicket:id="name" type="text" style="width: 100%;"></input>
-					</td>
-				</tr>
-				<tr>
-					<td>
-						Email:
-					</td>
-					<td>
-						<input wicket:id="mail" type="email" style="width: 100%;"></input>
-					</td>
-				</tr>
-			</table>					
-		</wicket:panel>
-	</body>
+<head>
+	<wicket:head>
+		<style type="text/css">
+			table#step1 {
+				width: 70%;
+				border-spacing: 0;
+				border-collapse: collapse;
+			}
+
+			th, td {
+				padding: 2px;
+			}
+		</style>
+	</wicket:head>
+</head>
+<body>
+	<wicket:panel>
+		<table id="step1">
+			<tr>
+				<td width="20%">
+					Name:
+				</td>
+				<td width="80%">
+					<input wicket:id="name" type="text" style="width: 100%;"></input>
+				</td>
+			</tr>
+			<tr>
+				<td>
+					Email:
+				</td>
+				<td>
+					<input wicket:id="mail" type="email" style="width: 100%;"></input>
+				</td>
+			</tr>
+		</table>					
+	</wicket:panel>
+</body>
 </html>

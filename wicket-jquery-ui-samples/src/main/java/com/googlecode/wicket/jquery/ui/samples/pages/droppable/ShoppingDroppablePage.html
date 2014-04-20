@@ -4,9 +4,24 @@
 <wicket:head>
 	<title>Wicket - jQuery UI: droppable, shopping card demo</title>
 	<style type="text/css">
-		.ui-draggable { width: 160px; height: 120px; margin: 0.1em; float: right; z-index: 99; border: 1px solid #336699; }
-		.ui-droppable { width: 280px; x-position: relative; }
-	</style>
+		table.book { width: 100%; border-spacing: 0; border-collapse: collapse; }
+		table.book td { padding: 2px; }
+		table.card { width: 100%; border-spacing: 0; border-collapse: collapse; }
+		table.card td { padding: 1px; }
+		
+		.ui-draggable {
+			width: 160px;
+			height: 120px;
+			margin: 0.1em;
+			float: right;
+			z-index: 99;
+			border: 1px solid #336699;
+		}
+		
+		.ui-droppable {
+			width: 280px;
+		}
+		</style>
 </wicket:head>
 </head>
 <body>
@@ -26,7 +41,7 @@
 					Shopping card
 				</div>
 				<div class="ui-widget-content ui-corner-all" style="min-height: 220px; margin-top:2px; border: 1px solid #993366;">
-					<table width="100%" cellspacing="0" cellpadding="1">
+					<table id="card">
 						<tr>
 							<th width="45%"></th>
 							<th width="20%"></th>
@@ -49,7 +64,7 @@
 	</div>
 	
 	<wicket:fragment wicket:id="book-fragment">
-		<table width="100%" cellpadding="2" cellspacing="0">
+		<table class="book">
 			<tr>
 				<td rowspan="2"><img wicket:id="cover" /></td>
 				<td wicket:id="label"></td>
