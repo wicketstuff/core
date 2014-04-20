@@ -96,15 +96,19 @@
 @Override
 public void init()
 {
-	super.init();
+    super.init();
 
-	this.getMarkupSettings().setStripWicketTags(true); //IMPORTANT!
+    this.getMarkupSettings().setStripWicketTags(true); //IMPORTANT!
 }
                 </pre>
             </div>
             <h4>Setting up the HTML markup, for Kendo UI</h4>
             <div>
-                Kendo UI also needs CSSs to work. You need to download your own copy of Kendo UI: <a href="http://www.telerik.com/download/kendo-ui-web-open-source">http://www.telerik.com/download/kendo-ui-web-open-source</a>.<br/>
+                Kendo UI also needs CSSs to work. You need to download your own copy of Kendo UI:<br/>
+				<a href="http://www.telerik.com/download/kendo-ui-core">http://www.telerik.com/download/kendo-ui-core</a><br/>
+				<br/>
+				The previous GPLv3 version can be downloaded here:<br/>                
+                <a href="http://www.telerik.com/download/kendo-ui-web-open-source">http://www.telerik.com/download/kendo-ui-web-open-source</a><br/>
                 <br/>
                 Once done, you have to copy <code>kendo.common.min.css</code> and <code>kendo.<i>choosen_theme</i>.min.css</code> in into you webapp, as well as the corresponding theme folder and the "<code>texture</code>" folder.<br/>
                 <br/>

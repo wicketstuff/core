@@ -24,7 +24,7 @@ Once done, just include the jar(s) in your project's build path.
 <dependency>
     <groupId>com.googlecode.wicket-jquery-ui</groupId>
     <artifactId>wicket-jquery-ui</artifactId>
-    <version>6.14.0</version> <!-- or 1.5.10 -->
+    <version>6.15.0</version> <!-- or 1.5.10 -->
 </dependency>
 ```
 
@@ -46,6 +46,7 @@ If the version you specified is *snapshot*, you might define this repository:
 
 <table>
 <tr><th>wicket-jquery-ui</th><th>Wicket</th><th>jQuery UI</th></tr>
+<tr><td>6.15.0</td><td>6.15.0</td><td>1.10.4</td></tr>
 <tr><td>6.14.0</td><td>6.14.0</td><td>1.10.4</td></tr>
 <tr><td>6.13.1</td><td>6.13.0</td><td>1.10.4</td></tr>
 <tr><td>6.13.0</td><td>6.13.0</td><td>1.10.3</td></tr>
@@ -74,7 +75,7 @@ The base template page is the following: (you might change the CSS href accordin
 <html xmlns:wicket="http://wicket.apache.org">
     <head>
         <!-- jQuery UI -->
-        <link rel="stylesheet" type="text/css" href="css/ui-lightness/jquery-ui-1.10.4.custom.min.css" />
+        <link rel="stylesheet" type="text/css" href="styles/ui-lightness/jquery-ui-1.10.4.custom.min.css" />
     </head>
     <body>
     </body>
@@ -96,9 +97,13 @@ public void init()
 ```
 
 ### Setting up the HTML markup, for Kendo UI
-Kendo UI also needs CSSs to work. You need to download your own copy of Kendo UI: <http://www.telerik.com/download/kendo-ui-web-open-source>.
+Kendo UI also needs CSSs to work. You need to download your own copy of Kendo UI:  
+<http://www.telerik.com/download/kendo-ui-core>
 
-Once done, you have to copy `kendo.common.min.css` and `kendo.choosen_theme.min.css` in into you webapp,
+The previous GPLv3 version can be downloaded here:  
+<http://www.telerik.com/download/kendo-ui-web-open-source>
+
+Once done, you have to copy `kendo.common.min.css` and `kendo.choosen_theme.min.css` into you webapp,
 as well as the `texture` folder and the corresponding `choosen_theme` folder.
 
 The base template page is then the following: (you might change the CSS href accordingly)
@@ -107,8 +112,8 @@ The base template page is then the following: (you might change the CSS href acc
 <html xmlns:wicket="http://wicket.apache.org">
     <head>
         <!-- Kendo UI -->
-        <link rel="stylesheet" type="text/css" href="css/kendo/kendo.common.min.css" media="all" />
-        <link rel="stylesheet" type="text/css" href="css/kendo/kendo.default.min.css" media="all" />
+        <link rel="stylesheet" type="text/css" href="styles/kendo/kendo.common.min.css" media="all" />
+        <link rel="stylesheet" type="text/css" href="styles/kendo/kendo.default.min.css" media="all" />
     </head>
     <body>
     </body>
