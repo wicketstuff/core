@@ -79,7 +79,6 @@ public abstract class AbstractSlider<T> extends FormComponentPanel<T> implements
 	 * Initialization, should be called *manually* by overridden classes, in their constructors.<br/>
 	 * <b>Warning:</b> Options should not be set before this method has been called.
 	 */
-	// XXX: renamed #init to #initialize
 	void initialize()
 	{
 		this.options = new Options();
