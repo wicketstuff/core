@@ -22,10 +22,10 @@ public class MySlider extends FormComponentPanel<RangeValue>
 		super(id, model);
 
 		this.label = label;
-		this.init();
+		this.initialize();
 	}
 
-	private final void init()
+	private final void initialize()
 	{
 		this.add(new Label("label", this.label));
 

@@ -18,10 +18,10 @@ public class TestPage extends AbstractKendoPage
 
 	public TestPage()
 	{
-		this.init();
+		this.initialize();
 	}
 
-	private void init()
+	private void initialize()
 	{
 		// FeedbackPanel //
 		final FeedbackPanel feedback = new JQueryFeedbackPanel("feedback");

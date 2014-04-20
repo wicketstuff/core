@@ -18,11 +18,6 @@ public class SecuredButtonPage extends AbstractButtonPage implements IJQuerySecu
 
 	public SecuredButtonPage()
 	{
-		this.init();
-	}
-
-	private void init()
-	{
 		this.add(new LoginPanel("login"));
 
 		final Form<Void> form = new Form<Void>("form");

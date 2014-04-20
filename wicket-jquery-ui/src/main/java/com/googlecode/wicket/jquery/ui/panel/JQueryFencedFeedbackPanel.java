@@ -43,7 +43,7 @@ public class JQueryFencedFeedbackPanel extends FencedFeedbackPanel
 	{
 		super(id);
 
-		this.init();
+		this.initialize();
 	}
 
 	/**
@@ -57,7 +57,7 @@ public class JQueryFencedFeedbackPanel extends FencedFeedbackPanel
 	{
 		super(id, fence);
 
-		this.init();
+		this.initialize();
 	}
 
 	/**
@@ -71,7 +71,7 @@ public class JQueryFencedFeedbackPanel extends FencedFeedbackPanel
 	{
 		super(id, filter);
 
-		this.init();
+		this.initialize();
 	}
 
 	/**
@@ -86,13 +86,13 @@ public class JQueryFencedFeedbackPanel extends FencedFeedbackPanel
 	{
 		super(id, fence, filter);
 
-		this.init();
+		this.initialize();
 	}
 
 	/**
 	 * Initialization
 	 */
-	private void init()
+	private void initialize()
 	{
 		this.setOutputMarkupId(true);
 	}

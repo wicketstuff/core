@@ -52,7 +52,7 @@ public class RangeSlider extends AbstractSlider<RangeValue>
 	public RangeSlider(String id)
 	{
 		super(id);
-		this.init();
+		this.initialize();
 	}
 
 	/**
@@ -63,7 +63,7 @@ public class RangeSlider extends AbstractSlider<RangeValue>
 	public RangeSlider(String id, IModel<RangeValue> model)
 	{
 		super(id, model);
-		this.init();
+		this.initialize();
 	}
 
 	/**
@@ -75,7 +75,7 @@ public class RangeSlider extends AbstractSlider<RangeValue>
 	public RangeSlider(String id, IModel<RangeValue> model, Label label)
 	{
 		super(id, model, label);
-		this.init();
+		this.initialize();
 	}
 
 	/**
@@ -99,16 +99,16 @@ public class RangeSlider extends AbstractSlider<RangeValue>
 		this.upper.setOutputMarkupId(true);
 		this.upper.add(this.newUpperBehavior());
 
-		this.init();
+		this.initialize();
 	}
 
 	/**
 	 * Initialization
 	 */
 	@Override
-	protected final void init()
+	void initialize()
 	{
-		super.init();
+		super.initialize();
 
 		this.setRange(true);
 	}

@@ -11,11 +11,6 @@ public class DefaultCalendarPage extends AbstractCalendarPage
 
 	public DefaultCalendarPage()
 	{
-		this.init();
-	}
-
-	private void init()
-	{
 		// FeedbackPanel //
 		this.add(new FeedbackPanel("feedback"));
 

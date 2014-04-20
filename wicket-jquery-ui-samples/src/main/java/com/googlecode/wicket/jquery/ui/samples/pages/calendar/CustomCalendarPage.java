@@ -24,10 +24,10 @@ public class CustomCalendarPage extends AbstractCalendarPage
 		this.events.add(new CalendarEvent(1, "Today's event", new Date()));
 		this.events.add(new CalendarEvent(2, "Another event", new Date()));
 
-		this.init();
+		this.initialize();
 	}
 
-	private void init()
+	private void initialize()
 	{
 		// FeedbackPanel //
 		final FeedbackPanel feedback = new JQueryFeedbackPanel("feedback");

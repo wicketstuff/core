@@ -41,7 +41,7 @@ public abstract class FragmentFormDialog<T extends Serializable> extends Abstrac
 	{
 		super(id, title);
 
-		this.init();
+		this.initialize();
 	}
 
 	/**
@@ -53,7 +53,7 @@ public abstract class FragmentFormDialog<T extends Serializable> extends Abstrac
 	{
 		super(id, title);
 
-		this.init();
+		this.initialize();
 	}
 
 	/**
@@ -66,7 +66,7 @@ public abstract class FragmentFormDialog<T extends Serializable> extends Abstrac
 	{
 		super(id, title, model);
 
-		this.init();
+		this.initialize();
 	}
 
 	/**
@@ -79,7 +79,7 @@ public abstract class FragmentFormDialog<T extends Serializable> extends Abstrac
 	{
 		super(id, title, model);
 
-		this.init();
+		this.initialize();
 	}
 
 	/**
@@ -92,7 +92,7 @@ public abstract class FragmentFormDialog<T extends Serializable> extends Abstrac
 	{
 		super(id, title, modal);
 
-		this.init();
+		this.initialize();
 	}
 
 	/**
@@ -105,7 +105,7 @@ public abstract class FragmentFormDialog<T extends Serializable> extends Abstrac
 	{
 		super(id, title, modal);
 
-		this.init();
+		this.initialize();
 	}
 
 	/**
@@ -119,7 +119,7 @@ public abstract class FragmentFormDialog<T extends Serializable> extends Abstrac
 	{
 		super(id, title, model, modal);
 
-		this.init();
+		this.initialize();
 	}
 
 	/**
@@ -133,13 +133,13 @@ public abstract class FragmentFormDialog<T extends Serializable> extends Abstrac
 	{
 		super(id, title, model, modal);
 
-		this.init();
+		this.initialize();
 	}
 
 	/**
 	 * Initialize component
 	 */
-	private void init()
+	private void initialize()
 	{
 		this.add(this.newFragment("fragment"));
 	}

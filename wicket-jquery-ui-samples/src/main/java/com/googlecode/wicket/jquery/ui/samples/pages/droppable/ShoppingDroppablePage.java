@@ -33,10 +33,10 @@ public class ShoppingDroppablePage extends AbstractDroppablePage
 		this.books = this.newBookList();
 		this.orders = new ArrayList<Book>();
 
-		this.init();
+		this.initialize();
 	}
 
-	private void init()
+	private void initialize()
 	{
 		// Shopping card //
 		final Form<List<Book>> form = new Form<List<Book>>("form", new ListModel<Book>(this.orders));
@@ -146,10 +146,11 @@ public class ShoppingDroppablePage extends AbstractDroppablePage
 		public BookFragment(String id, IModel<Book> model)
 		{
 			super(id, "book-fragment", ShoppingDroppablePage.this, model);
-			this.init();
+
+			this.initialize();
 		}
 
-		private void init()
+		private void initialize()
 		{
 			Book book = (Book) this.getDefaultModelObject();
 

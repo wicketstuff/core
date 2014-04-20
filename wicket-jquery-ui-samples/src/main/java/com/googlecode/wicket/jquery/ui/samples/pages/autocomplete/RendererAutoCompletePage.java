@@ -21,11 +21,6 @@ public class RendererAutoCompletePage extends AbstractAutoCompletePage
 
 	public RendererAutoCompletePage()
 	{
-		this.init();
-	}
-
-	private void init()
-	{
 		// Model //
 		final IModel<Genre> model = new Model<Genre>();
 

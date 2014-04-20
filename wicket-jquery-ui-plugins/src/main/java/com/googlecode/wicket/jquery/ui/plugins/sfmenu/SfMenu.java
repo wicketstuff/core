@@ -73,7 +73,7 @@ public class SfMenu extends JQueryPanel
 		this.items = Args.notNull(items, "items");
 		this.isVertical = isVertical;
 
-		this.init();
+		this.initialize();
 	}
 
 	/**
@@ -103,13 +103,13 @@ public class SfMenu extends JQueryPanel
 		this.items = Args.notNull(items, "items");
 		this.isVertical = isVertical;
 
-		this.init();
+		this.initialize();
 	}
 
 	/**
 	 * Initialization
 	 */
-	private void init()
+	private void initialize()
 	{
 		this.root = new WebMarkupContainer("root");
 		this.root.add(new ListFragment("list", this.items));

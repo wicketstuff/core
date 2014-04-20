@@ -16,10 +16,10 @@ public class AjaxDatePickerPage extends AbstractDatePickerPage
 
 	public AjaxDatePickerPage()
 	{
-		this.init();
+		this.initialize();
 	}
 
-	private void init()
+	private void initialize()
 	{
 		final Form<Date> form = new Form<Date>("form");
 		this.add(form);

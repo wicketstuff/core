@@ -17,10 +17,10 @@ public class AjaxRangeSliderPage extends AbstractSliderPage
 
 	public AjaxRangeSliderPage()
 	{
-		this.init();
+		this.initialize();
 	}
 
-	private void init()
+	private void initialize()
 	{
 		final Form<RangeValue> form = new Form<RangeValue>("form", new Model<RangeValue>(new RangeValue(16, 64)));
 		this.add(form);

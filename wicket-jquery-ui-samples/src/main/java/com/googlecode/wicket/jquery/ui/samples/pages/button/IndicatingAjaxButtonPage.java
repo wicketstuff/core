@@ -16,11 +16,6 @@ public class IndicatingAjaxButtonPage extends AbstractButtonPage
 
 	public IndicatingAjaxButtonPage()
 	{
-		this.init();
-	}
-
-	private void init()
-	{
 		final Form<Void> form = new Form<Void>("form");
 		this.add(form);
 

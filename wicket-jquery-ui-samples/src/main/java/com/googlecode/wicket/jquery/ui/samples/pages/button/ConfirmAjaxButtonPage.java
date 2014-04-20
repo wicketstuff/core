@@ -12,13 +12,8 @@ import com.googlecode.wicket.jquery.ui.panel.JQueryFeedbackPanel;
 public class ConfirmAjaxButtonPage extends AbstractButtonPage
 {
 	private static final long serialVersionUID = 1L;
-	
+
 	public ConfirmAjaxButtonPage()
-	{
-		this.init();
-	}
-	
-	private void init()
 	{
 		final Form<Void> form = new Form<Void>("form") {
 

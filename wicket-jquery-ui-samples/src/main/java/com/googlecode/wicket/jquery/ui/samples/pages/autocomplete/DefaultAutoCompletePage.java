@@ -26,11 +26,6 @@ public class DefaultAutoCompletePage extends AbstractAutoCompletePage
 
 	public DefaultAutoCompletePage()
 	{
-		this.init();
-	}
-
-	private void init()
-	{
 		// Form //
 		final Form<Void> form = new Form<Void>("form");
 		this.add(form);

@@ -17,14 +17,9 @@ import com.googlecode.wicket.jquery.ui.panel.JQueryFeedbackPanel;
 public class InputRangeSliderPage extends AbstractSliderPage
 {
 	private static final long serialVersionUID = 1L;
-	
+
 	// Models //
 	public InputRangeSliderPage()
-	{
-		this.init();
-	}
-	
-	private void init()
 	{
 		final Form<RangeValue> form = new Form<RangeValue>("form", new Model<RangeValue>(new RangeValue(-32, 64)));
 		this.add(form);
@@ -44,7 +39,7 @@ public class InputRangeSliderPage extends AbstractSliderPage
 		slider.setMax(128);
 		slider.setRangeValidator(new RangeValidator<Integer>(-128, 128));
 		form.add(slider);
-	
+
 		// Buttons //
 		form.add(new Button("submit") {
 
@@ -54,13 +49,13 @@ public class InputRangeSliderPage extends AbstractSliderPage
 			public void onSubmit()
 			{
 				InputRangeSliderPage.this.info(this, form);
-			}			
+			}
 		});
 
 		form.add(new AjaxButton("button") {
 
 			private static final long serialVersionUID = 1L;
-			
+
 			@Override
 			protected void onError(AjaxRequestTarget target, Form<?> form)
 			{
@@ -79,7 +74,7 @@ public class InputRangeSliderPage extends AbstractSliderPage
 	private void info(Component component, Form<?> form)
 	{
 		RangeValue value = (RangeValue) form.getModelObject(); //need to cast because 'form' argument is generic with ?
-		
+
 		this.info(component.getMarkupId() + " has been clicked");
 		this.info(String.format("lower value is %d and upper value is %d", value.getLower(), value.getUpper()));
 	}

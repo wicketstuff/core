@@ -42,11 +42,6 @@ public abstract class DemoCalendarDialog extends AbstractFormDialog<DemoCalendar
 	{
 		super(id, title, emptyModel(), true);
 
-		this.init();
-	}
-
-	private void init()
-	{
 		this.form = new Form<DemoCalendarEvent>("form", new CompoundPropertyModel<DemoCalendarEvent>(this.getModel()));
 		this.add(this.form);
 

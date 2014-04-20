@@ -28,11 +28,6 @@ public class OptionSpinnerPage extends AbstractKendoPage
 
 	public OptionSpinnerPage()
 	{
-		this.init();
-	}
-
-	private void init()
-	{
 		final Form<Double> form = new Form<Double>("form", new Model<Double>(new Double(1.5)));
 		this.add(form);
 

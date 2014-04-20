@@ -23,11 +23,6 @@ public class ExtendedCalendarPage extends AbstractCalendarPage
 
 	public ExtendedCalendarPage()
 	{
-		this.init();
-	}
-
-	private void init()
-	{
 		// Form //
 		final Form<Date> form = new Form<Date>("form");
 		this.add(form);

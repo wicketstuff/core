@@ -22,10 +22,10 @@ public class DefaultConsolePage extends AbstractConsolePage
 	{
 		this.feedbackModel = this.newFeedbackMessagesModel();
 
-		this.init();
+		this.initialize();
 	}
 
-	private void init()
+	private void initialize()
 	{
 		// Console //
 		final Console console = new Console("console");

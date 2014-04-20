@@ -17,26 +17,21 @@ import com.googlecode.wicket.jquery.ui.panel.JQueryFeedbackPanel;
 public class RadioButtonPage extends AbstractButtonPage
 {
 	private static final long serialVersionUID = 1L;
-	
+
 	public RadioButtonPage()
-	{
-		this.init();
-	}
-	
-	private void init()
 	{
 		final IModel<String> radioModel = new Model<String>();
 		final List<String> radioList = Arrays.asList("my radio 1", "my radio 2", "my radio 3");
-		
+
 		Form<Void> form = new Form<Void>("form");
 		this.add(form);
 
 		// FeedbackPanel //
 		form.add(new JQueryFeedbackPanel("feedback"));
-		
+
 		// Radio Button //
 		form.add(new RadioChoice<String>("radios", radioModel, radioList));
-		
+
 		// Buttons //
 		form.add(new Button("submit") {
 
@@ -45,10 +40,10 @@ public class RadioButtonPage extends AbstractButtonPage
 			@Override
 			public void onSubmit()
 			{
-				RadioButtonPage.this.info(this, radioModel);		
-			}			
+				RadioButtonPage.this.info(this, radioModel);
+			}
 		});
-		
+
 		form.add(new AjaxButton("button") {
 
 			private static final long serialVersionUID = 1L;
@@ -58,7 +53,7 @@ public class RadioButtonPage extends AbstractButtonPage
 			{
 				RadioButtonPage.this.info(this, radioModel);
 				target.add(form);
-			}			
+			}
 		});
 	}
 

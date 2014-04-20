@@ -83,7 +83,7 @@ public class Draggable<T> extends JQueryContainer implements IDraggableListener
 	{
 		super(id);
 
-		this.init();
+		this.initialize();
 	}
 
 	/**
@@ -95,7 +95,7 @@ public class Draggable<T> extends JQueryContainer implements IDraggableListener
 	{
 		super(id, model);
 
-		this.init();
+		this.initialize();
 	}
 
 
@@ -103,7 +103,7 @@ public class Draggable<T> extends JQueryContainer implements IDraggableListener
 	/**
 	 * Initialization
 	 */
-	private void init()
+	private void initialize()
 	{
 		this.options = new Options();
 	}

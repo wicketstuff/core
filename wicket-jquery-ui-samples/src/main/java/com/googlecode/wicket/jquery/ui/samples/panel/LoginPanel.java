@@ -6,18 +6,14 @@ import org.apache.wicket.markup.html.panel.Panel;
 import com.googlecode.wicket.jquery.ui.form.button.Button;
 import com.googlecode.wicket.jquery.ui.samples.SampleSession;
 
-public class LoginPanel extends Panel 
+public class LoginPanel extends Panel
 {
 	private static final long serialVersionUID = 1L;
-	
+
 	public LoginPanel(String id)
 	{
 		super(id);
-		this.init();
-	}
 
-	private void init()
-	{
 		final Form<Void> form = new Form<Void>("sform");
 		this.add(form);
 
@@ -29,7 +25,7 @@ public class LoginPanel extends Panel
 			public void onSubmit()
 			{
 				SampleSession.get().login();
-			}			
+			}
 		});
 
 		form.add(new Button("logout") {
@@ -40,7 +36,7 @@ public class LoginPanel extends Panel
 			public void onSubmit()
 			{
 				SampleSession.get().logout();
-			}			
+			}
 		});
 	}
 }

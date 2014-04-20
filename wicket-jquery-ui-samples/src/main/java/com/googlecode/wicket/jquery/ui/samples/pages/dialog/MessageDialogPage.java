@@ -18,11 +18,6 @@ public class MessageDialogPage extends AbstractDialogPage
 
 	public MessageDialogPage()
 	{
-		this.init();
-	}
-
-	private void init()
-	{
 		final Form<Void> form = new Form<Void>("form");
 		this.add(form);
 

@@ -18,11 +18,6 @@ public class DefaultDatePickerPage extends AbstractDatePickerPage
 
 	public DefaultDatePickerPage()
 	{
-		this.init();
-	}
-
-	private void init()
-	{
 		final Form<Date> form = new Form<Date>("form", new Model<Date>());
 		this.add(form);
 

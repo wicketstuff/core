@@ -15,11 +15,6 @@ public class InputDialogPage extends AbstractDialogPage
 
 	public InputDialogPage()
 	{
-		this.init();
-	}
-
-	private void init()
-	{
 		final Form<Void> form = new Form<Void>("form");
 		this.add(form);
 

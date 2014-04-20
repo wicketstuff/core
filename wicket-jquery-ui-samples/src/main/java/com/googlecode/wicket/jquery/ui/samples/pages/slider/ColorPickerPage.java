@@ -25,10 +25,10 @@ public class ColorPickerPage extends AbstractSliderPage
 	public ColorPickerPage()
 	{
 		this.model = new Model<String>("#336699");
-		this.init();
+		this.initialize();
 	}
 
-	private void init()
+	private void initialize()
 	{
 		final Form<Void> form = new Form<Void>("form");
 		this.add(form);
@@ -95,10 +95,10 @@ public class ColorPickerPage extends AbstractSliderPage
 			this.modelG = this.newColorModel(INDEX_G);
 			this.modelB = this.newColorModel(INDEX_B);
 
-			this.init();
+			this.initialize();
 		}
 
-		private void init()
+		private void initialize()
 		{
 			this.add(this.newAjaxSlider("r", this.modelR)); // Slider: Red
 			this.add(this.newAjaxSlider("g", this.modelG)); // Slider: Green

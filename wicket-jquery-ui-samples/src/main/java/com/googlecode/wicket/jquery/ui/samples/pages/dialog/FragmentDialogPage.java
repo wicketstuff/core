@@ -17,11 +17,6 @@ public class FragmentDialogPage extends AbstractDialogPage
 
 	public FragmentDialogPage()
 	{
-		this.init();
-	}
-
-	private void init()
-	{
 		final Form<Void> form = new Form<Void>("form");
 		this.add(form);
 

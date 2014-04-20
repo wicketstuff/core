@@ -11,13 +11,8 @@ import com.googlecode.wicket.jquery.ui.panel.JQueryFeedbackPanel;
 public class ConfirmButtonPage extends AbstractButtonPage
 {
 	private static final long serialVersionUID = 1L;
-	
+
 	public ConfirmButtonPage()
-	{
-		this.init();
-	}
-	
-	private void init()
 	{
 		final Form<Void> form = new Form<Void>("form") {
 
@@ -35,7 +30,7 @@ public class ConfirmButtonPage extends AbstractButtonPage
 		// FeedbackPanel //
 		final FeedbackPanel feedback = new JQueryFeedbackPanel("feedback");
 		form.add(feedback.setOutputMarkupId(true));
-		
+
 		// TextField //
 		final RequiredTextField<String> textField = new RequiredTextField<String>("text", new Model<String>());
 		form.add(textField);
@@ -44,7 +39,7 @@ public class ConfirmButtonPage extends AbstractButtonPage
 		form.add(new ConfirmButton("button", "Submit", "Please confirm", "Do you confirm?") {
 
 			private static final long serialVersionUID = 1L;
-			
+
 			@Override
 			public void onError()
 			{

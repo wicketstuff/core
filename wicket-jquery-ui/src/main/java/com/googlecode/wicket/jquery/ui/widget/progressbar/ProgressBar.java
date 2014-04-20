@@ -60,12 +60,6 @@ public class ProgressBar extends JQueryContainer implements IJQueryAjaxAware, IV
 		super(id, model);
 	}
 
-	// public ProgressBar(String id, IModel<Integer> model, Duration duration)
-	// {
-	// super(id, model);
-	// this.init();
-	// }
-
 	// Properties //
 	/**
 	 * Gets the model (wrapping the value)

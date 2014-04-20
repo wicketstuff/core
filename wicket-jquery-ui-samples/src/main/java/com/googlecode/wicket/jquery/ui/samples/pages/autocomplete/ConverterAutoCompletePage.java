@@ -21,11 +21,6 @@ public class ConverterAutoCompletePage extends AbstractAutoCompletePage
 
 	public ConverterAutoCompletePage()
 	{
-		this.init();
-	}
-
-	private void init()
-	{
 		// Form //
 		final Form<Genre> form = new Form<Genre>("form", new Model<Genre>(GenresDAO.get(0))); // test default value
 		this.add(form);

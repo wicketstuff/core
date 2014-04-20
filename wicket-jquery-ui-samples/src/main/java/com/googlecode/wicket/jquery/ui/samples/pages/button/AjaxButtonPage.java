@@ -14,10 +14,10 @@ public class AjaxButtonPage extends AbstractButtonPage
 	
 	public AjaxButtonPage()
 	{
-		this.init();
+		this.initialize();
 	}
 	
-	private void init()
+	private void initialize()
 	{
 		final Form<Void> form = new Form<Void>("form");
 		this.add(form);

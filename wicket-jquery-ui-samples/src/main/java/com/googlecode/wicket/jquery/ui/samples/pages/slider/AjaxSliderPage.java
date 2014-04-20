@@ -19,10 +19,10 @@ public class AjaxSliderPage extends AbstractSliderPage
 
 	public AjaxSliderPage()
 	{
-		this.init();
+		this.initialize();
 	}
 
-	private void init()
+	private void initialize()
 	{
 		final Form<Void> form = new Form<Void>("form");
 		this.add(form);

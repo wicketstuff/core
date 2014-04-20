@@ -66,7 +66,7 @@ public class Slider extends AbstractSlider<Integer>
 	public Slider(String id)
 	{
 		super(id);
-		this.init();
+		this.initialize();
 	}
 
 	/**
@@ -77,7 +77,7 @@ public class Slider extends AbstractSlider<Integer>
 	public Slider(String id, IModel<Integer> model)
 	{
 		super(id, model);
-		this.init();
+		this.initialize();
 	}
 
 	/**
@@ -89,7 +89,7 @@ public class Slider extends AbstractSlider<Integer>
 	public Slider(String id, IModel<Integer> model, Label label)
 	{
 		super(id, model, label);
-		this.init();
+		this.initialize();
 	}
 
 	/**
@@ -107,7 +107,7 @@ public class Slider extends AbstractSlider<Integer>
 		this.input.setOutputMarkupId(true);
 		this.input.add(this.newInputBehavior());
 
-		this.init();
+		this.initialize();
 	}
 
 	@Override

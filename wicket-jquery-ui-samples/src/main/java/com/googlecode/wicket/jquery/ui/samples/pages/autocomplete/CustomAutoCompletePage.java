@@ -22,11 +22,6 @@ public class CustomAutoCompletePage extends AbstractAutoCompletePage
 
 	public CustomAutoCompletePage()
 	{
-		this.init();
-	}
-
-	private void init()
-	{
 		// Model //
 		final IModel<Genre> model = new Model<Genre>(GenresDAO.newGenre());
 

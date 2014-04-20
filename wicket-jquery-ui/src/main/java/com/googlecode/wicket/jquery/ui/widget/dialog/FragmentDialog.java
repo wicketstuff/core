@@ -42,7 +42,7 @@ public abstract class FragmentDialog<T extends Serializable> extends AbstractDia
 	{
 		super(id, title);
 
-		this.init();
+		this.initialize();
 	}
 
 	/**
@@ -54,7 +54,7 @@ public abstract class FragmentDialog<T extends Serializable> extends AbstractDia
 	{
 		super(id, title);
 
-		this.init();
+		this.initialize();
 	}
 
 	/**
@@ -67,7 +67,7 @@ public abstract class FragmentDialog<T extends Serializable> extends AbstractDia
 	{
 		super(id, title, model);
 
-		this.init();
+		this.initialize();
 	}
 
 	/**
@@ -80,7 +80,7 @@ public abstract class FragmentDialog<T extends Serializable> extends AbstractDia
 	{
 		super(id, title, model);
 
-		this.init();
+		this.initialize();
 	}
 
 	/**
@@ -93,7 +93,7 @@ public abstract class FragmentDialog<T extends Serializable> extends AbstractDia
 	{
 		super(id, title, modal);
 
-		this.init();
+		this.initialize();
 	}
 
 	/**
@@ -106,7 +106,7 @@ public abstract class FragmentDialog<T extends Serializable> extends AbstractDia
 	{
 		super(id, title, modal);
 
-		this.init();
+		this.initialize();
 	}
 
 	/**
@@ -120,7 +120,7 @@ public abstract class FragmentDialog<T extends Serializable> extends AbstractDia
 	{
 		super(id, title, model, modal);
 
-		this.init();
+		this.initialize();
 	}
 
 	/**
@@ -134,13 +134,13 @@ public abstract class FragmentDialog<T extends Serializable> extends AbstractDia
 	{
 		super(id, title, model, modal);
 
-		this.init();
+		this.initialize();
 	}
 
 	/**
 	 * Initialize component
 	 */
-	private void init()
+	private void initialize()
 	{
 		this.add(this.newFragment("fragment"));
 	}

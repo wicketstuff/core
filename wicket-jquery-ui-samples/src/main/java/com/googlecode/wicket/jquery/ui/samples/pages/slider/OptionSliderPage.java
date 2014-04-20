@@ -16,17 +16,12 @@ import com.googlecode.wicket.jquery.ui.panel.JQueryFeedbackPanel;
 public class OptionSliderPage extends AbstractSliderPage
 {
 	private static final long serialVersionUID = 1L;
-	
+
 	// Models //
 	private final Model<Integer> model1 = new Model<Integer>(16);
 	private final Model<Integer> model2 = new Model<Integer>(4);
 
 	public OptionSliderPage()
-	{
-		this.init();
-	}
-	
-	private void init()
 	{
 		final Form<Void> form = new Form<Void>("form");
 		this.add(form);
@@ -40,13 +35,13 @@ public class OptionSliderPage extends AbstractSliderPage
 
 		form.add(new Label("model1", this.model1));
 		form.add(new Slider("slider1", this.model1, label1).setRange(Range.MIN).setMax(120).setStep(16));
-		
+
 		final Label label2 = new Label("label2", this.model2); //the supplied model allows the initial display
 		form.add(label2.setOutputMarkupId(true));
-		
+
 		form.add(new Label("model2", this.model2));
 		form.add(new Slider("slider2", this.model2, label2).setOrientation(Orientation.VERTICAL).setMin(1).setMax(10).setStep(3));
-		
+
 		// Buttons //
 		form.add(new Button("submit") {
 
@@ -56,7 +51,7 @@ public class OptionSliderPage extends AbstractSliderPage
 			public void onSubmit()
 			{
 				OptionSliderPage.this.info(this);
-			}			
+			}
 		});
 
 		form.add(new AjaxButton("button") {

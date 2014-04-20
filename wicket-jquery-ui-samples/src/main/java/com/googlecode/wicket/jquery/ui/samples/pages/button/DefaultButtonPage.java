@@ -10,30 +10,25 @@ import com.googlecode.wicket.jquery.ui.panel.JQueryFeedbackPanel;
 public class DefaultButtonPage extends AbstractButtonPage
 {
 	private static final long serialVersionUID = 1L;
-	
+
 	public DefaultButtonPage()
-	{
-		this.init();
-	}
-	
-	private void init()
 	{
 		final Form<Void> form = new Form<Void>("form");
 		this.add(form);
 
 		// FeedbackPanel //
 		form.add(new JQueryFeedbackPanel("feedback"));
-		
+
 		// Buttons //
-		form.add(new Button("button1", new Model<String>("Submit")) { //the model here is used to retrieve the button's text afterward 
+		form.add(new Button("button1", new Model<String>("Submit")) { //the model here is used to retrieve the button's text afterward
 
 			private static final long serialVersionUID = 1L;
 
 			@Override
 			public void onSubmit()
 			{
-				DefaultButtonPage.this.info(this);		
-			}			
+				DefaultButtonPage.this.info(this);
+			}
 		});
 
 		form.add(new Button("button2", new Model<String>("Submit, with client click")) { //idem as previous comment
@@ -49,8 +44,8 @@ public class DefaultButtonPage extends AbstractButtonPage
 			@Override
 			public void onSubmit()
 			{
-				DefaultButtonPage.this.info(this);	
-			}			
+				DefaultButtonPage.this.info(this);
+			}
 		});
 	}
 

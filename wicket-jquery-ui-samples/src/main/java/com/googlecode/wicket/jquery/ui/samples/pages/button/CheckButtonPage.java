@@ -21,10 +21,10 @@ public class CheckButtonPage extends AbstractButtonPage
 	
 	public CheckButtonPage()
 	{
-		this.init();
+		this.initialize();
 	}
 	
-	private void init()
+	private void initialize()
 	{
 		final IModel<ArrayList<String>> checkModel = new Model<ArrayList<String>>();
 		final List<String> checkList = Arrays.asList("my check 1", "my check 2", "my check 3");

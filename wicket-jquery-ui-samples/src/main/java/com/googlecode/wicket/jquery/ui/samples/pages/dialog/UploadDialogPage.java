@@ -16,11 +16,6 @@ public class UploadDialogPage extends AbstractDialogPage
 
 	public UploadDialogPage()
 	{
-		this.init();
-	}
-
-	private void init()
-	{
 		final Form<Void> form = new Form<Void>("form");
 		this.add(form);
 

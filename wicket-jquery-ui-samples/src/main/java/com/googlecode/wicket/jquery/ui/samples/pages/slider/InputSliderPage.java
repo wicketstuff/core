@@ -15,13 +15,8 @@ import com.googlecode.wicket.jquery.ui.panel.JQueryFeedbackPanel;
 public class InputSliderPage extends AbstractSliderPage
 {
 	private static final long serialVersionUID = 1L;
-	
+
 	public InputSliderPage()
-	{
-		this.init();
-	}
-	
-	private void init()
 	{
 		Form<Integer> form = new Form<Integer>("form");
 		this.add(form);
@@ -36,7 +31,7 @@ public class InputSliderPage extends AbstractSliderPage
 		final Slider slider = new Slider("slider", input.getModel(), input); //input is responsible of the model object
 		slider.setRangeValidator(new RangeValidator<Integer>(0, 200));
 		form.add(slider.setMin(0).setMax(200));
-		
+
 		// Buttons //
 		form.add(new Button("submit") {
 
@@ -46,7 +41,7 @@ public class InputSliderPage extends AbstractSliderPage
 			public void onSubmit()
 			{
 				InputSliderPage.this.info(this, slider);
-			}			
+			}
 		});
 
 		form.add(new AjaxButton("button") {
@@ -59,7 +54,7 @@ public class InputSliderPage extends AbstractSliderPage
 				InputSliderPage.this.info(this, slider);
 				target.add(form);
 			}
-			
+
 			@Override
 			protected void onError(AjaxRequestTarget target, Form<?> form)
 			{

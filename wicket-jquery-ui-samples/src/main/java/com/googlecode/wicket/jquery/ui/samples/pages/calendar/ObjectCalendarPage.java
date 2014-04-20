@@ -32,10 +32,10 @@ public class ObjectCalendarPage extends AbstractCalendarPage
 		this.objects.add(new MyEvent("event #1"));
 		this.objects.add(new MyEvent("event #2"));
 
-		this.init();
+		this.initialize();
 	}
 
-	private void init()
+	private void initialize()
 	{
 		// FeedbackPanel //
 		final FeedbackPanel feedback = new JQueryFeedbackPanel("feedback");

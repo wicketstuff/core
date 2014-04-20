@@ -59,7 +59,7 @@ public class JQueryFeedbackPanel extends FeedbackPanel
 	{
 		super(id);
 
-		this.init();
+		this.initialize();
 	}
 
 	/**
@@ -72,7 +72,7 @@ public class JQueryFeedbackPanel extends FeedbackPanel
 	{
 		super(id, new ComponentFeedbackMessageFilter(filter));
 
-		this.init();
+		this.initialize();
 	}
 
 	/**
@@ -85,13 +85,13 @@ public class JQueryFeedbackPanel extends FeedbackPanel
 	{
 		super(id, new ContainerFeedbackMessageFilter(filter));
 
-		this.init();
+		this.initialize();
 	}
 
 	/**
 	 * Initialization
 	 */
-	private void init()
+	private void initialize()
 	{
 		this.setOutputMarkupId(true);
 	}

@@ -33,10 +33,10 @@ public class UserDialogPage extends AbstractDialogPage
 	{
 		this.users = new ArrayList<User>();
 
-		this.init();
+		this.initialize();
 	}
 
-	private void init()
+	private void initialize()
 	{
 		final Form<List<User>> form = new Form<List<User>>("form", new ListModel<User>(this.users));
 		this.add(form);
