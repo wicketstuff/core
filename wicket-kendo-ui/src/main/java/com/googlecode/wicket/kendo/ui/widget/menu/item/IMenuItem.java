@@ -14,13 +14,15 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.googlecode.wicket.kendo.ui.widget.menu;
+package com.googlecode.wicket.kendo.ui.widget.menu.item;
 
 import java.util.List;
 
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.util.io.IClusterable;
+
+import com.googlecode.wicket.kendo.ui.widget.menu.Menu;
 
 /**
  * Interface used to represent a single item in a {@link Menu}

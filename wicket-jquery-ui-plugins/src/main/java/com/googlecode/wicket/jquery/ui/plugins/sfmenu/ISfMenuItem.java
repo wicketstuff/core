@@ -48,22 +48,22 @@ public interface ISfMenuItem extends IClusterable
 	List<ISfMenuItem> getItems();
 
 	/**
-	 * Get the page class registered with the link
+	 * Gets the page class registered with the link
 	 *
 	 * @return Page Class
 	 */
 	Class<? extends Page> getPageClass();
-	
+
 	/**
-	 * TODO javadoc
-	 * @return
+	 * Gets the page parameters
+	 *
+	 * @return the {@link PageParameters}
 	 */
 	PageParameters getPageParameters();
-	
+
 	/**
-	 * Get the url for a page. In most cases this will
-	 * be an url for an external page. 
-	 * 
+	 * Gets the url for a page. In most cases this will be an url for an external page.
+	 *
 	 * @return url of the page
 	 */
 	String getPageUrl();
@@ -74,10 +74,10 @@ public interface ISfMenuItem extends IClusterable
 	 * @return true or false
 	 */
 	boolean isEnabled();
-	
+
 	/**
 	 * Indicates whether the pages is opened in a new window
-	 * 
+	 *
 	 * @return true or false
 	 */
 	boolean isOpenInNewWindow();

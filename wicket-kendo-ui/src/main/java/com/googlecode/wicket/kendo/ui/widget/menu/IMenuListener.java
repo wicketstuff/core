@@ -18,6 +18,8 @@ package com.googlecode.wicket.kendo.ui.widget.menu;
 
 import org.apache.wicket.ajax.AjaxRequestTarget;
 
+import com.googlecode.wicket.kendo.ui.widget.menu.item.IMenuItem;
+
 /**
  * Event listener shared by the {@link Menu} widget and the {@link MenuBehavior}
  *

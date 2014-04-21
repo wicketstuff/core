@@ -8,9 +8,9 @@ import org.apache.wicket.model.Model;
 
 import com.googlecode.wicket.kendo.ui.KendoIcon;
 import com.googlecode.wicket.kendo.ui.panel.KendoFeedbackPanel;
-import com.googlecode.wicket.kendo.ui.widget.menu.IMenuItem;
 import com.googlecode.wicket.kendo.ui.widget.menu.Menu;
-import com.googlecode.wicket.kendo.ui.widget.menu.MenuItem;
+import com.googlecode.wicket.kendo.ui.widget.menu.item.IMenuItem;
+import com.googlecode.wicket.kendo.ui.widget.menu.item.MenuItem;
 
 
 public class KendoMenuPage extends AbstractMenuPage

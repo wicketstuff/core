@@ -66,7 +66,6 @@ public class SfMenuItem extends AbstractSfMenuItem
 	 *
 	 * @param title the title of the menu-item
 	 * @param pageClass the class of the page to redirect to, when menu-item is clicked
-	 * @param pageParameters the {@link PageParameters}
 	 */
 	public SfMenuItem(String title, Class<? extends Page> pageClass)
 	{
@@ -103,6 +102,7 @@ public class SfMenuItem extends AbstractSfMenuItem
 	 *
 	 * @param title IModel that represents the title of the menu-item
 	 * @param pageClass the class of the page to redirect to, when menu-item is clicked
+	 * @param pageParameters the {@link PageParameters}
 	 */
 	public SfMenuItem(IModel<String> title, Class<? extends Page> pageClass, PageParameters pageParameters)
 	{

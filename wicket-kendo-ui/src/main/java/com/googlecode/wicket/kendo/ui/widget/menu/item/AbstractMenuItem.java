@@ -14,16 +14,18 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.googlecode.wicket.kendo.ui.widget.menu;
+package com.googlecode.wicket.kendo.ui.widget.menu.item;
 
 import java.util.Collections;
 import java.util.List;
 
 import org.apache.wicket.model.IModel;
 
+import com.googlecode.wicket.kendo.ui.widget.menu.Menu;
+
 /**
  * Base class for {@link Menu} item
- *
+ * 
  * @author Sebastien Briquet - sebfz1
  * @since 6.15.0
  */
@@ -37,7 +39,7 @@ public abstract class AbstractMenuItem implements IMenuItem
 
 	/**
 	 * Constructor
-	 *
+	 * 
 	 * @param title {@link IModel} that represent the title of the menu-item
 	 * @param icon the kendo icon class
 	 */
@@ -61,7 +63,7 @@ public abstract class AbstractMenuItem implements IMenuItem
 
 	/**
 	 * Sets the menu-item title
-	 *
+	 * 
 	 * @param title the menu-item title
 	 */
 	public void setTitle(IModel<String> title)
@@ -77,12 +79,15 @@ public abstract class AbstractMenuItem implements IMenuItem
 
 	/**
 	 * Sets the icon css class being displayed in the {@link Menu} (ie: ui-my-icon)
-	 *
+	 * 
 	 * @param icon the icon css class
+	 * @return this, for chaining
 	 */
-	public void setIcon(String icon)
+	public AbstractMenuItem setIcon(String icon)
 	{
 		this.icon = icon;
+
+		return this;
 	}
 
 	@Override
@@ -93,12 +98,15 @@ public abstract class AbstractMenuItem implements IMenuItem
 
 	/**
 	 * Sets whether the menu-item is enabled
-	 *
+	 * 
 	 * @param enabled true or false
+	 * @return this, for chaining
 	 */
-	public void setEnabled(boolean enabled)
+	public AbstractMenuItem setEnabled(boolean enabled)
 	{
 		this.enabled = enabled;
+
+		return this;
 	}
 
 	@Override

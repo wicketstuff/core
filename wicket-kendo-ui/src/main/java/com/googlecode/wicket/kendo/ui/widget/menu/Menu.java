@@ -37,6 +37,8 @@ import com.googlecode.wicket.jquery.core.JQueryBehavior;
 import com.googlecode.wicket.jquery.core.JQueryPanel;
 import com.googlecode.wicket.jquery.core.Options;
 import com.googlecode.wicket.kendo.ui.KendoIcon;
+import com.googlecode.wicket.kendo.ui.widget.menu.item.IMenuItem;
+import com.googlecode.wicket.kendo.ui.widget.menu.item.MenuItem;
 
 /**
  * Provides the jQuery menu based on a {@link JQueryPanel}

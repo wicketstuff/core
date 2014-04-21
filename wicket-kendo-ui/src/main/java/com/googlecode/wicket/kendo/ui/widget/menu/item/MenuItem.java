@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.googlecode.wicket.kendo.ui.widget.menu;
+package com.googlecode.wicket.kendo.ui.widget.menu.item;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -53,7 +53,7 @@ public class MenuItem extends AbstractMenuItem
 	 * Constructor
 	 *
 	 * @param title the title of the menu-item
-	 * @param icon the icon css class (ie: ui-my-icon)
+	 * @param icon either a {@link KendoIcon} constant or a 'k-i-<i>icon</i>' css class
 	 */
 	public MenuItem(String title, String icon)
 	{
@@ -74,7 +74,7 @@ public class MenuItem extends AbstractMenuItem
 	 * Constructor
 	 *
 	 * @param title IModel that represent the title of the menu-item
-	 * @param icon the icon css class (ie: ui-my-icon)
+	 * @param icon either a {@link KendoIcon} constant or a 'k-i-<i>icon</i>' css class
 	 */
 	public MenuItem(IModel<String> title, String icon)
 	{
@@ -99,7 +99,7 @@ public class MenuItem extends AbstractMenuItem
 	 * Constructor
 	 *
 	 * @param title the title of the menu-item
-	 * @param icon the icon css class (ie: ui-my-icon)
+	 * @param icon either a {@link KendoIcon} constant or a 'k-i-<i>icon</i>' css class
 	 * @param items the sub-menu items
 	 */
 	public MenuItem(String title, String icon, List<IMenuItem> items)
@@ -122,7 +122,7 @@ public class MenuItem extends AbstractMenuItem
 	 * Constructor
 	 *
 	 * @param title IModel that represent the title of the menu-item
-	 * @param icon the icon css class (ie: ui-my-icon)
+	 * @param icon either a {@link KendoIcon} constant or a 'k-i-<i>icon</i>' css class
 	 * @param items the sub-menu items
 	 */
 	public MenuItem(IModel<String> title, String icon, List<IMenuItem> items)
