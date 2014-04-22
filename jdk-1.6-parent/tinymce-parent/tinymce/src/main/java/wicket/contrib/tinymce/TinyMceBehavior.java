@@ -60,12 +60,6 @@ public class TinyMceBehavior extends Behavior
 	}
 
 	@Override
-	public void afterRender(Component component)
-	{
-		component.getResponse().write("</div>");
-	}
-
-	@Override
 	public void renderHead(Component c, IHeaderResponse response)
 	{
 		super.renderHead(c, response);
