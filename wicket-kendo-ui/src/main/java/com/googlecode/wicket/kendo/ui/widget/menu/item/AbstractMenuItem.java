@@ -21,6 +21,7 @@ import java.util.List;
 
 import org.apache.wicket.model.IModel;
 
+import com.googlecode.wicket.kendo.ui.KendoIcon;
 import com.googlecode.wicket.kendo.ui.widget.menu.Menu;
 
 /**
@@ -41,7 +42,7 @@ public abstract class AbstractMenuItem implements IMenuItem
 	 * Constructor
 	 * 
 	 * @param title {@link IModel} that represent the title of the menu-item
-	 * @param icon the kendo icon class
+	 * @param icon either a {@link KendoIcon} constant or a 'k-i-<i>icon</i>' css class
 	 */
 	public AbstractMenuItem(IModel<String> title, String icon)
 	{
@@ -80,7 +81,7 @@ public abstract class AbstractMenuItem implements IMenuItem
 	/**
 	 * Sets the icon css class being displayed in the {@link Menu} (ie: ui-my-icon)
 	 * 
-	 * @param icon the icon css class
+	 * @param icon either a {@link KendoIcon} constant or a 'k-i-<i>icon</i>' css class
 	 * @return this, for chaining
 	 */
 	public AbstractMenuItem setIcon(String icon)

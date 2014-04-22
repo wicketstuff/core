@@ -54,7 +54,7 @@ public class UrlMenuItem extends AbstractMenuItem
 	 */
 	public UrlMenuItem(String title, String icon, String url)
 	{
-		this(Model.of(title), url);
+		this(Model.of(title), icon, url);
 	}
 
 	/**

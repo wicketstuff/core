@@ -28,7 +28,7 @@ import com.googlecode.wicket.kendo.ui.KendoIcon;
 
 /**
  * Provides a menu-item that redirect to a {@link Page}
- *
+ * 
  * @author Sebastien Briquet - sebfz1
  * @since 6.15.0
  */
@@ -43,7 +43,7 @@ public class PageMenuItem extends AbstractMenuItem
 	 * Constructor
 	 *
 	 * @param title the title of the menu-item
-	 * @param pageClass the {@link Page} to redirect to
+	 * @param pageClass the {@link Page} class
 	 */
 	public PageMenuItem(String title, Class<? extends Page> pageClass)
 	{
@@ -54,7 +54,19 @@ public class PageMenuItem extends AbstractMenuItem
 	 * Constructor
 	 *
 	 * @param title the title of the menu-item
-	 * @param pageClass the {@link Page} to redirect to
+	 * @param icon either a {@link KendoIcon} constant or a 'k-i-<i>icon</i>' css class
+	 * @param pageClass the {@link Page} class
+	 */
+	public PageMenuItem(String title, String icon, Class<? extends Page> pageClass)
+	{
+		this(Model.of(title), icon, pageClass);
+	}
+
+	/**
+	 * Constructor
+	 *
+	 * @param title the title of the menu-item
+	 * @param pageClass the {@link Page} class
 	 * @param parameters the {@link PageParameters}
 	 */
 	public PageMenuItem(String title, Class<? extends Page> pageClass, PageParameters parameters)
@@ -67,7 +79,7 @@ public class PageMenuItem extends AbstractMenuItem
 	 *
 	 * @param title the title of the menu-item
 	 * @param icon either a {@link KendoIcon} constant or a 'k-i-<i>icon</i>' css class
-	 * @param pageClass the {@link Page} to redirect to
+	 * @param pageClass the {@link Page} class
 	 * @param parameters the {@link PageParameters}
 	 */
 	public PageMenuItem(String title, String icon, Class<? extends Page> pageClass, PageParameters parameters)
@@ -79,7 +91,7 @@ public class PageMenuItem extends AbstractMenuItem
 	 * Constructor
 	 *
 	 * @param title IModel that represent the title of the menu-item
-	 * @param pageClass the {@link Page} to redirect to
+	 * @param pageClass the {@link Page} class
 	 */
 	public PageMenuItem(IModel<String> title, Class<? extends Page> pageClass)
 	{
@@ -90,7 +102,19 @@ public class PageMenuItem extends AbstractMenuItem
 	 * Constructor
 	 *
 	 * @param title IModel that represent the title of the menu-item
-	 * @param pageClass the {@link Page} to redirect to
+	 * @param icon either a {@link KendoIcon} constant or a 'k-i-<i>icon</i>' css class
+	 * @param pageClass the {@link Page} class
+	 */
+	public PageMenuItem(IModel<String> title, String icon, Class<? extends Page> pageClass)
+	{
+		this(title, KendoIcon.NONE, pageClass, new PageParameters());
+	}
+
+	/**
+	 * Constructor
+	 *
+	 * @param title IModel that represent the title of the menu-item
+	 * @param pageClass the {@link Page} class
 	 * @param parameters the {@link PageParameters}
 	 */
 	public PageMenuItem(IModel<String> title, Class<? extends Page> pageClass, PageParameters parameters)
@@ -103,7 +127,7 @@ public class PageMenuItem extends AbstractMenuItem
 	 *
 	 * @param title IModel that represent the title of the menu-item
 	 * @param icon either a {@link KendoIcon} constant or a 'k-i-<i>icon</i>' css class
-	 * @param pageClass the {@link Page} to redirect to
+	 * @param pageClass the {@link Page} class
 	 * @param parameters the {@link PageParameters}
 	 */
 	public PageMenuItem(IModel<String> title, String icon, Class<? extends Page> pageClass, PageParameters parameters)

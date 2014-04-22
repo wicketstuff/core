@@ -116,7 +116,6 @@ public class SfMenuItem extends AbstractSfMenuItem
 	 *
 	 * @param title the title of the menu-item
 	 * @param items the sub-menu items
-	 *
 	 */
 	public SfMenuItem(String title, List<ISfMenuItem> items)
 	{
