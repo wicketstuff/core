@@ -62,7 +62,7 @@ public abstract class SamplePage extends TemplatePage
 			@Override
 			public boolean isVisible()
 			{
-				return this.getModelObject().size() > 0; //model object cannot be null
+				return !this.getModelObject().isEmpty(); //model object cannot be null
 			}
 
 		});

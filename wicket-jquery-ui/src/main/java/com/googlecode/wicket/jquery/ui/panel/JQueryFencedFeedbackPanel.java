@@ -98,8 +98,8 @@ public class JQueryFencedFeedbackPanel extends FencedFeedbackPanel
 	}
 
 	@Override
-	protected Component newMessageDisplayComponent(String id, FeedbackMessage message) {
-
+	protected Component newMessageDisplayComponent(String id, FeedbackMessage message)
+	{
 		WebMarkupContainer container = new WebMarkupContainer(id);
 		container.add(AttributeModifier.replace("class", this.getMessageClass(message)));
 		container.add(new EmptyPanel("icon").add(AttributeModifier.replace("class", this.getIconClass(message))));
