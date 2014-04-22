@@ -28,7 +28,7 @@ public class RangeDatePickerPage extends AbstractRangeDatePickerPage
 		this.add(feedback.setOutputMarkupId(true));
 
 		// RangeDatePicker //
-		this.add(new RangeDatePicker("datepicker", new Model<DateRange>(DateRange.today()), options) {
+		this.add(new RangeDatePicker("datepicker", Model.of(DateRange.today()), options) {
 
 			private static final long serialVersionUID = 1L;
 

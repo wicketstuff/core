@@ -23,7 +23,7 @@ public class TemplateAutoCompletePage extends AbstractAutoCompletePage
 	public TemplateAutoCompletePage()
 	{
 		// Model //
-		final IModel<Genre> model = new Model<Genre>(GenresDAO.newGenre());
+		final IModel<Genre> model = Model.of(GenresDAO.newGenre());
 
 		// Form //
 		final Form<Void> form = new Form<Void>("form");

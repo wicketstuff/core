@@ -19,7 +19,7 @@ public class DefaultDroppablePage extends AbstractDroppablePage
 	 */
 	private static Draggable<String> newDraggable(String id, String label)
 	{
-		return new Draggable<String>(id, new Model<String>(label)).setContainment("#wrapper-panel-frame");
+		return new Draggable<String>(id, Model.of(label)).setContainment("#wrapper-panel-frame");
 	}
 
 
@@ -44,7 +44,7 @@ public class DefaultDroppablePage extends AbstractDroppablePage
 	 */
 	private Droppable<String> newDroppable(String id, String color)
 	{
-		return new Droppable<String>(id, new Model<String>(color)) {
+		return new Droppable<String>(id, Model.of(color)) {
 
 			private static final long serialVersionUID = 1L;
 

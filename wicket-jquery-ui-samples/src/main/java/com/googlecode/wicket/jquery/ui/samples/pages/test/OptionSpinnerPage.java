@@ -28,7 +28,7 @@ public class OptionSpinnerPage extends AbstractKendoPage
 
 	public OptionSpinnerPage()
 	{
-		final Form<Double> form = new Form<Double>("form", new Model<Double>(new Double(1.5)));
+		final Form<Double> form = new Form<Double>("form", Model.of(new Double(1.5)));
 		this.add(form);
 
 		// FeedbackPanel //

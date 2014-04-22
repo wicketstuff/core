@@ -37,7 +37,7 @@ public class ContainerEffectPage extends AbstractEffectPage
 		this.add(form);
 
 		// DropDownList //
-		final DropDownList<Effect> dropdown = new DropDownList<Effect>("effects", new Model<Effect>(Effect.Explode), Arrays.asList(Effect.values()));
+		final DropDownList<Effect> dropdown = new DropDownList<Effect>("effects", Model.of(Effect.Explode), Arrays.asList(Effect.values()));
 		form.add(dropdown);
 
 		// Button //

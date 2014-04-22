@@ -16,7 +16,7 @@ public class InputAjaxSliderPage extends AbstractSliderPage
 	private static final long serialVersionUID = 1L;
 
 	// Model //
-	private final Model<Integer> model = new Model<Integer>(15);
+	private final Model<Integer> model = Model.of(15);
 
 	public InputAjaxSliderPage()
 	{

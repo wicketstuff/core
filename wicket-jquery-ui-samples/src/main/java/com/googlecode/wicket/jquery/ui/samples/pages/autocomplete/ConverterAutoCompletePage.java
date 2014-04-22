@@ -22,7 +22,7 @@ public class ConverterAutoCompletePage extends AbstractAutoCompletePage
 	public ConverterAutoCompletePage()
 	{
 		// Form //
-		final Form<Genre> form = new Form<Genre>("form", new Model<Genre>(GenresDAO.get(0))); // test default value
+		final Form<Genre> form = new Form<Genre>("form", Model.of(GenresDAO.get(0))); // test default value
 		this.add(form);
 
 		// FeedbackPanel //

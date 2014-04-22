@@ -24,7 +24,7 @@ public class FormDialogPage extends AbstractDialogPage
 		form.add(feedback.setOutputMarkupId(true));
 
 		// Dialog //
-		final SliderDialog dialog = new SliderDialog("dialog", "Slider dialog", new Model<Integer>(0)) {
+		final SliderDialog dialog = new SliderDialog("dialog", "Slider dialog", Model.of(0)) {
 
 			private static final long serialVersionUID = 1L;
 

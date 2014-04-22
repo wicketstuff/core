@@ -18,8 +18,8 @@ public class OptionSliderPage extends AbstractSliderPage
 	private static final long serialVersionUID = 1L;
 
 	// Models //
-	private final Model<Integer> model1 = new Model<Integer>(16);
-	private final Model<Integer> model2 = new Model<Integer>(4);
+	private final Model<Integer> model1 = Model.of(16);
+	private final Model<Integer> model2 = Model.of(4);
 
 	public OptionSliderPage()
 	{

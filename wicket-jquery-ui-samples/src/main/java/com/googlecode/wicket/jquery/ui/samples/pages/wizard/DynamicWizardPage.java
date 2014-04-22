@@ -103,11 +103,11 @@ public class DynamicWizardPage extends AbstractWizardPage
 		private final IDynamicWizardStep step3;
 		private final IDynamicWizardStep step4;
 
-		private IModel<Boolean> enableAvatarStepModel = new Model<Boolean>(Boolean.FALSE);
+		private IModel<Boolean> enableAvatarStepModel = Model.of(Boolean.FALSE);
 
 		public UserWizard(String id, String title)
 		{
-			super(id, title, new Model<User>(new User()));
+			super(id, title, Model.of(new User()));
 
 			this.step0 = new Step0();
 			this.step1 = new Step1();

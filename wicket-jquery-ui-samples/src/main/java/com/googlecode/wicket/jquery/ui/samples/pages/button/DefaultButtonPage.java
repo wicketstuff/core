@@ -20,7 +20,7 @@ public class DefaultButtonPage extends AbstractButtonPage
 		form.add(new JQueryFeedbackPanel("feedback"));
 
 		// Buttons //
-		form.add(new Button("button1", new Model<String>("Submit")) { //the model here is used to retrieve the button's text afterward
+		form.add(new Button("button1", Model.of("Submit")) { //the model here is used to retrieve the button's text afterward
 
 			private static final long serialVersionUID = 1L;
 
@@ -31,7 +31,7 @@ public class DefaultButtonPage extends AbstractButtonPage
 			}
 		});
 
-		form.add(new Button("button2", new Model<String>("Submit, with client click")) { //idem as previous comment
+		form.add(new Button("button2", Model.of("Submit, with client click")) { //idem as previous comment
 
 			private static final long serialVersionUID = 1L;
 

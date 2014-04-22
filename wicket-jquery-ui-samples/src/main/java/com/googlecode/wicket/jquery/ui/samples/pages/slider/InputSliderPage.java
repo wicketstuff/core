@@ -25,7 +25,7 @@ public class InputSliderPage extends AbstractSliderPage
 		form.add(new JQueryFeedbackPanel("feedback").setOutputMarkupId(true));
 
 		// Sliders //
-		TextField<Integer> input = new TextField<Integer>("input", new Model<Integer>(15), Integer.class);
+		TextField<Integer> input = new TextField<Integer>("input", Model.of(15), Integer.class);
 		form.add(input);
 
 		final Slider slider = new Slider("slider", input.getModel(), input); //input is responsible of the model object

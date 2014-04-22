@@ -54,7 +54,7 @@ public class OptionSnippetPage extends AbstractSnippetPage
 		container.add(label);
 
 		// Buttons //
-		form.add(new AjaxButton("style1", new Model<String>("ide-eclipse")) {
+		form.add(new AjaxButton("style1", Model.of("ide-eclipse")) {
 
 			private static final long serialVersionUID = 1L;
 
@@ -66,7 +66,7 @@ public class OptionSnippetPage extends AbstractSnippetPage
 			}
 		});
 
-		form.add(new AjaxButton("style2", new Model<String>("blacknblue")) {
+		form.add(new AjaxButton("style2", Model.of("blacknblue")) {
 
 			private static final long serialVersionUID = 1L;
 

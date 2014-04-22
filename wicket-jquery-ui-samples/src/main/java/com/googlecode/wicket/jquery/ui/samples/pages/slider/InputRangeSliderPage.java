@@ -21,7 +21,7 @@ public class InputRangeSliderPage extends AbstractSliderPage
 	// Models //
 	public InputRangeSliderPage()
 	{
-		final Form<RangeValue> form = new Form<RangeValue>("form", new Model<RangeValue>(new RangeValue(-32, 64)));
+		final Form<RangeValue> form = new Form<RangeValue>("form", Model.of(new RangeValue(-32, 64)));
 		this.add(form);
 
 		// FeedbackPanel //

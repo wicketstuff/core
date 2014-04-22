@@ -17,7 +17,7 @@ public class DefaultSliderPage extends AbstractSliderPage
 
 	public DefaultSliderPage()
 	{
-		final Form<Integer> form = new Form<Integer>("form", new Model<Integer>(15));
+		final Form<Integer> form = new Form<Integer>("form", Model.of(15));
 		this.add(form);
 
 		// FeedbackPanel //

@@ -25,7 +25,7 @@ public class FragmentDialogPage extends AbstractDialogPage
 		form.add(feedback.setOutputMarkupId(true));
 
 		// Dialog //
-		final FragmentDialog<String> dialog = new FragmentDialog<String>("dialog", "Fragment dialog box", new Model<String>("I am the model object")) {
+		final FragmentDialog<String> dialog = new FragmentDialog<String>("dialog", "Fragment dialog box", Model.of("I am the model object")) {
 
 			private static final long serialVersionUID = 1L;
 

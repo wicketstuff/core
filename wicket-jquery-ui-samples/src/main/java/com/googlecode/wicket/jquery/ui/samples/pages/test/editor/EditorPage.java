@@ -15,7 +15,7 @@ public class EditorPage extends SamplePage
 
 	public EditorPage()
 	{
-		final Model<Html> model = new Model<Html>(new Html("the text"));
+		final Model<Html> model = Model.of(new Html("the text"));
 
 		// ModalWindow //
 		final ModalWindow popup = new EditorWindow("popup", model);

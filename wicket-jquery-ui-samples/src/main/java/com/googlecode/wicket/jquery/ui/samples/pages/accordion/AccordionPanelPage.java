@@ -69,10 +69,10 @@ public class AccordionPanelPage extends AbstractAccordionPage
 		List<ITab> tabs = new ArrayList<ITab>();
 
 		// tab #1, using SimpleTab //
-		tabs.add(new SimpleTab(new Model<String>("Tab (SimpleTab)"), new Model<String>("My content !")));
+		tabs.add(new SimpleTab(Model.of("Tab (SimpleTab)"), Model.of("My content !")));
 
 		// tab #2, invisible Tab //
-		tabs.add(new SimpleTab(new Model<String>("Tab (invisible)"), Model.of("")) {
+		tabs.add(new SimpleTab(Model.of("Tab (invisible)"), Model.of("")) {
 
 			private static final long serialVersionUID = 1L;
 
@@ -84,7 +84,7 @@ public class AccordionPanelPage extends AbstractAccordionPage
 		});
 
 		// tab #3, using AbstractTab //
-		tabs.add(new AbstractTab(new Model<String>("Tab (AbstractTab)")) {
+		tabs.add(new AbstractTab(Model.of("Tab (AbstractTab)")) {
 
 			private static final long serialVersionUID = 1L;
 
@@ -96,7 +96,7 @@ public class AccordionPanelPage extends AbstractAccordionPage
 		});
 
 		// tab #4, using AjaxTab //
-		tabs.add(new AjaxTab(new Model<String>("Tab (AjaxTab)")) {
+		tabs.add(new AjaxTab(Model.of("Tab (AjaxTab)")) {
 
 			private static final long serialVersionUID = 1L;
 

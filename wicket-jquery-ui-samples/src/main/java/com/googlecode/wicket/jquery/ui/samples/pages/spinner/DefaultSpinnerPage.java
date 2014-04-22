@@ -18,7 +18,7 @@ public class DefaultSpinnerPage extends AbstractSpinnerPage
 
 	public DefaultSpinnerPage()
 	{
-		final Form<Integer> form = new Form<Integer>("form", new Model<Integer>(0));
+		final Form<Integer> form = new Form<Integer>("form", Model.of(0));
 		this.add(form);
 
 		// FeedbackPanel //

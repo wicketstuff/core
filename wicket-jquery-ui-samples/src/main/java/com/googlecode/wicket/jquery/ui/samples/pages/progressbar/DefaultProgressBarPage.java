@@ -44,7 +44,7 @@ public class DefaultProgressBarPage extends AbstractProgressBarPage implements I
 		form.add(timer);
 
 		// ProgressBar //
-		this.progressBar = new ProgressBar("progress", new Model<Integer>(36)) {
+		this.progressBar = new ProgressBar("progress", Model.of(36)) {
 
 			private static final long serialVersionUID = 1L;
 

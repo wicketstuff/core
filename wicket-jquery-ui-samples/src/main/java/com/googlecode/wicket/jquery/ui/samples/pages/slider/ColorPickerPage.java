@@ -24,7 +24,7 @@ public class ColorPickerPage extends AbstractSliderPage
 
 	public ColorPickerPage()
 	{
-		this.model = new Model<String>("#336699");
+		this.model = Model.of("#336699");
 		this.initialize();
 	}
 
@@ -157,7 +157,7 @@ public class ColorPickerPage extends AbstractSliderPage
 		private IModel<Integer> newColorModel(int index)
 		{
 			String color = this.getDefaultModelObjectAsString().substring(index, index + 2);
-			return new Model<Integer>(Integer.parseInt(color, 16));
+			return Model.of(Integer.parseInt(color, 16));
 		}
 	}
 }

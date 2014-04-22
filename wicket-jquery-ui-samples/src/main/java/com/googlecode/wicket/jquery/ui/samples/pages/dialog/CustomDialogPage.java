@@ -24,7 +24,7 @@ public class CustomDialogPage extends AbstractDialogPage
 		form.add(feedback.setOutputMarkupId(true));
 
 		// Dialog //
-		final SimpleDialog dialog = new SimpleDialog("dialog", "Simple dialog box", new Model<String>("I am the widget dialog model")) {
+		final SimpleDialog dialog = new SimpleDialog("dialog", "Simple dialog box", Model.of("I am the widget dialog model")) {
 
 			private static final long serialVersionUID = 1L;
 

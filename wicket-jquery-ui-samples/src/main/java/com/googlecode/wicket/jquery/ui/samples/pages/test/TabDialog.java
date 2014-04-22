@@ -44,7 +44,7 @@ public abstract class TabDialog extends AbstractDialog<String>
 		List<ITab> tabs = new ArrayList<ITab>();
 
 		// tab #1 //
-		tabs.add(new AbstractTab(new Model<String>("My Tab")) {
+		tabs.add(new AbstractTab(Model.of("My Tab")) {
 
 			private static final long serialVersionUID = 1L;
 
@@ -56,7 +56,7 @@ public abstract class TabDialog extends AbstractDialog<String>
 		});
 
 //		// tab #2 //
-//		tabs.add(new AbstractTab(new Model<String>("My Tab 2")) {
+//		tabs.add(new AbstractTab(Model.of("My Tab 2")) {
 //
 //			private static final long serialVersionUID = 1L;
 //
@@ -68,7 +68,7 @@ public abstract class TabDialog extends AbstractDialog<String>
 //		});
 
 		// tab #2 //
-		tabs.add(new AjaxTab(new Model<String>("Tab (ajax)")) {
+		tabs.add(new AjaxTab(Model.of("Tab (ajax)")) {
 
 			private static final long serialVersionUID = 1L;
 

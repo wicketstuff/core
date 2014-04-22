@@ -163,7 +163,7 @@ public class DefaultWizardPage extends AbstractWizardPage
 				builder.append("<li>").append("User role: ").append(user.getRole()).append("</li>");
 				builder.append("</ul>");
 
-				this.setContentModel(new Model<String>(builder.toString()));
+				this.setContentModel(Model.of(builder.toString()));
 			}
 		}
 	}

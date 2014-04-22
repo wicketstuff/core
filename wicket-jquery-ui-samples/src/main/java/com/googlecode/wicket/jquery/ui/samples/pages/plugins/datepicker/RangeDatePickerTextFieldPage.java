@@ -30,7 +30,7 @@ public class RangeDatePickerTextFieldPage extends AbstractRangeDatePickerPage
 		form.add(feedback.setOutputMarkupId(true));
 
 		// RangeDatePicker //
-		final IModel<DateRange> model = new Model<DateRange>(new DateRange(new Date(new Date().getTime() - Duration.ONE_DAY.getMilliseconds() * 3), new Date()));
+		final IModel<DateRange> model = Model.of(new DateRange(new Date(new Date().getTime() - Duration.ONE_DAY.getMilliseconds() * 3), new Date()));
 
 		final RangeDatePickerTextField datepicker = new RangeDatePickerTextField("datepicker", model);
 //		datepicker.setRequired(true);
