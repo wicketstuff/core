@@ -25,104 +25,134 @@ import org.apache.wicket.markup.html.form.AbstractTextComponent;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
 
-import wicket.contrib.tinymce.settings.Button;
 import wicket.contrib.tinymce.settings.TinyMCESettings;
-import wicket.contrib.tinymce.settings.TinyMCESettings.Position;
 import wicket.contrib.tinymce.settings.TinyMCESettings.Theme;
-import wicket.contrib.tinymce.settings.TinyMCESettings.Toolbar;
 import wicket.contrib.tinymce.settings.WicketSavePlugin;
 
 public class InPlaceEditComponent extends AbstractTextComponent
 {
-	private static final long serialVersionUID = 1L;
-	private InPlaceSaveBehavior inPlaceSaveBehavior;
-	private InPlaceEditBehavior inPlaceEditBehavior;
-	private final Component triggerComponent;
+    private static final long serialVersionUID = 1L;
+    
+    private InPlaceSaveBehavior inPlaceSaveBehavior;
+    private InPlaceEditBehavior inPlaceEditBehavior;
+    
+    private final Component triggerComponent;
+    private final TinyMCESettings settings;
 
-	public InPlaceEditComponent(String id, IModel model)
+    public InPlaceEditComponent(String id, IModel model)
+    {
+	this(id, model, null, null);
+    }
+
+    public InPlaceEditComponent(String id, IModel model,
+	    Component triggerComponent)
+    {
+	this(id, model, triggerComponent, null);
+    }
+
+    public InPlaceEditComponent(String id, IModel model,
+	    TinyMCESettings settings)
+    {
+	this(id, model, null, settings);
+    }
+
+    public InPlaceEditComponent(String id, IModel model,
+	    Component triggerComponent, TinyMCESettings settings)
+    {
+	super(id, model);
+	this.settings = settings != null ? settings : new TinyMCESettings(Theme.advanced);
+	this.triggerComponent = triggerComponent != null ? triggerComponent : this;
+    }
+
+    public InPlaceEditComponent(String id, String text)
+    {
+	this(id, new Model(text));
+    }
+
+    public InPlaceEditComponent(String id, String text,
+	    Component triggerComponent)
+    {
+	this(id, new Model(text), triggerComponent, null);
+    }
+
+    public InPlaceEditComponent(String id, String text, TinyMCESettings settings)
+    {
+	this(id, new Model(text), settings);
+    }
+
+    public InPlaceEditComponent(String id, String text,
+	    Component triggerComponent, TinyMCESettings settings)
+    {
+	this(id, new Model(text), triggerComponent, settings);
+    }
+
+    @Override
+    protected void onInitialize()
+    {
+	// TODO Auto-generated method stub
+	super.onInitialize();
+	setEscapeModelStrings(false);
+	setOutputMarkupId(true);
+	// advanced theme required to add save/cancel buttons to toolbar
+	inPlaceSaveBehavior = createSaveBehavior();
+	if (inPlaceSaveBehavior != null)
 	{
-		super(id, model);
-		this.triggerComponent = this;
+	    add(inPlaceSaveBehavior);
 	}
+	inPlaceEditBehavior = createEditBehavior(triggerComponent);
+	if (inPlaceEditBehavior != null)
+	    add(inPlaceEditBehavior);
+    }
 
-	public InPlaceEditComponent(String id, IModel model, Component triggerComponent)
-	{
-		super(id, model);
-		this.triggerComponent = triggerComponent;
-	}
+    protected InPlaceEditBehavior createEditBehavior(Component triggerComponent)
+    {
+	WicketSavePlugin savePlugin = new WicketSavePlugin(inPlaceSaveBehavior);
 
-	public InPlaceEditComponent(String id, String text)
-	{
-		super(id, new Model(text));
-		this.triggerComponent = this;
-	}
+	return new InPlaceEditBehavior(settings, triggerComponent, savePlugin);
+    }
 
-	public InPlaceEditComponent(String id, String text, Component triggerComponent)
-	{
-		super(id, new Model(text));
-		this.triggerComponent = triggerComponent;
-	}
+    protected InPlaceSaveBehavior createSaveBehavior()
+    {
+	return new InPlaceSaveBehavior();
+    }
 
-	@Override
-	protected void onInitialize() 
-	{
-		// TODO Auto-generated method stub
-		super.onInitialize();
-		setEscapeModelStrings(false);
-		setOutputMarkupId(true);
-		// advanced theme required to add save/cancel buttons to toolbar
-		inPlaceSaveBehavior = createSaveBehavior();
-		if (inPlaceSaveBehavior != null)
-		{
-			add(inPlaceSaveBehavior);			
-		}
-		inPlaceEditBehavior = createEditBehavior(triggerComponent);
-		if (inPlaceEditBehavior != null)
-			add(inPlaceEditBehavior);
-	}
+    @Override
+    protected void onComponentTag(ComponentTag tag)
+    {
+	super.onComponentTag(tag);
+	// the name tag is added by AbstractTextComponent, because it expects
+	// this
+	// element to be an <input> tag. We don't need it, and it will render
+	// invalid
+	// xhtml if this is not an input tag:
+	tag.remove("name");
+    }
 
-	protected InPlaceEditBehavior createEditBehavior(Component triggerComponent)
-	{
-		TinyMCESettings settings = new TinyMCESettings(Theme.advanced);
-		WicketSavePlugin savePlugin = new WicketSavePlugin(inPlaceSaveBehavior);
-		
-		return new InPlaceEditBehavior(settings, triggerComponent, savePlugin);
-	}
+    @Override
+    public String getInputName()
+    {
+	return getMarkupId();
+    }
 
-	protected InPlaceSaveBehavior createSaveBehavior()
-	{
-		return new InPlaceSaveBehavior();
-	}
+    @Override
+    public final void onComponentTagBody(final MarkupStream markupStream,
+	    final ComponentTag openTag)
+    {
+	replaceComponentTagBody(markupStream, openTag, getValue());
+    }
 
-	@Override
-	protected void onComponentTag(ComponentTag tag)
-	{
-		super.onComponentTag(tag);
-		// the name tag is added by AbstractTextComponent, because it expects this
-		// element to be an <input> tag. We don't need it, and it will render invalid
-		// xhtml if this is not an input tag:
-		tag.remove("name");
-	}
+    public InPlaceSaveBehavior getInPlaceSaveBehavior()
+    {
+	return inPlaceSaveBehavior;
+    }
 
-	@Override
-	public String getInputName()
-	{
-		return getMarkupId();
-	}
+    public InPlaceEditBehavior getInPlaceEditBehavior()
+    {
+	return inPlaceEditBehavior;
+    }
 
-	@Override
-	public final void onComponentTagBody(final MarkupStream markupStream, final ComponentTag openTag)
-	{
-		replaceComponentTagBody(markupStream, openTag, getValue());
-	}	
-
-	public InPlaceSaveBehavior getInPlaceSaveBehavior()
-	{
-		return inPlaceSaveBehavior;
-	}
-
-	public InPlaceEditBehavior getInPlaceEditBehavior()
-	{
-		return inPlaceEditBehavior;
-	}
+    public TinyMCESettings getSettings()
+    {
+        return settings;
+    }
 }
