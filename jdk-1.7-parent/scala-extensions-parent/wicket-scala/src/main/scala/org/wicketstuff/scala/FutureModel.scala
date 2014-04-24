@@ -53,7 +53,7 @@ class FutureModel[T](body: => T,
   private[this] val cycle = RequestCycle.get()
 
   @transient
-  private[this] val f: Future[T] = future {
+  private[this] val f: Future[T] = Future {
     try {
       ThreadContext.setApplication(Application.get(appName))
       ThreadContext.setSession(session)
