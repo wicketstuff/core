@@ -4,7 +4,7 @@
 	<parent>
 		<artifactId>wicket-bundle-parent</artifactId>
 		<groupId>org.wicketstuff</groupId>
-		<version>6.0-SNAPSHOT</version>
+		<version>6.15.0</version>
 	</parent>
 	<artifactId>wicketstuff-ioc-bundle</artifactId>
 	<packaging>bundle</packaging>

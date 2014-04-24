@@ -5,7 +5,7 @@
 	<parent>
 		<groupId>org.wicketstuff</groupId>
 		<artifactId>jdk-1.6-parent</artifactId>
-		<version>6.0-SNAPSHOT</version>
+		<version>6.15.0</version>
 	</parent>
 	
 	<groupId>org.wicketstuff.scala</groupId>
@@ -129,8 +129,6 @@
 				<configuration>
 					<scalaVersion>${scala.version}</scalaVersion>
 					<sendJavaToScalac>false</sendJavaToScalac>
-					<recompileMode>incremental</recompileMode>
-					<useZincServer>true</useZincServer>
 					<jvmArgs>
 						<jvmArg>-Xmx512m</jvmArg>
 						<jvmArg>-XX:MaxPermSize=128m</jvmArg>
