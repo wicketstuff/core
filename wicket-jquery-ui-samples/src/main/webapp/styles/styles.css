@@ -34,10 +34,6 @@ table#wrapper {
 	border-collapse: collapse;
 }
 
-table#wrapper td {
-	padding: 0;
-}
-
 #wrapper-header {
 	margin: 4px;
 	padding: 10px;
