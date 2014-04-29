@@ -70,6 +70,55 @@ public interface IObjectSerialDeserial<T>{
 The main module comes with class `TextualObjectSerialDeserial` which implements both `IWebSerialDeserial` and `IObjectSerialDeserial` and that can be used as base class to implement serials/deserials that work with a textual MIME type and that need to know which charset encoding should be used.<br/>
 As JSON is de-facto standard format for REST API, the project comes also with a ready-to-use resource (`GsonRestResource`) and a serial/deserial (`GsonSerialDeserial`) that work with JSON format (both inside module 'restannotations-json'). These classes use [Gson](http://code.google.com/p/google-gson/) as Json library. Resource `PersonsRestResource` in the example module is based on `GsonRestResource`.
 
+Mounting resources to a specific path
+---------
+
+Since `AbstractRestResource` is a regular Wicket resource, it can be mounted to specific path using `WebApplication`'s method `mountResource`:
+
+
+````java
+         @Override
+	public void init() {
+		super.init();
+		
+		mountResource("/myresource", new ResourceReference("restReference") {
+			AbstractRestResource resource = new AbstractRestResource(){...};
+			
+                           @Override
+			public IResource getResource() {
+				return resource;
+			}
+
+		});
+	}
+````
+
+An easier way to mount our resources is to use annotation @ResourcePath which is provided with the REST module:
+
+````java
+package org.wicketstuff.rest.resource;
+
+@ResourcePath("/mountedpath")
+public class MountedResource extends AbstractRestResource
+{
+...
+}
+````
+
+Once we have annotated our resources with @ResourcePath, we must use utility class `PackageScanner` during initialization phase to scan for annotated resources and mount them:
+
+````java
+         @Override
+	public void init()
+	{
+		super.init();
+		PackageScanner.scanPackage("org.wicketstuff.rest.resource");
+	}
+
+````
+
+Method `scanPackage` requires an instance of class WebApplication in order to mount resources. If no one is provided it will use the current one (i.e. WebApplication.get()).
+
 Use multiple data format
 ---------
 Annotation `@MethodMapping` has two optional attributes, _consumes_ and _produces_, that can be used to specify which MIME type must be expected in the request and which one must be used to serialize data to response. Their default value is "application/json". 
