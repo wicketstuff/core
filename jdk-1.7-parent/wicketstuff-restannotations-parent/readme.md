@@ -77,7 +77,7 @@ Since `AbstractRestResource` is a regular Wicket resource, it can be mounted to 
 
 
 ````java
-         @Override
+	@Override
 	public void init() {
 		super.init();
 		
@@ -108,7 +108,7 @@ public class MountedResource extends AbstractRestResource
 Once we have annotated our resources with @ResourcePath, we must use utility class `PackageScanner` during initialization phase to scan for annotated resources and mount them:
 
 ````java
-         @Override
+	@Override
 	public void init()
 	{
 		super.init();
