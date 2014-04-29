@@ -20,7 +20,7 @@ public class MountingAnnotationTest
 			public void init()
 			{
 				super.init();
-				PackageScanner.scanPackage(this, "org.wicketstuff.rest.resource");
+				PackageScanner.scanPackage("org.wicketstuff.rest.resource");
 			}
 		});
 	}
