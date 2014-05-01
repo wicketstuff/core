@@ -55,14 +55,14 @@ public class DefaultSfMenuPage extends AbstractSfMenuPage
 
 		return list;
 	}
-	
+
 	static List<ISfMenuItem> externalPagesList()
 	{
 		List<ISfMenuItem> list = new ArrayList<ISfMenuItem>();
-		
+
 		list.add(new SfMenuItem("External Link to Google (new Window)", "http://www.google.com/", true));
 		list.add(new SfMenuItem("External Link to Yahoo (this Window)", "http://www.yahoo.com/"));
-		
+
 		return list;
 	}
 

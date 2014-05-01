@@ -18,26 +18,26 @@ import com.googlecode.wicket.jquery.ui.panel.JQueryFeedbackPanel;
 public class CheckButtonPage extends AbstractButtonPage
 {
 	private static final long serialVersionUID = 1L;
-	
+
 	public CheckButtonPage()
 	{
 		this.initialize();
 	}
-	
+
 	private void initialize()
 	{
 		final IModel<ArrayList<String>> checkModel = new Model<ArrayList<String>>();
 		final List<String> checkList = Arrays.asList("my check 1", "my check 2", "my check 3");
-		
+
 		Form<Void> form = new Form<Void>("form");
 		this.add(form);
 
 		// FeedbackPanel //
 		form.add(new JQueryFeedbackPanel("feedback"));
-		
+
 		// Radio Button //
 		form.add(new CheckChoice<String>("checks", checkModel, checkList));
-		
+
 		// Buttons //
 		form.add(new Button("submit") {
 
@@ -46,10 +46,10 @@ public class CheckButtonPage extends AbstractButtonPage
 			@Override
 			public void onSubmit()
 			{
-				CheckButtonPage.this.info(this, checkModel);		
-			}			
+				CheckButtonPage.this.info(this, checkModel);
+			}
 		});
-		
+
 		form.add(new AjaxButton("button") {
 
 			private static final long serialVersionUID = 1L;
@@ -59,7 +59,7 @@ public class CheckButtonPage extends AbstractButtonPage
 			{
 				CheckButtonPage.this.info(this, checkModel);
 				target.add(form);
-			}			
+			}
 		});
 	}
 
