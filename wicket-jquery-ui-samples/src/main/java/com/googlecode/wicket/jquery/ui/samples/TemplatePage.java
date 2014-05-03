@@ -33,47 +33,47 @@ public abstract class TemplatePage extends WebPage
 
 		this.add(new GoogleAnalyticsBehavior(this));
 	}
-}
 
-class GoogleAnalyticsBehavior extends Behavior
-{
-	private static final long serialVersionUID = 1L;
-
-	private final String url;
-
-	public GoogleAnalyticsBehavior(final WebPage page)
+	static class GoogleAnalyticsBehavior extends Behavior
 	{
-		this.url = GoogleAnalyticsBehavior.getUrl(page);
-	}
+		private static final long serialVersionUID = 1L;
 
-	private IModel<Map<String, Object>> newResourceModel()
-	{
-		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("url", this.url);
+		private final String url;
 
-		return Model.ofMap(map);
-	}
+		public GoogleAnalyticsBehavior(final WebPage page)
+		{
+			this.url = GoogleAnalyticsBehavior.getUrl(page);
+		}
 
-	private ResourceReference newResourceReference()
-	{
-		return new TextTemplateResourceReference(GoogleAnalyticsBehavior.class, "gaq.js", this.newResourceModel());
-	}
+		private IModel<Map<String, Object>> newResourceModel()
+		{
+			Map<String, Object> map = new HashMap<String, Object>();
+			map.put("url", this.url);
 
-	@Override
-	public void renderHead(Component component, IHeaderResponse response)
-	{
-		super.renderHead(component, response);
+			return Model.ofMap(map);
+		}
 
-		response.render(JavaScriptHeaderItem.forReference(this.newResourceReference(), "gaq"));
-	}
+		private ResourceReference newResourceReference()
+		{
+			return new TextTemplateResourceReference(GoogleAnalyticsBehavior.class, "gaq.js", this.newResourceModel());
+		}
 
-	private static String getUrl(WebPage page)
-	{
-		Url pageUrl = Url.parse(page.urlFor(page.getClass(), null).toString());
-		Url baseUrl = new Url(page.getRequestCycle().getUrlRenderer().getBaseUrl());
+		@Override
+		public void renderHead(Component component, IHeaderResponse response)
+		{
+			super.renderHead(component, response);
 
-		baseUrl.resolveRelative(pageUrl);
+			response.render(JavaScriptHeaderItem.forReference(this.newResourceReference(), "gaq"));
+		}
 
-		return String.format("%s/%s", page.getRequest().getContextPath(), baseUrl);
+		private static String getUrl(WebPage page)
+		{
+			Url pageUrl = Url.parse(page.urlFor(page.getClass(), null).toString());
+			Url baseUrl = new Url(page.getRequestCycle().getUrlRenderer().getBaseUrl());
+
+			baseUrl.resolveRelative(pageUrl);
+
+			return String.format("%s/%s", page.getRequest().getContextPath(), baseUrl);
+		}
 	}
 }

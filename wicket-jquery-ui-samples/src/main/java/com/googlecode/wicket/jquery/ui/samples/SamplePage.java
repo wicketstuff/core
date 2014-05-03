@@ -9,8 +9,10 @@ import org.apache.wicket.markup.html.link.BookmarkablePageLink;
 import org.apache.wicket.markup.html.link.Link;
 import org.apache.wicket.markup.html.list.ListItem;
 import org.apache.wicket.markup.html.list.ListView;
+import org.apache.wicket.model.Model;
 import org.apache.wicket.resource.ResourceUtil;
 import org.apache.wicket.util.io.IClusterable;
+import org.apache.wicket.util.reference.ClassReference;
 import org.apache.wicket.util.template.PackageTextTemplate;
 
 import com.googlecode.wicket.jquery.core.JQueryBehavior;
@@ -45,7 +47,7 @@ public abstract class SamplePage extends TemplatePage
 		this.add(new Label("source-html", this.getSource(Source.HTML)));
 		this.add(new JQueryBehavior("#wrapper-panel-source", "tabs"));
 
-		this.add(new ListView<DemoLink>("demo-list", this.getDemoLinks()) {
+		this.add(new ListView<DemoLink>("demo-list", Model.ofList(this.getDemoLinks())) {
 
 			private static final long serialVersionUID = 1L;
 
@@ -54,7 +56,7 @@ public abstract class SamplePage extends TemplatePage
 			{
 				DemoLink object = item.getModelObject();
 				Link<SamplePage> link = new BookmarkablePageLink<SamplePage>("link", object.getPage());
-				link.add(new Label("label", object.getLabel()).setEscapeModelStrings(false)); //new StringResourceModel("title", ), getString("title", type)
+				link.add(new Label("label", object.getLabel()).setEscapeModelStrings(false));
 
 				item.add(link);
 			}
@@ -78,27 +80,27 @@ public abstract class SamplePage extends TemplatePage
 		return SamplePage.getSource(source, this.getClass());
 	}
 
-	protected List<DemoLink> getDemoLinks()
+	protected List<? extends DemoLink> getDemoLinks()
 	{
 		return Collections.emptyList();
 	}
 
-	protected class DemoLink implements IClusterable
+	protected static class DemoLink implements IClusterable
 	{
 		private static final long serialVersionUID = 1L;
 
-		private final Class<? extends SamplePage> page;
+		private final ClassReference<? extends SamplePage> reference;
 		private final String label;
 
 		public DemoLink(Class<? extends SamplePage> page, String label)
 		{
-			this.page = page;
+			this.reference = ClassReference.of(page);
 			this.label = label;
 		}
 
 		public Class<? extends SamplePage> getPage()
 		{
-			return this.page;
+			return this.reference.get();
 		}
 
 		public String getLabel()

@@ -19,6 +19,7 @@
 	</properties>
 
 	<dependencies>
+
 		<!-- JQUERY-UI DEPENDENCIES -->
 		<dependency>
 			<groupId>com.googlecode.wicket-jquery-ui</groupId>
@@ -75,10 +76,16 @@
 
 		<!-- JETTY DEPENDENCIES FOR TESTING -->
 		<dependency>
-			<groupId>org.eclipse.jetty.aggregate</groupId>
-			<artifactId>jetty-all-server</artifactId>
+			<groupId>org.eclipse.jetty</groupId>
+			<artifactId>jetty-server</artifactId>
 			<version>${jetty.version}</version>
-			<scope>provided</scope>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.eclipse.jetty</groupId>
+			<artifactId>jetty-webapp</artifactId>
+			<version>${jetty.version}</version>
+			<scope>test</scope>
 		</dependency>
 
 	</dependencies>
@@ -100,22 +107,15 @@
 		</resources>
 		<plugins>
 			<plugin>
-				<groupId>org.mortbay.jetty</groupId>
+				<groupId>org.eclipse.jetty</groupId>
 				<artifactId>jetty-maven-plugin</artifactId>
 				<version>${jetty.version}</version>
 				<configuration>
-					<webAppConfig>
+					<webApp>
 						<contextPath>/${project.build.finalName}</contextPath>
-					</webAppConfig>
-					<connectors>
-						<connector implementation="org.eclipse.jetty.server.nio.SelectChannelConnector">
-							<port>8080</port>
-							<maxIdleTime>3600000</maxIdleTime>
-						</connector>
-					</connectors>
+					</webApp>
 				</configuration>
 			</plugin>
 		</plugins>
 	</build>
-
 </project>
