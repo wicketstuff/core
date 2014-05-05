@@ -115,33 +115,39 @@ public class LazyModel<T> implements IModel<T>, IObjectClassAwareModel<T>,
 	/**
 	 * Get the evaluation result's type.
 	 * 
-	 * @return result type, i.e. {@link Class} or {@link ParameterizedType}
-	 * @throws WicketRuntimeException
-	 *             if this model is not bound to a target
+	 * @return {@link Class}, {@link ParameterizedType} or {@code null} if not available
 	 */
 	public Type getObjectType() {
-		checkBound();
+		if (target == null) {
+			return null;
+		}
 
 		Type type = getTargetType();
-		if (type != null) {
+		if (type != null)
+		{
 			StackIterator iterator = new StackIterator();
-			while (iterator.hasNext()) {
+			while (iterator.hasNext())
+			{
 				iterator.next(Reflection.getClass(type));
 
 				Type previousType = type;
 				type = iterator.getType();
-				if (type instanceof TypeVariable) {
-					if (previousType instanceof ParameterizedType) {
-						type = Reflection.variableType(
-								(ParameterizedType) previousType,
-								(TypeVariable<?>) type);
-					} else {
-						type = Object.class;
+				if (type instanceof TypeVariable)
+				{
+					if (previousType instanceof ParameterizedType)
+					{
+						type = Reflection.variableType((ParameterizedType)previousType,
+							(TypeVariable<?>)type);
+					}
+					else
+					{
+						// not available
+						type = null;
+						break;
 					}
 				}
 			}
 		}
-
 		return type;
 	}
 
