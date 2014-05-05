@@ -63,7 +63,7 @@ public class TableParser
 	/**
 	 * Parse the grid component to a {@link Sheet} object
 	 *
-	 * @param workbook
+	 * @param tableComponent
 	 * @throws IOException
 	 * @throws ResourceStreamNotFoundException
 	 * @throws ParseException
@@ -87,7 +87,7 @@ public class TableParser
 	{
 		XmlPullParser parser = new XmlPullParser();
 		parser.parse(gridComponentMarkup);
-		XmlTag tag = null;
+		XmlTag tag;
 		int tableDeep = 0;
 		while ((tag = parser.nextTag()) != null)
 		{
@@ -201,7 +201,6 @@ public class TableParser
 			.remove(PathSetupListener.INSTANCE);
 		RequestCycle.get().setResponse(originalResponse);
 		originalResponse = null;
-		cellExporter = null;
 	}
 
 
