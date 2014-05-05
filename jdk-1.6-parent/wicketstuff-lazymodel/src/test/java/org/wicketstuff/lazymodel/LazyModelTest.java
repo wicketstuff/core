@@ -287,7 +287,7 @@ public class LazyModelTest {
 
 		LazyModel<Object> model = model(from(b).getRs().get(0));
 
-		assertEquals(Object.class, model.getObjectClass());
+		assertEquals(null, model.getObjectClass());
 		assertEquals("rs.get(i)", model.getPath());
 
 		assertEquals(b.cs.get(0), model.getObject());
