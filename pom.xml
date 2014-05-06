@@ -45,7 +45,7 @@
 	<properties>
 		<wicket.version>6.15.0</wicket.version>
 		<junit.version>4.11</junit.version>
-		<jetty.version>9.0.6.v20130930</jetty.version>
+		<jetty.version>8.1.15.v20140411</jetty.version>
 	</properties>
 
 	<repositories>
@@ -65,7 +65,6 @@
 	<build>
 		<pluginManagement>
 			<plugins>
-				<!-- maven-enforcer-plugin (goal "enforce") is ignored by m2e -->
 				<plugin>
 					<groupId>org.eclipse.m2e</groupId>
 					<artifactId>lifecycle-mapping</artifactId>
