@@ -109,7 +109,7 @@ public class Evaluation<R> implements Callback {
 				candidate = Reflection.variableType((ParameterizedType) type,
 						(TypeVariable) candidate);
 			} else {
-				candidate = Object.class;
+				candidate = method.getReturnType();
 			}
 		}
 		type = candidate;
