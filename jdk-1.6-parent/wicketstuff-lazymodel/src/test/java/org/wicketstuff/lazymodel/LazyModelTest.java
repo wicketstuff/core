@@ -47,6 +47,15 @@ import org.junit.Test;
 public class LazyModelTest {
 
 	@Test
+	public void typeErasedWithUpperBound() {
+		G<Serializable> g = new G<Serializable>();
+		
+		LazyModel<Serializable> model = model(from(g).get());
+		
+		assertEquals(null, model.getObjectClass());
+	}
+	
+	@Test
 	public void toStringNeverFails() {
 		IModel<B> model = model(from(A.class).getB()).bind(Model.of((A)null));
 		
@@ -1072,5 +1081,12 @@ public class LazyModelTest {
 	
 	public static enum E {
 		E1;
+	}
+	
+	
+	public static class G<T extends Serializable> {
+		public T get() {
+			return null;
+		}
 	}
 }
