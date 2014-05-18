@@ -28,6 +28,11 @@ import org.apache.wicket.validation.IValidationError;
  */
 public class RestValidationError implements IValidationError {
 	
+	/**
+         * 
+         */
+        private static final long serialVersionUID = 1L;
+
 	/** list of message keys to try against the <code>IErrorMessageSource</code>. */
 	private final List<String> keys;
 

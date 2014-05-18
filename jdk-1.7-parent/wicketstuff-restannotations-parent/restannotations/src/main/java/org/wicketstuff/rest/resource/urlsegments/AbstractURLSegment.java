@@ -23,9 +23,7 @@ import static org.apache.wicket.util.parse.metapattern.MetaPattern.VARIABLE_NAME
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.regex.Pattern;
 
-import org.apache.wicket.util.encoding.UrlEncoder;
 import org.apache.wicket.util.parse.metapattern.MetaPattern;
 import org.apache.wicket.util.parse.metapattern.OptionalMetaPattern;
 import org.apache.wicket.util.parse.metapattern.parsers.VariableAssignmentParser;
@@ -40,6 +38,11 @@ import org.apache.wicket.util.string.StringValue;
  */
 public abstract class AbstractURLSegment extends StringValue
 {
+	/**
+         * 
+         */
+        private static final long serialVersionUID = 1L;
+    
 	/** MetaPattern to identify the content of a regular expression. */
 	public static final MetaPattern REGEXP_BODY = new MetaPattern("([^\\}\\{]*|(\\{[\\d]+\\}))*");
 	/** MetaPattern to identify the declaration of a regular expression. */

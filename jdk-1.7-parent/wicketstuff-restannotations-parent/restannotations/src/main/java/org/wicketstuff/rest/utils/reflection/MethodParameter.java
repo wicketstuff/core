@@ -38,7 +38,6 @@ import org.wicketstuff.rest.resource.MethodMappingInfo;
 import org.wicketstuff.rest.resource.urlsegments.AbstractURLSegment;
 import org.wicketstuff.rest.utils.wicket.MethodParameterContext;
 
-// TODO: Auto-generated Javadoc
 /**
  * The class contains the informations of a method parameter, like its type or its index in the
  * array of method parameters.
@@ -135,11 +134,11 @@ public class MethodParameter<T>
 	{
 		LinkedHashMap<String, String> parameters = context.getPathParameters();
 		Iterator<String> paramIterator = parameters.values().iterator();
-		List<MethodParameter> methodParameters = ownerMethod.getMethodParameters();
+		List<MethodParameter<?>> methodParameters = ownerMethod.getMethodParameters();
 		
 		for (int i = 0; i < paramIndex; i++)
 		{
-			MethodParameter parameter = methodParameters.get(i);
+			MethodParameter<?> parameter = methodParameters.get(i);
 			
 			if(parameter.getAnnotationParam() == null)
 				paramIterator.next();

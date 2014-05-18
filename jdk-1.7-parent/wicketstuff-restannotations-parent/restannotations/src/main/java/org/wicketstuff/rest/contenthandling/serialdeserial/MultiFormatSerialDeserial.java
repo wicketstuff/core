@@ -33,7 +33,7 @@ import org.wicketstuff.rest.contenthandling.IWebSerialDeserial;
 public class MultiFormatSerialDeserial implements IWebSerialDeserial
 {
 
-	private final Map<String, IWebSerialDeserial> serialsDeserials = new HashMap<String, IWebSerialDeserial>();
+	private final Map<String, IWebSerialDeserial> serialsDeserials = new HashMap<>();
 
 	@Override
 	public void objectToResponse(Object targetObject, WebResponse response, String mimeType)
@@ -76,9 +76,17 @@ public class MultiFormatSerialDeserial implements IWebSerialDeserial
 	}
 
 	@Override
-	public <T> IObjectSerialDeserial getIObjectSerialDeserial(String mimeType) {
+	public <T> IObjectSerialDeserial<T> getIObjectSerialDeserial(String mimeType) 
+	{
 		IWebSerialDeserial webSerialDeserial = serialsDeserials.get(mimeType);
 		
-		return (webSerialDeserial == null ? null : webSerialDeserial.getIObjectSerialDeserial(mimeType));
+		if(webSerialDeserial == null)
+		{
+		    return null;
+		}
+		
+		IObjectSerialDeserial<T> objectSerialDeserial = webSerialDeserial.getIObjectSerialDeserial(mimeType);
+		
+		return objectSerialDeserial;
 	}
 }

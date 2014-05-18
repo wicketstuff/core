@@ -67,6 +67,11 @@ import org.wicketstuff.rest.utils.wicket.bundle.DefaultBundleResolver;
  */
 public abstract class AbstractRestResource<T extends IWebSerialDeserial> implements IResource
 {
+	/**
+     * 
+     */
+    private static final long serialVersionUID = 1L;
+
 	public static final String NO_SUITABLE_METHOD_FOUND = "No suitable method found.";
 
 	public static final String USER_IS_NOT_ALLOWED = "User is not allowed to use this resource.";
@@ -82,7 +87,7 @@ public abstract class AbstractRestResource<T extends IWebSerialDeserial> impleme
 	/**
 	 * HashMap that stores the validators registered by the resource.
 	 */
-	private final Map<String, IValidator> declaredValidators = new HashMap<String, IValidator>();
+	private final Map<String, IValidator<?>> declaredValidators = new HashMap<>();
 
 	/**
 	 * The implementation of {@link IWebSerialDeserial} that is used to serialize/desiarilze objects
@@ -139,7 +144,7 @@ public abstract class AbstractRestResource<T extends IWebSerialDeserial> impleme
      */
 	private List<Class<?>> loadBoundleClasses()
 	{
-        Collection<IValidator> validators = declaredValidators.values();
+        Collection<IValidator<?>> validators = declaredValidators.values();
         List<Class<?>> validatorsClasses = ReflectionUtils.getElementsClasses(validators);
 
         validatorsClasses.add(this.getClass());
@@ -203,7 +208,7 @@ public abstract class AbstractRestResource<T extends IWebSerialDeserial> impleme
 		}
 
 		// 2-extract method parameters
-		List parametersValues = extractMethodParameters(mappedMethod, attributesWrapper);
+		List<?> parametersValues = extractMethodParameters(mappedMethod, attributesWrapper);
 
 		if (parametersValues == null)
 		{
@@ -284,18 +289,18 @@ public abstract class AbstractRestResource<T extends IWebSerialDeserial> impleme
 	 * @return the list of validation errors, it is empty if validation succeeds
 	 */
 	private List<IValidationError> validateMethodParameters(MethodMappingInfo mappedMethod,
-		List parametersValues)
+		List<?> parametersValues)
 	{
-		List<MethodParameter> methodParameters = mappedMethod.getMethodParameters();
+		List<MethodParameter<?>> methodParameters = mappedMethod.getMethodParameters();
 		List<IValidationError> errors = new ArrayList<IValidationError>();
 
-		for (MethodParameter methodParameter : methodParameters)
+		for (MethodParameter<?> methodParameter : methodParameters)
 		{
 			int i = methodParameters.indexOf(methodParameter);
 
 			String validatorKey = methodParameter.getValdatorKey();
 			IValidator validator = getValidator(validatorKey);
-			Validatable validatable = new Validatable(parametersValues.get(i));
+			Validatable<?> validatable = new Validatable<>(parametersValues.get(i));
 
 			if (validator != null)
 			{
@@ -512,9 +517,9 @@ public abstract class AbstractRestResource<T extends IWebSerialDeserial> impleme
 	 *            the list map in input.
 	 * @return the immutable list map.
 	 */
-	private <T, E> Map<T, List<E>> makeListMapImmutable(Map<T, List<E>> listMap)
+	private <C, E> Map<C, List<E>> makeListMapImmutable(Map<C, List<E>> listMap)
 	{
-		for (T key : listMap.keySet())
+		for (C key : listMap.keySet())
 		{
 			listMap.put(key, Collections.unmodifiableList(listMap.get(key)));
 		}
@@ -531,17 +536,17 @@ public abstract class AbstractRestResource<T extends IWebSerialDeserial> impleme
 	 *            Attributes wrapper for the current request.
 	 * @return the value returned by the invoked method
 	 */
-	private List extractMethodParameters(MethodMappingInfo mappedMethod,
+	private List<?> extractMethodParameters(MethodMappingInfo mappedMethod,
 		AttributesWrapper attributesWrapper)
 	{
-		List parametersValues = new ArrayList();
+		List<Object> parametersValues = new ArrayList<>();
 
 		PageParameters pageParameters = attributesWrapper.getPageParameters();
 		LinkedHashMap<String, String> pathParameters = mappedMethod.populatePathParameters(pageParameters);
 		MethodParameterContext parameterContext = new MethodParameterContext(attributesWrapper,
 			pathParameters, webSerialDeserial);
 
-		for (MethodParameter methodParameter : mappedMethod.getMethodParameters())
+		for (MethodParameter<?> methodParameter : mappedMethod.getMethodParameters())
 		{
 			Object paramValue = methodParameter.extractParameterValue(parameterContext);
 
@@ -568,7 +573,7 @@ public abstract class AbstractRestResource<T extends IWebSerialDeserial> impleme
 	 *            the current WebResponse object.
 	 * @return the value (if any) returned by the method.
 	 */
-	private Object invokeMappedMethod(Method method, List parametersValues, WebResponse response)
+	private Object invokeMappedMethod(Method method, List<?> parametersValues, WebResponse response)
 	{
 		try
 		{
@@ -602,7 +607,7 @@ public abstract class AbstractRestResource<T extends IWebSerialDeserial> impleme
 	 *            the type we want to extract from request body.
 	 * @return the extracted object.
 	 */
-	public <T> T requestToObject(WebRequest request, Class<T> argClass, String mimeType)
+	public <E> E requestToObject(WebRequest request, Class<E> argClass, String mimeType)
 	{
 		try
 		{
@@ -636,7 +641,7 @@ public abstract class AbstractRestResource<T extends IWebSerialDeserial> impleme
 	 * @return the object corresponding to the converted string value, or null if value parameter is
 	 *         null
 	 */
-	public static Object toObject(Class clazz, String value) throws IllegalArgumentException
+	public static Object toObject(Class<?> clazz, String value) throws IllegalArgumentException
 	{
 		if (value == null)
 			return null;
@@ -644,7 +649,7 @@ public abstract class AbstractRestResource<T extends IWebSerialDeserial> impleme
 		// converted value.
 		try
 		{
-			IConverter converter = Application.get().getConverterLocator().getConverter(clazz);
+			IConverter<?> converter = Application.get().getConverterLocator().getConverter(clazz);
 
 			return converter.convertToObject(value, Session.get().getLocale());
 		}
@@ -710,7 +715,7 @@ public abstract class AbstractRestResource<T extends IWebSerialDeserial> impleme
 	 * @param validator
 	 * 		the validator to register
 	 */
-	protected void registerValidator(String key, IValidator validator)
+	protected void registerValidator(String key, IValidator<?> validator)
 	{
 		declaredValidators.put(key, validator);
 	}
@@ -727,7 +732,7 @@ public abstract class AbstractRestResource<T extends IWebSerialDeserial> impleme
 	}
 
 	/**
-	 * Retrieve a registered validato.
+	 * Retrieve a registered validator.
 	 *
 	 * @param key
 	 * 		the key to use to retrieve the validator.
@@ -735,7 +740,7 @@ public abstract class AbstractRestResource<T extends IWebSerialDeserial> impleme
 	 *         Null if no validator has been registered with the given key.
 	 *
 	 */
-	protected IValidator getValidator(String key)
+	protected IValidator<?> getValidator(String key)
 	{
 		return declaredValidators.get(key);
 	}

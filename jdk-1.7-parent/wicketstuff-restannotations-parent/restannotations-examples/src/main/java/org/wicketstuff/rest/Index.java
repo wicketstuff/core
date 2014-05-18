@@ -16,12 +16,12 @@
  */
 package org.wicketstuff.rest;
 
-import org.apache.wicket.Application;
-import org.apache.wicket.markup.head.IHeaderResponse;
-import org.apache.wicket.markup.head.JavaScriptHeaderItem;
-import org.apache.wicket.markup.head.PriorityHeaderItem;
 import org.apache.wicket.markup.html.WebPage;
-import org.apache.wicket.request.resource.ResourceReference;
 
 public class Index extends WebPage {
+
+    /**
+     * 
+     */
+    private static final long serialVersionUID = 1L;
 }

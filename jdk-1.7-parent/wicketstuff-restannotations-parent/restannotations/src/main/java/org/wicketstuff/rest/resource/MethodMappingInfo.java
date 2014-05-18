@@ -55,7 +55,7 @@ public class MethodMappingInfo implements IMimeTypeResolver
 	/** The MIME type to use in output. */
 	private final String outputFormat;
 	/** Method parameters list */
-	private final List<MethodParameter> methodParameters;
+	private final List<MethodParameter<?>> methodParameters;
 
 	/**
 	 * Class constructor.
@@ -77,10 +77,10 @@ public class MethodMappingInfo implements IMimeTypeResolver
 		this.methodParameters = loadMethodParameters(method);
 	}
 
-	private List<MethodParameter> loadMethodParameters(Method method)
+	private List<MethodParameter<?>> loadMethodParameters(Method method)
 	{
 		Class<?>[] paramsTypes = method.getParameterTypes();
-		List<MethodParameter> methodParameters = new ArrayList<MethodParameter>();
+		List<MethodParameter<?>> methodParameters = new ArrayList<>();
 
 		for (int i = 0; i < paramsTypes.length; i++)
 		{
@@ -237,7 +237,7 @@ public class MethodMappingInfo implements IMimeTypeResolver
 	 *
 	 * @return the method parameters
 	 */
-	public List<MethodParameter> getMethodParameters()
+	public List<MethodParameter<?>> getMethodParameters()
 	{
 		return methodParameters;
 	}

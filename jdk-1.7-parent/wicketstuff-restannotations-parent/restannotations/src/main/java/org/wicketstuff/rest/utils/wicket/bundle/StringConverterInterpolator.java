@@ -34,6 +34,10 @@ import org.apache.wicket.util.string.interpolator.MapVariableInterpolator;
 public class StringConverterInterpolator extends MapVariableInterpolator
 {
 
+	/**
+     * 
+     */
+    private static final long serialVersionUID = 1L;
 	private final Locale locale;
 
 	public StringConverterInterpolator(String string, Map<?, ?> variables,
@@ -72,7 +76,7 @@ public class StringConverterInterpolator extends MapVariableInterpolator
 		}
 	}
 
-	private IConverter getConverter(Class<? extends Object> clazz)
+	private IConverter<?> getConverter(Class<? extends Object> clazz)
 	{
 		return Application.get().getConverterLocator().getConverter(clazz);
 	}

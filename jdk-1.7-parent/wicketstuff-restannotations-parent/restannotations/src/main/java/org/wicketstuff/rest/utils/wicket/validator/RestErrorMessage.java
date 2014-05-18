@@ -16,17 +16,22 @@
  */
 package org.wicketstuff.rest.utils.wicket.validator;
 
+import java.io.Serializable;
+
 import org.apache.wicket.markup.html.form.ValidationErrorFeedback;
 import org.apache.wicket.validation.IValidationError;
-
-import java.io.Serializable;
 
 /**
  * The Class RestErrorMessage.
  */
 public class RestErrorMessage extends ValidationErrorFeedback {
 
-	/** The field. */
+	/**
+         * 
+         */
+        private static final long serialVersionUID = 1L;
+	
+        /** The field. */
 	private final String field;
 
 	/**

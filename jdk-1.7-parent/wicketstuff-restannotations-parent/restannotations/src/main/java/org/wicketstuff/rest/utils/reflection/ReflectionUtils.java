@@ -16,13 +16,13 @@
  */
 package org.wicketstuff.rest.utils.reflection;
 
-import org.wicketstuff.rest.annotations.parameters.AnnotatedParam;
-
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+
+import org.wicketstuff.rest.annotations.parameters.AnnotatedParam;
 
 /**
  * Utility methods to work with reflection entities

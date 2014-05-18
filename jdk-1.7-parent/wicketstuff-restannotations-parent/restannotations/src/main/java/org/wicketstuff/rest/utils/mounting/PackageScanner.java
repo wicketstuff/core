@@ -89,6 +89,11 @@ public class PackageScanner
 
 		application.mountResource(path, new ResourceReference(clazz.getSimpleName())
 		{
+			/**
+        		* 
+    		     	*/
+    		    	private static final long serialVersionUID = 1L;
+
 			@Override
 			public IResource getResource()
 			{

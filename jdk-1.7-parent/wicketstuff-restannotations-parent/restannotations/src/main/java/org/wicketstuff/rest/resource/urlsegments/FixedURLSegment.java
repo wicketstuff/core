@@ -30,6 +30,11 @@ import org.apache.wicket.util.parse.metapattern.MetaPattern;
 public class FixedURLSegment extends AbstractURLSegment
 {
 
+	/**
+         * 
+         */
+        private static final long serialVersionUID = 1L;
+
 	FixedURLSegment(String text)
 	{
 		super(text);

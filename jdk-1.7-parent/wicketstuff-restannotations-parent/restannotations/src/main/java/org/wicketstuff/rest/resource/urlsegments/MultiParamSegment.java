@@ -33,7 +33,12 @@ import org.apache.wicket.util.parse.metapattern.MetaPattern;
  */
 public class MultiParamSegment extends AbstractURLSegment
 {
-	private volatile List<AbstractURLSegment> subSegments;
+	/**
+         * 
+         */
+        private static final long serialVersionUID = 1L;
+	
+        private volatile List<AbstractURLSegment> subSegments;
 
 	MultiParamSegment(String text)
 	{

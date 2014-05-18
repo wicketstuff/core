@@ -32,6 +32,10 @@ import org.apache.wicket.util.string.StringValue;
 public class ParamSegment extends AbstractURLSegment
 {
 
+	/**
+     * 
+     */
+    private static final long serialVersionUID = 1L;
 	final private String paramName;
 
 	ParamSegment(String text)
