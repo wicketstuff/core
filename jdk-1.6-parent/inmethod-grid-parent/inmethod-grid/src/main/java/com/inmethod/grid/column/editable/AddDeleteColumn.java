@@ -103,9 +103,9 @@ public class AddDeleteColumn<M, I, S> extends SubmitCancelColumn<M, I, S>
       }
       if ( dg.getCurrentPageItemCount() == 1) //only item on page
       {
-        if ( 1 == dg.getCurrentPage() ) //only page
+        if ( 0 == dg.getCurrentPage() ) //only page
         { dg.markAllItemsDirty(); } //should trigger to show "no Items found"
-        dg.setCurrentPage(dg.getCurrentPage()-1); //no items on page so back-up
+        else { dg.setCurrentPage(dg.getCurrentPage()-1); } //no items on page so back-up
       }
     }
 
