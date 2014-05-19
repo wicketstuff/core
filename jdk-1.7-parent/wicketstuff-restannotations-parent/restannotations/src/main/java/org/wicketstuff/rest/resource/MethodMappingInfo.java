@@ -31,7 +31,6 @@ import org.wicketstuff.rest.resource.urlsegments.AbstractURLSegment;
 import org.wicketstuff.rest.utils.http.HttpMethod;
 import org.wicketstuff.rest.utils.reflection.MethodParameter;
 
-// TODO: Auto-generated Javadoc
 /**
  * This class contains the informations of a resource mapped method (i.e. a method annotated with
  * {@link MethodMapping}). These informations are used at runtime to select the most suited method
@@ -84,7 +83,7 @@ public class MethodMappingInfo implements IMimeTypeResolver
 
 		for (int i = 0; i < paramsTypes.length; i++)
 		{
-			methodParameters.add(new MethodParameter(paramsTypes[i], this, i));
+			methodParameters.add(new MethodParameter<>(paramsTypes[i], this, i));
 		}
 
 		return Collections.unmodifiableList(methodParameters);

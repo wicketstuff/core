@@ -49,7 +49,7 @@ public class MethodParameter<T>
 {
 
 	/** The parameter class. */
-	private final Class<T> parameterClass;
+	private final Class<? extends T> parameterClass;
 
 	/** The owner method. */
 	private final MethodMappingInfo ownerMethod;
@@ -79,7 +79,7 @@ public class MethodParameter<T>
 	 * @param paramIndex
 	 *            the index of the parameter in the array of method's parameters.
 	 */
-	public MethodParameter(Class<T> type, MethodMappingInfo ownerMethod, int paramIndex)
+	public MethodParameter(Class<? extends T> type, MethodMappingInfo ownerMethod, int paramIndex)
 	{
 		Args.notNull(type, "type");
 		Args.notNull(ownerMethod, "ownerMethod");

@@ -67,10 +67,10 @@ import org.wicketstuff.rest.utils.wicket.bundle.DefaultBundleResolver;
  */
 public abstract class AbstractRestResource<T extends IWebSerialDeserial> implements IResource
 {
-	/**
-     * 
-     */
-    private static final long serialVersionUID = 1L;
+        /**
+         * 
+         */
+        private static final long serialVersionUID = 1L;
 
 	public static final String NO_SUITABLE_METHOD_FOUND = "No suitable method found.";
 
@@ -134,14 +134,14 @@ public abstract class AbstractRestResource<T extends IWebSerialDeserial> impleme
 	}
 
 	/**
-     * Build a list of classes to use to search for a valid bundle. This list is
-     * made of the classes of the validators registered with abstractResource
-     * and of the class of the abstractResource.
-     *
-     * @param abstractResource
-     *            the abstract REST resource that is using the validator
-     * @return the list of the classes to use.
-     */
+         * Build a list of classes to use to search for a valid bundle. This list is
+         * made of the classes of the validators registered with abstractResource
+         * and of the class of the abstractResource.
+         *
+         * @param abstractResource
+         *            the abstract REST resource that is using the validator
+         * @return the list of the classes to use.
+         */
 	private List<Class<?>> loadBoundleClasses()
 	{
         Collection<IValidator<?>> validators = declaredValidators.values();
@@ -152,7 +152,7 @@ public abstract class AbstractRestResource<T extends IWebSerialDeserial> impleme
         return validatorsClasses;
     }
 
-    /***
+	/***
 	 * Handles a REST request invoking one of the methods annotated with {@link MethodMapping}. If
 	 * the annotated method returns a value, this latter is automatically serialized to a given
 	 * string format (like JSON, XML, etc...) and written to the web response.<br/>
@@ -297,7 +297,7 @@ public abstract class AbstractRestResource<T extends IWebSerialDeserial> impleme
 		for (MethodParameter<?> methodParameter : methodParameters)
 		{
 			int i = methodParameters.indexOf(methodParameter);
-
+			
 			String validatorKey = methodParameter.getValdatorKey();
 			IValidator validator = getValidator(validatorKey);
 			Validatable<?> validatable = new Validatable<>(parametersValues.get(i));

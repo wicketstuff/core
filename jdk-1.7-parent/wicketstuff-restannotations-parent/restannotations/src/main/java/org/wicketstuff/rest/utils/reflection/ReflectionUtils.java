@@ -223,15 +223,15 @@ public class ReflectionUtils
 	 * @return
 	 *     the list containing the type of list elements.
 	 */
-    public static List<Class<?>> getElementsClasses(Collection<?> collection)
-    {
-        List<Class<?>> targetClasses = new ArrayList<Class<?>>();
-
-        for (Object element : collection)
+        public static List<Class<?>> getElementsClasses(Collection<?> collection)
         {
-            targetClasses.add(element.getClass());
+            List<Class<?>> targetClasses = new ArrayList<Class<?>>();
+    
+            for (Object element : collection)
+            {
+                targetClasses.add(element.getClass());
+            }
+    
+            return targetClasses;
         }
-
-        return targetClasses;
-    }
 }
