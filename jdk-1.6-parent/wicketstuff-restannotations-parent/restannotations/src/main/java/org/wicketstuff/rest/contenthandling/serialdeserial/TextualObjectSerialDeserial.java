@@ -33,7 +33,10 @@ import org.wicketstuff.rest.utils.http.HttpUtils;
  * 
  * @author andrea del bene
  * 
+ * @deprecated
+ * Use TextualWebSerialDeserial and IObjectSerialDeserial<String> instead
  */
+@Deprecated
 public abstract class TextualObjectSerialDeserial implements IWebSerialDeserial,
 	IObjectSerialDeserial<String>
 {

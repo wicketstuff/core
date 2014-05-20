@@ -16,21 +16,23 @@
  */
 package org.wicketstuff.rest.resource;
 
-import org.wicketstuff.rest.annotations.MethodMapping;
-import org.wicketstuff.rest.annotations.parameters.RequestBody;
-import org.wicketstuff.rest.annotations.parameters.ValidatorKey;
-import org.wicketstuff.rest.domain.PersonPojo;
-import org.wicketstuff.rest.resource.gson.GsonRestResource;
-import org.wicketstuff.rest.resource.gson.GsonSerialDeserial;
-import org.wicketstuff.rest.utils.http.HttpMethod;
-
 import java.util.ArrayList;
 import java.util.List;
 
-public class PersonsRestResource extends GsonRestResource {
+import org.wicketstuff.rest.annotations.MethodMapping;
+import org.wicketstuff.rest.annotations.parameters.RequestBody;
+import org.wicketstuff.rest.annotations.parameters.ValidatorKey;
+import org.wicketstuff.rest.contenthandling.GsonObjectSerialDeserial;
+import org.wicketstuff.rest.contenthandling.json.JsonWebSerialDeserial;
+import org.wicketstuff.rest.domain.PersonPojo;
+import org.wicketstuff.rest.utils.http.HttpMethod;
+
+public class PersonsRestResource extends AbstractRestResource<JsonWebSerialDeserial> {
     private final List<PersonPojo> persons = new ArrayList<PersonPojo>();
 
     public PersonsRestResource() {
+	super(new JsonWebSerialDeserial(new GsonObjectSerialDeserial()));
+	
         persons.add(new PersonPojo("Freddie Mercury", "fmercury@queen.com", "Eeehooo!"));
         persons.add(new PersonPojo("John Deacon", "jdeacon@queen.com", "bass"));
         persons.add(new PersonPojo("Brian May", "bmay@queen.com", "guitar"));
@@ -55,7 +57,7 @@ public class PersonsRestResource extends GsonRestResource {
     }
 
     @Override
-    protected void onInitialize(GsonSerialDeserial objSerialDeserial) {
+    protected void onInitialize(JsonWebSerialDeserial objSerialDeserial) {
         super.onInitialize(objSerialDeserial);
         registerValidator("personValidator", new PersonPojoValidator());
     }

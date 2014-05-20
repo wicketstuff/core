@@ -14,39 +14,41 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-package org.wicketstuff.rest.utils.mounting;
+package org.wicketstuff.rest.contenthandling;
 
-import org.apache.wicket.authroles.authorization.strategies.role.Roles;
-import org.apache.wicket.util.tester.WicketTester;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
-import org.wicketstuff.rest.WicketApplication;
+import com.google.gson.Gson;
 
-public class MountingAnnotationTest
+/**
+ * Object serializer/deserailizer that works with JSON format and based on Gson library.
+ * 
+ * @author andrea del bene
+ *
+ */
+public class GsonObjectSerialDeserial implements IObjectSerialDeserial<String>
 {
-	private WicketTester tester;
+    private final Gson gson;
+    
+    public GsonObjectSerialDeserial(Gson gson)
+    {
+	this.gson = gson;
+    }
+    
+    public GsonObjectSerialDeserial()
+    {
+	this.gson = new Gson();
+    }
 
-	@Before
-	public void setUp()
-	{
-		tester = new WicketTester(new WicketApplication(new Roles())
-		{
-			@Override
-			public void init()
-			{
-				super.init();
-				PackageScanner.scanPackage(this, "org.wicketstuff.rest.resource");
-			}
-		});
-	}
+    @Override
+    public String serializeObject(Object target, String mimeType)
+    {
+	return gson.toJson(target);
+    }
 
-	@Test
-	public void testResourceMounted() throws Exception
-	{
-		tester.getRequest().setMethod("GET");
-		tester.executeUrl("./mountedpath");
-		Assert.assertEquals(200, tester.getLastResponse().getStatus());
-	}
+    @Override
+    public <E> E deserializeObject(String source, Class<E> targetClass,
+	    String mimeType)
+    {
+	return gson.fromJson(source, targetClass);
+    }
 
 }
