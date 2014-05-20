@@ -345,6 +345,23 @@ var getFirstChild = function(parent, tagName) {
 	return null;
 }
 
+Wicket.Browser.isIE9 = Wicket.Browser.isIE9 || function() {
+	var index = window.navigator.userAgent.indexOf("MSIE");
+	var version = parseFloat(window.navigator.userAgent.substring(index + 5));
+	return Wicket.Browser.isIE() && version == 9;
+};
+
+// Issue #44:
+// This bug can also be triggered when hiding a modal dialog or similar and the behind the dialog is a grid which
+// would be hovered at that moment. 
+function globalIE9HoverLayoutFix() {
+	$(".imxt-body-container2").css({
+		"overflow" : "auto"
+	});
+}
+if (Wicket.Browser.isIE9())
+	Wicket.Event.subscribe('/ajax/call/complete', globalIE9HoverLayoutFix);
+
 InMethod.XTable = Wicket.Class.create();
 
 InMethod.XTable.prototype = {
@@ -1391,6 +1408,29 @@ InMethod.XTable.prototype = {
 		var elements = this.getElements("*", "imxt-want-prelight");
 	
 		attachPrelight(elements, this);
+		
+		// Issue #44:
+		// Workaround for an IE9 rendering bug. IE9 miscalculates
+		// the tables sizes on hover in/out ... This leads to issue #44.
+		// 
+		// We just force the browser to do a full recaluclate on hover.
+		if (Wicket.Browser.isIE9()) {
+			var _this = this;
+			function fixIE9Layout() {
+				$(_this.getBodyTable()).parent().css({
+					'overflow' : 'auto'
+				});
+			}
+			var elements = _this.getElements("tr", "imxt-want-prelight");
+			for (var i = 0; i < elements.length; i++)
+				$(elements[i]).hover(fixIE9Layout);
+
+			$(_this.getBodyTable()).hover(fixIE9Layout);
+			$(_this.getElement("div", "imxt-bottom-toolbar-container")).hover(fixIE9Layout);
+
+			// If there is a custom link in a table cell it can trigger the same problem on hover ...
+			$(_this.getBodyTable()).find("a").hover(fixIE9Layout);
+		}
 	},
 		
 	/**
