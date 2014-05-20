@@ -22,8 +22,8 @@ import java.util.List;
 import org.wicketstuff.rest.annotations.MethodMapping;
 import org.wicketstuff.rest.annotations.parameters.RequestBody;
 import org.wicketstuff.rest.annotations.parameters.ValidatorKey;
-import org.wicketstuff.rest.contenthandling.GsonObjectSerialDeserial;
-import org.wicketstuff.rest.contenthandling.json.JsonWebSerialDeserial;
+import org.wicketstuff.rest.contenthandling.json.objserialdeserial.GsonObjectSerialDeserial;
+import org.wicketstuff.rest.contenthandling.json.webserialdeserial.JsonWebSerialDeserial;
 import org.wicketstuff.rest.domain.PersonPojo;
 import org.wicketstuff.rest.utils.http.HttpMethod;
 

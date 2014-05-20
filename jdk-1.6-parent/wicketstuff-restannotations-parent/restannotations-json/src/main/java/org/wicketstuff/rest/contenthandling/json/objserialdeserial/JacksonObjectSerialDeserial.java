@@ -14,9 +14,10 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-package org.wicketstuff.rest.contenthandling;
+package org.wicketstuff.rest.contenthandling.json.objserialdeserial;
 
 import org.apache.wicket.WicketRuntimeException;
+import org.wicketstuff.rest.contenthandling.IObjectSerialDeserial;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
