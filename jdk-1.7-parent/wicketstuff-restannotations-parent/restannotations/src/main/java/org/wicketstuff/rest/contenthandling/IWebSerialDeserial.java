@@ -73,5 +73,5 @@ public interface IWebSerialDeserial
 	 * @return
 	 *     the appropriate IObjectSerialDeserial.
 	 */
-	public <T> IObjectSerialDeserial<T> getIObjectSerialDeserial(String mimeType);
+	public IObjectSerialDeserial<?> getIObjectSerialDeserial(String mimeType);
 }

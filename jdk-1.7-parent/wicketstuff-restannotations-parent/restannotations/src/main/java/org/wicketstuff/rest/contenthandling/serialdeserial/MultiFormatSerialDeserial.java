@@ -76,7 +76,7 @@ public class MultiFormatSerialDeserial implements IWebSerialDeserial
 	}
 
 	@Override
-	public <T> IObjectSerialDeserial<T> getIObjectSerialDeserial(String mimeType) 
+	public IObjectSerialDeserial<?> getIObjectSerialDeserial(String mimeType) 
 	{
 		IWebSerialDeserial webSerialDeserial = serialsDeserials.get(mimeType);
 		
@@ -85,7 +85,7 @@ public class MultiFormatSerialDeserial implements IWebSerialDeserial
 		    return null;
 		}
 		
-		IObjectSerialDeserial<T> objectSerialDeserial = webSerialDeserial.getIObjectSerialDeserial(mimeType);
+		IObjectSerialDeserial<?> objectSerialDeserial = webSerialDeserial.getIObjectSerialDeserial(mimeType);
 		
 		return objectSerialDeserial;
 	}

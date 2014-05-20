@@ -31,51 +31,57 @@ import com.google.gson.Gson;
  */
 public class PersonResourceTest extends Assert
 {
-	private WicketTester tester;
-	final private Gson gson = new Gson();
+    private WicketTester tester;
+    
+    final private Gson gson = new Gson();
+    
     private BufferedMockRequest mockRequest;
 
-	@Before
-	public void setUp()
-	{
-		tester = new WicketTester(new WicketApplication());
-		mockRequest = new BufferedMockRequest(tester.getApplication(), tester.getHttpSession(),
-		        tester.getServletContext(), "POST");
-	}
+    @Before
+    public void setUp()
+    {
+	tester = new WicketTester(new WicketApplication());
+	mockRequest = new BufferedMockRequest(tester.getApplication(),
+		tester.getHttpSession(), tester.getServletContext(), "POST");
+    }
 
-	@After
-	public void tearDown() {
-		tester.destroy();
-	}
+    @After
+    public void tearDown()
+    {
+	tester.destroy();
+    }
 
-	@Test
-	public void testCreatePerson()
-	{
-		String jsonObj = gson.toJson(new PersonPojo("James Smith", "james@smith.com", "changeit"));
+    @Test
+    public void testCreatePerson()
+    {
+	String jsonObj = gson.toJson(new PersonPojo("James Smith",
+		"james@smith.com", "changeit"));
 
-		mockRequest.setTextAsRequestBody(jsonObj);
+	mockRequest.setTextAsRequestBody(jsonObj);
 
-		tester.setRequest(mockRequest);
-		tester.executeUrl("./personsmanager/persons");
+	tester.setRequest(mockRequest);
+	tester.executeUrl("./personsmanager/persons");
 
-		assertEquals(jsonObj, tester.getLastResponseAsString());
+	assertEquals(jsonObj, tester.getLastResponseAsString());
 
-		tester.getRequest().setMethod("GET");
-		tester.executeUrl("./personsmanager/persons");
+	tester.getRequest().setMethod("GET");
+	tester.executeUrl("./personsmanager/persons");
 
-		assertTrue(tester.getLastResponseAsString().contains(jsonObj));
-	}
+	assertTrue(tester.getLastResponseAsString().contains(jsonObj));
+    }
 
-	@Test
+    @Test
     public void testValidatorBundle()
     {
-	    String jsonObj = gson.toJson(new PersonPojo("James Smith", "notValidMail", "changeit"));
+	String jsonObj = gson.toJson(new PersonPojo("James Smith",
+		"notValidMail", "changeit"));
 
-        mockRequest.setTextAsRequestBody(jsonObj);
+	mockRequest.setTextAsRequestBody(jsonObj);
 
-        tester.setRequest(mockRequest);
-        tester.executeUrl("./personsmanager/persons");
+	tester.setRequest(mockRequest);
+	tester.executeUrl("./personsmanager/persons");
 
-        assertTrue(tester.getLastResponseAsString().contains("Email field not valid!"));
+	assertTrue(tester.getLastResponseAsString().contains(
+		"Email field not valid!"));
     }
 }

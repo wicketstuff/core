@@ -27,7 +27,10 @@ import com.google.gson.Gson;
  * 
  * @author andrea del bene
  * 
+ * @deprecated
+ * Use JsonWebSerialDeserial and GsonObjectSerialDeserial instead (see PersonsRestResource).
  */
+@Deprecated
 public class GsonSerialDeserial extends TextualObjectSerialDeserial
 {
 	/** The Gson instance used by the serial/deserial */
