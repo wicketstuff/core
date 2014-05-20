@@ -67,9 +67,6 @@ import org.wicketstuff.rest.utils.wicket.bundle.DefaultBundleResolver;
  */
 public abstract class AbstractRestResource<T extends IWebSerialDeserial> implements IResource
 {
-        /**
-         * 
-         */
         private static final long serialVersionUID = 1L;
 
 	public static final String NO_SUITABLE_METHOD_FOUND = "No suitable method found.";
@@ -144,13 +141,13 @@ public abstract class AbstractRestResource<T extends IWebSerialDeserial> impleme
          */
 	private List<Class<?>> loadBoundleClasses()
 	{
-        Collection<IValidator<?>> validators = declaredValidators.values();
-        List<Class<?>> validatorsClasses = ReflectionUtils.getElementsClasses(validators);
-
-        validatorsClasses.add(this.getClass());
-
-        return validatorsClasses;
-    }
+            Collection<IValidator<?>> validators = declaredValidators.values();
+            List<Class<?>> validatorsClasses = ReflectionUtils.getElementsClasses(validators);
+    
+            validatorsClasses.add(this.getClass());
+    
+            return validatorsClasses;
+        }
 
 	/***
 	 * Handles a REST request invoking one of the methods annotated with {@link MethodMapping}. If
@@ -296,24 +293,46 @@ public abstract class AbstractRestResource<T extends IWebSerialDeserial> impleme
 
 		for (MethodParameter<?> methodParameter : methodParameters)
 		{
-			int i = methodParameters.indexOf(methodParameter);
+		    	String validatorKey = methodParameter.getValdatorKey();
 			
-			String validatorKey = methodParameter.getValdatorKey();
-			IValidator validator = getValidator(validatorKey);
-			Validatable<?> validatable = new Validatable<>(parametersValues.get(i));
-
-			if (validator != null)
+			if (!Strings.isEmpty(validatorKey))
 			{
-				validator.validate(validatable);
-				errors.addAll(validatable.getErrors());
-			}
-			else if (!Strings.isEmpty(validatorKey))
-			{
-				log.debug("No validator found for key '" + validatorKey + "'");
+			    int i = methodParameters.indexOf(methodParameter);
+			    Object parameterValue = parametersValues.get(i);
+			    
+			    validateMethodParameter(errors, validatorKey,
+				parameterValue);
 			}
 		}
 
 		return errors;
+	}
+
+	/**
+	 * Validate a single parameter value of the mapped method we want to execute.
+	 * 
+	 * @param errors
+	 * 	the list of validation errors
+	 * @param validatorKey
+	 * 	the key for the current validator
+	 * @param parameterValue
+	 * 	the value for the current parameter
+	 */
+	private <E> void validateMethodParameter(List<IValidationError> errors,
+		String validatorKey, E parameterValue)
+	{
+	    IValidator<E> validator = getValidator(validatorKey, parameterValue);
+	    Validatable<E> validatable = new Validatable<>(parameterValue);
+
+	    if (validator != null)
+	    {
+	    	validator.validate(validatable);
+	    	errors.addAll(validatable.getErrors());
+	    }
+	    else
+	    {
+	    	log.debug("No validator found for key '" + validatorKey + "'");
+	    }
 	}
 
 	/**
@@ -715,7 +734,7 @@ public abstract class AbstractRestResource<T extends IWebSerialDeserial> impleme
 	 * @param validator
 	 * 		the validator to register
 	 */
-	protected void registerValidator(String key, IValidator<?> validator)
+	protected final void registerValidator(String key, IValidator<?> validator)
 	{
 		declaredValidators.put(key, validator);
 	}
@@ -726,7 +745,7 @@ public abstract class AbstractRestResource<T extends IWebSerialDeserial> impleme
 	 * @param key
 	 * 		the key to use to remove the validator.
 	 */
-	protected void unregisterValidator(String key)
+	protected final void unregisterValidator(String key)
 	{
 		declaredValidators.remove(key);
 	}
@@ -740,8 +759,9 @@ public abstract class AbstractRestResource<T extends IWebSerialDeserial> impleme
 	 *         Null if no validator has been registered with the given key.
 	 *
 	 */
-	protected IValidator<?> getValidator(String key)
+	@SuppressWarnings("unchecked")
+	protected final <E> IValidator<E> getValidator(String key, E validatorType)
 	{
-		return declaredValidators.get(key);
+		return (IValidator<E>) declaredValidators.get(key);
 	}
 }
