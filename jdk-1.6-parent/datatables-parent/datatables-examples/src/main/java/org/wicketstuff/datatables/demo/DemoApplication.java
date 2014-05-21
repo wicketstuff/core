@@ -16,6 +16,7 @@
  */
 package org.wicketstuff.datatables.demo;
 
+import de.agilecoders.wicket.webjars.WicketWebjars;
 import org.apache.wicket.Page;
 import org.apache.wicket.protocol.http.WebApplication;
 
@@ -28,4 +29,12 @@ public class DemoApplication extends WebApplication
 		return HomePage.class;
 	}
 
+    @Override
+    protected void init() {
+        super.init();
+
+        WicketWebjars.install(this);
+
+        mountPage("new", NewPage.class);
+    }
 }
