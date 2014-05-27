@@ -16,9 +16,12 @@
  */
 package org.wicketstuff.rest;
 
-import org.apache.wicket.ajax.json.JSONObject;
-import org.junit.Assert;
 import static org.junit.Assert.assertEquals;
+
+import java.io.BufferedReader;
+import java.io.StringReader;
+import java.io.StringWriter;
+import java.util.Collections;
 
 import javax.servlet.http.Cookie;
 import javax.xml.bind.JAXB;
@@ -26,24 +29,22 @@ import javax.xml.transform.stream.StreamResult;
 
 import org.apache.wicket.Session;
 import org.apache.wicket.WicketRuntimeException;
+import org.apache.wicket.ajax.json.JSONObject;
 import org.apache.wicket.authroles.authorization.strategies.role.Roles;
 import org.apache.wicket.util.tester.WicketTester;
 import org.junit.After;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
-import org.wicketstuff.rest.contenthandling.RestMimeTypes;
-import org.wicketstuff.rest.contenthandling.serialdeserial.TestJsonDesSer;
+import org.wicketstuff.rest.contenthandling.mimetypes.RestMimeTypes;
+import org.wicketstuff.rest.contenthandling.objserialdeserial.TestJsonDesSer;
+import org.wicketstuff.rest.contenthandling.webserialdeserial.JsonTestWebSerialDeserial;
 import org.wicketstuff.rest.resource.AbstractRestResource;
 import org.wicketstuff.rest.resource.RestResourceFullAnnotated;
 import org.wicketstuff.rest.utils.test.BufferedMockRequest;
 import org.wicketstuff.rest.utils.wicket.bundle.DefaultBundleResolver;
-
-import java.io.BufferedReader;
-import java.io.StringReader;
-import java.io.StringWriter;
-import java.util.Collections;
 
 
 /**
@@ -143,10 +144,10 @@ public class RestResourcesTest
 		tester.getRequest().setMethod("POST");
 		tester.executeUrl("./api");
 
-        JSONObject actual = new JSONObject(tester.getLastResponseAsString());
-        Assert.assertEquals("Smith", actual.getString("surname"));
-        Assert.assertEquals("Mary", actual.getString("name"));
-        Assert.assertEquals("m.smith@gmail.com", actual.getString("email"));
+                JSONObject actual = new JSONObject(tester.getLastResponseAsString());
+                Assert.assertEquals("Smith", actual.getString("surname"));
+                Assert.assertEquals("Mary", actual.getString("name"));
+                Assert.assertEquals("m.smith@gmail.com", actual.getString("email"));
 	}
 
 	@Test
@@ -207,7 +208,7 @@ public class RestResourcesTest
 		// RestResourceFullAnnotated uses annotation AuthorizeInvocation
 		// hence it needs a roleCheckingStrategy to be built
 		exception.expect(WicketRuntimeException.class);
-		new RestResourceFullAnnotated(new TestJsonDesSer());
+		new RestResourceFullAnnotated(new JsonTestWebSerialDeserial());
 	}
 
 	@Test

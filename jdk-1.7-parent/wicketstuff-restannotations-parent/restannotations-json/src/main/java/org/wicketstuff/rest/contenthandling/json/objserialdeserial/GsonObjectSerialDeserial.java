@@ -53,4 +53,9 @@ public class GsonObjectSerialDeserial implements IObjectSerialDeserial<String>
 	return gson.fromJson(source, targetClass);
     }
 
+    public Gson getGson()
+    {
+        return gson;
+    }
+
 }

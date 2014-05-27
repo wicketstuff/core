@@ -68,4 +68,9 @@ public class JacksonObjectSerialDeserial implements
 	} 
     }
 
+    public ObjectMapper getObjMapper()
+    {
+        return objMapper;
+    }
+
 }

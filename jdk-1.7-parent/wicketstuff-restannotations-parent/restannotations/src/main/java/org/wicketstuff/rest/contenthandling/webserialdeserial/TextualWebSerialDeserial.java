@@ -14,7 +14,7 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-package org.wicketstuff.rest.contenthandling.serialdeserial;
+package org.wicketstuff.rest.contenthandling.webserialdeserial;
 
 import java.io.IOException;
 
@@ -25,7 +25,7 @@ import org.apache.wicket.request.http.WebRequest;
 import org.apache.wicket.request.http.WebResponse;
 import org.wicketstuff.rest.contenthandling.IObjectSerialDeserial;
 import org.wicketstuff.rest.contenthandling.IWebSerialDeserial;
-import org.wicketstuff.rest.contenthandling.RestMimeTypes;
+import org.wicketstuff.rest.contenthandling.mimetypes.RestMimeTypes;
 import org.wicketstuff.rest.utils.http.HttpUtils;
 
 /**
@@ -120,6 +120,21 @@ public class TextualWebSerialDeserial implements IWebSerialDeserial
 		    .getContainerResponse();
 	    sResponse.setCharacterEncoding(charset);
 	}
+    }
+
+    public String getCharset()
+    {
+        return charset;
+    }
+
+    public String getMimeType()
+    {
+        return mimeType;
+    }
+
+    public IObjectSerialDeserial<String> getObjectSerialDeserial()
+    {
+        return objectSerialDeserial;
     }
 
 }

@@ -14,7 +14,7 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-package org.wicketstuff.rest.contenthandling.serialdeserial;
+package org.wicketstuff.rest.contenthandling.webserialdeserial;
 
 import java.util.HashMap;
 import java.util.Map;

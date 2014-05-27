@@ -14,40 +14,31 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-package org.wicketstuff.rest.contenthandling.serialdeserial;
+package org.wicketstuff.rest.contenthandling.objserialdeserial;
 
-import org.apache.wicket.ajax.json.JSONObject;
-import org.wicketstuff.rest.contenthandling.RestMimeTypes;
-import org.wicketstuff.rest.resource.RestResourceFullAnnotated;
+import java.io.StringWriter;
 
-public class TestJsonDesSer extends TextualObjectSerialDeserial
+import javax.xml.bind.JAXB;
+
+import org.apache.wicket.request.cycle.RequestCycle;
+import org.apache.wicket.request.http.WebResponse;
+import org.wicketstuff.rest.contenthandling.IObjectSerialDeserial;
+
+public class XmlSerialDeser implements IObjectSerialDeserial<String>
 {
-	public TestJsonDesSer()
-	{
-		super("UTF-8", RestMimeTypes.APPLICATION_JSON);
-	}
-
-	static public Object getObject()
-	{
-		return RestResourceFullAnnotated.createTestPerson();
-	}
-
-	static public String getJSON()
-	{
-		return "{\"email\":\"m.smith@gmail.com\",\"name\":\"Mary\",\"surname\":\"Smith\"}";
-	}
-
 	@Override
 	public String serializeObject(Object targetObject, String mimeType)
-	{	
-		JSONObject jsonObject = new JSONObject(targetObject);
-		
-		return jsonObject.toString();
+	{
+		WebResponse response = (WebResponse)RequestCycle.get().getResponse();
+		StringWriter stringWriter = new StringWriter();
+		JAXB.marshal(targetObject, stringWriter);
+
+		return stringWriter.toString();
 	}
 
 	@Override
 	public <T> T deserializeObject(String source, Class<T> targetClass, String mimeType)
 	{
-		return (T)getObject();
+		return JAXB.unmarshal(source, targetClass);
 	}
 }

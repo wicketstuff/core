@@ -17,8 +17,8 @@
 package org.wicketstuff.rest.contenthandling.json.webserialdeserial;
 
 import org.wicketstuff.rest.contenthandling.IObjectSerialDeserial;
-import org.wicketstuff.rest.contenthandling.RestMimeTypes;
-import org.wicketstuff.rest.contenthandling.serialdeserial.TextualWebSerialDeserial;
+import org.wicketstuff.rest.contenthandling.mimetypes.RestMimeTypes;
+import org.wicketstuff.rest.contenthandling.webserialdeserial.TextualWebSerialDeserial;
 
 /**
  * Web serializer/deserailizer that works with JSON format and UTF-8 encoding charset.

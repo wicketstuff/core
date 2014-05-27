@@ -27,93 +27,97 @@ import org.apache.wicket.request.Request;
 import org.apache.wicket.request.Response;
 import org.apache.wicket.request.resource.IResource;
 import org.apache.wicket.request.resource.ResourceReference;
-import org.wicketstuff.rest.contenthandling.RestMimeTypes;
-import org.wicketstuff.rest.contenthandling.serialdeserial.MultiFormatSerialDeserial;
-import org.wicketstuff.rest.contenthandling.serialdeserial.TestJsonDesSer;
-import org.wicketstuff.rest.contenthandling.serialdeserial.XmlSerialDeser;
+import org.wicketstuff.rest.contenthandling.mimetypes.RestMimeTypes;
+import org.wicketstuff.rest.contenthandling.webserialdeserial.JsonTestWebSerialDeserial;
+import org.wicketstuff.rest.contenthandling.webserialdeserial.MultiFormatSerialDeserial;
+import org.wicketstuff.rest.contenthandling.webserialdeserial.XmlTestWebSerialDeserial;
 import org.wicketstuff.rest.resource.MultiFormatRestResource;
 import org.wicketstuff.rest.resource.RegExpRestResource;
 import org.wicketstuff.rest.resource.RestResourceFullAnnotated;
 
-
 /**
- * Application object for your web application. If you want to run this application without
- * deploying, run the Start class.
+ * Application object for your web application. If you want to run this
+ * application without deploying, run the Start class.
  */
-public class WicketApplication extends WebApplication implements IRoleCheckingStrategy
+public class WicketApplication extends WebApplication implements
+	IRoleCheckingStrategy
 {
-	private final Roles roles;
+    private final Roles roles;
 
-	public WicketApplication(Roles roles)
+    public WicketApplication(Roles roles)
+    {
+	this.roles = roles;
+    }
+
+    /**
+     * @see org.apache.wicket.Application#getHomePage()
+     */
+    @Override
+    public Class<? extends WebPage> getHomePage()
+    {
+	return WebPage.class;
+    }
+
+    @Override
+    public boolean hasAnyRole(Roles roles)
+    {
+	return roles.hasAnyRole(this.roles);
+    }
+
+    @Override
+    public void init()
+    {
+	super.init();
+
+	mountResource("/api", new ResourceReference("restReference")
 	{
-		this.roles = roles;
-	}
 
-	/**
-	 * @see org.apache.wicket.Application#getHomePage()
-	 */
-	@Override
-	public Class<? extends WebPage> getHomePage()
+	    @Override
+	    public IResource getResource()
+	    {
+		return new RestResourceFullAnnotated(
+			new JsonTestWebSerialDeserial(), WicketApplication.this);
+	    }
+
+	});
+
+	mountResource("/api2", new ResourceReference("regExpRestResource")
 	{
-		return WebPage.class;
-	}
 
-	@Override
-	public boolean hasAnyRole(Roles roles)
+	    @Override
+	    public IResource getResource()
+	    {
+		return new RegExpRestResource(new JsonTestWebSerialDeserial(),
+			WicketApplication.this);
+	    }
+
+	});
+
+	mountResource("/api3", new ResourceReference("multiFormatRestResource")
 	{
-		return roles.hasAnyRole(this.roles);
-	}
 
-	@Override
-	public void init()
-	{
-		super.init();
+	    @Override
+	    public IResource getResource()
+	    {
+		MultiFormatSerialDeserial multiFormat = new MultiFormatSerialDeserial();
 
-		mountResource("/api", new ResourceReference("restReference")
-		{
+		multiFormat.registerSerDeser(new JsonTestWebSerialDeserial(),
+			RestMimeTypes.APPLICATION_JSON);
+		multiFormat.registerSerDeser(new XmlTestWebSerialDeserial(),
+			RestMimeTypes.APPLICATION_XML);
 
-			@Override
-			public IResource getResource()
-			{
-				return new RestResourceFullAnnotated(new TestJsonDesSer(), WicketApplication.this);
-			}
+		return new MultiFormatRestResource(multiFormat);
+	    }
 
-		});
+	});
+    }
 
-		mountResource("/api2", new ResourceReference("regExpRestResource")
-		{
+    @Override
+    public Session newSession(Request request, Response response)
+    {
+	Session session = super.newSession(request, response);
+	session.setLocale(Locale.ENGLISH);
 
-			@Override
-			public IResource getResource()
-			{
-				return new RegExpRestResource(new TestJsonDesSer(), WicketApplication.this);
-			}
-
-		});
-
-		mountResource("/api3", new ResourceReference("multiFormatRestResource")
-		{
-
-			@Override
-			public IResource getResource()
-			{
-				MultiFormatSerialDeserial multiFormat = new MultiFormatSerialDeserial();
-
-				multiFormat.registerSerDeser(new TestJsonDesSer(), RestMimeTypes.APPLICATION_JSON);
-				multiFormat.registerSerDeser(new XmlSerialDeser(), RestMimeTypes.APPLICATION_XML);
-
-				return new MultiFormatRestResource(multiFormat);
-			}
-
-		});
-	}
-
-	@Override
-	public Session newSession(Request request, Response response)
-	{
-		Session session = super.newSession(request, response);
-		session.setLocale(Locale.ENGLISH);
-
-		return session;
-	}
+	return session;
+    }
 }

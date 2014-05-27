@@ -36,25 +36,25 @@ import org.wicketstuff.rest.annotations.parameters.PathParam;
 import org.wicketstuff.rest.annotations.parameters.RequestBody;
 import org.wicketstuff.rest.annotations.parameters.RequestParam;
 import org.wicketstuff.rest.annotations.parameters.ValidatorKey;
-import org.wicketstuff.rest.contenthandling.RestMimeTypes;
-import org.wicketstuff.rest.contenthandling.serialdeserial.TestJsonDesSer;
+import org.wicketstuff.rest.contenthandling.mimetypes.RestMimeTypes;
+import org.wicketstuff.rest.contenthandling.webserialdeserial.TextualWebSerialDeserial;
 import org.wicketstuff.rest.utils.http.HttpMethod;
 
-public class RestResourceFullAnnotated extends AbstractRestResource<TestJsonDesSer>
+public class RestResourceFullAnnotated extends AbstractRestResource<TextualWebSerialDeserial>
 {
-	public RestResourceFullAnnotated(TestJsonDesSer jsonSerialDeserial,
+	public RestResourceFullAnnotated(TextualWebSerialDeserial jsonSerialDeserial,
 		IRoleCheckingStrategy roleCheckingStrategy)
 	{
 		super(jsonSerialDeserial, roleCheckingStrategy);
 	}
 
-	public RestResourceFullAnnotated(TestJsonDesSer jsonSerialDeserial)
+	public RestResourceFullAnnotated(TextualWebSerialDeserial jsonSerialDeserial)
 	{
 		super(jsonSerialDeserial);
 	}
 
 	@Override
-	protected void onInitialize(TestJsonDesSer objSerialDeserial)
+	protected void onInitialize(TextualWebSerialDeserial objSerialDeserial)
 	{
 		EmailAddressValidator emailValidator = EmailAddressValidator.getInstance();
 

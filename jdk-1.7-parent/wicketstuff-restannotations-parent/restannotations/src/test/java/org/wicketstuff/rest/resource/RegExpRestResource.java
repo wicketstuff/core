@@ -20,17 +20,17 @@ import org.apache.wicket.authroles.authorization.strategies.role.IRoleCheckingSt
 import org.apache.wicket.util.lang.Args;
 import org.wicketstuff.rest.annotations.MethodMapping;
 import org.wicketstuff.rest.annotations.parameters.CookieParam;
-import org.wicketstuff.rest.contenthandling.serialdeserial.TestJsonDesSer;
+import org.wicketstuff.rest.contenthandling.webserialdeserial.JsonTestWebSerialDeserial;
 
 public class RegExpRestResource extends RestResourceFullAnnotated
 {
-	public RegExpRestResource(TestJsonDesSer jsonSerialDeserial,
+	public RegExpRestResource(JsonTestWebSerialDeserial jsonSerialDeserial,
 		IRoleCheckingStrategy roleCheckingStrategy)
 	{
 		super(jsonSerialDeserial, roleCheckingStrategy);
 	}
 
-	public RegExpRestResource(TestJsonDesSer jsonSerialDeserial)
+	public RegExpRestResource(JsonTestWebSerialDeserial jsonSerialDeserial)
 	{
 		super(jsonSerialDeserial);
 	}
