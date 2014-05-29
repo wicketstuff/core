@@ -18,6 +18,12 @@ package org.wicketstuff.rest.contenthandling.json.webserialdeserial;
 
 import org.wicketstuff.rest.contenthandling.json.objserialdeserial.GsonObjectSerialDeserial;
 
+/**
+ * Web serializer/deserailizer that works with JSON and GsonObjectSerialDeserial
+ * 
+ * @author andrea del bene
+ * @see GsonObjectSerialDeserial
+ */
 public class GsonWebSerialDeserial extends JsonWebSerialDeserial
 {
 

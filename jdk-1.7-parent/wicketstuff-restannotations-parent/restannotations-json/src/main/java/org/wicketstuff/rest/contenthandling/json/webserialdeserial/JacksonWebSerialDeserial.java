@@ -18,6 +18,12 @@ package org.wicketstuff.rest.contenthandling.json.webserialdeserial;
 
 import org.wicketstuff.rest.contenthandling.json.objserialdeserial.JacksonObjectSerialDeserial;
 
+/**
+ * Web serializer/deserailizer that works with JSON and JacksonObjectSerialDeserial
+ * 
+ * @author andrea del bene
+ * @see JacksonObjectSerialDeserial
+ */
 public class JacksonWebSerialDeserial extends JsonWebSerialDeserial
 {
 
