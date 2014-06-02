@@ -3,73 +3,67 @@
  * All rights reserved.
  */
 
-if (typeof(InMethod) == "undefined") {
+if (typeof(InMethod) === "undefined") {
 	InMethod = { };
 }
 
-//InMethod.util = YAHOO.util;
-//InMethod.lang = YAHOO.lang;
 
 (function() {	
 	
-//var E = InMethod.util.Event;
-//var D = InMethod.util.Dom;
-//var L = InMethod.lang;
-var empty = function() { };
+    var empty = function() { };
 
-var genIdCounter = 0;
+    var genIdCounter = 0;
 
-/**
- * YAHOO event cleanups the listeners only on page unload. However, if the page lives long
- * enough the elements removed from document that have listener attached cause IE GC not free the
- * memory. So we manually register each element with listener and then periodically check 
- * whether the element is still in document. If it's not the element's listeners are removed.
- */
-var elementsWithListeners = new Array();
+    /**
+     * YAHOO event cleanups the listeners only on page unload. However, if the page lives long
+     * enough the elements removed from document that have listener attached cause IE GC not free the
+     * memory. So we manually register each element with listener and then periodically check 
+     * whether the element is still in document. If it's not the element's listeners are removed.
+     */
+    var elementsWithListeners = new Array();
 
-var addListener = function(element, event, fn, obj, override) {
-	
-	// attach event
-	$(element).on(event, obj, fn);
-	
-	if (element != document && element != window) {
-		elementsWithListeners.push(element);
-	}
-};
+    var addListener = function(element, event, fn, obj, override) {
 
-// temporary array of elements being processed during purge
-var beingPurged = null;
+            // attach event
+            $(element).on(event, obj, fn);
 
-// count of purged elements (debug)
-var purgedCount = 0;
+            if (element !== document && element !== window) {
+                    elementsWithListeners.push(element);
+            }
+    };
 
-var purgeDebug = false;
+    // temporary array of elements being processed during purge
+    var beingPurged = null;
 
-// periodically called to initiate the purging process
-var purgeInactiveListeners = function() {
-	
-	// if purge is in progress don't do anything
-	if (beingPurged != null) {
-		return;
-	}
-	
-	// the the elements
-	beingPurged = elementsWithListeners;
-	elementsWithListeners = new Array();
-	
-	if (purgeDebug)
-		Wicket.Log.info("Purge begin");
-	
-	purgedCount = 0;
-	
-	// start the process
-	purge();
-};
+    // count of purged elements (debug)
+    var purgedCount = 0;
 
-var purge = function() 
-{
-	if (beingPurged != null)
-	{
+    var purgeDebug = false;
+
+    // periodically called to initiate the purging process
+    var purgeInactiveListeners = function() {
+
+            // if purge is in progress don't do anything
+            if (typeof beingPurged !== 'undefined' && beingPurged !== null) {
+                    return;
+            }
+
+            // the the elements
+            beingPurged = elementsWithListeners;
+            elementsWithListeners = new Array();
+
+            if (purgeDebug)
+                    Wicket.Log.info("Purge begin");
+
+            purgedCount = 0;
+
+            // start the process
+            purge();
+    };
+
+    var purge = function() 
+    {
+	if (typeof beingPurged !== 'undefined' && beingPurged !== null) {
 		var done = 0;
 		
 		// it is necessary to limit amount of items being purged in one go otherwise
@@ -77,13 +71,13 @@ var purge = function()
 		var max = 50;
 		
 		var a = beingPurged;
-		for (var i = 0; i < a.length && done < 50; ++i)
+		for (var i = 0; i < a.length && done < max; ++i)
 		{
 			var e = a[i];
-			if (e != null)
+			if (e !== null)
 			{
 				++done;
-				if ($(e).length == 0) {
+				if ($(e).length === 0) {
 					// remove all events.
 					$(e).off();
 					++purgedCount;
@@ -96,7 +90,7 @@ var purge = function()
 		}
 		
 		
-		if (i == a.length)
+		if (i === a.length)
 		{
 			// we are done with purging
 			beingPurged = null;
@@ -110,76 +104,76 @@ var purge = function()
 			window.setTimeout(purge, 50);
 		}
 	}
-};
+    };
 
-/**
- * Prelight functionality
- */
-// map of elements with prelight
-var curPrelight = new Object();
+    /**
+     * Prelight functionality
+     */
+    // map of elements with prelight
+    var curPrelight = new Object();
  
-var mouseIn = function(ev, instance) {
-	var e = this;	
+    var mouseIn = function(ev, instance) {
+            var e = this;	
 
-	// if the old and new prelight are not related in any way make sure that
-	// the prelight is disabled on the old ones	
-	for (property in curPrelight) {		
-		var id = curPrelight[property];
-		if (id) {
-			var c = Wicket.$(id);
-			if (c != null && $(e).parents().index($(c))==0 && $(c).parents().index($(e))==0)  {
-				Wicket.bind(mouseOut,c)(null, instance);
-			}
-		}
-	}
-	
-	var id = getElementId(e);
-	curPrelight[id] = id;	
-	e.imxtPrelight = true;	
-	if(ev != null) {
-		ev.data.updatePrelight(e);	
-	} else if(instance != null) {
-		instance.updatePrelight(e);
-	}
-	
-};
-	
-var mouseOut = function(ev, instance) {
-	var e = this;
-	curPrelight[getElementId(e)] = null;	
-	e.imxtPrelight = false;	
-	ev.data.updatePrelight(e);	
-};
+            // if the old and new prelight are not related in any way make sure that
+            // the prelight is disabled on the old ones	
+            for (property in curPrelight) {		
+                    var id = curPrelight[property];
+                    if (id) {
+                            var c = Wicket.$(id);
+                            if (c != null && $(e).parents().index($(c))==0 && $(c).parents().index($(e))==0)  {
+                                    Wicket.bind(mouseOut,c)(null, instance);
+                            }
+                    }
+            }
 
-var ignorePrelight = function(element)
-{
-	// We need to ignore prelight on table rows for all browsers but IE<=6.
-	// For all other browsers we use :hover, it's much faster in IE7
-	return !(element.tagName == "TR" && Wicket.Browser.isIELessThan7()) && hasClass(element, "imxt-grid-row");
-}
+            var id = getElementId(e);
+            curPrelight[id] = id;	
+            e.imxtPrelight = true;	
+            if(ev !== null) {
+                    ev.data.updatePrelight(e);	
+            } else if(instance !== null) {
+                    instance.updatePrelight(e);
+            }
 
-var attachPrelight = function(elements, instance) {
-		
-	for (var i = 0; i < elements.length; ++i) {
-		var element = elements[i];
-					
-		if (element.imxtPrelightAttached != true && !ignorePrelight(element)) {			
-			if (curPrelight != null && curPrelight[getElementId(element)] != null) {
-				Wicket.bind(mouseIn,element)(null, instance);
-			}					
-			addListener(element, "mouseover", mouseIn, instance, false);
-			addListener(element, "mouseout", mouseOut, instance, false);
-			element.imxtPrelightAttached = true;						
-		}			
-	}
-};
+    };
+	
+    var mouseOut = function(ev, instance) {
+            var e = this;
+            curPrelight[getElementId(e)] = null;	
+            e.imxtPrelight = false;	
+            ev.data.updatePrelight(e);	
+    };
+
+    var ignorePrelight = function(element)
+    {
+            // We need to ignore prelight on table rows for all browsers but IE<=6.
+            // For all other browsers we use :hover, it's much faster in IE7
+            return !(element.tagName.toLowerCase() === "tr" && Wicket.Browser.isIELessThan7()) && hasClass(element, "imxt-grid-row");
+    }
+
+    var attachPrelight = function(elements, instance) {
+
+            for (var i = 0; i < elements.length; ++i) {
+                    var element = elements[i];
+
+                    if (element.imxtPrelightAttached !== true && !ignorePrelight(element)) {			
+                            if (curPrelight != null && curPrelight[getElementId(element)] != null) {
+                                    Wicket.bind(mouseIn,element)(null, instance);
+                            }					
+                            addListener(element, "mouseover", mouseIn, instance, false);
+                            addListener(element, "mouseout", mouseOut, instance, false);
+                            element.imxtPrelightAttached = true;						
+                    }			
+            }
+    };
 
 window.setInterval(purgeInactiveListeners, 10000); 
 
 $(window).on("unload", function() { elementsWithListeners = null; });
 
 var getElementId = function(element) {
-	if (typeof(element.getAttribute("id")) == "string" && element.getAttribute("id").length > 0) {
+	if (typeof(element.getAttribute("id")) === "string" && element.getAttribute("id").length > 0) {
 		return element.getAttribute("id");
 	} else {
 		var id = "imxt-generated-id-" + (++genIdCounter);
@@ -206,7 +200,7 @@ InMethod.Drag.prototype = {
 	},
 	
 	onMouseDown: function(e) {
-		if (typeof(e.ignore) == "undefined") {				
+		if (typeof(e.ignore) === "undefined") {				
 			e.stopPropagation();			
 			e.data.lastMouseX = e.clientX;
 			e.data.lastMouseY = e.clientY;				
@@ -234,8 +228,9 @@ InMethod.Drag.prototype = {
 				
 		var res = Wicket.bind(e.data.onDrag,e.data.thisRef)(Wicket.$(e.data.elementId), deltaX, deltaY, e);
 			
-		if (res == null)
-			res = [0, 0];
+		if (typeof res === 'undefined' || res === null){
+                    res = [0, 0];
+                }
 			
 		e.data.lastMouseX = e.clientX + res[0];
 		e.data.lastMouseY = e.clientY + res[1];
@@ -270,9 +265,7 @@ InMethod.Drag.prototype = {
 	}	
 };
 
-//var E = InMethod.util.Event;
-//var D = InMethod.util.Dom;
-//var L = InMethod.lang;
+
 var colSpanRegex = /imxt-colspan-([\d]+)/;
 
 var nextSibling = function(element) {
@@ -305,7 +298,7 @@ var contains = function(array, value) {
 };
 
 var isEmpty = function(string) {
-	return !(typeof string == 'string' && string.length > 0);
+	return !(typeof string === 'string' && string.length > 0);
 }
 
 
@@ -345,7 +338,7 @@ var getFirstChild = function(parent, tagName) {
 	return null;
 }
 
-Wicket.Browser.isIE9 = Wicket.Browser.isIE9 || function() {
+Wicket.Browser.isIE9 = Wicket.Browser.isIE9 || function() {
 	var index = window.navigator.userAgent.indexOf("MSIE");
 	var version = parseFloat(window.navigator.userAgent.substring(index + 5));
 	return Wicket.Browser.isIE() && version == 9;
@@ -367,7 +360,14 @@ InMethod.XTable = Wicket.Class.create();
 InMethod.XTable.prototype = {
 	
 	initialize: function(id, columnsData, columnsStateCallback) {			
-		this.id = id;			
+		this.id = id;	
+                //Store browser version in variables, calls to Wicket.Browser methods burn CPU.
+                this.isIE = Wicket.Browser.isIE();
+                this.isIEQuirks = Wicket.Browser.isIEQuirks();
+                this.isIELessThan7 = Wicket.Browser.isIELessThan7();
+                this.isGecko = Wicket.Browser.isGecko();
+                this.isOpera = Wicket.Browser.isOpera();
+                this.isSafari = Wicket.Browser.isSafari();		
 		
 		this.initColumns(columnsData);				
 		
@@ -376,7 +376,7 @@ InMethod.XTable.prototype = {
 		
 		this.updateScrollTop = this.lastScrollTop;
 		this.updateScrollLeft = this.lastScrollLeft;	
-					
+
 		//this.updateColumnWidths();		
 		this.update();		
 		
@@ -384,17 +384,17 @@ InMethod.XTable.prototype = {
 		
 		// IE needs update called twice, otherwise the top right corner flashes or there is a horizontal 
 		// scrollbar where it shouldn't be
-		if (Wicket.Browser.isIE() && !Wicket.Browser.isIEQuirks()) {
+		if (this.isIE && !this.isIEQuirks) {
 			var bodyContainer1 = this.getElement("div", "imxt-body-container1");
 			bodyContainer1.imxtOldOffsetWidth = null;
 			this.update();		
 		}
 						
-		if (Wicket.Browser.isIE()) {
+		if (this.isIE) {
 			addClass(Wicket.$(id), "imxt-ie");
-		} else if (Wicket.Browser.isGecko()) {
+		} else if (this.isGecko) {
 			addClass(Wicket.$(id), "imxt-ff");
-		} else if (Wicket.Browser.isSafari()) {
+		} else if (this.isSafari){
 			addClass(Wicket.$(id), "imxt-safari");
 		}				
 		
@@ -442,12 +442,15 @@ InMethod.XTable.prototype = {
 	/**
 	 * Returns the elements that have specified tagName and css class.
 	 * Optionally root parameter can narrow the searching scope.
+         * @param tagName
+         * @param className
+         * @param root
 	 */ 
 	getElements: function(tagName, className, root) {				
-		if (typeof(root) == "undefined")
+		if (typeof(root) === "undefined")
 			root = this.getTopContainer();
 		
-		if (className == null) {
+		if (typeof className === 'undefined' || className === null) {
 			return $(root).find(tagName);
 		} else {
 			var selector = tagName + '.' + className;
@@ -466,6 +469,7 @@ InMethod.XTable.prototype = {
 
 	/**
 	 * Constructs cache id unique for this XTable.
+         * @param suffix
 	 */
 	getCacheId: function(suffix) {
 		return "imxt-" + this.id + "-" + suffix;
@@ -475,13 +479,15 @@ InMethod.XTable.prototype = {
 	 * Returns element with specified id. If the element can't be found based on the id,
 	 * it calls getElementFunc to find the element and then either sets element id or
 	 * put a mapping to real id to idCache.
+         * @param id
+         * @param {function} getElementFunc
 	 */
 	getElementCached: function(id, getElementFunc) {
 		var actualId = this.idCache[id] || id;
 		
 		var e = Wicket.$(actualId);
 				
-		if (e == null) {
+		if (typeof e === 'undefined' || e === null) {
 		
 			e = getElementFunc();
 			actualId = e.getAttribute("id");
@@ -500,6 +506,9 @@ InMethod.XTable.prototype = {
 	/**
 	 * Returns element in this XTable with specified tagName and className,
 	 * optionally narrowing the search scope with the root parameter.
+         * @param tagName
+         * @param className
+         * @param root
 	 */	
 	getElement: function(tagName, className, root) {
 		var id = this.getCacheId(className);
@@ -585,7 +594,7 @@ InMethod.XTable.prototype = {
 								
 		var scroll;
 		 		
-		if (Wicket.Browser.isOpera()) {
+		if (this.isOpera) {
 			// for some reason opera doesn't preserve the scroll offset
 			bodyContainer1 = this.getElement("div", "imxt-body-container1");
 			scroll = bodyContainer1.scrollLeft;
@@ -610,13 +619,13 @@ InMethod.XTable.prototype = {
 					// opera fails to refresh the table properly, so we need to hide it and show
 					// after the width is set, that way it's refreshed properly
 					if (r.style.width != width) {
-						if (Wicket.Browser.isOpera())						
+						if (this.isOpera)						
 							this.getBodyTable().style.display = "none";
 						
 						r.style.width = width;
 					}
 						
-					if (Wicket.Browser.isOpera()) {
+					if (this.isOpera) {
 						this.getBodyTable().style.display = "";
 					}					
 				}
@@ -630,7 +639,7 @@ InMethod.XTable.prototype = {
 			// firefox and in some cases in shifts the content after the table and immediately moves it back which results in nasty
 			// flicker. This fix creates a style rule for imxt-body-cotnainer2 that forces it to have width of body table, so the 
 			// scrollbar is immediately visible (if necessary) after ajax replacement.
-			if (Wicket.Browser.isGecko()) {
+			if (this.isGecko) {
 				var c2 = this.getElement("div", "imxt-body-container2");
 				c2.style.width="auto"; // we want the stylesheet rule only applied on fresh replaced component
 				var x = document.styleSheets[0];
@@ -652,17 +661,19 @@ InMethod.XTable.prototype = {
 			}			
 		} 
 		
-		if (Wicket.Browser.isOpera()) {
+		if (this.isOpera) {
 			bodyContainer1 = this.getElement("div", "imxt-body-container1");
 			bodyContainer1.scrollLeft = scroll;
 		}
 	},
 	
 	/**
-	 * Updates the table state 
+	 * Updates the table state
+         * @param force
 	 */
 	updateInternal: function(force) {
-		
+		//This Function is run periodically, old calls to Wicket.Browser burnt CPU in
+                //newest chrome versions.
  		var topContainer = this.getTopContainer();
 		
 		if (topContainer == null) {
@@ -676,20 +687,21 @@ InMethod.XTable.prototype = {
   		var headContainer1 = this.getElement("div", "imxt-head-container1");
   		var headContainer2 = this.getElement("div", "imxt-head-container2");
   		var bodyContainer1 = this.getElement("div", "imxt-body-container1");  				  		
+	
 
-  		if (Wicket.Browser.isIE() || Wicket.Browser.isGecko()) {
+  		if (this.isIE || this.isGecko) {
   			bodyContainer1.style.width = topContainer.offsetWidth + "px";
-  		}  		
-  		
+  		}  	
+                
 		var padding = (bodyContainer1.offsetWidth - bodyContainer1.clientWidth);
 
 		// count new header width
 		var newWidth = (body.offsetWidth + padding);
 		
 		// sometimes newWidth is negative in IE, we have to ignore it		
-		if (Wicket.Browser.isIE() && newWidth > 0 && head.style.width != newWidth)
+		if (this.isIE&& newWidth > 0 && head.style.width != newWidth) {
 			head.style.width = newWidth + "px"; 
-		else if (Wicket.Browser.isSafari()) {			
+                } else if (this.isSafari) {			
 			var form = this.getElement("*", "imxt-form");			
 			var fieldset = this.getElement("fieldset", "imxt-fieldset", form);
 			fieldset.style.width = form.offsetWidth + "px";
@@ -749,24 +761,24 @@ InMethod.XTable.prototype = {
 	},
 	
 	fixIEStd: function() {
-		if (Wicket.Browser.isIE() && !Wicket.Browser.isIEQuirks()) {			
-		
-			var bodyContainer1 = this.getElement("div", "imxt-body-container1");
-		      		 		      				      		 		      		
-		    // IE in standard compliance mode fails to display the scrollbars properly
-		    // so we need to manually change the overflow mode		      		 		      	
-			if (this.dragging || bodyContainer1.imxtOldOffsetWidth != bodyContainer1.offsetWidth) {							
-			
-				var body = this.getBodyTable();
-			
-				// this forces IE to recalculate the width. setting to 1px "hides" the scrollbar
-				// so that bodyContainer1 gives us real scrollWidth						 				     		 		      				      		 		      		 
-				body.style.width = "1px";
-				body.style.width = bodyContainer1.scrollWidth + "px";	
-				
-				bodyContainer1.imxtOldOffsetWidth = bodyContainer1.offsetWidth;
-			}
-		}
+            if (this.isIE && !this.isIEQuirks) {			
+
+                var bodyContainer1 = this.getElement("div", "imxt-body-container1");
+
+                // IE in standard compliance mode fails to display the scrollbars properly
+                // so we need to manually change the overflow mode		      		 		      	
+                if (this.dragging || bodyContainer1.imxtOldOffsetWidth != bodyContainer1.offsetWidth) {							
+
+                        var body = this.getBodyTable();
+
+                        // this forces IE to recalculate the width. setting to 1px "hides" the scrollbar
+                        // so that bodyContainer1 gives us real scrollWidth						 				     		 		      				      		 		      		 
+                        body.style.width = "1px";
+                        body.style.width = bodyContainer1.scrollWidth + "px";	
+
+                        bodyContainer1.imxtOldOffsetWidth = bodyContainer1.offsetWidth;
+                }
+            }
 	},
 	
 	/**
@@ -775,7 +787,7 @@ InMethod.XTable.prototype = {
 	updateHandles: function(force) {
 		// this is slow on IE so we only do it on every tenth update
 		
-		if (Wicket.Browser.isIELessThan7() || Wicket.Browser.isIEQuirks()) {
+		if (this.isIELessThan7 || this.isIEQuirks) {
 			var c = this.counter || 0;
 			if (force)
 				c = 0;
@@ -799,9 +811,10 @@ InMethod.XTable.prototype = {
 	
 	/**
 	 * Updates the XTable. This is called during resizing, after column drag and also periodically.
+         * @param force
 	 */
 	update: function(force) {
-		if (this.dragging == true) {
+		if (this.dragging === true) {
 			return true;
 		} else {
 			return this.updateInternal(force);
@@ -820,7 +833,7 @@ InMethod.XTable.prototype = {
 
 	getResizeProxy: function() {
 		var e = Wicket.$("imxt-resize-proxy");
-		if (e == null) {
+		if (typeof e === 'undefined' || e === null) {
 			e = document.createElement("div");
 			e.setAttribute("id", "imxt-resize-proxy");
 			document.body.appendChild(e);
@@ -840,7 +853,7 @@ InMethod.XTable.prototype = {
 		proxy.style.height = (bodyContainer.offsetHeight + bodyContainerPos.top - headContainerPos.top) + "px";
 		
 		var top = headContainerPos.top;
-		if (Wicket.Browser.isIE()) { // weird IE bug
+		if (this.isIE) { // weird IE bug
 			top = top - 2;
 		}
 		proxy.style.top = top + "px";		
@@ -854,32 +867,34 @@ InMethod.XTable.prototype = {
 
 	/**
 	 * Called when column resizing handle dragging started.  
+         * @param handle
 	 */
 	handleDragBegin: function(handle) {
 		
-		Wicket.Focus.lastFocusId = null;
-		
-		this.dragging = true;		
+            Wicket.Focus.lastFocusId = null;
 
-		var column = handle;
-		// find the column itself      			
-      	do {
-      		column = column.parentNode; 				
-      	} while (column.tagName != "TH");
-      	      
-      	// add the css dragging class 	      	      	      
-      	addClass(column, "imxt-dragging");
-      	addClass(this.getColumnsRow(), "imxt-dragging");
-    
-    	column.min = this.getColumnMinSize(column);
-		column.max = this.getColumnMaxSize(column);	      
-    
-    	column.imxtWidth = parseInt(column.style.width, 10);
-    	this.showResizeProxy(column);   				
+            this.dragging = true;		
+
+            var column = handle;
+            // find the column itself      			
+            do {
+                    column = column.parentNode; 				
+            } while (column.tagName.toLowerCase() !== "th");
+
+            // add the css dragging class 	      	      	      
+            addClass(column, "imxt-dragging");
+            addClass(this.getColumnsRow(), "imxt-dragging");
+
+            column.min = this.getColumnMinSize(column);
+                    column.max = this.getColumnMaxSize(column);	      
+
+            column.imxtWidth = parseInt(column.style.width, 10);
+            this.showResizeProxy(column);   				
 	},
 	
 	/**
 	 * Called when column resizing handle dragging ended
+         * @param handle
 	 */
 	handleDragEnd: function(handle) {
 		this.dragging = false;
@@ -889,19 +904,19 @@ InMethod.XTable.prototype = {
 		var column = handle;
 		do {
       		column = column.parentNode; 				
-      	} while (column.tagName != "TH");
+      	} while (column.tagName.toLowerCase() !== "th");
 
-      	// opera has weird redrawing problems, to get over it we hide the handle and show 
-      	// it after setting the width	
-      	if (Wicket.Browser.isOpera()) {
+                // opera has weird redrawing problems, to get over it we hide the handle and show 
+                // it after setting the width	
+                if (this.isOpera) {
 			column.style.display = "none";
 		} 
 		
 		column.style.width = column.imxtWidth + "px";
 		
-		if (Wicket.Browser.isOpera()) {
-    		column.style.display = ""; 
-    	} 
+		if (this.isOpera) {
+                    column.style.display = ""; 
+                } 
 		
 		// remove the css classes
 		removeClass(column, "imxt-dragging");
@@ -911,7 +926,7 @@ InMethod.XTable.prototype = {
 		this.getElement("div", "imxt-body-container1").imxtOldOffsetWidth = null;
 		
 		// the prelight has not been updated during dragging, update it now
-		if (Wicket.Browser.isIE()) // flickers otherwise
+		if (this.isIE) // flickers otherwise
 			window.setTimeout(Wicket.bind(this.updatePrelight,this), 100);
 		else
 			this.updatePrelight();
@@ -922,29 +937,32 @@ InMethod.XTable.prototype = {
 	
 	/**
 	 * Called during a column handle dragging
+         * @param handle
+         * @param dX
+         * @param dY
 	 */
 	handleDrag: function(handle, dX, dY) {
-		var column = handle;
-      	do {
+            var column = handle;
+            do {
       		column = column.parentNode; 				
-		} while (column.tagName != "TH");      							      		
+            } while (column.tagName.toLowerCase() !== "th");      							      		
       	
-		var current = column.imxtWidth;
-		var newWidth = current + dX;
-		var delta = 0;
-      			
-		if (column.min != -1 && newWidth < column.min) {
-			delta = column.min - newWidth;
-			newWidth = column.min;
-		} else if (column.max != -1 && newWidth > column.max) {		
-			delta = column.max - newWidth;
-			newWidth = column.max;
-		}
+            var current = column.imxtWidth;
+            var newWidth = current + dX;
+            var delta = 0;
+
+            if (column.min != -1 && newWidth < column.min) {
+                    delta = column.min - newWidth;
+                    newWidth = column.min;
+            } else if (column.max != -1 && newWidth > column.max) {		
+                    delta = column.max - newWidth;
+                    newWidth = column.max;
+            }
       		      	
-      	column.imxtWidth = newWidth;
-      	this.showResizeProxy(column);
-      	
-      	return [delta, 0];		      			
+            column.imxtWidth = newWidth;
+            this.showResizeProxy(column);
+
+            return [delta, 0];		      			
 	},
 	
 	handleDoubleClick: function(event) {
@@ -952,9 +970,9 @@ InMethod.XTable.prototype = {
 		var column = event.target;
 		do {
       		column = column.parentNode; 				
-      	} while (column.tagName != "TH");      	
+      	} while (column.tagName.toLowerCase() !== "th");      	
       	
-      	var min = table.getColumnMinSize(column)
+      	var min = table.getColumnMinSize(column);
       	
       	column.style.width = min + "px";
       	table.updateInternal();
@@ -980,6 +998,7 @@ InMethod.XTable.prototype = {
 	
 	/**
 	 * Calback invoked when the body is scrolled.
+         * @param event
 	 */
 	onScroll: function(event) {
 		var bodyContainer = event.data.getElement("div", "imxt-body-container1");
@@ -1041,6 +1060,8 @@ InMethod.XTable.prototype = {
 	
 	/**
 	 * Called when user starts to drag a column (reorder)
+         * @param column
+         * @param event
 	 */
 	columnDragBegin: function(column, event) {
 		Wicket.Focus.lastFocusId = null;
@@ -1056,6 +1077,7 @@ InMethod.XTable.prototype = {
 	
 	/**
 	 * Called after user finished dragging a column (reorder)
+         * @param column
 	 */
 	columnDragEnd: function(column) {		
 	
@@ -1077,21 +1099,21 @@ InMethod.XTable.prototype = {
 			do {
 				c = prevSibling(c);
 				--delta;
-			} while (c != null && c != target[0]);
+			} while (typeof c !== 'undefined' && c !== null && c != target[0]);
 		
 			// if the column hasn't been found in left siblings, try moving right
-			if (c == null) {
+			if (typeof c === 'undefined' || c === null) {
 			 	c = column;
 				delta = 0;
 				do {
 					c = nextSibling(c);
 					++delta;
-				} while (c != null && c != target[0]);
+				} while (typeof c !== 'undefined' && c !== null && c != target[0]);
 				--delta;
 			}
 			
 			// if we found target column, do the actual reordering
-			if (c != null) {
+			if (typeof c !== 'undefined' && c !== null) {
 				delta += target[1];
 				this.moveColumn(column, delta);
 				submitState = true;
@@ -1114,10 +1136,12 @@ InMethod.XTable.prototype = {
 	/**
 	 * Initializes the drag proxy. If the drag proxy doesn't exist yet, creates it. 
 	 * This method doesn't make the proxy visible. Proxy is made visible in updateDragProxy.
+         * @param ev
+         * @param column
 	 */
 	initDragProxy: function(ev, column) {	
 		var p = Wicket.$("imxt-drag-proxy");
-		if (p == null) {
+		if (typeof p === 'undefined' || p === null) {
 			p = document.createElement("div");
 			document.body.appendChild(p);
 			p.setAttribute("id", "imxt-drag-proxy");
@@ -1141,6 +1165,7 @@ InMethod.XTable.prototype = {
 	
 	/**
 	 * Moves the drag proxy to mouse cursor position.
+         * @param ev
 	 */
 	updateDragProxy: function(ev) {
 		var p = Wicket.$("imxt-drag-proxy");
@@ -1160,10 +1185,11 @@ InMethod.XTable.prototype = {
 	/**
 	 * Returns the arrow element with specified id (should be either 'imxt-arrow-down' or 'imxt-arrow-up').
 	 * If the arrow element doesn't exist, creates it.
+         * @param id
 	 */
 	getArrow: function(id) {
 		var a = Wicket.$(id);
-		if (a == null) {
+		if (typeof a === 'undefined' || a === null) {
 			a = document.createElement("a");
 			a.setAttribute("id", id);
 			document.body.appendChild(a);
@@ -1177,6 +1203,8 @@ InMethod.XTable.prototype = {
 	
 	/**
 	 * Shows arrows (both up and down) at the specified position)
+         * @param column
+         * @param pos
 	 */
 	showArrows: function(column, pos) {
 		var a1 = this.getArrow("imxt-arrow-down");
@@ -1208,7 +1236,7 @@ InMethod.XTable.prototype = {
 	},
 	
 	columnAndPrevSiblingsNotReorderable: function(column) {
-		while (column != null) {
+		while (typeof column !== 'undefined' && column !== null) {
 			if (column.imxtReorderable == true) {
 				return false;
 			}
@@ -1218,7 +1246,7 @@ InMethod.XTable.prototype = {
 	},
 	
 	columnAndNextSiblingsNotReorderable: function(column) {
-		while (column != null) {
+		while (typeof column !== 'undefined' && column !== null) {
 			if (column.imxtReorderable == true) {
 				return false;
 			}
@@ -1229,11 +1257,15 @@ InMethod.XTable.prototype = {
 	
 	/**
 	 * Invoked when user is dragging a column (reorder).
+         * @param column
+         * @param dX
+         * @param dY
+         * @param event
 	 */
 	columnDrag: function(column, dX, dY, event) {										
 					
 		var columns = this.cachedColumns;
-		if (typeof(columns) == "undefined" || columns == null) {
+		if (typeof(columns) === "undefined" || columns === null) {
 			columns = getChildren(this.getColumnsRow(), "TH");
 			this.cachedColumns = columns;
 		}
@@ -1260,7 +1292,7 @@ InMethod.XTable.prototype = {
 		}		
 				
 		// if the column is a column other than the column being dragged
-		if (c != column && c != null) {					
+		if (typeof c !== 'undefined' && c != column && c !== null) {					
 			// find if the cursor is in left or right half of column
 			var c_x = $(cx).offset().left;
 			var x = event.pageX - c_x;
@@ -1299,9 +1331,11 @@ InMethod.XTable.prototype = {
 	
 	/**
 	 * Reorders the column according to the delta (positive or negative number)
+         * @param column
+         * @param delta
 	 */
 	moveColumn: function(column, delta) {
-		while (column.tagName != "TH") {
+		while (column.tagName.toLowerCase() !== "th") {
 			column = column.parentNode;
 		}
 				
@@ -1309,7 +1343,7 @@ InMethod.XTable.prototype = {
 		// otherwise the tables will not be refreshed afterwards
 		var bodyContainer1;
 		var scroll;
-		if (Wicket.Browser.isOpera()) {
+		if (this.isOpera) {
 			bodyContainer1 = this.getElement("div", "imxt-body-container1");
 			scroll = bodyContainer1.scrollLeft;
 			this.getHeadTable().style.display="none";
@@ -1364,7 +1398,7 @@ InMethod.XTable.prototype = {
 				
 				var current = tds[i];
 				
-				if (typeof(current) == "undefined") {
+				if (typeof(current) === "undefined") {
 					continue;
 				}
 				
@@ -1388,7 +1422,7 @@ InMethod.XTable.prototype = {
 		updateRows(this.getBodyRows(), fixSpans);
 				
 		// show the tables in opera
-		if (Wicket.Browser.isOpera()) {
+		if (this.isOpera) {
 			this.getHeadTable().style.display="";
 			this.getBodyTable().style.display="";			
 			bodyContainer1.scrollLeft = scroll;			
@@ -1439,6 +1473,7 @@ InMethod.XTable.prototype = {
 	 * during column resizing/reordering. 
 	 * If the specified element is undefined, the css class is updated on all elements with
 	 * "imxt-want-prelight" css class.
+         * @param element
 	 */ 
 	updatePrelight: function(element) {		
 		if (this.dragging != true) {
@@ -1447,7 +1482,7 @@ InMethod.XTable.prototype = {
 		 		
 		 		var scrollLeft;
 		 		
-				if (Wicket.Browser.isOpera()) {
+				if (this.isOpera) {
 					// for some reason opera doesn't preserve the scroll offset when changing/removing style
 					bodyContainer1 = this.getElement("div", "imxt-body-container1");					
 					scrollLeft = bodyContainer1.scrollLeft;
@@ -1460,7 +1495,7 @@ InMethod.XTable.prototype = {
 					removeClass(e, "imxt-prelight");
 				}
 				
-				if (Wicket.Browser.isOpera()) {
+				if (this.isOpera) {
 					//e.style.visibility = "";
 					bodyContainer1 = this.getElement("div", "imxt-body-container1");
 					bodyContainer1.scrollLeft = scrollLeft;
@@ -1469,7 +1504,7 @@ InMethod.XTable.prototype = {
 			}, this);
 		 	
 		 		
-			if (typeof(element) != "undefined") {				
+			if (typeof(element) !== "undefined") {				
 				update(element);
 			} else {
 				var elements = this.getElements("*", "imxt-want-prelight", this.getHeadTable());
@@ -1507,6 +1542,7 @@ InMethod.XTable.prototype = {
 	
 	/**
 	 * Needs to be called when a row was added or updated.
+         * @param rowElement
 	 */
 	rowUpdated: function(rowElement) {
 		var elements = this.getElements("*", "imxt-want-prelight", rowElement);
@@ -1522,7 +1558,7 @@ InMethod.XTable.prototype = {
 	},
 	
 	getCellId: function(cell) {
-		if (typeof(cell.imxtId) != "string") {
+		if (typeof(cell.imxtId) !== "string") {
 			var index = 0;
 			var c = cell;
 			while ((c = prevSibling(c)) != null) {
@@ -1534,7 +1570,7 @@ InMethod.XTable.prototype = {
 			
 			var headerCell = headerCells[index];
 			
-			if (typeof(headerCell.imxtId) == "string") {
+			if (typeof(headerCell.imxtId) === "string") {
 				cell.imxtId = headerCell.imxtId;
 			} else {
 				cell.imxtId = "";
@@ -1547,6 +1583,11 @@ InMethod.XTable.prototype = {
 	initCellsEventHandler: function(event) {
 		var cell = event.target;
 		var table = event.data;
+                //Needed because when jquery handles cell event, return cell contents instead
+                //of td cell.
+                if(cell.tagName.toLowerCase() !== 'td' | !$(cell).hasClass('imxt-cell')){
+                    cell =$(cell).parents("td.imxt-cell")[0];
+                }
 		cell.parentNode.imxtClickedColumn = table.getCellId(cell);		
 	},
 	
@@ -1570,9 +1611,9 @@ InMethod.XTable.canSelectRow = function(event) {
 	var e = Wicket.Event.fix(event);
 	var element = e.target ? e.target : e.srcElement;
 	
-	while (element != null && element != document.documentElement) {
-		var tn = element.tagName;
-		if (tn == "A" || tn == "INPUT" || tn == "SELECT" || tn == "BUTTON") {
+	while (typeof element !== 'undefined' && element !== null && element != document.documentElement) {
+		var tn = element.tagName.toLowerCase();
+		if (tn === "a" || tn === "input" || tn === "select" || tn === "button") {
 			return false;
 		}
 		element = element.parentNode;
@@ -1598,7 +1639,7 @@ InMethod.XTableManager.prototype = {
 	update: function() {						
 		for (var property in this.current) {
 			var table = this.current[property];
-			if (table != null) {
+			if (typeof table !== 'undefined' && table !== null) {
 				var res = table.update();
 				if (res != true) {
 					this.current[property] = null;
@@ -1610,7 +1651,7 @@ InMethod.XTableManager.prototype = {
 	updateTreeColumns: function() {
 		for (var property in this.current) {
 			var table = this.current[property];
-			if (table != null) {
+			if (typeof table !== 'undefined' && table !== null) {
 				table.updateTreeColumns();
 			}
 		};
@@ -1618,19 +1659,19 @@ InMethod.XTableManager.prototype = {
 	
 	register: function(id, columnsData, columnsStateCallback) {
 		var existing = this.current[id];
-		if (existing == null) {
-			existing = new InMethod.XTable(id, columnsData, columnsStateCallback);
-			this.current[id] = existing;
+		if (typeof existing === 'undefined' || existing === null) {
+                    existing = new InMethod.XTable(id, columnsData, columnsStateCallback);
+                    this.current[id] = existing;
 		} else {
-			// update existing
-			existing.initialize(id, columnsData, columnsStateCallback);
+                    // update existing
+                    existing.initialize(id, columnsData, columnsStateCallback);
 		}
 	},
 	
 	
 	updateRow: function(id, row) {
 		var table = this.current[id];
-		if (table != null) {
+		if (typeof table !== 'undefined' && table !== null) {
 			table.rowUpdated(row);
 		}
 	}
@@ -1639,7 +1680,7 @@ InMethod.XTableManager.prototype = {
 InMethod.XTableManager.instance = new InMethod.XTableManager(); 
 
 InMethod.setCursorPos = function(elm, begin, end) {
-    if (typeof elm.selectionStart != "undefined" && typeof elm.selectionEnd != "undefined")  {
+    if (typeof elm.selectionStart !== "undefined" && typeof elm.selectionEnd !== "undefined")  {
         elm.setSelectionRange (begin, end);
         elm.focus ();
     } else if (document.selection && document.selection.createRange) {
@@ -1648,12 +1689,10 @@ InMethod.setCursorPos = function(elm, begin, end) {
         range.moveEnd ("character", end - begin);
         range.select ();
     }
-}
+};
 
 function findParent(node, tagName)  {
-	return D.getAncestorBy(node, function(n) {
-		return n.tagName == tagName;
-	});
+    return $(node).parents(tagName);
 }
 
 onKeyEvent = function(element, event) {
@@ -1677,18 +1716,19 @@ onKeyEvent = function(element, event) {
 		
 		do {
 			row = findParent(row, "TR");		
-		} while (row != null && !hasClass(findParent(row, "TABLE"), "imxt-body"));
+		} while (typeof row !== 'undefined' && row !== null 
+                        && !hasClass(findParent(row, "TABLE"), "imxt-body"));
 		
-		if (row != null) {
+		if (typeof row !== 'undefined' && row !== null) {
 		
 			var elements;
 			if (key == 13) {
-				elements = D.getElementsByClassName("imxt-edit-submit", "A", row);
+                                elements = $(row).find("a.imxt-edit-submit");
 			} else {
-				elements = D.getElementsByClassName("imxt-edit-cancel", "A", row);
+                                elements = $(row).find("a.imxt-edit-submit");
 			}
 			
-			if (elements != null && elements.length > 0) {
+			if (typeof elements !== 'undefined' && elements !== null && elements.length > 0) {
 				$(elements[0]).click();
 			}		
 		}		
