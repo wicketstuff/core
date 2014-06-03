@@ -1581,14 +1581,11 @@ InMethod.XTable.prototype = {
 	},
 	
 	initCellsEventHandler: function(event) {
-		var cell = event.target;
-		var table = event.data;
-                //Needed because when jquery handles cell event, return cell contents instead
-                //of td cell.
-                if(cell.tagName.toLowerCase() !== 'td' | !$(cell).hasClass('imxt-cell')){
-                    cell =$(cell).parents("td.imxt-cell")[0];
-                }
-		cell.parentNode.imxtClickedColumn = table.getCellId(cell);		
+        // Needed because when jquery handles cell event, returns cell contents instead
+        // of td cell.
+        var cell = $(event.target).closest('td.imxt-cell')[0];
+        var table = event.data;
+        cell.parentNode.imxtClickedColumn = table.getCellId(cell);
 	},
 	
 	initCells: function(container) {
