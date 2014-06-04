@@ -16,11 +16,11 @@
  */
 package org.wicketstuff.event.annotation;
 
-import java.lang.annotation.Retention;
-import java.lang.annotation.Target;
-
 import static java.lang.annotation.ElementType.METHOD;
 import static java.lang.annotation.RetentionPolicy.RUNTIME;
+
+import java.lang.annotation.Retention;
+import java.lang.annotation.Target;
 
 /**
  * Annotation used to tag methods that should be called by {@link AnnotationEventDispatcher} to
@@ -31,5 +31,19 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
 @Retention(RUNTIME)
 public @interface OnEvent
 {
-	// marker annotation
+	/**
+	 * Whether to stop further broadcast of this event. Left unspecified it
+	 * defaults to false.
+	 *
+	 * @return whether to stop further broadcast of this event
+	 */
+	boolean stop() default false;
+
+	/**
+	 * Optional classes related to the event which may be use to distinguish
+	 * methods for event handling purposes.
+	 *
+	 * @return generic classes in the event
+	 */
+	Class<?>[] types() default {};
 }

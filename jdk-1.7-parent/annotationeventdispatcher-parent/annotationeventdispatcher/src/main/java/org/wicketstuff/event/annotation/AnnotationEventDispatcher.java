@@ -16,6 +16,7 @@
  */
 package org.wicketstuff.event.annotation;
 
+import org.apache.wicket.Application;
 import org.apache.wicket.Component;
 import org.apache.wicket.IEventDispatcher;
 import org.apache.wicket.application.IComponentInstantiationListener;
@@ -75,9 +76,27 @@ public class AnnotationEventDispatcher implements IEventDispatcher, IComponentIn
 	public void dispatchEvent(final Object sink, final IEvent<?> event, final Component component)
 	{
 		AnnotationEventSink eventSink = eventSinkByClass.get(sink.getClass());
-		if (eventSink != null && eventSink != EMPTY_SINK)
+		AnnotationEventDispatcherConfig config = Application.get().getMetaData(
+				Initializer.ANNOTATION_EVENT_DISPATCHER_CONFIG_CONTEXT_KEY);
+		if (eventSink != null
+				&& eventSink != EMPTY_SINK
+				&& (config.getEventFilter() == null || config.getEventFilter().isAssignableFrom(
+						event.getPayload().getClass()))
+				&& (config.isDispatchToNonVisibleComponents() || isVisible(sink)))
 		{
 			eventSink.onEvent(sink, event);
 		}
 	}
+
+	private boolean isVisible(final Object obj)
+	{
+		boolean visible = true;
+		if (obj instanceof Component)
+		{
+			final Component c = (Component) obj;
+			visible = c.isVisibleInHierarchy();
+		}
+		return visible;
+	}
+
 }

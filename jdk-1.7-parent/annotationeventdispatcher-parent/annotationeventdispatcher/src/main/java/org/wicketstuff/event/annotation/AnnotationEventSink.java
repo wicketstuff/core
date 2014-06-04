@@ -16,6 +16,10 @@
  */
 package org.wicketstuff.event.annotation;
 
+import static java.lang.reflect.Modifier.isPublic;
+import static java.util.Arrays.asList;
+import static org.apache.wicket.RuntimeConfigurationType.DEVELOPMENT;
+
 import org.apache.wicket.Application;
 import org.apache.wicket.event.IEvent;
 import org.apache.wicket.util.collections.ClassMetaCache;
@@ -24,10 +28,6 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.HashSet;
 import java.util.Set;
-
-import static java.lang.reflect.Modifier.isPublic;
-import static java.util.Arrays.asList;
-import static org.apache.wicket.RuntimeConfigurationType.DEVELOPMENT;
 
 class AnnotationEventSink
 {
@@ -101,7 +101,7 @@ class AnnotationEventSink
 		Set<Method> onEventMethods = getOnEventMethods(payload.getClass());
 		if (!onEventMethods.isEmpty())
 		{
-			onEvent(onEventMethods, sink, payload);
+			onEvent(onEventMethods, sink, payload, event);
 		}
 	}
 
@@ -124,13 +124,21 @@ class AnnotationEventSink
 		return onEventMethods;
 	}
 
-	private void onEvent(final Set<Method> onEventMethods, final Object sink, final Object payload)
+	private void onEvent(final Set<Method> onEventMethods, final Object sink, final Object payload, final IEvent<?> event)
 	{
 		try
 		{
 			for (Method method : onEventMethods)
 			{
-				method.invoke(sink, payload);
+				OnEvent onEvent = method.getAnnotation(OnEvent.class);
+				if (isPayloadApplicableToHandler(onEvent, payload))
+				{
+					method.invoke(sink, payload);
+					if (onEvent.stop()) {
+						event.stop();
+						break;
+					}
+				}
 			}
 		}
 		catch (InvocationTargetException e)
@@ -141,5 +149,24 @@ class AnnotationEventSink
 		{
 			throw new IllegalStateException("Failed to invoke @OnEvent method", e);
 		}
+	}
+	
+	private boolean isPayloadApplicableToHandler(final OnEvent onEvent,
+			final Object payload) 
+	{
+		boolean applicable = true;
+		if (payload instanceof ITypedEvent) 
+		{
+			Class<?>[] methodTypes = onEvent.types();
+			ITypedEvent event = (ITypedEvent) payload;
+			Class<?>[] eventTypes = event.getTypes();
+			for (int i = 0; i < methodTypes.length; i++) {
+				if (!methodTypes[i].isAssignableFrom(eventTypes[i])) {
+					applicable = false;
+					break;
+				}
+			}
+		}
+		return applicable;
 	}
 }
