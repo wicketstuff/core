@@ -6,6 +6,9 @@ import org.apache.wicket.event.Broadcast;
 import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.mock.MockApplication;
 import org.apache.wicket.util.tester.WicketTester;
+import org.apache.wicket.util.visit.IVisit;
+import org.apache.wicket.util.visit.Visit;
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -13,6 +16,11 @@ public class TypedAnnotationEventDispatcherTest
 {
 	private final MockApplication testApp = new MockApplication();
 	private final WicketTester tester = new WicketTester(testApp);
+	
+	@After
+	public void cleanup() {
+		tester.destroy();
+	}
 	
 	@Test
 	public void eventSentToProperHandlersBaseOnPayloadType()
@@ -31,7 +39,7 @@ public class TypedAnnotationEventDispatcherTest
 	}
 	
 	@Test
-	public void eventDoesNotPropogateOnStop()
+	public void eventDoesNotPropogateOnVisitWithStop()
 	{		
 		ComponentOne one = new ComponentOne("id1");
 		ComponentTwo two = new ComponentTwo("id2");
@@ -42,6 +50,22 @@ public class TypedAnnotationEventDispatcherTest
 		Assert.assertEquals(1, one.personsHandled);
 		Assert.assertEquals(0, one.widgetsHandled);
 		Assert.assertEquals(0, two.savesHandled);
+		Assert.assertEquals(0, container.widgetsHandled);
+		Assert.assertEquals(0, container.personsHandled);
+	}
+	
+	@Test
+	public void eventDoesNotPropogateOnAnnotationWithStop()
+	{		
+		ComponentTwo two = new ComponentTwo("id1");
+		ComponentFour four = new ComponentFour("id2");
+		TestContainer container = new TestContainer("container");
+		container.add(two, four);
+		tester.startComponentInPage(container);
+		four.send(four, Broadcast.BUBBLE, new SaveEvent<>(null, new Person()));
+		Assert.assertEquals(0, two.savesHandled);
+		Assert.assertEquals(1, four.personsHandled);
+		Assert.assertEquals(0, four.widgetsHandled);
 		Assert.assertEquals(0, container.widgetsHandled);
 		Assert.assertEquals(0, container.personsHandled);
 	}
@@ -171,10 +195,13 @@ public class TypedAnnotationEventDispatcherTest
 			widgetsHandled++;
 		}
 		
-		@OnEvent(types = Person.class, stop = true)
-		public void handleSavePersonEvent(final SaveEvent<Person> event)
+		@OnEvent(types = Person.class)
+		public IVisit<?> handleSavePersonEvent(final SaveEvent<Person> event)
 		{
 			personsHandled++;
+			Visit<?> visit = new Visit<>();
+			visit.stop();
+			return visit;
 		}
 	}
 	
@@ -214,6 +241,31 @@ public class TypedAnnotationEventDispatcherTest
 			System.out.println("widget = " + widget);
 		}
 		
+	}
+	
+	private class ComponentFour extends AbstractTestComponent
+	{
+		private static final long serialVersionUID = 1L;
+
+		public int personsHandled = 0;
+		public int widgetsHandled = 0;
+		
+		public ComponentFour(final String id)
+		{
+			super(id);
+		}
+
+		@OnEvent(types = Widget.class)
+		public void handleSaveWidgetEvent(final SaveEvent<Widget> event)
+		{
+			widgetsHandled++;
+		}
+		
+		@OnEvent(types = Person.class, stop = true)
+		public void handleSavePersonEvent(final SaveEvent<Person> event)
+		{
+			personsHandled++;
+		}
 	}
 	
 	private abstract class AbstractTestComponent extends Component

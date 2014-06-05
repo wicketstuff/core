@@ -24,6 +24,7 @@ import org.apache.wicket.Application;
 import org.apache.wicket.Component;
 import org.apache.wicket.event.IEvent;
 import org.apache.wicket.util.collections.ClassMetaCache;
+import org.apache.wicket.util.visit.Visit;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -138,8 +139,21 @@ class AnnotationEventSink
 					OnEvent onEvent = method.getAnnotation(OnEvent.class);
 					if (isPayloadApplicableToHandler(onEvent, payload))
 					{
-						method.invoke(sink, payload);
-						if (onEvent.stop())
+						Object result = method.invoke(sink, payload);
+						if (result instanceof Visit<?>)
+						{
+							Visit<?> visit = (Visit<?>) result;
+							if (visit.isDontGoDeeper())
+							{
+								event.dontBroadcastDeeper();
+							}
+							else if (visit.isStopped())
+							{
+								event.stop();
+								break;
+							}
+						}
+						else if (onEvent.stop())
 						{
 							event.stop();
 							break;
