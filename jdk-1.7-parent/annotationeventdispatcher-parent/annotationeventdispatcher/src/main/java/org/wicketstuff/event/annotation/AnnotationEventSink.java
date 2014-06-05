@@ -16,18 +16,21 @@
  */
 package org.wicketstuff.event.annotation;
 
+import static java.lang.reflect.Modifier.isPublic;
+import static java.util.Arrays.asList;
+import static org.apache.wicket.RuntimeConfigurationType.DEVELOPMENT;
+
 import org.apache.wicket.Application;
+import org.apache.wicket.Component;
 import org.apache.wicket.event.IEvent;
 import org.apache.wicket.util.collections.ClassMetaCache;
+import org.apache.wicket.util.visit.Visit;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
-
-import static java.lang.reflect.Modifier.isPublic;
-import static java.util.Arrays.asList;
-import static org.apache.wicket.RuntimeConfigurationType.DEVELOPMENT;
 
 class AnnotationEventSink
 {
@@ -66,13 +69,13 @@ class AnnotationEventSink
 	{
 		if (!isPublic(method.getModifiers()))
 		{
-			throw new RuntimeException("Invalid @OnEvent annotation in " + method +
-				": @OnEvent annotated methods must be public");
+			throw new RuntimeException("Invalid @OnEvent annotation in " + method
+					+ ": @OnEvent annotated methods must be public");
 		}
 		if (parameterTypes.length != 1)
 		{
-			throw new RuntimeException("Invalid @OnEvent annotation in " + method +
-				": @OnEvent annotated methods must have exactly one parameter");
+			throw new RuntimeException("Invalid @OnEvent annotation in " + method
+					+ ": @OnEvent annotated methods must have exactly one parameter");
 		}
 	}
 
@@ -101,7 +104,7 @@ class AnnotationEventSink
 		Set<Method> onEventMethods = getOnEventMethods(payload.getClass());
 		if (!onEventMethods.isEmpty())
 		{
-			onEvent(onEventMethods, sink, payload);
+			onEvent(onEventMethods, sink, payload, event);
 		}
 	}
 
@@ -124,22 +127,77 @@ class AnnotationEventSink
 		return onEventMethods;
 	}
 
-	private void onEvent(final Set<Method> onEventMethods, final Object sink, final Object payload)
+	private void onEvent(final Set<Method> onEventMethods, final Object sink, final Object payload,
+			final IEvent<?> event)
 	{
 		try
 		{
 			for (Method method : onEventMethods)
 			{
-				method.invoke(sink, payload);
+				if (canCallListenerInterface(sink, method))
+				{
+					OnEvent onEvent = method.getAnnotation(OnEvent.class);
+					if (isPayloadApplicableToHandler(onEvent, payload))
+					{
+						Object result = method.invoke(sink, payload);
+						if (result instanceof Visit<?>)
+						{
+							Visit<?> visit = (Visit<?>) result;
+							if (visit.isDontGoDeeper())
+							{
+								event.dontBroadcastDeeper();
+							}
+							else if (visit.isStopped())
+							{
+								event.stop();
+								break;
+							}
+						}
+						else if (onEvent.stop())
+						{
+							event.stop();
+							break;
+						}
+					}
+				}
+			}
+		} catch (InvocationTargetException e)
+		{
+			throw new IllegalStateException("Failed to invoke @OnEvent method", e);
+		} catch (IllegalAccessException e)
+		{
+			throw new IllegalStateException("Failed to invoke @OnEvent method", e);
+		}
+	}
+
+	private boolean canCallListenerInterface(final Object obj, final Method method)
+	{
+		boolean canCall = true;
+		if (obj instanceof Component)
+		{
+			Component c = (Component) obj;
+			canCall = c.canCallListenerInterface(method);
+		}
+		return canCall;
+	}
+
+	private boolean isPayloadApplicableToHandler(final OnEvent onEvent, final Object payload)
+	{
+		boolean applicable = true;
+		if (payload instanceof ITypedEvent)
+		{
+			Class<?>[] methodTypes = onEvent.types();
+			ITypedEvent event = (ITypedEvent) payload;
+			List<Class<?>> eventTypes = event.getTypes();
+			for (int i = 0; i < methodTypes.length; i++)
+			{
+				if (!methodTypes[i].isAssignableFrom(eventTypes.get(i)))
+				{
+					applicable = false;
+					break;
+				}
 			}
 		}
-		catch (InvocationTargetException e)
-		{
-			throw new IllegalStateException("Failed to invoke @OnEvent method", e);
-		}
-		catch (IllegalAccessException e)
-		{
-			throw new IllegalStateException("Failed to invoke @OnEvent method", e);
-		}
+		return applicable;
 	}
 }
