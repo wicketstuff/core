@@ -18,6 +18,8 @@ This library improves upon this situation by providing an `@OnEvent` annotation 
 
 The `@OnEvent` annotation takes an optional `stop` property.  If the `stop` property is true, the event will not propagate to any other event handlers.  Note that it probably only makes sense to use this with events where the broadcast type is `Broadcast.BUBBLE`.  By default, this property is false.
 
+Note that the `stop` property is specified at compile-time.  In order to more flexibly control the propagation of an event at run-time, an event handler method can return a `Visit` object to specify whether an event should continue propagating or whether the event should not continue propagating deeper into the component hierarchy. 
+
 The `@OnEvent` annotation also takes an optional `types` property.  The `types` property is an array of classes that is used in conjunction with the `ITypedEvent` interface to provide a means of discriminating the event handler methods to invoke.  The basic idea is that in order for an event handler to be invoked when the event payload is of type `ITypedEvent` the `types` classes on the event handler must be assignable from the result of the getTypes() method on the event.  The `AbstractPayloadTypedEvent` and `AbstractClassTypedPayloadEvent` classes are starting points for these types of events.       
 
 Installation
@@ -28,10 +30,11 @@ Configuration
 -------------
 The configuration object for the library, `AnnotationEventDispatcherConfig`, can be accessed via an application's metadata: `Application.get().getMetaData(Initializer.ANNOTATION_EVENT_DISPATCHER_CONFIG_CONTEXT_KEY)`.
 
-Currently, there are two configuration parameters:
+Currently, there is just one configuration parameter:
 
-* whether events should be dispatched to components that are not visible; by default, events are *not* dispatched to components that are not visible
 * class filter that events must implement in order to be handled by the annotation dispatcher; by default, there is no filter
+
+Whether an event is dispatched to a given event handler method is controlled by the Component#canCallListenerInterface(Method) method.  By default, this method returns false if the component is either disabled or not visible.
 
 Usage
 -----
@@ -67,6 +70,13 @@ The `AbstractPayloadTypedEvent` is the best starting place for implementing even
 	public void handleSaveWidgetEvent(SaveEvent<Widget> event) { ... }
 
 For the event handler, the `types` property (Widget.class) and the generic parameter on the event (Widget) should agree.
+
+Suggestions
+-----------
+* Determine the set of common actions that can be used with the various objects in the system.  These are most likely verbs such as save, delete, detail, edit, etc.
+* Create an event for each these actions that extends `AbstractPayloadTypedEvent`.  For example, `SaveEvent<T>`, `DeleteEvent<T>`, etc.
+* Create event-specific implementations of each event-producing component, most likely buttons and links, that simply sends the specific event in the `onClick()` or `onSubmit()` handler methods.  For example, `SaveButton`, `DeleteButton`, etc.  The object the component will send can either be explicitly set as the model for the component or the component can get the model from, for example, the enclosing form.
+* Separate form functionality into "pure" UI components that deal with user input and send events, and "mediator" components that contain the pure UI components and handle the events they send.  This has the effect of centralizing the code that persists the data.
 
 [1]: http://ci.apache.org/projects/wicket/apidocs/6.x/org/apache/wicket/Component.html#onEvent(org.apache.wicket.event.IEvent)
 [2]: http://wicket.apache.org/guide/guide/advanced.html#advanced_3
