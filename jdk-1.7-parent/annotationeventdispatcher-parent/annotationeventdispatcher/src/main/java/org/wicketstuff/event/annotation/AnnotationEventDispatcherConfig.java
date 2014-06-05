@@ -11,13 +11,9 @@ public class AnnotationEventDispatcherConfig {
 	public Class<?> getEventFilter() {
 		return eventFilter;
 	}
-
-	public void setEventFilter(final Class<?> eventFilter) {
-		this.eventFilter = eventFilter;
-	}
 	
 	public AnnotationEventDispatcherConfig eventFilter(final Class<?> eventFilter) {
-		setEventFilter(eventFilter);
+		this.eventFilter = eventFilter;
 		return this;
 	}
 	

@@ -11,7 +11,7 @@ public class Initializer implements IInitializer
 {
 
     @SuppressWarnings("serial")
-    public static MetaDataKey<AnnotationEventDispatcherConfig> ANNOTATION_EVENT_DISPATCHER_CONFIG_CONTEXT_KEY = new MetaDataKey<AnnotationEventDispatcherConfig>() {
+    public static final MetaDataKey<AnnotationEventDispatcherConfig> ANNOTATION_EVENT_DISPATCHER_CONFIG_CONTEXT_KEY = new MetaDataKey<AnnotationEventDispatcherConfig>() {
     };
 
     @Override
