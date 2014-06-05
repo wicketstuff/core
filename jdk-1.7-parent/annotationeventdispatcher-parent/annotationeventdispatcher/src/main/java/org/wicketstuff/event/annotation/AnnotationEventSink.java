@@ -21,12 +21,14 @@ import static java.util.Arrays.asList;
 import static org.apache.wicket.RuntimeConfigurationType.DEVELOPMENT;
 
 import org.apache.wicket.Application;
+import org.apache.wicket.Component;
 import org.apache.wicket.event.IEvent;
 import org.apache.wicket.util.collections.ClassMetaCache;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 class AnnotationEventSink
@@ -66,13 +68,13 @@ class AnnotationEventSink
 	{
 		if (!isPublic(method.getModifiers()))
 		{
-			throw new RuntimeException("Invalid @OnEvent annotation in " + method +
-				": @OnEvent annotated methods must be public");
+			throw new RuntimeException("Invalid @OnEvent annotation in " + method
+					+ ": @OnEvent annotated methods must be public");
 		}
 		if (parameterTypes.length != 1)
 		{
-			throw new RuntimeException("Invalid @OnEvent annotation in " + method +
-				": @OnEvent annotated methods must have exactly one parameter");
+			throw new RuntimeException("Invalid @OnEvent annotation in " + method
+					+ ": @OnEvent annotated methods must have exactly one parameter");
 		}
 	}
 
@@ -124,44 +126,59 @@ class AnnotationEventSink
 		return onEventMethods;
 	}
 
-	private void onEvent(final Set<Method> onEventMethods, final Object sink, final Object payload, final IEvent<?> event)
+	private void onEvent(final Set<Method> onEventMethods, final Object sink, final Object payload,
+			final IEvent<?> event)
 	{
 		try
 		{
 			for (Method method : onEventMethods)
 			{
-				OnEvent onEvent = method.getAnnotation(OnEvent.class);
-				if (isPayloadApplicableToHandler(onEvent, payload))
+				if (canCallListenerInterface(sink, method))
 				{
-					method.invoke(sink, payload);
-					if (onEvent.stop()) {
-						event.stop();
-						break;
+					OnEvent onEvent = method.getAnnotation(OnEvent.class);
+					if (isPayloadApplicableToHandler(onEvent, payload))
+					{
+						method.invoke(sink, payload);
+						if (onEvent.stop())
+						{
+							event.stop();
+							break;
+						}
 					}
 				}
 			}
-		}
-		catch (InvocationTargetException e)
+		} catch (InvocationTargetException e)
 		{
 			throw new IllegalStateException("Failed to invoke @OnEvent method", e);
-		}
-		catch (IllegalAccessException e)
+		} catch (IllegalAccessException e)
 		{
 			throw new IllegalStateException("Failed to invoke @OnEvent method", e);
 		}
 	}
-	
-	private boolean isPayloadApplicableToHandler(final OnEvent onEvent,
-			final Object payload) 
+
+	private boolean canCallListenerInterface(final Object obj, final Method method)
+	{
+		boolean canCall = true;
+		if (obj instanceof Component)
+		{
+			Component c = (Component) obj;
+			canCall = c.canCallListenerInterface(method);
+		}
+		return canCall;
+	}
+
+	private boolean isPayloadApplicableToHandler(final OnEvent onEvent, final Object payload)
 	{
 		boolean applicable = true;
-		if (payload instanceof ITypedEvent) 
+		if (payload instanceof ITypedEvent)
 		{
 			Class<?>[] methodTypes = onEvent.types();
 			ITypedEvent event = (ITypedEvent) payload;
-			Class<?>[] eventTypes = event.getTypes();
-			for (int i = 0; i < methodTypes.length; i++) {
-				if (!methodTypes[i].isAssignableFrom(eventTypes[i])) {
+			List<Class<?>> eventTypes = event.getTypes();
+			for (int i = 0; i < methodTypes.length; i++)
+			{
+				if (!methodTypes[i].isAssignableFrom(eventTypes.get(i)))
+				{
 					applicable = false;
 					break;
 				}

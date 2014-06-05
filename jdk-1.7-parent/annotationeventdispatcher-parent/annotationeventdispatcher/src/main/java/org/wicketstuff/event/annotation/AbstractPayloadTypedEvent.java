@@ -18,15 +18,16 @@ package org.wicketstuff.event.annotation;
 
 import org.apache.wicket.ajax.AjaxRequestTarget;
 
+import java.util.Arrays;
+
 /**
- * Implementation of {@link ITypedEvent} where the type is the type of
- * the payload.
+ * Implementation of {@link ITypedEvent} where {@link #getTypes()} returns the class of the payload.
  *
  * @param <T>
  *            type of the payload
  */
-public abstract class AbstractPayloadTypedEvent<T> extends AbstractPayloadEvent<T>
-		implements IPayloadEvent<T>, ITypedEvent {
+public abstract class AbstractPayloadTypedEvent<T> extends AbstractTypedEvent<T>
+{
 
 	/**
 	 * Constructor.
@@ -36,14 +37,10 @@ public abstract class AbstractPayloadTypedEvent<T> extends AbstractPayloadEvent<
 	 * @param payload
 	 *            payload on the event
 	 */
-	public AbstractPayloadTypedEvent(final AjaxRequestTarget target,
-			final T payload) {
-		super(target, payload);
-	}
-
-	@Override
-	public Class<?>[] getTypes() {
-		return new Class<?>[] { getPayload().getClass() };
+	public AbstractPayloadTypedEvent(final AjaxRequestTarget target, final T payload)
+	{
+		super(target, payload, payload == null ? null : Arrays
+				.<Class<?>> asList(payload.getClass()));
 	}
 
 }

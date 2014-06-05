@@ -16,8 +16,10 @@
  */
 package org.wicketstuff.event.annotation;
 
+import java.util.List;
+
 /**
- * Event with an array of classes to use for discriminating event handlers.
+ * Event with a list of classes to use for discriminating event handlers.
  */
 public interface ITypedEvent {
 
@@ -26,6 +28,6 @@ public interface ITypedEvent {
 	 * 
 	 * @return the types associated with the event
 	 */
-	Class<?>[] getTypes();
+	List<Class<?>> getTypes();
 
 }

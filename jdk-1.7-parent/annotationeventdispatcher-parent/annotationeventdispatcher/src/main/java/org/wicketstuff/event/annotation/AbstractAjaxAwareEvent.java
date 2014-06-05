@@ -19,16 +19,25 @@ package org.wicketstuff.event.annotation;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 
 /**
- * Event that provides an {@link AjaxRequestTarget}.
+ * Implementation of {@link IAjaxAwareEvent}.
  */
-public interface ITargetedEvent
-{
+public abstract class AbstractAjaxAwareEvent implements IAjaxAwareEvent {
+
+	private final AjaxRequestTarget target;
 
 	/**
-	 * Returns the {@link AjaxRequestTarget} associated with the event.
+	 * Constructor.
 	 * 
-	 * @return the {@link AjaxRequestTarget} associated with the event
+	 * @param target
+	 *            {@link AjaxRequestTarget} associated with the event
 	 */
-	AjaxRequestTarget getTarget();
+	public AbstractAjaxAwareEvent(final AjaxRequestTarget target) {
+		this.target = target;
+	}
+
+	@Override
+	public AjaxRequestTarget getTarget() {
+		return target;
+	}
 
 }

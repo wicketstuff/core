@@ -24,7 +24,7 @@ import org.apache.wicket.ajax.AjaxRequestTarget;
  * @param <T>
  *            type of the payload
  */
-public abstract class AbstractPayloadEvent<T> extends AbstractTargetedEvent implements
+public abstract class AbstractPayloadEvent<T> extends AbstractAjaxAwareEvent implements
 		IPayloadEvent<T> {
 
 	private final T payload;

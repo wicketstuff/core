@@ -7,14 +7,17 @@ import org.apache.wicket.MetaDataKey;
 /**
  * Automatically configures the application to use AnnotationEventDispatcher
  */
-public class Initializer implements IInitializer {
+public class Initializer implements IInitializer
+{
 
-	@SuppressWarnings("serial")
-	public static MetaDataKey<AnnotationEventDispatcherConfig> ANNOTATION_EVENT_DISPATCHER_CONFIG_CONTEXT_KEY = new MetaDataKey<AnnotationEventDispatcherConfig>() {};
-	
+    @SuppressWarnings("serial")
+    public static MetaDataKey<AnnotationEventDispatcherConfig> ANNOTATION_EVENT_DISPATCHER_CONFIG_CONTEXT_KEY = new MetaDataKey<AnnotationEventDispatcherConfig>() {
+    };
+
     @Override
-    public void init(final Application application) {
-    	AnnotationEventDispatcherConfig config = new AnnotationEventDispatcherConfig();
+    public void init(final Application application)
+    {
+        AnnotationEventDispatcherConfig config = new AnnotationEventDispatcherConfig();
         application.setMetaData(ANNOTATION_EVENT_DISPATCHER_CONFIG_CONTEXT_KEY, config);
         AnnotationEventDispatcher dispatcher = new AnnotationEventDispatcher();
         application.getComponentInstantiationListeners().add(dispatcher);
@@ -22,6 +25,8 @@ public class Initializer implements IInitializer {
     }
 
     @Override
-    public void destroy(final Application application) {
+    public void destroy(final Application application)
+    {
     }
+    
 }

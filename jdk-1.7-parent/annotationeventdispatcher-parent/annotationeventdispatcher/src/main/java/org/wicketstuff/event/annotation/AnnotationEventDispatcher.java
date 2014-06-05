@@ -81,22 +81,10 @@ public class AnnotationEventDispatcher implements IEventDispatcher, IComponentIn
 		if (eventSink != null
 				&& eventSink != EMPTY_SINK
 				&& (config.getEventFilter() == null || config.getEventFilter().isAssignableFrom(
-						event.getPayload().getClass()))
-				&& (config.isDispatchToNonVisibleComponents() || isVisible(sink)))
+						event.getPayload().getClass())))
 		{
 			eventSink.onEvent(sink, event);
 		}
-	}
-
-	private boolean isVisible(final Object obj)
-	{
-		boolean visible = true;
-		if (obj instanceof Component)
-		{
-			final Component c = (Component) obj;
-			visible = c.isVisibleInHierarchy();
-		}
-		return visible;
 	}
 
 }
