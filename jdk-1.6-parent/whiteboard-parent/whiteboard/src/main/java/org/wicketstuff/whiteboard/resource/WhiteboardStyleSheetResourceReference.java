@@ -20,19 +20,19 @@ import org.apache.wicket.request.resource.CssResourceReference;
 
 /**
  * Reference Class for whiteboard.css which gives the stylesheet for whiteboard
+ * 
  * @author andunslg
  */
-public class WhiteboardStyleSheetResourceReference extends CssResourceReference{
-	private static final long serialVersionUID=1L;
+public class WhiteboardStyleSheetResourceReference extends CssResourceReference {
+	private static final long serialVersionUID = 1L;
 
-	private static final WhiteboardStyleSheetResourceReference INSTANCE=new WhiteboardStyleSheetResourceReference();
+	private static final WhiteboardStyleSheetResourceReference INSTANCE = new WhiteboardStyleSheetResourceReference();
 
-
-	public static WhiteboardStyleSheetResourceReference get(){
+	public static WhiteboardStyleSheetResourceReference get() {
 		return INSTANCE;
 	}
 
-	private WhiteboardStyleSheetResourceReference(){
-		super(WhiteboardStyleSheetResourceReference.class,"whiteboard.css");
+	private WhiteboardStyleSheetResourceReference() {
+		super(WhiteboardStyleSheetResourceReference.class, "whiteboard.css");
 	}
 }

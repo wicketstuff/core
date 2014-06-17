@@ -21,41 +21,43 @@ import org.apache.wicket.ajax.json.JSONObject;
 
 /**
  * This class represent a text element on Whiteboard
+ * 
  * @author andunslg
  */
-public class Text extends Element{
-	private static final long serialVersionUID=1L;
+public class Text extends Element {
+	private static final long serialVersionUID = 1L;
 	protected int r;
 
-	public Text(int id, String label, String color, Boolean hidden, Type type, Boolean trace, int r){
-		super(id,label,color,hidden,type,trace);
-		this.r=r;
+	public Text(int id, String label, String color, Boolean hidden, Type type, Boolean trace, int r) {
+		super(id, label, color, hidden, type, trace);
+		this.r = r;
 	}
 
-	public Text(JSONObject object) throws JSONException{
+	public Text(JSONObject object) throws JSONException {
 		super(object);
-		this.type=Type.Text;
-		this.r=object.getInt("r");
+		this.type = Type.Text;
+		this.r = object.getInt("r");
 	}
 
 	/**
 	 * Return a JSON object which represent the Element
-	 * @return  JSON object with field values added
+	 * 
+	 * @return JSON object with field values added
 	 * @throws JSONException
 	 */
-	public JSONObject getJSON() throws JSONException{
-		JSONObject jsonObject=super.getJSON(new JSONObject());
-		jsonObject.put("r",r);
+	public JSONObject getJSON() throws JSONException {
+		JSONObject jsonObject = super.getJSON(new JSONObject());
+		jsonObject.put("r", r);
 
 		return jsonObject;
 
 	}
 
-	public int getR(){
+	public int getR() {
 		return r;
 	}
 
-	public void setR(int r){
-		this.r=r;
+	public void setR(int r) {
+		this.r = r;
 	}
 }

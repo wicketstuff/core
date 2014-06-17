@@ -21,65 +21,67 @@ import org.apache.wicket.ajax.json.JSONObject;
 
 /**
  * This class represent a line element on Whiteboard which is represented by three coordinates
+ * 
  * @author andunslg
  */
-public class CircleGeneral extends Element{
-	private static final long serialVersionUID=1L;
+public class CircleGeneral extends Element {
+	private static final long serialVersionUID = 1L;
 	protected double a;
 	protected double b;
 	protected double c;
 
 	public CircleGeneral(int id, String label, String color, Boolean hidden, Type type, Boolean trace, double a,
-						 double b, double c){
-		super(id,label,color,hidden,type,trace);
-		this.a=a;
-		this.b=b;
-		this.c=c;
+			double b, double c) {
+		super(id, label, color, hidden, type, trace);
+		this.a = a;
+		this.b = b;
+		this.c = c;
 	}
 
-	public CircleGeneral(JSONObject object) throws JSONException{
+	public CircleGeneral(JSONObject object) throws JSONException {
 		super(object);
-		this.type=Type.CircleGeneral;
-		this.a=object.getInt("a");
-		this.b=object.getInt("b");
-		this.c=object.getInt("c");
+		this.type = Type.CircleGeneral;
+		this.a = object.getInt("a");
+		this.b = object.getInt("b");
+		this.c = object.getInt("c");
 
 	}
 
 	/**
 	 * Return a JSON object which represent the Element
-	 * @return  JSON object with field values added
+	 * 
+	 * @return JSON object with field values added
 	 * @throws JSONException
 	 */
-	public JSONObject getJSON() throws JSONException{
-		JSONObject jsonObject=super.getJSON(new JSONObject());
-		jsonObject.put("a",a);
-		jsonObject.put("b",b);
-		jsonObject.put("c",c);
+	public JSONObject getJSON() throws JSONException {
+		JSONObject jsonObject = super.getJSON(new JSONObject());
+		jsonObject.put("a", a);
+		jsonObject.put("b", b);
+		jsonObject.put("c", c);
 		return jsonObject;
 	}
 
-	public double getB(){
+	public double getB() {
 		return b;
 	}
 
-	public void setB(double b){
-		this.b=b;
+	public void setB(double b) {
+		this.b = b;
 	}
 
-	public double getA(){
+	public double getA() {
 		return a;
 	}
 
-	public void setA(double a){
-		this.a=a;
+	public void setA(double a) {
+		this.a = a;
 	}
 
-	public double getC(){
+	public double getC() {
 		return c;
 	}
 
-	public void setC(double c){
-		this.c=c;
+	public void setC(double c) {
+		this.c = c;
 	}
 }

@@ -21,11 +21,12 @@ import org.apache.wicket.request.resource.JavaScriptResourceReference;
 import org.apache.wicket.settings.IJavaScriptLibrarySettings;
 
 /**
- * Holds the mandatory resource references for whiteboard
- * Default resources can be found in org.wicketstuff.whiteboard.resource
+ * Holds the mandatory resource references for whiteboard Default resources can be found in
+ * org.wicketstuff.whiteboard.resource
+ * 
  * @author andunslg
  */
-public interface IWhiteboardLibrarySettings extends IJavaScriptLibrarySettings{
+public interface IWhiteboardLibrarySettings extends IJavaScriptLibrarySettings {
 
 	CssResourceReference getWhiteboardStyleSheetReference();
 
@@ -33,6 +34,8 @@ public interface IWhiteboardLibrarySettings extends IJavaScriptLibrarySettings{
 
 	JavaScriptResourceReference getWhiteboardJavaScriptReference();
 
+	JavaScriptResourceReference getWhiteboardHelperJavaScriptReference();
+	
 	JavaScriptResourceReference getTranslateJavaScriptReference();
 
 	JavaScriptResourceReference getBaseJavaScriptReference();

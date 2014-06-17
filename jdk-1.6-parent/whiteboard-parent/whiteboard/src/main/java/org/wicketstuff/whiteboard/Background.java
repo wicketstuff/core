@@ -21,9 +21,10 @@ import org.apache.wicket.ajax.json.JSONObject;
 
 /**
  * This class represent the background image of the whiteboard
+ * 
  * @author andunslg
  */
-public class Background{
+public class Background {
 	private String type;
 	private String url;
 	private Double width;
@@ -31,85 +32,85 @@ public class Background{
 	private Double left;
 	private Double top;
 
-	public Background(String type, String url, Double width, Double height, Double left, Double top){
-		this.type=type;
-		this.url=url;
-		this.width=width;
-		this.height=height;
-		this.left=left;
-		this.top=top;
+	public Background(String type, String url, Double width, Double height, Double left, Double top) {
+		this.type = type;
+		this.url = url;
+		this.width = width;
+		this.height = height;
+		this.left = left;
+		this.top = top;
 	}
 
-	public Background(JSONObject object) throws JSONException{
-		this.type="Background";
-		this.url=object.getString("url");
-		this.width=object.getDouble("width");
-		this.height=object.getDouble("height");
-		this.left=object.getDouble("left");
-		this.top=object.getDouble("top");
+	public Background(JSONObject object) throws JSONException {
+		this.type = "Background";
+		this.url = object.getString("url");
+		this.width = object.getDouble("width");
+		this.height = object.getDouble("height");
+		this.left = object.getDouble("left");
+		this.top = object.getDouble("top");
 	}
 
 	/**
 	 * Return a JSON object which represent the Background
-	 * @return  JSON object which represent the Background
+	 * 
+	 * @return JSON object which represent the Background
 	 * @throws JSONException
 	 */
-	public JSONObject getJSON() throws JSONException{
-		JSONObject obj=new JSONObject();
-		obj.put("url",url);
-		obj.put("type",type);
-		obj.put("width",width);
-		obj.put("height",height);
-		obj.put("left",left);
-		obj.put("top",top);
-		return obj;
+	public JSONObject getJSON() throws JSONException {
+		return new JSONObject()
+			.put("url", url)
+			.put("type", type)
+			.put("width", width)
+			.put("height", height)
+			.put("left", left)
+			.put("top", top);
 	}
 
-	public String getType(){
+	public String getType() {
 		return type;
 	}
 
-	public void setType(String type){
-		this.type=type;
+	public void setType(String type) {
+		this.type = type;
 	}
 
-	public String getUrl(){
+	public String getUrl() {
 		return url;
 	}
 
-	public void setUrl(String url){
-		this.url=url;
+	public void setUrl(String url) {
+		this.url = url;
 	}
 
-	public Double getWidth(){
+	public Double getWidth() {
 		return width;
 	}
 
-	public void setWidth(Double width){
-		this.width=width;
+	public void setWidth(Double width) {
+		this.width = width;
 	}
 
-	public Double getHeight(){
+	public Double getHeight() {
 		return height;
 	}
 
-	public void setHeight(Double height){
-		this.height=height;
+	public void setHeight(Double height) {
+		this.height = height;
 	}
 
-	public Double getLeft(){
+	public Double getLeft() {
 		return left;
 	}
 
-	public void setLeft(Double left){
-		this.left=left;
+	public void setLeft(Double left) {
+		this.left = left;
 	}
 
-	public Double getTop(){
+	public Double getTop() {
 		return top;
 	}
 
-	public void setTop(Double top){
-		this.top=top;
+	public void setTop(Double top) {
+		this.top = top;
 	}
 }

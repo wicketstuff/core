@@ -21,65 +21,67 @@ import org.apache.wicket.ajax.json.JSONObject;
 
 /**
  * This class represent a point element on Whiteboard which is on a circle element
+ * 
  * @author andunslg
  */
-public class PointAtCircle extends Element{
-	private static final long serialVersionUID=1L;
+public class PointAtCircle extends Element {
+	private static final long serialVersionUID = 1L;
 	protected int obj;
 	protected double x;
 	protected double y;
 
 	public PointAtCircle(int id, String label, String color, Boolean hidden, Type type, Boolean trace, double x,
-						 double y, int obj){
-		super(id,label,color,hidden,type,trace);
-		this.x=x;
-		this.y=y;
-		this.obj=obj;
+			double y, int obj) {
+		super(id, label, color, hidden, type, trace);
+		this.x = x;
+		this.y = y;
+		this.obj = obj;
 	}
 
-	public PointAtCircle(JSONObject object) throws JSONException{
+	public PointAtCircle(JSONObject object) throws JSONException {
 		super(object);
-		this.type=Type.PointAtCircle;
-		this.obj=object.getInt("obj");
-		this.x=object.getDouble("x");
-		this.y=object.getDouble("y");
+		this.type = Type.PointAtCircle;
+		this.obj = object.getInt("obj");
+		this.x = object.getDouble("x");
+		this.y = object.getDouble("y");
 	}
 
 	/**
 	 * Return a JSON object which represent the Element
-	 * @return  JSON object with field values added
+	 * 
+	 * @return JSON object with field values added
 	 * @throws JSONException
 	 */
-	public JSONObject getJSON() throws JSONException{
-		JSONObject jsonObject=super.getJSON(new JSONObject());
-		jsonObject.put("obj",obj);
-		jsonObject.put("x",x);
-		jsonObject.put("y",y);
+	public JSONObject getJSON() throws JSONException {
+		JSONObject jsonObject = super.getJSON(new JSONObject());
+		jsonObject.put("obj", obj);
+		jsonObject.put("x", x);
+		jsonObject.put("y", y);
 
 		return jsonObject;
 	}
 
-	public int getObj(){
+	public int getObj() {
 		return obj;
 	}
 
-	public void setObj(int obj){
-		this.obj=obj;
+	public void setObj(int obj) {
+		this.obj = obj;
 	}
 
-	public double getX(){
+	public double getX() {
 		return x;
 	}
 
-	public void setT(double x){
-		this.x=x;
+	public void setT(double x) {
+		this.x = x;
 	}
 
-	public double getY(){
+	public double getY() {
 		return y;
 	}
 
-	public void setY(double x){
-		this.x=x;
+	public void setY(double x) {
+		this.x = x;
 	}
 }
