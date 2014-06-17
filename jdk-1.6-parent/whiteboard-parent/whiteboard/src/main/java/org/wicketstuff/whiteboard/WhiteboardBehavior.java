@@ -27,7 +27,7 @@ import org.apache.wicket.markup.head.*;
 import org.apache.wicket.protocol.http.WebApplication;
 import org.apache.wicket.protocol.ws.IWebSocketSettings;
 import org.apache.wicket.protocol.ws.api.IWebSocketConnection;
-import org.apache.wicket.protocol.ws.api.IWebSocketConnectionRegistry;
+import org.apache.wicket.protocol.ws.api.registry.IWebSocketConnectionRegistry;
 import org.apache.wicket.request.Url;
 import org.apache.wicket.request.cycle.RequestCycle;
 import org.apache.wicket.request.http.WebRequest;
@@ -40,6 +40,7 @@ import org.wicketstuff.whiteboard.settings.IWhiteboardLibrarySettings;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
+
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
