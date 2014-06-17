@@ -26,41 +26,48 @@ import org.slf4j.LoggerFactory;
 
 /**
  * This is the whiteboard main class
+ * 
  * @author andunslg
  */
-public class Whiteboard extends Panel{
-	private static final Logger log=LoggerFactory.getLogger(Whiteboard.class);
-	private static final long serialVersionUID=1L;
+public class Whiteboard extends Panel {
+	private static final Logger log = LoggerFactory.getLogger(Whiteboard.class);
+	private static final long serialVersionUID = 1L;
 
 	/**
 	 * This is the constructor which used to create a whiteboard in a wicket application
-	 * @param markupId html element markupId which holds the whiteboard
-	 * @param whiteboardContent If loading from a saved whiteboard file, content should be provided as a string. Otherwise null
-	 * @param clipArtFolderPath  Path of the folder which holds clipArts which can be added to whiteboard. Relative to context root
-	 * @param docFolderPath  Path of the folder which holds docs images which can be added to whiteboard. Relative to context root
+	 * 
+	 * @param markupId
+	 *            html element markupId which holds the whiteboard
+	 * @param whiteboardContent
+	 *            If loading from a saved whiteboard file, content should be provided as a string. Otherwise null
+	 * @param clipArtFolderPath
+	 *            Path of the folder which holds clipArts which can be added to whiteboard. Relative to context root
+	 * @param docFolderPath
+	 *            Path of the folder which holds docs images which can be added to whiteboard. Relative to context root
 	 */
-	public Whiteboard(String whiteboardID,String markupId, String whiteboardContent, String clipArtFolderPath,String docFolderPath){
+	public Whiteboard(String whiteboardID, String markupId, String whiteboardContent, String clipArtFolderPath,
+			String docFolderPath) {
 		super(markupId);
 
 		// Adding Web Socket behaviour to handle synchronization between whiteboards
 
-		this.add(new WebSocketBehavior(){
-			private static final long serialVersionUID=-3311970325911992958L;
+		this.add(new WebSocketBehavior() {
+			private static final long serialVersionUID = -3311970325911992958L;
 
 			@Override
-			protected void onConnect(ConnectedMessage message){
+			protected void onConnect(ConnectedMessage message) {
 				super.onConnect(message);
-				log.debug("Connecting :"+message.toString());
+				log.debug("Connecting :" + message.toString());
 			}
 
 			@Override
-			protected void onClose(ClosedMessage message){
+			protected void onClose(ClosedMessage message) {
 				super.onClose(message);
-				log.debug("Disconnecting :"+message.toString());
+				log.debug("Disconnecting :" + message.toString());
 			}
 		});
 
 		add(new WebMarkupContainer("whiteboard"));
-		add(new WhiteboardBehavior(whiteboardID,"whiteboard",whiteboardContent,clipArtFolderPath,docFolderPath));
+		add(new WhiteboardBehavior(whiteboardID, "whiteboard", whiteboardContent, clipArtFolderPath, docFolderPath));
 	}
 }

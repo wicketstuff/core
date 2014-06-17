@@ -21,52 +21,54 @@ import org.apache.wicket.ajax.json.JSONObject;
 
 /**
  * This class represent a point element on Whiteboard
+ * 
  * @author andunslg
  */
-public class Point_2l extends Element{
-	private static final long serialVersionUID=1L;
+public class Point_2l extends Element {
+	private static final long serialVersionUID = 1L;
 	protected int obj1;
 	protected int obj2;
 
-	public Point_2l(int id, String label, String color, Boolean hidden, Type type, Boolean trace, int obj1, int obj2){
-		super(id,label,color,hidden,type,trace);
-		this.obj1=obj1;
-		this.obj2=obj2;
+	public Point_2l(int id, String label, String color, Boolean hidden, Type type, Boolean trace, int obj1, int obj2) {
+		super(id, label, color, hidden, type, trace);
+		this.obj1 = obj1;
+		this.obj2 = obj2;
 	}
 
-	public Point_2l(JSONObject object) throws JSONException{
+	public Point_2l(JSONObject object) throws JSONException {
 		super(object);
-		this.type=Type.Point_2l;
-		this.obj1=object.getInt("obj1");
-		this.obj2=object.getInt("obj2");
+		this.type = Type.Point_2l;
+		this.obj1 = object.getInt("obj1");
+		this.obj2 = object.getInt("obj2");
 	}
 
 	/**
 	 * Return a JSON object which represent the Element
-	 * @return  JSON object with field values added
+	 * 
+	 * @return JSON object with field values added
 	 * @throws JSONException
 	 */
-	public JSONObject getJSON() throws JSONException{
-		JSONObject jsonObject=super.getJSON(new JSONObject());
-		jsonObject.put("obj1",obj1);
-		jsonObject.put("obj2",obj2);
+	public JSONObject getJSON() throws JSONException {
+		JSONObject jsonObject = super.getJSON(new JSONObject());
+		jsonObject.put("obj1", obj1);
+		jsonObject.put("obj2", obj2);
 
 		return jsonObject;
 	}
 
-	public int getObj2(){
+	public int getObj2() {
 		return obj2;
 	}
 
-	public void setObj2(int obj2){
-		this.obj2=obj2;
+	public void setObj2(int obj2) {
+		this.obj2 = obj2;
 	}
 
-	public int setObj1(){
+	public int setObj1() {
 		return obj1;
 	}
 
-	public void setObj1(int obj1){
-		this.obj1=obj1;
+	public void setObj1(int obj1) {
+		this.obj1 = obj1;
 	}
 }

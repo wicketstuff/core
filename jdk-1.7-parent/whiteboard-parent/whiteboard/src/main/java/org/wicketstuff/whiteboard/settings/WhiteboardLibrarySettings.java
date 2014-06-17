@@ -29,11 +29,14 @@ public abstract class WhiteboardLibrarySettings extends JavaScriptLibrarySetting
 
 	public abstract CssResourceReference getWhiteboardStyleSheetReference();
 
-    public abstract CssResourceReference getGoogStyleSheetReference();
+	public abstract CssResourceReference getGoogStyleSheetReference();
 
-    public abstract JavaScriptResourceReference getWhiteboardJavaScriptReference();
+	public abstract JavaScriptResourceReference getWhiteboardJavaScriptReference();
 
-    public abstract JavaScriptResourceReference getTranslateJavaScriptReference();
+	public abstract JavaScriptResourceReference getWhiteboardHelperJavaScriptReference();
 
-    public abstract JavaScriptResourceReference getBaseJavaScriptReference();
+	public abstract JavaScriptResourceReference getTranslateJavaScriptReference();
+
+	public abstract JavaScriptResourceReference getBaseJavaScriptReference();
 }
+

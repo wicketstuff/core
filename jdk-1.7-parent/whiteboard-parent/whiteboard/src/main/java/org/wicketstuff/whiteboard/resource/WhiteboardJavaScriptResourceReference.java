@@ -16,23 +16,23 @@
  */
 package org.wicketstuff.whiteboard.resource;
 
-
 import org.apache.wicket.request.resource.JavaScriptResourceReference;
 
 /**
  * Reference Class for whiteboard.js which handles all the client side whiteboard manipulations
+ * 
  * @author andunslg
  */
-public class WhiteboardJavaScriptResourceReference extends JavaScriptResourceReference{
-	private static final long serialVersionUID=1L;
+public class WhiteboardJavaScriptResourceReference extends JavaScriptResourceReference {
+	private static final long serialVersionUID = 1L;
 
-	private static final WhiteboardJavaScriptResourceReference INSTANCE=new WhiteboardJavaScriptResourceReference();
+	private static final WhiteboardJavaScriptResourceReference INSTANCE = new WhiteboardJavaScriptResourceReference();
 
-	public static WhiteboardJavaScriptResourceReference get(){
+	public static WhiteboardJavaScriptResourceReference get() {
 		return INSTANCE;
 	}
 
-	private WhiteboardJavaScriptResourceReference(){
-		super(WhiteboardJavaScriptResourceReference.class,"whiteboard.js");
+	private WhiteboardJavaScriptResourceReference() {
+		super(WhiteboardJavaScriptResourceReference.class, "whiteboard.js");
 	}
 }

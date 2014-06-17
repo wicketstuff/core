@@ -16,23 +16,23 @@
  */
 package org.wicketstuff.whiteboard.resource;
 
-import org.apache.wicket.request.resource.CssResourceReference;
+import org.apache.wicket.request.resource.JavaScriptResourceReference;
 
 /**
- * Reference Class for goog.css of Google Closure Library
+ * Reference Class for whiteboard.js which handles all the client side whiteboard manipulations
  * 
  * @author andunslg
  */
-public class GoogStyleSheetResourceReference extends CssResourceReference {
+public class WhiteboardHelperJavaScriptResourceReference extends JavaScriptResourceReference {
 	private static final long serialVersionUID = 1L;
 
-	private static final GoogStyleSheetResourceReference INSTANCE = new GoogStyleSheetResourceReference();
+	private static final WhiteboardHelperJavaScriptResourceReference INSTANCE = new WhiteboardHelperJavaScriptResourceReference();
 
-	public static GoogStyleSheetResourceReference get() {
+	public static WhiteboardHelperJavaScriptResourceReference get() {
 		return INSTANCE;
 	}
 
-	private GoogStyleSheetResourceReference() {
-		super(GoogStyleSheetResourceReference.class, "goog.css");
+	private WhiteboardHelperJavaScriptResourceReference() {
+		super(WhiteboardHelperJavaScriptResourceReference.class, "wb-helper.js");
 	}
 }

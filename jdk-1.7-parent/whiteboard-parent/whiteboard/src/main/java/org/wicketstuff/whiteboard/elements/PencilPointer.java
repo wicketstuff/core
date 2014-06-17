@@ -21,52 +21,54 @@ import org.apache.wicket.ajax.json.JSONObject;
 
 /**
  * This class represent a pointer element on Whiteboard which is represented by a coordinate and a blinking time
+ * 
  * @author andunslg
  */
-public class PencilPointer extends Element{
-	private static final long serialVersionUID=1L;
+public class PencilPointer extends Element {
+	private static final long serialVersionUID = 1L;
 	protected int p;
 	protected int age;
 
-	public PencilPointer(int id, String label, String color, Boolean hidden, Type type, Boolean trace, int p, int age){
-		super(id,label,color,hidden,type,trace);
-		this.p=p;
-		this.age=age;
+	public PencilPointer(int id, String label, String color, Boolean hidden, Type type, Boolean trace, int p, int age) {
+		super(id, label, color, hidden, type, trace);
+		this.p = p;
+		this.age = age;
 	}
 
-	public PencilPointer(JSONObject object) throws JSONException{
+	public PencilPointer(JSONObject object) throws JSONException {
 		super(object);
-		this.type=Type.PencilPointer;
-		this.p=object.getInt("p");
-		this.age="undefined".equals(object.get("age"))?1000:object.getInt("age");
+		this.type = Type.PencilPointer;
+		this.p = object.getInt("p");
+		this.age = "undefined".equals(object.get("age")) ? 1000 : object.getInt("age");
 	}
 
 	/**
 	 * Return a JSON object which represent the Element
-	 * @return  JSON object with field values added
+	 * 
+	 * @return JSON object with field values added
 	 * @throws JSONException
 	 */
-	public JSONObject getJSON() throws JSONException{
-		JSONObject jsonObject=super.getJSON(new JSONObject());
-		jsonObject.put("p",p);
-		jsonObject.put("age",age);
+	public JSONObject getJSON() throws JSONException {
+		JSONObject jsonObject = super.getJSON(new JSONObject());
+		jsonObject.put("p", p);
+		jsonObject.put("age", age);
 
 		return jsonObject;
 	}
 
-	public int getP(){
+	public int getP() {
 		return p;
 	}
 
-	public void setP(int p){
-		this.p=p;
+	public void setP(int p) {
+		this.p = p;
 	}
 
-	public int getAge(){
+	public int getAge() {
 		return age;
 	}
 
-	public void setAge(int age){
-		this.age=age;
+	public void setAge(int age) {
+		this.age = age;
 	}
 }
