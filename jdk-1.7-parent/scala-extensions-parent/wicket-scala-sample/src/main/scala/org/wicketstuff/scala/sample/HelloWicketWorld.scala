@@ -5,6 +5,7 @@ import org.apache.wicket.feedback.ContainerFeedbackMessageFilter
 import org.apache.wicket.markup.html.basic.Label
 import org.apache.wicket.markup.html.list.ListItem
 import org.apache.wicket.validation.validator.EmailAddressValidator
+import org.wicketstuff.scala.model.Fodel
 
 import scala.language.postfixOps
 import org.wicketstuff.scala._
@@ -64,7 +65,7 @@ class HomePage extends WebPage with ScalaWicket {
 
   add(new SPropertyListView[Presentation]("presentations", Presentation.stub, (li:ListItem[Presentation]) ⇒ { // list gets passed in by name
     val p = li.getModelObject
-    li add(new SLabel("name", p name))
+    li add new SLabel("name", p name)
     li add(new SLabel("author", p author))
     li add(new SLabel("votes", p.votes.toString))
 

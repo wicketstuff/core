@@ -1,4 +1,4 @@
-package org.wicketstuff.scala
+package org.wicketstuff.scala.model
 
 import org.apache.wicket.model.IModel
 

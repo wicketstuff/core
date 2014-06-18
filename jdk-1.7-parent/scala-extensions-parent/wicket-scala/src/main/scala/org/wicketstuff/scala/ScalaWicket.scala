@@ -1,5 +1,7 @@
 package org.wicketstuff.scala
 
+import org.wicketstuff.scala.model.Fodel
+
 import scala.language.implicitConversions
 
 /**

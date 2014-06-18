@@ -12,9 +12,10 @@ import org.apache.wicket.markup.html.form.{Form, TextField}
 import org.apache.wicket.markup.html.link.Link
 import org.apache.wicket.markup.html.list.{ListView, ListItem, PropertyListView}
 import org.apache.wicket.model.IModel
+import org.wicketstuff.scala.model.Fodel
 
 class SForm[T](id:String,
-               model:IModel[T] ,
+               model:IModel[T],
                onSubmitFunc: ⇒ Unit)
   extends Form[T](id, model:IModel[T]) {
 

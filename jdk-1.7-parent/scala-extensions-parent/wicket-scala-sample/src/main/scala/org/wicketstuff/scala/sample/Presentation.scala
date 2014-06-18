@@ -1,9 +1,9 @@
 package org.wicketstuff.scala.sample
 
-case class Presentation(id:Long, name:String, author:String, var votes:Int){
+case class Presentation(id:Long, name:String, author:String, var votes:Int) {
   def this()=this(0,"","",0)
   def this(name:String, author:String)=this(0,name,author,0)
-  override def toString = id+" "+name+" "+author
+  override def toString = s"$id $name $author"
   
   def addVotes(v:Vote) = votes += 1
 }
@@ -23,7 +23,7 @@ object Presentation {
   }
 }
 
-case class Vote(val email:String){
+case class Vote(email:String){
   def this()=this("")
   override def toString = "email: " + email
 }

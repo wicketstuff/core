@@ -6,6 +6,7 @@ import org.apache.wicket.markup.html.list.ListItem
 import org.apache.wicket.util.tester.WicketTester
 
 import org.specs2.mutable.SpecificationWithJUnit
+import org.wicketstuff.scala.model.Fodel
 
 /**
  * Specifications for the various Scala extended components.

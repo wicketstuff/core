@@ -2,6 +2,7 @@ package org.wicketstuff.scala
 
 
 import org.specs2.mutable.SpecificationWithJUnit
+import org.wicketstuff.scala.model.{FodelString, Fodel}
 
 /**
  * @author Antony Stubbs

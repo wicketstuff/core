@@ -1,12 +1,13 @@
-package org.wicketstuff.scala
+package org.wicketstuff.scala.model
 
 import java.util.concurrent.Executors
+
 import org.apache.wicket.model.AbstractReadOnlyModel
 import org.apache.wicket.request.cycle.RequestCycle
-import org.apache.wicket.{ThreadContext, Session, Application}
+import org.apache.wicket.{Application, Session, ThreadContext}
+
 import scala.concurrent._
 import scala.concurrent.duration._
-import scala.transient
 
 object FutureModel {
   private val Executor =
