@@ -3,11 +3,15 @@ package org.wicketstuff.scala
 import java.util.concurrent.atomic.AtomicBoolean
 
 import org.apache.wicket.markup.html.WebComponent
+import org.junit.runner.RunWith
+import org.scalatest.junit.JUnitRunner
 
 /**
  * Tests for ScalaComponent
  */
-class ScalaComponentSpec extends WicketSpec {
+@RunWith(classOf[JUnitRunner])
+class ScalaComponentSpec
+  extends WicketSpec {
 
   test("updateable should set outputMarkupId to true") {
     val component = new WebComponent("test") with ScalaComponent

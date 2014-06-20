@@ -1,18 +1,22 @@
 package org.wicketstuff.scala.sample
 
-import org.apache.wicket.markup.html.panel.FeedbackPanel
 import org.apache.wicket.feedback.ContainerFeedbackMessageFilter
+import org.apache.wicket.markup.html.WebPage
 import org.apache.wicket.markup.html.basic.Label
+import org.apache.wicket.markup.html.form.{Form, TextField}
 import org.apache.wicket.markup.html.list.ListItem
+import org.apache.wicket.markup.html.panel.FeedbackPanel
+import org.apache.wicket.model.{CompoundPropertyModel, IModel}
+import org.apache.wicket.protocol.http.WebApplication
 import org.apache.wicket.validation.validator.EmailAddressValidator
+import org.wicketstuff.scala.ScalaWicket
+import org.wicketstuff.scala.markup.html.basic.ScalaLabel
+import org.wicketstuff.scala.markup.html.form.ScalaTextField
+import org.wicketstuff.scala.markup.html.link.ScalaLink
+import org.wicketstuff.scala.markup.html.list.ScalaPropertyListView
 import org.wicketstuff.scala.model.Fodel
 
 import scala.language.postfixOps
-import org.wicketstuff.scala._
-import org.apache.wicket.protocol.http.WebApplication
-import org.apache.wicket.markup.html.WebPage
-import org.apache.wicket.markup.html.form.{TextField, Form}
-import org.apache.wicket.model.{CompoundPropertyModel, IModel}
 
 class HelloWicketWorld extends WebApplication {
    def getHomePage = classOf[HomePage]
@@ -39,17 +43,17 @@ class HomePage extends WebPage with ScalaWicket {
   form.add(new TextField("name2", new Fodel[String](name, name = _ ) ) )
   // and the Scala TextField is even shorter
   // this example requires the [String] parameter as the compiler is unable to infer the type of the parameters in the {name = _} function.
-  form.add(new STextField[String]("name3", name, name = _  ) )
+  form.add(new ScalaTextField[String]("name3", name, name = _  ) )
    
   // link with a closure
   var clickCount = 0
-  add(new SLink("clicker", {clickCount += 1; println(clickCount)}))
+  add(new ScalaLink("clicker", {clickCount += 1; println(clickCount)}))
    
   // using a fodel
   form.add(new Label("helloworld4", new Fodel({println ("f()label gtr"); name;})))
    
   // using an SLabel with a closure
-  form.add(new SLabel("helloworld2", {println ("slabel gtr"); name;}))
+  form.add(new ScalaLabel("helloworld2", {println ("slabel gtr"); name;}))
 
   // the form for new presentations and votes
   add(new Form[Presentation]("form2", new CompoundPropertyModel(new Presentation)){
@@ -63,11 +67,11 @@ class HomePage extends WebPage with ScalaWicket {
     }
   })
 
-  add(new SPropertyListView[Presentation]("presentations", Presentation.stub, (li:ListItem[Presentation]) ⇒ { // list gets passed in by name
+  add(new ScalaPropertyListView[Presentation]("presentations", Presentation.stub, (li:ListItem[Presentation]) ⇒ { // list gets passed in by name
     val p = li.getModelObject
-    li add new SLabel("name", p name)
-    li add(new SLabel("author", p author))
-    li add(new SLabel("votes", p.votes.toString))
+    li add new ScalaLabel("name", p name)
+    li add(new ScalaLabel("author", p author))
+    li add(new ScalaLabel("votes", p.votes.toString))
 
     li add(new Form[Vote]("form", new CompoundPropertyModel[Vote](new Vote)) {
       add(new TextField("email").add(EmailAddressValidator.getInstance))

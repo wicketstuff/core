@@ -4,12 +4,6 @@ import org.apache.wicket.Component
 import org.apache.wicket.ajax.{AjaxRequestTarget, AjaxEventBehavior}
 import org.apache.wicket.ajax.form.{OnChangeAjaxBehavior, AjaxFormSubmitBehavior}
 
-object ScalaComponent {
-  implicit class ScalaComponentOps(component: Component) extends AnyVal {
-    
-  }
-}
-
 /**
  * An extension of Wicket's Component class
  */

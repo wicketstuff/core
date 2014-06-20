@@ -1,6 +1,8 @@
 package org.wicketstuff.scala.model
 
 import org.apache.wicket.util.time.Duration
+import org.junit.runner.RunWith
+import org.scalatest.junit.JUnitRunner
 import org.wicketstuff.scala.WicketSpec
 
 import scala.concurrent.TimeoutException
@@ -10,7 +12,10 @@ import scala.util.{Failure, Try}
 /**
  * Tests for ScalaModel
  */
-class ScalaModelSpec extends WicketSpec with ScalaModel {
+@RunWith(classOf[JUnitRunner])
+class ScalaModelSpec
+  extends WicketSpec
+  with ScalaModel {
 
   test("Loadable detachable model") {
     val model = ldM({1 + 2})

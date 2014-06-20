@@ -1,11 +1,15 @@
 package org.wicketstuff.scala
 
 import org.apache.wicket.markup.html.{WebComponent, WebMarkupContainer}
+import org.junit.runner.RunWith
+import org.scalatest.junit.JUnitRunner
 
 /**
  * Tests for ScalaMarkupContainer
  */
-class ScalaMarkupContainerSpec extends WicketSpec {
+@RunWith(classOf[JUnitRunner])
+class ScalaMarkupContainerSpec
+  extends WicketSpec {
 
   test("MarkupContainer#add() is overloaded with operator +") {
     val parent = new WebMarkupContainer("parent") with ScalaMarkupContainer

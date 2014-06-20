@@ -11,8 +11,8 @@ class HomePage(parameters: PageParameters)
 
   var name = "default"
   add(new Form("form") {
-    add(new SLabel("helloworld2", name))
-    add(new STextField[String]("name", {println ("stf-getter"); name}, {println ("stf-setter"); name = _}) )
+    add(new ScalaLabel("helloworld2", name))
+    add(new ScalaTextField[String]("name", {println ("stf-getter"); name}, {println ("stf-setter"); name = _}) )
   })
 
 }
