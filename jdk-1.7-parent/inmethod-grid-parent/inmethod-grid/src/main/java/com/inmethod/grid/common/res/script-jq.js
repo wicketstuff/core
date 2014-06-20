@@ -81,6 +81,12 @@ if (typeof(InMethod) === "undefined") {
 					// remove all events.
 					$(e).off();
 					++purgedCount;
+				} 
+                                // Solves Memory leak
+                                else if(!jQuery.contains(document, e)){
+                                    $(e).off();
+                                    $(e).remove();
+                                    ++purgedCount;
 				} else {
 					// element is still in document, return it
 					elementsWithListeners.push(e);
