@@ -1722,7 +1722,7 @@ onKeyEvent = function(element, event) {
 			if (key == 13) {
                                 elements = $(row).find("a.imxt-edit-submit");
 			} else {
-                                elements = $(row).find("a.imxt-edit-submit");
+                                elements = $(row).find("a.imxt-edit-cancel");
 			}
 			
 			if (typeof elements !== 'undefined' && elements !== null && elements.length > 0) {
