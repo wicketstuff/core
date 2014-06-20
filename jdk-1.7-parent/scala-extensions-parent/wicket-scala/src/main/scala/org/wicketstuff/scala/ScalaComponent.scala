@@ -4,14 +4,19 @@ import org.apache.wicket.Component
 import org.apache.wicket.ajax.{AjaxRequestTarget, AjaxEventBehavior}
 import org.apache.wicket.ajax.form.{OnChangeAjaxBehavior, AjaxFormSubmitBehavior}
 
+object ScalaComponent {
+  implicit class ScalaComponentOps(component: Component) extends AnyVal {
+    
+  }
+}
+
 /**
  * An extension of Wicket's Component class
  */
 trait ScalaComponent {
   self: Component =>
 
-  private[this] def doNothing() = () => ()
-  private[this] def doNothing2(target: AjaxRequestTarget) = (_: AjaxRequestTarget) => ()
+  private[this] def doNothing(target: AjaxRequestTarget) = (_: AjaxRequestTarget) => ()
 
   def updateable(): this.type = {
     self.setOutputMarkupId(true)
@@ -21,7 +26,7 @@ trait ScalaComponent {
   def hide() = setVisibilityAllowed(false)
   def show() = setVisibilityAllowed(true)
 
-  def on(eventName: String, onAction: (AjaxRequestTarget) => Unit, error: (AjaxRequestTarget) => Unit = doNothing2): this.type = {
+  def on(eventName: String, onAction: (AjaxRequestTarget) => Unit)(implicit error: (AjaxRequestTarget) => Unit = doNothing): this.type = {
     eventName match {
       case "submit" =>
         add(new AjaxFormSubmitBehavior(eventName) {
