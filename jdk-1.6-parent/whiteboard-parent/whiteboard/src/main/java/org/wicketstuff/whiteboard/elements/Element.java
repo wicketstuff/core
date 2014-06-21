@@ -36,7 +36,27 @@ public abstract class Element implements Serializable {
 	protected Type type; // type (class) of the element
 
 	public enum Type {
-		Circle_3p, CircleGeneral, Line_2p, LineGeneral, PencilArrow, PencilCircle, PencilCurve, PencilFreeLine, PencilPointAtRect, PencilPointer, PencilRect, PencilUnderline, Point_2c, Point_2l, PointAtCircle, PointAtLine, PointFree, Point_lc, Segment, Text, ClipArt
+		Circle_3p
+		, CircleGeneral
+		, Line_2p
+		, LineGeneral
+		, PencilArrow
+		, PencilCircle
+		, PencilCurve
+		, PencilFreeLine
+		, PencilPointAtRect
+		, PencilPointer
+		, PencilRect
+		, PencilUnderline
+		, Point_2c
+		, Point_2l
+		, PointAtCircle
+		, PointAtLine
+		, PointFree
+		, Point_lc
+		, Segment
+		, Text
+		, ClipArt
 	}
 
 	public Element(int id, String label, String color, Boolean hidden, Type type, Boolean trace) {
