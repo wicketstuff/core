@@ -7,9 +7,15 @@ import org.wicketstuff.scala.ScalaMarkupContainer
 /**
  *
  */
-class ScalaForm[T](id:String, model:IModel[T], onSubmitFunc: ⇒ Unit)
-  extends Form[T](id, model:IModel[T])
+class ScalaForm[T](id: String,
+                   model: IModel[T] = null,
+                   actions: Map[String, (ScalaForm[T]) => Unit] = Map.empty[String, (ScalaForm[T]) => Unit])
+  extends Form[T](id, model)
   with ScalaMarkupContainer {
 
-  override def onSubmit(): Unit = onSubmitFunc
+  override def onSubmit(): Unit = actions.getOrElse("submit", thisToUnit _)(ScalaForm.this)
+
+  override def onError(): Unit = actions.getOrElse("error", thisToUnit _)(this)
+
+  protected def thisToUnit(typ: ScalaForm[T]) = (_: ScalaForm[T]) => ()
 }

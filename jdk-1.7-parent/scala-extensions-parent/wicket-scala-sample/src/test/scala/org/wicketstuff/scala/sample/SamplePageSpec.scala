@@ -15,6 +15,7 @@ class SamplePageSpec
       val wt = new WicketTester
       val p = wt.startPage(classOf[HomePage])
       p mustNot be (null)
+      wt.destroy()
     }
   }
   

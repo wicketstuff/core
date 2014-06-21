@@ -1,12 +1,12 @@
 package org.wicketstuff.scala.markup.html.basic
 
 import org.apache.wicket.markup.html.basic.Label
+import org.apache.wicket.model.IModel
 import org.wicketstuff.scala.ScalaComponent
-import org.wicketstuff.scala.model.Fodel
 
 /**
  *
  */
-class ScalaLabel(id:String, getter: ⇒ String)
-  extends Label(id, new Fodel(getter, null))
+class ScalaLabel[T](id: String, model: IModel[T] = null)
+  extends Label(id, model)
   with ScalaComponent

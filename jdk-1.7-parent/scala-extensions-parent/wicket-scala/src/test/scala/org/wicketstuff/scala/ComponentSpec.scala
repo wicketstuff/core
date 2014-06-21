@@ -52,7 +52,7 @@ class ComponentSpec
       val tester = new WicketTester()
       //detailedDiffs()
       val slk = new ScalaLink("clicker", clickCount += 1)
-      clickCountUpdatingFunction(slk.onClick)
+      clickCountUpdatingFunction(slk.onClick())
       tester.destroy()
     }
   }
@@ -62,9 +62,9 @@ class ComponentSpec
       var n = tony
       // a normal label doesn't update without a model
       val l = new Label("name", n)
-      l.getDefaultModelObject mustEqual (tony)
+      l.getDefaultModelObject mustEqual tony
       n = n + karyn
-      l.getDefaultModelObject mustEqual (tony)
+      l.getDefaultModelObject mustEqual tony
 
       // a scala label should bind dynamically
       n = tony
@@ -109,14 +109,14 @@ class ComponentSpec
   "SForm component" should {
     "take a closure for it's onSubmit method" in {
       val tester = new WicketTester()
-      val sf = new ScalaForm("form", null, clickCount += 1) // null model
-      def fx = sf.onSubmit
-      clickCountUpdatingFunction(fx)
+      val sf = new ScalaForm[Unit]("form", actions = Map("submit" -> { that => clickCount += 1})) // null model
+      def fx() = sf.onSubmit()
+      clickCountUpdatingFunction(fx())
       tester.destroy()
     }
     "pass model to a super-class" in {
       val tester = new WicketTester()
-      val sf = new ScalaForm("form", new Fodel[String]("test"), {})
+      val sf = new ScalaForm[String]("form", new Fodel[String]("test"))
       sf.getModelObject mustEqual "test"
       tester.destroy()
     }
@@ -128,9 +128,9 @@ class ComponentSpec
         item mustBe null
         clickCount += 1
       }
-      val slv = new ScalaListView[String]("votes", null, fx)
-      def curry = slv.populateItem(null)
-      clickCountUpdatingFunction(curry)
+      val slv = new ScalaListView[String]("votes", fx)
+      def curry() = slv.populateItem(null)
+      clickCountUpdatingFunction(curry())
       tester.destroy()
     }
   }
@@ -141,8 +141,8 @@ class ComponentSpec
         item mustBe null
         clickCount += 1
       })
-      def curry = splv.populateItem(null)
-      clickCountUpdatingFunction(curry)
+      def curry() = splv.populateItem(null)
+      clickCountUpdatingFunction(curry())
       tester.destroy()
     }
     "take a partially applied function for the #populateItem method" in {
@@ -151,9 +151,9 @@ class ComponentSpec
         item mustBe null
         clickCount += 1
       }
-      val splv = new ScalaPropertyListView[String]("votes", List[String](), fx _)
-      def curry = splv.populateItem(null)
-      clickCountUpdatingFunction(curry)
+      val splv = new ScalaPropertyListView[String]("votes", List[String](), fx)
+      def curry() = splv.populateItem(null)
+      clickCountUpdatingFunction(curry())
       tester.destroy()
     }
     "be able to be constructed with a static Scala type List" in {

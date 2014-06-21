@@ -8,7 +8,7 @@ import org.wicketstuff.scala.model.Fodel
 /**
  *
  */
-class ScalaNumberField[T](id: String, model: IModel[T])
+class ScalaNumberField[T <: Number with Comparable[T]](id: String, model: IModel[T])
   extends NumberTextField[T](id, model)
   with ScalaMarkupContainer {
 

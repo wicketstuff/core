@@ -10,6 +10,7 @@ import org.apache.wicket.ajax.form.{OnChangeAjaxBehavior, AjaxFormSubmitBehavior
 trait ScalaComponent {
   self: Component =>
 
+  protected def noOp() = () => ()
   private[this] def doNothing(target: AjaxRequestTarget) = (_: AjaxRequestTarget) => ()
 
   def updateable(): this.type = {

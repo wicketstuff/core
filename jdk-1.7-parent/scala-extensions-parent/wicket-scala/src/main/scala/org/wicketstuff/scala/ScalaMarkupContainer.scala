@@ -4,7 +4,8 @@ import org.apache.wicket.markup.html.list.ListItem
 import org.apache.wicket.model.IModel
 import org.apache.wicket.{Component, MarkupContainer}
 import org.wicketstuff.scala.markup.html.ScalaWebMarkupContainer
-import org.wicketstuff.scala.markup.html.form.{ScalaNumberField, ScalaTextArea, ScalaTextField}
+import org.wicketstuff.scala.markup.html.basic.ScalaLabel
+import org.wicketstuff.scala.markup.html.form._
 import org.wicketstuff.scala.markup.html.link.ScalaLink
 import org.wicketstuff.scala.markup.html.list.ScalaListView
 
@@ -24,35 +25,63 @@ trait ScalaMarkupContainer extends ScalaComponent {
     this
   }
 
+  def label[T](id: String, model: IModel[T] = null): ScalaLabel[T] = {
+    val label = new ScalaLabel(id, model)
+    add(label)
+    label
+  }
+
   def div[T](id: String, model: IModel[T] = null): ScalaWebMarkupContainer[T] = {
-    new ScalaWebMarkupContainer[T](id, model)
+    val div = new ScalaWebMarkupContainer[T](id, model)
+    add(div)
+    div
+  }
+
+  def form[T](id: String, model: IModel[T] = null, actions: Map[String, (ScalaForm[T]) => Unit] = Map.empty[String, (ScalaForm[T]) => Unit]): ScalaForm[T] = {
+    val form = new ScalaForm[T](id, model, actions)
+    add(form)
+    form
   }
 
   def text[T](id: String, model: IModel[T] = null): ScalaTextField[T] = {
-    new ScalaTextField[T](id, model)
+    val text = new ScalaTextField[T](id, model)
+    add(text)
+    text
   }
 
   def textarea[T](id: String, model: IModel[T] = null): ScalaTextArea[T] = {
-    new ScalaTextArea[T](id, model)
+    val textarea = new ScalaTextArea[T](id, model)
+    add(textarea)
+    textarea
   }
 
-  def password[T](id: String, model: IModel[T] = null): ScalaTextField[T] = {
-    new ScalaTextField[T](id, model)
+  def password(id: String, model: IModel[String] = null): ScalaPasswordField = {
+    val password = new ScalaPasswordField(id, model)
+    add(password)
+    password
   }
 
-  def number[T](id: String, model: IModel[T] = null): ScalaNumberField[T] = {
-    new ScalaNumberField[T](id, model)
+  def number[T <: Number with Comparable[T]](id: String, model: IModel[T] = null): ScalaNumberField[T] = {
+    val number = new ScalaNumberField[T](id, model)
+    add(number)
+    number
   }
 
   def link[T](id: String, onClickFunc: ⇒ Unit, model: IModel[T] = null): ScalaLink[T] = {
-    new ScalaLink[T](id, onClickFunc, model)
+    val link = new ScalaLink[T](id, onClickFunc, model)
+    add(link)
+    link
   }
 
   def listView[T](id:String, list: IModel[java.util.List[T]], populateItemFunc:(ListItem[T]) ⇒ Unit): ScalaListView[T] = {
-    new ScalaListView[T](id, list, populateItemFunc)
+    val listView = new ScalaListView[T](id, list, populateItemFunc)
+    add(listView)
+    listView
   }
 
   def listView[T](id:String, list: java.util.List[T], populateItemFunc:(ListItem[T]) ⇒ Unit): ScalaListView[T] = {
-    new ScalaListView[T](id, list, populateItemFunc)
+    val listView = new ScalaListView[T](id, list, populateItemFunc)
+    add(listView)
+    listView
   }
 }
