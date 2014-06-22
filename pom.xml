@@ -223,7 +223,7 @@
 	<!-- mocleiri: for distribution in to central repository sections in the main pom are not allowed -->
 
 	<properties>
-		<wicket.version>6.16.0-SNAPSHOT</wicket.version>
+		<wicket.version>6.17.0-SNAPSHOT</wicket.version>
 
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
