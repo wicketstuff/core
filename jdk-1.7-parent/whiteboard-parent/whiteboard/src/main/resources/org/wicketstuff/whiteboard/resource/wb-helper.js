@@ -14,7 +14,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-var wbCallbackUrl = '';
 var wbClipArtList = '';
 var wbDocList='';
 var wbCurrentDoc='';
@@ -67,20 +66,20 @@ function wbMessage(msg) {
     	wbCurrentDocComponentList = message.json;
     }
     else if (message && message.type == "addBackground") {
-        if(wbCurrentDocPage!=message.json.url){
+        if( wbCurrentDocPage!=message.json.url) {
             whiteboard.acceptBackground(JSON.stringify(message.json));
             var b=message.json.url;
-            if(b!=''){
+            if(b != '') {
             	wbCurrentDoc = b.substring(b.lastIndexOf("/") + 1, b.lastIndexOf("."));
             	wbCurrentDocPage = b;
             	wbCurrentDocComponentList = "";
-            }else{
+            } else {
             	wbCurrentDoc = '';
             	wbCurrentDocPage = '';
             	wbCurrentDocComponentList = '';
             }
         }
-    } else if(message && message.type == "eraseElements"){
+    } else if (message && message.type == "eraseElements") {
         whiteboard.collections.main.clear();
         whiteboard.collections.tracer.clear();
         whiteboard.redrawAll()
