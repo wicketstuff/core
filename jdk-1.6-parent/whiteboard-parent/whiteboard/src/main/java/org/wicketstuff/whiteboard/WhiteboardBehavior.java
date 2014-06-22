@@ -361,8 +361,7 @@ public class WhiteboardBehavior extends AbstractDefaultAjaxBehavior {
 				if (element != null) {
 					elementMap.put(element.getId(), element);
 
-					IWebSocketConnectionRegistry reg = IWebSocketSettings.Holder.get(Application.get())
-							.getConnectionRegistry();
+					IWebSocketConnectionRegistry reg = IWebSocketSettings.Holder.get(Application.get()).getConnectionRegistry();
 					for (IWebSocketConnection c : reg.getConnections(Application.get())) {
 						try {
 							JSONObject jsonObject = new JSONObject(editedElement);
@@ -434,8 +433,7 @@ public class WhiteboardBehavior extends AbstractDefaultAjaxBehavior {
 				String deleteList = "";
 				JSONArray changeList = new JSONArray();
 
-				IWebSocketConnectionRegistry reg = IWebSocketSettings.Holder.get(Application.get())
-						.getConnectionRegistry();
+				IWebSocketConnectionRegistry reg = IWebSocketSettings.Holder.get(Application.get()).getConnectionRegistry();
 
 				for (int i = 0; i < undoElement.size(); i++) {
 					if (undoCreationList.get(i)) {
@@ -472,8 +470,7 @@ public class WhiteboardBehavior extends AbstractDefaultAjaxBehavior {
 				background = previousBackground;
 				whiteboardMap.get(whiteboardObjectId).setBackground(previousBackground);
 
-				IWebSocketConnectionRegistry reg = IWebSocketSettings.Holder.get(Application.get())
-						.getConnectionRegistry();
+				IWebSocketConnectionRegistry reg = IWebSocketSettings.Holder.get(Application.get()).getConnectionRegistry();
 				for (IWebSocketConnection c : reg.getConnections(Application.get())) {
 					try {
 						if (previousBackground != null) {
