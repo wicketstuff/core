@@ -7,6 +7,8 @@ import org.junit.runner.RunWith
 import org.scalatest.junit.JUnitRunner
 import org.scalatest.{MustMatchers, WordSpec}
 
+import _root_.java.util.{ArrayList => JArrayList, List => JList}
+
 /**
  * @author Antony Stubbs
  */
@@ -73,10 +75,10 @@ class ScalaWicketSpec
   
   "Implicit list conversion" should {
     "convert to an ArrayList implicitly" in {
-      def takesAnJUList(list:java.util.List[Int]) = list
+      def takesAnJUList(list:JList[Int]) = list
       val result = takesAnJUList(List(1,2,3))
       result.size mustEqual 3
-      result.isInstanceOf[java.util.ArrayList[_]] mustBe true
+      result.isInstanceOf[JArrayList[_]] mustBe true
     }
     "allow us to create a ListView out of a Scala List" in {
       import org.apache.wicket.markup.html.list._

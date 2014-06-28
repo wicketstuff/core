@@ -13,6 +13,7 @@ import org.wicketstuff.scala.markup.html.form.{ScalaForm, ScalaTextField}
 import org.wicketstuff.scala.markup.html.link.ScalaLink
 import org.wicketstuff.scala.markup.html.list.{ScalaPropertyListView, ScalaListView}
 import org.wicketstuff.scala.model.Fodel
+import _root_.java.util.{ArrayList => JArrayList, List => JList}
 
 /**
  * Specifications for the various Scala extended components.
@@ -165,7 +166,7 @@ class ComponentSpec
     "be able to be constructed with a Fodel for the backing list" in {
       val tester = new WicketTester()
       val theBackingList = List(1,2,3)
-      val fodel = new Fodel[java.util.List[Int]](theBackingList)
+      val fodel = new Fodel[JList[Int]](theBackingList)
       val view = new ScalaPropertyListView[Int]("votes", fodel, null)
       tester.destroy()
       view mustNot be (null)
@@ -215,7 +216,7 @@ class ComponentSpec
     }
     "be able to be constructed with a Function literal for the backing list, typed as a Java list" in {
       val tester = new WicketTester()
-      val theBackingList = new java.util.ArrayList[Int]()
+      val theBackingList = new JArrayList[Int]()
       theBackingList.add(1)
       theBackingList.add(2)
       theBackingList.add(3)
@@ -225,7 +226,7 @@ class ComponentSpec
     }
     "passing the list in as a by name should work properly" in {
       val tester = new WicketTester()
-      val theBackingList = new java.util.ArrayList[Int]()
+      val theBackingList = new JArrayList[Int]()
       theBackingList.add(1)
       theBackingList.add(2)
       theBackingList.add(3)
@@ -247,7 +248,7 @@ class ComponentSpec
     "can still construct with a fodel using pass by name" in {
       val tester = new WicketTester()
       val theBackingList = List(1,2,3)
-      val fodel = new Fodel[java.util.List[Int]](theBackingList)
+      val fodel = new Fodel[JList[Int]](theBackingList)
       val view = new ScalaPropertyListView[Int]("votes", fodel.getObject, null)
       tester.destroy()
       view mustNot be (null)
