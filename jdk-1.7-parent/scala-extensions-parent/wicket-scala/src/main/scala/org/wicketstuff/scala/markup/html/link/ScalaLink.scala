@@ -4,9 +4,9 @@ import org.apache.wicket.markup.html.link.Link
 import org.apache.wicket.model.IModel
 import org.wicketstuff.scala.ScalaMarkupContainer
 
-class ScalaLink[T](id:String, onClickFunc: ⇒ Unit, model: IModel[T] = null)
+class ScalaLink[T](id:String, f: ⇒ Unit, model: IModel[T] = null)
   extends Link(id, model)
   with ScalaMarkupContainer {
 
-  override def onClick(): Unit = onClickFunc
+  override def onClick(): Unit = f
 }

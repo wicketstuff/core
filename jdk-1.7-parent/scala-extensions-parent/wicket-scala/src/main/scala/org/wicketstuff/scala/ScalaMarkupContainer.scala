@@ -1,12 +1,15 @@
 package org.wicketstuff.scala
 
+import _root_.java.util.{List => JList}
+
+import org.apache.wicket.ajax.AjaxRequestTarget
 import org.apache.wicket.markup.html.list.ListItem
 import org.apache.wicket.model.IModel
 import org.apache.wicket.{Component, MarkupContainer}
 import org.wicketstuff.scala.markup.html.ScalaWebMarkupContainer
 import org.wicketstuff.scala.markup.html.basic.ScalaLabel
 import org.wicketstuff.scala.markup.html.form._
-import org.wicketstuff.scala.markup.html.link.ScalaLink
+import org.wicketstuff.scala.markup.html.link.{ScalaAjaxFallbackLink, ScalaAjaxLink, ScalaLink}
 import org.wicketstuff.scala.markup.html.list.ScalaListView
 
 /**
@@ -73,13 +76,25 @@ trait ScalaMarkupContainer extends ScalaComponent {
     link
   }
 
-  def listView[T](id:String, list: IModel[java.util.List[T]], populateItemFunc:(ListItem[T]) ⇒ Unit): ScalaListView[T] = {
+  def ajaxLink[T](id: String, f: (AjaxRequestTarget) ⇒ Unit, model: IModel[T] = null): ScalaAjaxLink[T] = {
+    val link = new ScalaAjaxLink[T](id, f, model)
+    add(link)
+    link
+  }
+
+  def fallbackLink[T](id: String, f: (Option[AjaxRequestTarget]) ⇒ Unit, model: IModel[T] = null): ScalaAjaxFallbackLink[T] = {
+    val link = new ScalaAjaxFallbackLink[T](id, f, model)
+    add(link)
+    link
+  }
+
+  def listView[T](id:String, list: IModel[JList[T]], populateItemFunc:(ListItem[T]) ⇒ Unit): ScalaListView[T] = {
     val listView = new ScalaListView[T](id, list, populateItemFunc)
     add(listView)
     listView
   }
 
-  def listView[T](id:String, list: java.util.List[T], populateItemFunc:(ListItem[T]) ⇒ Unit): ScalaListView[T] = {
+  def listView[T](id:String, list: JList[T], populateItemFunc:(ListItem[T]) ⇒ Unit): ScalaListView[T] = {
     val listView = new ScalaListView[T](id, list, populateItemFunc)
     add(listView)
     listView
