@@ -13,9 +13,8 @@ class ScalaForm[T](id: String,
   extends Form[T](id, model)
   with ScalaMarkupContainer {
 
-  override def onSubmit(): Unit = actions.getOrElse("submit", thisToUnit _)(ScalaForm.this)
+  override def onSubmit(): Unit = actions.get("submit").fold(super.onSubmit())(_(ScalaForm.this))
 
-  override def onError(): Unit = actions.getOrElse("error", thisToUnit _)(this)
+  override def onError(): Unit = actions.get("error").fold(super.onError())(_(ScalaForm.this))
 
-  protected def thisToUnit(typ: ScalaForm[T]) = (_: ScalaForm[T]) => ()
 }
