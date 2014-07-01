@@ -20,6 +20,7 @@ import java.util.List;
 
 import org.apache.wicket.Application;
 import org.apache.wicket.Page;
+import org.apache.wicket.core.request.mapper.HomePageMapper;
 import org.apache.wicket.request.IRequestMapper;
 import org.apache.wicket.request.component.IRequestablePage;
 import org.apache.wicket.core.request.mapper.MountedMapper;
@@ -241,8 +242,11 @@ public class AnnotatedMountScanner
 	 * @return {@link MountedMapper}
 	 */
 	public IRequestMapper getRequestMapper(String mountPath,
-		Class<? extends IRequestablePage> pageClass)
+	Class<? extends IRequestablePage> pageClass)
 	{
+		if ("/".equals(mountPath)) {
+			return new HomePageMapper(pageClass);
+		}
 		return new MountedMapper(mountPath, pageClass);
 	}
 

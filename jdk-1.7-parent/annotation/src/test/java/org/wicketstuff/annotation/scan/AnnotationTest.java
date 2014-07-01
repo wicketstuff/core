@@ -16,19 +16,23 @@
  */
 package org.wicketstuff.annotation.scan;
 
-import junit.framework.TestCase;
-
 import org.apache.wicket.Page;
+import org.apache.wicket.core.request.mapper.HomePageMapper;
+import org.apache.wicket.core.request.mapper.MountedMapper;
 import org.apache.wicket.request.IRequestMapper;
 import org.apache.wicket.request.component.IRequestablePage;
-import org.apache.wicket.core.request.mapper.MountedMapper;
+import org.hamcrest.CoreMatchers;
+import static org.hamcrest.CoreMatchers.is;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
 import org.wicketstuff.annotation.mount.MountPath;
 
 /**
  * @author Doug Donohoe
  * @author Ronald Tetsuo Miura
  */
-public class AnnotationTest extends TestCase
+public class AnnotationTest extends Assert
 {
 	@MountPath
 	private static class DefaultMountPathPage extends Page
@@ -44,6 +48,12 @@ public class AnnotationTest extends TestCase
 
 	@MountPath(value = "primary", alt = { "alt1", "alt2" })
 	private static class AlternativePathsPage extends Page
+	{
+		private static final long serialVersionUID = 1L;
+	}
+
+	@MountPath(value = "/")
+	private static class HomePathsPage extends Page
 	{
 		private static final long serialVersionUID = 1L;
 	}
@@ -81,51 +91,61 @@ public class AnnotationTest extends TestCase
 	private TestAnnotatedMountScanner testScanner = new TestAnnotatedMountScanner();
 	private final CustomAnnotatedMountScanner customScanner = new CustomAnnotatedMountScanner();
 
-	@Override
-	protected void setUp() throws Exception
+	@Before
+	public void before() throws Exception
 	{
-		super.setUp();
-
 		testScanner = new TestAnnotatedMountScanner();
 	}
 
-	public void testDefaultMountPath()
+    @Test
+	public void defaultMountPath()
 	{
 		AnnotatedMountList list = testScanner.scanClass(DefaultMountPathPage.class);
 		assertEquals(1, list.size());
 		assertEquals("DefaultMountPathPage", ((TestMountedMapper)list.get(0)).mountPath);
 	}
 
-	public void testExplicitMountPath()
+    @Test
+	public void explicitMountPath()
 	{
 		AnnotatedMountList list = testScanner.scanClass(ExplicitMountPathPage.class);
 		assertEquals(1, list.size());
 		assertEquals("mountPath", ((TestMountedMapper)list.get(0)).mountPath);
 	}
 
-	public void testAlternativePaths()
+    @Test
+	public void alternativePaths()
 	{
-		AnnotatedMountList list = testScanner.scanClass(ExplicitMountPathPage.class);
-		list = testScanner.scanClass(AlternativePathsPage.class);
+        AnnotatedMountList list = testScanner.scanClass(AlternativePathsPage.class);
 		assertEquals(3, list.size());
 		assertEquals("primary", ((TestMountedMapper)list.get(0)).mountPath);
 		assertEquals("alt1", ((TestMountedMapper)list.get(1)).mountPath);
 		assertEquals("alt2", ((TestMountedMapper)list.get(2)).mountPath);
 	}
 
-	public void testPackageScan()
+    @Test
+	public void packageScan()
 	{
-		final int expectedCount = 5;
 		AnnotatedMountList list = testScanner.scanPackage(AnnotationTest.class.getPackage()
 			.getName());
-		assertEquals("Should have gotten " + expectedCount + " items", expectedCount, list.size());
+		assertThat("Should have gotten 6 items", list.size(), is(6));
 	}
 
-	public void testCustomDefaultPath()
+    @Test
+	public void customDefaultPath()
 	{
 		AnnotatedMountList list = customScanner.scanClass(DefaultMountPathPage.class);
 		assertEquals(1, list.size());
 		assertEquals("defaultmountpathpage", ((TestMountedMapper)list.get(0)).mountPath);
+	}
+
+	@Test
+	public void homePath()
+	{
+		AnnotatedMountScanner scanner = new AnnotatedMountScanner();
+		AnnotatedMountList list = scanner.scanClass(HomePathsPage.class);
+		assertThat(list.size(), is(1));
+		assertThat(list.get(0), CoreMatchers.instanceOf(HomePageMapper.class));
 	}
 
 }
