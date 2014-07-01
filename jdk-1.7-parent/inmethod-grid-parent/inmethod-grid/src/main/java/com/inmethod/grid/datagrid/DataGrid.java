@@ -345,6 +345,7 @@ public class DataGrid<D extends IDataSource<T>, T, S> extends AbstractGrid<D, T,
 	{
 		super.onBeforeRender();
 		dirtyItems = null;
+		allDirty = false;
 	}
 
 	/**
