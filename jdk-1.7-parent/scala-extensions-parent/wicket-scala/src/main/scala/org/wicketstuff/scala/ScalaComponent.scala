@@ -3,15 +3,24 @@ package org.wicketstuff.scala
 import org.apache.wicket.Component
 import org.apache.wicket.ajax.{AjaxRequestTarget, AjaxEventBehavior}
 import org.apache.wicket.ajax.form.{OnChangeAjaxBehavior, AjaxFormSubmitBehavior}
+import org.apache.wicket.markup.head.{JavaScriptHeaderItem, JavaScriptReferenceHeaderItem, CssHeaderItem, CssReferenceHeaderItem}
+import org.apache.wicket.request.resource.{JavaScriptResourceReference, CssResourceReference}
+import org.wicketstuff.scala.model.ScalaModel
+import scala.language.implicitConversions
 
 /**
  * An extension of Wicket's Component class
  */
-trait ScalaComponent {
+trait ScalaComponent
+  extends ScalaModel {
   self: Component =>
 
   protected def noOp() = () => ()
   private[this] def doNothing(target: AjaxRequestTarget) = (_: AjaxRequestTarget) => ()
+
+  implicit def cssRefToHeaderItem(reference: CssResourceReference): CssReferenceHeaderItem = CssHeaderItem.forReference(reference)
+  implicit def jsRefToHeaderItem(reference: JavaScriptResourceReference): JavaScriptReferenceHeaderItem =
+    JavaScriptHeaderItem.forReference(reference)
 
   def updateable(): this.type = {
     self.setOutputMarkupId(true)

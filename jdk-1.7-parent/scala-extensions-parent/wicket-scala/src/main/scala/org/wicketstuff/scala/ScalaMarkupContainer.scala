@@ -5,11 +5,12 @@ import _root_.java.util.{List => JList}
 import org.apache.wicket.ajax.AjaxRequestTarget
 import org.apache.wicket.markup.html.list.ListItem
 import org.apache.wicket.model.IModel
-import org.apache.wicket.{Component, MarkupContainer}
+import org.apache.wicket.request.mapper.parameter.PageParameters
+import org.apache.wicket.{Page, Component, MarkupContainer}
 import org.wicketstuff.scala.markup.html.ScalaWebMarkupContainer
 import org.wicketstuff.scala.markup.html.basic.ScalaLabel
 import org.wicketstuff.scala.markup.html.form._
-import org.wicketstuff.scala.markup.html.link.{ScalaAjaxFallbackLink, ScalaAjaxLink, ScalaLink}
+import org.wicketstuff.scala.markup.html.link._
 import org.wicketstuff.scala.markup.html.list.ScalaListView
 
 /**
@@ -46,6 +47,14 @@ trait ScalaMarkupContainer extends ScalaComponent {
     form
   }
 
+  def statelessForm[T](id: String,
+                       model: IModel[T] = null,
+                       actions: Map[String, (ScalaStatelessForm[T]) => Unit] = Map.empty[String, (ScalaStatelessForm[T]) => Unit]): ScalaStatelessForm[T] = {
+    val form = new ScalaStatelessForm[T](id, model, actions)
+    add(form)
+    form
+  }
+
   def text[T](id: String, model: IModel[T] = null): ScalaTextField[T] = {
     val text = new ScalaTextField[T](id, model)
     add(text)
@@ -70,8 +79,20 @@ trait ScalaMarkupContainer extends ScalaComponent {
     number
   }
 
-  def link[T](id: String, onClickFunc: ⇒ Unit, model: IModel[T] = null): ScalaLink[T] = {
-    val link = new ScalaLink[T](id, onClickFunc, model)
+  def link[T](id: String, f: ⇒ Unit, model: IModel[T] = null): ScalaLink[T] = {
+    val link = new ScalaLink[T](id, f, model)
+    add(link)
+    link
+  }
+
+  def statelessLink[T](id: String, f: ⇒ Unit): ScalaStatelessLink[T] = {
+    val link = new ScalaStatelessLink[T](id, f)
+    add(link)
+    link
+  }
+
+  def pageLink(id: String, clazz: Class[_ <: Page], parameters: PageParameters = null): ScalaBookmarkablePageLink = {
+    val link = new ScalaBookmarkablePageLink(id, clazz, parameters)
     add(link)
     link
   }

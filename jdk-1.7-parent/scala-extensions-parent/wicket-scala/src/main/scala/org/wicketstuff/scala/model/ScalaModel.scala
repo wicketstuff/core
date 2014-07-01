@@ -1,6 +1,6 @@
 package org.wicketstuff.scala.model
 
-import org.apache.wicket.model.LoadableDetachableModel
+import org.apache.wicket.model.{AbstractReadOnlyModel, LoadableDetachableModel}
 
 import scala.concurrent.duration._
 
@@ -19,5 +19,12 @@ trait ScalaModel {
   def futureM[T](body: => T, duration: Duration = 10.seconds): FutureModel[T] = {
     val fModel = new FutureModel[T](body, duration)
     fModel
+  }
+
+  def aroM[T](f: => T): AbstractReadOnlyModel[T] = {
+    val arom = new AbstractReadOnlyModel[T] {
+      override def getObject = f
+    }
+    arom
   }
 }
