@@ -32,7 +32,7 @@ public class UrlMenuItem extends AbstractMenuItem
 {
 	private static final long serialVersionUID = 1L;
 
-	private final String url;
+	private final CharSequence url;
 
 	/**
 	 * Constructor
@@ -40,7 +40,7 @@ public class UrlMenuItem extends AbstractMenuItem
 	 * @param title the title of the menu-item
 	 * @param url the url to redirect to
 	 */
-	public UrlMenuItem(String title, String url)
+	public UrlMenuItem(String title, CharSequence url)
 	{
 		this(Model.of(title), url);
 	}
@@ -52,7 +52,7 @@ public class UrlMenuItem extends AbstractMenuItem
 	 * @param icon either a {@link KendoIcon} constant or a 'k-i-<i>icon</i>' css class
 	 * @param url the url to redirect to
 	 */
-	public UrlMenuItem(String title, String icon, String url)
+	public UrlMenuItem(String title, String icon, CharSequence url)
 	{
 		this(Model.of(title), icon, url);
 	}
@@ -63,7 +63,7 @@ public class UrlMenuItem extends AbstractMenuItem
 	 * @param title IModel that represent the title of the menu-item
 	 * @param url the url to redirect to
 	 */
-	public UrlMenuItem(IModel<String> title, String url)
+	public UrlMenuItem(IModel<String> title, CharSequence url)
 	{
 		this(title, KendoIcon.NONE, url);
 	}
@@ -75,7 +75,7 @@ public class UrlMenuItem extends AbstractMenuItem
 	 * @param icon either a {@link KendoIcon} constant or a 'k-i-<i>icon</i>' css class
 	 * @param url the url to redirect to
 	 */
-	public UrlMenuItem(IModel<String> title, String icon, String url)
+	public UrlMenuItem(IModel<String> title, String icon, CharSequence url)
 	{
 		super(title, icon);
 

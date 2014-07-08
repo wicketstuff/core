@@ -50,7 +50,7 @@ public class Menu extends JQueryPanel implements IMenuListener
 {
 	private static final long serialVersionUID = 1L;
 
-	private final List<IMenuItem> items; // first level
+	private final List<? extends IMenuItem> items; // first level
 	private WebMarkupContainer root;
 
 	/** Keep a reference to the {@link MenuItem}<code>s</code> hash */
@@ -72,7 +72,7 @@ public class Menu extends JQueryPanel implements IMenuListener
 	 * @param id the markup id
 	 * @param items the menu-items
 	 */
-	public Menu(String id, List<IMenuItem> items)
+	public Menu(String id, List<? extends IMenuItem> items)
 	{
 		super(id);
 
@@ -122,7 +122,7 @@ public class Menu extends JQueryPanel implements IMenuListener
 	 *
 	 * @return the menu-item {@link List}
 	 */
-	public List<IMenuItem> getItemList()
+	public List<? extends IMenuItem> getItemList()
 	{
 		return this.items;
 	}
@@ -189,7 +189,7 @@ public class Menu extends JQueryPanel implements IMenuListener
 	{
 		private static final long serialVersionUID = 1L;
 
-		public ListFragment(String id, List<IMenuItem> items)
+		public ListFragment(String id, List<? extends IMenuItem> items)
 		{
 			super(id, "list-fragment", Menu.this);
 
