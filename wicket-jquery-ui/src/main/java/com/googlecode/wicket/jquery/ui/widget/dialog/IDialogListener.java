@@ -33,6 +33,14 @@ interface IDialogListener
 	 * @return false by default
 	 */
 	boolean isDefaultCloseEventEnabled();
+	
+	/**
+	 * Indicates whether the escape close event (pressing escape key) is enabled
+	 * If true, the {@link #onClose(AjaxRequestTarget, DialogButton)} event will be triggered, with a null {@link DialogButton}
+	 *
+	 * @return false by default
+	 */
+	boolean isEscapeCloseEventEnabled();
 
 	/**
 	 * Triggered when a button is clicked.

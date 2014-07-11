@@ -313,6 +313,12 @@ public abstract class AbstractDialog<T extends Serializable> extends JQueryPanel
 		return false;
 	}
 
+	@Override
+	public boolean isEscapeCloseEventEnabled()
+	{
+		return false;
+	}
+
 	/**
 	 * Gets the model
 	 *
@@ -413,6 +419,12 @@ public abstract class AbstractDialog<T extends Serializable> extends JQueryPanel
 			public boolean isDefaultCloseEventEnabled()
 			{
 				return AbstractDialog.this.isDefaultCloseEventEnabled();
+			}
+
+			@Override
+			public boolean isEscapeCloseEventEnabled()
+			{
+				return AbstractDialog.this.isEscapeCloseEventEnabled();
 			}
 
 			@Override
