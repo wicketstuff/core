@@ -123,10 +123,10 @@
 							</goals>
 							<configuration>
 								<instructions>
-									<Export-Package>*</Export-Package>
-									<Import-Package>com.googlecode.wicket.jquery.ui*</Import-Package>
-									<DynamicImport-Package>*</DynamicImport-Package>
-									<_nouses>true</_nouses>
+				                    <Bundle-Version>${project.version}</Bundle-Version>
+									<Bundle-SymbolicName>${bundle.namespace}</Bundle-SymbolicName>
+				                    <Embed-Dependency>*;scope=compile|runtime</Embed-Dependency>
+									<Export-Package>${bundle.namespace}.*;version="${project.version}"</Export-Package>
 								</instructions>
 							</configuration>
 						</execution>
@@ -159,11 +159,6 @@
 						</goals>
 					</execution>
 				</executions>
-			</plugin>
-
-			<plugin>
-				<groupId>org.apache.felix</groupId>
-				<artifactId>maven-bundle-plugin</artifactId>
 			</plugin>
 		</plugins>
 
