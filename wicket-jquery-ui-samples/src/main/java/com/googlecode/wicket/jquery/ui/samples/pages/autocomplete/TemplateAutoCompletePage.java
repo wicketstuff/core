@@ -59,26 +59,22 @@ public class TemplateAutoCompletePage extends AbstractAutoCompletePage
 					private static final long serialVersionUID = 1L;
 
 					/**
-					 * For an AutoCompleteTextField, the template text should be of the form: <a>...</a>
-					 *
 					 * The template text will be enclosed in a <script type="text/x-jquery-tmpl" />.
 					 * You can use the "\n" character to properly format the template.
 					 */
 					@Override
 					public String getText()
 					{
-						return  "<a>\n" +
-							"<table style='width: 100%' cellspacing='0' cellpadding='0'>\n" +
-							" <tr>\n" +
-							"  <td>\n" +
-							"   <img src='${ coverUrl }' width='50px' />\n" +
-							"  </td>\n" +
-							"  <td>\n" +
-							"   ${ name }\n" +
-							"  </td>\n" +
-							" </tr>\n" +
-							"</table>\n" +
-							"</a>";
+						return	"<table style='width: 100%' cellspacing='0' cellpadding='0'>\n" +
+								" <tr>\n" +
+								"  <td>\n" +
+								"   <img src='${ coverUrl }' width='50px' />\n" +
+								"  </td>\n" +
+								"  <td>\n" +
+								"   ${ name }\n" +
+								"  </td>\n" +
+								" </tr>\n" +
+								"</table>";
 					}
 
 					@Override

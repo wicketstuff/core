@@ -1,7 +1,6 @@
 <code>AutoCompleteTextField</code> widget allows you to customize the item's display using a jQuery template, 
 which will be enclosed in a <code>&lt;script type="text/x-jquery-tmpl" /&gt;</code> (so you can use the "<code>\n</code>" character to properly format the template).<br/>
 <br/>
-For an <code>AutoCompleteTextField</code>, the template text should be of the form: <code>&lt;a&gt;...&lt;/a&gt;</code>. Properties used in the template text should be identified in the list returned by <code>IJQueryTemplate#getTextProperties()</code>.<br/>
 
 <pre>
 @Override
@@ -14,7 +13,7 @@ protected IJQueryTemplate newTemplate()
 		@Override
 		public String getText()
 		{
-			return  "&lt;a&gt;${ name }&lt;/a&gt;";
+			return  "${ name }"; // prior to 6.16 (jQueryUI < 1.11), &lt;a&gt;...&lt;/a&gt; was needed
 		}
 
 		@Override
