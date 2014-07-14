@@ -41,8 +41,7 @@ public class DefaultWysiwygToolbar extends Panel implements IWysiwygToolbar
 	/**
 	 * Constructor
 	 *
-	 * @param id
-	 *            the markup-id
+	 * @param id the markup-id
 	 */
 	public DefaultWysiwygToolbar(String id)
 	{
@@ -52,10 +51,8 @@ public class DefaultWysiwygToolbar extends Panel implements IWysiwygToolbar
 	/**
 	 * Constructor
 	 *
-	 * @param id
-	 *            the markup-id
-	 * @param model
-	 *            the {@link org.apache.wicket.model.IModel}
+	 * @param id the markup-id
+	 * @param model the {@link IModel}
 	 */
 	public DefaultWysiwygToolbar(String id, IModel<String> model)
 	{

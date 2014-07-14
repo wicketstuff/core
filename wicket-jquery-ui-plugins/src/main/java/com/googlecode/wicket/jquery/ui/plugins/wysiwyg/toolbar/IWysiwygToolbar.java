@@ -18,8 +18,10 @@ package com.googlecode.wicket.jquery.ui.plugins.wysiwyg.toolbar;
 
 import org.apache.wicket.Component;
 
+import com.googlecode.wicket.jquery.ui.plugins.wysiwyg.WysiwygEditor;
+
 /**
- * Specifies a toolbar to be used by a {@link com.googlecode.wicket.jquery.ui.plugins.wysiwyg.WysiwygEditor}
+ * Specifies a toolbar to be used by a {@link WysiwygEditor}
  *
  * @author sebfz1
  * @author solomax
@@ -28,9 +30,9 @@ import org.apache.wicket.Component;
 public interface IWysiwygToolbar
 {
 	/**
-	 * Attaches the {@link IWysiwygToolbar} to the editor {@link org.apache.wicket.Component}
+	 * Attaches the {@link IWysiwygToolbar} to the editor {@link Component}
 	 *
-	 * @param editor the {@link org.apache.wicket.Component} to attach the {@link IWysiwygToolbar} to
+	 * @param editor the {@link Component} to attach the {@link IWysiwygToolbar} to
 	 */
 	void attachToEditor(Component editor);
 }
