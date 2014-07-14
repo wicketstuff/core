@@ -337,8 +337,7 @@ public class Selectable<T extends Serializable> extends JQueryContainer implemen
 			};
 
 			draggable.add(AttributeModifier.append("class", "ui-icon " + JQueryIcon.ARROW_4_DIAG));
-			draggable.add(AttributeModifier.append("style", "display: inline-block; background-position: -16px -80px !important;")); // The background position is the same as ui-icon-arrow-4-diag. It is marked as important for the icon to
-																																		// not disappear while selecting over it.
+			draggable.add(AttributeModifier.append("style", "display: inline-block; background-position: -16px -80px !important;")); // The background position is the same as ui-icon-arrow-4-diag. It is marked as important for the icon to not disappear while selecting over it.
 
 			return draggable;
 		}

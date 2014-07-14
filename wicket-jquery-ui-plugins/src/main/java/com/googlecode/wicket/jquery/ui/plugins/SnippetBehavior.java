@@ -40,6 +40,6 @@ public class SnippetBehavior extends JQueryBehavior
 	@Override
 	protected String $()
 	{
-		return String.format("jQuery(function() { jQuery('%s').%s('%s', %s); });", this.selector, this.method, this.language, this.options);
+		return String.format("jQuery('%s').%s('%s', %s);", this.selector, this.method, this.language, this.options);
 	}
 }
