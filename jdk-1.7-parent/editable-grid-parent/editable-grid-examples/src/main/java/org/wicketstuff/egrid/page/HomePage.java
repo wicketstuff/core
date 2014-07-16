@@ -7,6 +7,7 @@ import java.util.List;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.markup.html.WebPage;
 import org.apache.wicket.markup.html.panel.FeedbackPanel;
+import org.apache.wicket.markup.repeater.Item;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
@@ -56,6 +57,13 @@ public class HomePage extends WebPage
 			protected void onSave(AjaxRequestTarget target, IModel<Person> rowModel)
 			{
 				target.add(feedbackPanel);
+			}
+			@Override
+			protected boolean allowDelete(Item<Person> rowItem) {
+				if (rowItem.getModelObject().getAge().equals("12")) {
+					return false;
+				}
+				return true;
 			}
 		});
     }
