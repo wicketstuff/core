@@ -7,7 +7,6 @@ import java.util.List;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.markup.html.WebPage;
 import org.apache.wicket.markup.html.panel.FeedbackPanel;
-import org.apache.wicket.markup.repeater.Item;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
@@ -16,6 +15,7 @@ import org.wicketstuff.egrid.column.AbstractEditablePropertyColumn;
 import org.wicketstuff.egrid.column.EditableCellPanel;
 import org.wicketstuff.egrid.column.EditableRequiredDropDownCellPanel;
 import org.wicketstuff.egrid.column.RequiredEditableTextFieldColumn;
+import org.wicketstuff.egrid.component.EditableDataTable.RowItem;
 import org.wicketstuff.egrid.model.Person;
 import org.wicketstuff.egrid.provider.EditableListDataProvider;
 
@@ -59,13 +59,10 @@ public class HomePage extends WebPage
 				target.add(feedbackPanel);
 			}
 			@Override
-			protected boolean allowDelete(Item<Person> rowItem) {
-				if (rowItem.getModelObject().getAge().equals("12")) {
-					return false;
-				}
-				return true;
+			protected RowItem<Person> newRowItem(String id, int index, IModel<Person> model) {
+				return super.newRowItem(id, index, model);
 			}
-		});
+		}.setTableBodyCss("tbodycss").setTableCss("tableCss"));
     }
 
 	private List<AbstractEditablePropertyColumn<Person, String>> getColumns()
