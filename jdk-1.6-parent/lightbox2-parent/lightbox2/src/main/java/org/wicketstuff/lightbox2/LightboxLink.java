@@ -93,6 +93,15 @@ public class LightboxLink extends AbstractLink
 			stringRel.append("[").append(group).append("]");
 		}
 		tag.put("rel", stringRel);
+		
+		if (group != null)
+		{
+			tag.put("data-lightbox", group);
+		}
+		else
+		{
+			tag.put("data-lightbox", getMarkupId());
+		}
 	}
 
 }
