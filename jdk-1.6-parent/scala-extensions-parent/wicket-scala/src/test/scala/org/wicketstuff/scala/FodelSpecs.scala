@@ -26,9 +26,14 @@ class FodelSpecs
       val f = new FodelString(bound)
       f.getObject must be equalTo(tony)
     }
-    "can be constructed without using 'new'" in {
+    "fodelstring can be constructed without using 'new'" in {
       val bound = tony
       val f = FodelString(bound)
+      f.getObject must be equalTo(tony)
+    }
+    "fodel can be constructed without using 'new'" in {
+      val bound = tony
+      val f = Fodel(bound)
       f.getObject must be equalTo(tony)
     }
     "readonly fodel should bind correctly" in {
@@ -48,9 +53,16 @@ class FodelSpecs
     }
   }
   "Read/Write Fodel" should {
-    "assign the backing property" in {
+    "assign the backing property (FodelString)" in {
       var bound = tony
       val f = new FodelString(bound, bound = _)
+      f.getObject must be equalTo (tony)
+      f.setObject(karyn)
+      f.getObject must be equalTo (karyn)
+    }
+    "assign the backing property (Fodel)" in {
+      var bound = tony
+      val f = Fodel(bound, bound = _:String)
       f.getObject must be equalTo (tony)
       f.setObject(karyn)
       f.getObject must be equalTo (karyn)
