@@ -1,43 +1,38 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 
-	<modelVersion>4.0.0</modelVersion>
-
-	<parent>
-		<groupId>org.wicketstuff</groupId>
-		<artifactId>progressbar-parent</artifactId>
-		<version>7.0-SNAPSHOT</version>
-	</parent>
-
-	<artifactId>progressbar-example</artifactId>
-	<packaging>war</packaging>
-
-	<dependencies>
-		<dependency>
-			<groupId>${project.groupId}</groupId>
-			<artifactId>wicketstuff-progressbar</artifactId>
-			<version>${project.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>${project.groupId}</groupId>
-			<artifactId>wicketstuff-progressbar-spring</artifactId>
-			<version>${project.version}</version>
-		</dependency>
-
-		<dependency>
-			<groupId>org.apache.wicket</groupId>
-			<artifactId>wicket-extensions</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>log4j</groupId>
-			<artifactId>log4j</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.slf4j</groupId>
-			<artifactId>slf4j-log4j12</artifactId>
-		</dependency>
-	</dependencies>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">  
+  <modelVersion>4.0.0</modelVersion>  
+  <parent> 
+    <groupId>org.wicketstuff</groupId>  
+    <artifactId>progressbar-parent</artifactId>  
+    <version>7.0-SNAPSHOT</version> 
+  </parent>  
+  <artifactId>progressbar-example</artifactId>  
+  <packaging>war</packaging>  
+  <dependencies> 
+    <dependency> 
+      <groupId>${project.groupId}</groupId>  
+      <artifactId>wicketstuff-progressbar</artifactId>  
+      <version>${project.version}</version> 
+    </dependency>  
+    <dependency> 
+      <groupId>${project.groupId}</groupId>  
+      <artifactId>wicketstuff-progressbar-spring</artifactId>  
+      <version>${project.version}</version> 
+    </dependency>  
+    <dependency> 
+      <groupId>org.apache.wicket</groupId>  
+      <artifactId>wicket-extensions</artifactId> 
+    </dependency>  
+    <dependency> 
+      <groupId>log4j</groupId>  
+      <artifactId>log4j</artifactId>  
+      <scope>test</scope>
+    </dependency>  
+    <dependency> 
+      <groupId>org.slf4j</groupId>  
+      <artifactId>slf4j-log4j12</artifactId>  
+      <scope>test</scope>
+    </dependency> 
+  </dependencies> 
 </project>
-
