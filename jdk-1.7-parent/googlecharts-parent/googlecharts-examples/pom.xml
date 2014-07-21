@@ -1,27 +1,25 @@
-<?xml version="1.0"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
-    <modelVersion>4.0.0</modelVersion>
+<?xml version="1.0" encoding="UTF-8"?>
 
-    <parent>
-        <groupId>org.wicketstuff</groupId>
-        <artifactId>googlecharts-parent</artifactId>
-        <version>7.0-SNAPSHOT</version>
-    </parent>
-
-    <artifactId>googlecharts-examples</artifactId>
-    <packaging>war</packaging>
-
-    <name>Google Charts - Examples</name>
-
-    <dependencies>
-        <dependency>
-            <groupId>org.slf4j</groupId>
-            <artifactId>slf4j-log4j12</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>${project.groupId}</groupId>
-            <artifactId>wicketstuff-googlecharts</artifactId>
-            <version>${project.version}</version>
-        </dependency>
-    </dependencies>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">  
+  <modelVersion>4.0.0</modelVersion>  
+  <parent> 
+    <groupId>org.wicketstuff</groupId>  
+    <artifactId>googlecharts-parent</artifactId>  
+    <version>7.0-SNAPSHOT</version> 
+  </parent>  
+  <artifactId>googlecharts-examples</artifactId>  
+  <packaging>war</packaging>  
+  <name>Google Charts - Examples</name>  
+  <dependencies> 
+    <dependency> 
+      <groupId>org.slf4j</groupId>  
+      <artifactId>slf4j-log4j12</artifactId>  
+      <scope>test</scope>
+    </dependency>  
+    <dependency> 
+      <groupId>${project.groupId}</groupId>  
+      <artifactId>wicketstuff-googlecharts</artifactId>  
+      <version>${project.version}</version> 
+    </dependency> 
+  </dependencies> 
 </project>

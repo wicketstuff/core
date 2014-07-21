@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-	<!--
+
+<!--
 		Licensed to the Apache Software Foundation (ASF) under one or more
 		contributor license agreements. See the NOTICE file distributed with
 		this work for additional information regarding copyright ownership.
@@ -13,56 +14,49 @@
 		the specific language governing permissions and limitations under the
 		License.
 	-->
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
-
-	<modelVersion>4.0.0</modelVersion>
-
-	<parent>
-		<groupId>org.wicketstuff</groupId>
-		<artifactId>openlayers-parent</artifactId>
-		<version>7.0-SNAPSHOT</version>
-	</parent>
-
-	<artifactId>wicketstuff-openlayers</artifactId>
-	<packaging>jar</packaging>
-
-	<name>Openlayers</name>
-	<description>Openlayer component.</description>
-
-	<inceptionYear>2008</inceptionYear>
-
-	<url>http://wicketstuff.org/confluence/display/STUFFWIKI/wicket-contrib-openlayers</url>
-
-	<developers>
-		<developer>
-			<name>Nino Martinez</name>
-			<id>nmwael</id>
-			<email>nino.martinez.wael@gmail.com</email>
-		</developer>
-	</developers>
-
-	<dependencies>
-		<dependency>
-			<groupId>com.vividsolutions</groupId>
-			<artifactId>jts</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.slf4j</groupId>
-			<artifactId>slf4j-api</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.slf4j</groupId>
-			<artifactId>slf4j-log4j12</artifactId>
-            <scope>test</scope>
-		</dependency>
-        <dependency>
-            <groupId>log4j</groupId>
-            <artifactId>log4j</artifactId>
-            <scope>test</scope>
-        </dependency>
-		<dependency>
-			<groupId>junit</groupId>
-			<artifactId>junit</artifactId>
-		</dependency>
-	</dependencies>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">  
+  <modelVersion>4.0.0</modelVersion>  
+  <parent> 
+    <groupId>org.wicketstuff</groupId>  
+    <artifactId>openlayers-parent</artifactId>  
+    <version>7.0-SNAPSHOT</version> 
+  </parent>  
+  <artifactId>wicketstuff-openlayers</artifactId>  
+  <packaging>jar</packaging>  
+  <name>Openlayers</name>  
+  <description>Openlayer component.</description>  
+  <inceptionYear>2008</inceptionYear>  
+  <url>http://wicketstuff.org/confluence/display/STUFFWIKI/wicket-contrib-openlayers</url>  
+  <developers> 
+    <developer> 
+      <name>Nino Martinez</name>  
+      <id>nmwael</id>  
+      <email>nino.martinez.wael@gmail.com</email> 
+    </developer> 
+  </developers>  
+  <dependencies> 
+    <dependency> 
+      <groupId>com.vividsolutions</groupId>  
+      <artifactId>jts</artifactId> 
+    </dependency>  
+    <dependency> 
+      <groupId>org.slf4j</groupId>  
+      <artifactId>slf4j-api</artifactId> 
+    </dependency>  
+    <dependency> 
+      <groupId>org.slf4j</groupId>  
+      <artifactId>slf4j-log4j12</artifactId>  
+      <scope>test</scope> 
+    </dependency>  
+    <dependency> 
+      <groupId>log4j</groupId>  
+      <artifactId>log4j</artifactId>  
+      <scope>test</scope> 
+    </dependency>  
+    <dependency> 
+      <groupId>junit</groupId>  
+      <artifactId>junit</artifactId>  
+      <scope>test</scope>
+    </dependency> 
+  </dependencies> 
 </project>
