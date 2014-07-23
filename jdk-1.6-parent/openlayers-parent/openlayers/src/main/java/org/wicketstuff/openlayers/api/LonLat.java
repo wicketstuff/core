@@ -28,28 +28,57 @@ import com.vividsolutions.jts.geom.Point;
  */
 public class LonLat implements Value
 {
-	/**
-	 * Default serialVersionUID.
-	 */
+
 	private static final long serialVersionUID = 1L;
+
+    /** Default projection */
+    protected static final String DEFAULT_PROJECTION = "EPSG:900913";
+
+    /** Point data */
 	private final Point point;
 
-	/**
-	 * Construct.
-	 * 
-	 * @param lat
-	 * @param lng
-	 */
+    /** Native projection for the point */
+    private final String projection;
+
+    /** Target projection for the poing */
+    private final String targetProjection;
+
 	public LonLat(double lng, double lat)
 	{
 
-		point = OpenLayersMapUtils.createPoint(lng, lat);
+		this(OpenLayersMapUtils.createPoint(lng, lat));
 	}
+
+    public LonLat(double lng, double lat, String projection)
+    {
+
+        this(OpenLayersMapUtils.createPoint(lng, lat), projection, DEFAULT_PROJECTION);
+    }
+
+    public LonLat(double lng, double lat, String projection, String targetProjection)
+    {
+
+        this(OpenLayersMapUtils.createPoint(lng, lat), projection, targetProjection);
+    }
 
 	public LonLat(Point point)
 	{
-		this.point = point;
+
+        this(point, DEFAULT_PROJECTION, DEFAULT_PROJECTION);
 	}
+
+    public LonLat(Point point, String projection)
+    {
+
+        this(point, projection, DEFAULT_PROJECTION);
+    }
+
+    public LonLat(Point point, String projection, String targetProjection)
+    {
+        this.point = point;
+        this.projection = projection;
+        this.targetProjection = targetProjection;
+    }
 
 	public double getLat()
 	{
@@ -67,11 +96,17 @@ public class LonLat implements Value
 		return getJSconstructor();
 	}
 
-	/**
-	 */
 	public String getJSconstructor()
 	{
-		return new Constructor("OpenLayers.LonLat").add(getLng()).add(getLat()).toJS();
+
+        String jsLatLong = new Constructor("OpenLayers.LonLat").add(getLng()).add(getLat()).toJS();
+
+        if(!projection.equals(targetProjection)) {
+            jsLatLong += ".transform(new OpenLayers.Projection(\"" + projection + "\"),"
+                    + "new OpenLayers.Projection(\"" + targetProjection + "\"))";
+        }
+
+        return jsLatLong;
 	}
 
 	@Override
