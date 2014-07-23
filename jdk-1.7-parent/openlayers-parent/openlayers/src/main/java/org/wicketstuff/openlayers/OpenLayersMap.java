@@ -36,12 +36,7 @@ import org.apache.wicket.request.cycle.RequestCycle;
 import org.apache.wicket.request.resource.JavaScriptResourceReference;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.wicketstuff.openlayers.api.Bounds;
-import org.wicketstuff.openlayers.api.IJavascriptComponent;
-import org.wicketstuff.openlayers.api.InfoWindow;
-import org.wicketstuff.openlayers.api.LonLat;
-import org.wicketstuff.openlayers.api.Marker;
-import org.wicketstuff.openlayers.api.Overlay;
+import org.wicketstuff.openlayers.api.*;
 import org.wicketstuff.openlayers.api.layer.GMap;
 import org.wicketstuff.openlayers.api.layer.Layer;
 import org.wicketstuff.openlayers.api.layer.OSM;
@@ -197,7 +192,7 @@ public class OpenLayersMap extends Panel implements IOpenLayersMap
 
 	private PopupListener callbackListener = null;
 
-	private static final LonLat DEFAULT_CENTER = new LonLat(37.4419, -122.1419);
+	private static final LonLat DEFAULT_CENTER = new SphericalMercatorLonLat(37.4419, -122.1419);
 	private LonLat center = DEFAULT_CENTER;
 
 	private final List<IJavascriptComponent> controls = new ArrayList<IJavascriptComponent>();
