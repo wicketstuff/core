@@ -21,6 +21,7 @@ import org.apache.wicket.markup.html.WebPage;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
 import org.wicketstuff.openlayers.api.LonLat;
 import org.wicketstuff.openlayers.api.Marker;
+import org.wicketstuff.openlayers.api.SphericalMercatorLonLat;
 import org.wicketstuff.openlayers.api.control.RemoveDrawControl;
 import org.wicketstuff.openlayers.event.DrawListenerBehavior;
 
@@ -48,7 +49,7 @@ public class MapWithDrawLayerAndInteractionPage extends WebPage
 		OpenLayersMap openLayersMap = new OpenLayersMap("map", true);
 		add(openLayersMap);
 
-		final Marker marker = new Marker(new LonLat(50, 50), new PopupPanel("Hello Marker 1"));
+		final Marker marker = new Marker(new SphericalMercatorLonLat(50, 50), new PopupPanel("Hello Marker 1"));
 		openLayersMap.addOverlay(marker);
 
 		openLayersMap.add(new DrawListenerBehavior()

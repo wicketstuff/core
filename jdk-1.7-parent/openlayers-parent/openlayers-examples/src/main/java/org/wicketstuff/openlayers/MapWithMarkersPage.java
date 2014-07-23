@@ -4,6 +4,7 @@ import org.apache.wicket.markup.html.WebPage;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
 import org.wicketstuff.openlayers.api.LonLat;
 import org.wicketstuff.openlayers.api.Marker;
+import org.wicketstuff.openlayers.api.SphericalMercatorLonLat;
 
 /**
  * Homepage
@@ -26,10 +27,10 @@ public class MapWithMarkersPage extends WebPage
 
 		OpenLayersMap openLayersMap = new OpenLayersMap("map", true);
 
-		Marker marker = new Marker(new LonLat(50, 50));
+		Marker marker = new Marker(new SphericalMercatorLonLat(50, 50));
 		openLayersMap.addOverlay(marker);
 
-		marker = new Marker(new LonLat(100, 50));
+		marker = new Marker(new SphericalMercatorLonLat(100, 50));
 		openLayersMap.addOverlay(marker);
 
 		add(openLayersMap);
