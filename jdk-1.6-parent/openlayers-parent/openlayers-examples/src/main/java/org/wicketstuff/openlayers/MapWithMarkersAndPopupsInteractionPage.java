@@ -20,6 +20,7 @@ import org.apache.wicket.markup.html.WebPage;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
 import org.wicketstuff.openlayers.api.LonLat;
 import org.wicketstuff.openlayers.api.Marker;
+import org.wicketstuff.openlayers.api.SphericalMercatorLonLat;
 import org.wicketstuff.openlayers.event.PopupMarkerInfoAttributeAppender;
 
 /**
@@ -43,7 +44,7 @@ public class MapWithMarkersAndPopupsInteractionPage extends WebPage
 
 		OpenLayersMap openLayersMap = new OpenLayersMap("map", true);
 		add(openLayersMap);
-		Marker marker = new Marker(new LonLat(50, 50), new PopupPanel("Hello Marker 1"));
+		Marker marker = new Marker(new SphericalMercatorLonLat(50, 50), new PopupPanel("Hello Marker 1"));
 		openLayersMap.addOverlay(marker);
 
 		WebMarkupContainer popupClicker = new WebMarkupContainer("openPop1");
@@ -52,7 +53,7 @@ public class MapWithMarkersAndPopupsInteractionPage extends WebPage
 
 		add(popupClicker);
 
-		marker = new Marker(new LonLat(100, 50), new PopupPanel("Hello Marker 2"));
+		marker = new Marker(new SphericalMercatorLonLat(100, 50), new PopupPanel("Hello Marker 2"));
 		openLayersMap.addOverlay(marker);
 		popupClicker = new WebMarkupContainer("openPop2");
 
