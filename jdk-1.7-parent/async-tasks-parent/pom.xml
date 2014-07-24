@@ -31,10 +31,6 @@
     </description>
     <url>http://www.kantega.no</url>
 
-    <properties>
-        <version.testng>6.8.5</version.testng>
-    </properties>
-
     <licenses>
         <license>
             <name>The Apache Software License, Version 2.0</name>
@@ -67,13 +63,10 @@
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-simple</artifactId>
-            <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.testng</groupId>
             <artifactId>testng</artifactId>
-            <version>${version.testng}</version>
-            <scope>test</scope>
         </dependency>
     </dependencies>
 </project>

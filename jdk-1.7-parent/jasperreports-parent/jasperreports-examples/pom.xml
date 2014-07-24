@@ -20,42 +20,6 @@
 		<jasperreports.outputDirectory>${project.build.sourceDirectory}/../webapp/reports</jasperreports.outputDirectory>
 	</properties>
 
-	<!--build>
-		<plugins>
-			<plugin>
-				<groupId>org.codehaus.mojo</groupId>
-				<artifactId>jasperreports-maven-plugin</artifactId>
-				<version>1.0.3-SNAPSHOT</version>
-				<executions>
-					<execution>
-						<id>jrc</id>
-						<phase>compile</phase>
-						<goals>
-							<goal>compile-reports</goal>
-						</goals>
-					</execution>
-				</executions>
-				<configuration>
-					<compiler>net.sf.jasperreports.engine.design.JRJdtCompiler</compiler>
-					<keepJava>false</keepJava>
-					<targetDirectory>${jasperreports.outputDirectory}</targetDirectory>
-				</configuration>
-				<dependencies>
-					<dependency>
-						<groupId>${project.groupId}</groupId>
-						<artifactId>jasperreports</artifactId>
-						<version>${project.version}</version>
-					</dependency>
-					<dependency>
-						<groupId>jasperreports</groupId>
-						<artifactId>jasperreports</artifactId>
-						<version>${jasperreports.version}</version>
-					</dependency>
-				</dependencies>
-			</plugin>
-		</plugins>
-	</build-->
-
 	<dependencies>
 		<dependency>
 			<groupId>${project.groupId}</groupId>

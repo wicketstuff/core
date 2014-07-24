@@ -38,7 +38,6 @@
 		<module>javaee-inject-parent</module>
 		<module>jquery-parent</module>
 		<module>jslibraries</module>
-		<!--<module>jsr303-parent</module> Deprecated in favour of wicket-beanvalidation module -->
 		<module>jwicket-parent</module>
 		<module>mbeanview-parent</module>
 		<module>minis-parent</module>
