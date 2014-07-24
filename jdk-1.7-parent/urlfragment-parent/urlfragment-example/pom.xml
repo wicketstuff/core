@@ -87,7 +87,14 @@
 			<artifactId>wicketstuff-urlfragment</artifactId>
 		    <version>${project.version}</version>
 		</dependency>
-	</dependencies>
+		<dependency>
+			<groupId>org.eclipse.jetty.aggregate</groupId>
+			<artifactId>jetty-all-server</artifactId>
+			<version>${jetty.version}</version>
+			<scope>provided</scope>
+		</dependency>
+
+    </dependencies>
 	<build>
 		<resources>
 			<resource>
