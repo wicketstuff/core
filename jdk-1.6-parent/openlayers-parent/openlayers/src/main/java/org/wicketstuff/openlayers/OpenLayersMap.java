@@ -15,11 +15,6 @@
  */
 package org.wicketstuff.openlayers;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
-
 import org.apache.wicket.Application;
 import org.apache.wicket.Component;
 import org.apache.wicket.RuntimeConfigurationType;
@@ -36,17 +31,28 @@ import org.apache.wicket.request.cycle.RequestCycle;
 import org.apache.wicket.request.resource.JavaScriptResourceReference;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.wicketstuff.openlayers.api.*;
-import org.wicketstuff.openlayers.api.layer.GMap;
+import org.wicketstuff.openlayers.api.Bounds;
+import org.wicketstuff.openlayers.api.IJavascriptComponent;
+import org.wicketstuff.openlayers.api.InfoWindow;
+import org.wicketstuff.openlayers.api.LonLat;
+import org.wicketstuff.openlayers.api.SphericalMercatorLonLat;
+import org.wicketstuff.openlayers.api.Marker;
+import org.wicketstuff.openlayers.api.Overlay;
 import org.wicketstuff.openlayers.api.layer.Layer;
 import org.wicketstuff.openlayers.api.layer.OSM;
-import org.wicketstuff.openlayers.api.layer.Vector;
+import org.wicketstuff.openlayers.api.layer.GMap;
 import org.wicketstuff.openlayers.api.layer.WFS;
 import org.wicketstuff.openlayers.api.layer.WMS;
+import org.wicketstuff.openlayers.api.layer.Vector;
 import org.wicketstuff.openlayers.event.EventType;
 import org.wicketstuff.openlayers.event.OverlayListenerBehavior;
 import org.wicketstuff.openlayers.event.PopupListener;
 import org.wicketstuff.openlayers.js.JSUtils;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
 
 /**
  * Wicket component to embed <a href="http://www.openlayers.org/">Openlayers Maps</a> into your
@@ -322,7 +328,7 @@ public class OpenLayersMap extends Panel implements IOpenLayersMap
 	 * Construct.
 	 *
 	 * @param id
-	 * @param OpenLayerMapHeaderContributor
+	 * @param headerContrib
 	 * @param overlays
 	 */
 	private OpenLayersMap(final String id, final OpenLayersMapHeaderContributor headerContrib,
@@ -872,9 +878,9 @@ public class OpenLayersMap extends Panel implements IOpenLayersMap
 	}
 
 
-	/**
-	 * @see org.apache.wicket.MarkupContainer#onRender(org.apache.wicket.markup.MarkupStream)
-	 */
+    /**
+     * @see org.apache.wicket.Component#onRender()
+     */
 	@Override
 	protected void onRender()
 	{
