@@ -8,7 +8,9 @@ import org.wicketstuff.openlayers.OpenLayersMapUtils;
  */
 public class SphericalMercatorLonLat extends LonLat {
 
-    /** Default projection */
+    /**
+     * Default projection
+     * */
     private static final String DEFAULT_PROJECTION = "EPSG:4326";
 
     /**

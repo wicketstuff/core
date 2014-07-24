@@ -31,48 +31,95 @@ public class LonLat implements Value
 
 	private static final long serialVersionUID = 1L;
 
-    /** Default projection */
+    /**
+     * Default projection
+     */
     protected static final String DEFAULT_PROJECTION = "EPSG:900913";
 
-    /** Point data */
+    /**
+     *  Point data
+     */
 	private final Point point;
 
-    /** Native projection for the point */
+    /**
+     * Native projection for the point
+     */
     private final String projection;
 
-    /** Target projection for the poing */
+    /**
+     * Target projection for the point
+     */
     private final String targetProjection;
 
+    /**
+     * Creates a new instance.
+     *
+     * @param lng Longitude value
+     * @param lat Latitude value
+     */
 	public LonLat(double lng, double lat)
 	{
 
 		this(OpenLayersMapUtils.createPoint(lng, lat));
 	}
 
+    /**
+     * Creates a new instance.
+     *
+     * @param lng Longitude value
+     * @param lat Latitude value
+     * @param projection Projection for this coordinate
+     */
     public LonLat(double lng, double lat, String projection)
     {
 
         this(OpenLayersMapUtils.createPoint(lng, lat), projection, DEFAULT_PROJECTION);
     }
 
+    /**
+     * Creates a new instance.
+     *
+     * @param lng Longitude value
+     * @param lat Latitude value
+     * @param projection Projection for this coordinate
+     * @param targetProjection Target projection when placing coordinate on map
+     */
     public LonLat(double lng, double lat, String projection, String targetProjection)
     {
 
         this(OpenLayersMapUtils.createPoint(lng, lat), projection, targetProjection);
     }
 
+    /**
+     * Creates a new instance.
+     *
+     * @param point Point coordinate
+     */
 	public LonLat(Point point)
 	{
 
         this(point, DEFAULT_PROJECTION, DEFAULT_PROJECTION);
 	}
 
+    /**
+     * Creates a new instance.
+     *
+     * @param point Point coordinate
+     * @param projection Projection for this coordinate
+     */
     public LonLat(Point point, String projection)
     {
 
         this(point, projection, DEFAULT_PROJECTION);
     }
 
+    /**
+     * Creates a new instance.
+     *
+     * @param point Point coordinate
+     * @param projection Projection for this coordinate
+     * @param targetProjection Target projection when placing coordinate on map
+     */
     public LonLat(Point point, String projection, String targetProjection)
     {
         this.point = point;
@@ -80,11 +127,21 @@ public class LonLat implements Value
         this.targetProjection = targetProjection;
     }
 
+    /**
+     * Returns the latitude for this coordinate.
+     *
+     * @return Latitude value
+     */
 	public double getLat()
 	{
 		return point.getY();
 	}
 
+    /**
+     * Returns the longitude for this coordinate.
+     *
+     * @return Longitude value
+     */
 	public double getLng()
 	{
 		return point.getX();
