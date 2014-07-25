@@ -88,7 +88,6 @@ Commented because its build fails
 <module>console-parent</module>
 -->
  
-		<module>wicketstuff-wicket7</module>
 		<module>wicketstuff-glassfish4-integration</module>
 	</modules>
 

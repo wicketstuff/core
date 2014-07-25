@@ -44,18 +44,6 @@
 
     <build>
         <plugins>
-            <!--
-                TODO - see if this was what was causing TeamCity failure
-                and if so, fix it. Commenting out now to see if error is
-                resolved. IS IT EVEN NEEDED? <plugin>
-                <artifactId>maven-assembly-plugin</artifactId>
-                <configuration>
-                <descriptor>src/assembly/bin.xml</descriptor>
-                <finalName>${artifactId}-${version}</finalName>
-                <outputDirectory>target/distributions</outputDirectory>
-                <workDirectory>target/assembly/work</workDirectory>
-                </configuration> </plugin>
-            -->
             <plugin>
                 <artifactId>maven-site-plugin</artifactId>
                 <configuration>

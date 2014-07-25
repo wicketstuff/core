@@ -5,9 +5,11 @@ import javax.servlet.ServletException;
 import javax.servlet.annotation.WebFilter;
 import javax.servlet.annotation.WebInitParam;
 
+import org.apache.wicket.protocol.http.WicketFilter;
+
 @WebFilter(value = "/*", /* urlPatterns = "/*", */
 initParams = { @WebInitParam(name = "applicationClassName", value = "org.wicketstuff.servlet3.WicketApplication") })
-public class HomeFilter extends WicketFilter3
+public class HomeFilter extends WicketFilter
 {
 
 	/*
