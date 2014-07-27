@@ -36,7 +36,7 @@ import com.googlecode.wicket.jquery.core.template.JQueryTemplateBehavior;
 
 /**
  * Provides a jQuery auto-complete widget
- * 
+ *
  * @param <T> the type of the model object
  * @author Sebastien Briquet - sebfz1
  */
@@ -255,7 +255,7 @@ public abstract class AutoCompleteTextField<T extends Serializable> extends Text
 		if (index < this.choices.size())
 		{
 			T choice = AutoCompleteTextField.this.choices.get(index);
-			
+
 			this.setModelObject(choice);
 			this.onSelected(target);
 		}

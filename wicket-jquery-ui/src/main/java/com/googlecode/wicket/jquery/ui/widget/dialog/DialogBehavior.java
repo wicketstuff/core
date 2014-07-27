@@ -31,7 +31,7 @@ import com.googlecode.wicket.jquery.ui.widget.dialog.ButtonAjaxBehavior.ClickEve
 
 /**
  * Provides a jQuery dialog behavior.
- * 
+ *
  * @author Sebastien Briquet - sebfz1
  * @since 1.2.3
  * @since 6.0.1
@@ -46,7 +46,7 @@ public abstract class DialogBehavior extends JQueryBehavior implements IJQueryAj
 
 	/**
 	 * Constructor
-	 * 
+	 *
 	 * @param selector the html selector (ie: "#myId")
 	 */
 	public DialogBehavior(String selector)
@@ -56,7 +56,7 @@ public abstract class DialogBehavior extends JQueryBehavior implements IJQueryAj
 
 	/**
 	 * Constructor
-	 * 
+	 *
 	 * @param selector the html selector (ie: "#myId")
 	 * @param options the {@link Options}
 	 */
@@ -68,7 +68,7 @@ public abstract class DialogBehavior extends JQueryBehavior implements IJQueryAj
 	// Properties //
 	/**
 	 * Gets the dialog's buttons.<br/>
-	 * 
+	 *
 	 * @return the {@link List} of {@link Button}
 	 */
 	protected abstract List<DialogButton> getButtons();
@@ -97,7 +97,7 @@ public abstract class DialogBehavior extends JQueryBehavior implements IJQueryAj
 
 	/**
 	 * Opens the dialogs in ajax.<br/>
-	 * 
+	 *
 	 * @param target the {@link AjaxRequestTarget}
 	 */
 	public void open(AjaxRequestTarget target)
@@ -107,7 +107,7 @@ public abstract class DialogBehavior extends JQueryBehavior implements IJQueryAj
 
 	/**
 	 * Closes the dialogs in ajax.<br/>
-	 * 
+	 *
 	 * @param target the {@link AjaxRequestTarget}
 	 */
 	public void close(AjaxRequestTarget target)
@@ -185,7 +185,7 @@ public abstract class DialogBehavior extends JQueryBehavior implements IJQueryAj
 	/**
 	 * Gets a new {@link ButtonAjaxBehavior} that will be called by the corresponding {@link DialogButton}.<br/>
 	 * This method may be overridden to provide additional behaviors
-	 * 
+	 *
 	 * @param source the {@link IJQueryAjaxAware} source
 	 * @param button the button that is passed to the behavior so it can be retrieved via the {@link ClickEvent}
 	 * @return the {@link ButtonAjaxBehavior}
@@ -194,7 +194,7 @@ public abstract class DialogBehavior extends JQueryBehavior implements IJQueryAj
 
 	/**
 	 * Gets the ajax behavior that will be triggered when the user clicks on the X-icon
-	 * 
+	 *
 	 * @return the {@link JQueryAjaxBehavior}
 	 */
 	protected JQueryAjaxBehavior newDefaultCloseBehavior()
