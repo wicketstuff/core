@@ -38,6 +38,7 @@ public class AutoCompleteUtils
 	 * @param list reference list
 	 * @return the sub list
 	 */
+	// TODO: move to ListUtils
 	public static <T> List<T> contains(String search, List<T> list)
 	{
 		return AutoCompleteUtils.contains(search, list, MAX);
@@ -52,6 +53,7 @@ public class AutoCompleteUtils
 	 * @param max max size of the sub list to be returned
 	 * @return the sub list
 	 */
+	// TODO: move to ListUtils
 	public static <T> List<T> contains(String search, List<T> list, int max)
 	{
 		List<T> choices = new ArrayList<T>();
@@ -82,6 +84,7 @@ public class AutoCompleteUtils
 	 * @param list reference list
 	 * @return the sub list
 	 */
+	// TODO: move to ListUtils
 	public static <T> List<T> startsWith(String search, List<T> list)
 	{
 		return AutoCompleteUtils.startsWith(search, list, MAX);
@@ -96,6 +99,7 @@ public class AutoCompleteUtils
 	 * @param max max size of the sub list to be returned
 	 * @return the sub list
 	 */
+	// TODO: move to ListUtils
 	public static <T> List<T> startsWith(String search, List<T> list, int max)
 	{
 		List<T> choices = new ArrayList<T>();

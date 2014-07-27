@@ -14,28 +14,30 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.googlecode.wicket.jquery.ui.form.autocomplete;
+package com.googlecode.wicket.kendo.ui.form.autocomplete;
 
 import org.apache.wicket.Component;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.attributes.CallbackParameter;
 
-import com.googlecode.wicket.jquery.core.JQueryBehavior;
 import com.googlecode.wicket.jquery.core.JQueryEvent;
 import com.googlecode.wicket.jquery.core.Options;
 import com.googlecode.wicket.jquery.core.ajax.IJQueryAjaxAware;
 import com.googlecode.wicket.jquery.core.ajax.JQueryAjaxBehavior;
 import com.googlecode.wicket.jquery.core.utils.RequestCycleUtils;
+import com.googlecode.wicket.kendo.ui.KendoAbstractBehavior;
+import com.googlecode.wicket.kendo.ui.utils.DebugUtils;
 
 /**
- * Provides a jQuery auto-complete behavior
+ * Provides a Kendo UI auto-complete behavior
  *
  * @author Sebastien Briquet - sebfz1
+ *
  */
-public abstract class AutoCompleteBehavior extends JQueryBehavior implements IJQueryAjaxAware, IAutoCompleteListener
+public abstract class AutoCompleteBehavior extends KendoAbstractBehavior implements IJQueryAjaxAware, IAutoCompleteListener
 {
 	private static final long serialVersionUID = 1L;
-	private static final String METHOD = "autocomplete";
+	private static final String METHOD = "kendoAutoComplete";
 
 	private JQueryAjaxBehavior onSelectBehavior = null;
 
@@ -70,6 +72,8 @@ public abstract class AutoCompleteBehavior extends JQueryBehavior implements IJQ
 		component.add(this.onSelectBehavior = this.newOnSelectBehavior());
 	}
 
+	protected abstract CharSequence getChoiceCallbackUrl();
+
 	// Events //
 
 	@Override
@@ -77,6 +81,9 @@ public abstract class AutoCompleteBehavior extends JQueryBehavior implements IJQ
 	{
 		super.onConfigure(component);
 
+		this.setOption("autoBind", true); // immutable
+		this.setOption("serverFiltering", true);
+		this.setOption("dataSource", this.newDataSource());
 		this.setOption("select", this.onSelectBehavior.getCallbackFunction());
 	}
 
@@ -92,6 +99,12 @@ public abstract class AutoCompleteBehavior extends JQueryBehavior implements IJQ
 	}
 
 	// Factories //
+
+	protected String newDataSource()
+	{
+		return String.format("{ serverFiltering: true, transport: { read: { url: '%s', dataType: 'json' } }, error: %s }", this.getChoiceCallbackUrl(), DebugUtils.errorCallback);
+	}
+
 	/**
 	 * Gets a new {@link JQueryAjaxBehavior} that will be called on 'select' javascript method
 	 *
@@ -106,7 +119,7 @@ public abstract class AutoCompleteBehavior extends JQueryBehavior implements IJQ
 			@Override
 			protected CallbackParameter[] getCallbackParameters()
 			{
-				return new CallbackParameter[] { CallbackParameter.context("event"), CallbackParameter.context("ui"), CallbackParameter.resolved("index", "ui.item.id") };
+				return new CallbackParameter[] { CallbackParameter.context("e"), CallbackParameter.resolved("index", "e.item.index()") };
 			}
 
 			@Override

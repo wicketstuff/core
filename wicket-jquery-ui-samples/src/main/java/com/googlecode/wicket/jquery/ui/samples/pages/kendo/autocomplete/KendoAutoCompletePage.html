@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html xmlns:wicket="http://wicket.apache.org">
+<head>
+<wicket:head>
+	<title>Wicket - jQuery UI: kendo auto-complete</title>
+</wicket:head>
+</head>
+<body>
+<wicket:extend>
+	<div id="wrapper-panel-frame" class="ui-corner-all">
+		<form wicket:id="form">
+			<div>Choose your favorite rock genre: (that starts with your criteria)</div>
+			<br/>
+			<input wicket:id="autocomplete" type="text" size="50" title="enter your criteria here" style="width: 320px;"></input><br/>
+			<br/>
+			<button wicket:id="submit" type="submit">Submit</button>
+			<button wicket:id="button">Ajax Button</button>
+			<br/><br/>
+			<div wicket:id="feedback" style="width: 460px;"></div>
+		</form>
+	</div>
+</wicket:extend>
+</body>
+</html>

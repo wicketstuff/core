@@ -62,7 +62,7 @@ public abstract class AutoCompleteTextField<T extends Serializable> extends Text
 
 	/**
 	 * Constructor
-	 * 
+	 *
 	 * @param id the markup id
 	 */
 	public AutoCompleteTextField(String id)
@@ -72,7 +72,7 @@ public abstract class AutoCompleteTextField<T extends Serializable> extends Text
 
 	/**
 	 * Constructor
-	 * 
+	 *
 	 * @param id the markup id
 	 * @param type the type of the bean. This parameter should be supplied for the internal converter ({@link #getConverter(Class)}) to be used.
 	 */
@@ -83,7 +83,7 @@ public abstract class AutoCompleteTextField<T extends Serializable> extends Text
 
 	/**
 	 * Constructor
-	 * 
+	 *
 	 * @param id the markup id
 	 * @param renderer the {@link ITextRenderer}
 	 */
@@ -94,7 +94,7 @@ public abstract class AutoCompleteTextField<T extends Serializable> extends Text
 
 	/**
 	 * Constructor
-	 * 
+	 *
 	 * @param id the markup id
 	 * @param renderer the {@link ITextRenderer}
 	 * @param type the type of the bean. This parameter should be supplied for the internal converter ({@link #getConverter(Class)}) to be used.
@@ -110,7 +110,7 @@ public abstract class AutoCompleteTextField<T extends Serializable> extends Text
 
 	/**
 	 * Constructor
-	 * 
+	 *
 	 * @param id the markup id
 	 * @param model the {@link IModel}
 	 */
@@ -121,7 +121,7 @@ public abstract class AutoCompleteTextField<T extends Serializable> extends Text
 
 	/**
 	 * Constructor
-	 * 
+	 *
 	 * @param id the markup id
 	 * @param model the {@link IModel}
 	 * @param type the type of the bean. This parameter should be supplied for the internal converter ({@link #getConverter(Class)}) to be used.
@@ -133,7 +133,7 @@ public abstract class AutoCompleteTextField<T extends Serializable> extends Text
 
 	/**
 	 * Constructor
-	 * 
+	 *
 	 * @param id the markup id
 	 * @param model the {@link IModel}
 	 * @param renderer the {@link ITextRenderer}
@@ -145,7 +145,7 @@ public abstract class AutoCompleteTextField<T extends Serializable> extends Text
 
 	/**
 	 * Constructor
-	 * 
+	 *
 	 * @param id the markup id
 	 * @param model the {@link IModel}
 	 * @param renderer the {@link ITextRenderer}
@@ -161,24 +161,11 @@ public abstract class AutoCompleteTextField<T extends Serializable> extends Text
 	}
 
 	// Methods //
-	@Override
-	protected String getModelValue()
-	{
-		return this.renderer.getText(this.getModelObject()); // renderer cannot be null.
-	}
-
-	/**
-	 * Gets choices matching the provided input
-	 * 
-	 * @param input String that represent the query
-	 * @return the list of choices
-	 */
-	protected abstract List<T> getChoices(String input);
 
 	/**
 	 * Call {@link #getChoices(String)} and cache the result<br/>
 	 * Internal use only
-	 * 
+	 *
 	 * @param input String that represent the query
 	 * @return the list of choices
 	 */
@@ -190,8 +177,22 @@ public abstract class AutoCompleteTextField<T extends Serializable> extends Text
 	}
 
 	/**
+	 * Gets choices matching the provided input
+	 *
+	 * @param input String that represent the query
+	 * @return the list of choices
+	 */
+	protected abstract List<T> getChoices(String input);
+
+	@Override
+	protected String getModelValue()
+	{
+		return this.renderer.getText(this.getModelObject()); // renderer cannot be null.
+	}
+
+	/**
 	 * Gets the {@link ITextRenderer}
-	 * 
+	 *
 	 * @return the {@link ITextRenderer}
 	 */
 	public ITextRenderer<? super T> getRenderer()
@@ -233,6 +234,7 @@ public abstract class AutoCompleteTextField<T extends Serializable> extends Text
 	@Override
 	public void onConfigure(JQueryBehavior behavior)
 	{
+		// TODO: move to AutoCompleteBehavior
 		behavior.setOption("source", Options.asString(this.sourceBehavior.getCallbackUrl()));
 	}
 
@@ -252,9 +254,9 @@ public abstract class AutoCompleteTextField<T extends Serializable> extends Text
 	@Override
 	public final void onSelect(AjaxRequestTarget target, int index)
 	{
-		if (index < this.choices.size())
+		if (0 < index && index < this.choices.size())
 		{
-			T choice = AutoCompleteTextField.this.choices.get(index);
+			T choice = this.choices.get(index);
 
 			this.setModelObject(choice);
 			this.onSelected(target);
@@ -263,7 +265,7 @@ public abstract class AutoCompleteTextField<T extends Serializable> extends Text
 
 	/**
 	 * Triggered when the user selects an item from results that matched its input
-	 * 
+	 *
 	 * @param target the {@link AjaxRequestTarget}
 	 */
 	protected void onSelected(AjaxRequestTarget target)
@@ -304,7 +306,7 @@ public abstract class AutoCompleteTextField<T extends Serializable> extends Text
 	 * Gets a new {@link IJQueryTemplate} to customize the rendering<br/>
 	 * The {@link IJQueryTemplate#getText()} should return a template text of the form "&lt;a&gt;...&lt;/a&gt;".<br/>
 	 * The properties used in the template text (ie: ${name}) should be identified in the list returned by {@link IJQueryTemplate#getTextProperties()}
-	 * 
+	 *
 	 * @return null by default
 	 */
 	protected IJQueryTemplate newTemplate()
@@ -315,7 +317,7 @@ public abstract class AutoCompleteTextField<T extends Serializable> extends Text
 	/**
 	 * Gets a new {@link IConverter}.<br/>
 	 * Used when the form component is posted and the bean type has been supplied to the constructor.
-	 * 
+	 *
 	 * @return the {@link IConverter}
 	 */
 	private IConverter<T> newConverter()
@@ -345,7 +347,7 @@ public abstract class AutoCompleteTextField<T extends Serializable> extends Text
 
 	/**
 	 * Gets a new {@link AutoCompleteSourceBehavior}
-	 * 
+	 *
 	 * @return the {@link AutoCompleteSourceBehavior}
 	 */
 	private AutoCompleteSourceBehavior<T> newAutoCompleteSourceBehavior()
