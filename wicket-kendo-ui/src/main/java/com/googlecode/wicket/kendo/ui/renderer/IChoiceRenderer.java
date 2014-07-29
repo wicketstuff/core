@@ -32,14 +32,14 @@ public interface IChoiceRenderer<T> extends ITextRenderer<T>
 	 *
 	 * @return the name of the text field
 	 */
-	public abstract String getTextField();
+	String getTextField();
 
 	/**
 	 * Gets the name of the field that acts as the 'dataValueField' in the JSON response.
 	 *
 	 * @return the name of the value field
 	 */
-	public abstract String getValueField();
+	String getValueField();
 
 	/**
 	 * Gets the value that should be renderer for the supplied object
@@ -47,13 +47,5 @@ public interface IChoiceRenderer<T> extends ITextRenderer<T>
 	 * @param object the T object
 	 * @return the value
 	 */
-	public abstract String getValue(T object);
-
-	/**
-	 * Gets the JSON representation of the supplied object
-	 *
-	 * @param object the object
-	 * @return the JSON representation of the object
-	 */
-	public abstract String toJson(T object);
+	String getValue(T object);
 }

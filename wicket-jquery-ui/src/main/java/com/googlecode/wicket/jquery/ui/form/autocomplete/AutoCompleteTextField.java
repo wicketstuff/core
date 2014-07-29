@@ -195,6 +195,7 @@ public abstract class AutoCompleteTextField<T extends Serializable> extends Text
 	 *
 	 * @return the {@link ITextRenderer}
 	 */
+	//TODO: to remove ?
 	public ITextRenderer<? super T> getRenderer()
 	{
 		return this.renderer;
@@ -254,7 +255,7 @@ public abstract class AutoCompleteTextField<T extends Serializable> extends Text
 	@Override
 	public final void onSelect(AjaxRequestTarget target, int index)
 	{
-		if (0 < index && index < this.choices.size())
+		if (-1 < index && index < this.choices.size())
 		{
 			T choice = this.choices.get(index);
 

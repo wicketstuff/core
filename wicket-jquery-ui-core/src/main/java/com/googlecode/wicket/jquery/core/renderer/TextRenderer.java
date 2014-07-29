@@ -28,6 +28,8 @@ public class TextRenderer<T> implements ITextRenderer<T>
 {
 	private static final long serialVersionUID = 1L;
 
+	public static final String TEXT_FIELD = "text";
+
 	private final String expression;
 
 	/**
@@ -81,5 +83,11 @@ public class TextRenderer<T> implements ITextRenderer<T>
 		}
 
 		return "";
+	}
+
+	@Override
+	public String toJson(T object)
+	{
+		return String.format("{ \"%s\": \"%s\" }", TEXT_FIELD, this.getText(object));
 	}
 }

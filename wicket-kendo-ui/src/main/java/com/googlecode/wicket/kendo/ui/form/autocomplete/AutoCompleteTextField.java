@@ -17,15 +17,19 @@
 package com.googlecode.wicket.kendo.ui.form.autocomplete;
 
 import java.util.List;
+import java.util.Locale;
 
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.markup.ComponentTag;
 import org.apache.wicket.markup.html.form.TextField;
 import org.apache.wicket.model.IModel;
+import org.apache.wicket.util.convert.IConverter;
 
 import com.googlecode.wicket.jquery.core.IJQueryWidget;
 import com.googlecode.wicket.jquery.core.JQueryBehavior;
 import com.googlecode.wicket.jquery.core.Options;
+import com.googlecode.wicket.jquery.core.renderer.ITextRenderer;
+import com.googlecode.wicket.jquery.core.renderer.TextRenderer;
 import com.googlecode.wicket.jquery.core.utils.RequestCycleUtils;
 import com.googlecode.wicket.kendo.ui.behavior.ChoiceModelBehavior;
 import com.googlecode.wicket.kendo.ui.renderer.ChoiceRenderer;
@@ -49,8 +53,8 @@ public abstract class AutoCompleteTextField<T> extends TextField<T> /* TextField
 	/** cache of current choices, needed to retrieve the user selected object */
 	private List<T> choices;
 
-	/** the datasource renderer */
-	private final ChoiceRenderer<? super T> renderer;
+	private final ITextRenderer<? super T> renderer;
+	private final IConverter<T> converter;
 
 	/** inner list width. 0 means that it will not be handled */
 	private int width = 0;
@@ -62,7 +66,7 @@ public abstract class AutoCompleteTextField<T> extends TextField<T> /* TextField
 	 */
 	public AutoCompleteTextField(String id)
 	{
-		this(id, new ChoiceRenderer<T>());
+		this(id, new TextRenderer<T>());
 	}
 
 	/**
@@ -71,11 +75,12 @@ public abstract class AutoCompleteTextField<T> extends TextField<T> /* TextField
 	 * @param id the markup id
 	 * @param renderer the {@link ChoiceRenderer}
 	 */
-	public AutoCompleteTextField(String id, ChoiceRenderer<? super T> renderer)
+	public AutoCompleteTextField(String id, ITextRenderer<? super T> renderer)
 	{
 		super(id);
 
 		this.renderer = renderer;
+		this.converter = this.newConverter();
 	}
 
 	/**
@@ -87,7 +92,7 @@ public abstract class AutoCompleteTextField<T> extends TextField<T> /* TextField
 	//public AutoCompleteTextField(String id, IModel<? extends Collection<T>> model)
 	public AutoCompleteTextField(String id, IModel<T> model)
 	{
-		this(id, model, new ChoiceRenderer<T>());
+		this(id, model, new TextRenderer<T>());
 	}
 
 	/**
@@ -97,11 +102,12 @@ public abstract class AutoCompleteTextField<T> extends TextField<T> /* TextField
 	 * @param model the {@link IModel}
 	 * @param renderer the {@link ChoiceRenderer}
 	 */
-	public AutoCompleteTextField(String id, IModel<T> model, ChoiceRenderer<? super T> renderer)
+	public AutoCompleteTextField(String id, IModel<T> model, ITextRenderer<? super T> renderer)
 	{
 		super(id, model);
 
 		this.renderer = renderer;
+		this.converter = this.newConverter();
 	}
 
 	// Properties //
@@ -180,6 +186,22 @@ public abstract class AutoCompleteTextField<T> extends TextField<T> /* TextField
 		return this.renderer.getText(this.getModelObject()); // renderer cannot be null.
 	}
 
+	@Override
+	@SuppressWarnings("unchecked")
+	public <C> IConverter<C> getConverter(Class<C> type)
+	{
+		if (!String.class.isAssignableFrom(this.getType())) /* TODO: manage String (property)model object in a better way */
+		{
+			if (type != null && type.isAssignableFrom(this.getType()))
+			{
+				return (IConverter<C>) this.converter;
+			}
+		}
+
+		return super.getConverter(type);
+	}
+
+
 // for IModel<? extends Collection<T>>
 //	@Override
 //	protected T convertValue(String[] values)
@@ -227,8 +249,8 @@ public abstract class AutoCompleteTextField<T> extends TextField<T> /* TextField
 	{
 //		behavior.setOption("value", this.getModelValue());
 //		behavior.setOption("separator", Options.asString(SEPARATOR));
-		behavior.setOption("dataTextField", Options.asString(this.renderer.getTextField()));
-		behavior.setOption("dataValueField", Options.asString(this.renderer.getValueField()));
+		behavior.setOption("dataTextField", Options.asString(TextRenderer.TEXT_FIELD));
+//		behavior.setOption("dataValueField", Options.asString(this.renderer.getValueField()));
 
 		if (this.getListWidth() > 0)
 		{
@@ -253,7 +275,7 @@ public abstract class AutoCompleteTextField<T> extends TextField<T> /* TextField
 	@Override
 	public final void onSelect(AjaxRequestTarget target, int index)
 	{
-		if (0 < index && index < this.choices.size())
+		if (-1 < index && index < this.choices.size())
 		{
 			T choice = this.choices.get(index);
 
@@ -296,6 +318,37 @@ public abstract class AutoCompleteTextField<T> extends TextField<T> /* TextField
 	}
 
 	// Factories //
+
+	/**
+	 * Gets a new {@link IConverter}.<br/>
+	 * Used when the form component is posted and the bean type has been supplied to the constructor.
+	 *
+	 * @return the {@link IConverter}
+	 */
+	private IConverter<T> newConverter()
+	{
+		return new IConverter<T>() {
+
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			public T convertToObject(String value, Locale locale)
+			{
+				if (value != null && value.equals(AutoCompleteTextField.this.getModelValue()))
+				{
+					return AutoCompleteTextField.this.getModelObject();
+				}
+
+				return null; // if the TextField value (string) does not corresponds to the current object model (ie: user specific value), returns null.
+			}
+
+			@Override
+			public String convertToString(T value, Locale locale)
+			{
+				return AutoCompleteTextField.this.renderer.getText(value);
+			}
+		};
+	}
 
 	/**
 	 * Gets a new {@link ChoiceModelBehavior}

@@ -94,6 +94,7 @@ public abstract class AutoCompleteBehavior extends KendoAbstractBehavior impleme
 	{
 		if (event instanceof SelectEvent)
 		{
+			System.out.println("value: " + ((SelectEvent) event).getValue());
 			this.onSelect(target, ((SelectEvent) event).getIndex());
 		}
 	}
@@ -119,7 +120,14 @@ public abstract class AutoCompleteBehavior extends KendoAbstractBehavior impleme
 			@Override
 			protected CallbackParameter[] getCallbackParameters()
 			{
-				return new CallbackParameter[] { CallbackParameter.context("e"), CallbackParameter.resolved("index", "e.item.index()") };
+				return new CallbackParameter[] { CallbackParameter.context("e"), CallbackParameter.resolved("index", "e.item.index()"), CallbackParameter.resolved("value", "e.item.val()") };
+			}
+
+			@Override
+			public CharSequence getCallbackFunctionBody(CallbackParameter... extraParameters)
+			{
+				// TODO Auto-generated method stub
+				return "console.log(e.item);" + super.getCallbackFunctionBody(extraParameters);
 			}
 
 			@Override
@@ -138,15 +146,22 @@ public abstract class AutoCompleteBehavior extends KendoAbstractBehavior impleme
 	protected static class SelectEvent extends JQueryEvent
 	{
 		private final int index;
+		private final String value;
 
 		public SelectEvent()
 		{
-			this.index = RequestCycleUtils.getQueryParameterValue("index").toInt(1) - 1;
+			this.index = RequestCycleUtils.getQueryParameterValue("index").toInt(-1);
+			this.value = RequestCycleUtils.getQueryParameterValue("value").toString();
 		}
 
 		public int getIndex()
 		{
 			return this.index;
+		}
+
+		public String getValue()
+		{
+			return this.value;
 		}
 	}
 }

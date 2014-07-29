@@ -82,7 +82,7 @@ public class KendoAutoCompletePage extends AbstractAutoCompletePage
 		});
 	}
 
-	private void info(AutoCompleteTextField<String> autocomplete)
+	private void info(AutoCompleteTextField<?> autocomplete)
 	{
 		Object choice =  autocomplete.getModelObject();
 
