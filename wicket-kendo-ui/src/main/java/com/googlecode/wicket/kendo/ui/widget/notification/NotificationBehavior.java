@@ -19,6 +19,7 @@ package com.googlecode.wicket.kendo.ui.widget.notification;
 import java.io.Serializable;
 
 import org.apache.wicket.ajax.AjaxRequestTarget;
+import org.apache.wicket.core.util.string.JavaScriptUtils;
 
 import com.googlecode.wicket.jquery.core.Options;
 import com.googlecode.wicket.kendo.ui.KendoAbstractBehavior;
@@ -86,9 +87,9 @@ public class NotificationBehavior extends KendoAbstractBehavior
 	 * @param level the level, ie: info, success, warning, error
 	 * @return the formated message
 	 */
-	protected String format(Serializable message, String level)
+	protected CharSequence format(CharSequence message, String level)
 	{
-		return String.valueOf(message).replace("'", "\\'");
+		return JavaScriptUtils.escapeQuotes(message);
 	}
 
 	/**
@@ -101,6 +102,6 @@ public class NotificationBehavior extends KendoAbstractBehavior
 	 */
 	protected String $(Serializable message, String level)
 	{
-		return String.format("jQuery('%s').data('%s').show('%s', '%s');", this.selector, METHOD, this.format(message, level), level);
+		return String.format("jQuery('%s').data('%s').show('%s', '%s');", this.selector, METHOD, this.format(String.valueOf(message), level), level);
 	}
 }
