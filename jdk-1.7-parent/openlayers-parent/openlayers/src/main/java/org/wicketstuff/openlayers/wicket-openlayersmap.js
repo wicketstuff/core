@@ -64,13 +64,9 @@ function WicketOMap(id, options, markersLayerName, showMarkersInLayerSwitcher) {
 		params["centerConverted"] = this.businessLogicProjection != null ? this.map.getCenter().clone().transform(this.map.getProjectionObject(), new OpenLayers.Projection(this.businessLogicProjection)) : this.map.getCenter();
 		params["boundsConverted"] = this.businessLogicProjection != null ? this.map.getExtent().clone().transform(this.map.getProjectionObject(), new OpenLayers.Projection(this.businessLogicProjection)) : this.map.getExtent();
 		params["zoomConverted"] = this.map.getZoomForExtent(this.map.getExtent(), true);
-		for (var key in params) {
-			callBack = callBack + "&" + key + "=" + params[key];
-		}
-		wicketAjaxGet(callBack, function () {
-		}, function () {
-		});
-	};
+        Wicket.Ajax.post({u: callBack,
+            dep: [function(){return params;}]});
+    };
 	this.addLayer = function (layer, id) {
 		var self = this;
 		self.map.addLayer(layer);
@@ -123,9 +119,8 @@ function WicketOMap(id, options, markersLayerName, showMarkersInLayerSwitcher) {
 		if (evt != null) {
 			event = evt.type;
 		}
-		callBack = callBack + "&event=" + event;
-		var wcall = wicketAjaxGet(callBack, function () {
-		}, null, null);
+        var wcall = Wicket.Ajax.post({u: callBack,
+            dep: [function(){return {event: event}; }]});
 	};
 	this.getMarker = function (markerId) {
 		var self = this;
@@ -242,9 +237,8 @@ function WicketOMap(id, options, markersLayerName, showMarkersInLayerSwitcher) {
 	                    };   
 	                var format =new OpenLayers.Format.WKT(in_options);
 	                var str = format.write(e.feature, false);
-
-					var callModded = callBack + "&wkt=" + str;
-					var wcall = wicketAjaxGet(callModded, function () {}, null, null);
+                    var wcall = Wicket.Ajax.post({u: callBack,
+                        dep: [function(){return {wkt: str}; }]});
         	    }
     	    });
 	    }
