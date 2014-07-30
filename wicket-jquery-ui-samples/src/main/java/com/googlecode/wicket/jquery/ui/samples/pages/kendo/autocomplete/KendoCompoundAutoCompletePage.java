@@ -55,11 +55,9 @@ public class KendoCompoundAutoCompletePage extends AbstractAutoCompletePage
 			}
 
 			@Override
-			protected void onSelected(AjaxRequestTarget target, Genre object)
+			protected void onSelected(AjaxRequestTarget target)
 			{
-				this.info("model: " + this.getModelObject());
-				this.info("object: " + object);
-				this.info("genre: " + object);
+				this.info("genre: " + this.getModelObject());
 				target.add(feedback);
 			}
 		};

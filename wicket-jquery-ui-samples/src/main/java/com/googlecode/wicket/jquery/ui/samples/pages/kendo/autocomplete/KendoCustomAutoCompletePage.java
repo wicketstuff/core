@@ -55,7 +55,7 @@ public class KendoCustomAutoCompletePage extends AbstractAutoCompletePage
 			}
 
 			@Override
-			protected void onSelected(AjaxRequestTarget target, Genre object)
+			protected void onSelected(AjaxRequestTarget target)
 			{
 				target.add(container); //the model has already been updated
 			}

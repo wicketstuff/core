@@ -198,7 +198,7 @@ public class AjaxDropDownList<T> extends DropDownList<T> implements ISelectionCh
 		public void bind(Component component)
 		{
 			super.bind(component);
-
+			// TODO: probably change this (jquery ui oriented)
 			component.add(this.onChangeBehavior = new JQueryAjaxChangeBehavior(this, (FormComponent<?>) component));
 		}
 
@@ -207,6 +207,7 @@ public class AjaxDropDownList<T> extends DropDownList<T> implements ISelectionCh
 		{
 			super.onConfigure(component);
 
+			// TODO: getcallbackfunction ??
 			this.setOption("change", "function( event, ui ) { " + this.onChangeBehavior.getCallbackScript() + "}");
 		}
 

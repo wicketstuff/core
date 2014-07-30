@@ -94,7 +94,6 @@ public abstract class AutoCompleteBehavior extends KendoAbstractBehavior impleme
 	{
 		if (event instanceof SelectEvent)
 		{
-			System.out.println("value: " + ((SelectEvent) event).getValue());
 			this.onSelect(target, ((SelectEvent) event).getIndex());
 		}
 	}
@@ -120,14 +119,7 @@ public abstract class AutoCompleteBehavior extends KendoAbstractBehavior impleme
 			@Override
 			protected CallbackParameter[] getCallbackParameters()
 			{
-				return new CallbackParameter[] { CallbackParameter.context("e"), CallbackParameter.resolved("index", "e.item.index()"), CallbackParameter.resolved("value", "e.item.val()") };
-			}
-
-			@Override
-			public CharSequence getCallbackFunctionBody(CallbackParameter... extraParameters)
-			{
-				// TODO Auto-generated method stub
-				return "console.log(e.item);" + super.getCallbackFunctionBody(extraParameters);
+				return new CallbackParameter[] { CallbackParameter.context("e"), CallbackParameter.resolved("index", "e.item.index()"), CallbackParameter.resolved("value", "e.item.text") };
 			}
 
 			@Override
@@ -139,6 +131,7 @@ public abstract class AutoCompleteBehavior extends KendoAbstractBehavior impleme
 	}
 
 	// Event classes //
+
 	/**
 	 * Provides an event object that will be broadcasted by the {@link JQueryAjaxBehavior} select callback
 	 *
