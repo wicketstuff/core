@@ -45,11 +45,13 @@ public class RangeDatePickerTextField extends FormComponentPanel<DateRange> impl
 	private static final String NULL = "?";
 	private static final String SEPARATOR = " - ";
 
+	private final Options options;
 	private TextField<DateRange> input;
 	private RangeDatePicker datepicker;
 
 	/**
 	 * Constructor
+	 * 
 	 * @param id the markup id
 	 */
 	public RangeDatePickerTextField(String id)
@@ -59,6 +61,7 @@ public class RangeDatePickerTextField extends FormComponentPanel<DateRange> impl
 
 	/**
 	 * Constructor
+	 * 
 	 * @param id the markup id
 	 * @param options {@link Options}
 	 */
@@ -66,11 +69,12 @@ public class RangeDatePickerTextField extends FormComponentPanel<DateRange> impl
 	{
 		super(id);
 
-		this.init(options);
+		this.options = options;
 	}
 
 	/**
 	 * Constructor
+	 * 
 	 * @param id the markup id
 	 * @param model the {@link IModel}
 	 */
@@ -81,6 +85,7 @@ public class RangeDatePickerTextField extends FormComponentPanel<DateRange> impl
 
 	/**
 	 * Constructor
+	 * 
 	 * @param id the markup id
 	 * @param model the {@link IModel}
 	 * @param options {@link Options}
@@ -89,23 +94,52 @@ public class RangeDatePickerTextField extends FormComponentPanel<DateRange> impl
 	{
 		super(id, model);
 
-		this.init(options);
+		this.options = options;
+	}
+
+	// Methods //
+	@Override
+	protected void convertInput()
+	{
+		this.setConvertedInput(this.input.getConvertedInput());
+	}
+
+	// Properties //
+	/**
+	 * Gets the separator to be displayed in the {@link TextField}, between the two dates.
+	 * 
+	 * @return the text separator. Default to {@link #SEPARATOR}
+	 */
+	protected String getSeparator()
+	{
+		return SEPARATOR;
 	}
 
 	/**
-	 * Initialization
-	 * @param options the {@link Options}
+	 * Gets the text to be displayed in the {@link TextField}, in place of a date which is null.
+	 * 
+	 * @return the null representation. Default to {@link #NULL}
 	 */
-	private final void init(final Options options)
+	protected String getNullString()
 	{
+		return NULL;
+	}
+
+	// Events //
+
+	@Override
+	protected void onInitialize()
+	{
+		super.onInitialize();
+
 		// TextField //
-		this.input = this.newTextField();
+		this.input = this.newTextField("text", this.getModel());
 		this.input.setOutputMarkupId(true);
 		this.input.add(this.newToggleBehavior());
 		this.add(this.input);
 
 		// DatePicker //
-		this.datepicker = new RangeDatePicker("datepicker", this.getModel(), options) {
+		this.datepicker = new RangeDatePicker("datepicker", this.getModel(), this.options) {
 
 			private static final long serialVersionUID = 1L;
 
@@ -122,33 +156,6 @@ public class RangeDatePickerTextField extends FormComponentPanel<DateRange> impl
 		this.add(this.datepicker);
 	}
 
-	// Methods //
-	@Override
-	protected void convertInput()
-	{
-		this.setConvertedInput(this.input.getConvertedInput());
-	}
-
-	// Properties //
-	/**
-	 * Gets the separator to be displayed in the {@link TextField}, between the two dates.
-	 * @return the text separator. Default to {@link #SEPARATOR}
-	 */
-	protected String getSeparator()
-	{
-		return SEPARATOR;
-	}
-
-	/**
-	 * Gets the text to be displayed in the {@link TextField}, in place of a date which is null.
-	 * @return the null representation. Default to {@link #NULL}
-	 */
-	protected String getNullString()
-	{
-		return NULL;
-	}
-
-	// Events //
 	@Override
 	public void onValueChanged(AjaxRequestTarget target)
 	{
@@ -158,6 +165,7 @@ public class RangeDatePickerTextField extends FormComponentPanel<DateRange> impl
 	// Factories //
 	/**
 	 * Gets a new {@link DateFormat} to be used by the {@link TextField}'s {@link IConverter}
+	 * 
 	 * @param locale the {@link Locale}
 	 * @return the {@link DateFormat}
 	 */
@@ -171,11 +179,13 @@ public class RangeDatePickerTextField extends FormComponentPanel<DateRange> impl
 
 	/**
 	 * Gets a new {@link TextField}.
+	 * 
+	 * @param iModel
 	 * @return the {@link TextField}
 	 */
-	private TextField<DateRange> newTextField()
+	private TextField<DateRange> newTextField(String id, IModel<DateRange> model)
 	{
-		return new TextField<DateRange>("text", this.getModel(), DateRange.class) {
+		return new TextField<DateRange>(id, model, DateRange.class) {
 
 			private static final long serialVersionUID = 1L;
 
@@ -233,6 +243,7 @@ public class RangeDatePickerTextField extends FormComponentPanel<DateRange> impl
 
 	/**
 	 * Gets a new {@link JQueryAbstractBehavior} to show the {@link RangeDatePicker} on {@link TextField}'s click event.
+	 * 
 	 * @return the {@link JQueryAbstractBehavior}
 	 */
 	private JQueryAbstractBehavior newToggleBehavior()
@@ -242,7 +253,8 @@ public class RangeDatePickerTextField extends FormComponentPanel<DateRange> impl
 			private static final long serialVersionUID = 1L;
 
 			@Override
-			protected String $() {
+			protected String $()
+			{
 
 				StringBuilder statements = new StringBuilder();
 
