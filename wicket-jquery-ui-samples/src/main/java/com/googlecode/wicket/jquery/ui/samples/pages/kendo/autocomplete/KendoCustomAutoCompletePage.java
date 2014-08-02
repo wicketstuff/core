@@ -12,7 +12,7 @@ import org.apache.wicket.model.Model;
 import org.apache.wicket.model.PropertyModel;
 
 import com.googlecode.wicket.jquery.core.renderer.TextRenderer;
-import com.googlecode.wicket.jquery.ui.form.autocomplete.AutoCompleteUtils;
+import com.googlecode.wicket.jquery.core.utils.ListUtils;
 import com.googlecode.wicket.jquery.ui.samples.data.bean.Genre;
 import com.googlecode.wicket.jquery.ui.samples.data.dao.GenresDAO;
 import com.googlecode.wicket.kendo.ui.form.autocomplete.AutoCompleteTextField;
@@ -51,7 +51,7 @@ public class KendoCustomAutoCompletePage extends AbstractAutoCompletePage
 			@Override
 			protected List<Genre> getChoices(String input)
 			{
-				return AutoCompleteUtils.contains(input, GenresDAO.all());
+				return ListUtils.contains(input, GenresDAO.all());
 			}
 
 			@Override

@@ -32,6 +32,7 @@ public class JQueryAjaxChangeBehavior extends JQueryAjaxPostBehavior
 
 	/**
 	 * Constructor
+	 *
 	 * @param source the {@link Behavior} that will broadcast the event.
 	 * @param components the form components to post
 	 */
@@ -46,16 +47,16 @@ public class JQueryAjaxChangeBehavior extends JQueryAjaxPostBehavior
 		return new CallbackParameter[] { CallbackParameter.context("event"), CallbackParameter.context("ui") };
 	}
 
-
 	// Factories //
+
 	@Override
 	protected JQueryEvent newEvent()
 	{
 		return new ChangeEvent();
 	}
 
-
 	// Event Object //
+
 	/**
 	 * Provides an event object that will be broadcasted by the {@link JQueryAjaxChangeBehavior}
 	 */
@@ -63,4 +64,3 @@ public class JQueryAjaxChangeBehavior extends JQueryAjaxPostBehavior
 	{
 	}
 }
-

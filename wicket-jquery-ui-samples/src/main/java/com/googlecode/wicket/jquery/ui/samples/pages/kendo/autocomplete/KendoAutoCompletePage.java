@@ -8,7 +8,7 @@ import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.model.Model;
 
-import com.googlecode.wicket.jquery.ui.form.autocomplete.AutoCompleteUtils;
+import com.googlecode.wicket.jquery.core.utils.ListUtils;
 import com.googlecode.wicket.kendo.ui.form.autocomplete.AutoCompleteTextField;
 import com.googlecode.wicket.kendo.ui.form.button.AjaxButton;
 import com.googlecode.wicket.kendo.ui.form.button.Button;
@@ -51,7 +51,7 @@ public class KendoAutoCompletePage extends AbstractAutoCompletePage
 			@Override
 			protected List<String> getChoices(String input)
 			{
-				return AutoCompleteUtils.startsWith(input, CHOICES);
+				return ListUtils.startsWith(input, CHOICES);
 			}
 		};
 

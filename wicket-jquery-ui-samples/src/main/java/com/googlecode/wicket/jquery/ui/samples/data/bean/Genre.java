@@ -6,7 +6,7 @@ import org.apache.wicket.request.UrlUtils;
 import org.apache.wicket.request.cycle.RequestCycle;
 import org.apache.wicket.util.io.IClusterable;
 
-import com.googlecode.wicket.jquery.ui.form.autocomplete.AutoCompleteUtils;
+import com.googlecode.wicket.jquery.core.utils.ListUtils;
 
 public class Genre implements IClusterable
 {
@@ -62,7 +62,7 @@ public class Genre implements IClusterable
 
 	/**
 	 * #toString() needs to be overridden if no renderer is provided.
-	 * #toString() is also used by {@link AutoCompleteUtils#contains(String, List)} method.
+	 * #toString() is also used by {@link ListUtils#contains(String, List)} method.
 	 */
 	@Override
 	public String toString()
