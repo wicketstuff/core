@@ -55,7 +55,7 @@ public class SliderProgressBarPage extends AbstractProgressBarPage
 				//no need to set the model object to the progressbar's model; they already share the same model
 				//but we still need to inform the progressbar its model changed.
 				progressbar.modelChanged();
-				progressbar.respond(target);
+				progressbar.refresh(target);
 			}
 		});
 	}

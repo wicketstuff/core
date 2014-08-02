@@ -123,7 +123,7 @@ public class ProgressBar extends JQueryContainer implements IJQueryAjaxAware, IV
 	public final void forward(AjaxRequestTarget target, int step)
 	{
 		this.setModelObject(this.getModelObject() + step);
-		this.respond(target);
+		this.refresh(target);
 	}
 
 	/**
@@ -145,17 +145,17 @@ public class ProgressBar extends JQueryContainer implements IJQueryAjaxAware, IV
 	public final void backward(AjaxRequestTarget target, int step)
 	{
 		this.setModelObject(this.getModelObject() - step);
-		this.respond(target);
+		this.refresh(target);
 	}
 
 	/**
-	 * Re-attaches the widget behavior to the specified target, causing the progress-bar to refresh.<br/>
-	 * This method is needed to be called after the model object changed.<br/>
+	 * refresh the ProgressBar.<br/>
+	 * This method needs to be called after the model object changes.<br/>
 	 * But It is not required to be called when calling forward or backward methods.
 	 *
 	 * @param target the {@link AjaxRequestTarget}
 	 */
-	public final void respond(AjaxRequestTarget target)
+	public final void refresh(AjaxRequestTarget target)
 	{
 		target.appendJavaScript(this.widgetBehavior.toString()); // change the value ui-side so the change-event will be fired
 	}
