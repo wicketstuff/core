@@ -27,10 +27,10 @@ import org.apache.wicket.model.Model;
 import com.googlecode.wicket.jquery.core.JQueryBehavior;
 import com.googlecode.wicket.jquery.core.JQueryEvent;
 import com.googlecode.wicket.jquery.core.ajax.IJQueryAjaxAware;
-import com.googlecode.wicket.jquery.core.ajax.JQueryAjaxChangeBehavior;
 import com.googlecode.wicket.jquery.core.ajax.JQueryAjaxPostBehavior;
-import com.googlecode.wicket.jquery.core.ajax.JQueryAjaxChangeBehavior.ChangeEvent;
 import com.googlecode.wicket.jquery.core.event.IValueChangedListener;
+import com.googlecode.wicket.jquery.ui.ajax.JQueryAjaxChangeBehavior;
+import com.googlecode.wicket.jquery.ui.ajax.JQueryAjaxChangeBehavior.ChangeEvent;
 
 /**
  * Provides a jQuery slider based on a {@link FormComponentPanel}<br/>
@@ -125,6 +125,7 @@ public class AjaxSlider extends Slider implements IJQueryAjaxAware, IValueChange
 	}
 
 	// IJQueryWidget //
+
 	@Override
 	public JQueryBehavior newWidgetBehavior(String selector)
 	{

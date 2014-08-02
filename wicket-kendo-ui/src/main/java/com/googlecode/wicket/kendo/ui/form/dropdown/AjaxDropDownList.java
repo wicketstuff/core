@@ -28,10 +28,10 @@ import com.googlecode.wicket.jquery.core.JQueryBehavior;
 import com.googlecode.wicket.jquery.core.JQueryEvent;
 import com.googlecode.wicket.jquery.core.ajax.IJQueryAjaxAware;
 import com.googlecode.wicket.jquery.core.ajax.JQueryAjaxBehavior;
-import com.googlecode.wicket.jquery.core.ajax.JQueryAjaxChangeBehavior;
-import com.googlecode.wicket.jquery.core.ajax.JQueryAjaxChangeBehavior.ChangeEvent;
 import com.googlecode.wicket.jquery.core.event.ISelectionChangedListener;
 import com.googlecode.wicket.kendo.ui.KendoAbstractBehavior;
+import com.googlecode.wicket.kendo.ui.ajax.JQueryAjaxChangeBehavior;
+import com.googlecode.wicket.kendo.ui.ajax.JQueryAjaxChangeBehavior.ChangeEvent;
 
 /**
  * Provides a Kendo UI DropDownList widget.<br/>
@@ -198,7 +198,7 @@ public class AjaxDropDownList<T> extends DropDownList<T> implements ISelectionCh
 		public void bind(Component component)
 		{
 			super.bind(component);
-			// TODO: probably change this (jquery ui oriented)
+
 			component.add(this.onChangeBehavior = new JQueryAjaxChangeBehavior(this, (FormComponent<?>) component));
 		}
 
@@ -207,8 +207,7 @@ public class AjaxDropDownList<T> extends DropDownList<T> implements ISelectionCh
 		{
 			super.onConfigure(component);
 
-			// TODO: getcallbackfunction ??
-			this.setOption("change", "function( event, ui ) { " + this.onChangeBehavior.getCallbackScript() + "}");
+			this.setOption("change", this.onChangeBehavior.getCallbackFunction());
 		}
 
 		@Override
