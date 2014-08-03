@@ -19,6 +19,7 @@ package com.googlecode.wicket.jquery.core.utils.convert;
 import java.text.NumberFormat;
 import java.util.Locale;
 
+import org.apache.wicket.util.convert.ConversionException;
 import org.apache.wicket.util.convert.converter.AbstractConverter;
 
 import com.googlecode.wicket.jquery.core.IJQueryCultureWidget;
@@ -60,9 +61,10 @@ public abstract class CurrencyConverter<N extends Number> extends AbstractConver
 	 * @param max the maximum allowed value
 	 * @param locale the {@link Locale}
 	 * @return the converted number
+	 * @throws ConversionException
 	 */
 	// code from AbstractNumberConverter#parse(Object, double, double, Locale)
-	protected N parse(String value, final double min, final double max, Locale locale)
+	protected N parse(String value, final double min, final double max, Locale locale) throws ConversionException
 	{
 		if (value == null)
 		{

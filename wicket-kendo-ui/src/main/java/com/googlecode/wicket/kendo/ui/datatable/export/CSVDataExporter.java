@@ -47,6 +47,9 @@ public class CSVDataExporter implements IDataExporter
 	private static final String CRLF = "\r\n";
 	private static final String MIME = "text/csv";
 
+	private static final char delimiter = ',';
+	private static final String characterSet = "utf-8";
+
 	public static void export(DataTable<?> table, String filename)
 	{
 		CSVDataExporter.export(RequestCycle.get(), table, filename);
@@ -91,8 +94,6 @@ public class CSVDataExporter implements IDataExporter
 	}
 
 	private final String contentType;
-	private final char delimiter = ',';
-	private final String characterSet = "utf-8";
 	private boolean exportHeadersEnabled = true;
 
 	/**
@@ -123,7 +124,7 @@ public class CSVDataExporter implements IDataExporter
 	@Override
 	public String getContentType()
 	{
-		return this.contentType + "; charset=" + characterSet + "; header=" + (this.exportHeadersEnabled ? "present" : "absent");
+		return this.contentType + "; charset=" + CSVDataExporter.characterSet + "; header=" + (this.exportHeadersEnabled ? "present" : "absent");
 	}
 
 	/**
@@ -170,7 +171,7 @@ public class CSVDataExporter implements IDataExporter
 			}
 			else
 			{
-				writer.print(this.delimiter);
+				writer.print(CSVDataExporter.delimiter);
 			}
 
 			writer.print(this.quoteValue(column.getTitle()));
@@ -199,7 +200,7 @@ public class CSVDataExporter implements IDataExporter
 			}
 			else
 			{
-				writer.print(this.delimiter);
+				writer.print(CSVDataExporter.delimiter);
 			}
 
 			Object object = column.newDataModel(provider.model(row)).getObject();
@@ -240,7 +241,7 @@ public class CSVDataExporter implements IDataExporter
 	 */
 	public <T> void exportData(IDataProvider<T> provider, List<IExportableColumn> columns, OutputStream output, long first, long count) throws IOException
 	{
-		PrintWriter writer = new PrintWriter(new OutputStreamWriter(output, Charset.forName(this.characterSet)));
+		PrintWriter writer = new PrintWriter(new OutputStreamWriter(output, Charset.forName(CSVDataExporter.characterSet)));
 
 		try
 		{

@@ -185,7 +185,7 @@ public abstract class AutoCompleteTextField<T extends Serializable> extends Text
 	protected abstract List<T> getChoices(String input);
 
 	@Override
-	protected String getModelValue()
+	protected final String getModelValue()
 	{
 		return this.renderer.getText(this.getModelObject()); // renderer cannot be null.
 	}
@@ -205,7 +205,8 @@ public abstract class AutoCompleteTextField<T extends Serializable> extends Text
 	@SuppressWarnings("unchecked")
 	public <C> IConverter<C> getConverter(Class<C> type)
 	{
-		if (!String.class.isAssignableFrom(this.getType())) /* TODO: manage String (property)model object in a better way */
+		// TODO: manage String (property)model object in a better way
+		if (!String.class.isAssignableFrom(this.getType()))
 		{
 			if (type != null && type.isAssignableFrom(this.getType()))
 			{

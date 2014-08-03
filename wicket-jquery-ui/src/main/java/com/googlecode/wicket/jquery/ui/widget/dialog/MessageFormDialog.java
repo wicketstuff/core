@@ -131,7 +131,7 @@ public abstract class MessageFormDialog extends AbstractFormDialog<String>
 	 */
 	public MessageFormDialog(String id, IModel<String> title, IModel<String> message, DialogButtons buttons, DialogIcon icon)
 	{
-		this(id, title, message, buttons.toList(), DialogIcon.NONE);
+		this(id, title, message, buttons.toList(), icon);
 	}
 
 	/**

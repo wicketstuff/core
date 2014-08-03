@@ -200,9 +200,9 @@ public class ProgressBar extends JQueryContainer implements IProgressBarListener
 	 */
 	public final void refresh(AjaxRequestTarget target)
 	{
-		String $ = String.format("jQuery('%s').data('%s')", JQueryWidget.getSelector(this), ProgressBarBehavior.METHOD);
+		String widget = String.format("jQuery('%s').data('%s')", JQueryWidget.getSelector(this), ProgressBarBehavior.METHOD);
 
-		target.appendJavaScript(String.format("%s.value(%d);", $, this.getModelObject()));
+		target.appendJavaScript(String.format("%s.value(%d);", widget, this.getModelObject()));
 	}
 
 	/* Events */

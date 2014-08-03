@@ -38,7 +38,9 @@ public abstract class AbstractSlider<T> extends FormComponentPanel<T> implements
 	private static final long serialVersionUID = 1L;
 
 	protected Options options;
-	protected Label label; // the div on which the slider behavior will be applied to //
+
+	/** the div on which the slider behavior will be applied to */
+	protected Label label;
 	protected String labelId = null;
 
 	/**
@@ -88,6 +90,7 @@ public abstract class AbstractSlider<T> extends FormComponentPanel<T> implements
 	}
 
 	// Methods //
+
 	@Override
 	protected abstract void convertInput();
 
@@ -106,13 +109,14 @@ public abstract class AbstractSlider<T> extends FormComponentPanel<T> implements
 	public abstract <W extends AbstractSlider<T>> W setRangeValidator(RangeValidator<Integer> validator);
 
 	// Properties //
+
 	/**
 	 * Sets the label's markupId on which the current slide value will be displayed.<br/>
 	 * <b>Warning:</b> It cannot be set/changed once the Component has been initialized.
 	 * @param markupId the label's markupId
 	 * @return this
 	 */
-	public AbstractSlider<T> setLabelId(String markupId)
+	public final AbstractSlider<T> setLabelId(String markupId)
 	{
 		this.labelId = markupId;
 		return this;
@@ -140,6 +144,7 @@ public abstract class AbstractSlider<T> extends FormComponentPanel<T> implements
 	}
 
 	// IJQueryWidget //
+
 	@Override
 	public JQueryBehavior newWidgetBehavior(String selector)
 	{
@@ -147,6 +152,7 @@ public abstract class AbstractSlider<T> extends FormComponentPanel<T> implements
 	}
 
 	// Factory //
+
 	/**
 	 * Gets a new {@link Fragment} containing the input<br/>
 	 * Overridden methods should provide a {@link Fragment} containing input(s) when no input(s) has been specified in implementation constructors.
