@@ -26,8 +26,7 @@ import com.googlecode.wicket.jquery.core.Options;
 import com.googlecode.wicket.jquery.core.utils.RequestCycleUtils;
 
 /**
- * Provides a Kendo UI progress-bar based on a {@link JQueryContainer}<br/>
- * The default type is 'percent'; it can be changed by supplying an {@link Options} object: <code>new Options("type", Options.asString("value")</code>
+ * Provides a Kendo UI progress-bar based on a {@link JQueryContainer}
  *
  * @author Sebastien Briquet - sebfz1
  * @since 6.17.0
@@ -217,7 +216,7 @@ public class ProgressBar extends JQueryContainer implements IProgressBarListener
 		{
 			this.onValueChanged(target);
 
-			if (this.getModelObject().equals(this.getMax()))
+			if (this.getModelObject() >= this.getMax())
 			{
 				this.onComplete(target);
 			}
