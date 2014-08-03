@@ -54,16 +54,6 @@ public class ProgressBarBehavior extends JQueryBehavior
 		super(selector, METHOD, options);
 	}
 
-	// Methods //
-
-//	@Override
-//	public void bind(Component component)
-//	{
-//		super.bind(component);
-//
-//		component.add(this.onChangeBehavior = this.newOnChangeBehavior());
-//	}
-
 	// Events //
 
 	@Override
@@ -72,18 +62,5 @@ public class ProgressBarBehavior extends JQueryBehavior
 		super.onConfigure(component);
 
 		this.setOption("value", component.getDefaultModelObjectAsString()); // initial value
-		//this.setOption("change", this.onChangeBehavior.getCallbackFunction());
 	}
-
-	// Factories //
-//
-//	/**
-//	 * Gets a new {@link JQueryAjaxPostBehavior} that will be called on 'change' javascript event
-//	 *
-//	 * @return the {@link JQueryAjaxBehavior}
-//	 */
-//	protected JQueryAjaxPostBehavior newOnChangeBehavior()
-//	{
-//		return new JQueryAjaxChangeBehavior(this);
-//	}
 }
