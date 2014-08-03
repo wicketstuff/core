@@ -26,18 +26,18 @@ import com.googlecode.wicket.jquery.core.Options;
 /**
  * Provides a jQuery integration of foxrunsoftware's (range) DatePicker<br/>
  * https://github.com/foxrunsoftware/DatePicker/
- * 
+ *
  * @author Sebastien Briquet - sebfz1
  */
 public class RangeDatePicker extends JQueryContainer implements IRangeDatePickerListener
 {
 	private static final long serialVersionUID = 1L;
 
-	private Options options;
+	private final Options options;
 
 	/**
 	 * Constructor
-	 * 
+	 *
 	 * @param id the markup id
 	 * @param options {@link Options}
 	 */
@@ -50,7 +50,7 @@ public class RangeDatePicker extends JQueryContainer implements IRangeDatePicker
 
 	/**
 	 * Constructor
-	 * 
+	 *
 	 * @param id the markup id
 	 * @param model the {@link IModel}
 	 * @param options {@link Options}
@@ -65,7 +65,7 @@ public class RangeDatePicker extends JQueryContainer implements IRangeDatePicker
 	// Properties //
 	/**
 	 * Gets the model
-	 * 
+	 *
 	 * @return {@link IModel}
 	 */
 	@SuppressWarnings("unchecked")
@@ -76,7 +76,7 @@ public class RangeDatePicker extends JQueryContainer implements IRangeDatePicker
 
 	/**
 	 * Gets the model object
-	 * 
+	 *
 	 * @return the model object
 	 */
 	public final DateRange getModelObject()
@@ -86,7 +86,7 @@ public class RangeDatePicker extends JQueryContainer implements IRangeDatePicker
 
 	/**
 	 * Sets the model object
-	 * 
+	 *
 	 * @param object the model object
 	 */
 	public void setModelObject(DateRange object)

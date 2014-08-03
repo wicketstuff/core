@@ -39,7 +39,6 @@ public class ProgressBar extends JQueryContainer implements IProgressBarListener
 	private static final int MIN = 0;
 	private static final int MAX = 100;
 
-	// TODO: mark options final everywhere ?
 	private final Options options;
 
 	/**
