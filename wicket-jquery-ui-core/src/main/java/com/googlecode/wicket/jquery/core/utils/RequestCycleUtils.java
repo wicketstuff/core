@@ -18,6 +18,7 @@ package com.googlecode.wicket.jquery.core.utils;
 
 import java.util.List;
 
+import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.request.IRequestParameters;
 import org.apache.wicket.request.cycle.RequestCycle;
 import org.apache.wicket.util.string.StringValue;
@@ -31,7 +32,18 @@ import org.apache.wicket.util.string.StringValue;
 public class RequestCycleUtils
 {
 	/**
+	 * Gets the current {@link AjaxRequestTarget}
+	 *
+	 * @return the target or <tt>null<tt> if not in an ajax request
+	 */
+	public static AjaxRequestTarget getAjaxRequestTarget()
+	{
+		return RequestCycle.get().find(AjaxRequestTarget.class);
+	}
+
+	/**
 	 * Gets the value of a query parameter
+	 *
 	 * @param name the name of the query parameter
 	 * @return a {@link StringValue}
 	 */
@@ -45,6 +57,7 @@ public class RequestCycleUtils
 
 	/**
 	 * Gets the values of a query parameter
+	 *
 	 * @param name the name of the query parameter
 	 * @return a {@link List} of {@link StringValue}
 	 */
@@ -58,6 +71,7 @@ public class RequestCycleUtils
 
 	/**
 	 * Gets the value of a post parameter
+	 *
 	 * @param name the name of the query parameter
 	 * @return a {@link StringValue}
 	 */
@@ -71,6 +85,7 @@ public class RequestCycleUtils
 
 	/**
 	 * Gets the values of a post parameter
+	 *
 	 * @param name the name of the query parameter
 	 * @return a {@link List} of {@link StringValue}
 	 */
