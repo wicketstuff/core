@@ -2,7 +2,8 @@ package org.wicketstuff.scala
 
 import _root_.java.util.concurrent.atomic.AtomicBoolean
 
-import org.apache.wicket.markup.html.WebComponent
+import org.apache.wicket.markup.html.{WebMarkupContainer, WebComponent}
+import org.apache.wicket.model.Model
 import org.junit.runner.RunWith
 import org.scalatest.junit.JUnitRunner
 
@@ -12,6 +13,21 @@ import org.scalatest.junit.JUnitRunner
 @RunWith(classOf[JUnitRunner])
 class ScalaComponentSpec
   extends WicketSpec {
+
+  test("An implicit component should have the extra methods from ScalaComponent") {
+    val web = new WebComponent("web")
+    web.hide()
+    web.isVisibilityAllowed mustBe false
+    web.show()
+    web.isVisibilityAllowed mustBe true
+  }
+
+  test("An implicit markup container should have the extra methods from ScalaMarkupContainer") {
+    val web = new WebMarkupContainer("web")
+    val label = web.label("label", Model.of("A child"))
+    label mustNot be (null)
+    label.getDefaultModelObjectAsString mustBe "A child"
+  }
 
   test("updateable should set outputMarkupId to true") {
     val component = new WebComponent("test") with ScalaComponent

@@ -9,4 +9,8 @@ import org.wicketstuff.scala.ScalaMarkupContainer
  */
 class ScalaWebMarkupContainer[T](id: String, model: IModel[T] = null)
   extends WebMarkupContainer(id, model)
-  with ScalaMarkupContainer
+  with ScalaMarkupContainer {
+
+  override val self: ScalaWebMarkupContainer[T] = this
+
+}

@@ -12,5 +12,7 @@ class ScalaNumberField[T <: Number with Comparable[T]](id: String, model: IModel
   extends NumberTextField[T](id, model)
   with ScalaMarkupContainer {
 
+  override val self: ScalaNumberField[T] = this
+
   def this(id:String, getter: ⇒ T, setter:(T) ⇒ Unit) = this(id, new Fodel[T](getter, setter))
 }

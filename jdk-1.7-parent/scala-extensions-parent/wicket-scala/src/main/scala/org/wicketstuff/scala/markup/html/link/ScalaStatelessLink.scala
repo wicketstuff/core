@@ -4,8 +4,10 @@ import org.apache.wicket.markup.html.link.StatelessLink
 import org.wicketstuff.scala.ScalaMarkupContainer
 
 class ScalaStatelessLink[T](id:String, f: ⇒ Unit)
-  extends StatelessLink(id)
+  extends StatelessLink[T](id)
   with ScalaMarkupContainer {
+
+  override val self: ScalaStatelessLink[T] = this
 
   override def onClick(): Unit = f
 }

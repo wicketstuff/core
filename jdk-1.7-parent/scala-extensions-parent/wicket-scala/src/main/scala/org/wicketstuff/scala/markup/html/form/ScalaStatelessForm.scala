@@ -13,6 +13,8 @@ class ScalaStatelessForm[T](id: String,
   extends StatelessForm[T](id, model)
   with ScalaMarkupContainer {
 
+  override val self: ScalaStatelessForm[T] = this
+
   override def onSubmit(): Unit = actions.get("submit").fold(super.onSubmit())(_(ScalaStatelessForm.this))
 
   override def onError(): Unit = actions.get("error").fold(super.onError())(_(ScalaStatelessForm.this))

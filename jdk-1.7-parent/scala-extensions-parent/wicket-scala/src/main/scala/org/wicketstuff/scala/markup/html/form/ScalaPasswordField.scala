@@ -12,5 +12,7 @@ class ScalaPasswordField(id: String, model: IModel[String])
   extends PasswordTextField(id, model)
   with ScalaMarkupContainer {
 
+  override val self: ScalaPasswordField = this
+
   def this(id:String, getter: ⇒ String, setter:(String) ⇒ Unit) = this(id, new Fodel[String](getter, setter))
 }

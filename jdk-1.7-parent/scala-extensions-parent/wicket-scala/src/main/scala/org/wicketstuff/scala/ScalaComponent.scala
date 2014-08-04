@@ -13,7 +13,11 @@ import scala.language.implicitConversions
  */
 trait ScalaComponent
   extends ScalaModel {
-  self: Component =>
+
+  val self:Component = this match {
+    case c: Component => c
+    case _ => null
+  }
 
   protected def noOp() = () => ()
   private[this] def doNothing(target: AjaxRequestTarget) = (_: AjaxRequestTarget) => ()
@@ -22,32 +26,37 @@ trait ScalaComponent
   implicit def jsRefToHeaderItem(reference: JavaScriptResourceReference): JavaScriptReferenceHeaderItem =
     JavaScriptHeaderItem.forReference(reference)
 
-  def updateable(): this.type = {
+  def updateable(): self.type = {
     self.setOutputMarkupId(true)
-    this
+    self
   }
 
-  def hide() = setVisibilityAllowed(false)
-  def show() = setVisibilityAllowed(true)
+  def hide(): self.type = {
+    self.setVisibilityAllowed(false)
+    self
+  }
 
-  def on(eventName: String, onAction: (AjaxRequestTarget) => Unit)(implicit error: (AjaxRequestTarget) => Unit = doNothing): this.type = {
+  def show(): self.type = {
+    self.setVisibilityAllowed(true)
+    self
+  }
+
+  def on(eventName: String, onAction: (AjaxRequestTarget) => Unit)(implicit error: (AjaxRequestTarget) => Unit = doNothing): self.type = {
     eventName match {
       case "submit" =>
-        add(new AjaxFormSubmitBehavior(eventName) {
+        self.add(new AjaxFormSubmitBehavior(eventName) {
           override def onSubmit(target: AjaxRequestTarget) = onAction(target)
           override def onError(target: AjaxRequestTarget) = error(target)
         })
-        this
       case "change" =>
-        add(new OnChangeAjaxBehavior {
+        self.add(new OnChangeAjaxBehavior {
           override def onUpdate(target: AjaxRequestTarget) = onAction(target)
         })
-        this
       case _ =>
-        add(new AjaxEventBehavior(eventName) {
+        self.add(new AjaxEventBehavior(eventName) {
           override def onEvent(target: AjaxRequestTarget) = onAction(target)
         })
-        this
     }
+    self
   }
 }

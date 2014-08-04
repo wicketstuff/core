@@ -9,4 +9,7 @@ import org.wicketstuff.scala.ScalaMarkupContainer
  */
 class ScalaPanel[T](id: String, model: IModel[T] = null)
   extends GenericPanel[T](id, model)
-  with ScalaMarkupContainer
+  with ScalaMarkupContainer {
+
+  override val self: ScalaPanel[T] = this
+}

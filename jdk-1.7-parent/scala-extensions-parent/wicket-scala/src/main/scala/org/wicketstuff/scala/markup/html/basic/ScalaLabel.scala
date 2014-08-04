@@ -9,4 +9,8 @@ import org.wicketstuff.scala.ScalaComponent
  */
 class ScalaLabel[T](id: String, model: IModel[T] = null)
   extends Label(id, model)
-  with ScalaComponent
+  with ScalaComponent {
+
+  override val self: Label = this
+
+}

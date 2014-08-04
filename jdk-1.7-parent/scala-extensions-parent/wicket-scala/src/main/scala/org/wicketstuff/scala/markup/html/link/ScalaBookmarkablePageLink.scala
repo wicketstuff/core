@@ -7,4 +7,7 @@ import org.wicketstuff.scala.ScalaMarkupContainer
 
 class ScalaBookmarkablePageLink(id:String, clazz: Class[_ <: Page], parameters: PageParameters = null)
   extends BookmarkablePageLink[Unit](id, clazz, parameters)
-  with ScalaMarkupContainer
+  with ScalaMarkupContainer {
+
+  override val self: ScalaBookmarkablePageLink = this
+}

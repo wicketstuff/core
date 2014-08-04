@@ -13,6 +13,8 @@ class ScalaForm[T](id: String,
   extends Form[T](id, model)
   with ScalaMarkupContainer {
 
+  override val self: ScalaForm[T] = this
+
   override def onSubmit(): Unit = actions.get("submit").fold(super.onSubmit())(_(ScalaForm.this))
 
   override def onError(): Unit = actions.get("error").fold(super.onError())(_(ScalaForm.this))

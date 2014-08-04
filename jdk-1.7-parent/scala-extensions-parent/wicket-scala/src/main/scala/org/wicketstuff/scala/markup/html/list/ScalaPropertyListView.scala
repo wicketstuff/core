@@ -1,6 +1,7 @@
 package org.wicketstuff.scala.markup.html.list
 
-import org.apache.wicket.markup.html.list.{PropertyListView, ListItem}
+import org.apache.wicket.markup.html.list.{ListItem, PropertyListView}
+import org.wicketstuff.scala.ScalaMarkupContainer
 import org.wicketstuff.scala.model.Fodel
 
 /**
@@ -13,7 +14,11 @@ import org.wicketstuff.scala.model.Fodel
 class ScalaPropertyListView[T](id:String,
                              model:Fodel[_ <: java.util.List[_ <: T]],
                              populateItemFunc:(ListItem[T]) ⇒ Unit)
-    extends PropertyListView[T](id, model) {
+  extends PropertyListView[T](id, model)
+  with ScalaMarkupContainer {
+
+  override val self: ScalaPropertyListView[T] = this
+
     //class SPropertyListView[T](id:String, list: ⇒ java.util.List[_ <: T], populateItemFunc:(ListItem[T]) ⇒ Unit) extends PropertyListView[T](id, new Fodel[java.util.List[_ <: T]](list)) with ScalaWicket {
     //class SPropertyListView[T](id:String, list: ⇒ java.util.List[_ <: T], populateItemFunc:(ListItem[T]) ⇒ Unit) extends PropertyListView[T](id, model) with ScalaWicket {
 

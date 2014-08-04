@@ -11,5 +11,7 @@ class ScalaWebPage(parameters: PageParameters)
   extends WebPage(parameters)
   with ScalaMarkupContainer {
 
+  override val self: ScalaWebPage = this
+
   def this() = this(new PageParameters())
 }

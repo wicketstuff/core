@@ -10,4 +10,6 @@ import org.wicketstuff.scala.ScalaMarkupContainer
 class ScalaTextField[T](id: String, model: IModel[T])
   extends TextField[T](id, model)
   with ScalaMarkupContainer {
+
+  override val self: ScalaTextField[T] = this
 }
