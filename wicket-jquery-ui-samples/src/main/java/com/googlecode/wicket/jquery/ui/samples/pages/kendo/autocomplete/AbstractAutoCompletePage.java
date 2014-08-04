@@ -18,7 +18,9 @@ abstract class AbstractAutoCompletePage extends AbstractKendoPage
 	protected List<DemoLink> getDemoLinks()
 	{
 		return Arrays.asList(
-				new DemoLink(KendoAutoCompletePage.class, "AutoCompleteTextField")
+				new DemoLink(KendoAutoCompletePage.class, "Auto-complete"),
+				new DemoLink(KendoCustomAutoCompletePage.class, "Auto-complete: custom beans"),
+				new DemoLink(KendoCompoundAutoCompletePage.class, "Auto-complete: compound property model")
 			);
 	}
 }

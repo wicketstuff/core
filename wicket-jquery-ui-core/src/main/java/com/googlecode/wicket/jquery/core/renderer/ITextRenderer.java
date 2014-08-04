@@ -40,4 +40,12 @@ public interface ITextRenderer<T> extends IClusterable
 	 * @return the text
 	 */
 	String getText(T object, String expression);
+
+	/**
+	 * Gets the JSON representation of the supplied object
+	 *
+	 * @param object the object
+	 * @return the JSON representation of the object
+	 */
+	String toJson(T object);
 }

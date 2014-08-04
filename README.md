@@ -61,7 +61,7 @@ If the version you specified is *snapshot*, you might define this repository:
 <tr><td>6.2.1</td><td>6.6.0</td><td>1.10.1</td></tr>
 <tr><td>6.2.0</td><td>6.5.0</td><td>1.9.2</td></tr>
 <tr><td>6.1.0</td><td>6.1.0</td><td>1.8.23</td></tr>
-<tr><td>1.5.11</td><td>1.5.11</td><td>1.11.1</td></tr>
+<tr><td>1.5.11</td><td>1.5.11</td><td>1.11.0</td></tr>
 <tr><td>1.5.10</td><td>1.5.10</td><td>1.10.2</td></tr>
 <tr><td>1.4.1</td><td>1.5.9</td><td>1.10.1</td></tr>
 <tr><td>1.3.0</td><td>1.5.8</td><td>1.8.23</td></tr>

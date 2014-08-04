@@ -43,7 +43,7 @@ public class DatePicker extends DateTextField implements IJQueryWidget
 	protected static final String METHOD = "kendoDatePicker";
 	protected static final String DEFAULT_PATTERN = "MM/dd/yyyy"; // default java date pattern
 
-	Options options;
+	final Options options;
 
 	/**
 	 * Constructor

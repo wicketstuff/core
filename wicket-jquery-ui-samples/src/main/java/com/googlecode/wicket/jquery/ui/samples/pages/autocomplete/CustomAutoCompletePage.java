@@ -11,8 +11,8 @@ import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.model.PropertyModel;
 
+import com.googlecode.wicket.jquery.core.utils.ListUtils;
 import com.googlecode.wicket.jquery.ui.form.autocomplete.AutoCompleteTextField;
-import com.googlecode.wicket.jquery.ui.form.autocomplete.AutoCompleteUtils;
 import com.googlecode.wicket.jquery.ui.samples.data.bean.Genre;
 import com.googlecode.wicket.jquery.ui.samples.data.dao.GenresDAO;
 
@@ -44,7 +44,7 @@ public class CustomAutoCompletePage extends AbstractAutoCompletePage
 			@Override
 			protected List<Genre> getChoices(String input)
 			{
-				return AutoCompleteUtils.contains(input, GenresDAO.all());
+				return ListUtils.contains(input, GenresDAO.all());
 			}
 
 			@Override

@@ -28,7 +28,7 @@ import com.googlecode.wicket.kendo.ui.KendoIcon;
 
 /**
  * Provides a menu-item that redirect to a {@link Page}
- * 
+ *
  * @author Sebastien Briquet - sebfz1
  * @since 6.15.0
  */
@@ -107,7 +107,7 @@ public class PageMenuItem extends AbstractMenuItem
 	 */
 	public PageMenuItem(IModel<String> title, String icon, Class<? extends Page> pageClass)
 	{
-		this(title, KendoIcon.NONE, pageClass, new PageParameters());
+		this(title, icon, pageClass, new PageParameters());
 	}
 
 	/**

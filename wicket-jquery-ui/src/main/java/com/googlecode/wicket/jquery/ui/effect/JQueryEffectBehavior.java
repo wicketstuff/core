@@ -38,9 +38,9 @@ public class JQueryEffectBehavior extends JQueryAbstractBehavior implements IJQu
 	private static final int SPEED = 500;
 
 	private final String selector;
+	private final Options options;
 	private int speed;
 	private String effect;
-	private Options options;
 
 	private JQueryAjaxBehavior callback = null;
 

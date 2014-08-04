@@ -30,7 +30,7 @@ public abstract class JQueryContainer extends WebMarkupContainer implements IJQu
 	private static final long serialVersionUID = 1L;
 
 	/**
-	 * keep a reference of the behavior, in case of special needs, ie: ProgressBar#respond()
+	 * keep a reference of the behavior, in case of special needs, ie: ProgressBar#refresh()
 	 */
 	protected JQueryBehavior widgetBehavior = null;
 

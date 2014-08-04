@@ -75,7 +75,7 @@ class DataSourceBehavior<T> extends AbstractDefaultAjaxBehavior
 	@SuppressWarnings("unchecked")
 	protected void setSort(String property, SortOrder order)
 	{
-		ISortStateLocator<String> locator = ((ISortStateLocator<String>) this.provider);
+		ISortStateLocator<String> locator = (ISortStateLocator<String>) this.provider;
 
 		locator.getSortState().setPropertySortOrder(property, order);
 	}

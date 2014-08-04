@@ -16,6 +16,7 @@
  */
 package com.googlecode.wicket.jquery.core.utils;
 
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
@@ -29,6 +30,7 @@ public class ListUtils
 {
 	/**
 	 * Gets the list-item matching the given hash against the list
+	 *
 	 * @param hash the hashcode to match
 	 * @param list the {@link List} to search in
 	 * @return the list-item or <code>null</code> if not found
@@ -47,6 +49,7 @@ public class ListUtils
 
 	/**
 	 * Gets the index of the item occurrence matching the specified hashcode.
+	 *
 	 * @param list the {@link List}
 	 * @param hash the hashcode to match
 	 * @return the index of the item matching the hashcode or -1 if not found
@@ -81,6 +84,97 @@ public class ListUtils
 			list.add(index, list.remove(ListUtils.indexOf(item.hashCode(), list)));
 		}
 	}
+
+	private static final int MAX = 20;
+
+	/**
+	 * Returns a sub list of items of type T having their textual representation (toString()) containing the search criteria<br/>
+	 * The max size of the sub list is {@link #MAX}
+	 *
+	 * @param <T> the type
+	 * @param search search criteria
+	 * @param list reference list
+	 * @return the sub list
+	 */
+	public static <T> List<T> contains(String search, List<T> list)
+	{
+		return ListUtils.contains(search, list, MAX);
+	}
+
+	/**
+	 * Returns a sub list of items of type T having their textual representation (toString()) containing the search criteria<br/>
+	 *
+	 * @param <T> the type
+	 * @param search search criteria
+	 * @param list reference list
+	 * @param max max size of the sub list to be returned
+	 * @return the sub list
+	 */
+	public static <T> List<T> contains(String search, List<T> list, int max)
+	{
+		List<T> choices = new ArrayList<T>();
+
+		int count = 0;
+		for (T choice : list)
+		{
+			if (choice.toString().toLowerCase().contains(search.toLowerCase()))
+			{
+				choices.add(choice);
+
+				if (++count == max)
+				{
+					break;
+				}
+			}
+		}
+
+		return choices;
+	}
+
+	/**
+	 * Returns a sub list of items of type T having their textual representation (toString()) starting with the search criteria<br/>
+	 * The max size of the sub list is {@link #MAX}
+	 *
+	 * @param <T> the type
+	 * @param search search criteria
+	 * @param list reference list
+	 * @return the sub list
+	 */
+	public static <T> List<T> startsWith(String search, List<T> list)
+	{
+		return ListUtils.startsWith(search, list, MAX);
+	}
+
+	/**
+	 * Returns a sub list of items of type T having their textual representation (toString()) starting with the search criteria<br/>
+	 *
+	 * @param <T> the type
+	 * @param search search criteria
+	 * @param list reference list
+	 * @param max max size of the sub list to be returned
+	 * @return the sub list
+	 */
+	public static <T> List<T> startsWith(String search, List<T> list, int max)
+	{
+		List<T> choices = new ArrayList<T>();
+
+		int count = 0;
+		for (T choice : list)
+		{
+			if (choice.toString().toLowerCase().startsWith(search.toLowerCase()))
+			{
+				choices.add(choice);
+
+				if (++count == max)
+				{
+					break;
+				}
+			}
+		}
+
+		return choices;
+	}
+
 
 	/**
 	 * Utility class

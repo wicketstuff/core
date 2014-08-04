@@ -106,7 +106,7 @@ public class RangeSlider extends AbstractSlider<RangeValue>
 	 * Initialization
 	 */
 	@Override
-	void initialize()
+	final void initialize()
 	{
 		super.initialize();
 

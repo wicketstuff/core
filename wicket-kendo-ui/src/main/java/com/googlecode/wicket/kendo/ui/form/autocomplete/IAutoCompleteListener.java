@@ -24,7 +24,7 @@ import org.apache.wicket.ajax.AjaxRequestTarget;
  * @author Sebastien Briquet - sebfz1
  *
  */
-interface IAutoCompleteListener
+interface IAutoCompleteListener /* extends IValueChangedListener */
 {
 	/**
 	 * Triggered when a selection has been made

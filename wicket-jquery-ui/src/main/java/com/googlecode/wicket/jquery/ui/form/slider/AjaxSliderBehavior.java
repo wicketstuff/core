@@ -30,7 +30,7 @@ import com.googlecode.wicket.jquery.ui.form.slider.AbstractSlider.SliderBehavior
 
 /**
  * Provides a jQuery ajax-slider {@link JQueryBehavior}<br/>
- * {@link #onAjax(AjaxRequestTarget, JQueryEvent)}} is delegated to AjaxSlider (need to validate AjaxSlider as a {@link FormComponent})
+ * {@link #onAjax(AjaxRequestTarget, JQueryEvent)} is delegated to AjaxSlider (need to validate AjaxSlider as a {@link FormComponent})
  *
  * @author Sebastien Briquet - sebfz1
  *
@@ -72,6 +72,7 @@ public abstract class AjaxSliderBehavior extends SliderBehavior implements IJQue
 	// Factories //
 	/**
 	 * Gets a new {@link JQueryAjaxPostBehavior} that will be called on 'change' javascript event
+	 *
 	 * @return the {@link JQueryAjaxPostBehavior}
 	 */
 	protected abstract JQueryAjaxPostBehavior newOnChangeBehavior();

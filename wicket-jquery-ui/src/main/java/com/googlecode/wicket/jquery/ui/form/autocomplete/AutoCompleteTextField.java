@@ -185,7 +185,7 @@ public abstract class AutoCompleteTextField<T extends Serializable> extends Text
 	protected abstract List<T> getChoices(String input);
 
 	@Override
-	protected String getModelValue()
+	protected final String getModelValue()
 	{
 		return this.renderer.getText(this.getModelObject()); // renderer cannot be null.
 	}
@@ -195,6 +195,7 @@ public abstract class AutoCompleteTextField<T extends Serializable> extends Text
 	 *
 	 * @return the {@link ITextRenderer}
 	 */
+	//TODO: to remove ?
 	public ITextRenderer<? super T> getRenderer()
 	{
 		return this.renderer;
@@ -204,7 +205,8 @@ public abstract class AutoCompleteTextField<T extends Serializable> extends Text
 	@SuppressWarnings("unchecked")
 	public <C> IConverter<C> getConverter(Class<C> type)
 	{
-		if (!String.class.isAssignableFrom(this.getType())) /* TODO: manage String (property)model object in a better way */
+		// TODO: manage String (property)model object in a better way
+		if (!String.class.isAssignableFrom(this.getType()))
 		{
 			if (type != null && type.isAssignableFrom(this.getType()))
 			{
@@ -254,7 +256,7 @@ public abstract class AutoCompleteTextField<T extends Serializable> extends Text
 	@Override
 	public final void onSelect(AjaxRequestTarget target, int index)
 	{
-		if (0 < index && index < this.choices.size())
+		if (-1 < index && index < this.choices.size())
 		{
 			T choice = this.choices.get(index);
 

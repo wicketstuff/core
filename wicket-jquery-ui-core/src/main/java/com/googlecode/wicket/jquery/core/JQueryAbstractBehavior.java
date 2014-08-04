@@ -37,6 +37,7 @@ import org.slf4j.LoggerFactory;
 
 import com.googlecode.wicket.jquery.core.settings.IJQueryLibrarySettings;
 import com.googlecode.wicket.jquery.core.settings.JQueryLibrarySettings;
+import com.googlecode.wicket.jquery.core.utils.RequestCycleUtils;
 
 /**
  * Provides the base class for every jQuery behavior.
@@ -129,7 +130,7 @@ public abstract class JQueryAbstractBehavior extends Behavior
 		}
 
 		// Adds the statement //
-		AjaxRequestTarget target = component.getRequestCycle().find(AjaxRequestTarget.class);
+		AjaxRequestTarget target = RequestCycleUtils.getAjaxRequestTarget();
 
 		if (target != null)
 		{

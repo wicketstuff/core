@@ -34,7 +34,7 @@ public class Spinner<T extends Number> extends TextField<T> implements IJQueryCu
 {
 	private static final long serialVersionUID = 1L;
 
-	private Options options;
+	private final Options options;
 
 	/**
 	 * Constructor
@@ -181,7 +181,7 @@ public class Spinner<T extends Number> extends TextField<T> implements IJQueryCu
 	@Override
 	public String getCulture()
 	{
-		return (String) this.options.get("culture");
+		return this.options.get("culture");
 	}
 
 	/**

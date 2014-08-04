@@ -17,6 +17,7 @@
 package com.googlecode.wicket.kendo.ui.datatable.column;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import org.apache.wicket.model.IModel;
@@ -180,7 +181,7 @@ public abstract class AbstractColumn implements IColumn
 	@Override
 	public List<String> getAggregates()
 	{
-		return null;
+		return Collections.emptyList();
 	}
 
 	/**
@@ -258,7 +259,7 @@ public abstract class AbstractColumn implements IColumn
 			builder.append(Options.QUOTE).append("menu").append(Options.QUOTE).append(": ").append(this.getMenu());
 		}
 
-		if (this.getAggregates() != null)
+		if (!this.getAggregates().isEmpty())
 		{
 			builder.append(", ");
 			builder.append(Options.QUOTE).append("aggregates").append(Options.QUOTE).append(": ").append(this.getAggregatesAsString());

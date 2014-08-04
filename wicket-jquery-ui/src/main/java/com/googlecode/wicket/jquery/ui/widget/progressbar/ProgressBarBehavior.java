@@ -22,7 +22,8 @@ import com.googlecode.wicket.jquery.core.JQueryBehavior;
 import com.googlecode.wicket.jquery.core.Options;
 import com.googlecode.wicket.jquery.core.ajax.IJQueryAjaxAware;
 import com.googlecode.wicket.jquery.core.ajax.JQueryAjaxBehavior;
-import com.googlecode.wicket.jquery.core.ajax.JQueryAjaxChangeBehavior;
+import com.googlecode.wicket.jquery.core.ajax.JQueryAjaxPostBehavior;
+import com.googlecode.wicket.jquery.ui.ajax.JQueryAjaxChangeBehavior;
 
 /**
  * Provides a jQuery progress-bar behavior.
@@ -60,6 +61,7 @@ public abstract class ProgressBarBehavior extends JQueryBehavior implements IJQu
 	}
 
 	// Methods //
+
 	@Override
 	public void bind(Component component)
 	{
@@ -68,23 +70,25 @@ public abstract class ProgressBarBehavior extends JQueryBehavior implements IJQu
 		component.add(this.onChangeBehavior = this.newOnChangeBehavior());
 	}
 
-
 	// Events //
+
 	@Override
 	public void onConfigure(Component component)
 	{
 		super.onConfigure(component);
 
-		this.setOption("value", component.getDefaultModelObjectAsString()); //initial value
+		this.setOption("value", component.getDefaultModelObjectAsString()); // initial value
 		this.setOption("change", this.onChangeBehavior.getCallbackFunction());
 	}
 
 	// Factories //
+
 	/**
-	 * Gets a new {@link JQueryAjaxChangeBehavior} that will be called on 'change' javascript event
+	 * Gets a new {@link JQueryAjaxPostBehavior} that will be called on 'change' javascript event
+	 *
 	 * @return the {@link JQueryAjaxBehavior}
 	 */
-	protected JQueryAjaxBehavior newOnChangeBehavior()
+	protected JQueryAjaxPostBehavior newOnChangeBehavior()
 	{
 		return new JQueryAjaxChangeBehavior(this);
 	}

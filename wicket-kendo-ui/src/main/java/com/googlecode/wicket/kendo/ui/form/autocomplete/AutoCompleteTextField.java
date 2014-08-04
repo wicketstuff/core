@@ -16,18 +16,13 @@
  */
 package com.googlecode.wicket.kendo.ui.form.autocomplete;
 
-import java.util.List;
+import java.util.Locale;
 
 import org.apache.wicket.ajax.AjaxRequestTarget;
-import org.apache.wicket.markup.ComponentTag;
-import org.apache.wicket.markup.html.form.TextField;
 import org.apache.wicket.model.IModel;
+import org.apache.wicket.util.convert.IConverter;
 
-import com.googlecode.wicket.jquery.core.IJQueryWidget;
-import com.googlecode.wicket.jquery.core.JQueryBehavior;
-import com.googlecode.wicket.jquery.core.Options;
-import com.googlecode.wicket.jquery.core.utils.RequestCycleUtils;
-import com.googlecode.wicket.kendo.ui.behavior.ChoiceModelBehavior;
+import com.googlecode.wicket.jquery.core.renderer.ITextRenderer;
 import com.googlecode.wicket.kendo.ui.renderer.ChoiceRenderer;
 
 /**
@@ -37,23 +32,11 @@ import com.googlecode.wicket.kendo.ui.renderer.ChoiceRenderer;
  *
  * @param <T> the model object type
  */
-public abstract class AutoCompleteTextField<T> extends TextField<T> /* TextField<Collection<T>> */ implements IJQueryWidget, IAutoCompleteListener
+public abstract class AutoCompleteTextField<T> extends AbstractAutoCompleteTextField<T, T>
 {
 	private static final long serialVersionUID = 1L;
 
-	/** Default separator */
-	private static final String SEPARATOR = ", ";
-
-	private ChoiceModelBehavior<T> choiceModelBehavior;
-
-	/** cache of current choices, needed to retrieve the user selected object */
-	private List<T> choices;
-
-	/** the datasource renderer */
-	private final ChoiceRenderer<? super T> renderer;
-
-	/** inner list width. 0 means that it will not be handled */
-	private int width = 0;
+	private final IConverter<T> converter;
 
 	/**
 	 * Constructor
@@ -62,117 +45,52 @@ public abstract class AutoCompleteTextField<T> extends TextField<T> /* TextField
 	 */
 	public AutoCompleteTextField(String id)
 	{
-		this(id, new ChoiceRenderer<T>());
-	}
-
-	/**
-	 * Constructor
-	 *
-	 * @param id the markup id
-	 * @param renderer the {@link ChoiceRenderer}
-	 */
-	public AutoCompleteTextField(String id, ChoiceRenderer<? super T> renderer)
-	{
 		super(id);
 
-		this.renderer = renderer;
+		this.converter = this.newConverter();
 	}
 
 	/**
 	 * Constructor
 	 *
 	 * @param id the markup id
-	 * @param model the {@link IModel}
-	 */
-	//public AutoCompleteTextField(String id, IModel<? extends Collection<T>> model)
-	public AutoCompleteTextField(String id, IModel<T> model)
-	{
-		this(id, model, new ChoiceRenderer<T>());
-	}
-
-	/**
-	 * Constructor
-	 *
-	 * @param id the markup id
-	 * @param model the {@link IModel}
 	 * @param renderer the {@link ChoiceRenderer}
 	 */
-	public AutoCompleteTextField(String id, IModel<T> model, ChoiceRenderer<? super T> renderer)
+	public AutoCompleteTextField(String id, ITextRenderer<? super T> renderer)
+	{
+		super(id, renderer);
+
+		this.converter = this.newConverter();
+	}
+
+	/**
+	 * Constructor
+	 *
+	 * @param id the markup id
+	 * @param model the {@link IModel}
+	 */
+	public AutoCompleteTextField(String id, IModel<T> model)
 	{
 		super(id, model);
 
-		this.renderer = renderer;
-	}
-
-	// Properties //
-
-	/**
-	 * Gets the (inner) list width.
-	 *
-	 * @return the list width
-	 */
-	public int getListWidth()
-	{
-		return this.width;
+		this.converter = this.newConverter();
 	}
 
 	/**
-	 * Sets the (inner) list width.
+	 * Constructor
 	 *
-	 * @param width the list width
-	 * @return this, for chaining
+	 * @param id the markup id
+	 * @param model the {@link IModel}
+	 * @param renderer the {@link ChoiceRenderer}
 	 */
-	public AutoCompleteTextField<T> setListWidth(int width)
+	public AutoCompleteTextField(String id, IModel<T> model, ITextRenderer<? super T> renderer)
 	{
-		this.width = width;
+		super(id, model, renderer);
 
-		return this;
+		this.converter = this.newConverter();
 	}
 
 	// Methods //
-
-	/**
-	 * Call {@link #getChoices()} and cache the result<br/>
-	 * Internal use only
-	 *
-	 * @return the list of choices
-	 */
-	private List<T> internalGetChoices(String input)
-	{
-		// for IModel<? extends Collection<T>>
-//		this.choices.addAll(this.getChoices(input));
-		this.choices = this.getChoices(input);
-
-		return this.choices;
-	}
-
-	protected abstract List<T> getChoices(String input);
-
-//	@Override
-//	protected String getModelValue()
-//	{
-//		Collection<T> values = this.getModelObject();
-//
-//		if (values != null)
-//		{
-//			StringBuilder builder = new StringBuilder();
-//			Iterator<T> iterator = values.iterator();
-//
-//			for (int count = 0; iterator.hasNext(); count++)
-//			{
-//				if (count > 0)
-//				{
-//					builder.append(SEPARATOR);
-//				}
-//
-//				builder.append(this.renderer.getText(iterator.next()));
-//			}
-//
-//			return builder.toString();
-//		}
-//
-//		return "";
-//	}
 
 	@Override
 	protected String getModelValue()
@@ -180,140 +98,68 @@ public abstract class AutoCompleteTextField<T> extends TextField<T> /* TextField
 		return this.renderer.getText(this.getModelObject()); // renderer cannot be null.
 	}
 
-// for IModel<? extends Collection<T>>
-//	@Override
-//	protected T convertValue(String[] values)
-//	{
-//		List<T> list = new ArrayList<T>(values.length);
-//
-//		if (this.choices != null)
-//		{
-//			for (T object : this.choices)
-//			{
-//				for (String value : values)
-//				{
-//					if (value.equals(this.renderer.getText(object)))
-//					{
-//						list.add(object);
-//						break;
-//					}
-//				}
-//			}
-//		}
-//
-//		return list;
-//	}
+	@Override
+	@SuppressWarnings("unchecked")
+	public <C> IConverter<C> getConverter(Class<C> type)
+	{
+		if (!String.class.isAssignableFrom(this.getType())) /* TODO: manage String (property)model object in a better way */
+		{
+			if (type != null && type.isAssignableFrom(this.getType()))
+			{
+				return (IConverter<C>) this.converter;
+			}
+		}
 
-// for IModel<? extends Collection<T>>
-//	@Override
-//	public void updateModel()
-//	{
-//		FormComponent.updateCollectionModel(this);
-//	}
+		return super.getConverter(type);
+	}
 
 	// Events //
 
 	@Override
-	protected void onInitialize()
+	protected final void onSelected(AjaxRequestTarget target, T choice)
 	{
-		super.onInitialize();
-
-		this.add(this.choiceModelBehavior = this.newChoiceModelBehavior());
-		this.add(JQueryWidget.newWidgetBehavior(this));
-	}
-
-	@Override
-	public void onConfigure(JQueryBehavior behavior)
-	{
-//		behavior.setOption("value", this.getModelValue());
-//		behavior.setOption("separator", Options.asString(SEPARATOR));
-		behavior.setOption("dataTextField", Options.asString(this.renderer.getTextField()));
-		behavior.setOption("dataValueField", Options.asString(this.renderer.getValueField()));
-
-		if (this.getListWidth() > 0)
-		{
-			behavior.setOption("open", String.format("function(e) { e.sender.list.width(%d); }", this.getListWidth()));
-		}
-	}
-
-	@Override
-	public void onBeforeRender(JQueryBehavior behavior)
-	{
-		// noop
-	}
-
-	@Override
-	protected void onComponentTag(final ComponentTag tag)
-	{
-		super.onComponentTag(tag);
-
-		tag.put("autocomplete", "off"); // disable browser's autocomplete
-	}
-
-	@Override
-	public final void onSelect(AjaxRequestTarget target, int index)
-	{
-		if (0 < index && index < this.choices.size())
-		{
-			T choice = this.choices.get(index);
-
-			this.setModelObject(choice);
-			this.onSelected(target, choice);
-		}
+		this.setModelObject(choice);
+		this.onSelected(target);
 	}
 
 	/**
 	 * Triggered when the user selects an item from results that matched its input
 	 *
 	 * @param target the {@link AjaxRequestTarget}
-	 * @param choice TODO javadoc or remove
 	 */
-	protected void onSelected(AjaxRequestTarget target, T choice)
+	protected void onSelected(AjaxRequestTarget target)
 	{
-	}
-
-	// IJQueryWidget //
-
-	@Override
-	public JQueryBehavior newWidgetBehavior(String selector)
-	{
-		return new AutoCompleteBehavior(selector) {
-
-			private static final long serialVersionUID = 1L;
-
-			@Override
-			protected CharSequence getChoiceCallbackUrl()
-			{
-				return choiceModelBehavior.getCallbackUrl();
-			}
-
-			@Override
-			public void onSelect(AjaxRequestTarget target, int index)
-			{
-				AutoCompleteTextField.this.onSelect(target, index);
-			}
-		};
 	}
 
 	// Factories //
 
 	/**
-	 * Gets a new {@link ChoiceModelBehavior}
+	 * Gets a new {@link IConverter}.<br/>
+	 * Used when the form component is posted and the bean type has been supplied to the constructor.
 	 *
-	 * @return a new {@link ChoiceModelBehavior}
+	 * @return the {@link IConverter}
 	 */
-	protected ChoiceModelBehavior<T> newChoiceModelBehavior()
+	private final IConverter<T> newConverter()
 	{
-		return new ChoiceModelBehavior<T>(this.renderer) {
+		return new IConverter<T>() {
 
 			private static final long serialVersionUID = 1L;
 
 			@Override
-			public List<T> getChoices()
+			public T convertToObject(String value, Locale locale)
 			{
-				final String input = RequestCycleUtils.getQueryParameterValue("filter[filters][0][value]").toString();
+				if (value != null && value.equals(AutoCompleteTextField.this.getModelValue()))
+				{
+					return AutoCompleteTextField.this.getModelObject();
+				}
 
-				return AutoCompleteTextField.this.internalGetChoices(input);
+				return null; // if the TextField value (string) does not corresponds to the current object model (ie: user specific value), returns null.
+			}
+
+			@Override
+			public String convertToString(T value, Locale locale)
+			{
+				return AutoCompleteTextField.this.renderer.getText(value);
 			}
 		};
 	}

@@ -38,14 +38,14 @@ public interface IDataExporter
 	 *
 	 * @return the content type
 	 */
-	public String getContentType();
+	String getContentType();
 
 	/**
 	 * Indicates whether headers will be written to the output
 	 *
 	 * @return true or false
 	 */
-	public boolean isExportHeadersEnabled();
+	boolean isExportHeadersEnabled();
 
 	/**
 	 * Exports all data provided by the {@link IDataProvider} to the {@link OutputStream}.
@@ -55,5 +55,5 @@ public interface IDataExporter
 	 * @param output the {@link OutputStream}
 	 * @throws IOException
 	 */
-	public <T> void exportData(IDataProvider<T> provider, List<IExportableColumn> columns, OutputStream output) throws IOException;
+	<T> void exportData(IDataProvider<T> provider, List<IExportableColumn> columns, OutputStream output) throws IOException;
 }
