@@ -1,6 +1,8 @@
 package org.wicketstuff
 
 import org.apache.wicket.markup.Markup
+import org.apache.wicket.markup.head.{JavaScriptHeaderItem, JavaScriptReferenceHeaderItem, CssHeaderItem, CssReferenceHeaderItem}
+import org.apache.wicket.request.resource.{JavaScriptResourceReference, CssResourceReference}
 import org.apache.wicket.{Component, MarkupContainer}
 import org.wicketstuff.scala.model.Fodel
 
@@ -83,5 +85,11 @@ package object scala {
       {f.setObject(_)}
     )
   }
+
+  implicit def cssRefToHeaderItem(reference: CssResourceReference): CssReferenceHeaderItem = CssHeaderItem.forReference(reference)
+
+  implicit def jsRefToHeaderItem(reference: JavaScriptResourceReference): JavaScriptReferenceHeaderItem =
+    JavaScriptHeaderItem.forReference(reference)
+
 
 }

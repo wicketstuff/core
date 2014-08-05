@@ -27,7 +27,6 @@ class HomePage
   var name = "default"
    
   val form: ScalaForm[Unit] = form[Unit]("form1")
-//  add(form)
 
   // create an anonymous function and have it implicitly converted into a fodel
   val nf: IModel[_] = () ⇒ { println ("nff1"); name }
