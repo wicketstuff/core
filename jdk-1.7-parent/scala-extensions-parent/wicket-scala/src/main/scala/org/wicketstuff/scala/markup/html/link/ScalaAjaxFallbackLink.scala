@@ -5,7 +5,7 @@ import org.apache.wicket.ajax.markup.html.AjaxFallbackLink
 import org.apache.wicket.model.IModel
 import org.wicketstuff.scala.traits.ScalaMarkupContainerT
 
-class ScalaAjaxFallbackLink[T](id:String, f: (Option[AjaxRequestTarget]) ⇒ Unit, model: IModel[T] = null)
+class ScalaAjaxFallbackLink[T](id:String, model: IModel[T] = null, f: (Option[AjaxRequestTarget]) ⇒ Unit)
   extends AjaxFallbackLink[T](id, model)
   with ScalaMarkupContainerT {
 

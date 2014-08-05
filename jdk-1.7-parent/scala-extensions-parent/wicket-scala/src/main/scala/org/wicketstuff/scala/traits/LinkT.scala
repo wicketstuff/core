@@ -41,8 +41,8 @@ trait LinkT
     link
   }
 
-  def fallbackLink[T](id: String, f: (Option[AjaxRequestTarget]) ⇒ Unit, model: IModel[T] = null): ScalaAjaxFallbackLink[T] = {
-    val link = new ScalaAjaxFallbackLink[T](id, f, model)
+  def fallbackLink[T](id: String, model: IModel[T] = null)(f: (Option[AjaxRequestTarget]) ⇒ Unit): ScalaAjaxFallbackLink[T] = {
+    val link = new ScalaAjaxFallbackLink[T](id, model, f)
     self.add(link)
     link
   }

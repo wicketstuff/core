@@ -79,7 +79,7 @@ class ScalaComponentSpec
     tester.startComponentInPage(component, """<input wicket:id="test" type="password"/>""")
     onEventExecuted.get() mustBe false
     onErrorExecuted.get() mustBe false
-    
+
     tester.executeAjaxEvent(component, eventName)
     onEventExecuted.get() mustBe false
     onErrorExecuted.get() mustBe true
