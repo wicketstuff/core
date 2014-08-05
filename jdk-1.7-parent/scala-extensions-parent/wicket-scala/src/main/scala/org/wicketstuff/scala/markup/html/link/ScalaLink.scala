@@ -4,7 +4,7 @@ import org.apache.wicket.markup.html.link.Link
 import org.apache.wicket.model.IModel
 import org.wicketstuff.scala.traits.ScalaMarkupContainerT
 
-class ScalaLink[T](id:String, f: ⇒ Unit, model: IModel[T] = null)
+class ScalaLink[T](id:String, model: IModel[T] = null, f: ⇒ Unit)
   extends Link[T](id, model)
   with ScalaMarkupContainerT {
 

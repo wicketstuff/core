@@ -51,7 +51,7 @@ class ComponentSpec
     "work with a closure for onclick" in {
       val tester = new WicketTester()
       //detailedDiffs()
-      val slk = new ScalaLink("clicker", clickCount += 1)
+      val slk = new ScalaLink("clicker", f = clickCount += 1)
       clickCountUpdatingFunction(slk.onClick())
       tester.destroy()
     }

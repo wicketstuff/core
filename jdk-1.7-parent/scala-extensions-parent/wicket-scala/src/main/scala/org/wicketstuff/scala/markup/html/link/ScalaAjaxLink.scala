@@ -5,7 +5,7 @@ import org.apache.wicket.ajax.markup.html.AjaxLink
 import org.apache.wicket.model.IModel
 import org.wicketstuff.scala.traits.ScalaMarkupContainerT
 
-class ScalaAjaxLink[T](id: String, f: (AjaxRequestTarget) ⇒ Unit, model: IModel[T] = null)
+class ScalaAjaxLink[T](id: String, model: IModel[T] = null, f: (AjaxRequestTarget) ⇒ Unit)
   extends AjaxLink[T](id, model)
   with ScalaMarkupContainerT {
 
