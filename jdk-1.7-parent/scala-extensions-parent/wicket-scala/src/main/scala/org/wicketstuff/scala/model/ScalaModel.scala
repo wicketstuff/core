@@ -16,7 +16,7 @@ trait ScalaModel {
     ldm
   }
 
-  def futureM[T](body: => T, duration: Duration = 10.seconds): FutureModel[T] = {
+  def futureM[T](body: => T, duration: Duration = 1.second): FutureModel[T] = {
     val fModel = new FutureModel[T](body, duration)
     fModel
   }

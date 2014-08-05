@@ -3,7 +3,6 @@ package org.wicketstuff.scala
 import _root_.java.util.concurrent.atomic.AtomicBoolean
 
 import org.apache.wicket.markup.html.{WebMarkupContainer, WebComponent}
-import org.apache.wicket.model.Model
 import org.junit.runner.RunWith
 import org.scalatest.junit.JUnitRunner
 
@@ -14,23 +13,24 @@ import org.scalatest.junit.JUnitRunner
 class ScalaComponentSpec
   extends WicketSpec {
 
-  test("An implicit component should have the extra methods from ScalaComponent") {
+  test("A (Java) component should have the extra methods from ScalaComponent imported implicitly") {
     val web = new WebComponent("web")
     web.hide()
-    web.isVisibilityAllowed mustBe false
+    web.isVisible mustBe false
     web.show()
-    web.isVisibilityAllowed mustBe true
+    web.isVisible mustBe true
   }
 
-  test("An implicit markup container should have the extra methods from ScalaMarkupContainer") {
+  test("A (Java) markup container should have the extra methods from ScalaMarkupContainer imported implicitly") {
     val web = new WebMarkupContainer("web")
-    val label = web.label("label", Model.of("A child"))
+    val label = web.label("label", "A child")
     label mustNot be (null)
     label.getDefaultModelObjectAsString mustBe "A child"
   }
 
   test("updateable should set outputMarkupId to true") {
     val component = new WebComponent("test") with ScalaComponent
+    component.getOutputMarkupId mustBe false
     component.updateable()
     component.getOutputMarkupId mustBe true
   }
@@ -52,7 +52,7 @@ class ScalaComponentSpec
   }
 
   test("on('click')") {
-    val component = new WebComponent("test") with ScalaComponent
+    val component = new WebComponent("test")
     val clicked = new AtomicBoolean(false)
     component.on("click", { target =>
       clicked.set(true)

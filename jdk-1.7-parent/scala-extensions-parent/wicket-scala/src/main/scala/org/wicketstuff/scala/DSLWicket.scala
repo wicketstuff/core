@@ -28,6 +28,7 @@ import org.apache.wicket.Session
 import scala.reflect.ClassTag
 import scala.language.implicitConversions
 
+@deprecated(message = "Use the fine grained traits instead, or the implicit conversion", since = "7.0.0")
 trait DSLWicket {
   self: MarkupContainer ⇒
 

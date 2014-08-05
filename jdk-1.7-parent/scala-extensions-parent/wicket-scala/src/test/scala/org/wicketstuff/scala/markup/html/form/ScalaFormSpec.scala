@@ -2,10 +2,9 @@ package org.wicketstuff.scala.markup.html.form
 
 import java.util.concurrent.atomic.AtomicBoolean
 
-import org.apache.wicket.markup.Markup
 import org.junit.runner.RunWith
 import org.scalatest.junit.JUnitRunner
-import org.wicketstuff.scala.WicketSpec
+import org.wicketstuff.scala._
 
 /**
  * Tests for ScalaForm
@@ -25,7 +24,7 @@ class ScalaFormSpec
       }
     }
 
-    tester.startComponentInPage(form, Markup.of("""<form wicket:id="form"></form>"""))
+    tester.startComponentInPage(form, """<form wicket:id="form"></form>""")
     val formTester = tester.newFormTester("form")
     submitted.get() mustBe false
     formTester.submit()
@@ -42,7 +41,7 @@ class ScalaFormSpec
     })
     val form = new ScalaForm[Unit]("form", actions = actions)
 
-    tester.startComponentInPage(form, Markup.of("""<form wicket:id="form"></form>"""))
+    tester.startComponentInPage(form, """<form wicket:id="form"></form>""")
     val formTester = tester.newFormTester("form")
     submittedWithAction.get() mustBe false
     formTester.submit()

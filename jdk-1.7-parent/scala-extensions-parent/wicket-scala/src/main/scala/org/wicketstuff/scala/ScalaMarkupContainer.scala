@@ -3,7 +3,9 @@ package org.wicketstuff.scala
 import _root_.java.util.{List => JList}
 
 import org.apache.wicket.ajax.AjaxRequestTarget
+import org.apache.wicket.feedback.IFeedbackMessageFilter
 import org.apache.wicket.markup.html.list.ListItem
+import org.apache.wicket.markup.html.panel.FeedbackPanel
 import org.apache.wicket.model.IModel
 import org.apache.wicket.request.mapper.parameter.PageParameters
 import org.apache.wicket.{Component, MarkupContainer, Page}
@@ -123,5 +125,11 @@ trait ScalaMarkupContainer extends ScalaComponent {
     val listView = new ScalaListView[T](id, list, populateItemFunc)
     self.add(listView)
     listView
+  }
+
+  def feedback(id: String, filter: IFeedbackMessageFilter = null): FeedbackPanel = {
+    val feedback = new FeedbackPanel(id, filter)
+    self.add(feedback)
+    feedback
   }
 }

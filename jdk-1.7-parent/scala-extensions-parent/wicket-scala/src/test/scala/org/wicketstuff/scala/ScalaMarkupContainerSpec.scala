@@ -11,7 +11,7 @@ import org.scalatest.junit.JUnitRunner
 class ScalaMarkupContainerSpec
   extends WicketSpec {
 
-  test("MarkupContainer#add() is overloaded with operator +") {
+  test("MarkupContainer#add() is aliased with operator +") {
     val parent = new WebMarkupContainer("parent") with ScalaMarkupContainer
     val child = new WebComponent("child")
 
@@ -23,7 +23,7 @@ class ScalaMarkupContainerSpec
     child.getParent mustBe parent
   }
 
-  test("MarkupContainer#remove() is overloaded with operator -") {
+  test("MarkupContainer#remove() is aliased with operator -") {
     val parent = new WebMarkupContainer("parent") with ScalaMarkupContainer
     val child = new WebComponent("child")
 

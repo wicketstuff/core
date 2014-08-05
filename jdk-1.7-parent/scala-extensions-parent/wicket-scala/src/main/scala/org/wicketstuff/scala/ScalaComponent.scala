@@ -14,7 +14,7 @@ import scala.language.implicitConversions
 trait ScalaComponent
   extends ScalaModel {
 
-  val self:Component = this match {
+  val self: Component = this match {
     case c: Component => c
     case _ => null
   }
@@ -32,17 +32,17 @@ trait ScalaComponent
   }
 
   def hide(): self.type = {
-    self.setVisibilityAllowed(false)
+    self.setVisible(false)
     self
   }
 
   def show(): self.type = {
-    self.setVisibilityAllowed(true)
+    self.setVisible(true)
     self
   }
 
   def on(eventName: String, onAction: (AjaxRequestTarget) => Unit)(implicit error: (AjaxRequestTarget) => Unit = doNothing): self.type = {
-    eventName match {
+    eventName.toLowerCase match {
       case "submit" =>
         self.add(new AjaxFormSubmitBehavior(eventName) {
           override def onSubmit(target: AjaxRequestTarget) = onAction(target)

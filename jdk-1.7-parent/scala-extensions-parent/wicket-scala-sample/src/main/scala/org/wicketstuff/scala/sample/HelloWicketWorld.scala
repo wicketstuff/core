@@ -2,17 +2,14 @@ package org.wicketstuff.scala.sample
 
 import org.apache.wicket.feedback.ContainerFeedbackMessageFilter
 import org.apache.wicket.markup.html.WebPage
-import org.apache.wicket.markup.html.form.{Form, TextField}
 import org.apache.wicket.markup.html.list.ListItem
-import org.apache.wicket.markup.html.panel.FeedbackPanel
 import org.apache.wicket.model.{CompoundPropertyModel, IModel}
 import org.apache.wicket.protocol.http.WebApplication
 import org.apache.wicket.validation.validator.EmailAddressValidator
-import org.wicketstuff.scala.markup.html.basic.ScalaLabel
+import org.wicketstuff.scala._
 import org.wicketstuff.scala.markup.html.form.ScalaForm
 import org.wicketstuff.scala.markup.html.list.ScalaPropertyListView
 import org.wicketstuff.scala.model.Fodel
-import org.wicketstuff.scala.{ScalaMarkupContainer, ScalaWicket}
 
 import scala.language.postfixOps
 
@@ -25,8 +22,7 @@ class HelloWicketWorld extends WebApplication {
  */
 class HomePage
   extends WebPage
-  with ScalaMarkupContainer
-  with ScalaWicket {
+  with ScalaMarkupContainer {
 
   var name = "default"
    
@@ -74,21 +70,22 @@ class HomePage
 
   add(new ScalaPropertyListView[Presentation]("presentations", Presentation.stub, (li:ListItem[Presentation]) ⇒ { // list gets passed in by name
     val p = li.getModelObject
-    li add new ScalaLabel("name", p name)
-    li add(new ScalaLabel("author", p author))
-    li add(new ScalaLabel("votes", p.votes.toString))
+    li.label("name", p name)
+    li.label("author", p author)
+    li.label("votes", p.votes.toString)
 
-    li add(new Form[Vote]("form", new CompoundPropertyModel[Vote](new Vote)) {
-      add(new TextField("email").add(EmailAddressValidator.getInstance))
-      add(new FeedbackPanel("feedback", new ContainerFeedbackMessageFilter(li)))
-      override def onSubmit() {
-        val v = getModelObject
+    val form = li.form[Vote]("form", new CompoundPropertyModel[Vote](new Vote),
+      Map("submit" -> { (theForm: ScalaForm[Vote]) =>
+        val v = theForm.getModelObject
         p.addVotes(v)
         // we dont need to do anything with the returned presentation,
         // as the list view will reload it's model from the reset
         // service upon render
-      }
-    })
+      })
+    )
+    form.text("email").add(EmailAddressValidator.getInstance)
+    form.feedback("feedback", new ContainerFeedbackMessageFilter(li))
+
   }).setReuseItems(true))
     
 }

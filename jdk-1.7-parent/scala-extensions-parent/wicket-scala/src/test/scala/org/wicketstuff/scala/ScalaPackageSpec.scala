@@ -1,5 +1,7 @@
 package org.wicketstuff.scala
 
+import _root_.java.util.{ArrayList => JArrayList, List => JList}
+
 import org.apache.wicket.markup.html.basic.Label
 import org.apache.wicket.model.{IModel, Model}
 import org.apache.wicket.util.tester.WicketTester
@@ -7,16 +9,13 @@ import org.junit.runner.RunWith
 import org.scalatest.junit.JUnitRunner
 import org.scalatest.{MustMatchers, WordSpec}
 
-import _root_.java.util.{ArrayList => JArrayList, List => JList}
-
 /**
  * @author Antony Stubbs
  */
 @RunWith(classOf[JUnitRunner])
-class ScalaWicketSpec
+class ScalaPackageSpec
   extends WordSpec
-  with MustMatchers
-  with ScalaWicket {
+  with MustMatchers {
 
   "NullSafe operater" should {
     

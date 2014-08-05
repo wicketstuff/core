@@ -1,19 +1,19 @@
 package org.wicketstuff.scala
 
-import org.apache.wicket.markup.html.{WebComponent, WebPage}
+import _root_.java.util.{ArrayList => JArrayList, List => JList}
+
+import org.apache.wicket.markup.html.WebPage
 import org.apache.wicket.markup.html.basic.Label
 import org.apache.wicket.markup.html.list.ListItem
 import org.apache.wicket.util.tester.WicketTester
 import org.junit.runner.RunWith
-import org.scalatest.WordSpec
-import org.scalatest.MustMatchers
+import org.scalatest.{MustMatchers, WordSpec}
 import org.scalatest.junit.JUnitRunner
 import org.wicketstuff.scala.markup.html.basic.ScalaLabel
 import org.wicketstuff.scala.markup.html.form.{ScalaForm, ScalaTextField}
 import org.wicketstuff.scala.markup.html.link.ScalaLink
-import org.wicketstuff.scala.markup.html.list.{ScalaPropertyListView, ScalaListView}
+import org.wicketstuff.scala.markup.html.list.{ScalaListView, ScalaPropertyListView}
 import org.wicketstuff.scala.model.Fodel
-import _root_.java.util.{ArrayList => JArrayList, List => JList}
 
 /**
  * Specifications for the various Scala extended components.
@@ -23,8 +23,7 @@ import _root_.java.util.{ArrayList => JArrayList, List => JList}
 @RunWith(classOf[JUnitRunner])
 class ComponentSpec
   extends WordSpec
-  with MustMatchers
-  with ScalaWicket {
+  with MustMatchers {
 
   val tony = "Tony"
   val karyn = "Karyn"
@@ -91,7 +90,7 @@ class ComponentSpec
     "work with writable fodel" in {
       val tester = new WicketTester()
       var n = tony
-      val stf = new ScalaTextField("name", new Fodel[String](n, n = _))
+      val stf = new ScalaTextField[String]("name", new Fodel[String](n, n = _))
       stf.getDefaultModelObject mustEqual tony
       n = n + karyn
       stf.getDefaultModelObject mustEqual (tony+karyn)
@@ -192,7 +191,7 @@ class ComponentSpec
       val tester = new WicketTester()
       val theBackingList = List(1,2,3)
       val fodel = new Fodel[List[Int]](theBackingList)
-      val fodel2 = new Fodel(listToJavaList(theBackingList))
+      val fodel2 = new Fodel(seqToJavaList(theBackingList))
 
       new ScalaPropertyListView[Int]("votes", fodel2, null)
       val view = new ScalaPropertyListView[Int]("votes", fodel, null)
