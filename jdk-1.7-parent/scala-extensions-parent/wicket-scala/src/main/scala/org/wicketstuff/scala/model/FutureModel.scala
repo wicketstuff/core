@@ -1,6 +1,6 @@
 package org.wicketstuff.scala.model
 
-import org.apache.wicket.model.AbstractReadOnlyModel
+import org.apache.wicket.model.LoadableDetachableModel
 import org.wicketstuff.scala.AsyncExec
 
 import scala.concurrent._
@@ -28,19 +28,12 @@ import scala.concurrent.duration._
 class FutureModel[T](body: => T,
                      duration: Duration = 10.seconds)
                     (@transient implicit override protected val ec: ExecutionContext = AsyncExec.Executor)
-  extends AbstractReadOnlyModel[T]
+  extends LoadableDetachableModel[T]
   with AsyncExec[T] {
 
   override protected def task: T = body
 
-  @volatile
-  private[this] var obj: T = _
-
-  def getObject = {
-    if (obj != null) obj
-    else {
-      obj = Await.result(future, duration)
-      obj
-    }
+  override def load: T = {
+    Await.result(future, duration)
   }
 }
