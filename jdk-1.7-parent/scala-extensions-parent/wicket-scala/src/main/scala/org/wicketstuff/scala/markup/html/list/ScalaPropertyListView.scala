@@ -1,8 +1,8 @@
 package org.wicketstuff.scala.markup.html.list
 
 import org.apache.wicket.markup.html.list.{ListItem, PropertyListView}
-import org.wicketstuff.scala.ScalaMarkupContainer
 import org.wicketstuff.scala.model.Fodel
+import org.wicketstuff.scala.traits.ScalaMarkupContainerT
 
 /**
  * <p>Note, you may need to have "()" as the last statement in your block for the #populateItemFunc
@@ -15,7 +15,7 @@ class ScalaPropertyListView[T](id:String,
                              model:Fodel[_ <: java.util.List[_ <: T]],
                              populateItemFunc:(ListItem[T]) ⇒ Unit)
   extends PropertyListView[T](id, model)
-  with ScalaMarkupContainer {
+  with ScalaMarkupContainerT {
 
   override val self: ScalaPropertyListView[T] = this
 

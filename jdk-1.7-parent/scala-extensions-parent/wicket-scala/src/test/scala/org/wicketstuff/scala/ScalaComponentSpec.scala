@@ -5,6 +5,7 @@ import _root_.java.util.concurrent.atomic.AtomicBoolean
 import org.apache.wicket.markup.html.{WebMarkupContainer, WebComponent}
 import org.junit.runner.RunWith
 import org.scalatest.junit.JUnitRunner
+import org.wicketstuff.scala.traits.ScalaComponentT
 
 /**
  * Tests for ScalaComponent
@@ -29,21 +30,21 @@ class ScalaComponentSpec
   }
 
   test("updateable should set outputMarkupId to true") {
-    val component = new WebComponent("test") with ScalaComponent
+    val component = new WebComponent("test") with ScalaComponentT
     component.getOutputMarkupId mustBe false
     component.updateable()
     component.getOutputMarkupId mustBe true
   }
 
   test("hide") {
-    val component = new WebComponent("test") with ScalaComponent
+    val component = new WebComponent("test") with ScalaComponentT
     component.isVisibleInHierarchy mustBe true
     component.hide()
     component.isVisibleInHierarchy mustBe false
   }
 
   test("show") {
-    val component = new WebComponent("test") with ScalaComponent
+    val component = new WebComponent("test") with ScalaComponentT
     component.isVisibleInHierarchy mustBe true
     component.hide()
     component.isVisibleInHierarchy mustBe false

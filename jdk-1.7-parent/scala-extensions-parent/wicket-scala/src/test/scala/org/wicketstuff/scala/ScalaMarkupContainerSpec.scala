@@ -3,6 +3,7 @@ package org.wicketstuff.scala
 import org.apache.wicket.markup.html.{WebComponent, WebMarkupContainer}
 import org.junit.runner.RunWith
 import org.scalatest.junit.JUnitRunner
+import org.wicketstuff.scala.traits.ScalaMarkupContainerT
 
 /**
  * Tests for ScalaMarkupContainer
@@ -12,7 +13,7 @@ class ScalaMarkupContainerSpec
   extends WicketSpec {
 
   test("MarkupContainer#add() is aliased with operator +") {
-    val parent = new WebMarkupContainer("parent") with ScalaMarkupContainer
+    val parent = new WebMarkupContainer("parent") with ScalaMarkupContainerT
     val child = new WebComponent("child")
 
     parent.size() mustBe 0
@@ -24,7 +25,7 @@ class ScalaMarkupContainerSpec
   }
 
   test("MarkupContainer#remove() is aliased with operator -") {
-    val parent = new WebMarkupContainer("parent") with ScalaMarkupContainer
+    val parent = new WebMarkupContainer("parent") with ScalaMarkupContainerT
     val child = new WebComponent("child")
 
     parent + child

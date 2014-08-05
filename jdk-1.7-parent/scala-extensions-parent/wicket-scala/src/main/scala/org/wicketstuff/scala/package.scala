@@ -7,6 +7,8 @@ import org.apache.wicket.{Component, MarkupContainer}
 import org.wicketstuff.scala.model.Fodel
 
 import _root_.java.util.{List => JList, ArrayList => JArrayList}
+import org.wicketstuff.scala.traits.{ScalaMarkupContainerT, ScalaComponentT}
+
 import _root_.scala.language.implicitConversions
 
 /**
@@ -15,13 +17,13 @@ import _root_.scala.language.implicitConversions
 package object scala {
 
   implicit class ScalaComponentOps(val component: Component)
-    extends ScalaComponent {
+    extends ScalaComponentT {
 
     override val self: component.type = component
   }
 
   implicit class ScalaMarkupContainerOps(val container: MarkupContainer)
-    extends ScalaMarkupContainer {
+    extends ScalaMarkupContainerT {
 
     override val self: container.type = container
   }

@@ -1,4 +1,4 @@
-package org.wicketstuff.scala
+package org.wicketstuff.scala.traits
 
 import org.apache.wicket.Component
 import org.apache.wicket.ajax.form.{AjaxFormSubmitBehavior, OnChangeAjaxBehavior}
@@ -8,7 +8,7 @@ import org.wicketstuff.scala.model.ScalaModel
 /**
  * An extension of Wicket's Component class
  */
-trait ScalaComponent
+trait ScalaComponentT
   extends ScalaModel {
 
   val self: Component = this match {

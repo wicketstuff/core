@@ -10,6 +10,7 @@ import org.wicketstuff.scala._
 import org.wicketstuff.scala.markup.html.form.ScalaForm
 import org.wicketstuff.scala.markup.html.list.ScalaPropertyListView
 import org.wicketstuff.scala.model.Fodel
+import org.wicketstuff.scala.traits.ScalaMarkupContainerT
 
 import scala.language.postfixOps
 
@@ -22,7 +23,7 @@ class HelloWicketWorld extends WebApplication {
  */
 class HomePage
   extends WebPage
-  with ScalaMarkupContainer {
+  with ScalaMarkupContainerT {
 
   var name = "default"
    
