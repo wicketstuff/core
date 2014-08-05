@@ -16,8 +16,11 @@ trait ScalaComponentT
     case _ => null
   }
 
+  type OnError = (AjaxRequestTarget) => Unit
+
   protected def noOp() = () => ()
-  private[this] def doNothing(target: AjaxRequestTarget) = (_: AjaxRequestTarget) => ()
+
+  protected def ajaxNoOp(target: AjaxRequestTarget) = (_: AjaxRequestTarget) => ()
 
   def updateable(): self.type = {
     self.setOutputMarkupId(true)
@@ -34,7 +37,7 @@ trait ScalaComponentT
     self
   }
 
-  def on(eventName: String, onAction: (AjaxRequestTarget) => Unit)(implicit error: (AjaxRequestTarget) => Unit = doNothing): self.type = {
+  def on(eventName: String)(onAction: (AjaxRequestTarget) => Unit)(implicit error: OnError = ajaxNoOp): self.type = {
     eventName.toLowerCase match {
       case "submit" =>
         self.add(new AjaxFormSubmitBehavior(eventName) {
@@ -44,6 +47,7 @@ trait ScalaComponentT
       case "change" =>
         self.add(new OnChangeAjaxBehavior {
           override def onUpdate(target: AjaxRequestTarget) = onAction(target)
+          override def onError(target: AjaxRequestTarget, x: RuntimeException) = error(target)
         })
       case _ =>
         self.add(new AjaxEventBehavior(eventName) {
