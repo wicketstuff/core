@@ -11,6 +11,6 @@ class ScalaLabel[T](id: String, model: IModel[T] = null)
   extends Label(id, model)
   with ScalaComponent {
 
-  override val self: Label = this
+  override val self: ScalaLabel[T] = this
 
 }
