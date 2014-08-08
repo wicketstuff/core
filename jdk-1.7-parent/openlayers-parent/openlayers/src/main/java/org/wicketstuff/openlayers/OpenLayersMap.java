@@ -1,12 +1,12 @@
 /*
- * 
+ *
  * ==============================================================================
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
  * the License at
- * 
+ *
  * http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
  * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
@@ -14,11 +14,6 @@
  * the License.
  */
 package org.wicketstuff.openlayers;
-
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
 
 import org.apache.wicket.Application;
 import org.apache.wicket.Component;
@@ -40,18 +35,24 @@ import org.wicketstuff.openlayers.api.Bounds;
 import org.wicketstuff.openlayers.api.IJavascriptComponent;
 import org.wicketstuff.openlayers.api.InfoWindow;
 import org.wicketstuff.openlayers.api.LonLat;
+import org.wicketstuff.openlayers.api.SphericalMercatorLonLat;
 import org.wicketstuff.openlayers.api.Marker;
 import org.wicketstuff.openlayers.api.Overlay;
-import org.wicketstuff.openlayers.api.layer.GMap;
 import org.wicketstuff.openlayers.api.layer.Layer;
 import org.wicketstuff.openlayers.api.layer.OSM;
-import org.wicketstuff.openlayers.api.layer.Vector;
+import org.wicketstuff.openlayers.api.layer.GMap;
 import org.wicketstuff.openlayers.api.layer.WFS;
 import org.wicketstuff.openlayers.api.layer.WMS;
+import org.wicketstuff.openlayers.api.layer.Vector;
 import org.wicketstuff.openlayers.event.EventType;
 import org.wicketstuff.openlayers.event.OverlayListenerBehavior;
 import org.wicketstuff.openlayers.event.PopupListener;
 import org.wicketstuff.openlayers.js.JSUtils;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
 
 /**
  * Wicket component to embed <a href="http://www.openlayers.org/">Openlayers Maps</a> into your
@@ -60,7 +61,7 @@ import org.wicketstuff.openlayers.js.JSUtils;
 public class OpenLayersMap extends Panel implements IOpenLayersMap
 {
 
-	private static final String OPEN_LAYERS_VERSION = "2.9.1";
+	private static final String OPEN_LAYERS_VERSION = "2.13.1";
 
 	private static Logger log = LoggerFactory.getLogger(OpenLayersMap.class);
 	private String businessLogicProjection = null;
@@ -197,7 +198,7 @@ public class OpenLayersMap extends Panel implements IOpenLayersMap
 
 	private PopupListener callbackListener = null;
 
-	private static final LonLat DEFAULT_CENTER = new LonLat(37.4419, -122.1419);
+	private static final LonLat DEFAULT_CENTER = new SphericalMercatorLonLat(37.4419, -122.1419);
 	private LonLat center = DEFAULT_CENTER;
 
 	private final List<IJavascriptComponent> controls = new ArrayList<IJavascriptComponent>();
@@ -222,10 +223,10 @@ public class OpenLayersMap extends Panel implements IOpenLayersMap
 	private boolean showMarkersInLayerSwitcher = true;
 
 	/**
-	 * 
+	 *
 	 * Constructs a map with a default layer : "OpenLayers WMS",
 	 * "http://labs.metacarta.com/wms/vmap0"
-	 * 
+	 *
 	 * @param id
 	 */
 	public OpenLayersMap(final String id, boolean developmentMode)
@@ -247,7 +248,7 @@ public class OpenLayersMap extends Panel implements IOpenLayersMap
 
 	/**
 	 * Construct.
-	 * 
+	 *
 	 * @param id
 	 */
 	public OpenLayersMap(final String id, boolean developmentMode, List<Layer> defaultLayers,
@@ -292,16 +293,16 @@ public class OpenLayersMap extends Panel implements IOpenLayersMap
 	}
 
 	/**
-	 * 
+	 *
 	 * Popups up the window as default!
-	 * 
+	 *
 	 * is protected to allow subclasses to override the HeaderContributor that is used. @see
 	 * OpenLayersMapHeaderContributor
-	 * 
+	 *
 	 * @param id
 	 * @param headerContrib
 	 * @param overlays
-	 * 
+	 *
 	 */
 	protected OpenLayersMap(final String id, final OpenLayersMapHeaderContributor headerContrib,
 		List<Overlay> overlays, List<Layer> defaultLayers, HashMap<String, String> options)
@@ -325,9 +326,9 @@ public class OpenLayersMap extends Panel implements IOpenLayersMap
 
 	/**
 	 * Construct.
-	 * 
+	 *
 	 * @param id
-	 * @param OpenLayerMapHeaderContributor
+	 * @param headerContrib
 	 * @param overlays
 	 */
 	private OpenLayersMap(final String id, final OpenLayersMapHeaderContributor headerContrib,
@@ -376,7 +377,7 @@ public class OpenLayersMap extends Panel implements IOpenLayersMap
 
 	/**
 	 * Add a control.
-	 * 
+	 *
 	 * @param control
 	 *            control to add
 	 * @return This
@@ -394,7 +395,7 @@ public class OpenLayersMap extends Panel implements IOpenLayersMap
 			{
 
 				/**
-				 * 
+				 *
 				 */
 				private static final long serialVersionUID = 1L;
 
@@ -435,7 +436,7 @@ public class OpenLayersMap extends Panel implements IOpenLayersMap
 
 	/**
 	 * Add an overlay.
-	 * 
+	 *
 	 * @param overlay
 	 *            overlay to add
 	 * @return This
@@ -447,7 +448,7 @@ public class OpenLayersMap extends Panel implements IOpenLayersMap
 		{
 			add(behavior);
 		}
-		
+
 		if (findPage() != null)
 		{
 			AjaxRequestTarget ajaxRequestTarget = getRequestCycle().find(AjaxRequestTarget.class);
@@ -462,7 +463,7 @@ public class OpenLayersMap extends Panel implements IOpenLayersMap
 
 	/**
 	 * Clear all overlays.
-	 * 
+	 *
 	 * @return This
 	 */
 	public OpenLayersMap clearOverlays()
@@ -475,7 +476,7 @@ public class OpenLayersMap extends Panel implements IOpenLayersMap
 			}
 		}
 		overlays.clear();
-		
+
 		if (findPage() != null)
 		{
 			AjaxRequestTarget ajaxRequestTarget = getRequestCycle().find(AjaxRequestTarget.class);
@@ -509,7 +510,7 @@ public class OpenLayersMap extends Panel implements IOpenLayersMap
 	/**
 	 * Generates the JavaScript used to instantiate this OpenlayersMap as an JavaScript class on the
 	 * client side.
-	 * 
+	 *
 	 * @return The generated JavaScript
 	 */
 	protected String getJSinit()
@@ -624,7 +625,7 @@ public class OpenLayersMap extends Panel implements IOpenLayersMap
 	/**
 	 * Convenience method for generating a JavaScript call on this Openlayermap with the given
 	 * invocation.
-	 * 
+	 *
 	 * @param invocation
 	 *            The JavaScript call to invoke on this Openlayermap.
 	 * @return The generated JavaScript.
@@ -737,7 +738,7 @@ public class OpenLayersMap extends Panel implements IOpenLayersMap
 
 	/**
 	 * Remove a control.
-	 * 
+	 *
 	 * @param control
 	 *            control to remove
 	 * @return This
@@ -759,7 +760,7 @@ public class OpenLayersMap extends Panel implements IOpenLayersMap
 
 	/**
 	 * Remove an overlay.
-	 * 
+	 *
 	 * @param overlay
 	 *            overlay to remove
 	 * @return This
@@ -788,7 +789,7 @@ public class OpenLayersMap extends Panel implements IOpenLayersMap
 
 	/**
 	 * Set the center.
-	 * 
+	 *
 	 * @param center
 	 *            center to set
 	 */
@@ -877,9 +878,9 @@ public class OpenLayersMap extends Panel implements IOpenLayersMap
 	}
 
 
-	/**
-	 * @see org.apache.wicket.MarkupContainer#onRender(org.apache.wicket.markup.MarkupStream)
-	 */
+    /**
+     * @see org.apache.wicket.Component#onRender()
+     */
 	@Override
 	protected void onRender()
 	{
@@ -910,9 +911,9 @@ public class OpenLayersMap extends Panel implements IOpenLayersMap
 	 * @param showMarkersInLayerSwitcher
 	 *            if true the internal markers layer will be visible in the
 	 *            OpenLayers.Control.LayerSwitcher
-	 * 
+	 *
 	 *            Default is true.
-	 * 
+	 *
 	 *            Set to false to hide the markers layer from the LayerSwitcher.
 	 */
 	public void setShowMarkersInLayerSwitcher(boolean showMarkersInLayerSwitcher)

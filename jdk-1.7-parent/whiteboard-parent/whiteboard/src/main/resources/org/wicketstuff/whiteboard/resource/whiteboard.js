@@ -1,4 +1,5 @@
 var COMPILED = !0, goog = goog || {};
+var wbCallbackUrl = '';
 goog.global = this;
 goog.exportPath_ = function (a, b, c) {
     a = a.split(".");
@@ -11962,17 +11963,17 @@ bay.whiteboard.Whiteboard.addTool("eraseAll", "tools", {action: function (a, b) 
     a.collections.main.clear();
     a.collections.tracer.clear();
     a.redrawAll();
-    Wicket.Ajax.get({u: callbackUrl, ep: {eraseAll: "eraseAll"}})
+    Wicket.Ajax.get({u: wbCallbackUrl, ep: {eraseAll: "eraseAll"}})
 }}, 4, goog.getMsg("Clear all"));
 bay.whiteboard.Whiteboard.addTool("eraseTrace", "tools", {action: function (a, b) {
     a.collections.tracer.clear();
     a.redrawAll()
 }}, 5, goog.getMsg("Clear traces"));
 bay.whiteboard.Whiteboard.addTool("undo", null, {action: function (a, b) {
-    Wicket.Ajax.get({u: callbackUrl, ep: {undo: "undo"}})
+    Wicket.Ajax.get({u: wbCallbackUrl, ep: {undo: "undo"}})
 }}, 7, goog.getMsg("Undo"));
 bay.whiteboard.Whiteboard.addTool("save", null, {action: function (a, b) {
-    Wicket.Ajax.get({u: callbackUrl, ep: {save: "save"}})
+    Wicket.Ajax.get({u: wbCallbackUrl, ep: {save: "save"}})
 }}, 7, goog.getMsg("Save"));
 bay.whiteboard.Whiteboard.addTool("info", null, {toggleOn: function (a) {
     goog.dom.classes.add(a.elements.drawElement, "bwb_infoCursor")
@@ -13146,7 +13147,7 @@ bay.whiteboard.Whiteboard.addTool("clipart", "pencil", {toggleOn: function (a) {
     }
 }}, 20, goog.getMsg("Insert picture"));
 bay.whiteboard.art.chooseClipArt = function (a, b, c) {
-    Wicket.Ajax.get({u: callbackUrl, ep: {clipArt: "clipArt"}});
+    Wicket.Ajax.get({u: wbCallbackUrl, ep: {clipArt: "clipArt"}});
     for (var f = [], g = 0; g < clipArtList.length; g++)f.push(goog.dom.createDom("img", {src: clipArtList[g]}));
     f.push(goog.dom.createTextNode(goog.getMsg("Cancel")));
     f = new goog.ui.Palette(f);
@@ -13173,7 +13174,7 @@ bay.whiteboard.Whiteboard.addTool("addDoc", "docs", {action: function (a, b) {
     })
 }}, 21, goog.getMsg("Add document to whiteboard"));
 bay.whiteboard.Whiteboard.addTool("left", "docs", {action: function (a, b) {
-    "" == currentDocComponentList && Wicket.Ajax.get({u: callbackUrl, ep: {docComponents: "docComponents", docBaseName: currentDoc}});
+    "" == currentDocComponentList && Wicket.Ajax.get({u: wbCallbackUrl, ep: {docComponents: "docComponents", docBaseName: currentDoc}});
     if ("" != currentDocComponentList)for (var c = 0; c < currentDocComponentList.length; c++) {
         var f = currentDocPage.substring(currentDocPage.lastIndexOf("/") + 1, currentDocPage.lastIndexOf(".")), g = currentDocComponentList[c].substring(currentDocComponentList[c].lastIndexOf("/") +
             1, currentDocComponentList[c].lastIndexOf("."));
@@ -13185,7 +13186,7 @@ bay.whiteboard.Whiteboard.addTool("left", "docs", {action: function (a, b) {
     }
 }}, 22, goog.getMsg("Go to previous page of the Doc"));
 bay.whiteboard.Whiteboard.addTool("right", "docs", {action: function (a, b) {
-    "" == currentDocComponentList && Wicket.Ajax.get({u: callbackUrl, ep: {docComponents: "docComponents", docBaseName: currentDoc}});
+    "" == currentDocComponentList && Wicket.Ajax.get({u: wbCallbackUrl, ep: {docComponents: "docComponents", docBaseName: currentDoc}});
     if ("" != currentDocComponentList)for (var c = 0; c < currentDocComponentList.length; c++) {
         var f = currentDocPage.substring(currentDocPage.lastIndexOf("/") + 1, currentDocPage.lastIndexOf(".")), g = currentDocComponentList[c].substring(currentDocComponentList[c].lastIndexOf("/") +
             1, currentDocComponentList[c].lastIndexOf("."));
@@ -13197,7 +13198,7 @@ bay.whiteboard.Whiteboard.addTool("right", "docs", {action: function (a, b) {
     }
 }}, 23, goog.getMsg("Go to next page of the Doc"));
 bay.whiteboard.art.chooseBackground = function (a, b, c) {
-    Wicket.Ajax.get({u: callbackUrl, ep: {docList: "docList"}});
+    Wicket.Ajax.get({u: wbCallbackUrl, ep: {docList: "docList"}});
     for (var f = [], g = 0; g < docList.length; g++)f.push(goog.dom.createDom("img", {src: docList[g]}));
     f.push(goog.dom.createTextNode(goog.getMsg("Cancel")));
     f = new goog.ui.Palette(f);

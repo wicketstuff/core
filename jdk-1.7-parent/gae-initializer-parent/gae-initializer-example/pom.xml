@@ -21,8 +21,8 @@
       Specify AppEngine version for your project. It should match SDK version pointed to
       by ${gae.home} property (Typically, one used by your Eclipse plug-in)
     -->
-    <gae.home>/home/martin/appengine/appengine-java-sdk-1.3.8</gae.home>
-    <gae.version>1.3.8</gae.version>
+    <gae.home>/home/martin/appengine/appengine-java-sdk-1.9.7</gae.home>
+    <gae.version>1.9.7</gae.version>
 
     <!-- Upload to http://test.latest.<applicationName>.appspot.com by default -->
     <gae.application.version>test</gae.application.version>
@@ -39,7 +39,7 @@
       <plugin>
         <groupId>net.kindleit</groupId>
         <artifactId>maven-gae-plugin</artifactId>
-        <version>0.7.2</version>
+        <version>0.9.6</version>
         <configuration>
           <sdkDir>${gae.home}</sdkDir>
         </configuration>

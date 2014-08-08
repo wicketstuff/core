@@ -30,7 +30,6 @@
 		<module>restannotations-json</module>
 		<module>restannotations-examples</module>
 	</modules>
-	<!--url>http://wicket.apache.org/${project.artifactId}</url -->
 	<inceptionYear>2013</inceptionYear>
 	<licenses>
 		<license>

@@ -48,8 +48,16 @@ public class EditableGridActionsColumn<T, S> extends PropertyColumn<T, S>
 			protected void onDelete(AjaxRequestTarget target) {				
 				EditableGridActionsColumn.this.onDelete(target, rowModel);		
 			}
+			@Override
+			protected boolean allowDelete(Item<T> rowItem) {
+				return EditableGridActionsColumn.this.allowDelete(rowItem);
+			}
 			
 		});		
+	}
+	
+	protected boolean allowDelete(Item<T> rowItem) {
+		return true;
 	}
 
 	protected void onDelete(AjaxRequestTarget target, IModel<T> rowModel)

@@ -29,7 +29,6 @@
 	</developers>
 
 	<modules>
-		<module>wicket-servlet3</module>
 		<module>wicket-servlet3-examples</module>
 		<module>wicket-servlet3-auth</module>                
 	</modules>

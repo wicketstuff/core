@@ -16,7 +16,7 @@
 	<description>Examples GMap3 component.</description>
 
 	<properties>
-		<jetty.version>9.0.2.v20130417</jetty.version>
+		<jetty.version>9.2.2.v20140723</jetty.version>
 	</properties>
 
 	<dependencies>

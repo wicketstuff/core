@@ -1,1 +1,0 @@
-function onEventFor${markupId}(message){var callback = ${callback};if ((!callback || callback(message)) && '${url}') WicketDojo.Cometd._callback(message, '${url}')}

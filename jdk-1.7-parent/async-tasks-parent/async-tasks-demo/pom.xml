@@ -14,10 +14,6 @@
     <name>Wicket asynchronous task demo</name>
     <description>An example of the asynchronous task micro-framework.</description>
 
-    <properties>
-        <version.jetty>8.1.11.v20130520</version.jetty>
-    </properties>
-
     <dependencies>
         <dependency>
             <groupId>${project.groupId}</groupId>
@@ -47,7 +43,6 @@
             <!-- war configuration -->
             <plugin>
                 <artifactId>maven-war-plugin</artifactId>
-                <version>2.1.1</version>
                 <configuration>
                     <packagingExcludes>WEB-INF/web.xml</packagingExcludes>
                 </configuration>
@@ -56,7 +51,6 @@
             <plugin>
                 <groupId>org.mortbay.jetty</groupId>
                 <artifactId>jetty-maven-plugin</artifactId>
-                <version>${version.jetty}</version>
                 <configuration>
                     <connectors>
                         <connector implementation="org.eclipse.jetty.server.nio.SelectChannelConnector">

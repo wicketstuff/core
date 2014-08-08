@@ -3,16 +3,19 @@ package org.wicketstuff.egrid;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.wicket.AttributeModifier;
 import org.apache.wicket.Component;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.extensions.markup.html.repeater.data.table.IColumn;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.form.IFormSubmitter;
 import org.apache.wicket.markup.html.panel.Panel;
+import org.apache.wicket.markup.repeater.Item;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
 import org.wicketstuff.egrid.column.EditableGridActionsColumn;
 import org.wicketstuff.egrid.component.EditableDataTable;
+import org.wicketstuff.egrid.component.EditableDataTable.RowItem;
 import org.wicketstuff.egrid.provider.IEditableDataProvider;
 import org.wicketstuff.egrid.toolbar.EditableGridBottomToolbar;
 import org.wicketstuff.egrid.toolbar.EditableGridHeadersToolbar;
@@ -27,6 +30,8 @@ public class EditableGrid<T, S> extends Panel
 {
 
 	private static final long serialVersionUID = 1L;
+	
+	private EditableDataTable<T, S> dataTable;
 
 	public EditableGrid(final String id, final List<? extends IColumn<T, S>> columns,
 		final IEditableDataProvider<T, S> dataProvider, final long rowsPerPage, Class<T> clazz)
@@ -44,10 +49,23 @@ public class EditableGrid<T, S> extends Panel
 	{
 		Form<T> form = new NonValidatingForm<T>("form");
 		form.setOutputMarkupId(true);
-		form.add(newDataTable(columns, dataProvider, rowsPerPage, clazz));
+		this.dataTable = newDataTable(columns, dataProvider, rowsPerPage, clazz);
+		form.add(this.dataTable);
 		return form;
 	}
+
+	public final EditableGrid<T, S> setTableBodyCss(final String cssStyle)
+	{
+		this.dataTable.setTableBodyCss(cssStyle);
+		return this;
+	}
 	
+	public final EditableGrid<T, S> setTableCss(final String cssStyle)
+	{
+		this.dataTable.add(AttributeModifier.replace("class", cssStyle));
+		return this;
+	}
+
 	private static class NonValidatingForm<T> extends Form<T>
 	{
 		private static final long serialVersionUID = 1L;
@@ -63,7 +81,7 @@ public class EditableGrid<T, S> extends Panel
 		
 	}
 
-	private Component newDataTable(final List<? extends IColumn<T, S>> columns,
+	private EditableDataTable<T, S> newDataTable(final List<? extends IColumn<T, S>> columns,
 		final IEditableDataProvider<T, S> dataProvider, long rowsPerPage, Class<T> clazz)
 	{
 		final EditableDataTable<T, S> dataTable = new EditableDataTable<T, S>("dataTable", columns,
@@ -77,7 +95,12 @@ public class EditableGrid<T, S> extends Panel
 			{
 				EditableGrid.this.onError(target);
 			}
+			@Override
+			protected Item<T> newRowItem(String id, int index, IModel<T> model) {
+				return super.newRowItem(id, index, model);
+			}
 		};
+
 		dataTable.setOutputMarkupId(true);
 
 		dataTable.addTopToolbar(new EditableGridNavigationToolbar(dataTable));
@@ -88,6 +111,10 @@ public class EditableGrid<T, S> extends Panel
 		}
 
 		return dataTable;
+	}
+
+	protected RowItem<T> newRowItem(String id, int index, IModel<T> model) {
+		return new RowItem<T>(id, index, model);
 	}
 
 	private EditableGridBottomToolbar<T, S> newAddBottomToolbar(
@@ -147,7 +174,16 @@ public class EditableGrid<T, S> extends Panel
 			{
 				EditableGrid.this.onCancel(target);
 			}
+
+			@Override
+			protected boolean allowDelete(Item<T> rowItem) {
+				return EditableGrid.this.allowDelete(rowItem);
+			}
 		};
+	}
+
+	protected boolean allowDelete(Item<T> rowItem) {
+		return true;
 	}
 
 	protected void onCancel(AjaxRequestTarget target)

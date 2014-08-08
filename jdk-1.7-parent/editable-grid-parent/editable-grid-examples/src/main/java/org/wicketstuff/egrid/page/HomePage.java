@@ -15,6 +15,7 @@ import org.wicketstuff.egrid.column.AbstractEditablePropertyColumn;
 import org.wicketstuff.egrid.column.EditableCellPanel;
 import org.wicketstuff.egrid.column.EditableRequiredDropDownCellPanel;
 import org.wicketstuff.egrid.column.RequiredEditableTextFieldColumn;
+import org.wicketstuff.egrid.component.EditableDataTable.RowItem;
 import org.wicketstuff.egrid.model.Person;
 import org.wicketstuff.egrid.provider.EditableListDataProvider;
 
@@ -57,7 +58,11 @@ public class HomePage extends WebPage
 			{
 				target.add(feedbackPanel);
 			}
-		});
+			@Override
+			protected RowItem<Person> newRowItem(String id, int index, IModel<Person> model) {
+				return super.newRowItem(id, index, model);
+			}
+		}.setTableBodyCss("tbodycss").setTableCss("tableCss"));
     }
 
 	private List<AbstractEditablePropertyColumn<Person, String>> getColumns()

@@ -2,6 +2,12 @@ package org.wicketstuff.scala.model
 
 import org.apache.wicket.model.IModel
 
+object Fodel {
+  def apply[T](getter: => T): Fodel[T] = new Fodel(getter, null)
+
+  def apply[T](getter: => T, setter: (T) => Unit): Fodel[T] = new Fodel(getter, setter)
+}
+
 /**
  * A functional version of a wicket IModel. Uses anonymous functions to find backing objects, instead of reflection.
  *

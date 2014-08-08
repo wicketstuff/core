@@ -16,85 +16,11 @@
    limitations under the License.
 -->
 <html xmlns:wicket="http://wicket.apache.org">
-<wicket:head>
-    <script type="text/javascript">
-        var callbackUrl = '';
-        var clipArtList = '';
-        var docList='';
-        var currentDoc='';
-        var currentDocComponentList='';
-        var currentDocPage='';
-    </script>
-</wicket:head>
 <wicket:panel>
     <div id="whiteboard" wicket:id="whiteboard" style="width:100%; height:100%;"></div>
     <script type="text/javascript">
-
-        function addElement(m) {
-            elementCollection.acceptJsonStr(m);
-        }
-
-        function parseWB(m) {
-            elementCollection.parseJson(m);
-        }
-
-        function deleteElement(m) {
-            elementCollection.acceptDeletion(m);
-        }
-
-        function undo(m) {
-            if (JSON.stringify(m.deleteList) != '\"\"') {
-                var deleteList = JSON.stringify(m.deleteList).substring(1, JSON.stringify(m.deleteList).length - 1).split(",");
-                for (var i = 0; i < deleteList.length; i++) {
-                    deleteElement(deleteList[i])
-                }
-            }
-
-            var changeList = m.changeList;
-            for (var i = 0; i < changeList.length; i++) {
-                addElement(JSON.stringify(changeList[i]));
-            }
-        }
-
-
         Wicket.Event.subscribe("/websocket/message", function (jqEvent, msg) {
-            var message = jQuery.parseJSON(msg)
-            if (message && message.type == "addElement") {
-                addElement(JSON.stringify(message.json));
-            } else if (message && message.type == "parseWB") {
-                parseWB(message.json);
-            } else if (message && message.type == "undoList") {
-                undo(message);
-            }
-            else if (message && message.type == "clipArtList") {
-                clipArtList = message.json;
-            }
-            else if (message && message.type == "documentList") {
-                docList = message.json;
-            }
-            else if (message && message.type == "documentComponentList") {
-                currentDocComponentList = message.json;
-            }
-            else if (message && message.type == "addBackground") {
-                if(currentDocPage!=message.json.url){
-                    whiteboard.acceptBackground(JSON.stringify(message.json));
-                    var b=message.json.url;
-                    if(b!=''){
-                        currentDoc = b.substring(b.lastIndexOf("/") + 1, b.lastIndexOf("."));
-                        currentDocPage = b;
-                        currentDocComponentList = "";
-                    }else{
-                        currentDoc = '';
-                        currentDocPage = '';
-                        currentDocComponentList = '';
-                    }
-                }
-            } else if(message && message.type == "eraseElements"){
-                whiteboard.collections.main.clear();
-                whiteboard.collections.tracer.clear();
-                whiteboard.redrawAll()
-            }
-
+        	wbMessage(msg);
         });
     </script>
 </wicket:panel>

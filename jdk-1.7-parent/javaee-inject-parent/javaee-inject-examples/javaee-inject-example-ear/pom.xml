@@ -14,7 +14,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-ear-plugin</artifactId>
-                <version>2.4.2</version>
+                <version>2.9.1</version>
                 <configuration>
                     <!-- Change this to 5 if you want to use with Java EE 5 container -->
                     <version>6</version>

@@ -45,7 +45,7 @@ class HomePage
    
   // link with a closure
   var clickCount = 0
-  link("clicker", {clickCount += 1; println(clickCount)})
+  link("clicker") {clickCount += 1; println(clickCount)}
    
   // using a fodel
   form.label("helloworld4", new Fodel({println ("f()label gtr"); name;}))

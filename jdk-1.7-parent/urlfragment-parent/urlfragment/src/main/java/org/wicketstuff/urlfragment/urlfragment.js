@@ -1,14 +1,14 @@
 function newUrlUtil(options) {
 
 	var defaults = {
-	      fragmentIdentifierSuffix: '!',
-		    keyValueDelimiter: '=',
-      },
-	    options = $.extend(defaults, options),
-	    hashIdentifier = '#' + options.fragmentIdentifierSuffix,
-	    queryPrefix = '?',
-		  parameterPattern = new RegExp('([^&' + options.keyValueDelimiter + ']+)' + options.keyValueDelimiter + '?([^&]*)(?:&+|$)', 'g'),
-	    wicketAjaxCall = undefined;
+			fragmentIdentifierSuffix: '!',
+			keyValueDelimiter: '='
+		},
+		options = $.extend(defaults, options),
+		hashIdentifier = '#' + options.fragmentIdentifierSuffix,
+		queryPrefix = '?',
+		parameterPattern = new RegExp('([^&' + options.keyValueDelimiter + ']+)' + options.keyValueDelimiter + '?([^&]*)(?:&+|$)', 'g'),
+		wicketAjaxCall = undefined;
 
 	function getQueryParameters() {
 		return getParameters(window.location.search, queryPrefix);
@@ -27,23 +27,24 @@ function newUrlUtil(options) {
 	}
 
 	return {
-    setFragment : function(name, value) {
-      this.editedFragment = true;
-      if(value) {
-        window.location.hash = hashIdentifier.concat(name).concat(options.keyValueDelimiter).concat(value);
-      } else {
-        window.location.hash = hashIdentifier.concat(name);
-      }
-    },
+		setFragment : function(name, value) {
+			this.editedFragment = true;
+			if(value) {
+				window.location.hash = hashIdentifier.concat(name).concat(options.keyValueDelimiter).concat(value);
+			} else {
+				window.location.hash = hashIdentifier.concat(name);
+			}
+		},
+
 		putFragmentParameter : function(name, value, keyValuePairDelimiter) {
 			var fragmentParameters = getFragmentParameters(),
 			hash = hashIdentifier;
 			
 			if(keyValuePairDelimiter) {
 			  if(fragmentParameters[name]) {
-			    fragmentParameters[name] = fragmentParameters[name].concat(keyValuePairDelimiter).concat(value);			
+				fragmentParameters[name] = fragmentParameters[name].concat(keyValuePairDelimiter).concat(value);
 			  } else {
-			    fragmentParameters[name] = value;
+				fragmentParameters[name] = value;
 			  }
 			} else {
 			  fragmentParameters[name] = value;
@@ -58,10 +59,11 @@ function newUrlUtil(options) {
 			this.editedFragment = true;
 			window.location.hash = hash;
 		},
+
 		removeFragmentParameter : function(name) {
 			var fragmentParameters = getFragmentParameters(),
-			    hash = hashIdentifier;
-			
+				hash = hashIdentifier;
+
 			for (parameter in fragmentParameters) {
 				var hashBegin = hash === hashIdentifier ? '' : '&';
 				if (parameter != name) {
@@ -69,25 +71,28 @@ function newUrlUtil(options) {
 							.concat(fragmentParameters[parameter]);
 				}
 			}
-			
+
 			this.editedFragment = true;
 			window.location.hash = hash === hashIdentifier ? '' : hash;
 		},
+
 		joinQueryAndFragment : function() {
 			var queryParameters = getFragmentParameters(),
-			    fragmentParameters = getQueryParameters();
-			
+				fragmentParameters = getQueryParameters();
+
 			for (parameter in fragmentParameters) {
 				queryParameters[parameter] = fragmentParameters[parameter];
 			}
 			return queryParameters;
 		},
+
 		sendUrlParameters : function() {
 			if (!this.sentParametersOnInitialPageLoad) {
 				wicketAjaxCall();
 				this.sentParametersOnInitialPageLoad = true;
 			}
 		},
+
 		back : function() {
 			if (UrlUtil.editedFragment) { // hashchange through set/add/removeFragmentParameter
 				UrlUtil.editedFragment = false;
@@ -95,9 +100,11 @@ function newUrlUtil(options) {
 				wicketAjaxCall();
 			}
 		},
+
 		setWicketAjaxCall : function(ajaxCallFunction) {
 			wicketAjaxCall = ajaxCallFunction;
 		},
+
 		sentParametersOnInitialPageLoad : false, // used to avoid executing the Wicket AJAX call infinitely
 		editedFragment : false
 	};

@@ -28,34 +28,120 @@ import com.vividsolutions.jts.geom.Point;
  */
 public class LonLat implements Value
 {
-	/**
-	 * Default serialVersionUID.
-	 */
+
 	private static final long serialVersionUID = 1L;
+
+    /**
+     * Default projection
+     */
+    protected static final String DEFAULT_PROJECTION = "EPSG:900913";
+
+    /**
+     *  Point data
+     */
 	private final Point point;
 
-	/**
-	 * Construct.
-	 * 
-	 * @param lat
-	 * @param lng
-	 */
+    /**
+     * Native projection for the point
+     */
+    private final String projection;
+
+    /**
+     * Target projection for the point
+     */
+    private final String targetProjection;
+
+    /**
+     * Creates a new instance.
+     *
+     * @param lng Longitude value
+     * @param lat Latitude value
+     */
 	public LonLat(double lng, double lat)
 	{
 
-		point = OpenLayersMapUtils.createPoint(lng, lat);
+		this(OpenLayersMapUtils.createPoint(lng, lat));
 	}
 
+    /**
+     * Creates a new instance.
+     *
+     * @param lng Longitude value
+     * @param lat Latitude value
+     * @param projection Projection for this coordinate
+     */
+    public LonLat(double lng, double lat, String projection)
+    {
+
+        this(OpenLayersMapUtils.createPoint(lng, lat), projection, DEFAULT_PROJECTION);
+    }
+
+    /**
+     * Creates a new instance.
+     *
+     * @param lng Longitude value
+     * @param lat Latitude value
+     * @param projection Projection for this coordinate
+     * @param targetProjection Target projection when placing coordinate on map
+     */
+    public LonLat(double lng, double lat, String projection, String targetProjection)
+    {
+
+        this(OpenLayersMapUtils.createPoint(lng, lat), projection, targetProjection);
+    }
+
+    /**
+     * Creates a new instance.
+     *
+     * @param point Point coordinate
+     */
 	public LonLat(Point point)
 	{
-		this.point = point;
+
+        this(point, DEFAULT_PROJECTION, DEFAULT_PROJECTION);
 	}
 
+    /**
+     * Creates a new instance.
+     *
+     * @param point Point coordinate
+     * @param projection Projection for this coordinate
+     */
+    public LonLat(Point point, String projection)
+    {
+
+        this(point, projection, DEFAULT_PROJECTION);
+    }
+
+    /**
+     * Creates a new instance.
+     *
+     * @param point Point coordinate
+     * @param projection Projection for this coordinate
+     * @param targetProjection Target projection when placing coordinate on map
+     */
+    public LonLat(Point point, String projection, String targetProjection)
+    {
+        this.point = point;
+        this.projection = projection;
+        this.targetProjection = targetProjection;
+    }
+
+    /**
+     * Returns the latitude for this coordinate.
+     *
+     * @return Latitude value
+     */
 	public double getLat()
 	{
 		return point.getY();
 	}
 
+    /**
+     * Returns the longitude for this coordinate.
+     *
+     * @return Longitude value
+     */
 	public double getLng()
 	{
 		return point.getX();
@@ -67,11 +153,17 @@ public class LonLat implements Value
 		return getJSconstructor();
 	}
 
-	/**
-	 */
 	public String getJSconstructor()
 	{
-		return new Constructor("OpenLayers.LonLat").add(getLng()).add(getLat()).toJS();
+
+        String jsLatLong = new Constructor("OpenLayers.LonLat").add(getLng()).add(getLat()).toJS();
+
+        if(!projection.equals(targetProjection)) {
+            jsLatLong += ".transform(new OpenLayers.Projection(\"" + projection + "\"),"
+                    + "new OpenLayers.Projection(\"" + targetProjection + "\"))";
+        }
+
+        return jsLatLong;
 	}
 
 	@Override

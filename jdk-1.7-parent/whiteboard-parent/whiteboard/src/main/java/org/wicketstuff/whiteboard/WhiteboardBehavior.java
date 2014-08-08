@@ -317,23 +317,23 @@ public class WhiteboardBehavior extends AbstractDefaultAjaxBehavior {
 					}
 
 					if (Type.PencilCurve == element.getType()) {
-						List<Element> lastElementSnapshot = undoSnapshots.getLast();
-						Element lastSnapshotElement = lastElementSnapshot.get(lastElementSnapshot.size() - 1);
-
-						if ((lastSnapshotElement instanceof PencilCurve)
-								&& (lastSnapshotElement.getId() == element.getId())) {
-							List<Boolean> lastCreationSnapshot = undoSnapshotCreationList.getLast();
-
-							for (int i = 0; i < snapShot.size(); i++) {
-								lastElementSnapshot.add(snapShot.get(i));
-								lastCreationSnapshot.add(snapShotCreation.get(i));
+						List<Element> lastElementSnapshot = undoSnapshots.peekLast();
+						if (lastElementSnapshot != null) {
+							Element lastSnapshotElement = lastElementSnapshot.get(lastElementSnapshot.size() - 1);
+	
+							if ((lastSnapshotElement instanceof PencilCurve) && (lastSnapshotElement.getId() == element.getId())) {
+								List<Boolean> lastCreationSnapshot = undoSnapshotCreationList.getLast();
+	
+								for (int i = 0; i < snapShot.size(); i++) {
+									lastElementSnapshot.add(snapShot.get(i));
+									lastCreationSnapshot.add(snapShotCreation.get(i));
+								}
+							} else {
+								undoSnapshots.addLast(snapShot);
+								undoSnapshotCreationList.addLast(snapShotCreation);
+								isElementSnapshotList.addLast(true);
 							}
-						} else {
-							undoSnapshots.addLast(snapShot);
-							undoSnapshotCreationList.addLast(snapShotCreation);
-							isElementSnapshotList.addLast(true);
 						}
-
 					} else if (Type.ClipArt == element.getType()) {
 						List<Element> snapShotTemp = undoSnapshots.pollLast();
 						List<Boolean> snapShotCreationTemp = undoSnapshotCreationList.pollLast();

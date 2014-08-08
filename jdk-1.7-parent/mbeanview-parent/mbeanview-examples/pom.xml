@@ -28,7 +28,7 @@
 			<groupId>org.apache.wicket</groupId>
 			<artifactId>wicket-jmx</artifactId>
 		</dependency>
-						<!-- logging -->
+		<!-- logging -->
 		<dependency>
 			<groupId>log4j</groupId>
 			<artifactId>log4j</artifactId>

@@ -332,6 +332,11 @@ public class EditableDataTable<T, S> extends Panel implements IPageableItems, IC
 	{
 		return new Item<IColumn<T, S>>(id, index, model);
 	}
+	
+	protected Item<T> newRowItem(String id, int index, IModel<T> model)
+	{
+		return new RowItem<T>(id, index, model);
+	}
 
 	/**
 	 * @see org.apache.wicket.Component#onDetach()
@@ -501,20 +506,7 @@ public class EditableDataTable<T, S> extends Panel implements IPageableItems, IC
 		{
 			rowItem.removeAll();
 			populateItem(rowItem);
-		}
-
-		public class RowItem<RI> extends Item<RI>
-		{
-
-			private static final long serialVersionUID = 1L;
-
-			public RowItem(final String id, int index, final IModel<RI> model)
-			{
-				super(id, index, model);
-				this.setOutputMarkupId(true);
-				this.setMetaData(EditableGridActionsPanel.EDITING, Boolean.FALSE);
-			}
-		}
+		}		
 	}
 
 	@Override
@@ -538,6 +530,19 @@ public class EditableDataTable<T, S> extends Panel implements IPageableItems, IC
 				getDataProvider().remove(gridOperationData.getData());
 				event.stop();
 			}
+		}
+	}
+
+	public static class RowItem<RI> extends Item<RI>
+	{
+
+		private static final long serialVersionUID = 1L;
+
+		public RowItem(final String id, int index, final IModel<RI> model)
+		{
+			super(id, index, model);
+			this.setOutputMarkupId(true);
+			this.setMetaData(EditableGridActionsPanel.EDITING, Boolean.FALSE);
 		}
 	}
 

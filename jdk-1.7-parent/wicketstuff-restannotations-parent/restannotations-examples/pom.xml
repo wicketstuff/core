@@ -25,7 +25,6 @@
 	<packaging>war</packaging>
 
 	<name>wicketstuff-restannotations-examples</name>
-	<description></description>
 
 	<licenses>
 		<license>
@@ -37,7 +36,7 @@
 
 	<developers>
 		<developer>
-			<id>...</id>
+			<id>adelbene</id>
 			<name>Andrea Del Bene</name>
 			<email>an.delbene@gmail.com</email>
 		</developer>
@@ -57,7 +56,6 @@
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
-			<scope>test</scope>
 		</dependency>
 
 		<!-- DEPENDENCIES REQUIRED TO RUN EXAMPLES WITH JETTY -->

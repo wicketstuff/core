@@ -38,7 +38,6 @@
 		<module>javaee-inject-parent</module>
 		<module>jquery-parent</module>
 		<module>jslibraries</module>
-		<!--<module>jsr303-parent</module> Deprecated in favour of wicket-beanvalidation module -->
 		<module>jwicket-parent</module>
 		<module>mbeanview-parent</module>
 		<module>minis-parent</module>
@@ -89,19 +88,6 @@ Commented because its build fails
 <module>console-parent</module>
 -->
  
-    <!-- TODO: port these module to wicket 6 -->
-
-        <!-- <module>calendarviews-parent</module> -->
-        <!-- <module>client-and-server-validation</module> -->
-		<!-- <module>eidogo-parent</module> -->
-
-		<!-- <module>theme-parent</module> -->
-		<!-- <module>mootools-meiomask-parent</module> -->
-		
-		<!-- <module>yav-parent</module> -->
-		<!-- <module>maven-support</module> -->
-
-		<module>wicketstuff-wicket7</module>
 		<module>wicketstuff-glassfish4-integration</module>
 	</modules>
 

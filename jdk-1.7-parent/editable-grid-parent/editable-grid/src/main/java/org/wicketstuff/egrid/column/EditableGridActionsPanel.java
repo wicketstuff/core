@@ -105,6 +105,11 @@ public abstract class EditableGridActionsPanel<T> extends Panel
 				target.add(rowItem.findParent(EditableDataTable.class));
 				onDelete(target);
 			}
+
+			@Override
+			public boolean isVisible() {
+				return EditableGridActionsPanel.this.allowDelete(rowItem);
+			}
 		};
 	}
 
@@ -158,5 +163,9 @@ public abstract class EditableGridActionsPanel<T> extends Panel
 	private boolean isThisRowBeingEdited(Item<T> rowItem)
 	{
 		return rowItem.getMetaData(EDITING);
+	}
+	
+	protected boolean allowDelete(final Item<T> rowItem) {
+		return true;
 	}
 }
