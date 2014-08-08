@@ -61,6 +61,4 @@
 			<version>1.3.0</version>
 		</dependency>
 	</dependencies>
-
-	<!-- <repositories> <repository> </repository> </repositories> -->
 </project>
