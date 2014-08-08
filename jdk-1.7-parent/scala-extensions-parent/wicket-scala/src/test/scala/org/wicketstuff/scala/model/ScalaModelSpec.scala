@@ -1,5 +1,6 @@
 package org.wicketstuff.scala.model
 
+import org.apache.wicket.model.{CompoundPropertyModel, IModel, PropertyModel}
 import org.apache.wicket.util.time.Duration
 import org.junit.runner.RunWith
 import org.scalatest.junit.JUnitRunner
@@ -38,4 +39,43 @@ class ScalaModelSpec
       case wrong: Any => fail(s"Wrong result: $wrong")
     }
   }
+
+  test("Model - null") {
+    val value: String = null
+    val model = basicM(value)
+    model mustNot be (null)
+    model.getObject mustBe value
+  }
+
+  test("Model - String") {
+    val value: String = "value"
+    val model = basicM(value)
+    model mustNot be (null)
+    model.getObject mustBe value
+  }
+
+  test("PropertyModel") {
+    val john = Person("John", 42)
+    val model: PropertyModel[Array[Char]] = propertyM[Array[Char]](john, "name")
+    model mustNot be (null)
+    model.getObject must equal(john.name)
+  }
+
+  test("CompoundPropertyModel - object") {
+    val john = Person("John", 42)
+    val model: CompoundPropertyModel[Person] = compoundM(john)
+    model.getObject must equal(john)
+    val nameModel: IModel[String] = model.bind[String]("name")
+    nameModel.getObject must equal(john.name)
+  }
+
+  test("CompoundPropertyModel - model") {
+    val john = Person("John", 42)
+    val model: CompoundPropertyModel[Person] = compoundM(basicM(john))
+    model.getObject must equal(john)
+    val nameModel: IModel[String] = model.bind[String]("name")
+    nameModel.getObject must equal(john.name)
+  }
+
+  case class Person(name: String, age: Int)
 }

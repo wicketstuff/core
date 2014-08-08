@@ -1,6 +1,7 @@
 package org.wicketstuff.scala.model
 
-import org.apache.wicket.model.{AbstractReadOnlyModel, LoadableDetachableModel}
+import java.io.{Serializable => JSerializable}
+import org.apache.wicket.model.{Model, IModel, AbstractReadOnlyModel, CompoundPropertyModel, LoadableDetachableModel, PropertyModel}
 
 import scala.concurrent.duration._
 
@@ -26,5 +27,21 @@ trait ScalaModel {
       override def getObject = f
     }
     arom
+  }
+
+  def propertyM[T <: JSerializable](obj: JSerializable, expression: String): PropertyModel[T] = {
+    new PropertyModel[T](obj, expression)
+  }
+
+  def compoundM[T <: JSerializable](obj: T): CompoundPropertyModel[T] = {
+    new CompoundPropertyModel[T](obj)
+  }
+
+  def compoundM[T <: JSerializable](model: IModel[T]): CompoundPropertyModel[T] = {
+    new CompoundPropertyModel[T](model)
+  }
+
+  def basicM[T <: JSerializable](obj: T): Model[T] = {
+    Model.of(obj)
   }
 }
