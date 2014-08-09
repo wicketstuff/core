@@ -46,24 +46,21 @@ import com.googlecode.wicket.jquery.ui.interaction.draggable.Draggable;
  *
  * final Selectable&lt;String&gt; selectable = new Selectable&lt;String&gt;("selectable", list) {
  *
- * 	protected void onSelect(AjaxRequestTarget target, List&lt;String&gt; items)
+ * 	protected void onSelect(AjaxRequestTarget target)
  * 	{
- * 		//items: gets the selected item
+ * 		//this.getModelObject(): gets the selected items
  * 	}
  * };
  *
  * this.add(selectable);
- *
- * // ... //
- *
- * //selectable.getModelObject(): gets the selected items
  * </pre>
  *
  * @param <T> the type of the model object
  * @author Sebastien Briquet - sebfz1
  *
  */
-public class Selectable<T extends Serializable> extends JQueryContainer implements ISelectableListener<T>
+// XXX: removed implements ISelectableListener<T> (because of model object)
+public class Selectable<T extends Serializable> extends JQueryContainer
 {
 	private static final long serialVersionUID = 1L;
 
@@ -189,10 +186,9 @@ public class Selectable<T extends Serializable> extends JQueryContainer implemen
 	 * Triggered when a selection has been made (stops)
 	 *
 	 * @param target the {@link AjaxRequestTarget}
-	 * @param items the {@link List} of selected items
 	 */
-	@Override
-	public void onSelect(AjaxRequestTarget target, List<T> items)
+	// XXX: removed List<T> items (it's the model object) - API break
+	public void onSelect(AjaxRequestTarget target)
 	{
 		// noop
 	}
@@ -280,7 +276,7 @@ public class Selectable<T extends Serializable> extends JQueryContainer implemen
 			public void onSelect(AjaxRequestTarget target, List<T> items)
 			{
 				Selectable.this.setModelObject(items);
-				Selectable.this.onSelect(target, items);
+				Selectable.this.onSelect(target);
 			}
 		};
 	}

@@ -33,7 +33,6 @@ public class RangeDatePickerTextFieldPage extends AbstractRangeDatePickerPage
 		final IModel<DateRange> model = Model.of(new DateRange(new Date(new Date().getTime() - Duration.ONE_DAY.getMilliseconds() * 3), new Date()));
 
 		final RangeDatePickerTextField datepicker = new RangeDatePickerTextField("datepicker", model);
-//		datepicker.setRequired(true);
 		form.add(datepicker);
 
 		// Button //
@@ -49,7 +48,7 @@ public class RangeDatePickerTextFieldPage extends AbstractRangeDatePickerPage
 				if (range != null)
 				{
 					DateFormat df = new SimpleDateFormat("dd MMM yyyy");
-					df.setTimeZone(DateRange.UTC); //important
+					df.setTimeZone(DateRange.UTC); // important
 
 					this.info(String.format("%s - %s", df.format(range.getStart()), df.format(range.getEnd())));
 				}

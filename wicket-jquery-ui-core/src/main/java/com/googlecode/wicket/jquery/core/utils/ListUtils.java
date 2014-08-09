@@ -113,11 +113,12 @@ public class ListUtils
 	public static <T> List<T> contains(String search, List<T> list, int max)
 	{
 		List<T> choices = new ArrayList<T>();
+		String searchLowerCase = search.toLowerCase();
 
 		int count = 0;
 		for (T choice : list)
 		{
-			if (choice.toString().toLowerCase().contains(search.toLowerCase()))
+			if (choice.toString().toLowerCase().contains(searchLowerCase))
 			{
 				choices.add(choice);
 
@@ -157,11 +158,12 @@ public class ListUtils
 	public static <T> List<T> startsWith(String search, List<T> list, int max)
 	{
 		List<T> choices = new ArrayList<T>();
+		String searchLowerCase = search.toLowerCase();
 
 		int count = 0;
 		for (T choice : list)
 		{
-			if (choice.toString().toLowerCase().startsWith(search.toLowerCase()))
+			if (choice.toString().toLowerCase().startsWith(searchLowerCase))
 			{
 				choices.add(choice);
 

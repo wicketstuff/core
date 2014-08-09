@@ -51,7 +51,7 @@ public class RangeDatePickerTextField extends FormComponentPanel<DateRange> impl
 
 	/**
 	 * Constructor
-	 * 
+	 *
 	 * @param id the markup id
 	 */
 	public RangeDatePickerTextField(String id)
@@ -61,7 +61,7 @@ public class RangeDatePickerTextField extends FormComponentPanel<DateRange> impl
 
 	/**
 	 * Constructor
-	 * 
+	 *
 	 * @param id the markup id
 	 * @param options {@link Options}
 	 */
@@ -74,7 +74,7 @@ public class RangeDatePickerTextField extends FormComponentPanel<DateRange> impl
 
 	/**
 	 * Constructor
-	 * 
+	 *
 	 * @param id the markup id
 	 * @param model the {@link IModel}
 	 */
@@ -85,7 +85,7 @@ public class RangeDatePickerTextField extends FormComponentPanel<DateRange> impl
 
 	/**
 	 * Constructor
-	 * 
+	 *
 	 * @param id the markup id
 	 * @param model the {@link IModel}
 	 * @param options {@link Options}
@@ -107,7 +107,7 @@ public class RangeDatePickerTextField extends FormComponentPanel<DateRange> impl
 	// Properties //
 	/**
 	 * Gets the separator to be displayed in the {@link TextField}, between the two dates.
-	 * 
+	 *
 	 * @return the text separator. Default to {@link #SEPARATOR}
 	 */
 	protected String getSeparator()
@@ -117,7 +117,7 @@ public class RangeDatePickerTextField extends FormComponentPanel<DateRange> impl
 
 	/**
 	 * Gets the text to be displayed in the {@link TextField}, in place of a date which is null.
-	 * 
+	 *
 	 * @return the null representation. Default to {@link #NULL}
 	 */
 	protected String getNullString()
@@ -144,7 +144,7 @@ public class RangeDatePickerTextField extends FormComponentPanel<DateRange> impl
 			private static final long serialVersionUID = 1L;
 
 			@Override
-			public void onValueChanged(AjaxRequestTarget target, DateRange range)
+			public void onValueChanged(AjaxRequestTarget target)
 			{
 				RangeDatePickerTextField.this.input.modelChanged();
 				target.add(RangeDatePickerTextField.this.input);
@@ -165,7 +165,7 @@ public class RangeDatePickerTextField extends FormComponentPanel<DateRange> impl
 	// Factories //
 	/**
 	 * Gets a new {@link DateFormat} to be used by the {@link TextField}'s {@link IConverter}
-	 * 
+	 *
 	 * @param locale the {@link Locale}
 	 * @return the {@link DateFormat}
 	 */
@@ -179,7 +179,7 @@ public class RangeDatePickerTextField extends FormComponentPanel<DateRange> impl
 
 	/**
 	 * Gets a new {@link TextField}.
-	 * 
+	 *
 	 * @param iModel
 	 * @return the {@link TextField}
 	 */
@@ -212,12 +212,12 @@ public class RangeDatePickerTextField extends FormComponentPanel<DateRange> impl
 			@Override
 			public DateRange convertToObject(String value, Locale locale)
 			{
-				DateFormat dateFormat = RangeDatePickerTextField.this.newDateFormat(locale);
+				DateFormat df = RangeDatePickerTextField.this.newDateFormat(locale);
 				String[] dates = value.split(RangeDatePickerTextField.this.getSeparator());
 
 				try
 				{
-					return new DateRange(dateFormat.parse(dates[0]), dateFormat.parse(dates[1]));
+					return new DateRange(df.parse(dates[0]), df.parse(dates[1]));
 				}
 				catch (ParseException e)
 				{
@@ -232,18 +232,18 @@ public class RangeDatePickerTextField extends FormComponentPanel<DateRange> impl
 			@Override
 			public String convertToString(DateRange value, Locale locale)
 			{
-				DateFormat dateFormat = RangeDatePickerTextField.this.newDateFormat(locale);
+				DateFormat df = RangeDatePickerTextField.this.newDateFormat(locale);
 				Date start = value.getStart();
 				Date end = value.getEnd();
 
-				return String.format("%s%s%s", start != null ? dateFormat.format(start) : getNullString(), RangeDatePickerTextField.this.getSeparator(), end != null ? dateFormat.format(end) : getNullString());
+				return String.format("%s%s%s", start != null ? df.format(start) : getNullString(), RangeDatePickerTextField.this.getSeparator(), end != null ? df.format(end) : getNullString());
 			}
 		};
 	}
 
 	/**
 	 * Gets a new {@link JQueryAbstractBehavior} to show the {@link RangeDatePicker} on {@link TextField}'s click event.
-	 * 
+	 *
 	 * @return the {@link JQueryAbstractBehavior}
 	 */
 	private JQueryAbstractBehavior newToggleBehavior()

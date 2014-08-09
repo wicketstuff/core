@@ -33,9 +33,8 @@ import com.googlecode.wicket.jquery.core.renderer.ITextRenderer;
 /**
  * Provides the {@link AbstractDefaultAjaxBehavior} for the {@link AutoCompleteTextField}
  *
+ * @param <T> the model object type
  * @author Sebastien Briquet - sebfz1
- *
- * @param <T> the type of the model object
  */
 abstract class AutoCompleteSourceBehavior<T> extends AbstractDefaultAjaxBehavior
 {

@@ -22,6 +22,7 @@ import org.apache.wicket.model.IModel;
 import com.googlecode.wicket.jquery.core.JQueryBehavior;
 import com.googlecode.wicket.jquery.core.JQueryContainer;
 import com.googlecode.wicket.jquery.core.Options;
+import com.googlecode.wicket.jquery.core.event.IValueChangedListener;
 
 /**
  * Provides a jQuery integration of foxrunsoftware's (range) DatePicker<br/>
@@ -29,7 +30,8 @@ import com.googlecode.wicket.jquery.core.Options;
  *
  * @author Sebastien Briquet - sebfz1
  */
-public class RangeDatePicker extends JQueryContainer implements IRangeDatePickerListener
+// XXX: replaced implements IRangeDatePickerListener by IValueChangedListener - API break
+public class RangeDatePicker extends JQueryContainer implements IValueChangedListener
 {
 	private static final long serialVersionUID = 1L;
 
@@ -105,7 +107,7 @@ public class RangeDatePicker extends JQueryContainer implements IRangeDatePicker
 	}
 
 	@Override
-	public void onValueChanged(AjaxRequestTarget target, DateRange range)
+	public void onValueChanged(AjaxRequestTarget target)
 	{
 		// noop
 	}
@@ -123,7 +125,7 @@ public class RangeDatePicker extends JQueryContainer implements IRangeDatePicker
 			public void onValueChanged(AjaxRequestTarget target, DateRange range)
 			{
 				RangeDatePicker.this.setModelObject(range);
-				RangeDatePicker.this.onValueChanged(target, range);
+				RangeDatePicker.this.onValueChanged(target);
 			}
 		};
 	}

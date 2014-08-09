@@ -1,7 +1,5 @@
 package com.googlecode.wicket.jquery.ui.samples.pages.selectable;
 
-import java.util.List;
-
 import org.apache.wicket.Component;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.markup.html.basic.Label;
@@ -43,9 +41,9 @@ public class TableDraggableSelectablePage extends AbstractSelectablePage
 			}
 
 			@Override
-			public void onSelect(AjaxRequestTarget target, List<Genre> items)
+			public void onSelect(AjaxRequestTarget target)
 			{
-				this.info("items: " + items.toString());
+				this.info("items: " + this.getDefaultModelObjectAsString());
 				target.add(feedback);
 			}
 		};

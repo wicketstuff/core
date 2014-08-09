@@ -1,7 +1,24 @@
 RangeDatePickerTextField is a <code>FormComponent</code> based on a <code>TextField</code> and a <code>RangeDatePicker</code>;<br/>
 The model object of this component is a <code>DateRange</code>.<br/>
 <br/>
-The <code>TextField</code>'s date format and separator can be customized by overriding <code>#newDateFormat()</code> and <code>#getSeparator()</code>.<br/>
+The <code>TextField</code>'s date format and separator can be customized by overriding <code>#newDateFormat()</code> and <code>#getSeparator()</code>.
+
+<br/>
+<h4>Note</h4>
+To keep time information (from 0:00:00 to 23:59:59) on form submit, <code>#newDateFormat()</code> should be overridden as follow:<br/>
+<pre>
+new RangeDatePickerTextField("datepicker", model) {
+
+	@Override
+	protected DateFormat newDateFormat(Locale locale)
+	{
+		DateFormat df = new SimpleDateFormat("dd MMM yyyy HH:mm:ss");
+		df.setTimeZone(DateRange.UTC);
+
+		return df;
+	}
+};
+</pre>
 
 <h4>Since</h4>
 wicket-jquery-ui-plugin-1.3.0<br/>
