@@ -1,7 +1,7 @@
 package org.wicketstuff.scala.traits
 
 import org.apache.wicket.Component
-import org.apache.wicket.ajax.form.{AjaxFormSubmitBehavior, OnChangeAjaxBehavior}
+import org.apache.wicket.ajax.form.{AjaxFormValidatingBehavior, AjaxFormSubmitBehavior, OnChangeAjaxBehavior}
 import org.apache.wicket.ajax.{AjaxEventBehavior, AjaxRequestTarget}
 import org.wicketstuff.scala.model.ScalaModel
 
@@ -52,7 +52,12 @@ trait ScalaComponentT
   def on(eventName: String)(onAction: (AjaxRequestTarget) => Unit)(implicit error: OnError = ajaxNoOp): self.type = {
     eventName.toLowerCase match {
       case "submit" =>
-        self.add(new AjaxFormSubmitBehavior(eventName) {
+        self.add(new AjaxFormSubmitBehavior("submit") {
+          override def onSubmit(target: AjaxRequestTarget) = onAction(target)
+          override def onError(target: AjaxRequestTarget) = error(target)
+        })
+      case "validate" =>
+        self.add(new AjaxFormValidatingBehavior("submit") {
           override def onSubmit(target: AjaxRequestTarget) = onAction(target)
           override def onError(target: AjaxRequestTarget) = error(target)
         })
