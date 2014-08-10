@@ -23,6 +23,17 @@ trait ScalaComponentT
 
   protected def ajaxNoOp(target: AjaxRequestTarget) = (_: AjaxRequestTarget) => ()
 
+  /**
+   * An alias for Component#replaceWith()
+   *
+   * @param replacement The replacement
+   * @return The replacement
+   */
+  def >>>(replacement: Component): replacement.type = {
+    self.replaceWith(replacement)
+    replacement
+  }
+
   def updateable(): self.type = {
     self.setOutputMarkupId(true)
     self
