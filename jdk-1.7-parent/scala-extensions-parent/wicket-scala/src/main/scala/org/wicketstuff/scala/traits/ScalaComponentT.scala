@@ -68,4 +68,6 @@ trait ScalaComponentT
     }
     self
   }
+
+  def css(): self.type = ???
 }
