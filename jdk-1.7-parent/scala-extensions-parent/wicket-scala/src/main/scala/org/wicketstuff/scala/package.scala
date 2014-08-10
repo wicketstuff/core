@@ -93,5 +93,5 @@ package object scala {
   implicit def jsRefToHeaderItem(reference: JavaScriptResourceReference): JavaScriptReferenceHeaderItem =
     JavaScriptHeaderItem.forReference(reference)
 
-
+  implicit def intToSerializable(i: Int): java.io.Serializable = Integer.valueOf(i)
 }

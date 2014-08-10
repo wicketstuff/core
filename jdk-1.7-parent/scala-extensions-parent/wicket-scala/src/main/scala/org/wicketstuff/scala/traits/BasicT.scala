@@ -3,7 +3,7 @@ package org.wicketstuff.scala.traits
 import org.apache.wicket.MarkupContainer
 import org.apache.wicket.feedback.IFeedbackMessageFilter
 import org.apache.wicket.markup.html.panel.FeedbackPanel
-import org.apache.wicket.model.IModel
+import org.apache.wicket.model.{IModel, Model}
 import org.wicketstuff.scala.markup.html.ScalaWebMarkupContainer
 import org.wicketstuff.scala.markup.html.basic.ScalaLabel
 
@@ -24,10 +24,18 @@ trait BasicT
     label
   }
 
-  def div[T](id: String, model: IModel[T] = null): ScalaWebMarkupContainer[T] = {
-    val div = new ScalaWebMarkupContainer[T](id, model)
-    self.add(div)
-    div
+  type Init[T] = (ScalaWebMarkupContainer[T]) => Unit
+  private[this] def emptyInit[T]: Init[T] = (_: ScalaWebMarkupContainer[T]) => ()
+
+  def div[T <: Serializable](id: String, model: IModel[T] = new Model[T]())(implicit init: Init[T] = emptyInit): ScalaWebMarkupContainer[T] = {
+    val container = new ScalaWebMarkupContainer[T](id, model)
+    self.add(container)
+    init(container)
+    container
+  }
+
+  def span[T <: Serializable](id: String, model: IModel[T] = new Model[T]())(implicit init: Init[T] = emptyInit): ScalaWebMarkupContainer[T] = {
+    div[T](id, model)(init)
   }
 
   def feedback(id: String, filter: IFeedbackMessageFilter = null): FeedbackPanel = {
