@@ -19,9 +19,9 @@ package com.googlecode.wicket.jquery.ui.interaction.selectable;
 import java.io.Serializable;
 import java.util.List;
 
-import org.apache.wicket.AttributeModifier;
 import org.apache.wicket.Component;
 import org.apache.wicket.ajax.AjaxRequestTarget;
+import org.apache.wicket.markup.ComponentTag;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.util.ListModel;
 
@@ -330,10 +330,18 @@ public class Selectable<T extends Serializable> extends JQueryContainer
 
 					behavior.setOption("helper", helper);
 				}
-			};
 
-			draggable.add(AttributeModifier.append("class", "ui-icon " + JQueryIcon.ARROW_4_DIAG));
-			draggable.add(AttributeModifier.append("style", "display: inline-block; background-position: -16px -80px !important;")); // The background position is the same as ui-icon-arrow-4-diag. It is marked as important for the icon to not disappear while selecting over it.
+				@Override
+				protected void onComponentTag(ComponentTag tag)
+				{
+					super.onComponentTag(tag);
+
+					tag.append("class", "ui-icon " + JQueryIcon.ARROW_4_DIAG, " ");
+					tag.append("style", "display: inline-block; background-position: -16px -80px !important;", ";");
+					// The background position is the same as ui-icon-arrow-4-diag.
+					// It is marked as important for the icon to not disappear while selecting over it.
+				}
+			};
 
 			return draggable;
 		}

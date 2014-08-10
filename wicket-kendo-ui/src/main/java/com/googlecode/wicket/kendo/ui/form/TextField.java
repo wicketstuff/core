@@ -14,11 +14,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.googlecode.wicket.kendo.ui.form.button;
+package com.googlecode.wicket.kendo.ui.form;
 
-import org.apache.wicket.AttributeModifier;
+import org.apache.wicket.markup.ComponentTag;
 import org.apache.wicket.model.IModel;
-import org.apache.wicket.model.Model;
 
 /**
  * Provides a {@link org.apache.wicket.markup.html.form.TextField} with the Kendo-ui style
@@ -78,10 +77,10 @@ public class TextField<T> extends org.apache.wicket.markup.html.form.TextField<T
 	// Events //
 
 	@Override
-	protected void onInitialize()
+	protected void onComponentTag(ComponentTag tag)
 	{
-		super.onInitialize();
+		super.onComponentTag(tag);
 
-		this.add(AttributeModifier.append("class", Model.of("k-textbox")));
+		tag.append("class", "k-textbox", " ");
 	}
 }

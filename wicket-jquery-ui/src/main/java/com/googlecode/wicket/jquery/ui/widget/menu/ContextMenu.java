@@ -18,9 +18,9 @@ package com.googlecode.wicket.jquery.ui.widget.menu;
 
 import java.util.List;
 
-import org.apache.wicket.AttributeModifier;
 import org.apache.wicket.Component;
 import org.apache.wicket.ajax.AjaxRequestTarget;
+import org.apache.wicket.markup.ComponentTag;
 
 import com.googlecode.wicket.jquery.core.JQueryAbstractBehavior;
 import com.googlecode.wicket.jquery.core.Options;
@@ -101,9 +101,16 @@ public class ContextMenu extends Menu
 	{
 		super.onInitialize();
 
-		this.add(AttributeModifier.append("class", CONTEXTMENU_CSS_CLASS));
-		this.add(AttributeModifier.append("style", "position: absolute; display: none;"));
 		this.add(this.newContextMenuDocumentBehavior());
+	}
+
+	@Override
+	protected void onComponentTag(ComponentTag tag)
+	{
+		super.onComponentTag(tag);
+
+		tag.append("class", CONTEXTMENU_CSS_CLASS, " ");
+		tag.append("style", "position: absolute; display: none;", ";");
 	}
 
 	/**
