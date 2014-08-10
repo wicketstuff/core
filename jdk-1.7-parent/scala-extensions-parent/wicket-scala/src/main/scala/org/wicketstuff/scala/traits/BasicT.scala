@@ -18,7 +18,7 @@ trait BasicT
     case _ => null
   }
 
-  def label[T](id: String, model: IModel[T] = null): ScalaLabel[T] = {
+  def label[T <: Serializable](id: String, model: IModel[T] = new Model[T]()): ScalaLabel[T] = {
     val label = new ScalaLabel(id, model)
     self.add(label)
     label
