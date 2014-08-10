@@ -163,7 +163,6 @@ class DataSourceBehavior<T> extends AbstractAjaxBehavior
 
 				final String encoding = Application.get().getRequestCycleSettings().getResponseRequestEncoding();
 				response.setContentType("application/json; charset=" + encoding);
-//				response.setContentType("text/json; charset=" + encoding);
 				response.disableCaching();
 
 				final long size = provider.size();

@@ -35,7 +35,7 @@ public interface IChoiceRenderer<T> extends ITextRenderer<T>
 	 * Gets the value of an object.
 	 *
 	 * @param object the T object
-	 * @return the text
+	 * @return the value
 	 */
 	String getValue(T object);
 }
