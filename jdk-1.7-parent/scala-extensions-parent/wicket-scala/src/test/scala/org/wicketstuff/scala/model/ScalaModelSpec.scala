@@ -24,7 +24,7 @@ class ScalaModelSpec
   }
 
   test("Future model with simple result") {
-    val model = futureM({1 + 2})
+    val model = futureM[Integer]({1 + 2})
     model.getObject mustBe 3
   }
 

@@ -16,7 +16,6 @@ trait ScalaComponentT
     case _ => null
   }
 
-  type Serializable = java.io.Serializable
   type OnError = (AjaxRequestTarget) => Unit
 
   protected def noOp() = () => ()
