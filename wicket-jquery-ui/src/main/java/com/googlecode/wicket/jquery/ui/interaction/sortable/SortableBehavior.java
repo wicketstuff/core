@@ -16,6 +16,7 @@
  */
 package com.googlecode.wicket.jquery.ui.interaction.sortable;
 
+import java.util.Collections;
 import java.util.List;
 
 import org.apache.wicket.Component;
@@ -82,7 +83,7 @@ public abstract class SortableBehavior<T> extends JQueryBehavior implements IJQu
 	 */
 	protected List<T> getConnectedList()
 	{
-		return null;
+		return Collections.emptyList();
 	}
 
 	// Methods //
@@ -146,7 +147,7 @@ public abstract class SortableBehavior<T> extends JQueryBehavior implements IJQu
 			{
 				List<T> list = this.getConnectedList();
 
-				if (list != null)
+				if (list.size() > 0)
 				{
 					this.onReceive(target, ListUtils.fromHash(hash, list), index);
 				}

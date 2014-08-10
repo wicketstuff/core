@@ -18,6 +18,7 @@ package com.googlecode.wicket.kendo.ui.renderer;
 
 import org.apache.wicket.core.util.lang.PropertyResolver;
 
+import com.googlecode.wicket.jquery.core.renderer.IChoiceRenderer;
 import com.googlecode.wicket.jquery.core.renderer.TextRenderer;
 
 /**
@@ -73,11 +74,11 @@ public class ChoiceRenderer<T> extends TextRenderer<T> implements IChoiceRendere
 	@Override
 	public String getTextField()
 	{
-		String textExpression = super.getExpression();
+		String expression = super.getExpression();
 
-		if (textExpression != null)
+		if (expression != null)
 		{
-			return textExpression;
+			return expression;
 		}
 
 		return TEXT_FIELD;
@@ -108,11 +109,5 @@ public class ChoiceRenderer<T> extends TextRenderer<T> implements IChoiceRendere
 		}
 
 		return this.getText(object);
-	}
-
-	@Override
-	public String toJson(T object)
-	{
-		return String.format("{ \"%s\": \"%s\", \"%s\": \"%s\" }", this.getTextField(), this.getText(object), this.getValueField(), this.getValue(object));
 	}
 }

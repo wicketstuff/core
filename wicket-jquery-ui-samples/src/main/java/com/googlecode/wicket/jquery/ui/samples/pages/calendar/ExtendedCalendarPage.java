@@ -146,7 +146,7 @@ public class ExtendedCalendarPage extends AbstractCalendarPage
 
 				if (event != null)
 				{
-					Date date = (event.getEnd() == null ? event.getStart() : event.getEnd());
+					Date date = event.getEnd() == null ? event.getStart() : event.getEnd();
 					event.setEnd(new Date(date.getTime() + delta));
 
 					this.info(String.format("%s now ends the %s", event.getTitle(), event.getEnd()));

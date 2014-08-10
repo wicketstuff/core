@@ -26,10 +26,12 @@ import org.apache.wicket.model.IModel;
 import com.googlecode.wicket.jquery.core.IJQueryWidget;
 import com.googlecode.wicket.jquery.core.JQueryBehavior;
 import com.googlecode.wicket.jquery.core.Options;
+import com.googlecode.wicket.jquery.core.behavior.ChoiceModelBehavior;
 import com.googlecode.wicket.jquery.core.renderer.ITextRenderer;
 import com.googlecode.wicket.jquery.core.renderer.TextRenderer;
+import com.googlecode.wicket.jquery.core.template.IJQueryTemplate;
 import com.googlecode.wicket.jquery.core.utils.RequestCycleUtils;
-import com.googlecode.wicket.kendo.ui.behavior.ChoiceModelBehavior;
+import com.googlecode.wicket.kendo.ui.KendoTemplateBehavior;
 import com.googlecode.wicket.kendo.ui.renderer.ChoiceRenderer;
 
 /**
@@ -47,6 +49,8 @@ public abstract class AbstractAutoCompleteTextField<T, C> extends TextField<T> i
 
 	private ChoiceModelBehavior<C> choiceModelBehavior;
 	protected final ITextRenderer<? super C> renderer;
+	private final IJQueryTemplate template;
+	private KendoTemplateBehavior templateBehavior = null;
 
 	/** cache of current choices, needed to retrieve the user selected object */
 	private List<C> choices;
@@ -75,6 +79,7 @@ public abstract class AbstractAutoCompleteTextField<T, C> extends TextField<T> i
 		super(id);
 
 		this.renderer = renderer;
+		this.template = this.newTemplate();
 	}
 
 	/**
@@ -100,6 +105,7 @@ public abstract class AbstractAutoCompleteTextField<T, C> extends TextField<T> i
 		super(id, model);
 
 		this.renderer = renderer;
+		this.template = this.newTemplate();
 	}
 
 	// Properties //
@@ -153,13 +159,26 @@ public abstract class AbstractAutoCompleteTextField<T, C> extends TextField<T> i
 
 		this.add(this.choiceModelBehavior = this.newChoiceModelBehavior());
 		this.add(JQueryWidget.newWidgetBehavior(this));
+
+		if (this.template != null)
+		{
+			this.add(this.templateBehavior = new KendoTemplateBehavior(this.template));
+		}
 	}
 
 	@Override
 	public void onConfigure(JQueryBehavior behavior)
 	{
-		behavior.setOption("dataTextField", Options.asString(TextRenderer.TEXT_FIELD));
+		// set data source //
+		behavior.setOption("dataTextField", Options.asString(this.renderer.getTextField()));
 
+		// set template (if any) //
+		if (this.template != null)
+		{
+			behavior.setOption("template", String.format("jQuery('#%s').html()", this.templateBehavior.getToken()));
+		}
+
+		// set list-width //
 		if (this.getListWidth() > 0)
 		{
 			behavior.setOption("open", String.format("function(e) { e.sender.list.width(%d); }", this.getListWidth()));
@@ -225,6 +244,17 @@ public abstract class AbstractAutoCompleteTextField<T, C> extends TextField<T> i
 	// Factories //
 
 	/**
+	 * Gets a new {@link IJQueryTemplate} to customize the rendering<br/>
+	 * The properties used in the template text (ie: ${data.name}) should be of the prefixed by "data." and should be identified in the list returned by {@link IJQueryTemplate#getTextProperties()} (without "data.")
+	 *
+	 * @return null by default
+	 */
+	protected IJQueryTemplate newTemplate()
+	{
+		return null;
+	}
+
+	/**
 	 * Gets a new {@link ChoiceModelBehavior}
 	 *
 	 * @return a new {@link ChoiceModelBehavior}
@@ -234,13 +264,25 @@ public abstract class AbstractAutoCompleteTextField<T, C> extends TextField<T> i
 		return new ChoiceModelBehavior<C>(this.renderer) {
 
 			private static final long serialVersionUID = 1L;
+			private static final String TERM = "filter[filters][0][value]";
 
 			@Override
 			public List<C> getChoices()
 			{
-				final String input = RequestCycleUtils.getQueryParameterValue("filter[filters][0][value]").toString();
+				final String input = RequestCycleUtils.getQueryParameterValue(TERM).toString();
 
 				return AbstractAutoCompleteTextField.this.internalGetChoices(input);
+			}
+
+			@Override
+			protected List<String> getProperties()
+			{
+				if (AbstractAutoCompleteTextField.this.template != null)
+				{
+					return AbstractAutoCompleteTextField.this.template.getTextProperties();
+				}
+
+				return super.getProperties();
 			}
 		};
 	}

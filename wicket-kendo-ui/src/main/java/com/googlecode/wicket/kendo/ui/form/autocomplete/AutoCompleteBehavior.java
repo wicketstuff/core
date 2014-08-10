@@ -100,6 +100,11 @@ public abstract class AutoCompleteBehavior extends KendoAbstractBehavior impleme
 
 	// Factories //
 
+	/**
+	 * Gets a new DataSource
+	 * 
+	 * @return the new DataSource 
+	 */
 	protected String newDataSource()
 	{
 		return String.format("{ serverFiltering: true, transport: { read: { url: '%s', dataType: 'json' } }, error: %s }", this.getChoiceCallbackUrl(), DebugUtils.errorCallback);

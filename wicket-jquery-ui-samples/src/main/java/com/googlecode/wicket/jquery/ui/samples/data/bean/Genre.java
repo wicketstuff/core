@@ -57,7 +57,7 @@ public class Genre implements IClusterable
 
 	public String getCoverUrl()
 	{
-		return UrlUtils.rewriteToContextRelative("images/" + this.cover, RequestCycle.get());
+		return UrlUtils.rewriteToContextRelative(this.getCover(), RequestCycle.get());
 	}
 
 	/**

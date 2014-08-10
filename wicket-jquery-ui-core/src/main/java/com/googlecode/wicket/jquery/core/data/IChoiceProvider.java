@@ -21,11 +21,15 @@ import java.util.List;
 /**
  * Specifies that the implementing class provides a list of choices
  *
- * @author Sebastien Briquet - sebfz1
- *
  * @param <T> the model object type
+ * @author Sebastien Briquet - sebfz1
  */
 public interface IChoiceProvider<T>
 {
+	/**
+	 * Get the {@link List} of choices
+	 *
+	 * @return the list of choices
+	 */
 	List<T> getChoices();
 }

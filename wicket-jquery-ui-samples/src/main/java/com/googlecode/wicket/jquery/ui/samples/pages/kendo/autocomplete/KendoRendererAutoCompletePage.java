@@ -1,25 +1,24 @@
-package com.googlecode.wicket.jquery.ui.samples.pages.autocomplete;
+package com.googlecode.wicket.jquery.ui.samples.pages.kendo.autocomplete;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.markup.html.form.Form;
-import org.apache.wicket.markup.html.panel.FeedbackPanel;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
 
 import com.googlecode.wicket.jquery.core.renderer.TextRenderer;
-import com.googlecode.wicket.jquery.ui.form.autocomplete.AutoCompleteTextField;
-import com.googlecode.wicket.jquery.ui.panel.JQueryFeedbackPanel;
+import com.googlecode.wicket.jquery.core.utils.ListUtils;
 import com.googlecode.wicket.jquery.ui.samples.data.bean.Genre;
 import com.googlecode.wicket.jquery.ui.samples.data.dao.GenresDAO;
+import com.googlecode.wicket.kendo.ui.form.autocomplete.AutoCompleteTextField;
+import com.googlecode.wicket.kendo.ui.panel.KendoFeedbackPanel;
 
-public class RendererAutoCompletePage extends AbstractAutoCompletePage
+public class KendoRendererAutoCompletePage extends AbstractAutoCompletePage
 {
 	private static final long serialVersionUID = 1L;
 
-	public RendererAutoCompletePage()
+	public KendoRendererAutoCompletePage()
 	{
 		// Model //
 		final IModel<Genre> model = new Model<Genre>();
@@ -29,7 +28,7 @@ public class RendererAutoCompletePage extends AbstractAutoCompletePage
 		this.add(form);
 
 		// FeedbackPanel //
-		final FeedbackPanel feedback = new JQueryFeedbackPanel("feedback");
+		final KendoFeedbackPanel feedback = new KendoFeedbackPanel("feedback");
 		form.add(feedback.setOutputMarkupId(true));
 
 		// Auto-complete //
@@ -40,24 +39,7 @@ public class RendererAutoCompletePage extends AbstractAutoCompletePage
 			@Override
 			protected List<Genre> getChoices(String input)
 			{
-				List<Genre> choices = new ArrayList<Genre>();
-				int count = 0;
-
-				for (Genre genre : GenresDAO.all())
-				{
-					if (genre.getName().toLowerCase().contains(input.toLowerCase()))
-					{
-						choices.add(genre);
-
-						// limits the number of results
-						if (++count == 20)
-						{
-							break;
-						}
-					}
-				}
-
-				return choices;
+				return ListUtils.contains(input, GenresDAO.all());
 			}
 
 			@Override

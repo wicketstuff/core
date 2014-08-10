@@ -28,11 +28,11 @@ import org.apache.wicket.util.convert.IConverter;
 
 import com.googlecode.wicket.jquery.core.IJQueryWidget;
 import com.googlecode.wicket.jquery.core.JQueryBehavior;
-import com.googlecode.wicket.jquery.core.Options;
 import com.googlecode.wicket.jquery.core.renderer.ITextRenderer;
 import com.googlecode.wicket.jquery.core.renderer.TextRenderer;
 import com.googlecode.wicket.jquery.core.template.IJQueryTemplate;
 import com.googlecode.wicket.jquery.core.template.JQueryTemplateBehavior;
+import com.googlecode.wicket.jquery.core.utils.RequestCycleUtils;
 
 /**
  * Provides a jQuery auto-complete widget
@@ -47,7 +47,7 @@ public abstract class AutoCompleteTextField<T extends Serializable> extends Text
 	/**
 	 * Behavior that will be called when the user enters an input
 	 */
-	private AutoCompleteSourceBehavior<T> sourceBehavior;
+	private AutoCompleteChoiceModelBehavior<T> choiceModelBehavior;
 
 	private final ITextRenderer<? super T> renderer;
 	private final IConverter<T> converter;
@@ -194,8 +194,9 @@ public abstract class AutoCompleteTextField<T extends Serializable> extends Text
 	 * Gets the {@link ITextRenderer}
 	 *
 	 * @return the {@link ITextRenderer}
+	 * @deprecated probably useless, will be removed. Open an issue in GitHub if you need it
 	 */
-	//TODO: to remove ?
+	@Deprecated
 	public ITextRenderer<? super T> getRenderer()
 	{
 		return this.renderer;
@@ -223,7 +224,7 @@ public abstract class AutoCompleteTextField<T extends Serializable> extends Text
 	{
 		super.onInitialize();
 
-		this.add(this.sourceBehavior = this.newAutoCompleteSourceBehavior());
+		this.add(this.choiceModelBehavior = this.newChoiceModelBehavior());
 
 		this.add(JQueryWidget.newWidgetBehavior(this)); // cannot be in ctor as the markupId may be set manually afterward
 
@@ -236,8 +237,7 @@ public abstract class AutoCompleteTextField<T extends Serializable> extends Text
 	@Override
 	public void onConfigure(JQueryBehavior behavior)
 	{
-		// TODO: move to AutoCompleteBehavior
-		behavior.setOption("source", Options.asString(this.sourceBehavior.getCallbackUrl()));
+		// noop
 	}
 
 	@Override
@@ -275,12 +275,19 @@ public abstract class AutoCompleteTextField<T extends Serializable> extends Text
 	}
 
 	// IJQueryWidget //
+
 	@Override
 	public JQueryBehavior newWidgetBehavior(String selector)
 	{
 		return new AutoCompleteBehavior(selector) {
 
 			private static final long serialVersionUID = 1L;
+
+			@Override
+			protected CharSequence getChoiceCallbackUrl()
+			{
+				return choiceModelBehavior.getCallbackUrl();
+			}
 
 			@Override
 			public void onSelect(AjaxRequestTarget target, int index)
@@ -304,6 +311,7 @@ public abstract class AutoCompleteTextField<T extends Serializable> extends Text
 	}
 
 	// Factories //
+
 	/**
 	 * Gets a new {@link IJQueryTemplate} to customize the rendering<br/>
 	 * The {@link IJQueryTemplate#getText()} should return a template text of the form "&lt;a&gt;...&lt;/a&gt;".<br/>
@@ -348,19 +356,22 @@ public abstract class AutoCompleteTextField<T extends Serializable> extends Text
 	}
 
 	/**
-	 * Gets a new {@link AutoCompleteSourceBehavior}
+	 * Gets a new {@link AutoCompleteChoiceModelBehavior}
 	 *
-	 * @return the {@link AutoCompleteSourceBehavior}
+	 * @return the {@link AutoCompleteChoiceModelBehavior}
 	 */
-	private AutoCompleteSourceBehavior<T> newAutoCompleteSourceBehavior()
+	private AutoCompleteChoiceModelBehavior<T> newChoiceModelBehavior()
 	{
-		return new AutoCompleteSourceBehavior<T>(this.renderer) {
+		return new AutoCompleteChoiceModelBehavior<T>(this.renderer) {
 
 			private static final long serialVersionUID = 1L;
+			private static final String TERM = "term";
 
 			@Override
-			protected List<T> getChoices(String input)
+			public List<T> getChoices()
 			{
+				final String input = RequestCycleUtils.getQueryParameterValue(TERM).toString();
+
 				return AutoCompleteTextField.this.internalGetChoices(input);
 			}
 

@@ -61,6 +61,19 @@ public class TextRenderer<T> implements ITextRenderer<T>
 	}
 
 	@Override
+	public String getTextField()
+	{
+		String expression = this.getExpression();
+
+		if (expression != null)
+		{
+			return expression;
+		}
+
+		return TEXT_FIELD;
+	}
+
+	@Override
 	public String getText(T object)
 	{
 		if (this.expression != null)
@@ -68,7 +81,7 @@ public class TextRenderer<T> implements ITextRenderer<T>
 			return this.getText(object, this.expression);
 		}
 
-		return String.valueOf(object);
+		return object != null ? object.toString() : "";
 	}
 
 	@Override
@@ -85,11 +98,5 @@ public class TextRenderer<T> implements ITextRenderer<T>
 		}
 
 		return "";
-	}
-
-	@Override
-	public String toJson(T object)
-	{
-		return String.format("{ \"%s\": \"%s\" }", TEXT_FIELD, this.getText(object));
 	}
 }

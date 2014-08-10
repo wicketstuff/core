@@ -70,6 +70,8 @@ public abstract class AutoCompleteBehavior extends JQueryBehavior implements IJQ
 		component.add(this.onSelectBehavior = this.newOnSelectBehavior());
 	}
 
+	protected abstract CharSequence getChoiceCallbackUrl();
+
 	// Events //
 
 	@Override
@@ -77,6 +79,7 @@ public abstract class AutoCompleteBehavior extends JQueryBehavior implements IJQ
 	{
 		super.onConfigure(component);
 
+		this.setOption("source", Options.asString(this.getChoiceCallbackUrl()));
 		this.setOption("select", this.onSelectBehavior.getCallbackFunction());
 	}
 
@@ -92,6 +95,7 @@ public abstract class AutoCompleteBehavior extends JQueryBehavior implements IJQ
 	}
 
 	// Factories //
+
 	/**
 	 * Gets a new {@link JQueryAjaxBehavior} that will be called on 'select' javascript method
 	 *
@@ -118,6 +122,7 @@ public abstract class AutoCompleteBehavior extends JQueryBehavior implements IJQ
 	}
 
 	// Event classes //
+
 	/**
 	 * Provides an event object that will be broadcasted by the {@link JQueryAjaxBehavior} select callback
 	 *

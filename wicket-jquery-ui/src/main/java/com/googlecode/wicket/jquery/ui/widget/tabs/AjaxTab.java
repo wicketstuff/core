@@ -103,7 +103,7 @@ public abstract class AjaxTab extends AbstractTab
 	 */
 	public boolean load(AjaxRequestTarget target)
 	{
-		boolean load = (this.state == STATE_LOAD);
+		boolean load = this.state == STATE_LOAD;
 
 		if (load)
 		{

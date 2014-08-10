@@ -14,8 +14,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.googlecode.wicket.kendo.ui.behavior;
+package com.googlecode.wicket.jquery.core.behavior;
 
+import java.util.Collections;
 import java.util.List;
 
 import org.apache.wicket.Application;
@@ -25,7 +26,9 @@ import org.apache.wicket.request.IRequestHandler;
 import org.apache.wicket.request.cycle.RequestCycle;
 import org.apache.wicket.request.http.WebResponse;
 
+import com.googlecode.wicket.jquery.core.data.IChoiceProvider;
 import com.googlecode.wicket.jquery.core.renderer.ITextRenderer;
+import com.googlecode.wicket.jquery.core.utils.RendererUtils;
 
 /**
  * Provides the choice ajax loading behavior
@@ -34,11 +37,11 @@ import com.googlecode.wicket.jquery.core.renderer.ITextRenderer;
  *
  * @param <T> the model object type
  */
-public abstract class ChoiceModelBehavior<T> extends AbstractAjaxBehavior
+public abstract class ChoiceModelBehavior<T> extends AbstractAjaxBehavior implements IChoiceProvider<T>
 {
 	private static final long serialVersionUID = 1L;
 
-	private final ITextRenderer<? super T> renderer;
+	protected final ITextRenderer<? super T> renderer;
 
 	public ChoiceModelBehavior(ITextRenderer<? super T> renderer)
 	{
@@ -47,14 +50,31 @@ public abstract class ChoiceModelBehavior<T> extends AbstractAjaxBehavior
 		this.renderer = renderer;
 	}
 
+	// Methods //
+
+	/**
+	 * Gets the property list that should be appended to the JSON response. The value corresponding to the property is retrieved from the {@link ITextRenderer#getText(Object, String)}
+	 *
+	 * @return the property list
+	 */
+	protected List<String> getProperties()
+	{
+		return Collections.emptyList();
+	}
+
+	// Events //
+
 	@Override
 	public void onRequest()
 	{
 		RequestCycle.get().scheduleRequestHandlerAfterCurrent(this.newRequestHandler());
 	}
 
+	// Factories //
+
 	/**
-	 * Get a new {@link IRequestHandler}
+	 * Gets a new {@link IRequestHandler} that will call {@link #getChoices()} and will build be JSON response
+	 *
 	 * @return a new {@link IRequestHandler}
 	 */
 	protected IRequestHandler newRequestHandler()
@@ -70,21 +90,30 @@ public abstract class ChoiceModelBehavior<T> extends AbstractAjaxBehavior
 				response.setContentType("application/json; charset=" + encoding);
 				response.disableCaching();
 
-				List<T> list = ChoiceModelBehavior.this.getChoices();
+				List<T> choices = ChoiceModelBehavior.this.getChoices();
 
-				if (list != null)
+				if (choices != null)
 				{
-					int count = 0;
+					int index = 0;
 					StringBuilder builder = new StringBuilder("[");
 
-					for (T object : list)
+					for (T choice : choices)
 					{
-						if (count++ > 0)
+						if (index++ > 0)
 						{
-							builder.append(",");
+							builder.append(", ");
 						}
 
-						builder.append(ChoiceModelBehavior.this.renderer.toJson(object));
+						builder.append("{ ");
+						builder.append(RendererUtils.getJsonBody(choice, renderer));
+
+						for (String property : ChoiceModelBehavior.this.getProperties())
+						{
+							builder.append(", ");
+							builder.append(RendererUtils.getJsonBody(choice, renderer, property));
+						}
+
+						builder.append(" }");
 					}
 
 					builder.append("]");
@@ -100,11 +129,4 @@ public abstract class ChoiceModelBehavior<T> extends AbstractAjaxBehavior
 			}
 		};
 	}
-
-	/**
-	 * Get the {@link List} of choices
-	 *
-	 * @return the list of choices
-	 */
-	public abstract List<T> getChoices();
 }

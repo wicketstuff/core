@@ -16,6 +16,7 @@
  */
 package com.googlecode.wicket.jquery.ui.interaction.sortable;
 
+import java.util.Collections;
 import java.util.List;
 
 import org.apache.wicket.AttributeModifier;
@@ -275,7 +276,7 @@ public abstract class Sortable<T> extends JQueryContainer implements ISortableLi
 					return Sortable.this.connectedSortable.getModelObject();
 				}
 
-				return null;
+				return Collections.emptyList();
 			}
 
 			@Override

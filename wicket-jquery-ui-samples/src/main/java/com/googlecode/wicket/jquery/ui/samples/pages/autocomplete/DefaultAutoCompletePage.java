@@ -43,11 +43,12 @@ public class DefaultAutoCompletePage extends AbstractAutoCompletePage
 			protected List<String> getChoices(String input)
 			{
 				List<String> choices = new ArrayList<String>();
+				String inputLowerCase = input.toLowerCase();
 
 				int count = 0;
 				for (String choice : CHOICES)
 				{
-					if (choice.toLowerCase().startsWith(input.toLowerCase()))
+					if (choice.toLowerCase().startsWith(inputLowerCase))
 					{
 						choices.add(choice);
 
@@ -63,7 +64,7 @@ public class DefaultAutoCompletePage extends AbstractAutoCompletePage
 
 				//
 				// Equivalent to:
-				// return AutoCompleteUtils.startsWith(input, CHOICES);
+				// return ListUtils.startsWith(input, CHOICES);
 				//
 			}
 

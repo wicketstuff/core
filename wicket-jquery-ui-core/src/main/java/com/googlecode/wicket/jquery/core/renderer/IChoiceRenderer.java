@@ -14,38 +14,28 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.googlecode.wicket.kendo.ui.renderer;
-
-import com.googlecode.wicket.jquery.core.renderer.ITextRenderer;
+package com.googlecode.wicket.jquery.core.renderer;
 
 /**
- * Specifies a choice renderer for Kendo UI datasources.
- *
- * @author Sebastien Briquet - sebfz1
+ * Provides the ability to get a specific value/text (likely from properties) of a bean type, for rendering purpose
  *
  * @param <T> the model object type
+ * @author Sebastien Briquet - sebfz1
  */
 public interface IChoiceRenderer<T> extends ITextRenderer<T>
 {
 	/**
-	 * Gets the name of the field that acts as the 'dataTextField' in the JSON response.
+	 * Gets the field name that will represents the 'value' of an object.
 	 *
 	 * @return the name of the text field
-	 */
-	String getTextField();
-
-	/**
-	 * Gets the name of the field that acts as the 'dataValueField' in the JSON response.
-	 *
-	 * @return the name of the value field
 	 */
 	String getValueField();
 
 	/**
-	 * Gets the value that should be renderer for the supplied object
+	 * Gets the value of an object.
 	 *
 	 * @param object the T object
-	 * @return the value
+	 * @return the text
 	 */
 	String getValue(T object);
 }

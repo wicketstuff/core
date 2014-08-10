@@ -1,6 +1,5 @@
 package com.googlecode.wicket.jquery.ui.samples.pages.kendo.autocomplete;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -37,13 +36,6 @@ public class KendoAutoCompletePage extends AbstractAutoCompletePage
 		form.add(feedback);
 
 		// Auto-complete //
-		//TODO: fix or remove
-		List<String> selected = new ArrayList<String>();
-		selected.add("Heavy metal");
-		selected.add("Thrash metal");
-
-		//new ListModel<String>(selected)
-
 		final AutoCompleteTextField<String> autocomplete = new AutoCompleteTextField<String>("autocomplete", Model.of("Heavy metal")) {
 
 			private static final long serialVersionUID = 1L;

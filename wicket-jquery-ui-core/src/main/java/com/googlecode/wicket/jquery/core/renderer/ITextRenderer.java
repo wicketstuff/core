@@ -19,7 +19,7 @@ package com.googlecode.wicket.jquery.core.renderer;
 import org.apache.wicket.util.io.IClusterable;
 
 /**
- * Provides the capability to get a specific text (likely from a property) for a bean type, for rendering purpose
+ * Provides the ability to get a specific text (likely from a property) of a bean type, for rendering purpose
  *
  * @param <T> the model object type
  * @author Sebastien Briquet - sebfz1
@@ -27,25 +27,26 @@ import org.apache.wicket.util.io.IClusterable;
 public interface ITextRenderer<T> extends IClusterable
 {
 	/**
-	 * Gets the text that should be renderer for the supplied object
+	 * Gets the field name that will represents the 'text' of an object.
+	 *
+	 * @return the name of the text field
+	 */
+	String getTextField();
+
+	/**
+	 * Gets the text representation of an object.
+	 *
 	 * @param object the T object
 	 * @return the text
 	 */
 	String getText(T object);
 
 	/**
-	 * Gets the text that should be renderer for the supplied object, for the given property
+	 * Gets the text representation of an object, for its given property.
+	 *
 	 * @param object the T object
 	 * @param expression the property expression
 	 * @return the text
 	 */
 	String getText(T object, String expression);
-
-	/**
-	 * Gets the JSON representation of the supplied object
-	 *
-	 * @param object the object
-	 * @return the JSON representation of the object
-	 */
-	String toJson(T object);
 }

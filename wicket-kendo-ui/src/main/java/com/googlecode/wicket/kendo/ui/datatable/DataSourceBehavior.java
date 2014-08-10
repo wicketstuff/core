@@ -21,10 +21,9 @@ import java.util.List;
 
 import org.apache.wicket.Application;
 import org.apache.wicket.Session;
-import org.apache.wicket.ajax.AbstractDefaultAjaxBehavior;
-import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.json.JSONException;
 import org.apache.wicket.ajax.json.JSONObject;
+import org.apache.wicket.behavior.AbstractAjaxBehavior;
 import org.apache.wicket.core.util.lang.PropertyResolver;
 import org.apache.wicket.core.util.lang.PropertyResolverConverter;
 import org.apache.wicket.extensions.markup.html.repeater.data.sort.ISortStateLocator;
@@ -44,12 +43,12 @@ import com.googlecode.wicket.kendo.ui.datatable.column.PropertyColumn;
 import com.googlecode.wicket.kendo.ui.utils.PropertyUtils;
 
 /**
- * Provides the {@link DataTable} data source {@link AbstractDefaultAjaxBehavior}
+ * Provides the {@link DataTable} data source {@link AbstractAjaxBehavior}
  *
  * @param <T> the type of the model object
  * @author Sebastien Briquet - sebfz1
  */
-class DataSourceBehavior<T> extends AbstractDefaultAjaxBehavior
+class DataSourceBehavior<T> extends AbstractAjaxBehavior
 {
 	private static final long serialVersionUID = 1L;
 	private static final String ASC = "asc";
@@ -81,7 +80,7 @@ class DataSourceBehavior<T> extends AbstractDefaultAjaxBehavior
 	}
 
 	@Override
-	protected void respond(AjaxRequestTarget target)
+	public void onRequest()
 	{
 		final RequestCycle requestCycle = RequestCycle.get();
 		final IRequestParameters parameters = requestCycle.getRequest().getQueryParameters();
@@ -133,8 +132,7 @@ class DataSourceBehavior<T> extends AbstractDefaultAjaxBehavior
 			}
 		}
 
-		final IRequestHandler handler = this.newRequestHandler(first, count);
-		requestCycle.scheduleRequestHandlerAfterCurrent(handler);
+		requestCycle.scheduleRequestHandlerAfterCurrent(this.newRequestHandler(first, count));
 	}
 
 	/**
@@ -164,7 +162,8 @@ class DataSourceBehavior<T> extends AbstractDefaultAjaxBehavior
 				WebResponse response = (WebResponse) requestCycle.getResponse();
 
 				final String encoding = Application.get().getRequestCycleSettings().getResponseRequestEncoding();
-				response.setContentType("text/json; charset=" + encoding);
+				response.setContentType("application/json; charset=" + encoding);
+//				response.setContentType("text/json; charset=" + encoding);
 				response.disableCaching();
 
 				final long size = provider.size();

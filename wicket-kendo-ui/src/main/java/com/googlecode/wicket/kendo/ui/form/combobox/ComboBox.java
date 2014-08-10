@@ -26,6 +26,7 @@ import com.googlecode.wicket.jquery.core.IJQueryWidget;
 import com.googlecode.wicket.jquery.core.JQueryBehavior;
 import com.googlecode.wicket.jquery.core.Options;
 import com.googlecode.wicket.jquery.core.template.IJQueryTemplate;
+import com.googlecode.wicket.jquery.core.utils.RendererUtils;
 import com.googlecode.wicket.kendo.ui.KendoAbstractBehavior;
 import com.googlecode.wicket.kendo.ui.KendoTemplateBehavior;
 import com.googlecode.wicket.kendo.ui.renderer.ChoiceRenderer;
@@ -53,6 +54,7 @@ public class ComboBox<T> extends TextField<String> implements IJQueryWidget
 
 	/**
 	 * Constructor
+	 *
 	 * @param id the markup id
 	 * @param choices the list of choices
 	 */
@@ -63,6 +65,7 @@ public class ComboBox<T> extends TextField<String> implements IJQueryWidget
 
 	/**
 	 * Constructor
+	 *
 	 * @param id the markup id
 	 * @param choices the list of choices
 	 * @param renderer the renderer to be used, so the renderer item text and its values can be dissociated
@@ -74,6 +77,7 @@ public class ComboBox<T> extends TextField<String> implements IJQueryWidget
 
 	/**
 	 * Constructor
+	 *
 	 * @param id the markup id
 	 * @param choices the list model of choices
 	 */
@@ -84,6 +88,7 @@ public class ComboBox<T> extends TextField<String> implements IJQueryWidget
 
 	/**
 	 * Constructor
+	 *
 	 * @param id the markup id
 	 * @param choices the list model of choices
 	 * @param renderer the renderer to be used, so the renderer item text and its values can be dissociated
@@ -99,6 +104,7 @@ public class ComboBox<T> extends TextField<String> implements IJQueryWidget
 
 	/**
 	 * Constructor
+	 *
 	 * @param id the markup id
 	 * @param model the {@link IModel}
 	 * @param choices the list of choices
@@ -110,6 +116,7 @@ public class ComboBox<T> extends TextField<String> implements IJQueryWidget
 
 	/**
 	 * Constructor
+	 *
 	 * @param id the markup id
 	 * @param model the {@link IModel}
 	 * @param choices the list model of choices
@@ -122,6 +129,7 @@ public class ComboBox<T> extends TextField<String> implements IJQueryWidget
 
 	/**
 	 * Constructor
+	 *
 	 * @param id the markup id
 	 * @param model the {@link IModel}
 	 * @param choices the list model of choices
@@ -133,6 +141,7 @@ public class ComboBox<T> extends TextField<String> implements IJQueryWidget
 
 	/**
 	 * Constructor
+	 *
 	 * @param id the markup id
 	 * @param model the {@link IModel}
 	 * @param choices the list model of choices
@@ -147,10 +156,10 @@ public class ComboBox<T> extends TextField<String> implements IJQueryWidget
 		this.template = this.newTemplate();
 	}
 
-
 	// Properties //
 	/**
 	 * Gets the (inner) list width.
+	 *
 	 * @return the list width
 	 */
 	public int getListWidth()
@@ -160,6 +169,7 @@ public class ComboBox<T> extends TextField<String> implements IJQueryWidget
 
 	/**
 	 * Sets the (inner) list width.
+	 *
 	 * @param width the list width
 	 * @return this, for chaining
 	 */
@@ -169,7 +179,6 @@ public class ComboBox<T> extends TextField<String> implements IJQueryWidget
 
 		return this;
 	}
-
 
 	// Events //
 	@Override
@@ -188,52 +197,16 @@ public class ComboBox<T> extends TextField<String> implements IJQueryWidget
 	@Override
 	public void onConfigure(JQueryBehavior behavior)
 	{
+		// set data source //
+		behavior.setOption("dataSource", this.newDataSource());
+		behavior.setOption("dataTextField", Options.asString(this.renderer.getTextField()));
+		behavior.setOption("dataValueField", Options.asString(this.renderer.getValueField()));
+
 		// set template (if any) //
 		if (this.template != null)
 		{
 			behavior.setOption("template", String.format("jQuery('#%s').html()", this.templateBehavior.getToken()));
 		}
-
-		// set data source //
-		behavior.setOption("dataTextField", Options.asString(this.renderer.getTextField()));
-		behavior.setOption("dataValueField", Options.asString(this.renderer.getValueField()));
-
-		StringBuilder dataSource = new StringBuilder("[");
-
-		List<? extends T> list = this.choices.getObject();
-
-		if (list != null)
-		{
-			for (int index = 0 ; index < list.size(); index++)
-			{
-				T object = list.get(index);
-
-				if (index > 0)
-				{
-					dataSource.append(", ");
-				}
-
-				dataSource.append("{ ");
-				dataSource.append(this.renderer.getTextField()).append(": '").append(this.renderer.getText(object)).append("'");
-				dataSource.append(", ");
-				dataSource.append(this.renderer.getValueField()).append(": '").append(this.renderer.getValue(object)).append("'");
-
-				if (this.template != null)
-				{
-					for (String property : this.template.getTextProperties())
-					{
-						dataSource.append(", ");
-						dataSource.append(property).append(": '").append(this.renderer.getText(object, property)).append("'");
-					}
-				}
-
-				dataSource.append(" }");
-			}
-		}
-
-		dataSource.append("]");
-
-		behavior.setOption("dataSource", dataSource.toString());
 
 		// set list-width //
 		if (this.getListWidth() > 0)
@@ -249,6 +222,7 @@ public class ComboBox<T> extends TextField<String> implements IJQueryWidget
 	}
 
 	// IJQueryWidget //
+
 	@Override
 	public JQueryBehavior newWidgetBehavior(String selector)
 	{
@@ -256,9 +230,54 @@ public class ComboBox<T> extends TextField<String> implements IJQueryWidget
 	}
 
 	// Factories //
+
+	/**
+	 * Gets a new DataSource
+	 *
+	 * @return the new DataSource
+	 */
+	protected String newDataSource()
+	{
+		StringBuilder builder = new StringBuilder("[");
+
+		List<? extends T> list = this.choices.getObject();
+
+		if (list != null)
+		{
+			for (int index = 0; index < list.size(); index++)
+			{
+				T object = list.get(index);
+
+				if (index > 0)
+				{
+					builder.append(", ");
+				}
+
+				builder.append("{ ");
+				builder.append(RendererUtils.getJsonBody(object, renderer));
+
+				if (this.template != null)
+				{
+					for (String property : this.template.getTextProperties())
+					{
+						builder.append(", ");
+						builder.append(RendererUtils.getJsonBody(object, renderer, property));
+					}
+				}
+
+				builder.append(" }");
+			}
+		}
+
+		builder.append("]");
+
+		return builder.toString();
+	}
+
 	/**
 	 * Gets a new {@link IJQueryTemplate} to customize the rendering<br/>
 	 * The properties used in the template text (ie: ${data.name}) should be of the prefixed by "data." and should be identified in the list returned by {@link IJQueryTemplate#getTextProperties()} (without "data.")
+	 *
 	 * @return null by default
 	 */
 	protected IJQueryTemplate newTemplate()

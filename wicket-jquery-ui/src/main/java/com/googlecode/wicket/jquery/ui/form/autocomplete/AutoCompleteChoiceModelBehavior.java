@@ -16,85 +16,50 @@
  */
 package com.googlecode.wicket.jquery.ui.form.autocomplete;
 
-import java.util.Collections;
 import java.util.List;
 
 import org.apache.wicket.Application;
-import org.apache.wicket.ajax.AbstractDefaultAjaxBehavior;
-import org.apache.wicket.ajax.AjaxRequestTarget;
+import org.apache.wicket.behavior.AbstractAjaxBehavior;
 import org.apache.wicket.request.IRequestCycle;
 import org.apache.wicket.request.IRequestHandler;
-import org.apache.wicket.request.cycle.RequestCycle;
 import org.apache.wicket.request.http.WebResponse;
 
 import com.googlecode.wicket.jquery.core.Options;
+import com.googlecode.wicket.jquery.core.behavior.ChoiceModelBehavior;
 import com.googlecode.wicket.jquery.core.renderer.ITextRenderer;
+import com.googlecode.wicket.jquery.core.utils.RendererUtils;
 
 /**
- * Provides the {@link AbstractDefaultAjaxBehavior} for the {@link AutoCompleteTextField}
+ * Provides the {@link AbstractAjaxBehavior} for the {@link AutoCompleteTextField}
  *
  * @param <T> the model object type
  * @author Sebastien Briquet - sebfz1
  */
-abstract class AutoCompleteSourceBehavior<T> extends AbstractDefaultAjaxBehavior
+// XXX: renamed AutoCompleteSourceBehavior to AutoCompleteChoiceModelBehavior
+abstract class AutoCompleteChoiceModelBehavior<T> extends ChoiceModelBehavior<T>
 {
 	private static final long serialVersionUID = 1L;
-	private static final String QUERY = "term";
 
-	private final ITextRenderer<? super T> renderer;
-
-	public AutoCompleteSourceBehavior(ITextRenderer<? super T> renderer)
+	public AutoCompleteChoiceModelBehavior(ITextRenderer<? super T> renderer)
 	{
-		this.renderer = renderer;
+		super(renderer);
 	}
-
-	/**
-	 * Gets choices matching the provided input
-	 * @param input String that represent the query
-	 * @return the list of choices
-	 */
-	protected abstract List<T> getChoices(String input);
-
-	/**
-	 * Gets the property list that should be appended to the JSON response. The value corresponding to the property is retrieved from the {@link ITextRenderer#getText(Object, String)}
-	 * @return the property list
-	 */
-	protected List<String> getProperties()
-	{
-		return Collections.emptyList();
-	}
-
 
 	@Override
-	protected void respond(AjaxRequestTarget target)
+	protected IRequestHandler newRequestHandler()
 	{
-		final RequestCycle requestCycle = RequestCycle.get();
-		final String value = requestCycle.getRequest().getQueryParameters().getParameterValue(QUERY).toString();
+		return new IRequestHandler() {
 
-		final IRequestHandler handler = this.newRequestHandler(value);
-		requestCycle.scheduleRequestHandlerAfterCurrent(handler);
-	}
-
-	/**
-	 * Gets a new {@link IRequestHandler} that will call {@link #getChoices(String)} and will build be JSON response corresponding to the specified 'input' argument.
-	 * @param input user input
-	 * @return a new {@link IRequestHandler}
-	 */
-	private IRequestHandler newRequestHandler(final String input)
-	{
-		return new IRequestHandler()
-		{
 			@Override
 			public void respond(final IRequestCycle requestCycle)
 			{
-				WebResponse response = (WebResponse)requestCycle.getResponse();
+				WebResponse response = (WebResponse) requestCycle.getResponse();
 
 				final String encoding = Application.get().getRequestCycleSettings().getResponseRequestEncoding();
-				response.setContentType("text/json; charset=" + encoding);
+				response.setContentType("application/json; charset=" + encoding);
 				response.disableCaching();
 
-				List<T> choices = AutoCompleteSourceBehavior.this.getChoices(input);
-				List<String> properties = AutoCompleteSourceBehavior.this.getProperties();
+				List<T> choices = AutoCompleteChoiceModelBehavior.this.getChoices();
 
 				if (choices != null)
 				{
@@ -113,13 +78,11 @@ abstract class AutoCompleteSourceBehavior<T> extends AbstractDefaultAjaxBehavior
 						builder.append(", ");
 						builder.append(Options.QUOTE).append("value").append(Options.QUOTE).append(": ").append(Options.QUOTE).append(renderer.getText(choice)).append(Options.QUOTE); /* value is a reserved word */
 
-						if (properties != null)
+						//XXX: Warning, no null check. #getProperties should return Collections#emptyList if no properties to supply
+						for (String property : AutoCompleteChoiceModelBehavior.this.getProperties())
 						{
-							for (String property : properties)
-							{
-								builder.append(", ");
-								builder.append(Options.QUOTE).append(property).append(Options.QUOTE).append(": ").append(Options.QUOTE).append(renderer.getText(choice, property)).append(Options.QUOTE);
-							}
+							builder.append(", ");
+							builder.append(RendererUtils.getJsonBody(choice, renderer, property));
 						}
 
 						builder.append(" }");
