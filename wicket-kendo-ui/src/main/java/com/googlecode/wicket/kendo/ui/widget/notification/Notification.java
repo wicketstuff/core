@@ -35,10 +35,10 @@ public class Notification extends WebMarkupContainer implements IJQueryWidget
 {
 	private static final long serialVersionUID = 1L;
 
-	private static final String INFO = "info";
-	private static final String SUCCESS = "success";
-	private static final String WARNING = "warning";
-	private static final String ERROR = "error";
+	public static final String INFO = "info";
+	public static final String SUCCESS = "success";
+	public static final String WARNING = "warning";
+	public static final String ERROR = "error";
 
 	private final Options options;
 	private NotificationBehavior widgetBehavior = null;

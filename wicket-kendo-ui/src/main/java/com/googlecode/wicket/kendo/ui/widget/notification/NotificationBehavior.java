@@ -67,7 +67,7 @@ public class NotificationBehavior extends KendoAbstractBehavior
 	 */
 	public void show(AjaxRequestTarget target, Serializable message, String level)
 	{
-		target.appendJavaScript(this.$(message, level));
+		target.appendJavaScript(String.format("%s.show('%s', '%s');", this.widget(), this.format(String.valueOf(message), level), level));
 	}
 
 	/**
@@ -77,7 +77,17 @@ public class NotificationBehavior extends KendoAbstractBehavior
 	 */
 	public void hide(AjaxRequestTarget target)
 	{
-		target.appendJavaScript(String.format("jQuery('%s').data('%s').hide();", this.selector, METHOD));
+		target.appendJavaScript(String.format("%s.hide();", this.widget()));
+	}
+
+	/**
+	 * Gets the Kendo (jQuery) object
+	 * 
+	 * @return the jQuery object
+	 */
+	private String widget()
+	{
+		return String.format("jQuery('%s').data('%s')", this.selector, METHOD);
 	}
 
 	/**
@@ -90,18 +100,5 @@ public class NotificationBehavior extends KendoAbstractBehavior
 	protected CharSequence format(CharSequence message, String level)
 	{
 		return JavaScriptUtils.escapeQuotes(message);
-	}
-
-	/**
-	 * Gets the jQuery statement that logs the message<br/>
-	 * <b>Warning: </b> This method is *not* called by the behavior directly (only {@link #$()} is).
-	 *
-	 * @param message the message to log
-	 * @param level the level of the message
-	 * @return the jQuery statement
-	 */
-	protected String $(Serializable message, String level)
-	{
-		return String.format("jQuery('%s').data('%s').show('%s', '%s');", this.selector, METHOD, this.format(String.valueOf(message), level), level);
 	}
 }
