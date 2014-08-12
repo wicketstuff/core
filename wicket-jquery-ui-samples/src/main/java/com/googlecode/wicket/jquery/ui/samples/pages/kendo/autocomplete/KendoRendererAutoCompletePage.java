@@ -22,9 +22,6 @@ public class KendoRendererAutoCompletePage extends AbstractAutoCompletePage
 
 	public KendoRendererAutoCompletePage()
 	{
-		// Model //
-//		final IModel<Genre> model = new Model<Genre>();
-
 		// Form //
 		final Form<Void> form = new Form<Void>("form");
 		this.add(form);
