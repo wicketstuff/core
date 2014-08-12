@@ -11,7 +11,6 @@ import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.model.PropertyModel;
 
-import com.googlecode.wicket.jquery.core.renderer.TextRenderer;
 import com.googlecode.wicket.jquery.core.utils.ListUtils;
 import com.googlecode.wicket.jquery.ui.samples.data.bean.Genre;
 import com.googlecode.wicket.jquery.ui.samples.data.dao.GenresDAO;
@@ -44,7 +43,7 @@ public class KendoCustomAutoCompletePage extends AbstractAutoCompletePage
 		container.add(new Label("name", new PropertyModel<String>(model, "name")));
 
 		// Auto-complete //
-		final AutoCompleteTextField<Genre> autocomplete = new AutoCompleteTextField< Genre>("autocomplete", model, new TextRenderer<Genre>("name")) {
+		final AutoCompleteTextField<Genre> autocomplete = new AutoCompleteTextField< Genre>("autocomplete", model) {
 
 			private static final long serialVersionUID = 1L;
 
