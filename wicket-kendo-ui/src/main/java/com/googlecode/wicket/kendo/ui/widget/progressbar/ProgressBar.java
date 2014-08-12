@@ -23,7 +23,6 @@ import org.apache.wicket.util.lang.Args;
 import com.googlecode.wicket.jquery.core.JQueryBehavior;
 import com.googlecode.wicket.jquery.core.JQueryContainer;
 import com.googlecode.wicket.jquery.core.Options;
-import com.googlecode.wicket.jquery.core.utils.RequestCycleUtils;
 
 /**
  * Provides a Kendo UI progress-bar based on a {@link JQueryContainer}
@@ -39,6 +38,9 @@ public class ProgressBar extends JQueryContainer implements IProgressBarListener
 	private static final int MAX = 100;
 
 	private final Options options;
+
+	/** Flag that indicated the value (model object) has changed */
+	private boolean valueChanged = false;
 
 	/**
 	 * Constructor
@@ -201,19 +203,11 @@ public class ProgressBar extends JQueryContainer implements IProgressBarListener
 	public final void refresh(AjaxRequestTarget target)
 	{
 		String widget = String.format("jQuery('%s').data('%s')", JQueryWidget.getSelector(this), ProgressBarBehavior.METHOD);
-
 		target.appendJavaScript(String.format("%s.value(%d);", widget, this.getModelObject()));
-	}
-
-	/* Events */
-
-	@Override
-	protected void onModelChanged()
-	{
-		AjaxRequestTarget target = RequestCycleUtils.getAjaxRequestTarget();
-
-		if (target != null)
+		
+		if (this.valueChanged)
 		{
+			this.valueChanged = false;
 			this.onValueChanged(target);
 
 			if (this.getModelObject() >= this.getMax())
@@ -221,6 +215,14 @@ public class ProgressBar extends JQueryContainer implements IProgressBarListener
 				this.onComplete(target);
 			}
 		}
+	}
+
+	/* Events */
+
+	@Override
+	protected void onModelChanged()
+	{
+		this.valueChanged  = true;
 	}
 
 	/**
