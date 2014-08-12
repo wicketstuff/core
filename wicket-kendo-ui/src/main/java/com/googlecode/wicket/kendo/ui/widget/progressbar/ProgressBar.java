@@ -204,7 +204,7 @@ public class ProgressBar extends JQueryContainer implements IProgressBarListener
 	{
 		String widget = String.format("jQuery('%s').data('%s')", JQueryWidget.getSelector(this), ProgressBarBehavior.METHOD);
 		target.appendJavaScript(String.format("%s.value(%d);", widget, this.getModelObject()));
-		
+
 		if (this.valueChanged)
 		{
 			this.valueChanged = false;
@@ -222,7 +222,7 @@ public class ProgressBar extends JQueryContainer implements IProgressBarListener
 	@Override
 	protected void onModelChanged()
 	{
-		this.valueChanged  = true;
+		this.valueChanged = true;
 	}
 
 	/**

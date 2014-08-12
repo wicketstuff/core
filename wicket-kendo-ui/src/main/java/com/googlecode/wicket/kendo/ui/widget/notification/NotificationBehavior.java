@@ -82,7 +82,7 @@ public class NotificationBehavior extends KendoAbstractBehavior
 
 	/**
 	 * Gets the Kendo (jQuery) object
-	 * 
+	 *
 	 * @return the jQuery object
 	 */
 	private String widget()
