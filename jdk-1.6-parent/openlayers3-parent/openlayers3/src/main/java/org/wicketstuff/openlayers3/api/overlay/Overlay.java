@@ -72,6 +72,45 @@ public class Overlay extends JavascriptObject implements Serializable {
      *         The component linked to this overlay
      * @param position
      *         The position of the overlay
+     */
+    public Overlay(Component component, LongLat position) {
+        this(component, position, DEFAULT_POSITIONING, DEFAULT_STOP_EVENT);
+    }
+
+    /**
+     * Creates a new instance.
+     *
+     * @param component
+     *         The component linked to this overlay
+     * @param positioning
+     *         Defines how the overlay is actually positioned with respect to its position property.
+     */
+    public Overlay(Component component, Positioning positioning) {
+        this(component, null, positioning, DEFAULT_STOP_EVENT);
+    }
+
+    /**
+     * Creates a new instance.
+     *
+     * @param component
+     *         The component linked to this overlay
+     * @param position
+     *         The position of the overlay
+     * @param positioning
+     *         Defines how the overlay is actually positioned with respect to its position property.
+     */
+    public Overlay(Component component, LongLat position, Positioning positioning) {
+        this(component, position, positioning, DEFAULT_STOP_EVENT);
+    }
+
+
+    /**
+     * Creates a new instance.
+     *
+     * @param component
+     *         The component linked to this overlay
+     * @param position
+     *         The position of the overlay
      * @param positioning
      *         Defines how the overlay is actually positioned with respect to its position property.
      * @param stopEvent

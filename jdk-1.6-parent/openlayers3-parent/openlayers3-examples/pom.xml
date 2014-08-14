@@ -36,7 +36,7 @@
             <version>${project.version}</version>
         </dependency>
         <dependency>
-            <groupId>org.wicketstuff</groupId>
+            <groupId>${project.groupId}</groupId>
             <artifactId>wicketstuff-annotation</artifactId>
             <version>${project.version}</version>
         </dependency>

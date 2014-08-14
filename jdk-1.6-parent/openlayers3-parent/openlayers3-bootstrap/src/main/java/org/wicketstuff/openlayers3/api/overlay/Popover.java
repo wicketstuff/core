@@ -3,6 +3,7 @@ package org.wicketstuff.openlayers3.api.overlay;
 import org.apache.wicket.Component;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.model.IModel;
+import org.apache.wicket.util.string.Strings;
 import org.wicketstuff.openlayers3.api.coordinate.LongLat;
 
 /**
@@ -227,7 +228,7 @@ public class Popover extends Overlay {
         builder.append("$(element).popover({");
 
         if (titleModel != null) {
-            builder.append("'title': '" + titleModel.getObject() + "',");
+            builder.append("'title': '" + Strings.escapeMarkup(titleModel.getObject()) + "',");
         }
 
         if (placement != null) {
@@ -239,7 +240,7 @@ public class Popover extends Overlay {
         }
 
         if (html != null) {
-            builder.append("'content': '" + model.getObject() + "',");
+            builder.append("'content': '" + Strings.escapeMarkup(model.getObject()) + "',");
         }
         builder.append("});");
 

@@ -9,6 +9,9 @@ import org.wicketstuff.openlayers3.examples.base.BasePage;
 @MountPath("/index")
 public class HomePage extends BasePage {
 
+    /**
+     * Creates a new instance.
+     */
     public HomePage() {
 
     }
