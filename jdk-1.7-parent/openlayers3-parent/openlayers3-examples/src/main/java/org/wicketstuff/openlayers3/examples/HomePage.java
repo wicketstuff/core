@@ -1,11 +1,13 @@
 package org.wicketstuff.openlayers3.examples;
 
-import org.apache.wicket.markup.html.WebPage;
+import org.wicketstuff.annotation.mount.MountPath;
+import org.wicketstuff.openlayers3.examples.base.BasePage;
 
 /**
  * Provides the home page for the OpenLayers3 Examples application.
  */
-public class HomePage extends WebPage {
+@MountPath("/index")
+public class HomePage extends BasePage {
 
     public HomePage() {
 
