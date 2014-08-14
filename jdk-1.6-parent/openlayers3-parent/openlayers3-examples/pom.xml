@@ -35,6 +35,11 @@
             <artifactId>wicketstuff-openlayers3-bootstrap</artifactId>
             <version>${project.version}</version>
         </dependency>
+        <dependency>
+            <groupId>org.wicketstuff</groupId>
+            <artifactId>wicketstuff-annotation</artifactId>
+            <version>${project.version}</version>
+        </dependency>
 
         <!-- LOGGING DEPENDENCIES - LOG4J -->
         <dependency>

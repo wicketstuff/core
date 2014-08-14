@@ -1,5 +1,7 @@
 package org.wicketstuff.openlayers3.examples;
 
+import de.agilecoders.wicket.core.Bootstrap;
+import de.agilecoders.wicket.core.settings.BootstrapSettings;
 import org.apache.wicket.Page;
 import org.apache.wicket.protocol.http.WebApplication;
 
@@ -10,6 +12,14 @@ public class WicketApplication extends WebApplication {
 
     public WicketApplication() {
 
+    }
+
+    @Override
+    protected void init() {
+        super.init();
+
+        BootstrapSettings settings = new BootstrapSettings();
+        Bootstrap.install(this, settings);
     }
 
     @Override
