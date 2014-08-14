@@ -24,6 +24,8 @@ import javax.xml.transform.stream.StreamResult;
 
 import org.apache.wicket.Session;
 import org.apache.wicket.WicketRuntimeException;
+import org.apache.wicket.ajax.json.JSONException;
+import org.apache.wicket.ajax.json.JSONObject;
 import org.apache.wicket.authroles.authorization.strategies.role.Roles;
 import org.apache.wicket.util.tester.WicketTester;
 import org.junit.After;
@@ -137,13 +139,16 @@ public class RestResourcesTest
 	}
 
 	@Test
-	public void testJsonSerializedResponse()
+	public void testJsonSerializedResponse() throws JSONException
 	{
 		// test JSON response
 		tester.getRequest().setMethod("POST");
 		tester.executeUrl("./api");
 
-		Assert.assertEquals(TestJsonDesSer.getJSON(), tester.getLastResponseAsString());
+        JSONObject actual = new JSONObject(tester.getLastResponseAsString());
+        Assert.assertEquals("Smith", actual.getString("surname"));
+        Assert.assertEquals("Mary", actual.getString("name"));
+        Assert.assertEquals("m.smith@gmail.com", actual.getString("email"));
 	}
 
 	@Test
