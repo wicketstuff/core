@@ -15,7 +15,7 @@ public abstract class JavascriptObject {
     /**
      * Map for starting object Ids.
      */
-    public static java.util.Map<Object, String> objectIds = new HashMap<>();
+    public static java.util.Map<Object, String> objectIds = new HashMap<Object, String>();
 
     /**
      * Returns a String with the type of Javascript object that this object represents. This will be used when creating

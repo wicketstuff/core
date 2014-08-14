@@ -13,7 +13,7 @@ import java.util.List;
  */
 public class Vector extends Layer {
 
-    private List<VectorFeaturesLoadedListener> loadListeners = new ArrayList<>();
+    private List<VectorFeaturesLoadedListener> loadListeners = new ArrayList<VectorFeaturesLoadedListener>();
 
     /**
      * Style for the vector layer.

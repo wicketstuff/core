@@ -26,7 +26,7 @@ public abstract class VectorFeatureDataLoadedListener extends AbstractDefaultAja
     /**
      * Map for starting object Ids.
      */
-    public static java.util.Map<Object, String> objectIds = new HashMap<>();
+    public static java.util.Map<Object, String> objectIds = new HashMap<Object, String>();
 
     /**
      * Callback method that is invoked when feature data has been loaded into the vector layer.

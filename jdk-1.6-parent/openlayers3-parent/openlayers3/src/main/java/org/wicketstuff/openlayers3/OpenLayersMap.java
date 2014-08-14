@@ -27,7 +27,8 @@ public abstract class OpenLayersMap extends Panel {
     /**
      * Map of layers to the data loaded handler that notifies their listeners.
      */
-    private java.util.Map<Layer, VectorFeatureDataLoadedListener> layerDataLoadedMap = new HashMap<>();
+    private java.util.Map<Layer, VectorFeatureDataLoadedListener> layerDataLoadedMap =
+            new HashMap<Layer, VectorFeatureDataLoadedListener>();
 
     /**
      * Creates a new instance

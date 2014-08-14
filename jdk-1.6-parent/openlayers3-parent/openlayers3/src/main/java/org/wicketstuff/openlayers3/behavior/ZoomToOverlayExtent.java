@@ -71,7 +71,7 @@ public class ZoomToOverlayExtent extends Behavior {
     public void renderHead(Component component, IHeaderResponse response) {
         super.renderHead(component, response);
 
-        final Map<String, CharSequence> params = new HashMap<>();
+        final Map<String, CharSequence> params = new HashMap<String, CharSequence>();
         params.put("componentId", component.getMarkupId());
         params.put("buffer", buffer != null ? buffer.toString() : "NULL");
 
