@@ -17,7 +17,6 @@ import org.wicketstuff.openlayers3.component.MarkerPopover;
 import org.wicketstuff.openlayers3.component.PopoverPanel;
 import org.wicketstuff.openlayers3.examples.base.BasePage;
 
-import java.awt.*;
 import java.util.Arrays;
 
 /**
@@ -54,7 +53,7 @@ public class PopoverPage extends BasePage {
         // add a marker that will update the content of the popover, move the popover and then make it visible when
         // the marker is clicked
         add(markerPopover = new MarkerPopover("marker",
-                Color.BLUE,                                               // marker color
+                "#4169E1",                                                // marker color
                 popoverPanel,                                             // popover panel to populate on click
                 Model.of("Miles' Office"),                                // title for the popover
                 Model.of("This is where Miles labors away on his code"),  // content for the popover

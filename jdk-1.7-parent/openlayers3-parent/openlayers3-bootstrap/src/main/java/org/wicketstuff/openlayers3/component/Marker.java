@@ -6,8 +6,7 @@ import org.apache.wicket.markup.head.IHeaderResponse;
 import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.request.resource.CssResourceReference;
-
-import java.awt.*;
+import org.wicketstuff.openlayers3.api.util.Color;
 
 /**
  * Provides a marker that may be placed on a amp.
@@ -28,7 +27,7 @@ public class Marker extends Panel {
      *         The color of the marker
      */
     public Marker(final String id, final String color) {
-        this(id, Color.decode(color));
+        this(id, new Color(color));
     }
 
     /**
@@ -80,8 +79,7 @@ public class Marker extends Panel {
         super.onInitialize();
 
         add(new WebMarkupContainer("pin").add(
-                new AttributeAppender("style", "background-color: rgba(" + color.getRed() + ", " + color.getGreen()
-                        + ", " + color.getBlue() + ", " + color.getAlpha() + ");")));
+                new AttributeAppender("style", "background-color: " + color + ";")));
     }
 
     @Override
