@@ -16,6 +16,7 @@ public class CustomDialogPage extends AbstractDialogPage
 
 	public CustomDialogPage()
 	{
+		// Form //
 		final Form<Void> form = new Form<Void>("form");
 		this.add(form);
 

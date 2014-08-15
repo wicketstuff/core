@@ -217,14 +217,14 @@ public abstract class AbstractFormDialog<T extends Serializable> extends Abstrac
 	}
 
 	/**
-	 * Triggered after {@link Form#onError()} (when the form processing has error(s))
+	 * Triggered when the form is submitted, but the validation failed
 	 *
 	 * @param target
 	 */
 	protected abstract void onError(AjaxRequestTarget target);
 
 	/**
-	 * Triggered after {@link Form#onSubmit()} (the form has been submitted and it does not have error)
+	 * Triggered when the form is submitted, and the validation succeed
 	 *
 	 * @param target the {@link AjaxRequestTarget}
 	 */

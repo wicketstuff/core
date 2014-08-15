@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.googlecode.wicket.jquery.ui.interaction.behavior;
+package com.googlecode.wicket.jquery.core.behavior;
 
 import org.apache.wicket.Component;
 import org.apache.wicket.behavior.AttributeAppender;

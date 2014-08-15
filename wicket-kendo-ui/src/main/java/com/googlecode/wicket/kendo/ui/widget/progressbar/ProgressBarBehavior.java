@@ -18,8 +18,8 @@ package com.googlecode.wicket.kendo.ui.widget.progressbar;
 
 import org.apache.wicket.Component;
 
-import com.googlecode.wicket.jquery.core.JQueryBehavior;
 import com.googlecode.wicket.jquery.core.Options;
+import com.googlecode.wicket.kendo.ui.KendoAbstractBehavior;
 
 /**
  * Provides a Kendo UI progress-bar behavior.
@@ -27,7 +27,7 @@ import com.googlecode.wicket.jquery.core.Options;
  * @author Sebastien Briquet - sebfz1
  * @since 6.17.0
  */
-public class ProgressBarBehavior extends JQueryBehavior
+public class ProgressBarBehavior extends KendoAbstractBehavior
 {
 	private static final long serialVersionUID = 1L;
 

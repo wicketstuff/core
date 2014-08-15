@@ -109,7 +109,7 @@ public abstract class ConfirmAjaxButton extends GenericPanel<String>
 	// Events //
 
 	/**
-	 * Triggered when the form has been submitted, but the validation failed
+	 * Triggered when the form is submitted, but the validation failed
 	 *
 	 * @param target the {@link AjaxRequestTarget}
 	 * @param form the {@link Form}
@@ -117,7 +117,7 @@ public abstract class ConfirmAjaxButton extends GenericPanel<String>
 	protected abstract void onError(AjaxRequestTarget target, Form<?> form);
 
 	/**
-	 * Triggered when the form has been submitted, and the validation succeed
+	 * Triggered when the form is submitted, and the validation succeed
 	 *
 	 * @param target the {@link AjaxRequestTarget}
 	 * @param form the {@link Form}

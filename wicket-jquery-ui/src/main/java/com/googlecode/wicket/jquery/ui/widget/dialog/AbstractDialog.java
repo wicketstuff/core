@@ -21,15 +21,16 @@ import java.util.Arrays;
 import java.util.List;
 
 import org.apache.wicket.ajax.AjaxRequestTarget;
+import org.apache.wicket.markup.html.panel.GenericPanel;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
+import org.apache.wicket.util.lang.Args;
 
 import com.googlecode.wicket.jquery.core.IJQueryWidget;
 import com.googlecode.wicket.jquery.core.JQueryBehavior;
-import com.googlecode.wicket.jquery.core.JQueryPanel;
 import com.googlecode.wicket.jquery.core.Options;
 import com.googlecode.wicket.jquery.core.ajax.IJQueryAjaxAware;
-import com.googlecode.wicket.jquery.ui.interaction.behavior.DisplayNoneBehavior;
+import com.googlecode.wicket.jquery.core.behavior.DisplayNoneBehavior;
 import com.googlecode.wicket.jquery.ui.widget.dialog.ButtonAjaxBehavior.ClickEvent;
 
 /**
@@ -39,7 +40,7 @@ import com.googlecode.wicket.jquery.ui.widget.dialog.ButtonAjaxBehavior.ClickEve
  *
  * @param <T> the type of the model object
  */
-public abstract class AbstractDialog<T extends Serializable> extends JQueryPanel implements IDialogListener
+public abstract class AbstractDialog<T extends Serializable> extends GenericPanel<T> implements IJQueryWidget, IDialogListener
 {
 	private static final long serialVersionUID = 1L;
 
@@ -184,6 +185,12 @@ public abstract class AbstractDialog<T extends Serializable> extends JQueryPanel
 		behavior.setOption("width", this.getWidth());
 	}
 
+	@Override
+	public void onBeforeRender(JQueryBehavior behavior)
+	{
+		// noop
+	}
+
 	/**
 	 * Triggered when the dialog opens
 	 *
@@ -255,10 +262,7 @@ public abstract class AbstractDialog<T extends Serializable> extends JQueryPanel
 	 */
 	public void setTitle(IModel<String> title)
 	{
-		if (title == null)
-		{
-			throw new IllegalArgumentException("argument title must be not null");
-		}
+		Args.notNull(title, "title");
 
 		this.title = title;
 	}
@@ -317,38 +321,6 @@ public abstract class AbstractDialog<T extends Serializable> extends JQueryPanel
 	public boolean isEscapeCloseEventEnabled()
 	{
 		return false;
-	}
-
-	/**
-	 * Gets the model
-	 *
-	 * @return the parameterized model
-	 */
-	@SuppressWarnings("unchecked")
-	public IModel<T> getModel()
-	{
-		return (IModel<T>) this.getDefaultModel();
-	}
-
-	/**
-	 * Gets the model object
-	 *
-	 * @return the typed model object
-	 */
-	@SuppressWarnings("unchecked")
-	public T getModelObject()
-	{
-		return (T) this.getDefaultModelObject();
-	}
-
-	/**
-	 * Sets the model object
-	 *
-	 * @param object the typed model object
-	 */
-	public void setModelObject(T object)
-	{
-		this.setDefaultModelObject(object);
 	}
 
 	// Methods //

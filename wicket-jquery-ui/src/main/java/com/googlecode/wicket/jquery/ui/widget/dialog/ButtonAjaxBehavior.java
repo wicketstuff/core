@@ -83,5 +83,4 @@ public class ButtonAjaxBehavior extends JQueryAjaxBehavior
 			return this.button;
 		}
 	}
-
 }

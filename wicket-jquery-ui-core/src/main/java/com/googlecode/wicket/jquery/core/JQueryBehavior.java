@@ -214,12 +214,22 @@ public class JQueryBehavior extends JQueryAbstractBehavior
 	 */
 	protected void on(String selector, String event, String callback)
 	{
+		this.on(String.format("jQuery('%s').on('%s', %s);", selector, event, callback));
+	}
+
+	/**
+	 * Registers a jQuery event statement
+	 *
+	 * @param statement the jQuery statement (ie: "jQuery('#myId').on('click', function() {});")
+	 */
+	protected synchronized void on(String statement)
+	{
 		if (this.events == null)
 		{
 			this.events = new ArrayList<String>();
 		}
 
-		this.events.add(String.format("jQuery('%s').on('%s', %s);", selector, event, callback));
+		this.events.add(statement);
 	}
 
 	@Override

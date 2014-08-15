@@ -27,6 +27,7 @@ import com.googlecode.wicket.jquery.ui.samples.pages.kendo.multiselect.DefaultMu
 import com.googlecode.wicket.jquery.ui.samples.pages.kendo.notification.DefaultNotificationPage;
 import com.googlecode.wicket.jquery.ui.samples.pages.kendo.progressbar.KendoProgressBarPage;
 import com.googlecode.wicket.jquery.ui.samples.pages.kendo.splitter.DefaultSplitterPage;
+import com.googlecode.wicket.jquery.ui.samples.pages.kendo.window.DefaultWindowPage;
 import com.googlecode.wicket.jquery.ui.samples.pages.menu.DefaultMenuPage;
 import com.googlecode.wicket.jquery.ui.samples.pages.plugins.FontSizePage;
 import com.googlecode.wicket.jquery.ui.samples.pages.plugins.datepicker.RangeDatePickerPage;
@@ -101,6 +102,7 @@ public class SampleApplication extends WebApplication
 		this.mountPackage("/kendo/notification", DefaultNotificationPage.class);
 		this.mountPackage("/kendo/progressbar", KendoProgressBarPage.class);
 		this.mountPackage("/kendo/splitter", DefaultSplitterPage.class);
+		this.mountPackage("/kendo/window", DefaultWindowPage.class);
 
 		// Calendar //
 		this.mountPackage("/calendar", DefaultCalendarPage.class);

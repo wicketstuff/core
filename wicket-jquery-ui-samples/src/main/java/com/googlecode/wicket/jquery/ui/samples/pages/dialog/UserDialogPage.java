@@ -12,7 +12,6 @@ import org.apache.wicket.markup.html.form.RequiredTextField;
 import org.apache.wicket.markup.html.list.ListItem;
 import org.apache.wicket.markup.html.list.PropertyListView;
 import org.apache.wicket.markup.html.panel.FeedbackPanel;
-import org.apache.wicket.model.CompoundPropertyModel;
 import org.apache.wicket.model.util.ListModel;
 
 import com.googlecode.wicket.jquery.ui.JQueryIcon;
@@ -20,6 +19,7 @@ import com.googlecode.wicket.jquery.ui.form.RadioChoice;
 import com.googlecode.wicket.jquery.ui.form.button.AjaxButton;
 import com.googlecode.wicket.jquery.ui.panel.JQueryFeedbackPanel;
 import com.googlecode.wicket.jquery.ui.samples.data.bean.User;
+import com.googlecode.wicket.jquery.ui.samples.data.model.UserModel;
 import com.googlecode.wicket.jquery.ui.widget.dialog.AbstractFormDialog;
 import com.googlecode.wicket.jquery.ui.widget.dialog.DialogButton;
 
@@ -95,7 +95,7 @@ public class UserDialogPage extends AbstractDialogPage
 						User user = item.getModelObject();
 
 						dialog.setTitle(target, "Update user " + user.getName());
-						dialog.setModelObject(user);
+						dialog.setModel(new UserModel(user));
 						dialog.open(target);
 					}
 				});
@@ -111,7 +111,7 @@ public class UserDialogPage extends AbstractDialogPage
 			protected void onSubmit(AjaxRequestTarget target, Form<?> form)
 			{
 				dialog.setTitle(target, "Create new user");
-				dialog.setModelObject(new User()); //Provides a new model object to the dialog
+				dialog.setModel(new UserModel()); //Provides a new model object to the dialog
 				dialog.open(target); //Important: onOpen() event has been overridden in UserDialog to re-attach the inner form, in order to reflect the updated model
 			}
 		});
@@ -121,7 +121,7 @@ public class UserDialogPage extends AbstractDialogPage
 	 * This dialog class is located here for convenience in this sample<br/>
 	 * Associated markup file is UserDialogPage$UserDialog.html
 	 */
-	abstract class UserDialog extends AbstractFormDialog<User>
+	static abstract class UserDialog extends AbstractFormDialog<User>
 	{
 		private static final long serialVersionUID = 1L;
 		protected final DialogButton btnSubmit = new DialogButton("Save", JQueryIcon.CHECK);
@@ -164,12 +164,6 @@ public class UserDialogPage extends AbstractDialogPage
 		public Form<?> getForm()
 		{
 			return this.form;
-		}
-
-		@Override
-		public void setModelObject(User user)
-		{
-			this.setDefaultModel(new CompoundPropertyModel<User>(user));
 		}
 
 		// Events //

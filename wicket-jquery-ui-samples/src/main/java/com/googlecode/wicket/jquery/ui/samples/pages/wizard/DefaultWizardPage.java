@@ -10,7 +10,6 @@ import org.apache.wicket.markup.html.form.EmailTextField;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.form.RequiredTextField;
 import org.apache.wicket.markup.html.panel.FeedbackPanel;
-import org.apache.wicket.model.CompoundPropertyModel;
 import org.apache.wicket.model.Model;
 
 import com.googlecode.wicket.jquery.ui.JQueryIcon;
@@ -18,6 +17,7 @@ import com.googlecode.wicket.jquery.ui.form.RadioChoice;
 import com.googlecode.wicket.jquery.ui.form.button.AjaxButton;
 import com.googlecode.wicket.jquery.ui.panel.JQueryFeedbackPanel;
 import com.googlecode.wicket.jquery.ui.samples.data.bean.User;
+import com.googlecode.wicket.jquery.ui.samples.data.model.UserModel;
 import com.googlecode.wicket.jquery.ui.widget.wizard.AbstractWizard;
 
 public class DefaultWizardPage extends AbstractWizardPage
@@ -72,7 +72,7 @@ public class DefaultWizardPage extends AbstractWizardPage
 			@Override
 			protected void onSubmit(AjaxRequestTarget target, Form<?> form)
 			{
-				wizard.setModelObject(new User());
+				wizard.setModel(new UserModel());
 				wizard.open(target);
 			}
 		});
@@ -97,12 +97,6 @@ public class DefaultWizardPage extends AbstractWizardPage
 			wizardModel.setLastVisible(true); //makes the 'last step button' visible
 
 			this.init(wizardModel);
-		}
-
-		@Override
-		public void setModelObject(User user)
-		{
-			this.setDefaultModel(new CompoundPropertyModel<User>(user));
 		}
 
 		/**

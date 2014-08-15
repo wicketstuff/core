@@ -150,6 +150,16 @@ public class ProgressBar extends JQueryContainer implements IProgressBarListener
 	/* Methods */
 
 	/**
+	 * Gets the Kendo (jQuery) object
+	 *
+	 * @return the jQuery object
+	 */
+	protected String widget()
+	{
+		return String.format("jQuery('%s').data('%s')", JQueryWidget.getSelector(this), ProgressBarBehavior.METHOD);
+	}
+
+	/**
 	 * Increments the progress-bar value by 1
 	 *
 	 * @param target the {@link AjaxRequestTarget}
@@ -202,8 +212,7 @@ public class ProgressBar extends JQueryContainer implements IProgressBarListener
 	 */
 	public final void refresh(AjaxRequestTarget target)
 	{
-		String widget = String.format("jQuery('%s').data('%s')", JQueryWidget.getSelector(this), ProgressBarBehavior.METHOD);
-		target.appendJavaScript(String.format("%s.value(%d);", widget, this.getModelObject()));
+		target.appendJavaScript(String.format("%s.value(%d);", this.widget(), this.getModelObject()));
 
 		if (this.valueChanged)
 		{

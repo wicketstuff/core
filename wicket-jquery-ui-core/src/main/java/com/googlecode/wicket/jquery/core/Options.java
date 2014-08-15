@@ -24,6 +24,7 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
 
+import org.apache.wicket.core.util.string.JavaScriptUtils;
 import org.apache.wicket.util.io.IClusterable;
 
 import com.googlecode.wicket.jquery.core.utils.DateUtils;
@@ -41,7 +42,7 @@ public class Options implements IClusterable
 	public static final String QUOTE = "\"";
 
 	/**
-	 * Converts a string representation of an object to its javascript representation. ie: "myvalue" (with the double quotes)<br/>
+	 * Converts an object to its javascript representation. ie: "myvalue" (with the double quotes)<br/>
 	 * If the supplied value is null, "null" is returned
 	 *
 	 * @param value the object
@@ -61,7 +62,7 @@ public class Options implements IClusterable
 	 */
 	public static String asString(String value)
 	{
-		return String.format("%s%s%s", QUOTE, String.valueOf(value).replace(QUOTE, "\\" + QUOTE), QUOTE);
+		return String.format("%s%s%s", QUOTE, JavaScriptUtils.escapeQuotes(value), QUOTE);
 	}
 
 	/**

@@ -15,12 +15,14 @@
    See the License for the specific language governing permissions and
    limitations under the License.
 -->
-<html xmlns:wicket="http://wicket.apache.org">
-<head>
-</head>
-<body>
-	<wicket:panel>
-		<wicket:container wicket:id="fragment" />
-	</wicket:panel>
-</body>
-</html>
+<wicket:panel xmlns:wicket="http://wicket.apache.org">
+	<form wicket:id="form">
+		<div wicket:id="feedback"></div>
+		<br/>
+		<div wicket:id="label" style="padding-bottom: 4px;">[label]</div>
+		<input type="text" wicket:id="input" style="width: 50%;"></input>
+		<br/>
+		<button wicket:id="close" style="float: right; margin-left: 4px;"><wicket:message key="button.close"/></button>
+		<button wicket:id="submit" style="float: right; margin-left: 4px;"><wicket:message key="button.submit"/></button>
+	</form>
+</wicket:panel>

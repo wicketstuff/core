@@ -17,7 +17,7 @@ public class KendoProgressBarPage extends AbstractProgressBarPage implements IAj
 {
 	private static final long serialVersionUID = 1L;
 
-	private final ProgressBar progressBar;
+	private final ProgressBar progressbar;
 	private final AjaxIndicatorAppender indicator = new AjaxIndicatorAppender();
 
 	public KendoProgressBarPage()
@@ -37,7 +37,7 @@ public class KendoProgressBarPage extends AbstractProgressBarPage implements IAj
 			@Override
 			protected void onTimer(AjaxRequestTarget target)
 			{
-				progressBar.forward(target);
+				progressbar.forward(target);
 			}
 		};
 
@@ -47,7 +47,7 @@ public class KendoProgressBarPage extends AbstractProgressBarPage implements IAj
 		final Options options = new Options();
 		options.set("max", 20);
 
-		this.progressBar = new ProgressBar("progress", Model.of(15), options) {
+		this.progressbar = new ProgressBar("progress", Model.of(15), options) {
 
 			private static final long serialVersionUID = 1L;
 
@@ -68,13 +68,13 @@ public class KendoProgressBarPage extends AbstractProgressBarPage implements IAj
 			}
 		};
 
-		form.add(this.progressBar);
+		form.add(this.progressbar);
 
 		// Indicator //
 		form.add(new EmptyPanel("indicator").add(this.indicator));
 
 		// Initialize FeedbackPanel //
-		this.info("value: " + this.progressBar.getDefaultModelObjectAsString());
+		this.info("value: " + this.progressbar.getDefaultModelObjectAsString());
 	}
 
 	@Override

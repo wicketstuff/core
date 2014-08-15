@@ -106,12 +106,6 @@ public abstract class DemoCalendarDialog extends AbstractFormDialog<DemoCalendar
 		return this.form;
 	}
 
-	@Override
-	public void setModelObject(DemoCalendarEvent event)
-	{
-		this.setDefaultModelObject(event);
-	}
-
 	// Events //
 	@Override
 	protected void onOpen(AjaxRequestTarget target)

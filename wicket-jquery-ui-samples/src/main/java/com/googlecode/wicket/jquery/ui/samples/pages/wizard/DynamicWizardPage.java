@@ -19,7 +19,6 @@ import org.apache.wicket.markup.html.image.ContextImage;
 import org.apache.wicket.markup.html.list.ListItem;
 import org.apache.wicket.markup.html.list.ListView;
 import org.apache.wicket.markup.html.panel.FeedbackPanel;
-import org.apache.wicket.model.CompoundPropertyModel;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
 
@@ -30,6 +29,7 @@ import com.googlecode.wicket.jquery.ui.form.button.AjaxButton;
 import com.googlecode.wicket.jquery.ui.panel.JQueryFeedbackPanel;
 import com.googlecode.wicket.jquery.ui.samples.data.bean.User;
 import com.googlecode.wicket.jquery.ui.samples.data.bean.User.Avatar;
+import com.googlecode.wicket.jquery.ui.samples.data.model.UserModel;
 import com.googlecode.wicket.jquery.ui.widget.wizard.AbstractWizard;
 
 public class DynamicWizardPage extends AbstractWizardPage
@@ -84,7 +84,7 @@ public class DynamicWizardPage extends AbstractWizardPage
 			@Override
 			protected void onSubmit(AjaxRequestTarget target, Form<?> form)
 			{
-				wizard.setModelObject(new User());
+				wizard.setModel(new UserModel());
 				wizard.open(target);
 			}
 		});
@@ -107,7 +107,7 @@ public class DynamicWizardPage extends AbstractWizardPage
 
 		public UserWizard(String id, String title)
 		{
-			super(id, title, Model.of(new User()));
+			super(id, title);
 
 			this.step0 = new Step0();
 			this.step1 = new Step1();
@@ -117,12 +117,6 @@ public class DynamicWizardPage extends AbstractWizardPage
 
 			final IWizardModel wizardModel = new DynamicWizardModel(this.step0);
 			this.init(wizardModel);
-		}
-
-		@Override
-		public void setModelObject(User user)
-		{
-			this.setDefaultModel(new CompoundPropertyModel<User>(user));
 		}
 
 		@Override

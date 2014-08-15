@@ -33,7 +33,7 @@ public class PositionBehavior extends JQueryAbstractBehavior
 	private static final String METHOD = "position";
 
 	private final Object object;
-	private String statement = "";
+	private String selector;
 
 	/**
 	 * Constructor
@@ -60,12 +60,12 @@ public class PositionBehavior extends JQueryAbstractBehavior
 	{
 		super.bind(component);
 
-		this.statement = String.format("jQuery('%s').%s(%s);", JQueryWidget.getSelector(component), METHOD, this.object);
+		this.selector = JQueryWidget.getSelector(component);
 	}
 
 	@Override
 	protected String $()
 	{
-		return this.statement;
+		return String.format("jQuery('%s').%s(%s);", this.selector, METHOD, this.object);
 	}
 }
