@@ -19,7 +19,7 @@ public class Popover extends Overlay {
     /**
      * Flag indicating that the content to be displayed is HTML.
      */
-    private Boolean html = true;
+    private boolean html = true;
 
     /**
      * Backing model for this popover's title.
@@ -79,7 +79,7 @@ public class Popover extends Overlay {
      *
      * @return Value of the HTML flag
      */
-    public Boolean getHtml() {
+    public boolean getHtml() {
         return html;
     }
 
@@ -89,7 +89,7 @@ public class Popover extends Overlay {
      * @param html
      *         New value
      */
-    public void setHtml(Boolean html) {
+    public void setHtml(boolean html) {
         this.html = html;
     }
 
@@ -100,7 +100,7 @@ public class Popover extends Overlay {
      *         New value
      * @return This instance
      */
-    public Popover html(Boolean html) {
+    public Popover html(boolean html) {
         setHtml(html);
         return this;
     }
@@ -235,13 +235,13 @@ public class Popover extends Overlay {
             builder.append("'placement': '" + placement + "',");
         }
 
-        if (html != null) {
-            builder.append("'html': '" + html + "',");
-        }
-
-        if (html != null) {
+	builder.append("'html': '" + html + "',");
+        if (html) {
             builder.append("'content': '" + Strings.escapeMarkup(model.getObject()) + "',");
-        }
+        } else {
+            builder.append("'content': '" + model.getObject() + "',");
+	}
+
         builder.append("});");
 
         return builder.toString();

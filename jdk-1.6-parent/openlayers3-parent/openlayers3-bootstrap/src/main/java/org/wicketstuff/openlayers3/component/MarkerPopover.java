@@ -6,8 +6,7 @@ import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
 import org.wicketstuff.openlayers3.api.coordinate.LongLat;
 import org.wicketstuff.openlayers3.api.overlay.Overlay;
-
-import java.awt.*;
+import org.wicketstuff.openlayers3.api.util.Color;
 
 /**
  * Provides a marker linked to a popover. When the marker is clicked, the popover will have it's content updated and
@@ -68,7 +67,7 @@ public class MarkerPopover extends Marker {
      */
     public MarkerPopover(final String id, String color, final PopoverPanel popoverPanel, final IModel<String> titleModel,
                          final IModel<String> contentModel, final IModel<LongLat> positionModel) {
-        this(id, Color.decode(color), popoverPanel, titleModel, contentModel, positionModel);
+        this(id, new Color(color), popoverPanel, titleModel, contentModel, positionModel);
     }
 
     /**
