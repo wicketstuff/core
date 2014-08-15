@@ -59,7 +59,7 @@ public class DefaultWindowPage extends AbstractWindowPage
 
 	/**
 	 * This window class is located here for convenience in this sample<br/>
-	 * Associated markup file is DefaultWindowPage$$MyWindow.html
+	 * Associated markup file is DefaultWindowPage$MyWindow.html
 	 */
 	static class MyWindow extends AbstractWindow<Void>
 	{

@@ -94,7 +94,7 @@ public abstract class InputWindow<T> extends AbstractWindow<T>
 	 */
 	public InputWindow(String id, IModel<String> title, IModel<T> model, IModel<String> label)
 	{
-		super(id, title, model);
+		super(id, title, model, true);
 
 		this.label = label;
 		this.form = new Form<Void>("form");
