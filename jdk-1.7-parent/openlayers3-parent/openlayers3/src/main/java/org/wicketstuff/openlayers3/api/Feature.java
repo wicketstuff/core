@@ -218,7 +218,10 @@ public class Feature extends JavascriptObject implements Serializable {
         StringBuilder builder = new StringBuilder();
 
         if (getStyle() != null) {
-            builder.append(getJsId() + ".setStyle(new " + getStyle().getJsType() + "(" + getStyle().renderJs() + "));");
+            builder.append(getJsId());
+	    builder.append(".setStyle(new ");
+	    builder.append(getStyle().getJsType());
+	    builder.append("(" + getStyle().renderJs() + "));");
         }
 
         return builder.toString();
@@ -232,7 +235,9 @@ public class Feature extends JavascriptObject implements Serializable {
         builder.append("'id': '" + getJsId() + "',");
 
         if (getGeometry() != null) {
-            builder.append("'geometry': new " + geometry.getJsType() + "(" + getGeometry().renderJs() + "),");
+            builder.append("'geometry': new ");
+	    builder.append(geometry.getJsType());
+	    builder.append("(" + getGeometry().renderJs() + "),");
         }
 
         if (getName() != null) {
