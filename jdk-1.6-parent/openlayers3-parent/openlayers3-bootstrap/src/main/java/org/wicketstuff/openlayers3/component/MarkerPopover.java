@@ -124,7 +124,7 @@ public class MarkerPopover extends Marker {
     protected void onInitialize() {
         super.onInitialize();
 
-        add(new AjaxEventBehavior("onclick") {
+        add(new AjaxEventBehavior("click") {
             @Override
             protected void onEvent(AjaxRequestTarget target) {
                 popoverPanel.getContentModel().setObject(getContentModel().getObject());
