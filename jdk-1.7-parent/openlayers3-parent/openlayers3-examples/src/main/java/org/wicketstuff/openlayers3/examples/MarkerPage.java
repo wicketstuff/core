@@ -1,6 +1,8 @@
 package org.wicketstuff.openlayers3.examples;
 
 import org.apache.wicket.model.Model;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.wicketstuff.annotation.mount.MountPath;
 import org.wicketstuff.openlayers3.DefaultOpenLayersMap;
 import org.wicketstuff.openlayers3.api.Map;
@@ -10,6 +12,7 @@ import org.wicketstuff.openlayers3.api.layer.Tile;
 import org.wicketstuff.openlayers3.api.overlay.Overlay;
 import org.wicketstuff.openlayers3.api.source.Osm;
 import org.wicketstuff.openlayers3.api.style.View;
+import org.wicketstuff.openlayers3.api.util.Color;
 import org.wicketstuff.openlayers3.component.Marker;
 import org.wicketstuff.openlayers3.examples.base.BasePage;
 
@@ -20,6 +23,8 @@ import java.util.Arrays;
  */
 @MountPath("/marker")
 public class MarkerPage extends BasePage {
+
+    private final static Logger logger = LoggerFactory.getLogger(MarkerPage.class);
 
     /**
      * Marker over Miles' office.
