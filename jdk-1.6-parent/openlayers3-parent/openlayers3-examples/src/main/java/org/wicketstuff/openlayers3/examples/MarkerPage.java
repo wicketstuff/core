@@ -12,7 +12,6 @@ import org.wicketstuff.openlayers3.api.layer.Tile;
 import org.wicketstuff.openlayers3.api.overlay.Overlay;
 import org.wicketstuff.openlayers3.api.source.Osm;
 import org.wicketstuff.openlayers3.api.style.View;
-import org.wicketstuff.openlayers3.api.util.Color;
 import org.wicketstuff.openlayers3.component.Marker;
 import org.wicketstuff.openlayers3.examples.base.BasePage;
 
