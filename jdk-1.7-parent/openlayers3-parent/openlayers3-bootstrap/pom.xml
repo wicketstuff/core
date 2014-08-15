@@ -42,24 +42,6 @@
         <dependency>
             <groupId>de.agilecoders.wicket</groupId>
             <artifactId>wicket-bootstrap-core</artifactId>
-            <exclusions>
-                <exclusion>
-                    <groupId>org.apache.wicket</groupId>
-                    <artifactId>wicket-request</artifactId>
-                </exclusion>
-                <exclusion>
-                    <groupId>org.apache.wicket</groupId>
-                    <artifactId>wicket-util</artifactId>
-                </exclusion>
-            </exclusions>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.wicket</groupId>
-            <artifactId>wicket-request</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.wicket</groupId>
-            <artifactId>wicket-util</artifactId>
         </dependency>
         <dependency>
             <groupId>org.slf4j</groupId>
