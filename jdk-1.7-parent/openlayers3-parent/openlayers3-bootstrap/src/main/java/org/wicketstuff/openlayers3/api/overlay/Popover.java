@@ -4,12 +4,16 @@ import org.apache.wicket.Component;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.util.string.Strings;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.wicketstuff.openlayers3.api.coordinate.LongLat;
 
 /**
  * Provides an object that models an overlay containing a popover.
  */
 public class Popover extends Overlay {
+
+    private final static Logger logger = LoggerFactory.getLogger(Popover.class);
 
     /**
      * The placement position of the popover relative to the overlay's position.
@@ -235,9 +239,11 @@ public class Popover extends Overlay {
             builder.append("'placement': '" + placement + "',");
         }
 
-	builder.append("'html': '" + html + "',");
+        logger.info("HTML? " + html);
+        builder.append("'html': '" + html + "',");
         if (html) {
-            builder.append("'content': '" + model.getObject() + "',");
+            logger.info(escapeQuoteJs(model.getObject()));
+            builder.append("'content': '" + escapeQuoteJs(model.getObject()) + "',");
         } else {
             builder.append("'content': '" + Strings.escapeMarkup(model.getObject()) + "',");
         }
@@ -245,5 +251,16 @@ public class Popover extends Overlay {
         builder.append("});");
 
         return builder.toString();
+    }
+
+    /**
+     * Escapes single quotation marks in the provided String. When outputting Javascript code, we're using single
+     * quotation marks to surround the content.
+     *
+     * @param text Text to escape
+     * @return String with escaped text
+     */
+    private String escapeQuoteJs(String text) {
+        return text.replaceAll("\'", "&apos;");
     }
 }
