@@ -232,7 +232,7 @@ public class Popover extends Overlay {
         builder.append("$(element).popover({");
 
         if (titleModel != null) {
-            builder.append("'title': '" + Strings.escapeMarkup(titleModel.getObject()) + "',");
+            builder.append("'title': '" + escapeQuoteJs(titleModel.getObject()) + "',");
         }
 
         if (placement != null) {
