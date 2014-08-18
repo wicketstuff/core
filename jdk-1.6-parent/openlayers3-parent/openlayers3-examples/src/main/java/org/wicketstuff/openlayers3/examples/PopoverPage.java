@@ -2,6 +2,7 @@ package org.wicketstuff.openlayers3.examples;
 
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.model.Model;
+import org.apache.wicket.util.string.Strings;
 import org.wicketstuff.annotation.mount.MountPath;
 import org.wicketstuff.openlayers3.DefaultOpenLayersMap;
 import org.wicketstuff.openlayers3.OpenLayersMap;
@@ -53,11 +54,11 @@ public class PopoverPage extends BasePage {
         // add a marker that will update the content of the popover, move the popover and then make it visible when
         // the marker is clicked
         add(markerPopover = new MarkerPopover("marker",
-                "#4169E1",                                                // marker color
-                popoverPanel,                                             // popover panel to populate on click
-                Model.of("Miles' Office"),                                // title for the popover
-                Model.of("This is where Miles labors away on his code"),  // content for the popover
-                Model.of(longLat)));                                      // location for the popover
+                "#4169E1",                                                        // marker color
+                popoverPanel,                                                     // popover panel to populate on click
+                Model.of("Miles' Office"),                                        // title for the popover
+                Model.of("<p>This is where Miles' labors away on his code</p>"),  // content for the popover
+                Model.of(longLat)));                                              // location for the popover
 
         // create and add our marker
         add(map = new DefaultOpenLayersMap("map",
