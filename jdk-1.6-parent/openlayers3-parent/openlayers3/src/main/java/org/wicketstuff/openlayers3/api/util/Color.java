@@ -3,10 +3,12 @@ package org.wicketstuff.openlayers3.api.util;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.io.Serializable;
+
 /**
  * Provides an object that models a CSS color.
  */
-public class Color {
+public class Color implements Serializable {
 
     /**
      * The red value.
