@@ -19,6 +19,7 @@ import org.wicketstuff.openlayers3.component.PopoverPanel;
 import org.wicketstuff.openlayers3.examples.base.BasePage;
 
 import java.util.Arrays;
+import org.wicketstuff.openlayers3.api.util.Color;
 
 /**
  * Provides a page demonstrating a popover.
@@ -54,11 +55,11 @@ public class PopoverPage extends BasePage {
         // add a marker that will update the content of the popover, move the popover and then make it visible when
         // the marker is clicked
         add(markerPopover = new MarkerPopover("marker",
-                "#4169E1",                                                        // marker color
-                popoverPanel,                                                     // popover panel to populate on click
-                Model.of("Miles' Office"),                                        // title for the popover
-                Model.of("<p>This is where Miles' labors away on his code</p>"),  // content for the popover
-                Model.of(longLat)));                                              // location for the popover
+					      Model.of(new Color("#4169E1")),
+					      popoverPanel,
+					      Model.of("Miles' Office"),
+					      Model.of("<p>This is where Miles' labors away on his code</p>"),
+					      Model.of(longLat)));
 
         // create and add our marker
         add(map = new DefaultOpenLayersMap("map",
