@@ -44,6 +44,7 @@
 		<module>modalx-parent</module>
 		<module>objectautocomplete-parent</module>
 		<module>openlayers-parent</module>
+        <module>openlayers3-parent</module>
 		<!--<module>phonebook</module> Spring dropped iBatis support in 4.x -->
 		<module>plugin</module>
 		<module>portlet-parent</module>
@@ -82,11 +83,12 @@
 		<module>urlfragment-parent</module>
 		<module>wicketstuff-restannotations-parent</module>
         <module>whiteboard-parent</module>
-		<module>wicket-mount-parent</module>
-<!-- 
-Commented because its build fails
-<module>console-parent</module>
--->
+        <module>wicket-mount-parent</module>
+
+        <!--
+            Commented because its build fails
+            <module>console-parent</module>
+        -->
  
 		<module>wicketstuff-glassfish4-integration</module>
 	</modules>
