@@ -570,6 +570,16 @@
 				<artifactId>jts</artifactId>
 				<version>1.8</version>
 			</dependency>
+            <dependency>
+                <groupId>com.google.code.gson</groupId>
+                <artifactId>gson</artifactId>
+                <version>2.2.4</version>
+            </dependency>
+            <dependency>
+                <groupId>de.agilecoders.wicket</groupId>
+                <artifactId>wicket-bootstrap-core</artifactId>
+                <version>0.9.5</version>
+            </dependency>
 			<dependency>
 				<groupId>jasperreports</groupId>
 				<artifactId>jasperreports</artifactId>
