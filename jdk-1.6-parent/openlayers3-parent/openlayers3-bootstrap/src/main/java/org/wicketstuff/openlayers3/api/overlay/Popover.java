@@ -239,10 +239,8 @@ public class Popover extends Overlay {
             builder.append("'placement': '" + placement + "',");
         }
 
-        logger.info("HTML? " + html);
         builder.append("'html': '" + html + "',");
         if (html) {
-            logger.info(escapeQuoteJs(model.getObject()));
             builder.append("'content': '" + escapeQuoteJs(model.getObject()) + "',");
         } else {
             builder.append("'content': '" + Strings.escapeMarkup(model.getObject()) + "',");

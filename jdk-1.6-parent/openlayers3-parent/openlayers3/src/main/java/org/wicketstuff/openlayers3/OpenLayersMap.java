@@ -16,11 +16,12 @@ import org.wicketstuff.openlayers3.api.source.loader.DefaultGeoJsonLoader;
 import org.wicketstuff.openlayers3.api.source.loader.VectorFeatureDataLoadedListener;
 
 import java.util.HashMap;
+import org.apache.wicket.markup.html.panel.GenericPanel;
 
 /**
  * Provides the base class for all panels containing an OpenLayers map.
  */
-public abstract class OpenLayersMap extends Panel {
+public abstract class OpenLayersMap extends GenericPanel<Map> {
 
     private final static Logger logger = LoggerFactory.getLogger(OpenLayersMap.class);
 
@@ -42,23 +43,16 @@ public abstract class OpenLayersMap extends Panel {
         super(id, model);
     }
 
-    /**
-     * Returns the backing model for this map.
-     *
-     * @return Model wrapping a Map instance
-     */
-    public IModel<Map> getModel() {
-        return (IModel<Map>) getDefaultModel();
-    }
 
     @Override
     protected void onConfigure() {
         super.onConfigure();
-        getModel().getObject().setTarget(getMarkupId());
+	Map map = getModelObject();
+        map.setTarget(getMarkupId());
 
-        if (getModel().getObject().getLayers() != null) {
+        if (map.getLayers() != null) {
 
-            for (Layer layer : getModel().getObject().getLayers()) {
+            for (Layer layer : map.getLayers()) {
 
                 if (layer instanceof Vector) {
 
@@ -112,8 +106,9 @@ public abstract class OpenLayersMap extends Panel {
         builder.append("});");
         builder.append("var extent = ol.extent.boundingExtent(points);");
         builder.append("extent = ol.extent.buffer(extent, parseFloat('" + buffer + "'));");
-        builder.append(getModel().getObject().getJsId() + ".getView().fitExtent(extent, "
-                + getModel().getObject().getJsId() + ".getSize());");
+
+	String jsId = getModelObject().getJsId();
+        builder.append(jsId + ".getView().fitExtent(extent, " + jsId + ".getSize());");
 
         target.appendJavaScript(builder.toString());
     }
@@ -129,10 +124,11 @@ public abstract class OpenLayersMap extends Panel {
     public String renderBeforeConstructorJs() {
 
         StringBuilder builder = new StringBuilder();
+	Map map = getModelObject();
 
-        if (getModel().getObject().getLayers() != null) {
+        if (map != null) {
 
-            for (Layer layer : getModel().getObject().getLayers()) {
+            for (Layer layer : map.getLayers()) {
 
                 // create vector data sources before the map
                 if (layer.getSource() != null && layer.getSource() instanceof VectorSource) {
@@ -180,11 +176,12 @@ public abstract class OpenLayersMap extends Panel {
     public String renderAfterConstructorJs() {
 
         StringBuilder builder = new StringBuilder();
+	Map map = getModelObject();
 
         // handle additional map building code
-        if (getModel().getObject().getLayers() != null) {
+        if (map.getLayers() != null) {
 
-            for (Layer layer : getModel().getObject().getLayers()) {
+            for (Layer layer : map.getLayers()) {
 
                 if (layer.getSource() != null && layer.getSource() instanceof VectorSource) {
 
@@ -209,11 +206,12 @@ public abstract class OpenLayersMap extends Panel {
      */
     public String renderJs() {
 
+	Map map = getModelObject();
+
         StringBuilder builder = new StringBuilder();
         builder.append(renderBeforeConstructorJs() + "\n\n");
-        builder.append(getModel().getObject().getJsId() + " = new "
-                + getModel().getObject().getJsType() + "(");
-        builder.append(getModel().getObject().renderJs());
+        builder.append(map.getJsId() + " = new " + map.getJsType() + "(");
+        builder.append(map.renderJs());
         builder.append(");\n\n");
         builder.append(renderAfterConstructorJs());
         return builder.toString();

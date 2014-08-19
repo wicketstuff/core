@@ -54,8 +54,8 @@ public class MarkerPopover extends Marker {
      *
      * @param id
      *         Wicket element ID
-     * @param color
-     *         Color for the marker
+     * @param colorModel
+     *         Color model for the marker
      * @param popoverPanel
      *         Popover panel for display detail when marker is clicked
      * @param titleModel
@@ -65,9 +65,10 @@ public class MarkerPopover extends Marker {
      * @param positionModel
      *         Location of the marker on the map
      */
-    public MarkerPopover(final String id, String color, final PopoverPanel popoverPanel, final IModel<String> titleModel,
-                         final IModel<String> contentModel, final IModel<LongLat> positionModel) {
-        this(id, new Color(color), popoverPanel, titleModel, contentModel, positionModel);
+    public MarkerPopover(final String id, IModel<Color> colorModel, final PopoverPanel popoverPanel,
+			 final IModel<String> titleModel, final IModel<String> contentModel,
+			 final IModel<LongLat> positionModel) {
+        this(id, colorModel, popoverPanel, titleModel, contentModel, positionModel, Model.of(DEFAULT_PLACEMENT));
     }
 
     /**
@@ -75,29 +76,8 @@ public class MarkerPopover extends Marker {
      *
      * @param id
      *         Wicket element ID
-     * @param color
-     *         Color for the marker
-     * @param popoverPanel
-     *         Popover panel for display detail when marker is clicked
-     * @param titleModel
-     *         Title model for the popover panel
-     * @param contentModel
-     *         Content model for the popover panel
-     * @param positionModel
-     *         Location of the marker on the map
-     */
-    public MarkerPopover(final String id, Color color, final PopoverPanel popoverPanel, final IModel<String> titleModel,
-                         final IModel<String> contentModel, final IModel<LongLat> positionModel) {
-        this(id, color, popoverPanel, titleModel, contentModel, positionModel, Model.of(DEFAULT_PLACEMENT));
-    }
-
-    /**
-     * Creates a new marker that is linked to the provided popover panel.
-     *
-     * @param id
-     *         Wicket element ID
-     * @param color
-     *         Color for the marker
+     * @param colorModel
+     *         Color model for the marker
      * @param popoverPanel
      *         Popover panel for display detail when marker is clicked
      * @param titleModel
@@ -109,10 +89,10 @@ public class MarkerPopover extends Marker {
      * @param placementModel
      *         Position of the popover relative to the marker
      */
-    public MarkerPopover(final String id, Color color, final PopoverPanel popoverPanel, final IModel<String> titleModel,
-                         final IModel<String> contentModel, final IModel<LongLat> positionModel,
-                         final IModel<String> placementModel) {
-        super(id, color);
+    public MarkerPopover(final String id, IModel<Color> colorModel, final PopoverPanel popoverPanel,
+			 final IModel<String> titleModel,  final IModel<String> contentModel,
+			 final IModel<LongLat> positionModel, final IModel<String> placementModel) {
+        super(id, colorModel);
         this.popoverPanel = popoverPanel;
         this.titleModel = titleModel;
         this.contentModel = contentModel;

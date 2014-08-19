@@ -27,7 +27,7 @@ public class Feature extends JavascriptObject implements Serializable {
     private Style style;
 
     /**
-     * String attributed for this feature.
+     * String attributes for this feature.
      */
     private Map<String, String> stringValues;
 

@@ -16,6 +16,7 @@ import org.wicketstuff.openlayers3.component.Marker;
 import org.wicketstuff.openlayers3.examples.base.BasePage;
 
 import java.util.Arrays;
+import org.wicketstuff.openlayers3.api.util.Color;
 
 /**
  * Provides a page with a mpa that includes a marker.
@@ -35,7 +36,7 @@ public class MarkerPage extends BasePage {
         super.onInitialize();
 
         // create and add our marker
-        add(marker = new Marker("marker", "#4169E1"));
+        add(marker = new Marker("marker", Model.of(new Color("#4169E1"))));
 
         // create and add our marker
         add(new DefaultOpenLayersMap("map",

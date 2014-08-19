@@ -15,6 +15,8 @@ import org.wicketstuff.openlayers3.api.coordinate.LongLat;
 
 import java.util.HashMap;
 import java.util.Map;
+import org.apache.wicket.request.IRequestParameters;
+import org.apache.wicket.util.string.Strings;
 
 /**
  * Provides a behavior that handles clicking on features on the map.
@@ -81,14 +83,10 @@ public abstract class ClickFeatureHandler extends AbstractDefaultAjaxBehavior {
     @Override
     protected void respond(AjaxRequestTarget target) {
 
-        String coordinateRaw = RequestCycle.get().getRequest().getRequestParameters()
-                .getParameterValue("coordinate").toString();
-
-        String featureId = RequestCycle.get().getRequest().getRequestParameters()
-                .getParameterValue("id").toString();
-
-        String properties = RequestCycle.get().getRequest().getRequestParameters()
-                .getParameterValue("properties").toString();
+	IRequestParameters params = RequestCycle.get().getRequest().getRequestParameters();
+        String coordinateRaw = params.getParameterValue("coordinate").toString();
+        String featureId = params.getParameterValue("id").toString();
+        String properties = params.getParameterValue("properties").toString();
 
         JsonObject propertiesJson = null;
         JsonElement propertiesParsed = new JsonParser().parse(properties);
@@ -96,7 +94,7 @@ public abstract class ClickFeatureHandler extends AbstractDefaultAjaxBehavior {
             propertiesJson = propertiesParsed.getAsJsonObject();
         }
 
-        String[] coordinates = coordinateRaw.split(",");
+        String[] coordinates = Strings.split(coordinateRaw, ',');
         Double longitude = Double.parseDouble(coordinates[0]);
         Double latitude = Double.parseDouble(coordinates[1]);
 
