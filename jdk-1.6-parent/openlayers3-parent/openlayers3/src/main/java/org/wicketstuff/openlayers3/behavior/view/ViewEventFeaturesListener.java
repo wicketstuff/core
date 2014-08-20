@@ -1,5 +1,6 @@
 package org.wicketstuff.openlayers3.behavior.view;
 
+import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonNull;
 import com.google.gson.JsonParser;
@@ -11,15 +12,21 @@ import org.apache.wicket.markup.head.OnDomReadyHeaderItem;
 import org.apache.wicket.request.IRequestParameters;
 import org.apache.wicket.request.cycle.RequestCycle;
 import org.apache.wicket.util.template.PackageTextTemplate;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.wicketstuff.openlayers3.api.layer.Vector;
 
 import java.util.HashMap;
 import java.util.Map;
 
 /**
  * Provides a behavior that invokes a callback event whenever the map view changes. Specifically, this behavior will
- * monitor the map's ol.View for 'center' and 'resolution' events.
+ * monitor the map's ol.View for 'center' and 'resolution' events. In addition to providing information on the current
+ * view, it will also provide all of the features in the view extent for the provided layer.
  */
-public abstract class ViewEventListener extends AbstractDefaultAjaxBehavior {
+public abstract class ViewEventFeaturesListener extends AbstractDefaultAjaxBehavior {
+
+    private final static Logger logger = LoggerFactory.getLogger(ViewEventFeaturesListener.class);
 
     /**
      * Default projection.
@@ -42,18 +49,16 @@ public abstract class ViewEventListener extends AbstractDefaultAjaxBehavior {
     private String projection;
 
     /**
-     * Creates a new instance.
+     * Layer for which features will be enumerated.
      */
-    public ViewEventListener() {
-        this(DEFAULT_PROJECTION);
+    private Vector vector;
+
+    public ViewEventFeaturesListener(Vector vectorLayer) {
+        this(DEFAULT_PROJECTION, vectorLayer);
     }
 
-    /**
-     * Creates a new instance and sets the projection used to transform coordinates.
-     *
-     * @param projection Projection used to transform coordinates
-     */
-    public ViewEventListener(String projection) {
+    public ViewEventFeaturesListener(String projection, Vector vectorLayer) {
+        this.vector = vectorLayer;
         this.projection = projection;
     }
 
@@ -62,8 +67,9 @@ public abstract class ViewEventListener extends AbstractDefaultAjaxBehavior {
      *
      * @param target Ajax request target
      * @param viewEvent The current view
+     * @param features JSON array of features in the view
      */
-    public abstract void handleViewEvent(AjaxRequestTarget target, ViewEvent viewEvent);
+    public abstract void handleViewEvent(AjaxRequestTarget target, ViewEvent viewEvent, JsonArray features);
 
     /**
      * Javascript name of the callback function to invoke when feature data has been loaded into the layer.
@@ -71,7 +77,7 @@ public abstract class ViewEventListener extends AbstractDefaultAjaxBehavior {
      * @return String with the Javascript callback function name
      */
     public String getCallbackFunctionName() {
-        return "viewEventHandler_" + getId();
+        return "viewEventFeaturesHandler_" + getId();
     }
 
     /**
@@ -98,6 +104,7 @@ public abstract class ViewEventListener extends AbstractDefaultAjaxBehavior {
 
         IRequestParameters params = RequestCycle.get().getRequest().getRequestParameters();
         String viewJson = params.getParameterValue("view").toString();
+        String featuresJson = params.getParameterValue("features").toString();
 
         ViewEvent viewEvent = null;
         JsonElement viewParsed = new JsonParser().parse(viewJson);
@@ -105,7 +112,13 @@ public abstract class ViewEventListener extends AbstractDefaultAjaxBehavior {
             viewEvent = new ViewEvent(viewParsed.getAsJsonObject());
         }
 
-        handleViewEvent(target, viewEvent);
+        JsonArray features= null;
+        JsonElement featuresParsed = new JsonParser().parse(featuresJson);
+        if(!(featuresParsed instanceof JsonNull)) {
+            features = featuresParsed.getAsJsonArray();
+        }
+
+        handleViewEvent(target, viewEvent, features);
     }
 
     @Override
@@ -116,10 +129,11 @@ public abstract class ViewEventListener extends AbstractDefaultAjaxBehavior {
         params.put("callbackUrl", getCallbackUrl());
         params.put("callbackFunctionName", getCallbackFunctionName());
         params.put("componentId", component.getMarkupId());
+        params.put("layerId", vector.getJsId());
         params.put("projection", projection != null ? projection : "NULL");
 
         PackageTextTemplate template = new PackageTextTemplate(ViewEventListener.class,
-                "ViewEventListener.js");
+                "ViewEventFeaturesListener.js");
         response.render(OnDomReadyHeaderItem.forScript(template.asString(params)));
     }
 }
