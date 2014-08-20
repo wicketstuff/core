@@ -83,7 +83,7 @@ public abstract class ClickFeatureHandler extends AbstractDefaultAjaxBehavior {
     @Override
     protected void respond(AjaxRequestTarget target) {
 
-	IRequestParameters params = RequestCycle.get().getRequest().getRequestParameters();
+        IRequestParameters params = RequestCycle.get().getRequest().getRequestParameters();
         String coordinateRaw = params.getParameterValue("coordinate").toString();
         String featureId = params.getParameterValue("id").toString();
         String properties = params.getParameterValue("properties").toString();

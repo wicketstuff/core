@@ -1,5 +1,6 @@
 package org.wicketstuff.openlayers3.api.layer;
 
+import com.google.gson.JsonArray;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.wicketstuff.openlayers3.api.Style;
 import org.wicketstuff.openlayers3.api.source.ServerVector;
@@ -13,7 +14,17 @@ import java.util.List;
  */
 public class Vector extends Layer {
 
-    private List<VectorFeaturesLoadedListener> loadListeners = new ArrayList<VectorFeaturesLoadedListener>();
+    /**
+     * List of listeners, these will be notified that data is loaded and receive that data.
+     */
+    private List<VectorFeatureDataLoadedListener> dataLoadedListeners =
+            new ArrayList<VectorFeatureDataLoadedListener>();
+
+    /**
+     * List of listeners, these will be notified that data is loaded.
+     */
+    private List<VectorFeaturesLoadedListener> loadedListeners = new ArrayList<VectorFeaturesLoadedListener>();
+
 
     /**
      * Style for the vector layer.
@@ -81,8 +92,8 @@ public class Vector extends Layer {
      *         Listener to invoke when feature data is loaded
      * @return This instance
      */
-    public Layer addFeaturesLoadedListener(VectorFeaturesLoadedListener listener) {
-        loadListeners.add(listener);
+    public Vector addFeatureDataLoadedListener(VectorFeatureDataLoadedListener listener) {
+        dataLoadedListeners.add(listener);
         return this;
     }
 
@@ -93,9 +104,46 @@ public class Vector extends Layer {
      *         Listener to remove
      * @return This instance
      */
-    public Layer removeFeaturesLoadedListener(VectorFeaturesLoadedListener listener) {
-        loadListeners.remove(listener);
+    public Vector removeFeatureDataLoadedListener(VectorFeatureDataLoadedListener listener) {
+        dataLoadedListeners.remove(listener);
         return this;
+    }
+
+    /**
+     * Adds a new listener that will be invoked with feature data is loaded into this layer.
+     *
+     * @param listener
+     *         Listener to invoke when feature data is loaded
+     * @return This instance
+     */
+    public Vector addFeaturesLoadedListener(VectorFeaturesLoadedListener listener) {
+        loadedListeners.add(listener);
+        return this;
+    }
+
+    /**
+     * Removes a listener from the list of listeners that will be invoked when feature data is loaded into this layer.
+     *
+     * @param listener
+     *         Listener to remove
+     * @return This instance
+     */
+    public Vector removeFeaturesLoadedListener(VectorFeaturesLoadedListener listener) {
+        loadedListeners.remove(listener);
+        return this;
+    }
+
+    /**
+     * Notifies all registered listeners that features have been loaded into this layer.
+     *
+     * @param target
+     *         Ajax request target
+     * @param features JsonArray with the list of loaded features
+     */
+    public void notifyFeatureDataLoadedListeners(AjaxRequestTarget target, JsonArray features) {
+        for (VectorFeatureDataLoadedListener listener : dataLoadedListeners) {
+            listener.layerLoaded(target, this, features);
+        }
     }
 
     /**
@@ -105,7 +153,7 @@ public class Vector extends Layer {
      *         Ajax request target
      */
     public void notifyFeaturesLoadedListeners(AjaxRequestTarget target) {
-        for (VectorFeaturesLoadedListener listener : loadListeners) {
+        for (VectorFeaturesLoadedListener listener : loadedListeners) {
             listener.layerLoaded(target, this);
         }
     }
