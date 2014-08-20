@@ -9,14 +9,14 @@ import org.apache.wicket.ajax.AbstractDefaultAjaxBehavior;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.markup.head.IHeaderResponse;
 import org.apache.wicket.markup.head.OnDomReadyHeaderItem;
+import org.apache.wicket.request.IRequestParameters;
 import org.apache.wicket.request.cycle.RequestCycle;
+import org.apache.wicket.util.string.Strings;
 import org.apache.wicket.util.template.PackageTextTemplate;
 import org.wicketstuff.openlayers3.api.coordinate.LongLat;
 
 import java.util.HashMap;
 import java.util.Map;
-import org.apache.wicket.request.IRequestParameters;
-import org.apache.wicket.util.string.Strings;
 
 /**
  * Provides a behavior that handles clicking on features on the map.
