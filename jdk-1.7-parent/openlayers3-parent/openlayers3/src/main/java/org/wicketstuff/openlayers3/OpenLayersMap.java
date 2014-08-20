@@ -54,7 +54,8 @@ public abstract class OpenLayersMap extends GenericPanel<Map> {
     @Override
     protected void onConfigure() {
         super.onConfigure();
-	Map map = getModelObject();
+
+        Map map = getModelObject();
         map.setTarget(getMarkupId());
 
         if (map.getLayers() != null) {
@@ -65,33 +66,41 @@ public abstract class OpenLayersMap extends GenericPanel<Map> {
 
                     final Vector vectorLayer = (Vector) layer;
 
-                    // add a behavior to be notified when new data is loaded
-                    VectorFeatureDataLoadedListener vectorFeatureDataLoadedListener =
-                            new VectorFeatureDataLoadedListener(vectorLayer) {
+                    if(vectorLayer.getFeatureDataLoadedListeners() != null
+                            && vectorLayer.getFeatureDataLoadedListeners().size() > 0) {
 
-                        @Override
-                        public void handleDataLoaded(AjaxRequestTarget target, JsonArray features) {
-                            vectorLayer.notifyFeatureDataLoadedListeners(target, features);
-                        }
-                    };
-                    add(vectorFeatureDataLoadedListener);
+                        // add a behavior to be notified when new data is loaded
+                        VectorFeatureDataLoadedListener vectorFeatureDataLoadedListener =
+                                new VectorFeatureDataLoadedListener(vectorLayer) {
 
-                    // map the layer to the data loaded handler
-                    layerDataLoadedMap.put(layer, vectorFeatureDataLoadedListener);
+                                    @Override
+                                    public void handleDataLoaded(AjaxRequestTarget target, JsonArray features) {
+                                        vectorLayer.notifyFeatureDataLoadedListeners(target, features);
+                                    }
+                                };
+                        add(vectorFeatureDataLoadedListener);
 
-                    // add a behavior to be notified when new features are loaded
-                    VectorFeaturesLoadedListener vectorFeatureLoadedListener =
-                            new VectorFeaturesLoadedListener(vectorLayer) {
+                        // map the layer to the data loaded handler
+                        layerDataLoadedMap.put(layer, vectorFeatureDataLoadedListener);
+                    }
 
-                                @Override
-                                public void handleDataLoaded(AjaxRequestTarget target) {
-                                    vectorLayer.notifyFeaturesLoadedListeners(target);
-                                }
-                            };
-                    add(vectorFeatureLoadedListener);
+                    if(vectorLayer.getFeaturesLoadedListeners() != null
+                            && vectorLayer.getFeaturesLoadedListeners().size() > 0) {
 
-                    // map the layer to the data loaded handler
-                    layerLoadedMap.put(layer, vectorFeatureLoadedListener);
+                        // add a behavior to be notified when new features are loaded
+                        VectorFeaturesLoadedListener vectorFeatureLoadedListener =
+                                new VectorFeaturesLoadedListener(vectorLayer) {
+
+                                    @Override
+                                    public void handleDataLoaded(AjaxRequestTarget target) {
+                                        vectorLayer.notifyFeaturesLoadedListeners(target);
+                                    }
+                                };
+                        add(vectorFeatureLoadedListener);
+
+                        // map the layer to the data loaded handler
+                        layerLoadedMap.put(layer, vectorFeatureLoadedListener);
+                    }
                 }
             }
         }
@@ -177,7 +186,14 @@ public abstract class OpenLayersMap extends GenericPanel<Map> {
                         DefaultGeoJsonLoader loader = (DefaultGeoJsonLoader) vectorSource.getLoader();
 
                         if (layerDataLoadedMap.get(layer) != null) {
+
+                            // add our listener for the feature data loading
                             loader.vectorFeatureDataLoadedListener(layerDataLoadedMap.get((Vector) layer));
+                        }
+
+                        if (layerLoadedMap.get(layer) != null) {
+
+                            // add our listener for the feature loading
                             loader.vectorFeaturesLoadedListener(layerLoadedMap.get((Vector) layer));
                         }
                         builder.append(loader.renderBeforeConstructorJs() + ";\n");
@@ -199,7 +215,7 @@ public abstract class OpenLayersMap extends GenericPanel<Map> {
     public String renderAfterConstructorJs() {
 
         StringBuilder builder = new StringBuilder();
-	Map map = getModelObject();
+        Map map = getModelObject();
 
         // handle additional map building code
         if (map.getLayers() != null) {

@@ -133,6 +133,14 @@ public class Vector extends Layer {
         return this;
     }
 
+    public List<VectorFeatureDataLoadedListener> getFeatureDataLoadedListeners() {
+        return dataLoadedListeners;
+    }
+
+    public List<VectorFeaturesLoadedListener> getFeaturesLoadedListeners() {
+        return loadedListeners;
+    }
+
     /**
      * Notifies all registered listeners that features have been loaded into this layer.
      *
