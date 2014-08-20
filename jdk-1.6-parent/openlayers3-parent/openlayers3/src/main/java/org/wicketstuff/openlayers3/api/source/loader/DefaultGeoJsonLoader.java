@@ -183,8 +183,19 @@ public class DefaultGeoJsonLoader extends Loader implements Serializable {
         builder.append(getJsId() + "_loadFeatures = function(response) {");
         builder.append("  " + getSource().getJsId() + ".addFeatures(" + getSource().getJsId()
                 + ".readFeatures(response));");
-        builder.append(vectorFeatureDataLoadedListener.getCallbackFunctionName() + "(" + getSource().getJsId() + ");");
-        builder.append(vectorFeaturesLoadedListener.getCallbackFunctionName() + "(" + getSource().getJsId() + ");");
+
+        if(vectorFeatureDataLoadedListener != null) {
+
+            // invoke our callback for the feature data load
+            builder.append(vectorFeatureDataLoadedListener.getCallbackFunctionName() + "(" + getSource().getJsId() + ");");
+        }
+
+        if(vectorFeaturesLoadedListener != null) {
+
+            // invoke our callback for the feature load
+            builder.append(vectorFeaturesLoadedListener.getCallbackFunctionName() + "(" + getSource().getJsId() + ");");
+        }
+
         builder.append("};");
         return builder.toString();
     }

@@ -91,9 +91,7 @@ public abstract class VectorFeatureDataLoadedListener extends AbstractDefaultAja
     protected void respond(AjaxRequestTarget target) {
 
         IRequestParameters params = RequestCycle.get().getRequest().getRequestParameters();
-        String sourceId = params.getParameterValue("sourceId").toString();
         String featuresJson = params.getParameterValue("features").toString();
-        logger.info("FEATURES:" + featuresJson);
 
         JsonArray features= null;
         JsonElement featuresParsed = new JsonParser().parse(featuresJson);
