@@ -103,4 +103,9 @@ public class Coordinate extends JavascriptObject implements Serializable {
     public String renderJs() {
         return "[" + valueX.toString() + ", " + valueY.toString() + "]";
     }
+
+    @Override
+    public String toString() {
+        return getClass().getSimpleName() + "[" + getX() + "," + getY() + "]";
+    }
 }
