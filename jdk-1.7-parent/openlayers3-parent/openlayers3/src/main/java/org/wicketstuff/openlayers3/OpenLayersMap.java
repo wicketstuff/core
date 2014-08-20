@@ -1,8 +1,8 @@
 package org.wicketstuff.openlayers3;
 
+import com.google.gson.JsonArray;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.markup.head.IHeaderResponse;
-import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.model.IModel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -17,6 +17,7 @@ import org.wicketstuff.openlayers3.api.source.loader.VectorFeatureDataLoadedList
 
 import java.util.HashMap;
 import org.apache.wicket.markup.html.panel.GenericPanel;
+import org.wicketstuff.openlayers3.api.source.loader.VectorFeaturesLoadedListener;
 
 /**
  * Provides the base class for all panels containing an OpenLayers map.
@@ -30,6 +31,12 @@ public abstract class OpenLayersMap extends GenericPanel<Map> {
      */
     private java.util.Map<Layer, VectorFeatureDataLoadedListener> layerDataLoadedMap =
             new HashMap<Layer, VectorFeatureDataLoadedListener>();
+
+    /**
+     * Map of layers to the data loaded handler that notifies their listeners.
+     */
+    private java.util.Map<Layer, VectorFeaturesLoadedListener> layerLoadedMap =
+            new HashMap<Layer, VectorFeaturesLoadedListener>();
 
     /**
      * Creates a new instance
@@ -59,17 +66,32 @@ public abstract class OpenLayersMap extends GenericPanel<Map> {
                     final Vector vectorLayer = (Vector) layer;
 
                     // add a behavior to be notified when new data is loaded
-                    VectorFeatureDataLoadedListener vectorFeatureDataLoadedListener = new VectorFeatureDataLoadedListener() {
+                    VectorFeatureDataLoadedListener vectorFeatureDataLoadedListener =
+                            new VectorFeatureDataLoadedListener(vectorLayer) {
 
                         @Override
-                        public void handleDataLoaded(AjaxRequestTarget target) {
-                            vectorLayer.notifyFeaturesLoadedListeners(target);
+                        public void handleDataLoaded(AjaxRequestTarget target, JsonArray features) {
+                            vectorLayer.notifyFeatureDataLoadedListeners(target, features);
                         }
                     };
                     add(vectorFeatureDataLoadedListener);
 
                     // map the layer to the data loaded handler
                     layerDataLoadedMap.put(layer, vectorFeatureDataLoadedListener);
+
+                    // add a behavior to be notified when new features are loaded
+                    VectorFeaturesLoadedListener vectorFeatureLoadedListener =
+                            new VectorFeaturesLoadedListener(vectorLayer) {
+
+                                @Override
+                                public void handleDataLoaded(AjaxRequestTarget target) {
+                                    vectorLayer.notifyFeaturesLoadedListeners(target);
+                                }
+                            };
+                    add(vectorFeatureLoadedListener);
+
+                    // map the layer to the data loaded handler
+                    layerLoadedMap.put(layer, vectorFeatureLoadedListener);
                 }
             }
         }
@@ -150,12 +172,13 @@ public abstract class OpenLayersMap extends GenericPanel<Map> {
                     builder.append("var " + vectorSource.getJsId() + " = new " + vectorSource.getJsType() + "("
                             + vectorSource.renderJs() + ");\n");
 
-                    // for the GeoJSON loader, render the loading function
+                    // for the GeoJSON loader, render the data loading function
                     if (vectorSource.getLoader() instanceof DefaultGeoJsonLoader) {
                         DefaultGeoJsonLoader loader = (DefaultGeoJsonLoader) vectorSource.getLoader();
 
                         if (layerDataLoadedMap.get(layer) != null) {
-                            loader.dataLoaded(layerDataLoadedMap.get((Vector) layer));
+                            loader.vectorFeatureDataLoadedListener(layerDataLoadedMap.get((Vector) layer));
+                            loader.vectorFeaturesLoadedListener(layerLoadedMap.get((Vector) layer));
                         }
                         builder.append(loader.renderBeforeConstructorJs() + ";\n");
                     }
