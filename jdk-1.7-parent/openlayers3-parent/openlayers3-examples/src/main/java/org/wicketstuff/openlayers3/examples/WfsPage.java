@@ -27,9 +27,11 @@ import org.wicketstuff.openlayers3.api.source.ServerVector;
 import org.wicketstuff.openlayers3.api.source.loader.DefaultGeoJsonLoader;
 import org.wicketstuff.openlayers3.api.style.Icon;
 import org.wicketstuff.openlayers3.api.style.View;
+import org.wicketstuff.openlayers3.api.util.Color;
 import org.wicketstuff.openlayers3.api.util.CorsPolicy;
 import org.wicketstuff.openlayers3.behavior.ClickFeatureHandler;
 import org.wicketstuff.openlayers3.behavior.ClickHandler;
+import org.wicketstuff.openlayers3.component.MarkerPopover;
 import org.wicketstuff.openlayers3.component.PopoverPanel;
 import org.wicketstuff.openlayers3.examples.base.BasePage;
 
@@ -53,6 +55,14 @@ public class WfsPage extends BasePage {
      */
     private OpenLayersMap map;
 
+    /**
+     * Marker over Miles' office.
+     */
+    private MarkerPopover markerPopover;
+
+    /**
+     * Layer with our vector data of features.
+     */
     private Vector vectorLayer;
 
     @Override
@@ -61,6 +71,18 @@ public class WfsPage extends BasePage {
 
         // create our popover panel
         add(popoverPanel = new PopoverPanel("popover"));
+
+        // location of Miles' office
+        LongLat longLat = new LongLat(-72.638429, 42.313229, "EPSG:4326").transform(View.DEFAULT_PROJECTION);
+
+        // add a marker that will update the content of the popover, move the popover and then make it visible when
+        // the marker is clicked
+        add(markerPopover = new MarkerPopover("marker",
+                Model.of(new Color("#8b0000")),
+                popoverPanel,
+                Model.of("Miles' Office"),
+                Model.of("<p>This is where Miles' labors away on his code</p>"),
+                Model.of(longLat)));
 
         // style for map features
         Style style = new Style(new Icon("http://api.tiles.mapbox.com/mapbox.js/v2.0.1/images/marker-icon.png")
@@ -94,13 +116,22 @@ public class WfsPage extends BasePage {
                         Arrays.<Overlay>asList(
 
                                 // overlay with the popover
-                                popoverPanel.getPopover()),
+                                popoverPanel.getPopover(),
+
+                                // overlay with our marker and popover
+                                new Overlay(markerPopover,
+
+                                        // position of the overlay
+                                        longLat,
+
+                                        // position of the overlay relative to the point
+                                        Overlay.Positioning.BottomCenter)),
 
                         // view for this map
                         new View(
 
-                                // center of the map
-                                new LongLat(-72.638429, 42.313229, "EPSG:4326").transform(View.DEFAULT_PROJECTION),
+                                // center the map on Miles' office
+                                longLat,
 
                                 // zoom level for the view
                                 16))));
@@ -130,9 +161,19 @@ public class WfsPage extends BasePage {
                 address.append("</br>");
                 address.append(parseField(properties, "TOWN_NAME"));
 
+                // parse out constructed and architecture
+                String constructed = parseField(properties, "CONSTRUCTI");
+                String architecture = parseField(properties, "ARCHITECTU");
+
+                // assemble our description
+                StringBuffer description = new StringBuffer();
+                description.append("<p>" + "c. ");
+                description.append(constructed + "</p>");
+                description.append("<p>" + address.toString() + "</p>");
+
                 // update and display the popover with facility data
                 popoverPanel.getTitleModel().setObject(name);
-                popoverPanel.getContentModel().setObject(address.toString());
+                popoverPanel.getContentModel().setObject(description.toString());
                 popoverPanel.setPosition(coordinate);
                 popoverPanel.show(target);
             }
