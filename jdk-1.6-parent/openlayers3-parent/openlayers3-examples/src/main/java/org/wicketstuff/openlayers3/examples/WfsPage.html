@@ -1,0 +1,20 @@
+<html xmlns:wicket="http://wicket.apache.org" wicket:id="html">
+<wicket:extend>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+
+                <p>Below is a map covered with WFS data, each marker represents a historic site in Massachusetts. As
+                    you pan and zoom the map, more data will be loaded on demand. If you click on a point, more information
+                    about the feature will appear in a popover window. <b>Beware:</b> If you zoom out to far, there may be
+                    too much data for the map to display. The data is provided by the <a href="http://mhc-macris.net/">
+                    Massachusetss Historial Commisssion</a>.</p>
+
+                <div wicket:id="popover">[POPOVER]</div>
+
+                <div wicket:id="map" style="height: 600px; margin-top: 1em; border: 1px solid #a9a9a9">[MAP]</div>
+            </div>
+        </div>
+    </div>
+</wicket:extend>
+</html>

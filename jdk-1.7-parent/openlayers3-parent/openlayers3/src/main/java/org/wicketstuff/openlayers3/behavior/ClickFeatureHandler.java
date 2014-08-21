@@ -98,7 +98,7 @@ public abstract class ClickFeatureHandler extends AbstractDefaultAjaxBehavior {
         Double longitude = Double.parseDouble(coordinates[0]);
         Double latitude = Double.parseDouble(coordinates[1]);
 
-        if (!featureId.isEmpty()) {
+        if (!properties.isEmpty()) {
 
             handleClick(target, featureId, new LongLat(longitude, latitude, projection), propertiesJson);
         } else {
