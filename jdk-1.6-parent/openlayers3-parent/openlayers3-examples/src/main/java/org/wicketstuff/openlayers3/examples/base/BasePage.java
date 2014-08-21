@@ -7,12 +7,15 @@ import de.agilecoders.wicket.core.markup.html.bootstrap.html.MetaTag;
 import de.agilecoders.wicket.core.markup.html.bootstrap.html.OptimizedMobileViewportMetaTag;
 import de.agilecoders.wicket.core.markup.html.bootstrap.navbar.Navbar;
 import org.apache.wicket.Component;
+import org.apache.wicket.markup.head.CssHeaderItem;
+import org.apache.wicket.markup.head.IHeaderResponse;
 import org.apache.wicket.markup.html.WebPage;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.model.ResourceModel;
 import org.apache.wicket.model.StringResourceModel;
+import org.apache.wicket.request.resource.CssResourceReference;
 
 import java.util.Locale;
 
@@ -135,5 +138,10 @@ public class BasePage extends WebPage {
      */
     protected boolean isShowPageTitle() {
         return true;
+    }
+
+    @Override
+    public void renderHead(final IHeaderResponse response) {
+        response.render(CssHeaderItem.forReference(new CssResourceReference(BasePage.class, "BasePage.css")));
     }
 }
