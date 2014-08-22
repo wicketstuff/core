@@ -1,6 +1,5 @@
-package org.wicketstuff.openlayers3.api.style;
+package org.wicketstuff.openlayers3.api;
 
-import org.wicketstuff.openlayers3.api.JavascriptObject;
 import org.wicketstuff.openlayers3.api.coordinate.Coordinate;
 
 import java.io.Serializable;

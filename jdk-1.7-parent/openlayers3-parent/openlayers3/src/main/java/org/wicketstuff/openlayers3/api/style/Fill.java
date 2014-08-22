@@ -1,8 +1,8 @@
 package org.wicketstuff.openlayers3.api.style;
 
 import org.wicketstuff.openlayers3.api.JavascriptObject;
+import org.wicketstuff.openlayers3.api.util.Color;
 
-import java.awt.*;
 import java.io.Serializable;
 
 /**
@@ -22,7 +22,7 @@ public class Fill extends JavascriptObject implements Serializable {
      *         String with the hexadecimal color code for this fill
      */
     public Fill(String color) {
-        this(Color.decode(color));
+        this(new Color(color));
     }
 
     /**
@@ -51,7 +51,7 @@ public class Fill extends JavascriptObject implements Serializable {
      *         String with the hexadecimal color code for this fill
      */
     public void setColor(String color) {
-        setColor(Color.decode(color));
+        setColor(new Color(color));
     }
 
     /**
@@ -100,8 +100,7 @@ public class Fill extends JavascriptObject implements Serializable {
         builder.append("{");
 
         if (getColor() != null) {
-            builder.append("'color':  rgba(" + color.getRed() + ", " + color.getGreen() + ", " + color.getBlue()
-                    + ", " + color.getAlpha() + "),");
+            builder.append("'color': " + getColor().renderJs() + ",");
         }
 
         builder.append("}");

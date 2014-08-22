@@ -2,9 +2,10 @@ package org.wicketstuff.openlayers3.api.layer;
 
 import com.google.gson.JsonArray;
 import org.apache.wicket.ajax.AjaxRequestTarget;
-import org.wicketstuff.openlayers3.api.Style;
+import org.wicketstuff.openlayers3.api.style.Style;
 import org.wicketstuff.openlayers3.api.source.ServerVector;
 import org.wicketstuff.openlayers3.api.source.Source;
+import org.wicketstuff.openlayers3.api.style.ClusterStyle;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,13 +33,18 @@ public class Vector extends Layer {
     private Style style;
 
     /**
+     * Cluster style for the vector layer.
+     */
+    private ClusterStyle clusterStyle;
+
+    /**
      * Creates a new instance.
      *
      * @param source
      *         Source of data for this layer
      */
     public Vector(Source source) {
-        this(source, null);
+        this(source, null, null);
     }
 
     /**
@@ -52,6 +58,25 @@ public class Vector extends Layer {
     public Vector(Source source, Style style) {
         setSource(source);
         this.style = style;
+    }
+
+    /**
+     * Creates a new instance.
+     *
+     * @param source
+     *         Source Source of data for this layer
+     * @param clusterStyle
+     *         Style used when drawing features
+     */
+    public Vector(Source source, ClusterStyle clusterStyle) {
+        setSource(source);
+        this.clusterStyle = clusterStyle;
+    }
+
+    private Vector(Source source, Style style, ClusterStyle clusterStyle) {
+        setSource(source);
+        this.style = style;
+        this.clusterStyle = clusterStyle;
     }
 
     /**
@@ -197,6 +222,12 @@ public class Vector extends Layer {
             builder.append("'style': new " + getStyle().getJsType() + "(");
             builder.append(getStyle().renderJs());
             builder.append("),");
+        }
+
+        if (clusterStyle != null) {
+            builder.append("'style': ");
+            builder.append(clusterStyle.renderJs());
+            builder.append(",");
         }
 
         builder.append("}");

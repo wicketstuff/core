@@ -1,0 +1,29 @@
+<html xmlns:wicket="http://wicket.apache.org" wicket:id="html">
+<wicket:extend>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+
+                <p>Below is a map covered with clustered data, each cluster displays the number of historical sites
+                    present inside the cluster and is drawn proportional to the number of sites. </p>
+
+                <p>The clustering is done entirely by the map. All of the points in the viewable extent are loaded from
+                    the data source and the clustering is performed client side. As you pan and zoom, all of the
+                    clusters are re-calculated.</p>
+
+                <p><b>Beware:</b> If you zoom out sufficiently far, you will have to wait (perhaps quite a while) for the clusters to be
+                    calculated.</p>
+
+                <p>The data is provided by the
+                    <a href="http://mhc-macris.net/">Massachusetts Historial Commisssion</a>.</p>
+
+                <div wicket:id="popover">[POPOVER]</div>
+
+                <div wicket:id="marker">[MARKER]</div>
+
+                <div wicket:id="map" style="height: 600px; margin-top: 1em; border: 1px solid #a9a9a9">[MAP]</div>
+            </div>
+        </div>
+    </div>
+</wicket:extend>
+</html>
