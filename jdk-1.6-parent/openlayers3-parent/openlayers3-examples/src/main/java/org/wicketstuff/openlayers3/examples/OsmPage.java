@@ -8,7 +8,7 @@ import org.wicketstuff.openlayers3.api.coordinate.LongLat;
 import org.wicketstuff.openlayers3.api.layer.Layer;
 import org.wicketstuff.openlayers3.api.layer.Tile;
 import org.wicketstuff.openlayers3.api.source.Osm;
-import org.wicketstuff.openlayers3.api.style.View;
+import org.wicketstuff.openlayers3.api.View;
 import org.wicketstuff.openlayers3.examples.base.BasePage;
 
 import java.util.Arrays;

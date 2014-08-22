@@ -204,6 +204,10 @@ public class Color implements Serializable {
         return this;
     }
 
+    public String renderJs() {
+        return "[" + red + "," + green + "," + blue + "," + alpha + "]";
+    }
+
     @Override
     public String toString() {
         return "rgba(" + red + "," + green + "," + blue + "," + alpha + ")";

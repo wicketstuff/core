@@ -1,6 +1,7 @@
 package org.wicketstuff.openlayers3.api;
 
 import org.wicketstuff.openlayers3.api.geometry.Point;
+import org.wicketstuff.openlayers3.api.style.Style;
 
 import java.io.Serializable;
 import java.util.HashMap;

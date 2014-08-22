@@ -250,15 +250,4 @@ public class Popover extends Overlay {
 
         return builder.toString();
     }
-
-    /**
-     * Escapes single quotation marks in the provided String. When outputting Javascript code, we're using single
-     * quotation marks to surround the content.
-     *
-     * @param text Text to escape
-     * @return String with escaped text
-     */
-    private String escapeQuoteJs(String text) {
-        return text.replaceAll("\'", "&apos;");
-    }
 }
