@@ -8,5 +8,4 @@ META-INF
 .scala_dependencies
 nb-configuration.xml
 *~
-jrebel.xml
-
+rebel.xml
