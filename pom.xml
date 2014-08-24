@@ -198,6 +198,7 @@
 	<modules>
 		<module>wicket-jquery-ui-core</module>
 		<module>wicket-jquery-ui</module>
+		<module>wicket-jquery-ui-themes</module>
 		<module>wicket-jquery-ui-plugins</module>
 		<module>wicket-jquery-ui-calendar</module>
 		<module>wicket-kendo-ui</module>

@@ -30,7 +30,7 @@ import com.googlecode.wicket.jquery.core.resource.JQueryUIResourceReference;
  *     public void init()
  *     {
  *         super.init();
- *
+ *TODO review
  *         IJQueryLibrarySettings settings = new JQueryLibrarySettings();
  *         settings.setJQueryReference(new PackageResourceReference(SampleApplication.class, "jquery-1.9.1.js"));	// jQuery
  *         settings.setJQueryGlobalizeReference(JQueryGlobalizeResourceReference.get());							// jQuery Globalize
@@ -49,12 +49,14 @@ public class JQueryLibrarySettings extends JavaScriptLibrarySettings implements 
 {
 	private static JQueryLibrarySettings instance = null;
 
-	private ResourceReference jQueryUIReference = JQueryUIResourceReference.get();
-	private ResourceReference jQueryGlobalizeReference = null; //null by default, meaning the user has to set it explicitly
+	private ResourceReference javascriptReference = JQueryUIResourceReference.get();
+	private ResourceReference stylesheetReference = null;
+	private ResourceReference globalizeReference = null; // null by default, meaning the user has to set it explicitly
 
 	/**
 	 * INTERNAL USE<br/>
 	 * Gets the {@link JQueryLibrarySettings} instance
+	 *
 	 * @return the {@link JQueryLibrarySettings} instance
 	 */
 	public static synchronized JQueryLibrarySettings get()
@@ -67,7 +69,6 @@ public class JQueryLibrarySettings extends JavaScriptLibrarySettings implements 
 		return JQueryLibrarySettings.instance;
 	}
 
-
 	/**
 	 * Constructor
 	 */
@@ -76,28 +77,71 @@ public class JQueryLibrarySettings extends JavaScriptLibrarySettings implements 
 	}
 
 	// jQuery UI //
+
 	@Override
+	@Deprecated
 	public ResourceReference getJQueryUIReference()
 	{
-		return this.jQueryUIReference;
+		return this.getJQueryUIJavaScriptReference();
 	}
 
 	@Override
+	@Deprecated
 	public void setJQueryUIReference(ResourceReference reference)
 	{
-		this.jQueryUIReference = reference;
+		this.setJQueryUIJavaScriptReference(reference);
+	}
+
+	@Override
+	public ResourceReference getJQueryUIJavaScriptReference()
+	{
+		return this.javascriptReference;
+	}
+
+	/**
+	 * Gets the jQuery UI javascript resource reference
+	 *
+	 * @param reference the {@link ResourceReference}
+	 */
+	public void setJQueryUIJavaScriptReference(ResourceReference reference)
+	{
+		this.javascriptReference = reference;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 *
+	 * @return <tt>null</tt> by default
+	 * @see #setJQueryUIStyleSheetReference(ResourceReference)
+	 */
+	@Override
+	public ResourceReference getJQueryUIStyleSheetReference()
+	{
+		return this.stylesheetReference;
+	}
+
+	/**
+	 * Gets the jQuery UI stylesheet resource reference
+	 *
+	 * @param reference the {@link ResourceReference}
+	 */
+	public void setJQueryUIStyleSheetReference(ResourceReference reference)
+	{
+		this.stylesheetReference = reference;
 	}
 
 	// jQuery Globalize //
+
 	@Override
 	public ResourceReference getJQueryGlobalizeReference()
 	{
-		return this.jQueryGlobalizeReference;
+		return this.globalizeReference;
 	}
 
 	@Override
+	@Deprecated
 	public void setJQueryGlobalizeReference(ResourceReference reference)
 	{
-		this.jQueryGlobalizeReference = reference;
+		this.globalizeReference = reference;
 	}
 }

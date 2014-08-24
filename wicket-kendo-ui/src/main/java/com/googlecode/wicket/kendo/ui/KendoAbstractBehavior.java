@@ -92,7 +92,7 @@ public class KendoAbstractBehavior extends JQueryBehavior
 			this.add(settings.getKendoUIThemeStyleSheetReference());
 		}
 
-		// kendo.web.min.js //
+		// kendo.ui.core.js //
 		if (settings.getKendoUIJavaScriptReference() != null)
 		{
 			this.add(settings.getKendoUIJavaScriptReference());

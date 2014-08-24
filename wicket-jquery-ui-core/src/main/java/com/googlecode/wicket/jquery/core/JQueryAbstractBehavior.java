@@ -104,9 +104,15 @@ public abstract class JQueryAbstractBehavior extends Behavior
 		IJQueryLibrarySettings settings = getJQueryLibrarySettings();
 
 		// jQuery UI resource reference //
-		if (settings.getJQueryUIReference() != null)
+		// TODO: move in wicket-jquery-ui
+		if (settings.getJQueryUIJavaScriptReference() != null)
 		{
-			response.render(new PriorityHeaderItem(JavaScriptHeaderItem.forReference(settings.getJQueryUIReference())));
+			response.render(new PriorityHeaderItem(JavaScriptHeaderItem.forReference(settings.getJQueryUIJavaScriptReference())));
+		}
+
+		if (settings.getJQueryUIStyleSheetReference() != null)
+		{
+			response.render(new PriorityHeaderItem(CssHeaderItem.forReference(settings.getJQueryUIStyleSheetReference())));
 		}
 
 		// jQuery Globalize resource reference //
@@ -191,6 +197,7 @@ public abstract class JQueryAbstractBehavior extends Behavior
 
 	/**
 	 * Gets the jQuery statement.
+	 *
 	 * @return statement like 'jQuery(function() { ... });'
 	 */
 	@Override

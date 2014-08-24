@@ -28,6 +28,11 @@
 		</dependency>
 		<dependency>
 			<groupId>com.googlecode.wicket-jquery-ui</groupId>
+			<artifactId>wicket-jquery-ui-theme-uilightness</artifactId>
+			<version>6.16.1-SNAPSHOT</version>
+		</dependency>
+		<dependency>
+			<groupId>com.googlecode.wicket-jquery-ui</groupId>
 			<artifactId>wicket-jquery-ui-calendar</artifactId>
 			<version>6.16.1-SNAPSHOT</version>
 		</dependency>

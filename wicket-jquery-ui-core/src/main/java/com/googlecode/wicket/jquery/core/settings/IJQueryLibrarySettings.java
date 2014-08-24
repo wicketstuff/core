@@ -31,18 +31,36 @@ public interface IJQueryLibrarySettings extends IJavaScriptLibrarySettings
 	 * Gets the JQuery UI backing library resource reference
 	 *
 	 * @return the {@link ResourceReference}
+	 * @deprecated use {@link #getJQueryUIJavaScriptReference()} instead TODO: remove in wicket-7
 	 */
+	@Deprecated
 	ResourceReference getJQueryUIReference();
 
 	/**
 	 * Sets the JQuery UI backing library resource reference
 	 *
 	 * @param reference the {@link ResourceReference}
+	 * @deprecated use {@link JQueryLibrarySettings#setJQueryUIJavaScriptReference(ResourceReference)} instead TODO: remove in wicket-7
 	 */
+	@Deprecated
 	void setJQueryUIReference(ResourceReference reference);
 
 	/**
-	 * Gets the JQuery globalize library resource reference
+	 * Gets the jQuery UI javascript resource reference
+	 *
+	 * @return the {@link ResourceReference}
+	 */
+	ResourceReference getJQueryUIJavaScriptReference();
+
+	/**
+	 * Gets the jQuery UI stylesheet resource reference
+	 *
+	 * @return the {@link ResourceReference}
+	 */
+	ResourceReference getJQueryUIStyleSheetReference();
+
+	/**
+	 * Gets the JQuery globalize javascript resource reference
 	 *
 	 * @return the {@link ResourceReference}
 	 */
@@ -52,6 +70,8 @@ public interface IJQueryLibrarySettings extends IJavaScriptLibrarySettings
 	 * Sets the JQuery globalize library resource reference
 	 *
 	 * @param reference the {@link ResourceReference}
+	 * @deprecated use {@link JQueryLibrarySettings#setJQueryGlobalizeReference(ResourceReference)} instead TODO: remove in wicket-7
 	 */
+	@Deprecated
 	void setJQueryGlobalizeReference(ResourceReference reference);
 }
