@@ -1,0 +1,53 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<name>wicket-jquery-ui-theme-swankypurse</name>
+	<description>Wicket-jQuery UI Theme (swanky-purse)</description>
+
+	<parent>
+		<groupId>com.googlecode.wicket-jquery-ui</groupId>
+		<artifactId>wicket-jquery-ui-themes</artifactId>
+		<version>6.16.1-SNAPSHOT</version>
+	</parent>
+
+	<artifactId>wicket-jquery-ui-theme-swankypurse</artifactId>
+	<packaging>jar</packaging>
+
+    <properties>
+	    <bundle.namespace>com.googlecode.wicket.jquery.ui.theme.swankypurse</bundle.namespace>
+	</properties>
+
+	<dependencies>
+		<!-- KENDO-UI DEPENDENCIES -->
+		<dependency>
+			<groupId>com.googlecode.wicket-jquery-ui</groupId>
+			<artifactId>wicket-jquery-ui</artifactId>
+			<version>6.16.1-SNAPSHOT</version>
+			<scope>provided</scope>
+		</dependency>
+
+		<!-- WICKET DEPENDENCIES -->
+		<dependency>
+			<groupId>org.apache.wicket</groupId>
+			<artifactId>wicket-core</artifactId>
+			<version>${wicket.version}</version>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.wicket</groupId>
+			<artifactId>wicket-extensions</artifactId>
+			<version>${wicket.version}</version>
+			<scope>provided</scope>
+		</dependency>
+	</dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.felix</groupId>
+                <artifactId>maven-bundle-plugin</artifactId>
+            </plugin>
+        </plugins>
+    </build>
+
+</project>

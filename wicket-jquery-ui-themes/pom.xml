@@ -27,7 +27,30 @@
     </build>
 
 	<modules>
-		<module>theme-uilightness</module>
+		<module>theme-black-tie</module>
+		<module>theme-blitzer</module>
+		<module>theme-cupertino</module>
+		<module>theme-dark-hive</module>
+		<module>theme-dot-luv</module>
+		<module>theme-eggplant</module>
+		<module>theme-excite-bike</module>
+		<module>theme-flick</module>
+		<module>theme-hot-sneaks</module>
+		<module>theme-humanity</module>
+		<module>theme-le-frog</module>
+		<module>theme-mint-choc</module>
+		<module>theme-overcast</module>
+		<module>theme-pepper-grinder</module>
+		<module>theme-redmond</module>
+		<module>theme-smoothness</module>
+		<module>theme-south-street</module>
+		<module>theme-start</module>
+		<module>theme-sunny</module>
+		<module>theme-swanky-purse</module>
+		<module>theme-trontastic</module>
+		<module>theme-ui-darkness</module>
+		<module>theme-ui-lightness</module>
+		<module>theme-vader</module>
 	</modules>
 
 </project>

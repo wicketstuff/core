@@ -30,7 +30,7 @@ import com.googlecode.wicket.jquery.core.resource.JQueryUIResourceReference;
  *     public void init()
  *     {
  *         super.init();
- *TODO review
+ *
  *         IJQueryLibrarySettings settings = new JQueryLibrarySettings();
  *         settings.setJQueryReference(new PackageResourceReference(SampleApplication.class, "jquery-1.9.1.js"));	// jQuery
  *         settings.setJQueryGlobalizeReference(JQueryGlobalizeResourceReference.get());							// jQuery Globalize
@@ -45,6 +45,7 @@ import com.googlecode.wicket.jquery.core.resource.JQueryUIResourceReference;
  * @author Sebastien Briquet - sebfz1
  *
  */
+//TODO: rename to JQueryUILibrarySettings and move to jquery-ui
 public class JQueryLibrarySettings extends JavaScriptLibrarySettings implements IJQueryLibrarySettings
 {
 	private static JQueryLibrarySettings instance = null;
@@ -79,14 +80,12 @@ public class JQueryLibrarySettings extends JavaScriptLibrarySettings implements 
 	// jQuery UI //
 
 	@Override
-	@Deprecated
 	public ResourceReference getJQueryUIReference()
 	{
 		return this.getJQueryUIJavaScriptReference();
 	}
 
 	@Override
-	@Deprecated
 	public void setJQueryUIReference(ResourceReference reference)
 	{
 		this.setJQueryUIJavaScriptReference(reference);

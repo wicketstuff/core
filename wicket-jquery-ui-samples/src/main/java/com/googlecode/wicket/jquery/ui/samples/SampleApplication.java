@@ -54,7 +54,6 @@ public class SampleApplication extends WebApplication
 	{
 		super.init();
 
-		this.getMarkupSettings().setStripWicketTags(true); //IMPORTANT!
 		this.getResourceSettings().setThrowExceptionOnMissingResource(false);
 
 //		IJQueryLibrarySettings settings = new JQueryLibrarySettings();

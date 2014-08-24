@@ -28,13 +28,13 @@
 
 	<modules>
 		<module>theme-black</module>
-		<module>theme-blueopal</module>
+		<module>theme-blue-opal</module>
 		<module>theme-bootstrap</module>
 		<module>theme-default</module>
 		<module>theme-flat</module>
-		<module>theme-highcontrast</module>
+		<module>theme-high-contrast</module>
 		<module>theme-metro</module>
-		<module>theme-metroblack</module>
+		<module>theme-metro-black</module>
 		<module>theme-moonlight</module>
 		<module>theme-silver</module>
 		<module>theme-uniform</module>
