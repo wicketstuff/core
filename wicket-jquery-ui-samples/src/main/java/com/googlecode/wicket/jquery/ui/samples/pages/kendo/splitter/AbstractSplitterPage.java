@@ -3,19 +3,19 @@ package com.googlecode.wicket.jquery.ui.samples.pages.kendo.splitter;
 import java.util.Arrays;
 import java.util.List;
 
-import com.googlecode.wicket.jquery.ui.samples.pages.kendo.AbstractKendoPage;
+import com.googlecode.wicket.jquery.ui.samples.SamplePage;
 
 
 
-abstract class AbstractSplitterPage extends AbstractKendoPage
+abstract class AbstractSplitterPage extends SamplePage
 {
 	private static final long serialVersionUID = 1L;
-	
+
 	public AbstractSplitterPage()
 	{
-		
+
 	}
-	
+
 	@Override
 	protected List<DemoLink> getDemoLinks()
 	{

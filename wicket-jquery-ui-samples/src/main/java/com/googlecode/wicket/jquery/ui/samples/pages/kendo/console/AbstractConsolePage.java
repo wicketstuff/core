@@ -3,11 +3,11 @@ package com.googlecode.wicket.jquery.ui.samples.pages.kendo.console;
 import java.util.Arrays;
 import java.util.List;
 
-import com.googlecode.wicket.jquery.ui.samples.pages.kendo.AbstractKendoPage;
+import com.googlecode.wicket.jquery.ui.samples.SamplePage;
 
 
 
-abstract class AbstractConsolePage extends AbstractKendoPage
+abstract class AbstractConsolePage extends SamplePage
 {
 	private static final long serialVersionUID = 1L;
 

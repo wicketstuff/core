@@ -34,6 +34,7 @@ public class KendoUILibrarySettings extends JavaScriptLibrarySettings implements
 	/**
 	 * INTERNAL USE<br/>
 	 * Gets the {@link KendoUILibrarySettings} instance
+	 *
 	 * @return the {@link KendoUILibrarySettings} instance
 	 */
 	public static synchronized KendoUILibrarySettings get()
@@ -46,6 +47,8 @@ public class KendoUILibrarySettings extends JavaScriptLibrarySettings implements
 		return KendoUILibrarySettings.instance;
 	}
 
+	private ResourceReference commonCssReference = null;
+	private ResourceReference themeCssReference = null;
 
 	/**
 	 * Constructor
@@ -60,15 +63,47 @@ public class KendoUILibrarySettings extends JavaScriptLibrarySettings implements
 		return KendoUIJavaScriptResourceReference.get();
 	}
 
+	/**
+	 * {@inheritDoc}
+	 *
+	 * @return <tt>null</tt> by default
+	 * @see #setKendoUICommonStyleSheetReference(ResourceReference)
+	 */
 	@Override
 	public ResourceReference getKendoUICommonStyleSheetReference()
 	{
-		return null;
+		return this.commonCssReference;
 	}
 
+	/**
+	 * Sets the Kendo UI common stylesheet resource reference
+	 *
+	 * @param reference the {@link ResourceReference}
+	 */
+	public void setKendoUICommonStyleSheetReference(ResourceReference reference)
+	{
+		this.commonCssReference = reference;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 *
+	 * @return <tt>null</tt> by default
+	 * @see #setKendoUIThemeStyleSheetReference(ResourceReference)
+	 */
 	@Override
 	public ResourceReference getKendoUIThemeStyleSheetReference()
 	{
-		return null;
+		return this.themeCssReference;
+	}
+
+	/**
+	 * Sets the Kendo UI theme stylesheet resource reference
+	 *
+	 * @param reference the {@link ResourceReference}
+	 */
+	public void setKendoUIThemeStyleSheetReference(ResourceReference reference)
+	{
+		this.themeCssReference = reference;
 	}
 }

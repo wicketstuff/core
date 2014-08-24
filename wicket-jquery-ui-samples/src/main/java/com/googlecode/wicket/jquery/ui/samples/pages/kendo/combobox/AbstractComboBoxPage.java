@@ -3,18 +3,18 @@ package com.googlecode.wicket.jquery.ui.samples.pages.kendo.combobox;
 import java.util.Arrays;
 import java.util.List;
 
-import com.googlecode.wicket.jquery.ui.samples.pages.kendo.AbstractKendoPage;
+import com.googlecode.wicket.jquery.ui.samples.SamplePage;
 
 
 
-abstract class AbstractComboBoxPage extends AbstractKendoPage
+abstract class AbstractComboBoxPage extends SamplePage
 {
 	private static final long serialVersionUID = 1L;
-	
+
 	public AbstractComboBoxPage()
 	{
 	}
-	
+
 	@Override
 	protected List<DemoLink> getDemoLinks()
 	{

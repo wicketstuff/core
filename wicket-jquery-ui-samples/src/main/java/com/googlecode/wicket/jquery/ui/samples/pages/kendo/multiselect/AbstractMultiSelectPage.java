@@ -3,11 +3,11 @@ package com.googlecode.wicket.jquery.ui.samples.pages.kendo.multiselect;
 import java.util.Arrays;
 import java.util.List;
 
-import com.googlecode.wicket.jquery.ui.samples.pages.kendo.AbstractKendoPage;
+import com.googlecode.wicket.jquery.ui.samples.SamplePage;
 
 
 
-abstract class AbstractMultiSelectPage extends AbstractKendoPage
+abstract class AbstractMultiSelectPage extends SamplePage
 {
 	private static final long serialVersionUID = 1L;
 

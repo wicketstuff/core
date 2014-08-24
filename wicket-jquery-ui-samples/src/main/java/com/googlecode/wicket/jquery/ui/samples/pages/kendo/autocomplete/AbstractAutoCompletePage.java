@@ -3,10 +3,10 @@ package com.googlecode.wicket.jquery.ui.samples.pages.kendo.autocomplete;
 import java.util.Arrays;
 import java.util.List;
 
-import com.googlecode.wicket.jquery.ui.samples.pages.kendo.AbstractKendoPage;
+import com.googlecode.wicket.jquery.ui.samples.SamplePage;
 
 
-abstract class AbstractAutoCompletePage extends AbstractKendoPage
+abstract class AbstractAutoCompletePage extends SamplePage
 {
 	private static final long serialVersionUID = 1L;
 

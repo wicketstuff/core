@@ -1,0 +1,43 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<name>wicket-kendo-ui-themes</name>
+	<description>Wicket-Kendo UI Themes</description>
+
+	<parent>
+		<groupId>com.googlecode.wicket-jquery-ui</groupId>
+		<artifactId>wicket-jquery-ui-parent</artifactId>
+		<version>6.16.1-SNAPSHOT</version>
+	</parent>
+
+	<artifactId>wicket-kendo-ui-themes</artifactId>
+	<packaging>pom</packaging>
+
+    <properties>
+	    <bundle.namespace>com.googlecode.wicket.kendo.ui.themes</bundle.namespace>
+	</properties>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.felix</groupId>
+                <artifactId>maven-bundle-plugin</artifactId>
+            </plugin>
+        </plugins>
+    </build>
+
+	<modules>
+		<module>theme-black</module>
+		<module>theme-blueopal</module>
+		<module>theme-bootstrap</module>
+		<module>theme-default</module>
+		<module>theme-flat</module>
+		<module>theme-highcontrast</module>
+		<module>theme-metro</module>
+		<module>theme-metroblack</module>
+		<module>theme-moonlight</module>
+		<module>theme-silver</module>
+		<module>theme-uniform</module>
+	</modules>
+
+</project>

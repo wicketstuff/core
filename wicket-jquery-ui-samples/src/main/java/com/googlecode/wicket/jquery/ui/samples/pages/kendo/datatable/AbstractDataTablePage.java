@@ -3,9 +3,9 @@ package com.googlecode.wicket.jquery.ui.samples.pages.kendo.datatable;
 import java.util.Arrays;
 import java.util.List;
 
-import com.googlecode.wicket.jquery.ui.samples.pages.kendo.AbstractKendoPage;
+import com.googlecode.wicket.jquery.ui.samples.SamplePage;
 
-abstract class AbstractDataTablePage extends AbstractKendoPage
+abstract class AbstractDataTablePage extends SamplePage
 {
 	private static final long serialVersionUID = 1L;
 
