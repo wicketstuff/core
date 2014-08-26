@@ -13,6 +13,8 @@ import org.apache.wicket.request.IRequestParameters;
 import org.apache.wicket.request.cycle.RequestCycle;
 import org.apache.wicket.util.string.Strings;
 import org.apache.wicket.util.template.PackageTextTemplate;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.wicketstuff.openlayers3.api.coordinate.LongLat;
 
 import java.util.HashMap;
@@ -22,6 +24,8 @@ import java.util.Map;
  * Provides a behavior that handles clicking on features on the map.
  */
 public abstract class ClickFeatureHandler extends AbstractDefaultAjaxBehavior {
+
+    private final static Logger logger = LoggerFactory.getLogger(ClickFeatureHandler.class);
 
     /**
      * Default projection.
