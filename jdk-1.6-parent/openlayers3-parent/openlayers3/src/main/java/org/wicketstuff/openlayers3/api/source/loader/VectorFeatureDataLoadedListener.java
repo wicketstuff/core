@@ -1,7 +1,6 @@
 package org.wicketstuff.openlayers3.api.source.loader;
 
 import com.google.gson.*;
-import jdk.nashorn.internal.parser.JSONParser;
 import org.apache.wicket.Component;
 import org.apache.wicket.ajax.AbstractDefaultAjaxBehavior;
 import org.apache.wicket.ajax.AjaxRequestTarget;
