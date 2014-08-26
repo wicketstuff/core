@@ -1,7 +1,6 @@
 package org.wicketstuff.openlayers3.api.layer;
 
 import com.google.gson.JsonArray;
-import com.google.gson.JsonObject;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 
 import java.io.Serializable;

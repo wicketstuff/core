@@ -2,10 +2,10 @@ package org.wicketstuff.openlayers3.api.layer;
 
 import com.google.gson.JsonArray;
 import org.apache.wicket.ajax.AjaxRequestTarget;
-import org.wicketstuff.openlayers3.api.style.Style;
 import org.wicketstuff.openlayers3.api.source.ServerVector;
 import org.wicketstuff.openlayers3.api.source.Source;
 import org.wicketstuff.openlayers3.api.style.ClusterStyle;
+import org.wicketstuff.openlayers3.api.style.Style;
 
 import java.util.ArrayList;
 import java.util.List;

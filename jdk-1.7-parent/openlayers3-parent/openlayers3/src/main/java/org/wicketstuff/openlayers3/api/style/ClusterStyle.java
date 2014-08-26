@@ -1,9 +1,5 @@
 package org.wicketstuff.openlayers3.api.style;
 
-import org.wicketstuff.openlayers3.api.JavascriptObject;
-
-import java.io.Serializable;
-
 /**
  * Provides a style for clusters.
  */

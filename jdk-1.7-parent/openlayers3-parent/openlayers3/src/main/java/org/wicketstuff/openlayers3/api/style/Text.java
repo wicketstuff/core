@@ -1,6 +1,5 @@
 package org.wicketstuff.openlayers3.api.style;
 
-import org.apache.wicket.util.string.Strings;
 import org.wicketstuff.openlayers3.api.JavascriptObject;
 
 import java.io.Serializable;
