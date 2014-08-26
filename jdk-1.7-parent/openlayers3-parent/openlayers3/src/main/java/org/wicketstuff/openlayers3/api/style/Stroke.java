@@ -1,13 +1,10 @@
 package org.wicketstuff.openlayers3.api.style;
 
-import org.apache.wicket.util.crypt.StringUtils;
 import org.wicketstuff.openlayers3.api.JavascriptObject;
 import org.wicketstuff.openlayers3.api.util.Color;
 import org.wicketstuff.openlayers3.api.util.Joiner;
 
 import java.io.Serializable;
-import java.util.Arrays;
-import java.util.StringJoiner;
 
 /**
  * Provides a class that models a stroke style.
@@ -310,7 +307,7 @@ public class Stroke extends JavascriptObject implements Serializable {
         }
 
         if (getLineDash() != null) {
-            builder.append("'lineDash': [" + Joiner.join(",", lineDash) + "],");
+            builder.append("'lineDash': [" + Joiner.join(",", (Object[]) lineDash) + "],");
         }
 
         if (getMiterLimit() != null) {
