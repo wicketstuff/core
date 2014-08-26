@@ -1,7 +1,12 @@
 package org.wicketstuff.openlayers3.examples;
 
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonNull;
+import com.google.gson.JsonObject;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.model.Model;
+import org.apache.wicket.util.string.Strings;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.wicketstuff.annotation.mount.MountPath;
@@ -22,6 +27,7 @@ import org.wicketstuff.openlayers3.api.source.ServerVector;
 import org.wicketstuff.openlayers3.api.source.loader.DefaultGeoJsonLoader;
 import org.wicketstuff.openlayers3.api.style.*;
 import org.wicketstuff.openlayers3.api.util.Color;
+import org.wicketstuff.openlayers3.behavior.ClickFeatureHandler;
 import org.wicketstuff.openlayers3.behavior.ClickHandler;
 import org.wicketstuff.openlayers3.component.MarkerPopover;
 import org.wicketstuff.openlayers3.component.PopoverPanel;
@@ -142,15 +148,110 @@ public class ClusterPage extends BasePage {
                                 // zoom level for the view
                                 16))));
 
-        map.add(new ClickHandler() {
+        map.add(new ClickFeatureHandler("EPSG:4326") {
 
             @Override
-            public void handleClick(AjaxRequestTarget target, LongLat longLat) {
+            public void handleClick(AjaxRequestTarget target, String featureId, LongLat longLat, JsonObject properties) {
 
+                // get the coordinates for the feature
+                JsonArray coordinates = properties.get("geometry").getAsJsonArray();
+                Double longitude = coordinates.get(0).getAsDouble();
+                Double latitude = coordinates.get(1).getAsDouble();
+                LongLat coordinate = new LongLat(longitude, latitude, "EPSG:4326").transform(View.DEFAULT_PROJECTION);
+
+                // get some information on the features
+                JsonArray features = properties.get("features").getAsJsonArray();
+
+                String title = null;
+                String content = null;
+
+                if(features.size() > 1) {
+
+                    title = "Contains " + features.size() + " Features";
+
+                    if(features.size() < 6) {
+
+                        StringBuilder builder = new StringBuilder();
+                        for(JsonElement feature : features) {
+
+                            JsonObject featureThis = feature.getAsJsonObject();
+
+                            // parse out the name of the feature
+                            String name = parseField(featureThis, "HISTORIC_N");
+                            if(name.isEmpty()) {
+                                name = parseField(featureThis, "USE_TYPE");
+                            }
+
+                            if(name.length() > 0) {
+                                builder.append("<li>" + name + "</li>");
+                            }
+                        }
+
+                        content = builder.toString();
+                    } else {
+                        content = "Zoom in for more detail...";
+                    }
+                } else {
+
+                    JsonObject featureThis = features.get(0).getAsJsonObject();
+
+                    // parse out the name of the feature
+                    title = parseField(featureThis, "HISTORIC_N");
+                    if(title.isEmpty()) {
+                        title = parseField(featureThis, "USE_TYPE");
+                    }
+
+                    // parse out the address for the feature
+                    StringBuffer address = new StringBuffer();
+                    address.append(parseField(featureThis, "ADDRESS"));
+                    address.append("</br>");
+                    address.append(parseField(featureThis, "TOWN_NAME"));
+
+                    // parse out constructed and architecture
+                    String constructed = parseField(featureThis, "CONSTRUCTI");
+                    String architecture = parseField(featureThis, "ARCHITECTU");
+
+                    // assemble our description
+                    StringBuffer description = new StringBuffer();
+                    description.append("<p>" + "c. ");
+                    description.append(constructed + "</p>");
+                    description.append("<p>" + address.toString() + "</p>");
+
+                    content = description.toString();
+                }
+
+
+                // update and display the popover with facility data
+                popoverPanel.getTitleModel().setObject(title);
+                popoverPanel.getContentModel().setObject(content);
+                popoverPanel.setPosition(coordinate);
+                popoverPanel.show(target);
+            }
+
+            @Override
+            public void handleClickMiss(AjaxRequestTarget target, LongLat longLat) {
                 popoverPanel.hide(target);
             }
         });
 
         add(map);
+    }
+
+    /**
+     * Parses out a field of data from a JSON object.
+     *
+     * @param properties JSON object with the properties
+     * @param field Field to parse
+     * @return String with the parsed data
+     */
+    private String parseField(JsonObject properties, String field) {
+
+        String value = "";
+
+        if (!(properties.get(field) instanceof JsonNull) && properties.get(field) != null) {
+            value = Strings.escapeMarkup(properties.get(field).getAsString()).toString();
+        }
+
+        return value;
     }
 }
