@@ -3,6 +3,7 @@ package org.wicketstuff.openlayers3;
 import com.google.gson.JsonArray;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.markup.head.IHeaderResponse;
+import org.apache.wicket.markup.html.panel.GenericPanel;
 import org.apache.wicket.model.IModel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -12,14 +13,12 @@ import org.wicketstuff.openlayers3.api.layer.Layer;
 import org.wicketstuff.openlayers3.api.layer.Vector;
 import org.wicketstuff.openlayers3.api.source.Cluster;
 import org.wicketstuff.openlayers3.api.source.ServerVector;
-import org.wicketstuff.openlayers3.api.source.Source;
 import org.wicketstuff.openlayers3.api.source.VectorSource;
 import org.wicketstuff.openlayers3.api.source.loader.DefaultGeoJsonLoader;
 import org.wicketstuff.openlayers3.api.source.loader.VectorFeatureDataLoadedListener;
+import org.wicketstuff.openlayers3.api.source.loader.VectorFeaturesLoadedListener;
 
 import java.util.HashMap;
-import org.apache.wicket.markup.html.panel.GenericPanel;
-import org.wicketstuff.openlayers3.api.source.loader.VectorFeaturesLoadedListener;
 
 /**
  * Provides the base class for all panels containing an OpenLayers map.

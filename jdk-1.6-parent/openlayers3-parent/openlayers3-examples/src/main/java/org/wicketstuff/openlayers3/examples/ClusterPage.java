@@ -28,7 +28,6 @@ import org.wicketstuff.openlayers3.api.source.loader.DefaultGeoJsonLoader;
 import org.wicketstuff.openlayers3.api.style.*;
 import org.wicketstuff.openlayers3.api.util.Color;
 import org.wicketstuff.openlayers3.behavior.ClickFeatureHandler;
-import org.wicketstuff.openlayers3.behavior.ClickHandler;
 import org.wicketstuff.openlayers3.component.MarkerPopover;
 import org.wicketstuff.openlayers3.component.PopoverPanel;
 import org.wicketstuff.openlayers3.examples.base.BasePage;

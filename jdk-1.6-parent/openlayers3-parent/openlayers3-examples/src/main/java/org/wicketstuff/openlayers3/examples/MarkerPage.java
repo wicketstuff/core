@@ -6,17 +6,17 @@ import org.slf4j.LoggerFactory;
 import org.wicketstuff.annotation.mount.MountPath;
 import org.wicketstuff.openlayers3.DefaultOpenLayersMap;
 import org.wicketstuff.openlayers3.api.Map;
+import org.wicketstuff.openlayers3.api.View;
 import org.wicketstuff.openlayers3.api.coordinate.LongLat;
 import org.wicketstuff.openlayers3.api.layer.Layer;
 import org.wicketstuff.openlayers3.api.layer.Tile;
 import org.wicketstuff.openlayers3.api.overlay.Overlay;
 import org.wicketstuff.openlayers3.api.source.Osm;
-import org.wicketstuff.openlayers3.api.View;
+import org.wicketstuff.openlayers3.api.util.Color;
 import org.wicketstuff.openlayers3.component.Marker;
 import org.wicketstuff.openlayers3.examples.base.BasePage;
 
 import java.util.Arrays;
-import org.wicketstuff.openlayers3.api.util.Color;
 
 /**
  * Provides a page with a mpa that includes a marker.
