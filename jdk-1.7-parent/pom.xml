@@ -20,10 +20,10 @@
 
 	<modules>
 		<module>lightbox2-parent</module>
-        <module>jqplot-parent</module>
+		<module>jqplot-parent</module>
 		<module>annotation</module> 
 		<module>annotationeventdispatcher-parent</module>
-        <module>async-tasks-parent</module>
+		<module>async-tasks-parent</module>
 		<module>autocomplete-tagit-parent</module>
 		<module>browserid-parent</module>
 		<module>datastores-parent</module>
@@ -44,7 +44,7 @@
 		<module>modalx-parent</module>
 		<module>objectautocomplete-parent</module>
 		<module>openlayers-parent</module>
-        <module>openlayers3-parent</module>
+		<module>openlayers3-parent</module>
 		<!--<module>phonebook</module> Spring dropped iBatis support in 4.x -->
 		<module>plugin</module>
 		<module>portlet-parent</module>
@@ -82,13 +82,13 @@
 		<module>sitemap-xml-parent</module>
 		<module>urlfragment-parent</module>
 		<module>wicketstuff-restannotations-parent</module>
-        <module>whiteboard-parent</module>
-        <module>wicket-mount-parent</module>
+		<module>whiteboard-parent</module>
+		<module>wicket-mount-parent</module>
 
-        <!--
-            Commented because its build fails
-            <module>console-parent</module>
-        -->
+		<!--
+			Commented because its build fails
+			<module>console-parent</module>
+		-->
  
 		<module>wicketstuff-glassfish4-integration</module>
 	</modules>
