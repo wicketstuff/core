@@ -1,5 +1,8 @@
 package org.wicketstuff.scala
 
+import org.wicketstuff.scala.markup.html.basic.ScalaLabel
+import org.wicketstuff.scala.model.FodelString
+
 import scala.collection.JavaConversions.seqAsJavaList
 import org.apache.wicket.behavior.AttributeAppender
 import org.apache.wicket.datetime.markup.html.form.DateTextField
@@ -25,6 +28,7 @@ import org.apache.wicket.Session
 import scala.reflect.ClassTag
 import scala.language.implicitConversions
 
+@deprecated(message = "Use the fine grained traits instead, or the implicit conversion", since = "7.0.0")
 trait DSLWicket {
   self: MarkupContainer ⇒
 
@@ -44,7 +48,7 @@ trait DSLWicket {
   def multiLineLabel[T](id: String, value: String): MultiLineLabel = { val label = new MultiLineLabel(id, value); add(label); label }
   // Label
   def label[T](id: String, model: IModel[T] = null): Label = { val label = new Label(id, model); add(label); label }
-  def labelf[T](id: String, gtr: ⇒ String): Label = { val label = new SLabel(id, gtr); add(label); label }
+  def labelf[T](id: String, gtr: ⇒ String): Label = { val label = new ScalaLabel(id, new FodelString(gtr)); add(label); label }
   def label[T](id: String, value: String): Label = { val label = new Label(id, value); add(label); label }
 
   implicit def ser2model[S <: Serializable](ser: S): IModel[S] = Model.of(ser)

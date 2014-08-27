@@ -7,7 +7,6 @@ package com.inmethod.grid;
  */
 public enum SizeUnit
 {
-
 	/**
 	 * CSS EM unit
 	 */
@@ -17,6 +16,11 @@ public enum SizeUnit
 	 * CSS PX unit
 	 */
 	PX("px"),
+
+    /**
+     * CSS percent unit
+     */
+    PERCENT("%"),
 
 	/**
 	 * CSS EX unit
@@ -39,6 +43,4 @@ public enum SizeUnit
 	{
 		return value;
 	}
-
-
 };

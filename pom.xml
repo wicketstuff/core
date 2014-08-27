@@ -197,18 +197,18 @@
 					</releases>
 				</repository>
 
-                <!-- for wicket bootstrap snapshots -->
-                <repository>
-                    <id>sonatype-nexus-snapshots</id>
-                    <name>Sonatype Nexus Snapshots</name>
-                    <url>http://oss.sonatype.org/content/repositories/snapshots</url>
-                    <snapshots>
-                        <enabled>true</enabled>
-                    </snapshots>
-                    <releases>
-                        <enabled>false</enabled>
-                    </releases>
-                </repository>
+				<!-- for wicket bootstrap snapshots -->
+				<repository>
+					<id>sonatype-nexus-snapshots</id>
+					<name>Sonatype Nexus Snapshots</name>
+					<url>http://oss.sonatype.org/content/repositories/snapshots</url>
+					<snapshots>
+						<enabled>true</enabled>
+					</snapshots>
+					<releases>
+						<enabled>false</enabled>
+					</releases>
+				</repository>
 			</repositories>
 		</profile>
 	</profiles>
@@ -251,7 +251,7 @@
 		<spring.version>4.0.6.RELEASE</spring.version>
 		<cglib.version>3.1</cglib.version>
 		<objenesis.version>2.1</objenesis.version>
-	<scala.version>2.11.2</scala.version>
+		<scala.version>2.11.2</scala.version>
 	</properties>
 
 	<prerequisites>

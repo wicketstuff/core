@@ -1,17 +1,18 @@
 package org.wicketstuff.scala.sample
 
-import org.apache.wicket.markup.html.panel.FeedbackPanel
 import org.apache.wicket.feedback.ContainerFeedbackMessageFilter
-import org.apache.wicket.markup.html.basic.Label
+import org.apache.wicket.markup.html.WebPage
 import org.apache.wicket.markup.html.list.ListItem
+import org.apache.wicket.model.{CompoundPropertyModel, IModel}
+import org.apache.wicket.protocol.http.WebApplication
 import org.apache.wicket.validation.validator.EmailAddressValidator
+import org.wicketstuff.scala._
+import org.wicketstuff.scala.markup.html.form.ScalaForm
+import org.wicketstuff.scala.markup.html.list.ScalaPropertyListView
+import org.wicketstuff.scala.model.Fodel
+import org.wicketstuff.scala.traits.ScalaMarkupContainerT
 
 import scala.language.postfixOps
-import org.wicketstuff.scala._
-import org.apache.wicket.protocol.http.WebApplication
-import org.apache.wicket.markup.html.WebPage
-import org.apache.wicket.markup.html.form.{TextField, Form}
-import org.apache.wicket.model.{CompoundPropertyModel, IModel}
 
 class HelloWicketWorld extends WebApplication {
    def getHomePage = classOf[HomePage]
@@ -20,65 +21,71 @@ class HelloWicketWorld extends WebApplication {
 /**
  * Some examples of how to construct the components with Scala.
  */
-class HomePage extends WebPage with ScalaWicket {
+class HomePage
+  extends WebPage
+  with ScalaMarkupContainerT {
+
   var name = "default"
    
-  val form = new Form("form1")
-  add(form)
+  val form: ScalaForm[Unit] = form[Unit]("form1")
 
   // create an anonymous function and have it implicitly converted into a fodel
-  val nf: IModel[_] = () ⇒ { println ("nff1"); name }
-  form.add(new Label("helloworld1", nf))
-  val getter: IModel[_] = () ⇒ { println ("label gtr"); name }
-  form.add(new Label("helloworld3", getter))
+  val nf: IModel[String] = () ⇒ { println ("nff1"); name }
+  form.label("helloworld1", nf)
+  val getter: IModel[String] = () ⇒ { println ("label gtr"); name }
+  form.label("helloworld3", getter)
 
   // explicit fodel with debug lines
-  form.add(new TextField("name1", new Fodel[String]({println ("stf-getter"); name}, {println ("stf-setter"); name = _}) ) )
+  form.text("name1", new Fodel[String]({println ("stf-getter"); name}, {println ("stf-setter"); name = _}) )
   // and the shorter form
-  form.add(new TextField("name2", new Fodel[String](name, name = _ ) ) )
+  form.text("name2", new Fodel[String](name, name = _ ))
   // and the Scala TextField is even shorter
   // this example requires the [String] parameter as the compiler is unable to infer the type of the parameters in the {name = _} function.
-  form.add(new STextField[String]("name3", name, name = _  ) )
+  form.text[String]("name3", new Fodel[String](name, name = _))
    
   // link with a closure
   var clickCount = 0
-  add(new SLink("clicker", {clickCount += 1; println(clickCount)}))
+  link("clicker") {clickCount += 1; println(clickCount)}
    
   // using a fodel
-  form.add(new Label("helloworld4", new Fodel({println ("f()label gtr"); name;})))
+  form.label("helloworld4", new Fodel({println ("f()label gtr"); name;}))
    
   // using an SLabel with a closure
-  form.add(new SLabel("helloworld2", {println ("slabel gtr"); name;}))
+  form.label("helloworld2", {println ("slabel gtr"); name;})
 
   // the form for new presentations and votes
-  add(new Form[Presentation]("form2", new CompoundPropertyModel(new Presentation)){
-    add(new TextField("name"))
-    add(new TextField("author"))
-    override def onSubmit() {
-      val newP = getModelObject
-      Presentation add newP
-      println ("presentations: "+Presentation.stub)
-      setModelObject(new Presentation)
-    }
-  })
+  val presentationForm = form[Presentation]("form2", new CompoundPropertyModel(new Presentation),
+    Map(
+      "submit" -> { theForm: ScalaForm[Presentation] =>
+        val newP = theForm.getModelObject
+        Presentation add newP
+        println ("presentations: "+Presentation.stub)
+        theForm.setModelObject(new Presentation)
+      }
+    )
+  )
+  presentationForm.text("name")
+  presentationForm.text("author")
 
-  add(new SPropertyListView[Presentation]("presentations", Presentation.stub, (li:ListItem[Presentation]) ⇒ { // list gets passed in by name
+
+  add(new ScalaPropertyListView[Presentation]("presentations", Presentation.stub, (li:ListItem[Presentation]) ⇒ { // list gets passed in by name
     val p = li.getModelObject
-    li add(new SLabel("name", p name))
-    li add(new SLabel("author", p author))
-    li add(new SLabel("votes", p.votes.toString))
+    li.label("name", p name)
+    li.label("author", p author)
+    li.label("votes", p.votes.toString)
 
-    li add(new Form[Vote]("form", new CompoundPropertyModel[Vote](new Vote)) {
-      add(new TextField("email").add(EmailAddressValidator.getInstance))
-      add(new FeedbackPanel("feedback", new ContainerFeedbackMessageFilter(li)))
-      override def onSubmit() {
-        val v = getModelObject
+    val form = li.form[Vote]("form", new CompoundPropertyModel[Vote](new Vote),
+      Map("submit" -> { (theForm: ScalaForm[Vote]) =>
+        val v = theForm.getModelObject
         p.addVotes(v)
         // we dont need to do anything with the returned presentation,
         // as the list view will reload it's model from the reset
         // service upon render
-      }
-    })
+      })
+    )
+    form.text("email").add(EmailAddressValidator.getInstance)
+    form.feedback("feedback", new ContainerFeedbackMessageFilter(li))
+
   }).setReuseItems(true))
     
 }
