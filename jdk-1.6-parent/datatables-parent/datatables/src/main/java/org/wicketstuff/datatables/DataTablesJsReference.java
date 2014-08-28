@@ -14,7 +14,7 @@ import java.util.List;
  */
 public class DataTablesJsReference extends WebjarsJavaScriptResourceReference {
     public DataTablesJsReference() {
-        super("/datatables/current/media/js/jquery.dataTables.js");
+        super("/datatables/current/js/jquery.dataTables.js");
     }
 
     @Override

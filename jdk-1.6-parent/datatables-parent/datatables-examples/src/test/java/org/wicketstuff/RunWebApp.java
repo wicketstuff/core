@@ -19,7 +19,7 @@ import org.eclipse.jetty.server.bio.SocketConnector;
 import org.eclipse.jetty.webapp.WebAppContext;
 
 /**
- * Seperate startup class for people that want to run the examples directly.
+ * Separate startup class for people that want to run the examples directly.
  */
 public class RunWebApp
 {
