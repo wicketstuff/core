@@ -14,6 +14,7 @@ import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
 import org.wicketstuff.datatables.DataTables;
+import org.wicketstuff.datatables.Sort;
 import org.wicketstuff.datatables.themes.BootstrapTheme;
 
 /**
@@ -42,6 +43,8 @@ public class NewPage extends WebPage {
         table.addTopToolbar(new HeadersToolbar<String>(table, dataProvider));
 
         table.add(new BootstrapTheme());
+
+        table.getOptions().order(new Sort(2, Sort.Direction.DESC));
     }
 
     private static class Person implements Serializable {
