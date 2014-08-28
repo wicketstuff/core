@@ -21,7 +21,7 @@ public class AppNavBar extends Navbar {
         super(id);
 
         // navigation title
-        setBrandName(Model.of("Wicket Stuff OpenLayers 3"));
+        setBrandName(Model.of("Wicket Stuff: OpenLayers 3"));
 
         // navigation items
         addComponents(NavbarComponents.transform(Navbar.ComponentPosition.LEFT,
@@ -30,6 +30,8 @@ public class AppNavBar extends Navbar {
                 new NavbarButton<Void>(SimplePage.class, Model.of("Simple")),
                 new NavbarButton<Void>(OsmPage.class, Model.of("OpenStreetMap")),
                 new NavbarButton<Void>(MarkerPage.class, Model.of("Marker")),
-                new NavbarButton<Void>(PopoverPage.class, Model.of("Popover"))));
+                new NavbarButton<Void>(PopoverPage.class, Model.of("Popover")),
+                new NavbarButton<Void>(WfsPage.class, Model.of("WFS")),
+                new NavbarButton<Void>(ClusterPage.class, Model.of("Cluster"))));
     }
 }

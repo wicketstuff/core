@@ -5,12 +5,12 @@ import org.apache.wicket.ajax.AjaxRequestTarget;
 import java.io.Serializable;
 
 /**
- * Provides a listener that is invoked when feature data has been loaded into the vector layer.
+ * Provides a listener that is invoked when features have been loaded into the vector layer.
  */
 public abstract class VectorFeaturesLoadedListener implements Serializable {
 
     /**
-     * Callback method that is invoked when feature data has been loaded into the vector layer.
+     * Callback method that is invoked when features have been loaded into the vector layer.
      *
      * @param target
      *         Ajax request target

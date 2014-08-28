@@ -2,7 +2,6 @@ package org.wicketstuff.openlayers3.api;
 
 import org.wicketstuff.openlayers3.api.layer.Layer;
 import org.wicketstuff.openlayers3.api.overlay.Overlay;
-import org.wicketstuff.openlayers3.api.style.View;
 
 import java.io.Serializable;
 import java.util.List;

@@ -4,13 +4,11 @@ import org.apache.wicket.behavior.AttributeAppender;
 import org.apache.wicket.markup.head.CssHeaderItem;
 import org.apache.wicket.markup.head.IHeaderResponse;
 import org.apache.wicket.markup.html.WebMarkupContainer;
-import org.apache.wicket.markup.html.panel.Panel;
+import org.apache.wicket.markup.html.panel.GenericPanel;
+import org.apache.wicket.model.AbstractReadOnlyModel;
+import org.apache.wicket.model.IModel;
 import org.apache.wicket.request.resource.CssResourceReference;
 import org.wicketstuff.openlayers3.api.util.Color;
-import org.apache.wicket.model.IModel;
-import org.apache.wicket.model.AbstractReadOnlyModel;
-import org.apache.wicket.markup.html.panel.GenericPanel;
-import org.apache.wicket.model.Model;
 
 /**
  * Provides a marker that may be placed on a amp.

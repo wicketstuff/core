@@ -1,16 +1,10 @@
 package org.wicketstuff.openlayers3.api.source.loader;
 
-import com.google.gson.JsonArray;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonNull;
-import com.google.gson.JsonParser;
 import org.apache.wicket.Component;
 import org.apache.wicket.ajax.AbstractDefaultAjaxBehavior;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.markup.head.IHeaderResponse;
 import org.apache.wicket.markup.head.OnDomReadyHeaderItem;
-import org.apache.wicket.request.IRequestParameters;
-import org.apache.wicket.request.cycle.RequestCycle;
 import org.apache.wicket.util.template.PackageTextTemplate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -24,7 +18,7 @@ import java.util.Map;
  * support the ability to add VectorFeaturesLoadedListener instance on vector layers, this likely isn't the class for
  * which you are looking.
  */
-public abstract class VectorFeatureDataLoadedListener extends AbstractDefaultAjaxBehavior {
+public abstract class VectorFeaturesLoadedListener extends AbstractDefaultAjaxBehavior {
 
     private final static Logger logger = LoggerFactory.getLogger(VectorFeatureDataLoadedListener.class);
 
@@ -48,7 +42,7 @@ public abstract class VectorFeatureDataLoadedListener extends AbstractDefaultAja
      *
      * @param vector The vector layer for which we are monitoring the loading of features.
      */
-    public VectorFeatureDataLoadedListener(Vector vector) {
+    public VectorFeaturesLoadedListener(Vector vector) {
         this.vector = vector;
     }
 
@@ -57,9 +51,17 @@ public abstract class VectorFeatureDataLoadedListener extends AbstractDefaultAja
      *
      * @param target
      *         Ajax request target
-     * @param features JsonArray with the list of loaded features
      */
-    public abstract void handleDataLoaded(AjaxRequestTarget target, JsonArray features);
+    public abstract void handleDataLoaded(AjaxRequestTarget target);
+
+    /**
+     * Returns the vector layer to which we are listening.
+     *
+     * @return Vector layer
+     */
+    public Vector getVector() {
+        return vector;
+    }
 
     /**
      * Javascript name of the callback function to invoke when feature data has been loaded into the layer.
@@ -67,7 +69,7 @@ public abstract class VectorFeatureDataLoadedListener extends AbstractDefaultAja
      * @return String with the Javascript callback function name
      */
     public String getCallbackFunctionName() {
-        return "dataLoadedHandler_" + getId();
+        return "featuresLoadedHandler_" + getId();
     }
 
     /**
@@ -91,17 +93,7 @@ public abstract class VectorFeatureDataLoadedListener extends AbstractDefaultAja
 
     @Override
     protected void respond(AjaxRequestTarget target) {
-
-        IRequestParameters params = RequestCycle.get().getRequest().getRequestParameters();
-        String featuresJson = params.getParameterValue("features").toString();
-
-        JsonArray features= null;
-        JsonElement featuresParsed = new JsonParser().parse(featuresJson);
-        if(!(featuresParsed instanceof JsonNull)) {
-            features = featuresParsed.getAsJsonArray();
-        }
-
-        handleDataLoaded(target, features);
+        handleDataLoaded(target);
     }
 
     @Override
@@ -114,7 +106,7 @@ public abstract class VectorFeatureDataLoadedListener extends AbstractDefaultAja
         params.put("dataLoaderId", getId());
 
         PackageTextTemplate template = new PackageTextTemplate(VectorFeatureDataLoadedListener.class,
-                "VectorFeatureDataLoadedListener.js");
+                "VectorFeaturesLoadedListener.js");
         response.render(OnDomReadyHeaderItem.forScript(template.asString(params)));
     }
 }

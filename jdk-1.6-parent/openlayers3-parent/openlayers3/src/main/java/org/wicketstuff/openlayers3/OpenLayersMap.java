@@ -1,8 +1,9 @@
 package org.wicketstuff.openlayers3;
 
+import com.google.gson.JsonArray;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.markup.head.IHeaderResponse;
-import org.apache.wicket.markup.html.panel.Panel;
+import org.apache.wicket.markup.html.panel.GenericPanel;
 import org.apache.wicket.model.IModel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -10,13 +11,14 @@ import org.wicketstuff.openlayers3.api.Feature;
 import org.wicketstuff.openlayers3.api.Map;
 import org.wicketstuff.openlayers3.api.layer.Layer;
 import org.wicketstuff.openlayers3.api.layer.Vector;
+import org.wicketstuff.openlayers3.api.source.Cluster;
 import org.wicketstuff.openlayers3.api.source.ServerVector;
 import org.wicketstuff.openlayers3.api.source.VectorSource;
 import org.wicketstuff.openlayers3.api.source.loader.DefaultGeoJsonLoader;
 import org.wicketstuff.openlayers3.api.source.loader.VectorFeatureDataLoadedListener;
+import org.wicketstuff.openlayers3.api.source.loader.VectorFeaturesLoadedListener;
 
 import java.util.HashMap;
-import org.apache.wicket.markup.html.panel.GenericPanel;
 
 /**
  * Provides the base class for all panels containing an OpenLayers map.
@@ -30,6 +32,12 @@ public abstract class OpenLayersMap extends GenericPanel<Map> {
      */
     private java.util.Map<Layer, VectorFeatureDataLoadedListener> layerDataLoadedMap =
             new HashMap<Layer, VectorFeatureDataLoadedListener>();
+
+    /**
+     * Map of layers to the data loaded handler that notifies their listeners.
+     */
+    private java.util.Map<Layer, VectorFeaturesLoadedListener> layerLoadedMap =
+            new HashMap<Layer, VectorFeaturesLoadedListener>();
 
     /**
      * Creates a new instance
@@ -47,7 +55,8 @@ public abstract class OpenLayersMap extends GenericPanel<Map> {
     @Override
     protected void onConfigure() {
         super.onConfigure();
-	Map map = getModelObject();
+
+        Map map = getModelObject();
         map.setTarget(getMarkupId());
 
         if (map.getLayers() != null) {
@@ -58,18 +67,41 @@ public abstract class OpenLayersMap extends GenericPanel<Map> {
 
                     final Vector vectorLayer = (Vector) layer;
 
-                    // add a behavior to be notified when new data is loaded
-                    VectorFeatureDataLoadedListener vectorFeatureDataLoadedListener = new VectorFeatureDataLoadedListener() {
+                    if(vectorLayer.getFeatureDataLoadedListeners() != null
+                            && vectorLayer.getFeatureDataLoadedListeners().size() > 0) {
 
-                        @Override
-                        public void handleDataLoaded(AjaxRequestTarget target) {
-                            vectorLayer.notifyFeaturesLoadedListeners(target);
-                        }
-                    };
-                    add(vectorFeatureDataLoadedListener);
+                        // add a behavior to be notified when new data is loaded
+                        VectorFeatureDataLoadedListener vectorFeatureDataLoadedListener =
+                                new VectorFeatureDataLoadedListener(vectorLayer) {
 
-                    // map the layer to the data loaded handler
-                    layerDataLoadedMap.put(layer, vectorFeatureDataLoadedListener);
+                                    @Override
+                                    public void handleDataLoaded(AjaxRequestTarget target, JsonArray features) {
+                                        vectorLayer.notifyFeatureDataLoadedListeners(target, features);
+                                    }
+                                };
+                        add(vectorFeatureDataLoadedListener);
+
+                        // map the layer to the data loaded handler
+                        layerDataLoadedMap.put(layer, vectorFeatureDataLoadedListener);
+                    }
+
+                    if(vectorLayer.getFeaturesLoadedListeners() != null
+                            && vectorLayer.getFeaturesLoadedListeners().size() > 0) {
+
+                        // add a behavior to be notified when new features are loaded
+                        VectorFeaturesLoadedListener vectorFeatureLoadedListener =
+                                new VectorFeaturesLoadedListener(vectorLayer) {
+
+                                    @Override
+                                    public void handleDataLoaded(AjaxRequestTarget target) {
+                                        vectorLayer.notifyFeaturesLoadedListeners(target);
+                                    }
+                                };
+                        add(vectorFeatureLoadedListener);
+
+                        // map the layer to the data loaded handler
+                        layerLoadedMap.put(layer, vectorFeatureLoadedListener);
+                    }
                 }
             }
         }
@@ -107,7 +139,7 @@ public abstract class OpenLayersMap extends GenericPanel<Map> {
         builder.append("var extent = ol.extent.boundingExtent(points);");
         builder.append("extent = ol.extent.buffer(extent, parseFloat('" + buffer + "'));");
 
-	String jsId = getModelObject().getJsId();
+        String jsId = getModelObject().getJsId();
         builder.append(jsId + ".getView().fitExtent(extent, " + jsId + ".getSize());");
 
         target.appendJavaScript(builder.toString());
@@ -124,7 +156,7 @@ public abstract class OpenLayersMap extends GenericPanel<Map> {
     public String renderBeforeConstructorJs() {
 
         StringBuilder builder = new StringBuilder();
-	Map map = getModelObject();
+        Map map = getModelObject();
 
         if (map != null) {
 
@@ -147,22 +179,51 @@ public abstract class OpenLayersMap extends GenericPanel<Map> {
                 if (layer.getSource() != null && layer.getSource() instanceof ServerVector) {
 
                     ServerVector vectorSource = (ServerVector) layer.getSource();
-                    builder.append("var " + vectorSource.getJsId() + " = new " + vectorSource.getJsType() + "("
-                            + vectorSource.renderJs() + ");\n");
+                    builder.append(renderServerVectorJs(vectorSource, layer));
+                }
 
-                    // for the GeoJSON loader, render the loading function
-                    if (vectorSource.getLoader() instanceof DefaultGeoJsonLoader) {
-                        DefaultGeoJsonLoader loader = (DefaultGeoJsonLoader) vectorSource.getLoader();
+                // create vector data sources for clusters before the map
+                if (layer.getSource() != null && layer.getSource() instanceof Cluster) {
 
-                        if (layerDataLoadedMap.get(layer) != null) {
-                            loader.dataLoaded(layerDataLoadedMap.get((Vector) layer));
-                        }
-                        builder.append(loader.renderBeforeConstructorJs() + ";\n");
+                    Cluster source = (Cluster) layer.getSource();
+
+                    // for the GeoJSON loader, render the data loading function
+                    if(source.getSource() instanceof ServerVector) {
+
+                        ServerVector vectorSource = (ServerVector) source.getSource();
+                        builder.append(renderServerVectorJs(vectorSource, layer));
                     }
                 }
 
                 builder.append(layer.getJsId() + " = new " + layer.getJsType() + "(" + layer.renderJs() + ");\n");
             }
+        }
+
+        return builder.toString();
+    }
+
+    private String renderServerVectorJs(ServerVector vectorSource, Layer layer) {
+
+        StringBuilder builder = new StringBuilder();
+
+        builder.append("var " + vectorSource.getJsId() + " = new " + vectorSource.getJsType() + "("
+                + vectorSource.renderJs() + ");\n");
+
+        if (vectorSource.getLoader() instanceof DefaultGeoJsonLoader) {
+            DefaultGeoJsonLoader loader = (DefaultGeoJsonLoader) vectorSource.getLoader();
+
+            if (layerDataLoadedMap.get(layer) != null) {
+
+                // add our listener for the feature data loading
+                loader.vectorFeatureDataLoadedListener(layerDataLoadedMap.get((Vector) layer));
+            }
+
+            if (layerLoadedMap.get(layer) != null) {
+
+                // add our listener for the feature loading
+                loader.vectorFeaturesLoadedListener(layerLoadedMap.get((Vector) layer));
+            }
+            builder.append(loader.renderBeforeConstructorJs() + ";\n");
         }
 
         return builder.toString();
@@ -176,7 +237,7 @@ public abstract class OpenLayersMap extends GenericPanel<Map> {
     public String renderAfterConstructorJs() {
 
         StringBuilder builder = new StringBuilder();
-	Map map = getModelObject();
+        Map map = getModelObject();
 
         // handle additional map building code
         if (map.getLayers() != null) {
@@ -192,6 +253,23 @@ public abstract class OpenLayersMap extends GenericPanel<Map> {
                             builder.append(feature.renderAfterConstructorJs());
                         }
                     }
+                }
+
+                // create vector data sources for clusters before the map
+                if (layer.getSource() != null && layer.getSource() instanceof Cluster) {
+
+                    Cluster source = (Cluster) layer.getSource();
+
+                    // add a listener to reload our cluster data
+                    if(source.getSource() instanceof ServerVector) {
+
+                        builder.append(map.getJsId() + ".getView().on('propertychange', function(event) {");
+                        builder.append(renderClusterLoaderJs(map, layer));
+                        builder.append("});");
+                    }
+
+                    // kick off an initial cluster load
+                    builder.append(renderClusterLoaderJs(map, layer));
                 }
             }
         }
@@ -214,6 +292,24 @@ public abstract class OpenLayersMap extends GenericPanel<Map> {
         builder.append(map.renderJs());
         builder.append(");\n\n");
         builder.append(renderAfterConstructorJs());
+        return builder.toString();
+    }
+
+    /**
+     * Returns a String with Javascript code to load data into the cluster source for the provided layer.
+     *
+     * @param map Map instance
+     * @param layer Layer with a Cluster data source
+     * @return String with Javascript code
+     */
+    private String renderClusterLoaderJs(Map map, Layer layer) {
+
+        StringBuilder builder = new StringBuilder();
+        builder.append("  var map = " + map.getJsId() +";");
+        builder.append("  var projection = map.getView().getProjection();");
+        builder.append("  var resolution = map.getView().getResolution();");
+        builder.append("  var extent = map.getView().calculateExtent(map.getSize());");
+        builder.append("  " + layer.getJsId() + ".getSource().source_.loader_(extent, resolution, projection);");
         return builder.toString();
     }
 }
