@@ -40,7 +40,7 @@ import java.util.Arrays;
 @MountPath("/wfs")
 public class WfsPage extends BasePage {
 
-    private static Logger logger = LoggerFactory.getLogger(WfsPage.class);
+    private final static Logger logger = LoggerFactory.getLogger(WfsPage.class);
 
     /**
      * Popover for providing detail on markers.
@@ -153,14 +153,13 @@ public class WfsPage extends BasePage {
                 }
 
                 // parse out the address for the feature
-                StringBuffer address = new StringBuffer();
+                StringBuilder address = new StringBuilder();
                 address.append(parseField(properties, "ADDRESS"));
                 address.append("</br>");
                 address.append(parseField(properties, "TOWN_NAME"));
 
-                // parse out constructed and architecture
+                // parse out constructed year
                 String constructed = parseField(properties, "CONSTRUCTI");
-                String architecture = parseField(properties, "ARCHITECTU");
 
                 // assemble our description
                 StringBuffer description = new StringBuffer();
