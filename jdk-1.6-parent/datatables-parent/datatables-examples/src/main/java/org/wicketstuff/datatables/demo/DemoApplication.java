@@ -36,5 +36,7 @@ public class DemoApplication extends WebApplication
         WicketWebjars.install(this);
 
         mountPage("new", NewPage.class);
+
+        getMarkupSettings().setStripWicketTags(true);
     }
 }

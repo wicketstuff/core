@@ -22,9 +22,14 @@ public class NewPage extends WebPage {
         super(parameters);
 
         List<IColumn<Person, String>> columns = new ArrayList<IColumn<Person, String>>();
-        columns.add(new PropertyColumn<Person, String>(Model.of("First name"), "firstName", "firstName"));
-        columns.add(new PropertyColumn<Person, String>(Model.of("Last name"), "lastName", "lastName"));
-        columns.add(new PropertyColumn<Person, String>(Model.of("Age"), "age", "age"));
+        columns.add(new PropertyColumn<Person, String>(Model.of("First"), "firstName", "firstName"));
+        columns.add(new PropertyColumn<Person, String>(Model.of("Last"), "lastName", "lastName"));
+        columns.add(new SpanPropertyColumn<Person, String>(Model.of("Age"), "age", "age") {
+            @Override
+            public int getRowspan() {
+                return 2;
+            }
+        });
 
         List<Person> people = new ArrayList<Person>();
         people.add(new Person("John", "Doe", 32));
@@ -36,11 +41,19 @@ public class NewPage extends WebPage {
         DataTables<Person, String> table = new DataTables<Person, String>("table", columns, dataProvider, 4);
         add(table);
 
-        table.addTopToolbar(new HeadersToolbar<String>(table, dataProvider));
+        SpanColumn<Person, String> namesColumn = new SpanColumn<Person, String>(Model.of("Names"), null) {
+            @Override
+            public int getColspan() {
+                return 2;
+            }
+        };
+        table.addTopToolbar(new SpanHeadersToolbar<String>(table, namesColumn));
+        table.addTopToolbar(new SpanHeadersToolbar<String>(table));
+//        table.addTopToolbar(new HeadersToolbar<String>(table, dataProvider));
 
         table.add(new BootstrapTheme());
 
-        table.getOptions().order(new Sort(2, Sort.Direction.DESC)); // single column ordering
+        table.getOptions().order(new Sort(2, Sort.Direction.ASC)); // single column ordering
 //        table.getOptions().order(new Sort(2, Sort.Direction.DESC), new Sort(0, Sort.Direction.ASC)); // multi column ordering
     }
 

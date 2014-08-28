@@ -16,7 +16,7 @@ public class BootstrapTheme extends Behavior {
     public void onComponentTag(Component component, ComponentTag tag) {
         super.onComponentTag(component, tag);
 
-        tag.put("class", "table table-striped table-bordered");
+        tag.append("class", "table table-striped table-bordered", " ");
     }
 
     @Override
