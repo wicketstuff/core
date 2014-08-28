@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/cmiles74/core.svg?branch=master)](https://travis-ci.org/cmiles74/core)
+
 Wicket Stuff Core
 ==================
 
