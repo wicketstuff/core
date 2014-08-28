@@ -39,6 +39,7 @@ import com.googlecode.wicket.jquery.core.Options;
 import com.googlecode.wicket.kendo.ui.KendoIcon;
 import com.googlecode.wicket.kendo.ui.widget.menu.item.IMenuItem;
 import com.googlecode.wicket.kendo.ui.widget.menu.item.MenuItem;
+import com.googlecode.wicket.kendo.ui.widget.menu.item.UrlMenuItem;
 
 /**
  * Provides the jQuery menu based on a {@link JQueryPanel}
@@ -50,7 +51,7 @@ public class Menu extends JQueryPanel implements IMenuListener
 {
 	private static final long serialVersionUID = 1L;
 
-	private final List<? extends IMenuItem> items; // first level
+	private final List<IMenuItem> items; // first level
 	private WebMarkupContainer root;
 
 	/** Keep a reference to the {@link MenuItem}<code>s</code> hash */
@@ -72,7 +73,7 @@ public class Menu extends JQueryPanel implements IMenuListener
 	 * @param id the markup id
 	 * @param items the menu-items
 	 */
-	public Menu(String id, List<? extends IMenuItem> items)
+	public Menu(String id, List<IMenuItem> items)
 	{
 		super(id);
 
@@ -122,7 +123,7 @@ public class Menu extends JQueryPanel implements IMenuListener
 	 *
 	 * @return the menu-item {@link List}
 	 */
-	public List<? extends IMenuItem> getItemList()
+	public List<IMenuItem> getItemList()
 	{
 		return this.items;
 	}
@@ -201,20 +202,38 @@ public class Menu extends JQueryPanel implements IMenuListener
 				protected void populateItem(ListItem<IMenuItem> item)
 				{
 					IMenuItem menuItem = item.getModelObject();
-					Menu.this.map.put(menuItem.getId(), menuItem);
 
-					item.add(new ItemFragment("item", menuItem));
+					Menu.this.map.put(menuItem.getId(), menuItem);
 					item.add(AttributeModifier.replace("id", menuItem.getId()));
 
-					if (menuItem.isEnabled())
+					if (menuItem instanceof UrlMenuItem)
 					{
-						item.add(new MenuFragment("menu", menuItem.getItems()));
+						item.add(new LinkFragment("item", (UrlMenuItem) menuItem));
+						item.add(new EmptyPanel("menu"));
 					}
 					else
 					{
-						item.add(new EmptyPanel("menu"));
-						item.add(AttributeModifier.append("disabled", Model.of("disabled")));
+						item.add(new ItemFragment("item", menuItem));
+
+						if (this.hasSubMenus(menuItem))
+						{
+							item.add(new MenuFragment("menu", menuItem.getItems()));
+						}
+						else
+						{
+							item.add(new EmptyPanel("menu"));
+						}
 					}
+
+					if (!menuItem.isEnabled())
+					{
+						item.add(AttributeModifier.append("disabled", Model.of("disabled")));
+					}					
+				}
+
+				private boolean hasSubMenus(IMenuItem item)
+				{
+					return item.isEnabled() && !item.getItems().isEmpty(); // do not render sub-menus if item is disabled  
 				}
 			});
 		}
@@ -231,10 +250,32 @@ public class Menu extends JQueryPanel implements IMenuListener
 		{
 			super(id, "item-fragment", Menu.this);
 
-			String cssClass= KendoIcon.getCssClass(new PropertyModel<String>(item, "icon").getObject());
+			String cssClass = KendoIcon.getCssClass(new PropertyModel<String>(item, "icon").getObject());
 
 			this.add(new EmptyPanel("icon").add(AttributeModifier.append("class", cssClass)));
 			this.add(new Label("title", item.getTitle()).setRenderBodyOnly(true));
+		}
+	}
+
+	/**
+	 * Represents a {@link Fragment} of a link menu-item
+	 */
+	private class LinkFragment extends Fragment
+	{
+		private static final long serialVersionUID = 1L;
+
+		public LinkFragment(String id, UrlMenuItem item)
+		{
+			super(id, "link-fragment", Menu.this);
+
+			String cssClass = KendoIcon.getCssClass(new PropertyModel<String>(item, "icon").getObject());
+			
+			WebMarkupContainer link = new WebMarkupContainer("link");
+			link.add(new EmptyPanel("icon").add(AttributeModifier.append("class", cssClass)));
+			link.add(new Label("title", item.getTitle()).setRenderBodyOnly(true));
+			link.add(AttributeModifier.replace("href", item.getUrl()));
+
+			this.add(link);
 		}
 	}
 }

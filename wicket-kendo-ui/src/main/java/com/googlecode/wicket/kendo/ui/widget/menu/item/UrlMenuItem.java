@@ -82,11 +82,18 @@ public class UrlMenuItem extends AbstractMenuItem
 		this.url = url;
 	}
 
+	// Properties //
+
+	public String getUrl()
+	{
+		return this.url.toString();
+	}
+
 	// Events //
 
 	@Override
 	public void onClick(AjaxRequestTarget target)
 	{
-		target.appendJavaScript(String.format("location.href='%s'", this.url));
+		// noop
 	}
 }
