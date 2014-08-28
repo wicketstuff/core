@@ -44,7 +44,8 @@ public class NewPage extends WebPage {
 
         table.add(new BootstrapTheme());
 
-        table.getOptions().order(new Sort(2, Sort.Direction.DESC));
+        table.getOptions().order(new Sort(2, Sort.Direction.DESC)); // single column ordering
+//        table.getOptions().order(new Sort(2, Sort.Direction.DESC), new Sort(0, Sort.Direction.ASC)); // multi column ordering
     }
 
     private static class Person implements Serializable {
