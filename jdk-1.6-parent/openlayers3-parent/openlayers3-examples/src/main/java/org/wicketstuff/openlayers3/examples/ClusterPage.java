@@ -40,7 +40,7 @@ import java.util.Arrays;
 @MountPath("/cluster")
 public class ClusterPage extends BasePage {
 
-    private static Logger logger = LoggerFactory.getLogger(WfsPage.class);
+    private final static Logger logger = LoggerFactory.getLogger(ClusterPage.class);
 
     /**
      * Popover for providing detail on markers.
@@ -201,7 +201,7 @@ public class ClusterPage extends BasePage {
                     }
 
                     // parse out the address for the feature
-                    StringBuffer address = new StringBuffer();
+                    StringBuilder address = new StringBuilder();
                     address.append(parseField(featureThis, "ADDRESS"));
                     address.append("</br>");
                     address.append(parseField(featureThis, "TOWN_NAME"));
@@ -211,7 +211,7 @@ public class ClusterPage extends BasePage {
                     String architecture = parseField(featureThis, "ARCHITECTU");
 
                     // assemble our description
-                    StringBuffer description = new StringBuffer();
+                    StringBuilder description = new StringBuilder();
                     description.append("<p>" + "c. ");
                     description.append(constructed + "</p>");
                     description.append("<p>" + address.toString() + "</p>");
