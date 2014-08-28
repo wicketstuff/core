@@ -57,7 +57,9 @@ public class ProgressButton extends AjaxFallbackButton {
         this.refreshDependants = new HashSet<Component>();
 
         this.refreshBehavior = new RefreshBehavior(duration);
-
+        if (getTaskContainer().isRunning()) {
+            add(refreshBehavior);
+        }
         this.stateTextModels = new HashMap<StateDescription, IModel<String>>();
         this.setModel(new StateDispatcherModel<String>(getDefaultTextModel(model), stateTextModels));
 
