@@ -9,19 +9,23 @@ import org.apache.wicket.ajax.AbstractDefaultAjaxBehavior;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.markup.head.IHeaderResponse;
 import org.apache.wicket.markup.head.OnDomReadyHeaderItem;
+import org.apache.wicket.request.IRequestParameters;
 import org.apache.wicket.request.cycle.RequestCycle;
+import org.apache.wicket.util.string.Strings;
 import org.apache.wicket.util.template.PackageTextTemplate;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.wicketstuff.openlayers3.api.coordinate.LongLat;
 
 import java.util.HashMap;
 import java.util.Map;
-import org.apache.wicket.request.IRequestParameters;
-import org.apache.wicket.util.string.Strings;
 
 /**
  * Provides a behavior that handles clicking on features on the map.
  */
 public abstract class ClickFeatureHandler extends AbstractDefaultAjaxBehavior {
+
+    private final static Logger logger = LoggerFactory.getLogger(ClickFeatureHandler.class);
 
     /**
      * Default projection.
@@ -83,7 +87,7 @@ public abstract class ClickFeatureHandler extends AbstractDefaultAjaxBehavior {
     @Override
     protected void respond(AjaxRequestTarget target) {
 
-	IRequestParameters params = RequestCycle.get().getRequest().getRequestParameters();
+        IRequestParameters params = RequestCycle.get().getRequest().getRequestParameters();
         String coordinateRaw = params.getParameterValue("coordinate").toString();
         String featureId = params.getParameterValue("id").toString();
         String properties = params.getParameterValue("properties").toString();
@@ -98,7 +102,7 @@ public abstract class ClickFeatureHandler extends AbstractDefaultAjaxBehavior {
         Double longitude = Double.parseDouble(coordinates[0]);
         Double latitude = Double.parseDouble(coordinates[1]);
 
-        if (!featureId.isEmpty()) {
+        if (!properties.isEmpty()) {
 
             handleClick(target, featureId, new LongLat(longitude, latitude, projection), propertiesJson);
         } else {

@@ -24,7 +24,7 @@ public abstract class ClickHandler extends AbstractDefaultAjaxBehavior {
     /**
      * Counter for generating instance identifiers.
      */
-    public static Long counter = 0L;
+    private static Long counter = 0L;
     /**
      * The projection for this behavior, used to translate the 'clicked' coordinates.
      */

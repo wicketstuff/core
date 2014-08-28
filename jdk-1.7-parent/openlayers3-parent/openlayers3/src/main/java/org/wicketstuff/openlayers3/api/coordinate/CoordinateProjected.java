@@ -143,4 +143,9 @@ public class CoordinateProjected extends Coordinate {
         return " ol.proj.transform(" + super.renderJs() + ", '" + getProjection() + "', '"
                 + getTargetProjection() + "')";
     }
+
+    @Override
+    public String toString() {
+        return getClass().getSimpleName() + "[" + getProjection() + ",[" + getX() + "," + getY() + "]]";
+    }
 }

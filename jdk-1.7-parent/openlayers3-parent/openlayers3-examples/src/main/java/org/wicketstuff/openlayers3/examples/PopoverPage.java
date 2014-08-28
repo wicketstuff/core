@@ -2,24 +2,23 @@ package org.wicketstuff.openlayers3.examples;
 
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.model.Model;
-import org.apache.wicket.util.string.Strings;
 import org.wicketstuff.annotation.mount.MountPath;
 import org.wicketstuff.openlayers3.DefaultOpenLayersMap;
 import org.wicketstuff.openlayers3.OpenLayersMap;
 import org.wicketstuff.openlayers3.api.Map;
+import org.wicketstuff.openlayers3.api.View;
 import org.wicketstuff.openlayers3.api.coordinate.LongLat;
 import org.wicketstuff.openlayers3.api.layer.Layer;
 import org.wicketstuff.openlayers3.api.layer.Tile;
 import org.wicketstuff.openlayers3.api.overlay.Overlay;
 import org.wicketstuff.openlayers3.api.source.Osm;
-import org.wicketstuff.openlayers3.api.style.View;
+import org.wicketstuff.openlayers3.api.util.Color;
 import org.wicketstuff.openlayers3.behavior.ClickHandler;
 import org.wicketstuff.openlayers3.component.MarkerPopover;
 import org.wicketstuff.openlayers3.component.PopoverPanel;
 import org.wicketstuff.openlayers3.examples.base.BasePage;
 
 import java.util.Arrays;
-import org.wicketstuff.openlayers3.api.util.Color;
 
 /**
  * Provides a page demonstrating a popover.

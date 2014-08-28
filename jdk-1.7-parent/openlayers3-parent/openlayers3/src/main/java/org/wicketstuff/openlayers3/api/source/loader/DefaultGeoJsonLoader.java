@@ -20,9 +20,14 @@ public class DefaultGeoJsonLoader extends Loader implements Serializable {
     private String projection;
 
     /**
-     * Handler to notify when the data is loaded.
+     * Handler to notify when the feature data is loaded.
      */
     private VectorFeatureDataLoadedListener vectorFeatureDataLoadedListener;
+
+    /**
+     * Handler to notify when the features is loaded.
+     */
+    private VectorFeaturesLoadedListener vectorFeaturesLoadedListener;
 
     /**
      * Creates a new instance.
@@ -125,8 +130,40 @@ public class DefaultGeoJsonLoader extends Loader implements Serializable {
      *         Listener to invoke when feature data has been loaded
      * @return this instance
      */
-    public DefaultGeoJsonLoader dataLoaded(VectorFeatureDataLoadedListener vectorFeatureDataLoadedListener) {
+    public DefaultGeoJsonLoader vectorFeatureDataLoadedListener(VectorFeatureDataLoadedListener
+                                                                        vectorFeatureDataLoadedListener) {
         setVectorFeatureDataLoadedListener(vectorFeatureDataLoadedListener);
+        return this;
+    }
+
+    /**
+     * Returns the listener invoked when features have been loaded.
+     *
+     * @return Feature loaded listener
+     */
+    public VectorFeaturesLoadedListener getVectorFeaturesLoadedListener() {
+        return vectorFeaturesLoadedListener;
+    }
+
+    /**
+     * Sets a listener that will be invoked when features have been loaded.
+     *
+     * @param vectorFeaturesLoadedListener
+     *         Listener to invoke when features have been loaded
+     */
+    public void setVectorFeaturesLoadedListener(VectorFeaturesLoadedListener vectorFeaturesLoadedListener) {
+        this.vectorFeaturesLoadedListener = vectorFeaturesLoadedListener;
+    }
+
+    /**
+     * Sets a listener that will be invoked when features have been loaded.
+     *
+     * @param vectorFeaturesLoadedListener
+     *         Listener to invoke when features have been loaded
+     * @return This instance
+     */
+    public DefaultGeoJsonLoader vectorFeaturesLoadedListener(VectorFeaturesLoadedListener vectorFeaturesLoadedListener) {
+        setVectorFeaturesLoadedListener(vectorFeaturesLoadedListener);
         return this;
     }
 
@@ -146,7 +183,19 @@ public class DefaultGeoJsonLoader extends Loader implements Serializable {
         builder.append(getJsId() + "_loadFeatures = function(response) {");
         builder.append("  " + getSource().getJsId() + ".addFeatures(" + getSource().getJsId()
                 + ".readFeatures(response));");
-        builder.append(vectorFeatureDataLoadedListener.getCallbackFunctionName() + "(" + getSource().getJsId() + ")");
+
+        if(vectorFeatureDataLoadedListener != null) {
+
+            // invoke our callback for the feature data load
+            builder.append(vectorFeatureDataLoadedListener.getCallbackFunctionName() + "(" + getSource().getJsId() + ");");
+        }
+
+        if(vectorFeaturesLoadedListener != null) {
+
+            // invoke our callback for the feature load
+            builder.append(vectorFeaturesLoadedListener.getCallbackFunctionName() + "(" + getSource().getJsId() + ");");
+        }
+
         builder.append("};");
         return builder.toString();
     }

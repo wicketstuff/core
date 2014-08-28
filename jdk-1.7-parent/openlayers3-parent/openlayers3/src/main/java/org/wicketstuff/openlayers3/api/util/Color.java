@@ -1,8 +1,5 @@
 package org.wicketstuff.openlayers3.api.util;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import java.io.Serializable;
 
 /**
@@ -202,6 +199,10 @@ public class Color implements Serializable {
     public Color alpha(double alpha) {
         setAlpha(alpha);
         return this;
+    }
+
+    public String renderJs() {
+        return "[" + red + "," + green + "," + blue + "," + alpha + "]";
     }
 
     @Override

@@ -1,4 +1,4 @@
-package org.wicketstuff.openlayers3.api.source.loader;
+package org.wicketstuff.openlayers3.behavior.view;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
@@ -20,46 +20,56 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Provides a behavior that invokes a callback after feature data has been loaded into the vector layer. This is used to
- * support the ability to add VectorFeaturesLoadedListener instance on vector layers, this likely isn't the class for
- * which you are looking.
+ * Provides a behavior that invokes a callback event whenever the map view changes. Specifically, this behavior will
+ * monitor the map's ol.View for 'center' and 'resolution' events. In addition to providing information on the current
+ * view, it will also provide all of the features in the view extent for the provided layer.
  */
-public abstract class VectorFeatureDataLoadedListener extends AbstractDefaultAjaxBehavior {
+public abstract class ViewEventFeaturesListener extends AbstractDefaultAjaxBehavior {
 
-    private final static Logger logger = LoggerFactory.getLogger(VectorFeatureDataLoadedListener.class);
+    private final static Logger logger = LoggerFactory.getLogger(ViewEventFeaturesListener.class);
+
+    /**
+     * Default projection.
+     */
+    public final static String DEFAULT_PROJECTION = "EPSG:4326";
 
     /**
      * Counter for generating instance identifiers.
      */
-    public static Long counter = 0L;
+    private static Long counter = 0L;
 
     /**
      * Map for storing object Ids.
      */
-    public static java.util.Map<Object, String> objectIds = new HashMap<Object, String>();
+    private static java.util.Map<Object, String> objectIds = new HashMap<Object, String>();
 
     /**
-     * Vector layer for which we are monitoring the loading of features.
+     * Projection for this map.
      */
-    public Vector vector;
+    private String projection;
 
     /**
-     * Creates a new instance.
-     *
-     * @param vector The vector layer for which we are monitoring the loading of features.
+     * Layer for which features will be enumerated.
      */
-    public VectorFeatureDataLoadedListener(Vector vector) {
-        this.vector = vector;
+    private Vector vector;
+
+    public ViewEventFeaturesListener(Vector vectorLayer) {
+        this(DEFAULT_PROJECTION, vectorLayer);
+    }
+
+    public ViewEventFeaturesListener(String projection, Vector vectorLayer) {
+        this.vector = vectorLayer;
+        this.projection = projection;
     }
 
     /**
-     * Callback method that is invoked when feature data has been loaded into the vector layer.
+     * Callback method that is invoked when the map's view is changed.
      *
-     * @param target
-     *         Ajax request target
-     * @param features JsonArray with the list of loaded features
+     * @param target Ajax request target
+     * @param viewEvent The current view
+     * @param features JSON array of features in the view
      */
-    public abstract void handleDataLoaded(AjaxRequestTarget target, JsonArray features);
+    public abstract void handleViewEvent(AjaxRequestTarget target, ViewEvent viewEvent, JsonArray features);
 
     /**
      * Javascript name of the callback function to invoke when feature data has been loaded into the layer.
@@ -67,7 +77,7 @@ public abstract class VectorFeatureDataLoadedListener extends AbstractDefaultAja
      * @return String with the Javascript callback function name
      */
     public String getCallbackFunctionName() {
-        return "dataLoadedHandler_" + getId();
+        return "viewEventFeaturesHandler_" + getId();
     }
 
     /**
@@ -93,7 +103,14 @@ public abstract class VectorFeatureDataLoadedListener extends AbstractDefaultAja
     protected void respond(AjaxRequestTarget target) {
 
         IRequestParameters params = RequestCycle.get().getRequest().getRequestParameters();
+        String viewJson = params.getParameterValue("view").toString();
         String featuresJson = params.getParameterValue("features").toString();
+
+        ViewEvent viewEvent = null;
+        JsonElement viewParsed = new JsonParser().parse(viewJson);
+        if(!(viewParsed instanceof JsonNull)) {
+            viewEvent = new ViewEvent(viewParsed.getAsJsonObject());
+        }
 
         JsonArray features= null;
         JsonElement featuresParsed = new JsonParser().parse(featuresJson);
@@ -101,7 +118,7 @@ public abstract class VectorFeatureDataLoadedListener extends AbstractDefaultAja
             features = featuresParsed.getAsJsonArray();
         }
 
-        handleDataLoaded(target, features);
+        handleViewEvent(target, viewEvent, features);
     }
 
     @Override
@@ -110,11 +127,13 @@ public abstract class VectorFeatureDataLoadedListener extends AbstractDefaultAja
 
         final Map<String, CharSequence> params = new HashMap<String, CharSequence>();
         params.put("callbackUrl", getCallbackUrl());
-        params.put("componentId", vector.getJsId());
-        params.put("dataLoaderId", getId());
+        params.put("callbackFunctionName", getCallbackFunctionName());
+        params.put("componentId", component.getMarkupId());
+        params.put("layerId", vector.getJsId());
+        params.put("projection", projection != null ? projection : "NULL");
 
-        PackageTextTemplate template = new PackageTextTemplate(VectorFeatureDataLoadedListener.class,
-                "VectorFeatureDataLoadedListener.js");
+        PackageTextTemplate template = new PackageTextTemplate(ViewEventListener.class,
+                "ViewEventFeaturesListener.js");
         response.render(OnDomReadyHeaderItem.forScript(template.asString(params)));
     }
 }

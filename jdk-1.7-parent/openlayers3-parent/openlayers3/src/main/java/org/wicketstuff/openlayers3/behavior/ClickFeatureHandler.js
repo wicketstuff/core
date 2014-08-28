@@ -7,30 +7,47 @@ var clickFeatureHandler_${componentId}_${clickHandlerId} = function(id, coordina
 };
 
 map_${componentId}.on('click', function(event) {
+
+   var convertFeature = function(feature) {
+
+     var coordinateRaw = feature.getGeometry().getCoordinates();
+     var coordinateHdms = coordinateRaw;
+
+     if('${projection}' != 'NULL') {
+         coordinateHdms = ol.proj.transform(
+           coordinateRaw, map_${componentId}.getView().getProjection(), '${projection}');
+     }
+
+     var values = {};
+     feature.getKeys().forEach(function(key) {
+
+         if(key == 'geometry') {
+             values[key] = coordinateHdms;
+         } else if(key == 'features') {
+
+             var featuresOut = [];
+             feature.get(key).forEach(function(featureThis) {
+               featuresOut.push(convertFeature(featureThis));
+             });
+
+             values[key] = featuresOut;
+         } else {
+             values[key] = feature.get(key);
+         }
+     });
+
+     return values;
+   };
+
    var feature = map_${componentId}.forEachFeatureAtPixel(event.pixel,
      function(feature, layer) {
        return feature;
      });
 
     if(feature) {
-        var coordinateRaw = feature.getGeometry().getCoordinates();
-        var coordinateHdms = coordinateRaw;
 
-        if('${projection}' != 'NULL') {
-            coordinateHdms = ol.proj.transform(
-              coordinateRaw, map_${componentId}.getView().getProjection(), '${projection}');
-        }
-
-        var values = {};
-        feature.getKeys().forEach(function(key) {
-            if(key != 'geometry') {
-                values[key] = feature.get(key);
-            } else {
-                values[key] = coordinateHdms;
-            }
-        });
-
-      clickFeatureHandler_${componentId}_${clickHandlerId}(feature.get('id'), coordinateHdms, JSON.stringify(values));
+      values = convertFeature(feature);
+      clickFeatureHandler_${componentId}_${clickHandlerId}(feature.get('id'), values["geometry"], JSON.stringify(values));
     } else {
 
         var coordinateRaw = event.coordinate;
