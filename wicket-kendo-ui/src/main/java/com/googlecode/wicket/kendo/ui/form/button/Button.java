@@ -25,7 +25,7 @@ import com.googlecode.wicket.kendo.ui.KendoAbstractBehavior;
 import com.googlecode.wicket.kendo.ui.KendoIcon;
 
 /**
- * Provides a Kendo-ui button based on the built-in Button
+ * Provides a Kendo UI button based on the built-in Button
  *
  * @author Sebastien Briquet - sebfz1
  *

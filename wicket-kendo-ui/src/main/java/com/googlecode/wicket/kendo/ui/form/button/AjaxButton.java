@@ -27,7 +27,7 @@ import com.googlecode.wicket.kendo.ui.KendoIcon;
 import com.googlecode.wicket.kendo.ui.form.button.Button.ButtonBehavior;
 
 /**
- * Provides a jQuery button based on the built-in AjaxButton
+ * Provides a Kendo UI button based on the built-in AjaxButton
  *
  * @author Sebastien Briquet - sebfz1
  *
@@ -38,6 +38,7 @@ public abstract class AjaxButton extends org.apache.wicket.ajax.markup.html.form
 
 	/**
 	 * Constructor
+	 * 
 	 * @param id the markup id
 	 */
 	public AjaxButton(String id)
@@ -47,6 +48,7 @@ public abstract class AjaxButton extends org.apache.wicket.ajax.markup.html.form
 
 	/**
 	 * Constructor
+	 * 
 	 * @param id the markup id
 	 * @param form the {@link Form}
 	 */
@@ -57,6 +59,7 @@ public abstract class AjaxButton extends org.apache.wicket.ajax.markup.html.form
 
 	/**
 	 * Constructor
+	 * 
 	 * @param id the markup id
 	 * @param model the {@link IModel}
 	 */
@@ -67,6 +70,7 @@ public abstract class AjaxButton extends org.apache.wicket.ajax.markup.html.form
 
 	/**
 	 * Constructor
+	 * 
 	 * @param id the markup id
 	 * @param model the {@link IModel}
 	 * @param form the {@link Form}
