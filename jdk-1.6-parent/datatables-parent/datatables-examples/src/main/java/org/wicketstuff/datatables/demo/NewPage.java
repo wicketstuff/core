@@ -90,6 +90,9 @@ public class NewPage extends WebPage {
              // makes the age in bold and underlined
              // recommendation: load the String with PackageTextTemplate
             .createdRow(new Json.RawValue("function(row, data, displayIndex) { $('td', row).eq(2).wrapInner('<b><u></u></b>');}"))
+
+            .lengthMenu(new Integer[]{1,2,5,10}, new String[]{"One", "Two", "Five", "Ten"})
+
         ;
 
 

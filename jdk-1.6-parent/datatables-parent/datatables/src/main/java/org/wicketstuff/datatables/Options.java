@@ -4,6 +4,7 @@ import de.agilecoders.wicket.jquery.AbstractConfig;
 import de.agilecoders.wicket.jquery.IKey;
 import de.agilecoders.wicket.jquery.Key;
 import de.agilecoders.wicket.jquery.util.Json;
+import org.apache.wicket.util.lang.Args;
 
 /**
  *
@@ -98,6 +99,20 @@ public class Options extends AbstractConfig {
      * https://datatables.net/reference/option/createdRow
      */
     private static final IKey<Json.RawValue> CreatedRow = new Key<Json.RawValue>("createdRow", null);
+
+    /**
+     * https://datatables.net/examples/advanced_init/length_menu.html
+     * https://datatables.net/reference/option/lengthMenu
+     */
+    private static final IKey<Object[][]> LengthMenu = new Key<Object[][]>("lengthMenu", null);
+
+    public Options lengthMenu(Integer[] values, String[] displayValues) {
+        Args.notNull(values, "values");
+        Args.notNull(displayValues, "displayValues");
+        Args.isTrue(values.length == displayValues.length, "The values and display values length are different!");
+        put(LengthMenu, new Object[][]{values, displayValues});
+        return this;
+    }
 
     public Options createdRow(Json.RawValue createdRow) {
         put(CreatedRow, createdRow);
