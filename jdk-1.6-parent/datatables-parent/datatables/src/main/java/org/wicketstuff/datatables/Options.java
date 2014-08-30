@@ -4,7 +4,6 @@ import de.agilecoders.wicket.jquery.AbstractConfig;
 import de.agilecoders.wicket.jquery.IKey;
 import de.agilecoders.wicket.jquery.Key;
 import de.agilecoders.wicket.jquery.util.Json;
-import org.apache.wicket.validation.RawValidationError;
 
 /**
  *
@@ -86,6 +85,22 @@ public class Options extends AbstractConfig {
      * https://datatables.net/reference/option/rowCallback
      */
     private static final IKey<Json.RawValue> RowCallback = new Key<Json.RawValue>("rowCallback", null);
+
+    /**
+     *
+     * https://datatables.net/reference/option/deferLoading
+     */
+    private static final IKey<Integer[]> DeferLoading = new Key<Integer[]>("deferLoading", null);
+
+    public Options deferLoading(Integer maxItems) {
+        put(DeferLoading, new Integer[] {maxItems});
+        return this;
+    }
+
+    public Options deferLoadingFiltered(int maxItemsFiltered, int maxItems) {
+        put(DeferLoading, new Integer[] {maxItemsFiltered, maxItems});
+        return this;
+    }
 
     public Options rowCallback(Json.RawValue rowCallback) {
         put(RowCallback, rowCallback);
