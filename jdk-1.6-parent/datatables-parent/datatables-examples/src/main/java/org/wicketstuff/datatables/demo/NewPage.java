@@ -3,13 +3,13 @@ package org.wicketstuff.datatables.demo;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.wicket.extensions.markup.html.repeater.data.table.HeadersToolbar;
 import org.apache.wicket.extensions.markup.html.repeater.data.table.IColumn;
 import org.apache.wicket.extensions.markup.html.repeater.data.table.PropertyColumn;
 import org.apache.wicket.markup.html.WebPage;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
 import org.wicketstuff.datatables.DataTables;
+import org.wicketstuff.datatables.Options;
 import org.wicketstuff.datatables.Sort;
 import org.wicketstuff.datatables.themes.BootstrapTheme;
 
@@ -53,8 +53,10 @@ public class NewPage extends WebPage {
 
         table.add(new BootstrapTheme());
 
-        table.getOptions().order(new Sort(2, Sort.Direction.ASC)); // single column ordering
+        Options options = table.getOptions();
+        options.order(new Sort(2, Sort.Direction.ASC)); // single column ordering
 //        table.getOptions().order(new Sort(2, Sort.Direction.DESC), new Sort(0, Sort.Direction.ASC)); // multi column ordering
+        options.stateDuration(3600).stateSave(true);
     }
 
 }
