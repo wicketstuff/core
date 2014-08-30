@@ -3,6 +3,7 @@ package org.wicketstuff.datatables.demo;
 import java.util.ArrayList;
 import java.util.List;
 
+import de.agilecoders.wicket.jquery.util.Json;
 import org.apache.wicket.extensions.markup.html.repeater.data.table.IColumn;
 import org.apache.wicket.extensions.markup.html.repeater.data.table.PropertyColumn;
 import org.apache.wicket.markup.html.WebPage;
@@ -66,7 +67,10 @@ public class NewPage extends WebPage {
 //            .scrollY("350px")
 //            .scrollCollapse(true)
 
-            .scrollX(true)
+//            .scrollX(true)
+
+            // recommendation: load the String with PackageTextTemplate
+            .rowCallback(new Json.RawValue("function(row, data, displayIndex) {if(displayIndex == 1) {$(row).addClass('selected')}}"))
         ;
     }
 

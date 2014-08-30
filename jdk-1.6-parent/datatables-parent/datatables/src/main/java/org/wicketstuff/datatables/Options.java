@@ -3,6 +3,8 @@ package org.wicketstuff.datatables;
 import de.agilecoders.wicket.jquery.AbstractConfig;
 import de.agilecoders.wicket.jquery.IKey;
 import de.agilecoders.wicket.jquery.Key;
+import de.agilecoders.wicket.jquery.util.Json;
+import org.apache.wicket.validation.RawValidationError;
 
 /**
  *
@@ -78,6 +80,17 @@ public class Options extends AbstractConfig {
      * https://datatables.net/reference/option/scrollX
      */
     private static final IKey<Boolean> ScrollX = new Key<Boolean>("scrollX", false);
+
+    /**
+     * https://datatables.net/examples/server_side/select_rows.html
+     * https://datatables.net/reference/option/rowCallback
+     */
+    private static final IKey<Json.RawValue> RowCallback = new Key<Json.RawValue>("rowCallback", null);
+
+    public Options rowCallback(Json.RawValue rowCallback) {
+        put(RowCallback, rowCallback);
+        return this;
+    }
 
     public Options scrollX(Boolean scrollX) {
         put(ScrollX, scrollX);
