@@ -65,6 +65,8 @@ public class NewPage extends WebPage {
 //            .paging(false)
 //            .scrollY("350px")
 //            .scrollCollapse(true)
+
+            .scrollX(true)
         ;
     }
 

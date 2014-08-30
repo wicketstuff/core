@@ -73,6 +73,17 @@ public class Options extends AbstractConfig {
      */
     private static final IKey<Boolean> ScrollCollapse = new Key<Boolean>("scrollCollapse", false);
 
+    /**
+     * https://datatables.net/examples/basic_init/scroll_x.html
+     * https://datatables.net/reference/option/scrollX
+     */
+    private static final IKey<Boolean> ScrollX = new Key<Boolean>("scrollX", false);
+
+    public Options scrollX(Boolean scrollX) {
+        put(ScrollX, scrollX);
+        return this;
+    }
+
     public Options scrollCollapse(Boolean scrollCollapse) {
         put(ScrollCollapse, scrollCollapse);
         return this;
