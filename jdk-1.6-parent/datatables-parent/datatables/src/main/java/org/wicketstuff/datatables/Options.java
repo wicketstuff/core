@@ -57,6 +57,37 @@ public class Options extends AbstractConfig {
      */
     private static final IKey<PagingType> _PagingType = new Key<PagingType>("pagingType", PagingType.simple_numbers);
 
+    /**
+     * https://datatables.net/reference/option/paging
+     */
+    private static final IKey<Boolean> Paging = new Key<Boolean>("paging", true);
+
+    /**
+     * https://datatables.net/examples/basic_init/scroll_y.html
+     */
+    private static final IKey<String> ScrollY = new Key<String>("scrollY", null);
+
+    /**
+     * https://datatables.net/examples/basic_init/scroll_y.html
+     * https://datatables.net/reference/option/scrollCollapse
+     */
+    private static final IKey<Boolean> ScrollCollapse = new Key<Boolean>("scrollCollapse", false);
+
+    public Options scrollCollapse(Boolean scrollCollapse) {
+        put(ScrollCollapse, scrollCollapse);
+        return this;
+    }
+
+    public Options scrollY(String scrollY) {
+        put(ScrollY, scrollY);
+        return this;
+    }
+
+    public Options paging(Boolean paging) {
+        put(Paging, paging);
+        return this;
+    }
+
     public Options pagingType(PagingType pagingType) {
         put(_PagingType, pagingType);
         return this;
