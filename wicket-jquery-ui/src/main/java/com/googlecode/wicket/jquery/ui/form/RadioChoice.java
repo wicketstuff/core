@@ -24,6 +24,7 @@ import org.apache.wicket.model.IModel;
 import com.googlecode.wicket.jquery.core.IJQueryWidget;
 import com.googlecode.wicket.jquery.core.JQueryBehavior;
 import com.googlecode.wicket.jquery.core.Options;
+import com.googlecode.wicket.jquery.ui.JQueryUIBehavior;
 
 /**
  * Provides jQuery radio-buttons based on the built-in RadioChoice
@@ -189,7 +190,7 @@ public class RadioChoice<T> extends org.apache.wicket.markup.html.form.RadioChoi
 	/**
 	 * Provides jQuery radio-buttons {@link JQueryBehavior}
 	 */
-	public static class RadioChoiceBehavior extends JQueryBehavior
+	public static class RadioChoiceBehavior extends JQueryUIBehavior
 	{
 		private static final long serialVersionUID = 1L;
 		private static final String METHOD = "buttonset";

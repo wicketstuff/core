@@ -22,7 +22,7 @@ import org.apache.wicket.model.IModel;
 import com.googlecode.wicket.jquery.core.IJQueryWidget;
 import com.googlecode.wicket.jquery.core.JQueryBehavior;
 import com.googlecode.wicket.jquery.core.Options;
-import com.googlecode.wicket.kendo.ui.KendoAbstractBehavior;
+import com.googlecode.wicket.kendo.ui.KendoUIBehavior;
 
 /**
  * Provides a Kendo UI Editor widget.<br/>
@@ -115,7 +115,7 @@ public class Editor<T> extends TextArea<T> implements IJQueryWidget
 	@Override
 	public JQueryBehavior newWidgetBehavior(String selector)
 	{
-		return new KendoAbstractBehavior(selector, Editor.METHOD, this.options);
+		return new KendoUIBehavior(selector, Editor.METHOD, this.options);
 	}
 
 }

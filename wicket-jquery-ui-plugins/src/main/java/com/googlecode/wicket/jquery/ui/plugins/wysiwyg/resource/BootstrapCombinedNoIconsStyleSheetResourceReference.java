@@ -25,7 +25,6 @@ public class BootstrapCombinedNoIconsStyleSheetResourceReference extends CssReso
 
 	private static final BootstrapCombinedNoIconsStyleSheetResourceReference INSTANCE = new BootstrapCombinedNoIconsStyleSheetResourceReference();
 
-
 	public static BootstrapCombinedNoIconsStyleSheetResourceReference get()
 	{
 		return INSTANCE;

@@ -18,12 +18,12 @@ package com.googlecode.wicket.jquery.ui.plugins.sfmenu.resource;
 
 import org.apache.wicket.resource.JQueryPluginResourceReference;
 
-import com.googlecode.wicket.jquery.ui.plugins.sfmenu.settings.ISuperfishLibrarySettings;
+import com.googlecode.wicket.jquery.ui.plugins.sfmenu.settings.SuperfishLibrarySettings;
 
 /**
- * Provides the 'hoverIntent' javascript resource reference for the superfish-menu library.<br/>
+ * Provides the 'hoverIntent' javascript resource reference for the superfish-menu library.
  *
- * @see ISuperfishLibrarySettings
+ * @see SuperfishLibrarySettings
  * @author Sebastien Briquet - sebfz1
  * @since 6.12.0
  */
@@ -31,14 +31,6 @@ public class HoverIntentJavaScriptResourceReference extends JQueryPluginResource
 {
 	private static final long serialVersionUID = 1L;
 	private static final HoverIntentJavaScriptResourceReference INSTANCE = new HoverIntentJavaScriptResourceReference();
-
-	/**
-	 * Private constructor
-	 */
-	private HoverIntentJavaScriptResourceReference()
-	{
-		super(HoverIntentJavaScriptResourceReference.class, "js/hoverIntent.js");
-	}
 
 	/**
 	 * Gets the instance of the resource reference
@@ -50,4 +42,11 @@ public class HoverIntentJavaScriptResourceReference extends JQueryPluginResource
 		return INSTANCE;
 	}
 
+	/**
+	 * Private constructor
+	 */
+	private HoverIntentJavaScriptResourceReference()
+	{
+		super(HoverIntentJavaScriptResourceReference.class, "js/hoverIntent.js");
+	}
 }

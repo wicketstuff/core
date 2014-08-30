@@ -18,24 +18,47 @@ package com.googlecode.wicket.jquery.ui.calendar.settings;
 
 import org.apache.wicket.request.resource.ResourceReference;
 
-import com.googlecode.wicket.jquery.core.settings.JQueryLibrarySettings;
 import com.googlecode.wicket.jquery.ui.calendar.resource.CalendarJavaScriptResourceReference;
 import com.googlecode.wicket.jquery.ui.calendar.resource.CalendarStyleSheetResourceReference;
 import com.googlecode.wicket.jquery.ui.calendar.resource.GCalJavaScriptResourceReference;
 
 /**
- * Default implementation of {@link ICalendarLibrarySettings}.<br/>
+ * Provides library settings for FullCalendar resource references<br/>
+ * <br/>
+ * Usage:
+ *
+ * <pre>
+ * <code>
+ * public class MyApplication extends WebApplication
+ * {
+ *     public void init()
+ *     {
+ *         super.init();
+ *
+ *         CalendarLibrarySettings settings = CalendarLibrarySettings.get();
+ *         settings.setJavaScriptReference(new JavaScriptResourceReference(...));
+ *         settings.setStyleSheetReference(new CssResourceReference(...));
+ *         settings.setGCalJavaScriptReference(new JavaScriptResourceReference(...));
+ *     }
+ * }
+ * </code>
+ * </pre>
  *
  * @author Sebastien Briquet - sebfz1
  *
  */
-public class CalendarLibrarySettings extends JQueryLibrarySettings implements ICalendarLibrarySettings
+public class CalendarLibrarySettings
 {
 	private static CalendarLibrarySettings instance = null;
 
+	private ResourceReference javascriptReference = CalendarJavaScriptResourceReference.get();
+	private ResourceReference stylesheetReference = CalendarStyleSheetResourceReference.get();
+
+	private ResourceReference gcalReference = GCalJavaScriptResourceReference.get();
+
 	/**
-	 * INTERNAL USE<br/>
 	 * Gets the {@link CalendarLibrarySettings} instance
+	 *
 	 * @return the {@link CalendarLibrarySettings} instance
 	 */
 	public static synchronized CalendarLibrarySettings get()
@@ -48,29 +71,70 @@ public class CalendarLibrarySettings extends JQueryLibrarySettings implements IC
 		return CalendarLibrarySettings.instance;
 	}
 
-
 	/**
 	 * Constructor
 	 */
-	protected CalendarLibrarySettings()
+	private CalendarLibrarySettings()
 	{
 	}
 
-	@Override
-	public ResourceReference getCalendarStyleSheetReference()
+	/**
+	 * Gets the fullcalendar's javascript resource reference
+	 *
+	 * @return the {@link ResourceReference}
+	 */
+	public ResourceReference getJavaScriptReference()
 	{
-		return CalendarStyleSheetResourceReference.get();
+		return this.javascriptReference;
 	}
 
-	@Override
-	public ResourceReference getCalendarJavaScriptReference()
+	/**
+	 * Sets the fullcalendar's javascript resource reference
+	 *
+	 * @param reference the {@link ResourceReference}
+	 */
+	public void setJavascriptReference(ResourceReference reference)
 	{
-		return CalendarJavaScriptResourceReference.get();
+		this.javascriptReference = reference;
 	}
 
-	@Override
+	/**
+	 * Gets the fullcalendar's stylesheet resource reference
+	 *
+	 * @return the {@link ResourceReference}
+	 */
+	public ResourceReference getStyleSheetReference()
+	{
+		return this.stylesheetReference;
+	}
+
+	/**
+	 * Sets the fullcalendar's stylesheet resource reference
+	 *
+	 * @param reference the {@link ResourceReference}
+	 */
+	public void setStylesheetReference(ResourceReference reference)
+	{
+		this.stylesheetReference = reference;
+	}
+
+	/**
+	 * Gets the gcal's javascript resource reference
+	 *
+	 * @return the {@link ResourceReference}
+	 */
 	public ResourceReference getGCalJavaScriptReference()
 	{
-		return GCalJavaScriptResourceReference.get();
+		return this.gcalReference;
+	}
+
+	/**
+	 * Sets the gcal's javascript resource reference
+	 *
+	 * @param reference the {@link ResourceReference}
+	 */
+	public void setGCalJavaScriptReference(ResourceReference reference)
+	{
+		this.gcalReference = reference;
 	}
 }

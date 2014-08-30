@@ -23,6 +23,7 @@ import org.apache.wicket.markup.html.WebMarkupContainer;
 import com.googlecode.wicket.jquery.core.IJQueryWidget.JQueryWidget;
 import com.googlecode.wicket.jquery.core.JQueryBehavior;
 import com.googlecode.wicket.jquery.core.Options;
+import com.googlecode.wicket.jquery.ui.JQueryUIBehavior;
 
 /**
  * Provides a {@link WebMarkupContainer} on which effect can be played
@@ -77,7 +78,7 @@ public class JQueryEffectContainer extends WebMarkupContainer implements IEffect
 	 */
 	public void show(AjaxRequestTarget target)
 	{
-		JQueryBehavior behavior = new JQueryBehavior(JQueryWidget.getSelector(this), "fadeIn");
+		JQueryBehavior behavior = new JQueryUIBehavior(JQueryWidget.getSelector(this), "fadeIn");
 		target.appendJavaScript(behavior.toString());
 	}
 
@@ -87,7 +88,7 @@ public class JQueryEffectContainer extends WebMarkupContainer implements IEffect
 	 */
 	public void hide(AjaxRequestTarget target)
 	{
-		JQueryBehavior behavior = new JQueryBehavior(JQueryWidget.getSelector(this), "fadeOut");
+		JQueryBehavior behavior = new JQueryUIBehavior(JQueryWidget.getSelector(this), "fadeOut");
 		target.appendJavaScript(behavior.toString());
 	}
 

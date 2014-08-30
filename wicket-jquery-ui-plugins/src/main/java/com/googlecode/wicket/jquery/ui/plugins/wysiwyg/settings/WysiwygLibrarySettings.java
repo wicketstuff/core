@@ -16,9 +16,7 @@
  */
 package com.googlecode.wicket.jquery.ui.plugins.wysiwyg.settings;
 
-import org.apache.wicket.request.resource.CssResourceReference;
-import org.apache.wicket.request.resource.JavaScriptResourceReference;
-import org.apache.wicket.settings.def.JavaScriptLibrarySettings;
+import org.apache.wicket.request.resource.ResourceReference;
 
 import com.googlecode.wicket.jquery.ui.plugins.wysiwyg.resource.BootstrapCombinedNoIconsStyleSheetResourceReference;
 import com.googlecode.wicket.jquery.ui.plugins.wysiwyg.resource.BootstrapDropDownJavaScriptResourceReference;
@@ -29,21 +27,30 @@ import com.googlecode.wicket.jquery.ui.plugins.wysiwyg.resource.JQueryHotKeysJav
 import com.googlecode.wicket.jquery.ui.plugins.wysiwyg.resource.PrettifyJavaScriptResourceReference;
 
 /**
- * Default implementation of {@link IWysiwygLibrarySettings}.<br/>
+ * Provides library settings for Wysiwyg resource references<br/>
  *
  * @author Sebastien Briquet - sebfz1
  *
  */
-public class WysiwygLibrarySettings extends JavaScriptLibrarySettings implements IWysiwygLibrarySettings
+public class WysiwygLibrarySettings
 {
 	private static WysiwygLibrarySettings instance = null;
 
+	private ResourceReference bootstrapCombinedNoIconsStyleSheetReference = BootstrapCombinedNoIconsStyleSheetResourceReference.get();
+	private ResourceReference bootstrapResponsiveStyleSheetReference = BootstrapResponsiveStyleSheetResourceReference.get();
+	private ResourceReference editorStyleSheetReference = EditorStyleSheetResourceReference.get();
+
+	private ResourceReference bootstrapDropDownJavaScriptReference = BootstrapDropDownJavaScriptResourceReference.get();
+	private ResourceReference bootstrapWysiwygJavaScriptReference = BootstrapWysiwygJavaScriptResourceReference.get();
+	private ResourceReference jQueryHotKeysJavaScriptReference = JQueryHotKeysJavaScriptResourceReference.get();
+	private ResourceReference prettifyJavaScriptReference = PrettifyJavaScriptResourceReference.get();
+
 	/**
-	 * INTERNAL USE<br/>
 	 * Gets the {@link WysiwygLibrarySettings} instance
+	 *
 	 * @return the {@link WysiwygLibrarySettings} instance
 	 */
-	public static synchronized IWysiwygLibrarySettings get()
+	public static synchronized WysiwygLibrarySettings get()
 	{
 		if (WysiwygLibrarySettings.instance == null)
 		{
@@ -53,7 +60,6 @@ public class WysiwygLibrarySettings extends JavaScriptLibrarySettings implements
 		return WysiwygLibrarySettings.instance;
 	}
 
-
 	/**
 	 * Singleton class
 	 */
@@ -62,47 +68,74 @@ public class WysiwygLibrarySettings extends JavaScriptLibrarySettings implements
 	}
 
 	// StyleSheets //
-	@Override
-	public CssResourceReference getBootstrapCombinedNoIconsStyleSheetReference()
+	public ResourceReference getBootstrapCombinedNoIconsStyleSheetReference()
 	{
-		return BootstrapCombinedNoIconsStyleSheetResourceReference.get();
+		return this.bootstrapCombinedNoIconsStyleSheetReference;
 	}
 
-	@Override
-	public CssResourceReference getBootstrapResponsiveStyleSheetReference()
+	public void setBootstrapCombinedNoIconsStyleSheetReference(ResourceReference reference)
 	{
-		return BootstrapResponsiveStyleSheetResourceReference.get();
+		this.bootstrapCombinedNoIconsStyleSheetReference = reference;
 	}
 
-	@Override
-	public CssResourceReference getEditorStyleSheetReference()
+	public ResourceReference getBootstrapResponsiveStyleSheetReference()
 	{
-		return EditorStyleSheetResourceReference.get();
+		return this.bootstrapResponsiveStyleSheetReference;
 	}
 
+	public void setBootstrapResponsiveStyleSheetReference(ResourceReference reference)
+	{
+		this.bootstrapResponsiveStyleSheetReference = reference;
+	}
+
+	public ResourceReference getEditorStyleSheetReference()
+	{
+		return this.editorStyleSheetReference;
+	}
+
+	public void setEditorStyleSheetReference(ResourceReference reference)
+	{
+		this.editorStyleSheetReference = reference;
+	}
 
 	// JavaScripts //
-	@Override
-	public JavaScriptResourceReference getBootstrapDropDownJavaScriptReference()
+	public ResourceReference getBootstrapDropDownJavaScriptReference()
 	{
-		return BootstrapDropDownJavaScriptResourceReference.get();
+		return this.bootstrapDropDownJavaScriptReference;
 	}
 
-	@Override
-	public JavaScriptResourceReference getBootstrapWysiwygJavaScriptReference()
+	public void setBootstrapDropDownJavaScriptReference(ResourceReference reference)
 	{
-		return BootstrapWysiwygJavaScriptResourceReference.get();
+		this.bootstrapDropDownJavaScriptReference = reference;
 	}
 
-	@Override
-	public JavaScriptResourceReference getJQueryHotKeysJavaScriptReference()
+	public ResourceReference getBootstrapWysiwygJavaScriptReference()
 	{
-		return JQueryHotKeysJavaScriptResourceReference.get();
+		return this.bootstrapWysiwygJavaScriptReference;
 	}
 
-	@Override
-	public JavaScriptResourceReference getPrettifyJavaScriptReference()
+	public void setBootstrapWysiwygJavaScriptReference(ResourceReference reference)
 	{
-		return PrettifyJavaScriptResourceReference.get();
+		this.bootstrapWysiwygJavaScriptReference = reference;
+	}
+
+	public ResourceReference getJQueryHotKeysJavaScriptReference()
+	{
+		return this.jQueryHotKeysJavaScriptReference;
+	}
+
+	public void setjQueryHotKeysJavaScriptReference(ResourceReference reference)
+	{
+		this.jQueryHotKeysJavaScriptReference = reference;
+	}
+
+	public ResourceReference getPrettifyJavaScriptReference()
+	{
+		return this.prettifyJavaScriptReference;
+	}
+
+	public void setPrettifyJavaScriptReference(ResourceReference reference)
+	{
+		this.prettifyJavaScriptReference = reference;
 	}
 }

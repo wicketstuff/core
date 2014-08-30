@@ -17,9 +17,9 @@
 package com.googlecode.wicket.jquery.ui.plugins.wysiwyg.resource;
 
 
-import org.apache.wicket.request.resource.JavaScriptResourceReference;
+import org.apache.wicket.resource.JQueryPluginResourceReference;
 
-public class BootstrapDropDownJavaScriptResourceReference extends JavaScriptResourceReference
+public class BootstrapDropDownJavaScriptResourceReference extends JQueryPluginResourceReference
 {
 	private static final long serialVersionUID = 1L;
 

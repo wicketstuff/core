@@ -16,62 +16,16 @@
  */
 package com.googlecode.wicket.jquery.core.settings;
 
-import org.apache.wicket.request.resource.ResourceReference;
 import org.apache.wicket.settings.IJavaScriptLibrarySettings;
 
 /**
- * Provides the jQuery UI backing library resource references.
+ * Provides library settings for jQuery UI resource references
  *
  * @author Sebastien Briquet - sebfz1
- *
+ * @deprecated The way of customizing ResourceReference(s) has changed, please read <a href="https://github.com/sebfz1/wicket-jquery-ui/wiki/%5Bhowto%5D-change-resource-references">[howto] change resource references</a>
  */
+//TODO: remove in next version
+@Deprecated
 public interface IJQueryLibrarySettings extends IJavaScriptLibrarySettings
 {
-	/**
-	 * Gets the JQuery UI backing library resource reference
-	 *
-	 * @return the {@link ResourceReference}
-	 * @deprecated use {@link #getJQueryUIJavaScriptReference()} instead TODO: remove in wicket-7
-	 */
-	@Deprecated
-	ResourceReference getJQueryUIReference();
-
-	/**
-	 * Sets the JQuery UI backing library resource reference
-	 *
-	 * @param reference the {@link ResourceReference}
-	 * @deprecated use {@link JQueryLibrarySettings#setJQueryUIJavaScriptReference(ResourceReference)} instead TODO: remove in wicket-7
-	 */
-	@Deprecated
-	void setJQueryUIReference(ResourceReference reference);
-
-	/**
-	 * Gets the jQuery UI javascript resource reference
-	 *
-	 * @return the {@link ResourceReference}
-	 */
-	ResourceReference getJQueryUIJavaScriptReference();
-
-	/**
-	 * Gets the jQuery UI stylesheet resource reference
-	 *
-	 * @return the {@link ResourceReference}
-	 */
-	ResourceReference getJQueryUIStyleSheetReference();
-
-	/**
-	 * Gets the JQuery globalize javascript resource reference
-	 *
-	 * @return the {@link ResourceReference}
-	 */
-	ResourceReference getJQueryGlobalizeReference();
-
-	/**
-	 * Sets the JQuery globalize library resource reference
-	 *
-	 * @param reference the {@link ResourceReference}
-	 * @deprecated use {@link JQueryLibrarySettings#setJQueryGlobalizeReference(ResourceReference)} instead TODO: remove in wicket-7
-	 */
-	@Deprecated
-	void setJQueryGlobalizeReference(ResourceReference reference);
 }

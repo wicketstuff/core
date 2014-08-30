@@ -32,7 +32,7 @@ import com.googlecode.wicket.jquery.core.ajax.IJQueryAjaxAware;
 import com.googlecode.wicket.jquery.core.ajax.JQueryAjaxBehavior;
 import com.googlecode.wicket.jquery.core.ajax.JQueryAjaxPostBehavior;
 import com.googlecode.wicket.jquery.core.event.IValueChangedListener;
-import com.googlecode.wicket.kendo.ui.KendoAbstractBehavior;
+import com.googlecode.wicket.kendo.ui.KendoUIBehavior;
 
 /**
  * Provides a Kendo UI time-picker<br/>
@@ -221,7 +221,7 @@ public class AjaxTimePicker extends TimePicker implements IJQueryAjaxAware, IVal
 	/**
 	 * Provides a jQuery timepicker behavior
 	 */
-	protected abstract static class TimePickerBehavior extends KendoAbstractBehavior implements IJQueryAjaxAware
+	protected abstract static class TimePickerBehavior extends KendoUIBehavior implements IJQueryAjaxAware
 	{
 		private static final long serialVersionUID = 1L;
 

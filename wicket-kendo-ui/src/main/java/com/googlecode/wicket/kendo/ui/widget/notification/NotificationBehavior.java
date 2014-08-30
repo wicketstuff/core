@@ -22,7 +22,7 @@ import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.core.util.string.JavaScriptUtils;
 
 import com.googlecode.wicket.jquery.core.Options;
-import com.googlecode.wicket.kendo.ui.KendoAbstractBehavior;
+import com.googlecode.wicket.kendo.ui.KendoUIBehavior;
 
 /**
  * Provides a Kendo UI notification behavior
@@ -30,7 +30,7 @@ import com.googlecode.wicket.kendo.ui.KendoAbstractBehavior;
  * @author Sebastien Briquet - sebfz1
  * @since 6.15.0
  */
-public class NotificationBehavior extends KendoAbstractBehavior
+public class NotificationBehavior extends KendoUIBehavior
 {
 	private static final long serialVersionUID = 1L;
 	private static final String METHOD = "kendoNotification";

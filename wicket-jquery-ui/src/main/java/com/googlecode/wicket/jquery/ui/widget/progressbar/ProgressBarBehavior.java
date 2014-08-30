@@ -18,11 +18,11 @@ package com.googlecode.wicket.jquery.ui.widget.progressbar;
 
 import org.apache.wicket.Component;
 
-import com.googlecode.wicket.jquery.core.JQueryBehavior;
 import com.googlecode.wicket.jquery.core.Options;
 import com.googlecode.wicket.jquery.core.ajax.IJQueryAjaxAware;
 import com.googlecode.wicket.jquery.core.ajax.JQueryAjaxBehavior;
 import com.googlecode.wicket.jquery.core.ajax.JQueryAjaxPostBehavior;
+import com.googlecode.wicket.jquery.ui.JQueryUIBehavior;
 import com.googlecode.wicket.jquery.ui.ajax.JQueryAjaxChangeBehavior;
 
 /**
@@ -32,7 +32,7 @@ import com.googlecode.wicket.jquery.ui.ajax.JQueryAjaxChangeBehavior;
  * @since 1.2.3
  * @since 6.0.1
  */
-public abstract class ProgressBarBehavior extends JQueryBehavior implements IJQueryAjaxAware
+public abstract class ProgressBarBehavior extends JQueryUIBehavior implements IJQueryAjaxAware
 {
 	private static final long serialVersionUID = 1L;
 	private static final String METHOD = "progressbar";

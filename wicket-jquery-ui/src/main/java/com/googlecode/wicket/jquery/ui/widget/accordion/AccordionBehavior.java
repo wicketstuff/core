@@ -25,12 +25,12 @@ import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.attributes.CallbackParameter;
 import org.apache.wicket.extensions.markup.html.tabs.ITab;
 
-import com.googlecode.wicket.jquery.core.JQueryBehavior;
 import com.googlecode.wicket.jquery.core.JQueryEvent;
 import com.googlecode.wicket.jquery.core.Options;
 import com.googlecode.wicket.jquery.core.ajax.IJQueryAjaxAware;
 import com.googlecode.wicket.jquery.core.ajax.JQueryAjaxBehavior;
 import com.googlecode.wicket.jquery.core.utils.RequestCycleUtils;
+import com.googlecode.wicket.jquery.ui.JQueryUIBehavior;
 import com.googlecode.wicket.jquery.ui.widget.tabs.AjaxTab;
 
 /**
@@ -41,7 +41,7 @@ import com.googlecode.wicket.jquery.ui.widget.tabs.AjaxTab;
  * @since 1.2.3
  * @since 6.0.1
  */
-public abstract class AccordionBehavior extends JQueryBehavior implements IJQueryAjaxAware, IAccordionListener
+public abstract class AccordionBehavior extends JQueryUIBehavior implements IJQueryAjaxAware, IAccordionListener
 {
 	private static final long serialVersionUID = 1L;
 	private static final String METHOD = "accordion";

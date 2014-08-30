@@ -15,7 +15,7 @@ import org.apache.wicket.util.io.IClusterable;
 import org.apache.wicket.util.reference.ClassReference;
 import org.apache.wicket.util.template.PackageTextTemplate;
 
-import com.googlecode.wicket.jquery.core.JQueryBehavior;
+import com.googlecode.wicket.jquery.ui.JQueryUIBehavior;
 
 public abstract class SamplePage extends TemplatePage
 {
@@ -45,7 +45,7 @@ public abstract class SamplePage extends TemplatePage
 		this.add(new Label("source-desc", this.getSource(Source.TEXT)).setEscapeModelStrings(false));
 		this.add(new Label("source-java", this.getSource(Source.JAVA)));
 		this.add(new Label("source-html", this.getSource(Source.HTML)));
-		this.add(new JQueryBehavior("#wrapper-panel-source", "tabs"));
+		this.add(new JQueryUIBehavior("#wrapper-panel-source", "tabs"));
 
 		this.add(new ListView<DemoLink>("demo-list", Model.ofList(this.getDemoLinks())) {
 

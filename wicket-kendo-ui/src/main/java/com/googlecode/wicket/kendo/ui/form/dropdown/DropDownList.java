@@ -24,7 +24,7 @@ import org.apache.wicket.model.IModel;
 
 import com.googlecode.wicket.jquery.core.IJQueryWidget;
 import com.googlecode.wicket.jquery.core.JQueryBehavior;
-import com.googlecode.wicket.kendo.ui.KendoAbstractBehavior;
+import com.googlecode.wicket.kendo.ui.KendoUIBehavior;
 
 /**
  * Provides a Kendo UI DropDownList widget. It extends built-in {@link DropDownChoice}<br/>
@@ -190,6 +190,6 @@ public class DropDownList<T> extends DropDownChoice<T> implements IJQueryWidget
 	@Override
 	public JQueryBehavior newWidgetBehavior(String selector)
 	{
-		return new KendoAbstractBehavior(selector, DropDownList.METHOD);
+		return new KendoUIBehavior(selector, DropDownList.METHOD);
 	}
 }

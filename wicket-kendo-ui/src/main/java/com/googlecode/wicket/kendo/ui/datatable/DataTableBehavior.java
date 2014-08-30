@@ -27,7 +27,7 @@ import com.googlecode.wicket.jquery.core.JQueryEvent;
 import com.googlecode.wicket.jquery.core.Options;
 import com.googlecode.wicket.jquery.core.ajax.IJQueryAjaxAware;
 import com.googlecode.wicket.jquery.core.ajax.JQueryAjaxBehavior;
-import com.googlecode.wicket.kendo.ui.KendoAbstractBehavior;
+import com.googlecode.wicket.kendo.ui.KendoUIBehavior;
 import com.googlecode.wicket.kendo.ui.datatable.ColumnAjaxBehavior.ClickEvent;
 import com.googlecode.wicket.kendo.ui.datatable.ToolbarAjaxBehavior.ToolbarClickEvent;
 import com.googlecode.wicket.kendo.ui.datatable.column.CommandsColumn;
@@ -38,7 +38,7 @@ import com.googlecode.wicket.kendo.ui.datatable.column.IColumn;
  *
  * @author Sebastien Briquet - sebfz1
  */
-public abstract class DataTableBehavior extends KendoAbstractBehavior implements IJQueryAjaxAware, IDataTableListener
+public abstract class DataTableBehavior extends KendoUIBehavior implements IJQueryAjaxAware, IDataTableListener
 {
 	private static final long serialVersionUID = 1L;
 	private static final String METHOD = "kendoGrid";

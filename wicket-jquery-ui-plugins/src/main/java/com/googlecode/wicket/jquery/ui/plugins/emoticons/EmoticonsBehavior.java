@@ -16,16 +16,12 @@
  */
 package com.googlecode.wicket.jquery.ui.plugins.emoticons;
 
-import org.apache.wicket.Application;
-import org.apache.wicket.settings.IJavaScriptLibrarySettings;
-
 import com.googlecode.wicket.jquery.core.JQueryBehavior;
 import com.googlecode.wicket.jquery.core.Options;
 import com.googlecode.wicket.jquery.ui.plugins.emoticons.settings.EmoticonsLibrarySettings;
-import com.googlecode.wicket.jquery.ui.plugins.emoticons.settings.IEmoticonsLibrarySettings;
 
 /**
- * Provides the jQuery css-emoticons plugin behavior
+ * Provides the jQuery emoticons plugin behavior
  *
  * @author Sebastien Briquet - sebfz1
  */
@@ -33,22 +29,6 @@ public class EmoticonsBehavior extends JQueryBehavior
 {
 	private static final long serialVersionUID = 1L;
 	private static final String METHOD = "emoticonize";
-
-	/**
-	 * Gets the {@link IEmoticonsLibrarySettings}
-	 *
-	 * @return Default internal {@link IEmoticonsLibrarySettings} if {@link Application}'s {@link IJavaScriptLibrarySettings} is not an instance of {@link IEmoticonsLibrarySettings}
-	 */
-	private static IEmoticonsLibrarySettings getLibrarySettings()
-	{
-		if (Application.exists() && (Application.get().getJavaScriptLibrarySettings() instanceof IEmoticonsLibrarySettings))
-		{
-			return (IEmoticonsLibrarySettings) Application.get().getJavaScriptLibrarySettings();
-		}
-
-		return EmoticonsLibrarySettings.get();
-	}
-
 
 	/**
 	 * Constructor
@@ -76,18 +56,18 @@ public class EmoticonsBehavior extends JQueryBehavior
 	 */
 	private void initReferences()
 	{
-		IEmoticonsLibrarySettings settings = getLibrarySettings();
+		EmoticonsLibrarySettings settings = EmoticonsLibrarySettings.get();
 
 		// jquery.cssemoticons.css //
-		if (settings.getEmoticonsStyleSheetReference() != null)
+		if (settings.getStyleSheetReference() != null)
 		{
-			this.add(settings.getEmoticonsStyleSheetReference());
+			this.add(settings.getStyleSheetReference());
 		}
 
 		// jquery.cssemoticons.min.js //
-		if (settings.getEmoticonsJavaScriptReference() != null)
+		if (settings.getJavaScriptReference() != null)
 		{
-			this.add(settings.getEmoticonsJavaScriptReference());
+			this.add(settings.getJavaScriptReference());
 		}
 	}
 }

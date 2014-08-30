@@ -22,6 +22,7 @@ import com.googlecode.wicket.jquery.core.IJQueryWidget;
 import com.googlecode.wicket.jquery.core.JQueryBehavior;
 import com.googlecode.wicket.jquery.core.Options;
 import com.googlecode.wicket.jquery.ui.JQueryIcon;
+import com.googlecode.wicket.jquery.ui.JQueryUIBehavior;
 
 /**
  * Provides a jQuery button based on the built-in Button
@@ -100,7 +101,7 @@ public class Button extends org.apache.wicket.markup.html.form.Button implements
 	/**
 	 * Provides a jQuery button {@link JQueryBehavior}
 	 */
-	public static class ButtonBehavior extends JQueryBehavior
+	public static class ButtonBehavior extends JQueryUIBehavior
 	{
 		private static final long serialVersionUID = 1L;
 		private static final String METHOD = "button";

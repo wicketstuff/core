@@ -1,6 +1,6 @@
 package com.googlecode.wicket.jquery.ui.samples.pages.accordion;
 
-import com.googlecode.wicket.jquery.core.JQueryBehavior;
+import com.googlecode.wicket.jquery.ui.JQueryUIBehavior;
 
 public class DefaultAccordionPage extends AbstractAccordionPage
 {
@@ -8,6 +8,6 @@ public class DefaultAccordionPage extends AbstractAccordionPage
 
 	public DefaultAccordionPage()
 	{
-		this.add(new JQueryBehavior("#accordion", "accordion"));
+		this.add(new JQueryUIBehavior("#accordion", "accordion"));
 	}
 }

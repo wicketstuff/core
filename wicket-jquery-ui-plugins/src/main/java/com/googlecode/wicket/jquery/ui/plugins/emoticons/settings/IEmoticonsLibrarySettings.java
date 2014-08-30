@@ -16,58 +16,15 @@
  */
 package com.googlecode.wicket.jquery.ui.plugins.emoticons.settings;
 
-import org.apache.wicket.request.resource.ResourceReference;
 import org.apache.wicket.settings.IJavaScriptLibrarySettings;
 
 /**
- * Provides library settings for css-emoticons resource references<br/>
- * <br/>
- * Usage:
- * <pre><code>
- * public class MyApplication extends WebApplication
- * {
- * 	public void init()
- * 	{
- * 		super.init();
+ * Provides library settings for css-emoticons resource references
  *
- * 		this.getMarkupSettings().setStripWicketTags(true);
- * 		this.setJavaScriptLibrarySettings(new MyJQueryLibrarySettings());
- * 	}
- *
- * 	static class MyJQueryLibrarySettings extends JQueryLibrarySettings implements IEmoticonsLibrarySettings
- * 	{
- * 		private static ResourceReference STYLESHEET_RR = new CssResourceReference(...);
- * 		private static ResourceReference JAVASCRIPT_RR = new JavaScriptResourceReference(...);
- *
- * 		public ResourceReference getEmoticonsStyleSheetReference()
- * 		{
- * 			return STYLESHEET_RR;
- * 		}
- *
- * 		public ResourceReference getEmoticonsJavaScriptReference()
- * 		{
- * 			return JAVASCRIPT_RR;
- * 		}
- * 	}
- * }
- * </code></pre>
- *
- * @author Sebastien Briquet - sebfz1
- *
+ * @deprecated The way of customizing ResourceReference(s) has changed, please read <a href="https://github.com/sebfz1/wicket-jquery-ui/wiki/%5Bhowto%5D-change-resource-references">[howto] change resource references</a>
  */
+// TODO: remove in next version
+@Deprecated
 public interface IEmoticonsLibrarySettings extends IJavaScriptLibrarySettings
 {
-	/**
-	 * Gets the css-emoticons stylesheet resource reference
-	 *
-	 * @return the {@link ResourceReference}
-	 */
-	ResourceReference getEmoticonsStyleSheetReference();
-
-	/**
-	 * Gets the css-emoticons javascript resource reference
-	 *
-	 * @return the {@link ResourceReference}
-	 */
-	ResourceReference getEmoticonsJavaScriptReference();
 }

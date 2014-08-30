@@ -17,37 +17,4 @@
 	    <bundle.namespace>com.googlecode.wicket.jquery.ui.theme.start</bundle.namespace>
 	</properties>
 
-	<dependencies>
-		<!-- KENDO-UI DEPENDENCIES -->
-		<dependency>
-			<groupId>com.googlecode.wicket-jquery-ui</groupId>
-			<artifactId>wicket-jquery-ui</artifactId>
-			<version>6.16.1-SNAPSHOT</version>
-			<scope>provided</scope>
-		</dependency>
-
-		<!-- WICKET DEPENDENCIES -->
-		<dependency>
-			<groupId>org.apache.wicket</groupId>
-			<artifactId>wicket-core</artifactId>
-			<version>${wicket.version}</version>
-			<scope>provided</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.apache.wicket</groupId>
-			<artifactId>wicket-extensions</artifactId>
-			<version>${wicket.version}</version>
-			<scope>provided</scope>
-		</dependency>
-	</dependencies>
-
-    <build>
-        <plugins>
-            <plugin>
-                <groupId>org.apache.felix</groupId>
-                <artifactId>maven-bundle-plugin</artifactId>
-            </plugin>
-        </plugins>
-    </build>
-
 </project>

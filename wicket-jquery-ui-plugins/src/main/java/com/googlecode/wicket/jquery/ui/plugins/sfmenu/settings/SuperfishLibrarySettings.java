@@ -17,27 +17,47 @@
 package com.googlecode.wicket.jquery.ui.plugins.sfmenu.settings;
 
 import org.apache.wicket.request.resource.ResourceReference;
-import org.apache.wicket.settings.def.JavaScriptLibrarySettings;
 
 import com.googlecode.wicket.jquery.ui.plugins.sfmenu.resource.SuperfishStyleSheetResourceReference;
 import com.googlecode.wicket.jquery.ui.plugins.sfmenu.resource.SuperfishVerticalStyleSheetResourceReference;
 
 /**
- * Default implementation of {@link ISuperfishLibrarySettings}.<br/>
+ * Provides library settings for superfish css resource references<br/>
+ * <br/>
+ * Usage:
+ *
+ * <pre>
+ * <code>
+ * public class MyApplication extends WebApplication
+ * {
+ *     public void init()
+ *     {
+ *         super.init();
+ *
+ *         SuperfishLibrarySettings settings = SuperfishLibrarySettings.get();
+ *         settings.setStyleSheetReference(new CssResourceReference(...));
+ *         settings.setVerticalStyleSheetReference(new CssResourceReference(...));
+ *     }
+ * }
+ * </code>
+ * </pre>
  *
  * @author Ludger Kluitmann - JavaLuigi
  * @since 6.12.0
  */
-public class SuperfishLibrarySettings extends JavaScriptLibrarySettings implements ISuperfishLibrarySettings
+public class SuperfishLibrarySettings
 {
 	private static SuperfishLibrarySettings instance = null;
 
+	private ResourceReference stylesheetReference = SuperfishStyleSheetResourceReference.get();
+	private ResourceReference stylesheetVerticalReference = SuperfishVerticalStyleSheetResourceReference.get();
+
 	/**
-	 * INTERNAL USE<br/>
 	 * Gets the {@link SuperfishLibrarySettings} instance
+	 *
 	 * @return the {@link SuperfishLibrarySettings} instance
 	 */
-	public static synchronized ISuperfishLibrarySettings get()
+	public static synchronized SuperfishLibrarySettings get()
 	{
 		if (SuperfishLibrarySettings.instance == null)
 		{
@@ -47,7 +67,6 @@ public class SuperfishLibrarySettings extends JavaScriptLibrarySettings implemen
 		return SuperfishLibrarySettings.instance;
 	}
 
-
 	/**
 	 * Singleton class
 	 */
@@ -55,17 +74,43 @@ public class SuperfishLibrarySettings extends JavaScriptLibrarySettings implemen
 	{
 	}
 
-
-	@Override
-	public ResourceReference getSuperfishStyleSheetReference()
+	/**
+	 * Gets the superfish stylesheet resource reference
+	 *
+	 * @return the {@link ResourceReference}
+	 */
+	public ResourceReference getStyleSheetReference()
 	{
-		return SuperfishStyleSheetResourceReference.get();
+		return this.stylesheetReference;
 	}
 
-
-	@Override
-	public ResourceReference getSuperfishVerticalStyleSheetReference()
+	/**
+	 * Sets the superfish stylesheet resource reference
+	 *
+	 * @param reference the {@link ResourceReference}
+	 */
+	public void setStylesheetReference(ResourceReference reference)
 	{
-		return SuperfishVerticalStyleSheetResourceReference.get();
+		this.stylesheetReference = reference;
+	}
+
+	/**
+	 * Gets the superfish vertical stylesheet resource reference
+	 *
+	 * @return the {@link ResourceReference}
+	 */
+	public ResourceReference getVerticalStyleSheetReference()
+	{
+		return this.stylesheetVerticalReference;
+	}
+
+	/**
+	 * Sets the superfish stylesheet resource reference
+	 *
+	 * @param reference the {@link ResourceReference}
+	 */
+	public void setVerticalStyleSheetReference(ResourceReference reference)
+	{
+		this.stylesheetVerticalReference = reference;
 	}
 }

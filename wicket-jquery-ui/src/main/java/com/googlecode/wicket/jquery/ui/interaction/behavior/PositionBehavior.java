@@ -19,21 +19,20 @@ package com.googlecode.wicket.jquery.ui.interaction.behavior;
 import org.apache.wicket.Component;
 
 import com.googlecode.wicket.jquery.core.IJQueryWidget.JQueryWidget;
-import com.googlecode.wicket.jquery.core.JQueryAbstractBehavior;
+import com.googlecode.wicket.jquery.ui.JQueryUIBehavior;
 
 /**
- * Provides a jquery position behavior
+ * Provides a jQuery UI position behavior
  *
  * @author Sebastien Briquet - sebfz1
  * @since 6.11.0
  */
-public class PositionBehavior extends JQueryAbstractBehavior
+public class PositionBehavior extends JQueryUIBehavior
 {
 	private static final long serialVersionUID = 1L;
 	private static final String METHOD = "position";
 
 	private final Object object;
-	private String selector;
 
 	/**
 	 * Constructor
@@ -42,12 +41,13 @@ public class PositionBehavior extends JQueryAbstractBehavior
 	 */
 	public PositionBehavior(Object object)
 	{
-		super(METHOD);
+		super(null, METHOD);
 
 		this.object = object;
 	}
 
 	// Properties //
+
 	@Override
 	public boolean isTemporary(Component component)
 	{
@@ -55,6 +55,7 @@ public class PositionBehavior extends JQueryAbstractBehavior
 	}
 
 	// Methods //
+
 	@Override
 	public void bind(Component component)
 	{

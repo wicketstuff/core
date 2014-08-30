@@ -16,12 +16,15 @@
  */
 package com.googlecode.wicket.jquery.ui.plugins.fixedheadertable.settings;
 
-import org.apache.wicket.request.resource.ResourceReference;
 import org.apache.wicket.settings.IJavaScriptLibrarySettings;
 
+/**
+ * Provides library settings for the FixedHeaderTable plugin resource references
+ *
+ * @deprecated The way of customizing ResourceReference(s) has changed, please read <a href="https://github.com/sebfz1/wicket-jquery-ui/wiki/%5Bhowto%5D-change-resource-references">[howto] change resource references</a>
+ */
+// TODO: remove in next version
+@Deprecated
 public interface IFixedHeaderTableLibrarySettings extends IJavaScriptLibrarySettings
 {
-	ResourceReference getFixedHeaderTableStyleSheetReference();
-
-	ResourceReference getFixedHeaderTableJavaScriptReference();
 }

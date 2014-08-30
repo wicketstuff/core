@@ -6,7 +6,7 @@ import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.model.Model;
 
-import com.googlecode.wicket.jquery.core.JQueryBehavior;
+import com.googlecode.wicket.jquery.ui.JQueryUIBehavior;
 import com.googlecode.wicket.jquery.ui.effect.Effect;
 import com.googlecode.wicket.jquery.ui.effect.JQueryEffectContainer;
 import com.googlecode.wicket.jquery.ui.form.button.AjaxButton;
@@ -31,7 +31,7 @@ public class ContainerEffectPage extends AbstractEffectPage
 
 		this.add(container);
 
-		container.add(new JQueryBehavior("#tabs", "tabs"));
+		container.add(new JQueryUIBehavior("#tabs", "tabs"));
 
 		Form<Void> form = new Form<Void>("form");
 		this.add(form);

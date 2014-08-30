@@ -19,26 +19,23 @@ package com.googlecode.wicket.jquery.ui.effect;
 import org.apache.wicket.Component;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 
-import com.googlecode.wicket.jquery.core.JQueryAbstractBehavior;
 import com.googlecode.wicket.jquery.core.JQueryEvent;
 import com.googlecode.wicket.jquery.core.Options;
 import com.googlecode.wicket.jquery.core.ajax.IJQueryAjaxAware;
 import com.googlecode.wicket.jquery.core.ajax.JQueryAjaxBehavior;
+import com.googlecode.wicket.jquery.ui.JQueryUIBehavior;
 
 /**
  * Provides a specific jQuery behavior for playing effects.
  *
  * @author Sebastien Briquet - sebfz1
- *
  */
-public class JQueryEffectBehavior extends JQueryAbstractBehavior implements IJQueryAjaxAware, IEffectListener
+public class JQueryEffectBehavior extends JQueryUIBehavior implements IJQueryAjaxAware, IEffectListener
 {
 	private static final long serialVersionUID = 1L;
 	private static final String METHOD = "effect";
 	private static final int SPEED = 500;
 
-	private final String selector;
-	private final Options options;
 	private int speed;
 	private String effect;
 
@@ -99,11 +96,9 @@ public class JQueryEffectBehavior extends JQueryAbstractBehavior implements IJQu
 	 */
 	public JQueryEffectBehavior(String selector, String effect, Options options, int speed)
 	{
-		super(METHOD + "-" + effect);
+		super(selector, METHOD + "-" + effect, options);
 
-		this.selector = selector;
 		this.effect = effect;
-		this.options = options;
 		this.speed = speed;
 	}
 
@@ -149,15 +144,10 @@ public class JQueryEffectBehavior extends JQueryAbstractBehavior implements IJQu
 		return this.$(this.effect, this.options.toString());
 	}
 
-	/**
-	 * Gets the jQuery statement.
-	 *
-	 * @param effect the effect to be played
-	 * @return the jQuery statement
-	 */
+	@Override
 	public String $(String effect)
 	{
-		return this.$(effect, "''");
+		return this.$(effect, Options.asString(""));
 	}
 
 	/**

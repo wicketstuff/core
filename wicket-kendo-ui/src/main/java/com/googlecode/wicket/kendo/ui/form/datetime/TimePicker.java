@@ -27,7 +27,7 @@ import com.googlecode.wicket.jquery.core.IJQueryWidget;
 import com.googlecode.wicket.jquery.core.JQueryBehavior;
 import com.googlecode.wicket.jquery.core.Options;
 import com.googlecode.wicket.jquery.core.utils.LocaleUtils;
-import com.googlecode.wicket.kendo.ui.KendoAbstractBehavior;
+import com.googlecode.wicket.kendo.ui.KendoUIBehavior;
 import com.googlecode.wicket.kendo.ui.utils.KendoDateTimeUtils;
 
 /**
@@ -235,6 +235,6 @@ public class TimePicker extends DateTextField implements IJQueryWidget
 	@Override
 	public JQueryBehavior newWidgetBehavior(String selector)
 	{
-		return new KendoAbstractBehavior(selector, TimePicker.METHOD, this.options);
+		return new KendoUIBehavior(selector, TimePicker.METHOD, this.options);
 	}
 }

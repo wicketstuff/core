@@ -31,6 +31,7 @@ public class ButtonProgressBarPage extends AbstractProgressBarPage
 		// ProgressBar //
 		final Options options = new Options();
 		options.set("type", Options.asString("percent"));
+		options.set("animation", false);
 
 		final ProgressBar progressBar = new ProgressBar("progress", Model.of(90), options) {
 

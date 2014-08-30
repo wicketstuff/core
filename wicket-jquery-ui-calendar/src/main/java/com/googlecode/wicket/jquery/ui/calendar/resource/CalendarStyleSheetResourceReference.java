@@ -18,13 +18,9 @@ package com.googlecode.wicket.jquery.ui.calendar.resource;
 
 import org.apache.wicket.request.resource.CssResourceReference;
 
-import com.googlecode.wicket.jquery.ui.calendar.settings.ICalendarLibrarySettings;
-
 /**
- * Provides the resource reference for the fullcalendar stylesheet library.<br/>
- * This class is supposed to be used internally, see {@link ICalendarLibrarySettings} to specify another resource reference
+ * Provides the resource reference for the fullcalendar stylesheet.
  *
- * @see ICalendarLibrarySettings
  * @author Sebastien Briquet - sebfz1
  *
  */

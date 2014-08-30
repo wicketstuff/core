@@ -14,39 +14,27 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.googlecode.wicket.kendo.ui;
+package com.googlecode.wicket.jquery.ui;
 
 import org.apache.wicket.Application;
-import org.apache.wicket.settings.IJavaScriptLibrarySettings;
+import org.apache.wicket.Component;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.googlecode.wicket.jquery.core.JQueryBehavior;
 import com.googlecode.wicket.jquery.core.Options;
-import com.googlecode.wicket.kendo.ui.settings.IKendoUILibrarySettings;
-import com.googlecode.wicket.kendo.ui.settings.KendoUILibrarySettings;
+import com.googlecode.wicket.jquery.ui.settings.JQueryUILibrarySettings;
 
 /**
- * Provides the base class for Kendo UI behavior implementations
+ * Provides the base class for every jQuery behavior.
  *
  * @author Sebastien Briquet - sebfz1
+ *
  */
-public class KendoAbstractBehavior extends JQueryBehavior
+public class JQueryUIBehavior extends JQueryBehavior
 {
 	private static final long serialVersionUID = 1L;
-
-	/**
-	 * Gets the {@link IKendoUILibrarySettings}
-	 *
-	 * @return Default internal {@link KendoUILibrarySettings} instance if {@link Application}'s {@link IJavaScriptLibrarySettings} is not an instance of {@link IKendoUILibrarySettings}
-	 */
-	private static IKendoUILibrarySettings getLibrarySettings()
-	{
-		if (Application.exists() && (Application.get().getJavaScriptLibrarySettings() instanceof IKendoUILibrarySettings))
-		{
-			return (IKendoUILibrarySettings) Application.get().getJavaScriptLibrarySettings();
-		}
-
-		return KendoUILibrarySettings.get();
-	}
+	private static final Logger LOG = LoggerFactory.getLogger(JQueryUIBehavior.class);
 
 	/**
 	 * Constructor
@@ -54,7 +42,7 @@ public class KendoAbstractBehavior extends JQueryBehavior
 	 * @param selector the html selector (ie: "#myId")
 	 * @param method the kendo-ui method
 	 */
-	public KendoAbstractBehavior(String selector, String method)
+	public JQueryUIBehavior(String selector, String method)
 	{
 		this(selector, method, new Options());
 	}
@@ -66,7 +54,7 @@ public class KendoAbstractBehavior extends JQueryBehavior
 	 * @param method the kendo-ui method
 	 * @param options the {@link Options}
 	 */
-	public KendoAbstractBehavior(String selector, String method, Options options)
+	public JQueryUIBehavior(String selector, String method, Options options)
 	{
 		super(selector, method, options);
 
@@ -78,24 +66,29 @@ public class KendoAbstractBehavior extends JQueryBehavior
 	 */
 	private void initReferences()
 	{
-		IKendoUILibrarySettings settings = getLibrarySettings();
+		JQueryUILibrarySettings settings = JQueryUILibrarySettings.get();
 
-		// kendo.common.min.css //
-		if (settings.getKendoUICommonStyleSheetReference() != null)
+		if (settings.getJavaScriptReference() != null)
 		{
-			this.add(settings.getKendoUICommonStyleSheetReference());
+			this.add(settings.getJavaScriptReference());
 		}
 
-		// kendo.<theme>.min.css //
-		if (settings.getKendoUIThemeStyleSheetReference() != null)
+		if (settings.getStyleSheetReference() != null)
 		{
-			this.add(settings.getKendoUIThemeStyleSheetReference());
+			this.add(settings.getStyleSheetReference());
 		}
+	}
 
-		// kendo.ui.core.js //
-		if (settings.getKendoUIJavaScriptReference() != null)
+	// Events //
+
+	@Override
+	public void onConfigure(Component component)
+	{
+		super.onConfigure(component);
+
+		if (!Application.get().getMarkupSettings().getStripWicketTags())
 		{
-			this.add(settings.getKendoUIJavaScriptReference());
+			LOG.warn("Application > MarkupSettings > StripWicketTags: setting is currently set to false. It is highly recommended to set it to true to prevent widget misbehaviors.");
 		}
 	}
 }

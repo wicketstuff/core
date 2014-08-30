@@ -22,6 +22,7 @@ import org.apache.wicket.model.IModel;
 import com.googlecode.wicket.jquery.core.IJQueryCultureWidget;
 import com.googlecode.wicket.jquery.core.JQueryBehavior;
 import com.googlecode.wicket.jquery.core.Options;
+import com.googlecode.wicket.jquery.ui.JQueryUIBehavior;
 
 /**
  * Provides a jQuery spinner based on a {@link TextField}
@@ -305,7 +306,7 @@ public class Spinner<T extends Number> extends TextField<T> implements IJQueryCu
 	/**
 	 * Provides a jQuery spinner {@link JQueryBehavior}
 	 */
-	public static class SpinnerBehavior extends JQueryBehavior
+	public static class SpinnerBehavior extends JQueryUIBehavior
 	{
 		private static final long serialVersionUID = 1L;
 		private static final String METHOD = "spinner";

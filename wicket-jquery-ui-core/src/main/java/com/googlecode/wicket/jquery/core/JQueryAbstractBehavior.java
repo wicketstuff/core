@@ -32,10 +32,7 @@ import org.apache.wicket.request.resource.JavaScriptResourceReference;
 import org.apache.wicket.request.resource.ResourceReference;
 import org.apache.wicket.resource.JQueryPluginResourceReference;
 import org.apache.wicket.settings.IJavaScriptLibrarySettings;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
-import com.googlecode.wicket.jquery.core.settings.IJQueryLibrarySettings;
 import com.googlecode.wicket.jquery.core.settings.JQueryLibrarySettings;
 import com.googlecode.wicket.jquery.core.utils.RequestCycleUtils;
 
@@ -48,21 +45,20 @@ import com.googlecode.wicket.jquery.core.utils.RequestCycleUtils;
 public abstract class JQueryAbstractBehavior extends Behavior
 {
 	private static final long serialVersionUID = 1L;
-	private static final Logger LOG = LoggerFactory.getLogger(JQueryAbstractBehavior.class);
 
 	/**
-	 * Gets the {@link IJQueryLibrarySettings}
+	 * Gets the {@link JQueryLibrarySettings}
 	 *
-	 * @return Default internal {@link IJQueryLibrarySettings} if {@link Application}'s {@link IJavaScriptLibrarySettings} is not an instance of {@link IJQueryLibrarySettings}
+	 * @return The {@link JQueryLibrarySettings} or <tt>null</tt> if {@link Application}'s {@link IJavaScriptLibrarySettings} is not an instance of {@link JQueryLibrarySettings}
 	 */
-	public static IJQueryLibrarySettings getJQueryLibrarySettings()
+	public static JQueryLibrarySettings getJQueryLibrarySettings()
 	{
-		if (Application.exists() && (Application.get().getJavaScriptLibrarySettings() instanceof IJQueryLibrarySettings))
+		if (Application.exists() && (Application.get().getJavaScriptLibrarySettings() instanceof JQueryLibrarySettings))
 		{
-			return (IJQueryLibrarySettings) Application.get().getJavaScriptLibrarySettings();
+			return (JQueryLibrarySettings) Application.get().getJavaScriptLibrarySettings();
 		}
 
-		return JQueryLibrarySettings.get();
+		return null;
 	}
 
 	/**
@@ -101,22 +97,10 @@ public abstract class JQueryAbstractBehavior extends Behavior
 	public void renderHead(Component component, IHeaderResponse response)
 	{
 		// Gets the library settings //
-		IJQueryLibrarySettings settings = getJQueryLibrarySettings();
-
-		// jQuery UI resource reference //
-		// TODO: move in wicket-jquery-ui
-		if (settings.getJQueryUIJavaScriptReference() != null)
-		{
-			response.render(new PriorityHeaderItem(JavaScriptHeaderItem.forReference(settings.getJQueryUIJavaScriptReference())));
-		}
-
-		if (settings.getJQueryUIStyleSheetReference() != null)
-		{
-			response.render(new PriorityHeaderItem(CssHeaderItem.forReference(settings.getJQueryUIStyleSheetReference())));
-		}
+		JQueryLibrarySettings settings = getJQueryLibrarySettings();
 
 		// jQuery Globalize resource reference //
-		if (settings.getJQueryGlobalizeReference() != null)
+		if (settings != null && settings.getJQueryGlobalizeReference() != null)
 		{
 			response.render(new PriorityHeaderItem(JavaScriptHeaderItem.forReference(settings.getJQueryGlobalizeReference())));
 		}
@@ -178,21 +162,6 @@ public abstract class JQueryAbstractBehavior extends Behavior
 	protected String getToken()
 	{
 		return String.format("jquery-%s-%d", this.name, this.hashCode());
-	}
-
-	// Events //
-	@Override
-	public void onConfigure(Component component)
-	{
-		super.onConfigure(component);
-
-		if (Application.exists() && Application.get().usesDevelopmentConfig())
-		{
-			if (!Application.get().getMarkupSettings().getStripWicketTags())
-			{
-				LOG.warn("Application > MarkupSettings > StripWicketTags: setting is currently set to false. It is highly recommended to set it to true to prevent widget misbehaviors.");
-			}
-		}
 	}
 
 	/**

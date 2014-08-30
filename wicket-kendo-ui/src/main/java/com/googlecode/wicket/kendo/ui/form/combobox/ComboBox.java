@@ -27,7 +27,7 @@ import com.googlecode.wicket.jquery.core.JQueryBehavior;
 import com.googlecode.wicket.jquery.core.Options;
 import com.googlecode.wicket.jquery.core.template.IJQueryTemplate;
 import com.googlecode.wicket.jquery.core.utils.RendererUtils;
-import com.googlecode.wicket.kendo.ui.KendoAbstractBehavior;
+import com.googlecode.wicket.kendo.ui.KendoUIBehavior;
 import com.googlecode.wicket.kendo.ui.KendoTemplateBehavior;
 import com.googlecode.wicket.kendo.ui.renderer.ChoiceRenderer;
 
@@ -226,7 +226,7 @@ public class ComboBox<T> extends TextField<String> implements IJQueryWidget
 	@Override
 	public JQueryBehavior newWidgetBehavior(String selector)
 	{
-		return new KendoAbstractBehavior(selector, ComboBox.METHOD);
+		return new KendoUIBehavior(selector, ComboBox.METHOD);
 	}
 
 	// Factories //

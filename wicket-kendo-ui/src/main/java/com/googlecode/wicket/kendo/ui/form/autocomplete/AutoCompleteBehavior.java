@@ -25,7 +25,7 @@ import com.googlecode.wicket.jquery.core.Options;
 import com.googlecode.wicket.jquery.core.ajax.IJQueryAjaxAware;
 import com.googlecode.wicket.jquery.core.ajax.JQueryAjaxBehavior;
 import com.googlecode.wicket.jquery.core.utils.RequestCycleUtils;
-import com.googlecode.wicket.kendo.ui.KendoAbstractBehavior;
+import com.googlecode.wicket.kendo.ui.KendoUIBehavior;
 import com.googlecode.wicket.kendo.ui.utils.DebugUtils;
 
 /**
@@ -34,7 +34,7 @@ import com.googlecode.wicket.kendo.ui.utils.DebugUtils;
  * @author Sebastien Briquet - sebfz1
  *
  */
-public abstract class AutoCompleteBehavior extends KendoAbstractBehavior implements IJQueryAjaxAware, IAutoCompleteListener
+public abstract class AutoCompleteBehavior extends KendoUIBehavior implements IJQueryAjaxAware, IAutoCompleteListener
 {
 	private static final long serialVersionUID = 1L;
 	private static final String METHOD = "kendoAutoComplete";

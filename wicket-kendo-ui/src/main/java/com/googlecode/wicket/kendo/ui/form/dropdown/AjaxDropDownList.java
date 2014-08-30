@@ -29,7 +29,7 @@ import com.googlecode.wicket.jquery.core.JQueryEvent;
 import com.googlecode.wicket.jquery.core.ajax.IJQueryAjaxAware;
 import com.googlecode.wicket.jquery.core.ajax.JQueryAjaxBehavior;
 import com.googlecode.wicket.jquery.core.event.ISelectionChangedListener;
-import com.googlecode.wicket.kendo.ui.KendoAbstractBehavior;
+import com.googlecode.wicket.kendo.ui.KendoUIBehavior;
 import com.googlecode.wicket.kendo.ui.ajax.JQueryAjaxChangeBehavior;
 import com.googlecode.wicket.kendo.ui.ajax.JQueryAjaxChangeBehavior.ChangeEvent;
 
@@ -178,7 +178,7 @@ public class AjaxDropDownList<T> extends DropDownList<T> implements ISelectionCh
 	/**
 	 * Provides a Kendo UI DropDownList {@link JQueryBehavior}
 	 */
-	protected abstract static class AjaxDropDownListBehavior extends KendoAbstractBehavior implements IJQueryAjaxAware, ISelectionChangedListener
+	protected abstract static class AjaxDropDownListBehavior extends KendoUIBehavior implements IJQueryAjaxAware, ISelectionChangedListener
 	{
 		private static final long serialVersionUID = 1L;
 

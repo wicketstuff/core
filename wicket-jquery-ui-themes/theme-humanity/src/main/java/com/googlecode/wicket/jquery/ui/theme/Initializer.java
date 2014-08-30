@@ -20,7 +20,7 @@ import org.apache.wicket.Application;
 import org.apache.wicket.IInitializer;
 import org.apache.wicket.request.resource.CssResourceReference;
 
-import com.googlecode.wicket.jquery.core.settings.JQueryLibrarySettings;
+import com.googlecode.wicket.jquery.ui.settings.JQueryUILibrarySettings;
 
 /**
  * Provides the {@link IInitializer} for this theme
@@ -34,7 +34,7 @@ public class Initializer implements IInitializer
 	{
 		application.getMarkupSettings().setStripWicketTags(true);
 
-		JQueryLibrarySettings.get().setJQueryUIStyleSheetReference(new CssResourceReference(Initializer.class, "jquery-ui.css"));
+		JQueryUILibrarySettings.get().setStyleSheetReference(new CssResourceReference(Initializer.class, "jquery-ui.css"));
 	}
 
 	@Override

@@ -18,7 +18,7 @@ package com.googlecode.wicket.kendo.ui.form.multiselect.lazy;
 
 import org.apache.wicket.Component;
 
-import com.googlecode.wicket.kendo.ui.KendoAbstractBehavior;
+import com.googlecode.wicket.kendo.ui.KendoUIBehavior;
 import com.googlecode.wicket.kendo.ui.utils.DebugUtils;
 
 /**
@@ -27,7 +27,7 @@ import com.googlecode.wicket.kendo.ui.utils.DebugUtils;
  * @author Sebastien Briquet - sebfz1
  *
  */
-public abstract class MultiSelectBehavior extends KendoAbstractBehavior
+public abstract class MultiSelectBehavior extends KendoUIBehavior
 {
 	private static final long serialVersionUID = 1L;
 	private static final String METHOD = "kendoMultiSelect";

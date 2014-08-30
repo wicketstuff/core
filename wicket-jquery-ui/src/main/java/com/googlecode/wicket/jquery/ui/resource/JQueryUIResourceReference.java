@@ -14,16 +14,12 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.googlecode.wicket.jquery.core.resource;
+package com.googlecode.wicket.jquery.ui.resource;
 
 import org.apache.wicket.resource.JQueryPluginResourceReference;
 
-import com.googlecode.wicket.jquery.core.settings.IJQueryLibrarySettings;
-
 /**
- * Provides the resource reference for the jQuery UI javascript library.<br/>
- * To add a jQuery UI resource reference to a component, do not use this reference, but use
- * {@link IJQueryLibrarySettings#getJQueryUIReference()} to prevent version conflicts.
+ * Provides the resource reference for the jQuery UI javascript library.
  *
  * @author Sebastien Briquet - sebfz1
  *
@@ -35,8 +31,7 @@ public class JQueryUIResourceReference extends JQueryPluginResourceReference
 	private static final JQueryUIResourceReference INSTANCE = new JQueryUIResourceReference();
 
 	/**
-	 * Normally you should not use this method, but use
-	 * {@link IJQueryLibrarySettings#getJQueryUIReference()} to prevent version conflicts.
+	 * Gets the instance of the resource reference
 	 *
 	 * @return the single instance of the resource reference
 	 */

@@ -20,19 +20,19 @@ import org.apache.wicket.Component;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.attributes.CallbackParameter;
 
-import com.googlecode.wicket.jquery.core.JQueryBehavior;
 import com.googlecode.wicket.jquery.core.JQueryEvent;
 import com.googlecode.wicket.jquery.core.Options;
 import com.googlecode.wicket.jquery.core.ajax.IJQueryAjaxAware;
 import com.googlecode.wicket.jquery.core.ajax.JQueryAjaxBehavior;
 import com.googlecode.wicket.jquery.core.utils.RequestCycleUtils;
+import com.googlecode.wicket.jquery.ui.JQueryUIBehavior;
 
 /**
  * Provides a jQuery resizable behavior
  *
  * @author Sebastien Briquet - sebfz1
  */
-public abstract class ResizableBehavior extends JQueryBehavior implements IJQueryAjaxAware, IResizableListener
+public abstract class ResizableBehavior extends JQueryUIBehavior implements IJQueryAjaxAware, IResizableListener
 {
 	private static final long serialVersionUID = 1L;
 	private static final String METHOD = "resizable";

@@ -17,27 +17,47 @@
 package com.googlecode.wicket.jquery.ui.plugins.emoticons.settings;
 
 import org.apache.wicket.request.resource.ResourceReference;
-import org.apache.wicket.settings.def.JavaScriptLibrarySettings;
 
 import com.googlecode.wicket.jquery.ui.plugins.emoticons.resource.EmoticonsJavaScriptResourceReference;
 import com.googlecode.wicket.jquery.ui.plugins.emoticons.resource.EmoticonsStyleSheetResourceReference;
 
 /**
- * Default implementation of {@link IEmoticonsLibrarySettings}.<br/>
+ * Provides library settings for jQuery emoticons plugin resource references<br/>
+ * <br/>
+ * Usage:
+ *
+ * <pre>
+ * <code>
+ * public class MyApplication extends WebApplication
+ * {
+ *     public void init()
+ *     {
+ *         super.init();
+ *
+ *         EmoticonsLibrarySettings settings = EmoticonsLibrarySettings.get();
+ *         settings.setJavaScriptReference(new JavaScriptResourceReference(...));
+ *         settings.setStyleSheetReference(new CssResourceReference(...));
+ *     }
+ * }
+ * </code>
+ * </pre>
  *
  * @author Sebastien Briquet - sebfz1
  *
  */
-public class EmoticonsLibrarySettings extends JavaScriptLibrarySettings implements IEmoticonsLibrarySettings
+public class EmoticonsLibrarySettings
 {
 	private static EmoticonsLibrarySettings instance = null;
 
+	private ResourceReference javascriptReference = EmoticonsJavaScriptResourceReference.get();
+	private ResourceReference stylesheetReference = EmoticonsStyleSheetResourceReference.get();
+
 	/**
-	 * INTERNAL USE<br/>
 	 * Gets the {@link EmoticonsLibrarySettings} instance
+	 *
 	 * @return the {@link EmoticonsLibrarySettings} instance
 	 */
-	public static synchronized IEmoticonsLibrarySettings get()
+	public static synchronized EmoticonsLibrarySettings get()
 	{
 		if (EmoticonsLibrarySettings.instance == null)
 		{
@@ -47,7 +67,6 @@ public class EmoticonsLibrarySettings extends JavaScriptLibrarySettings implemen
 		return EmoticonsLibrarySettings.instance;
 	}
 
-
 	/**
 	 * Singleton class
 	 */
@@ -55,15 +74,43 @@ public class EmoticonsLibrarySettings extends JavaScriptLibrarySettings implemen
 	{
 	}
 
-	@Override
-	public ResourceReference getEmoticonsStyleSheetReference()
+	/**
+	 * Gets the emoticons javascript resource reference
+	 *
+	 * @return the {@link ResourceReference}
+	 */
+	public ResourceReference getJavaScriptReference()
 	{
-		return EmoticonsStyleSheetResourceReference.get();
+		return this.javascriptReference;
 	}
 
-	@Override
-	public ResourceReference getEmoticonsJavaScriptReference()
+	/**
+	 * Sets the emoticons javascript resource reference
+	 *
+	 * @param reference the {@link ResourceReference}
+	 */
+	public void setJavascriptReference(ResourceReference reference)
 	{
-		return EmoticonsJavaScriptResourceReference.get();
+		this.javascriptReference = reference;
+	}
+
+	/**
+	 * Gets the emoticons stylesheet resource reference
+	 *
+	 * @return the {@link ResourceReference}
+	 */
+	public ResourceReference getStyleSheetReference()
+	{
+		return this.stylesheetReference;
+	}
+
+	/**
+	 * Sets the emoticons stylesheet resource reference
+	 *
+	 * @param reference the {@link ResourceReference}
+	 */
+	public void setStylesheetReference(ResourceReference reference)
+	{
+		this.stylesheetReference = reference;
 	}
 }

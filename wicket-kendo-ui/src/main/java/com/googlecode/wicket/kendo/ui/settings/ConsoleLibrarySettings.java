@@ -17,24 +17,44 @@
 package com.googlecode.wicket.kendo.ui.settings;
 
 import org.apache.wicket.request.resource.ResourceReference;
-import org.apache.wicket.settings.def.JavaScriptLibrarySettings;
 
 import com.googlecode.wicket.kendo.ui.resource.ConsoleJavaScriptResourceReference;
 import com.googlecode.wicket.kendo.ui.resource.ConsoleStyleSheetResourceReference;
 
 /**
- * Default implementation of {@link IConsoleLibrarySettings}.<br/>
+ * Provides library settings for Kendo UI Console resource references<br/>
+ * <br/>
+ * Usage:
+ *
+ * <pre>
+ * <code>
+ * public class MyApplication extends WebApplication
+ * {
+ *     public void init()
+ *     {
+ *         super.init();
+ *
+ *         ConsoleLibrarySettings settings = ConsoleLibrarySettings.get();
+ *         settings.setJavaScriptReference(new JavaScriptResourceReference(...));
+ *         settings.setStyleSheetReference(new CssResourceReference(...));
+ *     }
+ * }
+ * </code>
+ * </pre>
  *
  * @author Sebastien Briquet - sebfz1
  *
  */
-public class ConsoleLibrarySettings extends JavaScriptLibrarySettings implements IConsoleLibrarySettings
+public class ConsoleLibrarySettings
 {
 	private static ConsoleLibrarySettings instance = null;
 
+	private ResourceReference javascriptReference = ConsoleJavaScriptResourceReference.get();
+	private ResourceReference stylesheetReference = ConsoleStyleSheetResourceReference.get();
+
 	/**
-	 * INTERNAL USE<br/>
 	 * Gets the {@link ConsoleLibrarySettings} instance
+	 *
 	 * @return the {@link ConsoleLibrarySettings} instance
 	 */
 	public static synchronized ConsoleLibrarySettings get()
@@ -47,24 +67,50 @@ public class ConsoleLibrarySettings extends JavaScriptLibrarySettings implements
 		return ConsoleLibrarySettings.instance;
 	}
 
-
 	/**
 	 * Constructor
 	 */
-	public ConsoleLibrarySettings()
+	private ConsoleLibrarySettings()
 	{
 	}
 
-	@Override
-	public ResourceReference getConsoleStyleSheetReference()
+	/**
+	 * Gets the Kendo UI Console javascript resource reference
+	 *
+	 * @return the {@link ResourceReference}
+	 */
+	public ResourceReference getJavaScriptReference()
 	{
-		return ConsoleStyleSheetResourceReference.get();
+		return this.javascriptReference;
 	}
 
-
-	@Override
-	public ResourceReference getConsoleJavaScriptReference()
+	/**
+	 * Sets the Kendo UI Console javascript resource reference
+	 *
+	 * @param reference the {@link ResourceReference}
+	 */
+	public void setJavascriptReference(ResourceReference reference)
 	{
-		return ConsoleJavaScriptResourceReference.get();
+		this.javascriptReference = reference;
+	}
+
+	/**
+	 * Gets the Kendo UI Console stylesheet resource reference
+	 *
+	 * @return the {@link ResourceReference}
+	 */
+	public ResourceReference getStyleSheetReference()
+	{
+		return this.stylesheetReference;
+	}
+
+	/**
+	 * Sets the Kendo UI Console stylesheet resource reference
+	 *
+	 * @param reference the {@link ResourceReference}
+	 */
+	public void setStylesheetReference(ResourceReference reference)
+	{
+		this.stylesheetReference = reference;
 	}
 }

@@ -1,6 +1,6 @@
 package com.googlecode.wicket.jquery.ui.samples.pages.draggable;
 
-import com.googlecode.wicket.jquery.core.JQueryBehavior;
+import com.googlecode.wicket.jquery.ui.JQueryUIBehavior;
 
 public class DefaultDraggablePage extends AbstractDraggablePage
 {
@@ -8,6 +8,6 @@ public class DefaultDraggablePage extends AbstractDraggablePage
 
 	public DefaultDraggablePage()
 	{
-		this.add(new JQueryBehavior("#draggable", "draggable"));
+		this.add(new JQueryUIBehavior("#draggable", "draggable"));
 	}
 }

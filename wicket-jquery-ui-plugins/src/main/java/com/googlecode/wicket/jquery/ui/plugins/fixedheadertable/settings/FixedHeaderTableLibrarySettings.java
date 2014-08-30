@@ -17,28 +17,47 @@
 package com.googlecode.wicket.jquery.ui.plugins.fixedheadertable.settings;
 
 import org.apache.wicket.request.resource.ResourceReference;
-import org.apache.wicket.settings.def.JavaScriptLibrarySettings;
 
-import com.googlecode.wicket.jquery.ui.plugins.emoticons.settings.IEmoticonsLibrarySettings;
 import com.googlecode.wicket.jquery.ui.plugins.fixedheadertable.resource.FixedHeaderTableJavaScriptResourceReference;
 import com.googlecode.wicket.jquery.ui.plugins.fixedheadertable.resource.FixedHeaderTableStyleSheetResourceReference;
 
 /**
- * Default implementation of {@link IEmoticonsLibrarySettings}.<br/>
+ * Provides library settings for the jQuery FixedHeaderTable plugin resource references<br/>
+ * <br/>
+ * Usage:
+ *
+ * <pre>
+ * <code>
+ * public class MyApplication extends WebApplication
+ * {
+ *     public void init()
+ *     {
+ *         super.init();
+ *
+ *         FixedHeaderTableLibrarySettings settings = FixedHeaderTableLibrarySettings.get();
+ *         settings.setJavaScriptReference(new JavaScriptResourceReference(...));
+ *         settings.setStyleSheetReference(new CssResourceReference(...));
+ *     }
+ * }
+ * </code>
+ * </pre>
  *
  * @author Sebastien Briquet - sebfz1
  *
  */
-public class FixedHeaderTableLibrarySettings extends JavaScriptLibrarySettings implements IFixedHeaderTableLibrarySettings
+public class FixedHeaderTableLibrarySettings
 {
-	private static IFixedHeaderTableLibrarySettings instance = null;
+	private static FixedHeaderTableLibrarySettings instance = null;
+
+	private ResourceReference javascriptReference = FixedHeaderTableJavaScriptResourceReference.get();
+	private ResourceReference stylesheetReference = FixedHeaderTableStyleSheetResourceReference.get();
 
 	/**
-	 * INTERNAL USE<br/>
 	 * Gets the {@link FixedHeaderTableLibrarySettings} instance
+	 *
 	 * @return the {@link FixedHeaderTableLibrarySettings} instance
 	 */
-	public static synchronized IFixedHeaderTableLibrarySettings get()
+	public static synchronized FixedHeaderTableLibrarySettings get()
 	{
 		if (FixedHeaderTableLibrarySettings.instance == null)
 		{
@@ -48,23 +67,50 @@ public class FixedHeaderTableLibrarySettings extends JavaScriptLibrarySettings i
 		return FixedHeaderTableLibrarySettings.instance;
 	}
 
-
 	/**
 	 * Constructor
 	 */
-	public FixedHeaderTableLibrarySettings()
+	private FixedHeaderTableLibrarySettings()
 	{
 	}
 
-	@Override
-	public ResourceReference getFixedHeaderTableStyleSheetReference()
+	/**
+	 * Gets the plugin javascript resource reference
+	 *
+	 * @return the {@link ResourceReference}
+	 */
+	public ResourceReference getJavaScriptReference()
 	{
-		return FixedHeaderTableStyleSheetResourceReference.get();
+		return this.javascriptReference;
 	}
 
-	@Override
-	public ResourceReference getFixedHeaderTableJavaScriptReference()
+	/**
+	 * Sets the plugin javascript resource reference
+	 *
+	 * @param reference the {@link ResourceReference}
+	 */
+	public void setJavascriptReference(ResourceReference reference)
 	{
-		return FixedHeaderTableJavaScriptResourceReference.get();
+		this.javascriptReference = reference;
+	}
+
+	/**
+	 * Gets the plugin stylesheet resource reference
+	 *
+	 * @return the {@link ResourceReference}
+	 */
+	public ResourceReference getStyleSheetReference()
+	{
+		return this.stylesheetReference;
+	}
+
+	/**
+	 * Sets the plugin stylesheet resource reference
+	 *
+	 * @param reference the {@link ResourceReference}
+	 */
+	public void setStylesheetReference(ResourceReference reference)
+	{
+		this.stylesheetReference = reference;
 	}
 }

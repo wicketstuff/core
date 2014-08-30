@@ -20,19 +20,19 @@ import org.apache.wicket.Component;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.attributes.CallbackParameter;
 
-import com.googlecode.wicket.jquery.core.JQueryBehavior;
 import com.googlecode.wicket.jquery.core.JQueryEvent;
 import com.googlecode.wicket.jquery.core.Options;
 import com.googlecode.wicket.jquery.core.ajax.IJQueryAjaxAware;
 import com.googlecode.wicket.jquery.core.ajax.JQueryAjaxBehavior;
 import com.googlecode.wicket.jquery.core.utils.RequestCycleUtils;
+import com.googlecode.wicket.jquery.ui.JQueryUIBehavior;
 
 /**
  * Provides a jQuery auto-complete behavior
  *
  * @author Sebastien Briquet - sebfz1
  */
-public abstract class AutoCompleteBehavior extends JQueryBehavior implements IJQueryAjaxAware, IAutoCompleteListener
+public abstract class AutoCompleteBehavior extends JQueryUIBehavior implements IJQueryAjaxAware, IAutoCompleteListener
 {
 	private static final long serialVersionUID = 1L;
 	private static final String METHOD = "autocomplete";

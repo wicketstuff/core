@@ -16,59 +16,15 @@
  */
 package com.googlecode.wicket.kendo.ui.settings;
 
-import org.apache.wicket.request.resource.ResourceReference;
 import org.apache.wicket.settings.IJavaScriptLibrarySettings;
 
 /**
- * Provides library settings for Kendo UI Console resource references<br/>
+ * Provides library settings for Kendo UI Console resource references
  *
- *  * <br/>
- * Usage:
- * <pre><code>
- * public class MyApplication extends WebApplication
- * {
- * 	public void init()
- * 	{
- * 		super.init();
- *
- * 		this.getMarkupSettings().setStripWicketTags(true);
- * 		this.setJavaScriptLibrarySettings(new MyJQueryLibrarySettings());
- * 	}
- *
- * 	static class MyJQueryLibrarySettings extends JQueryLibrarySettings implements IKendoUILibrarySettings
- * 	{
- * 		private static ResourceReference STYLESHEET_RR = new CssResourceReference(...);
- * 		private static ResourceReference JAVASCRIPT_RR = new JavaScriptResourceReference(...);
- *
- * 		public ResourceReference getKendoUIConsoleStyleSheetReference()
- * 		{
- * 			return STYLESHEET_RR; //may be null; will use the one declared in the markup
- * 		}
- *
- * 		public ResourceReference getKendoUIConsoleJavaScriptReference()
- * 		{
- * 			return JAVASCRIPT_RR; //may be null; will use the embedded one
- * 		}
- * 	}
- * }
- * </code></pre>
- *
- * @author Sebastien Briquet - sebfz1
- *
+ * @deprecated The way of customizing ResourceReference(s) has changed, please read <a href="https://github.com/sebfz1/wicket-jquery-ui/wiki/%5Bhowto%5D-change-resource-references">[howto] change resource references</a>
  */
+// TODO: remove in next version
+@Deprecated
 public interface IConsoleLibrarySettings extends IJavaScriptLibrarySettings
 {
-	/**
-	 * Gets the Kendo UI Console stylesheet resource reference
-	 *
-	 * @return the {@link ResourceReference}
-	 */
-	ResourceReference getConsoleStyleSheetReference();
-
-	/**
-	 * Gets the Kendo UI Console javascript resource reference
-	 *
-	 * @return the {@link ResourceReference}
-	 */
-	ResourceReference getConsoleJavaScriptReference();
 }

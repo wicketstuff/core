@@ -18,13 +18,12 @@ package com.googlecode.wicket.jquery.ui.plugins.sfmenu.resource;
 
 import org.apache.wicket.request.resource.CssResourceReference;
 
-import com.googlecode.wicket.jquery.ui.plugins.sfmenu.settings.ISuperfishLibrarySettings;
+import com.googlecode.wicket.jquery.ui.plugins.sfmenu.settings.SuperfishLibrarySettings;
 
 /**
- * Provides the 'superfish' css resource reference for the superfish-menu library.<br/>
- * This class is supposed to be used internally, see {@link ISuperfishLibrarySettings} to specify another resource reference
+ * Provides the 'superfish' css resource reference for the superfish-menu library.
  *
- * @see ISuperfishLibrarySettings
+ * @see SuperfishLibrarySettings
  * @author Sebastien Briquet - sebfz1
  * @since 6.12.0
  */
@@ -34,14 +33,6 @@ public class SuperfishStyleSheetResourceReference extends CssResourceReference
 	private static final SuperfishStyleSheetResourceReference INSTANCE = new SuperfishStyleSheetResourceReference();
 
 	/**
-	 * Private constructor
-	 */
-	private SuperfishStyleSheetResourceReference()
-	{
-		super(SuperfishStyleSheetResourceReference.class, "css/superfish.css");
-	}
-
-	/**
 	 * Gets the instance of the resource reference
 	 *
 	 * @return the single instance of the resource reference
@@ -49,5 +40,13 @@ public class SuperfishStyleSheetResourceReference extends CssResourceReference
 	public static SuperfishStyleSheetResourceReference get()
 	{
 		return INSTANCE;
+	}
+
+	/**
+	 * Private constructor
+	 */
+	private SuperfishStyleSheetResourceReference()
+	{
+		super(SuperfishStyleSheetResourceReference.class, "css/superfish.css");
 	}
 }

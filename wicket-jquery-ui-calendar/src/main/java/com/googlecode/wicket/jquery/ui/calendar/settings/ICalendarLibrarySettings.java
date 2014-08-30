@@ -16,70 +16,16 @@
  */
 package com.googlecode.wicket.jquery.ui.calendar.settings;
 
-import org.apache.wicket.request.resource.ResourceReference;
 import org.apache.wicket.settings.IJavaScriptLibrarySettings;
 
 /**
  * Provides library settings for fullcalendar resource references<br/>
- * <br/>
- * Usage:
- * <pre><code>
- * public class MyApplication extends WebApplication
- * {
- * 	public void init()
- * 	{
- * 		super.init();
- *
- * 		this.getMarkupSettings().setStripWicketTags(true);
- * 		this.setJavaScriptLibrarySettings(new MyJQueryLibrarySettings());
- * 	}
- *
- * 	static class MyJQueryLibrarySettings extends JQueryLibrarySettings implements ICalendarLibrarySettings
- * 	{
- * 		private static ResourceReference STYLESHEET_RR = new CssResourceReference(...);
- * 		private static ResourceReference JAVASCRIPT_RR = new JavaScriptResourceReference(...);
- *
- * 		public ResourceReference getCalendarStyleSheetReference()
- * 		{
- * 			return STYLESHEET_RR;
- * 		}
- *
- * 		public ResourceReference getCalendarJavaScriptReference()
- * 		{
- * 			return JAVASCRIPT_RR;
- * 		}
- *
- * 		public ResourceReference getGCalJavaScriptReference()
- * 		{
- * 			return null; //loads default (embedded) gcal.js
- * 		}
- * 	}
- * }
- * </code></pre>
  *
  * @author Sebastien Briquet - sebfz1
- *
+ * @deprecated The way of customizing ResourceReference(s) has changed, please read <a href="https://github.com/sebfz1/wicket-jquery-ui/wiki/%5Bhowto%5D-change-resource-references">[howto] change resource references</a>
  */
+// TODO: remove in next version
+@Deprecated
 public interface ICalendarLibrarySettings extends IJavaScriptLibrarySettings
 {
-	/**
-	 * Gets the fullcalendar's stylesheet resource reference
-	 *
-	 * @return the {@link ResourceReference}
-	 */
-	ResourceReference getCalendarStyleSheetReference();
-
-	/**
-	 * Gets the fullcalendar's javascript resource reference
-	 *
-	 * @return the {@link ResourceReference}
-	 */
-	ResourceReference getCalendarJavaScriptReference();
-
-	/**
-	 * Gets the gcal's javascript resource reference
-	 *
-	 * @return the {@link ResourceReference}
-	 */
-	ResourceReference getGCalJavaScriptReference();
 }

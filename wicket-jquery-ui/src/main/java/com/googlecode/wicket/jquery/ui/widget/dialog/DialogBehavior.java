@@ -21,11 +21,11 @@ import java.util.List;
 import org.apache.wicket.Component;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 
-import com.googlecode.wicket.jquery.core.JQueryBehavior;
 import com.googlecode.wicket.jquery.core.JQueryEvent;
 import com.googlecode.wicket.jquery.core.Options;
 import com.googlecode.wicket.jquery.core.ajax.IJQueryAjaxAware;
 import com.googlecode.wicket.jquery.core.ajax.JQueryAjaxBehavior;
+import com.googlecode.wicket.jquery.ui.JQueryUIBehavior;
 import com.googlecode.wicket.jquery.ui.form.button.Button;
 import com.googlecode.wicket.jquery.ui.widget.dialog.ButtonAjaxBehavior.ClickEvent;
 
@@ -36,7 +36,7 @@ import com.googlecode.wicket.jquery.ui.widget.dialog.ButtonAjaxBehavior.ClickEve
  * @since 1.2.3
  * @since 6.0.1
  */
-public abstract class DialogBehavior extends JQueryBehavior implements IJQueryAjaxAware, IDialogListener
+public abstract class DialogBehavior extends JQueryUIBehavior implements IJQueryAjaxAware, IDialogListener
 {
 	private static final long serialVersionUID = 1L;
 	private static final String METHOD = "dialog";
@@ -219,7 +219,7 @@ public abstract class DialogBehavior extends JQueryBehavior implements IJQueryAj
 
 	/**
 	 * Gets the ajax behavior that will be triggered when the user press the escape key
-	 * 
+	 *
 	 * @return the {@link JQueryAjaxBehavior}
 	 */
 	protected JQueryAjaxBehavior newEscapeCloseBehavior()

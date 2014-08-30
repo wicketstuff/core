@@ -27,7 +27,7 @@ import com.googlecode.wicket.jquery.core.Options;
 import com.googlecode.wicket.jquery.core.ajax.IJQueryAjaxAware;
 import com.googlecode.wicket.jquery.core.ajax.JQueryAjaxBehavior;
 import com.googlecode.wicket.jquery.core.utils.RequestCycleUtils;
-import com.googlecode.wicket.kendo.ui.KendoAbstractBehavior;
+import com.googlecode.wicket.kendo.ui.KendoUIBehavior;
 import com.googlecode.wicket.kendo.ui.widget.menu.item.IMenuItem;
 
 /**
@@ -36,7 +36,7 @@ import com.googlecode.wicket.kendo.ui.widget.menu.item.IMenuItem;
  * @author Sebastien Briquet - sebfz1
  * @since 6.15.0
  */
-public abstract class MenuBehavior extends KendoAbstractBehavior implements IJQueryAjaxAware, IMenuListener
+public abstract class MenuBehavior extends KendoUIBehavior implements IJQueryAjaxAware, IMenuListener
 {
 	private static final long serialVersionUID = 1L;
 	private static final String METHOD = "kendoMenu";

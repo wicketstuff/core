@@ -33,7 +33,7 @@ import com.googlecode.wicket.jquery.core.ajax.IJQueryAjaxAware;
 import com.googlecode.wicket.jquery.core.ajax.JQueryAjaxBehavior;
 import com.googlecode.wicket.jquery.core.ajax.JQueryAjaxPostBehavior;
 import com.googlecode.wicket.jquery.core.event.IValueChangedListener;
-import com.googlecode.wicket.kendo.ui.KendoAbstractBehavior;
+import com.googlecode.wicket.kendo.ui.KendoUIBehavior;
 
 /**
  * Provides a Kendo UI date-picker based on a {@link DateTextField}<br/>
@@ -222,7 +222,7 @@ public class AjaxDatePicker extends DatePicker implements IJQueryAjaxAware, IVal
 	/**
 	 * Provides a jQuery datepicker behavior
 	 */
-	protected abstract static class DatePickerBehavior extends KendoAbstractBehavior implements IJQueryAjaxAware
+	protected abstract static class DatePickerBehavior extends KendoUIBehavior implements IJQueryAjaxAware
 	{
 		private static final long serialVersionUID = 1L;
 

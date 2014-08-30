@@ -22,12 +22,12 @@ import org.apache.wicket.Component;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.attributes.CallbackParameter;
 
-import com.googlecode.wicket.jquery.core.JQueryBehavior;
 import com.googlecode.wicket.jquery.core.JQueryEvent;
 import com.googlecode.wicket.jquery.core.Options;
 import com.googlecode.wicket.jquery.core.ajax.IJQueryAjaxAware;
 import com.googlecode.wicket.jquery.core.ajax.JQueryAjaxBehavior;
 import com.googlecode.wicket.jquery.core.utils.RequestCycleUtils;
+import com.googlecode.wicket.jquery.ui.JQueryUIBehavior;
 
 /**
  * Provides a jQuery menu behavior.
@@ -36,7 +36,7 @@ import com.googlecode.wicket.jquery.core.utils.RequestCycleUtils;
  * @since 1.4.2
  * @since 1.6.2
  */
-public abstract class MenuBehavior extends JQueryBehavior implements IJQueryAjaxAware, IMenuListener
+public abstract class MenuBehavior extends JQueryUIBehavior implements IJQueryAjaxAware, IMenuListener
 {
 	private static final long serialVersionUID = 1L;
 	private static final String METHOD = "menu";

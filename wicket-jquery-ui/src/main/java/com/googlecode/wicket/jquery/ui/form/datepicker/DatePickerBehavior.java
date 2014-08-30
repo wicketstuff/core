@@ -21,20 +21,20 @@ import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.attributes.CallbackParameter;
 import org.apache.wicket.markup.html.form.FormComponent;
 
-import com.googlecode.wicket.jquery.core.JQueryBehavior;
 import com.googlecode.wicket.jquery.core.JQueryEvent;
 import com.googlecode.wicket.jquery.core.Options;
 import com.googlecode.wicket.jquery.core.ajax.IJQueryAjaxAware;
 import com.googlecode.wicket.jquery.core.ajax.JQueryAjaxBehavior;
 import com.googlecode.wicket.jquery.core.ajax.JQueryAjaxPostBehavior;
 import com.googlecode.wicket.jquery.core.utils.RequestCycleUtils;
+import com.googlecode.wicket.jquery.ui.JQueryUIBehavior;
 
 /**
  * Provides a jQuery datepicker behavior
  *
  * @author Sebastien Briquet - sebfz1
  */
-public abstract class DatePickerBehavior extends JQueryBehavior implements IJQueryAjaxAware, IDatePickerListener
+public abstract class DatePickerBehavior extends JQueryUIBehavior implements IJQueryAjaxAware, IDatePickerListener
 {
 	private static final long serialVersionUID = 1L;
 	private static final String METHOD = "datepicker";

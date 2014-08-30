@@ -18,13 +18,9 @@ package com.googlecode.wicket.kendo.ui.resource;
 
 import org.apache.wicket.resource.JQueryPluginResourceReference;
 
-import com.googlecode.wicket.kendo.ui.settings.IKendoUILibrarySettings;
-
 /**
- * Provides the resource reference for the Kendo UI javascript library.<br/>
- * This class is supposed to be used internally, see {@link IKendoUILibrarySettings} to specify another resource reference
+ * Provides the resource reference for the Kendo UI javascript library.
  *
- * @see IKendoUILibrarySettings
  * @author Sebastien Briquet - sebfz1
  *
  */

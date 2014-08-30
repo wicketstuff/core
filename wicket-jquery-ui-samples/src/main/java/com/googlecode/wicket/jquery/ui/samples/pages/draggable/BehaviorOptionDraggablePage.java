@@ -1,6 +1,6 @@
 package com.googlecode.wicket.jquery.ui.samples.pages.draggable;
 
-import com.googlecode.wicket.jquery.core.JQueryBehavior;
+import com.googlecode.wicket.jquery.ui.JQueryUIBehavior;
 
 public class BehaviorOptionDraggablePage extends AbstractDraggablePage
 {
@@ -8,6 +8,6 @@ public class BehaviorOptionDraggablePage extends AbstractDraggablePage
 
 	public BehaviorOptionDraggablePage()
 	{
-		this.add(new JQueryBehavior("#draggable", "draggable").setOption("axis", "'x'").setOption("containment", "'#wrapper-panel-frame'"));
+		this.add(new JQueryUIBehavior("#draggable", "draggable").setOption("axis", "'x'").setOption("containment", "'#wrapper-panel-frame'"));
 	}
 }

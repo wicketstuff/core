@@ -18,13 +18,9 @@ package com.googlecode.wicket.kendo.ui.resource;
 
 import org.apache.wicket.resource.JQueryPluginResourceReference;
 
-import com.googlecode.wicket.kendo.ui.settings.IConsoleLibrarySettings;
-
 /**
- * Provides the resource reference for the Kendo UI Console javascript library.<br/>
- * This class is supposed to be used internally, see {@link IConsoleLibrarySettings} to specify another resource reference
+ * Provides the resource reference for the Kendo UI Console javascript library.
  *
- * @see IConsoleLibrarySettings
  * @author Sebastien Briquet - sebfz1
  *
  */

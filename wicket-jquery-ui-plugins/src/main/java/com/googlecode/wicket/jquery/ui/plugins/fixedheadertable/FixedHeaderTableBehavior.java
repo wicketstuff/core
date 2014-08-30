@@ -16,34 +16,19 @@
  */
 package com.googlecode.wicket.jquery.ui.plugins.fixedheadertable;
 
-import org.apache.wicket.Application;
-import org.apache.wicket.settings.IJavaScriptLibrarySettings;
-
 import com.googlecode.wicket.jquery.core.JQueryBehavior;
 import com.googlecode.wicket.jquery.core.Options;
 import com.googlecode.wicket.jquery.ui.plugins.fixedheadertable.settings.FixedHeaderTableLibrarySettings;
-import com.googlecode.wicket.jquery.ui.plugins.fixedheadertable.settings.IFixedHeaderTableLibrarySettings;
 
+/**
+ * Provides the jQuery FixedHeaderTable plugin behavior
+ *
+ * @author Sebastien Briquet - sebfz1
+ */
 public class FixedHeaderTableBehavior extends JQueryBehavior
 {
 	private static final long serialVersionUID = 1L;
 	private static final String METHOD = "fixedHeaderTable";
-
-	/**
-	 * Gets the {@link IFixedHeaderTableLibrarySettings}
-	 *
-	 * @return Default internal {@link IFixedHeaderTableLibrarySettings} if {@link Application}'s {@link IJavaScriptLibrarySettings} is not an instance of {@link IFixedHeaderTableLibrarySettings}
-	 */
-	private static IFixedHeaderTableLibrarySettings getLibrarySettings()
-	{
-		if (Application.exists() && (Application.get().getJavaScriptLibrarySettings() instanceof IFixedHeaderTableLibrarySettings))
-		{
-			return (IFixedHeaderTableLibrarySettings) Application.get().getJavaScriptLibrarySettings();
-		}
-
-		return FixedHeaderTableLibrarySettings.get();
-	}
-
 
 	public FixedHeaderTableBehavior(String selector)
 	{
@@ -59,16 +44,16 @@ public class FixedHeaderTableBehavior extends JQueryBehavior
 
 	private void initReferences()
 	{
-		IFixedHeaderTableLibrarySettings settings = getLibrarySettings();
+		FixedHeaderTableLibrarySettings settings = FixedHeaderTableLibrarySettings.get();
 
-		if (settings.getFixedHeaderTableStyleSheetReference() != null)
+		if (settings.getStyleSheetReference() != null)
 		{
-			this.add(settings.getFixedHeaderTableStyleSheetReference());
+			this.add(settings.getStyleSheetReference());
 		}
 
-		if (settings.getFixedHeaderTableJavaScriptReference() != null)
+		if (settings.getJavaScriptReference() != null)
 		{
-			this.add(settings.getFixedHeaderTableJavaScriptReference());
+			this.add(settings.getJavaScriptReference());
 		}
 	}
 }

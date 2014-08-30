@@ -18,14 +18,11 @@ package com.googlecode.wicket.kendo.ui.console;
 
 import java.io.Serializable;
 
-import org.apache.wicket.Application;
 import org.apache.wicket.AttributeModifier;
 import org.apache.wicket.Component;
-import org.apache.wicket.settings.IJavaScriptLibrarySettings;
 
 import com.googlecode.wicket.jquery.core.JQueryAbstractBehavior;
 import com.googlecode.wicket.kendo.ui.settings.ConsoleLibrarySettings;
-import com.googlecode.wicket.kendo.ui.settings.IConsoleLibrarySettings;
 
 /**
  * Provides the Kendo UI console behavior
@@ -36,21 +33,6 @@ public abstract class ConsoleBehavior extends JQueryAbstractBehavior
 {
 	private static final long serialVersionUID = 1L;
 	private static final String CSS_CLASS = "console";
-
-	/**
-	 * Gets the {@link IConsoleLibrarySettings}
-	 *
-	 * @return Default internal {@link ConsoleLibrarySettings} instance if {@link Application}'s {@link IJavaScriptLibrarySettings} is not an instance of {@link IConsoleLibrarySettings}
-	 */
-	private static IConsoleLibrarySettings getLibrarySettings()
-	{
-		if (Application.exists() && (Application.get().getJavaScriptLibrarySettings() instanceof IConsoleLibrarySettings))
-		{
-			return (IConsoleLibrarySettings) Application.get().getJavaScriptLibrarySettings();
-		}
-
-		return ConsoleLibrarySettings.get();
-	}
 
 	/**
 	 * Constructor
@@ -67,18 +49,18 @@ public abstract class ConsoleBehavior extends JQueryAbstractBehavior
 	 */
 	private void initReferences()
 	{
-		IConsoleLibrarySettings settings = getLibrarySettings();
+		ConsoleLibrarySettings settings = ConsoleLibrarySettings.get();
 
 		// console.css //
-		if (settings.getConsoleStyleSheetReference() != null)
+		if (settings.getStyleSheetReference() != null)
 		{
-			this.add(settings.getConsoleStyleSheetReference());
+			this.add(settings.getStyleSheetReference());
 		}
 
 		// console.js //
-		if (settings.getConsoleJavaScriptReference() != null)
+		if (settings.getJavaScriptReference() != null)
 		{
-			this.add(settings.getConsoleJavaScriptReference());
+			this.add(settings.getJavaScriptReference());
 		}
 	}
 

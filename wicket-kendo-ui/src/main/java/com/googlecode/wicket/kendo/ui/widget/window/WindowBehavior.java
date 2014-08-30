@@ -25,7 +25,7 @@ import com.googlecode.wicket.jquery.core.Options;
 import com.googlecode.wicket.jquery.core.ajax.IJQueryAjaxAware;
 import com.googlecode.wicket.jquery.core.ajax.JQueryAjaxBehavior;
 import com.googlecode.wicket.jquery.core.utils.RequestCycleUtils;
-import com.googlecode.wicket.kendo.ui.KendoAbstractBehavior;
+import com.googlecode.wicket.kendo.ui.KendoUIBehavior;
 
 /**
  * Provides a Kendo UI window behavior.
@@ -33,7 +33,7 @@ import com.googlecode.wicket.kendo.ui.KendoAbstractBehavior;
  * @author Sebastien Briquet - sebfz1
  * @since 6.17.0
  */
-public abstract class WindowBehavior extends KendoAbstractBehavior implements IJQueryAjaxAware, IWindowListener
+public abstract class WindowBehavior extends KendoUIBehavior implements IJQueryAjaxAware, IWindowListener
 {
 	private static final long serialVersionUID = 1L;
 	private static final String METHOD = "kendoWindow";

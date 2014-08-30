@@ -16,8 +16,8 @@
  */
 package com.googlecode.wicket.jquery.ui.widget.tooltip;
 
-import com.googlecode.wicket.jquery.core.JQueryBehavior;
 import com.googlecode.wicket.jquery.core.Options;
+import com.googlecode.wicket.jquery.ui.JQueryUIBehavior;
 
 /**
  * Provides the jQuery tooltip behavior.<br/>
@@ -45,7 +45,7 @@ import com.googlecode.wicket.jquery.core.Options;
  * @since 1.4.0
  * @since 6.2.0
  */
-public class TooltipBehavior extends JQueryBehavior
+public class TooltipBehavior extends JQueryUIBehavior
 {
 	private static final long serialVersionUID = 1L;
 	private static final String METHOD = "tooltip";

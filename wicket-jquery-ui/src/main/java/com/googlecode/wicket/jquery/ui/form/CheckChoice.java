@@ -26,6 +26,7 @@ import org.apache.wicket.model.IModel;
 import com.googlecode.wicket.jquery.core.IJQueryWidget;
 import com.googlecode.wicket.jquery.core.JQueryBehavior;
 import com.googlecode.wicket.jquery.core.Options;
+import com.googlecode.wicket.jquery.ui.JQueryUIBehavior;
 
 /**
  * Provides jQuery check-buttons based on a {@link CheckBoxMultipleChoice}
@@ -182,7 +183,7 @@ public class CheckChoice<T> extends CheckBoxMultipleChoice<T> implements IJQuery
 	/**
 	 * Provides jQuery check-buttons {@link JQueryBehavior}
 	 */
-	public static class CheckChoiceBehavior extends JQueryBehavior
+	public static class CheckChoiceBehavior extends JQueryUIBehavior
 	{
 		private static final long serialVersionUID = 1L;
 		private static final String METHOD = "buttonset";

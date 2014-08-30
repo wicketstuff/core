@@ -18,12 +18,12 @@ package com.googlecode.wicket.jquery.ui.plugins.sfmenu.resource;
 
 import org.apache.wicket.resource.JQueryPluginResourceReference;
 
-import com.googlecode.wicket.jquery.ui.plugins.sfmenu.settings.ISuperfishLibrarySettings;
+import com.googlecode.wicket.jquery.ui.plugins.sfmenu.settings.SuperfishLibrarySettings;
 
 /**
- * Provides the 'superfish' javascript resource reference for the superfish-menu library.<br/>
+ * Provides the 'superfish' javascript resource reference for the superfish-menu library.
  *
- * @see ISuperfishLibrarySettings
+ * @see SuperfishLibrarySettings
  * @author Sebastien Briquet - sebfz1
  * @since 6.12.0
  */
@@ -31,14 +31,6 @@ public class SuperfishJavaScriptResourceReference extends JQueryPluginResourceRe
 {
 	private static final long serialVersionUID = 1L;
 	private static final SuperfishJavaScriptResourceReference INSTANCE = new SuperfishJavaScriptResourceReference();
-
-	/**
-	 * Private constructor
-	 */
-	private SuperfishJavaScriptResourceReference()
-	{
-		super(SuperfishJavaScriptResourceReference.class, "js/superfish.js");
-	}
 
 	/**
 	 * Gets the instance of the resource reference
@@ -50,4 +42,11 @@ public class SuperfishJavaScriptResourceReference extends JQueryPluginResourceRe
 		return INSTANCE;
 	}
 
+	/**
+	 * Private constructor
+	 */
+	private SuperfishJavaScriptResourceReference()
+	{
+		super(SuperfishJavaScriptResourceReference.class, "js/superfish.js");
+	}
 }

@@ -144,7 +144,18 @@ public class ProgressBar extends JQueryContainer implements IProgressBarListener
 	 */
 	public void setModelObject(Integer value)
 	{
-		this.setDefaultModelObject(Args.notNull(value, "value"));
+		Integer v = Args.notNull(value, "value");
+
+		if (v < this.getMin())
+		{
+			v = this.getMin();
+		}
+		else if (v > this.getMax())
+		{
+			v = this.getMax();
+		}
+
+		this.setDefaultModelObject(v);
 	}
 
 	/* Methods */
@@ -206,7 +217,7 @@ public class ProgressBar extends JQueryContainer implements IProgressBarListener
 	/**
 	 * Refreshes the ProgressBar.<br/>
 	 * This method needs to be called after the model object changes.<br/>
-	 * But It is not required to be called when calling forward or backward methods.
+	 * But is not required to be called when calling forward or backward methods.
 	 *
 	 * @param target the {@link AjaxRequestTarget}
 	 */

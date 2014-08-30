@@ -4,6 +4,7 @@ import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.markup.html.form.Form;
 
 import com.googlecode.wicket.jquery.core.JQueryBehavior;
+import com.googlecode.wicket.jquery.ui.JQueryUIBehavior;
 import com.googlecode.wicket.jquery.ui.effect.JQueryEffectBehavior;
 import com.googlecode.wicket.jquery.ui.form.button.AjaxButton;
 
@@ -13,7 +14,7 @@ public class DynamicEffectPage extends AbstractEffectPage
 
 	public DynamicEffectPage()
 	{
-		this.add(new JQueryBehavior("#tabs", "tabs"));
+		this.add(new JQueryUIBehavior("#tabs", "tabs"));
 
 		Form<Void> form = new Form<Void>("form");
 		this.add(form);
@@ -30,7 +31,7 @@ public class DynamicEffectPage extends AbstractEffectPage
 				target.appendJavaScript(effectBehavior.toString());
 
 				// re-display the panel //
-				JQueryBehavior behavior = new JQueryBehavior("#tabs", "fadeIn");
+				JQueryBehavior behavior = new JQueryUIBehavior("#tabs", "fadeIn");
 				target.appendJavaScript(behavior.toString());
 			}
 		});

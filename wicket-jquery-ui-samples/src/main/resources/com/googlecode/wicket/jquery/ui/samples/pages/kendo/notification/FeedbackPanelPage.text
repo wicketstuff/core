@@ -2,7 +2,7 @@ This sample shows how to use the <tt>KendoFeedbackPanel</tt>, based on Kendo UI 
 
 <br/>
 <h4>Since</h4>
-wicket-jquery-ui-kendo-6.15.0
+wicket-kendo-ui-6.15.0
 
 <br/>
 <h4>Licensing</h4>
@@ -14,4 +14,4 @@ To be able to use it, you need to change the <code>ResourceReference</code> with
 
 <br/>
 <h4>See also</h4>
-<a href="https://github.com/sebfz1/wicket-jquery-ui/wiki/%5Bhowto%5D-change-resources-references">[howto]-change-resources-references</a><br/>
+<a href="https://github.com/sebfz1/wicket-jquery-ui/wiki/%5Bhowto%5D-change-resource-references">[howto]-change-resource-references</a><br/>

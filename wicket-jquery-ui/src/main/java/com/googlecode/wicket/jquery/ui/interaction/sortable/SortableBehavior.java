@@ -23,13 +23,13 @@ import org.apache.wicket.Component;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.attributes.CallbackParameter;
 
-import com.googlecode.wicket.jquery.core.JQueryBehavior;
 import com.googlecode.wicket.jquery.core.JQueryEvent;
 import com.googlecode.wicket.jquery.core.Options;
 import com.googlecode.wicket.jquery.core.ajax.IJQueryAjaxAware;
 import com.googlecode.wicket.jquery.core.ajax.JQueryAjaxBehavior;
 import com.googlecode.wicket.jquery.core.utils.ListUtils;
 import com.googlecode.wicket.jquery.core.utils.RequestCycleUtils;
+import com.googlecode.wicket.jquery.ui.JQueryUIBehavior;
 import com.googlecode.wicket.jquery.ui.interaction.selectable.SelectableBehavior;
 
 /**
@@ -38,7 +38,7 @@ import com.googlecode.wicket.jquery.ui.interaction.selectable.SelectableBehavior
  * @param <T> the type of the model object
  * @author Sebastien Briquet - sebfz1
  */
-public abstract class SortableBehavior<T> extends JQueryBehavior implements IJQueryAjaxAware, ISortableListener<T>
+public abstract class SortableBehavior<T> extends JQueryUIBehavior implements IJQueryAjaxAware, ISortableListener<T>
 {
 	private static final long serialVersionUID = 1L;
 	private static final String METHOD = "sortable";

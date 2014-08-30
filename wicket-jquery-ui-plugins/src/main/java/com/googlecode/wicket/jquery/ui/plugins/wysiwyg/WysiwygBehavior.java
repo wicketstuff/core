@@ -16,37 +16,24 @@
  */
 package com.googlecode.wicket.jquery.ui.plugins.wysiwyg;
 
-import org.apache.wicket.Application;
-import org.apache.wicket.settings.IJavaScriptLibrarySettings;
-
 import com.googlecode.wicket.jquery.core.JQueryBehavior;
 import com.googlecode.wicket.jquery.core.Options;
-import com.googlecode.wicket.jquery.ui.plugins.wysiwyg.settings.IWysiwygLibrarySettings;
 import com.googlecode.wicket.jquery.ui.plugins.wysiwyg.settings.WysiwygLibrarySettings;
 
+/**
+ * Provides the Wysiwyg plugin behavior
+ *
+ * @author Sebastien Briquet - sebfz1
+ *
+ */
 public class WysiwygBehavior extends JQueryBehavior
 {
 	private static final long serialVersionUID = 1L;
 	private static final String METHOD = "wysiwyg";
 
 	/**
-	 * Gets the {@link IWysiwygLibrarySettings}
-	 *
-	 * @return Default {@link IWysiwygLibrarySettings} if Application's {@link IJavaScriptLibrarySettings} is not an instance of {@link IWysiwygLibrarySettings}
-	 */
-	private static IWysiwygLibrarySettings getLibrarySettings()
-	{
-		if (Application.exists() && (Application.get().getJavaScriptLibrarySettings() instanceof IWysiwygLibrarySettings))
-		{
-			return (IWysiwygLibrarySettings) Application.get().getJavaScriptLibrarySettings();
-		}
-
-		return WysiwygLibrarySettings.get();
-	}
-
-
-	/**
 	 * Constructor
+	 *
 	 * @param selector the html selector (ie: "#myId")
 	 */
 	public WysiwygBehavior(String selector)
@@ -56,6 +43,7 @@ public class WysiwygBehavior extends JQueryBehavior
 
 	/**
 	 * Constructor
+	 *
 	 * @param selector the html selector (ie: "#myId")
 	 * @param options the {@link Options}
 	 */
@@ -71,7 +59,7 @@ public class WysiwygBehavior extends JQueryBehavior
 	 */
 	private void initReferences()
 	{
-		IWysiwygLibrarySettings settings = getLibrarySettings();
+		WysiwygLibrarySettings settings = WysiwygLibrarySettings.get();
 
 		// Bootstrap combined CSS
 		if (settings.getBootstrapCombinedNoIconsStyleSheetReference() != null)

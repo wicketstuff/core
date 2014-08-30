@@ -23,12 +23,12 @@ import org.apache.wicket.ajax.attributes.CallbackParameter;
 import org.apache.wicket.util.visit.IVisit;
 import org.apache.wicket.util.visit.IVisitor;
 
-import com.googlecode.wicket.jquery.core.JQueryBehavior;
 import com.googlecode.wicket.jquery.core.JQueryEvent;
 import com.googlecode.wicket.jquery.core.Options;
 import com.googlecode.wicket.jquery.core.ajax.IJQueryAjaxAware;
 import com.googlecode.wicket.jquery.core.ajax.JQueryAjaxBehavior;
 import com.googlecode.wicket.jquery.core.utils.RequestCycleUtils;
+import com.googlecode.wicket.jquery.ui.JQueryUIBehavior;
 import com.googlecode.wicket.jquery.ui.interaction.droppable.DroppableBehavior;
 
 /**
@@ -38,7 +38,7 @@ import com.googlecode.wicket.jquery.ui.interaction.droppable.DroppableBehavior;
  *
  * @author Sebastien Briquet - sebfz1
  */
-public abstract class DraggableBehavior extends JQueryBehavior implements IJQueryAjaxAware, IDraggableListener
+public abstract class DraggableBehavior extends JQueryUIBehavior implements IJQueryAjaxAware, IDraggableListener
 {
 	private static final long serialVersionUID = 1L;
 	private static final String METHOD = "draggable";

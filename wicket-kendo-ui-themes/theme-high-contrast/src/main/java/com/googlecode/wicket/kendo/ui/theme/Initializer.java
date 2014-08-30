@@ -34,8 +34,8 @@ public class Initializer implements IInitializer
 	{
 		KendoUILibrarySettings settings = KendoUILibrarySettings.get();
 
-		settings.setKendoUICommonStyleSheetReference(new CssResourceReference(Initializer.class, "kendo.common.min.css"));
-		settings.setKendoUIThemeStyleSheetReference(new CssResourceReference(Initializer.class, "kendo.highcontrast.min.css"));
+		settings.setCommonStyleSheetReference(new CssResourceReference(Initializer.class, "kendo.common.min.css"));
+		settings.setThemeStyleSheetReference(new CssResourceReference(Initializer.class, "kendo.highcontrast.min.css"));
 	}
 
 	@Override

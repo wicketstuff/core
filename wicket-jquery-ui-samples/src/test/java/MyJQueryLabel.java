@@ -8,6 +8,7 @@ import com.googlecode.wicket.jquery.core.JQueryBehavior;
 import com.googlecode.wicket.jquery.core.JQueryEvent;
 import com.googlecode.wicket.jquery.core.ajax.IJQueryAjaxAware;
 import com.googlecode.wicket.jquery.core.ajax.JQueryAjaxBehavior;
+import com.googlecode.wicket.jquery.ui.JQueryUIBehavior;
 
 interface IMyJQueryListener
 {
@@ -63,7 +64,7 @@ public class MyJQueryLabel extends Label implements IJQueryWidget, IMyJQueryList
 		};
 	}
 
-	static abstract class MyJQueryBehavior extends JQueryBehavior implements IJQueryAjaxAware, IMyJQueryListener
+	static abstract class MyJQueryBehavior extends JQueryUIBehavior implements IJQueryAjaxAware, IMyJQueryListener
 	{
 		private static final long serialVersionUID = 1L;
 		private JQueryAjaxBehavior onMyEventBehavior;

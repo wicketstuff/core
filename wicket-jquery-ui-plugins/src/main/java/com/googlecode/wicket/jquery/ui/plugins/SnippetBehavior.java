@@ -17,7 +17,7 @@
 package com.googlecode.wicket.jquery.ui.plugins;
 
 import org.apache.wicket.request.resource.CssResourceReference;
-import org.apache.wicket.request.resource.JavaScriptResourceReference;
+import org.apache.wicket.resource.JQueryPluginResourceReference;
 
 import com.googlecode.wicket.jquery.core.JQueryBehavior;
 import com.googlecode.wicket.jquery.core.Options;
@@ -33,7 +33,7 @@ public class SnippetBehavior extends JQueryBehavior
 
 		this.language = language;
 
-		this.add(new JavaScriptResourceReference(SnippetBehavior.class, "jquery.snippet.min.js"));
+		this.add(new JQueryPluginResourceReference(SnippetBehavior.class, "jquery.snippet.min.js"));
 		this.add(new CssResourceReference(SnippetBehavior.class, "jquery.snippet.min.css"));
 	}
 

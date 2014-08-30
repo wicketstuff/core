@@ -16,58 +16,17 @@
  */
 package com.googlecode.wicket.jquery.ui.plugins.sfmenu.settings;
 
-import org.apache.wicket.request.resource.ResourceReference;
 import org.apache.wicket.settings.IJavaScriptLibrarySettings;
 
 /**
- * Provides library settings for superfish css resource references<br/>
- * <br/>
- * Usage:
- * <pre><code>
- * public class MyApplication extends WebApplication
- * {
- * 	public void init()
- * 	{
- * 		super.init();
- *
- * 		this.getMarkupSettings().setStripWicketTags(true);
- * 		this.setJavaScriptLibrarySettings(new MyJQueryLibrarySettings());
- * 	}
- *
- * 	static class MyJQueryLibrarySettings extends JQueryLibrarySettings implements ISuperfishLibrarySettings
- * 	{
- * 		private static ResourceReference STYLESHEET_SF = new CssResourceReference(...);
- * 		private static ResourceReference STYLESHEET_VERTICAL_SF = new CssResourceReference(...);
- *
- * 		public ResourceReference getSuperfishStyleSheetReference()
- * 		{
- * 			return STYLESHEET_RR;
- * 		}
- *
- * 		public ResourceReference getSuperfishVerticalStyleSheetReference()
- * 		{
- * 			return STYLESHEET_VERTICAL_SF;
- * 		}
- * 	}
- * }
- * </code></pre>
+ * Provides library settings for superfish css resource references
  *
  * @author Ludger Kluitmann - JavaLuigi
  * @since 6.12.0
+ * @deprecated The way of customizing ResourceReference(s) has changed, please read <a href="https://github.com/sebfz1/wicket-jquery-ui/wiki/%5Bhowto%5D-change-resource-references">[howto] change resource references</a>
  */
+// TODO: remove in next version
+@Deprecated
 public interface ISuperfishLibrarySettings extends IJavaScriptLibrarySettings
 {
-	/**
-	 * Gets the superfish stylesheet resource reference
-	 *
-	 * @return the {@link ResourceReference}
-	 */
-	ResourceReference getSuperfishStyleSheetReference();
-
-	/**
-	 * Gets the superfish vertical stylesheet resource reference
-	 *
-	 * @return the {@link ResourceReference}
-	 */
-	ResourceReference getSuperfishVerticalStyleSheetReference();
 }

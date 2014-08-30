@@ -25,12 +25,12 @@ import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.attributes.CallbackParameter;
 import org.apache.wicket.extensions.markup.html.tabs.ITab;
 
-import com.googlecode.wicket.jquery.core.JQueryBehavior;
 import com.googlecode.wicket.jquery.core.JQueryEvent;
 import com.googlecode.wicket.jquery.core.Options;
 import com.googlecode.wicket.jquery.core.ajax.IJQueryAjaxAware;
 import com.googlecode.wicket.jquery.core.ajax.JQueryAjaxBehavior;
 import com.googlecode.wicket.jquery.core.utils.RequestCycleUtils;
+import com.googlecode.wicket.jquery.ui.JQueryUIBehavior;
 
 /**
  * Provides a jQuery tabs behavior.<br/>
@@ -39,7 +39,7 @@ import com.googlecode.wicket.jquery.core.utils.RequestCycleUtils;
  * @author Sebastien Briquet - sebfz1
  * @since 1.2.1
  */
-public abstract class TabsBehavior extends JQueryBehavior implements IJQueryAjaxAware, ITabsListener
+public abstract class TabsBehavior extends JQueryUIBehavior implements IJQueryAjaxAware, ITabsListener
 {
 	private static final long serialVersionUID = 1L;
 	private static final String METHOD = "tabs";

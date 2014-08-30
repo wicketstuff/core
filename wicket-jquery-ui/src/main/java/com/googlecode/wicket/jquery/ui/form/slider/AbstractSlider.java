@@ -25,6 +25,7 @@ import org.apache.wicket.validation.validator.RangeValidator;
 import com.googlecode.wicket.jquery.core.IJQueryWidget;
 import com.googlecode.wicket.jquery.core.JQueryBehavior;
 import com.googlecode.wicket.jquery.core.Options;
+import com.googlecode.wicket.jquery.ui.JQueryUIBehavior;
 
 /**
  * Base class for implementing jQuery slider(s)
@@ -220,7 +221,7 @@ public abstract class AbstractSlider<T> extends FormComponentPanel<T> implements
 	/**
 	 * Provides a jQuery slider {@link JQueryBehavior}
 	 */
-	public static class SliderBehavior extends JQueryBehavior
+	public static class SliderBehavior extends JQueryUIBehavior
 	{
 		private static final long serialVersionUID = 1L;
 		private static final String METHOD = "slider";

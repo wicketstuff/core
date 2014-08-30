@@ -56,11 +56,6 @@ public class SampleApplication extends WebApplication
 
 		this.getResourceSettings().setThrowExceptionOnMissingResource(false);
 
-//		IJQueryLibrarySettings settings = new JQueryLibrarySettings();
-//		settings.setJQueryReference(new PackageResourceReference(SampleApplication.class, "jquery-1.9.1.js"));
-//		settings.setJQueryGlobalizeReference(JQueryGlobalizeResourceReference.get()); // jQuery Globalize Resource References
-//		this.setJavaScriptLibrarySettings(settings);
-
 		// SiteMap //
 		this.mountPage("/sitemap.xml", SiteMapPage.class);
 

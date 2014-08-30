@@ -18,6 +18,7 @@ package com.googlecode.wicket.jquery.ui.widget.progressbar;
 
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.model.IModel;
+import org.apache.wicket.util.lang.Args;
 
 import com.googlecode.wicket.jquery.core.JQueryBehavior;
 import com.googlecode.wicket.jquery.core.JQueryContainer;
@@ -89,7 +90,7 @@ public class ProgressBar extends JQueryContainer implements IJQueryAjaxAware, IV
 	 */
 	public void setModelObject(Integer value)
 	{
-		Integer v = value;
+		Integer v = Args.notNull(value, "value");
 
 		if (v < MIN)
 		{

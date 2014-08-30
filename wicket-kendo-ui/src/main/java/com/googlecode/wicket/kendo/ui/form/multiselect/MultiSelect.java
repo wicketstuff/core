@@ -25,7 +25,7 @@ import org.apache.wicket.model.IModel;
 
 import com.googlecode.wicket.jquery.core.IJQueryWidget;
 import com.googlecode.wicket.jquery.core.JQueryBehavior;
-import com.googlecode.wicket.kendo.ui.KendoAbstractBehavior;
+import com.googlecode.wicket.kendo.ui.KendoUIBehavior;
 
 /**
  * Provides a Kendo UI MultiSelect widget. It extends built-in {@link ListMultipleChoice}<br/>
@@ -203,6 +203,6 @@ public class MultiSelect<T> extends ListMultipleChoice<T> implements IJQueryWidg
 	@Override
 	public JQueryBehavior newWidgetBehavior(String selector)
 	{
-		return new KendoAbstractBehavior(selector, MultiSelect.METHOD);
+		return new KendoUIBehavior(selector, MultiSelect.METHOD);
 	}
 }
