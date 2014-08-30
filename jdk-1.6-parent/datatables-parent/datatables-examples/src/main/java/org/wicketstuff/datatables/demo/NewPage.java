@@ -56,7 +56,7 @@ public class NewPage extends WebPage {
         Options options = table.getOptions();
         options.order(new Sort(2, Sort.Direction.ASC)); // single column ordering
 //        table.getOptions().order(new Sort(2, Sort.Direction.DESC), new Sort(0, Sort.Direction.ASC)); // multi column ordering
-        options.stateDuration(3600).stateSave(true);
+        options.stateDuration(3600).stateSave(true).pagingType(Options.PagingType.simple);
     }
 
 }

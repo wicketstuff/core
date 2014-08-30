@@ -10,6 +10,31 @@ import de.agilecoders.wicket.jquery.Key;
 public class Options extends AbstractConfig {
 
     /**
+     * https://datatables.net/examples/basic_init/alt_pagination.html
+     */
+    public enum PagingType {
+        /**
+         *  'Previous' and 'Next' buttons only
+         */
+        simple,
+
+        /**
+         * 'Previous' and 'Next' buttons, plus page numbers
+         */
+        simple_numbers,
+
+        /**
+         * 'First', 'Previous', 'Next' and 'Last' buttons
+         */
+        full,
+
+        /**
+         * 'First', 'Previous', 'Next' and 'Last' buttons, plus page numbers
+         */
+        full_numbers
+    }
+
+    /**
      * https://datatables.net/examples/basic_init/table_sorting.html
      */
     private static final IKey<Sort[]> Order = new Key<Sort[]>("order", null);
@@ -27,6 +52,15 @@ public class Options extends AbstractConfig {
      */
     private static final IKey<Integer> StateDuration = new Key<Integer>("stateDuration", 7200);
 
+    /**
+     * https://datatables.net/examples/basic_init/alt_pagination.html
+     */
+    private static final IKey<PagingType> _PagingType = new Key<PagingType>("pagingType", PagingType.simple_numbers);
+
+    public Options pagingType(PagingType pagingType) {
+        put(_PagingType, pagingType);
+        return this;
+    }
 
     public Options stateSave(Boolean stateSave) {
         put(StateSave, stateSave);
