@@ -1,11 +1,14 @@
 package org.wicketstuff.datatables.demo;
 
+import static de.agilecoders.wicket.jquery.JQuery.$;
+
 import java.util.ArrayList;
 import java.util.List;
 
-import de.agilecoders.wicket.jquery.util.Json;
 import org.apache.wicket.extensions.markup.html.repeater.data.table.IColumn;
 import org.apache.wicket.extensions.markup.html.repeater.data.table.PropertyColumn;
+import org.apache.wicket.markup.head.IHeaderResponse;
+import org.apache.wicket.markup.head.OnDomReadyHeaderItem;
 import org.apache.wicket.markup.html.WebPage;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
@@ -13,6 +16,9 @@ import org.wicketstuff.datatables.DataTables;
 import org.wicketstuff.datatables.Options;
 import org.wicketstuff.datatables.Sort;
 import org.wicketstuff.datatables.themes.BootstrapTheme;
+
+import de.agilecoders.wicket.jquery.JQuery;
+import de.agilecoders.wicket.jquery.util.Json;
 
 /**
  *
@@ -39,7 +45,15 @@ public class NewPage extends WebPage {
 
         PeopleDataProvider dataProvider = new PeopleDataProvider(people);
 
-        DataTables<Person, String> table = new DataTables<Person, String>("table", columns, dataProvider, 4);
+        final DataTables<Person, String> table = new DataTables<Person, String>("table", columns, dataProvider, 4) {
+            @Override
+            public void renderHead(IHeaderResponse response) {
+                super.renderHead(response);
+
+                // see rowSelector below
+                response.render(OnDomReadyHeaderItem.forScript($(this).on("click", "tr", new JQuery.JavaScriptInlineFunction("$(this).toggleClass('selected');")).get()));
+            }
+        };
         add(table);
 
         SpanColumn<Person, String> namesColumn = new SpanColumn<Person, String>(Model.of("Names"), null) {
@@ -72,6 +86,8 @@ public class NewPage extends WebPage {
             // recommendation: load the String with PackageTextTemplate
             .rowCallback(new Json.RawValue("function(row, data, displayIndex) {if(displayIndex == 1) {$(row).addClass('selected')}}"))
         ;
+
+
     }
 
 }
