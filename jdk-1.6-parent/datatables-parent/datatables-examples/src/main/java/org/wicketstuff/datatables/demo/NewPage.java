@@ -83,8 +83,13 @@ public class NewPage extends WebPage {
 
 //            .scrollX(true)
 
+            // highlights the second row
             // recommendation: load the String with PackageTextTemplate
             .rowCallback(new Json.RawValue("function(row, data, displayIndex) {if(displayIndex == 1) {$(row).addClass('selected')}}"))
+
+             // makes the age in bold and underlined
+             // recommendation: load the String with PackageTextTemplate
+            .createdRow(new Json.RawValue("function(row, data, displayIndex) { $('td', row).eq(2).wrapInner('<b><u></u></b>');}"))
         ;
 
 

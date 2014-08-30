@@ -92,6 +92,18 @@ public class Options extends AbstractConfig {
      */
     private static final IKey<Integer[]> DeferLoading = new Key<Integer[]>("deferLoading", null);
 
+
+    /**
+     * https://datatables.net/examples/advanced_init/row_callback.html
+     * https://datatables.net/reference/option/createdRow
+     */
+    private static final IKey<Json.RawValue> CreatedRow = new Key<Json.RawValue>("createdRow", null);
+
+    public Options createdRow(Json.RawValue createdRow) {
+        put(CreatedRow, createdRow);
+        return this;
+    }
+
     public Options deferLoading(Integer maxItems) {
         put(DeferLoading, new Integer[] {maxItems});
         return this;
