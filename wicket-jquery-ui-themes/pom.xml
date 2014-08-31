@@ -13,10 +13,6 @@
 	<artifactId>wicket-jquery-ui-themes</artifactId>
 	<packaging>pom</packaging>
 
-    <properties>
-	    <bundle.namespace>com.googlecode.wicket.jquery.ui.themes</bundle.namespace>
-	</properties>
-	
 	<dependencies>
 		<!-- JQUERY-UI DEPENDENCIES -->
 		<dependency>
@@ -39,15 +35,6 @@
 			<scope>provided</scope>
 		</dependency>
 	</dependencies>
-
-    <build>
-        <plugins>
-            <plugin>
-                <groupId>org.apache.felix</groupId>
-                <artifactId>maven-bundle-plugin</artifactId>
-            </plugin>
-        </plugins>
-    </build>
 
 	<modules>
 		<module>theme-black-tie</module>
