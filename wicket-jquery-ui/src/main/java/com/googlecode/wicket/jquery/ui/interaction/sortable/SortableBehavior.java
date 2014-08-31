@@ -147,7 +147,7 @@ public abstract class SortableBehavior<T> extends JQueryUIBehavior implements IJ
 			{
 				List<T> list = this.getConnectedList();
 
-				if (list.size() > 0)
+				if (!list.isEmpty())
 				{
 					this.onReceive(target, ListUtils.fromHash(hash, list), index);
 				}

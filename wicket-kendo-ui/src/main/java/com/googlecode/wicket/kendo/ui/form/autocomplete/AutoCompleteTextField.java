@@ -93,7 +93,7 @@ public abstract class AutoCompleteTextField<T> extends AbstractAutoCompleteTextF
 	// Methods //
 
 	@Override
-	protected String getModelValue()
+	protected final String getModelValue()
 	{
 		return this.renderer.getText(this.getModelObject()); // renderer cannot be null.
 	}

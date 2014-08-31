@@ -25,12 +25,21 @@ import com.googlecode.wicket.jquery.ui.interaction.droppable.Droppable;
 public class ShoppingDroppablePage extends AbstractDroppablePage
 {
 	private static final long serialVersionUID = 1L;
+
+	private static List<Book> newBookList()
+	{
+		return Arrays.asList(new Book("Wicket In Action", 25.64f, "book1.png"),
+				new Book("Pro Wicket", 31.59f, "book2.png"),
+				new Book("Wicket (German)", 29.21f, "book3.png"),
+				new Book("Wicket (Japanese)", 30.22f, "book4.png"));
+	}
+
 	private final List<Book> books;
 	private final List<Book> orders;
 
 	public ShoppingDroppablePage()
 	{
-		this.books = this.newBookList();
+		this.books = newBookList();
 		this.orders = new ArrayList<Book>();
 
 		this.initialize();
@@ -56,7 +65,7 @@ public class ShoppingDroppablePage extends AbstractDroppablePage
 
 					if (object instanceof Book)
 					{
-						orders.add((Book)object);
+						orders.add((Book) object);
 					}
 				}
 
@@ -111,7 +120,6 @@ public class ShoppingDroppablePage extends AbstractDroppablePage
 
 		form.add(droppable);
 
-
 		// Book Store //
 		this.add(new ListView<Book>("books", this.books) {
 
@@ -128,14 +136,6 @@ public class ShoppingDroppablePage extends AbstractDroppablePage
 				item.add(draggable.setRevert(true));
 			}
 		});
-	}
-
-	private List<Book> newBookList()
-	{
-		return Arrays.asList(new Book("Wicket In Action", 25.64f, "book1.png"),
-				new Book("Pro Wicket", 31.59f, "book2.png"),
-				new Book("Wicket (German)", 29.21f, "book3.png"),
-				new Book("Wicket (Japanese)", 30.22f, "book4.png"));
 	}
 
 	// Book fragment //
@@ -160,7 +160,7 @@ public class ShoppingDroppablePage extends AbstractDroppablePage
 		}
 	}
 
-	class Book implements IClusterable, Comparable<Book>
+	static class Book implements IClusterable, Comparable<Book>
 	{
 		private static final long serialVersionUID = 1L;
 

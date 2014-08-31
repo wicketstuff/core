@@ -21,6 +21,7 @@ import java.io.OutputStream;
 import java.util.List;
 
 import org.apache.wicket.markup.repeater.data.IDataProvider;
+import org.apache.wicket.util.io.IClusterable;
 
 import com.googlecode.wicket.kendo.ui.datatable.column.IColumn;
 import com.googlecode.wicket.kendo.ui.datatable.column.IExportableColumn;
@@ -30,9 +31,8 @@ import com.googlecode.wicket.kendo.ui.datatable.column.IExportableColumn;
  *
  * @author Sebastien Briquet - sebfz1
  */
-public interface IDataExporter
+public interface IDataExporter extends IClusterable
 {
-
 	/**
 	 * Gets the content type
 	 *

@@ -97,7 +97,7 @@ public class CalendarDAO
 		this.list.add(new DemoCalendarEvent(this.newId(), "Private event", Category.PRIVATE, new Date()));
 	}
 
-	protected int newId()
+	protected final int newId()
 	{
 		return ++this.id;
 	}

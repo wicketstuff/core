@@ -43,6 +43,8 @@ import com.googlecode.wicket.kendo.ui.datatable.column.IExportableColumn;
  */
 public class CSVDataExporter implements IDataExporter
 {
+	private static final long serialVersionUID = 1L;
+
 	private static final char QUOTE = '"';
 	private static final String CRLF = "\r\n";
 	private static final String MIME = "text/csv";

@@ -21,7 +21,7 @@ public class DemoCalendarEvent extends CalendarEvent
 			this.name = name;
 			this.color = color;
 		}
-		
+
 		public String getColor()
 		{
 			return this.color;
@@ -50,10 +50,10 @@ public class DemoCalendarEvent extends CalendarEvent
 		this.setCategory(category);
 	}
 
-	public void setCategory(Category category)
+	public final void setCategory(Category category)
 	{
 		this.category = category;
-		
+
 		if (this.category != null)
 		{
 			this.setColor(this.category.getColor());

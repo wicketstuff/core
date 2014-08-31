@@ -255,7 +255,6 @@ public class RangeDatePickerTextField extends FormComponentPanel<DateRange> impl
 			@Override
 			protected String $()
 			{
-
 				StringBuilder statements = new StringBuilder();
 
 				statements.append("jQuery('#").append(input.getMarkupId()).append("').on('click', function() { ");

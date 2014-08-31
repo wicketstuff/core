@@ -46,6 +46,12 @@ public abstract class SamplePage extends TemplatePage
 		this.add(new Label("source-java", this.getSource(Source.JAVA)));
 		this.add(new Label("source-html", this.getSource(Source.HTML)));
 		this.add(new JQueryUIBehavior("#wrapper-panel-source", "tabs"));
+	}
+
+	@Override
+	protected void onInitialize()
+	{
+		super.onInitialize();
 
 		this.add(new ListView<DemoLink>("demo-list", Model.ofList(this.getDemoLinks())) {
 

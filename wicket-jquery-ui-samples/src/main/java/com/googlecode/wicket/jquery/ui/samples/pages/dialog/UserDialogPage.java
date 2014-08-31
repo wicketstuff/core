@@ -121,7 +121,7 @@ public class UserDialogPage extends AbstractDialogPage
 	 * This dialog class is located here for convenience in this sample<br/>
 	 * Associated markup file is UserDialogPage$UserDialog.html
 	 */
-	static abstract class UserDialog extends AbstractFormDialog<User>
+	abstract static class UserDialog extends AbstractFormDialog<User>
 	{
 		private static final long serialVersionUID = 1L;
 		protected final DialogButton btnSubmit = new DialogButton("Save", JQueryIcon.CHECK);

@@ -34,7 +34,7 @@ public class NavigationAjaxButton extends Panel
 	}
 
 	// Factories //
-	private AjaxButton newBackwardButton()
+	private final AjaxButton newBackwardButton()
 	{
 		return new AjaxButton("backward") {
 
@@ -55,7 +55,7 @@ public class NavigationAjaxButton extends Panel
 	}
 
 
-	private AjaxButton newForwardButton()
+	private final AjaxButton newForwardButton()
 	{
 		return new AjaxButton("forward") {
 

@@ -62,7 +62,7 @@ public class ActionWindowPage extends AbstractWindowPage
 	 * This window class is located here for convenience in this sample<br/>
 	 * Associated markup file is ActionWindowPage$MyWindow.html
 	 */
-	static abstract class MyWindow extends AbstractWindow<Void>
+	abstract static class MyWindow extends AbstractWindow<Void>
 	{
 		private static final long serialVersionUID = 1L;
 

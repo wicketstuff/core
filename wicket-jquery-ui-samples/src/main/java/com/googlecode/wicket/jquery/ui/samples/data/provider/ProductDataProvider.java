@@ -1,5 +1,6 @@
 package com.googlecode.wicket.jquery.ui.samples.data.provider;
 
+import java.io.Serializable;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
@@ -47,8 +48,10 @@ public class ProductDataProvider extends ListDataProvider<Product> implements IS
 		return this.state;
 	}
 
-	static class ProductComparator implements Comparator<Product>
+	static class ProductComparator implements Comparator<Product>, Serializable
 	{
+		private static final long serialVersionUID = 1L;
+
 		private final String property;
 		private final boolean ascending;
 

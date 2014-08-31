@@ -96,7 +96,7 @@ public class OptionSpinnerPage extends SamplePage
 		this.info("The model object is: " + form.getModelObject());
 	}
 
-	class CultureSpinner extends Spinner<Double>
+	static class CultureSpinner extends Spinner<Double>
 	{
 		private static final long serialVersionUID = 1L;
 		static final String CULTURE = "fr-FR"; //default culture

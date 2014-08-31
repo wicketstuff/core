@@ -49,12 +49,11 @@ public class Options implements IClusterable
 	 */
 	public static String asString(Object value)
 	{
-		return Options.asString(value);
+		return Options.asString(String.valueOf(value));
 	}
 
 	/**
-	 * Converts a string to its javascript representation. ie: "myvalue" (with the double quotes)<br/>
-	 * If the supplied value is null, "null" is returned
+	 * Converts a string to its javascript representation. ie: "myvalue" (with the double quotes)
 	 *
 	 * @param value the object
 	 * @return the JSON value
@@ -106,7 +105,7 @@ public class Options implements IClusterable
 	 */
 	public static String escapeQuotes(String value)
 	{
-		return String.valueOf(value).replaceAll(QUOTE, "\\" + QUOTE);
+		return value.replaceAll(QUOTE, "\\" + QUOTE);
 	}
 
 	private final Map<String, Serializable> map;

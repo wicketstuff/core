@@ -11,6 +11,8 @@ import org.apache.wicket.markup.html.panel.EmptyPanel;
 import org.apache.wicket.markup.html.panel.FeedbackPanel;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.util.io.IClusterable;
+import org.apache.wicket.util.lang.Args;
+import org.apache.wicket.util.string.Strings;
 
 import com.googlecode.wicket.jquery.ui.JQueryIcon;
 import com.googlecode.wicket.jquery.ui.interaction.sortable.Sortable;
@@ -99,11 +101,25 @@ public class CustomSortablePage extends AbstractSortablePage
 	{
 		private static final long serialVersionUID = 1L;
 
-		final String name;
+		private final String name;
 
 		public Item(String name)
 		{
-			this.name = name;
+			this.name = Args.notNull(name, "name");
+		}
+
+		/**
+		 * No incidence, just because we need to override #equals() if #hashCode() is overridden...
+		 */
+		@Override
+		public boolean equals(Object object)
+		{
+			if (object instanceof Item)
+			{
+				Strings.isEqual(this.toString(), object.toString());
+			}
+
+			return super.equals(object);
 		}
 
 		@Override
