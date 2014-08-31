@@ -16,8 +16,6 @@
  */
 package com.googlecode.wicket.jquery.ui.plugins.emoticons.settings;
 
-import org.apache.wicket.settings.IJavaScriptLibrarySettings;
-
 /**
  * Provides library settings for css-emoticons resource references
  *
@@ -25,6 +23,6 @@ import org.apache.wicket.settings.IJavaScriptLibrarySettings;
  */
 // TODO: remove in next version
 @Deprecated
-public interface IEmoticonsLibrarySettings extends IJavaScriptLibrarySettings
+public interface IEmoticonsLibrarySettings
 {
 }

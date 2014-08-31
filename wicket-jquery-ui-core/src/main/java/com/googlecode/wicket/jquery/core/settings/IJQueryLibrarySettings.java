@@ -16,8 +16,6 @@
  */
 package com.googlecode.wicket.jquery.core.settings;
 
-import org.apache.wicket.settings.IJavaScriptLibrarySettings;
-
 /**
  * Provides library settings for jQuery UI resource references
  *
@@ -26,6 +24,6 @@ import org.apache.wicket.settings.IJavaScriptLibrarySettings;
  */
 //TODO: remove in next version
 @Deprecated
-public interface IJQueryLibrarySettings extends IJavaScriptLibrarySettings
+public interface IJQueryLibrarySettings
 {
 }

@@ -16,8 +16,6 @@
  */
 package com.googlecode.wicket.jquery.ui.plugins.wysiwyg.settings;
 
-import org.apache.wicket.settings.IJavaScriptLibrarySettings;
-
 /**
  * Provides library settings for Wysiwyg resource references
  *
@@ -25,6 +23,6 @@ import org.apache.wicket.settings.IJavaScriptLibrarySettings;
  */
 // TODO: remove in next version
 @Deprecated
-public interface IWysiwygLibrarySettings extends IJavaScriptLibrarySettings
+public interface IWysiwygLibrarySettings
 {
 }

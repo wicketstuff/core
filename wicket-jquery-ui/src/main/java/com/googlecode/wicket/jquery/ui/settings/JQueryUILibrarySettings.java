@@ -68,7 +68,7 @@ public class JQueryUILibrarySettings
 	/**
 	 * Constructor
 	 */
-	public JQueryUILibrarySettings()
+	private JQueryUILibrarySettings()
 	{
 	}
 

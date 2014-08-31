@@ -16,8 +16,6 @@
  */
 package com.googlecode.wicket.jquery.ui.calendar.settings;
 
-import org.apache.wicket.settings.IJavaScriptLibrarySettings;
-
 /**
  * Provides library settings for fullcalendar resource references<br/>
  *
@@ -26,6 +24,6 @@ import org.apache.wicket.settings.IJavaScriptLibrarySettings;
  */
 // TODO: remove in next version
 @Deprecated
-public interface ICalendarLibrarySettings extends IJavaScriptLibrarySettings
+public interface ICalendarLibrarySettings
 {
 }

@@ -144,6 +144,12 @@ public class JQueryEffectBehavior extends JQueryUIBehavior implements IJQueryAja
 		return this.$(this.effect, this.options.toString());
 	}
 
+	/**
+	 * Gets the jQuery statement.
+	 *
+	 * @param effect the effect to be played
+	 * @return the jQuery statement
+	 */
 	@Override
 	public String $(String effect)
 	{
