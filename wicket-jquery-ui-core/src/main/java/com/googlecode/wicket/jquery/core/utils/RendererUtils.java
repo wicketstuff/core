@@ -26,7 +26,6 @@ import com.googlecode.wicket.jquery.core.renderer.ITextRenderer;
  * @author Sebastien Briquet - sebfz1
  *
  */
-// XXX: ChoiceRenderer#toJson has been removed. Use RendererUtils#toJson instead - API break
 public class RendererUtils
 {
 	// ITextRenderer //

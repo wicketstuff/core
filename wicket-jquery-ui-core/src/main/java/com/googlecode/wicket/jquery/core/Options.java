@@ -127,7 +127,6 @@ public class Options implements IClusterable
 	 * @param key the key whose associated value is to be returned
 	 * @return the value to which the specified key is mapped, or null if this map contains no mapping for the key
 	 */
-	// XXX: signature changed from Serializable get(String key) to <T extends Serializable> T get(String key)
 	@SuppressWarnings("unchecked")
 	public <T extends Serializable> T get(String key)
 	{

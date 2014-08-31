@@ -30,7 +30,6 @@ import com.googlecode.wicket.jquery.core.event.IValueChangedListener;
  *
  * @author Sebastien Briquet - sebfz1
  */
-// XXX: replaced implements IRangeDatePickerListener by IValueChangedListener - API break
 public class RangeDatePicker extends JQueryContainer implements IValueChangedListener
 {
 	private static final long serialVersionUID = 1L;

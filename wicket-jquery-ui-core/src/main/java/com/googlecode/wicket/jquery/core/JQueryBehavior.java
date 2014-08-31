@@ -139,7 +139,6 @@ public class JQueryBehavior extends JQueryAbstractBehavior
 	 * @param key the option key
 	 * @return null if the key does not exists
 	 */
-	// XXX: signature changed from getOption(String key) to <T extends Serializable> T getOption(String key)
 	public <T extends Serializable> T getOption(String key)
 	{
 		if (this.options == null)

@@ -35,7 +35,6 @@ import com.googlecode.wicket.jquery.core.utils.RendererUtils;
  * @param <T> the model object type
  * @author Sebastien Briquet - sebfz1
  */
-// XXX: renamed AutoCompleteSourceBehavior to AutoCompleteChoiceModelBehavior
 abstract class AutoCompleteChoiceModelBehavior<T> extends ChoiceModelBehavior<T>
 {
 	private static final long serialVersionUID = 1L;
@@ -78,7 +77,6 @@ abstract class AutoCompleteChoiceModelBehavior<T> extends ChoiceModelBehavior<T>
 						builder.append(", ");
 						builder.append(Options.QUOTE).append("value").append(Options.QUOTE).append(": ").append(Options.QUOTE).append(renderer.getText(choice)).append(Options.QUOTE); /* value is a reserved word */
 
-						//XXX: Warning, no null check. #getProperties should return Collections#emptyList if no properties to supply
 						for (String property : AutoCompleteChoiceModelBehavior.this.getProperties())
 						{
 							builder.append(", ");

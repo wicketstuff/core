@@ -59,7 +59,6 @@ import com.googlecode.wicket.jquery.ui.interaction.draggable.Draggable;
  * @author Sebastien Briquet - sebfz1
  *
  */
-// XXX: removed implements ISelectableListener<T> (because of model object)
 public class Selectable<T extends Serializable> extends JQueryContainer
 {
 	private static final long serialVersionUID = 1L;
@@ -187,7 +186,6 @@ public class Selectable<T extends Serializable> extends JQueryContainer
 	 *
 	 * @param target the {@link AjaxRequestTarget}
 	 */
-	// XXX: removed List<T> items (it's the model object) - API break
 	public void onSelect(AjaxRequestTarget target)
 	{
 		// noop
