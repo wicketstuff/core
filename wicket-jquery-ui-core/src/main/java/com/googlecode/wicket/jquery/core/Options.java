@@ -24,7 +24,6 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
 
-import org.apache.wicket.core.util.string.JavaScriptUtils;
 import org.apache.wicket.util.io.IClusterable;
 
 import com.googlecode.wicket.jquery.core.utils.DateUtils;
@@ -50,7 +49,7 @@ public class Options implements IClusterable
 	 */
 	public static String asString(Object value)
 	{
-		return Options.asString(String.valueOf(value));
+		return Options.asString(value);
 	}
 
 	/**
@@ -62,7 +61,7 @@ public class Options implements IClusterable
 	 */
 	public static String asString(String value)
 	{
-		return String.format("%s%s%s", QUOTE, JavaScriptUtils.escapeQuotes(value), QUOTE);
+		return String.format("%s%s%s", QUOTE, Options.escapeQuotes(value), QUOTE);
 	}
 
 	/**
@@ -97,6 +96,17 @@ public class Options implements IClusterable
 		}
 
 		return builder.toString();
+	}
+
+	/**
+	 * Escape JSON quotes ({@value #QUOTE})
+	 *
+	 * @param value the string to escape
+	 * @return the escaped string
+	 */
+	public static String escapeQuotes(String value)
+	{
+		return String.valueOf(value).replaceAll(QUOTE, "\\" + QUOTE);
 	}
 
 	private final Map<String, Serializable> map;
