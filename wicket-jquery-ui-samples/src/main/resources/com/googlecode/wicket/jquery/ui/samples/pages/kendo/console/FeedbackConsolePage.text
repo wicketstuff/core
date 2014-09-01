@@ -3,7 +3,7 @@ For this reason, the style is not part of the Kendo UI's theme. It can however b
 
 <br/>
 <h4>Tip</h4>
-In order to get <i>only</i> new feedback messages (ie: not keeping the history), <code>#clear()</code> should be called in <code>#onConfigure</code> and the console should be refreshed using <code>target.add(console)</code> (rather than <code>console.add(target)</code>) 
+In order to get <i>only</i> new feedback messages (ie: not keeping the history), <code>#clear()</code> should be called in <code>#onConfigure</code> and the console should be refreshed using <code>target.add(console)</code> (rather than <code>console.refresh(target)</code>) 
 <pre>
 	final FeedbackConsole console = new FeedbackConsole("console") {
 	
