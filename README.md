@@ -1,4 +1,4 @@
-# wicket-jquery-ui #
+# wicket-jquery-ui
 **jQuery UI integration in Wicket 1.5.x &amp; Wicket 6.x**  
 [![Build Status](https://buildhive.cloudbees.com/job/sebfz1/job/wicket-jquery-ui/badge/icon)](https://buildhive.cloudbees.com/job/sebfz1/job/wicket-jquery-ui/)
 
@@ -11,14 +11,14 @@
 ## Getting started
 In order to get started using this API, you may download appropriate jar(s) or set a maven dependency.
 
-### Download jar(s) ###
+### Download jar(s)
 If you are not using maven, you need to download the core jar here:
 <http://central.maven.org/maven2/com/googlecode/wicket-jquery-ui/>
 
 You may also download other jars as required (ie: `wicket-kendo-ui`).  
 Once done, just include the jar(s) in your project's build path.
 
-### Using Maven ###
+### Using Maven
 
 ```xml
 <dependency>
@@ -43,7 +43,7 @@ If the version you specified is *snapshot*, you might define this repository:
 </repositories>
 ```
 
-### Versions ###
+### Versions
 
 <table>
 <tr><th>wicket-jquery-ui</th><th>Wicket</th><th>jQuery UI</th></tr>
@@ -83,8 +83,9 @@ If the version you specified is *snapshot*, you might define this repository:
 <tr><td>1.5.10</td><td>1.5.10</td><td>2012.3.1114 (GPLv3)</td></tr>
 </table>
 
-## Setting up the jQuery UI theme ##
-### Using standard themes ### 
+## Setting up the jQuery UI theme
+
+### Using standard themes
 To use wicket-jquery-ui with a standard theme, just add the corresponding theme dependency to your webapp pom
 
 ```xml
@@ -95,12 +96,12 @@ To use wicket-jquery-ui with a standard theme, just add the corresponding theme 
 </dependency>
 ```
 
-### Using a custom theme ###
-Please follow the instruction on How to change resource references
+### Using a custom theme
+Please follow the instruction on [How to change resource references](https://github.com/sebfz1/wicket-jquery-ui/wiki/%5Bhowto%5D-change-resource-references)
 
-## Setting up the Kendo UI theme ##
+## Setting up the Kendo UI theme
 
-### Using standard themes ###
+### Using standard themes
 To use wicket-kendo-ui with a standard theme, just add the corresponding theme dependency to your webapp pom
 
 ```xml
@@ -111,8 +112,8 @@ To use wicket-kendo-ui with a standard theme, just add the corresponding theme d
 </dependency>
 ```
 
-### Using a custom theme ###
-Please follow the instruction on How to change resource references 
+### Using a custom theme
+Please follow the instruction on [How to change resource references](https://github.com/sebfz1/wicket-jquery-ui/wiki/%5Bhowto%5D-change-resource-references)
 
 ## You are now ready to use wicket-jquery-ui!
 Look at the samples provided in the demo site to get started with the code...  
