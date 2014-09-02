@@ -67,6 +67,7 @@ public class WicketJSPURL extends TagSupport {
 	    out.flush();
 	} catch (IOException e) {
 	    LOGGER.error("Error while generating url for page " + page, e);
+	    throw new JspException("Error while generating url for page ",e);
 	}
 	return SKIP_BODY;
     }
