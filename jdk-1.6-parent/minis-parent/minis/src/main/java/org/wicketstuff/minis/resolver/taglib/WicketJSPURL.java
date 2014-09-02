@@ -6,7 +6,8 @@ import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.JspWriter;
 import javax.servlet.jsp.tagext.TagSupport;
 
-import org.apache.wicket.markup.html.WebPage;
+import org.apache.wicket.Page;
+import org.apache.wicket.core.util.lang.WicketObjects;
 import org.apache.wicket.protocol.http.RequestUtils;
 import org.apache.wicket.request.cycle.RequestCycle;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
@@ -50,7 +51,6 @@ public class WicketJSPURL extends TagSupport {
 
     private String query = null;
 
-    @SuppressWarnings("unchecked")
     @Override
     public int doStartTag() throws JspException {
 	try {
@@ -59,16 +59,14 @@ public class WicketJSPURL extends TagSupport {
 	    if (query != null) {
 		RequestUtils.decodeParameters(query, pageParameters);
 	    }
+	    Class<Page> resolveClass = WicketObjects.resolveClass(page);
 	    CharSequence urlFor = RequestCycle.get().urlFor(
-		    (Class<? extends WebPage>) Class.forName(page),
+		    resolveClass,
 		    pageParameters);
 	    out.write(urlFor.toString());
 	    out.flush();
 	} catch (IOException e) {
 	    LOGGER.error("Error while generating url for page " + page, e);
-	} catch (ClassNotFoundException e) {
-	    LOGGER.error(
-		    "Error while receiving the class with the name" + page, e);
 	}
 	return SKIP_BODY;
     }
