@@ -14,7 +14,28 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Tag Support to generate a wicket url within a jsp.
+ * Tag Support to generate a wicket url within a jsp. The tag library can be
+ * defined within the <b>&lt;jsp-config&gt;</b> tag in <b>the web.xml</b>. Every
+ * jar which is included in the <b>lib</b> folder of the webapp project will
+ * automatically scanned if a taglib.tld is located in the <b>META-INF</b>
+ * folder. If so the tag library is automatically added.
+ * 
+ * Example of web.xml definition:
+ * <pre>
+ * &lt;taglib&gt;
+ * 	&lt;taglib-uri&gt;uri&lt;/taglib-uri&gt;
+ * 	&lt;taglib-location&gt;/WEB-INF/jsp/mytaglib.tld&lt;taglib-location&gt;
+ * &lt;/taglib&gt;
+ * </pre>
+ * 
+ * Usage:
+ * To use the taglib and this tag you only have to define it in the jsp:
+ * <pre>
+ * &lt;%@ taglib prefix="wicket" uri="http://org.wicketstuff.minis.jsp/functions" %&gt;
+ *
+ * Tag: url // Parameters: page(required), query(optional) // Example:
+ * &lt;a href="&lt;wicket:url page="mypage.MyTestPage" query="param1=value1&param2=value2"/&gt;"&gt;LINK&lt;/a&gt;
+ * </pre>
  * 
  * @author Tobias Soloschenko
  */
