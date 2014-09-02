@@ -15,7 +15,7 @@ public class WicketServletAndJSPResolverTest {
     public void testServletsAndJSPsAreResolvedRight() throws Exception {
 	TestApplication testApplication = new TestApplication();
 	MockServletContext mockServletContext = new MockServletContext(
-		testApplication, new File("src/main/webapp").getCanonicalPath());
+		testApplication, new File("src/test/webapp").getCanonicalPath());
 	WicketTester wicketTester = new WicketTester(testApplication,
 		mockServletContext);
 	wicketTester.startPage(TestServletAndJSPPage.class);

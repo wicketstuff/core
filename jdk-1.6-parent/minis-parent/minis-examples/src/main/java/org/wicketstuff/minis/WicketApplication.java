@@ -30,8 +30,7 @@ public class WicketApplication extends WebApplication
 	@Override
 	protected void init() 
 	{
-	super.init();
-	getPageSettings().addComponentResolver(new WicketServletAndJSPResolver());
+	    	super.init();
+	    	getPageSettings().addComponentResolver(new WicketServletAndJSPResolver());
 	}
-
 }
