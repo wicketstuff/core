@@ -5,6 +5,7 @@ target/
 *.i[mpw][lrs]
 .idea/
 META-INF
+!taglib.tld
 .scala_dependencies
 nb-configuration.xml
 *~
