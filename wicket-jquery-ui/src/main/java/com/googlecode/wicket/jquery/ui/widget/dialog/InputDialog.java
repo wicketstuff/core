@@ -46,6 +46,7 @@ public abstract class InputDialog<T extends Serializable> extends AbstractFormDi
 
 	/**
 	 * Constructor supplying a new default model.
+	 *
 	 * @param id the markupId, an html div suffice to host a dialog.
 	 * @param title the title of the dialog
 	 * @param label text that will be displayed in front of the text field.
@@ -57,6 +58,7 @@ public abstract class InputDialog<T extends Serializable> extends AbstractFormDi
 
 	/**
 	 * Constructor supplying a new default model.
+	 *
 	 * @param id the markupId, an html div suffice to host a dialog.
 	 * @param title the title of the dialog
 	 * @param label text that will be displayed in front of the text field.
@@ -115,6 +117,7 @@ public abstract class InputDialog<T extends Serializable> extends AbstractFormDi
 	// Properties //
 	/**
 	 * Sets the text that will be displayed in front of the text field.
+	 *
 	 * @return the dialog's label
 	 */
 	public IModel<String> getLabel()
@@ -124,6 +127,7 @@ public abstract class InputDialog<T extends Serializable> extends AbstractFormDi
 
 	/**
 	 * Sets the text that will be displayed in front of the text field.
+	 *
 	 * @param label the dialog's label
 	 */
 	public void setLabel(IModel<String> label)
@@ -137,7 +141,8 @@ public abstract class InputDialog<T extends Serializable> extends AbstractFormDi
 	}
 
 	/**
-	 * Indicated whether the underlying input is required
+	 * Indicates whether the underlying input is required
+	 *
 	 * @return true by default
 	 */
 	public boolean isRequired()
@@ -173,7 +178,7 @@ public abstract class InputDialog<T extends Serializable> extends AbstractFormDi
 	@Override
 	protected void onOpen(AjaxRequestTarget target)
 	{
-		//re-attach the feedback panel to clear previously displayed error message(s)
+		// re-attach the feedback panel to clear previously displayed error message(s)
 		target.add(this.form.get("feedback"));
 	}
 

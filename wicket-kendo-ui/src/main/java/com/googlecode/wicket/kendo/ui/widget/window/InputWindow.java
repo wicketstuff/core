@@ -103,7 +103,7 @@ public abstract class InputWindow<T> extends AbstractWindow<T>
 	// Properties //
 
 	/**
-	 * Indicated whether the {@link TextField}'s value value is required
+	 * Indicates whether the {@link TextField}'s value value is required
 	 *
 	 * @return true or false
 	 */
@@ -113,6 +113,7 @@ public abstract class InputWindow<T> extends AbstractWindow<T>
 	}
 
 	// Events //
+
 	@Override
 	protected void onInitialize()
 	{
@@ -133,7 +134,7 @@ public abstract class InputWindow<T> extends AbstractWindow<T>
 
 		// Button //
 		this.form.add(this.newSubmitButton("submit"));
-		this.form.add(this.newCloseButton("close"));
+		this.form.add(this.newCancelButton("cancel"));
 	}
 
 	@Override
@@ -208,7 +209,7 @@ public abstract class InputWindow<T> extends AbstractWindow<T>
 	 * @param id the markup id
 	 * @return the {@link AjaxButton}
 	 */
-	private AjaxButton newCloseButton(String id)
+	private AjaxButton newCancelButton(String id)
 	{
 		return new AjaxButton(id) {
 
