@@ -59,6 +59,7 @@ public final class Settings implements Serializable {
 	private String tags;
 	private String separator;
 	private String[] tokenSeparators;
+	private Boolean selectOnBlur;
 	private Boolean dropdownAutoWidth;
 
 	public CharSequence toJson() {
@@ -96,6 +97,7 @@ public final class Settings implements Serializable {
 			Json.writeObject(writer, "dropdownCssClass", dropdownCssClass);
 			Json.writeObject(writer, "separator", separator);
 			Json.writeObject(writer, "tokenSeparators", tokenSeparators);
+			Json.writeObject(writer, "selectOnBlur", selectOnBlur);
 			Json.writeObject(writer, "dropdownAutoWidth", dropdownAutoWidth);
 			if (ajax != null) {
 				writer.key("ajax");
@@ -388,6 +390,14 @@ public final class Settings implements Serializable {
 
 	public void setTokenSeparators(String[] tokenSeparators) {
 		this.tokenSeparators = tokenSeparators;
+	}
+
+	public Boolean getSelectOnBlur() {
+		return selectOnBlur;
+	}
+
+	public void setSelectOnBlur(Boolean selectOnBlur) {
+		this.selectOnBlur = selectOnBlur;
 	}
 
 	public Boolean getDropdownAutoWidth() {
