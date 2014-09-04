@@ -12,25 +12,28 @@
  */
 package org.wicketstuff.select2;
 
-import org.json.JSONException;
-import org.json.JSONWriter;
+import org.apache.wicket.ajax.json.JSONException;
+import org.apache.wicket.ajax.json.JSONWriter;
 
 /**
- * Takes care of Json serialization for the most common usecase where each choice is rendered as a text string.
+ * Takes care of Json serialization for the most common usecase where each
+ * choice is rendered as a text string.
  * 
  * @author igor
  * 
- * @param <T> type of choice object
+ * @param <T>
+ *            type of choice object
  */
 public abstract class TextChoiceProvider<T> extends ChoiceProvider<T> {
+	private static final long serialVersionUID = 1L;
 
-    protected abstract String getDisplayText(T choice);
+	protected abstract String getDisplayText(T choice);
 
-    protected abstract Object getId(T choice);
+	protected abstract Object getId(T choice);
 
-    @Override
-    public final void toJson(T choice, JSONWriter writer) throws JSONException {
-	writer.key("id").value(getId(choice)).key("text").value(getDisplayText(choice));
-    };
+	@Override
+	public final void toJson(T choice, JSONWriter writer) throws JSONException {
+		writer.key("id").value(getId(choice)).key("text").value(getDisplayText(choice));
+	};
 
 }

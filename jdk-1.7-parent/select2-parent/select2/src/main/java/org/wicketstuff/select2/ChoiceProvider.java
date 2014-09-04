@@ -14,9 +14,9 @@ package org.wicketstuff.select2;
 
 import java.util.Collection;
 
+import org.apache.wicket.ajax.json.JSONException;
+import org.apache.wicket.ajax.json.JSONWriter;
 import org.apache.wicket.model.IDetachable;
-import org.json.JSONException;
-import org.json.JSONWriter;
 
 /**
  * <p>
@@ -40,7 +40,9 @@ import org.json.JSONWriter;
  *            type of choice object
  */
 public abstract class ChoiceProvider<T> implements IDetachable {
-    /**
+	private static final long serialVersionUID = 1L;
+
+	/**
      * Queries application for choices that match the search {@code term} and adds them to the {@code response}
      * 
      * @param term

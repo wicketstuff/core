@@ -13,8 +13,9 @@ import org.apache.wicket.markup.head.OnDomReadyHeaderItem;
  * @author Tom Götz (tom@decoded.de)
  */
 public class DragAndDropBehavior extends Behavior {
+	private static final long serialVersionUID = 1L;
 
-    @Override
+	@Override
     public void renderHead(Component component, IHeaderResponse response) {
 
         // Include jquery-ui reference, if configured

@@ -8,8 +8,9 @@ import java.util.Collection;
  * @author Tom Götz (tom@decoded.de)
  */
 public abstract class StringTextChoiceProvider extends TextChoiceProvider<String> {
+	private static final long serialVersionUID = 1L;
 
-    @Override
+	@Override
     protected String getDisplayText(String choice) {
         return choice;
     }
