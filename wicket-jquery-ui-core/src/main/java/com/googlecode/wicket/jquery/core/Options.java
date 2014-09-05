@@ -38,6 +38,7 @@ import com.googlecode.wicket.jquery.core.utils.DateUtils;
 public class Options implements IClusterable
 {
 	private static final long serialVersionUID = 1L;
+
 	public static final String QUOTE = "\"";
 
 	/**
@@ -53,7 +54,8 @@ public class Options implements IClusterable
 	}
 
 	/**
-	 * Converts a string to its javascript representation. ie: "myvalue" (with the double quotes)
+	 * Converts a string to its javascript representation. ie: "myvalue" (with the double quotes)<br/>
+	 * If the supplied value is null, "" is returned
 	 *
 	 * @param value the object
 	 * @return the JSON value
@@ -105,7 +107,12 @@ public class Options implements IClusterable
 	 */
 	public static String escapeQuotes(String value)
 	{
-		return value.replaceAll(QUOTE, "\\" + QUOTE);
+		if (value != null)
+		{
+			return value.replaceAll(QUOTE, "\\" + QUOTE);
+		}
+
+		return ""; // fixes #92
 	}
 
 	private final Map<String, Serializable> map;
