@@ -37,6 +37,12 @@
 			<organization>Freelancer</organization>
 			<organizationUrl>http://www.sebthom.de/</organizationUrl>
 		</developer>
+		<developer>
+			<id>klopfdreh</id>
+			<name>Tobias Soloschenko</name>
+			<email>nocturnts@googlemail.com</email>
+			<timezone>1</timezone>
+		</developer>
 	</developers>
 
 	<dependencies>
@@ -48,6 +54,12 @@
 			<groupId>javax.servlet.jsp</groupId>
 			<artifactId>jsp-api</artifactId>
 			<version>2.2</version>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>com.sun.faces</groupId>
+			<artifactId>jsf-api</artifactId>
+			<version>2.2.8-01</version>
 			<scope>provided</scope>
 		</dependency>
 	</dependencies>
