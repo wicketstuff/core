@@ -47,6 +47,8 @@ import org.slf4j.LoggerFactory;
  * <code><pre>&lt;wicket:jsp file="/de/test/jspwicket/TestPage.jsp"&gt;&lt;/wicket:jsp&gt;</pre></code>
  * or
  * <code><pre>&lt;wicket:servlet path="/de/test/jspwicket/Servlet"&gt;&lt;/wicket:servlet&gt;</pre></code>
+ * or
+ * <code><pre>&lt;wicket:jsf file="/TestPage.xhtml"&gt;&lt;/wicket:jsf&gt;</pre></code>
  *
  * <b>Links:</b><br>
  * https://cwiki.apache.org/confluence/display/WICKET/Including+JSP+files+in+
@@ -75,6 +77,7 @@ public class WicketServletAndJSPResolver implements IComponentResolver {
 		    + WicketServletAndJSPResolver.class.getName());
 	}
 	WicketTagIdentifier.registerWellKnownTagName("jsp");
+	WicketTagIdentifier.registerWellKnownTagName("jsf");
 	WicketTagIdentifier.registerWellKnownTagName("servlet");
     }
 
@@ -90,6 +93,13 @@ public class WicketServletAndJSPResolver implements IComponentResolver {
 			    "Wrong format of <wicket:jsp file='/foo.jsp'>: attribute 'file' is missing");
 		}
 		return new ServletAndJspFileContainer(file, Type.JSP);
+	    } else if ("jsf".equalsIgnoreCase(wtag.getName())) {
+		String file = wtag.getAttributes().getString("file");
+		if (file == null || file.trim().length() == 0) {
+		    throw new MarkupException(
+			    "Wrong format of <wicket:jsf file='/foo.xhtml'>: attribute 'file' is missing");
+		}
+		return new ServletAndJspFileContainer(file, Type.JSF);
 	    } else if ("servlet".equalsIgnoreCase(wtag.getName())) {
 		String path = wtag.getAttributes().getString("path");
 		if (path == null || path.trim().length() == 0) {
@@ -179,7 +189,7 @@ public class WicketServletAndJSPResolver implements IComponentResolver {
 	private void handleMissingResource(ServletContext context)
 		throws WicketRuntimeException {
 	    try {
-		if (type == Type.JSP) {
+		if (type == Type.JSP || type == Type.JSF) {
 		    if (context.getResource(resource) == null) {
 			promptMissingResource(context, type);
 		    }
@@ -232,9 +242,10 @@ public class WicketServletAndJSPResolver implements IComponentResolver {
 				resource, type.toString(),
 				context.getContextPath()));
 	    } else {
-		LOGGER.warn(String.format(
-			"Resource of type: %s will not be processed. Cannot locate it %s within current context: %s",
-			type.toString(), resource, context.getContextPath()));
+		LOGGER.warn(String
+			.format("Resource of type: %s will not be processed. Cannot locate it %s within current context: %s",
+				type.toString(), resource,
+				context.getContextPath()));
 	    }
 	}
 
@@ -306,7 +317,7 @@ public class WicketServletAndJSPResolver implements IComponentResolver {
      * If the markup container is a jsp or a servlet
      */
     private enum Type {
-	JSP, SERVLET
+	JSP, JSF, SERVLET
     }
 
 }
