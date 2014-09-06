@@ -298,7 +298,7 @@ public abstract class AbstractWizard<T extends Serializable> extends AbstractFor
 		{
 			this.onCancel();
 			this.onCancel(target);
-			this.close(target, this.getCancelButton());
+			this.close(target, button);
 		}
 		else
 		{
