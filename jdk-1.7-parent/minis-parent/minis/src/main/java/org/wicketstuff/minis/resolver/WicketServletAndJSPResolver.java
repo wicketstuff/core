@@ -5,10 +5,12 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
 import java.net.MalformedURLException;
+import java.util.Iterator;
 
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.ServletOutputStream;
+import javax.servlet.ServletRegistration;
 import javax.servlet.ServletRequest;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -192,30 +194,21 @@ public class WicketServletAndJSPResolver implements IComponentResolver {
 			promptMissingResource(context, type);
 		    }
 		} else {
-		    // Servlet Registration is available at servlet api 3.0 so
-		    // we can't use it currently for wicket 6.16.0 because of
-		    // min requirements
-		    // boolean found = false;
-		    // Iterator<? extends ServletRegistration>
-		    // servletRegistrationIterator = context
-		    // .getServletRegistrations().values().iterator();
-		    // while (servletRegistrationIterator.hasNext()) {
-		    // Iterator<String> mappingsIterator =
-		    // servletRegistrationIterator
-		    // .next().getMappings().iterator();
-		    // while (mappingsIterator.hasNext()) {
-		    // String mapping = mappingsIterator.next();
-		    // if (resource.equals(mapping)) {
-		    // found = true;
-		    // }
-		    // }
-		    // }
-		    // if (!found) {
-		    // promptMissingResource(context);
-		    // }
-
-		    if (context.getRequestDispatcher(resource) == null) {
-			promptMissingResource(context, type);
+		    boolean found = false;
+		    Iterator<? extends ServletRegistration> servletRegistrationIterator = context
+			    .getServletRegistrations().values().iterator();
+		    while (servletRegistrationIterator.hasNext()) {
+			Iterator<String> mappingsIterator = servletRegistrationIterator
+				.next().getMappings().iterator();
+			while (mappingsIterator.hasNext()) {
+			    String mapping = mappingsIterator.next();
+			    if (resource.equals(mapping)) {
+				found = true;
+			    }
+			}
+		    }
+		    if (!found) {
+			promptMissingResource(context,type);
 		    }
 		}
 	    } catch (MalformedURLException e) {
@@ -230,7 +223,8 @@ public class WicketServletAndJSPResolver implements IComponentResolver {
 	 * 
 	 * @param context
 	 *            the context to be printed.
-	 * @param type the type
+	 * @param type
+	 *            the type
 	 */
 	private void promptMissingResource(ServletContext context, Type type) {
 	    if (shouldThrowExceptionForMissingFile()) {
