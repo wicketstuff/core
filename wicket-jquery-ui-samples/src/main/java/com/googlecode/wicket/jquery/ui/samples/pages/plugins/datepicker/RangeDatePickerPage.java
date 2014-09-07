@@ -8,6 +8,7 @@ import org.apache.wicket.markup.html.panel.FeedbackPanel;
 import org.apache.wicket.model.Model;
 
 import com.googlecode.wicket.jquery.core.Options;
+import com.googlecode.wicket.jquery.core.utils.DateUtils;
 import com.googlecode.wicket.jquery.ui.panel.JQueryFeedbackPanel;
 import com.googlecode.wicket.jquery.ui.plugins.datepicker.DateRange;
 import com.googlecode.wicket.jquery.ui.plugins.datepicker.RangeDatePicker;
@@ -38,7 +39,7 @@ public class RangeDatePickerPage extends AbstractRangeDatePickerPage
 				DateRange range = this.getModelObject();
 
 				DateFormat df = new SimpleDateFormat("dd MMM yyyy HH:mm:ss");
-				df.setTimeZone(DateRange.UTC); // important
+				df.setTimeZone(DateUtils.UTC); // important
 
 				this.info(String.format("%s - %s", df.format(range.getStart()), df.format(range.getEnd())));
 				target.add(feedback);

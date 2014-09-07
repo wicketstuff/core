@@ -87,7 +87,7 @@ public abstract class WindowBehavior extends KendoUIBehavior implements IJQueryA
 	 */
 	protected String widget()
 	{
-		return String.format("jQuery('%s').data('%s')", this.selector, METHOD);
+		return this.widget(METHOD);
 	}
 
 	/**

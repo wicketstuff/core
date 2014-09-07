@@ -14,22 +14,21 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.googlecode.wicket.jquery.ui.calendar;
+package com.googlecode.wicket.kendo.ui.scheduler;
+
 
 
 /**
- * Provides the ability for a {@link CalendarEvent} to be visited by a {@link CalendarModel}, after events have been retrieved by the {@link CalendarModelBehavior} (after {@link CalendarModel#load()}) <br/>
- * A typical use is to set the css class-name ({@link CalendarEvent#setClassName(String)}) depending on another property.
+ * Provides the ability for a {@link SchedulerEvent} to be visited by a {@link SchedulerModel}, after events have been retrieved by the {@link SchedulerModelBehavior} (after {@link SchedulerModel#load()})
  *
  * @author Sebastien Briquet - sebfz1
- *
  */
-public interface ICalendarVisitor
+public interface ISchedulerVisitor
 {
 	/**
-	 * Visits the {@link CalendarEvent}
+	 * Visits the {@link SchedulerEvent}
 	 *
-	 * @param event the {@link CalendarEvent}
+	 * @param event the {@link SchedulerEvent}
 	 */
-	void visit(CalendarEvent event);
+	void visit(SchedulerEvent event);
 }

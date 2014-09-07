@@ -86,6 +86,17 @@ public class KendoUIBehavior extends JQueryBehavior
 		}
 	}
 
+	/**
+	 * Gets the Kendo jQuery object
+	 *
+	 * @param method the Kendo method
+	 * @return the the jQuery object
+	 */
+	protected String widget(String method)
+	{
+		return String.format("jQuery('%s').data('%s')", this.selector, method);
+	}
+
 	// Events //
 
 	@Override

@@ -85,9 +85,9 @@ public class NotificationBehavior extends KendoUIBehavior
 	 *
 	 * @return the jQuery object
 	 */
-	private String widget()
+	protected String widget()
 	{
-		return String.format("jQuery('%s').data('%s')", this.selector, METHOD);
+		return this.widget(METHOD);
 	}
 
 	/**

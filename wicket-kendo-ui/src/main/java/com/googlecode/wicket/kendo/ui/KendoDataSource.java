@@ -14,22 +14,43 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.googlecode.wicket.jquery.ui.calendar;
+package com.googlecode.wicket.kendo.ui;
 
+import com.googlecode.wicket.jquery.core.Options;
+import com.googlecode.wicket.kendo.ui.utils.DebugUtils;
 
 /**
- * Provides the ability for a {@link CalendarEvent} to be visited by a {@link CalendarModel}, after events have been retrieved by the {@link CalendarModelBehavior} (after {@link CalendarModel#load()}) <br/>
- * A typical use is to set the css class-name ({@link CalendarEvent#setClassName(String)}) depending on another property.
+ * Base class for Kendo UI data sources<br/>
  *
+ * @see <a href="http://docs.telerik.com/kendo-ui/api/framework/datasource">http://docs.telerik.com/kendo-ui/api/framework/datasource</a>
  * @author Sebastien Briquet - sebfz1
- *
  */
-public interface ICalendarVisitor
+public class KendoDataSource extends Options
 {
+	private static final long serialVersionUID = 1L;
+	private static final String TYPE = "json";
+
 	/**
-	 * Visits the {@link CalendarEvent}
-	 *
-	 * @param event the {@link CalendarEvent}
+	 * Constructor
 	 */
-	void visit(CalendarEvent event);
+	public KendoDataSource()
+	{
+		this(TYPE);
+	}
+
+	/**
+	 * Constructor
+	 *
+	 * @param type
+	 */
+	public KendoDataSource(String type)
+	{
+		this.set("type", Options.asString(type));
+		this.set("error", DebugUtils.errorCallback);
+	}
+
+	public void setTransport(Options transport)
+	{
+		this.set("transport", transport);
+	}
 }

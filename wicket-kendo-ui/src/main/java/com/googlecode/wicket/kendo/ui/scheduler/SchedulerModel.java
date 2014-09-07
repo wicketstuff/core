@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.googlecode.wicket.jquery.ui.calendar;
+package com.googlecode.wicket.kendo.ui.scheduler;
 
 import java.util.Date;
 import java.util.List;
@@ -22,13 +22,13 @@ import java.util.List;
 import org.apache.wicket.model.LoadableDetachableModel;
 
 /**
- * Base class for implementing the list model of {@link CalendarEvent} to be retrieved.<br/>
- * {@link Calendar} widget takes those model in constructor; the inheriting class should be able to {@link #load()} events depending on {@link #getStart()} and {@link #getEnd()} dates.
+ * Model of {@link SchedulerEvent}<tt>s</tt> for the {@link Scheduler}<br/>
+ * The inheriting class should be able to {@link #load()} events depending on {@link #getStart()} and {@link #getEnd()} dates.
  *
  * @author Sebastien Briquet - sebfz1
  *
  */
-public abstract class CalendarModel extends LoadableDetachableModel<List<? extends CalendarEvent>>
+public abstract class SchedulerModel extends LoadableDetachableModel<List<? extends SchedulerEvent>>
 {
 	private static final long serialVersionUID = 1L;
 
@@ -38,14 +38,15 @@ public abstract class CalendarModel extends LoadableDetachableModel<List<? exten
 	/**
 	 * Constructor
 	 */
-	public CalendarModel()
+	public SchedulerModel()
 	{
 		this.start = null;
 		this.end = null;
 	}
 
 	/**
-	 * Gets the start date, used to {@link #load()} {@link CalendarEvent}<code>s</code>
+	 * Gets the start date, used to {@link #load()} {@link SchedulerEvent}<tt>s</tt>
+	 *
 	 * @return the start date
 	 */
 	public Date getStart()
@@ -55,6 +56,7 @@ public abstract class CalendarModel extends LoadableDetachableModel<List<? exten
 
 	/**
 	 * Sets the start date.
+	 *
 	 * @param date the start date
 	 */
 	public void setStart(Date date)
@@ -63,7 +65,8 @@ public abstract class CalendarModel extends LoadableDetachableModel<List<? exten
 	}
 
 	/**
-	 * Gets the end date, used to {@link #load()} {@link CalendarEvent}<code>s</code>
+	 * Gets the end date, used to {@link #load()} {@link SchedulerEvent}<tt>s</tt>
+	 *
 	 * @return the start date
 	 */
 	public Date getEnd()
@@ -73,6 +76,7 @@ public abstract class CalendarModel extends LoadableDetachableModel<List<? exten
 
 	/**
 	 * Gets the end date.
+	 *
 	 * @param date the start date
 	 */
 	public void setEnd(Date date)

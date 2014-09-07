@@ -17,7 +17,9 @@
 package com.googlecode.wicket.jquery.core.utils;
 
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.TimeZone;
 
 /**
  * Utility class for {@link Date}(<tt>s</tt>)
@@ -29,14 +31,33 @@ public class DateUtils
 {
 	private static final String ISO8601 = "yyyy-MM-dd'T'HH:mmZ";
 
+	public static final TimeZone UTC = TimeZone.getTimeZone("UTC");
+
 	/**
 	 * Converts a date to its ISO8601/javascript representation. ie: 2009-11-05T13:15:30+0200
+	 *
 	 * @param date the date to convert
 	 * @return the ISO8601 date as string
 	 */
 	public static String toISO8601(Date date)
 	{
 		return new SimpleDateFormat(ISO8601).format(date);
+	}
+
+	/**
+	 * Adds the specified amount of hours to a date
+	 *
+	 * @param date the actual date (UTC)
+	 * @param hours the amount of hours to add
+	 * @return a new date
+	 */
+	public static Date addHours(Date date, int hours)
+	{
+		Calendar calendar = Calendar.getInstance(UTC);
+		calendar.setTime(date);
+		calendar.add(Calendar.HOUR, hours);
+
+		return calendar.getTime();
 	}
 
 	/**

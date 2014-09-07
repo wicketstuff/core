@@ -26,6 +26,7 @@ import com.googlecode.wicket.jquery.ui.samples.pages.kendo.menu.KendoMenuPage;
 import com.googlecode.wicket.jquery.ui.samples.pages.kendo.multiselect.DefaultMultiSelectPage;
 import com.googlecode.wicket.jquery.ui.samples.pages.kendo.notification.DefaultNotificationPage;
 import com.googlecode.wicket.jquery.ui.samples.pages.kendo.progressbar.KendoProgressBarPage;
+import com.googlecode.wicket.jquery.ui.samples.pages.kendo.scheduler.DefaultSchedulerPage;
 import com.googlecode.wicket.jquery.ui.samples.pages.kendo.splitter.DefaultSplitterPage;
 import com.googlecode.wicket.jquery.ui.samples.pages.kendo.window.DefaultWindowPage;
 import com.googlecode.wicket.jquery.ui.samples.pages.menu.DefaultMenuPage;
@@ -96,6 +97,7 @@ public class SampleApplication extends WebApplication
 		this.mountPackage("/kendo/multiselect", DefaultMultiSelectPage.class);
 		this.mountPackage("/kendo/notification", DefaultNotificationPage.class);
 		this.mountPackage("/kendo/progressbar", KendoProgressBarPage.class);
+		this.mountPackage("/kendo/scheduler", DefaultSchedulerPage.class);
 		this.mountPackage("/kendo/splitter", DefaultSplitterPage.class);
 		this.mountPackage("/kendo/window", DefaultWindowPage.class);
 

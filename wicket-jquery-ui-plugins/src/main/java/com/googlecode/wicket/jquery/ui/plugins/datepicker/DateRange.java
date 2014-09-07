@@ -20,9 +20,10 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.TimeZone;
 
 import org.apache.wicket.util.io.IClusterable;
+
+import com.googlecode.wicket.jquery.core.utils.DateUtils;
 
 /**
  * Provides the value type to be used as model object for {@link RangeDatePicker} and {@link RangeDatePickerTextField}<br/>
@@ -36,7 +37,7 @@ public class DateRange implements IClusterable
 	private static final long serialVersionUID = 1L;
 
 	public static final String PATTERN = "yyyy-MM-dd'T'HH:mm:ss";
-	public static final TimeZone UTC = TimeZone.getTimeZone("UTC");
+	//XXX: report move UTC to DateUtils
 
 	/**
 	 * Gets a default {@link DateRange} with start-date and end-date are set to today (UTC).
@@ -47,17 +48,15 @@ public class DateRange implements IClusterable
 	{
 		final Date date = new Date();
 
-		Calendar start = Calendar.getInstance();
+		Calendar start = Calendar.getInstance(DateUtils.UTC);
 		start.setTime(date);
-		start.setTimeZone(UTC);
 		start.set(Calendar.HOUR_OF_DAY, 0);
 		start.set(Calendar.MINUTE, 0);
 		start.set(Calendar.SECOND, 0);
 		start.set(Calendar.MILLISECOND, 0);
 
-		Calendar end = Calendar.getInstance();
+		Calendar end = Calendar.getInstance(DateUtils.UTC);
 		end.setTime(date);
-		end.setTimeZone(UTC);
 		end.set(Calendar.HOUR_OF_DAY, 23);
 		end.set(Calendar.MINUTE, 59);
 		end.set(Calendar.SECOND, 59);
@@ -125,7 +124,7 @@ public class DateRange implements IClusterable
 	public String toString()
 	{
 		DateFormat df = new SimpleDateFormat(PATTERN); // ISO8601, no time zone
-		df.setTimeZone(UTC);
+		df.setTimeZone(DateUtils.UTC);
 
 		return String.format("[new Date('%s'),new Date('%s')]", df.format(this.getStart()), df.format(this.getEnd()));
 	}

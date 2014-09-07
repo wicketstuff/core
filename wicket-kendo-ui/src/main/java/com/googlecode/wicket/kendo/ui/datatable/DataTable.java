@@ -89,6 +89,16 @@ public class DataTable<T> extends WebComponent implements IJQueryWidget, IDataTa
 	// Methods //
 
 	/**
+	 * Gets the Kendo (jQuery) object
+	 *
+	 * @return the jQuery object
+	 */
+	protected String widget()
+	{
+		return String.format("jQuery('%s').data('%s')", JQueryWidget.getSelector(this), DataTableBehavior.METHOD);
+	}
+
+	/**
 	 * Shows the {@link DataTable}
 	 *
 	 * @param target the {@link AjaxRequestTarget}
@@ -119,7 +129,7 @@ public class DataTable<T> extends WebComponent implements IJQueryWidget, IDataTa
 	 */
 	public void refresh(AjaxRequestTarget target)
 	{
-		target.appendJavaScript(String.format("var grid = jQuery('%s').data('kendoGrid'); grid.dataSource.read(); grid.refresh();", JQueryWidget.getSelector(this)));
+		target.appendJavaScript(String.format("var grid = %s; grid.dataSource.read(); grid.refresh();", this.widget()));
 	}
 
 	// Properties //

@@ -41,7 +41,8 @@ import com.googlecode.wicket.kendo.ui.datatable.column.IColumn;
 public abstract class DataTableBehavior extends KendoUIBehavior implements IJQueryAjaxAware, IDataTableListener
 {
 	private static final long serialVersionUID = 1L;
-	private static final String METHOD = "kendoGrid";
+
+	static final String METHOD = "kendoGrid";
 
 	protected final List<? extends IColumn> columns;
 

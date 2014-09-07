@@ -32,6 +32,7 @@ import org.apache.wicket.util.convert.IConverter;
 import com.googlecode.wicket.jquery.core.JQueryAbstractBehavior;
 import com.googlecode.wicket.jquery.core.Options;
 import com.googlecode.wicket.jquery.core.event.IValueChangedListener;
+import com.googlecode.wicket.jquery.core.utils.DateUtils;
 
 /**
  * Provides a {@link FormComponentPanel} based on a {@link TextField} and a {@link RangeDatePicker}
@@ -172,7 +173,7 @@ public class RangeDatePickerTextField extends FormComponentPanel<DateRange> impl
 	protected DateFormat newDateFormat(Locale locale)
 	{
 		DateFormat df = new SimpleDateFormat("dd MMM yyyy", locale);
-		df.setTimeZone(DateRange.UTC);
+		df.setTimeZone(DateUtils.UTC);
 
 		return df;
 	}
