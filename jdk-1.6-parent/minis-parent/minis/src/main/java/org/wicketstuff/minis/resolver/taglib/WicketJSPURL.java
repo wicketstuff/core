@@ -22,6 +22,7 @@ import org.slf4j.LoggerFactory;
  * folder. If so the tag library is automatically added.
  * 
  * Example of web.xml definition:
+ * 
  * <pre>
  * &lt;taglib&gt;
  * 	&lt;taglib-uri&gt;uri&lt;/taglib-uri&gt;
@@ -29,13 +30,15 @@ import org.slf4j.LoggerFactory;
  * &lt;/taglib&gt;
  * </pre>
  * 
- * Usage:
- * To use the taglib and this tag you only have to define it in the jsp:
+ * Because the tld to this class is placed in the META-INF folder it is not required to add the taglib into the web.xml
+ * 
+ * Usage: To use the taglib and this tag you only have to define it in the jsp:
+ * 
  * <pre>
  * &lt;%@ taglib prefix="wicket" uri="http://org.wicketstuff.minis.jsp/functions" %&gt;
- *
+ * 
  * Tag: url // Parameters: page(required), query(optional) // Example:
- * &lt;a href="&lt;wicket:url page="mypage.MyTestPage" query="param1=value1&param2=value2"/&gt;"&gt;LINK&lt;/a&gt;
+ * &lt;a href="&lt;wicket:url page="mypage.MyTestPage" query="param1=value1&amp;param2=value2"/&gt;"&gt;LINK&lt;/a&gt;
  * </pre>
  * 
  * @author Tobias Soloschenko
@@ -51,6 +54,9 @@ public class WicketJSPURL extends TagSupport {
 
     private String query = null;
 
+    /**
+     * Applies the url of wicket to the tag
+     */
     @Override
     public int doStartTag() throws JspException {
 	try {
@@ -60,14 +66,13 @@ public class WicketJSPURL extends TagSupport {
 		RequestUtils.decodeParameters(query, pageParameters);
 	    }
 	    Class<Page> resolveClass = WicketObjects.resolveClass(page);
-	    CharSequence urlFor = RequestCycle.get().urlFor(
-		    resolveClass,
+	    CharSequence urlFor = RequestCycle.get().urlFor(resolveClass,
 		    pageParameters);
 	    out.write(urlFor.toString());
 	    out.flush();
 	} catch (IOException e) {
 	    LOGGER.error("Error while generating url for page " + page, e);
-	    throw new JspException("Error while generating url for page ",e);
+	    throw new JspException("Error while generating url for page ", e);
 	}
 	return SKIP_BODY;
     }
@@ -87,5 +92,4 @@ public class WicketJSPURL extends TagSupport {
     public void setQuery(String query) {
 	this.query = query;
     }
-
 }
