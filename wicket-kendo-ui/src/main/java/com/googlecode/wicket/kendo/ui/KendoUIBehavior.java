@@ -16,8 +16,15 @@
  */
 package com.googlecode.wicket.kendo.ui;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+
 import org.apache.wicket.Application;
 import org.apache.wicket.Component;
+import org.apache.wicket.markup.head.IHeaderResponse;
+import org.apache.wicket.markup.head.JavaScriptHeaderItem;
+import org.apache.wicket.markup.head.PriorityHeaderItem;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -34,6 +41,9 @@ public class KendoUIBehavior extends JQueryBehavior
 {
 	private static final long serialVersionUID = 1L;
 	private static final Logger LOG = LoggerFactory.getLogger(KendoUIBehavior.class);
+
+	/** Data Sources */
+	private final List<IKendoDataSource> datasources;
 
 	/**
 	 * Constructor
@@ -57,8 +67,11 @@ public class KendoUIBehavior extends JQueryBehavior
 	{
 		super(selector, method, options);
 
+		this.datasources = new ArrayList<IKendoDataSource>();
 		this.initReferences();
 	}
+
+	// Methods //
 
 	/**
 	 * Initializes CSS & JavaScript resource references
@@ -83,6 +96,29 @@ public class KendoUIBehavior extends JQueryBehavior
 		if (settings.getJavaScriptReference() != null)
 		{
 			this.add(settings.getJavaScriptReference());
+		}
+	}
+
+	/**
+	 * Adds a data-source to be rendered at {@link #renderHead(Component, IHeaderResponse)} time.
+	 *
+	 * @param datasource the {@link KendoDataSource}
+	 * @return <tt>true</tt> (as specified by {@link Collection#add})
+	 */
+	public boolean add(KendoDataSource datasource)
+	{
+		return this.datasources.add(datasource);
+	}
+
+	@Override
+	public void renderHead(Component component, IHeaderResponse response)
+	{
+		super.renderHead(component, response);
+
+		// Data Sources //
+		for (IKendoDataSource datasource : this.datasources)
+		{
+			response.render(new PriorityHeaderItem(JavaScriptHeaderItem.forScript(datasource.prepareRender().toScript(), datasource.getToken())));
 		}
 	}
 

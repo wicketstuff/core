@@ -20,37 +20,114 @@ import com.googlecode.wicket.jquery.core.Options;
 import com.googlecode.wicket.kendo.ui.utils.DebugUtils;
 
 /**
- * Base class for Kendo UI data sources<br/>
+ * Provides a standard Kendo UI data-source<br/>
  *
  * @see <a href="http://docs.telerik.com/kendo-ui/api/framework/datasource">http://docs.telerik.com/kendo-ui/api/framework/datasource</a>
  * @author Sebastien Briquet - sebfz1
  */
-public class KendoDataSource extends Options
+public class KendoDataSource extends Options implements IKendoDataSource
 {
 	private static final long serialVersionUID = 1L;
-	private static final String TYPE = "json";
+
+	protected static final String TYPE = "json";
+
+	private final String name;
+	private final Options transport;
 
 	/**
 	 * Constructor
+	 *
+	 * @param name the data-source name
 	 */
-	public KendoDataSource()
+	public KendoDataSource(String name)
 	{
-		this(TYPE);
+		this(name, TYPE);
 	}
 
 	/**
 	 * Constructor
 	 *
-	 * @param type
+	 * @param name the data-source name
+	 * @param type the response type (json, xml)
 	 */
-	public KendoDataSource(String type)
+	public KendoDataSource(String name, String type)
 	{
+		this.name = name;
+		this.transport = new Options();
+
 		this.set("type", Options.asString(type));
 		this.set("error", DebugUtils.errorCallback);
 	}
 
-	public void setTransport(Options transport)
+	// Properties //
+
+	/**
+	 * Gets the data-source's javacript variable name (global scoped)
+	 *
+	 * @return the variable name (ie: window.myDataSource)
+	 */
+	public String getName()
 	{
-		this.set("transport", transport);
+		return "window." + this.name;
+	}
+
+	@Override
+	public String getToken()
+	{
+		return "kendo-" + this.name;
+	}
+
+	/**
+	 * Sets the 'transport.read' callback function
+	 *
+	 * @param function the javascript function
+	 */
+	public void setTransportRead(String function)
+	{
+		this.transport.set("read", function);
+	}
+
+	/**
+	 * Sets the 'transport.create' callback function
+	 *
+	 * @param function the javascript function
+	 */
+	public void setTransportCreate(String function)
+	{
+		this.transport.set("create", function);
+	}
+
+	/**
+	 * Sets the 'transport.update' callback function
+	 *
+	 * @param function the javascript function
+	 */
+	public void setTransportUpdate(String function)
+	{
+		this.transport.set("update", function);
+	}
+
+	/**
+	 * Sets the 'transport.delete' callback function
+	 *
+	 * @param function the javascript function
+	 */
+	public void setTransportDelete(String function)
+	{
+		this.transport.set("destroy", function);
+	}
+
+	@Override
+	public IKendoDataSource prepareRender()
+	{
+		this.set("transport", this.transport);
+
+		return this;
+	}
+
+	@Override
+	public String toScript()
+	{
+		return String.format("jQuery(function() { %s = new kendo.data.DataSource(%s); });", this.getName(), this.toString());
 	}
 }

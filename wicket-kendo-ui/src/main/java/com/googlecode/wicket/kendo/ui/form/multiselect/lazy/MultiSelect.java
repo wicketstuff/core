@@ -48,7 +48,7 @@ public abstract class MultiSelect<T> extends FormComponent<Collection<T>> implem
 	/** cache of current choices, needed to retrieve the user selected object */
 	private List<T> choices = null;
 
-	/** the datasource renderer */
+	/** the data-source renderer */
 	private ChoiceRenderer<? super T> renderer;
 
 	/** inner list width. 0 means that it will not be handled */

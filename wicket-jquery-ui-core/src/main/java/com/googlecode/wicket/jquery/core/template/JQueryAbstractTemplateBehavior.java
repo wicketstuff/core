@@ -53,6 +53,7 @@ public abstract class JQueryAbstractTemplateBehavior extends Behavior
 
 	/**
 	 * Get the unique resource-stream token that acts as the script id.
+	 *
 	 * @return the token
 	 */
 	public String getToken()
@@ -62,6 +63,7 @@ public abstract class JQueryAbstractTemplateBehavior extends Behavior
 
 	/**
 	 * Gets a new {@link JQueryResourceStream} which contains the &lt;script /&gt; block.
+	 *
 	 * @return the {@link JQueryResourceStream}
 	 */
 	protected abstract JQueryResourceStream newResourceStream();

@@ -25,7 +25,6 @@ import com.googlecode.wicket.jquery.core.Options;
 import com.googlecode.wicket.jquery.core.ajax.IJQueryAjaxAware;
 import com.googlecode.wicket.jquery.core.ajax.JQueryAjaxBehavior;
 import com.googlecode.wicket.jquery.core.utils.RequestCycleUtils;
-import com.googlecode.wicket.kendo.ui.KendoDataSource;
 import com.googlecode.wicket.kendo.ui.KendoUIBehavior;
 
 /**
@@ -72,6 +71,7 @@ public abstract class SchedulerBehavior extends KendoUIBehavior implements IJQue
 	{
 		super.bind(component);
 
+		// events //
 		component.add(this.onCreateBehavior = this.newOnCreateBehavior());
 		component.add(this.onUpdateBehavior = this.newOnUpdateBehavior());
 		component.add(this.onDeleteBehavior = this.newOnDeleteBehavior());
@@ -88,17 +88,23 @@ public abstract class SchedulerBehavior extends KendoUIBehavior implements IJQue
 	{
 		super.onConfigure(component);
 
+		// data-sources //
+		final SchedulerDataSource dataSource = this.newSchedulerDataSource("schedulerDataSource");
+		this.add(dataSource);
+
+		// options //
 		this.setOption("autoBind", true);
+		// this.setOption("autoSync", true); // client side, probably useless
 
 		// events //
-//		this.setOption("add", "function(e) { console.log('add'); console.log(e); }");
-//		this.setOption("edit", "function(e) { console.log('edit'); console.log(e); }");
-//		this.setOption("save", "function(e) { console.log('save'); console.log(e); }");
-//		this.setOption("change", "function(e) { console.log('change'); console.log(e); }");
-//		this.setOption("remove", "function(e) { console.log('remove'); console.log(e); }");
+		// this.setOption("add", "function(e) { console.log('add'); console.log(e); }");
+		// this.setOption("edit", "function(e) { console.log('edit'); console.log(e); }");
+		// this.setOption("save", "function(e) { console.log('save'); console.log(e); }");
+		// this.setOption("change", "function(e) { console.log('change'); console.log(e); }");
+		// this.setOption("remove", "function(e) { console.log('remove'); console.log(e); }");
 
 		// data source //
-		this.setOption("dataSource", this.newDataSource());
+		this.setOption("dataSource", dataSource.getName());
 	}
 
 	@Override
@@ -122,24 +128,16 @@ public abstract class SchedulerBehavior extends KendoUIBehavior implements IJQue
 
 	// Factories //
 
-	private KendoDataSource newDataSource()
+	private SchedulerDataSource newSchedulerDataSource(String name)
 	{
-		KendoDataSource source = new KendoDataSource();
+		SchedulerDataSource ds = new SchedulerDataSource(name);
 
-		// transport //
-		Options transport = new Options();
-		transport.set("read", this.getReadCallbackFunction());
-		transport.set("create", this.onCreateBehavior.getCallbackFunction());
-		transport.set("update", this.onUpdateBehavior.getCallbackFunction());
-		transport.set("destroy", this.onDeleteBehavior.getCallbackFunction());
+		ds.setTransportRead(this.getReadCallbackFunction());
+		ds.setTransportCreate(this.onCreateBehavior.getCallbackFunction());
+		ds.setTransportUpdate(this.onUpdateBehavior.getCallbackFunction());
+		ds.setTransportDelete(this.onDeleteBehavior.getCallbackFunction());
 
-		// transport.set("create", "function(options) { options.success(); }");
-		// transport.set("update", "function(options) { options.success(); }");
-		// transport.set("destroy", "function(options) { options.success(); }");
-
-		source.setTransport(transport);
-
-		return source;
+		return ds;
 	}
 
 	/**
@@ -225,7 +223,6 @@ public abstract class SchedulerBehavior extends KendoUIBehavior implements IJQue
 		protected CallbackParameter[] getCallbackParameters()
 		{
 			return new CallbackParameter[] { CallbackParameter.context("options"), // lf
-
 					CallbackParameter.resolved("id", "options.data.id"), // retrieved
 					CallbackParameter.resolved("start", "options.data.start.getTime()"), // retrieved
 					CallbackParameter.resolved("end", "options.data.end.getTime()"), // retrieved
@@ -246,7 +243,7 @@ public abstract class SchedulerBehavior extends KendoUIBehavior implements IJQue
 
 		public CallbackSchedulerEvent()
 		{
-			int id = RequestCycleUtils.getQueryParameterValue("id").toInt(SchedulerEvent.NEW_ID);
+			int id = RequestCycleUtils.getQueryParameterValue("id").toInt();
 			this.setId(id);
 
 			String title = RequestCycleUtils.getQueryParameterValue("title").toString();

@@ -17,6 +17,7 @@
 package com.googlecode.wicket.jquery.core;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import org.apache.wicket.Application;
@@ -61,14 +62,10 @@ public abstract class JQueryAbstractBehavior extends Behavior
 		return null;
 	}
 
-	/**
-	 * Behavior name
-	 */
+	/** Behavior name */
 	private final String name;
 
-	/**
-	 * Additional references
-	 */
+	/** Additional references */
 	private final List<ResourceReference> references;
 
 	/**
@@ -83,10 +80,10 @@ public abstract class JQueryAbstractBehavior extends Behavior
 	}
 
 	/**
-	 * Adds a reference to be added at {@link #renderHead(Component, IHeaderResponse)} time.
+	 * Adds a reference to be rendered at {@link #renderHead(Component, IHeaderResponse)} time.
 	 *
 	 * @param reference a {@link CssResourceReference}, a {@link JavaScriptResourceReference} or a {@link JQueryPluginResourceReference}
-	 * @return true (as specified by Collection.add(E))
+	 * @return <tt>true</tt> (as specified by {@link Collection#add})
 	 */
 	public boolean add(ResourceReference reference)
 	{

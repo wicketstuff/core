@@ -42,17 +42,9 @@ public class DefaultSchedulerPage extends AbstractSchedulerPage
 			@Override
 			public void onCreate(AjaxRequestTarget target, SchedulerEvent event)
 			{
-				if (SchedulerEvent.isNew(event))
-				{
-					SchedulerDAO.get().createEvent(event);
-					this.info("Created: " + event);
-				}
-				else
-				{
-					SchedulerDAO.get().updateEvent(event);
-					this.info("Updated: " + event);
-				}
+				SchedulerDAO.get().createEvent(event);
 
+				this.info("Created: " + event);
 				target.add(feedback);
 			}
 

@@ -16,17 +16,45 @@
  */
 package com.googlecode.wicket.kendo.ui.scheduler;
 
+import com.googlecode.wicket.kendo.ui.KendoDataSource;
+
 /**
- * Provides the ability for a {@link SchedulerEvent} to be visited by a {@link SchedulerModel}, after events have been retrieved by the {@link SchedulerModelBehavior} (after {@link SchedulerModel#load()})
+ * Provide the data-source for the {@link Scheduler}
  *
  * @author Sebastien Briquet - sebfz1
  */
-public interface ISchedulerVisitor
+public class SchedulerDataSource extends KendoDataSource
 {
+	private static final long serialVersionUID = 1L;
+
 	/**
-	 * Visits the {@link SchedulerEvent}
+	 * Constructor which create a json based data-source
 	 *
-	 * @param event the {@link SchedulerEvent}
+	 * @param name the data-source name
 	 */
-	void visit(SchedulerEvent event);
+	public SchedulerDataSource(String name)
+	{
+		this(name, TYPE);
+	}
+
+	/**
+	 * Constructor
+	 *
+	 * @param name the data-source name
+	 * @param type the response type (json, xml)
+	 */
+	public SchedulerDataSource(String name, String type)
+	{
+		super(name, type);
+
+		this.set("change", "function(e) { if (e.action === 'sync') { this.read(); } }");
+	}
+
+	// Properties //
+
+	@Override
+	public String toScript()
+	{
+		return String.format("jQuery(function() { %s = new kendo.data.SchedulerDataSource(%s); });", this.getName(), this.toString());
+	}
 }
