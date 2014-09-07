@@ -34,21 +34,74 @@
 			or 
 			
 			&lt;wicket:servlet path="/de/test/jspwicket/Servlet"&gt;&lt;/wicket:servlet&gt;
+			
+			
+			or
+			
+			&lt;wicket:jsf file="/TestPage.xhtml"/&gt;
+						
 			</pre>
 			
-			Taglib<br/>
+			Tags for JSP / JSF<br/>
 			------<br/>
 			<pre>
-			&lt;%@ taglib prefix="wicket" uri="http://org.wicketstuff.minis.jsp/functions" %&gt;
+			JSP: &lt;%@ taglib prefix="wicket" uri="http://org.wicketstuff.minis.jsp/functions" %&gt;
+			JSF: &lt;div xmlns="http://www.w3.org/1999/xhtml" xmlns:f="http://java.sun.com/jsf/core"
+				xmlns:h="http://java.sun.com/jsf/html" xmlns:wicket="http://org.wicketstuff.minis.jsf/functions"&gt;
 			
 			Tag: url // Parameters: page(required), query(optional) // Example:
-			&lt;a href="&lt;wicket:url page="mypage.MyTestPage" query="param1=value1&param2=value2"/&gt;"&gt;LINK&lt;/a&gt;
+			JSP Example: &lt;a href="&lt;wicket:url page="mypage.MyTestPage" query="param1=value1&amp;param2=value2"/&gt;"&gt;LINK&lt;/a&gt;
+			JSF Example: Tag is the same but should not be used within a href, please refer to the EL-Functions
 			</pre>
+			
+			EL-Functions for JSP / JSF
+			<pre>
+			JSP: &lt;%@ taglib prefix="wicket" uri="http://org.wicketstuff.minis.jsp/functions" %&gt;
+			JSF: &lt;div xmlns="http://www.w3.org/1999/xhtml" xmlns:f="http://java.sun.com/jsf/core"
+				xmlns:h="http://java.sun.com/jsf/html" xmlns:wicket="http://org.wicketstuff.minis.jsf/functions"&gt;
+			
+			EL-Function:
+			${wicket:url('mypackage.MyPage')}
+			${wicket:urlWithQuery('mypackage.MyPage','param1=value1')}
+			</pre>
+			
+			Forms (GET / POST)<br/>
+			-----<br/>
+			<pre>
+			POST
+			JSP-Fragment:
+			&lt;form action="&lt;wicket:url page="mypackage.MyPage2"/&gt;" method="POST"&gt;
+				&lt;input type="hidden" name="hiddenparam" value="testvalue"&gt;
+				&lt;input type="submit" value="Submit"&gt;
+			&lt;/form&gt;
+			
+			mypackage.MyPage2:
+			public TestPage2(PageParameters parameters){
+				String hiddenparam = RequestCycle.get().getRequest()
+				.getPostParameters().getParameterValue("hiddenparam");
+			}
+			
+			GET
+			JSP-Fragment:
+			&lt;form action="&lt;wicket:url page="mypackage.MyPage2"/&gt;" method="GET"&gt;
+				&lt;input type="hidden" name="hiddenparam" value="testvalue"&gt;
+				&lt;input type="submit" value="Submit"&gt;
+			&lt;/form&gt;
+			
+			mypackage.MyPage2:
+			public TestPage2(PageParameters parameters){
+				String hiddenparam = parameters.get("hiddenparam").toString()
+			}
+			</pre>
+			
 			
 			Links<br/>
 			------<br/>
 			https://cwiki.apache.org/confluence/display/WICKET/Including+JSP+files+in+HTML+templates<br/>
 			http://apache-wicket.1842946.n4.nabble.com/Wicket-1-5-and-JSP-servlet-wrapping-td4407174.html<br/>
+			<hr/>
+			Example-Download: <a wicket:id="download">de.test.jspwicket.zip</a>
+			<hr/>
 		</wicket:extend>
     </body>
 </html>

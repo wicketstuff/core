@@ -5,8 +5,22 @@
 	<tlibversion>2.0</tlibversion>
 	<jspversion>2.2</jspversion>
 	<shortname>wicket.jsp</shortname>
-	<info>This taglib contains functions to be used in JSPs embedded into Wicket pages.</info>
+	<info>This taglib contains functions to be used in JSPs embedded into
+		Wicket pages.</info>
 	<uri>http://org.wicketstuff.minis.jsp/functions</uri>
+	
+	<function>
+        <name>url</name>
+        <function-class>org.wicketstuff.minis.resolver.taglib.el.WicketELURL</function-class>
+        <function-signature>java.lang.String url(java.lang.String)</function-signature>
+    </function>
+
+    <function>
+        <name>urlWithQuery</name>
+        <function-class>org.wicketstuff.minis.resolver.taglib.el.WicketELURL</function-class>
+        <function-signature>java.lang.String urlWithQuery(java.lang.String, java.lang.String)</function-signature>
+    </function>    
+    
 	<tag>
 		<name>url</name>
 		<tagclass>org.wicketstuff.minis.resolver.taglib.WicketJSPURL</tagclass>
