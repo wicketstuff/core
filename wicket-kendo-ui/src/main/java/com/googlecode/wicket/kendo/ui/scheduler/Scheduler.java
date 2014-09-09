@@ -218,10 +218,10 @@ public class Scheduler extends JQueryContainer implements ISchedulerListener
 			{
 				Calendar calendar = Calendar.getInstance(TimeZone.getTimeZone("UTC"));//TODO investigate; getting static from DateUtils ran into NoSuchFieldException UTC, dont know why / Patrick
 				calendar.setTime(date);
-				calendar.set(Calendar.HOUR_OF_DAY, 23);
-				calendar.set(Calendar.MINUTE, 59);
-				calendar.set(Calendar.SECOND, 59);
-				calendar.set(Calendar.MILLISECOND, 999);
+				calendar.add(Calendar.HOUR_OF_DAY, 23);
+				calendar.add(Calendar.MINUTE, 59);
+				calendar.add(Calendar.SECOND, 59);
+				calendar.add(Calendar.MILLISECOND, 999);
 
 				model.setEnd(calendar.getTime());
 			}
