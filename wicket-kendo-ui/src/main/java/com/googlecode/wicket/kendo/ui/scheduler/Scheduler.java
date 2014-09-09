@@ -18,13 +18,13 @@ package com.googlecode.wicket.kendo.ui.scheduler;
 
 import java.util.Calendar;
 import java.util.Date;
+import java.util.TimeZone;
 
 import org.apache.wicket.ajax.AjaxRequestTarget;
 
 import com.googlecode.wicket.jquery.core.JQueryBehavior;
 import com.googlecode.wicket.jquery.core.JQueryContainer;
 import com.googlecode.wicket.jquery.core.Options;
-import com.googlecode.wicket.jquery.core.utils.DateUtils;
 
 /**
  * Provides the Kendo UI scheduler
@@ -216,7 +216,7 @@ public class Scheduler extends JQueryContainer implements ISchedulerListener
 			@Override
 			protected void setEndDate(SchedulerModel model, Date date)
 			{
-				Calendar calendar = Calendar.getInstance(DateUtils.UTC);
+				Calendar calendar = Calendar.getInstance(TimeZone.getTimeZone("UTC"));//TODO investigate; getting static from DateUtils ran into NoSuchFieldException UTC, dont know why / Patrick
 				calendar.setTime(date);
 				calendar.set(Calendar.HOUR_OF_DAY, 23);
 				calendar.set(Calendar.MINUTE, 59);
