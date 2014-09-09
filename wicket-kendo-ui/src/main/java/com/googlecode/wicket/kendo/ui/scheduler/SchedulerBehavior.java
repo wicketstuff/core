@@ -148,8 +148,8 @@ public abstract class SchedulerBehavior extends KendoUIBehavior implements IJQue
 	private String getReadCallbackFunction()
 	{
 		String widget = this.widget(METHOD);
-		String start = widget + "._selectedView._startDate.getTime()";
-		String end = widget + "._selectedView._endDate.getTime()";
+		String start = widget + ".view().startDate().getTime()";
+		String end = widget + ".view().endDate().getTime()";
 
 		return "function(options) {" // lf
 				+ "	jQuery.ajax({" // lf
