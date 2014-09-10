@@ -101,6 +101,11 @@ public class Scheduler extends JQueryContainer implements ISchedulerListener
 
 	// Properties //
 
+	@Override
+	public boolean isEditEnabled() {
+		return false;
+	}
+	
 	/**
 	 * Gets the calendar's model
 	 *
@@ -137,12 +142,6 @@ public class Scheduler extends JQueryContainer implements ISchedulerListener
 		super.onConfigure(behavior);
 
 		behavior.setOption("timezone", Options.asString("Etc/UTC"));
-	}
-
-	@Override
-	public void onAdd(AjaxRequestTarget target, Date start, Date end, boolean allDay)
-	{
-		// noop
 	}
 
 	@Override
@@ -184,18 +183,18 @@ public class Scheduler extends JQueryContainer implements ISchedulerListener
 			// Properties //
 
 			@Override
+			public boolean isEditEnabled()
+			{
+				return Scheduler.this.isEditEnabled();
+			}
+			
+			@Override
 			protected CharSequence getDataSourceUrl()
 			{
 				return Scheduler.this.getDataSourceUrl();
 			}
 
 			// Events //
-
-			@Override
-			public void onAdd(AjaxRequestTarget target, Date start, Date end, boolean allDay)
-			{
-				Scheduler.this.onAdd(target, start, end, allDay);
-			}
 
 			@Override
 			public void onCreate(AjaxRequestTarget target, SchedulerEvent event)
