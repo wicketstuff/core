@@ -140,7 +140,19 @@ public class Scheduler extends JQueryContainer implements ISchedulerListener
 	}
 
 	@Override
+	public void onAdd(AjaxRequestTarget target, Date start, Date end, boolean allDay)
+	{
+		// noop
+	}
+
+	@Override
 	public void onCreate(AjaxRequestTarget target, SchedulerEvent event)
+	{
+		// noop
+	}
+
+	@Override
+	public void onEdit(AjaxRequestTarget target, SchedulerEvent event)
 	{
 		// noop
 	}
@@ -180,9 +192,21 @@ public class Scheduler extends JQueryContainer implements ISchedulerListener
 			// Events //
 
 			@Override
+			public void onAdd(AjaxRequestTarget target, Date start, Date end, boolean allDay)
+			{
+				Scheduler.this.onAdd(target, start, end, allDay);
+			}
+
+			@Override
 			public void onCreate(AjaxRequestTarget target, SchedulerEvent event)
 			{
 				Scheduler.this.onCreate(target, event);
+			}
+
+			@Override
+			public void onEdit(AjaxRequestTarget target, SchedulerEvent event)
+			{
+				Scheduler.this.onEdit(target, event);
 			}
 
 			@Override

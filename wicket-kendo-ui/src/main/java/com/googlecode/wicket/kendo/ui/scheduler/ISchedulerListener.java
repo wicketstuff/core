@@ -16,6 +16,8 @@
  */
 package com.googlecode.wicket.kendo.ui.scheduler;
 
+import java.util.Date;
+
 import org.apache.wicket.ajax.AjaxRequestTarget;
 
 /**
@@ -27,12 +29,28 @@ import org.apache.wicket.ajax.AjaxRequestTarget;
 public interface ISchedulerListener
 {
 	/**
+	 * Triggered when a {@link SchedulerEvent} should be added by clicking a slot
+	 *
+	 * @param target the {@link AjaxRequestTarget}
+	 * @param event the {@link SchedulerEvent}
+	 */
+	void onAdd(AjaxRequestTarget target, Date start, Date end, boolean allDay);
+	
+	/**
 	 * Triggered when a {@link SchedulerEvent} is created (or modified) through the Scheduler's dialog
 	 *
 	 * @param target the {@link AjaxRequestTarget}
 	 * @param event the {@link SchedulerEvent}
 	 */
 	void onCreate(AjaxRequestTarget target, SchedulerEvent event);
+
+	/**
+	 * Triggered when a {@link SchedulerEvent} should be edit
+	 *
+	 * @param target the {@link AjaxRequestTarget}
+	 * @param event the {@link SchedulerEvent}
+	 */
+	void onEdit(AjaxRequestTarget target, SchedulerEvent event);
 
 	/**
 	 * Triggered when a {@link SchedulerEvent} is updated through the Scheduler's (ie: drag &#38; drop)
