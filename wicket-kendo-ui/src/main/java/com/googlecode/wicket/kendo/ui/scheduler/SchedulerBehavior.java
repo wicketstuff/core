@@ -26,6 +26,7 @@ import com.googlecode.wicket.jquery.core.ajax.IJQueryAjaxAware;
 import com.googlecode.wicket.jquery.core.ajax.JQueryAjaxBehavior;
 import com.googlecode.wicket.jquery.core.utils.RequestCycleUtils;
 import com.googlecode.wicket.kendo.ui.KendoUIBehavior;
+import com.googlecode.wicket.kendo.ui.scheduler.views.SchedulerViewType;
 
 /**
  * Provides the Kendo UI scheduler behavior
@@ -120,29 +121,31 @@ public abstract class SchedulerBehavior extends KendoUIBehavior implements IJQue
 	@Override
 	public void onAjax(AjaxRequestTarget target, JQueryEvent event)
 	{
-//		if (event instanceof AddEvent)
+		SchedulerEvent e = (SchedulerEvent) event;
+
+		//		if (event instanceof AddEvent)
 //		{
-//			this.onAdd(target, ((AddEvent) event).getStart(), ((AddEvent) event).getEnd(), ((AddEvent) event).getAllDay());
+//			this.onAdd(target, e.getStart(), e.getEnd(), e.getAllDay());
 //		}
 
 		if (event instanceof CreateEvent)
 		{
-			this.onCreate(target, (SchedulerEvent) event);
+			this.onCreate(target, e, e.getView());
 		}
 
 		if (event instanceof EditEvent)
 		{
-			this.onEdit(target, (SchedulerEvent) event);
+			this.onEdit(target, e, e.getView());
 		}
 
 		if (event instanceof UpdateEvent)
 		{
-			this.onUpdate(target, (SchedulerEvent) event);
+			this.onUpdate(target, e, e.getView());
 		}
 
 		if (event instanceof DeleteEvent)
 		{
-			this.onDelete(target, (SchedulerEvent) event);
+			this.onDelete(target, e, e.getView());
 		}
 	}
 
@@ -248,7 +251,8 @@ public abstract class SchedulerBehavior extends KendoUIBehavior implements IJQue
 				return new CallbackParameter[] { CallbackParameter.context("e"),
 												 CallbackParameter.resolved("id", "e.event.id"),
 												 CallbackParameter.resolved("start", "e.event.start.getTime()"),
-												 CallbackParameter.resolved("end", "e.event.end.getTime()") };
+												 CallbackParameter.resolved("end", "e.event.end.getTime()"),
+												 CallbackParameter.resolved("view", "e.sender.view().name")};
 			}
 
 			@Override
@@ -302,11 +306,16 @@ public abstract class SchedulerBehavior extends KendoUIBehavior implements IJQue
 		@Override
 		protected CallbackParameter[] getCallbackParameters()
 		{
+			SchedulerBehavior b = getComponent().getBehaviors(SchedulerBehavior.class).get(0);
+			String widget = b.widget(METHOD);
+			String view = widget + ".view().name";
+
 			return new CallbackParameter[] { CallbackParameter.context("options"), // lf
 					CallbackParameter.resolved("id", "options.data.id"), // retrieved
 					CallbackParameter.resolved("start", "options.data.start.getTime()"), // retrieved
 					CallbackParameter.resolved("end", "options.data.end.getTime()"), // retrieved
-					CallbackParameter.resolved("title", "options.data.title") // retrieved
+					CallbackParameter.resolved("title", "options.data.title"), // retrieved
+					CallbackParameter.resolved("view", view) // retrieved
 			};
 		}
 
@@ -334,6 +343,9 @@ public abstract class SchedulerBehavior extends KendoUIBehavior implements IJQue
 
 			long end = RequestCycleUtils.getQueryParameterValue("end").toLong();
 			this.setEnd(end);
+			
+			String view = RequestCycleUtils.getQueryParameterValue("view").toString();
+			this.setView(SchedulerViewType.get(view));
 		}
 	}
 

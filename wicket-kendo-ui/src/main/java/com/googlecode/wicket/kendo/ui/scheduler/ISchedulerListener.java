@@ -18,6 +18,8 @@ package com.googlecode.wicket.kendo.ui.scheduler;
 
 import org.apache.wicket.ajax.AjaxRequestTarget;
 
+import com.googlecode.wicket.kendo.ui.scheduler.views.SchedulerViewType;
+
 /**
  * Event listener shared by the {@link Scheduler} widget and the {@link SchedulerBehavior}
  *
@@ -47,7 +49,7 @@ public interface ISchedulerListener
 	 * @param target the {@link AjaxRequestTarget}
 	 * @param event the {@link SchedulerEvent}
 	 */
-	void onCreate(AjaxRequestTarget target, SchedulerEvent event);
+	void onCreate(AjaxRequestTarget target, SchedulerEvent event, SchedulerViewType view);
 
 	/**
 	 * Triggered when a {@link SchedulerEvent} should be edit.<br/>
@@ -57,7 +59,7 @@ public interface ISchedulerListener
 	 * @param event the {@link SchedulerEvent}
 	 * @see {@link SchedulerEvent#isNew(SchedulerEvent)}
 	 */
-	void onEdit(AjaxRequestTarget target, SchedulerEvent event);
+	void onEdit(AjaxRequestTarget target, SchedulerEvent event, SchedulerViewType view);
 
 	/**
 	 * Triggered when a {@link SchedulerEvent} is updated through the Scheduler's (ie: drag &#38; drop)
@@ -65,7 +67,7 @@ public interface ISchedulerListener
 	 * @param target the {@link AjaxRequestTarget}
 	 * @param event the {@link SchedulerEvent}
 	 */
-	void onUpdate(AjaxRequestTarget target, SchedulerEvent event);
+	void onUpdate(AjaxRequestTarget target, SchedulerEvent event, SchedulerViewType view);
 
 	/**
 	 * Triggered when a {@link SchedulerEvent} is deleted, either through the Scheduler's dialog or the x-icon
@@ -73,5 +75,5 @@ public interface ISchedulerListener
 	 * @param target the {@link AjaxRequestTarget}
 	 * @param event the {@link SchedulerEvent}
 	 */
-	void onDelete(AjaxRequestTarget target, SchedulerEvent event);
+	void onDelete(AjaxRequestTarget target, SchedulerEvent event, SchedulerViewType view);
 }

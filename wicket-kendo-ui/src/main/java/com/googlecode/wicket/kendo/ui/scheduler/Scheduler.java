@@ -25,6 +25,7 @@ import org.apache.wicket.ajax.AjaxRequestTarget;
 import com.googlecode.wicket.jquery.core.JQueryBehavior;
 import com.googlecode.wicket.jquery.core.JQueryContainer;
 import com.googlecode.wicket.jquery.core.Options;
+import com.googlecode.wicket.kendo.ui.scheduler.views.SchedulerViewType;
 
 /**
  * Provides the Kendo UI scheduler
@@ -145,25 +146,25 @@ public class Scheduler extends JQueryContainer implements ISchedulerListener
 	}
 
 	@Override
-	public void onCreate(AjaxRequestTarget target, SchedulerEvent event)
+	public void onCreate(AjaxRequestTarget target, SchedulerEvent event, SchedulerViewType view)
 	{
 		// noop
 	}
 
 	@Override
-	public void onEdit(AjaxRequestTarget target, SchedulerEvent event)
+	public void onEdit(AjaxRequestTarget target, SchedulerEvent event, SchedulerViewType view)
 	{
 		// noop
 	}
 
 	@Override
-	public void onUpdate(AjaxRequestTarget target, SchedulerEvent event)
+	public void onUpdate(AjaxRequestTarget target, SchedulerEvent event, SchedulerViewType view)
 	{
 		// noop
 	}
 
 	@Override
-	public void onDelete(AjaxRequestTarget target, SchedulerEvent event)
+	public void onDelete(AjaxRequestTarget target, SchedulerEvent event, SchedulerViewType view)
 	{
 		// noop
 	}
@@ -197,27 +198,27 @@ public class Scheduler extends JQueryContainer implements ISchedulerListener
 			// Events //
 
 			@Override
-			public void onCreate(AjaxRequestTarget target, SchedulerEvent event)
+			public void onCreate(AjaxRequestTarget target, SchedulerEvent event, SchedulerViewType view)
 			{
-				Scheduler.this.onCreate(target, event);
+				Scheduler.this.onCreate(target, event, view);
 			}
 
 			@Override
-			public void onEdit(AjaxRequestTarget target, SchedulerEvent event)
+			public void onEdit(AjaxRequestTarget target, SchedulerEvent event, SchedulerViewType view)
 			{
-				Scheduler.this.onEdit(target, event);
+				Scheduler.this.onEdit(target, event, view);
 			}
 
 			@Override
-			public void onUpdate(AjaxRequestTarget target, SchedulerEvent event)
+			public void onUpdate(AjaxRequestTarget target, SchedulerEvent event, SchedulerViewType view)
 			{
-				Scheduler.this.onUpdate(target, event);
+				Scheduler.this.onUpdate(target, event, view);
 			}
 
 			@Override
-			public void onDelete(AjaxRequestTarget target, SchedulerEvent event)
+			public void onDelete(AjaxRequestTarget target, SchedulerEvent event, SchedulerViewType view)
 			{
-				Scheduler.this.onDelete(target, event);
+				Scheduler.this.onDelete(target, event, view);
 			}
 		};
 	}
