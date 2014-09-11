@@ -20,20 +20,19 @@ package wicket.contrib.tinymce;
 
 import java.util.Collection;
 import java.util.Collections;
-import java.util.List;
 
 import org.apache.wicket.Application;
 import org.apache.wicket.Component;
-import org.apache.wicket.ajax.IAjaxRegionMarkupIdProvider;
+import org.apache.wicket.RuntimeConfigurationType;
 import org.apache.wicket.behavior.Behavior;
 import org.apache.wicket.markup.head.HeaderItem;
 import org.apache.wicket.markup.head.IHeaderResponse;
 import org.apache.wicket.markup.head.JavaScriptHeaderItem;
 import org.apache.wicket.markup.head.OnDomReadyHeaderItem;
-import org.apache.wicket.request.Url;
+import org.apache.wicket.markup.html.IHeaderContributor;
 import org.apache.wicket.request.cycle.RequestCycle;
-import org.apache.wicket.request.handler.resource.ResourceReferenceRequestHandler;
 import org.apache.wicket.request.http.WebRequest;
+import org.apache.wicket.request.resource.ResourceReference;
 
 import wicket.contrib.tinymce.settings.TinyMCESettings;
 import wicket.contrib.tinymce.settings.TinyMCESettings.Mode;
@@ -65,18 +64,15 @@ public class TinyMceBehavior extends Behavior
 		super.renderHead(c, response);
 		if (component == null)
 			throw new IllegalStateException("TinyMceBehavior is not bound to a component");
-
-		ResourceReferenceRequestHandler handler = new ResourceReferenceRequestHandler(
-				TinyMCESettings.javaScriptReference(), null);
 		
 		// TinyMce javascript:
 		if (mayRenderJavascriptDirect())
 		{
-			response.render(JavaScriptHeaderItem.forReference(TinyMCESettings.javaScriptReference()));
+			response.render(JavaScriptHeaderItem.forReference(getTinyMCEReference()));
 		}
 		else
 		{
-			TinyMCESettings.lazyLoadTinyMCEResource(response);
+			lazyLoadTinyMCEResource(response);
 		}
 
 		String renderOnDomReady = getAddTinyMceSettingsScript(Mode.exact,
@@ -84,6 +80,53 @@ public class TinyMceBehavior extends Behavior
 		response.render(wrapTinyMceSettingsScript(renderOnDomReady, component));
 	}
 	
+	/**
+	 * <p>
+	 * TinyMCE javascript resource.
+	 * </p>
+	 * <p>
+	 * <strong>Note</strong>: The TinyMCE source cannot be lazily loaded via ajax. Therefore, adding
+	 * this in a {@link IHeaderContributor#renderHead(IHeaderResponse)} must be done in a component
+	 * that is not rendered via Ajax. If you wish to load this via Ajax, you can use the very hacky
+	 * workaround {@link TinyMceBehavior#lazyLoadTinyMCEResource(IHeaderResponse)}.
+	 * </p>
+	 * 
+	 * @return
+	 */
+	protected ResourceReference getTinyMCEReference()
+	{
+		Application app = Application.get();
+		if (RuntimeConfigurationType.DEVELOPMENT.equals(app.getConfigurationType()))
+			return TinyMCESettings.REFERENCE;
+		else
+			return TinyMCESettings.REFERENCE_MIN;
+	}
+	
+	/**
+	 * <p>
+	 * Normally, TinyMCE cannot be natively loaded lazily; you must have the 'tiny_mce.js' script
+	 * rendered directly to your page instead of through an Ajax loaded component. This method
+	 * provides a workaround similar to the one described on:
+	 * </p>
+	 * 
+	 * <pre>
+	 *   <a href="http://tinymce.moxiecode.com/forum/viewtopic.php?pid=66531#p66531">http://tinymce.moxiecode.com/forum/viewtopic.php?pid=66531#p66531</a>
+	 * </pre>
+	 * <p>
+	 * @param response
+	 */
+	protected final void lazyLoadTinyMCEResource(IHeaderResponse response)
+	{
+		String url = RequestCycle.get()
+			.urlFor(getTinyMCEReference(), null)
+			.toString();
+		String base = url.substring(0, url.lastIndexOf("/"));
+		response.render(JavaScriptHeaderItem.forScript("window.tinyMCEPreInit = {base : '" + base +
+			"', suffix : '', query : ''};", "tinyMceHackPreload"));
+		response.render(JavaScriptHeaderItem.forReference(getTinyMCEReference()));
+		response.render(JavaScriptHeaderItem.forScript(
+			"window.tinymce.dom.Event.domLoaded = true;", "tinyMceHackPostload"));
+	}
 	/**
 	 * Wrap the initialization script for TinyMCE into a HeaderItem. In this way we can control
 	 * when and how the script should be executed.
@@ -151,5 +194,5 @@ public class TinyMceBehavior extends Behavior
 	protected Component getComponent()
 	{
 		return component;
-	}
+	}	
 }

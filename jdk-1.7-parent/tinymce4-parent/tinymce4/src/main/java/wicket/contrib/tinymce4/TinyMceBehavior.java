@@ -21,12 +21,16 @@ package wicket.contrib.tinymce4;
 import java.util.Collection;
 import java.util.Collections;
 
+import org.apache.wicket.Application;
 import org.apache.wicket.Component;
+import org.apache.wicket.RuntimeConfigurationType;
 import org.apache.wicket.behavior.Behavior;
 import org.apache.wicket.markup.head.HeaderItem;
 import org.apache.wicket.markup.head.IHeaderResponse;
 import org.apache.wicket.markup.head.JavaScriptHeaderItem;
 import org.apache.wicket.markup.head.OnDomReadyHeaderItem;
+import org.apache.wicket.markup.html.IHeaderContributor;
+import org.apache.wicket.request.resource.ResourceReference;
 
 import wicket.contrib.tinymce4.settings.TinyMCESettings;
 import wicket.contrib.tinymce4.settings.TinyMCESettings.Mode;
@@ -60,7 +64,7 @@ public class TinyMceBehavior extends Behavior
 			throw new IllegalStateException("TinyMceBehavior is not bound to a component");
 
 		// TinyMce javascript:
-		response.render(JavaScriptHeaderItem.forReference(TinyMCESettings.javaScriptReference()));
+		response.render(JavaScriptHeaderItem.forReference(getTinyMCEReference()));
 
 		String renderOnDomReady = getAddTinyMceSettingsScript(Mode.exact,
 				Collections.singletonList(component));
@@ -126,5 +130,27 @@ public class TinyMceBehavior extends Behavior
 	protected Component getComponent()
 	{
 		return component;
+	}
+
+	/**
+	 * <p>
+	 * TinyMCE javascript resource.
+	 * </p>
+	 * <p>
+	 * <strong>Note</strong>: The TinyMCE source cannot be lazily loaded via ajax. Therefore, adding
+	 * this in a {@link IHeaderContributor#renderHead(IHeaderResponse)} must be done in a component
+	 * that is not rendered via Ajax. If you wish to load this via Ajax, you can use the very hacky
+	 * workaround {@link #lazyLoadTinyMCEResource(IHeaderResponse)}.
+	 * </p>
+	 * 
+	 * @return
+	 */
+	protected ResourceReference getTinyMCEReference()
+	{
+		Application app = Application.get();
+		if (RuntimeConfigurationType.DEVELOPMENT.equals(app.getConfigurationType()))
+			return TinyMCESettings.TINYMCE_JS_REF;
+		else
+			return TinyMCESettings.TINYMCE_JS_REF_MIN;
 	}
 }
