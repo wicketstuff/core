@@ -76,7 +76,10 @@ public abstract class SchedulerBehavior extends KendoUIBehavior implements IJQue
 		// events //
 		//component.add(this.onAddBehavior 	= this.newOnAddBehavior());
 		component.add(this.onCreateBehavior = this.newOnCreateBehavior());
-		component.add(this.onEditBehavior 	= this.newOnEditBehavior());
+		if (this.isEditEnabled())
+		{
+			component.add(this.onEditBehavior 	= this.newOnEditBehavior());
+		}
 		component.add(this.onUpdateBehavior = this.newOnUpdateBehavior());
 		component.add(this.onDeleteBehavior = this.newOnDeleteBehavior());
 	}
@@ -102,7 +105,10 @@ public abstract class SchedulerBehavior extends KendoUIBehavior implements IJQue
 
 		// events //
 		//this.setOption("add", this.onAddBehavior.getCallbackFunction());
-		this.setOption("edit", this.onEditBehavior.getCallbackFunction());
+		if(this.isEditEnabled())
+		{
+			this.setOption("edit", this.onEditBehavior.getCallbackFunction());
+		}
 		// this.setOption("save", "function(e) { console.log('save'); console.log(e); }");
 		// this.setOption("change", "function(e) { console.log('change'); console.log(e); }");
 		// this.setOption("remove", "function(e) { console.log('remove'); console.log(e); }");
