@@ -36,6 +36,7 @@
 		<module>inmethod-grid-parent</module>
 		<module>input-events-parent</module>
 		<module>javaee-inject-parent</module>
+		<module>jee-web-parent</module>
 		<module>jquery-parent</module>
 		<module>jslibraries</module>
 		<module>jsr303-parent</module>
