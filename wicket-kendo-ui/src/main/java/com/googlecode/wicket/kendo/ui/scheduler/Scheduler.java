@@ -97,7 +97,7 @@ public class Scheduler extends JQueryContainer implements ISchedulerListener
 	 */
 	public void refresh(AjaxRequestTarget target)
 	{
-		target.appendJavaScript(String.format("%s.dataSource.read();", this.widget()));
+		target.appendJavaScript(String.format("%s.dataSource.read(); %s.refresh(); ", this.widget(), this.widget()));
 	}
 
 	// Properties //
