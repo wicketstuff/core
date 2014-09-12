@@ -34,11 +34,11 @@ import org.slf4j.LoggerFactory;
 
 /**
  * The JEEWebResolver is used to embed Servlet, JSP and JSF content into wicked
- * HTML pages, by a custom Wicket-Tag. It is tested with Wicket 6.16.0. Because
- * include is used to apply the content, every restrictions of include is
- * applied. (No header modifications and so on) To use it you should registered
- * it to the page settings in the init-Method of the Wicket-Application:
- * <code><pre>
+ * HTML pages, by a custom Wicket-Tag. It is tested with Wicket 6.x / 7.x.
+ * Because include is used to apply the content, every restrictions of include
+ * is applied. (No header modifications and so on) To use it you should
+ * registered it to the page settings in the init-Method of the
+ * Wicket-Application: <code><pre>
  * 	{@literal @}Override
  * 	protected void init() {
  * 		super.init();
@@ -49,7 +49,8 @@ import org.slf4j.LoggerFactory;
  * <code><pre>&lt;wicket:jsp file="/de/test/jspwicket/TestPage.jsp"&gt;&lt;/wicket:jsp&gt;</pre></code>
  * or
  * <code><pre>&lt;wicket:servlet path="/de/test/jspwicket/Servlet"&gt;&lt;/wicket:servlet&gt;</pre></code>
- *
+ * or
+ * <code><pre>&lt;wicket:jsf file="/Page.xhtml"&gt;&lt;/wicket:jsf&gt;</pre></code>
  * <b>Links:</b><br>
  * https://cwiki.apache.org/confluence/display/WICKET/Including+JSP+files+in+
  * HTML+templates<br>
@@ -63,7 +64,7 @@ import org.slf4j.LoggerFactory;
  */
 public class JEEWebResolver implements IComponentResolver {
 
-    private static final long serialVersionUID = -5545617085402658472L;
+    private static final long serialVersionUID = 1L;
 
     private static final String SERVLET_AND_JSP_ENCODING = "UTF-8";
 
@@ -119,9 +120,9 @@ public class JEEWebResolver implements IComponentResolver {
 
 	private static final long serialVersionUID = -4296125929087527034L;
 
-	private String resource;
+	private final String resource;
 
-	private Type type;
+	private final Type type;
 
 	public ServletAndJspFileContainer(String resource, Type type) {
 	    super(resource);
@@ -147,7 +148,7 @@ public class JEEWebResolver implements IComponentResolver {
 		ComponentTag openTag) {
 
 	    // Get the everything required to include the jsp file
-	    RequestCycle cycle = (RequestCycle) RequestCycle.get();
+	    RequestCycle cycle = getRequestCycle();
 	    ServletRequest request = (HttpServletRequest) cycle.getRequest()
 		    .getContainerRequest();
 	    JSPIncludeHttpServletResponseWrapper response = new JSPIncludeHttpServletResponseWrapper(
@@ -168,9 +169,7 @@ public class JEEWebResolver implements IComponentResolver {
 		// output
 		replaceComponentTagBody(markupStream, openTag,
 			response.getOutput());
-	    } catch (ServletException e) {
-		throw new WicketRuntimeException(e);
-	    } catch (IOException e) {
+	    } catch (ServletException | IOException e) {
 		throw new WicketRuntimeException(e);
 	    }
 
@@ -224,7 +223,8 @@ public class JEEWebResolver implements IComponentResolver {
 	 * 
 	 * @param context
 	 *            the context to be printed.
-	 * @param type2
+	 * @param type
+	 *            the type
 	 */
 	private void promptMissingResource(ServletContext context, Type type) {
 	    if (shouldThrowExceptionForMissingFile()) {
@@ -277,10 +277,10 @@ public class JEEWebResolver implements IComponentResolver {
     private static class JSPIncludeHttpServletResponseWrapper extends
 	    HttpServletResponseWrapper {
 
-	private ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-	private ServletOutputStream byteArrayServletOutputStream = new ByteArrayServletOutputStream(
+	private final ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+	private final ServletOutputStream byteArrayServletOutputStream = new ByteArrayServletOutputStream(
 		byteArrayOutputStream);
-	private PrintWriter printWriter = new PrintWriter(byteArrayOutputStream);
+	private final PrintWriter printWriter = new PrintWriter(byteArrayOutputStream);
 
 	public JSPIncludeHttpServletResponseWrapper(HttpServletResponse response) {
 	    super(response);

@@ -33,7 +33,7 @@ import org.slf4j.LoggerFactory;
  * Usage: To use the taglib and this tag you only have to define it in the jsp:
  * 
  * <pre>
- * &lt;%@ taglib prefix="wicket" uri="http://wicket.jsp/functions" %&gt;
+ * &lt;%@ taglib prefix="wicket" uri="http://wicketstuff-jee-web.org/functions/jsp" %&gt;
  * 
  * Tag: url // Parameters: page(required), query(optional) // Example:
  * &lt;a href="&lt;wicket:url page="mypage.MyTestPage" query="param1=value1&param2=value2"/&gt;"&gt;LINK&lt;/a&gt;
@@ -43,7 +43,7 @@ import org.slf4j.LoggerFactory;
  */
 public class JspUrlTagSupport extends TagSupport {
 
-    private static final long serialVersionUID = 6146639184284158443L;
+    private static final long serialVersionUID = 1L;
 
     private static final Logger LOGGER = LoggerFactory
 	    .getLogger(JspUrlTagSupport.class);
