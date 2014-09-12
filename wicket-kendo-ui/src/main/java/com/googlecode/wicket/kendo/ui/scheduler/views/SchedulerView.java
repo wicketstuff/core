@@ -26,19 +26,10 @@ public abstract class SchedulerView extends Options
 		super.set("selected", selected);
 		return this;
 	}
-	
-	public static void main(String[] args) {
-		
-		Options o = new Options();
-		o.set("foo", new Options("foo1","value1"), new Options("foo2",Options.asString("value2")));
-		
-		System.out.println(o);
-		
-		Options options = new Options();
-		options.set("views", "["+DayView.newInstance().setSelected(true)+","+WeekView.newInstance()+"]");
 
-		System.out.println(options);
-//		options.set("views", DayView.newInstance().setSelected(true).toString(), WeekView.newInstance().toString());
-		System.out.println(options);
+	public SchedulerView setDateHeaderTemplatePattern(String pattern){
+		super.set("dateHeaderTemplate", "kendo.template(\"<strong>#=kendo.toString(date, '"+pattern+"')#</strong>\")");
+		return this;
 	}
+	
 }

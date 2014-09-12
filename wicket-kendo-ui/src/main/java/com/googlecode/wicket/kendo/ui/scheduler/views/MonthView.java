@@ -15,6 +15,11 @@ public final class MonthView extends SchedulerView
 		super(SchedulerViewType.month);
 	}
 
+	public SchedulerView setDayTemplatePattern(String pattern){
+		super.set("dayTemplate", "kendo.template(\"<strong>#=kendo.toString(date, '"+pattern+"')#</strong>\")");
+		return this;
+	}
+	
 	public static MonthView newInstance()
 	{
 		return new MonthView();
