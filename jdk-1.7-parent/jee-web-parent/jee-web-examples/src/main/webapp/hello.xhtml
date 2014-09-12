@@ -1,0 +1,14 @@
+<div xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:wicket="http://wicketstuff-jee-web.org/functions/jsf">
+
+	<h:form>
+		<h:inputText value="#{helloBean.name}"></h:inputText>
+		<h:commandButton value="Welcome Me" action="welcome"></h:commandButton>
+	</h:form>
+	
+	<div><a href="${wicket:url('org.wicketstuff.jeeweb.examples.TestPage2')}">Link rendered by EL</a></div>
+	
+	<div>Link rendered by tag: <wicket:url page="org.wicketstuff.jeeweb.examples.TestPage2" /></div>
+</div>
