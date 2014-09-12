@@ -26,6 +26,7 @@ import com.googlecode.wicket.jquery.core.ajax.IJQueryAjaxAware;
 import com.googlecode.wicket.jquery.core.ajax.JQueryAjaxBehavior;
 import com.googlecode.wicket.jquery.core.utils.RequestCycleUtils;
 import com.googlecode.wicket.kendo.ui.KendoUIBehavior;
+import com.googlecode.wicket.kendo.ui.scheduler.views.SchedulerViewType;
 
 /**
  * Provides the Kendo UI scheduler behavior
@@ -39,7 +40,9 @@ public abstract class SchedulerBehavior extends KendoUIBehavior implements IJQue
 
 	static final String METHOD = "kendoScheduler";
 
+	//private JQueryAjaxBehavior onAddBehavior = null;
 	private JQueryAjaxBehavior onCreateBehavior = null;
+	private JQueryAjaxBehavior onEditBehavior = null;
 	private JQueryAjaxBehavior onUpdateBehavior = null;
 	private JQueryAjaxBehavior onDeleteBehavior = null;
 
@@ -72,7 +75,12 @@ public abstract class SchedulerBehavior extends KendoUIBehavior implements IJQue
 		super.bind(component);
 
 		// events //
+		//component.add(this.onAddBehavior 	= this.newOnAddBehavior());
 		component.add(this.onCreateBehavior = this.newOnCreateBehavior());
+		if (this.isEditEnabled())
+		{
+			component.add(this.onEditBehavior 	= this.newOnEditBehavior());
+		}
 		component.add(this.onUpdateBehavior = this.newOnUpdateBehavior());
 		component.add(this.onDeleteBehavior = this.newOnDeleteBehavior());
 	}
@@ -97,8 +105,11 @@ public abstract class SchedulerBehavior extends KendoUIBehavior implements IJQue
 		// this.setOption("autoSync", true); // client side, probably useless
 
 		// events //
-		// this.setOption("add", "function(e) { console.log('add'); console.log(e); }");
-		// this.setOption("edit", "function(e) { console.log('edit'); console.log(e); }");
+		//this.setOption("add", this.onAddBehavior.getCallbackFunction());
+		if(this.isEditEnabled())
+		{
+			this.setOption("edit", this.onEditBehavior.getCallbackFunction());
+		}
 		// this.setOption("save", "function(e) { console.log('save'); console.log(e); }");
 		// this.setOption("change", "function(e) { console.log('change'); console.log(e); }");
 		// this.setOption("remove", "function(e) { console.log('remove'); console.log(e); }");
@@ -110,19 +121,31 @@ public abstract class SchedulerBehavior extends KendoUIBehavior implements IJQue
 	@Override
 	public void onAjax(AjaxRequestTarget target, JQueryEvent event)
 	{
+		SchedulerEvent e = (SchedulerEvent) event;
+
+		//		if (event instanceof AddEvent)
+//		{
+//			this.onAdd(target, e.getStart(), e.getEnd(), e.getAllDay());
+//		}
+
 		if (event instanceof CreateEvent)
 		{
-			this.onCreate(target, (SchedulerEvent) event);
+			this.onCreate(target, e);
+		}
+
+		if (event instanceof EditEvent)
+		{
+			this.onEdit(target, e, e.getView());
 		}
 
 		if (event instanceof UpdateEvent)
 		{
-			this.onUpdate(target, (SchedulerEvent) event);
+			this.onUpdate(target, e);
 		}
 
 		if (event instanceof DeleteEvent)
 		{
-			this.onDelete(target, (SchedulerEvent) event);
+			this.onDelete(target, e);
 		}
 	}
 
@@ -148,8 +171,8 @@ public abstract class SchedulerBehavior extends KendoUIBehavior implements IJQue
 	private String getReadCallbackFunction()
 	{
 		String widget = this.widget(METHOD);
-		String start = widget + "._selectedView._startDate.getTime()";
-		String end = widget + "._selectedView._endDate.getTime()";
+		String start = widget + ".view().startDate().getTime()";
+		String end = widget + ".view().endDate().getTime()";
 
 		return "function(options) {" // lf
 				+ "	jQuery.ajax({" // lf
@@ -166,6 +189,36 @@ public abstract class SchedulerBehavior extends KendoUIBehavior implements IJQue
 				+ "}";
 	}
 
+//	protected JQueryAjaxBehavior newOnAddBehavior()
+//	{
+//		return new JQueryAjaxBehavior(this) {
+//
+//			private static final long serialVersionUID = 1L;
+//
+//			@Override
+//			protected JQueryEvent newEvent()
+//			{
+//				return new AddEvent();
+//			}
+//			
+//			@Override
+//			protected CallbackParameter[] getCallbackParameters()
+//			{
+//				return new CallbackParameter[] { CallbackParameter.context("e"),
+//												 CallbackParameter.resolved("start", "e.event.start.getTime()"),
+//												 CallbackParameter.resolved("end", "e.event.end.getTime()"),
+//												 CallbackParameter.resolved("allday", "e.event.isAllDay") };
+//			}
+//
+//			@Override
+//			public CharSequence getCallbackFunctionBody(CallbackParameter... extraParameters)
+//			{
+//				return super.getCallbackFunctionBody(extraParameters) + " e.preventDefault();";//avoid propagation of KendoUIs edit-event after add-event
+//			}
+//
+//		};
+//	}
+
 	protected JQueryAjaxBehavior newOnCreateBehavior()
 	{
 		return new CallbackAjaxBehavior(this) {
@@ -177,6 +230,37 @@ public abstract class SchedulerBehavior extends KendoUIBehavior implements IJQue
 			{
 				return new CreateEvent();
 			}
+		};
+	}
+
+	protected JQueryAjaxBehavior newOnEditBehavior()
+	{
+		return new JQueryAjaxBehavior(this) {//TODO check ***
+
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			protected JQueryEvent newEvent()
+			{
+				return new EditEvent();
+			}
+			
+			@Override
+			protected CallbackParameter[] getCallbackParameters()
+			{
+				return new CallbackParameter[] { CallbackParameter.context("e"),
+												 CallbackParameter.resolved("id", "e.event.id"),
+												 CallbackParameter.resolved("start", "e.event.start.getTime()"),
+												 CallbackParameter.resolved("end", "e.event.end.getTime()"),
+												 CallbackParameter.resolved("view", "e.sender.view().name")};
+			}
+
+			@Override
+			public CharSequence getCallbackFunctionBody(CallbackParameter... extraParameters)
+			{
+				return super.getCallbackFunctionBody(extraParameters) + " e.preventDefault();";//avoid propagation of KendoUIs edit-event on client-side
+			}
+
 		};
 	}
 
@@ -254,10 +338,54 @@ public abstract class SchedulerBehavior extends KendoUIBehavior implements IJQue
 
 			long end = RequestCycleUtils.getQueryParameterValue("end").toLong();
 			this.setEnd(end);
+			
+			//TODO note: this is scheduler-event related, e.g. edit
+			String view = RequestCycleUtils.getQueryParameterValue("view").toString();
+			this.setView(SchedulerViewType.get(view));
 		}
 	}
 
+//	protected static class AddEvent extends JQueryEvent
+//	{
+//		private final Date start;
+//		private final Date end;
+//		private final boolean allDay;
+//		
+//		public AddEvent()
+//		{
+//			long start = RequestCycleUtils.getQueryParameterValue("start").toLong();
+//			this.start = new Date(start);
+//
+//			long end = RequestCycleUtils.getQueryParameterValue("end").toLong();
+//			this.end = new Date(end);
+//			
+//			this.allDay = RequestCycleUtils.getQueryParameterValue("allday").toBoolean();
+//		}
+//		
+//		public Date getStart() {
+//			return start;
+//		}
+//		
+//		public Date getEnd() {
+//			return end;
+//		}
+//		
+//		public boolean getAllDay() {
+//			return allDay;
+//		}
+//	}
+
 	protected static class CreateEvent extends CallbackSchedulerEvent
+	{
+		private static final long serialVersionUID = 1L;
+	}
+
+	//TODO *** is it ok, to inherit parameter-reading features from CallbackSchedulerEvent,
+	//but not to extend the newOnEditBehavior from CallbackAjaxBehavior and provide own CallBackParameter definitions?
+	//see also *** of newOnEditEventBehavior()
+	//I am not sure, if I understood CallbackAjaxBehavior right... it looks like its more datasource related, instead of calender related?!
+	//It is possible I accidently mixed it up.
+	protected static class EditEvent extends CallbackSchedulerEvent
 	{
 		private static final long serialVersionUID = 1L;
 	}

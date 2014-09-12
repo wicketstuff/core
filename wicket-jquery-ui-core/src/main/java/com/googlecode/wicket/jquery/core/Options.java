@@ -17,9 +17,11 @@
 package com.googlecode.wicket.jquery.core;
 
 import java.io.Serializable;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
@@ -178,6 +180,37 @@ public class Options implements IClusterable
 		return this;
 	}
 
+	/**
+	 * In addtion to {@link #set(String, Serializable)} this enables to build trees of Options.
+	 * 
+	 * <p>
+	 * Example:
+	 * <pre>
+	 * Options o = new Options();
+	 * o.set("foo", new Options("foo1", "value1"), new Options("foo2", Options.asString("value2")));
+	 * 
+	 * results in json:
+	 * { "foo": [
+	 *            { "foo1": value1 },
+	 *            { "foo2": "value2" }
+	 *          ]
+	 * }
+	 * </pre>
+	 * </p>
+	 * 
+	 * @param key - key with which the specified value is to be associated
+	 * @param values - values to be associated with the specified key
+	 */
+	public final void set(String key, Serializable... values)
+	{
+	    this.set(key, Arrays.asList(values));
+	}
+
+	void set(String key, List<Serializable> value)
+	{
+	    this.set(key, value.toString()); // back to set(String, Serializable); 
+	}
+	
 	/**
 	 * Gets a read-only entry set of options
 	 *

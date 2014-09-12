@@ -18,6 +18,8 @@ package com.googlecode.wicket.kendo.ui.scheduler;
 
 import org.apache.wicket.ajax.AjaxRequestTarget;
 
+import com.googlecode.wicket.kendo.ui.scheduler.views.SchedulerViewType;
+
 /**
  * Event listener shared by the {@link Scheduler} widget and the {@link SchedulerBehavior}
  *
@@ -27,12 +29,37 @@ import org.apache.wicket.ajax.AjaxRequestTarget;
 public interface ISchedulerListener
 {
 	/**
+	 * Indicates whether a edit-event is available.<br/>
+	 * If true, the {@link #onEdit(AjaxRequestTarget target, SchedulerEvent event)} event will be triggered by clicking an event or a free event slot.<br/>
+	 * 
+	 * <p>This can be usefull to implement a custom dialog. If false the internal event handling will proceed and opens the Scheduler's dialog
+	 * (see {@link #onUpdate(AjaxRequestTarget, SchedulerEvent)} to process the dialog results).</p>
+	 * 
+	 * <p>
+	 * <b>Note:</b> <tt>true</tt> will prevent the internal event handling (by using e.preventDefault()) to avoid conflicts with Scheduler's dialog.<br/>
+	 * </p>
+	 * 
+	 * @return false by default
+	 */
+	boolean isEditEnabled();
+
+	/**
 	 * Triggered when a {@link SchedulerEvent} is created (or modified) through the Scheduler's dialog
 	 *
 	 * @param target the {@link AjaxRequestTarget}
 	 * @param event the {@link SchedulerEvent}
 	 */
 	void onCreate(AjaxRequestTarget target, SchedulerEvent event);
+
+	/**
+	 * Triggered when a {@link SchedulerEvent} should be edit.<br/>
+	 * This occurs on clicking an event or clicking a free slot, as well. Use {@link SchedulerEvent#isNew(SchedulerEvent)} to determine the use-case. 
+	 *
+	 * @param target the {@link AjaxRequestTarget}
+	 * @param event the {@link SchedulerEvent}
+	 * @see {@link SchedulerEvent#isNew(SchedulerEvent)}
+	 */
+	void onEdit(AjaxRequestTarget target, SchedulerEvent event, SchedulerViewType view);
 
 	/**
 	 * Triggered when a {@link SchedulerEvent} is updated through the Scheduler's (ie: drag &#38; drop)

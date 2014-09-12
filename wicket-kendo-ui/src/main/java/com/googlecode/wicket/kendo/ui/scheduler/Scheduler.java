@@ -18,13 +18,14 @@ package com.googlecode.wicket.kendo.ui.scheduler;
 
 import java.util.Calendar;
 import java.util.Date;
+import java.util.TimeZone;
 
 import org.apache.wicket.ajax.AjaxRequestTarget;
 
 import com.googlecode.wicket.jquery.core.JQueryBehavior;
 import com.googlecode.wicket.jquery.core.JQueryContainer;
 import com.googlecode.wicket.jquery.core.Options;
-import com.googlecode.wicket.jquery.core.utils.DateUtils;
+import com.googlecode.wicket.kendo.ui.scheduler.views.SchedulerViewType;
 
 /**
  * Provides the Kendo UI scheduler
@@ -96,12 +97,16 @@ public class Scheduler extends JQueryContainer implements ISchedulerListener
 	 */
 	public void refresh(AjaxRequestTarget target)
 	{
-		//TODO: to test, might be replaced by widget.dataSource.read();
-		target.appendJavaScript(String.format("%s.refresh();", this.widget()));
+		target.appendJavaScript(String.format("%s.dataSource.read(); %s.refresh(); ", this.widget(), this.widget()));
 	}
 
 	// Properties //
 
+	@Override
+	public boolean isEditEnabled() {
+		return false;
+	}
+	
 	/**
 	 * Gets the calendar's model
 	 *
@@ -147,6 +152,12 @@ public class Scheduler extends JQueryContainer implements ISchedulerListener
 	}
 
 	@Override
+	public void onEdit(AjaxRequestTarget target, SchedulerEvent event, SchedulerViewType view)
+	{
+		// noop
+	}
+
+	@Override
 	public void onUpdate(AjaxRequestTarget target, SchedulerEvent event)
 	{
 		// noop
@@ -173,6 +184,12 @@ public class Scheduler extends JQueryContainer implements ISchedulerListener
 			// Properties //
 
 			@Override
+			public boolean isEditEnabled()
+			{
+				return Scheduler.this.isEditEnabled();
+			}
+			
+			@Override
 			protected CharSequence getDataSourceUrl()
 			{
 				return Scheduler.this.getDataSourceUrl();
@@ -184,6 +201,12 @@ public class Scheduler extends JQueryContainer implements ISchedulerListener
 			public void onCreate(AjaxRequestTarget target, SchedulerEvent event)
 			{
 				Scheduler.this.onCreate(target, event);
+			}
+
+			@Override
+			public void onEdit(AjaxRequestTarget target, SchedulerEvent event, SchedulerViewType view)
+			{
+				Scheduler.this.onEdit(target, event, view);
 			}
 
 			@Override
@@ -217,12 +240,12 @@ public class Scheduler extends JQueryContainer implements ISchedulerListener
 			@Override
 			protected void setEndDate(SchedulerModel model, Date date)
 			{
-				Calendar calendar = Calendar.getInstance(DateUtils.UTC);
+				Calendar calendar = Calendar.getInstance(TimeZone.getTimeZone("UTC"));//TODO investigate; getting static from DateUtils ran into NoSuchFieldException UTC, dont know why / Patrick
 				calendar.setTime(date);
-				calendar.set(Calendar.HOUR_OF_DAY, 23);
-				calendar.set(Calendar.MINUTE, 59);
-				calendar.set(Calendar.SECOND, 59);
-				calendar.set(Calendar.MILLISECOND, 999);
+				calendar.add(Calendar.HOUR_OF_DAY, 23);
+				calendar.add(Calendar.MINUTE, 59);
+				calendar.add(Calendar.SECOND, 59);
+				calendar.add(Calendar.MILLISECOND, 999);
 
 				model.setEnd(calendar.getTime());
 			}

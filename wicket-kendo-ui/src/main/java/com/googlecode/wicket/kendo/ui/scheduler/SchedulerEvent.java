@@ -25,6 +25,7 @@ import org.slf4j.LoggerFactory;
 
 import com.googlecode.wicket.jquery.core.JQueryEvent;
 import com.googlecode.wicket.jquery.core.utils.DateUtils;
+import com.googlecode.wicket.kendo.ui.scheduler.views.SchedulerViewType;
 
 /**
  * Provides a base Bean that can be used with a {@link SchedulerModel}
@@ -64,7 +65,9 @@ public class SchedulerEvent extends JQueryEvent implements Serializable
 	private Date start;
 	private Date end;
 	private boolean allDay = false;
-
+	
+	private SchedulerViewType view;
+	
 	/**
 	 * Constructor
 	 */
@@ -160,6 +163,15 @@ public class SchedulerEvent extends JQueryEvent implements Serializable
 	public void setAllDay(boolean allDay)
 	{
 		this.allDay = allDay;
+	}
+	
+	protected SchedulerViewType getView(){
+		return this.view;
+	}
+	
+	protected void setView(SchedulerViewType view)
+	{
+		this.view = view;
 	}
 
 	/**
