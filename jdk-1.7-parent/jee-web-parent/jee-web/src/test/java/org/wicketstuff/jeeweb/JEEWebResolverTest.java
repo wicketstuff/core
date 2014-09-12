@@ -3,6 +3,7 @@ package org.wicketstuff.jeeweb;
 import java.io.File;
 
 import javax.servlet.RequestDispatcher;
+import javax.servlet.Servlet;
 
 import org.apache.wicket.protocol.http.mock.MockServletContext;
 import org.apache.wicket.util.tester.WicketTester;
@@ -16,6 +17,9 @@ public class JEEWebResolverTest {
 	TestApplication testApplication = new TestApplication();
 	MockServletContext mockServletContext = new MockServletContext(
 		testApplication, new File("src/test/webapp").getCanonicalPath());
+	
+	mockServletContext.addMockServlet("/TestServlet", Servlet.class);
+	
 	WicketTester wicketTester = new WicketTester(testApplication,
 		mockServletContext);
 	wicketTester.startPage(TestServletAndJSPPage.class);
