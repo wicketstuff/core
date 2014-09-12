@@ -49,7 +49,7 @@ public interface ISchedulerListener
 	 * @param target the {@link AjaxRequestTarget}
 	 * @param event the {@link SchedulerEvent}
 	 */
-	void onCreate(AjaxRequestTarget target, SchedulerEvent event, SchedulerViewType view);
+	void onCreate(AjaxRequestTarget target, SchedulerEvent event);
 
 	/**
 	 * Triggered when a {@link SchedulerEvent} should be edit.<br/>
@@ -67,7 +67,7 @@ public interface ISchedulerListener
 	 * @param target the {@link AjaxRequestTarget}
 	 * @param event the {@link SchedulerEvent}
 	 */
-	void onUpdate(AjaxRequestTarget target, SchedulerEvent event, SchedulerViewType view);
+	void onUpdate(AjaxRequestTarget target, SchedulerEvent event);
 
 	/**
 	 * Triggered when a {@link SchedulerEvent} is deleted, either through the Scheduler's dialog or the x-icon
@@ -75,5 +75,5 @@ public interface ISchedulerListener
 	 * @param target the {@link AjaxRequestTarget}
 	 * @param event the {@link SchedulerEvent}
 	 */
-	void onDelete(AjaxRequestTarget target, SchedulerEvent event, SchedulerViewType view);
+	void onDelete(AjaxRequestTarget target, SchedulerEvent event);
 }

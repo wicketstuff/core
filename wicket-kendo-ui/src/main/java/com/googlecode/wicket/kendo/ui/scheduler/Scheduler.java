@@ -146,7 +146,7 @@ public class Scheduler extends JQueryContainer implements ISchedulerListener
 	}
 
 	@Override
-	public void onCreate(AjaxRequestTarget target, SchedulerEvent event, SchedulerViewType view)
+	public void onCreate(AjaxRequestTarget target, SchedulerEvent event)
 	{
 		// noop
 	}
@@ -158,13 +158,13 @@ public class Scheduler extends JQueryContainer implements ISchedulerListener
 	}
 
 	@Override
-	public void onUpdate(AjaxRequestTarget target, SchedulerEvent event, SchedulerViewType view)
+	public void onUpdate(AjaxRequestTarget target, SchedulerEvent event)
 	{
 		// noop
 	}
 
 	@Override
-	public void onDelete(AjaxRequestTarget target, SchedulerEvent event, SchedulerViewType view)
+	public void onDelete(AjaxRequestTarget target, SchedulerEvent event)
 	{
 		// noop
 	}
@@ -198,9 +198,9 @@ public class Scheduler extends JQueryContainer implements ISchedulerListener
 			// Events //
 
 			@Override
-			public void onCreate(AjaxRequestTarget target, SchedulerEvent event, SchedulerViewType view)
+			public void onCreate(AjaxRequestTarget target, SchedulerEvent event)
 			{
-				Scheduler.this.onCreate(target, event, view);
+				Scheduler.this.onCreate(target, event);
 			}
 
 			@Override
@@ -210,15 +210,15 @@ public class Scheduler extends JQueryContainer implements ISchedulerListener
 			}
 
 			@Override
-			public void onUpdate(AjaxRequestTarget target, SchedulerEvent event, SchedulerViewType view)
+			public void onUpdate(AjaxRequestTarget target, SchedulerEvent event)
 			{
-				Scheduler.this.onUpdate(target, event, view);
+				Scheduler.this.onUpdate(target, event);
 			}
 
 			@Override
-			public void onDelete(AjaxRequestTarget target, SchedulerEvent event, SchedulerViewType view)
+			public void onDelete(AjaxRequestTarget target, SchedulerEvent event)
 			{
-				Scheduler.this.onDelete(target, event, view);
+				Scheduler.this.onDelete(target, event);
 			}
 		};
 	}

@@ -130,7 +130,7 @@ public abstract class SchedulerBehavior extends KendoUIBehavior implements IJQue
 
 		if (event instanceof CreateEvent)
 		{
-			this.onCreate(target, e, e.getView());
+			this.onCreate(target, e);
 		}
 
 		if (event instanceof EditEvent)
@@ -140,12 +140,12 @@ public abstract class SchedulerBehavior extends KendoUIBehavior implements IJQue
 
 		if (event instanceof UpdateEvent)
 		{
-			this.onUpdate(target, e, e.getView());
+			this.onUpdate(target, e);
 		}
 
 		if (event instanceof DeleteEvent)
 		{
-			this.onDelete(target, e, e.getView());
+			this.onDelete(target, e);
 		}
 	}
 
@@ -306,16 +306,11 @@ public abstract class SchedulerBehavior extends KendoUIBehavior implements IJQue
 		@Override
 		protected CallbackParameter[] getCallbackParameters()
 		{
-			SchedulerBehavior b = getComponent().getBehaviors(SchedulerBehavior.class).get(0);
-			String widget = b.widget(METHOD);
-			String view = widget + ".view().name";
-
 			return new CallbackParameter[] { CallbackParameter.context("options"), // lf
 					CallbackParameter.resolved("id", "options.data.id"), // retrieved
 					CallbackParameter.resolved("start", "options.data.start.getTime()"), // retrieved
 					CallbackParameter.resolved("end", "options.data.end.getTime()"), // retrieved
-					CallbackParameter.resolved("title", "options.data.title"), // retrieved
-					CallbackParameter.resolved("view", view) // retrieved
+					CallbackParameter.resolved("title", "options.data.title") // retrieved
 			};
 		}
 
@@ -344,6 +339,7 @@ public abstract class SchedulerBehavior extends KendoUIBehavior implements IJQue
 			long end = RequestCycleUtils.getQueryParameterValue("end").toLong();
 			this.setEnd(end);
 			
+			//TODO note: this is scheduler-event related, e.g. edit
 			String view = RequestCycleUtils.getQueryParameterValue("view").toString();
 			this.setView(SchedulerViewType.get(view));
 		}
