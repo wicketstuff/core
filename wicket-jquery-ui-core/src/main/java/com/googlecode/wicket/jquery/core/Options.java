@@ -50,12 +50,11 @@ public class Options implements IClusterable
 	 */
 	public static String asString(Object value)
 	{
-		return Options.asString(String.valueOf(value));
+		return String.format("%s%s%s", QUOTE, String.valueOf(value), QUOTE);
 	}
 
 	/**
-	 * Converts a string to its javascript representation. ie: "myvalue" (with the double quotes)<br/>
-	 * If the supplied value is null, "" is returned
+	 * Converts a string to its javascript representation. ie: "myvalue" (with the double quotes)
 	 *
 	 * @param value the object
 	 * @return the JSON value
@@ -113,6 +112,32 @@ public class Options implements IClusterable
 		}
 
 		return ""; // fixes #92
+	}
+
+	/**
+	 * Helper method that adds a key/value JSON pair to the specified builder<br/>
+	 * If the supplied value is null, "null" is returned
+	 *
+	 * @param builder the {@link StringBuilder}
+	 * @param key the key
+	 * @param value the object
+	 */
+	// FIXME: replace where appropriate
+	public static void append(StringBuilder builder, String key, Object value)
+	{
+		builder.append(Options.QUOTE).append(key).append(Options.QUOTE).append(": ").append(String.valueOf(value));
+	}
+
+	/**
+	 * Helper method that adds a key/value JSON pair to the specified builder
+	 *
+	 * @param builder the {@link StringBuilder}
+	 * @param key the key
+	 * @param value the value
+	 */
+	public static void append(StringBuilder builder, String key, String value)
+	{
+		builder.append(Options.QUOTE).append(key).append(Options.QUOTE).append(": ").append(Options.QUOTE).append(escapeQuotes(value)).append(Options.QUOTE);
 	}
 
 	private final Map<String, Serializable> map;

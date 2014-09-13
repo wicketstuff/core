@@ -28,7 +28,7 @@ public class SchedulerDataSource extends KendoDataSource
 	private static final long serialVersionUID = 1L;
 
 	/**
-	 * Constructor which create a json based data-source
+	 * Constructor which create a JSON based data-source
 	 *
 	 * @param name the data-source name
 	 */

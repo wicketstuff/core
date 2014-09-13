@@ -18,6 +18,8 @@ package com.googlecode.wicket.kendo.ui.scheduler;
 
 import org.apache.wicket.ajax.json.JSONException;
 import org.apache.wicket.ajax.json.JSONObject;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.googlecode.wicket.jquery.core.utils.DateUtils;
 
@@ -29,31 +31,59 @@ import com.googlecode.wicket.jquery.core.utils.DateUtils;
  */
 public class SchedulerEventFactory
 {
-	public static String toJson(SchedulerEvent event) throws JSONException
+	private static final Logger LOG = LoggerFactory.getLogger(SchedulerEventFactory.class);
+
+	/**
+	 * Converts a <tt>SchedulerEvent</tt> to its JSON representation
+	 *
+	 * @param event the {@link SchedulerEvent}
+	 * @return the JSON string
+	 */
+	public static String toJson(SchedulerEvent event)
 	{
-		JSONObject object = new JSONObject();
-
-		object.put("id", event.getId());
-		object.put("isAllDay", event.isAllDay());
-
-		if (event.getTitle() != null)
+		try
 		{
-			object.put("title", event.getTitle());
+			JSONObject object = new JSONObject();
+
+			object.put("id", event.getId());
+			object.put("isAllDay", event.isAllDay());
+
+			if (event.getTitle() != null)
+			{
+				object.put("title", event.getTitle());
+			}
+
+			if (event.getDescription() != null)
+			{
+				object.put("description", event.getDescription());
+			}
+
+			if (event.getStart() != null)
+			{
+				object.put("start", DateUtils.toISO8601(event.getStart()));
+			}
+
+			if (event.getEnd() != null)
+			{
+				object.put("end", DateUtils.toISO8601(event.getEnd()));
+			}
+
+			// FIXME: Scheduler, to complete
+
+			// resources //
+			for (String field : event.getFields())
+			{
+				object.put(field, event.getValue(field)); // value is type of Object (can be Integer or List<Integer>)
+			}
+
+			return object.toString();
+		}
+		catch (JSONException e)
+		{
+			LOG.error(e.getMessage(), e);
 		}
 
-		if (event.getStart() != null)
-		{
-			object.put("start", DateUtils.toISO8601(event.getStart()));
-		}
-
-		if (event.getEnd() != null)
-		{
-			object.put("end", DateUtils.toISO8601(event.getEnd()));
-		}
-
-		// TODO Scheduler, to complete
-
-		return object.toString();
+		return "";
 	}
 
 	/**

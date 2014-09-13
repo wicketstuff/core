@@ -16,9 +16,15 @@
  */
 package com.googlecode.wicket.kendo.ui.scheduler;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 import org.apache.wicket.Component;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.attributes.CallbackParameter;
+import org.apache.wicket.util.string.StringValue;
 
 import com.googlecode.wicket.jquery.core.JQueryEvent;
 import com.googlecode.wicket.jquery.core.Options;
@@ -26,6 +32,8 @@ import com.googlecode.wicket.jquery.core.ajax.IJQueryAjaxAware;
 import com.googlecode.wicket.jquery.core.ajax.JQueryAjaxBehavior;
 import com.googlecode.wicket.jquery.core.utils.RequestCycleUtils;
 import com.googlecode.wicket.kendo.ui.KendoUIBehavior;
+import com.googlecode.wicket.kendo.ui.scheduler.resource.ResourceList;
+import com.googlecode.wicket.kendo.ui.scheduler.resource.ResourceListModel;
 
 /**
  * Provides the Kendo UI scheduler behavior
@@ -79,7 +87,19 @@ public abstract class SchedulerBehavior extends KendoUIBehavior implements IJQue
 
 	// Properties //
 
+	/**
+	 * Gets the data-source behavior's url
+	 *
+	 * @return the data-source behavior's url
+	 */
 	protected abstract CharSequence getDataSourceUrl();
+
+	/**
+	 * Gets the <tt>ResourceListModel</tt>
+	 *
+	 * @return the {@link ResourceListModel}
+	 */
+	protected abstract ResourceListModel getResourceListModel();
 
 	// Events //
 
@@ -105,6 +125,9 @@ public abstract class SchedulerBehavior extends KendoUIBehavior implements IJQue
 
 		// data source //
 		this.setOption("dataSource", dataSource.getName());
+
+		// resource //
+		this.setOption("resources", this.getResourceListModel());
 	}
 
 	@Override
@@ -128,6 +151,12 @@ public abstract class SchedulerBehavior extends KendoUIBehavior implements IJQue
 
 	// Factories //
 
+	/**
+	 * Gets a new <tt>SchedulerDataSource</tt>
+	 *
+	 * @param name the name of the data-source
+	 * @return a new {@link SchedulerDataSource}
+	 */
 	private SchedulerDataSource newSchedulerDataSource(String name)
 	{
 		SchedulerDataSource ds = new SchedulerDataSource(name);
@@ -141,6 +170,7 @@ public abstract class SchedulerBehavior extends KendoUIBehavior implements IJQue
 	}
 
 	/**
+	 * Gets the 'read' callback function<br/>
 	 * As create, update and destroy need to be supplied, we should declare read as a function. Weird...
 	 *
 	 * @return the 'read' callback function
@@ -166,55 +196,73 @@ public abstract class SchedulerBehavior extends KendoUIBehavior implements IJQue
 				+ "}";
 	}
 
+	/**
+	 * Gets the data-source's ajax behavior that will be triggered when an event is created
+	 *
+	 * @return the {@link JQueryAjaxBehavior}
+	 */
 	protected JQueryAjaxBehavior newOnCreateBehavior()
 	{
-		return new CallbackAjaxBehavior(this) {
+		return new DataSourceAjaxBehavior(this) {
 
 			private static final long serialVersionUID = 1L;
 
 			@Override
 			protected JQueryEvent newEvent()
 			{
-				return new CreateEvent();
+				return new CreateEvent(SchedulerBehavior.this.getResourceListModel());
 			}
 		};
 	}
 
+	/**
+	 * Gets the data-source's ajax behavior that will be triggered when an event is updated
+	 *
+	 * @return the {@link JQueryAjaxBehavior}
+	 */
 	protected JQueryAjaxBehavior newOnUpdateBehavior()
 	{
-		return new CallbackAjaxBehavior(this) {
+		return new DataSourceAjaxBehavior(this) {
 
 			private static final long serialVersionUID = 1L;
 
 			@Override
 			protected JQueryEvent newEvent()
 			{
-				return new UpdateEvent();
+				return new UpdateEvent(SchedulerBehavior.this.getResourceListModel());
 			}
 		};
 	}
 
+	/**
+	 * Gets the data-source's ajax behavior that will be triggered when an event is deleted
+	 *
+	 * @return the {@link JQueryAjaxBehavior}
+	 */
 	protected JQueryAjaxBehavior newOnDeleteBehavior()
 	{
-		return new CallbackAjaxBehavior(this) {
+		return new DataSourceAjaxBehavior(this) {
 
 			private static final long serialVersionUID = 1L;
 
 			@Override
 			protected JQueryEvent newEvent()
 			{
-				return new DeleteEvent();
+				return new DeleteEvent(SchedulerBehavior.this.getResourceListModel());
 			}
 		};
 	}
 
 	// Event classes //
 
-	abstract static class CallbackAjaxBehavior extends JQueryAjaxBehavior
+	/**
+	 * Base class for data-source's ajax behavior
+	 */
+	private abstract class DataSourceAjaxBehavior extends JQueryAjaxBehavior
 	{
 		private static final long serialVersionUID = 1L;
 
-		public CallbackAjaxBehavior(IJQueryAjaxAware source)
+		public DataSourceAjaxBehavior(IJQueryAjaxAware source)
 		{
 			super(source);
 		}
@@ -222,12 +270,21 @@ public abstract class SchedulerBehavior extends KendoUIBehavior implements IJQue
 		@Override
 		protected CallbackParameter[] getCallbackParameters()
 		{
-			return new CallbackParameter[] { CallbackParameter.context("options"), // lf
-					CallbackParameter.resolved("id", "options.data.id"), // retrieved
-					CallbackParameter.resolved("start", "options.data.start.getTime()"), // retrieved
-					CallbackParameter.resolved("end", "options.data.end.getTime()"), // retrieved
-					CallbackParameter.resolved("title", "options.data.title") // retrieved
-			};
+			List<CallbackParameter> parameters = new ArrayList<CallbackParameter>();
+
+			parameters.add(CallbackParameter.context("options"));
+			parameters.add(CallbackParameter.resolved("id", "options.data.id")); // retrieved
+			parameters.add(CallbackParameter.resolved("start", "options.data.start.getTime()")); // retrieved
+			parameters.add(CallbackParameter.resolved("end", "options.data.end.getTime()")); // retrieved
+			parameters.add(CallbackParameter.resolved("title", "options.data.title")); // retrieved
+			parameters.add(CallbackParameter.resolved("description", "options.data.description")); // retrieved
+
+			for (String field : SchedulerBehavior.this.getResourceListModel().getFields())
+			{
+				parameters.add(CallbackParameter.resolved(field, "options.data." + field)); // retrieved
+			}
+
+			return parameters.toArray(new CallbackParameter[] {});
 		}
 
 		@Override
@@ -237,11 +294,16 @@ public abstract class SchedulerBehavior extends KendoUIBehavior implements IJQue
 		}
 	}
 
+	/**
+	 * Base class for scheduler event object (payload)
+	 */
 	protected static class CallbackSchedulerEvent extends SchedulerEvent
 	{
 		private static final long serialVersionUID = 1L;
 
-		public CallbackSchedulerEvent()
+		// TODO: wrap SchedulerEvent & SchedulerViewType
+
+		public CallbackSchedulerEvent(final ResourceListModel listModel)
 		{
 			int id = RequestCycleUtils.getQueryParameterValue("id").toInt();
 			this.setId(id);
@@ -254,21 +316,79 @@ public abstract class SchedulerBehavior extends KendoUIBehavior implements IJQue
 
 			long end = RequestCycleUtils.getQueryParameterValue("end").toLong();
 			this.setEnd(end);
+
+			String description = RequestCycleUtils.getQueryParameterValue("description").toString();
+			this.setDescription(description);
+
+			// Resources //
+			Pattern pattern = Pattern.compile("(\\d+)");
+
+			for (ResourceList list : listModel.getObject())
+			{
+				String field = list.getField();
+				StringValue value = RequestCycleUtils.getQueryParameterValue(field);
+
+				List<Integer> values = new ArrayList<Integer>();
+
+				if (value != null)
+				{
+					Matcher matcher = pattern.matcher(value.toString());
+
+					while (matcher.find())
+					{
+						values.add(Integer.valueOf(matcher.group()));
+					}
+
+					if (list.isMutiple())
+					{
+						this.setResource(field, values);
+					}
+					else if (values.size() > 0) /* defensive, should never happens */
+					{
+						this.setResource(field, values.get(0));
+					}
+				}
+			}
 		}
 	}
 
+
+	/**
+	 * An event object that will be broadcasted when a scheduler event is created
+	 */
 	protected static class CreateEvent extends CallbackSchedulerEvent
 	{
 		private static final long serialVersionUID = 1L;
+
+		public CreateEvent(ResourceListModel listModel)
+		{
+			super(listModel);
+		}
 	}
 
+	/**
+	 * An event object that will be broadcasted when a scheduler event is updated
+	 */
 	protected static class UpdateEvent extends CallbackSchedulerEvent
 	{
 		private static final long serialVersionUID = 1L;
+
+		public UpdateEvent(ResourceListModel listModel)
+		{
+			super(listModel);
+		}
 	}
 
+	/**
+	 * An event object that will be broadcasted when a scheduler event is deleted
+	 */
 	protected static class DeleteEvent extends CallbackSchedulerEvent
 	{
 		private static final long serialVersionUID = 1L;
+
+		public DeleteEvent(ResourceListModel listModel)
+		{
+			super(listModel);
+		}
 	}
 }

@@ -7,19 +7,21 @@ import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.markup.html.form.Form;
 
 import com.googlecode.wicket.jquery.core.Options;
-import com.googlecode.wicket.jquery.ui.samples.data.dao.scheduler.SchedulerEventsDAO;
+import com.googlecode.wicket.jquery.ui.samples.data.dao.scheduler.EmployeeEventsDAO;
 import com.googlecode.wicket.kendo.ui.panel.KendoFeedbackPanel;
 import com.googlecode.wicket.kendo.ui.scheduler.Scheduler;
 import com.googlecode.wicket.kendo.ui.scheduler.SchedulerEvent;
 import com.googlecode.wicket.kendo.ui.scheduler.SchedulerModel;
+import com.googlecode.wicket.kendo.ui.scheduler.resource.Resource;
+import com.googlecode.wicket.kendo.ui.scheduler.resource.ResourceList;
 
-public class DefaultSchedulerPage extends AbstractSchedulerPage
+public class MultipleResourceSchedulerPage extends AbstractSchedulerPage
 {
 	private static final long serialVersionUID = 1L;
 
 	private final Scheduler scheduler;
 
-	public DefaultSchedulerPage()
+	public MultipleResourceSchedulerPage()
 	{
 		// Form //
 		final Form<Date> form = new Form<Date>("form");
@@ -44,7 +46,7 @@ public class DefaultSchedulerPage extends AbstractSchedulerPage
 			@Override
 			public void onCreate(AjaxRequestTarget target, SchedulerEvent event)
 			{
-				SchedulerEventsDAO.get().create(event);
+				EmployeeEventsDAO.get().create(event);
 
 				this.info("Created: " + event);
 				target.add(feedback);
@@ -53,7 +55,7 @@ public class DefaultSchedulerPage extends AbstractSchedulerPage
 			@Override
 			public void onUpdate(AjaxRequestTarget target, SchedulerEvent event)
 			{
-				SchedulerEventsDAO.get().update(event);
+				EmployeeEventsDAO.get().update(event);
 
 				this.info("Updated: " + event);
 				target.add(feedback);
@@ -62,19 +64,24 @@ public class DefaultSchedulerPage extends AbstractSchedulerPage
 			@Override
 			public void onDelete(AjaxRequestTarget target, SchedulerEvent event)
 			{
+				EmployeeEventsDAO.get().delete(event);
+
 				this.info("Deleted: " + event);
 				target.add(feedback);
 			}
 		};
+
+		this.scheduler.add(newRoomList());
+		this.scheduler.add(newEmployeeList());
 
 		form.add(this.scheduler);
 	}
 
 	// Factories //
 
-	private static SchedulerModel newSchedulerModel()
+	static SchedulerModel newSchedulerModel()
 	{
-		//ISchedulerVisitor
+		// ISchedulerVisitor
 		return new SchedulerModel() {
 
 			private static final long serialVersionUID = 1L;
@@ -82,8 +89,26 @@ public class DefaultSchedulerPage extends AbstractSchedulerPage
 			@Override
 			protected List<SchedulerEvent> load()
 			{
-				return SchedulerEventsDAO.get().getEvents(this.getStart(), this.getEnd());
+				return EmployeeEventsDAO.get().getEvents(this.getStart(), this.getEnd());
 			}
 		};
+	}
+
+	static ResourceList newRoomList()
+	{
+		ResourceList list = new ResourceList("Room", "roomId");
+		list.add(new Resource(1, "Room #1", "#6699cc"));
+		list.add(new Resource(2, "Room #2", "#9966cc"));
+
+		return list;
+	}
+
+	static ResourceList newEmployeeList()
+	{
+		ResourceList list = new ResourceList("Employee", "employeeId", true); // true: multiple
+		list.add(new Resource(1, "Patrick", "#339966"));
+		list.add(new Resource(2, "Sebastien", "#996633"));
+
+		return list;
 	}
 }

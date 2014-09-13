@@ -1,4 +1,4 @@
-package com.googlecode.wicket.jquery.ui.samples.data.dao;
+package com.googlecode.wicket.jquery.ui.samples.data.dao.scheduler;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -6,20 +6,8 @@ import java.util.List;
 
 import com.googlecode.wicket.kendo.ui.scheduler.SchedulerEvent;
 
-public class SchedulerDAO
+public abstract class AbstractSchedulerEventsDAO
 {
-	private static SchedulerDAO instance = null;
-
-	public static synchronized SchedulerDAO get()
-	{
-		if (instance == null)
-		{
-			instance = new SchedulerDAO();
-		}
-
-		return instance;
-	}
-
 	public static SchedulerEvent newEvent(Date date)
 	{
 		return new SchedulerEvent(SchedulerEvent.NEW_ID, "", date);
@@ -45,20 +33,12 @@ public class SchedulerDAO
 		return date != null && start.compareTo(date) <= 0 && end.compareTo(date) >= 0;
 	}
 
-
-	private final List<SchedulerEvent> list;
 	private int id = SchedulerEvent.NEW_ID;
+	protected final List<SchedulerEvent> list;
 
-	public SchedulerDAO()
+	protected AbstractSchedulerEventsDAO()
 	{
 		this.list = new ArrayList<SchedulerEvent>();
-		this.initList();
-	}
-
-	private final void initList()
-	{
-		this.list.add(new SchedulerEvent(this.newId(), "Public event", new Date()));
-		this.list.add(new SchedulerEvent(this.newId(), "Private event", new Date()));
 	}
 
 	protected final int newId()
@@ -85,7 +65,7 @@ public class SchedulerDAO
 
 		for (SchedulerEvent task : this.list)
 		{
-			if (SchedulerDAO.isInRange(task, start, end))
+			if (AbstractSchedulerEventsDAO.isInRange(task, start, end))
 			{
 				events.add(task);
 			}
@@ -94,7 +74,7 @@ public class SchedulerDAO
 		return events;
 	}
 
-	public void createEvent(SchedulerEvent event)
+	public void create(SchedulerEvent event)
 	{
 		if (SchedulerEvent.isNew(event))
 		{
@@ -103,16 +83,16 @@ public class SchedulerDAO
 		}
 	}
 
-	public void updateEvent(SchedulerEvent event) {
+	// FIXME: SchedulerPayload (extends SchedulerEvent) ?
+	public abstract void update(SchedulerEvent event);
 
+	public void delete(SchedulerEvent event)
+	{
 		SchedulerEvent e = this.getEvent(event.getId());
 
 		if (e != null)
 		{
-			e.setTitle(event.getTitle());
-			e.setStart(event.getStart());
-			e.setEnd(event.getEnd());
-			e.setAllDay(event.isAllDay());
+			this.list.remove(e);
 		}
 	}
 }

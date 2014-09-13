@@ -7,19 +7,21 @@ import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.markup.html.form.Form;
 
 import com.googlecode.wicket.jquery.core.Options;
-import com.googlecode.wicket.jquery.ui.samples.data.dao.scheduler.SchedulerEventsDAO;
+import com.googlecode.wicket.jquery.ui.samples.data.dao.scheduler.ResourceEventsDAO;
 import com.googlecode.wicket.kendo.ui.panel.KendoFeedbackPanel;
 import com.googlecode.wicket.kendo.ui.scheduler.Scheduler;
 import com.googlecode.wicket.kendo.ui.scheduler.SchedulerEvent;
 import com.googlecode.wicket.kendo.ui.scheduler.SchedulerModel;
+import com.googlecode.wicket.kendo.ui.scheduler.resource.Resource;
+import com.googlecode.wicket.kendo.ui.scheduler.resource.ResourceList;
 
-public class DefaultSchedulerPage extends AbstractSchedulerPage
+public class SingleResourceSchedulerPage extends AbstractSchedulerPage
 {
 	private static final long serialVersionUID = 1L;
 
 	private final Scheduler scheduler;
 
-	public DefaultSchedulerPage()
+	public SingleResourceSchedulerPage()
 	{
 		// Form //
 		final Form<Date> form = new Form<Date>("form");
@@ -37,14 +39,14 @@ public class DefaultSchedulerPage extends AbstractSchedulerPage
 		options.set("workDayStart", "new Date('2014/1/1 08:00 AM')");
 		options.set("workDayEnd", "new Date('2014/1/1 6:00 PM')");
 
-		this.scheduler = new Scheduler("scheduler", newSchedulerModel(), options) {
+		this.scheduler = new Scheduler("scheduler", newSchedulerModel(), newResourceList(), options) {
 
 			private static final long serialVersionUID = 1L;
 
 			@Override
 			public void onCreate(AjaxRequestTarget target, SchedulerEvent event)
 			{
-				SchedulerEventsDAO.get().create(event);
+				ResourceEventsDAO.get().create(event);
 
 				this.info("Created: " + event);
 				target.add(feedback);
@@ -53,7 +55,7 @@ public class DefaultSchedulerPage extends AbstractSchedulerPage
 			@Override
 			public void onUpdate(AjaxRequestTarget target, SchedulerEvent event)
 			{
-				SchedulerEventsDAO.get().update(event);
+				ResourceEventsDAO.get().update(event);
 
 				this.info("Updated: " + event);
 				target.add(feedback);
@@ -62,6 +64,8 @@ public class DefaultSchedulerPage extends AbstractSchedulerPage
 			@Override
 			public void onDelete(AjaxRequestTarget target, SchedulerEvent event)
 			{
+				ResourceEventsDAO.get().delete(event);
+
 				this.info("Deleted: " + event);
 				target.add(feedback);
 			}
@@ -72,7 +76,7 @@ public class DefaultSchedulerPage extends AbstractSchedulerPage
 
 	// Factories //
 
-	private static SchedulerModel newSchedulerModel()
+	static SchedulerModel newSchedulerModel()
 	{
 		//ISchedulerVisitor
 		return new SchedulerModel() {
@@ -82,8 +86,17 @@ public class DefaultSchedulerPage extends AbstractSchedulerPage
 			@Override
 			protected List<SchedulerEvent> load()
 			{
-				return SchedulerEventsDAO.get().getEvents(this.getStart(), this.getEnd());
+				return ResourceEventsDAO.get().getEvents(this.getStart(), this.getEnd());
 			}
 		};
+	}
+
+	static ResourceList newResourceList()
+	{
+		ResourceList list = new ResourceList("Agenda", "agendaId");
+		list.add(new Resource(1, "Sebastien", "#6699cc"));
+		list.add(new Resource(2, "Emilie", "#cc6699"));
+
+		return list;
 	}
 }

@@ -28,7 +28,7 @@ import org.apache.wicket.model.LoadableDetachableModel;
  * @author Sebastien Briquet - sebfz1
  *
  */
-public abstract class SchedulerModel extends LoadableDetachableModel<List<? extends SchedulerEvent>>
+public abstract class SchedulerModel extends LoadableDetachableModel<List<SchedulerEvent>>
 {
 	private static final long serialVersionUID = 1L;
 
