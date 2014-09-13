@@ -31,7 +31,7 @@ public class KendoDataSource extends Options implements IKendoDataSource
 {
 	private static final long serialVersionUID = 1L;
 
-	protected static final String TYPE = "w";
+	protected static final String TYPE = "json";
 
 	private final String name;
 	private final Options transport;
