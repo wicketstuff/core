@@ -23,7 +23,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import com.googlecode.wicket.jquery.core.JQueryEvent;
 import com.googlecode.wicket.jquery.core.utils.DateUtils;
 
 /**
@@ -32,7 +31,7 @@ import com.googlecode.wicket.jquery.core.utils.DateUtils;
  * @author Sebastien Briquet - sebfz1
  *
  */
-public class SchedulerEvent extends JQueryEvent implements Serializable
+public class SchedulerEvent implements Serializable
 {
 	private static final long serialVersionUID = 1L;
 
@@ -78,9 +77,35 @@ public class SchedulerEvent extends JQueryEvent implements Serializable
 	 * @param title the event title
 	 * @param start the start date
 	 */
+	public SchedulerEvent(int id, String title, long start)
+	{
+		this(id, title, new Date(start));
+	}
+
+	/**
+	 * Constructor<br/>
+	 * The end date will be the start date + {@value #DEFAULT_RANGE} hour(s)
+	 *
+	 * @param id the event id
+	 * @param title the event title
+	 * @param start the start date
+	 */
 	public SchedulerEvent(int id, String title, Date start)
 	{
 		this(id, title, start, DateUtils.addHours(start, DEFAULT_RANGE));
+	}
+
+	/**
+	 * Constructor
+	 *
+	 * @param id the event id
+	 * @param title the event title
+	 * @param start the start date
+	 * @param end the end date
+	 */
+	public SchedulerEvent(int id, String title, long start, long end)
+	{
+		this(id, title, new Date(start), new Date(end));
 	}
 
 	/**

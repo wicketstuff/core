@@ -34,6 +34,7 @@ import com.googlecode.wicket.jquery.core.utils.RequestCycleUtils;
 import com.googlecode.wicket.kendo.ui.KendoUIBehavior;
 import com.googlecode.wicket.kendo.ui.scheduler.resource.ResourceList;
 import com.googlecode.wicket.kendo.ui.scheduler.resource.ResourceListModel;
+import com.googlecode.wicket.kendo.ui.scheduler.views.SchedulerViewType;
 
 /**
  * Provides the Kendo UI scheduler behavior
@@ -47,6 +48,7 @@ public abstract class SchedulerBehavior extends KendoUIBehavior implements IJQue
 
 	static final String METHOD = "kendoScheduler";
 
+	private JQueryAjaxBehavior onEditBehavior = null;
 	private JQueryAjaxBehavior onCreateBehavior = null;
 	private JQueryAjaxBehavior onUpdateBehavior = null;
 	private JQueryAjaxBehavior onDeleteBehavior = null;
@@ -80,6 +82,11 @@ public abstract class SchedulerBehavior extends KendoUIBehavior implements IJQue
 		super.bind(component);
 
 		// events //
+		if (this.isEditEnabled())
+		{
+			component.add(this.onEditBehavior = this.newOnEditBehavior());
+		}
+
 		component.add(this.onCreateBehavior = this.newOnCreateBehavior());
 		component.add(this.onUpdateBehavior = this.newOnUpdateBehavior());
 		component.add(this.onDeleteBehavior = this.newOnDeleteBehavior());
@@ -117,11 +124,10 @@ public abstract class SchedulerBehavior extends KendoUIBehavior implements IJQue
 		// this.setOption("autoSync", true); // client side, probably useless
 
 		// events //
-		// this.setOption("add", "function(e) { console.log('add'); console.log(e); }");
-		// this.setOption("edit", "function(e) { console.log('edit'); console.log(e); }");
-		// this.setOption("save", "function(e) { console.log('save'); console.log(e); }");
-		// this.setOption("change", "function(e) { console.log('change'); console.log(e); }");
-		// this.setOption("remove", "function(e) { console.log('remove'); console.log(e); }");
+		if (this.onEditBehavior != null)
+		{
+			this.setOption("edit", this.onEditBehavior.getCallbackFunction());
+		}
 
 		// data source //
 		this.setOption("dataSource", dataSource.getName());
@@ -133,19 +139,29 @@ public abstract class SchedulerBehavior extends KendoUIBehavior implements IJQue
 	@Override
 	public void onAjax(AjaxRequestTarget target, JQueryEvent event)
 	{
-		if (event instanceof CreateEvent)
+		if (event instanceof SchedulerPayload)
 		{
-			this.onCreate(target, (SchedulerEvent) event);
-		}
+			SchedulerPayload payload = (SchedulerPayload) event;
 
-		if (event instanceof UpdateEvent)
-		{
-			this.onUpdate(target, (SchedulerEvent) event);
-		}
+			if (event instanceof EditEvent)
+			{
+				this.onEdit(target, payload.getEvent(), payload.getView());
+			}
 
-		if (event instanceof DeleteEvent)
-		{
-			this.onDelete(target, (SchedulerEvent) event);
+			if (event instanceof CreateEvent)
+			{
+				this.onCreate(target, payload.getEvent());
+			}
+
+			if (event instanceof UpdateEvent)
+			{
+				this.onUpdate(target, payload.getEvent());
+			}
+
+			if (event instanceof DeleteEvent)
+			{
+				this.onDelete(target, payload.getEvent());
+			}
 		}
 	}
 
@@ -178,8 +194,8 @@ public abstract class SchedulerBehavior extends KendoUIBehavior implements IJQue
 	private String getReadCallbackFunction()
 	{
 		String widget = this.widget(METHOD);
-		String start = widget + "._selectedView._startDate.getTime()";
-		String end = widget + "._selectedView._endDate.getTime()";
+		String start = widget + ".view().startDate().getTime()";
+		String end = widget + ".view().endDate().getTime()";
 
 		return "function(options) {" // lf
 				+ "	jQuery.ajax({" // lf
@@ -194,6 +210,52 @@ public abstract class SchedulerBehavior extends KendoUIBehavior implements IJQue
 				+ "		}" // lf
 				+ "	});" // lf
 				+ "}";
+	}
+
+	protected JQueryAjaxBehavior newOnEditBehavior()
+	{
+		return new JQueryAjaxBehavior(this) {
+
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			protected JQueryEvent newEvent()
+			{
+				return new EditEvent(SchedulerBehavior.this.getResourceListModel());
+			}
+
+			@Override
+			protected CallbackParameter[] getCallbackParameters()
+			{
+				List<CallbackParameter> parameters = new ArrayList<CallbackParameter>();
+
+				parameters.add(CallbackParameter.context("options"));
+
+				// event //
+				parameters.add(CallbackParameter.resolved("id", "options.data.id")); // retrieved
+				parameters.add(CallbackParameter.resolved("start", "options.data.start.getTime()")); // retrieved
+				parameters.add(CallbackParameter.resolved("end", "options.data.end.getTime()")); // retrieved
+				parameters.add(CallbackParameter.resolved("title", "options.data.title")); // retrieved
+				parameters.add(CallbackParameter.resolved("description", "options.data.description")); // retrieved
+
+				// resources //
+				for (String field : SchedulerBehavior.this.getResourceListModel().getFields())
+				{
+					parameters.add(CallbackParameter.resolved(field, "options.data." + field)); // retrieved
+				}
+
+				parameters.add(CallbackParameter.resolved("view", "e.sender.view().name")); // retrieved
+
+				// view //
+				return parameters.toArray(new CallbackParameter[] {});
+			}
+
+			@Override
+			public CharSequence getCallbackFunctionBody(CallbackParameter... extraParameters)
+			{
+				return super.getCallbackFunctionBody(extraParameters) + " e.preventDefault();"; // avoid propagation of KendoUIs edit-event on client-side
+			}
+		};
 	}
 
 	/**
@@ -273,12 +335,15 @@ public abstract class SchedulerBehavior extends KendoUIBehavior implements IJQue
 			List<CallbackParameter> parameters = new ArrayList<CallbackParameter>();
 
 			parameters.add(CallbackParameter.context("options"));
+
+			// event //
 			parameters.add(CallbackParameter.resolved("id", "options.data.id")); // retrieved
 			parameters.add(CallbackParameter.resolved("start", "options.data.start.getTime()")); // retrieved
 			parameters.add(CallbackParameter.resolved("end", "options.data.end.getTime()")); // retrieved
 			parameters.add(CallbackParameter.resolved("title", "options.data.title")); // retrieved
 			parameters.add(CallbackParameter.resolved("description", "options.data.description")); // retrieved
 
+			// resources //
 			for (String field : SchedulerBehavior.this.getResourceListModel().getFields())
 			{
 				parameters.add(CallbackParameter.resolved(field, "options.data." + field)); // retrieved
@@ -295,30 +360,23 @@ public abstract class SchedulerBehavior extends KendoUIBehavior implements IJQue
 	}
 
 	/**
-	 * Base class for scheduler event object (payload)
+	 * Base class for scheduler event payload
 	 */
-	protected static class CallbackSchedulerEvent extends SchedulerEvent
+	protected static class SchedulerPayload extends JQueryEvent
 	{
-		private static final long serialVersionUID = 1L;
+		private final SchedulerEvent event;
+		private SchedulerViewType view = null;
 
-		// TODO: wrap SchedulerEvent & SchedulerViewType
-
-		public CallbackSchedulerEvent(final ResourceListModel listModel)
+		public SchedulerPayload(final ResourceListModel listModel)
 		{
 			int id = RequestCycleUtils.getQueryParameterValue("id").toInt();
-			this.setId(id);
-
 			String title = RequestCycleUtils.getQueryParameterValue("title").toString();
-			this.setTitle(title);
-
 			long start = RequestCycleUtils.getQueryParameterValue("start").toLong();
-			this.setStart(start);
-
 			long end = RequestCycleUtils.getQueryParameterValue("end").toLong();
-			this.setEnd(end);
-
 			String description = RequestCycleUtils.getQueryParameterValue("description").toString();
-			this.setDescription(description);
+
+			this.event = new SchedulerEvent(id, title, start, end);
+			this.event.setDescription(description);
 
 			// Resources //
 			Pattern pattern = Pattern.compile("(\\d+)");
@@ -341,25 +399,48 @@ public abstract class SchedulerBehavior extends KendoUIBehavior implements IJQue
 
 					if (list.isMutiple())
 					{
-						this.setResource(field, values);
+						this.event.setResource(field, values);
 					}
 					else if (values.size() > 0) /* defensive, should never happens */
 					{
-						this.setResource(field, values.get(0));
+						this.event.setResource(field, values.get(0));
 					}
 				}
 			}
+
+			// View //
+			String view = RequestCycleUtils.getQueryParameterValue("view").toString();
+
+			if (view != null)
+			{
+				this.view = SchedulerViewType.get(view);
+			}
+		}
+
+		public SchedulerEvent getEvent()
+		{
+			return this.event;
+		}
+
+		public SchedulerViewType getView()
+		{
+			return this.view;
 		}
 	}
 
+	protected static class EditEvent extends SchedulerPayload
+	{
+		public EditEvent(ResourceListModel listModel)
+		{
+			super(listModel);
+		}
+	}
 
 	/**
 	 * An event object that will be broadcasted when a scheduler event is created
 	 */
-	protected static class CreateEvent extends CallbackSchedulerEvent
+	protected static class CreateEvent extends SchedulerPayload
 	{
-		private static final long serialVersionUID = 1L;
-
 		public CreateEvent(ResourceListModel listModel)
 		{
 			super(listModel);
@@ -369,10 +450,8 @@ public abstract class SchedulerBehavior extends KendoUIBehavior implements IJQue
 	/**
 	 * An event object that will be broadcasted when a scheduler event is updated
 	 */
-	protected static class UpdateEvent extends CallbackSchedulerEvent
+	protected static class UpdateEvent extends SchedulerPayload
 	{
-		private static final long serialVersionUID = 1L;
-
 		public UpdateEvent(ResourceListModel listModel)
 		{
 			super(listModel);
@@ -382,10 +461,8 @@ public abstract class SchedulerBehavior extends KendoUIBehavior implements IJQue
 	/**
 	 * An event object that will be broadcasted when a scheduler event is deleted
 	 */
-	protected static class DeleteEvent extends CallbackSchedulerEvent
+	protected static class DeleteEvent extends SchedulerPayload
 	{
-		private static final long serialVersionUID = 1L;
-
 		public DeleteEvent(ResourceListModel listModel)
 		{
 			super(listModel);

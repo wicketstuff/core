@@ -17,9 +17,11 @@
 package com.googlecode.wicket.jquery.core;
 
 import java.io.Serializable;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
@@ -182,7 +184,7 @@ public class Options implements IClusterable
 	}
 
 	/**
-	 * Adds or replace an options defined by a key/value pair.<br/>
+	 * Adds or replace an option defined by a key/value pair.<br/>
 	 * If for a given key, the value is null, then the pair is removed.
 	 *
 	 * @param key - key with which the specified value is to be associated
@@ -201,6 +203,58 @@ public class Options implements IClusterable
 		}
 
 		return this;
+	}
+
+	/**
+	 * In addtion to {@link #set(String, Serializable)} this enables to build trees of Options.
+	 *
+	 * <p>
+	 * Example:
+	 * <pre>
+	 * Options o = new Options();
+	 * o.set("foo", new Options("foo1", "value1"), new Options("foo2", Options.asString("value2")));
+	 *
+	 * results in json:
+	 * { "foo": [
+	 *            { "foo1": value1 },
+	 *            { "foo2": "value2" }
+	 *          ]
+	 * }
+	 * </pre>
+	 * </p>
+	 *
+	 * @param key - key with which the specified value is to be associated
+	 * @param values - values to be associated with the specified key
+	 */
+	public final void set(String key, Serializable... values)
+	{
+	    this.set(key, Arrays.asList(values));
+	}
+
+	/**
+	 * In addtion to {@link #set(String, Serializable)} this enables to build trees of Options.
+	 *
+	 * <p>
+	 * Example:
+	 * <pre>
+	 * Options o = new Options();
+	 * o.set("foo", new Options("foo1", "value1"), new Options("foo2", Options.asString("value2")));
+	 *
+	 * results in json:
+	 * { "foo": [
+	 *            { "foo1": value1 },
+	 *            { "foo2": "value2" }
+	 *          ]
+	 * }
+	 * </pre>
+	 * </p>
+	 *
+	 * @param key - key with which the specified value is to be associated
+	 * @param values - values to be associated with the specified key
+	 */
+	void set(String key, List<Serializable> value)
+	{
+	    this.set(key, value.toString());
 	}
 
 	/**

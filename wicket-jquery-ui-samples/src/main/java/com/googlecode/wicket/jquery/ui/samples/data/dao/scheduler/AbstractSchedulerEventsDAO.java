@@ -83,7 +83,6 @@ public abstract class AbstractSchedulerEventsDAO
 		}
 	}
 
-	// FIXME: SchedulerPayload (extends SchedulerEvent) ?
 	public abstract void update(SchedulerEvent event);
 
 	public void delete(SchedulerEvent event)

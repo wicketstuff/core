@@ -12,6 +12,11 @@ import com.googlecode.wicket.kendo.ui.panel.KendoFeedbackPanel;
 import com.googlecode.wicket.kendo.ui.scheduler.Scheduler;
 import com.googlecode.wicket.kendo.ui.scheduler.SchedulerEvent;
 import com.googlecode.wicket.kendo.ui.scheduler.SchedulerModel;
+import com.googlecode.wicket.kendo.ui.scheduler.views.AgendaView;
+import com.googlecode.wicket.kendo.ui.scheduler.views.DayView;
+import com.googlecode.wicket.kendo.ui.scheduler.views.MonthView;
+import com.googlecode.wicket.kendo.ui.scheduler.views.WeekView;
+import com.googlecode.wicket.kendo.ui.scheduler.views.WorkWeekView;
 
 public class DefaultSchedulerPage extends AbstractSchedulerPage
 {
@@ -33,7 +38,13 @@ public class DefaultSchedulerPage extends AbstractSchedulerPage
 		Options options = new Options();
 		options.set("date", "Date.now()");
 		options.set("editable", true); // default
-		options.set("views", "[ { type: 'day', showWorkHours: true }, { type: 'week', showWorkHours: true }, { type: 'month', selected: true } ]");
+		options.set("views", // lf
+				DayView.newInstance().setShowWorkHours(true), // lf
+				WeekView.newInstance().setShowWorkHours(true), // lf
+				WorkWeekView.newInstance(), // lf
+				MonthView.newInstance().setSelected(true), // lf
+				AgendaView.newInstance());
+
 		options.set("workDayStart", "new Date('2014/1/1 08:00 AM')");
 		options.set("workDayEnd", "new Date('2014/1/1 6:00 PM')");
 
@@ -74,7 +85,7 @@ public class DefaultSchedulerPage extends AbstractSchedulerPage
 
 	private static SchedulerModel newSchedulerModel()
 	{
-		//ISchedulerVisitor
+		// ISchedulerVisitor
 		return new SchedulerModel() {
 
 			private static final long serialVersionUID = 1L;
