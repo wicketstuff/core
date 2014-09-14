@@ -26,14 +26,12 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * This class is used to configure a global ajax event hook for the embedded
- * tags (Servlet, JSP, JSF). The tag libs can be used to generate a callback
- * function to send an ajax request to the current rendered page / their
- * components<br>
+ * This class is used to configure a global ajax event hook for the embedded tags (Servlet, JSP,
+ * JSF). The tag libs can be used to generate a callback function to send an ajax request to the
+ * current rendered page / their components<br>
  * <br>
  * 
- * <b>WATCH OUT - The WebPage has to be configured with setStatelassHint(false);
- * !!!!
+ * <b>WATCH OUT - The WebPage has to be configured with setStatelassHint(false); !!!!
  * 
  * The ajax functions are in the ELFunctions class beginning with ajax...
  * 
@@ -42,92 +40,94 @@ import org.slf4j.LoggerFactory;
  * @author Tobias Soloschenko
  *
  */
-public class JEEWebGlobalAjaxHandler extends ResourceReference {
+public class JEEWebGlobalAjaxHandler extends ResourceReference
+{
 
-    private static final Logger LOGGER = LoggerFactory
-	    .getLogger(JEEWebGlobalAjaxHandler.class);
+	private static final Logger LOGGER = LoggerFactory.getLogger(JEEWebGlobalAjaxHandler.class);
 
-    private static final long serialVersionUID = 4348780269907263872L;
+	private static final long serialVersionUID = 4348780269907263872L;
 
 
-    public JEEWebGlobalAjaxHandler() {
-	super(JEEWebGlobalAjaxHandler.class.getSimpleName());
-    }
+	public JEEWebGlobalAjaxHandler()
+	{
+		super(JEEWebGlobalAjaxHandler.class.getSimpleName());
+	}
 
-    /**
-     * Receives ajax events and delegates them to the page which where rendered
-     * previously.
-     */
-    @Override
-    public IResource getResource() {
-	return new IResource() {
-	    private static final long serialVersionUID = 3070290312369930992L;
+	/**
+	 * Receives ajax events and delegates them to the page which where rendered previously.
+	 */
+	@Override
+	public IResource getResource()
+	{
+		return new IResource()
+		{
+			private static final long serialVersionUID = 3070290312369930992L;
 
-	    @Override
-	    public void respond(Attributes attributes) {
-		try {
-		    PageParameters parameters = attributes.getParameters();
+			@Override
+			public void respond(Attributes attributes)
+			{
+				try
+				{
+					PageParameters parameters = attributes.getParameters();
 
-		    int pageId = parameters.get("pageId").toInt();
-		    Page page = (Page) WebSession.get().getPageManager()
-			    .getPage(pageId);
-		    AjaxRequestTarget newAjaxRequestTarget = ((WebApplication) Application
-			    .get()).newAjaxRequestTarget(page);
-		    RequestCycle.get().scheduleRequestHandlerAfterCurrent(
-			    newAjaxRequestTarget);
-		    page.send(page, Broadcast.BREADTH,
-			    new JEEWebGlobalAjaxEvent(newAjaxRequestTarget,
-				    parameters, RequestCycle.get().getRequest()
-					    .getPostParameters()));
-		} catch (Exception e) {
-		    LOGGER.error("Error while processing the ajax request", e);
-		}
-	    }
-	};
-    }
+					int pageId = parameters.get("pageId").toInt();
+					Page page = (Page)WebSession.get().getPageManager().getPage(pageId);
+					AjaxRequestTarget newAjaxRequestTarget = ((WebApplication)Application.get())
+						.newAjaxRequestTarget(page);
+					RequestCycle.get().scheduleRequestHandlerAfterCurrent(newAjaxRequestTarget);
+					page.send(page, Broadcast.BREADTH, new JEEWebGlobalAjaxEvent(
+						newAjaxRequestTarget, parameters, RequestCycle.get().getRequest()
+							.getPostParameters()));
+				}
+				catch (Exception e)
+				{
+					LOGGER.error("Error while processing the ajax request", e);
+				}
+			}
+		};
+	}
 
-    /**
-     * Configures the handler to the given application.
-     * 
-     * @param application
-     *            the application to configure the handler to
-     */
-    public static void configure(WebApplication application) {
-	application.getRequestCycleListeners().add(
-		new PageRequestHandlerTracker());
-	application.mountResource("/" + JEEWebGlobalAjaxHandler.class.getSimpleName(),
-		new JEEWebGlobalAjaxHandler());
-	application.getHeaderContributorListeners().add(
-		new IHeaderContributor() {
+	/**
+	 * Configures the handler to the given application.
+	 * 
+	 * @param application
+	 *            the application to configure the handler to
+	 */
+	public static void configure(WebApplication application)
+	{
+		application.getRequestCycleListeners().add(new PageRequestHandlerTracker());
+		application.mountResource("/" + JEEWebGlobalAjaxHandler.class.getSimpleName(),
+			new JEEWebGlobalAjaxHandler());
+		application.getHeaderContributorListeners().add(new IHeaderContributor()
+		{
 
-		    private static final long serialVersionUID = 1644041155625458328L;
+			private static final long serialVersionUID = 1644041155625458328L;
 
-		    @Override
-		    public void renderHead(IHeaderResponse response) {
-			JavaScriptResourceReference forReference = new JavaScriptResourceReference(
-				JEEWebGlobalAjaxHandler.class,
-				JEEWebGlobalAjaxHandler.class.getSimpleName()+".js") {
+			@Override
+			public void renderHead(IHeaderResponse response)
+			{
+				JavaScriptResourceReference forReference = new JavaScriptResourceReference(
+					JEEWebGlobalAjaxHandler.class, JEEWebGlobalAjaxHandler.class.getSimpleName()
+						+ ".js")
+				{
 
-			    private static final long serialVersionUID = -3649384632770480975L;
+					private static final long serialVersionUID = -3649384632770480975L;
 
-			    @Override
-			    public List<HeaderItem> getDependencies() {
-				List<HeaderItem> dependencies = new ArrayList<HeaderItem>();
-				dependencies.add(JavaScriptHeaderItem
-					.forReference(JQueryResourceReference
-						.get()));
-				dependencies.add(JavaScriptHeaderItem
-					.forReference(WicketEventJQueryResourceReference
-						.get()));
-				dependencies.add(JavaScriptHeaderItem
-					.forReference(WicketAjaxJQueryResourceReference
-						.get()));
-				return dependencies;
-			    }
-			};
-			response.render(JavaScriptHeaderItem
-				.forReference(forReference));
-		    }
+					@Override
+					public List<HeaderItem> getDependencies()
+					{
+						List<HeaderItem> dependencies = new ArrayList<HeaderItem>();
+						dependencies.add(JavaScriptHeaderItem.forReference(JQueryResourceReference
+							.get()));
+						dependencies.add(JavaScriptHeaderItem
+							.forReference(WicketEventJQueryResourceReference.get()));
+						dependencies.add(JavaScriptHeaderItem
+							.forReference(WicketAjaxJQueryResourceReference.get()));
+						return dependencies;
+					}
+				};
+				response.render(JavaScriptHeaderItem.forReference(forReference));
+			}
 		});
-    }
+	}
 }
