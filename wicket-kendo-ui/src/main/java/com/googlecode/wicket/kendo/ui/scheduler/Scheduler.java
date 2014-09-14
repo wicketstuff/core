@@ -25,10 +25,12 @@ import org.apache.wicket.ajax.AjaxRequestTarget;
 import com.googlecode.wicket.jquery.core.JQueryBehavior;
 import com.googlecode.wicket.jquery.core.JQueryContainer;
 import com.googlecode.wicket.jquery.core.Options;
+import com.googlecode.wicket.kendo.ui.scheduler.resource.ResourceList;
+import com.googlecode.wicket.kendo.ui.scheduler.resource.ResourceListModel;
 import com.googlecode.wicket.kendo.ui.scheduler.views.SchedulerViewType;
 
 /**
- * Provides the Kendo UI scheduler
+ * Provides the Kendo UI Scheduler
  *
  * @author Sebastien Briquet - sebfz1
  *
@@ -40,17 +42,17 @@ public class Scheduler extends JQueryContainer implements ISchedulerListener
 	private final Options options;
 	private SchedulerModelBehavior modelBehavior; // load events
 
+	private final ResourceListModel resourceListModel = new ResourceListModel();
+
 	/**
 	 * Constructor
 	 *
 	 * @param id the markup id
-	 * @param options {@link Options}.
+	 * @param options {@link Options}
 	 */
 	public Scheduler(String id, Options options)
 	{
-		super(id);
-
-		this.options = options;
+		this(id, null, null, new Options());
 	}
 
 	/**
@@ -61,15 +63,15 @@ public class Scheduler extends JQueryContainer implements ISchedulerListener
 	 */
 	public Scheduler(String id, SchedulerModel model)
 	{
-		this(id, model, new Options());
+		this(id, model, null, new Options());
 	}
 
 	/**
-	 * Constructor
+	 * Main constructor
 	 *
 	 * @param id the markup id
 	 * @param model the {@link SchedulerModel}
-	 * @param options {@link Options}.
+	 * @param options {@link Options}
 	 */
 	public Scheduler(String id, SchedulerModel model, Options options)
 	{
@@ -78,7 +80,39 @@ public class Scheduler extends JQueryContainer implements ISchedulerListener
 		this.options = options;
 	}
 
+	/**
+	 * Constructor
+	 *
+	 * @param id the markup id
+	 * @param model the {@link SchedulerModel}
+	 * @param resourceList a {@link ResourceList}
+	 */
+	public Scheduler(String id, SchedulerModel model, ResourceList resourceList)
+	{
+		this(id, model, resourceList, new Options());
+	}
+
+	/**
+	 * Constructor
+	 *
+	 * @param id the markup id
+	 * @param model the {@link SchedulerModel}
+	 * @param resourceList a {@link ResourceList}
+	 * @param options {@link Options}
+	 */
+	public Scheduler(String id, SchedulerModel model, ResourceList resourceList, Options options)
+	{
+		this(id, model, options);
+
+		this.resourceListModel.add(resourceList);
+	}
+
 	// Methods //
+
+	public void add(ResourceList resourceList)
+	{
+		this.resourceListModel.add(resourceList);
+	}
 
 	/**
 	 * Gets the Kendo (jQuery) object
@@ -97,16 +131,19 @@ public class Scheduler extends JQueryContainer implements ISchedulerListener
 	 */
 	public void refresh(AjaxRequestTarget target)
 	{
+		// TODO: to test, might be replaced by widget.dataSource.read();
+		// target.appendJavaScript(String.format("%s.refresh();", this.widget()));
 		target.appendJavaScript(String.format("%s.dataSource.read(); %s.refresh(); ", this.widget(), this.widget()));
 	}
 
 	// Properties //
 
 	@Override
-	public boolean isEditEnabled() {
+	public boolean isEditEnabled()
+	{
 		return false;
 	}
-	
+
 	/**
 	 * Gets the calendar's model
 	 *
@@ -115,16 +152,6 @@ public class Scheduler extends JQueryContainer implements ISchedulerListener
 	public SchedulerModel getModel()
 	{
 		return (SchedulerModel) this.getDefaultModel();
-	}
-
-	/**
-	 * Gets the data-source behavior's url
-	 *
-	 * @return the data-source behavior's url
-	 */
-	protected final CharSequence getDataSourceUrl()
-	{
-		return this.modelBehavior.getCallbackUrl();
 	}
 
 	// Events //
@@ -146,13 +173,13 @@ public class Scheduler extends JQueryContainer implements ISchedulerListener
 	}
 
 	@Override
-	public void onCreate(AjaxRequestTarget target, SchedulerEvent event)
+	public void onEdit(AjaxRequestTarget target, SchedulerEvent event, SchedulerViewType view)
 	{
 		// noop
 	}
 
 	@Override
-	public void onEdit(AjaxRequestTarget target, SchedulerEvent event, SchedulerViewType view)
+	public void onCreate(AjaxRequestTarget target, SchedulerEvent event)
 	{
 		// noop
 	}
@@ -188,25 +215,31 @@ public class Scheduler extends JQueryContainer implements ISchedulerListener
 			{
 				return Scheduler.this.isEditEnabled();
 			}
-			
+
 			@Override
 			protected CharSequence getDataSourceUrl()
 			{
-				return Scheduler.this.getDataSourceUrl();
+				return Scheduler.this.modelBehavior.getCallbackUrl();
+			}
+
+			@Override
+			protected ResourceListModel getResourceListModel()
+			{
+				return Scheduler.this.resourceListModel;
 			}
 
 			// Events //
 
 			@Override
-			public void onCreate(AjaxRequestTarget target, SchedulerEvent event)
-			{
-				Scheduler.this.onCreate(target, event);
-			}
-
-			@Override
 			public void onEdit(AjaxRequestTarget target, SchedulerEvent event, SchedulerViewType view)
 			{
 				Scheduler.this.onEdit(target, event, view);
+			}
+
+			@Override
+			public void onCreate(AjaxRequestTarget target, SchedulerEvent event)
+			{
+				Scheduler.this.onCreate(target, event);
 			}
 
 			@Override
@@ -240,12 +273,14 @@ public class Scheduler extends JQueryContainer implements ISchedulerListener
 			@Override
 			protected void setEndDate(SchedulerModel model, Date date)
 			{
-				Calendar calendar = Calendar.getInstance(TimeZone.getTimeZone("UTC"));//TODO investigate; getting static from DateUtils ran into NoSuchFieldException UTC, dont know why / Patrick
+				// Calendar calendar = Calendar.getInstance(DateUtils.UTC);
+				Calendar calendar = Calendar.getInstance(TimeZone.getTimeZone("UTC"));// TODO investigate; getting static from DateUtils ran into NoSuchFieldException UTC, dont know why / Patrick
+
 				calendar.setTime(date);
-				calendar.add(Calendar.HOUR_OF_DAY, 23);
-				calendar.add(Calendar.MINUTE, 59);
-				calendar.add(Calendar.SECOND, 59);
-				calendar.add(Calendar.MILLISECOND, 999);
+				calendar.set(Calendar.HOUR_OF_DAY, 23); // add ?
+				calendar.set(Calendar.MINUTE, 59);
+				calendar.set(Calendar.SECOND, 59);
+				calendar.set(Calendar.MILLISECOND, 999);
 
 				model.setEnd(calendar.getTime());
 			}

@@ -18,14 +18,12 @@ package com.googlecode.wicket.kendo.ui.scheduler;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
-import org.apache.wicket.ajax.json.JSONException;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import com.googlecode.wicket.jquery.core.JQueryEvent;
 import com.googlecode.wicket.jquery.core.utils.DateUtils;
-import com.googlecode.wicket.kendo.ui.scheduler.views.SchedulerViewType;
 
 /**
  * Provides a base Bean that can be used with a {@link SchedulerModel}
@@ -33,10 +31,9 @@ import com.googlecode.wicket.kendo.ui.scheduler.views.SchedulerViewType;
  * @author Sebastien Briquet - sebfz1
  *
  */
-public class SchedulerEvent extends JQueryEvent implements Serializable
+public class SchedulerEvent implements Serializable
 {
 	private static final long serialVersionUID = 1L;
-	private static final Logger LOG = LoggerFactory.getLogger(SchedulerEvent.class);
 
 	private static final int DEFAULT_RANGE = 1; // hour
 
@@ -48,32 +45,41 @@ public class SchedulerEvent extends JQueryEvent implements Serializable
 		return event != null && event.id == NEW_ID;
 	}
 
-	// id Number - the unique identifier of the scheduler event. Events whose id is not set are considered as "new".
-	// title String - the title of the event which is displayed in the scheduler views.
-	// start Date - the date at which the event starts.
-	// end Date - the date at which the event ends.
-	// isAllDay Boolean - if the event is "all day" or not.
-
-	// description String - the text description of the scheduler event.
+	// FIXME: Add properties
 	// recurrenceException String - the recurrence exceptions.
 	// recurrenceId String|Number|Object - the id of the recurrence parent. If set the current event is a recurrence exception.
 	// recurrenceRule String - the recurrence rule which describes the repetition pattern of the event. Follows the rfc5545 specification.
 
 	private int id;
 	private String title;
+	private String description;
 
 	private Date start;
 	private Date end;
 	private boolean allDay = false;
-	
-	private SchedulerViewType view;
-	
+
+	/** resources map */
+	private Map<String, Object> resources = new HashMap<String, Object>();
+
 	/**
 	 * Constructor
 	 */
-	protected SchedulerEvent()
+	public SchedulerEvent()
 	{
+		this(NEW_ID, "", new Date());
+	}
 
+	/**
+	 * Constructor<br/>
+	 * The end date will be the start date + {@value #DEFAULT_RANGE} hour(s)
+	 *
+	 * @param id the event id
+	 * @param title the event title
+	 * @param start the start date
+	 */
+	public SchedulerEvent(int id, String title, long start)
+	{
+		this(id, title, new Date(start));
 	}
 
 	/**
@@ -97,100 +103,215 @@ public class SchedulerEvent extends JQueryEvent implements Serializable
 	 * @param start the start date
 	 * @param end the end date
 	 */
+	public SchedulerEvent(int id, String title, long start, long end)
+	{
+		this(id, title, new Date(start), new Date(end));
+	}
+
+	/**
+	 * Constructor
+	 *
+	 * @param id the event id
+	 * @param title the event title
+	 * @param start the start date
+	 * @param end the end date
+	 */
 	public SchedulerEvent(int id, String title, Date start, Date end)
 	{
 		this.id = id;
 		this.title = title;
 		this.start = start;
 		this.end = end;
+		this.description = null;
 	}
 
+	/**
+	 * Gets the unique identifier of the scheduler event
+	 *
+	 * @return the id
+	 */
 	public int getId()
 	{
 		return this.id;
 	}
 
+	/**
+	 * Sets the unique identifier of the scheduler event
+	 *
+	 * @param id the id
+	 */
 	public void setId(int id)
 	{
 		this.id = id;
 	}
 
+	/**
+	 * Gets the title of the event which is displayed in the scheduler views
+	 *
+	 * @return the title
+	 */
 	public String getTitle()
 	{
 		return this.title;
 	}
 
+	/**
+	 * Sets the title of the event which is displayed in the scheduler views
+	 *
+	 * @param title the title
+	 */
 	public void setTitle(String title)
 	{
 		this.title = title;
 	}
 
+	/**
+	 * Gets the text description of the scheduler event
+	 *
+	 * @return the description
+	 */
+	public String getDescription()
+	{
+		return this.description;
+	}
+
+	/**
+	 * Sets the text description of the scheduler event
+	 *
+	 * @param description the description
+	 */
+	public void setDescription(String description)
+	{
+		this.description = description;
+	}
+
+	/**
+	 * Sets the date at which the event starts
+	 *
+	 * @return the start date
+	 */
 	public Date getStart()
 	{
 		return this.start;
 	}
 
-	public void setStart(Date start)
+	/**
+	 * Sets the date at which the event starts
+	 *
+	 * @param date the start date
+	 */
+	public void setStart(Date date)
 	{
-		this.start = start;
+		this.start = date;
 	}
 
-	public void setStart(long start)
+	/**
+	 * Sets the date at which the event starts
+	 *
+	 * @param date the start date
+	 */
+	public void setStart(long date)
 	{
-		this.start = new Date(start);
+		this.start = new Date(date);
 	}
 
+	/**
+	 * Sets the date at which the event ends
+	 *
+	 * @return the end date
+	 */
 	public Date getEnd()
 	{
 		return this.end;
 	}
 
-	public void setEnd(Date end)
+	/**
+	 * Gets the date at which the event ends
+	 *
+	 * @param date the end date
+	 */
+	public void setEnd(Date date)
 	{
-		this.end = end;
+		this.end = date;
 	}
 
-	public void setEnd(long end)
+	/**
+	 * Gets the date at which the event ends
+	 *
+	 * @param date the end date
+	 */
+	public void setEnd(long date)
 	{
-		this.end = new Date(end);
+		this.end = new Date(date);
 	}
 
+	/**
+	 * Indicates whether the event is "all day" or not
+	 *
+	 * @return true or false
+	 */
 	public boolean isAllDay()
 	{
 		return this.allDay;
 	}
 
+	/**
+	 * Sets if the event is "all day" or not
+	 *
+	 * @param allDay true or false
+	 */
 	public void setAllDay(boolean allDay)
 	{
 		this.allDay = allDay;
 	}
-	
-	protected SchedulerViewType getView(){
-		return this.view;
-	}
-	
-	protected void setView(SchedulerViewType view)
+
+	// resources //
+
+	/**
+	 * Gets the resources related fields
+	 *
+	 * @return the resources related fields
+	 */
+	public Set<String> getFields()
 	{
-		this.view = view;
+		return this.resources.keySet();
 	}
 
 	/**
-	 * Gets the JSON representation of this {@link SchedulerEvent}
+	 * Gets a resource value, identified by its field
+	 *
+	 * @param field the resource field (ie: 'resourceId')
+	 * @return the value, which is either an <tt>Integer</tt> or a <tt>List&lt;Integer&gt;</tt>
 	 */
-	@Override
-	public String toString()
+	@SuppressWarnings("unchecked")
+	public <T> T getValue(String field)
 	{
-		try
-		{
-			return SchedulerEventFactory.toJson(this);
-		}
-		catch (JSONException e)
-		{
-			LOG.error(e.getMessage(), e);
-		}
-
-		return "";
+		return (T) this.resources.get(field);
 	}
+
+	/**
+	 * Sets a resource value
+	 *
+	 * @param field the resource field (ie: 'resourceId')
+	 * @param value the value
+	 */
+	public void setResource(String field, Integer value)
+	{
+		this.resources.put(field, value);
+	}
+
+	/**
+	 * Sets a resource value
+	 *
+	 * @param field the resource field (ie: 'resourceId')
+	 * @param values the values
+	 */
+	public void setResource(String field, List<Integer> values)
+	{
+		this.resources.put(field, values);
+	}
+
+	// methods //
 
 	/**
 	 * Visitor accept method
@@ -200,5 +321,11 @@ public class SchedulerEvent extends JQueryEvent implements Serializable
 	public final void accept(ISchedulerVisitor visitor)
 	{
 		visitor.visit(this);
+	}
+
+	@Override
+	public String toString()
+	{
+		return this.title;
 	}
 }

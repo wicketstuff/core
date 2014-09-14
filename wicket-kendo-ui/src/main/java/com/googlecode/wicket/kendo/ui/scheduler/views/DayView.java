@@ -1,22 +1,37 @@
 package com.googlecode.wicket.kendo.ui.scheduler.views;
 
+
 /**
- * 
+ * Defines the 'day' scheduler's view
+ *
  * @author Patrick Davids - Patrick1701
  *
  */
 public final class DayView extends SchedulerView
 {
-
 	private static final long serialVersionUID = 1L;
 
+	/**
+	 * Gets a new instance of <tt>DayView</tt>
+	 *
+	 * @return a new {@link DayView}
+	 */
+	public static DayView newInstance()
+	{
+		return new DayView();
+	}
+
+	/**
+	 * Constructor
+	 */
 	private DayView()
 	{
 		super(SchedulerViewType.day);
 	}
 
-	public static DayView newInstance()
+	@Override
+	public SchedulerView setDateHeaderTemplatePattern(String pattern)
 	{
-		return new DayView();
+		return super.setDateHeaderTemplatePattern(pattern);
 	}
 }

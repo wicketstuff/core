@@ -92,7 +92,7 @@ class SchedulerModelBehavior extends AbstractAjaxBehavior
 	}
 
 	/**
-	 * Gets the new {@link IRequestHandler} that will respond the list of {@link SchedulerEvent} in a json format
+	 * Gets the new {@link IRequestHandler} that will respond the list of {@link SchedulerEvent} in a JSON format
 	 *
 	 * @return the {@link IRequestHandler}
 	 */
@@ -111,7 +111,7 @@ class SchedulerModelBehavior extends AbstractAjaxBehavior
 
 				if (model != null)
 				{
-					List<? extends SchedulerEvent> list = model.getObject(); // calls load()
+					List<SchedulerEvent> list = model.getObject(); // calls load()
 
 					if (list != null)
 					{
@@ -130,7 +130,7 @@ class SchedulerModelBehavior extends AbstractAjaxBehavior
 								builder.append(", ");
 							}
 
-							builder.append(event.toString());
+							builder.append(SchedulerEventFactory.toJson(event));
 						}
 
 						builder.append(" ]");

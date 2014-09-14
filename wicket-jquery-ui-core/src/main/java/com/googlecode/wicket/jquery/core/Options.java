@@ -52,12 +52,11 @@ public class Options implements IClusterable
 	 */
 	public static String asString(Object value)
 	{
-		return Options.asString(String.valueOf(value));
+		return String.format("%s%s%s", QUOTE, String.valueOf(value), QUOTE);
 	}
 
 	/**
-	 * Converts a string to its javascript representation. ie: "myvalue" (with the double quotes)<br/>
-	 * If the supplied value is null, "" is returned
+	 * Converts a string to its javascript representation. ie: "myvalue" (with the double quotes)
 	 *
 	 * @param value the object
 	 * @return the JSON value
@@ -117,6 +116,32 @@ public class Options implements IClusterable
 		return ""; // fixes #92
 	}
 
+	/**
+	 * Helper method that adds a key/value JSON pair to the specified builder<br/>
+	 * If the supplied value is null, "null" is returned
+	 *
+	 * @param builder the {@link StringBuilder}
+	 * @param key the key
+	 * @param value the object
+	 */
+	// FIXME: replace where appropriate
+	public static void append(StringBuilder builder, String key, Object value)
+	{
+		builder.append(Options.QUOTE).append(key).append(Options.QUOTE).append(": ").append(String.valueOf(value));
+	}
+
+	/**
+	 * Helper method that adds a key/value JSON pair to the specified builder
+	 *
+	 * @param builder the {@link StringBuilder}
+	 * @param key the key
+	 * @param value the value
+	 */
+	public static void append(StringBuilder builder, String key, String value)
+	{
+		builder.append(Options.QUOTE).append(key).append(Options.QUOTE).append(": ").append(Options.QUOTE).append(escapeQuotes(value)).append(Options.QUOTE);
+	}
+
 	private final Map<String, Serializable> map;
 
 	/**
@@ -159,7 +184,7 @@ public class Options implements IClusterable
 	}
 
 	/**
-	 * Adds or replace an options defined by a key/value pair.<br/>
+	 * Adds or replace an option defined by a key/value pair.<br/>
 	 * If for a given key, the value is null, then the pair is removed.
 	 *
 	 * @param key - key with which the specified value is to be associated
@@ -182,13 +207,13 @@ public class Options implements IClusterable
 
 	/**
 	 * In addtion to {@link #set(String, Serializable)} this enables to build trees of Options.
-	 * 
+	 *
 	 * <p>
 	 * Example:
 	 * <pre>
 	 * Options o = new Options();
 	 * o.set("foo", new Options("foo1", "value1"), new Options("foo2", Options.asString("value2")));
-	 * 
+	 *
 	 * results in json:
 	 * { "foo": [
 	 *            { "foo1": value1 },
@@ -197,7 +222,7 @@ public class Options implements IClusterable
 	 * }
 	 * </pre>
 	 * </p>
-	 * 
+	 *
 	 * @param key - key with which the specified value is to be associated
 	 * @param values - values to be associated with the specified key
 	 */
@@ -206,11 +231,32 @@ public class Options implements IClusterable
 	    this.set(key, Arrays.asList(values));
 	}
 
+	/**
+	 * In addtion to {@link #set(String, Serializable)} this enables to build trees of Options.
+	 *
+	 * <p>
+	 * Example:
+	 * <pre>
+	 * Options o = new Options();
+	 * o.set("foo", new Options("foo1", "value1"), new Options("foo2", Options.asString("value2")));
+	 *
+	 * results in json:
+	 * { "foo": [
+	 *            { "foo1": value1 },
+	 *            { "foo2": "value2" }
+	 *          ]
+	 * }
+	 * </pre>
+	 * </p>
+	 *
+	 * @param key - key with which the specified value is to be associated
+	 * @param values - values to be associated with the specified key
+	 */
 	void set(String key, List<Serializable> value)
 	{
-	    this.set(key, value.toString()); // back to set(String, Serializable); 
+	    this.set(key, value.toString());
 	}
-	
+
 	/**
 	 * Gets a read-only entry set of options
 	 *

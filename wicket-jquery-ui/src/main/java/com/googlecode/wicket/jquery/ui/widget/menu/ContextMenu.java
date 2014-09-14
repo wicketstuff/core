@@ -84,7 +84,7 @@ public class ContextMenu extends Menu
 	// Properties //
 
 	/**
-	 * Gets the jQuery UI position option (as json-string) that should be applied on the {@link ContextMenu} when 'contextmenu' event is triggered
+	 * Gets the jQuery UI position option (as JSON-string) that should be applied on the {@link ContextMenu} when 'contextmenu' event is triggered
 	 *
 	 * @param component the {@link Component} that fired the 'contextmenu' event
 	 * @return the jQuery position option (as string)

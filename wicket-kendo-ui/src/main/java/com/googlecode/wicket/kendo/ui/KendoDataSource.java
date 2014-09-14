@@ -16,6 +16,8 @@
  */
 package com.googlecode.wicket.kendo.ui;
 
+import org.apache.wicket.util.lang.Args;
+
 import com.googlecode.wicket.jquery.core.Options;
 import com.googlecode.wicket.kendo.ui.utils.DebugUtils;
 
@@ -52,7 +54,7 @@ public class KendoDataSource extends Options implements IKendoDataSource
 	 */
 	public KendoDataSource(String name, String type)
 	{
-		this.name = name;
+		this.name = Args.notNull(name, "name");
 		this.transport = new Options();
 
 		this.set("type", Options.asString(type));

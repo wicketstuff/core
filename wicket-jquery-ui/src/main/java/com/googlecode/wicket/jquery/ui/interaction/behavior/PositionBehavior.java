@@ -37,7 +37,7 @@ public class PositionBehavior extends JQueryUIBehavior
 	/**
 	 * Constructor
 	 *
-	 * @param object the position json object
+	 * @param object the position JSON object
 	 */
 	public PositionBehavior(Object object)
 	{
