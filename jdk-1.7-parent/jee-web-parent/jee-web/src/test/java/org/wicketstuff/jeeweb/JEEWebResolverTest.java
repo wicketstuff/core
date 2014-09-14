@@ -19,7 +19,7 @@ package org.wicketstuff.jeeweb;
 import java.io.File;
 
 import javax.servlet.RequestDispatcher;
-import javax.servlet.Servlet;
+import javax.servlet.http.HttpServlet;
 
 import org.apache.wicket.protocol.http.mock.MockServletContext;
 import org.apache.wicket.util.tester.WicketTester;
@@ -36,7 +36,7 @@ public class JEEWebResolverTest
 		MockServletContext mockServletContext = new MockServletContext(testApplication, new File(
 			"src/test/webapp").getCanonicalPath());
 
-		mockServletContext.addMockServlet("/TestServlet", Servlet.class);
+		mockServletContext.addServlet("/TestServlet", new HttpServlet(){});
 
 		WicketTester wicketTester = new WicketTester(testApplication, mockServletContext);
 		wicketTester.startPage(TestServletAndJSPPage.class);
@@ -74,5 +74,4 @@ public class JEEWebResolverTest
 		WicketTester wicketTester = new WicketTester(testApplication, mockServletContext);
 		wicketTester.startPage(TestServletFailPage.class);
 	}
-
 }
