@@ -226,7 +226,7 @@ public abstract class AbstractDialog<T extends Serializable> extends GenericPane
 	{
 		super.onDetach();
 
-		this.title.detach();
+		this.title.detach(); // fixes #120
 	}
 
 	// Properties //
