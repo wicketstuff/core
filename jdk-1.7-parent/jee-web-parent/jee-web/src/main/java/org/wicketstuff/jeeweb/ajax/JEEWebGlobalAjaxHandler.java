@@ -23,7 +23,6 @@ import org.apache.wicket.Application;
 import org.apache.wicket.Page;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.WicketAjaxJQueryResourceReference;
-import org.apache.wicket.ajax.WicketEventJQueryResourceReference;
 import org.apache.wicket.event.Broadcast;
 import org.apache.wicket.markup.head.HeaderItem;
 import org.apache.wicket.markup.head.IHeaderResponse;
@@ -37,7 +36,6 @@ import org.apache.wicket.request.mapper.parameter.PageParameters;
 import org.apache.wicket.request.resource.IResource;
 import org.apache.wicket.request.resource.JavaScriptResourceReference;
 import org.apache.wicket.request.resource.ResourceReference;
-import org.apache.wicket.resource.JQueryResourceReference;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -88,11 +86,11 @@ public class JEEWebGlobalAjaxHandler extends ResourceReference
 
 					int pageId = parameters.get("pageId").toInt();
 					Page page = (Page)WebSession.get().getPageManager().getPage(pageId);
-					AjaxRequestTarget newAjaxRequestTarget = ((WebApplication)Application.get())
-						.newAjaxRequestTarget(page);
+					AjaxRequestTarget newAjaxRequestTarget = ((WebApplication)Application.get()).newAjaxRequestTarget(page);
 					RequestCycle.get().scheduleRequestHandlerAfterCurrent(newAjaxRequestTarget);
 					page.send(page, Broadcast.BREADTH, new JEEWebGlobalAjaxEvent(
-						newAjaxRequestTarget, parameters, RequestCycle.get().getRequest()
+						newAjaxRequestTarget, parameters, RequestCycle.get()
+							.getRequest()
 							.getPostParameters()));
 				}
 				catch (Exception e)
@@ -123,8 +121,8 @@ public class JEEWebGlobalAjaxHandler extends ResourceReference
 			public void renderHead(IHeaderResponse response)
 			{
 				JavaScriptResourceReference forReference = new JavaScriptResourceReference(
-					JEEWebGlobalAjaxHandler.class, JEEWebGlobalAjaxHandler.class.getSimpleName()
-						+ ".js")
+					JEEWebGlobalAjaxHandler.class, JEEWebGlobalAjaxHandler.class.getSimpleName() +
+						".js")
 				{
 
 					private static final long serialVersionUID = -3649384632770480975L;
@@ -132,14 +130,14 @@ public class JEEWebGlobalAjaxHandler extends ResourceReference
 					@Override
 					public List<HeaderItem> getDependencies()
 					{
-						List<HeaderItem> dependencies = new ArrayList<HeaderItem>();
-						dependencies.add(JavaScriptHeaderItem.forReference(JQueryResourceReference
-							.get()));
-						dependencies.add(JavaScriptHeaderItem
-							.forReference(WicketEventJQueryResourceReference.get()));
-						dependencies.add(JavaScriptHeaderItem
-							.forReference(WicketAjaxJQueryResourceReference.get()));
-						return dependencies;
+						return new ArrayList<HeaderItem>()
+						{
+							private static final long serialVersionUID = 1L;
+							{
+
+								add(JavaScriptHeaderItem.forReference(WicketAjaxJQueryResourceReference.get()));
+							}
+						};
 					}
 				};
 				response.render(JavaScriptHeaderItem.forReference(forReference));
