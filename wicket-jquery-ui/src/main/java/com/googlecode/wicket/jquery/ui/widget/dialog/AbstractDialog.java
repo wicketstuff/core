@@ -221,6 +221,14 @@ public abstract class AbstractDialog<T extends Serializable> extends GenericPane
 		this.onClick(target, button);
 	}
 
+	@Override
+	protected void onDetach()
+	{
+		super.onDetach();
+
+		this.title.detach();
+	}
+
 	// Properties //
 
 	/**
