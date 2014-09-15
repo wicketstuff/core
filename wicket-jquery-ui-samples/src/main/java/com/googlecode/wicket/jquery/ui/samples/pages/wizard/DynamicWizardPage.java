@@ -84,7 +84,7 @@ public class DynamicWizardPage extends AbstractWizardPage
 			@Override
 			protected void onSubmit(AjaxRequestTarget target, Form<?> form)
 			{
-				wizard.setModelObject(new User("seb", "", ""));
+				wizard.setModelObject(new User());
 				wizard.open(target);
 			}
 		});
