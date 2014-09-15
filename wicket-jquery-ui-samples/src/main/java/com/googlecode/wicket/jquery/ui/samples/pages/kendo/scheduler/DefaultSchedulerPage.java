@@ -57,7 +57,7 @@ public class DefaultSchedulerPage extends AbstractSchedulerPage
 			{
 				SchedulerEventsDAO.get().create(event);
 
-				this.info("Created: " + event);
+				this.info(String.format("Created: %s, %s -%s", event, event.getStart(), event.getEnd()));
 				target.add(feedback);
 			}
 
@@ -66,7 +66,7 @@ public class DefaultSchedulerPage extends AbstractSchedulerPage
 			{
 				SchedulerEventsDAO.get().update(event);
 
-				this.info("Updated: " + event);
+				this.info(String.format("Updated: %s, %s -%s", event, event.getStart(), event.getEnd()));
 				target.add(feedback);
 			}
 

@@ -131,9 +131,7 @@ public class Scheduler extends JQueryContainer implements ISchedulerListener
 	 */
 	public void refresh(AjaxRequestTarget target)
 	{
-		// TODO: to test, might be replaced by widget.dataSource.read();
-		target.appendJavaScript(String.format("%s.refresh();", this.widget()));
-		// target.appendJavaScript(String.format("%s.dataSource.read(); %s.refresh(); ", this.widget(), this.widget()));
+		target.appendJavaScript(String.format("var widget = %s; widget.dataSource.read(); widget.refresh();", this.widget()));
 	}
 
 	// Properties //
@@ -169,7 +167,7 @@ public class Scheduler extends JQueryContainer implements ISchedulerListener
 	{
 		super.onConfigure(behavior);
 
-		behavior.setOption("timezone", Options.asString("Etc/UTC"));
+		behavior.setOption("timezone", Options.asString("Etc/UTC")); //TODO model to schema?
 	}
 
 	@Override
@@ -274,7 +272,6 @@ public class Scheduler extends JQueryContainer implements ISchedulerListener
 			protected void setEndDate(SchedulerModel model, Date date)
 			{
 				Calendar calendar = Calendar.getInstance(DateUtils.UTC);
-				// Calendar calendar = Calendar.getInstance(TimeZone.getTimeZone("UTC"));//TODO investigate; getting static from DateUtils ran into NoSuchFieldException UTC, dont know why / Patrick
 
 				calendar.setTime(date);
 				calendar.set(Calendar.HOUR_OF_DAY, 23); // add ?

@@ -37,7 +37,6 @@ public class DateRange implements IClusterable
 	private static final long serialVersionUID = 1L;
 
 	public static final String PATTERN = "yyyy-MM-dd'T'HH:mm:ss";
-	//XXX: report move UTC to DateUtils
 
 	/**
 	 * Gets a default {@link DateRange} with start-date and end-date are set to today (UTC).

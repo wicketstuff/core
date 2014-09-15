@@ -132,6 +132,9 @@ public abstract class SchedulerBehavior extends KendoUIBehavior implements IJQue
 		// data source //
 		this.setOption("dataSource", dataSource.getName());
 
+		// schema //
+//		this.setOption("schema", new Options("timezone", Options.asString("Etc/UTC")));
+
 		// resource //
 		this.setOption("resources", this.getResourceListModel());
 	}
