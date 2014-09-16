@@ -232,11 +232,11 @@ public abstract class SchedulerBehavior extends KendoUIBehavior implements IJQue
 				parameters.add(CallbackParameter.context("options"));
 
 				// event //
-				parameters.add(CallbackParameter.resolved("id", "options.data.id")); // retrieved
-				parameters.add(CallbackParameter.resolved("start", "options.data.start.getTime()")); // retrieved
-				parameters.add(CallbackParameter.resolved("end", "options.data.end.getTime()")); // retrieved
-				parameters.add(CallbackParameter.resolved("title", "options.data.title")); // retrieved
-				parameters.add(CallbackParameter.resolved("description", "options.data.description")); // retrieved
+				parameters.add(CallbackParameter.resolved("id", "options.event.id")); // retrieved
+				parameters.add(CallbackParameter.resolved("start", "options.event.start.getTime()")); // retrieved
+				parameters.add(CallbackParameter.resolved("end", "options.event.end.getTime()")); // retrieved
+				parameters.add(CallbackParameter.resolved("title", "options.event.title")); // retrieved
+				parameters.add(CallbackParameter.resolved("description", "options.event.description")); // retrieved
 
 				// resources //
 				for (String field : SchedulerBehavior.this.getResourceListModel().getFields())
@@ -244,7 +244,7 @@ public abstract class SchedulerBehavior extends KendoUIBehavior implements IJQue
 					parameters.add(CallbackParameter.resolved(field, "options.data." + field)); // retrieved
 				}
 
-				parameters.add(CallbackParameter.resolved("view", "e.sender.view().name")); // retrieved
+				parameters.add(CallbackParameter.resolved("view", "options.sender.view().name")); // retrieved
 
 				// view //
 				return parameters.toArray(new CallbackParameter[] {});
@@ -253,7 +253,7 @@ public abstract class SchedulerBehavior extends KendoUIBehavior implements IJQue
 			@Override
 			public CharSequence getCallbackFunctionBody(CallbackParameter... extraParameters)
 			{
-				return super.getCallbackFunctionBody(extraParameters) + " e.preventDefault();"; // avoid propagation of KendoUIs edit-event on client-side
+				return super.getCallbackFunctionBody(extraParameters) + " options.preventDefault();"; // avoid propagation of KendoUIs edit-event on client-side
 			}
 		};
 	}
