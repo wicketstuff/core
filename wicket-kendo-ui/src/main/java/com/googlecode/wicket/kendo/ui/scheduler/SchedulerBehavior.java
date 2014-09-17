@@ -24,6 +24,9 @@ import java.util.regex.Pattern;
 import org.apache.wicket.Component;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.attributes.CallbackParameter;
+import org.apache.wicket.markup.head.IHeaderResponse;
+import org.apache.wicket.markup.head.JavaScriptReferenceHeaderItem;
+import org.apache.wicket.request.resource.JavaScriptResourceReference;
 import org.apache.wicket.util.string.StringValue;
 
 import com.googlecode.wicket.jquery.core.JQueryEvent;
@@ -46,6 +49,8 @@ public abstract class SchedulerBehavior extends KendoUIBehavior implements IJQue
 {
 	private static final long serialVersionUID = 1L;
 
+	private static final JavaScriptResourceReference JS = new JavaScriptResourceReference(SchedulerBehavior.class, "SchedulerBehavior.js");
+	
 	static final String METHOD = "kendoScheduler";
 
 	private JQueryAjaxBehavior onEditBehavior = null;
@@ -92,6 +97,13 @@ public abstract class SchedulerBehavior extends KendoUIBehavior implements IJQue
 		component.add(this.onDeleteBehavior = this.newOnDeleteBehavior());
 	}
 
+
+	@Override
+	public void renderHead(Component component, IHeaderResponse response) {
+		super.renderHead(component, response);
+		response.render(JavaScriptReferenceHeaderItem.forReference(JS));
+	}
+	
 	// Properties //
 
 	/**
@@ -195,7 +207,7 @@ public abstract class SchedulerBehavior extends KendoUIBehavior implements IJQue
 	{
 		String widget = this.widget(METHOD);
 		String start = widget + ".view().startDate().getTime()";
-		String end = widget + ".view().endDate().getTime()";
+		String end = "calculateKendoSchedulerViewEndPeriod("+widget+".view().endDate()).getTime()";
 
 		return "function(options) {" // lf
 				+ "	jQuery.ajax({" // lf

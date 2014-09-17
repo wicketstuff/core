@@ -16,15 +16,11 @@
  */
 package com.googlecode.wicket.kendo.ui.scheduler;
 
-import java.util.Calendar;
-import java.util.Date;
-
 import org.apache.wicket.ajax.AjaxRequestTarget;
 
 import com.googlecode.wicket.jquery.core.JQueryBehavior;
 import com.googlecode.wicket.jquery.core.JQueryContainer;
 import com.googlecode.wicket.jquery.core.Options;
-import com.googlecode.wicket.jquery.core.utils.DateUtils;
 import com.googlecode.wicket.kendo.ui.scheduler.resource.ResourceList;
 import com.googlecode.wicket.kendo.ui.scheduler.resource.ResourceListModel;
 import com.googlecode.wicket.kendo.ui.scheduler.views.SchedulerViewType;
@@ -266,23 +262,6 @@ public class Scheduler extends JQueryContainer implements ISchedulerListener
 	 */
 	protected SchedulerModelBehavior newSchedulerModelBehavior(final SchedulerModel model)
 	{
-		return new SchedulerModelBehavior(model) {
-
-			private static final long serialVersionUID = 1L;
-
-			@Override
-			protected void setEndDate(SchedulerModel model, Date date)
-			{
-				Calendar calendar = Calendar.getInstance(DateUtils.UTC);
-
-				calendar.setTime(date);
-				calendar.set(Calendar.HOUR_OF_DAY, 23); // add ?
-				calendar.set(Calendar.MINUTE, 59);
-				calendar.set(Calendar.SECOND, 59);
-				calendar.set(Calendar.MILLISECOND, 999);
-
-				model.setEnd(calendar.getTime());
-			}
-		};
+		return new SchedulerModelBehavior(model);
 	}
 }
