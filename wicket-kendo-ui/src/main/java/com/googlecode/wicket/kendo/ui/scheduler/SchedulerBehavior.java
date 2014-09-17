@@ -409,7 +409,7 @@ public abstract class SchedulerBehavior extends KendoUIBehavior implements IJQue
 						values.add(Integer.valueOf(matcher.group()));
 					}
 
-					if (list.isMutiple())
+					if (list.isMultiple())
 					{
 						this.event.setResource(field, values);
 					}

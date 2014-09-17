@@ -31,7 +31,7 @@ public class ResourceList extends ArrayList<Resource>
 	private final String title;
 	private final String field;
 
-	private boolean mutiple;
+	private boolean multiple;
 
 	/**
 	 * Constructor
@@ -55,7 +55,7 @@ public class ResourceList extends ArrayList<Resource>
 	{
 		this.title = title;
 		this.field = field;
-		this.mutiple = multiple;
+		this.multiple = multiple;
 	}
 
 	/**
@@ -83,8 +83,8 @@ public class ResourceList extends ArrayList<Resource>
 	 *
 	 * @return true or false
 	 */
-	public boolean isMutiple()
+	public boolean isMultiple()
 	{
-		return this.mutiple;
+		return this.multiple;
 	}
 }
