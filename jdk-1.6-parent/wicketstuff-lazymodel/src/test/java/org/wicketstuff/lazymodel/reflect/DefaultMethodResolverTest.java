@@ -136,6 +136,16 @@ public class DefaultMethodResolverTest {
 	}
 
 	@Test
+	public void setterForOverridenGet() throws Exception {
+
+		Method getter = ExtendedFoo.class.getMethod("getBar");
+
+		Method setter = resolver.getSetter(getter);
+
+		assertEquals(Foo.class.getMethod("setBar", Object.class), setter);
+	}
+
+	@Test
 	public void setterForIs() throws Exception {
 
 		Method getter = Foo.class.getMethod("isBaz");
@@ -251,6 +261,13 @@ public class DefaultMethodResolverTest {
 		}
 
 		public void setQuux2(String key, String value) {
+		}
+	}
+	
+	public static class ExtendedFoo extends Foo {
+		@Override
+		public Object getBar() {
+			return super.getBar();
 		}
 	}
 }
