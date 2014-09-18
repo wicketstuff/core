@@ -130,12 +130,21 @@ public class DefaultMethodResolver implements IMethodResolver {
 				getterParameters.length);
 		setterParameters[getterParameters.length] = getter.getReturnType();
 
+		Class<?> owner = getter.getDeclaringClass();
 		Method setter;
-		try {
-			setter = getter.getDeclaringClass().getDeclaredMethod(name, setterParameters);
-		} catch (Exception e) {
-			throw new WicketRuntimeException(String.format(
-					"no setter for %s#%s", getter.getDeclaringClass(), name));
+		while (true) {
+			try {
+				setter = owner.getDeclaredMethod(name, setterParameters);
+				break;
+			} catch (Exception e) {
+				if (owner == Object.class) {
+					throw new WicketRuntimeException(String.format(
+						"no setter for %s#%s", getter.getDeclaringClass(), name));
+				}
+				
+				// getter might be overriden and setter is declared in superclass only
+				owner = owner.getSuperclass();
+			}
 		}
 
 		try {
