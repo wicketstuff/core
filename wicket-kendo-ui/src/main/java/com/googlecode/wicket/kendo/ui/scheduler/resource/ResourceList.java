@@ -39,6 +39,29 @@ public class ResourceList extends ArrayList<Resource>
 	 *
 	 * @param title the title of the resource list that will serves as the label in the 'edit' form (ie: 'Resource')
 	 * @param field the field (ie: 'resourceId')
+	 */
+	public ResourceList(String title, String field)
+	{
+		this(title, field, null, false);
+	}
+
+	/**
+	 * Constructor
+	 *
+	 * @param title the title of the resource list that will serves as the label in the 'edit' form (ie: 'Resource')
+	 * @param field the field of the resource list (ie: 'resourceId')
+	 * @param multiple whether an event can have multiple resources for the given field
+	 */
+	public ResourceList(String title, String field, boolean multiple)
+	{
+		this(title, field, null, multiple);
+	}
+
+	/**
+	 * Constructor
+	 *
+	 * @param title the title of the resource list that will serves as the label in the 'edit' form (ie: 'Resource')
+	 * @param field the field (ie: 'resourceId')
 	 * @param name of the resource list
 	 */
 	public ResourceList(String title, String field, String name)
