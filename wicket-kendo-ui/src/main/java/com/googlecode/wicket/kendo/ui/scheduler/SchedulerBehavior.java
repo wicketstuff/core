@@ -253,7 +253,7 @@ public abstract class SchedulerBehavior extends KendoUIBehavior implements IJQue
 				// resources //
 				for (String field : SchedulerBehavior.this.getResourceListModel().getFields())
 				{
-					parameters.add(CallbackParameter.resolved(field, "options.data." + field)); // retrieved
+					parameters.add(CallbackParameter.resolved(field, "options.event." + field)); // retrieved
 				}
 
 				parameters.add(CallbackParameter.resolved("view", "options.sender.view().name")); // retrieved
