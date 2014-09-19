@@ -24,6 +24,9 @@ import java.util.regex.Pattern;
 import org.apache.wicket.Component;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.attributes.CallbackParameter;
+import org.apache.wicket.markup.head.IHeaderResponse;
+import org.apache.wicket.markup.head.JavaScriptReferenceHeaderItem;
+import org.apache.wicket.request.resource.JavaScriptResourceReference;
 import org.apache.wicket.util.string.StringValue;
 
 import com.googlecode.wicket.jquery.core.JQueryEvent;
@@ -46,6 +49,8 @@ public abstract class SchedulerBehavior extends KendoUIBehavior implements IJQue
 {
 	private static final long serialVersionUID = 1L;
 
+	private static final JavaScriptResourceReference JS = new JavaScriptResourceReference(SchedulerBehavior.class, "SchedulerBehavior.js");
+	
 	static final String METHOD = "kendoScheduler";
 
 	private JQueryAjaxBehavior onEditBehavior = null;
@@ -92,6 +97,13 @@ public abstract class SchedulerBehavior extends KendoUIBehavior implements IJQue
 		component.add(this.onDeleteBehavior = this.newOnDeleteBehavior());
 	}
 
+
+	@Override
+	public void renderHead(Component component, IHeaderResponse response) {
+		super.renderHead(component, response);
+		response.render(JavaScriptReferenceHeaderItem.forReference(JS));
+	}
+	
 	// Properties //
 
 	/**
@@ -195,7 +207,7 @@ public abstract class SchedulerBehavior extends KendoUIBehavior implements IJQue
 	{
 		String widget = this.widget(METHOD);
 		String start = widget + ".view().startDate().getTime()";
-		String end = widget + ".view().endDate().getTime()";
+		String end = "calculateKendoSchedulerViewEndPeriod("+widget+".view().endDate()).getTime()";
 
 		return "function(options) {" // lf
 				+ "	jQuery.ajax({" // lf
@@ -232,19 +244,19 @@ public abstract class SchedulerBehavior extends KendoUIBehavior implements IJQue
 				parameters.add(CallbackParameter.context("options"));
 
 				// event //
-				parameters.add(CallbackParameter.resolved("id", "options.data.id")); // retrieved
-				parameters.add(CallbackParameter.resolved("start", "options.data.start.getTime()")); // retrieved
-				parameters.add(CallbackParameter.resolved("end", "options.data.end.getTime()")); // retrieved
-				parameters.add(CallbackParameter.resolved("title", "options.data.title")); // retrieved
-				parameters.add(CallbackParameter.resolved("description", "options.data.description")); // retrieved
+				parameters.add(CallbackParameter.resolved("id", "options.event.id")); // retrieved
+				parameters.add(CallbackParameter.resolved("start", "options.event.start.getTime()")); // retrieved
+				parameters.add(CallbackParameter.resolved("end", "options.event.end.getTime()")); // retrieved
+				parameters.add(CallbackParameter.resolved("title", "options.event.title")); // retrieved
+				parameters.add(CallbackParameter.resolved("description", "options.event.description")); // retrieved
 
 				// resources //
 				for (String field : SchedulerBehavior.this.getResourceListModel().getFields())
 				{
-					parameters.add(CallbackParameter.resolved(field, "options.data." + field)); // retrieved
+					parameters.add(CallbackParameter.resolved(field, "options.event." + field)); // retrieved
 				}
 
-				parameters.add(CallbackParameter.resolved("view", "e.sender.view().name")); // retrieved
+				parameters.add(CallbackParameter.resolved("view", "options.sender.view().name")); // retrieved
 
 				// view //
 				return parameters.toArray(new CallbackParameter[] {});
@@ -253,7 +265,7 @@ public abstract class SchedulerBehavior extends KendoUIBehavior implements IJQue
 			@Override
 			public CharSequence getCallbackFunctionBody(CallbackParameter... extraParameters)
 			{
-				return super.getCallbackFunctionBody(extraParameters) + " e.preventDefault();"; // avoid propagation of KendoUIs edit-event on client-side
+				return super.getCallbackFunctionBody(extraParameters) + " options.preventDefault();"; // avoid propagation of KendoUIs edit-event on client-side
 			}
 		};
 	}
@@ -397,7 +409,7 @@ public abstract class SchedulerBehavior extends KendoUIBehavior implements IJQue
 						values.add(Integer.valueOf(matcher.group()));
 					}
 
-					if (list.isMutiple())
+					if (list.isMultiple())
 					{
 						this.event.setResource(field, values);
 					}

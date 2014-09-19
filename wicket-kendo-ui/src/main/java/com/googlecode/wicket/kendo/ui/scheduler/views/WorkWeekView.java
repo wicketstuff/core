@@ -27,4 +27,10 @@ public final class WorkWeekView extends SchedulerView
 	{
 		super(SchedulerViewType.workWeek);
 	}
+	
+	@Override
+	public SchedulerView setDateHeaderTemplatePattern(String pattern)
+	{
+		return super.setDateHeaderTemplatePattern(pattern);
+	}
 }

@@ -85,9 +85,13 @@ public class ResourceListModel extends ListModel<ResourceList>
 			builder.append("{ ");
 			Options.append(builder, "field", list.getField());
 			builder.append(", ");
+			if(list.getName()!=null){
+				Options.append(builder, "name", list.getName());
+				builder.append(", ");
+			}
 			Options.append(builder, "title", list.getTitle());
 			builder.append(", ");
-			Options.append(builder, "multiple", list.isMutiple());
+			Options.append(builder, "multiple", list.isMultiple());
 			builder.append(", ");
 			builder.append("dataSource: [ ");
 
