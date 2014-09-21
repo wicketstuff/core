@@ -10,6 +10,8 @@ import org.apache.wicket.markup.html.form.EmailTextField;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.form.RequiredTextField;
 import org.apache.wicket.markup.html.panel.FeedbackPanel;
+import org.apache.wicket.model.CompoundPropertyModel;
+import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
 
 import com.googlecode.wicket.jquery.ui.JQueryIcon;
@@ -17,7 +19,6 @@ import com.googlecode.wicket.jquery.ui.form.RadioChoice;
 import com.googlecode.wicket.jquery.ui.form.button.AjaxButton;
 import com.googlecode.wicket.jquery.ui.panel.JQueryFeedbackPanel;
 import com.googlecode.wicket.jquery.ui.samples.data.bean.User;
-import com.googlecode.wicket.jquery.ui.samples.data.model.UserModel;
 import com.googlecode.wicket.jquery.ui.widget.wizard.AbstractWizard;
 
 public class DefaultWizardPage extends AbstractWizardPage
@@ -72,7 +73,7 @@ public class DefaultWizardPage extends AbstractWizardPage
 			@Override
 			protected void onSubmit(AjaxRequestTarget target, Form<?> form)
 			{
-				wizard.setModel(new UserModel());
+				wizard.setModelObject(new User());
 				wizard.open(target);
 			}
 		});
@@ -94,9 +95,17 @@ public class DefaultWizardPage extends AbstractWizardPage
 			wizardModel.add(new Step1());
 			wizardModel.add(new Step2());
 			wizardModel.add(new Step3());
-			wizardModel.setLastVisible(true); //makes the 'last step button' visible
+			wizardModel.setLastVisible(true); // makes the 'last step button' visible
 
 			this.init(wizardModel);
+		}
+
+		@Override
+		protected IModel<?> initModel()
+		{
+			// We need to have a model at initialization if none has been supplied to the ctor
+			// Calling #setModel should be avoided afterward, so we can specify a CPM here
+			return new CompoundPropertyModel<User>(new Model<User>());
 		}
 
 		/**
@@ -117,7 +126,7 @@ public class DefaultWizardPage extends AbstractWizardPage
 		}
 
 		/**
-		 * Provides the 'Role' step
+		 * Provides the 'Role' step<br/>
 		 * Associated markup file is DefaultWizardPage$UserWizard$Step2.html
 		 */
 		class Step2 extends WizardStep

@@ -35,7 +35,7 @@ public class MultipleResourceSchedulerPage extends AbstractSchedulerPage
 		Options options = new Options();
 		options.set("date", "Date.now()");
 		options.set("editable", true); // default
-		options.set("views", "[ { type: 'day', showWorkHours: true }, { type: 'week', showWorkHours: true }, { type: 'month', selected: true } ]");
+		options.set("views", "[ { type: 'day', showWorkHours: true }, { type: 'week', showWorkHours: true, selected: true }, { type: 'month' } ]");
 		options.set("workDayStart", "new Date('2014/1/1 08:00 AM')");
 		options.set("workDayEnd", "new Date('2014/1/1 6:00 PM')");
 
@@ -96,7 +96,7 @@ public class MultipleResourceSchedulerPage extends AbstractSchedulerPage
 
 	static ResourceList newRoomList()
 	{
-		ResourceList list = new ResourceList("Room", "roomId");
+		ResourceList list = new ResourceList("Room", "roomId", "Rooms"); // grouping by "Rooms" (optional)
 		list.add(new Resource(1, "Room #1", "#6699cc"));
 		list.add(new Resource(2, "Room #2", "#9966cc"));
 

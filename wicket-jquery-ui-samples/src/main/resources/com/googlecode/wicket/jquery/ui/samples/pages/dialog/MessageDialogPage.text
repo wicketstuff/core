@@ -9,12 +9,11 @@ Java:
 	{
 		protected void onClose(AjaxRequestTarget target, DialogButton button)
 		{
-			if(button != null && button.equals(LBL_OK))
+			if(button != null && button.match(LBL_OK))
 			{
 				//do something here
 				
-				//note1: #equals() compare either DialogButton or String (button text)
-				//note2: predefined button text are:
+				//note: predefined button text are:
 				//LBL_OK, LBL_CANCEL, LBL_YES, LBL_NO, LBL_CLOSE, LBL_SUBMIT
 			}
 		}	

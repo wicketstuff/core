@@ -16,7 +16,6 @@
  */
 package com.googlecode.wicket.jquery.core;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map.Entry;
@@ -139,7 +138,7 @@ public class JQueryBehavior extends JQueryAbstractBehavior
 	 * @param key the option key
 	 * @return null if the key does not exists
 	 */
-	public <T extends Serializable> T getOption(String key)
+	public <T extends Object> T getOption(String key)
 	{
 		if (this.options == null)
 		{
@@ -156,7 +155,7 @@ public class JQueryBehavior extends JQueryAbstractBehavior
 	 * @param value the option value
 	 * @return the {@link JQueryBehavior} (this)
 	 */
-	public JQueryBehavior setOption(String key, Serializable value)
+	public JQueryBehavior setOption(String key, Object value)
 	{
 		if (this.options == null)
 		{
@@ -164,6 +163,44 @@ public class JQueryBehavior extends JQueryAbstractBehavior
 		}
 
 		this.options.set(key, value);
+
+		return this;
+	}
+
+	/**
+	 * Sets a behavior option, with multiple values.
+	 *
+	 * @param key the option key
+	 * @param values the option values
+	 * @return the {@link JQueryBehavior} (this)
+	 */
+	public JQueryBehavior setOption(String key, Object... values)
+	{
+		if (this.options == null)
+		{
+			throw new WicketRuntimeException(NULL_OPTIONS);
+		}
+
+		this.options.set(key, values);
+
+		return this;
+	}
+
+	/**
+	 * Sets a behavior option, with multiple values.
+	 *
+	 * @param key the option key
+	 * @param values the option values
+	 * @return the {@link JQueryBehavior} (this)
+	 */
+	public JQueryBehavior setOption(String key, List<?> values)
+	{
+		if (this.options == null)
+		{
+			throw new WicketRuntimeException(NULL_OPTIONS);
+		}
+
+		this.options.set(key, values);
 
 		return this;
 	}
@@ -185,7 +222,7 @@ public class JQueryBehavior extends JQueryAbstractBehavior
 	 */
 	public void setOptions(Options options)
 	{
-		for (Entry<String, Serializable> option : options.entries())
+		for (Entry<String, Object> option : options.entries())
 		{
 			this.setOption(option.getKey(), option.getValue());
 		}

@@ -53,20 +53,42 @@ public class ResourceListModel extends ListModel<ResourceList>
 	}
 
 	/**
-	 * Get all fields contained in this collection of ResourceList
+	 * Get all field names contained in this collection of ResourceList
 	 *
-	 * @return all fields
+	 * @return all field names
 	 */
 	public List<String> getFields()
 	{
-		List<String> list = new ArrayList<String>();
+		List<String> fields = new ArrayList<String>();
 
-		for (ResourceList l : this.getObject())
+		for (ResourceList list : this.getObject())
 		{
-			list.add(l.getField());
+			fields.add(list.getField());
 		}
 
-		return list;
+		return fields;
+	}
+
+	/**
+	 * Get all group names contained in this collection of ResourceList
+	 *
+	 * @return all group names
+	 */
+	public List<String> getGroups()
+	{
+		List<String> groups = new ArrayList<String>();
+
+		for (ResourceList list : this.getObject())
+		{
+			String group = list.getGroup();
+
+			if (group != null)
+			{
+				groups.add(group);
+			}
+		}
+
+		return groups;
 	}
 
 	@Override
@@ -85,10 +107,13 @@ public class ResourceListModel extends ListModel<ResourceList>
 			builder.append("{ ");
 			Options.append(builder, "field", list.getField());
 			builder.append(", ");
-			if(list.getName()!=null){
-				Options.append(builder, "name", list.getName());
+
+			if (list.getGroup() != null)
+			{
+				Options.append(builder, "name", list.getGroup());
 				builder.append(", ");
 			}
+
 			Options.append(builder, "title", list.getTitle());
 			builder.append(", ");
 			Options.append(builder, "multiple", list.isMultiple());

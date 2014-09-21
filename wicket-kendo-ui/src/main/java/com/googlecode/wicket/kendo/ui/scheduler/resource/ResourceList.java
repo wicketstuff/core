@@ -30,7 +30,7 @@ public class ResourceList extends ArrayList<Resource>
 
 	private final String title;
 	private final String field;
-	private final String name;
+	private final String group;
 
 	private boolean multiple;
 
@@ -62,11 +62,11 @@ public class ResourceList extends ArrayList<Resource>
 	 *
 	 * @param title the title of the resource list that will serves as the label in the 'edit' form (ie: 'Resource')
 	 * @param field the field (ie: 'resourceId')
-	 * @param name of the resource list
+	 * @param group name of the group of the resource list belongs to
 	 */
-	public ResourceList(String title, String field, String name)
+	public ResourceList(String title, String field, String group)
 	{
-		this(title, field, name, false);
+		this(title, field, group, false);
 	}
 
 	/**
@@ -74,14 +74,14 @@ public class ResourceList extends ArrayList<Resource>
 	 *
 	 * @param title the title of the resource list that will serves as the label in the 'edit' form (ie: 'Resource')
 	 * @param field the field of the resource list (ie: 'resourceId')
-	 * @param name the resource to enable the scheduler to group by this resource
+	 * @param group name of the group of the resource list belongs to
 	 * @param multiple whether an event can have multiple resources for the given field
 	 */
-	public ResourceList(String title, String field, String name, boolean multiple)
+	public ResourceList(String title, String field, String group, boolean multiple)
 	{
 		this.title = title;
 		this.field = field;
-		this.name = name;
+		this.group = group;
 		this.multiple = multiple;
 	}
 
@@ -106,13 +106,13 @@ public class ResourceList extends ArrayList<Resource>
 	}
 
 	/**
-	 * Gets the name of the resource list
+	 * Gets the group name of the resource list
 	 *
-	 * @return the name
+	 * @return the group name
 	 */
-	public String getName()
+	public String getGroup()
 	{
-		return this.name;
+		return this.group;
 	}
 
 	/**

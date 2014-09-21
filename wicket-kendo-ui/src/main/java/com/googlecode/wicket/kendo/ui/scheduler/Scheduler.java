@@ -16,6 +16,8 @@
  */
 package com.googlecode.wicket.kendo.ui.scheduler;
 
+import java.util.List;
+
 import org.apache.wicket.ajax.AjaxRequestTarget;
 
 import com.googlecode.wicket.jquery.core.JQueryBehavior;
@@ -35,6 +37,12 @@ public class Scheduler extends JQueryContainer implements ISchedulerListener
 {
 	private static final long serialVersionUID = 1L;
 
+	/** Provides an enum of available group orientation */
+	protected enum GroupOrientation
+	{
+		horizontal, vertical
+	}
+
 	private final Options options;
 	private SchedulerModelBehavior modelBehavior; // load events
 
@@ -48,7 +56,7 @@ public class Scheduler extends JQueryContainer implements ISchedulerListener
 	 */
 	public Scheduler(String id, Options options)
 	{
-		this(id, null, null, new Options());
+		this(id, null, new Options());
 	}
 
 	/**
@@ -59,7 +67,7 @@ public class Scheduler extends JQueryContainer implements ISchedulerListener
 	 */
 	public Scheduler(String id, SchedulerModel model)
 	{
-		this(id, model, null, new Options());
+		this(id, model, new Options());
 	}
 
 	/**
@@ -127,9 +135,7 @@ public class Scheduler extends JQueryContainer implements ISchedulerListener
 	 */
 	public void refresh(AjaxRequestTarget target)
 	{
-		// TODO: to test, might be replaced by widget.dataSource.read();
-		// target.appendJavaScript(String.format("%s.refresh();", this.widget()));
-		target.appendJavaScript(String.format("%s.dataSource.read(); %s.refresh(); ", this.widget(), this.widget()));
+		target.appendJavaScript(String.format("var widget = %s; widget.dataSource.read(); widget.refresh();", this.widget()));
 	}
 
 	// Properties //
@@ -150,6 +156,16 @@ public class Scheduler extends JQueryContainer implements ISchedulerListener
 		return (SchedulerModel) this.getDefaultModel();
 	}
 
+	/**
+	 * Gets the orientation of the group headers
+	 *
+	 * @return {@value GroupOrientation#horizontal} by default
+	 */
+	protected GroupOrientation getGroupOrientation()
+	{
+		return GroupOrientation.horizontal;
+	}
+
 	// Events //
 
 	@Override
@@ -165,7 +181,18 @@ public class Scheduler extends JQueryContainer implements ISchedulerListener
 	{
 		super.onConfigure(behavior);
 
-		behavior.setOption("timezone", Options.asString("Etc/UTC"));
+		behavior.setOption("timezone", Options.asString("Etc/UTC")); // TODO model to schema?
+
+		// groups //
+		List<String> groups = this.resourceListModel.getGroups();
+
+		if (!groups.isEmpty())
+		{
+			Options options = new Options();
+			options.set("resources", Options.asString(groups));
+			options.set("orientation", Options.asString(this.getGroupOrientation()));
+			behavior.setOption("group", options);
+		}
 	}
 
 	@Override

@@ -7,26 +7,22 @@ package com.googlecode.wicket.kendo.ui.scheduler.views;
  */
 public enum SchedulerViewType
 {
-	    day,
-	    week,
-	    workWeek,
-	    month,
-	    agenda;
+	day, week, workWeek, month, agenda;
 
-	    /**
-	     * Safely get the {@link SchedulerViewType} corresponding to the supplied view name
-	     *
-	     * @param viewName the view name
-	     * @return null if the view name does not correspond to a view of the enum
-	     */
-	    public static SchedulerViewType get(String viewName)
+	/**
+	 * Safely get the {@link SchedulerViewType} corresponding to the supplied view name
+	 *
+	 * @param viewName the view name
+	 * @return null if the view name does not correspond to a view of the enum
+	 */
+	public static SchedulerViewType get(String viewName)
+	{
+		try
 		{
-			try
-		    {
-		        return SchedulerViewType.valueOf(viewName);
-		    }
-		    catch (IllegalArgumentException e) { /* not handled */ }
+			return SchedulerViewType.valueOf(viewName);
+		}
+		catch (IllegalArgumentException e) { /* not handled */ }
 
-		    return null;
-	    }
+		return null;
+	}
 }

@@ -6,7 +6,7 @@ package com.googlecode.wicket.kendo.ui.scheduler.views;
  * @author Patrick Davids - Patrick1701
  *
  */
-public final class WeekView extends SchedulerView
+public class WeekView extends SchedulerView
 {
 	private static final long serialVersionUID = 1L;
 

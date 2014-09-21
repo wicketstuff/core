@@ -12,6 +12,9 @@ import org.apache.wicket.markup.html.form.RequiredTextField;
 import org.apache.wicket.markup.html.list.ListItem;
 import org.apache.wicket.markup.html.list.PropertyListView;
 import org.apache.wicket.markup.html.panel.FeedbackPanel;
+import org.apache.wicket.model.CompoundPropertyModel;
+import org.apache.wicket.model.IModel;
+import org.apache.wicket.model.Model;
 import org.apache.wicket.model.util.ListModel;
 
 import com.googlecode.wicket.jquery.ui.JQueryIcon;
@@ -19,7 +22,6 @@ import com.googlecode.wicket.jquery.ui.form.RadioChoice;
 import com.googlecode.wicket.jquery.ui.form.button.AjaxButton;
 import com.googlecode.wicket.jquery.ui.panel.JQueryFeedbackPanel;
 import com.googlecode.wicket.jquery.ui.samples.data.bean.User;
-import com.googlecode.wicket.jquery.ui.samples.data.model.UserModel;
 import com.googlecode.wicket.jquery.ui.widget.dialog.AbstractFormDialog;
 import com.googlecode.wicket.jquery.ui.widget.dialog.DialogButton;
 
@@ -95,7 +97,7 @@ public class UserDialogPage extends AbstractDialogPage
 						User user = item.getModelObject();
 
 						dialog.setTitle(target, "Update user " + user.getName());
-						dialog.setModel(new UserModel(user));
+						dialog.setModelObject(user);
 						dialog.open(target);
 					}
 				});
@@ -111,8 +113,8 @@ public class UserDialogPage extends AbstractDialogPage
 			protected void onSubmit(AjaxRequestTarget target, Form<?> form)
 			{
 				dialog.setTitle(target, "Create new user");
-				dialog.setModel(new UserModel()); //Provides a new model object to the dialog
-				dialog.open(target); //Important: onOpen() event has been overridden in UserDialog to re-attach the inner form, in order to reflect the updated model
+				dialog.setModelObject(new User()); // Provides a new model object to the dialog
+				dialog.open(target); // Important: onOpen() event has been overridden in UserDialog to re-attach the inner form, in order to reflect the updated model
 			}
 		});
 	}
@@ -134,7 +136,7 @@ public class UserDialogPage extends AbstractDialogPage
 		{
 			super(id, title, true);
 
-			this.form = new Form<Integer>("form");
+			this.form = new Form<User>("form", new CompoundPropertyModel<User>(this.getModel()));
 			this.add(this.form);
 
 			// Slider //
@@ -147,7 +149,14 @@ public class UserDialogPage extends AbstractDialogPage
 			this.form.add(this.feedback);
 		}
 
+		@Override
+		protected IModel<?> initModel()
+		{
+			return new Model<User>();
+		}
+
 		// AbstractFormDialog //
+
 		@Override
 		protected List<DialogButton> getButtons()
 		{
@@ -167,6 +176,7 @@ public class UserDialogPage extends AbstractDialogPage
 		}
 
 		// Events //
+
 		@Override
 		protected void onOpen(AjaxRequestTarget target)
 		{

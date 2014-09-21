@@ -19,6 +19,7 @@ import org.apache.wicket.markup.html.image.ContextImage;
 import org.apache.wicket.markup.html.list.ListItem;
 import org.apache.wicket.markup.html.list.ListView;
 import org.apache.wicket.markup.html.panel.FeedbackPanel;
+import org.apache.wicket.model.CompoundPropertyModel;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
 
@@ -29,7 +30,6 @@ import com.googlecode.wicket.jquery.ui.form.button.AjaxButton;
 import com.googlecode.wicket.jquery.ui.panel.JQueryFeedbackPanel;
 import com.googlecode.wicket.jquery.ui.samples.data.bean.User;
 import com.googlecode.wicket.jquery.ui.samples.data.bean.User.Avatar;
-import com.googlecode.wicket.jquery.ui.samples.data.model.UserModel;
 import com.googlecode.wicket.jquery.ui.widget.wizard.AbstractWizard;
 
 public class DynamicWizardPage extends AbstractWizardPage
@@ -63,7 +63,7 @@ public class DynamicWizardPage extends AbstractWizardPage
 			{
 				User user = this.getModelObject();
 
-				this.info(String.format("Created user: '%s' - %s [%s] with %s", user.getName(), user.getMail(), user.getRole(), user.getAvatar() != null ? user.getAvatar() : "no avatar" ));
+				this.info(String.format("Created user: '%s' - %s [%s] with %s", user.getName(), user.getMail(), user.getRole(), user.getAvatar() != null ? user.getAvatar() : "no avatar"));
 				target.add(feedback.setEscapeModelStrings(false));
 			}
 		};
@@ -84,7 +84,7 @@ public class DynamicWizardPage extends AbstractWizardPage
 			@Override
 			protected void onSubmit(AjaxRequestTarget target, Form<?> form)
 			{
-				wizard.setModel(new UserModel());
+				wizard.setModelObject(new User());
 				wizard.open(target);
 			}
 		});
@@ -117,6 +117,14 @@ public class DynamicWizardPage extends AbstractWizardPage
 
 			final IWizardModel wizardModel = new DynamicWizardModel(this.step0);
 			this.init(wizardModel);
+		}
+
+		@Override
+		protected IModel<?> initModel()
+		{
+			// we need to have a model at initialization if none has been supplied to the ctor
+			// calling #setModel should be avoided afterward, so we can specify a CPM here
+			return new CompoundPropertyModel<User>(new Model<User>());
 		}
 
 		@Override
@@ -216,7 +224,7 @@ public class DynamicWizardPage extends AbstractWizardPage
 		}
 
 		/**
-		 * Provides the 'Role' step
+		 * Provides the 'Role' step<br/>
 		 * Associated markup file is DefaultWizardPage$UserWizard$Step2.html
 		 */
 		class Step2 extends DynamicWizardStep
@@ -239,13 +247,13 @@ public class DynamicWizardPage extends AbstractWizardPage
 			@Override
 			public IDynamicWizardStep next()
 			{
-				//defines if wizard goes to avatar step or finish step
+				// defines whether wizard should go to avatar step or finish step
 				return UserWizard.this.enableAvatarStepModel.getObject() ? UserWizard.this.step3 : UserWizard.this.step4;
 			}
 		}
 
 		/**
-		 * Provides the 'avatar' step
+		 * Provides the 'avatar' step<br/>
 		 * Associated markup file is DefaultWizardPage$UserWizard$Step3.html
 		 */
 		class Step3 extends DynamicWizardStep
@@ -315,8 +323,7 @@ public class DynamicWizardPage extends AbstractWizardPage
 		}
 
 		/**
-		 * Provides the 'summary' step
-		 * Associated markup file is DefaultWizardPage$UserWizard$Step4.html
+		 * Provides the 'summary' step Associated markup file is DefaultWizardPage$UserWizard$Step4.html
 		 */
 		class Step4 extends DynamicWizardStep
 		{
@@ -353,21 +360,8 @@ public class DynamicWizardPage extends AbstractWizardPage
 	}
 
 	// List of Avatar(s) //
-	static final List<Avatar> AVATARS = Arrays.asList(
-			new Avatar(1, "avatar01.jpg"),
-			new Avatar(2, "avatar02.jpg"),
-			new Avatar(3, "avatar03.jpg"),
-			new Avatar(4, "avatar04.jpg"),
-			new Avatar(5, "avatar05.jpg"),
-			new Avatar(6, "avatar06.jpg"),
-			new Avatar(7, "avatar07.jpg"),
-			new Avatar(8, "avatar08.jpg"),
-			new Avatar(9, "avatar09.jpg"),
-			new Avatar(10, "avatar10.jpg"),
-			new Avatar(11, "avatar11.jpg"),
-			new Avatar(12, "avatar12.jpg"),
-			new Avatar(13, "avatar13.jpg"),
-			new Avatar(14, "avatar14.jpg"),
-			new Avatar(15, "avatar15.jpg"));
+	static final List<Avatar> AVATARS = Arrays.asList(new Avatar(1, "avatar01.jpg"), new Avatar(2, "avatar02.jpg"), new Avatar(3, "avatar03.jpg"), new Avatar(4, "avatar04.jpg"), new Avatar(5, "avatar05.jpg"), new Avatar(6, "avatar06.jpg"),
+			new Avatar(7, "avatar07.jpg"), new Avatar(8, "avatar08.jpg"), new Avatar(9, "avatar09.jpg"), new Avatar(10, "avatar10.jpg"), new Avatar(11, "avatar11.jpg"), new Avatar(12, "avatar12.jpg"), new Avatar(13, "avatar13.jpg"),
+			new Avatar(14, "avatar14.jpg"), new Avatar(15, "avatar15.jpg"));
 
 }
