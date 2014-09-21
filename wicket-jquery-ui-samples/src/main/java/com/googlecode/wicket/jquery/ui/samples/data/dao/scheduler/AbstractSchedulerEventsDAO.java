@@ -83,7 +83,32 @@ public abstract class AbstractSchedulerEventsDAO
 		}
 	}
 
-	public abstract void update(SchedulerEvent event);
+	/**
+	 * Updates and returns the DAO's SchedulerEvent
+	 *
+	 * @param event the incoming event containing the modifications
+	 * @return the updated DAO's SchedulerEvent
+	 */
+	public SchedulerEvent update(SchedulerEvent event)
+	{
+		SchedulerEvent e = this.getEvent(event.getId());
+
+		if (e != null)
+		{
+			e.setTitle(event.getTitle());
+			e.setDescription(event.getDescription());
+
+			e.setStart(event.getStart());
+			e.setEnd(event.getEnd());
+			e.setAllDay(event.isAllDay());
+
+			e.setRecurrenceId(event.getRecurrenceId());
+			e.setRecurrenceRule(event.getRecurrenceRule());
+			e.setRecurrenceException(event.getRecurrenceException());
+		}
+
+		return e;
+	}
 
 	public void delete(SchedulerEvent event)
 	{

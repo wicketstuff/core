@@ -45,18 +45,17 @@ public class SchedulerEvent implements Serializable
 		return event != null && event.id == NEW_ID;
 	}
 
-	// FIXME: Add properties
-	// recurrenceException String - the recurrence exceptions.
-	// recurrenceId String|Number|Object - the id of the recurrence parent. If set the current event is a recurrence exception.
-	// recurrenceRule String - the recurrence rule which describes the repetition pattern of the event. Follows the rfc5545 specification.
-
 	private int id;
 	private String title;
 	private String description;
 
 	private Date start;
 	private Date end;
-	private boolean allDay = false;
+	private boolean allDay;
+
+	private String recurrenceId;
+	private String recurrenceRule;
+	private String recurrenceException;
 
 	/** resources map */
 	private Map<String, Object> resources = new HashMap<String, Object>();
@@ -120,10 +119,18 @@ public class SchedulerEvent implements Serializable
 	{
 		this.id = id;
 		this.title = title;
+		this.description = null;
+
 		this.start = start;
 		this.end = end;
-		this.description = null;
+		this.allDay = false;
+
+		this.recurrenceId = null;
+		this.recurrenceRule = null;
+		this.recurrenceException = null;
 	}
+
+	// Properties //
 
 	/**
 	 * Gets the unique identifier of the scheduler event
@@ -263,6 +270,68 @@ public class SchedulerEvent implements Serializable
 	public void setAllDay(boolean allDay)
 	{
 		this.allDay = allDay;
+	}
+
+	// recurrence //
+
+	/**
+	 * Gets the id of the recurrence parent.
+	 *
+	 * @return the id of the recurrence parent
+	 */
+	public String getRecurrenceId()
+	{
+		return recurrenceId;
+	}
+
+	/**
+	 * Sets the id of the recurrence parent. If set the current event is a recurrence exception.
+	 *
+	 * @param id the id of the recurrence parent
+	 */
+	public void setRecurrenceId(String id)
+	{
+		this.recurrenceId = id;
+	}
+
+	/**
+	 * Gets the recurrence rule which describes the repetition pattern of the event. Follows the rfc5545 specification.
+	 *
+	 * @return the recurrence rule
+	 */
+	public String getRecurrenceRule()
+	{
+		return recurrenceRule;
+	}
+
+	/**
+	 * Sets the recurrence rule which describes the repetition pattern of the event. Follows the rfc5545 specification.
+	 *
+	 * @param rule the recurrence rule
+	 */
+	public void setRecurrenceRule(String rule)
+	{
+		this.recurrenceRule = rule;
+	}
+
+	/**
+	 * Gets the recurrence exception
+	 *
+	 * @return the recurrence exception
+	 */
+	public String getRecurrenceException()
+	{
+		return recurrenceException;
+	}
+
+	/**
+	 * Sets the recurrence exception
+	 *
+	 * @param exception the recurrence exception
+	 */
+	public void setRecurrenceException(String exception)
+	{
+		this.recurrenceException = exception;
 	}
 
 	// resources //

@@ -40,20 +40,16 @@ public class EmployeeEventsDAO extends AbstractSchedulerEventsDAO
 
 	@Override
 	@SuppressWarnings("unchecked")
-	public void update(SchedulerEvent event)
+	public SchedulerEvent update(SchedulerEvent event)
 	{
-		SchedulerEvent e = this.getEvent(event.getId());
+		SchedulerEvent e = super.update(event);
 
 		if (e != null)
 		{
-			e.setTitle(event.getTitle());
-			e.setStart(event.getStart());
-			e.setEnd(event.getEnd());
-			e.setAllDay(event.isAllDay());
-			e.setDescription(event.getDescription());
-
 			e.setResource(ROOM_ID, (Integer) event.getValue(ROOM_ID));
 			e.setResource(EMPLOYEE_ID, (List<Integer>) event.getValue(EMPLOYEE_ID));
 		}
+
+		return e;
 	}
 }

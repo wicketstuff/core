@@ -1,7 +1,9 @@
 package com.googlecode.wicket.jquery.ui.samples.data.dao.scheduler;
 
+import java.util.Calendar;
 import java.util.Date;
 
+import com.googlecode.wicket.jquery.core.utils.DateUtils;
 import com.googlecode.wicket.kendo.ui.scheduler.SchedulerEvent;
 
 public class SchedulerEventsDAO extends AbstractSchedulerEventsDAO
@@ -22,22 +24,22 @@ public class SchedulerEventsDAO extends AbstractSchedulerEventsDAO
 	{
 		super();
 
-		super.list.add(new SchedulerEvent(this.newId(), "Public event", new Date()));
-		super.list.add(new SchedulerEvent(this.newId(), "Private event", new Date()));
-	}
+		// dates //
+		Calendar calendar = Calendar.getInstance(DateUtils.UTC);
+		calendar.setTime(new Date());
+		calendar.set(Calendar.HOUR_OF_DAY, 8);
+		calendar.set(Calendar.MINUTE, 0);
+		calendar.set(Calendar.SECOND, 0);
+		Date date1 = calendar.getTime();
 
-	@Override
-	public void update(SchedulerEvent event)
-	{
-		SchedulerEvent e = this.getEvent(event.getId());
+		calendar.set(Calendar.DAY_OF_WEEK, Calendar.MONDAY);
+		Date date2 = calendar.getTime();
 
-		if (e != null)
-		{
-			e.setTitle(event.getTitle());
-			e.setStart(event.getStart());
-			e.setEnd(event.getEnd());
-			e.setAllDay(event.isAllDay());
-			e.setDescription(event.getDescription());
-		}
+		// events //
+		super.list.add(new SchedulerEvent(this.newId(), "An event", date1));
+
+		SchedulerEvent event = new SchedulerEvent(this.newId(), "Meeting", date2);
+		event.setRecurrenceRule("FREQ=WEEKLY;COUNT=10;BYDAY=MO;WKST=SU"); // rfc5545 specification
+		super.list.add(event);
 	}
 }
