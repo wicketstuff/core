@@ -26,7 +26,7 @@ hr {
 #wrapper {
     margin: 0 auto;
     position: relative;
-    width: 956px;
+    width: 1024px;
 }
 
 table#wrapper {
@@ -92,15 +92,14 @@ table#wrapper {
 #wrapper-panel-source {
 	font-size: 12px;
     overflow: auto;
-	max-width: 720px;
+	max-width: 800px;
 }
 
 #wrapper-panel-source .ui-tabs-panel {
 	font-size: 0.9em;
-	max-height: 480px;
+	max-height: 600px;
 	overflow: auto;
 }
-
 
 #wrapper-footer {
 	margin: 4px;

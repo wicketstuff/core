@@ -16,15 +16,13 @@
  */
 package com.googlecode.wicket.kendo.ui.scheduler;
 
-import java.util.Calendar;
-import java.util.Date;
+import java.util.List;
 
 import org.apache.wicket.ajax.AjaxRequestTarget;
 
 import com.googlecode.wicket.jquery.core.JQueryBehavior;
 import com.googlecode.wicket.jquery.core.JQueryContainer;
 import com.googlecode.wicket.jquery.core.Options;
-import com.googlecode.wicket.jquery.core.utils.DateUtils;
 import com.googlecode.wicket.kendo.ui.scheduler.resource.ResourceList;
 import com.googlecode.wicket.kendo.ui.scheduler.resource.ResourceListModel;
 import com.googlecode.wicket.kendo.ui.scheduler.views.SchedulerViewType;
@@ -39,6 +37,12 @@ public class Scheduler extends JQueryContainer implements ISchedulerListener
 {
 	private static final long serialVersionUID = 1L;
 
+	/** Provides an enum of available group orientation */
+	protected enum GroupOrientation
+	{
+		horizontal, vertical
+	}
+
 	private final Options options;
 	private SchedulerModelBehavior modelBehavior; // load events
 
@@ -52,7 +56,7 @@ public class Scheduler extends JQueryContainer implements ISchedulerListener
 	 */
 	public Scheduler(String id, Options options)
 	{
-		this(id, null, null, new Options());
+		this(id, null, new Options());
 	}
 
 	/**
@@ -63,7 +67,7 @@ public class Scheduler extends JQueryContainer implements ISchedulerListener
 	 */
 	public Scheduler(String id, SchedulerModel model)
 	{
-		this(id, model, null, new Options());
+		this(id, model, new Options());
 	}
 
 	/**
@@ -152,6 +156,16 @@ public class Scheduler extends JQueryContainer implements ISchedulerListener
 		return (SchedulerModel) this.getDefaultModel();
 	}
 
+	/**
+	 * Gets the orientation of the group headers
+	 *
+	 * @return {@value GroupOrientation#horizontal} by default
+	 */
+	protected GroupOrientation getGroupOrientation()
+	{
+		return GroupOrientation.horizontal;
+	}
+
 	// Events //
 
 	@Override
@@ -167,7 +181,18 @@ public class Scheduler extends JQueryContainer implements ISchedulerListener
 	{
 		super.onConfigure(behavior);
 
-		behavior.setOption("timezone", Options.asString("Etc/UTC")); //TODO model to schema?
+		behavior.setOption("timezone", Options.asString("Etc/UTC")); // TODO model to schema?
+
+		// groups //
+		List<String> groups = this.resourceListModel.getGroups();
+
+		if (!groups.isEmpty())
+		{
+			Options options = new Options();
+			options.set("resources", Options.asString(groups));
+			options.set("orientation", Options.asString(this.getGroupOrientation()));
+			behavior.setOption("group", options);
+		}
 	}
 
 	@Override
@@ -264,23 +289,6 @@ public class Scheduler extends JQueryContainer implements ISchedulerListener
 	 */
 	protected SchedulerModelBehavior newSchedulerModelBehavior(final SchedulerModel model)
 	{
-		return new SchedulerModelBehavior(model) {
-
-			private static final long serialVersionUID = 1L;
-
-			@Override
-			protected void setEndDate(SchedulerModel model, Date date)
-			{
-				Calendar calendar = Calendar.getInstance(DateUtils.UTC);
-
-				calendar.setTime(date);
-				calendar.set(Calendar.HOUR_OF_DAY, 23); // add ?
-				calendar.set(Calendar.MINUTE, 59);
-				calendar.set(Calendar.SECOND, 59);
-				calendar.set(Calendar.MILLISECOND, 999);
-
-				model.setEnd(calendar.getTime());
-			}
-		};
+		return new SchedulerModelBehavior(model);
 	}
 }

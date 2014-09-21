@@ -39,7 +39,7 @@ public class Calendar extends JQueryContainer implements ICalendarListener
 	private static final long serialVersionUID = 1L;
 
 	private final Options options;
-	private Map<CharSequence, String> gcals; // TODO: move gcals to CalendarBehavior?
+	private Map<CharSequence, String> gcals;
 	private CalendarModelBehavior modelBehavior; // events load
 
 	/**

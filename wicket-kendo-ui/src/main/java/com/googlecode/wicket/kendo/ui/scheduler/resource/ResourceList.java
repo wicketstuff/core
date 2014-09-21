@@ -30,8 +30,9 @@ public class ResourceList extends ArrayList<Resource>
 
 	private final String title;
 	private final String field;
+	private final String group;
 
-	private boolean mutiple;
+	private boolean multiple;
 
 	/**
 	 * Constructor
@@ -41,7 +42,7 @@ public class ResourceList extends ArrayList<Resource>
 	 */
 	public ResourceList(String title, String field)
 	{
-		this(title, field, false);
+		this(title, field, null, false);
 	}
 
 	/**
@@ -53,9 +54,35 @@ public class ResourceList extends ArrayList<Resource>
 	 */
 	public ResourceList(String title, String field, boolean multiple)
 	{
+		this(title, field, null, multiple);
+	}
+
+	/**
+	 * Constructor
+	 *
+	 * @param title the title of the resource list that will serves as the label in the 'edit' form (ie: 'Resource')
+	 * @param field the field (ie: 'resourceId')
+	 * @param group name of the group of the resource list belongs to
+	 */
+	public ResourceList(String title, String field, String group)
+	{
+		this(title, field, group, false);
+	}
+
+	/**
+	 * Constructor
+	 *
+	 * @param title the title of the resource list that will serves as the label in the 'edit' form (ie: 'Resource')
+	 * @param field the field of the resource list (ie: 'resourceId')
+	 * @param group name of the group of the resource list belongs to
+	 * @param multiple whether an event can have multiple resources for the given field
+	 */
+	public ResourceList(String title, String field, String group, boolean multiple)
+	{
 		this.title = title;
 		this.field = field;
-		this.mutiple = multiple;
+		this.group = group;
+		this.multiple = multiple;
 	}
 
 	/**
@@ -79,12 +106,22 @@ public class ResourceList extends ArrayList<Resource>
 	}
 
 	/**
+	 * Gets the group name of the resource list
+	 *
+	 * @return the group name
+	 */
+	public String getGroup()
+	{
+		return this.group;
+	}
+
+	/**
 	 * Indicates whether an event can have multiple resources for the given field
 	 *
 	 * @return true or false
 	 */
-	public boolean isMutiple()
+	public boolean isMultiple()
 	{
-		return this.mutiple;
+		return this.multiple;
 	}
 }

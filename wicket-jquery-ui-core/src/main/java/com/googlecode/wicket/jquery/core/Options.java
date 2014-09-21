@@ -16,7 +16,7 @@
  */
 package com.googlecode.wicket.jquery.core;
 
-import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Date;
@@ -64,6 +64,24 @@ public class Options implements IClusterable
 	public static String asString(String value)
 	{
 		return String.format("%s%s%s", QUOTE, Options.escapeQuotes(value), QUOTE);
+	}
+
+	/**
+	 * Converts a list of strings to its javascript representation. ie: [ "myvalue1", "myvalue2" ] (with the double quotes)
+	 *
+	 * @param values the {@link List} of values
+	 * @return the JSON value
+	 */
+	public static String asString(List<String> values)
+	{
+		List<String> list = new ArrayList<String>();
+
+		for (Object object : values)
+		{
+			list.add(Options.asString(object));
+		}
+
+		return list.toString();
 	}
 
 	/**
@@ -125,6 +143,7 @@ public class Options implements IClusterable
 	 * @param value the object
 	 */
 	// FIXME: replace where appropriate
+	// TODO: move to OptionsUtils
 	public static void append(StringBuilder builder, String key, Object value)
 	{
 		builder.append(Options.QUOTE).append(key).append(Options.QUOTE).append(": ").append(String.valueOf(value));
@@ -137,19 +156,20 @@ public class Options implements IClusterable
 	 * @param key the key
 	 * @param value the value
 	 */
+	// TODO: move to OptionsUtils
 	public static void append(StringBuilder builder, String key, String value)
 	{
-		builder.append(Options.QUOTE).append(key).append(Options.QUOTE).append(": ").append(Options.QUOTE).append(escapeQuotes(value)).append(Options.QUOTE);
+		builder.append(Options.QUOTE).append(key).append(Options.QUOTE).append(": ").append(Options.QUOTE).append(Options.escapeQuotes(value)).append(Options.QUOTE);
 	}
 
-	private final Map<String, Serializable> map;
+	private final Map<String, Object> map;
 
 	/**
 	 * Constructor.
 	 */
 	public Options()
 	{
-		this.map = new HashMap<String, Serializable>();
+		this.map = new HashMap<String, Object>();
 	}
 
 	/**
@@ -158,10 +178,34 @@ public class Options implements IClusterable
 	 * @param key the option name
 	 * @param value the option value
 	 */
-	public Options(String key, Serializable value)
+	public Options(String key, Object value)
 	{
 		this();
 		this.set(key, value);
+	}
+
+	/**
+	 * Constructor which adds an array of objects, ie: "key" : ["value1", "value2"].
+	 *
+	 * @param key the option name
+	 * @param values the option values
+	 */
+	public Options(String key, Object... values)
+	{
+		this();
+		this.set(key, values);
+	}
+
+	/**
+	 * Constructor which a list of objects, ie: "key" : ["value1", "value2"].
+	 *
+	 * @param key the option name
+	 * @param values the option values
+	 */
+	public Options(String key, List<?> values)
+	{
+		this();
+		this.set(key, values);
 	}
 
 	/**
@@ -171,9 +215,9 @@ public class Options implements IClusterable
 	 * @return the value to which the specified key is mapped, or null if this map contains no mapping for the key
 	 */
 	@SuppressWarnings("unchecked")
-	public <T extends Serializable> T get(String key)
+	public <T extends Object> T get(String key)
 	{
-		Serializable value = this.map.get(key);
+		Object value = this.map.get(key);
 
 		if (value != null)
 		{
@@ -189,27 +233,28 @@ public class Options implements IClusterable
 	 *
 	 * @param key - key with which the specified value is to be associated
 	 * @param value - value to be associated with the specified key
-	 * @return this
+	 * @return this, for chaining
 	 */
-	public final Options set(String key, Serializable value)
+	public final Options set(String key, Object value)
 	{
-		if (value != null)
+		if (value == null)
 		{
-			this.map.put(key, value);
+			this.map.remove(key);
 		}
 		else
 		{
-			this.map.remove(key);
+			this.map.put(key, value);
 		}
 
 		return this;
 	}
 
 	/**
-	 * In addtion to {@link #set(String, Serializable)} this enables to build trees of Options.
+	 * In addition to {@link #set(String, Object)} this enables to build trees of Options.
 	 *
 	 * <p>
 	 * Example:
+	 *
 	 * <pre>
 	 * Options o = new Options();
 	 * o.set("foo", new Options("foo1", "value1"), new Options("foo2", Options.asString("value2")));
@@ -221,21 +266,24 @@ public class Options implements IClusterable
 	 *          ]
 	 * }
 	 * </pre>
+	 *
 	 * </p>
 	 *
 	 * @param key - key with which the specified value is to be associated
 	 * @param values - values to be associated with the specified key
+	 * @return this, for chaining
 	 */
-	public final void set(String key, Serializable... values)
+	public final Options set(String key, Object... values)
 	{
-	    this.set(key, Arrays.asList(values));
+		return this.set(key, Arrays.asList(values));
 	}
 
 	/**
-	 * In addtion to {@link #set(String, Serializable)} this enables to build trees of Options.
+	 * In addition to {@link #set(String, Object)} this enables to build trees of Options.
 	 *
 	 * <p>
 	 * Example:
+	 *
 	 * <pre>
 	 * Options o = new Options();
 	 * o.set("foo", new Options("foo1", "value1"), new Options("foo2", Options.asString("value2")));
@@ -247,14 +295,16 @@ public class Options implements IClusterable
 	 *          ]
 	 * }
 	 * </pre>
+	 *
 	 * </p>
 	 *
 	 * @param key - key with which the specified value is to be associated
 	 * @param values - values to be associated with the specified key
+	 * @return this, for chaining
 	 */
-	void set(String key, List<Serializable> value)
+	public final Options set(String key, List<?> values)
 	{
-	    this.set(key, value.toString());
+		return this.set(key, values.toString());
 	}
 
 	/**
@@ -262,13 +312,13 @@ public class Options implements IClusterable
 	 *
 	 * @return an unmodifiable set of internal map entries
 	 */
-	public Set<Entry<String, Serializable>> entries()
+	public Set<Entry<String, Object>> entries()
 	{
 		return Collections.unmodifiableSet(this.map.entrySet());
 	}
 
 	/**
-	 * Gets the JSON representation of the Options<br/>
+	 * Gets the JSON representation of the Options
 	 */
 	@Override
 	public String toString()
@@ -276,7 +326,7 @@ public class Options implements IClusterable
 		StringBuilder builder = new StringBuilder("{ ");
 
 		int i = 0;
-		for (Entry<String, Serializable> entry : this.map.entrySet())
+		for (Entry<String, Object> entry : this.map.entrySet())
 		{
 			if (i++ > 0)
 			{
