@@ -101,7 +101,6 @@ public abstract class SchedulerBehavior extends KendoUIBehavior implements IJQue
 		component.add(this.onDeleteBehavior = this.newOnDeleteBehavior());
 	}
 
-
 	@Override
 	public void renderHead(Component component, IHeaderResponse response)
 	{
@@ -180,7 +179,7 @@ public abstract class SchedulerBehavior extends KendoUIBehavior implements IJQue
 		this.setOption("dataSource", dataSource.getName());
 
 		// schema //
-//		this.setOption("schema", new Options("timezone", Options.asString("Etc/UTC")));
+		// this.setOption("schema", new Options("timezone", Options.asString("Etc/UTC")));
 
 		// resource //
 		this.setOption("resources", this.getResourceListModel());
@@ -231,11 +230,18 @@ public abstract class SchedulerBehavior extends KendoUIBehavior implements IJQue
 				parameters.add(CallbackParameter.context("e"));
 
 				// event //
-				parameters.add(CallbackParameter.resolved("id", "e.event.id")); // retrieved
-				parameters.add(CallbackParameter.resolved("start", "e.event.start.getTime()")); // retrieved
-				parameters.add(CallbackParameter.resolved("end", "e.event.end.getTime()")); // retrieved
-				parameters.add(CallbackParameter.resolved("title", "e.event.title")); // retrieved
-				parameters.add(CallbackParameter.resolved("description", "e.event.description")); // retrieved
+				parameters.add(CallbackParameter.resolved("id", "e.data.id")); // retrieved
+				parameters.add(CallbackParameter.resolved("title", "e.data.title")); // retrieved
+				parameters.add(CallbackParameter.resolved("description", "e.data.description")); // retrieved
+
+				parameters.add(CallbackParameter.resolved("start", "e.data.start.getTime()")); // retrieved
+				parameters.add(CallbackParameter.resolved("end", "e.data.end.getTime()")); // retrieved
+				parameters.add(CallbackParameter.resolved("isAllDay", "e.data.isAllDay")); // retrieved
+
+				// recurrence //
+				parameters.add(CallbackParameter.resolved("recurrenceId", "e.data.recurrenceId")); // retrieved
+				parameters.add(CallbackParameter.resolved("recurrenceRule", "e.data.recurrenceRule")); // retrieved
+				parameters.add(CallbackParameter.resolved("recurrenceException", "e.data.recurrenceException")); // retrieved
 
 				// resources //
 				for (String field : SchedulerBehavior.this.getResourceListModel().getFields())
@@ -343,10 +349,17 @@ public abstract class SchedulerBehavior extends KendoUIBehavior implements IJQue
 
 			// event //
 			parameters.add(CallbackParameter.resolved("id", "e.data.id")); // retrieved
-			parameters.add(CallbackParameter.resolved("start", "e.data.start.getTime()")); // retrieved
-			parameters.add(CallbackParameter.resolved("end", "e.data.end.getTime()")); // retrieved
 			parameters.add(CallbackParameter.resolved("title", "e.data.title")); // retrieved
 			parameters.add(CallbackParameter.resolved("description", "e.data.description")); // retrieved
+
+			parameters.add(CallbackParameter.resolved("start", "e.data.start.getTime()")); // retrieved
+			parameters.add(CallbackParameter.resolved("end", "e.data.end.getTime()")); // retrieved
+			parameters.add(CallbackParameter.resolved("isAllDay", "e.data.isAllDay")); // retrieved
+
+			// recurrence //
+			parameters.add(CallbackParameter.resolved("recurrenceId", "e.data.recurrenceId")); // retrieved
+			parameters.add(CallbackParameter.resolved("recurrenceRule", "e.data.recurrenceRule")); // retrieved
+			parameters.add(CallbackParameter.resolved("recurrenceException", "e.data.recurrenceException")); // retrieved
 
 			// resources //
 			for (String field : SchedulerBehavior.this.getResourceListModel().getFields())
@@ -376,12 +389,22 @@ public abstract class SchedulerBehavior extends KendoUIBehavior implements IJQue
 		{
 			int id = RequestCycleUtils.getQueryParameterValue("id").toInt();
 			String title = RequestCycleUtils.getQueryParameterValue("title").toString();
-			long start = RequestCycleUtils.getQueryParameterValue("start").toLong();
-			long end = RequestCycleUtils.getQueryParameterValue("end").toLong();
 			String description = RequestCycleUtils.getQueryParameterValue("description").toString();
 
+			long start = RequestCycleUtils.getQueryParameterValue("start").toLong();
+			long end = RequestCycleUtils.getQueryParameterValue("end").toLong();
+			boolean allDay = RequestCycleUtils.getQueryParameterValue("isAllDay").toBoolean();
+
+			String recurrenceId = RequestCycleUtils.getQueryParameterValue("recurrenceId").toString();
+			String recurrenceRule = RequestCycleUtils.getQueryParameterValue("recurrenceRule").toString();
+			String recurrenceException = RequestCycleUtils.getQueryParameterValue("recurrenceException").toString();
+
 			this.event = new SchedulerEvent(id, title, start, end);
+			this.event.setAllDay(allDay);
 			this.event.setDescription(description);
+			this.event.setRecurrenceId(recurrenceId);
+			this.event.setRecurrenceRule(recurrenceRule);
+			this.event.setRecurrenceException(recurrenceException);
 
 			// Resources //
 			Pattern pattern = Pattern.compile("(\\d+)");

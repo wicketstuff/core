@@ -32,19 +32,15 @@ public class ResourceEventsDAO extends AbstractSchedulerEventsDAO
 	}
 
 	@Override
-	public void update(SchedulerEvent event)
+	public SchedulerEvent update(SchedulerEvent event)
 	{
-		SchedulerEvent e = this.getEvent(event.getId());
+		SchedulerEvent e = super.update(event);
 
 		if (e != null)
 		{
-			e.setTitle(event.getTitle());
-			e.setStart(event.getStart());
-			e.setEnd(event.getEnd());
-			e.setAllDay(event.isAllDay());
-			e.setDescription(event.getDescription());
-
 			e.setResource(AGENDA_ID, (Integer) event.getValue(AGENDA_ID));
 		}
+
+		return e;
 	}
 }

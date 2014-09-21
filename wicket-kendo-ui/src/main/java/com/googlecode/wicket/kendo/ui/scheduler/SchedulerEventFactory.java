@@ -68,7 +68,21 @@ public class SchedulerEventFactory
 				object.put("end", DateUtils.toISO8601(event.getEnd()));
 			}
 
-			// FIXME: Scheduler, to complete
+			// recurrence //
+			if (event.getRecurrenceId() != null)
+			{
+				object.put("recurrenceId", event.getRecurrenceId());
+			}
+
+			if (event.getRecurrenceRule() != null)
+			{
+				object.put("recurrenceRule", event.getRecurrenceRule());
+			}
+
+			if (event.getRecurrenceException() != null)
+			{
+				object.put("recurrenceException", event.getRecurrenceException());
+			}
 
 			// resources //
 			for (String field : event.getFields())
