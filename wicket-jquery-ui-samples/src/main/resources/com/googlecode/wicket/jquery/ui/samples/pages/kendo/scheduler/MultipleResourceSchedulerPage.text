@@ -1,5 +1,8 @@
 This sample shows some of the Kendo UI's scheduler capabilities.<br/>
 
+<h4>Since</h4>
+wicket-kendo-ui-6.17.1-SNAPSHOT
+
 <br/>
 <h4>Licensing</h4>
 Kendo UI "Core" is <b>Apache License 2.0 licensed</b>, starting from version <b>2014.1.416</b>.<br/>
