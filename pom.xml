@@ -68,17 +68,9 @@
 	</ciManagement>
 
 	<distributionManagement>
-		<site>
-			<id>localRepo</id>
-			<url>file:target/site</url>
-		</site>
-		<repository>
-			<id>localRepo</id>
-			<url>file:target/m2-repo</url>
-		</repository>
 		<snapshotRepository>
-			<id>localRepo</id>
-			<url>file:target/m2-snapshot-repo</url>
+			<id>sonatype-nexus-snapshots</id>
+			<url>https://oss.sonatype.org/content/repositories/snapshots/</url>
 		</snapshotRepository>
 	</distributionManagement>
 
