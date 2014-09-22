@@ -841,7 +841,7 @@
 						<optimize>true</optimize>
 						<showDeprecation>true</showDeprecation>
 						<showWarnings>true</showWarnings>
-						<verbose>true</verbose>
+						<verbose>false</verbose>
 					</configuration>
 				</plugin>
 				<plugin>
