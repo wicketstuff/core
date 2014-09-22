@@ -1,7 +1,7 @@
 Wicket Stuff Core
 ==================
 
-[](https://api.travis-ci.org/wicketstuff/core.svg?style=flat)
+![](https://api.travis-ci.org/wicketstuff/core.svg?style=flat)
 
 
 Overview:
