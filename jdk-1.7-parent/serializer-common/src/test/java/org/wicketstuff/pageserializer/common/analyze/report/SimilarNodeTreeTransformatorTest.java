@@ -54,8 +54,8 @@ public class SimilarNodeTreeTransformatorTest
 
 		ISerializedObjectTree result = SimilarNodeTreeTransformator.transformTree(source);
 
-		List<ISerializedObjectTree> oneSubNode = new ArrayList<ISerializedObjectTree>();
-		List<ISerializedObjectTree> threeSubNodes = new ArrayList<ISerializedObjectTree>();
+		List<ISerializedObjectTree> oneSubNode = new ArrayList<>();
+		List<ISerializedObjectTree> threeSubNodes = new ArrayList<>();
 		threeSubNodes.add(new ImmutableTree(null, A.class, "a", 15, noChildren()));
 		threeSubNodes.add(new ImmutableTree(null, B.class, "b", 20, noChildren()));
 		threeSubNodes.add(new ImmutableTree(null, C.class, "c", 25, noChildren()));
@@ -107,7 +107,7 @@ public class SimilarNodeTreeTransformatorTest
 
 	private List<? extends ISerializedObjectTree> sameChildren5Times()
 	{
-		List<ISerializedObjectTree> ret = new ArrayList<ISerializedObjectTree>();
+		List<ISerializedObjectTree> ret = new ArrayList<>();
 		for (int i = 0; i < 5; i++)
 		{
 			ret.add(new ImmutableTree(new ObjectId(10 + i), Has3.class, "has3-" + i, 10,
@@ -118,7 +118,7 @@ public class SimilarNodeTreeTransformatorTest
 
 	private List<? extends ISerializedObjectTree> differentChildren(int idx)
 	{
-		List<ISerializedObjectTree> ret = new ArrayList<ISerializedObjectTree>();
+		List<ISerializedObjectTree> ret = new ArrayList<>();
 		ret.add(new ImmutableTree(new ObjectId(100 + idx + 1), A.class, "a", 3, noChildren()));
 		ret.add(new ImmutableTree(new ObjectId(100 + idx + 2), B.class, "b", 4, noChildren()));
 		ret.add(new ImmutableTree(new ObjectId(100 + idx + 3), C.class, "c", 5, noChildren()));
@@ -127,7 +127,7 @@ public class SimilarNodeTreeTransformatorTest
 
 	private static List<? extends ISerializedObjectTree> noChildren()
 	{
-		return new ArrayList<ISerializedObjectTree>();
+		return new ArrayList<>();
 	}
 
 	static class Root

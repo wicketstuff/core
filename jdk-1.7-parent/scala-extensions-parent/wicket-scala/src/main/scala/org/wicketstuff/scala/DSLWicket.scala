@@ -135,14 +135,14 @@ trait DSLWicket {
     lv.setDefaultModel(m)
     lv
   }
-  def pageableListView[T](id: String, populate: (SListItem[T]) ⇒ _, m: IModel[_ <: java.util.List[_ <: T]], pageSize: Int): DSLPageable[T] = {
+  def pageableListView[T](id: String, populate: (SListItem[T]) ⇒ _, m: IModel[_ <: java.util.List[T]], pageSize: Int): DSLPageable[T] = {
     val lv = new PageableListView[T](id, m, pageSize) with DSLPageable[T] { 
       override def populateItem(item: ListItem[T]) = populate(item.asInstanceOf[SListItem[T]])
       override def newItem(index: Int, itemModel: IModel[T]): ListItem[T] = new ListItem[T](index, itemModel) with SListItem[T]
     }
     add(lv); lv
   }
-  def pageableListView[T](id: String, populate: (SListItem[T]) ⇒ _, l: java.util.List[_ <: T], pageSize: Int): DSLPageable[T] = {
+  def pageableListView[T](id: String, populate: (SListItem[T]) ⇒ _, l: java.util.List[T], pageSize: Int): DSLPageable[T] = {
     val lv = new PageableListView[T](id, l, pageSize) with DSLPageable[T] {
       override def populateItem(item: ListItem[T]) = populate(item.asInstanceOf[SListItem[T]])
       override def newItem(index: Int, itemModel: IModel[T]): ListItem[T] = new ListItem[T](index, itemModel) with SListItem[T]

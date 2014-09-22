@@ -48,7 +48,7 @@ org.wicketstuff.pageserializer.common.components.ListViewPage(asSample)  |   141
           java.lang.String                                         |     3
           java.lang.Integer                                        |     1
           org.apache.wicket.markup.html.list.ListView(list)        |     1
-      org.apache.wicket.model.util.WildcardListModel               |     2
+      org.apache.wicket.model.util.ListModel                       |     2
         java.util.Arrays$ArrayList                                 |     3
           java.lang.String                                         |     4
           java.lang.String                                         |     4
@@ -89,7 +89,7 @@ org.wicketstuff.pageserializer.common.components.ListViewPage(asSample)  |   141
           java.lang.String                                         |     1
           java.lang.Integer                                        |     1
           org.apache.wicket.markup.html.list.ListView(list2)       |     1
-      org.apache.wicket.model.util.WildcardListModel               |     2
+      org.apache.wicket.model.util.ListModel                       |     2
         java.util.Arrays$ArrayList                                 |     1
       java.lang.Integer                                            |     1
       java.lang.Integer                                            |     5

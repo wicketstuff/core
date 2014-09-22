@@ -12,7 +12,7 @@ import org.wicketstuff.scala.traits.ScalaMarkupContainerT
  * <p>Regarding only having a single constructor - see http://groups.google.com/group/maven-and-scala/msg/e541cbef70e2cbe9?")
  */
 class ScalaPropertyListView[T](id:String,
-                             model:Fodel[_ <: java.util.List[_ <: T]],
+                             model:Fodel[_ <: java.util.List[T]],
                              populateItemFunc:(ListItem[T]) ⇒ Unit)
   extends PropertyListView[T](id, model)
   with ScalaMarkupContainerT {

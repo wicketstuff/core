@@ -23,7 +23,7 @@ package org.wicketstuff.pageserializer.common.analyze.report;
 import java.io.IOException;
 
 import org.apache.wicket.markup.html.list.ListView;
-import org.apache.wicket.model.util.WildcardListModel;
+import org.apache.wicket.model.util.ListModel;
 import org.junit.Assert;
 import org.junit.Test;
 import org.wicketstuff.pageserializer.common.analyze.ISerializedObjectTree;
@@ -70,7 +70,7 @@ public class TestTreeReader
 			+ "  java.lang.Integer                                                |     9\n"
 			+ "  [Ljava.lang.Object;                                              |     2\n"
 			+ "    org.apache.wicket.markup.html.list.ListView(list)              |   114\n"
-			+ "      org.apache.wicket.model.util.WildcardListModel               |     2\n"
+			+ "      org.apache.wicket.model.util.ListModel                       |     2\n"
 			+ "        java.util.Arrays$ArrayList                                 |     3\n"
 			+ "          java.lang.String                                         |     4\n"
 			+ "          java.lang.String                                         |     4\n"
@@ -84,7 +84,7 @@ public class TestTreeReader
 		Assert.assertEquals(141, sample.size());
 		Assert.assertEquals(146, sample.childSize());
 
-		Assert.assertEquals(WildcardListModel.class, sample.children()
+		Assert.assertEquals(ListModel.class, sample.children()
 			.get(1)
 			.children()
 			.get(0)
