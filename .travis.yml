@@ -2,6 +2,17 @@ language: java
 jdk:
   - oraclejdk7
 
+notifications:
+  email:
+    - mgrigorov@apache.org
+  irc: 
+  	channels:
+      - "chat.freenode.net##wicket"
+    template:
+      - "%{repository}, %{author}, (%{commit} - %{commit_message}) : %{message} "
+      - "Build details: %{build_url}"
+      - "Duration: %{duration}"
+
 env:
   global:
 	- secure: "I0PbW4iQlyMO/yztGnZ/qiaMm7IS51QqAGhA5HQYKVh/ywNpQpVrpZaFRyf8OlBAemqKmOTp3EcvR225hb6RQCFilkN2vCMbMO/b7BbMRVhfV6PlpkfiuP2EehgT5vXl74tF/WbnijbvLpQppLPqbC0yYKOVplVcNEDs0LcVLfk="
