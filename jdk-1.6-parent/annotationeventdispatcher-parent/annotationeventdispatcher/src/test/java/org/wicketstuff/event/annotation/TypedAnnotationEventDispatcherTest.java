@@ -1,6 +1,8 @@
 package org.wicketstuff.event.annotation;
 
 import org.apache.wicket.Component;
+import org.apache.wicket.Page;
+import org.apache.wicket.RestartResponseException;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.event.Broadcast;
 import org.apache.wicket.markup.html.panel.Panel;
@@ -130,11 +132,28 @@ public class TypedAnnotationEventDispatcherTest
 		two.send(container.getApplication(), Broadcast.BREADTH, new SaveEvent<Person>(null, new Person()));
 	}
 
+	@Test(expected = RestartResponseException.class)
+	public void replaceHandlerExceptionPropogated()
+	{
+		ComponentTwo two = new ComponentTwo("id1");
+		ComponentThree three = new ComponentThree("id2");
+		TestContainer container = new TestContainer("container");
+		container.add(two, three);
+		tester.startComponentInPage(container);
+		two.send(container.getApplication(), Broadcast.BREADTH, new SaveEvent<Company>(null,
+			new Company()));
+	}
+
 	private class Person {
 
 	}
 
 	private class Widget {
+
+	}
+
+	private class Company
+	{
 
 	}
 
@@ -173,6 +192,14 @@ public class TypedAnnotationEventDispatcherTest
 		public void handleSavePersonEvent(final SaveEvent<Person> event)
 		{
 			personsHandled++;
+		}
+
+		@OnEvent(types = Company.class)
+		public void handleCompanyPersonEvent(final SaveEvent<Company> event)
+		{
+			throw new RestartResponseException(new Page()
+			{
+			});
 		}
 
 	}
