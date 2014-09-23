@@ -1,6 +1,6 @@
 language: java
 jdk:
-  - oraclejdk6
+  - openjdk6
   - oraclejdk7
 
 notifications:
@@ -22,7 +22,7 @@ env:
 install: true
 
 script: 
-  - "jdk_switcher use oraclejdk6"
+  - "jdk_switcher use openjdk6"
   - "mvn -s sonatype-settings.xml clean deploy -N -Dmaven.javadoc.skip=true -B -V --quiet"
   - "cd jdk-1.6-parent"
   - "mvn -s sonatype-settings.xml clean deploy -Dmaven.javadoc.skip=true -B -V --quiet"
