@@ -1,6 +1,8 @@
 Wicket Stuff Core
 ==================
 
+![](https://travis-ci.org/wicketstuff/core.svg?branch=wicket-6.x&style=flat)
+
 Overview:
 ---------
 
