@@ -7,7 +7,7 @@
 	<groupId>org.wicketstuff</groupId>
 	<artifactId>wicketstuff-core</artifactId>
 	<packaging>pom</packaging>
-	<version>6.0-SNAPSHOT</version>
+	<version>7.0-SNAPSHOT</version>
 
 	<name>WicketStuff Core Parent</name>
 	<description>
@@ -18,7 +18,7 @@
 
 	<url>http://wicketstuff.org</url>
 
-	<!-- mocleiri: moved modules definition into the build-java5-modules and 
+	<!-- mocleiri: moved modules definition into the build-java5-modules and
 		build-java6-modules profiles -->
 	<licenses>
 		<license>
@@ -26,7 +26,7 @@
 			<url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
 			<distribution>repo</distribution>
 			<comments>
-				This project (core-parent) is being released under the Apache 2 license, 
+				This project (core-parent) is being released under the Apache 2 license,
 				but does not require that all child projects are released under the same license.
 				If a child project defines a license of it's own different from the Apache license,
 				Maven recognizes this and uses only that license.  If a child wants to use the
@@ -68,24 +68,16 @@
 	</ciManagement>
 
 	<distributionManagement>
-		<site>
-			<id>localRepo</id>
-			<url>file:target/site</url>
-		</site>
-		<repository>
-			<id>localRepo</id>
-			<url>file:target/m2-repo</url>
-		</repository>
 		<snapshotRepository>
-			<id>localRepo</id>
-			<url>file:target/m2-snapshot-repo</url>
+			<id>sonatype-nexus-snapshots</id>
+			<url>https://oss.sonatype.org/content/repositories/snapshots/</url>
 		</snapshotRepository>
 	</distributionManagement>
 
 	<profiles>
 		<profile>
 			<id>oss.sonatype.org-staged-release</id>
-			<!-- This is the profile to use for releasing into the staged release 
+			<!-- This is the profile to use for releasing into the staged release
 				repo. We need to sign the artifacts. -->
 
 			<activation>
@@ -102,7 +94,7 @@
 					<plugin>
 						<groupId>org.apache.maven.plugins</groupId>
 						<artifactId>maven-javadoc-plugin</artifactId>
-						<version>2.7</version>
+						<version>2.9.1</version>
 						<configuration>
 							<detectOfflineLinks>false</detectOfflineLinks>
 							<minmemory>128m</minmemory>
@@ -129,7 +121,7 @@
 					<plugin>
 						<groupId>org.apache.maven.plugins</groupId>
 						<artifactId>maven-gpg-plugin</artifactId>
-						<version>1.0</version>
+						<version>1.5</version>
 						<executions>
 							<execution>
 								<id>sign-artifacts</id>
@@ -163,8 +155,8 @@
 
 		<profile>
 			<!-- setup for using oss.sonatype.org to hold snapshots -->
-			<!-- should be active for all sessions except where the release plugin 
-				is being used. We keep this in a profile since central sync up requires no 
+			<!-- should be active for all sessions except where the release plugin
+				is being used. We keep this in a profile since central sync up requires no
 				<repository> tags at the top level of the POM. -->
 			<id>oss.sonatype.org-snapshots</id>
 
@@ -188,7 +180,20 @@
 				<repository>
 					<id>wicket-snapshots</id>
 					<name>Apache Wicket Snapshots</name>
-					<url>http://repository.apache.org/snapshots</url>
+					<url>https://repository.apache.org/content/repositories/snapshots</url>
+					<snapshots>
+						<enabled>true</enabled>
+					</snapshots>
+					<releases>
+						<enabled>false</enabled>
+					</releases>
+				</repository>
+
+				<!-- for wicket bootstrap snapshots -->
+				<repository>
+					<id>sonatype-nexus-snapshots</id>
+					<name>Sonatype Nexus Snapshots</name>
+					<url>http://oss.sonatype.org/content/repositories/snapshots</url>
 					<snapshots>
 						<enabled>true</enabled>
 					</snapshots>
@@ -223,23 +228,29 @@
 	<!-- mocleiri: for distribution in to central repository sections in the main pom are not allowed -->
 
 	<properties>
-		<wicket.version>6.0-SNAPSHOT</wicket.version>
+		<wicket.version>7.0.0-SNAPSHOT</wicket.version>
 
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 
-		<hibernate.version>3.6.8.Final</hibernate.version>
-		<jetty.version>7.5.4.v20111024</jetty.version>
+		<hibernate.version>4.3.4.Final</hibernate.version>
+		<jetty.version>8.1.15.v20140411</jetty.version>
 		<sf-jung.version>2.0.1</sf-jung.version>
-		<shiro.version>1.1.0</shiro.version>
-		<slf4j.version>1.6.4</slf4j.version>
-		<log4j.version>1.2.16</log4j.version>
-		<spring.version>3.0.6.RELEASE</spring.version>
+		<shiro.version>1.2.3</shiro.version>
+		<slf4j.version>1.7.6</slf4j.version>
+		<logback.version>1.1.1</logback.version>
+		<log4j.version>1.2.17</log4j.version>
+		<spring.version>4.1.0.RELEASE</spring.version>
+		<cglib.version>3.1</cglib.version>
+		<objenesis.version>2.1</objenesis.version>
+		<scala.version>2.11.2</scala.version>
 	</properties>
 
-	<!-- build contract is java 6 first then java 7 -->
+	<prerequisites>
+		<maven>3.0.4</maven>
+	</prerequisites>
+
 	<modules>
-		<module>jdk-1.6-parent</module>
 		<module>jdk-1.7-parent</module>
 	</modules>
 
@@ -253,13 +264,18 @@
 
 	<dependencyManagement>
 		<dependencies>
-			<!-- In order for this project to work, all child projects need to use 
+			<!-- In order for this project to work, all child projects need to use
 				these versions of wicket-* and not specify their own version -->
 			<dependency>
 				<groupId>org.apache.wicket</groupId>
 				<artifactId>wicket</artifactId>
 				<version>${wicket.version}</version>
 				<type>pom</type>
+			</dependency>
+			<dependency>
+				<groupId>org.apache.wicket</groupId>
+				<artifactId>wicket-core</artifactId>
+				<version>${wicket.version}</version>
 			</dependency>
 			<dependency>
 				<groupId>org.apache.wicket</groupId>
@@ -293,6 +309,21 @@
 			</dependency>
 			<dependency>
 				<groupId>org.apache.wicket</groupId>
+				<artifactId>wicket-devutils</artifactId>
+				<version>${wicket.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.apache.wicket</groupId>
+				<artifactId>wicket-auth-roles</artifactId>
+				<version>${wicket.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.apache.wicket</groupId>
+				<artifactId>wicket-jmx</artifactId>
+				<version>${wicket.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.apache.wicket</groupId>
 				<artifactId>wicket</artifactId>
 				<version>${wicket.version}</version>
 				<type>test-jar</type>
@@ -304,13 +335,13 @@
 			<dependency>
 				<groupId>ch.qos.logback</groupId>
 				<artifactId>logback-classic</artifactId>
-				<version>1.0.0</version>
+				<version>${logback.version}</version>
 				<scope>runtime</scope>
 			</dependency>
 			<dependency>
 				<groupId>commons-logging</groupId>
 				<artifactId>commons-logging</artifactId>
-				<version>1.1.1</version>
+				<version>1.1.3</version>
 				<scope>runtime</scope>
 			</dependency>
 			<dependency>
@@ -345,26 +376,32 @@
 				<groupId>org.slf4j</groupId>
 				<artifactId>slf4j-simple</artifactId>
 				<version>${slf4j.version}</version>
-				<scope>runtime</scope>
+				<scope>test</scope>
 			</dependency>
 
 			<!-- TESTING / DEV -->
 			<dependency>
 				<groupId>javax.servlet</groupId>
-				<artifactId>servlet-api</artifactId>
-				<version>2.5</version>
+				<artifactId>javax.servlet-api</artifactId>
+				<version>3.0.1</version>
 				<scope>provided</scope>
 			</dependency>
 			<dependency>
 				<groupId>junit</groupId>
 				<artifactId>junit</artifactId>
-				<version>4.10</version>
+				<version>4.11</version>
 				<scope>test</scope>
 			</dependency>
 			<dependency>
 				<groupId>org.easymock</groupId>
 				<artifactId>easymock</artifactId>
-				<version>3.0</version>
+				<version>3.2</version>
+				<scope>test</scope>
+			</dependency>
+			<dependency>
+				<groupId>org.mockito</groupId>
+				<artifactId>mockito-core</artifactId>
+				<version>1.9.5</version>
 				<scope>test</scope>
 			</dependency>
 			<dependency>
@@ -388,8 +425,7 @@
 			<dependency>
 				<groupId>org.testng</groupId>
 				<artifactId>testng</artifactId>
-				<version>5.9</version>
-				<classifier>jdk15</classifier>
+				<version>6.8.8</version>
 				<scope>test</scope>
 			</dependency>
 
@@ -400,19 +436,19 @@
 				<version>1.8.3</version>
 			</dependency>
 			<dependency>
-				<groupId>commons-collections</groupId>
-				<artifactId>commons-collections</artifactId>
-				<version>3.2.1</version>
+				<groupId>org.apache.commons</groupId>
+				<artifactId>commons-collections4</artifactId>
+				<version>4.0</version>
 			</dependency>
 			<dependency>
-				<groupId>commons-digester</groupId>
-				<artifactId>commons-digester</artifactId>
-				<version>2.1</version>
+				<groupId>org.apache.commons</groupId>
+				<artifactId>commons-digester3</artifactId>
+				<version>3.2</version>
 			</dependency>
 			<dependency>
-				<groupId>commons-lang</groupId>
-				<artifactId>commons-lang</artifactId>
-				<version>2.6</version>
+				<groupId>org.apache.commons</groupId>
+				<artifactId>commons-lang3</artifactId>
+				<version>3.3.1</version>
 			</dependency>
 
 			<!-- SPRING -->
@@ -441,12 +477,12 @@
 			<dependency>
 				<groupId>javax.validation</groupId>
 				<artifactId>validation-api</artifactId>
-				<version>1.0.0.GA</version>
+				<version>1.1.0.Final</version>
 			</dependency>
 			<dependency>
-				<groupId>javassist</groupId>
+				<groupId>org.javassist</groupId>
 				<artifactId>javassist</artifactId>
-				<version>3.12.1.GA</version>
+				<version>3.18.1-GA</version>
 				<scope>runtime</scope>
 			</dependency>
 			<dependency>
@@ -467,7 +503,7 @@
 			<dependency>
 				<groupId>org.hibernate</groupId>
 				<artifactId>hibernate-validator</artifactId>
-				<version>4.2.0.Final</version>
+				<version>5.1.0.Final</version>
 			</dependency>
 
 			<!-- APACHE SHIRO -->
@@ -540,7 +576,7 @@
 			<dependency>
 				<groupId>com.google.javascript</groupId>
 				<artifactId>closure-compiler</artifactId>
-				<version>r1352</version>
+				<version>v20131014</version>
 			</dependency>
 			<dependency>
 				<groupId>com.ibatis</groupId>
@@ -550,22 +586,32 @@
 			<dependency>
 				<groupId>com.vividsolutions</groupId>
 				<artifactId>jts</artifactId>
-				<version>1.8</version>
+				<version>1.13</version>
 			</dependency>
 			<dependency>
-				<groupId>jasperreports</groupId>
+			  <groupId>com.google.code.gson</groupId>
+			  <artifactId>gson</artifactId>
+			  <version>2.2.4</version>
+			</dependency>
+			<dependency>
+			  <groupId>de.agilecoders.wicket</groupId>
+			  <artifactId>wicket-bootstrap-core</artifactId>
+			  <version>0.10.0-SNAPSHOT</version>
+			</dependency>
+			<dependency>
+				<groupId>net.sf.jasperreports</groupId>
 				<artifactId>jasperreports</artifactId>
-				<version>3.5.3</version>
+				<version>5.5.1</version>
 			</dependency>
 			<dependency>
 				<groupId>joda-time</groupId>
 				<artifactId>joda-time</artifactId>
-				<version>2.0</version>
+				<version>2.3</version>
 			</dependency>
 			<dependency>
 				<groupId>net.sf.ehcache</groupId>
 				<artifactId>ehcache-core</artifactId>
-				<version>2.4.6</version>
+				<version>2.6.8</version>
 			</dependency>
 			<dependency>
 				<groupId>net.sf.json-lib</groupId>
@@ -586,33 +632,33 @@
 			<dependency>
 				<groupId>org.apache.poi</groupId>
 				<artifactId>poi</artifactId>
-				<version>3.8-beta4</version>
+				<version>3.10-FINAL</version>
+			</dependency>
+			<dependency>
+				<groupId>org.apache.poi</groupId>
+				<artifactId>poi-ooxml</artifactId>
+				<version>3.10-FINAL</version>
 			</dependency>
 			<dependency>
 				<groupId>org.clojure</groupId>
 				<artifactId>clojure</artifactId>
-				<version>1.3.0</version>
+				<version>1.6.0</version>
 			</dependency>
 			<dependency>
 				<groupId>org.codehaus.groovy</groupId>
 				<artifactId>groovy</artifactId>
-				<version>1.8.2</version>
-			</dependency>
-			<dependency>
-				<groupId>org.json</groupId>
-				<artifactId>json</artifactId>
-				<version>20090211</version>
+				<version>2.3.4</version>
 			</dependency>
 			<dependency>
 				<groupId>org.osgi</groupId>
 				<artifactId>org.osgi.core</artifactId>
-				<version>4.2.0</version>
+				<version>5.0.0</version>
 				<scope>provided</scope>
 			</dependency>
 			<dependency>
 				<groupId>org.osgi</groupId>
 				<artifactId>org.osgi.compendium</artifactId>
-				<version>4.2.0</version>
+				<version>5.0.0</version>
 				<scope>provided</scope>
 			</dependency>
 			<dependency>
@@ -623,12 +669,33 @@
 			<dependency>
 				<groupId>org.scala-lang</groupId>
 				<artifactId>scala-compiler</artifactId>
-				<version>2.9.2</version>
+				<version>${scala.version}</version>
 			</dependency>
 			<dependency>
 				<groupId>org.scala-lang</groupId>
 				<artifactId>scala-library</artifactId>
-				<version>2.9.2</version>
+				<version>${scala.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.objenesis</groupId>
+				<artifactId>objenesis</artifactId>
+				<version>${objenesis.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>cglib</groupId>
+				<artifactId>cglib</artifactId>
+				<version>${cglib.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.apache.commons</groupId>
+				<artifactId>commons2</artifactId>
+				<version>2.0</version>
+			</dependency>
+			<dependency>
+				<groupId>org.hsqldb</groupId>
+				<artifactId>hsqldb</artifactId>
+				<version>2.3.2</version>
+				<scope>runtime</scope>
 			</dependency>
 		</dependencies>
 	</dependencyManagement>
@@ -670,7 +737,6 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-source-plugin</artifactId>
-				<version>2.1.2</version>
 				<executions>
 					<execution>
 						<id>attach-sources</id>
@@ -684,13 +750,23 @@
 		<pluginManagement>
 			<plugins>
 				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-source-plugin</artifactId>
+					<version>2.3</version>
+				</plugin>
+				<plugin>
 					<groupId>com.mycila.maven-license-plugin</groupId>
 					<artifactId>maven-license-plugin</artifactId>
-					<version>1.9.0</version>
 					<configuration>
+						<header>${basedir}/license_header.txt</header>
 						<aggregate>true</aggregate>
+						<strictCheck>true</strictCheck>
 						<quiet>false</quiet>
 						<failIfMissing>true</failIfMissing>
+						<includes>
+							<include>src/**</include>
+							<include>**/test/**</include>
+						</includes>
 						<excludes>
 							<exclude>**/*.gif</exclude>
 							<exclude>**/*.jpg</exclude>
@@ -710,7 +786,7 @@
 				<plugin>
 					<groupId>net.alchim31.maven</groupId>
 					<artifactId>yuicompressor-maven-plugin</artifactId>
-					<version>1.1</version>
+					<version>1.4.0</version>
 					<executions>
 						<execution>
 							<phase>process-resources</phase>
@@ -721,7 +797,7 @@
 						</execution>
 					</executions>
 					<configuration>
-						<!-- these are 3rd party css + js files no need to see the warnings about 
+						<!-- these are 3rd party css + js files no need to see the warnings about
 							them -->
 						<jswarn>false</jswarn>
 						<nosuffix>true</nosuffix>
@@ -741,23 +817,23 @@
 				<plugin>
 					<groupId>org.apache.felix</groupId>
 					<artifactId>maven-bundle-plugin</artifactId>
-					<version>2.3.7</version>
+					<version>2.5.0</version>
 				</plugin>
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-assembly-plugin</artifactId>
-					<version>2.2.1</version>
+					<version>2.4.1</version>
 				</plugin>
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-compiler-plugin</artifactId>
-					<version>2.5.1</version>
+					<version>3.1</version>
 					<configuration>
 						<debug>true</debug>
-						<optimise>true</optimise>
+						<optimize>true</optimize>
 						<showDeprecation>true</showDeprecation>
 						<showWarnings>true</showWarnings>
-						<verbose>true</verbose>
+						<verbose>false</verbose>
 					</configuration>
 				</plugin>
 				<plugin>
@@ -777,17 +853,17 @@
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-help-plugin</artifactId>
-					<version>2.1.1</version>
-				</plugin>
-				<plugin>
-					<groupId>org.apache.maven.plugins</groupId>
-					<artifactId>maven-idea-plugin</artifactId>
 					<version>2.2</version>
 				</plugin>
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-idea-plugin</artifactId>
+					<version>2.2.1</version>
+				</plugin>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-jar-plugin</artifactId>
-					<version>2.3.2</version>
+					<version>2.5</version>
 					<configuration>
 						<archive>
 							<index>true</index>
@@ -803,8 +879,7 @@
 								<Specification-Title>${project.name}</Specification-Title>
 								<Specification-Version>${project.version}</Specification-Version>
 								<Implementation-Title>${project.name}</Implementation-Title>
-								<Implementation-Version>${project.version} ${buildNumber} - ${user.name}</Implementation-Version>
-								<SCM-Revision>${buildNumber}</SCM-Revision>
+								<Implementation-Version>${project.version}</Implementation-Version>
 								<SCM-url>${project.scm.url}</SCM-url>
 							</manifestEntries>
 						</archive>
@@ -813,12 +888,12 @@
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-resources-plugin</artifactId>
-					<version>2.5</version>
+					<version>2.6</version>
 				</plugin>
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-surefire-plugin</artifactId>
-					<version>2.10</version>
+					<version>2.17</version>
 					<configuration>
 						<includes>
 							<include>**/*Test.java</include>
@@ -829,7 +904,7 @@
 				<plugin>
 					<groupId>org.codehaus.mojo</groupId>
 					<artifactId>animal-sniffer-maven-plugin</artifactId>
-					<version>1.7</version>
+					<version>1.11</version>
 					<executions>
 						<execution>
 							<id>animal-sniff-dependencies</id>
@@ -853,7 +928,7 @@
 				<plugin>
 					<groupId>net.alchim31.maven</groupId>
 					<artifactId>scala-maven-plugin</artifactId>
-					<version>3.0.1</version>
+					<version>3.2.0</version>
 					<executions>
 						<execution>
 							<id>scala-compile-first</id>
@@ -873,8 +948,8 @@
 				</plugin>
 				<!--This plugin's configuration is used to store Eclipse m2e settings only. It has no influence on the Maven build itself.-->
 				<plugin>
-					<groupId>org.eclipse.m2e</groupId>
-					<artifactId>lifecycle-mapping</artifactId>
+					<groupId>io.tesla.maven.plugins</groupId>
+					<artifactId>tesla-lifecycle-mapping</artifactId>
 					<version>1.0.0</version>
 					<configuration>
 						<lifecycleMappingMetadata>
@@ -944,6 +1019,36 @@
 						</lifecycleMappingMetadata>
 					</configuration>
 				</plugin>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-clean-plugin</artifactId>
+					<version>2.5</version>
+				</plugin>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-deploy-plugin</artifactId>
+					<version>2.8.1</version>
+				</plugin>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-install-plugin</artifactId>
+					<version>2.5.1</version>
+				</plugin>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-site-plugin</artifactId>
+					<version>3.4</version>
+				</plugin>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-war-plugin</artifactId>
+					<version>2.4</version>
+				</plugin>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-release-plugin</artifactId>
+					<version>2.5</version>
+				</plugin>
 			</plugins>
 		</pluginManagement>
 	</build>
@@ -952,35 +1057,35 @@
 		<plugins>
 			<!-- HERE ARE SOME EXPERIMENTAL PLUGINS TO WORK IN SITE GEN: -->
 			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-pmd-plugin</artifactId>
-				<version>2.5</version>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-pmd-plugin</artifactId>
+                <version>3.2</version>
 				<configuration>
 					<linkXRef>true</linkXRef>
 					<sourceEncoding>utf-8</sourceEncoding>
-					<targetJdk>1.5</targetJdk>
+					<targetJdk>1.7</targetJdk>
 					<minimumTokens>100</minimumTokens>
 				</configuration>
 			</plugin>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-project-info-reports-plugin</artifactId>
-				<version>2.3.1</version>
+				<version>2.7</version>
 			</plugin>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-jxr-plugin</artifactId>
-				<version>2.2</version>
+				<version>2.4</version>
 			</plugin>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-checkstyle-plugin</artifactId>
-				<version>2.6</version>
+				<version>2.12.1</version>
 			</plugin>
 			<plugin>
 				<groupId>org.codehaus.mojo</groupId>
 				<artifactId>cobertura-maven-plugin</artifactId>
-				<version>2.4</version>
+				<version>2.6</version>
 			</plugin>
 			<plugin>
 				<groupId>org.codehaus.mojo</groupId>
@@ -990,7 +1095,7 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-surefire-report-plugin</artifactId>
-				<version>2.7.1</version>
+				<version>2.17</version>
 			</plugin>
 		</plugins>
 	</reporting>

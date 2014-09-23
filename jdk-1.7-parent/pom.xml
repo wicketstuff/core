@@ -6,7 +6,7 @@
 	<parent>
 		<groupId>org.wicketstuff</groupId>
 		<artifactId>wicketstuff-core</artifactId>
-		<version>6.0-SNAPSHOT</version>
+		<version>7.0-SNAPSHOT</version>
 	</parent>
 
 	<artifactId>jdk-1.7-parent</artifactId>
@@ -19,7 +19,79 @@
 	</description>
 
 	<modules>
-		<module>wicketstuff-wicket7</module>
+		<module>lightbox2-parent</module>
+		<module>jqplot-parent</module>
+		<module>annotation</module> 
+		<module>annotationeventdispatcher-parent</module>
+		<module>async-tasks-parent</module>
+		<module>autocomplete-tagit-parent</module>
+		<module>browserid-parent</module>
+		<module>datastores-parent</module>
+		<module>datatables-parent</module>
+		<module>flot-parent</module>
+		<module>gae-initializer-parent</module>
+		<module>gmap3-parent</module>
+		<module>googlecharts-parent</module>
+		<module>htmlcompressor-parent</module>
+		<!--<module>inmethod-grid-parent</module> Need migration to the new Tree component (wicket-extensions) -->
+		<module>input-events-parent</module>
+		<module>javaee-inject-parent</module>
+		<module>jee-web-parent</module>
+		<module>jquery-parent</module>
+		<module>jwicket-parent</module>
+		<module>mbeanview-parent</module>
+		<module>minis-parent</module>
+		<module>modalx-parent</module>
+		<module>objectautocomplete-parent</module>
+		<module>openlayers-parent</module>
+		<module>openlayers3-parent</module>
+		<!--<module>phonebook</module> Spring dropped iBatis support in 4.x -->
+		<module>plugin</module>
+		<module>portlet-parent</module>
+		<module>progressbar-parent</module>
+		<module>push-parent</module>
+		<module>simile-timeline-parent</module>
+		<module>tinymce4-parent</module>
+		<module>tinymce3-parent</module>
+		<module>twitter-parent</module> 
+		<module>wicket-bundle-parent</module>
+		<module>wicket-osgi-parent</module>
+		<module>wicket-poi-parent</module>
+		<module>wicketstuff-logback-parent</module>
+
+		<module>closure-compiler</module>
+		<module>scala-extensions-parent</module>
+		<module>serializer-common</module>
+		<module>serializer-kryo</module>
+		<module>serializer-kryo2</module>
+		<module>serializer-fast</module>
+		<module>serializer-ui</module>
+		<module>stateless-parent</module>
+		<module>shiro-security</module>
+		<module>wicket-facebook-parent</module>
+		<module>wicket-html5-parent</module>
+		<module>wicket-servlet3-parent</module>
+		<module>wicketstuff-springreference-parent</module>
+		<module>wicket-security-parent</module>
+
+		<module>yui-parent</module>
+		<module>jasperreports-parent</module>
+		<module>editable-grid-parent</module>
+
+		<module>wicketstuff-lazymodel</module>
+		<module>sitemap-xml-parent</module>
+		<module>urlfragment-parent</module>
+		<module>wicketstuff-restannotations-parent</module>
+		<module>whiteboard-parent</module>
+		<module>wicket-mount-parent</module>
+		<module>select2-parent</module>
+
+		<!--
+			Commented because its build fails
+			<module>console-parent</module>
+		-->
+ 
+		<module>wicketstuff-glassfish4-integration</module>
 	</modules>
 
 	<build>

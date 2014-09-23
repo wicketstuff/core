@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<web-app xmlns="http://java.sun.com/xml/ns/javaee"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"
+         version="3.0">
+    <session-config>
+        <session-timeout>
+            30
+        </session-timeout>
+    </session-config>
+
+    <!-- Optional web.xml configuration of Servlet Container security -->
+    <!--    <filter>
+            <filter-name>ContainerManagedSecurityApp</filter-name>
+            <filter-class>org.apache.wicket.protocol.http.WicketFilter</filter-class>
+            <init-param>
+                <param-name>applicationClassName</param-name>
+                <param-value>org.wicketstuff.servlet3.secure.example.ContainerManagedSecurityApp</param-value>
+            </init-param>
+        </filter>
+        <filter-mapping>
+            <filter-name>ContainerManagedSecurityApp</filter-name>
+            <url-pattern>/cms/*</url-pattern>
+           <dispatcher>REQUEST</dispatcher>  <!- - Thats the default but when explicit you have to specify it - ->
+        <dispatcher>FORWARD</dispatcher>     <!- - FORWARD allows the servlet container to FORWARD to Wicket url!!! - ->
+        </filter-mapping>-->
+
+    <security-constraint>
+        <display-name>ExampleConstraint</display-name>
+        <web-resource-collection>
+            <web-resource-name>secure-example</web-resource-name>
+            <description/>
+            <url-pattern>/cms/secure/*</url-pattern>
+        </web-resource-collection>
+        <auth-constraint>
+            <description>Example Roles</description>
+            <role-name>tomcat</role-name>
+            <role-name>role1</role-name>
+            <role-name>admin</role-name>
+        </auth-constraint>
+    </security-constraint>
+    <login-config>
+        <auth-method>FORM</auth-method>
+        <realm-name>UserDatabaseRealm</realm-name>
+        <!--<realm-name>file</realm-name>  Glassfish Realm if it is not set to default realm -->
+        <!--<realm-name>ApplicationRealm</realm-name>  WildFly 8 Realm -->
+        <form-login-config>
+            <form-login-page>/cms/login.html</form-login-page>
+            <form-error-page>/cms/index.html</form-error-page>
+        </form-login-config>
+    </login-config>
+    <security-role>
+        <role-name>tomcat</role-name>
+    </security-role>
+    <security-role>
+        <role-name>role1</role-name>
+    </security-role>
+    <security-role>
+        <role-name>admin</role-name>
+    </security-role>
+
+</web-app>

@@ -1,0 +1,69 @@
+{"background": {
+    "height": 326,
+    "width": 595.0481927710844,
+    "left": -297.5240963855422,
+    "type": "Background",
+    "url": "http://localhost:8080/Documents/gmaps.jpg",
+    "top": 163
+}, "elements": [
+    {
+        "id": 5,
+        "p2": 4,
+        "color": "",
+        "p1": 3,
+        "trace": false,
+        "hidden": false,
+        "label": "",
+        "type": "PencilCircle"
+    },
+    {
+        "id": 0,
+        "color": "",
+        "trace": false,
+        "hidden": false,
+        "label": "",
+        "type": "PointFree",
+        "y": 105,
+        "x": -527
+    },
+    {
+        "id": 2,
+        "p2": 1,
+        "color": "",
+        "p1": 0,
+        "trace": false,
+        "hidden": false,
+        "label": "",
+        "type": "PencilRect"
+    },
+    {
+        "id": 1,
+        "color": "",
+        "trace": false,
+        "hidden": false,
+        "label": "",
+        "type": "PointFree",
+        "y": -100,
+        "x": -157
+    },
+    {
+        "id": 3,
+        "color": "",
+        "trace": false,
+        "hidden": false,
+        "label": "",
+        "type": "PointFree",
+        "y": 96,
+        "x": 61
+    },
+    {
+        "id": 4,
+        "color": "",
+        "trace": false,
+        "hidden": false,
+        "label": "",
+        "type": "PointFree",
+        "y": 78,
+        "x": 88
+    }
+]}

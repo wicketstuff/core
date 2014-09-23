@@ -1,0 +1,16 @@
+[Ljava.lang.Object;                                          |     2
+  org.apache.wicket.markup.html.list.ListItem(0)             |    51
+    org.apache.wicket.markup.html.basic.Label(label)         |    53
+      org.apache.wicket.markup.html.list.ListItemModel       |     3
+        org.apache.wicket.markup.html.list.ListView(list)    |     1
+        java.lang.Integer                                    |     1
+      java.lang.String                                       |     6
+      java.lang.Integer                                      |     5
+      java.lang.Integer                                      |     1
+      org.apache.wicket.markup.html.list.ListItem(0)         |     1
+    org.apache.wicket.markup.html.list.ListItemModel         |     1
+    org.apache.wicket.markup.html.list.ListView(list)        |     1
+    java.lang.String                                         |     3
+    java.lang.Integer                                        |     5
+    java.lang.Integer                                        |     1
+    java.lang.Integer                                        |     1

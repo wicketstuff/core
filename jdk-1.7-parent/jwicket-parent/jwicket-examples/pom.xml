@@ -1,0 +1,112 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>org.wicketstuff</groupId>
+        <artifactId>wicketstuff-jwicket-parent</artifactId>
+        <version>7.0-SNAPSHOT</version>
+    </parent>
+
+    <artifactId>wicketstuff-jwicket-examples</artifactId>
+    <packaging>war</packaging>
+
+    <name>jWicket: jQuery Wicket integration - examples</name>
+    <description>
+        Examples of using jWicket
+        WicketJQuery by Stefan Lindner has been renamed to jWicket, mavenized, and migrated
+        to WicketStuff. This Wicketstuff version supercedes the original version which was available
+        at http://subversion.visionet.de/project/WicketJQuery/wiki
+    </description>
+
+    <developers>
+        <developer>
+            <name>Stefan Lindner</name>
+            <id>lindner</id>
+            <email>lindner at visionet.de</email>
+        </developer>
+        <developer>
+            <name>Tauren Mills</name>
+            <id>tauren</id>
+            <email>tauren at tauren.com</email>
+        </developer>
+    </developers>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.mortbay.jetty</groupId>
+                <artifactId>jetty-maven-plugin</artifactId>
+            </plugin>
+        </plugins>
+    </build>
+
+    <dependencies>
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>wicketstuff-jwicket-core</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>wicketstuff-jwicket-ui-dragdrop</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>wicketstuff-jwicket-ui-resize</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>wicketstuff-jwicket-ui-effects</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>wicketstuff-jwicket-ui-datepicker</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>wicketstuff-jwicket-tooltip-walterzorn</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>wicketstuff-jwicket-tooltip-beautytips</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>wicketstuff-jwicket-tooltip-wtooltips</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>wicketstuff-dropdown-menu</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>wicketstuff-jwicket-ui-tooltip</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+
+
+        <!-- LOGGING DEPENDENCIES - LOG4J -->
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-log4j12</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>log4j</groupId>
+            <artifactId>log4j</artifactId>
+        </dependency>
+
+    </dependencies>
+
+</project>

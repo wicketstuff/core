@@ -1,0 +1,7 @@
+.TestTreeTransformator$Root(asSample)     | 1
+  .TestTreeTransformator$A                | 0
+    .TestTreeTransformator$B              | 0
+  .TestTreeTransformator$A                | 0
+    .TestTreeTransformator$B              | 0
+    .TestTreeTransformator$B              | 0
+      .TestTreeTransformator$C            | 0

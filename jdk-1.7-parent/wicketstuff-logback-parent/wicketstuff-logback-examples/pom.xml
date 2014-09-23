@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+	<modelVersion>4.0.0</modelVersion>
+
+	<parent>
+		<groupId>org.wicketstuff</groupId>
+		<artifactId>wicketstuff-logback-parent</artifactId>
+		<version>7.0-SNAPSHOT</version>
+	</parent>
+
+	<artifactId>wicketstuff-logback-examples</artifactId>
+	<packaging>war</packaging>
+
+	<name>WicketStuff Logback - Example Web Application</name>
+	<description>
+		This is a standard Servlet 2.5 + logback + wicket webapplication
+		serving as an example for wicketstuff-logback. Especially
+		LogbackConfigListener to specify the location of logback config and
+		WicketWebPatternEncoder to provide request informations in log messages.
+		See the web.xml for more info.
+	</description>
+
+	<dependencies>
+		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>javax.servlet-api</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>${project.groupId}</groupId>
+			<artifactId>wicketstuff-logback</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+
+		<!--  JETTY DEPENDENCIES FOR TESTING  -->
+		<dependency>
+			<groupId>org.eclipse.jetty.aggregate</groupId>
+			<artifactId>jetty-all-server</artifactId>
+		</dependency>
+	</dependencies>
+</project>
