@@ -68,20 +68,27 @@
 	</ciManagement>
 
 	<distributionManagement>
-		<site>
-			<id>localRepo</id>
-			<url>file:target/site</url>
-		</site>
-		<repository>
-			<id>localRepo</id>
-			<url>file:target/m2-repo</url>
-		</repository>
 		<snapshotRepository>
-			<id>localRepo</id>
-			<url>file:target/m2-snapshot-repo</url>
+			<id>sonatype-nexus-snapshots</id>
+			<url>https://oss.sonatype.org/content/repositories/snapshots/</url>
 		</snapshotRepository>
 	</distributionManagement>
-
+	
+	<repositories>
+		<!-- for wicket snapshots -->
+		<repository>
+			<id>wicket-snapshots</id>
+			<name>Apache Wicket Snapshots</name>
+			<url>https://repository.apache.org/content/repositories/snapshots</url>
+			<snapshots>
+				<enabled>true</enabled>
+			</snapshots>
+			<releases>
+				<enabled>false</enabled>
+			</releases>
+		</repository>
+	</repositories>
+			
 	<profiles>
 		<profile>
 			<id>oss.sonatype.org-staged-release</id>
@@ -175,28 +182,6 @@
 					<url>http://oss.sonatype.org/content/repositories/snapshots</url>
 				</snapshotRepository>
 			</distributionManagement>
-		</profile>
-		<profile>
-			<id>resolve-oss.sonatype.org-snapshots</id>
-			<activation>
-				<property>
-					<name>!performRelease</name>
-				</property>
-			</activation>
-			<repositories>
-				<!-- for wicket snapshots -->
-				<repository>
-					<id>wicket-snapshots</id>
-					<name>Apache Wicket Snapshots</name>
-					<url>https://repository.apache.org/content/repositories/snapshots</url>
-					<snapshots>
-						<enabled>true</enabled>
-					</snapshots>
-					<releases>
-						<enabled>false</enabled>
-					</releases>
-				</repository>
-			</repositories>
 		</profile>
 	</profiles>
 
