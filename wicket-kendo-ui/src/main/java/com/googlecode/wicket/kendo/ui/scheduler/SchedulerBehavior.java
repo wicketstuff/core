@@ -229,19 +229,22 @@ public abstract class SchedulerBehavior extends KendoUIBehavior implements IJQue
 
 				parameters.add(CallbackParameter.context("e"));
 
+				//NOTE! edit is a scheduler-related event and does not contain data, like datasource-related events
+				//read e.event instead
+				
 				// event //
-				parameters.add(CallbackParameter.resolved("id", "e.data.id")); // retrieved
-				parameters.add(CallbackParameter.resolved("title", "e.data.title")); // retrieved
-				parameters.add(CallbackParameter.resolved("description", "e.data.description")); // retrieved
+				parameters.add(CallbackParameter.resolved("id", "e.event.id")); // retrieved
+				parameters.add(CallbackParameter.resolved("title", "e.event.title")); // retrieved
+				parameters.add(CallbackParameter.resolved("description", "e.event.description")); // retrieved
 
-				parameters.add(CallbackParameter.resolved("start", "e.data.start.getTime()")); // retrieved
-				parameters.add(CallbackParameter.resolved("end", "e.data.end.getTime()")); // retrieved
-				parameters.add(CallbackParameter.resolved("isAllDay", "e.data.isAllDay")); // retrieved
+				parameters.add(CallbackParameter.resolved("start", "e.event.start.getTime()")); // retrieved
+				parameters.add(CallbackParameter.resolved("end", "e.event.end.getTime()")); // retrieved
+				parameters.add(CallbackParameter.resolved("isAllDay", "e.event.isAllDay")); // retrieved
 
 				// recurrence //
-				parameters.add(CallbackParameter.resolved("recurrenceId", "e.data.recurrenceId")); // retrieved
-				parameters.add(CallbackParameter.resolved("recurrenceRule", "e.data.recurrenceRule")); // retrieved
-				parameters.add(CallbackParameter.resolved("recurrenceException", "e.data.recurrenceException")); // retrieved
+				parameters.add(CallbackParameter.resolved("recurrenceId", "e.event.recurrenceId")); // retrieved
+				parameters.add(CallbackParameter.resolved("recurrenceRule", "e.event.recurrenceRule")); // retrieved
+				parameters.add(CallbackParameter.resolved("recurrenceException", "e.event.recurrenceException")); // retrieved
 
 				// resources //
 				for (String field : SchedulerBehavior.this.getResourceListModel().getFields())
