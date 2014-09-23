@@ -229,9 +229,6 @@ public abstract class SchedulerBehavior extends KendoUIBehavior implements IJQue
 
 				parameters.add(CallbackParameter.context("e"));
 
-				//NOTE! edit is a scheduler-related event and does not contain data, like datasource-related events
-				//read e.event instead
-				
 				// event //
 				parameters.add(CallbackParameter.resolved("id", "e.event.id")); // retrieved
 				parameters.add(CallbackParameter.resolved("title", "e.event.title")); // retrieved
@@ -249,7 +246,7 @@ public abstract class SchedulerBehavior extends KendoUIBehavior implements IJQue
 				// resources //
 				for (String field : SchedulerBehavior.this.getResourceListModel().getFields())
 				{
-					parameters.add(CallbackParameter.resolved(field, "e.event." + field)); // retrieved
+					parameters.add(CallbackParameter.resolved(field, String.format("jQuery.makeArray(e.event.%s)", field))); // retrieved
 				}
 
 				parameters.add(CallbackParameter.resolved("view", "e.sender.view().name")); // retrieved
