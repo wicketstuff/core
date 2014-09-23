@@ -1,4 +1,31 @@
 language: java
 jdk:
+  - oraclejdk6
   - oraclejdk7
 
+notifications:
+  email:
+    - mgrigorov@apache.org
+  irc: 
+    channels:
+      - "chat.freenode.net##wicket"
+    template:
+      - "%{repository}, %{author}, (%{commit}) : %{message} "
+      - "Build details: %{build_url}"
+      - "Duration: %{duration}"
+
+env:
+  global:
+    - secure: "I0PbW4iQlyMO/yztGnZ/qiaMm7IS51QqAGhA5HQYKVh/ywNpQpVrpZaFRyf8OlBAemqKmOTp3EcvR225hb6RQCFilkN2vCMbMO/b7BbMRVhfV6PlpkfiuP2EehgT5vXl74tF/WbnijbvLpQppLPqbC0yYKOVplVcNEDs0LcVLfk="
+    - secure: "PKgEV+4JuiCQ+69lYz8kDXLVKxn107EzGd+jq0BPxZK09LqMsvQpvkF0EZGF0gk1xXt3Gn2itVeKPbcxgufccuzVNoQnnXljvKn9+6ITTKg2HZA7UP4MrdOhhw1m+GMRKYVEdPz6qcG4FXlBfw3zgrmiZZ89K6mggPFeyf1VFDw="
+
+install: true
+
+script: 
+  - "jdk_switcher use oraclejdk6"
+  - "mvn -s sonatype-settings.xml clean deploy -N -Dmaven.javadoc.skip=true -B -V --quiet"
+  - "cd jdk-1.6-parent"
+  - "mvn -s sonatype-settings.xml clean deploy -Dmaven.javadoc.skip=true -B -V --quiet"
+  - "cd ../jdk-1.7-parent"
+  - "jdk_switcher use oraclejdk7"
+  - "mvn -s sonatype-settings.xml clean deploy -Dmaven.javadoc.skip=true -B -V --quiet"
