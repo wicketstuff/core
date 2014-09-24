@@ -1086,6 +1086,11 @@
 				<groupId>org.codehaus.mojo</groupId>
 				<artifactId>cobertura-maven-plugin</artifactId>
 				<version>2.6</version>
+                                <configuration>
+                                    <formats>
+                                        <format>xml</format>
+                                    </formats>
+                                </configuration>
 			</plugin>
 			<plugin>
 				<groupId>org.codehaus.mojo</groupId>
@@ -1102,6 +1107,11 @@
                             <artifactId>findbugs-maven-plugin</artifactId>                            
                             <version>3.0.0</version>                            
                         </plugin>
+                        <plugin>
+                            <groupId>org.apache.maven.plugins</groupId>
+                            <artifactId>maven-javadoc-plugin</artifactId>                            
+                            <version>2.9.1</version>                            
+                        </plugin>                        
 		</plugins>
 	</reporting>
 </project>
