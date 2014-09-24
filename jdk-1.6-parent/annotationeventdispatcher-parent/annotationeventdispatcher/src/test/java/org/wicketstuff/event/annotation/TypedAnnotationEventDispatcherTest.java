@@ -132,6 +132,9 @@ public class TypedAnnotationEventDispatcherTest
 		two.send(container.getApplication(), Broadcast.BREADTH, new SaveEvent<Person>(null, new Person()));
 	}
 
+	/**
+	 * https://github.com/wicketstuff/core/pull/353
+	 */
 	@Test(expected = RestartResponseException.class)
 	public void replaceHandlerExceptionPropogated()
 	{

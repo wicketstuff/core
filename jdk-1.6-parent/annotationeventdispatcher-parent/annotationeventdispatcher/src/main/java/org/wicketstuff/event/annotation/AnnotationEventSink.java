@@ -164,7 +164,7 @@ class AnnotationEventSink
 			}
 		} catch (InvocationTargetException e)
 		{
-			if (e.getCause() != null && e.getCause() instanceof ReplaceHandlerException)
+			if (e.getCause() instanceof ReplaceHandlerException)
 			{
 				throw ((ReplaceHandlerException)e.getCause());
 			}
