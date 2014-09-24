@@ -11,3 +11,4 @@ META-INF
 nb-configuration.xml
 *~
 rebel.xml
+.springBeans
