@@ -20,17 +20,18 @@ import static java.lang.reflect.Modifier.isPublic;
 import static java.util.Arrays.asList;
 import static org.apache.wicket.RuntimeConfigurationType.DEVELOPMENT;
 
-import org.apache.wicket.Application;
-import org.apache.wicket.Component;
-import org.apache.wicket.event.IEvent;
-import org.apache.wicket.util.collections.ClassMetaCache;
-import org.apache.wicket.util.visit.Visit;
-
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+
+import org.apache.wicket.Application;
+import org.apache.wicket.Component;
+import org.apache.wicket.event.IEvent;
+import org.apache.wicket.request.RequestHandlerStack.ReplaceHandlerException;
+import org.apache.wicket.util.collections.ClassMetaCache;
+import org.apache.wicket.util.visit.Visit;
 
 class AnnotationEventSink
 {
@@ -163,7 +164,14 @@ class AnnotationEventSink
 			}
 		} catch (InvocationTargetException e)
 		{
-			throw new IllegalStateException("Failed to invoke @OnEvent method", e);
+			if (e.getCause() instanceof ReplaceHandlerException)
+			{
+				throw ((ReplaceHandlerException)e.getCause());
+			}
+			else
+			{
+				throw new IllegalStateException("Failed to invoke @OnEvent method", e);
+			}
 		} catch (IllegalAccessException e)
 		{
 			throw new IllegalStateException("Failed to invoke @OnEvent method", e);
