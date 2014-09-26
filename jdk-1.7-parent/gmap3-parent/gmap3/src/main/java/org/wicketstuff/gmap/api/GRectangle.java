@@ -1,5 +1,4 @@
 /*
- * 
  * ==============================================================================
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -22,9 +21,9 @@ import org.wicketstuff.gmap.js.ObjectLiteral;
 
 /**
  * Represents an Google Maps API's
- * <a href= "https://developers.google.com/maps/documentation/javascript/reference?#Circle">Circle</a>.<br/>
+ * <a href="https://developers.google.com/maps/documentation/javascript/reference?#Rectangle">Rectangle</a>.<br/>
  * Following events can be attached to this overlay:<br/>
- * <li>center_changed</li>
+ * <li>bounds_changed</li>
  * <li>click</li>
  * <li>dblckick</li>
  * <li>dragend</li>
@@ -34,7 +33,6 @@ import org.wicketstuff.gmap.js.ObjectLiteral;
  * <li>mouseout</li>
  * <li>mouseover</li>
  * <li>mouseup</li>
- * <li>radius_changed</li>
  * <li>rightclick</li>
  *
  * @see GEvent#bounds_changed
@@ -48,37 +46,31 @@ import org.wicketstuff.gmap.js.ObjectLiteral;
  * @see GEvent#mouseout
  * @see GEvent#mouseover
  * @see GEvent#mouseup
- * @see GEvent#radius_changed
  * @see GEvent#rightclick
  */
-public class GCircle extends GOverlay
+public class GRectangle extends GOverlay
 {
 
 	private static final long serialVersionUID = 1L;
 
 	/**
-	 * The <a href="https://developers.google.com/maps/documentation/javascript/reference?#CircleOptions">options</a>
+	 * The <a href="https://developers.google.com/maps/documentation/javascript/reference?#RectangleOptions">options</a>.
 	 */
-	private final GLatLng center;
-	private final double radius;
-	private final String strokeColor;
-	private final int strokeWeight;
-	private final float strokeOpacity;
-	private final String fillColor;
-	private final float fillOpacity;
+	private final GLatLngBounds bounds;
 	private boolean clickable = true;
 	private boolean draggable;
 	private boolean editable;
+	private final String fillColor;
+	private final float fillOpacity;
+	private final String strokeColor;
+	private final float strokeOpacity;
+	private final int strokeWeight;
 	private boolean visible = true;
 	private Integer zIndex;
 
-	public GCircle(GLatLng center, double radius, String strokeColor, int strokeWeight, float strokeOpacity, String fillColor, float fillOpacity)
+	public GRectangle(GLatLngBounds bounds, String strokeColor, int strokeWeight, float strokeOpacity, String fillColor, float fillOpacity)
 	{
-		this.center = Args.notNull(center, "center");
-
-		Checks.withinRangeShort(1d, Double.MAX_VALUE, radius, "radius");
-		this.radius = radius;
-
+		this.bounds = Args.notNull(bounds, "bounds");
 		this.strokeColor = strokeColor;
 		this.strokeWeight = strokeWeight;
 		this.strokeOpacity = strokeOpacity;
@@ -89,7 +81,7 @@ public class GCircle extends GOverlay
 	@Override
 	public String getJSconstructor()
 	{
-		return ("new google.maps.Circle(" + getSettings().toJS() + ")");
+		return ("new google.maps.Rectangle(" + getSettings().toJS() + ")");
 	}
 
 	private ObjectLiteral getSettings()
@@ -101,8 +93,7 @@ public class GCircle extends GOverlay
 		settings.set("strokeOpacity", String.valueOf(strokeOpacity));
 		settings.setString("fillColor", fillColor);
 		settings.set("fillOpacity", String.valueOf(fillOpacity));
-		settings.set("center", center.toString());
-		settings.set("radius", String.valueOf(radius));
+		settings.set("bounds", bounds.toString());
 
 		if (!clickable)
 		{
@@ -138,31 +129,31 @@ public class GCircle extends GOverlay
 		// empty method
 	}
 
-	public GCircle setClickable(boolean clickable)
+	public GRectangle setClickable(boolean clickable)
 	{
 		this.clickable = clickable;
 		return this;
 	}
 
-	public GCircle setDraggable(boolean draggable)
+	public GRectangle setDraggable(boolean draggable)
 	{
 		this.draggable = draggable;
 		return this;
 	}
 
-	public GCircle setEditable(boolean editable)
+	public GRectangle setEditable(boolean editable)
 	{
 		this.editable = editable;
 		return this;
 	}
 
-	public GCircle setVisible(boolean visible)
+	public GRectangle setVisible(boolean visible)
 	{
 		this.visible = visible;
 		return this;
 	}
 
-	public GCircle setZIndex(Integer zIndex)
+	public GRectangle setZIndex(Integer zIndex)
 	{
 		if (zIndex != null)
 		{
