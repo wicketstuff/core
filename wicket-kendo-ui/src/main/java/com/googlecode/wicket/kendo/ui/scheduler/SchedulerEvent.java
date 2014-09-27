@@ -17,6 +17,7 @@
 package com.googlecode.wicket.kendo.ui.scheduler;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -24,6 +25,7 @@ import java.util.Map;
 import java.util.Set;
 
 import com.googlecode.wicket.jquery.core.utils.DateUtils;
+import com.googlecode.wicket.kendo.ui.scheduler.resource.Id;
 
 /**
  * Provides a base Bean that can be used with a {@link SchedulerModel}
@@ -72,9 +74,9 @@ public class SchedulerEvent implements Serializable
 	 * Constructor<br/>
 	 * The end date will be the start date + {@value #DEFAULT_RANGE} hour(s)
 	 *
-	 * @param id the event id
-	 * @param title the event title
-	 * @param start the start date
+	 * @param id - the event id
+	 * @param title - the event title
+	 * @param start - the start date
 	 */
 	public SchedulerEvent(int id, String title, long start)
 	{
@@ -85,9 +87,9 @@ public class SchedulerEvent implements Serializable
 	 * Constructor<br/>
 	 * The end date will be the start date + {@value #DEFAULT_RANGE} hour(s)
 	 *
-	 * @param id the event id
-	 * @param title the event title
-	 * @param start the start date
+	 * @param id - the event id
+	 * @param title - the event title
+	 * @param start - the start date
 	 */
 	public SchedulerEvent(int id, String title, Date start)
 	{
@@ -97,10 +99,10 @@ public class SchedulerEvent implements Serializable
 	/**
 	 * Constructor
 	 *
-	 * @param id the event id
-	 * @param title the event title
-	 * @param start the start date
-	 * @param end the end date
+	 * @param id - the event id
+	 * @param title - the event title
+	 * @param start - the start date
+	 * @param end - the end date
 	 */
 	public SchedulerEvent(int id, String title, long start, long end)
 	{
@@ -110,10 +112,10 @@ public class SchedulerEvent implements Serializable
 	/**
 	 * Constructor
 	 *
-	 * @param id the event id
-	 * @param title the event title
-	 * @param start the start date
-	 * @param end the end date
+	 * @param id - the event id
+	 * @param title - the event title
+	 * @param start - the start date
+	 * @param end - the end date
 	 */
 	public SchedulerEvent(int id, String title, Date start, Date end)
 	{
@@ -145,7 +147,7 @@ public class SchedulerEvent implements Serializable
 	/**
 	 * Sets the unique identifier of the scheduler event
 	 *
-	 * @param id the id
+	 * @param id - the id
 	 */
 	public void setId(int id)
 	{
@@ -165,7 +167,7 @@ public class SchedulerEvent implements Serializable
 	/**
 	 * Sets the title of the event which is displayed in the scheduler views
 	 *
-	 * @param title the title
+	 * @param title - the title
 	 */
 	public void setTitle(String title)
 	{
@@ -185,7 +187,7 @@ public class SchedulerEvent implements Serializable
 	/**
 	 * Sets the text description of the scheduler event
 	 *
-	 * @param description the description
+	 * @param description - the description
 	 */
 	public void setDescription(String description)
 	{
@@ -205,7 +207,7 @@ public class SchedulerEvent implements Serializable
 	/**
 	 * Sets the date at which the event starts
 	 *
-	 * @param date the start date
+	 * @param date - the start date
 	 */
 	public void setStart(Date date)
 	{
@@ -215,7 +217,7 @@ public class SchedulerEvent implements Serializable
 	/**
 	 * Sets the date at which the event starts
 	 *
-	 * @param date the start date
+	 * @param date - the start date
 	 */
 	public void setStart(long date)
 	{
@@ -235,7 +237,7 @@ public class SchedulerEvent implements Serializable
 	/**
 	 * Gets the date at which the event ends
 	 *
-	 * @param date the end date
+	 * @param date - the end date
 	 */
 	public void setEnd(Date date)
 	{
@@ -245,7 +247,7 @@ public class SchedulerEvent implements Serializable
 	/**
 	 * Gets the date at which the event ends
 	 *
-	 * @param date the end date
+	 * @param date - the end date
 	 */
 	public void setEnd(long date)
 	{
@@ -265,7 +267,7 @@ public class SchedulerEvent implements Serializable
 	/**
 	 * Sets if the event is "all day" or not
 	 *
-	 * @param allDay true or false
+	 * @param allDay - true or false
 	 */
 	public void setAllDay(boolean allDay)
 	{
@@ -287,7 +289,7 @@ public class SchedulerEvent implements Serializable
 	/**
 	 * Sets the id of the recurrence parent. If set the current event is a recurrence exception.
 	 *
-	 * @param id the id of the recurrence parent
+	 * @param id - the id of the recurrence parent
 	 */
 	public void setRecurrenceId(String id)
 	{
@@ -307,7 +309,7 @@ public class SchedulerEvent implements Serializable
 	/**
 	 * Sets the recurrence rule which describes the repetition pattern of the event. Follows the rfc5545 specification.
 	 *
-	 * @param rule the recurrence rule
+	 * @param rule - the recurrence rule
 	 */
 	public void setRecurrenceRule(String rule)
 	{
@@ -349,35 +351,65 @@ public class SchedulerEvent implements Serializable
 	/**
 	 * Gets a resource value, identified by its field
 	 *
-	 * @param field the resource field (ie: 'resourceId')
-	 * @return the value, which is either an <tt>Integer</tt> or a <tt>List&lt;Integer&gt;</tt>
+	 * @param field - the resource field (ie: 'resourceId')
+	 * @return the value, which is either a <tt>String</tt>, an <tt>Integer</tt>, a <tt>List&lt;String&gt;</tt> or a <tt>List&lt;Integer&gt;</tt>
 	 */
 	@SuppressWarnings("unchecked")
-	public <T> T getValue(String field)
+	public final Object getValue(String field)
 	{
-		return (T) this.resources.get(field);
+		Object object = this.resources.get(field); // either an Id or a List<Id<?>>
+
+		if (object instanceof Id<?>)
+		{
+			return ((Id<?>) object).get();
+		}
+
+		if (object instanceof List<?>)
+		{
+			List<Object> list = new ArrayList<Object>();
+
+			for (Id<?> id : (List<Id<?>>) object)
+			{
+				list.add(id.get());
+			}
+
+			return list;
+		}
+
+		return null;
 	}
 
 	/**
 	 * Sets a resource value
 	 *
-	 * @param field the resource field (ie: 'resourceId')
-	 * @param value the value
+	 * @param field - the resource field (ie: 'resourceId')
+	 * @param id - the id-value
 	 */
-	public void setResource(String field, Integer value)
+	public final void setResource(String field, String id)
 	{
-		this.resources.put(field, value);
+		this.resources.put(field, Id.valueOf(id));
 	}
 
 	/**
 	 * Sets a resource value
 	 *
-	 * @param field the resource field (ie: 'resourceId')
-	 * @param values the values
+	 * @param field - the resource field (ie: 'resourceId')
+	 * @param id - the id-value
 	 */
-	public void setResource(String field, List<Integer> values)
+	public final void setResource(String field, Number id)
 	{
-		this.resources.put(field, values);
+		this.resources.put(field, Id.valueOf(id));
+	}
+
+	/**
+	 * Sets a resource value
+	 *
+	 * @param field - the resource field (ie: 'resourceId')
+	 * @param ids - the id-values
+	 */
+	public final void setResource(String field, List<?> ids)
+	{
+		this.resources.put(field, Id.valueOf(ids));
 	}
 
 	// methods //

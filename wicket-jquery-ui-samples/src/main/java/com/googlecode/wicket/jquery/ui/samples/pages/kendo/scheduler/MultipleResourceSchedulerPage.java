@@ -106,8 +106,8 @@ public class MultipleResourceSchedulerPage extends AbstractSchedulerPage
 	static ResourceList newEmployeeList()
 	{
 		ResourceList list = new ResourceList("Employee", "employeeId", true); // true: multiple
-		list.add(new Resource(1, "Patrick", "#339966"));
-		list.add(new Resource(2, "Sebastien", "#996633"));
+		list.add(new Resource(EmployeeEventsDAO.EMPLOYEE_1, "Patrick", "#339966")); // using EMPLOYEE_X/uuid like (String)
+		list.add(new Resource(EmployeeEventsDAO.EMPLOYEE_2, "Sebastien", "#996633"));
 
 		return list;
 	}

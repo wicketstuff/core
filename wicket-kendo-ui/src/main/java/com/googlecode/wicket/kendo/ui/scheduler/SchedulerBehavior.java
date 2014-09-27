@@ -407,14 +407,14 @@ public abstract class SchedulerBehavior extends KendoUIBehavior implements IJQue
 			this.event.setRecurrenceException(recurrenceException);
 
 			// Resources //
-			Pattern pattern = Pattern.compile("(\\d+)");
+			Pattern pattern = Pattern.compile("([\\w-]+)");
 
 			for (ResourceList list : listModel.getObject())
 			{
 				String field = list.getField();
 				StringValue value = RequestCycleUtils.getQueryParameterValue(field);
 
-				List<Integer> values = new ArrayList<Integer>();
+				List<String> values = new ArrayList<String>();
 
 				if (value != null)
 				{
@@ -422,17 +422,17 @@ public abstract class SchedulerBehavior extends KendoUIBehavior implements IJQue
 
 					while (matcher.find())
 					{
-						values.add(Integer.valueOf(matcher.group()));
+						values.add(matcher.group());
 					}
+				}
 
-					if (list.isMultiple())
-					{
-						this.event.setResource(field, values);
-					}
-					else if (values.size() > 0) /* defensive, should never happens */
-					{
-						this.event.setResource(field, values.get(0));
-					}
+				if (list.isMultiple())
+				{
+					this.event.setResource(field, values);
+				}
+				else if (!values.isEmpty())
+				{
+					this.event.setResource(field, values.get(0)); // if the underlying value is a number (even a string-number), it will handled by Id#valueOf(I)
 				}
 			}
 

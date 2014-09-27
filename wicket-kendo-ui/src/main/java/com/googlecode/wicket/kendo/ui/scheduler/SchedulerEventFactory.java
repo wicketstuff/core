@@ -87,7 +87,7 @@ public class SchedulerEventFactory
 			// resources //
 			for (String field : event.getFields())
 			{
-				object.put(field, event.getValue(field)); // value is type of Object (can be Integer or List<Integer>)
+				object.put(field, event.getValue(field)); // value is type of Object (String, Integer, List<String> or List<Integer>)
 			}
 
 			return object.toString();
