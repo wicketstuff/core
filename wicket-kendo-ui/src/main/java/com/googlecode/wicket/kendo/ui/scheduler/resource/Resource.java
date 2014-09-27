@@ -34,36 +34,86 @@ public class Resource implements Serializable
 {
 	private static final long serialVersionUID = 1L;
 
-	private int id;
+	private final Id<?> id;
 	private String text;
 	private String color;
 
 	/**
 	 * Constructor
+	 *
+	 * @param id - the resource id
 	 */
-	protected Resource()
+	protected Resource(String id)
 	{
+		this(Id.valueOf(id), null, null);
 	}
 
 	/**
 	 * Constructor
 	 *
-	 * @param id the resource id
-	 * @param text the text title
+	 * @param id - the resource id
 	 */
-	public Resource(int id, String text)
+	protected Resource(Integer id)
 	{
-		this(id, text, null);
+		this(Id.valueOf(id), null, null);
+	}
+
+	/**
+	 * Constructor<br/>
+	 * <b>Caution:</b> string-numbers as will be interpreted as integers
+	 *
+	 * @param id - the resource id
+	 * @param text - the text (ie: the name of the resource)
+	 */
+	public Resource(String id, String text)
+	{
+		this(Id.valueOf(id), text, null);
+	}
+
+	/**
+	 * Constructor<br/>
+	 * <b>Caution:</b> string-numbers as will be interpreted as integers
+	 *
+	 * @param id - the resource id
+	 * @param text - the text (ie: the name of the resource)
+	 * @param color - the color (ie: #336699)
+	 */
+	public Resource(String id, String text, String color)
+	{
+		this(Id.valueOf(id), text, color);
 	}
 
 	/**
 	 * Constructor
 	 *
-	 * @param id the resource id
-	 * @param text the text (ie: the name of the resource)
-	 * @param color the color (ie: #336699)
+	 * @param id - the resource id
+	 * @param text - the text (ie: the name of the resource)
 	 */
-	public Resource(int id, String text, String color)
+	public Resource(Integer id, String text)
+	{
+		this(Id.valueOf(id), text, null);
+	}
+
+	/**
+	 * Constructor
+	 *
+	 * @param id - the resource id
+	 * @param text - the text (ie: the name of the resource)
+	 * @param color - the color (ie: #336699)
+	 */
+	public Resource(Integer id, String text, String color)
+	{
+		this(Id.valueOf(id), text, color);
+	}
+
+	/**
+	 * Constructor
+	 *
+	 * @param id - the resource id
+	 * @param text - the text (ie: the name of the resource)
+	 * @param color - the color (ie: #336699)
+	 */
+	Resource(Id<?> id, String text, String color)
 	{
 		this.id = id;
 		this.text = text;
@@ -75,19 +125,10 @@ public class Resource implements Serializable
 	 *
 	 * @return the resource id
 	 */
-	public int getId()
+	@SuppressWarnings("unchecked")
+	public <T> T getId()
 	{
-		return this.id;
-	}
-
-	/**
-	 * Gets the resource id
-	 *
-	 * @param id the resource id
-	 */
-	public void setId(int id)
-	{
-		this.id = id;
+		return (T) this.id.get();
 	}
 
 	/**
@@ -103,7 +144,7 @@ public class Resource implements Serializable
 	/**
 	 * Sets the text of the resource (ie: the name of the resource)
 	 *
-	 * @param text the text
+	 * @param text - the text
 	 */
 	public void setText(String text)
 	{
@@ -113,7 +154,7 @@ public class Resource implements Serializable
 	/**
 	 * Gets the color of the resource (ie: #336699)
 	 *
-	 * @return color the color
+	 * @return color - the color
 	 */
 	public String getColor()
 	{
@@ -123,7 +164,7 @@ public class Resource implements Serializable
 	/**
 	 * Sets the color of the resource (ie: #336699)
 	 *
-	 * @param color the color
+	 * @param color - the color
 	 */
 	public void setColor(String color)
 	{
@@ -138,7 +179,7 @@ public class Resource implements Serializable
 	{
 		Options value = new Options();
 
-		value.set("value", this.id);
+		value.set("value", this.id.getValue());
 		value.set("text", Options.asString(this.text));
 
 		if (this.color != null)
