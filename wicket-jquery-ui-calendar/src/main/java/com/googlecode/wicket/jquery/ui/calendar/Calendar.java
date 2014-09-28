@@ -170,6 +170,18 @@ public class Calendar extends JQueryContainer implements ICalendarListener
 		return false;
 	}
 
+	@Override
+	public CharSequence getEventDropPrecondition()
+	{
+		return "";
+	}
+
+	@Override
+	public CharSequence getEventResizePrecondition()
+	{
+		return "";
+	}
+
 	// Events //
 	@Override
 	protected void onInitialize()
@@ -293,6 +305,18 @@ public class Calendar extends JQueryContainer implements ICalendarListener
 			public boolean isViewRenderEnabled()
 			{
 				return Calendar.this.isViewRenderEnabled();
+			}
+
+			@Override
+			public CharSequence getEventDropPrecondition()
+			{
+				return Calendar.this.getEventDropPrecondition();
+			}
+
+			@Override
+			public CharSequence getEventResizePrecondition()
+			{
+				return Calendar.this.getEventResizePrecondition();
 			}
 
 			@Override

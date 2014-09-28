@@ -85,6 +85,24 @@ interface ICalendarListener
 	boolean isViewRenderEnabled();
 
 	/**
+	 * Gets the javascript statement which will be executed before {@link #onEventDrop(AjaxRequestTarget, int, long, boolean)} event is triggered<br/>
+	 * A common use case is to call the <tt>revertFunc</tt> callback to cancel the event.
+	 *
+	 * @return the javascript statement
+	 * @see <a href="http://arshaw.com/fullcalendar/docs/event_ui/eventDrop/">http://arshaw.com/fullcalendar/docs/event_ui/eventDrop/</a>
+	 */
+	CharSequence getEventDropPrecondition();
+
+	/**
+	 * Gets the javascript statement which will be executed before {@link #onEventResize(AjaxRequestTarget, int, long)} event is triggered<br/>
+	 * A common use case is to call the <tt>revertFunc</tt> callback to cancel the event.
+	 *
+	 * @return the javascript statement
+	 * @see <a href="http://arshaw.com/fullcalendar/docs/event_ui/eventResize/">http://arshaw.com/fullcalendar/docs/event_ui/eventResize/</a>
+	 */
+	CharSequence getEventResizePrecondition();
+
+	/**
 	 * Triggered when an cell is selected.<br/>
 	 * {@link #isSelectable()} should return true for this event to be triggered.
 	 *
