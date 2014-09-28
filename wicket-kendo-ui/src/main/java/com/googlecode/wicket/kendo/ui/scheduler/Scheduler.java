@@ -52,11 +52,21 @@ public class Scheduler extends JQueryContainer implements ISchedulerListener
 	 * Constructor
 	 *
 	 * @param id the markup id
+	 */
+	public Scheduler(String id)
+	{
+		this(id, null, new Options());
+	}
+
+	/**
+	 * Constructor
+	 *
+	 * @param id the markup id
 	 * @param options {@link Options}
 	 */
 	public Scheduler(String id, Options options)
 	{
-		this(id, null, new Options());
+		this(id, null, options);
 	}
 
 	/**
@@ -181,7 +191,7 @@ public class Scheduler extends JQueryContainer implements ISchedulerListener
 	{
 		super.onConfigure(behavior);
 
-		behavior.setOption("timezone", Options.asString("Etc/UTC")); // TODO model to schema?
+		behavior.setOption("timezone", Options.asString("Etc/UTC"));
 
 		// groups //
 		List<String> groups = this.resourceListModel.getGroups();

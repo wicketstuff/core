@@ -190,18 +190,6 @@ public abstract class AutoCompleteTextField<T extends Serializable> extends Text
 		return this.renderer.getText(this.getModelObject()); // renderer cannot be null.
 	}
 
-	/**
-	 * Gets the {@link ITextRenderer}
-	 *
-	 * @return the {@link ITextRenderer}
-	 * @deprecated probably useless, will be removed. Open an issue in GitHub if you need it
-	 */
-	@Deprecated
-	public ITextRenderer<? super T> getRenderer()
-	{
-		return this.renderer;
-	}
-
 	@Override
 	@SuppressWarnings("unchecked")
 	public <C> IConverter<C> getConverter(Class<C> type)

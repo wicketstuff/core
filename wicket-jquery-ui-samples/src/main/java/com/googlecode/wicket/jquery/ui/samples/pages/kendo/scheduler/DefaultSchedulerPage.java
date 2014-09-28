@@ -22,8 +22,6 @@ public class DefaultSchedulerPage extends AbstractSchedulerPage
 {
 	private static final long serialVersionUID = 1L;
 
-	private final Scheduler scheduler;
-
 	public DefaultSchedulerPage()
 	{
 		// Form //
@@ -48,7 +46,7 @@ public class DefaultSchedulerPage extends AbstractSchedulerPage
 		options.set("workDayStart", "new Date('2014/1/1 08:00 AM')");
 		options.set("workDayEnd", "new Date('2014/1/1 6:00 PM')");
 
-		this.scheduler = new Scheduler("scheduler", newSchedulerModel(), options) {
+		form.add(new Scheduler("scheduler", newSchedulerModel(), options) {
 
 			private static final long serialVersionUID = 1L;
 
@@ -73,12 +71,12 @@ public class DefaultSchedulerPage extends AbstractSchedulerPage
 			@Override
 			public void onDelete(AjaxRequestTarget target, SchedulerEvent event)
 			{
+				SchedulerEventsDAO.get().delete(event);
+
 				this.info("Deleted: " + event);
 				target.add(feedback);
 			}
-		};
-
-		form.add(this.scheduler);
+		});
 	}
 
 	// Factories //

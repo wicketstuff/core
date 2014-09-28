@@ -19,8 +19,6 @@ public class SingleResourceSchedulerPage extends AbstractSchedulerPage
 {
 	private static final long serialVersionUID = 1L;
 
-	private final Scheduler scheduler;
-
 	public SingleResourceSchedulerPage()
 	{
 		// Form //
@@ -39,7 +37,7 @@ public class SingleResourceSchedulerPage extends AbstractSchedulerPage
 		options.set("workDayStart", "new Date('2014/1/1 08:00 AM')");
 		options.set("workDayEnd", "new Date('2014/1/1 6:00 PM')");
 
-		this.scheduler = new Scheduler("scheduler", newSchedulerModel(), newResourceList(), options) {
+		form.add(new Scheduler("scheduler", newSchedulerModel(), newResourceList(), options) {
 
 			private static final long serialVersionUID = 1L;
 
@@ -69,9 +67,7 @@ public class SingleResourceSchedulerPage extends AbstractSchedulerPage
 				this.info("Deleted: " + event);
 				target.add(feedback);
 			}
-		};
-
-		form.add(this.scheduler);
+		});
 	}
 
 	// Factories //
