@@ -212,8 +212,8 @@ public class RangeSlider extends AbstractSlider<RangeValue>
 		// lower & upper TextFields have not been specified in ctor //
 		if (this.lower == null || this.upper == null)
 		{
-			this.lower = new HiddenField<Integer>("lower", new PropertyModel<Integer>(this.getModelObject(), "lower"), Integer.class);
-			this.upper = new HiddenField<Integer>("upper", new PropertyModel<Integer>(this.getModelObject(), "upper"), Integer.class);
+			this.lower = new HiddenField<Integer>("lower", new PropertyModel<Integer>(this.getModel(), "lower"), Integer.class);
+			this.upper = new HiddenField<Integer>("upper", new PropertyModel<Integer>(this.getModel(), "upper"), Integer.class);
 
 			fragment = new Fragment(id, "range-fragment", this);
 			fragment.add(this.lower.setOutputMarkupPlaceholderTag(true));
