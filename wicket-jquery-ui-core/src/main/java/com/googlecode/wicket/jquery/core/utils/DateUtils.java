@@ -51,6 +51,22 @@ public class DateUtils
 	 * @param hours the amount of hours to add
 	 * @return a new date
 	 */
+	public static long addHours(long date, int hours)
+	{
+		Calendar calendar = Calendar.getInstance(UTC);
+		calendar.setTimeInMillis(date);
+		calendar.add(Calendar.HOUR, hours);
+
+		return calendar.getTimeInMillis();
+	}
+
+	/**
+	 * Adds the specified amount of hours to a date
+	 *
+	 * @param date the actual date (UTC)
+	 * @param hours the amount of hours to add
+	 * @return a new date
+	 */
 	public static Date addHours(Date date, int hours)
 	{
 		Calendar calendar = Calendar.getInstance(UTC);
