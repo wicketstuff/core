@@ -40,7 +40,7 @@ public class SchedulerEvent implements Serializable
 	private static final int DEFAULT_RANGE = 1; // hour
 
 	/** new event id */
-	public static int NEW_ID = 0;
+	public static final int NEW_ID = 0;
 
 	public static boolean isNew(SchedulerEvent event)
 	{
@@ -396,7 +396,7 @@ public class SchedulerEvent implements Serializable
 	 * @param field - the resource field (ie: 'resourceId')
 	 * @param id - the id-value
 	 */
-	public final void setResource(String field, Number id)
+	public final void setResource(String field, Integer id)
 	{
 		this.resources.put(field, Id.valueOf(id));
 	}

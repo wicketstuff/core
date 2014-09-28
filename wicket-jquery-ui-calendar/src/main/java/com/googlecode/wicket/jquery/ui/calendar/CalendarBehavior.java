@@ -21,12 +21,15 @@ import java.util.Date;
 import org.apache.wicket.Component;
 import org.apache.wicket.ajax.AbstractDefaultAjaxBehavior;
 import org.apache.wicket.ajax.AjaxRequestTarget;
+import org.apache.wicket.ajax.attributes.AjaxCallListener;
+import org.apache.wicket.ajax.attributes.AjaxRequestAttributes;
 import org.apache.wicket.ajax.attributes.CallbackParameter;
 import org.apache.wicket.markup.head.IHeaderResponse;
 import org.apache.wicket.markup.head.JavaScriptHeaderItem;
 import org.apache.wicket.request.IRequestHandler;
 import org.apache.wicket.request.cycle.RequestCycle;
 import org.apache.wicket.request.handler.resource.ResourceReferenceRequestHandler;
+import org.apache.wicket.util.string.Strings;
 import org.apache.wicket.util.time.Duration;
 
 import com.googlecode.wicket.jquery.core.JQueryBehavior;
@@ -385,6 +388,21 @@ public abstract class CalendarBehavior extends JQueryBehavior implements IJQuery
 			private static final long serialVersionUID = 1L;
 
 			@Override
+			protected void updateAjaxAttributes(AjaxRequestAttributes attributes)
+			{
+				super.updateAjaxAttributes(attributes);
+
+				CharSequence precondition = CalendarBehavior.this.getEventDropPrecondition();
+
+				if (!Strings.isEmpty(precondition))
+				{
+					AjaxCallListener ajaxCallListener = new AjaxCallListener();
+					ajaxCallListener.onPrecondition(precondition);
+					attributes.getAjaxCallListeners().add(ajaxCallListener);
+				}
+			}
+
+			@Override
 			protected CallbackParameter[] getCallbackParameters()
 			{
 				// http://arshaw.com/fullcalendar/docs/event_ui/eventResize/
@@ -419,6 +437,21 @@ public abstract class CalendarBehavior extends JQueryBehavior implements IJQuery
 		return new JQueryAjaxBehavior(this) {
 
 			private static final long serialVersionUID = 1L;
+
+			@Override
+			protected void updateAjaxAttributes(AjaxRequestAttributes attributes)
+			{
+				super.updateAjaxAttributes(attributes);
+
+				CharSequence precondition = CalendarBehavior.this.getEventResizePrecondition();
+
+				if (!Strings.isEmpty(precondition))
+				{
+					AjaxCallListener ajaxCallListener = new AjaxCallListener();
+					ajaxCallListener.onPrecondition(precondition);
+					attributes.getAjaxCallListeners().add(ajaxCallListener);
+				}
+			}
 
 			@Override
 			protected CallbackParameter[] getCallbackParameters()
