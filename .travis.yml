@@ -20,7 +20,7 @@ install: true
 
 script: 
   - "DEPLOY_OR_TEST=test"
-  - "if [[ $TRAVIS_PULL_REQUEST == 'false' ]]; DEPLOY_OR_TEST=deploy; fi"
+  - '[ "${TRAVIS_PULL_REQUEST}" = "false" ] && DEPLOY_OR_TEST=deploy'
   - "jdk_switcher use openjdk6"
   - "mvn -s sonatype-settings.xml clean install $DEPLOY_OR_TEST -N -Dmaven.javadoc.skip=true -B -V --quiet"
   - "cd jdk-1.6-parent"
