@@ -36,6 +36,12 @@
         <function-class>org.wicketstuff.jeeweb.el.ELFunctions</function-class>
         <function-signature>java.lang.String ajaxCallbackUrl()</function-signature>
     </function>
+    
+    <function>
+		<function-name>ajaxFormSubmit</function-name>
+		<function-class>org.wicketstuff.jeeweb.el.ELFunctions</function-class>
+		<function-signature>java.lang.String ajaxFormSubmit(java.lang.String)</function-signature>
+    </function>
 
     <tag>
 		<tag-name>url</tag-name>
