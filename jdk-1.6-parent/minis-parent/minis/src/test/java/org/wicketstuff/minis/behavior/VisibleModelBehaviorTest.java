@@ -38,8 +38,8 @@ public class VisibleModelBehaviorTest
 		tester.destroy();
 	}
 
-	@Test(expected = NullPointerException.class)
-	public void testNullDependentModelThrowsNPE()
+	@Test(expected = IllegalArgumentException.class)
+	public void testNullDependentModelThrowsException()
 	{
 		new Label(CID_LABEL).add(new VisibleModelBehavior(null));
 	}

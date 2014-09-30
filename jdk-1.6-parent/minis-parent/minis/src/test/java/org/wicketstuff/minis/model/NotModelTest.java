@@ -23,8 +23,8 @@ import org.junit.Test;
 public class NotModelTest
 {
 
-	@Test(expected = NullPointerException.class)
-	public void testNullDependentModelThrowsNPE()
+	@Test(expected = IllegalArgumentException.class)
+	public void testNullDependentModelThrowsException()
 	{
 		new NotModel(null);
 	}

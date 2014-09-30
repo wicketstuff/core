@@ -40,8 +40,8 @@ public class EnabledModelBehaviorTest
 		tester.destroy();
 	}
 
-	@Test(expected = NullPointerException.class)
-	public void testNullDependentModelThrowsNPE()
+	@Test(expected = IllegalArgumentException.class)
+	public void testNullDependentModelThrowsException()
 	{
 		new TextField<String>("field").add(new EnabledModelBehavior(null));
 	}

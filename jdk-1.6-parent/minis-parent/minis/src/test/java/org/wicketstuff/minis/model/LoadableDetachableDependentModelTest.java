@@ -38,8 +38,8 @@ public class LoadableDetachableDependentModelTest
 		tester.destroy();
 	}
 
-	@Test(expected = NullPointerException.class)
-	public void testNullDependentModelThrowsNPE()
+	@Test(expected = IllegalArgumentException.class)
+	public void testNullDependentModelThrowsException()
 	{
 		new LoadableDetachableDependentModel<String, String>(null)
 		{

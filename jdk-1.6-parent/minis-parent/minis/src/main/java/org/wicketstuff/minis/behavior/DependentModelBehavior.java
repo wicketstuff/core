@@ -16,11 +16,10 @@
  */
 package org.wicketstuff.minis.behavior;
 
-import java.util.Objects;
-
 import org.apache.wicket.Component;
 import org.apache.wicket.behavior.Behavior;
 import org.apache.wicket.model.IModel;
+import org.apache.wicket.util.lang.Args;
 
 /**
  * Behavior that uses the value of the dependent model. The dependent model is detached when the
@@ -42,7 +41,7 @@ public abstract class DependentModelBehavior<D> extends Behavior
 	 */
 	public DependentModelBehavior(final IModel<D> dependentModel)
 	{
-		Objects.requireNonNull(dependentModel, "The dependent model must not be null.");
+		Args.notNull(dependentModel, "The dependent model must not be null.");
 		this.dependentModel = dependentModel;
 	}
 

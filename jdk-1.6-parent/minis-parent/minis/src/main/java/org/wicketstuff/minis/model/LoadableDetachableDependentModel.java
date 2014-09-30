@@ -16,10 +16,9 @@
  */
 package org.wicketstuff.minis.model;
 
-import java.util.Objects;
-
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.LoadableDetachableModel;
+import org.apache.wicket.util.lang.Args;
 
 /**
  * {@link LoadableDetachableModel} that is dependent on another model. The dependent model is
@@ -43,7 +42,7 @@ public abstract class LoadableDetachableDependentModel<T, D> extends LoadableDet
 	 */
 	public LoadableDetachableDependentModel(IModel<D> dependentModel)
 	{
-		Objects.requireNonNull(dependentModel, "The dependent model cannot be null.");
+		Args.notNull(dependentModel, "The dependent model cannot be null.");
 		this.dependentModel = dependentModel;
 	}
 
