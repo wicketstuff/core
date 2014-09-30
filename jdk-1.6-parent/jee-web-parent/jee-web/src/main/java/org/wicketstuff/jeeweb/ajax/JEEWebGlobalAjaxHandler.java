@@ -30,12 +30,14 @@ import org.apache.wicket.markup.head.JavaScriptHeaderItem;
 import org.apache.wicket.markup.html.IHeaderContributor;
 import org.apache.wicket.protocol.http.WebApplication;
 import org.apache.wicket.protocol.http.WebSession;
+import org.apache.wicket.request.Url;
 import org.apache.wicket.request.cycle.PageRequestHandlerTracker;
 import org.apache.wicket.request.cycle.RequestCycle;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
 import org.apache.wicket.request.resource.IResource;
 import org.apache.wicket.request.resource.JavaScriptResourceReference;
 import org.apache.wicket.request.resource.ResourceReference;
+import org.apache.wicket.util.string.Strings;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -141,6 +143,17 @@ public class JEEWebGlobalAjaxHandler extends ResourceReference
 					}
 				};
 				response.render(JavaScriptHeaderItem.forReference(forReference));
+				addAJaxBaseUrl(response);
+			}
+				
+			private void addAJaxBaseUrl(IHeaderResponse response)
+			{
+				// render ajax base url. It's required by Wicket Ajax support.
+				Url baseUrl = RequestCycle.get().getUrlRenderer().getBaseUrl();
+				CharSequence ajaxBaseUrl = Strings.escapeMarkup(baseUrl.toString());
+				response.render(JavaScriptHeaderItem.forScript("Wicket.Ajax.baseUrl=\""
+					+ ajaxBaseUrl + "\";", "wicket-ajax-base-url"));
+
 			}
 		});
 	}
