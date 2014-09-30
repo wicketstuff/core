@@ -124,7 +124,8 @@ public class ELFunctions
 	}
 
 	/**
-	 * Creates a ajax callback function that processes a request to the current rendered page
+	 * Creates a ajax callback function that processes a request to the current rendered page.
+	 * It takes in input a query string.
 	 * 
 	 * @param query
 	 *            the query to be send to the function
@@ -133,5 +134,17 @@ public class ELFunctions
 	public static String ajaxGetWithQuery(String query)
 	{
 		return "Wicket.Ajax.get({'u':'" + ajaxCallbackUrlWithQuery(query) + "'});";
+	}
+	
+	/**
+	 * Creates a ajax callback function to send a form via AJAX to the current rendered page.
+	 * 
+	 * @param method
+	 * 			the request method that must be used (GET or POST).
+	 * @return the callback function
+	 */
+	public static String ajaxFormSubmit(String method)
+	{
+		return "Wicket.Ajax.ajax({'u':'" + ajaxCallbackUrl() + "', 'm':'" + method +"', 'f':this.id});return false;";
 	}
 }
