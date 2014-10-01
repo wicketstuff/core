@@ -29,7 +29,7 @@ public class ConverterAutoCompletePage extends AbstractAutoCompletePage
 		final FeedbackPanel feedback = new JQueryFeedbackPanel("feedback");
 		form.add(feedback.setOutputMarkupId(true));
 
-		// Auto-complete (note that Genre does not overrides #toString()) //
+		// Auto-complete //
 		final AutoCompleteTextField<Genre> autocomplete = new AutoCompleteTextField<Genre>("autocomplete", form.getModel(), new TextRenderer<Genre>("name"), Genre.class) {
 
 			private static final long serialVersionUID = 1L;
@@ -42,7 +42,8 @@ public class ConverterAutoCompletePage extends AbstractAutoCompletePage
 				int count = 0;
 				for (Genre genre : GenresDAO.all())
 				{
-					if (genre.getName().toLowerCase().contains(input.toLowerCase()))
+					// Using ITextRenderer#match is not mandatory, it's just an helper
+					if (this.getRenderer().match(genre, input, false))
 					{
 						choices.add(genre);
 
