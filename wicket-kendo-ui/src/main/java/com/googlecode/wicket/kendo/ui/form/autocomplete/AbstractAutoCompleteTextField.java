@@ -133,6 +133,16 @@ public abstract class AbstractAutoCompleteTextField<T, C> extends TextField<T> i
 		return this;
 	}
 
+	/**
+	 * Gets the {@link ITextRenderer}
+	 *
+	 * @return the {@link ITextRenderer}
+	 */
+	public ITextRenderer<? super C> getRenderer()
+	{
+		return this.renderer;
+	}
+
 	// Methods //
 
 	/**

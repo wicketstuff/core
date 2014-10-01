@@ -52,10 +52,10 @@ public interface ITextRenderer<T> extends IClusterable
 
 	/**
 	 * Indicates whether a search criteria matches the text representation of the supplied object
-	 * 
+	 *
 	 * @param object the T object
 	 * @param search the criteria
-	 * @param insensitive whether the search is case sensitive or not
+	 * @param sensitive whether the search is case sensitive or not
 	 * @return <tt>true</tt> or <tt>false</tt>
 	 */
 	boolean match(T object, String search, boolean sensitive);
