@@ -45,7 +45,8 @@ public class RendererAutoCompletePage extends AbstractAutoCompletePage
 
 				for (Genre genre : GenresDAO.all())
 				{
-					if (genre.getName().toLowerCase().contains(input.toLowerCase()))
+					// Using ITextRenderer#match is not mandatory, it's just an helper
+					if (this.getRenderer().match(genre, input, false))
 					{
 						choices.add(genre);
 

@@ -99,4 +99,15 @@ public class TextRenderer<T> implements ITextRenderer<T>
 
 		return "";
 	}
+
+	@Override
+	public boolean match(T object, String search, boolean sensitive)
+	{
+		if (!sensitive)
+		{
+			return this.getText(object).toLowerCase().contains(search.toLowerCase());
+		}
+
+		return this.getText(object).contains(search);
+	}
 }
