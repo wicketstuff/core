@@ -18,26 +18,28 @@
  */
 package wicket.contrib.phonebook;
 
-import junit.framework.TestCase;
-
 import org.hibernate.type.StandardBasicTypes;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
 
 /**
  * @author Kare Nuorteva
  */
-public class HibernateContactFinderQueryBuilderTest extends TestCase
+public class HibernateContactFinderQueryBuilderTest extends Assert
 {
 	private HibernateContactFinderQueryBuilder builder;
 	private Contact filter;
 
-	@Override
-	protected void setUp() throws Exception
+	@Before
+	public void before() throws Exception
 	{
 		builder = new HibernateContactFinderQueryBuilder();
 		filter = new Contact();
 		builder.setFilter(filter);
 	}
 
+    @Test
 	public void testCountsQueryResultsWhenRequested() throws Exception
 	{
 		builder.setCount(true);
@@ -45,6 +47,7 @@ public class HibernateContactFinderQueryBuilderTest extends TestCase
 		assertTrue(hql.startsWith("select count(*) from Contact target where 1=1 "));
 	}
 
+    @Test
 	public void testDoesNotCountResults() throws Exception
 	{
 		builder.setCount(false);
@@ -52,6 +55,7 @@ public class HibernateContactFinderQueryBuilderTest extends TestCase
 		assertTrue(hql.startsWith("from Contact target where 1=1 "));
 	}
 
+    @Test
 	public void testFilterCannotBeNull() throws Exception
 	{
 		try
@@ -65,6 +69,7 @@ public class HibernateContactFinderQueryBuilderTest extends TestCase
 		}
 	}
 
+    @Test
 	public void testFiltersByFirstName() throws Exception
 	{
 		filter.setFirstname("James");
@@ -73,6 +78,7 @@ public class HibernateContactFinderQueryBuilderTest extends TestCase
 		assertEquals(StandardBasicTypes.STRING, builder.getTypes()[0]);
 	}
 
+    @Test
 	public void testFiltersByLastName() throws Exception
 	{
 		filter.setLastname("Bond");
@@ -81,6 +87,7 @@ public class HibernateContactFinderQueryBuilderTest extends TestCase
 		assertEquals(StandardBasicTypes.STRING, builder.getTypes()[0]);
 	}
 
+    @Test
 	public void testFiltersByPhone() throws Exception
 	{
 		filter.setPhone("+12345");
@@ -89,6 +96,7 @@ public class HibernateContactFinderQueryBuilderTest extends TestCase
 		assertEquals(StandardBasicTypes.STRING, builder.getTypes()[0]);
 	}
 
+    @Test
 	public void testFiltersByEmail() throws Exception
 	{
 		filter.setEmail("james@bond.com");
@@ -97,24 +105,28 @@ public class HibernateContactFinderQueryBuilderTest extends TestCase
 		assertEquals(StandardBasicTypes.STRING, builder.getTypes()[0]);
 	}
 
+    @Test
 	public void testOrdersAscendingByFirstName() throws Exception
 	{
 		builder.setQueryParam(new QueryParam(0, 10, "firstname", true));
 		assertTrue(builder.buildHql().endsWith("order by upper(target.firstname) asc"));
 	}
 
+    @Test
 	public void testOrdersDescendingByLastName() throws Exception
 	{
 		builder.setQueryParam(new QueryParam(0, 10, "lastname", false));
 		assertTrue(builder.buildHql().endsWith("order by upper(target.lastname) desc"));
 	}
 
+    @Test
 	public void testDoesNotOrderIfSortParameterIsNotDefined() throws Exception
 	{
 		builder.setQueryParam(new QueryParam(0, 10));
 		assertTrue(builder.buildHql().endsWith("from Contact target where 1=1 "));
 	}
 
+    @Test
 	public void testOrdersIfCountIsNotRequested() throws Exception
 	{
 		builder.setQueryParam(new QueryParam(0, 10, "lastname", false));

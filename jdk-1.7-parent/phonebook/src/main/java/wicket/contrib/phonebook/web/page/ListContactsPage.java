@@ -65,7 +65,7 @@ public class ListContactsPage extends BasePage
 
 	private final DefaultDataTable<Contact,String> users;
 
-	private final Set<Long> selectedContactIds = new HashSet<Long>();
+	private final Set<Long> selectedContactIds = new HashSet<>();
 
 	/**
 	 * Provides a composite User Actions panel for the Actions column.
@@ -164,8 +164,8 @@ public class ListContactsPage extends BasePage
 		});
 
 		// create the data table
-		users = new DefaultDataTable<Contact, String>("users", createColumns(), dataProvider, 10);
-		users.addTopToolbar(new FilterToolbar(users, form, dataProvider));
+		users = new DefaultDataTable<>("users", createColumns(), dataProvider, 10);
+		users.addTopToolbar(new FilterToolbar(users, form));
 
 		form.add(users);
 
@@ -174,7 +174,7 @@ public class ListContactsPage extends BasePage
 
 	private List<IColumn<Contact, String>> createColumns()
 	{
-		List<IColumn<Contact, String>> columns = new ArrayList<IColumn<Contact, String>>();
+		List<IColumn<Contact, String>> columns = new ArrayList<>();
 		columns.add(new CheckBoxColumn<Contact>(new PropertyModel<Collection<Serializable>>(this,
 			"selectedContactIds"))
 		{
@@ -212,7 +212,7 @@ public class ListContactsPage extends BasePage
 	private TextFilteredPropertyColumn<Contact, Contact, String> createColumn(String key,
 		String sortProperty, String propertyExpression)
 	{
-		return new TextFilteredPropertyColumn<Contact, Contact, String>(new ResourceModel(key),
+		return new TextFilteredPropertyColumn<>(new ResourceModel(key),
 			sortProperty, propertyExpression);
 	}
 
@@ -223,7 +223,7 @@ public class ListContactsPage extends BasePage
 	 */
 	private FilteredAbstractColumn<Contact, String> createActionsColumn()
 	{
-		return new FilteredAbstractColumn<Contact, String>(new Model<String>(getString("actions")))
+		return new FilteredAbstractColumn<Contact, String>(Model.of(getString("actions")))
 		{
 			private static final long serialVersionUID = 1L;
 
@@ -255,7 +255,7 @@ public class ListContactsPage extends BasePage
 			@Override
 			public void onClick()
 			{
-				setResponsePage(new EditContactPage(getPage(), new Model<Contact>(new Contact())));
+				setResponsePage(new EditContactPage(getPage(), Model.of(new Contact())));
 			}
 		});
 	}

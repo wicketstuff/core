@@ -18,22 +18,24 @@
  */
 package wicket.contrib.phonebook.web.page;
 
-import junit.framework.TestCase;
+import wicket.contrib.phonebook.Contact;
+import wicket.contrib.phonebook.web.PhonebookApplicationForTesting;
+import wicket.contrib.phonebook.web.PhonebookFixture;
 
 import org.apache.wicket.Page;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.link.Link;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.util.tester.WicketTester;
-
-import wicket.contrib.phonebook.Contact;
-import wicket.contrib.phonebook.web.PhonebookApplicationForTesting;
-import wicket.contrib.phonebook.web.PhonebookFixture;
+import org.junit.After;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
 
 /**
  * @author Kare Nuorteva
  */
-public class DeleteContactPageTest extends TestCase
+public class DeleteContactPageTest extends Assert
 {
 	private WicketTester wicket;
 	private PhonebookApplicationForTesting app;
@@ -48,8 +50,8 @@ public class DeleteContactPageTest extends TestCase
 		return new DeleteContactPage(new ListContactsPage(), new Model<Contact>(contact));
 	}
 
-	@Override
-	protected void setUp() throws Exception
+	@Before
+	public void before() throws Exception
 	{
 		app = new PhonebookApplicationForTesting();
 		fixture = new PhonebookFixture();
@@ -58,11 +60,19 @@ public class DeleteContactPageTest extends TestCase
 		wicket.startPage(getTestPage());
 	}
 
+	@After
+	public void after() {
+		wicket.destroy();
+		wicket = null;
+	}
+
+	@Test
 	public void testContainsRequiredComponents() throws Exception
 	{
 		wicket.assertComponent("name", Label.class);
 	}
 
+	@Test
 	public void testConfirmLinkDeletesContactAndSetsInfoMessageAndForwardsBack() throws Exception
 	{
 		wicket.assertComponent("confirm", Link.class);
@@ -73,6 +83,7 @@ public class DeleteContactPageTest extends TestCase
 		wicket.assertRenderedPage(ListContactsPage.class);
 	}
 
+	@Test
 	public void testCancelLinkSetsInfoMessageAndForwardsBAck() throws Exception
 	{
 		wicket.assertComponent("cancel", Link.class);

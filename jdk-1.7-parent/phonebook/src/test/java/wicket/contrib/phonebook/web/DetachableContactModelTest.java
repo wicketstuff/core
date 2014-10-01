@@ -18,18 +18,19 @@
  */
 package wicket.contrib.phonebook.web;
 
-import junit.framework.TestCase;
-
-import org.easymock.EasyMock;
-
 import wicket.contrib.phonebook.Contact;
 import wicket.contrib.phonebook.ContactDao;
+
+import org.easymock.EasyMock;
+import org.junit.Assert;
+import org.junit.Test;
 
 /**
  * @author Kare Nuorteva
  */
-public class DetachableContactModelTest extends TestCase
+public class DetachableContactModelTest extends Assert
 {
+    @Test
 	public void testLoad() throws Exception
 	{
 		ContactDao dao = EasyMock.createMock(ContactDao.class);

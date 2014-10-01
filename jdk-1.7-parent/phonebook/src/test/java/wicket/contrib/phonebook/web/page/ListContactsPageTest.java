@@ -24,6 +24,10 @@ import org.apache.wicket.extensions.markup.html.repeater.data.table.DefaultDataT
 import org.apache.wicket.extensions.markup.html.repeater.data.table.filter.FilterForm;
 import org.apache.wicket.markup.html.link.Link;
 import org.apache.wicket.util.tester.WicketTester;
+import org.junit.After;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
 
 import wicket.contrib.phonebook.web.PhonebookApplicationForTesting;
 import wicket.contrib.phonebook.web.PhonebookFixture;
@@ -31,12 +35,12 @@ import wicket.contrib.phonebook.web.PhonebookFixture;
 /**
  * @author Kare Nuorteva
  */
-public class ListContactsPageTest extends TestCase
+public class ListContactsPageTest extends Assert
 {
 	private WicketTester wicket;
 
-	@Override
-	protected void setUp() throws Exception
+	@Before
+	public void before() throws Exception
 	{
 		PhonebookApplicationForTesting app = new PhonebookApplicationForTesting();
 		PhonebookFixture fixture = new PhonebookFixture();
@@ -46,22 +50,32 @@ public class ListContactsPageTest extends TestCase
 		wicket.assertRenderedPage(ListContactsPage.class);
 	}
 
+	@After
+	public void after() {
+		wicket.destroy();
+		wicket = null;
+	}
+
+    @Test
 	public void testContainsLinkToCreateContacs() throws Exception
 	{
 		wicket.clickLink("createLink");
 		wicket.assertRenderedPage(EditContactPage.class);
 	}
 
+	@Test
 	public void testContainsFilterForm() throws Exception
 	{
 		wicket.assertComponent("filter-form", FilterForm.class);
 	}
 
+	@Test
 	public void testContainsUserList() throws Exception
 	{
 		wicket.assertComponent("filter-form:users", DefaultDataTable.class);
 	}
 
+	@Test
 	public void testDeleteLinkOpensConfirmPage() throws Exception
 	{
 		wicket.assertComponent("filter-form:users:body:rows:1:cells:2:cell:deleteLink", Link.class);
@@ -69,6 +83,7 @@ public class ListContactsPageTest extends TestCase
 		wicket.assertRenderedPage(DeleteContactPage.class);
 	}
 
+	@Test
 	public void testEditLinkOpensContactEditor() throws Exception
 	{
 		wicket.assertComponent("filter-form:users:body:rows:1:cells:2:cell:editLink", Link.class);
