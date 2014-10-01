@@ -90,7 +90,7 @@ public abstract class AutoCompleteTextField<T> extends AbstractAutoCompleteTextF
 		this.converter = this.newConverter();
 	}
 
-	// Methods //
+	// Properties //
 
 	@Override
 	protected final String getModelValue()

@@ -1,5 +1,6 @@
 package com.googlecode.wicket.jquery.ui.samples.pages.kendo.autocomplete;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.wicket.ajax.AjaxRequestTarget;
@@ -8,7 +9,7 @@ import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.model.CompoundPropertyModel;
 import org.apache.wicket.model.IModel;
 
-import com.googlecode.wicket.jquery.core.utils.ListUtils;
+import com.googlecode.wicket.jquery.core.renderer.TextRenderer;
 import com.googlecode.wicket.jquery.ui.samples.data.bean.Genre;
 import com.googlecode.wicket.jquery.ui.samples.data.dao.GenresDAO;
 import com.googlecode.wicket.kendo.ui.form.autocomplete.AutoCompleteTextField;
@@ -33,14 +34,32 @@ public class KendoConverterAutoCompletePage extends AbstractAutoCompletePage
 		form.add(feedback);
 
 		// Auto-complete //
-		final AutoCompleteTextField<Genre> autocomplete = new AutoCompleteTextField<Genre>("genre") {
+		final AutoCompleteTextField<Genre> autocomplete = new AutoCompleteTextField<Genre>("genre", new TextRenderer<Genre>("name")) {
 
 			private static final long serialVersionUID = 1L;
 
 			@Override
 			protected List<Genre> getChoices(String input)
 			{
-				return ListUtils.contains(input, GenresDAO.all());
+				List<Genre> choices = new ArrayList<Genre>();
+
+				int count = 0;
+				for (Genre genre : GenresDAO.all())
+				{
+					// Using ITextRenderer#match is not mandatory, it's just an helper
+					if (this.getRenderer().match(genre, input, false))
+					{
+						choices.add(genre);
+
+						// limits the number of results
+						if (++count == 20)
+						{
+							break;
+						}
+					}
+				}
+
+				return choices;
 			}
 
 			@Override

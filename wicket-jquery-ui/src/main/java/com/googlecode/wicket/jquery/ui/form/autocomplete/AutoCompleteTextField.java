@@ -183,23 +183,11 @@ public abstract class AutoCompleteTextField<T extends Serializable> extends Text
 	 * @return the list of choices
 	 */
 	protected abstract List<T> getChoices(String input);
-	
-	// Properties //
 
 	@Override
 	protected final String getModelValue()
 	{
 		return this.renderer.getText(this.getModelObject()); // renderer cannot be null.
-	}
-
-	/**
-	 * Gets the {@link ITextRenderer}
-	 *
-	 * @return the {@link ITextRenderer}
-	 */
-	public ITextRenderer<? super T> getRenderer()
-	{
-		return this.renderer;
 	}
 
 	@Override
@@ -218,8 +206,20 @@ public abstract class AutoCompleteTextField<T extends Serializable> extends Text
 		return super.getConverter(type);
 	}
 
+	// Properties //
+
+	/**
+	 * Gets the {@link ITextRenderer}
+	 *
+	 * @return the {@link ITextRenderer}
+	 */
+	public ITextRenderer<? super T> getRenderer()
+	{
+		return this.renderer;
+	}
+
 	// Events //
-	
+
 	@Override
 	protected void onInitialize()
 	{
