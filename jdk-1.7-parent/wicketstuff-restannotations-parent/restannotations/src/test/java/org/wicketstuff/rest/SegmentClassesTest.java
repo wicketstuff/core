@@ -27,6 +27,7 @@ import org.junit.Test;
 import org.wicketstuff.rest.resource.urlsegments.AbstractURLSegment;
 import org.wicketstuff.rest.resource.urlsegments.MultiParamSegment;
 import org.wicketstuff.rest.resource.urlsegments.ParamSegment;
+import org.wicketstuff.rest.resource.urlsegments.PopulatePathVariablesVisitor;
 
 public class SegmentClassesTest extends Assert
 {
@@ -141,9 +142,12 @@ public class SegmentClassesTest extends Assert
 
 		assertFalse(matcher.matches());
 
-		HashMap<String, String> map;
+		Map<String, String> map;
+		Map<AbstractURLSegment, String> segValue = new HashMap<>();
+		
+		segValue.put(segment, fileName);
 		// testing segment parsing with regular expressions
-		segment.populatePathVariables(map = new HashMap<String, String>(), fileName);
+		map = new PopulatePathVariablesVisitor(segValue).extract();
 
 		assertEquals("gsaon", map.get("symbolicName"));
 		assertEquals("1.2.3", map.get("version"));

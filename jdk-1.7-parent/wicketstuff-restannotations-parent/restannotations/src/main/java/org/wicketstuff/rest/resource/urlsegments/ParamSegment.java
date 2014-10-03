@@ -16,11 +16,11 @@
  */
 package org.wicketstuff.rest.resource.urlsegments;
 
-import java.util.Map;
 import java.util.regex.Matcher;
 
 import org.apache.wicket.util.parse.metapattern.MetaPattern;
 import org.apache.wicket.util.string.StringValue;
+import org.wicketstuff.rest.resource.urlsegments.visitor.ISegmentVisitor;
 
 /**
  * {@link StringValue} subtype that represents a mounted segment containing a parameter's value (for
@@ -32,10 +32,8 @@ import org.apache.wicket.util.string.StringValue;
 public class ParamSegment extends AbstractURLSegment
 {
 
-	/**
-     * 
-     */
     private static final long serialVersionUID = 1L;
+    
 	final private String paramName;
 
 	ParamSegment(String text)
@@ -81,16 +79,14 @@ public class ParamSegment extends AbstractURLSegment
 		return new MetaPattern(group);
 	}
 
-	@Override
-	public void populatePathVariables(Map<String, String> variables, String segment)
-	{
-		Matcher matcher = getMetaPattern().matcher(segment);
-		matcher.matches();
-		variables.put(paramName, matcher.group());
-	}
-
 	public String getParamName()
 	{
 		return paramName;
+	}
+	
+	@Override
+	public void accept(ISegmentVisitor visitor)
+	{
+		visitor.visit(this);
 	}
 }

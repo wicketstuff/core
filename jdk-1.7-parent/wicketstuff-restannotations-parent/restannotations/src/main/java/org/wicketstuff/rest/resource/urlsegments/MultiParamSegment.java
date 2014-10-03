@@ -19,10 +19,10 @@ package org.wicketstuff.rest.resource.urlsegments;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.Map;
 import java.util.regex.Matcher;
 
 import org.apache.wicket.util.parse.metapattern.MetaPattern;
+import org.wicketstuff.rest.resource.urlsegments.visitor.ISegmentVisitor;
 
 /**
  * This kind of segment can contain more than one path parameter, for example
@@ -33,12 +33,9 @@ import org.apache.wicket.util.parse.metapattern.MetaPattern;
  */
 public class MultiParamSegment extends AbstractURLSegment
 {
-	/**
-         * 
-         */
-        private static final long serialVersionUID = 1L;
-	
-        private volatile List<AbstractURLSegment> subSegments;
+    private static final long serialVersionUID = 1L;
+
+    private volatile List<AbstractURLSegment> subSegments;
 
 	MultiParamSegment(String text)
 	{
@@ -107,33 +104,14 @@ public class MultiParamSegment extends AbstractURLSegment
 		return matcher.matches() ? 1 : 0;
 	}
 
-	@Override
-	public void populatePathVariables(Map<String, String> variables, String segment)
-	{
-		int startingIndex = 0;
-
-		if (!getMetaPattern().matcher(segment).matches())
-			return;
-
-		for (AbstractURLSegment subSegment : subSegments)
-		{
-			MetaPattern pattern = subSegment.getMetaPattern();
-			segment = segment.substring(startingIndex);
-			Matcher matcher = pattern.matcher(segment);
-
-			if (matcher.find())
-			{
-				String group = matcher.group();
-
-				subSegment.populatePathVariables(variables, group);
-
-				startingIndex = matcher.end();
-			}
-		}
-	}
-
 	public List<AbstractURLSegment> getSubSegments()
 	{
 		return subSegments;
+	}
+	
+	@Override
+	public void accept(ISegmentVisitor visitor)
+	{
+		visitor.visit(this);
 	}
 }

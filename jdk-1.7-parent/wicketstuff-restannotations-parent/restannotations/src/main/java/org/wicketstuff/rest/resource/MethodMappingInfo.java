@@ -31,6 +31,7 @@ import org.wicketstuff.rest.annotations.AuthorizeInvocation;
 import org.wicketstuff.rest.annotations.MethodMapping;
 import org.wicketstuff.rest.contenthandling.mimetypes.IMimeTypeResolver;
 import org.wicketstuff.rest.resource.urlsegments.AbstractURLSegment;
+import org.wicketstuff.rest.resource.urlsegments.PopulatePathVariablesVisitor;
 import org.wicketstuff.rest.utils.collection.CollectionUtils;
 import org.wicketstuff.rest.utils.http.HttpMethod;
 import org.wicketstuff.rest.utils.reflection.MethodParameter;
@@ -166,10 +167,10 @@ public class MethodMappingInfo implements IMimeTypeResolver
 	 *            the current PageParameters.
 	 * @return a Map containing the path parameters with their relative value.
 	 */
-	public LinkedHashMap<String, String> populatePathParameters(PageParameters pageParameters)
+	public Map<String, String> populatePathParameters(PageParameters pageParameters)
 	{
-		LinkedHashMap<String, String> pathParameters = new LinkedHashMap<String, String>();
 		int indexedCount = pageParameters.getIndexedCount();
+		LinkedHashMap<AbstractURLSegment, String> segmentsAndValues = new LinkedHashMap<>();
 
 		for (int i = 0; i < indexedCount; i++)
 		{
@@ -177,10 +178,12 @@ public class MethodMappingInfo implements IMimeTypeResolver
 				.toString());
 			AbstractURLSegment segment = segments.get(i);
 
-			segment.populatePathVariables(pathParameters, segmentContent);
+			segmentsAndValues.put(segment, segmentContent);
 		}
-
-		return pathParameters;
+		
+		PopulatePathVariablesVisitor visitor = new PopulatePathVariablesVisitor(segmentsAndValues);
+		
+		return visitor.extract();
 	}
 
 	// getters and setters

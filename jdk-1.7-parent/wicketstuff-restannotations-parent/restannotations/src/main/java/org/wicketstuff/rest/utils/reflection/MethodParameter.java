@@ -18,7 +18,6 @@ package org.wicketstuff.rest.utils.reflection;
 
 import java.lang.annotation.Annotation;
 import java.util.Iterator;
-import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -132,7 +131,7 @@ public class MethodParameter<T>
 	 */
 	private Object extractParameterFromUrl(MethodParameterContext context)
 	{
-		LinkedHashMap<String, String> parameters = context.getPathParameters();
+		Map<String, String> parameters = context.getPathParameters();
 		Iterator<String> paramIterator = parameters.values().iterator();
 		List<MethodParameter<?>> methodParameters = ownerMethod.getMethodParameters();
 		

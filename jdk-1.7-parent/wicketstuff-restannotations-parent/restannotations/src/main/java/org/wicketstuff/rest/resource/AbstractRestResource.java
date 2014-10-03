@@ -22,7 +22,6 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
-import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -567,7 +566,7 @@ public abstract class AbstractRestResource<T extends IWebSerialDeserial> impleme
 		List<Object> parametersValues = new ArrayList<>();
 
 		PageParameters pageParameters = attributesWrapper.getPageParameters();
-		LinkedHashMap<String, String> pathParameters = mappedMethod.populatePathParameters(pageParameters);
+		Map<String, String> pathParameters = mappedMethod.populatePathParameters(pageParameters);
 		MethodParameterContext parameterContext = new MethodParameterContext(attributesWrapper,
 			pathParameters, webSerialDeserial);
 
