@@ -22,7 +22,6 @@ package org.wicketstuff.pageserializer.fast;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
-import java.nio.ByteBuffer;
 
 import org.apache.wicket.serialize.ISerializer;
 import org.apache.wicket.util.io.ByteArrayOutputStream;
@@ -37,11 +36,6 @@ import de.ruedigermoeller.serialization.FSTSerialisationListener;
 
 
 public class FastWicketSerializer implements ISerializer{
-
-	/**
-	 * The size of the {@link ByteBuffer} that is used to hold the serialized page
-	 */
-	private static final Bytes DEFAULT_BUFFER_SIZE = Bytes.megabytes(10L);
 
 	private final Bytes bufferSize;
 	

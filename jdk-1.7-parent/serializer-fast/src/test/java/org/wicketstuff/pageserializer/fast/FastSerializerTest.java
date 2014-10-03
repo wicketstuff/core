@@ -104,7 +104,7 @@ public class FastSerializerTest
 	}
 	
 	@Test(expected=FastWicketSerialException.class)
-	public void notSerializableCompontentThrowsException()
+	public void notSerializableComponentThrowsException()
 	{
 		
 		NotSerializablePage page = tester.startPage(NotSerializablePage.class,
@@ -115,14 +115,14 @@ public class FastSerializerTest
 
 		ISerializer pageSerializer = getAndCheckSerializer();
 
-		byte[] data = pageSerializer.serialize(page);
+		pageSerializer.serialize(page);
 	}
 
 	private ISerializer getAndCheckSerializer()
 	{
 		ISerializer pageSerializer = tester.getApplication().getFrameworkSettings().getSerializer();
 		Assert.assertTrue(
-			"The configured IObjectSerializer is not instance of KryoSerializer! Type: " +
+			"The configured IObjectSerializer is not instance of FastSerializer! Type: " +
 				pageSerializer.getClass(), pageSerializer instanceof FastWicketSerializer);
 		return pageSerializer;
 	}

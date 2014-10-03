@@ -34,7 +34,7 @@ public class HomePage extends WebPage
 	{
 		super(parameters);
 
-		add(new Label("label", "Kryo Rocks!"));
+		add(new Label("label", "Fast Rocks!"));
 
 		add(new AjaxLink<Void>("link")
 		{
