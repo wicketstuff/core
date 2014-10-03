@@ -88,7 +88,7 @@ public class MethodParameter<T>
 		this.ownerMethod = ownerMethod;
 		this.paramIndex = paramIndex;
 
-		annotationParam = ReflectionUtils.getAnnotationParam(paramIndex, ownerMethod.getMethod());
+		this.annotationParam = ReflectionUtils.getAnnotationParam(paramIndex, ownerMethod.getMethod());
 
 		this.required = ReflectionUtils.getAnnotationField(annotationParam, "required", true);
 		this.deaultValue = ReflectionUtils.getAnnotationField(annotationParam, "defaultValue", "");

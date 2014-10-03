@@ -51,6 +51,7 @@ import org.wicketstuff.rest.annotations.AuthorizeInvocation;
 import org.wicketstuff.rest.annotations.MethodMapping;
 import org.wicketstuff.rest.contenthandling.IWebSerialDeserial;
 import org.wicketstuff.rest.resource.urlsegments.AbstractURLSegment;
+import org.wicketstuff.rest.utils.collection.CollectionUtils;
 import org.wicketstuff.rest.utils.http.HttpMethod;
 import org.wicketstuff.rest.utils.http.HttpUtils;
 import org.wicketstuff.rest.utils.reflection.MethodParameter;
@@ -81,6 +82,12 @@ public abstract class AbstractRestResource<T extends IWebSerialDeserial> impleme
 	 */
 	private final Map<String, List<MethodMappingInfo>> mappedMethods;
 
+	/**
+	 * Another HashMap that stores every mapped method of the class. 
+	 * The key of the map is {@link Method}.
+	 */
+	private final Map<Method, MethodMappingInfo> mappedMethodsInfo;
+	
 	/**
 	 * HashMap that stores the validators registered by the resource.
 	 */
@@ -127,6 +134,7 @@ public abstract class AbstractRestResource<T extends IWebSerialDeserial> impleme
 		this.webSerialDeserial = serialDeserial;
 		this.roleCheckingStrategy = roleCheckingStrategy;
 		this.mappedMethods = loadAnnotatedMethods();
+		this.mappedMethodsInfo = loadAnnotatedMethodsInfo();
 		this.bundleResolver = new DefaultBundleResolver(loadBoundleClasses());
 	}
 
@@ -526,24 +534,22 @@ public abstract class AbstractRestResource<T extends IWebSerialDeserial> impleme
 			throw new WicketRuntimeException(
 				"Annotation AuthorizeInvocation is used but no role-checking strategy has been set for the controller!");
 
-		return makeListMapImmutable(mappedMethods);
+		return CollectionUtils.makeListMapImmutable(mappedMethods);
 	}
-
-	/**
-	 * Make a list map immutable.
-	 *
-	 * @param listMap
-	 *            the list map in input.
-	 * @return the immutable list map.
-	 */
-	private <C, E> Map<C, List<E>> makeListMapImmutable(Map<C, List<E>> listMap)
+	
+	private Map<Method, MethodMappingInfo> loadAnnotatedMethodsInfo() 
 	{
-		for (C key : listMap.keySet())
+		Map<Method, MethodMappingInfo> methodsInfo = new HashMap<Method, MethodMappingInfo>();
+		
+		for (List<MethodMappingInfo> methodInfoList : mappedMethods.values()) 
 		{
-			listMap.put(key, Collections.unmodifiableList(listMap.get(key)));
+			for (MethodMappingInfo methodMappedInfo : methodInfoList) 
+			{
+				methodsInfo.put(methodMappedInfo.getMethod(), methodMappedInfo);
+			}
 		}
-
-		return Collections.unmodifiableMap(listMap);
+		
+		return Collections.unmodifiableMap(methodsInfo);
 	}
 
 	/***
@@ -763,5 +769,15 @@ public abstract class AbstractRestResource<T extends IWebSerialDeserial> impleme
 	protected final <E> IValidator<E> getValidator(String key, E validatorType)
 	{
 		return (IValidator<E>) declaredValidators.get(key);
+	}
+
+	public Map<Method, MethodMappingInfo> getMappedMethodsInfo()
+	{
+		return mappedMethodsInfo;
+	}
+	
+	public MethodMappingInfo getMethodInfo(Method method) 
+	{
+		return mappedMethodsInfo.get(method);
 	}
 }

@@ -64,14 +64,15 @@ public class ReflectionUtils
 	}
 
 	/**
-	 * Check if a parameter is annotated with an {@link AnnotatedParam} annotation.
+	 * Return the annotation (annotated with an {@link AnnotatedParam}) 
+	 * used with a given method parameter.
 	 *
 	 * @param i
 	 *            method parameter index.
 	 * @param method
 	 *            the method the parameter belongs to.
 	 *
-	 * @return true if such an annotation is found, false otherwise.
+	 * @return the annotation if any is found, null otherwise.
 	 * @see AnnotatedParam
 	 */
 	public static Annotation getAnnotationParam(int i, Method method)
@@ -223,15 +224,15 @@ public class ReflectionUtils
 	 * @return
 	 *     the list containing the type of list elements.
 	 */
-        public static List<Class<?>> getElementsClasses(Collection<?> collection)
+    public static List<Class<?>> getElementsClasses(Collection<?> collection)
+    {
+        List<Class<?>> targetClasses = new ArrayList<Class<?>>();
+
+        for (Object element : collection)
         {
-            List<Class<?>> targetClasses = new ArrayList<Class<?>>();
-    
-            for (Object element : collection)
-            {
-                targetClasses.add(element.getClass());
-            }
-    
-            return targetClasses;
+            targetClasses.add(element.getClass());
         }
+
+        return targetClasses;
+    }
 }
