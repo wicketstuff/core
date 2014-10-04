@@ -20,18 +20,15 @@ import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
 import org.apache.wicket.authroles.authorization.strategies.role.Roles;
-import org.apache.wicket.request.mapper.parameter.PageParameters;
 import org.apache.wicket.util.collections.MultiMap;
 import org.wicketstuff.rest.annotations.AuthorizeInvocation;
 import org.wicketstuff.rest.annotations.MethodMapping;
 import org.wicketstuff.rest.contenthandling.mimetypes.IMimeTypeResolver;
 import org.wicketstuff.rest.resource.urlsegments.AbstractURLSegment;
-import org.wicketstuff.rest.resource.urlsegments.PopulatePathVariablesVisitor;
 import org.wicketstuff.rest.utils.collection.CollectionUtils;
 import org.wicketstuff.rest.utils.http.HttpMethod;
 import org.wicketstuff.rest.utils.reflection.MethodParameter;
@@ -157,33 +154,6 @@ public class MethodMappingInfo implements IMimeTypeResolver
 			roles = new Roles(authorizeInvocation.value());
 		}
 		return roles;
-	}
-
-	/**
-	 * This method is invoked to populate the path parameters found in the mapped URL with the
-	 * values obtained from the current request.
-	 * 
-	 * @param pageParameters
-	 *            the current PageParameters.
-	 * @return a Map containing the path parameters with their relative value.
-	 */
-	public Map<String, String> populatePathParameters(PageParameters pageParameters)
-	{
-		int indexedCount = pageParameters.getIndexedCount();
-		LinkedHashMap<AbstractURLSegment, String> segmentsAndValues = new LinkedHashMap<>();
-
-		for (int i = 0; i < indexedCount; i++)
-		{
-			String segmentContent = AbstractURLSegment.getActualSegment(pageParameters.get(i)
-				.toString());
-			AbstractURLSegment segment = segments.get(i);
-
-			segmentsAndValues.put(segment, segmentContent);
-		}
-		
-		PopulatePathVariablesVisitor visitor = new PopulatePathVariablesVisitor(segmentsAndValues);
-		
-		return visitor.extract();
 	}
 
 	// getters and setters

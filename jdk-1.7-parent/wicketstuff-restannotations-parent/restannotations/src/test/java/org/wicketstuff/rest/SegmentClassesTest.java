@@ -16,7 +16,6 @@
  */
 package org.wicketstuff.rest;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.regex.Matcher;
@@ -27,7 +26,6 @@ import org.junit.Test;
 import org.wicketstuff.rest.resource.urlsegments.AbstractURLSegment;
 import org.wicketstuff.rest.resource.urlsegments.MultiParamSegment;
 import org.wicketstuff.rest.resource.urlsegments.ParamSegment;
-import org.wicketstuff.rest.resource.urlsegments.PopulatePathVariablesVisitor;
 
 public class SegmentClassesTest extends Assert
 {
@@ -131,27 +129,25 @@ public class SegmentClassesTest extends Assert
 
 		segmentMultiParam = "filename-{symbolicName:[a-z]+}-{version:\\d\\.\\d\\.\\d}{extension:\\.[a-z]+}";
 		segment = AbstractURLSegment.newSegment(segmentMultiParam);
-		metaPattern = segment.getMetaPattern();
+		multiParamSegment = (MultiParamSegment)segment;
+		metaPattern = multiParamSegment.getMetaPatternWithGroups();
 
 		String fileName = "filename-gsaon-1.2.3.zip";
 		Matcher matcher = metaPattern.matcher(fileName);
 
 		assertTrue(matcher.matches());
 
+		// testing segment parsing with regular expressions					
+		assertEquals("gsaon", matcher.group(1));
+		assertEquals("1.2.3", matcher.group(2));
+		assertEquals(".zip", matcher.group(3));
+
+
 		matcher = metaPattern.matcher("gsaon-1.2.3.zip");
 
 		assertFalse(matcher.matches());
-
-		Map<String, String> map;
-		Map<AbstractURLSegment, String> segValue = new HashMap<>();
 		
-		segValue.put(segment, fileName);
-		// testing segment parsing with regular expressions
-		map = new PopulatePathVariablesVisitor(segValue).extract();
 
-		assertEquals("gsaon", map.get("symbolicName"));
-		assertEquals("1.2.3", map.get("version"));
-		assertEquals(".zip", map.get("extension"));
 
 	}
 }

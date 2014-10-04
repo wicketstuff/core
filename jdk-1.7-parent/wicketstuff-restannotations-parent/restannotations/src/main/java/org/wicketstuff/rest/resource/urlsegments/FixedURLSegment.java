@@ -43,15 +43,6 @@ public class FixedURLSegment extends AbstractURLSegment
 	}
 
 	@Override
-	public int calculateScore(String segment)
-	{
-		if (segment.equals(this.toString()))
-			return 2;
-
-		return 0;
-	}
-
-	@Override
 	public void accept(ISegmentVisitor visitor)
 	{
 		visitor.visit(this);

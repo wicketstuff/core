@@ -143,7 +143,12 @@ public class MethodParameter<T>
 				paramIterator.next();
 		}
 		
-		return AbstractRestResource.toObject(parameterClass, paramIterator.next());
+		if(paramIterator.hasNext())
+		{
+			return AbstractRestResource.toObject(parameterClass, paramIterator.next());
+		}
+		
+		return null;
 	}
 
 	/**

@@ -50,6 +50,7 @@ import org.wicketstuff.rest.annotations.AuthorizeInvocation;
 import org.wicketstuff.rest.annotations.MethodMapping;
 import org.wicketstuff.rest.contenthandling.IWebSerialDeserial;
 import org.wicketstuff.rest.resource.urlsegments.AbstractURLSegment;
+import org.wicketstuff.rest.resource.urlsegments.visitor.ScoreMethodAndExtractPathVars;
 import org.wicketstuff.rest.utils.collection.CollectionUtils;
 import org.wicketstuff.rest.utils.http.HttpMethod;
 import org.wicketstuff.rest.utils.http.HttpUtils;
@@ -175,7 +176,7 @@ public abstract class AbstractRestResource<T extends IWebSerialDeserial> impleme
 		HttpMethod httpMethod = attributesWrapper.getHttpMethod();
 
 		// select the best "candidate" method to serve the request
-		MethodMappingInfo mappedMethod = selectMostSuitedMethod(attributesWrapper);
+		ScoreMethodAndExtractPathVars mappedMethod = selectMostSuitedMethod(attributesWrapper);
 
 		if (mappedMethod != null)
 		{
@@ -196,15 +197,16 @@ public abstract class AbstractRestResource<T extends IWebSerialDeserial> impleme
 	 *            the mapped method to execute
 	 */
 	private void handleMethodExecution(AttributesWrapper attributesWrapper,
-		MethodMappingInfo mappedMethod)
+		ScoreMethodAndExtractPathVars mappedMethod)
 	{
 		WebResponse response = attributesWrapper.getWebResponse();
 		HttpMethod httpMethod = attributesWrapper.getHttpMethod();
 		Attributes attributes = attributesWrapper.getOriginalAttributes();
-		String outputFormat = mappedMethod.getOutputFormat();
+		MethodMappingInfo methodInfo = mappedMethod.getMethodInfo();
+		String outputFormat = methodInfo.getOutputFormat();
 
 		// 1-check if user is authorized to invoke the method
-		if (!isUserAuthorized(mappedMethod.getRoles()))
+		if (!isUserAuthorized(methodInfo.getRoles()))
 		{
 			response.write(USER_IS_NOT_ALLOWED);
 			response.setStatus(401);
@@ -221,7 +223,7 @@ public abstract class AbstractRestResource<T extends IWebSerialDeserial> impleme
 		}
 
 		// 3-validate method parameters
-		List<IValidationError> validationErrors = validateMethodParameters(mappedMethod,
+		List<IValidationError> validationErrors = validateMethodParameters(methodInfo,
 			parametersValues);
 
 		if (validationErrors.size() > 0)
@@ -236,9 +238,9 @@ public abstract class AbstractRestResource<T extends IWebSerialDeserial> impleme
 		}
 
 		// 4-invoke method triggering the before-after hooks
-		onBeforeMethodInvoked(mappedMethod, attributes);
-		Object result = invokeMappedMethod(mappedMethod.getMethod(), parametersValues, response);
-		onAfterMethodInvoked(mappedMethod, attributes, result);
+		onBeforeMethodInvoked(methodInfo, attributes);
+		Object result = invokeMappedMethod(methodInfo.getMethod(), parametersValues, response);
+		onAfterMethodInvoked(methodInfo, attributes, result);
 
 		// 5-if the invoked method returns a value, it is written to response
 		if (result != null)
@@ -400,15 +402,13 @@ public abstract class AbstractRestResource<T extends IWebSerialDeserial> impleme
 	 * 			the current attribute wrapper
 	 * @return The "best" method found to serve the request.
 	 */
-	private MethodMappingInfo selectMostSuitedMethod(AttributesWrapper attributesWrapper)
+	private ScoreMethodAndExtractPathVars selectMostSuitedMethod(AttributesWrapper attributesWrapper)
 	{
-		int indexedParamCount = attributesWrapper.getPageParameters().getIndexedCount();
 		PageParameters pageParameters = attributesWrapper.getPageParameters();
-		List<MethodMappingInfo> mappedMethodsCandidates = mappedMethods.get(indexedParamCount +
+		List<MethodMappingInfo> mappedMethodsCandidates = mappedMethods.get(pageParameters.getIndexedCount() +
 			"_" + attributesWrapper.getHttpMethod());
 
-		MultiMap<Integer, MethodMappingInfo> mappedMethodByScore = new MultiMap<Integer, MethodMappingInfo>();
-		int highestScore = 0;
+		ScoreMethodAndExtractPathVars highiestScoredMethod = null;
 
 		// no method mapped
 		if (mappedMethodsCandidates == null || mappedMethodsCandidates.size() == 0)
@@ -418,42 +418,38 @@ public abstract class AbstractRestResource<T extends IWebSerialDeserial> impleme
 		 * To select the "best" method, a score is assigned to every mapped method. To calculate the
 		 * score method calculateScore is executed for every segment.
 		 */
+		int highestScore = 0;
+
 		for (MethodMappingInfo mappedMethod : mappedMethodsCandidates)
 		{
-			List<AbstractURLSegment> segments = mappedMethod.getSegments();
-			int score = 0;
-
-			for (AbstractURLSegment segment : segments)
+			ScoreMethodAndExtractPathVars scoredMethod = 
+				new ScoreMethodAndExtractPathVars(mappedMethod, pageParameters);
+			
+			for (AbstractURLSegment segment : mappedMethod.getSegments())
 			{
-				int i = segments.indexOf(segment);
-				String currentActualSegment = AbstractURLSegment.getActualSegment(pageParameters.get(
-					i)
-					.toString());
-
-				int partialScore = segment.calculateScore(currentActualSegment);
-
-				if (partialScore == 0)
+				segment.accept(scoredMethod);
+				
+				if(!scoredMethod.isSegmentValid())
 				{
-					score = -1;
 					break;
 				}
-
-				score += partialScore;
 			}
-
-			if (score >= highestScore)
+			
+			if(highestScore > 0 && scoredMethod.getScore() == highestScore)
 			{
-				highestScore = score;
-				mappedMethodByScore.addValue(score, mappedMethod);
+				// if we have more than one method with the highest score, throw
+				// ambiguous exception.
+				throwAmbiguousMethodsException(scoredMethod, highiestScoredMethod);
 			}
-		}
-		// if we have more than one method with the highest score, throw
-		// ambiguous exception.
-		if (mappedMethodByScore.get(highestScore) != null &&
-			mappedMethodByScore.get(highestScore).size() > 1)
-			throwAmbiguousMethodsException(mappedMethodByScore.get(highestScore));
 
-		return mappedMethodByScore.getFirstValue(highestScore);
+			if (scoredMethod.getScore() >= highestScore)
+			{
+				highestScore = scoredMethod.getScore();
+				highiestScoredMethod = scoredMethod;
+			} 
+		}
+				
+		return highiestScoredMethod;
 	}
 
 	/**
@@ -463,16 +459,17 @@ public abstract class AbstractRestResource<T extends IWebSerialDeserial> impleme
 	 * @param list
 	 *            the list of ambiguous methods.
 	 */
-	private void throwAmbiguousMethodsException(List<MethodMappingInfo> list)
+	private void throwAmbiguousMethodsException(ScoreMethodAndExtractPathVars... methods)
 	{
 		WebRequest request = getCurrentWebRequest();
 		String methodsNames = "";
 
-		for (MethodMappingInfo urlMappingInfo : list)
+		for (ScoreMethodAndExtractPathVars method : methods)
 		{
 			if (!methodsNames.isEmpty())
 				methodsNames += ", ";
 
+			MethodMappingInfo urlMappingInfo = method.getMethodInfo();
 			methodsNames += urlMappingInfo.getMethod().getName();
 		}
 
@@ -560,17 +557,16 @@ public abstract class AbstractRestResource<T extends IWebSerialDeserial> impleme
 	 *            Attributes wrapper for the current request.
 	 * @return the value returned by the invoked method
 	 */
-	private List<?> extractMethodParameters(MethodMappingInfo mappedMethod,
+	private List<?> extractMethodParameters(ScoreMethodAndExtractPathVars mappedMethod,
 		AttributesWrapper attributesWrapper)
 	{
 		List<Object> parametersValues = new ArrayList<>();
 
-		PageParameters pageParameters = attributesWrapper.getPageParameters();
-		Map<String, String> pathParameters = mappedMethod.populatePathParameters(pageParameters);
+		Map<String, String> pathParameters = mappedMethod.getPathVariables();
 		MethodParameterContext parameterContext = new MethodParameterContext(attributesWrapper,
 			pathParameters, webSerialDeserial);
 
-		for (MethodParameter<?> methodParameter : mappedMethod.getMethodParameters())
+		for (MethodParameter<?> methodParameter : mappedMethod.getMethodInfo().getMethodParameters())
 		{
 			Object paramValue = methodParameter.extractParameterValue(parameterContext);
 

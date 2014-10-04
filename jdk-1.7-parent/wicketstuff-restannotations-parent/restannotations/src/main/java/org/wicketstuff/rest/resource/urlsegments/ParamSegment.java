@@ -42,15 +42,7 @@ public class ParamSegment extends AbstractURLSegment
 
 		this.paramName = loadParamName();
 	}
-
-	@Override
-	public int calculateScore(String actualSegment)
-	{
-		Matcher matcher = getMetaPattern().matcher(actualSegment);
-
-		return matcher.matches() ? 1 : 0;
-	}
-
+	
 	private String loadParamName()
 	{
 		String segmentContent = this.toString();

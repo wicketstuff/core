@@ -21,6 +21,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.regex.Matcher;
 
+import org.apache.wicket.util.parse.metapattern.Group;
 import org.apache.wicket.util.parse.metapattern.MetaPattern;
 import org.wicketstuff.rest.resource.urlsegments.visitor.ISegmentVisitor;
 
@@ -95,14 +96,26 @@ public class MultiParamSegment extends AbstractURLSegment
 
 		return new MetaPattern(patterns);
 	}
-
-	@Override
-	public int calculateScore(String actualSegment)
+	
+	public MetaPattern getMetaPatternWithGroups()
 	{
-		Matcher matcher = getMetaPattern().matcher(actualSegment);
+		List<MetaPattern> patterns = new ArrayList<MetaPattern>();
+		
+		for (AbstractURLSegment segment : subSegments)
+		{
+			MetaPattern metaPattern = segment.getMetaPattern();
 
-		return matcher.matches() ? 1 : 0;
-	}
+			if(segment instanceof ParamSegment)
+			{
+				ParamSegment paramSegment = (ParamSegment)segment;
+				metaPattern = new Group(metaPattern); 
+			}
+			
+			patterns.add(metaPattern);			
+		}
+
+		return new MetaPattern(patterns);
+	} 
 
 	public List<AbstractURLSegment> getSubSegments()
 	{

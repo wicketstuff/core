@@ -20,6 +20,12 @@ import org.wicketstuff.rest.resource.urlsegments.FixedURLSegment;
 import org.wicketstuff.rest.resource.urlsegments.MultiParamSegment;
 import org.wicketstuff.rest.resource.urlsegments.ParamSegment;
 
+/**
+ * Implementation of pattern Visitor for URL segments. Visitor interface.
+ * 
+ * @author andrea del bene
+ *
+ */
 public interface ISegmentVisitor
 {
 	public void visit(FixedURLSegment segment);

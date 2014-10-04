@@ -16,6 +16,12 @@
  */
 package org.wicketstuff.rest.resource.urlsegments.visitor;
 
+/**
+ * Implementation of pattern Visitor for URL segments. Element interface.
+ * 
+ * @author andrea del bene
+ *
+ */
 public interface ISegementElement
 {
 	public void accept(ISegmentVisitor visitor);
