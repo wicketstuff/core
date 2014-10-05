@@ -226,12 +226,23 @@ public class DialogButton implements IClusterable
 	 *
 	 * @return the markupId
 	 */
-	protected String getMarkupId()
+	public String getMarkupId()
 	{
 		return String.format("btn%02x", this.id).toLowerCase();
 	}
 
 	// Methods //
+
+	/**
+	 * Gets the javascript statement that will generate an ajax GET request to the behavior for this assigned button
+	 *
+	 * @param behavior the {@link ButtonAjaxBehavior}
+	 * @return the javascript statement
+	 */
+	protected CharSequence getCallbackScript(ButtonAjaxBehavior behavior)
+	{
+		return behavior.getCallbackScript();
+	}
 
 	/**
 	 * Enables the button

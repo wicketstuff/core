@@ -158,7 +158,7 @@ public abstract class DialogBehavior extends JQueryUIBehavior implements IJQuery
 				buttons.append("icons: { primary: '").append(button.getIcon()).append("' }, ");
 			}
 
-			buttons.append("'click': function() { ").append(behavior.getCallbackScript()).append(" }");
+			buttons.append("'click': function() { ").append(button.getCallbackScript(behavior)).append(" }");
 			buttons.append("}");
 		}
 
