@@ -11,7 +11,7 @@
 	</parent>
 
 	<artifactId>wicket-kendo-ui</artifactId>
-	<packaging>jar</packaging>
+	<packaging>bundle</packaging>
 
     <properties>
 	    <bundle.namespace>com.googlecode.wicket.kendo.ui</bundle.namespace>

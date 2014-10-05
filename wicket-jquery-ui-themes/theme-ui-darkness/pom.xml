@@ -11,7 +11,7 @@
 	</parent>
 
 	<artifactId>wicket-jquery-ui-theme-uidarkness</artifactId>
-	<packaging>jar</packaging>
+	<packaging>bundle</packaging>
 
     <properties>
 	    <bundle.namespace>com.googlecode.wicket.jquery.ui.theme.uidarkness</bundle.namespace>

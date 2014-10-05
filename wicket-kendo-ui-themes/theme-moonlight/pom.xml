@@ -11,7 +11,7 @@
 	</parent>
 
 	<artifactId>wicket-kendo-ui-theme-moonlight</artifactId>
-	<packaging>jar</packaging>
+	<packaging>bundle</packaging>
 
     <properties>
 	    <bundle.namespace>com.googlecode.wicket.kendo.ui.theme.moonlight</bundle.namespace>

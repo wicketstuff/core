@@ -11,7 +11,7 @@
 	</parent>
 
 	<artifactId>wicket-jquery-ui-theme-peppergrinder</artifactId>
-	<packaging>jar</packaging>
+	<packaging>bundle</packaging>
 
     <properties>
 	    <bundle.namespace>com.googlecode.wicket.jquery.ui.theme.peppergrinder</bundle.namespace>
