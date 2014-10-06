@@ -195,7 +195,7 @@ public abstract class OpenLayersMap extends GenericPanel<Map> {
                     }
                 }
 
-                builder.append(layer.getJsId() + " = new " + layer.getJsType() + "(" + layer.renderJs() + ");\n");
+                builder.append("var " + layer.getJsId() + " = new " + layer.getJsType() + "(" + layer.renderJs() + ");\n");
             }
         }
 
