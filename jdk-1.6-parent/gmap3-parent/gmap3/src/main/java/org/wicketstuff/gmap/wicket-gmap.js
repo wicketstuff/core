@@ -139,6 +139,10 @@ function WicketMap(id, failSilently) {
                 params['overlay.radius'] = overlay.getRadius();
             }
 
+            if (overlay.getBounds) {
+                params['overlay.bounds'] = overlay.getBounds();
+            }
+
             params['overlay.overlayId'] = overlay.overlayId;
             params['overlay.event'] = event;
 

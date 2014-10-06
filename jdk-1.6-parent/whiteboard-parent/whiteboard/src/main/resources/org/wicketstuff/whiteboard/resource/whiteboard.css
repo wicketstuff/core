@@ -30,6 +30,7 @@ td.bwb_drawarea{
     height:100%;
     border: 2px inset;
     border-radius: 10px;
+    vertical-align: top;
 }
 
 td.bwb_drawarea svg{

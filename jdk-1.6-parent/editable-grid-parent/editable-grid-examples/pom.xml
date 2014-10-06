@@ -91,6 +91,7 @@
 		</plugins>
 	</build>
 
+	<!-- Test to resolve build errors.
 	<repositories>
 		<repository>
 			<id>Apache Nexus</id>
@@ -109,5 +110,5 @@
 				<enabled>true</enabled>
 			</snapshots>
 		</repository>
-	</repositories>
+	</repositories>-->
 </project>
