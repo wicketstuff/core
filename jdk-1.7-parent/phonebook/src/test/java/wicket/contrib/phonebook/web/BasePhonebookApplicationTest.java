@@ -18,14 +18,17 @@
  */
 package wicket.contrib.phonebook.web;
 
-import junit.framework.TestCase;
 import wicket.contrib.phonebook.web.page.ListContactsPage;
+
+import org.junit.Assert;
+import org.junit.Test;
 
 /**
  * @author Kare Nuorteva
  */
-public class BasePhonebookApplicationTest extends TestCase
+public class BasePhonebookApplicationTest extends Assert
 {
+    @Test
 	public void testHomePageShouldListContacts() throws Exception
 	{
 		PhonebookApplicationForTesting app = new PhonebookApplicationForTesting();

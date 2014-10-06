@@ -121,7 +121,7 @@ public class OperationsPanel extends Panel
 
 						modalOutput.setTitle("Failure");
 						modalOutput.setContent(new DataViewPanel(modalOutput.getContentId(),
-							Model.of(returnList)));
+							Model.ofList(returnList)));
 						modalOutput.show(target);
 					}
 

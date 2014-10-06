@@ -16,10 +16,10 @@
  */
 package org.wicketstuff.rest.resource.urlsegments;
 
-import java.util.Map;
 import java.util.regex.Pattern;
 
 import org.apache.wicket.util.parse.metapattern.MetaPattern;
+import org.wicketstuff.rest.resource.urlsegments.visitor.ISegmentVisitor;
 
 /**
  * Segment class for segments without path parameter (i.e. with a fixed value).
@@ -29,11 +29,7 @@ import org.apache.wicket.util.parse.metapattern.MetaPattern;
  */
 public class FixedURLSegment extends AbstractURLSegment
 {
-
-	/**
-         * 
-         */
-        private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L;
 
 	FixedURLSegment(String text)
 	{
@@ -47,18 +43,8 @@ public class FixedURLSegment extends AbstractURLSegment
 	}
 
 	@Override
-	public int calculateScore(String segment)
+	public void accept(ISegmentVisitor visitor)
 	{
-		if (segment.equals(this.toString()))
-			return 2;
-
-		return 0;
+		visitor.visit(this);
 	}
-
-	@Override
-	public void populatePathVariables(Map<String, String> variables, String segment)
-	{
-		// I don'have path variables, I do nothing
-	}
-
 }

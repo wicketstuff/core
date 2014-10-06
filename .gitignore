@@ -5,7 +5,10 @@ target/
 *.i[mpw][lrs]
 .idea/
 META-INF
+!faces.taglib.xml
+!jsp.taglib.tld
 .scala_dependencies
 nb-configuration.xml
 *~
 rebel.xml
+.springBeans

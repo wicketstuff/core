@@ -36,6 +36,7 @@
 		<!--<module>inmethod-grid-parent</module> Need migration to the new Tree component (wicket-extensions) -->
 		<module>input-events-parent</module>
 		<module>javaee-inject-parent</module>
+		<module>jee-web-parent</module>
 		<module>jquery-parent</module>
 		<module>jwicket-parent</module>
 		<module>mbeanview-parent</module>
@@ -44,7 +45,7 @@
 		<module>objectautocomplete-parent</module>
 		<module>openlayers-parent</module>
 		<module>openlayers3-parent</module>
-		<!--<module>phonebook</module> Spring dropped iBatis support in 4.x -->
+		<module>phonebook</module>
 		<module>plugin</module>
 		<module>portlet-parent</module>
 		<module>progressbar-parent</module>
@@ -83,6 +84,7 @@
 		<module>wicketstuff-restannotations-parent</module>
 		<module>whiteboard-parent</module>
 		<module>wicket-mount-parent</module>
+		<module>select2-parent</module>
 
 		<!--
 			Commented because its build fails

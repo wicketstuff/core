@@ -15,7 +15,7 @@ org.wicketstuff.pageserializer.common.components.ListViewPage(asSample)  |   141
               org.apache.wicket.markup.html.list.ListView(list)    |     3
           org.apache.wicket.markup.html.list.ListItemModel         |     3
           org.apache.wicket.markup.html.list.ListView(list)        |     3
-      org.apache.wicket.model.util.WildcardListModel               |     2
+      org.apache.wicket.model.util.ListModel                       |     2
         java.util.Arrays$ArrayList                                 |     3
           java.lang.String                                         |     12
       java.lang.Integer                                            |     12
@@ -31,7 +31,7 @@ org.wicketstuff.pageserializer.common.components.ListViewPage(asSample)  |   141
             java.lang.Integer                                      |     3
             org.apache.wicket.markup.html.list.ListView(list2)     |     3
           org.apache.wicket.markup.html.list.ListView(list2)       |     3
-      org.apache.wicket.model.util.WildcardListModel               |     2
+      org.apache.wicket.model.util.ListModel                       |     2
         java.util.Arrays$ArrayList                                 |     1
       java.lang.Integer                                            |     12
       java.lang.String                                             |     6

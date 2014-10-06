@@ -10,10 +10,10 @@
         <version>7.0-SNAPSHOT</version>
     </parent>
 
-    <artifactId>whiteboard-parent</artifactId>
+    <artifactId>wicketstuff-whiteboard-parent</artifactId>
     <packaging>pom</packaging>
 
-    <name>Wicket Whiteboard - Parent</name>
+    <name>Wicketstuff Whiteboard - Parent</name>
     <description>
         Wicket Components for the Whiteboard.
     </description>

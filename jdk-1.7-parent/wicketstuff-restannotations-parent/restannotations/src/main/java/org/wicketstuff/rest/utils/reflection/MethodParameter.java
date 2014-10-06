@@ -18,7 +18,6 @@ package org.wicketstuff.rest.utils.reflection;
 
 import java.lang.annotation.Annotation;
 import java.util.Iterator;
-import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -88,7 +87,7 @@ public class MethodParameter<T>
 		this.ownerMethod = ownerMethod;
 		this.paramIndex = paramIndex;
 
-		annotationParam = ReflectionUtils.getAnnotationParam(paramIndex, ownerMethod.getMethod());
+		this.annotationParam = ReflectionUtils.getAnnotationParam(paramIndex, ownerMethod.getMethod());
 
 		this.required = ReflectionUtils.getAnnotationField(annotationParam, "required", true);
 		this.deaultValue = ReflectionUtils.getAnnotationField(annotationParam, "defaultValue", "");
@@ -132,7 +131,7 @@ public class MethodParameter<T>
 	 */
 	private Object extractParameterFromUrl(MethodParameterContext context)
 	{
-		LinkedHashMap<String, String> parameters = context.getPathParameters();
+		Map<String, String> parameters = context.getPathParameters();
 		Iterator<String> paramIterator = parameters.values().iterator();
 		List<MethodParameter<?>> methodParameters = ownerMethod.getMethodParameters();
 		
@@ -144,7 +143,12 @@ public class MethodParameter<T>
 				paramIterator.next();
 		}
 		
-		return AbstractRestResource.toObject(parameterClass, paramIterator.next());
+		if(paramIterator.hasNext())
+		{
+			return AbstractRestResource.toObject(parameterClass, paramIterator.next());
+		}
+		
+		return null;
 	}
 
 	/**

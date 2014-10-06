@@ -18,7 +18,9 @@
  */
 package wicket.contrib.phonebook.web.page;
 
-import junit.framework.TestCase;
+import wicket.contrib.phonebook.Contact;
+import wicket.contrib.phonebook.web.PhonebookApplicationForTesting;
+import wicket.contrib.phonebook.web.PhonebookFixture;
 
 import org.apache.wicket.Page;
 import org.apache.wicket.markup.html.form.Button;
@@ -28,15 +30,15 @@ import org.apache.wicket.markup.html.form.TextField;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.util.tester.FormTester;
 import org.apache.wicket.util.tester.WicketTester;
-
-import wicket.contrib.phonebook.Contact;
-import wicket.contrib.phonebook.web.PhonebookApplicationForTesting;
-import wicket.contrib.phonebook.web.PhonebookFixture;
+import org.junit.After;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
 
 /**
  * @author Kare Nuorteva
  */
-public class EditContactPageTest extends TestCase
+public class EditContactPageTest extends Assert
 {
 	private WicketTester wicket;
 	private PhonebookApplicationForTesting app;
@@ -48,11 +50,11 @@ public class EditContactPageTest extends TestCase
 		contact.setId(99);
 		contact.setFirstname("James");
 		contact.setLastname("Bond");
-		return new EditContactPage(new ListContactsPage(), new Model<Contact>(contact));
+		return new EditContactPage(new ListContactsPage(), Model.of(contact));
 	}
 
-	@Override
-	protected void setUp() throws Exception
+	@Before
+	public void before() throws Exception
 	{
 		app = new PhonebookApplicationForTesting();
 		fixture = new PhonebookFixture();
@@ -61,6 +63,13 @@ public class EditContactPageTest extends TestCase
 		wicket.startPage(getTestPage());
 	}
 
+	@After
+	public void after() {
+		wicket.destroy();
+		wicket = null;
+	}
+
+	@Test
 	public void testContainsFormComponents() throws Exception
 	{
 		wicket.assertComponent("contactForm", Form.class);
@@ -72,6 +81,7 @@ public class EditContactPageTest extends TestCase
 		wicket.assertComponent("contactForm:save", Button.class);
 	}
 
+	@Test
 	public void testCancelButtonsForwardsToBackPage() throws Exception
 	{
 		FormTester form = wicket.newFormTester("contactForm");
@@ -80,6 +90,7 @@ public class EditContactPageTest extends TestCase
 		wicket.assertRenderedPage(ListContactsPage.class);
 	}
 
+	@Test
 	public void testSaveButtonStoresChangesAndForwardsToBackPage() throws Exception
 	{
 		FormTester form = wicket.newFormTester("contactForm", true);

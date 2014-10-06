@@ -18,36 +18,38 @@
  */
 package wicket.contrib.phonebook.web;
 
-import java.util.ArrayList;
-import java.util.Iterator;
-
-import junit.framework.TestCase;
-
-import org.easymock.EasyMock;
-
 import wicket.contrib.phonebook.Contact;
 import wicket.contrib.phonebook.ContactDao;
 import wicket.contrib.phonebook.QueryParam;
 
+import java.util.ArrayList;
+import java.util.Iterator;
+import org.easymock.EasyMock;
+import org.junit.After;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
+
 /**
  * @author Kare Nuorteva
  */
-public class ContactsDataProviderTest extends TestCase
+public class ContactsDataProviderTest extends Assert
 {
 	private ContactDao dao;
 
-	@Override
-	protected void setUp() throws Exception
+	@Before
+	public void before() throws Exception
 	{
 		dao = EasyMock.createStrictMock(ContactDao.class);
 	}
 
-	@Override
-	protected void tearDown() throws Exception
+	@After
+	public void tearDown() throws Exception
 	{
 		EasyMock.verify(dao);
 	}
 
+	@Test
 	public void testFind() throws Exception
 	{
 		QueryParam qp = new QueryParam(0, 10, "foo", true);
@@ -72,7 +74,7 @@ public class ContactsDataProviderTest extends TestCase
 
 	private Iterator<Contact> createContactResultList(Contact contact)
 	{
-		ArrayList<Contact> contacts = new ArrayList<Contact>();
+		ArrayList<Contact> contacts = new ArrayList<>();
 		contacts.add(contact);
 		Iterator<Contact> result = contacts.iterator();
 		return result;

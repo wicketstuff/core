@@ -68,17 +68,9 @@
 	</ciManagement>
 
 	<distributionManagement>
-		<site>
-			<id>localRepo</id>
-			<url>file:target/site</url>
-		</site>
-		<repository>
-			<id>localRepo</id>
-			<url>file:target/m2-repo</url>
-		</repository>
 		<snapshotRepository>
-			<id>localRepo</id>
-			<url>file:target/m2-snapshot-repo</url>
+			<id>sonatype-nexus-snapshots</id>
+			<url>https://oss.sonatype.org/content/repositories/snapshots/</url>
 		</snapshotRepository>
 	</distributionManagement>
 
@@ -241,14 +233,15 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 
-		<hibernate.version>4.3.4.Final</hibernate.version>
-		<jetty.version>8.1.15.v20140411</jetty.version>
+		<hibernate.version>4.3.6.Final</hibernate.version>
+		<javassist.version>3.18.2-GA</javassist.version>
+		<jetty.version>8.1.16.v20140903</jetty.version>
 		<sf-jung.version>2.0.1</sf-jung.version>
 		<shiro.version>1.2.3</shiro.version>
-		<slf4j.version>1.7.6</slf4j.version>
-		<logback.version>1.1.1</logback.version>
+		<slf4j.version>1.7.7</slf4j.version>
+		<logback.version>1.1.2</logback.version>
 		<log4j.version>1.2.17</log4j.version>
-		<spring.version>4.0.6.RELEASE</spring.version>
+		<spring.version>4.1.0.RELEASE</spring.version>
 		<cglib.version>3.1</cglib.version>
 		<objenesis.version>2.1</objenesis.version>
 		<scala.version>2.11.2</scala.version>
@@ -456,7 +449,7 @@
 			<dependency>
 				<groupId>org.apache.commons</groupId>
 				<artifactId>commons-lang3</artifactId>
-				<version>3.3.1</version>
+				<version>3.3.2</version>
 			</dependency>
 
 			<!-- SPRING -->
@@ -490,7 +483,7 @@
 			<dependency>
 				<groupId>org.javassist</groupId>
 				<artifactId>javassist</artifactId>
-				<version>3.18.1-GA</version>
+				<version>${javassist.version}</version>
 				<scope>runtime</scope>
 			</dependency>
 			<dependency>
@@ -695,11 +688,6 @@
 				<version>${cglib.version}</version>
 			</dependency>
 			<dependency>
-				<groupId>org.apache.commons</groupId>
-				<artifactId>commons2</artifactId>
-				<version>2.0</version>
-			</dependency>
-			<dependency>
 				<groupId>org.hsqldb</groupId>
 				<artifactId>hsqldb</artifactId>
 				<version>2.3.2</version>
@@ -765,8 +753,8 @@
 				<plugin>
 					<groupId>com.mycila.maven-license-plugin</groupId>
 					<artifactId>maven-license-plugin</artifactId>
-					<version>1.10.b1</version>
 					<configuration>
+						<header>${basedir}/license_header.txt</header>
 						<aggregate>true</aggregate>
 						<strictCheck>true</strictCheck>
 						<quiet>false</quiet>
@@ -1089,16 +1077,21 @@
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-checkstyle-plugin</artifactId>
 				<version>2.12.1</version>
+                                <configuration>
+                                    <configLocation>checkstyle.xml</configLocation>
+                                    <encoding>UTF-8</encoding>
+                                    <consoleOutput>true</consoleOutput>
+                                </configuration>
 			</plugin>
 			<plugin>
 				<groupId>org.codehaus.mojo</groupId>
 				<artifactId>cobertura-maven-plugin</artifactId>
 				<version>2.6</version>
-			</plugin>
-			<plugin>
-				<groupId>org.codehaus.mojo</groupId>
-				<artifactId>changes-maven-plugin</artifactId>
-				<version>2.0-beta-1</version>
+                                <configuration>
+                                    <formats>
+                                        <format>xml</format>
+                                    </formats>
+                                </configuration>
 			</plugin>
 			<plugin>
 				<groupId>org.codehaus.mojo</groupId>
@@ -1110,6 +1103,19 @@
 				<artifactId>maven-surefire-report-plugin</artifactId>
 				<version>2.17</version>
 			</plugin>
+                        <plugin>
+                            <groupId>org.codehaus.mojo</groupId>
+                            <artifactId>findbugs-maven-plugin</artifactId>
+                            <version>3.0.0</version>
+                        </plugin>
+                        <plugin>
+                            <groupId>org.apache.maven.plugins</groupId>
+                            <artifactId>maven-javadoc-plugin</artifactId>
+                            <version>2.9.1</version>
+                            <configuration>
+                                <failOnError>false</failOnError>
+                            </configuration>                            
+                        </plugin>                        
 		</plugins>
 	</reporting>
 </project>

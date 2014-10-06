@@ -16,7 +16,7 @@
  */
 package org.wicketstuff.rest.utils.wicket;
 
-import java.util.LinkedHashMap;
+import java.util.Map;
 
 import org.wicketstuff.rest.contenthandling.IWebSerialDeserial;
 
@@ -30,11 +30,11 @@ import org.wicketstuff.rest.contenthandling.IWebSerialDeserial;
 public class MethodParameterContext
 {
 	private final AttributesWrapper attributesWrapper;
-	private final LinkedHashMap<String, String> pathParameters;
+	private final Map<String, String> pathParameters;
 	private final IWebSerialDeserial serialDeserial;
 
 	public MethodParameterContext(AttributesWrapper attributesWrapper,
-		LinkedHashMap<String, String> pathParameters, IWebSerialDeserial serialDeserial)
+		Map<String, String> pathParameters, IWebSerialDeserial serialDeserial)
 	{
 		this.attributesWrapper = attributesWrapper;
 		this.pathParameters = pathParameters;
@@ -46,7 +46,7 @@ public class MethodParameterContext
 		return attributesWrapper;
 	}
 
-	public LinkedHashMap<String, String> getPathParameters()
+	public Map<String, String> getPathParameters()
 	{
 		return pathParameters;
 	}

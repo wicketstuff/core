@@ -18,18 +18,18 @@
  */
 package wicket.contrib.phonebook.web.page;
 
-import junit.framework.TestCase;
+import wicket.contrib.phonebook.web.PhonebookApplicationForTesting;
 
 import org.apache.wicket.markup.html.panel.FeedbackPanel;
 import org.apache.wicket.util.tester.WicketTester;
-
-import wicket.contrib.phonebook.web.PhonebookApplicationForTesting;
+import org.junit.Test;
 
 /**
  * @author Kare Nuorteva
  */
-public class BasePageTest extends TestCase
+public class BasePageTest
 {
+    @Test
 	public void testContainsFeedbackPanel() throws Exception
 	{
 		WicketTester wicket = new WicketTester(new PhonebookApplicationForTesting());

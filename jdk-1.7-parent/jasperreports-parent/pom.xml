@@ -74,15 +74,6 @@
 					<workDirectory>target/assembly/work</workDirectory>
 				</configuration>
 			</plugin>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-site-plugin</artifactId>
-				<version>3.4</version>
-				<configuration>
-					<templateDirectory>file:src/site/template/</templateDirectory>
-					<template>wicket-site.vm</template>
-				</configuration>
-			</plugin>
 		</plugins>
 	</build>
 	<reporting>

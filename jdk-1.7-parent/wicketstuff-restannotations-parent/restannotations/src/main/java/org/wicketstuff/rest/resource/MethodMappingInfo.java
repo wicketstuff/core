@@ -16,18 +16,20 @@
  */
 package org.wicketstuff.rest.resource;
 
+import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.wicket.authroles.authorization.strategies.role.Roles;
-import org.apache.wicket.request.mapper.parameter.PageParameters;
+import org.apache.wicket.util.collections.MultiMap;
 import org.wicketstuff.rest.annotations.AuthorizeInvocation;
 import org.wicketstuff.rest.annotations.MethodMapping;
 import org.wicketstuff.rest.contenthandling.mimetypes.IMimeTypeResolver;
 import org.wicketstuff.rest.resource.urlsegments.AbstractURLSegment;
+import org.wicketstuff.rest.utils.collection.CollectionUtils;
 import org.wicketstuff.rest.utils.http.HttpMethod;
 import org.wicketstuff.rest.utils.reflection.MethodParameter;
 
@@ -55,7 +57,9 @@ public class MethodMappingInfo implements IMimeTypeResolver
 	private final String outputFormat;
 	/** Method parameters list */
 	private final List<MethodParameter<?>> methodParameters;
-
+	/** Method parameters list */
+	private final Map<Class<? extends Annotation>, List<MethodParameter<?>>> annotatedMethodParameters;
+	
 	/**
 	 * Class constructor.
 	 * 
@@ -74,6 +78,7 @@ public class MethodMappingInfo implements IMimeTypeResolver
 		this.inputFormat = methodMapped.consumes();
 		this.outputFormat = methodMapped.produces();
 		this.methodParameters = loadMethodParameters(method);
+		this.annotatedMethodParameters = loadAnnotatedMethodParameters();
 	}
 
 	private List<MethodParameter<?>> loadMethodParameters(Method method)
@@ -87,6 +92,23 @@ public class MethodMappingInfo implements IMimeTypeResolver
 		}
 
 		return Collections.unmodifiableList(methodParameters);
+	}
+
+	private Map<Class<? extends Annotation>, List<MethodParameter<?>>> loadAnnotatedMethodParameters()
+	{
+		MultiMap<Class<? extends Annotation>, MethodParameter<?>> result = new MultiMap<>();
+		
+		for (MethodParameter<?> methodParameter : methodParameters)
+		{
+			Annotation annotationParam = methodParameter.getAnnotationParam();
+			
+			if(annotationParam != null)
+			{
+				result.addValue(annotationParam.getClass(), methodParameter);
+			}
+		}
+		
+		return CollectionUtils.makeListMapImmutable(result);
 	}
 
 	/**
@@ -132,31 +154,6 @@ public class MethodMappingInfo implements IMimeTypeResolver
 			roles = new Roles(authorizeInvocation.value());
 		}
 		return roles;
-	}
-
-	/**
-	 * This method is invoked to populate the path parameters found in the mapped URL with the
-	 * values obtained from the current request.
-	 * 
-	 * @param pageParameters
-	 *            the current PageParameters.
-	 * @return a Map containing the path parameters with their relative value.
-	 */
-	public LinkedHashMap<String, String> populatePathParameters(PageParameters pageParameters)
-	{
-		LinkedHashMap<String, String> pathParameters = new LinkedHashMap<String, String>();
-		int indexedCount = pageParameters.getIndexedCount();
-
-		for (int i = 0; i < indexedCount; i++)
-		{
-			String segmentContent = AbstractURLSegment.getActualSegment(pageParameters.get(i)
-				.toString());
-			AbstractURLSegment segment = segments.get(i);
-
-			segment.populatePathVariables(pathParameters, segmentContent);
-		}
-
-		return pathParameters;
 	}
 
 	// getters and setters
@@ -239,5 +236,15 @@ public class MethodMappingInfo implements IMimeTypeResolver
 	public List<MethodParameter<?>> getMethodParameters()
 	{
 		return methodParameters;
+	}
+
+	/**
+	 * Gets the method parameters stored by annotation.
+	 *
+	 * @return the method parameters
+	 */
+	public Map<Class<? extends Annotation>, List<MethodParameter<?>>> getAnnotatedMethodParameters()
+	{
+		return annotatedMethodParameters;
 	}
 }

@@ -24,12 +24,8 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 
-import org.apache.wicket.Application;
 import org.apache.wicket.Component;
-import org.apache.wicket.RuntimeConfigurationType;
 import org.apache.wicket.Session;
-import org.apache.wicket.markup.head.IHeaderResponse;
-import org.apache.wicket.markup.html.IHeaderContributor;
 import org.apache.wicket.request.cycle.RequestCycle;
 import org.apache.wicket.request.resource.JavaScriptResourceReference;
 import org.apache.wicket.request.resource.ResourceReference;
@@ -52,9 +48,9 @@ public class TinyMCESettings implements Serializable
 	private static final long serialVersionUID = 3L;
 	private static final Logger LOG = LoggerFactory.getLogger(TinyMCESettings.class);
 	
-	public static final ResourceReference tinymceJsRef = new JavaScriptResourceReference(
+	public static final ResourceReference TINYMCE_JS_REF = new JavaScriptResourceReference(
 			TinyMceBehavior.class, "tinymce/tinymce.js");
-	public static final ResourceReference tinymceJsRefMin = new JavaScriptResourceReference(
+	public static final ResourceReference TINYMCE_JS_REF_MIN = new JavaScriptResourceReference(
 			TinyMceBehavior.class, "tinymce/tinymce.min.js");
 	
 	private Theme theme;
@@ -389,28 +385,6 @@ public class TinyMCESettings implements Serializable
 	{
 		toolbars.add(toolbar);
 		return this;
-	}
-
-	/**
-	 * <p>
-	 * TinyMCE javascript resource.
-	 * </p>
-	 * <p>
-	 * <strong>Note</strong>: The TinyMCE source cannot be lazily loaded via ajax. Therefore, adding
-	 * this in a {@link IHeaderContributor#renderHead(IHeaderResponse)} must be done in a component
-	 * that is not rendered via Ajax. If you wish to load this via Ajax, you can use the very hacky
-	 * workaround {@link #lazyLoadTinyMCEResource(IHeaderResponse)}.
-	 * </p>
-	 * 
-	 * @return
-	 */
-	public static ResourceReference javaScriptReference()
-	{
-		Application app = Application.get();
-		if (RuntimeConfigurationType.DEVELOPMENT.equals(app.getConfigurationType()))
-			return tinymceJsRef;
-		else
-			return tinymceJsRefMin;
 	}
 
 	/**
