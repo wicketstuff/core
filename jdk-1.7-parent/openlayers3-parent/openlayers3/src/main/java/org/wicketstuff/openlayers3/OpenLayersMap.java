@@ -9,6 +9,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.wicketstuff.openlayers3.api.Feature;
 import org.wicketstuff.openlayers3.api.Map;
+import org.wicketstuff.openlayers3.api.PersistentFeature;
+import org.wicketstuff.openlayers3.api.geometry.Point;
 import org.wicketstuff.openlayers3.api.layer.Layer;
 import org.wicketstuff.openlayers3.api.layer.Vector;
 import org.wicketstuff.openlayers3.api.source.Cluster;
@@ -145,6 +147,22 @@ public abstract class OpenLayersMap extends GenericPanel<Map> {
         target.appendJavaScript(builder.toString());
     }
 
+    /**
+     * Sets the center of the map's current view.
+     *
+     * @param target Ajax request target
+     * @param point New center location for the map
+     */
+    public void setViewCenter(AjaxRequestTarget target, Point point) {
+
+        // update our model
+        getModelObject().getView().setCenter(point.getCoordinate());
+
+        // update the map
+        target.appendJavaScript("map_" + getMarkupId() + ".getView().setCenter("
+                + point.renderJs() + ");");
+    }
+
     @Override
     public abstract void renderHead(final IHeaderResponse response);
 
@@ -169,8 +187,17 @@ public abstract class OpenLayersMap extends GenericPanel<Map> {
 
                     if (vectorSource.getFeatures() != null) {
                         for (Feature feature : vectorSource.getFeatures()) {
-                            builder.append("var " + feature.getJsId() + " = new " + feature.getJsType() + "("
-                                    + feature.renderJs() + ");\n");
+
+                            if(feature instanceof PersistentFeature) {
+
+
+                                builder.append(feature.getJsId() + " = new " + feature.getJsType() + "("
+                                        + feature.renderJs() + ");\n");
+                            } else {
+
+                                builder.append("var " + feature.getJsId() + " = new " + feature.getJsType() + "("
+                                        + feature.renderJs() + ");\n");
+                            }
                         }
                     }
                 }
