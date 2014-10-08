@@ -253,6 +253,7 @@
 
 	<modules>
 		<module>jdk-1.7-parent</module>
+		<module>jdk-1.8-parent</module>
 	</modules>
 
 	<dependencies>
