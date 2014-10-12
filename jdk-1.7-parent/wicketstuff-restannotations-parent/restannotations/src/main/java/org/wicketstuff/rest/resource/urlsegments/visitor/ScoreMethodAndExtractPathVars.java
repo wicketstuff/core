@@ -16,8 +16,9 @@
  */
 package org.wicketstuff.rest.resource.urlsegments.visitor;
 
-import java.util.Iterator;
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.regex.Matcher;
 
@@ -29,9 +30,14 @@ import org.wicketstuff.rest.resource.urlsegments.AbstractURLSegment;
 import org.wicketstuff.rest.resource.urlsegments.FixedURLSegment;
 import org.wicketstuff.rest.resource.urlsegments.MultiParamSegment;
 import org.wicketstuff.rest.resource.urlsegments.ParamSegment;
+import org.wicketstuff.rest.utils.collection.CollectionUtils;
 
 /**
- * Visitor implementation to assign a score to URL segments and to extract path variables..
+ * Visitor implementation to assign a score to URL segments and to extract path variables.
+ * The score is an integer positive value if the string in input is compatible with the current
+ * segment, 0 otherwise. Segments of type FixedURLSegment have the priority over the
+ * other types of segment. That's why positive matches has a score of 2 for FixedURLSegment, 
+ * it's 1 for the other types of segment.
  * 
  * @author andrea del bene
  *
@@ -82,35 +88,20 @@ public class ScoreMethodAndExtractPathVars implements ISegmentVisitor
 
 		if(isSegmentValid = matcher.matches())
 		{
-			Iterator<AbstractURLSegment> subSegments = segment.getSubSegments().iterator();
-			
-			addScore(1);
+			List<ParamSegment> paramSegments = new ArrayList<>();
+			CollectionUtils.filterCollectionByType(segment.getSubSegments(), 
+				paramSegments, ParamSegment.class);
 			
 			for (int i = 1; i <= matcher.groupCount(); i++)
 			{
 				String group = matcher.group(i); 
-				String groupName = findGroupName(subSegments);
+				String groupName = paramSegments.get(i - 1).getParamName();
 				
 				addPathVariable(groupName, group);				
 			}
-		}
-	}
-
-	private String findGroupName(Iterator<AbstractURLSegment> subSegments)
-	{
-		while (subSegments.hasNext())
-		{
-			AbstractURLSegment abstractURLSegment = subSegments.next();
 			
-			if(abstractURLSegment instanceof ParamSegment)
-			{
-				ParamSegment paramSegment = (ParamSegment)abstractURLSegment;
-				
-				return paramSegment.getParamName();
-			}
+			addScore(1);
 		}
-		
-		return null;
 	}
 
 	@Override
@@ -126,6 +117,12 @@ public class ScoreMethodAndExtractPathVars implements ISegmentVisitor
 		}		
 	}
 	
+	/**
+	 * Extract segment value from current page parameters.
+	 * 
+	 * @param segment
+	 * @return
+	 */
 	protected String segmentActualValue(AbstractURLSegment segment)
 	{
 		int i = methodInfo.getSegments().indexOf(segment);

@@ -86,17 +86,6 @@ public abstract class AbstractURLSegment extends StringValue implements ISegemen
 	}
 
 	/**
-	 * This method checks if a given string is compatible with the current segment.
-	 * 
-	 * @param segment
-	 * @return an integer positive value if the string in input is compatible with the current
-	 *         segment, 0 otherwise. Segments of type FixedURLSegment have the priority over the
-	 *         other types of segment. That's why positive matches has a score of 2 if the method is
-	 *         invoked on a FixedURLSegment, while it returns 1 for the other types of segment.
-	 */
-//	public abstract int calculateScore(String segment);
-
-	/**
 	 * Get the segment value without optional matrix parameters. For example given the following
 	 * value 'segment;parm=value', the function returns 'segment'.
 	 * 
