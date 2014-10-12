@@ -46,7 +46,7 @@ public class Select2Choice<T> extends AbstractSelect2Choice<T, T> {
 	}
 
 	@Override
-	protected void convertInput() {
+	public void convertInput() {
 
 		String input = getWebRequest().getRequestParameters().getParameterValue(getInputName()).toString();
 		if (Strings.isEmpty(input)) {
