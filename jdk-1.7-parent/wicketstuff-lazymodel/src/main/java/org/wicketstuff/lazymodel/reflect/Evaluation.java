@@ -17,9 +17,7 @@
 package org.wicketstuff.lazymodel.reflect;
 
 import java.lang.reflect.Method;
-import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
-import java.lang.reflect.TypeVariable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -57,11 +55,8 @@ public class Evaluation<R> implements Callback {
 	 */
 	public final List<Object> stack = new ArrayList<Object>();
 
-	/**
-	 * The current type of evaluation result.
-	 */
-	private Type type;
-
+	private TypeIterator typeIterator;
+	
 	/**
 	 * Evaluation of method invocations on the given type.
 	 * 
@@ -69,7 +64,7 @@ public class Evaluation<R> implements Callback {
 	 *            starting type
 	 */
 	public Evaluation(Type type) {
-		this.type = type;
+		this.typeIterator = new TypeIterator(type);
 	}
 
 	/**
@@ -103,17 +98,8 @@ public class Evaluation<R> implements Callback {
 			stack.add(param);
 		}
 
-		Type candidate = method.getGenericReturnType();
-		if (candidate instanceof TypeVariable) {
-			if (type instanceof ParameterizedType) {
-				candidate = Reflection.variableType((ParameterizedType) type,
-						(TypeVariable) candidate);
-			} else {
-				candidate = method.getReturnType();
-			}
-		}
-		type = candidate;
-
+		typeIterator.next(method);
+			
 		return proxy();
 	}
 
@@ -127,7 +113,7 @@ public class Evaluation<R> implements Callback {
 	 */
 	@SuppressWarnings("unchecked")
 	public Object proxy() {
-		Class clazz = Reflection.getClass(type);
+		Class clazz = typeIterator.getType();
 
 		if (clazz.isPrimitive()) {
 			lastNonProxyable.set(this);

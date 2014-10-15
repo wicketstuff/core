@@ -52,7 +52,9 @@ public class LazyModelTest {
 		
 		LazyModel<Serializable> model = model(from(g).get());
 		
-		assertEquals(null, model.getObjectClass());
+		assertEquals(null, model.getObject());
+
+		assertEquals(Serializable.class, model.getObjectClass());
 	}
 	
 	@Test

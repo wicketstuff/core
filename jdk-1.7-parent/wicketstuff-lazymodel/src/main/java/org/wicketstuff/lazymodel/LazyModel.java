@@ -37,6 +37,7 @@ import org.wicketstuff.lazymodel.reflect.DefaultMethodResolver;
 import org.wicketstuff.lazymodel.reflect.Evaluation;
 import org.wicketstuff.lazymodel.reflect.IMethodResolver;
 import org.wicketstuff.lazymodel.reflect.Reflection;
+import org.wicketstuff.lazymodel.reflect.TypeIterator;
 
 /**
  * A model for lazy evaluations:
@@ -69,7 +70,7 @@ public class LazyModel<T> implements IModel<T>, IObjectClassAwareModel<T>,
 	/**
 	 * The resolver for {@link Method}s.
 	 */
-	private static IMethodResolver methodResolver = new CachingMethodResolver(
+	public static IMethodResolver methodResolver = new CachingMethodResolver(
 			new DefaultMethodResolver());
 
 	private static final Object[] EMPTY_ARGS = new Object[0];
@@ -125,28 +126,20 @@ public class LazyModel<T> implements IModel<T>, IObjectClassAwareModel<T>,
 		Type type = getTargetType();
 		if (type != null)
 		{
-			StackIterator iterator = new StackIterator();
-			while (iterator.hasNext())
+			TypeIterator typeIterator = new TypeIterator(type);
+			
+			MethodIterator methodIterator = new MethodIterator();
+			while (methodIterator.hasNext())
 			{
-				iterator.next(Reflection.getClass(type));
+				methodIterator.next(typeIterator.getType());
 
-				Type previousType = type;
-				type = iterator.getType();
-				if (type instanceof TypeVariable)
-				{
-					if (previousType instanceof ParameterizedType)
-					{
-						type = Reflection.variableType((ParameterizedType)previousType,
-							(TypeVariable<?>)type);
-					}
-					else
-					{
-						// not available
-						type = null;
-						break;
-					}
+				typeIterator.next(methodIterator.method);
+				if (typeIterator.getType() == Object.class) {
+					return null;
 				}
 			}
+			
+			type = typeIterator.getType();
 		}
 		return type;
 	}
@@ -172,25 +165,20 @@ public class LazyModel<T> implements IModel<T>, IObjectClassAwareModel<T>,
 
 		Type type = getTargetType();
 		if (type != null) {
-			StackIterator iterator = new StackIterator();
-			while (iterator.hasNext()) {
-				iterator.next(Reflection.getClass(type));
+			TypeIterator typeIterator = new TypeIterator(type);
 
-				Type previousType = type;
-				type = iterator.getType();
-				if (type instanceof TypeVariable) {
-					if (previousType instanceof ParameterizedType) {
-						type = Reflection.variableType(
-								(ParameterizedType) previousType,
-								(TypeVariable<?>) type);
-					} else {
-						type = Object.class;
-					}
+			MethodIterator methodIterator = new MethodIterator();
+			while (methodIterator.hasNext()) {
+				methodIterator.next(typeIterator.getType());
+				
+				typeIterator.next(methodIterator.method);
+				if (typeIterator.getType() == Object.class) {
+					return null;
 				}
 			}
 
-			if (Reflection.isGetter(iterator.method)) {
-				return iterator.method;
+			if (Reflection.isGetter(methodIterator.method)) {
+				return methodIterator.method;
 			}
 		}
 
@@ -248,11 +236,11 @@ public class LazyModel<T> implements IModel<T>, IObjectClassAwareModel<T>,
 			result = ((IModel<T>) result).getObject();
 		}
 
-		StackIterator iterator = new StackIterator();
-		while (result != null && iterator.hasNext()) {
-			iterator.next(result.getClass());
+		MethodIterator methodIterator = new MethodIterator();
+		while (result != null && methodIterator.hasNext()) {
+			methodIterator.next(result.getClass());
 
-			result = iterator.get(result);
+			result = methodIterator.get(result);
 		}
 
 		return (T) result;
@@ -271,8 +259,8 @@ public class LazyModel<T> implements IModel<T>, IObjectClassAwareModel<T>,
 
 		Object target = this.target;
 
-		StackIterator iterator = new StackIterator();
-		if (!iterator.hasNext()) {
+		MethodIterator methodIterator = new MethodIterator();
+		if (!methodIterator.hasNext()) {
 			if (target instanceof IModel) {
 				((IModel<T>) target).setObject(result);
 				return;
@@ -287,15 +275,15 @@ public class LazyModel<T> implements IModel<T>, IObjectClassAwareModel<T>,
 		if (target == null) {
 			throw new WicketRuntimeException("no target");
 		}
-		iterator.next(target.getClass());
+		methodIterator.next(target.getClass());
 
-		while (target != null && iterator.hasNext()) {
-			target = iterator.get(target);
+		while (target != null && methodIterator.hasNext()) {
+			target = methodIterator.get(target);
 
-			iterator.next(target.getClass());
+			methodIterator.next(target.getClass());
 		}
 
-		iterator.set(target, result);
+		methodIterator.set(target, result);
 	}
 
 	/**
@@ -360,16 +348,18 @@ public class LazyModel<T> implements IModel<T>, IObjectClassAwareModel<T>,
 			throw new WicketRuntimeException("cannot detect target type");
 		}
 
-		StackIterator iterator = new StackIterator();
-		while (iterator.hasNext()) {
-			iterator.next(Reflection.getClass(type));
+		TypeIterator typeIterator = new TypeIterator(type);
+
+		MethodIterator methodIterator = new MethodIterator();
+		while (methodIterator.hasNext()) {
+			methodIterator.next(typeIterator.getType());
 
 			if (string.length() > 0) {
 				string.append(".");
 			}
-			string.append(iterator.getId().toString());
+			string.append(methodIterator.id.toString());
 
-			type = iterator.getType();
+			typeIterator.next(methodIterator.method);
 		}
 
 		return string.toString();
@@ -416,9 +406,9 @@ public class LazyModel<T> implements IModel<T>, IObjectClassAwareModel<T>,
 	}
 
 	/**
-	 * Iterator over the evaluation's methods.
+	 * Iterator over the methods on the stack.
 	 */
-	private class StackIterator {
+	private class MethodIterator {
 
 		/**
 		 * The current index in the stack.
@@ -469,24 +459,6 @@ public class LazyModel<T> implements IModel<T>, IObjectClassAwareModel<T>,
 			method = (Method) methodResolver.getMethod(clazz, id);
 			count = method.getParameterTypes().length;
 			index += count;
-		}
-
-		/**
-		 * Get the identifier for the current method.
-		 * 
-		 * @return identified
-		 */
-		public Serializable getId() {
-			return id;
-		}
-
-		/**
-		 * Get the type for the current method.
-		 * 
-		 * @return type
-		 */
-		public Type getType() {
-			return method.getGenericReturnType();
 		}
 
 		/**
