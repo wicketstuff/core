@@ -39,10 +39,10 @@ public final class Reflection {
 	 *            the owning type
 	 * @param variable
 	 *            the variable
-	 * @return type
+	 * @return type or {@code null}
 	 */
 	@SuppressWarnings("rawtypes")
-	public static Class variableType(ParameterizedType owner,
+	public static Type variableType(ParameterizedType owner,
 			TypeVariable variable) {
 
 		Class clazz = (Class) owner.getRawType();
@@ -52,12 +52,12 @@ public final class Reflection {
 		int index = 0;
 		for (TypeVariable candidate : typeParameters) {
 			if (candidate.getName().equals(name)) {
-				return (Class) owner.getActualTypeArguments()[index];
+				return owner.getActualTypeArguments()[index];
 			}
 			index++;
 		}
 
-		throw new IllegalArgumentException("no type parameter");
+		return null;
 	}
 
 	/**
