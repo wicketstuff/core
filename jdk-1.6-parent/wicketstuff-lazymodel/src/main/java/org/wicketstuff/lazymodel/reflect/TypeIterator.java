@@ -89,7 +89,7 @@ public final class TypeIterator {
 				ParameterizedType parmeterizedType = (ParameterizedType)type;
 				
 				Type variableType = Reflection.variableType(parmeterizedType, variable);
-				if (variable != null) {
+				if (variableType != null) {
 					return variableType;
 				}
 				

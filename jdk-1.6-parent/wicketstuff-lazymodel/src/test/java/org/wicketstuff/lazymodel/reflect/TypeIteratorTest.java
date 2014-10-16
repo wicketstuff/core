@@ -21,8 +21,13 @@ import static org.wicketstuff.lazymodel.LazyModel.model;
 
 import java.lang.reflect.Method;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
+import javax.swing.plaf.multi.MultiButtonUI;
+
+import org.apache.wicket.util.collections.MicroMap;
 import org.junit.Test;
 import org.wicketstuff.lazymodel.LazyModel;
 
@@ -35,9 +40,9 @@ public class TypeIteratorTest
 	@Test
 	public void single()
 	{
-		Single m = new Single();
+		Single s = new Single();
 		
-		LazyModel<String> model = model(from(m).getT().s());
+		LazyModel<String> model = model(from(s).getT().s());
 
 		assertEquals("Q", model.getObject());
 
@@ -45,9 +50,9 @@ public class TypeIteratorTest
 	}
 
 	@Test
-	public void multiple()
+	public void nested()
 	{
-		Multiple m = new Multiple();
+		Nested m = new Nested();
 
 		LazyModel<String> model = model(from(m).getT().get(0).s());
 
@@ -57,11 +62,11 @@ public class TypeIteratorTest
 	}
 	
 	@Test
-	public void mega()
+	public void inhetired()
 	{
-		Mega m = new Mega();
+		Inherited i = new Inherited();
 
-		LazyModel<String> model = model(from(m).getT().getT().get(0).s());
+		LazyModel<String> model = model(from(i).getT().s());
 
 		assertEquals("Q", model.getObject());
 
@@ -99,19 +104,34 @@ public class TypeIteratorTest
 		}
 	}
 
-	public static class Multiple extends L<List<Q>>
+	public static class Nested extends L<List<Q>>
 	{
-		public Multiple()
+		public Nested()
 		{
 			super(Arrays.asList(new Q()));
 		}
 	}
 
-	public static class Mega extends L<Multiple>
-	{
-		public Mega()
+	public static class L2<S> extends Single {
+
+		private S s;
+
+		public L2(S s)
 		{
-			super(new Multiple());
+			this.s = s;
+		}
+		
+		public S getS()
+		{
+			return s;
+		}
+	}
+	
+	public static class Inherited extends L2<Nested>
+	{
+		public Inherited()
+		{
+			super(new Nested());
 		}
 	}
 }
