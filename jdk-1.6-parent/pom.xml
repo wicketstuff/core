@@ -61,7 +61,8 @@
 		<module>wicketstuff-logback-parent</module>
 
 		<module>closure-compiler</module>
-		<module>scala-extensions-parent</module> 
+		<module>scala-extensions-parent</module>
+		<module>select2-parent</module>
 		<module>serializer-common</module>
 		<module>serializer-kryo</module>
 		<module>serializer-kryo2</module>

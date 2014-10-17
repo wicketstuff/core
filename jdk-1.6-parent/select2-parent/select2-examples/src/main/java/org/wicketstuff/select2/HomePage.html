@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html xmlns:wicket="http://wicket.apache.org">
+<head>
+<meta charset="utf-8" />
+<title>Apache Wicketstuff Select2 Examples</title>
+<wicket:link>
+	<link rel="stylesheet" href="bootstrap/css/bootstrap.css"
+		type="text/css" media="screen" />
+	<link rel="stylesheet" href="bootstrap/css/bootstrap-responsive.css"
+		type="text/css" media="screen" />
+</wicket:link>
+
+</head>
+<body>
+
+	<div class="container">
+		<div class="hero-unit">
+			<h1>wicketstuff-select2 Examples</h1>
+			<p>
+				wicketstuff-select2 integrates <a
+					href="http://ivaynberg.github.com/select2/">Select2</a> with <a
+					href="http://wicket.apache.org">Apache Wicket</a>
+			</p>
+		</div>
+
+		<section>
+			<div class="page-header">
+				<h1>Single-Select <small>Ajax result loading. Paging with infinite scrolling. Minimum input length</small></h1>
+			</div>
+			<div class="row">
+				<div class="span12">
+					<p>
+						Country currently selected: <strong><span
+							wicket:id="country"></span> </strong>
+					</p>
+					<form wicket:id="single">
+						<input wicket:id="country" type="hidden"
+							style="width: 300px;" />
+						<div class="form-actions">
+							<button type="submit" class="btn">Submit</button>
+						</div>
+					</form>
+				</div>
+			</div>
+		</section>
+		<section>
+			<div class="page-header">
+				<h1>Multi-Select <small>Ajax result loading. Paging with infinite scrolling. Minimum input length. Drag &amp; Drop</small></h1>
+			</div>
+			<div class="row">
+				<div class="span12">
+					<p>
+						Countries currently selected: <strong><span
+							wicket:id="countries"></span> </strong>
+					</p>
+					<form wicket:id="multi">
+						<input wicket:id="countries"
+							type="hidden" style="width: 300px;" />
+						<div class="form-actions">
+							<button type="submit" class="btn">Submit</button>
+						</div>
+					</form>
+				</div>
+			</div>
+		</section>
+	</div>
+</body>
+</html>
