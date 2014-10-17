@@ -144,6 +144,7 @@ public class Map extends JavascriptObject implements Serializable {
      */
     public Map(RenderType renderer, List<Layer> layers, List<Overlay> overlays, View view,
                List<Interaction> interactions) {
+		super();
 
         this.renderer = renderer;
         this.view = view;
