@@ -47,6 +47,17 @@ import org.junit.Test;
 public class LazyModelTest {
 
 	@Test
+	public void inheritedTypeVariable() {
+		G2 g = new G2();
+
+		LazyModel<String> model = model(from(g).get());
+		
+		assertEquals(null, model.getObject());
+
+		assertEquals(String.class, model.getObjectClass());
+	}
+	
+	@Test
 	public void typeErasedWithUpperBound() {
 		G<Serializable> g = new G<Serializable>();
 		
@@ -54,7 +65,7 @@ public class LazyModelTest {
 		
 		assertEquals(null, model.getObject());
 
-		assertEquals(Serializable.class, model.getObjectClass());
+		assertEquals(null, model.getObjectClass());
 	}
 	
 	@Test
@@ -1090,5 +1101,11 @@ public class LazyModelTest {
 		public T get() {
 			return null;
 		}
+	}
+	
+	public static class G1 extends G<String> {
+	}
+	
+	public static class G2 extends G1 {
 	}
 }

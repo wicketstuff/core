@@ -23,6 +23,8 @@ import java.util.List;
 
 import org.apache.wicket.WicketRuntimeException;
 import org.apache.wicket.util.lang.Objects;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.wicketstuff.lazymodel.reflect.IProxyFactory.Callback;
 
 /**
@@ -35,6 +37,8 @@ import org.wicketstuff.lazymodel.reflect.IProxyFactory.Callback;
  */
 @SuppressWarnings("rawtypes")
 public class Evaluation<R> implements Callback {
+	
+	private static final Logger log = LoggerFactory.getLogger(Evaluation.class);
 
 	/**
 	 * If not null containing the last invocation result which couldn't be
@@ -55,7 +59,7 @@ public class Evaluation<R> implements Callback {
 	 */
 	public final List<Object> stack = new ArrayList<Object>();
 
-	private TypeIterator typeIterator;
+	private Type type;
 	
 	/**
 	 * Evaluation of method invocations on the given type.
@@ -64,7 +68,7 @@ public class Evaluation<R> implements Callback {
 	 *            starting type
 	 */
 	public Evaluation(Type type) {
-		this.typeIterator = new TypeIterator(type);
+		this.type = type;
 	}
 
 	/**
@@ -98,8 +102,12 @@ public class Evaluation<R> implements Callback {
 			stack.add(param);
 		}
 
-		typeIterator.next(method);
-			
+		type = Reflection.resultType(type, method.getGenericReturnType());
+		if (type == null) {
+			log.debug("falling back to raw type for method {}", method);
+			type = method.getReturnType();
+		}
+
 		return proxy();
 	}
 
@@ -113,7 +121,7 @@ public class Evaluation<R> implements Callback {
 	 */
 	@SuppressWarnings("unchecked")
 	public Object proxy() {
-		Class clazz = typeIterator.getType();
+		Class clazz = Reflection.getClass(type);
 
 		if (clazz.isPrimitive()) {
 			lastNonProxyable.set(this);
