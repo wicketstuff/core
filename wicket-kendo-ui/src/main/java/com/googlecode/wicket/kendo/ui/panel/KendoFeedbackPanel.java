@@ -67,6 +67,24 @@ public class KendoFeedbackPanel extends WebMarkupContainer implements IJQueryWid
 		this.options = options;
 	}
 
+	// Methods //
+
+	/**
+	 * Calls {@link Strings#escapeMarkup(CharSequence, boolean, boolean)} by default, if {@link #getEscapeModelStrings()} returns <code>true</code><br />
+	 * This can be overridden to provide additional escaping
+	 * 
+	 * @param message the message to format
+	 * @param level the level, ie: info, success, warning, error
+	 * @return the escaped markup
+	 * @see #setEscapeModelStrings(boolean)
+	 */
+	protected CharSequence escape(CharSequence message, String level)
+	{
+		return Strings.escapeMarkup(message, false, false);
+	}
+
+	// Properties //
+
 	@SuppressWarnings("unchecked")
 	public List<FeedbackMessage> getModelObject()
 	{
@@ -119,7 +137,7 @@ public class KendoFeedbackPanel extends WebMarkupContainer implements IJQueryWid
 			{
 				if (KendoFeedbackPanel.this.getEscapeModelStrings())
 				{
-					return Strings.escapeMarkup(message, false, false);
+					return KendoFeedbackPanel.this.escape(message, level);
 				}
 
 				return super.format(message, level);
