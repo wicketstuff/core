@@ -36,7 +36,7 @@ public class Overlay extends JavascriptObject implements Serializable {
     /**
      * Wicket component tied to this overlay.
      */
-    private Component element;
+    protected Component element;
 
     /**
      * Creates a new instance.
