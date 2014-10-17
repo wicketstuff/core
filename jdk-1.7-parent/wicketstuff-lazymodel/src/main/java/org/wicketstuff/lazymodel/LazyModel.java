@@ -37,7 +37,6 @@ import org.wicketstuff.lazymodel.reflect.DefaultMethodResolver;
 import org.wicketstuff.lazymodel.reflect.Evaluation;
 import org.wicketstuff.lazymodel.reflect.IMethodResolver;
 import org.wicketstuff.lazymodel.reflect.Reflection;
-import org.wicketstuff.lazymodel.reflect.TypeIterator;
 
 /**
  * A model for lazy evaluations:
@@ -126,20 +125,16 @@ public class LazyModel<T> implements IModel<T>, IObjectClassAwareModel<T>,
 		Type type = getTargetType();
 		if (type != null)
 		{
-			TypeIterator typeIterator = new TypeIterator(type);
-			
 			MethodIterator methodIterator = new MethodIterator();
 			while (methodIterator.hasNext())
 			{
-				methodIterator.next(typeIterator.getType());
+				methodIterator.next(Reflection.getClass(type));
 
-				typeIterator.next(methodIterator.method);
-				if (typeIterator.getType() == Object.class) {
-					return null;
+				type = Reflection.resultType(type, methodIterator.method.getGenericReturnType());
+				if (type == null) {
+					break;
 				}
 			}
-			
-			type = typeIterator.getType();
 		}
 		return type;
 	}
@@ -165,14 +160,12 @@ public class LazyModel<T> implements IModel<T>, IObjectClassAwareModel<T>,
 
 		Type type = getTargetType();
 		if (type != null) {
-			TypeIterator typeIterator = new TypeIterator(type);
-
 			MethodIterator methodIterator = new MethodIterator();
 			while (methodIterator.hasNext()) {
-				methodIterator.next(typeIterator.getType());
-				
-				typeIterator.next(methodIterator.method);
-				if (typeIterator.getType() == Object.class) {
+				methodIterator.next(Reflection.getClass(type));
+
+				type = Reflection.resultType(type, methodIterator.method.getGenericReturnType());
+				if (type == null) {
 					return null;
 				}
 			}
@@ -348,18 +341,16 @@ public class LazyModel<T> implements IModel<T>, IObjectClassAwareModel<T>,
 			throw new WicketRuntimeException("cannot detect target type");
 		}
 
-		TypeIterator typeIterator = new TypeIterator(type);
-
 		MethodIterator methodIterator = new MethodIterator();
 		while (methodIterator.hasNext()) {
-			methodIterator.next(typeIterator.getType());
+			methodIterator.next(Reflection.getClass(type));
 
 			if (string.length() > 0) {
 				string.append(".");
 			}
 			string.append(methodIterator.id.toString());
 
-			typeIterator.next(methodIterator.method);
+			type = Reflection.resultType(type, methodIterator.method.getGenericReturnType());
 		}
 
 		return string.toString();
