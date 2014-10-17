@@ -36,6 +36,13 @@ public class Style extends JavascriptObject implements Serializable {
 
     /**
      * Creates a new instance.
+     */
+    public Style() {
+
+    }
+
+    /**
+     * Creates a new instance.
      *
      * @param image
      *         The image for the style
