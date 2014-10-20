@@ -24,7 +24,7 @@ public class WicketApplication extends WebApplication
 	{
 		super.init();
 
-		getFrameworkSettings().setSerializer(new KryoSerializer(Bytes.bytes(500))
+		getFrameworkSettings().setSerializer(new KryoSerializer(Bytes.bytes(1000))
 		{
 
 			@Override

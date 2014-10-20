@@ -16,6 +16,7 @@
  */
 package org.wicketstuff.rest.utils.collection;
 
+import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
@@ -37,5 +38,26 @@ public class CollectionUtils
 		}
 
 		return Collections.unmodifiableMap(listMap);
+	}
+	/**
+	 * Copy the source collection into the destination one filtering source elements by the given type.
+	 * 
+	 * @param source
+	 * 			the source collection
+	 * @param destination
+	 * 			the destination collection
+	 * @param clazz
+	 * 			the filtering type
+	 */
+	@SuppressWarnings("unchecked")
+	public static <T, E extends T> void filterCollectionByType(Collection<T> source, Collection<E> destination, Class<E> clazz)
+	{
+		for (T element : source)
+		{
+			if(clazz.isInstance(element))
+			{
+				destination.add((E)element);
+			}
+		}
 	}
 }

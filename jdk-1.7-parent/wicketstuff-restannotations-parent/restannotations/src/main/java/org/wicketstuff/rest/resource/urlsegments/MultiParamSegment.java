@@ -97,6 +97,12 @@ public class MultiParamSegment extends AbstractURLSegment
 		return new MetaPattern(patterns);
 	}
 	
+	/**
+	 * Returns segment meta pattern with regexp group to support named-capturing.
+	 * 
+	 * @return
+	 * 		the meta pattern.
+	 */
 	public MetaPattern getMetaPatternWithGroups()
 	{
 		List<MetaPattern> patterns = new ArrayList<MetaPattern>();
@@ -107,7 +113,6 @@ public class MultiParamSegment extends AbstractURLSegment
 
 			if(segment instanceof ParamSegment)
 			{
-				ParamSegment paramSegment = (ParamSegment)segment;
 				metaPattern = new Group(metaPattern); 
 			}
 			

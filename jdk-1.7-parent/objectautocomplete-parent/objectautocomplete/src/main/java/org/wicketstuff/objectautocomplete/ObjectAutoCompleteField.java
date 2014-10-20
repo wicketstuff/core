@@ -338,7 +338,7 @@ public class ObjectAutoCompleteField<O /* object */, I /* its id */extends Seria
 	 * Called when form is submitted. We are simply store the object remembered internally.
 	 */
 	@Override
-	protected void convertInput()
+	public void convertInput()
 	{
 		setConvertedInput(selectedObjectId);
 	}
