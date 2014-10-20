@@ -22,42 +22,111 @@ import java.lang.reflect.Type;
 import java.lang.reflect.TypeVariable;
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 /**
  * Reflection utilities.
  * 
  * @author svenmeier
  */
-public final class Reflection {
+public final class Reflection
+{
 
-	private Reflection() {
+	private static Logger log = LoggerFactory.getLogger(Reflection.class);
+	
+	private Reflection()
+	{
+	}
+
+	/**
+	 * Get the resulting type of invoking the given method on the given owner.
+	 * 
+	 * @param ownerType
+	 *            type of owner
+	 * @param method
+	 *            method
+	 * @return resulting type or {@code null} if not known
+	 */
+	public static Type resultType(Type ownerType, Type type)
+	{
+		if (type instanceof TypeVariable)
+		{
+			TypeVariable<?> typeVariable = (TypeVariable<?>)type;
+
+			while (true)
+			{
+				Class<?> clazz;
+
+				if (ownerType instanceof ParameterizedType)
+				{
+					ParameterizedType parmeterizedType = (ParameterizedType)ownerType;
+
+					Type variableType = variableType(parmeterizedType, typeVariable);
+					if (variableType != null)
+					{
+						if (variableType instanceof TypeVariable<?>) {
+							log.debug("typeVariable {} resolves to typeVariable {}", typeVariable, variableType);
+							type = null;
+						} else {
+							type = variableType;
+						}
+						break;
+					}
+
+					clazz = (Class<?>)parmeterizedType.getRawType();
+				}
+				else if (ownerType instanceof Class)
+				{
+					clazz = (Class<?>)ownerType;
+				}
+				else
+				{
+					log.debug("unsupported ownerType {}", ownerType);
+					type = null;
+					break;
+				}
+
+				ownerType = clazz.getGenericSuperclass();
+				if (ownerType == Object.class)
+				{
+					log.debug("typeVariable {} cannot be resolved", typeVariable);
+					type = null;
+					break;
+				}
+			}
+		}
+
+		return type;
 	}
 
 	/**
 	 * Get the type for a class type variable.
 	 * 
-	 * @param owner
+	 * @param previousType
 	 *            the owning type
 	 * @param variable
 	 *            the variable
-	 * @return type
+	 * @return type or {@code null}
 	 */
-	@SuppressWarnings("rawtypes")
-	public static Class variableType(ParameterizedType owner,
-			TypeVariable variable) {
+	public static Type variableType(ParameterizedType type, TypeVariable<?> variable)
+	{
 
-		Class clazz = (Class) owner.getRawType();
-		TypeVariable[] typeParameters = clazz.getTypeParameters();
+		Class<?> clazz = (Class<?>)type.getRawType();
+		TypeVariable<?>[] typeParameters = clazz.getTypeParameters();
 
 		String name = variable.getName();
 		int index = 0;
-		for (TypeVariable candidate : typeParameters) {
-			if (candidate.getName().equals(name)) {
-				return (Class) owner.getActualTypeArguments()[index];
+		for (TypeVariable<?> candidate : typeParameters)
+		{
+			if (candidate.getName().equals(name))
+			{
+				return type.getActualTypeArguments()[index];
 			}
 			index++;
 		}
 
-		throw new IllegalArgumentException("no type parameter");
+		return null;
 	}
 
 	/**
@@ -69,16 +138,26 @@ public final class Reflection {
 	 * @throws IllegalArgumentException
 	 *             if type doesn't represent a class
 	 */
-	public static Class<?> getClass(Type type) {
+	public static Class<?> getClass(Type type)
+	{
 		Class<?> clazz;
 
-		if (type instanceof Class) {
-			clazz = ((Class<?>) type);
-		} else if (type instanceof ParameterizedType) {
-			clazz = (Class<?>) ((ParameterizedType) type).getRawType();
-		} else {
+		if (type instanceof Class)
+		{
+			clazz = ((Class<?>)type);
+		}
+		else if (type instanceof ParameterizedType)
+		{
+			clazz = (Class<?>)((ParameterizedType)type).getRawType();
+		}
+		else if (type == null)
+		{
+			throw new IllegalArgumentException("type must not be null");
+		}
+		else
+		{
 			throw new IllegalArgumentException(String.format(
-					"%s is not a class or parameterizedType", type));
+				"%s is not a class or parameterizedType", type));
 		}
 
 		return clazz;
@@ -91,22 +170,24 @@ public final class Reflection {
 	 *            method to test
 	 * @return {@code true} if method is a getter
 	 */
-	public static boolean isGetter(Method method) {
+	public static boolean isGetter(Method method)
+	{
 		String name = method.getName();
-		
-		if (method.getParameterTypes().length == 0) {
+
+		if (method.getParameterTypes().length == 0)
+		{
 			Class<?> returnType = method.getReturnType();
 
-			if (name.startsWith("get") && name.length() > 3
-					&& Character.isUpperCase(name.charAt(3))
-					&& returnType != Void.TYPE) {
+			if (name.startsWith("get") && name.length() > 3 &&
+				Character.isUpperCase(name.charAt(3)) && returnType != Void.TYPE)
+			{
 				return true;
 			}
 
-			if (name.startsWith("is")
-					&& name.length() > 2
-					&& Character.isUpperCase(name.charAt(2))
-					&& (returnType == Boolean.TYPE || returnType == Boolean.class)) {
+			if (name.startsWith("is") && name.length() > 2 &&
+				Character.isUpperCase(name.charAt(2)) &&
+				(returnType == Boolean.TYPE || returnType == Boolean.class))
+			{
 				return true;
 			}
 		}
@@ -121,14 +202,17 @@ public final class Reflection {
 	 *            method to test
 	 * @return {@code true} if list index
 	 */
-	public static boolean isListIndex(Method method) {
-		if ("get".equals(method.getName())) {
+	public static boolean isListIndex(Method method)
+	{
+		if ("get".equals(method.getName()))
+		{
 			Class<?>[] parameters = method.getParameterTypes();
-			if (parameters.length == 1 && parameters[0] == Integer.TYPE) {
+			if (parameters.length == 1 && parameters[0] == Integer.TYPE)
+			{
 				return true;
 			}
 		}
-		
+
 		return false;
 	}
 }
