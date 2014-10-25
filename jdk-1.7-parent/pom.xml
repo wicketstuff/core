@@ -92,6 +92,7 @@
 		-->
  
 		<module>wicketstuff-glassfish4-integration</module>
+		<module>serializer-fast2</module>
 	</modules>
 
 	<build>
