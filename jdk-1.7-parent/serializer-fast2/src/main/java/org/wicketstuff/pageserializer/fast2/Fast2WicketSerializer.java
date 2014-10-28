@@ -20,48 +20,56 @@
  */
 package org.wicketstuff.pageserializer.fast2;
 
-import java.io.ByteArrayInputStream;
 import java.io.IOException;
 
 import org.apache.wicket.serialize.ISerializer;
-import org.apache.wicket.util.io.ByteArrayOutputStream;
-import org.apache.wicket.util.lang.Args;
-import org.apache.wicket.util.lang.Bytes;
 import org.nustaq.serialization.FSTConfiguration;
-import org.nustaq.serialization.FSTObjectInput;
 import org.nustaq.serialization.FSTObjectOutput;
 import org.nustaq.serialization.FSTSerialisationListener;
 import org.wicketstuff.pageserializer.common.listener.ISerializationListener;
 
 
+/**
+ * A Wicket serializer using the Fast 2 library.
+ */
 public class Fast2WicketSerializer implements ISerializer
 {
 
-	private final Bytes bufferSize;
+	private final FSTConfiguration fastSerializationConfig;
 
-	static final FSTConfiguration fastSerialConfig;
-	static
+	private ISerializationListener listener;
+
+	/**
+	 * Build a Fast2 serializer with a default sensible configuration.
+	 */
+	public Fast2WicketSerializer()
+	{
+		this(getDefaultFSTConfiguration());
+	}
+
+	/**
+	 * Build a Fast2 serializer with a custom configuration.
+	 */
+	public Fast2WicketSerializer(FSTConfiguration config)
+	{
+		fastSerializationConfig = config;
+	}
+
+	public static final FSTConfiguration getDefaultFSTConfiguration()
 	{
 		FSTConfiguration config = FSTConfiguration.createDefaultConfiguration();
 		config.setForceSerializable(false);
-		fastSerialConfig = config;
-	}
-
-	public Fast2WicketSerializer(Bytes bufferSize)
-	{
-		this.bufferSize = Args.notNull(bufferSize, "bufferSize");
+		return config;
 	}
 
 	@Override
 	public byte[] serialize(Object object)
 	{
-		RuntimeException ex = null;
-		ISerializationListener listener = listener();
+		Exception exception = null;
 
 		try
 		{
-			ByteArrayOutputStream buffer = new ByteArrayOutputStream((int)this.bufferSize.bytes());
-			FSTObjectOutput out = fastSerialConfig.getObjectOutput(buffer);
+			FSTObjectOutput out = fastSerializationConfig.getObjectOutput();
 
 			if (listener != null)
 			{
@@ -69,33 +77,43 @@ public class Fast2WicketSerializer implements ISerializer
 				listener.begin(object);
 			}
 			out.writeObject(object);
-			// DON'T out.close() when using factory method;
-			out.flush();
 			out.setListener(null);
 
-			buffer.close();
-			return buffer.toByteArray();
+			return out.getCopyOfWrittenBuffer();
 		}
-		catch (RuntimeException e)
+		catch (RuntimeException | IOException e)
 		{
-			throw new Fast2WicketSerialException("serialize", e);
-		}
-		catch (IOException e)
-		{
-			throw new Fast2WicketSerialException("serialize", e);
+			exception = e;
+			throw new Fast2WicketSerialException(String.format(
+					"Unable to serialize the object of class %1$s", object), e);
 		}
 		finally
 		{
 			if (listener != null)
 			{
-				listener.end(object, ex);
+				listener.end(object, exception);
 			}
 		}
 	}
 
-	protected ISerializationListener listener()
+	/**
+	 * Define a listener to inspect the serialization process.
+	 * 
+	 * @param listener
+	 * @return the Serializer for chaining.
+	 */
+	public Fast2WicketSerializer setListener(ISerializationListener listener)
 	{
-		return null;
+		this.listener = listener;
+		return this;
+	}
+
+	/**
+	 * @return the listener used to inspect the serialization process.
+	 */
+	public ISerializationListener getListener()
+	{
+		return listener;
 	}
 
 	@Override
@@ -103,45 +121,38 @@ public class Fast2WicketSerializer implements ISerializer
 	{
 		try
 		{
-			ByteArrayInputStream buffer = new ByteArrayInputStream(data);
-
-			FSTObjectInput in = fastSerialConfig.getObjectInput(buffer);
-			Object result = in.readObject();
-			// DON'T: in.close(); here prevents reuse and will result in an
-			// exception
-			buffer.close();
-			return result;
-
+			return fastSerializationConfig.getObjectInput(data).readObject();
 		}
 		catch (IOException e)
 		{
-			throw new Fast2WicketSerialException("deserialize", e);
+			throw new Fast2WicketSerialException("Unable to deserialize the data", e);
 		}
 		catch (ClassNotFoundException e)
 		{
-			throw new Fast2WicketSerialException("deserialize", e);
+			throw new Fast2WicketSerialException(
+					"Unable to find a class while deserializing the data", e);
 		}
 	}
 
 	static class ListenerAdapter implements FSTSerialisationListener
 	{
-		private final ISerializationListener _listener;
+		private final ISerializationListener listener;
 
 		public ListenerAdapter(ISerializationListener listener)
 		{
-			_listener = listener;
+			this.listener = listener;
 		}
 
 		@Override
 		public void objectWillBeWritten(Object obj, int streamPosition)
 		{
-			_listener.before(streamPosition, obj);
+			listener.before(streamPosition, obj);
 		}
 
 		@Override
 		public void objectHasBeenWritten(Object obj, int oldStreamPosition, int streamPosition)
 		{
-			_listener.after(streamPosition, obj);
+			listener.after(streamPosition, obj);
 		}
 	}
 }

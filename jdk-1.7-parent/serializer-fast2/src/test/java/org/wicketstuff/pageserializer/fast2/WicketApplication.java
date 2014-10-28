@@ -25,7 +25,6 @@ import java.util.UUID;
 
 import org.apache.wicket.Component;
 import org.apache.wicket.protocol.http.WebApplication;
-import org.apache.wicket.util.lang.Bytes;
 import org.wicketstuff.pageserializer.common.analyze.AnalyzingSerializationListener;
 import org.wicketstuff.pageserializer.common.analyze.IObjectLabelizer;
 import org.wicketstuff.pageserializer.common.analyze.ISerializedObjectTree;
@@ -43,7 +42,6 @@ import org.wicketstuff.pageserializer.common.analyze.report.io.DirectoryBasedRep
 import org.wicketstuff.pageserializer.common.analyze.report.io.Keys;
 import org.wicketstuff.pageserializer.common.listener.ISerializationListener;
 import org.wicketstuff.pageserializer.common.listener.SerializationListeners;
-import org.wicketstuff.pageserializer.fast2.InspectingFast2WicketSerializer;
 
 /**
  * Application object for your web application. If you want to run this
@@ -103,8 +101,7 @@ public class WicketApplication extends WebApplication
 		ISerializationListener listener = SerializationListeners
 				.listOf(new AnalyzingSerializationListener(labelizer, cleanedTreeProcessor));
 
-		getFrameworkSettings().setSerializer(
-				new InspectingFast2WicketSerializer(Bytes.bytes(1024 * 1024), listener));
+		getFrameworkSettings().setSerializer(new Fast2WicketSerializer().setListener(listener));
 	}
 
 	private File tempDirectory(String prefix)
