@@ -48,7 +48,7 @@ public class DefaultJavaSerializationValidator implements ISerializationListener
 	}
 
 	@Override
-	public void end(Object object,RuntimeException ex)
+	public void end(Object object, Exception ex)
 	{
 		
 	}

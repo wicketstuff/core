@@ -51,9 +51,9 @@ public interface ISerializationListener
 	void after(int position, Object object);
 
 	/**
-	 * callend when serialization ends
+	 * called when serialization ends
 	 * @param object the object it started with
-	 * @param exceptionIfAny if somethings throws an exception, this parameter is set
+	 * @param exceptionIfAny if something throws an exception, this parameter is set
 	 */
-	void end(Object object, RuntimeException exceptionIfAny);
+	void end(Object object, Exception exceptionIfAny);
 }
