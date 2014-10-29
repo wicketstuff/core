@@ -20,8 +20,6 @@
  */
 package org.wicketstuff.pageserializer.fast2;
 
-import java.io.IOException;
-
 import org.apache.wicket.serialize.ISerializer;
 import org.nustaq.serialization.FSTConfiguration;
 import org.nustaq.serialization.FSTObjectOutput;
@@ -81,11 +79,11 @@ public class Fast2WicketSerializer implements ISerializer
 
 			return out.getCopyOfWrittenBuffer();
 		}
-		catch (RuntimeException | IOException e)
+		catch (Exception e)
 		{
 			exception = e;
 			throw new Fast2WicketSerialException(String.format(
-					"Unable to serialize the object of class %1$s", object), e);
+					"Unable to serialize the object %1$s", object), e);
 		}
 		finally
 		{
@@ -123,14 +121,9 @@ public class Fast2WicketSerializer implements ISerializer
 		{
 			return fastSerializationConfig.getObjectInput(data).readObject();
 		}
-		catch (IOException e)
+		catch (Exception e)
 		{
 			throw new Fast2WicketSerialException("Unable to deserialize the data", e);
-		}
-		catch (ClassNotFoundException e)
-		{
-			throw new Fast2WicketSerialException(
-					"Unable to find a class while deserializing the data", e);
 		}
 	}
 
