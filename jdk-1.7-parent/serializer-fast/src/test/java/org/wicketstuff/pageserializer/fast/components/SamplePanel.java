@@ -36,21 +36,22 @@ public class SamplePanel extends Panel
 	public SamplePanel(String id)
 	{
 		super(id);
-		
+
 		WebMarkupContainer container = new WebMarkupContainer("container");
 		container.add(new EmptyPanel("empty"));
-		
-		List<Integer> list=new ArrayList<Integer>();
-		list.addAll(Arrays.asList(1,2,3,4,5,6));
-		
-		container.add(new ListView<Integer>("list",list) {
+
+		List<Integer> list = new ArrayList<Integer>();
+		list.addAll(Arrays.asList(1, 2, 3, 4, 5, 6));
+
+		container.add(new ListView<Integer>("list", list)
+		{
 			@Override
 			protected void populateItem(ListItem<Integer> item)
 			{
-				item.add(new Label("label",item.getModel()));
+				item.add(new Label("label", item.getModel()));
 			}
 		});
-		
+
 		add(container);
 	}
 

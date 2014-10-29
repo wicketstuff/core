@@ -36,8 +36,8 @@ public class SamplePage extends WebPage
 			@Override
 			protected void populateItem(ListItem<String> item)
 			{
-				item.add(new Label("label",item.getModel()));
-				
+				item.add(new Label("label", item.getModel()));
+
 			}
 		});
 	}
