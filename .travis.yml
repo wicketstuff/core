@@ -21,7 +21,7 @@ env:
 install: true
 
 script: 
-  - "DEPLOY_OR_TEST=test"
+  - "DEPLOY_OR_TEST=install"
   - '[ "${TRAVIS_PULL_REQUEST}" = "false" ] && DEPLOY_OR_TEST=deploy'
   - "echo DEPLOY_OR_TEST=$DEPLOY_OR_TEST"
-  - "mvn -s sonatype-settings.xml clean $DEPLOY_OR_TEST -Dmaven.javadoc.skip=true -B -V --quiet"
+  - "mvn -s sonatype-settings.xml clean $DEPLOY_OR_TEST -Dmaven.javadoc.skip=true -Dsource.skip=true -B -V --quiet"
