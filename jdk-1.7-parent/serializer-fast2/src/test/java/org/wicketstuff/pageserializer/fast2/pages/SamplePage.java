@@ -18,42 +18,19 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.wicketstuff.pageserializer.common.listener;
+package org.wicketstuff.pageserializer.fast2.pages;
 
-/**
- * serialization listener
- * 
- * @author mosmann
- *
- */
-public interface ISerializationListener
+import org.apache.wicket.markup.html.WebPage;
+import org.apache.wicket.request.mapper.parameter.PageParameters;
+import org.wicketstuff.pageserializer.fast2.components.SamplePanel;
+
+public class SamplePage extends WebPage
 {
+	private final PageParameters pageParameters;
 
-	/**
-	 * called when serialization begins
-	 * @param object to be serialized
-	 */
-	void begin(Object object);
-
-	/**
-	 * before an object is written to output, this hook is called
-	 * @param position output stream position 
-	 * @param object
-	 */
-	void before(int position, Object object);
-
-	/**
-	 * after an object is written to output, this hook is called
-	 * if any exception is thrown, then this hook is NOT called
-	 * @param position
-	 * @param object
-	 */
-	void after(int position, Object object);
-
-	/**
-	 * called when serialization ends
-	 * @param object the object it started with
-	 * @param exceptionIfAny if something throws an exception, this parameter is set
-	 */
-	void end(Object object, Exception exceptionIfAny);
+	public SamplePage(PageParameters pageParameters)
+	{
+		this.pageParameters = pageParameters;
+		add(new SamplePanel("sample"));
+	}
 }

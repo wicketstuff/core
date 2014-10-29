@@ -18,42 +18,17 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.wicketstuff.pageserializer.common.listener;
+package org.wicketstuff.pageserializer.fast2;
 
-/**
- * serialization listener
- * 
- * @author mosmann
- *
- */
-public interface ISerializationListener
+
+public class Fast2WicketSerialException extends RuntimeException
 {
 
-	/**
-	 * called when serialization begins
-	 * @param object to be serialized
-	 */
-	void begin(Object object);
+	private static final long serialVersionUID = -2699660632014917257L;
 
-	/**
-	 * before an object is written to output, this hook is called
-	 * @param position output stream position 
-	 * @param object
-	 */
-	void before(int position, Object object);
+	public Fast2WicketSerialException(String message, Exception cause)
+	{
+		super(message, cause);
+	}
 
-	/**
-	 * after an object is written to output, this hook is called
-	 * if any exception is thrown, then this hook is NOT called
-	 * @param position
-	 * @param object
-	 */
-	void after(int position, Object object);
-
-	/**
-	 * called when serialization ends
-	 * @param object the object it started with
-	 * @param exceptionIfAny if something throws an exception, this parameter is set
-	 */
-	void end(Object object, Exception exceptionIfAny);
 }

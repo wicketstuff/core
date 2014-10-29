@@ -73,7 +73,7 @@ public abstract class ThreadLocalContextSerializationListener<T> implements ISer
 	protected abstract void after(T context, int position, Object object);
 
 	@Override
-	public void end(Object object, RuntimeException exception)
+	public void end(Object object, Exception exception)
 	{
 		T context = contextContainer.get();
 		contextContainer.remove();
@@ -83,5 +83,5 @@ public abstract class ThreadLocalContextSerializationListener<T> implements ISer
 	/**
 	 * @see ISerializationListener#end(Object, RuntimeException)
 	 */
-	protected abstract void end(T context, Object object, RuntimeException exception);
+	protected abstract void end(T context, Object object, Exception exception);
 }

@@ -72,7 +72,7 @@ public final class SerializationListeners
 			}
 
 			@Override
-			public void end(Object object, RuntimeException exceptionIfAny)
+			public void end(Object object, Exception exceptionIfAny)
 			{
 				for (ISerializationListener l : listener)
 				{
