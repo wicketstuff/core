@@ -216,7 +216,7 @@ public class Popover extends Overlay {
 
     @Override
     public String getJsId() {
-        return "popup_" + element.getId();
+        return "popup_" + element.getMarkupId();
     }
 
     /**
@@ -252,6 +252,16 @@ public class Popover extends Overlay {
         }
 
         builder.append("});");
+
+        if(titleModel != null) {
+            builder.append("$(element).attr('data-original-title', '" + escapeQuoteJs(titleModel.getObject())  + "');" );
+        }
+
+        if (html) {
+            builder.append("$(element).attr('data-content', '" + escapeQuoteJs(model.getObject()) + "');");
+        } else {
+            builder.append("$(element).attr('data-content', '" + Strings.escapeMarkup(model.getObject()) + "');");
+        }
 
         return builder.toString();
     }
