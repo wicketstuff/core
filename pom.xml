@@ -8,7 +8,6 @@
 	<artifactId>wicketstuff-core</artifactId>
 	<packaging>pom</packaging>
 	<version>6.0-SNAPSHOT</version>
-
 	<name>WicketStuff Core Parent</name>
 	<description>
 		WicketStuff Core Parent is the parent project for all of the core WicketStuff projects.  It tries
@@ -18,7 +17,7 @@
 
 	<url>http://wicketstuff.org</url>
 
-	<!-- mocleiri: moved modules definition into the build-java5-modules and 
+	<!-- mocleiri: moved modules definition into the build-java5-modules and
 		build-java6-modules profiles -->
 	<licenses>
 		<license>
@@ -26,7 +25,7 @@
 			<url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
 			<distribution>repo</distribution>
 			<comments>
-				This project (core-parent) is being released under the Apache 2 license, 
+				This project (core-parent) is being released under the Apache 2 license,
 				but does not require that all child projects are released under the same license.
 				If a child project defines a license of it's own different from the Apache license,
 				Maven recognizes this and uses only that license.  If a child wants to use the
@@ -73,7 +72,7 @@
 			<url>https://oss.sonatype.org/content/repositories/snapshots/</url>
 		</snapshotRepository>
 	</distributionManagement>
-	
+
 	<repositories>
 		<!-- for wicket snapshots -->
 		<repository>
@@ -88,11 +87,11 @@
 			</releases>
 		</repository>
 	</repositories>
-			
+
 	<profiles>
 		<profile>
 			<id>oss.sonatype.org-staged-release</id>
-			<!-- This is the profile to use for releasing into the staged release 
+			<!-- This is the profile to use for releasing into the staged release
 				repo. We need to sign the artifacts. -->
 
 			<activation>
@@ -170,8 +169,8 @@
 
 		<profile>
 			<!-- setup for using oss.sonatype.org to hold snapshots -->
-			<!-- should be active for all sessions except where the release plugin 
-				is being used. We keep this in a profile since central sync up requires no 
+			<!-- should be active for all sessions except where the release plugin
+				is being used. We keep this in a profile since central sync up requires no
 				<repository> tags at the top level of the POM. -->
 			<id>oss.sonatype.org-snapshots</id>
 
@@ -241,7 +240,7 @@
 
 	<dependencyManagement>
 		<dependencies>
-			<!-- In order for this project to work, all child projects need to use 
+			<!-- In order for this project to work, all child projects need to use
 				these versions of wicket-* and not specify their own version -->
 			<dependency>
 				<groupId>org.apache.wicket</groupId>
@@ -754,7 +753,7 @@
 						</execution>
 					</executions>
 					<configuration>
-						<!-- these are 3rd party css + js files no need to see the warnings about 
+						<!-- these are 3rd party css + js files no need to see the warnings about
 							them -->
 						<jswarn>false</jswarn>
 						<nosuffix>true</nosuffix>
