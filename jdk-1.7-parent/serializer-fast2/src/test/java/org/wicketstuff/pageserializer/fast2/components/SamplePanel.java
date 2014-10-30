@@ -18,34 +18,40 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.wicketstuff.pageserializer.fast;
+package org.wicketstuff.pageserializer.fast2.components;
 
-import org.apache.wicket.ajax.AjaxRequestTarget;
-import org.apache.wicket.ajax.markup.html.AjaxLink;
-import org.apache.wicket.markup.html.WebPage;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
+import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.markup.html.basic.Label;
-import org.apache.wicket.request.mapper.parameter.PageParameters;
+import org.apache.wicket.markup.html.list.ListItem;
+import org.apache.wicket.markup.html.list.ListView;
+import org.apache.wicket.markup.html.panel.EmptyPanel;
+import org.apache.wicket.markup.html.panel.Panel;
 
-public class HomePage extends WebPage
+public class SamplePanel extends Panel
 {
-	private static final long serialVersionUID = 1L;
-
-	public HomePage(final PageParameters parameters)
+	public SamplePanel(String id)
 	{
-		super(parameters);
-
-		add(new Label("label", "Fast Rocks!"));
-
-		add(new AjaxLink<Void>("link")
-		{
-			private static final long serialVersionUID = 1L;
-
+		super(id);
+		
+		WebMarkupContainer container = new WebMarkupContainer("container");
+		container.add(new EmptyPanel("empty"));
+		
+		List<Integer> list=new ArrayList<Integer>();
+		list.addAll(Arrays.asList(1,2,3,4,5,6));
+		
+		container.add(new ListView<Integer>("list",list) {
 			@Override
-			public void onClick(AjaxRequestTarget target)
+			protected void populateItem(ListItem<Integer> item)
 			{
-				System.err.println("click");
+				item.add(new Label("label",item.getModel()));
 			}
 		});
-
+		
+		add(container);
 	}
+
 }

@@ -18,7 +18,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.wicketstuff.pageserializer.fast;
+package org.wicketstuff.pageserializer.fast2;
 
 import org.apache.wicket.request.mapper.parameter.PageParameters;
 import org.apache.wicket.serialize.ISerializer;
@@ -27,15 +27,15 @@ import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import org.wicketstuff.pageserializer.fast.FastWicketSerialException;
-import org.wicketstuff.pageserializer.fast.FastWicketSerializer;
-import org.wicketstuff.pageserializer.fast.pages.NotSerializablePage;
-import org.wicketstuff.pageserializer.fast.pages.SamplePage;
+import org.wicketstuff.pageserializer.fast2.Fast2WicketSerialException;
+import org.wicketstuff.pageserializer.fast2.Fast2WicketSerializer;
+import org.wicketstuff.pageserializer.fast2.pages.NotSerializablePage;
+import org.wicketstuff.pageserializer.fast2.pages.SamplePage;
 
 /**
  * Simple test using the WicketTester
  */
-public class FastSerializerTest
+public class Fast2SerializerTest
 {
 	private WicketTester tester;
 
@@ -66,12 +66,12 @@ public class FastSerializerTest
 		Assert.assertNotNull("The produced data should not be null!", data);
 
 		// data length can fluctuate based on the object field values
-		Assert.assertEquals("The produced data length is not correct!", 638, data.length);
+		Assert.assertEquals("The produced data length is not correct!", 651, data.length);
 
 		Object object = pageSerializer.deserialize(data);
 		Assert.assertTrue(
-			"The deserialized page must be of type HomePage. Type: " + object.getClass(),
-			object instanceof HomePage);
+				"The deserialized page must be of type HomePage. Type: " + object.getClass(),
+				object instanceof HomePage);
 
 	}
 
@@ -80,7 +80,7 @@ public class FastSerializerTest
 	{
 		// start and render the test page
 		SamplePage page = tester.startPage(SamplePage.class,
-			new PageParameters().add("Test", "asString"));
+				new PageParameters().add("Test", "asString"));
 
 		// assert rendered page class
 		tester.assertRenderedPage(SamplePage.class);
@@ -92,8 +92,8 @@ public class FastSerializerTest
 
 		Object object = pageSerializer.deserialize(data);
 		Assert.assertTrue(
-			"The deserialized page must be of type HomePage. Type: " + object.getClass(),
-			object instanceof SamplePage);
+				"The deserialized page must be of type HomePage. Type: " + object.getClass(),
+				object instanceof SamplePage);
 
 		SamplePage samplePage = (SamplePage)object;
 
@@ -102,13 +102,13 @@ public class FastSerializerTest
 		// assert rendered page class
 		tester.assertRenderedPage(SamplePage.class);
 	}
-	
-	@Test(expected=FastWicketSerialException.class)
+
+	@Test(expected = Fast2WicketSerialException.class)
 	public void notSerializableComponentThrowsException()
 	{
-		
+
 		NotSerializablePage page = tester.startPage(NotSerializablePage.class,
-			new PageParameters().add("Test", "asString"));
+				new PageParameters().add("Test", "asString"));
 
 		// assert rendered page class
 		tester.assertRenderedPage(NotSerializablePage.class);
@@ -122,8 +122,9 @@ public class FastSerializerTest
 	{
 		ISerializer pageSerializer = tester.getApplication().getFrameworkSettings().getSerializer();
 		Assert.assertTrue(
-			"The configured IObjectSerializer is not instance of FastSerializer! Type: " +
-				pageSerializer.getClass(), pageSerializer instanceof FastWicketSerializer);
+				"The configured IObjectSerializer is not instance of Fast2Serializer! Type: "
+						+ pageSerializer.getClass(),
+				pageSerializer instanceof Fast2WicketSerializer);
 		return pageSerializer;
 	}
 }
