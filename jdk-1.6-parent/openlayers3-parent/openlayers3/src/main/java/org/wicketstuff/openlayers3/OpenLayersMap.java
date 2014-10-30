@@ -163,6 +163,39 @@ public abstract class OpenLayersMap extends GenericPanel<Map> {
                 + point.renderJs() + ");");
     }
 
+    /**
+     * Adds the provided interaction to the map.
+     *
+     * @param target Ajax request target
+     * @param interaction Interaction to add
+     */
+    public void addInteraction(AjaxRequestTarget target, Interaction interaction) {
+
+        // update our model
+        getModelObject().getInteractions().add(interaction);
+
+        // update the map
+        target.appendJavaScript("window." + interaction.getJsId() + " = new " + interaction.getJsType()
+                + "(" + interaction.renderJs() + ");"
+                + "map_" + getMarkupId() + ".addInteraction(" + interaction.getJsId() + ");");
+    }
+
+    /**
+     * Removes provided interaction from the map.
+     *
+     * @param target Ajax request target
+     * @param interaction Interaction to add
+     */
+    public void removeInteraction(AjaxRequestTarget target, Interaction interaction) {
+
+        // update our model
+        getModelObject().getInteractions().remove(interaction);
+
+        // update the map
+        target.appendJavaScript("map_" + getMarkupId() + ".removeInteraction(" + interaction.getJsId() + ");"
+                + interaction.getJsId() + ".dispose();");
+    }
+
     @Override
     public abstract void renderHead(final IHeaderResponse response);
 
