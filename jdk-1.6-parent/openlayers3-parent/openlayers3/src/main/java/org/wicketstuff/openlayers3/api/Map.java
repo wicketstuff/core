@@ -149,15 +149,15 @@ public class Map extends JavascriptObject implements Serializable {
         this.renderer = renderer;
         this.view = view;
 
-        if(layers != null) {
+        if (layers != null) {
             this.layers.addAll(layers);
         }
 
-        if(overlays != null) {
+        if (overlays != null) {
             this.overlays.addAll(overlays);
         }
 
-        if(interactions != null) {
+        if (interactions != null) {
             this.interactions.addAll(interactions);
         }
     }
@@ -219,7 +219,7 @@ public class Map extends JavascriptObject implements Serializable {
 
         this.layers = new ArrayList<Layer>();
 
-        if(layers != null) {
+        if (layers != null) {
             this.layers.addAll(layers);
         }
     }
@@ -243,7 +243,7 @@ public class Map extends JavascriptObject implements Serializable {
 
         this.overlays = new ArrayList<Overlay>();
 
-        if(overlays != null) {
+        if (overlays != null) {
             this.overlays.addAll(overlays);
         }
     }
@@ -323,7 +323,7 @@ public class Map extends JavascriptObject implements Serializable {
 
         this.interactions = new ArrayList<Interaction>();
 
-        if(interactions != null) {
+        if (interactions != null) {
             this.interactions.addAll(interactions);
         }
     }

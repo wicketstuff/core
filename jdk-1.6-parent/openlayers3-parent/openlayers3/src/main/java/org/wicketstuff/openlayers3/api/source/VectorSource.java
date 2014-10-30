@@ -21,6 +21,8 @@ public class VectorSource extends Source {
      *         Features for this source
      */
     public VectorSource(List<Feature> features) {
+        super();
+
         this.features = features;
     }
 

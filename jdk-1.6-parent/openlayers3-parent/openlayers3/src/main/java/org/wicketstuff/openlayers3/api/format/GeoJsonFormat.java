@@ -33,6 +33,8 @@ public class GeoJsonFormat extends Feature implements Serializable {
      *         The name to use when creating features
      */
     public GeoJsonFormat(final String defaultProjection, final String geometryName) {
+        super();
+
         this.defaultProjection = defaultProjection;
         this.geometryName = geometryName;
     }

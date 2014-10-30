@@ -30,7 +30,8 @@ public class Modify extends Interaction implements Serializable {
     /**
      * Creates a new instance.
      *
-     * @param features Features for this interaction
+     * @param features
+     *         Features for this interaction
      */
     public Modify(Feature... features) {
         this(new Style(), features);
@@ -39,8 +40,10 @@ public class Modify extends Interaction implements Serializable {
     /**
      * Creates a new instance.
      *
-     * @param style Style for this interaction (applied to feature when interacting)
-     * @param features Features for this interaction
+     * @param style
+     *         Style for this interaction (applied to feature when interacting)
+     * @param features
+     *         Features for this interaction
      */
     public Modify(Style style, Feature... features) {
         this.features = features;
@@ -51,30 +54,42 @@ public class Modify extends Interaction implements Serializable {
     /**
      * Creates a new instance.
      *
-     * @param vector Vector of features for this interaction
+     * @param vector
+     *         Vector of features for this interaction
      */
     public Modify(Vector vector) {
-        this(null, vector, null);
+        this(null, vector);
     }
 
     /**
      * Creates a new instance.
      *
-     * @param style Style for this interaction (applied to feature when interacting)
-     * @param vector Vector of features for this interaction
+     * @param style
+     *         Style for this interaction (applied to feature when interacting)
+     * @param vector
+     *         Vector of features for this interaction
      */
     public Modify(Style style, Vector vector) {
-        this(style, vector, null);
+        super();
+
+        this.features = null;
+        this.vector = vector;
+        this.style = style;
     }
 
     /**
      * Creates a new instance.
      *
-     * @param style Style for this interaction (applied to feature when interacting)
-     * @param vector Vector of features for this interaction
-     * @param features Features for this interaction
+     * @param style
+     *         Style for this interaction (applied to feature when interacting)
+     * @param vector
+     *         Vector of features for this interaction
+     * @param features
+     *         Features for this interaction
      */
     private Modify(Style style, Vector vector, Feature... features) {
+        super();
+
         this.features = features;
         this.vector = vector;
         this.style = style;
@@ -92,7 +107,8 @@ public class Modify extends Interaction implements Serializable {
     /**
      * Sets the features for this interaction.
      *
-     * @param features New value
+     * @param features
+     *         New value
      */
     public void setFeatures(Feature[] features) {
         this.features = features;
@@ -101,7 +117,8 @@ public class Modify extends Interaction implements Serializable {
     /**
      * Sets the features for this interaction.
      *
-     * @param features New value
+     * @param features
+     *         New value
      * @return This instance
      */
     public Modify features(Feature[] features) {
@@ -112,7 +129,8 @@ public class Modify extends Interaction implements Serializable {
     /**
      * Sets the features for this interaction.
      *
-     * @param featuresList A list of feature instances
+     * @param featuresList
+     *         A list of feature instances
      * @return This instance
      */
     public Modify features(List<Feature> featuresList) {
@@ -132,7 +150,8 @@ public class Modify extends Interaction implements Serializable {
     /**
      * Sets the vector source for this interaction's features.
      *
-     * @param vector Vector source of features
+     * @param vector
+     *         Vector source of features
      */
     public void setVector(Vector vector) {
         this.vector = vector;
@@ -141,7 +160,8 @@ public class Modify extends Interaction implements Serializable {
     /**
      * Sets the vector source for this interaction's features.
      *
-     * @param vector Vector source of features
+     * @param vector
+     *         Vector source of features
      * @return This instance
      */
     public Modify vector(Vector vector) {
@@ -161,7 +181,8 @@ public class Modify extends Interaction implements Serializable {
     /**
      * Sets the style for this interaction.
      *
-     * @param style New value
+     * @param style
+     *         New value
      */
     public void setStyle(Style style) {
         this.style = style;
@@ -170,7 +191,8 @@ public class Modify extends Interaction implements Serializable {
     /**
      * Sets the style for this interaction.
      *
-     * @param style New value
+     * @param style
+     *         New value
      * @return This instance
      */
     public Modify style(Style style) {
@@ -208,13 +230,13 @@ public class Modify extends Interaction implements Serializable {
             builder.append("]),");
         }
 
-        if(vector != null) {
+        if (vector != null) {
             builder.append("'features': new ol.Collection(");
             builder.append(vector.getJsId() + ".getSource().getFeatures()");
             builder.append("),");
         }
 
-        if(style != null) {
+        if (style != null) {
             builder.append("'style': new " + style.getJsType() + "(" + style.renderJs() + "), ");
         } else {
             builder.append("'style': new ol.style.Style(), ");

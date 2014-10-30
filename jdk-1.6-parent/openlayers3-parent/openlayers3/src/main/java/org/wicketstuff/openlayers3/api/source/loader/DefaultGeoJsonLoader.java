@@ -38,6 +38,8 @@ public class DefaultGeoJsonLoader extends Loader implements Serializable {
      *         The projection used to transform the fetched data
      */
     public DefaultGeoJsonLoader(final String url, final String projection) {
+        super();
+
         this.url = url;
         this.projection = projection;
     }
@@ -184,13 +186,13 @@ public class DefaultGeoJsonLoader extends Loader implements Serializable {
         builder.append("  " + getSource().getJsId() + ".addFeatures(" + getSource().getJsId()
                 + ".readFeatures(response));");
 
-        if(vectorFeatureDataLoadedListener != null) {
+        if (vectorFeatureDataLoadedListener != null) {
 
             // invoke our callback for the feature data load
             builder.append(vectorFeatureDataLoadedListener.getCallbackFunctionName() + "(" + getSource().getJsId() + ");");
         }
 
-        if(vectorFeaturesLoadedListener != null) {
+        if (vectorFeaturesLoadedListener != null) {
 
             // invoke our callback for the feature load
             builder.append(vectorFeaturesLoadedListener.getCallbackFunctionName() + "(" + getSource().getJsId() + ");");

@@ -31,6 +31,8 @@ public class Tile extends Layer {
      *         The source of data for this layer
      */
     public Tile(String title, Source source) {
+        super();
+
         this.title = title;
         setSource(source);
     }

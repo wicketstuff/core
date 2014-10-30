@@ -19,6 +19,8 @@ public abstract class StaticVector extends Source {
      *         Projection used to tranform the data
      */
     public StaticVector(Projection projection) {
+        super();
+
         this.projection = projection;
     }
 

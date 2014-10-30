@@ -57,6 +57,8 @@ public class Projection extends JavascriptObject implements Serializable {
      *         Axis orientation
      */
     public Projection(final String code, final String units, final String axisOrientation) {
+        super();
+
         this.code = code;
         this.units = units;
         this.axisOrientation = axisOrientation;

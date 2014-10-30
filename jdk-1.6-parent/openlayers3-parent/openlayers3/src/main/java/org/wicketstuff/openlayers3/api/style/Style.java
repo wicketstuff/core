@@ -64,13 +64,20 @@ public class Style extends JavascriptObject implements Serializable {
     /**
      * Creates a new instance.
      *
-     * @param fill The fill for this style
-     * @param image The image for this style
-     * @param stroke The stroke for this style
-     * @param text The text for this style
-     * @param zIndex The z-index for this style
+     * @param fill
+     *         The fill for this style
+     * @param image
+     *         The image for this style
+     * @param stroke
+     *         The stroke for this style
+     * @param text
+     *         The text for this style
+     * @param zIndex
+     *         The z-index for this style
      */
     public Style(Fill fill, Image image, Stroke stroke, Text text, Number zIndex) {
+        super();
+
         this.fill = fill;
         this.image = image;
         this.stroke = stroke;
@@ -152,7 +159,8 @@ public class Style extends JavascriptObject implements Serializable {
     /**
      * Sets the stroke for this style
      *
-     * @param stroke New value
+     * @param stroke
+     *         New value
      */
     public void setStroke(Stroke stroke) {
         this.stroke = stroke;
@@ -161,7 +169,8 @@ public class Style extends JavascriptObject implements Serializable {
     /**
      * Sets the stroke for this style.
      *
-     * @param stroke New value
+     * @param stroke
+     *         New value
      * @return This instance
      */
     public Style stroke(Stroke stroke) {
@@ -181,7 +190,8 @@ public class Style extends JavascriptObject implements Serializable {
     /**
      * Sets the text for this instance.
      *
-     * @param text New value
+     * @param text
+     *         New value
      */
     public void setText(Text text) {
         this.text = text;
@@ -190,7 +200,8 @@ public class Style extends JavascriptObject implements Serializable {
     /**
      * Sets the text for this style.
      *
-     * @param text New value
+     * @param text
+     *         New value
      * @return This instance
      */
     public Style text(Text text) {
@@ -210,7 +221,8 @@ public class Style extends JavascriptObject implements Serializable {
     /**
      * Sets the z-index for this style.
      *
-     * @param zIndex New value
+     * @param zIndex
+     *         New value
      */
     public void setzIndex(Number zIndex) {
         this.zIndex = zIndex;
@@ -219,7 +231,8 @@ public class Style extends JavascriptObject implements Serializable {
     /**
      * Sets the z-index for this style.
      *
-     * @param zIndex New value
+     * @param zIndex
+     *         New value
      * @return This instance
      */
     public Style zIndex(Number zIndex) {

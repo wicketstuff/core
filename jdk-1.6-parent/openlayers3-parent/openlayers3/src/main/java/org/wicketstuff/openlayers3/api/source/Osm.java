@@ -5,6 +5,13 @@ package org.wicketstuff.openlayers3.api.source;
  */
 public class Osm extends Source {
 
+    /**
+     * Creates a new instance.
+     */
+    public Osm() {
+        super();
+    }
+
     @Override
     public String getJsType() {
         return "ol.source.OSM";
