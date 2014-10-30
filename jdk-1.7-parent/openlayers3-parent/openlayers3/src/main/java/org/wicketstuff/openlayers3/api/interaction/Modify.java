@@ -1,5 +1,6 @@
 package org.wicketstuff.openlayers3.api.interaction;
 
+import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.wicketstuff.openlayers3.api.Feature;
 import org.wicketstuff.openlayers3.api.layer.Vector;
 import org.wicketstuff.openlayers3.api.style.Style;
@@ -198,6 +199,15 @@ public class Modify extends Interaction implements Serializable {
     public Modify style(Style style) {
         setStyle(style);
         return this;
+    }
+
+    /**
+     * Notifies the interaction that it has changed.
+     *
+     * @param target AJAX request target
+     */
+    public void changed(AjaxRequestTarget target) {
+        target.appendJavaScript(getJsId() + ".changed();");
     }
 
     @Override
