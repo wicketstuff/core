@@ -251,7 +251,7 @@ public class Overlay implements IJavascriptObject, Serializable {
 
     @Override
     public String getJsId() {
-        return "overlay_" + element.getId();
+        return "overlay_" + element.getMarkupId();
     }
 
     @Override
