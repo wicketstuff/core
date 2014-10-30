@@ -28,7 +28,7 @@ public class NotSerializablePage extends SamplePage
 	public NotSerializablePage(PageParameters pageParameters)
 	{
 		super(pageParameters);
-		
+
 		add(new NotSerializablePanel("not"));
 	}
 

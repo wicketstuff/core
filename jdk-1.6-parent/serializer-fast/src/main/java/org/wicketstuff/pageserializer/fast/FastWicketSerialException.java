@@ -21,9 +21,13 @@
 package org.wicketstuff.pageserializer.fast;
 
 
-public class FastWicketSerialException extends RuntimeException {
+public class FastWicketSerialException extends RuntimeException
+{
 
-	public FastWicketSerialException(String message, Exception cause) {
+	private static final long serialVersionUID = -6858547929540591922L;
+
+	public FastWicketSerialException(String message, Exception cause)
+	{
 		super(message, cause);
 	}
 
