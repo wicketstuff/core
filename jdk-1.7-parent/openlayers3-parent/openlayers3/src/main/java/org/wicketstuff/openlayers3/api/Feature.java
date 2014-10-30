@@ -60,6 +60,7 @@ public class Feature extends JavascriptObject implements Serializable {
      *         The style used to render this feature
      */
     public Feature(final Point geometry, final String name, final Style style) {
+        super();
         this.geometry = geometry;
         this.name = name;
         this.style = style;
@@ -220,9 +221,9 @@ public class Feature extends JavascriptObject implements Serializable {
 
         if (getStyle() != null) {
             builder.append(getJsId());
-	    builder.append(".setStyle(new ");
-	    builder.append(getStyle().getJsType());
-	    builder.append("(" + getStyle().renderJs() + "));");
+            builder.append(".setStyle(new ");
+            builder.append(getStyle().getJsType());
+            builder.append("(" + getStyle().renderJs() + "));");
         }
 
         return builder.toString();
@@ -237,8 +238,8 @@ public class Feature extends JavascriptObject implements Serializable {
 
         if (getGeometry() != null) {
             builder.append("'geometry': new ");
-	    builder.append(geometry.getJsType());
-	    builder.append("(" + getGeometry().renderJs() + "),");
+            builder.append(geometry.getJsType());
+            builder.append("(" + getGeometry().renderJs() + "),");
         }
 
         if (getName() != null) {

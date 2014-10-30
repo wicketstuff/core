@@ -28,6 +28,7 @@ public class Coordinate extends JavascriptObject implements Serializable {
      *         The "Y" coordinate
      */
     public Coordinate(final Number valueX, final Number valueY) {
+        super();
         this.valueX = valueX;
         this.valueY = valueY;
     }

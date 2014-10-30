@@ -214,6 +214,11 @@ public class Popover extends Overlay {
         return this;
     }
 
+    @Override
+    public String getJsId() {
+        return "popup_" + element.getId();
+    }
+
     /**
      * Renders the Javascript for the popover.
      *

@@ -39,6 +39,7 @@ public class Point extends JavascriptObject implements Serializable {
      *         Layout for the point
      */
     public Point(final Coordinate coordinate, final Geometry.Layout layout) {
+        super();
         this.coordinate = coordinate;
         this.layout = layout;
     }

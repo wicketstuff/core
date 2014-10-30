@@ -9,6 +9,13 @@ import java.io.Serializable;
  */
 public abstract class Feature extends JavascriptObject implements Serializable {
 
+    /**
+     * Creates a new instance.
+     */
+    public Feature() {
+        super();
+    }
+
     @Override
     public String getJsType() {
         return "ol.format.Feature";

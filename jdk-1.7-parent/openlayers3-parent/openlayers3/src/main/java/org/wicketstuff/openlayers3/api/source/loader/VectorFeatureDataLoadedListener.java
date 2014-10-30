@@ -46,9 +46,12 @@ public abstract class VectorFeatureDataLoadedListener extends AbstractDefaultAja
     /**
      * Creates a new instance.
      *
-     * @param vector The vector layer for which we are monitoring the loading of features.
+     * @param vector
+     *         The vector layer for which we are monitoring the loading of features.
      */
     public VectorFeatureDataLoadedListener(Vector vector) {
+        super();
+        getId();
         this.vector = vector;
     }
 
@@ -57,7 +60,8 @@ public abstract class VectorFeatureDataLoadedListener extends AbstractDefaultAja
      *
      * @param target
      *         Ajax request target
-     * @param features JsonArray with the list of loaded features
+     * @param features
+     *         JsonArray with the list of loaded features
      */
     public abstract void handleDataLoaded(AjaxRequestTarget target, JsonArray features);
 
@@ -95,9 +99,9 @@ public abstract class VectorFeatureDataLoadedListener extends AbstractDefaultAja
         IRequestParameters params = RequestCycle.get().getRequest().getRequestParameters();
         String featuresJson = params.getParameterValue("features").toString();
 
-        JsonArray features= null;
+        JsonArray features = null;
         JsonElement featuresParsed = new JsonParser().parse(featuresJson);
-        if(!(featuresParsed instanceof JsonNull)) {
+        if (!(featuresParsed instanceof JsonNull)) {
             features = featuresParsed.getAsJsonArray();
         }
 

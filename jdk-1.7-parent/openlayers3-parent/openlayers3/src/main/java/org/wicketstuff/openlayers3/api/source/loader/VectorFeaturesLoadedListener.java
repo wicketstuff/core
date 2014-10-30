@@ -40,9 +40,12 @@ public abstract class VectorFeaturesLoadedListener extends AbstractDefaultAjaxBe
     /**
      * Creates a new instance.
      *
-     * @param vector The vector layer for which we are monitoring the loading of features.
+     * @param vector
+     *         The vector layer for which we are monitoring the loading of features.
      */
     public VectorFeaturesLoadedListener(Vector vector) {
+        super();
+        getId();
         this.vector = vector;
     }
 

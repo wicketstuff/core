@@ -28,8 +28,10 @@ public class BingMaps extends Source {
     /**
      * Creates a new instance with the default culture.
      *
-     * @param key Bing Maps API key
-     * @param imagerySet Imagery set type to display
+     * @param key
+     *         Bing Maps API key
+     * @param imagerySet
+     *         Imagery set type to display
      */
     public BingMaps(String key, ImagerySet imagerySet) {
         this(DEFAULT_CULTURE, key, imagerySet);
@@ -38,11 +40,16 @@ public class BingMaps extends Source {
     /**
      * Creates a new instance.
      *
-     * @param culture Culture, used for displaying labels, etc.
-     * @param key The Bing Maps API key
-     * @param imagerySet Imagery set type to display
+     * @param culture
+     *         Culture, used for displaying labels, etc.
+     * @param key
+     *         The Bing Maps API key
+     * @param imagerySet
+     *         Imagery set type to display
      */
     public BingMaps(Culture culture, String key, ImagerySet imagerySet) {
+        super();
+
         this.culture = culture;
         this.key = key;
         this.imagerySet = imagerySet;
@@ -60,7 +67,8 @@ public class BingMaps extends Source {
     /**
      * Sets the culture for this instance.
      *
-     * @param culture New value
+     * @param culture
+     *         New value
      */
     public void setCulture(Culture culture) {
         this.culture = culture;
@@ -69,7 +77,8 @@ public class BingMaps extends Source {
     /**
      * Sets the culture for this instance.
      *
-     * @param culture New value
+     * @param culture
+     *         New value
      * @return This instance
      */
     public BingMaps culture(Culture culture) {
@@ -89,7 +98,8 @@ public class BingMaps extends Source {
     /**
      * Sets the Bing Maps API key for this instance.
      *
-     * @param key New value
+     * @param key
+     *         New value
      */
     public void setKey(String key) {
         this.key = key;
@@ -98,7 +108,8 @@ public class BingMaps extends Source {
     /**
      * Sets the Bing Maps API key for this instance.
      *
-     * @param key New value
+     * @param key
+     *         New value
      * @return This instance
      */
     public BingMaps key(String key) {
@@ -118,7 +129,8 @@ public class BingMaps extends Source {
     /**
      * Sets the imagery set for this instance.
      *
-     * @param imagerySet New value
+     * @param imagerySet
+     *         New value
      */
     public void setImagerySet(ImagerySet imagerySet) {
         this.imagerySet = imagerySet;
@@ -127,7 +139,8 @@ public class BingMaps extends Source {
     /**
      * Sets the imagery set for this instance.
      *
-     * @param imagerySet New value
+     * @param imagerySet
+     *         New value
      * @return This instance
      */
     public BingMaps imagerySet(ImagerySet imagerySet) {

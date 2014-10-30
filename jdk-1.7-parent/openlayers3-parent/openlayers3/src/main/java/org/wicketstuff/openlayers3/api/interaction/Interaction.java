@@ -9,6 +9,13 @@ import java.io.Serializable;
  */
 public abstract class Interaction extends JavascriptObject implements Serializable {
 
+    /**
+     * Creates a new instance.
+     */
+    public Interaction() {
+        super();
+    }
+
     @Override
     public String getJsType() {
         return "ol.interaction.Interaction";

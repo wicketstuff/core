@@ -83,6 +83,8 @@ public class Icon extends Image {
      */
     public Icon(final Coordinate anchor, final Origin anchorOrigin, final Unit anchorXUnits, final Unit anchorYUnits,
                 final Number opacity, final String src, final CorsPolicy crossOrigin) {
+        super();
+
         this.anchor = anchor;
         this.anchorOrigin = anchorOrigin;
         this.anchorXUnits = anchorXUnits;
