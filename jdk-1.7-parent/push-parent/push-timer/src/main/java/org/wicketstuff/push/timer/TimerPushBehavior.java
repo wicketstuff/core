@@ -131,10 +131,8 @@ public class TimerPushBehavior extends AbstractAjaxTimerBehavior
 		if (!isStopped())
 		{
 			// install an on-unload handler
-			response.render(JavaScriptHeaderItem.forScript(
-				"history.navigationMode = 'compatible';", "Opera on-unload support"));
-			response.render(OnEventHeaderItem.forScript("window", "unload", "Wicket.Ajax.get('" +
-				getCallbackUrl().toString() + "&unload=1', function() { }, function() { });"));
+	        response.render(JavaScriptHeaderItem.forScript("history.navigationMode = 'compatible';", "Opera on-unload support"));
+	        response.render(OnEventHeaderItem.forScript("window", "unload", "Wicket.Ajax.get({'u': '" + getCallbackUrl().toString() + "&unload=1'});"));
 		}
 	}
 }
