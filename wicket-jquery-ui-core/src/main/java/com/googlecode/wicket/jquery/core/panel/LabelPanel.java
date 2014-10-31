@@ -41,8 +41,28 @@ public class LabelPanel extends Panel
 	 */
 	public LabelPanel(String id, IModel<?> model)
 	{
-		super(id);
+		super(id, model);
+	}
 
-		this.add(new Label("label", model).setRenderBodyOnly(true));
+	@Override
+	protected void onInitialize()
+	{
+		super.onInitialize();
+
+		this.add(this.newLabel("label", this.getDefaultModel()).setRenderBodyOnly(true));
+	}
+
+	// Factories //
+
+	/**
+	 * Gets a new Label
+	 * 
+	 * @param id the markup id
+	 * @param model the {@link IModel}
+	 * @return the new {@link Label}
+	 */
+	protected Label newLabel(String id, IModel<?> model)
+	{
+		return new Label(id, model);
 	}
 }
