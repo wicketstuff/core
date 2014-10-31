@@ -49,7 +49,7 @@ public class TabbedPanel extends JQueryPanel implements ITabsListener
 	 * @param id the markup id
 	 * @param tabs the list of {@link ITab}<code>s</code>
 	 */
-	public TabbedPanel(String id, List<? extends ITab> tabs)
+	public TabbedPanel(String id, List<ITab> tabs)
 	{
 		this(id, tabs, new Options());
 	}
@@ -61,7 +61,7 @@ public class TabbedPanel extends JQueryPanel implements ITabsListener
 	 * @param tabs the list of {@link ITab}<code>s</code>
 	 * @param options {@link Options}
 	 */
-	public TabbedPanel(String id, List<? extends ITab> tabs, Options options)
+	public TabbedPanel(String id, List<ITab> tabs, Options options)
 	{
 		this(id, Model.ofList(tabs), options);
 	}
@@ -73,12 +73,13 @@ public class TabbedPanel extends JQueryPanel implements ITabsListener
 	 * @param model the list model of {@link ITab}<code>s</code>
 	 * @param options {@link Options}
 	 */
-	public TabbedPanel(String id, IModel<List<? extends ITab>> model, Options options)
+	public TabbedPanel(String id, IModel<List<ITab>> model, Options options)
 	{
 		super(id, model, options);
 	}
 
 	// Properties //
+
 	@SuppressWarnings("unchecked")
 	public List<ITab> getModelObject()
 	{
@@ -136,6 +137,7 @@ public class TabbedPanel extends JQueryPanel implements ITabsListener
 	}
 
 	// Methods //
+	
 	/**
 	 * Helper method. Adds an {@link ITab} to the list of tabs.
 	 *
@@ -148,6 +150,7 @@ public class TabbedPanel extends JQueryPanel implements ITabsListener
 	}
 
 	// Events //
+	
 	@Override
 	protected void onInitialize()
 	{

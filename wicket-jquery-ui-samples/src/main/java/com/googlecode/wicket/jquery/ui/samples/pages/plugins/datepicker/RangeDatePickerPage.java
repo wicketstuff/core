@@ -38,7 +38,7 @@ public class RangeDatePickerPage extends AbstractRangeDatePickerPage
 			{
 				DateRange range = this.getModelObject();
 
-				DateFormat df = new SimpleDateFormat("dd MMM yyyy HH:mm:ss");
+				DateFormat df = new SimpleDateFormat("dd MMM yyyy HH:mm:ss Z");
 				df.setTimeZone(DateUtils.UTC); // important
 
 				this.info(String.format("%s - %s", df.format(range.getStart()), df.format(range.getEnd())));

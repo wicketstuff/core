@@ -148,9 +148,9 @@ public class RangeDatePickerTextField extends FormComponentPanel<DateRange> impl
 			public void onValueChanged(AjaxRequestTarget target)
 			{
 				RangeDatePickerTextField.this.input.modelChanged();
-				target.add(RangeDatePickerTextField.this.input);
-
 				RangeDatePickerTextField.this.onValueChanged(target);
+
+				target.add(RangeDatePickerTextField.this.input);
 			}
 		};
 
@@ -176,6 +176,19 @@ public class RangeDatePickerTextField extends FormComponentPanel<DateRange> impl
 		df.setTimeZone(DateUtils.UTC);
 
 		return df;
+	}
+
+	/**
+	 * Gets a new DateRange object<br/>
+	 * Called by the converter to get a new {@link DateRange} object from the input text.<br/>
+	 * 
+	 * @param start the start date
+	 * @param end the end date
+	 * @return a new {@link DateRange} object, starting at 0:00:00.000 and ending at 23:59:59.999 by default
+	 */
+	protected DateRange newDateRange(Date start, Date end)
+	{
+		return DateRange.of(start.getTime(), end.getTime());
 	}
 
 	/**
@@ -218,7 +231,7 @@ public class RangeDatePickerTextField extends FormComponentPanel<DateRange> impl
 
 				try
 				{
-					return new DateRange(df.parse(dates[0]), df.parse(dates[1]));
+					return RangeDatePickerTextField.this.newDateRange(df.parse(dates[0]), df.parse(dates[1]));
 				}
 				catch (ParseException e)
 				{
