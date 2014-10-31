@@ -93,6 +93,8 @@ public class WysiwygEditor extends FormComponentPanel<String> implements IJQuery
 		{
 			toolbar.attachToEditor(this.container);
 		}
+
+		this.setEscapeModelStrings(false); // fixes #121
 	}
 
 	// Properties //
