@@ -20,15 +20,15 @@ import java.util.List;
 
 import org.apache.wicket.markup.html.form.TextField;
 import org.apache.wicket.model.IModel;
-import org.apache.wicket.model.Model;
+import org.apache.wicket.model.util.ListModel;
 
 import com.googlecode.wicket.jquery.core.IJQueryWidget;
 import com.googlecode.wicket.jquery.core.JQueryBehavior;
 import com.googlecode.wicket.jquery.core.Options;
 import com.googlecode.wicket.jquery.core.template.IJQueryTemplate;
 import com.googlecode.wicket.jquery.core.utils.RendererUtils;
-import com.googlecode.wicket.kendo.ui.KendoUIBehavior;
 import com.googlecode.wicket.kendo.ui.KendoTemplateBehavior;
+import com.googlecode.wicket.kendo.ui.KendoUIBehavior;
 import com.googlecode.wicket.kendo.ui.renderer.ChoiceRenderer;
 
 /**
@@ -60,7 +60,7 @@ public class ComboBox<T> extends TextField<String> implements IJQueryWidget
 	 */
 	public ComboBox(String id, List<T> choices)
 	{
-		this(id, Model.ofList(choices), new ChoiceRenderer<T>());
+		this(id, new ListModel<T>(choices), new ChoiceRenderer<T>());
 	}
 
 	/**
@@ -72,7 +72,7 @@ public class ComboBox<T> extends TextField<String> implements IJQueryWidget
 	 */
 	public ComboBox(String id, List<T> choices, ChoiceRenderer<? super T> renderer)
 	{
-		this(id, Model.ofList(choices), renderer);
+		this(id, new ListModel<T>(choices), renderer);
 	}
 
 	/**
@@ -111,7 +111,7 @@ public class ComboBox<T> extends TextField<String> implements IJQueryWidget
 	 */
 	public ComboBox(String id, IModel<String> model, List<T> choices)
 	{
-		this(id, model, Model.ofList(choices), new ChoiceRenderer<T>());
+		this(id, model, new ListModel<T>(choices), new ChoiceRenderer<T>());
 	}
 
 	/**
@@ -124,7 +124,7 @@ public class ComboBox<T> extends TextField<String> implements IJQueryWidget
 	 */
 	public ComboBox(String id, IModel<String> model, List<T> choices, ChoiceRenderer<? super T> renderer)
 	{
-		this(id, model, Model.ofList(choices), renderer);
+		this(id, model, new ListModel<T>(choices), renderer);
 	}
 
 	/**

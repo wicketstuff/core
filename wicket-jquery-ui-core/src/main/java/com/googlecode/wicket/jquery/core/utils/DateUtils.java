@@ -34,6 +34,41 @@ public class DateUtils
 	public static final TimeZone UTC = TimeZone.getTimeZone("UTC");
 
 	/**
+	 * Converts a local date to a UTC date
+	 * 
+	 * @param date the date to convert
+	 * @return the UTC date
+	 */
+	public static long utc(Date date)
+	{
+		return DateUtils.utc(date.getTime());
+	}
+
+	/**
+	 * Converts a local date to a UTC date
+	 * 
+	 * @param date the date to convert
+	 * @return the UTC date
+	 */
+	public static long utc(long date)
+	{
+		return date - DateUtils.offset(date);
+	}
+
+	/**
+	 * Gets the current timezone offset
+	 * 
+	 * @param time
+	 * 
+	 * @return the timezone offset
+	 * @see TimeZone#getRawOffset()
+	 */
+	public static long offset(long time)
+	{
+		return TimeZone.getDefault().getOffset(time);
+	}
+
+	/**
 	 * Converts a date to its ISO8601/javascript representation. ie: 2009-11-05T13:15:30+0200
 	 *
 	 * @param date the date to convert
