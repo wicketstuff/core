@@ -70,8 +70,8 @@ public class FastSerializerTest
 
 		Object object = pageSerializer.deserialize(data);
 		Assert.assertTrue(
-			"The deserialized page must be of type HomePage. Type: " + object.getClass(),
-			object instanceof HomePage);
+				"The deserialized page must be of type HomePage. Type: " + object.getClass(),
+				object instanceof HomePage);
 
 	}
 
@@ -80,7 +80,7 @@ public class FastSerializerTest
 	{
 		// start and render the test page
 		SamplePage page = tester.startPage(SamplePage.class,
-			new PageParameters().add("Test", "asString"));
+				new PageParameters().add("Test", "asString"));
 
 		// assert rendered page class
 		tester.assertRenderedPage(SamplePage.class);
@@ -92,8 +92,8 @@ public class FastSerializerTest
 
 		Object object = pageSerializer.deserialize(data);
 		Assert.assertTrue(
-			"The deserialized page must be of type HomePage. Type: " + object.getClass(),
-			object instanceof SamplePage);
+				"The deserialized page must be of type HomePage. Type: " + object.getClass(),
+				object instanceof SamplePage);
 
 		SamplePage samplePage = (SamplePage)object;
 
@@ -102,13 +102,13 @@ public class FastSerializerTest
 		// assert rendered page class
 		tester.assertRenderedPage(SamplePage.class);
 	}
-	
-	@Test(expected=FastWicketSerialException.class)
+
+	@Test(expected = FastWicketSerialException.class)
 	public void notSerializableComponentThrowsException()
 	{
-		
+
 		NotSerializablePage page = tester.startPage(NotSerializablePage.class,
-			new PageParameters().add("Test", "asString"));
+				new PageParameters().add("Test", "asString"));
 
 		// assert rendered page class
 		tester.assertRenderedPage(NotSerializablePage.class);
@@ -122,8 +122,8 @@ public class FastSerializerTest
 	{
 		ISerializer pageSerializer = tester.getApplication().getFrameworkSettings().getSerializer();
 		Assert.assertTrue(
-			"The configured IObjectSerializer is not instance of FastSerializer! Type: " +
-				pageSerializer.getClass(), pageSerializer instanceof FastWicketSerializer);
+				"The configured IObjectSerializer is not instance of FastSerializer! Type: "
+						+ pageSerializer.getClass(), pageSerializer instanceof FastWicketSerializer);
 		return pageSerializer;
 	}
 }
