@@ -74,7 +74,7 @@ public class SingleResourceSchedulerPage extends AbstractSchedulerPage
 
 	static SchedulerModel newSchedulerModel()
 	{
-		//ISchedulerVisitor
+		// ISchedulerVisitor
 		return new SchedulerModel() {
 
 			private static final long serialVersionUID = 1L;

@@ -212,6 +212,12 @@ public class Scheduler extends JQueryContainer implements ISchedulerListener
 	}
 
 	@Override
+	public void onNavigate(AjaxRequestTarget target, SchedulerViewType view)
+	{
+		this.refresh(target);
+	}
+
+	@Override
 	public void onCreate(AjaxRequestTarget target, SchedulerEvent event)
 	{
 		// noop
@@ -267,6 +273,12 @@ public class Scheduler extends JQueryContainer implements ISchedulerListener
 			public void onEdit(AjaxRequestTarget target, SchedulerEvent event, SchedulerViewType view)
 			{
 				Scheduler.this.onEdit(target, event, view);
+			}
+
+			@Override
+			public void onNavigate(AjaxRequestTarget target, SchedulerViewType view)
+			{
+				Scheduler.this.onNavigate(target, view);
 			}
 
 			@Override

@@ -32,8 +32,9 @@ public interface ISchedulerListener
 	 * Indicates whether a edit-event is available.<br/>
 	 * If true, the {@link #onEdit(AjaxRequestTarget, SchedulerEvent, SchedulerViewType)} event will be triggered by clicking an event or a free event slot.<br/>
 	 *
-	 * <p>This can be useful to implement a custom dialog. If false the internal event handling will proceed and opens the Scheduler's dialog
-	 * (see {@link #onUpdate(AjaxRequestTarget, SchedulerEvent)} to process the dialog results).</p>
+	 * <p>
+	 * This can be useful to implement a custom dialog. If false the internal event handling will proceed and opens the Scheduler's dialog (see {@link #onUpdate(AjaxRequestTarget, SchedulerEvent)} to process the dialog results).
+	 * </p>
 	 *
 	 * <p>
 	 * <b>Note:</b> <tt>true</tt> will prevent the internal event handling (by using e.preventDefault()) to avoid conflicts with Scheduler's dialog.<br/>
@@ -53,6 +54,14 @@ public interface ISchedulerListener
 	 * @see {@link SchedulerEvent#isNew(SchedulerEvent)}
 	 */
 	void onEdit(AjaxRequestTarget target, SchedulerEvent event, SchedulerViewType view);
+
+	/**
+	 * Triggered when the user changes the selected date, or view of the scheduler
+	 * 
+	 * @param target the {@link AjaxRequestTarget}
+	 * @param view the {@link SchedulerViewType}
+	 */
+	void onNavigate(AjaxRequestTarget target, SchedulerViewType view);
 
 	/**
 	 * Triggered when a {@link SchedulerEvent} is created (or modified) through the Scheduler's dialog

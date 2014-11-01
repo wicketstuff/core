@@ -55,9 +55,11 @@ public abstract class SchedulerBehavior extends KendoUIBehavior implements IJQue
 	private final SchedulerDataSource dataSource;
 
 	private JQueryAjaxBehavior onEditBehavior = null;
-	private JQueryAjaxBehavior onCreateBehavior = null;
-	private JQueryAjaxBehavior onUpdateBehavior = null;
-	private JQueryAjaxBehavior onDeleteBehavior = null;
+	private JQueryAjaxBehavior onNavigateBehavior;
+
+	private JQueryAjaxBehavior onCreateBehavior;
+	private JQueryAjaxBehavior onUpdateBehavior;
+	private JQueryAjaxBehavior onDeleteBehavior;
 
 	/**
 	 * Constructor
@@ -95,6 +97,8 @@ public abstract class SchedulerBehavior extends KendoUIBehavior implements IJQue
 		{
 			component.add(this.onEditBehavior = this.newOnEditBehavior());
 		}
+
+		component.add(this.onNavigateBehavior = this.newOnNavigateBehavior());
 
 		component.add(this.onCreateBehavior = this.newOnCreateBehavior());
 		component.add(this.onUpdateBehavior = this.newOnUpdateBehavior());
@@ -138,7 +142,7 @@ public abstract class SchedulerBehavior extends KendoUIBehavior implements IJQue
 		String end = String.format("calculateKendoSchedulerViewEndPeriod(%s.view().endDate()).getTime()", widget);
 
 		return "function(options) {" // lf
-				+ "	jQuery.ajax({" // lf
+				+ " jQuery.ajax({" // lf
 				+ "		url: '" + this.getDataSourceUrl() + "'," // lf
 				+ "		data: { start: " + start + ",  end: " + end + "}, " // lf
 				+ "		dataType: 'json'," // lf
@@ -159,15 +163,8 @@ public abstract class SchedulerBehavior extends KendoUIBehavior implements IJQue
 	{
 		super.onConfigure(component);
 
-		// data-source //
-		this.dataSource.setTransportRead(this.getReadCallbackFunction());
-		this.dataSource.setTransportCreate(this.onCreateBehavior.getCallbackFunction());
-		this.dataSource.setTransportUpdate(this.onUpdateBehavior.getCallbackFunction());
-		this.dataSource.setTransportDelete(this.onDeleteBehavior.getCallbackFunction());
-
 		// options //
 		this.setOption("autoBind", true);
-		// this.setOption("autoSync", true); // client side, probably useless
 
 		// events //
 		if (this.onEditBehavior != null)
@@ -175,8 +172,15 @@ public abstract class SchedulerBehavior extends KendoUIBehavior implements IJQue
 			this.setOption("edit", this.onEditBehavior.getCallbackFunction());
 		}
 
-		// data source //
-		this.setOption("dataSource", dataSource.getName());
+		this.setOption("navigate", this.onNavigateBehavior.getCallbackFunction());
+
+		// data-source //
+		this.setOption("dataSource", this.dataSource.getName());
+
+		this.dataSource.setTransportRead(this.getReadCallbackFunction());
+		this.dataSource.setTransportCreate(this.onCreateBehavior.getCallbackFunction());
+		this.dataSource.setTransportUpdate(this.onUpdateBehavior.getCallbackFunction());
+		this.dataSource.setTransportDelete(this.onDeleteBehavior.getCallbackFunction());
 
 		// schema //
 		// this.setOption("schema", new Options("timezone", Options.asString("Etc/UTC")));
@@ -188,6 +192,11 @@ public abstract class SchedulerBehavior extends KendoUIBehavior implements IJQue
 	@Override
 	public void onAjax(AjaxRequestTarget target, JQueryEvent event)
 	{
+		if (event instanceof NavigateEvent)
+		{
+			this.onNavigate(target, ((NavigateEvent) event).getView());
+		}
+
 		if (event instanceof SchedulerPayload)
 		{
 			SchedulerPayload payload = (SchedulerPayload) event;
@@ -216,6 +225,11 @@ public abstract class SchedulerBehavior extends KendoUIBehavior implements IJQue
 
 	// Factories //
 
+	/**
+	 * Gets the ajax behavior that will be triggered when when an event is edited
+	 *
+	 * @return the {@link JQueryAjaxBehavior}
+	 */
 	protected JQueryAjaxBehavior newOnEditBehavior()
 	{
 		return new JQueryAjaxBehavior(this) {
@@ -265,6 +279,31 @@ public abstract class SchedulerBehavior extends KendoUIBehavior implements IJQue
 			protected JQueryEvent newEvent()
 			{
 				return new EditEvent(SchedulerBehavior.this.getResourceListModel());
+			}
+		};
+	}
+
+	/**
+	 * Gets the ajax behavior that will be triggered when is navigating in the scheduler
+	 *
+	 * @return the {@link JQueryAjaxBehavior}
+	 */
+	protected JQueryAjaxBehavior newOnNavigateBehavior()
+	{
+		return new JQueryAjaxBehavior(this) {
+
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			protected CallbackParameter[] getCallbackParameters()
+			{
+				return new CallbackParameter[] { CallbackParameter.context("e"), CallbackParameter.resolved("view", "e.sender.view().name") };
+			}
+
+			@Override
+			protected JQueryEvent newEvent()
+			{
+				return new NavigateEvent();
 			}
 		};
 	}
@@ -374,6 +413,26 @@ public abstract class SchedulerBehavior extends KendoUIBehavior implements IJQue
 		public CharSequence getCallbackFunctionBody(CallbackParameter... extraParameters)
 		{
 			return super.getCallbackFunctionBody(extraParameters) + " e.success();";
+		}
+	}
+
+	protected static class NavigateEvent extends JQueryEvent
+	{
+		private SchedulerViewType view = null;
+
+		public NavigateEvent()
+		{
+			String view = RequestCycleUtils.getQueryParameterValue("view").toString();
+
+			if (view != null)
+			{
+				this.view = SchedulerViewType.get(view);
+			}
+		}
+
+		public SchedulerViewType getView()
+		{
+			return this.view;
 		}
 	}
 
