@@ -167,6 +167,12 @@ public abstract class AbstractColumn implements IColumn
 	}
 
 	@Override
+	public String getTemplate()
+	{
+		return null;
+	}
+
+	@Override
 	public String getFilterable()
 	{
 		return null;
@@ -237,6 +243,12 @@ public abstract class AbstractColumn implements IColumn
 		{
 			builder.append(", ");
 			builder.append(Options.QUOTE).append("format").append(Options.QUOTE).append(": ").append(Options.QUOTE).append(this.getFormat()).append(Options.QUOTE);
+		}
+
+		if (this.getTemplate() != null)
+		{
+			builder.append(", ");
+			builder.append(Options.QUOTE).append("template").append(Options.QUOTE).append(": ").append(this.getTemplate());
 		}
 
 		if (this.getGroupHeaderTemplate() != null)

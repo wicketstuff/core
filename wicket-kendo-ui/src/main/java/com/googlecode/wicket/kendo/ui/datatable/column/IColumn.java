@@ -69,6 +69,15 @@ public interface IColumn extends IClusterable
 	String getFormat();
 
 	/**
+	 * The template or javascript function which renders the column content.<br/>
+	 * If the template is a string (not a function), it should itself be enclosed into double quotes, ie:<br/>
+	 * <code>return Options.asString("&lt;a href='?id=#:data.id#'&gt;#:data.id#&lt;/a&gt;");</code>
+	 *
+	 * @return the template or <tt>null</tt> if it does not apply
+	 */
+	String getTemplate();
+
+	/**
 	 * If set to true a filter menu will be displayed for this column when filtering is enabled.<br/>
 	 * If set to false the filter menu will not be displayed.<br/>
 	 * By default a filter menu is displayed for all columns when filtering is enabled via the filterable option.
