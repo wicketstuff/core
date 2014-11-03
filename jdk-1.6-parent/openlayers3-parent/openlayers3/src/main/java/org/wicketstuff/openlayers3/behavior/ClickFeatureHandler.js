@@ -46,7 +46,7 @@ map_${componentId}.on('click', function(event) {
 
     if(feature) {
 
-      values = convertFeature(feature);
+      var values = convertFeature(feature);
       clickFeatureHandler_${componentId}_${clickHandlerId}(feature.get('id'), values["geometry"], JSON.stringify(values));
     } else {
 
