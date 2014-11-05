@@ -256,14 +256,6 @@
 		<module>jdk-1.8-parent</module>
 	</modules>
 
-	<dependencies>
-		<dependency>
-			<groupId>org.apache.wicket</groupId>
-			<artifactId>wicket</artifactId>
-			<type>pom</type>
-		</dependency>
-	</dependencies>
-
 	<dependencyManagement>
 		<dependencies>
 			<!-- In order for this project to work, all child projects need to use
