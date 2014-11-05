@@ -34,7 +34,7 @@ public final class AjaxSettings implements Serializable {
 	/** whether or not to use traditional parameter encoding. */
 	private Boolean traditional;
 
-	void toJson(JSONWriter writer) throws JSONException {
+	public void toJson(JSONWriter writer) throws JSONException {
 		writer.object();
 		Json.writeFunction(writer, "data", data);
 		Json.writeObject(writer, "dataType", dataType);
