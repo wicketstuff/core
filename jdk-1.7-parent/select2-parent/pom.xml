@@ -9,7 +9,7 @@
 	<artifactId>wicketstuff-select2-parent</artifactId>
 	<packaging>pom</packaging>
 	<name>Wicketstuff-Select2 Parent</name>
-	<description>Library for integrating Apache Wicket with CDI</description>
+	<description>Library for integrating Apache Wicket with Select2 JavaScript widget</description>
 
 	<modules>
 		<module>select2</module>
