@@ -20,15 +20,15 @@ import java.util.List;
 
 import org.apache.wicket.markup.html.form.TextField;
 import org.apache.wicket.model.IModel;
-import org.apache.wicket.model.Model;
+import org.apache.wicket.model.util.ListModel;
 
 import com.googlecode.wicket.jquery.core.IJQueryWidget;
 import com.googlecode.wicket.jquery.core.JQueryBehavior;
 import com.googlecode.wicket.jquery.core.Options;
 import com.googlecode.wicket.jquery.core.template.IJQueryTemplate;
 import com.googlecode.wicket.jquery.core.utils.RendererUtils;
-import com.googlecode.wicket.kendo.ui.KendoUIBehavior;
 import com.googlecode.wicket.kendo.ui.KendoTemplateBehavior;
+import com.googlecode.wicket.kendo.ui.KendoUIBehavior;
 import com.googlecode.wicket.kendo.ui.renderer.ChoiceRenderer;
 
 /**
@@ -44,7 +44,7 @@ public class ComboBox<T> extends TextField<String> implements IJQueryWidget
 	private static final long serialVersionUID = 1L;
 	private static final String METHOD = "kendoComboBox";
 
-	private final IModel<List<? extends T>> choices;
+	private final IModel<List<T>> choices;
 	private final ChoiceRenderer<? super T> renderer;
 	private final IJQueryTemplate template;
 	private KendoTemplateBehavior templateBehavior = null;
@@ -58,9 +58,9 @@ public class ComboBox<T> extends TextField<String> implements IJQueryWidget
 	 * @param id the markup id
 	 * @param choices the list of choices
 	 */
-	public ComboBox(String id, List<? extends T> choices)
+	public ComboBox(String id, List<T> choices)
 	{
-		this(id, Model.ofList(choices), new ChoiceRenderer<T>());
+		this(id, new ListModel<T>(choices), new ChoiceRenderer<T>());
 	}
 
 	/**
@@ -70,9 +70,9 @@ public class ComboBox<T> extends TextField<String> implements IJQueryWidget
 	 * @param choices the list of choices
 	 * @param renderer the renderer to be used, so the renderer item text and its values can be dissociated
 	 */
-	public ComboBox(String id, List<? extends T> choices, ChoiceRenderer<? super T> renderer)
+	public ComboBox(String id, List<T> choices, ChoiceRenderer<? super T> renderer)
 	{
-		this(id, Model.ofList(choices), renderer);
+		this(id, new ListModel<T>(choices), renderer);
 	}
 
 	/**
@@ -81,7 +81,7 @@ public class ComboBox<T> extends TextField<String> implements IJQueryWidget
 	 * @param id the markup id
 	 * @param choices the list model of choices
 	 */
-	public ComboBox(String id, IModel<List<? extends T>> choices)
+	public ComboBox(String id, IModel<List<T>> choices)
 	{
 		this(id, choices, new ChoiceRenderer<T>());
 	}
@@ -93,7 +93,7 @@ public class ComboBox<T> extends TextField<String> implements IJQueryWidget
 	 * @param choices the list model of choices
 	 * @param renderer the renderer to be used, so the renderer item text and its values can be dissociated
 	 */
-	public ComboBox(String id, IModel<List<? extends T>> choices, ChoiceRenderer<? super T> renderer)
+	public ComboBox(String id, IModel<List<T>> choices, ChoiceRenderer<? super T> renderer)
 	{
 		super(id);
 
@@ -109,9 +109,9 @@ public class ComboBox<T> extends TextField<String> implements IJQueryWidget
 	 * @param model the {@link IModel}
 	 * @param choices the list of choices
 	 */
-	public ComboBox(String id, IModel<String> model, List<? extends T> choices)
+	public ComboBox(String id, IModel<String> model, List<T> choices)
 	{
-		this(id, model, Model.ofList(choices), new ChoiceRenderer<T>());
+		this(id, model, new ListModel<T>(choices), new ChoiceRenderer<T>());
 	}
 
 	/**
@@ -122,9 +122,9 @@ public class ComboBox<T> extends TextField<String> implements IJQueryWidget
 	 * @param choices the list model of choices
 	 * @param renderer the renderer to be used, so the renderer item text and its values can be dissociated
 	 */
-	public ComboBox(String id, IModel<String> model, List<? extends T> choices, ChoiceRenderer<? super T> renderer)
+	public ComboBox(String id, IModel<String> model, List<T> choices, ChoiceRenderer<? super T> renderer)
 	{
-		this(id, model, Model.ofList(choices), renderer);
+		this(id, model, new ListModel<T>(choices), renderer);
 	}
 
 	/**
@@ -134,7 +134,7 @@ public class ComboBox<T> extends TextField<String> implements IJQueryWidget
 	 * @param model the {@link IModel}
 	 * @param choices the list model of choices
 	 */
-	public ComboBox(String id, IModel<String> model, IModel<List<? extends T>> choices)
+	public ComboBox(String id, IModel<String> model, IModel<List<T>> choices)
 	{
 		this(id, model, choices, new ChoiceRenderer<T>());
 	}
@@ -147,7 +147,7 @@ public class ComboBox<T> extends TextField<String> implements IJQueryWidget
 	 * @param choices the list model of choices
 	 * @param renderer the renderer to be used, so the renderer item text and its values can be dissociated
 	 */
-	public ComboBox(String id, IModel<String> model, IModel<List<? extends T>> choices, ChoiceRenderer<? super T> renderer)
+	public ComboBox(String id, IModel<String> model, IModel<List<T>> choices, ChoiceRenderer<? super T> renderer)
 	{
 		super(id, model);
 
@@ -240,7 +240,7 @@ public class ComboBox<T> extends TextField<String> implements IJQueryWidget
 	{
 		StringBuilder builder = new StringBuilder("[");
 
-		List<? extends T> list = this.choices.getObject();
+		List<T> list = this.choices.getObject();
 
 		if (list != null)
 		{

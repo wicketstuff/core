@@ -46,6 +46,7 @@ public abstract class AbstractSlider<T> extends FormComponentPanel<T> implements
 
 	/**
 	 * Constructor
+	 *
 	 * @param id the markup id
 	 */
 	public AbstractSlider(String id)
@@ -55,6 +56,7 @@ public abstract class AbstractSlider<T> extends FormComponentPanel<T> implements
 
 	/**
 	 * Constructor
+	 *
 	 * @param id the markup id
 	 * @param model the {@link IModel}
 	 */
@@ -65,6 +67,7 @@ public abstract class AbstractSlider<T> extends FormComponentPanel<T> implements
 
 	/**
 	 * Constructor
+	 *
 	 * @param id the markup id
 	 * @param model the {@link IModel}
 	 * @param label {@link Label} on which the current slide value will be displayed
@@ -114,6 +117,7 @@ public abstract class AbstractSlider<T> extends FormComponentPanel<T> implements
 	/**
 	 * Sets the label's markupId on which the current slide value will be displayed.<br/>
 	 * <b>Warning:</b> It cannot be set/changed once the Component has been initialized.
+	 *
 	 * @param markupId the label's markupId
 	 * @return this
 	 */
@@ -129,10 +133,9 @@ public abstract class AbstractSlider<T> extends FormComponentPanel<T> implements
 	{
 		super.onInitialize();
 
-		this.add(this.newInputFragment("model")); //cannot be in ctor as the model may not have been initialized before.
-		this.add(JQueryWidget.newWidgetBehavior(this, this.label)); //cannot be in ctor as the markupId may be set manually afterward
+		this.add(this.newInputFragment("model")); // cannot be in ctor as the model may not have been initialized before.
+		this.add(JQueryWidget.newWidgetBehavior(this, this.label)); // cannot be in ctor as the markupId may be set manually afterward
 	}
-
 
 	@Override
 	public void onConfigure(JQueryBehavior behavior)
@@ -157,6 +160,7 @@ public abstract class AbstractSlider<T> extends FormComponentPanel<T> implements
 	/**
 	 * Gets a new {@link Fragment} containing the input<br/>
 	 * Overridden methods should provide a {@link Fragment} containing input(s) when no input(s) has been specified in implementation constructors.
+	 *
 	 * @param id the markup-id
 	 * @return the empty-fragment by default
 	 */
@@ -168,6 +172,7 @@ public abstract class AbstractSlider<T> extends FormComponentPanel<T> implements
 	// Options //
 	/**
 	 * Sets the min value
+	 *
 	 * @param <W> the widget type
 	 * @param min
 	 * @return this
@@ -181,6 +186,7 @@ public abstract class AbstractSlider<T> extends FormComponentPanel<T> implements
 
 	/**
 	 * Sets the max value
+	 *
 	 * @param <W> the widget type
 	 * @param max
 	 * @return this
@@ -189,11 +195,12 @@ public abstract class AbstractSlider<T> extends FormComponentPanel<T> implements
 	public <W extends AbstractSlider<T>> W setMax(Integer max)
 	{
 		this.options.set("max", max);
-		return (W)this;
+		return (W) this;
 	}
 
 	/**
 	 * Sets the step value
+	 *
 	 * @param <W> the widget type
 	 * @param step
 	 * @return this
@@ -202,11 +209,12 @@ public abstract class AbstractSlider<T> extends FormComponentPanel<T> implements
 	public <W extends AbstractSlider<T>> W setStep(Integer step)
 	{
 		this.options.set("step", step);
-		return (W)this;
+		return (W) this;
 	}
 
 	/**
 	 * Sets the {@link Orientation}
+	 *
 	 * @param <W> the widget type
 	 * @param orientation
 	 * @return this
@@ -215,7 +223,7 @@ public abstract class AbstractSlider<T> extends FormComponentPanel<T> implements
 	public <W extends AbstractSlider<T>> W setOrientation(Orientation orientation)
 	{
 		this.options.set("orientation", orientation);
-		return (W)this;
+		return (W) this;
 	}
 
 	/**

@@ -11,7 +11,7 @@
 	</parent>
 
 	<artifactId>wicket-jquery-ui-core</artifactId>
-	<packaging>jar</packaging>
+	<packaging>bundle</packaging>
 
     <properties>
 	    <bundle.namespace>com.googlecode.wicket.jquery.core</bundle.namespace>

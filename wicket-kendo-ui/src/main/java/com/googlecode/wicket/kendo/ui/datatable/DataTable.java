@@ -340,7 +340,7 @@ public class DataTable<T> extends WebComponent implements IJQueryWidget, IDataTa
 	}
 
 	/**
-	 * Gets a new {@link JQueryAjaxBehavior} that will be called by the corresponding table's button.
+	 * Gets a new {@link JQueryAjaxBehavior} that will be called by the corresponding table's button.<br/>
 	 * This method may be overridden to provide additional behaviors
 	 *
 	 * @param source the {@link IJQueryAjaxAware}

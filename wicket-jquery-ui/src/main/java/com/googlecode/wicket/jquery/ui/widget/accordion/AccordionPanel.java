@@ -26,6 +26,7 @@ import org.apache.wicket.markup.html.list.Loop;
 import org.apache.wicket.markup.html.list.LoopItem;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
+import org.apache.wicket.model.util.ListModel;
 
 import com.googlecode.wicket.jquery.core.JQueryPanel;
 import com.googlecode.wicket.jquery.core.Options;
@@ -49,7 +50,7 @@ public class AccordionPanel extends JQueryPanel implements IAccordionListener
 	 * @param id the markup id
 	 * @param tabs the list of {@link ITab}<code>s</code>
 	 */
-	public AccordionPanel(String id, List<? extends ITab> tabs)
+	public AccordionPanel(String id, List<ITab> tabs)
 	{
 		this(id, tabs, new Options());
 	}
@@ -61,9 +62,9 @@ public class AccordionPanel extends JQueryPanel implements IAccordionListener
 	 * @param tabs the list of {@link ITab}<code>s</code>
 	 * @param options {@link Options}
 	 */
-	public AccordionPanel(String id, List<? extends ITab> tabs, Options options)
+	public AccordionPanel(String id, List<ITab> tabs, Options options)
 	{
-		this(id, Model.ofList(tabs), options);
+		this(id, new ListModel<ITab>(tabs), options);
 	}
 
 	/**
@@ -73,7 +74,7 @@ public class AccordionPanel extends JQueryPanel implements IAccordionListener
 	 * @param model the list model of {@link ITab}<code>s</code>
 	 * @param options {@link Options}
 	 */
-	public AccordionPanel(String id, IModel<List<? extends ITab>> model, Options options)
+	public AccordionPanel(String id, IModel<List<ITab>> model, Options options)
 	{
 		super(id, model, options);
 	}

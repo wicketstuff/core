@@ -31,7 +31,9 @@ public class RangeDatePickerTextFieldPage extends AbstractRangeDatePickerPage
 		form.add(feedback.setOutputMarkupId(true));
 
 		// RangeDatePicker //
-		final IModel<DateRange> model = Model.of(new DateRange(new Date(new Date().getTime() - Duration.ONE_DAY.getMilliseconds() * 3), new Date()));
+		long threeDays = Duration.ONE_DAY.getMilliseconds() * 3;
+		long threeDaysAgo = new Date().getTime() - threeDays;
+		final IModel<DateRange> model = Model.of(DateRange.of(new Date(threeDaysAgo), new Date()));
 
 		final RangeDatePickerTextField datepicker = new RangeDatePickerTextField("datepicker", model);
 		form.add(datepicker);
@@ -48,7 +50,7 @@ public class RangeDatePickerTextFieldPage extends AbstractRangeDatePickerPage
 
 				if (range != null)
 				{
-					DateFormat df = new SimpleDateFormat("dd MMM yyyy");
+					DateFormat df = new SimpleDateFormat("dd MMM yyyy HH:mm:ss Z");
 					df.setTimeZone(DateUtils.UTC); // important
 
 					this.info(String.format("%s - %s", df.format(range.getStart()), df.format(range.getEnd())));

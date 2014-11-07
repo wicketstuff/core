@@ -126,7 +126,7 @@ public class CSVDataExporter implements IDataExporter
 	@Override
 	public String getContentType()
 	{
-		return this.contentType + "; charset=" + CSVDataExporter.characterSet + "; header=" + (this.exportHeadersEnabled ? "present" : "absent");
+		return String.format("%s; charset=%s; header=%s", this.contentType, CSVDataExporter.characterSet, this.exportHeadersEnabled ? "present" : "absent");
 	}
 
 	/**

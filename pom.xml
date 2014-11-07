@@ -43,7 +43,7 @@
 	</scm>
 
 	<properties>
-		<wicket.version>6.17.0</wicket.version>
+		<wicket.version>6.18.0</wicket.version>
 		<junit.version>4.11</junit.version>
 		<jetty.version>8.1.15.v20140411</jetty.version>
 	</properties>
@@ -58,7 +58,7 @@
 		</repository>
 		<repository>
 			<id>Wicket Nexus Staging</id>
-			<url>https://repository.apache.org/content/repositories/orgapachewicket-1027/</url>
+			<url>https://repository.apache.org/content/repositories/orgapachewicket-1030/</url>
 		</repository>
 	</repositories>
 
@@ -112,6 +112,7 @@
 				<plugin>
 					<groupId>org.apache.felix</groupId>
 					<artifactId>maven-bundle-plugin</artifactId>
+					<extensions>true</extensions>
 					<version>2.4.0</version>
 					<executions>
 						<execution>

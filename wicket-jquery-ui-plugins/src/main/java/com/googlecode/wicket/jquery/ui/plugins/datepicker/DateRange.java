@@ -39,41 +39,89 @@ public class DateRange implements IClusterable
 	public static final String PATTERN = "yyyy-MM-dd'T'HH:mm:ss";
 
 	/**
-	 * Gets a default {@link DateRange} with start-date and end-date are set to today (UTC).
+	 * Creates a new {@link DateRange}, UTC time, starting at 0:00:00.000 and ending at 23:59:59.999<br/>
+	 * <b>Caution:</b> supplied dates should be local to the system (ie: <code>new Date()</code>).
+	 * 
+	 * @param start the local start date
+	 * @param end the local end date
+	 * @return a new {@link DateRange}
+	 */
+	public static DateRange of(Date start, Date end)
+	{
+		return DateRange.of(DateUtils.utc(start), DateUtils.utc(end));
+	}
+
+	/**
+	 * Creates a new {@link DateRange}, starting at 0:00:00.000 and ending at 23:59:59.999<br/>
+	 * <b>Caution:</b> supplied dates should be UTC.
+	 * 
+	 * @param start the UTC start date
+	 * @param end the UTC end date
+	 * @return a new {@link DateRange}
+	 */
+	public static DateRange of(long start, long end)
+	{
+		Calendar s = Calendar.getInstance(DateUtils.UTC);
+		s.setTimeInMillis(start); // UTC
+		s.set(Calendar.HOUR_OF_DAY, 0);
+		s.set(Calendar.MINUTE, 0);
+		s.set(Calendar.SECOND, 0);
+		s.set(Calendar.MILLISECOND, 0);
+
+		Calendar e = Calendar.getInstance(DateUtils.UTC);
+		e.setTimeInMillis(end); // UTC
+		e.set(Calendar.HOUR_OF_DAY, 23);
+		e.set(Calendar.MINUTE, 59);
+		e.set(Calendar.SECOND, 59);
+		e.set(Calendar.MILLISECOND, 999);
+
+		return new DateRange(s.getTimeInMillis(), e.getTimeInMillis());
+	}
+
+	/**
+	 * Gets a default {@link DateRange} from today 0:00:00.000 to 23:59:59.999 (UTC).
 	 *
 	 * @return the {@link DateRange}
 	 */
 	public static DateRange today()
 	{
-		final Date date = new Date();
-
-		Calendar start = Calendar.getInstance(DateUtils.UTC);
-		start.setTime(date);
-		start.set(Calendar.HOUR_OF_DAY, 0);
-		start.set(Calendar.MINUTE, 0);
-		start.set(Calendar.SECOND, 0);
-		start.set(Calendar.MILLISECOND, 0);
-
-		Calendar end = Calendar.getInstance(DateUtils.UTC);
-		end.setTime(date);
-		end.set(Calendar.HOUR_OF_DAY, 23);
-		end.set(Calendar.MINUTE, 59);
-		end.set(Calendar.SECOND, 59);
-		end.set(Calendar.MILLISECOND, 999);
-
-		return new DateRange(start.getTime(), end.getTime());
+		return DateRange.of(new Date(), new Date());
 	}
 
-	private Date start;
-	private Date end;
+	/**
+	 * Gets a new UTC {@link DateFormat} using ISO8601 pattern, but timezone agnostic
+	 * 
+	 * @return a new {@link DateFormat}
+	 */
+	public static DateFormat newDateFormat()
+	{
+		DateFormat df = new SimpleDateFormat(PATTERN);
+		df.setTimeZone(DateUtils.UTC);
+
+		return df;
+	}
+
+	private long start;
+	private long end;
 
 	/**
 	 * Constructor
 	 *
-	 * @param start the start date
-	 * @param end the end date
+	 * @param start the local start date
+	 * @param end the local end date
 	 */
 	public DateRange(Date start, Date end)
+	{
+		this(DateUtils.utc(start), DateUtils.utc(end));
+	}
+
+	/**
+	 * Constructor
+	 *
+	 * @param start the UTC start date
+	 * @param end the UTC end date
+	 */
+	public DateRange(long start, long end)
 	{
 		this.start = start;
 		this.end = end;
@@ -86,7 +134,7 @@ public class DateRange implements IClusterable
 	 */
 	public final Date getStart()
 	{
-		return this.start;
+		return new Date(this.start);
 	}
 
 	/**
@@ -95,6 +143,16 @@ public class DateRange implements IClusterable
 	 * @param date the start date
 	 */
 	public void setStart(Date date)
+	{
+		this.setStart(date.getTime());
+	}
+
+	/**
+	 * Sets the start date.<br/>
+	 *
+	 * @param date the start date
+	 */
+	public void setStart(long date)
 	{
 		this.start = date;
 	}
@@ -106,7 +164,7 @@ public class DateRange implements IClusterable
 	 */
 	public Date getEnd()
 	{
-		return this.end;
+		return new Date(this.end);
 	}
 
 	/**
@@ -116,14 +174,23 @@ public class DateRange implements IClusterable
 	 */
 	public void setEnd(Date date)
 	{
+		this.setEnd(date.getTime());
+	}
+
+	/**
+	 * Sets the end date.<br/>
+	 *
+	 * @param date the end date
+	 */
+	public void setEnd(long date)
+	{
 		this.end = date;
 	}
 
 	@Override
 	public String toString()
 	{
-		DateFormat df = new SimpleDateFormat(PATTERN); // ISO8601, no time zone
-		df.setTimeZone(DateUtils.UTC);
+		DateFormat df = DateRange.newDateFormat();
 
 		return String.format("[new Date('%s'),new Date('%s')]", df.format(this.getStart()), df.format(this.getEnd()));
 	}

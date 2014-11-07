@@ -22,7 +22,7 @@ import org.apache.wicket.Component;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.attributes.CallbackParameter;
 import org.apache.wicket.request.resource.CssResourceReference;
-import org.apache.wicket.request.resource.JavaScriptResourceReference;
+import org.apache.wicket.resource.JQueryPluginResourceReference;
 
 import com.googlecode.wicket.jquery.core.JQueryBehavior;
 import com.googlecode.wicket.jquery.core.JQueryEvent;
@@ -55,7 +55,7 @@ public abstract class RangeDatePickerBehavior extends JQueryBehavior implements 
 
 		this.add(new CssResourceReference(RangeDatePickerBehavior.class, "css/base.css"));
 		this.add(new CssResourceReference(RangeDatePickerBehavior.class, "css/clean.css"));
-		this.add(new JavaScriptResourceReference(RangeDatePickerBehavior.class, "js/datepicker.js"));
+		this.add(new JQueryPluginResourceReference(RangeDatePickerBehavior.class, "js/datepicker.js"));
 	}
 
 	@Override
@@ -65,7 +65,6 @@ public abstract class RangeDatePickerBehavior extends JQueryBehavior implements 
 
 		component.add(this.onRangeChangeBehavior = this.newOnRangeChangeBehavior());
 	}
-
 
 	// Events //
 	@Override
@@ -81,8 +80,11 @@ public abstract class RangeDatePickerBehavior extends JQueryBehavior implements 
 	{
 		if (event instanceof DateChangeEvent)
 		{
-			DateChangeEvent ev = (DateChangeEvent)event;
-			this.onValueChanged(target, new DateRange(ev.getStart(), ev.getEnd()));
+			DateChangeEvent ev = (DateChangeEvent) event;
+
+			long start = ev.getStart().getTime();
+			long end = ev.getEnd().getTime();
+			this.onValueChanged(target, new DateRange(start, end));
 		}
 	}
 
@@ -90,6 +92,7 @@ public abstract class RangeDatePickerBehavior extends JQueryBehavior implements 
 
 	/**
 	 * Gets a new {@link JQueryAjaxBehavior} that acts as the 'change' javascript callback
+	 * 
 	 * @return the {@link JQueryAjaxBehavior}
 	 */
 	private JQueryAjaxBehavior newOnRangeChangeBehavior()
@@ -101,14 +104,14 @@ public abstract class RangeDatePickerBehavior extends JQueryBehavior implements 
 			@Override
 			protected CallbackParameter[] getCallbackParameters()
 			{
-				//function(dates, el) { ... }
-				return new CallbackParameter[] {
-						CallbackParameter.context("dates"),
-						CallbackParameter.context("el"),
-						CallbackParameter.resolved("startTime", "dates[0].getTime()"),
-						CallbackParameter.resolved("startOffset", "dates[0].getTimezoneOffset()"), /* offset from UTC in minutes */
-						CallbackParameter.resolved("endTime", "dates[1].getTime()"),
-						CallbackParameter.resolved("endOffset", "dates[1].getTimezoneOffset()") /* offset from UTC in minutes */
+				// function(dates, el) { ... }
+				return new CallbackParameter[] { // lf
+				CallbackParameter.context("dates"), // lf
+						CallbackParameter.context("el"), // lf
+						CallbackParameter.resolved("startTime", "dates[0].getTime()"), // lf
+						CallbackParameter.resolved("startOffset", "dates[0].getTimezoneOffset()"), // offset from UTC in minutes
+						CallbackParameter.resolved("endTime", "dates[1].getTime()"), // lf
+						CallbackParameter.resolved("endOffset", "dates[1].getTimezoneOffset()") // offset from UTC in minutes
 				};
 			}
 
@@ -130,36 +133,38 @@ public abstract class RangeDatePickerBehavior extends JQueryBehavior implements 
 	 */
 	protected static class DateChangeEvent extends JQueryEvent
 	{
-		private final Date start;
-		private final Date end;
+		private final long start;
+		private final long end;
 
 		public DateChangeEvent()
 		{
 			long startTime = RequestCycleUtils.getQueryParameterValue("startTime").toLong();
 			int startOffset = RequestCycleUtils.getQueryParameterValue("startOffset").toInt(0) * 60 * 1000; // minutes to milliseconds
-			this.start = new Date(startTime - startOffset);
+			this.start = startTime - startOffset;
 
 			long endTime = RequestCycleUtils.getQueryParameterValue("endTime").toLong();
 			int endOffset = RequestCycleUtils.getQueryParameterValue("endOffset").toInt(0) * 60 * 1000; // minutes to milliseconds
-			this.end = new Date(endTime - endOffset);
+			this.end = endTime - endOffset;
 		}
 
 		/**
-		 * Gets the event's start date
+		 * Gets the event's UTC start date
+		 * 
 		 * @return the start date
 		 */
 		public Date getStart()
 		{
-			return this.start;
+			return new Date(this.start);
 		}
 
 		/**
-		 * Gets the event's end date
+		 * Gets the event's UTC end date
+		 * 
 		 * @return the end date
 		 */
 		public Date getEnd()
 		{
-			return this.end;
+			return new Date(this.end);
 		}
 	}
 }

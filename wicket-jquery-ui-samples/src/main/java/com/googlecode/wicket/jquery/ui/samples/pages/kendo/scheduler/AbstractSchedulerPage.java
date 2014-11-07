@@ -5,7 +5,6 @@ import java.util.List;
 
 import com.googlecode.wicket.jquery.ui.samples.SamplePage;
 
-// XXX: change versions in descriptions (*SchedulerPage.text)
 abstract class AbstractSchedulerPage extends SamplePage
 {
 	private static final long serialVersionUID = 1L;

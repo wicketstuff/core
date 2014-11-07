@@ -32,6 +32,8 @@ public class Initializer implements IInitializer
 	@Override
 	public void init(Application application)
 	{
+		application.getMarkupSettings().setStripWicketTags(true);
+		
 		JQueryUILibrarySettings.get().setStyleSheetReference(new CssResourceReference(Initializer.class, "jquery-ui.css"));
 	}
 

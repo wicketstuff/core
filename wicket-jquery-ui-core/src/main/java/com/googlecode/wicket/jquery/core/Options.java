@@ -90,6 +90,17 @@ public class Options implements IClusterable
 	 * @param date the date to convert
 	 * @return the JSON value
 	 */
+	public static String asDate(long date)
+	{
+		return Options.asDate(new Date(date));
+	}
+
+	/**
+	 * Converts a date to its ISO8601/javascript representation. ie: "2009-11-05T13:15:30+0200" (with the double quotes)
+	 *
+	 * @param date the date to convert
+	 * @return the JSON value
+	 */
 	public static String asDate(Date date)
 	{
 		return Options.asString(DateUtils.toISO8601(date));
