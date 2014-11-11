@@ -6,7 +6,7 @@
 	<parent>
 		<groupId>org.wicketstuff</groupId>
 		<artifactId>wicketstuff-core</artifactId>
-		<version>7.0-SNAPSHOT</version>
+		<version>7.0.0-M4</version>
 	</parent>
 
 	<artifactId>jdk-1.8-parent</artifactId>
