@@ -12,11 +12,6 @@
  */
 package org.wicketstuff.select2;
 
-import java.io.IOException;
-import java.io.OutputStreamWriter;
-import java.util.ArrayList;
-import java.util.List;
-
 import org.apache.wicket.IResourceListener;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.json.JSONException;
@@ -33,6 +28,11 @@ import org.apache.wicket.request.http.WebRequest;
 import org.apache.wicket.request.http.WebResponse;
 import org.apache.wicket.util.string.Strings;
 import org.wicketstuff.select2.json.JsonBuilder;
+
+import java.io.IOException;
+import java.io.OutputStreamWriter;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Base class for Select2 components
@@ -340,12 +340,10 @@ abstract class AbstractSelect2Choice<T, M> extends HiddenField<M> implements IRe
         jsonBuilder.key("id").value(key).key("text").value(value);
     }
 
-    /**
-     * Set options on select2
-     */
+
+//  render options on select2
     private void renderChoices() {
         JsonBuilder selection = new JsonBuilder();
-
         try {
             selection.object();
             selection.key("more").value(false);
