@@ -224,7 +224,7 @@ abstract class AbstractSelect2Choice<T, M> extends HiddenField<M> implements IRe
         super.onInitialize();
 
         // configure the ajax callbacks
-        if (provider != null) {
+        if (isAjax()) {
             AjaxSettings ajax = settings.getAjax(true);
             ajax.setData(String
                     .format("function(term, page) { return { term: term, page:page, '%s':true, '%s':[window.location.protocol, '//', window.location.host, window.location.pathname].join('')}; }",
@@ -247,7 +247,7 @@ abstract class AbstractSelect2Choice<T, M> extends HiddenField<M> implements IRe
     @Override
     protected void onConfigure() {
         super.onConfigure();
-        if (provider != null) {
+        if (isAjax()) {
             getSettings().getAjax().setUrl(urlFor(IResourceListener.INTERFACE, null));
         }
     }
@@ -323,7 +323,7 @@ abstract class AbstractSelect2Choice<T, M> extends HiddenField<M> implements IRe
 
     @Override
     protected void onDetach() {
-        if (provider != null) {
+        if (isAjax()) {
             provider.detach();
         }
         super.onDetach();
