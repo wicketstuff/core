@@ -89,7 +89,6 @@ public class CSVDataExporter implements IDataExporter
 	 */
 	public static void export(RequestCycle cycle, final IDataProvider<?> provider, final List<IExportableColumn> columns, String filename)
 	{
-		@SuppressWarnings("resource")
 		DataExporterResourceStreamWriter writer = new DataExporterResourceStreamWriter(new CSVDataExporter(), provider, columns);
 
 		cycle.scheduleRequestHandlerAfterCurrent(new ResourceStreamRequestHandler(writer, filename));
