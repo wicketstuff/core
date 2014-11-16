@@ -26,6 +26,7 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
 
+import org.apache.wicket.ajax.json.JSONObject;
 import org.apache.wicket.util.io.IClusterable;
 
 import com.googlecode.wicket.jquery.core.utils.DateUtils;
@@ -52,7 +53,7 @@ public class Options implements IClusterable
 	 */
 	public static String asString(Object value)
 	{
-		return String.format("%s%s%s", QUOTE, String.valueOf(value), QUOTE);
+		return Options.asString(String.valueOf(value));
 	}
 
 	/**
@@ -63,7 +64,7 @@ public class Options implements IClusterable
 	 */
 	public static String asString(String value)
 	{
-		return String.format("%s%s%s", QUOTE, Options.escapeQuotes(value), QUOTE);
+		return JSONObject.quote(value);
 	}
 
 	/**
@@ -134,7 +135,10 @@ public class Options implements IClusterable
 	 *
 	 * @param value the string to escape
 	 * @return the escaped string
+	 * @deprecated use {@link JSONObject#quote(String)} instead
+	 * TODO remove in next version
 	 */
+	@Deprecated
 	public static String escapeQuotes(String value)
 	{
 		if (value != null)
@@ -170,7 +174,7 @@ public class Options implements IClusterable
 	// TODO: move to OptionsUtils
 	public static void append(StringBuilder builder, String key, String value)
 	{
-		builder.append(Options.QUOTE).append(key).append(Options.QUOTE).append(": ").append(Options.QUOTE).append(Options.escapeQuotes(value)).append(Options.QUOTE);
+		builder.append(Options.QUOTE).append(key).append(Options.QUOTE).append(": ").append(JSONObject.quote(value));
 	}
 
 	private final Map<String, Object> map;

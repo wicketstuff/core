@@ -19,10 +19,7 @@ package com.googlecode.wicket.jquery.core.template;
 import org.apache.wicket.Component;
 import org.apache.wicket.behavior.Behavior;
 import org.apache.wicket.markup.head.IHeaderResponse;
-import org.apache.wicket.markup.head.JavaScriptHeaderItem;
 import org.apache.wicket.markup.head.StringHeaderItem;
-import org.apache.wicket.request.resource.JavaScriptResourceReference;
-import org.apache.wicket.request.resource.PackageResourceReference;
 
 /**
  * Provides the base class for jQuery template behavior.<br/>
@@ -33,7 +30,6 @@ import org.apache.wicket.request.resource.PackageResourceReference;
 public abstract class JQueryAbstractTemplateBehavior extends Behavior
 {
 	private static final long serialVersionUID = 1L;
-	public static final PackageResourceReference TMPL_JS = new JavaScriptResourceReference(JQueryAbstractTemplateBehavior.class, "jquery.tmpl.min.js");
 
 	/**
 	 * Constructor
@@ -47,7 +43,6 @@ public abstract class JQueryAbstractTemplateBehavior extends Behavior
 	{
 		super.renderHead(component, response);
 
-		response.render(JavaScriptHeaderItem.forReference(JQueryAbstractTemplateBehavior.TMPL_JS));
 		response.render(StringHeaderItem.forString(this.newResourceStream().getString()));
 	}
 
@@ -56,10 +51,8 @@ public abstract class JQueryAbstractTemplateBehavior extends Behavior
 	 *
 	 * @return the token
 	 */
-	public String getToken()
-	{
-		return String.format("jquery-template-%d", this.hashCode());
-	}
+	public abstract String getToken();
+
 
 	/**
 	 * Gets a new {@link JQueryResourceStream} which contains the &lt;script /&gt; block.

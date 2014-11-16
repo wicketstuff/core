@@ -160,6 +160,7 @@ public class Id<T> implements IClusterable
 		}
 	}
 
+//TODO move upper
 	@Override
 	public int hashCode() {
 		final int prime = 31;

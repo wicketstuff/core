@@ -45,6 +45,12 @@ public class KendoTemplateBehavior extends JQueryAbstractTemplateBehavior
 	}
 
 	@Override
+	public String getToken()
+	{
+		return String.format("kendo-template-%d", this.hashCode());
+	}
+
+	@Override
 	protected JQueryResourceStream newResourceStream()
 	{
 		return new KendoResourceStream(this.template.getText(), this.getToken());

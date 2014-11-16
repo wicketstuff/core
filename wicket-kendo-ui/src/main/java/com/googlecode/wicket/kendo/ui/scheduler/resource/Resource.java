@@ -190,6 +190,7 @@ public class Resource implements Serializable
 		return value.toString();
 	}
 
+// TODO move upper
 	@Override
 	public int hashCode() {
 		final int prime = 31;

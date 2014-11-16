@@ -16,7 +16,8 @@
  */
 package com.googlecode.wicket.jquery.core.utils;
 
-import com.googlecode.wicket.jquery.core.Options;
+import org.apache.wicket.ajax.json.JSONObject;
+
 import com.googlecode.wicket.jquery.core.renderer.IChoiceRenderer;
 import com.googlecode.wicket.jquery.core.renderer.ITextRenderer;
 
@@ -51,7 +52,7 @@ public class RendererUtils
 	 */
 	public static <T> String getJsonBody(final T object, final ITextRenderer<? super T> renderer)
 	{
-		return String.format("%1$s%2$s%1$s: %1$s%3$s%1$s", Options.QUOTE, renderer.getTextField(), renderer.getText(object));
+		return String.format("%s: %s", JSONObject.quote(renderer.getTextField()), JSONObject.quote(renderer.getText(object)));
 	}
 
 	/**
@@ -64,7 +65,7 @@ public class RendererUtils
 	 */
 	public static <T> String getJsonBody(final T object, final ITextRenderer<? super T> renderer, final String property)
 	{
-		return String.format("%1$s%2$s%1$s: %1$s%3$s%1$s", Options.QUOTE, property, renderer.getText(object, property));
+		return String.format("%s: %s", JSONObject.quote(property), JSONObject.quote(renderer.getText(object, property)));
 	}
 
 	// IChoiceRenderer //
@@ -90,7 +91,7 @@ public class RendererUtils
 	 */
 	public static <T> String getJsonBody(final T object, final IChoiceRenderer<? super T> renderer)
 	{
-		return String.format("%1$s%2$s%1$s: %1$s%3$s%1$s, %1$s%4$s%1$s: %1$s%5$s%1$s", Options.QUOTE, renderer.getTextField(), renderer.getText(object), renderer.getValueField(), renderer.getValue(object));
+		return String.format("%s: %s, %s: %s", JSONObject.quote(renderer.getTextField()), JSONObject.quote(renderer.getText(object)), JSONObject.quote(renderer.getValueField()), JSONObject.quote(renderer.getValue(object)));
 	}
 
 	/**
