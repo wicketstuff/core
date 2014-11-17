@@ -108,9 +108,9 @@ public class AnnotationTest extends TestCase
 		AnnotatedMountList list = testScanner.scanClass(ExplicitMountPathPage.class);
 		list = testScanner.scanClass(AlternativePathsPage.class);
 		assertEquals(3, list.size());
-		assertEquals("primary", ((TestMountedMapper)list.get(0)).mountPath);
-		assertEquals("alt1", ((TestMountedMapper)list.get(1)).mountPath);
-		assertEquals("alt2", ((TestMountedMapper)list.get(2)).mountPath);
+		assertEquals("alt1", ((TestMountedMapper)list.get(0)).mountPath);
+		assertEquals("alt2", ((TestMountedMapper)list.get(1)).mountPath);
+		assertEquals("primary", ((TestMountedMapper)list.get(2)).mountPath);
 	}
 
 	public void testPackageScan()
