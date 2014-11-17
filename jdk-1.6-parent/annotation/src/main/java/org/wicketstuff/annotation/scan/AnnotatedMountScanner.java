@@ -217,22 +217,23 @@ public class AnnotatedMountScanner
 		if (mountPath == null)
 			return;
 
-		String path = mountPath.value();
-
-		// default if no explicit path is provided
-		if ("".equals(path))
-		{
-			path = getDefaultMountPath(pageClass);
-		}
-
-		list.add(getRequestMapper(path, pageClass));
-
 		// alternates
 		for (String alt : mountPath.alt())
 		{
 			list.add(getRequestMapper(alt, pageClass));
 		}
-	}
+
+        // CompoundRequestMapper: last registered mapper has highest priority
+        String path = mountPath.value();
+
+        // default if no explicit path is provided
+        if ("".equals(path))
+        {
+            path = getDefaultMountPath(pageClass);
+        }
+
+        list.add(getRequestMapper(path, pageClass));
+    }
 
 	/**
 	 * Returns the default mapper given a mount path and class.
