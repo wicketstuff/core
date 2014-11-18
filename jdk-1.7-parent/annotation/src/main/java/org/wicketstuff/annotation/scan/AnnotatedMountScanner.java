@@ -217,6 +217,12 @@ public class AnnotatedMountScanner
 		if (mountPath == null)
 			return;
 
+		// alternates
+		for (String alt : mountPath.alt())
+		{
+			list.add(getRequestMapper(alt, pageClass));
+		}
+
 		String path = mountPath.value();
 
 		// default if no explicit path is provided
@@ -226,12 +232,6 @@ public class AnnotatedMountScanner
 		}
 
 		list.add(getRequestMapper(path, pageClass));
-
-		// alternates
-		for (String alt : mountPath.alt())
-		{
-			list.add(getRequestMapper(alt, pageClass));
-		}
 	}
 
 	/**
