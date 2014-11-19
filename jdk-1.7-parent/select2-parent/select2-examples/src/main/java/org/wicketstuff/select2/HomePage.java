@@ -12,16 +12,16 @@
  */
 package org.wicketstuff.select2;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.List;
-
 import org.apache.wicket.markup.html.WebPage;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.form.ChoiceRenderer;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.model.PropertyModel;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.List;
 
 /**
  * Example page.
@@ -30,137 +30,142 @@ import org.apache.wicket.model.PropertyModel;
  */
 public class HomePage extends WebPage {
 
-    private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L;
 
-    private static final int PAGE_SIZE = 10;
-    @SuppressWarnings("unused")
-    private Country country = Country.US;
-    @SuppressWarnings("unused")
-    private List<Country> countries = new ArrayList<>(Arrays.asList(new Country[] { Country.US, Country.CA }));
+	private static final int PAGE_SIZE = 10;
+	@SuppressWarnings("unused")
+	private Country country = Country.US;
+	@SuppressWarnings("unused")
+	private List<Country> countries = new ArrayList<>(Arrays.asList(new Country[] { Country.US, Country.CA }));
 
-    public HomePage() {
+	public HomePage() {
 
-        // single-select example
+		// single-select example
 
-        add(new Label("country", new PropertyModel<>(this, "country")));
+		add(new Label("country", new PropertyModel<>(this, "country")));
 
-        Form<?> form = new Form<Void>("single");
-        add(form);
+		Form<?> form = new Form<Void>("single");
+		add(form);
 
-        Select2Choice<Country> country = new Select2Choice<>("country", new PropertyModel<Country>(this, "country"),
-                new CountriesProvider());
-        country.getSettings().setMinimumInputLength(1);
-        form.add(country);
+		Select2Choice<Country> country = new Select2Choice<>("country", new PropertyModel<Country>(this, "country"),
+				new CountriesProvider());
+		country.getSettings().setMinimumInputLength(1);
+		form.add(country);
 
-        add(new Label("country-non-ajax", new PropertyModel<>(this, "country")));
+		add(new Label("country-non-ajax", new PropertyModel<>(this, "country")));
 
-        Form<?> nonAjaxform = new Form<Void>("single-non-ajax");
-        add(nonAjaxform);
-        Select2Choice<Country> nonAjaxCountry = new Select2Choice<>("country-non-ajax", new PropertyModel<Country>(this, "country"),
-                Arrays.asList(Country.values()), new CountriesRender());
-        nonAjaxCountry.getSettings().setMinimumInputLength(1);
-        nonAjaxform.add(nonAjaxCountry);
+		Form<?> nonAjaxform = new Form<Void>("single-non-ajax");
+		add(nonAjaxform);
+		Select2Choice<Country> nonAjaxCountry = new Select2Choice<>("country-non-ajax",
+				new PropertyModel<Country>(this, "country"),
+				Arrays.asList(Country.values()), new CountriesRender());
+		nonAjaxCountry.getSettings().setMinimumInputLength(1);
+		nonAjaxform.add(nonAjaxCountry);
 
-        // multi-select example
+		// multi-select example
 
-        add(new Label("countries", new PropertyModel<>(this, "countries")));
+		add(new Label("countries", new PropertyModel<>(this, "countries")));
 
-        Form<?> multi = new Form<Void>("multi");
-        add(multi);
+		Form<?> multi = new Form<Void>("multi");
+		add(multi);
 
-        Select2MultiChoice<Country> countries = new Select2MultiChoice<>("countries",
-                new PropertyModel<Collection<Country>>(this,
-                        "countries"), new CountriesProvider());
-        countries.getSettings().setMinimumInputLength(1);
-        countries.add(new DragAndDropBehavior());
-        multi.add(countries);
+		Select2MultiChoice<Country> countries = new Select2MultiChoice<>("countries",
+				new PropertyModel<Collection<Country>>(this,
+						"countries"), new CountriesProvider());
+		countries.getSettings().setMinimumInputLength(1);
+		countries.add(new DragAndDropBehavior());
+		multi.add(countries);
 
-        add(new Label("countries-non-ajax", new PropertyModel<>(this, "countries")));
-        Form<?> nonAjaxMulti = new Form<Void>("multi-non-ajax");
-        add(nonAjaxMulti);
+		add(new Label("countries-non-ajax", new PropertyModel<>(this, "countries")));
+		Form<?> nonAjaxMulti = new Form<Void>("multi-non-ajax");
+		add(nonAjaxMulti);
 
-        countries = new Select2MultiChoice<>("countries-non-ajax", new PropertyModel<Collection<Country>>(this,
-                "countries"), Arrays.asList(Country.values()), new CountriesRender());
-        countries.getSettings().setMinimumInputLength(1);
-        countries.add(new DragAndDropBehavior());
-        nonAjaxMulti.add(countries);
-    }
+		countries = new Select2MultiChoice<>("countries-non-ajax", new PropertyModel<Collection<Country>>(this,
+				"countries"), Arrays.asList(Country.values()), new CountriesRender());
+		countries.getSettings().setMinimumInputLength(1);
+		countries.add(new DragAndDropBehavior());
+		nonAjaxMulti.add(countries);
+	}
 
-    /**
-     * Queries {@code pageSize} worth of countries from the {@link Country}
-     * enum, starting with {@code page * pageSize} offset. Countries are matched
-     * on their {@code displayName} containing {@code term}
-     *
-     * @param term     search term
-     * @param page     starting page
-     * @param pageSize items per page
-     * @return list of matches
-     */
-    private static List<Country> queryMatches(String term, int page, int pageSize) {
+	/**
+	 * Queries {@code pageSize} worth of countries from the {@link Country}
+	 * enum, starting with {@code page * pageSize} offset. Countries are matched
+	 * on their {@code displayName} containing {@code term}
+	 *
+	 * @param term
+	 *            search term
+	 * @param page
+	 *            starting page
+	 * @param pageSize
+	 *            items per page
+	 * @return list of matches
+	 */
+	private static List<Country> queryMatches(String term, int page, int pageSize) {
 
-        List<Country> result = new ArrayList<>();
+		List<Country> result = new ArrayList<>();
 
-        term = term.toUpperCase();
+		term = term.toUpperCase();
 
-        final int offset = page * pageSize;
+		final int offset = page * pageSize;
 
-        int matched = 0;
-        for (Country country : Country.values()) {
-            if (result.size() == pageSize) {
-                break;
-            }
+		int matched = 0;
+		for (Country country : Country.values()) {
+			if (result.size() == pageSize) {
+				break;
+			}
 
-            if (country.getDisplayName().toUpperCase().contains(term)) {
-                matched++;
-                if (matched > offset) {
-                    result.add(country);
-                }
-            }
-        }
-        return result;
-    }
+			if (country.getDisplayName().toUpperCase().contains(term)) {
+				matched++;
+				if (matched > offset) {
+					result.add(country);
+				}
+			}
+		}
+		return result;
+	}
 
-    /**
-     * {@link Country} based choice provider for Select2 components.
-     * Demonstrates integration between Select2 components and a domain object
-     * (in this case an enum).
-     *
-     * @author igor
-     */
-    public class CountriesProvider extends TextChoiceProvider<Country> {
+	/**
+	 * {@link Country} based choice provider for Select2 components.
+	 * Demonstrates integration between Select2 components and a domain object
+	 * (in this case an enum).
+	 *
+	 * @author igor
+	 *
+	 */
+	public class CountriesProvider extends TextChoiceProvider<Country> {
 
-        private static final long serialVersionUID = 1L;
+		private static final long serialVersionUID = 1L;
 
-        @Override
-        protected String getDisplayText(Country choice) {
-            return choice.getDisplayName();
-        }
+		@Override
+		protected String getDisplayText(Country choice) {
+			return choice.getDisplayName();
+		}
 
-        @Override
-        protected Object getId(Country choice) {
-            return choice.name();
-        }
+		@Override
+		protected Object getId(Country choice) {
+			return choice.name();
+		}
 
-        @Override
-        public void query(String term, int page, Response<Country> response) {
-            response.addAll(queryMatches(term, page, PAGE_SIZE));
-            response.setHasMore(response.size() == PAGE_SIZE);
-        }
+		@Override
+		public void query(String term, int page, Response<Country> response) {
+			response.addAll(queryMatches(term, page, PAGE_SIZE));
+			response.setHasMore(response.size() == PAGE_SIZE);
+		}
 
-        @Override
-        public Collection<Country> toChoices(Collection<String> ids) {
-            ArrayList<Country> countries = new ArrayList<>();
-            for (String id : ids) {
-                countries.add(Country.valueOf(id));
-            }
-            return countries;
-        }
-    }
+		@Override
+		public Collection<Country> toChoices(Collection<String> ids) {
+			ArrayList<Country> countries = new ArrayList<>();
+			for (String id : ids) {
+				countries.add(Country.valueOf(id));
+			}
+			return countries;
+		}
+	}
 
-    private class CountriesRender extends ChoiceRenderer<Country> {
+	private class CountriesRender extends ChoiceRenderer<Country> {
 
-        public CountriesRender() {
-            super("displayName");
-        }
-    }
+		public CountriesRender() {
+			super("displayName");
+		}
+	}
 }
