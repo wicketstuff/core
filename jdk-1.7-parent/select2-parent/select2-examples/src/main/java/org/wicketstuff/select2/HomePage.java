@@ -12,65 +12,86 @@
  */
 package org.wicketstuff.select2;
 
+import org.apache.wicket.markup.html.WebPage;
+import org.apache.wicket.markup.html.basic.Label;
+import org.apache.wicket.markup.html.form.ChoiceRenderer;
+import org.apache.wicket.markup.html.form.Form;
+import org.apache.wicket.model.PropertyModel;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 
-import org.apache.wicket.markup.html.WebPage;
-import org.apache.wicket.markup.html.basic.Label;
-import org.apache.wicket.markup.html.form.Form;
-import org.apache.wicket.model.PropertyModel;
-
 /**
  * Example page.
- * 
+ *
  * @author igor
- * 
  */
 public class HomePage extends WebPage {
+
 	private static final long serialVersionUID = 1L;
 
 	private static final int PAGE_SIZE = 10;
 	@SuppressWarnings("unused")
 	private Country country = Country.US;
 	@SuppressWarnings("unused")
-	private List<Country> countries = new ArrayList<Country>(Arrays.asList(new Country[] { Country.US, Country.CA }));
+	private List<Country> countries = new ArrayList<>(Arrays.asList(new Country[] { Country.US, Country.CA }));
 
 	public HomePage() {
 
 		// single-select example
 
-		add(new Label("country", new PropertyModel<Object>(this, "country")));
+		add(new Label("country", new PropertyModel<>(this, "country")));
 
 		Form<?> form = new Form<Void>("single");
 		add(form);
 
-		Select2Choice<Country> country = new Select2Choice<Country>("country", new PropertyModel<Country>(this, "country"),
+		Select2Choice<Country> country = new Select2Choice<>("country", new PropertyModel<Country>(this, "country"),
 				new CountriesProvider());
 		country.getSettings().setMinimumInputLength(1);
 		form.add(country);
 
+		add(new Label("country-non-ajax", new PropertyModel<>(this, "country")));
+
+		Form<?> nonAjaxform = new Form<Void>("single-non-ajax");
+		add(nonAjaxform);
+		Select2Choice<Country> nonAjaxCountry = new Select2Choice<>("country-non-ajax",
+				new PropertyModel<Country>(this, "country"),
+				Arrays.asList(Country.values()), new CountriesRender());
+		nonAjaxCountry.getSettings().setMinimumInputLength(1);
+		nonAjaxform.add(nonAjaxCountry);
+
 		// multi-select example
 
-		add(new Label("countries", new PropertyModel<Object>(this, "countries")));
+		add(new Label("countries", new PropertyModel<>(this, "countries")));
 
 		Form<?> multi = new Form<Void>("multi");
 		add(multi);
 
-		Select2MultiChoice<Country> countries = new Select2MultiChoice<Country>("countries", new PropertyModel<Collection<Country>>(this,
-				"countries"), new CountriesProvider());
+		Select2MultiChoice<Country> countries = new Select2MultiChoice<>("countries",
+				new PropertyModel<Collection<Country>>(this,
+						"countries"), new CountriesProvider());
 		countries.getSettings().setMinimumInputLength(1);
 		countries.add(new DragAndDropBehavior());
 		multi.add(countries);
 
+		add(new Label("countries-non-ajax", new PropertyModel<>(this, "countries")));
+		Form<?> nonAjaxMulti = new Form<Void>("multi-non-ajax");
+		add(nonAjaxMulti);
+
+		countries = new Select2MultiChoice<>("countries-non-ajax", new PropertyModel<Collection<Country>>(this,
+				"countries"), Arrays.asList(Country.values()), new CountriesRender());
+		countries.getSettings().setMinimumInputLength(1);
+		countries.add(new DragAndDropBehavior());
+		nonAjaxMulti.add(countries);
 	}
 
 	/**
 	 * Queries {@code pageSize} worth of countries from the {@link Country}
 	 * enum, starting with {@code page * pageSize} offset. Countries are matched
 	 * on their {@code displayName} containing {@code term}
-	 * 
+	 *
 	 * @param term
 	 *            search term
 	 * @param page
@@ -81,7 +102,7 @@ public class HomePage extends WebPage {
 	 */
 	private static List<Country> queryMatches(String term, int page, int pageSize) {
 
-		List<Country> result = new ArrayList<Country>();
+		List<Country> result = new ArrayList<>();
 
 		term = term.toUpperCase();
 
@@ -107,11 +128,12 @@ public class HomePage extends WebPage {
 	 * {@link Country} based choice provider for Select2 components.
 	 * Demonstrates integration between Select2 components and a domain object
 	 * (in this case an enum).
-	 * 
+	 *
 	 * @author igor
-	 * 
+	 *
 	 */
 	public class CountriesProvider extends TextChoiceProvider<Country> {
+
 		private static final long serialVersionUID = 1L;
 
 		@Override
@@ -132,12 +154,18 @@ public class HomePage extends WebPage {
 
 		@Override
 		public Collection<Country> toChoices(Collection<String> ids) {
-			ArrayList<Country> countries = new ArrayList<Country>();
+			ArrayList<Country> countries = new ArrayList<>();
 			for (String id : ids) {
 				countries.add(Country.valueOf(id));
 			}
 			return countries;
 		}
+	}
 
+	private class CountriesRender extends ChoiceRenderer<Country> {
+
+		public CountriesRender() {
+			super("displayName");
+		}
 	}
 }

@@ -12,9 +12,6 @@
  */
 package org.wicketstuff.select2;
 
-import java.io.IOException;
-import java.io.OutputStreamWriter;
-
 import org.apache.wicket.IResourceListener;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.json.JSONException;
@@ -22,6 +19,7 @@ import org.apache.wicket.ajax.json.JSONWriter;
 import org.apache.wicket.event.IEvent;
 import org.apache.wicket.markup.head.IHeaderResponse;
 import org.apache.wicket.markup.head.OnDomReadyHeaderItem;
+import org.apache.wicket.markup.html.form.ChoiceRenderer;
 import org.apache.wicket.markup.html.form.HiddenField;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.request.IRequestParameters;
@@ -29,49 +27,60 @@ import org.apache.wicket.request.Request;
 import org.apache.wicket.request.http.WebRequest;
 import org.apache.wicket.request.http.WebResponse;
 import org.apache.wicket.util.string.Strings;
+import org.wicketstuff.select2.json.JsonBuilder;
+
+import java.io.IOException;
+import java.io.OutputStreamWriter;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Base class for Select2 components
- * 
+ *
+ * @param <T> type of choice object
+ * @param <M> type of model object
  * @author igor
- * 
+ *
  * @param <T>
  *            type of choice object
  * @param <M>
  *            type of model object
  */
 abstract class AbstractSelect2Choice<T, M> extends HiddenField<M> implements IResourceListener {
+
 	private static final long serialVersionUID = 1L;
 
 	private final Settings settings = new Settings();
 
 	private ChoiceProvider<T> provider;
+	private List<T> choices;
+	private ChoiceRenderer<T> renderer;
 
 	/**
 	 * Constructor
-	 * 
+	 *
 	 * @param id
 	 *            component id
 	 */
 	public AbstractSelect2Choice(String id) {
-		this(id, null, null);
+		this(id, null, null, null);
 	}
 
 	/**
 	 * Constructor
-	 * 
+	 *
 	 * @param id
 	 *            component id
 	 * @param model
 	 *            component model
 	 */
 	public AbstractSelect2Choice(String id, IModel<M> model) {
-		this(id, model, null);
+		this(id, model, null, null);
 	}
 
 	/**
 	 * Constructor.
-	 * 
+	 *
 	 * @param id
 	 *            component id
 	 * @param provider
@@ -83,7 +92,7 @@ abstract class AbstractSelect2Choice<T, M> extends HiddenField<M> implements IRe
 
 	/**
 	 * Constructor
-	 * 
+	 *
 	 * @param id
 	 *            component id
 	 * @param model
@@ -94,9 +103,42 @@ abstract class AbstractSelect2Choice<T, M> extends HiddenField<M> implements IRe
 	public AbstractSelect2Choice(String id, IModel<M> model, ChoiceProvider<T> provider) {
 		super(id, model);
 		this.provider = provider;
-
 		add(new Select2ResourcesBehavior());
+		setOutputMarkupId(true);
+	}
 
+	/**
+	 * Construct.
+	 *
+	 * @param id         markup id
+	 * @param model      model for select
+	 * @param collection list options for select
+	 */
+	public AbstractSelect2Choice(String id, IModel<M> model, List<T> collection) {
+		this(id, model, collection, null);
+	}
+
+	/**
+	 * Construct.
+	 *
+	 * @param id       markup id
+	 * @param model    model for select
+	 * @param choices  list options for select
+	 * @param renderer renderer list item
+	 * @see HiddenField#HiddenField(String, IModel)
+	 */
+	public AbstractSelect2Choice(String id, IModel<M> model, List<T> choices, ChoiceRenderer<T> renderer) {
+		super(id, model);
+		if (null == choices) {
+			throw new IllegalStateException("Select2 choice component: " + getId() + " does not have a List<T> set");
+		}
+		if (null == renderer) {
+			throw new IllegalStateException(
+					"Select2 choice component: " + getId() + " does not have a WCLChoiceRenderer<T> set");
+		}
+		add(new Select2ResourcesBehavior());
+		this.choices = new ArrayList<>(choices);
+		this.renderer = renderer;
 		setOutputMarkupId(true);
 	}
 
@@ -109,11 +151,30 @@ abstract class AbstractSelect2Choice<T, M> extends HiddenField<M> implements IRe
 
 	/**
 	 * Sets the choice provider
-	 * 
-	 * @param provider
+	 *
+	 * @param provider provider to set
 	 */
 	public final void setProvider(ChoiceProvider<T> provider) {
 		this.provider = provider;
+	}
+
+	/**
+	 * @return data
+	 */
+	public final List<T> getChoices() {
+		return choices;
+	}
+
+	public final void setChoices(List<T> choices) {
+		this.choices = choices;
+	}
+
+	public final ChoiceRenderer<T> getRenderer() {
+		return renderer;
+	}
+
+	public final void setRenderer(ChoiceRenderer<T> renderer) {
+		this.renderer = renderer;
 	}
 
 	/**
@@ -129,7 +190,7 @@ abstract class AbstractSelect2Choice<T, M> extends HiddenField<M> implements IRe
 	/**
 	 * Gets the markup id that is safe to use in jQuery by escaping dots in the
 	 * default {@link #getMarkup()}
-	 * 
+	 *
 	 * @return markup id
 	 */
 	protected String getJquerySafeMarkupId() {
@@ -153,20 +214,21 @@ abstract class AbstractSelect2Choice<T, M> extends HiddenField<M> implements IRe
 	@Override
 	public void renderHead(IHeaderResponse response) {
 		super.renderHead(response);
-
+		if (!isAjax()) {
+			// attach select options
+			renderChoices();
+		}
 		// initialize select2
-
-		response.render(OnDomReadyHeaderItem.forScript(JQuery.execute("$('#%s').select2(%s);", getJquerySafeMarkupId(), settings.toJson())));
-
+		response.render(OnDomReadyHeaderItem
+				.forScript(JQuery.execute("$('#%s').select2(%s);", getJquerySafeMarkupId(), settings.toJson())));
 		// select current value
-
 		renderInitializationScript(response);
 	}
 
 	/**
 	 * Renders script used to initialize the value of Select2 after it is
 	 * created so it matches the current model object.
-	 * 
+	 *
 	 * @param response
 	 *            header response
 	 */
@@ -177,19 +239,18 @@ abstract class AbstractSelect2Choice<T, M> extends HiddenField<M> implements IRe
 		super.onInitialize();
 
 		// configure the ajax callbacks
-
-		AjaxSettings ajax = settings.getAjax(true);
-
-		ajax.setData(String
-				.format("function(term, page) { return { term: term, page:page, '%s':true, '%s':[window.location.protocol, '//', window.location.host, window.location.pathname].join('')}; }",
-						WebRequest.PARAM_AJAX, WebRequest.PARAM_AJAX_BASE_URL));
-
-		ajax.setResults("function(data, page) { return data; }");
-
+		if (isAjax()) {
+			AjaxSettings ajax = settings.getAjax(true);
+			ajax.setData(String
+					.format("function(term, page) { return { term: term, page:page, '%s':true, '%s':[window.location.protocol, '//', window.location.host, window.location.pathname].join('')}; }",
+							WebRequest.PARAM_AJAX, WebRequest.PARAM_AJAX_BASE_URL));
+			ajax.setResults("function(data, page) { return data; }");
+		}
 		// configure the localized strings/renderers
 		getSettings().setFormatNoMatches("function() { return '" + getEscapedJsString("noMatches") + "';}");
 		getSettings().setFormatInputTooShort(
-				"function(input, min) { return min - input.length == 1 ? '" + getEscapedJsString("inputTooShortSingular") + "' : '"
+				"function(input, min) { return min - input.length == 1 ? '" + getEscapedJsString("inputTooShortSingular")
+						+ "' : '"
 						+ getEscapedJsString("inputTooShortPlural") + "'.replace('{number}', min - input.length); }");
 		getSettings().setFormatSelectionTooBig(
 				"function(limit) { return limit == 1 ? '" + getEscapedJsString("selectionTooBigSingular") + "' : '"
@@ -201,27 +262,28 @@ abstract class AbstractSelect2Choice<T, M> extends HiddenField<M> implements IRe
 	@Override
 	protected void onConfigure() {
 		super.onConfigure();
-
-		getSettings().getAjax().setUrl(urlFor(IResourceListener.INTERFACE, null));
+		if (isAjax()) {
+			getSettings().getAjax().setUrl(urlFor(IResourceListener.INTERFACE, null));
+		}
 	}
 
 	@Override
 	public void onEvent(IEvent<?> event) {
 		super.onEvent(event);
-
 		if (event.getPayload() instanceof AjaxRequestTarget) {
-
 			AjaxRequestTarget target = (AjaxRequestTarget) event.getPayload();
-
 			if (target.getComponents().contains(this)) {
 
 				// if this component is being repainted by ajax, directly, we
 				// must destroy Select2 so it removes
 				// its elements from DOM
-
 				target.prependJavaScript(JQuery.execute("$('#%s').select2('destroy');", getJquerySafeMarkupId()));
 			}
 		}
+	}
+
+	public boolean isAjax() {
+		return provider != null;
 	}
 
 	@Override
@@ -276,8 +338,46 @@ abstract class AbstractSelect2Choice<T, M> extends HiddenField<M> implements IRe
 
 	@Override
 	protected void onDetach() {
-		provider.detach();
+		if (isAjax()) {
+			provider.detach();
+		}
 		super.onDetach();
+	}
+
+	/**
+	 * render single choice
+	 *
+	 * @param choice      choice
+	 * @param jsonBuilder json builder
+	 */
+	protected void renderChoice(T choice, JsonBuilder jsonBuilder) {
+		String key = renderer.getIdValue(choice, choices.lastIndexOf(choice));
+		Object value = renderer.getDisplayValue(choice);
+		jsonBuilder.key("id").value(key).key("text").value(value);
+	}
+
+	//  render options on select2
+	private void renderChoices() {
+		JsonBuilder selection = new JsonBuilder();
+		try {
+			selection.object();
+			selection.key("more").value(false);
+			selection.key("results").array();
+			attachChoicesJson(selection);
+			selection.endArray().endObject();
+		} catch (JSONException e) {
+			throw new RuntimeException("Error converting model object to Json", e);
+		}
+
+		getSettings().setData(selection.toJson().toString());
+	}
+
+	private void attachChoicesJson(JsonBuilder jsonBuilder) throws JSONException {
+		for (T choice : choices) {
+			jsonBuilder.object();
+			renderChoice(choice, jsonBuilder);
+			jsonBuilder.endObject();
+		}
 	}
 
 }

@@ -24,7 +24,7 @@ import org.apache.wicket.ajax.json.JSONWriter;
  * @param <T>
  *            type of choice object
  */
-public abstract class TextChoiceProvider<T> extends ChoiceProvider<T> {
+public abstract class TextChoiceProvider<T> implements ChoiceProvider<T> {
 	private static final long serialVersionUID = 1L;
 
 	protected abstract String getDisplayText(T choice);
@@ -34,6 +34,9 @@ public abstract class TextChoiceProvider<T> extends ChoiceProvider<T> {
 	@Override
 	public final void toJson(T choice, JSONWriter writer) throws JSONException {
 		writer.key("id").value(getId(choice)).key("text").value(getDisplayText(choice));
-	};
+	}
 
+	@Override
+	public void detach() {
+	}
 }

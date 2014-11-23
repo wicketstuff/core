@@ -12,29 +12,34 @@
  */
 package org.wicketstuff.select2;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
-
 import org.apache.wicket.ajax.json.JSONException;
 import org.apache.wicket.markup.head.IHeaderResponse;
 import org.apache.wicket.markup.head.OnDomReadyHeaderItem;
+import org.apache.wicket.markup.html.form.ChoiceRenderer;
 import org.apache.wicket.markup.html.form.FormComponent;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.util.string.Strings;
 import org.wicketstuff.select2.json.JsonBuilder;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.List;
+
 /**
  * Multi-select Select2 component. Should be attached to a
  * {@code <input type='hidden'/>} element.
- * 
+ *
+ * @param <T> type of choice object
  * @author igor
- * 
- * @param <T>
- *            type of choice object
  */
 public class Select2MultiChoice<T> extends AbstractSelect2Choice<T, Collection<T>> {
+
 	private static final long serialVersionUID = 1L;
+
+	public Select2MultiChoice(String id, IModel<Collection<T>> model, List<T> choices, ChoiceRenderer<T> renderer) {
+		super(id, model, choices, renderer);
+	}
 
 	public Select2MultiChoice(String id, IModel<Collection<T>> model, ChoiceProvider<T> provider) {
 		super(id, model, provider);
@@ -50,16 +55,29 @@ public class Select2MultiChoice<T> extends AbstractSelect2Choice<T, Collection<T
 
 	@Override
 	public void convertInput() {
-
 		String input = getWebRequest().getRequestParameters().getParameterValue(getInputName()).toString();
-
 		final Collection<T> choices;
 		if (Strings.isEmpty(input)) {
-			choices = new ArrayList<T>();
+			choices = new ArrayList<>();
 		} else {
-			choices = getProvider().toChoices(Arrays.asList(input.split(",")));
+			if (isAjax()) {
+				choices = getProvider().toChoices(Arrays.asList(input.split(",")));
+			} else {
+				choices = new ArrayList<>();
+				String[] data = input.split(",");
+				for (int i = 0; i < getChoices().size(); i++) {
+					T item = getChoices().get(i);
+					for (String id : data) {
+						if (id.equals(getRenderer().getIdValue(item, i))) {
+							choices.add(item);
+							if (choices.size() == data.length) {
+								break;
+							}
+						}
+					}
+				}
+			}
 		}
-
 		setConvertedInput(choices);
 	}
 
@@ -105,7 +123,11 @@ public class Select2MultiChoice<T> extends AbstractSelect2Choice<T, Collection<T
 				selection.array();
 				for (T choice : choices) {
 					selection.object();
-					getProvider().toJson(choice, selection);
+					if (isAjax()) {
+						getProvider().toJson(choice, selection);
+					} else {
+						renderChoice(choice, selection);
+					}
 					selection.endObject();
 				}
 				selection.endArray();
@@ -113,8 +135,9 @@ public class Select2MultiChoice<T> extends AbstractSelect2Choice<T, Collection<T
 				throw new RuntimeException("Error converting model object to Json", e);
 			}
 
-			response.render(OnDomReadyHeaderItem.forScript(JQuery.execute("$('#%s').select2('data', %s);", getJquerySafeMarkupId(),
-					selection.toJson())));
+			response.render(
+					OnDomReadyHeaderItem.forScript(JQuery.execute("$('#%s').select2('data', %s);", getJquerySafeMarkupId(),
+							selection.toJson())));
 		}
 	}
 

@@ -12,11 +12,11 @@
  */
 package org.wicketstuff.select2;
 
-import java.util.Collection;
-
 import org.apache.wicket.ajax.json.JSONException;
 import org.apache.wicket.ajax.json.JSONWriter;
 import org.apache.wicket.model.IDetachable;
+
+import java.util.Collection;
 
 /**
  * <p>
@@ -39,8 +39,7 @@ import org.apache.wicket.model.IDetachable;
  * @param <T>
  *            type of choice object
  */
-public abstract class ChoiceProvider<T> implements IDetachable {
-	private static final long serialVersionUID = 1L;
+public interface ChoiceProvider<T> extends IDetachable {
 
 	/**
      * Queries application for choices that match the search {@code term} and adds them to the {@code response}
@@ -52,7 +51,7 @@ public abstract class ChoiceProvider<T> implements IDetachable {
      * @param response
      *            aggregate for matching choices as well as other response options
      */
-    public abstract void query(String term, int page, Response<T> response);
+    public void query(String term, int page, Response<T> response);
 
     /**
      * Converts the specified choice to Json.
@@ -79,7 +78,7 @@ public abstract class ChoiceProvider<T> implements IDetachable {
      *            Json writer that should be used to covnert the choice
      * @throws JSONException
      */
-    public abstract void toJson(T choice, JSONWriter writer) throws JSONException;
+    public void toJson(T choice, JSONWriter writer) throws JSONException;
 
     /**
      * Converts a list of choice ids back into application's choice objects. When the choice provider is attached to a
@@ -90,9 +89,6 @@ public abstract class ChoiceProvider<T> implements IDetachable {
      *            collection containing choice ids
      * @return collection containing application choice objects
      */
-    public abstract Collection<T> toChoices(Collection<String> ids);
+    public Collection<T> toChoices(Collection<String> ids);
 
-    @Override
-    public void detach() {
-    }
 }
