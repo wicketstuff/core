@@ -281,6 +281,10 @@ abstract class AbstractSelect2Choice<T, M> extends HiddenField<M> implements IRe
 			}
 		}
 	}
+	@Override
+	protected boolean getStatelessHint() {
+		return !isAjax();
+	}
 
 	public boolean isAjax() {
 		return provider != null;
