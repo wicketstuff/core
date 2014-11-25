@@ -61,7 +61,8 @@ public class Select2MultiChoice<T> extends AbstractSelect2Choice<T, Collection<T
 			choices = new ArrayList<>();
 		} else {
 			if (isAjax()) {
-				choices = getProvider().toChoices(Arrays.asList(input.split(",")));
+				List<String> ids = splitInput( input );
+				choices = getProvider().toChoices( ids );
 			} else {
 				choices = new ArrayList<>();
 				String[] data = input.split(",");
@@ -139,6 +140,37 @@ public class Select2MultiChoice<T> extends AbstractSelect2Choice<T, Collection<T
 					OnDomReadyHeaderItem.forScript(JQuery.execute("$('#%s').select2('data', %s);", getJquerySafeMarkupId(),
 							selection.toJson())));
 		}
+	}
+
+	static List<String> splitInput( String input ) {
+		if (input.startsWith("{") && input.endsWith("}")) {
+			// Assume we're using JSON IDs
+			List<String> result = new ArrayList<>();
+
+			int openBracket = 0;
+			Integer lastStartIdx = null;
+			for (int i = 0; i < input.length(); i++) {
+				char c = input.charAt(i);
+				if (c == '{') {
+					openBracket++;
+					if (lastStartIdx == null) {
+						lastStartIdx = i;
+					}
+				}
+				if (c == '}') {
+					openBracket--;
+					if (openBracket == 0) {
+						String substring = input.substring(lastStartIdx, i + 1);
+						result.add(substring);
+						lastStartIdx = null;
+					}
+				}
+			}
+
+			return result;
+		}
+
+		return Arrays.asList(input.split( "," ));
 	}
 
 }
