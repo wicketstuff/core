@@ -60,18 +60,18 @@ public class Select2MultiChoice<T> extends AbstractSelect2Choice<T, Collection<T
 		if (Strings.isEmpty(input)) {
 			choices = new ArrayList<>();
 		} else {
+			List<String> ids = splitInput(input);
 			if (isAjax()) {
-				List<String> ids = splitInput( input );
-				choices = getProvider().toChoices( ids );
+				choices = getProvider().toChoices(ids);
 			} else {
 				choices = new ArrayList<>();
-				String[] data = input.split(",");
-				for (int i = 0; i < getChoices().size(); i++) {
-					T item = getChoices().get(i);
-					for (String id : data) {
+				List<T> predefinedChoices = getChoices();
+				for (int i = 0; i < predefinedChoices.size(); i++) {
+					T item = predefinedChoices.get(i);
+					for (String id : ids) {
 						if (id.equals(getRenderer().getIdValue(item, i))) {
 							choices.add(item);
-							if (choices.size() == data.length) {
+							if (choices.size() == ids.size()) {
 								break;
 							}
 						}
@@ -109,7 +109,7 @@ public class Select2MultiChoice<T> extends AbstractSelect2Choice<T, Collection<T
 	@Override
 	protected void renderInitializationScript(IHeaderResponse response) {
 		Collection<? extends T> choices;
-		if (getWebRequest().getRequestParameters().getParameterNames().contains(getInputName())) {
+		if (!isValid() && hasRawInput()) {
 			convertInput();
 			choices = getConvertedInput();
 		} else {
