@@ -58,7 +58,7 @@ public class HomePage extends WebPage {
 		add(nonAjaxform);
 		Select2Choice<Country> nonAjaxCountry = new Select2Choice<>("country-non-ajax",
 				new PropertyModel<Country>(this, "country"),
-				Arrays.asList(Country.values()), new CountriesRender());
+				Arrays.asList(Country.values()), new CountriesRenderer());
 		nonAjaxCountry.getSettings().setMinimumInputLength(1);
 		nonAjaxform.add(nonAjaxCountry);
 
@@ -81,7 +81,7 @@ public class HomePage extends WebPage {
 		add(nonAjaxMulti);
 
 		countries = new Select2MultiChoice<>("countries-non-ajax", new PropertyModel<Collection<Country>>(this,
-				"countries"), Arrays.asList(Country.values()), new CountriesRender());
+				"countries"), Arrays.asList(Country.values()), new CountriesRenderer());
 		countries.getSettings().setMinimumInputLength(1);
 		countries.add(new DragAndDropBehavior());
 		nonAjaxMulti.add(countries);
@@ -132,7 +132,7 @@ public class HomePage extends WebPage {
 	 * @author igor
 	 *
 	 */
-	public class CountriesProvider extends TextChoiceProvider<Country> {
+	public static class CountriesProvider extends TextChoiceProvider<Country> {
 
 		private static final long serialVersionUID = 1L;
 
@@ -162,9 +162,9 @@ public class HomePage extends WebPage {
 		}
 	}
 
-	private class CountriesRender extends ChoiceRenderer<Country> {
+	private static class CountriesRenderer extends ChoiceRenderer<Country> {
 
-		public CountriesRender() {
+		public CountriesRenderer() {
 			super("displayName");
 		}
 	}
