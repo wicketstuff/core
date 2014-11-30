@@ -60,7 +60,7 @@ public class Select2Choice<T> extends AbstractSelect2Choice<T, T> {
 	protected void renderInitializationScript(IHeaderResponse response) {
 
 		T value;
-		if (getWebRequest().getRequestParameters().getParameterNames().contains(getInputName())) {
+		if (!isValid() && hasRawInput()) {
 			convertInput();
 			value = getConvertedInput();
 		} else {

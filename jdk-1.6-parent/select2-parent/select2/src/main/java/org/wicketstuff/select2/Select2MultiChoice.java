@@ -12,6 +12,7 @@
  */
 package org.wicketstuff.select2;
 
+import java.util.List;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -50,16 +51,30 @@ public class Select2MultiChoice<T> extends AbstractSelect2Choice<T, Collection<T
 
 	@Override
 	public void convertInput() {
-
 		String input = getWebRequest().getRequestParameters().getParameterValue(getInputName()).toString();
-
 		final Collection<T> choices;
 		if (Strings.isEmpty(input)) {
 			choices = new ArrayList<T>();
 		} else {
-			choices = getProvider().toChoices(Arrays.asList(input.split(",")));
+			List<String> ids = splitInput(input);
+			if (isAjax()) {
+				choices = getProvider().toChoices(ids);
+			} else {
+				choices = new ArrayList<T>();
+				List<T> predefinedChoices = getChoices();
+				for (int i = 0; i < predefinedChoices.size(); i++) {
+					T item = predefinedChoices.get(i);
+					for (String id : ids) {
+						if (id.equals(getRenderer().getIdValue(item, i))) {
+							choices.add(item);
+							if (choices.size() == ids.size()) {
+								break;
+							}
+						}
+					}
+				}
+			}
 		}
-
 		setConvertedInput(choices);
 	}
 
@@ -90,7 +105,7 @@ public class Select2MultiChoice<T> extends AbstractSelect2Choice<T, Collection<T
 	@Override
 	protected void renderInitializationScript(IHeaderResponse response) {
 		Collection<? extends T> choices;
-		if (getWebRequest().getRequestParameters().getParameterNames().contains(getInputName())) {
+		if (!isValid() && hasRawInput()) {
 			convertInput();
 			choices = getConvertedInput();
 		} else {
@@ -118,4 +133,34 @@ public class Select2MultiChoice<T> extends AbstractSelect2Choice<T, Collection<T
 		}
 	}
 
+	static List<String> splitInput( String input ) {
+		if (input.startsWith("{") && input.endsWith("}")) {
+			// Assume we're using JSON IDs
+			List<String> result = new ArrayList<String>();
+
+			int openBracket = 0;
+			Integer lastStartIdx = null;
+			for (int i = 0; i < input.length(); i++) {
+				char c = input.charAt(i);
+				if (c == '{') {
+					openBracket++;
+					if (lastStartIdx == null) {
+						lastStartIdx = i;
+					}
+				}
+				if (c == '}') {
+					openBracket--;
+					if (openBracket == 0) {
+						String substring = input.substring(lastStartIdx, i + 1);
+						result.add(substring);
+						lastStartIdx = null;
+					}
+				}
+			}
+
+			return result;
+		}
+
+		return Arrays.asList(input.split( "," ));
+	}
 }
