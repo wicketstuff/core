@@ -16,7 +16,14 @@
  */
 package com.googlecode.wicket.jquery.ui.calendar.resource;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import org.apache.wicket.markup.head.HeaderItem;
+import org.apache.wicket.markup.head.JavaScriptHeaderItem;
 import org.apache.wicket.resource.JQueryPluginResourceReference;
+
+import com.googlecode.wicket.jquery.core.resource.JQueryMomentResourceReference;
 
 /**
  * Provides the resource reference for the fullcalendar javascript library.
@@ -46,5 +53,20 @@ public class CalendarJavaScriptResourceReference extends JQueryPluginResourceRef
 	private CalendarJavaScriptResourceReference()
 	{
 		super(CalendarJavaScriptResourceReference.class, "fullcalendar.js");
+	}
+	
+	@Override
+	public Iterable<? extends HeaderItem> getDependencies()
+	{
+		List<HeaderItem> dependencies = new ArrayList<HeaderItem>();
+		
+		for (HeaderItem item : super.getDependencies())
+		{
+			dependencies.add(item);
+		}
+		
+		dependencies.add(JavaScriptHeaderItem.forReference(JQueryMomentResourceReference.get()));
+		
+		return dependencies;
 	}
 }
