@@ -21,39 +21,68 @@ import java.io.Serializable;
 import java.io.UnsupportedEncodingException;
 import java.net.URL;
 import java.net.URLEncoder;
+
+import org.apache.log4j.Logger;
 import org.apache.wicket.ajax.json.JSONArray;
 import org.apache.wicket.ajax.json.JSONException;
 import org.apache.wicket.ajax.json.JSONObject;
+import org.codehaus.jackson.JsonParseException;
+import org.codehaus.jackson.map.JsonMappingException;
+import org.codehaus.jackson.map.ObjectMapper;
+import org.wicketstuff.gmap.GMap;
 import org.wicketstuff.gmap.api.GLatLng;
+import org.wicketstuff.gmap.api.GLatLngBounds;
+import org.wicketstuff.gmap.geocoder.GeocoderGeometry.Location;
 
 /**
  * Geocoder. See: https://developers.google.com/maps/documentation/geocoding/
  *
  * @author Thijs Vonk
  * @author Dieter Tremel
+ * @author Mathias Born
  */
 public class Geocoder implements Serializable
 {
 
     private static final long serialVersionUID = 1L;
+    private static final Logger LOGGER = Logger.getLogger(Geocoder.class);
     // Constants
     public static final String OUTPUT_XML = "xml";
     public static final String OUTPUT_JSON = "json";
     private final String output = OUTPUT_JSON;
+    /**
+     * Result-Object of an gecoder request
+     */
+    private GeocoderResult geocoderResult;
 
     public Geocoder()
     {
     }
 
     public GLatLng decode(String response) throws GeocoderException, JSONException {
-        JSONObject jsonResponse = new JSONObject(response);
-        GeocoderStatus status = GeocoderStatus.valueOf(jsonResponse.getString("status"));
+        try {
+            geocoderResult = new ObjectMapper().readValue(response, GeocoderResult.class);
+        } catch (JsonParseException e) {
+            LOGGER.error(e);
+        } catch (JsonMappingException e) {
+            LOGGER.error(e);
+        } catch (IOException e) {
+            LOGGER.error(e);
+        }
+
+        GeocoderStatus status = geocoderResult.getStatus();
+       
         if (status != GeocoderStatus.OK) {
             throw new GeocoderException(status);
         }
-        JSONArray results = jsonResponse.getJSONArray("results");
-        JSONObject location = results.getJSONObject(0).getJSONObject("geometry").getJSONObject("location");
-        return new GLatLng(location.getDouble("lat"), location.getDouble("lng"));
+        
+        if (geocoderResult.getResults().length < 1) {
+            throw new RuntimeException(); // TODO: throw something better
+        }
+        
+        Location location = geocoderResult.getResults()[0].getGeometry().getLocation();
+        return new GLatLng(location.getLat(), location.getLng());
+        
     }
 
     /**
@@ -125,4 +154,38 @@ public class Geocoder implements Serializable
             throw new RuntimeException(ex.getMessage());
         }
     }
+    
+    /**
+     * Get the Result of the last geocoder Request
+     * @return the result of the last geocoder request
+     */
+    public GeocoderResult getGecoderResult() {
+        return geocoderResult;
+    }
+
+    /**
+	 * Convenience method to center and fit the zoom for an address, on the given map.
+	 * <p>
+	 * <b>Example:</b>
+	 * <pre>
+	 * GMap myMap = GMap("wicketId");
+	 * new Geocoder().centerAndFitZoomForAdress(myMap, "Frankfurt am Main");
+	 * </pre>
+	 * <b>Result:</b><br/>
+	 * Frankfurt is centered and the zoom is suitable
+	 * </p>
+	 * 
+	 * @param map
+	 *            - the map where the address should shown
+	 * @param address
+	 *            - address as string for the google geocoder
+	 * @throws Exception
+	 */
+	public void centerAndFitZoomForAdress(GMap map, String address) throws Exception {
+		 this.geocode(address);
+		 GeocoderViewPort port = getGecoderResult().getResults()[0].getGeometry().getViewport();
+         GLatLng sw = new GLatLng(port.getSouthwest().getLat(), port.getSouthwest().getLng());
+         GLatLng ne = new GLatLng(port.getNortheast().getLat(), port.getNortheast().getLng());
+         map.setBounds(new GLatLngBounds(sw,ne));
+	}
 }
