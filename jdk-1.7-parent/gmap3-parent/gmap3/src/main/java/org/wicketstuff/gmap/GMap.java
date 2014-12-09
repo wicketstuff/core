@@ -732,7 +732,6 @@ public class GMap extends Panel implements GOverlayContainer
 		}
 
 		js.append(getJSMarkerCluster());
-
 		return js.toString();
 	}
 

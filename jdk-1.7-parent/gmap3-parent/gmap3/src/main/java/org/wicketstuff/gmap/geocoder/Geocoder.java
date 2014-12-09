@@ -23,10 +23,9 @@ import java.net.URL;
 import java.net.URLEncoder;
 
 import org.apache.log4j.Logger;
-import org.apache.wicket.ajax.json.JSONArray;
 import org.apache.wicket.ajax.json.JSONException;
-import org.apache.wicket.ajax.json.JSONObject;
 import org.codehaus.jackson.JsonParseException;
+import org.codehaus.jackson.map.DeserializationConfig;
 import org.codehaus.jackson.map.JsonMappingException;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.wicketstuff.gmap.GMap;
@@ -44,133 +43,149 @@ import org.wicketstuff.gmap.geocoder.GeocoderGeometry.Location;
 public class Geocoder implements Serializable
 {
 
-    private static final long serialVersionUID = 1L;
-    private static final Logger LOGGER = Logger.getLogger(Geocoder.class);
-    // Constants
-    public static final String OUTPUT_XML = "xml";
-    public static final String OUTPUT_JSON = "json";
-    private final String output = OUTPUT_JSON;
-    /**
-     * Result-Object of an gecoder request
-     */
-    private GeocoderResult geocoderResult;
+	private static final long serialVersionUID = 1L;
+	private static final Logger LOGGER = Logger.getLogger(Geocoder.class);
+	// Constants
+	public static final String OUTPUT_XML = "xml";
+	public static final String OUTPUT_JSON = "json";
+	private final String output = OUTPUT_JSON;
+	/**
+	 * Result-Object of an gecoder request
+	 */
+	private GeocoderResult geocoderResult;
 
-    public Geocoder()
-    {
-    }
+	public Geocoder()
+	{
+	}
 
-    public GLatLng decode(String response) throws GeocoderException, JSONException {
-        try {
-            geocoderResult = new ObjectMapper().readValue(response, GeocoderResult.class);
-        } catch (JsonParseException e) {
-            LOGGER.error(e);
-        } catch (JsonMappingException e) {
-            LOGGER.error(e);
-        } catch (IOException e) {
-            LOGGER.error(e);
-        }
+	public GLatLng decode(String response) throws GeocoderException, JSONException
+	{
+		try
+		{
+			geocoderResult = new ObjectMapper() //
+			.configure(DeserializationConfig.Feature.FAIL_ON_UNKNOWN_PROPERTIES, false)
+				.readValue(response, GeocoderResult.class);
+		}
+		catch (JsonParseException e)
+		{
+			LOGGER.error(e);
+		}
+		catch (JsonMappingException e)
+		{
+			LOGGER.error(e);
+		}
+		catch (IOException e)
+		{
+			LOGGER.error(e);
+		}
 
-        GeocoderStatus status = geocoderResult.getStatus();
-       
-        if (status != GeocoderStatus.OK) {
-            throw new GeocoderException(status);
-        }
-        
-        if (geocoderResult.getResults().length < 1) {
-            throw new RuntimeException(); // TODO: throw something better
-        }
-        
-        Location location = geocoderResult.getResults()[0].getGeometry().getLocation();
-        return new GLatLng(location.getLat(), location.getLng());
-        
-    }
+		GeocoderStatus status = geocoderResult.getStatus();
 
-    /**
-     * builds the google geo-coding url
-     *
-     * @param address
-     * @return
-     */
-    public String encode(final String address)
-    {
-        StringBuilder sb = new StringBuilder("http://maps.googleapis.com/maps/api/geocode/");
-        sb.append(output);
-        sb.append("?");
-        sb.append("address=").append(urlEncode(address));
-        sb.append("&sensor=false");
-        return sb.toString();
-    }
+		if (status != GeocoderStatus.OK)
+		{
+			throw new GeocoderException(status);
+		}
 
-    /**
-     * @param address
-     * @return
-     * @throws IOException
-     */
-    public GLatLng geocode(final String address) throws Exception
-    {
-        InputStream is = invokeService(encode(address));
-        if (is != null)
-        {
-            try
-            {
-                String content = org.apache.wicket.util.io.IOUtils.toString(is);
-                return decode(content);
-            }
-            finally
-            {
-                is.close();
-            }
-        }
-        return null;
-    }
+		if (geocoderResult.getResults().length < 1)
+		{
+			throw new RuntimeException(); // TODO: throw something better
+		}
 
-    /**
-     * fetches the url content
-     *
-     * @param address
-     * @return
-     * @throws IOException
-     */
-    protected InputStream invokeService(final String address) throws IOException
-    {
-        URL url = new URL(address);
-        return url.openStream();
-    }
+		Location location = geocoderResult.getResults()[0].getGeometry().getLocation();
+		return new GLatLng(location.getLat(), location.getLng());
 
-    /**
-     * url-encode a value
-     *
-     * @param value
-     * @return
-     */
-    private String urlEncode(final String value)
-    {
-        try
-        {
-            return URLEncoder.encode(value, "UTF-8");
-        }
-        catch (UnsupportedEncodingException ex)
-        {
-            throw new RuntimeException(ex.getMessage());
-        }
-    }
-    
-    /**
-     * Get the Result of the last geocoder Request
-     * @return the result of the last geocoder request
-     */
-    public GeocoderResult getGecoderResult() {
-        return geocoderResult;
-    }
+	}
 
-    /**
+	/**
+	 * builds the google geo-coding url
+	 *
+	 * @param address
+	 * @return
+	 */
+	public String encode(final String address)
+	{
+		StringBuilder sb = new StringBuilder("http://maps.googleapis.com/maps/api/geocode/");
+		sb.append(output);
+		sb.append("?");
+		sb.append("address=").append(urlEncode(address));
+		sb.append("&sensor=false");
+		return sb.toString();
+	}
+
+	/**
+	 * @param address
+	 * @return
+	 * @throws IOException
+	 */
+	public GLatLng geocode(final String address) throws Exception
+	{
+		InputStream is = invokeService(encode(address));
+		if (is != null)
+		{
+			try
+			{
+				String content = org.apache.wicket.util.io.IOUtils.toString(is);
+				return decode(content);
+			}
+			finally
+			{
+				is.close();
+			}
+		}
+		return null;
+	}
+
+	/**
+	 * fetches the url content
+	 *
+	 * @param address
+	 * @return
+	 * @throws IOException
+	 */
+	protected InputStream invokeService(final String address) throws IOException
+	{
+		URL url = new URL(address);
+		return url.openStream();
+	}
+
+	/**
+	 * url-encode a value
+	 *
+	 * @param value
+	 * @return
+	 */
+	private String urlEncode(final String value)
+	{
+		try
+		{
+			return URLEncoder.encode(value, "UTF-8");
+		}
+		catch (UnsupportedEncodingException ex)
+		{
+			throw new RuntimeException(ex.getMessage());
+		}
+	}
+
+	/**
+	 * READY-ONLY Get the Result of the last geocoder Request
+	 * 
+	 * @return the result of the last geocoder request
+	 */
+	public GeocoderResult getGecoderResult()
+	{
+		return geocoderResult;
+	}
+
+	/**
 	 * Convenience method to center and fit the zoom for an address, on the given map.
 	 * <p>
 	 * <b>Example:</b>
+	 * 
 	 * <pre>
-	 * GMap myMap = GMap("wicketId");
-	 * new Geocoder().centerAndFitZoomForAdress(myMap, "Frankfurt am Main");
+	 * GMap myMap = GMap(&quot;wicketId&quot;);
+	 * new Geocoder().centerAndFitZoomForAdress(myMap, &quot;Frankfurt am Main&quot;);
 	 * </pre>
+	 * 
 	 * <b>Result:</b><br/>
 	 * Frankfurt is centered and the zoom is suitable
 	 * </p>
@@ -181,11 +196,12 @@ public class Geocoder implements Serializable
 	 *            - address as string for the google geocoder
 	 * @throws Exception
 	 */
-	public void centerAndFitZoomForAdress(GMap map, String address) throws Exception {
-		 this.geocode(address);
-		 GeocoderViewPort port = getGecoderResult().getResults()[0].getGeometry().getViewport();
-         GLatLng sw = new GLatLng(port.getSouthwest().getLat(), port.getSouthwest().getLng());
-         GLatLng ne = new GLatLng(port.getNortheast().getLat(), port.getNortheast().getLng());
-         map.setBounds(new GLatLngBounds(sw,ne));
+	public void centerAndFitZoomForAdress(GMap map, String address) throws Exception
+	{
+		this.geocode(address);
+		GeocoderViewPort port = getGecoderResult().getResults()[0].getGeometry().getViewport();
+		GLatLng sw = new GLatLng(port.getSouthwest().getLat(), port.getSouthwest().getLng());
+		GLatLng ne = new GLatLng(port.getNortheast().getLat(), port.getNortheast().getLng());
+		map.setBounds(new GLatLngBounds(sw, ne));
 	}
 }
