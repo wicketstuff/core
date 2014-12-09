@@ -13,10 +13,23 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-package org.wicketstuff.gmap.geocoder;
+package org.wicketstuff.gmap.geocoder.pojos;
 
 
 /**
+ * POJO for a google geocoder JSON Object viewport <br/>
+ * Contains the recommended viewport for displaying the returned result, specified as two
+ * latitude,longitude values defining the southwest and northeast corner of the viewport bounding
+ * box. Generally the viewport is used to frame a result when displaying it to a user.
+ * 
+ * <p>
+ * See also: <a href="https://developers.google.com/maps/documentation/geocoding/?hl=en#Results">
+ * Google Geocoder JSONResult Doc</a><br/>
+ * 
+ * <b>Note:</b><br/>
+ * The most documentation in this class a have been adopted by Google documentation.<br/>
+ * Say thank you to Google!
+ * </p>
  * 
  * @author Mathias Born - Contact: www.mathiasborn.de
  */
@@ -25,86 +38,6 @@ public class GeocoderViewPort
 
 	private Northeast northeast;
 	private Southwest southwest;
-
-	public class Northeast
-	{
-		double lat, lng;
-
-		/**
-		 * @return the lat
-		 */
-		public double getLat()
-		{
-			return lat;
-		}
-
-		/**
-		 * @param lat
-		 *            the lat to set
-		 */
-		public void setLat(double lat)
-		{
-			this.lat = lat;
-		}
-
-		/**
-		 * @return the lng
-		 */
-		public double getLng()
-		{
-			return lng;
-		}
-
-		/**
-		 * @param lng
-		 *            the lng to set
-		 */
-		public void setLng(double lng)
-		{
-			this.lng = lng;
-		}
-
-	}
-
-	public class Southwest
-	{
-		double lat, lng;
-
-		/**
-		 * @return the lat
-		 */
-		public double getLat()
-		{
-			return lat;
-		}
-
-		/**
-		 * @param lat
-		 *            the lat to set
-		 */
-		public void setLat(double lat)
-		{
-			this.lat = lat;
-		}
-
-		/**
-		 * @return the lng
-		 */
-		public double getLng()
-		{
-			return lng;
-		}
-
-		/**
-		 * @param lng
-		 *            the lng to set
-		 */
-		public void setLng(double lng)
-		{
-			this.lng = lng;
-		}
-
-	}
 
 	/**
 	 * @return the northeast

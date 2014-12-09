@@ -14,7 +14,7 @@ import org.wicketstuff.gmap.api.GClientGeocoder;
 import org.wicketstuff.gmap.api.GInfoWindow;
 import org.wicketstuff.gmap.api.GLatLng;
 import org.wicketstuff.gmap.api.GMapType;
-import org.wicketstuff.gmap.geocoder.GeocoderStatus;
+import org.wicketstuff.gmap.geocoder.pojos.GeocoderStatus;
 
 /**
  * Demonstrates geocoding client- and serverwise.

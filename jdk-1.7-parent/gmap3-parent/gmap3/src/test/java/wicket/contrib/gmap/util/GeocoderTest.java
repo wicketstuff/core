@@ -13,8 +13,6 @@ import org.wicketstuff.gmap.geocoder.Geocoder;
 @RunWith(JUnit4.class)
 public class GeocoderTest
 {
-
-
 	private Geocoder coder;
 
 	@Before
@@ -50,7 +48,7 @@ public class GeocoderTest
 		GMap map = new GMap("gmap");
 		tester.startComponentInPage(map);
 		Geocoder gecoder = new Geocoder();
-		gecoder.centerAndFitZoomForAdress(map, "Avigon, France");
+		gecoder.centerAndFitZoomForAdress(map, "Avignon, France");
 		Assert.assertEquals(43.9966409, map.getBounds().getNE().getLat(), 0.00001);
 		Assert.assertEquals(4.927226, map.getBounds().getNE().getLng(), 0.00001);
 		Assert.assertEquals(43.8864731, map.getBounds().getSW().getLat(), 0.00001);

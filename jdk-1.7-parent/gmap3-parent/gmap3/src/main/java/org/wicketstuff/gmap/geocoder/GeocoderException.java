@@ -17,6 +17,8 @@ package org.wicketstuff.gmap.geocoder;
 
 import java.io.IOException;
 
+import org.wicketstuff.gmap.geocoder.pojos.GeocoderStatus;
+
 public class GeocoderException extends IOException
 {
     private final GeocoderStatus _status;

@@ -10,7 +10,7 @@ import org.apache.wicket.request.Request;
 import org.apache.wicket.request.cycle.RequestCycle;
 import org.apache.wicket.util.time.Duration;
 import org.wicketstuff.gmap.GMapHeaderContributor;
-import org.wicketstuff.gmap.geocoder.GeocoderStatus;
+import org.wicketstuff.gmap.geocoder.pojos.GeocoderStatus;
 
 /**
  */

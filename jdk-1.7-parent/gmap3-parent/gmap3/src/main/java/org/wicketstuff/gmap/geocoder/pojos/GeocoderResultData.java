@@ -13,24 +13,44 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-package org.wicketstuff.gmap.geocoder;
+package org.wicketstuff.gmap.geocoder.pojos;
 
 import org.codehaus.jackson.annotate.JsonProperty;
 
 /**
+ * The {@link GeocoderResultData} is equivalent POJO to Googles Results as JSON Object.<br/>
+ * See also the documentation of Google.<br/>
+ * <a href="https://developers.google.com/maps/documentation/geocoding/?hl=en#Results"> Google
+ * Geocoder Result Documentation</a><br/>
+ * 
+ * <b>Note:</b><br/>
+ * The most documentation in this class a have been adopted by Google documentation.<br/>
+ * Say thank you to Google!
  * 
  * @author Mathias Born - Contact: www.mathiasborn.de
  */
 public class GeocoderResultData
 {
+	/** array containing the separate address components */
 	@JsonProperty("address_components")
 	private GeocoderAdress[] addressComponents;
+	/** containing the human-readable address of this location */
 	@JsonProperty("formatted_address")
 	private String formattedAddress;
+	/** containing the geometry data of a geocoder request result */
 	private GeocoderGeometry geometry;
+	/**
+	 * This array contains a set of zero or more tags identifying the type of feature returned in
+	 * the result. <br/>
+	 * <br/>
+	 * For example, a geocode of "Chicago" returns "locality" which indicates that "Chicago" is a
+	 * city, and also returns "political" which indicates it is a political entity.
+	 */
 	private String[] types;
 
 	/**
+	 * Get an array containing the separate address components
+	 * 
 	 * @return the addressComponents
 	 */
 	public GeocoderAdress[] getAddressComponents()
@@ -39,6 +59,8 @@ public class GeocoderResultData
 	}
 
 	/**
+	 * Set an array containing the separate address components
+	 * 
 	 * @param addressComponents
 	 *            the addressComponents to set
 	 */
@@ -48,6 +70,8 @@ public class GeocoderResultData
 	}
 
 	/**
+	 * Get the human-readable address of this location
+	 * 
 	 * @return the formattedAdress
 	 */
 	public String getFormattedAdress()
@@ -56,6 +80,8 @@ public class GeocoderResultData
 	}
 
 	/**
+	 * Set the human-readable address of this location
+	 * 
 	 * @param formattedAdress
 	 *            the formattedAdress to set
 	 */
@@ -82,6 +108,8 @@ public class GeocoderResultData
 	}
 
 	/**
+	 * Get zero or more tags identifying the type of feature
+	 * 
 	 * @return the types
 	 */
 	public String[] getTypes()
@@ -90,6 +118,8 @@ public class GeocoderResultData
 	}
 
 	/**
+	 * Set zero or more tags identifying the type of feature
+	 * 
 	 * @param types
 	 *            the types to set
 	 */

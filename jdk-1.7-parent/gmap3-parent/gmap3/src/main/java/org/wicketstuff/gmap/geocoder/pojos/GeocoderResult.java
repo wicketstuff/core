@@ -13,21 +13,40 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-package org.wicketstuff.gmap.geocoder;
+package org.wicketstuff.gmap.geocoder.pojos;
 
 
 /**
+ * {@link GeocoderResult} is the Resultset of the Google Geocode Request.<br/>
+ * This class encapsulates the full result of one geocoder request.
+ * 
+ * <p>
+ * See also: <a href="https://developers.google.com/maps/documentation/geocoding/?hl=en#JSON">
+ * Google Geocoder JSONResult Doc</a><br/>
+ * 
+ * <b>Note:</b><br/>
+ * The most documentation in this class a have been adopted by Google documentation.<br/>
+ * Say thank you to Google!
+ * </p>
+ * 
  * 
  * @author Mathias Born - Contact: www.mathiasborn.de
  */
 public class GeocoderResult
 {
 
+	/** An Array of the gecode result */
 	private GeocoderResultData[] results;
+	/**
+	 * contains the status of the request, and may contain debugging information to help you track
+	 * down why geocoding is not working
+	 */
 	private GeocoderStatus status;
 
 	/**
-	 * @return the status
+	 * Return the status of a geocoder request
+	 * 
+	 * @return {@link GeocoderStatus} geocoder request status
 	 */
 	public GeocoderStatus getStatus()
 	{
@@ -35,8 +54,10 @@ public class GeocoderResult
 	}
 
 	/**
+	 * Set the status of a geocoder request
+	 * 
 	 * @param status
-	 *            the status to set
+	 *            - the status to set
 	 */
 	public void setStatus(GeocoderStatus status)
 	{
@@ -44,7 +65,9 @@ public class GeocoderResult
 	}
 
 	/**
-	 * @return the results
+	 * Get all {@link GeocoderResultData} of a geocoder request
+	 * 
+	 * @return all {@link GeocoderResultData} of a geocoder request
 	 */
 	public GeocoderResultData[] getResults()
 	{
@@ -52,8 +75,10 @@ public class GeocoderResult
 	}
 
 	/**
+	 * Set all {@link GeocoderResultData} of a geocoder request
+	 * 
 	 * @param results
-	 *            the results to set
+	 *            all {@link GeocoderResultData} of a geocoder request
 	 */
 	public void setResults(GeocoderResultData[] results)
 	{

@@ -13,7 +13,7 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-package org.wicketstuff.gmap.geocoder;
+package org.wicketstuff.gmap.geocoder.pojos;
 
 import java.io.IOException;
 
@@ -22,6 +22,15 @@ import org.codehaus.jackson.map.JsonMappingException;
 import org.codehaus.jackson.map.ObjectMapper;
 
 /**
+ * Equivalent POJO for the google geometry JSON-Object of a geocoder request
+ * <p>
+ * See also: <a href="https://developers.google.com/maps/documentation/geocoding/?hl=en#JSON">
+ * Google Geocoder JSONResult Doc</a><br/>
+ * 
+ * <b>Note:</b><br/>
+ * The most documentation in this class a have been adopted by Google documentation.<br/>
+ * Say thank you to Google!
+ * </p>
  * 
  * @author Mathias Born - Contact: www.mathiasborn.de
  */
@@ -30,6 +39,7 @@ public class GeocoderGeometry
 
 	private Bounds bounds;
 	private Location location;
+	/** stores additional data about the specified location */
 	private String location_type;
 	private GeocoderViewPort viewport;
 
@@ -38,85 +48,6 @@ public class GeocoderGeometry
 		private Northeast northeast;
 		private Southwest southwest;
 
-		public class Northeast
-		{
-			double lat, lng;
-
-			/**
-			 * @return the lat
-			 */
-			public double getLat()
-			{
-				return lat;
-			}
-
-			/**
-			 * @param lat
-			 *            the lat to set
-			 */
-			public void setLat(double lat)
-			{
-				this.lat = lat;
-			}
-
-			/**
-			 * @return the lng
-			 */
-			public double getLng()
-			{
-				return lng;
-			}
-
-			/**
-			 * @param lng
-			 *            the lng to set
-			 */
-			public void setLng(double lng)
-			{
-				this.lng = lng;
-			}
-
-		}
-
-		public class Southwest
-		{
-			double lat, lng;
-
-			/**
-			 * @return the lat
-			 */
-			public double getLat()
-			{
-				return lat;
-			}
-
-			/**
-			 * @param lat
-			 *            the lat to set
-			 */
-			public void setLat(double lat)
-			{
-				this.lat = lat;
-			}
-
-			/**
-			 * @return the lng
-			 */
-			public double getLng()
-			{
-				return lng;
-			}
-
-			/**
-			 * @param lng
-			 *            the lng to set
-			 */
-			public void setLng(double lng)
-			{
-				this.lng = lng;
-			}
-
-		}
 
 		/**
 		 * @return the northeast
@@ -177,45 +108,6 @@ public class GeocoderGeometry
 		this.bounds = bounds;
 	}
 
-	public class Location
-	{
-		double lat, lng;
-
-		/**
-		 * @return the lat
-		 */
-		public double getLat()
-		{
-			return lat;
-		}
-
-		/**
-		 * @param lat
-		 *            the lat to set
-		 */
-		public void setLat(double lat)
-		{
-			this.lat = lat;
-		}
-
-		/**
-		 * @return the lng
-		 */
-		public double getLng()
-		{
-			return lng;
-		}
-
-		/**
-		 * @param lng
-		 *            the lng to set
-		 */
-		public void setLng(double lng)
-		{
-			this.lng = lng;
-		}
-
-	}
 
 	/**
 	 * @return the location

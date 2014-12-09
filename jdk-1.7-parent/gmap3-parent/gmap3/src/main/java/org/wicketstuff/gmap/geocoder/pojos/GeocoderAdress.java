@@ -13,21 +13,34 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-package org.wicketstuff.gmap.geocoder;
+package org.wicketstuff.gmap.geocoder.pojos;
 
 import org.codehaus.jackson.annotate.JsonProperty;
 
 /**
+ * POJO for an entity in Google geocoders address_components Array <br/>
+ * 
+ * <p>
+ * See also: <a href="https://developers.google.com/maps/documentation/geocoding/?hl=en#Results">
+ * Google Geocoder Result Documentation</a><br/>
+ * 
+ * <b>Note:</b><br/>
+ * The most documentation in this class a have been adopted by Google documentation.<br/>
+ * Say thank you to Google!
+ * </p>
  * 
  * @author Mathias Born - Contact: www.mathiasborn.de
  */
 public class GeocoderAdress
 {
 
+	/** full text description or name of the address component */
 	@JsonProperty("long_name")
 	private String longName;
+	/** an abbreviated textual name for the address component */
 	@JsonProperty("short_name")
 	private String shortName;
+	/** array indicating the type of the address component. */
 	private String[] types;
 
 	/**
@@ -39,6 +52,8 @@ public class GeocoderAdress
 	}
 
 	/**
+	 * Set the full text description or name of the address component
+	 * 
 	 * @param longName
 	 *            the longName to set
 	 */
@@ -48,6 +63,8 @@ public class GeocoderAdress
 	}
 
 	/**
+	 * Get the full text description or name of the address component
+	 * 
 	 * @return the shortName
 	 */
 	public String getShortName()
@@ -56,6 +73,8 @@ public class GeocoderAdress
 	}
 
 	/**
+	 * Set an abbreviated textual name for the address component
+	 * 
 	 * @param shortName
 	 *            the shortName to set
 	 */
@@ -65,6 +84,8 @@ public class GeocoderAdress
 	}
 
 	/**
+	 * Get an array that indicating the type of the address component.
+	 * 
 	 * @return the types
 	 */
 	public String[] getTypes()
@@ -73,6 +94,8 @@ public class GeocoderAdress
 	}
 
 	/**
+	 * Set an array that indicating the type of the address component.
+	 * 
 	 * @param types
 	 *            the types to set
 	 */

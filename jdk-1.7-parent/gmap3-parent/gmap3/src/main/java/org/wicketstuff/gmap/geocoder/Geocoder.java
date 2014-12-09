@@ -31,7 +31,10 @@ import org.codehaus.jackson.map.ObjectMapper;
 import org.wicketstuff.gmap.GMap;
 import org.wicketstuff.gmap.api.GLatLng;
 import org.wicketstuff.gmap.api.GLatLngBounds;
-import org.wicketstuff.gmap.geocoder.GeocoderGeometry.Location;
+import org.wicketstuff.gmap.geocoder.pojos.GeocoderResult;
+import org.wicketstuff.gmap.geocoder.pojos.GeocoderStatus;
+import org.wicketstuff.gmap.geocoder.pojos.GeocoderViewPort;
+import org.wicketstuff.gmap.geocoder.pojos.Location;
 
 /**
  * Geocoder. See: https://developers.google.com/maps/documentation/geocoding/
@@ -53,6 +56,16 @@ public class Geocoder implements Serializable
 	 * Result-Object of an gecoder request
 	 */
 	private GeocoderResult geocoderResult;
+	private static ObjectMapper objectMapper;
+
+	static
+	{
+
+		objectMapper = new ObjectMapper();
+		objectMapper.configure(DeserializationConfig.Feature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+
+
+	}
 
 	public Geocoder()
 	{
@@ -62,9 +75,7 @@ public class Geocoder implements Serializable
 	{
 		try
 		{
-			geocoderResult = new ObjectMapper() //
-			.configure(DeserializationConfig.Feature.FAIL_ON_UNKNOWN_PROPERTIES, false)
-				.readValue(response, GeocoderResult.class);
+			geocoderResult = objectMapper.readValue(response, GeocoderResult.class);
 		}
 		catch (JsonParseException e)
 		{
