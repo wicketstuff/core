@@ -251,7 +251,6 @@ public class GMap extends Panel implements GOverlayContainer
 		this.bounds = bounds;
 	}
 
-
 	/**
 	 * Returns the script for triggering an event on map.
 	 *
@@ -732,6 +731,7 @@ public class GMap extends Panel implements GOverlayContainer
 		}
 
 		js.append(getJSMarkerCluster());
+
 		return js.toString();
 	}
 
@@ -847,6 +847,20 @@ public class GMap extends Panel implements GOverlayContainer
 		return getJSinvoke("setZoomControlEnabled(" + enabled + ")");
 	}
 
+	/**
+	 * Build the JavaScript for fitBounds() with the bounds property
+	 * 
+	 * @return JavaScript for the fitBounds-Function
+	 */
+	private String getJSfitBounds()
+	{
+		if (null == bounds || Strings.isEmpty(bounds.getJSconstructor()))
+		{
+			return "";
+		} // else
+		return getJSinvoke("fitBounds(" + bounds.getJSconstructor() + ")");
+	}
+
 	private String getJSsetScaleControlEnabled(final boolean enabled)
 	{
 		return getJSinvoke("setScaleControlEnabled(" + enabled + ")");
@@ -866,21 +880,6 @@ public class GMap extends Panel implements GOverlayContainer
 	{
 		return getJSinvoke("setZoom(" + zoom + ")");
 	}
-
-	/**
-	 * Build the JavaScript for fitBounds() with the bounds property
-	 * 
-	 * @return JavaScript for the fitBounds-Function
-	 */
-	private String getJSfitBounds()
-	{
-		if (null == bounds || Strings.isEmpty(bounds.getJSconstructor()))
-		{
-			return "";
-		} // else
-		return getJSinvoke("fitBounds(" + bounds.getJSconstructor() + ")");
-	}
-
 
 	private String getJSsetMinZoom(final int minZoom)
 	{
