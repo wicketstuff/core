@@ -18,6 +18,8 @@ package org.wicketstuff.gmap.api;
 import java.math.BigDecimal;
 import java.util.StringTokenizer;
 
+import org.codehaus.jackson.annotate.JsonCreator;
+import org.codehaus.jackson.annotate.JsonProperty;
 import org.wicketstuff.gmap.js.Constructor;
 
 /**
@@ -35,13 +37,15 @@ public class GLatLng implements GValue
 	private final double lng;
 	private final boolean unbounded;
 
+
 	/**
 	 * Construct.
 	 *
 	 * @param lat
 	 * @param lng
 	 */
-	public GLatLng(double lat, double lng)
+	@JsonCreator
+	public GLatLng(@JsonProperty("lat") double lat, @JsonProperty("lng") double lng)
 	{
 		this(lat, lng, false);
 	}

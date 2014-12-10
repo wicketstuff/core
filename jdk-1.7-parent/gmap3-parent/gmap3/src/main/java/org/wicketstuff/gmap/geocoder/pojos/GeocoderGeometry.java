@@ -15,11 +15,8 @@
  */
 package org.wicketstuff.gmap.geocoder.pojos;
 
-import java.io.IOException;
-
-import org.codehaus.jackson.JsonGenerationException;
-import org.codehaus.jackson.map.JsonMappingException;
-import org.codehaus.jackson.map.ObjectMapper;
+import org.codehaus.jackson.annotate.JsonProperty;
+import org.wicketstuff.gmap.api.GLatLng;
 
 /**
  * Equivalent POJO for the google geometry JSON-Object of a geocoder request
@@ -37,64 +34,18 @@ import org.codehaus.jackson.map.ObjectMapper;
 public class GeocoderGeometry
 {
 
-	private Bounds bounds;
-	private Location location;
+	private NortheastSoutwestInfo bounds;
+	/** contains the geocoded latitude,longitude value */
+	private GLatLng location;
 	/** stores additional data about the specified location */
-	private String location_type;
-	private GeocoderViewPort viewport;
-
-	public class Bounds
-	{
-		private Northeast northeast;
-		private Southwest southwest;
-
-
-		/**
-		 * @return the northeast
-		 */
-		public Northeast getNortheast()
-		{
-			return northeast;
-		}
-
-		/**
-		 * @param northeast
-		 *            the northeast to set
-		 */
-		public void setNortheast(Northeast northeast)
-		{
-			this.northeast = northeast;
-		}
-
-		/**
-		 * @return the southwest
-		 */
-		public Southwest getSouthwest()
-		{
-			return southwest;
-		}
-
-		/**
-		 * @param southwest
-		 *            the southwest to set
-		 */
-		public void setSouthwest(Southwest southwest)
-		{
-			this.southwest = southwest;
-		}
-
-		public String toJSONObject() throws JsonGenerationException, JsonMappingException,
-			IOException
-		{
-			return new ObjectMapper().writeValueAsString(this);
-		}
-
-	}
+	@JsonProperty("location_type")
+	private String locationType;
+	private NortheastSoutwestInfo viewport;
 
 	/**
 	 * @return the bounds
 	 */
-	public Bounds getBounds()
+	public NortheastSoutwestInfo getBounds()
 	{
 		return bounds;
 	}
@@ -103,7 +54,7 @@ public class GeocoderGeometry
 	 * @param bounds
 	 *            the bounds to set
 	 */
-	public void setBounds(Bounds bounds)
+	public void setBounds(NortheastSoutwestInfo bounds)
 	{
 		this.bounds = bounds;
 	}
@@ -112,7 +63,7 @@ public class GeocoderGeometry
 	/**
 	 * @return the location
 	 */
-	public Location getLocation()
+	public GLatLng getLocation()
 	{
 		return location;
 	}
@@ -121,7 +72,7 @@ public class GeocoderGeometry
 	 * @param location
 	 *            the location to set
 	 */
-	public void setLocation(Location location)
+	public void setLocation(GLatLng location)
 	{
 		this.location = location;
 	}
@@ -131,7 +82,7 @@ public class GeocoderGeometry
 	 */
 	public String getLocation_type()
 	{
-		return location_type;
+		return locationType;
 	}
 
 	/**
@@ -140,13 +91,13 @@ public class GeocoderGeometry
 	 */
 	public void setLocation_type(String location_type)
 	{
-		this.location_type = location_type;
+		this.locationType = location_type;
 	}
 
 	/**
 	 * @return the viewport
 	 */
-	public GeocoderViewPort getViewport()
+	public NortheastSoutwestInfo getViewport()
 	{
 		return viewport;
 	}
@@ -155,7 +106,7 @@ public class GeocoderGeometry
 	 * @param viewport
 	 *            the viewport to set
 	 */
-	public void setViewport(GeocoderViewPort viewport)
+	public void setViewport(NortheastSoutwestInfo viewport)
 	{
 		this.viewport = viewport;
 	}

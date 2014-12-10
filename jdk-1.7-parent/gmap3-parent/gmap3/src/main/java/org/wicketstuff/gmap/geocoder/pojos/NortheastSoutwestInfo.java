@@ -15,9 +15,11 @@
  */
 package org.wicketstuff.gmap.geocoder.pojos;
 
+import org.wicketstuff.gmap.api.GLatLng;
+
 
 /**
- * POJO for a google geocoder JSON Object viewport <br/>
+ * POJO for a google geocoder JSON Object viewport and bounds<br/>
  * Contains the recommended viewport for displaying the returned result, specified as two
  * latitude,longitude values defining the southwest and northeast corner of the viewport bounding
  * box. Generally the viewport is used to frame a result when displaying it to a user.
@@ -33,16 +35,16 @@ package org.wicketstuff.gmap.geocoder.pojos;
  * 
  * @author Mathias Born - Contact: www.mathiasborn.de
  */
-public class GeocoderViewPort
+public class NortheastSoutwestInfo
 {
 
-	private Northeast northeast;
-	private Southwest southwest;
+	private GLatLng northeast;
+	private GLatLng southwest;
 
 	/**
 	 * @return the northeast
 	 */
-	public Northeast getNortheast()
+	public GLatLng getNortheast()
 	{
 		return northeast;
 	}
@@ -51,7 +53,7 @@ public class GeocoderViewPort
 	 * @param northeast
 	 *            the northeast to set
 	 */
-	public void setNortheast(Northeast northeast)
+	public void setNortheast(GLatLng northeast)
 	{
 		this.northeast = northeast;
 	}
@@ -59,7 +61,7 @@ public class GeocoderViewPort
 	/**
 	 * @return the southwest
 	 */
-	public Southwest getSouthwest()
+	public GLatLng getSouthwest()
 	{
 		return southwest;
 	}
@@ -68,7 +70,7 @@ public class GeocoderViewPort
 	 * @param southwest
 	 *            the southwest to set
 	 */
-	public void setSouthwest(Southwest southwest)
+	public void setSouthwest(GLatLng southwest)
 	{
 		this.southwest = southwest;
 	}

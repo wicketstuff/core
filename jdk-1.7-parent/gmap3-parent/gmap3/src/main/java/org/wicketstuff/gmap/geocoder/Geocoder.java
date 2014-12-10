@@ -33,8 +33,7 @@ import org.wicketstuff.gmap.api.GLatLng;
 import org.wicketstuff.gmap.api.GLatLngBounds;
 import org.wicketstuff.gmap.geocoder.pojos.GeocoderResult;
 import org.wicketstuff.gmap.geocoder.pojos.GeocoderStatus;
-import org.wicketstuff.gmap.geocoder.pojos.GeocoderViewPort;
-import org.wicketstuff.gmap.geocoder.pojos.Location;
+import org.wicketstuff.gmap.geocoder.pojos.NortheastSoutwestInfo;
 
 /**
  * Geocoder. See: https://developers.google.com/maps/documentation/geocoding/
@@ -102,8 +101,7 @@ public class Geocoder implements Serializable
 			throw new RuntimeException(); // TODO: throw something better
 		}
 
-		Location location = geocoderResult.getResults()[0].getGeometry().getLocation();
-		return new GLatLng(location.getLat(), location.getLng());
+		return geocoderResult.getResults()[0].getGeometry().getLocation();
 
 	}
 
@@ -210,7 +208,7 @@ public class Geocoder implements Serializable
 	public void centerAndFitZoomForAdress(GMap map, String address) throws Exception
 	{
 		this.geocode(address);
-		GeocoderViewPort port = getGecoderResult().getResults()[0].getGeometry().getViewport();
+		NortheastSoutwestInfo port = getGecoderResult().getResults()[0].getGeometry().getViewport();
 		GLatLng sw = new GLatLng(port.getSouthwest().getLat(), port.getSouthwest().getLng());
 		GLatLng ne = new GLatLng(port.getNortheast().getLat(), port.getNortheast().getLng());
 		map.setBounds(new GLatLngBounds(sw, ne));

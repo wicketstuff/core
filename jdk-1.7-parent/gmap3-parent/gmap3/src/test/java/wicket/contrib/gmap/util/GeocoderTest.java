@@ -41,6 +41,13 @@ public class GeocoderTest
 		Assert.assertEquals(14.29231840, result.getLng(), 0.00001);
 	}
 
+	/**
+	 * Integration test for loading geocoder information<br/>
+	 * from google geocoder service and center and fit the<br/>
+	 * zoom of the map
+	 * 
+	 * @throws Exception
+	 */
 	@Test
 	public void testCenterAndFitZoomForAdress() throws Exception
 	{
