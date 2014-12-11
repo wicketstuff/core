@@ -40,19 +40,19 @@ import org.wicketstuff.gmap.geocoder.pojos.NortheastSoutwestInfo;
  *
  * @author Thijs Vonk
  * @author Dieter Tremel
- * @author Mathias Born
  */
 public class Geocoder implements Serializable
 {
 
     private static final long serialVersionUID = 1L;
     private static final Logger LOGGER = Logger.getLogger(Geocoder.class);
+
     // Constants
     public static final String OUTPUT_XML = "xml";
     public static final String OUTPUT_JSON = "json";
     private final String output = OUTPUT_JSON;
     /**
-     * Result-Object of an gecoder request
+     * Result-Object of a gecoder request
      */
     private GeocoderResult geocoderResult;
     private static ObjectMapper objectMapper;
@@ -67,8 +67,7 @@ public class Geocoder implements Serializable
     {
     }
 
-    public GLatLng decode(String response) throws GeocoderException, JSONException
-    {
+    public GLatLng decode(String response) throws GeocoderException, JSONException {
         try
         {
             geocoderResult = objectMapper.readValue(response, GeocoderResult.class);
@@ -99,7 +98,6 @@ public class Geocoder implements Serializable
         }
 
         return geocoderResult.getResults()[0].getGeometry().getLocation();
-
     }
 
     /**
