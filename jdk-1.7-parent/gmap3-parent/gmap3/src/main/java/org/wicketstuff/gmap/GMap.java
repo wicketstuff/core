@@ -75,10 +75,10 @@ public class GMap extends Panel implements GOverlayContainer
     private GLatLngBounds bounds;
     private OverlayListener overlayListener = null;
     private List<GLatLng> markersToShow = new ArrayList<GLatLng>();
-
+    
     /**
-     * If set to true map loading will not produce any JavaScript errors in case google maps API
-     * cannot be found (e.g. no Internet connection)
+     * If set to true map loading will not produce any JavaScript errors in case
+     * google maps API cannot be found (e.g. no Internet connection)
      */
     private boolean failSilently = false;
     private GMarkerCluster markerCluster;
@@ -86,11 +86,9 @@ public class GMap extends Panel implements GOverlayContainer
     /**
      * Construct.
      *
-     * Default the header contributor of the component will added and the gmap will be inited
-     * directly on rendering of the map.
+     * Default the header contributor of the component will added and the gmap will be inited directly on rendering of the map.
      *
-     * @param id
-     *            wicket id
+     * @param id wicket id
      */
     public GMap(final String id)
     {
@@ -125,10 +123,10 @@ public class GMap extends Panel implements GOverlayContainer
         add(overlayListener);
 
     }
-
+    
     protected OverlayListener getOverlayListener()
     {
-        return new OverlayListener();
+    	return new OverlayListener();
     }
 
     /**
@@ -144,13 +142,13 @@ public class GMap extends Panel implements GOverlayContainer
     {
         super.onBeforeRender();
 
-        if (getApplication().usesDevelopmentConfig() &&
-            !getApplication().getMarkupSettings().getStripWicketTags())
+        if (getApplication().usesDevelopmentConfig()
+                && !getApplication().getMarkupSettings().getStripWicketTags())
         {
             log.warn("Application is in DEVELOPMENT mode && Wicket tags are not stripped,"
-                + "Some Chrome Versions will not render the GMap."
-                + " Change to DEPLOYMENT mode  || turn on Wicket tags stripping." + " See:"
-                + " http://www.nabble.com/Gmap2-problem-with-Firefox-3.0-to18137475.html.");
+                    + "Some Chrome Versions will not render the GMap."
+                    + " Change to DEPLOYMENT mode  || turn on Wicket tags stripping." + " See:"
+                    + " http://www.nabble.com/Gmap2-problem-with-Firefox-3.0-to18137475.html.");
         }
     }
 
@@ -165,7 +163,7 @@ public class GMap extends Panel implements GOverlayContainer
      *
      * @see GOverlayContainer#addOverlay(GOverlay)
      * @param overlay
-     *            overlay to add
+     * overlay to add
      * @return This
      */
     @Override
@@ -188,7 +186,7 @@ public class GMap extends Panel implements GOverlayContainer
      *
      * @see GOverlayContainer#removeOverlay(GOverlay)
      * @param overlay
-     *            overlay to remove
+     * overlay to remove
      * @return This
      */
     @Override
@@ -246,10 +244,9 @@ public class GMap extends Panel implements GOverlayContainer
         return bounds;
     }
 
-    public void setBounds(GLatLngBounds bounds)
-    {
-        this.bounds = bounds;
-    }
+	public void setBounds(GLatLngBounds bounds) {
+		this.bounds = bounds;
+	}
 
     /**
      * Returns the script for triggering an event on map.
@@ -257,24 +254,20 @@ public class GMap extends Panel implements GOverlayContainer
      * @param event
      * @return
      */
-    public CharSequence getTriggerEventScript(String event)
-    {
-        return "Wicket.maps['" + getMapId() + "'].triggerEvent('" + event + "')";
-    }
+    public CharSequence getTriggerEventScript(String event) {
+		return "Wicket.maps['"+getMapId()+ "'].triggerEvent('"+event+"')";
+	}
 
     /**
      * @return returns the script to make map re-paint after resize.
      */
-    public CharSequence getTriggerResizeScript()
-    {
-        return "Wicket.maps['" + getMapId() + "'].triggerResize();";
-    }
+	public CharSequence getTriggerResizeScript() {
+		return "Wicket.maps['"+getMapId()+ "'].triggerResize();";
+	}
 
     /**
      * Sets if dragging should be allowed or not.
-     * 
-     * @param enabled
-     *            true if dragging should be allowed, false otherwise
+     * @param enabled true if dragging should be allowed, false otherwise
      */
     public void setDraggingEnabled(final boolean enabled)
     {
@@ -302,9 +295,7 @@ public class GMap extends Panel implements GOverlayContainer
 
     /**
      * Sets if zooming-by-doubleclicking should be allowed or not.
-     * 
-     * @param enabled
-     *            true if zooming-by-doubleclicking should be allowed, false otherwise
+     * @param enabled true if zooming-by-doubleclicking should be allowed, false otherwise
      */
     public void setDoubleClickZoomEnabled(final boolean enabled)
     {
@@ -321,7 +312,8 @@ public class GMap extends Panel implements GOverlayContainer
     }
 
     /**
-     * Is the function zooming-by-doubleclick enabled? Disabled by default.
+     * Is the function zooming-by-doubleclick enabled?
+     * Disabled by default.
      *
      * @return true if enabled, false if disabled
      */
@@ -332,9 +324,7 @@ public class GMap extends Panel implements GOverlayContainer
 
     /**
      * Sets if zooming-by-mousewheel should be allowed or not.
-     * 
-     * @param enabled
-     *            true if zooming-by-mousewheel should be allowed, false otherwise
+     * @param enabled true if zooming-by-mousewheel should be allowed, false otherwise
      */
     public void setScrollWheelZoomEnabled(final boolean enabled)
     {
@@ -351,7 +341,8 @@ public class GMap extends Panel implements GOverlayContainer
     }
 
     /**
-     * Is the function zooming-by-mousewheel enabled? Disabled by default.
+     * Is the function zooming-by-mousewheel enabled?
+     * Disabled by default.
      *
      * @return true if enabled, false if disabled
      */
@@ -361,7 +352,8 @@ public class GMap extends Panel implements GOverlayContainer
     }
 
     /**
-     * Is the StreetView control enabled? Disabled by default.
+     * Is the StreetView control enabled?
+     * Disabled by default.
      *
      * @return true if enabled, false if disabled
      */
@@ -372,9 +364,7 @@ public class GMap extends Panel implements GOverlayContainer
 
     /**
      * Sets if the StreeView control should be visible or not.
-     * 
-     * @param enabled
-     *            true if StreetView should be allowed, false otherwise
+     * @param enabled true if StreetView should be allowed, false otherwise
      */
     public void setStreetViewControlEnabled(boolean enabled)
     {
@@ -391,7 +381,8 @@ public class GMap extends Panel implements GOverlayContainer
     }
 
     /**
-     * Is the zoom control enabled? Enabled by default.
+     * Is the zoom control enabled?
+     * Enabled by default.
      *
      * @return true if enabled, false if disabled
      */
@@ -402,9 +393,7 @@ public class GMap extends Panel implements GOverlayContainer
 
     /**
      * Sets if the zoom control should be visible or not.
-     * 
-     * @param enabled
-     *            true if the zoom-control should be enabled, false otherwise
+     * @param enabled true if the zoom-control should be enabled, false otherwise
      */
     public void setZoomControlEnabled(boolean enabled)
     {
@@ -421,7 +410,8 @@ public class GMap extends Panel implements GOverlayContainer
     }
 
     /**
-     * Is the map type control enabled? Enabled by default.
+     * Is the map type control enabled?
+     * Enabled by default.
      *
      * @return true if enabled, false if disabled
      */
@@ -432,10 +422,8 @@ public class GMap extends Panel implements GOverlayContainer
 
     /**
      * Sets if the map type control should be visible or not.
-     * 
-     * @param enabled
-     *            true if you want the user to have the possibility to change the map type, false
-     *            otherwise
+     * @param enabled true if you want the user to have the possibility to
+     * change the map type, false otherwise
      */
     public void setMapTypeControlEnabled(boolean enabled)
     {
@@ -453,7 +441,8 @@ public class GMap extends Panel implements GOverlayContainer
     }
 
     /**
-     * Is the scale control enabled? Disabled by default.
+     * Is the scale control enabled?
+     * Disabled by default.
      *
      * @return true if enabled, false if disabled
      */
@@ -464,9 +453,7 @@ public class GMap extends Panel implements GOverlayContainer
 
     /**
      * Sets if the scale control should be visible or not.
-     * 
-     * @param enabled
-     *            true if the scale-control should be enabled, false otherwise
+     * @param enabled true if the scale-control should be enabled, false otherwise
      */
     public void setScaleControlEnabled(boolean enabled)
     {
@@ -483,7 +470,8 @@ public class GMap extends Panel implements GOverlayContainer
     }
 
     /**
-     * Is the pan control enabled? Enabled by default.
+     * Is the pan control enabled?
+     * Enabled by default.
      *
      * @return true if enabled, false if disabled
      */
@@ -494,9 +482,7 @@ public class GMap extends Panel implements GOverlayContainer
 
     /**
      * Sets if the pan control should be visible or not.
-     * 
-     * @param enabled
-     *            true if the pan-control should be enabled, false otherwise
+     * @param enabled true if the pan-control should be enabled, false otherwise
      */
     public void setPanControlEnabled(boolean enabled)
     {
@@ -523,9 +509,7 @@ public class GMap extends Panel implements GOverlayContainer
 
     /**
      * Sets the map type which should be used.
-     * 
-     * @param mapType
-     *            the map type
+     * @param mapType the map type
      * @see GMapType
      */
     public void setMapType(final GMapType mapType)
@@ -549,7 +533,7 @@ public class GMap extends Panel implements GOverlayContainer
     {
         return zoom;
     }
-
+	
     /**
      * @return the minZoom level
      */
@@ -557,7 +541,7 @@ public class GMap extends Panel implements GOverlayContainer
     {
         return minZoom;
     }
-
+	
     /**
      * @return the maxZoom level
      */
@@ -568,9 +552,7 @@ public class GMap extends Panel implements GOverlayContainer
 
     /**
      * Sets a new zoom level.
-     * 
-     * @param level
-     *            the new zoom level
+     * @param level the new zoom level
      */
     public void setZoom(final int level)
     {
@@ -585,12 +567,10 @@ public class GMap extends Panel implements GOverlayContainer
             }
         }
     }
-
+	
     /**
      * Sets a new minZoom limit.
-     * 
-     * @param level
-     *            the new minZoom level
+     * @param level the new minZoom level
      */
     public void setMinZoom(final int level)
     {
@@ -605,12 +585,10 @@ public class GMap extends Panel implements GOverlayContainer
             }
         }
     }
-
+	
     /**
      * Sets a new maxZoom limit.
-     * 
-     * @param level
-     *            the new maxZoom level
+     * @param level the new maxZoom level
      */
     public void setMaxZoom(final int level)
     {
@@ -638,7 +616,7 @@ public class GMap extends Panel implements GOverlayContainer
      * Set the center.
      *
      * @param center
-     *            center to set
+     * center to set
      */
     public void setCenter(final GLatLng center)
     {
@@ -655,11 +633,11 @@ public class GMap extends Panel implements GOverlayContainer
     }
 
     /**
-     * Changes the center point of the map to the given point. If the point is already visible in
-     * the current map view, change the center in a smooth animation.
+     * Changes the center point of the map to the given point. If the point is already visible in the current map view,
+     * change the center in a smooth animation.
      *
      * @param center
-     *            the new center of the map
+     * the new center of the map
      */
     public void panTo(final GLatLng center)
     {
@@ -674,13 +652,13 @@ public class GMap extends Panel implements GOverlayContainer
             }
         }
     }
-
+    
     public void setMarkerCluster(GMarkerCluster markerCluster)
     {
-        if (markerCluster == null)
+        if(markerCluster == null)
             throw new IllegalArgumentException("GMarkerCluster argument should not be null.");
         this.markerCluster = markerCluster;
-        if (getBehaviors(GMapMarkerClustererHeaderContributor.class).isEmpty())
+        if (getBehaviors(GMapMarkerClustererHeaderContributor.class).isEmpty()) 
         {
             add(new GMapMarkerClustererHeaderContributor());
         }
@@ -690,17 +668,15 @@ public class GMap extends Panel implements GOverlayContainer
     {
         return markerCluster != null;
     }
-
+    
     /**
-     * Generates the JavaScript used to instantiate this GMap3 as an JavaScript class on the client
-     * side.
+     * Generates the JavaScript used to instantiate this GMap3 as an JavaScript class on the client side.
      *
      * @return The generated JavaScript
      */
     public String getJSinit()
     {
-        final StringBuilder js = new StringBuilder("new WicketMap('" + getMapId() + "', " +
-            isFailSilently() + ");\n");
+        final StringBuilder js = new StringBuilder("new WicketMap('" + getMapId() + "', "+isFailSilently() +");\n");
 
         js.append(getJSinvoke("clearOverlays()"));
         js.append(overlayListener.getJSinit());
@@ -708,7 +684,7 @@ public class GMap extends Panel implements GOverlayContainer
         js.append(getJSsetZoom(getZoom()));
         js.append(getJSsetMinZoom(getMinZoom()));
         js.append(getJSsetMaxZoom(getMaxZoom()));
-        js.append(getJSfitBounds());
+		js.append(getJSfitBounds());
         js.append(getJSsetDraggingEnabled(draggingEnabled));
         js.append(getJSsetDoubleClickZoomEnabled(doubleClickZoomEnabled));
         js.append(getJSsetScrollWheelZoomEnabled(scrollWheelZoomEnabled));
@@ -727,10 +703,11 @@ public class GMap extends Panel implements GOverlayContainer
         }
         for (final Object behavior : getBehaviors(GEventListenerBehavior.class))
         {
-            js.append(((GEventListenerBehavior)behavior).getJSaddListener());
+            js.append(((GEventListenerBehavior) behavior).getJSaddListener());
         }
-
+        
         js.append(getJSMarkerCluster());
+
         return js.toString();
     }
 
@@ -738,7 +715,7 @@ public class GMap extends Panel implements GOverlayContainer
      * Convenience method for generating a JavaScript call on this GMap with the given invocation.
      *
      * @param invocation
-     *            The JavaScript call to invoke on this GMap.
+     * The JavaScript call to invoke on this GMap.
      * @return The generated JavaScript.
      */
     public String getJSinvoke(final String invocation)
@@ -776,20 +753,19 @@ public class GMap extends Panel implements GOverlayContainer
      * <p>
      * Big ups to Doug Leeper for the code.
      *
-     * @see <a href= "http://www.nabble.com/Re%3A-initial-GMap2-bounds-question-p19886673.html"
-     *      >Doug's Nabble post</a>
+     * @see <a href= "http://www.nabble.com/Re%3A-initial-GMap2-bounds-question-p19886673.html" >Doug's Nabble post</a>
      * @param markersToShow
-     *            the points to centre around.
+     * the points to centre around.
      * @param showMarkersForPoints
-     *            if true, will also add basic markers to the map for each point focused on. Just a
-     *            simple convenience method - you will probably want to turn this off so that you
-     *            can show more information with each marker when clicked etc.
+     * if true, will also add basic markers to the map for each point focused on. Just a simple convenience
+     * method - you will probably want to turn this off so that you can show more information with each
+     * marker when clicked etc.
      */
     public void fitMarkers(final List<GLatLng> markersToShow, final boolean showMarkersForPoints,
-        final double zoomAdjustment)
+            final double zoomAdjustment)
     {
         this.markersToShow = markersToShow;
-
+        
         // show the markers
         if (showMarkersForPoints)
         {
@@ -799,14 +775,13 @@ public class GMap extends Panel implements GOverlayContainer
             }
         }
     }
-
-    private String getJSFitMarkers()
-    {
+    
+    private String getJSFitMarkers() {
         if (markersToShow.isEmpty())
         {
             return "";
         }
-
+        
         final StringBuilder buf = new StringBuilder();
         buf.append("var bounds = new google.maps.LatLngBounds();\n");
         // Ask google maps to keep extending the bounds to include each point
@@ -814,13 +789,13 @@ public class GMap extends Panel implements GOverlayContainer
         {
             buf.append("bounds.extend( ").append(point.getJSconstructor()).append(" );\n");
         }
-
+        
         buf.append(getJSinvoke("fitBounds(bounds)"));
         buf.append(getJSinvoke("panToBounds(bounds)"));
-
+        
         return buf.toString();
     }
-
+    
     private String getJSsetDraggingEnabled(final boolean enabled)
     {
         return getJSinvoke("setDraggingEnabled(" + enabled + ")");
@@ -865,43 +840,40 @@ public class GMap extends Panel implements GOverlayContainer
     {
         return getJSinvoke("setZoom(" + zoom + ")");
     }
-
-    /**
-     * Build the JavaScript for fitBounds() with the bounds property
-     * 
-     * @return JavaScript for the fitBounds-Function
-     */
-    private String getJSfitBounds()
-    {
-        if (null == bounds || Strings.isEmpty(bounds.getJSconstructor()))
-        {
-            return "";
-        } // else
-        return getJSinvoke("fitBounds(" + bounds.getJSconstructor() + ")");
-    }
-
+	
     private String getJSsetMinZoom(final int minZoom)
     {
         return getJSinvoke("setMinZoom(" + minZoom + ")");
     }
-
+	
     private String getJSsetMaxZoom(final int maxZoom)
     {
         return getJSinvoke("setMaxZoom(" + maxZoom + ")");
     }
+    
+	/**
+	 * Build the JavaScript for fitBounds() with the bounds property
+	 * 
+	 * @return JavaScript for the fitBounds-Function
+	 */
+	private String getJSfitBounds() {
+		if (null == bounds || Strings.isEmpty(bounds.getJSconstructor())) {
+			return "";
+		} // else
+		return getJSinvoke("fitBounds(" + bounds.getJSconstructor() + ")");
+	}
+
 
     private String getJSsetCenter(final GLatLng center)
     {
         if (center != null)
         {
-            if (!failSilently)
-            {
-                return getJSinvoke("setCenter(" + center.getJSconstructor() + ")");
-            }
-            else
-            {
-                return getJSinvoke("setCenterFailSafe(" + center.getArguments() + ")");
-            }
+        	if( !failSilently )
+        	{
+        		return getJSinvoke("setCenter(" + center.getJSconstructor() + ")");
+        	} else {
+        		return getJSinvoke("setCenterFailSafe(" + center.getArguments() + ")");
+        	}
         }
         return "";
     }
@@ -925,20 +897,22 @@ public class GMap extends Panel implements GOverlayContainer
     {
         return getJSinvoke("zoomIn()");
     }
-
+    
     private String getJSMarkerCluster()
     {
-        if (markerCluster != null)
-        {
-
-            return markerCluster.getJSconstructor();
-        }
-        return "";
+    	if(markerCluster != null)
+    	{
+    		
+    		return markerCluster.getJSconstructor();
+    	}
+    	return "";
     }
+    
+    
 
     /**
-     * Update state from a request to an AJAX target. You need to call this method explictly if you
-     * want to have up-to-date values.
+     * Update state from a request to an AJAX target.
+     * You need to call this method explictly if you want to have up-to-date values.
      */
     public void update()
     {
@@ -949,8 +923,7 @@ public class GMap extends Panel implements GOverlayContainer
         center = GLatLng.parse(requestParameters.getParameterValue("center").toString());
         zoom = requestParameters.getParameterValue("zoom").toInt(zoom);
         String requestMapType = requestParameters.getParameterValue("currentMapType").toString();
-        mapType = requestMapType != null ? GMapType.valueOf(requestParameters.getParameterValue(
-            "currentMapType").toString()) : mapType;
+        mapType = requestMapType != null ? GMapType.valueOf(requestParameters.getParameterValue("currentMapType").toString()) : mapType;
     }
 
     public void setOverlays(final List<GOverlay> overlays)
@@ -1103,13 +1076,8 @@ public class GMap extends Panel implements GOverlayContainer
         {
             final Request request = RequestCycle.get().getRequest();
 
-            final String overlayId = request.getRequestParameters()
-                .getParameterValue("overlay.overlayId")
-                .toString()
-                .replace("overlay", "");
-            final String event = request.getRequestParameters()
-                .getParameterValue("overlay.event")
-                .toString();
+            final String overlayId = request.getRequestParameters().getParameterValue("overlay.overlayId").toString().replace("overlay", "");
+            final String event = request.getRequestParameters().getParameterValue("overlay.event").toString();
             final GOverlay overlay = overlays.get(overlayId);
             if (overlay != null)
             {
@@ -1119,19 +1087,16 @@ public class GMap extends Panel implements GOverlayContainer
 
         public Object getJSinit()
         {
-            return GMap.this.getJSinvoke("overlayListenerCallbackUrl = '" + this.getCallbackUrl() +
-                "'");
+            return GMap.this.getJSinvoke("overlayListenerCallbackUrl = '" + this.getCallbackUrl() + "'");
 
         }
     }
 
-    public boolean isFailSilently()
-    {
-        return failSilently;
-    }
+	public boolean isFailSilently() {
+		return failSilently;
+	}
 
-    public void setFailSilently(boolean failSilently)
-    {
-        this.failSilently = failSilently;
-    }
+	public void setFailSilently(boolean failSilently) {
+		this.failSilently = failSilently;
+	}
 }
