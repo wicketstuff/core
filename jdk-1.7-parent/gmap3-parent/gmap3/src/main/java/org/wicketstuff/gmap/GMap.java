@@ -33,6 +33,7 @@ import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.request.IRequestParameters;
 import org.apache.wicket.request.Request;
 import org.apache.wicket.request.cycle.RequestCycle;
+import org.apache.wicket.util.string.Strings;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.wicketstuff.gmap.api.GEvent;
@@ -40,9 +41,9 @@ import org.wicketstuff.gmap.api.GLatLng;
 import org.wicketstuff.gmap.api.GLatLngBounds;
 import org.wicketstuff.gmap.api.GMapType;
 import org.wicketstuff.gmap.api.GMarker;
+import org.wicketstuff.gmap.api.GMarkerCluster;
 import org.wicketstuff.gmap.api.GMarkerOptions;
 import org.wicketstuff.gmap.api.GOverlay;
-import org.wicketstuff.gmap.api.GMarkerCluster;
 import org.wicketstuff.gmap.event.GEventListenerBehavior;
 
 /**
@@ -242,6 +243,11 @@ public class GMap extends Panel implements GOverlayContainer
     {
         return bounds;
     }
+
+    public void setBounds(GLatLngBounds bounds)
+    {
+		this.bounds = bounds;
+	}
 
     /**
      * Returns the script for triggering an event on map.
@@ -679,6 +685,7 @@ public class GMap extends Panel implements GOverlayContainer
         js.append(getJSsetZoom(getZoom()));
         js.append(getJSsetMinZoom(getMinZoom()));
         js.append(getJSsetMaxZoom(getMaxZoom()));
+        js.append(getJSfitBounds());
         js.append(getJSsetDraggingEnabled(draggingEnabled));
         js.append(getJSsetDoubleClickZoomEnabled(doubleClickZoomEnabled));
         js.append(getJSsetScrollWheelZoomEnabled(scrollWheelZoomEnabled));
@@ -844,6 +851,19 @@ public class GMap extends Panel implements GOverlayContainer
     {
         return getJSinvoke("setMaxZoom(" + maxZoom + ")");
     }
+
+    /**
+     * Build the JavaScript for fitBounds() with the bounds property
+     * 
+     * @return JavaScript for the fitBounds-Function
+     */
+	private String getJSfitBounds() {
+		if (null == bounds || Strings.isEmpty(bounds.getJSconstructor())) {
+			return "";
+		} // else
+		return getJSinvoke("fitBounds(" + bounds.getJSconstructor() + ")");
+	}
+
 
     private String getJSsetCenter(final GLatLng center)
     {

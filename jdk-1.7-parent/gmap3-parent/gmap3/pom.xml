@@ -51,5 +51,30 @@ limitations under the License.
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
         </dependency>
+        
+         <!-- JSON Parsing -->
+		<dependency>
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-core</artifactId>
+			<version>2.4.4</version>
+		</dependency>
+		<dependency>
+		  <groupId>com.fasterxml.jackson.core</groupId>
+		  <artifactId>jackson-databind</artifactId>
+		  <version>2.4.4</version>
+		</dependency>
+		<dependency>
+		  <groupId>com.fasterxml.jackson.core</groupId>
+		  <artifactId>jackson-annotations</artifactId>
+		  <version>2.4.4</version>
+		</dependency>
+
+		
+		<!-- SERVLET API FOR WICKET TESTER -->
+		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>javax.servlet-api</artifactId>
+			<scope>provided</scope>
+		</dependency>
     </dependencies>
 </project>
