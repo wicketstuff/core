@@ -46,7 +46,6 @@ limitations under the License.
         <dependency>
             <groupId>log4j</groupId>
             <artifactId>log4j</artifactId>
-            <scope>compile</scope>
         </dependency>
         <dependency>
             <groupId>junit</groupId>
@@ -55,10 +54,21 @@ limitations under the License.
         
          <!-- JSON Parsing -->
 		<dependency>
-			<groupId>org.codehaus.jackson</groupId>
-			<artifactId>jackson-mapper-asl</artifactId>
-			<version>1.9.13</version>
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-core</artifactId>
+			<version>2.4.4</version>
 		</dependency>
+		<dependency>
+		  <groupId>com.fasterxml.jackson.core</groupId>
+		  <artifactId>jackson-databind</artifactId>
+		  <version>2.4.4</version>
+		</dependency>
+		<dependency>
+		  <groupId>com.fasterxml.jackson.core</groupId>
+		  <artifactId>jackson-annotations</artifactId>
+		  <version>2.4.4</version>
+		</dependency>
+
 		
 		<!-- SERVLET API FOR WICKET TESTER -->
 		<dependency>

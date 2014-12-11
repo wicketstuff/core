@@ -17,6 +17,10 @@ import org.wicketstuff.gmap.api.GLatLngBounds;
 @RunWith(JUnit4.class)
 public class GMapTest
 {
+    /**
+     * Test if the JavaScript for fitBounds() isn't rendered,<br/>
+     * if >not< bounds set on the map
+     */
 	@Test
 	public void testIfBoundJSIsntRenderedIfBoundsPropertyIsntSet()
 	{
@@ -29,6 +33,10 @@ public class GMapTest
 	}
 
 
+    /**
+     * Test if the JavaScript for fitBounds() is rendered,<br/>
+     * if bounds set on the map
+     */
 	@Test
 	public void testIfBoundJSIsRenderedIfBoundsPropertyIsSet()
 	{

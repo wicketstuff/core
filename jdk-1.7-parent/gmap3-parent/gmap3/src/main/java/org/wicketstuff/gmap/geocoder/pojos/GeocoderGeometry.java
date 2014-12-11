@@ -15,8 +15,9 @@
  */
 package org.wicketstuff.gmap.geocoder.pojos;
 
-import org.codehaus.jackson.annotate.JsonProperty;
 import org.wicketstuff.gmap.api.GLatLng;
+
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 /**
  * Equivalent POJO for the google geometry JSON-Object of a geocoder request

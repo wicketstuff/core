@@ -15,6 +15,8 @@
  */
 package org.wicketstuff.gmap.geocoder.pojos;
 
+import org.wicketstuff.gmap.geocoder.GeocoderStatus;
+
 
 /**
  * {@link GeocoderResult} is the Resultset of the Google Geocode Request.<br/>

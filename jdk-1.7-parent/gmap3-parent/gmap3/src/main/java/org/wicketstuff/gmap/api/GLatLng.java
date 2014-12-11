@@ -18,9 +18,10 @@ package org.wicketstuff.gmap.api;
 import java.math.BigDecimal;
 import java.util.StringTokenizer;
 
-import org.codehaus.jackson.annotate.JsonCreator;
-import org.codehaus.jackson.annotate.JsonProperty;
 import org.wicketstuff.gmap.js.Constructor;
+
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 /**
  * Represents an Google Maps API's <a href=

@@ -244,7 +244,8 @@ public class GMap extends Panel implements GOverlayContainer
         return bounds;
     }
 
-	public void setBounds(GLatLngBounds bounds) {
+    public void setBounds(GLatLngBounds bounds)
+    {
 		this.bounds = bounds;
 	}
 
@@ -684,7 +685,7 @@ public class GMap extends Panel implements GOverlayContainer
         js.append(getJSsetZoom(getZoom()));
         js.append(getJSsetMinZoom(getMinZoom()));
         js.append(getJSsetMaxZoom(getMaxZoom()));
-		js.append(getJSfitBounds());
+        js.append(getJSfitBounds());
         js.append(getJSsetDraggingEnabled(draggingEnabled));
         js.append(getJSsetDoubleClickZoomEnabled(doubleClickZoomEnabled));
         js.append(getJSsetScrollWheelZoomEnabled(scrollWheelZoomEnabled));
@@ -850,12 +851,12 @@ public class GMap extends Panel implements GOverlayContainer
     {
         return getJSinvoke("setMaxZoom(" + maxZoom + ")");
     }
-    
-	/**
-	 * Build the JavaScript for fitBounds() with the bounds property
-	 * 
-	 * @return JavaScript for the fitBounds-Function
-	 */
+
+    /**
+     * Build the JavaScript for fitBounds() with the bounds property
+     * 
+     * @return JavaScript for the fitBounds-Function
+     */
 	private String getJSfitBounds() {
 		if (null == bounds || Strings.isEmpty(bounds.getJSconstructor())) {
 			return "";

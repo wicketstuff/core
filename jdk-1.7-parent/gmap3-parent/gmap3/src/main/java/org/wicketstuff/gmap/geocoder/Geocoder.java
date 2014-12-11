@@ -22,18 +22,19 @@ import java.io.UnsupportedEncodingException;
 import java.net.URL;
 import java.net.URLEncoder;
 
-import org.apache.log4j.Logger;
 import org.apache.wicket.ajax.json.JSONException;
-import org.codehaus.jackson.JsonParseException;
-import org.codehaus.jackson.map.DeserializationConfig;
-import org.codehaus.jackson.map.JsonMappingException;
-import org.codehaus.jackson.map.ObjectMapper;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.wicketstuff.gmap.GMap;
 import org.wicketstuff.gmap.api.GLatLng;
 import org.wicketstuff.gmap.api.GLatLngBounds;
 import org.wicketstuff.gmap.geocoder.pojos.GeocoderResult;
-import org.wicketstuff.gmap.geocoder.pojos.GeocoderStatus;
 import org.wicketstuff.gmap.geocoder.pojos.NortheastSoutwestInfo;
+
+import com.fasterxml.jackson.core.JsonParseException;
+import com.fasterxml.jackson.databind.DeserializationFeature;
+import com.fasterxml.jackson.databind.JsonMappingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 /**
  * Geocoder. See: https://developers.google.com/maps/documentation/geocoding/
@@ -45,7 +46,7 @@ public class Geocoder implements Serializable
 {
 
     private static final long serialVersionUID = 1L;
-    private static final Logger LOGGER = Logger.getLogger(Geocoder.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(Geocoder.class);
 
     // Constants
     public static final String OUTPUT_XML = "xml";
@@ -55,34 +56,63 @@ public class Geocoder implements Serializable
      * Result-Object of a gecoder request
      */
     private GeocoderResult geocoderResult;
-    private static ObjectMapper objectMapper;
+    private ObjectMapper objectMapper;
 
-    static
-    {
-        objectMapper = new ObjectMapper();
-        objectMapper.configure(DeserializationConfig.Feature.FAIL_ON_UNKNOWN_PROPERTIES, false);
-    }
 
+    /**
+     * <b>Default Constructor.</b><br/>
+     * Create an {@link ObjectMapper}.<br/>
+     * The {@link ObjectMapper} ignore unknown properties when mapping from JSON to POJO.<br/>
+     * <b>Use</b> {@link #Geocoder(ObjectMapper)} to customize
+     */
     public Geocoder()
     {
+        objectMapper = new ObjectMapper();
+        objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
     }
 
+    /**
+     * <b>Configuration Constructor.</b><br/>
+     * If you have to customize the default {@link ObjectMapper}
+     * 
+     * @see Geocoder#Geocoder()
+     */
+    public Geocoder(ObjectMapper mapper)
+    {
+        this.objectMapper = mapper;
+    }
+
+    /**
+     * Decode an response of an geocoder request to POJOs.<br/>
+     * Following the successful mapping from JSON to POJO<br/>
+     * all hits are available in {@link #geocoderResult}
+     * 
+     * @param response
+     *            - JSON respone from Google Geocoder Service
+     * @return firstHit - First hit of {@link #geocoderResult}
+     * @throws GeocoderException
+     *             - When GeocoderStatus unequal to {@link GeocoderStatus#OK}
+     * @throws JSONException
+     *             - The JSONException is thrown by the JSON.org classes when things are amiss.
+     */
     public GLatLng decode(String response) throws GeocoderException, JSONException {
         try
         {
             geocoderResult = objectMapper.readValue(response, GeocoderResult.class);
         }
-        catch (JsonParseException e)
+        catch (JsonParseException jpe)
         {
-            LOGGER.error(e);
+            LOGGER.error("Geocoder JSON parsing failed", jpe);
         }
-        catch (JsonMappingException e)
+        catch (JsonMappingException jme)
         {
-            LOGGER.error(e);
+            LOGGER.error(
+                "Something went wrong during json mapping. Check your ObjectMapper when customize.",
+                jme);
         }
-        catch (IOException e)
+        catch (IOException ioe)
         {
-            LOGGER.error(e);
+            LOGGER.error("Upps. Panic!", ioe);
         }
 
         GeocoderStatus status = geocoderResult.getStatus();
@@ -94,9 +124,10 @@ public class Geocoder implements Serializable
 
         if (geocoderResult.getResults().length < 1)
         {
-            throw new RuntimeException(); // TODO: throw something better
+            throw new IllegalStateException(
+                "GecoderStatus return GeocoderStatus.OK but size of the results was less then 1");
         }
-
+        // Only return the first Element
         return geocoderResult.getResults()[0].getGeometry().getLocation();
     }
 
@@ -117,11 +148,17 @@ public class Geocoder implements Serializable
     }
 
     /**
+     * Invoke a geocoder request to the GoogleMaps API.<br/>
+     * Only return the first element of {@link #geocoderResult} to be backward compatible.<br/>
+     * After succeful call of {@link #geocode(String)} you can get all results from
+     * {@link #geocoderResult}
+     * 
      * @param address
-     * @return
+     *            - Requested address
+     * @return {@link GLatLng} - only first hit of the request
      * @throws IOException
      */
-    public GLatLng geocode(final String address) throws Exception
+    public GLatLng geocode(final String address) throws IOException
     {
         InputStream is = invokeService(encode(address));
         if (is != null)
@@ -171,8 +208,7 @@ public class Geocoder implements Serializable
     }
 
     /**
-     * READY-ONLY Get the Result of the last geocoder Request
-     * 
+     * Get the Result of the last geocoder Request
      * @return the result of the last geocoder request
      */
     public GeocoderResult getGecoderResult()

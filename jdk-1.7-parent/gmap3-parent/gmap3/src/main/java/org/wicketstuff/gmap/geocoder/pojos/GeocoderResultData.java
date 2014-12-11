@@ -15,7 +15,8 @@
  */
 package org.wicketstuff.gmap.geocoder.pojos;
 
-import org.codehaus.jackson.annotate.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 
 /**
  * The {@link GeocoderResultData} is equivalent POJO to Googles Results as JSON Object.<br/>
@@ -33,7 +34,7 @@ public class GeocoderResultData
 {
 	/** array containing the separate address components */
 	@JsonProperty("address_components")
-	private GeocoderAdress[] addressComponents;
+	private GeocoderAddress[] addressComponents;
 	/** containing the human-readable address of this location */
 	@JsonProperty("formatted_address")
 	private String formattedAddress;
@@ -53,7 +54,7 @@ public class GeocoderResultData
 	 * 
 	 * @return the addressComponents
 	 */
-	public GeocoderAdress[] getAddressComponents()
+	public GeocoderAddress[] getAddressComponents()
 	{
 		return addressComponents;
 	}
@@ -64,7 +65,7 @@ public class GeocoderResultData
 	 * @param addressComponents
 	 *            the addressComponents to set
 	 */
-	public void setAddressComponents(GeocoderAdress[] addressComponents)
+	public void setAddressComponents(GeocoderAddress[] addressComponents)
 	{
 		this.addressComponents = addressComponents;
 	}

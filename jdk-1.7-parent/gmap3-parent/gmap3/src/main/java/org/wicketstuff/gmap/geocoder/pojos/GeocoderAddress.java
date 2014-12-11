@@ -15,7 +15,8 @@
  */
 package org.wicketstuff.gmap.geocoder.pojos;
 
-import org.codehaus.jackson.annotate.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 
 /**
  * POJO for an entity in Google geocoders address_components Array <br/>
@@ -31,7 +32,7 @@ import org.codehaus.jackson.annotate.JsonProperty;
  * 
  * @author Mathias Born - Contact: www.mathiasborn.de
  */
-public class GeocoderAdress
+public class GeocoderAddress
 {
 
 	/** full text description or name of the address component */
