@@ -91,16 +91,16 @@ public class WysiwygEditor extends FormComponentPanel<String> implements IJQuery
 			private static final long serialVersionUID = 1L;
 
 			@Override
-            protected void onComponentTag(ComponentTag tag)
-            {
-                super.onComponentTag(tag);
-
-                if (!WysiwygEditor.this.getForm().isEnabled())
-                {
-                    tag.put("contenteditable", "false"); // tag.append(key, value, separator); is also available
-                }
-            }
-        };
+			protected void onComponentTag(ComponentTag tag)
+			{
+				super.onComponentTag(tag);
+				
+				if (!WysiwygEditor.this.getForm().isEnabled())
+				{
+					tag.put("contenteditable", "false");
+				}
+			}
+		};
 		this.add(this.container);
 
 		if (toolbar != null)
