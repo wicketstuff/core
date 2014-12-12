@@ -7,8 +7,8 @@ import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.panel.FeedbackPanel;
 import org.apache.wicket.model.PropertyModel;
 
-import com.googlecode.wicket.jquery.core.JQueryBehavior;
 import com.googlecode.wicket.jquery.ui.form.button.AjaxButton;
+import com.googlecode.wicket.jquery.ui.form.button.Button.ButtonBehavior;
 import com.googlecode.wicket.jquery.ui.panel.JQueryFeedbackPanel;
 import com.googlecode.wicket.jquery.ui.plugins.wysiwyg.WysiwygEditor;
 import com.googlecode.wicket.jquery.ui.plugins.wysiwyg.toolbar.DefaultWysiwygToolbar;
@@ -52,7 +52,7 @@ public class WysiwygEditorPage extends SamplePage
 					target.add(feedback);
 				}
 			}
-			, new WebMarkupContainer("disable").setMarkupId("disable-btn").add(new JQueryBehavior("#disable-btn", "button")
+			, new WebMarkupContainer("disable").setMarkupId("disable-btn").add(new ButtonBehavior("#disable-btn")
 				, new AjaxEventBehavior("click") {
 					private static final long serialVersionUID = 1L;
 					
