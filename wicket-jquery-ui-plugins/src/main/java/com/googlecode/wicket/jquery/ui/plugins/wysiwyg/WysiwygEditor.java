@@ -16,6 +16,7 @@
  */
 package com.googlecode.wicket.jquery.ui.plugins.wysiwyg;
 
+import org.apache.wicket.markup.ComponentTag;
 import org.apache.wicket.markup.head.IHeaderResponse;
 import org.apache.wicket.markup.head.OnLoadHeaderItem;
 import org.apache.wicket.markup.html.WebMarkupContainer;
@@ -86,7 +87,20 @@ public class WysiwygEditor extends FormComponentPanel<String> implements IJQuery
 	{
 		super(id, model);
 
-		this.container = new WebMarkupContainer("container"); // widget component
+		this.container = new WebMarkupContainer("container") {
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			protected void onComponentTag(ComponentTag tag)
+			{
+				super.onComponentTag(tag);
+				
+				if (!WysiwygEditor.this.getForm().isEnabled())
+				{
+					tag.put("contenteditable", "false");
+				}
+			}
+		};
 		this.add(this.container);
 
 		if (toolbar != null)
