@@ -1,12 +1,12 @@
 package com.googlecode.wicket.jquery.ui.samples.pages.plugins.wysiwyg;
 
-import org.apache.wicket.ajax.AjaxEventBehavior;
 import org.apache.wicket.ajax.AjaxRequestTarget;
-import org.apache.wicket.markup.html.WebMarkupContainer;
+import org.apache.wicket.ajax.markup.html.AjaxLink;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.panel.FeedbackPanel;
 import org.apache.wicket.model.PropertyModel;
 
+import com.googlecode.wicket.jquery.core.IJQueryWidget;
 import com.googlecode.wicket.jquery.ui.form.button.AjaxButton;
 import com.googlecode.wicket.jquery.ui.form.button.Button.ButtonBehavior;
 import com.googlecode.wicket.jquery.ui.panel.JQueryFeedbackPanel;
@@ -35,32 +35,53 @@ public class WysiwygEditorPage extends SamplePage
 		// Feedback//
 		final FeedbackPanel feedback = new JQueryFeedbackPanel("feedback");
 		form.add(feedback);
+		
+		// Buttons //
+		this.add(new AjaxButton("display", form) {
 
-		add(new AjaxButton("display", form) {
-				private static final long serialVersionUID = 1L;
-	
-				@Override
-				protected void onSubmit(AjaxRequestTarget target, Form<?> _form)
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			protected void onSubmit(AjaxRequestTarget target, Form<?> _form)
+			{
+				String html = editor.getModelObject();
+
+				if (html != null)
 				{
-					String html = editor.getModelObject();
-	
-					if (html != null)
-					{
-						_form.info(html);
-					}
-	
-					target.add(feedback);
+					_form.info(html);
 				}
+
+				target.add(feedback);
 			}
-			, new WebMarkupContainer("disable").setMarkupId("disable-btn").add(new ButtonBehavior("#disable-btn")
-				, new AjaxEventBehavior("click") {
-					private static final long serialVersionUID = 1L;
-					
-					@Override
-					protected void onEvent(AjaxRequestTarget target) {
-						target.add(form.setEnabled(!form.isEnabled()));
-					}
-				})
-		);
+		});
+
+		this.add(new AjaxLink<Void>("disable") {
+
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			protected void onInitialize()
+			{
+				super.onInitialize();
+
+				this.add(new ButtonBehavior(IJQueryWidget.JQueryWidget.getSelector(this)));
+			}
+
+			@Override
+			public void onClick(AjaxRequestTarget target)
+			{
+				target.add(form.setEnabled(!form.isEnabled()));
+			}
+		});
+
+		// this.add(new WebMarkupContainer("disable").setMarkupId("disable-btn").add(new ButtonBehavior("#disable-btn"), new AjaxEventBehavior("click") {
+		// private static final long serialVersionUID = 1L;
+		//
+		// @Override
+		// protected void onEvent(AjaxRequestTarget target)
+		// {
+		// target.add(form.setEnabled(!form.isEnabled()));
+		// }
+		// }));
 	}
 }
