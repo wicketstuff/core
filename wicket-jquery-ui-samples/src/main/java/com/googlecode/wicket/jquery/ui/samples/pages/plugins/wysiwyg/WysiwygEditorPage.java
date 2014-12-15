@@ -73,15 +73,5 @@ public class WysiwygEditorPage extends SamplePage
 				target.add(form.setEnabled(!form.isEnabled()));
 			}
 		});
-
-		// this.add(new WebMarkupContainer("disable").setMarkupId("disable-btn").add(new ButtonBehavior("#disable-btn"), new AjaxEventBehavior("click") {
-		// private static final long serialVersionUID = 1L;
-		//
-		// @Override
-		// protected void onEvent(AjaxRequestTarget target)
-		// {
-		// target.add(form.setEnabled(!form.isEnabled()));
-		// }
-		// }));
 	}
 }
