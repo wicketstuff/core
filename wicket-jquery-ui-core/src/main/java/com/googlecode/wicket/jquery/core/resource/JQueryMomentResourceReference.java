@@ -18,28 +18,24 @@ package com.googlecode.wicket.jquery.core.resource;
 
 import org.apache.wicket.resource.JQueryPluginResourceReference;
 
-import com.googlecode.wicket.jquery.core.settings.JQueryLibrarySettings;
-
 /**
- * The resource reference for the jQuery Globalize javascript library.<br/>
- * This reference is not added by default. See {@link JQueryLibrarySettings}.
+ * The resource reference for the jQuery Moment javascript library.
  *
  * @author Sebastien Briquet - sebfz1
  *
  */
-public class JQueryGlobalizeResourceReference extends JQueryPluginResourceReference
+public class JQueryMomentResourceReference extends JQueryPluginResourceReference
 {
 	private static final long serialVersionUID = 1L;
 
-	private static final JQueryGlobalizeResourceReference INSTANCE = new JQueryGlobalizeResourceReference();
+	private static final JQueryMomentResourceReference INSTANCE = new JQueryMomentResourceReference();
 
 	/**
-	 * Normally you should not use this method, but use
-	 * {@link JQueryLibrarySettings#getJQueryGlobalizeReference()} to prevent version conflicts.
+	 * Gets the instance of the resource reference
 	 *
 	 * @return the single instance of the resource reference
 	 */
-	public static JQueryGlobalizeResourceReference get()
+	public static JQueryMomentResourceReference get()
 	{
 		return INSTANCE;
 	}
@@ -47,8 +43,8 @@ public class JQueryGlobalizeResourceReference extends JQueryPluginResourceRefere
 	/**
 	 * Private constructor
 	 */
-	private JQueryGlobalizeResourceReference()
+	private JQueryMomentResourceReference()
 	{
-		super(JQueryGlobalizeResourceReference.class, "globalize.js");
+		super(JQueryMomentResourceReference.class, "moment.min.js");
 	}
 }
