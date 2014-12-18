@@ -3,14 +3,12 @@ package wicket.contrib.tinymce4.image;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-
 import org.apache.wicket.Component;
 import org.apache.wicket.IResourceListener;
 import org.apache.wicket.ajax.AbstractDefaultAjaxBehavior;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.extensions.ajax.markup.html.modal.ModalWindow;
 import org.apache.wicket.extensions.ajax.markup.html.modal.ModalWindow.WindowClosedCallback;
-import org.apache.wicket.markup.head.CssContentHeaderItem;
 import org.apache.wicket.markup.head.CssHeaderItem;
 import org.apache.wicket.markup.head.IHeaderResponse;
 import org.apache.wicket.markup.head.JavaScriptHeaderItem;
@@ -59,6 +57,7 @@ public class ImageUploadPanel extends Panel implements IResourceListener {
 		modalWindow.setWindowClosedCallback(new WindowClosedCallback() {
 			private static final long serialVersionUID = 1L;
 
+            @Override
 			public void onClose(AjaxRequestTarget pTarget) {
 				resetModalContent();
 			}
@@ -126,6 +125,7 @@ public class ImageUploadPanel extends Panel implements IResourceListener {
 	/**
 	 * {@inheritDoc}
 	 */
+    @Override
 	public void onResourceRequested() {
 		final String fileName = RequestCycle.get().getRequest()
 				.getQueryParameters()

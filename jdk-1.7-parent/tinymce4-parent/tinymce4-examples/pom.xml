@@ -35,7 +35,7 @@
 		<dependency>
 			<groupId>net.sf.jazzy</groupId>
 			<artifactId>jazzy</artifactId>
-			<version>0.5.2-rtext-1.4.1</version>
+			<version>0.5.2-rtext-1.4.1-2</version>
 		</dependency>
 
 

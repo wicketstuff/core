@@ -20,8 +20,9 @@ import java.io.Serializable;
 
 public class Toolbar implements Serializable
 {
+    private static final long serialVersionUID = 1L;
 	public static final String SEPARATOR = "|";
-	
+    
 	private final String id;
 	private final StringBuffer buffer = new StringBuffer();
 	

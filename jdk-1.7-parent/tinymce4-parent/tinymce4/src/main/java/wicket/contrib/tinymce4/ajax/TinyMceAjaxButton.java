@@ -39,7 +39,7 @@ public abstract class TinyMceAjaxButton extends AjaxButton
 	/**
 	 * Add the TinyMceAjaxSubmitModifier to this AjaxButton
 	 */
-	private final void addTinyMceAjaxSubmitModifier()
+	private void addTinyMceAjaxSubmitModifier()
 	{
 		add(new TinyMceAjaxSubmitModifier());
 	}
