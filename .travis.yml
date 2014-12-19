@@ -16,6 +16,10 @@ env:
     - secure: "I0PbW4iQlyMO/yztGnZ/qiaMm7IS51QqAGhA5HQYKVh/ywNpQpVrpZaFRyf8OlBAemqKmOTp3EcvR225hb6RQCFilkN2vCMbMO/b7BbMRVhfV6PlpkfiuP2EehgT5vXl74tF/WbnijbvLpQppLPqbC0yYKOVplVcNEDs0LcVLfk="
     - secure: "PKgEV+4JuiCQ+69lYz8kDXLVKxn107EzGd+jq0BPxZK09LqMsvQpvkF0EZGF0gk1xXt3Gn2itVeKPbcxgufccuzVNoQnnXljvKn9+6ITTKg2HZA7UP4MrdOhhw1m+GMRKYVEdPz6qcG4FXlBfw3zgrmiZZ89K6mggPFeyf1VFDw="
 
+cache:
+  directories:
+    - $HOME/.m2
+
 install: true
 
 script: 
