@@ -37,7 +37,7 @@ public class ImageUploadContentPanel extends Panel
 		super(pId);
 		setOutputMarkupId(true);
 		this.uploadFolderPath = customUploadFolderPath;
-		Form<?> form = new Form("form");
+		Form<?> form = new Form<>("form");
 		final FeedbackPanel feedback = new FeedbackPanel("feedback");
 		feedback.setOutputMarkupId(true);
 		form.add(feedback);

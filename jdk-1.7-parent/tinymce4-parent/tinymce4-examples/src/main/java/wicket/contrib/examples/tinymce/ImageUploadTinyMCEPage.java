@@ -26,7 +26,7 @@ public class ImageUploadTinyMCEPage extends TinyMCEBasePage
 		settings.addPlugins("imageupload");
 		settings.addPlugins("image");
 		
-		TextArea<String> textArea = new TextArea("ta", new Model<String>(TEXT));
+		TextArea<String> textArea = new TextArea<>("ta", new Model<String>(TEXT));
 		textArea.add(new TinyMceBehavior(settings));
 		
 		add(textArea);

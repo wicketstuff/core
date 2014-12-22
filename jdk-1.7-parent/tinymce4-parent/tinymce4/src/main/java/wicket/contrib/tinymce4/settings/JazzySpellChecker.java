@@ -226,7 +226,7 @@ class JazzySpellChecker extends AbstractResource
 	{
 		final SpellChecker checker = new SpellChecker(dict);
 
-		final Set<String> errors = new HashSet();
+		final Set<String> errors = new HashSet<>();
 
 		checker.addSpellCheckListener(new SpellCheckListener()
 		{

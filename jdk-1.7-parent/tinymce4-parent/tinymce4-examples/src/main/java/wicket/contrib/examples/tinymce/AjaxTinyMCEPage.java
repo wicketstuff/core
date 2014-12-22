@@ -13,7 +13,7 @@ public class AjaxTinyMCEPage extends TinyMCEBasePage
 
 	public AjaxTinyMCEPage()
 	{
-		ta = new TextArea("ta");
+		ta = new TextArea<>("ta");
 		ta.setVisible(false);
 		ta.setOutputMarkupPlaceholderTag(true);
 		ta.add(new TinyMceBehavior());

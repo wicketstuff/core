@@ -50,7 +50,7 @@ public class FullFeaturedTinyMCEPage extends TinyMCEBasePage
         
         //settings.addCustomSetting("content_css : \"../../../../../content.css\"");
 
-		TextArea<String> textArea = new TextArea("ta", new Model<String>(TEXT));
+		TextArea<String> textArea = new TextArea<>("ta", new Model<String>(TEXT));
 		textArea.add(new TinyMceBehavior(settings));
 		add(textArea);
 	}
