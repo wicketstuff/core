@@ -3,7 +3,6 @@ package wicket.contrib.tinymce4.image;
 import java.io.File;
 import java.util.Arrays;
 import java.util.List;
-
 import org.apache.commons.io.FilenameUtils;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.markup.html.form.AjaxButton;
@@ -38,7 +37,7 @@ public class ImageUploadContentPanel extends Panel
 		super(pId);
 		setOutputMarkupId(true);
 		this.uploadFolderPath = customUploadFolderPath;
-		Form<?> form = new Form<Void>("form");
+		Form<?> form = new Form<>("form");
 		final FeedbackPanel feedback = new FeedbackPanel("feedback");
 		feedback.setOutputMarkupId(true);
 		form.add(feedback);

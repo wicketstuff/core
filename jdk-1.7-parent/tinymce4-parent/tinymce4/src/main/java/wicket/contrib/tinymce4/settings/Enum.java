@@ -60,6 +60,6 @@ public abstract class Enum implements Serializable
 	@Override
 	public String toString()
 	{
-		return name.toString();
+		return name;
 	}
 }

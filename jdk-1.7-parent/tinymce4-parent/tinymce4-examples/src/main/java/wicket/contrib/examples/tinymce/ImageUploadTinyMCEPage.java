@@ -2,7 +2,6 @@ package wicket.contrib.examples.tinymce;
 
 import org.apache.wicket.markup.html.form.TextArea;
 import org.apache.wicket.model.Model;
-
 import wicket.contrib.tinymce4.TinyMceBehavior;
 import wicket.contrib.tinymce4.image.ImageUploadPanel;
 import wicket.contrib.tinymce4.settings.TinyMCESettings;
@@ -27,7 +26,7 @@ public class ImageUploadTinyMCEPage extends TinyMCEBasePage
 		settings.addPlugins("imageupload");
 		settings.addPlugins("image");
 		
-		TextArea<String> textArea = new TextArea<String>("ta", new Model<String>(TEXT));
+		TextArea<String> textArea = new TextArea<>("ta", new Model<String>(TEXT));
 		textArea.add(new TinyMceBehavior(settings));
 		
 		add(textArea);

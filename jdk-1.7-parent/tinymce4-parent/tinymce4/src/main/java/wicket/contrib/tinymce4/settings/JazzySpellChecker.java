@@ -18,6 +18,12 @@
  */
 package wicket.contrib.tinymce4.settings;
 
+import com.swabunga.spell.engine.SpellDictionary;
+import com.swabunga.spell.engine.SpellDictionaryHashMap;
+import com.swabunga.spell.event.SpellCheckEvent;
+import com.swabunga.spell.event.SpellCheckListener;
+import com.swabunga.spell.event.SpellChecker;
+import com.swabunga.spell.event.StringWordTokenizer;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -26,10 +32,8 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
-
 import javax.servlet.ServletInputStream;
 import javax.servlet.http.HttpServletRequest;
-
 import org.apache.wicket.ajax.json.JSONArray;
 import org.apache.wicket.ajax.json.JSONException;
 import org.apache.wicket.ajax.json.JSONObject;
@@ -42,13 +46,6 @@ import org.apache.wicket.util.resource.StringBufferResourceStream;
 import org.apache.wicket.util.time.Time;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import com.swabunga.spell.engine.SpellDictionary;
-import com.swabunga.spell.engine.SpellDictionaryHashMap;
-import com.swabunga.spell.event.SpellCheckEvent;
-import com.swabunga.spell.event.SpellCheckListener;
-import com.swabunga.spell.event.SpellChecker;
-import com.swabunga.spell.event.StringWordTokenizer;
 
 /**
  * Wicket web resource that acts as backend spell checker for tinymce component.
@@ -63,7 +60,7 @@ class JazzySpellChecker extends AbstractResource
 
 	private SpellDictionary dict;
 
-	private StringBufferResourceStream resourceStream;
+	private final StringBufferResourceStream resourceStream;
 
 	protected static final String contentType = "application/json";
 
@@ -229,10 +226,11 @@ class JazzySpellChecker extends AbstractResource
 	{
 		final SpellChecker checker = new SpellChecker(dict);
 
-		final Set<String> errors = new HashSet<String>();
+		final Set<String> errors = new HashSet<>();
 
 		checker.addSpellCheckListener(new SpellCheckListener()
 		{
+            @Override
 			public void spellingError(SpellCheckEvent event)
 			{
 				errors.add(event.getInvalidWord());

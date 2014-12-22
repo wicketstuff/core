@@ -2,7 +2,6 @@ package wicket.contrib.examples.tinymce;
 
 import org.apache.wicket.markup.html.form.TextArea;
 import org.apache.wicket.model.Model;
-
 import wicket.contrib.tinymce4.TinyMceBehavior;
 
 /**
@@ -19,5 +18,5 @@ public class SimpleTinyMCEPage extends TinyMCEBasePage
 		add(textArea);
 	}
 
-	private String TEXT = "Some <b>element</b>, this is to be editor 1.";
+	private final String TEXT = "Some <b>element</b>, this is to be editor 1.";
 }
