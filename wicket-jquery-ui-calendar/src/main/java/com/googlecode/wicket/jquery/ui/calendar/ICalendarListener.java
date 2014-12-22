@@ -16,9 +16,8 @@
  */
 package com.googlecode.wicket.jquery.ui.calendar;
 
-import java.util.Date;
-
 import org.apache.wicket.ajax.AjaxRequestTarget;
+import org.threeten.bp.LocalDateTime;
 
 /**
  * Event listener shared by the {@link Calendar} widget and the {@link CalendarBehavior}
@@ -112,7 +111,7 @@ interface ICalendarListener
 	 * @param end the event end {@link Date}
 	 * @param allDay the event all-day property
 	 */
-	void onSelect(AjaxRequestTarget target, CalendarView view, Date start, Date end, boolean allDay);
+	void onSelect(AjaxRequestTarget target, CalendarView view, LocalDateTime start, LocalDateTime end, boolean allDay);
 
 	/**
 	 * Triggered when a calendar day is clicked<br/>
@@ -123,7 +122,7 @@ interface ICalendarListener
 	 * @param date the day
 	 * @param allDay the event all-day property
 	 */
-	void onDayClick(AjaxRequestTarget target, CalendarView view, Date date, boolean allDay);
+	void onDayClick(AjaxRequestTarget target, CalendarView view, LocalDateTime date, boolean allDay);
 
 	/**
 	 * Triggered when an event is clicked.<br/>
@@ -165,7 +164,7 @@ interface ICalendarListener
 	 * @param date the day
 	 * @param allDay the event all-day property
 	 */
-	void onObjectDrop(AjaxRequestTarget target, String title, Date date, boolean allDay);
+	void onObjectDrop(AjaxRequestTarget target, String title, LocalDateTime date, boolean allDay);
 
 	/**
 	 * Triggered when the calendar loads and every time a different date-range is displayed.<br/>
@@ -176,5 +175,5 @@ interface ICalendarListener
 	 * @param start the start {@link Date} of the current view
 	 * @param end the event end {@link Date} of the current view
 	 */
-	void onViewRender(AjaxRequestTarget target, CalendarView view, Date start, Date end);
+	void onViewRender(AjaxRequestTarget target, CalendarView view, LocalDateTime start, LocalDateTime end);
 }

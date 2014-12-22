@@ -5,6 +5,8 @@ import java.util.Date;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.panel.FeedbackPanel;
+import org.threeten.bp.LocalDateTime;
+import org.threeten.bp.temporal.ChronoUnit;
 
 import com.googlecode.wicket.jquery.core.Options;
 import com.googlecode.wicket.jquery.ui.calendar.Calendar;
@@ -93,7 +95,7 @@ public class ExtendedCalendarPage extends AbstractCalendarPage
 			}
 
 			@Override
-			public void onDayClick(AjaxRequestTarget target, CalendarView view, Date date, boolean allDay)
+			public void onDayClick(AjaxRequestTarget target, CalendarView view, LocalDateTime date, boolean allDay)
 			{
 				DemoCalendarEvent event = CalendarDAO.newEvent(date);
 
@@ -102,7 +104,7 @@ public class ExtendedCalendarPage extends AbstractCalendarPage
 			}
 
 			@Override
-			public void onSelect(AjaxRequestTarget target, CalendarView view, Date start, Date end, boolean allDay)
+			public void onSelect(AjaxRequestTarget target, CalendarView view, LocalDateTime start, LocalDateTime end, boolean allDay)
 			{
 				DemoCalendarEvent event = CalendarDAO.newEvent(start, end);
 				event.setAllDay(allDay);
@@ -130,8 +132,8 @@ public class ExtendedCalendarPage extends AbstractCalendarPage
 
 				if (event != null)
 				{
-					event.setStart(event.getStart() != null ? new Date(event.getStart().getTime() + delta) : null);	//recompute start date
-					event.setEnd(event.getEnd() != null ? new Date(event.getEnd().getTime() + delta) : null);	// recompute end date
+					event.setStart(event.getStart() != null ? event.getStart().plus(delta, ChronoUnit.MILLIS) : null);	//recompute start date
+					event.setEnd(event.getEnd() != null ? event.getEnd().plus(delta, ChronoUnit.MILLIS) : null);	// recompute end date
 					event.setAllDay(allDay);
 
 					this.info(String.format("%s changed to %s", event.getTitle(), event.getStart()));
@@ -146,8 +148,8 @@ public class ExtendedCalendarPage extends AbstractCalendarPage
 
 				if (event != null)
 				{
-					Date date = event.getEnd() == null ? event.getStart() : event.getEnd();
-					event.setEnd(new Date(date.getTime() + delta));
+					LocalDateTime date = event.getEnd() == null ? event.getStart() : event.getEnd();
+					event.setEnd(date.plus(delta, ChronoUnit.MILLIS));
 
 					this.info(String.format("%s now ends the %s", event.getTitle(), event.getEnd()));
 					target.add(feedback);

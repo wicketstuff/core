@@ -27,7 +27,7 @@ import com.googlecode.wicket.jquery.core.utils.RequestCycleUtils;
 /**
  * Provides a {@link JQueryAjaxPostBehavior} that can be returned by {@link DatePickerBehavior#newOnChangeBehavior()}
  */
-class OnChangeBehavior extends JQueryAjaxPostBehavior
+public class OnChangeBehavior extends JQueryAjaxPostBehavior
 {
 	private static final long serialVersionUID = 1L;
 

@@ -1,7 +1,8 @@
 package com.googlecode.wicket.jquery.ui.samples.data;
 
-import java.util.Date;
 import java.util.List;
+
+import org.threeten.bp.LocalDate;
 
 import com.googlecode.wicket.jquery.ui.calendar.CalendarEvent;
 import com.googlecode.wicket.jquery.ui.calendar.CalendarModel;
@@ -15,8 +16,8 @@ public class DemoCalendarModel extends CalendarModel implements ICalendarVisitor
 	@Override
 	protected List<DemoCalendarEvent> load()
 	{
-		 Date start = this.getStart();
-		 Date end = this.getEnd();
+		 LocalDate start = this.getStart();
+		 LocalDate end = this.getEnd();
 		
 		return CalendarDAO.getEvents(start, end);
 	}

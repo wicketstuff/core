@@ -17,7 +17,8 @@
 package com.googlecode.wicket.jquery.ui.calendar;
 
 import java.io.Serializable;
-import java.util.Date;
+
+import org.threeten.bp.LocalDateTime;
 
 import com.googlecode.wicket.jquery.core.Options;
 
@@ -34,8 +35,8 @@ public class CalendarEvent implements Serializable
 	private int id;
 	private String title;
 
-	private Date start;
-	private Date end;
+	private LocalDateTime start;
+	private LocalDateTime end;
 
 	private CharSequence url = null;
 	private String source = null;
@@ -49,12 +50,12 @@ public class CalendarEvent implements Serializable
 	private String borderColor = null;
 	private String textColor = null;
 
-	public CalendarEvent(int id, String title, Date date)
+	public CalendarEvent(int id, String title, LocalDateTime date)
 	{
 		this(id, title, date, null);
 	}
 
-	public CalendarEvent(int id, String title, Date start, Date end)
+	public CalendarEvent(int id, String title, LocalDateTime start, LocalDateTime end)
 	{
 		this.id = id;
 		this.title = title;
@@ -112,22 +113,22 @@ public class CalendarEvent implements Serializable
 		this.allDay = allDay;
 	}
 
-	public Date getStart()
+	public LocalDateTime getStart()
 	{
 		return this.start;
 	}
 
-	public void setStart(Date start)
+	public void setStart(LocalDateTime start)
 	{
 		this.start = start;
 	}
 
-	public Date getEnd()
+	public LocalDateTime getEnd()
 	{
 		return this.end;
 	}
 
-	public void setEnd(Date end)
+	public void setEnd(LocalDateTime end)
 	{
 		this.end = end;
 	}
@@ -221,12 +222,12 @@ public class CalendarEvent implements Serializable
 
 		if (this.start != null)
 		{
-			options.set("start", Options.asDate(this.start));
+			options.set("start", Options.asString(this.start.toString()));
 		}
 
 		if (this.end != null)
 		{
-			options.set("end", Options.asDate(this.end));
+			options.set("end", Options.asString(this.end.toString()));
 		}
 
 		if (this.url != null)

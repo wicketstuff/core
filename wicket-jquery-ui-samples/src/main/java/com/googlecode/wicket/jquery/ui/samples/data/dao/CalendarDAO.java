@@ -1,8 +1,10 @@
 package com.googlecode.wicket.jquery.ui.samples.data.dao;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
+
+import org.threeten.bp.LocalDate;
+import org.threeten.bp.LocalDateTime;
 
 import com.googlecode.wicket.jquery.ui.samples.data.DemoCalendarEvent;
 import com.googlecode.wicket.jquery.ui.samples.data.DemoCalendarEvent.Category;
@@ -29,12 +31,12 @@ public class CalendarDAO
 		return event != null && event.getId() == ID;
 	}
 
-	public static DemoCalendarEvent newEvent(Date date)
+	public static DemoCalendarEvent newEvent(LocalDateTime date)
 	{
 		return new DemoCalendarEvent(ID, "", Category.PUBLIC, date);
 	}
 
-	public static DemoCalendarEvent newEvent(Date start, Date end)
+	public static DemoCalendarEvent newEvent(LocalDateTime start, LocalDateTime end)
 	{
 		return new DemoCalendarEvent(ID, "", Category.PUBLIC, start, end);
 	}
@@ -52,7 +54,7 @@ public class CalendarDAO
 		return null;
 	}
 
-	public static List<DemoCalendarEvent> getEvents(Date start, Date end)
+	public static List<DemoCalendarEvent> getEvents(LocalDate start, LocalDate end)
 	{
 		List<DemoCalendarEvent> events = new ArrayList<DemoCalendarEvent>();
 
@@ -60,7 +62,7 @@ public class CalendarDAO
 
 		for (DemoCalendarEvent event : dao.list)
 		{
-			if (dao.isInRange(event, start, end))
+			if (dao.isInRange(event, start.atStartOfDay(), end.atStartOfDay()))
 			{
 				events.add(event);
 			}
@@ -93,8 +95,8 @@ public class CalendarDAO
 
 	private final void initList()
 	{
-		this.list.add(new DemoCalendarEvent(this.newId(), "Public event", Category.PUBLIC, new Date()));
-		this.list.add(new DemoCalendarEvent(this.newId(), "Private event", Category.PRIVATE, new Date()));
+		this.list.add(new DemoCalendarEvent(this.newId(), "Public event", Category.PUBLIC, LocalDateTime.now()));
+		this.list.add(new DemoCalendarEvent(this.newId(), "Private event", Category.PRIVATE, LocalDateTime.now()));
 	}
 
 	protected final int newId()
@@ -110,10 +112,12 @@ public class CalendarDAO
 	 * @param end
 	 * @return true or false
 	 */
-	protected boolean isInRange(DemoCalendarEvent event, Date start, Date end)
+	protected boolean isInRange(DemoCalendarEvent event, LocalDateTime start, LocalDateTime end)
 	{
-		Date date = event.getStart();
+		LocalDateTime dateS = event.getStart();
+		LocalDateTime dateE = event.getEnd();
 
-		return date != null && start.compareTo(date) <= 0 && end.compareTo(date) >= 0;
+		return dateS != null && start.compareTo(dateS) <= 0 && end.compareTo(dateS) >= 0
+				&& (dateE == null || (dateE != null && start.compareTo(dateE) <= 0 && end.compareTo(dateE) >= 0));
 	}
 }

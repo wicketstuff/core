@@ -1,8 +1,9 @@
 package com.googlecode.wicket.jquery.ui.samples.pages.calendar;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
+
+import org.threeten.bp.LocalDateTime;
 
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.markup.html.panel.FeedbackPanel;
@@ -75,7 +76,7 @@ public class ObjectCalendarPage extends AbstractCalendarPage
 			}
 
 			@Override
-			public void onObjectDrop(AjaxRequestTarget target, String title, Date date, boolean allDay)
+			public void onObjectDrop(AjaxRequestTarget target, String title, LocalDateTime date, boolean allDay)
 			{
 				CalendarEvent event = new CalendarEvent(0, title, date);
 				event.setAllDay(allDay);

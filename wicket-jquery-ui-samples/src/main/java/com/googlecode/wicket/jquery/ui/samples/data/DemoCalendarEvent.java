@@ -1,6 +1,6 @@
 package com.googlecode.wicket.jquery.ui.samples.data;
 
-import java.util.Date;
+import org.threeten.bp.LocalDateTime;
 
 import com.googlecode.wicket.jquery.ui.calendar.CalendarEvent;
 
@@ -36,14 +36,12 @@ public class DemoCalendarEvent extends CalendarEvent
 
 	private Category category;
 
-	public DemoCalendarEvent(int id, String title, Category category, Date date)
+	public DemoCalendarEvent(int id, String title, Category category, LocalDateTime date)
 	{
-		super(id, title, date);
-
-		this.setCategory(category);
+		this(id, title, category, date, null);
 	}
 
-	public DemoCalendarEvent(int id, String title, Category category, Date start, Date end)
+	public DemoCalendarEvent(int id, String title, Category category, LocalDateTime start, LocalDateTime end)
 	{
 		super(id, title, start, end);
 

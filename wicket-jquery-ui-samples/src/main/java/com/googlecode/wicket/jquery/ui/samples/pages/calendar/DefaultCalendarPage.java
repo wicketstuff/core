@@ -1,9 +1,8 @@
 package com.googlecode.wicket.jquery.ui.samples.pages.calendar;
 
-import org.apache.wicket.markup.html.panel.FeedbackPanel;
-
 import com.googlecode.wicket.jquery.core.Options;
 import com.googlecode.wicket.jquery.ui.calendar.Calendar;
+import com.googlecode.wicket.jquery.ui.panel.JQueryFeedbackPanel;
 
 public class DefaultCalendarPage extends AbstractCalendarPage
 {
@@ -12,11 +11,12 @@ public class DefaultCalendarPage extends AbstractCalendarPage
 	public DefaultCalendarPage()
 	{
 		// FeedbackPanel //
-		this.add(new FeedbackPanel("feedback"));
+		this.add(new JQueryFeedbackPanel("feedback"));
 
 		// Calendar //
 		Calendar calendar = new Calendar("calendar", new Options("theme", true));
-		calendar.addFeed("https://www.google.com/calendar/feeds/qde8vmooe48vsm1ma3i9je88q8%40group.calendar.google.com/public/basic", "event-duchesse");
+		calendar.setGoogleCalendarApiKey("no-key"); //FIXME correct KEY should be set here
+		calendar.addFeed("qde8vmooe48vsm1ma3i9je88q8@group.calendar.google.com", "event-duchesse");
 		this.add(calendar);
 	}
 }

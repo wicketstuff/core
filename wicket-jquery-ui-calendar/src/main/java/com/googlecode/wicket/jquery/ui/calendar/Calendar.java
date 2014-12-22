@@ -16,12 +16,14 @@
  */
 package com.googlecode.wicket.jquery.ui.calendar;
 
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import org.apache.wicket.WicketRuntimeException;
 import org.apache.wicket.ajax.AjaxRequestTarget;
+import org.apache.wicket.util.string.Strings;
+import org.threeten.bp.LocalDateTime;
 
 import com.googlecode.wicket.jquery.core.JQueryBehavior;
 import com.googlecode.wicket.jquery.core.JQueryContainer;
@@ -37,9 +39,11 @@ import com.googlecode.wicket.jquery.core.Options;
 public class Calendar extends JQueryContainer implements ICalendarListener
 {
 	private static final long serialVersionUID = 1L;
+	private static final String MISSING_API_KEY = "No Google Calendar API Key has been supplied";
 
 	private final Options options;
 	private Map<CharSequence, String> gcals;
+	private String gcalApiKey = null; // TODO this might be per calendar option !!!!
 	private CalendarModelBehavior modelBehavior; // events load
 
 	/**
@@ -92,11 +96,33 @@ public class Calendar extends JQueryContainer implements ICalendarListener
 
 	// Methods //
 	/**
+	 * Sets the Google Calendar API key<br/>
+	 * 
+	 * @return the API key
+	 * @see <a href="http://fullcalendar.io/docs/google_calendar/">http://fullcalendar.io/docs/google_calendar/</a>
+	 */
+	public String getGoogleCalendarApiKey()
+	{
+		return this.gcalApiKey;
+	}
+
+	/**
+	 * Sets the Google Calendar API key<br/>
+	 * 
+	 * @param key the API key
+	 * @see <a href="http://fullcalendar.io/docs/google_calendar/">http://fullcalendar.io/docs/google_calendar/</a>
+	 */
+	public void setGoogleCalendarApiKey(String key)
+	{
+		this.gcalApiKey = key;
+	}
+
+	/**
 	 * Adds a Google Calendar Feed
 	 *
 	 * @param gcal url to xml feed
 	 */
-	public void addFeed(CharSequence gcal)
+	public synchronized void addFeed(CharSequence gcal)
 	{
 		this.addFeed(gcal, "");
 	}
@@ -107,7 +133,7 @@ public class Calendar extends JQueryContainer implements ICalendarListener
 	 * @param gcal url to xml feed
 	 * @param className css class to be used
 	 */
-	public void addFeed(CharSequence gcal, String className)
+	public synchronized void addFeed(CharSequence gcal, String className)
 	{
 		if (this.gcals == null)
 		{
@@ -198,14 +224,21 @@ public class Calendar extends JQueryContainer implements ICalendarListener
 
 		// builds sources //
 		StringBuilder sourceBuilder = new StringBuilder();
-		sourceBuilder.append("'").append(Calendar.this.modelBehavior.getCallbackUrl()).append("'");
+		sourceBuilder.append(String.format("{url: '%s'}", Calendar.this.modelBehavior.getCallbackUrl()));
 
 		if (Calendar.this.gcals != null)
 		{
+			if (Strings.isEmpty(this.gcalApiKey))
+			{
+				throw new WicketRuntimeException(MISSING_API_KEY);
+			}
+			
+			behavior.setOption("googleCalendarApiKey", Options.asString(Calendar.this.gcalApiKey));
+
 			for (Entry<CharSequence, String> gcal : Calendar.this.gcals.entrySet())
 			{
 				sourceBuilder.append(", ");
-				sourceBuilder.append("jQuery.fullCalendar.gcalFeed('").append(gcal.getKey()).append("', { className: '").append(gcal.getValue()).append("' })");
+				sourceBuilder.append(String.format("{ googleCalendarId: '%s', className: '%s' }", gcal.getKey(), gcal.getValue()));
 			}
 		}
 
@@ -213,13 +246,13 @@ public class Calendar extends JQueryContainer implements ICalendarListener
 	}
 
 	@Override
-	public void onSelect(AjaxRequestTarget target, CalendarView view, Date start, Date end, boolean allDay)
+	public void onSelect(AjaxRequestTarget target, CalendarView view, LocalDateTime start, LocalDateTime end, boolean allDay)
 	{
 		// noop
 	}
 
 	@Override
-	public void onDayClick(AjaxRequestTarget target, CalendarView view, Date date, boolean allDay)
+	public void onDayClick(AjaxRequestTarget target, CalendarView view, LocalDateTime date, boolean allDay)
 	{
 		// noop
 	}
@@ -243,13 +276,13 @@ public class Calendar extends JQueryContainer implements ICalendarListener
 	}
 
 	@Override
-	public void onObjectDrop(AjaxRequestTarget target, String title, Date date, boolean allDay)
+	public void onObjectDrop(AjaxRequestTarget target, String title, LocalDateTime date, boolean allDay)
 	{
 		// noop
 	}
 
 	@Override
-	public void onViewRender(AjaxRequestTarget target, CalendarView view, Date start, Date end)
+	public void onViewRender(AjaxRequestTarget target, CalendarView view, LocalDateTime start, LocalDateTime end)
 	{
 		// noop
 	}
@@ -320,13 +353,13 @@ public class Calendar extends JQueryContainer implements ICalendarListener
 			}
 
 			@Override
-			public void onSelect(AjaxRequestTarget target, CalendarView view, Date start, Date end, boolean allDay)
+			public void onSelect(AjaxRequestTarget target, CalendarView view, LocalDateTime start, LocalDateTime end, boolean allDay)
 			{
 				Calendar.this.onSelect(target, view, start, end, allDay);
 			}
 
 			@Override
-			public void onDayClick(AjaxRequestTarget target, CalendarView view, Date date, boolean allDay)
+			public void onDayClick(AjaxRequestTarget target, CalendarView view, LocalDateTime date, boolean allDay)
 			{
 				Calendar.this.onDayClick(target, view, date, allDay);
 			}
@@ -350,13 +383,13 @@ public class Calendar extends JQueryContainer implements ICalendarListener
 			}
 
 			@Override
-			public void onObjectDrop(AjaxRequestTarget target, String title, Date date, boolean allDay)
+			public void onObjectDrop(AjaxRequestTarget target, String title, LocalDateTime date, boolean allDay)
 			{
 				Calendar.this.onObjectDrop(target, title, date, allDay);
 			}
 
 			@Override
-			public void onViewRender(AjaxRequestTarget target, CalendarView view, Date start, Date end)
+			public void onViewRender(AjaxRequestTarget target, CalendarView view, LocalDateTime start, LocalDateTime end)
 			{
 				Calendar.this.onViewRender(target, view, start, end);
 			}
@@ -364,6 +397,7 @@ public class Calendar extends JQueryContainer implements ICalendarListener
 	}
 
 	// Factory methods //
+
 	/**
 	 * Gets a new {@link CalendarModelBehavior}
 	 *

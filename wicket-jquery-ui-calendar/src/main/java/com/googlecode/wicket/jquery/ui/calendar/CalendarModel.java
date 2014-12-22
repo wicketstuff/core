@@ -16,10 +16,10 @@
  */
 package com.googlecode.wicket.jquery.ui.calendar;
 
-import java.util.Date;
 import java.util.List;
 
 import org.apache.wicket.model.LoadableDetachableModel;
+import org.threeten.bp.LocalDate;
 
 /**
  * Base class for implementing the list model of {@link CalendarEvent} to be retrieved.<br/>
@@ -32,8 +32,8 @@ public abstract class CalendarModel extends LoadableDetachableModel<List<? exten
 {
 	private static final long serialVersionUID = 1L;
 
-	private Date start;
-	private Date end;
+	private LocalDate start;
+	private LocalDate end;
 
 	/**
 	 * Constructor
@@ -48,7 +48,7 @@ public abstract class CalendarModel extends LoadableDetachableModel<List<? exten
 	 * Gets the start date, used to {@link #load()} {@link CalendarEvent}<code>s</code>
 	 * @return the start date
 	 */
-	public Date getStart()
+	public LocalDate getStart()
 	{
 		return this.start;
 	}
@@ -57,7 +57,7 @@ public abstract class CalendarModel extends LoadableDetachableModel<List<? exten
 	 * Sets the start date.
 	 * @param date the start date
 	 */
-	public void setStart(Date date)
+	public void setStart(LocalDate date)
 	{
 		this.start = date;
 	}
@@ -66,7 +66,7 @@ public abstract class CalendarModel extends LoadableDetachableModel<List<? exten
 	 * Gets the end date, used to {@link #load()} {@link CalendarEvent}<code>s</code>
 	 * @return the start date
 	 */
-	public Date getEnd()
+	public LocalDate getEnd()
 	{
 		return this.end;
 	}
@@ -75,7 +75,7 @@ public abstract class CalendarModel extends LoadableDetachableModel<List<? exten
 	 * Gets the end date.
 	 * @param date the start date
 	 */
-	public void setEnd(Date date)
+	public void setEnd(LocalDate date)
 	{
 		this.end = date;
 	}
