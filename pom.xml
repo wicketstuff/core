@@ -44,8 +44,8 @@
 
 	<properties>
 		<wicket.version>6.18.0</wicket.version>
-		<junit.version>4.11</junit.version>
-		<jetty.version>8.1.15.v20140411</jetty.version>
+		<junit.version>4.12</junit.version>
+		<jetty.version>8.1.16.v20140903</jetty.version>
 	</properties>
 
 	<repositories>
