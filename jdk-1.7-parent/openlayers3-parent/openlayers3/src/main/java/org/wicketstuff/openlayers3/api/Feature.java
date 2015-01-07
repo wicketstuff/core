@@ -2,6 +2,7 @@ package org.wicketstuff.openlayers3.api;
 
 import org.wicketstuff.openlayers3.api.geometry.Point;
 import org.wicketstuff.openlayers3.api.style.Style;
+import org.apache.wicket.util.string.Strings;
 
 import java.io.Serializable;
 import java.util.HashMap;
@@ -243,11 +244,11 @@ public class Feature extends JavascriptObject implements Serializable {
         }
 
         if (getName() != null) {
-            builder.append("'name': '" + getName() + "',");
+            builder.append("'name': '" + Strings.escapeMarkup(getName()).toString() + "',");
         }
 
         for (Map.Entry<String, String> entry : stringValues.entrySet()) {
-            builder.append("'" + entry.getKey() + "': '" + entry.getValue() + "',");
+            builder.append("'" + entry.getKey() + "': '" + Strings.escapeMarkup(entry.getValue()).toString() + "',");
         }
 
         for (Map.Entry<String, Number> entry : numberValues.entrySet()) {
