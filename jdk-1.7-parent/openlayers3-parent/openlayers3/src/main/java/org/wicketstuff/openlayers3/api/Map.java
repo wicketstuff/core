@@ -340,7 +340,7 @@ public class Map extends JavascriptObject implements Serializable {
 
     @Override
     public String getJsId() {
-        return "map_" + getTarget();
+        return  JS_GLOBAL + "['map_" + getTarget() + "']";
     }
 
     public String renderJs() {

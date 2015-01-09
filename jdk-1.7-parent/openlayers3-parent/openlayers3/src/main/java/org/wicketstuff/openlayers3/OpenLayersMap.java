@@ -161,7 +161,7 @@ public abstract class OpenLayersMap extends GenericPanel<Map> {
         getModelObject().getView().setCenter(point.getCoordinate());
 
         // update the map
-        target.appendJavaScript("map_" + getMarkupId() + ".getView().setCenter("
+        target.appendJavaScript(JavascriptObject.JS_GLOBAL + "['map_" + getMarkupId() + "'].getView().setCenter("
                 + point.renderJs() + ");");
     }
 
@@ -179,7 +179,7 @@ public abstract class OpenLayersMap extends GenericPanel<Map> {
         // update the map
         target.appendJavaScript(interaction.getJsId() + " = new " + interaction.getJsType()
                 + "(" + interaction.renderJs() + ");"
-                + "map_" + getMarkupId() + ".addInteraction(" + interaction.getJsId() + ");");
+                + JavascriptObject.JS_GLOBAL + "['map_" + getMarkupId() + "'].addInteraction(" + interaction.getJsId() + ");");
     }
 
     /**
@@ -194,8 +194,8 @@ public abstract class OpenLayersMap extends GenericPanel<Map> {
         getModelObject().getInteractions().remove(interaction);
 
         // update the map
-        target.appendJavaScript("map_" + getMarkupId() + ".removeInteraction(" + interaction.getJsId() + ");"
-                + interaction.getJsId() + ".dispose();");
+        target.appendJavaScript(JavascriptObject.JS_GLOBAL + "['map_" + getMarkupId() + "'].removeInteraction("
+			+ interaction.getJsId() + ");" + interaction.getJsId() + ".dispose();");
     }
 
     @Override
