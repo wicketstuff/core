@@ -5,3 +5,4 @@ target
 .settings
 .xml~
 bin
+/nbactions.xml

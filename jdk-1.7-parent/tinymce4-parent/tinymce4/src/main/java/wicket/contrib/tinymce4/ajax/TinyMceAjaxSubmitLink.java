@@ -35,7 +35,7 @@ public abstract class TinyMceAjaxSubmitLink extends AjaxSubmitLink
 	/**
 	 * Add the TinyMceAjaxSubmitModifier to this AjaxSubmitLink
 	 */
-	private final void addTinyMceAjaxSubmitModifier()
+	private void addTinyMceAjaxSubmitModifier()
 	{
 		add(new TinyMceAjaxSubmitModifier());
 	}

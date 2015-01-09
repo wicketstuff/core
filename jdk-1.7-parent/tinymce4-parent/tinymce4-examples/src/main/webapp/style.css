@@ -104,9 +104,10 @@ a.none {
 	display: inline !important;
 }
 
-<!--
-css style for TabPanel,thanks Wouter --><!--TODO clean up stuff that is not used by TabPanel-->#wicket-tab
-	{
+// css-style for TabPanel,thanks Wouter 
+// TODO clean up stuff that is not used by TabPanel
+#wicket-tab
+{
 	float: left;
 }
 

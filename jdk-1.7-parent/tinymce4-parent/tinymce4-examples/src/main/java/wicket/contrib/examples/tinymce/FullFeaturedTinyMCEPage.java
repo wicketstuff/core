@@ -2,7 +2,6 @@ package wicket.contrib.examples.tinymce;
 
 import org.apache.wicket.markup.html.form.TextArea;
 import org.apache.wicket.model.Model;
-
 import wicket.contrib.tinymce4.TinyMceBehavior;
 import wicket.contrib.tinymce4.settings.TinyMCESettings;
 import wicket.contrib.tinymce4.settings.Toolbar;
@@ -20,7 +19,7 @@ public class FullFeaturedTinyMCEPage extends TinyMCEBasePage
 		TinyMCESettings settings = new TinyMCESettings(TinyMCESettings.Theme.modern);
 		String plugins = "advlist autolink autosave link image lists charmap print preview hr anchor pagebreak spellchecker " +
                 "searchreplace wordcount visualblocks visualchars code fullscreen insertdatetime media nonbreaking " +
- "table contextmenu directionality emoticons template textcolor paste fullpage textcolor";
+                "table contextmenu directionality emoticons template textcolor paste fullpage colorpicker";
 
 		String[] pluginNames = plugins.split(" ");
 		
@@ -51,7 +50,7 @@ public class FullFeaturedTinyMCEPage extends TinyMCEBasePage
         
         //settings.addCustomSetting("content_css : \"../../../../../content.css\"");
 
-		TextArea<String> textArea = new TextArea<String>("ta", new Model<String>(TEXT));
+		TextArea<String> textArea = new TextArea<>("ta", new Model<String>(TEXT));
 		textArea.add(new TinyMceBehavior(settings));
 		add(textArea);
 	}

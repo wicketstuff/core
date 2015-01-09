@@ -40,15 +40,15 @@ public final class Reflection
 	}
 
 	/**
-	 * Get the resulting type of invoking the given method on the given owner.
+	 * Get the resulting type of invoking a method.
 	 * 
-	 * @param ownerType
-	 *            type of owner
-	 * @param method
-	 *            method
+	 * @param declaringType
+	 *            declaring class of the method
+	 * @param type
+	 *            return type of method
 	 * @return resulting type or {@code null} if not known
 	 */
-	public static Type resultType(Type ownerType, Type type)
+	public static Type resultType(Type declaringType, Type type)
 	{
 		if (type instanceof TypeVariable)
 		{
@@ -58,16 +58,20 @@ public final class Reflection
 			{
 				Class<?> clazz;
 
-				if (ownerType instanceof ParameterizedType)
+				if (declaringType instanceof ParameterizedType)
 				{
-					ParameterizedType parmeterizedType = (ParameterizedType)ownerType;
+					ParameterizedType parmeterizedType = (ParameterizedType)declaringType;
 
 					Type variableType = variableType(parmeterizedType, typeVariable);
 					if (variableType != null)
 					{
 						if (variableType instanceof TypeVariable<?>) {
-							log.debug("typeVariable {} resolves to typeVariable {}", typeVariable, variableType);
-							type = null;
+							if (declaringType instanceof BacktrackingParameterizedType) {
+								type = resultType(((BacktrackingParameterizedType)declaringType).declaringType, variableType);
+							} else {
+								log.debug("typeVariable {} resolves to typeVariable {}", typeVariable, variableType);
+								type = null;
+							}
 						} else {
 							type = variableType;
 						}
@@ -76,25 +80,27 @@ public final class Reflection
 
 					clazz = (Class<?>)parmeterizedType.getRawType();
 				}
-				else if (ownerType instanceof Class)
+				else if (declaringType instanceof Class)
 				{
-					clazz = (Class<?>)ownerType;
+					clazz = (Class<?>)declaringType;
 				}
 				else
 				{
-					log.debug("unsupported ownerType {}", ownerType);
+					log.debug("unsupported ownerType {}", declaringType);
 					type = null;
 					break;
 				}
 
-				ownerType = clazz.getGenericSuperclass();
-				if (ownerType == Object.class)
+				declaringType = clazz.getGenericSuperclass();
+				if (declaringType == Object.class)
 				{
 					log.debug("typeVariable {} cannot be resolved", typeVariable);
 					type = null;
 					break;
 				}
 			}
+		} else if (type instanceof ParameterizedType) {
+			type = new BacktrackingParameterizedType(declaringType, (ParameterizedType)type);
 		}
 
 		return type;
@@ -214,5 +220,39 @@ public final class Reflection
 		}
 
 		return false;
+	}
+	
+	/**
+	 * Allows backtracking of type variables.
+	 */
+	private static class BacktrackingParameterizedType implements ParameterizedType {
+
+		private Type declaringType;
+		
+		private ParameterizedType type;
+
+		public BacktrackingParameterizedType(Type declaringType, ParameterizedType type)
+		{
+			this.declaringType = declaringType;
+			this.type = type;
+		}
+
+		@Override
+		public Type[] getActualTypeArguments()
+		{
+			return type.getActualTypeArguments();
+		}
+
+		@Override
+		public Type getRawType()
+		{
+			return type.getRawType();
+		}
+
+		@Override
+		public Type getOwnerType()
+		{
+			return type.getOwnerType();
+		}
 	}
 }

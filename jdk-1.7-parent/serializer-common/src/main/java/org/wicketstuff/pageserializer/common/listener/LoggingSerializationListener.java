@@ -55,7 +55,7 @@ public class LoggingSerializationListener implements ISerializationListener
 	}
 
 	@Override
-	public void end(Object object, RuntimeException exception)
+	public void end(Object object, Exception exception)
 	{
 		LOG.debug("End for object:   '{}'", object.getClass());
 	}

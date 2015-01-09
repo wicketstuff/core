@@ -20,117 +20,130 @@
  */
 package org.wicketstuff.pageserializer.fast;
 
-import java.io.ByteArrayInputStream;
-import java.io.IOException;
-import java.nio.ByteBuffer;
-
 import org.apache.wicket.serialize.ISerializer;
-import org.apache.wicket.util.io.ByteArrayOutputStream;
-import org.apache.wicket.util.lang.Args;
-import org.apache.wicket.util.lang.Bytes;
 import org.wicketstuff.pageserializer.common.listener.ISerializationListener;
 
 import de.ruedigermoeller.serialization.FSTConfiguration;
-import de.ruedigermoeller.serialization.FSTObjectInput;
 import de.ruedigermoeller.serialization.FSTObjectOutput;
 import de.ruedigermoeller.serialization.FSTSerialisationListener;
 
 
-public class FastWicketSerializer implements ISerializer{
+public class FastWicketSerializer implements ISerializer
+{
+
+	private final FSTConfiguration fastSerializationConfig;
+
+	private ISerializationListener listener;
 
 	/**
-	 * The size of the {@link ByteBuffer} that is used to hold the serialized page
+	 * Build a Fast serializer with a default sensible configuration.
 	 */
-	private static final Bytes DEFAULT_BUFFER_SIZE = Bytes.megabytes(10L);
+	public FastWicketSerializer()
+	{
+		this(getDefaultFSTConfiguration());
+	}
 
-	private final Bytes bufferSize;
-	
-	static final FSTConfiguration fastSerialConfig;
-	static {
+	/**
+	 * Build a Fast serializer with a custom configuration.
+	 */
+	public FastWicketSerializer(FSTConfiguration config)
+	{
+		fastSerializationConfig = config;
+	}
+
+	public static final FSTConfiguration getDefaultFSTConfiguration()
+	{
 		FSTConfiguration config = FSTConfiguration.createDefaultConfiguration();
 		config.setIgnoreSerialInterfaces(false);
-		fastSerialConfig=config;
-	}
-	
-	public FastWicketSerializer(Bytes bufferSize) {
-		this.bufferSize = Args.notNull(bufferSize, "bufferSize");
+		return config;
 	}
 
-
-	
 	@Override
-	public byte[] serialize(Object object) {
-		
-		RuntimeException ex=null;
-  	ISerializationListener listener = listener();
-  	
-    try {
-  		ByteArrayOutputStream buffer = new ByteArrayOutputStream((int) this.bufferSize.bytes());
-    	FSTObjectOutput out = fastSerialConfig.getObjectOutput(buffer);
-    	
-    	if (listener!=null) {
-    		out.setListener(new ListenerAdapter(listener));
-    		listener.begin(object);
-    	}
+	public byte[] serialize(Object object)
+	{
+		Exception exception = null;
+
+		try
+		{
+			FSTObjectOutput out = fastSerializationConfig.getObjectOutput();
+
+			if (listener != null)
+			{
+				out.setListener(new ListenerAdapter(listener));
+				listener.begin(object);
+			}
 			out.writeObject(object);
-	    // DON'T out.close() when using factory method;
-	    out.flush();
 			out.setListener(null);
-			
-	    buffer.close();
-			return buffer.toByteArray();
-    } catch (RuntimeException e) {
-    	throw new FastWicketSerialException("serialize",e);
-		} catch (IOException e) {
-			throw new FastWicketSerialException("serialize",e);
-		} finally {
-			if (listener!=null) {
-				listener.end(object, ex);
+
+			return out.getCopyOfWrittenBuffer();
+		}
+		catch (Exception e)
+		{
+			exception = e;
+			throw new FastWicketSerialException(String.format(
+					"Unable to serialize the object %1$s", object), e);
+		}
+		finally
+		{
+			if (listener != null)
+			{
+				listener.end(object, exception);
 			}
 		}
 	}
 
-	protected ISerializationListener listener() {
-		return null;
+	/**
+	 * Define a listener to inspect the serialization process.
+	 * 
+	 * @param listener
+	 * @return the Serializer for chaining.
+	 */
+	public FastWicketSerializer setListener(ISerializationListener listener)
+	{
+		this.listener = listener;
+		return this;
 	}
 
-
+	/**
+	 * @return the listener used to inspect the serialization process.
+	 */
+	public ISerializationListener getListener()
+	{
+		return listener;
+	}
 
 	@Override
-	public Object deserialize(byte[] data) {
-		try {
-			ByteArrayInputStream buffer=new ByteArrayInputStream(data);
-			
-	    FSTObjectInput in = fastSerialConfig.getObjectInput(buffer);
-	    Object result = in.readObject();
-	    // DON'T: in.close(); here prevents reuse and will result in an exception      
-	    buffer.close();
-	    return result;
-	    
-		} catch (IOException e) {
-			throw new FastWicketSerialException("deserialize", e);
-		} catch (ClassNotFoundException e) {
-			throw new FastWicketSerialException("deserialize", e);
+	public Object deserialize(byte[] data)
+	{
+		try
+		{
+			return fastSerializationConfig.getObjectInput(data).readObject();
+		}
+		catch (Exception e)
+		{
+			throw new FastWicketSerialException("Unable to deserialize the data", e);
 		}
 	}
-	
-	static class ListenerAdapter implements FSTSerialisationListener {
 
-		private final ISerializationListener _listener;
+	static class ListenerAdapter implements FSTSerialisationListener
+	{
+		private final ISerializationListener listener;
 
-		public ListenerAdapter(ISerializationListener listener) {
-			_listener = listener;
+		public ListenerAdapter(ISerializationListener listener)
+		{
+			this.listener = listener;
 		}
 
 		@Override
-		public void objectWillBeWritten(Object obj, int streamPosition) {
-			_listener.before(streamPosition, obj);
+		public void objectWillBeWritten(Object obj, int streamPosition)
+		{
+			listener.before(streamPosition, obj);
 		}
 
 		@Override
-		public void objectHasBeenWritten(Object obj, int oldStreamPosition, int streamPosition) {
-			_listener.after(streamPosition, obj);
+		public void objectHasBeenWritten(Object obj, int oldStreamPosition, int streamPosition)
+		{
+			listener.after(streamPosition, obj);
 		}
-		
 	}
 }

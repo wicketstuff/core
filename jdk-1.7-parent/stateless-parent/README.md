@@ -6,7 +6,7 @@ Sometimes it is good to be stateless. As the core of Wicket is focused on managi
 These components currently include a ``StatelessLink`` and a ``StatelessAjaxFallbackLink``. They are backed by stateless behaviors: ``StatelessAjaxEventBehavior`` and ``StatelessAjaxFormComponentUpdatingBehavior``.
 
 
-== Maven ==
+##### Maven
 
 This component is part of WicketStuff project and is regularly released at Maven Central repository. Simply add the following lines of configuration to our `pom.xml`:
 

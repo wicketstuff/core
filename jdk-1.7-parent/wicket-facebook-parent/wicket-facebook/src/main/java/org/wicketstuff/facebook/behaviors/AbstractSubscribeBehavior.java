@@ -72,11 +72,11 @@ public abstract class AbstractSubscribeBehavior extends AbstractDefaultAjaxBehav
 			js.append("try{ callback += '&")
 				.append(param)
 				.append("='+")
-				.append("wicketEscape(response.")
+				.append("Wicket.Form.encode(response.")
 				.append(param)
-				.append(");}catch(e){}");
-		js.append("Wicket.Ajax.get(callback+'&response='+escape(response), function(){},function(){});");
-		js.append("}");
+				.append(");}catch(e){};");
+		js.append("Wicket.Ajax.get({'u':callback+'&response='+Wicket.Form.encode(response)});");
+		js.append('}');
 		js.append(");");
 
 		response.render(JavaScriptHeaderItem.forScript(js.toString(), null));

@@ -15,7 +15,7 @@ import org.apache.wicket.util.encoding.UrlEncoder;
  * 
  * @author jfk
  */
-final class StatelessEncoder
+public class StatelessEncoder
 {
     /**
      * Merges the query parameters of the url with the named parameters

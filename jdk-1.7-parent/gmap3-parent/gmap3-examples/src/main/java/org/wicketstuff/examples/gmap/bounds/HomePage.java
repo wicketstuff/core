@@ -3,13 +3,12 @@ package org.wicketstuff.examples.gmap.bounds;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.wicketstuff.examples.gmap.WicketExamplePage;
 import org.wicketstuff.gmap.GMap;
 import org.wicketstuff.gmap.api.GLatLng;
 import org.wicketstuff.gmap.api.GMarker;
 import org.wicketstuff.gmap.api.GMarkerOptions;
-import org.wicketstuff.gmap.event.ClickListener;
+import org.wicketstuff.gmap.geocoder.Geocoder;
 
 /**
  * Demonstrates how to use the bounds functionality in Google maps
@@ -46,5 +45,20 @@ public class HomePage extends WicketExamplePage
         markersToShow.add(glatlng2);
         markersToShow.add(glatlng3);
         map.fitMarkers(markersToShow);
+
+        // ###############################################
+        // e.g. to center and fit zoom of an address
+        // ###############################################
+        final GMap mapCenterAddress = new GMap("mapCenterAddress");
+        Geocoder gecoder = new Geocoder();
+        try
+        {
+            gecoder.centerAndFitZoomForAdress(mapCenterAddress, "Frankfurt am Main");
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+        }
+        add(mapCenterAddress);
     }
 }

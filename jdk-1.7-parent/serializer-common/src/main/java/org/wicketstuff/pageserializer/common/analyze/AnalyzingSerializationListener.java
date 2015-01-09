@@ -72,7 +72,7 @@ public class AnalyzingSerializationListener extends
 	}
 
 	@Override
-	public void end(ObjectTreeTracker treeTracker, Object object, RuntimeException exception)
+	public void end(ObjectTreeTracker treeTracker, Object object, Exception exception)
 	{
 		if (exception == null)
 			treeProcessor.process(treeTracker.end(object));

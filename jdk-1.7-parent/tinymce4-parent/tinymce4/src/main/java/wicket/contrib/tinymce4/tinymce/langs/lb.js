@@ -121,6 +121,7 @@ tinymce.addI18n('lb',{
 "Finish": "Ofschl\u00e9issen",
 "Ignore all": "All ignor\u00e9ieren",
 "Ignore": "Ignor\u00e9ieren",
+"Add to Dictionary": "An den Dictionnaire androen",
 "Insert row before": "Rei virdrun drasetzen",
 "Rows": "Reien",
 "Height": "H\u00e9icht",

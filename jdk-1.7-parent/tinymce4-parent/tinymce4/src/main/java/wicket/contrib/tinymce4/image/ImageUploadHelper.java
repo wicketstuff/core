@@ -1,14 +1,11 @@
 package wicket.contrib.tinymce4.image;
 
 import java.io.File;
-
 import javax.servlet.ServletContext;
-
 import org.apache.wicket.Session;
 import org.apache.wicket.markup.parser.XmlTag;
 import org.apache.wicket.protocol.http.WebApplication;
 import org.apache.wicket.request.cycle.RequestCycle;
-import org.apache.wicket.util.string.Strings;
 
 /**
  * Image upload handler responsible for images operations.

@@ -37,6 +37,7 @@ import org.apache.wicket.model.IObjectClassAwareModel;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.model.PropertyModel;
 import org.junit.Test;
+import org.wicketstuff.lazymodel.reflect.Reflection;
 
 /**
  * Test for {@link LazyModel}.
@@ -50,28 +51,39 @@ public class LazyModelTest {
 	public void inheritedTypeVariable() {
 		G2 g = new G2();
 
-		LazyModel<String> model = model(from(g).get());
-		
+		LazyModel<String> model = model(from(g).getT());
+
 		assertEquals(null, model.getObject());
 
 		assertEquals(String.class, model.getObjectClass());
 	}
-	
+
+	@Test
+	public void backtrackedTypeVariable() {
+		G1 g = new G1();
+
+		LazyModel<String> model = model(from(g).getList().get(0));
+
+		assertEquals(null, model.getObject());
+
+		assertEquals(String.class, model.getObjectClass());
+	}
+
 	@Test
 	public void typeErasedWithUpperBound() {
 		G<Serializable> g = new G<Serializable>();
-		
-		LazyModel<Serializable> model = model(from(g).get());
-		
+
+		LazyModel<Serializable> model = model(from(g).getT());
+
 		assertEquals(null, model.getObject());
 
 		assertEquals(null, model.getObjectClass());
 	}
-	
+
 	@Test
 	public void toStringNeverFails() {
-		IModel<B> model = model(from(A.class).getB()).bind(Model.of((A)null));
-		
+		IModel<B> model = model(from(A.class).getB()).bind(Model.of((A) null));
+
 		// targetType is unknown, thus #getPath() fails - but #toString()
 		// catches all exceptions anyway
 		assertEquals("", model.toString());
@@ -79,20 +91,18 @@ public class LazyModelTest {
 
 	@Test
 	public void improveTargetTypeWithTargetObjectClass() {
-		IModel<Serializable> target = new AbstractReadOnlyModel<Serializable>()
-		{
+		IModel<Serializable> target = new AbstractReadOnlyModel<Serializable>() {
 			@Override
-			public Serializable getObject()
-			{
+			public Serializable getObject() {
 				return new A();
 			}
 		};
-		
+
 		IObjectClassAwareModel<A> model = model(from(A.class)).bind(target);
-		
+
 		assertEquals(A.class, model.getObjectClass());
 	}
-	
+
 	@Test
 	public void loadableDetachable() {
 		final int[] got = new int[1];
@@ -762,7 +772,6 @@ public class LazyModelTest {
 		assertEquals(a.b.d.string, model.getObject());
 	}
 
-
 	@Test
 	public void getEnum() {
 		final A a = new A();
@@ -860,14 +869,14 @@ public class LazyModelTest {
 	@Test
 	public void fromTypeErasedModelFails() {
 		final A a = new A();
-		
+
 		try {
 			from(new Model<A>(a));
-			
+
 			fail();
 		} catch (WicketRuntimeException ex) {
 			assertEquals("cannot detect target type", ex.getMessage());
-		}		
+		}
 	}
 
 	@Test
@@ -877,10 +886,10 @@ public class LazyModelTest {
 
 		assertNull(model.getObjectType());
 		assertNull(model.getObjectClass());
-		
+
 		try {
 			model.getPath();
-			
+
 			fail();
 		} catch (WicketRuntimeException ex) {
 			assertEquals("cannot detect target type", ex.getMessage());
@@ -908,34 +917,36 @@ public class LazyModelTest {
 	public void propertyReflectionAwareModel() throws Exception {
 		A a = new A();
 		a.b = new B();
-		
+
 		LazyModel<Character> model = model(from(a).getB().getCharacter());
-		
+
 		assertNull(model.getPropertyField());
-		assertEquals(B.class.getMethod("getCharacter"), model.getPropertyGetter());
-		assertEquals(B.class.getMethod("setCharacter", Character.TYPE), model.getPropertySetter());
+		assertEquals(B.class.getMethod("getCharacter"),
+				model.getPropertyGetter());
+		assertEquals(B.class.getMethod("setCharacter", Character.TYPE),
+				model.getPropertySetter());
 	}
-	
+
 	@Test
 	public void propertyReflectionAwareModelNoProperty() throws Exception {
 		A a = new A();
 		a.b = new B();
-		
+
 		LazyModel<C> model = model(from(a).getB().getC(0));
-		
+
 		assertNull(model.getPropertyField());
 		assertNull(model.getPropertyGetter());
 		assertNull(model.getPropertySetter());
 	}
-	
+
 	public static class A implements Serializable {
 
 		B b;
 
 		F f;
-		
+
 		E e;
-		
+
 		P p;
 
 		int integer;
@@ -945,11 +956,11 @@ public class LazyModelTest {
 		public E getE() {
 			return e;
 		}
-		
+
 		public P getP() {
 			return p;
 		}
-		
+
 		public F getF() {
 			return f;
 		}
@@ -994,7 +1005,7 @@ public class LazyModelTest {
 		Map<String, String> strings = new HashMap<String, String>();
 
 		List<C> cs = new ArrayList<C>();
-		
+
 		D d;
 
 		B() {
@@ -1019,7 +1030,7 @@ public class LazyModelTest {
 		public List<C> getCs() {
 			return cs;
 		}
-		
+
 		public D getD() {
 			return d;
 		}
@@ -1079,32 +1090,49 @@ public class LazyModelTest {
 			return string;
 		}
 	}
-	
+
 	public static class P {
-		
+
 		public static P P1 = new P();
-		
+
 		private P() {
 		}
-		
+
 		public String getString() {
 			return "P";
 		}
 	}
-	
+
 	public static enum E {
 		E1;
 	}
-	
+
 	public static class G<T extends Serializable> {
-		public T get() {
+		/**
+		 * {@link Reflection} has to walk up the type hierarchy to resolve the
+		 * return type.
+		 * 
+		 * @see LazyModelTest#inheritedTypeVariable()
+		 */
+		public T getT() {
 			return null;
 		}
+
+		/**
+		 * {@link Reflection} has to backtrack from type variable {@code E} to
+		 * {@code T} to resolve the return type of {@link List#get(int)}
+		 * 
+		 * @see LazyModelTest#backtrackedTypeVariable()
+		 */
+		@SuppressWarnings({ "rawtypes", "unchecked" })
+		public List<T> getList() {
+			return new ArrayList();
+		}
 	}
-	
+
 	public static class G1 extends G<String> {
 	}
-	
+
 	public static class G2 extends G1 {
 	}
 }
