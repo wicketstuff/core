@@ -13,6 +13,7 @@ import org.wicketstuff.openlayers3.api.JavascriptObject;
 import org.wicketstuff.openlayers3.api.Map;
 import org.wicketstuff.openlayers3.api.PersistentFeature;
 import org.wicketstuff.openlayers3.api.geometry.Point;
+import org.wicketstuff.openlayers3.api.interaction.Interaction;
 import org.wicketstuff.openlayers3.api.layer.Layer;
 import org.wicketstuff.openlayers3.api.layer.Vector;
 import org.wicketstuff.openlayers3.api.source.Cluster;
