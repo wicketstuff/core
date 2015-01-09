@@ -71,7 +71,7 @@ var restartTimeout = function() {
     window.updateTimerChangeFeatureHandler_${componentId}_${changeHandlerId} = window.setTimeout(function() {
         console.log("Firing timer!");
         clearTimeout(window.updateTimerChangeFeatureHandler_${componentId}_${changeHandlerId});
-        values = convertFeature(${featureId});
+        var values = convertFeature(${featureId});
         changeFeatureHandler_${componentId}_${changeHandlerId}(${featureId}, values["geometry"], JSON.stringify(values));
     }, 500);
 };
