@@ -6,7 +6,7 @@ ${callbackFunctionName} = function(view) {
          }]});
 };
 
-map_${componentId}.getView().on('propertychange', function(event) {
+window.org_wicketstuff_openlayers3['map_${componentId}'].getView().on('propertychange', function(event) {
 
   var view = null
 
@@ -15,8 +15,8 @@ map_${componentId}.getView().on('propertychange', function(event) {
 
     if('${projection}' != 'NULL') {
 
-         extent = ol.extent.applyTransform(map_${componentId}.getView().calculateExtent(map_${componentId}.getSize()),
-                                           ol.proj.getTransform(map_${componentId}.getView().getProjection(),
+         extent = ol.extent.applyTransform(window.org_wicketstuff_openlayers3['map_${componentId}'].getView().calculateExtent(window.org_wicketstuff_openlayers3['map_${componentId}'].getSize()),
+                                           ol.proj.getTransform(window.org_wicketstuff_openlayers3['map_${componentId}'].getView().getProjection(),
                                                                 '${projection}'));
 
          view['transformedExtent'] = extent;

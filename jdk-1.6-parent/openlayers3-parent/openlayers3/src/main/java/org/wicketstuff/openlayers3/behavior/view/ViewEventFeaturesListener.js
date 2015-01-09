@@ -6,7 +6,7 @@ ${callbackFunctionName} = function(view, features) {
          }]});
 };
 
-map_${componentId}.getView().on('propertychange', function(event) {
+window.org_wicketstuff_openlayers3['map_${componentId}'].getView().on('propertychange', function(event) {
 
   var view = null
 
@@ -15,8 +15,8 @@ map_${componentId}.getView().on('propertychange', function(event) {
 
     if('${projection}' != 'NULL') {
 
-         extent = ol.extent.applyTransform(map_${componentId}.getView().calculateExtent(map_${componentId}.getSize()),
-                                           ol.proj.getTransform(map_${componentId}.getView().getProjection(),
+         extent = ol.extent.applyTransform(window.org_wicketstuff_openlayers3['map_${componentId}'].getView().calculateExtent(map_${componentId}.getSize()),
+                                           ol.proj.getTransform(window.org_wicketstuff_openlayers3['map_${componentId}'].getView().getProjection(),
                                                                 '${projection}'));
 
          view['transformedExtent'] = extent;
@@ -26,7 +26,7 @@ map_${componentId}.getView().on('propertychange', function(event) {
 
   var features = [];
 
-  ${layerId}.getSource().forEachFeatureInExtent(map_${componentId}.getView().calculateExtent(map_${componentId}.getSize()),
+  ${layerId}.getSource().forEachFeatureInExtent(window.org_wicketstuff_openlayers3['map_${componentId}'].getView().calculateExtent(window.org_wicketstuff_openlayers3['map_${componentId}'].getSize()),
     function(feature) {
 
       var coordinateRaw = feature.getGeometry().getCoordinates();
@@ -34,7 +34,7 @@ map_${componentId}.getView().on('propertychange', function(event) {
 
       if('${projection}' != 'NULL') {
         coordinateHdms = ol.proj.transform(
-        coordinateRaw, map_${componentId}.getView().getProjection(), '${projection}');
+        coordinateRaw, window.org_wicketstuff_openlayers3['map_${componentId}'].getView().getProjection(), '${projection}');
       }
 
       var values = {};

@@ -6,13 +6,13 @@ var clickHandler_${componentId}_${clickHandlerId} = function(coordinate) {
          }]});
 };
 
-map_${componentId}.on('click', function(event) {
+window.org_wicketstuff_openlayers3['map_${componentId}'].on('click', function(event) {
     var coordinateRaw = event.coordinate;
 
     var coordinateHdms = coordinateRaw;
     if('${projection}' != 'NULL') {
         coordinateHdms = ol.proj.transform(
-          coordinateRaw, map_${componentId}.getView().getProjection(), '${projection}');
+          coordinateRaw, window.org_wicketstuff_openlayers3['map_${componentId}'].getView().getProjection(), '${projection}');
     }
 
    clickHandler_${componentId}_${clickHandlerId}(coordinateHdms);

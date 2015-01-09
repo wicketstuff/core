@@ -32,7 +32,7 @@ var convertFeature = function(feature) {
 
     if('${projection}' != 'NULL') {
         coordinateHdms = ol.proj.transform(
-            coordinateRaw, map_${componentId}.getView().getProjection(), '${projection}');
+            coordinateRaw, window.org_wicketstuff_openlayers3['map_${componentId}'].getView().getProjection(), '${projection}');
     }
 
     var values = {};
