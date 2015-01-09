@@ -12,6 +12,11 @@ public abstract class JavascriptObject implements IJavascriptObject {
 
     private static Logger logger = LoggerFactory.getLogger(JavascriptObject.class);
 
+	/**
+	 * Global variable for holding all of our Javascript objects and data.
+	 */
+	public static final String JS_GLOBAL = "window.org_wicketstuff_openlayers3";
+
     /**
      * Counter for generating instance identifiers.
      */
@@ -46,9 +51,20 @@ public abstract class JavascriptObject implements IJavascriptObject {
      */
     public String getJsId() {
 
-        String objectId = getClass().getSimpleName().toLowerCase() + this.hashCode();
+        String objectId = JS_GLOBAL + "['" + getClass().getSimpleName().toLowerCase() + this.hashCode() + "']";
         return objectId;
     }
+
+	/**
+	 * Returns a String with the unique ID used to identify this object with the suffix appended.
+	 *
+	 * @return String with the object's unique ID
+	 */
+	public String getJsIdWithSuffix(String suffix) {
+
+		String objectId = JS_GLOBAL + "['" + getClass().getSimpleName().toLowerCase() + this.hashCode() + suffix + "']";
+        return objectId;
+	}
 
     /**
      * Returns a String with containing the rendered Javascript code for this object.
