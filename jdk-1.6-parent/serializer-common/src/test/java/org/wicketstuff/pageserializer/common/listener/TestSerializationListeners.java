@@ -22,8 +22,6 @@ package org.wicketstuff.pageserializer.common.listener;
 
 import org.junit.Assert;
 import org.junit.Test;
-import org.wicketstuff.pageserializer.common.listener.ISerializationListener;
-import org.wicketstuff.pageserializer.common.listener.SerializationListeners;
 
 public class TestSerializationListeners
 {
@@ -104,7 +102,7 @@ public class TestSerializationListeners
 		}
 
 		@Override
-		public void end(Object object, RuntimeException exceptionIfAny)
+		public void end(Object object, Exception exceptionIfAny)
 		{
 			increment(endCounter, object);
 			increment(exceptionCounter, exceptionIfAny);

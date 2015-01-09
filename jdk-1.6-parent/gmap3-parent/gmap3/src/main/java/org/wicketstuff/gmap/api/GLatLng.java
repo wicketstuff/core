@@ -20,6 +20,9 @@ import java.util.StringTokenizer;
 
 import org.wicketstuff.gmap.js.Constructor;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 /**
  * Represents an Google Maps API's <a href=
  * "http://code.google.com/apis/maps/documentation/javascript/reference.html#LatLng" >LatLng</a>.
@@ -41,7 +44,8 @@ public class GLatLng implements GValue
      * @param lat
      * @param lng
      */
-    public GLatLng(double lat, double lng)
+	@JsonCreator
+    public GLatLng(@JsonProperty("lat") double lat, @JsonProperty("lng") double lng)
     {
         this(lat, lng, false);
     }

@@ -18,22 +18,34 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.wicketstuff.pageserializer.fast;
+package org.wicketstuff.pageserializer.fast2;
 
-import org.apache.wicket.util.lang.Bytes;
-import org.wicketstuff.pageserializer.common.listener.ISerializationListener;
+import org.apache.wicket.ajax.AjaxRequestTarget;
+import org.apache.wicket.ajax.markup.html.AjaxLink;
+import org.apache.wicket.markup.html.WebPage;
+import org.apache.wicket.markup.html.basic.Label;
+import org.apache.wicket.request.mapper.parameter.PageParameters;
 
-public class InspectingFastWicketSerializer extends FastWicketSerializer {
+public class HomePage extends WebPage
+{
+	private static final long serialVersionUID = 1L;
 
-	private final ISerializationListener _listener;
+	public HomePage(final PageParameters parameters)
+	{
+		super(parameters);
 
-	public InspectingFastWicketSerializer(Bytes bufferSize, ISerializationListener listener) {
-		super(bufferSize);
-		_listener = listener;
-	}
+		add(new Label("label", "Fast 2 Rocks!"));
 
-	@Override
-	protected ISerializationListener listener() {
-		return _listener;
+		add(new AjaxLink<Void>("link")
+		{
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			public void onClick(AjaxRequestTarget target)
+			{
+				System.err.println("click");
+			}
+		});
+
 	}
 }

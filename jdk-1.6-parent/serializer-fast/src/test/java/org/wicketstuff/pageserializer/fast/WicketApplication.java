@@ -25,7 +25,6 @@ import java.util.UUID;
 
 import org.apache.wicket.Component;
 import org.apache.wicket.protocol.http.WebApplication;
-import org.apache.wicket.util.lang.Bytes;
 import org.wicketstuff.pageserializer.common.analyze.AnalyzingSerializationListener;
 import org.wicketstuff.pageserializer.common.analyze.IObjectLabelizer;
 import org.wicketstuff.pageserializer.common.analyze.ISerializedObjectTree;
@@ -45,10 +44,10 @@ import org.wicketstuff.pageserializer.common.listener.ISerializationListener;
 import org.wicketstuff.pageserializer.common.listener.SerializationListeners;
 
 /**
- * Application object for your web application. If you want to run this application without
- * deploying, run the Start class.
+ * Application object for your web application. If you want to run this
+ * application without deploying, run the Start class.
  * 
- * @see org.wicketstuff.pageserializer.kryo.mycompany.Start#main(String[])
+ * @see org.wicketstuff.pageserializer.fast.Start#main(String[])
  */
 public class WicketApplication extends WebApplication
 {
@@ -62,26 +61,33 @@ public class WicketApplication extends WebApplication
 	public void init()
 	{
 		super.init();
-		
+
 		IObjectLabelizer labelizer = new IObjectLabelizer()
 		{
 
 			@Override
 			public String labelFor(Object object)
 			{
-				if (object instanceof Component) {
-					return ((Component) object).getId();
+				if (object instanceof Component)
+				{
+					return ((Component)object).getId();
 				}
 				return null;
 			}
 		};
-		
-		DirectoryBasedReportOutput reportOutput=new DirectoryBasedReportOutput(tempDirectory("reports"));
-		
-		ISerializedObjectTreeProcessor treeProcessor = TreeProcessors.listOf(new TypeSizeReport(reportOutput.with(Keys.withNameAndFileExtension("TypeSizeReport", "txt"))),
-				new SortedTreeSizeReport(reportOutput.with(Keys.withNameAndFileExtension("SortedTreeSizeReport", "txt"))), 
-				new RenderTreeProcessor(reportOutput.with(Keys.withNameAndFileExtension("d3js-chart", "html")),new D3DataFileRenderer()), 
-				new SimilarNodeTreeTransformator(new SortedTreeSizeReport(reportOutput.with(Keys.withNameAndFileExtension("StrippedSortedTreeSizeReport", "txt")))));
+
+		DirectoryBasedReportOutput reportOutput = new DirectoryBasedReportOutput(
+				tempDirectory("reports"));
+
+		ISerializedObjectTreeProcessor treeProcessor = TreeProcessors.listOf(
+				new TypeSizeReport(reportOutput.with(Keys.withNameAndFileExtension(
+						"TypeSizeReport", "txt"))),
+				new SortedTreeSizeReport(reportOutput.with(Keys.withNameAndFileExtension(
+						"SortedTreeSizeReport", "txt"))),
+				new RenderTreeProcessor(reportOutput.with(Keys.withNameAndFileExtension(
+						"d3js-chart", "html")), new D3DataFileRenderer()),
+				new SimilarNodeTreeTransformator(new SortedTreeSizeReport(reportOutput.with(Keys
+						.withNameAndFileExtension("StrippedSortedTreeSizeReport", "txt")))));
 		ITreeFilter filter = new ITreeFilter()
 		{
 			@Override
@@ -91,19 +97,21 @@ public class WicketApplication extends WebApplication
 			}
 		};
 		ISerializedObjectTreeProcessor cleanedTreeProcessor = new TreeTransformator(treeProcessor,
-			TreeTransformator.strip(filter));
-		ISerializationListener listener = SerializationListeners.listOf(
-			new AnalyzingSerializationListener(labelizer, cleanedTreeProcessor));
-		
-		getFrameworkSettings().setSerializer(new InspectingFastWicketSerializer(Bytes.bytes(1024*1024),listener));
+				TreeTransformator.strip(filter));
+		ISerializationListener listener = SerializationListeners
+				.listOf(new AnalyzingSerializationListener(labelizer, cleanedTreeProcessor));
+
+		getFrameworkSettings().setSerializer(new FastWicketSerializer().setListener(listener));
 	}
 
-	private File tempDirectory(String prefix) {
+	private File tempDirectory(String prefix)
+	{
 		File baseDir = new File(System.getProperty("java.io.tmpdir"));
 		String baseName = prefix + "-" + UUID.randomUUID().toString();
 
 		File tempDir = new File(baseDir, baseName);
-		if (tempDir.mkdir()) {
+		if (tempDir.mkdir())
+		{
 			return tempDir;
 		}
 

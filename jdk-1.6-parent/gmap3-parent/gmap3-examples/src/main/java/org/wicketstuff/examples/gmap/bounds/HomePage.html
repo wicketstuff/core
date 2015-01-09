@@ -8,22 +8,28 @@
 <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
 <title>Wicket Examples - GMap Panel</title>
 <style type="text/css">
-    v\:* {
-      behavior:url(#default#VML);
-    }
+v\:* {
+	behavior: url(#default#VML);
+}
 </style>
 <link rel="stylesheet" type="text/css" href="style.css" />
 </head>
 
 <body>
-<span wicket:id="mainNavigation" />
-The map sets its viewport to the added markers.
-<center>
-<table>
-	<tr>
-		<td><div wicket:id="topPanel" style="width: 500px; height: 350px;">topPanel</div></td>
-	</tr>
-</table>
-</center>
+	<span wicket:id="mainNavigation" /> The map sets its viewport to the
+	added markers.
+	<center>
+	<table>
+		<tr>
+			<td><div wicket:id="topPanel"
+					style="width: 500px; height: 350px;">topPanel</div></td>
+		</tr>
+	</table>
+	
+	<hr/>
+	<h2>Center and fit zoom for an address (e.g. "Frankfurt am Main")</h2>
+	<div wicket:id="mapCenterAddress" style="width: 500px; height: 350px;">mapCenterAddress</div>
+
+	</center>
 </body>
 </html>
