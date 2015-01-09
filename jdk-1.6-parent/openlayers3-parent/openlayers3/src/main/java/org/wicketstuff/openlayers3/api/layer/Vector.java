@@ -211,7 +211,7 @@ public class Vector extends Layer {
         StringBuilder builder = new StringBuilder();
         builder.append("{");
 
-        builder.append("'id': '" + getJsId() + "',");
+        builder.append("'id': \"" + getJsId() + "\",");
 
         if (getSource() instanceof ServerVector) {
             builder.append("'source': " + getSource().getJsId() + ",");

@@ -235,7 +235,7 @@ public class Feature extends JavascriptObject implements Serializable {
         StringBuilder builder = new StringBuilder();
         builder.append("{");
 
-        builder.append("'id': '" + getJsId() + "',");
+        builder.append("'id': \"" + getJsId() + "\",");
 
         if (getGeometry() != null) {
             builder.append("'geometry': new ");

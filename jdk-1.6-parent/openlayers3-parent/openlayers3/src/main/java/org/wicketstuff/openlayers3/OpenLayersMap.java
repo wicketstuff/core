@@ -1,6 +1,7 @@
 package org.wicketstuff.openlayers3;
 
-import com.google.gson.JsonArray;
+import java.util.HashMap;
+
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.markup.head.IHeaderResponse;
 import org.apache.wicket.markup.html.panel.GenericPanel;
@@ -8,6 +9,7 @@ import org.apache.wicket.model.IModel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.wicketstuff.openlayers3.api.Feature;
+import org.wicketstuff.openlayers3.api.JavascriptObject;
 import org.wicketstuff.openlayers3.api.Map;
 import org.wicketstuff.openlayers3.api.PersistentFeature;
 import org.wicketstuff.openlayers3.api.geometry.Point;
@@ -20,7 +22,7 @@ import org.wicketstuff.openlayers3.api.source.loader.DefaultGeoJsonLoader;
 import org.wicketstuff.openlayers3.api.source.loader.VectorFeatureDataLoadedListener;
 import org.wicketstuff.openlayers3.api.source.loader.VectorFeaturesLoadedListener;
 
-import java.util.HashMap;
+import com.google.gson.JsonArray;
 
 /**
  * Provides the base class for all panels containing an OpenLayers map.
@@ -175,7 +177,7 @@ public abstract class OpenLayersMap extends GenericPanel<Map> {
         getModelObject().getInteractions().add(interaction);
 
         // update the map
-        target.appendJavaScript("window." + interaction.getJsId() + " = new " + interaction.getJsType()
+        target.appendJavaScript(interaction.getJsId() + " = new " + interaction.getJsType()
                 + "(" + interaction.renderJs() + ");"
                 + "map_" + getMarkupId() + ".addInteraction(" + interaction.getJsId() + ");");
     }
@@ -207,8 +209,12 @@ public abstract class OpenLayersMap extends GenericPanel<Map> {
     public String renderBeforeConstructorJs() {
 
         StringBuilder builder = new StringBuilder();
-        Map map = getModelObject();
 
+		// make sure our global variable exists
+		builder.append("if(typeof " + JavascriptObject.JS_GLOBAL + " === 'undefined') { "
+			+ JavascriptObject.JS_GLOBAL + " = []};\n\n");
+
+        Map map = getModelObject();
         if (map != null) {
 
             for (Layer layer : map.getLayers()) {
@@ -228,7 +234,7 @@ public abstract class OpenLayersMap extends GenericPanel<Map> {
                                         + feature.renderJs() + ");\n");
                             } else {
 
-                                builder.append("var " + feature.getJsId() + " = new " + feature.getJsType() + "("
+                                builder.append(feature.getJsId() + " = new " + feature.getJsType() + "("
                                         + feature.renderJs() + ");\n");
                             }
                         }

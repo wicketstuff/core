@@ -182,7 +182,7 @@ public class DefaultGeoJsonLoader extends Loader implements Serializable {
      */
     public String renderBeforeConstructorJs() {
         StringBuilder builder = new StringBuilder();
-        builder.append(getJsId() + "_loadFeatures = function(response) {");
+        builder.append(getJsIdWithSuffix("_loadFeatures") + " = function(response) {");
         builder.append("  " + getSource().getJsId() + ".addFeatures(" + getSource().getJsId()
                 + ".readFeatures(response));");
 
@@ -212,9 +212,9 @@ public class DefaultGeoJsonLoader extends Loader implements Serializable {
         StringBuilder builder = new StringBuilder();
 
         builder.append("function(extent, resolution, projection) {\n");
-        builder.append("var url = '" + url + "&outputFormat=text/javascript");
-        builder.append("&format_options=callback:" + getJsId() + "_loadFeatures&srsname=" + projection);
-        builder.append("&bbox=' + extent.join(',') + '," + projection + "';\n");
+        builder.append("var url = \"" + url + "&outputFormat=text/javascript");
+        builder.append("&format_options=callback:" + getJsIdWithSuffix("_loadFeatures") + "&srsname=" + projection);
+        builder.append("&bbox=\" + extent.join(\",\") + \"," + projection + "\";\n");
         builder.append("$.ajax({ 'url': url, 'dataType': 'jsonp', 'jsonp': false, 'type': 'GET', 'async': false,});");
         builder.append("}\n");
 
