@@ -13,6 +13,7 @@ import org.wicketstuff.openlayers3.api.JavascriptObject;
 import org.wicketstuff.openlayers3.api.Map;
 import org.wicketstuff.openlayers3.api.PersistentFeature;
 import org.wicketstuff.openlayers3.api.geometry.Point;
+import org.wicketstuff.openlayers3.api.interaction.Interaction;
 import org.wicketstuff.openlayers3.api.layer.Layer;
 import org.wicketstuff.openlayers3.api.layer.Vector;
 import org.wicketstuff.openlayers3.api.source.Cluster;
@@ -241,7 +242,7 @@ public abstract class OpenLayersMap extends GenericPanel<Map> {
                     }
                 }
 
-                // create server vector data source before the map
+                // create vector data source before the map
                 if (layer.getSource() != null && layer.getSource() instanceof ServerVector) {
 
                     ServerVector vectorSource = (ServerVector) layer.getSource();
@@ -261,7 +262,13 @@ public abstract class OpenLayersMap extends GenericPanel<Map> {
                     }
                 }
 
-                builder.append("var " + layer.getJsId() + " = new " + layer.getJsType() + "(" + layer.renderJs() + ");\n");
+                if(layer instanceof Vector) {
+                    builder.append(layer.getJsId() + " = new " + layer.getJsType() + "(" + layer.renderJs()
+                                   + ");\n");
+                } else {
+                    builder.append(layer.getJsId() + " = new " + layer.getJsType() + "(" + layer.renderJs()
+                        + ");\n");
+                }
             }
         }
 
@@ -272,7 +279,7 @@ public abstract class OpenLayersMap extends GenericPanel<Map> {
 
         StringBuilder builder = new StringBuilder();
 
-        builder.append("var " + vectorSource.getJsId() + " = new " + vectorSource.getJsType() + "("
+        builder.append(vectorSource.getJsId() + " = new " + vectorSource.getJsType() + "("
                 + vectorSource.renderJs() + ");\n");
 
         if (vectorSource.getLoader() instanceof DefaultGeoJsonLoader) {
