@@ -1,7 +1,7 @@
 /*
  * Variable to hold our timer.
  */
-window.updateTimerChangeFeatureHandler_${componentId}_${changeHandlerId} = null;
+window.org_wicketstuff_openlayers3['updateTimerChangeFeatureHandler_${componentId}_${changeHandlerId}'] = null;
 
 /**
  * Posts our new data back to the server.
@@ -66,13 +66,13 @@ var convertFeature = function(feature) {
  */
 var restartTimeout = function() {
     console.log("Starting timer...");
-    clearTimeout(window.updateTimerChangeFeatureHandler_${componentId}_${changeHandlerId});
+    clearTimeout(window.org_wicketstuff_openlayers3['updateTimerChangeFeatureHandler_${componentId}_${changeHandlerId}']);
 
-    window.updateTimerChangeFeatureHandler_${componentId}_${changeHandlerId} = window.setTimeout(function() {
-        console.log("Firing timer!");
-        clearTimeout(window.updateTimerChangeFeatureHandler_${componentId}_${changeHandlerId});
-        var values = convertFeature(${featureId});
-        changeFeatureHandler_${componentId}_${changeHandlerId}(${featureId}, values["geometry"], JSON.stringify(values));
+   window.org_wicketstuff_openlayers3['updateTimerChangeFeatureHandler_${componentId}_${changeHandlerId}'] = window.setTimeout(function() {
+       console.log("Firing timer!");
+       clearTimeout( window.updateTimerChangeFeatureHandler_${componentId}_${changeHandlerId});
+       var values = convertFeature(${featureId});
+       changeFeatureHandler_${componentId}_${changeHandlerId}(${featureId}, values["geometry"], JSON.stringify(values));
     }, 500);
 };
 
