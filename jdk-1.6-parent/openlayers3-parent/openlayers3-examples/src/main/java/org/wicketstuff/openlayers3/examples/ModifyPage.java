@@ -93,7 +93,7 @@ public class ModifyPage extends BasePage {
                     builder.append(", ");
                     builder.append(featureLocationModel.getObject().getY());
                 } else {
-                    builder.append("Unkown...");
+                    builder.append("Unknown...");
                 }
 
                 return builder.toString();

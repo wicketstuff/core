@@ -14,7 +14,7 @@ import org.wicketstuff.openlayers3.examples.base.BasePage;
 import java.util.Arrays;
 
 /**
- * Provides a page with a map that uses OpenStreetMap tiles.
+ * Provides a page with a map that uses Bing tiles.
  */
 @MountPath("bing")
 public class BingPage extends BasePage {

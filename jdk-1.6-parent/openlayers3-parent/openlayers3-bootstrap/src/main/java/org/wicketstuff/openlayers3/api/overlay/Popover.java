@@ -254,7 +254,9 @@ public class Popover extends Overlay {
         builder.append("});");
 
         if(titleModel != null) {
-            builder.append("$(element).attr('data-original-title', '" + escapeQuoteJs(titleModel.getObject())  + "');" );
+            builder.append("$(element).data('original-title', '");
+			builder.append(escapeQuoteJs(titleModel.getObject()));
+			builder.append("');");
         }
 
         if (html) {
