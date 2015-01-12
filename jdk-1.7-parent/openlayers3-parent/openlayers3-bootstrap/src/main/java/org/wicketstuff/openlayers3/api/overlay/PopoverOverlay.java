@@ -19,6 +19,6 @@ public class PopoverOverlay extends Overlay {
 
     @Override
     public String getJsId() {
-        return "popover_" + "overlay_" + element.getMarkupId();
+        return "popover_overlay_" + element.getMarkupId();
     }
 }
