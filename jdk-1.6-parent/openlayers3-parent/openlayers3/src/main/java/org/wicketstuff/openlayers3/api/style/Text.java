@@ -35,6 +35,8 @@ public class Text extends JavascriptObject implements Serializable {
 
     public Text(String font, Number offsetX, Number offsetY, Number scale, Number rotation, String text,
                 String textAlign, String textBaseLine, Fill fill, Stroke stroke) {
+        super();
+
         this.font = font;
         this.offsetX = offsetX;
         this.offsetY = offsetY;
@@ -155,7 +157,7 @@ public class Text extends JavascriptObject implements Serializable {
         }
 
         if (getText() != null) {
-            builder.append("'text': '" + escapeQuoteJs(getText())+ "',");
+            builder.append("'text': '" + escapeQuoteJs(getText()) + "',");
         }
 
         if (getTextBaseLine() != null) {

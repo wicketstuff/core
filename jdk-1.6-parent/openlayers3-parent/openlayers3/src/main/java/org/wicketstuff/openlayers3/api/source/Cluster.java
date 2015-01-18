@@ -10,6 +10,8 @@ public class Cluster extends Source {
     private Source source;
 
     public Cluster(Number distance, Source source) {
+        super();
+
         this.distance = distance;
         this.source = source;
     }

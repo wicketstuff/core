@@ -1,4 +1,4 @@
-var map = map_${componentId};
+var map = window.org_wicketstuff_openlayers3['map_${componentId}'];
 var view = map.getView();
 
 var points = []

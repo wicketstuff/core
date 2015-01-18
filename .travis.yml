@@ -1,9 +1,11 @@
 language: java
+jdk:
+  - oraclejdk7
 
 notifications:
   email:
     - mgrigorov@apache.org
-  irc: 
+  irc:
     channels:
       - "chat.freenode.net##wicket"
     template:
@@ -22,15 +24,8 @@ cache:
 
 install: true
 
-script: 
-  - 'MVN_OPTS="-Dmaven.javadoc.skip=true -Dsource.skip=true -B -V --quiet"'
-  - "DEPLOY_OR_TEST=test"
+script:
+  - "DEPLOY_OR_TEST=install"
   - '[ "${TRAVIS_PULL_REQUEST}" = "false" ] && DEPLOY_OR_TEST=deploy'
   - "echo DEPLOY_OR_TEST=$DEPLOY_OR_TEST"
-  - "jdk_switcher use openjdk6"
-  - "mvn -s sonatype-settings.xml clean $DEPLOY_OR_TEST -N $MVN_OPTS"
-  - "cd jdk-1.6-parent"
-  - "mvn -s ../sonatype-settings.xml clean $DEPLOY_OR_TEST $MVN_OPTS"
-  - "cd ../jdk-1.7-parent"
-  - "jdk_switcher use oraclejdk7"
-  - "mvn -s ../sonatype-settings.xml clean $DEPLOY_OR_TEST $MVN_OPTS"
+  - "mvn -s sonatype-settings.xml clean $DEPLOY_OR_TEST -Dmaven.javadoc.skip=true -Dsource.skip=true -B -V --quiet"

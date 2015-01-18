@@ -1,6 +1,7 @@
 package org.wicketstuff.openlayers3;
 
-import com.google.gson.JsonArray;
+import java.util.HashMap;
+
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.markup.head.IHeaderResponse;
 import org.apache.wicket.markup.html.panel.GenericPanel;
@@ -8,7 +9,11 @@ import org.apache.wicket.model.IModel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.wicketstuff.openlayers3.api.Feature;
+import org.wicketstuff.openlayers3.api.JavascriptObject;
 import org.wicketstuff.openlayers3.api.Map;
+import org.wicketstuff.openlayers3.api.PersistentFeature;
+import org.wicketstuff.openlayers3.api.geometry.Point;
+import org.wicketstuff.openlayers3.api.interaction.Interaction;
 import org.wicketstuff.openlayers3.api.layer.Layer;
 import org.wicketstuff.openlayers3.api.layer.Vector;
 import org.wicketstuff.openlayers3.api.source.Cluster;
@@ -18,7 +23,7 @@ import org.wicketstuff.openlayers3.api.source.loader.DefaultGeoJsonLoader;
 import org.wicketstuff.openlayers3.api.source.loader.VectorFeatureDataLoadedListener;
 import org.wicketstuff.openlayers3.api.source.loader.VectorFeaturesLoadedListener;
 
-import java.util.HashMap;
+import com.google.gson.JsonArray;
 
 /**
  * Provides the base class for all panels containing an OpenLayers map.
@@ -145,6 +150,55 @@ public abstract class OpenLayersMap extends GenericPanel<Map> {
         target.appendJavaScript(builder.toString());
     }
 
+    /**
+     * Sets the center of the map's current view.
+     *
+     * @param target Ajax request target
+     * @param point New center location for the map
+     */
+    public void setViewCenter(AjaxRequestTarget target, Point point) {
+
+        // update our model
+        getModelObject().getView().setCenter(point.getCoordinate());
+
+        // update the map
+        target.appendJavaScript(JavascriptObject.JS_GLOBAL + "['map_" + getMarkupId() + "'].getView().setCenter("
+                + point.renderJs() + ");");
+    }
+
+    /**
+     * Adds the provided interaction to the map.
+     *
+     * @param target Ajax request target
+     * @param interaction Interaction to add
+     */
+    public void addInteraction(AjaxRequestTarget target, Interaction interaction) {
+
+        // update our model
+        getModelObject().getInteractions().add(interaction);
+
+        // update the map
+        target.appendJavaScript(interaction.getJsId() + " = new " + interaction.getJsType()
+                + "(" + interaction.renderJs() + ");"
+                + JavascriptObject.JS_GLOBAL + "['map_" + getMarkupId() + "'].addInteraction(" + interaction.getJsId() + ");");
+    }
+
+    /**
+     * Removes provided interaction from the map.
+     *
+     * @param target Ajax request target
+     * @param interaction Interaction to add
+     */
+    public void removeInteraction(AjaxRequestTarget target, Interaction interaction) {
+
+        // update our model
+        getModelObject().getInteractions().remove(interaction);
+
+        // update the map
+        target.appendJavaScript(JavascriptObject.JS_GLOBAL + "['map_" + getMarkupId() + "'].removeInteraction("
+			+ interaction.getJsId() + ");" + interaction.getJsId() + ".dispose();");
+    }
+
     @Override
     public abstract void renderHead(final IHeaderResponse response);
 
@@ -156,8 +210,12 @@ public abstract class OpenLayersMap extends GenericPanel<Map> {
     public String renderBeforeConstructorJs() {
 
         StringBuilder builder = new StringBuilder();
-        Map map = getModelObject();
 
+		// make sure our global variable exists
+		builder.append("if(typeof " + JavascriptObject.JS_GLOBAL + " === 'undefined') { "
+			+ JavascriptObject.JS_GLOBAL + " = []};\n\n");
+
+        Map map = getModelObject();
         if (map != null) {
 
             for (Layer layer : map.getLayers()) {
@@ -169,13 +227,22 @@ public abstract class OpenLayersMap extends GenericPanel<Map> {
 
                     if (vectorSource.getFeatures() != null) {
                         for (Feature feature : vectorSource.getFeatures()) {
-                            builder.append("var " + feature.getJsId() + " = new " + feature.getJsType() + "("
-                                    + feature.renderJs() + ");\n");
+
+                            if(feature instanceof PersistentFeature) {
+
+
+                                builder.append(feature.getJsId() + " = new " + feature.getJsType() + "("
+                                        + feature.renderJs() + ");\n");
+                            } else {
+
+                                builder.append(feature.getJsId() + " = new " + feature.getJsType() + "("
+                                        + feature.renderJs() + ");\n");
+                            }
                         }
                     }
                 }
 
-                // create server vector data source before the map
+                // create vector data source before the map
                 if (layer.getSource() != null && layer.getSource() instanceof ServerVector) {
 
                     ServerVector vectorSource = (ServerVector) layer.getSource();
@@ -195,7 +262,13 @@ public abstract class OpenLayersMap extends GenericPanel<Map> {
                     }
                 }
 
-                builder.append(layer.getJsId() + " = new " + layer.getJsType() + "(" + layer.renderJs() + ");\n");
+                if(layer instanceof Vector) {
+                    builder.append(layer.getJsId() + " = new " + layer.getJsType() + "(" + layer.renderJs()
+                                   + ");\n");
+                } else {
+                    builder.append(layer.getJsId() + " = new " + layer.getJsType() + "(" + layer.renderJs()
+                        + ");\n");
+                }
             }
         }
 
@@ -206,7 +279,7 @@ public abstract class OpenLayersMap extends GenericPanel<Map> {
 
         StringBuilder builder = new StringBuilder();
 
-        builder.append("var " + vectorSource.getJsId() + " = new " + vectorSource.getJsType() + "("
+        builder.append(vectorSource.getJsId() + " = new " + vectorSource.getJsType() + "("
                 + vectorSource.renderJs() + ");\n");
 
         if (vectorSource.getLoader() instanceof DefaultGeoJsonLoader) {

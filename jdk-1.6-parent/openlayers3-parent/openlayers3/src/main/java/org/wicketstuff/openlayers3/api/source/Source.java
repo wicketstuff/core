@@ -9,6 +9,13 @@ import java.io.Serializable;
  */
 public abstract class Source extends JavascriptObject implements Serializable {
 
+    /**
+     * Creates a new instance.
+     */
+    public Source() {
+        super();
+    }
+
     public abstract String getJsType();
 
     public abstract String renderJs();

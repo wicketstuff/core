@@ -37,6 +37,8 @@ public class TileWms extends Source {
      *         Parameters for this tile map data source
      */
     public TileWms(String url, Map<String, String> params) {
+        super();
+
         this.url = url;
         this.params = params;
     }

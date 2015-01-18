@@ -20,6 +20,13 @@ public class Image extends JavascriptObject implements Serializable {
     private Number scale;
 
     /**
+     * Creates a new instance.
+     */
+    public Image() {
+        super();
+    }
+
+    /**
      * Returns the rotation of the image.
      *
      * @return Rotation value

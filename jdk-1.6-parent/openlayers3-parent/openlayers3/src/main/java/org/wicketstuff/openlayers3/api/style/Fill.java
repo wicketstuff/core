@@ -32,6 +32,8 @@ public class Fill extends JavascriptObject implements Serializable {
      *         Color for this fill
      */
     public Fill(Color color) {
+        super();
+
         this.color = color;
     }
 

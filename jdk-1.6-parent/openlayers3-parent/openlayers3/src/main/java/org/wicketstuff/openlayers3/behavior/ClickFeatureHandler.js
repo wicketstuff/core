@@ -6,7 +6,7 @@ var clickFeatureHandler_${componentId}_${clickHandlerId} = function(id, coordina
          }]});
 };
 
-map_${componentId}.on('click', function(event) {
+window.org_wicketstuff_openlayers3['map_${componentId}'].on('click', function(event) {
 
    var convertFeature = function(feature) {
 
@@ -15,7 +15,7 @@ map_${componentId}.on('click', function(event) {
 
      if('${projection}' != 'NULL') {
          coordinateHdms = ol.proj.transform(
-           coordinateRaw, map_${componentId}.getView().getProjection(), '${projection}');
+           coordinateRaw, window.org_wicketstuff_openlayers3['map_${componentId}'].getView().getProjection(), '${projection}');
      }
 
      var values = {};
@@ -39,14 +39,14 @@ map_${componentId}.on('click', function(event) {
      return values;
    };
 
-   var feature = map_${componentId}.forEachFeatureAtPixel(event.pixel,
+   var feature = window.org_wicketstuff_openlayers3['map_${componentId}'].forEachFeatureAtPixel(event.pixel,
      function(feature, layer) {
        return feature;
      });
 
     if(feature) {
 
-      values = convertFeature(feature);
+      var values = convertFeature(feature);
       clickFeatureHandler_${componentId}_${clickHandlerId}(feature.get('id'), values["geometry"], JSON.stringify(values));
     } else {
 
@@ -55,7 +55,7 @@ map_${componentId}.on('click', function(event) {
 
         if('${projection}' != 'NULL') {
             coordinateHdms = ol.proj.transform(
-              coordinateRaw, map_${componentId}.getView().getProjection(), '${projection}');
+              coordinateRaw, window.org_wicketstuff_openlayers3['map_${componentId}'].getView().getProjection(), '${projection}');
         }
       clickFeatureHandler_${componentId}_${clickHandlerId}(null, coordinateHdms);
     };

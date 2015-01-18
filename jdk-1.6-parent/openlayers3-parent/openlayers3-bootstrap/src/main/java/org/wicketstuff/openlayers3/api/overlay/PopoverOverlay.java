@@ -16,4 +16,9 @@ public class PopoverOverlay extends Overlay {
     public PopoverOverlay(MarkerPopover markerPopover) {
         super(markerPopover, markerPopover.getPositionModel().getObject(), DEFAULT_POSITIONING, DEFAULT_STOP_EVENT);
     }
+
+    @Override
+    public String getJsId() {
+        return "popover_overlay_" + element.getMarkupId();
+    }
 }

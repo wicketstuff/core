@@ -77,7 +77,8 @@ public class Stroke extends JavascriptObject implements Serializable {
     /**
      * Creates a new instance.
      *
-     * @param color Color for this instance
+     * @param color
+     *         Color for this instance
      */
     public Stroke(String color) {
         this(new Color(color));
@@ -86,7 +87,8 @@ public class Stroke extends JavascriptObject implements Serializable {
     /**
      * Creates a new instance.
      *
-     * @param color Color for this instance
+     * @param color
+     *         Color for this instance
      */
     public Stroke(Color color) {
         this(color, DEFAULT_LINE_CAP, DEFAULT_LINE_JOIN, null, DEFAULT_MITER_LIMIT, null);
@@ -95,14 +97,22 @@ public class Stroke extends JavascriptObject implements Serializable {
     /**
      * Creates a new instance.
      *
-     * @param color Color for this stroke
-     * @param lineCap Line cap style for this stroke
-     * @param lineJoin Line join style for this stroke
-     * @param lineDash Line dash pattern
-     * @param miterLimit Miter limit
-     * @param width Width of the stroke
+     * @param color
+     *         Color for this stroke
+     * @param lineCap
+     *         Line cap style for this stroke
+     * @param lineJoin
+     *         Line join style for this stroke
+     * @param lineDash
+     *         Line dash pattern
+     * @param miterLimit
+     *         Miter limit
+     * @param width
+     *         Width of the stroke
      */
     public Stroke(Color color, LineCap lineCap, LineCap lineJoin, Number[] lineDash, Number miterLimit, Number width) {
+        super();
+
         this.color = color;
         this.lineCap = lineCap;
         this.lineJoin = lineJoin;
@@ -123,7 +133,8 @@ public class Stroke extends JavascriptObject implements Serializable {
     /**
      * Sets the stroke color.
      *
-     * @param color New value
+     * @param color
+     *         New value
      */
     public void setColor(Color color) {
         this.color = color;
@@ -132,7 +143,8 @@ public class Stroke extends JavascriptObject implements Serializable {
     /**
      * Sets the stroke color.
      *
-     * @param color New value
+     * @param color
+     *         New value
      * @return This instance
      */
     public Stroke color(Color color) {
@@ -152,7 +164,8 @@ public class Stroke extends JavascriptObject implements Serializable {
     /**
      * Sets the line cap style.
      *
-     * @param lineCap New value
+     * @param lineCap
+     *         New value
      */
     public void setLineCap(LineCap lineCap) {
         this.lineCap = lineCap;
@@ -161,7 +174,8 @@ public class Stroke extends JavascriptObject implements Serializable {
     /**
      * Sets the line cap style.
      *
-     * @param lineCap New value
+     * @param lineCap
+     *         New value
      * @return This instance
      */
     public Stroke lineCap(LineCap lineCap) {
@@ -181,7 +195,8 @@ public class Stroke extends JavascriptObject implements Serializable {
     /**
      * Sets the line join style.
      *
-     * @param lineJoin New value
+     * @param lineJoin
+     *         New value
      */
     public void setLineJoin(LineCap lineJoin) {
         this.lineJoin = lineJoin;
@@ -190,7 +205,8 @@ public class Stroke extends JavascriptObject implements Serializable {
     /**
      * Sets the line join style.
      *
-     * @param lineJoin New value
+     * @param lineJoin
+     *         New value
      * @return This instance
      */
     public Stroke lineJoin(LineCap lineJoin) {
@@ -210,7 +226,8 @@ public class Stroke extends JavascriptObject implements Serializable {
     /**
      * Sets the line dash style.
      *
-     * @param lineDash New value
+     * @param lineDash
+     *         New value
      */
     public void setLineDash(Number... lineDash) {
         this.lineDash = lineDash;
@@ -219,7 +236,8 @@ public class Stroke extends JavascriptObject implements Serializable {
     /**
      * Sets the line dash style.
      *
-     * @param lineDash New value
+     * @param lineDash
+     *         New value
      * @return This instance
      */
     public Stroke lineDash(Number... lineDash) {
@@ -239,7 +257,8 @@ public class Stroke extends JavascriptObject implements Serializable {
     /**
      * Sets the miter limit.
      *
-     * @param miterLimit New value
+     * @param miterLimit
+     *         New value
      */
     public void setMiterLimit(Number miterLimit) {
         this.miterLimit = miterLimit;
@@ -248,7 +267,8 @@ public class Stroke extends JavascriptObject implements Serializable {
     /**
      * Sets the miter limit.
      *
-     * @param miterLimit New value
+     * @param miterLimit
+     *         New value
      * @return This instance
      */
     public Stroke miterLimit(Number miterLimit) {
@@ -268,7 +288,8 @@ public class Stroke extends JavascriptObject implements Serializable {
     /**
      * Sets the stroke width.
      *
-     * @param width New value
+     * @param width
+     *         New value
      */
     public void setWidth(Number width) {
         this.width = width;
@@ -277,7 +298,8 @@ public class Stroke extends JavascriptObject implements Serializable {
     /**
      * Sets the stroke width.
      *
-     * @param width New value
+     * @param width
+     *         New value
      * @return This instance
      */
     public Stroke width(Number width) {

@@ -68,6 +68,7 @@ public class PopoverPanel extends Panel {
      */
     public PopoverPanel(final String id, final IModel<String> titleModel, final IModel<String> contentModel) {
         super(id);
+
         this.titleModel = titleModel;
         this.contentModel = contentModel;
     }
@@ -75,6 +76,7 @@ public class PopoverPanel extends Panel {
     @Override
     protected void onInitialize() {
         super.onInitialize();
+
         add(behavior = new PopoverBehavior(titleModel, contentModel));
         popover = new Popover(this, getTitleModel(), getContentModel());
     }

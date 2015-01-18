@@ -56,6 +56,8 @@ public class Vector extends Layer {
      *         Style used when drawing features
      */
     public Vector(Source source, Style style) {
+        super();
+
         setSource(source);
         this.style = style;
     }
@@ -171,7 +173,8 @@ public class Vector extends Layer {
      *
      * @param target
      *         Ajax request target
-     * @param features JsonArray with the list of loaded features
+     * @param features
+     *         JsonArray with the list of loaded features
      */
     public void notifyFeatureDataLoadedListeners(AjaxRequestTarget target, JsonArray features) {
         for (VectorFeatureDataLoadedListener listener : dataLoadedListeners) {
@@ -208,7 +211,7 @@ public class Vector extends Layer {
         StringBuilder builder = new StringBuilder();
         builder.append("{");
 
-        builder.append("'id': '" + getJsId() + "',");
+        builder.append("'id': \"" + getJsId() + "\",");
 
         if (getSource() instanceof ServerVector) {
             builder.append("'source': " + getSource().getJsId() + ",");

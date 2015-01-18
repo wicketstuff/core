@@ -25,6 +25,16 @@ public class View extends JavascriptObject implements Serializable {
     public Integer zoom;
 
     /**
+     * The minimum zoom level for this view.
+     */
+    public Integer minZoom;
+
+    /**
+     * The maximum zoom level for this view.
+     */
+    public Integer maxZoom;
+
+    /**
      * The projection for the map.
      */
     public String projection;
@@ -38,7 +48,21 @@ public class View extends JavascriptObject implements Serializable {
      *         The zoom factor for this view
      */
     public View(Coordinate center, Integer zoom) {
-        this(center, zoom, DEFAULT_PROJECTION);
+        this(center, zoom, null, DEFAULT_PROJECTION);
+    }
+
+    /**
+     * Creates a new instance.
+     *
+     * @param center
+     *         The coordinate at the center of this view
+     * @param zoom
+     *         The zoom factor for this view
+     * @param maxZoom
+     *         The maximum zoom factor for this view
+     */
+    public View(Coordinate center, Integer zoom, Integer maxZoom) {
+        this(center, zoom, maxZoom, DEFAULT_PROJECTION);
     }
 
     /**
@@ -52,8 +76,27 @@ public class View extends JavascriptObject implements Serializable {
      *         The projection for this view
      */
     public View(Coordinate center, Integer zoom, String projection) {
+        this(center, zoom, null, projection);
+    }
+
+    /**
+     * Creates a new instance.
+     *
+     * @param center
+     *         The coordinate at the center of this view
+     * @param zoom
+     *         The zoom factor for this view
+     * @param maxZoom
+     *         The maximum zoom factor for this view
+     * @param projection
+     *         The projection for this view
+     */
+    public View(Coordinate center, Integer zoom, Integer maxZoom, String projection) {
+        super();
+
         this.center = center;
         this.zoom = zoom;
+        this.maxZoom = maxZoom;
         this.projection = projection;
     }
 
@@ -150,6 +193,68 @@ public class View extends JavascriptObject implements Serializable {
         return this;
     }
 
+    /**
+     * Returns the minimum zoom level for this instance.
+     *
+     * @return Integer with the minimum zoom level
+     */
+    public Integer getMinZoom() {
+        return minZoom;
+    }
+
+    /**
+     * Sets the minimum zoom level for this instance.
+     *
+     * @param minZoom
+     *         New value
+     */
+    public void setMinZoom(Integer minZoom) {
+        this.minZoom = minZoom;
+    }
+
+    /**
+     * Sets the minimum zoom level for this instance.
+     *
+     * @param minZoom
+     *         New value
+     * @return This instance
+     */
+    public View minZoom(Integer minZoom) {
+        setMaxZoom(minZoom);
+        return this;
+    }
+
+    /**
+     * Returns the maximum zoom level for this instance.
+     *
+     * @return Integer with the zoom level
+     */
+    public Integer getMaxZoom() {
+        return maxZoom;
+    }
+
+    /**
+     * Sets the maximum zoom level for this instance.
+     *
+     * @param maxZoom
+     *         Integer with the zoom level
+     */
+    public void setMaxZoom(Integer maxZoom) {
+        this.maxZoom = maxZoom;
+    }
+
+    /**
+     * Sets the maximum zoom level for this instance.
+     *
+     * @param maxZoom
+     *         Integer with the zoom level
+     * @return This instance
+     */
+    public View maxZoom(Integer maxZoom) {
+        setMaxZoom(maxZoom);
+        return this;
+    }
+
     @Override
     public String getJsType() {
         return "ol.View";
@@ -168,6 +273,14 @@ public class View extends JavascriptObject implements Serializable {
 
         if (getZoom() != null) {
             builder.append("'zoom': " + getZoom() + ",");
+        }
+
+        if (getMinZoom() != null) {
+            builder.append("'minZoom': " + getMinZoom() + ",");
+        }
+
+        if (getMaxZoom() != null) {
+            builder.append("'maxZoom': " + getMaxZoom() + ",");
         }
 
         if (getProjection() != null) {

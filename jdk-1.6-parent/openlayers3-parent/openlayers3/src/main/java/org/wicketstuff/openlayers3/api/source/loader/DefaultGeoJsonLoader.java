@@ -38,6 +38,8 @@ public class DefaultGeoJsonLoader extends Loader implements Serializable {
      *         The projection used to transform the fetched data
      */
     public DefaultGeoJsonLoader(final String url, final String projection) {
+        super();
+
         this.url = url;
         this.projection = projection;
     }
@@ -180,17 +182,17 @@ public class DefaultGeoJsonLoader extends Loader implements Serializable {
      */
     public String renderBeforeConstructorJs() {
         StringBuilder builder = new StringBuilder();
-        builder.append(getJsId() + "_loadFeatures = function(response) {");
+        builder.append(getJsIdWithSuffix("_loadFeatures") + " = function(response) {");
         builder.append("  " + getSource().getJsId() + ".addFeatures(" + getSource().getJsId()
                 + ".readFeatures(response));");
 
-        if(vectorFeatureDataLoadedListener != null) {
+        if (vectorFeatureDataLoadedListener != null) {
 
             // invoke our callback for the feature data load
             builder.append(vectorFeatureDataLoadedListener.getCallbackFunctionName() + "(" + getSource().getJsId() + ");");
         }
 
-        if(vectorFeaturesLoadedListener != null) {
+        if (vectorFeaturesLoadedListener != null) {
 
             // invoke our callback for the feature load
             builder.append(vectorFeaturesLoadedListener.getCallbackFunctionName() + "(" + getSource().getJsId() + ");");
@@ -210,9 +212,9 @@ public class DefaultGeoJsonLoader extends Loader implements Serializable {
         StringBuilder builder = new StringBuilder();
 
         builder.append("function(extent, resolution, projection) {\n");
-        builder.append("var url = '" + url + "&outputFormat=text/javascript");
-        builder.append("&format_options=callback:" + getJsId() + "_loadFeatures&srsname=" + projection);
-        builder.append("&bbox=' + extent.join(',') + '," + projection + "';\n");
+        builder.append("var url = \"" + url + "&outputFormat=text/javascript");
+        builder.append("&format_options=callback:" + getJsIdWithSuffix("_loadFeatures") + "&srsname=" + projection);
+        builder.append("&bbox=\" + extent.join(\",\") + \"," + projection + "\";\n");
         builder.append("$.ajax({ 'url': url, 'dataType': 'jsonp', 'jsonp': false, 'type': 'GET', 'async': false,});");
         builder.append("}\n");
 
