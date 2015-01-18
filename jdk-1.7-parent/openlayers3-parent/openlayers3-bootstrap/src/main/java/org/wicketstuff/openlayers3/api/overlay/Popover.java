@@ -214,6 +214,11 @@ public class Popover extends Overlay {
         return this;
     }
 
+    @Override
+    public String getJsId() {
+        return "popup_" + element.getMarkupId();
+    }
+
     /**
      * Renders the Javascript for the popover.
      *
@@ -247,6 +252,18 @@ public class Popover extends Overlay {
         }
 
         builder.append("});");
+
+        if(titleModel != null) {
+            builder.append("$(element).data('original-title', '");
+			builder.append(escapeQuoteJs(titleModel.getObject()));
+			builder.append("');");
+        }
+
+        if (html) {
+            builder.append("$(element).attr('data-content', '" + escapeQuoteJs(model.getObject()) + "');");
+        } else {
+            builder.append("$(element).attr('data-content', '" + Strings.escapeMarkup(model.getObject()) + "');");
+        }
 
         return builder.toString();
     }

@@ -1,9 +1,9 @@
-var map = map_${componentId};
+var map = window.org_wicketstuff_openlayers3['map_${componentId}'];
 var view = map.getView();
 var layers = 'NULL';
 
-if('${layers}' != 'NULL') {
-  layers = '${layers}'.split(',');
+if("${layers}" != 'NULL') {
+  layers = "${layers}".split(',');
 }
 
 var points = []

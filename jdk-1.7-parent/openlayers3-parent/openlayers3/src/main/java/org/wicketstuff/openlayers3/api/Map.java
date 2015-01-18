@@ -1,9 +1,11 @@
 package org.wicketstuff.openlayers3.api;
 
+import org.wicketstuff.openlayers3.api.interaction.Interaction;
 import org.wicketstuff.openlayers3.api.layer.Layer;
 import org.wicketstuff.openlayers3.api.overlay.Overlay;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -18,11 +20,11 @@ public class Map extends JavascriptObject implements Serializable {
     /**
      * The layers for this map.
      */
-    private List<Layer> layers;
+    private List<Layer> layers = new ArrayList<Layer>();
     /**
      * Overlays for this map.
      */
-    private List<Overlay> overlays;
+    private List<Overlay> overlays = new ArrayList<Overlay>();
     /**
      * The view for this map.
      */
@@ -31,6 +33,10 @@ public class Map extends JavascriptObject implements Serializable {
      * The target Wicket element for this map.
      */
     private String target;
+    /**
+     * List of interactions for this map
+     */
+    private List<Interaction> interactions = new ArrayList<Interaction>();
 
     /**
      * Creates a new instance.
@@ -119,10 +125,41 @@ public class Map extends JavascriptObject implements Serializable {
      *         The view for this map
      */
     public Map(RenderType renderer, List<Layer> layers, List<Overlay> overlays, View view) {
+        this(renderer, layers, overlays, view, null);
+    }
+
+    /**
+     * Creates a new instance.
+     *
+     * @param renderer
+     *         The renderer for this map
+     * @param layers
+     *         The layers for this map
+     * @param overlays
+     *         The overlays for this map
+     * @param view
+     *         The view for this map
+     * @param interactions
+     *         Interactions for the map
+     */
+    public Map(RenderType renderer, List<Layer> layers, List<Overlay> overlays, View view,
+               List<Interaction> interactions) {
+		super();
+
         this.renderer = renderer;
-        this.layers = layers;
-        this.overlays = overlays;
         this.view = view;
+
+        if (layers != null) {
+            this.layers.addAll(layers);
+        }
+
+        if (overlays != null) {
+            this.overlays.addAll(overlays);
+        }
+
+        if (interactions != null) {
+            this.interactions.addAll(interactions);
+        }
     }
 
     /**
@@ -179,7 +216,12 @@ public class Map extends JavascriptObject implements Serializable {
      *         List of layers
      */
     public void setLayers(List<Layer> layers) {
-        this.layers = layers;
+
+        this.layers = new ArrayList<Layer>();
+
+        if (layers != null) {
+            this.layers.addAll(layers);
+        }
     }
 
     /**
@@ -198,7 +240,12 @@ public class Map extends JavascriptObject implements Serializable {
      *         List of overlays
      */
     public void setOverlays(List<Overlay> overlays) {
-        this.overlays = overlays;
+
+        this.overlays = new ArrayList<Overlay>();
+
+        if (overlays != null) {
+            this.overlays.addAll(overlays);
+        }
     }
 
     /**
@@ -268,6 +315,24 @@ public class Map extends JavascriptObject implements Serializable {
         return this;
     }
 
+    public List<Interaction> getInteractions() {
+        return interactions;
+    }
+
+    public void setInteractions(List<Interaction> interactions) {
+
+        this.interactions = new ArrayList<Interaction>();
+
+        if (interactions != null) {
+            this.interactions.addAll(interactions);
+        }
+    }
+
+    public Map interactions(List<Interaction> interactions) {
+        setInteractions(interactions);
+        return this;
+    }
+
     @Override
     public String getJsType() {
         return "ol.Map";
@@ -275,7 +340,7 @@ public class Map extends JavascriptObject implements Serializable {
 
     @Override
     public String getJsId() {
-        return "map_" + getTarget();
+        return  JS_GLOBAL + "['map_" + getTarget() + "']";
     }
 
     public String renderJs() {
@@ -286,6 +351,18 @@ public class Map extends JavascriptObject implements Serializable {
 
         if (getRenderer() != null) {
             builder.append("'renderer': \'" + getRenderer().toString() + "',");
+        }
+
+        if (getInteractions() != null && getInteractions().size() > 0) {
+            builder.append("'interactions': ol.interaction.defaults().extend([");
+
+            for (Interaction interaction : getInteractions()) {
+                builder.append(interaction.getJsId() + " = new " + interaction.getJsType() + "(");
+                builder.append(interaction.renderJs());
+                builder.append("),");
+            }
+
+            builder.append("]),");
         }
 
         if (getLayers() != null && getLayers().size() > 0) {

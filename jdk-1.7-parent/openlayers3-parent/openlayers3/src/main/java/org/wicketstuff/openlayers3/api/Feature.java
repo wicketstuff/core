@@ -2,6 +2,7 @@ package org.wicketstuff.openlayers3.api;
 
 import org.wicketstuff.openlayers3.api.geometry.Point;
 import org.wicketstuff.openlayers3.api.style.Style;
+import org.apache.wicket.util.string.Strings;
 
 import java.io.Serializable;
 import java.util.HashMap;
@@ -60,6 +61,7 @@ public class Feature extends JavascriptObject implements Serializable {
      *         The style used to render this feature
      */
     public Feature(final Point geometry, final String name, final Style style) {
+        super();
         this.geometry = geometry;
         this.name = name;
         this.style = style;
@@ -220,9 +222,9 @@ public class Feature extends JavascriptObject implements Serializable {
 
         if (getStyle() != null) {
             builder.append(getJsId());
-	    builder.append(".setStyle(new ");
-	    builder.append(getStyle().getJsType());
-	    builder.append("(" + getStyle().renderJs() + "));");
+            builder.append(".setStyle(new ");
+            builder.append(getStyle().getJsType());
+            builder.append("(" + getStyle().renderJs() + "));");
         }
 
         return builder.toString();
@@ -233,20 +235,20 @@ public class Feature extends JavascriptObject implements Serializable {
         StringBuilder builder = new StringBuilder();
         builder.append("{");
 
-        builder.append("'id': '" + getJsId() + "',");
+        builder.append("'id': \"" + getJsId() + "\",");
 
         if (getGeometry() != null) {
             builder.append("'geometry': new ");
-	    builder.append(geometry.getJsType());
-	    builder.append("(" + getGeometry().renderJs() + "),");
+            builder.append(geometry.getJsType());
+            builder.append("(" + getGeometry().renderJs() + "),");
         }
 
         if (getName() != null) {
-            builder.append("'name': '" + getName() + "',");
+            builder.append("'name': '" + Strings.escapeMarkup(getName()).toString() + "',");
         }
 
         for (Map.Entry<String, String> entry : stringValues.entrySet()) {
-            builder.append("'" + entry.getKey() + "': '" + entry.getValue() + "',");
+            builder.append("'" + entry.getKey() + "': '" + Strings.escapeMarkup(entry.getValue()).toString() + "',");
         }
 
         for (Map.Entry<String, Number> entry : numberValues.entrySet()) {

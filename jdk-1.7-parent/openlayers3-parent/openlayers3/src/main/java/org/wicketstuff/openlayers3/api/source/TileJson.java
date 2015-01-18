@@ -36,6 +36,8 @@ public class TileJson extends Source {
      *         CORS (Cross Origin Resource Sharing) policy for this source
      */
     public TileJson(String url, CorsPolicy crossOrigin) {
+        super();
+
         this.url = url;
         this.crossOrigin = crossOrigin;
     }

@@ -15,6 +15,13 @@ public abstract class Loader extends JavascriptObject {
     private Source source;
 
     /**
+     * Creates a new instance.
+     */
+    public Loader() {
+        super();
+    }
+
+    /**
      * Sets the data source.
      *
      * @param source

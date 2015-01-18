@@ -1,7 +1,7 @@
 package org.wicketstuff.openlayers3.api.overlay;
 
 import org.apache.wicket.Component;
-import org.wicketstuff.openlayers3.api.JavascriptObject;
+import org.wicketstuff.openlayers3.api.IJavascriptObject;
 import org.wicketstuff.openlayers3.api.coordinate.LongLat;
 
 import java.io.Serializable;
@@ -9,7 +9,7 @@ import java.io.Serializable;
 /**
  * Provides an object that models a map overlay.
  */
-public class Overlay extends JavascriptObject implements Serializable {
+public class Overlay implements IJavascriptObject, Serializable {
 
     /**
      * Default positioning.
@@ -36,7 +36,7 @@ public class Overlay extends JavascriptObject implements Serializable {
     /**
      * Wicket component tied to this overlay.
      */
-    private Component element;
+    protected Component element;
 
     /**
      * Creates a new instance.
@@ -250,13 +250,13 @@ public class Overlay extends JavascriptObject implements Serializable {
     }
 
     @Override
-    public String getJsType() {
-        return "ol.Overlay";
+    public String getJsId() {
+        return "overlay_" + element.getMarkupId();
     }
 
     @Override
-    public String getJsId() {
-        return "overlay_" + element.getMarkupId();
+    public String getJsType() {
+        return "ol.Overlay";
     }
 
     @Override
@@ -307,5 +307,17 @@ public class Overlay extends JavascriptObject implements Serializable {
         public String toString() {
             return value;
         }
+    }
+
+    /**
+     * Escapes single quotation marks in the provided String. When outputting Javascript code, we're using single
+     * quotation marks to surround the content.
+     *
+     * @param text
+     *         Text to escape
+     * @return String with escaped text
+     */
+    protected String escapeQuoteJs(String text) {
+        return text.replaceAll("\'", "&apos;");
     }
 }
