@@ -151,7 +151,7 @@ public class ContextMenu extends Menu
 			private static final long serialVersionUID = 1L;
 
 			@Override
-			protected String $()
+			public String $()
 			{
 				StringBuilder builder = new StringBuilder();
 				String selector = JQueryWidget.getSelector(ContextMenu.this);

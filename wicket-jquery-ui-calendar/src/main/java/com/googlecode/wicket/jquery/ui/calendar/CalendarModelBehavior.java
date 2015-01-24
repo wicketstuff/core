@@ -36,6 +36,7 @@ import org.threeten.bp.LocalDate;
 public class CalendarModelBehavior extends AbstractAjaxBehavior
 {
 	private static final long serialVersionUID = 1L;
+
 	private final CalendarModel model;
 
 	/**

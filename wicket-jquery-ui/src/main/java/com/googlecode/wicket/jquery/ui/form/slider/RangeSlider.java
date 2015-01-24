@@ -114,7 +114,7 @@ public class RangeSlider extends AbstractSlider<RangeValue>
 	}
 
 	@Override
- 	protected void convertInput()
+	protected void convertInput()
  	{
 		Integer lower = this.lower.getConvertedInput();
 		Integer upper = this.upper.getConvertedInput();
@@ -239,7 +239,7 @@ public class RangeSlider extends AbstractSlider<RangeValue>
 			private static final long serialVersionUID = 1L;
 
 			@Override
-			protected String $() {
+			public String $() {
 
 				StringBuilder statements = new StringBuilder();
 
@@ -264,7 +264,7 @@ public class RangeSlider extends AbstractSlider<RangeValue>
 			private static final long serialVersionUID = 1L;
 
 			@Override
-			protected String $() {
+			public String $() {
 
 				StringBuilder statements = new StringBuilder();
 

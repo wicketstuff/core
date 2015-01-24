@@ -16,25 +16,25 @@
  */
 package com.googlecode.wicket.jquery.core;
 
-
 import org.apache.wicket.Component;
 
 /**
  * Specifies that the implementing {@link Component} class will use a {@link JQueryBehavior}<br/>
  * This interface is for best practice purpose only. Adding the {@link JQueryBehavior} to the {@link Component} is still required but the use of <code>JQueryWidget#newWidgetBehavior(Component)</code> can be made.<br/>
  * For instance:<br/>
+ * 
  * <pre>
- *	public JQueryBehavior newWidgetBehavior(String selector)
- *	{
- *		return new JQueryBehavior(selector, "jquerymethod");
- *	}
- *
- *	protected void onInitialize()
- *	{
- *		super.onInitialize();
- *
- *		this.add(JQueryWidget.newWidgetBehavior(this));
- *	}
+ * public JQueryBehavior newWidgetBehavior(String selector)
+ * {
+ * 	return new JQueryBehavior(selector, &quot;jquerymethod&quot;);
+ * }
+ * 
+ * protected void onInitialize()
+ * {
+ * 	super.onInitialize();
+ * 
+ * 	this.add(JQueryWidget.newWidgetBehavior(this));
+ * }
  * </pre>
  *
  * @author Sebastien Briquet - sebfz1
@@ -50,7 +50,7 @@ public interface IJQueryWidget
 	void onBeforeRender(JQueryBehavior behavior);
 
 	/**
-	 * Called immediately after the onConfigure method in a behavior. Since this is before the rendering
+	 * Called immediately after the onConfigure method in a behavior. Since this is before the rendering<br />
 	 * cycle has begun, the behavior can modify the configuration of the component (i.e. {@link Options})
 	 *
 	 * @param behavior the {@link JQueryBehavior}
@@ -59,6 +59,7 @@ public interface IJQueryWidget
 
 	/**
 	 * Gets a new {@link JQueryBehavior} that should be bound to the {@link IJQueryWidget} object.
+	 * 
 	 * @param selector the html selector (ie: '#myId')
 	 * @return the {@link JQueryBehavior}
 	 */
@@ -69,6 +70,7 @@ public interface IJQueryWidget
 	{
 		/**
 		 * Helper method that returns the component's html selector (ie: '#myId').
+		 * 
 		 * @param component the {@link Component}
 		 * @return the html selector
 		 */
@@ -79,35 +81,41 @@ public interface IJQueryWidget
 
 		/**
 		 * Factory method that gets a new {@link JQueryBehavior} by invoking {@link IJQueryWidget#newWidgetBehavior(String)} on the supplied widget.
-		 * @param <T> the type
+		 * 
+		 * @param <W> the type
 		 * @param widget the {@link IJQueryWidget} object
 		 * @return the {@link JQueryBehavior}
 		 */
-		public static <T extends Component & IJQueryWidget> JQueryBehavior newWidgetBehavior(T widget)
+		@SuppressWarnings("unchecked")
+		public static <T  extends JQueryBehavior, W extends Component & IJQueryWidget> T newWidgetBehavior(W widget)
 		{
-			return widget.newWidgetBehavior(JQueryWidget.getSelector(widget));
+			return (T) widget.newWidgetBehavior(JQueryWidget.getSelector(widget));
 		}
 
 		/**
 		 * Factory method that gets a new {@link JQueryBehavior} by invoking {@link IJQueryWidget#newWidgetBehavior(String)} on the supplied widget.
+		 * 
 		 * @param widget object implementing the {@link IJQueryWidget} interface.
 		 * @param component the {@link Component} the selector will be calculated from.
 		 * @return the {@link JQueryBehavior}
 		 */
-		public static JQueryBehavior newWidgetBehavior(IJQueryWidget widget, Component component)
+		@SuppressWarnings("unchecked")
+		public static <T extends JQueryBehavior> T newWidgetBehavior(IJQueryWidget widget, Component component)
 		{
-			return widget.newWidgetBehavior(JQueryWidget.getSelector(component));
+			return (T) widget.newWidgetBehavior(JQueryWidget.getSelector(component));
 		}
 
 		/**
 		 * Factory method that gets a new {@link JQueryBehavior} by invoking {@link IJQueryWidget#newWidgetBehavior(String)} on the supplied widget.
+		 * 
 		 * @param widget object implementing the {@link IJQueryWidget} interface.
 		 * @param selector the html selector (ie: '#myId')
 		 * @return the {@link JQueryBehavior}
 		 */
-		public static JQueryBehavior newWidgetBehavior(IJQueryWidget widget, String selector)
+		@SuppressWarnings("unchecked")
+		public static <T extends JQueryBehavior> T newWidgetBehavior(IJQueryWidget widget, String selector)
 		{
-			return widget.newWidgetBehavior(selector);
+			return (T) widget.newWidgetBehavior(selector);
 		}
 
 		/**

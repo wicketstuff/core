@@ -111,11 +111,12 @@ public class JQueryFencedFeedbackPanel extends FencedFeedbackPanel
 	@Override
 	protected String getCSSClass(FeedbackMessage message)
 	{
-		return ""; //not used, because it would be applied onto both 'message' and 'label'
+		return ""; // not used, because it would be applied onto both 'message' and 'label'
 	}
 
 	/**
 	 * Gets the icon CSS class for the given message.
+	 *
 	 * @param message the {@link FeedbackMessage}
 	 * @return the icon class
 	 */
@@ -125,6 +126,9 @@ public class JQueryFencedFeedbackPanel extends FencedFeedbackPanel
 		{
 			case FeedbackMessage.INFO:
 				return JQueryFeedbackPanel.INFO_ICO;
+
+			case FeedbackMessage.SUCCESS:
+				return JQueryFeedbackPanel.LIGHT_ICO;
 
 			case FeedbackMessage.WARNING:
 				return JQueryFeedbackPanel.WARN_ICO;
@@ -139,6 +143,7 @@ public class JQueryFencedFeedbackPanel extends FencedFeedbackPanel
 
 	/**
 	 * Gets the CSS class for the given message.
+	 *
 	 * @param message the {@link FeedbackMessage}
 	 * @return the label class
 	 */
@@ -148,6 +153,9 @@ public class JQueryFencedFeedbackPanel extends FencedFeedbackPanel
 		{
 			case FeedbackMessage.INFO:
 				return JQueryFeedbackPanel.INFO_CSS;
+
+			case FeedbackMessage.SUCCESS:
+				return JQueryFeedbackPanel.LIGHT_CSS;
 
 			case FeedbackMessage.WARNING:
 				return JQueryFeedbackPanel.WARN_CSS;

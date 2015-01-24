@@ -24,7 +24,6 @@ import com.googlecode.wicket.jquery.core.IJQueryWidget;
 import com.googlecode.wicket.jquery.core.JQueryBehavior;
 import com.googlecode.wicket.jquery.core.Options;
 import com.googlecode.wicket.kendo.ui.KendoIcon;
-import com.googlecode.wicket.kendo.ui.form.button.Button.ButtonBehavior;
 
 /**
  * Provides a Kendo UI button based on the built-in AjaxButton

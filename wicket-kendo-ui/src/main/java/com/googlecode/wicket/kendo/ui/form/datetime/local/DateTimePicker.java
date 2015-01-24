@@ -145,19 +145,6 @@ public class DateTimePicker extends FormComponentPanel<LocalDateTime> implements
 		LocalTime time = timePicker.getConvertedInput();
 
 		this.setConvertedInput(date == null ? null : LocalDateTime.of(date, time == null ? LocalTime.MIDNIGHT : time));
-		//TODO remove commented code block
-		// try
-		// {
-		// }
-		// catch (ConversionException e)
-		// {
-		// ValidationError error = new ValidationError();
-		// error.addKey("DateTimePicker.ConversionError"); // wicket6
-		// error.setVariable("date", this.datePicker.getInput());
-		// error.setVariable("time", this.timePicker.getInput());
-		//
-		// this.error(error);
-		// }
 	}
 
 	/**

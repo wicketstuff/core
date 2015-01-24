@@ -54,19 +54,19 @@ public class CalendarJavaScriptResourceReference extends JQueryPluginResourceRef
 	{
 		super(CalendarJavaScriptResourceReference.class, "fullcalendar.js");
 	}
-	
+
 	@Override
 	public Iterable<? extends HeaderItem> getDependencies()
 	{
 		List<HeaderItem> dependencies = new ArrayList<HeaderItem>();
-		
+
 		for (HeaderItem item : super.getDependencies())
 		{
 			dependencies.add(item);
 		}
-		
+
 		dependencies.add(JavaScriptHeaderItem.forReference(JQueryMomentResourceReference.get()));
-		
+
 		return dependencies;
 	}
 }

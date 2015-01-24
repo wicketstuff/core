@@ -98,7 +98,7 @@ public final class KendoBehaviorFactory
 			private static final long serialVersionUID = 1L;
 
 			@Override
-			protected String $()
+			public String $()
 			{
 				return KendoBehaviorFactory.getShowStatement(this.selector);
 			}
@@ -129,7 +129,7 @@ public final class KendoBehaviorFactory
 			private static final long serialVersionUID = 1L;
 
 			@Override
-			protected String $()
+			public String $()
 			{
 				return KendoBehaviorFactory.getHideStatement(this.selector);
 			}

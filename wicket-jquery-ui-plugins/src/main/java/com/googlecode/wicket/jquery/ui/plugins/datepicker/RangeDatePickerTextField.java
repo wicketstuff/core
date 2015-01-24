@@ -267,7 +267,7 @@ public class RangeDatePickerTextField extends FormComponentPanel<DateRange> impl
 			private static final long serialVersionUID = 1L;
 
 			@Override
-			protected String $()
+			public String $()
 			{
 				StringBuilder statements = new StringBuilder();
 

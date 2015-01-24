@@ -20,6 +20,8 @@
 		<module>theme-default</module>
 		<module>theme-flat</module>
 		<module>theme-high-contrast</module>
+		<module>theme-material</module>
+		<module>theme-material-black</module>
 		<module>theme-metro</module>
 		<module>theme-metro-black</module>
 		<module>theme-moonlight</module>

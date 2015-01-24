@@ -69,7 +69,6 @@ public abstract class TabsBehavior extends JQueryUIBehavior implements IJQueryAj
 		super(selector, METHOD, options);
 	}
 
-
 	// Properties //
 	/**
 	 * Gets the reference {@link List} of {@link ITab}<tt>s</tt>.<br/>
@@ -98,7 +97,6 @@ public abstract class TabsBehavior extends JQueryUIBehavior implements IJQueryAj
 
 		return Collections.unmodifiableList(list);
 	}
-
 
 	// Methods //
 	@Override
@@ -132,7 +130,6 @@ public abstract class TabsBehavior extends JQueryUIBehavior implements IJQueryAj
 	{
 		target.appendJavaScript(this.$("'option'", "'active'", index));
 	}
-
 
 	// Events //
 	@Override
@@ -170,7 +167,7 @@ public abstract class TabsBehavior extends JQueryUIBehavior implements IJQueryAj
 
 				if (tab instanceof AjaxTab)
 				{
-					((AjaxTab)tab).load(target);
+					((AjaxTab) tab).load(target);
 				}
 
 				if (event instanceof ActivatingEvent)
@@ -185,8 +182,8 @@ public abstract class TabsBehavior extends JQueryUIBehavior implements IJQueryAj
 		}
 	}
 
-
 	// Factories //
+
 	/**
 	 * Gets a new {@link JQueryAjaxBehavior} that acts as the 'activate' javascript callback
 	 *

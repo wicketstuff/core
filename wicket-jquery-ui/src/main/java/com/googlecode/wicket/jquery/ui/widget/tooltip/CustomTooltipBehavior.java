@@ -71,7 +71,7 @@ public abstract class CustomTooltipBehavior extends TooltipBehavior
 		this.setOption("content", String.format("function() { return \"%s\"; }", this.render(this.newContent(CONTENT_ID))));
 	}
 
-	// Methods
+	// Methods //
 
 	/**
 	 * Gets the {@link WebMarkupContainer} which will represent the tooltip content
@@ -106,7 +106,7 @@ public abstract class CustomTooltipBehavior extends TooltipBehavior
 	}
 
 	@Override
-	protected String $()
+	public String $()
 	{
 		if (this.selector == null)
 		{

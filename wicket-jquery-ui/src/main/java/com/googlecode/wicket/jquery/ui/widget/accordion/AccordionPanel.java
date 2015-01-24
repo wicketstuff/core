@@ -203,7 +203,7 @@ public class AccordionPanel extends JQueryPanel implements IAccordionListener
 			}
 		});
 
-		this.add(this.widgetBehavior = this.newWidgetBehavior(JQueryWidget.getSelector(this)));
+		this.add(this.widgetBehavior = JQueryWidget.newWidgetBehavior(this));
 	}
 
 	@Override

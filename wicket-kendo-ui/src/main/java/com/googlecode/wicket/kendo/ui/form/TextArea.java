@@ -19,8 +19,13 @@ package com.googlecode.wicket.kendo.ui.form;
 import org.apache.wicket.markup.ComponentTag;
 import org.apache.wicket.model.IModel;
 
+import com.googlecode.wicket.jquery.core.IJQueryWidget;
+
 /**
- * Provides a {@link org.apache.wicket.markup.html.form.TextArea} with the Kendo-ui style
+ * Provides a {@link org.apache.wicket.markup.html.form.TextArea} with the Kendo-ui style<br/>
+ * <br/>
+ * <b>Note:</b> {@link TextArea} is not a {@link IJQueryWidget} (no corresponding widget is supplied by Kendo UI)<br/>
+ * It means that required Kendo UI dependencies (javascript/stylesheet) are not automatically added. 
  *
  * @param <T> the model object type
  * @author Sebastien Briquet - sebfz1
@@ -59,5 +64,10 @@ public class TextArea<T> extends org.apache.wicket.markup.html.form.TextArea<T>
 		super.onComponentTag(tag);
 
 		tag.append("class", "k-textbox", " ");
+
+		if (!this.isEnabledInHierarchy())
+		{
+			tag.append("class", "k-state-disabled", " ");
+		}
 	}
 }

@@ -43,7 +43,7 @@ public class KendoUIBehavior extends JQueryBehavior
 	private static final Logger LOG = LoggerFactory.getLogger(KendoUIBehavior.class);
 
 	/** Data Sources */
-	private final List<IKendoDataSource> datasources;
+	private List<IKendoDataSource> datasources = null;
 
 	/**
 	 * Constructor
@@ -67,7 +67,6 @@ public class KendoUIBehavior extends JQueryBehavior
 	{
 		super(selector, method, options);
 
-		this.datasources = new ArrayList<IKendoDataSource>();
 		this.initReferences();
 	}
 
@@ -105,8 +104,13 @@ public class KendoUIBehavior extends JQueryBehavior
 	 * @param datasource the {@link IKendoDataSource}
 	 * @return <tt>true</tt> (as specified by {@link Collection#add})
 	 */
-	public boolean add(IKendoDataSource datasource)
+	public synchronized boolean add(IKendoDataSource datasource)
 	{
+		if (this.datasources == null)
+		{
+			this.datasources = new ArrayList<IKendoDataSource>();
+		}
+
 		return this.datasources.add(datasource);
 	}
 
@@ -116,10 +120,23 @@ public class KendoUIBehavior extends JQueryBehavior
 		super.renderHead(component, response);
 
 		// Data Sources //
-		for (IKendoDataSource datasource : this.datasources)
+		if (this.datasources != null)
 		{
-			response.render(new PriorityHeaderItem(JavaScriptHeaderItem.forScript(datasource.prepareRender().toScript(), datasource.getToken())));
+			for (IKendoDataSource datasource : this.datasources)
+			{
+				response.render(new PriorityHeaderItem(JavaScriptHeaderItem.forScript(datasource.prepareRender().toScript(), datasource.getToken())));
+			}
 		}
+	}
+
+	/**
+	 * Gets the Kendo jQuery object
+	 *
+	 * @return the the jQuery object
+	 */
+	protected String widget()
+	{
+		return this.widget(this.method);
 	}
 
 	/**

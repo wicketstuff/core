@@ -147,7 +147,7 @@ public class Spinner<T extends Number> extends TextField<T> implements IJQueryCu
 	{
 		super.onConfigure();
 
-		this.setDisabled(!this.isEnabled());
+		this.setDisabled(!this.isEnabledInHierarchy());
 	}
 
 	@Override

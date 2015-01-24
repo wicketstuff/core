@@ -20,7 +20,9 @@ import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.extensions.markup.html.tabs.ITab;
 
 /**
- * Event listener shared by the {@link TabbedPanel} widget and the {@link TabsBehavior}
+ * Event listener shared by the {@link TabbedPanel} widget and the {@link TabsBehavior}<br />
+ * <br />
+ * <b>Warning: </b> At least one event should be enabled for the {@link AjaxTab} to load.
  *
  * @author Sebastien Briquet - sebfz1
  *
@@ -29,9 +31,7 @@ interface ITabsListener
 {
 	/**
 	 * Indicates whether the 'create' event is enabled.<br/>
-	 * If true, the {@link #onActivate(AjaxRequestTarget, int, ITab)} event will be triggered on 'create'<br/>
-	 * <br/>
-	 * <b>Warning: </b> 'create' event is required to be enabled for the {@link AjaxTab} to load
+	 * If true, the {@link #onActivate(AjaxRequestTarget, int, ITab)} event will be triggered on 'create'
 	 *
 	 * @return true by default
 	 */
@@ -39,9 +39,7 @@ interface ITabsListener
 
 	/**
 	 * Indicates whether the 'activate' event is enabled.<br/>
-	 * If true, the {@link #onActivate(AjaxRequestTarget, int, ITab)} event will be triggered on 'activate'<br/>
-	 * <br/>
-	 * <b>Warning: </b> 'activate' event is required to be enabled for the {@link AjaxTab} to load
+	 * If true, the {@link #onActivate(AjaxRequestTarget, int, ITab)} event will be triggered on 'activate'
 	 *
 	 * @return true by default
 	 */
@@ -56,7 +54,7 @@ interface ITabsListener
 	boolean isActivatingEventEnabled();
 
 	/**
-	 * Triggered when a tab has been activated ('activate' event).<br/>
+	 * Triggered when a tab has been activated ('create' and 'activate' event).<br/>
 	 *
 	 * @param target the {@link AjaxRequestTarget}
 	 * @param index the tab index that triggered this event

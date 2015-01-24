@@ -222,12 +222,12 @@ public class CalendarEvent implements Serializable
 
 		if (this.start != null)
 		{
-			options.set("start", Options.asString(this.start.toString()));
+			options.set("start", Options.asString(this.start));
 		}
 
 		if (this.end != null)
 		{
-			options.set("end", Options.asString(this.end.toString()));
+			options.set("end", Options.asString(this.end));
 		}
 
 		if (this.url != null)

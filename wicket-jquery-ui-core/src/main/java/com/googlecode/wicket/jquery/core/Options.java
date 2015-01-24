@@ -38,6 +38,7 @@ import com.googlecode.wicket.jquery.core.utils.DateUtils;
  * @author Sebastien Briquet - sebfz1
  *
  */
+//XXX: removed deprecated Options#escapeQuotes, use {@link JSONObject#quote(String)} instead
 public class Options implements IClusterable
 {
 	private static final long serialVersionUID = 1L;
@@ -128,25 +129,6 @@ public class Options implements IClusterable
 		}
 
 		return builder.toString();
-	}
-
-	/**
-	 * Escape JSON quotes ({@value #QUOTE})
-	 *
-	 * @param value the string to escape
-	 * @return the escaped string
-	 * @deprecated use {@link JSONObject#quote(String)} instead
-	 * TODO remove in next version
-	 */
-	@Deprecated
-	public static String escapeQuotes(String value)
-	{
-		if (value != null)
-		{
-			return value.replaceAll(QUOTE, "\\" + QUOTE);
-		}
-
-		return ""; // fixes #92
 	}
 
 	/**

@@ -71,6 +71,17 @@ public class TabbedPanel extends JQueryPanel implements ITabsListener
 	 *
 	 * @param id the markup id
 	 * @param model the list model of {@link ITab}<code>s</code>
+	 */
+	public TabbedPanel(String id, IModel<List<ITab>> model)
+	{
+		this(id, model, new Options());
+	}
+
+	/**
+	 * Constructor
+	 *
+	 * @param id the markup id
+	 * @param model the list model of {@link ITab}<code>s</code>
 	 * @param options {@link Options}
 	 */
 	public TabbedPanel(String id, IModel<List<ITab>> model, Options options)
@@ -210,7 +221,7 @@ public class TabbedPanel extends JQueryPanel implements ITabsListener
 			}
 		});
 
-		this.add(this.widgetBehavior = this.newWidgetBehavior(JQueryWidget.getSelector(this)));
+		this.add(this.widgetBehavior = JQueryWidget.newWidgetBehavior(this));
 	}
 
 	@Override

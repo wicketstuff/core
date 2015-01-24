@@ -144,7 +144,7 @@ public class KendoFeedbackPanel extends WebMarkupContainer implements IJQueryWid
 			}
 
 			@Override
-			protected String $()
+			public String $()
 			{
 				StringBuilder builder = new StringBuilder(super.$());
 

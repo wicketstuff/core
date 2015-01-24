@@ -139,7 +139,7 @@ public class JQueryEffectBehavior extends JQueryUIBehavior implements IJQueryAja
 
 	// Statements //
 	@Override
-	protected String $()
+	public String $()
 	{
 		return this.$(this.effect, this.options.toString());
 	}

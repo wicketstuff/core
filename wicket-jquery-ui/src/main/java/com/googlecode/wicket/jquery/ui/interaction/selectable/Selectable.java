@@ -224,7 +224,7 @@ public class Selectable<T extends Serializable> extends JQueryContainer
 			}
 
 			@Override
-			protected String $()
+			public String $()
 			{
 				StringBuilder statement = new StringBuilder("");
 				List<T> list = Selectable.this.getModelObject();

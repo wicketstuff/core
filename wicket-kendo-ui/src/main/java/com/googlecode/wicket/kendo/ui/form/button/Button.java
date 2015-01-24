@@ -21,7 +21,6 @@ import org.apache.wicket.model.IModel;
 import com.googlecode.wicket.jquery.core.IJQueryWidget;
 import com.googlecode.wicket.jquery.core.JQueryBehavior;
 import com.googlecode.wicket.jquery.core.Options;
-import com.googlecode.wicket.kendo.ui.KendoUIBehavior;
 import com.googlecode.wicket.kendo.ui.KendoIcon;
 
 /**
@@ -98,29 +97,5 @@ public class Button extends org.apache.wicket.markup.html.form.Button  implement
 	public ButtonBehavior newWidgetBehavior(String selector)
 	{
 		return new ButtonBehavior(selector);
-	}
-
-	/**
-	 * Provides a jQuery button {@link JQueryBehavior}
-	 */
-	public static class ButtonBehavior extends KendoUIBehavior
-	{
-		private static final long serialVersionUID = 1L;
-		private static final String METHOD = "kendoButton";
-
-		public ButtonBehavior(String selector)
-		{
-			super(selector, METHOD);
-		}
-
-		public ButtonBehavior(String selector, Options options)
-		{
-			super(selector, METHOD, options);
-		}
-
-		public ButtonBehavior(String selector, String icon)
-		{
-			super(selector, METHOD, new Options("icon", Options.asString(icon)));
-		}
 	}
 }

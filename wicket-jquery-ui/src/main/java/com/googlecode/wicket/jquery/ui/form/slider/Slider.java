@@ -213,7 +213,7 @@ public class Slider extends AbstractSlider<Integer>
 			private static final long serialVersionUID = 1L;
 
 			@Override
-			protected String $() {
+			public String $() {
 
 				StringBuilder statements = new StringBuilder();
 
