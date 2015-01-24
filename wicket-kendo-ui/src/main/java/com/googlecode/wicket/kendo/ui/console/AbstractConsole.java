@@ -162,7 +162,7 @@ public abstract class AbstractConsole extends WebMarkupContainer
 			}
 
 			@Override
-			public String $()
+			protected String $()
 			{
 				StringBuilder builder = new StringBuilder();
 

@@ -298,7 +298,7 @@ public class DynamicWizardPage extends AbstractWizardPage
 								private static final long serialVersionUID = 1L;
 
 								@Override
-								public String $()
+								protected String $()
 								{
 									return String.format("jQuery('#%s').addClass('selected');", item.getMarkupId());
 								}

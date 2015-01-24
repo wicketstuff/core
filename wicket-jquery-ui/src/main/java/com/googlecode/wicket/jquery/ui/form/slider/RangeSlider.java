@@ -239,7 +239,7 @@ public class RangeSlider extends AbstractSlider<RangeValue>
 			private static final long serialVersionUID = 1L;
 
 			@Override
-			public String $() {
+			protected String $() {
 
 				StringBuilder statements = new StringBuilder();
 
@@ -264,7 +264,7 @@ public class RangeSlider extends AbstractSlider<RangeValue>
 			private static final long serialVersionUID = 1L;
 
 			@Override
-			public String $() {
+			protected String $() {
 
 				StringBuilder statements = new StringBuilder();
 

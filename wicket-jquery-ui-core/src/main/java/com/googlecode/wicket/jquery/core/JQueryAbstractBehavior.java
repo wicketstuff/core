@@ -147,7 +147,7 @@ public abstract class JQueryAbstractBehavior extends Behavior
 	 *
 	 * @return the jQuery statement
 	 */
-	public abstract String $();
+	protected abstract String $();
 
 	// Properties //
 

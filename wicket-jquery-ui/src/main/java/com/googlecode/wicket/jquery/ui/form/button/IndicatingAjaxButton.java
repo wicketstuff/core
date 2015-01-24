@@ -140,7 +140,7 @@ public abstract class IndicatingAjaxButton extends AjaxButton implements IJQuery
 			}
 
 			@Override
-			public String $()
+			protected String $()
 			{
 				// configure the busy indicator start & stop //
 				StringBuilder builder = new StringBuilder(super.$());

@@ -106,7 +106,7 @@ public abstract class CustomTooltipBehavior extends TooltipBehavior
 	}
 
 	@Override
-	public String $()
+	protected String $()
 	{
 		if (this.selector == null)
 		{

@@ -94,7 +94,7 @@ public class TooltipBehavior extends JQueryUIBehavior
 	// Methods
 
 	@Override
-	public String $()
+	protected String $()
 	{
 		if (this.selector == null)
 		{

@@ -297,7 +297,7 @@ public abstract class AutoCompleteTextField<T extends Serializable> extends Text
 			}
 
 			@Override
-			public String $()
+			protected String $()
 			{
 				if (templateBehavior != null)
 				{

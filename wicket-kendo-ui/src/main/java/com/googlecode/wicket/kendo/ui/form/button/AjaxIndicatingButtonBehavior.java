@@ -70,7 +70,7 @@ public class AjaxIndicatingButtonBehavior extends ButtonBehavior
 	}
 
 	@Override
-	public String $()
+	protected String $()
 	{
 		StringBuilder builder = new StringBuilder(super.$());
 

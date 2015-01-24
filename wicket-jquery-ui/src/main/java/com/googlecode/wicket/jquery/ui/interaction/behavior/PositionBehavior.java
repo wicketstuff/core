@@ -65,7 +65,7 @@ public class PositionBehavior extends JQueryUIBehavior
 	}
 
 	@Override
-	public String $()
+	protected String $()
 	{
 		return String.format("jQuery('%s').%s(%s);", this.selector, METHOD, this.object);
 	}
