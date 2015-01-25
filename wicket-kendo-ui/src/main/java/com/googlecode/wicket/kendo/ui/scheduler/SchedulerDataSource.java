@@ -46,8 +46,6 @@ public class SchedulerDataSource extends KendoDataSource
 	public SchedulerDataSource(String name, String type)
 	{
 		super(name, type);
-
-		this.set("change", "function(e) { if (e.action === 'sync') { this.read(); } }");
 	}
 
 	// Properties //

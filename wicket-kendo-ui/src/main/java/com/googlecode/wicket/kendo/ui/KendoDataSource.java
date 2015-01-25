@@ -58,6 +58,7 @@ public class KendoDataSource extends Options implements IKendoDataSource
 		this.transport = new Options();
 
 		this.set("type", Options.asString(type));
+		this.set("sync", "function() { this.read(); }");
 		this.set("error", DebugUtils.errorCallback);
 	}
 
