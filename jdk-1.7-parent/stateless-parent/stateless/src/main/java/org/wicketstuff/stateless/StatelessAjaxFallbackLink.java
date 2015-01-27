@@ -48,6 +48,7 @@ public abstract class StatelessAjaxFallbackLink<T> extends StatelessLink<T>
             protected void updateAjaxAttributes(AjaxRequestAttributes attributes)
             {
                 super.updateAjaxAttributes(attributes);
+		attributes.setPreventDefault(true);
                 StatelessAjaxFallbackLink.this.updateAjaxAttributes(attributes);
             }
 
