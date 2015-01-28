@@ -19,6 +19,7 @@ import org.wicketstuff.html5.markup.html.form.NumberFieldDemo;
 import org.wicketstuff.html5.markup.html.form.RangeTextFieldDemo;
 import org.wicketstuff.html5.media.audio.AudioDemo;
 import org.wicketstuff.html5.media.video.VideoDemo;
+import org.wicketstuff.html5.shape.ShapeCircleExamplePage;
 
 /**
  * 
@@ -49,6 +50,7 @@ public class WicketApplication extends WebApplication
 		mountPage("/progress", ProgressDemo.class);
 
 		mountPage("/eventSource", EventSourceDemo.class);
+		mountPage("/shape", ShapeCircleExamplePage.class);
 		mountResource("/eventSourceResource", new EventSourceResourceReference());
 	}
 }
