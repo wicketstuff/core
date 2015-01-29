@@ -16,16 +16,11 @@
  */
 package com.googlecode.wicket.jquery.core.panel;
 
-import java.io.Serializable;
-
-import org.apache.wicket.AttributeModifier;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.markup.html.form.Form;
-import org.apache.wicket.markup.html.form.HiddenField;
 import org.apache.wicket.markup.html.form.IFormSubmittingComponent;
 import org.apache.wicket.markup.html.panel.GenericPanel;
 import org.apache.wicket.model.IModel;
-import org.apache.wicket.model.Model;
 
 import com.googlecode.wicket.jquery.core.IJQueryWidget.JQueryWidget;
 
@@ -68,15 +63,7 @@ public abstract class FormSubmittingPanel<T> extends GenericPanel<T> implements 
 		super(id, model);
 	}
 
-	@Override
-	protected void onInitialize()
-	{
-		super.onInitialize();
-
-		// As the Form is posted, Form#findSubmittingButton() expect to retrieve this component by the request parameter 'name'.
-		// But as this component is not an input, it does not have a name attribute. Thus, it should match the #getInputName() path
-		this.add(new HiddenField<Serializable>("submitter", new Model<Serializable>()).add(AttributeModifier.replace("name", this.getInputName())));
-	}
+	// Methods //
 
 	/**
 	 * Performs a form submit through the target
@@ -85,10 +72,18 @@ public abstract class FormSubmittingPanel<T> extends GenericPanel<T> implements 
 	 */
 	public void submit(AjaxRequestTarget target)
 	{
-		target.appendJavaScript(String.format("jQuery('%s').submit();", JQueryWidget.getSelector(this.getForm()))); // not tested in nested forms
+		/**
+		 * As the Form is posted, Form#findSubmittingButton() expects to retrieve this component by the request parameter 'name'.<br/>
+		 * But this component (panel) is not an input, so it does not have a name attribute. <br/>
+		 * The name should mach the #getInputName() path
+		 */
+		String input = String.format("<input type=\"hidden\" name=\"%s\" value=\"\" />", this.getInputName());
+
+		target.appendJavaScript(String.format("jQuery('%s').append('%s').submit();", JQueryWidget.getSelector(this.getForm()), input)); // not tested in nested forms
 	}
 
 	// IFormSubmittingComponent //
+
 	@Override
 	public Form<?> getForm()
 	{
@@ -121,6 +116,6 @@ public abstract class FormSubmittingPanel<T> extends GenericPanel<T> implements 
 	@Override
 	public void onAfterSubmit()
 	{
-		//wicket6
+		// wicket6
 	}
 }
