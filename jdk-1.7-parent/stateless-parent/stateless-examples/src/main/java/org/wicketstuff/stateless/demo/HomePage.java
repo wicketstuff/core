@@ -2,7 +2,6 @@ package org.wicketstuff.stateless.demo;
 
 import java.util.Arrays;
 
-import org.apache.wicket.Session;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.devutils.stateless.StatelessComponent;
 import org.apache.wicket.markup.html.WebPage;
@@ -117,13 +116,6 @@ public class HomePage extends WebPage {
 		}
 
 		return value.toString();
-	}
-	
-	@Override
-	protected void onBeforeRender()
-	{
-		super.onBeforeRender();
-		System.out.println(Session.get().isTemporary());
 	}
 	
 	protected final void updateParams(final PageParameters pageParameters, final int counter) {
