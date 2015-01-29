@@ -18,7 +18,8 @@ public abstract class StatelessAjaxEventBehavior extends AjaxEventBehavior
     protected void onBind()
     {
         super.onBind();
-
+        
+        //generate behavior id
         getComponent().getBehaviorId(this);
     }
 

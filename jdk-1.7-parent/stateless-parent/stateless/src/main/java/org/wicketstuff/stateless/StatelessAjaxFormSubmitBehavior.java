@@ -66,7 +66,6 @@ public class StatelessAjaxFormSubmitBehavior extends StatelessAjaxEventBehavior
 	@Override
 	protected void onEvent(AjaxRequestTarget target)
 	{
-		getForm().getRootForm().onFormSubmitted();//(new AjaxFormSubmitter(this, target));
+		getForm().getRootForm().onFormSubmitted();
 	}
-
 }

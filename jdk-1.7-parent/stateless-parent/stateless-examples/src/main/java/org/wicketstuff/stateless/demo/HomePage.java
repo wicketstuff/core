@@ -5,7 +5,6 @@ import java.util.Arrays;
 import org.apache.wicket.Session;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.devutils.stateless.StatelessComponent;
-import org.apache.wicket.markup.ComponentTag;
 import org.apache.wicket.markup.html.WebPage;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.form.DropDownChoice;
@@ -13,14 +12,13 @@ import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.form.StatelessForm;
 import org.apache.wicket.markup.html.form.TextField;
 import org.apache.wicket.markup.html.link.Link;
-import org.apache.wicket.markup.html.link.StatelessLink;
 import org.apache.wicket.model.AbstractReadOnlyModel;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
 import org.apache.wicket.util.string.StringValue;
 import org.wicketstuff.stateless.StatelessAjaxFallbackLink;
 import org.wicketstuff.stateless.StatelessAjaxFormComponentUpdatingBehavior;
-import org.wicketstuff.stateless.StatelessAjaxFormSubmitBehavior;
+import org.wicketstuff.stateless.StatelessAjaxSubmittingLink;
 
 /**
  * For testing only
@@ -103,27 +101,7 @@ public class HomePage extends WebPage {
 		form.add(a);
 		form.add(b);
 		
-		form.add(new StatelessLink("submit")
-		{
-			
-			@Override
-			public void onClick()
-			{		
-			}
-			
-			@Override
-			protected void onComponentTag(ComponentTag tag)
-			{
-				super.onComponentTag(tag);
-				if (isEnabledInHierarchy())
-				{
-					tag.remove("onclick");
-					tag.remove("href");
-				}
-			}
-		}
-		.setOutputMarkupId(true)
-		.add(new StatelessAjaxFormSubmitBehavior("click")));
+		form.add(new StatelessAjaxSubmittingLink("submit"));
 		
 		add(form);
 
