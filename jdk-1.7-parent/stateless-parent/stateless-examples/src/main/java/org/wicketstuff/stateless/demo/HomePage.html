@@ -19,12 +19,12 @@ and a regular wicket roundtrip when ajax or javascript are not available
 and the page should be stateless. )
 <br />
 
-<form wicket:id="inputForm" method="get">
+<form wicket:id="inputForm" >
 <label for="a">a:</label>
 <input wicket:id="a" id="a" type="text" size="15"/><br/>
 <label for="b">b:</label>
 <input wicket:id="b" id="b" type="text" size="15"/><br/>
-<input type="submit" value="Execute" />
+<button wicket:id="submit">Execute</button>
 </form>
 
 <select wicket:id="c" />

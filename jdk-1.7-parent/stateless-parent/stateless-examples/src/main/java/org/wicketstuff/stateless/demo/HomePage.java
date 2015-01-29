@@ -2,8 +2,10 @@ package org.wicketstuff.stateless.demo;
 
 import java.util.Arrays;
 
+import org.apache.wicket.Session;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.devutils.stateless.StatelessComponent;
+import org.apache.wicket.markup.ComponentTag;
 import org.apache.wicket.markup.html.WebPage;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.form.DropDownChoice;
@@ -11,13 +13,14 @@ import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.form.StatelessForm;
 import org.apache.wicket.markup.html.form.TextField;
 import org.apache.wicket.markup.html.link.Link;
+import org.apache.wicket.markup.html.link.StatelessLink;
 import org.apache.wicket.model.AbstractReadOnlyModel;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
 import org.apache.wicket.util.string.StringValue;
-
 import org.wicketstuff.stateless.StatelessAjaxFallbackLink;
 import org.wicketstuff.stateless.StatelessAjaxFormComponentUpdatingBehavior;
+import org.wicketstuff.stateless.StatelessAjaxFormSubmitBehavior;
 
 /**
  * For testing only
@@ -64,19 +67,21 @@ public class HomePage extends WebPage {
 
 		final String _a = getParameter(parameters, "a");
 		final String _b = getParameter(parameters, "b");
+		
+		final TextField<String> a = new TextField<String>("a",
+			new Model<String>(_a));
+		final TextField<String> b = new TextField<String>("b",
+			new Model<String>(_b));
+
 		final Form<String> form = new StatelessForm<String>("inputForm") {
 
 			@Override
 			protected void onSubmit() {
 				System.out.format("clicked sumbit: a = [%s], b = [%s]%n",
-						getParameter(parameters, "a"), getParameter(parameters, "b"));
+						a.getModelObject(), b.getModelObject());
 			}
-
+			
 		};
-		final TextField<String> a = new TextField<String>("a",
-				new Model<String>(_a));
-		final TextField<String> b = new TextField<String>("b",
-				new Model<String>(_b));
 		final DropDownChoice<String> c = new DropDownChoice<String>("c",
 				new Model<String>("2"), Arrays.asList(new String[] { "1", "2",
 						"3" }));
@@ -97,6 +102,29 @@ public class HomePage extends WebPage {
 		c.setMarkupId("c");
 		form.add(a);
 		form.add(b);
+		
+		form.add(new StatelessLink("submit")
+		{
+			
+			@Override
+			public void onClick()
+			{		
+			}
+			
+			@Override
+			protected void onComponentTag(ComponentTag tag)
+			{
+				super.onComponentTag(tag);
+				if (isEnabledInHierarchy())
+				{
+					tag.remove("onclick");
+					tag.remove("href");
+				}
+			}
+		}
+		.setOutputMarkupId(true)
+		.add(new StatelessAjaxFormSubmitBehavior("click")));
+		
 		add(form);
 
 		add(c);
@@ -112,7 +140,14 @@ public class HomePage extends WebPage {
 
 		return value.toString();
 	}
-
+	
+	@Override
+	protected void onBeforeRender()
+	{
+		super.onBeforeRender();
+		System.out.println(Session.get().isTemporary());
+	}
+	
 	protected final void updateParams(final PageParameters pageParameters, final int counter) {
 		pageParameters.set(COUNTER_PARAM, Integer.toString(counter + 1));
 	}
