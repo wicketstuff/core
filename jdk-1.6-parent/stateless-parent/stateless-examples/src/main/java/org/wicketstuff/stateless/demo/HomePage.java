@@ -15,9 +15,9 @@ import org.apache.wicket.model.AbstractReadOnlyModel;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
 import org.apache.wicket.util.string.StringValue;
-
 import org.wicketstuff.stateless.StatelessAjaxFallbackLink;
 import org.wicketstuff.stateless.StatelessAjaxFormComponentUpdatingBehavior;
+import org.wicketstuff.stateless.StatelessAjaxSubmittingLink;
 
 /**
  * For testing only
@@ -64,19 +64,21 @@ public class HomePage extends WebPage {
 
 		final String _a = getParameter(parameters, "a");
 		final String _b = getParameter(parameters, "b");
+		
+		final TextField<String> a = new TextField<String>("a",
+			new Model<String>(_a));
+		final TextField<String> b = new TextField<String>("b",
+			new Model<String>(_b));
+
 		final Form<String> form = new StatelessForm<String>("inputForm") {
 
 			@Override
 			protected void onSubmit() {
 				System.out.format("clicked sumbit: a = [%s], b = [%s]%n",
-						getParameter(parameters, "a"), getParameter(parameters, "b"));
+						a.getModelObject(), b.getModelObject());
 			}
-
+			
 		};
-		final TextField<String> a = new TextField<String>("a",
-				new Model<String>(_a));
-		final TextField<String> b = new TextField<String>("b",
-				new Model<String>(_b));
 		final DropDownChoice<String> c = new DropDownChoice<String>("c",
 				new Model<String>("2"), Arrays.asList(new String[] { "1", "2",
 						"3" }));
@@ -97,6 +99,9 @@ public class HomePage extends WebPage {
 		c.setMarkupId("c");
 		form.add(a);
 		form.add(b);
+		
+		form.add(new StatelessAjaxSubmittingLink("submit"));
+		
 		add(form);
 
 		add(c);
@@ -112,7 +117,7 @@ public class HomePage extends WebPage {
 
 		return value.toString();
 	}
-
+	
 	protected final void updateParams(final PageParameters pageParameters, final int counter) {
 		pageParameters.set(COUNTER_PARAM, Integer.toString(counter + 1));
 	}
