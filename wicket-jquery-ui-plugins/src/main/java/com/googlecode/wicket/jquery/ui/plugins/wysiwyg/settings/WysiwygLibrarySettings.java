@@ -22,6 +22,7 @@ import com.googlecode.wicket.jquery.ui.plugins.wysiwyg.resource.BootstrapCombine
 import com.googlecode.wicket.jquery.ui.plugins.wysiwyg.resource.BootstrapDropDownJavaScriptResourceReference;
 import com.googlecode.wicket.jquery.ui.plugins.wysiwyg.resource.BootstrapResponsiveStyleSheetResourceReference;
 import com.googlecode.wicket.jquery.ui.plugins.wysiwyg.resource.BootstrapWysiwygJavaScriptResourceReference;
+import com.googlecode.wicket.jquery.ui.plugins.wysiwyg.resource.EditorJavaScriptResourceReference;
 import com.googlecode.wicket.jquery.ui.plugins.wysiwyg.resource.EditorStyleSheetResourceReference;
 import com.googlecode.wicket.jquery.ui.plugins.wysiwyg.resource.JQueryHotKeysJavaScriptResourceReference;
 import com.googlecode.wicket.jquery.ui.plugins.wysiwyg.resource.PrettifyJavaScriptResourceReference;
@@ -39,6 +40,7 @@ public class WysiwygLibrarySettings
 	private ResourceReference bootstrapCombinedNoIconsStyleSheetReference = BootstrapCombinedNoIconsStyleSheetResourceReference.get();
 	private ResourceReference bootstrapResponsiveStyleSheetReference = BootstrapResponsiveStyleSheetResourceReference.get();
 	private ResourceReference editorStyleSheetReference = EditorStyleSheetResourceReference.get();
+	private ResourceReference editorJavaScriptResourceReference = EditorJavaScriptResourceReference.get();
 
 	private ResourceReference bootstrapDropDownJavaScriptReference = BootstrapDropDownJavaScriptResourceReference.get();
 	private ResourceReference bootstrapWysiwygJavaScriptReference = BootstrapWysiwygJavaScriptResourceReference.get();
@@ -137,5 +139,15 @@ public class WysiwygLibrarySettings
 	public void setPrettifyJavaScriptReference(ResourceReference reference)
 	{
 		this.prettifyJavaScriptReference = reference;
+	}
+
+	public ResourceReference getEditorJavaScriptResourceReference()
+	{
+		return editorJavaScriptResourceReference;
+	}
+
+	public void setEditorJavaScriptResourceReference(ResourceReference editorJavaScriptResourceReference)
+	{
+		this.editorJavaScriptResourceReference = editorJavaScriptResourceReference;
 	}
 }
