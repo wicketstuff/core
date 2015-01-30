@@ -3,10 +3,10 @@ package org.wicketstuff.stateless;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.markup.html.link.AbstractLink;
 
-public class StatelessAjaxSubmittingLink extends AbstractLink
+public class StatelessAjaxSubmitLink extends AbstractLink
 {
 
-	public StatelessAjaxSubmittingLink(String id)
+	public StatelessAjaxSubmitLink(String id)
 	{
 		super(id);
 		setOutputMarkupId(true);
@@ -31,19 +31,19 @@ public class StatelessAjaxSubmittingLink extends AbstractLink
 		@Override
 		protected void onAfterSubmit(AjaxRequestTarget target)
 		{
-			StatelessAjaxSubmittingLink.this.onAfterSubmit(target);
+			StatelessAjaxSubmitLink.this.onAfterSubmit(target);
 		}
 
 		@Override
 		protected void onSubmit(AjaxRequestTarget target)
 		{
-			StatelessAjaxSubmittingLink.this.onSubmit(target);
+			StatelessAjaxSubmitLink.this.onSubmit(target);
 		}
 
 		@Override
 		protected void onError(AjaxRequestTarget target)
 		{
-			StatelessAjaxSubmittingLink.this.onError(target);
+			StatelessAjaxSubmitLink.this.onError(target);
 		}		
 	}
 	
@@ -54,7 +54,7 @@ public class StatelessAjaxSubmittingLink extends AbstractLink
 
 	protected void onSubmit(AjaxRequestTarget target)
 	{
-		System.out.println("AJAX submit!");
+		
 	}
 
 	protected void onError(AjaxRequestTarget target)

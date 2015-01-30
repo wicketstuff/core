@@ -2,6 +2,7 @@ package org.wicketstuff.stateless.demo;
 
 import java.util.Arrays;
 
+import org.apache.wicket.Component;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.devutils.stateless.StatelessComponent;
 import org.apache.wicket.markup.html.WebPage;
@@ -11,13 +12,14 @@ import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.form.StatelessForm;
 import org.apache.wicket.markup.html.form.TextField;
 import org.apache.wicket.markup.html.link.Link;
+import org.apache.wicket.markup.html.panel.FeedbackPanel;
 import org.apache.wicket.model.AbstractReadOnlyModel;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
 import org.apache.wicket.util.string.StringValue;
 import org.wicketstuff.stateless.StatelessAjaxFallbackLink;
 import org.wicketstuff.stateless.StatelessAjaxFormComponentUpdatingBehavior;
-import org.wicketstuff.stateless.StatelessAjaxSubmittingLink;
+import org.wicketstuff.stateless.StatelessAjaxSubmitLink;
 
 /**
  * For testing only
@@ -58,9 +60,8 @@ public class HomePage extends WebPage {
 			}
 		};
 
-		c2.setMarkupId(c2.getId()); // Make the id stable for each page instance
 		add(c2Link);
-		add(c2);
+		add(c2.setOutputMarkupId(true));
 
 		final String _a = getParameter(parameters, "a");
 		final String _b = getParameter(parameters, "b");
@@ -96,11 +97,28 @@ public class HomePage extends WebPage {
 				System.out.println("xxxxxxxxxxxxxxxxxx: " + value);
 			}
 		});
-		c.setMarkupId("c");
-		form.add(a);
-		form.add(b);
 		
-		form.add(new StatelessAjaxSubmittingLink("submit"));
+		form.add(a.setRequired(true));
+		form.add(b.setRequired(true));
+		
+		final Component feedback = new FeedbackPanel("feedback");
+		
+		form.add(feedback.setOutputMarkupId(true));
+		
+		form.add(new StatelessAjaxSubmitLink("submit"){
+			@Override
+			protected void onError(AjaxRequestTarget target)
+			{
+				super.onError(target);
+				target.add(feedback);
+			}
+			@Override
+			protected void onSubmit(AjaxRequestTarget target)
+			{		
+				super.onSubmit(target);
+				target.add(feedback);
+			}
+		});
 		
 		add(form);
 

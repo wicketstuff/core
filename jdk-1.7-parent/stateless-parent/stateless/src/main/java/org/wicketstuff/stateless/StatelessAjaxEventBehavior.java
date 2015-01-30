@@ -38,7 +38,8 @@ public abstract class StatelessAjaxEventBehavior extends AjaxEventBehavior
      * @return always {@literal true}
      */
     @Override
-    public boolean getStatelessHint(final Component component) {
+    public boolean getStatelessHint(final Component component) 
+    {
         return true;
     }
 }
