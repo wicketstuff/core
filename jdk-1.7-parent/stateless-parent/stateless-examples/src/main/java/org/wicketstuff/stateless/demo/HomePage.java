@@ -53,7 +53,6 @@ public class HomePage extends WebPage {
 			public void onClick(final AjaxRequestTarget target) {
 				if (target != null) {
 					Integer counter = (Integer) c2.getDefaultModelObject();
-					System.out.println("label: " + counter);
 					updateParams(getPageParameters(), counter);
 					target.add(c2);
 				}
@@ -66,25 +65,26 @@ public class HomePage extends WebPage {
 		final String _a = getParameter(parameters, "a");
 		final String _b = getParameter(parameters, "b");
 		
-		final TextField<String> a = new TextField<String>("a",
+		final TextField<String> a = new TextField<String>("name",
 			new Model<String>(_a));
-		final TextField<String> b = new TextField<String>("b",
+		final TextField<String> b = new TextField<String>("surname",
 			new Model<String>(_b));
 
 		final Form<String> form = new StatelessForm<String>("inputForm") {
 
 			@Override
 			protected void onSubmit() {
-				System.out.format("clicked sumbit: a = [%s], b = [%s]%n",
-						a.getModelObject(), b.getModelObject());
+				
 			}
 			
 		};
-		final DropDownChoice<String> c = new DropDownChoice<String>("c",
+		final DropDownChoice<String> select = new DropDownChoice<String>("select",
 				new Model<String>("2"), Arrays.asList(new String[] { "1", "2",
 						"3" }));
-
-		c.add(new StatelessAjaxFormComponentUpdatingBehavior("change") {
+		final Label selectedValue = new Label("selectedValue", "");
+		add(selectedValue.setOutputMarkupId(true));
+		
+		select.add(new StatelessAjaxFormComponentUpdatingBehavior("change") {
 
 			@Override
 			protected PageParameters getPageParameters() {
@@ -93,8 +93,9 @@ public class HomePage extends WebPage {
 
 			@Override
 			protected void onUpdate(final AjaxRequestTarget target) {
-				final String value = c.getModelObject();
-				System.out.println("xxxxxxxxxxxxxxxxxx: " + value);
+				final String value = select.getModelObject();
+				selectedValue.setDefaultModelObject("Selected value: " + value);
+				target.add(selectedValue);
 			}
 		});
 		
@@ -102,8 +103,10 @@ public class HomePage extends WebPage {
 		form.add(b.setRequired(true));
 		
 		final Component feedback = new FeedbackPanel("feedback");
+		final Label submittedValues = new Label("submittedValues", "");
 		
 		form.add(feedback.setOutputMarkupId(true));
+		form.add(submittedValues.setOutputMarkupId(true));
 		
 		form.add(new StatelessAjaxSubmitLink("submit"){
 			@Override
@@ -116,13 +119,16 @@ public class HomePage extends WebPage {
 			protected void onSubmit(AjaxRequestTarget target)
 			{		
 				super.onSubmit(target);
-				target.add(feedback);
+				String values = "Your name is: " + a.getModelObject() +
+					" " + b.getModelObject();
+				submittedValues.setDefaultModelObject(values);
+				target.add(feedback, submittedValues);
 			}
 		});
 		
 		add(form);
 
-		add(c);
+		add(select);
 	}
 
 	private String getParameter(final PageParameters parameters,
