@@ -40,7 +40,7 @@ public class BookmarkablePageLink<T> extends org.apache.wicket.markup.html.link.
 	/**
 	 * Constructor
 	 * 
-	 * @param id the markup-id
+	 * @param id the markup id
 	 * @param pageClass the class of page to link to
 	 */
 	public <C extends Page> BookmarkablePageLink(String id, Class<C> pageClass)
@@ -51,7 +51,7 @@ public class BookmarkablePageLink<T> extends org.apache.wicket.markup.html.link.
 	/**
 	 * Constructor
 	 * 
-	 * @param id the markup-id
+	 * @param id the markup id
 	 * @param pageClass the class of page to link to
 	 * @param icon either a {@link KendoIcon} constant or a 'k-i-<i>icon</i>' css class
 	 */
@@ -65,7 +65,7 @@ public class BookmarkablePageLink<T> extends org.apache.wicket.markup.html.link.
 	/**
 	 * Constructor
 	 * 
-	 * @param id the markup-id
+	 * @param id the markup id
 	 * @param pageClass the class of page to link to
 	 * @param parameters the parameters to pass to the new page when the link is clicked
 	 */
@@ -77,7 +77,7 @@ public class BookmarkablePageLink<T> extends org.apache.wicket.markup.html.link.
 	/**
 	 * Constructor
 	 * 
-	 * @param id the markup-id
+	 * @param id the markup id
 	 * @param pageClass the class of page to link to
 	 * @param parameters the parameters to pass to the new page when the link is clicked
 	 * @param icon either a {@link KendoIcon} constant or a 'k-i-<i>icon</i>' css class

@@ -79,7 +79,6 @@ public abstract class AjaxButton extends org.apache.wicket.ajax.markup.html.form
 		super(id, model, form);
 	}
 
-	// Events //
 	// Properties //
 
 	/**

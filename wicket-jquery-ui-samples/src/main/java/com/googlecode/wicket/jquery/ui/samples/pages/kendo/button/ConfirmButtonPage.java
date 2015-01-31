@@ -1,12 +1,11 @@
-package com.googlecode.wicket.jquery.ui.samples.pages.button;
+package com.googlecode.wicket.jquery.ui.samples.pages.kendo.button;
 
 import org.apache.wicket.markup.html.form.Form;
-import org.apache.wicket.markup.html.form.RequiredTextField;
-import org.apache.wicket.markup.html.panel.FeedbackPanel;
 import org.apache.wicket.model.Model;
 
-import com.googlecode.wicket.jquery.ui.form.button.ConfirmButton;
-import com.googlecode.wicket.jquery.ui.panel.JQueryFeedbackPanel;
+import com.googlecode.wicket.kendo.ui.form.TextField;
+import com.googlecode.wicket.kendo.ui.form.button.ConfirmButton;
+import com.googlecode.wicket.kendo.ui.panel.KendoFeedbackPanel;
 
 public class ConfirmButtonPage extends AbstractButtonPage
 {
@@ -28,12 +27,12 @@ public class ConfirmButtonPage extends AbstractButtonPage
 		this.add(form);
 
 		// FeedbackPanel //
-		final FeedbackPanel feedback = new JQueryFeedbackPanel("feedback");
+		final KendoFeedbackPanel feedback = new KendoFeedbackPanel("feedback");
 		form.add(feedback.setOutputMarkupId(true));
 
 		// TextField //
-		final RequiredTextField<String> textField = new RequiredTextField<String>("text", new Model<String>());
-		form.add(textField);
+		final TextField<String> textField = new TextField<String>("text", new Model<String>());
+		form.add(textField.setRequired(true));
 
 		// Buttons //
 		form.add(new ConfirmButton("button", "Submit", "Please confirm", "Do you confirm?") {

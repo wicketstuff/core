@@ -28,13 +28,14 @@ import com.googlecode.wicket.kendo.ui.form.button.AjaxButton;
 import com.googlecode.wicket.kendo.ui.panel.KendoFeedbackPanel;
 
 /**
- * Provides a Kendo UI window having a {@link TextField}, a 'Submit' button and a 'Cancel' button
+ * Provides a Kendo UI Window having a {@link TextField}, a 'Submit' button and a 'Cancel' button
  *
  * @param <T> the type of the model object
  *
  * @author Sebastien Briquet - sebfz1
  * @since 6.17.0
  */
+//TODO inherit from Window
 public abstract class InputWindow<T> extends AbstractWindow<T>
 {
 	private static final long serialVersionUID = 1L;
@@ -50,7 +51,7 @@ public abstract class InputWindow<T> extends AbstractWindow<T>
 	/**
 	 * Constructor
 	 *
-	 * @param id the markupId, an html div suffice to host a window.
+	 * @param id the markup id, an html div suffice to host a window.
 	 * @param title the title of the window
 	 * @param label the label of the textfield
 	 */
@@ -62,7 +63,7 @@ public abstract class InputWindow<T> extends AbstractWindow<T>
 	/**
 	 * Constructor
 	 *
-	 * @param id the markupId, an html div suffice to host a window.
+	 * @param id the markup id, an html div suffice to host a window.
 	 * @param title the title of the window
 	 * @param label the label of the textfield
 	 */
@@ -74,7 +75,7 @@ public abstract class InputWindow<T> extends AbstractWindow<T>
 	/**
 	 * Constructor
 	 *
-	 * @param id markupId, an html div suffice to host a window.
+	 * @param id the markup id, an html div suffice to host a window.
 	 * @param title the title of the window
 	 * @param model the model to be used in the window
 	 * @param label the label of the textfield
@@ -87,7 +88,7 @@ public abstract class InputWindow<T> extends AbstractWindow<T>
 	/**
 	 * Constructor
 	 *
-	 * @param id markupId, an html div suffice to host a window.
+	 * @param id the markup id, an html div suffice to host a window.
 	 * @param title the title of the window
 	 * @param model the model to be used in the window
 	 * @param label the label of the textfield
@@ -103,7 +104,7 @@ public abstract class InputWindow<T> extends AbstractWindow<T>
 	// Properties //
 
 	/**
-	 * Indicates whether the {@link TextField}'s value value is required
+	 * Indicates whether the {@link TextField}'s value is required
 	 *
 	 * @return true or false
 	 */

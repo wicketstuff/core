@@ -2,16 +2,16 @@
 <html xmlns:wicket="http://wicket.apache.org">
 <head>
 <wicket:head>
-	<title>Wicket - Kendo UI: indicating ajax button</title>
+	<title>Wicket - Kendo UI: confirm button</title>
 </wicket:head>
 </head>
 <body>
 <wicket:extend>
 	<div id="wrapper-panel-frame" class="ui-corner-all">
 		<form wicket:id="form">
-			<button wicket:id="button1">Indicating Button</button>
-			<button wicket:id="button2">Indicating Ajax Button, with freeze</button>
-			<br/><br/>
+			<input type="text" wicket:id="text"></input>
+			<span wicket:id="button"></span><br />
+			<br/>
 			<div wicket:id="feedback" style="width: 360px;"></div>
 		</form>
 	</div>

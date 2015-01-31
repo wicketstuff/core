@@ -20,6 +20,7 @@ abstract class AbstractWindowPage extends SamplePage
 		return Arrays.asList(
 				new DemoLink(DefaultWindowPage.class, "Window"),
 				new DemoLink(ActionWindowPage.class, "Window: actions"),
+				new DemoLink(MessageWindowPage.class, "Message Window"),
 				new DemoLink(InputWindowPage.class, "Input Window")
 			);
 	}

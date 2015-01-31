@@ -76,7 +76,7 @@ public abstract class CustomTooltipBehavior extends TooltipBehavior
 	/**
 	 * Gets the {@link WebMarkupContainer} which will represent the tooltip content
 	 *
-	 * @param markupId the markup-id to be used
+	 * @param markupId the markup id to be used
 	 * @return a new {@link WebMarkupContainer}
 	 */
 	protected abstract WebMarkupContainer newContent(String markupId);

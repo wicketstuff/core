@@ -164,7 +164,7 @@ public abstract class AbstractFormDialog<T extends Serializable> extends Abstrac
 	public abstract Form<?> getForm();
 
 	/**
-	 * Returns the form associated to the button.<br/>
+	 * Gets the form associated to the button.<br/>
 	 * It means that it will return the form if the button is the submit button and null otherwise. The callback script will differ depending on this.
 	 *
 	 * @param button the dialog's button

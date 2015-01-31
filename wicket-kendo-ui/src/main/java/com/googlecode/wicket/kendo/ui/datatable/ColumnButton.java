@@ -32,7 +32,7 @@ public class ColumnButton implements IClusterable
 	private static short sequence = 0;
 
 	/**
-	 * Gets the next id-sequence. This is used to generate the markupId
+	 * Gets the next id-sequence. This is used to generate the markup id
 	 *
 	 * @return 0x0000 to 0x7FFF
 	 */

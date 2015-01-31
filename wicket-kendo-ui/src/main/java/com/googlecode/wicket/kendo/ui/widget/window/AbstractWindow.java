@@ -17,7 +17,6 @@
 package com.googlecode.wicket.kendo.ui.widget.window;
 
 import org.apache.wicket.ajax.AjaxRequestTarget;
-import org.apache.wicket.core.util.string.JavaScriptUtils;
 import org.apache.wicket.markup.html.panel.GenericPanel;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
@@ -56,7 +55,7 @@ public abstract class AbstractWindow<T> extends GenericPanel<T> implements IJQue
 	/**
 	 * Constructor
 	 *
-	 * @param id the markupId, an html div suffice to host a window.
+	 * @param id the markup id, an html div suffice to host a window.
 	 * @param title the title of the window
 	 */
 	public AbstractWindow(String id, String title)
@@ -67,7 +66,7 @@ public abstract class AbstractWindow<T> extends GenericPanel<T> implements IJQue
 	/**
 	 * Constructor
 	 *
-	 * @param id the markupId, an html div suffice to host a window.
+	 * @param id the markup id, an html div suffice to host a window.
 	 * @param title the title of the window
 	 */
 	public AbstractWindow(String id, IModel<String> title)
@@ -78,7 +77,7 @@ public abstract class AbstractWindow<T> extends GenericPanel<T> implements IJQue
 	/**
 	 * Constructor
 	 *
-	 * @param id the markupId, an html div suffice to host a window.
+	 * @param id the markup id, an html div suffice to host a window.
 	 * @param title the title of the window
 	 * @param model the model to be used in the window.
 	 */
@@ -90,7 +89,7 @@ public abstract class AbstractWindow<T> extends GenericPanel<T> implements IJQue
 	/**
 	 * Constructor
 	 *
-	 * @param id the markupId, an html div suffice to host a window.
+	 * @param id the markup id, an html div suffice to host a window.
 	 * @param title the title of the window
 	 * @param model the model to be used in the window.
 	 */
@@ -102,7 +101,7 @@ public abstract class AbstractWindow<T> extends GenericPanel<T> implements IJQue
 	/**
 	 * Constructor
 	 *
-	 * @param id the markupId, an html div suffice to host a window.
+	 * @param id the markup id, an html div suffice to host a window.
 	 * @param title the title of the window
 	 * @param modal indicates whether the window is modal
 	 */
@@ -114,7 +113,7 @@ public abstract class AbstractWindow<T> extends GenericPanel<T> implements IJQue
 	/**
 	 * Constructor
 	 *
-	 * @param id the markupId, an html div suffice to host a window.
+	 * @param id the markup id, an html div suffice to host a window.
 	 * @param title the title of the window
 	 * @param modal indicates whether the window is modal
 	 */
@@ -126,7 +125,7 @@ public abstract class AbstractWindow<T> extends GenericPanel<T> implements IJQue
 	/**
 	 * Constructor
 	 *
-	 * @param id markupId, an html div suffice to host a window.
+	 * @param id the markup id, an html div suffice to host a window.
 	 * @param title the title of the window
 	 * @param modal indicates whether the window is modal
 	 * @param model the model to be used in the window
@@ -139,7 +138,7 @@ public abstract class AbstractWindow<T> extends GenericPanel<T> implements IJQue
 	/**
 	 * Constructor
 	 *
-	 * @param id markupId, an html div suffice to host a window.
+	 * @param id the markup id, an html div suffice to host a window.
 	 * @param title the title of the window
 	 * @param modal indicates whether the window is modal
 	 * @param model the model to be used in the window
@@ -239,7 +238,7 @@ public abstract class AbstractWindow<T> extends GenericPanel<T> implements IJQue
 	{
 		this.setTitle(title);
 
-		target.appendJavaScript(String.format("%s.title('%s');", this.widgetBehavior.widget(), JavaScriptUtils.escapeQuotes(title.getObject())));
+		target.appendJavaScript(String.format("%s.title(%s);", this.widgetBehavior.widget(), Options.asString(title.getObject())));
 	}
 
 	/**

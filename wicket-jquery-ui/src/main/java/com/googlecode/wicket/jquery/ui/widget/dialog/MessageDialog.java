@@ -28,8 +28,8 @@ import org.apache.wicket.model.Model;
 import org.apache.wicket.util.lang.Args;
 
 /**
- * Provides a modal dialog box that display a specific message, with a predefined icon and a predefined button set.<br/>
- * <b>Note: </b> {@link MessageDialog} & {@link MessageFormDialog} are sharing the same code, there just do not extends the same class.
+ * Provides a modal dialog box that displays a specific message, with a predefined icon and a predefined button set.<br/>
+ * <b>Note: </b> {@link MessageDialog} & {@link MessageFormDialog} are sharing the same code, they just does not extend the same class.
  *
  * @author Sebastien Briquet - sebfz1
  */

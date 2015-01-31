@@ -121,7 +121,7 @@ public class AccordionPanel extends JQueryPanel implements IAccordionListener
 	 * @param index the visible tab's index to activate
 	 * @return this, for chaining
 	 */
-	// TODO: warning changes setActiveTab by setTabIndex. See if should be changed elsewhere
+	// TODO: warning changed setActiveTab by setTabIndex. See if should be changed elsewhere
 	public AccordionPanel setTabIndex(int index)
 	{
 		this.widgetBehavior.tabIndex = index;

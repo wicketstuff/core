@@ -14,31 +14,31 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.googlecode.wicket.jquery.ui.widget.dialog;
+package com.googlecode.wicket.kendo.ui.widget.window;
 
 import java.util.List;
 
 import org.apache.wicket.AttributeModifier;
 import org.apache.wicket.ajax.AjaxRequestTarget;
-import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.markup.html.basic.Label;
+import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.panel.EmptyPanel;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
-import org.apache.wicket.util.lang.Args;
+
+import com.googlecode.wicket.kendo.ui.KendoIcon;
 
 /**
- * Provides a modal dialog box that displays a specific message, with a predefined icon and a predefined button set.<br/>
- * <b>Note: </b> {@link MessageDialog} & {@link MessageFormDialog} are sharing the same code, they just does not extend the same class.
+ * Provides a modal window that displays a specific message, with a predefined icon and a predefined button set.
  *
  * @author Sebastien Briquet - sebfz1
  */
-public abstract class MessageFormDialog extends AbstractFormDialog<String>
+public abstract class MessageWindow extends Window<String>
 {
 	private static final long serialVersionUID = 1L;
 
 	private Label label;
-	private List<DialogButton> buttons;
+	private final Form<?> form;
 
 	/**
 	 * Constructor.
@@ -46,11 +46,11 @@ public abstract class MessageFormDialog extends AbstractFormDialog<String>
 	 * @param id the markup id, an html div suffice to host a dialog.
 	 * @param title the title of the dialog
 	 * @param message the message to be displayed
-	 * @param buttons button set to be displayed
+	 * @param buttons list of buttons to be displayed
 	 */
-	public MessageFormDialog(String id, String title, String message, DialogButtons buttons)
+	public MessageWindow(String id, String title, String message, WindowButtons buttons)
 	{
-		this(id, title, message, buttons.toList(), DialogIcon.NONE);
+		this(id, Model.of(title), Model.of(message), buttons.toList(), KendoIcon.NONE);
 	}
 
 	/**
@@ -61,9 +61,9 @@ public abstract class MessageFormDialog extends AbstractFormDialog<String>
 	 * @param message the message to be displayed
 	 * @param buttons list of buttons to be displayed
 	 */
-	public MessageFormDialog(String id, String title, String message, List<DialogButton> buttons)
+	public MessageWindow(String id, String title, String message, List<WindowButton> buttons)
 	{
-		this(id, title, message, buttons, DialogIcon.NONE);
+		this(id, Model.of(title), Model.of(message), buttons, KendoIcon.NONE);
 	}
 
 	/**
@@ -72,10 +72,10 @@ public abstract class MessageFormDialog extends AbstractFormDialog<String>
 	 * @param id the markup id, an html div suffice to host a dialog.
 	 * @param title the title of the dialog
 	 * @param message the message to be displayed
-	 * @param buttons button set to be displayed
+	 * @param buttons list of buttons to be displayed
 	 * @param icon the predefined icon to display
 	 */
-	public MessageFormDialog(String id, String title, String message, DialogButtons buttons, DialogIcon icon)
+	public MessageWindow(String id, String title, String message, WindowButtons buttons, String icon)
 	{
 		this(id, Model.of(title), Model.of(message), buttons.toList(), icon);
 	}
@@ -89,7 +89,7 @@ public abstract class MessageFormDialog extends AbstractFormDialog<String>
 	 * @param buttons list of buttons to be displayed
 	 * @param icon the predefined icon to display
 	 */
-	public MessageFormDialog(String id, String title, String message, List<DialogButton> buttons, DialogIcon icon)
+	public MessageWindow(String id, String title, String message, List<WindowButton> buttons, String icon)
 	{
 		this(id, Model.of(title), Model.of(message), buttons, icon);
 	}
@@ -100,11 +100,11 @@ public abstract class MessageFormDialog extends AbstractFormDialog<String>
 	 * @param id the markup id, an html div suffice to host a dialog.
 	 * @param title the title of the dialog
 	 * @param message the message to be displayed
-	 * @param buttons button set to be displayed
+	 * @param buttons list of buttons to be displayed
 	 */
-	public MessageFormDialog(String id, IModel<String> title, IModel<String> message, DialogButtons buttons)
+	public MessageWindow(String id, IModel<String> title, IModel<String> message, WindowButtons buttons)
 	{
-		this(id, title, message, buttons.toList(), DialogIcon.NONE);
+		this(id, title, message, buttons.toList(), KendoIcon.NONE);
 	}
 
 	/**
@@ -115,9 +115,9 @@ public abstract class MessageFormDialog extends AbstractFormDialog<String>
 	 * @param message the message to be displayed
 	 * @param buttons list of buttons to be displayed
 	 */
-	public MessageFormDialog(String id, IModel<String> title, IModel<String> message, List<DialogButton> buttons)
+	public MessageWindow(String id, IModel<String> title, IModel<String> message, List<WindowButton> buttons)
 	{
-		this(id, title, message, buttons, DialogIcon.NONE);
+		this(id, title, message, buttons, KendoIcon.NONE);
 	}
 
 	/**
@@ -126,16 +126,16 @@ public abstract class MessageFormDialog extends AbstractFormDialog<String>
 	 * @param id the markup id, an html div suffice to host a dialog.
 	 * @param title the title of the dialog
 	 * @param message the message to be displayed
-	 * @param buttons button set to be displayed
+	 * @param buttons list of buttons to be displayed
 	 * @param icon the predefined icon to display
 	 */
-	public MessageFormDialog(String id, IModel<String> title, IModel<String> message, DialogButtons buttons, DialogIcon icon)
+	public MessageWindow(String id, IModel<String> title, IModel<String> message, WindowButtons buttons, String icon)
 	{
 		this(id, title, message, buttons.toList(), icon);
 	}
 
 	/**
-	 * Constructor.
+	 * Main Constructor.
 	 *
 	 * @param id the markup id, an html div suffice to host a dialog.
 	 * @param title the title of the dialog
@@ -143,36 +143,44 @@ public abstract class MessageFormDialog extends AbstractFormDialog<String>
 	 * @param buttons list of buttons to be displayed
 	 * @param icon the predefined icon to display
 	 */
-	public MessageFormDialog(String id, IModel<String> title, IModel<String> message, List<DialogButton> buttons, DialogIcon icon)
+	public MessageWindow(String id, IModel<String> title, IModel<String> message, List<WindowButton> buttons, String icon)
 	{
-		super(id, title, message, true);
-		this.buttons = Args.notNull(buttons, "buttons");
+		super(id, title, message, buttons);
 
-		WebMarkupContainer container = new WebMarkupContainer("container");
-		this.add(container);
+		// icon //
+		this.add(new EmptyPanel("icon").add(AttributeModifier.append("class", KendoIcon.getCssClass(icon))));
 
-		container.add(AttributeModifier.append("class", icon.getStyle()));
-		container.add(new EmptyPanel("icon").add(AttributeModifier.replace("class", icon)));
+		// label //
+		this.label = new Label("text", this.getModel());
+		this.add(this.label.setOutputMarkupId(true));
 
-		this.label = new Label("message", this.getModel());
-		container.add(this.label.setOutputMarkupId(true));
+		// form //
+		this.form = new Form<Void>("form");
+		this.add(this.form);
 	}
 
+	// Properties //
+
 	@Override
-	protected final List<DialogButton> getButtons()
+	protected Form<?> getForm()
 	{
-		return this.buttons;
+		return this.form;
+	}
+
+	// Events //
+
+	@Override
+	protected void onInitialize()
+	{
+		super.onInitialize();
+
+		// buttons //
+		form.add(this.newButtonPanel("buttons", this.getButtons()));
 	}
 
 	@Override
 	protected void onOpen(AjaxRequestTarget target)
 	{
 		target.add(this.label);
-	}
-
-	@Override
-	public void onClose(AjaxRequestTarget target, DialogButton button)
-	{
-		//not mandatory to override
 	}
 }

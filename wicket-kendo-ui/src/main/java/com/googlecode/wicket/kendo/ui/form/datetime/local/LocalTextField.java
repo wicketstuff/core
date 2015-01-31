@@ -28,11 +28,11 @@ import com.googlecode.wicket.kendo.ui.KendoUIBehavior;
 import com.googlecode.wicket.kendo.ui.utils.KendoDateTimeUtils;
 
 /**
- * TODO javadoc
+ * Base class for {@link DatePicker} and {@link TimePicker}
  * 
- * @author sbriquet
+ * @author Sebastien Briquet - sebfz1
  *
- * @param <T>
+ * @param <T> the model object type
  */
 public abstract class LocalTextField<T> extends TextField<T> implements ITextFormatProvider, IJQueryWidget
 {

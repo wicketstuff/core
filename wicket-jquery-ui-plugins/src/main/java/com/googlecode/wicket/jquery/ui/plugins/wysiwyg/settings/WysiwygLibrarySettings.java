@@ -143,7 +143,7 @@ public class WysiwygLibrarySettings
 
 	public ResourceReference getEditorJavaScriptResourceReference()
 	{
-		return editorJavaScriptResourceReference;
+		return this.editorJavaScriptResourceReference;
 	}
 
 	public void setEditorJavaScriptResourceReference(ResourceReference editorJavaScriptResourceReference)

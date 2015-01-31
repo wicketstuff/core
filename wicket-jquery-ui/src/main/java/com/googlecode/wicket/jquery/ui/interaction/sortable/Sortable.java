@@ -319,7 +319,7 @@ public abstract class Sortable<T> extends JQueryContainer implements ISortableLi
 		/**
 		 * Constructor
 		 *
-		 * @param id the markup-id
+		 * @param id the markup id
 		 */
 		public HashListView(String id)
 		{
@@ -329,7 +329,7 @@ public abstract class Sortable<T> extends JQueryContainer implements ISortableLi
 		/**
 		 * Constructor
 		 *
-		 * @param id the markup-id
+		 * @param id the markup id
 		 * @param list the {@link List}
 		 */
 		public HashListView(String id, List<? extends T> list)
@@ -340,7 +340,7 @@ public abstract class Sortable<T> extends JQueryContainer implements ISortableLi
 		/**
 		 * Constructor
 		 *
-		 * @param id the markup-id
+		 * @param id the markup id
 		 * @param model the {@link IModel}
 		 */
 		public HashListView(String id, IModel<? extends List<? extends T>> model)

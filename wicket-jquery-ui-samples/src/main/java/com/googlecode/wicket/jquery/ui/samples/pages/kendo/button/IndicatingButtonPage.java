@@ -28,6 +28,15 @@ public class IndicatingButtonPage extends AbstractButtonPage
 			private static final long serialVersionUID = 1L;
 
 			@Override
+			protected boolean isDisabledOnClick()
+			{
+				/*
+				 * Warning: if true the button will not be send as part of the post because of its disabled state. Therefore Button.onSubmit() will not be reached, Form.onSubmit() should be used instead.
+				 */
+				return false; // default value
+			}
+
+			@Override
 			public void onSubmit()
 			{
 				try
@@ -48,6 +57,12 @@ public class IndicatingButtonPage extends AbstractButtonPage
 		form.add(new IndicatingAjaxButton("button2") {
 
 			private static final long serialVersionUID = 1L;
+
+			@Override
+			protected boolean isDisabledOnClick()
+			{
+				return true;
+			}
 
 			@Override
 			protected void onSubmit(AjaxRequestTarget target, Form<?> form)

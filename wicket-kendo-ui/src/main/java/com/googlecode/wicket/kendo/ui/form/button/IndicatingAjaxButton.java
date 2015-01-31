@@ -16,10 +16,10 @@
  */
 package com.googlecode.wicket.kendo.ui.form.button;
 
-import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.model.IModel;
 
 import com.googlecode.wicket.jquery.core.IJQueryWidget;
+import com.googlecode.wicket.jquery.core.JQueryBehavior;
 import com.googlecode.wicket.jquery.core.Options;
 
 /**
@@ -56,15 +56,23 @@ public class IndicatingAjaxButton extends AjaxButton implements IJQueryWidget
 	// Properties //
 
 	/**
-	 * Indicates whether the button will be disabled on-click to prevent double submit<br/>
-	 * <br/>
-	 * <b>Warning:</b> the button will not be send as part of the post because of its disabled state. Therefore {@link Button#onSubmit()} will not be reached, {@link Form#onSubmit()} should be used instead.
+	 * Indicates whether the button will be disabled on-click to prevent double submit
 	 * 
 	 * @return false by default
 	 */
 	protected boolean isDisabledOnClick()
 	{
 		return false;
+	}
+	
+	// Event //
+	@Override
+	public void onConfigure(JQueryBehavior behavior)
+	{
+		super.onConfigure(behavior);
+		
+		// explicitly sets the enable flag to be able to restore the state after click with isDisabledOnClick true
+		behavior.setOption("enable", this.isEnabledInHierarchy());
 	}
 
 	// IJQueryWidget //

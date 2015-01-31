@@ -43,6 +43,12 @@ public enum DialogButtons
 		}
 	}
 
+	/**
+	 * Gets the list of buttons
+	 * 
+	 * @return the {@link List} of {@link DialogButton}</code>s</code>
+	 */
+
 	public List<DialogButton> toList()
 	{
 		return this.buttons;

@@ -81,7 +81,8 @@ public class AjaxIndicatingButtonBehavior extends ButtonBehavior
 
 		// busy indicator stops //
 		builder.append("jQuery(document).ajaxStop(function() { ");
-		builder.append("jQuery('").append(this.selector).append(" .").append(KendoIcon.K_ICON).append("').remove(); "); // TODO: open issue (icon should be removed manually) 
+		builder.append("jQuery('").append(this.selector).append(" .").append(KendoIcon.K_ICON).append("').remove(); "); // TODO: open issue (icon should be removed manually!) 
+		builder.append("jQuery('").append(this.selector).append("').removeAttr('disabled'); "); // TODO: open issue ({enable: true} does not remove disabled attr!) 
 		builder.append($(this.options));
 		builder.append(" }); ");
 

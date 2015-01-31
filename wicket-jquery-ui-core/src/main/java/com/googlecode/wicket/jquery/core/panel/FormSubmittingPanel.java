@@ -70,7 +70,7 @@ public abstract class FormSubmittingPanel<T> extends GenericPanel<T> implements 
 	 *
 	 * @param target the {@link AjaxRequestTarget}
 	 */
-	public void submit(AjaxRequestTarget target)
+	protected void submit(AjaxRequestTarget target)
 	{
 		/**
 		 * As the Form is posted, Form#findSubmittingButton() expects to retrieve this component by the request parameter 'name'.<br/>
