@@ -79,6 +79,12 @@ public class WysiwygBehavior extends JQueryBehavior
 			this.add(settings.getEditorStyleSheetReference());
 		}
 
+		// Editor JS
+		if (settings.getEditorJavaScriptResourceReference() != null)
+		{
+			this.add(settings.getEditorJavaScriptResourceReference());
+		}
+
 		// Bootstrap Wysiwyg
 		if (settings.getBootstrapWysiwygJavaScriptReference() != null)
 		{
