@@ -4,11 +4,10 @@ import java.io.Serializable;
 
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.markup.html.form.Form;
-import org.apache.wicket.markup.html.form.RequiredTextField;
-import org.apache.wicket.markup.html.form.TextField;
 import org.apache.wicket.model.Model;
 
 import com.googlecode.wicket.kendo.ui.console.FeedbackConsole;
+import com.googlecode.wicket.kendo.ui.form.TextField;
 import com.googlecode.wicket.kendo.ui.form.button.AjaxButton;
 
 public class FeedbackConsolePage extends AbstractConsolePage
@@ -41,8 +40,8 @@ public class FeedbackConsolePage extends AbstractConsolePage
 		this.add(form);
 
 		// TextField //
-		final TextField<String> textField = new RequiredTextField<String>("message", Model.of(""));
-		form.add(textField);
+		final TextField<String> textField = new TextField<String>("message", Model.of(""));
+		form.add(textField.setRequired(true));
 
 		// Buttons //
 		form.add(new AjaxButton("button") {
