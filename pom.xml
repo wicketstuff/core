@@ -17,7 +17,7 @@
 
 	<groupId>com.googlecode.wicket-jquery-ui</groupId>
 	<artifactId>wicket-jquery-ui-parent</artifactId>
-	<version>6.18.2-SNAPSHOT</version>
+	<version>6.19.0-SNAPSHOT</version>
 	<packaging>pom</packaging>
 
 	<licenses>
@@ -43,7 +43,7 @@
 	</scm>
 
 	<properties>
-		<wicket.version>6.18.0</wicket.version>
+		<wicket.version>6.19.0</wicket.version>
 		<junit.version>4.12</junit.version>
 		<jetty.version>8.1.16.v20140903</jetty.version>
 	</properties>
@@ -58,7 +58,7 @@
 		</repository>
 		<repository>
 			<id>Wicket Nexus Staging</id>
-			<url>https://repository.apache.org/content/repositories/orgapachewicket-1030/</url>
+			<url>https://repository.apache.org/content/repositories/orgapachewicket-1033/</url>
 		</repository>
 	</repositories>
 
