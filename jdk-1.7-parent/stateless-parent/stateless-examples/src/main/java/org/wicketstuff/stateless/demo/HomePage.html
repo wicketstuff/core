@@ -1,3 +1,21 @@
+<!--
+
+     Licensed to the Apache Software Foundation (ASF) under one or more
+     contributor license agreements.  See the NOTICE file distributed with
+     this work for additional information regarding copyright ownership.
+     The ASF licenses this file to You under the Apache License, Version 2.0
+     (the "License"); you may not use this file except in compliance with
+     the License.  You may obtain a copy of the License at
+
+          http://www.apache.org/licenses/LICENSE-2.0
+
+     Unless required by applicable law or agreed to in writing, software
+     distributed under the License is distributed on an "AS IS" BASIS,
+     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     See the License for the specific language governing permissions and
+     limitations under the License.
+
+-->
 <html
   xmlns:wicket="http://wicket.apache.org/dtds.data/wicket-xhtml1.4-strict.dtd">
 <head>
@@ -21,9 +39,9 @@ and the page should be stateless.
 
 <h3>Submit form via AJAX. Each field is required.</h3>
 <form wicket:id="inputForm" >
-<label for="name" style="width: 150px">Name:</label>
+<label for="name">Name:</label>
 <input wicket:id="name" id="name" type="text" size="15"/><br/>
-<label for="surname" style="width: 150px">Surname:</label>
+<label for="surname">Surname:</label>
 <input wicket:id="surname" id="surname" type="text" size="15"/><br/>
 <button id="submitButton" wicket:id="submit">Submit</button>
 
