@@ -11,8 +11,13 @@ Stateless components and behaviors follows the same rules and convetions of thei
 
 However in this case calling ``setOutputMarkupId`` on a component is not enough. Since we are working with a stateless page, the id of the component to refresh must be unique but also *static*, meaning that it should not depend on page instance. In other words, the id should be constant through different instances of the same page. 
 
-By default Wicket generates markup ids using a session-level counter and this make them not static. Hence, to refresh component in a stateless page we must provide them with static ids, either setting them in Java code (with ``Component.setMarkupId``) or simply writing them directly in the markup.
+By default Wicket generates markup ids using a session-level counter and this make them not static. Hence, to refresh component in a stateless page we must provide them with static ids, either setting them in Java code (with ``Component.setMarkupId``) or simply writing them directly in the markup:
 
+````html
+   <span id="staticIdToUSe" wicket:id="componentWicketId"></span>
+````
+
+See home page from example module for more examples.
 
 ##### Maven
 
