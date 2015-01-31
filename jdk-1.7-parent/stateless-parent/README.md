@@ -8,7 +8,9 @@ These components currently include a ``StatelessLink``,a ``StatelessAjaxSubmitLi
 ## Usage
 
 Stateless components and behaviors follows the same rules and convetion of their standard stateful version shiped with Wicket. Therefore you will find different handler method like ``onSubmit`` or ``onClick`` that provide an instance of ``AjaxRequestTarget`` to refresh components markup. Such components must have a markup id in order to be manipulated via JavaScript. 
-However, calling ``setOutputMarkupId``  on a component is not enough. Since we are working with a stateless page, the id of the components to refresh must be unique but also *static*, meaning that it should not depend on page instance. In other word, the id should be constant through different instances of the same page. 
+
+However, calling ``setOutputMarkupId``  on a component is not enough. Since we are working with a stateless page, the id of the component to refresh must be unique but also *static*, meaning that it should not depend on page instance. In other word, the id should be constant through different instances of the same page. 
+
 By default Wicket generates markup ids using a session-level counter and this make them not static. Hence, to refresh component in a stateless page we must provide them with static ids, either setting them in Java code (with ``Component.setMarkupId``) or simply writing them directly in the markup.
 
 
