@@ -300,7 +300,7 @@ public abstract class TabsBehavior extends KendoUIBehavior implements IJQueryAja
 	/**
 	 * Provides a base event object that will be broadcasted by the {@link JQueryAjaxBehavior} callbacks
 	 */
-	protected static abstract class AbtractTabEvent extends JQueryEvent
+	protected abstract static class AbtractTabEvent extends JQueryEvent
 	{
 		private final int index;
 

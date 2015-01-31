@@ -8,6 +8,8 @@ import org.apache.wicket.extensions.markup.html.tabs.ITab;
 import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.markup.html.panel.Fragment;
 import org.apache.wicket.model.Model;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.googlecode.wicket.jquery.core.Options;
 import com.googlecode.wicket.kendo.ui.widget.tabs.AjaxTab;
@@ -17,6 +19,7 @@ import com.googlecode.wicket.kendo.ui.widget.tabs.TabbedPanel;
 public class TabbedPanelPage extends AbstractTabsPage
 {
 	private static final long serialVersionUID = 1L;
+	private static final Logger LOG = LoggerFactory.getLogger(TabbedPanelPage.class);
 
 	public TabbedPanelPage()
 	{
@@ -60,7 +63,10 @@ public class TabbedPanelPage extends AbstractTabsPage
 				}
 				catch (InterruptedException e)
 				{
-					error(e.getMessage());
+					if (LOG.isDebugEnabled())
+					{
+						LOG.debug(e.getMessage(), e);
+					}
 				}
 
 				return new Fragment(panelId, "panel-2", TabbedPanelPage.this);

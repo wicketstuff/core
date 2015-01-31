@@ -19,6 +19,7 @@ import com.googlecode.wicket.jquery.ui.widget.dialog.DialogButton;
 public abstract class TabDialog extends AbstractFormDialog<TabItem>
 {
 	private static final long serialVersionUID = 1L;
+
 	protected final DialogButton btnSubmit = new DialogButton("Add");
 	protected final DialogButton btnCancel = new DialogButton(LBL_CANCEL);
 
@@ -65,7 +66,7 @@ public abstract class TabDialog extends AbstractFormDialog<TabItem>
 	@Override
 	protected void onOpen(AjaxRequestTarget target)
 	{
-		//re-attach the feedback panel to clear previously displayed error message(s)
+		// re-attach the feedback panel to clear previously displayed error message(s)
 		target.add(this.feedback);
 	}
 

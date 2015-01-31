@@ -104,11 +104,14 @@ public class KendoUIBehavior extends JQueryBehavior
 	 * @param datasource the {@link IKendoDataSource}
 	 * @return <tt>true</tt> (as specified by {@link Collection#add})
 	 */
-	public synchronized boolean add(IKendoDataSource datasource)
+	public boolean add(IKendoDataSource datasource)
 	{
 		if (this.datasources == null)
 		{
-			this.datasources = new ArrayList<IKendoDataSource>();
+			synchronized (this)
+			{
+				this.datasources = new ArrayList<IKendoDataSource>();
+			}
 		}
 
 		return this.datasources.add(datasource);

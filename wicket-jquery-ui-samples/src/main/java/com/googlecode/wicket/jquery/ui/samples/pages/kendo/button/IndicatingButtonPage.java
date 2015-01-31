@@ -4,6 +4,8 @@ import org.apache.wicket.Component;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.markup.html.form.Button;
 import org.apache.wicket.markup.html.form.Form;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.googlecode.wicket.kendo.ui.form.button.IndicatingAjaxButton;
 import com.googlecode.wicket.kendo.ui.form.button.IndicatingButton;
@@ -12,6 +14,7 @@ import com.googlecode.wicket.kendo.ui.panel.KendoFeedbackPanel;
 public class IndicatingButtonPage extends AbstractButtonPage
 {
 	private static final long serialVersionUID = 1L;
+	private static final Logger LOG = LoggerFactory.getLogger(IndicatingButtonPage.class);
 
 	public IndicatingButtonPage()
 	{
@@ -45,7 +48,10 @@ public class IndicatingButtonPage extends AbstractButtonPage
 				}
 				catch (InterruptedException e)
 				{
-					info(e.getMessage());
+					if (LOG.isDebugEnabled())
+					{
+						LOG.debug(e.getMessage(), e);
+					}
 				}
 
 				IndicatingButtonPage.this.info(this);
@@ -73,7 +79,10 @@ public class IndicatingButtonPage extends AbstractButtonPage
 				}
 				catch (InterruptedException e)
 				{
-					info(e.getMessage());
+					if (LOG.isDebugEnabled())
+					{
+						LOG.debug(e.getMessage(), e);
+					}
 				}
 
 				IndicatingButtonPage.this.info(this);

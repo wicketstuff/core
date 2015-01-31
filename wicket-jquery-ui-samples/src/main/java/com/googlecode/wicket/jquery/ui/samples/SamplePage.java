@@ -14,13 +14,20 @@ import org.apache.wicket.resource.ResourceUtil;
 import org.apache.wicket.util.io.IClusterable;
 import org.apache.wicket.util.reference.ClassReference;
 import org.apache.wicket.util.template.PackageTextTemplate;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.googlecode.wicket.jquery.ui.JQueryUIBehavior;
 
 public abstract class SamplePage extends TemplatePage
 {
 	private static final long serialVersionUID = 1L;
-	private enum Source { HTML, JAVA, TEXT }
+	private static final Logger LOG = LoggerFactory.getLogger(SamplePage.class);
+
+	private enum Source
+	{
+		HTML, JAVA, TEXT
+	}
 
 	private static String getSource(Source source, Class<? extends SamplePage> scope)
 	{
@@ -31,11 +38,16 @@ public abstract class SamplePage extends TemplatePage
 		{
 			stream.close();
 		}
-		catch (IOException e) { /* not handled */ }
+		catch (IOException e)
+		{
+			if (LOG.isDebugEnabled())
+			{
+				LOG.debug(e.getMessage(), e);
+			}
+		}
 
 		return string;
 	}
-
 
 	public SamplePage()
 	{
@@ -70,7 +82,7 @@ public abstract class SamplePage extends TemplatePage
 			@Override
 			public boolean isVisible()
 			{
-				return !this.getModelObject().isEmpty(); //model object cannot be null
+				return !this.getModelObject().isEmpty(); // model object cannot be null
 			}
 
 		});

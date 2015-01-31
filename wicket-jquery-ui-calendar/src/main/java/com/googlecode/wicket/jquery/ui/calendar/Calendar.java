@@ -133,11 +133,14 @@ public class Calendar extends JQueryContainer implements ICalendarListener
 	 * @param gcal url to xml feed
 	 * @param className css class to be used
 	 */
-	public synchronized void addFeed(CharSequence gcal, String className)
+	public void addFeed(CharSequence gcal, String className)
 	{
 		if (this.gcals == null)
 		{
-			this.gcals = new HashMap<CharSequence, String>();
+			synchronized (this)
+			{
+				this.gcals = new HashMap<CharSequence, String>();
+			}
 		}
 
 		this.gcals.put(gcal, className);

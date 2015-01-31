@@ -7,6 +7,8 @@ import java.util.List;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.model.util.ListModel;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.googlecode.wicket.kendo.ui.form.button.AjaxButton;
 import com.googlecode.wicket.kendo.ui.form.button.Button;
@@ -16,6 +18,7 @@ import com.googlecode.wicket.kendo.ui.panel.KendoFeedbackPanel;
 public class LazyMultiSelectPage extends AbstractMultiSelectPage
 {
 	private static final long serialVersionUID = 1L;
+	private static final Logger LOG = LoggerFactory.getLogger(LazyMultiSelectPage.class);
 	private static final List<String> GENRES = Arrays.asList("Black Metal", "Death Metal", "Doom Metal", "Folk Metal", "Gothic Metal", "Heavy Metal", "Power Metal", "Symphonic Metal", "Trash Metal", "Vicking Metal");
 
 	public LazyMultiSelectPage()
@@ -46,7 +49,10 @@ public class LazyMultiSelectPage extends AbstractMultiSelectPage
 				}
 				catch (InterruptedException e)
 				{
-					this.error(e.getMessage());
+					if (LOG.isDebugEnabled())
+					{
+						LOG.debug(e.getMessage(), e);
+					}
 				}
 
 				return GENRES;
@@ -82,7 +88,7 @@ public class LazyMultiSelectPage extends AbstractMultiSelectPage
 
 	private void info(MultiSelect<String> multiselect)
 	{
-		Object choice =  multiselect.getModelObject();
+		Object choice = multiselect.getModelObject();
 
 		this.info(choice != null ? choice.toString() : "no choice");
 	}

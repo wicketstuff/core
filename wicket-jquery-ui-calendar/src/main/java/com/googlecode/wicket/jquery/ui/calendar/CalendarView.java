@@ -16,6 +16,9 @@
  */
 package com.googlecode.wicket.jquery.ui.calendar;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 /**
  * Provides an enum of available calendar views
  *
@@ -36,6 +39,8 @@ public enum CalendarView
     resourceNextWeeks,	// Shows ongoing week and 3 weeks after that in same calendar.
     resourceMonth;		// Shows a single month in calendar.
 
+    private static final Logger LOG = LoggerFactory.getLogger(CalendarView.class);
+
     /**
      * Safely get the {@link CalendarView} corresponding to the supplied view name
      *
@@ -48,7 +53,13 @@ public enum CalendarView
 	    {
 	        return CalendarView.valueOf(viewName);
 	    }
-	    catch (IllegalArgumentException e) { /* not handled */ }
+	    catch (IllegalArgumentException e)
+		{ 
+	    	if (LOG.isDebugEnabled())
+	    	{
+	    		LOG.debug(e.getMessage(), e);
+	    	}
+		}
 
 	    return null;
     }

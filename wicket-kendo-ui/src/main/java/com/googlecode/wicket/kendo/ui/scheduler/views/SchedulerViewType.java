@@ -1,5 +1,8 @@
 package com.googlecode.wicket.kendo.ui.scheduler.views;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 /**
  * Provides an enum of available scheduler views
  *
@@ -9,6 +12,8 @@ public enum SchedulerViewType
 {
 	day, week, workWeek, month, agenda;
 
+	private static final Logger LOG = LoggerFactory.getLogger(SchedulerViewType.class);
+	
 	/**
 	 * Safely get the {@link SchedulerViewType} corresponding to the supplied view name
 	 *
@@ -21,7 +26,13 @@ public enum SchedulerViewType
 		{
 			return SchedulerViewType.valueOf(viewName);
 		}
-		catch (IllegalArgumentException e) { /* not handled */ }
+		catch (IllegalArgumentException e)
+		{
+	    	if (LOG.isDebugEnabled())
+	    	{
+	    		LOG.debug(e.getMessage(), e);
+	    	}
+		}
 
 		return null;
 	}

@@ -5,6 +5,8 @@ import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.markup.html.form.Button;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.panel.FeedbackPanel;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.googlecode.wicket.jquery.ui.form.button.IndicatingAjaxButton;
 import com.googlecode.wicket.jquery.ui.form.button.IndicatingAjaxButton.Position;
@@ -13,6 +15,7 @@ import com.googlecode.wicket.jquery.ui.panel.JQueryFeedbackPanel;
 public class IndicatingAjaxButtonPage extends AbstractButtonPage
 {
 	private static final long serialVersionUID = 1L;
+	private static final Logger LOG = LoggerFactory.getLogger(IndicatingAjaxButtonPage.class);
 
 	public IndicatingAjaxButtonPage()
 	{
@@ -37,7 +40,10 @@ public class IndicatingAjaxButtonPage extends AbstractButtonPage
 				}
 				catch (InterruptedException e)
 				{
-					info(e.getMessage());
+					if (LOG.isDebugEnabled())
+					{
+						LOG.debug(e.getMessage(), e);
+					}
 				}
 
 				IndicatingAjaxButtonPage.this.info(this);
@@ -60,11 +66,14 @@ public class IndicatingAjaxButtonPage extends AbstractButtonPage
 				}
 				catch (InterruptedException e)
 				{
-					info(e.getMessage());
+					if (LOG.isDebugEnabled())
+					{
+						LOG.debug(e.getMessage(), e);
+					}
 				}
 
 				IndicatingAjaxButtonPage.this.info(this);
-				//IndicatingAjaxButtonPage.this.info("re-attaching button1");
+				// IndicatingAjaxButtonPage.this.info("re-attaching button1");
 
 				target.add(button1);
 				target.add(feedbackPanel);

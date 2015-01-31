@@ -8,6 +8,8 @@ import org.apache.wicket.extensions.markup.html.tabs.ITab;
 import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.markup.html.panel.Fragment;
 import org.apache.wicket.model.Model;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.googlecode.wicket.jquery.ui.widget.dialog.AbstractDialog;
 import com.googlecode.wicket.jquery.ui.widget.dialog.DialogButton;
@@ -18,6 +20,7 @@ import com.googlecode.wicket.jquery.ui.widget.tabs.TabbedPanel;
 public abstract class TabDialog extends AbstractDialog<String>
 {
 	private static final long serialVersionUID = 1L;
+	private static final Logger LOG = LoggerFactory.getLogger(TabDialog.class);
 
 	public TabDialog(String id, String title, Model<String> model)
 	{
@@ -38,7 +41,6 @@ public abstract class TabDialog extends AbstractDialog<String>
 		return DialogButtons.OK_CANCEL.toList();
 	}
 
-
 	private List<ITab> newTabList()
 	{
 		List<ITab> tabs = new ArrayList<ITab>();
@@ -55,18 +57,6 @@ public abstract class TabDialog extends AbstractDialog<String>
 			}
 		});
 
-//		// tab #2 //
-//		tabs.add(new AbstractTab(Model.of("My Tab 2")) {
-//
-//			private static final long serialVersionUID = 1L;
-//
-//			@Override
-//			public WebMarkupContainer getPanel(String panelId)
-//			{
-//				return new Fragment(panelId, "panel-2", TabDialog.this);
-//			}
-//		});
-
 		// tab #2 //
 		tabs.add(new AjaxTab(Model.of("Tab (ajax)")) {
 
@@ -82,7 +72,10 @@ public abstract class TabDialog extends AbstractDialog<String>
 				}
 				catch (InterruptedException e)
 				{
-					error(e.getMessage());
+					if (LOG.isDebugEnabled())
+					{
+						LOG.debug(e.getMessage(), e);
+					}
 				}
 
 				return new Fragment(panelId, "panel-2", TabDialog.this);

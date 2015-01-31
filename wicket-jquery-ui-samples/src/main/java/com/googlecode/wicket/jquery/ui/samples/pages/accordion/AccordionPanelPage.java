@@ -11,6 +11,8 @@ import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.panel.FeedbackPanel;
 import org.apache.wicket.markup.html.panel.Fragment;
 import org.apache.wicket.model.Model;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.googlecode.wicket.jquery.core.Options;
 import com.googlecode.wicket.jquery.ui.form.button.AjaxButton;
@@ -22,6 +24,7 @@ import com.googlecode.wicket.jquery.ui.widget.tabs.SimpleTab;
 public class AccordionPanelPage extends AbstractAccordionPage
 {
 	private static final long serialVersionUID = 1L;
+	private static final Logger LOG = LoggerFactory.getLogger(AccordionPanelPage.class);
 
 	public AccordionPanelPage()
 	{
@@ -110,7 +113,10 @@ public class AccordionPanelPage extends AbstractAccordionPage
 				}
 				catch (InterruptedException e)
 				{
-					error(e.getMessage());
+					if (LOG.isDebugEnabled())
+					{
+						LOG.debug(e.getMessage(), e);
+					}
 				}
 
 				return new Fragment(panelId, "panel-2", AccordionPanelPage.this);

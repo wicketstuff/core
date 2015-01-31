@@ -30,6 +30,8 @@ import org.apache.wicket.util.convert.ConversionException;
 import org.apache.wicket.util.convert.IConverter;
 import org.apache.wicket.util.convert.converter.DateConverter;
 import org.apache.wicket.validation.ValidationError;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Provides a datetime-picker based on a {@link DatePicker} and a {@link TimePicker}
@@ -39,7 +41,36 @@ import org.apache.wicket.validation.ValidationError;
 public class DateTimePicker extends FormComponentPanel<Date> implements ITextFormatProvider
 {
 	private static final long serialVersionUID = 1L;
+	private static final Logger LOG = LoggerFactory.getLogger(DateTimePicker.class);
+
 	private static final String ERROR_NOT_INITIALIZED = "Internal timePicker is not initialized (#onInitialize() has not yet been called).";
+
+	/**
+	 * Gets a new date converter.
+	 * 
+	 * @param format the date format
+	 * @return the converter
+	 */
+	private static IConverter<Date> newConverter(final String format)
+	{
+		return new DateConverter() {
+
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			public DateFormat getDateFormat(Locale locale)
+			{
+				Locale l = locale;
+
+				if (l == null)
+				{
+					l = Locale.getDefault();
+				}
+
+				return new SimpleDateFormat(format, l);
+			}
+		};
+	}
 
 	DatePicker datePicker;
 	TimePicker timePicker;
@@ -117,6 +148,11 @@ public class DateTimePicker extends FormComponentPanel<Date> implements ITextFor
 		}
 		catch (ConversionException e)
 		{
+			if (LOG.isDebugEnabled())
+			{
+				LOG.debug(e.getMessage(), e);
+			}
+
 			ValidationError error = new ValidationError();
 			error.addKey("DateTimePicker.ConversionError"); // wicket6
 			error.setVariable("date", dateInput);
@@ -145,6 +181,7 @@ public class DateTimePicker extends FormComponentPanel<Date> implements ITextFor
 	}
 
 	// Properties //
+
 	@Override
 	@SuppressWarnings("unchecked")
 	public <C> IConverter<C> getConverter(Class<C> type)
@@ -153,7 +190,7 @@ public class DateTimePicker extends FormComponentPanel<Date> implements ITextFor
 		{
 			if (this.converter == null)
 			{
-				this.converter = this.newDateConverter();
+				this.converter = DateTimePicker.newConverter(this.getTextFormat());
 			}
 
 			return (IConverter<C>) this.converter;
@@ -262,6 +299,7 @@ public class DateTimePicker extends FormComponentPanel<Date> implements ITextFor
 	}
 
 	// Events //
+
 	@Override
 	protected void onInitialize()
 	{
@@ -275,31 +313,6 @@ public class DateTimePicker extends FormComponentPanel<Date> implements ITextFor
 	}
 
 	// Factories //
-	/**
-	 * Gets a new date converter.
-	 *
-	 * @return the converter
-	 */
-	private IConverter<Date> newDateConverter()
-	{
-		return new DateConverter() {
-
-			private static final long serialVersionUID = 1L;
-
-			@Override
-			public DateFormat getDateFormat(Locale locale)
-			{
-				Locale l = locale;
-
-				if (l == null)
-				{
-					l = Locale.getDefault();
-				}
-
-				return new SimpleDateFormat(getTextFormat(), l);
-			}
-		};
-	}
 
 	/**
 	 * Gets a new {@link DatePicker}

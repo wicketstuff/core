@@ -258,11 +258,14 @@ public class JQueryBehavior extends JQueryAbstractBehavior
 	 *
 	 * @param statement the jQuery statement (ie: "jQuery('#myId').on('click', function() {});")
 	 */
-	protected synchronized void on(String statement)
+	protected void on(String statement)
 	{
 		if (this.events == null)
 		{
-			this.events = new ArrayList<String>();
+			synchronized (this)
+			{
+				this.events = new ArrayList<String>();
+			}
 		}
 
 		this.events.add(statement);

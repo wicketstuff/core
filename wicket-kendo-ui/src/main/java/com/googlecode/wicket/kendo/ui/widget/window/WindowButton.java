@@ -211,6 +211,12 @@ public class WindowButton implements IClusterable
 
 		return super.equals(object);
 	}
+	
+	@Override
+	public int hashCode()
+	{
+		return this.toString().hashCode();
+	}
 
 	/**
 	 * Indicates whether this {@link WindowButton} text representation ({@link #toString()}) match to the supplied text.

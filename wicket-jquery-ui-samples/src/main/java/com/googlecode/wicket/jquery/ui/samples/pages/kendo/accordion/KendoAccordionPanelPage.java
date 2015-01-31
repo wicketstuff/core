@@ -10,6 +10,8 @@ import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.panel.Fragment;
 import org.apache.wicket.model.Model;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.googlecode.wicket.kendo.ui.form.button.AjaxButton;
 import com.googlecode.wicket.kendo.ui.panel.KendoFeedbackPanel;
@@ -20,7 +22,8 @@ import com.googlecode.wicket.kendo.ui.widget.tabs.SimpleTab;
 public class KendoAccordionPanelPage extends AbstractAccordionPage
 {
 	private static final long serialVersionUID = 1L;
-
+	private static final Logger LOG = LoggerFactory.getLogger(KendoAccordionPanelPage.class);
+	
 	public KendoAccordionPanelPage()
 	{
 		final Form<?> form = new Form<Void>("form");
@@ -104,7 +107,10 @@ public class KendoAccordionPanelPage extends AbstractAccordionPage
 				}
 				catch (InterruptedException e)
 				{
-					error(e.getMessage());
+					if (LOG.isDebugEnabled())
+					{
+						LOG.debug(e.getMessage(), e);
+					}
 				}
 
 				return new Fragment(panelId, "panel-2", KendoAccordionPanelPage.this);

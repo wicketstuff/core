@@ -117,7 +117,7 @@ public class CalendarDAO
 		LocalDateTime dateS = event.getStart();
 		LocalDateTime dateE = event.getEnd();
 
-		return dateS != null && start.compareTo(dateS) <= 0 && end.compareTo(dateS) >= 0
-				&& (dateE == null || (dateE != null && start.compareTo(dateE) <= 0 && end.compareTo(dateE) >= 0));
+		return dateS != null && start.compareTo(dateS) <= 0 && end.compareTo(dateS) >= 0 && // lf
+				(dateE == null || (start.compareTo(dateE) <= 0 && end.compareTo(dateE) >= 0));
 	}
 }
