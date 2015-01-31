@@ -3,8 +3,9 @@ WicketStuff Stateless
 
 Sometimes it is good to be stateless. As the core of Wicket is focused on managing stateful behavior there is sometimes a lack of support for stateless pages. The goal of this package is to add a few components that provide more comprehensive stateless features for Apache Wicket.
 
-These components currently include a ``StatelessLink`` and a ``StatelessAjaxFallbackLink``. They are backed by stateless behaviors: ``StatelessAjaxEventBehavior`` and ``StatelessAjaxFormComponentUpdatingBehavior``.
+These components currently include a ``StatelessLink``,a ``StatelessAjaxSubmitLink`` and  a ``StatelessAjaxFallbackLink``. They are backed by stateless behaviors: ``StatelessAjaxEventBehavior``, ``StatelessAjaxFormSubmitBehavior`` and ``StatelessAjaxFormComponentUpdatingBehavior``.
 
+## Usage
 
 ##### Maven
 
