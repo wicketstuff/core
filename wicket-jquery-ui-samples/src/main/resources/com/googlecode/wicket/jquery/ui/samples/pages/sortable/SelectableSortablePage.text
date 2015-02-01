@@ -1,0 +1,4 @@
+In order to use the <code>SelectableBehavior</code> within the <code>Sortable</code>, the <code>handle</code> option should be supplied to the <code>Sortable</code>.
+
+<h4>Since</h4>
+wicket-jquery-ui-6.9.1
