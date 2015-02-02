@@ -24,17 +24,26 @@ import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.markup.html.WebPage;
 import org.apache.wicket.markup.html.basic.Label;
+import org.apache.wicket.markup.html.form.Form;
+import org.apache.wicket.markup.html.form.StatelessForm;
+import org.apache.wicket.markup.html.form.TextField;
 import org.apache.wicket.markup.html.link.BookmarkablePageLink;
 import org.apache.wicket.markup.html.link.Link;
 import org.apache.wicket.markup.html.list.ListItem;
 import org.apache.wicket.markup.html.list.ListView;
+import org.apache.wicket.markup.html.panel.FeedbackPanel;
+import org.apache.wicket.model.Model;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
 
 /**
  * Homepage
  */
 public class HomePage extends WebPage {
-    static int itemCount = 0;
+    public static final String AJAX_SUBMIT = "AJAX submit";
+
+	public static final String FORM_SUBMIT = "form submit";
+
+	static int itemCount = 0;
 
     private static final long serialVersionUID = 1L;
 
@@ -56,7 +65,7 @@ public class HomePage extends WebPage {
      *            Page parameters
      */
     public HomePage(final PageParameters parameters) {
-        super(parameters);
+        super(parameters);    
 
         final MarkupContainer list = new WebMarkupContainer("list");
         final List<String> data = getList();
@@ -91,9 +100,38 @@ public class HomePage extends WebPage {
                 HomePage.class);
 
         add(homeLink);
-        // list.setOutputMarkupId(true);
         list.add(listView);
         add(list);
         add(moreLink);
+        
+        //add form
+        TextField<String> name = new TextField<String>("name",
+        	new Model<String>("name"));
+		TextField<String> surname = new TextField<String>("surname",
+			new Model<String>("surname"));
+
+		Form<String> form = new StatelessForm<String>("inputForm") {
+			@Override
+			protected void onSubmit() {
+				super.onSubmit();
+				info(FORM_SUBMIT);
+			}
+		};
+		
+		form.add(name, surname);
+		
+		final FeedbackPanel feedback;
+		form.add(feedback = new FeedbackPanel("feedback"));
+		feedback.setOutputMarkupId(true);
+		
+		form.add(new StatelessAjaxSubmitLink("submit") {
+			@Override
+			protected void onSubmit(AjaxRequestTarget target) {
+				super.onSubmit(target);
+				info(AJAX_SUBMIT);
+				target.add(feedback);
+			}
+		});
+		add(form);
     }
 }
