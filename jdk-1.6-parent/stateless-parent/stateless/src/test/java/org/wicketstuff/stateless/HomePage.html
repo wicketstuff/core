@@ -23,9 +23,18 @@
     <body>
       <ul wicket:id="list">
         <li wicket:id="item"><span wicket:id="value">Item 1</span></li>
-        <div id="new"/>
       </ul>
+      <div id="new"></div>
       <a href="#" wicket:id="more">More Data</a>
       <a href="#" wicket:id="home">Home</a>
+      
+      <form wicket:id="inputForm" >
+		<label for="name">Name:</label>
+		<input wicket:id="name" id="name" type="text" size="15"/><br/>
+		<label for="surname">Surname:</label>
+		<input wicket:id="surname" id="surname" type="text" size="15"/><br/>
+		<button id="submitButton" wicket:id="submit">Submit</button>
+		<div wicket:id="feedback" id="feedback"></div>
+	  </form>	
     </body>
 </html>

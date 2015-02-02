@@ -20,10 +20,11 @@ import static org.junit.Assert.assertTrue;
 
 import java.util.List;
 
-import org.apache.wicket.Page;
+import org.apache.wicket.Session;
 import org.apache.wicket.ajax.AjaxEventBehavior;
+import org.apache.wicket.ajax.XmlAjaxResponse;
 import org.apache.wicket.behavior.Behavior;
-import org.apache.wicket.protocol.http.WebApplication;
+import org.apache.wicket.util.tester.FormTester;
 import org.apache.wicket.util.tester.WicketTester;
 import org.junit.After;
 import org.junit.Before;
@@ -33,17 +34,12 @@ import org.junit.Test;
  * @author jfk
  * 
  */
-public class StatelessAjaxFallbackLinkTest {
+public class StatelessAjaxComponentsBehaviorsTest {
     protected WicketTester tester;
 
     @Before
     public void setUp() {
-        tester = new WicketTester(new WebApplication() {
-            @Override
-            public Class<? extends Page> getHomePage() {
-                return HomePage.class;
-            }
-        });
+        tester = new WicketTester(new WicketApplication());
 
     }
 
@@ -54,6 +50,8 @@ public class StatelessAjaxFallbackLinkTest {
         if (dump) {
             tester.dumpPage();
         }
+        //things must stay stateless
+        assertTrue(Session.get().isTemporary());
     }
 
     /**
@@ -77,7 +75,30 @@ public class StatelessAjaxFallbackLinkTest {
 
         behavior.onRequest();
     }
-
+    
+    @Test
+	public void testSubmitForm() throws Exception {
+    	tester.startPage(HomePage.class);
+    	
+    	FormTester formTester = tester.newFormTester("inputForm");
+    	formTester.setValue("name", "myname");
+    	formTester.setValue("surname", "mysurname");
+    	
+    	tester.executeAjaxEvent("inputForm:submit", "click");
+    	
+    	String response = tester.getLastResponseAsString();
+    	
+    	boolean isAjaxResponse = response.contains(XmlAjaxResponse.START_ROOT_ELEMENT)
+    		&& response.contains(XmlAjaxResponse.END_ROOT_ELEMENT);
+    	
+    	assertTrue(isAjaxResponse);
+    	
+    	boolean formAjaxSubmit = response.contains(HomePage.FORM_SUBMIT) &&
+    		response.contains(HomePage.AJAX_SUBMIT);
+    	
+    	assertTrue(formAjaxSubmit);
+	}
+    
     /**
      * Test method for {@link StatelessAjaxFallbackLink#getStatelessHint()}.
      */
