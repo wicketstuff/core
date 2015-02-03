@@ -16,7 +16,9 @@ public abstract class Source extends JavascriptObject implements Serializable {
         super();
     }
 
+    @Override
     public abstract String getJsType();
 
+    @Override
     public abstract String renderJs();
 }

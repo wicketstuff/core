@@ -37,6 +37,7 @@ public class Cluster extends Source {
         return "ol.source.Cluster";
     }
 
+    @Override
     public String renderJs() {
 
         StringBuilder builder = new StringBuilder();

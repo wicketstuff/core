@@ -61,6 +61,7 @@ public class GeoJson extends StaticVector {
         return "ol.source.GeoJSON";
     }
 
+    @Override
     public String renderJs() {
 
         StringBuilder builder = new StringBuilder();

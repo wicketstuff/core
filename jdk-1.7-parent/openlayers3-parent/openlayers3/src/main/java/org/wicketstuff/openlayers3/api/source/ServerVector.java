@@ -111,6 +111,7 @@ public class ServerVector extends StaticVector {
         return "ol.source.ServerVector";
     }
 
+    @Override
     public String renderJs() {
 
         StringBuilder builder = new StringBuilder();

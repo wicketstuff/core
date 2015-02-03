@@ -75,6 +75,7 @@ public class Tile extends Layer {
      *         New value
      * @return this instance
      */
+    @Override
     public Tile source(Source source) {
         setSource(source);
         return this;

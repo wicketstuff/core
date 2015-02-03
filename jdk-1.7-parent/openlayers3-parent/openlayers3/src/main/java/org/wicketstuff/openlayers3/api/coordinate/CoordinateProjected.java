@@ -116,6 +116,7 @@ public class CoordinateProjected extends Coordinate {
      *         New value
      * @return This instance
      */
+    @Override
     public CoordinateProjected x(Number valueX) {
         setX(valueX);
         return this;
@@ -128,6 +129,7 @@ public class CoordinateProjected extends Coordinate {
      *         New value
      * @return this instance
      */
+    @Override
     public CoordinateProjected y(Number valueY) {
         setY(valueY);
         return this;

@@ -42,6 +42,7 @@ public abstract class JavascriptObject implements IJavascriptObject {
      *
      * @return String with the Javascript object type
      */
+    @Override
     public abstract String getJsType();
 
     /**
@@ -49,6 +50,7 @@ public abstract class JavascriptObject implements IJavascriptObject {
      *
      * @return String with the object's unique ID
      */
+    @Override
     public String getJsId() {
 
         String objectId = JS_GLOBAL + "['" + getClass().getSimpleName().toLowerCase() + this.hashCode() + "']";
@@ -71,6 +73,7 @@ public abstract class JavascriptObject implements IJavascriptObject {
      *
      * @return String with rendered Javascript code
      */
+    @Override
     public abstract String renderJs();
 
     /**

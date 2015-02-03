@@ -142,6 +142,7 @@ public class Circle extends Style {
         return "ol.style.Circle";
     }
 
+    @Override
     public String renderAttributesJs() {
 
         StringBuilder builder = new StringBuilder();

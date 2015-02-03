@@ -181,6 +181,7 @@ public class ClusterStyle extends Style {
         return "";
     }
 
+    @Override
     public String renderAttributesJs() {
 
         StringBuilder builder = new StringBuilder();

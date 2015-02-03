@@ -98,6 +98,7 @@ public class LongLat extends CoordinateProjected {
      *         New value
      * @return This instance
      */
+    @Override
     public LongLat targetProjection(String targetProjection) {
         setTargetProjection(targetProjection);
         return this;
@@ -110,6 +111,7 @@ public class LongLat extends CoordinateProjected {
      *         New value
      * @return This instance
      */
+    @Override
     public LongLat transform(String targetProjection) {
         return targetProjection(targetProjection);
     }
@@ -121,6 +123,7 @@ public class LongLat extends CoordinateProjected {
      *         New value
      * @return This instance
      */
+    @Override
     public LongLat x(Number valueX) {
         setX(valueX);
         return this;
@@ -133,6 +136,7 @@ public class LongLat extends CoordinateProjected {
      *         New value
      * @return this instance
      */
+    @Override
     public LongLat y(Number valueY) {
         setY(valueY);
         return this;

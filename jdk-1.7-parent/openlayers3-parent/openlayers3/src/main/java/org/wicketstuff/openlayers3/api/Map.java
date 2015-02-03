@@ -343,6 +343,7 @@ public class Map extends JavascriptObject implements Serializable {
         return  JS_GLOBAL + "['map_" + getTarget() + "']";
     }
 
+    @Override
     public String renderJs() {
 
         StringBuilder builder = new StringBuilder();

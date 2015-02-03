@@ -104,6 +104,7 @@ public class GeoJsonFormat extends Feature implements Serializable {
         return "ol.format.GeoJSON";
     }
 
+    @Override
     public String renderJs() {
         StringBuilder builder = new StringBuilder();
 
