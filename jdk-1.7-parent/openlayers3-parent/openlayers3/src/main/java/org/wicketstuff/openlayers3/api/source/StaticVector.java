@@ -16,7 +16,7 @@ public abstract class StaticVector extends Source {
      * Creates a new instance.
      *
      * @param projection
-     *         Projection used to tranform the data
+     *         Projection used to transform the data
      */
     public StaticVector(Projection projection) {
         super();
@@ -36,10 +36,10 @@ public abstract class StaticVector extends Source {
     /**
      * Sets the projection used to transform the data.
      *
-     * @param Projection
+     * @param projection
      *         New value
      */
-    public void setProjection(Projection Projection) {
+    public void setProjection(Projection projection) {
         this.projection = projection;
     }
 
