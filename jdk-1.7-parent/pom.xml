@@ -19,6 +19,7 @@
 	</description>
 
 	<modules>
+		<module>wicketstuff-native-websocket-javax</module>
 		<module>wicketstuff-wicket7</module>
 		<module>wicketstuff-glassfish4-integration</module>
 		<module>serializer-fast2</module>
