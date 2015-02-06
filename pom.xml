@@ -86,6 +86,18 @@
 				<enabled>false</enabled>
 			</releases>
 		</repository>
+		<!-- for wicket bootstrap snapshots -->
+		<repository>
+			<id>sonatype-nexus-snapshots</id>
+			<name>Sonatype Nexus Snapshots</name>
+			<url>http://oss.sonatype.org/content/repositories/snapshots</url>
+			<snapshots>
+				<enabled>true</enabled>
+			</snapshots>
+			<releases>
+				<enabled>false</enabled>
+			</releases>
+		</repository>
 	</repositories>
 
 	<profiles>
