@@ -108,6 +108,7 @@ public class BookmarkablePageLink<T> extends org.apache.wicket.markup.html.link.
 	@Override
 	public void onBeforeRender(JQueryBehavior behavior)
 	{
+		// noop
 	}
 
 	@Override

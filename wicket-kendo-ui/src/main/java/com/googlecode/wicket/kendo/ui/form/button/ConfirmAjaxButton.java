@@ -78,18 +78,18 @@ public abstract class ConfirmAjaxButton extends GenericPanel<String>
 			private static final long serialVersionUID = 1L;
 
 			@Override
+			protected String getIcon()
+			{
+				return ConfirmAjaxButton.this.getIcon();
+			}
+			
+			@Override
 			protected void onInitialize()
 			{
 				super.onInitialize();
 
 				// does not validate the form before the window is being displayed
 				this.setDefaultFormProcessing(false);
-			}
-
-			@Override
-			protected String getIcon()
-			{
-				return ConfirmAjaxButton.this.getIcon();
 			}
 
 			@Override

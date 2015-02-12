@@ -86,7 +86,9 @@ public abstract class AjaxTab extends AbstractTab
 	protected abstract WebMarkupContainer getLazyPanel(String panelId);
 
 	/**
-	 * Replaces the loading panel's placeholder component (indicator) by the lazy-loaded component. Warning, should be called only once!
+	 * Replaces the loading panel's placeholder component (indicator) by the lazy-loaded component.<br/>
+	 * <br/>
+	 * <b>Warning: </b> should be called only once!
 	 *
 	 * @return the lazy-loaded component
 	 */

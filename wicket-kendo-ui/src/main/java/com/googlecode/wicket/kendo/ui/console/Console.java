@@ -16,11 +16,14 @@
  */
 package com.googlecode.wicket.kendo.ui.console;
 
+import java.io.Serializable;
+
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.model.IModel;
 
 /**
- * Provides a Kendo UI console widget
+ * Provides a Kendo UI console widget<br/>
+ * <br/>
  * <b>Note about the capacity:</b> the capacity allows to define a maximum number of messages.<br/>
  * Elder messages will be automatically removed from the model object on insertion.<br/>
  * However, this is only reflected when the component is (re-)rendered ({@link #onBeforeRender()} has to be invoked)
@@ -69,7 +72,9 @@ public class Console extends AbstractConsole
 	 * Helper method that logs an info message
 	 *
 	 * @param message the message to log
+	 * @deprecated too confusing with {@link #info(Serializable)}, use {@link #log(Serializable, boolean)} or {@link #info(AjaxRequestTarget, Serializable)} instead
 	 */
+	@Deprecated
 	public void info(String message)
 	{
 		this.log(message, false);
@@ -81,9 +86,10 @@ public class Console extends AbstractConsole
 	 * @param message the message to log
 	 * @param target the {@link AjaxRequestTarget}
 	 */
-	public void info(String message, AjaxRequestTarget target)
+	// XXX: inverted args to keep consistency with the rest of the API
+	public void info(AjaxRequestTarget target, Serializable message)
 	{
-		this.info(message);
+		this.log(message, false);
 
 		target.appendJavaScript(this.consoleBehavior.$(message, false));
 	}
@@ -92,7 +98,9 @@ public class Console extends AbstractConsole
 	 * Helper method that logs an error message
 	 *
 	 * @param message the message to log
+	 * @deprecated too confusing with error(Serializable), use log(Serializable, true) or error(AjaxRequestTarget, Serializable)
 	 */
+	@Deprecated
 	public void error(String message)
 	{
 		this.log(message, true);
@@ -104,9 +112,10 @@ public class Console extends AbstractConsole
 	 * @param message the message to log
 	 * @param target the {@link AjaxRequestTarget}
 	 */
-	public void error(String message, AjaxRequestTarget target)
+	// XXX: inverted args to keep consistency with the rest of the API
+	public void error(AjaxRequestTarget target, Serializable message)
 	{
-		this.error(message);
+		this.log(message, true);
 
 		target.appendJavaScript(this.consoleBehavior.$(message, true));
 	}

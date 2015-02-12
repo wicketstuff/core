@@ -170,6 +170,19 @@ public class Options implements IClusterable
 	}
 
 	/**
+	 * Constructor which shadow copies an existing {@link Options}
+	 */
+	public Options(Options options)
+	{
+		this();
+
+		for (Entry<String, Object> option : options.entries())
+		{
+			this.set(option.getKey(), option.getValue());
+		}
+	}
+
+	/**
 	 * Constructor which adds an options defined by a key/value pair.
 	 *
 	 * @param key the option name

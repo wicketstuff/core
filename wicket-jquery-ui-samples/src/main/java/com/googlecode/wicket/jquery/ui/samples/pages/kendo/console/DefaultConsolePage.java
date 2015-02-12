@@ -47,7 +47,7 @@ public class DefaultConsolePage extends AbstractConsolePage
 			@Override
 			protected void onSubmit(AjaxRequestTarget target, Form<?> form)
 			{
-				console.info(textField.getModelObject(), target);
+				console.info(target, textField.getModelObject());
 			}
 
 			@Override
@@ -55,7 +55,7 @@ public class DefaultConsolePage extends AbstractConsolePage
 			{
 				for (FeedbackMessage message : errorFeedbackMessagesModel.getObject())
 				{
-					console.log(message.getMessage(), true, target);
+					console.error(target, message.getMessage());
 					message.markRendered();
 				}
 			}
