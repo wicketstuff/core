@@ -20,12 +20,13 @@ import java.util.Locale;
 
 import org.apache.wicket.resource.JQueryPluginResourceReference;
 
+import com.googlecode.wicket.jquery.core.utils.LocaleUtils;
 import com.googlecode.wicket.kendo.ui.KendoCulture;
 
 /**
  * The resource reference for the Kendo Globalize javascript library.<br/>
  * <br/>
- * <b>Warning:</b> When globalize.js is registered before Kendo scripts, then Kendo will use globalize.js features instead of Kendo Globalization.  
+ * <b>Warning:</b> When globalize.js is registered before Kendo scripts, then Kendo will use globalize.js features instead of Kendo Globalization.
  *
  * @author Sebastien Briquet - sebfz1
  *
@@ -43,7 +44,7 @@ public class KendoGlobalizeResourceReference extends JQueryPluginResourceReferen
 	 */
 	public KendoGlobalizeResourceReference(Locale locale)
 	{
-		this(locale.toLanguageTag()); // java7
+		this(LocaleUtils.getLangageCode(locale));
 	}
 
 	/**
