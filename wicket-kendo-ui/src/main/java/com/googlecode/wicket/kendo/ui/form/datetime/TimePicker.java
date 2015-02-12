@@ -88,7 +88,7 @@ public class TimePicker extends DateTextField implements IJQueryWidget
 	}
 
 	/**
-	 * Constructor, which use {@link Locale} and Kengo UI Globalization
+	 * Constructor, which use {@link Locale} and Kendo UI Globalization
 	 * @param id the markup id
 	 * @param locale the {@link Locale}
 	 */
@@ -98,7 +98,7 @@ public class TimePicker extends DateTextField implements IJQueryWidget
 	}
 
 	/**
-	 * Constructor, which use {@link Locale} and Kengo UI Globalization
+	 * Constructor, which use {@link Locale} and Kendo UI Globalization
 	 * @param id the markup id
 	 * @param locale the {@link Locale}
 	 * @param options the {@link Options}
@@ -156,7 +156,7 @@ public class TimePicker extends DateTextField implements IJQueryWidget
 	}
 
 	/**
-	 * Constructor, which use {@link Locale} and Kengo UI Globalization
+	 * Constructor, which use {@link Locale} and Kendo UI Globalization
 	 * @param id the markup id
 	 * @param model the {@link IModel}
 	 * @param locale the {@link Locale}
@@ -167,7 +167,7 @@ public class TimePicker extends DateTextField implements IJQueryWidget
 	}
 
 	/**
-	 * Constructor, which use {@link Locale} and Kengo UI Globalization
+	 * Constructor, which use {@link Locale} and Kendo UI Globalization
 	 * @param id the markup id
 	 * @param model the {@link IModel}
 	 * @param locale the {@link Locale}

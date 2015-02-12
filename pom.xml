@@ -203,6 +203,7 @@
 		<module>wicket-jquery-ui-plugins</module>
 		<module>wicket-jquery-ui-calendar</module>
 		<module>wicket-kendo-ui</module>
+		<module>wicket-kendo-ui-culture</module>
 		<module>wicket-kendo-ui-themes</module>
 		<module>wicket-jquery-ui-samples</module>
 	</modules>

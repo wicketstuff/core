@@ -8,13 +8,12 @@ import org.apache.wicket.markup.head.IHeaderResponse;
 import org.apache.wicket.markup.head.JavaScriptHeaderItem;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.model.Model;
-import org.apache.wicket.request.resource.JavaScriptResourceReference;
 
-import com.googlecode.wicket.jquery.ui.samples.SampleApplication;
 import com.googlecode.wicket.kendo.ui.form.button.AjaxButton;
 import com.googlecode.wicket.kendo.ui.form.button.Button;
 import com.googlecode.wicket.kendo.ui.form.datetime.TimePicker;
 import com.googlecode.wicket.kendo.ui.panel.KendoFeedbackPanel;
+import com.googlecode.wicket.kendo.ui.resource.KendoGlobalizeResourceReference;
 
 public class LocaleTimePickerPage extends AbstractTimePickerPage
 {
@@ -31,7 +30,7 @@ public class LocaleTimePickerPage extends AbstractTimePickerPage
 
 		// TimePicker //
 		Calendar calendar = Calendar.getInstance();
-		calendar.set(0, 0, 0, 14, 0); //2:00 PM
+		calendar.set(0, 0, 0, 14, 0); // 2:00 PM
 
 		final TimePicker timepicker = new TimePicker("timepicker", Model.of(calendar.getTime()), Locale.FRENCH);
 		form.add(timepicker);
@@ -75,6 +74,6 @@ public class LocaleTimePickerPage extends AbstractTimePickerPage
 	{
 		super.renderHead(response);
 
-		response.render(JavaScriptHeaderItem.forReference(new JavaScriptResourceReference(SampleApplication.class, "kendo.culture.fr.min.js")));
+		response.render(JavaScriptHeaderItem.forReference(new KendoGlobalizeResourceReference(Locale.FRENCH)));
 	}
 }

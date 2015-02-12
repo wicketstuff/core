@@ -10,15 +10,14 @@ import org.apache.wicket.markup.head.JavaScriptHeaderItem;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
-import org.apache.wicket.request.resource.JavaScriptResourceReference;
 
-import com.googlecode.wicket.jquery.ui.samples.SampleApplication;
 import com.googlecode.wicket.kendo.ui.form.button.AjaxButton;
 import com.googlecode.wicket.kendo.ui.form.button.Button;
 import com.googlecode.wicket.kendo.ui.form.datetime.DatePicker;
 import com.googlecode.wicket.kendo.ui.form.datetime.DateTimePicker;
 import com.googlecode.wicket.kendo.ui.form.datetime.TimePicker;
 import com.googlecode.wicket.kendo.ui.panel.KendoFeedbackPanel;
+import com.googlecode.wicket.kendo.ui.resource.KendoGlobalizeResourceReference;
 
 public class LocaleDateTimePickerPage extends AbstractTimePickerPage
 {
@@ -95,6 +94,6 @@ public class LocaleDateTimePickerPage extends AbstractTimePickerPage
 	{
 		super.renderHead(response);
 
-		response.render(JavaScriptHeaderItem.forReference(new JavaScriptResourceReference(SampleApplication.class, "kendo.culture.fr.min.js")));
+		response.render(JavaScriptHeaderItem.forReference(new KendoGlobalizeResourceReference(Locale.FRENCH)));
 	}
 }

@@ -7,20 +7,20 @@ For instance:<br/>
 <li><tt>Locale.FRANCE</tt> corresponds to <tt>kendo.culture.fr-FR.min.js</tt>
 </ul>
 <br/>
+<code>wicket-kendo-ui-culture</code> dependency does already embeds all culture files. Its usage is the following:  
+<br/>
 <pre>
-public void renderHead(IHeaderResponse response)
-{
-	super.renderHead(response);
+	@Override
+	public void renderHead(IHeaderResponse response)
+	{
+		super.renderHead(response);
 
-	response.render(
-		JavaScriptHeaderItem.forReference(
-			new JavaScriptResourceReference(SampleApplication.class,
-				"kendo.culture.fr.min.js")));
-}
+		response.render(JavaScriptHeaderItem.forReference(new KendoGlobalizeResourceReference(Locale.FRANCE)));
+	}
 </pre>
 
-<h4>Limitation</h4>
-It seems that Kendo-UI Globalize is conflicting with jQuery Globalize. Therefore it is not recommended to use both in conjunction.
+<h4>Warning</h4>
+When globalize.js is registered before Kendo scripts, then Kendo will use globalize.js features instead of Kendo Globalization.
 
 <br/>
 <h4>Since</h4>

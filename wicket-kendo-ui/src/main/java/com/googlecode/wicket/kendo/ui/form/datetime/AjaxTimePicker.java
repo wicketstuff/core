@@ -89,7 +89,7 @@ public class AjaxTimePicker extends TimePicker implements IJQueryAjaxAware, IVal
 	}
 
 	/**
-	 * Constructor, which use {@link Locale} and Kengo UI Globalization
+	 * Constructor, which use {@link Locale} and Kendo UI Globalization
 	 *
 	 * @param id the markup id
 	 * @param locale the {@link Locale}
@@ -100,7 +100,7 @@ public class AjaxTimePicker extends TimePicker implements IJQueryAjaxAware, IVal
 	}
 
 	/**
-	 * Constructor, which use {@link Locale} and Kengo UI Globalization
+	 * Constructor, which use {@link Locale} and Kendo UI Globalization
 	 *
 	 * @param id the markup id
 	 * @param locale the {@link Locale}
@@ -160,7 +160,7 @@ public class AjaxTimePicker extends TimePicker implements IJQueryAjaxAware, IVal
 	}
 
 	/**
-	 * Constructor, which use {@link Locale} and Kengo UI Globalization
+	 * Constructor, which use {@link Locale} and Kendo UI Globalization
 	 *
 	 * @param id the markup id
 	 * @param model the {@link IModel}
@@ -172,7 +172,7 @@ public class AjaxTimePicker extends TimePicker implements IJQueryAjaxAware, IVal
 	}
 
 	/**
-	 * Constructor, which use {@link Locale} and Kengo UI Globalization
+	 * Constructor, which use {@link Locale} and Kendo UI Globalization
 	 *
 	 * @param id the markup id
 	 * @param model the {@link IModel}
