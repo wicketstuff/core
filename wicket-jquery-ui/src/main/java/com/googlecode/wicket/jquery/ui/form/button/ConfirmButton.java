@@ -39,6 +39,7 @@ import com.googlecode.wicket.jquery.ui.widget.dialog.MessageDialog;
  * should be validated. The dialog does not proceed to a (whole) form validation while being opened, because the form validation will occur when the user will confirm (by clicking on OK button). This the intended behavior.
  *
  * @author Sebastien Briquet - sebfz1
+ * 
  */
 public abstract class ConfirmButton extends FormSubmittingPanel<String>
 {

@@ -1,4 +1,4 @@
-function openMenuReturnFalse(opener){
+function showSplitButtonMenu(opener){
 	//first lets hide all open SplitButton menus
 	jQuery('.split-button-marker')/* every buttonset-container-span gets this class / see markup file */
 	.next()/* tags for menus (auto-iterating) */

@@ -18,12 +18,12 @@ abstract class AbstractButtonPage extends SamplePage
 	protected List<DemoLink> getDemoLinks()
 	{
 		return Arrays.asList(
-				new DemoLink(KendoButtonPage.class, "Submit Button"),
-				new DemoLink(AjaxButtonPage.class, "Ajax Button"),
+				new DemoLink(KendoButtonPage.class, "Button"),
+				new DemoLink(AjaxButtonPage.class, "AjaxButton"),
 				new DemoLink(ConfirmButtonPage.class, "Confirm Button"),
-				new DemoLink(ConfirmAjaxButtonPage.class, "Confirm Ajax Button"),
-				new DemoLink(SecuredButtonPage.class, "Secured Button"),
-				new DemoLink(IndicatingButtonPage.class, "Indicating Button")
+				new DemoLink(ConfirmAjaxButtonPage.class, "Confirm AjaxButton"),
+				new DemoLink(SecuredButtonPage.class, "Secured [Ajax]Button"),
+				new DemoLink(IndicatingButtonPage.class, "Indicating [Ajax]Button")
 			);
 	}
 }

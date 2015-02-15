@@ -2,7 +2,9 @@ package com.googlecode.wicket.jquery.ui.form.button;
 
 import java.util.List;
 
-import org.apache.wicket.markup.html.form.SubmitLink;
+import org.apache.wicket.ajax.AjaxRequestTarget;
+import org.apache.wicket.ajax.markup.html.form.AjaxSubmitLink;
+import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.link.AbstractLink;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
@@ -10,13 +12,13 @@ import org.apache.wicket.model.Model;
 import com.googlecode.wicket.jquery.ui.widget.menu.IMenuItem;
 
 /**
- * Provides a jQuery split-button
+ * Provides a jQuery split ajax-button
  * 
  * @author Patrick Davids - Patrick1701
  * @author Sebastien Briquet - sebfz1
  * 
  */
-public class SplitButton extends AbstractSplitButton
+public class SplitAjaxButton extends SplitButton
 {
 	private static final long serialVersionUID = 1L;
 
@@ -26,7 +28,7 @@ public class SplitButton extends AbstractSplitButton
 	 * @param id the markup id
 	 * @param items the list of {@link IMenuItem}
 	 */
-	public SplitButton(String id, List<IMenuItem> items)
+	public SplitAjaxButton(String id, List<IMenuItem> items)
 	{
 		super(id, items);
 	}
@@ -37,7 +39,7 @@ public class SplitButton extends AbstractSplitButton
 	 * @param id the markup id
 	 * @param items the list model of {@link IMenuItem}
 	 */
-	public SplitButton(String id, IModel<List<IMenuItem>> items)
+	public SplitAjaxButton(String id, IModel<List<IMenuItem>> items)
 	{
 		super(id, items);
 	}
@@ -46,8 +48,11 @@ public class SplitButton extends AbstractSplitButton
 
 	/**
 	 * Triggered when the form is submitted, but the validation failed
+	 *
+	 * @param target the {@link AjaxRequestTarget}
+	 * @param form the {@link Form}
 	 */
-	protected void onError()
+	protected void onError(AjaxRequestTarget target, Form<?> form)
 	{
 		// noop
 	}
@@ -55,9 +60,10 @@ public class SplitButton extends AbstractSplitButton
 	/**
 	 * Triggered when the form is submitted, and the validation succeed
 	 *
+	 * @param target the {@link AjaxRequestTarget}
 	 * @param item the selected {@link IMenuItem}
 	 */
-	protected void onSubmit(IMenuItem item)
+	protected void onSubmit(AjaxRequestTarget target, IMenuItem item)
 	{
 		// noop
 	}
@@ -67,7 +73,7 @@ public class SplitButton extends AbstractSplitButton
 	@Override
 	protected AbstractLink newLink(String id)
 	{
-		return new SubmitLink(id) {
+		return new AjaxSubmitLink(id) {
 
 			private static final long serialVersionUID = 1L;
 
@@ -95,18 +101,10 @@ public class SplitButton extends AbstractSplitButton
 			@Override
 			public boolean getDefaultFormProcessing()
 			{
-				return SplitButton.this.getDefaultFormProcessing();
+				return SplitAjaxButton.this.getDefaultFormProcessing();
 			}
 
 			// events //
-
-			@Override
-			protected void onInitialize()
-			{
-				super.onInitialize();
-
-				this.setOutputMarkupId(true);
-			}
 
 			@Override
 			protected void onConfigure()
@@ -115,7 +113,7 @@ public class SplitButton extends AbstractSplitButton
 
 				if (this.getDefaultModelObject() == null)
 				{
-					List<IMenuItem> items = SplitButton.this.getModelObject();
+					List<IMenuItem> items = SplitAjaxButton.this.getModelObject();
 
 					if (!items.isEmpty())
 					{
@@ -125,22 +123,22 @@ public class SplitButton extends AbstractSplitButton
 			}
 
 			@Override
-			public void onError()
+			protected void onSubmit(AjaxRequestTarget target, Form<?> form)
 			{
-				super.onError();
-
-				SplitButton.this.onError();
-			}
-
-			@Override
-			public void onSubmit()
-			{
-				super.onSubmit();
+				super.onSubmit(target, form);
 
 				if (this.getDefaultModelObject() != null)
 				{
-					SplitButton.this.onSubmit((IMenuItem) this.getDefaultModelObject());
+					SplitAjaxButton.this.onSubmit(target, (IMenuItem) this.getDefaultModelObject());
 				}
+			}
+
+			@Override
+			protected void onError(AjaxRequestTarget target, Form<?> form)
+			{
+				super.onError(target, form);
+
+				SplitAjaxButton.this.onError(target, form);
 			}
 		};
 	}
