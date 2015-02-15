@@ -18,7 +18,7 @@ import com.googlecode.wicket.jquery.ui.widget.menu.IMenuItem;
  * @author Sebastien Briquet - sebfz1
  * 
  */
-public class SplitAjaxButton extends SplitButton
+public class AjaxSplitButton extends SplitButton
 {
 	private static final long serialVersionUID = 1L;
 
@@ -28,7 +28,7 @@ public class SplitAjaxButton extends SplitButton
 	 * @param id the markup id
 	 * @param items the list of {@link IMenuItem}
 	 */
-	public SplitAjaxButton(String id, List<IMenuItem> items)
+	public AjaxSplitButton(String id, List<IMenuItem> items)
 	{
 		super(id, items);
 	}
@@ -39,7 +39,7 @@ public class SplitAjaxButton extends SplitButton
 	 * @param id the markup id
 	 * @param items the list model of {@link IMenuItem}
 	 */
-	public SplitAjaxButton(String id, IModel<List<IMenuItem>> items)
+	public AjaxSplitButton(String id, IModel<List<IMenuItem>> items)
 	{
 		super(id, items);
 	}
@@ -101,7 +101,7 @@ public class SplitAjaxButton extends SplitButton
 			@Override
 			public boolean getDefaultFormProcessing()
 			{
-				return SplitAjaxButton.this.getDefaultFormProcessing();
+				return AjaxSplitButton.this.getDefaultFormProcessing();
 			}
 
 			// events //
@@ -113,7 +113,7 @@ public class SplitAjaxButton extends SplitButton
 
 				if (this.getDefaultModelObject() == null)
 				{
-					List<IMenuItem> items = SplitAjaxButton.this.getModelObject();
+					List<IMenuItem> items = AjaxSplitButton.this.getModelObject();
 
 					if (!items.isEmpty())
 					{
@@ -129,7 +129,7 @@ public class SplitAjaxButton extends SplitButton
 
 				if (this.getDefaultModelObject() != null)
 				{
-					SplitAjaxButton.this.onSubmit(target, (IMenuItem) this.getDefaultModelObject());
+					AjaxSplitButton.this.onSubmit(target, (IMenuItem) this.getDefaultModelObject());
 				}
 			}
 
@@ -138,7 +138,7 @@ public class SplitAjaxButton extends SplitButton
 			{
 				super.onError(target, form);
 
-				SplitAjaxButton.this.onError(target, form);
+				AjaxSplitButton.this.onError(target, form);
 			}
 		};
 	}

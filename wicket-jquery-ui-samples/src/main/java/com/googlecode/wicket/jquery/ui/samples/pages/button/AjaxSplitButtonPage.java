@@ -10,18 +10,18 @@ import org.apache.wicket.markup.html.panel.FeedbackPanel;
 import org.apache.wicket.model.Model;
 
 import com.googlecode.wicket.jquery.ui.JQueryIcon;
-import com.googlecode.wicket.jquery.ui.form.button.SplitAjaxButton;
+import com.googlecode.wicket.jquery.ui.form.button.AjaxSplitButton;
 import com.googlecode.wicket.jquery.ui.panel.JQueryFeedbackPanel;
 import com.googlecode.wicket.jquery.ui.widget.menu.IMenuItem;
 import com.googlecode.wicket.jquery.ui.widget.menu.MenuItem;
 
-public class SplitAjaxButtonPage extends AbstractButtonPage
+public class AjaxSplitButtonPage extends AbstractButtonPage
 {
 	private static final long serialVersionUID = 1L;
 
 	private final FeedbackPanel feedback;
 
-	public SplitAjaxButtonPage()
+	public AjaxSplitButtonPage()
 	{
 		final Form<Void> form = new Form<Void>("form") {
 
@@ -45,7 +45,7 @@ public class SplitAjaxButtonPage extends AbstractButtonPage
 		form.add(textField);
 
 		// Buttons //
-		form.add(new SplitAjaxButton("button", newMenuList()) {
+		form.add(new AjaxSplitButton("button", newMenuList()) {
 
 			private static final long serialVersionUID = 1L;
 

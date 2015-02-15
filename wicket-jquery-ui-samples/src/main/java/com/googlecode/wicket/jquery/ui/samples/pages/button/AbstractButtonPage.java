@@ -25,8 +25,8 @@ abstract class AbstractButtonPage extends SamplePage
 				new DemoLink(CheckButtonPage.class, "Check Buttons"),
 				new DemoLink(ConfirmButtonPage.class, "Confirm Button"),
 				new DemoLink(ConfirmAjaxButtonPage.class, "Confirm AjaxButton"),
-				new DemoLink(SplitButtonPage.class, "Split Button"),
-				new DemoLink(SplitAjaxButtonPage.class, "Split AjaxButton"),
+				new DemoLink(SplitButtonPage.class, "SplitButton"),
+				new DemoLink(AjaxSplitButtonPage.class, "Ajax SplitButton"),
 				new DemoLink(SecuredButtonPage.class, "Secured [Ajax]Button"),
 				new DemoLink(IndicatingAjaxButtonPage.class, "Indicating AjaxButton")
 			);
