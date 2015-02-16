@@ -7,7 +7,7 @@
 	<groupId>org.wicketstuff</groupId>
 	<artifactId>wicketstuff-core</artifactId>
 	<packaging>pom</packaging>
-	<version>1.5-SNAPSHOT</version>
+	<version>1.5.13</version>
 
 	<name>WicketStuff Core Parent</name>
 	<description>
@@ -156,7 +156,7 @@
 				<repository>
 					<id>sonatype-nexus-staging</id>
 					<name>Nexus Release Repository</name>
-					<url>http://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
+					<url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
 				</repository>
 			</distributionManagement>
 		</profile>
@@ -172,7 +172,7 @@
 				<snapshotRepository>
 					<id>sonatype-nexus-snapshots</id>
 					<name>Sonatype Nexus Snapshots</name>
-					<url>http://oss.sonatype.org/content/repositories/snapshots</url>
+					<url>https://oss.sonatype.org/content/repositories/snapshots</url>
 				</snapshotRepository>
 			</distributionManagement>
 		</profile>
@@ -188,7 +188,7 @@
 				<repository>
 					<id>wicket-snapshots</id>
 					<name>Apache Wicket Snapshots</name>
-					<url>http://repository.apache.org/snapshots</url>
+					<url>https://repository.apache.org/snapshots</url>
 					<snapshots>
 						<enabled>true</enabled>
 					</snapshots>
@@ -216,14 +216,14 @@
 	</mailingLists>
 
 	<scm>
-		<url>https://github.com/wicketstuff/core/tree/core-1.5.x</url>
+		<url>https://github.com/wicketstuff/core/tree/core-1.5.13</url>
 		<connection>scm:git:ssh://git@github.com:wicketstuff/core.git</connection>
 	</scm>
 
 	<!-- mocleiri: for distribution in to central repository sections in the main pom are not allowed -->
 
 	<properties>
-		<wicket.version>1.5-SNAPSHOT</wicket.version>
+		<wicket.version>1.5.13</wicket.version>
 
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>

@@ -7,7 +7,7 @@
   <parent>
     <artifactId>gae-initializer-parent</artifactId>
     <groupId>org.wicketstuff</groupId>
-    <version>1.5-SNAPSHOT</version>
+    <version>1.5.13</version>
   </parent>
 
   <artifactId>gae-initializer-example</artifactId>
