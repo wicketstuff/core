@@ -19,9 +19,13 @@ package org.wicketstuff.rest.utils.mounting;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
+import java.net.URLDecoder;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Enumeration;
 import java.util.List;
+import java.util.jar.JarEntry;
+import java.util.jar.JarFile;
 
 import org.apache.wicket.WicketRuntimeException;
 import org.apache.wicket.protocol.http.WebApplication;
@@ -122,11 +126,23 @@ public class PackageScanner
 		String path = packageName.replace('.', '/');
 		Enumeration<URL> resources = classLoader.getResources(path);
 		List<File> dirs = new ArrayList<File>();
+		List<JarFile> jars = new ArrayList<JarFile>();
 		
 		while (resources.hasMoreElements())
 		{
 			URL resource = resources.nextElement();
-			dirs.add(new File(resource.getFile()));
+			
+			if(resource.getProtocol().equals("jar")) 
+			{
+				String jarFileName = URLDecoder.decode(resource.getFile(), "UTF-8");
+		        jarFileName = jarFileName.substring(5,jarFileName.indexOf("!"));
+		        
+		        jars.add(new JarFile(jarFileName));
+			}
+			else
+			{
+				dirs.add(new File(resource.getFile()));
+			}
 		}
 		
 		ArrayList<Class<?>> classes = new ArrayList<Class<?>>();
@@ -136,8 +152,14 @@ public class PackageScanner
 			classes.addAll(findClasses(directory, packageName));
 		}
 		
+		for (JarFile jarFile : jars)
+		{
+			classes.addAll(findClasses(jarFile, path));
+		}
+		
 		return classes.toArray(new Class[classes.size()]);
 	}
+
 
 	/**
 	 * Recursive method used to find all classes in a given directory and
@@ -178,5 +200,39 @@ public class PackageScanner
 		
 		return classes;
 	}
-
+	
+	/**
+	 * Search for classes in a given jar file and package name
+	 * 
+	 * Credits: http://www.dzone.com/snippets/get-all-classes-within-package
+	 * 
+	 * @param jarFile
+	 *            The target jar arcive
+	 * @param path
+	 *            The package to look into as path
+	 * @return The classes
+	 * @throws ClassNotFoundException
+	 */
+	private static Collection<? extends Class<?>> findClasses(JarFile jarFile, String path) 
+		throws ClassNotFoundException
+	{
+		List<Class<?>> classes = new ArrayList<Class<?>>();
+		Enumeration<JarEntry> jarEntries = jarFile.entries();
+		
+		while (jarEntries.hasMoreElements())
+		{
+			JarEntry jarEntry = jarEntries.nextElement();
+			String entryName = jarEntry.getName();
+			int classExtensionIndex = entryName.indexOf(".class");
+			
+			if(entryName.startsWith(path) && classExtensionIndex >= 0)
+			{
+                entryName = entryName.substring(0, classExtensionIndex);
+                entryName = entryName.replace('/', '.');
+                classes.add(Class.forName(entryName));
+            }
+		}
+		
+		return classes;
+	}
 }
