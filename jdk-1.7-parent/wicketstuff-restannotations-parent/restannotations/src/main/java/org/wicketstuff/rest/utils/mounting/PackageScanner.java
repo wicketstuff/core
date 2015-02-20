@@ -136,8 +136,9 @@ public class PackageScanner
 		while (resources.hasMoreElements())
 		{
 			URL resource = resources.nextElement();
+			String protocol = resource.getProtocol();
 			
-			if(resource.getProtocol().equals("jar")) 
+			if("jar".equals(protocol) || "wsjar".equals(protocol)) 
 			{
 				String jarFileName = URLDecoder.decode(resource.getFile(), "UTF-8");
 		        jarFileName = jarFileName.substring(5,jarFileName.indexOf("!"));
