@@ -23,11 +23,21 @@ import javax.servlet.http.HttpServlet;
 
 import org.apache.wicket.protocol.http.mock.MockServletContext;
 import org.apache.wicket.util.tester.WicketTester;
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.Test;
 
 public class JEEWebResolverTest
 {
+
+	private WicketTester wicketTester;
+
+	@After
+	public void tearDown()
+	{
+		wicketTester.destroy();
+	}
+
 
 	@Test
 	public void testServletsAndJSPsAreResolvedRight() throws Exception
@@ -36,9 +46,11 @@ public class JEEWebResolverTest
 		MockServletContext mockServletContext = new MockServletContext(testApplication, new File(
 			"src/test/webapp").getCanonicalPath());
 
-		mockServletContext.addServlet("/TestServlet", new HttpServlet(){});
+		mockServletContext.addServlet("/TestServlet", new HttpServlet()
+		{
+		});
 
-		WicketTester wicketTester = new WicketTester(testApplication, mockServletContext);
+		wicketTester = new WicketTester(testApplication, mockServletContext);
 		wicketTester.startPage(TestServletAndJSPPage.class);
 		String lastResponse = wicketTester.getLastResponseAsString();
 		Assert.assertTrue(lastResponse.contains("INCLUDE OF RESOURCE: /TestServlet"));
@@ -51,7 +63,7 @@ public class JEEWebResolverTest
 		TestApplication testApplication = new TestApplication();
 		MockServletContext mockServletContext = new MockServletContext(testApplication, new File(
 			"src/main/webapp").getCanonicalPath());
-		WicketTester wicketTester = new WicketTester(testApplication, mockServletContext);
+		wicketTester = new WicketTester(testApplication, mockServletContext);
 		wicketTester.startPage(TestJSPFailPage.class);
 	}
 
@@ -71,7 +83,7 @@ public class JEEWebResolverTest
 				return null;
 			}
 		};
-		WicketTester wicketTester = new WicketTester(testApplication, mockServletContext);
+		wicketTester = new WicketTester(testApplication, mockServletContext);
 		wicketTester.startPage(TestServletFailPage.class);
 	}
 }
