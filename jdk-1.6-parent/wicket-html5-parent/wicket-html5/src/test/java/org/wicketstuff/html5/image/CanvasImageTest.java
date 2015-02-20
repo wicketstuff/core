@@ -18,6 +18,7 @@ package org.wicketstuff.html5.image;
 
 
 import org.apache.wicket.util.tester.WicketTester;
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -32,6 +33,12 @@ public class CanvasImageTest
 	public void setup()
 	{
 		wicketTester = new WicketTester();
+	}
+
+	@After
+	public void tearDown()
+	{
+		wicketTester.destroy();
 	}
 
 	@Test
