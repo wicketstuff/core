@@ -37,6 +37,11 @@
 			<organization>Freelancer</organization>
 			<organizationUrl>http://www.sebthom.de/</organizationUrl>
 		</developer>
+		<developer>
+			<id>klopfdreh</id>
+			<name>Tobias Soloschenko</name>
+			<email>tobias [dot] soloschenko [at] googlemail [dot] com</email>
+		</developer>
 	</developers>
 
 	<dependencies>
