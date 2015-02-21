@@ -24,6 +24,8 @@ import org.apache.wicket.model.IModel;
 
 import com.googlecode.wicket.jquery.core.IJQueryWidget;
 import com.googlecode.wicket.jquery.core.JQueryBehavior;
+import com.googlecode.wicket.jquery.core.template.IJQueryTemplate;
+import com.googlecode.wicket.kendo.ui.KendoTemplateBehavior;
 import com.googlecode.wicket.kendo.ui.KendoUIBehavior;
 
 /**
@@ -38,11 +40,15 @@ public class DropDownList<T> extends DropDownChoice<T> implements IJQueryWidget
 	private static final long serialVersionUID = 1L;
 	protected static final String METHOD = "kendoDropDownList";
 
+	private IJQueryTemplate template;
+	private KendoTemplateBehavior templateBehavior = null;
+
 	/** inner list width. 0 means that it will not be handled */
 	private int width = 0;
 
 	/**
 	 * Constructor
+	 * 
 	 * @param id the markup id
 	 */
 	public DropDownList(String id)
@@ -52,6 +58,7 @@ public class DropDownList<T> extends DropDownChoice<T> implements IJQueryWidget
 
 	/**
 	 * Constructor
+	 * 
 	 * @param id the markup id
 	 * @param choices the list of choices
 	 */
@@ -62,6 +69,7 @@ public class DropDownList<T> extends DropDownChoice<T> implements IJQueryWidget
 
 	/**
 	 * Constructor
+	 * 
 	 * @param id the markup id
 	 * @param choices the list of choices
 	 * @param renderer the rendering engine
@@ -73,6 +81,7 @@ public class DropDownList<T> extends DropDownChoice<T> implements IJQueryWidget
 
 	/**
 	 * Constructor
+	 * 
 	 * @param id the markup id
 	 * @param model the {@link IModel}
 	 * @param choices the list of choices
@@ -84,6 +93,7 @@ public class DropDownList<T> extends DropDownChoice<T> implements IJQueryWidget
 
 	/**
 	 * Constructor
+	 * 
 	 * @param id the markup id
 	 * @param model the {@link IModel}
 	 * @param choices the list of choices
@@ -96,6 +106,7 @@ public class DropDownList<T> extends DropDownChoice<T> implements IJQueryWidget
 
 	/**
 	 * Constructor
+	 * 
 	 * @param id the markup id
 	 * @param choices the list of choices
 	 */
@@ -106,6 +117,7 @@ public class DropDownList<T> extends DropDownChoice<T> implements IJQueryWidget
 
 	/**
 	 * Constructor
+	 * 
 	 * @param id the markup id
 	 * @param model the {@link IModel}
 	 * @param choices the list of choices
@@ -117,6 +129,7 @@ public class DropDownList<T> extends DropDownChoice<T> implements IJQueryWidget
 
 	/**
 	 * Constructor
+	 * 
 	 * @param id the markup id
 	 * @param choices the list of choices
 	 * @param renderer the rendering engine
@@ -128,6 +141,7 @@ public class DropDownList<T> extends DropDownChoice<T> implements IJQueryWidget
 
 	/**
 	 * Constructor
+	 * 
 	 * @param id the markup id
 	 * @param model the {@link IModel}
 	 * @param choices the list of choices
@@ -138,10 +152,11 @@ public class DropDownList<T> extends DropDownChoice<T> implements IJQueryWidget
 		super(id, model, choices, renderer);
 	}
 
-
 	// Properties //
+
 	/**
 	 * Gets the (inner) list width.
+	 * 
 	 * @return the list width
 	 */
 	public int getListWidth()
@@ -151,6 +166,7 @@ public class DropDownList<T> extends DropDownChoice<T> implements IJQueryWidget
 
 	/**
 	 * Sets the (inner) list width.
+	 * 
 	 * @param width the list width
 	 * @return this, for chaining
 	 */
@@ -161,19 +177,33 @@ public class DropDownList<T> extends DropDownChoice<T> implements IJQueryWidget
 		return this;
 	}
 
-
 	// Events //
+
 	@Override
 	protected void onInitialize()
 	{
 		super.onInitialize();
 
 		this.add(JQueryWidget.newWidgetBehavior(this));
+
+		this.template = this.newTemplate();
+
+		if (this.template != null)
+		{
+			this.add(this.templateBehavior = new KendoTemplateBehavior(this.template));
+		}
 	}
 
 	@Override
 	public void onConfigure(JQueryBehavior behavior)
 	{
+		// set template (if any) //
+		if (this.template != null)
+		{
+			behavior.setOption("template", String.format("jQuery('#%s').html()", this.templateBehavior.getToken()));
+		}
+
+		// set list-width //
 		if (this.getListWidth() > 0)
 		{
 			behavior.setOption("open", String.format("function(e) { e.sender.list.width(%d); }", this.getListWidth()));
@@ -187,9 +217,23 @@ public class DropDownList<T> extends DropDownChoice<T> implements IJQueryWidget
 	}
 
 	// IJQueryWidget //
+
 	@Override
 	public JQueryBehavior newWidgetBehavior(String selector)
 	{
 		return new KendoUIBehavior(selector, DropDownList.METHOD);
+	}
+
+	// Factories //
+
+	/**
+	 * Gets a new {@link IJQueryTemplate} to customize the rendering<br/>
+	 * The properties used in the template text (ie: ${data.name}) should be of the prefixed by "data." and should be identified in the list returned by {@link IJQueryTemplate#getTextProperties()} (without "data.")
+	 *
+	 * @return null by default
+	 */
+	protected IJQueryTemplate newTemplate()
+	{
+		return null;
 	}
 }

@@ -82,7 +82,7 @@ public class DateTimePicker extends FormComponentPanel<LocalDateTime> implements
 	private final String datePattern;
 	private final String timePattern;
 
-	private IConverter<LocalDateTime> converter;
+	private IConverter<LocalDateTime> converter = null;
 
 	/**
 	 * Constructor

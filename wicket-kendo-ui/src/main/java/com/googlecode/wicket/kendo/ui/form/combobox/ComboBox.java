@@ -153,7 +153,7 @@ public class ComboBox<T> extends TextField<String> implements IJQueryWidget
 
 		this.choices = choices;
 		this.renderer = renderer;
-		this.template = this.newTemplate();
+		this.template = this.newTemplate(); //TODO: move to onInitialize (check the other classes)
 	}
 
 	// Properties //
