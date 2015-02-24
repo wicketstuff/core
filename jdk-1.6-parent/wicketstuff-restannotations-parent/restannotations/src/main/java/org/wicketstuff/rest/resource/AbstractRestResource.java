@@ -582,21 +582,32 @@ public abstract class AbstractRestResource<T extends IWebSerialDeserial> impleme
 	 *            the current WebResponse object.
 	 * @return the value (if any) returned by the method.
 	 */
-	private Object invokeMappedMethod(Method method, List parametersValues, WebResponse response)
+	private Object invokeMappedMethod(Method method, List<?> parametersValues, WebResponse response)
 	{
 		try
 		{
 			return method.invoke(this, parametersValues.toArray());
 		}
-		catch (Exception e)
+		catch (Exception exception)
 		{
-			response.setStatus(500);
-			response.write("General server error.");
+			handleException(response, exception);
 
 			log.debug("Error invoking method '" + method.getName() + "'");
 		}
 
 		return null;
+	}
+	
+	/**
+     	* Handle Exception. Default: set response Status to 500. Override this method to implement
+     	* customized error handling
+     	* @param exception The Exception
+     	* @param response Response-Object
+     	*/
+	protected void handleException(WebResponse response, Exception exception)
+	{
+		response.setStatus(500);
+		response.write("General server error.");
 	}
 
 	/**
