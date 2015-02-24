@@ -100,12 +100,8 @@ public class HomePage extends WebPage {
 		final Label selectedValue = new Label("selectedValue", "");
 		add(selectedValue.setOutputMarkupId(true));
 		
-		select.add(new StatelessAjaxFormComponentUpdatingBehavior("change") {
-
-			@Override
-			protected PageParameters getPageParameters() {
-				return new PageParameters();
-			}
+		select.add(new StatelessAjaxFormComponentUpdatingBehavior("change") 
+		{
 
 			@Override
 			protected void onUpdate(final AjaxRequestTarget target) {

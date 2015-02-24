@@ -58,9 +58,12 @@ public abstract class StatelessAjaxFormComponentUpdatingBehavior
         return StatelessEncoder.mergeParameters(url, params).toString();
     }
 
-    protected abstract PageParameters getPageParameters();
-
-    /**
+    protected PageParameters getPageParameters()
+    {
+    	return null;
+    }
+	
+	/**
      * @return always {@literal true}
      */
     @Override
