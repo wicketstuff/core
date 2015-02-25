@@ -36,6 +36,8 @@ import org.apache.wicket.util.string.StringValue;
 import org.wicketstuff.stateless.StatelessAjaxFallbackLink;
 import org.wicketstuff.stateless.StatelessAjaxFormComponentUpdatingBehavior;
 import org.wicketstuff.stateless.StatelessAjaxSubmitLink;
+import org.wicketstuff.stateless.StatelessIndicatingAjaxButton;
+import org.wicketstuff.stateless.StatelessIndicatingAjaxFallbackLink;
 
 /**
  * For testing only
@@ -100,12 +102,8 @@ public class HomePage extends WebPage {
 		final Label selectedValue = new Label("selectedValue", "");
 		add(selectedValue.setOutputMarkupId(true));
 		
-		select.add(new StatelessAjaxFormComponentUpdatingBehavior("change") {
-
-			@Override
-			protected PageParameters getPageParameters() {
-				return new PageParameters();
-			}
+		select.add(new StatelessAjaxFormComponentUpdatingBehavior("change") 
+		{
 
 			@Override
 			protected void onUpdate(final AjaxRequestTarget target) {
@@ -145,6 +143,35 @@ public class HomePage extends WebPage {
 		add(form);
 
 		add(select);
+		
+		
+		add(new StatelessIndicatingAjaxFallbackLink("indicatingLink"){
+			@Override
+			public void onClick(AjaxRequestTarget target)
+			{
+				try {
+				    Thread.sleep(5000);                 //1000 milliseconds is one second.
+				} catch(InterruptedException ex) {
+				    Thread.currentThread().interrupt();
+				}
+			}
+		});
+		
+		StatelessForm indicatingForm = new StatelessForm("indicatingForm");
+		
+		add(indicatingForm);
+		add(new StatelessIndicatingAjaxButton("indicatingButton", indicatingForm){
+			@Override
+			protected void onSubmit(AjaxRequestTarget target, Form<?> form)
+			{
+				try {
+				    Thread.sleep(5000);                 //1000 milliseconds is one second.
+				} catch(InterruptedException ex) {
+				    Thread.currentThread().interrupt();
+				}
+			}
+		});
+		
 	}
 
 	private String getParameter(final PageParameters parameters,

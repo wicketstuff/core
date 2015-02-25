@@ -67,7 +67,7 @@ public class StatelessAjaxFormSubmitBehavior extends StatelessAjaxEventBehavior
 		{
 			attributes.setMultipart(true);
 			attributes.setMethod(Method.POST);
-		}
+		}		
 	}
 	
 	/**
