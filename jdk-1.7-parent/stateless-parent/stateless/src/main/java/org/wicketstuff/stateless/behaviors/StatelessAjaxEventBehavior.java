@@ -14,29 +14,25 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-package org.wicketstuff.stateless;
+package org.wicketstuff.stateless.behaviors;
 
 import org.apache.wicket.Component;
-import org.apache.wicket.ajax.form.AjaxFormComponentUpdatingBehavior;
+import org.apache.wicket.ajax.AjaxEventBehavior;
 import org.apache.wicket.request.Url;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
+import org.wicketstuff.stateless.StatelessEncoder;
 
 /**
- * Stateless version of AjaxFormComponentUpdatingBehavior.
+ * Stateless version of AjaxEventBehavior
  * 
- * @author jfk
- * 
+ * @author Andrea Del Bene
+ *
  */
-public abstract class StatelessAjaxFormComponentUpdatingBehavior 
-    extends AjaxFormComponentUpdatingBehavior
+public abstract class StatelessAjaxEventBehavior extends AjaxEventBehavior
 {
+    private static final long serialVersionUID = 2387070289758596955L;
 
-    private static final long serialVersionUID = -286307141298283926L;
-
-    /**
-     * @param event
-     */
-    public StatelessAjaxFormComponentUpdatingBehavior(final String event)
+    public StatelessAjaxEventBehavior(final String event)
     {
         super(event);
     }
@@ -45,7 +41,8 @@ public abstract class StatelessAjaxFormComponentUpdatingBehavior
     protected void onBind()
     {
         super.onBind();
-
+        
+        //generate behavior id
         getComponent().getBehaviorId(this);
     }
 
@@ -58,16 +55,13 @@ public abstract class StatelessAjaxFormComponentUpdatingBehavior
         return StatelessEncoder.mergeParameters(url, params).toString();
     }
 
-    protected PageParameters getPageParameters()
-    {
-    	return null;
-    }
-	
-	/**
+    protected abstract PageParameters getPageParameters();
+
+    /**
      * @return always {@literal true}
      */
     @Override
-    public boolean getStatelessHint(final Component component)
+    public boolean getStatelessHint(final Component component) 
     {
         return true;
     }

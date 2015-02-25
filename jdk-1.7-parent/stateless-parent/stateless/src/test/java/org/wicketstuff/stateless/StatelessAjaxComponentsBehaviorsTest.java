@@ -29,6 +29,7 @@ import org.apache.wicket.util.tester.WicketTester;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import org.wicketstuff.stateless.components.StatelessAjaxFallbackLink;
 
 /**
  * @author jfk
@@ -55,7 +56,7 @@ public class StatelessAjaxComponentsBehaviorsTest {
     }
 
     /**
-     * Test method for {@link org.wicketstuff.stateless.StatelessAjaxFallbackLink#getStatelessHint()}.
+     * Test method for {@link org.wicketstuff.stateless.components.StatelessAjaxFallbackLink#getStatelessHint()}.
      */
     @SuppressWarnings("unchecked")
     @Test

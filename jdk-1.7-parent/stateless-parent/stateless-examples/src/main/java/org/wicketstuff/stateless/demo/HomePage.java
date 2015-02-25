@@ -33,11 +33,11 @@ import org.apache.wicket.model.AbstractReadOnlyModel;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
 import org.apache.wicket.util.string.StringValue;
-import org.wicketstuff.stateless.StatelessAjaxFallbackLink;
-import org.wicketstuff.stateless.StatelessAjaxFormComponentUpdatingBehavior;
-import org.wicketstuff.stateless.StatelessAjaxSubmitLink;
-import org.wicketstuff.stateless.StatelessIndicatingAjaxButton;
-import org.wicketstuff.stateless.StatelessIndicatingAjaxFallbackLink;
+import org.wicketstuff.stateless.behaviors.StatelessAjaxFormComponentUpdatingBehavior;
+import org.wicketstuff.stateless.components.StatelessAjaxFallbackLink;
+import org.wicketstuff.stateless.components.StatelessAjaxSubmitLink;
+import org.wicketstuff.stateless.components.StatelessIndicatingAjaxButton;
+import org.wicketstuff.stateless.components.StatelessIndicatingAjaxFallbackLink;
 
 /**
  * For testing only

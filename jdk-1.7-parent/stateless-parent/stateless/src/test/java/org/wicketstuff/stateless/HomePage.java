@@ -34,6 +34,8 @@ import org.apache.wicket.markup.html.list.ListView;
 import org.apache.wicket.markup.html.panel.FeedbackPanel;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
+import org.wicketstuff.stateless.components.StatelessAjaxFallbackLink;
+import org.wicketstuff.stateless.components.StatelessAjaxSubmitLink;
 
 /**
  * Homepage

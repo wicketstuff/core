@@ -1,4 +1,4 @@
-package org.wicketstuff.stateless;
+package org.wicketstuff.stateless.components;
 
 import org.apache.wicket.Component;
 import org.apache.wicket.ajax.IAjaxIndicatorAware;

@@ -18,8 +18,8 @@ package org.wicketstuff.stateless;
 
 import java.nio.charset.Charset;
 import java.util.HashSet;
-import java.util.Set;
 import java.util.List;
+import java.util.Set;
 
 import org.apache.wicket.request.Url;
 import org.apache.wicket.request.mapper.parameter.INamedParameters;
@@ -42,7 +42,7 @@ public class StatelessEncoder
      * @param params the page parameters to merge
      * @return an Url with merged parameters
      */
-    static Url mergeParameters(final Url url, final PageParameters params)
+    public static Url mergeParameters(final Url url, final PageParameters params)
     {
         if (params == null)
         {

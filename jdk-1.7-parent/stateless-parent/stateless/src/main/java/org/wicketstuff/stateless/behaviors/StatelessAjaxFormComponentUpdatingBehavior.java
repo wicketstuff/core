@@ -14,24 +14,30 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-package org.wicketstuff.stateless;
+package org.wicketstuff.stateless.behaviors;
 
 import org.apache.wicket.Component;
-import org.apache.wicket.ajax.AjaxEventBehavior;
+import org.apache.wicket.ajax.form.AjaxFormComponentUpdatingBehavior;
 import org.apache.wicket.request.Url;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
+import org.wicketstuff.stateless.StatelessEncoder;
 
 /**
- * Stateless version of AjaxEventBehavior
+ * Stateless version of AjaxFormComponentUpdatingBehavior.
  * 
- * @author Andrea Del Bene
- *
+ * @author jfk
+ * 
  */
-public abstract class StatelessAjaxEventBehavior extends AjaxEventBehavior
+public abstract class StatelessAjaxFormComponentUpdatingBehavior 
+    extends AjaxFormComponentUpdatingBehavior
 {
-    private static final long serialVersionUID = 2387070289758596955L;
 
-    public StatelessAjaxEventBehavior(final String event)
+    private static final long serialVersionUID = -286307141298283926L;
+
+    /**
+     * @param event
+     */
+    public StatelessAjaxFormComponentUpdatingBehavior(final String event)
     {
         super(event);
     }
@@ -40,8 +46,7 @@ public abstract class StatelessAjaxEventBehavior extends AjaxEventBehavior
     protected void onBind()
     {
         super.onBind();
-        
-        //generate behavior id
+
         getComponent().getBehaviorId(this);
     }
 
@@ -54,13 +59,16 @@ public abstract class StatelessAjaxEventBehavior extends AjaxEventBehavior
         return StatelessEncoder.mergeParameters(url, params).toString();
     }
 
-    protected abstract PageParameters getPageParameters();
-
-    /**
+    protected PageParameters getPageParameters()
+    {
+    	return null;
+    }
+	
+	/**
      * @return always {@literal true}
      */
     @Override
-    public boolean getStatelessHint(final Component component) 
+    public boolean getStatelessHint(final Component component)
     {
         return true;
     }

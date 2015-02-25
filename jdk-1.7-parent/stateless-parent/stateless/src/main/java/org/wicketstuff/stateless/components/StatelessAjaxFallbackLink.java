@@ -14,7 +14,7 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-package org.wicketstuff.stateless;
+package org.wicketstuff.stateless.components;
 
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.attributes.AjaxRequestAttributes;
@@ -24,6 +24,7 @@ import org.apache.wicket.markup.ComponentTag;
 import org.apache.wicket.markup.html.link.Link;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
+import org.wicketstuff.stateless.behaviors.StatelessAjaxEventBehavior;
 
 /**
  * Just like {@link AjaxFallbackLink}, but stateless.
