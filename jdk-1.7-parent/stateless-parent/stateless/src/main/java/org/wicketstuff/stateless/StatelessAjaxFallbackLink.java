@@ -100,7 +100,7 @@ public abstract class StatelessAjaxFallbackLink<T> extends StatelessLink<T>
     protected void updateAjaxAttributes(AjaxRequestAttributes attributes)
     {
     }
-
+    
     /**
      * @see Link#onClick()
      */
@@ -110,6 +110,14 @@ public abstract class StatelessAjaxFallbackLink<T> extends StatelessLink<T>
         onClick(null);
     }
 
+    @Override
+    protected void onComponentTag(ComponentTag tag)
+    {
+    	super.onComponentTag(tag);
+    	
+    	tag.remove("onclick");
+    }
+    
     /**
      * Callback for the onClick event. If ajax failed and this event was
      * generated via a normal link the target argument will be null

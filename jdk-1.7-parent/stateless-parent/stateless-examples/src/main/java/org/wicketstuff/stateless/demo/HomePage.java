@@ -36,6 +36,7 @@ import org.apache.wicket.util.string.StringValue;
 import org.wicketstuff.stateless.StatelessAjaxFallbackLink;
 import org.wicketstuff.stateless.StatelessAjaxFormComponentUpdatingBehavior;
 import org.wicketstuff.stateless.StatelessAjaxSubmitLink;
+import org.wicketstuff.stateless.StatelessIndicatingAjaxFallbackLink;
 
 /**
  * For testing only
@@ -141,6 +142,18 @@ public class HomePage extends WebPage {
 		add(form);
 
 		add(select);
+		
+		add(new StatelessIndicatingAjaxFallbackLink("indicatingLink"){
+			@Override
+			public void onClick(AjaxRequestTarget target)
+			{
+				try {
+				    Thread.sleep(5000);                 //1000 milliseconds is one second.
+				} catch(InterruptedException ex) {
+				    Thread.currentThread().interrupt();
+				}
+			}
+		});
 	}
 
 	private String getParameter(final PageParameters parameters,
