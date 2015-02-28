@@ -29,3 +29,7 @@ Project Documentation (Wiki):
 
 https://github.com/wicketstuff/core/wiki
 
+Project Documentation (JavaDoc):
+----------------------
+
+http://wicketstuff.org/core/javadoc7/apidocs/index.html
