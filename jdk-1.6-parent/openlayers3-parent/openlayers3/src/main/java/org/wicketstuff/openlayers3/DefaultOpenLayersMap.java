@@ -7,6 +7,7 @@ import org.apache.wicket.markup.head.JavaScriptHeaderItem;
 import org.apache.wicket.markup.head.OnDomReadyHeaderItem;
 import org.apache.wicket.model.IModel;
 import org.wicketstuff.openlayers3.api.Map;
+import de.agilecoders.wicket.webjars.request.resource.WebjarsJavaScriptResourceReference;
 
 /**
  * Provides an OpenLayers map that fetches resources from the OpenLayers public website.
@@ -27,12 +28,12 @@ public class DefaultOpenLayersMap extends OpenLayersMap {
 
     @Override
     public void renderHead(final IHeaderResponse response) {
-        response.render(CssHeaderItem.forUrl("http://ol3js.org/en/master/css/ol.css"));
+		response.render(CssHeaderItem.forReference(new WebjarsJavaScriptResourceReference("openlayers/current/ol.css")));
 
         if (RuntimeConfigurationType.DEVELOPMENT.equals(getApplication().getConfigurationType())) {
-            response.render(JavaScriptHeaderItem.forUrl("http://ol3js.org/en/master/build/ol-debug.js"));
+			response.render(JavaScriptHeaderItem.forReference(new WebjarsJavaScriptResourceReference("openlayers/current/ol-debug.js")));
         } else {
-            response.render(JavaScriptHeaderItem.forUrl("http://ol3js.org/en/master/build/ol.js"));
+			response.render(JavaScriptHeaderItem.forReference(new WebjarsJavaScriptResourceReference("openlayers/current/ol.js")));
         }
 
         response.render(OnDomReadyHeaderItem.forScript(this.renderJs()));

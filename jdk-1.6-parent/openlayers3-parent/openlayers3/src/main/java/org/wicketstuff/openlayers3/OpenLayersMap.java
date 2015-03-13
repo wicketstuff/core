@@ -196,7 +196,7 @@ public abstract class OpenLayersMap extends GenericPanel<Map> {
 
         // update the map
         target.appendJavaScript(JavascriptObject.JS_GLOBAL + "['map_" + getMarkupId() + "'].removeInteraction("
-			+ interaction.getJsId() + ");" + interaction.getJsId() + ".dispose();");
+			+ interaction.getJsId() + ");");
     }
 
     @Override

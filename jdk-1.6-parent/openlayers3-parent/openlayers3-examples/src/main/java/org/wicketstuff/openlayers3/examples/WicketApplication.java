@@ -6,6 +6,8 @@ import org.apache.wicket.Page;
 import org.apache.wicket.RuntimeConfigurationType;
 import org.apache.wicket.protocol.http.WebApplication;
 import org.wicketstuff.annotation.scan.AnnotatedMountScanner;
+import de.agilecoders.wicket.webjars.WicketWebjars;
+import de.agilecoders.wicket.webjars.settings.WebjarsSettings;
 
 /**
  * Provides an application that demonstrates the OpenLayers3 map.
@@ -26,9 +28,13 @@ public class WicketApplication extends WebApplication {
         // scan for annotations
         new AnnotatedMountScanner().scanPackage("org.wicketstuff.openlayers3.examples").mount(this);
 
+		// setup webjars
+		WebjarsSettings webjarsSettings = new WebjarsSettings();
+        WicketWebjars.install(this, webjarsSettings);
+
         // setup wicket boostrap
-        BootstrapSettings settings = new BootstrapSettings();
-        Bootstrap.install(this, settings);
+        BootstrapSettings bootstrapSettings = new BootstrapSettings();
+        Bootstrap.install(this, bootstrapSettings);
     }
 
     @Override
