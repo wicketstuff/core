@@ -23,18 +23,18 @@ public class WicketApplication extends WebApplication {
 
     @Override
     protected void init() {
-		super.init();
+	super.init();
 
-		// scan for annotations
-		new AnnotatedMountScanner().scanPackage("org.wicketstuff.openlayers3.examples").mount(this);
+	// scan for annotations
+	new AnnotatedMountScanner().scanPackage("org.wicketstuff.openlayers3.examples").mount(this);
 
-		// setup webjars
-		WebjarsSettings webjarsSettings = new WebjarsSettings();
-		WicketWebjars.install(this, webjarsSettings);
+	// setup webjars
+	WebjarsSettings webjarsSettings = new WebjarsSettings();
+	WicketWebjars.install(this, webjarsSettings);
 
-		// setup wicket boostrap
-		BootstrapSettings bootstrapSettings = new BootstrapSettings();
-		Bootstrap.install(this, bootstrapSettings);
+	// setup wicket boostrap
+	BootstrapSettings bootstrapSettings = new BootstrapSettings();
+	Bootstrap.install(this, bootstrapSettings);
     }
 
     @Override
