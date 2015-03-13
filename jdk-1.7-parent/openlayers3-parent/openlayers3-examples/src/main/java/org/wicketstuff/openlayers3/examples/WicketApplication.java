@@ -30,7 +30,7 @@ public class WicketApplication extends WebApplication {
 
 		// setup webjars
 		WebjarsSettings webjarsSettings = new WebjarsSettings();
-        WicketWebjars.install(this, webjarsSettings);
+		WicketWebjars.install(this, webjarsSettings);
 
         // setup wicket boostrap
         BootstrapSettings bootstrapSettings = new BootstrapSettings();
