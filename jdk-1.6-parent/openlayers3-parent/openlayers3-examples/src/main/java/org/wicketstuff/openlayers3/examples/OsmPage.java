@@ -1,17 +1,19 @@
 package org.wicketstuff.openlayers3.examples;
 
+import java.util.Arrays;
+
 import org.apache.wicket.model.Model;
 import org.wicketstuff.annotation.mount.MountPath;
 import org.wicketstuff.openlayers3.DefaultOpenLayersMap;
+import org.wicketstuff.openlayers3.api.Extent;
 import org.wicketstuff.openlayers3.api.Map;
 import org.wicketstuff.openlayers3.api.View;
+import org.wicketstuff.openlayers3.api.coordinate.Coordinate;
 import org.wicketstuff.openlayers3.api.coordinate.LongLat;
 import org.wicketstuff.openlayers3.api.layer.Layer;
 import org.wicketstuff.openlayers3.api.layer.Tile;
 import org.wicketstuff.openlayers3.api.source.Osm;
 import org.wicketstuff.openlayers3.examples.base.BasePage;
-
-import java.util.Arrays;
 
 /**
  * Provides a page with a map that uses OpenStreetMap tiles.
@@ -45,6 +47,7 @@ public class OsmPage extends BasePage {
                                 new LongLat(-72.638429, 42.313229, "EPSG:4326").transform(View.DEFAULT_PROJECTION),
 
                                 // zoom level for the view
-                                16)))));
+                                16).extent(new Extent().minimum(new LongLat(-73.574935, 42.776520, "EPSG:4326"))
+									.maximum(new LongLat(-69.754439, 41.398720, "EPSG:4326")))))));
     }
 }
