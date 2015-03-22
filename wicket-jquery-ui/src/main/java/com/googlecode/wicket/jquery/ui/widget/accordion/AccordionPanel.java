@@ -30,6 +30,7 @@ import org.apache.wicket.model.util.ListModel;
 
 import com.googlecode.wicket.jquery.core.JQueryPanel;
 import com.googlecode.wicket.jquery.core.Options;
+import com.googlecode.wicket.jquery.ui.widget.tabs.TabListModel;
 
 /**
  * Provides a jQuery accordion based on a {@link JQueryPanel}, which takes {@link ITab}<code>s</code> as contructor's argument
@@ -52,7 +53,7 @@ public class AccordionPanel extends JQueryPanel implements IAccordionListener
 	 */
 	public AccordionPanel(String id, List<ITab> tabs)
 	{
-		this(id, tabs, new Options());
+		this(id, new ListModel<ITab>(tabs), new Options());
 	}
 
 	/**
@@ -72,6 +73,17 @@ public class AccordionPanel extends JQueryPanel implements IAccordionListener
 	 *
 	 * @param id the markup id
 	 * @param model the list model of {@link ITab}<code>s</code>
+	 */
+	public AccordionPanel(String id, IModel<List<ITab>> model)
+	{
+		this(id, model, new Options());
+	}
+
+	/**
+	 * Constructor
+	 *
+	 * @param id the markup id
+	 * @param model the list model of {@link ITab}<code>s</code>
 	 * @param options {@link Options}
 	 */
 	public AccordionPanel(String id, IModel<List<ITab>> model, Options options)
@@ -80,6 +92,12 @@ public class AccordionPanel extends JQueryPanel implements IAccordionListener
 	}
 
 	// Properties //
+
+	@SuppressWarnings("unchecked")
+	public IModel<List<ITab>> getModel()
+	{
+		return (IModel<List<ITab>>) this.getDefaultModel();
+	}
 
 	@SuppressWarnings("unchecked")
 	public List<ITab> getModelObject()
@@ -168,6 +186,27 @@ public class AccordionPanel extends JQueryPanel implements IAccordionListener
 	public boolean isActivateEventEnabled()
 	{
 		return true;
+	}
+
+	// Methods //
+
+	/**
+	 * Refreshes the {@link AccordionPanel}<br/>
+	 * <br/>
+	 * <b>Note:</b> This method should be used instead of <code>target.add(tabbedPanel)</code> if the underlying model is-a {@link TabListModel}
+	 * 
+	 * @param target the {@link AjaxRequestTarget}
+	 */
+	public void refresh(AjaxRequestTarget target)
+	{
+		IModel<?> model = this.getModel();
+
+		if (model instanceof TabListModel)
+		{
+			((TabListModel) model).flush();
+		}
+
+		target.add(this);
 	}
 
 	// Events //

@@ -10,17 +10,21 @@ import org.apache.wicket.extensions.markup.html.tabs.AbstractTab;
 import org.apache.wicket.extensions.markup.html.tabs.ITab;
 import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.markup.html.form.Form;
+import org.apache.wicket.markup.html.panel.FeedbackPanel;
 import org.apache.wicket.markup.html.panel.Fragment;
+import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.googlecode.wicket.jquery.core.JQueryEvent;
 import com.googlecode.wicket.jquery.ui.form.button.AjaxButton;
+import com.googlecode.wicket.jquery.ui.panel.JQueryFeedbackPanel;
 import com.googlecode.wicket.jquery.ui.samples.component.NavigationAjaxButton;
 import com.googlecode.wicket.jquery.ui.samples.component.TabDialog;
 import com.googlecode.wicket.jquery.ui.widget.tabs.AjaxTab;
 import com.googlecode.wicket.jquery.ui.widget.tabs.SimpleTab;
+import com.googlecode.wicket.jquery.ui.widget.tabs.TabListModel;
 import com.googlecode.wicket.jquery.ui.widget.tabs.TabbedPanel;
 
 public class AdvancedTabsPage extends AbstractTabsPage
@@ -41,11 +45,45 @@ public class AdvancedTabsPage extends AbstractTabsPage
 		Form<Void> form = new Form<Void>("form");
 		this.add(form);
 
-		// Nav-tab Buttons //
+		// Feedback Panel //
+		final FeedbackPanel feedback = new JQueryFeedbackPanel("feedback");
+		form.add(feedback.setOutputMarkupId(true));
+
+		// Navigation //
 		final NavigationAjaxButton buttons = this.newNavigationAjaxButton("nav");
 		form.add(buttons);
 
-		// Add-tab Buttons //
+		// TabbedPanel //
+		this.tabPanel = new TabbedPanel("tabs", this.newTabModel()) {
+
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			public void onActivate(AjaxRequestTarget target, int index, ITab tab)
+			{
+				tabIndex = index;
+
+				this.info("selected tab #" + index);
+				this.send(buttons, Broadcast.EXACT, new ChangeEvent(target));
+
+				target.add(feedback);
+			}
+		};
+
+		form.add(this.tabPanel);
+
+		// Buttons //
+		form.add(new AjaxButton("reload") {
+
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			protected void onSubmit(AjaxRequestTarget target, Form<?> form)
+			{
+				tabPanel.refresh(target); // will force reload model
+			}
+		});
+
 		form.add(new AjaxButton("add") {
 
 			private static final long serialVersionUID = 1L;
@@ -57,23 +95,10 @@ public class AdvancedTabsPage extends AbstractTabsPage
 			}
 		});
 
-		// TabbedPanel //
-		this.tabPanel = new TabbedPanel("tabs", this.newTabList()) {
-
-			private static final long serialVersionUID = 1L;
-
-			@Override
-			public void onActivate(AjaxRequestTarget target, int index, ITab tab)
-			{
-				tabIndex = index;
-				this.send(buttons, Broadcast.EXACT, new ChangeEvent(target));
-			}
-		};
-
-		form.add(this.tabPanel);
 	}
 
 	// Factories //
+
 	private TabDialog newTabDialog(String id)
 	{
 		return new TabDialog(id, "Add Tab") {
@@ -174,63 +199,78 @@ public class AdvancedTabsPage extends AbstractTabsPage
 		};
 	}
 
-	private List<ITab> newTabList()
+	/**
+	 * Returning a TabListModel is not mandatory, unless the underlying the list of tabs is dynamic.<br/>
+	 * Do *not* use a LoadableDetachableModel if the model object contains AjaxTab(s)
+	 */
+	private IModel<List<ITab>> newTabModel()
 	{
-		List<ITab> tabs = new ArrayList<ITab>();
-
-		// tab #1, using SimpleTab //
-		tabs.add(new SimpleTab(Model.of("Tab #1"), Model.of("my content")));
-
-		// tab #2, invisible Tab //
-		tabs.add(new SimpleTab(Model.of("Tab #2"), Model.of("invisible")) {
+		return new TabListModel() {
 
 			private static final long serialVersionUID = 1L;
 
 			@Override
-			public boolean isVisible()
+			protected List<ITab> load()
 			{
-				return false;
-			}
-		});
+				List<ITab> tabs = new ArrayList<ITab>();
 
-		// tab #3, using AbstractTab //
-		tabs.add(new AbstractTab(Model.of("Tab #3")) {
+				// tab #1, using SimpleTab //
+				tabs.add(new SimpleTab(Model.of("Simple Tab"), Model.of("my content")));
 
-			private static final long serialVersionUID = 1L;
+				// tab #2, invisible Tab //
+				tabs.add(new SimpleTab(Model.of("Tab (randow visibility)"), Model.of("now visible")) {
 
-			@Override
-			public WebMarkupContainer getPanel(String panelId)
-			{
-				return new Fragment(panelId, "panel-1", AdvancedTabsPage.this);
-			}
-		});
+					private static final long serialVersionUID = 1L;
 
-		// tab #4, using AjaxTab //
-		tabs.add(new AjaxTab(Model.of("Tab (ajax)")) {
+					private final boolean visible = Math.random() > 0.5; // makes the model dynamic
 
-			private static final long serialVersionUID = 1L;
-
-			@Override
-			public WebMarkupContainer getLazyPanel(String panelId)
-			{
-				try
-				{
-					// sleep the thread for a half second to simulate a long load
-					Thread.sleep(500);
-				}
-				catch (InterruptedException e)
-				{
-					if (LOG.isDebugEnabled())
+					@Override
+					public boolean isVisible()
 					{
-						LOG.debug(e.getMessage(), e);
+						return this.visible;
 					}
-				}
+				});
 
-				return new Fragment(panelId, "panel-2", AdvancedTabsPage.this);
+				// tab #3, using AbstractTab //
+				tabs.add(new AbstractTab(Model.of("Abstract Tab")) {
+
+					private static final long serialVersionUID = 1L;
+
+					@Override
+					public WebMarkupContainer getPanel(String panelId)
+					{
+						return new Fragment(panelId, "panel-1", AdvancedTabsPage.this);
+					}
+				});
+
+				// tab #4, using AjaxTab //
+				tabs.add(new AjaxTab(Model.of("Ajax Tab")) {
+
+					private static final long serialVersionUID = 1L;
+
+					@Override
+					public WebMarkupContainer getLazyPanel(String panelId)
+					{
+						try
+						{
+							// sleep the thread for a half second to simulate a long load
+							Thread.sleep(500);
+						}
+						catch (InterruptedException e)
+						{
+							if (LOG.isDebugEnabled())
+							{
+								LOG.debug(e.getMessage(), e);
+							}
+						}
+
+						return new Fragment(panelId, "panel-2", AdvancedTabsPage.this);
+					}
+				});
+
+				return tabs;
 			}
-		});
-
-		return tabs;
+		};
 	}
 
 	static class ChangeEvent extends JQueryEvent

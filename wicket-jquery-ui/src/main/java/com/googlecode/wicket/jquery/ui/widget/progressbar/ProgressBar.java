@@ -150,7 +150,7 @@ public class ProgressBar extends JQueryContainer implements IJQueryAjaxAware, IV
 	}
 
 	/**
-	 * refresh the ProgressBar.<br/>
+	 * Refreshes the ProgressBar.<br/>
 	 * This method needs to be called after the model object changes.<br/>
 	 * But It is not required to be called when calling forward or backward methods.
 	 *

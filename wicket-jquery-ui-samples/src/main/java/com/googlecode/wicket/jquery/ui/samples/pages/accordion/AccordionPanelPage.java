@@ -10,6 +10,7 @@ import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.panel.FeedbackPanel;
 import org.apache.wicket.markup.html.panel.Fragment;
+import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -20,6 +21,7 @@ import com.googlecode.wicket.jquery.ui.panel.JQueryFeedbackPanel;
 import com.googlecode.wicket.jquery.ui.widget.accordion.AccordionPanel;
 import com.googlecode.wicket.jquery.ui.widget.tabs.AjaxTab;
 import com.googlecode.wicket.jquery.ui.widget.tabs.SimpleTab;
+import com.googlecode.wicket.jquery.ui.widget.tabs.TabListModel;
 
 public class AccordionPanelPage extends AbstractAccordionPage
 {
@@ -40,7 +42,7 @@ public class AccordionPanelPage extends AbstractAccordionPage
 		options.set("heightStyle", Options.asString("content"));
 
 		// Accordion //
-		final AccordionPanel accordion = new AccordionPanel("accordion", this.newTabList(), options) {
+		final AccordionPanel accordion = new AccordionPanel("accordion", this.newTabModel(), options) {
 
 			private static final long serialVersionUID = 1L;
 
@@ -55,7 +57,18 @@ public class AccordionPanelPage extends AbstractAccordionPage
 		form.add(accordion);
 
 		// Button //
-		form.add(new AjaxButton("button") {
+		form.add(new AjaxButton("reload") {
+
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			protected void onSubmit(AjaxRequestTarget target, Form<?> form)
+			{
+				accordion.setActiveTab(0).refresh(target); // resets active tab and forces reload model
+			}
+		});
+ 
+		form.add(new AjaxButton("activate") {
 
 			private static final long serialVersionUID = 1L;
 
@@ -67,62 +80,77 @@ public class AccordionPanelPage extends AbstractAccordionPage
 		});
 	}
 
-	private List<ITab> newTabList()
+	/**
+	 * Returning a TabListModel is not mandatory, unless the underlying the list of tabs is dynamic.<br/>
+	 * Do *not* use a LoadableDetachableModel if the model object contains AjaxTab(s)
+	 */
+	private IModel<List<ITab>> newTabModel()
 	{
-		List<ITab> tabs = new ArrayList<ITab>();
-
-		// tab #1, using SimpleTab //
-		tabs.add(new SimpleTab(Model.of("Tab (SimpleTab)"), Model.of("My content !")));
-
-		// tab #2, invisible Tab //
-		tabs.add(new SimpleTab(Model.of("Tab (invisible)"), Model.of("")) {
+		return new TabListModel() {
 
 			private static final long serialVersionUID = 1L;
 
 			@Override
-			public boolean isVisible()
+			protected List<ITab> load()
 			{
-				return false;
-			}
-		});
+				List<ITab> tabs = new ArrayList<ITab>();
 
-		// tab #3, using AbstractTab //
-		tabs.add(new AbstractTab(Model.of("Tab (AbstractTab)")) {
+				// tab #1, using SimpleTab //
+				tabs.add(new SimpleTab(Model.of("Simple Tab"), Model.of("my content")));
 
-			private static final long serialVersionUID = 1L;
+				// tab #2, invisible Tab //
+				tabs.add(new SimpleTab(Model.of("Tab (randow visibility)"), Model.of("now visible")) {
 
-			@Override
-			public WebMarkupContainer getPanel(String panelId)
-			{
-				return new Fragment(panelId, "panel-1", AccordionPanelPage.this);
-			}
-		});
+					private static final long serialVersionUID = 1L;
 
-		// tab #4, using AjaxTab //
-		tabs.add(new AjaxTab(Model.of("Tab (AjaxTab)")) {
+					private final boolean visible = Math.random() > 0.5; // makes the model dynamic
 
-			private static final long serialVersionUID = 1L;
-
-			@Override
-			public WebMarkupContainer getLazyPanel(String panelId)
-			{
-				try
-				{
-					// sleep the thread to simulate a long load
-					Thread.sleep(500);
-				}
-				catch (InterruptedException e)
-				{
-					if (LOG.isDebugEnabled())
+					@Override
+					public boolean isVisible()
 					{
-						LOG.debug(e.getMessage(), e);
+						return this.visible;
 					}
-				}
+				});
 
-				return new Fragment(panelId, "panel-2", AccordionPanelPage.this);
+				// tab #3, using AbstractTab //
+				tabs.add(new AbstractTab(Model.of("Abstract Tab")) {
+
+					private static final long serialVersionUID = 1L;
+
+					@Override
+					public WebMarkupContainer getPanel(String panelId)
+					{
+						return new Fragment(panelId, "panel-1", AccordionPanelPage.this);
+					}
+				});
+
+				// tab #4, using AjaxTab //
+				tabs.add(new AjaxTab(Model.of("Ajax Tab")) {
+
+					private static final long serialVersionUID = 1L;
+
+					@Override
+					public WebMarkupContainer getLazyPanel(String panelId)
+					{
+						try
+						{
+							// sleep the thread for a half second to simulate a long load
+							Thread.sleep(500);
+						}
+						catch (InterruptedException e)
+						{
+							if (LOG.isDebugEnabled())
+							{
+								LOG.debug(e.getMessage(), e);
+							}
+						}
+
+						return new Fragment(panelId, "panel-2", AccordionPanelPage.this);
+					}
+				});
+
+				return tabs;
 			}
-		});
-
-		return tabs;
+		};
 	}
 }

@@ -70,6 +70,7 @@ public abstract class TabsBehavior extends JQueryUIBehavior implements IJQueryAj
 	}
 
 	// Properties //
+
 	/**
 	 * Gets the reference {@link List} of {@link ITab}<tt>s</tt>.<br/>
 	 * Usually the model object of the component on which this {@link TabsBehavior} is bound to.
@@ -99,6 +100,7 @@ public abstract class TabsBehavior extends JQueryUIBehavior implements IJQueryAj
 	}
 
 	// Methods //
+
 	@Override
 	public void bind(Component component)
 	{
@@ -132,6 +134,7 @@ public abstract class TabsBehavior extends JQueryUIBehavior implements IJQueryAj
 	}
 
 	// Events //
+
 	@Override
 	public void onConfigure(Component component)
 	{

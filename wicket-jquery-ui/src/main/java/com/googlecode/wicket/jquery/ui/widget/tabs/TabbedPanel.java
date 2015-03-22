@@ -51,7 +51,7 @@ public class TabbedPanel extends JQueryPanel implements ITabsListener
 	 */
 	public TabbedPanel(String id, List<ITab> tabs)
 	{
-		this(id, tabs, new Options());
+		this(id, new ListModel<ITab>(tabs), new Options());
 	}
 
 	/**
@@ -92,6 +92,12 @@ public class TabbedPanel extends JQueryPanel implements ITabsListener
 	// Properties //
 
 	@SuppressWarnings("unchecked")
+	public IModel<List<ITab>> getModel()
+	{
+		return (IModel<List<ITab>>) this.getDefaultModel();
+	}
+
+	@SuppressWarnings("unchecked")
 	public List<ITab> getModelObject()
 	{
 		List<ITab> list = (List<ITab>) this.getDefaultModelObject();
@@ -119,7 +125,8 @@ public class TabbedPanel extends JQueryPanel implements ITabsListener
 
 	/**
 	 * Activates the selected tab<br/>
-	 * <b>Warning: </b> invoking this method results to a dual client-server round-trip. Use this method if you cannot use {@link #setActiveTab(int)} followed by <code>target.add(myTabbedPannel)</code>
+	 * <br/>
+	 * <b>Warning:</b> invoking this method results to a dual client-server round-trip. Use this method if you cannot use {@link #setActiveTab(int)} followed by <code>target.add(myTabbedPannel)</code>
 	 *
 	 * @param target the {@link AjaxRequestTarget}
 	 * @param index the tab's index to activate
@@ -148,7 +155,7 @@ public class TabbedPanel extends JQueryPanel implements ITabsListener
 	}
 
 	// Methods //
-	
+
 	/**
 	 * Helper method. Adds an {@link ITab} to the list of tabs.
 	 *
@@ -160,8 +167,27 @@ public class TabbedPanel extends JQueryPanel implements ITabsListener
 		return this.getModelObject().add(tab); // will throw an UnsupportedOperationException if null is supplied to the constructor
 	}
 
+	/**
+	 * Refreshes the {@link TabbedPanel}<br/>
+	 * <br/>
+	 * <b>Note:</b> This method should be used instead of <code>target.add(tabbedPanel)</code> if the underlying model is-a {@link TabListModel}
+	 * 
+	 * @param target the {@link AjaxRequestTarget}
+	 */
+	public void refresh(AjaxRequestTarget target)
+	{
+		IModel<?> model = this.getModel();
+
+		if (model instanceof TabListModel)
+		{
+			((TabListModel) model).flush();
+		}
+
+		target.add(this);
+	}
+
 	// Events //
-	
+
 	@Override
 	protected void onInitialize()
 	{
@@ -188,7 +214,7 @@ public class TabbedPanel extends JQueryPanel implements ITabsListener
 
 		this.add(panels);
 
-		this.add(new ListView<ITab>("tabs", this.getModelObject()) {
+		this.add(new ListView<ITab>("tabs", this.getModel()) {
 
 			private static final long serialVersionUID = 1L;
 
