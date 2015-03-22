@@ -37,104 +37,103 @@ import org.wicketstuff.rest.utils.http.HttpUtils;
 public class TextualWebSerialDeserial implements IWebSerialDeserial
 {
 
-    /** the supported charset. */
-    private final String charset;
+	/** the supported charset. */
+	private final String charset;
 
-    /** the supported MIME type. */
-    private final String mimeType;
+	/** the supported MIME type. */
+	private final String mimeType;
 
-    /** the object serializer/deserializer **/
-    private final IObjectSerialDeserial<String> objectSerialDeserial;
+	/** the object serializer/deserializer **/
+	private final IObjectSerialDeserial<String> objectSerialDeserial;
 
-    public TextualWebSerialDeserial(String charset, String mimeType,
-	    IObjectSerialDeserial<String> objectSerialDeserial)
-    {
-	this.charset = charset;
-	this.mimeType = mimeType;
-	this.objectSerialDeserial = objectSerialDeserial;
-    }
-
-    @Override
-    public void objectToResponse(Object targetObject, WebResponse response,
-	    String mimeType) throws WicketRuntimeException
-    {
-	setCharsetResponse(response);
-
-	String strOutput;
-
-	if (RestMimeTypes.TEXT_PLAIN.equals(mimeType))
+	public TextualWebSerialDeserial(String charset, String mimeType,
+		IObjectSerialDeserial<String> objectSerialDeserial)
 	{
-	    strOutput = targetObject == null ? "" : targetObject.toString();
-	}
-	else
-	{
-	    strOutput = objectSerialDeserial.serializeObject(targetObject, mimeType);
+		this.charset = charset;
+		this.mimeType = mimeType;
+		this.objectSerialDeserial = objectSerialDeserial;
 	}
 
-	response.write(strOutput);
-    }
-
-    @Override
-    public <T> T requestToObject(WebRequest request, Class<T> argClass,
-	    String mimeType) throws WicketRuntimeException
-    {
-	try 
+	@Override
+	public void objectToResponse(Object targetObject, WebResponse response, String mimeType)
+		throws WicketRuntimeException
 	{
-	    return objectSerialDeserial.deserializeObject(HttpUtils.readStringFromRequest(request), argClass, mimeType);
+		setCharsetResponse(response);
+
+		String strOutput;
+
+		if (RestMimeTypes.TEXT_PLAIN.equals(mimeType))
+		{
+			strOutput = targetObject == null ? "" : targetObject.toString();
+		}
+		else
+		{
+			strOutput = objectSerialDeserial.serializeObject(targetObject, mimeType);
+		}
+
+		response.write(strOutput);
 	}
-	catch (IOException e)
+
+	@Override
+	public <T> T requestToObject(WebRequest request, Class<T> argClass, String mimeType)
+		throws WicketRuntimeException
 	{
-	    throw new WicketRuntimeException("An error occurred during request reading.", e);
+		try
+		{
+			return objectSerialDeserial.deserializeObject(HttpUtils.readStringFromRequest(request),
+				argClass, mimeType);
+		}
+		catch (IOException e)
+		{
+			throw new WicketRuntimeException("An error occurred during request reading.", e);
+		}
 	}
-    }
 
-    @Override
-    final public boolean isMimeTypeSupported(String mimeType)
-    {
-	return RestMimeTypes.TEXT_PLAIN.equals(mimeType)
-		|| this.mimeType.equals(mimeType);
-    }
-
-    @Override
-    public IObjectSerialDeserial<?> getIObjectSerialDeserial(String mimeType)
-    {
-	if(!isMimeTypeSupported(mimeType))
+	@Override
+	final public boolean isMimeTypeSupported(String mimeType)
 	{
-	    return null;
+		return RestMimeTypes.TEXT_PLAIN.equals(mimeType) || this.mimeType.equals(mimeType);
 	}
-	
-	return objectSerialDeserial;
-    }
 
-    /**
-     * Sets the charset response.
-     * 
-     * @param response
-     *            the new charset response
-     */
-    private void setCharsetResponse(WebResponse response)
-    {
-	if (response.getContainerResponse() instanceof ServletResponse)
+	@Override
+	public IObjectSerialDeserial<?> getIObjectSerialDeserial(String mimeType)
 	{
-	    ServletResponse sResponse = (ServletResponse) response
-		    .getContainerResponse();
-	    sResponse.setCharacterEncoding(charset);
+		if (!isMimeTypeSupported(mimeType))
+		{
+			return null;
+		}
+
+		return objectSerialDeserial;
 	}
-    }
 
-    public String getCharset()
-    {
-        return charset;
-    }
+	/**
+	 * Sets the charset for the current response.
+	 * 
+	 * @param response
+	 *            the current response
+	 */
+	private void setCharsetResponse(WebResponse response)
+	{
+		if (response.getContainerResponse() instanceof ServletResponse)
+		{
+			ServletResponse sResponse = (ServletResponse)response.getContainerResponse();
+			sResponse.setCharacterEncoding(charset);
+		}
+	}
 
-    public String getMimeType()
-    {
-        return mimeType;
-    }
+	public String getCharset()
+	{
+		return charset;
+	}
 
-    public IObjectSerialDeserial<String> getObjectSerialDeserial()
-    {
-        return objectSerialDeserial;
-    }
+	public String getMimeType()
+	{
+		return mimeType;
+	}
+
+	public IObjectSerialDeserial<String> getObjectSerialDeserial()
+	{
+		return objectSerialDeserial;
+	}
 
 }
