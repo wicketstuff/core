@@ -16,33 +16,24 @@
 package org.wicketstuff.pageserializer.ui;
 
 import java.io.File;
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.net.URLClassLoader;
 import org.fuin.utils4j.Utils4J;
 
 /**
  *
  * @author mosmann
  */
-public abstract class SerializerUIStarter {
-
-    public static void main(final String[] args) {
-        startUI();
-
-    }
-
-    public static void startUI() {
-        JavaFXStarter.withJavaFX(new Runnable() {
-            
-            @Override
-            public void run() {
-                SerializerUI.start(new String[]{});
-            }
-        });
-    }
+public class JavaFXStarter {
     
-    
+    public static void withJavaFX(Runnable runable) {
+        String jfxJar=System.getProperty("java.home") + File.separator + "lib" + File.separator + "jfxrt.jar";
+//        System.out.println("Jar: "+jfxJar);
+        
+        if (!new File(jfxJar).exists()) {
+            throw new IllegalArgumentException("File do NOT exist: "+jfxJar);
+        }
+//        final URL jfxurl = new URL("file:///" + jfxJar);
+        
+        Utils4J.addToClasspath("file:///" + jfxJar);
+        runable.run();
+    }
 }

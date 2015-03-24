@@ -66,7 +66,7 @@ stage.setScene(new Scene(new Button("foo"), 800, 600));
                 */
                 }
 
-       public static void main(String[] args) {
+       public static void start(String[] args) {
         launch(args);
     }
 
