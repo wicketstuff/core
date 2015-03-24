@@ -17,7 +17,19 @@ package org.wicketstuff.pageserializer.ui;
 
 import com.cathive.fx.guice.GuiceApplication;
 import com.google.inject.Module;
+
 import java.util.List;
+import java.util.concurrent.Future;
+import java.util.concurrent.FutureTask;
+import java.util.concurrent.atomic.AtomicReference;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.wicketstuff.pageserializer.common.analyze.ISerializedObjectTree;
+import org.wicketstuff.pageserializer.common.analyze.ISerializedObjectTreeProcessor;
+
+import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.stage.Stage;
@@ -28,13 +40,38 @@ import javafx.stage.Stage;
  */
 public class SerializerUI extends GuiceApplication {
 
+	private static AtomicReference<SerializerUI> runningInstance=new AtomicReference<SerializerUI>();
+	private final Logger LOG=LoggerFactory.getLogger(UIAdapter.class);
+	
+	UIAdapter ui=new UIAdapter();
+	Stage currentStage;
+	
+	public SerializerUI() {
+		runningInstance.compareAndSet(null, this);
+		synchronized (runningInstance) {
+			runningInstance.notifyAll();
+		}
+	}
+	
     @Override
     public void init(List<Module> modules) throws Exception {
         
     }
 
+	protected void closeUI() {
+		try {
+			if (currentStage!=null) {
+				currentStage.hide();
+			}
+			stop();
+		} catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+	
     @Override
     public void start(Stage stage) throws Exception {
+    	currentStage=stage;
 stage.setScene(new Scene(new Button("foo"), 800, 600));
         stage.show();
         /*
@@ -66,8 +103,80 @@ stage.setScene(new Scene(new Button("foo"), 800, 600));
                 */
                 }
 
-       public static void start(String[] args) {
-        launch(args);
-    }
+	class UIAdapter implements UI {
+
+		@Override
+		public void stopUI() {
+			LOG.warn("try to stop UI");
+			
+			runningInstance.compareAndSet(SerializerUI.this, null);
+			Platform.runLater(new Runnable() {
+
+				@Override
+				public void run() {
+					SerializerUI.this.closeUI();
+				}
+			});
+		}
+
+		@Override
+		public ISerializedObjectTreeProcessor treeProcessor() {
+			return new ISerializedObjectTreeProcessor() {
+				
+				@Override
+				public void process(ISerializedObjectTree tree) {
+					System.out.println("Process: "+tree);
+				}
+			};
+		}
+
+	}
+	
+	public static UI start(final String[] args) {
+		new Thread(new Runnable() {
+			
+			@Override
+			public void run() {
+				Application.launch(SerializerUI.class,args);				
+				
+			}
+		}).start();
+//		Platform.runLater(new Runnable() {
+//			
+//			@Override
+//			public void run() {
+//				Application.launch(SerializerUI.class,args);				
+//			}
+//		});
+		synchronized (runningInstance) {
+			try {
+				runningInstance.wait();
+				return runningInstance.get().ui;
+			} catch (InterruptedException e) {
+				Thread.currentThread().interrupt();
+				throw new RuntimeException(e);
+			}
+		}
+		
+//		Thread thread = new Thread(new Runnable() {
+//			
+//			@Override
+//			public void run() {
+//				SerializerUI.launch(args);
+//			}
+//		});
+////		thread.setDaemon(true);
+//		thread.start();
+//		synchronized (runningInstance) {
+//			try {
+//				runningInstance.wait();
+//				return runningInstance.get().ui;
+//			} catch (InterruptedException e) {
+//				Thread.currentThread().interrupt();
+//				throw new RuntimeException("could not get UI");
+//			}
+//		}
+	}
+
 
 }

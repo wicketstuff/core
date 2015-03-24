@@ -16,6 +16,12 @@
 package org.wicketstuff.pageserializer.ui;
 
 import java.io.File;
+import java.util.concurrent.Callable;
+import java.util.concurrent.FutureTask;
+import java.util.concurrent.locks.Condition;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
+
 import org.fuin.utils4j.Utils4J;
 
 /**
@@ -24,16 +30,22 @@ import org.fuin.utils4j.Utils4J;
  */
 public class JavaFXStarter {
     
-    public static void withJavaFX(Runnable runable) {
-        String jfxJar=System.getProperty("java.home") + File.separator + "lib" + File.separator + "jfxrt.jar";
-//        System.out.println("Jar: "+jfxJar);
-        
-        if (!new File(jfxJar).exists()) {
-            throw new IllegalArgumentException("File do NOT exist: "+jfxJar);
-        }
-//        final URL jfxurl = new URL("file:///" + jfxJar);
-        
-        Utils4J.addToClasspath("file:///" + jfxJar);
-        runable.run();
+    public static <V> V withJavaFX(Callable<V> runable) {
+    	Lock lock=new ReentrantLock();
+    	
+    	try {
+	        String jfxJar=System.getProperty("java.home") + File.separator + "lib" + File.separator + "jfxrt.jar";
+	//        System.out.println("Jar: "+jfxJar);
+	        
+	        if (!new File(jfxJar).exists()) {
+	            throw new IllegalArgumentException("File do NOT exist: "+jfxJar);
+	        }
+	//        final URL jfxurl = new URL("file:///" + jfxJar);
+	        
+	        Utils4J.addToClasspath("file:///" + jfxJar);
+	        return runable.call();
+    	} catch (Exception ex) {
+    		throw new RuntimeException(ex);
+    	}
     }
 }

@@ -21,6 +21,8 @@ import java.lang.reflect.Method;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLClassLoader;
+import java.util.concurrent.Callable;
+
 import org.fuin.utils4j.Utils4J;
 
 /**
@@ -30,19 +32,18 @@ import org.fuin.utils4j.Utils4J;
 public abstract class SerializerUIStarter {
 
     public static void main(final String[] args) {
-        startUI();
-
+        UI ui=startUI();
     }
 
-    public static void startUI() {
-        JavaFXStarter.withJavaFX(new Runnable() {
+    public static UI startUI() {
+    	
+        return JavaFXStarter.withJavaFX(new Callable<UI>() {
             
-            @Override
-            public void run() {
-                SerializerUI.start(new String[]{});
-            }
+        	@Override
+        	public UI call() throws Exception {
+                return SerializerUI.start(new String[]{});
+        	}
         });
     }
-    
-    
+        
 }
