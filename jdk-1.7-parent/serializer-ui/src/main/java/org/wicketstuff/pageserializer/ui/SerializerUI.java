@@ -16,6 +16,7 @@
 package org.wicketstuff.pageserializer.ui;
 
 import com.cathive.fx.guice.GuiceApplication;
+import com.google.inject.Inject;
 import com.google.inject.Module;
 
 import java.util.List;
@@ -27,11 +28,18 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.wicketstuff.pageserializer.common.analyze.ISerializedObjectTree;
 import org.wicketstuff.pageserializer.common.analyze.ISerializedObjectTreeProcessor;
+import org.wicketstuff.pageserializer.ui.components.MainPanelFx;
+import org.wicketstuff.pageserializer.ui.events.AppEvent;
+import org.wicketstuff.pageserializer.ui.events.QuitEventFx;
 
 import javafx.application.Application;
 import javafx.application.Platform;
+import javafx.event.EventHandler;
+import javafx.scene.Node;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
 /**
@@ -45,6 +53,9 @@ public class SerializerUI extends GuiceApplication {
 	
 	UIAdapter ui=new UIAdapter();
 	Stage currentStage;
+	
+	@Inject
+	MainPanelFx mainPanel;
 	
 	public SerializerUI() {
 		runningInstance.compareAndSet(null, this);
@@ -70,11 +81,11 @@ public class SerializerUI extends GuiceApplication {
 	}
 	
     @Override
-    public void start(Stage stage) throws Exception {
+    public void start(final Stage stage) throws Exception {
     	currentStage=stage;
-stage.setScene(new Scene(new Button("foo"), 800, 600));
+stage.setScene(new Scene(mainPanel, 800, 600));
         stage.show();
-        /*
+        
         stage.addEventHandler(AppEvent.APP, new EventHandler<AppEvent>() {
         	@Override
         	public void handle(AppEvent event) {
@@ -91,16 +102,16 @@ stage.setScene(new Scene(new Button("foo"), 800, 600));
 						throw new RuntimeException("quit called",e);
 					}
 	        	}
-        		if (event instanceof ShowSceneWithEventFx) {
-        			stage.setScene(new Scene(((ShowSceneWithEventFx) event).root()));
-        		}
+//        		if (event instanceof ShowSceneWithEventFx) {
+//        			stage.setScene(new Scene(((ShowSceneWithEventFx) event).root()));
+//        		}
         		if (!found) {
 	        		System.out.println("What?"+event);
 	        	}
         		
         	}
 		});    
-                */
+                
                 }
 
 	class UIAdapter implements UI {
@@ -178,5 +189,36 @@ stage.setScene(new Scene(new Button("foo"), 800, 600));
 //		}
 	}
 
+
+	   private void walkUp(Node node, Consumer<Node> visitor) {
+			visitor.accept(node);
+	    	Parent parent = node.getParent();
+	    	if (parent!=null) {
+	    		walkUp(parent, visitor);
+	    	}
+	    	else {
+	    		Scene scene = node.getScene();
+	    	}
+	    }
+	    
+	    private void walkTree(Node node, Consumer<Node> visitor) {
+	        visitor.accept(node);
+	        if (node instanceof Parent) {
+	            for (Node n : ((Parent) node).getChildrenUnmodifiable()) {
+	            	walkTree(n, visitor);
+	            }
+	        }
+	    }
+
+	    static interface Consumer<T> {
+
+			void accept(T element);
+	    	
+	    }
+	    
+	    static class MyPane extends Pane {
+	    	
+	    	
+	    }
 
 }
