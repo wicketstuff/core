@@ -132,7 +132,7 @@ public abstract class Sortable<T> extends JQueryContainer implements ISortableLi
 	public void onUpdate(AjaxRequestTarget target, T item, int index)
 	{
 		this.modelChanging();
-		ListUtils.move(item, index, this.getModelObject()); //why is it called by sender if moving to receiver?
+		ListUtils.move(item, index, this.getModelObject()); // why is it called by sender if moving to receiver?
 		this.modelChanged();
 	}
 
@@ -197,7 +197,7 @@ public abstract class Sortable<T> extends JQueryContainer implements ISortableLi
 	@Override
 	public boolean isOnRemoveEnabled()
 	{
-		return false; // 'remove' will be handled after 'receive', by the event bus
+		return false; // 'remove' will be handled after 'receive' by the event bus because there is a risk the item is removed before being received (leading to a NPE)
 	}
 
 	// Methods //

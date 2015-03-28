@@ -43,7 +43,7 @@ public class ConnectSortablePage extends AbstractSortablePage
 		sortable2.connectWith(sortable1);
 	}
 
-	private Sortable<String> newSortable(final String id, List<String> list)
+	private Sortable<String> newSortable(final String id, final List<String> list)
 	{
 		return new Sortable<String>(id, list) {
 
@@ -65,7 +65,7 @@ public class ConnectSortablePage extends AbstractSortablePage
 				this.info(String.format("%s updated %s to position %d", id, item, index + 1));
 				this.info(String.format("%s list is now: %s", id, this.getModelObject()));
 
-				//Update is always the last thrown event
+				// Update is always the last event to be thrown
 				target.add(feedback);
 			}
 
