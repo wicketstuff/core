@@ -51,4 +51,20 @@ public abstract class Colors {
 			return _brightness;
 		}
 	}
+
+	public static String asRGBHex(Color color) {
+		return new StringBuilder()
+			.append(colorPartAsHex(color.getRed()))
+			.append(colorPartAsHex(color.getGreen()))
+			.append(colorPartAsHex(color.getBlue()))
+			.toString();
+	}
+	
+	private static String colorPartAsHex(int byteValue) {
+		String ret = Integer.toHexString(byteValue);
+		if (ret.length()==1) {
+			ret="0"+ret;
+		}
+		return ret;
+	}
 }

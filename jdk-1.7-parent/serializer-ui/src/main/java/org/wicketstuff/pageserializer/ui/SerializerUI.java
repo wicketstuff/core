@@ -28,6 +28,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.wicketstuff.pageserializer.common.analyze.ISerializedObjectTree;
 import org.wicketstuff.pageserializer.common.analyze.ISerializedObjectTreeProcessor;
+import org.wicketstuff.pageserializer.ui.components.ControlableGuiceApplication;
 import org.wicketstuff.pageserializer.ui.components.MainPanelFx;
 import org.wicketstuff.pageserializer.ui.events.AppEvent;
 import org.wicketstuff.pageserializer.ui.events.QuitEventFx;
@@ -46,7 +47,7 @@ import javafx.stage.Stage;
  *
  * @author mosmann
  */
-public class SerializerUI extends GuiceApplication {
+public class SerializerUI extends ControlableGuiceApplication {
 
 	private static AtomicReference<SerializerUI> runningInstance=new AtomicReference<SerializerUI>();
 	private final Logger LOG=LoggerFactory.getLogger(UIAdapter.class);

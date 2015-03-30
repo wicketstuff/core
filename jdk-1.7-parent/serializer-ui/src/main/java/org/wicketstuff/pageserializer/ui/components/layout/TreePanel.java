@@ -1,7 +1,11 @@
 package org.wicketstuff.pageserializer.ui.components.layout;
 
+import org.wicketstuff.pageserializer.ui.colors.Colors;
+import org.wicketstuff.pageserializer.ui.colors.Colors.HSB;
+
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -9,10 +13,11 @@ import javafx.scene.effect.DropShadow;
 import javafx.scene.effect.Effect;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.TilePane;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 
-public class TreePanel extends Pane {
+public class TreePanel extends TilePane {
 
 	public TreePanel() {
         Button btn = new Button();
@@ -42,6 +47,7 @@ public class TreePanel extends Pane {
         label.setEffect(borderGlow);
 		root.getChildren().add(label);
 		root.getChildren().add(new RandomColorPane());
+		root.getChildren().add(new RandomColorPane());
 //        primaryStage.setScene(new Scene(root, 300, 250));
 //        primaryStage.show();
         
@@ -65,11 +71,15 @@ public class TreePanel extends Pane {
 	static class RandomColorPane extends Pane {
 		
 		public RandomColorPane() {
+			String hexColor=Colors.asRGBHex(Colors.colorFromHashcode(this.hashCode(), Integer.MAX_VALUE, Colors.hsb(0f, 1.0f, 1.0f)));
 			setHeight(100);
 			setWidth(50);
-//			setStyle("background-color:red");
+			setStyle("-fx-background-color:#"+hexColor);
 			getChildren().add(new Button("foo"));
 			setMinSize(100, 100);
+			setPrefSize(100, 100);
+			setMaxSize(100, 100);
+			setPadding(new Insets(2));
 		}
 	}
 }

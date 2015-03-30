@@ -51,4 +51,10 @@ public class ColorsTest {
 			System.out.println(i+":"+result);
 		}
 	}
+	
+	@Test
+	public void colorToHexShoulGiveValidRGBHexCode() {
+		Color src=new Color(0,128,255);
+		assertEquals("0080ff", Colors.asRGBHex(src));
+	}
 }
