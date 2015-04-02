@@ -183,7 +183,7 @@ public abstract class AbstractAutoCompleteTextField<T, C> extends TextField<T> i
 		behavior.setOption("dataTextField", Options.asString(this.renderer.getTextField()));
 
 		// set template (if any) //
-		if (this.template != null)
+		if (this.templateBehavior != null)
 		{
 			behavior.setOption("template", String.format("jQuery('#%s').html()", this.templateBehavior.getToken()));
 		}

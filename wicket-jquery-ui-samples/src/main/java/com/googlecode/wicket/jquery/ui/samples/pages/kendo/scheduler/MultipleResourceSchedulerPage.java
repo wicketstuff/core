@@ -40,6 +40,15 @@ public class MultipleResourceSchedulerPage extends AbstractSchedulerPage
 		final Scheduler scheduler = new Scheduler("scheduler", newSchedulerModel(), options) {
 
 			private static final long serialVersionUID = 1L;
+			
+			@Override
+			protected void onInitialize()
+			{
+				super.onInitialize();
+
+				this.add(newRoomList());
+				this.add(newEmployeeList());
+			}
 
 			@Override
 			public void onCreate(AjaxRequestTarget target, SchedulerEvent event)
@@ -68,9 +77,6 @@ public class MultipleResourceSchedulerPage extends AbstractSchedulerPage
 				target.add(feedback);
 			}
 		};
-
-		scheduler.add(newRoomList());
-		scheduler.add(newEmployeeList());
 
 		form.add(scheduler);
 	}

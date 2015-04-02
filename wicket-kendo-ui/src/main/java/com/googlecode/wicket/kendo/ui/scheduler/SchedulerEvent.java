@@ -59,6 +59,9 @@ public class SchedulerEvent implements Serializable
 	private String recurrenceRule;
 	private String recurrenceException;
 
+	/** server side */
+	private boolean visible = true;
+
 	/** resources map */
 	private Map<String, Object> resources = new HashMap<String, Object>();
 
@@ -272,6 +275,27 @@ public class SchedulerEvent implements Serializable
 	public void setAllDay(boolean allDay)
 	{
 		this.allDay = allDay;
+	}
+
+	/**
+	 * Indicates whether the event is visible<br/>
+	 * If <tt>false</tt>, it will not be added to the JSON response
+	 * 
+	 * @return <tt>true</tt> or <tt>false</tt>
+	 */
+	public boolean isVisible()
+	{
+		return this.visible;
+	}
+
+	/**
+	 * Sets whether the event is visible
+	 * 
+	 * @param visible <tt>true</tt> or <tt>false</tt>
+	 */
+	public void setVisible(boolean visible)
+	{
+		this.visible = visible;
 	}
 
 	// recurrence //

@@ -125,12 +125,15 @@ class SchedulerModelBehavior extends AbstractAjaxBehavior
 								event.accept((ISchedulerVisitor) model); // last chance to set options
 							}
 
-							if (count++ > 0)
+							if (event.isVisible())
 							{
-								builder.append(", ");
-							}
+								if (count++ > 0)
+								{
+									builder.append(", ");
+								}
 
-							builder.append(SchedulerEventFactory.toJson(event));
+								builder.append(SchedulerEventFactory.toJson(event));
+							}
 						}
 
 						builder.append(" ]");

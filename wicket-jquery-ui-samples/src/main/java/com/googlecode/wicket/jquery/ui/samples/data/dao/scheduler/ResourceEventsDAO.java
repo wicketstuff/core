@@ -6,7 +6,7 @@ import com.googlecode.wicket.kendo.ui.scheduler.SchedulerEvent;
 
 public class ResourceEventsDAO extends AbstractSchedulerEventsDAO
 {
-	private static final String AGENDA_ID = "agendaId";
+	public static final String AGENDA_ID = "agendaId";
 
 	private static ResourceEventsDAO instance = null;
 

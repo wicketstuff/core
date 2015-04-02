@@ -23,6 +23,8 @@ import org.apache.wicket.ajax.AjaxRequestTarget;
 import com.googlecode.wicket.jquery.core.JQueryBehavior;
 import com.googlecode.wicket.jquery.core.JQueryContainer;
 import com.googlecode.wicket.jquery.core.Options;
+import com.googlecode.wicket.jquery.core.template.IJQueryTemplate;
+import com.googlecode.wicket.kendo.ui.KendoTemplateBehavior;
 import com.googlecode.wicket.kendo.ui.scheduler.resource.ResourceList;
 import com.googlecode.wicket.kendo.ui.scheduler.resource.ResourceListModel;
 import com.googlecode.wicket.kendo.ui.scheduler.views.SchedulerViewType;
@@ -47,6 +49,10 @@ public class Scheduler extends JQueryContainer implements ISchedulerListener
 	private SchedulerModelBehavior modelBehavior; // load events
 
 	private final ResourceListModel resourceListModel = new ResourceListModel();
+
+	// template //
+	private final IJQueryTemplate template;
+	private KendoTemplateBehavior templateBehavior = null;
 
 	/**
 	 * Constructor
@@ -92,6 +98,7 @@ public class Scheduler extends JQueryContainer implements ISchedulerListener
 		super(id, model);
 
 		this.options = options;
+		this.template = this.newTemplate();
 	}
 
 	/**
@@ -184,6 +191,11 @@ public class Scheduler extends JQueryContainer implements ISchedulerListener
 		super.onInitialize();
 
 		this.add(this.modelBehavior = this.newSchedulerModelBehavior(this.getModel()));
+
+		if (this.template != null)
+		{
+			this.add(this.templateBehavior = new KendoTemplateBehavior(this.template));
+		}
 	}
 
 	@Override
@@ -202,6 +214,12 @@ public class Scheduler extends JQueryContainer implements ISchedulerListener
 			options.set("resources", Options.asString(groups));
 			options.set("orientation", Options.asString(this.getGroupOrientation()));
 			behavior.setOption("group", options);
+		}
+
+		// set template (if any) //
+		if (this.templateBehavior != null)
+		{
+			behavior.setOption("eventTemplate", String.format("jQuery('#%s').html()", this.templateBehavior.getToken()));
 		}
 	}
 
@@ -302,6 +320,17 @@ public class Scheduler extends JQueryContainer implements ISchedulerListener
 	}
 
 	// Factory methods //
+
+	/**
+	 * Gets a new {@link IJQueryTemplate} to customize the event rendering<br/>
+	 * The properties used in the template text (ie: ${data.name}) should be of the prefixed by "data." and should be identified in the list returned by {@link IJQueryTemplate#getTextProperties()} (without "data.")
+	 *
+	 * @return null by default
+	 */
+	protected IJQueryTemplate newTemplate()
+	{
+		return null;
+	}
 
 	/**
 	 * Gets a new {@link SchedulerModelBehavior}
