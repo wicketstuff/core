@@ -48,7 +48,7 @@ import com.googlecode.wicket.kendo.ui.utils.PropertyUtils;
  * @param <T> the type of the model object
  * @author Sebastien Briquet - sebfz1
  */
-class DataSourceBehavior<T> extends AbstractAjaxBehavior
+public class DataSourceBehavior<T> extends AbstractAjaxBehavior
 {
 	private static final long serialVersionUID = 1L;
 	private static final String ASC = "asc";
@@ -176,14 +176,17 @@ class DataSourceBehavior<T> extends AbstractAjaxBehavior
 				builder.append(Options.QUOTE).append("results").append(Options.QUOTE).append(": ");
 				builder.append("[ ");
 
-				for (int index = 0; iterator.hasNext(); index++)
+				if (iterator != null)
 				{
-					if (index > 0)
+					for (int index = 0; iterator.hasNext(); index++)
 					{
-						builder.append(", ");
-					}
+						if (index > 0)
+						{
+							builder.append(", ");
+						}
 
-					builder.append(DataSourceBehavior.this.newJsonRow(iterator.next()));
+						builder.append(DataSourceBehavior.this.newJsonRow(iterator.next()));
+					}
 				}
 
 				builder.append(" ] }");

@@ -30,12 +30,14 @@ public interface IJQueryTemplate extends IClusterable
 {
 	/**
 	 * Gets the template text
+	 * 
 	 * @return the template text
 	 */
 	String getText();
 
 	/**
 	 * Gets the list of properties used in the template text
+	 * 
 	 * @return the list of properties
 	 */
 	List<String> getTextProperties();

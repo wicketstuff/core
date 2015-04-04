@@ -98,16 +98,16 @@ public class SingleResourceSchedulerPage extends AbstractSchedulerPage
 					@Override
 					public String getText()
 					{
-						return "<div>" // lf
-								+ "<h3>#: title #</h3>" // lf
-								+ "<p>#: kendo.toString(start, 'hh:mm') # - #: kendo.toString(end, 'hh:mm') #</p>" // lf
-								+ "</div>";
+						return "# if (!isAllDay) { #"
+								+ "#= kendo.toString(start, 'hh:mm') # - "
+								+ "# } #"
+								+ "#= title #";
 					}
 
 					@Override
 					public List<String> getTextProperties()
 					{
-						return Collections.emptyList();
+						return Collections.emptyList(); // not needed for Scheduler
 					}
 				};
 			}

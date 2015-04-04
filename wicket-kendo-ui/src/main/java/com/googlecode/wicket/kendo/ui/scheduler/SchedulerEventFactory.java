@@ -24,8 +24,8 @@ import org.slf4j.LoggerFactory;
 import com.googlecode.wicket.jquery.core.utils.DateUtils;
 
 /**
- * Factory/Helper class for {@link SchedulerEvent}<tt>s</tt>
- *
+ * Provides a factory for building {@link SchedulerEvent}<tt>s</tt> as JSON
+ * 
  * @author Sebastien Briquet - sebfz1
  *
  */
@@ -34,12 +34,12 @@ public class SchedulerEventFactory
 	private static final Logger LOG = LoggerFactory.getLogger(SchedulerEventFactory.class);
 
 	/**
-	 * Converts a <tt>SchedulerEvent</tt> to its JSON representation
+	 * Converts a <tt>SchedulerEvent</tt> to a {@link JSONObject}
 	 *
 	 * @param event the {@link SchedulerEvent}
-	 * @return the JSON string
+	 * @return the {@link JSONObject}
 	 */
-	public static String toJson(SchedulerEvent event)
+	public static JSONObject toJson(SchedulerEvent event)
 	{
 		try
 		{
@@ -90,14 +90,14 @@ public class SchedulerEventFactory
 				object.put(field, event.getValue(field)); // value is type of Object (String, Integer, List<String> or List<Integer>)
 			}
 
-			return object.toString();
+			return object;
 		}
 		catch (JSONException e)
 		{
 			LOG.error(e.getMessage(), e);
 		}
 
-		return "";
+		return null;
 	}
 
 	/**

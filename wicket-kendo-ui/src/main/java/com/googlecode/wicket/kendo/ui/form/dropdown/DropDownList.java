@@ -198,7 +198,7 @@ public class DropDownList<T> extends DropDownChoice<T> implements IJQueryWidget
 	public void onConfigure(JQueryBehavior behavior)
 	{
 		// set template (if any) //
-		if (this.template != null)
+		if (this.templateBehavior != null)
 		{
 			behavior.setOption("template", String.format("jQuery('#%s').html()", this.templateBehavior.getToken()));
 		}

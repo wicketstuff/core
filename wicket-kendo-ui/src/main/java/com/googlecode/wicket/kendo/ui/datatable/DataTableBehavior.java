@@ -233,7 +233,8 @@ public abstract class DataTableBehavior extends KendoUIBehavior implements IJQue
 		if (event instanceof ClickEvent)
 		{
 			ClickEvent e = (ClickEvent) event;
-			// e.getButton().onClick(target, e.getValue()); //TODO: to implement?
+			e.getButton().onClick(target, e.getValue());
+
 			this.onClick(target, e.getButton(), e.getValue());
 		}
 		else if (event instanceof ToolbarClickEvent)

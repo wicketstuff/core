@@ -33,7 +33,7 @@ import org.apache.wicket.request.http.WebResponse;
  * @author Sebastien Briquet - sebfz1
  *
  */
-class SchedulerModelBehavior extends AbstractAjaxBehavior
+public class SchedulerModelBehavior extends AbstractAjaxBehavior
 {
 	private static final long serialVersionUID = 1L;
 
@@ -60,8 +60,8 @@ class SchedulerModelBehavior extends AbstractAjaxBehavior
 
 		if (this.model != null)
 		{
-			this.setStartDate(this.model, new Date(start)); // * 1000
-			this.setEndDate(this.model, new Date(end)); // * 1000
+			this.setStartDate(this.model, new Date(start));
+			this.setEndDate(this.model, new Date(end));
 		}
 
 		requestCycle.scheduleRequestHandlerAfterCurrent(this.newRequestHandler());
@@ -132,7 +132,7 @@ class SchedulerModelBehavior extends AbstractAjaxBehavior
 									builder.append(", ");
 								}
 
-								builder.append(SchedulerEventFactory.toJson(event));
+								builder.append(event.toJson());
 							}
 						}
 

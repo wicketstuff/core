@@ -322,11 +322,11 @@ public class Scheduler extends JQueryContainer implements ISchedulerListener
 	// Factory methods //
 
 	/**
-	 * Gets a new {@link IJQueryTemplate} to customize the event rendering<br/>
-	 * The properties used in the template text (ie: ${data.name}) should be of the prefixed by "data." and should be identified in the list returned by {@link IJQueryTemplate#getTextProperties()} (without "data.")
-	 *
+	 * Gets a new {@link IJQueryTemplate} to customize the event rendering
+	 * 
 	 * @return null by default
 	 */
+	// TODO add ISchedulerTemplate? (#getTextProperties seems to be useless, to be double checked)
 	protected IJQueryTemplate newTemplate()
 	{
 		return null;

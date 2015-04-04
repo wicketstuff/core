@@ -16,6 +16,7 @@
  */
 package com.googlecode.wicket.kendo.ui.datatable;
 
+import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.util.io.IClusterable;
@@ -153,5 +154,18 @@ public class ColumnButton implements IClusterable
 	public String toString()
 	{
 		return this.text.getObject();
+	}
+
+	// Events //
+
+	/**
+	 * Triggered when the column-button is clicked
+	 * 
+	 * @param target the {@link AjaxRequestTarget}
+	 * @param value the row's object value 
+	 */
+	public void onClick(AjaxRequestTarget target, String value)
+	{
+		// noop
 	}
 }

@@ -28,6 +28,7 @@ interface IMenuListener
 {
 	/**
 	 * Triggered when a menu-item is clicked
+	 * 
 	 * @param target the {@link AjaxRequestTarget}
 	 * @param item the {@link IMenuItem}
 	 */

@@ -24,6 +24,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import org.apache.wicket.ajax.json.JSONObject;
+
 import com.googlecode.wicket.jquery.core.utils.DateUtils;
 import com.googlecode.wicket.kendo.ui.scheduler.resource.Id;
 
@@ -446,6 +448,16 @@ public class SchedulerEvent implements Serializable
 	public final void accept(ISchedulerVisitor visitor)
 	{
 		visitor.visit(this);
+	}
+
+	/**
+	 * Converts this event to a {@link JSONObject}
+	 * 
+	 * @return the {@link JSONObject}
+	 */
+	public JSONObject toJson()
+	{
+		return SchedulerEventFactory.toJson(this);
 	}
 
 	@Override
