@@ -25,7 +25,7 @@ import org.apache.wicket.model.IModel;
 
 import com.googlecode.wicket.jquery.core.IJQueryWidget.JQueryWidget;
 import com.googlecode.wicket.jquery.ui.JQueryIcon;
-import com.googlecode.wicket.jquery.ui.form.button.Button.ButtonBehavior;
+import com.googlecode.wicket.jquery.ui.form.button.ButtonBehavior;
 
 /**
  * Provides a Palette, with jQuery UI icon-buttons

@@ -30,7 +30,6 @@ import org.apache.wicket.request.handler.resource.ResourceReferenceRequestHandle
 
 import com.googlecode.wicket.jquery.core.IJQueryWidget;
 import com.googlecode.wicket.jquery.core.JQueryBehavior;
-import com.googlecode.wicket.jquery.ui.form.button.Button.ButtonBehavior;
 
 /**
  * Provides a jQuery button based on the built-in AjaxButton, with an ajax indicator the time the {@link #onSubmit()} process.
@@ -42,12 +41,16 @@ public abstract class IndicatingAjaxButton extends AjaxButton implements IJQuery
 {
 	private static final long serialVersionUID = 1L;
 
-	public enum Position { LEFT, RIGHT }
+	public enum Position
+	{
+		LEFT, RIGHT
+	}
 
 	private Position position = Position.LEFT;
 
 	/**
 	 * Constructor
+	 * 
 	 * @param id the markup id
 	 */
 	public IndicatingAjaxButton(String id)
@@ -57,6 +60,7 @@ public abstract class IndicatingAjaxButton extends AjaxButton implements IJQuery
 
 	/**
 	 * Constructor
+	 * 
 	 * @param id the markup id
 	 * @param form the {@link Form}
 	 */
@@ -67,6 +71,7 @@ public abstract class IndicatingAjaxButton extends AjaxButton implements IJQuery
 
 	/**
 	 * Constructor
+	 * 
 	 * @param id the markup id
 	 * @param model the {@link IModel}
 	 */
@@ -77,6 +82,7 @@ public abstract class IndicatingAjaxButton extends AjaxButton implements IJQuery
 
 	/**
 	 * Constructor
+	 * 
 	 * @param id the markup id
 	 * @param model the {@link IModel}
 	 * @param form the {@link Form}
@@ -145,7 +151,8 @@ public abstract class IndicatingAjaxButton extends AjaxButton implements IJQuery
 				// configure the busy indicator start & stop //
 				StringBuilder builder = new StringBuilder(super.$());
 
-				builder.append("jQuery('").append(this.selector).append("')").append(".click(function() { jQuery(this).button('option', 'icons', {").append(position == Position.LEFT ? "primary" : "secondary").append(": 'ui-icon-indicator' }); }); ");
+				builder.append("jQuery('").append(this.selector).append("')").append(".click(function() { jQuery(this).button('option', 'icons', {").append(position == Position.LEFT ? "primary" : "secondary")
+						.append(": 'ui-icon-indicator' }); }); ");
 				builder.append("jQuery(document).ajaxStop(function() { jQuery('").append(this.selector).append("').button('option', 'icons', {").append(position == Position.LEFT ? "primary" : "secondary").append(": null }); }); ");
 
 				return builder.toString();

@@ -17,7 +17,6 @@ import com.googlecode.wicket.jquery.core.IJQueryWidget.JQueryWidget;
 import com.googlecode.wicket.jquery.core.Options;
 import com.googlecode.wicket.jquery.ui.JQueryIcon;
 import com.googlecode.wicket.jquery.ui.JQueryUIBehavior;
-import com.googlecode.wicket.jquery.ui.form.button.Button.ButtonBehavior;
 import com.googlecode.wicket.jquery.ui.widget.menu.IMenuItem;
 import com.googlecode.wicket.jquery.ui.widget.menu.Menu;
 

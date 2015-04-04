@@ -14,53 +14,47 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.googlecode.wicket.jquery.ui.form.button;
-
-import org.apache.wicket.model.IModel;
+package com.googlecode.wicket.kendo.ui.markup.html.link;
 
 import com.googlecode.wicket.jquery.core.IJQueryWidget;
 import com.googlecode.wicket.jquery.core.JQueryBehavior;
-import com.googlecode.wicket.jquery.ui.JQueryIcon;
+import com.googlecode.wicket.kendo.ui.KendoIcon;
+import com.googlecode.wicket.kendo.ui.form.button.ButtonBehavior;
 
 /**
- * Provides a jQuery button based on the built-in Button
+ * Provides a Kendo UI button based on a built-in <code>StatelessLink</code>
  *
  * @author Sebastien Briquet - sebfz1
- *
+ * @since 6.19.0
+ * @since 7.0.0
  */
-public class Button extends org.apache.wicket.markup.html.form.Button implements IJQueryWidget
+public abstract class StatelessLink<T> extends org.apache.wicket.markup.html.link.StatelessLink<T> implements IJQueryWidget
 {
 	private static final long serialVersionUID = 1L;
 
+	private final String icon;
+
 	/**
 	 * Constructor
 	 *
 	 * @param id the markup id
 	 */
-	public Button(String id)
+	public StatelessLink(String id)
+	{
+		this(id, KendoIcon.NONE);
+	}
+
+	/**
+	 * Constructor
+	 *
+	 * @param id the markup id
+	 * @param icon either a {@link KendoIcon} constant or a 'k-i-<i>icon</i>' css class
+	 */
+	public StatelessLink(String id, String icon)
 	{
 		super(id);
-	}
 
-	/**
-	 * Constructor
-	 *
-	 * @param id the markup id
-	 * @param model the {@link IModel}
-	 */
-	public Button(String id, IModel<String> model)
-	{
-		super(id, model);
-	}
-
-	/**
-	 * Gets the icon being displayed in the button
-	 *
-	 * @return {@link JQueryIcon#NONE} by default
-	 */
-	protected String getIcon()
-	{
-		return JQueryIcon.NONE; // used in #onConfigure
+		this.icon = icon;
 	}
 
 	// Events //
@@ -70,29 +64,23 @@ public class Button extends org.apache.wicket.markup.html.form.Button implements
 	{
 		super.onInitialize();
 
-		this.add(JQueryWidget.newWidgetBehavior(this)); // cannot be in ctor as the markupId may be set manually afterward
+		this.add(JQueryWidget.newWidgetBehavior(this));
 	}
 
 	@Override
 	public void onConfigure(JQueryBehavior behavior)
 	{
-		if (!JQueryIcon.isNone(this.getIcon()))
-		{
-			behavior.setOption("icons", String.format("{ primary: '%s' }", this.getIcon()));
-		}
+		behavior.setOption("enable", this.isEnabledInHierarchy());
 	}
 
 	@Override
 	public void onBeforeRender(JQueryBehavior behavior)
 	{
-		// noop
 	}
 
-	// IJQueryWidget //
-
 	@Override
-	public ButtonBehavior newWidgetBehavior(String selector)
+	public JQueryBehavior newWidgetBehavior(String selector)
 	{
-		return new ButtonBehavior(selector);
+		return new ButtonBehavior(selector, this.icon);
 	}
 }
