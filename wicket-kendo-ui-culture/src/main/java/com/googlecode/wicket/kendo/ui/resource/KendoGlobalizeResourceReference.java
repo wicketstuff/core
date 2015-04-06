@@ -35,7 +35,7 @@ public class KendoGlobalizeResourceReference extends JQueryPluginResourceReferen
 {
 	private static final long serialVersionUID = 1L;
 
-	public static final String FILENAME_PATTERN = "kendo.culture.%s.min.js";
+	public static final String FILENAME_PATTERN = "kendo.culture.%s.js";
 
 	/**
 	 * Constructor

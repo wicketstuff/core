@@ -10,6 +10,7 @@ import org.slf4j.LoggerFactory;
  */
 public enum SchedulerViewType
 {
+	// TODO: add timelineview
 	day, week, workWeek, month, agenda;
 
 	private static final Logger LOG = LoggerFactory.getLogger(SchedulerViewType.class);

@@ -35,7 +35,7 @@ public class Initializer implements IInitializer
 		application.getMarkupSettings().setStripWicketTags(true);
 
 		KendoUILibrarySettings settings = KendoUILibrarySettings.get();
-		settings.setCommonStyleSheetReference(new CssResourceReference(Initializer.class, "kendo.common.min.css"));
+		settings.setCommonStyleSheetReference(new CssResourceReference(Initializer.class, "kendo.common-material.min.css"));
 		settings.setThemeStyleSheetReference(new CssResourceReference(Initializer.class, "kendo.materialblack.min.css"));
 	}
 
@@ -48,6 +48,6 @@ public class Initializer implements IInitializer
 	@Override
 	public String toString()
 	{
-		return "Wicket extensions initializer (wicket-kendo-ui-theme-material)";
+		return "Wicket extensions initializer (wicket-kendo-ui-theme-materialblack)";
 	}
 }

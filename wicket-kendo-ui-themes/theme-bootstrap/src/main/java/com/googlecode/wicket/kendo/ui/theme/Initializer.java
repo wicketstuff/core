@@ -35,7 +35,7 @@ public class Initializer implements IInitializer
 		application.getMarkupSettings().setStripWicketTags(true);
 
 		KendoUILibrarySettings settings = KendoUILibrarySettings.get();
-		settings.setCommonStyleSheetReference(new CssResourceReference(Initializer.class, "kendo.common.min.css"));
+		settings.setCommonStyleSheetReference(new CssResourceReference(Initializer.class, "kendo.common-bootstrap.min.css"));
 		settings.setThemeStyleSheetReference(new CssResourceReference(Initializer.class, "kendo.bootstrap.min.css"));
 	}
 
