@@ -33,7 +33,7 @@
 		<module>gmap3-parent</module>
 		<module>googlecharts-parent</module>
 		<module>htmlcompressor-parent</module>
-		<!--<module>inmethod-grid-parent</module> Need migration to the new Tree component (wicket-extensions) -->
+		<module>inmethod-grid-parent</module>
 		<module>input-events-parent</module>
 		<module>javaee-inject-parent</module>
 		<module>jee-web-parent</module>
