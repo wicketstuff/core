@@ -267,7 +267,7 @@ abstract class AbstractSelect2Choice<T, M> extends HiddenField<M> implements IRe
 		// initialize select2
 
 		response.render(OnDomReadyHeaderItem.forScript(JQuery.execute("$('#%s').select2(%s);",
-			getJquerySafeMarkupId(), settings.toJson())));
+			getJquerySafeMarkupId(), getSettings().toJson())));
 		// select current value
 		renderInitializationScript(response);
 	}
@@ -317,7 +317,7 @@ abstract class AbstractSelect2Choice<T, M> extends HiddenField<M> implements IRe
 	protected void onConfigure()
 	{
 		super.onConfigure();
-	if (isAjax())
+		if (isAjax())
 		{
 			getSettings().getAjax().setUrl(urlFor(IResourceListener.INTERFACE, null));
 		}
