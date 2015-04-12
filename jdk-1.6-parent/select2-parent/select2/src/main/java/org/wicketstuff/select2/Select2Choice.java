@@ -60,14 +60,6 @@ public class Select2Choice<T> extends AbstractSelect2Choice<T, T>
 	}
 
 	@Override
-	protected final void convertInput()
-	{
-		// Select2Choice uses ChoiceProvider to convert IDS into objects.
-		// The #getConverter() method is not supported by Select2Choice.
-		setConvertedInput(convertValue(getInputAsArray()));
-	}
-
-	@Override
 	protected final T convertValue(String[] value) throws ConversionException
 	{
 		if (value != null && value.length > 0)
@@ -85,9 +77,7 @@ public class Select2Choice<T> extends AbstractSelect2Choice<T, T>
 	@Override
 	protected void renderInitializationScript(IHeaderResponse response)
 	{
-		// hasRawInput() == true indicates, that form was submitted with errors.
-		// It means model was not updated yet.
-		T value = hasRawInput() ? getConvertedInput() : getModelObject();
+		T value = getValueToRender();
 		if (value != null)
 		{
 			JsonBuilder selection = new JsonBuilder();

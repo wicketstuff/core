@@ -229,6 +229,14 @@ abstract class AbstractSelect2Choice<T, M> extends HiddenField<M> implements IRe
 		return provider;
 	}
 
+	@Override
+	protected final void convertInput()
+	{
+		// AbstractSelect2Choice uses ChoiceProvider to convert IDS into objects.
+		// The #getConverter() method is not supported by Select2Choice.
+		setConvertedInput(convertValue(getInputAsArray()));
+	}
+
 	/**
 	 * Gets the markup id that is safe to use in jQuery by escaping dots in the default
 	 * {@link #getMarkup()}
@@ -265,7 +273,6 @@ abstract class AbstractSelect2Choice<T, M> extends HiddenField<M> implements IRe
 			renderChoices();
 		}
 		// initialize select2
-
 		response.render(OnDomReadyHeaderItem.forScript(JQuery.execute("$('#%s').select2(%s);",
 			getJquerySafeMarkupId(), getSettings().toJson())));
 		// select current value
@@ -279,7 +286,18 @@ abstract class AbstractSelect2Choice<T, M> extends HiddenField<M> implements IRe
 	 * @param response
 	 *            header response
 	 */
+	// TODO add <M> (getChoiceToRender) to method's signature in 7.0
 	protected abstract void renderInitializationScript(IHeaderResponse response);
+
+	/**
+	 * @return value, suitable for rendering in select2
+	 */
+	protected final M getValueToRender()
+	{
+		// hasRawInput() == true indicates, that form was submitted with errors.
+		// It means model was not updated yet.
+		return hasRawInput() ? getConvertedInput() : getModelObject();
+	}
 
 	@Override
 	protected void onInitialize()
