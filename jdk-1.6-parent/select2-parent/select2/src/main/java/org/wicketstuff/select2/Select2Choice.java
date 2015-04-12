@@ -13,12 +13,14 @@
 package org.wicketstuff.select2;
 
 import java.util.Collections;
+import java.util.Iterator;
+import java.util.List;
 
 import org.apache.wicket.ajax.json.JSONException;
 import org.apache.wicket.markup.head.IHeaderResponse;
 import org.apache.wicket.markup.head.OnDomReadyHeaderItem;
 import org.apache.wicket.model.IModel;
-import org.apache.wicket.util.string.Strings;
+import org.apache.wicket.util.convert.ConversionException;
 import org.wicketstuff.select2.json.JsonBuilder;
 
 /**
@@ -49,37 +51,34 @@ public class Select2Choice<T> extends AbstractSelect2Choice<T, T>
 	}
 
 	@Override
-	public void convertInput()
+	protected final void convertInput()
 	{
-		String input = getWebRequest().getRequestParameters()
-			.getParameterValue(getInputName())
-			.toString();
-		if (Strings.isEmpty(input))
+		// Select2Choice uses ChoiceProvider to convert IDS into objects.
+		// The #getConverter() method is not supported by Select2Choice.
+		setConvertedInput(convertValue(getInputAsArray()));
+	}
+
+	@Override
+	protected final T convertValue(String[] value) throws ConversionException
+	{
+		if (value != null && value.length > 0)
 		{
-			setConvertedInput(null);
+			List<String> ids = Collections.singletonList(value[0]);
+			Iterator<T> iterator = getProvider().toChoices(ids).iterator();
+			return iterator.hasNext() ? iterator.next() : null;
 		}
 		else
 		{
-			setConvertedInput(getProvider().toChoices(Collections.singleton(input))
-				.iterator()
-				.next());
+			return null;
 		}
 	}
 
 	@Override
 	protected void renderInitializationScript(IHeaderResponse response)
 	{
-		T value;
-		if (!isValid() && hasRawInput())
-		{
-			convertInput();
-			value = getConvertedInput();
-		}
-		else
-		{
-			value = getModelObject();
-		}
-
+		// hasRawInput() == true indicates, that form was submitted with errors.
+		// It means model was not updated yet.
+		T value = hasRawInput() ? getConvertedInput() : getModelObject();
 		if (value != null)
 		{
 			JsonBuilder selection = new JsonBuilder();
