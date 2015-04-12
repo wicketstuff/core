@@ -62,6 +62,8 @@ abstract class AbstractSelect2Choice<T, M> extends HiddenField<M> implements IRe
 	 * @param id
 	 *            component id
 	 */
+	// will be dropped in 7.0
+	@Deprecated
 	public AbstractSelect2Choice(String id)
 	{
 		this(id, null, null, null);
@@ -75,6 +77,8 @@ abstract class AbstractSelect2Choice<T, M> extends HiddenField<M> implements IRe
 	 * @param model
 	 *            component model
 	 */
+	// will be dropped in 7.0
+	@Deprecated
 	public AbstractSelect2Choice(String id, IModel<M> model)
 	{
 		this(id, model, null, null);
@@ -106,8 +110,8 @@ abstract class AbstractSelect2Choice<T, M> extends HiddenField<M> implements IRe
 	public AbstractSelect2Choice(String id, IModel<M> model, ChoiceProvider<T> provider)
 	{
 		super(id, model);
-		this.provider = provider;
 		add(new Select2ResourcesBehavior());
+		setProvider(provider);
 		setOutputMarkupId(true);
 	}
 
@@ -121,6 +125,8 @@ abstract class AbstractSelect2Choice<T, M> extends HiddenField<M> implements IRe
 	 * @param collection
 	 *            list options for select
 	 */
+	// will be dropped in 7.0
+	@Deprecated
 	public AbstractSelect2Choice(String id, IModel<M> model, List<T> collection)
 	{
 		this(id, model, collection, null);
@@ -139,6 +145,8 @@ abstract class AbstractSelect2Choice<T, M> extends HiddenField<M> implements IRe
 	 *            renderer list item
 	 * @see HiddenField#HiddenField(String, IModel)
 	 */
+	// will be dropped in 7.0
+	@Deprecated
 	public AbstractSelect2Choice(String id, IModel<M> model, List<T> choices,
 		ChoiceRenderer<T> renderer)
 	{
@@ -180,21 +188,29 @@ abstract class AbstractSelect2Choice<T, M> extends HiddenField<M> implements IRe
 	/**
 	 * @return data
 	 */
+	// will be dropped in 7.0
+	@Deprecated
 	public final List<T> getChoices()
 	{
 		return choices;
 	}
 
+	// will be dropped in 7.0
+	@Deprecated
 	public final void setChoices(List<T> choices)
 	{
 		this.choices = choices;
 	}
 
+	// will be dropped in 7.0
+	@Deprecated
 	public final ChoiceRenderer<T> getRenderer()
 	{
 		return renderer;
 	}
 
+	// will be dropped in 7.0
+	@Deprecated
 	public final void setRenderer(ChoiceRenderer<T> renderer)
 	{
 		this.renderer = renderer;
@@ -333,9 +349,11 @@ abstract class AbstractSelect2Choice<T, M> extends HiddenField<M> implements IRe
 	@Override
 	protected boolean getStatelessHint()
 	{
-		return !isAjax();
+		return false;
 	}
 
+	// will be dropped in 7.0
+	@Deprecated
 	public boolean isAjax()
 	{
 		return provider != null;

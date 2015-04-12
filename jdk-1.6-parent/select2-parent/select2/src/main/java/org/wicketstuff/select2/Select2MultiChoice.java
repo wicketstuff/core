@@ -42,11 +42,20 @@ public class Select2MultiChoice<T> extends AbstractSelect2Choice<T, Collection<T
 		super(id, model, provider);
 	}
 
+	public Select2MultiChoice(String id, ChoiceProvider<T> provider)
+	{
+		super(id, provider);
+	}
+
+	// will be dropped in 7.0
+	@Deprecated
 	public Select2MultiChoice(String id, IModel<Collection<T>> model)
 	{
 		super(id, model);
 	}
 
+	// will be dropped in 7.0
+	@Deprecated
 	public Select2MultiChoice(String id)
 	{
 		super(id);
