@@ -22,64 +22,79 @@ import org.apache.wicket.util.string.Strings;
 import org.wicketstuff.select2.json.JsonBuilder;
 
 /**
- * Single-select Select2 component. Should be attached to a
- * {@code <input type='hidden'/>} element.
+ * Single-select Select2 component. Should be attached to a {@code <input type='hidden'/>} element.
  * 
  * @author igor
  * 
  * @param <T>
  *            type of choice object
  */
-public class Select2Choice<T> extends AbstractSelect2Choice<T, T> {
+public class Select2Choice<T> extends AbstractSelect2Choice<T, T>
+{
 	private static final long serialVersionUID = 1L;
 
-	public Select2Choice(String id, IModel<T> model, ChoiceProvider<T> provider) {
+	public Select2Choice(String id, IModel<T> model, ChoiceProvider<T> provider)
+	{
 		super(id, model, provider);
 	}
 
-	public Select2Choice(String id, IModel<T> model) {
+	public Select2Choice(String id, IModel<T> model)
+	{
 		super(id, model);
 	}
 
-	public Select2Choice(String id) {
+	public Select2Choice(String id)
+	{
 		super(id);
 	}
 
 	@Override
-	public void convertInput() {
-
-		String input = getWebRequest().getRequestParameters().getParameterValue(getInputName()).toString();
-		if (Strings.isEmpty(input)) {
+	public void convertInput()
+	{
+		String input = getWebRequest().getRequestParameters()
+			.getParameterValue(getInputName())
+			.toString();
+		if (Strings.isEmpty(input))
+		{
 			setConvertedInput(null);
-		} else {
-			setConvertedInput(getProvider().toChoices(Collections.singleton(input)).iterator().next());
+		}
+		else
+		{
+			setConvertedInput(getProvider().toChoices(Collections.singleton(input))
+				.iterator()
+				.next());
 		}
 	}
 
 	@Override
-	protected void renderInitializationScript(IHeaderResponse response) {
-
+	protected void renderInitializationScript(IHeaderResponse response)
+	{
 		T value;
-		if (!isValid() && hasRawInput()) {
+		if (!isValid() && hasRawInput())
+		{
 			convertInput();
 			value = getConvertedInput();
-		} else {
+		}
+		else
+		{
 			value = getModelObject();
 		}
 
-		if (value != null) {
-
+		if (value != null)
+		{
 			JsonBuilder selection = new JsonBuilder();
-
-			try {
+			try
+			{
 				selection.object();
 				getProvider().toJson(value, selection);
 				selection.endObject();
-			} catch (JSONException e) {
+			}
+			catch (JSONException e)
+			{
 				throw new RuntimeException("Error converting model object to Json", e);
 			}
-			response.render(OnDomReadyHeaderItem.forScript(JQuery.execute("$('#%s').select2('data', %s);", getJquerySafeMarkupId(),
-					selection.toJson())));
+			response.render(OnDomReadyHeaderItem.forScript(JQuery.execute(
+				"$('#%s').select2('data', %s);", getJquerySafeMarkupId(), selection.toJson())));
 		}
 	}
 }
