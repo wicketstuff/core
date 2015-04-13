@@ -12,10 +12,10 @@
  */
 package org.wicketstuff.select2;
 
-import java.util.List;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.List;
 
 import org.apache.wicket.ajax.json.JSONException;
 import org.apache.wicket.markup.head.IHeaderResponse;
@@ -26,48 +26,64 @@ import org.apache.wicket.util.string.Strings;
 import org.wicketstuff.select2.json.JsonBuilder;
 
 /**
- * Multi-select Select2 component. Should be attached to a
- * {@code <input type='hidden'/>} element.
+ * Multi-select Select2 component. Should be attached to a {@code <input type='hidden'/>} element.
  * 
  * @author igor
  * 
  * @param <T>
  *            type of choice object
  */
-public class Select2MultiChoice<T> extends AbstractSelect2Choice<T, Collection<T>> {
+public class Select2MultiChoice<T> extends AbstractSelect2Choice<T, Collection<T>>
+{
 	private static final long serialVersionUID = 1L;
 
-	public Select2MultiChoice(String id, IModel<Collection<T>> model, ChoiceProvider<T> provider) {
+	public Select2MultiChoice(String id, IModel<Collection<T>> model, ChoiceProvider<T> provider)
+	{
 		super(id, model, provider);
 	}
 
-	public Select2MultiChoice(String id, IModel<Collection<T>> model) {
+	public Select2MultiChoice(String id, IModel<Collection<T>> model)
+	{
 		super(id, model);
 	}
 
-	public Select2MultiChoice(String id) {
+	public Select2MultiChoice(String id)
+	{
 		super(id);
 	}
 
 	@Override
-	public void convertInput() {
-		String input = getWebRequest().getRequestParameters().getParameterValue(getInputName()).toString();
+	public void convertInput()
+	{
+		String input = getWebRequest().getRequestParameters()
+			.getParameterValue(getInputName())
+			.toString();
 		final Collection<T> choices;
-		if (Strings.isEmpty(input)) {
+		if (Strings.isEmpty(input))
+		{
 			choices = new ArrayList<T>();
-		} else {
+		}
+		else
+		{
 			List<String> ids = splitInput(input);
-			if (isAjax()) {
+			if (isAjax())
+			{
 				choices = getProvider().toChoices(ids);
-			} else {
+			}
+			else
+			{
 				choices = new ArrayList<T>();
 				List<T> predefinedChoices = getChoices();
-				for (int i = 0; i < predefinedChoices.size(); i++) {
+				for (int i = 0; i < predefinedChoices.size(); i++)
+				{
 					T item = predefinedChoices.get(i);
-					for (String id : ids) {
-						if (id.equals(getRenderer().getIdValue(item, i))) {
+					for (String id : ids)
+					{
+						if (id.equals(getRenderer().getIdValue(item, i)))
+						{
 							choices.add(item);
-							if (choices.size() == ids.size()) {
+							if (choices.size() == ids.size())
+							{
 								break;
 							}
 						}
@@ -79,23 +95,27 @@ public class Select2MultiChoice<T> extends AbstractSelect2Choice<T, Collection<T
 	}
 
 	@Override
-	public void updateModel() {
+	public void updateModel()
+	{
 		FormComponent.updateCollectionModel(this);
 	}
 
 	@Override
-	protected void onInitialize() {
+	protected void onInitialize()
+	{
 		super.onInitialize();
 		getSettings().setMultiple(true);
 	}
 
 	@Override
-	protected String getModelValue() {
+	protected String getModelValue()
+	{
 		Collection<T> values = getModelObject();
 
 		// if values is null or empty set value attribute to an empty string
 		// rather then '[]' which does not make sense
-		if (values == null || values.isEmpty()) {
+		if (values == null || values.isEmpty())
+		{
 			return "";
 		}
 
@@ -103,54 +123,70 @@ public class Select2MultiChoice<T> extends AbstractSelect2Choice<T, Collection<T
 	}
 
 	@Override
-	protected void renderInitializationScript(IHeaderResponse response) {
+	protected void renderInitializationScript(IHeaderResponse response)
+	{
 		Collection<? extends T> choices;
-		if (!isValid() && hasRawInput()) {
+		if (!isValid() && hasRawInput())
+		{
 			convertInput();
 			choices = getConvertedInput();
-		} else {
+		}
+		else
+		{
 			choices = getModelObject();
 		}
 
-		if (choices != null && !choices.isEmpty()) {
+		if (choices != null && !choices.isEmpty())
+		{
 
 			JsonBuilder selection = new JsonBuilder();
 
-			try {
+			try
+			{
 				selection.array();
-				for (T choice : choices) {
+				for (T choice : choices)
+				{
 					selection.object();
 					getProvider().toJson(choice, selection);
 					selection.endObject();
 				}
 				selection.endArray();
-			} catch (JSONException e) {
+			}
+			catch (JSONException e)
+			{
 				throw new RuntimeException("Error converting model object to Json", e);
 			}
 
-			response.render(OnDomReadyHeaderItem.forScript(JQuery.execute("$('#%s').select2('data', %s);", getJquerySafeMarkupId(),
-					selection.toJson())));
+			response.render(OnDomReadyHeaderItem.forScript(JQuery.execute(
+				"$('#%s').select2('data', %s);", getJquerySafeMarkupId(), selection.toJson())));
 		}
 	}
 
-	static List<String> splitInput( String input ) {
-		if (input.startsWith("{") && input.endsWith("}")) {
+	static List<String> splitInput(String input)
+	{
+		if (input.startsWith("{") && input.endsWith("}"))
+		{
 			// Assume we're using JSON IDs
 			List<String> result = new ArrayList<String>();
 
 			int openBracket = 0;
 			Integer lastStartIdx = null;
-			for (int i = 0; i < input.length(); i++) {
+			for (int i = 0; i < input.length(); i++)
+			{
 				char c = input.charAt(i);
-				if (c == '{') {
+				if (c == '{')
+				{
 					openBracket++;
-					if (lastStartIdx == null) {
+					if (lastStartIdx == null)
+					{
 						lastStartIdx = i;
 					}
 				}
-				if (c == '}') {
+				if (c == '}')
+				{
 					openBracket--;
-					if (openBracket == 0) {
+					if (openBracket == 0)
+					{
 						String substring = input.substring(lastStartIdx, i + 1);
 						result.add(substring);
 						lastStartIdx = null;
@@ -161,6 +197,6 @@ public class Select2MultiChoice<T> extends AbstractSelect2Choice<T, Collection<T
 			return result;
 		}
 
-		return Arrays.asList(input.split( "," ));
+		return Arrays.asList(input.split(","));
 	}
 }
