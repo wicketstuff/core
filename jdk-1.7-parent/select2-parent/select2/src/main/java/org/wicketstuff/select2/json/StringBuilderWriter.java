@@ -21,37 +21,48 @@ import java.io.Writer;
  * @author igor
  * 
  */
-public class StringBuilderWriter extends Writer {
-    private final StringBuilder builder;
+public class StringBuilderWriter extends Writer
+{
+	private final StringBuilder builder;
 
-    public StringBuilderWriter() {
-	this(new StringBuilder());
-    }
-
-    public StringBuilderWriter(StringBuilder builder) {
-	this.builder = builder;
-    }
-
-    public StringBuilder getBuilder() {
-	return builder;
-    }
-
-    @Override
-    public void write(char[] cbuf, int off, int len) throws IOException {
-	if ((off < 0) || (off > cbuf.length) || (len < 0) || ((off + len) > cbuf.length) || ((off + len) < 0)) {
-	    throw new IndexOutOfBoundsException();
-	} else if (len == 0) {
-	    return;
+	public StringBuilderWriter()
+	{
+		this(new StringBuilder());
 	}
-	builder.append(cbuf, off, len);
-    }
 
-    @Override
-    public void flush() throws IOException {
-    }
+	public StringBuilderWriter(StringBuilder builder)
+	{
+		this.builder = builder;
+	}
 
-    @Override
-    public void close() throws IOException {
-    }
+	public StringBuilder getBuilder()
+	{
+		return builder;
+	}
+
+	@Override
+	public void write(char[] cbuf, int off, int len) throws IOException
+	{
+		if ((off < 0) || (off > cbuf.length) || (len < 0) || ((off + len) > cbuf.length) ||
+			((off + len) < 0))
+		{
+			throw new IndexOutOfBoundsException();
+		}
+		else if (len == 0)
+		{
+			return;
+		}
+		builder.append(cbuf, off, len);
+	}
+
+	@Override
+	public void flush() throws IOException
+	{
+	}
+
+	@Override
+	public void close() throws IOException
+	{
+	}
 
 }

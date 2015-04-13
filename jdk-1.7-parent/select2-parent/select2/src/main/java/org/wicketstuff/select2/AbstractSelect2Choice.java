@@ -12,6 +12,11 @@
  */
 package org.wicketstuff.select2;
 
+import java.io.IOException;
+import java.io.OutputStreamWriter;
+import java.util.ArrayList;
+import java.util.List;
+
 import org.apache.wicket.IResourceListener;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.json.JSONException;
@@ -29,16 +34,13 @@ import org.apache.wicket.request.http.WebResponse;
 import org.apache.wicket.util.string.Strings;
 import org.wicketstuff.select2.json.JsonBuilder;
 
-import java.io.IOException;
-import java.io.OutputStreamWriter;
-import java.util.ArrayList;
-import java.util.List;
-
 /**
  * Base class for Select2 components
  *
- * @param <T> type of choice object
- * @param <M> type of model object
+ * @param <T>
+ *            type of choice object
+ * @param <M>
+ *            type of model object
  * @author igor
  *
  * @param <T>
@@ -46,7 +48,8 @@ import java.util.List;
  * @param <M>
  *            type of model object
  */
-abstract class AbstractSelect2Choice<T, M> extends HiddenField<M> implements IResourceListener {
+abstract class AbstractSelect2Choice<T, M> extends HiddenField<M> implements IResourceListener
+{
 
 	private static final long serialVersionUID = 1L;
 
@@ -62,7 +65,8 @@ abstract class AbstractSelect2Choice<T, M> extends HiddenField<M> implements IRe
 	 * @param id
 	 *            component id
 	 */
-	public AbstractSelect2Choice(String id) {
+	public AbstractSelect2Choice(String id)
+	{
 		this(id, null, null, null);
 	}
 
@@ -74,7 +78,8 @@ abstract class AbstractSelect2Choice<T, M> extends HiddenField<M> implements IRe
 	 * @param model
 	 *            component model
 	 */
-	public AbstractSelect2Choice(String id, IModel<M> model) {
+	public AbstractSelect2Choice(String id, IModel<M> model)
+	{
 		this(id, model, null, null);
 	}
 
@@ -86,7 +91,8 @@ abstract class AbstractSelect2Choice<T, M> extends HiddenField<M> implements IRe
 	 * @param provider
 	 *            choice provider
 	 */
-	public AbstractSelect2Choice(String id, ChoiceProvider<T> provider) {
+	public AbstractSelect2Choice(String id, ChoiceProvider<T> provider)
+	{
 		this(id, null, provider);
 	}
 
@@ -100,7 +106,8 @@ abstract class AbstractSelect2Choice<T, M> extends HiddenField<M> implements IRe
 	 * @param provider
 	 *            choice provider
 	 */
-	public AbstractSelect2Choice(String id, IModel<M> model, ChoiceProvider<T> provider) {
+	public AbstractSelect2Choice(String id, IModel<M> model, ChoiceProvider<T> provider)
+	{
 		super(id, model);
 		this.provider = provider;
 		add(new Select2ResourcesBehavior());
@@ -110,31 +117,44 @@ abstract class AbstractSelect2Choice<T, M> extends HiddenField<M> implements IRe
 	/**
 	 * Construct.
 	 *
-	 * @param id         markup id
-	 * @param model      model for select
-	 * @param collection list options for select
+	 * @param id
+	 *            markup id
+	 * @param model
+	 *            model for select
+	 * @param collection
+	 *            list options for select
 	 */
-	public AbstractSelect2Choice(String id, IModel<M> model, List<T> collection) {
+	public AbstractSelect2Choice(String id, IModel<M> model, List<T> collection)
+	{
 		this(id, model, collection, null);
 	}
 
 	/**
 	 * Construct.
 	 *
-	 * @param id       markup id
-	 * @param model    model for select
-	 * @param choices  list options for select
-	 * @param renderer renderer list item
+	 * @param id
+	 *            markup id
+	 * @param model
+	 *            model for select
+	 * @param choices
+	 *            list options for select
+	 * @param renderer
+	 *            renderer list item
 	 * @see HiddenField#HiddenField(String, IModel)
 	 */
-	public AbstractSelect2Choice(String id, IModel<M> model, List<T> choices, ChoiceRenderer<T> renderer) {
+	public AbstractSelect2Choice(String id, IModel<M> model, List<T> choices,
+		ChoiceRenderer<T> renderer)
+	{
 		super(id, model);
-		if (null == choices) {
-			throw new IllegalStateException("Select2 choice component: " + getId() + " does not have a List<T> set");
+		if (null == choices)
+		{
+			throw new IllegalStateException("Select2 choice component: " + getId() +
+				" does not have a List<T> set");
 		}
-		if (null == renderer) {
-			throw new IllegalStateException(
-					"Select2 choice component: " + getId() + " does not have a WCLChoiceRenderer<T> set");
+		if (null == renderer)
+		{
+			throw new IllegalStateException("Select2 choice component: " + getId() +
+				" does not have a WCLChoiceRenderer<T> set");
 		}
 		add(new Select2ResourcesBehavior());
 		this.choices = new ArrayList<>(choices);
@@ -145,89 +165,103 @@ abstract class AbstractSelect2Choice<T, M> extends HiddenField<M> implements IRe
 	/**
 	 * @return Select2 settings for this component
 	 */
-	public final Settings getSettings() {
+	public final Settings getSettings()
+	{
 		return settings;
 	}
 
 	/**
 	 * Sets the choice provider
 	 *
-	 * @param provider provider to set
+	 * @param provider
+	 *            provider to set
 	 */
-	public final void setProvider(ChoiceProvider<T> provider) {
+	public final void setProvider(ChoiceProvider<T> provider)
+	{
 		this.provider = provider;
 	}
 
 	/**
 	 * @return data
 	 */
-	public final List<T> getChoices() {
+	public final List<T> getChoices()
+	{
 		return choices;
 	}
 
-	public final void setChoices(List<T> choices) {
+	public final void setChoices(List<T> choices)
+	{
 		this.choices = choices;
 	}
 
-	public final ChoiceRenderer<T> getRenderer() {
+	public final ChoiceRenderer<T> getRenderer()
+	{
 		return renderer;
 	}
 
-	public final void setRenderer(ChoiceRenderer<T> renderer) {
+	public final void setRenderer(ChoiceRenderer<T> renderer)
+	{
 		this.renderer = renderer;
 	}
 
 	/**
 	 * @return choice provider
 	 */
-	public final ChoiceProvider<T> getProvider() {
-		if (provider == null) {
-			throw new IllegalStateException("Select2 choice component: " + getId() + " does not have a ChoiceProvider set");
+	public final ChoiceProvider<T> getProvider()
+	{
+		if (provider == null)
+		{
+			throw new IllegalStateException("Select2 choice component: " + getId() +
+				" does not have a ChoiceProvider set");
 		}
 		return provider;
 	}
 
 	/**
-	 * Gets the markup id that is safe to use in jQuery by escaping dots in the
-	 * default {@link #getMarkup()}
+	 * Gets the markup id that is safe to use in jQuery by escaping dots in the default
+	 * {@link #getMarkup()}
 	 *
 	 * @return markup id
 	 */
-	protected String getJquerySafeMarkupId() {
+	protected String getJquerySafeMarkupId()
+	{
 		return getMarkupId().replace(".", "\\\\.");
 	}
 
 	/**
-	 * Escapes single quotes in localized strings to be used as JavaScript
-	 * strings enclosed in single quotes
+	 * Escapes single quotes in localized strings to be used as JavaScript strings enclosed in
+	 * single quotes
 	 *
 	 * @param key
 	 *            resource key for localized message
 	 * @return localized string with escaped single quotes
 	 */
-	protected String getEscapedJsString(String key) {
+	protected String getEscapedJsString(String key)
+	{
 		String value = getString(key);
 
 		return Strings.replaceAll(value, "'", "\\'").toString();
 	}
 
 	@Override
-	public void renderHead(IHeaderResponse response) {
+	public void renderHead(IHeaderResponse response)
+	{
 		super.renderHead(response);
-		if (!isAjax()) {
+		if (!isAjax())
+		{
 			// attach select options
 			renderChoices();
 		}
 		// initialize select2
-		response.render(OnDomReadyHeaderItem
-				.forScript(JQuery.execute("$('#%s').select2(%s);", getJquerySafeMarkupId(), settings.toJson())));
+		response.render(OnDomReadyHeaderItem.forScript(JQuery.execute("$('#%s').select2(%s);",
+																	  getJquerySafeMarkupId(), settings.toJson())));
 		// select current value
 		renderInitializationScript(response);
 	}
 
 	/**
-	 * Renders script used to initialize the value of Select2 after it is
-	 * created so it matches the current model object.
+	 * Renders script used to initialize the value of Select2 after it is created so it matches the
+	 * current model object.
 	 *
 	 * @param response
 	 *            header response
@@ -235,63 +269,80 @@ abstract class AbstractSelect2Choice<T, M> extends HiddenField<M> implements IRe
 	protected abstract void renderInitializationScript(IHeaderResponse response);
 
 	@Override
-	protected void onInitialize() {
+	protected void onInitialize()
+	{
 		super.onInitialize();
 
 		// configure the ajax callbacks
-		if (isAjax()) {
+		if (isAjax())
+		{
 			AjaxSettings ajax = settings.getAjax(true);
-			ajax.setData(String
-					.format("function(term, page) { return { term: term, page:page, '%s':true, '%s':[window.location.protocol, '//', window.location.host, window.location.pathname].join('')}; }",
-							WebRequest.PARAM_AJAX, WebRequest.PARAM_AJAX_BASE_URL));
+			ajax.setData(String.format(
+					"function(term, page) { return { term: term, page:page, '%s':true, '%s':[window.location.protocol, '//', window.location.host, window.location.pathname].join('')}; }",
+					WebRequest.PARAM_AJAX, WebRequest.PARAM_AJAX_BASE_URL));
 			ajax.setResults("function(data, page) { return data; }");
 		}
 		// configure the localized strings/renderers
-		getSettings().setFormatNoMatches("function() { return '" + getEscapedJsString("noMatches") + "';}");
+		getSettings().setFormatNoMatches(
+			"function() { return '" + getEscapedJsString("noMatches") + "';}");
 		getSettings().setFormatInputTooShort(
-				"function(input, min) { return min - input.length == 1 ? '" + getEscapedJsString("inputTooShortSingular")
-						+ "' : '"
-						+ getEscapedJsString("inputTooShortPlural") + "'.replace('{number}', min - input.length); }");
+			"function(input, min) { return min - input.length == 1 ? '" +
+				getEscapedJsString("inputTooShortSingular") + "' : '" +
+				getEscapedJsString("inputTooShortPlural") +
+				"'.replace('{number}', min - input.length); }");
 		getSettings().setFormatSelectionTooBig(
-				"function(limit) { return limit == 1 ? '" + getEscapedJsString("selectionTooBigSingular") + "' : '"
-						+ getEscapedJsString("selectionTooBigPlural") + "'.replace('{limit}', limit); }");
-		getSettings().setFormatLoadMore("function() { return '" + getEscapedJsString("loadMore") + "';}");
-		getSettings().setFormatSearching("function() { return '" + getEscapedJsString("searching") + "';}");
+			"function(limit) { return limit == 1 ? '" +
+				getEscapedJsString("selectionTooBigSingular") + "' : '" +
+				getEscapedJsString("selectionTooBigPlural") + "'.replace('{limit}', limit); }");
+		getSettings().setFormatLoadMore(
+			"function() { return '" + getEscapedJsString("loadMore") + "';}");
+		getSettings().setFormatSearching(
+			"function() { return '" + getEscapedJsString("searching") + "';}");
 	}
 
 	@Override
-	protected void onConfigure() {
+	protected void onConfigure()
+	{
 		super.onConfigure();
-		if (isAjax()) {
+		if (isAjax())
+		{
 			getSettings().getAjax().setUrl(urlFor(IResourceListener.INTERFACE, null));
 		}
 	}
 
 	@Override
-	public void onEvent(IEvent<?> event) {
+	public void onEvent(IEvent<?> event)
+	{
 		super.onEvent(event);
-		if (event.getPayload() instanceof AjaxRequestTarget) {
-			AjaxRequestTarget target = (AjaxRequestTarget) event.getPayload();
-			if (target.getComponents().contains(this)) {
+		if (event.getPayload() instanceof AjaxRequestTarget)
+		{
+			AjaxRequestTarget target = (AjaxRequestTarget)event.getPayload();
+			if (target.getComponents().contains(this))
+			{
 
 				// if this component is being repainted by ajax, directly, we
 				// must destroy Select2 so it removes
 				// its elements from DOM
-				target.prependJavaScript(JQuery.execute("$('#%s').select2('destroy');", getJquerySafeMarkupId()));
+				target.prependJavaScript(JQuery.execute("$('#%s').select2('destroy');",
+					getJquerySafeMarkupId()));
 			}
 		}
 	}
+
 	@Override
-	protected boolean getStatelessHint() {
+	protected boolean getStatelessHint()
+	{
 		return !isAjax();
 	}
 
-	public boolean isAjax() {
+	public boolean isAjax()
+	{
 		return provider != null;
 	}
 
 	@Override
-	public void onResourceRequested() {
+	public void onResourceRequested()
+	{
 
 		// this is the callback that retrieves matching choices used to populate
 		// the dropdown
@@ -313,36 +364,46 @@ abstract class AbstractSelect2Choice<T, M> extends HiddenField<M> implements IRe
 
 		// jsonize and write out the choices to the response
 
-		WebResponse webResponse = (WebResponse) getRequestCycle().getResponse();
+		WebResponse webResponse = (WebResponse)getRequestCycle().getResponse();
 		webResponse.setContentType("application/json");
 
-		OutputStreamWriter out = new OutputStreamWriter(webResponse.getOutputStream(), getRequest().getCharset());
+		OutputStreamWriter out = new OutputStreamWriter(webResponse.getOutputStream(),
+			getRequest().getCharset());
 		JSONWriter json = new JSONWriter(out);
 
-		try {
+		try
+		{
 			json.object();
 			json.key("results").array();
-			for (T item : response) {
+			for (T item : response)
+			{
 				json.object();
 				provider.toJson(item, json);
 				json.endObject();
 			}
 			json.endArray();
 			json.key("more").value(response.getHasMore()).endObject();
-		} catch (JSONException e) {
+		}
+		catch (JSONException e)
+		{
 			throw new RuntimeException("Could not write Json response", e);
 		}
 
-		try {
+		try
+		{
 			out.flush();
-		} catch (IOException e) {
+		}
+		catch (IOException e)
+		{
 			throw new RuntimeException("Could not write Json to servlet response", e);
 		}
 	}
 
 	@Override
-	protected void onDetach() {
-		if (isAjax()) {
+	protected void onDetach()
+	{
+		if (isAjax())
+		{
 			provider.detach();
 		}
 		super.onDetach();
@@ -351,33 +412,42 @@ abstract class AbstractSelect2Choice<T, M> extends HiddenField<M> implements IRe
 	/**
 	 * render single choice
 	 *
-	 * @param choice      choice
-	 * @param jsonBuilder json builder
+	 * @param choice
+	 *            choice
+	 * @param jsonBuilder
+	 *            json builder
 	 */
-	protected void renderChoice(T choice, JsonBuilder jsonBuilder) {
+	protected void renderChoice(T choice, JsonBuilder jsonBuilder)
+	{
 		String key = renderer.getIdValue(choice, choices.lastIndexOf(choice));
 		Object value = renderer.getDisplayValue(choice);
 		jsonBuilder.key("id").value(key).key("text").value(value);
 	}
 
-	//  render options on select2
-	private void renderChoices() {
+	// render options on select2
+	private void renderChoices()
+	{
 		JsonBuilder selection = new JsonBuilder();
-		try {
+		try
+		{
 			selection.object();
 			selection.key("more").value(false);
 			selection.key("results").array();
 			attachChoicesJson(selection);
 			selection.endArray().endObject();
-		} catch (JSONException e) {
+		}
+		catch (JSONException e)
+		{
 			throw new RuntimeException("Error converting model object to Json", e);
 		}
 
 		getSettings().setData(selection.toJson().toString());
 	}
 
-	private void attachChoicesJson(JsonBuilder jsonBuilder) throws JSONException {
-		for (T choice : choices) {
+	private void attachChoicesJson(JsonBuilder jsonBuilder) throws JSONException
+	{
+		for (T choice : choices)
+		{
 			jsonBuilder.object();
 			renderChoice(choice, jsonBuilder);
 			jsonBuilder.endObject();
