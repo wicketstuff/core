@@ -19,12 +19,12 @@ import org.apache.wicket.ajax.json.JSONWriter;
 import org.wicketstuff.select2.json.Json;
 
 /**
- * Select2 Ajax settings. Refer to the Select2 documentation for what these
- * options mean.
+ * Select2 Ajax settings. Refer to the Select2 documentation for what these options mean.
  * 
  * @author igor
  */
-public final class AjaxSettings implements Serializable {
+public final class AjaxSettings implements Serializable
+{
 	private static final long serialVersionUID = 1L;
 	private CharSequence url;
 	private String dataType = "json";
@@ -34,7 +34,8 @@ public final class AjaxSettings implements Serializable {
 	/** whether or not to use traditional parameter encoding. */
 	private Boolean traditional;
 
-	public void toJson(JSONWriter writer) throws JSONException {
+	public void toJson(JSONWriter writer) throws JSONException
+	{
 		writer.object();
 		Json.writeFunction(writer, "data", data);
 		Json.writeObject(writer, "dataType", dataType);
@@ -45,51 +46,63 @@ public final class AjaxSettings implements Serializable {
 		writer.endObject();
 	}
 
-	public void setUrl(CharSequence url) {
+	public void setUrl(CharSequence url)
+	{
 		this.url = url;
 	}
 
-	public void setDataType(String dataType) {
+	public void setDataType(String dataType)
+	{
 		this.dataType = dataType;
 	}
 
-	public void setQuietMillis(int quietMillis) {
+	public void setQuietMillis(int quietMillis)
+	{
 		this.quietMillis = quietMillis;
 	}
 
-	public void setData(String data) {
+	public void setData(String data)
+	{
 		this.data = data;
 	}
 
-	public void setResults(String results) {
+	public void setResults(String results)
+	{
 		this.results = results;
 	}
 
-	public CharSequence getUrl() {
+	public CharSequence getUrl()
+	{
 		return url;
 	}
 
-	public String getDataType() {
+	public String getDataType()
+	{
 		return dataType;
 	}
 
-	public int getQuietMillis() {
+	public int getQuietMillis()
+	{
 		return quietMillis;
 	}
 
-	public String getData() {
+	public String getData()
+	{
 		return data;
 	}
 
-	public String getResults() {
+	public String getResults()
+	{
 		return results;
 	}
 
-	public boolean isTraditional() {
+	public boolean isTraditional()
+	{
 		return traditional;
 	}
 
-	public void setTraditional(boolean traditional) {
+	public void setTraditional(boolean traditional)
+	{
 		this.traditional = traditional;
 	}
 

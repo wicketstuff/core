@@ -12,11 +12,11 @@
  */
 package org.wicketstuff.select2;
 
+import java.util.Collection;
+
 import org.apache.wicket.ajax.json.JSONException;
 import org.apache.wicket.ajax.json.JSONWriter;
 import org.apache.wicket.model.IDetachable;
-
-import java.util.Collection;
 
 /**
  * <p>
@@ -31,7 +31,8 @@ import java.util.Collection;
  * </ul>
  * </p>
  * <p>
- * For the most common usecase where each choice is rendered as a text string see {@link TextChoiceProvider}.
+ * For the most common usecase where each choice is rendered as a text string see
+ * {@link TextChoiceProvider}.
  * </p>
  * 
  * @author igor
@@ -39,56 +40,60 @@ import java.util.Collection;
  * @param <T>
  *            type of choice object
  */
-public interface ChoiceProvider<T> extends IDetachable {
+public interface ChoiceProvider<T> extends IDetachable
+{
 
 	/**
-     * Queries application for choices that match the search {@code term} and adds them to the {@code response}
-     * 
-     * @param term
-     *            search term
-     * @param page
-     *            requested search term results page
-     * @param response
-     *            aggregate for matching choices as well as other response options
-     */
-    public void query(String term, int page, Response<T> response);
+	 * Queries application for choices that match the search {@code term} and adds them to the
+	 * {@code response}
+	 * 
+	 * @param term
+	 *            search term
+	 * @param page
+	 *            requested search term results page
+	 * @param response
+	 *            aggregate for matching choices as well as other response options
+	 */
+	public void query(String term, int page, Response<T> response);
 
-    /**
-     * Converts the specified choice to Json.
-     * 
-     * <p>
-     * At the very least each choice should contain an {@code id} attribute. If no custom rendering function is
-     * specified, the {@code text} attribute should also be provided
-     * </p>
-     * 
-     * <p>
-     * Example: If mapping a User {Long id, String name} using default rendering the code should look like this:
-     * 
-     * <pre>
-     * toJson(User choice, JSONWriter writer) {
-     *     writer.key(&quot;id&quot;).value(choice.getId()).key(&quot;text&quot;).value(choice.getName());
-     * }
-     * </pre>
-     * 
-     * </p>
-     * 
-     * @param choice
-     *            choice to convert
-     * @param writer
-     *            Json writer that should be used to covnert the choice
-     * @throws JSONException
-     */
-    public void toJson(T choice, JSONWriter writer) throws JSONException;
+	/**
+	 * Converts the specified choice to Json.
+	 * 
+	 * <p>
+	 * At the very least each choice should contain an {@code id} attribute. If no custom rendering
+	 * function is specified, the {@code text} attribute should also be provided
+	 * </p>
+	 * 
+	 * <p>
+	 * Example: If mapping a User {Long id, String name} using default rendering the code should
+	 * look like this:
+	 * 
+	 * <pre>
+	 * toJson(User choice, JSONWriter writer)
+	 * {
+	 * 	writer.key(&quot;id&quot;).value(choice.getId()).key(&quot;text&quot;).value(choice.getName());
+	 * }
+	 * </pre>
+	 * 
+	 * </p>
+	 * 
+	 * @param choice
+	 *            choice to convert
+	 * @param writer
+	 *            Json writer that should be used to covnert the choice
+	 * @throws JSONException
+	 */
+	public void toJson(T choice, JSONWriter writer) throws JSONException;
 
-    /**
-     * Converts a list of choice ids back into application's choice objects. When the choice provider is attached to a
-     * single-select component the {@code ids} collection will contain exactly one id, and a collection containing
-     * exactly one choice should be returned.
-     * 
-     * @param ids
-     *            collection containing choice ids
-     * @return collection containing application choice objects
-     */
-    public Collection<T> toChoices(Collection<String> ids);
+	/**
+	 * Converts a list of choice ids back into application's choice objects. When the choice
+	 * provider is attached to a single-select component the {@code ids} collection will contain
+	 * exactly one id, and a collection containing exactly one choice should be returned.
+	 * 
+	 * @param ids
+	 *            collection containing choice ids
+	 * @return collection containing application choice objects
+	 */
+	public Collection<T> toChoices(Collection<String> ids);
 
 }
