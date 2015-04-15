@@ -13,11 +13,14 @@
 package org.wicketstuff.select2;
 
 import java.util.Collections;
+import java.util.Iterator;
+import java.util.List;
 
 import org.apache.wicket.ajax.json.JSONException;
 import org.apache.wicket.markup.head.IHeaderResponse;
 import org.apache.wicket.markup.head.OnDomReadyHeaderItem;
 import org.apache.wicket.model.IModel;
+import org.apache.wicket.util.convert.ConversionException;
 import org.apache.wicket.util.string.Strings;
 import org.wicketstuff.select2.json.JsonBuilder;
 
@@ -38,55 +41,47 @@ public class Select2Choice<T> extends AbstractSelect2Choice<T, T>
 		super(id, model, provider);
 	}
 
+	public Select2Choice(String id, ChoiceProvider<T> provider)
+	{
+		super(id, provider);
+	}
+
+	// will be dropped in 7.0
+	@Deprecated
 	public Select2Choice(String id, IModel<T> model)
 	{
 		super(id, model);
 	}
 
+	// will be dropped in 7.0
+	@Deprecated
 	public Select2Choice(String id)
 	{
 		super(id);
 	}
 
 	@Override
-	public void convertInput()
+	protected final T convertValue(String[] value) throws ConversionException
 	{
-
-		String input = getWebRequest().getRequestParameters()
-			.getParameterValue(getInputName())
-			.toString();
-		if (Strings.isEmpty(input))
+		if (value != null && value.length > 0 && !Strings.isEmpty(value[0]))
 		{
-			setConvertedInput(null);
+			List<String> ids = Collections.singletonList(value[0]);
+			Iterator<T> iterator = getProvider().toChoices(ids).iterator();
+			return iterator.hasNext() ? iterator.next() : null;
 		}
 		else
 		{
-			setConvertedInput(getProvider().toChoices(Collections.singleton(input))
-				.iterator()
-				.next());
+			return null;
 		}
 	}
 
 	@Override
 	protected void renderInitializationScript(IHeaderResponse response)
 	{
-
-		T value;
-		if (!isValid() && hasRawInput())
-		{
-			convertInput();
-			value = getConvertedInput();
-		}
-		else
-		{
-			value = getModelObject();
-		}
-
+		T value = getCurrentValue();
 		if (value != null)
 		{
-
 			JsonBuilder selection = new JsonBuilder();
-
 			try
 			{
 				selection.object();
@@ -101,4 +96,5 @@ public class Select2Choice<T> extends AbstractSelect2Choice<T, T>
 				"$('#%s').select2('data', %s);", getJquerySafeMarkupId(), selection.toJson())));
 		}
 	}
+
 }
