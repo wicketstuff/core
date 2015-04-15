@@ -181,10 +181,9 @@ public class Select2MultiChoice<T> extends AbstractSelect2Choice<T, Collection<T
 					}
 				}
 			}
-
 			return result;
 		}
-
 		return Arrays.asList(input.split(","));
 	}
+
 }

@@ -13,14 +13,12 @@
 package org.wicketstuff.select2;
 
 import java.util.Collections;
-import java.util.Iterator;
-import java.util.List;
 
 import org.apache.wicket.ajax.json.JSONException;
 import org.apache.wicket.markup.head.IHeaderResponse;
 import org.apache.wicket.markup.head.OnDomReadyHeaderItem;
 import org.apache.wicket.model.IModel;
-import org.apache.wicket.util.convert.ConversionException;
+import org.apache.wicket.util.string.Strings;
 import org.wicketstuff.select2.json.JsonBuilder;
 
 /**
@@ -60,21 +58,6 @@ public class Select2Choice<T> extends AbstractSelect2Choice<T, T>
 	}
 
 	@Override
-	protected final T convertValue(String[] value) throws ConversionException
-	{
-		if (value != null && value.length > 0)
-		{
-			List<String> ids = Collections.singletonList(value[0]);
-			Iterator<T> iterator = getProvider().toChoices(ids).iterator();
-			return iterator.hasNext() ? iterator.next() : null;
-		}
-		else
-		{
-			return null;
-		}
-	}
-
-	@Override
 	protected void renderInitializationScript(IHeaderResponse response)
 	{
 		T value = getValueToRender();
@@ -95,4 +78,5 @@ public class Select2Choice<T> extends AbstractSelect2Choice<T, T>
 				"$('#%s').select2('data', %s);", getJquerySafeMarkupId(), selection.toJson())));
 		}
 	}
+
 }
