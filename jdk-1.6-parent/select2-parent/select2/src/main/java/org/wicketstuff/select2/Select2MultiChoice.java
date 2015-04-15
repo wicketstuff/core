@@ -70,17 +70,13 @@ public class Select2MultiChoice<T> extends AbstractSelect2Choice<T, Collection<T
 	@Override
 	public final String[] getInputAsArray()
 	{
-		String value = getRequest().getRequestParameters()
-			.getParameterValue(getInputName())
-			.toString();
+		String value = getRequest().getRequestParameters().getParameterValue(getInputName()).toString();
 		if (Strings.isEmpty(value))
 		{
 			return EMPTY_STRING_ARRAY;
-		}
-		else
+		} else
 		{
-			List<String> ids = splitInput(value);
-			return ids.isEmpty() ? EMPTY_STRING_ARRAY : ids.toArray(new String[ids.size()]);
+			return splitInput(value);
 		}
 	}
 
@@ -126,7 +122,7 @@ public class Select2MultiChoice<T> extends AbstractSelect2Choice<T, Collection<T
 	@Override
 	protected void renderInitializationScript(IHeaderResponse response)
 	{
-		Collection<? extends T> choices = getValueToRender();
+		Collection<? extends T> choices = getCurrentValue();
 		if (choices != null && !choices.isEmpty())
 		{
 			JsonBuilder selection = new JsonBuilder();
@@ -150,13 +146,12 @@ public class Select2MultiChoice<T> extends AbstractSelect2Choice<T, Collection<T
 		}
 	}
 
-	private static List<String> splitInput(String input)
+	private static String[] splitInput(String input)
 	{
 		if (input.startsWith("{") && input.endsWith("}"))
 		{
 			// Assume we're using JSON IDs
 			List<String> result = new ArrayList<String>();
-
 			int openBracket = 0;
 			Integer lastStartIdx = null;
 			for (int i = 0; i < input.length(); i++)
@@ -181,9 +176,9 @@ public class Select2MultiChoice<T> extends AbstractSelect2Choice<T, Collection<T
 					}
 				}
 			}
-			return result;
+			return result.toArray(new String[result.size()]);
 		}
-		return Arrays.asList(input.split(","));
+		return input.split(","); // select2 uses comma as value separator
 	}
 
 }

@@ -21,6 +21,7 @@ import org.apache.wicket.markup.head.IHeaderResponse;
 import org.apache.wicket.markup.head.OnDomReadyHeaderItem;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.util.convert.ConversionException;
+import org.apache.wicket.util.string.Strings;
 import org.wicketstuff.select2.json.JsonBuilder;
 
 /**
@@ -62,7 +63,7 @@ public class Select2Choice<T> extends AbstractSelect2Choice<T, T>
 	@Override
 	protected final T convertValue(String[] value) throws ConversionException
 	{
-		if (value != null && value.length > 0)
+		if (value != null && value.length > 0 && !Strings.isEmpty(value[0]))
 		{
 			List<String> ids = Collections.singletonList(value[0]);
 			Iterator<T> iterator = getProvider().toChoices(ids).iterator();
@@ -77,7 +78,7 @@ public class Select2Choice<T> extends AbstractSelect2Choice<T, T>
 	@Override
 	protected void renderInitializationScript(IHeaderResponse response)
 	{
-		T value = getValueToRender();
+		T value = getCurrentValue();
 		if (value != null)
 		{
 			JsonBuilder selection = new JsonBuilder();
