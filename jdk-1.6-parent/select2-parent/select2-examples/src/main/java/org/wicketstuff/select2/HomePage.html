@@ -45,6 +45,24 @@
 		</section>
 		<section>
 			<div class="page-header">
+				<h1>Single-Select <small>Client-side only filtering (i.e. stateless mode). Minimum input length</small></h1>
+			</div>
+			<div class="row">
+				<div class="span12" wicket:id="clientSideSelect2ChoiceWrapper">
+					<p>
+						Country currently selected: <strong><span wicket:id="country"></span> </strong>
+					</p>
+					<form wicket:id="single">
+						<input wicket:id="country" type="hidden" style="width: 300px;" />
+						<div class="form-actions">
+							<button type="submit" class="btn">Submit</button>
+						</div>
+					</form>
+				</div>
+			</div>
+		</section>
+		<section>
+			<div class="page-header">
 				<h1>Multi-Select <small>Ajax result loading. Paging with infinite scrolling. Minimum input length. Drag &amp; Drop</small></h1>
 			</div>
 			<div class="row">
