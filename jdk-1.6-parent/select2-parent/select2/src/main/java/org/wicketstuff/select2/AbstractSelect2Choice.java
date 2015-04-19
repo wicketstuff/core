@@ -55,7 +55,7 @@ abstract class AbstractSelect2Choice<T, M> extends HiddenField<M> implements IRe
 	private List<T> choices;
 	private ChoiceRenderer<T> renderer;
 
-	private transient boolean convertValuePerformed = false;
+	private boolean convertInputPerformed = false;
 
 	/**
 	 * Constructor
@@ -220,7 +220,7 @@ abstract class AbstractSelect2Choice<T, M> extends HiddenField<M> implements IRe
 		// AbstractSelect2Choice uses ChoiceProvider to convert IDS into objects.
 		// The #getConverter() method is not supported by Select2Choice.
 		setConvertedInput(convertValue(getInputAsArray()));
-		convertValuePerformed = true;
+		convertInputPerformed = true;
 	}
 
 	/**
@@ -283,7 +283,7 @@ abstract class AbstractSelect2Choice<T, M> extends HiddenField<M> implements IRe
 		if (hasRawInput())
 		{
 			// since raw input is retained, we need explicitly convert it to target value
-			if (convertValuePerformed)
+			if (convertInputPerformed)
 			{
 				return getConvertedInput();
 			}
@@ -437,7 +437,7 @@ abstract class AbstractSelect2Choice<T, M> extends HiddenField<M> implements IRe
 	@Override
 	protected void onDetach()
 	{
-		convertValuePerformed = false;
+		convertInputPerformed = false;
 		provider.detach();
 		super.onDetach();
 	}

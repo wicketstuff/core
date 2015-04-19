@@ -170,6 +170,6 @@ public class Select2MultiChoice<T> extends AbstractSelect2Choice<T, Collection<T
 			}
 			return result.toArray(new String[result.size()]);
 		}
-		return input.split(","); // select2 uses comma as value separator
+		return Strings.split(input, ','); // select2 uses comma as value separator
 	}
 }
