@@ -15,6 +15,8 @@ package org.wicketstuff.select2;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 import org.apache.wicket.IResourceListener;
@@ -24,10 +26,11 @@ import org.apache.wicket.ajax.json.JSONWriter;
 import org.apache.wicket.event.IEvent;
 import org.apache.wicket.markup.head.IHeaderResponse;
 import org.apache.wicket.markup.head.OnDomReadyHeaderItem;
-import org.apache.wicket.markup.html.form.ChoiceRenderer;
 import org.apache.wicket.markup.html.form.FormComponent;
 import org.apache.wicket.markup.html.form.HiddenField;
+import org.apache.wicket.markup.html.form.IChoiceRenderer;
 import org.apache.wicket.model.IModel;
+import org.apache.wicket.model.util.ListModel;
 import org.apache.wicket.request.IRequestParameters;
 import org.apache.wicket.request.Request;
 import org.apache.wicket.request.http.WebRequest;
@@ -58,7 +61,7 @@ abstract class AbstractSelect2Choice<T, M> extends HiddenField<M> implements IRe
 
 	private ChoiceProvider<T> provider;
 	private List<T> choices;
-	private ChoiceRenderer<T> renderer;
+	private IChoiceRenderer<T> renderer;
 
 	private boolean convertInputPerformed = false;
 
@@ -133,6 +136,19 @@ abstract class AbstractSelect2Choice<T, M> extends HiddenField<M> implements IRe
 	}
 
 	/**
+	 * @param id
+	 * 		markup id
+	 * @param choices
+	 * 		list options for select
+	 * @param renderer
+	 * 		list item renderer
+	 */
+	public AbstractSelect2Choice(String id, List<T> choices, IChoiceRenderer<T> renderer)
+	{
+		this(id, null, choices, renderer);
+	}
+
+	/**
 	 * Construct.
 	 *
 	 * @param id
@@ -145,8 +161,7 @@ abstract class AbstractSelect2Choice<T, M> extends HiddenField<M> implements IRe
 	 *            renderer list item
 	 * @see HiddenField#HiddenField(String, IModel)
 	 */
-	public AbstractSelect2Choice(String id, IModel<M> model, List<T> choices,
-	                             ChoiceRenderer<T> renderer)
+	public AbstractSelect2Choice(String id, IModel<M> model, List<T> choices, IChoiceRenderer<T> renderer)
 	{
 		super(id, model);
 		if (null == choices)
@@ -189,6 +204,11 @@ abstract class AbstractSelect2Choice<T, M> extends HiddenField<M> implements IRe
 	 */
 	public final List<T> getChoices()
 	{
+		if (choices == null)
+		{
+			throw new IllegalStateException("Select2 choice component: " + getId() +
+					" does not have a choices set");
+		}
 		return choices;
 	}
 
@@ -197,12 +217,17 @@ abstract class AbstractSelect2Choice<T, M> extends HiddenField<M> implements IRe
 		this.choices = choices;
 	}
 
-	public final ChoiceRenderer<T> getRenderer()
+	public final IChoiceRenderer<T> getRenderer()
 	{
+		if (renderer == null)
+		{
+			throw new IllegalStateException("Select2 choice component: " + getId() +
+					" does not have a IChoiceRenderer set");
+		}
 		return renderer;
 	}
 
-	public final void setRenderer(ChoiceRenderer<T> renderer)
+	public final void setRenderer(IChoiceRenderer<T> renderer)
 	{
 		this.renderer = renderer;
 	}
@@ -227,6 +252,32 @@ abstract class AbstractSelect2Choice<T, M> extends HiddenField<M> implements IRe
 		// The #getConverter() method is not supported by Select2Choice.
 		setConvertedInput(convertValue(getInputAsArray()));
 		convertInputPerformed = true;
+	}
+
+	protected final Collection<T> convertIdsToChoices(List<String> ids)
+	{
+		if (ids == null || ids.isEmpty())
+		{
+			return Collections.emptyList();
+		}
+		if (isAjax())
+		{
+			return getProvider().toChoices(ids);
+		}
+		else
+		{
+			ListModel<T> model = new ListModel<>(getChoices());
+			List<T> result = new ArrayList<>(ids.size());
+			for (String id : ids)
+			{
+				T choice = getRenderer().getObject(id, model);
+				if (choice != null)
+				{
+					result.add(choice);
+				}
+			}
+			return result;
+		}
 	}
 
 	/**
@@ -457,8 +508,8 @@ abstract class AbstractSelect2Choice<T, M> extends HiddenField<M> implements IRe
 	 */
 	protected void renderChoice(T choice, JsonBuilder jsonBuilder)
 	{
-		String key = renderer.getIdValue(choice, choices.lastIndexOf(choice));
-		Object value = renderer.getDisplayValue(choice);
+		String key = getRenderer().getIdValue(choice, getChoices().lastIndexOf(choice));
+		Object value = getRenderer().getDisplayValue(choice);
 		jsonBuilder.key("id").value(key).key("text").value(value);
 	}
 

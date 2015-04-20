@@ -21,6 +21,7 @@ import org.apache.wicket.markup.head.IHeaderResponse;
 import org.apache.wicket.markup.head.OnDomReadyHeaderItem;
 import org.apache.wicket.markup.html.form.ChoiceRenderer;
 import org.apache.wicket.markup.html.form.FormComponent;
+import org.apache.wicket.markup.html.form.IChoiceRenderer;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.util.convert.ConversionException;
 import org.apache.wicket.util.string.Strings;
@@ -52,6 +53,16 @@ public class Select2MultiChoice<T> extends AbstractSelect2Choice<T, Collection<T
 	public Select2MultiChoice(String id, IModel<Collection<T>> model, ChoiceProvider<T> provider)
 	{
 		super(id, model, provider);
+	}
+
+	public Select2MultiChoice(String id, List<T> choices, IChoiceRenderer<T> renderer)
+	{
+		super(id, null, choices, renderer);
+	}
+
+	public Select2MultiChoice(String id, IModel<Collection<T>> model, List<T> choices, IChoiceRenderer<T> renderer)
+	{
+		super(id, model, choices, renderer);
 	}
 
 	public Select2MultiChoice(String id, IModel<Collection<T>> model)
@@ -89,7 +100,7 @@ public class Select2MultiChoice<T> extends AbstractSelect2Choice<T, Collection<T
 	{
 		if (value != null && value.length > 0)
 		{
-			return getProvider().toChoices(Arrays.asList(value));
+			return convertIdsToChoices(Arrays.asList(value));
 		}
 		else
 		{
