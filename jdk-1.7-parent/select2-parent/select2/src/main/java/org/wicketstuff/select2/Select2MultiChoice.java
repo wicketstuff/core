@@ -129,37 +129,33 @@ public class Select2MultiChoice<T> extends AbstractSelect2Choice<T, Collection<T
 	}
 
 	@Override
-	protected void renderInitializationScript(IHeaderResponse response)
+	protected void renderInitializationScript(IHeaderResponse response, Collection<T> choices)
 	{
-		Collection<? extends T> choices = getCurrentValue();
-		if (choices != null && !choices.isEmpty())
+		JsonBuilder selection = new JsonBuilder();
+		try
 		{
-			JsonBuilder selection = new JsonBuilder();
-			try
+			selection.array();
+			for (T choice : choices)
 			{
-				selection.array();
-				for (T choice : choices)
+				selection.object();
+				if (isAjax())
 				{
-					selection.object();
-					if (isAjax())
-					{
-						getProvider().toJson(choice, selection);
-					}
-					else
-					{
-						renderChoice(choice, selection);
-					}
-					selection.endObject();
+					getProvider().toJson(choice, selection);
 				}
-				selection.endArray();
+				else
+				{
+					renderChoice(choice, selection);
+				}
+				selection.endObject();
 			}
-			catch (JSONException e)
-			{
-				throw new RuntimeException("Error converting model object to Json", e);
-			}
-			response.render(OnDomReadyHeaderItem.forScript(JQuery.execute(
-				"$('#%s').select2('data', %s);", getJquerySafeMarkupId(), selection.toJson())));
+			selection.endArray();
 		}
+		catch (JSONException e)
+		{
+			throw new RuntimeException("Error converting model object to Json", e);
+		}
+		response.render(OnDomReadyHeaderItem.forScript(JQuery.execute(
+			"$('#%s').select2('data', %s);", getJquerySafeMarkupId(), selection.toJson())));
 	}
 
 }

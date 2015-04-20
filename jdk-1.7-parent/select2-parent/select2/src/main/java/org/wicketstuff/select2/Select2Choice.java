@@ -83,31 +83,27 @@ public class Select2Choice<T> extends AbstractSelect2Choice<T, T>
 	}
 
 	@Override
-	protected void renderInitializationScript(IHeaderResponse response)
+	protected void renderInitializationScript(IHeaderResponse response, T choice)
 	{
-		T value = getCurrentValue();
-		if (value != null)
+		JsonBuilder selection = new JsonBuilder();
+		try
 		{
-			JsonBuilder selection = new JsonBuilder();
-			try
+			selection.object();
+			if (isAjax())
 			{
-				selection.object();
-				if (isAjax())
-				{
-					getProvider().toJson(value, selection);
-				}
-				else
-				{
-					renderChoice(value, selection);
-				}
-				selection.endObject();
+				getProvider().toJson(choice, selection);
 			}
-			catch (JSONException e)
+			else
 			{
-				throw new RuntimeException("Error converting model object to Json", e);
+				renderChoice(choice, selection);
 			}
-			response.render(OnDomReadyHeaderItem.forScript(JQuery.execute(
-				"$('#%s').select2('data', %s);", getJquerySafeMarkupId(), selection.toJson())));
+			selection.endObject();
 		}
+		catch (JSONException e)
+		{
+			throw new RuntimeException("Error converting model object to Json", e);
+		}
+		response.render(OnDomReadyHeaderItem.forScript(JQuery.execute(
+			"$('#%s').select2('data', %s);", getJquerySafeMarkupId(), selection.toJson())));
 	}
 }

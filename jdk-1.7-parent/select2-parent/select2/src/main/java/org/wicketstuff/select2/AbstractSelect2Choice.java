@@ -318,8 +318,12 @@ abstract class AbstractSelect2Choice<T, M> extends HiddenField<M> implements IRe
 		// initialize select2
 		response.render(OnDomReadyHeaderItem.forScript(JQuery.execute("$('#%s').select2(%s);",
 				getJquerySafeMarkupId(), getSettings().toJson())));
-		// select current value
-		renderInitializationScript(response);
+		M currentValue = getCurrentValue();
+		if (canInitializeInitialValue(currentValue))
+		{
+			// select current value
+			renderInitializationScript(response, currentValue);
+		}
 	}
 
 	/**
@@ -327,10 +331,11 @@ abstract class AbstractSelect2Choice<T, M> extends HiddenField<M> implements IRe
 	 * current model object.
 	 *
 	 * @param response
-	 *            header response
+	 * 		header response
+	 * @param value
+	 * 		value to display
 	 */
-	// TODO add <M> (getCurrentValue) to method's signature in 7.0
-	protected abstract void renderInitializationScript(IHeaderResponse response);
+	protected abstract void renderInitializationScript(IHeaderResponse response, M value);
 
 	/**
 	 * @return current value, suitable for rendering as selected value in select2 component
@@ -364,7 +369,7 @@ abstract class AbstractSelect2Choice<T, M> extends HiddenField<M> implements IRe
 		// configure the ajax callbacks
 		if (isAjax())
 		{
-			AjaxSettings ajax = settings.getAjax(true);
+			AjaxSettings ajax = getSettings().getAjax(true);
 			ajax.setData(String.format(
 					"function(term, page) { return { term: term, page:page, '%s':true, '%s':[window.location.protocol, '//', window.location.host, window.location.pathname].join('')}; }",
 					WebRequest.PARAM_AJAX, WebRequest.PARAM_AJAX_BASE_URL));
@@ -448,11 +453,11 @@ abstract class AbstractSelect2Choice<T, M> extends HiddenField<M> implements IRe
 		page -= 1;
 
 		Response<T> response = new Response<T>();
-		provider.query(term, page, response);
+		getProvider().query(term, page, response);
 
 		// jsonize and write out the choices to the response
 
-		WebResponse webResponse = (WebResponse)getRequestCycle().getResponse();
+		WebResponse webResponse = (WebResponse) getRequestCycle().getResponse();
 		webResponse.setContentType("application/json");
 
 		OutputStreamWriter out = new OutputStreamWriter(webResponse.getOutputStream(),
@@ -466,7 +471,7 @@ abstract class AbstractSelect2Choice<T, M> extends HiddenField<M> implements IRe
 			for (T item : response)
 			{
 				json.object();
-				provider.toJson(item, json);
+				getProvider().toJson(item, json);
 				json.endObject();
 			}
 			json.endArray();
@@ -493,7 +498,7 @@ abstract class AbstractSelect2Choice<T, M> extends HiddenField<M> implements IRe
 		convertInputPerformed = false;
 		if (isAjax())
 		{
-			provider.detach();
+			getProvider().detach();
 		}
 		super.onDetach();
 	}
@@ -535,11 +540,22 @@ abstract class AbstractSelect2Choice<T, M> extends HiddenField<M> implements IRe
 
 	private void attachChoicesJson(JsonBuilder jsonBuilder) throws JSONException
 	{
-		for (T choice : choices)
+		for (T choice : getChoices())
 		{
 			jsonBuilder.object();
 			renderChoice(choice, jsonBuilder);
 			jsonBuilder.endObject();
+		}
+	}
+
+	private static boolean canInitializeInitialValue(Object value)
+	{
+		if (value instanceof Collection)
+		{
+			return !((Collection) value).isEmpty();
+		}else
+		{
+			return value != null;
 		}
 	}
 
