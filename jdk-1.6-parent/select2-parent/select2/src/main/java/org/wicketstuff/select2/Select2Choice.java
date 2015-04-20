@@ -19,6 +19,7 @@ import java.util.List;
 import org.apache.wicket.ajax.json.JSONException;
 import org.apache.wicket.markup.head.IHeaderResponse;
 import org.apache.wicket.markup.head.OnDomReadyHeaderItem;
+import org.apache.wicket.markup.html.form.IChoiceRenderer;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.util.convert.ConversionException;
 import org.apache.wicket.util.string.Strings;
@@ -41,6 +42,16 @@ public class Select2Choice<T> extends AbstractSelect2Choice<T, T>
 		super(id, model, provider);
 	}
 
+	public Select2Choice(String id, IModel<T> model, List<T> choices, IChoiceRenderer<T> renderer)
+	{
+		super(id, model, choices, renderer);
+	}
+
+	public Select2Choice(String id, List<T> choices, IChoiceRenderer<T> renderer)
+	{
+		super(id, choices, renderer);
+	}
+
 	public Select2Choice(String id, IModel<T> model)
 	{
 		super(id, model);
@@ -56,9 +67,8 @@ public class Select2Choice<T> extends AbstractSelect2Choice<T, T>
 	{
 		if (value != null && value.length > 0 && !Strings.isEmpty(value[0]))
 		{
-			List<String> ids = Collections.singletonList(value[0]);
-			Iterator<T> iterator = getProvider().toChoices(ids).iterator();
-			return iterator.hasNext() ? iterator.next() : null;
+			Iterator<T> it = convertIdsToChoices(Collections.singletonList(value[0])).iterator();
+			return it.hasNext() ? it.next() : null;
 		}
 		else
 		{
@@ -72,13 +82,18 @@ public class Select2Choice<T> extends AbstractSelect2Choice<T, T>
 		T value = getCurrentValue();
 		if (value != null)
 		{
-
 			JsonBuilder selection = new JsonBuilder();
-
 			try
 			{
 				selection.object();
-				getProvider().toJson(value, selection);
+				if (isAjax())
+				{
+					getProvider().toJson(value, selection);
+				}
+				else
+				{
+					renderChoice(value, selection);
+				}
 				selection.endObject();
 			}
 			catch (JSONException e)
