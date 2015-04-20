@@ -13,6 +13,7 @@
 package org.wicketstuff.select2;
 
 import java.util.Collections;
+import java.util.Iterator;
 import java.util.List;
 
 import org.apache.wicket.ajax.json.JSONException;
@@ -20,6 +21,7 @@ import org.apache.wicket.markup.head.IHeaderResponse;
 import org.apache.wicket.markup.head.OnDomReadyHeaderItem;
 import org.apache.wicket.markup.html.form.ChoiceRenderer;
 import org.apache.wicket.model.IModel;
+import org.apache.wicket.util.convert.ConversionException;
 import org.apache.wicket.util.string.Strings;
 import org.wicketstuff.select2.json.JsonBuilder;
 
@@ -56,51 +58,24 @@ public class Select2Choice<T> extends AbstractSelect2Choice<T, T>
 	}
 
 	@Override
-	public void convertInput()
+	protected final T convertValue(String[] value) throws ConversionException
 	{
-		String input = getWebRequest().getRequestParameters()
-			.getParameterValue(getInputName())
-			.toString();
-		if (Strings.isEmpty(input))
+		if (value != null && value.length > 0 && !Strings.isEmpty(value[0]))
 		{
-			setConvertedInput(null);
+			List<String> ids = Collections.singletonList(value[0]);
+			Iterator<T> iterator = getProvider().toChoices(ids).iterator();
+			return iterator.hasNext() ? iterator.next() : null;
 		}
 		else
 		{
-			if (isAjax())
-			{
-				setConvertedInput(getProvider().toChoices(Collections.singleton(input))
-					.iterator()
-					.next());
-			}
-			else
-			{
-				for (int i = 0; i < getChoices().size(); i++)
-				{
-					T item = getChoices().get(i);
-					if (input.equals(getRenderer().getIdValue(item, i)))
-					{
-						setConvertedInput(item);
-						break;
-					}
-				}
-			}
+			return null;
 		}
 	}
 
 	@Override
 	protected void renderInitializationScript(IHeaderResponse response)
 	{
-		T value;
-		if (!isValid() && hasRawInput())
-		{
-			convertInput();
-			value = getConvertedInput();
-		}
-		else
-		{
-			value = getModelObject();
-		}
+		T value = getCurrentValue();
 		if (value != null)
 		{
 
