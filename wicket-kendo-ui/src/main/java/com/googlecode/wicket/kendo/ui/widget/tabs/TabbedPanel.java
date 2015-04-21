@@ -20,6 +20,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import org.apache.wicket.IGenericComponent;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.extensions.markup.html.tabs.ITab;
 import org.apache.wicket.markup.html.basic.Label;
@@ -40,7 +41,7 @@ import com.googlecode.wicket.jquery.core.Options;
  * @since 7.0.0
  */
 // FIXME: target.add(myTabbedPannel) does not work
-public class TabbedPanel extends JQueryPanel implements ITabsListener
+public class TabbedPanel extends JQueryPanel implements ITabsListener, IGenericComponent<List<ITab>>
 {
 	private static final long serialVersionUID = 1L;
 
@@ -119,6 +120,23 @@ public class TabbedPanel extends JQueryPanel implements ITabsListener
 	// Properties //
 
 	@SuppressWarnings("unchecked")
+	@Override
+	public IModel<List<ITab>> getModel() {
+		return (IModel<List<ITab>>) this.getDefaultModel();
+	}
+
+	@Override
+	public void setModel(IModel<List<ITab>> model) {
+		this.setDefaultModel(model);
+	}
+
+	@Override
+	public void setModelObject(List<ITab> object) {
+		this.setDefaultModelObject(object);
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
 	public List<ITab> getModelObject()
 	{
 		List<ITab> list = (List<ITab>) this.getDefaultModelObject();

@@ -20,6 +20,7 @@ import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.util.lang.Args;
 
+import com.googlecode.wicket.jquery.core.GenericJQueryContainer;
 import com.googlecode.wicket.jquery.core.JQueryBehavior;
 import com.googlecode.wicket.jquery.core.JQueryContainer;
 import com.googlecode.wicket.jquery.core.Options;
@@ -30,7 +31,7 @@ import com.googlecode.wicket.jquery.core.Options;
  * @author Sebastien Briquet - sebfz1
  * @since 6.17.0
  */
-public class ProgressBar extends JQueryContainer implements IProgressBarListener
+public class ProgressBar extends GenericJQueryContainer<Integer> implements IProgressBarListener
 {
 	private static final long serialVersionUID = 1L;
 
@@ -114,27 +115,6 @@ public class ProgressBar extends JQueryContainer implements IProgressBarListener
 		Integer max = this.options.get("max");
 
 		return max != null ? max : MAX;
-	}
-
-	/**
-	 * Gets the model (wrapping the value)
-	 *
-	 * @return {@link IModel}
-	 */
-	@SuppressWarnings("unchecked")
-	public IModel<Integer> getModel()
-	{
-		return (IModel<Integer>) this.getDefaultModel();
-	}
-
-	/**
-	 * Gets the model object
-	 *
-	 * @return the progress-bar value
-	 */
-	public Integer getModelObject()
-	{
-		return (Integer) this.getDefaultModelObject();
 	}
 
 	/**

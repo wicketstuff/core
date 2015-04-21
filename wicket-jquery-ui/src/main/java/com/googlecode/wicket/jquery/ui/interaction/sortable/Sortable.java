@@ -30,6 +30,7 @@ import org.apache.wicket.model.util.ListModel;
 import org.apache.wicket.request.cycle.RequestCycle;
 import org.apache.wicket.util.lang.Args;
 
+import com.googlecode.wicket.jquery.core.GenericJQueryContainer;
 import com.googlecode.wicket.jquery.core.JQueryBehavior;
 import com.googlecode.wicket.jquery.core.JQueryContainer;
 import com.googlecode.wicket.jquery.core.Options;
@@ -43,7 +44,7 @@ import com.googlecode.wicket.jquery.core.utils.ListUtils;
  * @author Sebastien Briquet - sebfz1
  *
  */
-public abstract class Sortable<T> extends JQueryContainer implements ISortableListener<T>
+public abstract class Sortable<T> extends GenericJQueryContainer<List<T>> implements ISortableListener<T>
 {
 	private static final long serialVersionUID = 1L;
 
@@ -156,37 +157,6 @@ public abstract class Sortable<T> extends JQueryContainer implements ISortableLi
 	}
 
 	// Properties //
-	/**
-	 * Gets the {@link IModel}
-	 *
-	 * @return the {@link IModel}
-	 */
-	@SuppressWarnings("unchecked")
-	public IModel<List<T>> getModel()
-	{
-		return (IModel<List<T>>) this.getDefaultModel();
-	}
-
-	/**
-	 * Gets the {@link IModel}
-	 *
-	 * @return the {@link IModel}
-	 */
-	@SuppressWarnings("unchecked")
-	public List<T> getModelObject()
-	{
-		return (List<T>) this.getDefaultModelObject();
-	}
-
-	/**
-	 * Sets the model object
-	 *
-	 * @param list the {@link List}
-	 */
-	public void setModelObject(List<T> list)
-	{
-		this.setDefaultModelObject(list);
-	}
 
 	@Override
 	public boolean isOnReceiveEnabled()
