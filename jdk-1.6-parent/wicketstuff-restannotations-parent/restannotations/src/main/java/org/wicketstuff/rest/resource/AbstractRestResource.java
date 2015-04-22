@@ -16,6 +16,16 @@
  */
 package org.wicketstuff.rest.resource;
 
+import java.io.Serializable;
+import java.lang.reflect.Method;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
+
 import org.apache.wicket.Application;
 import org.apache.wicket.Session;
 import org.apache.wicket.WicketRuntimeException;
@@ -48,16 +58,6 @@ import org.wicketstuff.rest.utils.reflection.ReflectionUtils;
 import org.wicketstuff.rest.utils.wicket.AttributesWrapper;
 import org.wicketstuff.rest.utils.wicket.MethodParameterContext;
 import org.wicketstuff.rest.utils.wicket.bundle.DefaultBundleResolver;
-
-import java.io.Serializable;
-import java.lang.reflect.Method;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
 
 /**
  * Base class to build a resource that serves REST requests.
@@ -237,6 +237,9 @@ public abstract class AbstractRestResource<T extends IWebSerialDeserial> impleme
 		{
 			objectToResponse(result, response, outputFormat);
 		}
+		
+		//6-set response content type
+		response.setContentType(outputFormat);
 	}
 
 
@@ -354,7 +357,6 @@ public abstract class AbstractRestResource<T extends IWebSerialDeserial> impleme
 	{
 		try
 		{
-			response.setContentType(mimeType);
 			webSerialDeserial.objectToResponse(result, response, mimeType);
 		}
 		catch (Exception e)
