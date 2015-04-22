@@ -9,13 +9,30 @@
 
                 <p>The clustering is done entirely by the map. All of the points in the viewable extent are loaded from
                     the data source and the clustering is performed client side. As you pan and zoom, all of the
-                    clusters are re-calculated.</p>
-
-                <p><b>Beware:</b> If you zoom out sufficiently far, you will have to wait (perhaps quite a while) for the clusters to be
-                    calculated.</p>
+                  clusters are re-calculated.</p>
 
                 <p>The data is provided by the
                     <a href="http://mhc-macris.net/">Massachusetts Historial Commisssion</a>.</p>
+
+                <h4>Beware</h4>
+                <ul>
+                  <li>If you zoom out sufficiently far, you will have to
+                    wait (perhaps quite a while) for the clusters to be
+                    calculated.</li>
+
+                  <li>There is a known issue with the OpenLayers
+                  ClusterSource, new data is only loaded from the source
+                  when map is zoomed but not panned. For now, the
+                  library has some hacky code that forces data to be
+                  loaded when the map pans. If you need this
+                  functionality, it will only work when deployed with
+                  Wicket in "development" mode, it will fail in
+                  "production". More information can be found
+                  in <a href="https://github.com/wicketstuff/core/issues/381">this
+                  Wicketstuff issue</a> and this
+                  <a href="https://groups.google.com/forum/#!topic/ol3-dev/N7TGCRax_u0">OpenLayers
+                  discussion thread</a>.</li>
+                </ul>
 
                 <div wicket:id="popover">[POPOVER]</div>
 
