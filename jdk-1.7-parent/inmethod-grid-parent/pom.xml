@@ -54,6 +54,12 @@
 			<artifactId>wicket-extensions</artifactId>
 		</dependency>
 
+		<dependency>
+			<groupId>org.wicketstuff</groupId>
+			<artifactId>wicket15-tree</artifactId>
+			<version>1.0.0-SNAPSHOT</version>
+		</dependency>
+
 		<!-- LOGGING DEPENDENCIES - LOG4J -->
 		<dependency>
 			<groupId>org.slf4j</groupId>

@@ -247,6 +247,10 @@ public abstract class AbstractRestResource<T extends IWebSerialDeserial> impleme
 		{
 			objectToResponse(result, response, outputFormat);
 		}
+		
+		//6-set response content type
+		response.setContentType(outputFormat);
+		
 	}
 
 
@@ -386,7 +390,6 @@ public abstract class AbstractRestResource<T extends IWebSerialDeserial> impleme
 	{
 		try
 		{
-			response.setContentType(mimeType);
 			webSerialDeserial.objectToResponse(result, response, mimeType);
 		}
 		catch (Exception e)

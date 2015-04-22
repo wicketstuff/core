@@ -16,15 +16,16 @@ import org.apache.wicket.ajax.json.JSONException;
 import org.apache.wicket.ajax.json.JSONWriter;
 
 /**
- * Takes care of Json serialization for the most common usecase where each
- * choice is rendered as a text string.
+ * Takes care of Json serialization for the most common usecase where each choice is rendered as a
+ * text string.
  * 
  * @author igor
  * 
  * @param <T>
  *            type of choice object
  */
-public abstract class TextChoiceProvider<T> implements ChoiceProvider<T> {
+public abstract class TextChoiceProvider<T> implements ChoiceProvider<T>
+{
 	private static final long serialVersionUID = 1L;
 
 	protected abstract String getDisplayText(T choice);
@@ -32,11 +33,13 @@ public abstract class TextChoiceProvider<T> implements ChoiceProvider<T> {
 	protected abstract Object getId(T choice);
 
 	@Override
-	public final void toJson(T choice, JSONWriter writer) throws JSONException {
+	public final void toJson(T choice, JSONWriter writer) throws JSONException
+	{
 		writer.key("id").value(getId(choice)).key("text").value(getDisplayText(choice));
 	}
 
 	@Override
-	public void detach() {
+	public void detach()
+	{
 	}
 }

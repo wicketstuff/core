@@ -222,9 +222,43 @@ Every URL segment can contain multiple path parameters and each of them can spec
 As you can see in the code above, the syntax to write a regular expression is _{variableName:regExp}_.
 
 
+Response status code
+---------
+To explicitly set the status code of the current response we can simply use `AbstractRestResource` method `setResponseStatusCode(int statusCode)`:
+
+````java
+	@MethodMapping(value = "/customer/{p1}/order/{p2}", produces = RestMimeTypes.PLAIN_TEXT)
+	public String mappedMethod(@PathParam("p2") String textParam, @PathParam("p1") int intParam) {
+		//do some stuff...
+		
+		setResponseStatusCode(201);
+		return result;
+	}
+````
+ 
+
+Exception handling
+---------
+During the invocation of a mapped method we might stumble across possible exceptions. To handle this kind of exceptions we can override method `handleException`:
+
+````java
+	@Override
+	protected void handleException(WebResponse response, Exception exception) {
+		
+		if(exception instanceof IOException) {		
+			//do some stuff...
+		} 
+		else
+		//do some other stuff...
+
+	}
+````
+
+The default implementation of this handler just returns 500 as response code.
+
 Validation
 ---------
-Class `AbstractRestResource` offers validation support through standard Wicket validators (i.e. implementations of interface `IValidator`). With method `registerValidator` we can "register" a specific validator assigning a unique key:  
+Class `AbstractRestResource` offers validation support through standard Wicket validators (i.e. implementations of interface `IValidator`). With method `registerValidator` we can "register" a specific validator assigning a unique key:
 
 ````java
 	@Override

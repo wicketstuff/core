@@ -7,22 +7,26 @@ import java.util.Collection;
  *
  * @author Tom Götz (tom@decoded.de)
  */
-public abstract class StringTextChoiceProvider extends TextChoiceProvider<String> {
+public abstract class StringTextChoiceProvider extends TextChoiceProvider<String>
+{
 	private static final long serialVersionUID = 1L;
 
 	@Override
-    protected String getDisplayText(String choice) {
-        return choice;
-    }
+	protected String getDisplayText(String choice)
+	{
+		return choice;
+	}
 
-    @Override
-    protected Object getId(String choice) {
-        return choice;
-    }
+	@Override
+	protected Object getId(String choice)
+	{
+		return choice;
+	}
 
-    @Override
-    public Collection<String> toChoices(Collection<String> ids) {
-        return ids;
-    }
+	@Override
+	public Collection<String> toChoices(Collection<String> ids)
+	{
+		return ids;
+	}
 
 }

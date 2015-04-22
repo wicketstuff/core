@@ -2,6 +2,7 @@ package com.inmethod.grid.column;
 
 import org.apache.wicket.Component;
 import org.apache.wicket.ajax.AjaxRequestTarget;
+import org.apache.wicket.ajax.attributes.AjaxCallListener;
 import org.apache.wicket.ajax.attributes.AjaxRequestAttributes;
 import org.apache.wicket.ajax.form.AjaxFormSubmitBehavior;
 import org.apache.wicket.markup.ComponentTag;
@@ -189,10 +190,13 @@ public class CheckBoxColumn<M, I, S> extends AbstractColumn<M, I, S>
 				}
 
 				@Override
-				protected CharSequence getPreconditionScript()
+				protected void updateAjaxAttributes(AjaxRequestAttributes attributes)
 				{
-					return "window.setTimeout(function(){this.checked=!this.checked}.bind(this),0);" +
-						super.getPreconditionScript();
+					super.updateAjaxAttributes(attributes);
+
+					AjaxCallListener listener = new AjaxCallListener();
+					listener.onBeforeSend("var cb = Wicket.$(attrs.c); cb.checked=!cb.checked");
+					attributes.getAjaxCallListeners().add(listener);
 				}
 			});
 		}
@@ -341,13 +345,10 @@ public class CheckBoxColumn<M, I, S> extends AbstractColumn<M, I, S>
 
 					CharSequence checkedParameter = "return {'checked': Wicket.$(attrs.c).checked}";
 					attributes.getDynamicExtraParameters().add(checkedParameter);
-				}
 
-				@Override
-				protected CharSequence getPreconditionScript()
-				{
-					return "window.setTimeout(function(){this.checked=!this.checked}.bind(this),0);" +
-						super.getPreconditionScript();
+					AjaxCallListener listener = new AjaxCallListener();
+					listener.onBeforeSend("var cb = Wicket.$(attrs.c); cb.checked=!cb.checked");
+					attributes.getAjaxCallListeners().add(listener);
 				}
 			});
 		}
