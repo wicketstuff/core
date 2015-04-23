@@ -28,8 +28,8 @@ public class WicketApplication extends WebApplication {
         // scan for annotations
         new AnnotatedMountScanner().scanPackage("org.wicketstuff.openlayers3.examples").mount(this);
 
-		// setup webjars
-		WebjarsSettings webjarsSettings = new WebjarsSettings();
+	// setup webjars
+	WebjarsSettings webjarsSettings = new WebjarsSettings();
         WicketWebjars.install(this, webjarsSettings);
 
         // setup wicket boostrap
