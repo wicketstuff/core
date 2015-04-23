@@ -39,6 +39,11 @@ public class View extends JavascriptObject implements Serializable {
      */
     public String projection;
 
+	/**
+	 * Extent for this map.
+	 */
+	private Extent extent;
+
     /**
      * Creates a new instance.
      *
@@ -92,12 +97,31 @@ public class View extends JavascriptObject implements Serializable {
      *         The projection for this view
      */
     public View(Coordinate center, Integer zoom, Integer maxZoom, String projection) {
+		this(center, zoom, maxZoom, projection, null);
+    }
+
+	/**
+     * Creates a new instance.
+     *
+     * @param center
+     *         The coordinate at the center of this view
+     * @param zoom
+     *         The zoom factor for this view
+     * @param maxZoom
+     *         The maximum zoom factor for this view
+     * @param projection
+     *         The projection for this view
+     * @param extent
+     *         The extent for this view
+     */
+    public View(Coordinate center, Integer zoom, Integer maxZoom, String projection, Extent extent) {
         super();
 
         this.center = center;
         this.zoom = zoom;
         this.maxZoom = maxZoom;
         this.projection = projection;
+		this.extent = extent;
     }
 
     /**
@@ -254,6 +278,35 @@ public class View extends JavascriptObject implements Serializable {
         setMaxZoom(maxZoom);
         return this;
     }
+
+	/**
+	 * Returns the extent for this view.
+	 *
+	 * @return Extent for this view
+	 */
+	public Extent getExtent() {
+		return extent;
+	}
+
+	/**
+	 * Sets the extent for this view.
+	 *
+	 * @param extent The extent for this view
+	 */
+	public void setExtent(Extent extent) {
+		this.extent = extent;
+	}
+
+	/**
+	 * Sets the extent for this view.
+	 *
+	 * @param extent The extent for this view
+	 * @return this instance
+	 */
+	public View extent(Extent extent) {
+		setExtent(extent);
+		return this;
+	}
 
     @Override
     public String getJsType() {

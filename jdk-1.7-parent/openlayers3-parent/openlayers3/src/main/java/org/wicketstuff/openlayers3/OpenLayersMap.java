@@ -8,6 +8,7 @@ import org.apache.wicket.markup.html.panel.GenericPanel;
 import org.apache.wicket.model.IModel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.wicketstuff.openlayers3.api.Extent;
 import org.wicketstuff.openlayers3.api.Feature;
 import org.wicketstuff.openlayers3.api.JavascriptObject;
 import org.wicketstuff.openlayers3.api.Map;
@@ -199,6 +200,18 @@ public abstract class OpenLayersMap extends GenericPanel<Map> {
 			+ interaction.getJsId() + ");");
     }
 
+	/**
+     * Sets the extent for the map and zooms to that extent.
+     *
+     * @param target Ajax request target
+     * @param extent Extent to which the map will be zoomed
+     */
+	public void zoomToExtent(AjaxRequestTarget target, Extent extent) {
+		target.appendJavaScript(JavascriptObject.JS_GLOBAL + "['map_" + getMarkupId() + "'].getView().fitExtent("
+			+ getModelObject().getView().getExtent().renderJsForView(getModelObject().getView()) + ","
+			+ JavascriptObject.JS_GLOBAL + "['map_" + getMarkupId() + "']" + ".getSize());");
+	}
+
     @Override
     public abstract void renderHead(final IHeaderResponse response);
 
@@ -346,6 +359,11 @@ public abstract class OpenLayersMap extends GenericPanel<Map> {
                 }
             }
         }
+
+		if(map.getView().getExtent() != null) {
+			builder.append(map.getJsId() + ".getView().fitExtent(" + map.getView().getExtent().renderJsForView(map.getView()) + ","
+				+ map.getJsId() + ".getSize());");
+		}
 
         return builder.toString();
     }

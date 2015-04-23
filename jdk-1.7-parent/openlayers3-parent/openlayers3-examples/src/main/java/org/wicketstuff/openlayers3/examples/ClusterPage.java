@@ -105,7 +105,7 @@ public class ClusterPage extends BasePage {
                                                 // vector data source for calculating clusters
                                                 new ServerVector(new GeoJsonFormat(),
                                                         new DefaultGeoJsonLoader(
-                                                                "http://mhc-macris.net:8080/geoserver/MHC/ows?"
+                                                                "http://mhc-macris.net:8080/geoserver/ows?"
                                                                         + "service=WFS"
                                                                         + "&version=1.0.0&request=GetFeature"
                                                                         + "&typeName=MHC:in_pts&outputFormat=json",
