@@ -40,7 +40,7 @@ public abstract class InputWindow<T> extends Window<T>
 	/** feedback panel */
 	private final KendoFeedbackPanel feedback;
 
-	private final Form<Void> form;
+	private final Form<?> form;
 
 	/**
 	 * Constructor
@@ -111,7 +111,7 @@ public abstract class InputWindow<T> extends Window<T>
 	 * @return the form
 	 */
 	@Override
-	public Form<Void> getForm()
+	public Form<?> getForm()
 	{
 		return this.form;
 	}

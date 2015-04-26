@@ -93,7 +93,7 @@ public abstract class InputDialog<T extends Serializable> extends AbstractFormDi
 
 		this.label = label;
 
-		this.form = new Form<T>("form");
+		this.form = InputDialog.newForm("form");
 		this.add(this.form);
 
 		this.form.add(new Label("label", this.label));
@@ -115,6 +115,7 @@ public abstract class InputDialog<T extends Serializable> extends AbstractFormDi
 	}
 
 	// Properties //
+
 	/**
 	 * Sets the text that will be displayed in front of the text field.
 	 *
@@ -140,6 +141,12 @@ public abstract class InputDialog<T extends Serializable> extends AbstractFormDi
 		this.label = label;
 	}
 
+	@Override
+	public Form<?> getForm()
+	{
+		return this.form;
+	}
+
 	/**
 	 * Indicates whether the underlying input is required
 	 *
@@ -148,12 +155,6 @@ public abstract class InputDialog<T extends Serializable> extends AbstractFormDi
 	public boolean isRequired()
 	{
 		return true;
-	}
-
-	@Override
-	public Form<?> getForm()
-	{
-		return this.form;
 	}
 
 	@Override
@@ -186,5 +187,27 @@ public abstract class InputDialog<T extends Serializable> extends AbstractFormDi
 	public final void onError(AjaxRequestTarget target)
 	{
 		target.add(this.form.get("feedback"));
+	}
+
+	// Factories //
+
+	/**
+	 * Gets a new {@link Form}
+	 *
+	 * @param id the markup-id
+	 * @return the new form
+	 */
+	private static Form<?> newForm(String id)
+	{
+		return new Form<Void>(id) {
+
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			protected boolean wantSubmitOnParentFormSubmit()
+			{
+				return false;
+			}
+		};
 	}
 }
