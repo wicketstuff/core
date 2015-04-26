@@ -17,7 +17,10 @@
 package com.googlecode.wicket.kendo.ui.widget.window;
 
 import org.apache.wicket.markup.html.form.IFormSubmittingComponent;
+import org.apache.wicket.model.IModel;
+import org.apache.wicket.model.Model;
 import org.apache.wicket.util.io.IClusterable;
+import org.apache.wicket.util.string.Strings;
 
 import com.googlecode.wicket.kendo.ui.KendoIcon;
 
@@ -35,32 +38,32 @@ public class WindowButton implements IClusterable
 
 	/**
 	 * Helper that creates a new {@link WindowButton}
-	 * 
+	 *
 	 * @param text the button's text
 	 * @param formProcessing whether the form will be validated and updated
 	 * @return a new {@link WindowButton}
 	 */
-	public static WindowButton of(String text, boolean formProcessing)
+	public static WindowButton of(IModel<String> text, boolean formProcessing)
 	{
 		return WindowButton.of(text, ICON, formProcessing);
 	}
 
 	/**
 	 * Helper that creates a new {@link WindowButton}
-	 * 
+	 *
 	 * @param text the button's text
 	 * @param icon the button's icon
 	 * @param formProcessing whether the form will be validated and updated
 	 * @return a new {@link WindowButton}
 	 */
-	public static WindowButton of(String text, String icon, boolean formProcessing)
+	public static WindowButton of(IModel<String> text, String icon, boolean formProcessing)
 	{
 		WindowButton button = new WindowButton(text, icon);
 
 		return button.setDefaultFormProcessing(formProcessing);
 	}
 
-	private final String text;
+	private final IModel<String> model;
 	private String icon;
 	private boolean enabled;
 	private boolean visible = true;
@@ -73,7 +76,7 @@ public class WindowButton implements IClusterable
 	 */
 	public WindowButton(String text)
 	{
-		this(text, ICON, true);
+		this(Model.of(text), ICON, true);
 	}
 
 	/**
@@ -84,7 +87,7 @@ public class WindowButton implements IClusterable
 	 */
 	public WindowButton(String text, String icon)
 	{
-		this(text, icon, true);
+		this(Model.of(text), icon, true);
 	}
 
 	/**
@@ -95,7 +98,7 @@ public class WindowButton implements IClusterable
 	 */
 	public WindowButton(String text, boolean enabled)
 	{
-		this(text, ICON, enabled);
+		this(Model.of(text), ICON, enabled);
 	}
 
 	/**
@@ -107,7 +110,51 @@ public class WindowButton implements IClusterable
 	 */
 	public WindowButton(String text, String icon, boolean enabled)
 	{
-		this.text = text;
+		this(Model.of(text), icon, enabled);
+	}
+
+	/**
+	 * Constructor
+	 *
+	 * @param text the button's text
+	 */
+	public WindowButton(IModel<String> text)
+	{
+		this(text, ICON, true);
+	}
+
+	/**
+	 * Constructor
+	 *
+	 * @param text the button's text
+	 * @param icon the button's icon
+	 */
+	public WindowButton(IModel<String> text, String icon)
+	{
+		this(text, icon, true);
+	}
+
+	/**
+	 * Constructor
+	 *
+	 * @param text the button's text
+	 * @param enabled indicates whether the button is enabled
+	 */
+	public WindowButton(IModel<String> text, boolean enabled)
+	{
+		this(text, ICON, enabled);
+	}
+
+	/**
+	 * Main constructor
+	 *
+	 * @param text the button's text
+	 * @param icon the button's icon
+	 * @param enabled indicates whether the button is enabled
+	 */
+	public WindowButton(IModel<String> text, String icon, boolean enabled)
+	{
+		this.model = text;
 		this.icon = icon;
 		this.enabled = enabled;
 	}
@@ -136,12 +183,22 @@ public class WindowButton implements IClusterable
 
 	/**
 	 * Gets the button's text
-	 * 
+	 *
 	 * @return the button's text
 	 */
 	public String getText()
 	{
-		return this.text;
+		return this.model.getObject();
+	}
+
+	/**
+	 * Gets the model of the button's text
+	 *
+	 * @return the {@link IModel}
+	 */
+	public IModel<String> getTextModel()
+	{
+		return this.model;
 	}
 
 	/**
@@ -170,7 +227,7 @@ public class WindowButton implements IClusterable
 
 	/**
 	 * Indicates whether the form will be validated and updated.
-	 * 
+	 *
 	 * @return true by default
 	 * @see IFormSubmittingComponent#getDefaultFormProcessing()
 	 */
@@ -181,7 +238,7 @@ public class WindowButton implements IClusterable
 
 	/**
 	 * Set the default form processing
-	 * 
+	 *
 	 * @param processing true or false
 	 * @return this, for chaining
 	 */
@@ -206,12 +263,12 @@ public class WindowButton implements IClusterable
 	{
 		if (object instanceof WindowButton)
 		{
-			return this.match(object.toString());
+			return this.match(((WindowButton) object).getTextModel());
 		}
 
 		return super.equals(object);
 	}
-	
+
 	@Override
 	public int hashCode()
 	{
@@ -219,19 +276,30 @@ public class WindowButton implements IClusterable
 	}
 
 	/**
-	 * Indicates whether this {@link WindowButton} text representation ({@link #toString()}) match to the supplied text.
+	 * Indicates whether this {@link WindowButton} text representation ({@link #toString()}) match the supplied text.
 	 *
 	 * @param text the text to compare to
 	 * @return true if equal
 	 */
 	public boolean match(String text)
 	{
-		return text.equals(this.toString()); // let throw a NPE
+		return Strings.isEqual(text, this.toString());
+	}
+
+	/**
+	 * Indicates whether this {@link WindowButton} text representation ({@link #toString()}) match the supplied text.
+	 *
+	 * @param text the text to compare to
+	 * @return true if equal
+	 */
+	public boolean match(IModel<String> text)
+	{
+		return this.match(text.getObject());
 	}
 
 	@Override
 	public String toString()
 	{
-		return this.text;
+		return this.getText();
 	}
 }

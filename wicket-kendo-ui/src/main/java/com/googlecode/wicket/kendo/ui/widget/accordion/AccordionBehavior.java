@@ -109,7 +109,7 @@ public abstract class AccordionBehavior extends KendoUIBehavior implements IJQue
 
 	/**
 	 * Gets the jQuery 'select' and 'expand' statement
-	 * 
+	 *
 	 * @param index the visible tab's index
 	 * @return the jQuery statement
 	 */
@@ -119,16 +119,6 @@ public abstract class AccordionBehavior extends KendoUIBehavior implements IJQue
 	}
 
 	// Methods //
-
-	/**
-	 * Gets the Kendo (jQuery) object
-	 *
-	 * @return the jQuery object
-	 */
-	protected String widget()
-	{
-		return this.widget(METHOD);
-	}
 
 	@Override
 	public void bind(Component component)

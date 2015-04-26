@@ -18,6 +18,7 @@
 		<module>theme-blue-opal</module>
 		<module>theme-bootstrap</module>
 		<module>theme-default</module>
+		<module>theme-fiori</module>
 		<module>theme-flat</module>
 		<module>theme-high-contrast</module>
 		<module>theme-material</module>

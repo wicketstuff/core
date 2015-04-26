@@ -54,7 +54,7 @@ public class DownloadLink extends org.apache.wicket.markup.html.link.DownloadLin
 	 *
 	 * @param id the markup id
 	 * @param model model that contains the file object
-	 * @param icon either a {@link KendoIcon} constant or a 'k-i-<i>icon</i>' css class
+	 * @param icon either a {@link JQueryIcon} constant or a 'ui-icon-xxx' css class
 	 */
 	public DownloadLink(String id, IModel<File> model, String icon)
 	{
@@ -81,7 +81,7 @@ public class DownloadLink extends org.apache.wicket.markup.html.link.DownloadLin
 	 * @param id the markup id
 	 * @param model model that contains the file object
 	 * @param filename model that provides the file name to use in the response headers
-	 * @param icon either a {@link KendoIcon} constant or a 'k-i-<i>icon</i>' css class
+	 * @param icon either a {@link JQueryIcon} constant or a 'ui-icon-xxx' css class
 	 */
 	public DownloadLink(String id, IModel<File> model, IModel<String> filename, String icon)
 	{

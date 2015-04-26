@@ -29,29 +29,29 @@ public class WindowButtonUtils
 	 * Helper that applies #setDefaultFormProcessing to the list of {@link WindowButton}<code>s</code><br/>
 	 * <br/>
 	 * <b>Warning:</b> the WindowButtons supplied in argument will be modified
-	 * 
-	 * @return the list of {@link WindowButton}
+	 *
+	 * @param buttons the list of {@link WindowButton}
+	 * @param processing whether the form will be validated and updated
 	 */
-	public static List<WindowButton> setDefaultFormProcessing(WindowButtons buttons, boolean processing)
+	public static void setDefaultFormProcessing(WindowButtons buttons, boolean processing)
 	{
-		return WindowButtonUtils.setDefaultFormProcessing(buttons.toList(), processing);
+		WindowButtonUtils.setDefaultFormProcessing(buttons.toList(), processing);
 	}
 
 	/**
 	 * Helper that applies #setDefaultFormProcessing to the list of {@link WindowButton}<code>s</code><br/>
 	 * <br/>
 	 * <b>Warning:</b> the WindowButtons supplied in the list argument will be modified
-	 * 
-	 * @return the list of {@link WindowButton}
+	 *
+	 * @param buttons the list of {@link WindowButton}
+	 * @param processing whether the form will be validated and updated
 	 */
-	public static List<WindowButton> setDefaultFormProcessing(List<WindowButton> buttons, boolean processing)
+	public static void setDefaultFormProcessing(List<WindowButton> buttons, boolean processing)
 	{
 		for (WindowButton button : buttons)
 		{
 			button.setDefaultFormProcessing(processing);
 		}
-
-		return buttons;
 	}
 
 	/**

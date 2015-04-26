@@ -137,7 +137,7 @@ public class KendoUIBehavior extends JQueryBehavior
 	 *
 	 * @return the the jQuery object
 	 */
-	protected String widget()
+	public String widget()
 	{
 		return this.widget(this.method);
 	}

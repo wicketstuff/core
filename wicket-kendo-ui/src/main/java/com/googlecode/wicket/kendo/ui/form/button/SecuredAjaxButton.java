@@ -117,6 +117,7 @@ public abstract class SecuredAjaxButton extends AjaxButton
 	}
 
 	// Events //
+
 	@Override
 	protected void onConfigure()
 	{

@@ -20,7 +20,7 @@ public class DefaultConsolePage extends AbstractConsolePage
 
 	public DefaultConsolePage()
 	{
-		this.errorFeedbackMessagesModel = this.newErrorFeedbackMessagesModel(this);
+		this.errorFeedbackMessagesModel = newErrorFeedbackMessagesModel(this);
 
 		this.initialize();
 	}
@@ -62,7 +62,7 @@ public class DefaultConsolePage extends AbstractConsolePage
 		});
 	}
 
-	protected final FeedbackMessagesModel newErrorFeedbackMessagesModel(Page page)
+	protected static FeedbackMessagesModel newErrorFeedbackMessagesModel(Page page)
 	{
 		return new FeedbackMessagesModel(page, new ErrorLevelFeedbackMessageFilter(FeedbackMessage.ERROR));
 	}

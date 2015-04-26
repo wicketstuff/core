@@ -107,16 +107,6 @@ public abstract class TabsBehavior extends KendoUIBehavior implements IJQueryAja
 
 	// Methods //
 
-	/**
-	 * Gets the Kendo (jQuery) object
-	 *
-	 * @return the jQuery object
-	 */
-	protected String widget()
-	{
-		return this.widget(METHOD);
-	}
-
 	@Override
 	public void bind(Component component)
 	{

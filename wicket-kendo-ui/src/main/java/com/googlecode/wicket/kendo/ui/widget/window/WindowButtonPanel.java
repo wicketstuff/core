@@ -23,7 +23,6 @@ import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.markup.repeater.RepeatingView;
-import org.apache.wicket.model.Model;
 
 import com.googlecode.wicket.kendo.ui.form.button.AjaxButton;
 
@@ -119,7 +118,7 @@ public abstract class WindowButtonPanel extends Panel
 			{
 				super.onInitialize();
 
-				this.add(new Label("text", Model.of(button.getText())).setRenderBodyOnly(true));
+				this.add(new Label("text", button.getTextModel()).setRenderBodyOnly(true));
 			}
 
 			@Override

@@ -19,6 +19,7 @@ package com.googlecode.wicket.jquery.ui.widget.dialog;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.util.io.IClusterable;
+import org.apache.wicket.util.string.Strings;
 
 /**
  * Provides the button object that can be used in dialogs
@@ -316,7 +317,7 @@ public class DialogButton implements IClusterable
 	 */
 	public boolean match(String text)
 	{
-		return text.equals(this.toString()); // let throw a NPE
+		return Strings.isEqual(text, this.toString());
 	}
 
 	@Override

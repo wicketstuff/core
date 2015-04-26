@@ -50,7 +50,7 @@ public abstract class AjaxSubmitLink extends org.apache.wicket.ajax.markup.html.
 	 * Constructor
 	 *
 	 * @param id the markup id
-	 * @param icon either a {@link KendoIcon} constant or a 'k-i-<i>icon</i>' css class
+	 * @param icon either a {@link JQueryIcon} constant or a 'ui-icon-xxx' css class
 	 */
 	public AjaxSubmitLink(String id, String icon)
 	{
@@ -75,7 +75,7 @@ public abstract class AjaxSubmitLink extends org.apache.wicket.ajax.markup.html.
 	 *
 	 * @param id the markup id
 	 * @param form the {@link Form}
-	 * @param icon either a {@link KendoIcon} constant or a 'k-i-<i>icon</i>' css class
+	 * @param icon either a {@link JQueryIcon} constant or a 'ui-icon-xxx' css class
 	 */
 	public AjaxSubmitLink(String id, Form<?> form, String icon)
 	{

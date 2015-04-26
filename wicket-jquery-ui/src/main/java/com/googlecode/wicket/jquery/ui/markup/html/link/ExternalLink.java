@@ -52,7 +52,7 @@ public class ExternalLink extends org.apache.wicket.markup.html.link.ExternalLin
 	 *
 	 * @param id the markup id
 	 * @param href the href attribute to set
-	 * @param icon either a {@link KendoIcon} constant or a 'k-i-<i>icon</i>' css class
+	 * @param icon either a {@link JQueryIcon} constant or a 'ui-icon-xxx' css class
 	 */
 	public ExternalLink(String id, IModel<String> href, String icon)
 	{
@@ -79,7 +79,7 @@ public class ExternalLink extends org.apache.wicket.markup.html.link.ExternalLin
 	 * @param id the markup id
 	 * @param href the href attribute to set
 	 * @param label the label (body)
-	 * @param icon either a {@link KendoIcon} constant or a 'k-i-<i>icon</i>' css class
+	 * @param icon either a {@link JQueryIcon} constant or a 'ui-icon-xxx' css class
 	 */
 	public ExternalLink(String id, IModel<String> href, final IModel<?> label, String icon)
 	{

@@ -28,6 +28,7 @@ import com.googlecode.wicket.jquery.ui.form.button.ButtonBehavior;
 /**
  * Provides a Kendo UI button based on a built-in <code>ResourceLink</code>
  *
+ * @param <T> the model object type
  * @author Sebastien Briquet - sebfz1
  * @since 6.19.0
  * @since 7.0.0
@@ -54,7 +55,7 @@ public class ResourceLink<T> extends org.apache.wicket.markup.html.link.Resource
 	 *
 	 * @param id the markup id
 	 * @param reference the shared resource to link to
-	 * @param icon either a {@link KendoIcon} constant or a 'k-i-<i>icon</i>' css class
+	 * @param icon either a {@link JQueryIcon} constant or a 'ui-icon-xxx' css class
 	 */
 	public ResourceLink(String id, ResourceReference reference, String icon)
 	{
@@ -81,7 +82,7 @@ public class ResourceLink<T> extends org.apache.wicket.markup.html.link.Resource
 	 * @param id the markup id
 	 * @param reference the shared resource to link to
 	 * @param parameters the resource parameters
-	 * @param icon either a {@link KendoIcon} constant or a 'k-i-<i>icon</i>' css class
+	 * @param icon either a {@link JQueryIcon} constant or a 'ui-icon-xxx' css class
 	 */
 	public ResourceLink(String id, ResourceReference reference, PageParameters parameters, String icon)
 	{
@@ -106,7 +107,7 @@ public class ResourceLink<T> extends org.apache.wicket.markup.html.link.Resource
 	 *
 	 * @param id the markup id
 	 * @param resource the resource
-	 * @param icon either a {@link KendoIcon} constant or a 'k-i-<i>icon</i>' css class
+	 * @param icon either a {@link JQueryIcon} constant or a 'ui-icon-xxx' css class
 	 */
 	public ResourceLink(String id, IResource resource, String icon)
 	{

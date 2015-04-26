@@ -19,7 +19,6 @@ package com.googlecode.wicket.kendo.ui.form.button;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.model.IModel;
 
-import com.googlecode.wicket.jquery.core.IJQueryWidget;
 import com.googlecode.wicket.jquery.core.Options;
 
 /**
@@ -28,7 +27,7 @@ import com.googlecode.wicket.jquery.core.Options;
  * @author Sebastien Briquet - sebfz1
  *
  */
-public class IndicatingButton extends Button implements IJQueryWidget
+public class IndicatingButton extends Button
 {
 	private static final long serialVersionUID = 1L;
 
@@ -59,7 +58,7 @@ public class IndicatingButton extends Button implements IJQueryWidget
 	 * Indicates whether the button will be disabled on-click to prevent double submit<br/>
 	 * <br/>
 	 * <b>Warning:</b> the button will not be send as part of the post because of its disabled state. Therefore {@link Button#onSubmit()} will not be reached, {@link Form#onSubmit()} should be used instead.
-	 * 
+	 *
 	 * @return false by default
 	 */
 	protected boolean isDisabledOnClick()

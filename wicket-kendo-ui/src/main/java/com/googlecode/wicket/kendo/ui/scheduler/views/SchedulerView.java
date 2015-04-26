@@ -32,7 +32,7 @@ public abstract class SchedulerView extends Options
 	}
 
 	/**
-	 * Indicated whether the view will be initially selected by the scheduler widget.
+	 * Indicates whether the view will be initially selected by the scheduler widget.
 	 *
 	 * @param selected true or false
 	 * @return <tt>this</tt>, for chaining

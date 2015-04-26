@@ -24,6 +24,7 @@ import com.googlecode.wicket.kendo.ui.form.button.ButtonBehavior;
 /**
  * Provides a Kendo UI button based on a built-in <code>StatelessLink</code>
  *
+ * @param <T> the model object type
  * @author Sebastien Briquet - sebfz1
  * @since 6.19.0
  * @since 7.0.0

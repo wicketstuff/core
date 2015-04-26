@@ -81,16 +81,6 @@ public class NotificationBehavior extends KendoUIBehavior
 	}
 
 	/**
-	 * Gets the Kendo (jQuery) object
-	 *
-	 * @return the jQuery object
-	 */
-	protected String widget()
-	{
-		return this.widget(METHOD);
-	}
-
-	/**
 	 * Formats the message (escaping, etc)
 	 *
 	 * @param message the message to format

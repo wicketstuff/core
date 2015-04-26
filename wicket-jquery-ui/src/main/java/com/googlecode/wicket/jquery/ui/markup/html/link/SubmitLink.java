@@ -51,7 +51,7 @@ public class SubmitLink extends org.apache.wicket.markup.html.form.SubmitLink im
 	 * Constructor
 	 *
 	 * @param id the markup id
-	 * @param icon either a {@link KendoIcon} constant or a 'k-i-<i>icon</i>' css class
+	 * @param icon either a {@link JQueryIcon} constant or a 'ui-icon-xxx' css class
 	 */
 	public SubmitLink(String id, String icon)
 	{
@@ -76,7 +76,7 @@ public class SubmitLink extends org.apache.wicket.markup.html.form.SubmitLink im
 	 *
 	 * @param id the markup id
 	 * @param model the {@link IModel}
-	 * @param icon either a {@link KendoIcon} constant or a 'k-i-<i>icon</i>' css class
+	 * @param icon either a {@link JQueryIcon} constant or a 'ui-icon-xxx' css class
 	 */
 	public SubmitLink(String id, IModel<?> model, String icon)
 	{
@@ -101,7 +101,7 @@ public class SubmitLink extends org.apache.wicket.markup.html.form.SubmitLink im
 	 *
 	 * @param id the markup id
 	 * @param form the form to submit
-	 * @param icon either a {@link KendoIcon} constant or a 'k-i-<i>icon</i>' css class
+	 * @param icon either a {@link JQueryIcon} constant or a 'ui-icon-xxx' css class
 	 */
 	public SubmitLink(String id, Form<?> form, String icon)
 	{
@@ -128,7 +128,7 @@ public class SubmitLink extends org.apache.wicket.markup.html.form.SubmitLink im
 	 * @param id the markup id
 	 * @param model the {@link IModel}
 	 * @param form the form to submit
-	 * @param icon either a {@link KendoIcon} constant or a 'k-i-<i>icon</i>' css class
+	 * @param icon either a {@link JQueryIcon} constant or a 'ui-icon-xxx' css class
 	 */
 	public SubmitLink(String id, IModel<?> model, Form<?> form, String icon)
 	{

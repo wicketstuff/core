@@ -29,7 +29,7 @@ interface ICalendarListener
 {
 	/**
 	 * Indicates whether a cell can be selected.<br/>
-	 * If true, the {@link #onSelect(AjaxRequestTarget, CalendarView, Date, Date, boolean)} event will be triggered
+	 * If true, the {@link #onSelect(AjaxRequestTarget, CalendarView, LocalDateTime, LocalDateTime, boolean)} event will be triggered
 	 *
 	 * @return false by default
 	 */
@@ -37,7 +37,7 @@ interface ICalendarListener
 
 	/**
 	 * Indicates whether a day can be clicked.<br/>
-	 * If true, the {@link #onDayClick(AjaxRequestTarget, CalendarView, Date, boolean)} event will be triggered<br/>
+	 * If true, the {@link #onDayClick(AjaxRequestTarget, CalendarView, LocalDateTime, boolean)} event will be triggered<br/>
 	 * <b>Note:</b> <tt>true</tt> will enable the global 'editable' option to <tt>true</tt>.
 	 *
 	 * @return false by default
@@ -56,7 +56,7 @@ interface ICalendarListener
 	boolean isEventClickEnabled();
 
 	/**
-	 * Indicates whether the {@link #onObjectDrop(AjaxRequestTarget, String, Date, boolean)} event will be triggered
+	 * Indicates whether the {@link #onObjectDrop(AjaxRequestTarget, String, LocalDateTime, boolean)} event will be triggered
 	 *
 	 * @return false by default
 	 */
@@ -77,7 +77,7 @@ interface ICalendarListener
 	boolean isEventResizeEnabled();
 
 	/**
-	 * Indicates whether the {@link #onViewRender(AjaxRequestTarget, CalendarView, Date, Date)} event will be triggered
+	 * Indicates whether the {@link #onViewRender(AjaxRequestTarget, CalendarView, LocalDateTime, LocalDateTime)} event will be triggered
 	 *
 	 * @return false by default
 	 */
@@ -107,8 +107,8 @@ interface ICalendarListener
 	 *
 	 * @param target the {@link AjaxRequestTarget}
 	 * @param view the current calendar view
-	 * @param start the event start {@link Date}
-	 * @param end the event end {@link Date}
+	 * @param start the event start {@link LocalDateTime}
+	 * @param end the event end {@link LocalDateTime}
 	 * @param allDay the event all-day property
 	 */
 	void onSelect(AjaxRequestTarget target, CalendarView view, LocalDateTime start, LocalDateTime end, boolean allDay);
@@ -172,8 +172,8 @@ interface ICalendarListener
 	 *
 	 * @param target the {@link AjaxRequestTarget}
 	 * @param view the current calendar view
-	 * @param start the start {@link Date} of the current view
-	 * @param end the event end {@link Date} of the current view
+	 * @param start the start {@link LocalDateTime} of the current view
+	 * @param end the event end {@link LocalDateTime} of the current view
 	 */
 	void onViewRender(AjaxRequestTarget target, CalendarView view, LocalDateTime start, LocalDateTime end);
 }

@@ -22,10 +22,10 @@ import com.googlecode.wicket.jquery.ui.widget.menu.Menu;
 
 /**
  * Base class for jQuery split-button
- * 
+ *
  * @author Patrick Davids - Patrick1701
  * @author Sebastien Briquet - sebfz1
- * 
+ *
  */
 public abstract class AbstractSplitButton extends GenericPanel<List<IMenuItem>>
 {
@@ -37,7 +37,7 @@ public abstract class AbstractSplitButton extends GenericPanel<List<IMenuItem>>
 
 	/**
 	 * Constructor
-	 * 
+	 *
 	 * @param id the markup id
 	 * @param items the list of {@link IMenuItem}
 	 */
@@ -48,7 +48,7 @@ public abstract class AbstractSplitButton extends GenericPanel<List<IMenuItem>>
 
 	/**
 	 * Constructor
-	 * 
+	 *
 	 * @param id the markup id
 	 * @param items the list model of {@link IMenuItem}
 	 */
@@ -72,7 +72,7 @@ public abstract class AbstractSplitButton extends GenericPanel<List<IMenuItem>>
 	/**
 	 * Returns whether form should be processed the default way.<br/>
 	 * If false, all validation and form updating is bypassed and the onSubmit method of that button is called directly, and the onSubmit method of the parent form is not called.
-	 * 
+	 *
 	 * @return <code>true</code> or <code>false</code>
 	 */
 	public boolean getDefaultFormProcessing()
@@ -82,8 +82,9 @@ public abstract class AbstractSplitButton extends GenericPanel<List<IMenuItem>>
 
 	/**
 	 * Sets whether form should be processed the default way.
-	 * 
+	 *
 	 * @param defaultFormProcessing <code>true</code> or <code>false</code>
+	 * @return this, for chaining
 	 */
 	public AbstractSplitButton setDefaultFormProcessing(boolean defaultFormProcessing)
 	{
@@ -105,11 +106,11 @@ public abstract class AbstractSplitButton extends GenericPanel<List<IMenuItem>>
 
 		// main-button //
 		this.button = this.newLink("button");
-		this.button.add(this.newButtonSetBehavior(buttonset)); // the 'buttonset' behavior is attached to the button to be re-applied on menu click
+		this.button.add(newButtonSetBehavior(buttonset)); // the 'buttonset' behavior is attached to the button to be re-applied on menu click
 		buttonset.add(this.button);
 
 		// menu-button //
-		buttonset.add(this.newMenuContainer("select"));
+		buttonset.add(newMenuContainer("select"));
 	}
 
 	@Override
@@ -124,7 +125,7 @@ public abstract class AbstractSplitButton extends GenericPanel<List<IMenuItem>>
 
 	/**
 	 * Gets a new Link for the main button
-	 * 
+	 *
 	 * @param id the markup id
 	 * @return an {@link AbstractLink}
 	 */
@@ -132,22 +133,22 @@ public abstract class AbstractSplitButton extends GenericPanel<List<IMenuItem>>
 
 	/**
 	 * Gets a new buttonset behavior
-	 * 
+	 *
 	 * @param component the component on which the behavior should apply
 	 * @return a new {@link JQueryUIBehavior}
 	 */
-	private JQueryUIBehavior newButtonSetBehavior(Component component)
+	private static JQueryUIBehavior newButtonSetBehavior(Component component)
 	{
 		return new JQueryUIBehavior(JQueryWidget.getSelector(component), "buttonset");
 	}
 
 	/**
 	 * Gets a new {@link WebMarkupContainer} responsible for showing the {@link Menu}
-	 * 
+	 *
 	 * @param id the markup id
 	 * @return a new {@link WebMarkupContainer}
 	 */
-	private WebMarkupContainer newMenuContainer(String id)
+	private static WebMarkupContainer newMenuContainer(String id)
 	{
 		WebMarkupContainer container = new WebMarkupContainer(id);
 
@@ -178,7 +179,7 @@ public abstract class AbstractSplitButton extends GenericPanel<List<IMenuItem>>
 
 	/**
 	 * Gets a new {@link Menu} that will be displayed when the menu-container will be clicked
-	 * 
+	 *
 	 * @param id the markup id
 	 * @param items the list of {@link IMenuItem}
 	 * @return a new {@link Menu}

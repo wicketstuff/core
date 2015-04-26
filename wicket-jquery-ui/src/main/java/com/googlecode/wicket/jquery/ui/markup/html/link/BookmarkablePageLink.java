@@ -27,6 +27,7 @@ import com.googlecode.wicket.jquery.ui.form.button.ButtonBehavior;
 /**
  * Provides a Kendo UI button based on a built-in <code>BookmarkablePageLink</code>
  *
+ * @param <T> the model object type
  * @author Sebastien Briquet - sebfz1
  * @since 6.19.0
  * @since 7.0.0
@@ -39,7 +40,7 @@ public class BookmarkablePageLink<T> extends org.apache.wicket.markup.html.link.
 
 	/**
 	 * Constructor
-	 * 
+	 *
 	 * @param id the markup id
 	 * @param pageClass the class of page to link to
 	 */
@@ -50,10 +51,10 @@ public class BookmarkablePageLink<T> extends org.apache.wicket.markup.html.link.
 
 	/**
 	 * Constructor
-	 * 
+	 *
 	 * @param id the markup id
 	 * @param pageClass the class of page to link to
-	 * @param icon either a {@link KendoIcon} constant or a 'k-i-<i>icon</i>' css class
+	 * @param icon either a {@link JQueryIcon} constant or a 'ui-icon-xxx' css class
 	 */
 	public <C extends Page> BookmarkablePageLink(String id, Class<C> pageClass, String icon)
 	{
@@ -64,7 +65,7 @@ public class BookmarkablePageLink<T> extends org.apache.wicket.markup.html.link.
 
 	/**
 	 * Constructor
-	 * 
+	 *
 	 * @param id the markup id
 	 * @param pageClass the class of page to link to
 	 * @param parameters the parameters to pass to the new page when the link is clicked
@@ -76,11 +77,11 @@ public class BookmarkablePageLink<T> extends org.apache.wicket.markup.html.link.
 
 	/**
 	 * Constructor
-	 * 
+	 *
 	 * @param id the markup id
 	 * @param pageClass the class of page to link to
 	 * @param parameters the parameters to pass to the new page when the link is clicked
-	 * @param icon either a {@link KendoIcon} constant or a 'k-i-<i>icon</i>' css class
+	 * @param icon either a {@link JQueryIcon} constant or a 'ui-icon-xxx' css class
 	 */
 	public <C extends Page> BookmarkablePageLink(String id, Class<C> pageClass, PageParameters parameters, String icon)
 	{

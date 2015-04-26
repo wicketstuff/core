@@ -29,7 +29,7 @@ import com.googlecode.wicket.kendo.ui.utils.KendoDateTimeUtils;
 
 /**
  * Base class for {@link DatePicker} and {@link TimePicker}
- * 
+ *
  * @author Sebastien Briquet - sebfz1
  *
  * @param <T> the model object type
@@ -53,6 +53,8 @@ public abstract class LocalTextField<T> extends TextField<T> implements ITextFor
 	 * @param model the {@link IModel}
 	 * @param pattern a <code>SimpleDateFormat</code> pattern
 	 * @param options {@link Options}
+	 * @param type the class type
+	 * @param converter the {@link IConverter}
 	 */
 	public LocalTextField(String id, IModel<T> model, String pattern, Options options, Class<T> type, IConverter<T> converter)
 	{
@@ -65,9 +67,9 @@ public abstract class LocalTextField<T> extends TextField<T> implements ITextFor
 
 	/**
 	 * Returns the date pattern.
-	 * 
+	 *
 	 * Marked as final. It is - probably - not consistent to have a pattern different from the display
-	 * 
+	 *
 	 * @see org.apache.wicket.markup.html.form.AbstractTextComponent.ITextFormatProvider#getTextFormat()
 	 */
 	@Override
@@ -95,7 +97,7 @@ public abstract class LocalTextField<T> extends TextField<T> implements ITextFor
 
 	/**
 	 * Returns the default converter if created without pattern; otherwise it returns a pattern-specific converter.
-	 * 
+	 *
 	 * @param type The type for which the convertor should work
 	 * @return A pattern-specific converter
 	 * @see org.apache.wicket.markup.html.form.TextField

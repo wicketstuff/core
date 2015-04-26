@@ -591,7 +591,7 @@ public abstract class CalendarBehavior extends JQueryBehavior implements IJQuery
 		}
 
 		/**
-		 * Indicated whether this event is an 'all-day' event
+		 * Indicates whether this event is an 'all-day' event
 		 *
 		 * @return true or false
 		 */
@@ -644,7 +644,7 @@ public abstract class CalendarBehavior extends JQueryBehavior implements IJQuery
 		}
 
 		/**
-		 * Indicated whether this event is an 'all-day' event
+		 * Indicates whether this event is an 'all-day' event
 		 *
 		 * @return true or false
 		 */
@@ -811,7 +811,7 @@ public abstract class CalendarBehavior extends JQueryBehavior implements IJQuery
 		}
 
 		/**
-		 * Indicated whether this event is an 'all-day' event
+		 * Indicates whether this event is an 'all-day' event
 		 *
 		 * @return true or false
 		 */
@@ -871,7 +871,7 @@ public abstract class CalendarBehavior extends JQueryBehavior implements IJQuery
 		}
 
 		/**
-		 * Indicated whether this event is an 'all-day' event
+		 * Indicates whether this event is an 'all-day' event
 		 *
 		 * @return true or false
 		 */

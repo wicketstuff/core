@@ -26,6 +26,7 @@ import com.googlecode.wicket.jquery.ui.form.button.ButtonBehavior;
 /**
  * Provides a Kendo UI button based on a built-in <code>AjaxFallbackLink</code>
  *
+ * @param <T> the model object type
  * @author Sebastien Briquet - sebfz1
  * @since 6.19.0
  * @since 7.0.0
@@ -50,7 +51,7 @@ public abstract class AjaxFallbackLink<T> extends org.apache.wicket.ajax.markup.
 	 * Constructor
 	 *
 	 * @param id the markup id
-	 * @param icon either a {@link KendoIcon} constant or a 'k-i-<i>icon</i>' css class
+	 * @param icon either a {@link JQueryIcon} constant or a 'ui-icon-xxx' css class
 	 */
 	public AjaxFallbackLink(String id, String icon)
 	{
@@ -75,7 +76,7 @@ public abstract class AjaxFallbackLink<T> extends org.apache.wicket.ajax.markup.
 	 *
 	 * @param id the markup id
 	 * @param model the {@link IModel}
-	 * @param icon either a {@link KendoIcon} constant or a 'k-i-<i>icon</i>' css class
+	 * @param icon either a {@link JQueryIcon} constant or a 'ui-icon-xxx' css class
 	 */
 	public AjaxFallbackLink(String id, IModel<T> model, String icon)
 	{

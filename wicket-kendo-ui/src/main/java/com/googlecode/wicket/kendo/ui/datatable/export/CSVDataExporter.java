@@ -30,6 +30,8 @@ import org.apache.wicket.request.cycle.RequestCycle;
 import org.apache.wicket.request.handler.resource.ResourceStreamRequestHandler;
 import org.apache.wicket.util.resource.AbstractResourceStreamWriter;
 import org.apache.wicket.util.resource.IResourceStreamWriter;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.googlecode.wicket.jquery.core.utils.ConverterUtils;
 import com.googlecode.wicket.kendo.ui.datatable.DataTable;
@@ -44,6 +46,7 @@ import com.googlecode.wicket.kendo.ui.datatable.column.IExportableColumn;
 public class CSVDataExporter implements IDataExporter
 {
 	private static final long serialVersionUID = 1L;
+	private static final Logger LOG = LoggerFactory.getLogger(CSVDataExporter.class);
 
 	private static final char QUOTE = '"';
 	private static final String CRLF = "\r\n";
@@ -90,8 +93,16 @@ public class CSVDataExporter implements IDataExporter
 	public static void export(RequestCycle cycle, final IDataProvider<?> provider, final List<IExportableColumn> columns, String filename)
 	{
 		DataExporterResourceStreamWriter writer = new DataExporterResourceStreamWriter(new CSVDataExporter(), provider, columns);
-
 		cycle.scheduleRequestHandlerAfterCurrent(new ResourceStreamRequestHandler(writer, filename));
+
+		try
+		{
+			writer.close();
+		}
+		catch (IOException e)
+		{
+			LOG.error(e.getMessage(), e);
+		}
 	}
 
 	private final String contentType;

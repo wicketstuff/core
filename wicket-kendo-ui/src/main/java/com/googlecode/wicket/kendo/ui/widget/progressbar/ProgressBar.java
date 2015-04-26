@@ -39,7 +39,7 @@ public class ProgressBar extends JQueryContainer implements IProgressBarListener
 
 	private final Options options;
 
-	/** Flag that indicated the value (model object) has changed */
+	/** Flag that indicates the value (model object) has changed */
 	private boolean valueChanged = false;
 
 	/**

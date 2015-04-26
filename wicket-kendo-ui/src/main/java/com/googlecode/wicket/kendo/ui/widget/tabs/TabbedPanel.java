@@ -50,8 +50,7 @@ public class TabbedPanel extends JQueryPanel implements ITabsListener
 	 * Constructor with empty list of Tabs.<br/>
 	 *
 	 * @param id the markup id
-	 * @param tabs the list of {@link ITab}<code>s</code>
-	 * @see {@link #add(ITab)} to add tabs.
+	 * @see #add(ITab)
 	 */
 	public TabbedPanel(String id)
 	{
@@ -62,8 +61,8 @@ public class TabbedPanel extends JQueryPanel implements ITabsListener
 	 * Constructor with empty list of Tabs.<br/>
 	 *
 	 * @param id the markup id
-	 * @param tabs the list of {@link ITab}<code>s</code>
-	 * @see {@link #add(ITab)} to add tabs.
+	 * @param options {@link Options}
+	 * @see #add(ITab)
 	 */
 	public TabbedPanel(String id, Options options)
 	{

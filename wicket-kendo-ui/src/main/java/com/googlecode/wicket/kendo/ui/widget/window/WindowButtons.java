@@ -28,17 +28,16 @@ import com.googlecode.wicket.kendo.ui.KendoIcon;
  */
 public enum WindowButtons
 {
-	OK(MessageWindow.LBL_OK), // lf
-	OK_CANCEL(WindowButton.of(MessageWindow.LBL_OK, KendoIcon.TICK, true), WindowButton.of(MessageWindow.LBL_CANCEL, KendoIcon.CANCEL, false)), // lf
-
-	YES_NO(MessageWindow.LBL_YES, MessageWindow.LBL_NO), // lf
-	YES_NO_CANCEL(WindowButton.of(MessageWindow.LBL_YES, true), WindowButton.of(MessageWindow.LBL_NO, true), WindowButton.of(MessageWindow.LBL_CANCEL, false));
+	OK(WindowButton.of(Window.LBL_OK, KendoIcon.TICK, true)), // lf
+	OK_CANCEL(WindowButton.of(Window.LBL_OK, KendoIcon.TICK, true), WindowButton.of(Window.LBL_CANCEL, KendoIcon.CANCEL, false)), // lf
+	YES_NO(WindowButton.of(Window.LBL_YES, true), WindowButton.of(Window.LBL_NO, true)), // lf
+	YES_NO_CANCEL(WindowButton.of(Window.LBL_YES, true), WindowButton.of(Window.LBL_NO, true), WindowButton.of(Window.LBL_CANCEL, false));
 
 	private final List<WindowButton> buttons = new ArrayList<WindowButton>();
 
 	/**
 	 * Constructor
-	 * 
+	 *
 	 * @param labels the button labels
 	 */
 	private WindowButtons(String... labels)
@@ -51,7 +50,7 @@ public enum WindowButtons
 
 	/**
 	 * Constructor
-	 * 
+	 *
 	 * @param buttons the buttons
 	 */
 	private WindowButtons(WindowButton... buttons)
@@ -64,7 +63,7 @@ public enum WindowButtons
 
 	/**
 	 * Gets the list of buttons
-	 * 
+	 *
 	 * @return the {@link List} of {@link WindowButton}</code>s</code>
 	 */
 	public List<WindowButton> toList()

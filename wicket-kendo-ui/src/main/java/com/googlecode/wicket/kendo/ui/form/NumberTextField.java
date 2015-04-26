@@ -26,13 +26,14 @@ import com.googlecode.wicket.kendo.ui.KendoUIBehavior;
 /**
  * Provides a Kendo UI NumericTextBox on the built-in {@link org.apache.wicket.markup.html.form.NumberTextField}
  *
+ * @param <T> the model object type
  * @author Sebastien Briquet - sebfz1
  *
  */
 public class NumberTextField<T extends Number & Comparable<T>> extends org.apache.wicket.markup.html.form.NumberTextField<T> implements IJQueryWidget
 {
 	private static final long serialVersionUID = 1L;
-	private static final String METHOD = "kendoNumericTextBox";	
+	private static final String METHOD = "kendoNumericTextBox";
 
 	private final Options options;
 
@@ -80,7 +81,7 @@ public class NumberTextField<T extends Number & Comparable<T>> extends org.apach
 	public NumberTextField(String id, Class<T> type, Options options)
 	{
 		super(id, type);
-		
+
 		this.options = options;
 	}
 
@@ -105,7 +106,7 @@ public class NumberTextField<T extends Number & Comparable<T>> extends org.apach
 	public NumberTextField(String id, IModel<T> model, Options options)
 	{
 		super(id, model);
-		
+
 		this.options = options;
 	}
 
@@ -132,7 +133,7 @@ public class NumberTextField<T extends Number & Comparable<T>> extends org.apach
 	public NumberTextField(String id, IModel<T> model, Class<T> type, Options options)
 	{
 		super(id, model, type);
-		
+
 		this.options = options;
 	}
 

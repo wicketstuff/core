@@ -26,6 +26,7 @@ import com.googlecode.wicket.jquery.ui.form.button.ButtonBehavior;
 /**
  * Provides a Kendo UI button based on a built-in <code>AjaxLink</code>
  *
+ * @param <T> the model object type
  * @author Sebastien Briquet - sebfz1
  * @since 6.19.0
  * @since 7.0.0
@@ -50,7 +51,7 @@ public abstract class AjaxLink<T> extends org.apache.wicket.ajax.markup.html.Aja
 	 * Constructor
 	 *
 	 * @param id the markup id
-	 * @param icon either a {@link KendoIcon} constant or a 'k-i-<i>icon</i>' css class
+	 * @param icon either a {@link JQueryIcon} constant or a 'ui-icon-xxx' css class
 	 */
 	public AjaxLink(String id, String icon)
 	{
@@ -75,7 +76,7 @@ public abstract class AjaxLink<T> extends org.apache.wicket.ajax.markup.html.Aja
 	 *
 	 * @param id the markup id
 	 * @param model the {@link IModel}
-	 * @param icon either a {@link KendoIcon} constant or a 'k-i-<i>icon</i>' css class
+	 * @param icon either a {@link JQueryIcon} constant or a 'ui-icon-xxx' css class
 	 */
 	public AjaxLink(String id, IModel<T> model, String icon)
 	{

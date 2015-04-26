@@ -18,7 +18,6 @@ package com.googlecode.wicket.kendo.ui.form.button;
 
 import org.apache.wicket.model.IModel;
 
-import com.googlecode.wicket.jquery.core.IJQueryWidget;
 import com.googlecode.wicket.jquery.core.JQueryBehavior;
 import com.googlecode.wicket.jquery.core.Options;
 
@@ -28,7 +27,7 @@ import com.googlecode.wicket.jquery.core.Options;
  * @author Sebastien Briquet - sebfz1
  *
  */
-public class IndicatingAjaxButton extends AjaxButton implements IJQueryWidget
+public class IndicatingAjaxButton extends AjaxButton
 {
 	private static final long serialVersionUID = 1L;
 
@@ -57,20 +56,20 @@ public class IndicatingAjaxButton extends AjaxButton implements IJQueryWidget
 
 	/**
 	 * Indicates whether the button will be disabled on-click to prevent double submit
-	 * 
+	 *
 	 * @return false by default
 	 */
 	protected boolean isDisabledOnClick()
 	{
 		return false;
 	}
-	
+
 	// Event //
 	@Override
 	public void onConfigure(JQueryBehavior behavior)
 	{
 		super.onConfigure(behavior);
-		
+
 		// explicitly sets the enable flag to be able to restore the state after click with isDisabledOnClick true
 		behavior.setOption("enable", this.isEnabledInHierarchy());
 	}

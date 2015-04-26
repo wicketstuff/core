@@ -155,7 +155,7 @@ public abstract class MessageWindow extends Window<String>
 		this.add(this.label.setOutputMarkupId(true));
 
 		// form //
-		this.form = new Form<Void>("form");
+		this.form = MessageWindow.newForm("form");
 		this.add(this.form);
 	}
 
@@ -175,12 +175,34 @@ public abstract class MessageWindow extends Window<String>
 		super.onInitialize();
 
 		// buttons //
-		form.add(this.newButtonPanel("buttons", this.getButtons()));
+		this.form.add(this.newButtonPanel("buttons", this.getButtons()));
 	}
 
 	@Override
 	protected void onOpen(AjaxRequestTarget target)
 	{
 		target.add(this.label);
+	}
+
+	// Factories //
+
+	/**
+	 * Gets a new {@link Form}
+	 *
+	 * @param id the markup-id
+	 * @return the new form
+	 */
+	private static Form<Void> newForm(String id)
+	{
+		return new Form<Void>(id) {
+
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			public boolean wantSubmitOnParentFormSubmit()
+			{
+				return false;
+			}
+		};
 	}
 }

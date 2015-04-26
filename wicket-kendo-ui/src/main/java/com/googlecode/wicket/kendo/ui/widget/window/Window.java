@@ -21,6 +21,7 @@ import java.util.List;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.model.IModel;
+import org.apache.wicket.model.ResourceModel;
 import org.apache.wicket.util.lang.Args;
 
 /**
@@ -28,19 +29,20 @@ import org.apache.wicket.util.lang.Args;
  * {@link #onAfterSubmit(AjaxRequestTarget, WindowButton)}<br/>
  * The window is automatically closed {@link #onAfterSubmit(AjaxRequestTarget, WindowButton)}
  *
+ * @param <T> the model object type
  * @author Sebastien Briquet - sebfz1
  */
 public abstract class Window<T> extends AbstractWindow<T>
 {
 	private static final long serialVersionUID = 1L;
 
-	/* Default Button labels */
-	public static final String LBL_OK = "OK";
-	public static final String LBL_NO = "No";
-	public static final String LBL_YES = "Yes";
-	public static final String LBL_CLOSE = "Close";
-	public static final String LBL_CANCEL = "Cancel";
-	public static final String LBL_SUBMIT = "Submit";
+	/* Default Button label models */
+	public static final IModel<String> LBL_OK = new ResourceModel("button.ok");
+	public static final IModel<String> LBL_NO = new ResourceModel("button.no");
+	public static final IModel<String> LBL_YES = new ResourceModel("button.yes");
+	public static final IModel<String> LBL_CLOSE = new ResourceModel("button.close");
+	public static final IModel<String> LBL_CANCEL = new ResourceModel("button.cancel");
+	public static final IModel<String> LBL_SUBMIT = new ResourceModel("button.submit");
 
 	private final List<WindowButton> buttons;
 
@@ -49,6 +51,7 @@ public abstract class Window<T> extends AbstractWindow<T>
 	 *
 	 * @param id the markup id, an html div suffice to host a window.
 	 * @param title the title of the window
+	 * @param buttons the set of predefined buttons
 	 */
 	public Window(String id, String title, WindowButtons buttons)
 	{
@@ -60,6 +63,7 @@ public abstract class Window<T> extends AbstractWindow<T>
 	 *
 	 * @param id the markup id, an html div suffice to host a window.
 	 * @param title the title of the window
+	 * @param buttons the list of {@link WindowButton}
 	 */
 	public Window(String id, String title, List<WindowButton> buttons)
 	{
@@ -73,6 +77,7 @@ public abstract class Window<T> extends AbstractWindow<T>
 	 *
 	 * @param id the markup id, an html div suffice to host a window.
 	 * @param title the title of the window
+	 * @param buttons the set of predefined buttons
 	 */
 	public Window(String id, IModel<String> title, WindowButtons buttons)
 	{
@@ -84,6 +89,7 @@ public abstract class Window<T> extends AbstractWindow<T>
 	 *
 	 * @param id the markup id, an html div suffice to host a window.
 	 * @param title the title of the window
+	 * @param buttons the list of {@link WindowButton}
 	 */
 	public Window(String id, IModel<String> title, List<WindowButton> buttons)
 	{
@@ -98,6 +104,7 @@ public abstract class Window<T> extends AbstractWindow<T>
 	 * @param id the markup id, an html div suffice to host a window.
 	 * @param title the title of the window
 	 * @param model the model to be used in the window.
+	 * @param buttons the set of predefined buttons
 	 */
 	public Window(String id, String title, IModel<T> model, WindowButtons buttons)
 	{
@@ -110,6 +117,7 @@ public abstract class Window<T> extends AbstractWindow<T>
 	 * @param id the markup id, an html div suffice to host a window.
 	 * @param title the title of the window
 	 * @param model the model to be used in the window.
+	 * @param buttons the list of {@link WindowButton}
 	 */
 	public Window(String id, String title, IModel<T> model, List<WindowButton> buttons)
 	{
@@ -124,6 +132,7 @@ public abstract class Window<T> extends AbstractWindow<T>
 	 * @param id the markup id, an html div suffice to host a window.
 	 * @param title the title of the window
 	 * @param model the model to be used in the window.
+	 * @param buttons the set of predefined buttons
 	 */
 	public Window(String id, IModel<String> title, IModel<T> model, WindowButtons buttons)
 	{
@@ -136,6 +145,7 @@ public abstract class Window<T> extends AbstractWindow<T>
 	 * @param id the markup id, an html div suffice to host a window.
 	 * @param title the title of the window
 	 * @param model the model to be used in the window.
+	 * @param buttons the list of {@link WindowButton}
 	 */
 	public Window(String id, IModel<String> title, IModel<T> model, List<WindowButton> buttons)
 	{
@@ -148,14 +158,14 @@ public abstract class Window<T> extends AbstractWindow<T>
 
 	/**
 	 * Gets the {@link Form} that should be submitted and validated
-	 * 
+	 *
 	 * @return the {@link Form}
 	 */
 	protected abstract Form<?> getForm();
 
 	/**
 	 * Gets the list of {@link WindowButton}<code>s</code> This method an be overridden to provide a behavioral helper for instance
-	 * 
+	 *
 	 * @return the list of {@link WindowButton}<code>s</code>
 	 * @see WindowButtonUtils#setDefaultFormProcessing(WindowButtons, boolean)
 	 */
@@ -168,7 +178,7 @@ public abstract class Window<T> extends AbstractWindow<T>
 
 	/**
 	 * Triggered when the form is submitted, but the validation failed
-	 * 
+	 *
 	 * @param target the {@link AjaxRequestTarget}
 	 * @param button the {@link WindowButton}
 	 */
@@ -179,7 +189,7 @@ public abstract class Window<T> extends AbstractWindow<T>
 
 	/**
 	 * Triggered when the form is submitted, and the validation succeed
-	 * 
+	 *
 	 * @param target the {@link AjaxRequestTarget}
 	 * @param button the {@link WindowButton}
 	 */
@@ -191,7 +201,7 @@ public abstract class Window<T> extends AbstractWindow<T>
 	/**
 	 * Triggered after the form is submitted, and the validation succeed<br />
 	 * Closes the dialog by default
-	 * 
+	 *
 	 * @param target the {@link AjaxRequestTarget}
 	 * @param button the {@link WindowButton}
 	 */
@@ -204,7 +214,7 @@ public abstract class Window<T> extends AbstractWindow<T>
 
 	/**
 	 * Gets a new {@link WindowButtonPanel}
-	 * 
+	 *
 	 * @param id the markup id
 	 * @param buttons the list of {@link WindowButton}
 	 * @return the new {@link WindowButtonPanel}

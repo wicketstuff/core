@@ -22,9 +22,7 @@ import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
 
-import com.googlecode.wicket.kendo.ui.KendoIcon;
 import com.googlecode.wicket.kendo.ui.form.TextField;
-import com.googlecode.wicket.kendo.ui.form.button.AjaxButton;
 import com.googlecode.wicket.kendo.ui.panel.KendoFeedbackPanel;
 
 /**
@@ -35,16 +33,12 @@ import com.googlecode.wicket.kendo.ui.panel.KendoFeedbackPanel;
  * @author Sebastien Briquet - sebfz1
  * @since 6.17.0
  */
-//TODO inherit from Window
-public abstract class InputWindow<T> extends AbstractWindow<T>
+public abstract class InputWindow<T> extends Window<T>
 {
 	private static final long serialVersionUID = 1L;
 
 	/** feedback panel */
-	private KendoFeedbackPanel feedback;
-
-	/** label model */
-	private final IModel<String> label;
+	private final KendoFeedbackPanel feedback;
 
 	private final Form<Void> form;
 
@@ -95,22 +89,42 @@ public abstract class InputWindow<T> extends AbstractWindow<T>
 	 */
 	public InputWindow(String id, IModel<String> title, IModel<T> model, IModel<String> label)
 	{
-		super(id, title, model, true);
+		super(id, title, model, WindowButtons.OK_CANCEL);
 
-		this.label = label;
-		this.form = new Form<Void>("form");
+		// form //
+		this.form = InputWindow.newForm("form");
+		this.add(this.form);
+
+		// feedback //
+		this.feedback = new KendoFeedbackPanel("feedback");
+		this.form.add(this.feedback);
+
+		// label //
+		this.form.add(new Label("label", label));
 	}
 
 	// Properties //
 
 	/**
+	 * Gets the inner {@link Form}
+	 *
+	 * @return the form
+	 */
+	@Override
+	public Form<Void> getForm()
+	{
+		return this.form;
+	}
+
+	/**
 	 * Indicates whether the {@link TextField}'s value is required
 	 *
-	 * @return true or false
+	 * @return true by default
 	 */
 	protected boolean isRequired()
 	{
-		return false;
+		// XXX: changed InputButton#isRequired to true by default because it makes more sense - SILENT API BREAK
+		return true;
 	}
 
 	// Events //
@@ -120,22 +134,11 @@ public abstract class InputWindow<T> extends AbstractWindow<T>
 	{
 		super.onInitialize();
 
-		// Form //
-		this.add(this.form);
-
-		// FeedbackPanel //
-		this.feedback = new KendoFeedbackPanel("feedback");
-		this.form.add(this.feedback);
-
-		// Label //
-		this.form.add(new Label("label", this.label));
-
-		// TextField //
+		// field //
 		this.form.add(new TextField<T>("input", this.getModel()).setRequired(this.isRequired()));
 
-		// Button //
-		this.form.add(this.newSubmitButton("submit"));
-		this.form.add(this.newCancelButton("cancel"));
+		// buttons //
+		this.form.add(this.newButtonPanel("buttons", this.getButtons()));
 	}
 
 	@Override
@@ -146,94 +149,63 @@ public abstract class InputWindow<T> extends AbstractWindow<T>
 		target.add(this.form);
 	}
 
+	@Override
+	protected void onError(AjaxRequestTarget target, WindowButton button)
+	{
+		target.add(this.feedback);
+	}
+
+	@Override
+	protected void onSubmit(AjaxRequestTarget target, WindowButton button)
+	{
+		if (button != null)
+		{
+			if (button.match(LBL_OK))
+			{
+				this.onSubmit(target);
+			}
+			else if (button.match(LBL_CANCEL))
+			{
+				this.onCancel(target);
+			}
+		}
+	}
+
 	/**
-	 * Triggered when the form is submitted, and the validation succeed
+	 * Triggered when the 'submit' button is clicked, and the validation succeed
 	 *
 	 * @param target the {@link AjaxRequestTarget}
 	 */
 	protected abstract void onSubmit(AjaxRequestTarget target);
 
 	/**
-	 * Triggered after the form is submitted, and the validation succeed<br/>
-	 * Closes the dialog by default (if not overridden)
+	 * Triggered when the 'cancel' button is clicked
 	 *
 	 * @param target the {@link AjaxRequestTarget}
 	 */
-	protected void onAfterSubmit(AjaxRequestTarget target)
+	protected void onCancel(AjaxRequestTarget target)
 	{
-		this.close(target);
+		// noop
 	}
 
 	// Factories //
 
 	/**
-	 * Gets a new 'Submit' button
+	 * Gets a new {@link Form}
 	 *
-	 * @param id the markup id
-	 * @return the {@link AjaxButton}
+	 * @param id the markup-id
+	 * @return the new form
 	 */
-	private AjaxButton newSubmitButton(String id)
+	private static Form<Void> newForm(String id)
 	{
-		return new AjaxButton(id) {
+		return new Form<Void>(id) {
 
 			private static final long serialVersionUID = 1L;
 
 			@Override
-			protected String getIcon()
+			public boolean wantSubmitOnParentFormSubmit()
 			{
-				return KendoIcon.TICK;
-			}
-
-			@Override
-			protected void onSubmit(AjaxRequestTarget target, Form<?> unused)
-			{
-				InputWindow.this.onSubmit(target);
-			}
-
-			@Override
-			protected void onError(AjaxRequestTarget target, Form<?> unused)
-			{
-				target.add(InputWindow.this.feedback);
-			}
-
-			@Override
-			protected void onAfterSubmit(AjaxRequestTarget target, Form<?> unused)
-			{
-				InputWindow.this.onAfterSubmit(target);
-			}
-		};
-	}
-
-	/**
-	 * Gets a new 'Close' button
-	 *
-	 * @param id the markup id
-	 * @return the {@link AjaxButton}
-	 */
-	private AjaxButton newCancelButton(String id)
-	{
-		return new AjaxButton(id) {
-
-			private static final long serialVersionUID = 1L;
-
-			@Override
-			protected String getIcon()
-			{
-				return KendoIcon.CANCEL;
-			}
-
-			@Override
-			protected void onInitialize()
-			{
-				super.onInitialize();
-
-				this.setDefaultFormProcessing(false);
-			}
-
-			@Override
-			protected void onAfterSubmit(AjaxRequestTarget target, Form<?> unused)
-			{
-				InputWindow.this.onAfterSubmit(target);
+				return false;
 			}
 		};
 	}

@@ -38,7 +38,7 @@ import com.googlecode.wicket.jquery.core.utils.DateUtils;
  * @author Sebastien Briquet - sebfz1
  *
  */
-//XXX: removed deprecated Options#escapeQuotes, use {@link JSONObject#quote(String)} instead
+// XXX: removed deprecated Options#escapeQuotes, use {@link JSONObject#quote(String)} instead
 public class Options implements IClusterable
 {
 	private static final long serialVersionUID = 1L;
@@ -171,6 +171,8 @@ public class Options implements IClusterable
 
 	/**
 	 * Constructor which shadow copies an existing {@link Options}
+	 *
+	 * @param options the base Options
 	 */
 	public Options(Options options)
 	{

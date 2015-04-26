@@ -310,7 +310,7 @@ public abstract class AbstractDialog<T extends Serializable> extends GenericPane
 	}
 
 	/**
-	 * Indicated whether the dialog is resizable
+	 * Indicates whether the dialog is resizable
 	 *
 	 * @return false by default
 	 */

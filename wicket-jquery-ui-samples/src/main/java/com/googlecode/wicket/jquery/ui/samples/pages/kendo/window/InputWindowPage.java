@@ -23,15 +23,9 @@ public class InputWindowPage extends AbstractWindowPage
 		this.add(form);
 
 		// Window //
-		final InputWindow<String> window = new InputWindow<String>("window", "My Input Window", Model.of(""), "Please provide a value:") {
+		final InputWindow<String> window = new MyInputWindow("window") {
 
 			private static final long serialVersionUID = 1L;
-
-			@Override
-			protected boolean isRequired()
-			{
-				return true;
-			}
 
 			@Override
 			protected void onOpen(AjaxRequestTarget target)
@@ -69,5 +63,19 @@ public class InputWindowPage extends AbstractWindowPage
 				window.open(target);
 			}
 		});
+	}
+
+	/**
+	 * This input window is an inner class to ease the l10n of button.<br/>
+	 * Therefore the new button value(s) are located in InputWindowPage$MyInputWindow.properties
+	 */
+	private static abstract class MyInputWindow extends InputWindow<String>
+	{
+		private static final long serialVersionUID = 1L;
+
+		private MyInputWindow(String id)
+		{
+			super(id, "My Input Window", Model.of(""), "Please provide a value:");
+		}
 	}
 }

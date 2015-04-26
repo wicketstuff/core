@@ -24,6 +24,7 @@ import com.googlecode.wicket.jquery.ui.form.button.ButtonBehavior;
 /**
  * Provides a Kendo UI button based on a built-in <code>StatelessLink</code>
  *
+ * @param <T> the model object type
  * @author Sebastien Briquet - sebfz1
  * @since 6.19.0
  * @since 7.0.0
@@ -48,7 +49,7 @@ public abstract class StatelessLink<T> extends org.apache.wicket.markup.html.lin
 	 * Constructor
 	 *
 	 * @param id the markup id
-	 * @param icon either a {@link KendoIcon} constant or a 'k-i-<i>icon</i>' css class
+	 * @param icon either a {@link JQueryIcon} constant or a 'ui-icon-xxx' css class
 	 */
 	public StatelessLink(String id, String icon)
 	{
