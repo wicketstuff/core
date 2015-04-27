@@ -19,7 +19,6 @@ package com.googlecode.wicket.kendo.ui.widget.accordion;
 import java.util.Collections;
 import java.util.List;
 
-import org.apache.wicket.IGenericComponent;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.extensions.markup.html.tabs.ITab;
 import org.apache.wicket.markup.html.WebMarkupContainer;
@@ -30,6 +29,7 @@ import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.model.util.ListModel;
 
+import com.googlecode.wicket.jquery.core.JQueryGenericPanel;
 import com.googlecode.wicket.jquery.core.JQueryPanel;
 import com.googlecode.wicket.jquery.core.Options;
 
@@ -40,7 +40,7 @@ import com.googlecode.wicket.jquery.core.Options;
  * @since 6.19.0
  * @since 7.0.0
  */
-public class AccordionPanel extends JQueryPanel implements IAccordionListener, IGenericComponent<List<ITab>>
+public class AccordionPanel extends JQueryGenericPanel<List<ITab>> implements IAccordionListener
 {
 	private static final long serialVersionUID = 1L;
 
@@ -96,26 +96,9 @@ public class AccordionPanel extends JQueryPanel implements IAccordionListener, I
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public IModel<List<ITab>> getModel()
-	{
-		return (IModel<List<ITab>>) this.getDefaultModel();
-	}
-
-	@Override
-	public void setModel(IModel<List<ITab>> model) {
-		this.setDefaultModel(model);
-	}
-
-	@Override
-	public void setModelObject(List<ITab> object) {
-		this.setDefaultModelObject(object);
-	}
-
-	@SuppressWarnings("unchecked")
-	@Override
 	public List<ITab> getModelObject()
 	{
-		List<ITab> list = (List<ITab>) this.getDefaultModelObject();
+		List<ITab> list = super.getModelObject();
 
 		if (list != null)
 		{
