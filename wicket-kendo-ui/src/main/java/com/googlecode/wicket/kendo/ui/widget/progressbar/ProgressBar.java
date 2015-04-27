@@ -20,13 +20,12 @@ import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.util.lang.Args;
 
-import com.googlecode.wicket.jquery.core.JQueryGenericContainer;
 import com.googlecode.wicket.jquery.core.JQueryBehavior;
-import com.googlecode.wicket.jquery.core.JQueryContainer;
+import com.googlecode.wicket.jquery.core.JQueryGenericContainer;
 import com.googlecode.wicket.jquery.core.Options;
 
 /**
- * Provides a Kendo UI progress-bar based on a {@link JQueryContainer}
+ * Provides a Kendo UI progress-bar based on a {@link JQueryGenericContainer}
  *
  * @author Sebastien Briquet - sebfz1
  * @since 6.17.0
@@ -122,6 +121,7 @@ public class ProgressBar extends JQueryGenericContainer<Integer> implements IPro
 	 *
 	 * @param value value which should be greater than or equals to {@link #MIN} and less than or equals to {@link #MAX}
 	 */
+	@Override
 	public void setModelObject(Integer value)
 	{
 		Integer v = Args.notNull(value, "value");
@@ -138,7 +138,7 @@ public class ProgressBar extends JQueryGenericContainer<Integer> implements IPro
 		this.setDefaultModelObject(v);
 	}
 
-	/* Methods */
+	// Methods //
 
 	/**
 	 * Gets the Kendo (jQuery) object
@@ -217,7 +217,7 @@ public class ProgressBar extends JQueryGenericContainer<Integer> implements IPro
 		}
 	}
 
-	/* Events */
+	// Events //
 
 	@Override
 	protected void onModelChanged()

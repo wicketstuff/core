@@ -20,16 +20,15 @@ import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.util.lang.Args;
 
-import com.googlecode.wicket.jquery.core.JQueryGenericContainer;
 import com.googlecode.wicket.jquery.core.JQueryBehavior;
-import com.googlecode.wicket.jquery.core.JQueryContainer;
 import com.googlecode.wicket.jquery.core.JQueryEvent;
+import com.googlecode.wicket.jquery.core.JQueryGenericContainer;
 import com.googlecode.wicket.jquery.core.ajax.IJQueryAjaxAware;
 import com.googlecode.wicket.jquery.core.event.IValueChangedListener;
 import com.googlecode.wicket.jquery.ui.ajax.JQueryAjaxChangeBehavior.ChangeEvent;
 
 /**
- * Provides a jQuery progress-bar based on a {@link JQueryContainer}
+ * Provides a jQuery progress-bar based on a {@link JQueryGenericContainer}
  *
  * @author Sebastien Briquet - sebfz1
  * @since 1.0
@@ -63,11 +62,13 @@ public class ProgressBar extends JQueryGenericContainer<Integer> implements IJQu
 	}
 
 	// Properties //
+	
 	/**
 	 * Sets the progress-bar value
 	 *
 	 * @param value value which should be greater than or equals to {@link #MIN} and less than or equals to {@link #MAX}
 	 */
+	@Override
 	public void setModelObject(Integer value)
 	{
 		Integer v = Args.notNull(value, "value");
@@ -84,7 +85,8 @@ public class ProgressBar extends JQueryGenericContainer<Integer> implements IJQu
 		super.setModelObject(v);
 	}
 
-	/* Ajax Methods */
+	// Methods //
+	
 	/**
 	 * Increments the progress-bar value by 1
 	 *
@@ -141,7 +143,8 @@ public class ProgressBar extends JQueryGenericContainer<Integer> implements IJQu
 		target.appendJavaScript(this.widgetBehavior.toString()); // change the value ui-side so the change-event will be fired
 	}
 
-	/* Events */
+	// Events //
+
 	@Override
 	public void onAjax(AjaxRequestTarget target, JQueryEvent event)
 	{
@@ -184,6 +187,7 @@ public class ProgressBar extends JQueryGenericContainer<Integer> implements IJQu
 	}
 
 	// IJQueryWidget //
+	
 	@Override
 	public JQueryBehavior newWidgetBehavior(String selector)
 	{

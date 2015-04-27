@@ -22,13 +22,12 @@ import org.apache.wicket.Component;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.model.IModel;
 
-import com.googlecode.wicket.jquery.core.JQueryGenericContainer;
 import com.googlecode.wicket.jquery.core.JQueryBehavior;
-import com.googlecode.wicket.jquery.core.JQueryContainer;
+import com.googlecode.wicket.jquery.core.JQueryGenericContainer;
 import com.googlecode.wicket.jquery.core.Options;
 
 /**
- * Provides a jQuery draggable element based on a {@link JQueryContainer}
+ * Provides a jQuery draggable element based on a {@link JQueryGenericContainer}
  *
  * @param <T> the object model type
  * @author Sebastien Briquet - sebfz1
@@ -37,8 +36,9 @@ public class Draggable<T> extends JQueryGenericContainer<T> implements IDraggabl
 {
 	private static final long serialVersionUID = 1L;
 
-	public enum Axis {
-		X("'x'"),
+	public enum Axis
+	{
+		X("'x'"), // lf
 		Y("'y'");
 
 		private String axis;
@@ -55,9 +55,10 @@ public class Draggable<T> extends JQueryGenericContainer<T> implements IDraggabl
 		}
 	}
 
-	public enum Containment {
-		Parent("'parent'"),
-		Document("'document'"),
+	public enum Containment
+	{
+		Parent("'parent'"), // lf
+		Document("'document'"), // lf
 		Window("'window'");
 
 		private String containment;
@@ -78,6 +79,7 @@ public class Draggable<T> extends JQueryGenericContainer<T> implements IDraggabl
 
 	/**
 	 * Contructor
+	 * 
 	 * @param id the markup id
 	 */
 	public Draggable(String id)
@@ -89,6 +91,7 @@ public class Draggable<T> extends JQueryGenericContainer<T> implements IDraggabl
 
 	/**
 	 * Contructor
+	 * 
 	 * @param id the markup id
 	 * @param model the {@link IModel}
 	 */
@@ -99,8 +102,8 @@ public class Draggable<T> extends JQueryGenericContainer<T> implements IDraggabl
 		this.initialize();
 	}
 
-
 	// Methods //
+
 	/**
 	 * Initialization
 	 */
@@ -110,6 +113,7 @@ public class Draggable<T> extends JQueryGenericContainer<T> implements IDraggabl
 	}
 
 	// Properties //
+
 	@Override
 	public boolean isStopEventEnabled()
 	{
@@ -117,6 +121,7 @@ public class Draggable<T> extends JQueryGenericContainer<T> implements IDraggabl
 	}
 
 	// Events //
+
 	@Override
 	public void onDragStart(AjaxRequestTarget target, int top, int left)
 	{
@@ -130,8 +135,10 @@ public class Draggable<T> extends JQueryGenericContainer<T> implements IDraggabl
 	}
 
 	// Options //
+
 	/**
 	 * Sets the {@link Axis} on which it is possible to drag the component
+	 * 
 	 * @param axis the {@link Axis} value
 	 * @return the {@link Draggable}
 	 */
@@ -143,12 +150,13 @@ public class Draggable<T> extends JQueryGenericContainer<T> implements IDraggabl
 
 	/**
 	 * Sets the grid on which snapping the component
+	 * 
 	 * @param grid a [x, y] {@link List}, assuming its toString() method returns [x, y] (like ArrayList)
 	 * @return the {@link Draggable}
 	 */
 	public Draggable<T> setGrid(List<Integer> grid)
 	{
-		if(grid.size() == 2)
+		if (grid.size() == 2)
 		{
 			this.options.set("grid", grid.toString());
 		}
@@ -158,6 +166,7 @@ public class Draggable<T> extends JQueryGenericContainer<T> implements IDraggabl
 
 	/**
 	 * Sets the container on which this component is allowed to move.
+	 * 
 	 * @param component a {@link Component}
 	 * @return the {@link Draggable}
 	 */
@@ -168,6 +177,7 @@ public class Draggable<T> extends JQueryGenericContainer<T> implements IDraggabl
 
 	/**
 	 * Sets the container, specified by its selector, on which this component is allowed to move.
+	 * 
 	 * @param selector the container selector (ie: '#myId')
 	 * @return the {@link Draggable}
 	 */
@@ -179,6 +189,7 @@ public class Draggable<T> extends JQueryGenericContainer<T> implements IDraggabl
 
 	/**
 	 * Sets the container, specified by a {@link Containment}, on which this component is allowed to move.
+	 * 
 	 * @param containment the {@link Containment} value
 	 * @return the {@link Draggable}
 	 */
@@ -190,6 +201,7 @@ public class Draggable<T> extends JQueryGenericContainer<T> implements IDraggabl
 
 	/**
 	 * Set whether the component should revert to its original position
+	 * 
 	 * @param revert yes/no
 	 * @return the {@link Draggable}
 	 */
@@ -200,6 +212,7 @@ public class Draggable<T> extends JQueryGenericContainer<T> implements IDraggabl
 	}
 
 	// IJQueryWidget //
+
 	@Override
 	public JQueryBehavior newWidgetBehavior(String selector)
 	{

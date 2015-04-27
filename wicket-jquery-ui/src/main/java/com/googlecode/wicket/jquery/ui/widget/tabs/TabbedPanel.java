@@ -30,11 +30,10 @@ import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.util.ListModel;
 
 import com.googlecode.wicket.jquery.core.JQueryGenericPanel;
-import com.googlecode.wicket.jquery.core.JQueryPanel;
 import com.googlecode.wicket.jquery.core.Options;
 
 /**
- * Provides jQuery tabs based on a {@link JQueryPanel}
+ * Provides jQuery tabs based on a {@link JQueryGenericPanel}
  *
  * @author Sebastien Briquet - sebfz1
  */
@@ -92,7 +91,6 @@ public class TabbedPanel extends JQueryGenericPanel<List<ITab>> implements ITabs
 
 	// Properties //
 
-	@SuppressWarnings("unchecked")
 	@Override
 	public List<ITab> getModelObject()
 	{

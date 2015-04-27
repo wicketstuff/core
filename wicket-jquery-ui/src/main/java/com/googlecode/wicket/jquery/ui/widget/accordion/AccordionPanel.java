@@ -29,12 +29,11 @@ import org.apache.wicket.model.Model;
 import org.apache.wicket.model.util.ListModel;
 
 import com.googlecode.wicket.jquery.core.JQueryGenericPanel;
-import com.googlecode.wicket.jquery.core.JQueryPanel;
 import com.googlecode.wicket.jquery.core.Options;
 import com.googlecode.wicket.jquery.ui.widget.tabs.TabListModel;
 
 /**
- * Provides a jQuery accordion based on a {@link JQueryPanel}, which takes {@link ITab}<code>s</code> as contructor's argument
+ * Provides a jQuery accordion based on a {@link JQueryGenericPanel}, which takes {@link ITab}<code>s</code> as contructor's argument
  *
  * @author Sebastien Briquet - sebfz1
  * @since 1.2.3
@@ -94,7 +93,6 @@ public class AccordionPanel extends JQueryGenericPanel<List<ITab>> implements IA
 
 	// Properties //
 
-	@SuppressWarnings("unchecked")
 	@Override
 	public List<ITab> getModelObject()
 	{

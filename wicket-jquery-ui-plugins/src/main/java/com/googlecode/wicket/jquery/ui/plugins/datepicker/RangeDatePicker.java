@@ -64,6 +64,7 @@ public class RangeDatePicker extends JQueryGenericContainer<DateRange> implement
 	}
 
 	// Properties //
+
 	/**
 	 * Sets the model object
 	 *

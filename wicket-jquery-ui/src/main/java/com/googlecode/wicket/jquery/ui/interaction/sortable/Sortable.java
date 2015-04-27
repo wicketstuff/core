@@ -30,14 +30,13 @@ import org.apache.wicket.model.util.ListModel;
 import org.apache.wicket.request.cycle.RequestCycle;
 import org.apache.wicket.util.lang.Args;
 
-import com.googlecode.wicket.jquery.core.JQueryGenericContainer;
 import com.googlecode.wicket.jquery.core.JQueryBehavior;
-import com.googlecode.wicket.jquery.core.JQueryContainer;
+import com.googlecode.wicket.jquery.core.JQueryGenericContainer;
 import com.googlecode.wicket.jquery.core.Options;
 import com.googlecode.wicket.jquery.core.utils.ListUtils;
 
 /**
- * Provides a jQuery UI sortable {@link JQueryContainer}.<br/>
+ * Provides a jQuery UI sortable {@link JQueryGenericContainer}.<br/>
  * The <tt>Sortable</tt> is usually associated to an &lt;UL&gt; element.
  *
  * @param <T> the type of the model object
@@ -103,6 +102,8 @@ public abstract class Sortable<T> extends JQueryGenericContainer<List<T>> implem
 
 		this.options = options;
 	}
+
+	// Events //
 
 	@Override
 	protected void onInitialize()
@@ -171,6 +172,7 @@ public abstract class Sortable<T> extends JQueryGenericContainer<List<T>> implem
 	}
 
 	// Methods //
+
 	/**
 	 * Connects with another {@link Sortable}<br/>
 	 * The specified {@link Sortable} will keep a reference to the caller (<code>this</code>).
@@ -213,6 +215,7 @@ public abstract class Sortable<T> extends JQueryGenericContainer<List<T>> implem
 	}
 
 	// IJQueryWidget //
+
 	@Override
 	public JQueryBehavior newWidgetBehavior(String selector)
 	{

@@ -25,15 +25,14 @@ import org.apache.wicket.markup.ComponentTag;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.util.ListModel;
 
-import com.googlecode.wicket.jquery.core.JQueryGenericContainer;
 import com.googlecode.wicket.jquery.core.JQueryAbstractBehavior;
 import com.googlecode.wicket.jquery.core.JQueryBehavior;
-import com.googlecode.wicket.jquery.core.JQueryContainer;
+import com.googlecode.wicket.jquery.core.JQueryGenericContainer;
 import com.googlecode.wicket.jquery.ui.JQueryIcon;
 import com.googlecode.wicket.jquery.ui.interaction.draggable.Draggable;
 
 /**
- * Provides a jQuery UI selectable {@link JQueryContainer}.<br/>
+ * Provides a jQuery UI selectable {@link JQueryGenericContainer}.<br/>
  * Children of that container can be selected using the mouse or by pressing ctrl+click<br/>
  * Usage:
  *
@@ -43,16 +42,16 @@ import com.googlecode.wicket.jquery.ui.interaction.draggable.Draggable;
  * 		&lt;span wicket:id="item"&gt;[label]&lt;/span&gt;
  * 	&lt;/li&gt;
  * &lt;/ul&gt;
- *
- *
+ * 
+ * 
  * final Selectable&lt;String&gt; selectable = new Selectable&lt;String&gt;("selectable", list) {
- *
+ * 
  * 	protected void onSelect(AjaxRequestTarget target)
  * 	{
  * 		//this.getModelObject(): gets the selected items
  * 	}
  * };
- *
+ * 
  * this.add(selectable);
  * </pre>
  *
@@ -118,6 +117,7 @@ public class Selectable<T extends Serializable> extends JQueryGenericContainer<L
 	}
 
 	// Properties //
+
 	/**
 	 * Gets the reference list of all selectable items.
 	 *

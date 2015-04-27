@@ -30,11 +30,10 @@ import org.apache.wicket.model.Model;
 import org.apache.wicket.model.util.ListModel;
 
 import com.googlecode.wicket.jquery.core.JQueryGenericPanel;
-import com.googlecode.wicket.jquery.core.JQueryPanel;
 import com.googlecode.wicket.jquery.core.Options;
 
 /**
- * Provides a Kendo UI accordion based on a {@link JQueryPanel}, which takes {@link ITab}<code>s</code> as contructor's argument
+ * Provides a Kendo UI accordion based on a {@link JQueryGenericPanel}, which takes {@link ITab}<code>s</code> as contructor's argument
  *
  * @author Sebastien Briquet - sebfz1
  * @since 6.19.0
@@ -94,7 +93,6 @@ public class AccordionPanel extends JQueryGenericPanel<List<ITab>> implements IA
 
 	// Properties //
 
-	@SuppressWarnings("unchecked")
 	@Override
 	public List<ITab> getModelObject()
 	{

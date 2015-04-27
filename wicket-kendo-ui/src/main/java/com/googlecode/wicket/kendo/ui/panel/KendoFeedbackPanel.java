@@ -87,24 +87,27 @@ public class KendoFeedbackPanel extends WebMarkupContainer implements IJQueryWid
 
 	// Properties //
 
-	@SuppressWarnings("unchecked")
 	@Override
-	public IModel<List<FeedbackMessage>> getModel() {
+	@SuppressWarnings("unchecked")
+	public IModel<List<FeedbackMessage>> getModel()
+	{
 		return (IModel<List<FeedbackMessage>>) this.getDefaultModel();
 	}
 
 	@Override
-	public void setModel(IModel<List<FeedbackMessage>> model) {
+	public void setModel(IModel<List<FeedbackMessage>> model)
+	{
 		this.setDefaultModel(model);
 	}
 
 	@Override
-	public void setModelObject(List<FeedbackMessage> object) {
+	public void setModelObject(List<FeedbackMessage> object)
+	{
 		this.setDefaultModelObject(object);
 	}
 
-	@SuppressWarnings("unchecked")
 	@Override
+	@SuppressWarnings("unchecked")
 	public List<FeedbackMessage> getModelObject()
 	{
 		return (List<FeedbackMessage>) this.getDefaultModelObject();
