@@ -20,7 +20,7 @@ import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.util.lang.Args;
 
-import com.googlecode.wicket.jquery.core.GenericJQueryContainer;
+import com.googlecode.wicket.jquery.core.JQueryGenericContainer;
 import com.googlecode.wicket.jquery.core.JQueryBehavior;
 import com.googlecode.wicket.jquery.core.JQueryContainer;
 import com.googlecode.wicket.jquery.core.Options;
@@ -31,7 +31,7 @@ import com.googlecode.wicket.jquery.core.Options;
  * @author Sebastien Briquet - sebfz1
  * @since 6.17.0
  */
-public class ProgressBar extends GenericJQueryContainer<Integer> implements IProgressBarListener
+public class ProgressBar extends JQueryGenericContainer<Integer> implements IProgressBarListener
 {
 	private static final long serialVersionUID = 1L;
 

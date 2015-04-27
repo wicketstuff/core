@@ -22,7 +22,7 @@ import org.apache.wicket.Component;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.model.IModel;
 
-import com.googlecode.wicket.jquery.core.GenericJQueryContainer;
+import com.googlecode.wicket.jquery.core.JQueryGenericContainer;
 import com.googlecode.wicket.jquery.core.JQueryBehavior;
 import com.googlecode.wicket.jquery.core.JQueryContainer;
 import com.googlecode.wicket.jquery.core.Options;
@@ -33,7 +33,7 @@ import com.googlecode.wicket.jquery.core.Options;
  * @param <T> the object model type
  * @author Sebastien Briquet - sebfz1
  */
-public class Draggable<T> extends GenericJQueryContainer<T> implements IDraggableListener
+public class Draggable<T> extends JQueryGenericContainer<T> implements IDraggableListener
 {
 	private static final long serialVersionUID = 1L;
 

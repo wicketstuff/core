@@ -9,13 +9,13 @@ import org.apache.wicket.model.IModel;
  * @param <T>
  *     the type of the model object
  */
-public abstract class GenericJQueryContainer<T> extends JQueryContainer implements IGenericComponent<T> {
+public abstract class JQueryGenericContainer<T> extends JQueryContainer implements IGenericComponent<T> {
 
-    public GenericJQueryContainer(String id) {
+    public JQueryGenericContainer(String id) {
         super(id);
     }
 
-    public GenericJQueryContainer(String id, IModel<?> model) {
+    public JQueryGenericContainer(String id, IModel<?> model) {
         super(id, model);
     }
 

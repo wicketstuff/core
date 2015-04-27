@@ -20,7 +20,7 @@ import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.util.lang.Args;
 
-import com.googlecode.wicket.jquery.core.GenericJQueryContainer;
+import com.googlecode.wicket.jquery.core.JQueryGenericContainer;
 import com.googlecode.wicket.jquery.core.JQueryBehavior;
 import com.googlecode.wicket.jquery.core.JQueryContainer;
 import com.googlecode.wicket.jquery.core.JQueryEvent;
@@ -34,7 +34,7 @@ import com.googlecode.wicket.jquery.ui.ajax.JQueryAjaxChangeBehavior.ChangeEvent
  * @author Sebastien Briquet - sebfz1
  * @since 1.0
  */
-public class ProgressBar extends GenericJQueryContainer<Integer> implements IJQueryAjaxAware, IValueChangedListener
+public class ProgressBar extends JQueryGenericContainer<Integer> implements IJQueryAjaxAware, IValueChangedListener
 {
 	private static final long serialVersionUID = 1L;
 

@@ -19,7 +19,7 @@ package com.googlecode.wicket.jquery.ui.plugins.datepicker;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.model.IModel;
 
-import com.googlecode.wicket.jquery.core.GenericJQueryContainer;
+import com.googlecode.wicket.jquery.core.JQueryGenericContainer;
 import com.googlecode.wicket.jquery.core.JQueryBehavior;
 import com.googlecode.wicket.jquery.core.Options;
 import com.googlecode.wicket.jquery.core.event.IValueChangedListener;
@@ -30,7 +30,7 @@ import com.googlecode.wicket.jquery.core.event.IValueChangedListener;
  *
  * @author Sebastien Briquet - sebfz1
  */
-public class RangeDatePicker extends GenericJQueryContainer<DateRange> implements IValueChangedListener
+public class RangeDatePicker extends JQueryGenericContainer<DateRange> implements IValueChangedListener
 {
 	private static final long serialVersionUID = 1L;
 

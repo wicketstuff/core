@@ -30,7 +30,7 @@ import org.apache.wicket.model.util.ListModel;
 import org.apache.wicket.request.cycle.RequestCycle;
 import org.apache.wicket.util.lang.Args;
 
-import com.googlecode.wicket.jquery.core.GenericJQueryContainer;
+import com.googlecode.wicket.jquery.core.JQueryGenericContainer;
 import com.googlecode.wicket.jquery.core.JQueryBehavior;
 import com.googlecode.wicket.jquery.core.JQueryContainer;
 import com.googlecode.wicket.jquery.core.Options;
@@ -44,7 +44,7 @@ import com.googlecode.wicket.jquery.core.utils.ListUtils;
  * @author Sebastien Briquet - sebfz1
  *
  */
-public abstract class Sortable<T> extends GenericJQueryContainer<List<T>> implements ISortableListener<T>
+public abstract class Sortable<T> extends JQueryGenericContainer<List<T>> implements ISortableListener<T>
 {
 	private static final long serialVersionUID = 1L;
 
