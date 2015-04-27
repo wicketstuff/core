@@ -25,6 +25,7 @@ import org.apache.wicket.markup.ComponentTag;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.util.ListModel;
 
+import com.googlecode.wicket.jquery.core.JQueryGenericContainer;
 import com.googlecode.wicket.jquery.core.JQueryAbstractBehavior;
 import com.googlecode.wicket.jquery.core.JQueryBehavior;
 import com.googlecode.wicket.jquery.core.JQueryContainer;
@@ -59,7 +60,7 @@ import com.googlecode.wicket.jquery.ui.interaction.draggable.Draggable;
  * @author Sebastien Briquet - sebfz1
  *
  */
-public class Selectable<T extends Serializable> extends JQueryContainer
+public class Selectable<T extends Serializable> extends JQueryGenericContainer<List<T>>
 {
 	private static final long serialVersionUID = 1L;
 
@@ -117,39 +118,6 @@ public class Selectable<T extends Serializable> extends JQueryContainer
 	}
 
 	// Properties //
-
-	/**
-	 * Gets the model object
-	 *
-	 * @return the list of selected items
-	 */
-	@SuppressWarnings("unchecked")
-	public IModel<? extends List<T>> getModel()
-	{
-		return (IModel<? extends List<T>>) this.getDefaultModel();
-	}
-
-	/**
-	 * Gets the model object
-	 *
-	 * @return the list of selected items
-	 */
-	@SuppressWarnings("unchecked")
-	public List<T> getModelObject()
-	{
-		return (List<T>) this.getDefaultModelObject();
-	}
-
-	/**
-	 * Sets the model object
-	 *
-	 * @param list the list of selected items
-	 */
-	public void setModelObject(List<T> list)
-	{
-		this.setDefaultModelObject(list);
-	}
-
 	/**
 	 * Gets the reference list of all selectable items.
 	 *

@@ -22,6 +22,7 @@ import org.apache.wicket.Component;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.model.IModel;
 
+import com.googlecode.wicket.jquery.core.JQueryGenericContainer;
 import com.googlecode.wicket.jquery.core.JQueryBehavior;
 import com.googlecode.wicket.jquery.core.JQueryContainer;
 import com.googlecode.wicket.jquery.core.Options;
@@ -32,7 +33,7 @@ import com.googlecode.wicket.jquery.core.Options;
  * @param <T> the object model type
  * @author Sebastien Briquet - sebfz1
  */
-public class Draggable<T> extends JQueryContainer implements IDraggableListener
+public class Draggable<T> extends JQueryGenericContainer<T> implements IDraggableListener
 {
 	private static final long serialVersionUID = 1L;
 
@@ -109,26 +110,6 @@ public class Draggable<T> extends JQueryContainer implements IDraggableListener
 	}
 
 	// Properties //
-	/**
-	 * Gets the model
-	 * @return {@link IModel}
-	 */
-	@SuppressWarnings("unchecked")
-	public IModel<T> getModel()
-	{
-		return (IModel<T>) this.getDefaultModel();
-	}
-
-	/**
-	 * Gets the model object
-	 * @return the model object
-	 */
-	@SuppressWarnings("unchecked")
-	public T getModelObject()
-	{
-		return (T)this.getDefaultModelObject();
-	}
-
 	@Override
 	public boolean isStopEventEnabled()
 	{

@@ -20,6 +20,7 @@ import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.util.lang.Args;
 
+import com.googlecode.wicket.jquery.core.JQueryGenericContainer;
 import com.googlecode.wicket.jquery.core.JQueryBehavior;
 import com.googlecode.wicket.jquery.core.JQueryContainer;
 import com.googlecode.wicket.jquery.core.JQueryEvent;
@@ -33,7 +34,7 @@ import com.googlecode.wicket.jquery.ui.ajax.JQueryAjaxChangeBehavior.ChangeEvent
  * @author Sebastien Briquet - sebfz1
  * @since 1.0
  */
-public class ProgressBar extends JQueryContainer implements IJQueryAjaxAware, IValueChangedListener
+public class ProgressBar extends JQueryGenericContainer<Integer> implements IJQueryAjaxAware, IValueChangedListener
 {
 	private static final long serialVersionUID = 1L;
 
@@ -63,27 +64,6 @@ public class ProgressBar extends JQueryContainer implements IJQueryAjaxAware, IV
 
 	// Properties //
 	/**
-	 * Gets the model (wrapping the value)
-	 *
-	 * @return {@link IModel}
-	 */
-	@SuppressWarnings("unchecked")
-	public IModel<Integer> getModel()
-	{
-		return (IModel<Integer>) this.getDefaultModel();
-	}
-
-	/**
-	 * Gets the model object
-	 *
-	 * @return the progress-bar value
-	 */
-	public Integer getModelObject()
-	{
-		return (Integer) this.getDefaultModelObject();
-	}
-
-	/**
 	 * Sets the progress-bar value
 	 *
 	 * @param value value which should be greater than or equals to {@link #MIN} and less than or equals to {@link #MAX}
@@ -101,7 +81,7 @@ public class ProgressBar extends JQueryContainer implements IJQueryAjaxAware, IV
 			v = MAX;
 		}
 
-		this.setDefaultModelObject(v);
+		super.setModelObject(v);
 	}
 
 	/* Ajax Methods */

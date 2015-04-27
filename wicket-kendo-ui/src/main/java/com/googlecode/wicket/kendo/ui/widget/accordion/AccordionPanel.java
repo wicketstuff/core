@@ -29,6 +29,7 @@ import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.model.util.ListModel;
 
+import com.googlecode.wicket.jquery.core.JQueryGenericPanel;
 import com.googlecode.wicket.jquery.core.JQueryPanel;
 import com.googlecode.wicket.jquery.core.Options;
 
@@ -39,7 +40,7 @@ import com.googlecode.wicket.jquery.core.Options;
  * @since 6.19.0
  * @since 7.0.0
  */
-public class AccordionPanel extends JQueryPanel implements IAccordionListener
+public class AccordionPanel extends JQueryGenericPanel<List<ITab>> implements IAccordionListener
 {
 	private static final long serialVersionUID = 1L;
 
@@ -94,15 +95,10 @@ public class AccordionPanel extends JQueryPanel implements IAccordionListener
 	// Properties //
 
 	@SuppressWarnings("unchecked")
-	public IModel<List<ITab>> getModel()
-	{
-		return (IModel<List<ITab>>) this.getDefaultModel();
-	}
-
-	@SuppressWarnings("unchecked")
+	@Override
 	public List<ITab> getModelObject()
 	{
-		List<ITab> list = (List<ITab>) this.getDefaultModelObject();
+		List<ITab> list = super.getModelObject();
 
 		if (list != null)
 		{
