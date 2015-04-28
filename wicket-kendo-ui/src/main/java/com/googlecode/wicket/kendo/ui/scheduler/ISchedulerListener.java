@@ -37,7 +37,7 @@ public interface ISchedulerListener
 	 * </p>
 	 *
 	 * <p>
-	 * <b>Note:</b> <tt>true</tt> will prevent the internal event handling (by using e.preventDefault()) to avoid conflicts with Scheduler's dialog.<br/>
+	 * <b>Note:</b> {@code true} will prevent the internal event handling (by using e.preventDefault()) to avoid conflicts with Scheduler's dialog.<br/>
 	 * </p>
 	 *
 	 * @return false by default

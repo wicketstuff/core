@@ -26,7 +26,7 @@ import com.googlecode.wicket.kendo.ui.form.TextField;
 import com.googlecode.wicket.kendo.ui.panel.KendoFeedbackPanel;
 
 /**
- * Provides a Kendo UI Window having a {@link TextField}, a 'Submit' button and a 'Cancel' button
+ * Provides a Kendo UI Window having a {@link TextField}, an 'Ok' and a 'Cancel' button
  *
  * @param <T> the type of the model object
  *
@@ -160,11 +160,11 @@ public abstract class InputWindow<T> extends Window<T>
 	{
 		if (button != null)
 		{
-			if (button.match(LBL_OK))
+			if (button.match(OK))
 			{
 				this.onSubmit(target);
 			}
-			else if (button.match(LBL_CANCEL))
+			else if (button.match(CANCEL))
 			{
 				this.onCancel(target);
 			}

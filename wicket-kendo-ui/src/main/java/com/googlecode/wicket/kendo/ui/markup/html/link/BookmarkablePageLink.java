@@ -25,7 +25,7 @@ import com.googlecode.wicket.kendo.ui.KendoIcon;
 import com.googlecode.wicket.kendo.ui.form.button.ButtonBehavior;
 
 /**
- * Provides a Kendo UI button based on a built-in <code>BookmarkablePageLink</code>
+ * Provides a Kendo UI button based on a built-in {@code BookmarkablePageLink}
  *
  * @param <T> the model object type
  * @author Sebastien Briquet - sebfz1

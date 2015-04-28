@@ -22,31 +22,18 @@ import java.util.List;
 import com.googlecode.wicket.kendo.ui.KendoIcon;
 
 /**
- * Provides default sets of {@link WindowButton}<code>s</code> to be used in {@link Window}
+ * Provides default sets of {@link WindowButton}{@code s} to be used in {@link Window}
  *
  * @author Sebastien Briquet - sebfz1
  */
 public enum WindowButtons
 {
-	OK(WindowButton.of(Window.LBL_OK, KendoIcon.TICK, true)), // lf
-	OK_CANCEL(WindowButton.of(Window.LBL_OK, KendoIcon.TICK, true), WindowButton.of(Window.LBL_CANCEL, KendoIcon.CANCEL, false)), // lf
-	YES_NO(WindowButton.of(Window.LBL_YES, true), WindowButton.of(Window.LBL_NO, true)), // lf
-	YES_NO_CANCEL(WindowButton.of(Window.LBL_YES, true), WindowButton.of(Window.LBL_NO, true), WindowButton.of(Window.LBL_CANCEL, false));
+	OK(WindowButton.of(Window.OK, Window.LBL_OK, KendoIcon.TICK, true)), // lf
+	OK_CANCEL(WindowButton.of(Window.OK, Window.LBL_OK, KendoIcon.TICK, true), WindowButton.of(Window.CANCEL, Window.LBL_CANCEL, KendoIcon.CANCEL, false)), // lf
+	YES_NO(WindowButton.of(Window.YES, Window.LBL_YES, true), WindowButton.of(Window.NO, Window.LBL_NO, true)), // lf
+	YES_NO_CANCEL(WindowButton.of(Window.YES, Window.LBL_YES, true), WindowButton.of(Window.NO, Window.LBL_NO, true), WindowButton.of(Window.CANCEL, Window.LBL_CANCEL, false));
 
 	private final List<WindowButton> buttons = new ArrayList<WindowButton>();
-
-	/**
-	 * Constructor
-	 *
-	 * @param labels the button labels
-	 */
-	private WindowButtons(String... labels)
-	{
-		for (String label : labels)
-		{
-			this.buttons.add(new WindowButton(label));
-		}
-	}
 
 	/**
 	 * Constructor

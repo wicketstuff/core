@@ -102,7 +102,7 @@ public class KendoUIBehavior extends JQueryBehavior
 	 * Adds a data-source to be rendered at {@link #renderHead(Component, IHeaderResponse)} time.
 	 *
 	 * @param datasource the {@link IKendoDataSource}
-	 * @return <tt>true</tt> (as specified by {@link Collection#add})
+	 * @return {@code true} (as specified by {@link Collection#add})
 	 */
 	public boolean add(IKendoDataSource datasource)
 	{

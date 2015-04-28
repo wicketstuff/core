@@ -72,7 +72,7 @@ public abstract class AccordionBehavior extends JQueryUIBehavior implements IJQu
 
 	// Properties //
 	/**
-	 * Gets the reference {@link List} of {@link ITab}<tt>s</tt>.<br/>
+	 * Gets the reference {@link List} of {@link ITab}{@code s}.<br/>
 	 * Usually the model object of the component on which this {@link AccordionBehavior} is bound to.
 	 *
 	 * @return a non-null {@link List}
@@ -82,7 +82,7 @@ public abstract class AccordionBehavior extends JQueryUIBehavior implements IJQu
 	/**
 	 * Gets a read-only {@link ITab} {@link List} having its visible flag set to true.
 	 *
-	 * @return a {@link List} of {@link ITab}<tt>s</tt>
+	 * @return a {@link List} of {@link ITab}{@code s}
 	 */
 	protected List<ITab> getVisibleTabs()
 	{

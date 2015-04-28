@@ -174,12 +174,11 @@ public abstract class ConfirmAjaxButton extends GenericPanel<String>
 			{
 				if (button != null)
 				{
-					if (button.match(LBL_OK))
+					if (button.match(OK))
 					{
 						ConfirmAjaxButton.this.onSubmit(target);
 					}
-
-					if (button.match(LBL_CANCEL))
+					else if (button.match(CANCEL))
 					{
 						ConfirmAjaxButton.this.onCancel(target);
 					}

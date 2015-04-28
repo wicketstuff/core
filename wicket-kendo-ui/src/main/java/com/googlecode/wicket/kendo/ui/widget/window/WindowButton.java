@@ -43,9 +43,9 @@ public class WindowButton implements IClusterable
 	 * @param formProcessing whether the form will be validated and updated
 	 * @return a new {@link WindowButton}
 	 */
-	public static WindowButton of(IModel<String> text, boolean formProcessing)
+	public static WindowButton of(String name, IModel<String> text, boolean formProcessing)
 	{
-		return WindowButton.of(text, ICON, formProcessing);
+		return WindowButton.of(name, text, ICON, formProcessing);
 	}
 
 	/**
@@ -56,13 +56,14 @@ public class WindowButton implements IClusterable
 	 * @param formProcessing whether the form will be validated and updated
 	 * @return a new {@link WindowButton}
 	 */
-	public static WindowButton of(IModel<String> text, String icon, boolean formProcessing)
+	public static WindowButton of(String name, IModel<String> text, String icon, boolean formProcessing)
 	{
-		WindowButton button = new WindowButton(text, icon);
+		WindowButton button = new WindowButton(name, text, icon);
 
 		return button.setDefaultFormProcessing(formProcessing);
 	}
 
+	private String name;
 	private final IModel<String> model;
 	private String icon;
 	private boolean enabled;
@@ -71,95 +72,127 @@ public class WindowButton implements IClusterable
 
 	/**
 	 * Constructor
-	 *
+	 * 
+	 * @param name the button's name
 	 * @param text the button's text
 	 */
-	public WindowButton(String text)
+	public WindowButton(String name, String text)
 	{
-		this(Model.of(text), ICON, true);
+		this(name, Model.of(text), ICON, true);
 	}
 
 	/**
 	 * Constructor
 	 *
+	 * @param name the button's name
 	 * @param text the button's text
 	 * @param icon the button's icon
 	 */
-	public WindowButton(String text, String icon)
+	public WindowButton(String name, String text, String icon)
 	{
-		this(Model.of(text), icon, true);
+		this(name, Model.of(text), icon, true);
 	}
 
 	/**
 	 * Constructor
 	 *
+	 * @param name the button's name
 	 * @param text the button's text
 	 * @param enabled indicates whether the button is enabled
 	 */
-	public WindowButton(String text, boolean enabled)
+	public WindowButton(String name, String text, boolean enabled)
 	{
-		this(Model.of(text), ICON, enabled);
+		this(name, Model.of(text), ICON, enabled);
 	}
 
 	/**
 	 * Constructor
 	 *
+	 * @param name the button's name
 	 * @param text the button's text
 	 * @param icon the button's icon
 	 * @param enabled indicates whether the button is enabled
 	 */
-	public WindowButton(String text, String icon, boolean enabled)
+	public WindowButton(String name, String text, String icon, boolean enabled)
 	{
-		this(Model.of(text), icon, enabled);
+		this(name, Model.of(text), icon, enabled);
 	}
 
 	/**
 	 * Constructor
 	 *
+	 * @param name the button's name
 	 * @param text the button's text
 	 */
-	public WindowButton(IModel<String> text)
+	public WindowButton(String name, IModel<String> text)
 	{
-		this(text, ICON, true);
+		this(name, text, ICON, true);
 	}
 
 	/**
 	 * Constructor
 	 *
+	 * @param name the button's name
 	 * @param text the button's text
 	 * @param icon the button's icon
 	 */
-	public WindowButton(IModel<String> text, String icon)
+	public WindowButton(String name, IModel<String> text, String icon)
 	{
-		this(text, icon, true);
+		this(name, text, icon, true);
 	}
 
 	/**
 	 * Constructor
 	 *
+	 * @param name the button's name
 	 * @param text the button's text
 	 * @param enabled indicates whether the button is enabled
 	 */
-	public WindowButton(IModel<String> text, boolean enabled)
+	public WindowButton(String name, IModel<String> text, boolean enabled)
 	{
-		this(text, ICON, enabled);
+		this(name, text, ICON, enabled);
 	}
 
 	/**
 	 * Main constructor
 	 *
+	 * @param name the button's name
 	 * @param text the button's text
 	 * @param icon the button's icon
 	 * @param enabled indicates whether the button is enabled
 	 */
-	public WindowButton(IModel<String> text, String icon, boolean enabled)
+	public WindowButton(String name, IModel<String> text, String icon, boolean enabled)
 	{
+		this.name = name;
 		this.model = text;
 		this.icon = icon;
 		this.enabled = enabled;
 	}
 
 	// Properties //
+
+	/**
+	 * Gets the button's name
+	 *
+	 * @return the button's name
+	 */
+	public String getName()
+	{
+		return this.name;
+	}
+
+	/**
+	 * INTERNAL USE<br/>
+	 * Gets the model of the button's text<br/>
+	 * <br/>
+	 * <b>Warning: </b> It may throw an Exception if not wrapped to a component
+	 *
+	 * @return the {@link IModel}
+	 */
+	IModel<String> getTextModel()
+	{
+		return this.model;
+	}
 
 	/**
 	 * Gets the button's icon
@@ -179,26 +212,6 @@ public class WindowButton implements IClusterable
 	public void setIcon(String icon)
 	{
 		this.icon = icon;
-	}
-
-	/**
-	 * Gets the button's text
-	 *
-	 * @return the button's text
-	 */
-	public String getText()
-	{
-		return this.model.getObject();
-	}
-
-	/**
-	 * Gets the model of the button's text
-	 *
-	 * @return the {@link IModel}
-	 */
-	public IModel<String> getTextModel()
-	{
-		return this.model;
 	}
 
 	/**
@@ -263,7 +276,7 @@ public class WindowButton implements IClusterable
 	{
 		if (object instanceof WindowButton)
 		{
-			return this.match(((WindowButton) object).getTextModel());
+			return this.match(((WindowButton) object).getName());
 		}
 
 		return super.equals(object);
@@ -272,34 +285,17 @@ public class WindowButton implements IClusterable
 	@Override
 	public int hashCode()
 	{
-		return this.toString().hashCode();
+		return this.name.hashCode();
 	}
 
 	/**
-	 * Indicates whether this {@link WindowButton} text representation ({@link #toString()}) match the supplied text.
+	 * Indicates whether this {@link WindowButton} name match the supplied name.
 	 *
-	 * @param text the text to compare to
+	 * @param name the name to compare to
 	 * @return true if equal
 	 */
-	public boolean match(String text)
+	public boolean match(String name)
 	{
-		return Strings.isEqual(text, this.toString());
-	}
-
-	/**
-	 * Indicates whether this {@link WindowButton} text representation ({@link #toString()}) match the supplied text.
-	 *
-	 * @param text the text to compare to
-	 * @return true if equal
-	 */
-	public boolean match(IModel<String> text)
-	{
-		return this.match(text.getObject());
-	}
-
-	@Override
-	public String toString()
-	{
-		return this.getText();
+		return Strings.isEqual(name, this.name);
 	}
 }

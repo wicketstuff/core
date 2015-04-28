@@ -27,7 +27,7 @@ import org.apache.wicket.markup.repeater.RepeatingView;
 import com.googlecode.wicket.kendo.ui.form.button.AjaxButton;
 
 /**
- * Provides a {@link Panel} of {@link WindowButton}<code>s</code> to be used in {@link Window}
+ * Provides a {@link Panel} of {@link WindowButton}{@code s} to be used in {@link Window}
  * 
  * @author Sebastien Briquet - sebfz1
  */

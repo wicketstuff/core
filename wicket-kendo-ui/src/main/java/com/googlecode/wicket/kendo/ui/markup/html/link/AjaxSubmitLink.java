@@ -24,7 +24,7 @@ import com.googlecode.wicket.kendo.ui.KendoIcon;
 import com.googlecode.wicket.kendo.ui.form.button.ButtonBehavior;
 
 /**
- * Provides a Kendo UI button based on a built-in <code>AjaxSubmitLink</code>
+ * Provides a Kendo UI button based on a built-in {@code AjaxSubmitLink}
  *
  * @author Sebastien Briquet - sebfz1
  * @since 6.19.0

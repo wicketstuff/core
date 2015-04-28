@@ -50,7 +50,7 @@ public abstract class JQueryAbstractBehavior extends Behavior
 	/**
 	 * Gets the {@link JQueryLibrarySettings}
 	 *
-	 * @return The {@link JQueryLibrarySettings} or <tt>null</tt> if {@link Application}'s {@link IJavaScriptLibrarySettings} is not an instance of {@link JQueryLibrarySettings}
+	 * @return The {@link JQueryLibrarySettings} or {@code null} if {@link Application}'s {@link JavaScriptLibrarySettings} is not an instance of {@link JQueryLibrarySettings}
 	 */
 	public static JQueryLibrarySettings getJQueryLibrarySettings()
 	{
@@ -83,7 +83,7 @@ public abstract class JQueryAbstractBehavior extends Behavior
 	 * Adds a reference to be rendered at {@link #renderHead(Component, IHeaderResponse)} time.
 	 *
 	 * @param reference a {@link CssResourceReference}, a {@link JavaScriptResourceReference} or a {@link JQueryPluginResourceReference}
-	 * @return <tt>true</tt> (as specified by {@link Collection#add})
+	 * @return {@code true} (as specified by {@link Collection#add})
 	 */
 	public boolean add(ResourceReference reference)
 	{
@@ -132,7 +132,7 @@ public abstract class JQueryAbstractBehavior extends Behavior
 	/**
 	 * Renders the {@link Behavior}'s javascript<br/>
 	 * This can be overridden to provides a priority:<br/>
-	 * <code>response.render(new PriorityHeaderItem(script));</code>
+	 * {@code response.render(new PriorityHeaderItem(script));}
 	 *
 	 * @param script the {@link JavaScriptHeaderItem}
 	 * @param response the {@link IHeaderResponse}

@@ -21,7 +21,7 @@ import java.util.Iterator;
 import java.util.List;
 
 /**
- * Utility class for {@link List}(<tt>s</tt>)
+ * Utility class for {@link List}({@code s})
  *
  * @author Sebastien Briquet - sebfz1
  *
@@ -33,7 +33,7 @@ public class ListUtils
 	 *
 	 * @param hash the hashcode to match
 	 * @param list the {@link List} to search in
-	 * @return the list-item or <code>null</code> if not found
+	 * @return the list-item or {@code null} if not found
 	 */
 	public static synchronized <T> T fromHash(int hash, List<T> list)
 	{

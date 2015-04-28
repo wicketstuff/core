@@ -19,7 +19,7 @@ package com.googlecode.wicket.jquery.core;
 import com.googlecode.wicket.jquery.core.ajax.JQueryAjaxBehavior;
 
 /**
- * Base class for a jQuery event object that will be broadcasted by {@link JQueryAjaxBehavior}<code>s</code>.
+ * Base class for a jQuery event object that will be broadcasted by {@link JQueryAjaxBehavior}{@code s}.
  *
  * @author Sebastien Briquet - sebfz1
  *

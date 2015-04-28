@@ -95,7 +95,7 @@ public class JQueryUILibrarySettings
 	/**
 	 * Gets the JQuery UI stylesheet resource reference
 	 *
-	 * @return <tt>null</tt> by default, meaning the style is supplied through the HTML page (&lt;link rel="stylesheet" type="text/css" href="..." /&gt;)
+	 * @return {@code null} by default, meaning the style is supplied through the HTML page (&lt;link rel="stylesheet" type="text/css" href="..." /&gt;)
 	 * @see #setStyleSheetReference(ResourceReference)
 	 */
 	public ResourceReference getStyleSheetReference()

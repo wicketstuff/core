@@ -26,7 +26,7 @@ import com.googlecode.wicket.kendo.ui.KendoIcon;
 import com.googlecode.wicket.kendo.ui.form.button.ButtonBehavior;
 
 /**
- * Provides a Kendo UI button based on a built-in <code>DownloadLink</code>
+ * Provides a Kendo UI button based on a built-in {@code DownloadLink}
  *
  * @author Sebastien Briquet - sebfz1
  * @since 6.19.0

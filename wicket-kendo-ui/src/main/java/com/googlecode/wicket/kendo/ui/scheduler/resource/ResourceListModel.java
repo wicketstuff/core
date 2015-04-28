@@ -25,7 +25,7 @@ import com.googlecode.wicket.jquery.core.Options;
 
 /**
  * INTERNAL USE<br/>
- * {@link ListModel} of {@link ResourceList} (a <tt>List</tt> of <tt>List</tt>)
+ * {@link ListModel} of {@link ResourceList} (a {@code List} of {@code List})
  *
  * @author Sebastien Briquet - sebfz1
  *
@@ -43,7 +43,7 @@ public class ResourceListModel extends ListModel<ResourceList>
 	}
 
 	/**
-	 * Adds a <tt>ResourceList</tt> to the model object
+	 * Adds a {@code ResourceList} to the model object
 	 *
 	 * @param list the {@link ResourceList}
 	 */

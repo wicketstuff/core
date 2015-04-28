@@ -194,8 +194,8 @@ public abstract class JQueryAjaxBehavior extends AbstractDefaultAjaxBehavior
 	}
 
 	/**
-	 * Gets the {@link CallbackParameter}<code>s</code> that *may* be passed to {@link #getCallbackFunction(CallbackParameter...)}<br/>
-	 * This is a convenience method that allows to define {@link CallbackParameter}<code>s</code> before the invocation of {@link #getCallbackFunction(CallbackParameter...)}.
+	 * Gets the {@link CallbackParameter}{@code s} that *may* be passed to {@link #getCallbackFunction(CallbackParameter...)}<br/>
+	 * This is a convenience method that allows to define {@link CallbackParameter}{@code s} before the invocation of {@link #getCallbackFunction(CallbackParameter...)}.
 	 *
 	 * @return an array of {@link CallbackParameter}
 	 * @see #getCallbackFunction()
@@ -206,7 +206,7 @@ public abstract class JQueryAjaxBehavior extends AbstractDefaultAjaxBehavior
 	}
 
 	/**
-	 * Calls {@link #getCallbackFunction(CallbackParameter...)} by passing {@link CallbackParameter}<code>s</code> from {@link #getCallbackParameters()}
+	 * Calls {@link #getCallbackFunction(CallbackParameter...)} by passing {@link CallbackParameter}{@code s} from {@link #getCallbackParameters()}
 	 *
 	 * @return the javascript function.
 	 */

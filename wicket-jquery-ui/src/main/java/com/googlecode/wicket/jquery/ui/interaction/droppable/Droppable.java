@@ -25,7 +25,7 @@ import com.googlecode.wicket.jquery.core.JQueryContainer;
 import com.googlecode.wicket.jquery.ui.interaction.draggable.Draggable;
 
 /**
- * Provides a jQuery droppable area, on which {@link Draggable}<code>s</code> could be dropped.
+ * Provides a jQuery droppable area, on which {@link Draggable}{@code s} could be dropped.
  *
  * @param <T> the model object type
  * @author Sebastien Briquet - sebfz1

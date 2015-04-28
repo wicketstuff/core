@@ -27,7 +27,7 @@ import com.googlecode.wicket.kendo.ui.datatable.column.IColumn;
 import com.googlecode.wicket.kendo.ui.datatable.column.IExportableColumn;
 
 /**
- * Specifies export of {@link IExportableColumn}<tt>s</tt> against an {@link IDataProvider}
+ * Specifies export of {@link IExportableColumn}{@code s} against an {@link IDataProvider}
  *
  * @author Sebastien Briquet - sebfz1
  */

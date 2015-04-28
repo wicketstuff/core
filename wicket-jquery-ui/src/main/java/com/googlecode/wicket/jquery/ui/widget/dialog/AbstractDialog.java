@@ -201,7 +201,7 @@ public abstract class AbstractDialog<T extends Serializable> extends GenericPane
 	}
 
 	/**
-	 * Triggered when a button is clicked. This method may be overridden to handle button behaviors, but the dialog will not been closed until <code>super.onClick(event)</code> or {@link #close(AjaxRequestTarget, DialogButton)} is called.
+	 * Triggered when a button is clicked. This method may be overridden to handle button behaviors, but the dialog will not been closed until {@code super.onClick(event)} or {@link #close(AjaxRequestTarget, DialogButton)} is called.
 	 */
 	@Override
 	public void onClick(AjaxRequestTarget target, DialogButton button)
@@ -211,7 +211,7 @@ public abstract class AbstractDialog<T extends Serializable> extends GenericPane
 
 	/**
 	 * Internal onClick method, fired by the behavior<br/>
-	 * The purpose of this method is to prevent the behavior calling {@link #onClick(AjaxRequestTarget, DialogButton)} directly, as <code>onClick</code> is implemented by default
+	 * The purpose of this method is to prevent the behavior calling {@link #onClick(AjaxRequestTarget, DialogButton)} directly, as {@code onClick} is implemented by default
 	 *
 	 * @param target the {@link AjaxRequestTarget}
 	 * @param button the {@link DialogButton}

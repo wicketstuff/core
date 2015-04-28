@@ -28,7 +28,7 @@ import com.googlecode.wicket.jquery.core.utils.DateUtils;
 /**
  * Provides the value type to be used as model object for {@link RangeDatePicker} and {@link RangeDatePickerTextField}<br/>
  * <br/>
- * <tt>start</tt> and <tt>end</tt> dates are UTC based, the JSON array ({@link #toString()}) is timezone agnostic
+ * {@code start} and {@code end} dates are UTC based, the JSON array ({@link #toString()}) is timezone agnostic
  *
  * @author Sebastien Briquet - sebfz1
  */
@@ -40,7 +40,7 @@ public class DateRange implements IClusterable
 
 	/**
 	 * Creates a new {@link DateRange}, UTC time, starting at 0:00:00.000 and ending at 23:59:59.999<br/>
-	 * <b>Caution:</b> supplied dates should be local to the system (ie: <code>new Date()</code>).
+	 * <b>Caution:</b> supplied dates should be local to the system (ie: {@code new Date()}).
 	 * 
 	 * @param start the local start date
 	 * @param end the local end date

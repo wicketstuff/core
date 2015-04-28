@@ -22,7 +22,7 @@ import java.util.List;
 import org.apache.wicket.model.LoadableDetachableModel;
 
 /**
- * Model of {@link SchedulerEvent}<tt>s</tt> for the {@link Scheduler}<br/>
+ * Model of {@link SchedulerEvent}{@code s} for the {@link Scheduler}<br/>
  * The inheriting class should be able to {@link #load()} events depending on {@link #getStart()} and {@link #getEnd()} dates.
  *
  * @author Sebastien Briquet - sebfz1
@@ -45,7 +45,7 @@ public abstract class SchedulerModel extends LoadableDetachableModel<List<Schedu
 	}
 
 	/**
-	 * Gets the start date, used to {@link #load()} {@link SchedulerEvent}<tt>s</tt>
+	 * Gets the start date, used to {@link #load()} {@link SchedulerEvent}{@code s}
 	 *
 	 * @return the start date
 	 */
@@ -65,7 +65,7 @@ public abstract class SchedulerModel extends LoadableDetachableModel<List<Schedu
 	}
 
 	/**
-	 * Gets the end date, used to {@link #load()} {@link SchedulerEvent}<tt>s</tt>
+	 * Gets the end date, used to {@link #load()} {@link SchedulerEvent}{@code s}
 	 *
 	 * @return the start date
 	 */

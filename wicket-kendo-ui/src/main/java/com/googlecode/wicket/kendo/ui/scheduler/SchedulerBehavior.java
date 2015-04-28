@@ -123,7 +123,7 @@ public abstract class SchedulerBehavior extends KendoUIBehavior implements IJQue
 	protected abstract CharSequence getDataSourceUrl();
 
 	/**
-	 * Gets the <tt>ResourceListModel</tt>
+	 * Gets the {@code ResourceListModel}
 	 *
 	 * @return the {@link ResourceListModel}
 	 */

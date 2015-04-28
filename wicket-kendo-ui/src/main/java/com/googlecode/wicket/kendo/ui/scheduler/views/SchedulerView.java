@@ -22,7 +22,7 @@ public abstract class SchedulerView extends Options
 	 * Sets the user-friendly title of the view displayed by the scheduler.
 	 *
 	 * @param title the title
-	 * @return <tt>this</tt>, for chaining
+	 * @return {@code this}, for chaining
 	 */
 	public SchedulerView setTitle(String title)
 	{
@@ -35,7 +35,7 @@ public abstract class SchedulerView extends Options
 	 * Indicates whether the view will be initially selected by the scheduler widget.
 	 *
 	 * @param selected true or false
-	 * @return <tt>this</tt>, for chaining
+	 * @return {@code this}, for chaining
 	 */
 	public SchedulerView setSelected(boolean selected)
 	{
@@ -49,7 +49,7 @@ public abstract class SchedulerView extends Options
 	 * Overrides the editable option of the scheduler.
 	 *
 	 * @param editable true or false
-	 * @return <tt>this</tt>, for chaining
+	 * @return {@code this}, for chaining
 	 */
 	public SchedulerView setEditable(boolean editable)
 	{
@@ -62,7 +62,7 @@ public abstract class SchedulerView extends Options
 	 * Indicates whether the view will be initially shown in business hours mode.<br/>
 	 * By default view is displayed in full day mode.
 	 * @param show true or false
-	 * @return <tt>this</tt>, for chaining
+	 * @return {@code this}, for chaining
 	 */
 	public SchedulerView setShowWorkHours(boolean show)
 	{
@@ -76,7 +76,7 @@ public abstract class SchedulerView extends Options
 	 * {@link SchedulerView#setDateHeaderTemplatePattern(String)} is marked as protected by default because it is not available to all views.
 	 *
 	 * @param pattern the date pattern
-	 * @return <tt>this</tt>, for chaining
+	 * @return {@code this}, for chaining
 	 */
 	protected SchedulerView setDateHeaderTemplatePattern(String pattern)
 	{

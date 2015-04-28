@@ -73,7 +73,7 @@ public abstract class AbstractSplitButton extends GenericPanel<List<IMenuItem>>
 	 * Returns whether form should be processed the default way.<br/>
 	 * If false, all validation and form updating is bypassed and the onSubmit method of that button is called directly, and the onSubmit method of the parent form is not called.
 	 *
-	 * @return <code>true</code> or <code>false</code>
+	 * @return {@code true} or {@code false}
 	 */
 	public boolean getDefaultFormProcessing()
 	{
@@ -83,7 +83,7 @@ public abstract class AbstractSplitButton extends GenericPanel<List<IMenuItem>>
 	/**
 	 * Sets whether form should be processed the default way.
 	 *
-	 * @param defaultFormProcessing <code>true</code> or <code>false</code>
+	 * @param defaultFormProcessing {@code true} or {@code false}
 	 * @return this, for chaining
 	 */
 	public AbstractSplitButton setDefaultFormProcessing(boolean defaultFormProcessing)

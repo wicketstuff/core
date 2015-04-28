@@ -12,7 +12,7 @@ public class DayView extends SchedulerView
 	private static final long serialVersionUID = 1L;
 
 	/**
-	 * Gets a new instance of <tt>DayView</tt>
+	 * Gets a new instance of {@code DayView}
 	 *
 	 * @return a new {@link DayView}
 	 */

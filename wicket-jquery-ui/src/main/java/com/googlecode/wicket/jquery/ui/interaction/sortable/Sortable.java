@@ -37,7 +37,7 @@ import com.googlecode.wicket.jquery.core.utils.ListUtils;
 
 /**
  * Provides a jQuery UI sortable {@link JQueryGenericContainer}.<br/>
- * The <tt>Sortable</tt> is usually associated to an &lt;UL&gt; element.
+ * The {@code Sortable} is usually associated to an &lt;UL&gt; element.
  *
  * @param <T> the type of the model object
  * @author Sebastien Briquet - sebfz1
@@ -175,7 +175,7 @@ public abstract class Sortable<T> extends JQueryGenericContainer<List<T>> implem
 
 	/**
 	 * Connects with another {@link Sortable}<br/>
-	 * The specified {@link Sortable} will keep a reference to the caller (<code>this</code>).
+	 * The specified {@link Sortable} will keep a reference to the caller ({@code this}).
 	 *
 	 * @param sortable the {@link Sortable} to connect with
 	 * @return this, for chaining
@@ -190,7 +190,7 @@ public abstract class Sortable<T> extends JQueryGenericContainer<List<T>> implem
 	}
 
 	/**
-	 * Sets the '<code>connectWith</code>' options
+	 * Sets the '{@code connectWith}' options
 	 *
 	 * @param selector the html selector
 	 * @return this, for chaining

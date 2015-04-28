@@ -251,7 +251,7 @@ public class Selectable<T extends Serializable> extends JQueryGenericContainer<L
 
 	/**
 	 * Creates a {@link Draggable} object that is related to this {@link Selectable}.<br/>
-	 * Uses a default factory that will create a {@link Draggable} with a <code>ui-icon-arrow-4-diag</code> icon
+	 * Uses a default factory that will create a {@link Draggable} with a {@code ui-icon-arrow-4-diag} icon
 	 *
 	 * @param id the markup id
 	 * @return the {@link Draggable}

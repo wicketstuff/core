@@ -100,7 +100,7 @@ public class DatePicker extends LocalTextField<LocalDate>
 	 * Constructor
 	 *
 	 * @param id the markup id
-	 * @param pattern a <code>SimpleDateFormat</code> pattern
+	 * @param pattern a {@code SimpleDateFormat} pattern
 	 */
 	public DatePicker(String id, String pattern)
 	{
@@ -111,7 +111,7 @@ public class DatePicker extends LocalTextField<LocalDate>
 	 * Constructor
 	 *
 	 * @param id the markup id
-	 * @param pattern a <code>SimpleDateFormat</code> pattern
+	 * @param pattern a {@code SimpleDateFormat} pattern
 	 * @param options the {@link Options}
 	 */
 	public DatePicker(String id, String pattern, Options options)
@@ -170,7 +170,7 @@ public class DatePicker extends LocalTextField<LocalDate>
 	 *
 	 * @param id the markup id
 	 * @param model the {@link IModel}
-	 * @param pattern a <code>SimpleDateFormat</code> pattern
+	 * @param pattern a {@code SimpleDateFormat} pattern
 	 */
 	public DatePicker(String id, IModel<LocalDate> model, String pattern)
 	{
@@ -182,7 +182,7 @@ public class DatePicker extends LocalTextField<LocalDate>
 	 *
 	 * @param id the markup id
 	 * @param model the {@link IModel}
-	 * @param pattern a <code>SimpleDateFormat</code> pattern
+	 * @param pattern a {@code SimpleDateFormat} pattern
 	 * @param options {@link Options}
 	 */
 	public DatePicker(String id, IModel<LocalDate> model, final String pattern, Options options)

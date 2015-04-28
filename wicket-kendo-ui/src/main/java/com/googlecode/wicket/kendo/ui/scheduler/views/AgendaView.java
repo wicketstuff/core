@@ -11,7 +11,7 @@ public class AgendaView extends SchedulerView
 	private static final long serialVersionUID = 1L;
 
 	/**
-	 * Gets a new instance of <tt>AgendaView</tt>
+	 * Gets a new instance of {@code AgendaView}
 	 *
 	 * @return a new {@link AgendaView}
 	 */

@@ -155,9 +155,9 @@ public class DataTable<T> extends WebComponent implements IJQueryWidget, IDataTa
 	}
 
 	/**
-	 * Gets the read-only {@link List} of {@link IColumn}<tt>s</tt>
+	 * Gets the read-only {@link List} of {@link IColumn}{@code s}
 	 *
-	 * @return the {@link List} of {@link IColumn}<tt>s</tt>
+	 * @return the {@link List} of {@link IColumn}{@code s}
 	 */
 	public final List<? extends IColumn> getColumns()
 	{

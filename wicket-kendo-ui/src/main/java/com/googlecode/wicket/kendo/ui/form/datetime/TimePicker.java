@@ -67,7 +67,7 @@ public class TimePicker extends DateTextField implements IJQueryWidget
 	/**
 	 * Constructor
 	 * @param id the markup id
-	 * @param pattern a <code>SimpleDateFormat</code> pattern
+	 * @param pattern a {@code SimpleDateFormat} pattern
 	 */
 	public TimePicker(String id, String pattern)
 	{
@@ -77,7 +77,7 @@ public class TimePicker extends DateTextField implements IJQueryWidget
 	/**
 	 * Main constructor
 	 * @param id the markup id
-	 * @param pattern a <code>SimpleDateFormat</code> pattern
+	 * @param pattern a {@code SimpleDateFormat} pattern
 	 * @param options {@link Options}
 	 */
 	public TimePicker(String id, String pattern, Options options)
@@ -134,7 +134,7 @@ public class TimePicker extends DateTextField implements IJQueryWidget
 	 * Constructor
 	 * @param id the markup id
 	 * @param model the {@link IModel}
-	 * @param pattern a <code>SimpleDateFormat</code> pattern
+	 * @param pattern a {@code SimpleDateFormat} pattern
 	 */
 	public TimePicker(String id, IModel<Date> model, String pattern)
 	{
@@ -145,7 +145,7 @@ public class TimePicker extends DateTextField implements IJQueryWidget
 	 * Main constructor
 	 * @param id the markup id
 	 * @param model the {@link IModel}
-	 * @param pattern a <code>SimpleDateFormat</code> pattern.
+	 * @param pattern a {@code SimpleDateFormat} pattern.
 	 * @param options {@link Options}
 	 */
 	public TimePicker(String id, IModel<Date> model, String pattern, Options options)

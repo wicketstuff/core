@@ -25,7 +25,7 @@ import org.apache.wicket.model.ResourceModel;
 import org.apache.wicket.util.lang.Args;
 
 /**
- * Default implementation for {@link AbstractWindow} that provides a set of {@link WindowButton}<code>s</code> and events such as {@link #onSubmit(AjaxRequestTarget, WindowButton)}, {@link #onError(AjaxRequestTarget, WindowButton)} and
+ * Default implementation for {@link AbstractWindow} that provides a set of {@link WindowButton}{@code s} and events such as {@link #onSubmit(AjaxRequestTarget, WindowButton)}, {@link #onError(AjaxRequestTarget, WindowButton)} and
  * {@link #onAfterSubmit(AjaxRequestTarget, WindowButton)}<br/>
  * The window is automatically closed {@link #onAfterSubmit(AjaxRequestTarget, WindowButton)}
  *
@@ -36,13 +36,21 @@ public abstract class Window<T> extends AbstractWindow<T>
 {
 	private static final long serialVersionUID = 1L;
 
-	/* Default Button label models */
-	public static final IModel<String> LBL_OK = new ResourceModel("button.ok");
-	public static final IModel<String> LBL_NO = new ResourceModel("button.no");
-	public static final IModel<String> LBL_YES = new ResourceModel("button.yes");
-	public static final IModel<String> LBL_CLOSE = new ResourceModel("button.close");
-	public static final IModel<String> LBL_CANCEL = new ResourceModel("button.cancel");
-	public static final IModel<String> LBL_SUBMIT = new ResourceModel("button.submit");
+	/* Default Button names */
+	public static final String OK = "OK";
+	public static final String NO = "NO";
+	public static final String YES = "YES";
+	public static final String CLOSE = "CLOSE";
+	public static final String CANCEL = "CANCEL";
+	public static final String SUBMIT = "SUBMIT";
+
+	/* Default Button labels */
+	protected static final IModel<String> LBL_OK = new ResourceModel("button.ok");
+	protected static final IModel<String> LBL_NO = new ResourceModel("button.no");
+	protected static final IModel<String> LBL_YES = new ResourceModel("button.yes");
+	protected static final IModel<String> LBL_CLOSE = new ResourceModel("button.close");
+	protected static final IModel<String> LBL_CANCEL = new ResourceModel("button.cancel");
+	protected static final IModel<String> LBL_SUBMIT = new ResourceModel("button.submit");
 
 	private final List<WindowButton> buttons;
 
@@ -164,9 +172,9 @@ public abstract class Window<T> extends AbstractWindow<T>
 	protected abstract Form<?> getForm();
 
 	/**
-	 * Gets the list of {@link WindowButton}<code>s</code> This method an be overridden to provide a behavioral helper for instance
+	 * Gets the list of {@link WindowButton}{@code s} This method an be overridden to provide a behavioral helper for instance
 	 *
-	 * @return the list of {@link WindowButton}<code>s</code>
+	 * @return the list of {@link WindowButton}{@code s}
 	 * @see WindowButtonUtils#setDefaultFormProcessing(WindowButtons, boolean)
 	 */
 	protected List<WindowButton> getButtons()

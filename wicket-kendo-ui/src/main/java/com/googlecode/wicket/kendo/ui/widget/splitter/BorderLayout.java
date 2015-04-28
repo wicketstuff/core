@@ -23,7 +23,7 @@ import org.apache.wicket.markup.html.WebMarkupContainer;
 import com.googlecode.wicket.jquery.core.Options;
 
 /**
- * Provides a Border Layout {@link WebMarkupContainer} based on vertical and horizontal {@link SplitterBehavior}<tt>s</tt><br/>
+ * Provides a Border Layout {@link WebMarkupContainer} based on vertical and horizontal {@link SplitterBehavior}{@code s}<br/>
  * {@link #getVerticalPanes()} and {@link #getHorizontalPanes()} may be overridden to change the default layout<br/>
  * <br/>
  * <b>Note:</b> the {@link BorderLayout} IS a {@link WebMarkupContainer}. If you wish to apply a {@link BorderLayout} on an existing Page or an existing Panel, consider implementing the {@link IBorderLayout} interface.<br/>

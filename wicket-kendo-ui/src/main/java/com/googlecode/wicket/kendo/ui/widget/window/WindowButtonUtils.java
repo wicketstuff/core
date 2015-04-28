@@ -19,14 +19,14 @@ package com.googlecode.wicket.kendo.ui.widget.window;
 import java.util.List;
 
 /**
- * Utility class for {@link WindowButton}<code>s</code>
+ * Utility class for {@link WindowButton}{@code s}
  *
  * @author Sebastien Briquet - sebfz1
  */
 public class WindowButtonUtils
 {
 	/**
-	 * Helper that applies #setDefaultFormProcessing to the list of {@link WindowButton}<code>s</code><br/>
+	 * Helper that applies #setDefaultFormProcessing to the list of {@link WindowButton}{@code s}<br/>
 	 * <br/>
 	 * <b>Warning:</b> the WindowButtons supplied in argument will be modified
 	 *
@@ -39,7 +39,7 @@ public class WindowButtonUtils
 	}
 
 	/**
-	 * Helper that applies #setDefaultFormProcessing to the list of {@link WindowButton}<code>s</code><br/>
+	 * Helper that applies #setDefaultFormProcessing to the list of {@link WindowButton}{@code s}<br/>
 	 * <br/>
 	 * <b>Warning:</b> the WindowButtons supplied in the list argument will be modified
 	 *

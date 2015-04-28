@@ -168,7 +168,7 @@ public abstract class AbstractFormDialog<T extends Serializable> extends Abstrac
 	 * It means that it will return the form if the button is the submit button and null otherwise. The callback script will differ depending on this.
 	 *
 	 * @param button the dialog's button
-	 * @return the {@link Form} or <code>null</code>
+	 * @return the {@link Form} or {@code null}
 	 */
 	protected Form<?> getForm(DialogButton button)
 	{

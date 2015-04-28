@@ -70,7 +70,7 @@ public class DatePicker extends DateTextField implements IJQueryWidget
 	 * Constructor
 	 *
 	 * @param id the markup id
-	 * @param pattern a <code>SimpleDateFormat</code> pattern
+	 * @param pattern a {@code SimpleDateFormat} pattern
 	 */
 	public DatePicker(String id, String pattern)
 	{
@@ -81,7 +81,7 @@ public class DatePicker extends DateTextField implements IJQueryWidget
 	 * Main constructor
 	 *
 	 * @param id the markup id
-	 * @param pattern a <code>SimpleDateFormat</code> pattern
+	 * @param pattern a {@code SimpleDateFormat} pattern
 	 * @param options the {@link Options}
 	 */
 	public DatePicker(String id, String pattern, Options options)
@@ -142,7 +142,7 @@ public class DatePicker extends DateTextField implements IJQueryWidget
 	 *
 	 * @param id the markup id
 	 * @param model the {@link IModel}
-	 * @param pattern a <code>SimpleDateFormat</code> pattern
+	 * @param pattern a {@code SimpleDateFormat} pattern
 	 */
 	public DatePicker(String id, IModel<Date> model, String pattern)
 	{
@@ -154,7 +154,7 @@ public class DatePicker extends DateTextField implements IJQueryWidget
 	 *
 	 * @param id the markup id
 	 * @param model the {@link IModel}
-	 * @param pattern a <code>SimpleDateFormat</code> pattern
+	 * @param pattern a {@code SimpleDateFormat} pattern
 	 * @param options {@link Options}
 	 */
 	public DatePicker(String id, IModel<Date> model, String pattern, Options options)

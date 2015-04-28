@@ -22,7 +22,7 @@ import org.apache.wicket.extensions.markup.html.tabs.ITab;
 import org.apache.wicket.model.util.ListModel;
 
 /**
- * Provides a loadable (not detachable) {@link ListModel} of {@link ITab}<code>s</code>
+ * Provides a loadable (not detachable) {@link ListModel} of {@link ITab}{@code s}
  *
  * @author Sebastien Briquet - sebfz1
  * @since 6.20.0

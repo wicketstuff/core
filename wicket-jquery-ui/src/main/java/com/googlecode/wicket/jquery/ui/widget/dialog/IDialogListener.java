@@ -44,7 +44,7 @@ interface IDialogListener
 
 	/**
 	 * Triggered when a button is clicked.
-	 * This method may be overridden to handle button behaviors, but the dialog will not been closed until <code>super.onClick(event)</code> or {@link DialogBehavior#close(AjaxRequestTarget)} is called.
+	 * This method may be overridden to handle button behaviors, but the dialog will not been closed until {@code super.onClick(event)} or {@link DialogBehavior#close(AjaxRequestTarget)} is called.
 	 * @param target the {@link AjaxRequestTarget}
 	 * @param button the button that closed the dialog
 	 */

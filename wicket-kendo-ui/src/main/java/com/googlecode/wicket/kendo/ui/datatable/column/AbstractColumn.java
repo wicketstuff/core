@@ -26,7 +26,7 @@ import org.apache.wicket.model.Model;
 import com.googlecode.wicket.jquery.core.Options;
 
 /**
- * Base class for {@link IColumn}<tt>s</tt> implementation
+ * Base class for {@link IColumn}{@code s} implementation
  *
  * @author Sebastien Briquet - sebfz1
  */

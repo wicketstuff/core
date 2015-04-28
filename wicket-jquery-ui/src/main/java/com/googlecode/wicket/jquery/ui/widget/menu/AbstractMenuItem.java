@@ -41,7 +41,7 @@ public abstract class AbstractMenuItem implements IMenuItem
 	/**
 	 * Constructor
 	 * @param title {@link IModel} that represent the title of the menu-item
-	 * @param icon the icon css class; <code>'ui-icon-blank'</code> or {@link JQueryIcon#BLANK} may be used to display no icon.
+	 * @param icon the icon css class; {@code 'ui-icon-blank'} or {@link JQueryIcon#BLANK} may be used to display no icon.
 	 */
 	public AbstractMenuItem(IModel<String> title, String icon)
 	{

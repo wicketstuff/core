@@ -28,7 +28,7 @@ import org.apache.wicket.request.http.WebResponse;
 import org.threeten.bp.LocalDate;
 
 /**
- * Provides the behavior that loads {@link CalendarEvent}<code>s</code> according to {@link CalendarModel} start &amp; end dates
+ * Provides the behavior that loads {@link CalendarEvent}{@code s} according to {@link CalendarModel} start &amp; end dates
  *
  * @author Sebastien Briquet - sebfz1
  *

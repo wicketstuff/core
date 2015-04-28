@@ -20,7 +20,7 @@ import org.apache.wicket.Component;
 
 /**
  * Specifies that the implementing {@link Component} class will use a {@link JQueryBehavior}<br/>
- * This interface is for best practice purpose only. Adding the {@link JQueryBehavior} to the {@link Component} is still required but the use of <code>JQueryWidget#newWidgetBehavior(Component)</code> can be made.<br/>
+ * This interface is for best practice purpose only. Adding the {@link JQueryBehavior} to the {@link Component} is still required but the use of {@code JQueryWidget#newWidgetBehavior(Component)} can be made.<br/>
  * For instance:<br/>
  * 
  * <pre>

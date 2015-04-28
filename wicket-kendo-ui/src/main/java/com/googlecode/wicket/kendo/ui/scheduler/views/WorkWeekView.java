@@ -11,7 +11,7 @@ public class WorkWeekView extends SchedulerView
 	private static final long serialVersionUID = 1L;
 
 	/**
-	 * Gets a new instance of <tt>WorkWeekView</tt>
+	 * Gets a new instance of {@code WorkWeekView}
 	 *
 	 * @return a new {@link WorkWeekView}
 	 */

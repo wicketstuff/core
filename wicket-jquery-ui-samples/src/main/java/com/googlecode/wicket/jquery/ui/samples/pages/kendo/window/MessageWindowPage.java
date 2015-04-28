@@ -31,7 +31,7 @@ public class MessageWindowPage extends AbstractWindowPage
 			@Override
 			protected void onSubmit(AjaxRequestTarget target, WindowButton button)
 			{
-				if (button.match(LBL_OK))
+				if (button.match(OK))
 				{
 					this.info("Ok has been clicked");
 				}

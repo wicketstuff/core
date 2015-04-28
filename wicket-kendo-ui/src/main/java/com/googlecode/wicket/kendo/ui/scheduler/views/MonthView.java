@@ -11,7 +11,7 @@ public class MonthView extends SchedulerView
 	private static final long serialVersionUID = 1L;
 
 	/**
-	 * Gets a new instance of <tt>MonthView</tt>
+	 * Gets a new instance of {@code MonthView}
 	 *
 	 * @return a new {@link MonthView}
 	 */
@@ -32,7 +32,7 @@ public class MonthView extends SchedulerView
 	 * Sets the template pattern used to render the day slots in month view.
 	 *
 	 * @param pattern the date pattern
-	 * @return <tt>this</tt>, for chaining
+	 * @return {@code this}, for chaining
 	 */
 	public SchedulerView setDayTemplatePattern(String pattern)
 	{

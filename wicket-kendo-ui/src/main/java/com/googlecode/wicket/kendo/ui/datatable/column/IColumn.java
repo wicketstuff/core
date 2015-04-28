@@ -60,7 +60,7 @@ public interface IColumn extends IClusterable
 	/**
 	 * The format that is applied to the value before it is displayed. Takes the form "{0:format}" where "format" is a standard number format, custom number format, standard date format or a custom date format.
 	 *
-	 * @return the format or <tt>null</tt> if it does not apply
+	 * @return the format or {@code null} if it does not apply
 	 * @see <a href="http://docs.kendoui.com/api/framework/kendo#standard-number-formats">standard-number-formats</a>
 	 * @see <a href="http://docs.kendoui.com/api/framework/kendo#custom-number-formats">custom-number-formats</a>
 	 * @see <a href="http://docs.kendoui.com/api/framework/kendo#standard-date-formats">standard-date-formats</a>
@@ -71,9 +71,9 @@ public interface IColumn extends IClusterable
 	/**
 	 * The template or javascript function which renders the column content.<br/>
 	 * If the template is a string (not a function), it should itself be enclosed into double quotes, ie:<br/>
-	 * <code>return Options.asString("&lt;a href='?id=#:data.id#'&gt;#:data.id#&lt;/a&gt;");</code>
+	 * {@code return Options.asString("&lt;a href='?id=#:data.id#'&gt;#:data.id#&lt;/a&gt;");}
 	 *
-	 * @return the template or <tt>null</tt> if it does not apply
+	 * @return the template or {@code null} if it does not apply
 	 */
 	String getTemplate();
 
@@ -82,7 +82,7 @@ public interface IColumn extends IClusterable
 	 * If set to false the filter menu will not be displayed.<br/>
 	 * By default a filter menu is displayed for all columns when filtering is enabled via the filterable option.
 	 *
-	 * @return the <tt>filterable</tt> object; ie: <tt>true</tt> or <tt>{ extra: false }</tt>
+	 * @return the {@code filterable} object; ie: {@code true} or <code>{ extra: false }</code>
 	 * @see <a href="http://docs.kendoui.com/api/web/grid#configuration-columns.filterable">configuration-columns.filterable</a>
 	 */
 	String getFilterable();
@@ -90,7 +90,7 @@ public interface IColumn extends IClusterable
 	/**
 	 * If set to true the column will be visible in the grid column menu. By default the column menu includes all data-bound columns (ones that have their field set).
 	 *
-	 * @return the <tt>menu</tt> object; ie: <tt>false</tt> or <tt>{ extra: false }</tt>
+	 * @return the {@code menu} object; ie: {@code false} or <code>{ extra: false }</code>
 	 * @see <a href="http://docs.kendoui.com/api/web/grid#configuration-columns.menu">configuration-columns.menu</a>
 	 */
 	String getMenu();

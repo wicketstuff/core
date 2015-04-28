@@ -38,7 +38,7 @@ interface ICalendarListener
 	/**
 	 * Indicates whether a day can be clicked.<br/>
 	 * If true, the {@link #onDayClick(AjaxRequestTarget, CalendarView, LocalDateTime, boolean)} event will be triggered<br/>
-	 * <b>Note:</b> <tt>true</tt> will enable the global 'editable' option to <tt>true</tt>.
+	 * <b>Note:</b> {@code true} will enable the global 'editable' option to {@code true}.
 	 *
 	 * @return false by default
 	 * @see CalendarEvent#setEditable(Boolean)
@@ -48,7 +48,7 @@ interface ICalendarListener
 	/**
 	 * Indicates whether an event can be clicked.<br/>
 	 * If true, the {@link #onEventClick(AjaxRequestTarget, CalendarView, int)} event will be triggered<br/>
-	 * <b>Note:</b> <tt>true</tt> will enable the global 'editable' option to <tt>true</tt>.
+	 * <b>Note:</b> {@code true} will enable the global 'editable' option to {@code true}.
 	 *
 	 * @return false by default
 	 * @see CalendarEvent#setEditable(Boolean)
@@ -85,7 +85,7 @@ interface ICalendarListener
 
 	/**
 	 * Gets the javascript statement which will be executed before {@link #onEventDrop(AjaxRequestTarget, int, long, boolean)} event is triggered<br/>
-	 * A common use case is to call the <tt>revertFunc</tt> callback to cancel the event.
+	 * A common use case is to call the {@code revertFunc} callback to cancel the event.
 	 *
 	 * @return the javascript statement
 	 * @see <a href="http://arshaw.com/fullcalendar/docs/event_ui/eventDrop/">http://arshaw.com/fullcalendar/docs/event_ui/eventDrop/</a>
@@ -94,7 +94,7 @@ interface ICalendarListener
 
 	/**
 	 * Gets the javascript statement which will be executed before {@link #onEventResize(AjaxRequestTarget, int, long)} event is triggered<br/>
-	 * A common use case is to call the <tt>revertFunc</tt> callback to cancel the event.
+	 * A common use case is to call the {@code revertFunc} callback to cancel the event.
 	 *
 	 * @return the javascript statement
 	 * @see <a href="http://arshaw.com/fullcalendar/docs/event_ui/eventResize/">http://arshaw.com/fullcalendar/docs/event_ui/eventResize/</a>

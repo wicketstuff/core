@@ -24,7 +24,7 @@ import org.slf4j.LoggerFactory;
 import com.googlecode.wicket.jquery.core.utils.DateUtils;
 
 /**
- * Provides a factory for building {@link SchedulerEvent}<tt>s</tt> as JSON
+ * Provides a factory for building {@link SchedulerEvent}{@code s} as JSON
  * 
  * @author Sebastien Briquet - sebfz1
  *
@@ -34,7 +34,7 @@ public class SchedulerEventFactory
 	private static final Logger LOG = LoggerFactory.getLogger(SchedulerEventFactory.class);
 
 	/**
-	 * Converts a <tt>SchedulerEvent</tt> to a {@link JSONObject}
+	 * Converts a {@code SchedulerEvent} to a {@link JSONObject}
 	 *
 	 * @param event the {@link SchedulerEvent}
 	 * @return the {@link JSONObject}

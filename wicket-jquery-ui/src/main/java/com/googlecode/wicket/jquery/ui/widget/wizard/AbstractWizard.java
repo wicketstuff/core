@@ -416,7 +416,7 @@ public abstract class AbstractWizard<T extends Serializable> extends AbstractFor
 	 * This method may be overridden to specify other form-submitter buttons (ie: btnPrev)
 	 *
 	 * @param button the dialog's button
-	 * @return the {@link Form} or <code>null</code>
+	 * @return the {@link Form} or {@code null}
 	 */
 	@Override
 	protected Form<?> getForm(DialogButton button)

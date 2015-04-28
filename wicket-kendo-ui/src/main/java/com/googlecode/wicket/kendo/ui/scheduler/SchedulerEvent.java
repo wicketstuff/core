@@ -281,9 +281,9 @@ public class SchedulerEvent implements Serializable
 
 	/**
 	 * Indicates whether the event is visible<br/>
-	 * If <tt>false</tt>, it will not be added to the JSON response
+	 * If {@code false}, it will not be added to the JSON response
 	 * 
-	 * @return <tt>true</tt> or <tt>false</tt>
+	 * @return {@code true} or {@code false}
 	 */
 	public boolean isVisible()
 	{
@@ -293,7 +293,7 @@ public class SchedulerEvent implements Serializable
 	/**
 	 * Sets whether the event is visible
 	 * 
-	 * @param visible <tt>true</tt> or <tt>false</tt>
+	 * @param visible {@code true} or {@code false}
 	 */
 	public void setVisible(boolean visible)
 	{
@@ -378,7 +378,7 @@ public class SchedulerEvent implements Serializable
 	 * Gets a resource value, identified by its field
 	 *
 	 * @param field - the resource field (ie: 'resourceId')
-	 * @return the value, which is either a <tt>String</tt>, an <tt>Integer</tt>, a <tt>List&lt;String&gt;</tt> or a <tt>List&lt;Integer&gt;</tt>
+	 * @return the value, which is either a {@code String}, an {@code Integer}, a {@code List&lt;String&gt;} or a {@code List&lt;Integer&gt;}
 	 */
 	@SuppressWarnings("unchecked")
 	public final Object getValue(String field)

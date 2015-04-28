@@ -128,7 +128,7 @@ public abstract class RangeDatePickerBehavior extends JQueryBehavior implements 
 	/**
 	 * Provides an event object that will be broadcasted by the {@link JQueryAjaxBehavior} 'change' callback<br/>
 	 * <br/>
-	 * <b>Note</b>: The <tt>start</tt> and <tt>end</tt> dates will be translated to UTC.<br/>
+	 * <b>Note</b>: The {@code start} and {@code end} dates will be translated to UTC.<br/>
 	 * ie: if the behavior receives 10/10/2010 0:00:00 CET, it will be translated to 10/10/2010 0:00:00 UTC
 	 */
 	protected static class DateChangeEvent extends JQueryEvent

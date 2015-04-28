@@ -28,7 +28,7 @@ import org.apache.wicket.request.cycle.RequestCycle;
 import org.apache.wicket.request.http.WebResponse;
 
 /**
- * Provides the behavior that loads {@link SchedulerEvent}<tt>s</tt> according to {@link SchedulerModel} start &amp; end dates
+ * Provides the behavior that loads {@link SchedulerEvent}{@code s} according to {@link SchedulerModel} start &amp; end dates
  *
  * @author Sebastien Briquet - sebfz1
  *

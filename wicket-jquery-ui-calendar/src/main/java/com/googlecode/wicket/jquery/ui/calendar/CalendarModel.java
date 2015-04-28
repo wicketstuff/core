@@ -45,7 +45,7 @@ public abstract class CalendarModel extends LoadableDetachableModel<List<? exten
 	}
 
 	/**
-	 * Gets the start date, used to {@link #load()} {@link CalendarEvent}<code>s</code>
+	 * Gets the start date, used to {@link #load()} {@link CalendarEvent}{@code s}
 	 * @return the start date
 	 */
 	public LocalDate getStart()
@@ -63,7 +63,7 @@ public abstract class CalendarModel extends LoadableDetachableModel<List<? exten
 	}
 
 	/**
-	 * Gets the end date, used to {@link #load()} {@link CalendarEvent}<code>s</code>
+	 * Gets the end date, used to {@link #load()} {@link CalendarEvent}{@code s}
 	 * @return the start date
 	 */
 	public LocalDate getEnd()

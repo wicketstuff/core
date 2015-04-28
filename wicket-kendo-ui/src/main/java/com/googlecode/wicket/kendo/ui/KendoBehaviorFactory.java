@@ -23,7 +23,7 @@ import com.googlecode.wicket.jquery.core.IJQueryWidget.JQueryWidget;
 import com.googlecode.wicket.jquery.core.JQueryBehavior;
 
 /**
- * Factory that provides {@link JQueryBehavior}<code>s</code>, which may be used in widgets.
+ * Factory that provides {@link JQueryBehavior}{@code s}, which may be used in widgets.
  *
  * @author Sebastien Briquet - sebfz1
  *

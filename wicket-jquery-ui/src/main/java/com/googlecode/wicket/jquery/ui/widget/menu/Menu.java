@@ -51,7 +51,7 @@ public class Menu extends JQueryPanel implements IMenuListener
 	private final List<IMenuItem> items; // first level
 	private WebMarkupContainer root;
 
-	/** Keep a reference to the {@link MenuItem}<code>s</code> hash */
+	/** Keep a reference to the {@link MenuItem}{@code s} hash */
 	private Map<String, IMenuItem> map = new HashMap<String, IMenuItem>();
 
 	/**

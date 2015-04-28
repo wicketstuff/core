@@ -145,7 +145,7 @@ public class Id<T> implements IClusterable
 	}
 
 	/**
-	 * Converts a list of ids of type I to its corresponding <tt>List</tt> of {@link Id}
+	 * Converts a list of ids of type I to its corresponding {@code List} of {@link Id}
 	 *
 	 * @param ids the id-values
 	 * @return a new {@link Id}
@@ -163,7 +163,7 @@ public class Id<T> implements IClusterable
 	}
 
 	/**
-	 * Internal <tt>String</tt> {@link Id}
+	 * Internal {@code String} {@link Id}
 	 */
 	private static class StringId extends Id<String>
 	{
@@ -182,7 +182,7 @@ public class Id<T> implements IClusterable
 	}
 
 	/**
-	 * Internal <tt>Number</tt> {@link Id}
+	 * Internal {@code Number} {@link Id}
 	 */
 	private static class NumberId extends Id<Number>
 	{

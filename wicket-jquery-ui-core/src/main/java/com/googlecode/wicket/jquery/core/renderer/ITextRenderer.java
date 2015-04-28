@@ -56,7 +56,7 @@ public interface ITextRenderer<T> extends IClusterable
 	 * @param object the T object
 	 * @param search the criteria
 	 * @param sensitive whether the search is case sensitive or not
-	 * @return <tt>true</tt> or <tt>false</tt>
+	 * @return {@code true} or {@code false}
 	 */
 	boolean match(T object, String search, boolean sensitive);
 }

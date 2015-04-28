@@ -22,7 +22,7 @@ import java.util.Date;
 import java.util.TimeZone;
 
 /**
- * Utility class for {@link Date}(<tt>s</tt>)
+ * Utility class for {@link Date}({@code s})
  *
  * @author Sebastien Briquet - sebfz1
  *

@@ -26,6 +26,7 @@ import org.apache.wicket.util.string.Strings;
  *
  * @author Sebastien Briquet - sebfz1
  */
+//TODO: DialogButton- add 'name' and use it in match for better L10N support
 public class DialogButton implements IClusterable
 {
 	private static final long serialVersionUID = 1L;

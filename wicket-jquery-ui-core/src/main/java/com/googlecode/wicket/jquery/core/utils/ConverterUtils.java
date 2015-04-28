@@ -23,7 +23,7 @@ import org.apache.wicket.Session;
 import org.apache.wicket.util.convert.IConverter;
 
 /**
- * Utility class for {@link Date}(<tt>s</tt>)
+ * Utility class for {@link Date}({@code s})
  * 
  * @author Sebastien Briquet - sebfz1
  * 

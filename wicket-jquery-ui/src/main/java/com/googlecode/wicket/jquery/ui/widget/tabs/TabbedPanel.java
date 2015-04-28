@@ -47,7 +47,7 @@ public class TabbedPanel extends JQueryGenericPanel<List<ITab>> implements ITabs
 	 * Constructor
 	 *
 	 * @param id the markup id
-	 * @param tabs the list of {@link ITab}<code>s</code>
+	 * @param tabs the list of {@link ITab}{@code s}
 	 */
 	public TabbedPanel(String id, List<ITab> tabs)
 	{
@@ -58,7 +58,7 @@ public class TabbedPanel extends JQueryGenericPanel<List<ITab>> implements ITabs
 	 * Constructor
 	 *
 	 * @param id the markup id
-	 * @param tabs the list of {@link ITab}<code>s</code>
+	 * @param tabs the list of {@link ITab}{@code s}
 	 * @param options {@link Options}
 	 */
 	public TabbedPanel(String id, List<ITab> tabs, Options options)
@@ -70,7 +70,7 @@ public class TabbedPanel extends JQueryGenericPanel<List<ITab>> implements ITabs
 	 * Constructor
 	 *
 	 * @param id the markup id
-	 * @param model the list model of {@link ITab}<code>s</code>
+	 * @param model the list model of {@link ITab}{@code s}
 	 */
 	public TabbedPanel(String id, IModel<List<ITab>> model)
 	{
@@ -81,7 +81,7 @@ public class TabbedPanel extends JQueryGenericPanel<List<ITab>> implements ITabs
 	 * Constructor
 	 *
 	 * @param id the markup id
-	 * @param model the list model of {@link ITab}<code>s</code>
+	 * @param model the list model of {@link ITab}{@code s}
 	 * @param options {@link Options}
 	 */
 	public TabbedPanel(String id, IModel<List<ITab>> model, Options options)
@@ -120,7 +120,7 @@ public class TabbedPanel extends JQueryGenericPanel<List<ITab>> implements ITabs
 	/**
 	 * Activates the selected tab<br/>
 	 * <br/>
-	 * <b>Warning:</b> invoking this method results to a dual client-server round-trip. Use this method if you cannot use {@link #setActiveTab(int)} followed by <code>target.add(myTabbedPannel)</code>
+	 * <b>Warning:</b> invoking this method results to a dual client-server round-trip. Use this method if you cannot use {@link #setActiveTab(int)} followed by {@code target.add(myTabbedPannel)}
 	 *
 	 * @param target the {@link AjaxRequestTarget}
 	 * @param index the tab's index to activate
@@ -164,7 +164,7 @@ public class TabbedPanel extends JQueryGenericPanel<List<ITab>> implements ITabs
 	/**
 	 * Refreshes the {@link TabbedPanel}<br/>
 	 * <br/>
-	 * <b>Note:</b> This method should be used instead of <code>target.add(tabbedPanel)</code> if the underlying model is-a {@link TabListModel}
+	 * <b>Note:</b> This method should be used instead of {@code target.add(tabbedPanel)} if the underlying model is-a {@link TabListModel}
 	 * 
 	 * @param target the {@link AjaxRequestTarget}
 	 */

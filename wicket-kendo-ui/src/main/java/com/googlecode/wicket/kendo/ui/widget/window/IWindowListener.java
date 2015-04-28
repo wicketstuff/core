@@ -51,7 +51,7 @@ interface IWindowListener
 	void onAction(AjaxRequestTarget target, String action);
 
 	/**
-	 * Triggered when then the Window closes, either trough the 'X' icon or the 'escape' key ({@link #isCloseEventEnabled()} should return <tt>true</tt>), or if {@link AbstractWindow#close(AjaxRequestTarget)} has been called
+	 * Triggered when then the Window closes, either trough the 'X' icon or the 'escape' key ({@link #isCloseEventEnabled()} should return {@code true}), or if {@link AbstractWindow#close(AjaxRequestTarget)} has been called
 	 *
 	 * @param target the {@link AjaxRequestTarget}
 	 */
