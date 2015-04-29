@@ -282,7 +282,7 @@ public abstract class AbstractRestResource<T extends IWebSerialDeserial> impleme
 	 * @param httpMethod
 	 *            the HTTP method of the current request
 	 */
-	public static void noSuitableMethodFound(WebResponse response, HttpMethod httpMethod)
+	public void noSuitableMethodFound(WebResponse response, HttpMethod httpMethod)
 	{
 		response.setStatus(400);
 		response.write(NO_SUITABLE_METHOD_FOUND + " URL '" + extractUrlFromRequest() +
