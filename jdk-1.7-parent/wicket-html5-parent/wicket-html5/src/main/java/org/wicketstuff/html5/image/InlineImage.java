@@ -27,12 +27,12 @@ import org.apache.wicket.util.crypt.Base64;
 import org.apache.wicket.util.resource.IResourceStream;
 
 /**
- * The canvas image is used to embed the complete image content within a HTML document.
+ * The inline image is used to embed the complete image content within a HTML document.
  * 
  * @author Tobias Soloschenko
  * 
  */
-public class CanvasImage extends WebComponent
+public class InlineImage extends WebComponent
 {
 
 	private static final long serialVersionUID = 1L;
@@ -40,29 +40,29 @@ public class CanvasImage extends WebComponent
 	private PackageResourceReference packageResourceReference;
 
 	/**
-	 * Creates an canvas image
+	 * Creates an inline image
 	 * 
 	 * @param id
 	 *            the id
 	 * @param packageResourceStream
 	 *            the package resource stream of the image
 	 */
-	public CanvasImage(String id, PackageResourceReference packageResourceReference)
+	public InlineImage(String id, PackageResourceReference packageResourceReference)
 	{
 		this(id, null, packageResourceReference);
 	}
 
 	/**
-	 * Creates an canvas image
+	 * Creates an inline image
 	 * 
 	 * @param id
 	 *            the id
 	 * @param model
-	 *            the model of the canvas image
+	 *            the model of the inline image
 	 * @param packageResourceStream
 	 *            the package resource stream of the image
 	 */
-	public CanvasImage(String id, IModel<?> model, PackageResourceReference packageResourceReference)
+	public InlineImage(String id, IModel<?> model, PackageResourceReference packageResourceReference)
 	{
 		super(id, model);
 		this.packageResourceReference = packageResourceReference;

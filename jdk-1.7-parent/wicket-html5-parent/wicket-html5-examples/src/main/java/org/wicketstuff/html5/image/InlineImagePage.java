@@ -16,38 +16,18 @@
  */
 package org.wicketstuff.html5.image;
 
+import org.apache.wicket.request.resource.PackageResourceReference;
+import org.wicketstuff.html5.BasePage;
 
-import org.apache.wicket.util.tester.WicketTester;
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
-
-
-public class CanvasImageTest
+public class InlineImagePage extends BasePage
 {
 
-	private WicketTester wicketTester;
+	private static final long serialVersionUID = 1L;
 
-	@Before
-	public void setup()
+	public InlineImagePage()
 	{
-		wicketTester = new WicketTester();
+		add(new InlineImage("inlineimage", new PackageResourceReference(InlineImagePage.class,
+			"InlineImage.gif")));
 	}
 
-	@After
-	public void tearDown()
-	{
-		wicketTester.destroy();
-	}
-
-	@Test
-	public void canvasImageTest()
-	{
-		wicketTester.startPage(CanvasImageTestPage.class);
-		String lastResponseAsString = wicketTester.getLastResponse().getDocument();
-		Assert.assertTrue(
-			"canvas image is in html",
-			lastResponseAsString.contains("<img wicket:id=\"canvasimage\" src=\"data:image/gif;base64,R0lGODlhQAHwAPf8AAAAAAwMDAsNABUZABUXBRIS"));
-	}
 }

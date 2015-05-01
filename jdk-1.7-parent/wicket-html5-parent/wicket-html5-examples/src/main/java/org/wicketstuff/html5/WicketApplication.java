@@ -15,7 +15,7 @@ import org.wicketstuff.html5.eventsource.EventSourceDemo;
 import org.wicketstuff.html5.eventsource.EventSourceResourceReference;
 import org.wicketstuff.html5.fileapi.FileApiPage;
 import org.wicketstuff.html5.geolocation.GeolocationDemo;
-import org.wicketstuff.html5.image.CanvasImagePage;
+import org.wicketstuff.html5.image.InlineImagePage;
 import org.wicketstuff.html5.markup.html.ProgressDemo;
 import org.wicketstuff.html5.markup.html.form.NumberFieldDemo;
 import org.wicketstuff.html5.markup.html.form.RangeTextFieldDemo;
@@ -53,7 +53,7 @@ public class WicketApplication extends WebApplication
 
 		mountPage("/eventSource", EventSourceDemo.class);
 		mountPage("/shape", ShapeCircleExamplePage.class);
-		mountPage("/canvasimage", CanvasImagePage.class);
+		mountPage("/inlineimage", InlineImagePage.class);
 		mountResource("/eventSourceResource", new EventSourceResourceReference());
 
 		IPackageResourceGuard packageResourceGuard = getResourceSettings().getPackageResourceGuard();
