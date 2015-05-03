@@ -68,7 +68,7 @@ public interface IObjectSerialDeserial<T>{
 
 <br/>
 The main module comes with class `TextualObjectSerialDeserial` which implements both `IWebSerialDeserial` and `IObjectSerialDeserial` and that can be used as base class to implement serials/deserials that work with a textual MIME type and that need to know which charset encoding should be used.<br/>
-As JSON is de-facto standard format for REST API, the project comes also with a ready-to-use resource (`GsonRestResource`) and a serial/deserial (`GsonSerialDeserial`) that work with JSON format (both inside module 'restannotations-json'). These classes use [Gson](http://code.google.com/p/google-gson/) as Json library. Resource `PersonsRestResource` in the example module is based on `GsonRestResource`.
+As JSON is de-facto standard format for REST API, the project comes also a ready-to-use resources (`GsonRestResource`) and two serials/deserials (`GsonSerialDeserial`, `JacksonObjectSerialDeserial`) that work with JSON format (both inside module 'restannotations-json'). The `GsonRestResource` and `GsonSerialDeserial` use [Gson](http://code.google.com/p/google-gson/) as Json library while `JacksonObjectSerialDeserial` is based on [Jackson](http://jackson.codehaus.org/). Resource `PersonsRestResource` in the example module is based on `GsonRestResource`.
 
 Mounting resources to a specific path
 ---------
