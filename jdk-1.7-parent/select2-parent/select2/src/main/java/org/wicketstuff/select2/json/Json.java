@@ -22,7 +22,7 @@ public class Json
 {
 	private Json()
 	{
-	};
+	}
 
 	/**
 	 * Writes a key/value pair into the {@code writer} if the value is not {@code null}

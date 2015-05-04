@@ -14,7 +14,6 @@ package org.wicketstuff.select2;
 
 import java.io.IOException;
 import java.io.OutputStreamWriter;
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
@@ -28,15 +27,12 @@ import org.apache.wicket.markup.head.IHeaderResponse;
 import org.apache.wicket.markup.head.OnDomReadyHeaderItem;
 import org.apache.wicket.markup.html.form.FormComponent;
 import org.apache.wicket.markup.html.form.HiddenField;
-import org.apache.wicket.markup.html.form.IChoiceRenderer;
 import org.apache.wicket.model.IModel;
-import org.apache.wicket.model.util.ListModel;
 import org.apache.wicket.request.IRequestParameters;
 import org.apache.wicket.request.Request;
 import org.apache.wicket.request.http.WebRequest;
 import org.apache.wicket.request.http.WebResponse;
 import org.apache.wicket.util.string.Strings;
-import org.wicketstuff.select2.json.JsonBuilder;
 
 /**
  * Base class for Select2 components
@@ -46,11 +42,6 @@ import org.wicketstuff.select2.json.JsonBuilder;
  * @param <M>
  *            type of model object
  * @author igor
- *
- * @param <T>
- *            type of choice object
- * @param <M>
- *            type of model object
  */
 abstract class AbstractSelect2Choice<T, M> extends HiddenField<M> implements IResourceListener
 {
@@ -60,20 +51,17 @@ abstract class AbstractSelect2Choice<T, M> extends HiddenField<M> implements IRe
 	private final Settings settings = new Settings();
 
 	private ChoiceProvider<T> provider;
-	private List<T> choices;
-	private IChoiceRenderer<T> renderer;
 
 	private boolean convertInputPerformed = false;
 
+
 	/**
-	 * Constructor
-	 *
 	 * @param id
-	 *            component id
+	 * 		markup id
 	 */
 	public AbstractSelect2Choice(String id)
 	{
-		this(id, null, null, null);
+		this(id, null, null);
 	}
 
 	/**
@@ -86,8 +74,9 @@ abstract class AbstractSelect2Choice<T, M> extends HiddenField<M> implements IRe
 	 */
 	public AbstractSelect2Choice(String id, IModel<M> model)
 	{
-		this(id, model, null, null);
+		this(id, model, null);
 	}
+
 
 	/**
 	 * Constructor.
@@ -103,80 +92,20 @@ abstract class AbstractSelect2Choice<T, M> extends HiddenField<M> implements IRe
 	}
 
 	/**
-	 * Constructor
+	 * Construct.
 	 *
 	 * @param id
-	 *            component id
+	 *            markup id
 	 * @param model
-	 *            component model
-	 * @param provider
-	 *            choice provider
+	 *            model for select
+	 *
+	 * @see HiddenField#HiddenField(String, IModel)
 	 */
 	public AbstractSelect2Choice(String id, IModel<M> model, ChoiceProvider<T> provider)
 	{
 		super(id, model);
 		this.provider = provider;
 		add(new Select2ResourcesBehavior());
-		setOutputMarkupId(true);
-	}
-
-	/**
-	 * Construct.
-	 *
-	 * @param id
-	 *            markup id
-	 * @param model
-	 *            model for select
-	 * @param collection
-	 *            list options for select
-	 */
-	public AbstractSelect2Choice(String id, IModel<M> model, List<T> collection)
-	{
-		this(id, model, collection, null);
-	}
-
-	/**
-	 * @param id
-	 * 		markup id
-	 * @param choices
-	 * 		list options for select
-	 * @param renderer
-	 * 		list item renderer
-	 */
-	public AbstractSelect2Choice(String id, List<T> choices, IChoiceRenderer<T> renderer)
-	{
-		this(id, null, choices, renderer);
-	}
-
-	/**
-	 * Construct.
-	 *
-	 * @param id
-	 *            markup id
-	 * @param model
-	 *            model for select
-	 * @param choices
-	 *            list options for select
-	 * @param renderer
-	 *            renderer list item
-	 * @see HiddenField#HiddenField(String, IModel)
-	 */
-	public AbstractSelect2Choice(String id, IModel<M> model, List<T> choices, IChoiceRenderer<T> renderer)
-	{
-		super(id, model);
-		if (null == choices)
-		{
-			throw new IllegalStateException("Select2 choice component: " + getId() +
-					" does not have a List<T> set");
-		}
-		if (null == renderer)
-		{
-			throw new IllegalStateException("Select2 choice component: " + getId() +
-					" does not have a WCLChoiceRenderer<T> set");
-		}
-		add(new Select2ResourcesBehavior());
-		this.choices = new ArrayList<>(choices);
-		this.renderer = renderer;
 		setOutputMarkupId(true);
 	}
 
@@ -197,39 +126,6 @@ abstract class AbstractSelect2Choice<T, M> extends HiddenField<M> implements IRe
 	public final void setProvider(ChoiceProvider<T> provider)
 	{
 		this.provider = provider;
-	}
-
-	/**
-	 * @return data
-	 */
-	public final List<T> getChoices()
-	{
-		if (choices == null)
-		{
-			throw new IllegalStateException("Select2 choice component: " + getId() +
-					" does not have a choices set");
-		}
-		return choices;
-	}
-
-	public final void setChoices(List<T> choices)
-	{
-		this.choices = choices;
-	}
-
-	public final IChoiceRenderer<T> getRenderer()
-	{
-		if (renderer == null)
-		{
-			throw new IllegalStateException("Select2 choice component: " + getId() +
-					" does not have a IChoiceRenderer set");
-		}
-		return renderer;
-	}
-
-	public final void setRenderer(IChoiceRenderer<T> renderer)
-	{
-		this.renderer = renderer;
 	}
 
 	/**
@@ -254,30 +150,20 @@ abstract class AbstractSelect2Choice<T, M> extends HiddenField<M> implements IRe
 		convertInputPerformed = true;
 	}
 
+	/**
+	 * Convert IDS into choices.
+	 *
+	 * @param ids
+	 * 		list of identities
+	 * @return collection of choices or empty collection
+	 */
 	protected final Collection<T> convertIdsToChoices(List<String> ids)
 	{
 		if (ids == null || ids.isEmpty())
 		{
 			return Collections.emptyList();
 		}
-		if (isAjax())
-		{
-			return getProvider().toChoices(ids);
-		}
-		else
-		{
-			ListModel<T> model = new ListModel<>(getChoices());
-			List<T> result = new ArrayList<>(ids.size());
-			for (String id : ids)
-			{
-				T choice = getRenderer().getObject(id, model);
-				if (choice != null)
-				{
-					result.add(choice);
-				}
-			}
-			return result;
-		}
+        return getProvider().toChoices(ids);
 	}
 
 	/**
@@ -310,11 +196,7 @@ abstract class AbstractSelect2Choice<T, M> extends HiddenField<M> implements IRe
 	public void renderHead(IHeaderResponse response)
 	{
 		super.renderHead(response);
-		if (!isAjax())
-		{
-			// attach select options
-			renderChoices();
-		}
+
 		// initialize select2
 		response.render(OnDomReadyHeaderItem.forScript(JQuery.execute("$('#%s').select2(%s);",
 				getJquerySafeMarkupId(), getSettings().toJson())));
@@ -390,7 +272,7 @@ abstract class AbstractSelect2Choice<T, M> extends HiddenField<M> implements IRe
 		getSettings().setFormatLoadMore(
 				"function() { return '" + getEscapedJsString("loadMore") + "';}");
 		getSettings().setFormatSearching(
-				"function() { return '" + getEscapedJsString("searching") + "';}");
+                "function() { return '" + getEscapedJsString("searching") + "';}");
 	}
 
 	@Override
@@ -452,7 +334,7 @@ abstract class AbstractSelect2Choice<T, M> extends HiddenField<M> implements IRe
 		// 0-based
 		page -= 1;
 
-		Response<T> response = new Response<T>();
+		Response<T> response = new Response<>();
 		getProvider().query(term, page, response);
 
 		// jsonize and write out the choices to the response
@@ -503,60 +385,15 @@ abstract class AbstractSelect2Choice<T, M> extends HiddenField<M> implements IRe
 		super.onDetach();
 	}
 
-	/**
-	 * render single choice
-	 *
-	 * @param choice
-	 *            choice
-	 * @param jsonBuilder
-	 *            json builder
-	 */
-	protected void renderChoice(T choice, JsonBuilder jsonBuilder)
-	{
-		String key = getRenderer().getIdValue(choice, getChoices().lastIndexOf(choice));
-		Object value = getRenderer().getDisplayValue(choice);
-		jsonBuilder.key("id").value(key).key("text").value(value);
-	}
-
-	// render options on select2
-	private void renderChoices()
-	{
-		JsonBuilder selection = new JsonBuilder();
-		try
-		{
-			selection.object();
-			selection.key("more").value(false);
-			selection.key("results").array();
-			attachChoicesJson(selection);
-			selection.endArray().endObject();
-		}
-		catch (JSONException e)
-		{
-			throw new RuntimeException("Error converting model object to Json", e);
-		}
-
-		getSettings().setData(selection.toJson().toString());
-	}
-
-	private void attachChoicesJson(JsonBuilder jsonBuilder) throws JSONException
-	{
-		for (T choice : getChoices())
-		{
-			jsonBuilder.object();
-			renderChoice(choice, jsonBuilder);
-			jsonBuilder.endObject();
-		}
-	}
-
 	private static boolean canInitializeInitialValue(Object value)
 	{
-		if (value instanceof Collection)
-		{
-			return !((Collection) value).isEmpty();
-		}else
-		{
-			return value != null;
-		}
-	}
+        if (value instanceof Collection)
+        {
+            return !((Collection) value).isEmpty();
+        } else
+        {
+            return value != null;
+        }
+    }
 
 }
