@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html xmlns:wicket="http://wicket.apache.org">
+<head>
+<meta charset="utf-8" />
+<title>wicket-foundation</title>
+</head>
+<body>
+	<wicket:extend>
+		<div class="row">
+			<h1 id="sub-nav">Sub Nav</h1>
+			<h3 class="subheader">This simple sub nav is great for moving
+				between different states of a page. We use these frequently to show
+				iterations of something, typically by date, but they&#39;re also
+				handy for filters like these.</h3>
+
+			<hr>
+			<h2 id="basic">Basic</h2>
+			<p>
+				Add a
+				<code>.sub-nav</code>
+				class to a
+				<code>dl</code>
+				element and fill it full of definitions. You can use the definition
+				title as a label at the beginning (useful for building filters on a
+				page).
+			</p>
+			<p>
+				Add a title to the beginning of your list with the
+				<code>dt</code>
+				element. Add an
+				<code>.active</code>
+				class to a
+				<code>dd</code>
+				element to give it the active style.
+			</p>
+			<div>
+                <div>
+                    <h4>HTML</h4>
+                    
+<pre><code class="language-html"><div class="code-container"><span class="tag">&lt;<span class="title">div</span> <span class="attribute">class</span>=<span class="value">&quot;basic&quot;</span>&gt;</span><span class="tag">&lt;/<span class="title">div</span>&gt;</span>
+</div></code>
+</pre>
+
+                </div>
+                <div>
+                    <h4>Java</h4>
+                    
+<pre><code class="language-html"><div class="code-container">List&lt;SubNavItem&gt; items = new ArrayList&lt;&gt;();
+items.add(new SubNavItem(&quot;All&quot;, true));
+items.add(new SubNavItem(&quot;Active&quot;));
+items.add(new SubNavItem(&quot;Pending&quot;));
+items.add(new SubNavItem(&quot;Suspended&quot;));
+add(new FoundationSubNav(&quot;basic&quot;, &quot;FILTER&quot;, items) {
+	@Override
+	public AbstractLink createLink(String id, final int idx) {
+		return new AjaxLink&lt;Void&gt;(id) {
+			@Override
+			public void onClick(AjaxRequestTarget target) {
+				target.appendJavaScript(String.format(&quot;alert('%d');&quot;, idx));
+			}
+		};
+	}
+});
+</div></code>
+</pre>
+
+                </div>
+				<div>
+					<h4>Rendered HTML</h4>
+					<div wicket:id="basic"></div>
+				</div>
+			</div>
+		</div>
+	</wicket:extend>
+</body>
+</html>

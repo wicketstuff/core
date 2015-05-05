@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html xmlns:wicket="http://wicket.apache.org">
+<head>
+<meta charset="utf-8" />
+<title>wicket-foundation</title>
+</head>
+<body>
+  <wicket:extend>
+
+  <div class="row">
+    <h1 id="buttons">Buttons</h1>
+    <h3 class="subheader">Buttons are convenient tools when you
+      need more traditional actions. To that end, Foundation has many
+      easy to use button styles that you can customize or override to
+      fit your needs.</h3>
+
+    <hr>
+    <h2 id="basic">Basic</h2>
+    <p>You can create a button using minimal markup.</p>
+    <div>
+      <div>
+        <h4>HTML</h4>
+        
+<pre><code class="language-html"><div class="code-container"><span class="tag">&lt;<span class="title">a</span> <span class="attribute">wicket:id</span>=<span class="value">&quot;btn&quot;</span>&gt;</span><span class="tag">&lt;/<span class="title">a</span>&gt;</span>
+</div></code>
+</pre>
+
+        <h4>Java</h4>
+        
+<pre><code class="language-html"><div class="code-container">add(new FoundationButton("btn", Model.of("Click")));
+</div></code>
+</pre>
+
+      </div>
+      
+      <div>
+        <h4>Rendered HTML</h4>
+        <a wicket:id="btn"></a><br>
+
+      </div>
+    </div>
+
+
+    <hr>
+    <h2 id="advanced">Advanced</h2>
+    <p>Additional classes can be added to your component to change
+      its appearance.</p>
+    <div>
+      <div>
+      
+        <h4>HTML</h4>
+<pre><code class="language-html"><div class="code-container"><span class="comment">&lt;!-- Size Classes --&gt;</span>
+<span class="tag">&lt;<span class="title">a</span> <span class="attribute">wicket:id</span>=<span class="value">&quot;tiny&quot;</span>&gt;</span><span class="tag">&lt;/<span class="title">a</span>&gt;</span>
+<span class="comment">&lt;!-- Color Classes --&gt;</span>
+<span class="tag">&lt;<span class="title">a</span> <span class="attribute">wicket:id</span>=<span class="value">&quot;alert&quot;</span>&gt;</span><span class="tag">&lt;/<span class="title">a</span>&gt;</span>
+<span class="comment">&lt;!-- Radius Classes --&gt;</span>
+<span class="tag">&lt;<span class="title">a</span> <span class="attribute">wicket:id</span>=<span class="value">&quot;radius&quot;</span>&gt;</span><span class="tag">&lt;/<span class="title">a</span>&gt;</span>
+<span class="comment">&lt;!-- Disabled Class --&gt;</span>
+<span class="tag">&lt;<span class="title">a</span> <span class="attribute">wicket:id</span>=<span class="value">&quot;disabled&quot;</span>&gt;</span><span class="tag">&lt;/<span class="title">a</span>&gt;</span>
+<span class="comment">&lt;!-- Expand Class --&gt;</span>
+<span class="tag">&lt;<span class="title">a</span> <span class="attribute">wicket:id</span>=<span class="value">&quot;expand&quot;</span>&gt;</span><span class="tag">&lt;/<span class="title">a</span>&gt;</span>
+</div></code>
+</pre>
+
+        <h4>Java</h4>
+<pre><code class="language-html"><div class="code-container">add(new FoundationButton("tiny", Model.of("Tiny"), new FoundationButtonOptions(FoundationButtonSize.TINY)));
+add(new FoundationButton("alert", Model.of("Alert"), new FoundationButtonOptions(FoundationButtonColor.ALERT)));
+add(new FoundationButton("radius", Model.of("Radius"), new FoundationButtonOptions(FoundationButtonRadius.RADIUS)));
+add(new FoundationButton("disabled", Model.of("Disabled"), new FoundationButtonOptions(FoundationButtonState.DISABLED)));
+add(new FoundationButton("expand", Model.of("Expand"), new FoundationButtonOptions(FoundationButtonExpansion.EXPAND)));
+</div></code>
+</pre>
+
+      </div>
+      <div>
+        <h4>Rendered HTML</h4>
+          <div>
+            <a wicket:id="tiny"></a>
+          </div>
+          <div>
+            <a wicket:id="alert"></a>
+          </div>
+          <div>
+            <a wicket:id="radius"></a>
+          </div>
+          <div>
+            <a wicket:id="disabled"></a>
+          </div>
+          <div>
+            <a wicket:id="expand"></a>
+          </div>
+
+        <p>
+      </div>
+    </div>
+
+
+
+  </div>
+
+</wicket:extend>
+</body>
+</html>

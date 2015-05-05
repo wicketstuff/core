@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html xmlns:wicket="http://wicket.apache.org">
+<head>
+<meta charset="utf-8" />
+<title>wicket-foundation</title>
+</head>
+<body>
+    <wicket:extend>
+
+        <div class="row">
+            <h1 id="top-bar">Top Bar</h1>
+            <h3 class="subheader">The Foundation Top Bar gives you
+                a great way to display a complex navigation bar on
+                small, medium or large screens.</h3>
+
+            <hr>
+            <h3 id="build-with-html-classes">Build With HTML
+                Classes</h3>
+            <p>
+                The top bar is a pretty complex piece of magical UI
+                goodness. We rely on many presentational classes to
+                define its look and feel, and there&#39;s a lot
+                happening in the JS. The top bar is hoverable by
+                default, but you can change it to use click events
+                instead by adding
+                <code>data-options=&quot;is_hover: false&quot;</code>
+                to the
+                <code>&lt;nav&gt;</code>
+                element.
+            </p>
+            
+            <div>
+                <h4 id="html">HTML</h4>
+            
+<pre><code class="language-html"><div class="code-container"><span class="tag">&lt;<span class="title">div</span> <span class="attribute">wicket:id</span>=<span class="value">&quot;basic&quot;</span>&gt;</span><span class="tag">&lt;<span class="title">/div</span>&gt;</span>
+</div></code>
+</pre>
+            </div>
+
+            <div>
+                <h4 id="html">Java</h4>
+            
+<pre><code class="language-html"><div class="code-container">List&lt;TopBarItem&gt; rightItems = new ArrayList&lt;&gt;();
+rightItems.add(new SimpleTopBarItem(&quot;rightButtonActive&quot;, &quot;Right Button Active&quot;, true, false));
+SimpleTopBarItem rightButtonDropdown = new SimpleTopBarItem(&quot;rightButtonDropdown&quot;, &quot;Right Button Dropdown&quot;);
+rightButtonDropdown.addChild(new SimpleTopBarItem(&quot;firstLinkInDropdown&quot;, &quot;First link in dropdown&quot;));
+rightButtonDropdown.addChild(new SimpleTopBarItem(&quot;activeLinkInDropdown&quot;, &quot;Active link in dropdown&quot;, true, false));
+rightItems.add(rightButtonDropdown);
+
+List&lt;TopBarItem&gt; leftItems = new ArrayList&lt;&gt;();
+leftItems.add(new SimpleTopBarItem(&quot;leftButton&quot;, &quot;Left Button&quot;));
+
+add(new FoundationTopBarPanel(&quot;basic&quot;, rightItems, leftItems) {
+
+    @Override
+    public WebMarkupContainer createTitleContainer(String id) {
+        return new FoundationTopBarTitlePanel(id, Model.of(&quot;My Site&quot;), Model.of(TopBarMenuLayout.TITLE_AND_ICON), Model.of(&quot;Menu&quot;)) {
+            @Override
+            public AbstractLink createTitleLink(String id) {
+                return new Link(id) {
+                    @Override
+                    public void onClick() {
+                    }
+                };
+            }
+        };
+    }
+
+    @Override
+    public AbstractLink createLink(String id, final String itemId) {
+        return new AjaxLink&lt;Void&gt;(id) {
+
+            @Override
+            public void onClick(AjaxRequestTarget target) {
+                target.appendJavaScript(String.format(&quot;alert('%s');&quot;, itemId));
+            }
+            
+        };
+    }
+});
+</div></code>
+</pre>
+            </div>
+            
+            <div>
+                <h4 id="html">Rendered HTML</h4>
+                <div wicket:id="basic"></div>
+            </div>
+            <div>
+                <br>
+            </div>
+
+            <hr>
+            <h3 id="positioning-the-bar">Positioning the Bar</h3>
+            <p>
+                The top bar is built with a single
+                <code>nav</code>
+                element with a class of
+                <code>top-bar</code>
+                . It will take on full-browser width by default. To make
+                the top bar stay fixed as you scroll, wrap it in
+                <code>div class=&quot;fixed&quot;</code>
+                . If you want your navigation to be set to your grid
+                width, wrap it in
+                <code>div class=&quot;contain-to-grid&quot;</code>
+                . You may use
+                <code>fixed</code>
+                and
+                <code>contain-to-grid</code>
+                together in the wrapping div (
+                <code>div class=&quot;contain-to-grid fixed</code>
+                ).
+            </p>
+            <hr>
+            <h4>Fixed navigation</h4>
+            
+            <div>
+                <h4 id="html">HTML</h4>
+            
+<pre><code class="language-html"><div class="code-container"><span class="tag">&lt;<span class="title">div</span> <span class="attribute">wicket:id</span>=<span class="value">&quot;fixed&quot;</span>&gt;</span><span class="tag">&lt;<span class="title">/div</span>&gt;</span>
+</div></code>
+</pre>
+            </div>
+
+            <div>
+                <h4 id="html">Java</h4>
+            
+<pre><code class="language-html"><div class="code-container">add(new FoundationTopBarPanel(&quot;fixed&quot;, new TopBarOptions().setFixed(true), new ArrayList&lt;TopBarItem&gt;(), new ArrayList&lt;TopBarItem&gt;()) {
+  @Override
+  public WebMarkupContainer createTitleContainer(String id) {
+      return new EmptyPanel(id);
+  }
+  @Override
+  public AbstractLink createLink(String id, String itemId) {
+      return new Link&lt;Void&gt;(id) {
+          @Override
+          public void onClick() {
+          }
+      };
+  }
+});
+</div></code>
+</pre>
+            </div>
+            
+<!--              
+            <div>
+                <h4 id="html">Rendered HTML</h4>
+                <div wicket:id="fixed"></div>            
+            </div>
+-->
+            <hr>
+            <h3 id="sticky-top-bar">Sticky Top Bar</h3>
+            <p>
+                You may also wrap your top bar in
+                <code>div class=&quot;sticky&quot;</code>
+                and put it anywhere within your markup. When the
+                navigation hits the top of the browser, it will act like
+                the fixed top bar and stick to the top as users continue
+                to scroll. <strong>Note:</strong> If you are using SCSS,
+                you can control the default
+                <code>sticky</code>
+                class by adjusting the
+                <code>$topbar-sticky-class</code>
+                variable. <strong>Make sure the JS variable for
+                    <code>sticky_class</code> matches whatever class you
+                    use in the variable.
+                </strong>
+            </p>
+            
+            <div>
+                <h4 id="html">HTML</h4>
+            
+<pre><code class="language-html"><div class="code-container"><span class="tag">&lt;<span class="title">div</span> <span class="attribute">wicket:id</span>=<span class="value">&quot;sticky&quot;</span>&gt;</span><span class="tag">&lt;<span class="title">/div</span>&gt;</span>
+</div></code>
+</pre>
+            </div>
+
+            <div>
+                <h4 id="html">Java</h4>
+            
+<pre><code class="language-html"><div class="code-container">add(new FoundationTopBarPanel(&quot;sticky&quot;, new TopBarOptions().setSticky(true), new ArrayList&lt;TopBarItem&gt;(), new ArrayList&lt;TopBarItem&gt;()) {
+    @Override
+    public WebMarkupContainer createTitleContainer(String id) {
+        return new EmptyPanel(id);
+    }
+    @Override
+    public AbstractLink createLink(String id, String itemId) {
+        return new Link&lt;Void&gt;(id) {
+            @Override
+            public void onClick() {
+            }
+        };
+    }
+});
+</div></code>
+</pre>
+            </div>
+            
+<!--              
+            <div>
+                <h4 id="html">Rendered HTML</h4>
+                <div wicket:id="sticky"></div>
+            </div>
+-->            
+            <div>
+                <br>
+            </div>
+
+            <hr>
+            <h3 id="sticky-top-bar">Sticky conditions</h3>
+            <p>
+                You can also add
+                <code>sticky_on</code>
+                to your
+                <code>data-options</code>
+                attribute to allow your sticky bar to work on
+                <code>small</code>
+                ,
+                <code>medium</code>
+                , or
+                <code>large</code>
+                when the page loads. This works in conjunction with the
+                sticky class wrapper to target sticky for small, medium,
+                or large. It will be sticky on all screen sizes by
+                default.
+            </p>
+
+            <div>
+                <h4 id="html">HTML</h4>
+            
+<pre><code class="language-html"><div class="code-container"><span class="tag">&lt;<span class="title">div</span> <span class="attribute">wicket:id</span>=<span class="value">&quot;sticky&quot;</span>&gt;</span><span class="tag">&lt;<span class="title">/div</span>&gt;</span>
+</div></code>
+</pre>
+            </div>
+
+            <div>
+                <h4 id="html">Java</h4>
+            
+<pre><code class="language-html"><div class="code-container">TopBarOptions stickyConditionsOptions = new TopBarOptions();
+stickyConditionsOptions.setSticky(true);
+stickyConditionsOptions.setStickySizes(EnumSet.of(TopBarStickySize.LARGE));
+add(new FoundationTopBarPanel(&quot;stickyConditions&quot;, stickyConditionsOptions, new ArrayList&lt;TopBarItem&gt;(), new ArrayList&lt;TopBarItem&gt;()) {
+    @Override
+    public WebMarkupContainer createTitleContainer(String id) {
+        return new EmptyPanel(id);
+    }
+    @Override
+    public AbstractLink createLink(String id, String itemId) {
+        return new Link&lt;Void&gt;(id) {
+            @Override
+            public void onClick() {
+            }
+        };
+    }
+});     
+</div></code>
+</pre>
+            </div>
+
+<!--  
+            <div>
+                <h4 id="html">Rendered HTML</h4>
+                <div wicket:id="stickyConditions"></div>
+            </div>
+-->
+
+            <hr>
+            <p>
+                <a name="clickable"></a>
+            </p>
+            <h3 id="clickable-top-bar">Clickable Top Bar</h3>
+            <p>You can now make the top bar clickable by adding a
+                data-attribute to the nav element. Here&#39;s an
+                example:</p>
+                
+            <div>
+                <h4 id="html">HTML</h4>
+            
+<pre><code class="language-html"><div class="code-container"><span class="tag">&lt;<span class="title">div</span> <span class="attribute">wicket:id</span>=<span class="value">&quot;sticky&quot;</span>&gt;</span><span class="tag">&lt;<span class="title">/div</span>&gt;</span>
+</div></code>
+</pre>
+            </div>
+
+            <div>
+                <h4 id="html">Java</h4>
+            
+<pre><code class="language-html"><div class="code-container">List&lt;TopBarItem&gt; clickableRightItems = new ArrayList&lt;&gt;();
+clickableRightItems.add(new SimpleTopBarItem(&quot;rightButtonActive&quot;, &quot;Right Button Active&quot;, true, false));
+SimpleTopBarItem clickableRightDropdown = new SimpleTopBarItem(&quot;clickableRightDropdown&quot;, &quot;Right Button Dropdown&quot;);
+clickableRightDropdown.addChild(new SimpleTopBarItem(&quot;firstLinkInDropdown&quot;, &quot;First link in dropdown&quot;));
+clickableRightDropdown.addChild(new SimpleTopBarItem(&quot;activeLinkInDropdown&quot;, &quot;Active link in dropdown&quot;, true, false));
+clickableRightItems.add(rightButtonDropdown);
+
+add(new FoundationTopBarPanel(&quot;clickable&quot;, new TopBarOptions().setClickable(true), rightItems, new ArrayList&lt;TopBarItem&gt;()) {
+
+    @Override
+    public WebMarkupContainer createTitleContainer(String id) {
+        return new FoundationTopBarTitlePanel(id, Model.of(&quot;My Site&quot;), Model.of(TopBarMenuLayout.TITLE_AND_ICON), Model.of(&quot;Menu&quot;)) {
+            @Override
+            public AbstractLink createTitleLink(String id) {
+                return new Link(id) {
+                    @Override
+                    public void onClick() {
+                    }
+                };
+            }
+        };
+    }
+
+    @Override
+    public AbstractLink createLink(String id, final String itemId) {
+        return new AjaxLink&lt;Void&gt;(id) {
+
+            @Override
+            public void onClick(AjaxRequestTarget target) {
+                target.appendJavaScript(String.format(&quot;alert('%s');&quot;, itemId));
+            }
+            
+        };
+    }
+});
+</div></code>
+</pre>
+            </div>
+
+            <div>
+                <h4 id="html">Rendered HTML</h4>
+                <div wicket:id="clickable"></div>
+            </div>
+
+            <div>
+                <br>
+            </div>
+
+        </div>
+
+    </wicket:extend>
+</body>
+</html>

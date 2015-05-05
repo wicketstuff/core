@@ -1,0 +1,45 @@
+pre code {
+	display: block;
+	padding: 0.5em;
+	background: #FAFAFA;
+	color: #333;
+}
+
+pre .tag, pre .tag .title, pre .rules .property, pre .django .tag .keyword {
+	color: #000080;
+	font-weight: normal;
+}
+
+pre .attribute, pre .variable, pre .lisp .body {
+	color: #008080;
+}
+
+pre .string, pre .tag .value, pre .phpdoc, pre .tex .formula {
+	color: #d14;
+}
+
+.row {
+	max-width: 80rem;
+}
+
+.row.display {
+	background: #eee;
+	font-size: 11px;
+	margin-bottom: 10px;
+	line-height: 2rem;
+	border: solid 1px #c6c6c6;
+	margin-left: 0 !important;
+	margin-right: 0 !important;
+}
+
+.row.display .columns:nth-child(2),.row.display .columns.small-centered,.row.display .columns.large-centered {
+	background: #e1e1e1;
+}
+
+.verticalPadding30 {
+    padding-bottom: 30px;
+}
+
+.verticalPadding50 {
+	padding-bottom: 50px;
+}

@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html xmlns:wicket="http://wicket.apache.org">
+<head>
+<meta charset="utf-8" />
+<title>wicket-foundation</title>
+</head>
+<body>
+<wicket:extend>
+
+		<div class="row">
+			<h1 id="orbit">Orbit</h1>
+			<h3 class="subheader">Orbit is an easy, powerful, responsive
+				image slider that allows users to swipe on touch-enabled devices.</h3>
+
+			<hr>
+			<h4 class="warn">Deprecation Notice:</h4>
+
+			<p>
+				Orbit has been deprecated, meaning that it is no longer supported.
+				There&#39;s no need to worry though as we decided to leave it in
+				Foundation if you choose to continue using it. We explain it <a
+					href="http://foundation.zurb.com/forum/posts/14504-moving-on-from-developing-orbit">here.</a>
+			</p>
+			<p>There are other great options if you need an image slider. A
+				lot of them have features based on Orbit and may have added one of
+				two more features.</p>
+			<p>
+				This image slider is really slick: <a
+					href="http://kenwheeler.github.io/slick/">Slick Carousel</a>. It
+				has all the features Orbit has and can also be used as a carousel
+				for single image sliding. It&#39;s easy to set up and is <a
+					href="https://github.com/kenwheeler/slick/">well supported.</a>
+			</p>
+			<p>Orbit is also not accessible to screen readers or assistive
+				devices.</p>
+			<hr>
+			<p>
+				<a name="setup"></a>
+			</p>
+			<h2 id="how-to-setup-orbit">How to Setup Orbit</h2>
+			<p>
+				Orbit requires minimal HTML markup to function. Our Javascript takes
+				care of most of the heavy lifting for you. The only thing you need
+				to do is add a
+				<code>&lt;ul data-orbit&gt;&lt;/ul&gt;</code>
+				element to your page. You can then populate it with images, text,
+				and captions. Here&#39;s the markup required to implement a basic
+				Orbit slider on your page:
+			</p>
+			<h4>HTML</h4>
+
+<pre><code class="language-html"><div class="code-container"><span class="tag">&lt;<span class="title">div</span> <span class="attribute">wicket:id</span>=<span class="value">&quot;orbitSlider&quot;</span>&gt;</span><span class="tag">&lt;/<span class="title">div</span>&gt;</span>
+</div></code></pre>
+
+			<h4>Java</h4>
+
+<pre><code class="language-html"><div class="code-container">items.add(new OrbitSliderItem(&quot;1&quot;, new PackageResourceReference(this.getClass(), &quot;andromeda-orbit.jpg&quot;), &quot;Caption 1&quot;));
+items.add(new OrbitSliderItem(&quot;2&quot;, new PackageResourceReference(this.getClass(), &quot;launch-orbit.jpg&quot;), &quot;Caption 2&quot;));
+items.add(new OrbitSliderItem(&quot;3&quot;, new PackageResourceReference(this.getClass(), &quot;satelite-orbit.jpg&quot;), &quot;Caption 3&quot;));
+FoundationOrbitSlider orbitSlider = new FoundationOrbitSlider(&quot;orbitSlider&quot;, new ListModel&lt;&gt;(items));
+add(orbitSlider);
+</div></code></pre>
+
+			<h4>Rendered HTML</h4>
+
+			<div wicket:id="orbitSlider"></div>
+
+			<hr>
+			<h2 id="content-sliders">Content Sliders</h2>
+			<p>Orbit can also be used with just content and no images.</p>
+			<div>
+				<div>
+					<h4>HTML</h4>
+					
+<pre><code class="language-html"><div class="code-container"><span class="tag">&lt;<span class="title">div</span> <span class="attribute">wicket:id</span>=<span class="value">&quot;contentSlider&quot;</span>&gt;</span><span class="tag">&lt;/<span class="title">div</span>&gt;</span>
+</div></code></pre>
+					
+				</div>
+				<div>
+					<h4>Java</h4>
+					
+<pre><code class="language-html"><div class="code-container">List&lt;OrbitSliderContent&gt; contents = new ArrayList&lt;&gt;();
+contents.add(new OrbitSliderContent(&quot;1&quot;, &quot;Heading 1&quot;, &quot;Subheading 1&quot;));
+contents.add(new OrbitSliderContent(&quot;2&quot;, &quot;Heading 2&quot;, &quot;Subheading 2&quot;));
+contents.add(new OrbitSliderContent(&quot;3&quot;, &quot;Heading 3&quot;, &quot;Subheading 3&quot;));
+FoundationOrbitContentSlider contentSlider = new FoundationOrbitContentSlider(&quot;contentSlider&quot;, new ListModel&lt;&gt;(contents));
+add(contentSlider);
+</div></code></pre>
+					
+				</div>
+				<div>
+					<h4>Rendered HTML</h4>
+					
+					<div wicket:id="contentSlider"></div>
+				</div>
+			</div>
+
+			<hr>
+			<h2 id="deep-linking">Deep Linking</h2>
+			<p>
+				To link to a particular slide in your Orbit slider you will need to
+				add a
+				<code>data-orbit-slide</code>
+				attribute to each slide. Then anywhere on your page you can use
+				<code>data-orbit-link</code>
+				to link to that slide.
+			</p>
+			<div>
+				<div>
+					<h4>HTML</h4>
+					
+<pre><code class="language-html"><div class="code-container"><span class="tag">&lt;<span class="title">div</span> <span class="attribute">wicket:id</span>=<span class="value">&quot;orbitSlider&quot;</span>&gt;</span><span class="tag">&lt;/<span class="title">div</span>&gt;</span>
+</div></code></pre>
+
+				</div>
+				<div>
+					<h4>Java</h4>
+					
+<pre><code class="language-html"><div class="code-container"><span class="tag">&lt;<span class="title">div</span> <span class="attribute">wicket:id</span>=<span class="value">&quot;orbitSlider&quot;</span>&gt;</span><span class="tag">&lt;/<span class="title">div</span>&gt;</span>
+</div></code></pre>
+
+				</div>
+				<div>
+					<h4>Rendered HTML</h4>
+					
+					<div>
+						<a wicket:id="slide1">Slide 1</a>
+						<a wicket:id="slide2">Slide 2</a>
+						<a wicket:id="slide3">Slide 3</a>
+					</div>
+					
+					<div wicket:id="slider"></div>
+					
+				</div>
+			</div>
+		</div>
+
+	</wicket:extend>
+</body>
+</html>

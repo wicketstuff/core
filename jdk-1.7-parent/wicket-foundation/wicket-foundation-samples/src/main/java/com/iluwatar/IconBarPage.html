@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html xmlns:wicket="http://wicket.apache.org">
+<head>
+<meta charset="utf-8" />
+<title>wicket-foundation</title>
+</head>
+<body>
+  <wicket:extend>
+
+        <div class="row">
+            <h1 id="icon-bar">Icon Bar</h1>
+            <h3 class="subheader">An Icon Bar provides a menu to
+                quickly navigate an app. Use the Icon Bar horizontally
+                or vertically, with the labels below the icons or to the
+                right. Have it your way.</h3>
+
+            <hr>
+            <h3>Basic</h3>
+
+            <p>
+                You can create an Icon Bar using minimal markup.
+                Specifying the number of items
+                <code>one-up</code>
+                through
+                <code>six-up</code>
+                will ensure the items are evenly spaced.
+            </p>
+            <div>
+                <div>
+                    <h4>HTML</h4>
+                    
+<pre><code class="language-html"><div class="code-container"><span class="tag">&lt;<span class="title">div</span> <span class="attribute">class</span>=<span class="value">&quot;basic&quot;</span>&gt;</span><span class="tag">&lt;/<span class="title">div</span>&gt;</span>
+</div></code>
+</pre>
+
+                </div>
+                <div>
+                    <h4>Java</h4>
+                    
+<pre><code class="language-html"><div class="code-container">List&lt;IconBarItem&gt; items = new ArrayList&lt;&gt;();
+items.add(new IconBarResourceItem(new PackageResourceReference(this.getClass(), &quot;fi-bookmark.svg&quot;), &quot;Bookmark&quot;));
+items.add(new IconBarResourceItem(new PackageResourceReference(this.getClass(), &quot;fi-home.svg&quot;), &quot;Home&quot;));
+items.add(new IconBarResourceItem(new PackageResourceReference(this.getClass(), &quot;fi-info.svg&quot;), &quot;Info&quot;));
+items.add(new IconBarResourceItem(new PackageResourceReference(this.getClass(), &quot;fi-like.svg&quot;), &quot;Like&quot;));
+items.add(new IconBarResourceItem(new PackageResourceReference(this.getClass(), &quot;fi-mail.svg&quot;), &quot;Mail&quot;));
+FoundationIconBar iconBar = new FoundationIconBar(&quot;basic&quot;, items);
+add(iconBar);
+</div></code>
+</pre>
+
+                </div>
+                <div>
+                    <h4>Rendered HTML</h4>
+                    <div wicket:id="basic"></div>
+                </div>
+            </div>
+
+            <hr>
+            <h3>Vertical Icon Bar</h3>
+
+            <p>
+                It&#39;s easy. Just add a class of
+                <code>.vertical</code>
+                to make the Icon Bar stack up. For an Icon bar
+                that&#39;s horizontal on small screens but vertical on
+                larger use &#39;.medium-vertical&#39; and
+                &#39;large-vertical&#39; to utilize those breakpoints.
+            </p>
+            <div>
+                <div>
+                    <h4>HTML</h4>
+                    
+<pre><code class="language-html"><div class="code-container"><span class="tag">&lt;<span class="title">div</span> <span class="attribute">class</span>=<span class="value">&quot;vertical&quot;</span>&gt;</span><span class="tag">&lt;/<span class="title">div</span>&gt;</span>
+<span class="tag">&lt;<span class="title">div</span> <span class="attribute">class</span>=<span class="value">&quot;largeVertical&quot;</span>&gt;</span><span class="tag">&lt;/<span class="title">div</span>&gt;</span>
+</div></code>
+</pre>
+
+                </div>
+                <div>
+                    <h4>Java</h4>
+                    
+<pre><code class="language-html"><div class="code-container">
+private void createVertical() {
+    List&lt;IconBarItem&gt; items = new ArrayList&lt;&gt;();
+    items.add(new IconBarResourceItem(new PackageResourceReference(this.getClass(), &quot;fi-bookmark.svg&quot;), &quot;Bookmark&quot;));
+    items.add(new IconBarResourceItem(new PackageResourceReference(this.getClass(), &quot;fi-home.svg&quot;), &quot;Home&quot;));
+    items.add(new IconBarResourceItem(new PackageResourceReference(this.getClass(), &quot;fi-info.svg&quot;), &quot;Info&quot;));
+    items.add(new IconBarResourceItem(new PackageResourceReference(this.getClass(), &quot;fi-like.svg&quot;), &quot;Like&quot;));
+    items.add(new IconBarResourceItem(new PackageResourceReference(this.getClass(), &quot;fi-mail.svg&quot;), &quot;Mail&quot;));
+    IconBarOptions options = new IconBarOptions(IconBarVerticalStyle.VERTICAL);
+    FoundationIconBar iconBar = new FoundationIconBar(&quot;vertical&quot;, options, items);
+    add(iconBar);
+}
+
+private void createLargeVertical() {
+    List&lt;IconBarItem&gt; items = new ArrayList&lt;&gt;();
+    items.add(new IconBarResourceItem(new PackageResourceReference(this.getClass(), &quot;fi-bookmark.svg&quot;), &quot;Bookmark&quot;));
+    items.add(new IconBarResourceItem(new PackageResourceReference(this.getClass(), &quot;fi-home.svg&quot;), &quot;Home&quot;));
+    items.add(new IconBarResourceItem(new PackageResourceReference(this.getClass(), &quot;fi-info.svg&quot;), &quot;Info&quot;));
+    items.add(new IconBarResourceItem(new PackageResourceReference(this.getClass(), &quot;fi-like.svg&quot;), &quot;Like&quot;));
+    IconBarOptions options = new IconBarOptions(IconBarVerticalStyle.LARGE_VERTICAL);
+    FoundationIconBar iconBar = new FoundationIconBar(&quot;largeVertical&quot;, options, items);
+    add(iconBar);
+}
+</div></code>
+</pre>
+
+                </div>
+                <div>
+                    <h4>Rendered HTML</h4>
+                    <div wicket:id="vertical"></div>
+                    <div wicket:id="largeVertical"></div>
+                </div>
+            </div>
+
+            <hr>
+            <h3 id="advanced">Advanced</h3>
+            <p>
+                Instead of images you can use Icon Fonts. This will help
+                you change the colors and size faster instead of having
+                to upload new images each time. <a
+                    href="http://zurb.com/playground/foundation-icon-fonts-3">Check
+                    out our badass Icon Fonts here.</a>
+            </p>
+            <div>
+                <div>
+                    <h4>HTML</h4>
+                    
+<pre><code class="language-html"><div class="code-container"><span class="tag">&lt;<span class="title">div</span> <span class="attribute">class</span>=<span class="value">&quot;advanced&quot;</span>&gt;</span><span class="tag">&lt;/<span class="title">div</span>&gt;</span>
+</div></code>
+</pre>
+
+                </div>
+                <div>
+                    <h4>Java</h4>
+                    
+<pre><code class="language-html"><div class="code-container">List&lt;IconBarItem&gt; items = new ArrayList&lt;&gt;();
+items.add(new IconBarFontItem(&quot;fi-bookmark&quot;, &quot;Bookmark&quot;));
+items.add(new IconBarFontItem(&quot;fi-home&quot;, &quot;Home&quot;));
+items.add(new IconBarFontItem(&quot;fi-info&quot;, &quot;Info&quot;));
+items.add(new IconBarFontItem(&quot;fi-like&quot;, &quot;Like&quot;));
+items.add(new IconBarFontItem(&quot;fi-mail&quot;, &quot;Mail&quot;));
+FoundationIconBar iconBar = new FoundationIconBar(&quot;advanced&quot;, items);
+add(iconBar);
+</div></code>
+</pre>
+
+                </div>
+                <div>
+                    <h4>Rendered HTML</h4>
+                    <div wicket:id="advanced"></div>
+                </div>
+            </div>
+        </div>
+
+    </wicket:extend>
+</body>
+</html>

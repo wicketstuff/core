@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html xmlns:wicket="http://wicket.apache.org">
+<head>
+<meta charset="utf-8" />
+<title>wicket-foundation</title>
+</head>
+<body>
+    <wicket:extend>
+
+        <div class="row">
+            <h1 id="dropdowns">Dropdowns</h1>
+            <h3 class="subheader">We removed the various dropdowns
+                within different UI elements for Foundation 5. Instead,
+                we created a universal dropdown plugin that will attach
+                dropdowns or popovers to whatever element you need.</h3>
+
+            <hr>
+            <h3>Basic</h3>
+
+            <p>
+                You can create a dropdown using minimal markup. <strong>On
+                    a small device, the tooltips are full-width and
+                    bottom aligned.</strong>
+            </p>
+            <div>
+                <div>
+                    <h4>HTML</h4>
+                    
+<pre><code class="language-html"><div class="code-container"><span class="tag">&lt;<span class="title">span</span> <span class="attribute">wicket:id</span>=<span class="value">&quot;basicDropdown&quot;</span>&gt;</span><span class="tag">&lt;/<span class="title">span</span>&gt;</span> | <span class="tag">&lt;<span class="title">span</span> <span class="attribute">wicket:id</span>=<span class="value">&quot;basicContentDropdown&quot;</span>&gt;</span><span class="tag">&lt;/<span class="title">span</span>&gt;</span>
+</div></code>
+</pre>
+
+                </div>
+                <div>
+                    <h4>Java</h4>
+                    
+<pre><code class="language-html"><div class="code-container">List&lt;String&gt; links = Arrays.asList(&quot;First link&quot;, &quot;Second link&quot;, &quot;Third link&quot;);
+FoundationDropdown basicDropdown = new FoundationDropdown(&quot;basicDropdown&quot;, &quot;Has Dropdown&quot;, new DropdownOptions(), links) {
+    @Override
+    protected WebMarkupContainer createDropdownLink(int idx, String id) {
+        return new Link&lt;String&gt;(id) {
+            @Override
+            public void onClick() {}
+        };
+    }
+};
+add(basicDropdown);
+
+final String content = &quot;&lt;p&gt;Some text that people will think is awesome! Some text that people will think is awesome! Some text that people will think is awesome!&lt;/p&gt;&quot;;
+FoundationContentDropdown basicContentDropdown = new FoundationContentDropdown(&quot;basicContentDropdown&quot;, &quot;Has Content Dropdown&quot;, new DropdownOptions(), content);
+add(basicContentDropdown);
+</div></code>
+</pre>
+
+                </div>
+                <div>
+                    <h4>HTML Rendered</h4>
+
+                    <span wicket:id="basicDropdown"></span> | <span wicket:id="basicContentDropdown"></span>
+                    
+                </div>
+            </div>
+
+            <hr>
+            <h3>Advanced</h3>
+
+            <p>Additional classes can be added to your dropdown to
+                change its appearance.</p>
+            <div>
+                <div>
+                    <h4>HTML</h4>
+                    
+<pre><code class="language-html"><div class="code-container"><span class="tag">&lt;<span class="title">div</span> <span class="attribute">wicket:id</span>=<span class="value">&quot;advancedDropdownLink&quot;</span>&gt;</span><span class="tag">&lt;/<span class="title">div</span>&gt;</span>
+</div></code>
+</pre>
+
+                </div>
+                <div>
+                    <h4>Java</h4>
+                    
+<pre><code class="language-html"><div class="code-container">List&lt;String&gt; advancedLinks = Arrays.asList(&quot;This is a link&quot;, &quot;This is another&quot;, &quot;Yet another&quot;);
+FoundationDropdown advancedDropdownLink = new FoundationDropdown(&quot;advancedDropdownLink&quot;, &quot;Link Dropdown&quot;, new DropdownOptions(DropdownType.DROPDOWNLINK), advancedLinks) {
+        @Override
+        protected WebMarkupContainer createDropdownLink(int idx, String id) {
+            return new Link&lt;String&gt;(id) {
+                @Override
+                public void onClick() {}
+            };
+        }
+};
+add(advancedDropdownLink);      
+</div></code>
+</pre>
+
+                </div>
+                <div>
+                    <h4>Rendered HTML</h4>
+                    <div wicket:id="advancedDropdownLink"></div>
+                </div>
+            </div>
+
+            <hr>
+            <h3>Directions</h3>
+
+            <p>
+                You can now position dropdowns on the top, bottom, left,
+                or right of the target element. The default position is
+                <em>bottom</em> and you do not need to change anything
+                to get your tooltip positioned <em>bottom</em>.
+            </p>
+            <div>
+                <div>
+                    <h4>HTML</h4>
+                
+<pre><code class="language-html"><div class="code-container"><span class="tag">&lt;<span class="title">span</span> <span class="attribute">wicket:id</span>=<span class="value">&quot;directionTop&quot;</span>&gt;</span><span class="tag">&lt;/<span class="title">span</span>&gt;</span>
+<span class="tag">&lt;<span class="title">span</span> <span class="attribute">wicket:id</span>=<span class="value">&quot;directionLeft&quot;</span>&gt;</span><span class="tag">&lt;/<span class="title">span</span>&gt;</span>
+<span class="tag">&lt;<span class="title">span</span> <span class="attribute">wicket:id</span>=<span class="value">&quot;directionDown&quot;</span>&gt;</span><span class="tag">&lt;/<span class="title">span</span>&gt;</span>
+<span class="tag">&lt;<span class="title">span</span> <span class="attribute">wicket:id</span>=<span class="value">&quot;directionRight&quot;</span>&gt;</span><span class="tag">&lt;/<span class="title">span</span>&gt;</span>
+</div></code>
+</pre>
+
+                </div>
+                <div>
+                    <h4>Java</h4>
+                
+<pre><code class="language-html"><div class="code-container">List&lt;String&gt; directionLinks = Arrays.asList(&quot;This is a link&quot;, &quot;This is another&quot;, &quot;Yet another&quot;);
+add(createDirectionDropdown(&quot;directionTop&quot;, &quot;Top&quot;, directionLinks, DropdownListAlignment.TOP));
+add(createDirectionDropdown(&quot;directionLeft&quot;, &quot;Left&quot;, directionLinks, DropdownListAlignment.LEFT));
+add(createDirectionDropdown(&quot;directionDown&quot;, &quot;Down&quot;, directionLinks, null));
+add(createDirectionDropdown(&quot;directionRight&quot;, &quot;Right&quot;, directionLinks, DropdownListAlignment.RIGHT));
+        
+private FoundationDropdown createDirectionDropdown(String id, String title, List&lt;String&gt; links, DropdownListAlignment align) {
+    DropdownOptions options = new DropdownOptions(DropdownType.DROPDOWNLINK).setListAlignment(align);
+    return new FoundationDropdown(id, title, options, Collections.unmodifiableList(links)) {
+            @Override
+            protected WebMarkupContainer createDropdownLink(int idx, String id) {
+                return new Link&lt;String&gt;(id) {
+                    @Override
+                    public void onClick() {}
+                };
+            }
+    };
+}
+</div></code>
+</pre>
+
+                </div>
+                <div>
+                    <h4>Rendered HTML</h4>
+                    <span wicket:id="directionTop"></span>
+                    <span wicket:id="directionLeft"></span>
+                    <span wicket:id="directionDown"></span>
+                    <span wicket:id="directionRight"></span>
+                </div>
+            </div>
+
+            <hr>
+            <div>
+                <div>
+                    <h4>HTML</h4>
+                    
+<pre><code class="language-html"><div class="code-container"><span class="tag">&lt;<span class="title">div</span> <span class="attribute">wicket:id</span>=<span class="value">&quot;hoverDropdown&quot;</span>&gt;</span><span class="tag">&lt;/<span class="title">div</span>&gt;</span>
+</div></code>
+</pre>
+
+                </div>
+                <div>
+                    <h4>Java</h4>
+                    
+<pre><code class="language-html"><div class="code-container">List&lt;String&gt; hoverLinks = Arrays.asList(&quot;First link&quot;, &quot;Second link&quot;, &quot;Third link&quot;);
+FoundationDropdown hoverDropdown = new FoundationDropdown(&quot;hoverDropdown&quot;, &quot;Has Hover Dropdown&quot;, new DropdownOptions(DropdownHover.HOVERABLE), hoverLinks) {
+        @Override
+        protected WebMarkupContainer createDropdownLink(int idx, String id) {
+            return new Link&lt;String&gt;(id) {
+                @Override
+                public void onClick() {}
+            };
+        }
+};
+add(hoverDropdown);
+</div></code>
+</pre>
+
+                </div>
+                <div>
+                    <h4>Rendered HTML</h4>
+                    <div wicket:id="hoverDropdown"></div>
+                </div>
+            </div>
+        </div>
+
+    </wicket:extend>
+</body>
+</html>

@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html xmlns:wicket="http://wicket.apache.org">
+<head>
+<meta charset="utf-8" />
+<title>wicket-foundation</title>
+</head>
+<body>
+
+	<div class="row">
+		<h1 id="pricing-tables">Pricing Tables</h1>
+		<h3 class="subheader">If you&#39;re making a rockin&#39;
+			marketing site for a subscription-based product, you&#39;re likely in
+			need of a pricing table. These tables fill 100% of their container
+			and are made from a simple unordered list.</h3>
+
+		<hr>
+		<h2>Basic</h2>
+
+		<ul>
+			<li><code>li.title</code>: Creates the styles for a title.</li>
+			<li><code>li.price</code>: Add a price that stands out.</li>
+			<li><code>li.description</code>: If you need to describe the
+				plan, add this.</li>
+			<li><code>li.bullet-item</code>: To call out features, use this
+				list item.</li>
+			<li><code>li.cta-button</code>: To add a button inside a list
+				item, use this.</li>
+		</ul>
+		<div>
+			<div>
+			
+				<h4>HTML</h4>
+<pre><code class="language-html"><div class="code-container"><span class="tag">&lt;<span class="title">div</span> <span class="attribute">wicket:id</span>=<span class="value">&quot;basic&quot;</span>&gt;</span><span class="tag">&lt;/<span class="title">div</span>&gt;</span>
+</div></code></pre>
+
+			</div>
+
+			<div>
+			
+				<h4>Java</h4>
+<pre><code class="language-html"><div class="code-container">List&lt;PricingTableItem&gt; items = new ArrayList&lt;&gt;();
+items.add(new PricingTableItem(PricingTableItemType.TITLE, &quot;Hammer&quot;));
+items.add(new PricingTableItem(PricingTableItemType.PRICE, &quot;12€&quot;));
+items.add(new PricingTableItem(PricingTableItemType.DESCRIPTION, &quot;A really good hammer&quot;));
+items.add(new PricingTableItem(PricingTableItemType.BULLET_ITEM, &quot;Weight 3kg&quot;));
+items.add(new PricingTableItem(PricingTableItemType.BULLET_ITEM, &quot;Wooden handle&quot;));
+items.add(new PricingTableItem(PricingTableItemType.BULLET_ITEM, &quot;Good grip&quot;));
+items.add(new PricingTableItem(PricingTableItemType.CTA_BUTTON));
+add(new FoundationPricingTable(&quot;pricingTable&quot;, new ListModel&lt;&gt;(items)) {
+	@Override
+	public WebMarkupContainer createContent(int idx, String id,
+			IModel&lt;PricingTableItem&gt; model) {
+		return new PricingTableButtonPanel(id, Model.of(&quot;Buy now&quot;)) {
+			@Override
+			public void onClick(AjaxRequestTarget target) {
+				target.appendJavaScript(&quot;alert('clicked');&quot;);
+			}
+		};
+	}
+});
+</div></code></pre>
+
+			</div>
+
+			<div>
+				<h4>Rendered HTML</h4>
+				
+				<div wicket:id="pricingTable"></div>
+				
+			</div>
+		</div>
+	</div>
+</body>
+</html>

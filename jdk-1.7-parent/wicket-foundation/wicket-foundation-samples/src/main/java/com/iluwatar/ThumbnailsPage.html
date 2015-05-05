@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html xmlns:wicket="http://wicket.apache.org">
+<head>
+<meta charset="utf-8" />
+<title>wicket-foundation</title>
+</head>
+<body>
+    <wicket:extend>
+
+		<div class="row">
+			<h1 id="thumbnails">Thumbnails</h1>
+			<h3 class="subheader">
+				If you&#39;re going to use an image as an anchor, we&#39;ve got you
+				covered. All you gotta do is wrap an
+				<code>a.th</code>
+				around your image and voil&#224;!
+			</h3>
+			
+			<hr>
+
+			<h3>Basic</h3>
+
+			<p>You can create a thumbnail image using minimal markup.</p>
+			<div>
+                <div>
+                    <h4>HTML</h4>
+                    
+<pre><code class="language-html"><div class="code-container"><span class="tag">&lt;<span class="title">span</span> <span class="attribute">wicket:id</span>=<span class="value">&quot;thumbnail&quot;</span>&gt;</span><span class="tag">&lt;/<span class="title">span</span>&gt;</span>
+</div></code>
+</pre>
+
+                </div>
+                <div>
+                    <h4>Java</h4>
+                    
+<pre><code class="language-html"><div class="code-container">add(new FoundationThumbnail(&quot;thumbnail&quot;, new PackageResourceReference(this.getClass(), &quot;space.jpg&quot;), new PackageResourceReference(this.getClass(), &quot;space-th-sm.jpg&quot;)));
+</div></code>
+</pre>
+
+                </div>
+				<div>
+					<h4>Rendered HTML</h4>
+					<div wicket:id="thumbnail"></div>
+				</div>
+			</div>
+		</div>
+			
+	</wicket:extend>
+</body>
+</html>

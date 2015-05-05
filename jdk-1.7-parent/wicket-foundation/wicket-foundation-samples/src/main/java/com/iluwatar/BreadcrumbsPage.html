@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html xmlns:wicket="http://wicket.apache.org">
+<head>
+<meta charset="utf-8" />
+<title>wicket-foundation</title>
+</head>
+<body>
+  <wicket:extend>
+
+  <div class="row">
+    <h1 id="breadcrumbs">Breadcrumbs</h1>
+    <h3 class="subheader">Breadcrumbs come in handy to show a
+      navigation trail for users clicking through a site or app.
+      They&#39;ll fill out 100% of the width of their parent container.</h3>
+
+    <hr>
+    <h2 id="basic">Basic</h2>
+    <div>
+      <div>
+        <h4>HTML</h4>
+        
+<pre><code class="language-html"><div class="code-container"><span class="tag">&lt;<span class="title">nav</span> <span class="attribute">wicket:id</span>=<span class="value">&quot;basic&quot;</span>&gt;</span><span class="tag">&lt;<span class="title">/nav</span>&gt;</span>
+</div></code>
+</pre>
+
+      </div>
+      <div>
+        <h4>Java</h4>
+        
+<pre><code class="language-html"><div class="code-container">List&lt;BreadcrumbsItem&gt; basicItems = new ArrayList&lt;&gt;();
+basicItems.add(new BreadcrumbsItem(&quot;First&quot;));
+basicItems.add(new BreadcrumbsItem(&quot;Second&quot;));
+basicItems.add(new BreadcrumbsItem(&quot;Third&quot;));
+basicItems.add(new BreadcrumbsItem(&quot;Fourth&quot;));
+add(new FoundationBreadcrumbs(&quot;basic&quot;, basicItems) {
+	@Override
+	public AbstractLink createLink(String id, final int idx) {
+		return new AjaxLink&lt;Void&gt;(id) {
+			@Override
+			public void onClick(AjaxRequestTarget target) {
+				target.appendJavaScript(String.format(&quot;alert('%d');&quot;, idx));
+			}
+		};
+	}
+});
+</div></code>
+</pre>
+
+      </div>
+      <div>
+        <h4>Rendered HTML</h4>
+        <nav wicket:id="basic"></nav>
+      </div>
+      <div class="verticalPadding30"></div>
+    </div>
+
+    <hr>
+    <h2 id="advanced">Advanced</h2>
+    <div>
+      <div>
+        <h4>HTML</h4>
+        
+<pre><code class="language-html"><div class="code-container"><span class="tag">&lt;<span class="title">nav</span> <span class="attribute">wicket:id</span>=<span class="value">&quot;advanced&quot;</span>&gt;</span><span class="tag">&lt;<span class="title">/nav</span>&gt;</span>
+</div></code>
+</pre>
+
+      </div>
+      <div>
+        <h4>Java</h4>
+
+<pre><code class="language-html"><div class="code-container">List&lt;BreadcrumbsItem&gt; advancedItems = new ArrayList&lt;&gt;();
+advancedItems.add(new BreadcrumbsItem(&quot;First&quot;));
+advancedItems.add(new BreadcrumbsItem(&quot;Second&quot;));
+advancedItems.add(new BreadcrumbsItem(&quot;Third&quot;));
+advancedItems.add(new BreadcrumbsItem(&quot;Fourth&quot;, true, false));
+advancedItems.add(new BreadcrumbsItem(&quot;Fifth&quot;, false, true));
+advancedItems.add(new BreadcrumbsItem(&quot;Sixth&quot;));
+add(new FoundationBreadcrumbs(&quot;advanced&quot;, advancedItems) {
+	@Override
+	public AbstractLink createLink(String id, final int idx) {
+		return new AjaxLink&lt;Void&gt;(id) {
+			@Override
+			public void onClick(AjaxRequestTarget target) {
+				target.appendJavaScript(String.format(&quot;alert('%d');&quot;, idx));
+			}
+		};
+	}
+});
+</div></code>
+</pre>
+        
+      </div>
+      <div>
+        <h4>Rendered HTML</h4>
+        <nav wicket:id="advanced"></nav>
+      </div>
+    </div>
+  </div>
+  
+  <br />
+  <br />
+  
+</wicket:extend>
+</body>
+</html>

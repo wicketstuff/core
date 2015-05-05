@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html xmlns:wicket="http://wicket.apache.org">
+<head>
+<meta charset="utf-8" />
+<title>wicket-foundation</title>
+</head>
+<body>
+  <wicket:extend>
+    <div class="row">
+      <h1 id="visibility-classes">Visibility Classes</h1>
+      <h3 class="subheader">Visibility classes let you show or hide elements based on screen size or device orientation. You can use visibility classes to control which elements users see depending on their browsing environment.</h3>
+
+      <h3 id="show-by-screen-size">Show by Screen Size</h3>
+      <p>In this example, we use the <strong>show</strong> visibility classes to show certain strings of text based on the device on which users view a page. If their browser meets the class&#39;s conditions, the element will be shown. If not, it will be hidden.</p>
+      <h4>HTML</h4>
+      
+<pre><code class="language-html"><div class="code-container"><span class="tag">&lt;<span class="title">p</span> <span class="attribute">wicket:id</span>=<span class="value">&quot;showByScreenSize&quot;</span>&gt;</span>
+  <span class="tag">&lt;<span class="title">strong</span> <span class="attribute">wicket:id</span>=<span class="value">&quot;showForSmallOnly&quot;</span>&gt;</span><span class="tag">&lt;/<span class="title">strong</span>&gt;</span>
+  <span class="tag">&lt;<span class="title">strong</span> <span class="attribute">wicket:id</span>=<span class="value">&quot;showForMediumUp&quot;</span>&gt;</span><span class="tag">&lt;/<span class="title">strong</span>&gt;</span>
+  <span class="tag">&lt;<span class="title">strong</span> <span class="attribute">wicket:id</span>=<span class="value">&quot;showForMediumOnly&quot;</span>&gt;</span><span class="tag">&lt;/<span class="title">strong</span>&gt;</span>
+  <span class="tag">&lt;<span class="title">strong</span> <span class="attribute">wicket:id</span>=<span class="value">&quot;showForLargeUp&quot;</span>&gt;</span><span class="tag">&lt;/<span class="title">strong</span>&gt;</span>
+  <span class="tag">&lt;<span class="title">strong</span> <span class="attribute">wicket:id</span>=<span class="value">&quot;showForLargeOnly&quot;</span>&gt;</span><span class="tag">&lt;/<span class="title">strong</span>&gt;</span>
+  <span class="tag">&lt;<span class="title">strong</span> <span class="attribute">wicket:id</span>=<span class="value">&quot;showForXlargeUp&quot;</span>&gt;</span><span class="tag">&lt;/<span class="title">strong</span>&gt;</span>
+  <span class="tag">&lt;<span class="title">strong</span> <span class="attribute">wicket:id</span>=<span class="value">&quot;showForXlargeOnly&quot;</span>&gt;</span><span class="tag">&lt;/<span class="title">strong</span>&gt;</span>
+  <span class="tag">&lt;<span class="title">strong</span> <span class="attribute">wicket:id</span>=<span class="value">&quot;showForXxlargeUp&quot;</span>&gt;</span><span class="tag">&lt;/<span class="title">strong</span>&gt;</span>
+<span class="tag">&lt;/<span class="title">p</span>&gt;</span></div></code>
+</pre>
+
+      <h4>Java</h4>
+      
+<pre><code class="language-html"><div class="code-container">FoundationPanelBorder showByScreenSize = new FoundationPanelBorder("showByScreenSize", Model.of(FoundationPanelType.NORMAL));
+add(showByScreenSize);
+Label showForSmallOnly = new Label(&quot;showForSmallOnly&quot;, Model.of(&quot;This text is shown only on a small screen.&quot;));
+showByScreenSize.add(showForSmallOnly);
+showForSmallOnly.add(new ShowByScreenSizeBehavior(Model.of(ShowByScreenSizeType.SHOW_FOR_SMALL_ONLY)));
+...
+</div></code>
+</pre>
+
+      <h4>Rendered HTML</h4>
+      <div wicket:id="showByScreenSize">
+        <strong wicket:id="showForSmallOnly"></strong>
+        <strong wicket:id="showForMediumUp"></strong>
+        <strong wicket:id="showForMediumOnly"></strong>
+        <strong wicket:id="showForLargeUp"></strong>
+        <strong wicket:id="showForLargeOnly"></strong>
+        <strong wicket:id="showForXlargeUp"></strong>
+        <strong wicket:id="showForXlargeOnly"></strong>
+        <strong wicket:id="showForXxlargeUp"></strong>
+      </div>
+      
+      <h3 id="hide-by-screen-size">Hide by Screen Size</h3>
+      <p>This example shows the opposite: It uses the <strong>hide</strong> visibility classes to state which elements should disappear based on your device&#39;s screen size or orientation. Users will see elements on every browser <strong>except</strong> those that meet these conditions.</p>
+      <h4>HTML</h4>
+      
+<pre><code class="language-html"><div class="code-container"><span class="tag">&lt;<span class="title">p</span> <span class="attribute">wicket:id</span>=<span class="value">&quot;hideByScreenSize&quot;</span>&gt;</span>
+  <span class="tag">&lt;<span class="title">strong</span> <span class="attribute">wicket:id</span>=<span class="value">&quot;hideForSmallOnly&quot;</span>&gt;</span><span class="tag">&lt;/<span class="title">strong</span>&gt;</span>
+  <span class="tag">&lt;<span class="title">strong</span> <span class="attribute">wicket:id</span>=<span class="value">&quot;hideForMediumUp&quot;</span>&gt;</span><span class="tag">&lt;/<span class="title">strong</span>&gt;</span>
+  <span class="tag">&lt;<span class="title">strong</span> <span class="attribute">wicket:id</span>=<span class="value">&quot;hideForMediumOnly&quot;</span>&gt;</span><span class="tag">&lt;/<span class="title">strong</span>&gt;</span>
+  <span class="tag">&lt;<span class="title">strong</span> <span class="attribute">wicket:id</span>=<span class="value">&quot;hideForLargeUp&quot;</span>&gt;</span><span class="tag">&lt;/<span class="title">strong</span>&gt;</span>
+  <span class="tag">&lt;<span class="title">strong</span> <span class="attribute">wicket:id</span>=<span class="value">&quot;hideForLargeOnly&quot;</span>&gt;</span><span class="tag">&lt;/<span class="title">strong</span>&gt;</span>
+  <span class="tag">&lt;<span class="title">strong</span> <span class="attribute">wicket:id</span>=<span class="value">&quot;hideForXlargeUp&quot;</span>&gt;</span><span class="tag">&lt;/<span class="title">strong</span>&gt;</span>
+  <span class="tag">&lt;<span class="title">strong</span> <span class="attribute">wicket:id</span>=<span class="value">&quot;hideForXlargeOnly&quot;</span>&gt;</span><span class="tag">&lt;/<span class="title">strong</span>&gt;</span>
+  <span class="tag">&lt;<span class="title">strong</span> <span class="attribute">wicket:id</span>=<span class="value">&quot;hideForXxlargeUp&quot;</span>&gt;</span><span class="tag">&lt;/<span class="title">strong</span>&gt;</span>
+<span class="tag">&lt;/<span class="title">p</span>&gt;</span></div></code>
+</pre>
+
+      <h4>Java</h4>
+      
+<pre><code class="language-html"><div class="code-container">FoundationPanelBorder hideByScreenSize = new FoundationPanelBorder("hideByScreenSize", Model.of(FoundationPanelType.NORMAL));
+add(hideByScreenSize);
+Label hideForSmallOnly = new Label(&quot;hideForSmallOnly&quot;, Model.of(&quot;You are not on a small screen.&quot;));
+hideByScreenSize.add(hideForSmallOnly);
+hideForSmallOnly.add(new HideByScreenSizeBehavior(Model.of(HideByScreenSizeType.HIDE_FOR_SMALL_ONLY)));
+...
+</div></code>
+</pre>
+
+      <h4>Rendered HTML</h4>
+      <div wicket:id="hideByScreenSize">
+        <strong wicket:id="hideForSmallOnly"></strong>
+        <strong wicket:id="hideForMediumUp"></strong>
+        <strong wicket:id="hideForMediumOnly"></strong>
+        <strong wicket:id="hideForLargeUp"></strong>
+        <strong wicket:id="hideForLargeOnly"></strong>
+        <strong wicket:id="hideForXlargeUp"></strong>
+        <strong wicket:id="hideForXlargeOnly"></strong>
+        <strong wicket:id="hideForXxlargeUp"></strong>
+      </div>
+      <h3 id="orientation-detection">Orientation Detection</h3>
+      <p>This straightforward example shows how two strings of text determine whether or not an element is visible in different orientations. This will change on mobile devices when you rotate the device. On desktop, the orientation is almost always reported as landscape.</p>
+      <h4>HTML</h4>
+      
+<pre><code class="language-html"><div class="code-container"><span class="tag">&lt;<span class="title">p</span> <span class="attribute">wicket:id</span>=<span class="value">&quot;orientationDetection&quot;</span>&gt;</span>
+  <span class="tag">&lt;<span class="title">strong</span> <span class="attribute">wicket:id</span>=<span class="value">&quot;showForLandscape&quot;</span>&gt;</span><span class="tag">&lt;/<span class="title">strong</span>&gt;</span>
+  <span class="tag">&lt;<span class="title">strong</span> <span class="attribute">wicket:id</span>=<span class="value">&quot;showForPortrait&quot;</span>&gt;</span><span class="tag">&lt;/<span class="title">strong</span>&gt;</span>
+<span class="tag">&lt;/<span class="title">p</span>&gt;</span></div></code>
+</pre>
+
+
+      <h4>Java</h4>
+      
+<pre><code class="language-html"><div class="code-container">FoundationPanelBorder orientationDetection = new FoundationPanelBorder("orientationDetection", Model.of(FoundationPanelType.NORMAL));
+add(orientationDetection);
+Label showForLandscape = new Label("showForLandscape", Model.of("You are in landscape orientation."));
+orientationDetection.add(showForLandscape);
+showForLandscape.add(new ShowByOrientationBehavior(Model.of(ShowByOrientationType.SHOW_FOR_LANDSCAPE)));
+...
+</div></code>
+</pre>
+
+      <h4>Rendered HTML</h4>
+      <div wicket:id="orientationDetection">
+        <strong wicket:id="showForLandscape"></strong>
+        <strong wicket:id="showForPortrait"></strong>
+      </div>
+      <h3 id="touch-detection">Touch Detection</h3>
+      <p>There are also visibility classes to hide or show content based on whether a device supports touch (as determined by Modernizr).</p>
+      <h4>HTML</h4>
+      
+<pre><code class="language-html"><div class="code-container"><span class="tag">&lt;<span class="title">p</span> <span class="attribute">wicket:id</span>=<span class="value">&quot;touchDetection&quot;</span>&gt;</span>
+  <span class="tag">&lt;<span class="title">strong</span> <span class="attribute">wicket:id</span>=<span class="value">&quot;showForTouch&quot;</span>&gt;</span><span class="tag">&lt;/<span class="title">strong</span>&gt;</span>
+  <span class="tag">&lt;<span class="title">strong</span> <span class="attribute">wicket:id</span>=<span class="value">&quot;hideForTouch&quot;</span>&gt;</span><span class="tag">&lt;/<span class="title">strong</span>&gt;</span>
+<span class="tag">&lt;/<span class="title">p</span>&gt;</span></div></code>
+</pre>
+
+      <h4>Java</h4>
+      
+<pre><code class="language-html"><div class="code-container">FoundationPanelBorder touchDetection = new FoundationPanelBorder("touchDetection", Model.of(FoundationPanelType.NORMAL));
+add(touchDetection);
+Label showForTouch = new Label("showForTouch", Model.of("You are on a touch-enabled device."));
+touchDetection.add(showForTouch);
+showForTouch.add(new TouchDetectionBehavior(Model.of(TouchDetectionType.SHOW_FOR_TOUCH)));
+...
+</div></code>
+</pre>
+
+      <h4>Rendered HTML</h4>
+      <div wicket:id="touchDetection">
+        <strong wicket:id="showForTouch">You are on a touch-enabled device.</strong>
+        <strong wicket:id="hideForTouch">You are not on a touch-enabled device.</strong>
+      </div>
+      <h3 id="accessibility">Accessibility</h3>
+      <p>Finally, if you want to hide some content but still make it accessible for screen readers, use the <strong>hidden</strong> visibility classes. Do not confuse these classes with <strong>hide</strong> visibility classes. Use these classes in conjunction with the <strong>hide</strong> and <strong>show</strong> visibility classes to control complex layouts while offering accessibility for those using screen readers.</p>
+      <h4>HTML</h4>
+
+<pre><code class="language-html"><div class="code-container"><span class="tag">&lt;<span class="title">p</span> <span class="attribute">wicket:id</span>=<span class="value">&quot;hiddenFor&quot;</span>&gt;</span>
+  <span class="tag">&lt;<span class="title">strong</span> <span class="attribute">wicket:id</span>=<span class="value">&quot;hiddenForSmallOnly&quot;</span>&gt;</span><span class="tag">&lt;/<span class="title">strong</span>&gt;</span>
+  <span class="tag">&lt;<span class="title">strong</span> <span class="attribute">wicket:id</span>=<span class="value">&quot;hiddenForMediumUp&quot;</span>&gt;</span><span class="tag">&lt;/<span class="title">strong</span>&gt;</span>
+  <span class="tag">&lt;<span class="title">strong</span> <span class="attribute">wicket:id</span>=<span class="value">&quot;hiddenForMediumOnly&quot;</span>&gt;</span><span class="tag">&lt;/<span class="title">strong</span>&gt;</span>
+  <span class="tag">&lt;<span class="title">strong</span> <span class="attribute">wicket:id</span>=<span class="value">&quot;hiddenForLargeUp&quot;</span>&gt;</span><span class="tag">&lt;/<span class="title">strong</span>&gt;</span>
+  <span class="tag">&lt;<span class="title">strong</span> <span class="attribute">wicket:id</span>=<span class="value">&quot;hiddenForLargeOnly&quot;</span>&gt;</span><span class="tag">&lt;/<span class="title">strong</span>&gt;</span>
+  <span class="tag">&lt;<span class="title">strong</span> <span class="attribute">wicket:id</span>=<span class="value">&quot;hiddenForXlargeUp&quot;</span>&gt;</span><span class="tag">&lt;/<span class="title">strong</span>&gt;</span>
+  <span class="tag">&lt;<span class="title">strong</span> <span class="attribute">wicket:id</span>=<span class="value">&quot;hiddenForXlargeOnly&quot;</span>&gt;</span><span class="tag">&lt;/<span class="title">strong</span>&gt;</span>
+  <span class="tag">&lt;<span class="title">strong</span> <span class="attribute">wicket:id</span>=<span class="value">&quot;hiddenForXxlargeUp&quot;</span>&gt;</span><span class="tag">&lt;/<span class="title">strong</span>&gt;</span>
+<span class="tag">&lt;/<span class="title">p</span>&gt;</span></div></code>
+</pre>
+
+      <h4>Java</h4>
+
+<pre><code class="language-html"><div class="code-container">FoundationPanelBorder hiddenFor = new FoundationPanelBorder("hiddenFor", Model.of(FoundationPanelType.NORMAL));
+add(hiddenFor);
+Label hiddenForSmallOnly = new Label("hiddenForSmallOnly", Model.of("You are not on a small screen."));
+hiddenFor.add(hiddenForSmallOnly);
+hiddenForSmallOnly.add(new HiddenByScreenSizeBehavior(Model.of(HiddenByScreenSizeType.HIDDEN_FOR_SMALL_ONLY)));
+...
+</div></code>
+</pre>
+
+      <h4>Rendered HTML</h4>
+      <div wicket:id="hiddenFor">
+        <strong wicket:id="hiddenForSmallOnly"></strong>
+        <strong wicket:id="hiddenForMediumUp"></strong>
+        <strong wicket:id="hiddenForMediumOnly"></strong>
+        <strong wicket:id="hiddenForLargeUp"></strong>
+        <strong wicket:id="hiddenForLargeOnly"></strong>
+        <strong wicket:id="hiddenForXlargeUp"></strong>
+        <strong wicket:id="hiddenForXlargeOnly"></strong>
+        <strong wicket:id="hiddenForXxlargeUp"></strong>
+      </div>
+      <p>To reverse the rules defined by <strong>hidden</strong>, use the <strong>visible</strong> visibility classes.</p>
+      <h4>HTML</h4>
+      
+<pre><code class="language-html"><div class="code-container"><span class="tag">&lt;<span class="title">p</span> <span class="attribute">wicket:id</span>=<span class="value">&quot;visibleFor&quot;</span>&gt;</span>
+  <span class="tag">&lt;<span class="title">strong</span> <span class="attribute">class</span>=<span class="value">&quot;visibleForSmallOnly&quot;</span>&gt;</span><span class="tag">&lt;/<span class="title">strong</span>&gt;</span>
+  <span class="tag">&lt;<span class="title">strong</span> <span class="attribute">class</span>=<span class="value">&quot;visibleForMediumUp&quot;</span>&gt;</span><span class="tag">&lt;/<span class="title">strong</span>&gt;</span>
+  <span class="tag">&lt;<span class="title">strong</span> <span class="attribute">class</span>=<span class="value">&quot;visibleForMediumOnly&quot;</span>&gt;</span><span class="tag">&lt;/<span class="title">strong</span>&gt;</span>
+  <span class="tag">&lt;<span class="title">strong</span> <span class="attribute">class</span>=<span class="value">&quot;visibleForLargeUp&quot;</span>&gt;</span><span class="tag">&lt;/<span class="title">strong</span>&gt;</span>
+  <span class="tag">&lt;<span class="title">strong</span> <span class="attribute">class</span>=<span class="value">&quot;visibleForLargeOnly&quot;</span>&gt;</span><span class="tag">&lt;/<span class="title">strong</span>&gt;</span>
+  <span class="tag">&lt;<span class="title">strong</span> <span class="attribute">class</span>=<span class="value">&quot;visibleForXlargeUp&quot;</span>&gt;</span><span class="tag">&lt;/<span class="title">strong</span>&gt;</span>
+  <span class="tag">&lt;<span class="title">strong</span> <span class="attribute">class</span>=<span class="value">&quot;visibleForXlargeOnly&quot;</span>&gt;</span><span class="tag">&lt;/<span class="title">strong</span>&gt;</span>
+  <span class="tag">&lt;<span class="title">strong</span> <span class="attribute">class</span>=<span class="value">&quot;visibleForXxlargeUp&quot;</span>&gt;</span><span class="tag">&lt;/<span class="title">strong</span>&gt;</span>
+<span class="tag">&lt;/<span class="title">p</span>&gt;</span></div></code>
+</pre>
+
+      <h4>Java</h4>
+      
+<pre><code class="language-html"><div class="code-container">FoundationPanelBorder visibleFor = new FoundationPanelBorder("visibleFor", Model.of(FoundationPanelType.NORMAL));
+add(visibleFor);
+Label visibleForSmallOnly = new Label("visibleForSmallOnly", Model.of("This text is visible only on a small screen."));
+visibleFor.add(visibleForSmallOnly);
+visibleForSmallOnly.add(new VisibleForScreenSizeBehavior(Model.of(VisibleForScreenSizeType.VISIBLE_FOR_SMALL_ONLY)));
+...
+</div></code>
+</pre>
+
+      <h4>Rendered HTML</h4>
+      <div wicket:id="visibleFor">
+        <strong wicket:id="visibleForSmallOnly"></strong>
+        <strong wicket:id="visibleForMediumUp"></strong>
+        <strong wicket:id="visibleForMediumOnly"></strong>
+        <strong wicket:id="visibleForLargeUp"></strong>
+        <strong wicket:id="visibleForLargeOnly"></strong>
+        <strong wicket:id="visibleForXlargeUp"></strong>
+        <strong wicket:id="visibleForXlargeOnly"></strong>
+        <strong wicket:id="visibleForXxlargeUp"></strong>
+      </div>
+      <hr>
+    </div>
+  </wicket:extend>
+</body>
+</html>

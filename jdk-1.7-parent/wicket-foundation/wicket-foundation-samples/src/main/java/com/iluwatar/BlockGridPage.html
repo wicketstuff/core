@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html xmlns:wicket="http://wicket.apache.org">
+<head>
+<meta charset="utf-8" />
+<title>wicket-foundation</title>
+</head>
+<body>
+  <wicket:extend>
+
+    <div class="row">
+      <h1 id="block-grid">Block grid</h1>
+      <h3 class="subheader">Block grids give you a way to evenly
+        split contents of a list within the grid. If you wanted to
+        create a row of five images or paragraphs that need to stay
+        evenly spaced no matter the screen size, the block grid is for
+        you.</h3>
+      
+      <hr>
+      <h3>Basic</h3>
+      <p>
+        Use a simple
+        <code>small-block-grid-#</code>
+        class to code up the block grid and specify the number of items
+        in a row.
+      </p>
+
+          <h4>HTML</h4>
+<pre><code class="language-html"><div class="code-container"><span class="tag">&lt;<span class="title">div</span> <span class="attribute">wicket:id</span>=<span class="value">&quot;basic&quot;</span>&gt;</span><span class="tag">&lt;/<span class="title">div</span>&gt;</span>
+</div></code>
+</pre>
+
+          <h4>Java</h4>
+<pre><code class="language-html"><div class="code-container">add(new FoundationBlockGrid&lt;String&gt;(&quot;basic&quot;, new BlockGridOptions(BlockGridType.SMALL_BLOCK_GRID, 3), Arrays.asList(&quot;satelite.jpg&quot;, &quot;space.jpg&quot;, &quot;spacewalk.jpg&quot;)) {
+    @Override
+    public WebMarkupContainer createContent(int idx, String id,
+            IModel&lt;String&gt; model) {
+        return new BlockGridImagePanel(id, new PackageResourceReference(this.getClass(), model.getObject()));
+    }           
+});
+</div></code>
+</pre>
+
+          <h4>Rendered HTML</h4>
+          <div wicket:id="basic"></div>
+
+      <hr>
+      <h3>Advanced</h3>
+      <p>Use additional classes to specify a different number of
+        items in a row for each screen size.</p>
+
+          <h4>HTML</h4>
+<pre><code class="language-html"><div class="code-container"><span class="tag">&lt;<span class="title">div</span> <span class="attribute">wicket:id</span>=<span class="value">&quot;advanced&quot;</span>&gt;</span><span class="tag">&lt;/<span class="title">div</span>&gt;</span>
+</div></code>
+</pre>
+
+          <h4>Java</h4>
+<pre><code class="language-html"><div class="code-container">List&lt;BlockGridOptions&gt; optionsList = Arrays.asList(new BlockGridOptions(BlockGridType.SMALL_BLOCK_GRID, 2), 
+        new BlockGridOptions(BlockGridType.MEDIUM_BLOCK_GRID, 3), new BlockGridOptions(BlockGridType.LARGE_BLOCK_GRID, 4));
+List&lt;String&gt; imageList = Arrays.asList(&quot;satelite.jpg&quot;, &quot;space.jpg&quot;, &quot;spacewalk.jpg&quot;, &quot;satelite.jpg&quot;, &quot;space.jpg&quot;, &quot;spacewalk.jpg&quot;);
+add(new FoundationBlockGrid&lt;String&gt;(&quot;advanced&quot;, optionsList, imageList) {
+    @Override
+    public WebMarkupContainer createContent(int idx, String id,
+            IModel&lt;String&gt; model) {
+        return new BlockGridImagePanel(id, new PackageResourceReference(this.getClass(), model.getObject()));
+    }           
+});
+</div></code>
+</pre>
+
+          <h4>Rendered HTML</h4>
+          <div wicket:id="advanced"></div>
+
+      <p>
+        If you use the
+        <code>small-block-grid</code>
+        only, the grid will keep its spacing and configuration no matter
+        the screen size. If you use
+        <code>large-block-grid</code>
+        only, the list items will stack on top of each other for small
+        devices. If you use both of those classes combined, you can
+        control the configuration and layout separately for each
+        breakpoint.
+      </p>
+      <hr>
+    </div>
+
+  </wicket:extend>
+</body>
+</html>
