@@ -101,27 +101,29 @@ public class GIcon implements GValue, Cloneable
     {
         final StringBuffer buffer = new StringBuffer();
         buffer.append("(function() {\n");
-        buffer.append("var icon = new google.maps.MarkerImage(\'" + url + "\' );\n");
+        buffer.append("var icon = {\n");
+        buffer.append("url: '").append(url).append("',\n");
 
         if (size != null)
         {
-            buffer.append("icon.size = ").append(size.getJSconstructor()).append(";\n");
+            buffer.append("size: ").append(size.getJSconstructor()).append(",\n");
         }
 
         if (anchor != null)
         {
-            buffer.append("icon.anchor = ").append(anchor.getJSconstructor()).append(";\n");
+            buffer.append("anchor: ").append(anchor.getJSconstructor()).append(",\n");
         }
 
         if (origin != null)
         {
-            buffer.append("icon.origin = ").append(origin.getJSconstructor()).append(";\n");
+            buffer.append("origin: ").append(origin.getJSconstructor()).append(",\n");
         }
         if (scaledSize != null)
         {
-            buffer.append("icon.scaledSize = ").append(scaledSize.getJSconstructor()).append(";\n");
-        }
-
+            buffer.append("scaledSize: ").append(scaledSize.getJSconstructor()).append("\n");
+        }                
+        
+        buffer.append("}\n");
         buffer.append("return icon;\n");
         buffer.append("})()\n");
         return buffer.toString();

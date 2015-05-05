@@ -15,6 +15,7 @@
  */
 package org.wicketstuff.gmap.api;
 
+import static org.apache.wicket.ThreadContext.getRequestCycle;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.request.Request;
 import org.apache.wicket.request.cycle.RequestCycle;
@@ -50,6 +51,30 @@ public class GMarker extends GOverlay
     public GMarkerOptions getMarkerOptions()
     {
         return options;
+    }
+    
+    /**
+     * Sets the animation type for this marker.
+     * 
+     * @param animation The animation which should be applied to this marker.
+     * Pass NULL if you want to stop an ongoing animation.
+     * 
+     * @see org.wicketstuff.gmap.api.GAnimation
+     */
+    public void setAnimation(GAnimation animation)
+    {   
+        AjaxRequestTarget target = getRequestCycle().find(AjaxRequestTarget.class);        
+        if (target != null)            
+        {                
+            options.setAnimation(animation);
+            String animationToSet = null;
+            if (animation != null)
+            {
+                animationToSet = animation.toString();
+            }
+            
+            target.appendJavaScript(getParent().getJsReference() + ".overlays['overlay" + getId() + "'].setAnimation("+animationToSet+")");
+        }            
     }
 
     /**

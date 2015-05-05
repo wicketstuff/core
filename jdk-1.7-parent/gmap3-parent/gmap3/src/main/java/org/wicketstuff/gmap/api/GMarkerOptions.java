@@ -44,6 +44,7 @@ public class GMarkerOptions implements GValue, Cloneable
     private boolean bouncy = true;
     private boolean autoPan = false;
     private GIcon shadow = null;
+    private GAnimation animation = null;
 
     public GMarkerOptions(GMap gmap, GLatLng latLng)
     {
@@ -112,6 +113,10 @@ public class GMarkerOptions implements GValue, Cloneable
         if (autoPan)
         {
             literal.set("autoPan", "true");
+        }
+        if (animation != null)
+        {
+            literal.set("animation", animation.toString());
         }
 
         return literal.toJS();
@@ -314,4 +319,15 @@ public class GMarkerOptions implements GValue, Cloneable
     {
         return shadow;
     }
+
+    public GAnimation getAnimation() 
+    {
+        return animation;
+    }
+
+    public void setAnimation(GAnimation animation) 
+    {        
+        this.animation = animation;
+    }
+        
 }
