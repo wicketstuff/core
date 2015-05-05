@@ -36,6 +36,7 @@ public abstract class CommandsColumn extends AbstractColumn
 
 	/**
 	 * Constructor
+	 * 
 	 * @param title the text of the column header
 	 */
 	public CommandsColumn(String title)
@@ -45,6 +46,7 @@ public abstract class CommandsColumn extends AbstractColumn
 
 	/**
 	 * Constructor
+	 * 
 	 * @param title the text of the column header
 	 * @param width the desired width of the column
 	 */
@@ -53,9 +55,9 @@ public abstract class CommandsColumn extends AbstractColumn
 		super(title, width);
 	}
 
-
 	/**
 	 * Constructor
+	 * 
 	 * @param title the text of the column header
 	 */
 	public CommandsColumn(IModel<String> title)
@@ -65,6 +67,7 @@ public abstract class CommandsColumn extends AbstractColumn
 
 	/**
 	 * Constructor
+	 * 
 	 * @param title the text of the column header
 	 * @param width the desired width of the column
 	 */
@@ -72,7 +75,6 @@ public abstract class CommandsColumn extends AbstractColumn
 	{
 		super(title, width);
 	}
-
 
 	/**
 	 * Gets a new {@link List} a {@link ColumnButton}

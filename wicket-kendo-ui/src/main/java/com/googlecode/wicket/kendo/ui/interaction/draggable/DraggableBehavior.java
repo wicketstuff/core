@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.googlecode.wicket.jquery.ui.interaction.draggable;
+package com.googlecode.wicket.kendo.ui.interaction.draggable;
 
 import org.apache.wicket.Component;
 import org.apache.wicket.WicketRuntimeException;
@@ -24,38 +24,63 @@ import org.apache.wicket.util.visit.IVisit;
 import org.apache.wicket.util.visit.IVisitor;
 import org.apache.wicket.util.visit.Visits;
 
+import com.googlecode.wicket.jquery.core.IJQueryWidget.JQueryWidget;
 import com.googlecode.wicket.jquery.core.JQueryEvent;
 import com.googlecode.wicket.jquery.core.Options;
 import com.googlecode.wicket.jquery.core.ajax.IJQueryAjaxAware;
 import com.googlecode.wicket.jquery.core.ajax.JQueryAjaxBehavior;
 import com.googlecode.wicket.jquery.core.utils.RequestCycleUtils;
-import com.googlecode.wicket.jquery.ui.JQueryUIBehavior;
-import com.googlecode.wicket.jquery.ui.interaction.droppable.DroppableBehavior;
+import com.googlecode.wicket.kendo.ui.KendoUIBehavior;
+import com.googlecode.wicket.kendo.ui.interaction.droppable.DroppableBehavior;
 
 /**
- * Provides a jQuery draggable behavior<br/>
- * <br/>
+ * Provides a Kendo UI draggable behavior<br/>
+ * <b>Note:</b> This behavior should be attached directly to the component to be dragged. Therefore the 'filter' option will not work here.<br/>
  * <b>Warning:</b> not thread-safe: the instance of this behavior should only be used once
  *
  * @author Sebastien Briquet - sebfz1
  */
-public abstract class DraggableBehavior extends JQueryUIBehavior implements IJQueryAjaxAware, IDraggableListener
+public abstract class DraggableBehavior extends KendoUIBehavior implements IJQueryAjaxAware, IDraggableListener
 {
 	private static final long serialVersionUID = 1L;
-	private static final String METHOD = "draggable";
+	private static final String METHOD = "kendoDraggable";
+
+	public static final String CSS_HIDE = "kendoDraggable-hide";
+	public static final String CSS_CLONE = "kendoDraggable-clone";
+
+	/** default hint */
+	public static final String HINT = "function(element) { return element.clone().addClass('" + CSS_CLONE + "'); }";
 
 	private JQueryAjaxBehavior onDragStartBehavior;
 	private JQueryAjaxBehavior onDragStopBehavior = null;
+	private JQueryAjaxBehavior onDragCancelBehavior = null;
+
 	private Component component = null;
 
-	// TODO add default ctor (see kendo DraggableBehavior)
+	/**
+	 * Constructor
+	 */
+	public DraggableBehavior()
+	{
+		this(null, new Options());
+	}
+
+	/**
+	 * Constructor
+	 * 
+	 * @param options the {@link Options}
+	 */
+	public DraggableBehavior(Options options)
+	{
+		this(null, options);
+	}
 
 	/**
 	 * Constructor
 	 * 
 	 * @param selector the html selector (ie: "#myId")
 	 */
-	public DraggableBehavior(String selector)
+	protected DraggableBehavior(String selector)
 	{
 		this(selector, new Options());
 	}
@@ -66,7 +91,7 @@ public abstract class DraggableBehavior extends JQueryUIBehavior implements IJQu
 	 * @param selector the html selector (ie: "#myId")
 	 * @param options the {@link Options}
 	 */
-	public DraggableBehavior(String selector, Options options)
+	protected DraggableBehavior(String selector, Options options)
 	{
 		super(selector, METHOD, options);
 	}
@@ -83,13 +108,19 @@ public abstract class DraggableBehavior extends JQueryUIBehavior implements IJQu
 			throw new WicketRuntimeException("Behavior is already bound to another component.");
 		}
 
+		if (this.selector == null)
+		{
+			this.selector = JQueryWidget.getSelector(component);
+		}
+
 		this.component = component; // warning, not thread-safe: the instance of this behavior should only be used once
 		this.component.add(this.onDragStartBehavior = this.newOnDragStartBehavior());
+		this.component.add(this.onDragStopBehavior = this.newOnDragStopBehavior());
 
 		// this event is not enabled by default to prevent unnecessary server round-trips.
-		if (this.isStopEventEnabled())
+		if (this.isCancelEventEnabled())
 		{
-			this.component.add(this.onDragStopBehavior = this.newOnDragStopBehavior());
+			this.component.add(this.onDragCancelBehavior = this.newOnDragCancelBehavior());
 		}
 	}
 
@@ -100,11 +131,21 @@ public abstract class DraggableBehavior extends JQueryUIBehavior implements IJQu
 	{
 		super.onConfigure(component);
 
-		this.setOption("start", this.onDragStartBehavior.getCallbackFunction());
+		// options //
 
-		if (this.onDragStopBehavior != null)
+		if (this.getOption("hint") == null)
 		{
-			this.setOption("stop", this.onDragStopBehavior.getCallbackFunction());
+			this.setOption("hint", HINT);
+		}
+
+		// behaviors //
+
+		this.setOption("dragstart", this.onDragStartBehavior.getCallbackFunction());
+		this.setOption("dragend", this.onDragStopBehavior.getCallbackFunction());
+
+		if (this.onDragCancelBehavior != null)
+		{
+			this.setOption("dragcancel", this.onDragCancelBehavior.getCallbackFunction());
 		}
 	}
 
@@ -113,19 +154,24 @@ public abstract class DraggableBehavior extends JQueryUIBehavior implements IJQu
 	{
 		if (event instanceof DraggableEvent)
 		{
-			DraggableEvent ev = (DraggableEvent) event;
+			DraggableEvent e = (DraggableEvent) event;
 
-			if (ev instanceof DragStartEvent)
+			if (e instanceof DragStartEvent)
 			{
 				// register to all DroppableBehavior(s) //
 				Visits.visit(target.getPage(), this.newDroppableBehaviorVisitor());
 
-				this.onDragStart(target, ev.getTop(), ev.getLeft());
+				this.onDragStart(target, e.getTop(), e.getLeft());
 			}
 
-			else if (ev instanceof DragStopEvent)
+			else if (e instanceof DragStopEvent)
 			{
-				this.onDragStop(target, ev.getTop(), ev.getLeft());
+				this.onDragStop(target, e.getTop(), e.getLeft());
+			}
+
+			else if (e instanceof DragCancelEvent)
+			{
+				this.onDragCancel(target, e.getTop(), e.getLeft());
 			}
 		}
 	}
@@ -154,7 +200,7 @@ public abstract class DraggableBehavior extends JQueryUIBehavior implements IJQu
 	}
 
 	/**
-	 * Gets a new {@link JQueryAjaxBehavior} that will be called on 'start' javascript event
+	 * Gets a new {@link JQueryAjaxBehavior} that will be called on 'dragstart' javascript event
 	 * 
 	 * @return the {@link JQueryAjaxBehavior}
 	 */
@@ -167,14 +213,17 @@ public abstract class DraggableBehavior extends JQueryUIBehavior implements IJQu
 			@Override
 			protected CallbackParameter[] getCallbackParameters()
 			{
-				return new CallbackParameter[] {
-						CallbackParameter.context("event"), // lf
-						CallbackParameter.context("ui"), // lf
-						CallbackParameter.resolved("top", "ui.position.top"), // lf
-						CallbackParameter.resolved("left", "ui.position.left"), // lf
-						CallbackParameter.resolved("offsetTop", "ui.offset.top | 0"), // cast to int, no rounding
-						CallbackParameter.resolved("offsetLeft", "ui.offset.left | 0")  // cast to int, no rounding
+				return new CallbackParameter[] { CallbackParameter.context("e"), // lf
+						CallbackParameter.resolved("top", "e.sender.hintOffset.top | 0"), // cast to int, no rounding
+						CallbackParameter.resolved("left", "e.sender.hintOffset.left | 0") // cast to int, no rounding
 				};
+			}
+
+			@Override
+			public CharSequence getCallbackFunctionBody(CallbackParameter... parameters)
+			{
+				String statement = "this.element.addClass('" + CSS_HIDE + "');";
+				return statement + super.getCallbackFunctionBody(parameters);
 			}
 
 			@Override
@@ -186,7 +235,7 @@ public abstract class DraggableBehavior extends JQueryUIBehavior implements IJQu
 	}
 
 	/**
-	 * Gets a new {@link JQueryAjaxBehavior} that will be called on 'stop' javascript event
+	 * Gets a new {@link JQueryAjaxBehavior} that will be called on 'dragend' javascript event
 	 * 
 	 * @return the {@link JQueryAjaxBehavior}
 	 */
@@ -199,20 +248,58 @@ public abstract class DraggableBehavior extends JQueryUIBehavior implements IJQu
 			@Override
 			protected CallbackParameter[] getCallbackParameters()
 			{
-				return new CallbackParameter[] {
-						CallbackParameter.context("event"), // lf
-						CallbackParameter.context("ui"), // lf
-						CallbackParameter.resolved("top", "ui.position.top"), // lf
-						CallbackParameter.resolved("left", "ui.position.left"), // lf
-						CallbackParameter.resolved("offsetTop", "ui.offset.top | 0"), // cast to int, no rounding
-						CallbackParameter.resolved("offsetLeft", "ui.offset.left | 0")  // cast to int, no rounding
+				return new CallbackParameter[] { CallbackParameter.context("e"), // lf
+						CallbackParameter.resolved("top", "e.sender.hintOffset.top | 0"), // cast to int, no rounding
+						CallbackParameter.resolved("left", "e.sender.hintOffset.left | 0") // cast to int, no rounding
 				};
+			}
+
+			@Override
+			public CharSequence getCallbackFunctionBody(CallbackParameter... parameters)
+			{
+				String statement = "this.element.removeClass('" + CSS_HIDE + "');";
+				return statement + super.getCallbackFunctionBody(parameters);
 			}
 
 			@Override
 			protected JQueryEvent newEvent()
 			{
 				return new DragStopEvent();
+			}
+		};
+	}
+
+	/**
+	 * Gets a new {@link JQueryAjaxBehavior} that will be called on 'dragend' javascript event
+	 * 
+	 * @return the {@link JQueryAjaxBehavior}
+	 */
+	protected JQueryAjaxBehavior newOnDragCancelBehavior()
+	{
+		return new JQueryAjaxBehavior(this) {
+
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			protected CallbackParameter[] getCallbackParameters()
+			{
+				return new CallbackParameter[] { CallbackParameter.context("e"), // lf
+						CallbackParameter.resolved("top", "e.sender.hintOffset.top | 0"), // cast to int, no rounding
+						CallbackParameter.resolved("left", "e.sender.hintOffset.left | 0") // cast to int, no rounding
+				};
+			}
+
+			@Override
+			public CharSequence getCallbackFunctionBody(CallbackParameter... parameters)
+			{
+				String statement = "this.element.removeClass('" + CSS_HIDE + "');";
+				return statement + super.getCallbackFunctionBody(parameters);
+			}
+
+			@Override
+			protected JQueryEvent newEvent()
+			{
+				return new DragCancelEvent();
 			}
 		};
 	}
@@ -226,8 +313,6 @@ public abstract class DraggableBehavior extends JQueryUIBehavior implements IJQu
 	{
 		private final int top;
 		private final int left;
-		private final int offsetTop;
-		private final int offsetLeft;
 
 		/**
 		 * Constructor.
@@ -236,13 +321,11 @@ public abstract class DraggableBehavior extends JQueryUIBehavior implements IJQu
 		{
 			this.top = RequestCycleUtils.getQueryParameterValue("top").toInt(-1);
 			this.left = RequestCycleUtils.getQueryParameterValue("left").toInt(-1);
-			this.offsetTop = RequestCycleUtils.getQueryParameterValue("offsetTop").toInt(-1);
-			this.offsetLeft = RequestCycleUtils.getQueryParameterValue("offsetLeft").toInt(-1);
 		}
 
 		/**
 		 * Gets the position's top value
-		 * 
+		 *
 		 * @return the position's top value
 		 */
 		public int getTop()
@@ -252,46 +335,33 @@ public abstract class DraggableBehavior extends JQueryUIBehavior implements IJQu
 
 		/**
 		 * Gets the position's left value
-		 * 
+		 *
 		 * @return the position's left value
 		 */
 		public int getLeft()
 		{
 			return this.left;
 		}
-
-		/**
-		 * Gets the offset's top value
-		 * 
-		 * @return the offset's top value
-		 */
-		public int getOffsetTop()
-		{
-			return this.offsetTop;
-		}
-
-		/**
-		 * Gets the offset's left value
-		 * 
-		 * @return the offset's left value
-		 */
-		public int getOffsetLeft()
-		{
-			return this.offsetLeft;
-		}
 	}
 
 	/**
-	 * Provides an event object that will be broadcasted by the {@link JQueryAjaxBehavior} 'start' callback
+	 * Provides an event object that will be broadcasted by the {@link JQueryAjaxBehavior} 'dragstart' callback
 	 */
 	protected static class DragStartEvent extends DraggableEvent
 	{
 	}
 
 	/**
-	 * Provides an event object that will be broadcasted by the {@link JQueryAjaxBehavior} 'stop' callback
+	 * Provides an event object that will be broadcasted by the {@link JQueryAjaxBehavior} 'dragend' callback
 	 */
 	protected static class DragStopEvent extends DraggableEvent
+	{
+	}
+
+	/**
+	 * Provides an event object that will be broadcasted by the {@link JQueryAjaxBehavior} 'dragcancel' callback
+	 */
+	protected static class DragCancelEvent extends DraggableEvent
 	{
 	}
 }

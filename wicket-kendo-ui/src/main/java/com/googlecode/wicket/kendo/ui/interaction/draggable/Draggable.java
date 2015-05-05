@@ -14,20 +14,19 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.googlecode.wicket.jquery.ui.interaction.draggable;
-
-import java.util.List;
+package com.googlecode.wicket.kendo.ui.interaction.draggable;
 
 import org.apache.wicket.Component;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.model.IModel;
+import org.apache.wicket.util.lang.Args;
 
 import com.googlecode.wicket.jquery.core.JQueryBehavior;
 import com.googlecode.wicket.jquery.core.JQueryGenericContainer;
 import com.googlecode.wicket.jquery.core.Options;
 
 /**
- * Provides a jQuery draggable element based on a {@link JQueryGenericContainer}
+ * Provides a Kendo UI draggable element based on a {@link JQueryGenericContainer}
  *
  * @param <T> the object model type
  * @author Sebastien Briquet - sebfz1
@@ -38,8 +37,8 @@ public class Draggable<T> extends JQueryGenericContainer<T> implements IDraggabl
 
 	public enum Axis
 	{
-		X("'x'"), // lf
-		Y("'y'");
+		X("x"), // lf
+		Y("y");
 
 		private String axis;
 
@@ -55,27 +54,9 @@ public class Draggable<T> extends JQueryGenericContainer<T> implements IDraggabl
 		}
 	}
 
-	public enum Containment
-	{
-		Parent("'parent'"), // lf
-		Document("'document'"), // lf
-		Window("'window'");
+	// TODO remove quote in jquery ui draggable
 
-		private String containment;
-
-		private Containment(String containment)
-		{
-			this.containment = containment;
-		}
-
-		@Override
-		public String toString()
-		{
-			return this.containment;
-		}
-	}
-
-	private Options options = new Options();
+	private Options options;
 
 	/**
 	 * Constructor
@@ -84,7 +65,20 @@ public class Draggable<T> extends JQueryGenericContainer<T> implements IDraggabl
 	 */
 	public Draggable(String id)
 	{
+		this(id, new Options());
+	}
+
+	/**
+	 * Constructor
+	 * 
+	 * @param id the markup id
+	 * @param options the {@link Options}
+	 */
+	public Draggable(String id, Options options)
+	{
 		super(id);
+
+		this.options = Args.notNull(options, "options");
 	}
 
 	/**
@@ -95,15 +89,27 @@ public class Draggable<T> extends JQueryGenericContainer<T> implements IDraggabl
 	 */
 	public Draggable(String id, IModel<T> model)
 	{
-		super(id, model);
+		this(id, model, new Options());
 	}
 
-	// TODO remove initialize everywhere if only instantiate options
+	/**
+	 * Constructor
+	 * 
+	 * @param id the markup id
+	 * @param model the {@link IModel}
+	 * @param options the {@link Options}
+	 */
+	public Draggable(String id, IModel<T> model, Options options)
+	{
+		super(id, model);
+
+		this.options = Args.notNull(options, "options");
+	}
 
 	// Properties //
 
 	@Override
-	public boolean isStopEventEnabled()
+	public boolean isCancelEventEnabled()
 	{
 		return false;
 	}
@@ -122,80 +128,74 @@ public class Draggable<T> extends JQueryGenericContainer<T> implements IDraggabl
 		// noop
 	}
 
+	@Override
+	public void onDragCancel(AjaxRequestTarget target, int top, int left)
+	{
+		// noop
+	}
+
 	// Options //
 
 	/**
-	 * Sets the {@link Axis} on which it is possible to drag the component
+	 * Constrains the hint movement to either the horizontal (x) or vertical (y) axis.
 	 * 
 	 * @param axis the {@link Axis} value
-	 * @return the {@link Draggable}
+	 * @return this, for chaining
 	 */
 	public Draggable<T> setAxis(Axis axis)
 	{
-		this.options.set("axis", axis);
+		this.options.set("axis", Options.asString(axis));
+
 		return this;
 	}
 
 	/**
-	 * Sets the grid on which snapping the component
+	 * Provides a way for customization of the drag indicator
 	 * 
-	 * @param grid a [x, y] {@link List}, assuming its toString() method returns [x, y] (like ArrayList)
-	 * @return the {@link Draggable}
+	 * @param function the javascript function
+	 * @return this, for chaining
 	 */
-	public Draggable<T> setGrid(List<Integer> grid)
+	protected Draggable<T> getHint(String function)
 	{
-		if (grid.size() == 2)
-		{
-			this.options.set("grid", grid.toString());
-		}
+		this.options.set("hint", function);
 
 		return this;
 	}
 
 	/**
-	 * Sets the container on which this component is allowed to move.
+	 * Sets the required distance that the mouse should travel in order to initiate a drag.
+	 * 
+	 * @param distance the distance
+	 * @return this, for chaining
+	 */
+	public Draggable<T> setDistance(Integer distance)
+	{
+		this.options.set("distance", distance);
+
+		return this;
+	}
+
+	/**
+	 * If set, the hint movement is constrained to the container boundaries.
 	 * 
 	 * @param component a {@link Component}
-	 * @return the {@link Draggable}
+	 * @return this, for chaining
 	 */
-	public Draggable<T> setContainment(Component component)
+	public Draggable<T> setContainer(Component component)
 	{
-		return this.setContainment(JQueryWidget.getSelector(component));
+		return this.setContainer(JQueryWidget.getSelector(component));
 	}
 
 	/**
-	 * Sets the container, specified by its selector, on which this component is allowed to move.
+	 * If set, the hint movement is constrained to the container boundaries.
 	 * 
 	 * @param selector the container selector (ie: '#myId')
-	 * @return the {@link Draggable}
+	 * @return this, for chaining
 	 */
-	public Draggable<T> setContainment(String selector)
+	public Draggable<T> setContainer(String selector)
 	{
-		this.options.set("containment", Options.asString(selector));
-		return this;
-	}
+		this.options.set("container", String.format("jQuery(%s)", Options.asString(selector)));
 
-	/**
-	 * Sets the container, specified by a {@link Containment}, on which this component is allowed to move.
-	 * 
-	 * @param containment the {@link Containment} value
-	 * @return the {@link Draggable}
-	 */
-	public Draggable<T> setContainment(Containment containment)
-	{
-		this.options.set("containment", containment);
-		return this;
-	}
-
-	/**
-	 * Set whether the component should revert to its original position
-	 * 
-	 * @param revert yes/no
-	 * @return the {@link Draggable}
-	 */
-	public Draggable<T> setRevert(Boolean revert)
-	{
-		this.options.set("revert", revert);
 		return this;
 	}
 
@@ -209,9 +209,9 @@ public class Draggable<T> extends JQueryGenericContainer<T> implements IDraggabl
 			private static final long serialVersionUID = 1L;
 
 			@Override
-			public boolean isStopEventEnabled()
+			public boolean isCancelEventEnabled()
 			{
-				return Draggable.this.isStopEventEnabled();
+				return Draggable.this.isCancelEventEnabled();
 			}
 
 			@Override
@@ -224,6 +224,12 @@ public class Draggable<T> extends JQueryGenericContainer<T> implements IDraggabl
 			public void onDragStop(AjaxRequestTarget target, int top, int left)
 			{
 				Draggable.this.onDragStop(target, top, left);
+			}
+
+			@Override
+			public void onDragCancel(AjaxRequestTarget target, int top, int left)
+			{
+				Draggable.this.onDragCancel(target, top, left);
 			}
 		};
 	}

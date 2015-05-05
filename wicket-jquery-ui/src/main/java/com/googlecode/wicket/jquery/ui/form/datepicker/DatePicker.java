@@ -21,6 +21,7 @@ import java.util.Date;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.extensions.markup.html.form.DateTextField;
 import org.apache.wicket.model.IModel;
+import org.apache.wicket.util.lang.Args;
 
 import com.googlecode.wicket.jquery.core.IJQueryWidget;
 import com.googlecode.wicket.jquery.core.JQueryBehavior;
@@ -58,7 +59,7 @@ public class DatePicker extends DateTextField implements IJQueryWidget, IDatePic
 	{
 		super(id);
 
-		this.options = options;
+		this.options = Args.notNull(options, "options");
 	}
 
 	/**
@@ -72,7 +73,7 @@ public class DatePicker extends DateTextField implements IJQueryWidget, IDatePic
 	{
 		super(id, pattern);
 
-		this.options = options;
+		this.options = Args.notNull(options, "options");
 	}
 
 	/**
@@ -97,7 +98,7 @@ public class DatePicker extends DateTextField implements IJQueryWidget, IDatePic
 	{
 		super(id, model);
 
-		this.options = options;
+		this.options = Args.notNull(options, "options");
 	}
 
 	/**
@@ -112,7 +113,7 @@ public class DatePicker extends DateTextField implements IJQueryWidget, IDatePic
 	{
 		super(id, model, pattern);
 
-		this.options = options;
+		this.options = Args.notNull(options, "options");
 	}
 
 	// IDatePickerListener //

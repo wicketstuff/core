@@ -62,7 +62,7 @@ public class ProgressBar extends JQueryGenericContainer<Integer> implements IPro
 	{
 		super(id);
 
-		this.options = options;
+		this.options = Args.notNull(options, "options");
 	}
 
 	/**
@@ -87,7 +87,7 @@ public class ProgressBar extends JQueryGenericContainer<Integer> implements IPro
 	{
 		super(id, model);
 
-		this.options = options;
+		this.options = Args.notNull(options, "options");
 	}
 
 	// Properties //

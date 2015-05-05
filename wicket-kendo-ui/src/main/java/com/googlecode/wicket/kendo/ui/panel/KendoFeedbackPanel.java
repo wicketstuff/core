@@ -27,6 +27,7 @@ import org.apache.wicket.feedback.IFeedbackMessageFilter;
 import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.markup.html.panel.FeedbackPanel;
 import org.apache.wicket.model.IModel;
+import org.apache.wicket.util.lang.Args;
 import org.apache.wicket.util.string.Strings;
 
 import com.googlecode.wicket.jquery.core.IJQueryWidget;
@@ -66,7 +67,7 @@ public class KendoFeedbackPanel extends WebMarkupContainer implements IJQueryWid
 	{
 		super(id);
 
-		this.options = options;
+		this.options = Args.notNull(options, "options");
 	}
 
 	// Methods //

@@ -33,7 +33,7 @@ import com.googlecode.wicket.jquery.core.JQueryGenericPanel;
 import com.googlecode.wicket.jquery.core.Options;
 
 /**
- * Provides a Kendo UI accordion based on a {@link JQueryGenericPanel}, which takes {@link ITab}{@code s} as contructor's argument
+ * Provides a Kendo UI accordion based on a {@link JQueryGenericPanel}, which takes {@link ITab}{@code s} as constructor's argument
  *
  * @author Sebastien Briquet - sebfz1
  * @since 6.19.0

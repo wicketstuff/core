@@ -33,7 +33,7 @@ import com.googlecode.wicket.jquery.core.Options;
 import com.googlecode.wicket.jquery.ui.widget.tabs.TabListModel;
 
 /**
- * Provides a jQuery accordion based on a {@link JQueryGenericPanel}, which takes {@link ITab}{@code s} as contructor's argument
+ * Provides a jQuery accordion based on a {@link JQueryGenericPanel}, which takes {@link ITab}{@code s} as constructor's argument
  *
  * @author Sebastien Briquet - sebfz1
  * @since 1.2.3

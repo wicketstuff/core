@@ -22,6 +22,7 @@ import java.util.Map.Entry;
 
 import org.apache.wicket.WicketRuntimeException;
 import org.apache.wicket.ajax.AjaxRequestTarget;
+import org.apache.wicket.util.lang.Args;
 import org.apache.wicket.util.string.Strings;
 import org.threeten.bp.LocalDateTime;
 
@@ -56,7 +57,7 @@ public class Calendar extends JQueryContainer implements ICalendarListener
 	{
 		super(id);
 
-		this.options = options;
+		this.options = Args.notNull(options, "options");
 	}
 
 	/**
@@ -81,7 +82,7 @@ public class Calendar extends JQueryContainer implements ICalendarListener
 	{
 		super(id, model);
 
-		this.options = options;
+		this.options = Args.notNull(options, "options");
 	}
 
 	/**

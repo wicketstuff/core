@@ -18,6 +18,7 @@ package com.googlecode.wicket.jquery.ui.plugins.datepicker;
 
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.model.IModel;
+import org.apache.wicket.util.lang.Args;
 
 import com.googlecode.wicket.jquery.core.JQueryGenericContainer;
 import com.googlecode.wicket.jquery.core.JQueryBehavior;
@@ -46,7 +47,7 @@ public class RangeDatePicker extends JQueryGenericContainer<DateRange> implement
 	{
 		super(id);
 
-		this.options = options;
+		this.options = Args.notNull(options, "options");
 	}
 
 	/**
@@ -60,7 +61,7 @@ public class RangeDatePicker extends JQueryGenericContainer<DateRange> implement
 	{
 		super(id, model);
 
-		this.options = options;
+		this.options = Args.notNull(options, "options");
 	}
 
 	// Properties //

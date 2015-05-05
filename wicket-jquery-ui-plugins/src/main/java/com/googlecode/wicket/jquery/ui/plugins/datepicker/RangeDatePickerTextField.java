@@ -28,6 +28,7 @@ import org.apache.wicket.markup.html.form.TextField;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.util.convert.ConversionException;
 import org.apache.wicket.util.convert.IConverter;
+import org.apache.wicket.util.lang.Args;
 
 import com.googlecode.wicket.jquery.core.JQueryAbstractBehavior;
 import com.googlecode.wicket.jquery.core.Options;
@@ -70,7 +71,7 @@ public class RangeDatePickerTextField extends FormComponentPanel<DateRange> impl
 	{
 		super(id);
 
-		this.options = options;
+		this.options = Args.notNull(options, "options");
 	}
 
 	/**
@@ -95,7 +96,7 @@ public class RangeDatePickerTextField extends FormComponentPanel<DateRange> impl
 	{
 		super(id, model);
 
-		this.options = options;
+		this.options = Args.notNull(options, "options");
 	}
 
 	// Methods //

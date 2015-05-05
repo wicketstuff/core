@@ -18,6 +18,7 @@ package com.googlecode.wicket.kendo.ui.widget.editor;
 
 import org.apache.wicket.markup.html.form.TextArea;
 import org.apache.wicket.model.IModel;
+import org.apache.wicket.util.lang.Args;
 
 import com.googlecode.wicket.jquery.core.IJQueryWidget;
 import com.googlecode.wicket.jquery.core.JQueryBehavior;
@@ -60,8 +61,7 @@ public class Editor<T> extends TextArea<T> implements IJQueryWidget
 	{
 		super(id);
 
-		this.options = options;
-		this.setEscapeModelStrings(false);
+		this.options = Args.notNull(options, "options");
 	}
 
 	/**
@@ -87,8 +87,7 @@ public class Editor<T> extends TextArea<T> implements IJQueryWidget
 	{
 		super(id, model);
 
-		this.options = options;
-		this.setEscapeModelStrings(false);
+		this.options = Args.notNull(options, "options");
 	}
 
 	@Override
@@ -96,6 +95,7 @@ public class Editor<T> extends TextArea<T> implements IJQueryWidget
 	{
 		super.onInitialize();
 
+		this.setEscapeModelStrings(false);
 		this.add(JQueryWidget.newWidgetBehavior(this));
 	}
 

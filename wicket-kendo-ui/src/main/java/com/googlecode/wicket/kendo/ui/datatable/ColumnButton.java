@@ -20,6 +20,7 @@ import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.util.io.IClusterable;
+import org.apache.wicket.util.string.Strings;
 
 /**
  * Provides the button object that can be used in {@link DataTable}
@@ -147,7 +148,7 @@ public class ColumnButton implements IClusterable
 	 */
 	public boolean match(String text)
 	{
-		return text.equals(this.toString()); // let throw a NPE
+		return Strings.isEqual(text, this.toString());
 	}
 
 	@Override

@@ -18,6 +18,7 @@ package com.googlecode.wicket.jquery.core;
 
 import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.model.IModel;
+import org.apache.wicket.util.lang.Args;
 
 /**
  * Base class for a jQuery widget based on a {@link Panel}.
@@ -49,7 +50,7 @@ public abstract class JQueryPanel extends Panel implements IJQueryWidget
 	{
 		super(id);
 
-		this.options = options;
+		this.options = Args.notNull(options, "options");
 	}
 
 	/**
@@ -72,7 +73,7 @@ public abstract class JQueryPanel extends Panel implements IJQueryWidget
 	{
 		super(id, model);
 
-		this.options = options;
+		this.options = Args.notNull(options, "options");
 	}
 
 	// Events //

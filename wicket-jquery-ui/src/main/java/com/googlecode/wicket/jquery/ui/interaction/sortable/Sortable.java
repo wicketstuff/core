@@ -100,7 +100,7 @@ public abstract class Sortable<T> extends JQueryGenericContainer<List<T>> implem
 	{
 		super(id, model);
 
-		this.options = options;
+		this.options = Args.notNull(options, "options");
 	}
 
 	// Events //

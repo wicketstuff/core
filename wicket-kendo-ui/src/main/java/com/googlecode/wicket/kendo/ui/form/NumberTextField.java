@@ -17,6 +17,7 @@
 package com.googlecode.wicket.kendo.ui.form;
 
 import org.apache.wicket.model.IModel;
+import org.apache.wicket.util.lang.Args;
 
 import com.googlecode.wicket.jquery.core.IJQueryWidget;
 import com.googlecode.wicket.jquery.core.JQueryBehavior;
@@ -57,7 +58,7 @@ public class NumberTextField<T extends Number & Comparable<T>> extends org.apach
 	{
 		super(id);
 
-		this.options = options;
+		this.options = Args.notNull(options, "options");
 	}
 
 	/**
@@ -82,7 +83,7 @@ public class NumberTextField<T extends Number & Comparable<T>> extends org.apach
 	{
 		super(id, type);
 
-		this.options = options;
+		this.options = Args.notNull(options, "options");
 	}
 
 	/**
@@ -107,7 +108,7 @@ public class NumberTextField<T extends Number & Comparable<T>> extends org.apach
 	{
 		super(id, model);
 
-		this.options = options;
+		this.options = Args.notNull(options, "options");
 	}
 
 	/**
@@ -134,7 +135,7 @@ public class NumberTextField<T extends Number & Comparable<T>> extends org.apach
 	{
 		super(id, model, type);
 
-		this.options = options;
+		this.options = Args.notNull(options, "options");
 	}
 
 	// Events //

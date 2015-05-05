@@ -48,7 +48,10 @@ public class ColumnAjaxBehavior extends JQueryAjaxBehavior
 	@Override
 	protected CallbackParameter[] getCallbackParameters()
 	{
-		return new CallbackParameter[] { CallbackParameter.context("e"), CallbackParameter.resolved("value", String.format("this.dataItem(jQuery(e.target).closest('tr'))['%s']", this.button.getProperty())) };
+		return new CallbackParameter[] { // lf
+				CallbackParameter.context("e"), // lf
+				CallbackParameter.resolved("value", String.format("this.dataItem(jQuery(e.target).closest('tr'))['%s']", this.button.getProperty())) // lf
+		};
 	}
 
 	/**

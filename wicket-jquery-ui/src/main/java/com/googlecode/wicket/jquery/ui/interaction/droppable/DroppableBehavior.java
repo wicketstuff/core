@@ -40,10 +40,12 @@ public abstract class DroppableBehavior extends JQueryUIBehavior implements IJQu
 	private JQueryAjaxBehavior onOverBehavior = null;
 	private JQueryAjaxBehavior onExitBehavior = null;
 
-	private transient Component draggable = null;  /* object being dragged */
+	/** object being dragged */
+	private transient Component draggable = null;
 
 	/**
 	 * Constructor
+	 * 
 	 * @param selector the html selector (ie: "#myId")
 	 */
 	public DroppableBehavior(String selector)
@@ -53,6 +55,7 @@ public abstract class DroppableBehavior extends JQueryUIBehavior implements IJQu
 
 	/**
 	 * Constructor
+	 * 
 	 * @param selector the html selector (ie: "#myId")
 	 * @param options the {@link Options}
 	 */
@@ -62,12 +65,14 @@ public abstract class DroppableBehavior extends JQueryUIBehavior implements IJQu
 	}
 
 	// Properties //
+
 	public void setDraggable(Component draggable)
 	{
 		this.draggable = draggable;
 	}
 
 	// Methods //
+
 	@Override
 	public void bind(Component component)
 	{
@@ -128,6 +133,7 @@ public abstract class DroppableBehavior extends JQueryUIBehavior implements IJQu
 	// Factories //
 	/**
 	 * Gets a new {@link JQueryAjaxBehavior} that will be called on 'drop' javascript event
+	 * 
 	 * @return the {@link JQueryAjaxBehavior}
 	 */
 	protected JQueryAjaxBehavior newOnDropBehavior()
@@ -152,6 +158,7 @@ public abstract class DroppableBehavior extends JQueryUIBehavior implements IJQu
 
 	/**
 	 * Gets a new {@link JQueryAjaxBehavior} that will be called on 'over' javascript event
+	 * 
 	 * @return the {@link JQueryAjaxBehavior}
 	 */
 	protected JQueryAjaxBehavior newOnOverBehavior()
@@ -176,6 +183,7 @@ public abstract class DroppableBehavior extends JQueryUIBehavior implements IJQu
 
 	/**
 	 * Gets a new {@link JQueryAjaxBehavior} that will be called on 'exit' javascript event
+	 * 
 	 * @return the {@link JQueryAjaxBehavior}
 	 */
 	protected JQueryAjaxBehavior newOnExitBehavior()
@@ -199,6 +207,7 @@ public abstract class DroppableBehavior extends JQueryUIBehavior implements IJQu
 	}
 
 	// Event classes //
+
 	/**
 	 * Provides an event object that will be broadcasted by the {@link JQueryAjaxBehavior} 'drop' callback
 	 */

@@ -33,7 +33,7 @@ public class JQueryResourceStream extends AbstractStringResourceStream
 	private final String content;
 
 	/**
-	 * Contructor
+	 * Constructor
 	 * 
 	 * @param content the content inside the &lt;script /&gt; block
 	 * @param token the unique resource-stream token that acts as the script id.

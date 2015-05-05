@@ -20,6 +20,7 @@ import org.apache.wicket.AttributeModifier;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
+import org.apache.wicket.util.lang.Args;
 
 import com.googlecode.wicket.jquery.core.IJQueryWidget;
 import com.googlecode.wicket.jquery.core.JQueryBehavior;
@@ -81,7 +82,7 @@ public class EventObject extends Label implements IJQueryWidget
 	{
 		super(id, title);
 
-		this.options = options;
+		this.options = Args.notNull(options, "options");
 	}
 
 	@Override

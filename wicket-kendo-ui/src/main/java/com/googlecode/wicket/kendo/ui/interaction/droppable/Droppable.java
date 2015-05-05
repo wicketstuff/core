@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.googlecode.wicket.jquery.ui.interaction.droppable;
+package com.googlecode.wicket.kendo.ui.interaction.droppable;
 
 import org.apache.wicket.Component;
 import org.apache.wicket.ajax.AjaxRequestTarget;
@@ -22,7 +22,7 @@ import org.apache.wicket.model.IModel;
 
 import com.googlecode.wicket.jquery.core.JQueryBehavior;
 import com.googlecode.wicket.jquery.core.JQueryGenericContainer;
-import com.googlecode.wicket.jquery.ui.interaction.draggable.Draggable;
+import com.googlecode.wicket.kendo.ui.interaction.draggable.Draggable;
 
 /**
  * Provides a jQuery droppable area, on which {@link Draggable}{@code s} can be dropped.
@@ -58,13 +58,13 @@ public abstract class Droppable<T> extends JQueryGenericContainer<T> implements 
 	// Properties //
 
 	@Override
-	public boolean isOverEventEnabled()
+	public boolean isDragEnterEventEnabled()
 	{
 		return false;
 	}
 
 	@Override
-	public boolean isExitEventEnabled()
+	public boolean isDragLeaveEventEnabled()
 	{
 		return false;
 	}
@@ -72,19 +72,19 @@ public abstract class Droppable<T> extends JQueryGenericContainer<T> implements 
 	// Events //
 
 	@Override
-	public void onOver(AjaxRequestTarget target, Component component)
-	{
-		// noop
-	}
-
-	@Override
-	public void onExit(AjaxRequestTarget target, Component component)
-	{
-		// noop
-	}
-
-	@Override
 	public abstract void onDrop(AjaxRequestTarget target, Component component);
+
+	@Override
+	public void onDragEnter(AjaxRequestTarget target, Component component)
+	{
+		// noop
+	}
+
+	@Override
+	public void onDragLeave(AjaxRequestTarget target, Component component)
+	{
+		// noop
+	}
 
 	// IJQueryWidget //
 
@@ -96,33 +96,33 @@ public abstract class Droppable<T> extends JQueryGenericContainer<T> implements 
 			private static final long serialVersionUID = 1L;
 
 			@Override
-			public boolean isOverEventEnabled()
+			public boolean isDragEnterEventEnabled()
 			{
-				return Droppable.this.isOverEventEnabled();
+				return Droppable.this.isDragEnterEventEnabled();
 			}
 
 			@Override
-			public boolean isExitEventEnabled()
+			public boolean isDragLeaveEventEnabled()
 			{
-				return Droppable.this.isExitEventEnabled();
+				return Droppable.this.isDragLeaveEventEnabled();
+			}
+
+			@Override
+			public void onDragEnter(AjaxRequestTarget target, Component component)
+			{
+				Droppable.this.onDragEnter(target, component);
+			}
+
+			@Override
+			public void onDragLeave(AjaxRequestTarget target, Component component)
+			{
+				Droppable.this.onDragLeave(target, component);
 			}
 
 			@Override
 			public void onDrop(AjaxRequestTarget target, Component component)
 			{
 				Droppable.this.onDrop(target, component);
-			}
-
-			@Override
-			public void onOver(AjaxRequestTarget target, Component component)
-			{
-				Droppable.this.onOver(target, component);
-			}
-
-			@Override
-			public void onExit(AjaxRequestTarget target, Component component)
-			{
-				Droppable.this.onExit(target, component);
 			}
 		};
 	}

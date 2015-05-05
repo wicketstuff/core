@@ -18,6 +18,7 @@ package com.googlecode.wicket.jquery.ui.form.spinner;
 
 import org.apache.wicket.markup.html.form.TextField;
 import org.apache.wicket.model.IModel;
+import org.apache.wicket.util.lang.Args;
 
 import com.googlecode.wicket.jquery.core.IJQueryCultureWidget;
 import com.googlecode.wicket.jquery.core.JQueryBehavior;
@@ -80,7 +81,7 @@ public class Spinner<T extends Number> extends TextField<T> implements IJQueryCu
 	{
 		super(id, type);
 
-		this.options = options;
+		this.options = Args.notNull(options, "options");
 	}
 
 	/**
@@ -130,7 +131,7 @@ public class Spinner<T extends Number> extends TextField<T> implements IJQueryCu
 	{
 		super(id, model, type);
 
-		this.options = options;
+		this.options = Args.notNull(options, "options");
 	}
 
 	// Events //

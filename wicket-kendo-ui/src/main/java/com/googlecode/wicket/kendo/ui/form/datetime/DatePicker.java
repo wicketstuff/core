@@ -22,6 +22,7 @@ import java.util.Locale;
 
 import org.apache.wicket.extensions.markup.html.form.DateTextField;
 import org.apache.wicket.model.IModel;
+import org.apache.wicket.util.lang.Args;
 
 import com.googlecode.wicket.jquery.core.IJQueryWidget;
 import com.googlecode.wicket.jquery.core.JQueryBehavior;
@@ -88,7 +89,7 @@ public class DatePicker extends DateTextField implements IJQueryWidget
 	{
 		super(id, pattern);
 
-		this.options = options;
+		this.options = Args.notNull(options, "options");
 	}
 
 	/**
@@ -161,7 +162,7 @@ public class DatePicker extends DateTextField implements IJQueryWidget
 	{
 		super(id, model, pattern);
 
-		this.options = options;
+		this.options = Args.notNull(options, "options");
 	}
 
 	/**

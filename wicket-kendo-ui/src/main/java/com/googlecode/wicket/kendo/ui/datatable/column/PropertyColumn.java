@@ -122,6 +122,8 @@ public class PropertyColumn extends AbstractColumn implements IExportableColumn
 		return PropertyResolver.getValue(this.property, object); // if the object is null, null is returned
 	}
 
+	// Export //
+
 	@Override
 	public IModel<Object> newDataModel(IModel<?> rowModel)
 	{

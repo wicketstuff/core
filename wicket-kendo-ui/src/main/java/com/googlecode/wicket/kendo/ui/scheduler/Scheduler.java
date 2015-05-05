@@ -19,6 +19,7 @@ package com.googlecode.wicket.kendo.ui.scheduler;
 import java.util.List;
 
 import org.apache.wicket.ajax.AjaxRequestTarget;
+import org.apache.wicket.util.lang.Args;
 
 import com.googlecode.wicket.jquery.core.JQueryBehavior;
 import com.googlecode.wicket.jquery.core.JQueryContainer;
@@ -97,7 +98,7 @@ public class Scheduler extends JQueryContainer implements ISchedulerListener
 	{
 		super(id, model);
 
-		this.options = options;
+		this.options = Args.notNull(options, "options");
 		this.template = this.newTemplate();
 	}
 

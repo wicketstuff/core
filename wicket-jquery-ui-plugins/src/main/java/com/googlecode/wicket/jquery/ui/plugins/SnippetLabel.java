@@ -2,6 +2,7 @@ package com.googlecode.wicket.jquery.ui.plugins;
 
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.model.IModel;
+import org.apache.wicket.util.lang.Args;
 
 import com.googlecode.wicket.jquery.core.IJQueryWidget;
 import com.googlecode.wicket.jquery.core.JQueryBehavior;
@@ -22,8 +23,8 @@ public class SnippetLabel extends Label implements IJQueryWidget
 	{
 		super(id, model);
 
-		this.language = language;
-		this.options = options;
+		this.language = Args.notNull(language, "language");
+		this.options = Args.notNull(options, "options");
 	}
 
 	// Properties //

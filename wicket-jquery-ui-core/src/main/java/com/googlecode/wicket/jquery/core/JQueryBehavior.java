@@ -21,9 +21,9 @@ import java.util.List;
 import java.util.Map.Entry;
 
 import org.apache.wicket.Component;
-import org.apache.wicket.WicketRuntimeException;
 import org.apache.wicket.markup.head.IHeaderResponse;
 import org.apache.wicket.markup.head.JavaScriptHeaderItem;
+import org.apache.wicket.util.lang.Args;
 
 /**
  * Provides a default implementation of {@link JQueryAbstractBehavior}.
@@ -34,7 +34,6 @@ import org.apache.wicket.markup.head.JavaScriptHeaderItem;
 public class JQueryBehavior extends JQueryAbstractBehavior
 {
 	private static final long serialVersionUID = 1L;
-	private static final String NULL_OPTIONS = "Options have not been defined (null has been supplied to the constructor)";
 
 	protected String selector = null;
 	protected final String method;
@@ -74,12 +73,13 @@ public class JQueryBehavior extends JQueryAbstractBehavior
 	{
 		super(method);
 
-		this.method = method;
-		this.options = options;
-		this.selector = selector;
+		this.method = Args.notNull(method, "method");
+		this.options = Args.notNull(options, "options");
+		this.selector = Args.notNull(selector, "selector");
 	}
 
 	// Methods //
+
 	@Override
 	public void renderHead(Component component, IHeaderResponse response)
 	{
@@ -102,6 +102,7 @@ public class JQueryBehavior extends JQueryAbstractBehavior
 	}
 
 	// Properties //
+
 	/**
 	 * Gets the selector
 	 *
@@ -140,11 +141,6 @@ public class JQueryBehavior extends JQueryAbstractBehavior
 	 */
 	public <T extends Object> T getOption(String key)
 	{
-		if (this.options == null)
-		{
-			throw new WicketRuntimeException(NULL_OPTIONS);
-		}
-
 		return this.options.get(key);
 	}
 
@@ -157,11 +153,6 @@ public class JQueryBehavior extends JQueryAbstractBehavior
 	 */
 	public JQueryBehavior setOption(String key, Object value)
 	{
-		if (this.options == null)
-		{
-			throw new WicketRuntimeException(NULL_OPTIONS);
-		}
-
 		this.options.set(key, value);
 
 		return this;
@@ -176,11 +167,6 @@ public class JQueryBehavior extends JQueryAbstractBehavior
 	 */
 	public JQueryBehavior setOption(String key, Object... values)
 	{
-		if (this.options == null)
-		{
-			throw new WicketRuntimeException(NULL_OPTIONS);
-		}
-
 		this.options.set(key, values);
 
 		return this;
@@ -195,11 +181,6 @@ public class JQueryBehavior extends JQueryAbstractBehavior
 	 */
 	public JQueryBehavior setOption(String key, List<?> values)
 	{
-		if (this.options == null)
-		{
-			throw new WicketRuntimeException(NULL_OPTIONS);
-		}
-
 		this.options.set(key, values);
 
 		return this;
