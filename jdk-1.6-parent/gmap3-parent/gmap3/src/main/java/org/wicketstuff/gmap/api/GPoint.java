@@ -54,6 +54,7 @@ public class GPoint implements GValue
     /**
      * @see wicket.contrib.gmap.api.GValue#getJSconstructor()
      */
+    @Override
     public String getJSconstructor()
     {
         return new Constructor("google.maps.Point").add(longitude).add(latitude).toJS();
