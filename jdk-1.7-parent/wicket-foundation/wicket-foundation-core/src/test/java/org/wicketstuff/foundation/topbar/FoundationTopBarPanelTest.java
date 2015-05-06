@@ -119,7 +119,7 @@ public class FoundationTopBarPanelTest {
 				return new FoundationTopBarTitle(id, Model.of("Home"), Model.of(TopBarMenuLayout.TITLE_AND_ICON), Model.of("Menu")) {
 					@Override
 					public AbstractLink createTitleLink(String id) {
-						return new Link(id) {
+						return new Link<Void>(id) {
 							@Override
 							public void onClick() {
 							}

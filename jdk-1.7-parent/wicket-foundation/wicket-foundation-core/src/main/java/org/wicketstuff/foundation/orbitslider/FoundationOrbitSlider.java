@@ -21,6 +21,7 @@ public class FoundationOrbitSlider extends OrbitSliderBase {
 		super(id, itemsModel);
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	protected AbstractRepeater createRepeater(String id) {
 		return new ListView<OrbitSliderItem>(id, (IModel<List<OrbitSliderItem>>)getDefaultModel()) {
