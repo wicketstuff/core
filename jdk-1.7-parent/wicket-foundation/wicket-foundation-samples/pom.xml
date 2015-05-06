@@ -6,7 +6,7 @@
 
     <parent>
         <artifactId>wicket-foundation-parent</artifactId>
-        <groupId>com.iluwatar</groupId>
+        <groupId>org.wicketstuff.foundation</groupId>
         <version>0.4.0-SNAPSHOT</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
@@ -16,7 +16,7 @@
 
     <dependencies>
         <dependency>
-            <groupId>com.iluwatar</groupId>
+            <groupId>org.wicketstuff.foundation</groupId>
             <artifactId>wicket-foundation-core</artifactId>
             <version>${project.version}</version>
         </dependency>
