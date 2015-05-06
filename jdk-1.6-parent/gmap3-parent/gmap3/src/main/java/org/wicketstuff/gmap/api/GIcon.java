@@ -106,23 +106,24 @@ public class GIcon implements GValue, Cloneable
 
         if (size != null)
         {
-            buffer.append("size: ").append(size.getJSconstructor()).append(";\n");
+            buffer.append("size: ").append(size.getJSconstructor()).append(",\n");
         }
 
         if (anchor != null)
         {
-            buffer.append("anchor: ").append(anchor.getJSconstructor()).append(";\n");
+            buffer.append("anchor: ").append(anchor.getJSconstructor()).append(",\n");
         }
 
         if (origin != null)
         {
-            buffer.append("origin: ").append(origin.getJSconstructor()).append(";\n");
+            buffer.append("origin: ").append(origin.getJSconstructor()).append(",\n");
         }
         if (scaledSize != null)
         {
-            buffer.append("scaledSize: ").append(scaledSize.getJSconstructor()).append(";\n");
+            buffer.append("scaledSize: ").append(scaledSize.getJSconstructor()).append(",\n");
         }
 
+        buffer.append("}\n");
         buffer.append("return icon;\n");
         buffer.append("})()\n");
         return buffer.toString();
