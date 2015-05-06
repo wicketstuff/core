@@ -59,6 +59,19 @@ public class GMarkerOptions implements GValue, Cloneable
 
     }
 
+    public GMarkerOptions(GMap gmap, GLatLng latLng, String title, GIcon icon)
+    {
+        this(gmap, latLng);
+        this.title = title;
+        this.icon = icon;
+    }
+
+    /**
+     * Do not use this constructor anymore since it will be removed with WicketStuff 1.7.
+     * @deprecated Marker shadows were removed in version 3.14 of the Google Maps JavaScript API. 
+     * Any shadows specified programmatically will be ignored.
+     * @see https://developers.google.com/maps/documentation/javascript/markers#complex_icons
+     */
     public GMarkerOptions(GMap gmap, GLatLng latLng, String title, GIcon icon, GIcon shadow)
     {
         this(gmap, latLng);
@@ -136,12 +149,21 @@ public class GMarkerOptions implements GValue, Cloneable
     {
         return clickable;
     }
-
+       
+    /**
+     * Do not use this method since it will be removed with WicketStuff 1.7.
+     * @deprecated This has been removed by Google Maps. 
+     * @see org.wicketstuff.gmap.api.GMarker#setAnimation(org.wicketstuff.gmap.api.GAnimation) 
+     */
     public boolean isBouncy()
     {
         return bouncy;
     }
 
+    /**
+     * Do not use this method since it will be removed with WicketStuff 1.7.
+     * @deprecated This has been removed by Google Maps. 
+     */    
     public boolean isAutoPan()
     {
         return autoPan;
@@ -182,6 +204,10 @@ public class GMarkerOptions implements GValue, Cloneable
         return clone;
     }
 
+    /**
+     * Do not use this method since it will be removed with WicketStuff 1.7.
+     * @deprecated This has been removed by Google Maps. 
+     */    
     public GMarkerOptions autoPan(boolean autoPan)
     {
         GMarkerOptions clone = clone();
@@ -189,6 +215,11 @@ public class GMarkerOptions implements GValue, Cloneable
         return clone;
     }
 
+    /**
+     * Do not use this method since it will be removed with WicketStuff 1.7.
+     * @deprecated This has been removed by Google Maps. 
+     * @see org.wicketstuff.gmap.api.GMarker#setAnimation(org.wicketstuff.gmap.api.GAnimation) 
+     */    
     public GMarkerOptions bouncy(boolean bouncy)
     {
         GMarkerOptions clone = clone();
@@ -201,6 +232,10 @@ public class GMarkerOptions implements GValue, Cloneable
         return cursor;
     }
 
+    /**
+     * Do not use this method since it will be removed with WicketStuff 1.7.
+     * @deprecated This has been removed by Google Maps. 
+     */    
     public boolean isFlat()
     {
         return flat;
@@ -310,11 +345,24 @@ public class GMarkerOptions implements GValue, Cloneable
         return true;
     }
 
+    
+    /**
+     * Do not use this method since it will be removed with WicketStuff 1.7.
+     * @deprecated Marker shadows were removed in version 3.14 of the Google Maps JavaScript API. 
+     * Any shadows specified programmatically will be ignored.
+     * @see https://developers.google.com/maps/documentation/javascript/markers#complex_icons
+     */
     public void setShadow(GIcon shadow)
     {
         this.shadow = shadow;
     }
 
+    /**
+     * Do not use this method since it will be removed with WicketStuff 1.7.
+     * @deprecated Marker shadows were removed in version 3.14 of the Google Maps JavaScript API. 
+     * Any shadows specified programmatically will be ignored.
+     * @see https://developers.google.com/maps/documentation/javascript/markers#complex_icons
+     */
     public GIcon getShadow()
     {
         return shadow;
