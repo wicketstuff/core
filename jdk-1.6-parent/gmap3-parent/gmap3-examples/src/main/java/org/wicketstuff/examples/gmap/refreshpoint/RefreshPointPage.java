@@ -95,10 +95,10 @@ public class RefreshPointPage extends WicketExamplePage
 
 
         GIcon icon =
-                new GIcon("/" + image).setScaledSize(
+                new GIcon("../" + image).setScaledSize(
                 new GSize(64, 64)).setSize(new GSize(64, 64));
         GIcon shadowIcon =
-                new GIcon("/" + shadow).setScaledSize(
+                new GIcon("../" + shadow).setScaledSize(
                 new GSize(64, 64)).setSize(new GSize(64, 64));
 
         map.setCenter(latLng);
