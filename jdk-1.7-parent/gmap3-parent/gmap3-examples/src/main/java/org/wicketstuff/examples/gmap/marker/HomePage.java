@@ -3,9 +3,11 @@ package org.wicketstuff.examples.gmap.marker;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.wicketstuff.examples.gmap.WicketExamplePage;
 import org.wicketstuff.gmap.GMap;
+import org.wicketstuff.gmap.api.GAnimation;
 import org.wicketstuff.gmap.api.GLatLng;
 import org.wicketstuff.gmap.api.GMarker;
 import org.wicketstuff.gmap.api.GMarkerOptions;
+import org.wicketstuff.gmap.api.GOverlay;
 import org.wicketstuff.gmap.event.ClickListener;
 
 /**
@@ -33,8 +35,23 @@ public class HomePage extends WicketExamplePage
                     {
                         map.removeOverlay(map.getOverlays().get(0));
                     }
-                    map.addOverlay(new GMarker(new GMarkerOptions(map, latLng)));
-                }
+
+                    // stop the animation for the markers which are already on the map
+                    for (GOverlay overlay : map.getOverlays())
+                    {      
+                       ((GMarker)overlay).setAnimation(null);
+                    }
+
+                    // create a new marker with a bounce animation
+                    // the animation continues until it is set explicitly to null
+                    GMarkerOptions opt = new GMarkerOptions(map, latLng);
+                    opt.setAnimation(GAnimation.BOUNCE);
+                    map.addOverlay(new GMarker(opt));
+
+                    // if you don't want to use any animation and just add a marker
+                    // the following line would be sufficient:
+//                    map.addOverlay(new GMarker(new GMarkerOptions(map, latLng)));
+                 }
             }
         });
     }

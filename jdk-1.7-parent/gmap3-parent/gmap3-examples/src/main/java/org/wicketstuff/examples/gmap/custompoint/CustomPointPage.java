@@ -24,12 +24,9 @@ public class CustomPointPage extends WicketExamplePage
         add(map);
 
         GIcon icon =
-                new GIcon("/pin.gif").setScaledSize(
+                new GIcon("../pin.gif").setScaledSize(
                 new GSize(64, 64)).setSize(new GSize(64, 64));
-        GIcon shadow =
-                new GIcon("/shadow.png").setScaledSize(
-                new GSize(64, 64)).setSize(new GSize(64, 64));
-        GOverlay marker = new GMarker(new GMarkerOptions(map, new GLatLng(52.37649, 4.888573), "My Title", icon, shadow));
+        GOverlay marker = new GMarker(new GMarkerOptions(map, new GLatLng(52.37649, 4.888573), "My Title", icon));
 
         map.addOverlay(marker);
     }
