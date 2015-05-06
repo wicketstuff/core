@@ -41,7 +41,6 @@ public class FoundationPricingTableTest {
 
 					@Override
 					public void onClick(AjaxRequestTarget target) {
-						// TODO Auto-generated method stub
 					}
 				};
 			}
