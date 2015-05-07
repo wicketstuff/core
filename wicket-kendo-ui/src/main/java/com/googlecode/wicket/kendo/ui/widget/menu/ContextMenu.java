@@ -23,7 +23,6 @@ import java.util.Map;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 
 import com.googlecode.wicket.jquery.core.JQueryBehavior;
-import com.googlecode.wicket.jquery.core.JQueryPanel;
 import com.googlecode.wicket.jquery.core.Options;
 import com.googlecode.wicket.kendo.ui.widget.menu.item.IMenuItem;
 
@@ -78,14 +77,14 @@ public class ContextMenu extends Menu
 	public ContextMenu(String id, List<IMenuItem> items, Options options)
 	{
 		super(id, items, options);
-    }
+	}
 
 	// IJQueryWidget //
 	@Override
 	public JQueryBehavior newWidgetBehavior(String selector)
 	{
-		return new ContextMenuBehavior(selector, this.options) {
-
+		return new ContextMenuBehavior(selector, this.options)
+        {
 			private static final long serialVersionUID = 1L;
 
 			@Override
