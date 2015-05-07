@@ -53,7 +53,17 @@ public abstract class MenuBehavior extends KendoUIBehavior implements IJQueryAja
 		super(selector, METHOD);
 	}
 
-	/**
+    /**
+     * Constructor
+     *
+     * @param selector the html selector (ie: "#myId")
+     */
+    protected MenuBehavior(String selector, String method)
+    {
+        super(selector, method);
+    }
+
+    /**
 	 * Constructor
 	 *
 	 * @param selector the html selector (ie: "#myId")
@@ -64,7 +74,19 @@ public abstract class MenuBehavior extends KendoUIBehavior implements IJQueryAja
 		super(selector, METHOD, options);
 	}
 
-	// Properties //
+
+    /**
+     * Constructor
+     *
+     * @param selector the html selector (ie: "#myId")
+     * @param options the {@link Options}
+     */
+    protected MenuBehavior(String selector, String method, Options options)
+    {
+        super(selector, method, options);
+    }
+
+    // Properties //
 
 	/**
 	 * Gets the reference map of hash/menu-item.<br/>
