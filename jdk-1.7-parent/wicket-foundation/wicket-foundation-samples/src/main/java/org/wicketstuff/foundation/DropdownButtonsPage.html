@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html xmlns:wicket="http://wicket.apache.org">
+<head>
+<meta charset="utf-8" />
+<title>wicket-foundation</title>
+</head>
+<body>
+    <wicket:extend>
+
+        <div class="row">
+            <h1 id="dropdown-buttons">Dropdown Buttons</h1>
+            <h3 class="subheader">
+                Dropdown buttons are elements that, when tapped, reveal
+                additional content. We&#39;ve simplified our dropdown
+                buttons by getting rid of the dedicated ones associated
+                with the various buttons styles. Instead, you&#39;ll use
+                our <a href="dropdown.html">new dropdown plugin</a> to
+                attach a dropdown to the button style of your choice.
+            </h3>
+
+            <hr>
+            <h2>Basic</h2>
+
+            <p>You can create a dropdown using minimal markup.</p>
+            <div>
+                <div>
+                    <h4>HTML</h4>
+                    
+<pre><code class="language-html"><div class="code-container"><span class="tag">&lt;<span class="title">div</span> <span class="attribute">wicket:id</span>=<span class="value">&quot;basic&quot;</span>&gt;</span><span class="tag">&lt;/<span class="title">div</span>&gt;</span>
+</div></code>
+</pre>
+
+                </div>
+                <div>
+                    <h4>Java</h4>
+                    
+<pre><code class="language-html"><div class="code-container">List&lt;String&gt; links = Arrays.asList(&quot;This is a link&quot;, &quot;This is another&quot;, &quot;Yet another&quot;);
+add(createDropdownButton(&quot;basic&quot;, &quot;Dropdown Button&quot;, links, new DropdownOptions(DropdownType.DROPDOWNBUTTON)));
+
+private FoundationDropdown createDropdownButton(String id, String title, List&lt;String&gt; links, DropdownOptions options) {
+    return new FoundationDropdown(id, title, options, Collections.unmodifiableList(links)) {
+            @Override
+            protected WebMarkupContainer createDropdownLink(int idx, String id) {
+                return new Link&lt;String&gt;(id) {
+                    @Override
+                    public void onClick() {}
+                };
+            }
+    };
+}
+</div></code>
+</pre>
+
+                </div>
+                <div>
+                    <h4>Rendered HTML</h4>
+                    <div wicket:id="basic"></div>
+                </div>
+            </div>
+
+            <hr>
+            <h2>Advanced</h2>
+
+            <p>Additional classes can be added to your dropdown
+                buttons to change their appearance.</p>
+            <div>
+                <div>
+                    <h4>HTML</h4>
+                    
+<pre><code class="language-html"><div class="code-container"><span class="tag">&lt;<span class="title">div</span> <span class="attribute">wicket:id</span>=<span class="value">&quot;advanced&quot;</span>&gt;</span><span class="tag">&lt;/<span class="title">div</span>&gt;</span>
+</div></code>
+</pre>
+
+                </div>
+                <div>
+                    <h4>Java</h4>
+                    
+<pre><code class="language-html"><div class="code-container">List&lt;String&gt; advancedLinks = Arrays.asList(&quot;This is a link&quot;, &quot;This is another&quot;, &quot;Yet another&quot;);
+DropdownOptions options = new DropdownOptions(DropdownType.DROPDOWNBUTTON).setSize(ButtonSize.LARGE).setRadius(ButtonRadius.ROUND).setColor(ButtonColor.ALERT);
+add(createDropdownButton(&quot;advanced&quot;, &quot;Dropdown Button&quot;, advancedLinks, options));
+
+private FoundationDropdown createDropdownButton(String id, String title, List&lt;String&gt; links, DropdownOptions options) {
+    return new FoundationDropdown(id, title, options, Collections.unmodifiableList(links)) {
+            @Override
+            protected WebMarkupContainer createDropdownLink(int idx, String id) {
+                return new Link&lt;String&gt;(id) {
+                    @Override
+                    public void onClick() {}
+                };
+            }
+    };
+}
+</div></code>
+</pre>
+
+                </div>
+                <div>
+                    <h4>Rendered HTML</h4>
+                    <div wicket:id="advanced"></div>
+                </div>
+            </div>
+        </div>
+
+    </wicket:extend>
+</body>
+</html>
