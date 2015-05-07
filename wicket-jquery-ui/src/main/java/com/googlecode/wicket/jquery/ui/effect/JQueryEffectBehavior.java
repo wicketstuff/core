@@ -33,7 +33,7 @@ import com.googlecode.wicket.jquery.ui.JQueryUIBehavior;
 public class JQueryEffectBehavior extends JQueryUIBehavior implements IJQueryAjaxAware, IEffectListener
 {
 	private static final long serialVersionUID = 1L;
-	private static final String METHOD = "effect";
+	public static final String METHOD = "effect";
 	private static final int SPEED = 500;
 
 	private int speed;

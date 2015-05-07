@@ -29,7 +29,7 @@ import com.googlecode.wicket.jquery.ui.JQueryUIBehavior;
 public class ButtonBehavior extends JQueryUIBehavior
 {
 	private static final long serialVersionUID = 1L;
-	private static final String METHOD = "button";
+	public static final String METHOD = "button";
 
 	public ButtonBehavior(String selector)
 	{

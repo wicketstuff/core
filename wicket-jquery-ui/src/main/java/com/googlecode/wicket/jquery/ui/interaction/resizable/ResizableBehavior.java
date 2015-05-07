@@ -35,7 +35,7 @@ import com.googlecode.wicket.jquery.ui.JQueryUIBehavior;
 public abstract class ResizableBehavior extends JQueryUIBehavior implements IJQueryAjaxAware, IResizableListener
 {
 	private static final long serialVersionUID = 1L;
-	private static final String METHOD = "resizable";
+	public static final String METHOD = "resizable";
 
 	private JQueryAjaxBehavior onResizeStartBehavior = null;
 	private JQueryAjaxBehavior onResizeStopBehavior = null;

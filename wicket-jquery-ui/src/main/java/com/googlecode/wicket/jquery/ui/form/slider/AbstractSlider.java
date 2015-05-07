@@ -232,7 +232,7 @@ public abstract class AbstractSlider<T> extends FormComponentPanel<T> implements
 	public static class SliderBehavior extends JQueryUIBehavior
 	{
 		private static final long serialVersionUID = 1L;
-		private static final String METHOD = "slider";
+		public static final String METHOD = "slider";
 
 		public SliderBehavior(String selector)
 		{

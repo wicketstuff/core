@@ -39,7 +39,7 @@ import com.googlecode.wicket.jquery.ui.widget.dialog.ButtonAjaxBehavior.ClickEve
 public abstract class DialogBehavior extends JQueryUIBehavior implements IJQueryAjaxAware, IDialogListener
 {
 	private static final long serialVersionUID = 1L;
-	private static final String METHOD = "dialog";
+	public static final String METHOD = "dialog";
 
 	private JQueryAjaxBehavior onDefaultClose = null;
 	private JQueryAjaxBehavior onEscapeClose = null;

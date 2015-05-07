@@ -39,7 +39,7 @@ import com.googlecode.wicket.jquery.ui.JQueryUIBehavior;
 public abstract class MenuBehavior extends JQueryUIBehavior implements IJQueryAjaxAware, IMenuListener
 {
 	private static final long serialVersionUID = 1L;
-	private static final String METHOD = "menu";
+	public static final String METHOD = "menu";
 
 	private JQueryAjaxBehavior onSelectBehavior;
 

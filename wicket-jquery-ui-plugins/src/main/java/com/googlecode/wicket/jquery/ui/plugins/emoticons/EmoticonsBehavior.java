@@ -28,7 +28,7 @@ import com.googlecode.wicket.jquery.ui.plugins.emoticons.settings.EmoticonsLibra
 public class EmoticonsBehavior extends JQueryBehavior
 {
 	private static final long serialVersionUID = 1L;
-	private static final String METHOD = "emoticonize";
+	public static final String METHOD = "emoticonize";
 
 	/**
 	 * Constructor

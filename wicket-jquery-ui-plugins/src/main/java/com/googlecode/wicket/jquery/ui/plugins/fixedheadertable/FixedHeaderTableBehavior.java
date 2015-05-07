@@ -28,7 +28,7 @@ import com.googlecode.wicket.jquery.ui.plugins.fixedheadertable.settings.FixedHe
 public class FixedHeaderTableBehavior extends JQueryBehavior
 {
 	private static final long serialVersionUID = 1L;
-	private static final String METHOD = "fixedHeaderTable";
+	public static final String METHOD = "fixedHeaderTable";
 
 	public FixedHeaderTableBehavior(String selector)
 	{

@@ -35,7 +35,7 @@ import com.googlecode.wicket.jquery.ui.JQueryUIBehavior;
 public abstract class AutoCompleteBehavior extends JQueryUIBehavior implements IJQueryAjaxAware, IAutoCompleteListener
 {
 	private static final long serialVersionUID = 1L;
-	private static final String METHOD = "autocomplete";
+	public static final String METHOD = "autocomplete";
 
 	private JQueryAjaxBehavior onSelectBehavior = null;
 

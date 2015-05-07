@@ -42,7 +42,7 @@ import com.googlecode.wicket.jquery.ui.interaction.droppable.DroppableBehavior;
 public abstract class DraggableBehavior extends JQueryUIBehavior implements IJQueryAjaxAware, IDraggableListener
 {
 	private static final long serialVersionUID = 1L;
-	private static final String METHOD = "draggable";
+	public static final String METHOD = "draggable";
 
 	private JQueryAjaxBehavior onDragStartBehavior;
 	private JQueryAjaxBehavior onDragStopBehavior = null;

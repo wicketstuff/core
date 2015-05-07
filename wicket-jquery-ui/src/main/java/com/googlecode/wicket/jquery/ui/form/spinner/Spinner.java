@@ -310,7 +310,7 @@ public class Spinner<T extends Number> extends TextField<T> implements IJQueryCu
 	public static class SpinnerBehavior extends JQueryUIBehavior
 	{
 		private static final long serialVersionUID = 1L;
-		private static final String METHOD = "spinner";
+		public static final String METHOD = "spinner";
 
 		public SpinnerBehavior(String selector)
 		{

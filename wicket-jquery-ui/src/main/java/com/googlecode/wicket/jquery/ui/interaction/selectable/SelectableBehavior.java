@@ -43,7 +43,7 @@ import com.googlecode.wicket.jquery.ui.JQueryUIBehavior;
 public abstract class SelectableBehavior<T extends Serializable> extends JQueryUIBehavior implements IJQueryAjaxAware, ISelectableListener<T>
 {
 	private static final long serialVersionUID = 1L;
-	private static final String METHOD = "selectable";
+	public static final String METHOD = "selectable";
 
 	private JQueryAjaxBehavior onStopBehavior;
 

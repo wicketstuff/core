@@ -30,7 +30,7 @@ import com.googlecode.wicket.kendo.ui.utils.DebugUtils;
 public abstract class MultiSelectBehavior extends KendoUIBehavior
 {
 	private static final long serialVersionUID = 1L;
-	private static final String METHOD = "kendoMultiSelect";
+	public static final String METHOD = "kendoMultiSelect";
 
 	public MultiSelectBehavior(String selector)
 	{

@@ -48,7 +48,7 @@ import com.googlecode.wicket.jquery.ui.JQueryUIBehavior;
 public class TooltipBehavior extends JQueryUIBehavior
 {
 	private static final long serialVersionUID = 1L;
-	private static final String METHOD = "tooltip";
+	public static final String METHOD = "tooltip";
 
 	/**
 	 * Default constructor<br/>

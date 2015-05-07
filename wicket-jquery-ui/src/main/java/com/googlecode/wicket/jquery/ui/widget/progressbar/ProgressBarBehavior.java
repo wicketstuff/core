@@ -35,7 +35,7 @@ import com.googlecode.wicket.jquery.ui.ajax.JQueryAjaxChangeBehavior;
 public abstract class ProgressBarBehavior extends JQueryUIBehavior implements IJQueryAjaxAware
 {
 	private static final long serialVersionUID = 1L;
-	private static final String METHOD = "progressbar";
+	public static final String METHOD = "progressbar";
 
 	private JQueryAjaxBehavior onChangeBehavior = null;
 

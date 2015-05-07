@@ -29,7 +29,7 @@ import com.googlecode.wicket.jquery.ui.plugins.wysiwyg.settings.WysiwygLibrarySe
 public class WysiwygBehavior extends JQueryBehavior
 {
 	private static final long serialVersionUID = 1L;
-	private static final String METHOD = "wysiwyg";
+	public static final String METHOD = "wysiwyg";
 
 	/**
 	 * Constructor

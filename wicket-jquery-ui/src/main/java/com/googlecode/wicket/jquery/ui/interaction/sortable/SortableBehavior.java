@@ -41,7 +41,7 @@ import com.googlecode.wicket.jquery.ui.interaction.selectable.SelectableBehavior
 public abstract class SortableBehavior<T> extends JQueryUIBehavior implements IJQueryAjaxAware, ISortableListener<T>
 {
 	private static final long serialVersionUID = 1L;
-	private static final String METHOD = "sortable";
+	public static final String METHOD = "sortable";
 
 	private JQueryAjaxBehavior onUpdateBehavior;
 	private JQueryAjaxBehavior onReceiveBehavior = null;

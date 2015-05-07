@@ -48,7 +48,7 @@ import com.googlecode.wicket.jquery.ui.calendar.settings.CalendarLibrarySettings
 public abstract class CalendarBehavior extends JQueryBehavior implements IJQueryAjaxAware, ICalendarListener
 {
 	private static final long serialVersionUID = 1L;
-	private static final String METHOD = "fullCalendar";
+	public static final String METHOD = "fullCalendar";
 
 	private JQueryAjaxBehavior onSelectBehavior = null; // date range-select behavior;
 

@@ -37,7 +37,7 @@ import com.googlecode.wicket.jquery.ui.JQueryUIBehavior;
 public abstract class DatePickerBehavior extends JQueryUIBehavior implements IJQueryAjaxAware, IDatePickerListener
 {
 	private static final long serialVersionUID = 1L;
-	private static final String METHOD = "datepicker";
+	public static final String METHOD = "datepicker";
 
 	private JQueryAjaxBehavior onSelectBehavior = null;
 

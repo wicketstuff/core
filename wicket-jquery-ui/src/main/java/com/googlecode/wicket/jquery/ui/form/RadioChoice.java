@@ -193,7 +193,7 @@ public class RadioChoice<T> extends org.apache.wicket.markup.html.form.RadioChoi
 	public static class RadioChoiceBehavior extends JQueryUIBehavior
 	{
 		private static final long serialVersionUID = 1L;
-		private static final String METHOD = "buttonset";
+		public static final String METHOD = "buttonset";
 
 		public RadioChoiceBehavior(String selector)
 		{
