@@ -7,7 +7,6 @@ import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.model.Model;
 
 import com.googlecode.wicket.kendo.ui.KendoIcon;
-import com.googlecode.wicket.kendo.ui.panel.KendoFeedbackPanel;
 import com.googlecode.wicket.kendo.ui.widget.menu.Menu;
 import com.googlecode.wicket.kendo.ui.widget.menu.item.IMenuItem;
 import com.googlecode.wicket.kendo.ui.widget.menu.item.MenuItem;
@@ -62,10 +61,6 @@ public class KendoMenuPage extends AbstractMenuPage
 
 	public KendoMenuPage()
 	{
-		// FeedbackPanel //
-		final KendoFeedbackPanel feedback = new KendoFeedbackPanel("feedback");
-		this.add(feedback);
-
 		// Menu //
 		this.add(new Menu("menu", KendoMenuPage.newMenuItemList()) {
 

@@ -42,7 +42,7 @@ import com.googlecode.wicket.kendo.ui.widget.menu.item.MenuItem;
 import com.googlecode.wicket.kendo.ui.widget.menu.item.UrlMenuItem;
 
 /**
- * Provides the jQuery menu based on a {@link JQueryPanel}
+ * Provides the Kendo UI menu based on a {@link JQueryPanel}
  *
  * @author Sebastien Briquet - sebfz1
  * @since 6.15.0
@@ -154,7 +154,7 @@ public class Menu extends JQueryPanel implements IMenuListener
 			@Override
 			protected Map<String, IMenuItem> getMenuItemMap()
 			{
-				return Menu.this.map;
+				return Menu.this.getMenuItemsMap();
 			}
 
 			// Events //
@@ -164,6 +164,10 @@ public class Menu extends JQueryPanel implements IMenuListener
 				Menu.this.onClick(target, item);
 			}
 		};
+	}
+
+	protected Map<String, IMenuItem> getMenuItemsMap() {
+		return this.map;
 	}
 
 	// Fragments //
