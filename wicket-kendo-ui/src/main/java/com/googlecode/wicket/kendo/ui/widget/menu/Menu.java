@@ -124,7 +124,7 @@ public class Menu extends JQueryPanel implements IMenuListener
 	 */
 	public void destroy(AjaxRequestTarget target)
 	{
-		target.prependJavaScript(this.widgetBehavior.widget() + ".destroy()");
+		target.prependJavaScript(this.widgetBehavior.widget() + ".destroy();");
 	}
 
 	/**
