@@ -199,10 +199,12 @@ public class Menu extends JQueryPanel implements IMenuListener
 				protected void populateItem(ListItem<IMenuItem> item)
 				{
 					IMenuItem menuItem = item.getModelObject();
-					Menu.this.map.put(menuItem.getId(), menuItem);
+					String menuItemId = menuItem.getId();
+
+					Menu.this.map.put(menuItemId, menuItem);
+					item.add(AttributeModifier.replace("id", menuItemId));
 
 					item.add(new ItemFragment("item", menuItem));
-					item.add(AttributeModifier.replace("id", menuItem.getId()));
 
 					if (menuItem.isEnabled())
 					{

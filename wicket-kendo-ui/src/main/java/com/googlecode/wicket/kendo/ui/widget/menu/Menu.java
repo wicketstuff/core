@@ -30,7 +30,6 @@ import org.apache.wicket.markup.html.list.ListView;
 import org.apache.wicket.markup.html.panel.EmptyPanel;
 import org.apache.wicket.markup.html.panel.Fragment;
 import org.apache.wicket.model.Model;
-import org.apache.wicket.model.PropertyModel;
 import org.apache.wicket.util.lang.Args;
 
 import com.googlecode.wicket.jquery.core.JQueryPanel;
@@ -57,7 +56,7 @@ public class Menu extends JQueryPanel implements IMenuListener
 	private Map<String, IMenuItem> map = new HashMap<String, IMenuItem>();
 	private MenuBehavior widgetBehavior;
 
-    /**
+	/**
 	 * Constructor
 	 *
 	 * @param id the markup id
@@ -123,8 +122,9 @@ public class Menu extends JQueryPanel implements IMenuListener
 	 *
 	 * @param target The Ajax request handler
 	 */
-	public void destroy(AjaxRequestTarget target) {
-		target.prependJavaScript(widgetBehavior.widget() + ".destroy()");
+	public void destroy(AjaxRequestTarget target)
+	{
+		target.prependJavaScript(this.widgetBehavior.widget() + ".destroy()");
 	}
 
 	/**
@@ -132,8 +132,9 @@ public class Menu extends JQueryPanel implements IMenuListener
 	 *
 	 * @param target The Ajax request handler
 	 */
-	public void refresh(AjaxRequestTarget target) {
-		destroy(target);
+	public void refresh(AjaxRequestTarget target)
+	{
+		this.destroy(target);
 		target.add(this);
 	}
 
@@ -153,7 +154,7 @@ public class Menu extends JQueryPanel implements IMenuListener
 	{
 		super.onInitialize();
 
-		this.add(widgetBehavior = JQueryWidget.newWidgetBehavior(this, this.root));
+		this.add(this.widgetBehavior = JQueryWidget.newWidgetBehavior(this, this.root));
 	}
 
 	@Override
@@ -185,7 +186,8 @@ public class Menu extends JQueryPanel implements IMenuListener
 		};
 	}
 
-	protected Map<String, IMenuItem> getMenuItemsMap() {
+	protected Map<String, IMenuItem> getMenuItemsMap()
+	{
 		return this.map;
 	}
 
@@ -225,9 +227,10 @@ public class Menu extends JQueryPanel implements IMenuListener
 				protected void populateItem(ListItem<IMenuItem> item)
 				{
 					IMenuItem menuItem = item.getModelObject();
+					String menuItemId = menuItem.getId();
 
-					Menu.this.map.put(menuItem.getId(), menuItem);
-					item.add(AttributeModifier.replace("id", menuItem.getId()));
+					Menu.this.map.put(menuItemId, menuItem);
+					item.add(AttributeModifier.replace("id", menuItemId));
 
 					if (menuItem instanceof UrlMenuItem)
 					{
@@ -256,7 +259,7 @@ public class Menu extends JQueryPanel implements IMenuListener
 
 				private boolean hasSubMenus(IMenuItem item)
 				{
-					return item.isEnabled() && !item.getItems().isEmpty(); // do not render sub-menus if item is disabled  
+					return item.isEnabled() && !item.getItems().isEmpty(); // do not render sub-menus if item is disabled
 				}
 			});
 		}
@@ -273,9 +276,7 @@ public class Menu extends JQueryPanel implements IMenuListener
 		{
 			super(id, "item-fragment", Menu.this);
 
-			String cssClass = KendoIcon.getCssClass(new PropertyModel<String>(item, "icon").getObject());
-
-			this.add(new EmptyPanel("icon").add(AttributeModifier.append("class", cssClass)));
+			this.add(new EmptyPanel("icon").add(AttributeModifier.append("class", KendoIcon.getCssClass(item.getIcon()))));
 			this.add(new Label("title", item.getTitle()).setRenderBodyOnly(true));
 		}
 	}
@@ -291,10 +292,8 @@ public class Menu extends JQueryPanel implements IMenuListener
 		{
 			super(id, "link-fragment", Menu.this);
 
-			String cssClass = KendoIcon.getCssClass(new PropertyModel<String>(item, "icon").getObject());
-			
 			WebMarkupContainer link = new WebMarkupContainer("link");
-			link.add(new EmptyPanel("icon").add(AttributeModifier.append("class", cssClass)));
+			link.add(new EmptyPanel("icon").add(AttributeModifier.append("class", KendoIcon.getCssClass(item.getIcon()))));
 			link.add(new Label("title", item.getTitle()).setRenderBodyOnly(true));
 			link.add(AttributeModifier.replace("href", item.getUrl()));
 

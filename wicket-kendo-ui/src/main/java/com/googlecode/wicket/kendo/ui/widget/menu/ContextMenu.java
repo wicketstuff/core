@@ -32,7 +32,7 @@ import com.googlecode.wicket.kendo.ui.widget.menu.item.IMenuItem;
  *
  * @since 6.20.0
  */
-public class ContextMenu extends Menu
+public class ContextMenu extends Menu implements IContextMenuListener
 {
 	private static final long serialVersionUID = 1L;
 
@@ -79,27 +79,52 @@ public class ContextMenu extends Menu
 	{
 		super(id, items, options);
 	}
+	
+	// Properties //
 
-	// Actions //
-
-	protected void onOpen(AjaxRequestTarget target)
+	@Override
+	public boolean isOpenEventEnabled()
 	{
+		return false;
+	}
+
+	// Events //
+
+	@Override
+	public void onOpen(AjaxRequestTarget target)
+	{
+		// noop
 	}
 
 	// Factories //
 
-	protected JQueryAjaxBehavior newOnOpenJQueryBehavior(IJQueryAjaxAware ajaxAware)
+	/**
+	 * Gets a new {@link JQueryAjaxBehavior} that acts as the 'open' javascript callback
+	 *
+	 * @return the {@link JQueryAjaxBehavior}
+	 */
+	// TODO: generalize this? 
+	protected JQueryAjaxBehavior newOnOpenAjaxBehavior(IJQueryAjaxAware source)
 	{
-		return new ContextMenuBehavior.OnOpenJQueryBehavior(ajaxAware);
+		return new ContextMenuBehavior.OnOpenAjaxBehavior(source);
 	}
 
 	// IJQueryWidget //
+
 	@Override
 	public ContextMenuBehavior newWidgetBehavior(String selector)
 	{
-		return new ContextMenuBehavior(selector, this.options)
-        {
+		return new ContextMenuBehavior(selector, this.options) {
+
 			private static final long serialVersionUID = 1L;
+
+			// properties //
+
+			@Override
+			public boolean isOpenEventEnabled()
+			{
+				return ContextMenu.this.isOpenEventEnabled();
+			}
 
 			@Override
 			protected Map<String, IMenuItem> getMenuItemMap()
@@ -107,41 +132,27 @@ public class ContextMenu extends Menu
 				return ContextMenu.this.getMenuItemsMap();
 			}
 
-			@Override
-			protected boolean isOpenEventEnabled()
-			{
-				return ContextMenu.this.isOpenEventEnabled();
-			}
+			// events //
 
 			@Override
-			protected JQueryAjaxBehavior newOnOpenJQueryBehavior(IJQueryAjaxAware ajaxAware)
-			{
-				return ContextMenu.this.newOnOpenJQueryBehavior(ajaxAware);
-			}
-
-			@Override
-			protected void onOpen(AjaxRequestTarget target)
+			public void onOpen(AjaxRequestTarget target)
 			{
 				ContextMenu.this.onOpen(target);
 			}
 
-			// Events //
 			@Override
 			public void onClick(AjaxRequestTarget target, IMenuItem item)
 			{
 				ContextMenu.this.onClick(target, item);
 			}
-		};
-	}
 
-	/**
-	 * Indicates whether the open event is enabled.<br/>
-	 * If true, the {@link #onOpen(AjaxRequestTarget)} event will be triggered
-	 *
-	 * @return false by default
-	 */
-	protected boolean isOpenEventEnabled()
-	{
-		return false;
+			// factories //
+
+			@Override
+			protected JQueryAjaxBehavior newOnOpenAjaxBehavior(IJQueryAjaxAware source)
+			{
+				return ContextMenu.this.newOnOpenAjaxBehavior(source);
+			}
+		};
 	}
 }

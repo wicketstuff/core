@@ -28,7 +28,7 @@ import org.apache.wicket.ajax.AjaxRequestTarget;
  *
  * @since 6.20.0
  */
-public abstract class ContextMenuBehavior extends MenuBehavior
+public abstract class ContextMenuBehavior extends MenuBehavior implements IContextMenuListener
 {
 	private static final long serialVersionUID = 1L;
 	public static final String METHOD = "kendoContextMenu";
@@ -63,7 +63,7 @@ public abstract class ContextMenuBehavior extends MenuBehavior
 
 		if (this.isOpenEventEnabled())
 		{
-			this.onOpenBehavior = this.newOnOpenJQueryBehavior(this);
+			this.onOpenBehavior = this.newOnOpenAjaxBehavior(this);
 			component.add(this.onOpenBehavior);
 		}
 	}
@@ -73,53 +73,49 @@ public abstract class ContextMenuBehavior extends MenuBehavior
 	{
 		super.onConfigure(component);
 
-		if (this.isOpenEventEnabled())
+		if (this.onOpenBehavior != null)
 		{
-			this.setOption("open", onOpenBehavior.getCallbackFunction());
+			this.setOption("open", this.onOpenBehavior.getCallbackFunction());
 		}
 	}
 
-	/**
-	 * Indicates whether the open event is enabled.<br/>
-	 * If true, the {@link #onOpen(AjaxRequestTarget)} event will be triggered
-	 *
-	 * @return false by default
-	 */
-	protected boolean isOpenEventEnabled()
-	{
-		return false;
-	}
-
-	// Actions //
-
-	protected void onOpen(AjaxRequestTarget target)
-	{
-	}
+	// Events //
 
 	@Override
 	public void onAjax(AjaxRequestTarget target, JQueryEvent event)
 	{
+		super.onAjax(target, event);
+
 		if (event instanceof OpenEvent)
 		{
-			ContextMenuBehavior.this.onOpen(target);
-		}
-		else if (event instanceof SelectEvent)
-		{
-			super.onAjax(target, event);
+			this.onOpen(target);
 		}
 	}
 
 	// Factories //
 
-	protected JQueryAjaxBehavior newOnOpenJQueryBehavior(IJQueryAjaxAware ajaxAware)
+	/**
+	 * Gets a new {@link JQueryAjaxBehavior} that acts as the 'open' javascript callback
+	 *
+	 * @return the {@link JQueryAjaxBehavior}
+	 */
+	// TODO: add newOnXxxAjaxBehavior everywhere and deprecate all newOnXxxBehavior until removing
+	protected JQueryAjaxBehavior newOnOpenAjaxBehavior(IJQueryAjaxAware source)
 	{
-		return new ContextMenuBehavior.OnOpenJQueryBehavior(ajaxAware);
+		return new OnOpenAjaxBehavior(source);
 	}
 
-	public static class OnOpenJQueryBehavior extends JQueryAjaxBehavior
-	{
+	// Ajax class //
 
-		public OnOpenJQueryBehavior(IJQueryAjaxAware source)
+	/**
+	 * Provides a default {@link JQueryAjaxBehavior} implementation for {@link ContextMenuBehavior#newOnOpenAjaxBehavior(IJQueryAjaxAware)}
+	 */
+	// TODO: introduce OnXxxAjaxBehavior classes everywhere
+	public static class OnOpenAjaxBehavior extends JQueryAjaxBehavior
+	{
+		private static final long serialVersionUID = 1L;
+
+		public OnOpenAjaxBehavior(IJQueryAjaxAware source)
 		{
 			super(source);
 		}
@@ -133,6 +129,9 @@ public abstract class ContextMenuBehavior extends MenuBehavior
 
 	// Event class //
 
+	/**
+	 * Provides an event object that will be broadcasted by the {@link JQueryAjaxBehavior} 'open' callback
+	 */
 	protected static class OpenEvent extends JQueryEvent
 	{
 	}
