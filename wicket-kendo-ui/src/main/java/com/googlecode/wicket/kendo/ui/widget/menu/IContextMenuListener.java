@@ -30,7 +30,7 @@ interface IContextMenuListener
 	 * Indicates whether the 'open' event is enabled.<br />
 	 * If true, the {@link #onOpen(AjaxRequestTarget)} event will be triggered.
 	 *
-	 * @return true by default
+	 * @return false by default
 	 */
 	boolean isOpenEventEnabled();
 
