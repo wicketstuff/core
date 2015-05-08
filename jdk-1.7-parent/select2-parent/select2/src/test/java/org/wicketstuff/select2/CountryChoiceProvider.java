@@ -41,7 +41,7 @@ public final class CountryChoiceProvider implements ChoiceProvider<Country>
 
 	private static List<Country> countryMatches(String term, int page, int pageSize)
 	{
-		List<Country> result = new ArrayList<>(PAGE_SIZE);
+		List<Country> result = new ArrayList<>(pageSize);
 		int offset = page * pageSize;
 		int matched = 0;
 		for (Country country : Country.values())
