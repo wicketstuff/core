@@ -34,6 +34,7 @@ public abstract class ContextMenuBehavior extends MenuBehavior
 	public static final String METHOD = "kendoContextMenu";
 
 	private JQueryAjaxBehavior onOpenBehavior = null;
+
 	/**
 	 * Constructor
 	 *
@@ -62,8 +63,8 @@ public abstract class ContextMenuBehavior extends MenuBehavior
 
 		if (this.isOpenEventEnabled())
 		{
-			onOpenBehavior = this.newOnOpenJQueryBehavior(this);
-			component.add(onOpenBehavior);
+			this.onOpenBehavior = this.newOnOpenJQueryBehavior(this);
+			component.add(this.onOpenBehavior);
 		}
 	}
 
@@ -72,7 +73,8 @@ public abstract class ContextMenuBehavior extends MenuBehavior
 	{
 		super.onConfigure(component);
 
-		if (this.isOpenEventEnabled()) {
+		if (this.isOpenEventEnabled())
+		{
 			this.setOption("open", onOpenBehavior.getCallbackFunction());
 		}
 	}
@@ -95,10 +97,14 @@ public abstract class ContextMenuBehavior extends MenuBehavior
 	}
 
 	@Override
-	public void onAjax(AjaxRequestTarget target, JQueryEvent event) {
-		if (event instanceof OpenEvent) {
+	public void onAjax(AjaxRequestTarget target, JQueryEvent event)
+	{
+		if (event instanceof OpenEvent)
+		{
 			ContextMenuBehavior.this.onOpen(target);
-		} else if (event instanceof SelectEvent) {
+		}
+		else if (event instanceof SelectEvent)
+		{
 			super.onAjax(target, event);
 		}
 	}
@@ -110,20 +116,24 @@ public abstract class ContextMenuBehavior extends MenuBehavior
 		return new ContextMenuBehavior.OnOpenJQueryBehavior(ajaxAware);
 	}
 
-	public static class OnOpenJQueryBehavior extends JQueryAjaxBehavior {
+	public static class OnOpenJQueryBehavior extends JQueryAjaxBehavior
+	{
 
-		public OnOpenJQueryBehavior(IJQueryAjaxAware source) {
+		public OnOpenJQueryBehavior(IJQueryAjaxAware source)
+		{
 			super(source);
 		}
 
 		@Override
-		protected JQueryEvent newEvent() {
+		protected JQueryEvent newEvent()
+		{
 			return new OpenEvent();
 		}
 	}
 
 	// Event class //
 
-	protected static class OpenEvent extends JQueryEvent {
+	protected static class OpenEvent extends JQueryEvent
+	{
 	}
 }

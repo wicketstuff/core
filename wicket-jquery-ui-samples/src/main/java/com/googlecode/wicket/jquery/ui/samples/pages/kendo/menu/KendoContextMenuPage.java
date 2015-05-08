@@ -24,7 +24,8 @@ public class KendoContextMenuPage extends AbstractMenuPage
 			private static final long serialVersionUID = 1L;
 
 			@Override
-			public void onConfigure(JQueryBehavior behavior) {
+			public void onConfigure(JQueryBehavior behavior)
+			{
 				super.onConfigure(behavior);
 
 				behavior.setOption("target", Options.asString("#menu-target"));
