@@ -58,7 +58,7 @@ public abstract class MenuBehavior extends KendoUIBehavior implements IJQueryAja
      *
      * @param selector the html selector (ie: "#myId")
      */
-    protected MenuBehavior(String selector, String method)
+    MenuBehavior(String selector, String method)
     {
         super(selector, method);
     }
@@ -81,7 +81,7 @@ public abstract class MenuBehavior extends KendoUIBehavior implements IJQueryAja
      * @param selector the html selector (ie: "#myId")
      * @param options the {@link Options}
      */
-    protected MenuBehavior(String selector, String method, Options options)
+    MenuBehavior(String selector, String method, Options options)
     {
         super(selector, method, options);
     }
