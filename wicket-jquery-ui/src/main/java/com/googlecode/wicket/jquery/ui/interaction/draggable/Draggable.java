@@ -38,8 +38,8 @@ public class Draggable<T> extends JQueryGenericContainer<T> implements IDraggabl
 
 	public enum Axis
 	{
-		X("'x'"), // lf
-		Y("'y'");
+		X("x"), // lf
+		Y("y");
 
 		private String axis;
 
@@ -57,9 +57,9 @@ public class Draggable<T> extends JQueryGenericContainer<T> implements IDraggabl
 
 	public enum Containment
 	{
-		Parent("'parent'"), // lf
-		Document("'document'"), // lf
-		Window("'window'");
+		Parent("parent"), // lf
+		Document("document"), // lf
+		Window("window");
 
 		private String containment;
 
@@ -98,8 +98,6 @@ public class Draggable<T> extends JQueryGenericContainer<T> implements IDraggabl
 		super(id, model);
 	}
 
-	// TODO remove initialize everywhere if only instantiate options
-
 	// Properties //
 
 	@Override
@@ -132,7 +130,7 @@ public class Draggable<T> extends JQueryGenericContainer<T> implements IDraggabl
 	 */
 	public Draggable<T> setAxis(Axis axis)
 	{
-		this.options.set("axis", axis);
+		this.options.set("axis", Options.asString(axis));
 		return this;
 	}
 
@@ -150,6 +148,17 @@ public class Draggable<T> extends JQueryGenericContainer<T> implements IDraggabl
 		}
 
 		return this;
+	}
+
+	/**
+	 * Sets the container, specified by a {@link Containment}, on which this component is allowed to move.
+	 * 
+	 * @param containment the {@link Containment} value
+	 * @return the {@link Draggable}
+	 */
+	public Draggable<T> setContainment(Containment containment)
+	{
+		return this.setContainment(containment.toString());
 	}
 
 	/**
@@ -172,18 +181,6 @@ public class Draggable<T> extends JQueryGenericContainer<T> implements IDraggabl
 	public Draggable<T> setContainment(String selector)
 	{
 		this.options.set("containment", Options.asString(selector));
-		return this;
-	}
-
-	/**
-	 * Sets the container, specified by a {@link Containment}, on which this component is allowed to move.
-	 * 
-	 * @param containment the {@link Containment} value
-	 * @return the {@link Draggable}
-	 */
-	public Draggable<T> setContainment(Containment containment)
-	{
-		this.options.set("containment", containment);
 		return this;
 	}
 

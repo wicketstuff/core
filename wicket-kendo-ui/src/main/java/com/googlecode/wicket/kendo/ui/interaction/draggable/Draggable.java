@@ -54,8 +54,6 @@ public class Draggable<T> extends JQueryGenericContainer<T> implements IDraggabl
 		}
 	}
 
-	// TODO remove quote in jquery ui draggable
-
 	private Options options;
 
 	/**

@@ -41,8 +41,6 @@ public abstract class FragmentDialog<T extends Serializable> extends AbstractDia
 	public FragmentDialog(String id, String title)
 	{
 		super(id, title);
-
-		this.initialize();
 	}
 
 	/**
@@ -53,8 +51,6 @@ public abstract class FragmentDialog<T extends Serializable> extends AbstractDia
 	public FragmentDialog(String id, IModel<String> title)
 	{
 		super(id, title);
-
-		this.initialize();
 	}
 
 	/**
@@ -66,8 +62,6 @@ public abstract class FragmentDialog<T extends Serializable> extends AbstractDia
 	public FragmentDialog(String id, String title, Model<T> model)
 	{
 		super(id, title, model);
-
-		this.initialize();
 	}
 
 	/**
@@ -79,8 +73,6 @@ public abstract class FragmentDialog<T extends Serializable> extends AbstractDia
 	public FragmentDialog(String id, IModel<String> title, Model<T> model)
 	{
 		super(id, title, model);
-
-		this.initialize();
 	}
 
 	/**
@@ -92,8 +84,6 @@ public abstract class FragmentDialog<T extends Serializable> extends AbstractDia
 	public FragmentDialog(String id, String title, boolean modal)
 	{
 		super(id, title, modal);
-
-		this.initialize();
 	}
 
 	/**
@@ -105,8 +95,6 @@ public abstract class FragmentDialog<T extends Serializable> extends AbstractDia
 	public FragmentDialog(String id, IModel<String> title, boolean modal)
 	{
 		super(id, title, modal);
-
-		this.initialize();
 	}
 
 	/**
@@ -119,8 +107,6 @@ public abstract class FragmentDialog<T extends Serializable> extends AbstractDia
 	public FragmentDialog(String id, String title, IModel<T> model, boolean modal)
 	{
 		super(id, title, model, modal);
-
-		this.initialize();
 	}
 
 	/**
@@ -133,15 +119,13 @@ public abstract class FragmentDialog<T extends Serializable> extends AbstractDia
 	public FragmentDialog(String id, IModel<String> title, IModel<T> model, boolean modal)
 	{
 		super(id, title, model, modal);
-
-		this.initialize();
 	}
 
-	/**
-	 * Initialize component
-	 */
-	private void initialize()
+	@Override
+	protected void onInitialize()
 	{
+		super.onInitialize();
+
 		this.add(this.newFragment("fragment"));
 	}
 
