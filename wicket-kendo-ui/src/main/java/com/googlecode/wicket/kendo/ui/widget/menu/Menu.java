@@ -118,8 +118,22 @@ public class Menu extends JQueryPanel implements IMenuListener
 		this.add(this.root);
 	}
 
-	public void refresh(AjaxRequestTarget target) {
+	/**
+	 * Destroys the menu widget in the browser and clear up all its resources.
+	 *
+	 * @param target The Ajax request handler
+	 */
+	public void destroy(AjaxRequestTarget target) {
 		target.prependJavaScript(widgetBehavior.widget() + ".destroy()");
+	}
+
+	/**
+	 * Refreshes the menu widget by destroying it and recreating it at in the browser.
+	 *
+	 * @param target The Ajax request handler
+	 */
+	public void refresh(AjaxRequestTarget target) {
+		destroy(target);
 		target.add(this);
 	}
 

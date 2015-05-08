@@ -20,10 +20,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import com.googlecode.wicket.jquery.core.ajax.IJQueryAjaxAware;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 
-import com.googlecode.wicket.jquery.core.JQueryBehavior;
 import com.googlecode.wicket.jquery.core.Options;
+import com.googlecode.wicket.jquery.core.ajax.JQueryAjaxBehavior;
 import com.googlecode.wicket.kendo.ui.widget.menu.item.IMenuItem;
 
 /**
@@ -79,6 +80,19 @@ public class ContextMenu extends Menu
 		super(id, items, options);
 	}
 
+	// Actions //
+
+	protected void onOpen(AjaxRequestTarget target)
+	{
+	}
+
+	// Factories //
+
+	protected JQueryAjaxBehavior newOnOpenJQueryBehavior(IJQueryAjaxAware ajaxAware)
+	{
+		return new ContextMenuBehavior.OnOpenJQueryBehavior(ajaxAware);
+	}
+
 	// IJQueryWidget //
 	@Override
 	public ContextMenuBehavior newWidgetBehavior(String selector)
@@ -93,6 +107,24 @@ public class ContextMenu extends Menu
 				return ContextMenu.this.getMenuItemsMap();
 			}
 
+			@Override
+			protected boolean isOpenEventEnabled()
+			{
+				return ContextMenu.this.isOpenEventEnabled();
+			}
+
+			@Override
+			protected JQueryAjaxBehavior newOnOpenJQueryBehavior(IJQueryAjaxAware ajaxAware)
+			{
+				return ContextMenu.this.newOnOpenJQueryBehavior(ajaxAware);
+			}
+
+			@Override
+			protected void onOpen(AjaxRequestTarget target)
+			{
+				ContextMenu.this.onOpen(target);
+			}
+
 			// Events //
 			@Override
 			public void onClick(AjaxRequestTarget target, IMenuItem item)
@@ -100,5 +132,16 @@ public class ContextMenu extends Menu
 				ContextMenu.this.onClick(target, item);
 			}
 		};
+	}
+
+	/**
+	 * Indicates whether the open event is enabled.<br/>
+	 * If true, the {@link #onOpen(AjaxRequestTarget)} event will be triggered
+	 *
+	 * @return false by default
+	 */
+	protected boolean isOpenEventEnabled()
+	{
+		return false;
 	}
 }
