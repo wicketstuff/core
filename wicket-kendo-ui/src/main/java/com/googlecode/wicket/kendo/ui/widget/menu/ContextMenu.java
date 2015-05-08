@@ -81,7 +81,7 @@ public class ContextMenu extends Menu
 
 	// IJQueryWidget //
 	@Override
-	public JQueryBehavior newWidgetBehavior(String selector)
+	public ContextMenuBehavior newWidgetBehavior(String selector)
 	{
 		return new ContextMenuBehavior(selector, this.options)
         {

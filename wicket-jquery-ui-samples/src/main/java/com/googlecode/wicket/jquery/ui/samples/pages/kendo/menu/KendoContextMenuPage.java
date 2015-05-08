@@ -35,7 +35,7 @@ public class KendoContextMenuPage extends AbstractMenuPage
 			{
 				this.info("Clicked " + item.getTitle().getObject());
 
-				target.add(this);
+				refresh(target);
 				target.add(feedback);
 			}
 		});

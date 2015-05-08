@@ -33,7 +33,6 @@ import org.apache.wicket.model.Model;
 import org.apache.wicket.model.PropertyModel;
 import org.apache.wicket.util.lang.Args;
 
-import com.googlecode.wicket.jquery.core.JQueryBehavior;
 import com.googlecode.wicket.jquery.core.JQueryPanel;
 import com.googlecode.wicket.jquery.core.Options;
 import com.googlecode.wicket.kendo.ui.KendoIcon;
@@ -56,8 +55,9 @@ public class Menu extends JQueryPanel implements IMenuListener
 
 	/** Keep a reference to the {@link MenuItem}{@code s} hash */
 	private Map<String, IMenuItem> map = new HashMap<String, IMenuItem>();
+	private MenuBehavior widgetBehavior;
 
-	/**
+    /**
 	 * Constructor
 	 *
 	 * @param id the markup id
@@ -118,6 +118,11 @@ public class Menu extends JQueryPanel implements IMenuListener
 		this.add(this.root);
 	}
 
+	public void refresh(AjaxRequestTarget target) {
+		target.prependJavaScript(widgetBehavior.widget() + ".destroy()");
+		target.add(this);
+	}
+
 	/**
 	 * Gets the menu-item list
 	 *
@@ -134,7 +139,7 @@ public class Menu extends JQueryPanel implements IMenuListener
 	{
 		super.onInitialize();
 
-		this.add(JQueryWidget.newWidgetBehavior(this, this.root));
+		this.add(widgetBehavior = JQueryWidget.newWidgetBehavior(this, this.root));
 	}
 
 	@Override
@@ -145,7 +150,7 @@ public class Menu extends JQueryPanel implements IMenuListener
 
 	// IJQueryWidget //
 	@Override
-	public JQueryBehavior newWidgetBehavior(String selector)
+	public MenuBehavior newWidgetBehavior(String selector)
 	{
 		return new MenuBehavior(selector, this.options) {
 
@@ -232,7 +237,7 @@ public class Menu extends JQueryPanel implements IMenuListener
 					if (!menuItem.isEnabled())
 					{
 						item.add(AttributeModifier.append("disabled", Model.of("disabled")));
-					}					
+					}
 				}
 
 				private boolean hasSubMenus(IMenuItem item)
