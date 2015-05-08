@@ -4,6 +4,7 @@ import org.apache.wicket.ajax.AjaxRequestTarget;
 
 import com.googlecode.wicket.jquery.core.JQueryBehavior;
 import com.googlecode.wicket.jquery.core.Options;
+import com.googlecode.wicket.kendo.ui.panel.KendoFeedbackPanel;
 import com.googlecode.wicket.kendo.ui.widget.menu.ContextMenu;
 import com.googlecode.wicket.kendo.ui.widget.menu.item.IMenuItem;
 
@@ -13,6 +14,10 @@ public class KendoContextMenuPage extends AbstractMenuPage
 
 	public KendoContextMenuPage()
 	{
+		// FeedbackPanel //
+		final KendoFeedbackPanel feedback = new KendoFeedbackPanel("feedback");
+		this.add(feedback);
+
 		// Context Menu //
 		this.add(new ContextMenu("menu", KendoMenuPage.newMenuItemList()) {
 
