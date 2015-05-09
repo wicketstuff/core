@@ -67,6 +67,6 @@ public class Foundation {
 	}	
 	
 	public static String getFoundationInitScript() {
-		return "$(document).foundation();";
+		return "jQuery(document).foundation();";
 	}
 }
