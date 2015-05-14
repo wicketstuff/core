@@ -179,6 +179,14 @@ public abstract class MessageWindow extends Window<String>
 		this.form.add(this.newButtonPanel("buttons", this.getButtons()));
 	}
 
+	@Override
+	protected void onOpen(AjaxRequestTarget target)
+	{
+		target.add(this.label);
+	}
+
+	// Factories //
+
 	/**
 	 * Factory method for creating the component that will be used as a label in the
 	 * window.<br/>
@@ -192,14 +200,6 @@ public abstract class MessageWindow extends Window<String>
 	{
 		return new Label(id, model).setOutputMarkupId(true);
 	}
-
-	@Override
-	protected void onOpen(AjaxRequestTarget target)
-	{
-		target.add(this.label);
-	}
-
-	// Factories //
 
 	/**
 	 * Gets a new {@link Form}

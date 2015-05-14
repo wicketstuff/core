@@ -147,33 +147,6 @@ public abstract class InputWindow<T> extends Window<T>
 		this.form.add(this.newButtonPanel("buttons", this.getButtons()));
 	}
 
-	/**
-	 * Factory method for creating the form component that will be used as an input.<br/>
-	 * Override this method when you need to use different input type, e.g. NumberTextField or PasswordField.
-	 *
-	 * @param id The component id
-	 * @param model The model with the label text
-	 * @return The label component.
-	 */
-	protected FormComponent<T> newTextField(String id, IModel<T> model)
-	{
-		return new TextField<T>(id, model);
-	}
-
-	/**
-	 * Factory method for creating the component that will be used as a label in the
-	 * window.<br/>
-	 * Override this method when you need to show formatted label.
-	 *
-	 * @param id The component id
-	 * @param model The model with the label text
-	 * @return The label component.
-	 */
-	protected Component newLabel(String id, IModel<String> model)
-	{
-		return new Label(id, model);
-	}
-
 	@Override
 	protected void onOpen(AjaxRequestTarget target)
 	{
@@ -204,6 +177,13 @@ public abstract class InputWindow<T> extends Window<T>
 		}
 	}
 
+	@Override
+	protected void onDetach()
+	{
+		super.onDetach();
+		labelModel.detach();
+	}
+
 	/**
 	 * Triggered when the 'submit' button is clicked, and the validation succeed
 	 *
@@ -222,6 +202,33 @@ public abstract class InputWindow<T> extends Window<T>
 	}
 
 	// Factories //
+
+	/**
+	 * Factory method for creating the form component that will be used as an input.<br/>
+	 * Override this method when you need to use different input type, e.g. NumberTextField or PasswordField.
+	 *
+	 * @param id The component id
+	 * @param model The model with the label text
+	 * @return The label component.
+	 */
+	protected FormComponent<T> newTextField(String id, IModel<T> model)
+	{
+		return new TextField<T>(id, model);
+	}
+
+	/**
+	 * Factory method for creating the component that will be used as a label in the
+	 * window.<br/>
+	 * Override this method when you need to show formatted label.
+	 *
+	 * @param id The component id
+	 * @param model The model with the label text
+	 * @return The label component.
+	 */
+	protected Component newLabel(String id, IModel<String> model)
+	{
+		return new Label(id, model);
+	}
 
 	/**
 	 * Gets a new {@link Form}
