@@ -16,9 +16,11 @@
  */
 package com.googlecode.wicket.kendo.ui.widget.window;
 
+import org.apache.wicket.Component;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.form.Form;
+import org.apache.wicket.markup.html.form.FormComponent;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
 
@@ -41,6 +43,8 @@ public abstract class InputWindow<T> extends Window<T>
 	private final KendoFeedbackPanel feedback;
 
 	private final Form<?> form;
+
+	private IModel<String> labelModel;
 
 	/**
 	 * Constructor
@@ -91,6 +95,8 @@ public abstract class InputWindow<T> extends Window<T>
 	{
 		super(id, title, model, WindowButtons.OK_CANCEL);
 
+		this.labelModel = label;
+
 		// form //
 		this.form = InputWindow.newForm("form");
 		this.add(this.form);
@@ -98,9 +104,6 @@ public abstract class InputWindow<T> extends Window<T>
 		// feedback //
 		this.feedback = new KendoFeedbackPanel("feedback");
 		this.form.add(this.feedback);
-
-		// label //
-		this.form.add(new Label("label", label));
 	}
 
 	// Properties //
@@ -134,11 +137,41 @@ public abstract class InputWindow<T> extends Window<T>
 	{
 		super.onInitialize();
 
+		// label //
+		this.form.add(newLabel("label", labelModel));
+
 		// field //
-		this.form.add(new TextField<T>("input", this.getModel()).setRequired(this.isRequired()));
+		this.form.add(newTextField("input", this.getModel()).setRequired(this.isRequired()));
 
 		// buttons //
 		this.form.add(this.newButtonPanel("buttons", this.getButtons()));
+	}
+
+	/**
+	 * Factory method for creating the form component that will be used as an input.<br/>
+	 * Override this method when you need to use different input type, e.g. NumberTextField or PasswordField.
+	 *
+	 * @param id The component id
+	 * @param model The model with the label text
+	 * @return The label component.
+	 */
+	protected FormComponent<T> newTextField(String id, IModel<T> model)
+	{
+		return new TextField<T>(id, model);
+	}
+
+	/**
+	 * Factory method for creating the component that will be used as a label in the
+	 * window.<br/>
+	 * Override this method when you need to show formatted label.
+	 *
+	 * @param id The component id
+	 * @param model The model with the label text
+	 * @return The label component.
+	 */
+	protected Component newLabel(String id, IModel<String> model)
+	{
+		return new Label(id, model);
 	}
 
 	@Override
