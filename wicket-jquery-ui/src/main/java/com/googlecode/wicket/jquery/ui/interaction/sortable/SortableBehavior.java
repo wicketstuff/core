@@ -134,7 +134,7 @@ public abstract class SortableBehavior<T> extends JQueryUIBehavior implements IJ
 		if (event instanceof SortableEvent)
 		{
 			SortableEvent ev = (SortableEvent) event;
-			int hash = ev.getHash();
+			String hash = ev.getHash();
 			int index = ev.getIndex();
 
 			if (event instanceof UpdateEvent)
@@ -143,7 +143,7 @@ public abstract class SortableBehavior<T> extends JQueryUIBehavior implements IJ
 
 				if (list != null)
 				{
-					this.onUpdate(target, ListUtils.fromHash(hash, list), index);
+					this.onUpdate(target, findItem(hash, list), index);
 				}
 			}
 
@@ -153,7 +153,7 @@ public abstract class SortableBehavior<T> extends JQueryUIBehavior implements IJ
 
 				if (!list.isEmpty())
 				{
-					this.onReceive(target, ListUtils.fromHash(hash, list), index);
+					this.onReceive(target, findItem(hash, list), index);
 				}
 			}
 
@@ -163,10 +163,15 @@ public abstract class SortableBehavior<T> extends JQueryUIBehavior implements IJ
 
 				if (list != null)
 				{
-					this.onRemove(target, ListUtils.fromHash(hash, list));
+					this.onRemove(target, findItem(hash, list));
 				}
 			}
 		}
+	}
+
+	protected T findItem(String hash, List<T> list)
+	{
+		return ListUtils.fromHash(Integer.parseInt(hash, 10), list);
 	}
 
 	// Factories //
@@ -253,12 +258,12 @@ public abstract class SortableBehavior<T> extends JQueryUIBehavior implements IJ
 	 */
 	protected static class SortableEvent extends JQueryEvent
 	{
-		private final int hash;
+		private final String hash;
 		private final int index;
 
 		public SortableEvent()
 		{
-			this.hash = RequestCycleUtils.getQueryParameterValue("hash").toInt(0);
+			this.hash = RequestCycleUtils.getQueryParameterValue("hash").toString();
 			this.index = RequestCycleUtils.getQueryParameterValue("index").toInt(-1); // remove-behavior will default to -1
 		}
 
@@ -267,7 +272,7 @@ public abstract class SortableBehavior<T> extends JQueryUIBehavior implements IJ
 		 *
 		 * @return the hash
 		 */
-		public int getHash()
+		public String getHash()
 		{
 			return this.hash;
 		}

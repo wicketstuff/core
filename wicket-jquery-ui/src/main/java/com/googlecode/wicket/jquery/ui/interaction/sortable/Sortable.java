@@ -269,7 +269,18 @@ public abstract class Sortable<T> extends JQueryGenericContainer<List<T>> implem
 			{
 				Sortable.this.onRemove(target, item);
 			}
+
+			@Override
+			protected T findItem(String hash, List<T> list)
+			{
+				return Sortable.this.findItem(hash, list);
+			}
 		};
+	}
+
+	protected T findItem(String hash, List<T> list)
+	{
+		return ListUtils.fromHash(Integer.parseInt(hash, 10), list);
 	}
 
 	/**
