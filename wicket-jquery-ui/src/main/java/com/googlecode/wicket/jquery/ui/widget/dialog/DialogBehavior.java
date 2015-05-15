@@ -41,8 +41,8 @@ public abstract class DialogBehavior extends JQueryUIBehavior implements IJQuery
 	private static final long serialVersionUID = 1L;
 	public static final String METHOD = "dialog";
 
-	private JQueryAjaxBehavior onDefaultClose = null;
-	private JQueryAjaxBehavior onEscapeClose = null;
+	private JQueryAjaxBehavior onDefaultCloseAjaxBehavior = null;
+	private JQueryAjaxBehavior onEscapeCloseAjaxBehavior = null;
 
 	/**
 	 * Constructor
@@ -86,12 +86,14 @@ public abstract class DialogBehavior extends JQueryUIBehavior implements IJQuery
 
 		if (this.isDefaultCloseEventEnabled())
 		{
-			component.add(this.onDefaultClose = this.newDefaultCloseBehavior());
+			this.onDefaultCloseAjaxBehavior = this.newOnDefaultCloseAjaxBehavior(this);
+			component.add(this.onDefaultCloseAjaxBehavior);
 		}
 
 		if (this.isEscapeCloseEventEnabled())
 		{
-			component.add(this.onEscapeClose = this.newEscapeCloseBehavior());
+			this.onEscapeCloseAjaxBehavior = this.newOnEscapeCloseAjaxBehavior(this);
+			component.add(this.onEscapeCloseAjaxBehavior);
 		}
 	}
 
@@ -121,14 +123,14 @@ public abstract class DialogBehavior extends JQueryUIBehavior implements IJQuery
 	{
 		super.onConfigure(component);
 
-		if (this.onDefaultClose != null)
+		if (this.onDefaultCloseAjaxBehavior != null)
 		{
-			this.setOption("close", this.onDefaultClose.getCallbackFunction());
+			this.setOption("close", this.onDefaultCloseAjaxBehavior.getCallbackFunction());
 		}
 
-		if (this.onEscapeClose != null)
+		if (this.onEscapeCloseAjaxBehavior != null)
 		{
-			this.setOption("beforeClose", this.onEscapeClose.getCallbackFunction());
+			this.setOption("beforeClose", this.onEscapeCloseAjaxBehavior.getCallbackFunction());
 		}
 
 		// buttons events //
@@ -195,11 +197,12 @@ public abstract class DialogBehavior extends JQueryUIBehavior implements IJQuery
 	/**
 	 * Gets the ajax behavior that will be triggered when the user clicks on the X-icon
 	 *
+	 * @param source the {@link IJQueryAjaxAware}
 	 * @return the {@link JQueryAjaxBehavior}
 	 */
-	protected JQueryAjaxBehavior newDefaultCloseBehavior()
+	protected JQueryAjaxBehavior newOnDefaultCloseAjaxBehavior(IJQueryAjaxAware source)
 	{
-		return new JQueryAjaxBehavior(this) {
+		return new JQueryAjaxBehavior(source) {
 
 			private static final long serialVersionUID = 1L;
 
@@ -220,11 +223,12 @@ public abstract class DialogBehavior extends JQueryUIBehavior implements IJQuery
 	/**
 	 * Gets the ajax behavior that will be triggered when the user press the escape key
 	 *
+	 * @param source the {@link IJQueryAjaxAware}
 	 * @return the {@link JQueryAjaxBehavior}
 	 */
-	protected JQueryAjaxBehavior newEscapeCloseBehavior()
+	protected JQueryAjaxBehavior newOnEscapeCloseAjaxBehavior(IJQueryAjaxAware source)
 	{
-		return new JQueryAjaxBehavior(this) {
+		return new JQueryAjaxBehavior(source) {
 
 			private static final long serialVersionUID = 1L;
 

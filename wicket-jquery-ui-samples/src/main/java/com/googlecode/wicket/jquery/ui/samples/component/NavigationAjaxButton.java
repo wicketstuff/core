@@ -17,9 +17,13 @@ public class NavigationAjaxButton extends Panel
 	{
 		super(id);
 
+		this.backwardButton = this.newBackwardButton();
+		this.add(this.backwardButton);
+
+		this.forwardButton = this.newForwardButton();
+		this.add(this.forwardButton);
+
 		this.setOutputMarkupId(true);
-		this.add(this.backwardButton = this.newBackwardButton());
-		this.add(this.forwardButton = this.newForwardButton());
 	}
 
 	// Properties //
@@ -53,7 +57,6 @@ public class NavigationAjaxButton extends Panel
 			}
 		};
 	}
-
 
 	private final AjaxButton newForwardButton()
 	{

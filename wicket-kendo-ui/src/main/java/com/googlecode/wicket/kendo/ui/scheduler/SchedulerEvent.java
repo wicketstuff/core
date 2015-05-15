@@ -53,8 +53,8 @@ public class SchedulerEvent implements Serializable
 	private String title;
 	private String description;
 
-	private Date start;
-	private Date end;
+	private long start;
+	private long end;
 	private boolean allDay;
 
 	private String recurrenceId;
@@ -83,9 +83,9 @@ public class SchedulerEvent implements Serializable
 	 * @param title - the event title
 	 * @param start - the start date
 	 */
-	public SchedulerEvent(int id, String title, long start)
+	public SchedulerEvent(int id, String title, Date start)
 	{
-		this(id, title, new Date(start));
+		this(id, title, start.getTime());
 	}
 
 	/**
@@ -96,7 +96,8 @@ public class SchedulerEvent implements Serializable
 	 * @param title - the event title
 	 * @param start - the start date
 	 */
-	public SchedulerEvent(int id, String title, Date start)
+	public SchedulerEvent(int id, String title, long start)
+
 	{
 		this(id, title, start, DateUtils.addHours(start, DEFAULT_RANGE));
 	}
@@ -109,9 +110,9 @@ public class SchedulerEvent implements Serializable
 	 * @param start - the start date
 	 * @param end - the end date
 	 */
-	public SchedulerEvent(int id, String title, long start, long end)
+	public SchedulerEvent(int id, String title, Date start, Date end)
 	{
-		this(id, title, new Date(start), new Date(end));
+		this(id, title, start.getTime(), end.getTime());
 	}
 
 	/**
@@ -122,7 +123,8 @@ public class SchedulerEvent implements Serializable
 	 * @param start - the start date
 	 * @param end - the end date
 	 */
-	public SchedulerEvent(int id, String title, Date start, Date end)
+	public SchedulerEvent(int id, String title, long start, long end)
+
 	{
 		this.id = id;
 		this.title = title;
@@ -206,7 +208,7 @@ public class SchedulerEvent implements Serializable
 	 */
 	public Date getStart()
 	{
-		return this.start;
+		return new Date(this.start);
 	}
 
 	/**
@@ -216,7 +218,7 @@ public class SchedulerEvent implements Serializable
 	 */
 	public void setStart(Date date)
 	{
-		this.start = date;
+		this.setStart(date.getTime());
 	}
 
 	/**
@@ -226,7 +228,7 @@ public class SchedulerEvent implements Serializable
 	 */
 	public void setStart(long date)
 	{
-		this.start = new Date(date);
+		this.start = date;
 	}
 
 	/**
@@ -236,7 +238,7 @@ public class SchedulerEvent implements Serializable
 	 */
 	public Date getEnd()
 	{
-		return this.end;
+		return new Date(this.end);
 	}
 
 	/**
@@ -246,7 +248,7 @@ public class SchedulerEvent implements Serializable
 	 */
 	public void setEnd(Date date)
 	{
-		this.end = date;
+		this.setEnd(date.getTime());
 	}
 
 	/**
@@ -256,7 +258,7 @@ public class SchedulerEvent implements Serializable
 	 */
 	public void setEnd(long date)
 	{
-		this.end = new Date(date);
+		this.end = date;
 	}
 
 	/**

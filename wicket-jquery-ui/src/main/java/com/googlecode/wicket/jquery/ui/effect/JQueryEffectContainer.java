@@ -39,6 +39,7 @@ public class JQueryEffectContainer extends WebMarkupContainer implements IEffect
 
 	/**
 	 * Constructor
+	 * 
 	 * @param id the markup id
 	 */
 	public JQueryEffectContainer(String id)
@@ -64,6 +65,7 @@ public class JQueryEffectContainer extends WebMarkupContainer implements IEffect
 
 	/**
 	 * Plays the specified effect.
+	 * 
 	 * @param target the {@link AjaxRequestTarget}
 	 * @param effect the effect to be played
 	 */
@@ -74,6 +76,7 @@ public class JQueryEffectContainer extends WebMarkupContainer implements IEffect
 
 	/**
 	 * Shows the container by playing the 'fadeIn' effect.
+	 * 
 	 * @param target the {@link AjaxRequestTarget}
 	 */
 	public void show(AjaxRequestTarget target)
@@ -84,6 +87,7 @@ public class JQueryEffectContainer extends WebMarkupContainer implements IEffect
 
 	/**
 	 * Hides the container by playing the 'fadeOut' effect.
+	 * 
 	 * @param target the {@link AjaxRequestTarget}
 	 */
 	public void hide(AjaxRequestTarget target)
@@ -92,19 +96,19 @@ public class JQueryEffectContainer extends WebMarkupContainer implements IEffect
 		target.appendJavaScript(behavior.toString());
 	}
 
-
 	// Events //
 	@Override
 	protected void onInitialize()
 	{
 		super.onInitialize();
 
-		this.add(this.effectBehavior = this.newEffectBehavior(JQueryWidget.getSelector(this))); //cannot be in ctor as the markupId may be set manually afterward
+		// cannot be in ctor as the markupId may be set manually afterward
+		this.effectBehavior = this.newEffectBehavior(JQueryWidget.getSelector(this));
+		this.add(this.effectBehavior);
 	}
 
 	/**
-	 * Called immediately after the onConfigure method in a behavior. Since this is before the rendering
-	 * cycle has begun, the behavior can modify the configuration of the component (i.e. {@link Options})
+	 * Called immediately after the onConfigure method in a behavior. Since this is before the rendering cycle has begun, the behavior can modify the configuration of the component (i.e. {@link Options})
 	 *
 	 * @param behavior the {@link JQueryBehavior}
 	 */
@@ -119,10 +123,10 @@ public class JQueryEffectContainer extends WebMarkupContainer implements IEffect
 		// noop
 	}
 
-
 	// Factories //
 	/**
 	 * Gets a new {@link JQueryEffectBehavior}
+	 * 
 	 * @param selector
 	 * @return the widget behavior
 	 */

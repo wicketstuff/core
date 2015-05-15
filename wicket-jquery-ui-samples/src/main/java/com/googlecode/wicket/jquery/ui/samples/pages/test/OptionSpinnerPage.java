@@ -100,7 +100,6 @@ public class OptionSpinnerPage extends SamplePage
 	{
 		private static final long serialVersionUID = 1L;
 		static final String CULTURE = "fr-FR"; //default culture
-//		static final String CULTURE = "en-US"; //default culture
 
 		public CultureSpinner(String id, IModel<Double> model)
 		{
@@ -119,27 +118,6 @@ public class OptionSpinnerPage extends SamplePage
 			behavior.add(new JavaScriptResourceReference(SampleApplication.class, "globalize.culture.de-DE.js"));
 			behavior.add(new JavaScriptResourceReference(SampleApplication.class, "globalize.culture.fr-FR.js"));
 		}
-
-//		@Override
-//		public <C> IConverter<C> getConverter(Class<C> type)
-//		{
-//			if (Double.class.isAssignableFrom(type))
-//			{
-//				return (IConverter<C>) new CurrencyConverter<Double>(this) {
-//
-//					private static final long serialVersionUID = 1L;
-//
-//					@Override
-//					protected Class<Double> getTargetType()
-//					{
-//						return Double.class;
-//					}
-//
-//				};
-//			}
-//
-//			return super.getConverter(type);
-//		}
 	}
 
 	class CultureDropDown extends AjaxDropDownList<String>

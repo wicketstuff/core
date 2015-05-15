@@ -54,12 +54,12 @@ public abstract class SchedulerBehavior extends KendoUIBehavior implements IJQue
 
 	private final SchedulerDataSource dataSource;
 
-	private JQueryAjaxBehavior onEditBehavior = null;
-	private JQueryAjaxBehavior onNavigateBehavior;
+	private JQueryAjaxBehavior onEditAjaxBehavior = null;
+	private JQueryAjaxBehavior onNavigateAjaxBehavior;
 
-	private JQueryAjaxBehavior onCreateBehavior;
-	private JQueryAjaxBehavior onUpdateBehavior;
-	private JQueryAjaxBehavior onDeleteBehavior;
+	private JQueryAjaxBehavior onCreateAjaxBehavior;
+	private JQueryAjaxBehavior onUpdateAjaxBehavior;
+	private JQueryAjaxBehavior onDeleteAjaxBehavior;
 
 	/**
 	 * Constructor
@@ -95,14 +95,21 @@ public abstract class SchedulerBehavior extends KendoUIBehavior implements IJQue
 		// events //
 		if (this.isEditEnabled())
 		{
-			component.add(this.onEditBehavior = this.newOnEditBehavior());
+			this.onEditAjaxBehavior = this.newOnEditAjaxBehavior(this);
+			component.add(this.onEditAjaxBehavior);
 		}
 
-		component.add(this.onNavigateBehavior = this.newOnNavigateBehavior());
+		this.onNavigateAjaxBehavior = this.newOnNavigateAjaxBehavior(this);
+		component.add(this.onNavigateAjaxBehavior);
 
-		component.add(this.onCreateBehavior = this.newOnCreateBehavior());
-		component.add(this.onUpdateBehavior = this.newOnUpdateBehavior());
-		component.add(this.onDeleteBehavior = this.newOnDeleteBehavior());
+		this.onCreateAjaxBehavior = this.newOnCreateAjaxBehavior(this);
+		component.add(this.onCreateAjaxBehavior);
+
+		this.onUpdateAjaxBehavior = this.newOnUpdateAjaxBehavior(this);
+		component.add(this.onUpdateAjaxBehavior);
+
+		this.onDeleteAjaxBehavior = this.newOnDeleteAjaxBehavior(this);
+		component.add(this.onDeleteAjaxBehavior);
 	}
 
 	@Override
@@ -168,20 +175,20 @@ public abstract class SchedulerBehavior extends KendoUIBehavior implements IJQue
 		this.setOption("autoBind", true);
 
 		// events //
-		if (this.onEditBehavior != null)
+		if (this.onEditAjaxBehavior != null)
 		{
-			this.setOption("edit", this.onEditBehavior.getCallbackFunction());
+			this.setOption("edit", this.onEditAjaxBehavior.getCallbackFunction());
 		}
 
-		this.setOption("navigate", this.onNavigateBehavior.getCallbackFunction());
+		this.setOption("navigate", this.onNavigateAjaxBehavior.getCallbackFunction());
 
 		// data-source //
 		this.setOption("dataSource", this.dataSource.getName());
 
 		this.dataSource.setTransportRead(this.getReadCallbackFunction());
-		this.dataSource.setTransportCreate(this.onCreateBehavior.getCallbackFunction());
-		this.dataSource.setTransportUpdate(this.onUpdateBehavior.getCallbackFunction());
-		this.dataSource.setTransportDelete(this.onDeleteBehavior.getCallbackFunction());
+		this.dataSource.setTransportCreate(this.onCreateAjaxBehavior.getCallbackFunction());
+		this.dataSource.setTransportUpdate(this.onUpdateAjaxBehavior.getCallbackFunction());
+		this.dataSource.setTransportDelete(this.onDeleteAjaxBehavior.getCallbackFunction());
 
 		// schema //
 		// this.setOption("schema", new Options("timezone", Options.asString("Etc/UTC")));
@@ -229,11 +236,12 @@ public abstract class SchedulerBehavior extends KendoUIBehavior implements IJQue
 	/**
 	 * Gets the ajax behavior that will be triggered when when an event is edited
 	 *
+	 * @param source the {@link IJQueryAjaxAware}
 	 * @return the {@link JQueryAjaxBehavior}
 	 */
-	protected JQueryAjaxBehavior newOnEditBehavior()
+	protected JQueryAjaxBehavior newOnEditAjaxBehavior(IJQueryAjaxAware source)
 	{
-		return new JQueryAjaxBehavior(this) {
+		return new JQueryAjaxBehavior(source) {
 
 			private static final long serialVersionUID = 1L;
 
@@ -287,11 +295,12 @@ public abstract class SchedulerBehavior extends KendoUIBehavior implements IJQue
 	/**
 	 * Gets the ajax behavior that will be triggered when is navigating in the scheduler
 	 *
+	 * @param source the {@link IJQueryAjaxAware}
 	 * @return the {@link JQueryAjaxBehavior}
 	 */
-	protected JQueryAjaxBehavior newOnNavigateBehavior()
+	protected JQueryAjaxBehavior newOnNavigateAjaxBehavior(IJQueryAjaxAware source)
 	{
-		return new JQueryAjaxBehavior(this) {
+		return new JQueryAjaxBehavior(source) {
 
 			private static final long serialVersionUID = 1L;
 
@@ -312,11 +321,12 @@ public abstract class SchedulerBehavior extends KendoUIBehavior implements IJQue
 	/**
 	 * Gets the data-source's ajax behavior that will be triggered when an event is created
 	 *
+	 * @param source the {@link IJQueryAjaxAware}
 	 * @return the {@link JQueryAjaxBehavior}
 	 */
-	protected JQueryAjaxBehavior newOnCreateBehavior()
+	protected JQueryAjaxBehavior newOnCreateAjaxBehavior(IJQueryAjaxAware source)
 	{
-		return new DataSourceAjaxBehavior(this) {
+		return new DataSourceAjaxBehavior(source) {
 
 			private static final long serialVersionUID = 1L;
 
@@ -331,11 +341,12 @@ public abstract class SchedulerBehavior extends KendoUIBehavior implements IJQue
 	/**
 	 * Gets the data-source's ajax behavior that will be triggered when an event is updated
 	 *
+	 * @param source the {@link IJQueryAjaxAware}
 	 * @return the {@link JQueryAjaxBehavior}
 	 */
-	protected JQueryAjaxBehavior newOnUpdateBehavior()
+	protected JQueryAjaxBehavior newOnUpdateAjaxBehavior(IJQueryAjaxAware source)
 	{
-		return new DataSourceAjaxBehavior(this) {
+		return new DataSourceAjaxBehavior(source) {
 
 			private static final long serialVersionUID = 1L;
 
@@ -350,11 +361,12 @@ public abstract class SchedulerBehavior extends KendoUIBehavior implements IJQue
 	/**
 	 * Gets the data-source's ajax behavior that will be triggered when an event is deleted
 	 *
+	 * @param source the {@link IJQueryAjaxAware}
 	 * @return the {@link JQueryAjaxBehavior}
 	 */
-	protected JQueryAjaxBehavior newOnDeleteBehavior()
+	protected JQueryAjaxBehavior newOnDeleteAjaxBehavior(IJQueryAjaxAware source)
 	{
-		return new DataSourceAjaxBehavior(this) {
+		return new DataSourceAjaxBehavior(source) {
 
 			private static final long serialVersionUID = 1L;
 

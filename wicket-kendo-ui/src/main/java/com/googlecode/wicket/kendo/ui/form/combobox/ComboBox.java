@@ -190,7 +190,8 @@ public class ComboBox<T> extends TextField<String> implements IJQueryWidget
 
 		if (this.template != null)
 		{
-			this.add(this.templateBehavior = new KendoTemplateBehavior(this.template));
+			this.templateBehavior = new KendoTemplateBehavior(this.template);
+			this.add(this.templateBehavior);
 		}
 	}
 

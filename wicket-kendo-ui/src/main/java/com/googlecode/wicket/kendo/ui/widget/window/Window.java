@@ -37,6 +37,7 @@ public abstract class Window<T> extends AbstractWindow<T>
 	private static final long serialVersionUID = 1L;
 
 	/* Default Button names */
+	// TODO rename to BTN_Xxx ?
 	public static final String OK = "OK";
 	public static final String NO = "NO";
 	public static final String YES = "YES";

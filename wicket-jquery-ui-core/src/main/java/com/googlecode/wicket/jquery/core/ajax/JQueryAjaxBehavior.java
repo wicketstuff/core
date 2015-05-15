@@ -76,7 +76,7 @@ import com.googlecode.wicket.jquery.core.JQueryEvent;
  * 	static abstract class MyJQueryBehavior extends JQueryBehavior implements IJQueryAjaxAware, IMyJQueryListener
  * 	{
  * 		private static final long serialVersionUID = 1L;
- * 		private JQueryAjaxBehavior onMyEventBehavior;
+ * 		private JQueryAjaxBehavior onMyEventAjaxBehavior;
  * 
  * 		public MyJQueryBehavior(String selector, String method)
  * 		{
@@ -87,7 +87,7 @@ import com.googlecode.wicket.jquery.core.JQueryEvent;
  * 		{
  * 			super.bind(component);
  * 
- * 			component.add(this.onMyEventBehavior = this.newJQueryAjaxBehavior());
+ * 			component.add(this.onMyEventAjaxBehavior = this.newJQueryAjaxBehavior(this));
  * 		}
  * 
  * 		// Events //
@@ -95,7 +95,7 @@ import com.googlecode.wicket.jquery.core.JQueryEvent;
  * 		{
  * 			super.onConfigure(component);
  * 
- * 			this.setOption(&quot;jqueryevent&quot;, this.onMyEventBehavior.getCallbackFunction());
+ * 			this.setOption(&quot;jqueryevent&quot;, this.onMyEventAjaxBehavior.getCallbackFunction());
  * 		}
  * 
  * 		public void onAjax(AjaxRequestTarget target, JQueryEvent event)
@@ -107,9 +107,9 @@ import com.googlecode.wicket.jquery.core.JQueryEvent;
  * 		}
  * 
  * 		// Factory //
- * 		protected JQueryAjaxBehavior newJQueryAjaxBehavior()
+ * 		protected JQueryAjaxBehavior newJQueryAjaxBehavior(IJQueryAjaxAware source)
  * 		{
- * 			return new JQueryAjaxBehavior(this) {
+ * 			return new JQueryAjaxBehavior(source) {
  * 
  * 				private static final long serialVersionUID = 1L;
  * 

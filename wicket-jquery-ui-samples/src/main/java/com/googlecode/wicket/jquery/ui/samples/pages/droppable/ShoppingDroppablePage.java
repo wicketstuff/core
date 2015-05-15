@@ -17,6 +17,7 @@ import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.PropertyModel;
 import org.apache.wicket.model.util.ListModel;
 import org.apache.wicket.util.io.IClusterable;
+import org.apache.wicket.util.string.Strings;
 
 import com.googlecode.wicket.jquery.ui.form.button.AjaxButton;
 import com.googlecode.wicket.jquery.ui.interaction.draggable.Draggable;
@@ -28,9 +29,9 @@ public class ShoppingDroppablePage extends AbstractDroppablePage
 
 	private static List<Book> newBookList()
 	{
-		return Arrays.asList(new Book("Wicket In Action", 25.64f, "book1.png"),
-				new Book("Pro Wicket", 31.59f, "book2.png"),
-				new Book("Wicket (German)", 29.21f, "book3.png"),
+		return Arrays.asList(new Book("Wicket In Action", 25.64f, "book1.png"), // lf
+				new Book("Pro Wicket", 31.59f, "book2.png"), // lf
+				new Book("Wicket (German)", 29.21f, "book3.png"), // lf
 				new Book("Wicket (Japanese)", 30.22f, "book4.png"));
 	}
 
@@ -194,6 +195,23 @@ public class ShoppingDroppablePage extends AbstractDroppablePage
 		public int compareTo(Book book)
 		{
 			return this.label.compareTo(book.label);
+		}
+
+		@Override
+		public boolean equals(Object object)
+		{
+			if (object instanceof Book)
+			{
+				return Strings.isEqual(this.label, ((Book) object).label);
+			}
+
+			return super.equals(object);
+		}
+
+		@Override
+		public int hashCode()
+		{
+			return this.label.hashCode();
 		}
 	}
 }

@@ -32,16 +32,14 @@ public abstract class SchedulerModel extends LoadableDetachableModel<List<Schedu
 {
 	private static final long serialVersionUID = 1L;
 
-	private Date start;
-	private Date end;
+	private long start;
+	private long end;
 
 	/**
 	 * Constructor
 	 */
 	public SchedulerModel()
 	{
-		this.start = null;
-		this.end = null;
 	}
 
 	/**
@@ -51,7 +49,7 @@ public abstract class SchedulerModel extends LoadableDetachableModel<List<Schedu
 	 */
 	public Date getStart()
 	{
-		return this.start;
+		return new Date(this.start);
 	}
 
 	/**
@@ -60,6 +58,16 @@ public abstract class SchedulerModel extends LoadableDetachableModel<List<Schedu
 	 * @param date the start date
 	 */
 	public void setStart(Date date)
+	{
+		this.setStart(date.getTime());
+	}
+
+	/**
+	 * Sets the start date.
+	 *
+	 * @param date the start date
+	 */
+	public void setStart(long date)
 	{
 		this.start = date;
 	}
@@ -71,7 +79,7 @@ public abstract class SchedulerModel extends LoadableDetachableModel<List<Schedu
 	 */
 	public Date getEnd()
 	{
-		return this.end;
+		return new Date(this.end);
 	}
 
 	/**
@@ -80,6 +88,16 @@ public abstract class SchedulerModel extends LoadableDetachableModel<List<Schedu
 	 * @param date the start date
 	 */
 	public void setEnd(Date date)
+	{
+		this.setEnd(date.getTime());
+	}
+
+	/**
+	 * Gets the end date.
+	 *
+	 * @param date the start date
+	 */
+	public void setEnd(long date)
 	{
 		this.end = date;
 	}

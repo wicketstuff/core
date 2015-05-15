@@ -23,12 +23,13 @@ import org.apache.wicket.markup.html.form.FormComponent;
 import com.googlecode.wicket.jquery.core.JQueryEvent;
 import com.googlecode.wicket.jquery.core.ajax.IJQueryAjaxAware;
 import com.googlecode.wicket.jquery.core.ajax.JQueryAjaxPostBehavior;
+import com.googlecode.wicket.jquery.core.utils.RequestCycleUtils;
 
 /**
  * Provides a new {@link JQueryAjaxPostBehavior} that is designed to be called on 'change' jQuery event<br/>
  * It will broadcast a {@link ChangeEvent} (by default)
  */
-public class JQueryAjaxChangeBehavior extends JQueryAjaxPostBehavior
+public class OnChangeAjaxBehavior extends JQueryAjaxPostBehavior
 {
 	private static final long serialVersionUID = 1L;
 
@@ -38,7 +39,7 @@ public class JQueryAjaxChangeBehavior extends JQueryAjaxPostBehavior
 	 * @param source the {@link Behavior} that will broadcast the event.
 	 * @param components the form components to post
 	 */
-	public JQueryAjaxChangeBehavior(IJQueryAjaxAware source, FormComponent<?>... components)
+	public OnChangeAjaxBehavior(final IJQueryAjaxAware source, final FormComponent<?>... components)
 	{
 		super(source, components);
 	}
@@ -46,10 +47,11 @@ public class JQueryAjaxChangeBehavior extends JQueryAjaxPostBehavior
 	@Override
 	protected CallbackParameter[] getCallbackParameters()
 	{
-		return new CallbackParameter[] { CallbackParameter.context("e") };
+		// function() { ... }
+		return new CallbackParameter[] { // lf
+				CallbackParameter.context("e"), // lf
+				CallbackParameter.resolved("value", "this.value()") };
 	}
-
-	// Factories //
 
 	@Override
 	protected JQueryEvent newEvent()
@@ -57,12 +59,23 @@ public class JQueryAjaxChangeBehavior extends JQueryAjaxPostBehavior
 		return new ChangeEvent();
 	}
 
-	// Event Object //
+	// Event classes //
 
 	/**
-	 * Provides an event object that will be broadcasted by the {@link JQueryAjaxChangeBehavior}
+	 * Provides an event object that will be broadcasted by the {@link JQueryAjaxPostBehavior} select callback
 	 */
 	public static class ChangeEvent extends JQueryEvent
 	{
+		private final String value;
+
+		public ChangeEvent()
+		{
+			this.value = RequestCycleUtils.getPostParameterValue("value").toString();
+		}
+
+		public String getValue()
+		{
+			return this.value;
+		}
 	}
 }

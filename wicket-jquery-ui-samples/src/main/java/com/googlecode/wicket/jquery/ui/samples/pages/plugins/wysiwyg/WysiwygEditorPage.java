@@ -17,6 +17,7 @@ import com.googlecode.wicket.jquery.ui.samples.SamplePage;
 public class WysiwygEditorPage extends SamplePage
 {
 	private static final long serialVersionUID = 1L;
+
 	@SuppressWarnings("unused")
 	private String text;
 
@@ -42,13 +43,13 @@ public class WysiwygEditorPage extends SamplePage
 			private static final long serialVersionUID = 1L;
 
 			@Override
-			protected void onSubmit(AjaxRequestTarget target, Form<?> _form)
+			protected void onSubmit(AjaxRequestTarget target, Form<?> unused)
 			{
 				String html = editor.getModelObject();
 
 				if (html != null)
 				{
-					_form.info(html);
+					form.info(html);
 				}
 
 				target.add(feedback);

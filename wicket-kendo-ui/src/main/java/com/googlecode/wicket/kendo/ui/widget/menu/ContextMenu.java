@@ -79,7 +79,7 @@ public class ContextMenu extends Menu implements IContextMenuListener
 	{
 		super(id, items, options);
 	}
-	
+
 	// Properties //
 
 	@Override
@@ -101,9 +101,9 @@ public class ContextMenu extends Menu implements IContextMenuListener
 	/**
 	 * Gets a new {@link JQueryAjaxBehavior} that acts as the 'open' javascript callback
 	 *
+	 * @param source the {@link IJQueryAjaxAware}
 	 * @return the {@link JQueryAjaxBehavior}
 	 */
-	// TODO: generalize this? 
 	protected JQueryAjaxBehavior newOnOpenAjaxBehavior(IJQueryAjaxAware source)
 	{
 		return new ContextMenuBehavior.OnOpenAjaxBehavior(source);

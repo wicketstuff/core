@@ -44,7 +44,6 @@ import com.googlecode.wicket.jquery.core.utils.DateUtils;
 public class RangeDatePickerTextField extends FormComponentPanel<DateRange> implements IValueChangedListener
 {
 	private static final long serialVersionUID = 1L;
-	private static final String NULL = "?";
 	private static final String SEPARATOR = " - ";
 
 	private final Options options;
@@ -115,16 +114,6 @@ public class RangeDatePickerTextField extends FormComponentPanel<DateRange> impl
 	protected String getSeparator()
 	{
 		return SEPARATOR;
-	}
-
-	/**
-	 * Gets the text to be displayed in the {@link TextField}, in place of a date which is null.
-	 *
-	 * @return the null representation. Default to {@link #NULL}
-	 */
-	protected String getNullString()
-	{
-		return NULL;
 	}
 
 	// Events //
@@ -248,10 +237,8 @@ public class RangeDatePickerTextField extends FormComponentPanel<DateRange> impl
 			public String convertToString(DateRange value, Locale locale)
 			{
 				DateFormat df = RangeDatePickerTextField.this.newDateFormat(locale);
-				Date start = value.getStart();
-				Date end = value.getEnd();
 
-				return String.format("%s%s%s", start != null ? df.format(start) : getNullString(), RangeDatePickerTextField.this.getSeparator(), end != null ? df.format(end) : getNullString());
+				return String.format("%s%s%s", df.format(value.getStart()), RangeDatePickerTextField.this.getSeparator(), df.format(value.getEnd()));
 			}
 		};
 	}

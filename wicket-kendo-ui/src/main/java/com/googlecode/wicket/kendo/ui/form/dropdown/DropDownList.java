@@ -190,7 +190,8 @@ public class DropDownList<T> extends DropDownChoice<T> implements IJQueryWidget
 
 		if (this.template != null)
 		{
-			this.add(this.templateBehavior = new KendoTemplateBehavior(this.template));
+			this.templateBehavior = new KendoTemplateBehavior(this.template);
+			this.add(this.templateBehavior);
 		}
 	}
 

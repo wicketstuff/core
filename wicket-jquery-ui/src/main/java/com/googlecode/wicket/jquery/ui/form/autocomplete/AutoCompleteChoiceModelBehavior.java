@@ -47,55 +47,59 @@ abstract class AutoCompleteChoiceModelBehavior<T> extends ChoiceModelBehavior<T>
 	@Override
 	protected IRequestHandler newRequestHandler()
 	{
-		return new IRequestHandler() {
+		return new AutoCompleteChoiceModelRequestHandler();
+	}
 
-			@Override
-			public void respond(final IRequestCycle requestCycle)
+	/**
+	 * Provides the {@link IRequestHandler}
+	 */
+	protected class AutoCompleteChoiceModelRequestHandler implements IRequestHandler
+	{
+		@Override
+		public void respond(final IRequestCycle requestCycle)
+		{
+			WebResponse response = (WebResponse) requestCycle.getResponse();
+
+			final String encoding = Application.get().getRequestCycleSettings().getResponseRequestEncoding();
+			response.setContentType("application/json; charset=" + encoding);
+			response.disableCaching();
+
+			List<T> choices = AutoCompleteChoiceModelBehavior.this.getChoices();
+
+			if (choices != null)
 			{
-				WebResponse response = (WebResponse) requestCycle.getResponse();
+				StringBuilder builder = new StringBuilder("[ ");
 
-				final String encoding = Application.get().getRequestCycleSettings().getResponseRequestEncoding();
-				response.setContentType("application/json; charset=" + encoding);
-				response.disableCaching();
-
-				List<T> choices = AutoCompleteChoiceModelBehavior.this.getChoices();
-
-				if (choices != null)
+				int index = 0;
+				for (T choice : choices)
 				{
-					StringBuilder builder = new StringBuilder("[ ");
-
-					int index = 0;
-					for (T choice : choices)
+					if (index++ > 0)
 					{
-						if (index++ > 0)
-						{
-							builder.append(", ");
-						}
-
-						builder.append("{ ");
-						builder.append(Options.QUOTE).append("id").append(Options.QUOTE).append(": ").append(Options.QUOTE).append(Integer.toString(index)).append(Options.QUOTE); /* id is a reserved word */
 						builder.append(", ");
-						builder.append(Options.QUOTE).append("value").append(Options.QUOTE).append(": ").append(Options.QUOTE).append(renderer.getText(choice)).append(Options.QUOTE); /* value is a reserved word */
-
-						for (String property : AutoCompleteChoiceModelBehavior.this.getProperties())
-						{
-							builder.append(", ");
-							builder.append(RendererUtils.getJsonBody(choice, renderer, property));
-						}
-
-						builder.append(" }");
 					}
 
-					builder.append(" ]");
+					builder.append("{ ");
+					builder.append(Options.QUOTE).append("id").append(Options.QUOTE).append(": ").append(Options.QUOTE).append(Integer.toString(index)).append(Options.QUOTE); /* id is a reserved word */
+					builder.append(", ");
+					builder.append(Options.QUOTE).append("value").append(Options.QUOTE).append(": ").append(Options.QUOTE).append(renderer.getText(choice)).append(Options.QUOTE); /* value is a reserved word */
 
-					response.write(builder);
+					for (String property : AutoCompleteChoiceModelBehavior.this.getProperties())
+					{
+						builder.append(", ");
+						builder.append(RendererUtils.getJsonBody(choice, renderer, property));
+					}
+
+					builder.append(" }");
 				}
-			}
 
-			@Override
-			public void detach(final IRequestCycle requestCycle)
-			{
+				response.write(builder.append(" ]"));
 			}
-		};
+		}
+
+		@Override
+		public void detach(final IRequestCycle requestCycle)
+		{
+			// noop
+		}
 	}
 }

@@ -38,8 +38,8 @@ public abstract class WindowBehavior extends KendoUIBehavior implements IJQueryA
 	private static final long serialVersionUID = 1L;
 	public static final String METHOD = "kendoWindow";
 
-	private JQueryAjaxBehavior onActionBehavior = null;
-	private JQueryAjaxBehavior onCloseBehavior = null;
+	private JQueryAjaxBehavior onActionAjaxBehavior = null;
+	private JQueryAjaxBehavior onCloseAjaxBehavior = null;
 
 	/**
 	 * Constructor
@@ -71,12 +71,14 @@ public abstract class WindowBehavior extends KendoUIBehavior implements IJQueryA
 
 		if (this.isActionEventEnabled())
 		{
-			component.add(this.onActionBehavior = this.newActionBehavior());
+			this.onActionAjaxBehavior = this.newOnActionAjaxBehavior(this);
+			component.add(this.onActionAjaxBehavior);
 		}
 
 		if (this.isCloseEventEnabled())
 		{
-			component.add(this.onCloseBehavior = this.newCloseBehavior());
+			this.onCloseAjaxBehavior = this.newOnCloseAjaxBehavior(this);
+			component.add(this.onCloseAjaxBehavior);
 		}
 	}
 
@@ -104,9 +106,9 @@ public abstract class WindowBehavior extends KendoUIBehavior implements IJQueryA
 	{
 		target.prependJavaScript(this.widget() + ".close();");
 	}
-	
+
 	// Properties //
-	
+
 	/**
 	 * Indicates whether the window is centered
 	 *
@@ -124,14 +126,14 @@ public abstract class WindowBehavior extends KendoUIBehavior implements IJQueryA
 	{
 		super.onConfigure(component);
 
-		if (this.onActionBehavior != null)
+		if (this.onActionAjaxBehavior != null)
 		{
-			this.on(String.format("%s.wrapper.find('a.k-window-action').click(%s);", this.widget(), this.onActionBehavior.getCallbackFunction()));
+			this.on(String.format("%s.wrapper.find('a.k-window-action').click(%s);", this.widget(), this.onActionAjaxBehavior.getCallbackFunction()));
 		}
 
-		if (this.onCloseBehavior != null)
+		if (this.onCloseAjaxBehavior != null)
 		{
-			this.setOption("close", this.onCloseBehavior.getCallbackFunction());
+			this.setOption("close", this.onCloseAjaxBehavior.getCallbackFunction());
 		}
 	}
 
@@ -151,9 +153,15 @@ public abstract class WindowBehavior extends KendoUIBehavior implements IJQueryA
 
 	// Factories //
 
-	protected JQueryAjaxBehavior newActionBehavior()
+	/**
+	 * Gets the ajax behavior that will be triggered when the user clicks on an action icon
+	 * 
+	 * @param source the {@link IJQueryAjaxAware}
+	 * @return the {@link JQueryAjaxBehavior}
+	 */
+	protected JQueryAjaxBehavior newOnActionAjaxBehavior(IJQueryAjaxAware source)
 	{
-		return new JQueryAjaxBehavior(this) {
+		return new JQueryAjaxBehavior(source) {
 			private static final long serialVersionUID = 1L;
 
 			@Override
@@ -177,11 +185,12 @@ public abstract class WindowBehavior extends KendoUIBehavior implements IJQueryA
 	/**
 	 * Gets the ajax behavior that will be triggered when the user clicks on the X-icon
 	 *
+	 * @param source the {@link IJQueryAjaxAware}
 	 * @return the {@link JQueryAjaxBehavior}
 	 */
-	protected JQueryAjaxBehavior newCloseBehavior()
+	protected JQueryAjaxBehavior newOnCloseAjaxBehavior(IJQueryAjaxAware source)
 	{
-		return new JQueryAjaxBehavior(this) {
+		return new JQueryAjaxBehavior(source) {
 
 			private static final long serialVersionUID = 1L;
 

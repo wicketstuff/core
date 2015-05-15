@@ -37,7 +37,7 @@ public abstract class AutoCompleteBehavior extends JQueryUIBehavior implements I
 	private static final long serialVersionUID = 1L;
 	public static final String METHOD = "autocomplete";
 
-	private JQueryAjaxBehavior onSelectBehavior = null;
+	private JQueryAjaxBehavior onSelectAjaxBehavior = null;
 
 	/**
 	 * Constructor
@@ -67,7 +67,8 @@ public abstract class AutoCompleteBehavior extends JQueryUIBehavior implements I
 	{
 		super.bind(component);
 
-		component.add(this.onSelectBehavior = this.newOnSelectBehavior());
+		this.onSelectAjaxBehavior = this.newOnSelectAjaxBehavior(this);
+		component.add(this.onSelectAjaxBehavior);
 	}
 
 	protected abstract CharSequence getChoiceCallbackUrl();
@@ -80,7 +81,7 @@ public abstract class AutoCompleteBehavior extends JQueryUIBehavior implements I
 		super.onConfigure(component);
 
 		this.setOption("source", Options.asString(this.getChoiceCallbackUrl()));
-		this.setOption("select", this.onSelectBehavior.getCallbackFunction());
+		this.setOption("select", this.onSelectAjaxBehavior.getCallbackFunction());
 	}
 
 	// IJQueryAjaxAware //
@@ -99,11 +100,13 @@ public abstract class AutoCompleteBehavior extends JQueryUIBehavior implements I
 	/**
 	 * Gets a new {@link JQueryAjaxBehavior} that will be called on 'select' javascript method
 	 *
+	 * @param source the {@link IJQueryAjaxAware}
 	 * @return the {@link JQueryAjaxBehavior}
 	 */
-	protected JQueryAjaxBehavior newOnSelectBehavior()
+	protected JQueryAjaxBehavior newOnSelectAjaxBehavior(IJQueryAjaxAware source)
 	{
-		return new JQueryAjaxBehavior(this) {
+		// TODO OnSelectAjaxBehavior inner class
+		return new JQueryAjaxBehavior(source) {
 
 			private static final long serialVersionUID = 1L;
 

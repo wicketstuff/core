@@ -27,6 +27,7 @@ import com.googlecode.wicket.jquery.core.JQueryEvent;
 import com.googlecode.wicket.jquery.core.ajax.IJQueryAjaxAware;
 import com.googlecode.wicket.jquery.core.ajax.JQueryAjaxPostBehavior;
 import com.googlecode.wicket.jquery.core.event.IValueChangedListener;
+import com.googlecode.wicket.kendo.ui.ajax.OnChangeAjaxBehavior;
 
 /**
  * Provides a datetime-picker based on a {@link AjaxDatePicker} and a {@link AjaxTimePicker}<br/>
@@ -126,9 +127,9 @@ public class AjaxDateTimePicker extends DateTimePicker implements IJQueryAjaxAwa
 					}
 
 					@Override
-					protected JQueryAjaxPostBehavior newOnChangeBehavior(FormComponent<?> component)
+					protected JQueryAjaxPostBehavior newOnChangeAjaxBehavior(IJQueryAjaxAware source, FormComponent<?> component)
 					{
-						return new OnChangeBehavior(this, AjaxDateTimePicker.this.datePicker, AjaxDateTimePicker.this.timePicker);
+						return new OnChangeAjaxBehavior(source, AjaxDateTimePicker.this.datePicker, AjaxDateTimePicker.this.timePicker);
 					}
 				};
 			}
@@ -156,9 +157,9 @@ public class AjaxDateTimePicker extends DateTimePicker implements IJQueryAjaxAwa
 					}
 
 					@Override
-					protected JQueryAjaxPostBehavior newOnChangeBehavior(FormComponent<?> component)
+					protected JQueryAjaxPostBehavior newOnChangeAjaxBehavior(IJQueryAjaxAware source, FormComponent<?> component)
 					{
-						return new OnChangeBehavior(this, AjaxDateTimePicker.this.datePicker, AjaxDateTimePicker.this.timePicker);
+						return new OnChangeAjaxBehavior(source, AjaxDateTimePicker.this.datePicker, AjaxDateTimePicker.this.timePicker);
 					}
 				};
 			}

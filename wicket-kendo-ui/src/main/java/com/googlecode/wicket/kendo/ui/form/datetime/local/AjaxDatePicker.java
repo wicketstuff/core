@@ -33,7 +33,7 @@ import com.googlecode.wicket.jquery.core.ajax.JQueryAjaxBehavior;
 import com.googlecode.wicket.jquery.core.ajax.JQueryAjaxPostBehavior;
 import com.googlecode.wicket.jquery.core.event.IValueChangedListener;
 import com.googlecode.wicket.kendo.ui.KendoUIBehavior;
-import com.googlecode.wicket.kendo.ui.form.datetime.OnChangeBehavior;
+import com.googlecode.wicket.kendo.ui.ajax.OnChangeAjaxBehavior;
 
 /**
  * Provides a Kendo UI date-picker based on a {@link DatePicker}<br/>
@@ -227,7 +227,7 @@ public class AjaxDatePicker extends DatePicker implements IJQueryAjaxAware, IVal
 	{
 		private static final long serialVersionUID = 1L;
 
-		private JQueryAjaxBehavior onChangeBehavior = null;
+		private JQueryAjaxBehavior onChangeAjaxBehavior = null;
 
 		/**
 		 * Constructor
@@ -251,6 +251,7 @@ public class AjaxDatePicker extends DatePicker implements IJQueryAjaxAware, IVal
 		}
 
 		// Methods //
+
 		@Override
 		public void bind(Component component)
 		{
@@ -258,7 +259,8 @@ public class AjaxDatePicker extends DatePicker implements IJQueryAjaxAware, IVal
 
 			if (component instanceof FormComponent<?>)
 			{
-				component.add(this.onChangeBehavior = this.newOnChangeBehavior((FormComponent<?>) component));
+				this.onChangeAjaxBehavior = this.newOnChangeAjaxBehavior(this, (FormComponent<?>) component);
+				component.add(this.onChangeAjaxBehavior);
 			}
 			else
 			{
@@ -267,14 +269,15 @@ public class AjaxDatePicker extends DatePicker implements IJQueryAjaxAware, IVal
 		}
 
 		// Events //
+
 		@Override
 		public void onConfigure(Component component)
 		{
 			super.onConfigure(component);
 
-			if (this.onChangeBehavior != null)
+			if (this.onChangeAjaxBehavior != null)
 			{
-				this.setOption("change", this.onChangeBehavior.getCallbackFunction());
+				this.setOption("change", this.onChangeAjaxBehavior.getCallbackFunction());
 			}
 		}
 
@@ -283,12 +286,13 @@ public class AjaxDatePicker extends DatePicker implements IJQueryAjaxAware, IVal
 		/**
 		 * Gets a new {@link JQueryAjaxPostBehavior} that will be called on 'change' javascript method
 		 *
+		 * @param source the {@link IJQueryAjaxAware}
 		 * @param component the bound {@link Component}
-		 * @return the {@link JQueryAjaxPostBehavior}, typically a {@link OnChangeBehavior}
+		 * @return the {@link JQueryAjaxPostBehavior}, typically a {@link OnChangeAjaxBehavior}
 		 */
-		protected JQueryAjaxPostBehavior newOnChangeBehavior(FormComponent<?> component)
+		protected JQueryAjaxPostBehavior newOnChangeAjaxBehavior(IJQueryAjaxAware source, FormComponent<?> component)
 		{
-			return new OnChangeBehavior(this, component);
+			return new OnChangeAjaxBehavior(source, component);
 		}
 	}
 }

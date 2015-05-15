@@ -37,11 +37,12 @@ public abstract class ResizableBehavior extends JQueryUIBehavior implements IJQu
 	private static final long serialVersionUID = 1L;
 	public static final String METHOD = "resizable";
 
-	private JQueryAjaxBehavior onResizeStartBehavior = null;
-	private JQueryAjaxBehavior onResizeStopBehavior = null;
+	private JQueryAjaxBehavior onResizeStartAjaxBehavior = null;
+	private JQueryAjaxBehavior onResizeStopAjaxBehavior = null;
 
 	/**
 	 * Constructor
+	 * 
 	 * @param selector the html selector (ie: "#myId")
 	 */
 	public ResizableBehavior(String selector)
@@ -51,6 +52,7 @@ public abstract class ResizableBehavior extends JQueryUIBehavior implements IJQu
 
 	/**
 	 * Constructor
+	 * 
 	 * @param selector the html selector (ie: "#myId")
 	 * @param options the {@link Options}
 	 */
@@ -68,12 +70,14 @@ public abstract class ResizableBehavior extends JQueryUIBehavior implements IJQu
 		// these events are not enabled by default to prevent unnecessary server round-trips.
 		if (this.isResizeStartEventEnabled())
 		{
-			component.add(this.onResizeStartBehavior = this.newOnResizeStartBehavior());
+			this.onResizeStartAjaxBehavior = this.newOnResizeStartAjaxBehavior(this);
+			component.add(this.onResizeStartAjaxBehavior);
 		}
 
 		if (this.isResizeStopEventEnabled())
 		{
-			component.add(this.onResizeStopBehavior = this.newOnResizeStopBehavior());
+			this.onResizeStopAjaxBehavior = this.newOnResizeStopAjaxBehavior(this);
+			component.add(this.onResizeStopAjaxBehavior);
 		}
 	}
 
@@ -83,14 +87,14 @@ public abstract class ResizableBehavior extends JQueryUIBehavior implements IJQu
 	{
 		super.onConfigure(component);
 
-		if (this.onResizeStartBehavior != null)
+		if (this.onResizeStartAjaxBehavior != null)
 		{
-			this.setOption("start", this.onResizeStartBehavior.getCallbackFunction());
+			this.setOption("start", this.onResizeStartAjaxBehavior.getCallbackFunction());
 		}
 
-		if (this.onResizeStopBehavior != null)
+		if (this.onResizeStopAjaxBehavior != null)
 		{
-			this.setOption("stop", this.onResizeStopBehavior.getCallbackFunction());
+			this.setOption("stop", this.onResizeStopAjaxBehavior.getCallbackFunction());
 		}
 	}
 
@@ -114,27 +118,29 @@ public abstract class ResizableBehavior extends JQueryUIBehavior implements IJQu
 	}
 
 	// Factories //
+
 	/**
 	 * Gets a new {@link JQueryAjaxBehavior} that will be called on 'start' javascript event
+	 * 
+	 * @param source the {@link IJQueryAjaxAware}
 	 * @return the {@link JQueryAjaxBehavior}
 	 */
-	protected JQueryAjaxBehavior newOnResizeStartBehavior()
+	protected JQueryAjaxBehavior newOnResizeStartAjaxBehavior(IJQueryAjaxAware source)
 	{
-		return new JQueryAjaxBehavior(this) {
+		return new JQueryAjaxBehavior(source) {
 
 			private static final long serialVersionUID = 1L;
 
 			@Override
 			protected CallbackParameter[] getCallbackParameters()
 			{
-				return new CallbackParameter[] {
-						CallbackParameter.context("event"),
-						CallbackParameter.context("ui"),
-						CallbackParameter.resolved("top", "ui.position.top"),
-						CallbackParameter.resolved("left", "ui.position.left"),
-						CallbackParameter.resolved("width", "ui.size.width"),
-						CallbackParameter.resolved("height", "ui.size.height")
-				};
+				return new CallbackParameter[] { // lf
+						CallbackParameter.context("event"), // lf
+						CallbackParameter.context("ui"), // lf
+						CallbackParameter.resolved("top", "ui.position.top"), // lf
+						CallbackParameter.resolved("left", "ui.position.left"), // lf
+						CallbackParameter.resolved("width", "ui.size.width"), // lf
+						CallbackParameter.resolved("height", "ui.size.height") };
 			}
 
 			@Override
@@ -147,25 +153,26 @@ public abstract class ResizableBehavior extends JQueryUIBehavior implements IJQu
 
 	/**
 	 * Gets a new {@link JQueryAjaxBehavior} that will be called on 'stop' javascript event
+	 * 
+	 * @param source the {@link IJQueryAjaxAware}
 	 * @return the {@link JQueryAjaxBehavior}
 	 */
-	protected JQueryAjaxBehavior newOnResizeStopBehavior()
+	protected JQueryAjaxBehavior newOnResizeStopAjaxBehavior(IJQueryAjaxAware source)
 	{
-		return new JQueryAjaxBehavior(this) {
+		return new JQueryAjaxBehavior(source) {
 
 			private static final long serialVersionUID = 1L;
 
 			@Override
 			protected CallbackParameter[] getCallbackParameters()
 			{
-				return new CallbackParameter[] {
-						CallbackParameter.context("event"),
-						CallbackParameter.context("ui"),
-						CallbackParameter.resolved("top", "ui.position.top"),
-						CallbackParameter.resolved("left", "ui.position.left"),
-						CallbackParameter.resolved("width", "ui.size.width"),
-						CallbackParameter.resolved("height", "ui.size.height")
-				};
+				return new CallbackParameter[] { // lf
+						CallbackParameter.context("event"), // lf
+						CallbackParameter.context("ui"), // lf
+						CallbackParameter.resolved("top", "ui.position.top"), // lf
+						CallbackParameter.resolved("left", "ui.position.left"), // lf
+						CallbackParameter.resolved("width", "ui.size.width"), // lf
+						CallbackParameter.resolved("height", "ui.size.height") };
 			}
 
 			@Override
@@ -175,7 +182,6 @@ public abstract class ResizableBehavior extends JQueryUIBehavior implements IJQu
 			}
 		};
 	}
-
 
 	// Event Objects //
 	/**
@@ -201,6 +207,7 @@ public abstract class ResizableBehavior extends JQueryUIBehavior implements IJQu
 
 		/**
 		 * Gets the position's top value
+		 * 
 		 * @return the position's top value
 		 */
 		public int getTop()
@@ -210,6 +217,7 @@ public abstract class ResizableBehavior extends JQueryUIBehavior implements IJQu
 
 		/**
 		 * Gets the position's left value
+		 * 
 		 * @return the position's left value
 		 */
 		public int getLeft()
@@ -219,6 +227,7 @@ public abstract class ResizableBehavior extends JQueryUIBehavior implements IJQu
 
 		/**
 		 * Gets the size's width value
+		 * 
 		 * @return the size's width value
 		 */
 		public int getWidth()
@@ -228,6 +237,7 @@ public abstract class ResizableBehavior extends JQueryUIBehavior implements IJQu
 
 		/**
 		 * Gets the size's height value
+		 * 
 		 * @return the size's height value
 		 */
 		public int getHeight()

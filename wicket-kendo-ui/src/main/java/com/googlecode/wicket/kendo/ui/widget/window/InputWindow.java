@@ -43,7 +43,6 @@ public abstract class InputWindow<T> extends Window<T>
 	private final KendoFeedbackPanel feedback;
 
 	private final Form<?> form;
-
 	private IModel<String> labelModel;
 
 	/**
@@ -106,30 +105,6 @@ public abstract class InputWindow<T> extends Window<T>
 		this.form.add(this.feedback);
 	}
 
-	// Properties //
-
-	/**
-	 * Gets the inner {@link Form}
-	 *
-	 * @return the form
-	 */
-	@Override
-	public Form<?> getForm()
-	{
-		return this.form;
-	}
-
-	/**
-	 * Indicates whether the {@link TextField}'s value is required
-	 *
-	 * @return true by default
-	 */
-	protected boolean isRequired()
-	{
-		// XXX: changed InputButton#isRequired to true by default because it makes more sense - SILENT API BREAK
-		return true;
-	}
-
 	// Events //
 
 	@Override
@@ -138,10 +113,10 @@ public abstract class InputWindow<T> extends Window<T>
 		super.onInitialize();
 
 		// label //
-		this.form.add(newLabel("label", labelModel));
+		this.form.add(this.newLabel("label", this.labelModel));
 
 		// field //
-		this.form.add(newTextField("input", this.getModel()).setRequired(this.isRequired()));
+		this.form.add(this.newTextField("input", this.getModel()).setRequired(this.isRequired()));
 
 		// buttons //
 		this.form.add(this.newButtonPanel("buttons", this.getButtons()));
@@ -177,13 +152,6 @@ public abstract class InputWindow<T> extends Window<T>
 		}
 	}
 
-	@Override
-	protected void onDetach()
-	{
-		super.onDetach();
-		labelModel.detach();
-	}
-
 	/**
 	 * Triggered when the 'submit' button is clicked, and the validation succeed
 	 *
@@ -201,34 +169,39 @@ public abstract class InputWindow<T> extends Window<T>
 		// noop
 	}
 
+	@Override
+	protected void onDetach()
+	{
+		super.onDetach();
+
+		this.labelModel.detach();
+	}
+
+	// Properties //
+
+	/**
+	 * Gets the inner {@link Form}
+	 *
+	 * @return the form
+	 */
+	@Override
+	public Form<?> getForm()
+	{
+		return this.form;
+	}
+
+	/**
+	 * Indicates whether the {@link TextField}'s value is required
+	 *
+	 * @return true by default
+	 */
+	protected boolean isRequired()
+	{
+		// XXX: changed InputButton#isRequired to true by default because it makes more sense - SILENT API BREAK
+		return true;
+	}
+
 	// Factories //
-
-	/**
-	 * Factory method for creating the form component that will be used as an input.<br/>
-	 * Override this method when you need to use different input type, e.g. NumberTextField or PasswordField.
-	 *
-	 * @param id The component id
-	 * @param model The model with the label text
-	 * @return The label component.
-	 */
-	protected FormComponent<T> newTextField(String id, IModel<T> model)
-	{
-		return new TextField<T>(id, model);
-	}
-
-	/**
-	 * Factory method for creating the component that will be used as a label in the
-	 * window.<br/>
-	 * Override this method when you need to show formatted label.
-	 *
-	 * @param id The component id
-	 * @param model The model with the label text
-	 * @return The label component.
-	 */
-	protected Component newLabel(String id, IModel<String> model)
-	{
-		return new Label(id, model);
-	}
 
 	/**
 	 * Gets a new {@link Form}
@@ -248,5 +221,31 @@ public abstract class InputWindow<T> extends Window<T>
 				return false;
 			}
 		};
+	}
+
+	/**
+	 * Gets a new {@link Component} that will be used as a label in the window.<br/>
+	 * Override this method when you need to show formatted label.
+	 *
+	 * @param id the markup-id
+	 * @param model the label {@link IModel}
+	 * @return the new label component.
+	 */
+	protected Component newLabel(String id, IModel<String> model)
+	{
+		return new Label(id, model);
+	}
+
+	/**
+	 * Gets a new {@link FormComponent} that will be used as an input.<br/>
+	 * Override this method when you need to use a {@code IValidator} or different input type, e.g. {@code NumberTextField} or {@code PasswordField}.
+	 * 
+	 * @param id the markup-id
+	 * @param model the {@link IModel}
+	 * @return the new {@link FormComponent}
+	 */
+	protected FormComponent<T> newTextField(String id, IModel<T> model)
+	{
+		return new TextField<T>(id, model);
 	}
 }

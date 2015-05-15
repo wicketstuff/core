@@ -50,9 +50,9 @@ public abstract class TabsBehavior extends KendoUIBehavior implements IJQueryAja
 
 	int activeTab = DEFAULT_TAB;
 
-	private JQueryAjaxBehavior selectEventBehavior = null;
-	private JQueryAjaxBehavior showEventBehavior = null;
-	private JQueryAjaxBehavior activateEventBehavior = null;
+	private JQueryAjaxBehavior onSelectAjaxBehavior = null;
+	private JQueryAjaxBehavior onShowAjaxBehavior = null;
+	private JQueryAjaxBehavior onActivateAjaxBehavior = null;
 
 	/**
 	 * Constructor
@@ -114,17 +114,20 @@ public abstract class TabsBehavior extends KendoUIBehavior implements IJQueryAja
 
 		if (this.isSelectEventEnabled())
 		{
-			component.add(this.selectEventBehavior = this.newSelectEventBehavior());
+			this.onSelectAjaxBehavior = this.newOnSelectAjaxBehavior(this);
+			component.add(this.onSelectAjaxBehavior);
 		}
 
 		if (this.isShowEventEnabled())
 		{
-			component.add(this.showEventBehavior = this.newShowEventBehavior());
+			this.onShowAjaxBehavior = this.newOnShowAjaxBehavior(this);
+			component.add(this.onShowAjaxBehavior);
 		}
 
 		if (this.isActivateEventEnabled())
 		{
-			component.add(this.activateEventBehavior = this.newActivateEventBehavior());
+			this.onActivateAjaxBehavior = this.newOnActivateAjaxBehavior(this);
+			component.add(this.onActivateAjaxBehavior);
 		}
 	}
 
@@ -157,19 +160,19 @@ public abstract class TabsBehavior extends KendoUIBehavior implements IJQueryAja
 	{
 		super.onConfigure(component);
 
-		if (this.selectEventBehavior != null)
+		if (this.onSelectAjaxBehavior != null)
 		{
-			this.setOption("select", this.selectEventBehavior.getCallbackFunction());
+			this.setOption("select", this.onSelectAjaxBehavior.getCallbackFunction());
 		}
 
-		if (this.showEventBehavior != null)
+		if (this.onShowAjaxBehavior != null)
 		{
-			this.setOption("show", this.showEventBehavior.getCallbackFunction());
+			this.setOption("show", this.onShowAjaxBehavior.getCallbackFunction());
 		}
 
-		if (this.activateEventBehavior != null)
+		if (this.onActivateAjaxBehavior != null)
 		{
-			this.setOption("activate", this.activateEventBehavior.getCallbackFunction());
+			this.setOption("activate", this.onActivateAjaxBehavior.getCallbackFunction());
 		}
 	}
 
@@ -213,11 +216,12 @@ public abstract class TabsBehavior extends KendoUIBehavior implements IJQueryAja
 	/**
 	 * Gets a new {@link JQueryAjaxBehavior} that acts as the 'select' javascript callback
 	 *
+	 * @param source the {@link IJQueryAjaxAware}
 	 * @return the {@link JQueryAjaxBehavior}
 	 */
-	protected JQueryAjaxBehavior newSelectEventBehavior()
+	protected JQueryAjaxBehavior newOnSelectAjaxBehavior(IJQueryAjaxAware source)
 	{
-		return new JQueryAjaxBehavior(this) {
+		return new JQueryAjaxBehavior(source) {
 
 			private static final long serialVersionUID = 1L;
 
@@ -238,11 +242,12 @@ public abstract class TabsBehavior extends KendoUIBehavior implements IJQueryAja
 	/**
 	 * Gets a new {@link JQueryAjaxBehavior} that acts as the 'show' javascript callback
 	 *
+	 * @param source the {@link IJQueryAjaxAware}
 	 * @return the {@link JQueryAjaxBehavior}
 	 */
-	protected JQueryAjaxBehavior newShowEventBehavior()
+	protected JQueryAjaxBehavior newOnShowAjaxBehavior(IJQueryAjaxAware source)
 	{
-		return new JQueryAjaxBehavior(this) {
+		return new JQueryAjaxBehavior(source) {
 
 			private static final long serialVersionUID = 1L;
 
@@ -263,11 +268,12 @@ public abstract class TabsBehavior extends KendoUIBehavior implements IJQueryAja
 	/**
 	 * Gets a new {@link JQueryAjaxBehavior} that acts as the 'activate' javascript callback
 	 *
+	 * @param source the {@link IJQueryAjaxAware}
 	 * @return the {@link JQueryAjaxBehavior}
 	 */
-	protected JQueryAjaxBehavior newActivateEventBehavior()
+	protected JQueryAjaxBehavior newOnActivateAjaxBehavior(IJQueryAjaxAware source)
 	{
-		return new JQueryAjaxBehavior(this) {
+		return new JQueryAjaxBehavior(source) {
 
 			private static final long serialVersionUID = 1L;
 

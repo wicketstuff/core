@@ -80,7 +80,8 @@ public abstract class AbstractConsole extends WebMarkupContainer
 	{
 		super.onInitialize();
 
-		this.add(this.consoleBehavior = this.newConsoleBehavior());
+		this.consoleBehavior = this.newConsoleBehavior();
+		this.add(this.consoleBehavior);
 	}
 
 	// Properties //

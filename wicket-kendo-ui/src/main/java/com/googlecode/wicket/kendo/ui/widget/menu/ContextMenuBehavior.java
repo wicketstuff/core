@@ -33,7 +33,7 @@ public abstract class ContextMenuBehavior extends MenuBehavior implements IConte
 	private static final long serialVersionUID = 1L;
 	public static final String METHOD = "kendoContextMenu";
 
-	private JQueryAjaxBehavior onOpenBehavior = null;
+	private JQueryAjaxBehavior onOpenAjaxBehavior = null;
 
 	/**
 	 * Constructor
@@ -63,8 +63,8 @@ public abstract class ContextMenuBehavior extends MenuBehavior implements IConte
 
 		if (this.isOpenEventEnabled())
 		{
-			this.onOpenBehavior = this.newOnOpenAjaxBehavior(this);
-			component.add(this.onOpenBehavior);
+			this.onOpenAjaxBehavior = this.newOnOpenAjaxBehavior(this);
+			component.add(this.onOpenAjaxBehavior);
 		}
 	}
 
@@ -73,9 +73,9 @@ public abstract class ContextMenuBehavior extends MenuBehavior implements IConte
 	{
 		super.onConfigure(component);
 
-		if (this.onOpenBehavior != null)
+		if (this.onOpenAjaxBehavior != null)
 		{
-			this.setOption("open", this.onOpenBehavior.getCallbackFunction());
+			this.setOption("open", this.onOpenAjaxBehavior.getCallbackFunction());
 		}
 	}
 
@@ -97,9 +97,9 @@ public abstract class ContextMenuBehavior extends MenuBehavior implements IConte
 	/**
 	 * Gets a new {@link JQueryAjaxBehavior} that acts as the 'open' javascript callback
 	 *
+	 * @param source the {@link IJQueryAjaxAware}
 	 * @return the {@link JQueryAjaxBehavior}
 	 */
-	// TODO: add newOnXxxAjaxBehavior everywhere and deprecate all newOnXxxBehavior until removing
 	protected JQueryAjaxBehavior newOnOpenAjaxBehavior(IJQueryAjaxAware source)
 	{
 		return new OnOpenAjaxBehavior(source);
@@ -108,7 +108,7 @@ public abstract class ContextMenuBehavior extends MenuBehavior implements IConte
 	// Ajax class //
 
 	/**
-	 * Provides a default {@link JQueryAjaxBehavior} implementation for {@link ContextMenuBehavior#newOnOpenAjaxBehavior(IJQueryAjaxAware)}
+	 * Default {@link JQueryAjaxBehavior} implementation for {@link ContextMenuBehavior#newOnOpenAjaxBehavior(IJQueryAjaxAware)}
 	 */
 	// TODO: introduce OnXxxAjaxBehavior classes everywhere
 	public static class OnOpenAjaxBehavior extends JQueryAjaxBehavior

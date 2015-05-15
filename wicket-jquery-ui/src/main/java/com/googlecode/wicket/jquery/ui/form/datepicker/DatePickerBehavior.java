@@ -39,7 +39,7 @@ public abstract class DatePickerBehavior extends JQueryUIBehavior implements IJQ
 	private static final long serialVersionUID = 1L;
 	public static final String METHOD = "datepicker";
 
-	private JQueryAjaxBehavior onSelectBehavior = null;
+	private JQueryAjaxBehavior onSelectAjaxBehavior = null;
 
 	/**
 	 * Constructor
@@ -68,7 +68,8 @@ public abstract class DatePickerBehavior extends JQueryUIBehavior implements IJQ
 
 		if (this.isOnSelectEventEnabled())
 		{
-			component.add(this.onSelectBehavior = this.newOnSelectBehavior());
+			this.onSelectAjaxBehavior = this.newOnSelectAjaxBehavior(this);
+			component.add(this.onSelectAjaxBehavior);
 		}
 	}
 
@@ -79,9 +80,9 @@ public abstract class DatePickerBehavior extends JQueryUIBehavior implements IJQ
 	{
 		super.onConfigure(component);
 
-		if (this.onSelectBehavior != null)
+		if (this.onSelectAjaxBehavior != null)
 		{
-			this.setOption("onSelect", this.onSelectBehavior.getCallbackFunction());
+			this.setOption("onSelect", this.onSelectAjaxBehavior.getCallbackFunction());
 		}
 	}
 
@@ -98,20 +99,21 @@ public abstract class DatePickerBehavior extends JQueryUIBehavior implements IJQ
 	/**
 	 * Gets a new {@link JQueryAjaxPostBehavior} that will be called on 'select' javascript method
 	 *
-	 * @return the {@link JQueryAjaxPostBehavior}, typically a {@link OnSelectBehavior}
+	 * @param source the {@link IJQueryAjaxAware}
+	 * @return the {@link JQueryAjaxPostBehavior}, typically a {@link OnSelectAjaxBehavior}
 	 */
-	protected abstract JQueryAjaxPostBehavior newOnSelectBehavior();
+	protected abstract JQueryAjaxPostBehavior newOnSelectAjaxBehavior(IJQueryAjaxAware source);
 
 
 	// Behavior class //
 	/**
-	 * Provides a {@link JQueryAjaxPostBehavior} that can be returned by {@link DatePickerBehavior#newOnSelectBehavior()}
+	 * Provides a {@link JQueryAjaxPostBehavior} that can be returned by {@link DatePickerBehavior#newOnSelectAjaxBehavior(IJQueryAjaxAware)}
 	 */
-	protected static class OnSelectBehavior extends JQueryAjaxPostBehavior
+	protected static class OnSelectAjaxBehavior extends JQueryAjaxPostBehavior
 	{
 		private static final long serialVersionUID = 1L;
 
-		public OnSelectBehavior(final IJQueryAjaxAware source, final FormComponent<?> component)
+		public OnSelectAjaxBehavior(final IJQueryAjaxAware source, final FormComponent<?> component)
 		{
 			super(source, component);
 		}

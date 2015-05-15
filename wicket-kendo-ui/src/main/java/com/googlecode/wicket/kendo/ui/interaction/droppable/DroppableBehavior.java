@@ -37,9 +37,9 @@ public abstract class DroppableBehavior extends KendoUIBehavior implements IJQue
 	private static final long serialVersionUID = 1L;
 	private static final String METHOD = "kendoDropTarget";
 
-	private JQueryAjaxBehavior onDropBehavior;
-	private JQueryAjaxBehavior onDragEnterBehavior = null;
-	private JQueryAjaxBehavior onDragLeaveBehavior = null;
+	private JQueryAjaxBehavior onDropAjaxBehavior;
+	private JQueryAjaxBehavior onDragEnterAjaxBehavior = null;
+	private JQueryAjaxBehavior onDragLeaveAjaxBehavior = null;
 
 	/** object being dragged */
 	private transient Component draggable = null;
@@ -120,17 +120,20 @@ public abstract class DroppableBehavior extends KendoUIBehavior implements IJQue
 	{
 		super.bind(component);
 
-		component.add(this.onDropBehavior = this.newOnDropBehavior());
+		this.onDropAjaxBehavior = this.newOnDropAjaxBehavior(this);
+		component.add(this.onDropAjaxBehavior);
 
 		// these events are not enabled by default to prevent unnecessary server round-trips.
 		if (this.isDragEnterEventEnabled())
 		{
-			component.add(this.onDragEnterBehavior = this.newOnDragEnterBehavior());
+			this.onDragEnterAjaxBehavior = this.newOnDragEnterAjaxBehavior(this);
+			component.add(this.onDragEnterAjaxBehavior);
 		}
 
 		if (this.isDragLeaveEventEnabled())
 		{
-			component.add(this.onDragLeaveBehavior = this.newOnDragLeaveBehavior());
+			this.onDragLeaveAjaxBehavior = this.newOnDragLeaveAjaxBehavior(this);
+			component.add(this.onDragLeaveAjaxBehavior);
 		}
 	}
 
@@ -141,16 +144,16 @@ public abstract class DroppableBehavior extends KendoUIBehavior implements IJQue
 	{
 		super.onConfigure(component);
 
-		this.setOption("drop", this.onDropBehavior.getCallbackFunction());
+		this.setOption("drop", this.onDropAjaxBehavior.getCallbackFunction());
 
-		if (this.onDragEnterBehavior != null)
+		if (this.onDragEnterAjaxBehavior != null)
 		{
-			this.setOption("dragenter", this.onDragEnterBehavior.getCallbackFunction());
+			this.setOption("dragenter", this.onDragEnterAjaxBehavior.getCallbackFunction());
 		}
 
-		if (this.onDragLeaveBehavior != null)
+		if (this.onDragLeaveAjaxBehavior != null)
 		{
-			this.setOption("dragleave", this.onDragLeaveBehavior.getCallbackFunction());
+			this.setOption("dragleave", this.onDragLeaveAjaxBehavior.getCallbackFunction());
 		}
 	}
 
@@ -178,11 +181,12 @@ public abstract class DroppableBehavior extends KendoUIBehavior implements IJQue
 	/**
 	 * Gets a new {@link JQueryAjaxBehavior} that will be called on 'dragenter' javascript event
 	 * 
+	 * @param source the {@link IJQueryAjaxAware}
 	 * @return the {@link JQueryAjaxBehavior}
 	 */
-	protected JQueryAjaxBehavior newOnDragEnterBehavior()
+	protected JQueryAjaxBehavior newOnDragEnterAjaxBehavior(IJQueryAjaxAware source)
 	{
-		return new JQueryAjaxBehavior(this) {
+		return new JQueryAjaxBehavior(source) {
 
 			private static final long serialVersionUID = 1L;
 
@@ -209,11 +213,12 @@ public abstract class DroppableBehavior extends KendoUIBehavior implements IJQue
 	/**
 	 * Gets a new {@link JQueryAjaxBehavior} that will be called on 'dragleave' javascript event
 	 * 
+	 * @param source the {@link IJQueryAjaxAware}
 	 * @return the {@link JQueryAjaxBehavior}
 	 */
-	protected JQueryAjaxBehavior newOnDragLeaveBehavior()
+	protected JQueryAjaxBehavior newOnDragLeaveAjaxBehavior(IJQueryAjaxAware source)
 	{
-		return new JQueryAjaxBehavior(this) {
+		return new JQueryAjaxBehavior(source) {
 
 			private static final long serialVersionUID = 1L;
 
@@ -240,11 +245,12 @@ public abstract class DroppableBehavior extends KendoUIBehavior implements IJQue
 	/**
 	 * Gets a new {@link JQueryAjaxBehavior} that will be called on 'drop' javascript event
 	 * 
+	 * @param source the {@link IJQueryAjaxAware}
 	 * @return the {@link JQueryAjaxBehavior}
 	 */
-	protected JQueryAjaxBehavior newOnDropBehavior()
+	protected JQueryAjaxBehavior newOnDropAjaxBehavior(IJQueryAjaxAware source)
 	{
-		return new JQueryAjaxBehavior(this) {
+		return new JQueryAjaxBehavior(source) {
 
 			private static final long serialVersionUID = 1L;
 

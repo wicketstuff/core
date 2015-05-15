@@ -85,7 +85,16 @@ public class KendoConverterAutoCompletePage extends AbstractAutoCompletePage
 			@Override
 			protected void onSubmit(AjaxRequestTarget target, Form<?> unused)
 			{
-				this.info("#onSubmit: " + genre);
+				if (genre != null)
+				{
+					info(String.format("Your favorite rock genre is: %s (id #%d)", genre.getName(), genre.getId()));
+				}
+				else
+				{
+					warn("Unlisted genre");
+					info("User input is: " + autocomplete.getInput());
+				}
+
 				target.add(feedback);
 			}
 		});

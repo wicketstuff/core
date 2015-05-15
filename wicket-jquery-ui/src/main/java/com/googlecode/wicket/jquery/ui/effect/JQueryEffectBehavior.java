@@ -117,7 +117,8 @@ public class JQueryEffectBehavior extends JQueryUIBehavior implements IJQueryAja
 
 		if (this.isCallbackEnabled())
 		{
-			component.add(this.callback = this.newCallbackBehavior());
+			this.callback = this.newCallbackBehavior();
+			component.add(this.callback);
 		}
 	}
 

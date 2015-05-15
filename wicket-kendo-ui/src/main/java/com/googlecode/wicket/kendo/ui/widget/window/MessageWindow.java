@@ -172,7 +172,7 @@ public abstract class MessageWindow extends Window<String>
 		super.onInitialize();
 
 		// label //
-		this.label = newLabel("text", this.getModel());
+		this.label = this.newLabel("text", this.getModel());
 		this.add(this.label);
 
 		// buttons //
@@ -186,20 +186,6 @@ public abstract class MessageWindow extends Window<String>
 	}
 
 	// Factories //
-
-	/**
-	 * Factory method for creating the component that will be used as a label in the
-	 * window.<br/>
-	 * Override this method when you need to show formatted label.
-	 *
-	 * @param id The component id
-	 * @param model The model with the label text
-	 * @return The label component.
-	 */
-	protected Component newLabel(String id, IModel<String> model)
-	{
-		return new Label(id, model).setOutputMarkupId(true);
-	}
 
 	/**
 	 * Gets a new {@link Form}
@@ -219,5 +205,18 @@ public abstract class MessageWindow extends Window<String>
 				return false;
 			}
 		};
+	}
+
+	/**
+	 * Gets a new {@link Component} that will be used as a label in the window.<br/>
+	 * Override this method when you need to show formatted label.
+	 *
+	 * @param id the markup id
+	 * @param model the label {@link IModel}
+	 * @return the new label component.
+	 */
+	protected Component newLabel(String id, IModel<String> model)
+	{
+		return new Label(id, model).setOutputMarkupId(true);
 	}
 }

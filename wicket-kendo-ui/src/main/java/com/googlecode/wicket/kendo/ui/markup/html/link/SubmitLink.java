@@ -156,6 +156,7 @@ public class SubmitLink extends org.apache.wicket.markup.html.form.SubmitLink im
 	@Override
 	public void onBeforeRender(JQueryBehavior behavior)
 	{
+		// noop
 	}
 
 	@Override

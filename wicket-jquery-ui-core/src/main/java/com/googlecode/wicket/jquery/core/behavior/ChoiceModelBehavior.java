@@ -79,54 +79,59 @@ public abstract class ChoiceModelBehavior<T> extends AbstractAjaxBehavior implem
 	 */
 	protected IRequestHandler newRequestHandler()
 	{
-		return new IRequestHandler() {
+		return new ChoiceModelRequestHandler();
+	}
 
-			@Override
-			public void respond(final IRequestCycle requestCycle)
+	// Classes //
+
+	/**
+	 * Provides the {@link IRequestHandler}
+	 */
+	protected class ChoiceModelRequestHandler implements IRequestHandler
+	{
+		@Override
+		public void respond(final IRequestCycle requestCycle)
+		{
+			WebResponse response = (WebResponse) requestCycle.getResponse();
+
+			final String encoding = Application.get().getRequestCycleSettings().getResponseRequestEncoding();
+			response.setContentType("application/json; charset=" + encoding);
+			response.disableCaching();
+
+			List<T> choices = ChoiceModelBehavior.this.getChoices();
+
+			if (choices != null)
 			{
-				WebResponse response = (WebResponse) requestCycle.getResponse();
+				int index = 0;
+				StringBuilder builder = new StringBuilder("[");
 
-				final String encoding = Application.get().getRequestCycleSettings().getResponseRequestEncoding();
-				response.setContentType("application/json; charset=" + encoding);
-				response.disableCaching();
-
-				List<T> choices = ChoiceModelBehavior.this.getChoices();
-
-				if (choices != null)
+				for (T choice : choices)
 				{
-					int index = 0;
-					StringBuilder builder = new StringBuilder("[");
-
-					for (T choice : choices)
+					if (index++ > 0)
 					{
-						if (index++ > 0)
-						{
-							builder.append(", ");
-						}
-
-						builder.append("{ ");
-						builder.append(RendererUtils.getJsonBody(choice, renderer));
-
-						for (String property : ChoiceModelBehavior.this.getProperties())
-						{
-							builder.append(", ");
-							builder.append(RendererUtils.getJsonBody(choice, renderer, property));
-						}
-
-						builder.append(" }");
+						builder.append(", ");
 					}
 
-					builder.append("]");
+					builder.append("{ ");
+					builder.append(RendererUtils.getJsonBody(choice, renderer));
 
-					response.write(builder);
+					for (String property : ChoiceModelBehavior.this.getProperties())
+					{
+						builder.append(", ");
+						builder.append(RendererUtils.getJsonBody(choice, renderer, property));
+					}
+
+					builder.append(" }");
 				}
-			}
 
-			@Override
-			public void detach(final IRequestCycle requestCycle)
-			{
-				// noop
+				response.write(builder.append("]"));
 			}
-		};
+		}
+
+		@Override
+		public void detach(final IRequestCycle requestCycle)
+		{
+			// noop
+		}
 	}
 }

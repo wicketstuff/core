@@ -44,6 +44,9 @@ public abstract class ConfirmButton extends FormSubmittingPanel<String>
 {
 	private static final long serialVersionUID = 1L;
 
+	private final IModel<String> labelModel;
+	private final IModel<String> titleModel;
+
 	/**
 	 * Constructor
 	 *
@@ -69,13 +72,28 @@ public abstract class ConfirmButton extends FormSubmittingPanel<String>
 	{
 		super(id, message);
 
-		final AbstractWindow<?> window = this.newWindow("window", title, this.getModel());
+		this.labelModel = label;
+		this.titleModel = title;
+	}
+
+	// Events //
+
+	@Override
+	protected void onInitialize()
+	{
+		super.onInitialize();
+
+		// TODO add Models in jquery-ui ConfirmButton too
+
+		// window //
+		final AbstractWindow<?> window = this.newWindow("window", this.titleModel, this.getModel());
 		this.add(window);
 
+		// button //
 		final AjaxButton button = new AjaxButton("button") {
 
 			private static final long serialVersionUID = 1L;
-			
+
 			@Override
 			protected String getIcon()
 			{
@@ -86,7 +104,7 @@ public abstract class ConfirmButton extends FormSubmittingPanel<String>
 			protected void onInitialize()
 			{
 				super.onInitialize();
-				
+
 				// does not validate the form before the window is being displayed
 				this.setDefaultFormProcessing(false);
 			}
@@ -100,7 +118,17 @@ public abstract class ConfirmButton extends FormSubmittingPanel<String>
 
 		this.add(button);
 
-		button.add(new Label("label", label).setRenderBodyOnly(true));
+		// button label //
+		button.add(new Label("label", this.labelModel).setRenderBodyOnly(true));
+	}
+	
+	@Override
+	protected void onDetach()
+	{
+		super.onDetach();
+		
+		this.labelModel.detach();
+		this.titleModel.detach();
 	}
 
 	// Properties //
