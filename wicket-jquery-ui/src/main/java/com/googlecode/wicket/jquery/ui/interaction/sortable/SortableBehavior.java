@@ -169,9 +169,16 @@ public abstract class SortableBehavior<T> extends JQueryUIBehavior implements IJ
 		}
 	}
 
-	protected T findItem(String hash, List<T> list)
+	/**
+	 * A helper method to locate an item in a list by identifier
+	 *
+	 * @param id The identifier of the item
+	 * @param list The list of items
+	 * @return The item with that identifier or {@code null} if there is no such
+	 */
+	protected T findItem(String id, List<T> list)
 	{
-		return ListUtils.fromHash(Integer.parseInt(hash, 10), list);
+		return ListUtils.fromHash(Integer.parseInt(id, 10), list);
 	}
 
 	// Factories //

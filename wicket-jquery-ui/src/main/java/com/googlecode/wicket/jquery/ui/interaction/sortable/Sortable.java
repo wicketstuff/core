@@ -271,16 +271,23 @@ public abstract class Sortable<T> extends JQueryGenericContainer<List<T>> implem
 			}
 
 			@Override
-			protected T findItem(String hash, List<T> list)
+			protected T findItem(String id, List<T> list)
 			{
-				return Sortable.this.findItem(hash, list);
+				return Sortable.this.findItem(id, list);
 			}
 		};
 	}
 
-	protected T findItem(String hash, List<T> list)
+	/**
+	 * A helper method to locate an item in a list by identifier
+	 *
+	 * @param id The identifier of the item
+	 * @param list The list of items
+	 * @return The item with that identifier or {@code null} if there is no such
+	 */
+	protected T findItem(String id, List<T> list)
 	{
-		return ListUtils.fromHash(Integer.parseInt(hash, 10), list);
+		return ListUtils.fromHash(Integer.parseInt(id, 10), list);
 	}
 
 	/**
