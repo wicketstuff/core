@@ -44,7 +44,7 @@ import com.googlecode.wicket.jquery.ui.widget.tabs.AjaxTab;
 public abstract class AccordionBehavior extends JQueryUIBehavior implements IJQueryAjaxAware, IAccordionListener
 {
 	private static final long serialVersionUID = 1L;
-	private static final String METHOD = "accordion";
+	public static final String METHOD = "accordion";
 
 	private JQueryAjaxBehavior createEventBehavior = null;
 	private JQueryAjaxBehavior activateEventBehavior = null;

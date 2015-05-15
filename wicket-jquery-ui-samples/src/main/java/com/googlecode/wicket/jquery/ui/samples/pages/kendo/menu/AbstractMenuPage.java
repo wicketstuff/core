@@ -5,8 +5,6 @@ import java.util.List;
 
 import com.googlecode.wicket.jquery.ui.samples.SamplePage;
 
-
-
 abstract class AbstractMenuPage extends SamplePage
 {
 	private static final long serialVersionUID = 1L;
@@ -19,7 +17,8 @@ abstract class AbstractMenuPage extends SamplePage
 	protected List<DemoLink> getDemoLinks()
 	{
 		return Arrays.asList(
-				new DemoLink(KendoMenuPage.class, "Menu")
+				new DemoLink(KendoMenuPage.class, "Menu"),
+				new DemoLink(KendoContextMenuPage.class, "Context Menu")
 //				new DemoLink(AjaxMenuPage.class, "Ajax Menu")
 			);
 	}

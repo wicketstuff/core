@@ -39,7 +39,7 @@ import com.googlecode.wicket.jquery.core.Options;
  * @since 6.19.0
  * @since 7.0.0
  */
-// FIXME: target.add(myTabbedPannel) does not work
+// FIXME: target.add(myTabbedPannel) does not work, try with #destroy
 public class TabbedPanel extends JQueryGenericPanel<List<ITab>> implements ITabsListener
 {
 	private static final long serialVersionUID = 1L;

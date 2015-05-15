@@ -36,7 +36,7 @@ import com.googlecode.wicket.kendo.ui.KendoUIBehavior;
 public abstract class WindowBehavior extends KendoUIBehavior implements IJQueryAjaxAware, IWindowListener
 {
 	private static final long serialVersionUID = 1L;
-	private static final String METHOD = "kendoWindow";
+	public static final String METHOD = "kendoWindow";
 
 	private JQueryAjaxBehavior onActionBehavior = null;
 	private JQueryAjaxBehavior onCloseBehavior = null;

@@ -33,7 +33,7 @@ import com.googlecode.wicket.kendo.ui.KendoUIBehavior;
 public class NotificationBehavior extends KendoUIBehavior
 {
 	private static final long serialVersionUID = 1L;
-	private static final String METHOD = "kendoNotification";
+	public static final String METHOD = "kendoNotification";
 
 	/**
 	 * Constructor

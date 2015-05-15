@@ -37,7 +37,7 @@ import com.googlecode.wicket.kendo.ui.utils.DebugUtils;
 public abstract class AutoCompleteBehavior extends KendoUIBehavior implements IJQueryAjaxAware, IAutoCompleteListener
 {
 	private static final long serialVersionUID = 1L;
-	private static final String METHOD = "kendoAutoComplete";
+	public static final String METHOD = "kendoAutoComplete";
 
 	private JQueryAjaxBehavior onSelectBehavior = null;
 

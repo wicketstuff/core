@@ -42,7 +42,7 @@ import com.googlecode.wicket.jquery.ui.JQueryUIBehavior;
 public abstract class TabsBehavior extends JQueryUIBehavior implements IJQueryAjaxAware, ITabsListener
 {
 	private static final long serialVersionUID = 1L;
-	private static final String METHOD = "tabs";
+	public static final String METHOD = "tabs";
 
 	private JQueryAjaxBehavior createEventBehavior = null;
 	private JQueryAjaxBehavior activateEventBehavior = null;

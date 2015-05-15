@@ -42,7 +42,7 @@ import com.googlecode.wicket.kendo.ui.renderer.ChoiceRenderer;
 public class ComboBox<T> extends TextField<String> implements IJQueryWidget
 {
 	private static final long serialVersionUID = 1L;
-	private static final String METHOD = "kendoComboBox";
+	public static final String METHOD = "kendoComboBox";
 
 	private final IModel<List<T>> choices;
 	private final ChoiceRenderer<? super T> renderer;

@@ -186,7 +186,7 @@ public class CheckChoice<T> extends CheckBoxMultipleChoice<T> implements IJQuery
 	public static class CheckChoiceBehavior extends JQueryUIBehavior
 	{
 		private static final long serialVersionUID = 1L;
-		private static final String METHOD = "buttonset";
+		public static final String METHOD = "buttonset";
 
 		public CheckChoiceBehavior(String selector)
 		{

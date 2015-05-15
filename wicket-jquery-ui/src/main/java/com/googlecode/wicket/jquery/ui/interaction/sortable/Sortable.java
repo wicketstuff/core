@@ -204,7 +204,7 @@ public abstract class Sortable<T> extends JQueryGenericContainer<List<T>> implem
 
 	/**
 	 * Sets the connected {@link Sortable} reference.<br/>
-	 * Suppling a non-null {@link Sortable} will activate {@link #isOnReceiveEnabled()}
+	 * Supplying a non-null {@link Sortable} will activate {@link #isOnReceiveEnabled()}
 	 *
 	 * @param sortable the {@link Sortable}
 	 * @see #isOnReceiveEnabled()

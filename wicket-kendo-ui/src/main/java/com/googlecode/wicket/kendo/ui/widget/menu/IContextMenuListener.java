@@ -14,35 +14,31 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.googlecode.wicket.jquery.ui.form.button;
+package com.googlecode.wicket.kendo.ui.widget.menu;
 
-import com.googlecode.wicket.jquery.core.JQueryBehavior;
-import com.googlecode.wicket.jquery.core.Options;
-import com.googlecode.wicket.jquery.ui.JQueryUIBehavior;
+import org.apache.wicket.ajax.AjaxRequestTarget;
 
 /**
- * Provides a jQuery button {@link JQueryBehavior}
- *
+ * Event listener shared by the {@link ContextMenu} widget and the {@link ContextMenuBehavior}
+ * 
  * @author Sebastien Briquet - sebfz1
+ * @since 6.20.0
  */
-//XXX: moved button.Button.ButtonBehavior to button.ButtonBehavior
-public class ButtonBehavior extends JQueryUIBehavior
+interface IContextMenuListener
 {
-	private static final long serialVersionUID = 1L;
-	public static final String METHOD = "button";
+	/**
+	 * Indicates whether the 'open' event is enabled.<br />
+	 * If true, the {@link #onOpen(AjaxRequestTarget)} event will be triggered.
+	 *
+	 * @return false by default
+	 */
+	boolean isOpenEventEnabled();
 
-	public ButtonBehavior(String selector)
-	{
-		super(selector, METHOD);
-	}
-
-	public ButtonBehavior(String selector, Options options)
-	{
-		super(selector, METHOD, options);
-	}
-
-	public ButtonBehavior(String selector, String icon)
-	{
-		super(selector, METHOD, new Options("icons", String.format("{ primary: '%s' }", icon)));
-	}
+	/**
+	 * Triggered when the context menu is opened
+	 *
+	 * @param target the {@link AjaxRequestTarget}
+	 * @see #isOpenEventEnabled()
+	 */
+	void onOpen(AjaxRequestTarget target);
 }

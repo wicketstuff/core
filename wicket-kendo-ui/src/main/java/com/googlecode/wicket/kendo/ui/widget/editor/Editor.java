@@ -36,7 +36,7 @@ import com.googlecode.wicket.kendo.ui.KendoUIBehavior;
 public class Editor<T> extends TextArea<T> implements IJQueryWidget
 {
 	private static final long serialVersionUID = 1L;
-	private static final String METHOD = "kendoEditor";
+	public static final String METHOD = "kendoEditor";
 
 	private final Options options;
 

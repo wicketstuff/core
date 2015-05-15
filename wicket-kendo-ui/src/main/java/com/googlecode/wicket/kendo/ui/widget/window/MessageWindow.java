@@ -19,6 +19,7 @@ package com.googlecode.wicket.kendo.ui.widget.window;
 import java.util.List;
 
 import org.apache.wicket.AttributeModifier;
+import org.apache.wicket.Component;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.form.Form;
@@ -37,7 +38,7 @@ public abstract class MessageWindow extends Window<String>
 {
 	private static final long serialVersionUID = 1L;
 
-	private Label label;
+	private Component label;
 	private final Form<?> form;
 
 	/**
@@ -150,10 +151,6 @@ public abstract class MessageWindow extends Window<String>
 		// icon //
 		this.add(new EmptyPanel("icon").add(AttributeModifier.append("class", KendoIcon.getCssClass(icon))));
 
-		// label //
-		this.label = new Label("text", this.getModel());
-		this.add(this.label.setOutputMarkupId(true));
-
 		// form //
 		this.form = MessageWindow.newForm("form");
 		this.add(this.form);
@@ -174,6 +171,10 @@ public abstract class MessageWindow extends Window<String>
 	{
 		super.onInitialize();
 
+		// label //
+		this.label = newLabel("text", this.getModel());
+		this.add(this.label);
+
 		// buttons //
 		this.form.add(this.newButtonPanel("buttons", this.getButtons()));
 	}
@@ -185,6 +186,20 @@ public abstract class MessageWindow extends Window<String>
 	}
 
 	// Factories //
+
+	/**
+	 * Factory method for creating the component that will be used as a label in the
+	 * window.<br/>
+	 * Override this method when you need to show formatted label.
+	 *
+	 * @param id The component id
+	 * @param model The model with the label text
+	 * @return The label component.
+	 */
+	protected Component newLabel(String id, IModel<String> model)
+	{
+		return new Label(id, model).setOutputMarkupId(true);
+	}
 
 	/**
 	 * Gets a new {@link Form}

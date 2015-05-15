@@ -31,7 +31,7 @@ import com.googlecode.wicket.jquery.ui.plugins.sfmenu.settings.SuperfishLibraryS
 public class SfMenuBehavior extends JQueryBehavior
 {
 	private static final long serialVersionUID = 1L;
-	private static final String METHOD = "superfish";
+	public static final String METHOD = "superfish";
 
 	/***
 	 * Constructor

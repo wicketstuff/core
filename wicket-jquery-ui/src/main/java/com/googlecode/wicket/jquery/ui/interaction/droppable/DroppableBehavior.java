@@ -34,7 +34,7 @@ import com.googlecode.wicket.jquery.ui.JQueryUIBehavior;
 public abstract class DroppableBehavior extends JQueryUIBehavior implements IJQueryAjaxAware, IDroppableListener
 {
 	private static final long serialVersionUID = 1L;
-	private static final String METHOD = "droppable";
+	public static final String METHOD = "droppable";
 
 	private JQueryAjaxBehavior onDropBehavior;
 	private JQueryAjaxBehavior onOverBehavior = null;

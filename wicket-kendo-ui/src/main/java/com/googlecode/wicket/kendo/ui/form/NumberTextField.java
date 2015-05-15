@@ -34,7 +34,7 @@ import com.googlecode.wicket.kendo.ui.KendoUIBehavior;
 public class NumberTextField<T extends Number & Comparable<T>> extends org.apache.wicket.markup.html.form.NumberTextField<T> implements IJQueryWidget
 {
 	private static final long serialVersionUID = 1L;
-	private static final String METHOD = "kendoNumericTextBox";
+	public static final String METHOD = "kendoNumericTextBox";
 
 	private final Options options;
 

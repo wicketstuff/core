@@ -40,7 +40,7 @@ import com.googlecode.wicket.jquery.core.utils.RequestCycleUtils;
 public abstract class RangeDatePickerBehavior extends JQueryBehavior implements IJQueryAjaxAware, IRangeDatePickerListener
 {
 	private static final long serialVersionUID = 1L;
-	private static final String METHOD = "DatePicker";
+	public static final String METHOD = "DatePicker";
 
 	private JQueryAjaxBehavior onRangeChangeBehavior;
 
