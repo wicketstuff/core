@@ -214,6 +214,20 @@ public abstract class Sortable<T> extends JQueryGenericContainer<List<T>> implem
 		this.connectedSortable = sortable;
 	}
 
+	/**
+	 * Helper method to locate an item in a list by identifier.<br />
+	 * By default, uses item's hashcode as identifier.
+	 *
+	 * @param id the item id
+	 * @param list the list of items
+	 * @return the item with that identifier or {@code null} if there is no such
+	 * @see SortableBehavior#findItem(String, List)
+	 */
+	protected T findItem(String id, List<T> list)
+	{
+		return ListUtils.fromHash(Integer.parseInt(id), list);
+	}
+
 	// IJQueryWidget //
 
 	@Override
@@ -250,6 +264,12 @@ public abstract class Sortable<T> extends JQueryGenericContainer<List<T>> implem
 				}
 
 				return Collections.emptyList();
+			}
+
+			@Override
+			protected T findItem(String id, List<T> list)
+			{
+				return Sortable.this.findItem(id, list);
 			}
 
 			@Override

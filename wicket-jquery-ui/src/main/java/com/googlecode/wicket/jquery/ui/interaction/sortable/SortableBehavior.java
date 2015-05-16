@@ -111,6 +111,20 @@ public abstract class SortableBehavior<T> extends JQueryUIBehavior implements IJ
 		}
 	}
 
+	/**
+	 * Helper method to locate an item in a list by identifier.<br />
+	 * By default, uses item's hashcode as identifier.
+	 *
+	 * @param id the item id
+	 * @param list the list of items
+	 * @return the item with that identifier or {@code null} if there is no such
+	 * @see Sortable#findItem(String, List)
+	 */
+	protected T findItem(String id, List<T> list)
+	{
+		return ListUtils.fromHash(Integer.parseInt(id), list);
+	}
+
 	// Events //
 
 	@Override
@@ -137,7 +151,7 @@ public abstract class SortableBehavior<T> extends JQueryUIBehavior implements IJ
 		if (event instanceof SortableEvent)
 		{
 			SortableEvent ev = (SortableEvent) event;
-			int hash = ev.getHash();
+			String hash = ev.getHash();
 			int index = ev.getIndex();
 
 			if (event instanceof UpdateEvent)
@@ -146,7 +160,7 @@ public abstract class SortableBehavior<T> extends JQueryUIBehavior implements IJ
 
 				if (list != null)
 				{
-					this.onUpdate(target, ListUtils.fromHash(hash, list), index);
+					this.onUpdate(target, findItem(hash, list), index);
 				}
 			}
 
@@ -156,7 +170,7 @@ public abstract class SortableBehavior<T> extends JQueryUIBehavior implements IJ
 
 				if (!list.isEmpty())
 				{
-					this.onReceive(target, ListUtils.fromHash(hash, list), index);
+					this.onReceive(target, findItem(hash, list), index);
 				}
 			}
 
@@ -166,7 +180,7 @@ public abstract class SortableBehavior<T> extends JQueryUIBehavior implements IJ
 
 				if (list != null)
 				{
-					this.onRemove(target, ListUtils.fromHash(hash, list));
+					this.onRemove(target, findItem(hash, list));
 				}
 			}
 		}
@@ -189,7 +203,11 @@ public abstract class SortableBehavior<T> extends JQueryUIBehavior implements IJ
 			@Override
 			protected CallbackParameter[] getCallbackParameters()
 			{
-				return new CallbackParameter[] { CallbackParameter.context("event"), CallbackParameter.context("ui"), CallbackParameter.resolved("hash", "ui.item.data('hash')"), CallbackParameter.resolved("index", "ui.item.index()") };
+				return new CallbackParameter[] { // lf
+						CallbackParameter.context("event"), // lf
+						CallbackParameter.context("ui"), // lf
+						CallbackParameter.resolved("hash", "ui.item.data('hash')"), // lf
+						CallbackParameter.resolved("index", "ui.item.index()") };
 			}
 
 			@Override
@@ -215,7 +233,11 @@ public abstract class SortableBehavior<T> extends JQueryUIBehavior implements IJ
 			@Override
 			protected CallbackParameter[] getCallbackParameters()
 			{
-				return new CallbackParameter[] { CallbackParameter.context("event"), CallbackParameter.context("ui"), CallbackParameter.resolved("hash", "ui.item.data('hash')"), CallbackParameter.resolved("index", "ui.item.index()") };
+				return new CallbackParameter[] { // lf
+						CallbackParameter.context("event"), // lf
+						CallbackParameter.context("ui"), // lf
+						CallbackParameter.resolved("hash", "ui.item.data('hash')"), // lf
+						CallbackParameter.resolved("index", "ui.item.index()") };
 			}
 
 			@Override
@@ -241,7 +263,10 @@ public abstract class SortableBehavior<T> extends JQueryUIBehavior implements IJ
 			@Override
 			protected CallbackParameter[] getCallbackParameters()
 			{
-				return new CallbackParameter[] { CallbackParameter.context("event"), CallbackParameter.context("ui"), CallbackParameter.resolved("hash", "ui.item.data('hash')") };
+				return new CallbackParameter[] { // lf
+						CallbackParameter.context("event"), // lf
+						CallbackParameter.context("ui"), // lf
+						CallbackParameter.resolved("hash", "ui.item.data('hash')") };
 			}
 
 			@Override
@@ -259,12 +284,12 @@ public abstract class SortableBehavior<T> extends JQueryUIBehavior implements IJ
 	 */
 	protected static class SortableEvent extends JQueryEvent
 	{
-		private final int hash;
+		private final String hash;
 		private final int index;
 
 		public SortableEvent()
 		{
-			this.hash = RequestCycleUtils.getQueryParameterValue("hash").toInt(0);
+			this.hash = RequestCycleUtils.getQueryParameterValue("hash").toString();
 			this.index = RequestCycleUtils.getQueryParameterValue("index").toInt(-1); // remove-behavior will default to -1
 		}
 
@@ -273,7 +298,7 @@ public abstract class SortableBehavior<T> extends JQueryUIBehavior implements IJ
 		 *
 		 * @return the hash
 		 */
-		public int getHash()
+		public String getHash()
 		{
 			return this.hash;
 		}
