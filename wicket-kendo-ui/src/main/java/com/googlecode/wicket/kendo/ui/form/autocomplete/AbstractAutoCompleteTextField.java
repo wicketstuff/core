@@ -167,12 +167,16 @@ public abstract class AbstractAutoCompleteTextField<T, C> extends TextField<T> i
 	{
 		super.onInitialize();
 
-		this.add(this.choiceModelBehavior = this.newChoiceModelBehavior());
+		this.choiceModelBehavior = this.newChoiceModelBehavior();
+		this.add(this.choiceModelBehavior);
+		
+		// choiceModelBehavior should be set at this point
 		this.add(JQueryWidget.newWidgetBehavior(this));
 
 		if (this.template != null)
 		{
-			this.add(this.templateBehavior = new KendoTemplateBehavior(this.template));
+			this.templateBehavior = new KendoTemplateBehavior(this.template);
+			this.add(this.templateBehavior);
 		}
 	}
 

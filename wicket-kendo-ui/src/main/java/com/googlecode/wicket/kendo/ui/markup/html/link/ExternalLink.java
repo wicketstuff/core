@@ -107,6 +107,7 @@ public class ExternalLink extends org.apache.wicket.markup.html.link.ExternalLin
 	@Override
 	public void onBeforeRender(JQueryBehavior behavior)
 	{
+		// noop
 	}
 
 	@Override

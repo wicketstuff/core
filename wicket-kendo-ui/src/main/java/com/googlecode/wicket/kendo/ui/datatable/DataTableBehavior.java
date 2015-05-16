@@ -46,7 +46,7 @@ public abstract class DataTableBehavior extends KendoUIBehavior implements IJQue
 
 	protected final List<? extends IColumn> columns;
 
-	private JQueryAjaxBehavior onToolbarClickBehavior; // toolbar buttons
+	private JQueryAjaxBehavior onToolbarClickAjaxBehavior; // toolbar buttons
 
 	/**
 	 * Constructor
@@ -83,15 +83,15 @@ public abstract class DataTableBehavior extends KendoUIBehavior implements IJQue
 		// column buttons //
 		for (ColumnButton button : this.getColumnButtons())
 		{
-			component.add(this.newButtonAjaxBehavior(button));
+			component.add(this.newButtonAjaxBehavior(this, button));
 		}
 
 		// toolbar buttons //
-		this.onToolbarClickBehavior = this.newToolbarAjaxBehavior();
+		this.onToolbarClickAjaxBehavior = this.newToolbarClickAjaxBehavior(this);
 
-		if (this.onToolbarClickBehavior != null)
+		if (this.onToolbarClickAjaxBehavior != null)
 		{
-			component.add(this.onToolbarClickBehavior);
+			component.add(this.onToolbarClickAjaxBehavior);
 		}
 	}
 
@@ -147,9 +147,9 @@ public abstract class DataTableBehavior extends KendoUIBehavior implements IJQue
 		super.onConfigure(component);
 
 		// events //
-		if (this.onToolbarClickBehavior != null)
+		if (this.onToolbarClickAjaxBehavior != null)
 		{
-			this.on(this.selector + " .k-grid-toolbar .k-button", "click", this.onToolbarClickBehavior.getCallbackFunction());
+			this.on(this.selector + " .k-grid-toolbar .k-button", "click", this.onToolbarClickAjaxBehavior.getCallbackFunction());
 		}
 
 		// options //
@@ -249,16 +249,18 @@ public abstract class DataTableBehavior extends KendoUIBehavior implements IJQue
 	/**
 	 * Gets the {@link JQueryAjaxBehavior} that will be called when the user clicks a toolbar button
 	 *
+	 * @param source {@link IJQueryAjaxAware}
 	 * @return the {@link JQueryAjaxBehavior}
 	 */
-	protected abstract JQueryAjaxBehavior newToolbarAjaxBehavior();
+	protected abstract JQueryAjaxBehavior newToolbarClickAjaxBehavior(IJQueryAjaxAware source);
 
 	/**
 	 * Gets a new {@link JQueryAjaxBehavior} that will be called by a table's button.
 	 * This method may be overridden to provide additional behaviors
 	 *
+	 * @param source the {@link IJQueryAjaxAware}
 	 * @param button the button that is passed to the behavior so it can be retrieved via the {@link ClickEvent}
 	 * @return the {@link JQueryAjaxBehavior}
 	 */
-	protected abstract JQueryAjaxBehavior newButtonAjaxBehavior(ColumnButton button);
+	protected abstract JQueryAjaxBehavior newButtonAjaxBehavior(IJQueryAjaxAware source, ColumnButton button);
 }

@@ -23,7 +23,7 @@ import org.apache.wicket.util.io.IClusterable;
  *
  * @author Sebastien Briquet - sebfz1
  */
-public class RangeValue implements IClusterable /*, Comparable<RangeValue> */
+public class RangeValue implements IClusterable
 {
 	private static final long serialVersionUID = 1L;
 
@@ -91,24 +91,4 @@ public class RangeValue implements IClusterable /*, Comparable<RangeValue> */
 	{
 		return String.format("[%d, %d]", this.getLower(), this.getUpper());
 	}
-
-	// Comparable<RangeValue> //
-//	@Override
-//	public int compareTo(RangeValue value)
-//	{
-//		if (this.lower == value.lower && this.upper == value.upper)
-//		{
-//			return 0;
-//		}
-//
-//		if (this.lower < value.lower)
-//		{
-//			return -1;
-//		}
-//
-//		if (this.upper > value.upper)
-//		{
-//			return 1;
-//		}
-//	}
 }

@@ -34,6 +34,16 @@ public class DateUtils
 	public static final TimeZone UTC = TimeZone.getTimeZone("UTC");
 
 	/**
+	 * Gets the current UTC date
+	 * 
+	 * @return the current UTC date
+	 */
+	public static long utc()
+	{
+		return DateUtils.utc(new Date());
+	}
+
+	/**
 	 * Converts a local date to a UTC date
 	 * 
 	 * @param date the date to convert

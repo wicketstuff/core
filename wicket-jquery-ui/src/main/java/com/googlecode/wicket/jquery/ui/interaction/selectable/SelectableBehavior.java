@@ -45,7 +45,7 @@ public abstract class SelectableBehavior<T extends Serializable> extends JQueryU
 	private static final long serialVersionUID = 1L;
 	public static final String METHOD = "selectable";
 
-	private JQueryAjaxBehavior onStopBehavior;
+	private JQueryAjaxBehavior onStopAjaxBehavior;
 
 	/**
 	 * Constructor
@@ -89,7 +89,8 @@ public abstract class SelectableBehavior<T extends Serializable> extends JQueryU
 	{
 		super.bind(component);
 
-		component.add(this.onStopBehavior = this.newOnStopBehavior());
+		this.onStopAjaxBehavior = this.newOnStopAjaxBehavior(this);
+		component.add(this.onStopAjaxBehavior);
 	}
 
 	// Events //
@@ -98,7 +99,7 @@ public abstract class SelectableBehavior<T extends Serializable> extends JQueryU
 	{
 		super.onConfigure(component);
 
-		this.setOption("stop", this.onStopBehavior.getCallbackFunction());
+		this.setOption("stop", this.onStopAjaxBehavior.getCallbackFunction());
 		this.setOption("filter", Options.asString(this.getItemSelector()));
 	}
 
@@ -127,11 +128,12 @@ public abstract class SelectableBehavior<T extends Serializable> extends JQueryU
 	/**
 	 * Gets the ajax behavior that will be triggered when the user has selected items
 	 *
+	 * @param source the {@link IJQueryAjaxAware}
 	 * @return the {@link JQueryAjaxBehavior}
 	 */
-	protected JQueryAjaxBehavior newOnStopBehavior()
+	protected JQueryAjaxBehavior newOnStopAjaxBehavior(IJQueryAjaxAware source)
 	{
-		return new JQueryAjaxBehavior(this) {
+		return new JQueryAjaxBehavior(source) {
 
 			private static final long serialVersionUID = 1L;
 

@@ -283,9 +283,9 @@ public class Selectable<T extends Serializable> extends JQueryGenericContainer<L
 		private static final long serialVersionUID = 1L;
 
 		@Override
-		protected Draggable<?> create(String id, String selector, final String helper)
+		protected Draggable<T> create(String id, String selector, final String helper)
 		{
-			Draggable<T> draggable = new Draggable<T>(id) {
+			return new Draggable<T>(id) {
 
 				private static final long serialVersionUID = 1L;
 
@@ -308,8 +308,6 @@ public class Selectable<T extends Serializable> extends JQueryGenericContainer<L
 					// It is marked as important for the icon to not disappear while selecting over it.
 				}
 			};
-
-			return draggable;
 		}
 	}
 }

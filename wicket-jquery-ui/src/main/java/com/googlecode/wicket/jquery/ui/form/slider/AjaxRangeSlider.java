@@ -28,8 +28,8 @@ import com.googlecode.wicket.jquery.core.JQueryEvent;
 import com.googlecode.wicket.jquery.core.ajax.IJQueryAjaxAware;
 import com.googlecode.wicket.jquery.core.ajax.JQueryAjaxPostBehavior;
 import com.googlecode.wicket.jquery.core.event.IValueChangedListener;
-import com.googlecode.wicket.jquery.ui.ajax.JQueryAjaxChangeBehavior;
-import com.googlecode.wicket.jquery.ui.ajax.JQueryAjaxChangeBehavior.ChangeEvent;
+import com.googlecode.wicket.jquery.ui.ajax.OnChangeAjaxBehavior;
+import com.googlecode.wicket.jquery.ui.ajax.OnChangeAjaxBehavior.ChangeEvent;
 
 /**
  * Provides a jQuery range slider based on a {@link FormComponentPanel} This ajax version will post the {@link Component}, using a {@link JQueryAjaxPostBehavior}, when the 'change' javascript method is called.
@@ -149,9 +149,9 @@ public class AjaxRangeSlider extends RangeSlider implements IJQueryAjaxAware, IV
 			}
 
 			@Override
-			protected JQueryAjaxPostBehavior newOnChangeBehavior()
+			protected JQueryAjaxPostBehavior newOnChangeAjaxBehavior(IJQueryAjaxAware source)
 			{
-				return new JQueryAjaxChangeBehavior(this, AjaxRangeSlider.this.lower, AjaxRangeSlider.this.upper);
+				return new OnChangeAjaxBehavior(source, AjaxRangeSlider.this.lower, AjaxRangeSlider.this.upper);
 			}
 		};
 	}

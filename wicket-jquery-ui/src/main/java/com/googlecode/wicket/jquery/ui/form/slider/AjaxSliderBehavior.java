@@ -39,7 +39,7 @@ public abstract class AjaxSliderBehavior extends SliderBehavior implements IJQue
 {
 	private static final long serialVersionUID = 1L;
 
-	private JQueryAjaxBehavior onChangeBehavior;
+	private JQueryAjaxBehavior onChangeAjaxBehavior;
 
 	public AjaxSliderBehavior(String selector)
 	{
@@ -57,7 +57,8 @@ public abstract class AjaxSliderBehavior extends SliderBehavior implements IJQue
 	{
 		super.bind(component);
 
-		component.add(this.onChangeBehavior = this.newOnChangeBehavior());
+		this.onChangeAjaxBehavior = this.newOnChangeAjaxBehavior(this);
+		component.add(this.onChangeAjaxBehavior);
 	}
 
 	// Events //
@@ -66,14 +67,16 @@ public abstract class AjaxSliderBehavior extends SliderBehavior implements IJQue
 	{
 		super.onConfigure(component);
 
-		this.setOption("change", this.onChangeBehavior.getCallbackFunction());
+		this.setOption("change", this.onChangeAjaxBehavior.getCallbackFunction());
 	}
 
 	// Factories //
+
 	/**
 	 * Gets a new {@link JQueryAjaxPostBehavior} that will be called on 'change' javascript event
-	 *
+	 * 
+	 * @param source the {@link IJQueryAjaxAware}
 	 * @return the {@link JQueryAjaxPostBehavior}
 	 */
-	protected abstract JQueryAjaxPostBehavior newOnChangeBehavior();
+	protected abstract JQueryAjaxPostBehavior newOnChangeAjaxBehavior(IJQueryAjaxAware source);
 }

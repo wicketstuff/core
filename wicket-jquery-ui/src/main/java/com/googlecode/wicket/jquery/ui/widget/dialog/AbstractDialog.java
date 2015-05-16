@@ -171,7 +171,9 @@ public abstract class AbstractDialog<T extends Serializable> extends GenericPane
 	{
 		super.onInitialize();
 
-		this.add(this.widgetBehavior = JQueryWidget.newWidgetBehavior(this)); // warning: ButtonAjaxBehavior(s) should be set at this point!
+		// warning: ButtonAjaxBehavior(s) should be set at this point!
+		this.widgetBehavior = JQueryWidget.newWidgetBehavior(this);
+		this.add(this.widgetBehavior);
 	}
 
 	@Override

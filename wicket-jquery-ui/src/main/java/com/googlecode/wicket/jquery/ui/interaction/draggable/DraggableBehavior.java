@@ -45,8 +45,8 @@ public abstract class DraggableBehavior extends JQueryUIBehavior implements IJQu
 	private static final long serialVersionUID = 1L;
 	public static final String METHOD = "draggable";
 
-	private JQueryAjaxBehavior onDragStartBehavior;
-	private JQueryAjaxBehavior onDragStopBehavior = null;
+	private JQueryAjaxBehavior onDragStartAjaxBehavior;
+	private JQueryAjaxBehavior onDragStopAjaxBehavior = null;
 	private Component component = null;
 
 	/**
@@ -100,18 +100,21 @@ public abstract class DraggableBehavior extends JQueryUIBehavior implements IJQu
 			throw new WicketRuntimeException("Behavior is already bound to another component.");
 		}
 
+		this.component = component; // warning, not thread-safe: the instance of this behavior should only be used once
+
 		if (this.selector == null)
 		{
-			this.selector = JQueryWidget.getSelector(component);
+			this.selector = JQueryWidget.getSelector(this.component);
 		}
 
-		this.component = component; // warning, not thread-safe: the instance of this behavior should only be used once
-		this.component.add(this.onDragStartBehavior = this.newOnDragStartBehavior());
+		this.onDragStartAjaxBehavior = this.newOnDragStartAjaxBehavior(this);
+		this.component.add(this.onDragStartAjaxBehavior);
 
 		// this event is not enabled by default to prevent unnecessary server round-trips.
 		if (this.isStopEventEnabled())
 		{
-			this.component.add(this.onDragStopBehavior = this.newOnDragStopBehavior());
+			this.onDragStopAjaxBehavior = this.newOnDragStopAjaxBehavior(this);
+			this.component.add(this.onDragStopAjaxBehavior);
 		}
 	}
 
@@ -122,11 +125,11 @@ public abstract class DraggableBehavior extends JQueryUIBehavior implements IJQu
 	{
 		super.onConfigure(component);
 
-		this.setOption("start", this.onDragStartBehavior.getCallbackFunction());
+		this.setOption("start", this.onDragStartAjaxBehavior.getCallbackFunction());
 
-		if (this.onDragStopBehavior != null)
+		if (this.onDragStopAjaxBehavior != null)
 		{
-			this.setOption("stop", this.onDragStopBehavior.getCallbackFunction());
+			this.setOption("stop", this.onDragStopAjaxBehavior.getCallbackFunction());
 		}
 	}
 
@@ -178,11 +181,12 @@ public abstract class DraggableBehavior extends JQueryUIBehavior implements IJQu
 	/**
 	 * Gets a new {@link JQueryAjaxBehavior} that will be called on 'start' javascript event
 	 * 
+	 * @param source the {@link IJQueryAjaxAware}
 	 * @return the {@link JQueryAjaxBehavior}
 	 */
-	protected JQueryAjaxBehavior newOnDragStartBehavior()
+	protected JQueryAjaxBehavior newOnDragStartAjaxBehavior(IJQueryAjaxAware source)
 	{
-		return new JQueryAjaxBehavior(this) {
+		return new JQueryAjaxBehavior(source) {
 
 			private static final long serialVersionUID = 1L;
 
@@ -210,11 +214,12 @@ public abstract class DraggableBehavior extends JQueryUIBehavior implements IJQu
 	/**
 	 * Gets a new {@link JQueryAjaxBehavior} that will be called on 'stop' javascript event
 	 * 
+	 * @param source the {@link IJQueryAjaxAware}
 	 * @return the {@link JQueryAjaxBehavior}
 	 */
-	protected JQueryAjaxBehavior newOnDragStopBehavior()
+	protected JQueryAjaxBehavior newOnDragStopAjaxBehavior(IJQueryAjaxAware source)
 	{
-		return new JQueryAjaxBehavior(this) {
+		return new JQueryAjaxBehavior(source) {
 
 			private static final long serialVersionUID = 1L;
 

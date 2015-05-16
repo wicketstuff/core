@@ -46,8 +46,8 @@ public abstract class AccordionBehavior extends JQueryUIBehavior implements IJQu
 	private static final long serialVersionUID = 1L;
 	public static final String METHOD = "accordion";
 
-	private JQueryAjaxBehavior createEventBehavior = null;
-	private JQueryAjaxBehavior activateEventBehavior = null;
+	private JQueryAjaxBehavior onCreateAjaxBehavior = null;
+	private JQueryAjaxBehavior onActivateAjaxBehavior = null;
 
 	/**
 	 * Constructor
@@ -107,12 +107,14 @@ public abstract class AccordionBehavior extends JQueryUIBehavior implements IJQu
 
 		if (this.isCreateEventEnabled())
 		{
-			component.add(this.createEventBehavior = this.newActivateEventBehavior());
+			this.onCreateAjaxBehavior = this.newOnActivateAjaxBehavior(this);
+			component.add(this.onCreateAjaxBehavior);
 		}
 
 		if (this.isActivateEventEnabled())
 		{
-			component.add(this.activateEventBehavior = this.newActivateEventBehavior());
+			this.onActivateAjaxBehavior = this.newOnActivateAjaxBehavior(this);
+			component.add(this.onActivateAjaxBehavior);
 		}
 	}
 
@@ -133,14 +135,14 @@ public abstract class AccordionBehavior extends JQueryUIBehavior implements IJQu
 	{
 		super.onConfigure(component);
 
-		if (this.createEventBehavior != null)
+		if (this.onCreateAjaxBehavior != null)
 		{
-			this.setOption("create", this.createEventBehavior.getCallbackFunction());
+			this.setOption("create", this.onCreateAjaxBehavior.getCallbackFunction());
 		}
 
-		if (this.activateEventBehavior != null)
+		if (this.onActivateAjaxBehavior != null)
 		{
-			this.setOption("activate", this.activateEventBehavior.getCallbackFunction());
+			this.setOption("activate", this.onActivateAjaxBehavior.getCallbackFunction());
 		}
 	}
 
@@ -170,18 +172,22 @@ public abstract class AccordionBehavior extends JQueryUIBehavior implements IJQu
 	/**
 	 * Gets a new {@link JQueryAjaxBehavior} that acts as the 'activate' callback
 	 *
+	 * @param source the {@link IJQueryAjaxAware}
 	 * @return the {@link JQueryAjaxBehavior}
 	 */
-	protected JQueryAjaxBehavior newActivateEventBehavior()
+	protected JQueryAjaxBehavior newOnActivateAjaxBehavior(IJQueryAjaxAware source)
 	{
-		return new JQueryAjaxBehavior(this) {
+		return new JQueryAjaxBehavior(source) {
 
 			private static final long serialVersionUID = 1L;
 
 			@Override
 			protected CallbackParameter[] getCallbackParameters()
 			{
-				return new CallbackParameter[] { CallbackParameter.context("event"), CallbackParameter.context("ui"), CallbackParameter.resolved("index", "jQuery(event.target).accordion('option', 'active')") };
+				return new CallbackParameter[] { // lf
+						CallbackParameter.context("event"), //lf 
+						CallbackParameter.context("ui"), // lf
+						CallbackParameter.resolved("index", "jQuery(event.target).accordion('option', 'active')") };
 			}
 
 			@Override

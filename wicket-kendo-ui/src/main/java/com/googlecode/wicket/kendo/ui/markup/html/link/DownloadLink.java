@@ -109,6 +109,7 @@ public class DownloadLink extends org.apache.wicket.markup.html.link.DownloadLin
 	@Override
 	public void onBeforeRender(JQueryBehavior behavior)
 	{
+		// noop
 	}
 
 	@Override

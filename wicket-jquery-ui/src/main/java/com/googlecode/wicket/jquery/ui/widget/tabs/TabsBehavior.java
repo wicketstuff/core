@@ -44,9 +44,9 @@ public abstract class TabsBehavior extends JQueryUIBehavior implements IJQueryAj
 	private static final long serialVersionUID = 1L;
 	public static final String METHOD = "tabs";
 
-	private JQueryAjaxBehavior createEventBehavior = null;
-	private JQueryAjaxBehavior activateEventBehavior = null;
-	private JQueryAjaxBehavior activatingEventBehavior = null;
+	private JQueryAjaxBehavior onCreateAjaxBehavior = null;
+	private JQueryAjaxBehavior onActivateAjaxBehavior = null;
+	private JQueryAjaxBehavior onActivatingAjaxBehavior = null;
 
 	/**
 	 * Constructor
@@ -108,17 +108,20 @@ public abstract class TabsBehavior extends JQueryUIBehavior implements IJQueryAj
 
 		if (this.isCreateEventEnabled())
 		{
-			component.add(this.createEventBehavior = this.newActivateEventBehavior());
+			this.onCreateAjaxBehavior = this.newOnActivateAjaxBehavior(this);
+			component.add(this.onCreateAjaxBehavior);
 		}
 
 		if (this.isActivateEventEnabled())
 		{
-			component.add(this.activateEventBehavior = this.newActivateEventBehavior());
+			this.onActivateAjaxBehavior = this.newOnActivateAjaxBehavior(this);
+			component.add(this.onActivateAjaxBehavior);
 		}
 
 		if (this.isActivatingEventEnabled())
 		{
-			component.add(this.activatingEventBehavior = this.newActivatingEventBehavior());
+			this.onActivatingAjaxBehavior = this.newOnActivatingAjaxBehavior(this);
+			component.add(this.onActivatingAjaxBehavior);
 		}
 	}
 
@@ -140,19 +143,19 @@ public abstract class TabsBehavior extends JQueryUIBehavior implements IJQueryAj
 	{
 		super.onConfigure(component);
 
-		if (this.createEventBehavior != null)
+		if (this.onCreateAjaxBehavior != null)
 		{
-			this.setOption("create", this.createEventBehavior.getCallbackFunction());
+			this.setOption("create", this.onCreateAjaxBehavior.getCallbackFunction());
 		}
 
-		if (this.activateEventBehavior != null)
+		if (this.onActivateAjaxBehavior != null)
 		{
-			this.setOption("activate", this.activateEventBehavior.getCallbackFunction());
+			this.setOption("activate", this.onActivateAjaxBehavior.getCallbackFunction());
 		}
 
-		if (this.activatingEventBehavior != null)
+		if (this.onActivatingAjaxBehavior != null)
 		{
-			this.setOption("beforeActivate", this.activatingEventBehavior.getCallbackFunction());
+			this.setOption("beforeActivate", this.onActivatingAjaxBehavior.getCallbackFunction());
 		}
 	}
 
@@ -190,11 +193,12 @@ public abstract class TabsBehavior extends JQueryUIBehavior implements IJQueryAj
 	/**
 	 * Gets a new {@link JQueryAjaxBehavior} that acts as the 'activate' javascript callback
 	 *
+	 * @param source the {@link IJQueryAjaxAware}
 	 * @return the {@link JQueryAjaxBehavior}
 	 */
-	protected JQueryAjaxBehavior newActivateEventBehavior()
+	protected JQueryAjaxBehavior newOnActivateAjaxBehavior(IJQueryAjaxAware source)
 	{
-		return new JQueryAjaxBehavior(this) {
+		return new JQueryAjaxBehavior(source) {
 
 			private static final long serialVersionUID = 1L;
 
@@ -219,11 +223,12 @@ public abstract class TabsBehavior extends JQueryUIBehavior implements IJQueryAj
 	/**
 	 * Gets a new {@link JQueryAjaxBehavior} that acts as the 'beforeActivate' javascript callback
 	 *
+	 * @param source the {@link IJQueryAjaxAware}
 	 * @return the {@link JQueryAjaxBehavior}
 	 */
-	protected JQueryAjaxBehavior newActivatingEventBehavior()
+	protected JQueryAjaxBehavior newOnActivatingAjaxBehavior(IJQueryAjaxAware source)
 	{
-		return new JQueryAjaxBehavior(this) {
+		return new JQueryAjaxBehavior(source) {
 
 			private static final long serialVersionUID = 1L;
 

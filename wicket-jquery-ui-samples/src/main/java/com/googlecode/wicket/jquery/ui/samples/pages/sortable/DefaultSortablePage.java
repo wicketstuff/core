@@ -77,7 +77,7 @@ public class DefaultSortablePage extends AbstractSortablePage
 	 */
 	private static List<String> newList(String... items)
 	{
-		ArrayList<String> list = new ArrayList<String>();
+		List<String> list = new ArrayList<String>();
 
 		for (String item : items)
 		{

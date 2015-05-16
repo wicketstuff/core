@@ -16,7 +16,6 @@
  */
 package com.googlecode.wicket.kendo.ui.scheduler;
 
-import java.util.Date;
 import java.util.List;
 
 import org.apache.wicket.Application;
@@ -60,8 +59,8 @@ public class SchedulerModelBehavior extends AbstractAjaxBehavior
 
 		if (this.model != null)
 		{
-			this.setStartDate(this.model, new Date(start));
-			this.setEndDate(this.model, new Date(end));
+			this.setStartDate(this.model, start);
+			this.setEndDate(this.model, end);
 		}
 
 		requestCycle.scheduleRequestHandlerAfterCurrent(this.newRequestHandler());
@@ -72,9 +71,9 @@ public class SchedulerModelBehavior extends AbstractAjaxBehavior
 	 * This can be overridden to perform additional operation on date before the assignment.
 	 *
 	 * @param model the {@link SchedulerModel}
-	 * @param date the {@link Date}
+	 * @param date the timestamp
 	 */
-	protected void setStartDate(SchedulerModel model, Date date)
+	protected void setStartDate(SchedulerModel model, long date)
 	{
 		model.setStart(date);
 	}
@@ -84,9 +83,9 @@ public class SchedulerModelBehavior extends AbstractAjaxBehavior
 	 * This can be overridden to perform additional operation on date before the assignment.
 	 *
 	 * @param model the {@link SchedulerModel}
-	 * @param date the {@link Date}
+	 * @param date the timestamp
 	 */
-	protected void setEndDate(SchedulerModel model, Date date)
+	protected void setEndDate(SchedulerModel model, long date)
 	{
 		model.setEnd(date);
 	}
@@ -98,56 +97,59 @@ public class SchedulerModelBehavior extends AbstractAjaxBehavior
 	 */
 	protected IRequestHandler newRequestHandler()
 	{
-		return new IRequestHandler() {
+		return new SchedulerModelRequestHandler();
+	}
 
-			@Override
-			public void respond(final IRequestCycle requestCycle)
+	/**
+	 * Provides the {@link IRequestHandler}
+	 */
+	protected class SchedulerModelRequestHandler implements IRequestHandler
+	{
+		@Override
+		public void respond(final IRequestCycle requestCycle)
+		{
+			WebResponse response = (WebResponse) requestCycle.getResponse();
+
+			final String encoding = Application.get().getRequestCycleSettings().getResponseRequestEncoding();
+			response.setContentType("text/json; charset=" + encoding);
+			response.disableCaching();
+
+			if (model != null)
 			{
-				WebResponse response = (WebResponse) requestCycle.getResponse();
+				List<SchedulerEvent> list = model.getObject(); // calls load()
 
-				final String encoding = Application.get().getRequestCycleSettings().getResponseRequestEncoding();
-				response.setContentType("text/json; charset=" + encoding);
-				response.disableCaching();
-
-				if (model != null)
+				if (list != null)
 				{
-					List<SchedulerEvent> list = model.getObject(); // calls load()
+					StringBuilder builder = new StringBuilder("[ ");
 
-					if (list != null)
+					int count = 0;
+					for (SchedulerEvent event : list)
 					{
-						StringBuilder builder = new StringBuilder("[ ");
-
-						int count = 0;
-						for (SchedulerEvent event : list)
+						if (model instanceof ISchedulerVisitor)
 						{
-							if (model instanceof ISchedulerVisitor)
-							{
-								event.accept((ISchedulerVisitor) model); // last chance to set options
-							}
-
-							if (event.isVisible())
-							{
-								if (count++ > 0)
-								{
-									builder.append(", ");
-								}
-
-								builder.append(event.toJson());
-							}
+							event.accept((ISchedulerVisitor) model); // last chance to set options
 						}
 
-						builder.append(" ]");
+						if (event.isVisible())
+						{
+							if (count++ > 0)
+							{
+								builder.append(", ");
+							}
 
-						response.write(builder);
+							builder.append(event.toJson());
+						}
 					}
+
+					response.write(builder.append(" ]"));
 				}
 			}
+		}
 
-			@Override
-			public void detach(final IRequestCycle requestCycle)
-			{
-				model.detach();
-			}
-		};
+		@Override
+		public void detach(final IRequestCycle requestCycle)
+		{
+			model.detach();
+		}
 	}
 }

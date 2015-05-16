@@ -19,14 +19,16 @@ package com.googlecode.wicket.jquery.ui.widget.dialog;
 import java.io.Serializable;
 import java.util.List;
 
+import org.apache.wicket.Component;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.form.Form;
-import org.apache.wicket.markup.html.form.RequiredTextField;
+import org.apache.wicket.markup.html.form.FormComponent;
 import org.apache.wicket.markup.html.form.TextField;
 import org.apache.wicket.markup.html.panel.FeedbackPanel;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
+import org.apache.wicket.util.lang.Args;
 
 import com.googlecode.wicket.jquery.ui.panel.JQueryFeedbackPanel;
 
@@ -35,14 +37,17 @@ import com.googlecode.wicket.jquery.ui.panel.JQueryFeedbackPanel;
  *
  * @author Sebastien Briquet - sebfz1
  *
- * @param <T> the type of the model object of the {@link RequiredTextField}
+ * @param <T> the type of the model object of the {@link TextField}
  */
 public abstract class InputDialog<T extends Serializable> extends AbstractFormDialog<T>
 {
 	private static final long serialVersionUID = 1L;
 
+	/** feedback panel */
+	private final FeedbackPanel feedback;
+
 	private final Form<?> form;
-	private IModel<String> label;
+	private IModel<String> labelModel;
 
 	/**
 	 * Constructor supplying a new default model.
@@ -91,27 +96,55 @@ public abstract class InputDialog<T extends Serializable> extends AbstractFormDi
 	{
 		super(id, title, model, true);
 
-		this.label = label;
+		this.labelModel = label;
 
+		// form //
 		this.form = InputDialog.newForm("form");
 		this.add(this.form);
 
-		this.form.add(new Label("label", this.label));
-		this.form.add(new TextField<T>("input", this.getModel()) {
+		// feedback //
+		this.feedback = new JQueryFeedbackPanel("feedback"); // TODO remove this.form.get("input") ?
+		this.form.add(this.feedback);
+	}
 
-			private static final long serialVersionUID = 1L;
+	// Events //
 
-			@Override
-			protected void onConfigure()
-			{
-				super.onConfigure();
+	@Override
+	protected void onInitialize()
+	{
+		super.onInitialize();
 
-				this.setRequired(InputDialog.this.isRequired());
-			}
-		});
+		// label //
+		this.form.add(this.newLabel("label", this.labelModel));
 
-		FeedbackPanel feedback = new JQueryFeedbackPanel("feedback", this.form.get("input"));
-		this.form.add(feedback);
+		// field //
+		this.form.add(this.newTextField("input", this.getModel()).setRequired(this.isRequired()));
+	}
+
+	@Override
+	protected void onOpen(AjaxRequestTarget target)
+	{
+		// TODO remove this?
+		// re-attach the feedback panel to clear previously displayed error message(s)
+		// target.add(this.feedback);
+		super.onOpen(target);
+
+		// TODO test this
+		target.add(this.form);
+	}
+
+	@Override
+	public final void onError(AjaxRequestTarget target)
+	{
+		target.add(this.feedback);
+	}
+
+	@Override
+	protected void onDetach()
+	{
+		super.onDetach();
+
+		this.labelModel.detach();
 	}
 
 	// Properties //
@@ -120,25 +153,26 @@ public abstract class InputDialog<T extends Serializable> extends AbstractFormDi
 	 * Sets the text that will be displayed in front of the text field.
 	 *
 	 * @return the dialog's label
+	 * @deprecated useless, will be removed
 	 */
+	@Deprecated
 	public IModel<String> getLabel()
 	{
-		return this.label;
+		return this.labelModel;
 	}
 
 	/**
 	 * Sets the text that will be displayed in front of the text field.
 	 *
 	 * @param label the dialog's label
+	 * @deprecated useless, will be removed
 	 */
+	@Deprecated
 	public void setLabel(IModel<String> label)
 	{
-		if (label == null)
-		{
-			throw new IllegalArgumentException("argument label must be not null");
-		}
+		Args.notNull(label, "label");
 
-		this.label = label;
+		this.labelModel = label;
 	}
 
 	@Override
@@ -175,20 +209,6 @@ public abstract class InputDialog<T extends Serializable> extends AbstractFormDi
 		return this.findButton(LBL_OK);
 	}
 
-	// Events //
-	@Override
-	protected void onOpen(AjaxRequestTarget target)
-	{
-		// re-attach the feedback panel to clear previously displayed error message(s)
-		target.add(this.form.get("feedback"));
-	}
-
-	@Override
-	public final void onError(AjaxRequestTarget target)
-	{
-		target.add(this.form.get("feedback"));
-	}
-
 	// Factories //
 
 	/**
@@ -209,5 +229,31 @@ public abstract class InputDialog<T extends Serializable> extends AbstractFormDi
 				return false;
 			}
 		};
+	}
+
+	/**
+	 * Gets a new {@link Component} that will be used as a label in the dialog.<br/>
+	 * Override this method when you need to show formatted label.
+	 *
+	 * @param id the markup-id
+	 * @param model the label {@link IModel}
+	 * @return the new label component.
+	 */
+	protected Component newLabel(String id, IModel<String> model)
+	{
+		return new Label(id, model);
+	}
+
+	/**
+	 * Gets a new {@link FormComponent} that will be used as an input.<br/>
+	 * Override this method when you need to use a {@code IValidator} or different input type, e.g. {@code NumberTextField} or {@code PasswordField}.
+	 * 
+	 * @param id the markup-id
+	 * @param model the {@link IModel}
+	 * @return the new {@link FormComponent}
+	 */
+	protected FormComponent<T> newTextField(String id, IModel<T> model)
+	{
+		return new TextField<T>(id, model);
 	}
 }

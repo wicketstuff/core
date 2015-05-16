@@ -51,10 +51,10 @@ public abstract class AccordionBehavior extends KendoUIBehavior implements IJQue
 
 	int tabIndex = TAB_NONE;
 
-	private JQueryAjaxBehavior selectEventBehavior = null;
-	private JQueryAjaxBehavior activateEventBehavior = null;
-	private JQueryAjaxBehavior expandEventBehavior = null;
-	private JQueryAjaxBehavior collapseEventBehavior = null;
+	private JQueryAjaxBehavior onSelectAjaxBehavior = null;
+	private JQueryAjaxBehavior onActivateAjaxBehavior = null;
+	private JQueryAjaxBehavior onExpandAjaxBehavior = null;
+	private JQueryAjaxBehavior onCollapseAjaxBehavior = null;
 
 	/**
 	 * Constructor
@@ -127,22 +127,26 @@ public abstract class AccordionBehavior extends KendoUIBehavior implements IJQue
 
 		if (this.isSelectEventEnabled())
 		{
-			component.add(this.selectEventBehavior = this.newSelectEventBehavior());
+			this.onSelectAjaxBehavior = this.newOnSelectAjaxBehavior(this);
+			component.add(this.onSelectAjaxBehavior);
 		}
 
 		if (this.isActivateEventEnabled())
 		{
-			component.add(this.activateEventBehavior = this.newActivateEventBehavior());
+			this.onActivateAjaxBehavior = this.newOnActivateAjaxBehavior(this);
+			component.add(this.onActivateAjaxBehavior);
 		}
 
 		if (this.isExpandEventEnabled())
 		{
-			component.add(this.expandEventBehavior = this.newExpandEventBehavior());
+			this.onExpandAjaxBehavior = this.newOnExpandAjaxBehavior(this);
+			component.add(this.onExpandAjaxBehavior);
 		}
 
 		if (this.isCollapseEventEnabled())
 		{
-			component.add(this.collapseEventBehavior = this.newCollapseEventBehavior());
+			this.onCollapseAjaxBehavior = this.newOnCollapseAjaxBehavior(this);
+			component.add(this.onCollapseAjaxBehavior);
 		}
 	}
 
@@ -179,24 +183,24 @@ public abstract class AccordionBehavior extends KendoUIBehavior implements IJQue
 	{
 		super.onConfigure(component);
 
-		if (this.selectEventBehavior != null)
+		if (this.onSelectAjaxBehavior != null)
 		{
-			this.setOption("select", this.selectEventBehavior.getCallbackFunction());
+			this.setOption("select", this.onSelectAjaxBehavior.getCallbackFunction());
 		}
 
-		if (this.activateEventBehavior != null)
+		if (this.onActivateAjaxBehavior != null)
 		{
-			this.setOption("activate", this.activateEventBehavior.getCallbackFunction());
+			this.setOption("activate", this.onActivateAjaxBehavior.getCallbackFunction());
 		}
 
-		if (this.expandEventBehavior != null)
+		if (this.onExpandAjaxBehavior != null)
 		{
-			this.setOption("expand", this.expandEventBehavior.getCallbackFunction());
+			this.setOption("expand", this.onExpandAjaxBehavior.getCallbackFunction());
 		}
 
-		if (this.collapseEventBehavior != null)
+		if (this.onCollapseAjaxBehavior != null)
 		{
-			this.setOption("collapse", this.collapseEventBehavior.getCallbackFunction());
+			this.setOption("collapse", this.onCollapseAjaxBehavior.getCallbackFunction());
 		}
 	}
 
@@ -245,11 +249,12 @@ public abstract class AccordionBehavior extends KendoUIBehavior implements IJQue
 	/**
 	 * Gets a new {@link JQueryAjaxBehavior} that acts as the 'select' javascript callback
 	 *
+	 * @param source the {@link IJQueryAjaxAware}
 	 * @return the {@link JQueryAjaxBehavior}
 	 */
-	protected JQueryAjaxBehavior newSelectEventBehavior()
+	protected JQueryAjaxBehavior newOnSelectAjaxBehavior(IJQueryAjaxAware source)
 	{
-		return new JQueryAjaxBehavior(this) {
+		return new JQueryAjaxBehavior(source) {
 
 			private static final long serialVersionUID = 1L;
 
@@ -270,11 +275,12 @@ public abstract class AccordionBehavior extends KendoUIBehavior implements IJQue
 	/**
 	 * Gets a new {@link JQueryAjaxBehavior} that acts as the 'activate' javascript callback
 	 *
+	 * @param source the {@link IJQueryAjaxAware}
 	 * @return the {@link JQueryAjaxBehavior}
 	 */
-	protected JQueryAjaxBehavior newActivateEventBehavior()
+	protected JQueryAjaxBehavior newOnActivateAjaxBehavior(IJQueryAjaxAware source)
 	{
-		return new JQueryAjaxBehavior(this) {
+		return new JQueryAjaxBehavior(source) {
 
 			private static final long serialVersionUID = 1L;
 
@@ -295,11 +301,12 @@ public abstract class AccordionBehavior extends KendoUIBehavior implements IJQue
 	/**
 	 * Gets a new {@link JQueryAjaxBehavior} that acts as the 'expand' javascript callback
 	 *
+	 * @param source the {@link IJQueryAjaxAware}
 	 * @return the {@link JQueryAjaxBehavior}
 	 */
-	protected JQueryAjaxBehavior newExpandEventBehavior()
+	protected JQueryAjaxBehavior newOnExpandAjaxBehavior(IJQueryAjaxAware source)
 	{
-		return new JQueryAjaxBehavior(this) {
+		return new JQueryAjaxBehavior(source) {
 
 			private static final long serialVersionUID = 1L;
 
@@ -320,11 +327,12 @@ public abstract class AccordionBehavior extends KendoUIBehavior implements IJQue
 	/**
 	 * Gets a new {@link JQueryAjaxBehavior} that acts as the 'collapse' javascript callback
 	 *
+	 * @param source the {@link IJQueryAjaxAware}
 	 * @return the {@link JQueryAjaxBehavior}
 	 */
-	protected JQueryAjaxBehavior newCollapseEventBehavior()
+	protected JQueryAjaxBehavior newOnCollapseAjaxBehavior(IJQueryAjaxAware source)
 	{
-		return new JQueryAjaxBehavior(this) {
+		return new JQueryAjaxBehavior(source) {
 
 			private static final long serialVersionUID = 1L;
 

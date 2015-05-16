@@ -135,6 +135,7 @@ public class ResourceLink<T> extends org.apache.wicket.markup.html.link.Resource
 	@Override
 	public void onBeforeRender(JQueryBehavior behavior)
 	{
+		// noop
 	}
 
 	@Override

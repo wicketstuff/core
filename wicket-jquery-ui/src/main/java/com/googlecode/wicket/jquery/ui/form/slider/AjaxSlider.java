@@ -29,12 +29,12 @@ import com.googlecode.wicket.jquery.core.JQueryEvent;
 import com.googlecode.wicket.jquery.core.ajax.IJQueryAjaxAware;
 import com.googlecode.wicket.jquery.core.ajax.JQueryAjaxPostBehavior;
 import com.googlecode.wicket.jquery.core.event.IValueChangedListener;
-import com.googlecode.wicket.jquery.ui.ajax.JQueryAjaxChangeBehavior;
-import com.googlecode.wicket.jquery.ui.ajax.JQueryAjaxChangeBehavior.ChangeEvent;
+import com.googlecode.wicket.jquery.ui.ajax.OnChangeAjaxBehavior;
+import com.googlecode.wicket.jquery.ui.ajax.OnChangeAjaxBehavior.ChangeEvent;
 
 /**
  * Provides a jQuery slider based on a {@link FormComponentPanel}<br/>
- * This ajax version will post the {@link Component}, using a {@link JQueryAjaxChangeBehavior}, when the 'change' javascript method is called.
+ * This ajax version will post the {@link Component}, using a {@link OnChangeAjaxBehavior}, when the 'change' javascript method is called.
  *
  * @author Sebastien Briquet - sebfz1
  */
@@ -148,9 +148,9 @@ public class AjaxSlider extends Slider implements IJQueryAjaxAware, IValueChange
 			}
 
 			@Override
-			protected JQueryAjaxPostBehavior newOnChangeBehavior()
+			protected JQueryAjaxPostBehavior newOnChangeAjaxBehavior(IJQueryAjaxAware source)
 			{
-				return new JQueryAjaxChangeBehavior(this, AjaxSlider.this.input);
+				return new OnChangeAjaxBehavior(source, AjaxSlider.this.input);
 			}
 		};
 	}

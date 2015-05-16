@@ -116,6 +116,11 @@ public abstract class LocalTextField<T> extends TextField<T> implements ITextFor
 		}
 	}
 
+	/**
+	 * Gets the widget's method
+	 * 
+	 * @return the widget's method
+	 */
 	protected abstract String getMethod();
 
 	// Events //

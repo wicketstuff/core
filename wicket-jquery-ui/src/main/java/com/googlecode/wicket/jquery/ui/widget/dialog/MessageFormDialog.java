@@ -153,7 +153,7 @@ public abstract class MessageFormDialog extends AbstractFormDialog<String>
 
 		container.add(AttributeModifier.append("class", icon.getStyle()));
 		container.add(new EmptyPanel("icon").add(AttributeModifier.replace("class", icon)));
-
+		// TODO add #newLabel, see MessageWindow
 		this.label = new Label("message", this.getModel());
 		container.add(this.label.setOutputMarkupId(true));
 	}

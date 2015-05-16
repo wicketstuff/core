@@ -41,7 +41,7 @@ public abstract class MenuBehavior extends JQueryUIBehavior implements IJQueryAj
 	private static final long serialVersionUID = 1L;
 	public static final String METHOD = "menu";
 
-	private JQueryAjaxBehavior onSelectBehavior;
+	private JQueryAjaxBehavior onSelectAjaxBehavior;
 
 	/**
 	 * Constructor
@@ -80,7 +80,8 @@ public abstract class MenuBehavior extends JQueryUIBehavior implements IJQueryAj
 	{
 		super.bind(component);
 
-		component.add(this.onSelectBehavior = this.newOnSelectBehavior());
+		this.onSelectAjaxBehavior = this.newOnSelectAjaxBehavior(this);
+		component.add(this.onSelectAjaxBehavior);
 	}
 
 	// Events //
@@ -90,7 +91,7 @@ public abstract class MenuBehavior extends JQueryUIBehavior implements IJQueryAj
 	{
 		super.onConfigure(component);
 
-		this.setOption("select", this.onSelectBehavior.getCallbackFunction());
+		this.setOption("select", this.onSelectAjaxBehavior.getCallbackFunction());
 	}
 
 	@Override
@@ -113,11 +114,12 @@ public abstract class MenuBehavior extends JQueryUIBehavior implements IJQueryAj
 	/**
 	 * Gets a new {@link JQueryAjaxBehavior} that acts as the 'select' javascript callback
 	 *
+	 * @param source the {@link IJQueryAjaxAware}
 	 * @return the {@link JQueryAjaxBehavior}
 	 */
-	protected JQueryAjaxBehavior newOnSelectBehavior()
+	protected JQueryAjaxBehavior newOnSelectAjaxBehavior(IJQueryAjaxAware source)
 	{
-		return new JQueryAjaxBehavior(this) {
+		return new JQueryAjaxBehavior(source) {
 
 			private static final long serialVersionUID = 1L;
 
@@ -136,6 +138,7 @@ public abstract class MenuBehavior extends JQueryUIBehavior implements IJQueryAj
 	}
 
 	// Event objects //
+
 	/**
 	 * Provides an event object that will be broadcasted by the {@link JQueryAjaxBehavior} 'select' callback
 	 */

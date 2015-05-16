@@ -236,7 +236,8 @@ public class AccordionPanel extends JQueryGenericPanel<List<ITab>> implements IA
 			}
 		});
 
-		this.add(this.widgetBehavior = JQueryWidget.newWidgetBehavior(this));
+		this.widgetBehavior = JQueryWidget.newWidgetBehavior(this);
+		this.add(this.widgetBehavior);
 	}
 
 	@Override

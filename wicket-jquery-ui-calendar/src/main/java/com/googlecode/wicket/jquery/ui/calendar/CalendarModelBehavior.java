@@ -98,51 +98,58 @@ public class CalendarModelBehavior extends AbstractAjaxBehavior
 	 */
 	protected IRequestHandler newRequestHandler()
 	{
-		return new IRequestHandler() {
-			@Override
-			public void respond(final IRequestCycle requestCycle)
+		return new CalendarModelRequestHandler();
+	}
+	
+	// Classes //
+
+	/**
+	 * Provides the {@link IRequestHandler}
+	 */
+	protected class CalendarModelRequestHandler implements IRequestHandler
+	{
+		@Override
+		public void respond(final IRequestCycle requestCycle)
+		{
+			WebResponse response = (WebResponse) requestCycle.getResponse();
+
+			final String encoding = Application.get().getRequestCycleSettings().getResponseRequestEncoding();
+			response.setContentType("text/json; charset=" + encoding);
+			response.disableCaching();
+
+			if (model != null)
 			{
-				WebResponse response = (WebResponse) requestCycle.getResponse();
+				List<? extends CalendarEvent> list = model.getObject(); // calls load()
 
-				final String encoding = Application.get().getRequestCycleSettings().getResponseRequestEncoding();
-				response.setContentType("text/json; charset=" + encoding);
-				response.disableCaching();
-
-				if (model != null)
+				if (list != null)
 				{
-					List<? extends CalendarEvent> list = model.getObject(); // calls load()
+					StringBuilder builder = new StringBuilder("[ ");
 
-					if (list != null)
+					int count = 0;
+					for (CalendarEvent event : list)
 					{
-						StringBuilder builder = new StringBuilder("[ ");
-
-						int count = 0;
-						for (CalendarEvent event : list)
+						if (model instanceof ICalendarVisitor)
 						{
-							if (model instanceof ICalendarVisitor)
-							{
-								event.accept((ICalendarVisitor) model); // last chance to set options
-							}
-
-							if (count++ > 0)
-							{
-								builder.append(", ");
-							}
-							builder.append(event.toString());
+							event.accept((ICalendarVisitor) model); // last chance to set options
 						}
 
-						builder.append(" ]");
+						if (count++ > 0)
+						{
+							builder.append(", ");
+						}
 
-						response.write(builder);
+						builder.append(event.toString());
 					}
+
+					response.write(builder.append(" ]"));
 				}
 			}
+		}
 
-			@Override
-			public void detach(final IRequestCycle requestCycle)
-			{
-				// noop
-			}
-		};
+		@Override
+		public void detach(final IRequestCycle requestCycle)
+		{
+			model.detach();
+		}
 	}
 }

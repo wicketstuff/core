@@ -22,6 +22,7 @@ import java.util.List;
 
 import org.apache.wicket.Application;
 import org.apache.wicket.Component;
+import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.markup.head.IHeaderResponse;
 import org.apache.wicket.markup.head.JavaScriptHeaderItem;
 import org.apache.wicket.markup.head.PriorityHeaderItem;
@@ -151,6 +152,16 @@ public class KendoUIBehavior extends JQueryBehavior
 	protected String widget(String method)
 	{
 		return String.format("jQuery('%s').data('%s')", this.selector, method);
+	}
+	
+	/**
+	 * Prepares the widget for safe removal from the DOM. Detaches all event handlers and removes jQuery.data attributes to avoid memory leaks. Calls destroy method of any child Kendo widgets.
+	 * 
+	 * @param target the {@link AjaxRequestTarget}
+	 */
+	public void destroy(AjaxRequestTarget target)
+	{
+		target.prependJavaScript(this.widget() + ".destroy();");
 	}
 
 	// Events //

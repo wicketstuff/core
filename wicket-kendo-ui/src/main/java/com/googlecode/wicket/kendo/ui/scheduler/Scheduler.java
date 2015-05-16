@@ -191,11 +191,13 @@ public class Scheduler extends JQueryContainer implements ISchedulerListener
 	{
 		super.onInitialize();
 
-		this.add(this.modelBehavior = this.newSchedulerModelBehavior(this.getModel()));
+		this.modelBehavior = this.newSchedulerModelBehavior(this.getModel());
+		this.add(this.modelBehavior);
 
 		if (this.template != null)
 		{
-			this.add(this.templateBehavior = new KendoTemplateBehavior(this.template));
+			this.templateBehavior = new KendoTemplateBehavior(this.template);
+			this.add(this.templateBehavior);
 		}
 	}
 

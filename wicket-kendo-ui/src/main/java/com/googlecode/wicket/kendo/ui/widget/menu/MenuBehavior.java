@@ -41,7 +41,7 @@ public abstract class MenuBehavior extends KendoUIBehavior implements IJQueryAja
 	private static final long serialVersionUID = 1L;
 	public static final String METHOD = "kendoMenu";
 
-	private JQueryAjaxBehavior onSelectBehavior;
+	private JQueryAjaxBehavior onSelectAjaxBehavior;
 
 	/**
 	 * Constructor
@@ -53,17 +53,17 @@ public abstract class MenuBehavior extends KendoUIBehavior implements IJQueryAja
 		super(selector, METHOD);
 	}
 
-    /**
-     * Constructor
-     *
-     * @param selector the html selector (ie: "#myId")
-     */
-    MenuBehavior(String selector, String method)
-    {
-        super(selector, method);
-    }
+	/**
+	 * Constructor
+	 *
+	 * @param selector the html selector (ie: "#myId")
+	 */
+	MenuBehavior(String selector, String method)
+	{
+		super(selector, method);
+	}
 
-    /**
+	/**
 	 * Constructor
 	 *
 	 * @param selector the html selector (ie: "#myId")
@@ -74,19 +74,18 @@ public abstract class MenuBehavior extends KendoUIBehavior implements IJQueryAja
 		super(selector, METHOD, options);
 	}
 
+	/**
+	 * Constructor
+	 *
+	 * @param selector the html selector (ie: "#myId")
+	 * @param options the {@link Options}
+	 */
+	MenuBehavior(String selector, String method, Options options)
+	{
+		super(selector, method, options);
+	}
 
-    /**
-     * Constructor
-     *
-     * @param selector the html selector (ie: "#myId")
-     * @param options the {@link Options}
-     */
-    MenuBehavior(String selector, String method, Options options)
-    {
-        super(selector, method, options);
-    }
-
-    // Properties //
+	// Properties //
 
 	/**
 	 * Gets the reference map of hash/menu-item.<br/>
@@ -102,7 +101,8 @@ public abstract class MenuBehavior extends KendoUIBehavior implements IJQueryAja
 	{
 		super.bind(component);
 
-		component.add(this.onSelectBehavior = this.newOnSelectBehavior());
+		this.onSelectAjaxBehavior = this.newOnSelectAjaxBehavior(this);
+		component.add(this.onSelectAjaxBehavior);
 	}
 
 	// Events //
@@ -112,7 +112,7 @@ public abstract class MenuBehavior extends KendoUIBehavior implements IJQueryAja
 	{
 		super.onConfigure(component);
 
-		this.setOption("select", this.onSelectBehavior.getCallbackFunction());
+		this.setOption("select", this.onSelectAjaxBehavior.getCallbackFunction());
 	}
 
 	@Override
@@ -135,11 +135,12 @@ public abstract class MenuBehavior extends KendoUIBehavior implements IJQueryAja
 	/**
 	 * Gets a new {@link JQueryAjaxBehavior} that acts as the 'select' javascript callback
 	 *
+	 * @param source the {@link IJQueryAjaxAware}
 	 * @return the {@link JQueryAjaxBehavior}
 	 */
-	protected JQueryAjaxBehavior newOnSelectBehavior()
+	protected JQueryAjaxBehavior newOnSelectAjaxBehavior(IJQueryAjaxAware source)
 	{
-		return new JQueryAjaxBehavior(this) {
+		return new JQueryAjaxBehavior(source) {
 
 			private static final long serialVersionUID = 1L;
 
@@ -160,6 +161,7 @@ public abstract class MenuBehavior extends KendoUIBehavior implements IJQueryAja
 	}
 
 	// Event objects //
+
 	/**
 	 * Provides an event object that will be broadcasted by the {@link JQueryAjaxBehavior} 'select' callback
 	 */

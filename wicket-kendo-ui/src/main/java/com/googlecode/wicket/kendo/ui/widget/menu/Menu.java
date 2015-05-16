@@ -118,20 +118,21 @@ public class Menu extends JQueryPanel implements IMenuListener
 	}
 
 	/**
-	 * Destroys the menu widget in the browser and clear up all its resources.
+	 * Prepares the widget for safe removal from the DOM. Detaches all event handlers and removes jQuery.data attributes to avoid memory leaks. Calls destroy method of any child Kendo widgets.
 	 *
-	 * @param target The Ajax request handler
+	 * @param target The {@link AjaxRequestTarget}
 	 */
 	public void destroy(AjaxRequestTarget target)
 	{
-		target.prependJavaScript(this.widgetBehavior.widget() + ".destroy();");
+		this.widgetBehavior.destroy(target);
 	}
 
 	/**
-	 * Refreshes the menu widget by destroying it and recreating it at in the browser.
+	 * Refreshes the widget by calling {@link #destroy(AjaxRequestTarget)} and re-adding it to the target
 	 *
-	 * @param target The Ajax request handler
+	 * @param target The {@link AjaxRequestTarget}
 	 */
+	//TODO rename #refresh to #reload
 	public void refresh(AjaxRequestTarget target)
 	{
 		this.destroy(target);
@@ -154,7 +155,8 @@ public class Menu extends JQueryPanel implements IMenuListener
 	{
 		super.onInitialize();
 
-		this.add(this.widgetBehavior = JQueryWidget.newWidgetBehavior(this, this.root));
+		this.widgetBehavior = JQueryWidget.newWidgetBehavior(this, this.root);
+		this.add(this.widgetBehavior);
 	}
 
 	@Override

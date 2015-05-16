@@ -51,9 +51,9 @@ public abstract class DraggableBehavior extends KendoUIBehavior implements IJQue
 	/** default hint */
 	public static final String HINT = "function(element) { return element.clone().addClass('" + CSS_CLONE + "'); }";
 
-	private JQueryAjaxBehavior onDragStartBehavior;
-	private JQueryAjaxBehavior onDragStopBehavior = null;
-	private JQueryAjaxBehavior onDragCancelBehavior = null;
+	private JQueryAjaxBehavior onDragStartAjaxBehavior;
+	private JQueryAjaxBehavior onDragStopAjaxBehavior = null;
+	private JQueryAjaxBehavior onDragCancelAjaxBehavior = null;
 
 	private Component component = null;
 
@@ -108,19 +108,24 @@ public abstract class DraggableBehavior extends KendoUIBehavior implements IJQue
 			throw new WicketRuntimeException("Behavior is already bound to another component.");
 		}
 
+		this.component = component; // warning, not thread-safe: the instance of this behavior should only be used once
+
 		if (this.selector == null)
 		{
-			this.selector = JQueryWidget.getSelector(component);
+			this.selector = JQueryWidget.getSelector(this.component);
 		}
 
-		this.component = component; // warning, not thread-safe: the instance of this behavior should only be used once
-		this.component.add(this.onDragStartBehavior = this.newOnDragStartBehavior());
-		this.component.add(this.onDragStopBehavior = this.newOnDragStopBehavior());
+		this.onDragStartAjaxBehavior = this.newOnDragStartAjaxBehavior(this);
+		this.component.add(this.onDragStartAjaxBehavior);
+		
+		this.onDragStopAjaxBehavior = this.newOnDragStopAjaxBehavior(this);
+		this.component.add(this.onDragStopAjaxBehavior);
 
 		// this event is not enabled by default to prevent unnecessary server round-trips.
 		if (this.isCancelEventEnabled())
 		{
-			this.component.add(this.onDragCancelBehavior = this.newOnDragCancelBehavior());
+			this.onDragCancelAjaxBehavior = this.newOnDragCancelAjaxBehavior(this);
+			this.component.add(this.onDragCancelAjaxBehavior);
 		}
 	}
 
@@ -140,12 +145,12 @@ public abstract class DraggableBehavior extends KendoUIBehavior implements IJQue
 
 		// behaviors //
 
-		this.setOption("dragstart", this.onDragStartBehavior.getCallbackFunction());
-		this.setOption("dragend", this.onDragStopBehavior.getCallbackFunction());
+		this.setOption("dragstart", this.onDragStartAjaxBehavior.getCallbackFunction());
+		this.setOption("dragend", this.onDragStopAjaxBehavior.getCallbackFunction());
 
-		if (this.onDragCancelBehavior != null)
+		if (this.onDragCancelAjaxBehavior != null)
 		{
-			this.setOption("dragcancel", this.onDragCancelBehavior.getCallbackFunction());
+			this.setOption("dragcancel", this.onDragCancelAjaxBehavior.getCallbackFunction());
 		}
 	}
 
@@ -202,11 +207,12 @@ public abstract class DraggableBehavior extends KendoUIBehavior implements IJQue
 	/**
 	 * Gets a new {@link JQueryAjaxBehavior} that will be called on 'dragstart' javascript event
 	 * 
+	 * @param source the {@link IJQueryAjaxAware}
 	 * @return the {@link JQueryAjaxBehavior}
 	 */
-	protected JQueryAjaxBehavior newOnDragStartBehavior()
+	protected JQueryAjaxBehavior newOnDragStartAjaxBehavior(IJQueryAjaxAware source)
 	{
-		return new JQueryAjaxBehavior(this) {
+		return new JQueryAjaxBehavior(source) {
 
 			private static final long serialVersionUID = 1L;
 
@@ -237,11 +243,12 @@ public abstract class DraggableBehavior extends KendoUIBehavior implements IJQue
 	/**
 	 * Gets a new {@link JQueryAjaxBehavior} that will be called on 'dragend' javascript event
 	 * 
+	 * @param source {@link IJQueryAjaxAware}
 	 * @return the {@link JQueryAjaxBehavior}
 	 */
-	protected JQueryAjaxBehavior newOnDragStopBehavior()
+	protected JQueryAjaxBehavior newOnDragStopAjaxBehavior(IJQueryAjaxAware source)
 	{
-		return new JQueryAjaxBehavior(this) {
+		return new JQueryAjaxBehavior(source) {
 
 			private static final long serialVersionUID = 1L;
 
@@ -272,11 +279,12 @@ public abstract class DraggableBehavior extends KendoUIBehavior implements IJQue
 	/**
 	 * Gets a new {@link JQueryAjaxBehavior} that will be called on 'dragend' javascript event
 	 * 
+	 * @param source the {@link IJQueryAjaxAware}
 	 * @return the {@link JQueryAjaxBehavior}
 	 */
-	protected JQueryAjaxBehavior newOnDragCancelBehavior()
+	protected JQueryAjaxBehavior newOnDragCancelAjaxBehavior(IJQueryAjaxAware source)
 	{
-		return new JQueryAjaxBehavior(this) {
+		return new JQueryAjaxBehavior(source) {
 
 			private static final long serialVersionUID = 1L;
 

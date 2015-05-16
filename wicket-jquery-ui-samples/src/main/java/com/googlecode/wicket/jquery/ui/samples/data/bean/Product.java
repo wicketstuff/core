@@ -4,6 +4,8 @@ import java.util.Date;
 
 import org.apache.wicket.util.io.IClusterable;
 
+import com.googlecode.wicket.jquery.core.utils.DateUtils;
+
 public class Product implements IClusterable
 {
 	private static final long serialVersionUID = 1L;
@@ -11,7 +13,7 @@ public class Product implements IClusterable
 	private int id;
 	private String name;
 	private String desc;
-	private Date date;
+	private long date;
 	private double price;
 
 	private Vendor vendor;
@@ -26,7 +28,7 @@ public class Product implements IClusterable
 		this.id = id;
 		this.name = name;
 		this.desc = description;
-		this.date = new Date();
+		this.date = DateUtils.utc();
 		this.price = price;
 		this.vendor = vendor;
 	}
@@ -48,7 +50,7 @@ public class Product implements IClusterable
 
 	public Date getDate()
 	{
-		return this.date;
+		return new Date(this.date);
 	}
 
 	public double getPrice()

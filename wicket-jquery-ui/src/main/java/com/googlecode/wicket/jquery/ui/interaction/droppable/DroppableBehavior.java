@@ -36,9 +36,9 @@ public abstract class DroppableBehavior extends JQueryUIBehavior implements IJQu
 	private static final long serialVersionUID = 1L;
 	public static final String METHOD = "droppable";
 
-	private JQueryAjaxBehavior onDropBehavior;
-	private JQueryAjaxBehavior onOverBehavior = null;
-	private JQueryAjaxBehavior onExitBehavior = null;
+	private JQueryAjaxBehavior onDropAjaxBehavior;
+	private JQueryAjaxBehavior onOverAjaxBehavior = null;
+	private JQueryAjaxBehavior onExitAjaxBehavior = null;
 
 	/** object being dragged */
 	private transient Component draggable = null;
@@ -78,17 +78,20 @@ public abstract class DroppableBehavior extends JQueryUIBehavior implements IJQu
 	{
 		super.bind(component);
 
-		component.add(this.onDropBehavior = this.newOnDropBehavior());
+		this.onDropAjaxBehavior = this.newOnDropAjaxBehavior(this);
+		component.add(this.onDropAjaxBehavior);
 
 		// these events are not enabled by default to prevent unnecessary server round-trips.
 		if (this.isOverEventEnabled())
 		{
-			component.add(this.onOverBehavior = this.newOnOverBehavior());
+			this.onOverAjaxBehavior = this.newOnOverAjaxBehavior(this);
+			component.add(this.onOverAjaxBehavior);
 		}
 
 		if (this.isExitEventEnabled())
 		{
-			component.add(this.onExitBehavior = this.newOnExitBehavior());
+			this.onExitAjaxBehavior = this.newOnExitAjaxBehavior(this);
+			component.add(this.onExitAjaxBehavior);
 		}
 	}
 
@@ -98,16 +101,16 @@ public abstract class DroppableBehavior extends JQueryUIBehavior implements IJQu
 	{
 		super.onConfigure(component);
 
-		this.setOption("drop", this.onDropBehavior.getCallbackFunction());
+		this.setOption("drop", this.onDropAjaxBehavior.getCallbackFunction());
 
-		if (this.onOverBehavior != null)
+		if (this.onOverAjaxBehavior != null)
 		{
-			this.setOption("over", this.onOverBehavior.getCallbackFunction());
+			this.setOption("over", this.onOverAjaxBehavior.getCallbackFunction());
 		}
 
-		if (this.onExitBehavior != null)
+		if (this.onExitAjaxBehavior != null)
 		{
-			this.setOption("out", this.onExitBehavior.getCallbackFunction());
+			this.setOption("out", this.onExitAjaxBehavior.getCallbackFunction());
 		}
 	}
 
@@ -131,14 +134,16 @@ public abstract class DroppableBehavior extends JQueryUIBehavior implements IJQu
 	}
 
 	// Factories //
+
 	/**
 	 * Gets a new {@link JQueryAjaxBehavior} that will be called on 'drop' javascript event
 	 * 
+	 * @param source the {@link IJQueryAjaxAware}
 	 * @return the {@link JQueryAjaxBehavior}
 	 */
-	protected JQueryAjaxBehavior newOnDropBehavior()
+	protected JQueryAjaxBehavior newOnDropAjaxBehavior(IJQueryAjaxAware source)
 	{
-		return new JQueryAjaxBehavior(this) {
+		return new JQueryAjaxBehavior(source) {
 
 			private static final long serialVersionUID = 1L;
 
@@ -159,11 +164,12 @@ public abstract class DroppableBehavior extends JQueryUIBehavior implements IJQu
 	/**
 	 * Gets a new {@link JQueryAjaxBehavior} that will be called on 'over' javascript event
 	 * 
+	 * @param source the {@link IJQueryAjaxAware}
 	 * @return the {@link JQueryAjaxBehavior}
 	 */
-	protected JQueryAjaxBehavior newOnOverBehavior()
+	protected JQueryAjaxBehavior newOnOverAjaxBehavior(IJQueryAjaxAware source)
 	{
-		return new JQueryAjaxBehavior(this) {
+		return new JQueryAjaxBehavior(source) {
 
 			private static final long serialVersionUID = 1L;
 
@@ -184,11 +190,12 @@ public abstract class DroppableBehavior extends JQueryUIBehavior implements IJQu
 	/**
 	 * Gets a new {@link JQueryAjaxBehavior} that will be called on 'exit' javascript event
 	 * 
+	 * @param source the {@link IJQueryAjaxAware}
 	 * @return the {@link JQueryAjaxBehavior}
 	 */
-	protected JQueryAjaxBehavior newOnExitBehavior()
+	protected JQueryAjaxBehavior newOnExitAjaxBehavior(IJQueryAjaxAware source)
 	{
-		return new JQueryAjaxBehavior(this) {
+		return new JQueryAjaxBehavior(source) {
 
 			private static final long serialVersionUID = 1L;
 

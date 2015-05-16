@@ -43,9 +43,9 @@ public abstract class SortableBehavior<T> extends JQueryUIBehavior implements IJ
 	private static final long serialVersionUID = 1L;
 	public static final String METHOD = "sortable";
 
-	private JQueryAjaxBehavior onUpdateBehavior;
-	private JQueryAjaxBehavior onReceiveBehavior = null;
-	private JQueryAjaxBehavior onRemoveBehavior = null;
+	private JQueryAjaxBehavior onUpdateAjaxBehavior;
+	private JQueryAjaxBehavior onReceiveAjaxBehavior = null;
+	private JQueryAjaxBehavior onRemoveAjaxBehavior = null;
 
 	/**
 	 * Constructor
@@ -95,16 +95,19 @@ public abstract class SortableBehavior<T> extends JQueryUIBehavior implements IJ
 	{
 		super.bind(component);
 
-		component.add(this.onUpdateBehavior = this.newOnUpdateBehavior());
+		this.onUpdateAjaxBehavior = this.newOnUpdateAjaxBehavior(this);
+		component.add(this.onUpdateAjaxBehavior);
 
 		if (this.isOnReceiveEnabled())
 		{
-			component.add(this.onReceiveBehavior = this.newOnReceiveBehavior());
+			this.onReceiveAjaxBehavior = this.newOnReceiveAjaxBehavior(this);
+			component.add(this.onReceiveAjaxBehavior);
 		}
 
 		if (this.isOnRemoveEnabled())
 		{
-			component.add(this.onRemoveBehavior = this.newOnRemoveBehavior());
+			this.onRemoveAjaxBehavior = this.newOnRemoveAjaxBehavior(this);
+			component.add(this.onRemoveAjaxBehavior);
 		}
 	}
 
@@ -115,16 +118,16 @@ public abstract class SortableBehavior<T> extends JQueryUIBehavior implements IJ
 	{
 		super.onConfigure(component);
 
-		this.setOption("update", this.onUpdateBehavior.getCallbackFunction());
+		this.setOption("update", this.onUpdateAjaxBehavior.getCallbackFunction());
 
-		if (this.onReceiveBehavior != null)
+		if (this.onReceiveAjaxBehavior != null)
 		{
-			this.setOption("receive", this.onReceiveBehavior.getCallbackFunction());
+			this.setOption("receive", this.onReceiveAjaxBehavior.getCallbackFunction());
 		}
 
-		if (this.onRemoveBehavior != null)
+		if (this.onRemoveAjaxBehavior != null)
 		{
-			this.setOption("remove", this.onRemoveBehavior.getCallbackFunction());
+			this.setOption("remove", this.onRemoveAjaxBehavior.getCallbackFunction());
 		}
 	}
 
@@ -186,11 +189,12 @@ public abstract class SortableBehavior<T> extends JQueryUIBehavior implements IJ
 	/**
 	 * Gets the ajax behavior that will be triggered when the user has selected items
 	 *
+	 * @param source the {@link IJQueryAjaxAware}
 	 * @return the {@link JQueryAjaxBehavior}
 	 */
-	protected JQueryAjaxBehavior newOnUpdateBehavior()
+	protected JQueryAjaxBehavior newOnUpdateAjaxBehavior(IJQueryAjaxAware source)
 	{
-		return new JQueryAjaxBehavior(this) {
+		return new JQueryAjaxBehavior(source) {
 
 			private static final long serialVersionUID = 1L;
 
@@ -211,11 +215,12 @@ public abstract class SortableBehavior<T> extends JQueryUIBehavior implements IJ
 	/**
 	 * Gets the ajax behavior that will be triggered when a connected sortable list has received an item from another list.
 	 *
+	 * @param source the {@link IJQueryAjaxAware}
 	 * @return the {@link JQueryAjaxBehavior}
 	 */
-	protected JQueryAjaxBehavior newOnReceiveBehavior()
+	protected JQueryAjaxBehavior newOnReceiveAjaxBehavior(IJQueryAjaxAware source)
 	{
-		return new JQueryAjaxBehavior(this) {
+		return new JQueryAjaxBehavior(source) {
 
 			private static final long serialVersionUID = 1L;
 
@@ -236,11 +241,12 @@ public abstract class SortableBehavior<T> extends JQueryUIBehavior implements IJ
 	/**
 	 * Gets the ajax behavior that will be triggered when a sortable item has been dragged out from the list and into another.
 	 *
+	 * @param source the {@link IJQueryAjaxAware}
 	 * @return the {@link JQueryAjaxBehavior}
 	 */
-	protected JQueryAjaxBehavior newOnRemoveBehavior()
+	protected JQueryAjaxBehavior newOnRemoveAjaxBehavior(IJQueryAjaxAware source)
 	{
-		return new JQueryAjaxBehavior(this) {
+		return new JQueryAjaxBehavior(source) {
 
 			private static final long serialVersionUID = 1L;
 

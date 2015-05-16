@@ -28,7 +28,7 @@ import com.googlecode.wicket.jquery.core.ajax.JQueryAjaxPostBehavior;
  * Provides a new {@link JQueryAjaxPostBehavior} that is designed to be called on 'change' jQuery event<br/>
  * It will broadcast a {@link ChangeEvent} (by default)
  */
-public class JQueryAjaxChangeBehavior extends JQueryAjaxPostBehavior
+public class OnChangeAjaxBehavior extends JQueryAjaxPostBehavior
 {
 	private static final long serialVersionUID = 1L;
 
@@ -38,7 +38,7 @@ public class JQueryAjaxChangeBehavior extends JQueryAjaxPostBehavior
 	 * @param source the {@link Behavior} that will broadcast the event.
 	 * @param components the form components to post
 	 */
-	public JQueryAjaxChangeBehavior(IJQueryAjaxAware source, FormComponent<?>... components)
+	public OnChangeAjaxBehavior(IJQueryAjaxAware source, FormComponent<?>... components)
 	{
 		super(source, components);
 	}
@@ -60,7 +60,7 @@ public class JQueryAjaxChangeBehavior extends JQueryAjaxPostBehavior
 	// Event Object //
 
 	/**
-	 * Provides an event object that will be broadcasted by the {@link JQueryAjaxChangeBehavior}
+	 * Provides an event object that will be broadcasted by the {@link OnChangeAjaxBehavior}
 	 */
 	public static class ChangeEvent extends JQueryEvent
 	{

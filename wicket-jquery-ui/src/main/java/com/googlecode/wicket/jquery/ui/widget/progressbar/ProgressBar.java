@@ -25,7 +25,7 @@ import com.googlecode.wicket.jquery.core.JQueryEvent;
 import com.googlecode.wicket.jquery.core.JQueryGenericContainer;
 import com.googlecode.wicket.jquery.core.ajax.IJQueryAjaxAware;
 import com.googlecode.wicket.jquery.core.event.IValueChangedListener;
-import com.googlecode.wicket.jquery.ui.ajax.JQueryAjaxChangeBehavior.ChangeEvent;
+import com.googlecode.wicket.jquery.ui.ajax.OnChangeAjaxBehavior.ChangeEvent;
 
 /**
  * Provides a jQuery progress-bar based on a {@link JQueryGenericContainer}
