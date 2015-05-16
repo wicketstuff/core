@@ -111,6 +111,20 @@ public abstract class SortableBehavior<T> extends JQueryUIBehavior implements IJ
 		}
 	}
 
+	/**
+	 * Helper method to locate an item in a list by identifier.<br />
+	 * By default, uses item's hashcode as identifier.
+	 *
+	 * @param id the item id
+	 * @param list the list of items
+	 * @return the item with that identifier or {@code null} if there is no such
+	 * @see Sortable#findItem(String, List)
+	 */
+	protected T findItem(String id, List<T> list)
+	{
+		return ListUtils.fromHash(Integer.parseInt(id), list);
+	}
+
 	// Events //
 
 	@Override
@@ -172,18 +186,6 @@ public abstract class SortableBehavior<T> extends JQueryUIBehavior implements IJ
 		}
 	}
 
-	/**
-	 * A helper method to locate an item in a list by identifier
-	 *
-	 * @param id The identifier of the item
-	 * @param list The list of items
-	 * @return The item with that identifier or {@code null} if there is no such
-	 */
-	protected T findItem(String id, List<T> list)
-	{
-		return ListUtils.fromHash(Integer.parseInt(id, 10), list);
-	}
-
 	// Factories //
 
 	/**
@@ -201,7 +203,11 @@ public abstract class SortableBehavior<T> extends JQueryUIBehavior implements IJ
 			@Override
 			protected CallbackParameter[] getCallbackParameters()
 			{
-				return new CallbackParameter[] { CallbackParameter.context("event"), CallbackParameter.context("ui"), CallbackParameter.resolved("hash", "ui.item.data('hash')"), CallbackParameter.resolved("index", "ui.item.index()") };
+				return new CallbackParameter[] { // lf
+						CallbackParameter.context("event"), // lf
+						CallbackParameter.context("ui"), // lf
+						CallbackParameter.resolved("hash", "ui.item.data('hash')"), // lf
+						CallbackParameter.resolved("index", "ui.item.index()") };
 			}
 
 			@Override
@@ -227,7 +233,11 @@ public abstract class SortableBehavior<T> extends JQueryUIBehavior implements IJ
 			@Override
 			protected CallbackParameter[] getCallbackParameters()
 			{
-				return new CallbackParameter[] { CallbackParameter.context("event"), CallbackParameter.context("ui"), CallbackParameter.resolved("hash", "ui.item.data('hash')"), CallbackParameter.resolved("index", "ui.item.index()") };
+				return new CallbackParameter[] { // lf
+						CallbackParameter.context("event"), // lf
+						CallbackParameter.context("ui"), // lf
+						CallbackParameter.resolved("hash", "ui.item.data('hash')"), // lf
+						CallbackParameter.resolved("index", "ui.item.index()") };
 			}
 
 			@Override
@@ -253,7 +263,10 @@ public abstract class SortableBehavior<T> extends JQueryUIBehavior implements IJ
 			@Override
 			protected CallbackParameter[] getCallbackParameters()
 			{
-				return new CallbackParameter[] { CallbackParameter.context("event"), CallbackParameter.context("ui"), CallbackParameter.resolved("hash", "ui.item.data('hash')") };
+				return new CallbackParameter[] { // lf
+						CallbackParameter.context("event"), // lf
+						CallbackParameter.context("ui"), // lf
+						CallbackParameter.resolved("hash", "ui.item.data('hash')") };
 			}
 
 			@Override
