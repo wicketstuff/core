@@ -16,13 +16,15 @@
  */
 package com.googlecode.wicket.kendo.ui.widget.tooltip;
 
-import com.googlecode.wicket.jquery.core.IJQueryWidget;
-import com.googlecode.wicket.jquery.core.Options;
-import com.googlecode.wicket.kendo.ui.KendoUIBehavior;
 import org.apache.wicket.Component;
 import org.apache.wicket.core.util.string.ComponentRenderer;
 import org.apache.wicket.model.AbstractReadOnlyModel;
 import org.apache.wicket.model.IModel;
+import org.apache.wicket.model.Model;
+
+import com.googlecode.wicket.jquery.core.IJQueryWidget.JQueryWidget;
+import com.googlecode.wicket.jquery.core.Options;
+import com.googlecode.wicket.kendo.ui.KendoUIBehavior;
 
 /**
  * Provides a Kendo UI tooltip behavior
@@ -34,12 +36,70 @@ public class TooltipBehavior extends KendoUIBehavior
 	private static final long serialVersionUID = 1L;
 	public static final String METHOD = "kendoTooltip";
 
+	/**
+	 * Gets a new model that represent the content from the tooltip rendering
+	 */
+	private static IModel<String> asModel(final Component tooltip)
+	{
+		return new AbstractReadOnlyModel<String>() {
+
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			public String getObject()
+			{
+				return ComponentRenderer.renderComponent(tooltip).toString();
+			}
+		};
+	}
+
 	private final IModel<String> tooltip;
+
+	/**
+	 * Constructor<br/>
+	 * The {@code title} attribute will serve as tooltip content
+	 */
+	public TooltipBehavior()
+	{
+		this(new Options());
+	}
+
+	/**
+	 * Constructor<br/>
+	 * The {@code title} attribute will serve as tooltip content
+	 * 
+	 * @param options the {@link Options}
+	 */
+	public TooltipBehavior(Options options)
+	{
+		this(new Model<String>(null), options);
+	}
 
 	/**
 	 * Constructor
 	 *
-	 * @param tooltip A model providing the text that should be used as a tooltip
+	 * @param tooltip a component that should be used as a tooltip
+	 */
+	public TooltipBehavior(final Component tooltip)
+	{
+		this(asModel(tooltip), new Options());
+	}
+
+	/**
+	 * Constructor
+	 *
+	 * @param tooltip a component that should be used as a tooltip
+	 * @param options the {@link Options}
+	 */
+	public TooltipBehavior(final Component tooltip, Options options)
+	{
+		this(asModel(tooltip), options);
+	}
+
+	/**
+	 * Constructor
+	 *
+	 * @param tooltip a model providing the text that should be used as a tooltip
 	 */
 	public TooltipBehavior(IModel<String> tooltip)
 	{
@@ -49,33 +109,12 @@ public class TooltipBehavior extends KendoUIBehavior
 	/**
 	 * Constructor
 	 *
-	 * @param tooltip A component that should be used as a tooltip
-	 */
-	public TooltipBehavior(final Component tooltip)
-	{
-		this(asModel(tooltip));
-	}
-
-	private static IModel<String> asModel(final Component tooltip) {
-		return new AbstractReadOnlyModel<String>()
-		{
-			@Override
-			public String getObject()
-			{
-				return ComponentRenderer.renderComponent(tooltip).toString();
-			}
-		};
-	}
-
-	/**
-	 * Constructor
-	 *
-	 * @param tooltip A model providing the text that should be used as a tooltip
+	 * @param tooltip a model providing the text that should be used as a tooltip
 	 * @param options the {@link Options}
 	 */
 	public TooltipBehavior(IModel<String> tooltip, Options options)
 	{
-		super("", METHOD, options);
+		super(null, METHOD, options);
 
 		this.tooltip = tooltip;
 	}
@@ -85,7 +124,8 @@ public class TooltipBehavior extends KendoUIBehavior
 	{
 		super.bind(component);
 
-		setSelector(IJQueryWidget.JQueryWidget.getSelector(component));
+		// seems that kendo-ui tooltip only apply to the component it is bound to (applying to document doesn't have any effect)
+		this.selector = JQueryWidget.getSelector(component);
 	}
 
 	@Override
@@ -93,7 +133,11 @@ public class TooltipBehavior extends KendoUIBehavior
 	{
 		super.onConfigure(component);
 
-		String ttip = tooltip.getObject();
-		getOptions().set("content", Options.asString(ttip));
+		String content = this.tooltip.getObject();
+
+		if (content != null)
+		{
+			this.setOption("content", Options.asString(content));
+		}
 	}
 }

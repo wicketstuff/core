@@ -1,12 +1,11 @@
 package com.googlecode.wicket.jquery.ui.samples.pages.kendo.tooltip;
 
-import com.googlecode.wicket.jquery.core.Options;
-import org.apache.wicket.Component;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.basic.MultiLineLabel;
-
-import com.googlecode.wicket.kendo.ui.widget.tooltip.TooltipBehavior;
 import org.apache.wicket.markup.html.panel.Panel;
+
+import com.googlecode.wicket.jquery.core.Options;
+import com.googlecode.wicket.kendo.ui.widget.tooltip.TooltipBehavior;
 
 public class ComponentKendoTooltipPage extends AbstractTooltipPage
 {
@@ -14,27 +13,23 @@ public class ComponentKendoTooltipPage extends AbstractTooltipPage
 
 	public ComponentKendoTooltipPage()
 	{
-		MultiLineLabel tooltip = new MultiLineLabel("dummy", "I am a tooltip\non several\nlines");
+		// label 1 //
+		MultiLineLabel tooltip1 = new MultiLineLabel("dummy1", "I am a tooltip\non several\nlines");
 		final Label multiLineLabel = new Label("multilineLabel", "Hover me to give you a multi line tip!");
 		this.add(multiLineLabel);
-		multiLineLabel.add(new TooltipBehavior(tooltip));
+		multiLineLabel.add(new TooltipBehavior(tooltip1));
 
-		ImageAndTextPanel tooltip2 = new ImageAndTextPanel("imageAndText");
+		// label 2 //
+		ImageAndTextPanel tooltip2 = new ImageAndTextPanel("dummy2");
 		final Label imageAndTextLabel = new Label("imageAndText", "Hover me to give you a tip with an image!");
 		this.add(imageAndTextLabel);
-		imageAndTextLabel.add(new TooltipBehavior(tooltip2) {
-			@Override
-			public void onConfigure(Component component)
-			{
-				super.onConfigure(component);
-
-				getOptions().set("position", Options.asString("right"));
-			}
-		});
+		imageAndTextLabel.add(new TooltipBehavior(tooltip2, new Options("position", Options.asString("right"))));
 	}
 
 	private static class ImageAndTextPanel extends Panel
 	{
+		private static final long serialVersionUID = 1L;
+
 		public ImageAndTextPanel(String id)
 		{
 			super(id);

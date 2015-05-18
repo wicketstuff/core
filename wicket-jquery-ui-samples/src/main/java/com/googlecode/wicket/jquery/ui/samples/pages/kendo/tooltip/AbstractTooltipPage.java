@@ -18,8 +18,8 @@ abstract class AbstractTooltipPage extends SamplePage
 	protected List<DemoLink> getDemoLinks()
 	{
 		return Arrays.asList(
-				new DemoLink(DefaultKendoTooltipPage.class, "Tooltip"),
-				new DemoLink(ComponentKendoTooltipPage.class, "Component Tooltip")
+				new DemoLink(DefaultKendoTooltipPage.class, "Tooltip Behavior, using strings"),
+				new DemoLink(ComponentKendoTooltipPage.class, "Tooltip Behavior, using Components")
 			);
 	}
 }
