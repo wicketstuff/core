@@ -5,6 +5,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.regex.Pattern;
 
+import com.googlecode.wicket.jquery.ui.samples.pages.kendo.tooltip.DefaultKendoTooltipPage;
 import org.apache.wicket.markup.MarkupType;
 import org.apache.wicket.markup.html.WebPage;
 import org.apache.wicket.markup.html.basic.Label;
@@ -207,6 +208,7 @@ public class SiteMapPage extends WebPage
 			DefaultDroppablePage.class,
 			DefaultEditorPage.class,
 			DefaultEffectPage.class,
+			DefaultKendoTooltipPage.class,
 			DefaultMenuPage.class,
 			DefaultMultiSelectPage.class,
 			DefaultNotificationPage.class,

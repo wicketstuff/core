@@ -1,5 +1,7 @@
 package com.googlecode.wicket.jquery.ui.samples;
 
+import com.googlecode.wicket.jquery.ui.samples.pages.kendo.tooltip.ComponentKendoTooltipPage;
+import com.googlecode.wicket.jquery.ui.samples.pages.kendo.tooltip.DefaultKendoTooltipPage;
 import org.apache.wicket.Session;
 import org.apache.wicket.markup.html.WebPage;
 import org.apache.wicket.protocol.http.WebApplication;
@@ -106,6 +108,7 @@ public class SampleApplication extends WebApplication
 		this.mountPackage("/kendo/scheduler", DefaultSchedulerPage.class);
 		this.mountPackage("/kendo/splitter", DefaultSplitterPage.class);
 		this.mountPackage("/kendo/tabs", KendoTabsPage.class);
+		this.mountPackage("/kendo/tooltip", DefaultKendoTooltipPage.class);
 		this.mountPackage("/kendo/window", DefaultWindowPage.class);
 		
 		// Kendo interactions //
