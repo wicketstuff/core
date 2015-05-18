@@ -1,0 +1,7 @@
+This is a simple use of a <code>TooltipBehavior</code> that uses a Wicket component as content.<br/>
+<br/>
+<h4>Required markup & options</h4>
+<a href="http://docs.telerik.com/kendo-ui/api/javascript/ui/tooltip">http://docs.telerik.com/kendo-ui/api/javascript/ui/tooltip</a>
+<br/>
+<h4>Since</h4>
+wicket-kendo-ui-6.20.0
