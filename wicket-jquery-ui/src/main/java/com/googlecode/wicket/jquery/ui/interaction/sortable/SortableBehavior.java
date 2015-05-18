@@ -132,16 +132,19 @@ public abstract class SortableBehavior<T> extends JQueryUIBehavior implements IJ
 	{
 		super.onConfigure(component);
 
-		this.setOption("update", this.onUpdateAjaxBehavior.getCallbackFunction());
-
-		if (this.onReceiveAjaxBehavior != null)
+		if (isEnabled(component))
 		{
-			this.setOption("receive", this.onReceiveAjaxBehavior.getCallbackFunction());
-		}
+			this.setOption("update", this.onUpdateAjaxBehavior.getCallbackFunction());
 
-		if (this.onRemoveAjaxBehavior != null)
-		{
-			this.setOption("remove", this.onRemoveAjaxBehavior.getCallbackFunction());
+			if (this.onReceiveAjaxBehavior != null)
+			{
+				this.setOption("receive", this.onReceiveAjaxBehavior.getCallbackFunction());
+			}
+
+			if (this.onRemoveAjaxBehavior != null)
+			{
+				this.setOption("remove", this.onRemoveAjaxBehavior.getCallbackFunction());
+			}
 		}
 	}
 
@@ -184,6 +187,12 @@ public abstract class SortableBehavior<T> extends JQueryUIBehavior implements IJ
 				}
 			}
 		}
+	}
+
+	@Override
+	public boolean isEnabled(Component component)
+	{
+		return component.isEnabledInHierarchy();
 	}
 
 	// Factories //
