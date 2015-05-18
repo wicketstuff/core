@@ -94,6 +94,6 @@ public class TooltipBehavior extends KendoUIBehavior
 		super.onConfigure(component);
 
 		String ttip = tooltip.getObject();
-		getOptions().set("content", Options.asString(ttip));
+		setOption("content", Options.asString(ttip));
 	}
 }
