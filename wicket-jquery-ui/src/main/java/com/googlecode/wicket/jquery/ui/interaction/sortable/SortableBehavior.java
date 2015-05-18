@@ -88,6 +88,13 @@ public abstract class SortableBehavior<T> extends JQueryUIBehavior implements IJ
 		return Collections.emptyList();
 	}
 
+	// TODO: move to JQueryUIBehavior/KendoUIBehavior (or JQueryBehavior), and generalize call in #onConfigure(Component) where applicable
+	@Override
+	public boolean isEnabled(Component component)
+	{
+		return component.isEnabledInHierarchy();
+	}
+
 	// Methods //
 
 	@Override
@@ -132,7 +139,7 @@ public abstract class SortableBehavior<T> extends JQueryUIBehavior implements IJ
 	{
 		super.onConfigure(component);
 
-		if (isEnabled(component))
+		if (this.isEnabled(component))
 		{
 			this.setOption("update", this.onUpdateAjaxBehavior.getCallbackFunction());
 
@@ -187,12 +194,6 @@ public abstract class SortableBehavior<T> extends JQueryUIBehavior implements IJ
 				}
 			}
 		}
-	}
-
-	@Override
-	public boolean isEnabled(Component component)
-	{
-		return component.isEnabledInHierarchy();
 	}
 
 	// Factories //
