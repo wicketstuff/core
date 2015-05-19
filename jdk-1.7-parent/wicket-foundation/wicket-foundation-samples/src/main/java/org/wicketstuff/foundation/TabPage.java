@@ -30,7 +30,7 @@ public class TabPage extends BasePage
 			@Override
 			public WebMarkupContainer getPanel(String panelId)
 			{
-				return new TextualPanel(panelId, Model.of("Content 1"));
+				return new TextualPanel(panelId, Model.of("This is the first panel of the basic tab example. You can place all sorts of content here including a grid."));
 			}
 		});
 
@@ -40,7 +40,7 @@ public class TabPage extends BasePage
 			@Override
 			public WebMarkupContainer getPanel(String panelId)
 			{
-				return new TextualPanel(panelId, Model.of("Content 2"));
+				return new TextualPanel(panelId, Model.of("This is the second panel of the basic tab example. This is the second panel of the basic tab example."));
 			}
 		});
 		
@@ -50,11 +50,23 @@ public class TabPage extends BasePage
 			@Override
 			public WebMarkupContainer getPanel(String panelId)
 			{
-				return new TextualPanel(panelId, Model.of("Content 3"));
+				return new TextualPanel(panelId, Model.of("This is the third panel of the basic tab example. This is the third panel of the basic tab example."));
+			}
+		});
+		
+		tabs.add(new AbstractTab(Model.of("title 4"))
+		{
+
+			@Override
+			public WebMarkupContainer getPanel(String panelId)
+			{
+				return new TextualPanel(panelId, Model.of("This is the fourth panel of the basic tab example. This is the fourth panel of the basic tab example."));
 			}
 		});
 
-		add(new FoundationTab<>("ajaxTab", tabs).setVerticalTab(true));
+		add(new FoundationTab<>("ajaxTabHorizontal", tabs));
+		add(new FoundationTab<>("ajaxTabVertical", tabs).setVerticalTab(true));
+		
 	}
 	
 	class ContainerString extends WebMarkupContainer implements IMarkupResourceStreamProvider, IMarkupCacheKeyProvider
