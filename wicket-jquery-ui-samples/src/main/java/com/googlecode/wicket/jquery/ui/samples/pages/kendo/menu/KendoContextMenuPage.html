@@ -13,6 +13,12 @@
 	<div wicket:id="menu"></div>
 	<br/>
 	<div wicket:id="feedback"></div>
+
+	<wicket:fragment wicket:id="moveToPosition">
+		<form wicket:id="form" onclick="var $evt=jQuery.event.fix(event);if($evt.target.nodeName !== 'BUTTON'){$evt.stopPropagation()}">
+			A menu item with a Form: <input wicket:id="position" type="text" style="width: 40px"/> <button type="button" class="k-button" wicket:id="moveToPositionBtn">Set position</button>
+		</form>
+	</wicket:fragment>
 </wicket:extend>
 </body>
 </html>

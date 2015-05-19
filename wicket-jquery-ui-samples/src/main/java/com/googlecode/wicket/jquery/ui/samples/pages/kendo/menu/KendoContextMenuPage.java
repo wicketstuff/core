@@ -7,6 +7,8 @@ import com.googlecode.wicket.jquery.core.Options;
 import com.googlecode.wicket.kendo.ui.panel.KendoFeedbackPanel;
 import com.googlecode.wicket.kendo.ui.widget.menu.ContextMenu;
 import com.googlecode.wicket.kendo.ui.widget.menu.item.IMenuItem;
+import org.apache.wicket.markup.html.WebMarkupContainer;
+import org.apache.wicket.markup.html.list.ListItem;
 
 public class KendoContextMenuPage extends AbstractMenuPage
 {
@@ -34,11 +36,30 @@ public class KendoContextMenuPage extends AbstractMenuPage
 			@Override
 			public void onClick(AjaxRequestTarget target, IMenuItem item)
 			{
-				this.info("Clicked " + item.getTitle().getObject());
+				if (item instanceof KendoMenuPage.MoveToPositionMenuItem)
+				{
+					KendoMenuPage.MoveToPositionMenuItem moveToPositionMenuItem = (KendoMenuPage.MoveToPositionMenuItem) item;
+					this.info("Set the position to: " + moveToPositionMenuItem.getPosition());
+				}
+				else
+				{
+					this.info("Clicked " + item.getTitle().getObject());
+				}
 
 				refresh(target);
 				target.add(feedback);
 			}
+
+			@Override
+			protected void addMenuItem(ListItem<IMenuItem> item, IMenuItem menuItem) {
+				if (menuItem instanceof KendoMenuPage.MoveToPositionMenuItem) {
+					item.add(new KendoMenuPage.MoveToPositionPanel("item", (KendoMenuPage.MoveToPositionMenuItem) menuItem, KendoContextMenuPage.this));
+					item.add(new WebMarkupContainer("menu"));
+				} else {
+					super.addMenuItem(item, menuItem);
+				}
+			}
 		});
 	}
+
 }

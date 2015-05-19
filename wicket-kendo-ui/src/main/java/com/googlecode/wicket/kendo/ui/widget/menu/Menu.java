@@ -234,37 +234,54 @@ public class Menu extends JQueryPanel implements IMenuListener
 					Menu.this.map.put(menuItemId, menuItem);
 					item.add(AttributeModifier.replace("id", menuItemId));
 
-					if (menuItem instanceof UrlMenuItem)
-					{
-						item.add(new LinkFragment("item", (UrlMenuItem) menuItem));
-						item.add(new EmptyPanel("menu"));
-					}
-					else
-					{
-						item.add(new ItemFragment("item", menuItem));
-
-						if (this.hasSubMenus(menuItem))
-						{
-							item.add(new MenuFragment("menu", menuItem.getItems()));
-						}
-						else
-						{
-							item.add(new EmptyPanel("menu"));
-						}
-					}
+					addMenuItem(item, menuItem);
 
 					if (!menuItem.isEnabled())
 					{
 						item.add(AttributeModifier.append("disabled", Model.of("disabled")));
 					}
 				}
-
-				private boolean hasSubMenus(IMenuItem item)
-				{
-					return item.isEnabled() && !item.getItems().isEmpty(); // do not render sub-menus if item is disabled
-				}
 			});
 		}
+	}
+
+	/**
+	 * Adds the needed Wicket components to render the given <em>menuItem</em>
+	 *
+	 * @param item The ListView item
+	 * @param menuItem The menu item to render
+	 */
+	protected void addMenuItem(ListItem<IMenuItem> item, IMenuItem menuItem)
+	{
+		if (menuItem instanceof UrlMenuItem)
+		{
+			item.add(new LinkFragment("item", (UrlMenuItem) menuItem));
+			item.add(new EmptyPanel("menu"));
+		}
+		else
+		{
+			item.add(new ItemFragment("item", menuItem));
+
+			if (this.hasSubMenus(menuItem))
+			{
+				item.add(new MenuFragment("menu", menuItem.getItems()));
+			}
+			else
+			{
+				item.add(new EmptyPanel("menu"));
+			}
+		}
+	}
+
+	/**
+	 * Checks whether a menu item has sub menu items
+	 *
+	 * @param item The menu item to check for sub menu items
+	 * @return {@code true} if the item has sub items, otherwise {@code false}
+	 */
+	protected boolean hasSubMenus(IMenuItem item)
+	{
+		return item.isEnabled() && !item.getItems().isEmpty(); // do not render sub-menus if item is disabled
 	}
 
 	/**
