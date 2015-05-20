@@ -66,7 +66,7 @@ public class KryoSerializerTest
 		Assert.assertNotNull("The produced data should not be null!", data);
 
 		// data length can fluctuate based on the object field values
-		Assert.assertEquals("The produced data length is not correct!", 622, data.length);
+		Assert.assertEquals("The produced data length is not correct!", 621, data.length);
 
 		Object object = pageSerializer.deserialize(data);
 		Assert.assertTrue(
@@ -102,11 +102,11 @@ public class KryoSerializerTest
 		// assert rendered page class
 		tester.assertRenderedPage(SamplePage.class);
 	}
-	
+
 	@Test(expected=KryoException.class)
 	public void notSerializableCompontentThrowsException()
 	{
-		
+
 		NotSerializablePage page = tester.startPage(NotSerializablePage.class,
 			new PageParameters().add("Test", "asString"));
 
