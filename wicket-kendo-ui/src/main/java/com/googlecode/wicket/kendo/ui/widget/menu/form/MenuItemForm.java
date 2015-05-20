@@ -67,7 +67,7 @@ public class MenuItemForm<T> extends Form<T>
 	 */
 	protected String getOnClickStatement()
 	{
-		return "var $event = $.event.fix(event); if ($event.target.nodeName !== 'BUTTON') { $event.stopPropagation(); }";
+		return "var $event = jQuery.event.fix(event); if ($event.target.nodeName !== 'BUTTON') { $event.stopPropagation(); }";
 	}
 
 	// Events //
