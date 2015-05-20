@@ -28,10 +28,10 @@ import org.apache.wicket.util.io.IClusterable;
  * overridden using the <code>NavigatorLabel</code> property key, the default message is used is of
  * the format <code>Showing ${from} to ${to} of ${of}</code>. The message can also be configured
  * pragmatically by setting it as the model object of the label.
- * 
+ *
  * @author Igor Vaynberg (ivaynberg)
  * @author Matej Knopp
- * 
+ *
  */
 public class NavigatorLabel extends Label
 {
@@ -47,8 +47,7 @@ public class NavigatorLabel extends Label
 	{
 		super(id);
 		setDefaultModel(new StringResourceModel("NavigatorLabel", this,
-			new Model<LabelModelObject<D, T>>(new LabelModelObject<D, T>(table)),
-			"Showing ${from} to ${to} of ${of}"));
+			new Model<LabelModelObject<D, T>>(new LabelModelObject<D, T>(table))));
 	}
 
 	private class LabelModelObject<D extends IDataSource<T>, T> implements IClusterable
@@ -58,7 +57,7 @@ public class NavigatorLabel extends Label
 
 		/**
 		 * Construct.
-		 * 
+		 *
 		 * @param table
 		 */
 		public LabelModelObject(DataGrid<D, T, ?> table)
