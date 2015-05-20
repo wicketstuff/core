@@ -3,13 +3,13 @@ package com.googlecode.wicket.jquery.ui.samples.pages.kendo.menu;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.googlecode.wicket.kendo.ui.form.TextField;
+import com.googlecode.wicket.kendo.ui.form.NumberTextField;
 import com.googlecode.wicket.kendo.ui.form.button.AjaxButton;
+import com.googlecode.wicket.kendo.ui.widget.menu.item.MenuItemForm;
 import org.apache.wicket.MarkupContainer;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.attributes.AjaxRequestAttributes;
 import org.apache.wicket.markup.html.WebMarkupContainer;
-import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.list.ListItem;
 import org.apache.wicket.markup.html.panel.Fragment;
 import org.apache.wicket.model.Model;
@@ -121,10 +121,10 @@ public class KendoMenuPage extends AbstractMenuPage
 		public MoveToPositionPanel(String id, KendoMenuPage.MoveToPositionMenuItem menuItem, MarkupContainer markupProvider) {
 			super(id, "moveToPosition", markupProvider);
 
-			Form<Void> form = new Form<Void>("form");
+			MenuItemForm<Void> form = new MenuItemForm<Void>("form");
 			add(form);
 
-			final TextField<Integer> position = new TextField<Integer>("position", new PropertyModel<Integer>(menuItem, "position"));
+			final NumberTextField<Integer> position = new NumberTextField<Integer>("position", new PropertyModel<Integer>(menuItem, "position"));
 			AjaxButton applyBtn = new AjaxButton("moveToPositionBtn") {
 				@Override
 				protected void updateAjaxAttributes(AjaxRequestAttributes attributes) {
@@ -139,7 +139,7 @@ public class KendoMenuPage extends AbstractMenuPage
 	}
 	public static class MoveToPositionMenuItem extends MenuItem
 	{
-		private int position;
+		private int position = 1;
 
 		private MoveToPositionMenuItem(String title) {
 			super(title);

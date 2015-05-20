@@ -12,8 +12,8 @@
 	<div wicket:id="feedback"></div>
 
 	<wicket:fragment wicket:id="moveToPosition">
-		<form wicket:id="form" onclick="var $evt=jQuery.event.fix(event);if($evt.target.nodeName !== 'BUTTON'){$evt.stopPropagation()}">
-			With a Form: <input wicket:id="position" type="text" style="width: 40px"/> <button type="button" class="k-button" wicket:id="moveToPositionBtn">Set position</button>
+		<form wicket:id="form">
+			With a Form: <input wicket:id="position" type="number" style="width: 80px"/> <button type="button" wicket:id="moveToPositionBtn">Set position</button>
 		</form>
 	</wicket:fragment>
 
