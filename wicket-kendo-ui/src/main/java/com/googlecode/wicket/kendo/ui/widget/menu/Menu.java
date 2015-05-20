@@ -128,15 +128,25 @@ public class Menu extends JQueryPanel implements IMenuListener
 	}
 
 	/**
-	 * Refreshes the widget by calling {@link #destroy(AjaxRequestTarget)} and re-adding it to the target
+	 * Refreshes the {@link Menu}
+	 * 
+	 * @param target the {@link AjaxRequestTarget}
+	 * @see #reload(AjaxRequestTarget)
+	 */
+	public void refresh(AjaxRequestTarget target)
+	{
+		target.add(this);
+	}
+
+	/**
+	 * Reloads the widget by calling {@link #destroy(AjaxRequestTarget)} and {@link #refresh(AjaxRequestTarget)}
 	 *
 	 * @param target The {@link AjaxRequestTarget}
 	 */
-	//TODO rename #refresh to #reload
-	public void refresh(AjaxRequestTarget target)
+	public void reload(AjaxRequestTarget target)
 	{
 		this.destroy(target);
-		target.add(this);
+		this.refresh(target);
 	}
 
 	/**
@@ -150,6 +160,7 @@ public class Menu extends JQueryPanel implements IMenuListener
 	}
 
 	// Events //
+
 	@Override
 	protected void onInitialize()
 	{
@@ -166,6 +177,7 @@ public class Menu extends JQueryPanel implements IMenuListener
 	}
 
 	// IJQueryWidget //
+
 	@Override
 	public MenuBehavior newWidgetBehavior(String selector)
 	{
@@ -194,6 +206,7 @@ public class Menu extends JQueryPanel implements IMenuListener
 	}
 
 	// Fragments //
+
 	/**
 	 * Represents a menu {@link Fragment}. Could be either the root or a sub-menu
 	 */
@@ -234,7 +247,7 @@ public class Menu extends JQueryPanel implements IMenuListener
 					Menu.this.map.put(menuItemId, menuItem);
 					item.add(AttributeModifier.replace("id", menuItemId));
 
-					addMenuItem(item, menuItem);
+					Menu.this.addMenuItem(item, menuItem);
 
 					if (!menuItem.isEnabled())
 					{
@@ -246,10 +259,10 @@ public class Menu extends JQueryPanel implements IMenuListener
 	}
 
 	/**
-	 * Adds the needed Wicket components to render the given <em>menuItem</em>
+	 * Adds the needed Wicket components to render the given {@code IMenuItem}
 	 *
-	 * @param item The ListView item
-	 * @param menuItem The menu item to render
+	 * @param item the ListView item
+	 * @param menuItem the menu item to render
 	 */
 	protected void addMenuItem(ListItem<IMenuItem> item, IMenuItem menuItem)
 	{
@@ -276,7 +289,7 @@ public class Menu extends JQueryPanel implements IMenuListener
 	/**
 	 * Checks whether a menu item has sub menu items
 	 *
-	 * @param item The menu item to check for sub menu items
+	 * @param item the menu item to check for sub menu items
 	 * @return {@code true} if the item has sub items, otherwise {@code false}
 	 */
 	protected boolean hasSubMenus(IMenuItem item)

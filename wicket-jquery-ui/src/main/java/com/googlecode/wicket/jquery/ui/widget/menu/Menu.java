@@ -204,6 +204,7 @@ public class Menu extends JQueryPanel implements IMenuListener
 					Menu.this.map.put(menuItemId, menuItem);
 					item.add(AttributeModifier.replace("id", menuItemId));
 
+					// TODO #addMenuItem & #hasSubMenus(?) - see kendo implementation
 					item.add(new ItemFragment("item", menuItem));
 
 					if (menuItem.isEnabled())

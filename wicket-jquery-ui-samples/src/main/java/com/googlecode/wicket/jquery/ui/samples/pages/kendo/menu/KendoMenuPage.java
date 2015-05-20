@@ -3,24 +3,24 @@ package com.googlecode.wicket.jquery.ui.samples.pages.kendo.menu;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.googlecode.wicket.kendo.ui.form.NumberTextField;
-import com.googlecode.wicket.kendo.ui.form.button.AjaxButton;
-import com.googlecode.wicket.kendo.ui.widget.menu.item.MenuItemForm;
 import org.apache.wicket.MarkupContainer;
 import org.apache.wicket.ajax.AjaxRequestTarget;
-import org.apache.wicket.ajax.attributes.AjaxRequestAttributes;
 import org.apache.wicket.markup.html.WebMarkupContainer;
+import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.list.ListItem;
 import org.apache.wicket.markup.html.panel.Fragment;
 import org.apache.wicket.model.Model;
-
-import com.googlecode.wicket.kendo.ui.KendoIcon;
-import com.googlecode.wicket.kendo.ui.panel.KendoFeedbackPanel;
-import com.googlecode.wicket.kendo.ui.widget.menu.Menu;
-import com.googlecode.wicket.kendo.ui.widget.menu.item.IMenuItem;
-import com.googlecode.wicket.kendo.ui.widget.menu.item.MenuItem;
 import org.apache.wicket.model.PropertyModel;
 
+import com.googlecode.wicket.kendo.ui.KendoIcon;
+import com.googlecode.wicket.kendo.ui.form.NumberTextField;
+import com.googlecode.wicket.kendo.ui.form.button.AjaxButton;
+import com.googlecode.wicket.kendo.ui.panel.KendoFeedbackPanel;
+import com.googlecode.wicket.kendo.ui.widget.menu.Menu;
+import com.googlecode.wicket.kendo.ui.widget.menu.form.MenuItemAjaxButton;
+import com.googlecode.wicket.kendo.ui.widget.menu.form.MenuItemForm;
+import com.googlecode.wicket.kendo.ui.widget.menu.item.IMenuItem;
+import com.googlecode.wicket.kendo.ui.widget.menu.item.MenuItem;
 
 public class KendoMenuPage extends AbstractMenuPage
 {
@@ -41,8 +41,7 @@ public class KendoMenuPage extends AbstractMenuPage
 				this.setTitle(Model.of("Title changed!"));
 			}
 		});
-		list.add(new MenuItem("Another menu item"));
-		list.add(new MenuItem("Menu item, with sub-menu", newSubMenuList()));
+		list.add(new MenuItem("With sub-menu", newSubMenuList()));
 		list.add(new MenuItem("Desactivate me") {
 
 			private static final long serialVersionUID = 1L;
@@ -69,7 +68,6 @@ public class KendoMenuPage extends AbstractMenuPage
 		return list;
 	}
 
-
 	public KendoMenuPage()
 	{
 		// FeedbackPanel //
@@ -81,12 +79,30 @@ public class KendoMenuPage extends AbstractMenuPage
 
 			private static final long serialVersionUID = 1L;
 
+			// methods //
+
+			@Override
+			protected void addMenuItem(ListItem<IMenuItem> item, IMenuItem menuItem)
+			{
+				if (menuItem instanceof MoveToPositionMenuItem)
+				{
+					item.add(new MoveToPositionPanel("item", (MoveToPositionMenuItem) menuItem, KendoMenuPage.this));
+					item.add(new WebMarkupContainer("menu"));
+				}
+				else
+				{
+					super.addMenuItem(item, menuItem);
+				}
+			}
+
+			// events //
+
 			@Override
 			public void onClick(AjaxRequestTarget target, IMenuItem item)
 			{
-				if (item instanceof KendoMenuPage.MoveToPositionMenuItem)
+				if (item instanceof MoveToPositionMenuItem)
 				{
-					KendoMenuPage.MoveToPositionMenuItem moveToPositionMenuItem = (KendoMenuPage.MoveToPositionMenuItem) item;
+					MoveToPositionMenuItem moveToPositionMenuItem = (MoveToPositionMenuItem) item;
 					this.info("Set the position to: " + moveToPositionMenuItem.getPosition());
 				}
 				else
@@ -97,51 +113,41 @@ public class KendoMenuPage extends AbstractMenuPage
 				target.add(this);
 				target.add(feedback);
 			}
-
-			@Override
-			protected void addMenuItem(ListItem<IMenuItem> item, IMenuItem menuItem) {
-				if (menuItem instanceof KendoMenuPage.MoveToPositionMenuItem) {
-					item.add(new MoveToPositionPanel("item", (KendoMenuPage.MoveToPositionMenuItem) menuItem, KendoMenuPage.this));
-					item.add(new WebMarkupContainer("menu"));
-				} else {
-					super.addMenuItem(item, menuItem);
-				}
-			}
 		});
 	}
 
-	public static class MoveToPositionPanel extends Fragment
+	static class MoveToPositionPanel extends Fragment
 	{
+		private static final long serialVersionUID = 1L;
+
 		/**
 		 * Constructor.
 		 *
 		 * @param id The component id
 		 * @param menuItem
 		 */
-		public MoveToPositionPanel(String id, KendoMenuPage.MoveToPositionMenuItem menuItem, MarkupContainer markupProvider) {
-			super(id, "moveToPosition", markupProvider);
+		public MoveToPositionPanel(String id, MoveToPositionMenuItem menuItem, MarkupContainer provider)
+		{
+			super(id, "moveToPosition", provider);
 
-			MenuItemForm<Void> form = new MenuItemForm<Void>("form");
-			add(form);
+			Form<Void> form = new MenuItemForm<Void>("form");
+			this.add(form);
 
-			final NumberTextField<Integer> position = new NumberTextField<Integer>("position", new PropertyModel<Integer>(menuItem, "position"));
-			AjaxButton applyBtn = new AjaxButton("moveToPositionBtn") {
-				@Override
-				protected void updateAjaxAttributes(AjaxRequestAttributes attributes) {
-					super.updateAjaxAttributes(attributes);
-					attributes.setAllowDefault(true);
-					attributes.setEventPropagation(AjaxRequestAttributes.EventPropagation.BUBBLE);
-				}
-			};
+			final NumberTextField<Integer> textField = new NumberTextField<Integer>("position", new PropertyModel<Integer>(menuItem, "position"));
+			final AjaxButton button = new MenuItemAjaxButton("moveToPositionBtn");
 
-			form.add(position, applyBtn);
+			form.add(textField, button);
 		}
 	}
-	public static class MoveToPositionMenuItem extends MenuItem
+
+	static class MoveToPositionMenuItem extends MenuItem
 	{
+		private static final long serialVersionUID = 1L;
+
 		private int position = 1;
 
-		private MoveToPositionMenuItem(String title) {
+		private MoveToPositionMenuItem(String title)
+		{
 			super(title);
 		}
 
@@ -155,5 +161,4 @@ public class KendoMenuPage extends AbstractMenuPage
 			this.position = position;
 		}
 	}
-
 }

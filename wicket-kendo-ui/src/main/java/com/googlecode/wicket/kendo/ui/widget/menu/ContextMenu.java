@@ -30,6 +30,7 @@ import com.googlecode.wicket.kendo.ui.widget.menu.item.IMenuItem;
 /**
  * Provides the Kendo UI context menu
  *
+ * @author Martin Grigorov - martin-g
  * @since 6.20.0
  */
 public class ContextMenu extends Menu implements IContextMenuListener
