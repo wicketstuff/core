@@ -196,9 +196,8 @@ public class Popover extends Overlay {
      * @return This instance
      */
     public Popover show(AjaxRequestTarget target) {
+		hide(target);
         target.appendJavaScript(renderPopoverJs());
-        hide(target);
-        target.appendJavaScript("$(" + getJsId() + ".getElement()).popover('show');");
         return this;
     }
 
@@ -210,7 +209,7 @@ public class Popover extends Overlay {
      * @return This instance
      */
     public Popover hide(AjaxRequestTarget target) {
-        target.appendJavaScript("$(" + getJsId() + ".getElement()).popover('hide');");
+        target.appendJavaScript("$(" + getJsId() + ".getElement()).popover('destroy');");
         return this;
     }
 
@@ -228,42 +227,46 @@ public class Popover extends Overlay {
 
         StringBuilder builder = new StringBuilder();
 
+		// get a handle on our popup
         builder.append("var popup = " + getJsId() + ";");
         builder.append("var element = popup.getElement();");
 
-        builder.append("$(element).popover('destroy');");
+		// set the new position of the popup
         builder.append("popup.setPosition(" + position.renderJs() + ");");
 
+		// inital popup settings
         builder.append("$(element).popover({");
-
+		builder.append("'trigger': 'manual', 'animation': false,");
         if (titleModel != null) {
             builder.append("'title': '" + escapeQuoteJs(titleModel.getObject()) + "',");
         }
-
         if (placement != null) {
             builder.append("'placement': '" + placement + "',");
         }
-
         builder.append("'html': '" + html + "',");
         if (html) {
             builder.append("'content': '" + escapeQuoteJs(model.getObject()) + "',");
         } else {
             builder.append("'content': '" + Strings.escapeMarkup(model.getObject()) + "',");
         }
-
         builder.append("});");
 
+		// update popup content
         if(titleModel != null) {
             builder.append("$(element).data('original-title', '");
 			builder.append(escapeQuoteJs(titleModel.getObject()));
 			builder.append("');");
-        }
-
+        } else {
+            builder.append("$(element).data('original-title', '');");
+		}
         if (html) {
             builder.append("$(element).attr('data-content', '" + escapeQuoteJs(model.getObject()) + "');");
         } else {
             builder.append("$(element).attr('data-content', '" + Strings.escapeMarkup(model.getObject()) + "');");
         }
+
+		// show our popup
+		builder.append("$(element).popover('show');");
 
         return builder.toString();
     }
