@@ -14,13 +14,10 @@ package org.wicketstuff.select2;
 
 import java.util.Collections;
 import java.util.Iterator;
-import java.util.List;
 
 import org.apache.wicket.ajax.json.JSONException;
 import org.apache.wicket.markup.head.IHeaderResponse;
 import org.apache.wicket.markup.head.OnDomReadyHeaderItem;
-import org.apache.wicket.markup.html.form.IChoiceRenderer;
-import org.apache.wicket.markup.html.form.ChoiceRenderer;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.util.convert.ConversionException;
 import org.apache.wicket.util.string.Strings;
@@ -38,34 +35,48 @@ public class Select2Choice<T> extends AbstractSelect2Choice<T, T>
 
 	private static final long serialVersionUID = 1L;
 
-	public Select2Choice(String id, IModel<T> model, List<T> choices, ChoiceRenderer<T> renderer)
+	/**
+	 * Constructor.
+	 *
+	 * @param id
+	 */
+	public Select2Choice(String id)
 	{
-		super(id, model, choices, renderer);
+		super(id);
 	}
 
-	public Select2Choice(String id, IModel<T> model, ChoiceProvider<T> provider)
-	{
-		super(id, model, provider);
-	}
-
-	public Select2Choice(String id, IModel<T> model, List<T> choices, IChoiceRenderer<T> renderer)
-	{
-		super(id, model, choices, renderer);
-	}
-
-	public Select2Choice(String id, List<T> choices, IChoiceRenderer<T> renderer)
-	{
-		super(id, choices, renderer);
-	}
-
+	/**
+	 * Constructor.
+	 *
+	 * @param id
+	 * @param model
+	 */
 	public Select2Choice(String id, IModel<T> model)
 	{
 		super(id, model);
 	}
 
-	public Select2Choice(String id)
+	/**
+	 * Constructor.
+	 *
+	 * @param id
+	 * @param model
+	 * @param provider
+	 */
+	public Select2Choice(String id, IModel<T> model, ChoiceProvider<T> provider)
 	{
-		super(id);
+		super(id, model, provider);
+	}
+
+	/**
+	 * Constructor.
+	 *
+	 * @param id
+	 * @param provider
+	 */
+	public Select2Choice(String id, ChoiceProvider<T> provider)
+	{
+		super(id, provider);
 	}
 
 	@Override
@@ -89,14 +100,7 @@ public class Select2Choice<T> extends AbstractSelect2Choice<T, T>
 		try
 		{
 			selection.object();
-			if (isAjax())
-			{
-				getProvider().toJson(choice, selection);
-			}
-			else
-			{
-				renderChoice(choice, selection);
-			}
+			getProvider().toJson(choice, selection);
 			selection.endObject();
 		}
 		catch (JSONException e)

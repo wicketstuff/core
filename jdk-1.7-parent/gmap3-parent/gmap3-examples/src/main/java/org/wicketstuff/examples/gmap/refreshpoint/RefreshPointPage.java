@@ -32,7 +32,7 @@ public class RefreshPointPage extends WicketExamplePage
         map = new GMap("map");
         add(map);
 
-        GOverlay overlay = createOverlay("Amsterdam", new GLatLng(52.37649, 4.888573), "pin.gif", "shadow.png");
+        GOverlay overlay = createOverlay("Amsterdam", new GLatLng(52.37649, 4.888573), "pin.gif");
 
         map.addOverlay(overlay);
 
@@ -49,16 +49,16 @@ public class RefreshPointPage extends WicketExamplePage
                     GOverlay newOverlay;
                     if (i % 3 == 0)
                     {
-                        newOverlay = createOverlay("Amsterdam", new GLatLng(52.37649, 4.888573), "pin.gif", "shadow.png");
+                        newOverlay = createOverlay("Amsterdam", new GLatLng(52.37649, 4.888573), "pin.gif");
                         i = 0;
                     }
                     else if (i % 3 == 1)
                     {
-                        newOverlay = createOverlay("Amsterdam", new GLatLng(52.37649, 4.888573), "pin2.gif", "shadow2.png");
+                        newOverlay = createOverlay("Amsterdam", new GLatLng(52.37649, 4.888573), "pin2.gif");
                     }
                     else
                     {
-                        newOverlay = createOverlay("Toulouse", new GLatLng(43.604363, 1.442951), "pin2.gif", "shadow2.png");
+                        newOverlay = createOverlay("Toulouse", new GLatLng(43.604363, 1.442951), "pin2.gif");
                     }
                     i++;
                     map.setOverlays(Collections.singletonList(newOverlay));
@@ -90,18 +90,12 @@ public class RefreshPointPage extends WicketExamplePage
         add(toggleLink);
     }
 
-    private GOverlay createOverlay(String title, GLatLng latLng, String image, String shadow)
+    private GOverlay createOverlay(String title, GLatLng latLng, String image)
     {
-
-
         GIcon icon =
-                new GIcon("/" + image).setScaledSize(
+                new GIcon("../" + image).setScaledSize(
                 new GSize(64, 64)).setSize(new GSize(64, 64));
-        GIcon shadowIcon =
-                new GIcon("/" + shadow).setScaledSize(
-                new GSize(64, 64)).setSize(new GSize(64, 64));
-
         map.setCenter(latLng);
-        return new GMarker(new GMarkerOptions(map, latLng, title, icon, shadowIcon));
+        return new GMarker(new GMarkerOptions(map, latLng, title, icon));
     }
 }

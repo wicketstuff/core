@@ -93,6 +93,7 @@
  
 		<module>wicketstuff-glassfish4-integration</module>
 		<module>serializer-fast2</module>
+		<module>wicket-foundation</module>
 	</modules>
 
 	<build>

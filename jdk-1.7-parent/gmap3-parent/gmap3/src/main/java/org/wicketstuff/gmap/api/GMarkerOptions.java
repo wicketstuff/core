@@ -36,14 +36,11 @@ public class GMarkerOptions implements GValue, Cloneable
     private boolean clickable = true;
     private final String cursor = null;
     private boolean draggable = false;
-    private final boolean flat = false;
     private GIcon icon = null;
     private final GMap gmap;
     private String title;
     private GLatLng latLng;
-    private boolean bouncy = true;
-    private boolean autoPan = false;
-    private GIcon shadow = null;
+    private GAnimation animation = null;
 
     public GMarkerOptions(GMap gmap, GLatLng latLng)
     {
@@ -58,12 +55,11 @@ public class GMarkerOptions implements GValue, Cloneable
 
     }
 
-    public GMarkerOptions(GMap gmap, GLatLng latLng, String title, GIcon icon, GIcon shadow)
+    public GMarkerOptions(GMap gmap, GLatLng latLng, String title, GIcon icon)
     {
         this(gmap, latLng);
         this.title = title;
         this.icon = icon;
-        this.shadow = shadow;
     }
 
     /**
@@ -89,29 +85,17 @@ public class GMarkerOptions implements GValue, Cloneable
         {
             literal.set("draggable", "true");
         }
-        if (flat)
-        {
-            literal.setString("flat", "true");
-        }
         if (icon != null)
         {
             literal.set("icon", icon.getJSconstructor());
-        }
-        if (shadow != null)
-        {
-            literal.set("shadow", shadow.getJSconstructor());
         }
         if (title != null)
         {
             literal.setString("title", title);
         }
-        if (!bouncy)
+        if (animation != null)
         {
-            literal.set("bouncy", "false");
-        }
-        if (autoPan)
-        {
-            literal.set("autoPan", "true");
+            literal.set("animation", animation.toString());
         }
 
         return literal.toJS();
@@ -130,16 +114,6 @@ public class GMarkerOptions implements GValue, Cloneable
     public boolean isClickable()
     {
         return clickable;
-    }
-
-    public boolean isBouncy()
-    {
-        return bouncy;
-    }
-
-    public boolean isAutoPan()
-    {
-        return autoPan;
     }
 
     public GIcon getIcon()
@@ -177,28 +151,10 @@ public class GMarkerOptions implements GValue, Cloneable
         return clone;
     }
 
-    public GMarkerOptions autoPan(boolean autoPan)
-    {
-        GMarkerOptions clone = clone();
-        clone.autoPan = autoPan;
-        return clone;
-    }
-
-    public GMarkerOptions bouncy(boolean bouncy)
-    {
-        GMarkerOptions clone = clone();
-        clone.bouncy = bouncy;
-        return clone;
-    }
 
     public String getCursor()
     {
         return cursor;
-    }
-
-    public boolean isFlat()
-    {
-        return flat;
     }
 
     public void setLatLng(GLatLng latLng)
@@ -224,12 +180,6 @@ public class GMarkerOptions implements GValue, Cloneable
     {
         final int PRIME = 31;
         int result = 1;
-        result = PRIME * result + (autoPan
-                ? 1231
-                : 1237);
-        result = PRIME * result + (bouncy
-                ? 1231
-                : 1237);
         result = PRIME * result + (clickable
                 ? 1231
                 : 1237);
@@ -264,14 +214,6 @@ public class GMarkerOptions implements GValue, Cloneable
             return false;
         }
         final GMarkerOptions other = (GMarkerOptions) obj;
-        if (autoPan != other.autoPan)
-        {
-            return false;
-        }
-        if (bouncy != other.bouncy)
-        {
-            return false;
-        }
         if (clickable != other.clickable)
         {
             return false;
@@ -305,13 +247,14 @@ public class GMarkerOptions implements GValue, Cloneable
         return true;
     }
 
-    public void setShadow(GIcon shadow)
+    public GAnimation getAnimation() 
     {
-        this.shadow = shadow;
+        return animation;
     }
 
-    public GIcon getShadow()
-    {
-        return shadow;
+    public void setAnimation(GAnimation animation) 
+    {        
+        this.animation = animation;
     }
+        
 }

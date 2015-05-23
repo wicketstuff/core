@@ -22,14 +22,14 @@ public class Select2MultiChoicePage extends WebPage
 	{
 		super();
 
-		this.city = new TextField<String>("city", new Model<String>());
+		this.city = new TextField<>("city", new Model<String>());
 		this.city.setRequired(true);
 
-		this.country = new Select2MultiChoice<Country>("country", new CollectionModel<Country>(),
+		this.country = new Select2MultiChoice<>("country", new CollectionModel<Country>(),
 			new CountryChoiceProvider());
 		this.country.setRequired(true);
 
-		this.form = new Form<Void>("form");
+		this.form = new Form<>("form");
 		this.form.add(this.country);
 		this.form.add(this.city);
 		add(this.form);

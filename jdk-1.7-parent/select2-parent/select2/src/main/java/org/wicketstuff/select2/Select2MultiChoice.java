@@ -15,14 +15,11 @@ package org.wicketstuff.select2;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
-import java.util.List;
 
 import org.apache.wicket.ajax.json.JSONException;
 import org.apache.wicket.markup.head.IHeaderResponse;
 import org.apache.wicket.markup.head.OnDomReadyHeaderItem;
-import org.apache.wicket.markup.html.form.ChoiceRenderer;
 import org.apache.wicket.markup.html.form.FormComponent;
-import org.apache.wicket.markup.html.form.IChoiceRenderer;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.util.convert.ConversionException;
 import org.apache.wicket.util.string.Strings;
@@ -41,29 +38,13 @@ public class Select2MultiChoice<T> extends AbstractSelect2Choice<T, Collection<T
 
 	private static final long serialVersionUID = 1L;
 
-	public Select2MultiChoice(String id, IModel<Collection<T>> model, List<T> choices,
-		ChoiceRenderer<T> renderer)
-	{
-		super(id, model, choices, renderer);
-	}
-
 	private static final String[] EMPTY_STRING_ARRAY = new String[0];
 
 	private static final String EMPTY_STRING = "";
 
-	public Select2MultiChoice(String id, IModel<Collection<T>> model, ChoiceProvider<T> provider)
+	public Select2MultiChoice(String id)
 	{
-		super(id, model, provider);
-	}
-
-	public Select2MultiChoice(String id, List<T> choices, IChoiceRenderer<T> renderer)
-	{
-		super(id, null, choices, renderer);
-	}
-
-	public Select2MultiChoice(String id, IModel<Collection<T>> model, List<T> choices, IChoiceRenderer<T> renderer)
-	{
-		super(id, model, choices, renderer);
+		super(id);
 	}
 
 	public Select2MultiChoice(String id, IModel<Collection<T>> model)
@@ -71,9 +52,14 @@ public class Select2MultiChoice<T> extends AbstractSelect2Choice<T, Collection<T
 		super(id, model);
 	}
 
-	public Select2MultiChoice(String id)
+	public Select2MultiChoice(String id, IModel<Collection<T>> model, ChoiceProvider<T> provider)
 	{
-		super(id);
+		super(id, model, provider);
+	}
+
+	public Select2MultiChoice(String id, ChoiceProvider<T> provider)
+	{
+		super(id, provider);
 	}
 
 	@Override
@@ -139,14 +125,7 @@ public class Select2MultiChoice<T> extends AbstractSelect2Choice<T, Collection<T
 			for (T choice : choices)
 			{
 				selection.object();
-				if (isAjax())
-				{
-					getProvider().toJson(choice, selection);
-				}
-				else
-				{
-					renderChoice(choice, selection);
-				}
+				getProvider().toJson(choice, selection);
 				selection.endObject();
 			}
 			selection.endArray();

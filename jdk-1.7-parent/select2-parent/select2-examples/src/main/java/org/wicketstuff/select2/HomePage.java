@@ -19,7 +19,6 @@ import java.util.List;
 
 import org.apache.wicket.markup.html.WebPage;
 import org.apache.wicket.markup.html.basic.Label;
-import org.apache.wicket.markup.html.form.ChoiceRenderer;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.model.PropertyModel;
 
@@ -37,14 +36,12 @@ public class HomePage extends WebPage
 	@SuppressWarnings("unused")
 	private Country country = Country.US;
 	@SuppressWarnings("unused")
-	private List<Country> countries = new ArrayList<>(Arrays.asList(new Country[] { Country.US,
-			Country.CA }));
+	private List<Country> countries = new ArrayList<>(Arrays.asList(
+            new Country[] { Country.US, Country.CA }));
 
 	public HomePage()
 	{
-
 		// single-select example
-
 		add(new Label("country", new PropertyModel<>(this, "country")));
 
 		Form<?> form = new Form<Void>("single");
@@ -55,18 +52,7 @@ public class HomePage extends WebPage
 		country.getSettings().setMinimumInputLength(1);
 		form.add(country);
 
-		add(new Label("country-non-ajax", new PropertyModel<>(this, "country")));
-
-		Form<?> nonAjaxform = new Form<Void>("single-non-ajax");
-		add(nonAjaxform);
-		Select2Choice<Country> nonAjaxCountry = new Select2Choice<>("country-non-ajax",
-			new PropertyModel<Country>(this, "country"), Arrays.asList(Country.values()),
-			new CountriesRenderer());
-		nonAjaxCountry.getSettings().setMinimumInputLength(1);
-		nonAjaxform.add(nonAjaxCountry);
-
 		// multi-select example
-
 		add(new Label("countries", new PropertyModel<>(this, "countries")));
 
 		Form<?> multi = new Form<Void>("multi");
@@ -77,17 +63,6 @@ public class HomePage extends WebPage
 		countries.getSettings().setMinimumInputLength(1);
 		countries.add(new DragAndDropBehavior());
 		multi.add(countries);
-
-		add(new Label("countries-non-ajax", new PropertyModel<>(this, "countries")));
-		Form<?> nonAjaxMulti = new Form<Void>("multi-non-ajax");
-		add(nonAjaxMulti);
-
-		countries = new Select2MultiChoice<>("countries-non-ajax",
-			new PropertyModel<Collection<Country>>(this, "countries"),
-			Arrays.asList(Country.values()), new CountriesRenderer());
-		countries.getSettings().setMinimumInputLength(1);
-		countries.add(new DragAndDropBehavior());
-		nonAjaxMulti.add(countries);
 	}
 
 	/**
@@ -105,11 +80,8 @@ public class HomePage extends WebPage
 	 */
 	private static List<Country> queryMatches(String term, int page, int pageSize)
 	{
-
 		List<Country> result = new ArrayList<>();
-
 		term = term.toUpperCase();
-
 		final int offset = page * pageSize;
 
 		int matched = 0;
@@ -175,12 +147,4 @@ public class HomePage extends WebPage
 		}
 	}
 
-	private static class CountriesRenderer extends ChoiceRenderer<Country>
-	{
-
-		public CountriesRenderer()
-		{
-			super("displayName");
-		}
-	}
 }

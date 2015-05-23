@@ -27,7 +27,7 @@ import java.util.List;
  */
 public class Response<T> implements Iterable<T>
 {
-	private List<T> results = new ArrayList<T>();
+	private List<T> results = new ArrayList<>();
 	private Boolean hasMore;
 
 	public Response()
