@@ -7,12 +7,12 @@ Installation
 ------------
 ```xml
 <dependency>
-	<groupId>org.wicketstuff.select2</groupId>
-	<artifactId>wicketstuff-select2</artifactId>
-	<version>6.17.0</version>
+    <groupId>org.wicketstuff</groupId>
+    <artifactId>wicketstuff-select2</artifactId>
+    <version>...</version>
 </dependency>
 ```
-You may want to check for the latest released version using [Maven Search](http://search.maven.org/#search%7Cgav%7C1%7Cg%3A%22org.wicketstuff.select2%22%20AND%20a%3A%22wicketstuff-select2%22)
+You may want to check for the latest released version using [Maven Search](http://search.maven.org/#search%7Cga%7C1%7Cg%3A%22org.wicketstuff%22%20AND%20a%3A%22wicketstuff-select2%22)
 
 Configuration
 -------------
