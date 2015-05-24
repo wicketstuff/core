@@ -14,6 +14,7 @@ package org.wicketstuff.select2;
 
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Collections;
 
 import org.apache.wicket.ajax.json.JSONException;
 import org.apache.wicket.markup.head.IHeaderResponse;
@@ -90,7 +91,7 @@ public class Select2MultiChoice<T> extends AbstractSelect2Choice<T, Collection<T
 		}
 		else
 		{
-			return null;
+			return Collections.emptyList();
 		}
 	}
 
