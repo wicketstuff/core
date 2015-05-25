@@ -78,5 +78,13 @@ public class MenuItemForm<T> extends Form<T>
 		super.onComponentTag(tag);
 
 		tag.put("onclick", this.getOnClickStatement());
+
+		// KendoUI Menu component uses <li><span class="k-link"> as a parent of the menu items
+		// If there is a outer form Wicket will change the tag name to <div>
+		// but the browser will render this <div> as a sibling to <span class="k-link"> instead of a child
+		// this will break the JavaScript event propagation because the KendoUI click listener is on '.k-link'
+		if ("div".equals(tag.getName())) {
+			tag.setName("span");
+		}
 	}
 }
