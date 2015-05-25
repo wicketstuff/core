@@ -20,11 +20,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import com.googlecode.wicket.jquery.core.ajax.IJQueryAjaxAware;
-
 import org.apache.wicket.ajax.AjaxRequestTarget;
 
 import com.googlecode.wicket.jquery.core.Options;
+import com.googlecode.wicket.jquery.core.ajax.IJQueryAjaxAware;
 import com.googlecode.wicket.jquery.core.ajax.JQueryAjaxBehavior;
 import com.googlecode.wicket.kendo.ui.widget.menu.ContextMenuBehavior.OnOpenAjaxBehavior;
 import com.googlecode.wicket.kendo.ui.widget.menu.item.IMenuItem;

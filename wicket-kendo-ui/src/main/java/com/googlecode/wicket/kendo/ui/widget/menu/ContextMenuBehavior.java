@@ -24,12 +24,6 @@ import com.googlecode.wicket.jquery.core.Options;
 import com.googlecode.wicket.jquery.core.ajax.IJQueryAjaxAware;
 import com.googlecode.wicket.jquery.core.ajax.JQueryAjaxBehavior;
 
-/**
- * Provides a Kendo UI context menu widget
- *
- * @author Martin Grigorov - martin-g
- * @since 6.20.0
- */
 public abstract class ContextMenuBehavior extends MenuBehavior implements IContextMenuListener
 {
 	private static final long serialVersionUID = 1L;
@@ -88,11 +82,53 @@ public abstract class ContextMenuBehavior extends MenuBehavior implements IConte
 	{
 		super.onAjax(target, event);
 
+		System.out.println("#onAjax: " + event);
+
+		// wrapper
+
 		if (event instanceof OpenEvent)
 		{
 			this.onOpen(target);
 		}
+
+		// target.prependJavaScript();
 	}
+
+	@Override
+	public void destroy(AjaxRequestTarget target)
+	{
+		System.out.println("destroy !"); // TODO remove
+		super.destroy(target);
+	}
+
+	// @Override
+	// public void onDestroy(AjaxRequestTarget target)
+	// {
+	// this.destroy(target);
+	// }
+	//
+
+	// TODO remove
+	// @Override
+	// public void renderHead(Component component, IHeaderResponse response)
+	// {
+	// String destroy = String.format("jQuery(addedElement).data('%s').destroy();", method);
+	// //.destroy()
+	// // String destroy = String.format("console.log(jQuery(addedElement));", method);
+	// System.out.println(destroy);
+	// String script_add = "Wicket.Event.subscribe('/dom/node/added', function(jqEvent, addedElement) { "
+	// + "if (jQuery(addedElement).attr('id').startsWith('menu')) {"
+	// + "console.log('added'); console.log(jqEvent); console.log(addedElement); "
+	// + destroy
+	// + "}"
+	// + "});";
+	// response.render(JavaScriptHeaderItem.forScript(script_add, "add-sdfsdfsdsdf")); // TODO change token
+	//
+	// String script_remove = "Wicket.Event.subscribe('/dom/node/removed', function(jqEvent, removedElement) { console.log('removed'); console.log(jqEvent); console.log(removedElement); });";
+	// response.render(JavaScriptHeaderItem.forScript(script_remove, "sdfsdfsdsdf")); // TODO change token
+	//
+	// super.renderHead(component, response);
+	// }
 
 	// Factories //
 
