@@ -191,69 +191,87 @@ public abstract class TabsBehavior extends JQueryUIBehavior implements IJQueryAj
 	// Factories //
 
 	/**
-	 * Gets a new {@link JQueryAjaxBehavior} that acts as the 'activate' javascript callback
+	 * Gets a new {@link JQueryAjaxBehavior} that will be wired to the 'activate' event
 	 *
 	 * @param source the {@link IJQueryAjaxAware}
-	 * @return the {@link JQueryAjaxBehavior}
+	 * @return a new {@link OnActivateAjaxBehavior} by default
 	 */
 	protected JQueryAjaxBehavior newOnActivateAjaxBehavior(IJQueryAjaxAware source)
 	{
-		return new JQueryAjaxBehavior(source) {
-
-			private static final long serialVersionUID = 1L;
-
-			@Override
-			protected CallbackParameter[] getCallbackParameters()
-			{
-				return new CallbackParameter[] {
-						CallbackParameter.context("event"),
-						CallbackParameter.context("ui"),
-						CallbackParameter.resolved("index", "jQuery(event.target).tabs('option', 'active')")
-				};
-			}
-
-			@Override
-			protected JQueryEvent newEvent()
-			{
-				return new ActivateEvent();
-			}
-		};
+		return new OnActivateAjaxBehavior(source);
 	}
 
 	/**
-	 * Gets a new {@link JQueryAjaxBehavior} that acts as the 'beforeActivate' javascript callback
+	 * Gets a new {@link JQueryAjaxBehavior} that will be wired to the 'beforeActivate' event
 	 *
 	 * @param source the {@link IJQueryAjaxAware}
-	 * @return the {@link JQueryAjaxBehavior}
+	 * @return a new {@link OnActivateAjaxBehavior} by default
 	 */
 	protected JQueryAjaxBehavior newOnActivatingAjaxBehavior(IJQueryAjaxAware source)
 	{
-		return new JQueryAjaxBehavior(source) {
+		return new OnActivatingAjaxBehavior(source);
+	}
 
-			private static final long serialVersionUID = 1L;
+	// Ajax classes //
 
-			@Override
-			protected CallbackParameter[] getCallbackParameters()
-			{
-				return new CallbackParameter[] {
-						CallbackParameter.context("event"),
-						CallbackParameter.context("ui"),
-						CallbackParameter.resolved("index", "jQuery(event.target).tabs('option', 'active')"),
-				};
-			}
+	/**
+	 * Provides a {@link JQueryAjaxBehavior} that aims to be wired to the 'activate' event
+	 */
+	protected static class OnActivateAjaxBehavior extends JQueryAjaxBehavior
+	{
+		private static final long serialVersionUID = 1L;
 
-			@Override
-			protected JQueryEvent newEvent()
-			{
-				return new ActivatingEvent();
-			}
-		};
+		public OnActivateAjaxBehavior(IJQueryAjaxAware source)
+		{
+			super(source);
+		}
+
+		@Override
+		protected CallbackParameter[] getCallbackParameters()
+		{
+			return new CallbackParameter[] { CallbackParameter.context("event"), // lf
+					CallbackParameter.context("ui"), // lf
+					CallbackParameter.resolved("index", "jQuery(event.target).tabs('option', 'active')") };
+		}
+
+		@Override
+		protected JQueryEvent newEvent()
+		{
+			return new ActivateEvent();
+		}
+	}
+
+	/**
+	 * Provides a {@link JQueryAjaxBehavior} that aims to be wired to the 'beforeActivate' event
+	 */
+	protected static class OnActivatingAjaxBehavior extends JQueryAjaxBehavior
+	{
+		private static final long serialVersionUID = 1L;
+
+		public OnActivatingAjaxBehavior(IJQueryAjaxAware source)
+		{
+			super(source);
+		}
+
+		@Override
+		protected CallbackParameter[] getCallbackParameters()
+		{
+			return new CallbackParameter[] { CallbackParameter.context("event"), // lf
+					CallbackParameter.context("ui"), // lf
+					CallbackParameter.resolved("index", "jQuery(event.target).tabs('option', 'active')"), };
+		}
+
+		@Override
+		protected JQueryEvent newEvent()
+		{
+			return new ActivatingEvent();
+		}
 	}
 
 	// Event objects //
 
 	/**
-	 * Provides an event object that will be broadcasted by the {@link JQueryAjaxBehavior} 'activate' callback
+	 * Provides an event object that will be broadcasted by the {@link OnActivateAjaxBehavior} callback
 	 */
 	protected static class ActivateEvent extends JQueryEvent
 	{
@@ -281,7 +299,7 @@ public abstract class TabsBehavior extends JQueryUIBehavior implements IJQueryAj
 	}
 
 	/**
-	 * Provides an event object that will be broadcasted by the {@link JQueryAjaxBehavior} 'beforeActivate' callback
+	 * Provides an event object that will be broadcasted by the {@link OnActivatingAjaxBehavior} callback
 	 */
 	protected static class ActivatingEvent extends ActivateEvent
 	{

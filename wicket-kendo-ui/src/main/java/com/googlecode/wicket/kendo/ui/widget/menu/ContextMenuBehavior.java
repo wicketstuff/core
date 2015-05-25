@@ -16,12 +16,13 @@
  */
 package com.googlecode.wicket.kendo.ui.widget.menu;
 
+import org.apache.wicket.Component;
+import org.apache.wicket.ajax.AjaxRequestTarget;
+
 import com.googlecode.wicket.jquery.core.JQueryEvent;
 import com.googlecode.wicket.jquery.core.Options;
 import com.googlecode.wicket.jquery.core.ajax.IJQueryAjaxAware;
 import com.googlecode.wicket.jquery.core.ajax.JQueryAjaxBehavior;
-import org.apache.wicket.Component;
-import org.apache.wicket.ajax.AjaxRequestTarget;
 
 /**
  * Provides a Kendo UI context menu widget
@@ -96,22 +97,21 @@ public abstract class ContextMenuBehavior extends MenuBehavior implements IConte
 	// Factories //
 
 	/**
-	 * Gets a new {@link JQueryAjaxBehavior} that acts as the 'open' javascript callback
+	 * Gets a new {@link JQueryAjaxBehavior} that will be wired to the 'open' event
 	 *
 	 * @param source the {@link IJQueryAjaxAware}
-	 * @return the {@link JQueryAjaxBehavior}
+	 * @return a new {@link OnOpenAjaxBehavior} by default
 	 */
 	protected JQueryAjaxBehavior newOnOpenAjaxBehavior(IJQueryAjaxAware source)
 	{
 		return new OnOpenAjaxBehavior(source);
 	}
 
-	// Ajax class //
+	// Ajax classes //
 
 	/**
-	 * Default {@link JQueryAjaxBehavior} implementation for {@link ContextMenuBehavior#newOnOpenAjaxBehavior(IJQueryAjaxAware)}
+	 * Provides a {@link JQueryAjaxBehavior} that aims to be wired to the 'open' event
 	 */
-	// TODO: introduce OnXxxAjaxBehavior classes everywhere
 	public static class OnOpenAjaxBehavior extends JQueryAjaxBehavior
 	{
 		private static final long serialVersionUID = 1L;
@@ -128,10 +128,10 @@ public abstract class ContextMenuBehavior extends MenuBehavior implements IConte
 		}
 	}
 
-	// Event class //
+	// Event objects //
 
 	/**
-	 * Provides an event object that will be broadcasted by the {@link JQueryAjaxBehavior} 'open' callback
+	 * Provides an event object that will be broadcasted by the {@link OnOpenAjaxBehavior} callback
 	 */
 	protected static class OpenEvent extends JQueryEvent
 	{

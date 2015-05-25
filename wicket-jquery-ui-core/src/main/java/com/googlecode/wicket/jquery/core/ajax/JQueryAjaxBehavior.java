@@ -125,7 +125,7 @@ import com.googlecode.wicket.jquery.core.JQueryEvent;
  * 			};
  * 		}
  * 
- * 		// Event Class //
+ * 		// Event objects //
  * 		protected static class MyEvent extends JQueryEvent
  * 		{
  * 		}
@@ -214,5 +214,4 @@ public abstract class JQueryAjaxBehavior extends AbstractDefaultAjaxBehavior
 	{
 		return super.getCallbackFunction(this.getCallbackParameters()).toString();
 	}
-
 }

@@ -23,7 +23,7 @@ import org.apache.wicket.markup.html.form.Form;
 import com.googlecode.wicket.jquery.core.ajax.IJQueryAjaxAware;
 
 /**
- * Provides the dialog-button's form-submit behavior
+ * Provides a specialization of {@link ButtonAjaxBehavior} that handles form-submit
  *
  * @author Sebastien Briquet - sebfz1
  */

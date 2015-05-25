@@ -169,38 +169,51 @@ public abstract class AccordionBehavior extends JQueryUIBehavior implements IJQu
 	}
 
 	// Factories //
+
 	/**
-	 * Gets a new {@link JQueryAjaxBehavior} that acts as the 'activate' callback
+	 * Gets a new {@link JQueryAjaxBehavior} that will be wired to the 'activate' event
 	 *
 	 * @param source the {@link IJQueryAjaxAware}
-	 * @return the {@link JQueryAjaxBehavior}
+	 * @return a new {@link OnActivateAjaxBehavior} by default
 	 */
 	protected JQueryAjaxBehavior newOnActivateAjaxBehavior(IJQueryAjaxAware source)
 	{
-		return new JQueryAjaxBehavior(source) {
+		return new OnActivateAjaxBehavior(source);
+	}
 
-			private static final long serialVersionUID = 1L;
+	// Ajax classes //
 
-			@Override
-			protected CallbackParameter[] getCallbackParameters()
-			{
-				return new CallbackParameter[] { // lf
-						CallbackParameter.context("event"), //lf 
-						CallbackParameter.context("ui"), // lf
-						CallbackParameter.resolved("index", "jQuery(event.target).accordion('option', 'active')") };
-			}
+	/**
+	 * Provides a {@link JQueryAjaxBehavior} that aims to be wired to the 'activate' event
+	 */
+	protected static class OnActivateAjaxBehavior extends JQueryAjaxBehavior
+	{
+		private static final long serialVersionUID = 1L;
 
-			@Override
-			protected JQueryEvent newEvent()
-			{
-				return new ActivateEvent();
-			}
-		};
+		public OnActivateAjaxBehavior(IJQueryAjaxAware source)
+		{
+			super(source);
+		}
+
+		@Override
+		protected CallbackParameter[] getCallbackParameters()
+		{
+			return new CallbackParameter[] { CallbackParameter.context("event"), // lf
+					CallbackParameter.context("ui"), // lf
+					CallbackParameter.resolved("index", "jQuery(event.target).accordion('option', 'active')") };
+		}
+
+		@Override
+		protected JQueryEvent newEvent()
+		{
+			return new ActivateEvent();
+		}
 	}
 
 	// Events classes //
+
 	/**
-	 * Base class for accordion event objects
+	 * Provides an event object that will be broadcasted by the {@link OnActivateAjaxBehavior} callback
 	 */
 	protected static class ActivateEvent extends JQueryEvent
 	{

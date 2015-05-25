@@ -116,7 +116,6 @@ public abstract class AbstractConsole extends WebMarkupContainer
 	 * @param error indicates whether the message is an error message
 	 * @param target the {@link AjaxRequestTarget}
 	 */
-	//XXX: inverted args to keep consistency with the rest of the API
 	public void log(AjaxRequestTarget target, Serializable message, boolean error)
 	{
 		this.log(message, error);

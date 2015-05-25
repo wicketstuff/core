@@ -184,6 +184,7 @@ public class JQueryEffectBehavior extends JQueryUIBehavior implements IJQueryAja
 	}
 
 	// Factories //
+
 	/**
 	 * Gets the ajax behavior that will be triggered when the user has selected items
 	 *
@@ -203,7 +204,8 @@ public class JQueryEffectBehavior extends JQueryUIBehavior implements IJQueryAja
 		};
 	}
 
-	// Event class //
+	// Event objects //
+
 	/**
 	 * Provides the event object that will be broadcasted by the {@link JQueryAjaxBehavior} callback
 	 */

@@ -185,8 +185,7 @@ public abstract class DialogBehavior extends JQueryUIBehavior implements IJQuery
 
 	// Factories //
 	/**
-	 * Gets a new {@link ButtonAjaxBehavior} that will be called by the corresponding {@link DialogButton}.<br/>
-	 * This method may be overridden to provide additional behaviors
+	 * Gets a new {@link ButtonAjaxBehavior} that will be called by the corresponding {@link DialogButton}.
 	 *
 	 * @param source the {@link IJQueryAjaxAware} source
 	 * @param button the button that is passed to the behavior so it can be retrieved via the {@link ClickEvent}
@@ -195,60 +194,85 @@ public abstract class DialogBehavior extends JQueryUIBehavior implements IJQuery
 	protected abstract ButtonAjaxBehavior newButtonAjaxBehavior(IJQueryAjaxAware source, DialogButton button);
 
 	/**
-	 * Gets the ajax behavior that will be triggered when the user clicks on the X-icon
+	 * Gets a new {@link JQueryAjaxBehavior} that will be wired to the 'close' event, triggered when the user clicks on the X-icon
 	 *
 	 * @param source the {@link IJQueryAjaxAware}
-	 * @return the {@link JQueryAjaxBehavior}
+	 * @return a new {@link OnDefaultCloseAjaxBehavior} by default
 	 */
 	protected JQueryAjaxBehavior newOnDefaultCloseAjaxBehavior(IJQueryAjaxAware source)
 	{
-		return new JQueryAjaxBehavior(source) {
-
-			private static final long serialVersionUID = 1L;
-
-			@Override
-			public String getCallbackFunction()
-			{
-				return "function(event, ui) { if (event.button == 0) { " + this.getCallbackScript() + " } }";
-			}
-
-			@Override
-			protected JQueryEvent newEvent()
-			{
-				return new CloseEvent();
-			}
-		};
+		return new OnDefaultCloseAjaxBehavior(source);
 	}
 
 	/**
-	 * Gets the ajax behavior that will be triggered when the user press the escape key
+	 * Gets a new {@link JQueryAjaxBehavior} that will be wired to the 'beforeClose' event, triggered when the user presses the escape key
 	 *
 	 * @param source the {@link IJQueryAjaxAware}
-	 * @return the {@link JQueryAjaxBehavior}
+	 * @return a new {@link OnEscapeCloseAjaxBehavior} by default
 	 */
 	protected JQueryAjaxBehavior newOnEscapeCloseAjaxBehavior(IJQueryAjaxAware source)
 	{
-		return new JQueryAjaxBehavior(source) {
-
-			private static final long serialVersionUID = 1L;
-
-			@Override
-			public String getCallbackFunction()
-			{
-				return "function(event, ui) { if (event.keyCode == $.ui.keyCode.ESCAPE) { " + this.getCallbackScript() + " } }";
-			}
-
-			@Override
-			protected JQueryEvent newEvent()
-			{
-				return new CloseEvent();
-			}
-		};
+		return new OnEscapeCloseAjaxBehavior(source);
 	}
 
-	// Event class //
+	// Ajax class //
+
 	/**
-	 * An event object that will be broadcasted when the user clicks on the X-icon
+	 * Provides a {@link JQueryAjaxBehavior} that aims to be wired to the 'close' event<br/>
+	 * Underlying callback will be triggered when the user clicks on the X-icon
+	 */
+	protected static class OnDefaultCloseAjaxBehavior extends JQueryAjaxBehavior
+	{
+		private static final long serialVersionUID = 1L;
+
+		public OnDefaultCloseAjaxBehavior(IJQueryAjaxAware source)
+		{
+			super(source);
+		}
+
+		@Override
+		public String getCallbackFunction()
+		{
+			return "function(event, ui) { if (event.button == 0) { " + this.getCallbackScript() + " } }";
+		}
+
+		@Override
+		protected JQueryEvent newEvent()
+		{
+			return new CloseEvent();
+		}
+	}
+
+	/**
+	 * Provides a {@link JQueryAjaxBehavior} that aims to be wired to the 'beforeClose' event<br/>
+	 * Underlying callback will be triggered when the user presses the escape key
+	 */
+	protected static class OnEscapeCloseAjaxBehavior extends JQueryAjaxBehavior
+	{
+		private static final long serialVersionUID = 1L;
+
+		public OnEscapeCloseAjaxBehavior(IJQueryAjaxAware source)
+		{
+			super(source);
+		}
+
+		@Override
+		public String getCallbackFunction()
+		{
+			return "function(event, ui) { if (event.keyCode == $.ui.keyCode.ESCAPE) { " + this.getCallbackScript() + " } }";
+		}
+
+		@Override
+		protected JQueryEvent newEvent()
+		{
+			return new CloseEvent();
+		}
+	}
+
+	// Event objects //
+
+	/**
+	 * Provides an event object that will be broadcasted by the {@link OnDefaultCloseAjaxBehavior} and the {@link OnEscapeCloseAjaxBehavior} callbacks
 	 */
 	protected static class CloseEvent extends JQueryEvent
 	{

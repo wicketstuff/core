@@ -25,7 +25,6 @@ import com.googlecode.wicket.jquery.ui.JQueryUIBehavior;
  *
  * @author Sebastien Briquet - sebfz1
  */
-//XXX: moved button.Button.ButtonBehavior to button.ButtonBehavior
 public class ButtonBehavior extends JQueryUIBehavior
 {
 	private static final long serialVersionUID = 1L;

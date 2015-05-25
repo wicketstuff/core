@@ -26,7 +26,6 @@ import com.googlecode.wicket.kendo.ui.KendoUIBehavior;
  * @author Sebastien Briquet - sebfz1
  *
  */
-//XXX: moved button.Button.ButtonBehavior to button.ButtonBehavior
 public class ButtonBehavior extends KendoUIBehavior
 {
 	private static final long serialVersionUID = 1L;

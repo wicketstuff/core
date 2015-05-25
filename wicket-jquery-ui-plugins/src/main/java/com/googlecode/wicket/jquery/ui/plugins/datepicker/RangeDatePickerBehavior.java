@@ -88,20 +88,20 @@ public abstract class RangeDatePickerBehavior extends JQueryBehavior implements 
 	// Factories //
 
 	/**
-	 * Gets a new {@link JQueryAjaxBehavior} that acts as the 'change' javascript callback
-	 * 
+	 * Gets a new {@link JQueryAjaxBehavior} that will be wired to the 'onRangeChange' event
+	 *
 	 * @param source the {@link IJQueryAjaxAware}
-	 * @return the {@link JQueryAjaxBehavior}
+	 * @return a new {@link OnRangeChangeAjaxBehavior} by default
 	 */
 	private JQueryAjaxBehavior newOnRangeChangeAjaxBehavior(IJQueryAjaxAware source)
 	{
 		return new OnRangeChangeAjaxBehavior(source);
 	}
 
-	// Ajax class //
+	// Ajax classes //
 
 	/**
-	 * Default {@link JQueryAjaxBehavior} implementation for {@link RangeDatePickerBehavior#newOnRangeChangeAjaxBehavior(IJQueryAjaxAware)}
+	 * Provides a {@link JQueryAjaxBehavior} that aims to be wired to the 'onRangeChange' event
 	 */
 	protected static class OnRangeChangeAjaxBehavior extends JQueryAjaxBehavior
 	{
@@ -133,10 +133,10 @@ public abstract class RangeDatePickerBehavior extends JQueryBehavior implements 
 		}
 	}
 
-	// Event class //
+	// Event objects //
 
 	/**
-	 * Provides an event object that will be broadcasted by the {@link JQueryAjaxBehavior} 'change' callback<br/>
+	 * Provides an event object that will be broadcasted by the {@link OnRangeChangeAjaxBehavior} callback<br/>
 	 * <br/>
 	 * <b>Note</b>: The {@code start} and {@code end} dates will be translated to UTC.<br/>
 	 * ie: if the behavior receives 10/10/2010 0:00:00 CET, it will be translated to 10/10/2010 0:00:00 UTC

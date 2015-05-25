@@ -73,7 +73,7 @@ public abstract class DroppableBehavior extends KendoUIBehavior implements IJQue
 	}
 
 	/**
-	 * Gets the javascript statement that will we executed on 'dragenter' event
+	 * Gets the javascript statement that will we executed on 'dragenter' event<br/>
 	 * The event variable is {@code 'e'}
 	 * 
 	 * @return the javascript statement
@@ -84,7 +84,7 @@ public abstract class DroppableBehavior extends KendoUIBehavior implements IJQue
 	}
 
 	/**
-	 * Gets the javascript statement that will we executed on 'dragleave' event
+	 * Gets the javascript statement that will we executed on 'dragleave' event<br/>
 	 * The event variable is {@code 'e'}
 	 * 
 	 * @return the javascript statement
@@ -108,7 +108,7 @@ public abstract class DroppableBehavior extends KendoUIBehavior implements IJQue
 		statement.append("$element = e.draggable.element;");
 		statement.append("$element.removeClass('").append(DraggableBehavior.CSS_HIDE).append("');");
 		statement.append("$element.offset($clone.offset());");
-//		statement.append("e.draggable.destroy();"); // prevent dragStop to be fired (dual round-trip)
+		// statement.append("e.draggable.destroy();"); // prevent dragStop to be fired (dual round-trip)
 
 		return statement.toString();
 	}
@@ -120,19 +120,19 @@ public abstract class DroppableBehavior extends KendoUIBehavior implements IJQue
 	{
 		super.bind(component);
 
-		this.onDropAjaxBehavior = this.newOnDropAjaxBehavior(this);
+		this.onDropAjaxBehavior = this.newOnDropAjaxBehavior(this, this.getOnDropStatement());
 		component.add(this.onDropAjaxBehavior);
 
 		// these events are not enabled by default to prevent unnecessary server round-trips.
 		if (this.isDragEnterEventEnabled())
 		{
-			this.onDragEnterAjaxBehavior = this.newOnDragEnterAjaxBehavior(this);
+			this.onDragEnterAjaxBehavior = this.newOnDragEnterAjaxBehavior(this, this.getOnDragEnterStatement());
 			component.add(this.onDragEnterAjaxBehavior);
 		}
 
 		if (this.isDragLeaveEventEnabled())
 		{
-			this.onDragLeaveAjaxBehavior = this.newOnDragLeaveAjaxBehavior(this);
+			this.onDragLeaveAjaxBehavior = this.newOnDragLeaveAjaxBehavior(this, this.getOnDragLeaveStatement());
 			component.add(this.onDragLeaveAjaxBehavior);
 		}
 	}
@@ -179,119 +179,166 @@ public abstract class DroppableBehavior extends KendoUIBehavior implements IJQue
 	// Factories //
 
 	/**
-	 * Gets a new {@link JQueryAjaxBehavior} that will be called on 'dragenter' javascript event
-	 * 
+	 * Gets a new {@link JQueryAjaxBehavior} that will be wired to the 'dragenter' event
+	 *
 	 * @param source the {@link IJQueryAjaxAware}
-	 * @return the {@link JQueryAjaxBehavior}
+	 * @param statement the statement to execute just before the ajax call
+	 * @return a new {@link OnDragEnterAjaxBehavior} by default
 	 */
-	protected JQueryAjaxBehavior newOnDragEnterAjaxBehavior(IJQueryAjaxAware source)
+	protected JQueryAjaxBehavior newOnDragEnterAjaxBehavior(IJQueryAjaxAware source, String statement)
 	{
-		return new JQueryAjaxBehavior(source) {
-
-			private static final long serialVersionUID = 1L;
-
-			@Override
-			protected CallbackParameter[] getCallbackParameters()
-			{
-				return new CallbackParameter[] { CallbackParameter.context("e") };
-			}
-
-			@Override
-			public CharSequence getCallbackFunctionBody(CallbackParameter... parameters)
-			{
-				return DroppableBehavior.this.getOnDragEnterStatement() + super.getCallbackFunctionBody(parameters);
-			}
-
-			@Override
-			protected JQueryEvent newEvent()
-			{
-				return new DragEnterEvent();
-			}
-		};
+		return new OnDragEnterAjaxBehavior(source, statement);
 	}
 
 	/**
-	 * Gets a new {@link JQueryAjaxBehavior} that will be called on 'dragleave' javascript event
-	 * 
+	 * Gets a new {@link JQueryAjaxBehavior} that will be wired to the 'dragleave' event
+	 *
 	 * @param source the {@link IJQueryAjaxAware}
-	 * @return the {@link JQueryAjaxBehavior}
+	 * @param statement the statement to execute just before the ajax call
+	 * @return a new {@link OnDragLeaveAjaxBehavior} by default
 	 */
-	protected JQueryAjaxBehavior newOnDragLeaveAjaxBehavior(IJQueryAjaxAware source)
+	protected JQueryAjaxBehavior newOnDragLeaveAjaxBehavior(IJQueryAjaxAware source, String statement)
 	{
-		return new JQueryAjaxBehavior(source) {
-
-			private static final long serialVersionUID = 1L;
-
-			@Override
-			protected CallbackParameter[] getCallbackParameters()
-			{
-				return new CallbackParameter[] { CallbackParameter.context("e") };
-			}
-
-			@Override
-			public CharSequence getCallbackFunctionBody(CallbackParameter... parameters)
-			{
-				return DroppableBehavior.this.getOnDragLeaveStatement() + super.getCallbackFunctionBody(parameters);
-			}
-
-			@Override
-			protected JQueryEvent newEvent()
-			{
-				return new DragLeaveEvent();
-			}
-		};
+		return new OnDragLeaveAjaxBehavior(source, statement);
 	}
 
 	/**
-	 * Gets a new {@link JQueryAjaxBehavior} that will be called on 'drop' javascript event
-	 * 
+	 * Gets a new {@link JQueryAjaxBehavior} that will be wired to the 'drop' event
+	 *
 	 * @param source the {@link IJQueryAjaxAware}
-	 * @return the {@link JQueryAjaxBehavior}
+	 * @param statement the statement to execute just before the ajax call
+	 * @return a new {@link OnDropAjaxBehavior} by default
 	 */
-	protected JQueryAjaxBehavior newOnDropAjaxBehavior(IJQueryAjaxAware source)
+	protected JQueryAjaxBehavior newOnDropAjaxBehavior(IJQueryAjaxAware source, String statement)
 	{
-		return new JQueryAjaxBehavior(source) {
-
-			private static final long serialVersionUID = 1L;
-
-			@Override
-			protected CallbackParameter[] getCallbackParameters()
-			{
-				return new CallbackParameter[] { CallbackParameter.context("e") };
-			}
-
-			@Override
-			public CharSequence getCallbackFunctionBody(CallbackParameter... parameters)
-			{
-				return DroppableBehavior.this.getOnDropStatement() + super.getCallbackFunctionBody(parameters);
-			}
-
-			@Override
-			protected JQueryEvent newEvent()
-			{
-				return new DropEvent();
-			}
-		};
+		return new OnDropAjaxBehavior(source, statement);
 	}
 
-	// Event classes //
+	// Ajax classes //
 
 	/**
-	 * Provides an event object that will be broadcasted by the {@link JQueryAjaxBehavior} 'over' callback
+	 * Provides a {@link JQueryAjaxBehavior} that aims to be wired to the 'dragenter' event
+	 */
+	protected static class OnDragEnterAjaxBehavior extends JQueryAjaxBehavior
+	{
+		private static final long serialVersionUID = 1L;
+
+		private final String statement;
+
+		public OnDragEnterAjaxBehavior(IJQueryAjaxAware source, String statement)
+		{
+			super(source);
+
+			this.statement = statement;
+		}
+
+		@Override
+		protected CallbackParameter[] getCallbackParameters()
+		{
+			return new CallbackParameter[] { CallbackParameter.context("e") };
+		}
+
+		@Override
+		public CharSequence getCallbackFunctionBody(CallbackParameter... parameters)
+		{
+			return this.statement + super.getCallbackFunctionBody(parameters);
+		}
+
+		@Override
+		protected JQueryEvent newEvent()
+		{
+			return new DragEnterEvent();
+		}
+	}
+
+	/**
+	 * Provides a {@link JQueryAjaxBehavior} that aims to be wired to the 'dragleave' event
+	 */
+	protected static class OnDragLeaveAjaxBehavior extends JQueryAjaxBehavior
+	{
+		private static final long serialVersionUID = 1L;
+
+		private final String statement;
+
+		public OnDragLeaveAjaxBehavior(IJQueryAjaxAware source, String statement)
+		{
+			super(source);
+
+			this.statement = statement;
+		}
+
+		@Override
+		protected CallbackParameter[] getCallbackParameters()
+		{
+			return new CallbackParameter[] { CallbackParameter.context("e") };
+		}
+
+		@Override
+		public CharSequence getCallbackFunctionBody(CallbackParameter... parameters)
+		{
+			return this.statement + super.getCallbackFunctionBody(parameters);
+		}
+
+		@Override
+		protected JQueryEvent newEvent()
+		{
+			return new DragLeaveEvent();
+		}
+	}
+
+	/**
+	 * Provides a {@link JQueryAjaxBehavior} that aims to be wired to the 'drop' event
+	 */
+	protected static class OnDropAjaxBehavior extends JQueryAjaxBehavior
+	{
+		private static final long serialVersionUID = 1L;
+
+		private final String statement;
+
+		public OnDropAjaxBehavior(IJQueryAjaxAware source, String statement)
+		{
+			super(source);
+
+			this.statement = statement;
+		}
+
+		@Override
+		protected CallbackParameter[] getCallbackParameters()
+		{
+			return new CallbackParameter[] { CallbackParameter.context("e") };
+		}
+
+		@Override
+		public CharSequence getCallbackFunctionBody(CallbackParameter... parameters)
+		{
+			return this.statement + super.getCallbackFunctionBody(parameters);
+		}
+
+		@Override
+		protected JQueryEvent newEvent()
+		{
+			return new DropEvent();
+		}
+	}
+
+	// Event objects //
+
+	/**
+	 * Provides an event object that will be broadcasted by the {@link OnDragEnterAjaxBehavior} callback
 	 */
 	protected static class DragEnterEvent extends JQueryEvent
 	{
 	}
 
 	/**
-	 * Provides an event object that will be broadcasted by the {@link JQueryAjaxBehavior} 'exit' callback
+	 * Provides an event object that will be broadcasted by the {@link OnDragLeaveAjaxBehavior} callback
 	 */
 	protected static class DragLeaveEvent extends JQueryEvent
 	{
 	}
 
 	/**
-	 * Provides an event object that will be broadcasted by the {@link JQueryAjaxBehavior} 'drop' callback
+	 * Provides an event object that will be broadcasted by the {@link OnDropAjaxBehavior} callback
 	 */
 	protected static class DropEvent extends JQueryEvent
 	{

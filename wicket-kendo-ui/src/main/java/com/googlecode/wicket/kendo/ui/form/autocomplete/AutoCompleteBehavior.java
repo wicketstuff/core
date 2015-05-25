@@ -112,37 +112,49 @@ public abstract class AutoCompleteBehavior extends KendoUIBehavior implements IJ
 	}
 
 	/**
-	 * Gets a new {@link JQueryAjaxBehavior} that will be called on 'select' javascript method
-	 * 
+	 * Gets a new {@link JQueryAjaxBehavior} that will be wired to the 'select' event
+	 *
 	 * @param source the {@link IJQueryAjaxAware}
-	 * @return the {@link JQueryAjaxBehavior}
+	 * @return a new {@link OnSelectAjaxBehavior} by default
 	 */
 	protected JQueryAjaxBehavior newOnSelectAjaxBehavior(IJQueryAjaxAware source)
 	{
-		// TODO OnSelectAjaxBehavior inner class
-		return new JQueryAjaxBehavior(source) {
-
-			private static final long serialVersionUID = 1L;
-
-			@Override
-			protected CallbackParameter[] getCallbackParameters()
-			{
-				return new CallbackParameter[] { CallbackParameter.context("e"), CallbackParameter.resolved("index", "e.item.index()"), CallbackParameter.resolved("value", "e.item.text") };
-			}
-
-			@Override
-			protected JQueryEvent newEvent()
-			{
-				return new SelectEvent();
-			}
-		};
+		return new OnSelectAjaxBehavior(source);
 	}
 
-	// Event classes //
+	// Ajax classes //
 
 	/**
-	 * Provides an event object that will be broadcasted by the {@link JQueryAjaxBehavior} select callback
-	 *
+	 * Provides a {@link JQueryAjaxBehavior} that aims to be wired to the 'select' event
+	 */
+	protected static class OnSelectAjaxBehavior extends JQueryAjaxBehavior
+	{
+		private static final long serialVersionUID = 1L;
+
+		public OnSelectAjaxBehavior(IJQueryAjaxAware source)
+		{
+			super(source);
+		}
+
+		@Override
+		protected CallbackParameter[] getCallbackParameters()
+		{
+			return new CallbackParameter[] { CallbackParameter.context("e"), // lf
+					CallbackParameter.resolved("index", "e.item.index()"), // lf
+					CallbackParameter.resolved("value", "e.item.text") };
+		}
+
+		@Override
+		protected JQueryEvent newEvent()
+		{
+			return new SelectEvent();
+		}
+	}
+
+	// Event objects //
+
+	/**
+	 * Provides an event object that will be broadcasted by the {@link OnSelectAjaxBehavior} callback
 	 */
 	protected static class SelectEvent extends JQueryEvent
 	{

@@ -21,7 +21,7 @@ import com.googlecode.wicket.jquery.core.ajax.IJQueryAjaxAware;
 import com.googlecode.wicket.jquery.core.ajax.JQueryAjaxBehavior;
 
 /**
- * Provides the dialog-button's {@link JQueryAjaxBehavior}
+ * Provides a {@link JQueryAjaxBehavior} that aims to be wired to the 'click' event of {@link DialogButton}{@code s}
  *
  * @author Sebastien Briquet - sebfz1
  */
@@ -59,9 +59,10 @@ public class ButtonAjaxBehavior extends JQueryAjaxBehavior
 	}
 
 
-	// Event class //
+	// Event objects //
+
 	/**
-	 * Provides a dialog event that will be transmitted to the {@link AbstractDialog}
+	 * Provides an event object that will be broadcasted by the {@link ButtonAjaxBehavior} callback
 	 */
 	protected static class ClickEvent extends JQueryEvent
 	{

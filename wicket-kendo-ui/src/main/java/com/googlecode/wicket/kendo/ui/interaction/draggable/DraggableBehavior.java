@@ -117,7 +117,7 @@ public abstract class DraggableBehavior extends KendoUIBehavior implements IJQue
 
 		this.onDragStartAjaxBehavior = this.newOnDragStartAjaxBehavior(this);
 		this.component.add(this.onDragStartAjaxBehavior);
-		
+
 		this.onDragStopAjaxBehavior = this.newOnDragStopAjaxBehavior(this);
 		this.component.add(this.onDragStopAjaxBehavior);
 
@@ -205,117 +205,149 @@ public abstract class DraggableBehavior extends KendoUIBehavior implements IJQue
 	}
 
 	/**
-	 * Gets a new {@link JQueryAjaxBehavior} that will be called on 'dragstart' javascript event
-	 * 
+	 * Gets a new {@link JQueryAjaxBehavior} that will be wired to the 'dragstart' event
+	 *
 	 * @param source the {@link IJQueryAjaxAware}
-	 * @return the {@link JQueryAjaxBehavior}
+	 * @return a new {@link OnDragStartAjaxBehavior} by default
 	 */
 	protected JQueryAjaxBehavior newOnDragStartAjaxBehavior(IJQueryAjaxAware source)
 	{
-		return new JQueryAjaxBehavior(source) {
-
-			private static final long serialVersionUID = 1L;
-
-			@Override
-			protected CallbackParameter[] getCallbackParameters()
-			{
-				return new CallbackParameter[] { CallbackParameter.context("e"), // lf
-						CallbackParameter.resolved("top", "e.sender.hintOffset.top | 0"), // cast to int, no rounding
-						CallbackParameter.resolved("left", "e.sender.hintOffset.left | 0") // cast to int, no rounding
-				};
-			}
-
-			@Override
-			public CharSequence getCallbackFunctionBody(CallbackParameter... parameters)
-			{
-				String statement = "this.element.addClass('" + CSS_HIDE + "');";
-				return statement + super.getCallbackFunctionBody(parameters);
-			}
-
-			@Override
-			protected JQueryEvent newEvent()
-			{
-				return new DragStartEvent();
-			}
-		};
+		return new OnDragStartAjaxBehavior(source);
 	}
 
 	/**
-	 * Gets a new {@link JQueryAjaxBehavior} that will be called on 'dragend' javascript event
-	 * 
-	 * @param source {@link IJQueryAjaxAware}
-	 * @return the {@link JQueryAjaxBehavior}
+	 * Gets a new {@link JQueryAjaxBehavior} that will be wired to the 'dragend' event
+	 *
+	 * @param source the {@link IJQueryAjaxAware}
+	 * @return a new {@link OnDragStopAjaxBehavior} by default
 	 */
 	protected JQueryAjaxBehavior newOnDragStopAjaxBehavior(IJQueryAjaxAware source)
 	{
-		return new JQueryAjaxBehavior(source) {
-
-			private static final long serialVersionUID = 1L;
-
-			@Override
-			protected CallbackParameter[] getCallbackParameters()
-			{
-				return new CallbackParameter[] { CallbackParameter.context("e"), // lf
-						CallbackParameter.resolved("top", "e.sender.hintOffset.top | 0"), // cast to int, no rounding
-						CallbackParameter.resolved("left", "e.sender.hintOffset.left | 0") // cast to int, no rounding
-				};
-			}
-
-			@Override
-			public CharSequence getCallbackFunctionBody(CallbackParameter... parameters)
-			{
-				String statement = "this.element.removeClass('" + CSS_HIDE + "');";
-				return statement + super.getCallbackFunctionBody(parameters);
-			}
-
-			@Override
-			protected JQueryEvent newEvent()
-			{
-				return new DragStopEvent();
-			}
-		};
+		return new OnDragStopAjaxBehavior(source);
 	}
 
 	/**
-	 * Gets a new {@link JQueryAjaxBehavior} that will be called on 'dragend' javascript event
-	 * 
+	 * Gets a new {@link JQueryAjaxBehavior} that will be wired to the 'dragcancel' event
+	 *
 	 * @param source the {@link IJQueryAjaxAware}
-	 * @return the {@link JQueryAjaxBehavior}
+	 * @return a new {@link OnDragCancelAjaxBehavior} by default
 	 */
 	protected JQueryAjaxBehavior newOnDragCancelAjaxBehavior(IJQueryAjaxAware source)
 	{
-		return new JQueryAjaxBehavior(source) {
-
-			private static final long serialVersionUID = 1L;
-
-			@Override
-			protected CallbackParameter[] getCallbackParameters()
-			{
-				return new CallbackParameter[] { CallbackParameter.context("e"), // lf
-						CallbackParameter.resolved("top", "e.sender.hintOffset.top | 0"), // cast to int, no rounding
-						CallbackParameter.resolved("left", "e.sender.hintOffset.left | 0") // cast to int, no rounding
-				};
-			}
-
-			@Override
-			public CharSequence getCallbackFunctionBody(CallbackParameter... parameters)
-			{
-				String statement = "this.element.removeClass('" + CSS_HIDE + "');";
-				return statement + super.getCallbackFunctionBody(parameters);
-			}
-
-			@Override
-			protected JQueryEvent newEvent()
-			{
-				return new DragCancelEvent();
-			}
-		};
+		return new OnDragCancelAjaxBehavior(source);
 	}
 
-	// Events classes //
+	// Ajax classes //
 
 	/**
-	 * Provides a base class for draggable event object
+	 * Provides a {@link JQueryAjaxBehavior} that aims to be wired to the 'dragstart' event
+	 */
+	protected static class OnDragStartAjaxBehavior extends JQueryAjaxBehavior
+	{
+		private static final long serialVersionUID = 1L;
+
+		public OnDragStartAjaxBehavior(IJQueryAjaxAware source)
+		{
+			super(source);
+		}
+
+		@Override
+		protected CallbackParameter[] getCallbackParameters()
+		{
+			return new CallbackParameter[] { CallbackParameter.context("e"), // lf
+					CallbackParameter.resolved("top", "e.sender.hintOffset.top | 0"), // cast to int, no rounding
+					CallbackParameter.resolved("left", "e.sender.hintOffset.left | 0") // cast to int, no rounding
+			};
+		}
+
+		@Override
+		public CharSequence getCallbackFunctionBody(CallbackParameter... parameters)
+		{
+			String statement = "this.element.addClass('" + CSS_HIDE + "');";
+			return statement + super.getCallbackFunctionBody(parameters);
+		}
+
+		@Override
+		protected JQueryEvent newEvent()
+		{
+			return new DragStartEvent();
+		}
+	}
+
+	/**
+	 * Provides a {@link JQueryAjaxBehavior} that aims to be wired to the 'dragend' event
+	 */
+	protected static class OnDragStopAjaxBehavior extends JQueryAjaxBehavior
+	{
+		private static final long serialVersionUID = 1L;
+
+		public OnDragStopAjaxBehavior(IJQueryAjaxAware source)
+		{
+			super(source);
+		}
+
+		@Override
+		protected CallbackParameter[] getCallbackParameters()
+		{
+			return new CallbackParameter[] { CallbackParameter.context("e"), // lf
+					CallbackParameter.resolved("top", "e.sender.hintOffset.top | 0"), // cast to int, no rounding
+					CallbackParameter.resolved("left", "e.sender.hintOffset.left | 0") // cast to int, no rounding
+			};
+		}
+
+		@Override
+		public CharSequence getCallbackFunctionBody(CallbackParameter... parameters)
+		{
+			String statement = "this.element.removeClass('" + CSS_HIDE + "');";
+			return statement + super.getCallbackFunctionBody(parameters);
+		}
+
+		@Override
+		protected JQueryEvent newEvent()
+		{
+			return new DragStopEvent();
+		}
+	}
+
+	/**
+	 * Provides a {@link JQueryAjaxBehavior} that aims to be wired to the 'dragcancel' event
+	 */
+	protected static class OnDragCancelAjaxBehavior extends JQueryAjaxBehavior
+	{
+		private static final long serialVersionUID = 1L;
+
+		public OnDragCancelAjaxBehavior(IJQueryAjaxAware source)
+		{
+			super(source);
+		}
+
+		@Override
+		protected CallbackParameter[] getCallbackParameters()
+		{
+			return new CallbackParameter[] { CallbackParameter.context("e"), // lf
+					CallbackParameter.resolved("top", "e.sender.hintOffset.top | 0"), // cast to int, no rounding
+					CallbackParameter.resolved("left", "e.sender.hintOffset.left | 0") // cast to int, no rounding
+			};
+		}
+
+		@Override
+		public CharSequence getCallbackFunctionBody(CallbackParameter... parameters)
+		{
+			String statement = "this.element.removeClass('" + CSS_HIDE + "');";
+			return statement + super.getCallbackFunctionBody(parameters);
+		}
+
+		@Override
+		protected JQueryEvent newEvent()
+		{
+			return new DragCancelEvent();
+		}
+	}
+
+	// Event objects //
+
+	/**
+	 * Provides a base class for {@link DraggableBehavior} event objects
 	 */
 	protected static class DraggableEvent extends JQueryEvent
 	{
@@ -353,21 +385,21 @@ public abstract class DraggableBehavior extends KendoUIBehavior implements IJQue
 	}
 
 	/**
-	 * Provides an event object that will be broadcasted by the {@link JQueryAjaxBehavior} 'dragstart' callback
+	 * Provides an event object that will be broadcasted by the {@link OnDragStartAjaxBehavior} callback
 	 */
 	protected static class DragStartEvent extends DraggableEvent
 	{
 	}
 
 	/**
-	 * Provides an event object that will be broadcasted by the {@link JQueryAjaxBehavior} 'dragend' callback
+	 * Provides an event object that will be broadcasted by the {@link OnDragStopAjaxBehavior} callback
 	 */
 	protected static class DragStopEvent extends DraggableEvent
 	{
 	}
 
 	/**
-	 * Provides an event object that will be broadcasted by the {@link JQueryAjaxBehavior} 'dragcancel' callback
+	 * Provides an event object that will be broadcasted by the {@link OnDragCancelAjaxBehavior} callback
 	 */
 	protected static class DragCancelEvent extends DraggableEvent
 	{

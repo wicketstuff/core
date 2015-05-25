@@ -154,63 +154,87 @@ public abstract class WindowBehavior extends KendoUIBehavior implements IJQueryA
 	// Factories //
 
 	/**
-	 * Gets the ajax behavior that will be triggered when the user clicks on an action icon
-	 * 
+	 * Gets a new {@link JQueryAjaxBehavior} that will be wired to the 'a.k-window-action click' event, triggered when the user clicks on an action icon
+	 *
 	 * @param source the {@link IJQueryAjaxAware}
-	 * @return the {@link JQueryAjaxBehavior}
+	 * @return a new {@link OnActionAjaxBehavior} by default
 	 */
 	protected JQueryAjaxBehavior newOnActionAjaxBehavior(IJQueryAjaxAware source)
 	{
-		return new JQueryAjaxBehavior(source) {
-			private static final long serialVersionUID = 1L;
-
-			@Override
-			protected CallbackParameter[] getCallbackParameters()
-			{
-				// function(e) { }
-				return new CallbackParameter[] { // lf
-						CallbackParameter.context("e"), // lf
-						CallbackParameter.resolved("action", "jQuery(e.target).attr('class').match(/k-i-(\\w+)/)[1]") // lf
-				};
-			}
-
-			@Override
-			protected JQueryEvent newEvent()
-			{
-				return new ActionEvent();
-			}
-		};
+		return new OnActionAjaxBehavior(source);
 	}
 
 	/**
-	 * Gets the ajax behavior that will be triggered when the user clicks on the X-icon
+	 * Gets a new {@link JQueryAjaxBehavior} that will be wired to the 'close' event, triggered when the user clicks on the X-icon
 	 *
 	 * @param source the {@link IJQueryAjaxAware}
-	 * @return the {@link JQueryAjaxBehavior}
+	 * @return a new {@link OnCloseAjaxBehavior} by default
 	 */
 	protected JQueryAjaxBehavior newOnCloseAjaxBehavior(IJQueryAjaxAware source)
 	{
-		return new JQueryAjaxBehavior(source) {
-
-			private static final long serialVersionUID = 1L;
-
-			@Override
-			public String getCallbackFunction()
-			{
-				// prevent a dual call to #onClose if called manually
-				return "function(e) { if (e.userTriggered) { " + this.getCallbackScript() + " } }";
-			}
-
-			@Override
-			protected JQueryEvent newEvent()
-			{
-				return new CloseEvent();
-			}
-		};
+		return new OnCloseAjaxBehavior(source);
 	}
 
-	// Event class //
+	// Ajax classes //
 
+	/**
+	 * Provides a {@link JQueryAjaxBehavior} that aims to be wired to the 'a.k-window-action click' event
+	 */
+	protected static class OnActionAjaxBehavior extends JQueryAjaxBehavior
+	{
+		private static final long serialVersionUID = 1L;
+
+		public OnActionAjaxBehavior(IJQueryAjaxAware source)
+		{
+			super(source);
+		}
+
+		@Override
+		protected CallbackParameter[] getCallbackParameters()
+		{
+			return new CallbackParameter[] { CallbackParameter.context("e"), // lf
+					CallbackParameter.resolved("action", "jQuery(e.target).attr('class').match(/k-i-(\\w+)/)[1]") // lf
+			};
+		}
+
+		@Override
+		protected JQueryEvent newEvent()
+		{
+			return new ActionEvent();
+		}
+	}
+
+	/**
+	 * Provides a {@link JQueryAjaxBehavior} that aims to be wired to the 'close' event
+	 */
+	protected static class OnCloseAjaxBehavior extends JQueryAjaxBehavior
+	{
+		private static final long serialVersionUID = 1L;
+
+		public OnCloseAjaxBehavior(IJQueryAjaxAware source)
+		{
+			super(source);
+		}
+
+		@Override
+		public String getCallbackFunction()
+		{
+			// prevent a dual call to #onClose if called manually
+			return "function(e) { if (e.userTriggered) { " + this.getCallbackScript() + " } }";
+		}
+
+		@Override
+		protected JQueryEvent newEvent()
+		{
+			return new CloseEvent();
+		}
+	}
+
+	// Event objects //
+
+	/**
+	 * Provides an event object that will be broadcasted by the {@link OnActionAjaxBehavior} callback
+	 */
 	protected static class ActionEvent extends JQueryEvent
 	{
 		private final String action;
@@ -227,7 +251,7 @@ public abstract class WindowBehavior extends KendoUIBehavior implements IJQueryA
 	}
 
 	/**
-	 * An event object that will be broadcasted when the user clicks on the X-icon
+	 * Provides an event object that will be broadcasted by the {@link OnCloseAjaxBehavior} callback
 	 */
 	protected static class CloseEvent extends JQueryEvent
 	{

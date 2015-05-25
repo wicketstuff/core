@@ -70,7 +70,7 @@ public class ColumnAjaxBehavior extends JQueryAjaxBehavior
 		return new ClickEvent(this.button);
 	}
 
-	// Event class //
+	// Event objects //
 
 	/**
 	 * Provides a click event that will be transmitted to the {@link DataTable}

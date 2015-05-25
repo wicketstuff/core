@@ -24,9 +24,9 @@ import org.apache.wicket.util.visit.IVisit;
 import org.apache.wicket.util.visit.IVisitor;
 import org.apache.wicket.util.visit.Visits;
 
+import com.googlecode.wicket.jquery.core.IJQueryWidget.JQueryWidget;
 import com.googlecode.wicket.jquery.core.JQueryEvent;
 import com.googlecode.wicket.jquery.core.Options;
-import com.googlecode.wicket.jquery.core.IJQueryWidget.JQueryWidget;
 import com.googlecode.wicket.jquery.core.ajax.IJQueryAjaxAware;
 import com.googlecode.wicket.jquery.core.ajax.JQueryAjaxBehavior;
 import com.googlecode.wicket.jquery.core.utils.RequestCycleUtils;
@@ -76,7 +76,7 @@ public abstract class DraggableBehavior extends JQueryUIBehavior implements IJQu
 	{
 		this(null, options);
 	}
-	
+
 	/**
 	 * Constructor
 	 * 
@@ -179,75 +179,95 @@ public abstract class DraggableBehavior extends JQueryUIBehavior implements IJQu
 	}
 
 	/**
-	 * Gets a new {@link JQueryAjaxBehavior} that will be called on 'start' javascript event
-	 * 
+	 * Gets a new {@link JQueryAjaxBehavior} that will be wired to the 'start' event
+	 *
 	 * @param source the {@link IJQueryAjaxAware}
-	 * @return the {@link JQueryAjaxBehavior}
+	 * @return a new {@link OnDragStartAjaxBehavior} by default
 	 */
 	protected JQueryAjaxBehavior newOnDragStartAjaxBehavior(IJQueryAjaxAware source)
 	{
-		return new JQueryAjaxBehavior(source) {
-
-			private static final long serialVersionUID = 1L;
-
-			@Override
-			protected CallbackParameter[] getCallbackParameters()
-			{
-				return new CallbackParameter[] {
-						CallbackParameter.context("event"), // lf
-						CallbackParameter.context("ui"), // lf
-						CallbackParameter.resolved("top", "ui.position.top"), // lf
-						CallbackParameter.resolved("left", "ui.position.left"), // lf
-						CallbackParameter.resolved("offsetTop", "ui.offset.top | 0"), // cast to int, no rounding
-						CallbackParameter.resolved("offsetLeft", "ui.offset.left | 0")  // cast to int, no rounding
-				};
-			}
-
-			@Override
-			protected JQueryEvent newEvent()
-			{
-				return new DragStartEvent();
-			}
-		};
+		return new OnDragStartAjaxBehavior(source);
 	}
 
 	/**
-	 * Gets a new {@link JQueryAjaxBehavior} that will be called on 'stop' javascript event
-	 * 
+	 * Gets a new {@link JQueryAjaxBehavior} that will be wired to the 'stop' event
+	 *
 	 * @param source the {@link IJQueryAjaxAware}
-	 * @return the {@link JQueryAjaxBehavior}
+	 * @return a new {@link OnDragStopAjaxBehavior} by default
 	 */
 	protected JQueryAjaxBehavior newOnDragStopAjaxBehavior(IJQueryAjaxAware source)
 	{
-		return new JQueryAjaxBehavior(source) {
-
-			private static final long serialVersionUID = 1L;
-
-			@Override
-			protected CallbackParameter[] getCallbackParameters()
-			{
-				return new CallbackParameter[] {
-						CallbackParameter.context("event"), // lf
-						CallbackParameter.context("ui"), // lf
-						CallbackParameter.resolved("top", "ui.position.top"), // lf
-						CallbackParameter.resolved("left", "ui.position.left"), // lf
-						CallbackParameter.resolved("offsetTop", "ui.offset.top | 0"), // cast to int, no rounding
-						CallbackParameter.resolved("offsetLeft", "ui.offset.left | 0")  // cast to int, no rounding
-				};
-			}
-
-			@Override
-			protected JQueryEvent newEvent()
-			{
-				return new DragStopEvent();
-			}
-		};
+		return new OnDragStopAjaxBehavior(source);
 	}
 
-	// Events classes //
+	// Ajax classes //
 
 	/**
-	 * Provides a base class for draggable event object
+	 * Provides a {@link JQueryAjaxBehavior} that aims to be wired to the 'start' event
+	 */
+	protected static class OnDragStartAjaxBehavior extends JQueryAjaxBehavior
+	{
+		private static final long serialVersionUID = 1L;
+
+		public OnDragStartAjaxBehavior(IJQueryAjaxAware source)
+		{
+			super(source);
+		}
+
+		@Override
+		protected CallbackParameter[] getCallbackParameters()
+		{
+			return new CallbackParameter[] { CallbackParameter.context("event"), // lf
+					CallbackParameter.context("ui"), // lf
+					CallbackParameter.resolved("top", "ui.position.top"), // lf
+					CallbackParameter.resolved("left", "ui.position.left"), // lf
+					CallbackParameter.resolved("offsetTop", "ui.offset.top | 0"), // cast to int, no rounding
+					CallbackParameter.resolved("offsetLeft", "ui.offset.left | 0") // cast to int, no rounding
+			};
+		}
+
+		@Override
+		protected JQueryEvent newEvent()
+		{
+			return new DragStartEvent();
+		}
+	}
+
+	/**
+	 * Provides a {@link JQueryAjaxBehavior} that aims to be wired to the 'stop' event
+	 */
+	protected static class OnDragStopAjaxBehavior extends JQueryAjaxBehavior
+	{
+		private static final long serialVersionUID = 1L;
+
+		public OnDragStopAjaxBehavior(IJQueryAjaxAware source)
+		{
+			super(source);
+		}
+
+		@Override
+		protected CallbackParameter[] getCallbackParameters()
+		{
+			return new CallbackParameter[] { CallbackParameter.context("event"), // lf
+					CallbackParameter.context("ui"), // lf
+					CallbackParameter.resolved("top", "ui.position.top"), // lf
+					CallbackParameter.resolved("left", "ui.position.left"), // lf
+					CallbackParameter.resolved("offsetTop", "ui.offset.top | 0"), // cast to int, no rounding
+					CallbackParameter.resolved("offsetLeft", "ui.offset.left | 0") // cast to int, no rounding
+			};
+		}
+
+		@Override
+		protected JQueryEvent newEvent()
+		{
+			return new DragStopEvent();
+		}
+	}
+
+	// Event objects //
+
+	/**
+	 * Provides a base class for {@link DraggableBehavior} event objects
 	 */
 	protected static class DraggableEvent extends JQueryEvent
 	{
@@ -309,14 +329,14 @@ public abstract class DraggableBehavior extends JQueryUIBehavior implements IJQu
 	}
 
 	/**
-	 * Provides an event object that will be broadcasted by the {@link JQueryAjaxBehavior} 'start' callback
+	 * Provides an event object that will be broadcasted by the {@link OnDragStartAjaxBehavior} callback
 	 */
 	protected static class DragStartEvent extends DraggableEvent
 	{
 	}
 
 	/**
-	 * Provides an event object that will be broadcasted by the {@link JQueryAjaxBehavior} 'stop' callback
+	 * Provides an event object that will be broadcasted by the {@link OnDragStopAjaxBehavior} callback
 	 */
 	protected static class DragStopEvent extends DraggableEvent
 	{

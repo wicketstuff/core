@@ -79,7 +79,7 @@ public class MyJQueryLabel extends Label implements IJQueryWidget, IMyJQueryList
 		{
 			super.bind(component);
 
-			this.onMyEventAjaxBehavior = this.newJQueryAjaxBehavior(this);
+			this.onMyEventAjaxBehavior = this.newMyEventAjaxBehavior(this);
 			component.add(this.onMyEventAjaxBehavior);
 		}
 
@@ -101,28 +101,38 @@ public class MyJQueryLabel extends Label implements IJQueryWidget, IMyJQueryList
 			}
 		}
 
-		// Factory //
-		protected JQueryAjaxBehavior newJQueryAjaxBehavior(IJQueryAjaxAware source)
+		// Factories //
+		protected JQueryAjaxBehavior newMyEventAjaxBehavior(IJQueryAjaxAware source)
 		{
-			return new JQueryAjaxBehavior(source) {
-
-				private static final long serialVersionUID = 1L;
-
-				@Override
-				protected CallbackParameter[] getCallbackParameters()
-				{
-					return new CallbackParameter[] { CallbackParameter.context("event"), CallbackParameter.context("ui") };
-				}
-
-				@Override
-				protected JQueryEvent newEvent()
-				{
-					return new MyEvent();
-				}
-			};
+			return new MyEventAjaxBehavior(source);
 		}
 
-		// Event Class //
+		// Ajax classes //
+
+		public static class MyEventAjaxBehavior extends JQueryAjaxBehavior
+		{
+			private static final long serialVersionUID = 1L;
+
+			public MyEventAjaxBehavior(IJQueryAjaxAware source)
+			{
+				super(source);
+			}
+
+			@Override
+			protected CallbackParameter[] getCallbackParameters()
+			{
+				return new CallbackParameter[] { CallbackParameter.context("event"), CallbackParameter.context("ui") };
+			}
+
+			@Override
+			protected JQueryEvent newEvent()
+			{
+				return new MyEvent();
+			}
+		}
+
+		// Event objects //
+
 		protected static class MyEvent extends JQueryEvent
 		{
 		}

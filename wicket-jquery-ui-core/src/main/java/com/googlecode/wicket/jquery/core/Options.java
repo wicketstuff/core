@@ -38,7 +38,6 @@ import com.googlecode.wicket.jquery.core.utils.DateUtils;
  * @author Sebastien Briquet - sebfz1
  *
  */
-// XXX: removed deprecated Options#escapeQuotes, use {@link JSONObject#quote(String)} instead
 public class Options implements IClusterable
 {
 	private static final long serialVersionUID = 1L;

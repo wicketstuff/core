@@ -120,72 +120,93 @@ public abstract class ResizableBehavior extends JQueryUIBehavior implements IJQu
 	// Factories //
 
 	/**
-	 * Gets a new {@link JQueryAjaxBehavior} that will be called on 'start' javascript event
-	 * 
+	 * Gets a new {@link JQueryAjaxBehavior} that will be wired to the 'start' event
+	 *
 	 * @param source the {@link IJQueryAjaxAware}
-	 * @return the {@link JQueryAjaxBehavior}
+	 * @return a new {@link OnResizeStartAjaxBehavior} by default
 	 */
 	protected JQueryAjaxBehavior newOnResizeStartAjaxBehavior(IJQueryAjaxAware source)
 	{
-		return new JQueryAjaxBehavior(source) {
-
-			private static final long serialVersionUID = 1L;
-
-			@Override
-			protected CallbackParameter[] getCallbackParameters()
-			{
-				return new CallbackParameter[] { // lf
-						CallbackParameter.context("event"), // lf
-						CallbackParameter.context("ui"), // lf
-						CallbackParameter.resolved("top", "ui.position.top"), // lf
-						CallbackParameter.resolved("left", "ui.position.left"), // lf
-						CallbackParameter.resolved("width", "ui.size.width"), // lf
-						CallbackParameter.resolved("height", "ui.size.height") };
-			}
-
-			@Override
-			protected JQueryEvent newEvent()
-			{
-				return new ResizeStartEvent();
-			}
-		};
+		return new OnResizeStartAjaxBehavior(source);
 	}
 
 	/**
-	 * Gets a new {@link JQueryAjaxBehavior} that will be called on 'stop' javascript event
-	 * 
+	 * Gets a new {@link JQueryAjaxBehavior} that will be wired to the 'stop' event
+	 *
 	 * @param source the {@link IJQueryAjaxAware}
-	 * @return the {@link JQueryAjaxBehavior}
+	 * @return a new {@link OnResizeStopAjaxBehavior} by default
 	 */
 	protected JQueryAjaxBehavior newOnResizeStopAjaxBehavior(IJQueryAjaxAware source)
 	{
-		return new JQueryAjaxBehavior(source) {
-
-			private static final long serialVersionUID = 1L;
-
-			@Override
-			protected CallbackParameter[] getCallbackParameters()
-			{
-				return new CallbackParameter[] { // lf
-						CallbackParameter.context("event"), // lf
-						CallbackParameter.context("ui"), // lf
-						CallbackParameter.resolved("top", "ui.position.top"), // lf
-						CallbackParameter.resolved("left", "ui.position.left"), // lf
-						CallbackParameter.resolved("width", "ui.size.width"), // lf
-						CallbackParameter.resolved("height", "ui.size.height") };
-			}
-
-			@Override
-			protected JQueryEvent newEvent()
-			{
-				return new ResizeStopEvent();
-			}
-		};
+		return new OnResizeStopAjaxBehavior(source);
 	}
 
-	// Event Objects //
+	// Ajax classes //
+
 	/**
-	 * Provides a base class for resize event object
+	 * Provides a {@link JQueryAjaxBehavior} that aims to be wired to the 'start' event
+	 */
+	protected static class OnResizeStartAjaxBehavior extends JQueryAjaxBehavior
+	{
+		private static final long serialVersionUID = 1L;
+
+		public OnResizeStartAjaxBehavior(IJQueryAjaxAware source)
+		{
+			super(source);
+		}
+
+		@Override
+		protected CallbackParameter[] getCallbackParameters()
+		{
+			return new CallbackParameter[] { CallbackParameter.context("event"), // lf
+					CallbackParameter.context("ui"), // lf
+					CallbackParameter.resolved("top", "ui.position.top"), // lf
+					CallbackParameter.resolved("left", "ui.position.left"), // lf
+					CallbackParameter.resolved("width", "ui.size.width"), // lf
+					CallbackParameter.resolved("height", "ui.size.height") };
+		}
+
+		@Override
+		protected JQueryEvent newEvent()
+		{
+			return new ResizeStartEvent();
+		}
+	}
+
+	/**
+	 * Provides a {@link JQueryAjaxBehavior} that aims to be wired to the 'stop' event
+	 */
+	protected static class OnResizeStopAjaxBehavior extends JQueryAjaxBehavior
+	{
+		private static final long serialVersionUID = 1L;
+
+		public OnResizeStopAjaxBehavior(IJQueryAjaxAware source)
+		{
+			super(source);
+		}
+
+		@Override
+		protected CallbackParameter[] getCallbackParameters()
+		{
+			return new CallbackParameter[] { CallbackParameter.context("event"), // lf
+					CallbackParameter.context("ui"), // lf
+					CallbackParameter.resolved("top", "ui.position.top"), // lf
+					CallbackParameter.resolved("left", "ui.position.left"), // lf
+					CallbackParameter.resolved("width", "ui.size.width"), // lf
+					CallbackParameter.resolved("height", "ui.size.height") };
+		}
+
+		@Override
+		protected JQueryEvent newEvent()
+		{
+			return new ResizeStopEvent();
+		}
+	}
+
+	// Event objects //
+
+	/**
+	 * Provides a base class for {@link ResizableBehavior} event objects
 	 */
 	protected static class ResizeEvent extends JQueryEvent
 	{
@@ -247,14 +268,14 @@ public abstract class ResizableBehavior extends JQueryUIBehavior implements IJQu
 	}
 
 	/**
-	 * Provides an event object that will be broadcasted by the {@link JQueryAjaxBehavior} 'start' callback
+	 * Provides an event object that will be broadcasted by the {@link OnResizeStartAjaxBehavior} callback
 	 */
 	protected static class ResizeStartEvent extends ResizeEvent
 	{
 	}
 
 	/**
-	 * Provides an event object that will be broadcasted by the {@link JQueryAjaxBehavior} 'stop' callback
+	 * Provides an event object that will be broadcasted by the {@link OnResizeStopAjaxBehavior} callback
 	 */
 	protected static class ResizeStopEvent extends ResizeEvent
 	{

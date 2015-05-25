@@ -93,7 +93,6 @@ public class FeedbackConsole extends AbstractConsole implements IFeedback
 	 * @param message the {@link FeedbackMessage}
 	 * @param target the {@link AjaxRequestTarget}
 	 */
-	//XXX: inverted args to keep consistency with the rest of the API 
 	protected void log(AjaxRequestTarget target, FeedbackMessage message)
 	{
 		this.log(target, message.getMessage(), this.isError(message));
@@ -107,7 +106,6 @@ public class FeedbackConsole extends AbstractConsole implements IFeedback
 	 * @param messages the list of {@link FeedbackMessage}
 	 * @param target the {@link AjaxRequestTarget}
 	 */
-	//XXX: inverted args to keep consistency with the rest of the API 
 	protected final void log(AjaxRequestTarget target, List<FeedbackMessage> messages)
 	{
 		for (FeedbackMessage message : messages)

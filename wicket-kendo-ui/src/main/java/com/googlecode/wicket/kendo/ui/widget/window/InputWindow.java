@@ -197,7 +197,6 @@ public abstract class InputWindow<T> extends Window<T>
 	 */
 	protected boolean isRequired()
 	{
-		// XXX: changed InputButton#isRequired to true by default because it makes more sense - SILENT API BREAK
 		return true;
 	}
 

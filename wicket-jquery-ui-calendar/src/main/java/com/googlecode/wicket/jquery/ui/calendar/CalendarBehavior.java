@@ -300,9 +300,10 @@ public abstract class CalendarBehavior extends JQueryBehavior implements IJQuery
 	// Factories //
 
 	/**
-	 * Gets the ajax behavior that will be triggered when the user select a cell range
+	 * Gets a new {@link JQueryAjaxBehavior} that will be wired to the 'select' event, triggered when the user select a cell range
 	 *
-	 * @return the {@link JQueryAjaxBehavior}
+	 * @param source the {@link IJQueryAjaxAware}
+	 * @return a new {@link OnSelectAjaxBehavior} by default
 	 */
 	protected JQueryAjaxBehavior newOnSelectAjaxBehavior(IJQueryAjaxAware source)
 	{
@@ -310,9 +311,10 @@ public abstract class CalendarBehavior extends JQueryBehavior implements IJQuery
 	}
 
 	/**
-	 * Gets the ajax behavior that will be triggered when the user clicks on a day cell
+	 * Gets a new {@link JQueryAjaxBehavior} that will be wired to the 'dayClick' event, triggered when the user clicks on a day cell
 	 *
-	 * @return the {@link JQueryAjaxBehavior}
+	 * @param source the {@link IJQueryAjaxAware}
+	 * @return a new {@link OnDayClickAjaxBehavior} by default
 	 */
 	protected JQueryAjaxBehavior newOnDayClickAjaxBehavior(IJQueryAjaxAware source)
 	{
@@ -320,9 +322,10 @@ public abstract class CalendarBehavior extends JQueryBehavior implements IJQuery
 	}
 
 	/**
-	 * Gets the ajax behavior that will be triggered when the user clicks on an event
+	 * Gets a new {@link JQueryAjaxBehavior} that will be wired to the 'eventClick' event, triggered when the user clicks on an event
 	 *
-	 * @return the {@link JQueryAjaxBehavior}
+	 * @param source the {@link IJQueryAjaxAware}
+	 * @return a new {@link OnEventClickAjaxBehavior} by default
 	 */
 	protected JQueryAjaxBehavior newOnEventClickAjaxBehavior(IJQueryAjaxAware source)
 	{
@@ -330,9 +333,10 @@ public abstract class CalendarBehavior extends JQueryBehavior implements IJQuery
 	}
 
 	/**
-	 * Gets the ajax behavior that will be triggered when the user moves (drag & drop) an event
+	 * Gets a new {@link JQueryAjaxBehavior} that will be wired to the 'eventDrop' event, triggered when the user moves (drag & drop) an event
 	 *
-	 * @return the {@link JQueryAjaxBehavior}
+	 * @param source the {@link IJQueryAjaxAware}
+	 * @return a new {@link OnEventDropAjaxBehavior} by default
 	 */
 	protected JQueryAjaxBehavior newOnEventDropAjaxBehavior(IJQueryAjaxAware source, CharSequence precondition)
 	{
@@ -340,9 +344,10 @@ public abstract class CalendarBehavior extends JQueryBehavior implements IJQuery
 	}
 
 	/**
-	 * Gets the ajax behavior that will be triggered when the user resizes an event
+	 * Gets a new {@link JQueryAjaxBehavior} that will be wired to the 'eventResize' event, triggered when the user resizes an event
 	 *
-	 * @return the {@link JQueryAjaxBehavior}
+	 * @param source the {@link IJQueryAjaxAware}
+	 * @return a new {@link OnEventResizeAjaxBehavior} by default
 	 */
 	protected JQueryAjaxBehavior newOnEventResizeAjaxBehavior(IJQueryAjaxAware source, CharSequence precondition)
 	{
@@ -350,9 +355,10 @@ public abstract class CalendarBehavior extends JQueryBehavior implements IJQuery
 	}
 
 	/**
-	 * Gets the ajax behavior that will be triggered when the user drops an event object
+	 * Gets a new {@link JQueryAjaxBehavior} that will be wired to the 'drop' event, triggered when the user drops an event object
 	 *
-	 * @return the {@link JQueryAjaxBehavior}
+	 * @param source the {@link IJQueryAjaxAware}
+	 * @return a new {@link OnObjectDropAjaxBehavior} by default
 	 */
 	protected JQueryAjaxBehavior newOnObjectDropAjaxBehavior(IJQueryAjaxAware source)
 	{
@@ -360,9 +366,10 @@ public abstract class CalendarBehavior extends JQueryBehavior implements IJQuery
 	}
 
 	/**
-	 * Gets the ajax behavior that will be triggered when the user changes the view, or when any of the date navigation methods are called.
+	 * Gets a new {@link JQueryAjaxBehavior} that will be wired to the 'viewRender' event, triggered when the user changes the view, or when any of the date navigation methods are called.
 	 *
-	 * @return the {@link JQueryAjaxBehavior}
+	 * @param source the {@link IJQueryAjaxAware}
+	 * @return a new {@link OnViewRenderAjaxBehavior} by default
 	 */
 	protected JQueryAjaxBehavior newOnViewRenderAjaxBehavior(IJQueryAjaxAware source)
 	{
@@ -372,7 +379,7 @@ public abstract class CalendarBehavior extends JQueryBehavior implements IJQuery
 	// Ajax classes //
 
 	/**
-	 * Default {@link JQueryAjaxBehavior} implementation for {@link CalendarBehavior#newOnSelectAjaxBehavior(IJQueryAjaxAware)}
+	 * Provides a {@link JQueryAjaxBehavior} that aims to be wired to the 'select' event
 	 */
 	protected static class OnSelectAjaxBehavior extends JQueryAjaxBehavior
 	{
@@ -387,7 +394,6 @@ public abstract class CalendarBehavior extends JQueryBehavior implements IJQuery
 		protected CallbackParameter[] getCallbackParameters()
 		{
 			// http://fullcalendar.io/docs/selection/select_callback/
-			// function(startDate, endDate, jsEvent, view) { }
 			return new CallbackParameter[] { CallbackParameter.converted("startDate", "startDate.format()"), // retrieved
 					CallbackParameter.converted("endDate", "endDate.format()"), // retrieved
 					CallbackParameter.resolved("allDay", "!startDate.hasTime()"), // retrieved
@@ -405,7 +411,7 @@ public abstract class CalendarBehavior extends JQueryBehavior implements IJQuery
 	}
 
 	/**
-	 * Default {@link JQueryAjaxBehavior} implementation for {@link CalendarBehavior#newOnDayClickAjaxBehavior(IJQueryAjaxAware)}
+	 * Provides a {@link JQueryAjaxBehavior} that aims to be wired to the 'dayClick' event
 	 */
 	protected static class OnDayClickAjaxBehavior extends JQueryAjaxBehavior
 	{
@@ -420,7 +426,6 @@ public abstract class CalendarBehavior extends JQueryBehavior implements IJQuery
 		protected CallbackParameter[] getCallbackParameters()
 		{
 			// http://fullcalendar.io/docs/mouse/dayClick/
-			// function(date, allDay, jsEvent, view)
 			return new CallbackParameter[] { CallbackParameter.converted("date", "date.format()"), // retrieved
 					CallbackParameter.resolved("allDay", "!date.hasTime()"), // retrieved
 					CallbackParameter.context("jsEvent"), // lf
@@ -437,7 +442,7 @@ public abstract class CalendarBehavior extends JQueryBehavior implements IJQuery
 	}
 
 	/**
-	 * Default {@link JQueryAjaxBehavior} implementation for {@link CalendarBehavior#newOnEventClickAjaxBehavior(IJQueryAjaxAware)}
+	 * Provides a {@link JQueryAjaxBehavior} that aims to be wired to the 'eventClick' event
 	 */
 	protected static class OnEventClickAjaxBehavior extends JQueryAjaxBehavior
 	{
@@ -452,7 +457,6 @@ public abstract class CalendarBehavior extends JQueryBehavior implements IJQuery
 		protected CallbackParameter[] getCallbackParameters()
 		{
 			// http://arshaw.com/fullcalendar/docs/mouse/eventClick/
-			// function(event, jsEvent, view) { }
 			return new CallbackParameter[] { CallbackParameter.context("event"), // lf
 					CallbackParameter.context("jsEvent"), // lf
 					CallbackParameter.context("view"), // lf
@@ -469,7 +473,7 @@ public abstract class CalendarBehavior extends JQueryBehavior implements IJQuery
 	}
 
 	/**
-	 * Default {@link JQueryAjaxBehavior} implementation for {@link CalendarBehavior#newOnEventDropAjaxBehavior(IJQueryAjaxAware, CharSequence)}
+	 * Provides a {@link JQueryAjaxBehavior} that aims to be wired to the 'eventDrop' event
 	 */
 	protected static class OnEventDropAjaxBehavior extends JQueryAjaxBehavior
 	{
@@ -502,7 +506,6 @@ public abstract class CalendarBehavior extends JQueryBehavior implements IJQuery
 		protected CallbackParameter[] getCallbackParameters()
 		{
 			// http://fullcalendar.io/docs/event_ui/eventDrop/
-			// function(event, delta, revertFunc, jsEvent, ui, view) { }
 			return new CallbackParameter[] { CallbackParameter.context("event"), // lf
 					CallbackParameter.context("delta"), // lf
 					CallbackParameter.resolved("millisDelta", "delta.asMilliseconds()"), // retrieved
@@ -523,7 +526,7 @@ public abstract class CalendarBehavior extends JQueryBehavior implements IJQuery
 	}
 
 	/**
-	 * Default {@link JQueryAjaxBehavior} implementation for {@link CalendarBehavior#newOnEventResizeAjaxBehavior(IJQueryAjaxAware, CharSequence)}
+	 * Provides a {@link JQueryAjaxBehavior} that aims to be wired to the 'eventResize' event
 	 */
 	protected static class OnEventResizeAjaxBehavior extends JQueryAjaxBehavior
 	{
@@ -577,7 +580,7 @@ public abstract class CalendarBehavior extends JQueryBehavior implements IJQuery
 	}
 
 	/**
-	 * Default {@link JQueryAjaxBehavior} implementation for {@link CalendarBehavior#newOnObjectDropAjaxBehavior(IJQueryAjaxAware)}
+	 * Provides a {@link JQueryAjaxBehavior} that aims to be wired to the 'drop' event
 	 */
 	protected static class OnObjectDropAjaxBehavior extends JQueryAjaxBehavior
 	{
@@ -592,7 +595,6 @@ public abstract class CalendarBehavior extends JQueryBehavior implements IJQuery
 		protected CallbackParameter[] getCallbackParameters()
 		{
 			// http://fullcalendar.io/docs/dropping/drop/
-			// function(date, jsEvent, ui) { }
 			return new CallbackParameter[] { CallbackParameter.converted("date", "date.format()"), // retrieved
 					CallbackParameter.resolved("allDay", "!date.hasTime()"), // retrieved
 					CallbackParameter.context("jsEvent"), // lf
@@ -609,7 +611,7 @@ public abstract class CalendarBehavior extends JQueryBehavior implements IJQuery
 	}
 
 	/**
-	 * Default {@link JQueryAjaxBehavior} implementation for {@link CalendarBehavior#newOnViewRenderAjaxBehavior(IJQueryAjaxAware)}
+	 * Provides a {@link JQueryAjaxBehavior} that aims to be wired to the 'viewRender' event
 	 */
 	protected static class OnViewRenderAjaxBehavior extends JQueryAjaxBehavior
 	{
@@ -624,7 +626,6 @@ public abstract class CalendarBehavior extends JQueryBehavior implements IJQuery
 		protected CallbackParameter[] getCallbackParameters()
 		{
 			// http://arshaw.com/fullcalendar/docs/display/viewRender/
-			// function(view, element) { }
 			return new CallbackParameter[] { CallbackParameter.context("view"),// lf
 					CallbackParameter.context("element"), // lf
 					CallbackParameter.resolved("viewName", "view.name"), // retrieved
@@ -639,10 +640,10 @@ public abstract class CalendarBehavior extends JQueryBehavior implements IJQuery
 		}
 	}
 
-	// Event classes //
+	// Event objects //
 
 	/**
-	 * An event object that will be broadcasted when the user select a cell range
+	 * Provides an event object that will be broadcasted by the {@link OnSelectAjaxBehavior} callback
 	 */
 	protected static class SelectEvent extends JQueryEvent
 	{
@@ -706,7 +707,7 @@ public abstract class CalendarBehavior extends JQueryBehavior implements IJQuery
 	}
 
 	/**
-	 * An event object that will be broadcasted when the user clicks on a day cell
+	 * Provides an event object that will be broadcasted by the {@link OnDayClickAjaxBehavior} callback
 	 */
 	protected static class DayClickEvent extends JQueryEvent
 	{
@@ -759,7 +760,7 @@ public abstract class CalendarBehavior extends JQueryBehavior implements IJQuery
 	}
 
 	/**
-	 * An event object that will be broadcasted when the user clicks on an event
+	 * Provides an event object that will be broadcasted by the {@link OnEventClickAjaxBehavior} callback
 	 */
 	protected static class ClickEvent extends JQueryEvent
 	{
@@ -797,7 +798,7 @@ public abstract class CalendarBehavior extends JQueryBehavior implements IJQuery
 	}
 
 	/**
-	 * An event object that will be broadcasted when the calendar loads and every time a different date-range is displayed.
+	 * Provides an event object that will be broadcasted by the {@link OnViewRenderAjaxBehavior} callback
 	 */
 	protected static class ViewRenderEvent extends JQueryEvent
 	{
@@ -851,7 +852,7 @@ public abstract class CalendarBehavior extends JQueryBehavior implements IJQuery
 	}
 
 	/**
-	 * A base event object that contains a delta time
+	 * Provides a base class for {@link CalendarBehavior} event objects that contain a delta time
 	 */
 	protected abstract static class DeltaEvent extends JQueryEvent
 	{
@@ -890,7 +891,7 @@ public abstract class CalendarBehavior extends JQueryBehavior implements IJQuery
 	}
 
 	/**
-	 * An event object that will be broadcasted when the user moves (drag & drop) an event
+	 * Provides an event object that will be broadcasted by the {@link OnEventDropAjaxBehavior} callback
 	 */
 	protected static class DropEvent extends DeltaEvent
 	{
@@ -916,14 +917,14 @@ public abstract class CalendarBehavior extends JQueryBehavior implements IJQuery
 	}
 
 	/**
-	 * An event object that will be broadcasted when the user resizes an event
+	 * Provides an event object that will be broadcasted by the {@link OnEventResizeAjaxBehavior} callback
 	 */
 	protected static class ResizeEvent extends DeltaEvent
 	{
 	}
 
 	/**
-	 * An event object that will be broadcasted when the user drops an event-object
+	 * Provides an event object that will be broadcasted by the {@link OnObjectDropAjaxBehavior} callback
 	 */
 	protected static class ObjectDropEvent extends JQueryEvent
 	{

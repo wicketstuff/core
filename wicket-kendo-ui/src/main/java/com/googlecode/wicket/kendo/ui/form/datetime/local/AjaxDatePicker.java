@@ -284,11 +284,11 @@ public class AjaxDatePicker extends DatePicker implements IJQueryAjaxAware, IVal
 		// Factories //
 
 		/**
-		 * Gets a new {@link JQueryAjaxPostBehavior} that will be called on 'change' javascript method
+		 * Gets a new {@link JQueryAjaxPostBehavior} that will be wired to the 'change' event
 		 *
 		 * @param source the {@link IJQueryAjaxAware}
 		 * @param component the bound {@link Component}
-		 * @return the {@link JQueryAjaxPostBehavior}, typically a {@link OnChangeAjaxBehavior}
+		 * @return a new {@link OnChangeAjaxBehavior} by default
 		 */
 		protected JQueryAjaxPostBehavior newOnChangeAjaxBehavior(IJQueryAjaxAware source, FormComponent<?> component)
 		{

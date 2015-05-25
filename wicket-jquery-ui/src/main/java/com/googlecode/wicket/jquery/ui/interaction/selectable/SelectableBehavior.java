@@ -49,6 +49,7 @@ public abstract class SelectableBehavior<T extends Serializable> extends JQueryU
 
 	/**
 	 * Constructor
+	 * 
 	 * @param selector the html selector (ie: "#myId")
 	 */
 	public SelectableBehavior(String selector)
@@ -58,6 +59,7 @@ public abstract class SelectableBehavior<T extends Serializable> extends JQueryU
 
 	/**
 	 * Constructor
+	 * 
 	 * @param selector the html selector (ie: "#myId")
 	 * @param options the {@link Options}
 	 */
@@ -66,8 +68,8 @@ public abstract class SelectableBehavior<T extends Serializable> extends JQueryU
 		super(selector, METHOD, options);
 	}
 
-
 	// Properties //
+
 	/**
 	 * Gets the reference list of all selectable items.
 	 *
@@ -84,6 +86,7 @@ public abstract class SelectableBehavior<T extends Serializable> extends JQueryU
 	protected abstract String getItemSelector();
 
 	// Methods //
+
 	@Override
 	public void bind(Component component)
 	{
@@ -94,6 +97,7 @@ public abstract class SelectableBehavior<T extends Serializable> extends JQueryU
 	}
 
 	// Events //
+
 	@Override
 	public void onConfigure(Component component)
 	{
@@ -111,7 +115,7 @@ public abstract class SelectableBehavior<T extends Serializable> extends JQueryU
 			List<T> items = new ArrayList<T>();
 			List<T> list = this.getItemList();
 
-			for (int index : ((StopEvent)event).getIndexes())
+			for (int index : ((StopEvent) event).getIndexes())
 			{
 				// defensive, if the item-selector is miss-configured, this can result in an OutOfBoundException
 				if (index < list.size())
@@ -125,45 +129,59 @@ public abstract class SelectableBehavior<T extends Serializable> extends JQueryU
 	}
 
 	// Factories //
+
 	/**
-	 * Gets the ajax behavior that will be triggered when the user has selected items
+	 * Gets a new {@link JQueryAjaxBehavior} that will be wired to the 'stop' event, triggered when the user has selected items
 	 *
 	 * @param source the {@link IJQueryAjaxAware}
-	 * @return the {@link JQueryAjaxBehavior}
+	 * @return a new {@link OnStopAjaxBehavior} by default
 	 */
 	protected JQueryAjaxBehavior newOnStopAjaxBehavior(IJQueryAjaxAware source)
 	{
-		return new JQueryAjaxBehavior(source) {
-
-			private static final long serialVersionUID = 1L;
-
-			@Override
-			protected CallbackParameter[] getCallbackParameters()
-			{
-				return new CallbackParameter[] { CallbackParameter.resolved("indexes", "indexes") };
-			}
-
-			@Override
-			public CharSequence getCallbackFunctionBody(CallbackParameter... parameters)
-			{
-				//build indexes array, ie: 'indexes=[1,2,3]'
-				String selector = String.format("%s %s", SelectableBehavior.this.selector, SelectableBehavior.this.getItemSelector());
-				String indexes = "var indexes=[]; jQuery('.ui-selected', this).each( function() { indexes.push(jQuery('" + selector + "').index(this)); } ); ";
-
-				return indexes + super.getCallbackFunctionBody(parameters);
-			}
-
-			@Override
-			protected JQueryEvent newEvent()
-			{
-				return new StopEvent();
-			}
-		};
+		return new OnStopAjaxBehavior(source);
 	}
 
-	// Event Objects //
+	// Ajax classes //
+
 	/**
-	 * Provides an event object that will be broadcasted by the {@link JQueryAjaxBehavior} 'stop' callback
+	 * Provides a {@link JQueryAjaxBehavior} that aims to be wired to the 'stop' event
+	 */
+	protected class OnStopAjaxBehavior extends JQueryAjaxBehavior
+	{
+		private static final long serialVersionUID = 1L;
+
+		public OnStopAjaxBehavior(IJQueryAjaxAware source)
+		{
+			super(source);
+		}
+
+		@Override
+		protected CallbackParameter[] getCallbackParameters()
+		{
+			return new CallbackParameter[] { CallbackParameter.resolved("indexes", "indexes") };
+		}
+
+		@Override
+		public CharSequence getCallbackFunctionBody(CallbackParameter... parameters)
+		{
+			// build indexes array, ie: 'indexes=[1,2,3]'
+			String selector = String.format("%s %s", SelectableBehavior.this.selector, SelectableBehavior.this.getItemSelector());
+			String indexes = "var indexes=[]; jQuery('.ui-selected', this).each(function() { indexes.push(jQuery('" + selector + "').index(this)); }); ";
+
+			return indexes + super.getCallbackFunctionBody(parameters);
+		}
+
+		@Override
+		protected JQueryEvent newEvent()
+		{
+			return new StopEvent();
+		}
+	}
+
+	// Event objects //
+
+	/**
+	 * Provides an event object that will be broadcasted by the {@link OnStopAjaxBehavior} callback
 	 */
 	protected static class StopEvent extends JQueryEvent
 	{

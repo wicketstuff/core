@@ -86,7 +86,6 @@ public class Console extends AbstractConsole
 	 * @param message the message to log
 	 * @param target the {@link AjaxRequestTarget}
 	 */
-	// XXX: inverted args to keep consistency with the rest of the API
 	public void info(AjaxRequestTarget target, Serializable message)
 	{
 		this.log(message, false);
@@ -112,7 +111,6 @@ public class Console extends AbstractConsole
 	 * @param message the message to log
 	 * @param target the {@link AjaxRequestTarget}
 	 */
-	// XXX: inverted args to keep consistency with the rest of the API
 	public void error(AjaxRequestTarget target, Serializable message)
 	{
 		this.log(message, true);

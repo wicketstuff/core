@@ -84,10 +84,10 @@ public abstract class ProgressBarBehavior extends JQueryUIBehavior implements IJ
 	// Factories //
 
 	/**
-	 * Gets a new {@link JQueryAjaxPostBehavior} that will be called on 'change' javascript event
+	 * Gets a new {@link JQueryAjaxPostBehavior} that will be wired to the 'change' event
 	 *
 	 * @param source the {@link IJQueryAjaxAware}
-	 * @return the {@link JQueryAjaxPostBehavior}
+	 * @return a new {@link OnChangeAjaxBehavior} by default
 	 */
 	protected JQueryAjaxPostBehavior newOnChangeAjaxBehavior(IJQueryAjaxAware source)
 	{

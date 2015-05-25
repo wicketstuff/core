@@ -43,6 +43,7 @@ public abstract class DatePickerBehavior extends JQueryUIBehavior implements IJQ
 
 	/**
 	 * Constructor
+	 * 
 	 * @param selector the html selector (ie: "#myId")
 	 */
 	public DatePickerBehavior(String selector)
@@ -52,6 +53,7 @@ public abstract class DatePickerBehavior extends JQueryUIBehavior implements IJQ
 
 	/**
 	 * Constructor
+	 * 
 	 * @param selector the html selector (ie: "#myId")
 	 * @param options the {@link Options}
 	 */
@@ -96,18 +98,19 @@ public abstract class DatePickerBehavior extends JQueryUIBehavior implements IJQ
 	}
 
 	// Factories //
+
 	/**
-	 * Gets a new {@link JQueryAjaxPostBehavior} that will be called on 'select' javascript method
+	 * Gets a new {@link JQueryAjaxPostBehavior} that will be wired to the 'onSelect' event
 	 *
 	 * @param source the {@link IJQueryAjaxAware}
-	 * @return the {@link JQueryAjaxPostBehavior}, typically a {@link OnSelectAjaxBehavior}
+	 * @return a new {@link OnSelectAjaxBehavior} by default
 	 */
 	protected abstract JQueryAjaxPostBehavior newOnSelectAjaxBehavior(IJQueryAjaxAware source);
 
+	// Ajax classes //
 
-	// Behavior class //
 	/**
-	 * Provides a {@link JQueryAjaxPostBehavior} that can be returned by {@link DatePickerBehavior#newOnSelectAjaxBehavior(IJQueryAjaxAware)}
+	 * Provides a {@link JQueryAjaxPostBehavior} that aims to be wired to the 'onSelect' event
 	 */
 	protected static class OnSelectAjaxBehavior extends JQueryAjaxPostBehavior
 	{
@@ -121,7 +124,7 @@ public abstract class DatePickerBehavior extends JQueryUIBehavior implements IJQ
 		@Override
 		protected CallbackParameter[] getCallbackParameters()
 		{
-			//function( dateText, inst ) { ... }
+			// function( dateText, inst ) { ... }
 			return new CallbackParameter[] { CallbackParameter.explicit("dateText"), CallbackParameter.context("inst") };
 		}
 
@@ -132,9 +135,10 @@ public abstract class DatePickerBehavior extends JQueryUIBehavior implements IJQ
 		}
 	}
 
-	// Event classes //
+	// Event objects //
+
 	/**
-	 * Provides an event object that will be broadcasted by the {@link JQueryAjaxPostBehavior} select callback
+	 * Provides an event object that will be broadcasted by the {@link OnSelectAjaxBehavior} callback
 	 */
 	protected static class SelectEvent extends JQueryEvent
 	{

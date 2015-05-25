@@ -21,10 +21,12 @@ import java.util.List;
 import java.util.Map;
 
 import com.googlecode.wicket.jquery.core.ajax.IJQueryAjaxAware;
+
 import org.apache.wicket.ajax.AjaxRequestTarget;
 
 import com.googlecode.wicket.jquery.core.Options;
 import com.googlecode.wicket.jquery.core.ajax.JQueryAjaxBehavior;
+import com.googlecode.wicket.kendo.ui.widget.menu.ContextMenuBehavior.OnOpenAjaxBehavior;
 import com.googlecode.wicket.kendo.ui.widget.menu.item.IMenuItem;
 
 /**
@@ -100,10 +102,10 @@ public class ContextMenu extends Menu implements IContextMenuListener
 	// Factories //
 
 	/**
-	 * Gets a new {@link JQueryAjaxBehavior} that acts as the 'open' javascript callback
+	 * Gets a new {@link JQueryAjaxBehavior} that will be wired to the 'open' event
 	 *
 	 * @param source the {@link IJQueryAjaxAware}
-	 * @return the {@link JQueryAjaxBehavior}
+	 * @return a new {@link OnOpenAjaxBehavior} by default
 	 */
 	protected JQueryAjaxBehavior newOnOpenAjaxBehavior(IJQueryAjaxAware source)
 	{

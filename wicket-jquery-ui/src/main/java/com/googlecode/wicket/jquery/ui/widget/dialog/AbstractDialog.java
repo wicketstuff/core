@@ -435,6 +435,8 @@ public abstract class AbstractDialog<T extends Serializable> extends GenericPane
 		};
 	}
 
+	// Factories //
+
 	/**
 	 * Gets a new {@link ButtonAjaxBehavior} that will be called by the corresponding {@link DialogButton}.<br/>
 	 * This method may be overridden to provide additional behaviors

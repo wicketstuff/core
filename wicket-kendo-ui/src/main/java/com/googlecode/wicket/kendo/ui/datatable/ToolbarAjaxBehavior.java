@@ -80,7 +80,7 @@ public class ToolbarAjaxBehavior extends JQueryAjaxBehavior
 		return new ToolbarClickEvent();
 	}
 
-	// Event class //
+	// Event objects //
 
 	/**
 	 * Provides a click event that will be transmitted to the {@link DataTable}
