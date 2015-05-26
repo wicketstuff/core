@@ -158,8 +158,11 @@ public class KendoUIBehavior extends JQueryBehavior implements IDestroyable
 	@Override
 	public void destroy(AjaxRequestTarget target)
 	{
-		target.prependJavaScript(String.format("console.info('destroying %s (%s)...')", this.method, this.selector)); //TODO remove log
+		// TODO: remove log
+		target.prependJavaScript(String.format("console.info('destroying %s (%s)...')", this.method, this.selector));
 		target.prependJavaScript(this.widget() + ".destroy();");
+
+		this.onDestroy(target);
 	}
 
 	// Events //
@@ -173,5 +176,16 @@ public class KendoUIBehavior extends JQueryBehavior implements IDestroyable
 		{
 			LOG.warn("Application > MarkupSettings > StripWicketTags: setting is currently set to false. It is highly recommended to set it to true to prevent widget misbehaviors.");
 		}
+	}
+
+	/**
+	 * Called when the widget is about to be destroyed
+	 * 
+	 * @param target the {@link AjaxRequestTarget}
+	 * @see #destroy(AjaxRequestTarget)
+	 */
+	protected void onDestroy(AjaxRequestTarget target)
+	{
+		// noop
 	}
 }

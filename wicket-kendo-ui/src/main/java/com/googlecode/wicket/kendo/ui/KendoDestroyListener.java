@@ -28,24 +28,29 @@ import org.apache.wicket.util.visit.IVisitor;
 import org.apache.wicket.util.visit.Visits;
 
 /**
- * TODO javadoc
- *
+ * INTERNAL USE<br/>
+ * Provides an {@link IListener} for {@link KendoUIBehavior}{@code s} that destroys widgets about to be repainted.
+ * 
+ * @author Sebastien Briquet - sebfz1
  */
 public class KendoDestroyListener implements IListener
 {
 	/**
-	 * TODO javadoc
-	 *
+	 * Specifies that a widgets can be automatically destroyed
 	 */
 	public static interface IDestroyable
 	{
 		/**
-		 * Prepares the widget for safe removal from the DOM. Detaches all event handlers and removes jQuery.data attributes to avoid memory leaks. Calls destroy method of any child Kendo widgets.
+		 * Prepares the widget for safe removal from the DOM.<br/>
+		 * Detaches all event handlers and removes jQuery.data attributes to avoid memory leaks.<br/>
+		 * Calls destroy method of any child Kendo widgets.
 		 * 
 		 * @param target the {@link AjaxRequestTarget}
 		 */
 		void destroy(AjaxRequestTarget target);
 	}
+
+	// Events //
 
 	@Override
 	public void onBeforeRespond(Map<String, Component> map, AjaxRequestTarget target)
@@ -61,9 +66,12 @@ public class KendoDestroyListener implements IListener
 	{
 	}
 
+	// Factories //
+
 	/**
-	 * TODO javadoc
+	 * Gets a new {@link IVisitor} that will be used by {@link #onBeforeRespond(Map, AjaxRequestTarget)}
 	 *
+	 * @return the new {@code IVisitor}
 	 */
 	protected IVisitor<Component, Object> newBeforeRespondVisitor(final AjaxRequestTarget target)
 	{

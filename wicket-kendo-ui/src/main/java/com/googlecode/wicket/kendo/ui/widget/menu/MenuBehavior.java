@@ -36,10 +36,8 @@ import com.googlecode.wicket.kendo.ui.widget.menu.item.IMenuItem;
  * @author Sebastien Briquet - sebfz1
  * @since 6.15.0
  */
-
 public abstract class MenuBehavior extends KendoUIBehavior implements IJQueryAjaxAware, IMenuListener
 {
-
 	private static final long serialVersionUID = 1L;
 	public static final String METHOD = "kendoMenu";
 

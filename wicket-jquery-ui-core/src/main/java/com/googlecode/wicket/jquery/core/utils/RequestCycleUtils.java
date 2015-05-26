@@ -34,7 +34,7 @@ public class RequestCycleUtils
 	/**
 	 * Gets the current {@link AjaxRequestTarget}
 	 *
-	 * @return the target or <tt>null<tt> if not in an ajax request
+	 * @return the target or {@code null} if not in an ajax request
 	 */
 	public static AjaxRequestTarget getAjaxRequestTarget()
 	{

@@ -18,15 +18,12 @@ public class KendoContextMenuPage extends AbstractMenuPage
 
 	public KendoContextMenuPage()
 	{
-		final WebMarkupContainer container = new  WebMarkupContainer("container");
-		this.add(container.setOutputMarkupId(true));
-		
 		// FeedbackPanel //
 		final KendoFeedbackPanel feedback = new KendoFeedbackPanel("feedback");
-		container.add(feedback);
+		this.add(feedback);
 
 		// Context Menu //
-		container.add(new ContextMenu("menu", KendoMenuPage.newMenuItemList()) {
+		this.add(new ContextMenu("menu", KendoMenuPage.newMenuItemList()) {
 
 			private static final long serialVersionUID = 1L;
 
@@ -69,10 +66,8 @@ public class KendoContextMenuPage extends AbstractMenuPage
 					this.info("Clicked " + item.getTitle().getObject());
 				}
 
-				// this.destroy(target);
-				// target.prependJavaScript(String.format("kendo.destroy('%s');", JQueryWidget.getSelector(this.getPage())));
-				target.add(container);
-//				target.add(feedback);
+				this.reload(target);
+				target.add(feedback);
 			}
 		});
 	}

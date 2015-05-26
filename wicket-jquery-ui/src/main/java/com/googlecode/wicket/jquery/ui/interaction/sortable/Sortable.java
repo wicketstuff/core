@@ -27,13 +27,13 @@ import org.apache.wicket.markup.html.list.ListItem;
 import org.apache.wicket.markup.html.list.ListView;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.util.ListModel;
-import org.apache.wicket.request.cycle.RequestCycle;
 import org.apache.wicket.util.lang.Args;
 
 import com.googlecode.wicket.jquery.core.JQueryBehavior;
 import com.googlecode.wicket.jquery.core.JQueryGenericContainer;
 import com.googlecode.wicket.jquery.core.Options;
 import com.googlecode.wicket.jquery.core.utils.ListUtils;
+import com.googlecode.wicket.jquery.core.utils.RequestCycleUtils;
 
 /**
  * Provides a jQuery UI sortable {@link JQueryGenericContainer}.<br/>
@@ -118,7 +118,7 @@ public abstract class Sortable<T> extends JQueryGenericContainer<List<T>> implem
 	{
 		if (event.getSource() instanceof Sortable<?>)
 		{
-			AjaxRequestTarget target = RequestCycle.get().find(AjaxRequestTarget.class);
+			AjaxRequestTarget target = RequestCycleUtils.getAjaxRequestTarget();
 
 			if (target != null)
 			{

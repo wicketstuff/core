@@ -18,6 +18,8 @@ package com.googlecode.wicket.kendo.ui.widget.window;
 
 import org.apache.wicket.Component;
 import org.apache.wicket.ajax.AjaxRequestTarget;
+import org.apache.wicket.feedback.ContainerFeedbackMessageFilter;
+import org.apache.wicket.feedback.FeedbackMessagesModel;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.form.FormComponent;
@@ -101,7 +103,7 @@ public abstract class InputWindow<T> extends Window<T>
 		this.add(this.form);
 
 		// feedback //
-		this.feedback = new KendoFeedbackPanel("feedback");
+		this.feedback = this.newFeedbackPanel("feedback");
 		this.form.add(this.feedback);
 	}
 
@@ -218,6 +220,28 @@ public abstract class InputWindow<T> extends Window<T>
 			public boolean wantSubmitOnParentFormSubmit()
 			{
 				return false;
+			}
+		};
+	}
+
+	/**
+	 * Gets a new {@link KendoFeedbackPanel}
+	 * 
+	 * @return a new {@code KendoFeedbackPanel}
+	 */
+	protected KendoFeedbackPanel newFeedbackPanel(String id)
+	{
+		return new KendoFeedbackPanel(id) {
+
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			protected FeedbackMessagesModel newFeedbackMessagesModel()
+			{
+				FeedbackMessagesModel model = new FeedbackMessagesModel(this);
+				model.setFilter(new ContainerFeedbackMessageFilter(InputWindow.this));
+
+				return model;
 			}
 		};
 	}

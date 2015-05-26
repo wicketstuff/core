@@ -21,6 +21,7 @@ import java.util.List;
 import java.util.Map.Entry;
 
 import org.apache.wicket.Component;
+import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.markup.head.IHeaderResponse;
 import org.apache.wicket.markup.head.JavaScriptHeaderItem;
 import org.apache.wicket.util.lang.Args;
@@ -72,7 +73,7 @@ public class JQueryBehavior extends JQueryAbstractBehavior
 	public JQueryBehavior(String selector, String method, Options options)
 	{
 		super(method);
-		
+
 		Args.notNull(options, "options");
 
 		this.method = method;
@@ -101,6 +102,33 @@ public class JQueryBehavior extends JQueryAbstractBehavior
 
 			response.render(JavaScriptHeaderItem.forScript(statements, this.getToken() + "-events"));
 		}
+	}
+
+	/**
+	 * Removes the element matching the current selector from the DOM.<br/>
+	 * The {@code #detach} method is the same as {@code #remove}, except that {@code #detach} keeps all jQuery data associated with the removed elements.<br/>
+	 * This method is useful when removed elements are to be reinserted into the DOM at a later time.
+	 * 
+	 * @param target the {@link AjaxRequestTarget}
+	 * @see #remove(AjaxRequestTarget)
+	 */
+	public void detach(AjaxRequestTarget target)
+	{
+		target.prependJavaScript(String.format("jQuery('%s').detach();", this.selector));
+	}
+
+	/**
+	 * Removes the element matching the current selector from the DOM.<br/>
+	 * Use {@code #remove} when you want to remove the element itself, as well as everything inside it.<br/>
+	 * In addition to the elements themselves, all bound events and jQuery data associated with the elements are removed.<br/>
+	 * To remove the elements without removing data and events, use {@code #detach} instead.
+	 * 
+	 * @param target the {@link AjaxRequestTarget}
+	 * @see #detach(AjaxRequestTarget)
+	 */
+	public void remove(AjaxRequestTarget target)
+	{
+		target.prependJavaScript(String.format("jQuery('%s').remove();", this.selector));
 	}
 
 	// Properties //

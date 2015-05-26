@@ -103,11 +103,11 @@ public class DataSourceBehavior<T> extends AbstractAjaxBehavior
 		// IFilterStateLocator //
 		if (this.provider instanceof IFilterStateLocator<?>)
 		{
+			@SuppressWarnings("unused")
+			String logicPattern = "filter[logic]";
 			String fieldPattern = "filter[filters][%d][field]";
 			String valuePattern = "filter[filters][%d][value]";
 
-			@SuppressWarnings("unused")
-			String logicPattern = "filter[logic]";
 			@SuppressWarnings("unused")
 			String operatorPattern = "filter[filters][%d][operator]";
 			// TODO: implement logic & operator (new IFilterStateLocator interface?)
