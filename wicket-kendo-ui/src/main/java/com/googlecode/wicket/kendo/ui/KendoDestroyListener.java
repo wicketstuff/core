@@ -21,19 +21,18 @@ import java.util.Map.Entry;
 
 import org.apache.wicket.Component;
 import org.apache.wicket.ajax.AjaxRequestTarget;
-import org.apache.wicket.ajax.AjaxRequestTarget.IJavaScriptResponse;
-import org.apache.wicket.ajax.AjaxRequestTarget.IListener;
+import org.apache.wicket.ajax.AjaxRequestTarget.AbstractListener;
 import org.apache.wicket.util.visit.IVisit;
 import org.apache.wicket.util.visit.IVisitor;
 import org.apache.wicket.util.visit.Visits;
 
 /**
  * INTERNAL USE<br/>
- * Provides an {@link IListener} for {@link KendoUIBehavior}{@code s} that destroys widgets about to be repainted.
+ * Provides an {@code IListener} for {@link KendoUIBehavior}{@code s} that destroys widgets about to be repainted.
  * 
  * @author Sebastien Briquet - sebfz1
  */
-public class KendoDestroyListener extends AjaxRequestTarget.AbstractListener
+public class KendoDestroyListener extends AbstractListener
 {
 	/**
 	 * Specifies that a widgets can be automatically destroyed
@@ -61,7 +60,6 @@ public class KendoDestroyListener extends AjaxRequestTarget.AbstractListener
 		}
 	}
 
-
 	// Factories //
 
 	/**
@@ -72,6 +70,7 @@ public class KendoDestroyListener extends AjaxRequestTarget.AbstractListener
 	protected IVisitor<Component, Object> newBeforeRespondVisitor(final AjaxRequestTarget target)
 	{
 		return new IVisitor<Component, Object>() {
+
 			@Override
 			public void component(Component component, IVisit<Object> visit)
 			{

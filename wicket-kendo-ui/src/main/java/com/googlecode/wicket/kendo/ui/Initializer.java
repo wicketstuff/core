@@ -21,7 +21,6 @@ import org.apache.wicket.IInitializer;
 import org.apache.wicket.protocol.http.WebApplication;
 
 /**
- * TODO javadoc
  * Provides the {@link IInitializer} for Kendo UI
  *
  * @author Sebastien Briquet - sebfz1
