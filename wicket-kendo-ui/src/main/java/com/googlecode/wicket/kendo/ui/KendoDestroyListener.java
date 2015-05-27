@@ -72,16 +72,12 @@ public class KendoDestroyListener extends AjaxRequestTarget.AbstractListener
 	protected IVisitor<Component, Object> newBeforeRespondVisitor(final AjaxRequestTarget target)
 	{
 		return new IVisitor<Component, Object>() {
-
 			@Override
 			public void component(Component component, IVisit<Object> visit)
 			{
 				for (KendoUIBehavior behavior : component.getBehaviors(KendoUIBehavior.class))
 				{
-					if (behavior instanceof IDestroyable)
-					{
-						((IDestroyable) behavior).destroy(target);
-					}
+					behavior.destroy(target);
 				}
 			}
 		};
