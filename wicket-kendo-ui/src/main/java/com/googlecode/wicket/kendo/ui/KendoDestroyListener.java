@@ -33,12 +33,12 @@ import org.apache.wicket.util.visit.Visits;
  * 
  * @author Sebastien Briquet - sebfz1
  */
-public class KendoDestroyListener implements IListener
+public class KendoDestroyListener extends AjaxRequestTarget.AbstractListener
 {
 	/**
 	 * Specifies that a widgets can be automatically destroyed
 	 */
-	public static interface IDestroyable
+	public interface IDestroyable
 	{
 		/**
 		 * Prepares the widget for safe removal from the DOM.<br/>
@@ -61,10 +61,6 @@ public class KendoDestroyListener implements IListener
 		}
 	}
 
-	@Override
-	public void onAfterRespond(Map<String, Component> map, IJavaScriptResponse response)
-	{
-	}
 
 	// Factories //
 
