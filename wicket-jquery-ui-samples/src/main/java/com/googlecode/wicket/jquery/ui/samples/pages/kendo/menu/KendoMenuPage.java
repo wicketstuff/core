@@ -3,6 +3,7 @@ package com.googlecode.wicket.jquery.ui.samples.pages.kendo.menu;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.googlecode.wicket.jquery.core.Options;
 import org.apache.wicket.MarkupContainer;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.markup.html.WebMarkupContainer;
@@ -133,7 +134,8 @@ public class KendoMenuPage extends AbstractMenuPage
 			Form<Void> form = new MenuItemForm<Void>("form");
 			this.add(form);
 
-			final NumberTextField<Integer> textField = new NumberTextField<Integer>("position", new PropertyModel<Integer>(menuItem, "position"));
+			Options options = new Options("format", Options.asString("n0")); // integer format, no floating points
+			final NumberTextField<Integer> textField = new NumberTextField<Integer>("position", new PropertyModel<Integer>(menuItem, "position"), options);
 			final AjaxButton button = new MenuItemAjaxButton("moveToPositionBtn");
 
 			form.add(textField, button);
