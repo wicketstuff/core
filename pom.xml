@@ -34,6 +34,11 @@
 			<name>Sebastien Briquet</name>
 			<email>sebfz1@gmail.com</email>
 		</developer>
+		<developer>
+			<id>martingrigorov</id>
+			<name>Martin Grigorov</name>
+			<email>mgrigorov@apache.org</email>
+		</developer>
 	</developers>
 
 	<scm>
