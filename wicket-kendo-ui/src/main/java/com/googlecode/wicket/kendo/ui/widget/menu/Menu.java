@@ -131,22 +131,10 @@ public class Menu extends JQueryPanel implements IMenuListener
 	 * Refreshes the {@link Menu}
 	 * 
 	 * @param target the {@link AjaxRequestTarget}
-	 * @see #reload(AjaxRequestTarget)
 	 */
 	public void refresh(AjaxRequestTarget target)
 	{
 		target.add(this);
-	}
-
-	/**
-	 * Reloads the widget by calling {@link #destroy(AjaxRequestTarget)} and {@link #refresh(AjaxRequestTarget)}
-	 *
-	 * @param target The {@link AjaxRequestTarget}
-	 */
-	public void reload(AjaxRequestTarget target)
-	{
-		this.destroy(target);
-		this.refresh(target);
 	}
 
 	/**
