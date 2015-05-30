@@ -7,7 +7,7 @@
 	<parent>
 		<groupId>com.googlecode.wicket-jquery-ui</groupId>
 		<artifactId>wicket-kendo-ui-themes</artifactId>
-		<version>6.19.2</version>
+		<version>6.19.3-SNAPSHOT</version>
 	</parent>
 
 	<artifactId>wicket-kendo-ui-theme-fiori</artifactId>
@@ -22,7 +22,7 @@
 		<dependency>
 			<groupId>com.googlecode.wicket-jquery-ui</groupId>
 			<artifactId>wicket-kendo-ui</artifactId>
-			<version>6.19.2</version>
+			<version>6.19.3-SNAPSHOT</version>
 			<scope>provided</scope>
 		</dependency>
 
