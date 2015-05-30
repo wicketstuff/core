@@ -45,7 +45,8 @@
 		<url>git@github.com:sebfz1/wicket-jquery-ui.git</url>
 		<connection>scm:git:git@github.com:sebfz1/wicket-jquery-ui.git</connection>
 		<developerConnection>scm:git:git@github.com:sebfz1/wicket-jquery-ui.git</developerConnection>
-	</scm>
+	  <tag>wicket-jquery-ui-6.19.2</tag>
+  </scm>
 
 	<properties>
 		<wicket.version>6.19.0</wicket.version>
@@ -186,7 +187,7 @@
 						<link>http://www.slf4j.org/apidocs/</link>
 					</links>
 					<additionalJOptions>
-						<additionalJOption>-J-Xmx32m</additionalJOption>
+						<additionalJOption>-J-Xmx256m</additionalJOption>
 					</additionalJOptions>
 				</configuration>
 				<executions>
