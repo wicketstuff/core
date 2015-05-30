@@ -7,7 +7,7 @@
 	<parent>
 		<groupId>com.googlecode.wicket-jquery-ui</groupId>
 		<artifactId>wicket-jquery-ui-parent</artifactId>
-		<version>6.19.2-SNAPSHOT</version>
+		<version>6.19.2</version>
 	</parent>
 
 	<artifactId>wicket-jquery-ui-samples</artifactId>
@@ -24,39 +24,39 @@
 		<dependency>
 			<groupId>com.googlecode.wicket-jquery-ui</groupId>
 			<artifactId>wicket-jquery-ui</artifactId>
-			<version>6.19.2-SNAPSHOT</version>
+			<version>6.19.2</version>
 		</dependency>
 		<dependency>
 			<groupId>com.googlecode.wicket-jquery-ui</groupId>
 			<artifactId>wicket-jquery-ui-theme-uilightness</artifactId>
-			<version>6.19.2-SNAPSHOT</version>
+			<version>6.19.2</version>
 		</dependency>
 		<dependency>
 			<groupId>com.googlecode.wicket-jquery-ui</groupId>
 			<artifactId>wicket-jquery-ui-calendar</artifactId>
-			<version>6.19.2-SNAPSHOT</version>
+			<version>6.19.2</version>
 		</dependency>
 		<dependency>
 			<groupId>com.googlecode.wicket-jquery-ui</groupId>
 			<artifactId>wicket-jquery-ui-plugins</artifactId>
-			<version>6.19.2-SNAPSHOT</version>
+			<version>6.19.2</version>
 		</dependency>
 
 		<!-- KENDO-UI DEPENDENCIES -->
 		<dependency>
 			<groupId>com.googlecode.wicket-jquery-ui</groupId>
 			<artifactId>wicket-kendo-ui</artifactId>
-			<version>6.19.2-SNAPSHOT</version>
+			<version>6.19.2</version>
 		</dependency>
 		<dependency>
 			<groupId>com.googlecode.wicket-jquery-ui</groupId>
 			<artifactId>wicket-kendo-ui-culture</artifactId>
-			<version>6.19.2-SNAPSHOT</version>
+			<version>6.19.2</version>
 		</dependency>
 		<dependency>
 			<groupId>com.googlecode.wicket-jquery-ui</groupId>
 			<artifactId>wicket-kendo-ui-theme-default</artifactId>
-			<version>6.19.2-SNAPSHOT</version>
+			<version>6.19.2</version>
 		</dependency>
 
 		<!-- WICKET DEPENDENCIES -->
