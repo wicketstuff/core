@@ -158,6 +158,8 @@ public class KendoUIBehavior extends JQueryBehavior implements IDestroyable
 	@Override
 	public void destroy(AjaxRequestTarget target)
 	{
+		// TODO: remove log
+		target.prependJavaScript(String.format("console.info('destroying %s (%s)...')", this.method, this.selector));
 		target.prependJavaScript(String.format("var $w=%s; if($w) { $w.destroy(); }", this.widget()));
 
 		this.onDestroy(target);
