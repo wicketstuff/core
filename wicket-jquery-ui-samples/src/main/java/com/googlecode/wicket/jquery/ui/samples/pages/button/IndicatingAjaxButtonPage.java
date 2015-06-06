@@ -47,7 +47,7 @@ public class IndicatingAjaxButtonPage extends AbstractButtonPage
 				}
 
 				IndicatingAjaxButtonPage.this.info(this);
-				target.add(feedbackPanel);
+				target.add(form);
 			}
 		};
 
@@ -73,10 +73,7 @@ public class IndicatingAjaxButtonPage extends AbstractButtonPage
 				}
 
 				IndicatingAjaxButtonPage.this.info(this);
-				// IndicatingAjaxButtonPage.this.info("re-attaching button1");
-
-				target.add(button1);
-				target.add(feedbackPanel);
+				target.add(form);
 			}
 		}.setPosition(Position.RIGHT));
 	}

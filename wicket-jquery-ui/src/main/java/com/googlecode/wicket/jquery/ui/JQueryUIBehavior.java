@@ -18,11 +18,13 @@ package com.googlecode.wicket.jquery.ui;
 
 import org.apache.wicket.Application;
 import org.apache.wicket.Component;
+import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.googlecode.wicket.jquery.core.JQueryBehavior;
 import com.googlecode.wicket.jquery.core.Options;
+import com.googlecode.wicket.jquery.ui.JQueryDestroyListener.IDestroyable;
 import com.googlecode.wicket.jquery.ui.settings.JQueryUILibrarySettings;
 
 /**
@@ -31,7 +33,7 @@ import com.googlecode.wicket.jquery.ui.settings.JQueryUILibrarySettings;
  * @author Sebastien Briquet - sebfz1
  *
  */
-public class JQueryUIBehavior extends JQueryBehavior
+public class JQueryUIBehavior extends JQueryBehavior implements IDestroyable
 {
 	private static final long serialVersionUID = 1L;
 	private static final Logger LOG = LoggerFactory.getLogger(JQueryUIBehavior.class);
@@ -60,6 +62,8 @@ public class JQueryUIBehavior extends JQueryBehavior
 
 		this.initReferences();
 	}
+	
+	// Methods //
 
 	/**
 	 * Initializes CSS & JavaScript resource references
@@ -79,6 +83,39 @@ public class JQueryUIBehavior extends JQueryBehavior
 		}
 	}
 
+	/**
+	 * Gets the jQuery UI object
+	 *
+	 * @return the jQuery UI object (if exists, 'undefined' otherwise)
+	 */
+	public String widget()
+	{
+		return this.widget(this.method);
+	}
+
+	/**
+	 * Gets the jQuery UI object
+	 *
+	 * @param method the jQuery UI method
+	 * @return the jQuery UI object (if exists, 'undefined' otherwise)
+	 */
+	protected String widget(String method)
+	{
+		return String.format("jQuery('%s').%s('instance')", this.selector, method);
+	}
+
+	@Override
+	public void destroy(AjaxRequestTarget target)
+	{
+		// TODO: remove log
+		target.prependJavaScript(String.format("console.info('destroying %s (%s)...');", this.method, this.selector));
+		// datapicker leads to js error TODO: to be removed
+//		target.prependJavaScript(String.format("var $w = %s; if($w !== undefined) { $w.destroy(); }", this.widget()));
+		target.prependJavaScript(this.$(Options.asString("destroy")));
+
+		this.onDestroy(target);
+	}
+
 	// Events //
 
 	@Override
@@ -90,5 +127,16 @@ public class JQueryUIBehavior extends JQueryBehavior
 		{
 			LOG.warn("Application > MarkupSettings > StripWicketTags: setting is currently set to false. It is highly recommended to set it to true to prevent widget misbehaviors.");
 		}
+	}
+
+	/**
+	 * Called when the widget is about to be destroyed
+	 * 
+	 * @param target the {@link AjaxRequestTarget}
+	 * @see #destroy(AjaxRequestTarget)
+	 */
+	protected void onDestroy(AjaxRequestTarget target)
+	{
+		// noop
 	}
 }

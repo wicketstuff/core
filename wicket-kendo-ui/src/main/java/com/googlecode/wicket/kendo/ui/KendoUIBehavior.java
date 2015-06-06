@@ -135,9 +135,9 @@ public class KendoUIBehavior extends JQueryBehavior implements IDestroyable
 	}
 
 	/**
-	 * Gets the Kendo jQuery object
+	 * Gets the Kendo UI object
 	 *
-	 * @return the the jQuery object
+	 * @return the Kendo UI object
 	 */
 	public String widget()
 	{
@@ -145,10 +145,10 @@ public class KendoUIBehavior extends JQueryBehavior implements IDestroyable
 	}
 
 	/**
-	 * Gets the Kendo jQuery object
+	 * Gets the Kendo UI object
 	 *
-	 * @param method the Kendo method
-	 * @return the the jQuery object
+	 * @param method the Kendo UI method
+	 * @return the Kendo UI object
 	 */
 	protected String widget(String method)
 	{
@@ -159,8 +159,8 @@ public class KendoUIBehavior extends JQueryBehavior implements IDestroyable
 	public void destroy(AjaxRequestTarget target)
 	{
 		// TODO: remove log
-		target.prependJavaScript(String.format("console.info('destroying %s (%s)...')", this.method, this.selector));
-		target.prependJavaScript(String.format("var $w=%s; if($w) { $w.destroy(); }", this.widget()));
+		target.prependJavaScript(String.format("console.info('destroying %s (%s)...');", this.method, this.selector));
+		target.prependJavaScript(String.format("var $w = %s; if($w) { $w.destroy(); }", this.widget()));
 
 		this.onDestroy(target);
 	}
