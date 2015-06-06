@@ -156,8 +156,8 @@ public class ContextMenu extends Menu
 				StringBuilder builder = new StringBuilder();
 				String selector = JQueryWidget.getSelector(ContextMenu.this);
 
-				// hide on click (outside invoker area) //
-				builder.append("jQuery(document).click(function(e) { if (!(jQuery(e.target).is('.").append(ContextMenuBehavior.INVOKER_CSS_CLASS).append("'))) { jQuery('").append(selector).append("').hide(); } } );\n");
+				// hide on left-click //
+				builder.append("jQuery(document).click(function(e) { if (e.which == 1) { jQuery('").append(selector).append("').hide(); } } );\n");
 
 				// hide on escape //
 				builder.append("jQuery(document).keyup(function(e) { if (e.which == 27) { jQuery('").append(selector).append("').hide(); } });\n");
