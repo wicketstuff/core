@@ -109,8 +109,6 @@ public class JQueryUIBehavior extends JQueryBehavior implements IDestroyable
 	{
 		// TODO: remove log
 		target.prependJavaScript(String.format("console.info('destroying %s (%s)...');", this.method, this.selector));
-		// datapicker leads to js error TODO: to be removed
-//		target.prependJavaScript(String.format("var $w = %s; if($w !== undefined) { $w.destroy(); }", this.widget()));
 		target.prependJavaScript(this.$(Options.asString("destroy")));
 
 		this.onDestroy(target);
