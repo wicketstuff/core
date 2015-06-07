@@ -39,36 +39,37 @@ public class WindowButton implements IClusterable
 	/**
 	 * Helper that creates a new {@link WindowButton}
 	 *
-	 * @param text the button's text
+	 * @param model the button's text
 	 * @param formProcessing whether the form will be validated and updated
 	 * @return a new {@link WindowButton}
 	 */
-	public static WindowButton of(String name, IModel<String> text, boolean formProcessing)
+	public static WindowButton of(String name, IModel<String> model, boolean formProcessing)
 	{
-		return WindowButton.of(name, text, ICON, formProcessing);
+		return WindowButton.of(name, model, ICON, formProcessing);
 	}
 
 	/**
 	 * Helper that creates a new {@link WindowButton}
 	 *
-	 * @param text the button's text
+	 * @param model the button's text
 	 * @param icon the button's icon
 	 * @param formProcessing whether the form will be validated and updated
 	 * @return a new {@link WindowButton}
 	 */
-	public static WindowButton of(String name, IModel<String> text, String icon, boolean formProcessing)
+	public static WindowButton of(String name, IModel<String> model, String icon, boolean formProcessing)
 	{
-		WindowButton button = new WindowButton(name, text, icon);
+		WindowButton button = new WindowButton(name, model, icon);
 
 		return button.setDefaultFormProcessing(formProcessing);
 	}
 
 	private String name;
-	private final IModel<String> model;
 	private String icon;
 	private boolean enabled;
 	private boolean visible = true;
 	private boolean formProcessing = true;
+
+	private final IModel<String> model;
 
 	/**
 	 * Constructor
@@ -122,49 +123,49 @@ public class WindowButton implements IClusterable
 	 * Constructor
 	 *
 	 * @param name the button's name
-	 * @param text the button's text
+	 * @param model the button's text
 	 */
-	public WindowButton(String name, IModel<String> text)
+	public WindowButton(String name, IModel<String> model)
 	{
-		this(name, text, ICON, true);
+		this(name, model, ICON, true);
 	}
 
 	/**
 	 * Constructor
 	 *
 	 * @param name the button's name
-	 * @param text the button's text
+	 * @param model the button's text
 	 * @param icon the button's icon
 	 */
-	public WindowButton(String name, IModel<String> text, String icon)
+	public WindowButton(String name, IModel<String> model, String icon)
 	{
-		this(name, text, icon, true);
+		this(name, model, icon, true);
 	}
 
 	/**
 	 * Constructor
 	 *
 	 * @param name the button's name
-	 * @param text the button's text
+	 * @param model the button's text
 	 * @param enabled indicates whether the button is enabled
 	 */
-	public WindowButton(String name, IModel<String> text, boolean enabled)
+	public WindowButton(String name, IModel<String> model, boolean enabled)
 	{
-		this(name, text, ICON, enabled);
+		this(name, model, ICON, enabled);
 	}
 
 	/**
 	 * Main constructor
 	 *
 	 * @param name the button's name
-	 * @param text the button's text
+	 * @param model the button's text
 	 * @param icon the button's icon
 	 * @param enabled indicates whether the button is enabled
 	 */
-	public WindowButton(String name, IModel<String> text, String icon, boolean enabled)
+	public WindowButton(String name, IModel<String> model, String icon, boolean enabled)
 	{
 		this.name = name;
-		this.model = text;
+		this.model = model;
 		this.icon = icon;
 		this.enabled = enabled;
 	}
@@ -189,7 +190,7 @@ public class WindowButton implements IClusterable
 	 *
 	 * @return the {@link IModel}
 	 */
-	IModel<String> getTextModel()
+	IModel<String> getModel()
 	{
 		return this.model;
 	}
@@ -297,5 +298,11 @@ public class WindowButton implements IClusterable
 	public boolean match(String name)
 	{
 		return Strings.isEqual(name, this.name);
+	}
+
+	@Override
+	public String toString()
+	{
+		return this.name;
 	}
 }

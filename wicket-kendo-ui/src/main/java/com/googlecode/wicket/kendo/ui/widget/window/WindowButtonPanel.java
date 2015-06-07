@@ -85,7 +85,7 @@ public abstract class WindowButtonPanel extends Panel
 
 	// Factories //
 
-	protected AjaxButton newAjaxButton(final String id, final WindowButton button)
+	protected final AjaxButton newAjaxButton(final String id, final WindowButton button)
 	{
 		return new AjaxButton(id, this.getForm()) {
 
@@ -118,7 +118,7 @@ public abstract class WindowButtonPanel extends Panel
 			{
 				super.onInitialize();
 
-				this.add(new Label("text", button.getTextModel()).setRenderBodyOnly(true));
+				this.add(new Label("text", button.getModel()).setRenderBodyOnly(true));
 			}
 
 			@Override

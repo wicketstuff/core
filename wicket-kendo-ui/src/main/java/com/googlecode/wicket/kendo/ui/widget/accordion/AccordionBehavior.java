@@ -207,9 +207,9 @@ public abstract class AccordionBehavior extends KendoUIBehavior implements IJQue
 	@Override
 	public void onAjax(AjaxRequestTarget target, JQueryEvent event)
 	{
-		if (event instanceof AbtractTabEvent)
+		if (event instanceof AbstractTabEvent)
 		{
-			int index = ((AbtractTabEvent) event).getIndex();
+			int index = ((AbstractTabEvent) event).getIndex();
 			final List<ITab> tabs = this.getVisibleTabs();
 
 			if (-1 < index && index < tabs.size()) /* index could be unknown depending on options and user action */
@@ -401,14 +401,14 @@ public abstract class AccordionBehavior extends KendoUIBehavior implements IJQue
 	/**
 	 * Provides a base class for {@link AccordionBehavior} event objects
 	 */
-	protected abstract static class AbtractTabEvent extends JQueryEvent
+	protected abstract static class AbstractTabEvent extends JQueryEvent
 	{
 		private final int index;
 
 		/**
 		 * Constructor
 		 */
-		public AbtractTabEvent()
+		public AbstractTabEvent()
 		{
 			super();
 
@@ -429,28 +429,28 @@ public abstract class AccordionBehavior extends KendoUIBehavior implements IJQue
 	/**
 	 * Provides an event object that will be broadcasted by the {@link OnSelectAjaxBehavior} callback
 	 */
-	protected static class SelectEvent extends AbtractTabEvent
+	protected static class SelectEvent extends AbstractTabEvent
 	{
 	}
 
 	/**
 	 * Provides an event object that will be broadcasted by the {@link OnActivateAjaxBehavior} callback
 	 */
-	protected static class ActivateEvent extends AbtractTabEvent
+	protected static class ActivateEvent extends AbstractTabEvent
 	{
 	}
 
 	/**
 	 * Provides an event object that will be broadcasted by the {@link OnExpandAjaxBehavior} callback
 	 */
-	protected static class ExpandEvent extends AbtractTabEvent
+	protected static class ExpandEvent extends AbstractTabEvent
 	{
 	}
 
 	/**
 	 * Provides an event object that will be broadcasted by the {@link OnCollapseAjaxBehavior} callback
 	 */
-	protected static class CollapseEvent extends AbtractTabEvent
+	protected static class CollapseEvent extends AbstractTabEvent
 	{
 	}
 }

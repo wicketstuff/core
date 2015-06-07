@@ -9,6 +9,7 @@ import org.apache.wicket.markup.html.form.TextArea;
 import org.apache.wicket.markup.html.form.TextField;
 import org.apache.wicket.markup.html.panel.FeedbackPanel;
 import org.apache.wicket.model.CompoundPropertyModel;
+import org.apache.wicket.model.Model;
 import org.apache.wicket.util.io.IClusterable;
 
 import com.googlecode.wicket.jquery.ui.panel.JQueryFeedbackPanel;
@@ -20,8 +21,8 @@ public abstract class TabDialog extends AbstractFormDialog<TabItem>
 {
 	private static final long serialVersionUID = 1L;
 
-	protected final DialogButton btnSubmit = new DialogButton("Add");
-	protected final DialogButton btnCancel = new DialogButton(LBL_CANCEL);
+	protected final DialogButton btnSubmit = new DialogButton(SUBMIT, Model.of("Add"));
+	protected final DialogButton btnCancel = new DialogButton(CANCEL, LBL_CANCEL);
 
 	private Form<?> form;
 	private FeedbackPanel feedback;

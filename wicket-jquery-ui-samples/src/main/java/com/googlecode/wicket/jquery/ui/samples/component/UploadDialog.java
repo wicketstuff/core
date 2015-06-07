@@ -17,8 +17,8 @@ import com.googlecode.wicket.jquery.ui.widget.dialog.DialogButton;
 public abstract class UploadDialog extends AbstractFormDialog<FileUpload>
 {
 	private static final long serialVersionUID = 1L;
-	protected final DialogButton btnUpload = new DialogButton("Upload!");
-	protected final DialogButton btnCancel = new DialogButton(LBL_CANCEL);
+	protected final DialogButton btnUpload = new DialogButton(SUBMIT, Model.of("Upload!"));
+	protected final DialogButton btnCancel = new DialogButton(CANCEL, LBL_CANCEL);
 
 	private Form<?> form;
 	private FeedbackPanel feedback;

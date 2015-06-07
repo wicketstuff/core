@@ -18,6 +18,7 @@ package com.googlecode.wicket.jquery.ui.widget.dialog;
 
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.model.IModel;
+import org.apache.wicket.model.Model;
 import org.apache.wicket.util.io.IClusterable;
 import org.apache.wicket.util.string.Strings;
 
@@ -26,7 +27,6 @@ import org.apache.wicket.util.string.Strings;
  *
  * @author Sebastien Briquet - sebfz1
  */
-//TODO: DialogButton- add 'name' and use it in match for better L10N support
 public class DialogButton implements IClusterable
 {
 	private static final long serialVersionUID = 1L;
@@ -44,19 +44,23 @@ public class DialogButton implements IClusterable
 	}
 
 	private final int id;
-	private final String text;
+	private String name;
 	private String icon;
 	private boolean enabled;
 	private boolean visible = true;
 
+	private final IModel<String> model;
+
 	/**
 	 * Constructor
 	 *
 	 * @param text the button's text
+	 * @deprecated this ctor is *not* deprecated but this warning aims to warn you about ctor change in 6.20.0, was previously (String text, String icon). Please update by adding 'name' and/or use Model for safety  
 	 */
-	public DialogButton(String text)
+	// TODO: 6.21.0 - remove deprecation 
+	public DialogButton(String name, String text)
 	{
-		this(text, null, true);
+		this(name, Model.of(text), null, true);
 	}
 
 	/**
@@ -65,9 +69,9 @@ public class DialogButton implements IClusterable
 	 * @param text the button's text
 	 * @param icon the button's icon
 	 */
-	public DialogButton(String text, String icon)
+	public DialogButton(String name, String text, String icon)
 	{
-		this(text, icon, true);
+		this(name, Model.of(text), icon, true);
 	}
 
 	/**
@@ -75,10 +79,12 @@ public class DialogButton implements IClusterable
 	 *
 	 * @param text the button's text
 	 * @param enabled indicates whether the button is enabled
+	 * @deprecated this ctor is *not* deprecated but this warning aims to warn you about ctor change in 6.20.0, was previously (String text, String icon, boolean enabled). Please update by adding 'name' and/or use Model for safety
 	 */
-	public DialogButton(String text, boolean enabled)
+	// TODO: 6.21.0 - remove deprecation
+	public DialogButton(String name, String text, boolean enabled)
 	{
-		this(text, null, enabled);
+		this(name, Model.of(text), null, enabled);
 	}
 
 	/**
@@ -88,59 +94,84 @@ public class DialogButton implements IClusterable
 	 * @param icon the button's icon
 	 * @param enabled indicates whether the button is enabled
 	 */
-	public DialogButton(String text, String icon, boolean enabled)
+	public DialogButton(String name, String text, String icon, boolean enabled)
+	{
+		this(name, Model.of(text), null, true);
+	}
+
+	/**
+	 * Constructor
+	 *
+	 * @param model the button's text model
+	 */
+	public DialogButton(String name, final IModel<String> model)
+	{
+		this(name, model, null, true);
+	}
+
+	/**
+	 * Constructor
+	 *
+	 * @param model the button's text model
+	 * @param icon the button's icon
+	 */
+	public DialogButton(String name, final IModel<String> model, String icon)
+	{
+		this(name, model, icon, true);
+	}
+
+	/**
+	 * Constructor
+	 *
+	 * @param model the button's text model
+	 * @param enabled indicates whether the button is enabled
+	 */
+	public DialogButton(String name, final IModel<String> model, boolean enabled)
+	{
+		this(name, model, null, enabled);
+	}
+
+	/**
+	 * Constructor
+	 *
+	 * @param model the button's text model
+	 * @param icon the button's icon
+	 * @param enabled indicates whether the button is enabled
+	 */
+	public DialogButton(String name, final IModel<String> model, String icon, boolean enabled)
 	{
 		this.id = DialogButton.nextSequence();
-		this.text = text;
+		this.name = name;
+		this.model= model;
 		this.icon = icon;
 		this.enabled = enabled;
 	}
 
-	/**
-	 * Constructor
-	 *
-	 * @param model the button's text model
-	 */
-	public DialogButton(final IModel<String> model)
-	{
-		this(model.getObject(), null, true);
-	}
-
-	/**
-	 * Constructor
-	 *
-	 * @param model the button's text model
-	 * @param icon the button's icon
-	 */
-	public DialogButton(final IModel<String> model, String icon)
-	{
-		this(model.getObject(), icon, true);
-	}
-
-	/**
-	 * Constructor
-	 *
-	 * @param model the button's text model
-	 * @param enabled indicates whether the button is enabled
-	 */
-	public DialogButton(final IModel<String> model, boolean enabled)
-	{
-		this(model.getObject(), null, enabled);
-	}
-
-	/**
-	 * Constructor
-	 *
-	 * @param model the button's text model
-	 * @param icon the button's icon
-	 * @param enabled indicates whether the button is enabled
-	 */
-	public DialogButton(final IModel<String> model, String icon, boolean enabled)
-	{
-		this(model.getObject(), icon, enabled);
-	}
-
 	// Properties //
+
+	/**
+	 * Gets the button's name
+	 *
+	 * @return the button's name
+	 */
+	public String getName()
+	{
+		return this.name;
+	}
+
+	/**
+	 * INTERNAL USE<br/>
+	 * Gets the model of the button's text<br/>
+	 * <br/>
+	 * <b>Warning: </b> It may throw an Exception if not wrapped to a component
+	 *
+	 * @return the {@link IModel}
+	 */
+	IModel<String> getModel()
+	{
+		return this.model;
+	}
+
 	/**
 	 * Gets the button's icon
 	 *
@@ -304,26 +335,26 @@ public class DialogButton implements IClusterable
 	{
 		if (object instanceof DialogButton)
 		{
-			return this.match(object.toString());
+			return this.match(((DialogButton) object).getName());
 		}
 
 		return super.equals(object);
 	}
 
 	/**
-	 * Indicates whether this {@link DialogButton} text representation ({@link #toString()}) match to the supplied text.
+	 * Indicates whether this {@link DialogButton} name match the supplied name.
 	 *
-	 * @param text the text to compare to
+	 * @param name the name to compare to
 	 * @return true if equal
 	 */
-	public boolean match(String text)
+	public boolean match(String name)
 	{
-		return Strings.isEqual(text, this.toString());
+		return Strings.isEqual(name, this.name);
 	}
 
 	@Override
 	public String toString()
 	{
-		return this.text;
+		return this.model.getObject();
 	}
 }

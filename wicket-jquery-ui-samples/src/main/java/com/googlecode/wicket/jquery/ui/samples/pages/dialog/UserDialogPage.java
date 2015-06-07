@@ -126,8 +126,8 @@ public class UserDialogPage extends AbstractDialogPage
 	abstract static class UserDialog extends AbstractFormDialog<User>
 	{
 		private static final long serialVersionUID = 1L;
-		protected final DialogButton btnSubmit = new DialogButton("Save", JQueryIcon.CHECK);
-		protected final DialogButton btnCancel = new DialogButton(LBL_CANCEL, JQueryIcon.CANCEL);
+		protected final DialogButton btnSubmit = new DialogButton(SUBMIT, "Save", JQueryIcon.CHECK);
+		protected final DialogButton btnCancel = new DialogButton(CANCEL, LBL_CANCEL, JQueryIcon.CANCEL);
 
 		private Form<?> form;
 		private FeedbackPanel feedback;

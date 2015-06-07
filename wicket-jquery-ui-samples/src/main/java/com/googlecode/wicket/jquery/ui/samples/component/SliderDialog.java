@@ -8,6 +8,7 @@ import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.panel.FeedbackPanel;
 import org.apache.wicket.model.IModel;
+import org.apache.wicket.model.Model;
 import org.apache.wicket.validation.validator.RangeValidator;
 
 import com.googlecode.wicket.jquery.ui.form.slider.Slider;
@@ -18,8 +19,8 @@ import com.googlecode.wicket.jquery.ui.widget.dialog.DialogButton;
 public abstract class SliderDialog extends AbstractFormDialog<Integer>
 {
 	private static final long serialVersionUID = 1L;
-	protected final DialogButton btnSubmit = new DialogButton("Submit!");
-	protected final DialogButton btnCancel = new DialogButton(LBL_CANCEL);
+	protected final DialogButton btnSubmit = new DialogButton(SUBMIT, Model.of("Submit!"));
+	protected final DialogButton btnCancel = new DialogButton(CANCEL, LBL_CANCEL);
 
 	private Form<?> form;
 	private FeedbackPanel feedback;

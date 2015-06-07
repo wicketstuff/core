@@ -104,7 +104,7 @@ public abstract class DialogBehavior extends JQueryUIBehavior implements IJQuery
 	 */
 	public void open(AjaxRequestTarget target)
 	{
-		target.appendJavaScript(this.$("'open'"));
+		target.appendJavaScript(this.$(Options.asString("open")));
 	}
 
 	/**
@@ -114,7 +114,7 @@ public abstract class DialogBehavior extends JQueryUIBehavior implements IJQuery
 	 */
 	public void close(AjaxRequestTarget target)
 	{
-		target.prependJavaScript(this.$("'close'")); // fixes #88
+		target.prependJavaScript(this.$(Options.asString("close"))); // fixes #88
 	}
 
 	// Events //

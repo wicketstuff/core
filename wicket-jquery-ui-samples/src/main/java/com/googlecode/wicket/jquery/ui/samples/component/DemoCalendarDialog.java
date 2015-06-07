@@ -27,8 +27,8 @@ import com.googlecode.wicket.kendo.ui.form.datetime.local.DateTimePicker;
 public abstract class DemoCalendarDialog extends AbstractFormDialog<DemoCalendarEvent>
 {
 	private static final long serialVersionUID = 1L;
-	protected final DialogButton btnSubmit = new DialogButton("Save");
-	protected final DialogButton btnCancel = new DialogButton(LBL_CANCEL);
+	protected final DialogButton btnSubmit = new DialogButton(SUBMIT, Model.of("Save"));
+	protected final DialogButton btnCancel = new DialogButton(CANCEL, LBL_CANCEL);
 
 	static IModel<DemoCalendarEvent> emptyModel()
 	{

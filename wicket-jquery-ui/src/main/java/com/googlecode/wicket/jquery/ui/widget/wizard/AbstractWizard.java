@@ -243,11 +243,11 @@ public abstract class AbstractWizard<T extends Serializable> extends AbstractFor
 	protected void onInitialize()
 	{
 		// buttons (located in #onInitialize() for #getString() to work properly, without warnings)
-		this.btnPrev = new DialogButton(this.getString("wizard.button.prev"));
-		this.btnNext = new DialogButton(this.getString("wizard.button.next"));
-		this.btnLast = new DialogButton(this.getString("wizard.button.last"));
-		this.btnFinish = new DialogButton(this.getString("wizard.button.finish"));
-		this.btnCancel = new DialogButton(this.getString("wizard.button.cancel"));
+		this.btnPrev = new DialogButton("PREV", this.getString("wizard.button.prev"));
+		this.btnNext = new DialogButton("NEXT", this.getString("wizard.button.next"));
+		this.btnLast = new DialogButton("LAST", this.getString("wizard.button.last"));
+		this.btnFinish = new DialogButton(AbstractDialog.SUBMIT, this.getString("wizard.button.finish"));
+		this.btnCancel = new DialogButton(AbstractDialog.CANCEL, this.getString("wizard.button.cancel"));
 
 		// should be called *after* button's initialization
 		super.onInitialize();

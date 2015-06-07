@@ -202,7 +202,7 @@ public abstract class InputDialog<T extends Serializable> extends AbstractFormDi
 	@Override
 	protected DialogButton getSubmitButton()
 	{
-		return this.findButton(LBL_OK);
+		return this.findButton(OK);
 	}
 
 	// Factories //

@@ -25,21 +25,21 @@ import java.util.List;
  */
 public enum DialogButtons
 {
-	OK(AbstractDialog.LBL_OK),
-	OK_CANCEL(AbstractDialog.LBL_OK, AbstractDialog.LBL_CANCEL),
+	OK(new DialogButton(AbstractDialog.OK, AbstractDialog.LBL_OK)),
+	OK_CANCEL(new DialogButton(AbstractDialog.OK, AbstractDialog.LBL_OK), new DialogButton(AbstractDialog.CANCEL, AbstractDialog.LBL_CANCEL)),
 
-	YES_NO(AbstractDialog.LBL_YES, AbstractDialog.LBL_NO),
-	YES_NO_CANCEL(AbstractDialog.LBL_YES, AbstractDialog.LBL_NO, AbstractDialog.LBL_CANCEL);
+	YES_NO(new DialogButton(AbstractDialog.YES, AbstractDialog.LBL_YES), new DialogButton(AbstractDialog.NO, AbstractDialog.LBL_NO)),
+	YES_NO_CANCEL(new DialogButton(AbstractDialog.YES, AbstractDialog.LBL_YES), new DialogButton(AbstractDialog.NO, AbstractDialog.LBL_NO), new DialogButton(AbstractDialog.CANCEL, AbstractDialog.LBL_CANCEL));
 
 	private final List<DialogButton> buttons;
 
-	private DialogButtons(String... labels)
+	private DialogButtons(DialogButton... buttons)
 	{
 		this.buttons = new ArrayList<DialogButton>();
 
-		for (String label : labels)
+		for (DialogButton button : buttons)
 		{
-			this.buttons.add(new DialogButton(label));
+			this.buttons.add(button);
 		}
 	}
 

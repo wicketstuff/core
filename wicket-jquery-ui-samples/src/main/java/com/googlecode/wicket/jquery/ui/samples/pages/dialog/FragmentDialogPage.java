@@ -40,7 +40,7 @@ public class FragmentDialogPage extends AbstractDialogPage
 			{
 				this.info(button + " has been clicked");
 
-				if (button != null && button.match(LBL_OK))
+				if (button != null && button.match(OK))
 				{
 					this.info(String.format("The model object is: '%s'", this.getModelObject()));
 				}

@@ -44,13 +44,21 @@ public abstract class AbstractDialog<T extends Serializable> extends GenericPane
 {
 	private static final long serialVersionUID = 1L;
 
-	/* Default Button labels */
-	public static final String LBL_OK = "OK";
-	public static final String LBL_NO = "No";
-	public static final String LBL_YES = "Yes";
-	public static final String LBL_CLOSE = "Close";
-	public static final String LBL_CANCEL = "Cancel";
-	public static final String LBL_SUBMIT = "Submit";
+	/* Default Button names */
+	public static final String OK = "OK";
+	public static final String NO = "NO";
+	public static final String YES = "YES";
+	public static final String CLOSE = "CLOSE";
+	public static final String CANCEL = "CANCEL";
+	public static final String SUBMIT = "SUBMIT";
+
+	/* Default Button labels (cannot be ResourceModel because not wrapped to a component) */
+	public static final IModel<String> LBL_OK = Model.of("Ok");
+	public static final IModel<String> LBL_NO = Model.of("No");
+	public static final IModel<String> LBL_YES = Model.of("Yes");
+	public static final IModel<String> LBL_CLOSE = Model.of("Close");
+	public static final IModel<String> LBL_CANCEL = Model.of("Cancel");
+	public static final IModel<String> LBL_SUBMIT = Model.of("Submit");
 
 	/** Default width */
 	private static final int WIDTH = 450;
@@ -60,7 +68,7 @@ public abstract class AbstractDialog<T extends Serializable> extends GenericPane
 	private DialogBehavior widgetBehavior;
 
 	/** Default button */
-	private final DialogButton btnOk = new DialogButton(LBL_OK);
+	private final DialogButton btnOk = new DialogButton(OK, LBL_OK);
 
 	/**
 	 * Constructor
@@ -336,16 +344,16 @@ public abstract class AbstractDialog<T extends Serializable> extends GenericPane
 	// Methods //
 
 	/**
-	 * Finds a {@link DialogButton} - identified by its text - within the list of buttons returned by {@link #getButtons()}
+	 * Finds a {@link DialogButton} - identified by its name - within the list of buttons returned by {@link #getButtons()}
 	 *
-	 * @param text the button's text
+	 * @param name the button's name
 	 * @return the {@link DialogButton} if found, null otherwise
 	 */
-	public DialogButton findButton(String text)
+	public DialogButton findButton(String name)
 	{
 		for (DialogButton button : this.getButtons())
 		{
-			if (button != null && button.match(text))
+			if (button != null && button.match(name))
 			{
 				return button;
 			}

@@ -175,7 +175,7 @@ public abstract class ConfirmAjaxButton extends GenericPanel<String>
 			@Override
 			protected DialogButton getSubmitButton()
 			{
-				return this.findButton(LBL_OK);
+				return this.findButton(OK);
 			}
 
 			@Override
