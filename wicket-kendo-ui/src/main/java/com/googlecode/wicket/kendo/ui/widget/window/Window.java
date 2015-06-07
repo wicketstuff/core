@@ -37,7 +37,6 @@ public abstract class Window<T> extends AbstractWindow<T>
 	private static final long serialVersionUID = 1L;
 
 	/* Default Button names */
-	// TODO rename to BTN_Xxx ?
 	public static final String OK = "OK";
 	public static final String NO = "NO";
 	public static final String YES = "YES";
@@ -46,12 +45,12 @@ public abstract class Window<T> extends AbstractWindow<T>
 	public static final String SUBMIT = "SUBMIT";
 
 	/* Default Button labels */
-	protected static final IModel<String> LBL_OK = new ResourceModel("button.ok");
-	protected static final IModel<String> LBL_NO = new ResourceModel("button.no");
-	protected static final IModel<String> LBL_YES = new ResourceModel("button.yes");
-	protected static final IModel<String> LBL_CLOSE = new ResourceModel("button.close");
-	protected static final IModel<String> LBL_CANCEL = new ResourceModel("button.cancel");
-	protected static final IModel<String> LBL_SUBMIT = new ResourceModel("button.submit");
+	public static final IModel<String> LBL_OK = new ResourceModel("button.ok");
+	public static final IModel<String> LBL_NO = new ResourceModel("button.no");
+	public static final IModel<String> LBL_YES = new ResourceModel("button.yes");
+	public static final IModel<String> LBL_CLOSE = new ResourceModel("button.close");
+	public static final IModel<String> LBL_CANCEL = new ResourceModel("button.cancel");
+	public static final IModel<String> LBL_SUBMIT = new ResourceModel("button.submit");
 
 	private final List<WindowButton> buttons;
 

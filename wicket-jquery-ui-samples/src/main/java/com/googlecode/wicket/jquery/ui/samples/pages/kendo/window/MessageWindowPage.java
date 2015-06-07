@@ -1,18 +1,26 @@
 package com.googlecode.wicket.jquery.ui.samples.pages.kendo.window;
 
+import java.util.Arrays;
+import java.util.List;
+
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.markup.html.form.Form;
+import org.apache.wicket.model.Model;
 
 import com.googlecode.wicket.kendo.ui.KendoIcon;
 import com.googlecode.wicket.kendo.ui.form.button.AjaxButton;
 import com.googlecode.wicket.kendo.ui.panel.KendoFeedbackPanel;
 import com.googlecode.wicket.kendo.ui.widget.window.MessageWindow;
+import com.googlecode.wicket.kendo.ui.widget.window.Window;
 import com.googlecode.wicket.kendo.ui.widget.window.WindowButton;
-import com.googlecode.wicket.kendo.ui.widget.window.WindowButtons;
 
 public class MessageWindowPage extends AbstractWindowPage
 {
 	private static final long serialVersionUID = 1L;
+
+	private static final List<WindowButton> BUTTONS = Arrays.asList( // lf
+			new WindowButton(Window.OK, Window.LBL_OK), // lf
+			new WindowButton(Window.CANCEL, Model.of("I don't care")));
 
 	public MessageWindowPage()
 	{
@@ -24,7 +32,7 @@ public class MessageWindowPage extends AbstractWindowPage
 		form.add(feedback.setOutputMarkupId(true));
 
 		// Window //
-		final MessageWindow window = new MessageWindow("window", "Information", "This is a sample message", WindowButtons.OK_CANCEL, KendoIcon.NOTE) {
+		final MessageWindow window = new MessageWindow("window", "Information", "This is a sample message", BUTTONS, KendoIcon.NOTE) {
 
 			private static final long serialVersionUID = 1L;
 
@@ -50,7 +58,7 @@ public class MessageWindowPage extends AbstractWindowPage
 		form.add(new AjaxButton("button") {
 
 			private static final long serialVersionUID = 1L;
-			
+
 			@Override
 			protected String getIcon()
 			{
