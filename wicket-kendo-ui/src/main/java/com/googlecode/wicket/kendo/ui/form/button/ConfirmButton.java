@@ -83,8 +83,6 @@ public abstract class ConfirmButton extends FormSubmittingPanel<String>
 	{
 		super.onInitialize();
 
-		// TODO add Models in jquery-ui ConfirmButton too
-
 		// window //
 		final AbstractWindow<?> window = this.newWindow("window", this.titleModel, this.getModel());
 		this.add(window);
@@ -121,12 +119,12 @@ public abstract class ConfirmButton extends FormSubmittingPanel<String>
 		// button label //
 		button.add(new Label("label", this.labelModel).setRenderBodyOnly(true));
 	}
-	
+
 	@Override
 	protected void onDetach()
 	{
 		super.onDetach();
-		
+
 		this.labelModel.detach();
 		this.titleModel.detach();
 	}

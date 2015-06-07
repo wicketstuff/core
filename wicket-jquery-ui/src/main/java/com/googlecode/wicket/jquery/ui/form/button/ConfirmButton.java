@@ -33,9 +33,9 @@ import com.googlecode.wicket.jquery.ui.widget.dialog.MessageDialog;
 /**
  * Provides a {@link AjaxButton} which pop-ups an OK-Cancel confirmation dialog when clicked. In case of confirmation, the form is sent via a http submit.<br/>
  * <br/>
- * <b>Note: </b> this component is not a {@link Button} itself but a Panel, it should not be attached to a &lt;button /&gt; but on a &lt;div /&gt; or a &lt;span /&gt; for instance.<br/>
+ * <b>Note:</b> this component is not a {@link Button} itself but a Panel, it should not be attached to a &lt;button /&gt; but on a &lt;div /&gt; or a &lt;span /&gt; for instance.<br/>
  * <br/>
- * <b>Warning: </b> it is not possible to get a form component value - that is going to be changed - to be displayed in the dialog box message. The reason is that in order to get a form component (updated) model object, the form component
+ * <b>Warning:</b> it is not possible to get a form component value - that is going to be changed - to be displayed in the dialog box message. The reason is that in order to get a form component (updated) model object, the form component
  * should be validated. The dialog does not proceed to a (whole) form validation while being opened, because the form validation will occur when the user will confirm (by clicking on OK button). This the intended behavior.
  *
  * @author Sebastien Briquet - sebfz1
@@ -44,6 +44,9 @@ import com.googlecode.wicket.jquery.ui.widget.dialog.MessageDialog;
 public abstract class ConfirmButton extends FormSubmittingPanel<String>
 {
 	private static final long serialVersionUID = 1L;
+
+	private final IModel<String> labelModel;
+	private final IModel<String> titleModel;
 
 	/**
 	 * Constructor
@@ -70,7 +73,18 @@ public abstract class ConfirmButton extends FormSubmittingPanel<String>
 	{
 		super(id, message);
 
-		final AbstractDialog<?> dialog = this.newDialog("dialog", title, this.getModel());
+		this.labelModel = label;
+		this.titleModel = title;
+	}
+
+	// Events //
+
+	@Override
+	protected void onInitialize()
+	{
+		super.onInitialize();
+
+		final AbstractDialog<?> dialog = this.newDialog("dialog", this.titleModel, this.getModel());
 		this.add(dialog);
 
 		final AjaxButton button = new AjaxButton("button") {
@@ -81,7 +95,7 @@ public abstract class ConfirmButton extends FormSubmittingPanel<String>
 			protected void onInitialize()
 			{
 				super.onInitialize();
-				
+
 				// does not validate the form before the window is being displayed
 				this.setDefaultFormProcessing(false);
 			}
@@ -101,7 +115,16 @@ public abstract class ConfirmButton extends FormSubmittingPanel<String>
 
 		this.add(button);
 
-		button.add(new Label("label", label).setRenderBodyOnly(true));
+		button.add(new Label("label", this.labelModel).setRenderBodyOnly(true));
+	}
+
+	@Override
+	protected void onDetach()
+	{
+		super.onDetach();
+
+		this.labelModel.detach();
+		this.titleModel.detach();
 	}
 
 	// Properties //

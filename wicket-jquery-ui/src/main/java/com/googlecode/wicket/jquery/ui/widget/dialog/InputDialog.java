@@ -103,7 +103,7 @@ public abstract class InputDialog<T extends Serializable> extends AbstractFormDi
 		this.add(this.form);
 
 		// feedback //
-		this.feedback = new JQueryFeedbackPanel("feedback"); // TODO remove this.form.get("input") ?
+		this.feedback = new JQueryFeedbackPanel("feedback");
 		this.form.add(this.feedback);
 	}
 
@@ -124,12 +124,8 @@ public abstract class InputDialog<T extends Serializable> extends AbstractFormDi
 	@Override
 	protected void onOpen(AjaxRequestTarget target)
 	{
-		// TODO remove this?
-		// re-attach the feedback panel to clear previously displayed error message(s)
-		// target.add(this.feedback);
 		super.onOpen(target);
 
-		// TODO test this
 		target.add(this.form);
 	}
 
