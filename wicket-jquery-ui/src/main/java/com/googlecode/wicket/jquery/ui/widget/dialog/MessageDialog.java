@@ -19,6 +19,7 @@ package com.googlecode.wicket.jquery.ui.widget.dialog;
 import java.util.List;
 
 import org.apache.wicket.AttributeModifier;
+import org.apache.wicket.Component;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.markup.html.basic.Label;
@@ -37,8 +38,10 @@ public abstract class MessageDialog extends AbstractDialog<String>
 {
 	private static final long serialVersionUID = 1L;
 
-	private Label label;
+	private Component label;
 	private List<DialogButton> buttons;
+
+	private final WebMarkupContainer container;
 
 	/**
 	 * Constructor.
@@ -146,17 +149,19 @@ public abstract class MessageDialog extends AbstractDialog<String>
 	public MessageDialog(String id, IModel<String> title, IModel<String> message, List<DialogButton> buttons, DialogIcon icon)
 	{
 		super(id, title, message, true);
+		
+		// buttons //
 		this.buttons = Args.notNull(buttons, "buttons");
 
-		WebMarkupContainer container = new WebMarkupContainer("container");
-		this.add(container);
+		// container //
+		this.container = new WebMarkupContainer("container");
+		this.add(this.container);
 
-		container.add(AttributeModifier.append("class", icon.getStyle()));
-		container.add(new EmptyPanel("icon").add(AttributeModifier.replace("class", icon)));
-		// TODO add #newLabel, see MessageWindow
-		this.label = new Label("message", this.getModel());
-		container.add(this.label.setOutputMarkupId(true));
+		this.container.add(AttributeModifier.append("class", icon.getStyle()));
+		this.container.add(new EmptyPanel("icon").add(AttributeModifier.replace("class", icon)));
 	}
+
+	// Properties //
 
 	@Override
 	protected final List<DialogButton> getButtons()
@@ -164,9 +169,36 @@ public abstract class MessageDialog extends AbstractDialog<String>
 		return this.buttons;
 	}
 
+	// Events //
+	
+	@Override
+	protected void onInitialize()
+	{
+		super.onInitialize();
+
+		// label //
+		this.label = this.newLabel("message", this.getModel());
+		this.container.add(this.label.setOutputMarkupId(true));
+	}
+
 	@Override
 	protected void onOpen(AjaxRequestTarget target)
 	{
 		target.add(this.label);
+	}
+
+	// Factories //
+
+	/**
+	 * Gets a new {@link Component} that will be used as a label in the dialog.<br/>
+	 * Override this method when you need to show formatted label.
+	 *
+	 * @param id the markup id
+	 * @param model the label {@link IModel}
+	 * @return the new label component.
+	 */
+	protected Component newLabel(String id, IModel<String> model)
+	{
+		return new Label(id, model);
 	}
 }

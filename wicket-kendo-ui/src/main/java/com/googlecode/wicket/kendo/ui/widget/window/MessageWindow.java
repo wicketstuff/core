@@ -173,7 +173,7 @@ public abstract class MessageWindow extends Window<String>
 
 		// label //
 		this.label = this.newLabel("text", this.getModel());
-		this.add(this.label);
+		this.add(this.label.setOutputMarkupId(true));
 
 		// buttons //
 		this.form.add(this.newButtonPanel("buttons", this.getButtons()));
@@ -217,6 +217,6 @@ public abstract class MessageWindow extends Window<String>
 	 */
 	protected Component newLabel(String id, IModel<String> model)
 	{
-		return new Label(id, model).setOutputMarkupId(true);
+		return new Label(id, model);
 	}
 }
