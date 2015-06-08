@@ -14,6 +14,7 @@ import org.apache.wicket.model.Model;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
 import org.apache.wicket.util.resource.IResourceStream;
 import org.apache.wicket.util.resource.StringResourceStream;
+import org.wicketstuff.foundation.tab.AjaxFoundationTab;
 import org.wicketstuff.foundation.tab.FoundationTab;
 
 public class TabPage extends BasePage
@@ -64,9 +65,9 @@ public class TabPage extends BasePage
 			}
 		});
 
-		add(new FoundationTab<>("ajaxTabHorizontal", tabs));
-		add(new FoundationTab<>("ajaxTabVertical", tabs).setVerticalTab(true));
-		
+		add(new FoundationTab<>("tabHorizontal", tabs));
+		add(new FoundationTab<>("tabVertical", tabs).setVerticalTab(true));
+		add(new AjaxFoundationTab<>("ajaxTab", tabs));
 	}
 	
 	class ContainerString extends WebMarkupContainer implements IMarkupResourceStreamProvider, IMarkupCacheKeyProvider
