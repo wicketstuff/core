@@ -183,16 +183,7 @@ public abstract class AbstractFormDialog<T extends Serializable> extends Abstrac
 	@Override
 	public IModelComparator getModelComparator()
 	{
-		return new IModelComparator() {
-
-			private static final long serialVersionUID = 1L;
-
-			@Override
-			public boolean compare(Component component, Object object)
-			{
-				return false; // fixes #119
-			}
-		};
+		return IModelComparator.ALWAYS_FALSE;
 	}
 
 	// Events //
