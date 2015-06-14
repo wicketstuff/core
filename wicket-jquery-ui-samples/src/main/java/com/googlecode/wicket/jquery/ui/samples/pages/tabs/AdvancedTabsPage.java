@@ -32,8 +32,8 @@ public class AdvancedTabsPage extends AbstractTabsPage
 	private static final long serialVersionUID = 1L;
 	private static final Logger LOG = LoggerFactory.getLogger(AdvancedTabsPage.class);
 
-	private int tabIndex = 0;
 	private final TabbedPanel tabPanel;
+	final NavigationAjaxButton buttons;
 
 	public AdvancedTabsPage()
 	{
@@ -50,8 +50,8 @@ public class AdvancedTabsPage extends AbstractTabsPage
 		form.add(feedback.setOutputMarkupId(true));
 
 		// Navigation //
-		final NavigationAjaxButton buttons = this.newNavigationAjaxButton("nav");
-		form.add(buttons);
+		this.buttons = this.newNavigationAjaxButton("nav");
+		form.add(this.buttons);
 
 		// TabbedPanel //
 		this.tabPanel = new TabbedPanel("tabs", this.newTabModel()) {
@@ -61,10 +61,8 @@ public class AdvancedTabsPage extends AbstractTabsPage
 			@Override
 			public void onActivate(AjaxRequestTarget target, int index, ITab tab)
 			{
-				tabIndex = index;
-
+				this.send(buttons, Broadcast.EXACT, new ChangeEvent(index, target));
 				this.info("selected tab #" + index);
-				this.send(buttons, Broadcast.EXACT, new ChangeEvent(target));
 
 				target.add(feedback);
 			}
@@ -94,7 +92,6 @@ public class AdvancedTabsPage extends AbstractTabsPage
 				dialog.open(target);
 			}
 		});
-
 	}
 
 	// Factories //
@@ -121,7 +118,11 @@ public class AdvancedTabsPage extends AbstractTabsPage
 				TabItem item = this.getModelObject();
 
 				tabPanel.add(new SimpleTab(item.getTitle(), item.getContent()));
-				target.add(tabPanel);
+				int index = tabPanel.getLastTabIndex(); // gets last visible
+				target.add(tabPanel.setActiveTab(index));
+
+				// refreshes the navigation buttons //
+				this.send(buttons, Broadcast.EXACT, new ChangeEvent(index, target));
 			}
 		};
 	}
@@ -132,6 +133,7 @@ public class AdvancedTabsPage extends AbstractTabsPage
 
 			private static final long serialVersionUID = 1L;
 			private int max = 0;
+			private int index = 0;
 
 			@Override
 			protected void onConfigure()
@@ -140,25 +142,25 @@ public class AdvancedTabsPage extends AbstractTabsPage
 
 				this.max = this.count() - 1;
 
-				this.getBackwardButton().setEnabled(tabIndex > 0);
-				this.getForwardButton().setEnabled(tabIndex < this.max);
+				this.getBackwardButton().setEnabled(this.index > 0);
+				this.getForwardButton().setEnabled(this.index < this.max);
 			}
 
 			@Override
 			protected void onBackward(AjaxRequestTarget target, AjaxButton button)
 			{
-				if (tabIndex > 0)
+				if (this.index > 0)
 				{
-					tabPanel.setActiveTab(tabIndex - 1, target); // fires onActivate
+					tabPanel.setActiveTab(this.index - 1, target); // fires onActivate
 				}
 			}
 
 			@Override
 			protected void onForward(AjaxRequestTarget target, AjaxButton button)
 			{
-				if (tabIndex < this.max)
+				if (this.index < this.max)
 				{
-					tabPanel.setActiveTab(tabIndex + 1, target);
+					tabPanel.setActiveTab(this.index + 1, target);
 				}
 			}
 
@@ -171,6 +173,8 @@ public class AdvancedTabsPage extends AbstractTabsPage
 				if (event.getPayload() instanceof ChangeEvent)
 				{
 					ChangeEvent payload = (ChangeEvent) event.getPayload();
+
+					this.index = payload.getIndex();
 					AjaxRequestTarget target = payload.getTarget();
 
 					target.add(this);
@@ -276,10 +280,17 @@ public class AdvancedTabsPage extends AbstractTabsPage
 	static class ChangeEvent extends JQueryEvent
 	{
 		private final AjaxRequestTarget target;
+		private final int index;
 
-		public ChangeEvent(AjaxRequestTarget target)
+		public ChangeEvent(int index, AjaxRequestTarget target)
 		{
+			this.index = index;
 			this.target = target;
+		}
+
+		public int getIndex()
+		{
+			return this.index;
 		}
 
 		public AjaxRequestTarget getTarget()

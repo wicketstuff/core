@@ -127,12 +127,11 @@ public class AccordionPanel extends JQueryGenericPanel<List<ITab>> implements IA
 
 	/**
 	 * Sets the current tab index<br/>
-	 * <b>Warning:</b> the index is related to visible tabs only
+	 * <b>Warning:</b> the index is relative to visible tabs only
 	 *
 	 * @param index the visible tab's index to activate
 	 * @return this, for chaining
 	 */
-	// TODO: warning changed setActiveTab by setTabIndex. See if should be changed elsewhere
 	public AccordionPanel setTabIndex(int index)
 	{
 		this.widgetBehavior.tabIndex = index;

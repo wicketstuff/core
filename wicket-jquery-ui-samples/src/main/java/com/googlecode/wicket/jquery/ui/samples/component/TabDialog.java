@@ -35,7 +35,7 @@ public abstract class TabDialog extends AbstractFormDialog<TabItem>
 		this.form = new Form<Integer>("form");
 		this.add(this.form);
 
-		// FeedbackPanel //
+		// Feedback //
 		this.feedback = new JQueryFeedbackPanel("feedback");
 		this.form.add(this.feedback);
 
@@ -67,8 +67,7 @@ public abstract class TabDialog extends AbstractFormDialog<TabItem>
 	@Override
 	protected void onOpen(AjaxRequestTarget target)
 	{
-		// re-attach the feedback panel to clear previously displayed error message(s)
-		target.add(this.feedback);
+		target.add(this.form);
 	}
 
 	@Override
@@ -82,8 +81,8 @@ public abstract class TabDialog extends AbstractFormDialog<TabItem>
 	{
 		private static final long serialVersionUID = 1L;
 
-		private String title;
-		private String content;
+		private String title = "";
+		private String content = "";
 
 		public TabItem()
 		{

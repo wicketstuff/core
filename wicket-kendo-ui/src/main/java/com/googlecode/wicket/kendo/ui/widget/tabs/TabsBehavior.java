@@ -137,7 +137,8 @@ public abstract class TabsBehavior extends KendoUIBehavior implements IJQueryAja
 		super.renderHead(component, response);
 
 		// selects (& expands) the active tab (this is not a default behavior)
-		response.render(JavaScriptHeaderItem.forScript(String.format("jQuery(function() { %s.select(%d); } );", this.widget(), this.tabIndex), this.getToken() + "-select"));
+		// FIXME: it does not select the tab on reload!
+		response.render(JavaScriptHeaderItem.forScript(String.format("jQuery(function() { %s.select(%d); });", this.widget(), this.tabIndex), this.getToken() + "-select"));
 	}
 
 	/**

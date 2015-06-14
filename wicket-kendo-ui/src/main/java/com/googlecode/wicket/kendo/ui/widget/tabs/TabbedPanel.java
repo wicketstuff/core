@@ -39,7 +39,6 @@ import com.googlecode.wicket.jquery.core.Options;
  * @since 6.19.0
  * @since 7.0.0
  */
-// FIXME: target.add(myTabbedPannel) does not work, try with #destroy
 public class TabbedPanel extends JQueryGenericPanel<List<ITab>> implements ITabsListener
 {
 	private static final long serialVersionUID = 1L;
@@ -131,29 +130,49 @@ public class TabbedPanel extends JQueryGenericPanel<List<ITab>> implements ITabs
 	}
 
 	/**
-	 * Sets the selected tab
+	 * Sets the current tab index<br/>
+	 * <b>Warning:</b> the index is relative to visible tabs only
 	 *
-	 * @param index the tab's index to activate
+	 * @param index the visible tab's index to activate
 	 * @return this, for chaining
 	 */
-	public TabbedPanel setActiveTab(int index)
+	public TabbedPanel setTabIndex(int index)
 	{
-		this.widgetBehavior.activeTab = index;
+		this.widgetBehavior.tabIndex = index;
 
 		return this;
 	}
 
 	/**
-	 * Selects (and activates) a tab, identified by the index<br/>
-	 * <br/>
+	 * Sets and activates the current tab index<br/>
 	 * <b>Warning: </b> invoking this method results to a dual client-server round-trip.
 	 *
 	 * @param target the {@link AjaxRequestTarget}
 	 * @param index the tab's index to activate
 	 */
-	public void setActiveTab(int index, AjaxRequestTarget target)
+	public void setTabIndex(int index, AjaxRequestTarget target)
 	{
 		this.widgetBehavior.select(index, target);
+	}
+
+	/**
+	 * Gets the last <i>visible</i> tab index
+	 *
+	 * @return the tab index, or -1 if none
+	 */
+	public int getLastTabIndex()
+	{
+		int index = -1;
+		
+		for (ITab tab : this.getModelObject())
+		{
+			if (tab.isVisible())
+			{
+				index++;
+			}
+		}
+
+		return index;
 	}
 
 	@Override

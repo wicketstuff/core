@@ -130,6 +130,26 @@ public class TabbedPanel extends JQueryGenericPanel<List<ITab>> implements ITabs
 		this.widgetBehavior.activate(index, target); // sets 'active' option, that fires 'activate' event (best would be that is also fires a 'show' event)
 	}
 
+	/**
+	 * Gets the last <i>visible</i> tab index
+	 *
+	 * @return the tab index, or -1 if none
+	 */
+	public int getLastTabIndex()
+	{
+		int index = -1;
+
+		for (ITab tab : this.getModelObject())
+		{
+			if (tab.isVisible())
+			{
+				index++;
+			}
+		}
+
+		return index;
+	}
+
 	@Override
 	public boolean isCreateEventEnabled()
 	{

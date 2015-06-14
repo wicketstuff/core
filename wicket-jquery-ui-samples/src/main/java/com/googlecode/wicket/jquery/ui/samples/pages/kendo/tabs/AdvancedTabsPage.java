@@ -23,14 +23,15 @@ import com.googlecode.wicket.kendo.ui.panel.KendoFeedbackPanel;
 import com.googlecode.wicket.kendo.ui.widget.tabs.AjaxTab;
 import com.googlecode.wicket.kendo.ui.widget.tabs.SimpleTab;
 import com.googlecode.wicket.kendo.ui.widget.tabs.TabbedPanel;
+import com.googlecode.wicket.kendo.ui.widget.tabs.TabsBehavior;
 
 public class AdvancedTabsPage extends AbstractTabsPage
 {
 	private static final long serialVersionUID = 1L;
 	private static final Logger LOG = LoggerFactory.getLogger(AdvancedTabsPage.class);
 
-	private int tabIndex = 0;
 	private final TabbedPanel tabPanel;
+	private final NavigationAjaxButton buttons;
 
 	public AdvancedTabsPage()
 	{
@@ -47,11 +48,11 @@ public class AdvancedTabsPage extends AbstractTabsPage
 		this.add(form);
 
 		// Nav-tab Buttons //
-		final NavigationAjaxButton buttons = this.newNavigationAjaxButton("nav");
-		form.add(buttons);
+		this.buttons = this.newNavigationAjaxButton("nav");
+		form.add(this.buttons);
 
 		// Add-tab Buttons //
-		form.add(new AjaxButton("add") {
+		form.add(new com.googlecode.wicket.kendo.ui.form.button.AjaxButton("add") {
 
 			private static final long serialVersionUID = 1L;
 
@@ -70,10 +71,9 @@ public class AdvancedTabsPage extends AbstractTabsPage
 			@Override
 			public void onSelect(AjaxRequestTarget target, int index, ITab tab)
 			{
-				tabIndex = index;
-				this.send(buttons, Broadcast.EXACT, new ChangeEvent(target));
-
+				this.send(buttons, Broadcast.EXACT, new ChangeEvent(index, target));
 				this.info("Selected tab #" + index);
+
 				target.add(feedback);
 			}
 		};
@@ -82,6 +82,7 @@ public class AdvancedTabsPage extends AbstractTabsPage
 	}
 
 	// Factories //
+
 	private TabDialog newTabDialog(String id)
 	{
 		return new TabDialog(id, "Add Tab") {
@@ -104,7 +105,11 @@ public class AdvancedTabsPage extends AbstractTabsPage
 				TabItem item = this.getModelObject();
 
 				tabPanel.add(new SimpleTab(item.getTitle(), item.getContent()));
-				target.add(tabPanel);
+				int index = tabPanel.getLastTabIndex(); // gets last visible
+				target.add(tabPanel.setTabIndex(index));
+
+				// refreshes the navigation buttons //
+				this.send(buttons, Broadcast.EXACT, new ChangeEvent(index, target));
 			}
 		};
 	}
@@ -115,6 +120,7 @@ public class AdvancedTabsPage extends AbstractTabsPage
 
 			private static final long serialVersionUID = 1L;
 			private int max = 0;
+			private int index = TabsBehavior.DEFAULT_TAB_INDEX;
 
 			@Override
 			protected void onConfigure()
@@ -123,25 +129,25 @@ public class AdvancedTabsPage extends AbstractTabsPage
 
 				this.max = this.count() - 1;
 
-				this.getBackwardButton().setEnabled(tabIndex > 0);
-				this.getForwardButton().setEnabled(tabIndex < this.max);
+				this.getBackwardButton().setEnabled(this.index > 0);
+				this.getForwardButton().setEnabled(this.index < this.max);
 			}
 
 			@Override
 			protected void onBackward(AjaxRequestTarget target, AjaxButton button)
 			{
-				if (tabIndex > 0)
+				if (this.index > 0)
 				{
-					tabPanel.setActiveTab(tabIndex - 1, target); // fires onSelect
+					tabPanel.setTabIndex(this.index - 1, target); // fires onSelect
 				}
 			}
 
 			@Override
 			protected void onForward(AjaxRequestTarget target, AjaxButton button)
 			{
-				if (tabIndex < this.max)
+				if (this.index < this.max)
 				{
-					tabPanel.setActiveTab(tabIndex + 1, target); // fires onSelect
+					tabPanel.setTabIndex(this.index + 1, target); // fires onSelect
 				}
 			}
 
@@ -154,6 +160,8 @@ public class AdvancedTabsPage extends AbstractTabsPage
 				if (event.getPayload() instanceof ChangeEvent)
 				{
 					ChangeEvent payload = (ChangeEvent) event.getPayload();
+
+					this.index = payload.getIndex();
 					AjaxRequestTarget target = payload.getTarget();
 
 					target.add(this);
@@ -244,10 +252,17 @@ public class AdvancedTabsPage extends AbstractTabsPage
 	static class ChangeEvent extends JQueryEvent
 	{
 		private final AjaxRequestTarget target;
+		private final int index;
 
-		public ChangeEvent(AjaxRequestTarget target)
+		public ChangeEvent(int index, AjaxRequestTarget target)
 		{
+			this.index = index;
 			this.target = target;
+		}
+
+		public int getIndex()
+		{
+			return this.index;
 		}
 
 		public AjaxRequestTarget getTarget()
