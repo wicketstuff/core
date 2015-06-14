@@ -18,7 +18,6 @@ package com.googlecode.wicket.jquery.ui.widget.dialog;
 
 import java.io.Serializable;
 
-import org.apache.wicket.Component;
 import org.apache.wicket.WicketRuntimeException;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.markup.html.form.Form;
@@ -183,16 +182,7 @@ public abstract class AbstractFormDialog<T extends Serializable> extends Abstrac
 	@Override
 	public IModelComparator getModelComparator()
 	{
-		return new IModelComparator() {
-
-			private static final long serialVersionUID = 1L;
-
-			@Override
-			public boolean compare(Component component, Object object)
-			{
-				return false; // fixes #119
-			}
-		};
+		return IModelComparator.ALWAYS_FALSE; // fixes #119
 	}
 
 	// Events //
