@@ -31,7 +31,7 @@ public class ProgressBarBehavior extends KendoUIBehavior
 {
 	private static final long serialVersionUID = 1L;
 
-	static final String METHOD = "kendoProgressBar";
+	public static final String METHOD = "kendoProgressBar";
 
 	/**
 	 * Constructor

@@ -46,7 +46,8 @@ public abstract class AccordionBehavior extends KendoUIBehavior implements IJQue
 {
 	private static final long serialVersionUID = 1L;
 
-	static final String METHOD = "kendoPanelBar";
+	public static final String METHOD = "kendoPanelBar";
+
 	private static final int TAB_NONE = -1;
 
 	int tabIndex = TAB_NONE;

@@ -35,7 +35,8 @@ import com.googlecode.wicket.kendo.ui.interaction.draggable.DraggableBehavior;
 public abstract class DroppableBehavior extends KendoUIBehavior implements IJQueryAjaxAware, IDroppableListener
 {
 	private static final long serialVersionUID = 1L;
-	private static final String METHOD = "kendoDropTarget";
+
+	public static final String METHOD = "kendoDropTarget";
 
 	private JQueryAjaxBehavior onDropAjaxBehavior;
 	private JQueryAjaxBehavior onDragEnterAjaxBehavior = null;

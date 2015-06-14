@@ -37,7 +37,8 @@ import com.googlecode.wicket.kendo.ui.KendoUIBehavior;
 public class MultiSelect<T> extends ListMultipleChoice<T> implements IJQueryWidget
 {
 	private static final long serialVersionUID = 1L;
-	protected static final String METHOD = "kendoMultiSelect";
+
+	public static final String METHOD = "kendoMultiSelect";
 
 	/** inner list width. 0 means that it will not be handled */
 	private int width = 0;

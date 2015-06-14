@@ -38,7 +38,8 @@ import com.googlecode.wicket.kendo.ui.KendoUIBehavior;
 public class DropDownList<T> extends DropDownChoice<T> implements IJQueryWidget
 {
 	private static final long serialVersionUID = 1L;
-	protected static final String METHOD = "kendoDropDownList";
+
+	public static final String METHOD = "kendoDropDownList";
 
 	private IJQueryTemplate template;
 	private KendoTemplateBehavior templateBehavior = null;

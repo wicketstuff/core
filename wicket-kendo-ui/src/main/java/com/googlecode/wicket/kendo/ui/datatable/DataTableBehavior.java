@@ -42,7 +42,7 @@ public abstract class DataTableBehavior extends KendoUIBehavior implements IJQue
 {
 	private static final long serialVersionUID = 1L;
 
-	static final String METHOD = "kendoGrid";
+	public static final String METHOD = "kendoGrid";
 
 	protected final List<? extends IColumn> columns;
 

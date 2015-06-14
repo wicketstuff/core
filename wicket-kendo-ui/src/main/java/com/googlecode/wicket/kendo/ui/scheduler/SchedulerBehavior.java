@@ -50,7 +50,7 @@ public abstract class SchedulerBehavior extends KendoUIBehavior implements IJQue
 	private static final long serialVersionUID = 1L;
 	private static final JavaScriptResourceReference JS = new JavaScriptResourceReference(SchedulerBehavior.class, "SchedulerBehavior.js");
 
-	static final String METHOD = "kendoScheduler";
+	public static final String METHOD = "kendoScheduler";
 
 	private final SchedulerDataSource dataSource;
 

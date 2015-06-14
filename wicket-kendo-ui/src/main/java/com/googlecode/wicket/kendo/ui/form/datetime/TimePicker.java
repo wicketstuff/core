@@ -41,7 +41,8 @@ public class TimePicker extends DateTextField implements IJQueryWidget
 {
 	private static final long serialVersionUID = 1L;
 
-	protected static final String METHOD = "kendoTimePicker";
+	public static final String METHOD = "kendoTimePicker";
+
 	protected static final String DEFAULT_PATTERN = "h:mm aa"; // default java time pattern
 
 	final Options options;

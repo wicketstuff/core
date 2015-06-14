@@ -39,7 +39,8 @@ public class TimePicker extends LocalTextField<LocalTime>
 {
 	private static final long serialVersionUID = 1L;
 
-	protected static final String METHOD = "kendoTimePicker";
+	public static final String METHOD = "kendoTimePicker";
+
 	protected static final String DEFAULT_PATTERN = "h:mm a"; // default java time pattern
 
 	/**

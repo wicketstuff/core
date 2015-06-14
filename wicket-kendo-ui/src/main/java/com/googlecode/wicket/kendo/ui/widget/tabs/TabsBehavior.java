@@ -45,10 +45,10 @@ public abstract class TabsBehavior extends KendoUIBehavior implements IJQueryAja
 {
 	private static final long serialVersionUID = 1L;
 
-	static final String METHOD = "kendoTabStrip";
-	private static final int DEFAULT_TAB = 0;
+	public static final String METHOD = "kendoTabStrip";
+	public static final int DEFAULT_TAB_INDEX = 0;
 
-	int activeTab = DEFAULT_TAB;
+	int tabIndex = DEFAULT_TAB_INDEX;
 
 	private JQueryAjaxBehavior onSelectAjaxBehavior = null;
 	private JQueryAjaxBehavior onShowAjaxBehavior = null;
@@ -137,7 +137,7 @@ public abstract class TabsBehavior extends KendoUIBehavior implements IJQueryAja
 		super.renderHead(component, response);
 
 		// selects (& expands) the active tab (this is not a default behavior)
-		response.render(JavaScriptHeaderItem.forScript(String.format("jQuery(function() { %s.select(%d); } );", this.widget(), this.activeTab), this.getToken() + "-select"));
+		response.render(JavaScriptHeaderItem.forScript(String.format("jQuery(function() { %s.select(%d); } );", this.widget(), this.tabIndex), this.getToken() + "-select"));
 	}
 
 	/**
@@ -148,9 +148,9 @@ public abstract class TabsBehavior extends KendoUIBehavior implements IJQueryAja
 	 */
 	public void select(int index, AjaxRequestTarget target)
 	{
-		this.activeTab = index;
+		this.tabIndex = index;
 
-		target.appendJavaScript(String.format("%s.select(%d);", this.widget(), this.activeTab));
+		target.appendJavaScript(String.format("%s.select(%d);", this.widget(), this.tabIndex));
 	}
 
 	// Events //

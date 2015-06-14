@@ -43,7 +43,8 @@ import com.googlecode.wicket.kendo.ui.interaction.droppable.DroppableBehavior;
 public abstract class DraggableBehavior extends KendoUIBehavior implements IJQueryAjaxAware, IDraggableListener
 {
 	private static final long serialVersionUID = 1L;
-	private static final String METHOD = "kendoDraggable";
+
+	public static final String METHOD = "kendoDraggable";
 
 	public static final String CSS_HIDE = "kendoDraggable-hide";
 	public static final String CSS_CLONE = "kendoDraggable-clone";
