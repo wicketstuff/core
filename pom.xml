@@ -45,8 +45,8 @@
 		<url>git@github.com:sebfz1/wicket-jquery-ui.git</url>
 		<connection>scm:git:git@github.com:sebfz1/wicket-jquery-ui.git</connection>
 		<developerConnection>scm:git:git@github.com:sebfz1/wicket-jquery-ui.git</developerConnection>
-	  <tag>HEAD</tag>
-  </scm>
+		<tag>HEAD</tag>
+	</scm>
 
 	<properties>
 		<wicket.version>6.20.0</wicket.version>
@@ -57,14 +57,14 @@
 	<repositories>
 		<repository>
 			<id>Apache Nexus Snapshot</id>
-			<url>https://repository.apache.org/content/repositories/snapshots/</url>
+			<url>https://repository.apache.org/content/repositories/snapshots</url>
 			<snapshots>
 				<enabled>true</enabled>
 			</snapshots>
 		</repository>
 		<repository>
 			<id>Wicket Nexus Staging</id>
-			<url>https://repository.apache.org/content/repositories/orgapachewicket-1038/</url>
+			<url>https://repository.apache.org/content/repositories/orgapachewicket-1038</url>
 		</repository>
 	</repositories>
 
