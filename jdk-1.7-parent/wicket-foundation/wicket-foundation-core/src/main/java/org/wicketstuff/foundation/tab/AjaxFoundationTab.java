@@ -12,6 +12,11 @@ import org.apache.wicket.model.IModel;
 public class AjaxFoundationTab<T extends ITab> extends FoundationTab<T>
 {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 	public AjaxFoundationTab(String id, List<T> tabs, IModel<Integer> model)
 	{
 		super(id, tabs, model);
