@@ -26,6 +26,7 @@ import com.googlecode.wicket.jquery.core.Options;
 import com.googlecode.wicket.jquery.core.ajax.IJQueryAjaxAware;
 import com.googlecode.wicket.jquery.core.ajax.JQueryAjaxBehavior;
 import com.googlecode.wicket.jquery.core.ajax.JQueryAjaxPostBehavior;
+import com.googlecode.wicket.jquery.core.utils.JQueryUtils;
 import com.googlecode.wicket.jquery.core.utils.RequestCycleUtils;
 import com.googlecode.wicket.jquery.ui.JQueryUIBehavior;
 
@@ -63,6 +64,7 @@ public abstract class DatePickerBehavior extends JQueryUIBehavior implements IJQ
 	}
 
 	// Methods //
+
 	@Override
 	public void bind(Component component)
 	{
@@ -75,8 +77,17 @@ public abstract class DatePickerBehavior extends JQueryUIBehavior implements IJQ
 		}
 	}
 
-	// Properties //
+	@Override
+	public void destroy(AjaxRequestTarget target)
+	{
+		// FIXME: workaround, will be removed when fixed in jquery-ui
+		target.prependJavaScript(JQueryUtils.trycatch(this.$(Options.asString("destroy"))));
+
+		this.onDestroy(target);
+	}
+
 	// Events //
+
 	@Override
 	public void onConfigure(Component component)
 	{

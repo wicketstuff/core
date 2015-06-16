@@ -24,6 +24,7 @@ import org.slf4j.LoggerFactory;
 
 import com.googlecode.wicket.jquery.core.JQueryBehavior;
 import com.googlecode.wicket.jquery.core.Options;
+import com.googlecode.wicket.jquery.core.utils.JQueryUtils;
 import com.googlecode.wicket.jquery.ui.JQueryDestroyListener.IDestroyable;
 import com.googlecode.wicket.jquery.ui.settings.JQueryUILibrarySettings;
 
@@ -62,7 +63,7 @@ public class JQueryUIBehavior extends JQueryBehavior implements IDestroyable
 
 		this.initReferences();
 	}
-	
+
 	// Methods //
 
 	/**
@@ -107,7 +108,8 @@ public class JQueryUIBehavior extends JQueryBehavior implements IDestroyable
 	@Override
 	public void destroy(AjaxRequestTarget target)
 	{
-		target.prependJavaScript(String.format("var $w = %s; if($w) { $w.destroy(); }", this.widget()));
+		String statement = String.format("var $w = %s; if($w) { $w.destroy(); }", this.widget());
+		target.prependJavaScript(JQueryUtils.trycatch(statement));
 
 		this.onDestroy(target);
 	}
