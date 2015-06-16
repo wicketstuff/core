@@ -107,7 +107,7 @@ public class JQueryUIBehavior extends JQueryBehavior implements IDestroyable
 	@Override
 	public void destroy(AjaxRequestTarget target)
 	{
-		target.prependJavaScript(this.$(Options.asString("destroy")));
+		target.prependJavaScript(String.format("var $w = %s; if($w) { $w.destroy(); }", this.widget()));
 
 		this.onDestroy(target);
 	}
