@@ -49,8 +49,8 @@ Releases should be signed with a PGP key.
 http://central.sonatype.org/pages/working-with-pgp-signatures.html
 
 * update `<version>6.x.y</version>` in **README.md** and **wicket-jquery-ui-samples/src/main/java/com/googlecode/wicket/jquery/ui/samples/HomePage.html**
-* `mvn versions:set -DnewVersion=x.y.z-SNAPSHOT` (where x.y.z is the new version, this will prevent to enter the new version for each artifact)
-* commit and push 
+* `mvn release:update-versions -DautoVersionSubmodules=true` (if your development version does not match the incoming release version)
+* `git commit` and `git push` 
 * `mvn release:clean`
 * `mvn release:prepare`
 * `mvn release:perform`
