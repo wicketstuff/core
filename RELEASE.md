@@ -7,7 +7,7 @@ More info: http://central.sonatype.org/pages/apache-maven.html
 
 ### Prerequisites
 
-Open Maven settings.xml (i.e. `~/.m2/settings.xml`) file and add the needed `servers` and  with the following content:
+Open Maven settings.xml (i.e. `~/.m2/settings.xml`) file and add the needed `server` and `profile` with the following content:
 
 ```xml
 <settings>
@@ -25,7 +25,7 @@ Open Maven settings.xml (i.e. `~/.m2/settings.xml`) file and add the needed `ser
         <activeByDefault>true</activeByDefault>
       </activation>
       <properties>
-        <gpg.executable>gpg2</gpg.executable>
+        <gpg.executable>gpg</gpg.executable> <!-- or gpg2 -->
         <gpg.passphrase>[MY GPG PASSPHRASE]</gpg.passphrase>
       </properties>
     </profile>
