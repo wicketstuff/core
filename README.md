@@ -24,7 +24,7 @@ Once done, just include the jar(s) in your project's build path.
 <dependency>
     <groupId>com.googlecode.wicket-jquery-ui</groupId>
     <artifactId>wicket-jquery-ui</artifactId>
-    <version>6.20.0</version> <!-- or 1.5.11, or 7.0.0-M6 -->
+    <version>6.20.0</version> <!-- or 1.5.11, 7.0.0-M6 -->
 </dependency>
 ```
 
