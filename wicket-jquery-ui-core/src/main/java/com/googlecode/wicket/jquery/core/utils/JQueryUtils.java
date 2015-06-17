@@ -33,7 +33,7 @@ public class JQueryUtils
 	 */
 	public static String trycatch(String statement)
 	{
-		return "try { " + statement + " } catch (e) { console.warn(e); }";
+		return "try { " + statement + " } catch (e) { if (console) { console.warn(e); } }";
 	}
 
 	/**
