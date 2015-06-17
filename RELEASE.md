@@ -10,35 +10,26 @@ More info: http://central.sonatype.org/pages/apache-maven.html
 Open Maven settings.xml (i.e. `~/.m2/settings.xml`) file and add the needed `servers` and  with the following content:
 
 ```xml
-    <!--
-    <servers>
-    -->
-      <server>
-        <id>sonatype-nexus-snapshots</id>
-        <username>[THE USERNAME]</username>
-        <password>[THE PASSWORD]</password>
-      </server>
-      <server>
-        <id>sonatype-nexus-staging</id>
-        <username>[THE USERNAME]</username>
-        <password>[THE PASSWORD]</password>
-      </server>
-      <!--
-    </servers>
-    -->
-    <!--
-    <profiles>
-    -->
+<settings>
+  <servers>
+    <server>
+      <id>ossrh</id>
+      <username>[THE USERNAME]</username>
+      <password>[THE PASSWORD]</password>
+    </server>
+  </servers>
+  <profiles>
     <profile>
-      <id>sonatype-oss-release</id>
+      <id>ossrh</id>
+      <activation>
+        <activeByDefault>true</activeByDefault>
+      </activation>
       <properties>
+        <gpg.executable>gpg2</gpg.executable>
         <gpg.passphrase>[MY GPG PASSPHRASE]</gpg.passphrase>
       </properties>
     </profile>
-  <!--
   </profiles>
-  -->
-  
 </settings>
 ```
 
@@ -48,14 +39,17 @@ The GPG passphrase is used to sign the artifacts before uploading them to Sonaty
 
 ### Deploy a Snapshot version
 ```
-$ mvn clean deploy
+$ mvn clean deploy -P snapshot
 ```
 
 After finishing the deployment you can check that the new snapshot version is at [Sonatype OSS Snapshots](https://oss.sonatype.org/content/repositories/snapshots/com/googlecode/wicket-jquery-ui/)
 
 ### Deploy a Release version
+Releases should be signed with a PGP key.
+http://central.sonatype.org/pages/working-with-pgp-signatures.html
 
 * update `<version>6.x.y</version>` in **README.md** and **wicket-jquery-ui-samples/src/main/java/com/googlecode/wicket/jquery/ui/samples/HomePage.html**
+* `mvn versions:set -DnewVersion=x.y.z-SNAPSHOT` (where x.y.z is the new version, this will prevent to enter the new version for each artifact)
 * commit and push 
 * `mvn release:clean`
 * `mvn release:prepare`
