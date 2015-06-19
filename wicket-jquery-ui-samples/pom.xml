@@ -14,10 +14,6 @@
 	<artifactId>wicket-jquery-ui-samples</artifactId>
 	<packaging>war</packaging>
 
-	<properties>
-		<maven.javadoc.skip>true</maven.javadoc.skip>
-	</properties>
-
 	<dependencies>
 
 		<!-- JQUERY-UI DEPENDENCIES -->
@@ -126,8 +122,8 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-source-plugin</artifactId>
-				<configuration>
-					<skip>true</skip>
+				<configuration>				
+					<skipSource>true</skipSource>
 				</configuration>
 			</plugin>
 			<plugin>
@@ -142,6 +138,13 @@
 				<artifactId>maven-deploy-plugin</artifactId>
 				<configuration>
 					<skip>true</skip>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.sonatype.plugins</groupId>
+				<artifactId>nexus-staging-maven-plugin</artifactId>
+				<configuration>
+
 				</configuration>
 			</plugin>
 			<plugin>
