@@ -4,6 +4,7 @@
 
 	<name>wicket-jquery-ui pom</name>
 	<description>parent pom</description>
+	<url>https://github.com/sebfz1/wicket-jquery-ui</url>
 
 	<organization>
 		<name>7thWeb</name>
