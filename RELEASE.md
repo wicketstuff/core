@@ -55,5 +55,4 @@ http://central.sonatype.org/pages/working-with-pgp-signatures.html
 * `mvn release:prepare`
 * `mvn release:perform`
 * Go to [Sonatype OSS](https://oss.sonatype.org) and login with the same credentials as in settings.xml's server configuration
-* Navigate to `Staging Repositories`, find the deployed bundle in the grid, select it and close it (button *Close* in the toolbar)
-* Wait few seconds until Nexus closes it and then select the bundle and release it (button *Release* in the toolbar)
+* Navigate to `Staging Repositories`, find the deployed bundle in the grid, select it and release it (button *Release* in the toolbar)
