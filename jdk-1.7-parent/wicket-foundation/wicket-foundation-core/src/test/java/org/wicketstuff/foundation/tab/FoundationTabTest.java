@@ -9,6 +9,7 @@ import org.apache.wicket.extensions.markup.html.tabs.ITab;
 import org.apache.wicket.markup.IMarkupCacheKeyProvider;
 import org.apache.wicket.markup.IMarkupResourceStreamProvider;
 import org.apache.wicket.markup.html.WebMarkupContainer;
+import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.util.resource.IResourceStream;
@@ -19,6 +20,9 @@ import org.junit.Test;
 
 public class FoundationTabTest extends WicketTestCase {
 	
+	public static final String THIRD_TAB_TEXT = "This is the third panel of the basic tab example. This is the third panel of the basic tab example.";
+	public static final String SECOND_TAB_TEXT = "This is the second panel of the basic tab example. This is the second panel of the basic tab example.";
+	public static final String FIRST_TAB_TEXT = "This is the first panel of the basic tab example. You can place all sorts of content here including a grid.";
 	private final ArrayList<ITab> tabs;
 
 	public FoundationTabTest() {
@@ -28,7 +32,7 @@ public class FoundationTabTest extends WicketTestCase {
 
 			@Override
 			public WebMarkupContainer getPanel(String panelId) {
-				return new TextualPanel(panelId, Model.of("This is the first panel of the basic tab example. You can place all sorts of content here including a grid."));
+				return new TextualPanel(panelId, Model.of(FIRST_TAB_TEXT));
 			}
 		});
 
@@ -36,7 +40,7 @@ public class FoundationTabTest extends WicketTestCase {
 
 			@Override
 			public WebMarkupContainer getPanel(String panelId) {
-				return new TextualPanel(panelId, Model.of("This is the second panel of the basic tab example. This is the second panel of the basic tab example."));
+				return new TextualPanel(panelId, Model.of(SECOND_TAB_TEXT));
 			}
 		});
 		
@@ -44,7 +48,7 @@ public class FoundationTabTest extends WicketTestCase {
 
 			@Override
 			public WebMarkupContainer getPanel(String panelId) {
-				return new TextualPanel(panelId, Model.of("This is the third panel of the basic tab example. This is the third panel of the basic tab example."));
+				return new TextualPanel(panelId, Model.of(THIRD_TAB_TEXT));
 			}
 		});
 	}
@@ -55,13 +59,7 @@ public class FoundationTabTest extends WicketTestCase {
 		
 		tester.startComponentInPage(tab);
 		
-		//must have the three rendered titles for the tabs.
-		List<TagTester> tagsByWicketId = tester.getTagsByWicketId("title");
-		assertEquals(tabs.size(), tagsByWicketId.size());
-		
-		for (TagTester tagTester : tagsByWicketId) {
-			assertTrue(tagTester.getValue().startsWith("title"));
-		}
+		testRenderedTab();
 		
 		//render a vertical tab component
 		tab = new FoundationTab<>("id", tabs);
@@ -71,7 +69,33 @@ public class FoundationTabTest extends WicketTestCase {
 		assertTrue(tagByWicketId.getAttributeContains("class", "vertical"));
 	}
 	
-	class TextualPanel extends WebMarkupContainer implements IMarkupResourceStreamProvider, IMarkupCacheKeyProvider {
+	@Test
+	public void renderAjaxTab() {
+		AjaxFoundationTab<ITab> tab = new AjaxFoundationTab<>("id", tabs);
+		
+		tester.startComponentInPage(tab);
+		
+		testRenderedTab();
+	}
+
+	private void testRenderedTab() {
+		//must have a rendered title section for each tab.
+		List<TagTester> tagsByWicketId = tester.getTagsByWicketId("title");
+		assertEquals(tabs.size(), tagsByWicketId.size());
+		
+		for (TagTester tagTester : tagsByWicketId) {
+			assertTrue(tagTester.getValue().startsWith("title"));
+		}
+		
+		//the first tab must be rendered as default tab
+		tester.assertContains(FIRST_TAB_TEXT);
+		
+		//click on second link and check that the resulting content is ok
+		tester.clickLink("id:tabs-container:tabs:1:link");
+		tester.assertContains(SECOND_TAB_TEXT);
+	}
+	
+	class TextualPanel extends Panel implements IMarkupResourceStreamProvider, IMarkupCacheKeyProvider {
 
 		/**
 		 * 
@@ -90,13 +114,7 @@ public class FoundationTabTest extends WicketTestCase {
 		@Override
 		public IResourceStream getMarkupResourceStream(MarkupContainer container,
 			Class<?> containerClass) {
-			return new StringResourceStream("<div>" + getDefaultModelObjectAsString() + "</div>");
-		}
-
-		@Override
-		protected void onRender()
-		{
-			
+			return new StringResourceStream("<wicket:panel><div>" + getDefaultModelObjectAsString() + "</div></wicket:panel>");
 		}
 	}
 }
