@@ -22,8 +22,8 @@ import java.util.List;
 
 import org.apache.wicket.Session;
 import org.apache.wicket.ajax.AjaxEventBehavior;
-import org.apache.wicket.ajax.XmlAjaxResponse;
 import org.apache.wicket.behavior.Behavior;
+import org.apache.wicket.page.XmlPartialPageUpdate;
 import org.apache.wicket.util.tester.FormTester;
 import org.apache.wicket.util.tester.WicketTester;
 import org.junit.After;
@@ -89,8 +89,8 @@ public class StatelessAjaxComponentsBehaviorsTest {
     	
     	String response = tester.getLastResponseAsString();
     	
-    	boolean isAjaxResponse = response.contains(XmlAjaxResponse.START_ROOT_ELEMENT)
-    		&& response.contains(XmlAjaxResponse.END_ROOT_ELEMENT);
+    	boolean isAjaxResponse = response.contains(XmlPartialPageUpdate.START_ROOT_ELEMENT)
+    		&& response.contains(XmlPartialPageUpdate.END_ROOT_ELEMENT);
     	
     	assertTrue(isAjaxResponse);
     	
