@@ -15,15 +15,30 @@ import org.apache.wicket.model.Model;
 import org.apache.wicket.util.resource.IResourceStream;
 import org.apache.wicket.util.resource.StringResourceStream;
 import org.apache.wicket.util.tester.TagTester;
-import org.apache.wicket.util.tester.WicketTestCase;
+import org.apache.wicket.util.tester.WicketTester;
+import org.junit.After;
+import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Test;
 
-public class FoundationTabTest extends WicketTestCase {
+public class FoundationTabTest extends Assert {
 	
 	public static final String THIRD_TAB_TEXT = "This is the third panel of the basic tab example. This is the third panel of the basic tab example.";
 	public static final String SECOND_TAB_TEXT = "This is the second panel of the basic tab example. This is the second panel of the basic tab example.";
 	public static final String FIRST_TAB_TEXT = "This is the first panel of the basic tab example. You can place all sorts of content here including a grid.";
 	private final ArrayList<ITab> tabs;
+
+	private WicketTester tester;
+
+	@Before
+	public void before() {
+		tester = new WicketTester();
+	}
+
+	@After
+	public void after() {
+		tester.destroy();
+	}
 
 	public FoundationTabTest() {
 		tabs = new ArrayList<>();
