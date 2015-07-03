@@ -14,7 +14,7 @@
  */
 package org.wicketstuff.urlfragment;
 
-import org.apache.wicket.ajax.AjaxRequestTarget;
+import org.apache.wicket.core.request.handler.IPartialPageRequestHandler;
 
 /**
  * Encapsulates the JavaScripts used to edit the URL fragment in the browser.
@@ -24,11 +24,11 @@ import org.apache.wicket.ajax.AjaxRequestTarget;
  */
 public class UrlFragment
 {
-	private final AjaxRequestTarget target;
+	private final IPartialPageRequestHandler handler;
 
-	public UrlFragment(AjaxRequestTarget target)
+	public UrlFragment(IPartialPageRequestHandler handler)
 	{
-		this.target = target;
+		this.handler = handler;
 	}
 
 	/**
@@ -110,9 +110,9 @@ public class UrlFragment
 
 	private void addJsToTarget(String js)
 	{
-		if (this.target != null)
+		if (this.handler != null)
 		{
-			this.target.prependJavaScript(js);
+			this.handler.prependJavaScript(js);
 		}
 	}
 
