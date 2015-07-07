@@ -22,7 +22,7 @@ import org.apache.wicket.ajax.markup.html.AjaxFallbackLink;
 import org.apache.wicket.ajax.markup.html.IAjaxLink;
 import org.apache.wicket.markup.ComponentTag;
 import org.apache.wicket.markup.html.link.Link;
-import org.apache.wicket.model.IModel;
+import org.apache.wicket.markup.html.link.StatelessLink;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
 import org.wicketstuff.stateless.behaviors.StatelessAjaxEventBehavior;
 
@@ -39,23 +39,7 @@ public abstract class StatelessAjaxFallbackLink<T> extends StatelessLink<T>
 
     public StatelessAjaxFallbackLink(final String id)
     {
-        this(id, null, null);
-    }
-
-	public StatelessAjaxFallbackLink(final String id, final PageParameters params)
-	{
-		this(id, null, params);
-	}
-
-    public StatelessAjaxFallbackLink(final String id, final IModel<T> model)
-    {
-        this(id, model, null);
-    }
-
-    public StatelessAjaxFallbackLink(final String id, final IModel<T> model,
-            final PageParameters params)
-    {
-        super(id, model, params);
+        super(id);
 
         add(new StatelessAjaxEventBehavior("click")
         {
@@ -67,12 +51,6 @@ public abstract class StatelessAjaxFallbackLink<T> extends StatelessLink<T>
                 super.updateAjaxAttributes(attributes);
                 attributes.setPreventDefault(true);
                 StatelessAjaxFallbackLink.this.updateAjaxAttributes(attributes);
-            }
-
-            @Override
-            protected PageParameters getPageParameters()
-            {
-                return StatelessAjaxFallbackLink.this.getPageParameters();
             }
 
             @Override
@@ -91,6 +69,12 @@ public abstract class StatelessAjaxFallbackLink<T> extends StatelessLink<T>
                 onClick(target);
                 target.add(StatelessAjaxFallbackLink.this);
             }
+
+			@Override
+			protected PageParameters getPageParameters()
+			{
+				return getPage().getPageParameters();
+			}
         });
     }
 

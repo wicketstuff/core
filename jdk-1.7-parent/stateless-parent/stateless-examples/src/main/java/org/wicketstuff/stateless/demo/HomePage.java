@@ -54,6 +54,8 @@ public class HomePage extends WebPage {
 	 *            Page parameters
 	 */
 	public HomePage(final PageParameters parameters) {
+		super(parameters);
+		
 		final Label c2 = new Label("c2", new AbstractReadOnlyModel<Integer>() {
 			private static final long serialVersionUID = 1L;
 
@@ -64,8 +66,7 @@ public class HomePage extends WebPage {
 			}
 
 		});
-		final Link<?> c2Link = new StatelessAjaxFallbackLink<Void>("c2-link",
-				null, parameters) {
+		final Link<?> c2Link = new StatelessAjaxFallbackLink<Void>("c2-link") {
 
 			@Override
 			public void onClick(final AjaxRequestTarget target) {
