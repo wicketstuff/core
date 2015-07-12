@@ -11,7 +11,6 @@
 
 	<artifactId>wicketstuff-annotation</artifactId>
 	<packaging>jar</packaging>
-
 	<name>Wicket Annotations</name>
 	<description>
 		Use wicketstuff-annotation to use Java Annotations and class path searching to mount your Wicket pages.
@@ -26,10 +25,10 @@
 	</developers>
 
 	<dependencies>
-		<dependency>
+		<!-- <dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-core</artifactId>
-		</dependency>
+		</dependency> -->
 		<dependency>
 			<groupId>org.slf4j</groupId>
 			<artifactId>slf4j-log4j12</artifactId>
@@ -41,6 +40,11 @@
 		<dependency>
 			<groupId>log4j</groupId>
 			<artifactId>log4j</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.reflections</groupId>
+			<artifactId>reflections</artifactId>
+			<version>0.9.10</version>
 		</dependency>
 	</dependencies>
 

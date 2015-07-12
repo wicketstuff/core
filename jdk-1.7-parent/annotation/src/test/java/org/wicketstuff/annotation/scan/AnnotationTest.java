@@ -16,16 +16,19 @@
  */
 package org.wicketstuff.annotation.scan;
 
+import static org.hamcrest.CoreMatchers.is;
+
 import org.apache.wicket.Page;
 import org.apache.wicket.core.request.mapper.HomePageMapper;
 import org.apache.wicket.core.request.mapper.MountedMapper;
 import org.apache.wicket.request.IRequestMapper;
 import org.apache.wicket.request.component.IRequestablePage;
 import org.hamcrest.CoreMatchers;
-import static org.hamcrest.CoreMatchers.is;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.wicketstuff.annotation.mount.MountPath;
 
 /**
@@ -34,6 +37,8 @@ import org.wicketstuff.annotation.mount.MountPath;
  */
 public class AnnotationTest extends Assert
 {
+	Logger log = LoggerFactory.getLogger(AnnotationTest.class);
+			
 	@MountPath
 	private static class DefaultMountPathPage extends Page
 	{
@@ -54,6 +59,18 @@ public class AnnotationTest extends Assert
 
 	@MountPath(value = "/")
 	private static class HomePathsPage extends Page
+	{
+		private static final long serialVersionUID = 1L;
+	}
+	
+	@MountPath(value = "baseMountPath")
+	private static class BaseMountPathPage extends Page
+	{
+		private static final long serialVersionUID = 1L;
+	}
+	
+	@MountPath(value = "extendedBaseMountPath")
+	private static class ExtendedBaseMountPathPage extends BaseMountPathPage
 	{
 		private static final long serialVersionUID = 1L;
 	}
@@ -128,7 +145,7 @@ public class AnnotationTest extends Assert
 	{
 		AnnotatedMountList list = testScanner.scanPackage(AnnotationTest.class.getPackage()
 			.getName());
-		assertThat("Should have gotten 6 items", list.size(), is(6));
+		assertThat("Should have gotten 8 items", list.size(), is(8));
 	}
 
     @Test
@@ -147,5 +164,11 @@ public class AnnotationTest extends Assert
 		assertThat(list.size(), is(1));
 		assertThat(list.get(0), CoreMatchers.instanceOf(HomePageMapper.class));
 	}
-
+	
+	@Test
+	public void packageScanHierarchical()
+	{
+		AnnotatedMountList list = testScanner.scanPackage("org.wicketstuff.annotation");
+		assertThat("Should have gotten 8 items", list.size(), is(8));
+	}
 }
