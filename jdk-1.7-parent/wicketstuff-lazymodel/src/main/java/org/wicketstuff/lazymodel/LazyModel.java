@@ -563,9 +563,23 @@ public class LazyModel<T> implements IModel<T>, IObjectClassAwareModel<T>,
 	 * @param type The type parameter for that model.
 	 * @param <T>
 	 * @return a result proxy for further evaluation.
+	 * @see #fromObject(IModel)
 	 */
 	public static <T> T from(IModel<T> target, Class<T> type) {
 		return (T) new BoundEvaluation<T>(type, target).proxy();
+	}
+
+	/**
+	 * Start a lazy evaluation, using the reflected runtime type of the given model's object. Use this for terse model
+	 * building on top of a type erased model.
+	 * @param target The model to bind to.
+	 * @param <T>
+	 * @return a result proxy for further evaluation.
+	 * @see #from(IModel, Class)
+	 */
+	public static <T> T fromObject(IModel<T> target)
+	{
+		return (T) new BoundEvaluation<T>(target.getObject().getClass(), target).proxy();
 	}
 
 	/**
