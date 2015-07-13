@@ -556,6 +556,19 @@ public class LazyModel<T> implements IModel<T>, IObjectClassAwareModel<T>,
 	}
 
 	/**
+	 * Shortcut for {@link #from(Class)} and {@link #bind(Object)}. Use this for quick model building on top of a
+	 * type-erased model.
+	 *
+	 * @param target The model to bind to.
+	 * @param type The type parameter for that model.
+	 * @param <T>
+	 * @return a result proxy for further evaluation.
+	 */
+	public static <T> T from(IModel<T> target, Class<T> type) {
+		return (T) new BoundEvaluation<T>(type, target).proxy();
+	}
+
+	/**
 	 * Start a lazy evaluation.
 	 * 
 	 * @param target
