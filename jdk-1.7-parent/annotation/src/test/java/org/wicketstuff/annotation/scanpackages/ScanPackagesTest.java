@@ -81,6 +81,6 @@ public class ScanPackagesTest extends Assert
 	public void testOnlyScanPackage()
 	{
 		AnnotatedMountList list = testScanner.scanPackages(AnnotationTest.class.getPackage().getName() + ".");
-		assertThat("Should have gotten 7 items", list.size(), is(6));
+		assertThat("Should have gotten 6 items", list.size(), is(6));
 	}
 }
