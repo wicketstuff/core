@@ -880,6 +880,21 @@ public class LazyModelTest {
 	}
 
 	@Test
+	public void fromTypeErasedModelWithClass() throws Exception
+	{
+		final A a = new A();
+		a.b = new B();
+
+		Model target = new Model(a);
+		LazyModel<B> model = model(from(target, A.class).getB());
+
+		assertEquals(B.class, model.getObjectClass());
+		assertEquals("b", model.getPath());
+		assertEquals(a.b, model.getObject());
+	}
+
+
+	@Test
 	public void bindToTypeErasedModelWithNull() {
 		LazyModel<B> model = model(from(A.class).getB()).bind(
 				new Model<A>(null));
