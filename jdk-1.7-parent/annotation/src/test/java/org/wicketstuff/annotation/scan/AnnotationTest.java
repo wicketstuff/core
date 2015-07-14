@@ -27,8 +27,6 @@ import org.hamcrest.CoreMatchers;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.wicketstuff.annotation.mount.MountPath;
 
 /**
@@ -37,7 +35,6 @@ import org.wicketstuff.annotation.mount.MountPath;
  */
 public class AnnotationTest extends Assert
 {
-	Logger log = LoggerFactory.getLogger(AnnotationTest.class);
 			
 	@MountPath
 	private static class DefaultMountPathPage extends Page
@@ -63,18 +60,6 @@ public class AnnotationTest extends Assert
 		private static final long serialVersionUID = 1L;
 	}
 	
-	@MountPath(value = "baseMountPath")
-	private static class BaseMountPathPage extends Page
-	{
-		private static final long serialVersionUID = 1L;
-	}
-	
-	@MountPath(value = "extendedBaseMountPath")
-	private static class ExtendedBaseMountPathPage extends BaseMountPathPage
-	{
-		private static final long serialVersionUID = 1L;
-	}
-
 	private class TestMountedMapper extends MountedMapper
 	{
 		public final String mountPath;
@@ -145,7 +130,7 @@ public class AnnotationTest extends Assert
 	{
 		AnnotatedMountList list = testScanner.scanPackage(AnnotationTest.class.getPackage()
 			.getName());
-		assertThat("Should have gotten 8 items", list.size(), is(8));
+		assertThat("Should have gotten 6 items", list.size(), is(6));
 	}
 
     @Test
@@ -165,10 +150,4 @@ public class AnnotationTest extends Assert
 		assertThat(list.get(0), CoreMatchers.instanceOf(HomePageMapper.class));
 	}
 	
-	@Test
-	public void packageScanHierarchical()
-	{
-		AnnotatedMountList list = testScanner.scanPackage("org.wicketstuff.annotation");
-		assertThat("Should have gotten 8 items", list.size(), is(8));
-	}
 }

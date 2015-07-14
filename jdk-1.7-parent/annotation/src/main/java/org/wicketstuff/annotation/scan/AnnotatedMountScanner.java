@@ -16,6 +16,7 @@
  */
 package org.wicketstuff.annotation.scan;
 
+import java.util.List;
 import java.util.Set;
 
 import org.apache.wicket.Application;
@@ -27,6 +28,7 @@ import org.apache.wicket.request.component.IRequestablePage;
 import org.reflections.Reflections;
 import org.reflections.scanners.TypeAnnotationsScanner;
 import org.wicketstuff.annotation.mount.MountPath;
+import org.wicketstuff.config.MatchingResources;
 
 /**
  * Looks for mount information by scanning for classes annotated with {@link MountPath}. You can
@@ -57,6 +59,17 @@ import org.wicketstuff.annotation.mount.MountPath;
  * 
  * <p>
  * You could scan the entire classpath if you wanted by passing in null, but that might require more
+ * time to run than limiting it to known packages which have annotated classes.
+ *
+ * <pre>
+ * protected void init()
+ * {
+ * 	new AnnotatedMountScanner().scanPackage(&quot;org.mycompany.wicket.pages&quot;,&quot;org.anothermycompanypackage.anotherwicketpackage.anotherpages&quot;).mount(this);
+ * }
+ * </pre>
+ * 
+ * <p>
+ * You could scan the entire classpath if you wanted by passing in &quot;&quot;, but that might require more
  * time to run than limiting it to known packages which have annotated classes.
  * 
  * <p>
@@ -98,16 +111,51 @@ public class AnnotatedMountScanner
 {
 
 	/**
-	 * Scan a list of classes which are annotated with MountPath
+	 * Get the Spring search pattern given a package name or part of a package name
 	 * 
-	 * @param mounts
-	 * @return An {@link AnnotatedMountList}
+	 * @param packageName
+	 *            a package name
+	 * @return a Spring search pattern for the given package
+	 * @deprecated will be removed on migration to 8.x.
 	 */
-	@SuppressWarnings({ "unchecked" })
-	public AnnotatedMountList scanPackage(String ... patterns)
+	@Deprecated
+	public String getPatternForPackage(String packageName)
 	{
-		Reflections reflections = new Reflections(patterns,TypeAnnotationsScanner.class);
-		Set<Class<?>> mounts = reflections.getTypesAnnotatedWith(MountPath.class, true);
+		if (packageName == null)
+			packageName = "";
+		packageName = packageName.replace('.', '/');
+		if (!packageName.endsWith("/"))
+		{
+			packageName += '/';
+		}
+
+		return "classpath*:" + packageName + "**/*.class";
+	}
+	
+	/**
+	 * Scan given a package name or part of a package name and return list of classes with MountPath
+	 * annotation.
+	 * 
+	 * @return A List of classes annotated with &#64;MountPath
+	 * @deprecated will be removed on migration to 8.x.
+	 */
+	@Deprecated
+	public List<Class<?>> getPackageMatches(String pattern)
+	{
+		return getPatternMatches(getPatternForPackage(pattern));
+	}
+	
+	/**
+	 * Scan given a Spring search pattern and return list of classes with MountPath annotation.
+	 * 
+	 * @return A List of classes annotated with &#64;MountPath
+	 * @deprecated will be removed on migration to 8.x.
+	 */
+	@Deprecated
+	public List<Class<?>> getPatternMatches(String pattern)
+	{
+		MatchingResources resources = new MatchingResources(pattern);
+		List<Class<?>> mounts = resources.getAnnotatedMatches(MountPath.class);
 		for (Class<?> mount : mounts)
 		{
 			if (!(Page.class.isAssignableFrom(mount)))
@@ -116,7 +164,47 @@ public class AnnotatedMountScanner
 					mount);
 			}
 		}
-		
+		return mounts;
+	}
+	
+	/**
+	 * Scan given package name or part of a package name
+	 * 
+	 * @param packageName
+	 *            a package to scan (e.g., "org.mycompany.pages)
+	 * @return An {@link AnnotatedMountList}
+	 * @deprecated will be removed on migration to 8.x.
+	 */
+	@Deprecated
+	public AnnotatedMountList scanPackage(String packageName)
+	{
+		return scanList(getPackageMatches(packageName));
+	}
+	
+	/**
+	 * Scan given a Spring search pattern.
+	 * 
+	 * @param pattern
+	 * @return An {@link AnnotatedMountList}
+	 * @deprecated will be removed on migration to 8.x.
+	 */
+	@Deprecated
+	public AnnotatedMountList scanPattern(String pattern)
+	{
+		return scanList(getPatternMatches(pattern));
+	}
+	
+	/**
+	 * Scan a list of classes which are annotated with MountPath
+	 * 
+	 * @param mounts
+	 * @return An {@link AnnotatedMountList}
+	 * @deprecated will be removed on migration to 8.x.
+	 */
+	@Deprecated
+	@SuppressWarnings({ "unchecked" })
+	protected AnnotatedMountList scanList(List<Class<?>> mounts)
+	{
 		AnnotatedMountList list = new AnnotatedMountList();
 		for (Class<?> mount : mounts)
 		{
@@ -125,7 +213,7 @@ public class AnnotatedMountScanner
 		}
 		return list;
 	}
-
+	
 	/**
 	 * Scan given a class that is a sublass of {@link Page}.
 	 * 
@@ -140,7 +228,7 @@ public class AnnotatedMountScanner
 		scanClass(pageClass, list);
 		return list;
 	}
-
+	
 	/**
 	 * Magic of all this is done here.
 	 * 
@@ -169,7 +257,7 @@ public class AnnotatedMountScanner
 
 		list.add(getRequestMapper(path, pageClass));
 	}
-
+	
 	/**
 	 * Returns the default mapper given a mount path and class.
 	 * 
@@ -185,7 +273,7 @@ public class AnnotatedMountScanner
 		}
 		return new MountedMapper(mountPath, pageClass);
 	}
-
+	
 	/**
 	 * Returns the default mount path for a given class (used if the path has not been specified in
 	 * the <code>@MountPath</code> annotation). By default, this method returns the
@@ -198,4 +286,35 @@ public class AnnotatedMountScanner
 	{
 		return pageClass.getSimpleName();
 	}
+	
+	/**
+	 * Scan a list of classes which are annotated with MountPath
+	 * 
+	 * @param packages
+	 * 			packages to scan (e.g., "org.mycompany.pages","org.anothercompanypackages.anotherpagespackages")
+	 * @return An {@link AnnotatedMountList}
+	 */
+	@SuppressWarnings({ "unchecked" })
+	public AnnotatedMountList scanPackages(String ... packages)
+	{	
+		Reflections reflections = new Reflections(packages,TypeAnnotationsScanner.class);
+		Set<Class<?>> mounts = reflections.getTypesAnnotatedWith(MountPath.class, true);
+		for (Class<?> mount : mounts)
+		{
+			if (!(Page.class.isAssignableFrom(mount)))
+			{
+				throw new RuntimeException("@MountPath annotated class should subclass Page: " +
+					mount);
+			}
+		}
+		
+		AnnotatedMountList list = new AnnotatedMountList();
+		for (Class<?> mount : mounts)
+		{
+			Class<? extends Page> page = (Class<? extends Page>)mount;
+			scanClass(page, list);
+		}
+		return list;
+	}
+	
 }
