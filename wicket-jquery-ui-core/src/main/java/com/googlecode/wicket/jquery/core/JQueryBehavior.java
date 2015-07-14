@@ -182,7 +182,7 @@ public class JQueryBehavior extends JQueryAbstractBehavior
 	 * @param key the option key
 	 * @return null if the key does not exists
 	 */
-	public <T extends Object> T getOption(String key)
+	public <T> T getOption(String key)
 	{
 		return this.options.get(key);
 	}
