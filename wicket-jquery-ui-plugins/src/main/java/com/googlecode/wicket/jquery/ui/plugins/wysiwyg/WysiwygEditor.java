@@ -113,7 +113,7 @@ public class WysiwygEditor extends FormComponentPanel<String> implements IJQuery
 	// Methods //
 
 	@Override
-	protected void convertInput()
+	public void convertInput()
 	{
 		this.setConvertedInput(this.textarea.getConvertedInput());
 	}

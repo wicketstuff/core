@@ -220,7 +220,7 @@ public abstract class InputDialog<T extends Serializable> extends AbstractFormDi
 			private static final long serialVersionUID = 1L;
 
 			@Override
-			public boolean wantSubmitOnParentFormSubmit()
+			protected boolean wantSubmitOnParentFormSubmit()
 			{
 				return false;
 			}

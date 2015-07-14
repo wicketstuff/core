@@ -27,7 +27,7 @@ import org.apache.wicket.markup.html.list.ListItem;
 import org.apache.wicket.markup.html.list.ListView;
 import org.apache.wicket.markup.repeater.RepeatingView;
 import org.apache.wicket.model.IModel;
-import org.apache.wicket.model.util.ListModel;
+import org.apache.wicket.model.Model;
 
 import com.googlecode.wicket.jquery.core.JQueryGenericPanel;
 import com.googlecode.wicket.jquery.core.Options;
@@ -51,7 +51,7 @@ public class TabbedPanel extends JQueryGenericPanel<List<ITab>> implements ITabs
 	 */
 	public TabbedPanel(String id, List<ITab> tabs)
 	{
-		this(id, new ListModel<ITab>(tabs), new Options());
+		this(id, Model.ofList(tabs), new Options());
 	}
 
 	/**
@@ -63,7 +63,7 @@ public class TabbedPanel extends JQueryGenericPanel<List<ITab>> implements ITabs
 	 */
 	public TabbedPanel(String id, List<ITab> tabs, Options options)
 	{
-		this(id, new ListModel<ITab>(tabs), options);
+		this(id, Model.ofList(tabs), options);
 	}
 
 	/**

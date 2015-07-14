@@ -26,7 +26,6 @@ import org.apache.wicket.markup.html.list.Loop;
 import org.apache.wicket.markup.html.list.LoopItem;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
-import org.apache.wicket.model.util.ListModel;
 
 import com.googlecode.wicket.jquery.core.JQueryGenericPanel;
 import com.googlecode.wicket.jquery.core.Options;
@@ -53,7 +52,7 @@ public class AccordionPanel extends JQueryGenericPanel<List<ITab>> implements IA
 	 */
 	public AccordionPanel(String id, List<ITab> tabs)
 	{
-		this(id, new ListModel<ITab>(tabs), new Options());
+		this(id, Model.ofList(tabs), new Options());
 	}
 
 	/**
@@ -65,7 +64,7 @@ public class AccordionPanel extends JQueryGenericPanel<List<ITab>> implements IA
 	 */
 	public AccordionPanel(String id, List<ITab> tabs, Options options)
 	{
-		this(id, new ListModel<ITab>(tabs), options);
+		this(id, Model.ofList(tabs), options);
 	}
 
 	/**

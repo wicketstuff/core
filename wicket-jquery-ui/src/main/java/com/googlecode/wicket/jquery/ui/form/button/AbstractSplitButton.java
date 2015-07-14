@@ -10,7 +10,7 @@ import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.markup.html.link.AbstractLink;
 import org.apache.wicket.markup.html.panel.GenericPanel;
 import org.apache.wicket.model.IModel;
-import org.apache.wicket.model.util.ListModel;
+import org.apache.wicket.model.Model;
 import org.apache.wicket.request.resource.JavaScriptResourceReference;
 
 import com.googlecode.wicket.jquery.core.IJQueryWidget.JQueryWidget;
@@ -43,7 +43,7 @@ public abstract class AbstractSplitButton extends GenericPanel<List<IMenuItem>>
 	 */
 	public AbstractSplitButton(String id, List<IMenuItem> items)
 	{
-		this(id, new ListModel<IMenuItem>(items));
+		this(id, Model.ofList(items));
 	}
 
 	/**

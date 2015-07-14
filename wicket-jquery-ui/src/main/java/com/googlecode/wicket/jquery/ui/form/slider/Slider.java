@@ -111,7 +111,7 @@ public class Slider extends AbstractSlider<Integer>
 	}
 
 	@Override
- 	protected void convertInput()
+	public void convertInput()
  	{
  		this.setConvertedInput(this.input.getConvertedInput());
  	}

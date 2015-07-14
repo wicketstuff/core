@@ -11,9 +11,9 @@ import org.apache.wicket.extensions.wizard.dynamic.DynamicWizardStep;
 import org.apache.wicket.extensions.wizard.dynamic.IDynamicWizardStep;
 import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.markup.html.basic.Label;
+import org.apache.wicket.markup.html.form.ChoiceRenderer;
 import org.apache.wicket.markup.html.form.EmailTextField;
 import org.apache.wicket.markup.html.form.Form;
-import org.apache.wicket.markup.html.form.IChoiceRenderer;
 import org.apache.wicket.markup.html.form.RequiredTextField;
 import org.apache.wicket.markup.html.image.ContextImage;
 import org.apache.wicket.markup.html.list.ListItem;
@@ -142,7 +142,7 @@ public class DynamicWizardPage extends AbstractWizardPage
 				super(null, "Welcome!", "Introduction to the user creation wizard.");
 
 				// Radio Button //
-				this.add(new RadioChoice<Boolean>("enableAvatarStep", enableAvatarStepModel, Arrays.asList(Boolean.TRUE, Boolean.FALSE), new IChoiceRenderer<Boolean>() {
+				this.add(new RadioChoice<Boolean>("enableAvatarStep", enableAvatarStepModel, Arrays.asList(Boolean.TRUE, Boolean.FALSE), new ChoiceRenderer<Boolean>() {
 
 					private static final long serialVersionUID = 1L;
 

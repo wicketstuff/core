@@ -159,7 +159,6 @@ public class SiteMapPage extends WebPage
 	private static final Pattern PATTERN = Pattern.compile("^\\./");
 	private static final String LASTMOD = "2015-05-16";
 
-	@SuppressWarnings("unchecked")
 	private static final List<? extends Class<? extends WebPage>> LIST = Arrays.asList(
 			AccordionPanelPage.class,
 			ActionWindowPage.class,

@@ -114,7 +114,7 @@ public class RangeSlider extends AbstractSlider<RangeValue>
 	}
 
 	@Override
-	protected void convertInput()
+	public void convertInput()
  	{
 		Integer lower = this.lower.getConvertedInput();
 		Integer upper = this.upper.getConvertedInput();

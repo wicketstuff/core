@@ -217,7 +217,7 @@ public abstract class InputWindow<T> extends Window<T>
 			private static final long serialVersionUID = 1L;
 
 			@Override
-			public boolean wantSubmitOnParentFormSubmit()
+			protected boolean wantSubmitOnParentFormSubmit()
 			{
 				return false;
 			}

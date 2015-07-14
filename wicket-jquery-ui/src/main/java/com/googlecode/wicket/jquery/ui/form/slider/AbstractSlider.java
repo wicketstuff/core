@@ -96,7 +96,7 @@ public abstract class AbstractSlider<T> extends FormComponentPanel<T> implements
 	// Methods //
 
 	@Override
-	protected abstract void convertInput();
+	public abstract void convertInput();
 
 	/**
 	 * Adds a {@link RangeValidator} so slider value(s) are valid only if comprised between minimum and maximum.<br/>

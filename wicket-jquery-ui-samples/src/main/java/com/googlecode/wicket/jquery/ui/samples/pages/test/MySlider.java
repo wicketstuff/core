@@ -56,7 +56,7 @@ public class MySlider extends FormComponentPanel<RangeValue>
 	}
 
 	@Override
-	protected void convertInput()
+	public void convertInput()
 	{
 		this.setConvertedInput(this.slider.getConvertedInput());
 	}

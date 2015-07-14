@@ -100,7 +100,6 @@ public class JQueryFeedbackPanel extends FeedbackPanel
 	protected Component newMessageDisplayComponent(String id, FeedbackMessage message)
 	{
 		WebMarkupContainer container = new WebMarkupContainer(id);
-		container.add(AttributeModifier.replace("class", this.getMessageClass(message)));
 		container.add(new EmptyPanel("icon").add(AttributeModifier.replace("class", this.getIconClass(message))));
 		container.add(super.newMessageDisplayComponent("label", message));
 
@@ -110,7 +109,23 @@ public class JQueryFeedbackPanel extends FeedbackPanel
 	@Override
 	protected String getCSSClass(FeedbackMessage message)
 	{
-		return ""; // not used, because it would be applied onto both 'message' and 'label'
+		switch (message.getLevel())
+		{
+			case FeedbackMessage.INFO:
+				return INFO_CSS;
+
+			case FeedbackMessage.SUCCESS:
+				return LIGHT_CSS;
+
+			case FeedbackMessage.WARNING:
+				return WARN_CSS;
+
+			case FeedbackMessage.ERROR:
+				return ERROR_CSS;
+
+			default:
+				return super.getCSSClass(message);
+		}
 	}
 
 	/**
@@ -136,34 +151,7 @@ public class JQueryFeedbackPanel extends FeedbackPanel
 				return ERROR_ICO;
 
 			default:
-				return this.getCSSClass(message);
-		}
-	}
-
-	/**
-	 * Gets the CSS class for the given message.
-	 *
-	 * @param message the {@link FeedbackMessage}
-	 * @return the label class
-	 */
-	protected String getMessageClass(FeedbackMessage message)
-	{
-		switch (message.getLevel())
-		{
-			case FeedbackMessage.INFO:
-				return INFO_CSS;
-
-			case FeedbackMessage.SUCCESS:
-				return LIGHT_CSS;
-
-			case FeedbackMessage.WARNING:
-				return WARN_CSS;
-
-			case FeedbackMessage.ERROR:
-				return ERROR_CSS;
-
-			default:
-				return this.getCSSClass(message);
+				return JQueryIcon.NONE;
 		}
 	}
 }

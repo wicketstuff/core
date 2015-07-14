@@ -56,7 +56,7 @@ public class CalendarJavaScriptResourceReference extends JQueryPluginResourceRef
 	}
 
 	@Override
-	public Iterable<? extends HeaderItem> getDependencies()
+	public List<HeaderItem> getDependencies()
 	{
 		List<HeaderItem> dependencies = new ArrayList<HeaderItem>();
 

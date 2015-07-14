@@ -17,7 +17,6 @@
 package com.googlecode.wicket.jquery.ui.form.palette;
 
 import java.util.Collection;
-import java.util.List;
 
 import org.apache.wicket.Component;
 import org.apache.wicket.markup.html.form.IChoiceRenderer;
@@ -44,7 +43,7 @@ public class Palette<T> extends org.apache.wicket.extensions.markup.html.form.pa
 	 * @param rows Number of choices to be visible on the screen with out scrolling
 	 * @param allowOrder Allow user to move selections up and down
 	 */
-	public Palette(String id, IModel<? extends Collection<? extends T>> choicesModel, IChoiceRenderer<T> choiceRenderer, int rows, boolean allowOrder)
+	public Palette(String id, IModel<? extends Collection<T>> choicesModel, IChoiceRenderer<T> choiceRenderer, int rows, boolean allowOrder)
 	{
 		super(id, choicesModel, choiceRenderer, rows, allowOrder);
 	}
@@ -57,7 +56,7 @@ public class Palette<T> extends org.apache.wicket.extensions.markup.html.form.pa
 	 * @param rows Number of choices to be visible on the screen with out scrolling
 	 * @param allowOrder Allow user to move selections up and down
 	 */
-	public Palette(String id, IModel<? extends List<? extends T>> model, IModel<? extends Collection<? extends T>> choicesModel, IChoiceRenderer<T> choiceRenderer, int rows, boolean allowOrder)
+	public Palette(String id, IModel<? extends Collection<T>> model, IModel<? extends Collection<? extends T>> choicesModel, IChoiceRenderer<T> choiceRenderer, int rows, boolean allowOrder)
 	{
 		super(id, model, choicesModel, choiceRenderer, rows, allowOrder);
 	}

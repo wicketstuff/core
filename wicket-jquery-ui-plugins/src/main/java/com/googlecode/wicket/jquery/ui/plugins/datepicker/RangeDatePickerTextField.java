@@ -100,7 +100,7 @@ public class RangeDatePickerTextField extends FormComponentPanel<DateRange> impl
 
 	// Methods //
 	@Override
-	protected void convertInput()
+	public void convertInput()
 	{
 		this.setConvertedInput(this.input.getConvertedInput());
 	}

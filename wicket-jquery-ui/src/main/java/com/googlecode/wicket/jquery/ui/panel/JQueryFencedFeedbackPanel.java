@@ -24,6 +24,8 @@ import org.apache.wicket.feedback.IFeedbackMessageFilter;
 import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.markup.html.panel.EmptyPanel;
 
+import com.googlecode.wicket.jquery.ui.JQueryIcon;
+
 /**
  * Provides a {@link FencedFeedbackPanel} customized with the jQuery theme
  *
@@ -101,7 +103,6 @@ public class JQueryFencedFeedbackPanel extends FencedFeedbackPanel
 	protected Component newMessageDisplayComponent(String id, FeedbackMessage message)
 	{
 		WebMarkupContainer container = new WebMarkupContainer(id);
-		container.add(AttributeModifier.replace("class", this.getMessageClass(message)));
 		container.add(new EmptyPanel("icon").add(AttributeModifier.replace("class", this.getIconClass(message))));
 		container.add(super.newMessageDisplayComponent("label", message));
 
@@ -111,7 +112,23 @@ public class JQueryFencedFeedbackPanel extends FencedFeedbackPanel
 	@Override
 	protected String getCSSClass(FeedbackMessage message)
 	{
-		return ""; // not used, because it would be applied onto both 'message' and 'label'
+		switch (message.getLevel())
+		{
+			case FeedbackMessage.INFO:
+				return JQueryFeedbackPanel.INFO_CSS;
+
+			case FeedbackMessage.SUCCESS:
+				return JQueryFeedbackPanel.LIGHT_CSS;
+
+			case FeedbackMessage.WARNING:
+				return JQueryFeedbackPanel.WARN_CSS;
+
+			case FeedbackMessage.ERROR:
+				return JQueryFeedbackPanel.ERROR_CSS;
+
+			default:
+				return super.getCSSClass(message);
+		}
 	}
 
 	/**
@@ -137,34 +154,7 @@ public class JQueryFencedFeedbackPanel extends FencedFeedbackPanel
 				return JQueryFeedbackPanel.ERROR_ICO;
 
 			default:
-				return this.getCSSClass(message);
-		}
-	}
-
-	/**
-	 * Gets the CSS class for the given message.
-	 *
-	 * @param message the {@link FeedbackMessage}
-	 * @return the label class
-	 */
-	protected String getMessageClass(FeedbackMessage message)
-	{
-		switch (message.getLevel())
-		{
-			case FeedbackMessage.INFO:
-				return JQueryFeedbackPanel.INFO_CSS;
-
-			case FeedbackMessage.SUCCESS:
-				return JQueryFeedbackPanel.LIGHT_CSS;
-
-			case FeedbackMessage.WARNING:
-				return JQueryFeedbackPanel.WARN_CSS;
-
-			case FeedbackMessage.ERROR:
-				return JQueryFeedbackPanel.ERROR_CSS;
-
-			default:
-				return this.getCSSClass(message);
+				return JQueryIcon.NONE;
 		}
 	}
 }

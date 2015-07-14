@@ -42,7 +42,7 @@ public class MenuItemAjaxButton extends AjaxButton
 	{
 		super.updateAjaxAttributes(attributes);
 
-		attributes.setAllowDefault(true);
+		attributes.setPreventDefault(false); // wicket7
 		attributes.setEventPropagation(EventPropagation.BUBBLE);
 	}
 }

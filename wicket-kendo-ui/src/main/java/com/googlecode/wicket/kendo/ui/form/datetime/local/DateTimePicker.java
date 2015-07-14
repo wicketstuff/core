@@ -139,7 +139,7 @@ public class DateTimePicker extends FormComponentPanel<LocalDateTime> implements
 	// Methods //
 
 	@Override
-	protected void convertInput()
+	public void convertInput()
 	{
 		LocalDate date = datePicker.getConvertedInput();
 		LocalTime time = timePicker.getConvertedInput();

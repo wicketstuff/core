@@ -127,7 +127,7 @@ public class DateTimePicker extends FormComponentPanel<Date> implements ITextFor
 
 	// Methods //
 	@Override
-	protected void convertInput()
+	public void convertInput()
 	{
 		final IConverter<Date> converter = this.getConverter(Date.class);
 
