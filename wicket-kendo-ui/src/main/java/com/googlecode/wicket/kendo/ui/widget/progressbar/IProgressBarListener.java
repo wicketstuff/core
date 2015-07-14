@@ -16,7 +16,7 @@
  */
 package com.googlecode.wicket.kendo.ui.widget.progressbar;
 
-import org.apache.wicket.ajax.AjaxRequestTarget;
+import org.apache.wicket.core.request.handler.IPartialPageRequestHandler;
 
 import com.googlecode.wicket.jquery.core.event.IValueChangedListener;
 
@@ -29,7 +29,7 @@ public interface IProgressBarListener extends IValueChangedListener
 {
 	/**
 	 * Triggers when the value has changed
-	 * @param target the {@link AjaxRequestTarget}
+	 * @param handler the {@link IPartialPageRequestHandler}
 	 */
-	void onComplete(AjaxRequestTarget target);
+	void onComplete(IPartialPageRequestHandler handler);
 }

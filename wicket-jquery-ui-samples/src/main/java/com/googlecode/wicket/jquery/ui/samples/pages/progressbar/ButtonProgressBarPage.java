@@ -1,6 +1,7 @@
 package com.googlecode.wicket.jquery.ui.samples.pages.progressbar;
 
 import org.apache.wicket.ajax.AjaxRequestTarget;
+import org.apache.wicket.core.request.handler.IPartialPageRequestHandler;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.panel.FeedbackPanel;
 import org.apache.wicket.model.Model;
@@ -33,10 +34,10 @@ public class ButtonProgressBarPage extends AbstractProgressBarPage
 			private static final long serialVersionUID = 1L;
 
 			@Override
-			public void onValueChanged(AjaxRequestTarget target)
+			public void onValueChanged(IPartialPageRequestHandler handler)
 			{
 				info("value: " + this.getDefaultModelObjectAsString());
-				target.add(feedback);
+				handler.add(feedback);
 			}
 
 			@Override

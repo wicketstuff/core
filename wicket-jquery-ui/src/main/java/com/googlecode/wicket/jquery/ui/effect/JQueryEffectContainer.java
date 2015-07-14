@@ -18,6 +18,7 @@ package com.googlecode.wicket.jquery.ui.effect;
 
 import org.apache.wicket.Component;
 import org.apache.wicket.ajax.AjaxRequestTarget;
+import org.apache.wicket.core.request.handler.IPartialPageRequestHandler;
 import org.apache.wicket.markup.html.WebMarkupContainer;
 
 import com.googlecode.wicket.jquery.core.IJQueryWidget.JQueryWidget;
@@ -55,45 +56,52 @@ public class JQueryEffectContainer extends WebMarkupContainer implements IEffect
 	}
 
 	// Methods //
-	public void play(AjaxRequestTarget target, Effect effect)
+	
+	/**
+	 * Plays the specified effect.
+	 * 
+	 * @param handler the {@link IPartialPageRequestHandler}
+	 * @param effect the effect to be played
+	 */
+	public void play(IPartialPageRequestHandler handler, Effect effect)
 	{
 		if (effect != null)
 		{
-			this.play(target, effect.toString());
+			this.play(handler, effect.toString());
 		}
 	}
 
 	/**
 	 * Plays the specified effect.
 	 * 
-	 * @param target the {@link AjaxRequestTarget}
+	 * @param handler the {@link IPartialPageRequestHandler}
 	 * @param effect the effect to be played
 	 */
-	public void play(AjaxRequestTarget target, String effect)
+	public void play(IPartialPageRequestHandler handler, String effect)
 	{
-		target.appendJavaScript(this.effectBehavior.$(effect));
+		handler.appendJavaScript(this.effectBehavior.$(effect));
 	}
 
 	/**
 	 * Shows the container by playing the 'fadeIn' effect.
 	 * 
-	 * @param target the {@link AjaxRequestTarget}
+	 * @param handler the {@link IPartialPageRequestHandler}
 	 */
-	public void show(AjaxRequestTarget target)
+	public void show(IPartialPageRequestHandler handler)
 	{
 		JQueryBehavior behavior = new JQueryUIBehavior(JQueryWidget.getSelector(this), "fadeIn");
-		target.appendJavaScript(behavior.toString());
+		handler.appendJavaScript(behavior.toString());
 	}
 
 	/**
 	 * Hides the container by playing the 'fadeOut' effect.
 	 * 
-	 * @param target the {@link AjaxRequestTarget}
+	 * @param handler the {@link IPartialPageRequestHandler}
 	 */
-	public void hide(AjaxRequestTarget target)
+	public void hide(IPartialPageRequestHandler handler)
 	{
 		JQueryBehavior behavior = new JQueryUIBehavior(JQueryWidget.getSelector(this), "fadeOut");
-		target.appendJavaScript(behavior.toString());
+		handler.appendJavaScript(behavior.toString());
 	}
 
 	// Events //

@@ -21,7 +21,7 @@ import java.util.List;
 import java.util.Map.Entry;
 
 import org.apache.wicket.Component;
-import org.apache.wicket.ajax.AjaxRequestTarget;
+import org.apache.wicket.core.request.handler.IPartialPageRequestHandler;
 import org.apache.wicket.markup.head.IHeaderResponse;
 import org.apache.wicket.markup.head.JavaScriptHeaderItem;
 import org.apache.wicket.util.lang.Args;
@@ -122,12 +122,12 @@ public class JQueryBehavior extends JQueryAbstractBehavior
 	 * The {@code #detach} method is the same as {@code #remove}, except that {@code #detach} keeps all jQuery data associated with the removed elements.<br/>
 	 * This method is useful when removed elements are to be reinserted into the DOM at a later time.
 	 * 
-	 * @param target the {@link AjaxRequestTarget}
-	 * @see #remove(AjaxRequestTarget)
+	 * @param handler the {@link IPartialPageRequestHandler}
+	 * @see #remove(IPartialPageRequestHandler)
 	 */
-	public void detach(AjaxRequestTarget target)
+	public void detach(IPartialPageRequestHandler handler)
 	{
-		target.prependJavaScript(String.format("jQuery('%s').detach();", this.selector));
+		handler.prependJavaScript(String.format("jQuery('%s').detach();", this.selector));
 	}
 
 	/**
@@ -136,12 +136,12 @@ public class JQueryBehavior extends JQueryAbstractBehavior
 	 * In addition to the elements themselves, all bound events and jQuery data associated with the elements are removed.<br/>
 	 * To remove the elements without removing data and events, use {@code #detach} instead.
 	 * 
-	 * @param target the {@link AjaxRequestTarget}
-	 * @see #detach(AjaxRequestTarget)
+	 * @param handler the {@link IPartialPageRequestHandler}
+	 * @see #detach(IPartialPageRequestHandler)
 	 */
-	public void remove(AjaxRequestTarget target)
+	public void remove(IPartialPageRequestHandler handler)
 	{
-		target.prependJavaScript(String.format("jQuery('%s').remove();", this.selector));
+		handler.prependJavaScript(String.format("jQuery('%s').remove();", this.selector));
 	}
 
 	// Properties //
@@ -182,7 +182,7 @@ public class JQueryBehavior extends JQueryAbstractBehavior
 	 * @param key the option key
 	 * @return null if the key does not exists
 	 */
-	public <T extends Object> T getOption(String key)
+	public <T> T getOption(String key)
 	{
 		return this.options.get(key);
 	}

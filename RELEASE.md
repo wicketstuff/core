@@ -45,11 +45,10 @@ $ mvn clean deploy -P snapshot
 After finishing the deployment you can check that the new snapshot version is at [Sonatype OSS Snapshots](https://oss.sonatype.org/content/repositories/snapshots/com/googlecode/wicket-jquery-ui/)
 
 ### Deploy a Release version
-Releases should be signed with a PGP key.
+Releases should be signed with a PGP key.  
 http://central.sonatype.org/pages/working-with-pgp-signatures.html
 
-* update `<version>6.x.y</version>` in **README.md** and **wicket-jquery-ui-samples/src/main/java/com/googlecode/wicket/jquery/ui/samples/HomePage.html**
-* `mvn release:update-versions -DautoVersionSubmodules=true` (if your development version does not match the incoming release version)
+* update `<version>6.x.y</version>` in **README.md** and **samples/HomePage.html**
 * `git commit` and `git push` 
 * `mvn release:clean`
 * `mvn release:prepare`

@@ -6,6 +6,7 @@ import java.util.List;
 import org.apache.wicket.AttributeModifier;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.markup.html.form.AjaxCheckBox;
+import org.apache.wicket.core.request.handler.IPartialPageRequestHandler;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.form.CheckBox;
 import org.apache.wicket.markup.html.form.Form;
@@ -108,9 +109,9 @@ public abstract class DemoCalendarDialog extends AbstractFormDialog<DemoCalendar
 
 	// Events //
 	@Override
-	protected void onOpen(AjaxRequestTarget target)
+	protected void onOpen(IPartialPageRequestHandler handler)
 	{
-		target.add(this.form);
+		handler.add(this.form);
 	}
 
 	@Override

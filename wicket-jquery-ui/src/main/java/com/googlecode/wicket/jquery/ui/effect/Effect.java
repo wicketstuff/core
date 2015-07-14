@@ -18,7 +18,7 @@ package com.googlecode.wicket.jquery.ui.effect;
 
 /**
  * Provides an enumeration of effect being available in jQuery<br/>
- * It can be used as argument on {@link JQueryEffectContainer#play(org.apache.wicket.ajax.AjaxRequestTarget, Effect)}
+ * It can be used as argument on {@link JQueryEffectContainer#play(org.apache.wicket.core.request.handler.IPartialPageRequestHandler, Effect)}
  *
  * @author Sebastien Briquet - sebfz1
  */

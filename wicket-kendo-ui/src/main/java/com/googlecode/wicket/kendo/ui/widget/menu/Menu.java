@@ -23,6 +23,7 @@ import java.util.Map;
 
 import org.apache.wicket.AttributeModifier;
 import org.apache.wicket.ajax.AjaxRequestTarget;
+import org.apache.wicket.core.request.handler.IPartialPageRequestHandler;
 import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.list.ListItem;
@@ -118,23 +119,13 @@ public class Menu extends JQueryPanel implements IMenuListener
 	}
 
 	/**
-	 * Prepares the widget for safe removal from the DOM. Detaches all event handlers and removes jQuery.data attributes to avoid memory leaks. Calls destroy method of any child Kendo widgets.
-	 *
-	 * @param target The {@link AjaxRequestTarget}
-	 */
-	public void destroy(AjaxRequestTarget target)
-	{
-		this.widgetBehavior.destroy(target);
-	}
-
-	/**
 	 * Refreshes the {@link Menu}
 	 * 
-	 * @param target the {@link AjaxRequestTarget}
+	 * @param handler the {@link IPartialPageRequestHandler}
 	 */
-	public void refresh(AjaxRequestTarget target)
+	public void refresh(IPartialPageRequestHandler handler)
 	{
-		target.add(this);
+		handler.add(this);
 	}
 
 	/**
@@ -218,7 +209,7 @@ public class Menu extends JQueryPanel implements IMenuListener
 	{
 		private static final long serialVersionUID = 1L;
 
-		public ListFragment(String id, List<? extends IMenuItem> items)
+		public ListFragment(String id, List<IMenuItem> items)
 		{
 			super(id, "list-fragment", Menu.this);
 

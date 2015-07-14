@@ -22,6 +22,7 @@ import java.util.Map.Entry;
 
 import org.apache.wicket.WicketRuntimeException;
 import org.apache.wicket.ajax.AjaxRequestTarget;
+import org.apache.wicket.core.request.handler.IPartialPageRequestHandler;
 import org.apache.wicket.util.lang.Args;
 import org.apache.wicket.util.string.Strings;
 import org.threeten.bp.LocalDateTime;
@@ -140,7 +141,7 @@ public class Calendar extends JQueryContainer implements ICalendarListener
 		{
 			synchronized (this)
 			{
-				this.gcals = new HashMap<CharSequence, String>();
+				this.gcals = new HashMap<>();
 			}
 		}
 
@@ -148,13 +149,13 @@ public class Calendar extends JQueryContainer implements ICalendarListener
 	}
 
 	/**
-	 * Refetches and refreshes the events currently available in the selected view.
+	 * Re-fetches and refreshes the events currently available in the selected view.
 	 *
-	 * @param target the {@link AjaxRequestTarget}
+	 * @param handler the {@link IPartialPageRequestHandler}
 	 */
-	public void refresh(AjaxRequestTarget target)
+	public void refresh(IPartialPageRequestHandler handler)
 	{
-		target.appendJavaScript(String.format("jQuery('%s').fullCalendar('refetchEvents');", JQueryWidget.getSelector(this)));
+		handler.appendJavaScript(String.format("jQuery('%s').fullCalendar('refetchEvents');", JQueryWidget.getSelector(this)));
 	}
 
 	// Properties //

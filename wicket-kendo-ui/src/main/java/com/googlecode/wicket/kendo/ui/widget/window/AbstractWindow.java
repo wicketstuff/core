@@ -17,6 +17,7 @@
 package com.googlecode.wicket.kendo.ui.widget.window;
 
 import org.apache.wicket.ajax.AjaxRequestTarget;
+import org.apache.wicket.core.request.handler.IPartialPageRequestHandler;
 import org.apache.wicket.markup.html.panel.GenericPanel;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
@@ -156,31 +157,31 @@ public abstract class AbstractWindow<T> extends GenericPanel<T> implements IJQue
 	/**
 	 * Opens the window in ajax.
 	 *
-	 * @param target the {@link AjaxRequestTarget}
+	 * @param handler the {@link IPartialPageRequestHandler}
 	 */
-	public final void open(AjaxRequestTarget target)
+	public final void open(IPartialPageRequestHandler handler)
 	{
-		this.onOpen(target);
+		this.onOpen(handler);
 
 		if (this.widgetBehavior != null)
 		{
-			this.widgetBehavior.open(target);
+			this.widgetBehavior.open(handler);
 		}
 	}
 
 	/**
 	 * Closes the window in ajax.
 	 *
-	 * @param target the {@link AjaxRequestTarget}
+	 * @param handler the {@link IPartialPageRequestHandler}
 	 */
-	public final void close(AjaxRequestTarget target)
+	public final void close(IPartialPageRequestHandler handler)
 	{
 		if (this.widgetBehavior != null)
 		{
-			this.widgetBehavior.close(target);
+			this.widgetBehavior.close(handler);
 		}
 
-		this.onClose(target);
+		this.onClose(handler);
 	}
 
 	// Properties //
@@ -220,25 +221,25 @@ public abstract class AbstractWindow<T> extends GenericPanel<T> implements IJQue
 	/**
 	 * Sets the window's title dynamically
 	 *
-	 * @param target the {@link AjaxRequestTarget}
+	 * @param handler the {@link IPartialPageRequestHandler}
 	 * @param title the window's title
 	 */
-	public void setTitle(AjaxRequestTarget target, String title)
+	public void setTitle(IPartialPageRequestHandler handler, String title)
 	{
-		this.setTitle(target, Model.of(title));
+		this.setTitle(handler, Model.of(title));
 	}
 
 	/**
 	 * Sets the window's title dynamically
 	 *
-	 * @param target the {@link AjaxRequestTarget}
+	 * @param handler the {@link IPartialPageRequestHandler}
 	 * @param title the window's title
 	 */
-	public void setTitle(AjaxRequestTarget target, IModel<String> title)
+	public void setTitle(IPartialPageRequestHandler handler, IModel<String> title)
 	{
 		this.setTitle(title);
 
-		target.appendJavaScript(String.format("%s.title(%s);", this.widgetBehavior.widget(), Options.asString(title.getObject())));
+		handler.appendJavaScript(String.format("%s.title(%s);", this.widgetBehavior.widget(), Options.asString(title.getObject())));
 	}
 
 	/**
@@ -315,9 +316,9 @@ public abstract class AbstractWindow<T> extends GenericPanel<T> implements IJQue
 	/**
 	 * Triggered when the window opens
 	 *
-	 * @param target the {@link AjaxRequestTarget}
+	 * @param handler the {@link IPartialPageRequestHandler}
 	 */
-	protected void onOpen(AjaxRequestTarget target)
+	protected void onOpen(IPartialPageRequestHandler handler)
 	{
 		// noop
 	}
@@ -329,7 +330,7 @@ public abstract class AbstractWindow<T> extends GenericPanel<T> implements IJQue
 	}
 
 	@Override
-	public void onClose(AjaxRequestTarget target)
+	public void onClose(IPartialPageRequestHandler handler)
 	{
 		// noop
 	}
@@ -375,9 +376,9 @@ public abstract class AbstractWindow<T> extends GenericPanel<T> implements IJQue
 			}
 
 			@Override
-			public void onClose(AjaxRequestTarget target)
+			public void onClose(IPartialPageRequestHandler handler)
 			{
-				AbstractWindow.this.onClose(target);
+				AbstractWindow.this.onClose(handler);
 			}
 		};
 	}

@@ -3,7 +3,7 @@ package com.googlecode.wicket.jquery.ui.samples.pages.plugins.datepicker;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 
-import org.apache.wicket.ajax.AjaxRequestTarget;
+import org.apache.wicket.core.request.handler.IPartialPageRequestHandler;
 import org.apache.wicket.markup.html.panel.FeedbackPanel;
 import org.apache.wicket.model.Model;
 
@@ -34,7 +34,7 @@ public class RangeDatePickerPage extends AbstractRangeDatePickerPage
 			private static final long serialVersionUID = 1L;
 
 			@Override
-			public void onValueChanged(AjaxRequestTarget target)
+			public void onValueChanged(IPartialPageRequestHandler handler)
 			{
 				DateRange range = this.getModelObject();
 
@@ -42,7 +42,7 @@ public class RangeDatePickerPage extends AbstractRangeDatePickerPage
 				df.setTimeZone(DateUtils.UTC); // important
 
 				this.info(String.format("%s - %s", df.format(range.getStart()), df.format(range.getEnd())));
-				target.add(feedback);
+				handler.add(feedback);
 			}
 		});
 	}

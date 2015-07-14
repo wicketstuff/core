@@ -1,6 +1,7 @@
 package com.googlecode.wicket.jquery.ui.samples.pages.dialog;
 
 import org.apache.wicket.ajax.AjaxRequestTarget;
+import org.apache.wicket.core.request.handler.IPartialPageRequestHandler;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.form.upload.FileUpload;
 import org.apache.wicket.markup.html.panel.FeedbackPanel;
@@ -42,11 +43,11 @@ public class UploadDialogPage extends AbstractDialogPage
 			}
 
 			@Override
-			public void onClose(AjaxRequestTarget target, DialogButton button)
+			public void onClose(IPartialPageRequestHandler handler, DialogButton button)
 			{
-				super.onClose(target, button);
+				super.onClose(handler, button);
 
-				target.add(feedback);
+				handler.add(feedback);
 			}
 		};
 

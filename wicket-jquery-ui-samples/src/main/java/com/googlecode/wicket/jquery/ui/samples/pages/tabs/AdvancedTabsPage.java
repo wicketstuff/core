@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.wicket.ajax.AjaxRequestTarget;
+import org.apache.wicket.core.request.handler.IPartialPageRequestHandler;
 import org.apache.wicket.event.Broadcast;
 import org.apache.wicket.event.IEvent;
 import org.apache.wicket.extensions.markup.html.tabs.AbstractTab;
@@ -103,9 +104,9 @@ public class AdvancedTabsPage extends AbstractTabsPage
 			private static final long serialVersionUID = 1L;
 
 			@Override
-			protected void onOpen(AjaxRequestTarget target)
+			protected void onOpen(IPartialPageRequestHandler handler)
 			{
-				super.onOpen(target);
+				super.onOpen(handler);
 
 				// Sets an empty model object //
 				this.setModelObject(new TabItem());

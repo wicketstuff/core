@@ -21,6 +21,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import org.apache.wicket.ajax.AjaxRequestTarget;
+import org.apache.wicket.core.request.handler.IPartialPageRequestHandler;
 import org.apache.wicket.extensions.wizard.IWizard;
 import org.apache.wicket.extensions.wizard.IWizardModel;
 import org.apache.wicket.extensions.wizard.IWizardModelListener;
@@ -212,17 +213,17 @@ public abstract class AbstractWizard<T extends Serializable> extends AbstractFor
 	}
 
 	/**
-	 * Refreshes the wizard, by calling {@link #onConfigure(AjaxRequestTarget)} and re-attaching the form<br/>
+	 * Refreshes the wizard, by calling {@link #onConfigure(IPartialPageRequestHandler)} and re-attaching the form<br/>
 	 * This method is called when, for instance, the wizard opens or the step changes.
 	 *
-	 * @param target the {@link AjaxRequestTarget}
+	 * @param handler the {@link IPartialPageRequestHandler}
 	 */
-	protected void refresh(AjaxRequestTarget target)
+	protected void refresh(IPartialPageRequestHandler handler)
 	{
-		this.onConfigure(target);
+		this.onConfigure(handler);
 
 		// update form //
-		target.add(this.form);
+		handler.add(this.form);
 	}
 
 	// Properties //
@@ -256,29 +257,29 @@ public abstract class AbstractWizard<T extends Serializable> extends AbstractFor
 	/**
 	 * Called when the wizard needs to be configured.
 	 *
-	 * @param target the {@link AjaxRequestTarget}
+	 * @param handler the {@link IPartialPageRequestHandler}
 	 */
-	protected void onConfigure(AjaxRequestTarget target)
+	protected void onConfigure(IPartialPageRequestHandler handler)
 	{
 		// configure buttons //
-		this.btnPrev.setEnabled(this.wizardModel.isPreviousAvailable(), target);
-		this.btnNext.setEnabled(this.wizardModel.isNextAvailable(), target);
-		this.btnLast.setEnabled(this.wizardModel.isLastAvailable(), target);
-		this.btnLast.setVisible(this.wizardModel.isLastVisible(), target);
-		this.btnCancel.setVisible(this.wizardModel.isCancelVisible(), target);
+		this.btnPrev.setEnabled(this.wizardModel.isPreviousAvailable(), handler);
+		this.btnNext.setEnabled(this.wizardModel.isNextAvailable(), handler);
+		this.btnLast.setEnabled(this.wizardModel.isLastAvailable(), handler);
+		this.btnLast.setVisible(this.wizardModel.isLastVisible(), handler);
+		this.btnCancel.setVisible(this.wizardModel.isCancelVisible(), handler);
 
 		boolean enabled = this.wizardModel.isLastStep(this.wizardModel.getActiveStep());
-		this.btnFinish.setEnabled(enabled, target);
+		this.btnFinish.setEnabled(enabled, handler);
 		// TODO: WizardModelStrategy#isLastStepEnabled()
 	}
 
 	@Override
-	protected void onOpen(AjaxRequestTarget target)
+	protected void onOpen(IPartialPageRequestHandler handler)
 	{
-		super.onOpen(target);
+		super.onOpen(handler);
 
 		this.wizardModel.reset(); // reset model to prepare for action
-		this.refresh(target);
+		this.refresh(handler);
 	}
 
 	/**

@@ -28,6 +28,7 @@ import com.googlecode.wicket.jquery.core.ajax.JQueryAjaxBehavior;
 import com.googlecode.wicket.jquery.ui.JQueryUIBehavior;
 import com.googlecode.wicket.jquery.ui.form.button.Button;
 import com.googlecode.wicket.jquery.ui.widget.dialog.ButtonAjaxBehavior.ClickEvent;
+import org.apache.wicket.core.request.handler.IPartialPageRequestHandler;
 
 /**
  * Provides a jQuery dialog behavior.
@@ -98,23 +99,23 @@ public abstract class DialogBehavior extends JQueryUIBehavior implements IJQuery
 	}
 
 	/**
-	 * Opens the dialogs in ajax.<br/>
+	 * Opens the dialogs in ajax.
 	 *
-	 * @param target the {@link AjaxRequestTarget}
+	 * @param handler the {@link IPartialPageRequestHandler}
 	 */
-	public void open(AjaxRequestTarget target)
+	public void open(IPartialPageRequestHandler handler)
 	{
-		target.appendJavaScript(this.$(Options.asString("open")));
+		handler.appendJavaScript(this.$(Options.asString("open")));
 	}
 
 	/**
-	 * Closes the dialogs in ajax.<br/>
+	 * Closes the dialogs in ajax.
 	 *
-	 * @param target the {@link AjaxRequestTarget}
+	 * @param handler the {@link IPartialPageRequestHandler}
 	 */
-	public void close(AjaxRequestTarget target)
+	public void close(IPartialPageRequestHandler handler)
 	{
-		target.prependJavaScript(this.$(Options.asString("close"))); // fixes #88
+		handler.prependJavaScript(this.$(Options.asString("close"))); // fixes #88
 	}
 
 	// Events //

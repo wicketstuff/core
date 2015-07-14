@@ -23,6 +23,7 @@ import java.util.List;
 import org.apache.wicket.Component;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.attributes.CallbackParameter;
+import org.apache.wicket.core.request.handler.IPartialPageRequestHandler;
 import org.apache.wicket.extensions.markup.html.tabs.ITab;
 import org.apache.wicket.markup.head.IHeaderResponse;
 import org.apache.wicket.markup.head.JavaScriptHeaderItem;
@@ -167,14 +168,14 @@ public abstract class AccordionBehavior extends KendoUIBehavior implements IJQue
 	 * Selects and expands a tab, identified by its index<br/>
 	 * <b>Warning:</b> the index is related to visible tabs only
 	 *
-	 * @param target the {@link AjaxRequestTarget}
+	 * @param handler the {@link IPartialPageRequestHandler}
 	 * @param index the visible tab's index
 	 */
-	public void select(int index, AjaxRequestTarget target)
+	public void select(int index, IPartialPageRequestHandler handler)
 	{
 		this.tabIndex = index;
 
-		target.appendJavaScript(this.getSelectStatement(this.tabIndex));
+		handler.appendJavaScript(this.getSelectStatement(this.tabIndex));
 	}
 
 	// Events //

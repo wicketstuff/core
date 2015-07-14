@@ -18,7 +18,7 @@ package com.googlecode.wicket.kendo.ui.console;
 
 import java.io.Serializable;
 
-import org.apache.wicket.ajax.AjaxRequestTarget;
+import org.apache.wicket.core.request.handler.IPartialPageRequestHandler;
 import org.apache.wicket.model.IModel;
 
 /**
@@ -72,7 +72,7 @@ public class Console extends AbstractConsole
 	 * Helper method that logs an info message
 	 *
 	 * @param message the message to log
-	 * @deprecated too confusing with {@link #info(Serializable)}, use {@link #log(Serializable, boolean)} or {@link #info(AjaxRequestTarget, Serializable)} instead
+	 * @deprecated too confusing with {@link #info(Serializable)}, use {@link #log(Serializable, boolean)} or {@link #info(IPartialPageRequestHandler, Serializable)} instead
 	 */
 	@Deprecated
 	public void info(String message)
@@ -84,13 +84,13 @@ public class Console extends AbstractConsole
 	 * Helper method that logs an info message
 	 *
 	 * @param message the message to log
-	 * @param target the {@link AjaxRequestTarget}
+	 * @param handler the {@link IPartialPageRequestHandler}
 	 */
-	public void info(AjaxRequestTarget target, Serializable message)
+	public void info(IPartialPageRequestHandler handler, Serializable message)
 	{
 		this.log(message, false);
 
-		target.appendJavaScript(this.consoleBehavior.$(message, false));
+		handler.appendJavaScript(this.consoleBehavior.$(message, false));
 	}
 
 	/**
@@ -109,12 +109,12 @@ public class Console extends AbstractConsole
 	 * Helper method that logs an error message
 	 *
 	 * @param message the message to log
-	 * @param target the {@link AjaxRequestTarget}
+	 * @param handler the {@link IPartialPageRequestHandler}
 	 */
-	public void error(AjaxRequestTarget target, Serializable message)
+	public void error(IPartialPageRequestHandler handler, Serializable message)
 	{
 		this.log(message, true);
 
-		target.appendJavaScript(this.consoleBehavior.$(message, true));
+		handler.appendJavaScript(this.consoleBehavior.$(message, true));
 	}
 }

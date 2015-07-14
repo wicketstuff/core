@@ -28,7 +28,7 @@ interface IDraggableListener
 {
 	/**
 	 * Indicates whether the 'dragcancel' event is enabled.<br />
-	 * If true, the {@link #onCancelEvent(AjaxRequestTarget, int, int)} event will be triggered.
+	 * If true, the {@link #onDragCancel(AjaxRequestTarget, int, int)} event will be triggered.
 	 *
 	 * @return false by default
 	 */

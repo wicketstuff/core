@@ -325,7 +325,7 @@ public abstract class Sortable<T> extends JQueryGenericContainer<List<T>> implem
 		 * @param id the markup id
 		 * @param list the {@link List}
 		 */
-		public HashListView(String id, List<? extends T> list)
+		public HashListView(String id, List<T> list)
 		{
 			super(id, list);
 		}
@@ -336,7 +336,7 @@ public abstract class Sortable<T> extends JQueryGenericContainer<List<T>> implem
 		 * @param id the markup id
 		 * @param model the {@link IModel}
 		 */
-		public HashListView(String id, IModel<? extends List<? extends T>> model)
+		public HashListView(String id, IModel<? extends List<T>> model)
 		{
 			super(id, model);
 		}

@@ -1,7 +1,7 @@
-import org.apache.wicket.ajax.AjaxRequestTarget;
 
 import com.googlecode.wicket.jquery.ui.widget.dialog.AbstractDialog;
 import com.googlecode.wicket.jquery.ui.widget.dialog.DialogButton;
+import org.apache.wicket.core.request.handler.IPartialPageRequestHandler;
 
 
 public class MyDialog extends AbstractDialog<String>
@@ -14,7 +14,7 @@ public class MyDialog extends AbstractDialog<String>
 	}
 
 	@Override
-	public void onClose(AjaxRequestTarget target, DialogButton button)
+	public void onClose(IPartialPageRequestHandler handler, DialogButton button)
 	{
 	}
 }

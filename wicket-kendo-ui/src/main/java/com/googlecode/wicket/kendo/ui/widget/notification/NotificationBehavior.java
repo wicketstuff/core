@@ -18,7 +18,7 @@ package com.googlecode.wicket.kendo.ui.widget.notification;
 
 import java.io.Serializable;
 
-import org.apache.wicket.ajax.AjaxRequestTarget;
+import org.apache.wicket.core.request.handler.IPartialPageRequestHandler;
 import org.apache.wicket.core.util.string.JavaScriptUtils;
 
 import com.googlecode.wicket.jquery.core.Options;
@@ -61,23 +61,23 @@ public class NotificationBehavior extends KendoUIBehavior
 	/**
 	 * Shows the message
 	 *
-	 * @param target the {@link AjaxRequestTarget}
+	 * @param handler the {@link IPartialPageRequestHandler}
 	 * @param message the message to format
 	 * @param level the level, ie: info, success, warning, error
 	 */
-	public void show(AjaxRequestTarget target, Serializable message, String level)
+	public void show(IPartialPageRequestHandler handler, Serializable message, String level)
 	{
-		target.appendJavaScript(this.$(message, level));
+		handler.appendJavaScript(this.$(message, level));
 	}
 
 	/**
 	 * Hides all notifications
 	 *
-	 * @param target the {@link AjaxRequestTarget}
+	 * @param handler the {@link IPartialPageRequestHandler}
 	 */
-	public void hide(AjaxRequestTarget target)
+	public void hide(IPartialPageRequestHandler handler)
 	{
-		target.appendJavaScript(String.format("%s.hide();", this.widget()));
+		handler.appendJavaScript(String.format("%s.hide();", this.widget()));
 	}
 
 	/**

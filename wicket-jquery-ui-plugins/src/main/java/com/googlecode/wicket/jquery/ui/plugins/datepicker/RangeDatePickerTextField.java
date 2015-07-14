@@ -22,7 +22,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 
-import org.apache.wicket.ajax.AjaxRequestTarget;
+import org.apache.wicket.core.request.handler.IPartialPageRequestHandler;
 import org.apache.wicket.markup.html.form.FormComponentPanel;
 import org.apache.wicket.markup.html.form.TextField;
 import org.apache.wicket.model.IModel;
@@ -135,12 +135,12 @@ public class RangeDatePickerTextField extends FormComponentPanel<DateRange> impl
 			private static final long serialVersionUID = 1L;
 
 			@Override
-			public void onValueChanged(AjaxRequestTarget target)
+			public void onValueChanged(IPartialPageRequestHandler handler)
 			{
 				RangeDatePickerTextField.this.input.modelChanged();
-				RangeDatePickerTextField.this.onValueChanged(target);
+				RangeDatePickerTextField.this.onValueChanged(handler);
 
-				target.add(RangeDatePickerTextField.this.input);
+				handler.add(RangeDatePickerTextField.this.input);
 			}
 		};
 
@@ -148,7 +148,7 @@ public class RangeDatePickerTextField extends FormComponentPanel<DateRange> impl
 	}
 
 	@Override
-	public void onValueChanged(AjaxRequestTarget target)
+	public void onValueChanged(IPartialPageRequestHandler handler)
 	{
 		// noop
 	}

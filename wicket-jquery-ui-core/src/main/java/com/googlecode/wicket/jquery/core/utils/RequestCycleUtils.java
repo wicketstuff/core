@@ -19,12 +19,13 @@ package com.googlecode.wicket.jquery.core.utils;
 import java.util.List;
 
 import org.apache.wicket.ajax.AjaxRequestTarget;
+import org.apache.wicket.core.request.handler.IPartialPageRequestHandler;
 import org.apache.wicket.request.IRequestParameters;
 import org.apache.wicket.request.cycle.RequestCycle;
 import org.apache.wicket.util.string.StringValue;
 
 /**
- * Utility class for retrieving request parameters
+ * Utility class for {@link RequestCycle}
  *
  * @author Sebastien Briquet - sebfz1
  *
@@ -39,6 +40,16 @@ public class RequestCycleUtils
 	public static AjaxRequestTarget getAjaxRequestTarget()
 	{
 		return RequestCycle.get().find(AjaxRequestTarget.class);
+	}
+
+	/**
+	 * Gets the current {@link IPartialPageRequestHandler}
+	 *
+	 * @return the handler or {@code null} if not in an ajax request / websocket notification
+	 */
+	public static IPartialPageRequestHandler getRequestHandler()
+	{
+		return RequestCycle.get().find(IPartialPageRequestHandler.class);
 	}
 
 	/**

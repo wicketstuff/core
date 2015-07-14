@@ -17,6 +17,7 @@
 package com.googlecode.wicket.jquery.core.panel;
 
 import org.apache.wicket.ajax.AjaxRequestTarget;
+import org.apache.wicket.core.request.handler.IPartialPageRequestHandler;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.form.IFormSubmittingComponent;
 import org.apache.wicket.markup.html.panel.GenericPanel;
@@ -68,9 +69,9 @@ public abstract class FormSubmittingPanel<T> extends GenericPanel<T> implements 
 	/**
 	 * Performs a form submit through the target
 	 *
-	 * @param target the {@link AjaxRequestTarget}
+	 * @param handler the {@link IPartialPageRequestHandler}
 	 */
-	protected void submit(AjaxRequestTarget target)
+	protected void submit(IPartialPageRequestHandler handler)
 	{
 		/**
 		 * As the Form is posted, Form#findSubmittingButton() expects to retrieve this component by the request parameter 'name'.<br/>
@@ -79,7 +80,7 @@ public abstract class FormSubmittingPanel<T> extends GenericPanel<T> implements 
 		 */
 		String input = String.format("<input type=\"hidden\" name=\"%s\" value=\"\" />", this.getInputName());
 
-		target.appendJavaScript(String.format("jQuery('%s').append('%s').submit();", JQueryWidget.getSelector(this.getForm()), input)); // not tested in nested forms
+		handler.appendJavaScript(String.format("jQuery('%s').append('%s').submit();", JQueryWidget.getSelector(this.getForm()), input)); // not tested in nested forms
 	}
 
 	// IFormSubmittingComponent //

@@ -98,7 +98,7 @@ public abstract class SamplePage extends TemplatePage
 		return SamplePage.getSource(source, this.getClass());
 	}
 
-	protected List<? extends DemoLink> getDemoLinks()
+	protected List<DemoLink> getDemoLinks()
 	{
 		return Collections.emptyList();
 	}

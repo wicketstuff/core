@@ -22,7 +22,7 @@ import java.util.Date;
 import java.util.Locale;
 
 import org.apache.wicket.WicketRuntimeException;
-import org.apache.wicket.ajax.AjaxRequestTarget;
+import org.apache.wicket.core.request.handler.IPartialPageRequestHandler;
 import org.apache.wicket.markup.html.form.AbstractTextComponent.ITextFormatProvider;
 import org.apache.wicket.markup.html.form.FormComponentPanel;
 import org.apache.wicket.model.IModel;
@@ -248,14 +248,14 @@ public class DateTimePicker extends FormComponentPanel<Date> implements ITextFor
 	/**
 	 * Sets the time-picker enabled flag
 	 *
-	 * @param target the {@link AjaxRequestTarget}
+	 * @param handler the {@link IPartialPageRequestHandler}
 	 * @param enabled the enabled flag
 	 */
-	public final void setTimePickerEnabled(AjaxRequestTarget target, boolean enabled)
+	public final void setTimePickerEnabled(IPartialPageRequestHandler handler, boolean enabled)
 	{
 		this.setTimePickerEnabled(enabled);
 
-		target.add(this.timePicker);
+		handler.add(this.timePicker);
 	}
 
 	/**

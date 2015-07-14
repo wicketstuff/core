@@ -3,6 +3,7 @@ package com.googlecode.wicket.jquery.ui.samples.pages.kendo.progressbar;
 import org.apache.wicket.ajax.AbstractAjaxTimerBehavior;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.IAjaxIndicatorAware;
+import org.apache.wicket.core.request.handler.IPartialPageRequestHandler;
 import org.apache.wicket.extensions.ajax.markup.html.AjaxIndicatorAppender;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.panel.EmptyPanel;
@@ -52,19 +53,19 @@ public class KendoProgressBarPage extends AbstractProgressBarPage implements IAj
 			private static final long serialVersionUID = 1L;
 
 			@Override
-			public void onValueChanged(AjaxRequestTarget target)
+			public void onValueChanged(IPartialPageRequestHandler handler)
 			{
 				info("value: " + this.getDefaultModelObjectAsString());
-				target.add(feedback);
+				handler.add(feedback);
 			}
 
 			@Override
-			public void onComplete(AjaxRequestTarget target)
+			public void onComplete(IPartialPageRequestHandler handler)
 			{
-				timer.stop(target); //wicket6
+				timer.stop(handler); //wicket6
 
 				info("completed!");
-				target.add(feedback);
+				handler.add(feedback);
 			}
 		};
 

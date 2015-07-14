@@ -4,6 +4,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import org.apache.wicket.ajax.AjaxRequestTarget;
+import org.apache.wicket.core.request.handler.IPartialPageRequestHandler;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.panel.FeedbackPanel;
@@ -66,10 +67,10 @@ public abstract class SliderDialog extends AbstractFormDialog<Integer>
 	}
 
 	@Override
-	protected void onOpen(AjaxRequestTarget target)
+	protected void onOpen(IPartialPageRequestHandler handler)
 	{
 		//re-attach the feedback panel to clear previously displayed error message(s)
-		target.add(this.feedback);
+		handler.add(this.feedback);
 	}
 
 	@Override

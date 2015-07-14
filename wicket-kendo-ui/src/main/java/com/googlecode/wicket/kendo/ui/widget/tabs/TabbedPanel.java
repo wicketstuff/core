@@ -21,6 +21,7 @@ import java.util.Collections;
 import java.util.List;
 
 import org.apache.wicket.ajax.AjaxRequestTarget;
+import org.apache.wicket.core.request.handler.IPartialPageRequestHandler;
 import org.apache.wicket.extensions.markup.html.tabs.ITab;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.list.ListItem;
@@ -147,12 +148,12 @@ public class TabbedPanel extends JQueryGenericPanel<List<ITab>> implements ITabs
 	 * Sets and activates the current tab index<br/>
 	 * <b>Warning: </b> invoking this method results to a dual client-server round-trip.
 	 *
-	 * @param target the {@link AjaxRequestTarget}
 	 * @param index the tab's index to activate
+	 * @param handler the {@link IPartialPageRequestHandler}
 	 */
-	public void setTabIndex(int index, AjaxRequestTarget target)
+	public void setTabIndex(int index, IPartialPageRequestHandler handler)
 	{
-		this.widgetBehavior.select(index, target);
+		this.widgetBehavior.select(index, handler);
 	}
 
 	/**

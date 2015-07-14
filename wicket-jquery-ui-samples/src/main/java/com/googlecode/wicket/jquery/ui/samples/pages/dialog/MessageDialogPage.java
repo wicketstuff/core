@@ -1,6 +1,7 @@
 package com.googlecode.wicket.jquery.ui.samples.pages.dialog;
 
 import org.apache.wicket.ajax.AjaxRequestTarget;
+import org.apache.wicket.core.request.handler.IPartialPageRequestHandler;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.panel.FeedbackPanel;
 import org.apache.wicket.model.StringResourceModel;
@@ -31,7 +32,7 @@ public class MessageDialogPage extends AbstractDialogPage
 			private static final long serialVersionUID = 1L;
 
 			@Override
-			public void onClose(AjaxRequestTarget target, DialogButton button)
+			public void onClose(IPartialPageRequestHandler handler, DialogButton button)
 			{
 				// noop
 			}
@@ -44,7 +45,7 @@ public class MessageDialogPage extends AbstractDialogPage
 			private static final long serialVersionUID = 1L;
 
 			@Override
-			public void onClose(AjaxRequestTarget target, DialogButton button)
+			public void onClose(IPartialPageRequestHandler handler, DialogButton button)
 			{
 				// noop
 			}
@@ -57,7 +58,7 @@ public class MessageDialogPage extends AbstractDialogPage
 			private static final long serialVersionUID = 1L;
 
 			@Override
-			public void onClose(AjaxRequestTarget target, DialogButton button)
+			public void onClose(IPartialPageRequestHandler handler, DialogButton button)
 			{
 				// noop
 			}

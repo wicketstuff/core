@@ -5,6 +5,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import org.apache.wicket.ajax.AjaxRequestTarget;
+import org.apache.wicket.core.request.handler.IPartialPageRequestHandler;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.form.EmailTextField;
 import org.apache.wicket.markup.html.form.Form;
@@ -33,14 +34,14 @@ public class UserDialogPage extends AbstractDialogPage
 
 	public UserDialogPage()
 	{
-		this.users = new ArrayList<User>();
+		this.users = new ArrayList<>();
 
 		this.initialize();
 	}
 
 	private void initialize()
 	{
-		final Form<List<User>> form = new Form<List<User>>("form", new ListModel<User>(this.users));
+		final Form<List<User>> form = new Form<List<User>>("form", new ListModel<>(this.users));
 		this.add(form);
 
 		// FeedbackPanel //
@@ -68,9 +69,9 @@ public class UserDialogPage extends AbstractDialogPage
 			}
 
 			@Override
-			public void onClose(AjaxRequestTarget target, DialogButton button)
+			public void onClose(IPartialPageRequestHandler handler, DialogButton button)
 			{
-				target.add(form);
+				handler.add(form);
 			}
 		};
 
@@ -178,9 +179,9 @@ public class UserDialogPage extends AbstractDialogPage
 		// Events //
 
 		@Override
-		protected void onOpen(AjaxRequestTarget target)
+		protected void onOpen(IPartialPageRequestHandler handler)
 		{
-			target.add(this.form);
+			handler.add(this.form);
 		}
 
 		@Override

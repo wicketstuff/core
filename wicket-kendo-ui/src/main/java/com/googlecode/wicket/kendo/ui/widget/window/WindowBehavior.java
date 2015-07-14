@@ -19,6 +19,7 @@ package com.googlecode.wicket.kendo.ui.widget.window;
 import org.apache.wicket.Component;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.attributes.CallbackParameter;
+import org.apache.wicket.core.request.handler.IPartialPageRequestHandler;
 
 import com.googlecode.wicket.jquery.core.JQueryEvent;
 import com.googlecode.wicket.jquery.core.Options;
@@ -85,26 +86,26 @@ public abstract class WindowBehavior extends KendoUIBehavior implements IJQueryA
 	/**
 	 * Opens the window in ajax.<br/>
 	 *
-	 * @param target the {@link AjaxRequestTarget}
+	 * @param handler the {@link IPartialPageRequestHandler}
 	 */
-	public void open(AjaxRequestTarget target)
+	public void open(IPartialPageRequestHandler handler)
 	{
 		if (this.isCentered())
 		{
-			target.appendJavaScript(this.widget() + ".center();");
+			handler.appendJavaScript(this.widget() + ".center();");
 		}
 
-		target.appendJavaScript(this.widget() + ".open();");
+		handler.appendJavaScript(this.widget() + ".open();");
 	}
 
 	/**
 	 * Closes the window in ajax.<br/>
 	 *
-	 * @param target the {@link AjaxRequestTarget}
+	 * @param handler the {@link IPartialPageRequestHandler}
 	 */
-	public void close(AjaxRequestTarget target)
+	public void close(IPartialPageRequestHandler handler)
 	{
-		target.prependJavaScript(this.widget() + ".close();");
+		handler.prependJavaScript(this.widget() + ".close();");
 	}
 
 	// Properties //

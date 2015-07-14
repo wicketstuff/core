@@ -3,6 +3,7 @@ package com.googlecode.wicket.jquery.ui.samples.pages.progressbar;
 import org.apache.wicket.ajax.AbstractAjaxTimerBehavior;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.IAjaxIndicatorAware;
+import org.apache.wicket.core.request.handler.IPartialPageRequestHandler;
 import org.apache.wicket.extensions.ajax.markup.html.AjaxIndicatorAppender;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.panel.EmptyPanel;
@@ -49,10 +50,10 @@ public class DefaultProgressBarPage extends AbstractProgressBarPage implements I
 			private static final long serialVersionUID = 1L;
 
 			@Override
-			public void onValueChanged(AjaxRequestTarget target)
+			public void onValueChanged(IPartialPageRequestHandler handler)
 			{
 				info("value: " + this.getDefaultModelObjectAsString());
-				target.add(feedback);
+				handler.add(feedback);
 			}
 
 			@Override

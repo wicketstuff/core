@@ -18,6 +18,7 @@ package com.googlecode.wicket.kendo.ui.widget.window;
 
 import org.apache.wicket.Component;
 import org.apache.wicket.ajax.AjaxRequestTarget;
+import org.apache.wicket.core.request.handler.IPartialPageRequestHandler;
 import org.apache.wicket.feedback.ContainerFeedbackMessageFilter;
 import org.apache.wicket.feedback.FeedbackMessagesModel;
 import org.apache.wicket.markup.html.basic.Label;
@@ -125,11 +126,11 @@ public abstract class InputWindow<T> extends Window<T>
 	}
 
 	@Override
-	protected void onOpen(AjaxRequestTarget target)
+	protected void onOpen(IPartialPageRequestHandler handler)
 	{
-		super.onOpen(target);
+		super.onOpen(handler);
 
-		target.add(this.form);
+		handler.add(this.form);
 	}
 
 	@Override

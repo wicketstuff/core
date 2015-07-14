@@ -20,6 +20,7 @@ import java.util.Date;
 
 import org.apache.wicket.Component;
 import org.apache.wicket.ajax.AjaxRequestTarget;
+import org.apache.wicket.core.request.handler.IPartialPageRequestHandler;
 import org.apache.wicket.extensions.markup.html.form.DateTextField;
 import org.apache.wicket.model.IModel;
 
@@ -107,6 +108,7 @@ public class AjaxDatePicker extends DatePicker implements IValueChangedListener
 	}
 
 	// IDatePickerListener //
+
 	@Override
 	public final boolean isOnSelectEventEnabled()
 	{
@@ -114,6 +116,7 @@ public class AjaxDatePicker extends DatePicker implements IValueChangedListener
 	}
 
 	// Events //
+
 	@Override
 	public final void onSelect(AjaxRequestTarget target, String date)
 	{
@@ -122,8 +125,9 @@ public class AjaxDatePicker extends DatePicker implements IValueChangedListener
 	}
 
 	// IValueChangedListener //
+
 	@Override
-	public void onValueChanged(AjaxRequestTarget target)
+	public void onValueChanged(IPartialPageRequestHandler handler)
 	{
 		// noop
 	}

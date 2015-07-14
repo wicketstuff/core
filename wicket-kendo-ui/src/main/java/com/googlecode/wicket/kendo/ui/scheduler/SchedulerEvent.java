@@ -77,7 +77,7 @@ public class SchedulerEvent implements Serializable
 
 	/**
 	 * Constructor<br/>
-	 * The end date will be the start date + {@value #DEFAULT_RANGE} hour(s)
+	 * The end date will be the start date + {@link #DEFAULT_RANGE} hour(s)
 	 *
 	 * @param id - the event id
 	 * @param title - the event title
@@ -90,7 +90,7 @@ public class SchedulerEvent implements Serializable
 
 	/**
 	 * Constructor<br/>
-	 * The end date will be the start date + {@value #DEFAULT_RANGE} hour(s)
+	 * The end date will be the start date + {@link #DEFAULT_RANGE} hour(s)
 	 *
 	 * @param id - the event id
 	 * @param title - the event title

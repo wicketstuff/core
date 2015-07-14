@@ -1,6 +1,6 @@
 package com.googlecode.wicket.jquery.ui.samples.pages.kendo.progressbar;
 
-import org.apache.wicket.ajax.AjaxRequestTarget;
+import org.apache.wicket.core.request.handler.IPartialPageRequestHandler;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.model.Model;
 
@@ -32,17 +32,17 @@ public class SliderProgressBarPage extends AbstractProgressBarPage
 			private static final long serialVersionUID = 1L;
 
 			@Override
-			public void onValueChanged(AjaxRequestTarget target)
+			public void onValueChanged(IPartialPageRequestHandler handler)
 			{
 				info("value: " + this.getDefaultModelObjectAsString());
-				target.add(feedback);
+				handler.add(feedback);
 			}
 
 			@Override
-			public void onComplete(AjaxRequestTarget target)
+			public void onComplete(IPartialPageRequestHandler handler)
 			{
 				info("completed!");
-				target.add(feedback);
+				handler.add(feedback);
 			}
 		};
 
@@ -54,12 +54,12 @@ public class SliderProgressBarPage extends AbstractProgressBarPage
 			private static final long serialVersionUID = 1L;
 
 			@Override
-			public void onValueChanged(AjaxRequestTarget target)
+			public void onValueChanged(IPartialPageRequestHandler handler)
 			{
-				//no need to set the model object to the progressbar's model; they already share the same model
-				//but we still need to inform the progressbar its model changed.
+				// no need to set the model object to the progressbar's model; they already share the same model
+				// but we still need to inform the progressbar its model changed.
 				progressbar.modelChanged();
-				progressbar.refresh(target);
+				progressbar.refresh(handler);
 			}
 		});
 	}

@@ -18,6 +18,7 @@ package com.googlecode.wicket.kendo.ui.widget.splitter;
 
 import org.apache.wicket.MarkupContainer;
 import org.apache.wicket.ajax.AjaxRequestTarget;
+import org.apache.wicket.core.request.handler.IPartialPageRequestHandler;
 import org.apache.wicket.markup.html.WebMarkupContainer;
 
 import com.googlecode.wicket.jquery.core.Options;
@@ -98,26 +99,26 @@ public class BorderLayout extends WebMarkupContainer implements IBorderLayout, I
 	 * Expands the specified pane<br/>
 	 * <b>Note: </b> Invoking the method will not trigger an expand event.
 	 *
-	 * @param target the {@link AjaxRequestTarget}
+	 * @param handler the {@link IPartialPageRequestHandler}
 	 * @param selector the splitter selector (ie: "#vertical")
 	 * @param pane the pane selector (ie: "#bottom")
 	 */
-	public void expand(AjaxRequestTarget target, String selector, String pane)
+	public void expand(IPartialPageRequestHandler handler, String selector, String pane)
 	{
-		target.appendJavaScript(String.format("$('%s').data('%s').expand('%s');", selector, SplitterBehavior.METHOD, pane));
+		handler.appendJavaScript(String.format("$('%s').data('%s').expand('%s');", selector, SplitterBehavior.METHOD, pane));
 	}
 
 	/**
 	 * Collapses the specified pane<br/>
 	 * <b>Note: </b> Invoking the method will not trigger a collapse event.
 	 *
-	 * @param target the {@link AjaxRequestTarget}
+	 * @param handler the {@link IPartialPageRequestHandler}
 	 * @param selector the splitter selector (ie: "#vertical")
 	 * @param pane the pane selector (ie: "#bottom")
 	 */
-	public void collapse(AjaxRequestTarget target, String selector, String pane)
+	public void collapse(IPartialPageRequestHandler handler, String selector, String pane)
 	{
-		target.appendJavaScript(String.format("$('%s').data('%s').collapse('%s');", selector, SplitterBehavior.METHOD, pane));
+		handler.appendJavaScript(String.format("$('%s').data('%s').collapse('%s');", selector, SplitterBehavior.METHOD, pane));
 	}
 
 	// Events //

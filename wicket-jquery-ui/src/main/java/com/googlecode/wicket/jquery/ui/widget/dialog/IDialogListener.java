@@ -17,6 +17,7 @@
 package com.googlecode.wicket.jquery.ui.widget.dialog;
 
 import org.apache.wicket.ajax.AjaxRequestTarget;
+import org.apache.wicket.core.request.handler.IPartialPageRequestHandler;
 
 /**
  * Event listener shared by the {@link AbstractDialog} widget and the {@link DialogBehavior}
@@ -28,7 +29,7 @@ interface IDialogListener
 {
 	/**
 	 * Indicates whether the default close event (the click on the X-icon) is enabled
-	 * If true, the {@link #onClose(AjaxRequestTarget, DialogButton)} event will be triggered, with a null {@link DialogButton}
+	 * If true, the {@link #onClose(IPartialPageRequestHandler, DialogButton)} event will be triggered, with a null {@link DialogButton}
 	 *
 	 * @return false by default
 	 */
@@ -36,7 +37,7 @@ interface IDialogListener
 	
 	/**
 	 * Indicates whether the escape close event (pressing escape key) is enabled
-	 * If true, the {@link #onClose(AjaxRequestTarget, DialogButton)} event will be triggered, with a null {@link DialogButton}
+	 * If true, the {@link #onClose(IPartialPageRequestHandler, DialogButton)} event will be triggered, with a null {@link DialogButton}
 	 *
 	 * @return false by default
 	 */
@@ -44,7 +45,7 @@ interface IDialogListener
 
 	/**
 	 * Triggered when a button is clicked.
-	 * This method may be overridden to handle button behaviors, but the dialog will not been closed until {@code super.onClick(event)} or {@link DialogBehavior#close(AjaxRequestTarget)} is called.
+	 * This method may be overridden to handle button behaviors, but the dialog will not been closed until {@code super.onClick(event)} or {@link DialogBehavior#close(IPartialPageRequestHandler)} is called.
 	 * @param target the {@link AjaxRequestTarget}
 	 * @param button the button that closed the dialog
 	 */
@@ -52,8 +53,8 @@ interface IDialogListener
 
 	/**
 	 * Triggered when the dialog closes.
-	 * @param target the {@link AjaxRequestTarget}
+	 * @param handler the {@link IPartialPageRequestHandler}
 	 * @param button the button that closed the dialog
 	 */
-	void onClose(AjaxRequestTarget target, DialogButton button);
+	void onClose(IPartialPageRequestHandler handler, DialogButton button);
 }

@@ -22,8 +22,8 @@ import java.util.List;
 
 import org.apache.wicket.Application;
 import org.apache.wicket.Component;
-import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.behavior.Behavior;
+import org.apache.wicket.core.request.handler.IPartialPageRequestHandler;
 import org.apache.wicket.markup.head.CssHeaderItem;
 import org.apache.wicket.markup.head.IHeaderResponse;
 import org.apache.wicket.markup.head.JavaScriptHeaderItem;
@@ -117,7 +117,7 @@ public abstract class JQueryAbstractBehavior extends Behavior
 		}
 
 		// Adds the statement //
-		AjaxRequestTarget target = RequestCycleUtils.getAjaxRequestTarget();
+		IPartialPageRequestHandler target = RequestCycleUtils.getRequestHandler();
 
 		if (target != null)
 		{

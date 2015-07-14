@@ -18,7 +18,7 @@ package com.googlecode.wicket.kendo.ui.widget.notification;
 
 import java.io.Serializable;
 
-import org.apache.wicket.ajax.AjaxRequestTarget;
+import org.apache.wicket.core.request.handler.IPartialPageRequestHandler;
 import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.util.lang.Args;
 
@@ -95,67 +95,67 @@ public class Notification extends WebMarkupContainer implements IJQueryWidget
 	/**
 	 * Shows the message
 	 *
-	 * @param target the {@link AjaxRequestTarget}
+	 * @param handler the {@link IPartialPageRequestHandler}
 	 * @param message the message to format
 	 * @param level the level, ie: info, success, warning, error
 	 */
-	public void show(AjaxRequestTarget target, Serializable message, String level)
+	public void show(IPartialPageRequestHandler handler, Serializable message, String level)
 	{
-		this.widgetBehavior.show(target, message, level);
+		this.widgetBehavior.show(handler, message, level);
 	}
 
 	/**
 	 * Shows an info message
 	 *
-	 * @param target the {@link AjaxRequestTarget}
+	 * @param handler the {@link IPartialPageRequestHandler}
 	 * @param message the message to format
 	 */
-	public void info(AjaxRequestTarget target, Serializable message)
+	public void info(IPartialPageRequestHandler handler, Serializable message)
 	{
-		this.show(target, message, INFO);
+		this.show(handler, message, INFO);
 	}
 
 	/**
 	 * Shows a success message
 	 *
-	 * @param target the {@link AjaxRequestTarget}
+	 * @param handler the {@link IPartialPageRequestHandler}
 	 * @param message the message to format
 	 */
-	public void success(AjaxRequestTarget target, Serializable message)
+	public void success(IPartialPageRequestHandler handler, Serializable message)
 	{
-		this.show(target, message, SUCCESS);
+		this.show(handler, message, SUCCESS);
 	}
 
 	/**
 	 * Shows a warn message
 	 *
-	 * @param target the {@link AjaxRequestTarget}
+	 * @param handler the {@link IPartialPageRequestHandler}
 	 * @param message the message to format
 	 */
-	public void warn(AjaxRequestTarget target, Serializable message)
+	public void warn(IPartialPageRequestHandler handler, Serializable message)
 	{
-		this.show(target, message, WARNING);
+		this.show(handler, message, WARNING);
 	}
 
 	/**
 	 * Shows an error message
 	 *
-	 * @param target the {@link AjaxRequestTarget}
+	 * @param handler the {@link IPartialPageRequestHandler}
 	 * @param message the message to format
 	 */
-	public void error(AjaxRequestTarget target, Serializable message)
+	public void error(IPartialPageRequestHandler handler, Serializable message)
 	{
-		this.show(target, message, ERROR);
+		this.show(handler, message, ERROR);
 	}
 
 	/**
 	 * Hides all notifications
 	 *
-	 * @param target the {@link AjaxRequestTarget}
+	 * @param handler the {@link IPartialPageRequestHandler}
 	 */
-	public void hide(AjaxRequestTarget target)
+	public void hide(IPartialPageRequestHandler handler)
 	{
-		this.widgetBehavior.hide(target);
+		this.widgetBehavior.hide(handler);
 	}
 
 	// IJQueryWidget //

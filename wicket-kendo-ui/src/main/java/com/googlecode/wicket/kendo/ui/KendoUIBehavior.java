@@ -22,7 +22,7 @@ import java.util.List;
 
 import org.apache.wicket.Application;
 import org.apache.wicket.Component;
-import org.apache.wicket.ajax.AjaxRequestTarget;
+import org.apache.wicket.core.request.handler.IPartialPageRequestHandler;
 import org.apache.wicket.markup.head.IHeaderResponse;
 import org.apache.wicket.markup.head.JavaScriptHeaderItem;
 import org.apache.wicket.markup.head.PriorityHeaderItem;
@@ -156,11 +156,11 @@ public class KendoUIBehavior extends JQueryBehavior implements IDestroyable
 	}
 
 	@Override
-	public void destroy(AjaxRequestTarget target)
+	public void destroy(IPartialPageRequestHandler handler)
 	{
-		target.prependJavaScript(String.format("var $w = %s; if($w) { $w.destroy(); }", this.widget()));
+		handler.prependJavaScript(String.format("var $w = %s; if($w) { $w.destroy(); }", this.widget()));
 
-		this.onDestroy(target);
+		this.onDestroy(handler);
 	}
 
 	// Events //
@@ -179,10 +179,10 @@ public class KendoUIBehavior extends JQueryBehavior implements IDestroyable
 	/**
 	 * Called when the widget is about to be destroyed
 	 * 
-	 * @param target the {@link AjaxRequestTarget}
-	 * @see #destroy(AjaxRequestTarget)
+	 * @param handler the {@link IPartialPageRequestHandler}
+	 * @see #destroy(IPartialPageRequestHandler)
 	 */
-	protected void onDestroy(AjaxRequestTarget target)
+	protected void onDestroy(IPartialPageRequestHandler handler)
 	{
 		// noop
 	}

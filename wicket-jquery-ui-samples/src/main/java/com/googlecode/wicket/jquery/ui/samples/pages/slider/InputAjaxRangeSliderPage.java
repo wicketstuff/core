@@ -2,6 +2,7 @@ package com.googlecode.wicket.jquery.ui.samples.pages.slider;
 
 import org.apache.wicket.Component;
 import org.apache.wicket.ajax.AjaxRequestTarget;
+import org.apache.wicket.core.request.handler.IPartialPageRequestHandler;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.form.TextField;
 import org.apache.wicket.markup.html.panel.FeedbackPanel;
@@ -44,10 +45,10 @@ public class InputAjaxRangeSliderPage extends AbstractSliderPage
 			}
 
 			@Override
-			public void onValueChanged(AjaxRequestTarget target)
+			public void onValueChanged(IPartialPageRequestHandler handler)
 			{
 				InputAjaxRangeSliderPage.this.info(this, form);
-				target.add(feedback); //do never add 'this' or the form here!
+				handler.add(feedback); //do never add 'this' or the form here!
 			}
 		};
 

@@ -23,6 +23,7 @@ import java.util.List;
 import org.apache.wicket.Component;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.attributes.CallbackParameter;
+import org.apache.wicket.core.request.handler.IPartialPageRequestHandler;
 import org.apache.wicket.extensions.markup.html.tabs.ITab;
 
 import com.googlecode.wicket.jquery.core.JQueryEvent;
@@ -128,12 +129,12 @@ public abstract class TabsBehavior extends JQueryUIBehavior implements IJQueryAj
 	/**
 	 * Activates the selected tab, identified by the index
 	 *
-	 * @param target the {@link AjaxRequestTarget}
 	 * @param index the tab's index
+	 * @param handler the {@link IPartialPageRequestHandler}
 	 */
-	public void activate(int index, AjaxRequestTarget target)
+	public void activate(int index, IPartialPageRequestHandler handler)
 	{
-		target.appendJavaScript(this.$("'option'", "'active'", index));
+		handler.appendJavaScript(this.$("'option'", "'active'", index));
 	}
 
 	// Events //

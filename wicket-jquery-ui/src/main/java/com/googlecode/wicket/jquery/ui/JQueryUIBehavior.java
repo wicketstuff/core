@@ -18,7 +18,7 @@ package com.googlecode.wicket.jquery.ui;
 
 import org.apache.wicket.Application;
 import org.apache.wicket.Component;
-import org.apache.wicket.ajax.AjaxRequestTarget;
+import org.apache.wicket.core.request.handler.IPartialPageRequestHandler;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -106,12 +106,12 @@ public class JQueryUIBehavior extends JQueryBehavior implements IDestroyable
 	}
 
 	@Override
-	public void destroy(AjaxRequestTarget target)
+	public void destroy(IPartialPageRequestHandler handler)
 	{
 		String statement = String.format("var $w = %s; if($w) { $w.destroy(); }", this.widget());
-		target.prependJavaScript(JQueryUtils.trycatch(statement));
+		handler.prependJavaScript(JQueryUtils.trycatch(statement));
 
-		this.onDestroy(target);
+		this.onDestroy(handler);
 	}
 
 	// Events //
@@ -130,10 +130,10 @@ public class JQueryUIBehavior extends JQueryBehavior implements IDestroyable
 	/**
 	 * Called when the widget is about to be destroyed
 	 * 
-	 * @param target the {@link AjaxRequestTarget}
-	 * @see #destroy(AjaxRequestTarget)
+	 * @param handler the {@link IPartialPageRequestHandler}
+	 * @see #destroy(IPartialPageRequestHandler)
 	 */
-	protected void onDestroy(AjaxRequestTarget target)
+	protected void onDestroy(IPartialPageRequestHandler handler)
 	{
 		// noop
 	}

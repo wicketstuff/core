@@ -16,7 +16,7 @@
  */
 package com.googlecode.wicket.jquery.ui.widget.dialog;
 
-import org.apache.wicket.ajax.AjaxRequestTarget;
+import org.apache.wicket.core.request.handler.IPartialPageRequestHandler;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.util.io.IClusterable;
@@ -216,17 +216,17 @@ public class DialogButton implements IClusterable
 	 * Sets the enable state of the button
 	 *
 	 * @param enabled true or false
-	 * @param target the {@link AjaxRequestTarget}
+	 * @param handler the {@link IPartialPageRequestHandler}
 	 */
-	public void setEnabled(boolean enabled, AjaxRequestTarget target)
+	public void setEnabled(boolean enabled, IPartialPageRequestHandler handler)
 	{
 		if (enabled)
 		{
-			this.enable(target);
+			this.enable(handler);
 		}
 		else
 		{
-			this.disable(target);
+			this.disable(handler);
 		}
 	}
 
@@ -234,9 +234,9 @@ public class DialogButton implements IClusterable
 	 * Sets the visible state of the button
 	 *
 	 * @param visible true or false
-	 * @param target the {@link AjaxRequestTarget}
+	 * @param handler the {@link IPartialPageRequestHandler}
 	 */
-	public void setVisible(boolean visible, AjaxRequestTarget target)
+	public void setVisible(boolean visible, IPartialPageRequestHandler handler)
 	{
 		if (this.visible != visible)
 		{
@@ -244,11 +244,11 @@ public class DialogButton implements IClusterable
 
 			if (this.visible)
 			{
-				this.show(target);
+				this.show(handler);
 			}
 			else
 			{
-				this.hide(target);
+				this.hide(handler);
 			}
 		}
 	}
@@ -280,41 +280,41 @@ public class DialogButton implements IClusterable
 	/**
 	 * Enables the button
 	 *
-	 * @param target the {@link AjaxRequestTarget}
+	 * @param handler the {@link IPartialPageRequestHandler}
 	 */
-	private void enable(AjaxRequestTarget target)
+	private void enable(IPartialPageRequestHandler handler)
 	{
-		target.appendJavaScript(String.format("jQuery('#%s').button('enable');", this.getMarkupId()));
+		handler.appendJavaScript(String.format("jQuery('#%s').button('enable');", this.getMarkupId()));
 	}
 
 	/**
 	 * Disables the button
 	 *
-	 * @param target the {@link AjaxRequestTarget}
+	 * @param handler the {@link IPartialPageRequestHandler}
 	 */
-	private void disable(AjaxRequestTarget target)
+	private void disable(IPartialPageRequestHandler handler)
 	{
-		target.appendJavaScript(String.format("jQuery('#%s').button('disable');", this.getMarkupId()));
+		handler.appendJavaScript(String.format("jQuery('#%s').button('disable');", this.getMarkupId()));
 	}
 
 	/**
 	 * Shows the button
 	 *
-	 * @param target the {@link AjaxRequestTarget}
+	 * @param handler the {@link IPartialPageRequestHandler}
 	 */
-	private void show(AjaxRequestTarget target)
+	private void show(IPartialPageRequestHandler handler)
 	{
-		target.appendJavaScript(String.format("jQuery('#%s').show();", this.getMarkupId()));
+		handler.appendJavaScript(String.format("jQuery('#%s').show();", this.getMarkupId()));
 	}
 
 	/**
 	 * Hides the button
 	 *
-	 * @param target the {@link AjaxRequestTarget}
+	 * @param handler the {@link IPartialPageRequestHandler}
 	 */
-	private void hide(AjaxRequestTarget target)
+	private void hide(IPartialPageRequestHandler handler)
 	{
-		target.appendJavaScript(String.format("jQuery('#%s').hide();", this.getMarkupId()));
+		handler.appendJavaScript(String.format("jQuery('#%s').hide();", this.getMarkupId()));
 	}
 
 	@Override

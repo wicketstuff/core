@@ -2,7 +2,7 @@ package com.googlecode.wicket.jquery.ui.samples.pages.datepicker;
 
 import java.util.Date;
 
-import org.apache.wicket.ajax.AjaxRequestTarget;
+import org.apache.wicket.core.request.handler.IPartialPageRequestHandler;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.panel.FeedbackPanel;
 import org.apache.wicket.model.Model;
@@ -34,10 +34,10 @@ public class AjaxDatePickerPage extends AbstractDatePickerPage
 			private static final long serialVersionUID = 1L;
 
 			@Override
-			public void onValueChanged(AjaxRequestTarget target)
+			public void onValueChanged(IPartialPageRequestHandler handler)
 			{
 				info("Selected date: " + this.getModelObject());
-				target.add(feedback);
+				handler.add(feedback);
 			}
 		});
 	}

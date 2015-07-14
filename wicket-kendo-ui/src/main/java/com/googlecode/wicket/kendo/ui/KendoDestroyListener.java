@@ -22,6 +22,7 @@ import java.util.Map.Entry;
 import org.apache.wicket.Component;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.AjaxRequestTarget.AbstractListener;
+import org.apache.wicket.core.request.handler.IPartialPageRequestHandler;
 import org.apache.wicket.util.visit.IVisit;
 import org.apache.wicket.util.visit.IVisitor;
 import org.apache.wicket.util.visit.Visits;
@@ -42,11 +43,12 @@ public class KendoDestroyListener extends AbstractListener
 		/**
 		 * Prepares the widget for safe removal from the DOM.<br/>
 		 * Detaches all event handlers and removes jQuery.data attributes to avoid memory leaks.<br/>
-		 * Calls destroy method of any child Kendo widgets.
+		 * Calls destroy method of any child Kendo widgets.<br/>
+		 * This method is automatically called on ajax request. In case of web socket requests, this may be called manually. 
 		 * 
-		 * @param target the {@link AjaxRequestTarget}
+		 * @param handler the {@link IPartialPageRequestHandler}
 		 */
-		void destroy(AjaxRequestTarget target);
+		void destroy(IPartialPageRequestHandler handler);
 	}
 
 	// Events //

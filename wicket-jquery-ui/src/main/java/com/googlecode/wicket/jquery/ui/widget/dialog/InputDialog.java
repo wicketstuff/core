@@ -21,6 +21,7 @@ import java.util.List;
 
 import org.apache.wicket.Component;
 import org.apache.wicket.ajax.AjaxRequestTarget;
+import org.apache.wicket.core.request.handler.IPartialPageRequestHandler;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.form.FormComponent;
@@ -122,11 +123,11 @@ public abstract class InputDialog<T extends Serializable> extends AbstractFormDi
 	}
 
 	@Override
-	protected void onOpen(AjaxRequestTarget target)
+	protected void onOpen(IPartialPageRequestHandler handler)
 	{
-		super.onOpen(target);
+		super.onOpen(handler);
 
-		target.add(this.form);
+		handler.add(this.form);
 	}
 
 	@Override

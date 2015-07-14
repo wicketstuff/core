@@ -20,6 +20,7 @@ import java.io.Serializable;
 
 import org.apache.wicket.WicketRuntimeException;
 import org.apache.wicket.ajax.AjaxRequestTarget;
+import org.apache.wicket.core.request.handler.IPartialPageRequestHandler;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.form.IFormSubmitter;
 import org.apache.wicket.model.IModel;
@@ -225,7 +226,7 @@ public abstract class AbstractFormDialog<T extends Serializable> extends Abstrac
 	}
 
 	@Override
-	public void onClose(AjaxRequestTarget target, DialogButton button)
+	public void onClose(IPartialPageRequestHandler handler, DialogButton button)
 	{
 		// not mandatory to override
 	}

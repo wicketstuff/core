@@ -20,6 +20,7 @@ import java.util.Collections;
 import java.util.List;
 
 import org.apache.wicket.ajax.AjaxRequestTarget;
+import org.apache.wicket.core.request.handler.IPartialPageRequestHandler;
 import org.apache.wicket.extensions.markup.html.tabs.ITab;
 import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.markup.html.basic.Label;
@@ -143,12 +144,12 @@ public class AccordionPanel extends JQueryGenericPanel<List<ITab>> implements IA
 	 * <b>Warning:</b> the index is related to visible tabs only<br/>
 	 * <b>Warning:</b> invoking this method results to a dual client-server round-trip.
 	 *
-	 * @param target the {@link AjaxRequestTarget}
 	 * @param index the visible tab's index to activate
+	 * @param handler the {@link IPartialPageRequestHandler}
 	 */
-	public void setTabIndex(int index, AjaxRequestTarget target)
+	public void setTabIndex(int index, IPartialPageRequestHandler handler)
 	{
-		this.widgetBehavior.select(index, target);
+		this.widgetBehavior.select(index, handler);
 	}
 
 	/**

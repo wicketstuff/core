@@ -17,6 +17,7 @@
 package com.googlecode.wicket.kendo.ui.widget.window;
 
 import org.apache.wicket.ajax.AjaxRequestTarget;
+import org.apache.wicket.core.request.handler.IPartialPageRequestHandler;
 
 /**
  * Event listener shared by the {@link AbstractWindow} widget and the {@link WindowBehavior}
@@ -36,7 +37,7 @@ interface IWindowListener
 
 	/**
 	 * Indicates whether the close event is enabled. Both 'X' icon and 'escape' key fire this event.<br/>
-	 * If true, the {@link #onClose(AjaxRequestTarget)} event will be triggered
+	 * If true, the {@link #onClose(IPartialPageRequestHandler)} event will be triggered
 	 *
 	 * @return false by default
 	 */
@@ -51,9 +52,9 @@ interface IWindowListener
 	void onAction(AjaxRequestTarget target, String action);
 
 	/**
-	 * Triggered when then the Window closes, either trough the 'X' icon or the 'escape' key ({@link #isCloseEventEnabled()} should return {@code true}), or if {@link AbstractWindow#close(AjaxRequestTarget)} has been called
+	 * Triggered when then the Window closes, either trough the 'X' icon or the 'escape' key ({@link #isCloseEventEnabled()} should return {@code true}), or if {@link AbstractWindow#close(IPartialPageRequestHandler)} has been called
 	 *
-	 * @param target the {@link AjaxRequestTarget}
+	 * @param handler the {@link IPartialPageRequestHandler}
 	 */
-	void onClose(AjaxRequestTarget target);
+	void onClose(IPartialPageRequestHandler handler);
 }

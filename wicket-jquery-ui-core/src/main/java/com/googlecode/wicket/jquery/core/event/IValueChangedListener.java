@@ -16,10 +16,10 @@
  */
 package com.googlecode.wicket.jquery.core.event;
 
-import org.apache.wicket.ajax.AjaxRequestTarget;
+import org.apache.wicket.core.request.handler.IPartialPageRequestHandler;
 
 /**
- * Specifies that a widget handles a value-changed AJAX behavior
+ * Specifies that a widget handles a value-changed ajax/websocket behavior
  *
  * @author Sebastien Briquet - sebfz1
  */
@@ -27,7 +27,7 @@ public interface IValueChangedListener
 {
 	/**
 	 * Triggers when the value has changed
-	 * @param target the {@link AjaxRequestTarget}
+	 * @param handler the {@link IPartialPageRequestHandler}
 	 */
-	void onValueChanged(AjaxRequestTarget target);
+	void onValueChanged(IPartialPageRequestHandler handler);
 }

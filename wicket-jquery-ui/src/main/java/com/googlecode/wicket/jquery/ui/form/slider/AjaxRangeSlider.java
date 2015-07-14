@@ -18,6 +18,7 @@ package com.googlecode.wicket.jquery.ui.form.slider;
 
 import org.apache.wicket.Component;
 import org.apache.wicket.ajax.AjaxRequestTarget;
+import org.apache.wicket.core.request.handler.IPartialPageRequestHandler;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.form.FormComponentPanel;
 import org.apache.wicket.markup.html.form.TextField;
@@ -110,7 +111,7 @@ public class AjaxRangeSlider extends RangeSlider implements IJQueryAjaxAware, IV
 	}
 
 	@Override
-	public void onValueChanged(AjaxRequestTarget target)
+	public void onValueChanged(IPartialPageRequestHandler handler)
 	{
 		// noop
 	}

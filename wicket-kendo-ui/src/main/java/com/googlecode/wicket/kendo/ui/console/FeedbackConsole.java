@@ -18,7 +18,7 @@ package com.googlecode.wicket.kendo.ui.console;
 
 import java.util.List;
 
-import org.apache.wicket.ajax.AjaxRequestTarget;
+import org.apache.wicket.core.request.handler.IPartialPageRequestHandler;
 import org.apache.wicket.feedback.FeedbackMessage;
 import org.apache.wicket.feedback.FeedbackMessagesModel;
 import org.apache.wicket.feedback.IFeedback;
@@ -91,11 +91,11 @@ public class FeedbackConsole extends AbstractConsole implements IFeedback
 	 * Logs a {@link FeedbackMessage}
 	 *
 	 * @param message the {@link FeedbackMessage}
-	 * @param target the {@link AjaxRequestTarget}
+	 * @param handler the {@link IPartialPageRequestHandler}
 	 */
-	protected void log(AjaxRequestTarget target, FeedbackMessage message)
+	protected void log(IPartialPageRequestHandler handler, FeedbackMessage message)
 	{
-		this.log(target, message.getMessage(), this.isError(message));
+		this.log(handler, message.getMessage(), this.isError(message));
 
 		message.markRendered();
 	}
@@ -104,13 +104,13 @@ public class FeedbackConsole extends AbstractConsole implements IFeedback
 	 * Logs a list of {@link FeedbackMessage}
 	 *
 	 * @param messages the list of {@link FeedbackMessage}
-	 * @param target the {@link AjaxRequestTarget}
+	 * @param handler the {@link IPartialPageRequestHandler}
 	 */
-	protected final void log(AjaxRequestTarget target, List<FeedbackMessage> messages)
+	protected final void log(IPartialPageRequestHandler handler, List<FeedbackMessage> messages)
 	{
 		for (FeedbackMessage message : messages)
 		{
-			this.log(target, message);
+			this.log(handler, message);
 		}
 	}
 
@@ -128,11 +128,11 @@ public class FeedbackConsole extends AbstractConsole implements IFeedback
 	/**
 	 * Refreshes the console with the current feedback messages
 	 *
-	 * @param target the {@link AjaxRequestTarget}
+	 * @param handler the {@link IPartialPageRequestHandler}
 	 */
-	public void refresh(AjaxRequestTarget target)
+	public void refresh(IPartialPageRequestHandler handler)
 	{
-		this.log(target, this.feedbackMessagesModel.getObject());
+		this.log(handler, this.feedbackMessagesModel.getObject());
 	}
 
 	// Events //

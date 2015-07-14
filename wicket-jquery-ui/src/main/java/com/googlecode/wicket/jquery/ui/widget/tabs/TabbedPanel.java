@@ -21,6 +21,7 @@ import java.util.List;
 
 import org.apache.wicket.AttributeModifier;
 import org.apache.wicket.ajax.AjaxRequestTarget;
+import org.apache.wicket.core.request.handler.IPartialPageRequestHandler;
 import org.apache.wicket.extensions.markup.html.tabs.ITab;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.list.ListItem;
@@ -122,12 +123,12 @@ public class TabbedPanel extends JQueryGenericPanel<List<ITab>> implements ITabs
 	 * <br/>
 	 * <b>Warning:</b> invoking this method results to a dual client-server round-trip. Use this method if you cannot use {@link #setActiveTab(int)} followed by {@code target.add(myTabbedPannel)}
 	 *
-	 * @param target the {@link AjaxRequestTarget}
 	 * @param index the tab's index to activate
+	 * @param handler the {@link IPartialPageRequestHandler}
 	 */
-	public void setActiveTab(int index, AjaxRequestTarget target)
+	public void setActiveTab(int index, IPartialPageRequestHandler handler)
 	{
-		this.widgetBehavior.activate(index, target); // sets 'active' option, that fires 'activate' event (best would be that is also fires a 'show' event)
+		this.widgetBehavior.activate(index, handler); // sets 'active' option, that fires 'activate' event (best would be that is also fires a 'show' event)
 	}
 
 	/**
@@ -186,9 +187,9 @@ public class TabbedPanel extends JQueryGenericPanel<List<ITab>> implements ITabs
 	 * <br/>
 	 * <b>Note:</b> This method should be used instead of {@code target.add(tabbedPanel)} if the underlying model is-a {@link TabListModel}
 	 * 
-	 * @param target the {@link AjaxRequestTarget}
+	 * @param handler the {@link IPartialPageRequestHandler}
 	 */
-	public void refresh(AjaxRequestTarget target)
+	public void refresh(IPartialPageRequestHandler handler)
 	{
 		IModel<?> model = this.getModel();
 
@@ -197,7 +198,7 @@ public class TabbedPanel extends JQueryGenericPanel<List<ITab>> implements ITabs
 			((TabListModel) model).flush();
 		}
 
-		target.add(this);
+		handler.add(this);
 	}
 
 	// Events //

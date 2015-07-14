@@ -44,7 +44,7 @@
 	</scm>
 
 	<properties>
-		<wicket.version>7.0.0-M6</wicket.version>
+		<wicket.version>7.0.0</wicket.version>
 		<junit.version>4.12</junit.version>
 		<jetty.version>8.1.16.v20140903</jetty.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -60,7 +60,7 @@
 		</repository>
 		<repository>
 			<id>Wicket Nexus Staging</id>
-			<url>https://repository.apache.org/content/repositories/orgapachewicket-1043</url>
+			<url>https://repository.apache.org/content/repositories/orgapachewicket-1049</url>
 		</repository>
 	</repositories>
 
@@ -140,6 +140,12 @@
 							</goals>
 						</execution>
 					</executions>
+				</plugin>
+
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-deploy-plugin</artifactId>
+					<version>2.8.2</version>
 				</plugin>
 
 				<plugin>

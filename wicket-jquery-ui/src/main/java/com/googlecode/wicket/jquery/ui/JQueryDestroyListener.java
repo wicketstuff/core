@@ -22,6 +22,7 @@ import java.util.Map.Entry;
 import org.apache.wicket.Component;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.AjaxRequestTarget.AbstractListener;
+import org.apache.wicket.core.request.handler.IPartialPageRequestHandler;
 import org.apache.wicket.util.visit.IVisit;
 import org.apache.wicket.util.visit.IVisitor;
 import org.apache.wicket.util.visit.Visits;
@@ -40,11 +41,12 @@ public class JQueryDestroyListener extends AbstractListener
 	public interface IDestroyable
 	{
 		/**
-		 * Removes the widget functionality completely. This will return the element back to its pre-init state. 
+		 * Removes the widget functionality completely. This will return the element back to its pre-init state.<br/>
+		 * This method is automatically called on ajax request. In case of web socket requests, this may be called manually. 
 		 * 
-		 * @param target the {@link AjaxRequestTarget}
+		 * @param handler the {@link IPartialPageRequestHandler}
 		 */
-		void destroy(AjaxRequestTarget target);
+		void destroy(IPartialPageRequestHandler handler);
 	}
 
 	// Events //

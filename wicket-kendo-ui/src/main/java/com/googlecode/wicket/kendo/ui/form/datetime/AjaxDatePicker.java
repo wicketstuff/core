@@ -22,6 +22,7 @@ import java.util.Locale;
 import org.apache.wicket.Component;
 import org.apache.wicket.WicketRuntimeException;
 import org.apache.wicket.ajax.AjaxRequestTarget;
+import org.apache.wicket.core.request.handler.IPartialPageRequestHandler;
 import org.apache.wicket.extensions.markup.html.form.DateTextField;
 import org.apache.wicket.markup.html.form.FormComponent;
 import org.apache.wicket.model.IModel;
@@ -199,12 +200,13 @@ public class AjaxDatePicker extends DatePicker implements IJQueryAjaxAware, IVal
 	}
 
 	@Override
-	public void onValueChanged(AjaxRequestTarget target)
+	public void onValueChanged(IPartialPageRequestHandler handler)
 	{
 		// noop
 	}
 
 	// IJQueryWidget //
+
 	@Override
 	public JQueryBehavior newWidgetBehavior(String selector)
 	{

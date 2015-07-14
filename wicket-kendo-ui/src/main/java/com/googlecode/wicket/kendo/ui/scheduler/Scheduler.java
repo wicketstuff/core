@@ -19,6 +19,7 @@ package com.googlecode.wicket.kendo.ui.scheduler;
 import java.util.List;
 
 import org.apache.wicket.ajax.AjaxRequestTarget;
+import org.apache.wicket.core.request.handler.IPartialPageRequestHandler;
 import org.apache.wicket.util.lang.Args;
 
 import com.googlecode.wicket.jquery.core.JQueryBehavior;
@@ -149,11 +150,11 @@ public class Scheduler extends JQueryContainer implements ISchedulerListener
 	/**
 	 * Refreshes the events currently available in the selected view.
 	 *
-	 * @param target the {@link AjaxRequestTarget}
+	 * @param handler the {@link IPartialPageRequestHandler}
 	 */
-	public void refresh(AjaxRequestTarget target)
+	public void refresh(IPartialPageRequestHandler handler)
 	{
-		target.appendJavaScript(String.format("var widget = %s; widget.dataSource.read(); widget.refresh();", this.widget()));
+		handler.appendJavaScript(String.format("var widget = %s; widget.dataSource.read(); widget.refresh();", this.widget()));
 	}
 
 	// Properties //
@@ -177,7 +178,7 @@ public class Scheduler extends JQueryContainer implements ISchedulerListener
 	/**
 	 * Gets the orientation of the group headers
 	 *
-	 * @return {@value GroupOrientation#horizontal} by default
+	 * @return {@link GroupOrientation#horizontal} by default
 	 */
 	protected GroupOrientation getGroupOrientation()
 	{

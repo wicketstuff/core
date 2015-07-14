@@ -17,6 +17,7 @@
 package com.googlecode.wicket.kendo.ui.form.datetime.local;
 
 import org.apache.wicket.ajax.AjaxRequestTarget;
+import org.apache.wicket.core.request.handler.IPartialPageRequestHandler;
 import org.apache.wicket.markup.html.form.FormComponent;
 import org.apache.wicket.model.IModel;
 import org.threeten.bp.LocalDate;
@@ -88,8 +89,7 @@ public class AjaxDateTimePicker extends DateTimePicker implements IJQueryAjaxAwa
 
 	// Events //
 	/**
-	 * {@inheritDoc}
-	 * <br/>
+	 * {@inheritDoc} <br/>
 	 * <i>Not intended to be overridden</i>
 	 */
 	@Override
@@ -100,7 +100,7 @@ public class AjaxDateTimePicker extends DateTimePicker implements IJQueryAjaxAwa
 	}
 
 	@Override
-	public void onValueChanged(AjaxRequestTarget target)
+	public void onValueChanged(IPartialPageRequestHandler handler)
 	{
 		// noop
 	}

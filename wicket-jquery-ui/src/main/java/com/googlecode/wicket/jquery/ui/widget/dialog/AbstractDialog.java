@@ -21,6 +21,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import org.apache.wicket.ajax.AjaxRequestTarget;
+import org.apache.wicket.core.request.handler.IPartialPageRequestHandler;
 import org.apache.wicket.markup.html.panel.GenericPanel;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
@@ -204,14 +205,14 @@ public abstract class AbstractDialog<T extends Serializable> extends GenericPane
 	/**
 	 * Triggered when the dialog opens
 	 *
-	 * @param target the {@link AjaxRequestTarget}
+	 * @param handler the {@link IPartialPageRequestHandler}
 	 */
-	protected void onOpen(AjaxRequestTarget target)
+	protected void onOpen(IPartialPageRequestHandler handler)
 	{
 	}
 
 	/**
-	 * Triggered when a button is clicked. This method may be overridden to handle button behaviors, but the dialog will not been closed until {@code super.onClick(event)} or {@link #close(AjaxRequestTarget, DialogButton)} is called.
+	 * Triggered when a button is clicked. This method may be overridden to handle button behaviors, but the dialog will not been closed until {@code super.onClick(event)} or {@link #close(IPartialPageRequestHandler, DialogButton)} is called.
 	 */
 	@Override
 	public void onClick(AjaxRequestTarget target, DialogButton button)
@@ -288,25 +289,25 @@ public abstract class AbstractDialog<T extends Serializable> extends GenericPane
 	/**
 	 * Sets the dialog's title dynamically
 	 *
-	 * @param target the {@link AjaxRequestTarget}
+	 * @param handler the {@link IPartialPageRequestHandler}
 	 * @param title the dialog's title
 	 */
-	public void setTitle(AjaxRequestTarget target, String title)
+	public void setTitle(IPartialPageRequestHandler handler, String title)
 	{
-		this.setTitle(target, Model.of(title));
+		this.setTitle(handler, Model.of(title));
 	}
 
 	/**
 	 * Sets the dialog's title dynamically
 	 *
-	 * @param target the {@link AjaxRequestTarget}
+	 * @param handler the {@link IPartialPageRequestHandler}
 	 * @param title the dialog's title
 	 */
-	public void setTitle(AjaxRequestTarget target, IModel<String> title)
+	public void setTitle(IPartialPageRequestHandler handler, IModel<String> title)
 	{
 		this.setTitle(title);
 
-		target.appendJavaScript(this.widgetBehavior.$(Options.asString("option"), Options.asString("title"), Options.asString(title.getObject())));
+		handler.appendJavaScript(this.widgetBehavior.$(Options.asString("option"), Options.asString("title"), Options.asString(title.getObject())));
 	}
 
 	/**
@@ -365,32 +366,32 @@ public abstract class AbstractDialog<T extends Serializable> extends GenericPane
 	/**
 	 * Opens the dialogs in ajax.
 	 *
-	 * @param target the {@link AjaxRequestTarget}
+	 * @param handler the {@link IPartialPageRequestHandler}
 	 */
-	public final void open(AjaxRequestTarget target)
+	public final void open(IPartialPageRequestHandler handler)
 	{
-		this.onOpen(target);
+		this.onOpen(handler);
 
 		if (this.widgetBehavior != null)
 		{
-			this.widgetBehavior.open(target);
+			this.widgetBehavior.open(handler);
 		}
 	}
 
 	/**
-	 * Closes the dialogs in ajax.
+	 * Closes the dialogs in ajax/websocket.
 	 *
-	 * @param target the {@link AjaxRequestTarget}
+	 * @param handler the {@link IPartialPageRequestHandler}
 	 * @param button the button that closes the dialog
 	 */
-	public final void close(AjaxRequestTarget target, DialogButton button)
+	public final void close(IPartialPageRequestHandler handler, DialogButton button)
 	{
 		if (this.widgetBehavior != null)
 		{
-			this.widgetBehavior.close(target);
+			this.widgetBehavior.close(handler);
 		}
 
-		this.onClose(target, button);
+		this.onClose(handler, button);
 	}
 
 	// IJQueryWidget //
@@ -430,9 +431,9 @@ public abstract class AbstractDialog<T extends Serializable> extends GenericPane
 			}
 
 			@Override
-			public void onClose(AjaxRequestTarget target, DialogButton button)
+			public void onClose(IPartialPageRequestHandler handler, DialogButton button)
 			{
-				AbstractDialog.this.onClose(target, button);
+				AbstractDialog.this.onClose(handler, button);
 			}
 
 			@Override

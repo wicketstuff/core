@@ -17,7 +17,7 @@
 package com.googlecode.wicket.kendo.ui;
 
 import org.apache.wicket.Component;
-import org.apache.wicket.ajax.AjaxRequestTarget;
+import org.apache.wicket.core.request.handler.IPartialPageRequestHandler;
 
 import com.googlecode.wicket.jquery.core.IJQueryWidget.JQueryWidget;
 import com.googlecode.wicket.jquery.core.JQueryBehavior;
@@ -33,45 +33,45 @@ public final class KendoBehaviorFactory
 	/**
 	 * Shows the kendo-ui widget using its reference
 	 *
-	 * @param target the {@link AjaxRequestTarget}
+	 * @param handler the {@link IPartialPageRequestHandler}
 	 * @param component the {@link Component} reference
 	 */
-	public static void show(AjaxRequestTarget target, Component component)
+	public static void show(IPartialPageRequestHandler handler, Component component)
 	{
-		KendoBehaviorFactory.show(target, JQueryWidget.getSelector(component));
+		KendoBehaviorFactory.show(handler, JQueryWidget.getSelector(component));
 	}
 
 	/**
 	 * Shows the kendo-ui widget using its selector
 	 *
-	 * @param target the {@link AjaxRequestTarget}
+	 * @param handler the {@link IPartialPageRequestHandler}
 	 * @param selector the html selector (ie: '#myId')
 	 */
-	public static void show(AjaxRequestTarget target, String selector)
+	public static void show(IPartialPageRequestHandler handler, String selector)
 	{
-		target.appendJavaScript(KendoBehaviorFactory.getShowStatement(selector));
+		handler.appendJavaScript(KendoBehaviorFactory.getShowStatement(selector));
 	}
 
 	/**
 	 * Hides the kendo-ui widget using its reference
 	 *
-	 * @param target the {@link AjaxRequestTarget}
+	 * @param handler the {@link IPartialPageRequestHandler}
 	 * @param component the {@link Component} reference
 	 */
-	public static void hide(AjaxRequestTarget target, Component component)
+	public static void hide(IPartialPageRequestHandler handler, Component component)
 	{
-		KendoBehaviorFactory.hide(target, JQueryWidget.getSelector(component));
+		KendoBehaviorFactory.hide(handler, JQueryWidget.getSelector(component));
 	}
 
 	/**
 	 * Hides the kendo-ui widget using its selector
 	 *
-	 * @param target the {@link AjaxRequestTarget}
+	 * @param handler the {@link IPartialPageRequestHandler}
 	 * @param selector the html selector (ie: '#myId')
 	 */
-	public static void hide(AjaxRequestTarget target, String selector)
+	public static void hide(IPartialPageRequestHandler handler, String selector)
 	{
-		target.appendJavaScript(KendoBehaviorFactory.getHideStatement(selector));
+		handler.appendJavaScript(KendoBehaviorFactory.getHideStatement(selector));
 	}
 
 	/**

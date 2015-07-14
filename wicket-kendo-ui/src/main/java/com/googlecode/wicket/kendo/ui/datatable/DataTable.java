@@ -21,6 +21,7 @@ import java.util.List;
 
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.behavior.AbstractAjaxBehavior;
+import org.apache.wicket.core.request.handler.IPartialPageRequestHandler;
 import org.apache.wicket.extensions.markup.html.repeater.data.sort.ISortStateLocator;
 import org.apache.wicket.markup.ComponentTag;
 import org.apache.wicket.markup.MarkupStream;
@@ -101,35 +102,35 @@ public class DataTable<T> extends WebComponent implements IJQueryWidget, IDataTa
 	/**
 	 * Shows the {@link DataTable}
 	 *
-	 * @param target the {@link AjaxRequestTarget}
+	 * @param handler the {@link IPartialPageRequestHandler}
 	 */
-	public final void show(AjaxRequestTarget target)
+	public final void show(IPartialPageRequestHandler handler)
 	{
-		this.onShow(target);
+		this.onShow(handler);
 
-		KendoBehaviorFactory.show(target, this);
+		KendoBehaviorFactory.show(handler, this);
 	}
 
 	/**
 	 * Hides the {@link DataTable}
 	 *
-	 * @param target the {@link AjaxRequestTarget}
+	 * @param handler the {@link IPartialPageRequestHandler}
 	 */
-	public final void hide(AjaxRequestTarget target)
+	public final void hide(IPartialPageRequestHandler handler)
 	{
-		KendoBehaviorFactory.hide(target, this);
+		KendoBehaviorFactory.hide(handler, this);
 
-		this.onHide(target);
+		this.onHide(handler);
 	}
 
 	/**
 	 * Reloads data and refreshes the {@link DataTable}
 	 *
-	 * @param target the {@link AjaxRequestTarget}
+	 * @param handler the {@link IPartialPageRequestHandler}
 	 */
-	public void refresh(AjaxRequestTarget target)
+	public void refresh(IPartialPageRequestHandler handler)
 	{
-		target.appendJavaScript(String.format("var grid = %s; grid.dataSource.read(); grid.refresh();", this.widget()));
+		handler.appendJavaScript(String.format("var grid = %s; grid.dataSource.read(); grid.refresh();", this.widget()));
 	}
 
 	// Properties //
@@ -228,9 +229,9 @@ public class DataTable<T> extends WebComponent implements IJQueryWidget, IDataTa
 	/**
 	 * Triggered when the {@link DataTable} shows
 	 *
-	 * @param target the {@link AjaxRequestTarget}
+	 * @param handler the {@link IPartialPageRequestHandler}
 	 */
-	public void onShow(AjaxRequestTarget target)
+	public void onShow(IPartialPageRequestHandler handler)
 	{
 		// noop
 	}
@@ -238,9 +239,9 @@ public class DataTable<T> extends WebComponent implements IJQueryWidget, IDataTa
 	/**
 	 * Triggered when the {@link DataTable} hides
 	 *
-	 * @param target the {@link AjaxRequestTarget}
+	 * @param handler the {@link IPartialPageRequestHandler}
 	 */
-	public void onHide(AjaxRequestTarget target)
+	public void onHide(IPartialPageRequestHandler handler)
 	{
 		// noop
 	}

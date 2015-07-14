@@ -1,6 +1,7 @@
 package com.googlecode.wicket.jquery.ui.samples.pages.dialog;
 
 import org.apache.wicket.ajax.AjaxRequestTarget;
+import org.apache.wicket.core.request.handler.IPartialPageRequestHandler;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.panel.FeedbackPanel;
 import org.apache.wicket.model.Model;
@@ -36,10 +37,10 @@ public class FormDialogPage extends AbstractDialogPage
 			}
 
 			@Override
-			public void onClose(AjaxRequestTarget target, DialogButton button)
+			public void onClose(IPartialPageRequestHandler handler, DialogButton button)
 			{
 				this.info(button + " has been clicked");
-				target.add(feedback);
+				handler.add(feedback);
 			}
 		};
 

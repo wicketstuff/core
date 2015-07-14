@@ -17,6 +17,7 @@
 package com.googlecode.wicket.jquery.ui.widget.progressbar;
 
 import org.apache.wicket.ajax.AjaxRequestTarget;
+import org.apache.wicket.core.request.handler.IPartialPageRequestHandler;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.util.lang.Args;
 
@@ -90,45 +91,45 @@ public class ProgressBar extends JQueryGenericContainer<Integer> implements IJQu
 	/**
 	 * Increments the progress-bar value by 1
 	 *
-	 * @param target the {@link AjaxRequestTarget}
+	 * @param handler the {@link IPartialPageRequestHandler}
 	 */
-	public void forward(AjaxRequestTarget target)
+	public void forward(IPartialPageRequestHandler handler)
 	{
-		this.forward(target, 1);
+		this.forward(handler, 1);
 	}
 
 	/**
 	 * Increments the progress-bar value by the specified step value
 	 *
-	 * @param target the {@link AjaxRequestTarget}
+	 * @param handler the {@link IPartialPageRequestHandler}
 	 * @param step the value
 	 */
-	public final void forward(AjaxRequestTarget target, int step)
+	public final void forward(IPartialPageRequestHandler handler, int step)
 	{
 		this.setModelObject(this.getModelObject() + step);
-		this.refresh(target);
+		this.refresh(handler);
 	}
 
 	/**
 	 * Decrements the progress-bar value by 1
 	 *
-	 * @param target the {@link AjaxRequestTarget}
+	 * @param handler the {@link IPartialPageRequestHandler}
 	 */
-	public final void backward(AjaxRequestTarget target)
+	public final void backward(IPartialPageRequestHandler handler)
 	{
-		this.backward(target, 1);
+		this.backward(handler, 1);
 	}
 
 	/**
 	 * Decrements the progress-bar value by the specified step value
 	 *
-	 * @param target the {@link AjaxRequestTarget}
+	 * @param handler the {@link IPartialPageRequestHandler}
 	 * @param step the value
 	 */
-	public final void backward(AjaxRequestTarget target, int step)
+	public final void backward(IPartialPageRequestHandler handler, int step)
 	{
 		this.setModelObject(this.getModelObject() - step);
-		this.refresh(target);
+		this.refresh(handler);
 	}
 
 	/**
@@ -136,11 +137,11 @@ public class ProgressBar extends JQueryGenericContainer<Integer> implements IJQu
 	 * This method needs to be called after the model object changes.<br/>
 	 * But It is not required to be called when calling forward or backward methods.
 	 *
-	 * @param target the {@link AjaxRequestTarget}
+	 * @param handler the {@link IPartialPageRequestHandler}
 	 */
-	public final void refresh(AjaxRequestTarget target)
+	public final void refresh(IPartialPageRequestHandler handler)
 	{
-		target.appendJavaScript(this.widgetBehavior.toString()); // change the value ui-side so the change-event will be fired
+		handler.appendJavaScript(this.widgetBehavior.toString()); // change the value ui-side so the change-event will be fired
 	}
 
 	// Events //
@@ -159,13 +160,8 @@ public class ProgressBar extends JQueryGenericContainer<Integer> implements IJQu
 		}
 	}
 
-	/**
-	 * Triggered when the value changed
-	 *
-	 * @param target the {@link AjaxRequestTarget}
-	 */
 	@Override
-	public void onValueChanged(AjaxRequestTarget target)
+	public void onValueChanged(IPartialPageRequestHandler handler)
 	{
 		// noop
 	}

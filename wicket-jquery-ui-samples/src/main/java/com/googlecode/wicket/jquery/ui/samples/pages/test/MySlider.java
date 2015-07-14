@@ -1,6 +1,7 @@
 package com.googlecode.wicket.jquery.ui.samples.pages.test;
 
 import org.apache.wicket.ajax.AjaxRequestTarget;
+import org.apache.wicket.core.request.handler.IPartialPageRequestHandler;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.form.FormComponentPanel;
 import org.apache.wicket.markup.html.form.TextField;
@@ -46,9 +47,9 @@ public class MySlider extends FormComponentPanel<RangeValue>
 			}
 
 			@Override
-			public void onValueChanged(AjaxRequestTarget target)
+			public void onValueChanged(IPartialPageRequestHandler handler)
 			{
-				MySlider.this.onValueChanged(target);
+				MySlider.this.onValueChanged(handler);
 			}
 		};
 
@@ -65,7 +66,7 @@ public class MySlider extends FormComponentPanel<RangeValue>
 	/**
 	 * @param target
 	 */
-	protected void onValueChanged(AjaxRequestTarget target)
+	protected void onValueChanged(IPartialPageRequestHandler handler)
 	{
 		// noop
 	}

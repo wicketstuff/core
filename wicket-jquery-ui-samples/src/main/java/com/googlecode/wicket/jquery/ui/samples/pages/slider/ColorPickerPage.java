@@ -2,8 +2,8 @@ package com.googlecode.wicket.jquery.ui.samples.pages.slider;
 
 import org.apache.wicket.AttributeModifier;
 import org.apache.wicket.Component;
-import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.behavior.Behavior;
+import org.apache.wicket.core.request.handler.IPartialPageRequestHandler;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.panel.EmptyPanel;
 import org.apache.wicket.markup.html.panel.FeedbackPanel;
@@ -48,14 +48,14 @@ public class ColorPickerPage extends AbstractSliderPage
 			private static final long serialVersionUID = 1L;
 
 			@Override
-			protected void onColorChanged(AjaxRequestTarget target)
+			protected void onColorChanged(IPartialPageRequestHandler handler)
 			{
 				// change the color of the color-panel //
 				colorPanel.add(ColorPickerPage.this.newBackgroundAttributeModifier());
-				target.add(colorPanel);
+				handler.add(colorPanel);
 
 				ColorPickerPage.this.info(this);
-				target.add(feedback);
+				handler.add(feedback);
 			}
 		});
 	}
@@ -71,7 +71,6 @@ public class ColorPickerPage extends AbstractSliderPage
 		this.info("The model object is: " + this.model.getObject());
 	}
 
-
 	/**
 	 * A FormComponentFragment would have been perfect here, but... it does not exists :s
 	 *
@@ -79,9 +78,9 @@ public class ColorPickerPage extends AbstractSliderPage
 	abstract class ColorPicker extends Fragment
 	{
 		private static final long serialVersionUID = 1L;
-		private static final int INDEX_R = 1;	//#RRxxxx
-		private static final int INDEX_G = 3;	//#xxGGxx
-		private static final int INDEX_B = 5;	//#xxxxBB
+		private static final int INDEX_R = 1; // #RRxxxx
+		private static final int INDEX_G = 3; // #xxGGxx
+		private static final int INDEX_B = 5; // #xxxxBB
 
 		private final IModel<Integer> modelR;
 		private final IModel<Integer> modelG;
@@ -107,29 +106,32 @@ public class ColorPickerPage extends AbstractSliderPage
 
 		/**
 		 * Updates the model with the new color.
-		 * @param target
+		 * 
+		 * @param handler
 		 * @param form
 		 */
-		private void changeColor(AjaxRequestTarget target)
+		private void changeColor(IPartialPageRequestHandler handler)
 		{
 			Integer r = this.modelR.getObject();
 			Integer g = this.modelG.getObject();
 			Integer b = this.modelB.getObject();
 
 			this.setDefaultModelObject(String.format("#%02x%02x%02x", r, g, b));
-			this.onColorChanged(target);
+			this.onColorChanged(handler);
 		}
 
 		// Events //
 		/**
 		 * Event which will be fired when the color has been changed.
-		 * @param target the {@link AjaxRequestTarget}
+		 * 
+		 * @param handler the {@link IPartialPageRequestHandler}
 		 */
-		protected abstract void onColorChanged(AjaxRequestTarget target);
+		protected abstract void onColorChanged(IPartialPageRequestHandler handler);
 
 		// Factories //
 		/**
 		 * Gets a new {@link AjaxSlider} for the specified color model
+		 * 
 		 * @param id the markup id
 		 * @param model the (R|G|B) color model
 		 * @return the {@link AjaxSlider}
@@ -141,9 +143,9 @@ public class ColorPickerPage extends AbstractSliderPage
 				private static final long serialVersionUID = 1L;
 
 				@Override
-				public void onValueChanged(AjaxRequestTarget target)
+				public void onValueChanged(IPartialPageRequestHandler handler)
 				{
-					ColorPicker.this.changeColor(target);
+					ColorPicker.this.changeColor(handler);
 				}
 			};
 
@@ -161,4 +163,3 @@ public class ColorPickerPage extends AbstractSliderPage
 		}
 	}
 }
-

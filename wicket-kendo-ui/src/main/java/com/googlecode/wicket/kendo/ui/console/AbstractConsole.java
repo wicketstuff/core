@@ -19,7 +19,7 @@ package com.googlecode.wicket.kendo.ui.console;
 import java.io.Serializable;
 import java.util.Map;
 
-import org.apache.wicket.ajax.AjaxRequestTarget;
+import org.apache.wicket.core.request.handler.IPartialPageRequestHandler;
 import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
@@ -114,13 +114,13 @@ public abstract class AbstractConsole extends WebMarkupContainer
 	 *
 	 * @param message the message to log
 	 * @param error indicates whether the message is an error message
-	 * @param target the {@link AjaxRequestTarget}
+	 * @param handler the {@link IPartialPageRequestHandler}
 	 */
-	public void log(AjaxRequestTarget target, Serializable message, boolean error)
+	public void log(IPartialPageRequestHandler handler, Serializable message, boolean error)
 	{
 		this.log(message, error);
 
-		target.appendJavaScript(this.consoleBehavior.$(message, error));
+		handler.appendJavaScript(this.consoleBehavior.$(message, error));
 	}
 
 	/**

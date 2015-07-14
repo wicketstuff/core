@@ -51,7 +51,7 @@ public interface ISchedulerListener
 	 * @param target the {@link AjaxRequestTarget}
 	 * @param event the {@link SchedulerEvent}
 	 * @param view the {@link SchedulerViewType}
-	 * @see {@link SchedulerEvent#isNew(SchedulerEvent)}
+	 * @see SchedulerEvent#isNew(SchedulerEvent)
 	 */
 	void onEdit(AjaxRequestTarget target, SchedulerEvent event, SchedulerViewType view);
 

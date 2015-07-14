@@ -16,7 +16,7 @@
  */
 package com.googlecode.wicket.kendo.ui.widget.progressbar;
 
-import org.apache.wicket.ajax.AjaxRequestTarget;
+import org.apache.wicket.core.request.handler.IPartialPageRequestHandler;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.util.lang.Args;
 
@@ -95,7 +95,7 @@ public class ProgressBar extends JQueryGenericContainer<Integer> implements IPro
 	/**
 	 * Gets the min value
 	 *
-	 * @return the 'min' value specified in the options or {@value #MIN} if unspecified
+	 * @return the 'min' value specified in the options or {@link #MIN} if unspecified
 	 */
 	public int getMin()
 	{
@@ -107,7 +107,7 @@ public class ProgressBar extends JQueryGenericContainer<Integer> implements IPro
 	/**
 	 * Gets the max value
 	 *
-	 * @return the 'max' value specified in the options or {@value #MAX} if unspecified
+	 * @return the 'max' value specified in the options or {@link #MAX} if unspecified
 	 */
 	public int getMax()
 	{
@@ -153,45 +153,45 @@ public class ProgressBar extends JQueryGenericContainer<Integer> implements IPro
 	/**
 	 * Increments the progress-bar value by 1
 	 *
-	 * @param target the {@link AjaxRequestTarget}
+	 * @param handler the {@link IPartialPageRequestHandler}
 	 */
-	public void forward(AjaxRequestTarget target)
+	public void forward(IPartialPageRequestHandler handler)
 	{
-		this.forward(target, 1);
+		this.forward(handler, 1);
 	}
 
 	/**
 	 * Increments the progress-bar value by the specified step value
 	 *
-	 * @param target the {@link AjaxRequestTarget}
+	 * @param handler the {@link IPartialPageRequestHandler}
 	 * @param step the value
 	 */
-	public final void forward(AjaxRequestTarget target, int step)
+	public final void forward(IPartialPageRequestHandler handler, int step)
 	{
 		this.setModelObject(this.getModelObject() + step);
-		this.refresh(target);
+		this.refresh(handler);
 	}
 
 	/**
 	 * Decrements the progress-bar value by 1
 	 *
-	 * @param target the {@link AjaxRequestTarget}
+	 * @param handler the {@link IPartialPageRequestHandler}
 	 */
-	public final void backward(AjaxRequestTarget target)
+	public final void backward(IPartialPageRequestHandler handler)
 	{
-		this.backward(target, 1);
+		this.backward(handler, 1);
 	}
 
 	/**
 	 * Decrements the progress-bar value by the specified step value
 	 *
-	 * @param target the {@link AjaxRequestTarget}
+	 * @param handler the {@link IPartialPageRequestHandler}
 	 * @param step the value
 	 */
-	public final void backward(AjaxRequestTarget target, int step)
+	public final void backward(IPartialPageRequestHandler handler, int step)
 	{
 		this.setModelObject(this.getModelObject() - step);
-		this.refresh(target);
+		this.refresh(handler);
 	}
 
 	/**
@@ -199,20 +199,20 @@ public class ProgressBar extends JQueryGenericContainer<Integer> implements IPro
 	 * This method needs to be called after the model object changes.<br/>
 	 * But is not required to be called when calling forward or backward methods.
 	 *
-	 * @param target the {@link AjaxRequestTarget}
+	 * @param handler the {@link IPartialPageRequestHandler}
 	 */
-	public final void refresh(AjaxRequestTarget target)
+	public final void refresh(IPartialPageRequestHandler handler)
 	{
-		target.appendJavaScript(String.format("%s.value(%d);", this.widget(), this.getModelObject()));
+		handler.appendJavaScript(String.format("%s.value(%d);", this.widget(), this.getModelObject()));
 
 		if (this.valueChanged)
 		{
 			this.valueChanged = false;
-			this.onValueChanged(target);
+			this.onValueChanged(handler);
 
 			if (this.getModelObject() >= this.getMax())
 			{
-				this.onComplete(target);
+				this.onComplete(handler);
 			}
 		}
 	}
@@ -228,10 +228,10 @@ public class ProgressBar extends JQueryGenericContainer<Integer> implements IPro
 	/**
 	 * Triggered when the value changed
 	 *
-	 * @param target the {@link AjaxRequestTarget}
+	 * @param handler the {@link IPartialPageRequestHandler}
 	 */
 	@Override
-	public void onValueChanged(AjaxRequestTarget target)
+	public void onValueChanged(IPartialPageRequestHandler handler)
 	{
 		// noop
 	}
@@ -239,10 +239,10 @@ public class ProgressBar extends JQueryGenericContainer<Integer> implements IPro
 	/**
 	 * Triggered when the value reach {@link #MAX}
 	 *
-	 * @param target the {@link AjaxRequestTarget}
+	 * @param handler the {@link IPartialPageRequestHandler}
 	 */
 	@Override
-	public void onComplete(AjaxRequestTarget target)
+	public void onComplete(IPartialPageRequestHandler handler)
 	{
 		// noop
 	}

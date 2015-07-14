@@ -19,6 +19,7 @@ package com.googlecode.wicket.kendo.ui.widget.splitter;
 import org.apache.wicket.Component;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.attributes.CallbackParameter;
+import org.apache.wicket.core.request.handler.IPartialPageRequestHandler;
 
 import com.googlecode.wicket.jquery.core.JQueryEvent;
 import com.googlecode.wicket.jquery.core.Options;
@@ -80,24 +81,24 @@ public class SplitterBehavior extends KendoUIBehavior implements IJQueryAjaxAwar
 	 * Expands the specified pane<br/>
 	 * <b>Note: </b> Invoking the method will not trigger an expand event.
 	 *
-	 * @param target the {@link AjaxRequestTarget}
+	 * @param handler the {@link IPartialPageRequestHandler}
 	 * @param pane the pane selector (ie: "#bottom")
 	 */
-	public void expand(AjaxRequestTarget target, String pane)
+	public void expand(IPartialPageRequestHandler handler, String pane)
 	{
-		target.appendJavaScript(String.format("$('%s').data('%s').expand('%s');", this.selector, METHOD, pane));
+		handler.appendJavaScript(String.format("$('%s').data('%s').expand('%s');", this.selector, METHOD, pane));
 	}
 
 	/**
 	 * Collapses the specified pane<br/>
 	 * <b>Note: </b> Invoking the method will not trigger a collapse event.
 	 *
-	 * @param target the {@link AjaxRequestTarget}
+	 * @param handler the {@link IPartialPageRequestHandler}
 	 * @param pane the pane selector (ie: "#bottom")
 	 */
-	public void collapse(AjaxRequestTarget target, String pane)
+	public void collapse(IPartialPageRequestHandler handler, String pane)
 	{
-		target.appendJavaScript(String.format("$('%s').data('%s').collapse('%s');", this.selector, METHOD, pane));
+		handler.appendJavaScript(String.format("$('%s').data('%s').collapse('%s');", this.selector, METHOD, pane));
 	}
 
 	// Properties //

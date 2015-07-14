@@ -1,6 +1,7 @@
 package com.googlecode.wicket.jquery.ui.samples.pages.kendo.window;
 
 import org.apache.wicket.ajax.AjaxRequestTarget;
+import org.apache.wicket.core.request.handler.IPartialPageRequestHandler;
 import org.apache.wicket.markup.html.form.Form;
 
 import com.googlecode.wicket.kendo.ui.form.button.AjaxButton;
@@ -27,18 +28,18 @@ public class DefaultWindowPage extends AbstractWindowPage
 			private static final long serialVersionUID = 1L;
 
 			@Override
-			protected void onOpen(AjaxRequestTarget target)
+			protected void onOpen(IPartialPageRequestHandler handler)
 			{
-				super.onOpen(target);
+				super.onOpen(handler);
 
-				target.add(feedback); // clear previous messages
+				handler.add(feedback); // clear previous messages
 			}
 
 			@Override
-			public void onClose(AjaxRequestTarget target)
+			public void onClose(IPartialPageRequestHandler handler)
 			{
 				this.info("Window has been closed");
-				target.add(feedback);
+				handler.add(feedback);
 			}
 		};
 
