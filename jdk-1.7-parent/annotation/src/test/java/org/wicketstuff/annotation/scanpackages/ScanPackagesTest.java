@@ -34,20 +34,14 @@ import org.wicketstuff.annotation.scan.AnnotationTest;
  * @author Doug Donohoe
  * @author Ronald Tetsuo Miura
  */
-public class AnnotationPackagesTest extends Assert
+public class ScanPackagesTest extends Assert
 {
-	@MountPath(value = "baseMountPath")
-	private static class BaseMountPathPage extends Page
+	@MountPath(value = "bothMountPath")
+	private static class BothMountPathPage extends Page
 	{
 		private static final long serialVersionUID = 1L;
 	}
 	
-	@MountPath(value = "extendedBaseMountPath")
-	private static class ExtendedBaseMountPathPage extends BaseMountPathPage
-	{
-		private static final long serialVersionUID = 1L;
-	}
-
 	private class TestMountedMapper extends MountedMapper
 	{
 
@@ -76,18 +70,17 @@ public class AnnotationPackagesTest extends Assert
 	}
 
 	@Test
-	public void packageScanHierarchical()
+	public void testScanAndScanPackages()
 	{
-		AnnotatedMountList list = testScanner.scanPackages(AnnotationPackagesTest.class.getPackage()
-				.getName());
-		assertThat("Should have gotten 2 items", list.size(), is(2));
+		// Without a dot so scan 'scan' and 'scanpackages' packages.
+		AnnotatedMountList list = testScanner.scanPackages(AnnotationTest.class.getPackage().getName());
+		assertThat("Should have gotten 7 items", list.size(), is(7));
 	}
 	
 	@Test
-	public void packagesScan()
+	public void testOnlyScanPackage()
 	{
-		AnnotatedMountList list = testScanner.scanPackages(AnnotationPackagesTest.class.getPackage()
-			.getName(),AnnotationTest.class.getPackage().getName());
-		assertThat("Should have gotten 8 items", list.size(), is(8));
+		AnnotatedMountList list = testScanner.scanPackages(AnnotationTest.class.getPackage().getName() + ".");
+		assertThat("Should have gotten 7 items", list.size(), is(6));
 	}
 }

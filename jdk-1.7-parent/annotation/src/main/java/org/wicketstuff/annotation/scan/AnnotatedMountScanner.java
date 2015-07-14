@@ -173,12 +173,10 @@ public class AnnotatedMountScanner
 	 * @param packageName
 	 *            a package to scan (e.g., "org.mycompany.pages)
 	 * @return An {@link AnnotatedMountList}
-	 * @deprecated will be removed on migration to 8.x.
 	 */
-	@Deprecated
 	public AnnotatedMountList scanPackage(String packageName)
 	{
-		return scanList(getPackageMatches(packageName));
+		return scanPackages(packageName);
 	}
 	
 	/**
@@ -288,15 +286,44 @@ public class AnnotatedMountScanner
 	}
 	
 	/**
-	 * Scan a list of classes which are annotated with MountPath
+	 * Scan a list of classes which are annotated with MountPath.
 	 * 
 	 * @param packages
 	 * 			packages to scan (e.g., "org.mycompany.pages","org.anothercompanypackages.anotherpagespackages")
 	 * @return An {@link AnnotatedMountList}
 	 */
-	@SuppressWarnings({ "unchecked" })
 	public AnnotatedMountList scanPackages(String ... packages)
-	{	
+	{
+		return scanList(getPackagesMatches(packages));
+	}
+
+	/**
+	 * Scan a list of classes which are annotated with MountPath
+	 * 
+	 * @param mounts
+	 * @return An {@link AnnotatedMountList}
+	 */
+	@SuppressWarnings({ "unchecked" })
+	protected AnnotatedMountList scanList(Set<Class<?>> mounts)
+	{
+		AnnotatedMountList list = new AnnotatedMountList();
+		for (Class<?> mount : mounts)
+		{
+			Class<? extends Page> page = (Class<? extends Page>)mount;
+			scanClass(page, list);
+		}
+		return list;
+	}
+
+	/**
+	 * Scan given package(s) name(s) and return list of classes with MountPath annotation.
+	 * 
+	 * @param packages
+	 * 			packages to scan (e.g., "org.mycompany.pages","org.anothercompanypackages.anotherpagespackages")
+	 * @return A List of classes annotated with &#64;MountPath
+	 */
+	public Set<Class<?>> getPackagesMatches(String ... packages)
+	{
 		Reflections reflections = new Reflections(packages,TypeAnnotationsScanner.class);
 		Set<Class<?>> mounts = reflections.getTypesAnnotatedWith(MountPath.class, true);
 		for (Class<?> mount : mounts)
@@ -307,14 +334,7 @@ public class AnnotatedMountScanner
 					mount);
 			}
 		}
-		
-		AnnotatedMountList list = new AnnotatedMountList();
-		for (Class<?> mount : mounts)
-		{
-			Class<? extends Page> page = (Class<? extends Page>)mount;
-			scanClass(page, list);
-		}
-		return list;
+		return mounts;
 	}
 	
 }

@@ -126,10 +126,11 @@ public class AnnotationTest extends Assert
 	}
 
     @Test
-	public void packageScan()
+	public void testOnlyPackageScan()
 	{
 		AnnotatedMountList list = testScanner.scanPackage(AnnotationTest.class.getPackage()
-			.getName());
+				// Note that has a dot that forces to use this package.
+			.getName() + ".");
 		assertThat("Should have gotten 6 items", list.size(), is(6));
 	}
 
@@ -148,6 +149,15 @@ public class AnnotationTest extends Assert
 		AnnotatedMountList list = scanner.scanClass(HomePathsPage.class);
 		assertThat(list.size(), is(1));
 		assertThat(list.get(0), CoreMatchers.instanceOf(HomePageMapper.class));
+	}
+	
+	@Test
+	public void testScanAndPackageScan()
+	{
+		AnnotatedMountList list = testScanner.scanPackage(AnnotationTest.class.getPackage()
+				// Without a dot so scan 'scan' and 'scanpackages' packages.
+			.getName());
+		assertThat("Should have gotten 7 items", list.size(), is(7));
 	}
 	
 }
