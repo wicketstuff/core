@@ -26,7 +26,9 @@ import org.springframework.core.io.Resource;
 
 /**
  * @author Doug Donohoe
+ * @deprecated will be removed on migration to 8.x.
  */
+@Deprecated
 public class MatchingResourcesTest extends TestCase
 {
 	Logger logger = LoggerFactory.getLogger(MatchingResourcesTest.class);

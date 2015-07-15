@@ -16,13 +16,14 @@
  */
 package org.wicketstuff.annotation.scan;
 
+import static org.hamcrest.CoreMatchers.is;
+
 import org.apache.wicket.Page;
 import org.apache.wicket.core.request.mapper.HomePageMapper;
 import org.apache.wicket.core.request.mapper.MountedMapper;
 import org.apache.wicket.request.IRequestMapper;
 import org.apache.wicket.request.component.IRequestablePage;
 import org.hamcrest.CoreMatchers;
-import static org.hamcrest.CoreMatchers.is;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -34,6 +35,7 @@ import org.wicketstuff.annotation.mount.MountPath;
  */
 public class AnnotationTest extends Assert
 {
+			
 	@MountPath
 	private static class DefaultMountPathPage extends Page
 	{
@@ -57,7 +59,7 @@ public class AnnotationTest extends Assert
 	{
 		private static final long serialVersionUID = 1L;
 	}
-
+	
 	private class TestMountedMapper extends MountedMapper
 	{
 		public final String mountPath;
@@ -124,10 +126,11 @@ public class AnnotationTest extends Assert
 	}
 
     @Test
-	public void packageScan()
+	public void testOnlyPackageScan()
 	{
 		AnnotatedMountList list = testScanner.scanPackage(AnnotationTest.class.getPackage()
-			.getName());
+				// Note that has a dot that forces to use this package.
+			.getName() + ".");
 		assertThat("Should have gotten 6 items", list.size(), is(6));
 	}
 
@@ -147,5 +150,14 @@ public class AnnotationTest extends Assert
 		assertThat(list.size(), is(1));
 		assertThat(list.get(0), CoreMatchers.instanceOf(HomePageMapper.class));
 	}
-
+	
+	@Test
+	public void testScanAndPackageScan()
+	{
+		AnnotatedMountList list = testScanner.scanPackage(AnnotationTest.class.getPackage()
+				// Without a dot so scan 'scan' and 'scanpackages' packages.
+			.getName());
+		assertThat("Should have gotten 7 items", list.size(), is(7));
+	}
+	
 }

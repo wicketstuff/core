@@ -38,7 +38,9 @@ import org.springframework.core.type.classreading.SimpleMetadataReaderFactory;
  * @see PathMatchingResourcePatternResolver
  * 
  * @author Doug Donohoe
+ * @deprecated will be removed on migration to 8.x.
  */
+@Deprecated
 public class MatchingResources
 {
 	private static Logger logger = LoggerFactory.getLogger(MatchingResources.class);
@@ -53,7 +55,9 @@ public class MatchingResources
 	 * @param sPattern
 	 *            the pattern to search for
 	 * @see PathMatchingResourcePatternResolver
+	 * @deprecated will be removed on migration to 8.x.
 	 */
+	@Deprecated
 	public MatchingResources(String sPattern)
 	{
 		pattern = sPattern.replace('\\', '/'); // fix DOS paths
@@ -74,7 +78,9 @@ public class MatchingResources
 	 * 
 	 * @return A {@link Resource} array of all matches. If no matches are found this is a
 	 *         zero-length array.
+	 * @deprecated will be removed on migration to 8.x.
 	 */
+	@Deprecated
 	public Resource[] getAllMatches()
 	{
 		return resources;
@@ -84,7 +90,9 @@ public class MatchingResources
 	 * Get all matching resources as URLs.
 	 * 
 	 * @return {@link URL} array detemined by calling {@link #getURL(Resource)} on each resource.
+	 * @deprecated will be removed on migration to 8.x.
 	 */
+	@Deprecated
 	public URL[] getAllMatchesURL()
 	{
 		URL urls[] = new URL[resources.length];
@@ -106,7 +114,9 @@ public class MatchingResources
 	 *            annotation
 	 * @return List of all classes that have the given annotation. List is empty if non matches
 	 *         found.
+	 * @deprecated will be removed on migration to 8.x.
 	 */
+	@Deprecated
 	public List<Class<?>> getAnnotatedMatches(Class<? extends Annotation> annotation,
 		boolean includeSubclasses)
 	{
@@ -144,7 +154,9 @@ public class MatchingResources
 	 * @return List of all classes that have the given annotation. List is empty if non matches
 	 *         found.
 	 * @see MatchingResources#getAnnotatedMatches(Class, boolean)
+	 * @deprecated will be removed on migration to 8.x.
 	 */
+	@Deprecated
 	public List<Class<?>> getAnnotatedMatches(Class<? extends Annotation> annotation)
 	{
 		return getAnnotatedMatches(annotation, false);
@@ -175,7 +187,9 @@ public class MatchingResources
 	 * @return The single matching {@link Resource}
 	 * @throws RuntimeException
 	 *             if more than one {@link Resource} was found
+	 * @deprecated will be removed on migration to 8.x.
 	 */
+	@Deprecated
 	public Resource getSingleResource()
 	{
 		if (resources.length > 1)
@@ -195,7 +209,9 @@ public class MatchingResources
 	 * @return The single matching {@link Resource} as an {@link URL}
 	 * @throws RuntimeException
 	 *             if more than one {@link Resource} was found
+	 * @deprecated will be removed on migration to 8.x.
 	 */
+	@Deprecated
 	public URL getSingleResourceURL()
 	{
 		Resource r = getSingleResource();
@@ -212,7 +228,9 @@ public class MatchingResources
 	 * @return The single matching {@link Resource}
 	 * @throws RuntimeException
 	 *             if zero or more than one {@link Resource} was found
+	 * @deprecated will be removed on migration to 8.x.
 	 */
+	@Deprecated
 	public Resource getSingleRequiredResource()
 	{
 		if (resources.length == 0)
@@ -237,7 +255,9 @@ public class MatchingResources
 	 * @return The single matching {@link Resource} as an {@link URL}
 	 * @throws RuntimeException
 	 *             if zero or more than one {@link Resource} was found
+	 * @deprecated will be removed on migration to 8.x.
 	 */
+	@Deprecated
 	public URL getSingleRequiredResourceURL()
 	{
 		Resource r = getSingleRequiredResource();
@@ -254,7 +274,9 @@ public class MatchingResources
 	 * @return its URL
 	 * @throws RuntimeException
 	 *             if {@link Resource#getURL()} throws {@link IOException}
+	 * @deprecated will be removed on migration to 8.x.
 	 */
+	@Deprecated
 	public URL getURL(Resource r)
 	{
 		if (r == null)
