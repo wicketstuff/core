@@ -100,4 +100,12 @@ public class AnnotationPackagesTest extends Assert
 			.getName(),AnnotationTest.class.getPackage().getName()); 
 		assertThat("Should have gotten 9 items", list.size(), is(9));
 	}
+	
+	@Test
+	public void testScanWildcard() 
+	{	
+		// Test results not found.
+		AnnotatedMountList list = testScanner.scanPackages("org.*.annotation.packages","org.wicketstuff.*.scan"); 
+		assertThat("Should have gotten 0 items", list.size(), is(0));
+	}
 }
