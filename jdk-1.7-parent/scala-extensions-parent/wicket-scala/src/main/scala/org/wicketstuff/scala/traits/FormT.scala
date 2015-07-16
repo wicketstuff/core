@@ -15,7 +15,9 @@ trait FormT
     case _ => null
   }
 
-  def form[T](id: String, model: IModel[T] = null, actions: Map[String, (ScalaForm[T]) => Unit] = Map.empty[String, (ScalaForm[T]) => Unit]): ScalaForm[T] = {
+  def form[T](id: String,
+              model: IModel[T] = null,
+              actions: Map[String, (ScalaForm[T]) => Unit] = Map.empty[String, (ScalaForm[T]) => Unit]): ScalaForm[T] = {
     val form = new ScalaForm[T](id, model, actions)
     self.add(form)
     form
