@@ -243,7 +243,7 @@
 		<spring.version>4.1.6.RELEASE</spring.version>
 		<cglib.version>3.1</cglib.version>
 		<objenesis.version>2.1</objenesis.version>
-		<scala.version>2.11.6</scala.version>
+		<scala.version>2.11.7</scala.version>
 	</properties>
 
 	<prerequisites>
