@@ -18,7 +18,7 @@ object Presentation {
   def p(id:Long, name:String, author:String, votes:Int) = new Presentation(id, name, author, votes)
 
   def add(p:Presentation) = {
-    stub = stub ::: List(p)
+    stub = stub :+ p
     println("New presentation: " + p)
   }
 }
