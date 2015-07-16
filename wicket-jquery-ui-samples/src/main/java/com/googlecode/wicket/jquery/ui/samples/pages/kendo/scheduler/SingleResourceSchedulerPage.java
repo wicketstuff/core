@@ -124,6 +124,8 @@ public class SingleResourceSchedulerPage extends AbstractSchedulerPage
 			@Override
 			protected void onSubmit(AjaxRequestTarget target, Form<?> form)
 			{
+				// TODO: remove
+				target.add(scheduler);
 				scheduler.refresh(target);
 			}
 		});

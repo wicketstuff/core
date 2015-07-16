@@ -23,10 +23,11 @@ import java.util.List;
 import org.apache.wicket.Application;
 import org.apache.wicket.Component;
 import org.apache.wicket.behavior.Behavior;
-import org.apache.wicket.core.request.handler.IPartialPageRequestHandler;
 import org.apache.wicket.markup.head.CssHeaderItem;
+import org.apache.wicket.markup.head.HeaderItem;
 import org.apache.wicket.markup.head.IHeaderResponse;
 import org.apache.wicket.markup.head.JavaScriptHeaderItem;
+import org.apache.wicket.markup.head.OnDomReadyHeaderItem;
 import org.apache.wicket.markup.head.PriorityHeaderItem;
 import org.apache.wicket.request.resource.CssResourceReference;
 import org.apache.wicket.request.resource.JavaScriptResourceReference;
@@ -35,7 +36,6 @@ import org.apache.wicket.resource.JQueryPluginResourceReference;
 import org.apache.wicket.settings.JavaScriptLibrarySettings;
 
 import com.googlecode.wicket.jquery.core.settings.JQueryLibrarySettings;
-import com.googlecode.wicket.jquery.core.utils.RequestCycleUtils;
 
 /**
  * Provides the base class for every jQuery behavior.
@@ -99,7 +99,7 @@ public abstract class JQueryAbstractBehavior extends Behavior
 		// jQuery Globalize resource reference //
 		if (settings != null && settings.getJQueryGlobalizeReference() != null)
 		{
-			response.render(new PriorityHeaderItem(JavaScriptHeaderItem.forReference(settings.getJQueryGlobalizeReference())));
+			this.renderPriorityHeaderItem(JavaScriptHeaderItem.forReference(settings.getJQueryGlobalizeReference()), response);
 		}
 
 		// Additional resource references //
@@ -107,39 +107,41 @@ public abstract class JQueryAbstractBehavior extends Behavior
 		{
 			if (reference instanceof CssResourceReference)
 			{
-				response.render(new PriorityHeaderItem(CssHeaderItem.forReference(reference)));
+				this.renderPriorityHeaderItem(CssHeaderItem.forReference(reference), response);
 			}
 
 			if (reference instanceof JavaScriptResourceReference)
 			{
-				response.render(new PriorityHeaderItem(JavaScriptHeaderItem.forReference(reference)));
+				this.renderPriorityHeaderItem(JavaScriptHeaderItem.forReference(reference), response);
 			}
 		}
 
 		// Adds the statement //
-		IPartialPageRequestHandler target = RequestCycleUtils.getRequestHandler();
-
-		if (target != null)
-		{
-			target.appendJavaScript(this.$());
-		}
-		else
-		{
-			this.renderScript(JavaScriptHeaderItem.forScript(this.toString(), this.getToken()), response);
-		}
+		this.renderOnDomReadyScript(this.$(), response);
 	}
 
 	/**
-	 * Renders the {@link Behavior}'s javascript<br/>
+	 * Renders a priority {@code HeaderItem}
+	 *
+	 * @param item the {@link HeaderItem}
+	 * @param response the {@link IHeaderResponse}
+	 */
+	protected void renderPriorityHeaderItem(HeaderItem item, IHeaderResponse response)
+	{
+		response.render(new PriorityHeaderItem(item));
+	}
+
+	/**
+	 * Renders the javascript 'on-dom-ready'<br/>
 	 * This can be overridden to provides a priority:<br/>
 	 * {@code response.render(new PriorityHeaderItem(script));}
 	 *
 	 * @param script the {@link JavaScriptHeaderItem}
 	 * @param response the {@link IHeaderResponse}
 	 */
-	protected void renderScript(JavaScriptHeaderItem script, IHeaderResponse response)
+	protected void renderOnDomReadyScript(String script, IHeaderResponse response)
 	{
-		response.render(script);
+		response.render(OnDomReadyHeaderItem.forScript(script));
 	}
 
 	/**
