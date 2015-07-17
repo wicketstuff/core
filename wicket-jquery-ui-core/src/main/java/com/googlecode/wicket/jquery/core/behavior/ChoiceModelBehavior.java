@@ -67,6 +67,8 @@ public abstract class ChoiceModelBehavior<T> extends AbstractAjaxBehavior implem
 	@Override
 	public void onRequest()
 	{
+		// FIXME: called twice! (see LazyMultiSelectPage)
+		// TODO: test in wicket-6
 		RequestCycle.get().scheduleRequestHandlerAfterCurrent(this.newRequestHandler());
 	}
 

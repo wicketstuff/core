@@ -26,7 +26,6 @@ import org.apache.wicket.ajax.attributes.CallbackParameter;
 import org.apache.wicket.core.request.handler.IPartialPageRequestHandler;
 import org.apache.wicket.extensions.markup.html.tabs.ITab;
 import org.apache.wicket.markup.head.IHeaderResponse;
-import org.apache.wicket.markup.head.JavaScriptHeaderItem;
 
 import com.googlecode.wicket.jquery.core.JQueryEvent;
 import com.googlecode.wicket.jquery.core.Options;
@@ -137,9 +136,8 @@ public abstract class TabsBehavior extends KendoUIBehavior implements IJQueryAja
 	{
 		super.renderHead(component, response);
 
-		// selects (& expands) the active tab (this is not a default behavior)
-		// FIXME: it does not select the tab on reload!
-		response.render(JavaScriptHeaderItem.forScript(String.format("jQuery(function() { %s.select(%d); });", this.widget(), this.tabIndex), this.getToken() + "-select"));
+		// selects (& expands) the active tab (not a default behavior)
+		this.renderOnDomReadyScript(String.format("%s.select(%d);", this.widget(), this.tabIndex), response);
 	}
 
 	/**

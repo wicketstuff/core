@@ -26,7 +26,6 @@ import org.apache.wicket.ajax.attributes.CallbackParameter;
 import org.apache.wicket.core.request.handler.IPartialPageRequestHandler;
 import org.apache.wicket.extensions.markup.html.tabs.ITab;
 import org.apache.wicket.markup.head.IHeaderResponse;
-import org.apache.wicket.markup.head.JavaScriptHeaderItem;
 
 import com.googlecode.wicket.jquery.core.JQueryEvent;
 import com.googlecode.wicket.jquery.core.Options;
@@ -117,7 +116,7 @@ public abstract class AccordionBehavior extends KendoUIBehavior implements IJQue
 	 */
 	private String getSelectStatement(int index)
 	{
-		return String.format("var $widget = %s, $item = jQuery('li:nth-child(%d)'); $widget.select($item); $widget.expand($item);", this.widget(), index + 1);
+		return String.format("var $w = %s, $item = jQuery('li:nth-child(%d)'); $w.select($item); $w.expand($item);", this.widget(), index + 1);
 	}
 
 	// Methods //
@@ -160,7 +159,7 @@ public abstract class AccordionBehavior extends KendoUIBehavior implements IJQue
 		// selects (& expands) the active tab index
 		if (this.tabIndex != TAB_NONE)
 		{
-			response.render(JavaScriptHeaderItem.forScript(String.format("jQuery(function() { %s } );", this.getSelectStatement(this.tabIndex)), this.getToken() + "-select"));
+			this.renderOnDomReadyScript(this.getSelectStatement(this.tabIndex), response);
 		}
 	}
 

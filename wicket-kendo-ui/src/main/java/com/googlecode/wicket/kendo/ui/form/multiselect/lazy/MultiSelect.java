@@ -146,9 +146,9 @@ public abstract class MultiSelect<T> extends FormComponent<Collection<T>> implem
 	@Override
 	protected Collection<T> convertValue(String[] values)
 	{
-		List<T> list = new ArrayList<T>(values.length);
+		List<T> list = new ArrayList<>();
 
-		if (this.choices != null)
+		if (values != null && this.choices != null)
 		{
 			for (T object : this.choices)
 			{
@@ -170,6 +170,21 @@ public abstract class MultiSelect<T> extends FormComponent<Collection<T>> implem
 	public void updateModel()
 	{
 		FormComponent.updateCollectionModel(this);
+	}
+
+	// Properties //
+
+	@Override
+	protected String getModelValue()
+	{
+		List<String> values = new ArrayList<String>();
+
+		for (T value : this.getModelObject())
+		{
+			values.add(RendererUtils.toJson(value, this.renderer));
+		}
+
+		return values.toString();
 	}
 
 	// Events //
@@ -196,19 +211,6 @@ public abstract class MultiSelect<T> extends FormComponent<Collection<T>> implem
 		{
 			behavior.setOption("open", String.format("function(e) { e.sender.list.width(%d); }", this.getListWidth()));
 		}
-	}
-
-	@Override
-	protected String getModelValue()
-	{
-		List<String> values = new ArrayList<String>();
-
-		for (T value : this.getModelObject())
-		{
-			values.add(RendererUtils.toJson(value, this.renderer));
-		}
-
-		return values.toString();
 	}
 
 	@Override
