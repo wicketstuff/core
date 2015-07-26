@@ -20,6 +20,7 @@ import org.apache.wicket.Component;
 import org.apache.wicket.WicketRuntimeException;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.attributes.CallbackParameter;
+import org.apache.wicket.util.lang.Args;
 import org.apache.wicket.util.visit.IVisit;
 import org.apache.wicket.util.visit.IVisitor;
 import org.apache.wicket.util.visit.Visits;
@@ -40,10 +41,13 @@ import com.googlecode.wicket.jquery.ui.interaction.droppable.DroppableBehavior;
  *
  * @author Sebastien Briquet - sebfz1
  */
-public abstract class DraggableBehavior extends JQueryUIBehavior implements IJQueryAjaxAware, IDraggableListener
+public class DraggableBehavior extends JQueryUIBehavior implements IJQueryAjaxAware
 {
 	private static final long serialVersionUID = 1L;
 	public static final String METHOD = "draggable";
+
+	/** event listener */
+	private final IDraggableListener listener;
 
 	private JQueryAjaxBehavior onDragStartAjaxBehavior;
 	private JQueryAjaxBehavior onDragStopAjaxBehavior = null;
@@ -51,30 +55,34 @@ public abstract class DraggableBehavior extends JQueryUIBehavior implements IJQu
 
 	/**
 	 * Constructor
+	 * 
+	 * @param listener the {@link IDraggableListener}
 	 */
-	public DraggableBehavior()
+	public DraggableBehavior(IDraggableListener listener)
 	{
-		this(null, new Options());
+		this(null, new Options(), listener);
 	}
 
 	/**
 	 * Constructor
 	 * 
 	 * @param selector the html selector (ie: "#myId")
+	 * @param listener the {@link IDraggableListener}
 	 */
-	public DraggableBehavior(String selector)
+	public DraggableBehavior(String selector, IDraggableListener listener)
 	{
-		this(selector, new Options());
+		this(selector, new Options(), listener);
 	}
 
 	/**
 	 * Constructor
 	 * 
 	 * @param options the {@link Options}
+	 * @param listener the {@link IDraggableListener}
 	 */
-	public DraggableBehavior(Options options)
+	public DraggableBehavior(Options options, IDraggableListener listener)
 	{
-		this(null, options);
+		this(null, options, listener);
 	}
 
 	/**
@@ -82,10 +90,13 @@ public abstract class DraggableBehavior extends JQueryUIBehavior implements IJQu
 	 * 
 	 * @param selector the html selector (ie: "#myId")
 	 * @param options the {@link Options}
+	 * @param listener the {@link IDraggableListener}
 	 */
-	public DraggableBehavior(String selector, Options options)
+	public DraggableBehavior(String selector, Options options, IDraggableListener listener)
 	{
 		super(selector, METHOD, options);
+		
+		this.listener = Args.notNull(listener, "listener");
 	}
 
 	// Methods //
@@ -111,7 +122,7 @@ public abstract class DraggableBehavior extends JQueryUIBehavior implements IJQu
 		this.component.add(this.onDragStartAjaxBehavior);
 
 		// this event is not enabled by default to prevent unnecessary server round-trips.
-		if (this.isStopEventEnabled())
+		if (this.listener.isStopEventEnabled())
 		{
 			this.onDragStopAjaxBehavior = this.newOnDragStopAjaxBehavior(this);
 			this.component.add(this.onDragStopAjaxBehavior);
@@ -145,12 +156,12 @@ public abstract class DraggableBehavior extends JQueryUIBehavior implements IJQu
 				// register to all DroppableBehavior(s) //
 				Visits.visit(target.getPage(), this.newDroppableBehaviorVisitor());
 
-				this.onDragStart(target, ev.getTop(), ev.getLeft());
+				this.listener.onDragStart(target, ev.getTop(), ev.getLeft());
 			}
 
 			else if (ev instanceof DragStopEvent)
 			{
-				this.onDragStop(target, ev.getTop(), ev.getLeft());
+				this.listener.onDragStop(target, ev.getTop(), ev.getLeft());
 			}
 		}
 	}
