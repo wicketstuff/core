@@ -97,6 +97,7 @@ public class Calendar extends JQueryContainer implements ICalendarListener
 	}
 
 	// Methods //
+
 	/**
 	 * Sets the Google Calendar API key<br/>
 	 * 
@@ -156,6 +157,7 @@ public class Calendar extends JQueryContainer implements ICalendarListener
 	}
 
 	// Properties //
+
 	@Override
 	public boolean isSelectable()
 	{
@@ -211,6 +213,7 @@ public class Calendar extends JQueryContainer implements ICalendarListener
 	}
 
 	// Events //
+
 	@Override
 	protected void onInitialize()
 	{
@@ -291,112 +294,14 @@ public class Calendar extends JQueryContainer implements ICalendarListener
 	}
 
 	// IJQueryWidget //
+
 	/**
 	 * see {@link JQueryContainer#newWidgetBehavior(String)}
 	 */
 	@Override
 	public JQueryBehavior newWidgetBehavior(String selector)
 	{
-		return new CalendarBehavior(selector, this.options) {
-
-			private static final long serialVersionUID = 1L;
-
-			@Override
-			public boolean isSelectable()
-			{
-				return Calendar.this.isSelectable();
-			}
-
-			@Override
-			public boolean isDayClickEnabled()
-			{
-				return Calendar.this.isDayClickEnabled();
-			}
-
-			@Override
-			public boolean isEventClickEnabled()
-			{
-				return Calendar.this.isEventClickEnabled();
-			}
-
-			@Override
-			public boolean isEventDropEnabled()
-			{
-				return Calendar.this.isEventDropEnabled();
-			}
-
-			@Override
-			public boolean isEventResizeEnabled()
-			{
-				return Calendar.this.isEventResizeEnabled();
-			}
-
-			@Override
-			public boolean isObjectDropEnabled()
-			{
-				return Calendar.this.isObjectDropEnabled();
-			}
-
-			@Override
-			public boolean isViewRenderEnabled()
-			{
-				return Calendar.this.isViewRenderEnabled();
-			}
-
-			@Override
-			public CharSequence getEventDropPrecondition()
-			{
-				return Calendar.this.getEventDropPrecondition();
-			}
-
-			@Override
-			public CharSequence getEventResizePrecondition()
-			{
-				return Calendar.this.getEventResizePrecondition();
-			}
-
-			@Override
-			public void onSelect(AjaxRequestTarget target, CalendarView view, LocalDateTime start, LocalDateTime end, boolean allDay)
-			{
-				Calendar.this.onSelect(target, view, start, end, allDay);
-			}
-
-			@Override
-			public void onDayClick(AjaxRequestTarget target, CalendarView view, LocalDateTime date, boolean allDay)
-			{
-				Calendar.this.onDayClick(target, view, date, allDay);
-			}
-
-			@Override
-			public void onEventClick(AjaxRequestTarget target, CalendarView view, int eventId)
-			{
-				Calendar.this.onEventClick(target, view, eventId);
-			}
-
-			@Override
-			public void onEventDrop(AjaxRequestTarget target, int eventId, long delta, boolean allDay)
-			{
-				Calendar.this.onEventDrop(target, eventId, delta, allDay);
-			}
-
-			@Override
-			public void onEventResize(AjaxRequestTarget target, int eventId, long delta)
-			{
-				Calendar.this.onEventResize(target, eventId, delta);
-			}
-
-			@Override
-			public void onObjectDrop(AjaxRequestTarget target, String title, LocalDateTime date, boolean allDay)
-			{
-				Calendar.this.onObjectDrop(target, title, date, allDay);
-			}
-
-			@Override
-			public void onViewRender(AjaxRequestTarget target, CalendarView view, LocalDateTime start, LocalDateTime end)
-			{
-				Calendar.this.onViewRender(target, view, start, end);
-			}
-		};
+		return new CalendarBehavior(selector, this.options, this);
 	}
 
 	// Factory methods //

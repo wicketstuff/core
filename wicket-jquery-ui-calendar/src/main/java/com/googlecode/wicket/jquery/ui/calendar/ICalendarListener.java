@@ -25,7 +25,7 @@ import org.threeten.bp.LocalDateTime;
  * @author Sebastien Briquet - sebfz1
  *
  */
-interface ICalendarListener
+public interface ICalendarListener
 {
 	/**
 	 * Indicates whether a cell can be selected.<br/>
@@ -87,7 +87,7 @@ interface ICalendarListener
 	 * Gets the javascript statement which will be executed before {@link #onEventDrop(AjaxRequestTarget, int, long, boolean)} event is triggered<br/>
 	 * A common use case is to call the {@code revertFunc} callback to cancel the event.
 	 *
-	 * @return the javascript statement
+	 * @return the javascript statement, empty string by default
 	 * @see <a href="http://arshaw.com/fullcalendar/docs/event_ui/eventDrop/">http://arshaw.com/fullcalendar/docs/event_ui/eventDrop/</a>
 	 */
 	CharSequence getEventDropPrecondition();
@@ -96,7 +96,7 @@ interface ICalendarListener
 	 * Gets the javascript statement which will be executed before {@link #onEventResize(AjaxRequestTarget, int, long)} event is triggered<br/>
 	 * A common use case is to call the {@code revertFunc} callback to cancel the event.
 	 *
-	 * @return the javascript statement
+	 * @return the javascript statement, empty string by default
 	 * @see <a href="http://arshaw.com/fullcalendar/docs/event_ui/eventResize/">http://arshaw.com/fullcalendar/docs/event_ui/eventResize/</a>
 	 */
 	CharSequence getEventResizePrecondition();

@@ -26,6 +26,7 @@ import org.apache.wicket.markup.head.IHeaderResponse;
 import org.apache.wicket.request.IRequestHandler;
 import org.apache.wicket.request.cycle.RequestCycle;
 import org.apache.wicket.request.handler.resource.ResourceReferenceRequestHandler;
+import org.apache.wicket.util.lang.Args;
 import org.apache.wicket.util.string.Strings;
 import org.threeten.bp.LocalDate;
 import org.threeten.bp.LocalDateTime;
@@ -44,10 +45,13 @@ import com.googlecode.wicket.jquery.ui.calendar.settings.CalendarLibrarySettings
  * @author Sebastien Briquet - sebfz1
  *
  */
-public abstract class CalendarBehavior extends JQueryBehavior implements IJQueryAjaxAware, ICalendarListener
+public class CalendarBehavior extends JQueryBehavior implements IJQueryAjaxAware
 {
 	private static final long serialVersionUID = 1L;
 	public static final String METHOD = "fullCalendar";
+
+	/** event listener */
+	private final ICalendarListener listener;
 
 	/** date range-select behavior */
 	private JQueryAjaxBehavior onSelectAjaxBehavior = null;
@@ -74,10 +78,11 @@ public abstract class CalendarBehavior extends JQueryBehavior implements IJQuery
 	 * Constructor
 	 *
 	 * @param selector the html selector (ie: "#myId")
+	 * @param listener the {@link ICalendarListener}
 	 */
-	public CalendarBehavior(final String selector)
+	public CalendarBehavior(final String selector, ICalendarListener listener)
 	{
-		this(selector, new Options());
+		this(selector, new Options(), listener);
 	}
 
 	/**
@@ -85,11 +90,13 @@ public abstract class CalendarBehavior extends JQueryBehavior implements IJQuery
 	 *
 	 * @param selector the html selector (ie: "#myId")
 	 * @param options the {@link Options}
+	 * @param listener the {@link ICalendarListener}
 	 */
-	public CalendarBehavior(final String selector, Options options)
+	public CalendarBehavior(final String selector, Options options, ICalendarListener listener)
 	{
 		super(selector, METHOD, options);
 
+		this.listener = Args.notNull(listener, "listener");
 		this.initReferences();
 	}
 
@@ -126,43 +133,43 @@ public abstract class CalendarBehavior extends JQueryBehavior implements IJQuery
 	{
 		super.bind(component);
 
-		if (this.isSelectable())
+		if (this.listener.isSelectable())
 		{
 			this.onSelectAjaxBehavior = this.newOnSelectAjaxBehavior(this);
 			component.add(this.onSelectAjaxBehavior);
 		}
 
-		if (this.isDayClickEnabled())
+		if (this.listener.isDayClickEnabled())
 		{
 			this.onDayClickAjaxBehavior = this.newOnDayClickAjaxBehavior(this);
 			component.add(this.onDayClickAjaxBehavior);
 		}
 
-		if (this.isEventClickEnabled())
+		if (this.listener.isEventClickEnabled())
 		{
 			this.onEventClickAjaxBehavior = this.newOnEventClickAjaxBehavior(this);
 			component.add(this.onEventClickAjaxBehavior);
 		}
 
-		if (this.isEventDropEnabled())
+		if (this.listener.isEventDropEnabled())
 		{
-			this.onEventDropAjaxBehavior = this.newOnEventDropAjaxBehavior(this, this.getEventDropPrecondition());
+			this.onEventDropAjaxBehavior = this.newOnEventDropAjaxBehavior(this, this.listener.getEventDropPrecondition());
 			component.add(this.onEventDropAjaxBehavior);
 		}
 
-		if (this.isEventResizeEnabled())
+		if (this.listener.isEventResizeEnabled())
 		{
-			this.onEventResizeAjaxBehavior = this.newOnEventResizeAjaxBehavior(this, this.getEventResizePrecondition());
+			this.onEventResizeAjaxBehavior = this.newOnEventResizeAjaxBehavior(this, this.listener.getEventResizePrecondition());
 			component.add(this.onEventResizeAjaxBehavior);
 		}
 
-		if (this.isObjectDropEnabled())
+		if (this.listener.isObjectDropEnabled())
 		{
 			this.onObjectDropAjaxBehavior = this.newOnObjectDropAjaxBehavior(this);
 			component.add(this.onObjectDropAjaxBehavior);
 		}
 
-		if (this.isViewRenderEnabled())
+		if (this.listener.isViewRenderEnabled())
 		{
 			this.onViewRenderAjaxBehavior = this.newOnViewRenderAjaxBehavior(this);
 			component.add(this.onViewRenderAjaxBehavior);
@@ -206,11 +213,11 @@ public abstract class CalendarBehavior extends JQueryBehavior implements IJQuery
 		super.onConfigure(component);
 
 		this.setOption("editable", this.isEditable());
-		this.setOption("selectable", this.isSelectable());
-		this.setOption("selectHelper", this.isSelectable());
-		this.setOption("disableDragging", !this.isEventDropEnabled());
-		this.setOption("disableResizing", !this.isEventResizeEnabled());
-		this.setOption("droppable", this.isObjectDropEnabled());
+		this.setOption("selectable", this.listener.isSelectable());
+		this.setOption("selectHelper", this.listener.isSelectable());
+		this.setOption("disableDragging", !this.listener.isEventDropEnabled());
+		this.setOption("disableResizing", !this.listener.isEventResizeEnabled());
+		this.setOption("droppable", this.listener.isObjectDropEnabled());
 
 		if (this.onSelectAjaxBehavior != null)
 		{
@@ -254,43 +261,43 @@ public abstract class CalendarBehavior extends JQueryBehavior implements IJQuery
 		if (event instanceof SelectEvent)
 		{
 			SelectEvent selectEvent = (SelectEvent) event;
-			this.onSelect(target, selectEvent.getView(), selectEvent.getStart(), selectEvent.getEnd(), selectEvent.isAllDay());
+			this.listener.onSelect(target, selectEvent.getView(), selectEvent.getStart(), selectEvent.getEnd(), selectEvent.isAllDay());
 		}
 
 		else if (event instanceof DayClickEvent)
 		{
 			DayClickEvent dayClickEvent = (DayClickEvent) event;
-			this.onDayClick(target, dayClickEvent.getView(), dayClickEvent.getDate(), dayClickEvent.isAllDay());
+			this.listener.onDayClick(target, dayClickEvent.getView(), dayClickEvent.getDate(), dayClickEvent.isAllDay());
 		}
 
 		else if (event instanceof ClickEvent)
 		{
 			ClickEvent clickEvent = (ClickEvent) event;
-			this.onEventClick(target, clickEvent.getView(), clickEvent.getEventId());
+			this.listener.onEventClick(target, clickEvent.getView(), clickEvent.getEventId());
 		}
 
 		else if (event instanceof DropEvent)
 		{
 			DropEvent dropEvent = (DropEvent) event;
-			this.onEventDrop(target, dropEvent.getEventId(), dropEvent.getDelta(), dropEvent.isAllDay());
+			this.listener.onEventDrop(target, dropEvent.getEventId(), dropEvent.getDelta(), dropEvent.isAllDay());
 		}
 
 		else if (event instanceof ResizeEvent)
 		{
 			ResizeEvent resizeEvent = (ResizeEvent) event;
-			this.onEventResize(target, resizeEvent.getEventId(), resizeEvent.getDelta());
+			this.listener.onEventResize(target, resizeEvent.getEventId(), resizeEvent.getDelta());
 		}
 
 		else if (event instanceof ObjectDropEvent)
 		{
 			ObjectDropEvent dropEvent = (ObjectDropEvent) event;
-			this.onObjectDrop(target, dropEvent.getTitle(), dropEvent.getDate(), dropEvent.isAllDay());
+			this.listener.onObjectDrop(target, dropEvent.getTitle(), dropEvent.getDate(), dropEvent.isAllDay());
 		}
 
 		else if (event instanceof ViewRenderEvent)
 		{
 			ViewRenderEvent renderEvent = (ViewRenderEvent) event;
-			this.onViewRender(target, renderEvent.getView(), renderEvent.getStart(), renderEvent.getEnd());
+			this.listener.onViewRender(target, renderEvent.getView(), renderEvent.getStart(), renderEvent.getEnd());
 		}
 	}
 
