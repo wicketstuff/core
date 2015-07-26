@@ -22,6 +22,7 @@ import java.util.List;
 import org.apache.wicket.Component;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.attributes.CallbackParameter;
+import org.apache.wicket.util.lang.Args;
 
 import com.googlecode.wicket.jquery.core.JQueryEvent;
 import com.googlecode.wicket.jquery.core.Options;
@@ -38,10 +39,13 @@ import com.googlecode.wicket.jquery.ui.interaction.selectable.SelectableBehavior
  * @param <T> the type of the model object
  * @author Sebastien Briquet - sebfz1
  */
-public abstract class SortableBehavior<T> extends JQueryUIBehavior implements IJQueryAjaxAware, ISortableListener<T>
+public abstract class SortableBehavior<T> extends JQueryUIBehavior implements IJQueryAjaxAware
 {
 	private static final long serialVersionUID = 1L;
 	public static final String METHOD = "sortable";
+
+	/** event listener */
+	private final ISortableListener<T> listener;
 
 	private JQueryAjaxBehavior onUpdateAjaxBehavior;
 	private JQueryAjaxBehavior onReceiveAjaxBehavior = null;
@@ -51,10 +55,11 @@ public abstract class SortableBehavior<T> extends JQueryUIBehavior implements IJ
 	 * Constructor
 	 *
 	 * @param selector the html selector (ie: "#myId")
+	 * @param listener the {@link ISortableListener}
 	 */
-	public SortableBehavior(String selector)
+	public SortableBehavior(String selector, ISortableListener<T> listener)
 	{
-		super(selector, METHOD, new Options());
+		this(selector, new Options(), listener);
 	}
 
 	/**
@@ -62,10 +67,13 @@ public abstract class SortableBehavior<T> extends JQueryUIBehavior implements IJ
 	 *
 	 * @param selector the html selector (ie: "#myId")
 	 * @param options the {@link Options}
+	 * @param listener the {@link ISortableListener}
 	 */
-	public SortableBehavior(String selector, Options options)
+	public SortableBehavior(String selector, Options options, ISortableListener<T> listener)
 	{
 		super(selector, METHOD, options);
+		
+		this.listener = Args.notNull(listener, "listener");
 	}
 
 	// Properties //
@@ -104,13 +112,13 @@ public abstract class SortableBehavior<T> extends JQueryUIBehavior implements IJ
 		this.onUpdateAjaxBehavior = this.newOnUpdateAjaxBehavior(this);
 		component.add(this.onUpdateAjaxBehavior);
 
-		if (this.isOnReceiveEnabled())
+		if (this.listener.isOnReceiveEnabled())
 		{
 			this.onReceiveAjaxBehavior = this.newOnReceiveAjaxBehavior(this);
 			component.add(this.onReceiveAjaxBehavior);
 		}
 
-		if (this.isOnRemoveEnabled())
+		if (this.listener.isOnRemoveEnabled())
 		{
 			this.onRemoveAjaxBehavior = this.newOnRemoveAjaxBehavior(this);
 			component.add(this.onRemoveAjaxBehavior);
@@ -169,7 +177,7 @@ public abstract class SortableBehavior<T> extends JQueryUIBehavior implements IJ
 
 				if (list != null)
 				{
-					this.onUpdate(target, findItem(hash, list), index);
+					this.listener.onUpdate(target, findItem(hash, list), index);
 				}
 			}
 
@@ -179,7 +187,7 @@ public abstract class SortableBehavior<T> extends JQueryUIBehavior implements IJ
 
 				if (!list.isEmpty())
 				{
-					this.onReceive(target, findItem(hash, list), index);
+					this.listener.onReceive(target, findItem(hash, list), index);
 				}
 			}
 
@@ -189,7 +197,7 @@ public abstract class SortableBehavior<T> extends JQueryUIBehavior implements IJ
 
 				if (list != null)
 				{
-					this.onRemove(target, findItem(hash, list));
+					this.listener.onRemove(target, findItem(hash, list));
 				}
 			}
 		}

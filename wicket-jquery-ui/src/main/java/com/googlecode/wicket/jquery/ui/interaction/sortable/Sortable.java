@@ -233,21 +233,9 @@ public abstract class Sortable<T> extends JQueryGenericContainer<List<T>> implem
 	@Override
 	public JQueryBehavior newWidgetBehavior(String selector)
 	{
-		return new SortableBehavior<T>(selector, this.options) {
+		return new SortableBehavior<T>(selector, this.options, this) {
 
 			private static final long serialVersionUID = 1L;
-
-			@Override
-			public boolean isOnReceiveEnabled()
-			{
-				return Sortable.this.isOnReceiveEnabled();
-			}
-
-			@Override
-			public boolean isOnRemoveEnabled()
-			{
-				return Sortable.this.isOnRemoveEnabled();
-			}
 
 			@Override
 			protected List<T> getItemList()
@@ -270,24 +258,6 @@ public abstract class Sortable<T> extends JQueryGenericContainer<List<T>> implem
 			protected T findItem(String id, List<T> list)
 			{
 				return Sortable.this.findItem(id, list);
-			}
-
-			@Override
-			public void onUpdate(AjaxRequestTarget target, T item, int position)
-			{
-				Sortable.this.onUpdate(target, item, position);
-			}
-
-			@Override
-			public void onReceive(AjaxRequestTarget target, T item, int index)
-			{
-				Sortable.this.onReceive(target, item, index);
-			}
-
-			@Override
-			public void onRemove(AjaxRequestTarget target, T item)
-			{
-				Sortable.this.onRemove(target, item);
 			}
 		};
 	}
