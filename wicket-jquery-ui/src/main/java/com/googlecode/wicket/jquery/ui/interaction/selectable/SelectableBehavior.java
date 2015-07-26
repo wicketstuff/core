@@ -25,6 +25,7 @@ import java.util.regex.Pattern;
 import org.apache.wicket.Component;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.attributes.CallbackParameter;
+import org.apache.wicket.util.lang.Args;
 import org.apache.wicket.util.string.StringValue;
 
 import com.googlecode.wicket.jquery.core.JQueryEvent;
@@ -40,10 +41,13 @@ import com.googlecode.wicket.jquery.ui.JQueryUIBehavior;
  * @author Sebastien Briquet - sebfz1
  * @param <T>
  */
-public abstract class SelectableBehavior<T extends Serializable> extends JQueryUIBehavior implements IJQueryAjaxAware, ISelectableListener<T>
+public abstract class SelectableBehavior<T extends Serializable> extends JQueryUIBehavior implements IJQueryAjaxAware
 {
 	private static final long serialVersionUID = 1L;
 	public static final String METHOD = "selectable";
+
+	/** event listener */
+	private ISelectableListener<T> listener;
 
 	private JQueryAjaxBehavior onStopAjaxBehavior;
 
@@ -52,9 +56,9 @@ public abstract class SelectableBehavior<T extends Serializable> extends JQueryU
 	 * 
 	 * @param selector the html selector (ie: "#myId")
 	 */
-	public SelectableBehavior(String selector)
+	public SelectableBehavior(String selector, ISelectableListener<T> listener)
 	{
-		super(selector, METHOD, new Options());
+		this(selector, new Options(), listener);
 	}
 
 	/**
@@ -63,9 +67,11 @@ public abstract class SelectableBehavior<T extends Serializable> extends JQueryU
 	 * @param selector the html selector (ie: "#myId")
 	 * @param options the {@link Options}
 	 */
-	public SelectableBehavior(String selector, Options options)
+	public SelectableBehavior(String selector, Options options, ISelectableListener<T> listener)
 	{
 		super(selector, METHOD, options);
+
+		this.listener = Args.notNull(listener, "listener");
 	}
 
 	// Properties //
@@ -124,7 +130,7 @@ public abstract class SelectableBehavior<T extends Serializable> extends JQueryU
 				}
 			}
 
-			this.onSelect(target, items);
+			this.listener.onSelect(target, items);
 		}
 	}
 

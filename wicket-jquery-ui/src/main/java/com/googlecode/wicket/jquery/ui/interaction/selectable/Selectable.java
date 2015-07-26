@@ -59,7 +59,7 @@ import com.googlecode.wicket.jquery.ui.interaction.draggable.Draggable;
  * @author Sebastien Briquet - sebfz1
  *
  */
-public class Selectable<T extends Serializable> extends JQueryGenericContainer<List<T>>
+public class Selectable<T extends Serializable> extends JQueryGenericContainer<List<T>> implements ISelectableListener<T>
 {
 	private static final long serialVersionUID = 1L;
 
@@ -160,6 +160,13 @@ public class Selectable<T extends Serializable> extends JQueryGenericContainer<L
 	}
 
 	@Override
+	public final void onSelect(AjaxRequestTarget target, List<T> items)
+	{
+		this.setModelObject(items);
+		this.onSelect(target);
+	}
+
+	@Override
 	protected void onDetach()
 	{
 		super.onDetach();
@@ -222,7 +229,7 @@ public class Selectable<T extends Serializable> extends JQueryGenericContainer<L
 	@Override
 	public JQueryBehavior newWidgetBehavior(String selector)
 	{
-		return new SelectableBehavior<T>(selector) {
+		return new SelectableBehavior<T>(selector, this) {
 
 			private static final long serialVersionUID = 1L;
 
@@ -236,13 +243,6 @@ public class Selectable<T extends Serializable> extends JQueryGenericContainer<L
 			protected String getItemSelector()
 			{
 				return Selectable.this.getItemSelector();
-			}
-
-			@Override
-			public void onSelect(AjaxRequestTarget target, List<T> items)
-			{
-				Selectable.this.setModelObject(items);
-				Selectable.this.onSelect(target);
 			}
 		};
 	}

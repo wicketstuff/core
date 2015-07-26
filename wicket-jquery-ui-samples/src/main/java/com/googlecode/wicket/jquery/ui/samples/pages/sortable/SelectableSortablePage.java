@@ -13,25 +13,29 @@ import org.apache.wicket.model.IModel;
 
 import com.googlecode.wicket.jquery.core.Options;
 import com.googlecode.wicket.jquery.ui.JQueryIcon;
+import com.googlecode.wicket.jquery.ui.interaction.selectable.ISelectableListener;
 import com.googlecode.wicket.jquery.ui.interaction.selectable.SelectableBehavior;
 import com.googlecode.wicket.jquery.ui.interaction.sortable.Sortable;
 import com.googlecode.wicket.jquery.ui.interaction.sortable.Sortable.HashListView;
 import com.googlecode.wicket.jquery.ui.panel.JQueryFeedbackPanel;
 
-public class SelectableSortablePage extends AbstractSortablePage
+public class SelectableSortablePage extends AbstractSortablePage implements ISelectableListener<String>
 {
 	private static final long serialVersionUID = 1L;
+	private final String HANDLE = Options.asString(".handle");
+
+	private final FeedbackPanel feedback;
 
 	public SelectableSortablePage()
 	{
 		final List<String> list = newList("item #1", "item #2", "item #3", "item #4", "item #5", "item #6");
 
 		// FeedbackPanel //
-		final FeedbackPanel feedback = new JQueryFeedbackPanel("feedback");
-		this.add(feedback.setOutputMarkupId(true));
+		this.feedback = new JQueryFeedbackPanel("feedback");
+		this.add(this.feedback.setOutputMarkupId(true));
 
 		// Sortable //
-		final Sortable<String> sortable = new Sortable<String>("sortable", list, new Options("handle", Options.asString(".handle"))) {
+		final Sortable<String> sortable = new Sortable<String>("sortable", list, new Options("handle", HANDLE)) {
 
 			private static final long serialVersionUID = 1L;
 
@@ -40,36 +44,7 @@ public class SelectableSortablePage extends AbstractSortablePage
 			{
 				super.onInitialize();
 
-				this.add(new SelectableBehavior<String>(JQueryWidget.getSelector(this), new Options("cancel", Options.asString(".handle"))) {
-
-					private static final long serialVersionUID = 1L;
-
-					@Override
-					protected String getItemSelector()
-					{
-						return "li";
-					}
-
-					@Override
-					protected List<String> getItemList()
-					{
-						return list;
-					}
-
-					@Override
-					public void onSelect(AjaxRequestTarget target, List<String> items)
-					{
-						info("selected " + items);
-
-						target.add(feedback);
-					}
-				});
-			}
-
-			@Override
-			protected HashListView<String> newListView(IModel<List<String>> model)
-			{
-				return SelectableSortablePage.newListView("items", model);
+				this.add(SelectableSortablePage.this.newSelectableBehavior(JQueryWidget.getSelector(this), list));
 			}
 
 			@Override
@@ -84,10 +59,52 @@ public class SelectableSortablePage extends AbstractSortablePage
 
 				target.add(feedback);
 			}
+
+			@Override
+			protected HashListView<String> newListView(IModel<List<String>> model)
+			{
+				return SelectableSortablePage.newListView("items", model);
+			}
 		};
 
 		this.add(sortable);
 	}
+
+	// ISelectableListener //
+
+	@Override
+	public void onSelect(AjaxRequestTarget target, List<String> items)
+	{
+		info("selected " + items);
+
+		target.add(this.feedback);
+	}
+
+	// Factories //
+
+	protected SelectableBehavior<String> newSelectableBehavior(String id, final List<String> list)
+	{
+		Options options = new Options("cancel", HANDLE);
+
+		return new SelectableBehavior<String>(id, options, this) {
+
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			protected String getItemSelector()
+			{
+				return "li";
+			}
+
+			@Override
+			protected List<String> getItemList()
+			{
+				return list;
+			}
+		};
+	}
+
+	// Static factories //
 
 	protected static HashListView<String> newListView(String id, IModel<List<String>> model)
 	{

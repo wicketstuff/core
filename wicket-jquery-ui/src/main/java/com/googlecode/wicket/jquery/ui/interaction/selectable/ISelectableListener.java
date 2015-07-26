@@ -27,7 +27,7 @@ import org.apache.wicket.ajax.AjaxRequestTarget;
  * @author Sebastien Briquet - sebfz1
  *
  */
-interface ISelectableListener<T extends Serializable>
+public interface ISelectableListener<T extends Serializable>
 {
 	/**
 	 * Triggered when a selection has been made (stops)
