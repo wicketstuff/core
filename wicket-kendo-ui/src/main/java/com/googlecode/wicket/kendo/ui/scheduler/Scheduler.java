@@ -330,7 +330,7 @@ public class Scheduler extends JQueryContainer implements ISchedulerListener
 	 * 
 	 * @return null by default
 	 */
-	// TODO add ISchedulerTemplate? (#getTextProperties seems to be useless, to be double checked)
+	// TODO: add ISchedulerTemplate? (#getTextProperties seems to be useless, to be double checked)
 	protected IJQueryTemplate newTemplate()
 	{
 		return null;

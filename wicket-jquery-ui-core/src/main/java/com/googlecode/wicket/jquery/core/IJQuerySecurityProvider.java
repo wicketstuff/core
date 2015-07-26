@@ -27,6 +27,7 @@ public interface IJQuerySecurityProvider
 	/**
 	 * Indicates whether provided roles matches user roles.<br/>
 	 * Implementation is free to define the strategy. For instance, has the user one of the roles or should him have all roles?
+	 * 
 	 * @param roles the roles to check
 	 * @return the strategy result
 	 */

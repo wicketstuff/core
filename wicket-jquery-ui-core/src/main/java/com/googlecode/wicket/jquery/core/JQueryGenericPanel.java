@@ -12,24 +12,48 @@ public abstract class JQueryGenericPanel<T> extends JQueryPanel implements IGene
 {
 	private static final long serialVersionUID = 1L;
 
+	/**
+	 * Constructor
+	 * 
+	 * @param id the markup id
+	 */
 	public JQueryGenericPanel(String id)
 	{
 		super(id);
 	}
 
+	/**
+	 * Constructor
+	 * 
+	 * @param id the markup id
+	 * @param options the {@link Options}
+	 */
 	public JQueryGenericPanel(String id, Options options)
 	{
 		super(id, options);
 	}
 
-	public JQueryGenericPanel(String id, IModel<?> model, Options options)
-	{
-		super(id, model, options);
-	}
-
+	/**
+	 * Constructor
+	 * 
+	 * @param id the markup id
+	 * @param model the {@link IModel}
+	 */
 	public JQueryGenericPanel(String id, IModel<?> model)
 	{
 		super(id, model);
+	}
+
+	/**
+	 * Constructor
+	 * 
+	 * @param id the markup id
+	 * @param model the {@link IModel}
+	 * @param options the {@link Options}
+	 */
+	public JQueryGenericPanel(String id, IModel<?> model, Options options)
+	{
+		super(id, model, options);
 	}
 
 	// Properties //

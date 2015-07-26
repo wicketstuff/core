@@ -109,10 +109,7 @@ public class KendoUIBehavior extends JQueryBehavior implements IDestroyable
 	{
 		if (this.datasources == null)
 		{
-			synchronized (this)
-			{
-				this.datasources = new ArrayList<IKendoDataSource>();
-			}
+			this.datasources = new ArrayList<IKendoDataSource>();
 		}
 
 		return this.datasources.add(datasource);

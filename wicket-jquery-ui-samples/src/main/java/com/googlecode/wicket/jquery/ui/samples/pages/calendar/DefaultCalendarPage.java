@@ -15,7 +15,7 @@ public class DefaultCalendarPage extends AbstractCalendarPage
 
 		// Calendar //
 		Calendar calendar = new Calendar("calendar", new Options("theme", true));
-		calendar.setGoogleCalendarApiKey("no-key"); //FIXME correct KEY should be set here
+		calendar.setGoogleCalendarApiKey("no-key"); // FIXME: correct KEY should be set here
 		calendar.addFeed("qde8vmooe48vsm1ma3i9je88q8@group.calendar.google.com", "event-duchesse");
 		this.add(calendar);
 	}

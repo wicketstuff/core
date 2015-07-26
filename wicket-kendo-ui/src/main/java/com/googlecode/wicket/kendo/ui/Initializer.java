@@ -32,7 +32,7 @@ public class Initializer implements IInitializer
 	{
 		if (application instanceof WebApplication)
 		{
-			WebApplication webApplication = ((WebApplication) application);
+			WebApplication webApplication = (WebApplication) application;
 			webApplication.getAjaxRequestTargetListeners().add(new KendoDestroyListener());
 		}
 	}

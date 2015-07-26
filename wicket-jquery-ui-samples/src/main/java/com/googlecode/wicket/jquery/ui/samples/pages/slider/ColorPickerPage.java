@@ -107,8 +107,7 @@ public class ColorPickerPage extends AbstractSliderPage
 		/**
 		 * Updates the model with the new color.
 		 * 
-		 * @param handler
-		 * @param form
+		 * @param handler the {@link IPartialPageRequestHandler}
 		 */
 		private void changeColor(IPartialPageRequestHandler handler)
 		{

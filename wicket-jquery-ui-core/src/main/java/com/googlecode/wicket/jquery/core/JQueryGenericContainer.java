@@ -12,11 +12,22 @@ public abstract class JQueryGenericContainer<T> extends JQueryContainer implemen
 {
 	private static final long serialVersionUID = 1L;
 
+	/**
+	 * Constructor.
+	 * 
+	 * @param id the markup id
+	 */
 	public JQueryGenericContainer(String id)
 	{
 		super(id);
 	}
 
+	/**
+	 * Constructor.
+	 * 
+	 * @param id the markup id
+	 * @param model the model
+	 */
 	public JQueryGenericContainer(String id, IModel<?> model)
 	{
 		super(id, model);

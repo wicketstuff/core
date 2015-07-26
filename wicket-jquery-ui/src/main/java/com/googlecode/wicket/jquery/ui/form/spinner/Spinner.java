@@ -164,6 +164,7 @@ public class Spinner<T extends Number> extends TextField<T> implements IJQueryCu
 	}
 
 	// Options //
+
 	/**
 	 * Sets the culture to use for parsing and formatting the value.<br/>
 	 * <b>More:</b> https://github.com/jquery/globalize
@@ -298,6 +299,7 @@ public class Spinner<T extends Number> extends TextField<T> implements IJQueryCu
 	}
 
 	// IJQueryWidget //
+
 	@Override
 	public SpinnerBehavior newWidgetBehavior(String selector)
 	{

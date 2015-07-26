@@ -98,9 +98,9 @@ public class SingleResourceSchedulerPage extends AbstractSchedulerPage
 					@Override
 					public String getText()
 					{
-						return "# if (!isAllDay) { #"
-								+ "#= kendo.toString(start, 'hh:mm') # - "
-								+ "# } #"
+						return "# if (!isAllDay) { #" // lf
+								+ "#= kendo.toString(start, 'hh:mm') # - " // lf
+								+ "# } #" // lf
 								+ "#= title #";
 					}
 
@@ -124,12 +124,9 @@ public class SingleResourceSchedulerPage extends AbstractSchedulerPage
 			@Override
 			protected void onSubmit(AjaxRequestTarget target, Form<?> form)
 			{
-				// TODO: remove
-				target.add(scheduler);
 				scheduler.refresh(target);
 			}
 		});
-
 	}
 
 	// Properties //

@@ -56,7 +56,7 @@ public class JQueryEffectContainer extends WebMarkupContainer implements IEffect
 	}
 
 	// Methods //
-	
+
 	/**
 	 * Plays the specified effect.
 	 * 

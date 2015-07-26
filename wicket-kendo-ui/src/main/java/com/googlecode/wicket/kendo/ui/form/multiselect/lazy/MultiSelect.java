@@ -177,7 +177,7 @@ public abstract class MultiSelect<T> extends FormComponent<Collection<T>> implem
 	@Override
 	protected String getModelValue()
 	{
-		List<String> values = new ArrayList<String>();
+		List<String> values = new ArrayList<>();
 
 		for (T value : this.getModelObject())
 		{

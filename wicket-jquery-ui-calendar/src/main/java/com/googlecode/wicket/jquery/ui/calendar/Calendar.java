@@ -45,7 +45,7 @@ public class Calendar extends JQueryContainer implements ICalendarListener
 
 	private final Options options;
 	private Map<CharSequence, String> gcals;
-	private String gcalApiKey = null; // TODO this might be per calendar option !!!!
+	private String gcalApiKey = null; // TODO: this might be per calendar option !!!!
 	private CalendarModelBehavior modelBehavior; // events load
 
 	/**
@@ -139,10 +139,7 @@ public class Calendar extends JQueryContainer implements ICalendarListener
 	{
 		if (this.gcals == null)
 		{
-			synchronized (this)
-			{
-				this.gcals = new HashMap<>();
-			}
+			this.gcals = new HashMap<>();
 		}
 
 		this.gcals.put(gcal, className);
@@ -238,7 +235,7 @@ public class Calendar extends JQueryContainer implements ICalendarListener
 			{
 				throw new WicketRuntimeException(MISSING_API_KEY);
 			}
-			
+
 			behavior.setOption("googleCalendarApiKey", Options.asString(Calendar.this.gcalApiKey));
 
 			for (Entry<CharSequence, String> gcal : Calendar.this.gcals.entrySet())

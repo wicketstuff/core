@@ -34,6 +34,7 @@ public abstract class JQueryPanel extends Panel implements IJQueryWidget
 
 	/**
 	 * Constructor
+	 * 
 	 * @param id the markup id
 	 */
 	protected JQueryPanel(String id)
@@ -43,6 +44,7 @@ public abstract class JQueryPanel extends Panel implements IJQueryWidget
 
 	/**
 	 * Constructor
+	 * 
 	 * @param id the markup id
 	 * @param options the {@link Options}
 	 */
@@ -55,6 +57,7 @@ public abstract class JQueryPanel extends Panel implements IJQueryWidget
 
 	/**
 	 * Constructor
+	 * 
 	 * @param id the markup id
 	 * @param model the {@link IModel}
 	 */
@@ -65,6 +68,7 @@ public abstract class JQueryPanel extends Panel implements IJQueryWidget
 
 	/**
 	 * Constructor
+	 * 
 	 * @param id the markup id
 	 * @param model the {@link IModel}
 	 * @param options the {@link Options}

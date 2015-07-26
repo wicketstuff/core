@@ -25,5 +25,6 @@ package com.googlecode.wicket.jquery.core;
 public interface IJQueryCultureWidget extends IJQueryWidget
 {
 	String getCulture();
+
 	IJQueryCultureWidget setCulture(String culture);
 }
