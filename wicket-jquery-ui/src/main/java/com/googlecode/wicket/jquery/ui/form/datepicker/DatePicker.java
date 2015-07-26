@@ -155,21 +155,9 @@ public class DatePicker extends DateTextField implements IJQueryWidget, IDatePic
 	@Override
 	public JQueryBehavior newWidgetBehavior(String selector)
 	{
-		return new DatePickerBehavior(selector, this.options) {
+		return new DatePickerBehavior(selector, this.options, this) {
 
 			private static final long serialVersionUID = 1L;
-
-			@Override
-			public boolean isOnSelectEventEnabled()
-			{
-				return DatePicker.this.isOnSelectEventEnabled();
-			}
-
-			@Override
-			public void onSelect(AjaxRequestTarget target, String date)
-			{
-				DatePicker.this.onSelect(target, date);
-			}
 
 			@Override
 			protected JQueryAjaxPostBehavior newOnSelectAjaxBehavior(IJQueryAjaxAware source)

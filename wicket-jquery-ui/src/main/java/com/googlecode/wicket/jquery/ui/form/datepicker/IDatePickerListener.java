@@ -24,7 +24,7 @@ import org.apache.wicket.ajax.AjaxRequestTarget;
  * @author Sebastien Briquet - sebfz1
  *
  */
-interface IDatePickerListener
+public interface IDatePickerListener
 {
 	/**
 	 * Indicates whether the 'onSelect' event is enabled.<br/>

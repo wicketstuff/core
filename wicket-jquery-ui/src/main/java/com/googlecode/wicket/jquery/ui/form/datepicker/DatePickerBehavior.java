@@ -21,6 +21,7 @@ import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.attributes.CallbackParameter;
 import org.apache.wicket.core.request.handler.IPartialPageRequestHandler;
 import org.apache.wicket.markup.html.form.FormComponent;
+import org.apache.wicket.util.lang.Args;
 
 import com.googlecode.wicket.jquery.core.JQueryEvent;
 import com.googlecode.wicket.jquery.core.Options;
@@ -36,21 +37,25 @@ import com.googlecode.wicket.jquery.ui.JQueryUIBehavior;
  *
  * @author Sebastien Briquet - sebfz1
  */
-public abstract class DatePickerBehavior extends JQueryUIBehavior implements IJQueryAjaxAware, IDatePickerListener
+public abstract class DatePickerBehavior extends JQueryUIBehavior implements IJQueryAjaxAware
 {
 	private static final long serialVersionUID = 1L;
 	public static final String METHOD = "datepicker";
 
 	private JQueryAjaxBehavior onSelectAjaxBehavior = null;
 
+	/** event listener */
+	private final IDatePickerListener listener;
+
 	/**
 	 * Constructor
 	 * 
 	 * @param selector the html selector (ie: "#myId")
+	 * @param listener the {@link IDatePickerListener}
 	 */
-	public DatePickerBehavior(String selector)
+	public DatePickerBehavior(String selector, IDatePickerListener listener)
 	{
-		this(selector, new Options());
+		this(selector, new Options(), listener);
 	}
 
 	/**
@@ -58,10 +63,13 @@ public abstract class DatePickerBehavior extends JQueryUIBehavior implements IJQ
 	 * 
 	 * @param selector the html selector (ie: "#myId")
 	 * @param options the {@link Options}
+	 * @param listener the {@link IDatePickerListener}
 	 */
-	public DatePickerBehavior(String selector, Options options)
+	public DatePickerBehavior(String selector, Options options, IDatePickerListener listener)
 	{
 		super(selector, METHOD, options);
+
+		this.listener = Args.notNull(listener, "listener");
 	}
 
 	// Methods //
@@ -71,7 +79,7 @@ public abstract class DatePickerBehavior extends JQueryUIBehavior implements IJQ
 	{
 		super.bind(component);
 
-		if (this.isOnSelectEventEnabled())
+		if (this.listener.isOnSelectEventEnabled())
 		{
 			this.onSelectAjaxBehavior = this.newOnSelectAjaxBehavior(this);
 			component.add(this.onSelectAjaxBehavior);
@@ -105,7 +113,7 @@ public abstract class DatePickerBehavior extends JQueryUIBehavior implements IJQ
 	{
 		if (event instanceof SelectEvent)
 		{
-			this.onSelect(target, ((SelectEvent) event).getDateText());
+			this.listener.onSelect(target, ((SelectEvent) event).getDateText());
 		}
 	}
 
