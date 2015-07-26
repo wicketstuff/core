@@ -124,7 +124,7 @@ public class Calendar extends JQueryContainer implements ICalendarListener
 	 *
 	 * @param gcal url to xml feed
 	 */
-	public synchronized void addFeed(CharSequence gcal)
+	public void addFeed(CharSequence gcal)
 	{
 		this.addFeed(gcal, "");
 	}
