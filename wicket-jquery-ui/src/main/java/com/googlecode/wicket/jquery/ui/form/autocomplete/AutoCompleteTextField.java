@@ -282,7 +282,7 @@ public abstract class AutoCompleteTextField<T extends Serializable> extends Text
 	@Override
 	public JQueryBehavior newWidgetBehavior(String selector)
 	{
-		return new AutoCompleteBehavior(selector) {
+		return new AutoCompleteBehavior(selector, this) {
 
 			private static final long serialVersionUID = 1L;
 
@@ -290,12 +290,6 @@ public abstract class AutoCompleteTextField<T extends Serializable> extends Text
 			protected CharSequence getChoiceCallbackUrl()
 			{
 				return choiceModelBehavior.getCallbackUrl();
-			}
-
-			@Override
-			public void onSelect(AjaxRequestTarget target, int index)
-			{
-				AutoCompleteTextField.this.onSelect(target, index);
 			}
 
 			@Override
