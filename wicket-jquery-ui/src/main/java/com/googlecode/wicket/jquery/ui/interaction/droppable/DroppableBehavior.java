@@ -19,6 +19,7 @@ package com.googlecode.wicket.jquery.ui.interaction.droppable;
 import org.apache.wicket.Component;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.attributes.CallbackParameter;
+import org.apache.wicket.util.lang.Args;
 
 import com.googlecode.wicket.jquery.core.JQueryEvent;
 import com.googlecode.wicket.jquery.core.Options;
@@ -31,10 +32,13 @@ import com.googlecode.wicket.jquery.ui.JQueryUIBehavior;
  *
  * @author Sebastien Briquet - sebfz1
  */
-public abstract class DroppableBehavior extends JQueryUIBehavior implements IJQueryAjaxAware, IDroppableListener
+public class DroppableBehavior extends JQueryUIBehavior implements IJQueryAjaxAware
 {
 	private static final long serialVersionUID = 1L;
 	public static final String METHOD = "droppable";
+	
+	/** event listener */
+	private final IDroppableListener listener; 
 
 	private JQueryAjaxBehavior onDropAjaxBehavior;
 	private JQueryAjaxBehavior onOverAjaxBehavior = null;
@@ -47,10 +51,11 @@ public abstract class DroppableBehavior extends JQueryUIBehavior implements IJQu
 	 * Constructor
 	 * 
 	 * @param selector the html selector (ie: "#myId")
+	 * @param listener the {@link IDroppableListener}
 	 */
-	public DroppableBehavior(String selector)
+	public DroppableBehavior(String selector, IDroppableListener listener)
 	{
-		this(selector, new Options());
+		this(selector, new Options(), listener);
 	}
 
 	/**
@@ -58,10 +63,13 @@ public abstract class DroppableBehavior extends JQueryUIBehavior implements IJQu
 	 * 
 	 * @param selector the html selector (ie: "#myId")
 	 * @param options the {@link Options}
+	 * @param listener the {@link IDroppableListener}
 	 */
-	public DroppableBehavior(String selector, Options options)
+	public DroppableBehavior(String selector, Options options, IDroppableListener listener)
 	{
 		super(selector, METHOD, options);
+		
+		this.listener = Args.notNull(listener, "listener");
 	}
 
 	// Properties //
@@ -82,13 +90,13 @@ public abstract class DroppableBehavior extends JQueryUIBehavior implements IJQu
 		component.add(this.onDropAjaxBehavior);
 
 		// these events are not enabled by default to prevent unnecessary server round-trips.
-		if (this.isOverEventEnabled())
+		if (this.listener.isOverEventEnabled())
 		{
 			this.onOverAjaxBehavior = this.newOnOverAjaxBehavior(this);
 			component.add(this.onOverAjaxBehavior);
 		}
 
-		if (this.isExitEventEnabled())
+		if (this.listener.isExitEventEnabled())
 		{
 			this.onExitAjaxBehavior = this.newOnExitAjaxBehavior(this);
 			component.add(this.onExitAjaxBehavior);
@@ -119,17 +127,17 @@ public abstract class DroppableBehavior extends JQueryUIBehavior implements IJQu
 	{
 		if (event instanceof DropEvent)
 		{
-			this.onDrop(target, this.draggable);
+			this.listener.onDrop(target, this.draggable);
 		}
 
 		else if (event instanceof OverEvent)
 		{
-			this.onOver(target, this.draggable);
+			this.listener.onOver(target, this.draggable);
 		}
 
 		else if (event instanceof ExitEvent)
 		{
-			this.onExit(target, this.draggable);
+			this.listener.onExit(target, this.draggable);
 		}
 	}
 

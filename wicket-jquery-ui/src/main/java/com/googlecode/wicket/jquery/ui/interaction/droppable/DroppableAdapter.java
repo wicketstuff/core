@@ -18,45 +18,15 @@ package com.googlecode.wicket.jquery.ui.interaction.droppable;
 
 import org.apache.wicket.Component;
 import org.apache.wicket.ajax.AjaxRequestTarget;
-import org.apache.wicket.model.IModel;
-
-import com.googlecode.wicket.jquery.core.JQueryBehavior;
-import com.googlecode.wicket.jquery.core.JQueryGenericContainer;
-import com.googlecode.wicket.jquery.ui.interaction.draggable.Draggable;
 
 /**
- * Provides a jQuery droppable area, on which {@link Draggable}{@code s} can be dropped.
+ * Adapter class for {@link IDroppableListener}
  *
- * @param <T> the model object type
  * @author Sebastien Briquet - sebfz1
+ *
  */
-public abstract class Droppable<T> extends JQueryGenericContainer<T> implements IDroppableListener
+public class DroppableAdapter implements IDroppableListener
 {
-	private static final long serialVersionUID = 1L;
-
-	/**
-	 * Constructor
-	 * 
-	 * @param id the markup id
-	 */
-	public Droppable(String id)
-	{
-		super(id);
-	}
-
-	/**
-	 * Constructor
-	 * 
-	 * @param id the markup id
-	 * @param model the {@link IModel}
-	 */
-	public Droppable(String id, IModel<T> model)
-	{
-		super(id, model);
-	}
-
-	// Properties //
-
 	@Override
 	public boolean isOverEventEnabled()
 	{
@@ -69,7 +39,11 @@ public abstract class Droppable<T> extends JQueryGenericContainer<T> implements 
 		return false;
 	}
 
-	// Events //
+	@Override
+	public void onDrop(AjaxRequestTarget target, Component component)
+	{
+		// noop
+	}
 
 	@Override
 	public void onOver(AjaxRequestTarget target, Component component)
@@ -81,13 +55,5 @@ public abstract class Droppable<T> extends JQueryGenericContainer<T> implements 
 	public void onExit(AjaxRequestTarget target, Component component)
 	{
 		// noop
-	}
-
-	// IJQueryWidget //
-
-	@Override
-	public JQueryBehavior newWidgetBehavior(String selector)
-	{
-		return new DroppableBehavior(selector, this);
 	}
 }
