@@ -88,7 +88,6 @@ public abstract class SortableBehavior<T> extends JQueryUIBehavior implements IJ
 		return Collections.emptyList();
 	}
 
-	// TODO: move to JQueryUIBehavior/KendoUIBehavior (or JQueryBehavior), and generalize call in #onConfigure(Component) where applicable
 	@Override
 	public boolean isEnabled(Component component)
 	{

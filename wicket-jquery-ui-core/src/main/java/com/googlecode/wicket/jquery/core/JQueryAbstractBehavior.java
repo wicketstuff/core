@@ -157,7 +157,10 @@ public abstract class JQueryAbstractBehavior extends Behavior
 	 * Get the unique behavior token that act as the script id.
 	 *
 	 * @return the token
+	 * @deprecated 6.21.0 - not used/called anymore. Please open an issue if you still need it
 	 */
+	// TODO: 6.22.0 - remove? 
+	@Deprecated
 	protected String getToken()
 	{
 		return String.format("jquery-%s-%d", this.name, this.hashCode());
@@ -167,10 +170,14 @@ public abstract class JQueryAbstractBehavior extends Behavior
 	 * Gets the jQuery statement.
 	 *
 	 * @return statement like 'jQuery(function() { ... });'
+	 * @deprecated warning, not directly called anymore: check your calls and overrides!
 	 */
+	// TODO: 6.22.0 - remove deprecation
 	@Override
 	public String toString()
 	{
 		return String.format("jQuery(function() { %s });", this.$());
+		// TODO: replace by this.$() and update javadoc
+		// return this.$();
 	}
 }

@@ -336,7 +336,7 @@ public class JQueryBehavior extends JQueryAbstractBehavior
 	/**
 	 * {@inheritDoc} <br/>
 	 * Also, {@link #onConfigure(Component)} will call {@link IJQueryWidget#onConfigure(JQueryBehavior)} (if the component IS-A {@link IJQueryWidget})<br/>
-	 * If a property set is in {@link #onConfigure(Component)} is needed in {@link IJQueryWidget#onConfigure(JQueryBehavior)}, {@code super.onConfigure(component)} should be the last statement.
+	 * If a property is set in {@link #onConfigure(Component)} and is needed in {@link IJQueryWidget#onConfigure(JQueryBehavior)}, {@code super.onConfigure(component)} should be the last statement.
 	 */
 	@Override
 	public void onConfigure(Component component)
@@ -352,7 +352,7 @@ public class JQueryBehavior extends JQueryAbstractBehavior
 	/**
 	 * {@inheritDoc} <br/>
 	 * Also, {@link #beforeRender(Component)} will call {@link IJQueryWidget#onBeforeRender(JQueryBehavior)} (if the component IS-A {@link IJQueryWidget})<br/>
-	 * If a property set is in {@link #beforeRender(Component)} is needed in {@link IJQueryWidget#onBeforeRender(JQueryBehavior)}, {@code super.beforeRender(component)} should be the last statement.
+	 * If a property is set in {@link #beforeRender(Component)} and is needed in {@link IJQueryWidget#onBeforeRender(JQueryBehavior)}, {@code super.beforeRender(component)} should be the last statement.
 	 */
 	@Override
 	public void beforeRender(Component component)
