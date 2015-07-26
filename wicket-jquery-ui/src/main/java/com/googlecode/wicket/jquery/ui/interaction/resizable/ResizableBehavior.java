@@ -19,6 +19,7 @@ package com.googlecode.wicket.jquery.ui.interaction.resizable;
 import org.apache.wicket.Component;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.attributes.CallbackParameter;
+import org.apache.wicket.util.lang.Args;
 
 import com.googlecode.wicket.jquery.core.JQueryEvent;
 import com.googlecode.wicket.jquery.core.Options;
@@ -32,10 +33,13 @@ import com.googlecode.wicket.jquery.ui.JQueryUIBehavior;
  *
  * @author Sebastien Briquet - sebfz1
  */
-public abstract class ResizableBehavior extends JQueryUIBehavior implements IJQueryAjaxAware, IResizableListener
+public class ResizableBehavior extends JQueryUIBehavior implements IJQueryAjaxAware
 {
 	private static final long serialVersionUID = 1L;
 	public static final String METHOD = "resizable";
+
+	/** event listener */
+	private final IResizableListener listener;
 
 	private JQueryAjaxBehavior onResizeStartAjaxBehavior = null;
 	private JQueryAjaxBehavior onResizeStopAjaxBehavior = null;
@@ -44,10 +48,11 @@ public abstract class ResizableBehavior extends JQueryUIBehavior implements IJQu
 	 * Constructor
 	 * 
 	 * @param selector the html selector (ie: "#myId")
+	 * @param listener the {@link IResizableListener}
 	 */
-	public ResizableBehavior(String selector)
+	public ResizableBehavior(String selector, IResizableListener listener)
 	{
-		this(selector, new Options());
+		this(selector, new Options(), listener);
 	}
 
 	/**
@@ -55,26 +60,30 @@ public abstract class ResizableBehavior extends JQueryUIBehavior implements IJQu
 	 * 
 	 * @param selector the html selector (ie: "#myId")
 	 * @param options the {@link Options}
+	 * @param listener the {@link IResizableListener}
 	 */
-	public ResizableBehavior(String selector, Options options)
+	public ResizableBehavior(String selector, Options options, IResizableListener listener)
 	{
 		super(selector, METHOD, options);
+
+		this.listener = Args.notNull(listener, "listener");
 	}
 
 	// Methods //
+
 	@Override
 	public void bind(Component component)
 	{
 		super.bind(component);
 
 		// these events are not enabled by default to prevent unnecessary server round-trips.
-		if (this.isResizeStartEventEnabled())
+		if (this.listener.isResizeStartEventEnabled())
 		{
 			this.onResizeStartAjaxBehavior = this.newOnResizeStartAjaxBehavior(this);
 			component.add(this.onResizeStartAjaxBehavior);
 		}
 
-		if (this.isResizeStopEventEnabled())
+		if (this.listener.isResizeStopEventEnabled())
 		{
 			this.onResizeStopAjaxBehavior = this.newOnResizeStopAjaxBehavior(this);
 			component.add(this.onResizeStopAjaxBehavior);
@@ -82,6 +91,7 @@ public abstract class ResizableBehavior extends JQueryUIBehavior implements IJQu
 	}
 
 	// Events //
+
 	@Override
 	public void onConfigure(Component component)
 	{
@@ -107,12 +117,12 @@ public abstract class ResizableBehavior extends JQueryUIBehavior implements IJQu
 
 			if (ev instanceof ResizeStartEvent)
 			{
-				this.onResizeStart(target, ev.getTop(), ev.getLeft(), ev.getWidth(), ev.getHeight());
+				this.listener.onResizeStart(target, ev.getTop(), ev.getLeft(), ev.getWidth(), ev.getHeight());
 			}
 
 			if (ev instanceof ResizeStopEvent)
 			{
-				this.onResizeStop(target, ev.getTop(), ev.getLeft(), ev.getWidth(), ev.getHeight());
+				this.listener.onResizeStop(target, ev.getTop(), ev.getLeft(), ev.getWidth(), ev.getHeight());
 			}
 		}
 	}

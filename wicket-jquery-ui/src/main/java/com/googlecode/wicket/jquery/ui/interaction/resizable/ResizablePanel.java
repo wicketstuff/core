@@ -37,6 +37,7 @@ public abstract class ResizablePanel extends JQueryPanel implements IResizableLi
 
 	/**
 	 * Constructor
+	 * 
 	 * @param id the markup id
 	 */
 	public ResizablePanel(String id)
@@ -46,6 +47,7 @@ public abstract class ResizablePanel extends JQueryPanel implements IResizableLi
 
 	/**
 	 * Constructor
+	 * 
 	 * @param id the markup id
 	 * @param options the {@link Options}
 	 */
@@ -56,6 +58,7 @@ public abstract class ResizablePanel extends JQueryPanel implements IResizableLi
 
 	/**
 	 * Constructor
+	 * 
 	 * @param id the markup id
 	 * @param model the {@link IModel}
 	 */
@@ -66,6 +69,7 @@ public abstract class ResizablePanel extends JQueryPanel implements IResizableLi
 
 	/**
 	 * Constructor
+	 * 
 	 * @param id the markup id
 	 * @param model the {@link IModel}
 	 * @param options the {@link Options}
@@ -76,6 +80,7 @@ public abstract class ResizablePanel extends JQueryPanel implements IResizableLi
 	}
 
 	// IResizableListener //
+
 	@Override
 	public boolean isResizeStartEventEnabled()
 	{
@@ -108,36 +113,10 @@ public abstract class ResizablePanel extends JQueryPanel implements IResizableLi
 	}
 
 	// IJQueryWidget //
+
 	@Override
 	public JQueryBehavior newWidgetBehavior(String selector)
 	{
-		return new ResizableBehavior(selector, this.options) {
-
-			private static final long serialVersionUID = 1L;
-
-			@Override
-			public boolean isResizeStartEventEnabled()
-			{
-				return ResizablePanel.this.isResizeStartEventEnabled();
-			}
-
-			@Override
-			public boolean isResizeStopEventEnabled()
-			{
-				return ResizablePanel.this.isResizeStopEventEnabled();
-			}
-
-			@Override
-			public void onResizeStart(AjaxRequestTarget target, int top, int left, int width, int height)
-			{
-				ResizablePanel.this.onResizeStart(target, top, left, width, height);
-			}
-
-			@Override
-			public void onResizeStop(AjaxRequestTarget target, int top, int left, int width, int height)
-			{
-				ResizablePanel.this.onResizeStop(target, top, left, width, height);
-			}
-		};
+		return new ResizableBehavior(selector, this.options, this);
 	}
 }

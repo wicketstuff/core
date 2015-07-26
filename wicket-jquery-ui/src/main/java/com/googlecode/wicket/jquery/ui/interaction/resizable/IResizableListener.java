@@ -24,7 +24,7 @@ import org.apache.wicket.ajax.AjaxRequestTarget;
  * @author Sebastien Briquet - sebfz1
  *
  */
-interface IResizableListener
+public interface IResizableListener
 {
 	/**
 	 * Indicates whether the 'start' event is enabled.<br />
