@@ -56,6 +56,7 @@ public abstract class AccordionBehavior extends JQueryUIBehavior implements IJQu
 	 * Constructor
 	 *
 	 * @param selector the html selector (ie: "#myId")
+	 * @param listener the {@link IAccordionListener}
 	 */
 	public AccordionBehavior(String selector, IAccordionListener listener)
 	{
@@ -67,6 +68,7 @@ public abstract class AccordionBehavior extends JQueryUIBehavior implements IJQu
 	 *
 	 * @param selector the html selector (ie: "#myId")
 	 * @param options the {@link Options}
+	 * @param listener the {@link IAccordionListener}
 	 */
 	public AccordionBehavior(String selector, Options options, IAccordionListener listener)
 	{

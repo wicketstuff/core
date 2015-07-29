@@ -71,6 +71,7 @@ public class JQueryEffectBehavior extends JQueryUIBehavior implements IJQueryAja
 	 * Constructor.
 	 *
 	 * @param selector the html selector (ie: '#myId')
+	 * @param listener the {@link IEffectListener}
 	 */
 	JQueryEffectBehavior(String selector, IEffectListener listener)
 	{
@@ -82,6 +83,7 @@ public class JQueryEffectBehavior extends JQueryUIBehavior implements IJQueryAja
 	 *
 	 * @param selector the html selector (ie: '#myId')
 	 * @param effect the effect to be played
+	 * @param listener the {@link IEffectListener}
 	 */
 	public JQueryEffectBehavior(String selector, String effect, IEffectListener listener)
 	{
@@ -94,6 +96,7 @@ public class JQueryEffectBehavior extends JQueryUIBehavior implements IJQueryAja
 	 * @param selector the html selector (ie: '#myId')
 	 * @param effect the effect to be played
 	 * @param options the options to be applied
+	 * @param listener the {@link IEffectListener}
 	 */
 	public JQueryEffectBehavior(String selector, String effect, Options options, IEffectListener listener)
 	{
@@ -106,6 +109,7 @@ public class JQueryEffectBehavior extends JQueryUIBehavior implements IJQueryAja
 	 * @param selector the html selector (ie: '#myId')
 	 * @param effect the effect to be played
 	 * @param speed the speed of the effect
+	 * @param listener the {@link IEffectListener}
 	 */
 	public JQueryEffectBehavior(String selector, String effect, int speed, IEffectListener listener)
 	{
@@ -119,6 +123,7 @@ public class JQueryEffectBehavior extends JQueryUIBehavior implements IJQueryAja
 	 * @param effect the effect to be played
 	 * @param options the options to be applied
 	 * @param speed the speed of the effect
+	 * @param listener the {@link IEffectListener}
 	 */
 	public JQueryEffectBehavior(String selector, String effect, Options options, int speed, IEffectListener listener)
 	{

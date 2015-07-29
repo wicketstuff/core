@@ -49,6 +49,7 @@ public abstract class MenuBehavior extends JQueryUIBehavior implements IJQueryAj
 	 * Constructor
 	 *
 	 * @param selector the html selector (ie: "#myId")
+	 * @param listener the {@link IMenuListener}
 	 */
 	public MenuBehavior(String selector, IMenuListener listener)
 	{
@@ -60,6 +61,7 @@ public abstract class MenuBehavior extends JQueryUIBehavior implements IJQueryAj
 	 *
 	 * @param selector the html selector (ie: "#myId")
 	 * @param options the {@link Options}
+	 * @param listener the {@link IMenuListener}
 	 */
 	public MenuBehavior(String selector, Options options, IMenuListener listener)
 	{

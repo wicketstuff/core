@@ -51,6 +51,7 @@ public abstract class DialogBehavior extends JQueryUIBehavior implements IJQuery
 	 * Constructor
 	 *
 	 * @param selector the html selector (ie: "#myId")
+	 * @param listener the {@link IDialogListener}
 	 */
 	public DialogBehavior(String selector, IDialogListener listener)
 	{
@@ -62,6 +63,7 @@ public abstract class DialogBehavior extends JQueryUIBehavior implements IJQuery
 	 *
 	 * @param selector the html selector (ie: "#myId")
 	 * @param options the {@link Options}
+	 * @param listener the {@link IDialogListener}
 	 */
 	public DialogBehavior(String selector, Options options, IDialogListener listener)
 	{

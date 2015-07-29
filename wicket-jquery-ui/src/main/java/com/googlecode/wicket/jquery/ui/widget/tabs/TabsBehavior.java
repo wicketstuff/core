@@ -55,6 +55,7 @@ public abstract class TabsBehavior extends JQueryUIBehavior implements IJQueryAj
 	 * Constructor
 	 *
 	 * @param selector the html selector (ie: "#myId")
+	 * @param listener the {@link ITabsListener}
 	 */
 	public TabsBehavior(String selector, ITabsListener listener)
 	{
@@ -66,6 +67,7 @@ public abstract class TabsBehavior extends JQueryUIBehavior implements IJQueryAj
 	 *
 	 * @param selector the html selector (ie: "#myId")
 	 * @param options the {@link Options}
+	 * @param listener the {@link ITabsListener}
 	 */
 	public TabsBehavior(String selector, Options options, ITabsListener listener)
 	{
