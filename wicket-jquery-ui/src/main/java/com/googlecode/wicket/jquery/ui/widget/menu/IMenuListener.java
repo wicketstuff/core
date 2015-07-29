@@ -24,7 +24,7 @@ import org.apache.wicket.ajax.AjaxRequestTarget;
  * @author Sebastien Briquet - sebfz1
  *
  */
-interface IMenuListener
+public interface IMenuListener
 {
 	/**
 	 * Triggered when a menu-item is clicked

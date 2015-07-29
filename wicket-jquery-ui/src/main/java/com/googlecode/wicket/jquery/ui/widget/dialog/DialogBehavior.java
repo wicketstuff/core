@@ -20,6 +20,8 @@ import java.util.List;
 
 import org.apache.wicket.Component;
 import org.apache.wicket.ajax.AjaxRequestTarget;
+import org.apache.wicket.core.request.handler.IPartialPageRequestHandler;
+import org.apache.wicket.util.lang.Args;
 
 import com.googlecode.wicket.jquery.core.JQueryEvent;
 import com.googlecode.wicket.jquery.core.Options;
@@ -28,7 +30,6 @@ import com.googlecode.wicket.jquery.core.ajax.JQueryAjaxBehavior;
 import com.googlecode.wicket.jquery.ui.JQueryUIBehavior;
 import com.googlecode.wicket.jquery.ui.form.button.Button;
 import com.googlecode.wicket.jquery.ui.widget.dialog.ButtonAjaxBehavior.ClickEvent;
-import org.apache.wicket.core.request.handler.IPartialPageRequestHandler;
 
 /**
  * Provides a jQuery dialog behavior.
@@ -37,11 +38,12 @@ import org.apache.wicket.core.request.handler.IPartialPageRequestHandler;
  * @since 1.2.3
  * @since 6.0.1
  */
-public abstract class DialogBehavior extends JQueryUIBehavior implements IJQueryAjaxAware, IDialogListener
+public abstract class DialogBehavior extends JQueryUIBehavior implements IJQueryAjaxAware
 {
 	private static final long serialVersionUID = 1L;
 	public static final String METHOD = "dialog";
 
+	private final IDialogListener listener;
 	private JQueryAjaxBehavior onDefaultCloseAjaxBehavior = null;
 	private JQueryAjaxBehavior onEscapeCloseAjaxBehavior = null;
 
@@ -50,9 +52,9 @@ public abstract class DialogBehavior extends JQueryUIBehavior implements IJQuery
 	 *
 	 * @param selector the html selector (ie: "#myId")
 	 */
-	public DialogBehavior(String selector)
+	public DialogBehavior(String selector, IDialogListener listener)
 	{
-		super(selector, METHOD);
+		this(selector, new Options(), listener);
 	}
 
 	/**
@@ -61,12 +63,15 @@ public abstract class DialogBehavior extends JQueryUIBehavior implements IJQuery
 	 * @param selector the html selector (ie: "#myId")
 	 * @param options the {@link Options}
 	 */
-	public DialogBehavior(String selector, Options options)
+	public DialogBehavior(String selector, Options options, IDialogListener listener)
 	{
 		super(selector, METHOD, options);
+
+		this.listener = Args.notNull(listener, "listener");
 	}
 
 	// Properties //
+
 	/**
 	 * Gets the dialog's buttons.<br/>
 	 *
@@ -75,6 +80,7 @@ public abstract class DialogBehavior extends JQueryUIBehavior implements IJQuery
 	protected abstract List<DialogButton> getButtons();
 
 	// Methods //
+
 	@Override
 	public void bind(Component component)
 	{
@@ -85,13 +91,13 @@ public abstract class DialogBehavior extends JQueryUIBehavior implements IJQuery
 			component.add(this.newButtonAjaxBehavior(this, button));
 		}
 
-		if (this.isDefaultCloseEventEnabled())
+		if (this.listener.isDefaultCloseEventEnabled())
 		{
 			this.onDefaultCloseAjaxBehavior = this.newOnDefaultCloseAjaxBehavior(this);
 			component.add(this.onDefaultCloseAjaxBehavior);
 		}
 
-		if (this.isEscapeCloseEventEnabled())
+		if (this.listener.isEscapeCloseEventEnabled())
 		{
 			this.onEscapeCloseAjaxBehavior = this.newOnEscapeCloseAjaxBehavior(this);
 			component.add(this.onEscapeCloseAjaxBehavior);
@@ -119,6 +125,7 @@ public abstract class DialogBehavior extends JQueryUIBehavior implements IJQuery
 	}
 
 	// Events //
+
 	@Override
 	public void onConfigure(Component component)
 	{
@@ -175,16 +182,17 @@ public abstract class DialogBehavior extends JQueryUIBehavior implements IJQuery
 	{
 		if (event instanceof ClickEvent)
 		{
-			this.onClick(target, ((ClickEvent) event).getButton());
+			this.listener.onClick(target, ((ClickEvent) event).getButton());
 		}
 
 		else if (event instanceof CloseEvent)
 		{
-			this.onClose(target, null);
+			this.listener.onClose(target, null);
 		}
 	}
 
 	// Factories //
+
 	/**
 	 * Gets a new {@link ButtonAjaxBehavior} that will be called by the corresponding {@link DialogButton}.
 	 *

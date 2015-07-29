@@ -297,7 +297,7 @@ public class TabbedPanel extends JQueryGenericPanel<List<ITab>> implements ITabs
 	@Override
 	public TabsBehavior newWidgetBehavior(String selector)
 	{
-		return new TabsBehavior(selector, this.options) {
+		return new TabsBehavior(selector, this.options, this) {
 
 			private static final long serialVersionUID = 1L;
 
@@ -305,36 +305,6 @@ public class TabbedPanel extends JQueryGenericPanel<List<ITab>> implements ITabs
 			protected List<ITab> getTabs()
 			{
 				return TabbedPanel.this.getModelObject();
-			}
-
-			@Override
-			public boolean isCreateEventEnabled()
-			{
-				return TabbedPanel.this.isCreateEventEnabled();
-			}
-
-			@Override
-			public boolean isActivateEventEnabled()
-			{
-				return TabbedPanel.this.isActivateEventEnabled();
-			}
-
-			@Override
-			public boolean isActivatingEventEnabled()
-			{
-				return TabbedPanel.this.isActivatingEventEnabled();
-			}
-
-			@Override
-			public void onActivate(AjaxRequestTarget target, int index, ITab tab)
-			{
-				TabbedPanel.this.onActivate(target, index, tab);
-			}
-
-			@Override
-			public void onActivating(AjaxRequestTarget target, int index, ITab tab)
-			{
-				TabbedPanel.this.onActivating(target, index, tab);
 			}
 		};
 	}

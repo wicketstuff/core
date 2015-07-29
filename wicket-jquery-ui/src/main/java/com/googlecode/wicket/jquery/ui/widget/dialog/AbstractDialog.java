@@ -212,7 +212,8 @@ public abstract class AbstractDialog<T extends Serializable> extends GenericPane
 	}
 
 	/**
-	 * Triggered when a button is clicked. This method may be overridden to handle button behaviors, but the dialog will not been closed until {@code super.onClick(event)} or {@link #close(IPartialPageRequestHandler, DialogButton)} is called.
+	 * Triggered when a button is clicked. This method may be overridden to handle button behaviors, but the dialog will not been closed until {@code super.onClick(event)} or {@link #close(IPartialPageRequestHandler, DialogButton)} is
+	 * called.
 	 */
 	@Override
 	public void onClick(AjaxRequestTarget target, DialogButton button)
@@ -402,38 +403,14 @@ public abstract class AbstractDialog<T extends Serializable> extends GenericPane
 	@Override
 	public DialogBehavior newWidgetBehavior(String selector)
 	{
-		return new DialogBehavior(selector) {
+		return new DialogBehavior(selector, this) {
 
 			private static final long serialVersionUID = 1L;
-
-			@Override
-			public boolean isDefaultCloseEventEnabled()
-			{
-				return AbstractDialog.this.isDefaultCloseEventEnabled();
-			}
-
-			@Override
-			public boolean isEscapeCloseEventEnabled()
-			{
-				return AbstractDialog.this.isEscapeCloseEventEnabled();
-			}
 
 			@Override
 			protected List<DialogButton> getButtons()
 			{
 				return AbstractDialog.this.getButtons();
-			}
-
-			@Override
-			public void onClick(AjaxRequestTarget target, DialogButton button)
-			{
-				AbstractDialog.this.internalOnClick(target, button);
-			}
-
-			@Override
-			public void onClose(IPartialPageRequestHandler handler, DialogButton button)
-			{
-				AbstractDialog.this.onClose(handler, button);
 			}
 
 			@Override

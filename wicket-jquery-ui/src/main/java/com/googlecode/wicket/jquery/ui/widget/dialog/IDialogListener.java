@@ -25,7 +25,7 @@ import org.apache.wicket.core.request.handler.IPartialPageRequestHandler;
  * @author Sebastien Briquet - sebfz1
  *
  */
-interface IDialogListener
+public interface IDialogListener
 {
 	/**
 	 * Indicates whether the default close event (the click on the X-icon) is enabled

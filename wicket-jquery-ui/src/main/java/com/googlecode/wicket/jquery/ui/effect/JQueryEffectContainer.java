@@ -140,7 +140,7 @@ public class JQueryEffectContainer extends WebMarkupContainer implements IEffect
 	 */
 	protected JQueryEffectBehavior newEffectBehavior(String selector)
 	{
-		return new JQueryEffectBehavior(selector) {
+		return new JQueryEffectBehavior(selector, this) {
 
 			private static final long serialVersionUID = 1L;
 
@@ -150,18 +150,6 @@ public class JQueryEffectContainer extends WebMarkupContainer implements IEffect
 				super.onConfigure(component);
 
 				JQueryEffectContainer.this.onConfigure(this);
-			}
-
-			@Override
-			public boolean isCallbackEnabled()
-			{
-				return JQueryEffectContainer.this.isCallbackEnabled();
-			}
-
-			@Override
-			public void onEffectComplete(AjaxRequestTarget target)
-			{
-				JQueryEffectContainer.this.onEffectComplete(target);
 			}
 		};
 	}

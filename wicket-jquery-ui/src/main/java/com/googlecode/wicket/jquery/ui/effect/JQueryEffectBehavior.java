@@ -18,6 +18,7 @@ package com.googlecode.wicket.jquery.ui.effect;
 
 import org.apache.wicket.Component;
 import org.apache.wicket.ajax.AjaxRequestTarget;
+import org.apache.wicket.util.lang.Args;
 
 import com.googlecode.wicket.jquery.core.JQueryEvent;
 import com.googlecode.wicket.jquery.core.Options;
@@ -30,12 +31,37 @@ import com.googlecode.wicket.jquery.ui.JQueryUIBehavior;
  *
  * @author Sebastien Briquet - sebfz1
  */
-public class JQueryEffectBehavior extends JQueryUIBehavior implements IJQueryAjaxAware, IEffectListener
+public class JQueryEffectBehavior extends JQueryUIBehavior implements IJQueryAjaxAware
 {
 	private static final long serialVersionUID = 1L;
 	public static final String METHOD = "effect";
 	private static final int SPEED = 500;
 
+	/**
+	 * Helper method that returns the {@link JQueryEffectBehavior} string representation
+	 * 
+	 * @param selector the html selector (ie: '#myId')
+	 * @param effect the effect to be played
+	 * @return the effect javascript statement
+	 */
+	public static String toString(String selector, Effect effect)
+	{
+		return JQueryEffectBehavior.toString(selector, effect.toString());
+	}
+
+	/**
+	 * Helper method that returns the {@link JQueryEffectBehavior} string representation
+	 * 
+	 * @param selector the html selector (ie: '#myId')
+	 * @param effect the effect to be played
+	 * @return the effect javascript statement
+	 */
+	public static String toString(String selector, String effect)
+	{
+		return new JQueryEffectBehavior(selector, effect, new EffectAdapter()).toString();
+	}
+
+	private final IEffectListener listener;
 	private int speed;
 	private String effect;
 
@@ -46,9 +72,9 @@ public class JQueryEffectBehavior extends JQueryUIBehavior implements IJQueryAja
 	 *
 	 * @param selector the html selector (ie: '#myId')
 	 */
-	JQueryEffectBehavior(String selector)
+	JQueryEffectBehavior(String selector, IEffectListener listener)
 	{
-		this(selector, "");
+		this(selector, "", new Options(), listener);
 	}
 
 	/**
@@ -57,9 +83,9 @@ public class JQueryEffectBehavior extends JQueryUIBehavior implements IJQueryAja
 	 * @param selector the html selector (ie: '#myId')
 	 * @param effect the effect to be played
 	 */
-	public JQueryEffectBehavior(String selector, String effect)
+	public JQueryEffectBehavior(String selector, String effect, IEffectListener listener)
 	{
-		this(selector, effect, new Options());
+		this(selector, effect, new Options(), listener);
 	}
 
 	/**
@@ -69,9 +95,9 @@ public class JQueryEffectBehavior extends JQueryUIBehavior implements IJQueryAja
 	 * @param effect the effect to be played
 	 * @param options the options to be applied
 	 */
-	public JQueryEffectBehavior(String selector, String effect, Options options)
+	public JQueryEffectBehavior(String selector, String effect, Options options, IEffectListener listener)
 	{
-		this(selector, effect, options, SPEED);
+		this(selector, effect, options, SPEED, listener);
 	}
 
 	/**
@@ -81,9 +107,9 @@ public class JQueryEffectBehavior extends JQueryUIBehavior implements IJQueryAja
 	 * @param effect the effect to be played
 	 * @param speed the speed of the effect
 	 */
-	public JQueryEffectBehavior(String selector, String effect, int speed)
+	public JQueryEffectBehavior(String selector, String effect, int speed, IEffectListener listener)
 	{
-		this(selector, effect, new Options(), speed);
+		this(selector, effect, new Options(), speed, listener);
 	}
 
 	/**
@@ -94,28 +120,23 @@ public class JQueryEffectBehavior extends JQueryUIBehavior implements IJQueryAja
 	 * @param options the options to be applied
 	 * @param speed the speed of the effect
 	 */
-	public JQueryEffectBehavior(String selector, String effect, Options options, int speed)
+	public JQueryEffectBehavior(String selector, String effect, Options options, int speed, IEffectListener listener)
 	{
 		super(selector, METHOD + "-" + effect, options);
 
+		this.listener = Args.notNull(listener, "listener");
 		this.effect = effect;
 		this.speed = speed;
 	}
 
-	// Properties //
-	@Override
-	public boolean isCallbackEnabled()
-	{
-		return false;
-	}
-
 	// Methods //
+
 	@Override
 	public void bind(Component component)
 	{
 		super.bind(component);
 
-		if (this.isCallbackEnabled())
+		if (this.listener.isCallbackEnabled())
 		{
 			this.callback = this.newCallbackBehavior();
 			component.add(this.callback);
@@ -123,22 +144,18 @@ public class JQueryEffectBehavior extends JQueryUIBehavior implements IJQueryAja
 	}
 
 	// Events //
+
 	@Override
 	public void onAjax(AjaxRequestTarget target, JQueryEvent event)
 	{
 		if (event instanceof CallbackEvent)
 		{
-			this.onEffectComplete(target);
+			this.listener.onEffectComplete(target);
 		}
 	}
 
-	@Override
-	public void onEffectComplete(AjaxRequestTarget target)
-	{
-		// noop
-	}
-
 	// Statements //
+
 	@Override
 	protected String $()
 	{

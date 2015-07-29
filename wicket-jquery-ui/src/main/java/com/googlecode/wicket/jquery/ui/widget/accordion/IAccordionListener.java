@@ -27,7 +27,7 @@ import com.googlecode.wicket.jquery.ui.widget.tabs.AjaxTab;
  * @author Sebastien Briquet - sebfz1
  *
  */
-interface IAccordionListener
+public interface IAccordionListener
 {
 	/**
 	 * Indicates whether the 'create' event is enabled.<br/>

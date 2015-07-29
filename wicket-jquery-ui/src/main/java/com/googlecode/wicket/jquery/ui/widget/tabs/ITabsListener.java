@@ -27,7 +27,7 @@ import org.apache.wicket.extensions.markup.html.tabs.ITab;
  * @author Sebastien Briquet - sebfz1
  *
  */
-interface ITabsListener
+public interface ITabsListener
 {
 	/**
 	 * Indicates whether the 'create' event is enabled.<br/>

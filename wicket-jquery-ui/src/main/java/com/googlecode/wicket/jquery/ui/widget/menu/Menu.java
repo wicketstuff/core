@@ -126,6 +126,7 @@ public class Menu extends JQueryPanel implements IMenuListener
 	}
 
 	// Events //
+
 	@Override
 	protected void onInitialize()
 	{
@@ -141,10 +142,11 @@ public class Menu extends JQueryPanel implements IMenuListener
 	}
 
 	// IJQueryWidget //
+
 	@Override
 	public JQueryBehavior newWidgetBehavior(String selector)
 	{
-		return new MenuBehavior(selector, this.options) {
+		return new MenuBehavior(selector, this.options, this) {
 
 			private static final long serialVersionUID = 1L;
 
@@ -153,17 +155,11 @@ public class Menu extends JQueryPanel implements IMenuListener
 			{
 				return Menu.this.map;
 			}
-
-			// Events //
-			@Override
-			public void onClick(AjaxRequestTarget target, IMenuItem item)
-			{
-				Menu.this.onClick(target, item);
-			}
 		};
 	}
 
 	// Fragments //
+
 	/**
 	 * Represents a menu {@link Fragment}. Could be either the root or a sub-menu
 	 */

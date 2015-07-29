@@ -14,32 +14,40 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.googlecode.wicket.jquery.ui.effect;
+package com.googlecode.wicket.jquery.ui.widget.dialog;
 
 import org.apache.wicket.ajax.AjaxRequestTarget;
+import org.apache.wicket.core.request.handler.IPartialPageRequestHandler;
 
 /**
- * Event listener shared by the {@link JQueryEffectContainer} and the {@link JQueryEffectBehavior}
+ * Adapter class for {@link IDialogListener}
  *
  * @author Sebastien Briquet - sebfz1
  *
  */
-public interface IEffectListener
+public class DialogAdapter implements IDialogListener
 {
-	/**
-	 * Indicates whether the callback should be triggered when the effect completes.<br />
-	 * If true, the {@link #onEffectComplete(AjaxRequestTarget)} event will be triggered.
-	 *
-	 * @return false by default
-	 */
-	boolean isCallbackEnabled();
+	@Override
+	public boolean isDefaultCloseEventEnabled()
+	{
+		return false;
+	}
 
-	/**
-	 * Triggered when the effects is completed
-	 *
-	 * @param target the {@link AjaxRequestTarget}
-	 *
-	 * @see #isCallbackEnabled()
-	 */
-	void onEffectComplete(AjaxRequestTarget target);
+	@Override
+	public boolean isEscapeCloseEventEnabled()
+	{
+		return false;
+	}
+
+	@Override
+	public void onClick(AjaxRequestTarget target, DialogButton button)
+	{
+		// noop
+	}
+
+	@Override
+	public void onClose(IPartialPageRequestHandler handler, DialogButton button)
+	{
+		// noop
+	}
 }

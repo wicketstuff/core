@@ -25,6 +25,7 @@ import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.attributes.CallbackParameter;
 import org.apache.wicket.core.request.handler.IPartialPageRequestHandler;
 import org.apache.wicket.extensions.markup.html.tabs.ITab;
+import org.apache.wicket.util.lang.Args;
 
 import com.googlecode.wicket.jquery.core.JQueryEvent;
 import com.googlecode.wicket.jquery.core.Options;
@@ -40,11 +41,12 @@ import com.googlecode.wicket.jquery.ui.JQueryUIBehavior;
  * @author Sebastien Briquet - sebfz1
  * @since 1.2.1
  */
-public abstract class TabsBehavior extends JQueryUIBehavior implements IJQueryAjaxAware, ITabsListener
+public abstract class TabsBehavior extends JQueryUIBehavior implements IJQueryAjaxAware
 {
 	private static final long serialVersionUID = 1L;
 	public static final String METHOD = "tabs";
 
+	private final ITabsListener listener;
 	private JQueryAjaxBehavior onCreateAjaxBehavior = null;
 	private JQueryAjaxBehavior onActivateAjaxBehavior = null;
 	private JQueryAjaxBehavior onActivatingAjaxBehavior = null;
@@ -54,9 +56,9 @@ public abstract class TabsBehavior extends JQueryUIBehavior implements IJQueryAj
 	 *
 	 * @param selector the html selector (ie: "#myId")
 	 */
-	public TabsBehavior(String selector)
+	public TabsBehavior(String selector, ITabsListener listener)
 	{
-		super(selector, METHOD);
+		this(selector, new Options(), listener);
 	}
 
 	/**
@@ -65,9 +67,11 @@ public abstract class TabsBehavior extends JQueryUIBehavior implements IJQueryAj
 	 * @param selector the html selector (ie: "#myId")
 	 * @param options the {@link Options}
 	 */
-	public TabsBehavior(String selector, Options options)
+	public TabsBehavior(String selector, Options options, ITabsListener listener)
 	{
 		super(selector, METHOD, options);
+		
+		this.listener = Args.notNull(listener, "listener");
 	}
 
 	// Properties //
@@ -107,19 +111,19 @@ public abstract class TabsBehavior extends JQueryUIBehavior implements IJQueryAj
 	{
 		super.bind(component);
 
-		if (this.isCreateEventEnabled())
+		if (this.listener.isCreateEventEnabled())
 		{
 			this.onCreateAjaxBehavior = this.newOnActivateAjaxBehavior(this);
 			component.add(this.onCreateAjaxBehavior);
 		}
 
-		if (this.isActivateEventEnabled())
+		if (this.listener.isActivateEventEnabled())
 		{
 			this.onActivateAjaxBehavior = this.newOnActivateAjaxBehavior(this);
 			component.add(this.onActivateAjaxBehavior);
 		}
 
-		if (this.isActivatingEventEnabled())
+		if (this.listener.isActivatingEventEnabled())
 		{
 			this.onActivatingAjaxBehavior = this.newOnActivatingAjaxBehavior(this);
 			component.add(this.onActivatingAjaxBehavior);
@@ -179,11 +183,11 @@ public abstract class TabsBehavior extends JQueryUIBehavior implements IJQueryAj
 
 				if (event instanceof ActivatingEvent)
 				{
-					this.onActivating(target, index, tab);
+					this.listener.onActivating(target, index, tab);
 				}
 				else
 				{
-					this.onActivate(target, index, tab);
+					this.listener.onActivate(target, index, tab);
 				}
 			}
 		}

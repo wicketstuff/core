@@ -14,32 +14,27 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.googlecode.wicket.jquery.ui.effect;
+package com.googlecode.wicket.jquery.ui.form.datepicker;
 
 import org.apache.wicket.ajax.AjaxRequestTarget;
 
 /**
- * Event listener shared by the {@link JQueryEffectContainer} and the {@link JQueryEffectBehavior}
+ * Adapter class for {@link IDatePickerListener}
  *
  * @author Sebastien Briquet - sebfz1
  *
  */
-public interface IEffectListener
+public class DatePickerAdapter implements IDatePickerListener
 {
-	/**
-	 * Indicates whether the callback should be triggered when the effect completes.<br />
-	 * If true, the {@link #onEffectComplete(AjaxRequestTarget)} event will be triggered.
-	 *
-	 * @return false by default
-	 */
-	boolean isCallbackEnabled();
+	@Override
+	public boolean isOnSelectEventEnabled()
+	{
+		return false;
+	}
 
-	/**
-	 * Triggered when the effects is completed
-	 *
-	 * @param target the {@link AjaxRequestTarget}
-	 *
-	 * @see #isCallbackEnabled()
-	 */
-	void onEffectComplete(AjaxRequestTarget target);
+	@Override
+	public void onSelect(AjaxRequestTarget target, String date)
+	{
+		// noop
+	}
 }

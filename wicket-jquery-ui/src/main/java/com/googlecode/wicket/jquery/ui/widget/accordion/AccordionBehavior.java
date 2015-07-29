@@ -25,6 +25,7 @@ import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.attributes.CallbackParameter;
 import org.apache.wicket.core.request.handler.IPartialPageRequestHandler;
 import org.apache.wicket.extensions.markup.html.tabs.ITab;
+import org.apache.wicket.util.lang.Args;
 
 import com.googlecode.wicket.jquery.core.JQueryEvent;
 import com.googlecode.wicket.jquery.core.Options;
@@ -42,11 +43,12 @@ import com.googlecode.wicket.jquery.ui.widget.tabs.AjaxTab;
  * @since 1.2.3
  * @since 6.0.1
  */
-public abstract class AccordionBehavior extends JQueryUIBehavior implements IJQueryAjaxAware, IAccordionListener
+public abstract class AccordionBehavior extends JQueryUIBehavior implements IJQueryAjaxAware
 {
 	private static final long serialVersionUID = 1L;
 	public static final String METHOD = "accordion";
 
+	private final IAccordionListener listener;
 	private JQueryAjaxBehavior onCreateAjaxBehavior = null;
 	private JQueryAjaxBehavior onActivateAjaxBehavior = null;
 
@@ -55,9 +57,9 @@ public abstract class AccordionBehavior extends JQueryUIBehavior implements IJQu
 	 *
 	 * @param selector the html selector (ie: "#myId")
 	 */
-	public AccordionBehavior(String selector)
+	public AccordionBehavior(String selector, IAccordionListener listener)
 	{
-		super(selector, METHOD);
+		this(selector, new Options(), listener);
 	}
 
 	/**
@@ -66,12 +68,15 @@ public abstract class AccordionBehavior extends JQueryUIBehavior implements IJQu
 	 * @param selector the html selector (ie: "#myId")
 	 * @param options the {@link Options}
 	 */
-	public AccordionBehavior(String selector, Options options)
+	public AccordionBehavior(String selector, Options options, IAccordionListener listener)
 	{
 		super(selector, METHOD, options);
+
+		this.listener = Args.notNull(listener, "listener");
 	}
 
 	// Properties //
+
 	/**
 	 * Gets the reference {@link List} of {@link ITab}{@code s}.<br/>
 	 * Usually the model object of the component on which this {@link AccordionBehavior} is bound to.
@@ -101,18 +106,19 @@ public abstract class AccordionBehavior extends JQueryUIBehavior implements IJQu
 	}
 
 	// Methods //
+
 	@Override
 	public void bind(Component component)
 	{
 		super.bind(component);
 
-		if (this.isCreateEventEnabled())
+		if (this.listener.isCreateEventEnabled())
 		{
 			this.onCreateAjaxBehavior = this.newOnActivateAjaxBehavior(this);
 			component.add(this.onCreateAjaxBehavior);
 		}
 
-		if (this.isActivateEventEnabled())
+		if (this.listener.isActivateEventEnabled())
 		{
 			this.onActivateAjaxBehavior = this.newOnActivateAjaxBehavior(this);
 			component.add(this.onActivateAjaxBehavior);
@@ -131,6 +137,7 @@ public abstract class AccordionBehavior extends JQueryUIBehavior implements IJQu
 	}
 
 	// Events //
+
 	@Override
 	public void onConfigure(Component component)
 	{
@@ -164,7 +171,7 @@ public abstract class AccordionBehavior extends JQueryUIBehavior implements IJQu
 					((AjaxTab) tab).load(target);
 				}
 
-				this.onActivate(target, index, tab);
+				this.listener.onActivate(target, index, tab);
 			}
 		}
 	}

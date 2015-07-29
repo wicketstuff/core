@@ -5,6 +5,7 @@ import org.apache.wicket.markup.html.form.Form;
 
 import com.googlecode.wicket.jquery.core.JQueryBehavior;
 import com.googlecode.wicket.jquery.ui.JQueryUIBehavior;
+import com.googlecode.wicket.jquery.ui.effect.Effect;
 import com.googlecode.wicket.jquery.ui.effect.JQueryEffectBehavior;
 import com.googlecode.wicket.jquery.ui.form.button.AjaxButton;
 
@@ -27,8 +28,7 @@ public class DynamicEffectPage extends AbstractEffectPage
 			protected void onSubmit(AjaxRequestTarget target, Form<?> form)
 			{
 				// run effect with default speed //
-				JQueryEffectBehavior effectBehavior = new JQueryEffectBehavior("#tabs", "explode");
-				target.appendJavaScript(effectBehavior.toString());
+				target.appendJavaScript(JQueryEffectBehavior.toString("#tabs", Effect.Explode));
 
 				// re-display the panel //
 				JQueryBehavior behavior = new JQueryUIBehavior("#tabs", "fadeIn");

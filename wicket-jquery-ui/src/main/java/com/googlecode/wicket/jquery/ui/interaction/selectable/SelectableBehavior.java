@@ -55,6 +55,7 @@ public abstract class SelectableBehavior<T extends Serializable> extends JQueryU
 	 * Constructor
 	 * 
 	 * @param selector the html selector (ie: "#myId")
+	 * @param listener the {@link ISelectableListener}
 	 */
 	public SelectableBehavior(String selector, ISelectableListener<T> listener)
 	{
@@ -66,6 +67,7 @@ public abstract class SelectableBehavior<T extends Serializable> extends JQueryU
 	 * 
 	 * @param selector the html selector (ie: "#myId")
 	 * @param options the {@link Options}
+	 * @param listener the {@link ISelectableListener}
 	 */
 	public SelectableBehavior(String selector, Options options, ISelectableListener<T> listener)
 	{

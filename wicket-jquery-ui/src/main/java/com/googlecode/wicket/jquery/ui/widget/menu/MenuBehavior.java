@@ -21,6 +21,7 @@ import java.util.Map;
 import org.apache.wicket.Component;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.attributes.CallbackParameter;
+import org.apache.wicket.util.lang.Args;
 
 import com.googlecode.wicket.jquery.core.JQueryEvent;
 import com.googlecode.wicket.jquery.core.Options;
@@ -36,11 +37,12 @@ import com.googlecode.wicket.jquery.ui.JQueryUIBehavior;
  * @since 1.4.2
  * @since 1.6.2
  */
-public abstract class MenuBehavior extends JQueryUIBehavior implements IJQueryAjaxAware, IMenuListener
+public abstract class MenuBehavior extends JQueryUIBehavior implements IJQueryAjaxAware
 {
 	private static final long serialVersionUID = 1L;
 	public static final String METHOD = "menu";
-
+	
+	private final IMenuListener listener;
 	private JQueryAjaxBehavior onSelectAjaxBehavior;
 
 	/**
@@ -48,9 +50,9 @@ public abstract class MenuBehavior extends JQueryUIBehavior implements IJQueryAj
 	 *
 	 * @param selector the html selector (ie: "#myId")
 	 */
-	public MenuBehavior(String selector)
+	public MenuBehavior(String selector, IMenuListener listener)
 	{
-		super(selector, METHOD);
+		this(selector, new Options(), listener);
 	}
 
 	/**
@@ -59,9 +61,11 @@ public abstract class MenuBehavior extends JQueryUIBehavior implements IJQueryAj
 	 * @param selector the html selector (ie: "#myId")
 	 * @param options the {@link Options}
 	 */
-	public MenuBehavior(String selector, Options options)
+	public MenuBehavior(String selector, Options options, IMenuListener listener)
 	{
 		super(selector, METHOD, options);
+		
+		this.listener = Args.notNull(listener, "listener");
 	}
 
 	// Properties //
@@ -104,7 +108,7 @@ public abstract class MenuBehavior extends JQueryUIBehavior implements IJQueryAj
 			if (item != null)
 			{
 				item.onClick(target);
-				this.onClick(target, item);
+				this.listener.onClick(target, item);
 			}
 		}
 	}
