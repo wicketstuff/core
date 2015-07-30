@@ -21,6 +21,7 @@ import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 import static org.wicketstuff.lazymodel.LazyModel.from;
+import static org.wicketstuff.lazymodel.LazyModel.fromObject;
 import static org.wicketstuff.lazymodel.LazyModel.model;
 import static org.wicketstuff.lazymodel.LazyModel.path;
 
@@ -893,6 +894,19 @@ public class LazyModelTest {
 		assertEquals(a.b, model.getObject());
 	}
 
+	@Test
+	public void fromTypeErasedModelWithReflectionOnObject() throws Exception
+	{
+		final A a = new A();
+		a.b = new B();
+
+		Model<A> target = new Model(a);
+		LazyModel<B> model = model(fromObject(target).getB());
+
+		assertEquals(B.class, model.getObjectClass());
+		assertEquals("b", model.getPath());
+		assertEquals(a.b, model.getObject());
+	}
 
 	@Test
 	public void bindToTypeErasedModelWithNull() {
