@@ -160,7 +160,7 @@ public class Menu extends JQueryPanel implements IMenuListener
 	@Override
 	public MenuBehavior newWidgetBehavior(String selector)
 	{
-		return new MenuBehavior(selector, this.options) {
+		return new MenuBehavior(selector, this.options, this) {
 
 			private static final long serialVersionUID = 1L;
 
@@ -168,13 +168,6 @@ public class Menu extends JQueryPanel implements IMenuListener
 			protected Map<String, IMenuItem> getMenuItemMap()
 			{
 				return Menu.this.getMenuItemsMap();
-			}
-
-			// Events //
-			@Override
-			public void onClick(AjaxRequestTarget target, IMenuItem item)
-			{
-				Menu.this.onClick(target, item);
 			}
 		};
 	}

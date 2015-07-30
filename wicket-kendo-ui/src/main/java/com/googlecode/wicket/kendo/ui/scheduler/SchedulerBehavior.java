@@ -27,6 +27,7 @@ import org.apache.wicket.ajax.attributes.CallbackParameter;
 import org.apache.wicket.markup.head.IHeaderResponse;
 import org.apache.wicket.markup.head.JavaScriptHeaderItem;
 import org.apache.wicket.request.resource.JavaScriptResourceReference;
+import org.apache.wicket.util.lang.Args;
 import org.apache.wicket.util.string.StringValue;
 
 import com.googlecode.wicket.jquery.core.JQueryEvent;
@@ -45,13 +46,14 @@ import com.googlecode.wicket.kendo.ui.scheduler.views.SchedulerViewType;
  * @author Sebastien Briquet - sebfz1
  *
  */
-public abstract class SchedulerBehavior extends KendoUIBehavior implements IJQueryAjaxAware, ISchedulerListener
+public abstract class SchedulerBehavior extends KendoUIBehavior implements IJQueryAjaxAware
 {
 	private static final long serialVersionUID = 1L;
 	private static final JavaScriptResourceReference JS = new JavaScriptResourceReference(SchedulerBehavior.class, "SchedulerBehavior.js");
 
 	public static final String METHOD = "kendoScheduler";
 
+	private final ISchedulerListener listener;
 	private final SchedulerDataSource dataSource;
 
 	private JQueryAjaxBehavior onEditAjaxBehavior = null;
@@ -65,10 +67,11 @@ public abstract class SchedulerBehavior extends KendoUIBehavior implements IJQue
 	 * Constructor
 	 *
 	 * @param selector the html selector (ie: "#myId")
+	 * @param listener the {@link ISchedulerListener}
 	 */
-	public SchedulerBehavior(final String selector)
+	public SchedulerBehavior(final String selector, ISchedulerListener listener)
 	{
-		this(selector, new Options());
+		this(selector, new Options(), listener);
 	}
 
 	/**
@@ -76,11 +79,13 @@ public abstract class SchedulerBehavior extends KendoUIBehavior implements IJQue
 	 *
 	 * @param selector the html selector (ie: "#myId")
 	 * @param options the {@link Options}
+	 * @param listener the {@link ISchedulerListener}
 	 */
-	public SchedulerBehavior(final String selector, Options options)
+	public SchedulerBehavior(final String selector, Options options, ISchedulerListener listener)
 	{
 		super(selector, METHOD, options);
 
+		this.listener = Args.notNull(listener, "listener");
 		this.dataSource = new SchedulerDataSource("schedulerDataSource");
 		this.add(this.dataSource);
 	}
@@ -93,7 +98,7 @@ public abstract class SchedulerBehavior extends KendoUIBehavior implements IJQue
 		super.bind(component);
 
 		// events //
-		if (this.isEditEnabled())
+		if (this.listener.isEditEnabled())
 		{
 			this.onEditAjaxBehavior = this.newOnEditAjaxBehavior(this);
 			component.add(this.onEditAjaxBehavior);
@@ -202,7 +207,7 @@ public abstract class SchedulerBehavior extends KendoUIBehavior implements IJQue
 	{
 		if (event instanceof NavigateEvent)
 		{
-			this.onNavigate(target, ((NavigateEvent) event).getView());
+			this.listener.onNavigate(target, ((NavigateEvent) event).getView());
 		}
 
 		if (event instanceof SchedulerPayload)
@@ -211,22 +216,22 @@ public abstract class SchedulerBehavior extends KendoUIBehavior implements IJQue
 
 			if (event instanceof EditEvent)
 			{
-				this.onEdit(target, payload.getEvent(), payload.getView());
+				this.listener.onEdit(target, payload.getEvent(), payload.getView());
 			}
 
 			if (event instanceof CreateEvent)
 			{
-				this.onCreate(target, payload.getEvent());
+				this.listener.onCreate(target, payload.getEvent());
 			}
 
 			if (event instanceof UpdateEvent)
 			{
-				this.onUpdate(target, payload.getEvent());
+				this.listener.onUpdate(target, payload.getEvent());
 			}
 
 			if (event instanceof DeleteEvent)
 			{
-				this.onDelete(target, payload.getEvent());
+				this.listener.onDelete(target, payload.getEvent());
 			}
 		}
 	}

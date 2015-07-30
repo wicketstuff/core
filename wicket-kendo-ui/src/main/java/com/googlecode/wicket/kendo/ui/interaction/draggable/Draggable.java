@@ -202,33 +202,6 @@ public class Draggable<T> extends JQueryGenericContainer<T> implements IDraggabl
 	@Override
 	public JQueryBehavior newWidgetBehavior(String selector)
 	{
-		return new DraggableBehavior(selector, this.options) {
-
-			private static final long serialVersionUID = 1L;
-
-			@Override
-			public boolean isCancelEventEnabled()
-			{
-				return Draggable.this.isCancelEventEnabled();
-			}
-
-			@Override
-			public void onDragStart(AjaxRequestTarget target, int top, int left)
-			{
-				Draggable.this.onDragStart(target, top, left);
-			}
-
-			@Override
-			public void onDragStop(AjaxRequestTarget target, int top, int left)
-			{
-				Draggable.this.onDragStop(target, top, left);
-			}
-
-			@Override
-			public void onDragCancel(AjaxRequestTarget target, int top, int left)
-			{
-				Draggable.this.onDragCancel(target, top, left);
-			}
-		};
+		return new DraggableBehavior(selector, this.options, this);
 	}
 }

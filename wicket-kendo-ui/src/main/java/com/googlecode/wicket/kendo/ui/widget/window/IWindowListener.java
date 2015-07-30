@@ -25,7 +25,7 @@ import org.apache.wicket.core.request.handler.IPartialPageRequestHandler;
  * @author Sebastien Briquet - sebfz1
  * @since 6.17.0
  */
-interface IWindowListener
+public interface IWindowListener
 {
 	/**
 	 * Indicates whether the action events are enabled.<br/>

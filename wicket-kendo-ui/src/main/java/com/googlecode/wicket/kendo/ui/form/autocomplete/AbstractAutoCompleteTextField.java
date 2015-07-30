@@ -169,7 +169,7 @@ public abstract class AbstractAutoCompleteTextField<T, C> extends TextField<T> i
 
 		this.choiceModelBehavior = this.newChoiceModelBehavior();
 		this.add(this.choiceModelBehavior);
-		
+
 		// choiceModelBehavior should be set at this point
 		this.add(JQueryWidget.newWidgetBehavior(this));
 
@@ -237,7 +237,7 @@ public abstract class AbstractAutoCompleteTextField<T, C> extends TextField<T> i
 	@Override
 	public JQueryBehavior newWidgetBehavior(String selector)
 	{
-		return new AutoCompleteBehavior(selector) {
+		return new AutoCompleteBehavior(selector, this) {
 
 			private static final long serialVersionUID = 1L;
 
@@ -245,12 +245,6 @@ public abstract class AbstractAutoCompleteTextField<T, C> extends TextField<T> i
 			protected CharSequence getChoiceCallbackUrl()
 			{
 				return choiceModelBehavior.getCallbackUrl();
-			}
-
-			@Override
-			public void onSelect(AjaxRequestTarget target, int index)
-			{
-				AbstractAutoCompleteTextField.this.onSelect(target, index);
 			}
 		};
 	}

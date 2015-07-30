@@ -116,36 +116,16 @@ public class ContextMenu extends Menu implements IContextMenuListener
 	@Override
 	public ContextMenuBehavior newWidgetBehavior(String selector)
 	{
-		return new ContextMenuBehavior(selector, this.options) {
+		return new ContextMenuBehavior(selector, this.options, this) {
 
 			private static final long serialVersionUID = 1L;
 
 			// properties //
 
 			@Override
-			public boolean isOpenEventEnabled()
-			{
-				return ContextMenu.this.isOpenEventEnabled();
-			}
-
-			@Override
 			protected Map<String, IMenuItem> getMenuItemMap()
 			{
 				return ContextMenu.this.getMenuItemsMap();
-			}
-
-			// events //
-
-			@Override
-			public void onOpen(AjaxRequestTarget target)
-			{
-				ContextMenu.this.onOpen(target);
-			}
-
-			@Override
-			public void onClick(AjaxRequestTarget target, IMenuItem item)
-			{
-				ContextMenu.this.onClick(target, item);
 			}
 
 			// factories //

@@ -26,7 +26,7 @@ import com.googlecode.wicket.kendo.ui.widget.menu.item.IMenuItem;
  * @author Sebastien Briquet - sebfz1
  * @since 6.15.0
  */
-interface IMenuListener
+public interface IMenuListener
 {
 	/**
 	 * Triggered when a menu-item is clicked

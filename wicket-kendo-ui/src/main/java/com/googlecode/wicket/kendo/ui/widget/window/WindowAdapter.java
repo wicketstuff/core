@@ -14,31 +14,40 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.googlecode.wicket.kendo.ui.widget.menu;
+package com.googlecode.wicket.kendo.ui.widget.window;
 
 import org.apache.wicket.ajax.AjaxRequestTarget;
+import org.apache.wicket.core.request.handler.IPartialPageRequestHandler;
 
 /**
- * Event listener shared by the {@link ContextMenu} widget and the {@link ContextMenuBehavior}
- * 
+ * Adapter class for {@link IWindowListener}
+ *
  * @author Sebastien Briquet - sebfz1
- * @since 6.20.0
+ * 
  */
-interface IContextMenuListener extends IMenuListener
+public class WindowAdapter implements IWindowListener
 {
-	/**
-	 * Indicates whether the 'open' event is enabled.<br />
-	 * If true, the {@link #onOpen(AjaxRequestTarget)} event will be triggered.
-	 *
-	 * @return false by default
-	 */
-	boolean isOpenEventEnabled();
+	@Override
+	public boolean isActionEventEnabled()
+	{
+		return false;
+	}
 
-	/**
-	 * Triggered when the context menu is opened
-	 *
-	 * @param target the {@link AjaxRequestTarget}
-	 * @see #isOpenEventEnabled()
-	 */
-	void onOpen(AjaxRequestTarget target);
+	@Override
+	public boolean isCloseEventEnabled()
+	{
+		return false;
+	}
+
+	@Override
+	public void onAction(AjaxRequestTarget target, String action)
+	{
+		// noop		
+	}
+
+	@Override
+	public void onClose(IPartialPageRequestHandler handler)
+	{
+		// noop
+	}	
 }

@@ -99,6 +99,7 @@ public class RangeDatePickerTextField extends FormComponentPanel<DateRange> impl
 	}
 
 	// Methods //
+
 	@Override
 	public void convertInput()
 	{
@@ -106,6 +107,7 @@ public class RangeDatePickerTextField extends FormComponentPanel<DateRange> impl
 	}
 
 	// Properties //
+
 	/**
 	 * Gets the separator to be displayed in the {@link TextField}, between the two dates.
 	 *
@@ -154,6 +156,7 @@ public class RangeDatePickerTextField extends FormComponentPanel<DateRange> impl
 	}
 
 	// Factories //
+
 	/**
 	 * Gets a new {@link DateFormat} to be used by the {@link TextField}'s {@link IConverter}
 	 *

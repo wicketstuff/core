@@ -21,6 +21,7 @@ import java.util.List;
 
 import org.apache.wicket.Component;
 import org.apache.wicket.ajax.AjaxRequestTarget;
+import org.apache.wicket.util.lang.Args;
 import org.apache.wicket.util.string.Strings;
 
 import com.googlecode.wicket.jquery.core.JQueryEvent;
@@ -38,25 +39,27 @@ import com.googlecode.wicket.kendo.ui.datatable.column.IColumn;
  *
  * @author Sebastien Briquet - sebfz1
  */
-public abstract class DataTableBehavior extends KendoUIBehavior implements IJQueryAjaxAware, IDataTableListener
+public abstract class DataTableBehavior extends KendoUIBehavior implements IJQueryAjaxAware
 {
 	private static final long serialVersionUID = 1L;
 
 	public static final String METHOD = "kendoGrid";
 
-	protected final List<? extends IColumn> columns;
-
+	private final IDataTableListener listener;
 	private JQueryAjaxBehavior onToolbarClickAjaxBehavior; // toolbar buttons
+
+	protected final List<? extends IColumn> columns;
 
 	/**
 	 * Constructor
 	 *
 	 * @param selector the html selector (ie: "#myId")
 	 * @param columns the list of {@link IColumn}
+	 * @param listener the {@link IDataTableListener}
 	 */
-	public DataTableBehavior(String selector, List<? extends IColumn> columns)
+	public DataTableBehavior(String selector, List<? extends IColumn> columns, IDataTableListener listener)
 	{
-		this(selector, new Options(), columns);
+		this(selector, new Options(), columns, listener);
 	}
 
 	/**
@@ -65,11 +68,13 @@ public abstract class DataTableBehavior extends KendoUIBehavior implements IJQue
 	 * @param selector the html selector (ie: "#myId")
 	 * @param options the {@link Options}
 	 * @param columns the list of {@link IColumn}
+	 * @param listener the {@link IDataTableListener}
 	 */
-	public DataTableBehavior(String selector, Options options, List<? extends IColumn> columns)
+	public DataTableBehavior(String selector, Options options, List<? extends IColumn> columns, IDataTableListener listener)
 	{
 		super(selector, METHOD, options);
 
+		this.listener = Args.notNull(listener, "listener");
 		this.columns = columns;
 	}
 
@@ -235,12 +240,12 @@ public abstract class DataTableBehavior extends KendoUIBehavior implements IJQue
 			ClickEvent e = (ClickEvent) event;
 			e.getButton().onClick(target, e.getValue());
 
-			this.onClick(target, e.getButton(), e.getValue());
+			this.listener.onClick(target, e.getButton(), e.getValue());
 		}
 		else if (event instanceof ToolbarClickEvent)
 		{
 			ToolbarClickEvent e = (ToolbarClickEvent) event;
-			this.onClick(target, e.getButton(), e.getValues());
+			this.listener.onClick(target, e.getButton(), e.getValues());
 		}
 	}
 

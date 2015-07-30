@@ -179,34 +179,7 @@ public class BorderLayout extends WebMarkupContainer implements IBorderLayout, I
 		options.set("panes", panes);
 		options.set("orientation", Options.asString("vertical"));
 
-		return new SplitterBehavior(selector, options) {
-
-			private static final long serialVersionUID = 1L;
-
-			@Override
-			public boolean isExpandEventEnabled()
-			{
-				return BorderLayout.this.isExpandEventEnabled();
-			}
-
-			@Override
-			public boolean isCollapseEventEnabled()
-			{
-				return BorderLayout.this.isCollapseEventEnabled();
-			}
-
-			@Override
-			public void onExpand(AjaxRequestTarget target, String paneId)
-			{
-				BorderLayout.this.onExpand(target, paneId);
-			}
-
-			@Override
-			public void onCollapse(AjaxRequestTarget target, String paneId)
-			{
-				BorderLayout.this.onCollapse(target, paneId);
-			}
-		};
+		return new SplitterBehavior(selector, options, this);
 	}
 
 	/**
@@ -221,33 +194,6 @@ public class BorderLayout extends WebMarkupContainer implements IBorderLayout, I
 		Options options = new Options();
 		options.set("panes", panes);
 
-		return new SplitterBehavior(selector, options) {
-
-			private static final long serialVersionUID = 1L;
-
-			@Override
-			public boolean isExpandEventEnabled()
-			{
-				return BorderLayout.this.isExpandEventEnabled();
-			}
-
-			@Override
-			public boolean isCollapseEventEnabled()
-			{
-				return BorderLayout.this.isCollapseEventEnabled();
-			}
-
-			@Override
-			public void onExpand(AjaxRequestTarget target, String paneId)
-			{
-				BorderLayout.this.onExpand(target, paneId);
-			}
-
-			@Override
-			public void onCollapse(AjaxRequestTarget target, String paneId)
-			{
-				BorderLayout.this.onCollapse(target, paneId);
-			}
-		};
+		return new SplitterBehavior(selector, options, this);
 	}
 }

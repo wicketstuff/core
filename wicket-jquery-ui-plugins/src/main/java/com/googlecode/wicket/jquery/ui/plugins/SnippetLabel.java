@@ -28,6 +28,7 @@ public class SnippetLabel extends Label implements IJQueryWidget
 	}
 
 	// Properties //
+
 	public SnippetLabel setStyle(String style)
 	{
 		this.options.set("style", Options.asString(style));
@@ -36,14 +37,15 @@ public class SnippetLabel extends Label implements IJQueryWidget
 	}
 
 	// Events //
+
 	@Override
 	protected void onInitialize()
 	{
 		super.onInitialize();
 
 		this.add(JQueryWidget.newWidgetBehavior(this));
-		//shortcut for:
-		//this.add(this.newWidgetBehavior("#" + this.setOutputMarkupId(true).getMarkupId()));
+		// shortcut for:
+		// this.add(this.newWidgetBehavior("#" + this.setOutputMarkupId(true).getMarkupId()));
 	}
 
 	@Override

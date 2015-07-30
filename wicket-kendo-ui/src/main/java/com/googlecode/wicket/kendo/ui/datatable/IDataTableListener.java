@@ -25,7 +25,7 @@ import org.apache.wicket.ajax.AjaxRequestTarget;
  *
  * @author Sebastien Briquet - sebfz1
  */
-interface IDataTableListener
+public interface IDataTableListener
 {
 	/**
 	 * Triggered when a toolbar button is clicked.

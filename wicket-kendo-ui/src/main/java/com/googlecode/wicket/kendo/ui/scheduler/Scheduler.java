@@ -265,17 +265,9 @@ public class Scheduler extends JQueryContainer implements ISchedulerListener
 	@Override
 	public JQueryBehavior newWidgetBehavior(String selector)
 	{
-		return new SchedulerBehavior(selector, this.options) {
+		return new SchedulerBehavior(selector, this.options, this) {
 
 			private static final long serialVersionUID = 1L;
-
-			// Properties //
-
-			@Override
-			public boolean isEditEnabled()
-			{
-				return Scheduler.this.isEditEnabled();
-			}
 
 			@Override
 			protected CharSequence getDataSourceUrl()
@@ -287,38 +279,6 @@ public class Scheduler extends JQueryContainer implements ISchedulerListener
 			protected ResourceListModel getResourceListModel()
 			{
 				return Scheduler.this.resourceListModel;
-			}
-
-			// Events //
-
-			@Override
-			public void onEdit(AjaxRequestTarget target, SchedulerEvent event, SchedulerViewType view)
-			{
-				Scheduler.this.onEdit(target, event, view);
-			}
-
-			@Override
-			public void onNavigate(AjaxRequestTarget target, SchedulerViewType view)
-			{
-				Scheduler.this.onNavigate(target, view);
-			}
-
-			@Override
-			public void onCreate(AjaxRequestTarget target, SchedulerEvent event)
-			{
-				Scheduler.this.onCreate(target, event);
-			}
-
-			@Override
-			public void onUpdate(AjaxRequestTarget target, SchedulerEvent event)
-			{
-				Scheduler.this.onUpdate(target, event);
-			}
-
-			@Override
-			public void onDelete(AjaxRequestTarget target, SchedulerEvent event)
-			{
-				Scheduler.this.onDelete(target, event);
 			}
 		};
 	}

@@ -18,6 +18,7 @@ package com.googlecode.wicket.kendo.ui.widget.menu;
 
 import org.apache.wicket.Component;
 import org.apache.wicket.ajax.AjaxRequestTarget;
+import org.apache.wicket.util.lang.Args;
 
 import com.googlecode.wicket.jquery.core.JQueryEvent;
 import com.googlecode.wicket.jquery.core.Options;
@@ -30,21 +31,23 @@ import com.googlecode.wicket.jquery.core.ajax.JQueryAjaxBehavior;
  * @author Martin Grigorov - martin-g
  * @since 6.20.0
  */
-public abstract class ContextMenuBehavior extends MenuBehavior implements IContextMenuListener
+public abstract class ContextMenuBehavior extends MenuBehavior
 {
 	private static final long serialVersionUID = 1L;
 	public static final String METHOD = "kendoContextMenu";
 
+	private final IContextMenuListener listener;
 	private JQueryAjaxBehavior onOpenAjaxBehavior = null;
 
 	/**
 	 * Constructor
 	 *
 	 * @param selector the html selector (ie: "#myId")
+	 * @param listener the {@link IContextMenuListener}
 	 */
-	public ContextMenuBehavior(String selector)
+	public ContextMenuBehavior(String selector, IContextMenuListener listener)
 	{
-		super(selector, METHOD);
+		this(selector, new Options(), listener);
 	}
 
 	/**
@@ -52,10 +55,13 @@ public abstract class ContextMenuBehavior extends MenuBehavior implements IConte
 	 *
 	 * @param selector the html selector (ie: "#myId")
 	 * @param options the {@link Options}
+	 * @param listener the {@link IContextMenuListener}
 	 */
-	public ContextMenuBehavior(String selector, Options options)
+	public ContextMenuBehavior(String selector, Options options, IContextMenuListener listener)
 	{
-		super(selector, METHOD, options);
+		super(selector, METHOD, options, listener);
+
+		this.listener = Args.notNull(listener, "listener");
 	}
 
 	@Override
@@ -63,7 +69,7 @@ public abstract class ContextMenuBehavior extends MenuBehavior implements IConte
 	{
 		super.bind(component);
 
-		if (this.isOpenEventEnabled())
+		if (this.listener.isOpenEventEnabled())
 		{
 			this.onOpenAjaxBehavior = this.newOnOpenAjaxBehavior(this);
 			component.add(this.onOpenAjaxBehavior);
@@ -90,7 +96,7 @@ public abstract class ContextMenuBehavior extends MenuBehavior implements IConte
 
 		if (event instanceof OpenEvent)
 		{
-			this.onOpen(target);
+			this.listener.onOpen(target);
 		}
 	}
 

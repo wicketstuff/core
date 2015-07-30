@@ -14,31 +14,46 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.googlecode.wicket.kendo.ui.widget.menu;
+package com.googlecode.wicket.kendo.ui.interaction.droppable;
 
+import org.apache.wicket.Component;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 
 /**
- * Event listener shared by the {@link ContextMenu} widget and the {@link ContextMenuBehavior}
- * 
+ * Adapter class for {@link IDroppableListener}
+ *
  * @author Sebastien Briquet - sebfz1
- * @since 6.20.0
+ *
  */
-interface IContextMenuListener extends IMenuListener
+public class DroppableAdaper implements IDroppableListener
 {
-	/**
-	 * Indicates whether the 'open' event is enabled.<br />
-	 * If true, the {@link #onOpen(AjaxRequestTarget)} event will be triggered.
-	 *
-	 * @return false by default
-	 */
-	boolean isOpenEventEnabled();
+	@Override
+	public boolean isDragEnterEventEnabled()
+	{
+		return false;
+	}
 
-	/**
-	 * Triggered when the context menu is opened
-	 *
-	 * @param target the {@link AjaxRequestTarget}
-	 * @see #isOpenEventEnabled()
-	 */
-	void onOpen(AjaxRequestTarget target);
+	@Override
+	public boolean isDragLeaveEventEnabled()
+	{
+		return false;
+	}
+
+	@Override
+	public void onDragEnter(AjaxRequestTarget target, Component component)
+	{
+		// noop
+	}
+
+	@Override
+	public void onDragLeave(AjaxRequestTarget target, Component component)
+	{
+		// noop
+	}
+
+	@Override
+	public void onDrop(AjaxRequestTarget target, Component component)
+	{
+		// noop
+	}
 }

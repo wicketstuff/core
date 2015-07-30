@@ -20,6 +20,7 @@ import org.apache.wicket.Component;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.attributes.CallbackParameter;
 import org.apache.wicket.core.request.handler.IPartialPageRequestHandler;
+import org.apache.wicket.util.lang.Args;
 
 import com.googlecode.wicket.jquery.core.JQueryEvent;
 import com.googlecode.wicket.jquery.core.Options;
@@ -34,11 +35,12 @@ import com.googlecode.wicket.kendo.ui.KendoUIBehavior;
  * @author Sebastien Briquet - sebfz1
  * @since 6.17.0
  */
-public abstract class WindowBehavior extends KendoUIBehavior implements IJQueryAjaxAware, IWindowListener
+public class WindowBehavior extends KendoUIBehavior implements IJQueryAjaxAware
 {
 	private static final long serialVersionUID = 1L;
 	public static final String METHOD = "kendoWindow";
 
+	private final IWindowListener listener;
 	private JQueryAjaxBehavior onActionAjaxBehavior = null;
 	private JQueryAjaxBehavior onCloseAjaxBehavior = null;
 
@@ -46,10 +48,11 @@ public abstract class WindowBehavior extends KendoUIBehavior implements IJQueryA
 	 * Constructor
 	 *
 	 * @param selector the html selector (ie: "#myId")
+	 * @param listener the {@link IWindowListener}
 	 */
-	public WindowBehavior(String selector)
+	public WindowBehavior(String selector, IWindowListener listener)
 	{
-		super(selector, METHOD);
+		this(selector, new Options(), listener);
 	}
 
 	/**
@@ -57,10 +60,13 @@ public abstract class WindowBehavior extends KendoUIBehavior implements IJQueryA
 	 *
 	 * @param selector the html selector (ie: "#myId")
 	 * @param options the {@link Options}
+	 * @param listener the {@link IWindowListener}
 	 */
-	public WindowBehavior(String selector, Options options)
+	public WindowBehavior(String selector, Options options, IWindowListener listener)
 	{
 		super(selector, METHOD, options);
+		
+		this.listener = Args.notNull(listener, "listener");
 	}
 
 	// Methods //
@@ -70,13 +76,13 @@ public abstract class WindowBehavior extends KendoUIBehavior implements IJQueryA
 	{
 		super.bind(component);
 
-		if (this.isActionEventEnabled())
+		if (this.listener.isActionEventEnabled())
 		{
 			this.onActionAjaxBehavior = this.newOnActionAjaxBehavior(this);
 			component.add(this.onActionAjaxBehavior);
 		}
 
-		if (this.isCloseEventEnabled())
+		if (this.listener.isCloseEventEnabled())
 		{
 			this.onCloseAjaxBehavior = this.newOnCloseAjaxBehavior(this);
 			component.add(this.onCloseAjaxBehavior);
@@ -143,12 +149,12 @@ public abstract class WindowBehavior extends KendoUIBehavior implements IJQueryA
 	{
 		if (event instanceof ActionEvent)
 		{
-			this.onAction(target, ((ActionEvent) event).getAction());
+			this.listener.onAction(target, ((ActionEvent) event).getAction());
 		}
 
 		if (event instanceof CloseEvent)
 		{
-			this.onClose(target);
+			this.listener.onClose(target);
 		}
 	}
 

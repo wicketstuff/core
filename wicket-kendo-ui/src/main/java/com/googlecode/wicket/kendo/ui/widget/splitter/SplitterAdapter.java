@@ -14,31 +14,40 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.googlecode.wicket.kendo.ui.widget.menu;
+package com.googlecode.wicket.kendo.ui.widget.splitter;
 
 import org.apache.wicket.ajax.AjaxRequestTarget;
 
 /**
- * Event listener shared by the {@link ContextMenu} widget and the {@link ContextMenuBehavior}
- * 
+ * Adapter class for {@link ISplitterListener}
+ *
  * @author Sebastien Briquet - sebfz1
- * @since 6.20.0
+ *
  */
-interface IContextMenuListener extends IMenuListener
+public class SplitterAdapter implements ISplitterListener
 {
-	/**
-	 * Indicates whether the 'open' event is enabled.<br />
-	 * If true, the {@link #onOpen(AjaxRequestTarget)} event will be triggered.
-	 *
-	 * @return false by default
-	 */
-	boolean isOpenEventEnabled();
 
-	/**
-	 * Triggered when the context menu is opened
-	 *
-	 * @param target the {@link AjaxRequestTarget}
-	 * @see #isOpenEventEnabled()
-	 */
-	void onOpen(AjaxRequestTarget target);
+	@Override
+	public boolean isExpandEventEnabled()
+	{
+		return false;
+	}
+
+	@Override
+	public boolean isCollapseEventEnabled()
+	{
+		return false;
+	}
+
+	@Override
+	public void onExpand(AjaxRequestTarget target, String paneId)
+	{
+		// noop
+	}
+
+	@Override
+	public void onCollapse(AjaxRequestTarget target, String paneId)
+	{
+		// noop
+	}
 }

@@ -91,39 +91,6 @@ public abstract class Droppable<T> extends JQueryGenericContainer<T> implements 
 	@Override
 	public JQueryBehavior newWidgetBehavior(String selector)
 	{
-		return new DroppableBehavior(selector) {
-
-			private static final long serialVersionUID = 1L;
-
-			@Override
-			public boolean isDragEnterEventEnabled()
-			{
-				return Droppable.this.isDragEnterEventEnabled();
-			}
-
-			@Override
-			public boolean isDragLeaveEventEnabled()
-			{
-				return Droppable.this.isDragLeaveEventEnabled();
-			}
-
-			@Override
-			public void onDragEnter(AjaxRequestTarget target, Component component)
-			{
-				Droppable.this.onDragEnter(target, component);
-			}
-
-			@Override
-			public void onDragLeave(AjaxRequestTarget target, Component component)
-			{
-				Droppable.this.onDragLeave(target, component);
-			}
-
-			@Override
-			public void onDrop(AjaxRequestTarget target, Component component)
-			{
-				Droppable.this.onDrop(target, component);
-			}
-		};
+		return new DroppableBehavior(selector, this);
 	}
 }

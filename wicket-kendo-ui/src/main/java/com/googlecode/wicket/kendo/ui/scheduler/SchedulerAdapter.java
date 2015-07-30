@@ -14,31 +14,53 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.googlecode.wicket.kendo.ui.widget.menu;
+package com.googlecode.wicket.kendo.ui.scheduler;
 
 import org.apache.wicket.ajax.AjaxRequestTarget;
 
-/**
- * Event listener shared by the {@link ContextMenu} widget and the {@link ContextMenuBehavior}
- * 
- * @author Sebastien Briquet - sebfz1
- * @since 6.20.0
- */
-interface IContextMenuListener extends IMenuListener
-{
-	/**
-	 * Indicates whether the 'open' event is enabled.<br />
-	 * If true, the {@link #onOpen(AjaxRequestTarget)} event will be triggered.
-	 *
-	 * @return false by default
-	 */
-	boolean isOpenEventEnabled();
+import com.googlecode.wicket.kendo.ui.scheduler.views.SchedulerViewType;
 
-	/**
-	 * Triggered when the context menu is opened
-	 *
-	 * @param target the {@link AjaxRequestTarget}
-	 * @see #isOpenEventEnabled()
-	 */
-	void onOpen(AjaxRequestTarget target);
+/**
+ * Adapter class for {@link ISchedulerListener}
+ *
+ * @author Sebastien Briquet - sebfz1
+ *
+ */
+public class SchedulerAdapter implements ISchedulerListener
+{
+	@Override
+	public boolean isEditEnabled()
+	{
+		return false;
+	}
+
+	@Override
+	public void onEdit(AjaxRequestTarget target, SchedulerEvent event, SchedulerViewType view)
+	{
+		// noop
+	}
+
+	@Override
+	public void onNavigate(AjaxRequestTarget target, SchedulerViewType view)
+	{
+		// noop
+	}
+
+	@Override
+	public void onCreate(AjaxRequestTarget target, SchedulerEvent event)
+	{
+		// noop
+	}
+
+	@Override
+	public void onUpdate(AjaxRequestTarget target, SchedulerEvent event)
+	{
+		// noop
+	}
+
+	@Override
+	public void onDelete(AjaxRequestTarget target, SchedulerEvent event)
+	{
+		// noop
+	}
 }

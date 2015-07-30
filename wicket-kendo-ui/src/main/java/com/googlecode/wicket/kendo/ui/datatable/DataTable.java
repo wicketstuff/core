@@ -263,7 +263,7 @@ public class DataTable<T> extends WebComponent implements IJQueryWidget, IDataTa
 	@Override
 	public JQueryBehavior newWidgetBehavior(String selector)
 	{
-		return new DataTableBehavior(selector, this.options, this.columns) {
+		return new DataTableBehavior(selector, this.options, this.columns, this) {
 
 			private static final long serialVersionUID = 1L;
 
@@ -285,20 +285,6 @@ public class DataTable<T> extends WebComponent implements IJQueryWidget, IDataTa
 			protected CharSequence getSourceCallbackUrl()
 			{
 				return DataTable.this.getSourceCallbackUrl();
-			}
-
-			// Events //
-
-			@Override
-			public void onClick(AjaxRequestTarget target, ColumnButton button, String value)
-			{
-				DataTable.this.onClick(target, button, value);
-			}
-
-			@Override
-			public void onClick(AjaxRequestTarget target, String button, List<String> values)
-			{
-				DataTable.this.onClick(target, button, values);
 			}
 
 			// Factories //

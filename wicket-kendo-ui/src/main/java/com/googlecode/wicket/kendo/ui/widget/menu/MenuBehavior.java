@@ -36,42 +36,34 @@ import com.googlecode.wicket.kendo.ui.widget.menu.item.IMenuItem;
  * @author Sebastien Briquet - sebfz1
  * @since 6.15.0
  */
-public abstract class MenuBehavior extends KendoUIBehavior implements IJQueryAjaxAware, IMenuListener
+public abstract class MenuBehavior extends KendoUIBehavior implements IJQueryAjaxAware
 {
 	private static final long serialVersionUID = 1L;
 	public static final String METHOD = "kendoMenu";
 
+	private final IMenuListener listener;
 	private JQueryAjaxBehavior onSelectAjaxBehavior;
 
 	/**
 	 * Constructor
 	 *
 	 * @param selector the html selector (ie: "#myId")
+	 * @param listener the {@link IMenuListener}
 	 */
-	public MenuBehavior(String selector)
+	public MenuBehavior(String selector, IMenuListener listener)
 	{
-		super(selector, METHOD);
+		this(selector, METHOD, new Options(), listener);
 	}
 
 	/**
 	 * Constructor
 	 *
 	 * @param selector the html selector (ie: "#myId")
+	 * @param listener the {@link IMenuListener}
 	 */
-	MenuBehavior(String selector, String method)
+	MenuBehavior(String selector, String method, IMenuListener listener)
 	{
-		super(selector, method);
-	}
-
-	/**
-	 * Constructor
-	 *
-	 * @param selector the html selector (ie: "#myId")
-	 * @param options the {@link Options}
-	 */
-	public MenuBehavior(String selector, Options options)
-	{
-		super(selector, METHOD, options);
+		this(selector, method, new Options(), listener);
 	}
 
 	/**
@@ -79,10 +71,25 @@ public abstract class MenuBehavior extends KendoUIBehavior implements IJQueryAja
 	 *
 	 * @param selector the html selector (ie: "#myId")
 	 * @param options the {@link Options}
+	 * @param listener the {@link IMenuListener}
 	 */
-	MenuBehavior(String selector, String method, Options options)
+	public MenuBehavior(String selector, Options options, IMenuListener listener)
+	{
+		this(selector, METHOD, options, listener);
+	}
+
+	/**
+	 * Constructor
+	 *
+	 * @param selector the html selector (ie: "#myId")
+	 * @param options the {@link Options}
+	 * @param listener the {@link IMenuListener}
+	 */
+	MenuBehavior(String selector, String method, Options options, IMenuListener listener)
 	{
 		super(selector, method, options);
+		
+		this.listener = listener;
 	}
 
 	// Properties //
@@ -125,7 +132,7 @@ public abstract class MenuBehavior extends KendoUIBehavior implements IJQueryAja
 			if (item != null)
 			{
 				item.onClick(target);
-				this.onClick(target, item);
+				this.listener.onClick(target, item);
 			}
 		}
 	}

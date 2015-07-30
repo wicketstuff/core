@@ -32,7 +32,7 @@ import com.googlecode.wicket.jquery.core.event.IValueChangedListener;
  *
  * @author Sebastien Briquet - sebfz1
  */
-public class RangeDatePicker extends JQueryGenericContainer<DateRange> implements IValueChangedListener
+public class RangeDatePicker extends JQueryGenericContainer<DateRange> implements IRangeDatePickerListener, IValueChangedListener
 {
 	private static final long serialVersionUID = 1L;
 
@@ -65,18 +65,6 @@ public class RangeDatePicker extends JQueryGenericContainer<DateRange> implement
 		this.options = Args.notNull(options, "options");
 	}
 
-	// Properties //
-
-	/**
-	 * Sets the model object
-	 *
-	 * @param object the model object
-	 */
-	public void setModelObject(DateRange object)
-	{
-		this.setDefaultModelObject(object);
-	}
-
 	// Events //
 
 	@Override
@@ -93,21 +81,18 @@ public class RangeDatePicker extends JQueryGenericContainer<DateRange> implement
 		// noop
 	}
 
+	@Override
+	public final void onValueChanged(AjaxRequestTarget target, DateRange range)
+	{
+		this.setModelObject(range);
+		this.onValueChanged(target);
+	}
+
 	// IJQueryWidget //
 
 	@Override
 	public JQueryBehavior newWidgetBehavior(String selector)
 	{
-		return new RangeDatePickerBehavior(selector, this.options) {
-
-			private static final long serialVersionUID = 1L;
-
-			@Override
-			public void onValueChanged(AjaxRequestTarget target, DateRange range)
-			{
-				RangeDatePicker.this.setModelObject(range);
-				RangeDatePicker.this.onValueChanged(target);
-			}
-		};
+		return new RangeDatePickerBehavior(selector, this.options, this);
 	}
 }

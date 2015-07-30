@@ -24,7 +24,7 @@ import org.apache.wicket.ajax.AjaxRequestTarget;
  * @author Sebastien Briquet - sebfz1
  *
  */
-interface ISplitterListener
+public interface ISplitterListener
 {
 	/**
 	 * Indicates whether the 'expand' event is enabled.<br />

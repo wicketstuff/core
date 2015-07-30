@@ -27,7 +27,7 @@ import com.googlecode.wicket.kendo.ui.interaction.draggable.DraggableBehavior;
  * @author Sebastien Briquet - sebfz1
  *
  */
-interface IDroppableListener
+public interface IDroppableListener
 {
 	/**
 	 * Indicates whether the 'enter' event is enabled.<br />

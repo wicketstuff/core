@@ -24,7 +24,7 @@ import org.apache.wicket.ajax.AjaxRequestTarget;
  * @author Sebastien Briquet - sebfz1
  *
  */
-interface IDraggableListener
+public interface IDraggableListener
 {
 	/**
 	 * Indicates whether the 'dragcancel' event is enabled.<br />

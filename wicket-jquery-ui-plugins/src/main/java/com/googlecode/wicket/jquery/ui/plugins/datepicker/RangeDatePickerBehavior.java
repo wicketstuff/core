@@ -21,6 +21,7 @@ import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.attributes.CallbackParameter;
 import org.apache.wicket.request.resource.CssResourceReference;
 import org.apache.wicket.resource.JQueryPluginResourceReference;
+import org.apache.wicket.util.lang.Args;
 
 import com.googlecode.wicket.jquery.core.JQueryBehavior;
 import com.googlecode.wicket.jquery.core.JQueryEvent;
@@ -35,21 +36,24 @@ import com.googlecode.wicket.jquery.core.utils.RequestCycleUtils;
  * @author Sebastien Briquet - sebfz1
  *
  */
-public abstract class RangeDatePickerBehavior extends JQueryBehavior implements IJQueryAjaxAware, IRangeDatePickerListener
+public class RangeDatePickerBehavior extends JQueryBehavior implements IJQueryAjaxAware
 {
 	private static final long serialVersionUID = 1L;
 	public static final String METHOD = "DatePicker";
 
+	private final IRangeDatePickerListener listener;
 	private JQueryAjaxBehavior onRangeChangeAjaxBehavior;
 
-	public RangeDatePickerBehavior(final String selector)
+	public RangeDatePickerBehavior(final String selector, IRangeDatePickerListener listener)
 	{
-		this(selector, new Options());
+		this(selector, new Options(), listener);
 	}
 
-	public RangeDatePickerBehavior(final String selector, final Options options)
+	public RangeDatePickerBehavior(final String selector, final Options options, IRangeDatePickerListener listener)
 	{
 		super(selector, METHOD, options);
+
+		this.listener = Args.notNull(listener, "listener");
 
 		this.add(new CssResourceReference(RangeDatePickerBehavior.class, "css/base.css"));
 		this.add(new CssResourceReference(RangeDatePickerBehavior.class, "css/clean.css"));
@@ -81,7 +85,7 @@ public abstract class RangeDatePickerBehavior extends JQueryBehavior implements 
 		{
 			DateChangeEvent ev = (DateChangeEvent) event;
 
-			this.onValueChanged(target, new DateRange(ev.getStart(), ev.getEnd()));
+			this.listener.onValueChanged(target, new DateRange(ev.getStart(), ev.getEnd()));
 		}
 	}
 

@@ -343,42 +343,14 @@ public abstract class AbstractWindow<T> extends GenericPanel<T> implements IJQue
 	@Override
 	public WindowBehavior newWidgetBehavior(String selector)
 	{
-		return new WindowBehavior(selector) {
+		return new WindowBehavior(selector, this) {
 
 			private static final long serialVersionUID = 1L;
-
-			// Properties //
 
 			@Override
 			protected boolean isCentered()
 			{
 				return AbstractWindow.this.isCentered();
-			}
-
-			@Override
-			public boolean isActionEventEnabled()
-			{
-				return AbstractWindow.this.isActionEventEnabled();
-			}
-
-			@Override
-			public boolean isCloseEventEnabled()
-			{
-				return AbstractWindow.this.isCloseEventEnabled();
-			}
-
-			// Events //
-
-			@Override
-			public void onAction(AjaxRequestTarget target, String action)
-			{
-				AbstractWindow.this.onAction(target, action);
-			}
-
-			@Override
-			public void onClose(IPartialPageRequestHandler handler)
-			{
-				AbstractWindow.this.onClose(handler);
 			}
 		};
 	}

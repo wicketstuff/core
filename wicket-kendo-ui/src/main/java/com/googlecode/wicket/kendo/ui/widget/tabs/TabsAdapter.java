@@ -14,31 +14,53 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.googlecode.wicket.kendo.ui.widget.menu;
+package com.googlecode.wicket.kendo.ui.widget.tabs;
 
 import org.apache.wicket.ajax.AjaxRequestTarget;
+import org.apache.wicket.extensions.markup.html.tabs.ITab;
 
 /**
- * Event listener shared by the {@link ContextMenu} widget and the {@link ContextMenuBehavior}
+ * Adapter class for {@link ITabsListener}
  * 
  * @author Sebastien Briquet - sebfz1
- * @since 6.20.0
+ * 
  */
-interface IContextMenuListener extends IMenuListener
+public class TabsAdapter implements ITabsListener
 {
-	/**
-	 * Indicates whether the 'open' event is enabled.<br />
-	 * If true, the {@link #onOpen(AjaxRequestTarget)} event will be triggered.
-	 *
-	 * @return false by default
-	 */
-	boolean isOpenEventEnabled();
 
-	/**
-	 * Triggered when the context menu is opened
-	 *
-	 * @param target the {@link AjaxRequestTarget}
-	 * @see #isOpenEventEnabled()
-	 */
-	void onOpen(AjaxRequestTarget target);
+	@Override
+	public boolean isSelectEventEnabled()
+	{
+		return true;
+	}
+
+	@Override
+	public boolean isShowEventEnabled()
+	{
+		return false;
+	}
+
+	@Override
+	public boolean isActivateEventEnabled()
+	{
+		return false;
+	}
+
+	@Override
+	public void onSelect(AjaxRequestTarget target, int index, ITab tab)
+	{
+		// noop
+	}
+
+	@Override
+	public void onShow(AjaxRequestTarget target, int index, ITab tab)
+	{
+		// noop
+	}
+
+	@Override
+	public void onActivate(AjaxRequestTarget target, int index, ITab tab)
+	{
+		// noop
+	}
 }

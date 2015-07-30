@@ -279,62 +279,14 @@ public class AccordionPanel extends JQueryGenericPanel<List<ITab>> implements IA
 	@Override
 	public AccordionBehavior newWidgetBehavior(String selector)
 	{
-		return new AccordionBehavior(selector, this.options) {
+		return new AccordionBehavior(selector, this.options, this) {
 
 			private static final long serialVersionUID = 1L;
-
-			@Override
-			public boolean isSelectEventEnabled()
-			{
-				return AccordionPanel.this.isSelectEventEnabled();
-			}
-
-			@Override
-			public boolean isActivateEventEnabled()
-			{
-				return AccordionPanel.this.isActivateEventEnabled();
-			}
-
-			@Override
-			public boolean isExpandEventEnabled()
-			{
-				return AccordionPanel.this.isExpandEventEnabled();
-			}
-
-			@Override
-			public boolean isCollapseEventEnabled()
-			{
-				return AccordionPanel.this.isCollapseEventEnabled();
-			}
 
 			@Override
 			protected List<ITab> getTabs()
 			{
 				return AccordionPanel.this.getModelObject();
-			}
-
-			@Override
-			public void onSelect(AjaxRequestTarget target, int index, ITab tab)
-			{
-				AccordionPanel.this.onSelect(target, index, tab);
-			}
-
-			@Override
-			public void onActivate(AjaxRequestTarget target, int index, ITab tab)
-			{
-				AccordionPanel.this.onActivate(target, index, tab);
-			}
-
-			@Override
-			public void onExpand(AjaxRequestTarget target, int index, ITab tab)
-			{
-				AccordionPanel.this.onExpand(target, index, tab);
-			}
-
-			@Override
-			public void onCollapse(AjaxRequestTarget target, int index, ITab tab)
-			{
-				AccordionPanel.this.onCollapse(target, index, tab);
 			}
 		};
 	}

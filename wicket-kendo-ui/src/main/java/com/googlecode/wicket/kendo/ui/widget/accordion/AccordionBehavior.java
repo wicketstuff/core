@@ -42,7 +42,7 @@ import com.googlecode.wicket.kendo.ui.widget.tabs.AjaxTab;
  * @since 6.19.0
  * @since 7.0.0
  */
-public abstract class AccordionBehavior extends KendoUIBehavior implements IJQueryAjaxAware, IAccordionListener
+public abstract class AccordionBehavior extends KendoUIBehavior implements IJQueryAjaxAware
 {
 	private static final long serialVersionUID = 1L;
 
@@ -52,6 +52,7 @@ public abstract class AccordionBehavior extends KendoUIBehavior implements IJQue
 
 	int tabIndex = TAB_NONE;
 
+	private final IAccordionListener listener;
 	private JQueryAjaxBehavior onSelectAjaxBehavior = null;
 	private JQueryAjaxBehavior onActivateAjaxBehavior = null;
 	private JQueryAjaxBehavior onExpandAjaxBehavior = null;
@@ -61,10 +62,11 @@ public abstract class AccordionBehavior extends KendoUIBehavior implements IJQue
 	 * Constructor
 	 *
 	 * @param selector the html selector (ie: "#myId")
+	 * @param listener the {@link IAccordionListener}
 	 */
-	public AccordionBehavior(String selector)
+	public AccordionBehavior(String selector, IAccordionListener listener)
 	{
-		super(selector, METHOD);
+		this(selector, new Options(), listener);
 	}
 
 	/**
@@ -72,10 +74,13 @@ public abstract class AccordionBehavior extends KendoUIBehavior implements IJQue
 	 *
 	 * @param selector the html selector (ie: "#myId")
 	 * @param options the {@link Options}
+	 * @param listener the {@link IAccordionListener}
 	 */
-	public AccordionBehavior(String selector, Options options)
+	public AccordionBehavior(String selector, Options options, IAccordionListener listener)
 	{
 		super(selector, METHOD, options);
+		
+		this.listener = listener;
 	}
 
 	// Properties //
@@ -126,25 +131,25 @@ public abstract class AccordionBehavior extends KendoUIBehavior implements IJQue
 	{
 		super.bind(component);
 
-		if (this.isSelectEventEnabled())
+		if (this.listener.isSelectEventEnabled())
 		{
 			this.onSelectAjaxBehavior = this.newOnSelectAjaxBehavior(this);
 			component.add(this.onSelectAjaxBehavior);
 		}
 
-		if (this.isActivateEventEnabled())
+		if (this.listener.isActivateEventEnabled())
 		{
 			this.onActivateAjaxBehavior = this.newOnActivateAjaxBehavior(this);
 			component.add(this.onActivateAjaxBehavior);
 		}
 
-		if (this.isExpandEventEnabled())
+		if (this.listener.isExpandEventEnabled())
 		{
 			this.onExpandAjaxBehavior = this.newOnExpandAjaxBehavior(this);
 			component.add(this.onExpandAjaxBehavior);
 		}
 
-		if (this.isCollapseEventEnabled())
+		if (this.listener.isCollapseEventEnabled())
 		{
 			this.onCollapseAjaxBehavior = this.newOnCollapseAjaxBehavior(this);
 			component.add(this.onCollapseAjaxBehavior);
@@ -224,22 +229,22 @@ public abstract class AccordionBehavior extends KendoUIBehavior implements IJQue
 
 				if (event instanceof SelectEvent)
 				{
-					this.onSelect(target, index, tab);
+					this.listener.onSelect(target, index, tab);
 				}
 
 				if (event instanceof ActivateEvent)
 				{
-					this.onActivate(target, index, tab);
+					this.listener.onActivate(target, index, tab);
 				}
 
 				if (event instanceof ExpandEvent)
 				{
-					this.onExpand(target, index, tab);
+					this.listener.onExpand(target, index, tab);
 				}
 
 				if (event instanceof CollapseEvent)
 				{
-					this.onCollapse(target, index, tab);
+					this.listener.onCollapse(target, index, tab);
 				}
 			}
 		}

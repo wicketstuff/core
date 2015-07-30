@@ -19,6 +19,7 @@ package com.googlecode.wicket.kendo.ui.form.autocomplete;
 import org.apache.wicket.Component;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.attributes.CallbackParameter;
+import org.apache.wicket.util.lang.Args;
 
 import com.googlecode.wicket.jquery.core.JQueryEvent;
 import com.googlecode.wicket.jquery.core.Options;
@@ -34,21 +35,23 @@ import com.googlecode.wicket.kendo.ui.utils.DebugUtils;
  * @author Sebastien Briquet - sebfz1
  *
  */
-public abstract class AutoCompleteBehavior extends KendoUIBehavior implements IJQueryAjaxAware, IAutoCompleteListener
+public abstract class AutoCompleteBehavior extends KendoUIBehavior implements IJQueryAjaxAware
 {
 	private static final long serialVersionUID = 1L;
 	public static final String METHOD = "kendoAutoComplete";
 
+	private final IAutoCompleteListener listener;
 	private JQueryAjaxBehavior onSelectAjaxBehavior = null;
 
 	/**
 	 * Constructor
 	 *
 	 * @param selector the html selector (ie: "#myId")
+	 * @param listener the {@link IAutoCompleteListener}
 	 */
-	public AutoCompleteBehavior(String selector)
+	public AutoCompleteBehavior(String selector, IAutoCompleteListener listener)
 	{
-		this(selector, new Options());
+		this(selector, new Options(), listener);
 	}
 
 	/**
@@ -56,10 +59,13 @@ public abstract class AutoCompleteBehavior extends KendoUIBehavior implements IJ
 	 *
 	 * @param selector the html selector (ie: "#myId")
 	 * @param options the {@link Options}
+	 * @param listener the {@link IAutoCompleteListener}
 	 */
-	public AutoCompleteBehavior(String selector, Options options)
+	public AutoCompleteBehavior(String selector, Options options, IAutoCompleteListener listener)
 	{
 		super(selector, METHOD, options);
+
+		this.listener = Args.notNull(listener, "listener");
 	}
 
 	// Methods //
@@ -95,7 +101,7 @@ public abstract class AutoCompleteBehavior extends KendoUIBehavior implements IJ
 	{
 		if (event instanceof SelectEvent)
 		{
-			this.onSelect(target, ((SelectEvent) event).getIndex());
+			this.listener.onSelect(target, ((SelectEvent) event).getIndex());
 		}
 	}
 

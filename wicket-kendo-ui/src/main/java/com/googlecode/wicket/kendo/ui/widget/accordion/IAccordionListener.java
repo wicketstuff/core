@@ -30,7 +30,7 @@ import com.googlecode.wicket.kendo.ui.widget.tabs.AjaxTab;
  * @since 6.19.0
  * @since 7.0.0
  */
-interface IAccordionListener
+public interface IAccordionListener
 {
     /**
 	 * Indicates whether the 'select' event is enabled.<br />

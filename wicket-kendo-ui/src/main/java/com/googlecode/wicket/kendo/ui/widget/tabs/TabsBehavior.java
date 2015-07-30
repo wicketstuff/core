@@ -26,6 +26,7 @@ import org.apache.wicket.ajax.attributes.CallbackParameter;
 import org.apache.wicket.core.request.handler.IPartialPageRequestHandler;
 import org.apache.wicket.extensions.markup.html.tabs.ITab;
 import org.apache.wicket.markup.head.IHeaderResponse;
+import org.apache.wicket.util.lang.Args;
 
 import com.googlecode.wicket.jquery.core.JQueryEvent;
 import com.googlecode.wicket.jquery.core.Options;
@@ -41,7 +42,7 @@ import com.googlecode.wicket.kendo.ui.KendoUIBehavior;
  * @author Sebastien Briquet - sebfz1
  * @since 6.19.0
  */
-public abstract class TabsBehavior extends KendoUIBehavior implements IJQueryAjaxAware, ITabsListener
+public abstract class TabsBehavior extends KendoUIBehavior implements IJQueryAjaxAware
 {
 	private static final long serialVersionUID = 1L;
 
@@ -50,6 +51,7 @@ public abstract class TabsBehavior extends KendoUIBehavior implements IJQueryAja
 
 	int tabIndex = DEFAULT_TAB_INDEX;
 
+	private final ITabsListener listener;
 	private JQueryAjaxBehavior onSelectAjaxBehavior = null;
 	private JQueryAjaxBehavior onShowAjaxBehavior = null;
 	private JQueryAjaxBehavior onActivateAjaxBehavior = null;
@@ -58,10 +60,11 @@ public abstract class TabsBehavior extends KendoUIBehavior implements IJQueryAja
 	 * Constructor
 	 *
 	 * @param selector the html selector (ie: "#myId")
+	 * @param listener the ITabsListener
 	 */
-	public TabsBehavior(String selector)
+	public TabsBehavior(String selector, ITabsListener listener)
 	{
-		super(selector, METHOD);
+		this(selector, new Options(), listener);
 	}
 
 	/**
@@ -69,10 +72,13 @@ public abstract class TabsBehavior extends KendoUIBehavior implements IJQueryAja
 	 *
 	 * @param selector the html selector (ie: "#myId")
 	 * @param options the {@link Options}
+	 * @param listener the ITabsListener
 	 */
-	public TabsBehavior(String selector, Options options)
+	public TabsBehavior(String selector, Options options, ITabsListener listener)
 	{
 		super(selector, METHOD, options);
+
+		this.listener = Args.notNull(listener, "listener");
 	}
 
 	// Properties //
@@ -112,19 +118,19 @@ public abstract class TabsBehavior extends KendoUIBehavior implements IJQueryAja
 	{
 		super.bind(component);
 
-		if (this.isSelectEventEnabled())
+		if (this.listener.isSelectEventEnabled())
 		{
 			this.onSelectAjaxBehavior = this.newOnSelectAjaxBehavior(this);
 			component.add(this.onSelectAjaxBehavior);
 		}
 
-		if (this.isShowEventEnabled())
+		if (this.listener.isShowEventEnabled())
 		{
 			this.onShowAjaxBehavior = this.newOnShowAjaxBehavior(this);
 			component.add(this.onShowAjaxBehavior);
 		}
 
-		if (this.isActivateEventEnabled())
+		if (this.listener.isActivateEventEnabled())
 		{
 			this.onActivateAjaxBehavior = this.newOnActivateAjaxBehavior(this);
 			component.add(this.onActivateAjaxBehavior);
@@ -195,17 +201,17 @@ public abstract class TabsBehavior extends KendoUIBehavior implements IJQueryAja
 
 				if (event instanceof SelectEvent)
 				{
-					this.onSelect(target, index, tab);
+					this.listener.onSelect(target, index, tab);
 				}
 
 				if (event instanceof ShowEvent)
 				{
-					this.onShow(target, index, tab);
+					this.listener.onShow(target, index, tab);
 				}
 
 				if (event instanceof ActivateEvent)
 				{
-					this.onActivate(target, index, tab);
+					this.listener.onActivate(target, index, tab);
 				}
 			}
 		}

@@ -27,7 +27,7 @@ import org.apache.wicket.extensions.markup.html.tabs.ITab;
  * @author Sebastien Briquet - sebfz1
  * @since 6.19.0
  */
-interface ITabsListener
+public interface ITabsListener
 {
 	/**
 	 * Indicates whether the 'select' event is enabled.<br />

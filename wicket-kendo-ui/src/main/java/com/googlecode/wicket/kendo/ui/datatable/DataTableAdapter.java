@@ -14,31 +14,28 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.googlecode.wicket.kendo.ui.widget.menu;
+package com.googlecode.wicket.kendo.ui.datatable;
+
+import java.util.List;
 
 import org.apache.wicket.ajax.AjaxRequestTarget;
 
 /**
- * Event listener shared by the {@link ContextMenu} widget and the {@link ContextMenuBehavior}
- * 
+ * Adapter class for {@link IDataTableListener}
+ *
  * @author Sebastien Briquet - sebfz1
- * @since 6.20.0
  */
-interface IContextMenuListener extends IMenuListener
+public class DataTableAdapter implements IDataTableListener
 {
-	/**
-	 * Indicates whether the 'open' event is enabled.<br />
-	 * If true, the {@link #onOpen(AjaxRequestTarget)} event will be triggered.
-	 *
-	 * @return false by default
-	 */
-	boolean isOpenEventEnabled();
+	@Override
+	public void onClick(AjaxRequestTarget target, String button, List<String> values)
+	{
+		// noop
+	}
 
-	/**
-	 * Triggered when the context menu is opened
-	 *
-	 * @param target the {@link AjaxRequestTarget}
-	 * @see #isOpenEventEnabled()
-	 */
-	void onOpen(AjaxRequestTarget target);
+	@Override
+	public void onClick(AjaxRequestTarget target, ColumnButton button, String value)
+	{
+		// noop
+	}
 }

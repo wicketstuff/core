@@ -20,6 +20,7 @@ import org.apache.wicket.Component;
 import org.apache.wicket.WicketRuntimeException;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.attributes.CallbackParameter;
+import org.apache.wicket.util.lang.Args;
 import org.apache.wicket.util.visit.IVisit;
 import org.apache.wicket.util.visit.IVisitor;
 import org.apache.wicket.util.visit.Visits;
@@ -40,7 +41,7 @@ import com.googlecode.wicket.kendo.ui.interaction.droppable.DroppableBehavior;
  *
  * @author Sebastien Briquet - sebfz1
  */
-public abstract class DraggableBehavior extends KendoUIBehavior implements IJQueryAjaxAware, IDraggableListener
+public class DraggableBehavior extends KendoUIBehavior implements IJQueryAjaxAware
 {
 	private static final long serialVersionUID = 1L;
 
@@ -52,6 +53,7 @@ public abstract class DraggableBehavior extends KendoUIBehavior implements IJQue
 	/** default hint */
 	public static final String HINT = "function(element) { return element.clone().addClass('" + CSS_CLONE + "'); }";
 
+	private final IDraggableListener listener;
 	private JQueryAjaxBehavior onDragStartAjaxBehavior;
 	private JQueryAjaxBehavior onDragStopAjaxBehavior = null;
 	private JQueryAjaxBehavior onDragCancelAjaxBehavior = null;
@@ -60,30 +62,33 @@ public abstract class DraggableBehavior extends KendoUIBehavior implements IJQue
 
 	/**
 	 * Constructor
+	 * @param listener the {@link IDraggableListener}
 	 */
-	public DraggableBehavior()
+	public DraggableBehavior(IDraggableListener listener)
 	{
-		this(null, new Options());
+		this(null, new Options(), listener);
 	}
 
 	/**
 	 * Constructor
 	 * 
 	 * @param options the {@link Options}
+	 * @param listener the {@link IDraggableListener}
 	 */
-	public DraggableBehavior(Options options)
+	public DraggableBehavior(Options options, IDraggableListener listener)
 	{
-		this(null, options);
+		this(null, options, listener);
 	}
 
 	/**
 	 * Constructor
 	 * 
 	 * @param selector the html selector (ie: "#myId")
+	 * @param listener the {@link IDraggableListener}
 	 */
-	protected DraggableBehavior(String selector)
+	protected DraggableBehavior(String selector, IDraggableListener listener)
 	{
-		this(selector, new Options());
+		this(selector, new Options(), listener);
 	}
 
 	/**
@@ -91,10 +96,13 @@ public abstract class DraggableBehavior extends KendoUIBehavior implements IJQue
 	 * 
 	 * @param selector the html selector (ie: "#myId")
 	 * @param options the {@link Options}
+	 * @param listener the {@link IDraggableListener}
 	 */
-	protected DraggableBehavior(String selector, Options options)
+	protected DraggableBehavior(String selector, Options options, IDraggableListener listener)
 	{
 		super(selector, METHOD, options);
+		
+		this.listener = Args.notNull(listener, "listener");
 	}
 
 	// Methods //
@@ -123,7 +131,7 @@ public abstract class DraggableBehavior extends KendoUIBehavior implements IJQue
 		this.component.add(this.onDragStopAjaxBehavior);
 
 		// this event is not enabled by default to prevent unnecessary server round-trips.
-		if (this.isCancelEventEnabled())
+		if (this.listener.isCancelEventEnabled())
 		{
 			this.onDragCancelAjaxBehavior = this.newOnDragCancelAjaxBehavior(this);
 			this.component.add(this.onDragCancelAjaxBehavior);
@@ -167,17 +175,17 @@ public abstract class DraggableBehavior extends KendoUIBehavior implements IJQue
 				// register to all DroppableBehavior(s) //
 				Visits.visit(target.getPage(), this.newDroppableBehaviorVisitor());
 
-				this.onDragStart(target, e.getTop(), e.getLeft());
+				this.listener.onDragStart(target, e.getTop(), e.getLeft());
 			}
 
 			else if (e instanceof DragStopEvent)
 			{
-				this.onDragStop(target, e.getTop(), e.getLeft());
+				this.listener.onDragStop(target, e.getTop(), e.getLeft());
 			}
 
 			else if (e instanceof DragCancelEvent)
 			{
-				this.onDragCancel(target, e.getTop(), e.getLeft());
+				this.listener.onDragCancel(target, e.getTop(), e.getLeft());
 			}
 		}
 	}

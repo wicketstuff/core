@@ -14,31 +14,39 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.googlecode.wicket.kendo.ui.widget.menu;
+package com.googlecode.wicket.kendo.ui.interaction.draggable;
 
 import org.apache.wicket.ajax.AjaxRequestTarget;
 
 /**
- * Event listener shared by the {@link ContextMenu} widget and the {@link ContextMenuBehavior}
- * 
+ * Adapter class for {@link IDraggableListener}
+ *
  * @author Sebastien Briquet - sebfz1
- * @since 6.20.0
+ *
  */
-interface IContextMenuListener extends IMenuListener
+public class DraggableAdapter implements IDraggableListener
 {
-	/**
-	 * Indicates whether the 'open' event is enabled.<br />
-	 * If true, the {@link #onOpen(AjaxRequestTarget)} event will be triggered.
-	 *
-	 * @return false by default
-	 */
-	boolean isOpenEventEnabled();
+	@Override
+	public boolean isCancelEventEnabled()
+	{
+		return false;
+	}
 
-	/**
-	 * Triggered when the context menu is opened
-	 *
-	 * @param target the {@link AjaxRequestTarget}
-	 * @see #isOpenEventEnabled()
-	 */
-	void onOpen(AjaxRequestTarget target);
+	@Override
+	public void onDragStart(AjaxRequestTarget target, int top, int left)
+	{
+		// noop
+	}
+
+	@Override
+	public void onDragStop(AjaxRequestTarget target, int top, int left)
+	{
+		// noop
+	}
+
+	@Override
+	public void onDragCancel(AjaxRequestTarget target, int top, int left)
+	{
+		// noop
+	}
 }

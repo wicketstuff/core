@@ -19,6 +19,7 @@ package com.googlecode.wicket.kendo.ui.interaction.droppable;
 import org.apache.wicket.Component;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.attributes.CallbackParameter;
+import org.apache.wicket.util.lang.Args;
 
 import com.googlecode.wicket.jquery.core.JQueryEvent;
 import com.googlecode.wicket.jquery.core.Options;
@@ -32,12 +33,13 @@ import com.googlecode.wicket.kendo.ui.interaction.draggable.DraggableBehavior;
  *
  * @author Sebastien Briquet - sebfz1
  */
-public abstract class DroppableBehavior extends KendoUIBehavior implements IJQueryAjaxAware, IDroppableListener
+public class DroppableBehavior extends KendoUIBehavior implements IJQueryAjaxAware
 {
 	private static final long serialVersionUID = 1L;
 
 	public static final String METHOD = "kendoDropTarget";
 
+	private final IDroppableListener listener;
 	private JQueryAjaxBehavior onDropAjaxBehavior;
 	private JQueryAjaxBehavior onDragEnterAjaxBehavior = null;
 	private JQueryAjaxBehavior onDragLeaveAjaxBehavior = null;
@@ -49,10 +51,11 @@ public abstract class DroppableBehavior extends KendoUIBehavior implements IJQue
 	 * Constructor
 	 * 
 	 * @param selector the html selector (ie: "#myId")
+	 * @param listener the {@link IDroppableListener}
 	 */
-	public DroppableBehavior(String selector)
+	public DroppableBehavior(String selector, IDroppableListener listener)
 	{
-		this(selector, new Options());
+		this(selector, new Options(), listener);
 	}
 
 	/**
@@ -60,10 +63,13 @@ public abstract class DroppableBehavior extends KendoUIBehavior implements IJQue
 	 * 
 	 * @param selector the html selector (ie: "#myId")
 	 * @param options the {@link Options}
+	 * @param listener the {@link IDroppableListener}
 	 */
-	public DroppableBehavior(String selector, Options options)
+	public DroppableBehavior(String selector, Options options, IDroppableListener listener)
 	{
 		super(selector, METHOD, options);
+		
+		this.listener = Args.notNull(listener, "listener");
 	}
 
 	// Properties //
@@ -125,13 +131,13 @@ public abstract class DroppableBehavior extends KendoUIBehavior implements IJQue
 		component.add(this.onDropAjaxBehavior);
 
 		// these events are not enabled by default to prevent unnecessary server round-trips.
-		if (this.isDragEnterEventEnabled())
+		if (this.listener.isDragEnterEventEnabled())
 		{
 			this.onDragEnterAjaxBehavior = this.newOnDragEnterAjaxBehavior(this, this.getOnDragEnterStatement());
 			component.add(this.onDragEnterAjaxBehavior);
 		}
 
-		if (this.isDragLeaveEventEnabled())
+		if (this.listener.isDragLeaveEventEnabled())
 		{
 			this.onDragLeaveAjaxBehavior = this.newOnDragLeaveAjaxBehavior(this, this.getOnDragLeaveStatement());
 			component.add(this.onDragLeaveAjaxBehavior);
@@ -163,17 +169,17 @@ public abstract class DroppableBehavior extends KendoUIBehavior implements IJQue
 	{
 		if (event instanceof DropEvent)
 		{
-			this.onDrop(target, this.draggable);
+			this.listener.onDrop(target, this.draggable);
 		}
 
 		else if (event instanceof DragEnterEvent)
 		{
-			this.onDragEnter(target, this.draggable);
+			this.listener.onDragEnter(target, this.draggable);
 		}
 
 		else if (event instanceof DragLeaveEvent)
 		{
-			this.onDragLeave(target, this.draggable);
+			this.listener.onDragLeave(target, this.draggable);
 		}
 	}
 
