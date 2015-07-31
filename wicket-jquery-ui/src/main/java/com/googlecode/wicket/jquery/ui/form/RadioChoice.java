@@ -44,7 +44,6 @@ public class RadioChoice<T> extends org.apache.wicket.markup.html.form.RadioChoi
 	public RadioChoice(String id)
 	{
 		super(id);
-		this.initialize();
 	}
 
 	/**
@@ -56,7 +55,6 @@ public class RadioChoice<T> extends org.apache.wicket.markup.html.form.RadioChoi
 	public RadioChoice(String id, List<? extends T> choices)
 	{
 		super(id, choices);
-		this.initialize();
 	}
 
 	/**
@@ -69,7 +67,6 @@ public class RadioChoice<T> extends org.apache.wicket.markup.html.form.RadioChoi
 	public RadioChoice(String id, List<? extends T> choices, IChoiceRenderer<? super T> renderer)
 	{
 		super(id, choices, renderer);
-		this.initialize();
 	}
 
 	/**
@@ -81,7 +78,6 @@ public class RadioChoice<T> extends org.apache.wicket.markup.html.form.RadioChoi
 	public RadioChoice(String id, IModel<? extends List<? extends T>> choices)
 	{
 		super(id, choices);
-		this.initialize();
 	}
 
 	/**
@@ -94,7 +90,6 @@ public class RadioChoice<T> extends org.apache.wicket.markup.html.form.RadioChoi
 	public RadioChoice(String id, IModel<? extends List<? extends T>> choices, IChoiceRenderer<? super T> renderer)
 	{
 		super(id, choices, renderer);
-		this.initialize();
 	}
 
 	/**
@@ -107,7 +102,6 @@ public class RadioChoice<T> extends org.apache.wicket.markup.html.form.RadioChoi
 	public RadioChoice(String id, IModel<T> model, List<? extends T> choices)
 	{
 		super(id, model, choices);
-		this.initialize();
 	}
 
 	/**
@@ -121,7 +115,6 @@ public class RadioChoice<T> extends org.apache.wicket.markup.html.form.RadioChoi
 	public RadioChoice(String id, IModel<T> model, List<? extends T> choices, IChoiceRenderer<? super T> renderer)
 	{
 		super(id, model, choices, renderer);
-		this.initialize();
 	}
 
 	/**
@@ -134,7 +127,6 @@ public class RadioChoice<T> extends org.apache.wicket.markup.html.form.RadioChoi
 	public RadioChoice(String id, IModel<T> model, IModel<? extends List<? extends T>> choices)
 	{
 		super(id, model, choices);
-		this.initialize();
 	}
 
 	/**
@@ -148,15 +140,6 @@ public class RadioChoice<T> extends org.apache.wicket.markup.html.form.RadioChoi
 	public RadioChoice(String id, IModel<T> model, IModel<? extends List<? extends T>> choices, IChoiceRenderer<? super T> renderer)
 	{
 		super(id, model, choices, renderer);
-		this.initialize();
-	}
-
-	/**
-	 * Initialization
-	 */
-	private void initialize()
-	{
-		this.setSuffix(""); // prevent the <br/> tag
 	}
 
 	// Events //

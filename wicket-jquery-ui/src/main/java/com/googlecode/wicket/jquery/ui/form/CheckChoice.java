@@ -40,27 +40,28 @@ public class CheckChoice<T> extends CheckBoxMultipleChoice<T> implements IJQuery
 
 	/**
 	 * Constructor
+	 * 
 	 * @param id the markup id
 	 */
 	public CheckChoice(String id)
 	{
 		super(id);
-		this.initialize();
 	}
 
 	/**
 	 * Constructor
+	 * 
 	 * @param id the markup id
 	 * @param choices the collection of choices in the check choice
 	 */
 	public CheckChoice(String id, List<? extends T> choices)
 	{
 		super(id, choices);
-		this.initialize();
 	}
 
 	/**
 	 * Constructor
+	 * 
 	 * @param id the markup id
 	 * @param choices the collection of choices in the check choice
 	 * @param renderer the rendering engine
@@ -68,22 +69,22 @@ public class CheckChoice<T> extends CheckBoxMultipleChoice<T> implements IJQuery
 	public CheckChoice(String id, List<? extends T> choices, IChoiceRenderer<? super T> renderer)
 	{
 		super(id, choices, renderer);
-		this.initialize();
 	}
 
 	/**
 	 * Constructor
+	 * 
 	 * @param id the markup id
 	 * @param choices the collection of choices in the check choice
 	 */
 	public CheckChoice(String id, IModel<? extends List<? extends T>> choices)
 	{
 		super(id, choices);
-		this.initialize();
 	}
 
 	/**
 	 * Constructor
+	 * 
 	 * @param id the markup id
 	 * @param choices the collection of choices in the check choice
 	 * @param renderer the rendering engine
@@ -91,11 +92,11 @@ public class CheckChoice<T> extends CheckBoxMultipleChoice<T> implements IJQuery
 	public CheckChoice(String id, IModel<? extends List<? extends T>> choices, IChoiceRenderer<? super T> renderer)
 	{
 		super(id, choices, renderer);
-		this.initialize();
 	}
 
 	/**
 	 * Constructor
+	 * 
 	 * @param id the markup id
 	 * @param model the {@link IModel}
 	 * @param choices the collection of choices in the check choice
@@ -103,11 +104,11 @@ public class CheckChoice<T> extends CheckBoxMultipleChoice<T> implements IJQuery
 	public CheckChoice(String id, IModel<? extends Collection<T>> model, List<? extends T> choices)
 	{
 		super(id, model, choices);
-		this.initialize();
 	}
 
 	/**
 	 * Constructor
+	 * 
 	 * @param id the markup id
 	 * @param model the {@link IModel}
 	 * @param choices the collection of choices in the check choice
@@ -115,11 +116,11 @@ public class CheckChoice<T> extends CheckBoxMultipleChoice<T> implements IJQuery
 	public CheckChoice(String id, IModel<? extends Collection<T>> model, IModel<? extends List<? extends T>> choices)
 	{
 		super(id, model, choices);
-		this.initialize();
 	}
 
 	/**
 	 * Constructor
+	 * 
 	 * @param id the markup id
 	 * @param model the {@link IModel}
 	 * @param choices the collection of choices in the check choice
@@ -128,11 +129,11 @@ public class CheckChoice<T> extends CheckBoxMultipleChoice<T> implements IJQuery
 	public CheckChoice(String id, IModel<? extends Collection<T>> model, List<? extends T> choices, IChoiceRenderer<? super T> renderer)
 	{
 		super(id, model, choices, renderer);
-		this.initialize();
 	}
 
 	/**
 	 * Constructor
+	 * 
 	 * @param id the markup id
 	 * @param model the {@link IModel}
 	 * @param choices the collection of choices in the check choice
@@ -141,24 +142,16 @@ public class CheckChoice<T> extends CheckBoxMultipleChoice<T> implements IJQuery
 	public CheckChoice(String id, IModel<? extends Collection<T>> model, IModel<? extends List<? extends T>> choices, IChoiceRenderer<? super T> renderer)
 	{
 		super(id, model, choices, renderer);
-		this.initialize();
-	}
-
-	/**
-	 * Initialization
-	 */
-	private void initialize()
-	{
-		this.setSuffix(""); // prevent the <br/> tag
 	}
 
 	// Events //
+
 	@Override
 	protected void onInitialize()
 	{
 		super.onInitialize();
 
-		this.add(JQueryWidget.newWidgetBehavior(this)); //cannot be in ctor as the markupId may be set manually afterward
+		this.add(JQueryWidget.newWidgetBehavior(this)); // cannot be in ctor as the markupId may be set manually afterward
 	}
 
 	@Override
@@ -174,6 +167,7 @@ public class CheckChoice<T> extends CheckBoxMultipleChoice<T> implements IJQuery
 	}
 
 	// IJQueryWidget //
+
 	@Override
 	public CheckChoiceBehavior newWidgetBehavior(String selector)
 	{
