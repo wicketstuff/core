@@ -27,6 +27,7 @@ import org.apache.wicket.extensions.markup.html.tabs.ITab;
  */
 public class TabsAdapter implements ITabsListener
 {
+	private static final long serialVersionUID = 1L;
 
 	@Override
 	public boolean isSelectEventEnabled()

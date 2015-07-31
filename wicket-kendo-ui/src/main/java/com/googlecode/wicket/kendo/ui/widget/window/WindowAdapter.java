@@ -27,6 +27,8 @@ import org.apache.wicket.core.request.handler.IPartialPageRequestHandler;
  */
 public class WindowAdapter implements IWindowListener
 {
+	private static final long serialVersionUID = 1L;
+
 	@Override
 	public boolean isActionEventEnabled()
 	{

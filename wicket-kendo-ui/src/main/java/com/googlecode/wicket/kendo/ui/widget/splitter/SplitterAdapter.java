@@ -26,6 +26,7 @@ import org.apache.wicket.ajax.AjaxRequestTarget;
  */
 public class SplitterAdapter implements ISplitterListener
 {
+	private static final long serialVersionUID = 1L;
 
 	@Override
 	public boolean isExpandEventEnabled()

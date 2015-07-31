@@ -26,6 +26,8 @@ import org.threeten.bp.LocalDateTime;
  */
 public class CalendarAdapter implements ICalendarListener
 {
+	private static final long serialVersionUID = 1L;
+
 	@Override
 	public boolean isSelectable()
 	{

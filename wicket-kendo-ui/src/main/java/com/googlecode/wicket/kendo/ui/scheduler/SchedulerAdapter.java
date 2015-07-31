@@ -28,6 +28,8 @@ import com.googlecode.wicket.kendo.ui.scheduler.views.SchedulerViewType;
  */
 public class SchedulerAdapter implements ISchedulerListener
 {
+	private static final long serialVersionUID = 1L;
+
 	@Override
 	public boolean isEditEnabled()
 	{

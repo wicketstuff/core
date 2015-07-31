@@ -27,6 +27,8 @@ import org.apache.wicket.ajax.AjaxRequestTarget;
  */
 public class DroppableAdaper implements IDroppableListener
 {
+	private static final long serialVersionUID = 1L;
+
 	@Override
 	public boolean isDragEnterEventEnabled()
 	{

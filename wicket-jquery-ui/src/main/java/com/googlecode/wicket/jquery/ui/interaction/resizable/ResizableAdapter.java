@@ -26,6 +26,8 @@ import org.apache.wicket.ajax.AjaxRequestTarget;
  */
 public class ResizableAdapter implements IResizableListener
 {
+	private static final long serialVersionUID = 1L;
+
 	@Override
 	public boolean isResizeStartEventEnabled()
 	{

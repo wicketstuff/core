@@ -25,6 +25,8 @@ import org.apache.wicket.ajax.AjaxRequestTarget;
  */
 public class DraggableAdapter implements IDraggableListener
 {
+	private static final long serialVersionUID = 1L;
+
 	@Override
 	public boolean isStopEventEnabled()
 	{

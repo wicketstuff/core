@@ -27,6 +27,8 @@ import org.apache.wicket.ajax.AjaxRequestTarget;
  */
 public class DataTableAdapter implements IDataTableListener
 {
+	private static final long serialVersionUID = 1L;
+
 	@Override
 	public void onClick(AjaxRequestTarget target, String button, List<String> values)
 	{
