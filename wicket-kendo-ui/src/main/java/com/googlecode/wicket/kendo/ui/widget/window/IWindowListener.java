@@ -18,6 +18,7 @@ package com.googlecode.wicket.kendo.ui.widget.window;
 
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.core.request.handler.IPartialPageRequestHandler;
+import org.apache.wicket.util.io.IClusterable;
 
 /**
  * Event listener shared by the {@link AbstractWindow} widget and the {@link WindowBehavior}
@@ -25,7 +26,7 @@ import org.apache.wicket.core.request.handler.IPartialPageRequestHandler;
  * @author Sebastien Briquet - sebfz1
  * @since 6.17.0
  */
-public interface IWindowListener
+public interface IWindowListener extends IClusterable
 {
 	/**
 	 * Indicates whether the action events are enabled.<br/>

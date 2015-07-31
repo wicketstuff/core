@@ -17,6 +17,7 @@
 package com.googlecode.wicket.kendo.ui.widget.menu;
 
 import org.apache.wicket.ajax.AjaxRequestTarget;
+import org.apache.wicket.util.io.IClusterable;
 
 import com.googlecode.wicket.kendo.ui.widget.menu.item.IMenuItem;
 
@@ -26,7 +27,7 @@ import com.googlecode.wicket.kendo.ui.widget.menu.item.IMenuItem;
  * @author Sebastien Briquet - sebfz1
  * @since 6.15.0
  */
-public interface IMenuListener
+public interface IMenuListener extends IClusterable
 {
 	/**
 	 * Triggered when a menu-item is clicked

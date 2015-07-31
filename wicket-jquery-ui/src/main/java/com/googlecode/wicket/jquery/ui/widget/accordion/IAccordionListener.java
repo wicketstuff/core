@@ -18,6 +18,7 @@ package com.googlecode.wicket.jquery.ui.widget.accordion;
 
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.extensions.markup.html.tabs.ITab;
+import org.apache.wicket.util.io.IClusterable;
 
 import com.googlecode.wicket.jquery.ui.widget.tabs.AjaxTab;
 
@@ -27,7 +28,7 @@ import com.googlecode.wicket.jquery.ui.widget.tabs.AjaxTab;
  * @author Sebastien Briquet - sebfz1
  *
  */
-public interface IAccordionListener
+public interface IAccordionListener extends IClusterable
 {
 	/**
 	 * Indicates whether the 'create' event is enabled.<br/>

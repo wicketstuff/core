@@ -18,6 +18,7 @@ package com.googlecode.wicket.kendo.ui.interaction.droppable;
 
 import org.apache.wicket.Component;
 import org.apache.wicket.ajax.AjaxRequestTarget;
+import org.apache.wicket.util.io.IClusterable;
 
 import com.googlecode.wicket.kendo.ui.interaction.draggable.DraggableBehavior;
 
@@ -27,7 +28,7 @@ import com.googlecode.wicket.kendo.ui.interaction.draggable.DraggableBehavior;
  * @author Sebastien Briquet - sebfz1
  *
  */
-public interface IDroppableListener
+public interface IDroppableListener extends IClusterable
 {
 	/**
 	 * Indicates whether the 'enter' event is enabled.<br />

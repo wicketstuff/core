@@ -17,6 +17,7 @@
 package com.googlecode.wicket.kendo.ui.form.autocomplete;
 
 import org.apache.wicket.ajax.AjaxRequestTarget;
+import org.apache.wicket.util.io.IClusterable;
 
 /**
  * Event listener shared by the {@link AutoCompleteTextField} widget and the {@link AutoCompleteBehavior}
@@ -24,7 +25,7 @@ import org.apache.wicket.ajax.AjaxRequestTarget;
  * @author Sebastien Briquet - sebfz1
  *
  */
-public interface IAutoCompleteListener
+public interface IAutoCompleteListener extends IClusterable
 {
 	/**
 	 * Triggered when a selection has been made

@@ -17,6 +17,7 @@
 package com.googlecode.wicket.kendo.ui.widget.splitter;
 
 import org.apache.wicket.ajax.AjaxRequestTarget;
+import org.apache.wicket.util.io.IClusterable;
 
 /**
  * Event listener shared by the {@link BorderLayout} widget and the {@link SplitterBehavior}
@@ -24,7 +25,7 @@ import org.apache.wicket.ajax.AjaxRequestTarget;
  * @author Sebastien Briquet - sebfz1
  *
  */
-public interface ISplitterListener
+public interface ISplitterListener extends IClusterable
 {
 	/**
 	 * Indicates whether the 'expand' event is enabled.<br />

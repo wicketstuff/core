@@ -7,10 +7,11 @@ import org.apache.wicket.markup.html.WebMarkupContainer;
 import com.googlecode.wicket.kendo.ui.console.Console;
 import com.googlecode.wicket.kendo.ui.interaction.draggable.DraggableBehavior;
 import com.googlecode.wicket.kendo.ui.interaction.draggable.IDraggableListener;
+import com.googlecode.wicket.kendo.ui.interaction.droppable.DroppableAdaper;
 import com.googlecode.wicket.kendo.ui.interaction.droppable.DroppableBehavior;
 import com.googlecode.wicket.kendo.ui.interaction.droppable.IDroppableListener;
 
-public class BehaviorDragDropPage extends AbstractDragDropPage implements IDraggableListener, IDroppableListener
+public class BehaviorDragDropPage extends AbstractDragDropPage implements IDraggableListener
 {
 	private static final long serialVersionUID = 1L;
 
@@ -28,7 +29,7 @@ public class BehaviorDragDropPage extends AbstractDragDropPage implements IDragg
 		this.add(container);
 
 		// droppable //
-		this.add(new DroppableBehavior("#wrapper-panel-frame", this));
+		this.add(new DroppableBehavior("#wrapper-panel-frame", this.newDroppableListener()));
 	}
 
 	// Methods //
@@ -55,13 +56,13 @@ public class BehaviorDragDropPage extends AbstractDragDropPage implements IDragg
 	@Override
 	public void onDragStart(AjaxRequestTarget target, int top, int left)
 	{
-		info(target, String.format("Draggable: onDragStart, position [%d, %d]", top, left));
+		this.info(target, String.format("Draggable: onDragStart, position [%d, %d]", top, left));
 	}
 
 	@Override
 	public void onDragStop(AjaxRequestTarget target, int top, int left)
 	{
-		info(target, String.format("Draggable: onDragStop, position [%d, %d]", top, left));
+		this.info(target, String.format("Draggable: onDragStop, position [%d, %d]", top, left));
 	}
 
 	@Override
@@ -72,35 +73,17 @@ public class BehaviorDragDropPage extends AbstractDragDropPage implements IDragg
 
 	// IDroppableListener //
 
-	@Override
-	public boolean isDragEnterEventEnabled()
+	private IDroppableListener newDroppableListener()
 	{
-		// not enabled to prevent unnecessary server round-trips.
-		return false;
-	}
+		return new DroppableAdaper() {
 
-	@Override
-	public boolean isDragLeaveEventEnabled()
-	{
-		// not enabled to prevent unnecessary server round-trips.
-		return false;
-	}
-
-	@Override
-	public void onDragEnter(AjaxRequestTarget target, Component component)
-	{
-		// noop
-	}
-
-	@Override
-	public void onDragLeave(AjaxRequestTarget target, Component component)
-	{
-		// noop
-	}
-
-	@Override
-	public void onDrop(AjaxRequestTarget target, Component component)
-	{
-		info(target, "Droppable: onDrop", component);
+			private static final long serialVersionUID = 1L;
+			
+			@Override
+			public void onDrop(AjaxRequestTarget target, Component component)
+			{
+				info(target, "Droppable: onDrop", component);
+			}
+		};
 	}
 }

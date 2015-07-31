@@ -17,6 +17,7 @@
 package com.googlecode.wicket.jquery.ui.interaction.resizable;
 
 import org.apache.wicket.ajax.AjaxRequestTarget;
+import org.apache.wicket.util.io.IClusterable;
 
 /**
  * Event listener shared by the {@link Resizable} widget and the {@link ResizableBehavior}
@@ -24,7 +25,7 @@ import org.apache.wicket.ajax.AjaxRequestTarget;
  * @author Sebastien Briquet - sebfz1
  *
  */
-public interface IResizableListener
+public interface IResizableListener extends IClusterable
 {
 	/**
 	 * Indicates whether the 'start' event is enabled.<br />

@@ -17,6 +17,7 @@
 package com.googlecode.wicket.kendo.ui.scheduler;
 
 import org.apache.wicket.ajax.AjaxRequestTarget;
+import org.apache.wicket.util.io.IClusterable;
 
 import com.googlecode.wicket.kendo.ui.scheduler.views.SchedulerViewType;
 
@@ -26,7 +27,7 @@ import com.googlecode.wicket.kendo.ui.scheduler.views.SchedulerViewType;
  * @author Sebastien Briquet - sebfz1
  *
  */
-public interface ISchedulerListener
+public interface ISchedulerListener extends IClusterable
 {
 	/**
 	 * Indicates whether a edit-event is available.<br/>

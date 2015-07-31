@@ -17,6 +17,7 @@
 package com.googlecode.wicket.jquery.ui.calendar;
 
 import org.apache.wicket.ajax.AjaxRequestTarget;
+import org.apache.wicket.util.io.IClusterable;
 import org.threeten.bp.LocalDateTime;
 
 /**
@@ -25,7 +26,7 @@ import org.threeten.bp.LocalDateTime;
  * @author Sebastien Briquet - sebfz1
  *
  */
-public interface ICalendarListener
+public interface ICalendarListener extends IClusterable
 {
 	/**
 	 * Indicates whether a cell can be selected.<br/>

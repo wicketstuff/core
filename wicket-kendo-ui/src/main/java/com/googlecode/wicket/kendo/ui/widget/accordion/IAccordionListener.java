@@ -18,6 +18,7 @@ package com.googlecode.wicket.kendo.ui.widget.accordion;
 
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.extensions.markup.html.tabs.ITab;
+import org.apache.wicket.util.io.IClusterable;
 
 import com.googlecode.wicket.kendo.ui.widget.tabs.AjaxTab;
 
@@ -30,7 +31,7 @@ import com.googlecode.wicket.kendo.ui.widget.tabs.AjaxTab;
  * @since 6.19.0
  * @since 7.0.0
  */
-public interface IAccordionListener
+public interface IAccordionListener extends IClusterable
 {
     /**
 	 * Indicates whether the 'select' event is enabled.<br />

@@ -17,6 +17,7 @@
 package com.googlecode.wicket.jquery.ui.interaction.sortable;
 
 import org.apache.wicket.ajax.AjaxRequestTarget;
+import org.apache.wicket.util.io.IClusterable;
 
 /**
  * Event listener shared by the {@link Sortable} widget and the {@link SortableBehavior}
@@ -24,7 +25,7 @@ import org.apache.wicket.ajax.AjaxRequestTarget;
  * @param <T> the type of the model object
  * @author Sebastien Briquet - sebfz1
  */
-public interface ISortableListener<T>
+public interface ISortableListener<T> extends IClusterable
 {
 	/**
 	 * Indicates whether the 'receive' event is enabled.<br />

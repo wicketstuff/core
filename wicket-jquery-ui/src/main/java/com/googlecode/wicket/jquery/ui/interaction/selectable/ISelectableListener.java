@@ -20,6 +20,7 @@ import java.io.Serializable;
 import java.util.List;
 
 import org.apache.wicket.ajax.AjaxRequestTarget;
+import org.apache.wicket.util.io.IClusterable;
 
 /**
  * Event listener shared by the {@link Selectable} widget and the {@link SelectableBehavior}
@@ -27,7 +28,7 @@ import org.apache.wicket.ajax.AjaxRequestTarget;
  * @author Sebastien Briquet - sebfz1
  *
  */
-public interface ISelectableListener<T extends Serializable>
+public interface ISelectableListener<T extends Serializable> extends IClusterable
 {
 	/**
 	 * Triggered when a selection has been made (stops)

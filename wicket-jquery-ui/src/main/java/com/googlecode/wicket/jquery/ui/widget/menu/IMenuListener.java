@@ -17,6 +17,7 @@
 package com.googlecode.wicket.jquery.ui.widget.menu;
 
 import org.apache.wicket.ajax.AjaxRequestTarget;
+import org.apache.wicket.util.io.IClusterable;
 
 /**
  * Event listener shared by the {@link Menu} widget and the {@link MenuBehavior}
@@ -24,7 +25,7 @@ import org.apache.wicket.ajax.AjaxRequestTarget;
  * @author Sebastien Briquet - sebfz1
  *
  */
-public interface IMenuListener
+public interface IMenuListener extends IClusterable
 {
 	/**
 	 * Triggered when a menu-item is clicked

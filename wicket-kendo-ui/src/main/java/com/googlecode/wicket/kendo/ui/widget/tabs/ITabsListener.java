@@ -18,6 +18,7 @@ package com.googlecode.wicket.kendo.ui.widget.tabs;
 
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.extensions.markup.html.tabs.ITab;
+import org.apache.wicket.util.io.IClusterable;
 
 /**
  * Event listener shared by the {@link TabbedPanel} widget and the {@link TabsBehavior}<br />
@@ -27,7 +28,7 @@ import org.apache.wicket.extensions.markup.html.tabs.ITab;
  * @author Sebastien Briquet - sebfz1
  * @since 6.19.0
  */
-public interface ITabsListener
+public interface ITabsListener extends IClusterable
 {
 	/**
 	 * Indicates whether the 'select' event is enabled.<br />

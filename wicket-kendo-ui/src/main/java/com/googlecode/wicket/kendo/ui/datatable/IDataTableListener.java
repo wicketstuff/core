@@ -19,13 +19,14 @@ package com.googlecode.wicket.kendo.ui.datatable;
 import java.util.List;
 
 import org.apache.wicket.ajax.AjaxRequestTarget;
+import org.apache.wicket.util.io.IClusterable;
 
 /**
  * Event listener shared by the {@link DataTable} widget and the {@link DataTableBehavior}
  *
  * @author Sebastien Briquet - sebfz1
  */
-public interface IDataTableListener
+public interface IDataTableListener extends IClusterable
 {
 	/**
 	 * Triggered when a toolbar button is clicked.

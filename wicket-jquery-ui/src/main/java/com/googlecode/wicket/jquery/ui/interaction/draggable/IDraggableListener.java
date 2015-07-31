@@ -17,6 +17,7 @@
 package com.googlecode.wicket.jquery.ui.interaction.draggable;
 
 import org.apache.wicket.ajax.AjaxRequestTarget;
+import org.apache.wicket.util.io.IClusterable;
 
 /**
  * Event listener shared by the {@link Draggable} widget and the {@link DraggableBehavior}
@@ -24,7 +25,7 @@ import org.apache.wicket.ajax.AjaxRequestTarget;
  * @author Sebastien Briquet - sebfz1
  *
  */
-public interface IDraggableListener
+public interface IDraggableListener extends IClusterable
 {
 	/**
 	 * Indicates whether the 'stop' event is enabled.<br />

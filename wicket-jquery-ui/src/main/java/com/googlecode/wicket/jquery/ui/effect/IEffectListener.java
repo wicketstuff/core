@@ -17,6 +17,7 @@
 package com.googlecode.wicket.jquery.ui.effect;
 
 import org.apache.wicket.ajax.AjaxRequestTarget;
+import org.apache.wicket.util.io.IClusterable;
 
 /**
  * Event listener shared by the {@link JQueryEffectContainer} and the {@link JQueryEffectBehavior}
@@ -24,7 +25,7 @@ import org.apache.wicket.ajax.AjaxRequestTarget;
  * @author Sebastien Briquet - sebfz1
  *
  */
-public interface IEffectListener
+public interface IEffectListener extends IClusterable
 {
 	/**
 	 * Indicates whether the callback should be triggered when the effect completes.<br />

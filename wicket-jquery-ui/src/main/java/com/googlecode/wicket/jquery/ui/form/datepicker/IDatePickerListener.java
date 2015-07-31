@@ -17,6 +17,7 @@
 package com.googlecode.wicket.jquery.ui.form.datepicker;
 
 import org.apache.wicket.ajax.AjaxRequestTarget;
+import org.apache.wicket.util.io.IClusterable;
 
 /**
  * Event listener shared by the {@link DatePicker} widget and the {@link DatePickerBehavior}
@@ -24,7 +25,7 @@ import org.apache.wicket.ajax.AjaxRequestTarget;
  * @author Sebastien Briquet - sebfz1
  *
  */
-public interface IDatePickerListener
+public interface IDatePickerListener extends IClusterable
 {
 	/**
 	 * Indicates whether the 'onSelect' event is enabled.<br/>
