@@ -135,6 +135,7 @@ public class CalendarEvent implements Serializable
 
 	/**
 	 * Overrides the master editable option for this single event.
+	 * 
 	 * @return true or false
 	 */
 	public Boolean isEditable()
@@ -290,6 +291,7 @@ public class CalendarEvent implements Serializable
 
 	/**
 	 * Visitor accept method
+	 * 
 	 * @param visitor
 	 */
 	public final void accept(ICalendarVisitor visitor)
@@ -297,5 +299,3 @@ public class CalendarEvent implements Serializable
 		visitor.visit(this);
 	}
 }
-
-
