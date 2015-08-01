@@ -16,7 +16,6 @@
  */
 package com.googlecode.wicket.jquery.core.utils;
 
-
 /**
  * Utility class for javascript / jQuery statements
  * 
@@ -33,7 +32,19 @@ public class JQueryUtils
 	 */
 	public static String trycatch(String statement)
 	{
-		return "try { " + statement + " } catch (e) { if (console) { console.warn(e); } }";
+		return JQueryUtils.trycatch(statement, false);
+	}
+
+	/**
+	 * Wraps a js statement into a try-catch block
+	 * 
+	 * @param statement the js statement
+	 * @param warn whether a warn should be logged to the console
+	 * @return the wrapped statement
+	 */
+	public static String trycatch(String statement, boolean warn)
+	{
+		return "try { " + statement + " } catch (e) { " + (warn ? "if (console) { console.warn(e); }" : "") + " }";
 	}
 
 	/**

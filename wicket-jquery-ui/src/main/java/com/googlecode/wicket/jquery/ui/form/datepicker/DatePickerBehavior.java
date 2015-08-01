@@ -89,8 +89,9 @@ public abstract class DatePickerBehavior extends JQueryUIBehavior implements IJQ
 	@Override
 	public void destroy(IPartialPageRequestHandler handler)
 	{
-		// FIXME: workaround, will be removed when fixed in jquery-ui
-		handler.prependJavaScript(JQueryUtils.trycatch(this.$(Options.asString("destroy"))));
+		// XXX: workaround, will be removed when fixed in jquery-ui
+		String statement = this.$(Options.asString("destroy"));
+		handler.prependJavaScript(JQueryUtils.trycatch(statement));
 
 		this.onDestroy(handler);
 	}
