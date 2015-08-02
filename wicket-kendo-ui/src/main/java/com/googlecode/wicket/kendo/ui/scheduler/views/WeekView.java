@@ -1,5 +1,7 @@
 package com.googlecode.wicket.kendo.ui.scheduler.views;
 
+
+
 /**
  * Defines the 'week' scheduler's view
  *

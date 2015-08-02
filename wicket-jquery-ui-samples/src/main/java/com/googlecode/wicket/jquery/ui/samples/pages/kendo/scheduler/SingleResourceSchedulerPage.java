@@ -53,7 +53,7 @@ public class SingleResourceSchedulerPage extends AbstractSchedulerPage
 		Options options = new Options();
 		options.set("date", "Date.now()");
 		options.set("editable", true); // default
-		options.set("views", "[ { type: 'day', showWorkHours: true }, { type: 'week', showWorkHours: true }, { type: 'month', selected: true } ]");
+		options.set("views", "[ { type: 'day', showWorkHours: true }, { type: 'week', showWorkHours: true }, { type: 'month', selected: true }, { type: 'timeline' } ]");
 		options.set("workDayStart", "new Date('2014/1/1 08:00 AM')");
 		options.set("workDayEnd", "new Date('2014/1/1 6:00 PM')");
 

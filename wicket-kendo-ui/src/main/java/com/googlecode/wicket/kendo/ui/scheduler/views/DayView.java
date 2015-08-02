@@ -1,6 +1,8 @@
 package com.googlecode.wicket.kendo.ui.scheduler.views;
 
 
+
+
 /**
  * Defines the 'day' scheduler's view
  *

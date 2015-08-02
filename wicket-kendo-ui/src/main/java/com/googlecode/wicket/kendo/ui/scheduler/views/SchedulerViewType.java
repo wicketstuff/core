@@ -10,11 +10,10 @@ import org.slf4j.LoggerFactory;
  */
 public enum SchedulerViewType
 {
-	// TODO: add timelineview
-	day, week, workWeek, month, agenda;
+	day, week, workWeek, month, agenda, timeline, timelineWeek, timelineWorkWeek, timelineMonth;
 
 	private static final Logger LOG = LoggerFactory.getLogger(SchedulerViewType.class);
-	
+
 	/**
 	 * Safely get the {@link SchedulerViewType} corresponding to the supplied view name
 	 *
@@ -29,10 +28,10 @@ public enum SchedulerViewType
 		}
 		catch (IllegalArgumentException e)
 		{
-	    	if (LOG.isDebugEnabled())
-	    	{
-	    		LOG.debug(e.getMessage(), e);
-	    	}
+			if (LOG.isDebugEnabled())
+			{
+				LOG.debug(e.getMessage(), e);
+			}
 		}
 
 		return null;

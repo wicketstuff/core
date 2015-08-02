@@ -15,6 +15,7 @@ import com.googlecode.wicket.kendo.ui.scheduler.SchedulerModel;
 import com.googlecode.wicket.kendo.ui.scheduler.views.AgendaView;
 import com.googlecode.wicket.kendo.ui.scheduler.views.DayView;
 import com.googlecode.wicket.kendo.ui.scheduler.views.MonthView;
+import com.googlecode.wicket.kendo.ui.scheduler.views.TimelineView;
 import com.googlecode.wicket.kendo.ui.scheduler.views.WeekView;
 import com.googlecode.wicket.kendo.ui.scheduler.views.WorkWeekView;
 
@@ -41,7 +42,8 @@ public class DefaultSchedulerPage extends AbstractSchedulerPage
 				WeekView.newInstance().setShowWorkHours(true), // lf
 				WorkWeekView.newInstance(), // lf
 				MonthView.newInstance().setSelected(true), // lf
-				AgendaView.newInstance());
+				AgendaView.newInstance(), // lf
+				TimelineView.newInstance().setShowWorkHours(true));
 
 		options.set("workDayStart", "new Date('2014/1/1 08:00 AM')");
 		options.set("workDayEnd", "new Date('2014/1/1 6:00 PM')");
