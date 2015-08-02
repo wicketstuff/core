@@ -24,10 +24,9 @@ import org.apache.wicket.request.IRequestCycle;
 import org.apache.wicket.request.IRequestHandler;
 import org.apache.wicket.request.http.WebResponse;
 
-import com.googlecode.wicket.jquery.core.Options;
 import com.googlecode.wicket.jquery.core.behavior.ChoiceModelBehavior;
 import com.googlecode.wicket.jquery.core.renderer.ITextRenderer;
-import com.googlecode.wicket.jquery.core.utils.RendererUtils;
+import com.googlecode.wicket.jquery.core.utils.BuilderUtils;
 
 /**
  * Provides the {@link AbstractAjaxBehavior} for the {@link AutoCompleteTextField}
@@ -79,14 +78,14 @@ abstract class AutoCompleteChoiceModelBehavior<T> extends ChoiceModelBehavior<T>
 					}
 
 					builder.append("{ ");
-					Options.append(builder, "id", Integer.toString(index)); /* id is a reserved word */
+					BuilderUtils.append(builder, "id", Integer.toString(index)); /* id is a reserved word */
 					builder.append(", ");
-					Options.append(builder, "value", renderer.getText(choice)); /* value is a reserved word */
+					BuilderUtils.append(builder, "value", renderer.getText(choice)); /* value is a reserved word */
 
 					for (String property : AutoCompleteChoiceModelBehavior.this.getProperties())
 					{
 						builder.append(", ");
-						builder.append(RendererUtils.getJsonBody(choice, renderer, property));
+						BuilderUtils.resolve(builder, choice, property);
 					}
 
 					builder.append(" }");

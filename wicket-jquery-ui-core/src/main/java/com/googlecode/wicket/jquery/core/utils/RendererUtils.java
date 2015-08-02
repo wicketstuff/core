@@ -25,8 +25,10 @@ import com.googlecode.wicket.jquery.core.renderer.ITextRenderer;
  * Utility class for renderers
  *
  * @author Sebastien Briquet - sebfz1
- *
+ * @deprecated Not used anymore (error prone). will be removed in 6.22.0
+ * TODO: 6.22.0 - remove
  */
+@Deprecated
 public class RendererUtils
 {
 	// ITextRenderer //

@@ -21,7 +21,7 @@ import java.util.List;
 
 import org.apache.wicket.model.util.ListModel;
 
-import com.googlecode.wicket.jquery.core.Options;
+import com.googlecode.wicket.jquery.core.utils.BuilderUtils;
 
 /**
  * INTERNAL USE<br/>
@@ -105,18 +105,18 @@ public class ResourceListModel extends ListModel<ResourceList>
 			}
 
 			builder.append("{ ");
-			Options.append(builder, "field", list.getField());
+			BuilderUtils.append(builder, "field", list.getField());
 			builder.append(", ");
 
 			if (list.getGroup() != null)
 			{
-				Options.append(builder, "name", list.getGroup());
+				BuilderUtils.append(builder, "name", list.getGroup());
 				builder.append(", ");
 			}
 
-			Options.append(builder, "title", list.getTitle());
+			BuilderUtils.append(builder, "title", list.getTitle());
 			builder.append(", ");
-			Options.append(builder, "multiple", list.isMultiple());
+			BuilderUtils.append(builder, "multiple", list.isMultiple());
 			builder.append(", ");
 			builder.append("dataSource: [ ");
 

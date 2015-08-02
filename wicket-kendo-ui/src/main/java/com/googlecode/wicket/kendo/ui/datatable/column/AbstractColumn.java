@@ -24,6 +24,7 @@ import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
 
 import com.googlecode.wicket.jquery.core.Options;
+import com.googlecode.wicket.jquery.core.utils.BuilderUtils;
 
 /**
  * Base class for {@link IColumn}{@code s} implementation
@@ -224,17 +225,17 @@ public abstract class AbstractColumn implements IColumn
 	{
 		StringBuilder builder = new StringBuilder();
 
-		Options.append(builder, "title", this.getTitle());
+		BuilderUtils.append(builder, "title", this.getTitle());
 		builder.append(", ");
-		Options.append(builder, "field", this.getField());
+		BuilderUtils.append(builder, "field", this.getField());
 
 		builder.append(", ");
-		Options.append(builder, "hidden", !this.isVisible());
+		BuilderUtils.append(builder, "hidden", !this.isVisible());
 
 		if (this.getWidth() > 0)
 		{
 			builder.append(", ");
-			Options.append(builder, "width", this.getWidth());
+			BuilderUtils.append(builder, "width", this.getWidth());
 		}
 
 		// nullable options (string) //
@@ -242,25 +243,25 @@ public abstract class AbstractColumn implements IColumn
 		if (this.getFormat() != null)
 		{
 			builder.append(", ");
-			Options.append(builder, "format", this.getFormat());
+			BuilderUtils.append(builder, "format", this.getFormat());
 		}
 
 		if (this.getTemplate() != null)
 		{
 			builder.append(", ");
-			Options.append(builder, "template", this.getTemplate());
+			BuilderUtils.append(builder, "template", this.getTemplate());
 		}
 
 		if (this.getGroupHeaderTemplate() != null)
 		{
 			builder.append(", ");
-			Options.append(builder, "groupHeaderTemplate", this.getGroupHeaderTemplate());
+			BuilderUtils.append(builder, "groupHeaderTemplate", this.getGroupHeaderTemplate());
 		}
 
 		if (this.getGroupFooterTemplate() != null)
 		{
 			builder.append(", ");
-			Options.append(builder, "groupFooterTemplate", this.getGroupFooterTemplate());
+			BuilderUtils.append(builder, "groupFooterTemplate", this.getGroupFooterTemplate());
 		}
 
 		// nullable options (object) //

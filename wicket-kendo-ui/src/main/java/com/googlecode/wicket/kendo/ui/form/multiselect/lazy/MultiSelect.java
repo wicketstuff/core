@@ -28,7 +28,6 @@ import com.googlecode.wicket.jquery.core.JQueryBehavior;
 import com.googlecode.wicket.jquery.core.Options;
 import com.googlecode.wicket.jquery.core.behavior.ChoiceModelBehavior;
 import com.googlecode.wicket.jquery.core.data.IChoiceProvider;
-import com.googlecode.wicket.jquery.core.utils.RendererUtils;
 import com.googlecode.wicket.kendo.ui.renderer.ChoiceRenderer;
 
 /**
@@ -181,7 +180,7 @@ public abstract class MultiSelect<T> extends FormComponent<Collection<T>> implem
 
 		for (T value : this.getModelObject())
 		{
-			values.add(RendererUtils.toJson(value, this.renderer));
+			values.add(String.format("{ %s }", this.renderer.render(value)));
 		}
 
 		return values.toString();

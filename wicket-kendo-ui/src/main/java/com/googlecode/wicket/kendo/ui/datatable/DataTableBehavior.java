@@ -28,6 +28,7 @@ import com.googlecode.wicket.jquery.core.JQueryEvent;
 import com.googlecode.wicket.jquery.core.Options;
 import com.googlecode.wicket.jquery.core.ajax.IJQueryAjaxAware;
 import com.googlecode.wicket.jquery.core.ajax.JQueryAjaxBehavior;
+import com.googlecode.wicket.jquery.core.utils.BuilderUtils;
 import com.googlecode.wicket.kendo.ui.KendoUIBehavior;
 import com.googlecode.wicket.kendo.ui.datatable.ColumnAjaxBehavior.ClickEvent;
 import com.googlecode.wicket.kendo.ui.datatable.ToolbarAjaxBehavior.ToolbarClickEvent;
@@ -211,14 +212,14 @@ public abstract class DataTableBehavior extends KendoUIBehavior implements IJQue
 					}
 
 					builder.append("{ ");
-					Options.append(builder, "name", button.getName());
+					BuilderUtils.append(builder, "name", button.getName());
 					builder.append(", ");
-					Options.append(builder, "text", button.toString());
+					BuilderUtils.append(builder, "text", button.toString());
 					builder.append(", ");
 
 					if (!Strings.isEmpty(css)) /* important */
 					{
-						Options.append(builder, "className", css);
+						BuilderUtils.append(builder, "className", css);
 						builder.append(", ");
 					}
 
@@ -263,8 +264,7 @@ public abstract class DataTableBehavior extends KendoUIBehavior implements IJQue
 	protected abstract JQueryAjaxBehavior newToolbarClickAjaxBehavior(IJQueryAjaxAware source);
 
 	/**
-	 * Gets a new {@link JQueryAjaxBehavior} that will be called by a table's button.
-	 * This method may be overridden to provide additional behaviors
+	 * Gets a new {@link JQueryAjaxBehavior} that will be called by a table's button. This method may be overridden to provide additional behaviors
 	 *
 	 * @param source the {@link IJQueryAjaxAware}
 	 * @param button the button that is passed to the behavior so it can be retrieved via the {@link ClickEvent}

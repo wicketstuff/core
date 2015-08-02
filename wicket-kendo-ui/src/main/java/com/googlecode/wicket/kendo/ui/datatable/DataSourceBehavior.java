@@ -38,6 +38,7 @@ import org.apache.wicket.request.http.WebResponse;
 import org.apache.wicket.util.convert.ConversionException;
 
 import com.googlecode.wicket.jquery.core.Options;
+import com.googlecode.wicket.jquery.core.utils.BuilderUtils;
 import com.googlecode.wicket.kendo.ui.datatable.column.IColumn;
 import com.googlecode.wicket.kendo.ui.datatable.column.PropertyColumn;
 import com.googlecode.wicket.kendo.ui.utils.PropertyUtils;
@@ -172,7 +173,7 @@ public class DataSourceBehavior<T> extends AbstractAjaxBehavior
 				StringBuilder builder = new StringBuilder();
 
 				builder.append("{ ");
-				Options.append(builder, "__count", size);
+				BuilderUtils.append(builder, "__count", size);
 				builder.append(", ");
 				builder.append(Options.QUOTE).append("results").append(Options.QUOTE).append(": ");
 				builder.append("[ ");

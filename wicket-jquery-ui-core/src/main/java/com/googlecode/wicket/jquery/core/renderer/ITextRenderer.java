@@ -59,4 +59,9 @@ public interface ITextRenderer<T> extends IClusterable
 	 * @return {@code true} or {@code false}
 	 */
 	boolean match(T object, String search, boolean sensitive);
+
+	/**
+	 * Renders the object. This typically returns a JSON body (without brackets)
+	 */
+	String render(T object);
 }

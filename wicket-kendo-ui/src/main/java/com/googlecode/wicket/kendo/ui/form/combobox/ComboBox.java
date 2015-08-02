@@ -26,9 +26,9 @@ import com.googlecode.wicket.jquery.core.IJQueryWidget;
 import com.googlecode.wicket.jquery.core.JQueryBehavior;
 import com.googlecode.wicket.jquery.core.Options;
 import com.googlecode.wicket.jquery.core.template.IJQueryTemplate;
-import com.googlecode.wicket.jquery.core.utils.RendererUtils;
-import com.googlecode.wicket.kendo.ui.KendoUIBehavior;
+import com.googlecode.wicket.jquery.core.utils.BuilderUtils;
 import com.googlecode.wicket.kendo.ui.KendoTemplateBehavior;
+import com.googlecode.wicket.kendo.ui.KendoUIBehavior;
 import com.googlecode.wicket.kendo.ui.renderer.ChoiceRenderer;
 
 /**
@@ -153,7 +153,7 @@ public class ComboBox<T> extends TextField<String> implements IJQueryWidget
 
 		this.choices = choices;
 		this.renderer = renderer;
-		this.template = this.newTemplate(); //TODO: move to onInitialize (check the other classes)
+		this.template = this.newTemplate(); // TODO: move to onInitialize (check the other classes)
 	}
 
 	// Properties //
@@ -255,14 +255,14 @@ public class ComboBox<T> extends TextField<String> implements IJQueryWidget
 				}
 
 				builder.append("{ ");
-				builder.append(RendererUtils.getJsonBody(object, renderer));
+				builder.append(renderer.render(object));
 
 				if (this.template != null)
 				{
 					for (String property : this.template.getTextProperties())
 					{
 						builder.append(", ");
-						builder.append(RendererUtils.getJsonBody(object, renderer, property));
+						BuilderUtils.resolve(builder, object, property);
 					}
 				}
 

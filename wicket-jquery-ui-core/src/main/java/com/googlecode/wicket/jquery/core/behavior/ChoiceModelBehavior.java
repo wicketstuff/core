@@ -28,7 +28,7 @@ import org.apache.wicket.request.http.WebResponse;
 
 import com.googlecode.wicket.jquery.core.data.IChoiceProvider;
 import com.googlecode.wicket.jquery.core.renderer.ITextRenderer;
-import com.googlecode.wicket.jquery.core.utils.RendererUtils;
+import com.googlecode.wicket.jquery.core.utils.BuilderUtils;
 
 /**
  * Provides the choice ajax loading behavior
@@ -115,12 +115,12 @@ public abstract class ChoiceModelBehavior<T> extends AbstractAjaxBehavior implem
 					}
 
 					builder.append("{ ");
-					builder.append(RendererUtils.getJsonBody(choice, renderer));
+					builder.append(renderer.render(choice));
 
 					for (String property : ChoiceModelBehavior.this.getProperties())
 					{
 						builder.append(", ");
-						builder.append(RendererUtils.getJsonBody(choice, renderer, property));
+						BuilderUtils.resolve(builder, choice, property);
 					}
 
 					builder.append(" }");

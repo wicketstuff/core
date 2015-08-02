@@ -16,6 +16,7 @@
  */
 package com.googlecode.wicket.jquery.core.renderer;
 
+import org.apache.wicket.ajax.json.JSONObject;
 import org.apache.wicket.core.util.lang.PropertyResolver;
 
 /**
@@ -98,6 +99,12 @@ public class TextRenderer<T> implements ITextRenderer<T>
 		}
 
 		return "";
+	}
+
+	@Override
+	public String render(T object)
+	{
+		return String.format("%s: %s", JSONObject.quote(this.getTextField()), JSONObject.quote(this.getText(object)));
 	}
 
 	@Override

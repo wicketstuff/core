@@ -29,6 +29,7 @@ import java.util.Set;
 import org.apache.wicket.ajax.json.JSONObject;
 import org.apache.wicket.util.io.IClusterable;
 
+import com.googlecode.wicket.jquery.core.utils.BuilderUtils;
 import com.googlecode.wicket.jquery.core.utils.DateUtils;
 
 /**
@@ -128,31 +129,6 @@ public class Options implements IClusterable
 		}
 
 		return builder.toString();
-	}
-
-	/**
-	 * Helper method that adds a key/value JSON pair to the specified builder<br/>
-	 * The value will *not* be quoted, except if the value is {@code null}, {@code "null"} will be returned.
-	 *
-	 * @param builder the {@link StringBuilder}
-	 * @param key the key
-	 * @param value the object
-	 */
-	public static void append(StringBuilder builder, String key, Object value)
-	{
-		builder.append(JSONObject.quote(key)).append(": ").append(String.valueOf(value));
-	}
-
-	/**
-	 * Helper method that adds a key/value JSON pair to the specified builder. The value will be quoted
-	 *
-	 * @param builder the {@link StringBuilder}
-	 * @param key the key
-	 * @param value the value
-	 */
-	public static void append(StringBuilder builder, String key, String value)
-	{
-		builder.append(JSONObject.quote(key)).append(": ").append(JSONObject.quote(value));
 	}
 
 	private final Map<String, Object> map;
@@ -341,7 +317,7 @@ public class Options implements IClusterable
 				builder.append(", ");
 			}
 
-			Options.append(builder, entry.getKey(), entry.getValue());
+			BuilderUtils.append(builder, entry.getKey(), entry.getValue());
 		}
 
 		return builder.append(" }").toString();
