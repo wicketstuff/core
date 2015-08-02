@@ -102,7 +102,7 @@ public abstract class CustomTooltipBehavior extends TooltipBehavior
 	 */
 	protected String escape(String content)
 	{
-		return content.replace("\t", "").replace("\n", "").replace("\"", "'");
+		return content.replace("\t", "").replace("\r", "").replace("\n", "").replace("\"", "'");
 	}
 
 	@Override
