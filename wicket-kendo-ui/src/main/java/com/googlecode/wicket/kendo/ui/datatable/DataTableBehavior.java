@@ -211,12 +211,15 @@ public abstract class DataTableBehavior extends KendoUIBehavior implements IJQue
 					}
 
 					builder.append("{ ");
-					builder.append("'name': '").append(button.getName()).append("', ");
-					builder.append("'text': '").append(button.toString()).append("', ");
+					Options.append(builder, "name", button.getName());
+					builder.append(", ");
+					Options.append(builder, "text", button.toString());
+					builder.append(", ");
 
 					if (!Strings.isEmpty(css)) /* important */
 					{
-						builder.append("'className': '").append(css).append("', ");
+						Options.append(builder, "className", css);
+						builder.append(", ");
 					}
 
 					builder.append("'click': ").append(behavior.getCallbackFunction());

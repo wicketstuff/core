@@ -132,30 +132,27 @@ public class Options implements IClusterable
 
 	/**
 	 * Helper method that adds a key/value JSON pair to the specified builder<br/>
-	 * If the supplied value is null, "null" is returned
+	 * The value will *not* be quoted, except if the value is {@code null}, {@code "null"} will be returned.
 	 *
 	 * @param builder the {@link StringBuilder}
 	 * @param key the key
 	 * @param value the object
 	 */
-	// FIXME: replace where appropriate
-	// TODO: move to OptionsUtils
 	public static void append(StringBuilder builder, String key, Object value)
 	{
-		builder.append(Options.QUOTE).append(key).append(Options.QUOTE).append(": ").append(String.valueOf(value));
+		builder.append(JSONObject.quote(key)).append(": ").append(String.valueOf(value));
 	}
 
 	/**
-	 * Helper method that adds a key/value JSON pair to the specified builder
+	 * Helper method that adds a key/value JSON pair to the specified builder. The value will be quoted
 	 *
 	 * @param builder the {@link StringBuilder}
 	 * @param key the key
 	 * @param value the value
 	 */
-	// TODO: move to OptionsUtils
 	public static void append(StringBuilder builder, String key, String value)
 	{
-		builder.append(Options.QUOTE).append(key).append(Options.QUOTE).append(": ").append(JSONObject.quote(value));
+		builder.append(JSONObject.quote(key)).append(": ").append(JSONObject.quote(value));
 	}
 
 	private final Map<String, Object> map;
@@ -269,7 +266,7 @@ public class Options implements IClusterable
 	 * <pre>
 	 * Options o = new Options();
 	 * o.set("foo", new Options("foo1", "value1"), new Options("foo2", Options.asString("value2")));
-	 *
+	 * 
 	 * results in json:
 	 * { "foo": [
 	 *            { "foo1": value1 },
@@ -298,7 +295,7 @@ public class Options implements IClusterable
 	 * <pre>
 	 * Options o = new Options();
 	 * o.set("foo", new Options("foo1", "value1"), new Options("foo2", Options.asString("value2")));
-	 *
+	 * 
 	 * results in json:
 	 * { "foo": [
 	 *            { "foo1": value1 },
@@ -344,7 +341,7 @@ public class Options implements IClusterable
 				builder.append(", ");
 			}
 
-			builder.append(QUOTE).append(entry.getKey()).append(QUOTE).append(": ").append(entry.getValue());
+			Options.append(builder, entry.getKey(), entry.getValue());
 		}
 
 		return builder.append(" }").toString();

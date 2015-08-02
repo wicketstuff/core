@@ -172,7 +172,8 @@ public class DataSourceBehavior<T> extends AbstractAjaxBehavior
 				StringBuilder builder = new StringBuilder();
 
 				builder.append("{ ");
-				builder.append(Options.QUOTE).append("__count").append(Options.QUOTE).append(": ").append(size).append(", ");
+				Options.append(builder, "__count", size);
+				builder.append(", ");
 				builder.append(Options.QUOTE).append("results").append(Options.QUOTE).append(": ");
 				builder.append("[ ");
 

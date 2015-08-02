@@ -79,9 +79,9 @@ abstract class AutoCompleteChoiceModelBehavior<T> extends ChoiceModelBehavior<T>
 					}
 
 					builder.append("{ ");
-					builder.append(Options.QUOTE).append("id").append(Options.QUOTE).append(": ").append(Options.QUOTE).append(Integer.toString(index)).append(Options.QUOTE); /* id is a reserved word */
+					Options.append(builder, "id", Integer.toString(index)); /* id is a reserved word */
 					builder.append(", ");
-					builder.append(Options.QUOTE).append("value").append(Options.QUOTE).append(": ").append(Options.QUOTE).append(renderer.getText(choice)).append(Options.QUOTE); /* value is a reserved word */
+					Options.append(builder, "value", renderer.getText(choice)); /* value is a reserved word */
 
 					for (String property : AutoCompleteChoiceModelBehavior.this.getProperties())
 					{

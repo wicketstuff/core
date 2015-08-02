@@ -25,7 +25,7 @@ import org.apache.wicket.model.IModel;
 import com.googlecode.wicket.jquery.core.IJQueryWidget;
 
 /**
- * Provides a {@link org.apache.wicket.markup.html.form.CheckBoxMultipleChoice} with the Kendo-ui style<br/>
+ * Provides a {@link org.apache.wicket.markup.html.form.Check} with the Kendo-ui style<br/>
  * <br/>
  * <b>Note:</b> {@link Check} is not a {@link IJQueryWidget} (no corresponding widget is supplied by Kendo UI)<br/>
  * It means that required Kendo UI dependencies (javascript/stylesheet) are not automatically added.
@@ -34,7 +34,7 @@ import com.googlecode.wicket.jquery.core.IJQueryWidget;
  * @author Sebastien Briquet - sebfz1
  *
  */
-// TODO: add sample
+// TODO: add sample for Check
 public class Check<T> extends org.apache.wicket.markup.html.form.Check<T>
 {
 	private static final long serialVersionUID = 1L;
