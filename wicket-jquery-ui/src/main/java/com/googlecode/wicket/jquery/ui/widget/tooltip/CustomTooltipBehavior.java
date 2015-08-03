@@ -18,6 +18,7 @@ package com.googlecode.wicket.jquery.ui.widget.tooltip;
 
 import org.apache.wicket.AttributeModifier;
 import org.apache.wicket.Component;
+import org.apache.wicket.ajax.json.JSONObject;
 import org.apache.wicket.core.util.string.ComponentRenderer;
 import org.apache.wicket.markup.html.WebMarkupContainer;
 
@@ -27,9 +28,8 @@ import com.googlecode.wicket.jquery.core.Options;
 /**
  * Provides the jQuery tooltip behavior, with custom content.<br/>
  * <br/>
- * <b>Warning:</b> there is no selector supplied to the constructor, but it does not means that this behavior will
- * be applied to the <i>document</i>, like for the {@link TooltipBehavior}. The selector will be retrieved from the
- * component this behavior will be bound to, because this is a mandatory condition.
+ * <b>Warning:</b> there is no selector supplied to the constructor, but it does not means that this behavior will be applied to the <i>document</i>, like for the {@link TooltipBehavior}. The selector will be retrieved from the component
+ * this behavior will be bound to, because this is a mandatory condition.
  *
  * @author Sebastien Briquet - sebfz1
  * @since 6.12.0
@@ -68,7 +68,7 @@ public abstract class CustomTooltipBehavior extends TooltipBehavior
 
 		this.selector = JQueryWidget.getSelector(component);
 		this.setOption("items", Options.asString("[data-tooltip]"));
-		this.setOption("content", String.format("function() { return \"%s\"; }", this.render(this.newContent(CONTENT_ID))));
+		this.setOption("content", String.format("function() { return %s; }", this.render(this.newContent(CONTENT_ID))));
 	}
 
 	// Methods //
@@ -85,24 +85,38 @@ public abstract class CustomTooltipBehavior extends TooltipBehavior
 	 * Renders the supplied container using {@link ComponentRenderer}
 	 *
 	 * @param container the {@link WebMarkupContainer}
-	 * @return the escaped string of the rendered container
+	 * @return the quoted/escaped string of the rendered container
 	 * @see #escape(String)
 	 */
 	private String render(WebMarkupContainer container)
 	{
-		return this.escape(String.valueOf(ComponentRenderer.renderComponent(container)));
+		return this.quote(String.valueOf(ComponentRenderer.renderComponent(container)));
 	}
 
 	/**
-	 * Escapes the supplied content<br/>
-	 * This can be overridden to provide additional escaping
+	 * Quotes (and escapes) the content<br/>
+	 * <b>Warning:</b> override with care
+	 *
+	 * @param content the content, likely html
+	 * @return the quoted content
+	 */
+	protected String quote(String content)
+	{
+		return JSONObject.quote(this.escape(content));
+	}
+
+	/**
+	 * Provides escaping before the content is quoted
 	 *
 	 * @param content the content, likely html
 	 * @return the escaped content
+	 * @deprecated useless, prefer overriding {@link #quote(String)}
+	 * TODO: 6.22.0/7.1.0 - remove 
 	 */
+	@Deprecated
 	protected String escape(String content)
 	{
-		return content.replace("\t", "").replace("\r", "").replace("\n", "").replace("\"", "'");
+		return content;
 	}
 
 	@Override
