@@ -14,15 +14,19 @@ public class ComponentKendoTooltipPage extends AbstractTooltipPage
 	public ComponentKendoTooltipPage()
 	{
 		// label 1 //
-		MultiLineLabel tooltip1 = new MultiLineLabel("dummy1", "I am a tooltip\non several\nlines");
 		final Label multiLineLabel = new Label("multilineLabel", "Hover me to give you a multi line tip!");
 		this.add(multiLineLabel);
+
+		// tooltip 1 //
+		MultiLineLabel tooltip1 = new MultiLineLabel("dummy1", "I am a tooltip\non several\nlines");
 		multiLineLabel.add(new TooltipBehavior(tooltip1));
 
 		// label 2 //
-		ImageAndTextPanel tooltip2 = new ImageAndTextPanel("dummy2");
 		final Label imageAndTextLabel = new Label("imageAndText", "Hover me to give you a tip with an image!");
 		this.add(imageAndTextLabel);
+
+		// tooltip 2//
+		ImageAndTextPanel tooltip2 = new ImageAndTextPanel("dummy2");
 		imageAndTextLabel.add(new TooltipBehavior(tooltip2, new Options("position", Options.asString("right"))));
 	}
 
