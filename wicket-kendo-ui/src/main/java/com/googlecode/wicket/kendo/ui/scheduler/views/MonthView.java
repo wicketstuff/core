@@ -1,7 +1,5 @@
 package com.googlecode.wicket.kendo.ui.scheduler.views;
 
-
-
 /**
  * Defines the 'month' scheduler's view
  *

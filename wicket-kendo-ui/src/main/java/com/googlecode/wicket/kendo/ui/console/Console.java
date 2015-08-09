@@ -73,6 +73,7 @@ public class Console extends AbstractConsole
 	 *
 	 * @param message the message to log
 	 * @deprecated too confusing with {@link #info(Serializable)}, use {@link #log(Serializable, boolean)} or {@link #info(IPartialPageRequestHandler, Serializable)} instead
+	 * TODO: 6.22.0/7.1.0 remove
 	 */
 	@Deprecated
 	public void info(String message)
