@@ -308,7 +308,7 @@ public class TreeTable extends DefaultAbstractTree
 	protected void onBeforeAttach()
 	{
 		// has the header been added yet?
-		if (get("sideColumns") == null)
+		if (get("sideHeaderColumns") == null)
 		{
 			// no. initialize columns first
 			if (columns != null)
