@@ -25,7 +25,7 @@
     <groupId>org.wicketstuff</groupId>
     <artifactId>wicket15-tree</artifactId>
     <packaging>jar</packaging>
-    <version>7.1.0-SNAPSHOT</version>
+    <version>7.0.1-SNAPSHOT</version>
     <name>Wicket 1.5 Tree component</name>
     <description>A copy of the pre- Wicket-6.x Tree component from wicket-extensions</description>
     <licenses>
@@ -44,6 +44,9 @@
         <maven.compiler.source>1.7</maven.compiler.source>
         <maven.compiler.target>1.7</maven.compiler.target>
         <!-- allowed values: R7, 1.0, 1.5, 2.0 or none -->
+        <log4j.version>1.2.17</log4j.version>
+        <servlet-api.version>3.0.1</servlet-api.version>
+        <slf4j.version>1.7.6</slf4j.version>
         <wtp.version>none</wtp.version>
         <wicket.version>7.0.0</wicket.version>
     </properties>
@@ -56,16 +59,59 @@
     <dependencyManagement>
         <dependencies>
             <dependency>
+                <groupId>javax.servlet</groupId>
+                <artifactId>javax.servlet-api</artifactId>
+                <version>${servlet-api.version}</version>
+                <scope>provided</scope>
+            </dependency>
+            <dependency>
                 <groupId>org.apache.wicket</groupId>
                 <artifactId>wicket-core</artifactId>
                 <version>${wicket.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>junit</groupId>
+                <artifactId>junit</artifactId>
+                <version>4.12</version>
+                <scope>test</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.slf4j</groupId>
+                <artifactId>slf4j-log4j12</artifactId>
+                <version>${slf4j.version}</version>
+                <scope>provided</scope>
+            </dependency>
+            <dependency>
+                <groupId>log4j</groupId>
+                <artifactId>log4j</artifactId>
+                <version>${log4j.version}</version>
+                <scope>provided</scope>
             </dependency>
         </dependencies>
     </dependencyManagement>
     <dependencies>
         <dependency>
+            <groupId>javax.servlet</groupId>
+            <artifactId>javax.servlet-api</artifactId>
+        </dependency>
+        <dependency>
             <groupId>org.apache.wicket</groupId>
             <artifactId>wicket-core</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-log4j12</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>log4j</groupId>
+            <artifactId>log4j</artifactId>
+            <scope>test</scope>
         </dependency>
     </dependencies>
     <build>
