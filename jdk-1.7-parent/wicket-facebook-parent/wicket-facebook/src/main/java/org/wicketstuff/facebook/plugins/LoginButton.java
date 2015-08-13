@@ -60,7 +60,7 @@ public class LoginButton extends AbstractFacebookPlugin
 
 		add(new AttributeModifier("data-show-faces", new PropertyModel<Boolean>(this, "showFaces")));
 		add(new AttributeModifier("data-max-rows", new PropertyModel<Boolean>(this, "maxRows")));
-		add(new AttributeModifier("data-perms", new PermissionsModel()));
+		add(new AttributeModifier("data-scope", new PermissionsModel()));
 	}
 
 	/**
