@@ -25,7 +25,7 @@
     <groupId>org.wicketstuff</groupId>
     <artifactId>wicket15-tree</artifactId>
     <packaging>jar</packaging>
-    <version>7.0.2</version>
+    <version>7.1.0-SNAPSHOT</version>
     <name>Wicket 1.5 Tree component</name>
     <description>A copy of the pre- Wicket-6.x Tree component from wicket-extensions</description>
     <licenses>
@@ -54,7 +54,7 @@
         <connection>scm:git:git@github.com:wicketstuff/wicket1.5-tree.git</connection>
         <developerConnection>scm:git:git://github.com/wicketstuff/wicket1.5-tree.git</developerConnection>
         <url>git@github.com:wicketstuff/wicket1.5-tree.git</url>
-        <tag>wicket15-tree-7.0.2</tag>
+        <tag>HEAD</tag>
     </scm>
     <dependencyManagement>
         <dependencies>
