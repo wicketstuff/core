@@ -233,7 +233,7 @@ public class TreeTable extends DefaultAbstractTree
 	protected void addHeader()
 	{
 		// create the view for side columns
-		SideColumnsView sideColumns = new SideColumnsView("sideColumns", null);
+		SideColumnsView sideColumns = new SideColumnsView("sideHeaderColumns", null);
 		add(sideColumns);
 		if (columns != null)
 		{
@@ -252,7 +252,7 @@ public class TreeTable extends DefaultAbstractTree
 		}
 
 		// create the view for middle columns
-		MiddleColumnsView middleColumns = new MiddleColumnsView("middleColumns", null,
+		MiddleColumnsView middleColumns = new MiddleColumnsView("middleHeaderColumns", null,
 			hasLeftColumn());
 		add(middleColumns);
 		if (columns != null)
@@ -338,7 +338,7 @@ public class TreeTable extends DefaultAbstractTree
 		final TreeNode node = (TreeNode)item.getDefaultModelObject();
 
 		// add side columns
-		SideColumnsView sideColumns = new SideColumnsView("sideColumns", node);
+		SideColumnsView sideColumns = new SideColumnsView("sideBodyColumns", node);
 		item.add(sideColumns);
 		if (columns != null)
 		{
@@ -370,7 +370,7 @@ public class TreeTable extends DefaultAbstractTree
 		}
 
 		// add middle columns
-		MiddleColumnsView middleColumns = new MiddleColumnsView("middleColumns", node,
+		MiddleColumnsView middleColumns = new MiddleColumnsView("middleBodyColumns", node,
 			hasLeftColumn());
 		if (columns != null)
 		{
