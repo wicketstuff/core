@@ -27,6 +27,7 @@ import org.apache.wicket.extensions.markup.html.tree.table.ColumnLocation.Alignm
 import org.apache.wicket.extensions.markup.html.tree.table.ColumnLocation.Unit;
 import org.apache.wicket.extensions.markup.html.tree.table.IColumn;
 import org.apache.wicket.extensions.markup.html.tree.table.PropertyRenderableColumn;
+import org.apache.wicket.extensions.markup.html.tree.table.PropertyTreeColumn;
 import org.apache.wicket.extensions.markup.html.tree.table.TreeTable;
 import org.apache.wicket.markup.html.WebPage;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
@@ -38,14 +39,30 @@ public class TreeTablePage extends WebPage {
 	public TreeTablePage(final PageParameters parameters) {
 		super(parameters);
 
-		DefaultMutableTreeNode root = new DefaultMutableTreeNode();
+		Person opa = new Person();
+		opa.setName("Opa Puk");
+
 		Person pietje = new Person();
 		pietje.setName("Pietje Puk");
-		root.setUserObject(pietje);
-		TreeModel treeModel = new DefaultTreeModel(root);
+
+		Person janneke = new Person();
+		janneke.setName("Janneke Puk");
+
+		Person pino = new Person();
+		pino.setName("Pino Puk");
+
+		FamilyTreeNode family = new FamilyTreeNode(opa);
+
+		FamilyTreeNode pietjeNode = family.addChild(pietje);
+		FamilyTreeNode jannekeNode = family.addChild(janneke);
+		jannekeNode.addChild(pino);
+
+		TreeModel treeModel = new DefaultTreeModel(family);
 
 		IColumn[] columns = new IColumn[] {
-				new PropertyRenderableColumn<>(new ColumnLocation(Alignment.LEFT, 100, Unit.PERCENT), "Titel", "userObject.name") };
+				new PropertyTreeColumn<>(new ColumnLocation(Alignment.LEFT, 100, Unit.PERCENT), "Titel", "self.name"),
+				new PropertyRenderableColumn<>(new ColumnLocation(Alignment.LEFT, 100, Unit.PERCENT), "Titel",
+						"self.name") };
 		add(new TreeTable("tree", treeModel, columns));
 
 	}
@@ -61,6 +78,11 @@ public class TreeTablePage extends WebPage {
 
 		public void setName(String naam) {
 			this.name = naam;
+		}
+
+		@Override
+		public String toString() {
+			return getClass().getSimpleName() + ": " + name;
 		}
 	}
 }

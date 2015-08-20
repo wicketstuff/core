@@ -16,14 +16,51 @@
  */
 package org.apache.wicket.extensions.markup.html.tree;
 
+import static org.hamcrest.CoreMatchers.containsString;
+import static org.junit.Assert.assertThat;
+
+import org.apache.wicket.ajax.markup.html.AjaxLink;
+import org.apache.wicket.protocol.http.mock.MockHttpServletResponse;
 import org.apache.wicket.util.tester.WicketTester;
+import org.junit.Before;
 import org.junit.Test;
 
 public class TreeTablePageTest {
+	private WicketTester tester;
+	private TreeTablePage page;
+
+	@Before
+	public void setup() {
+		tester = new WicketTester();
+	}
+
 	@Test
 	public void pageRenders() {
-		WicketTester tester = new WicketTester();
-		tester.startPage(TreeTablePage.class);
+		page = tester.startPage(TreeTablePage.class);
 		tester.assertRenderedPage(TreeTablePage.class);
+	}
+
+	@Test
+	public void expandOpaNodeRendersChildrenUsingAjax() {
+		pageRenders();
+		
+		// expand the first node in the tree table (the Opa node)
+		tester.clickLink("tree:i:0:sideBodyColumns:0:comp:link");
+		MockHttpServletResponse opaLinkResponse = tester.getLastResponse();
+
+		String opaResponseBody = opaLinkResponse.getDocument();
+
+		// assert that all rendered AJAX links their client side event handlers are registered 
+		page.visitChildren(AjaxLink.class, (v, r) -> {
+			assertThat(opaResponseBody, containsString("\"c\":\"" + v.getMarkupId() + "\""));
+		});
+
+//		tester.clickLink("tree:i:2:sideBodyColumns:0:comp:link");
+//		MockHttpServletResponse childLinkResponse = tester.getLastResponse();
+//
+//		String childResponseBody = childLinkResponse.getDocument();
+//		page.visitChildren(AjaxLink.class, (v, r) -> {
+//			assertThat(childResponseBody, containsString("\"c\":\"" + v.getMarkupId() + "\""));
+//		});
 	}
 }

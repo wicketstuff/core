@@ -29,6 +29,8 @@ import org.apache.wicket.markup.html.WebMarkupContainer;
  */
 public abstract class AbstractColumnsView extends WebMarkupContainer
 {
+	private static final long serialVersionUID = 1L;
+
 	protected final List<IColumn> columns = new ArrayList<IColumn>();
 
 	protected final List<Component> components = new ArrayList<Component>();

@@ -26,6 +26,8 @@ import org.apache.wicket.markup.html.panel.PanelMarkupSourcingStrategy;
  */
 class TreeTableItem extends AbstractItem
 {
+	private static final long serialVersionUID = 1L;
+	
 	/**
 	 * The component id of the wrapped component
 	 */
