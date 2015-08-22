@@ -117,7 +117,7 @@
                             <jvmArg>-XX:MaxPermSize=128m</jvmArg>
                         </jvmArgs>
                         <args>
-                            <arg>-target:jvm-1.6</arg>
+                            <arg>-target:jvm-1.7</arg>
                             <arg>-deprecation</arg>
                             <!--arg>-optimise</arg-->
                             <arg>-unchecked</arg>
