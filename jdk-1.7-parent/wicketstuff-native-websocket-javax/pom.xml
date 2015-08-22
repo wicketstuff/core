@@ -29,6 +29,8 @@
 	<description>Provides the common code needed for the different integrations with web container's WebSocket implementations</description>
 	<properties>
 		<jetty.version>9.2.7.v20150116</jetty.version>
+		<maven.compiler.source>1.7</maven.compiler.source>
+		<maven.compiler.target>1.7</maven.compiler.target>
 	</properties>
     <dependencyManagement>
 	<dependencies>

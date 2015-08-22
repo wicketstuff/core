@@ -314,7 +314,7 @@ public abstract class AbstractGrid<M, I, S> extends Panel
 		setFlag(FLAG_RENDERING, false);
 	}
 
-	boolean isRendering()
+	public boolean isRendering()
 	{
 		return getFlag(FLAG_RENDERING);
 	}

@@ -14,6 +14,12 @@
         Provides custom serializer compatible with Glassfish 4.0. This prevents serialization issues when classes
         use cdi injection in the glassfish app server.
     </description>
+
+    <properties>
+        <maven.compiler.source>1.7</maven.compiler.source>
+        <maven.compiler.target>1.7</maven.compiler.target>
+    </properties>
+
     <dependencies>
         <dependency>
             <groupId>org.apache.wicket</groupId>

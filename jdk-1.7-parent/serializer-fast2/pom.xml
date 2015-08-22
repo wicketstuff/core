@@ -13,6 +13,12 @@
   <name>WicketStuff Fast 2 Serializer</name>
   <description>ISerializer based on version 2 of Fast https://github.com/RuedigerMoeller/fast-serialization</description>
 
+  <properties>
+    <header.location>lic/header.txt</header.location>
+    <maven.compiler.source>1.7</maven.compiler.source>
+    <maven.compiler.target>1.7</maven.compiler.target>
+  </properties>
+
   <dependencies>
     <dependency>
       <groupId>junit</groupId>
@@ -55,7 +61,4 @@
     </plugins>
   </build>
 
-  <properties>
-    <header.location>lic/header.txt</header.location>
-  </properties>
 </project>
