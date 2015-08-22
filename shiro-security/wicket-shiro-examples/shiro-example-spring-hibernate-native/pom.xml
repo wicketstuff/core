@@ -39,6 +39,12 @@
 	Shiro updated to 1.1. Most of the app works but logout throws an exception
 	about session not found during invalidation.
  -->
+    <properties>
+        <javadoc.disabled>true</javadoc.disabled>
+        <deployment.disabled>true</deployment.disabled>
+        <sources.disabled>true</sources.disabled>
+    </properties>
+
     <dependencies>
         <dependency>
             <groupId>${project.groupId}</groupId>

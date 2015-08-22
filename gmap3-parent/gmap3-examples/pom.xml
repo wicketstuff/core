@@ -17,6 +17,9 @@
 
 	<properties>
 		<jetty.version>9.2.2.v20140723</jetty.version>
+		<javadoc.disabled>true</javadoc.disabled>
+		<deployment.disabled>true</deployment.disabled>
+		<sources.disabled>true</sources.disabled>
 	</properties>
 
 	<dependencies>

@@ -25,7 +25,12 @@
 	<packaging>war</packaging>
 
 	<name>wicketstuff-restannotations-examples</name>
-	<description></description>
+
+	<properties>
+		<javadoc.disabled>true</javadoc.disabled>
+		<deployment.disabled>true</deployment.disabled>
+		<sources.disabled>true</sources.disabled>
+	</properties>
 
 	<licenses>
 		<license>

@@ -13,6 +13,7 @@
     <artifactId>jqplot-parent</artifactId>
     <packaging>pom</packaging>
 
+
     <name>JqPlot Plugin Integration - Parent</name>
     <description>
         See the child project "jqplot" for a more complete description.  This

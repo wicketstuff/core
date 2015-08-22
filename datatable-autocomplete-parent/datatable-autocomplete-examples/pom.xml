@@ -18,6 +18,12 @@
 	<description>Provides an example application that shows how the AutoCompletingTextField can be used for fast AJAX lookups.
 	</description>
 
+	<properties>
+		<javadoc.disabled>true</javadoc.disabled>
+		<deployment.disabled>true</deployment.disabled>
+		<sources.disabled>true</sources.disabled>
+	</properties>
+
 	<dependencies>
 		<dependency>
 			<groupId>${project.groupId}</groupId>

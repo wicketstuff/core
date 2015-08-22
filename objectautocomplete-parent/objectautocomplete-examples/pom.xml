@@ -14,6 +14,12 @@
     <name>ObjectAutoComplete - Examples</name>
     <description>Example showing the usage of the objectautocomplete component</description>
 
+    <properties>
+        <javadoc.disabled>true</javadoc.disabled>
+        <deployment.disabled>true</deployment.disabled>
+        <sources.disabled>true</sources.disabled>
+    </properties>
+
     <dependencies>
         <!--  WICKET DEPENDENCIES -->
         <dependency>

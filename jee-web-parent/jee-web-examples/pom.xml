@@ -21,6 +21,9 @@
 	<properties>
 		<jsf.version>2.1.13</jsf.version>
 		<jstl.version>1.2</jstl.version>
+		<javadoc.disabled>true</javadoc.disabled>
+		<deployment.disabled>true</deployment.disabled>
+		<sources.disabled>true</sources.disabled>
 	</properties>
 
 	<dependencies>

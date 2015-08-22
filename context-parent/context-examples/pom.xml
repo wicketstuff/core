@@ -36,10 +36,14 @@
 			<distribution>repo</distribution>
 		</license>
 	</licenses>
+
 	<properties>
 		<jetty.version>7.6.3.v20120416</jetty.version>
-		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<javadoc.disabled>true</javadoc.disabled>
+		<deployment.disabled>true</deployment.disabled>
+		<sources.disabled>true</sources.disabled>
 	</properties>
+
 	<dependencies>
 		<dependency>
 			<groupId>org.wicketstuff</groupId>

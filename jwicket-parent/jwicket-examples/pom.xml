@@ -20,6 +20,12 @@
         at http://subversion.visionet.de/project/WicketJQuery/wiki
     </description>
 
+    <properties>
+        <javadoc.disabled>true</javadoc.disabled>
+        <deployment.disabled>true</deployment.disabled>
+        <sources.disabled>true</sources.disabled>
+    </properties>
+
     <developers>
         <developer>
             <name>Stefan Lindner</name>

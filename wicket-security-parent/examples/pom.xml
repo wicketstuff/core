@@ -36,4 +36,11 @@
 		<module>spring-security</module>
 		<module>secureforms-example</module>
 	</modules>
+
+	<properties>
+		<javadoc.disabled>true</javadoc.disabled>
+		<deployment.disabled>true</deployment.disabled>
+		<sources.disabled>true</sources.disabled>
+	</properties>
+
 </project>

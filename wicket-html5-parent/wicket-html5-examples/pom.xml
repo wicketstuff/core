@@ -18,6 +18,12 @@
 		Some simple components and behaviors to support HTMl5
 	</description>
 
+	<properties>
+		<javadoc.disabled>true</javadoc.disabled>
+		<deployment.disabled>true</deployment.disabled>
+		<sources.disabled>true</sources.disabled>
+	</properties>
+
 	<organization>
 		<name>Mystic Coders, LLC</name>
 		<url>http://www.mysticcoders.com</url>

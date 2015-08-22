@@ -11,6 +11,12 @@
 	<packaging>pom</packaging>
 	<name>JavaEE Inject - Examples</name>
 
+	<properties>
+		<javadoc.disabled>true</javadoc.disabled>
+		<deployment.disabled>true</deployment.disabled>
+		<sources.disabled>true</sources.disabled>
+	</properties>
+
 	<description>
         This is a sample JAVA EE 6 project for demonstrating how the JavaEE Inject
         library should been used in Enterprise and/or Web Applications.

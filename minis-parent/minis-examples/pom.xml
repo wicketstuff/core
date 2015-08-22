@@ -20,6 +20,12 @@
 		project is a webapp that shows examples of using them.
 	</description>
 
+	<properties>
+		<javadoc.disabled>true</javadoc.disabled>
+		<deployment.disabled>true</deployment.disabled>
+		<sources.disabled>true</sources.disabled>
+	</properties>
+
 	<licenses>
 		<license>
 			<name>The Apache Software License, Version 2.0</name>
