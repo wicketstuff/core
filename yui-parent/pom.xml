@@ -1,0 +1,30 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>org.wicketstuff</groupId>
+        <artifactId>wicketstuff-core</artifactId>
+        <version>7.0.0-SNAPSHOT</version>
+    </parent>
+
+    <artifactId>wicketstuff-yui-parent</artifactId>
+    <packaging>pom</packaging>
+
+    <name>Wicket YUI Integration - Parent</name>
+
+    <description>
+        Wicket Components for the Yahoo User Interface (YUI) library.
+        This is the parent for the actual project and the examples.
+        See the child project "yui" for a more complete description.
+    </description>
+
+    <modules>
+        <!-- This module should be seperated into several pieces. -->
+        <!--<module>yui</module>-->
+        <module>yui-common</module>
+        <module>yui-calendar</module>
+        <!--<module>yui-examples</module>-->
+    </modules>
+
+</project>

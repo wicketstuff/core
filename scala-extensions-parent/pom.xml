@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	
+	<parent>
+		<groupId>org.wicketstuff</groupId>
+		<artifactId>wicketstuff-core</artifactId>
+		<version>7.0.0-SNAPSHOT</version>
+	</parent>
+	
+	<groupId>org.wicketstuff.scala</groupId>
+	<artifactId>scala-extensions-parent</artifactId>
+	<packaging>pom</packaging>
+	<name>Wicket-Scala Parent</name>
+
+	<description>Collection of modules relevant to developing Wicket with Scala, including core utilities and Wicket extensions, Scala language extensions, a sample project and an Archetype.</description>
+
+	<developers>
+		<developer>
+			<name>Antony Stubbs</name>
+			<email>antony.stubbs@gmail.com</email>
+			<url>antonystubbs.com</url>
+			<timezone>+12</timezone>
+		</developer>
+		<developer>
+			<name>Martin Grigorov</name>
+			<email>mgrigorov@apache.org</email>
+			<url>http://wicket.apache.org</url>
+			<timezone>+2</timezone>
+		</developer>
+	</developers>
+
+	<modules>
+		<module>wicket-scala</module>
+		<module>wicket-scala-sample</module>
+		<module>wicket-scala-archetype</module>
+	</modules>
+
+	<dependencyManagement>
+		<dependencies>
+			<dependency>
+				<groupId>org.scalatest</groupId>
+				<artifactId>scalatest_2.11</artifactId>
+				<version>2.2.2</version>
+				<scope>test</scope>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
+
+	<build>
+		<resources>
+			<resource>
+				<filtering>false</filtering>
+				<directory>src/main/scala</directory>
+				<includes>
+					<include>**</include>
+				</includes>
+				<excludes>
+					<exclude>**/*.scala</exclude>
+				</excludes>
+			</resource>
+			<resource>
+				<filtering>false</filtering>
+				<directory>src/main/resources</directory>
+				<includes>
+					<include>**</include>
+				</includes>
+			</resource>
+		</resources>
+		<testResources>
+			<testResource>
+				<filtering>false</filtering>
+				<directory>src/test/scala</directory>
+				<includes>
+					<include>**</include>
+				</includes>
+				<excludes>
+					<exclude>**/*.scala</exclude>
+				</excludes>
+			</testResource>
+		</testResources>
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <groupId>net.alchim31.maven</groupId>
+                    <artifactId>scala-maven-plugin</artifactId>
+                    <executions>
+                        <execution>
+                            <id>compile</id>
+                            <goals>
+                                <goal>compile</goal>
+                            </goals>
+                            <phase>compile</phase>
+                        </execution>
+                        <execution>
+                            <id>test-compile</id>
+                            <goals>
+                                <goal>testCompile</goal>
+                            </goals>
+                            <phase>test-compile</phase>
+                        </execution>
+                        <execution>
+                            <phase>process-resources</phase>
+                            <goals>
+                                <goal>compile</goal>
+                                <goal>testCompile</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                    <configuration>
+                        <scalaVersion>${scala.version}</scalaVersion>
+                        <sendJavaToScalac>false</sendJavaToScalac>
+                        <!--<recompileMode>incremental</recompileMode>-->
+                        <!--<useZincServer>true</useZincServer>-->
+                        <jvmArgs>
+                            <jvmArg>-Xmx512m</jvmArg>
+                            <jvmArg>-XX:MaxPermSize=128m</jvmArg>
+                        </jvmArgs>
+                        <args>
+                            <arg>-target:jvm-1.7</arg>
+                            <arg>-deprecation</arg>
+                            <!--arg>-optimise</arg-->
+                            <arg>-unchecked</arg>
+                            <arg>-uniqid</arg>
+                            <arg>-no-specialization</arg>
+                            <arg>-encoding</arg>
+                            <arg>UTF-8</arg>
+                            <arg>-feature</arg>
+
+                            <!-- prints a message when a method is generated that uses Reflection -->
+                            <arg>-Xlog-reflective-calls</arg>
+
+                            <arg>-Ywarn-adapted-args</arg>
+                        </args>
+                    </configuration>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-source-plugin</artifactId>
+                    <configuration>
+                        <includes>
+                            <include>**/*</include>
+                        </includes>
+                    </configuration>
+                </plugin>
+                <!-- disable surefire -->
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-surefire-plugin</artifactId>
+                    <version>2.17</version>
+                    <configuration>
+                        <skipTests>true</skipTests>
+                    </configuration>
+                </plugin>
+                <!-- enable scalatest -->
+                <plugin>
+                    <groupId>org.scalatest</groupId>
+                    <artifactId>scalatest-maven-plugin</artifactId>
+                    <version>1.0</version>
+                    <configuration>
+                        <reportsDirectory>${project.build.directory}/surefire-reports</reportsDirectory>
+                        <junitxml>.</junitxml>
+                        <filereports>WDF TestSuite.txt</filereports>
+                    </configuration>
+                    <executions>
+                        <execution>
+                            <id>test</id>
+                            <goals>
+                                <goal>test</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                </plugin>
+            </plugins>
+        </pluginManagement>
+	</build>
+</project>

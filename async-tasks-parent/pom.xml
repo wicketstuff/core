@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>org.wicketstuff</groupId>
+        <artifactId>wicketstuff-core</artifactId>
+        <version>7.0.0-SNAPSHOT</version>
+    </parent>
+
+    <artifactId>async-tasks-parent</artifactId>
+    <packaging>pom</packaging>
+
+    <modules>
+        <module>async-tasks-demo</module>
+        <module>async-tasks-impl</module>
+    </modules>
+
+    <inceptionYear>2013</inceptionYear>
+
+    <organization>
+        <name>Kantega AS</name>
+        <url>http://www.kantega.no</url>
+    </organization>
+
+    <name>Wicket asynchronous task</name>
+    <description>A mini-framework that allows to represent asynchronous tasks in Wicket web applications without
+        breaking the serialization contract.
+    </description>
+    <url>http://www.kantega.no</url>
+
+    <licenses>
+        <license>
+            <name>The Apache Software License, Version 2.0</name>
+            <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+            <distribution>repo</distribution>
+            <comments>A business-friendly OSS license</comments>
+        </license>
+    </licenses>
+
+    <developers>
+        <developer>
+            <id>rafwin</id>
+            <name>Rafael Winterhalter</name>
+            <email>rafael.winterhalter@kantega.no</email>
+            <url>http://mydailyjava.blogspot.com</url>
+            <organization>Kantega</organization>
+            <organizationUrl>http://www.kantega.no</organizationUrl>
+            <roles>
+                <role>developer</role>
+            </roles>
+            <timezone>+1</timezone>
+        </developer>
+    </developers>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.apache.wicket</groupId>
+            <artifactId>wicket-core</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-simple</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.testng</groupId>
+            <artifactId>testng</artifactId>
+        </dependency>
+    </dependencies>
+</project>

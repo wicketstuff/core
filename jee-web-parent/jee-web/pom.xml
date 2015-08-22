@@ -1,0 +1,73 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>org.wicketstuff</groupId>
+        <artifactId>jee-web-parent</artifactId>
+        <version>7.0.0-SNAPSHOT</version>
+    </parent>
+	<artifactId>wicketstuff-jee-web</artifactId>
+	<packaging>jar</packaging>
+	<name>JEE Web Integration</name>
+
+	<developers>
+		<developer>
+			<id>klopfdreh</id>
+			<name>Tobias Soloschenko</name>
+			<email>tobias [dot] soloschenko [at] googlemail [dot] com</email>
+		</developer>
+	</developers>
+
+	<properties>
+		<servlet.jsp.api.version>2.2</servlet.jsp.api.version>
+		<faces.api.version>2.2.8-01</faces.api.version>
+	</properties>
+
+	<dependencies>
+		<!-- provided dependencies for framework -->
+		<dependency>
+			<groupId>org.apache.wicket</groupId>
+			<artifactId>wicket-core</artifactId>
+			<scope>provided</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>javax.servlet-api</artifactId>
+			<scope>provided</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>javax.servlet.jsp</groupId>
+			<artifactId>jsp-api</artifactId>
+			<version>${servlet.jsp.api.version}</version>
+			<scope>provided</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>com.sun.faces</groupId>
+			<artifactId>jsf-api</artifactId>
+			<version>${faces.api.version}</version>
+			<scope>provided</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-api</artifactId>
+			<scope>provided</scope>
+		</dependency>
+
+		<!-- Test dependencies -->
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-simple</artifactId>
+			<scope>test</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<scope>test</scope>
+		</dependency>
+	</dependencies>
+</project>

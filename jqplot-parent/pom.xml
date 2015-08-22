@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>org.wicketstuff</groupId>
+        <artifactId>wicketstuff-core</artifactId>
+        <version>7.0.0-SNAPSHOT</version>
+    </parent>
+
+    <artifactId>jqplot-parent</artifactId>
+    <packaging>pom</packaging>
+
+    <name>JqPlot Plugin Integration - Parent</name>
+    <description>
+        See the child project "jqplot" for a more complete description.  This
+        is the parent for the actual project and the examples.
+    </description>
+    <modules>
+        <module>jqplot</module>
+        <module>jqplot-examples</module>
+    </modules>
+
+</project>
+

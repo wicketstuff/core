@@ -1,0 +1,55 @@
+ModalX: Getting Started Guide
+-----------------------------
+Copyright (c) 2009,2011. Step Ahead Software Pty Ltd. All rights reserved.
+
+Open Source License for Free and Commercial Applications
+--------------------------------------------------------
+
+This software is released under the Apache 2 license and can be
+used in both free and commerical applications.
+
+The best source of code examples that demonstrates how to do most things
+in ModalX is the sample code under the example directory.
+
+Implementing ModalMgr
+---------------------
+
+ModalWindowS are automatically allocated under ModalX. They are generic windows
+which means you don't have to extend the behaviour of ModalWindow yourself
+to implement a modal window. The only class you need to extend is ModalFormPanel.
+
+If you want to use a MessageBox no new class is required. Simply call the
+appropriate MessageBox.show() method.
+
+The ModalMgr interface is required to provide the generic ModalWindow's on demand.
+You can implement this yourself in your own base Page or for extra convenience you
+can simply insert the ready made ModalMgr implementation ModalXPage into your class
+hiearchy above your existing base page (if you don't already derive all of your page
+classes from a single base page class then you can simply derive them all from ModalXPage)
+
+Define a form class
+-------------------
+
+If you want to display a form simply create a class that extends ModalFormPanel and a 
+corresponding HTML file. To display the form simply use:
+
+MyForm myForm = new MyForm(allocateWindow(), null);
+myForm.show(target);
+
+It's that easy!
+
+MessageBox
+----------
+
+No new classes need to be defined to display a message box. Displaying a message box 
+is as simple as calling the appropriate MessageBox static show method:
+
+MessageBox.show(this, "Message text", "Title");
+
+ModalContentPanel Close Listener
+--------------------------------
+
+You can provide a IWindowCloseListener implementation in the contructor of your form and this
+will receive a callback via its windowClosed() method when the form is closed. In the listener
+handler you can call getModalResult() to determine the button that was used to close the form
+and perform different actions based on that.

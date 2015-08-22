@@ -1,0 +1,45 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+
+	<modelVersion>4.0.0</modelVersion>
+
+	<parent>
+		<groupId>org.wicketstuff</groupId>
+		<artifactId>jasperreports-parent</artifactId>
+		<version>7.0.0-SNAPSHOT</version>
+	</parent>
+
+	<artifactId>wicketstuff-jasperreports</artifactId>
+	<packaging>jar</packaging>
+
+	<name>JasperReports Integration</name>
+	<description>JasperReports integration components and resources for Wicket.</description>
+	<url>http://wicketstuff.org/confluence/display/STUFFWIKI/wicket-contrib-jasperreports</url>
+
+	<dependencies>
+		<!-- Inherited -->
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-api</artifactId>
+		</dependency>
+
+		<!-- Inherited -->
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>jcl-over-slf4j</artifactId>
+		</dependency>
+
+		<!-- Module-specific -->
+		<dependency>
+			<groupId>net.sf.jasperreports</groupId>
+			<artifactId>jasperreports</artifactId>
+			<version>5.5.0</version>
+		</dependency>
+
+		<!-- Provided -->
+		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>javax.servlet-api</artifactId>
+		</dependency>
+	</dependencies>
+</project>

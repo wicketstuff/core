@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+
+	<modelVersion>4.0.0</modelVersion>
+
+	<parent>
+		<groupId>org.wicketstuff</groupId>
+		<artifactId>wicketstuff-core</artifactId>
+		<version>7.0.0-SNAPSHOT</version>
+	</parent>
+	<artifactId>modalx-parent</artifactId>
+	<name>ModalX Parent</name>
+
+	<packaging>pom</packaging>
+	<url>http://wicketstuff.org/</url>
+	<inceptionYear>2007</inceptionYear>
+
+	<description>Parent project for wicketstuff ModalX</description>
+
+	<licenses>
+		<license>
+			<name>The Apache Software License, Version 2.0</name>
+			<url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+			<distribution>repo</distribution>
+		</license>
+	</licenses>
+
+	<modules>
+		<module>modalx</module>
+		<module>modalx-examples</module>
+	</modules>
+
+	<developers>
+		<developer>
+			<name>Chris Colman</name>
+		</developer>
+	</developers>
+</project>

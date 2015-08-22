@@ -1,0 +1,57 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<parent>
+		<groupId>org.wicketstuff</groupId>
+		<artifactId>wicketstuff-core</artifactId>
+		<version>7.0.0-SNAPSHOT</version>
+	</parent>
+
+	<artifactId>wicketstuff-stateless-parent</artifactId>
+	<packaging>pom</packaging>
+	<name>WicketStuff Stateless Parent</name>
+	<description>Components for Apache Wicket useful for Stateless Applications</description>
+	<licenses>
+		<license>
+			<name>The Apache Software License, Version 2.0</name>
+			<url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+			<distribution>repo</distribution>
+		</license>
+	</licenses>
+	<modules>
+		<module>stateless</module>
+		<module>stateless-examples</module>
+	</modules>
+	<build>
+		<pluginManagement>
+			<plugins>
+				<plugin>
+					<inherited>true</inherited>
+					<groupId>com.mycila.maven-license-plugin</groupId>
+					<artifactId>maven-license-plugin</artifactId>
+					<configuration>
+						<header>./header.txt</header>
+						<failIfMissing>true</failIfMissing>
+						<aggregate>true</aggregate>
+						<excludes>
+							<exclude>LICENSE.txt</exclude>
+							<exclude>**/src/test/resources/**</exclude>
+							<exclude>**/src/test/data/**</exclude>
+							<exclude>**/jquery*</exclude>
+							<exclude>**/*.csv</exclude>
+						</excludes>
+					</configuration>
+					<executions>
+						<execution>
+							<id>check-headers</id>
+							<phase>verify</phase>
+							<goals>
+								<goal>check</goal>
+							</goals>
+						</execution>
+					</executions>
+				</plugin>
+			</plugins>
+		</pluginManagement>
+	</build>
+</project>

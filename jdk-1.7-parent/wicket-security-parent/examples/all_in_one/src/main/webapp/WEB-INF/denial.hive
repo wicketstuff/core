@@ -1,8 +1,0 @@
-//compared to the tabs hive we could get rid of a lot of stuff that is now automatically granted
-//all that is left is to specify that the super user is not allowed to see the heineken and grolsch pages
-grant principal org.apache.wicket.security.examples.authorization.MyPrincipal "super"
-{
-//i know it still says permission but you should read is as deny
-	permission ${ComponentPermission} "org.apache.wicket.security.examples.tabs.panels.Heineken", "render, enable";
-	permission ${ComponentPermission} "org.apache.wicket.security.examples.tabs.panels.Grolsch", "render, enable";
-};

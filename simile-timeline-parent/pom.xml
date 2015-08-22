@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+
+	<modelVersion>4.0.0</modelVersion>
+
+	<parent>
+		<groupId>org.wicketstuff</groupId>
+		<artifactId>wicketstuff-core</artifactId>
+		<version>7.0.0-SNAPSHOT</version>
+	</parent>
+
+	<artifactId>simile-timeline-parent</artifactId>
+	<packaging>pom</packaging>
+
+	<name>Simile Timeline - Parent</name>
+	<description>
+		See the child project "simile-timeline" for a more complete description.  This
+		is the parent for the actual project and the examples.
+	</description>
+
+	<modules>
+		<module>simile-timeline</module>
+	</modules>
+
+	<developers>
+		<developer>
+			<id>raboof</id>
+			<name>Arnout Engelen</name>
+			<url>http://arnout.engelen.eu</url>
+			<timezone>+1</timezone>
+			<organization>Topicus Zorg</organization>
+			<organizationUrl>http://www.topicuszorg.nl</organizationUrl>
+		</developer>
+	</developers>
+
+	<dependencies>
+		<!-- LOGGING DEPENDENCIES - LOG4J -->
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-log4j12</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>log4j</groupId>
+			<artifactId>log4j</artifactId>
+		</dependency>
+
+		<!-- JUNIT DEPENDENCY FOR TESTING -->
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+		</dependency>
+	</dependencies>
+</project>
