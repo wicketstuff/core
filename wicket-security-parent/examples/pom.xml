@@ -26,6 +26,13 @@
 	<packaging>pom</packaging>
 	<name>Examples</name>
 	<description>Parent project for Wicket Security Examples</description>
+
+	<properties>
+		<javadoc.disabled>true</javadoc.disabled>
+		<deployment.disabled>true</deployment.disabled>
+		<sources.disabled>true</sources.disabled>
+	</properties>
+
 	<modules>
 		<module>all_in_one</module>
 		<!--

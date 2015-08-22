@@ -14,6 +14,12 @@
 
 	<name>Lightbox2 Plugin Integration - Examples</name>
 
+	<properties>
+		<javadoc.disabled>true</javadoc.disabled>
+		<deployment.disabled>true</deployment.disabled>
+		<sources.disabled>true</sources.disabled>
+	</properties>
+
 	<developers>
 		<developer>
 			<id>inaiat</id>

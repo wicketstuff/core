@@ -18,6 +18,9 @@
 
 	<properties>
 		<jasperreports.outputDirectory>${project.build.sourceDirectory}/../webapp/reports</jasperreports.outputDirectory>
+		<javadoc.disabled>true</javadoc.disabled>
+		<deployment.disabled>true</deployment.disabled>
+		<sources.disabled>true</sources.disabled>
 	</properties>
 
 	<dependencies>

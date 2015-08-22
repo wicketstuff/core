@@ -18,6 +18,12 @@
         to JAVA EE 5, which is also supported by the library.
     </description>
 
+	<properties>
+		<javadoc.disabled>true</javadoc.disabled>
+		<deployment.disabled>true</deployment.disabled>
+		<sources.disabled>true</sources.disabled>
+	</properties>
+
 	<modules>
 		<module>javaee-inject-example-ear</module>
 		<module>javaee-inject-example-ejb</module>

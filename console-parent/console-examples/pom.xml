@@ -15,6 +15,13 @@
 
 	<name>Wicket Console - Examples</name>
 	<description>Examples of Wicket Console</description>
+
+	<properties>
+		<javadoc.disabled>true</javadoc.disabled>
+		<deployment.disabled>true</deployment.disabled>
+		<sources.disabled>true</sources.disabled>
+	</properties>
+
 	<build>
 		<plugins>
 			<plugin>

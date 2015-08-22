@@ -33,6 +33,12 @@
 		A collection of example configurations
 	</description>
 
+	<properties>
+		<javadoc.disabled>true</javadoc.disabled>
+		<deployment.disabled>true</deployment.disabled>
+		<sources.disabled>true</sources.disabled>
+	</properties>
+
 	<dependencies>
 
 		<!-- LOGGING DEPENDENCIES - LOG4J -->

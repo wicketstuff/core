@@ -9,6 +9,13 @@
     <artifactId>javaee-inject-example-ear</artifactId>
     <packaging>ear</packaging>
     <name>JavaEE Inject - Example EAR</name>
+
+    <properties>
+        <javadoc.disabled>true</javadoc.disabled>
+        <deployment.disabled>true</deployment.disabled>
+        <sources.disabled>true</sources.disabled>
+    </properties>
+
     <build>
         <plugins>
             <plugin>

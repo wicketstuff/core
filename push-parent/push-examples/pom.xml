@@ -15,6 +15,12 @@
 
 	<name>Wicketstuff Push - Examples</name>
 
+	<properties>
+		<javadoc.disabled>true</javadoc.disabled>
+		<deployment.disabled>true</deployment.disabled>
+		<sources.disabled>true</sources.disabled>
+	</properties>
+
 	<dependencies>
 		<dependency>
 			<groupId>org.wicketstuff</groupId>

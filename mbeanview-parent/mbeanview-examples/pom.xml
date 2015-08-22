@@ -12,11 +12,12 @@
 	<packaging>war</packaging>
 
 	<name>MBean View - Example</name>
-	<description />
-	<!--
-		TODO <organization> <name>company name</name> <url>company url</url>
-		</organization>
-	-->
+
+	<properties>
+		<javadoc.disabled>true</javadoc.disabled>
+		<deployment.disabled>true</deployment.disabled>
+		<sources.disabled>true</sources.disabled>
+	</properties>
 
 	<dependencies>
 		<dependency>

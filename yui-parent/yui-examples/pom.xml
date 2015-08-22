@@ -18,6 +18,12 @@
 
     <inceptionYear>2006</inceptionYear>
 
+    <properties>
+        <javadoc.disabled>true</javadoc.disabled>
+        <deployment.disabled>true</deployment.disabled>
+        <sources.disabled>true</sources.disabled>
+    </properties>
+    
     <developers>
         <developer>
             <id>Eelco</id>

@@ -26,6 +26,12 @@
 	<name>TinyMCE3 Examples</name>
 	<description>Examples for Wicket Contrib TinyMCE</description>
 
+	<properties>
+		<javadoc.disabled>true</javadoc.disabled>
+		<deployment.disabled>true</deployment.disabled>
+		<sources.disabled>true</sources.disabled>
+	</properties>
+
 	<dependencies>
 		<dependency>
 			<groupId>org.wicketstuff</groupId>
