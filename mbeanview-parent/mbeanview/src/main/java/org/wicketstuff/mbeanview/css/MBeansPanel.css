@@ -1,0 +1,201 @@
+/*
+ * Licensed to the Apache Software Foundation (ASF) under one or more
+ * contributor license agreements.  See the NOTICE file distributed with
+ * this work for additional information regarding copyright ownership.
+ * The ASF licenses this file to You under the Apache License, Version 2.0
+ * (the "License"); you may not use this file except in compliance with
+ * the License.  You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+div.wicket-tree {
+	border: 1px solid #CCCCCC;
+	margin: 10px;
+	overflow: auto;
+	white-space: nowrap;
+}
+
+div.wicket-tree a {
+	color: #3311AA;
+	float: left;
+	text-decoration: none;
+}
+
+div.wicket-tree div.row,div.wicket-tree div.row-selected {
+	height: 1.5em;
+	margin: 0;
+	overflow: hidden;
+	padding: 0;
+	width: 100%;
+}
+
+div.wicket-tree div.a_ {
+	margin: 0;
+	padding-left: 1em;
+	width: 2000px;
+}
+
+div.wicket-tree span.junction,div.wicket-tree span.junction-last,div.wicket-tree span.plus,div.wicket-tree span.minus,div.wicket-tree span.corner,div.wicket-tree span.indent-line,div.wicket-tree span.icon
+	{
+	float: left;
+	height: 1.5em;
+	min-height: 18px;
+	width: 18px;
+}
+
+div.wicket-tree span.junction,div.wicket-tree span.junction-last {
+	cursor: pointer;
+}
+
+div.wicket-tree span.junction {
+	background-image: url(tree-images.png);
+	background-position: -36px 0;
+	background-repeat: repeat-y;
+}
+
+div.wicket-tree span.junction-last {
+	background-image: url(tree-images.png);
+	background-position: -72px 0;
+	background-repeat: no-repeat;
+}
+
+div.wicket-tree span.plus,div.wicket-tree span.minus,div.wicket-tree span.corner
+	{
+	background-repeat: no-repeat;
+}
+
+div.wicket-tree span.plus {
+	background-image: url(tree-images.png);
+	background-position: 0 center;
+}
+
+div.wicket-tree span.minus {
+	background-image: url(tree-images.png);
+	background-position: -18px center;
+}
+
+div.wicket-tree span.corner {
+	background-image: url(tree-images.png);
+	background-position: -54px center;
+}
+
+div.wicket-tree span.indent {
+	clear: left;
+	float: left;
+}
+
+div.wicket-tree a:hover {
+	text-decoration: underline;
+}
+
+div.wicket-tree span.icon {
+	background-position: 50% 50%;
+	background-repeat: no-repeat;
+	margin-left: 2px;
+	margin-top: -1px;
+}
+
+div.wicket-tree a {
+	outline-color: -moz-use-text-color;
+	outline-style: none;
+	outline-width: medium;
+}
+
+div.wicket-tree span.indent-blank {
+	float: left;
+	height: 1em;
+	width: 18px;
+}
+
+div.wicket-tree span.indent-line {
+	background-image: url(tree-images.png);
+	background-position: -36px 0;
+	background-repeat: repeat-y;
+	overflow: hidden;
+}
+
+div.wicket-tree div.row,div.wicket-tree div.row-selected {
+	clear: both;
+	overflow: hidden;
+}
+
+div.wicket-tree div.row-selected {
+	background-color: #E0E8FF;
+	font-weight: bold;
+}
+
+body {
+	background-color: white;
+	background-repeat: repeat-x;
+	color: black;
+	/*font-family: 'Tahoma', 'Lucida Sans', 'Arial', 'Helvetica', 'Sans-serif', 'sans'*/
+	;
+	/*font-size: xx-small;*/
+	font-family: "Lucida Sans Unicode", "Lucida Grande", Verdana, Arial,
+		Helvetica, sans-serif;
+}
+
+* {
+	padding: 0;
+	margin: 0;
+	font-size: small;
+}
+
+.feedbackPanelERROR {
+	color: red;
+	list-style: circle;
+	font-weight: bold;
+}
+
+.feedbackPanelINFO {
+	color: green;
+	list-style: circle;
+	font-weight: bold;
+}
+
+a {
+	color: #E9601A;
+	font-weight: bold;
+	text-decoration: none;
+}
+
+a:hover {
+	text-decoration: underline;
+}
+
+img {
+	border: none;
+}
+
+pre {
+	font-family: 'Lucida Sans', 'Helvetica', 'Sans serif', 'sans';
+}
+
+th {
+	background: #C3C3C3;
+	color: white;
+	font-weight: bold;
+}
+
+tr.b {
+	background: #F5F5F5;
+}
+
+tr.a {
+	background: #E6E6E5;
+}
+
+tr.none {
+	background: transparent;
+}
+
+a.none {
+	background: transparent;
+	padding-right: 0px;
+}

@@ -1,0 +1,49 @@
+<wicket:panel>
+	<!-- <div class="modalPanel"> -->
+
+		<p style="color:red;font-size: 14px;"><span wicket:id="feedback"></span></p>
+
+		
+		<form wicket:id="form" action="" method="POST">
+            <div class="ControlPanel">
+                <input type="button" wicket:id="showFormDefSource" value="Form Class Definition"/>
+                <input type="button" wicket:id="showFormOpenSource" value="Opening a Form"/>
+            </div>
+            <div class="ControlPanel">
+                <input type="button" wicket:id="showMsgBox" value="Message Box"/>
+            </div>
+
+            <div style="clear: both"/>
+            <p style="font-size: 14px;">Please specify the details of the person:</p>
+
+			<p>
+				<label>First name</label><br>
+				<input style="width: 330px;" type="text" class="text" wicket:id="firstName" name="dummy1" value="18" />
+			</p>
+            <p>
+                <label>Last name</label><br>
+                <input style="width: 330px;" type="text" class="text" wicket:id="lastName" name="dummy1" value="18" />
+            </p>
+            <p>
+                <label>Address line 1</label><br>
+                <input style="width: 330px;" type="text" class="text" wicket:id="address1" name="dummy1" value="18" />
+            </p>
+            <p>
+                <label>Address line 2</label><br>
+                <input style="width: 330px;" type="text" class="text" wicket:id="address2" name="dummy1" value="18" />
+            </p>
+            <p>
+                <label>State</label><br>
+                <input style="width: 330px;" type="text" class="text" wicket:id="state" name="dummy1" value="18" />
+            </p>
+            <p>
+                <label>Country</label><br>
+                <input style="width: 330px;" type="text" class="text" wicket:id="country" name="dummy1" value="18" />
+            </p>
+            <div class="ControlPanel">
+                <input type="button" wicket:id="ok" value="OK"/>
+                <input type="button" wicket:id="cancel" value="Cancel"/>
+            </div>
+		</form>
+<!-- 	</div> -->
+</wicket:panel>

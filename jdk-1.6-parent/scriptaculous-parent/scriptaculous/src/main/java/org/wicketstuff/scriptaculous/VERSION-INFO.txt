@@ -1,3 +1,0 @@
-this package uses:
-	- prototype (http://prototype.conio.net/) 1.6.0
-	- script.aculo.us (http://script.aculo.us/)  1.8.1

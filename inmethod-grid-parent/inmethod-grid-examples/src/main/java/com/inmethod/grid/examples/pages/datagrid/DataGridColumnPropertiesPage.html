@@ -1,0 +1,22 @@
+<wicket:head xmlns:wicket="http://wicket.apache.org">
+	<style type="text/css">
+		td.lastName {
+			font-weight: bold;
+		}
+		td.homePhone {
+			color: red;
+		}
+	</style>
+</wicket:head>
+<wicket:extend xmlns:wicket="http://wicket.apache.org">
+	<div wicket:id="grid">
+	</div>
+	
+	<ul>
+		<li>Id column is neither resizable nor reorderable and has a tooltip in header.</li>
+		<li>First Name column is not reorderable, has different initial, maximal and minimal width and has a tooltip in header.</li>
+		<li>Last Name column has custom css class.</li>
+		<li>Home Phone and Cell Phone columns are not resizable and have custom initial size.</li>
+		<li>Home Phone column has a custom css class</li>
+	</ul>
+</wicket:extend>

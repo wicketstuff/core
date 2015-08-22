@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<project name="Wicket Phonebook">
+  <bannerLeft>
+    <name>Wicket Stuff</name>
+    <src>http://wicket-stuff.sourceforge.net/images/projectLogo.png</src>
+    <href>http://wicket-stuff.sourceforge.net/</href>
+  </bannerLeft>
+	<body>
+		<links>
+			<item name="Apache Wicket 1.3" href="http://wicket.sf.net/wicket-1.3/index.html" />
+		</links>
+
+		<menu name="Wicket Phonebook">
+			<item name="About" href="/index.html" />
+			<item name="License" href="/license.html" />
+		</menu>
+		<menu name="Downloads">
+			<item name="1.3" href="http://prdownloads.sourceforge.net/wicket-stuff/wicket-phonebook-1.3-bin.zip?download" />
+		</menu>
+		<menu name="Related projects">
+			<item name="Apache Wicket" href="http://wicket.apache.org/" />
+			<item name="Wicket Extensions" href="http://wicket.sourceforge.net/wicket-extensions/" />
+			<item name="Wicket Spring" href="http://wicket.sourceforge.net/wicket-spring/" />
+			<item name="Spring" href="http://www.springframework.org/" />
+			<item name="Hibernate" href="http://www.hibernate.org/" />
+		</menu>
+		<menu name="Documentation">
+			<item name="Wiki" href="http://cwiki.apache.org/WICKET/" />
+			<item name="Javadoc" href="/apidocs/index.html" target="_blank" class="newwindow" />
+			<item name="Dependencies" href="/dependencies.html" />
+		</menu>
+		<menu name="Project info">
+			<item name="Wicket Stuff Home" href="http://wicket-stuff.sourceforge.net" />
+			<item name="SourceForge" href="http://sourceforge.net/projects/wicket-stuff" />
+			<item name="Issue tracker" href="http://sourceforge.net/tracker/?group_id=134391" />
+		</menu>
+        <menu name="Development">
+            <item name="Developers" href="/team-list.html" />
+            <item name="SVN Access" href="/source-repository.html" />
+			<item name="Build Reports" href="/project-reports.html" collapse="true">
+                <item name="Unit Tests" href="/surefire-report.html" />
+                <item name="Javadoc" href="/apidocs/index.html" target="_blank" class="newwindow" />
+                <item name="Source Xref" href="/xref/index.html" target="_blank" class="newwindow" />
+                <item name="Test Source Xref" href="/xref-test/index.html" target="_blank" class="newwindow" />
+                <item name="Tag List" href="/taglist.html" />
+            </item>
+        </menu>
+	</body>
+</project>

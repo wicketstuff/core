@@ -1,0 +1,33 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+<head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+<title>Digest http logon example</title>
+
+<!-- STYLESHEETS -->
+<link rel="stylesheet" href="css/reset-fonts-grids.css" type="text/css"
+	media="all" />
+<link rel="stylesheet" href="css/style.css" type="text/css" media="all" />
+
+<!-- STYLESHEET FOR BUGGY BROWSERS -->
+<!--[if IE]>
+		<link rel="stylesheet" href="css/ie.css" type="text/css" media="all" />
+	<![endif]-->
+</head>
+<body>
+<div id="loginBox">
+<div class="loginTitle">Logon to the Swarm</div>
+<div class="loginError" wicket:id="feedback">Username or password
+incorrect</div>
+<div class="loginFormBox" id="signInPanel">This site requires
+digest http authentication.<br />
+Log in using any nonzero username password combination <br/>as long as both
+are the same.<br />
+Oops did i realy just told you that ;)<br /><br/>
+<button wicket:id="link">Login</button>
+</div>
+<div class="loginFooter">Digest http logon example version 1.3.1 -
+Powered by Swarm</div>
+</div>
+</body>
+</html>
