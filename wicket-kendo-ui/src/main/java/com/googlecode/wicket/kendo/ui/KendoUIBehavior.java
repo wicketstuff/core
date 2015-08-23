@@ -92,6 +92,12 @@ public class KendoUIBehavior extends JQueryBehavior implements IDestroyable
 			this.add(settings.getThemeStyleSheetReference());
 		}
 
+		// kendo.<theme>.mobile.min.css //
+		if (settings.getMobileStyleSheetReference() != null)
+		{
+			this.add(settings.getMobileStyleSheetReference());
+		}
+
 		// kendo.ui.core.js //
 		if (settings.getJavaScriptReference() != null)
 		{

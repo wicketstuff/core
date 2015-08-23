@@ -37,6 +37,7 @@ public class Initializer implements IInitializer
 		KendoUILibrarySettings settings = KendoUILibrarySettings.get();
 		settings.setCommonStyleSheetReference(new CssResourceReference(Initializer.class, "kendo.common-office365.min.css"));
 		settings.setThemeStyleSheetReference(new CssResourceReference(Initializer.class, "kendo.office365.min.css"));
+		settings.setMobileStyleSheetReference(new CssResourceReference(Initializer.class, "kendo.office365.mobile.min.css"));
 	}
 
 	@Override

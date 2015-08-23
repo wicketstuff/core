@@ -68,6 +68,7 @@ public class KendoUILibrarySettings
 	private ResourceReference javascriptReference = KendoUIJavaScriptResourceReference.get();
 	private ResourceReference stylesheetReferenceC = null;
 	private ResourceReference stylesheetReferenceT = null;
+	private ResourceReference stylesheetReferenceM = null;
 
 	/**
 	 * Constructor
@@ -137,5 +138,26 @@ public class KendoUILibrarySettings
 	public void setThemeStyleSheetReference(ResourceReference reference)
 	{
 		this.stylesheetReferenceT = reference;
+	}
+
+	/**
+	 * Gets the Kendo UI mobile stylesheet resource reference
+	 *
+	 * @return {@code null} by default, meaning the style is supplied through the HTML page (&lt;link rel="stylesheet" type="text/css" href="..." /&gt;)
+	 * @see #setMobileStyleSheetReference(ResourceReference)
+	 */
+	public ResourceReference getMobileStyleSheetReference()
+	{
+		return this.stylesheetReferenceM;
+	}
+
+	/**
+	 * Sets the Kendo UI mobile stylesheet resource reference
+	 *
+	 * @param reference the {@link ResourceReference}
+	 */
+	public void setMobileStyleSheetReference(ResourceReference reference)
+	{
+		this.stylesheetReferenceM = reference;
 	}
 }

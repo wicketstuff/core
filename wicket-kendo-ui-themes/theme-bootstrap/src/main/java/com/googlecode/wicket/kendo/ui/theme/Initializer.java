@@ -37,6 +37,7 @@ public class Initializer implements IInitializer
 		KendoUILibrarySettings settings = KendoUILibrarySettings.get();
 		settings.setCommonStyleSheetReference(new CssResourceReference(Initializer.class, "kendo.common-bootstrap.min.css"));
 		settings.setThemeStyleSheetReference(new CssResourceReference(Initializer.class, "kendo.bootstrap.min.css"));
+		settings.setMobileStyleSheetReference(new CssResourceReference(Initializer.class, "kendo.bootstrap.mobile.min.css"));
 	}
 
 	@Override
