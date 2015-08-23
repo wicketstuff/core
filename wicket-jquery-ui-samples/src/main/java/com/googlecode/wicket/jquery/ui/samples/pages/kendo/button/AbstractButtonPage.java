@@ -23,7 +23,9 @@ abstract class AbstractButtonPage extends SamplePage
 				new DemoLink(ConfirmButtonPage.class, "Confirm Button"),
 				new DemoLink(ConfirmAjaxButtonPage.class, "Confirm AjaxButton"),
 				new DemoLink(SecuredButtonPage.class, "Secured [Ajax]Button"),
-				new DemoLink(IndicatingButtonPage.class, "Indicating [Ajax]Button")
+				new DemoLink(IndicatingButtonPage.class, "Indicating [Ajax]Button"),
+				new DemoLink(ButtonGroupPage.class, "ButtonGroup (radio button like)"),
+				new DemoLink(AjaxButtonGroupPage.class, "AjaxButtonGroup")
 			);
 	}
 }
