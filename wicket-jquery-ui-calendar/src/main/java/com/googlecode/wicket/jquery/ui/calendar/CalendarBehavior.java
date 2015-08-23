@@ -198,7 +198,7 @@ public class CalendarBehavior extends JQueryBehavior implements IJQueryAjaxAware
 	/**
 	 * Indicates whether the Calendar will be editable
 	 *
-	 * @return by default, true if {@link #isDayClickEnabled()} is true or {@link #isEventClickEnabled()} is true
+	 * @return by default, true if {@link ICalendarListener#isDayClickEnabled()} is true or {@link ICalendarListener#isEventClickEnabled()} is true
 	 */
 	protected boolean isEditable()
 	{

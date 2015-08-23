@@ -57,7 +57,6 @@ public class BuilderUtils
 	 * @param builder the {@link StringBuilder}
 	 * @param object the object
 	 * @param property the object's property
-	 * @return the JSON body
 	 */
 	public static <T> void resolve(StringBuilder builder, final T object, final String property)
 	{

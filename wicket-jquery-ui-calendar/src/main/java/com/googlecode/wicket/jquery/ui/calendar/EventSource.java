@@ -24,7 +24,7 @@ import com.googlecode.wicket.jquery.core.Options;
  * Provides an event source Object
  *
  * @author Sebastien Briquet - sebfz1
- * @see http://fullcalendar.io/docs/event_data/Event_Source_Object/
+ * @see <a href="http://fullcalendar.io/docs/event_data/Event_Source_Object/">http://fullcalendar.io/docs/event_data/Event_Source_Object/</a>
  */
 public class EventSource implements IClusterable
 {

@@ -20,7 +20,7 @@ import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.util.io.IClusterable;
 
 /**
- * Event listener shared by the {@link Resizable} widget and the {@link ResizableBehavior}
+ * Event listener shared by the {@link ResizablePanel} widget and the {@link ResizableBehavior}
  *
  * @author Sebastien Briquet - sebfz1
  *
