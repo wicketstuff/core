@@ -255,7 +255,7 @@ public class ComboBox<T> extends TextField<String> implements IJQueryWidget
 				}
 
 				builder.append("{ ");
-				builder.append(renderer.render(object));
+				builder.append(this.renderer.render(object));
 
 				if (this.template != null)
 				{
