@@ -8,21 +8,74 @@ import com.googlecode.wicket.jquery.ui.samples.data.bean.Product.Vendor;
 
 public class ProductsDAO
 {
-	private static ProductsDAO instance = null;
-
-	private static synchronized ProductsDAO get()
-	{
-		if (instance == null)
-		{
-			instance = new ProductsDAO();
-		}
-
-		return instance;
-	}
+	private static ProductsDAO instance = new ProductsDAO();
 
 	public static List<Product> all()
 	{
-		return ProductsDAO.get().list;
+		return instance.list;
+	}
+
+	public static Product select(int id)
+	{
+		for (Product product : all())
+		{
+			if (product.getId() == id)
+			{
+				return product;
+			}
+		}
+
+		return null;
+	}
+
+	public static void insert(Product product)
+	{
+		if (product.getId() == 0)
+		{
+			product.setId(nextId());
+			all().add(product);
+		}
+	}
+
+	public static void update(Product product)
+	{
+		Product updated = select(product.getId());
+
+		if (updated != null)
+		{
+			updated.setName(product.getName());
+			updated.setDescription(product.getDescription());
+			updated.setDate(product.getDate()); // FIXME: date is not taken into account
+			updated.setPrice(product.getPrice());
+			// TODO: updated.setVendor(product.getVendor());
+		}
+	}
+
+	public static void delete(Product product)
+	{
+		Product deleted = select(product.getId());
+
+		if (deleted != null)
+		{
+			all().remove(deleted.getId());
+		}
+	}
+
+	private static int nextId()
+	{
+		int max = 0;
+
+		for (Product product : all())
+		{
+			int id = product.getId();
+
+			if (max < id)
+			{
+				max = id;
+			}
+		}
+
+		return max + 1;
 	}
 
 	private final List<Product> list;

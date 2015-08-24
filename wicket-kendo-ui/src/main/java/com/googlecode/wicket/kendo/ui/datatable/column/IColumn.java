@@ -51,13 +51,6 @@ public interface IColumn extends IClusterable
 	int getWidth();
 
 	/**
-	 * Get the field's type
-	 *
-	 * @return the the field's type
-	 */
-	String getType();
-
-	/**
 	 * The format that is applied to the value before it is displayed. Takes the form "{0:format}" where "format" is a standard number format, custom number format, standard date format or a custom date format.
 	 *
 	 * @return the format or {@code null} if it does not apply
@@ -118,4 +111,28 @@ public interface IColumn extends IClusterable
 	 * @see <a href="http://docs.kendoui.com/api/web/grid#configuration-columns.groupFooterTemplate">configuration-columns.groupFooterTemplate</a>
 	 */
 	String getGroupFooterTemplate();
+
+	// schema model //
+
+	/**
+	 * Indicates whether the column is editable
+	 * 
+	 * @return {@code null} by default, meaning not specified
+	 */
+	Boolean isEditable();
+
+	/**
+	 * Indicates whether the column is nullable
+	 * 
+	 * @return {@code null} by default, meaning not specified
+	 */
+	Boolean isNullable();
+
+	/**
+	 * Get the field's type
+	 *
+	 * @return the the field's type
+	 */
+	String getType();
+
 }

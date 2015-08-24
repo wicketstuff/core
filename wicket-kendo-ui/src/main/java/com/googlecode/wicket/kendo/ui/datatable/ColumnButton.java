@@ -30,7 +30,6 @@ import org.apache.wicket.util.string.Strings;
 public class ColumnButton implements IClusterable
 {
 	private static final long serialVersionUID = 1L;
-
 	private static short sequence = 0;
 
 	/**
@@ -49,6 +48,16 @@ public class ColumnButton implements IClusterable
 	private final String property;
 
 	/**
+	 * Constructor for built-in commands (no property supplied)
+	 *
+	 * @param name the button's name
+	 */
+	public ColumnButton(String name)
+	{
+		this(name, Model.of(name), null);
+	}
+
+	/**
 	 * Constructor
 	 *
 	 * @param name the button's name
@@ -57,6 +66,18 @@ public class ColumnButton implements IClusterable
 	public ColumnButton(String name, String property)
 	{
 		this(name, Model.of(name), property);
+	}
+
+	/**
+	 * Constructor for built-in commands (no property supplied)
+	 *
+	 * @param name the button's name
+	 * @param text the button's text
+	 * @param property the property used to retrieve the row's object value
+	 */
+	public ColumnButton(String name, IModel<String> text)
+	{
+		this(name, text, null);
 	}
 
 	/**
@@ -123,6 +144,16 @@ public class ColumnButton implements IClusterable
 	}
 
 	/**
+	 * Indicates whether the button acts as the built-in one (like create, edit, update, destroy)
+	 * 
+	 * @return true if no 'property' has been supplied
+	 */
+	public boolean useBuiltIn()
+	{
+		return this.property == null;
+	}
+
+	/**
 	 * Indicates whether this {@link ColumnButton} is equal to another {@link ColumnButton}.<br/>
 	 * Are considered equals buttons having the same text representation, which is the text supplied to the constructor (if {@link #toString()} is not overridden).
 	 *
@@ -163,7 +194,7 @@ public class ColumnButton implements IClusterable
 	 * Triggered when the column-button is clicked
 	 * 
 	 * @param target the {@link AjaxRequestTarget}
-	 * @param value the row's object value 
+	 * @param value the row's object value
 	 */
 	public void onClick(AjaxRequestTarget target, String value)
 	{

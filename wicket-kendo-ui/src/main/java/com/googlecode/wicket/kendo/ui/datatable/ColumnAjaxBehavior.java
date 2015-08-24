@@ -45,15 +45,6 @@ public class ColumnAjaxBehavior extends JQueryAjaxBehavior
 		this.button = button;
 	}
 
-	@Override
-	protected CallbackParameter[] getCallbackParameters()
-	{
-		return new CallbackParameter[] { // lf
-				CallbackParameter.context("e"), // lf
-				CallbackParameter.resolved("value", String.format("this.dataItem(jQuery(e.target).closest('tr'))['%s']", this.button.getProperty())) // lf
-		};
-	}
-
 	/**
 	 * Gets the {@link ColumnButton}
 	 *
@@ -62,6 +53,26 @@ public class ColumnAjaxBehavior extends JQueryAjaxBehavior
 	public ColumnButton getButton()
 	{
 		return this.button;
+	}
+
+	@Override
+	protected CallbackParameter[] getCallbackParameters()
+	{
+		return new CallbackParameter[] { // lf
+				CallbackParameter.context("e"), // lf
+				CallbackParameter.resolved("value", String.format("this.dataItem(jQuery(e.target).closest('tr'))['%s']", this.button.getProperty())) // lf
+		};
+	}
+	
+	@Override
+	public String getCallbackFunction()
+	{
+		if (this.button.useBuiltIn())
+		{
+			return null;
+		}
+
+		return super.getCallbackFunction();
 	}
 
 	@Override

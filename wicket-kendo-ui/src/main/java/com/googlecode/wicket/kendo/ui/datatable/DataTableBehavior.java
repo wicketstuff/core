@@ -21,6 +21,8 @@ import java.util.List;
 
 import org.apache.wicket.Component;
 import org.apache.wicket.ajax.AjaxRequestTarget;
+import org.apache.wicket.ajax.attributes.CallbackParameter;
+import org.apache.wicket.ajax.json.JSONObject;
 import org.apache.wicket.util.lang.Args;
 import org.apache.wicket.util.string.Strings;
 
@@ -29,11 +31,15 @@ import com.googlecode.wicket.jquery.core.Options;
 import com.googlecode.wicket.jquery.core.ajax.IJQueryAjaxAware;
 import com.googlecode.wicket.jquery.core.ajax.JQueryAjaxBehavior;
 import com.googlecode.wicket.jquery.core.utils.BuilderUtils;
+import com.googlecode.wicket.jquery.core.utils.RequestCycleUtils;
+import com.googlecode.wicket.kendo.ui.KendoDataSource;
 import com.googlecode.wicket.kendo.ui.KendoUIBehavior;
 import com.googlecode.wicket.kendo.ui.datatable.ColumnAjaxBehavior.ClickEvent;
 import com.googlecode.wicket.kendo.ui.datatable.ToolbarAjaxBehavior.ToolbarClickEvent;
 import com.googlecode.wicket.kendo.ui.datatable.column.CommandsColumn;
 import com.googlecode.wicket.kendo.ui.datatable.column.IColumn;
+import com.googlecode.wicket.kendo.ui.datatable.column.IdPropertyColumn;
+import com.googlecode.wicket.kendo.ui.scheduler.SchedulerBehavior;
 
 /**
  * Provides the Kendo UI data-table behavior
@@ -47,6 +53,13 @@ public abstract class DataTableBehavior extends KendoUIBehavior implements IJQue
 	public static final String METHOD = "kendoGrid";
 
 	private final IDataTableListener listener;
+	private final KendoDataSource dataSource;
+
+	// TODO: private JQueryAjaxBehavior onEditAjaxBehavior;
+	private JQueryAjaxBehavior onCancelAjaxBehavior;
+	private JQueryAjaxBehavior onCreateAjaxBehavior;
+	private JQueryAjaxBehavior onUpdateAjaxBehavior;
+	private JQueryAjaxBehavior onDeleteAjaxBehavior;
 	private JQueryAjaxBehavior onToolbarClickAjaxBehavior; // toolbar buttons
 
 	protected final List<? extends IColumn> columns;
@@ -75,8 +88,11 @@ public abstract class DataTableBehavior extends KendoUIBehavior implements IJQue
 	{
 		super(selector, METHOD, options);
 
-		this.listener = Args.notNull(listener, "listener");
 		this.columns = columns;
+		this.listener = Args.notNull(listener, "listener");
+
+		this.dataSource = new KendoDataSource("gridDataSource");
+		this.add(this.dataSource);
 	}
 
 	// Methods //
@@ -85,6 +101,20 @@ public abstract class DataTableBehavior extends KendoUIBehavior implements IJQue
 	public void bind(Component component)
 	{
 		super.bind(component);
+
+		// grid events //
+		this.onCancelAjaxBehavior = this.newOnCancelAjaxBehavior(this);
+		component.add(this.onCancelAjaxBehavior);
+
+		// data source //
+		this.onCreateAjaxBehavior = this.newOnCreateAjaxBehavior(this);
+		component.add(this.onCreateAjaxBehavior);
+
+		this.onUpdateAjaxBehavior = this.newOnUpdateAjaxBehavior(this);
+		component.add(this.onUpdateAjaxBehavior);
+
+		this.onDeleteAjaxBehavior = this.newOnDeleteAjaxBehavior(this);
+		component.add(this.onDeleteAjaxBehavior);
 
 		// column buttons //
 		for (ColumnButton button : this.getColumnButtons())
@@ -111,20 +141,21 @@ public abstract class DataTableBehavior extends KendoUIBehavior implements IJQue
 	protected abstract long getRowCount();
 
 	/**
-	 * Gets the data-source behavior's url
+	 * Gets the data-provider behavior's url
 	 *
-	 * @return the data-source behavior's url
+	 * @return the data-provider behavior's url
 	 */
-	protected abstract CharSequence getSourceCallbackUrl();
+	protected abstract CharSequence getProviderCallbackUrl();
 
 	/**
-	 * Get the JSON model of the datasource's schema
-	 *
-	 * @return the model, as JSON string
+	 * Indicates whether the read function should use cache
+	 * 
+	 * @return false by default
+	 * @see <a href="http://docs.telerik.com/kendo-ui/api/javascript/data/datasource#configuration-transport.read.cache">configuration-transport.read.cache</a>
 	 */
-	protected Options getSchemaModel()
+	protected boolean useCache()
 	{
-		return new Options();
+		return false;
 	}
 
 	/**
@@ -145,6 +176,30 @@ public abstract class DataTableBehavior extends KendoUIBehavior implements IJQue
 		return Collections.emptyList();
 	}
 
+	/**
+	 * Gets the 'read' callback function<br/>
+	 * As create, update and destroy need to be supplied as function, we should declare read as a function as well. Weird...
+	 *
+	 * @return the 'read' callback function
+	 */
+	private String getReadCallbackFunction()
+	{
+		return "function(options) {" // lf
+				+ " jQuery.ajax({" // lf
+				+ "		url: '" + this.getProviderCallbackUrl() + "'," // lf
+				+ "		data: options.data," // lf
+				+ "		cache: " + this.useCache() + "," // lf
+				+ "		dataType: 'json'," // lf
+				+ "		success: function(result) {" // lf
+				+ "			options.success(result);" // lf
+				+ "		}," // lf
+				+ "		error: function(result) {" // lf
+				+ "			options.error(result);" // lf
+				+ "		}" // lf
+				+ "	});" // lf
+				+ "}";
+	}
+
 	// Events //
 
 	@Override
@@ -158,25 +213,29 @@ public abstract class DataTableBehavior extends KendoUIBehavior implements IJQue
 			this.on(this.selector + " .k-grid-toolbar .k-button", "click", this.onToolbarClickAjaxBehavior.getCallbackFunction());
 		}
 
+		// this.setOption("edit", this.onEditAjaxBehavior.getCallbackFunction());
+		this.setOption("cancel", this.onCancelAjaxBehavior.getCallbackFunction());
+
 		// options //
-		Options source = new Options();
 		Options schema = new Options();
 
 		// schema //
 		schema.set("data", Options.asString("results"));
 		schema.set("total", Options.asString("__count"));
-		schema.set("model", this.getSchemaModel());
+		schema.set("model", this.newSchemaModel());
 
-		// source //
-		source.set("type", Options.asString("json"));
-		source.set("pageSize", this.getRowCount());
-		source.set("serverPaging", true);
-		source.set("serverSorting", true);
-		source.set("serverFiltering", true);
-		source.set("transport", new Options("read", Options.asString(this.getSourceCallbackUrl())));
-		source.set("schema", schema);
+		// data-source //
+		this.setOption("dataSource", this.dataSource.getName());
 
-		this.setOption("dataSource", source);
+		this.dataSource.set("pageSize", this.getRowCount());
+		this.dataSource.set("serverPaging", true);
+		this.dataSource.set("serverSorting", true);
+		this.dataSource.set("serverFiltering", true);
+		this.dataSource.set("schema", schema);
+		this.dataSource.setTransportRead(this.getReadCallbackFunction());
+		this.dataSource.setTransportCreate(this.onCreateAjaxBehavior.getCallbackFunction());
+		this.dataSource.setTransportUpdate(this.onUpdateAjaxBehavior.getCallbackFunction());
+		this.dataSource.setTransportDelete(this.onDeleteAjaxBehavior.getCallbackFunction());
 
 		// columns //
 		StringBuilder builder = new StringBuilder("[ ");
@@ -223,7 +282,13 @@ public abstract class DataTableBehavior extends KendoUIBehavior implements IJQue
 						builder.append(", ");
 					}
 
-					builder.append("'click': ").append(behavior.getCallbackFunction());
+					String function = behavior.getCallbackFunction();
+
+					if (function != null)
+					{
+						builder.append("'click': ").append(function);
+					}
+
 					builder.append(" }");
 				}
 
@@ -246,14 +311,166 @@ public abstract class DataTableBehavior extends KendoUIBehavior implements IJQue
 
 			this.listener.onClick(target, e.getButton(), e.getValue());
 		}
-		else if (event instanceof ToolbarClickEvent)
+
+		if (event instanceof ToolbarClickEvent)
 		{
 			ToolbarClickEvent e = (ToolbarClickEvent) event;
 			this.listener.onClick(target, e.getButton(), e.getValues());
 		}
+
+		if (event instanceof CancelEvent)
+		{
+			this.listener.onCancel(target);
+		}
+
+		if (event instanceof CreateEvent)
+		{
+			this.listener.onCreate(target, ((CreateEvent) event).getObject());
+		}
+
+		if (event instanceof UpdateEvent)
+		{
+			this.listener.onUpdate(target, ((UpdateEvent) event).getObject());
+		}
+
+		if (event instanceof DeleteEvent)
+		{
+			this.listener.onDelete(target, ((DeleteEvent) event).getObject());
+		}
 	}
 
 	// Factories //
+
+	/**
+	 * Get the JSON model of the datasource's schema
+	 *
+	 * @return the model, as JSON object
+	 */
+	protected Options newSchemaModel()
+	{
+		Options model = new Options();
+		Options fields = new Options();
+
+		for (IColumn column : this.columns)
+		{
+			if (column.getField() != null)
+			{
+				Options field = new Options();
+
+				if (column instanceof IdPropertyColumn)
+				{
+					model.set("id", Options.asString(column.getField()));
+				}
+
+				if (column.isEditable() != null)
+				{
+					field.set("editable", column.isEditable());
+				}
+
+				if (column.isNullable() != null)
+				{
+					field.set("nullable", column.isNullable());
+				}
+
+				if (column.getType() != null)
+				{
+					field.set("type", Options.asString(column.getType()));
+				}
+
+				fields.set(column.getField(), field);
+			}
+		}
+
+		model.set("fields", fields);
+
+		return model;
+	}
+
+	/**
+	 * Gets a new {@link JQueryAjaxBehavior} that will be wired to the 'update' event
+	 * 
+	 * @param source the {@link IJQueryAjaxAware}
+	 * @return a new {@link JQueryAjaxBehavior} by default
+	 */
+	protected JQueryAjaxBehavior newOnCancelAjaxBehavior(IJQueryAjaxAware source)
+	{
+		return new JQueryAjaxBehavior(source) {
+
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			protected CallbackParameter[] getCallbackParameters()
+			{
+				return new CallbackParameter[] { CallbackParameter.context("e") };
+			}
+
+			@Override
+			protected JQueryEvent newEvent()
+			{
+				return new CancelEvent();
+			}
+		};
+	}
+
+	/**
+	 * Gets a new {@link JQueryAjaxBehavior} that will be wired to the datasource's 'create' event
+	 *
+	 * @param source the {@link IJQueryAjaxAware}
+	 * @return a new {@link DataSourceAjaxBehavior} by default
+	 */
+	protected JQueryAjaxBehavior newOnCreateAjaxBehavior(IJQueryAjaxAware source)
+	{
+		return new DataSourceAjaxBehavior(source) {
+
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			protected JQueryEvent newEvent()
+			{
+				return new CreateEvent();
+			}
+		};
+	}
+
+	/**
+	 * Gets a new {@link JQueryAjaxBehavior} that will be wired to the datasource's 'update' event
+	 *
+	 * @param source the {@link IJQueryAjaxAware}
+	 * @return a new {@link DataSourceAjaxBehavior} by default
+	 */
+	protected JQueryAjaxBehavior newOnUpdateAjaxBehavior(IJQueryAjaxAware source)
+	{
+		return new DataSourceAjaxBehavior(source) {
+
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			protected JQueryEvent newEvent()
+			{
+				return new UpdateEvent();
+			}
+		};
+	}
+
+	/**
+	 * Gets a new {@link JQueryAjaxBehavior} that will be wired to the datasource's 'delete' event
+	 *
+	 * @param source the {@link IJQueryAjaxAware}
+	 * @return a new {@link DataSourceAjaxBehavior} by default
+	 */
+	protected JQueryAjaxBehavior newOnDeleteAjaxBehavior(IJQueryAjaxAware source)
+	{
+		return new DataSourceAjaxBehavior(source) {
+
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			protected JQueryEvent newEvent()
+			{
+				return new DeleteEvent();
+			}
+		};
+	}
 
 	/**
 	 * Gets the {@link JQueryAjaxBehavior} that will be called when the user clicks a toolbar button
@@ -271,4 +488,77 @@ public abstract class DataTableBehavior extends KendoUIBehavior implements IJQue
 	 * @return the {@link JQueryAjaxBehavior}
 	 */
 	protected abstract JQueryAjaxBehavior newButtonAjaxBehavior(IJQueryAjaxAware source, ColumnButton button);
+
+	// Ajax classes //
+
+	/**
+	 * Provides a {@link JQueryAjaxBehavior} for handling datasource operations
+	 */
+	protected abstract class DataSourceAjaxBehavior extends JQueryAjaxBehavior
+	{
+		private static final long serialVersionUID = 1L;
+
+		public DataSourceAjaxBehavior(IJQueryAjaxAware source)
+		{
+			super(source);
+		}
+
+		@Override
+		protected CallbackParameter[] getCallbackParameters()
+		{
+			return new CallbackParameter[] { CallbackParameter.context("e"), CallbackParameter.resolved("data", "kendo.stringify(e.data)") };
+		}
+
+		@Override
+		public CharSequence getCallbackFunctionBody(CallbackParameter... parameters)
+		{
+			return super.getCallbackFunctionBody(parameters) + " e.success();";
+		}
+	}
+
+	// Event object //
+
+	protected static class CancelEvent extends JQueryEvent
+	{
+	}
+
+	/**
+	 * Provides a base class for {@link SchedulerBehavior} event objects
+	 */
+	protected static class DataSourceEvent extends JQueryEvent
+	{
+		private final JSONObject object;
+
+		public DataSourceEvent()
+		{
+			String data = RequestCycleUtils.getQueryParameterValue("data").toString();
+			this.object = new JSONObject(data);
+		}
+
+		public JSONObject getObject()
+		{
+			return this.object;
+		}
+	}
+
+	/**
+	 * Provides an event object that will be broadcasted by the {@link DataSourceAjaxBehavior} 'create' callback
+	 */
+	protected static class CreateEvent extends DataSourceEvent
+	{
+	}
+
+	/**
+	 * Provides an event object that will be broadcasted by the {@link DataSourceAjaxBehavior} 'update' callback
+	 */
+	protected static class UpdateEvent extends DataSourceEvent
+	{
+	}
+
+	/**
+	 * Provides an event object that will be broadcasted by the {@link DataSourceAjaxBehavior} 'delete' callback
+	 */
+	protected static class DeleteEvent extends DataSourceEvent
+	{
+	}
 }

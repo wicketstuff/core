@@ -42,6 +42,8 @@ public abstract class AbstractColumn implements IColumn
 	private final IModel<String> title;
 	private Integer width;
 
+	// TODO: add locked & lockable
+
 	/**
 	 * Constructor
 	 *
@@ -49,7 +51,7 @@ public abstract class AbstractColumn implements IColumn
 	 */
 	public AbstractColumn(String title)
 	{
-		this(Model.of(title), "", WIDTH);
+		this(Model.of(title), null, WIDTH);
 	}
 
 	/**
@@ -60,7 +62,7 @@ public abstract class AbstractColumn implements IColumn
 	 */
 	public AbstractColumn(String title, int width)
 	{
-		this(Model.of(title), "", width);
+		this(Model.of(title), null, width);
 	}
 
 	/**
@@ -93,7 +95,7 @@ public abstract class AbstractColumn implements IColumn
 	 */
 	public AbstractColumn(IModel<String> title)
 	{
-		this(title, "", WIDTH);
+		this(title, null, WIDTH);
 	}
 
 	/**
@@ -104,7 +106,7 @@ public abstract class AbstractColumn implements IColumn
 	 */
 	public AbstractColumn(IModel<String> title, int width)
 	{
-		this(title, "", width);
+		this(title, null, width);
 	}
 
 	/**
@@ -153,12 +155,6 @@ public abstract class AbstractColumn implements IColumn
 	public boolean isVisible()
 	{
 		return true;
-	}
-
-	@Override
-	public String getType()
-	{
-		return null;
 	}
 
 	@Override
@@ -220,14 +216,32 @@ public abstract class AbstractColumn implements IColumn
 		return null;
 	}
 
+	// schema model //
+
+	public Boolean isEditable()
+	{
+		return null;
+	}
+
+	public Boolean isNullable()
+	{
+		return null;
+	}
+
+	@Override
+	public String getType()
+	{
+		return null;
+	}
+
+	// Methods //
+
 	@Override
 	public String toString()
 	{
 		StringBuilder builder = new StringBuilder();
 
 		BuilderUtils.append(builder, "title", this.getTitle());
-		builder.append(", ");
-		BuilderUtils.append(builder, "field", this.getField());
 
 		builder.append(", ");
 		BuilderUtils.append(builder, "hidden", !this.isVisible());
@@ -265,6 +279,12 @@ public abstract class AbstractColumn implements IColumn
 		}
 
 		// nullable options (object) //
+
+		if (this.getField() != null)
+		{
+			builder.append(", ");
+			BuilderUtils.append(builder, "field", this.getField());
+		}
 
 		if (this.getMenu() != null)
 		{

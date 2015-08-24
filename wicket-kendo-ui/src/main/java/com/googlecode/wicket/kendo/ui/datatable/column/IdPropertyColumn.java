@@ -14,55 +14,54 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.googlecode.wicket.kendo.ui.datatable;
+package com.googlecode.wicket.kendo.ui.datatable.column;
 
-import java.util.List;
+import org.apache.wicket.model.IModel;
 
-import org.apache.wicket.ajax.AjaxRequestTarget;
-import org.apache.wicket.ajax.json.JSONObject;
+import com.googlecode.wicket.kendo.ui.datatable.DataTable;
 
 /**
- * Adapter class for {@link IDataTableListener}
+ * Provides an id property column for a {@link DataTable}. This type of column is not editable by default
  *
  * @author Sebastien Briquet - sebfz1
  */
-public class DataTableAdapter implements IDataTableListener
+public class IdPropertyColumn extends PropertyColumn
 {
 	private static final long serialVersionUID = 1L;
 
-	@Override
-	public void onClick(AjaxRequestTarget target, ColumnButton button, String value)
+	public IdPropertyColumn(String title)
 	{
-		// noop
+		super(title);
+	}
+
+	public IdPropertyColumn(String title, String property)
+	{
+		super(title, property);
+	}
+
+	public IdPropertyColumn(String title, int width)
+	{
+		super(title, width);
+	}
+
+	public IdPropertyColumn(String title, String property, int width)
+	{
+		super(title, property, width);
+	}
+
+	public IdPropertyColumn(IModel<String> title, String property)
+	{
+		super(title, property);
+	}
+
+	public IdPropertyColumn(IModel<String> title, String property, int width)
+	{
+		super(title, property, width);
 	}
 	
 	@Override
-	public void onClick(AjaxRequestTarget target, String button, List<String> values)
+	public Boolean isEditable()
 	{
-		// noop
-	}
-
-	@Override
-	public void onCancel(AjaxRequestTarget target)
-	{
-		// noop		
-	}
-
-	@Override
-	public void onCreate(AjaxRequestTarget target, JSONObject object)
-	{
-		// noop		
-	}
-
-	@Override
-	public void onUpdate(AjaxRequestTarget target, JSONObject object)
-	{
-		// noop
-	}
-
-	@Override
-	public void onDelete(AjaxRequestTarget target, JSONObject object)
-	{
-		// noop		
+		return false;
 	}
 }

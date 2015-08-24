@@ -20,6 +20,7 @@ import java.util.Collections;
 import java.util.List;
 
 import org.apache.wicket.ajax.AjaxRequestTarget;
+import org.apache.wicket.ajax.json.JSONObject;
 import org.apache.wicket.behavior.AbstractAjaxBehavior;
 import org.apache.wicket.core.request.handler.IPartialPageRequestHandler;
 import org.apache.wicket.extensions.markup.html.repeater.data.sort.ISortStateLocator;
@@ -48,7 +49,7 @@ public class DataTable<T> extends WebComponent implements IJQueryWidget, IDataTa
 	private static final long serialVersionUID = 1L;
 
 	/** The behavior that ajax-loads data */
-	private AbstractAjaxBehavior sourceBehavior;
+	private AbstractAjaxBehavior providerBehavior;
 
 	private final Options options;
 	private final List<? extends IColumn> columns;
@@ -166,33 +167,13 @@ public class DataTable<T> extends WebComponent implements IJQueryWidget, IDataTa
 	}
 
 	/**
-	 * Get the JSON model of the datasource's schema
+	 * Gets the data-provider behavior's url
 	 *
-	 * @return the model, as JSON object
+	 * @return the data-provider behavior's url
 	 */
-	protected Options getSchemaModel()
+	protected final CharSequence getProviderCallbackUrl()
 	{
-		Options fields = new Options();
-
-		for (IColumn column : this.getColumns())
-		{
-			if (column.getType() != null)
-			{
-				fields.set(column.getField(), new Options("type", Options.asString(column.getType())));
-			}
-		}
-
-		return new Options("fields", fields);
-	}
-
-	/**
-	 * Gets the data-source behavior's url
-	 *
-	 * @return the data-source behavior's url
-	 */
-	protected final CharSequence getSourceCallbackUrl()
-	{
-		return this.sourceBehavior.getCallbackUrl();
+		return this.providerBehavior.getCallbackUrl();
 	}
 
 	// Events //
@@ -202,9 +183,9 @@ public class DataTable<T> extends WebComponent implements IJQueryWidget, IDataTa
 	{
 		super.onInitialize();
 
-		this.sourceBehavior = this.newDataSourceBehavior(this.columns, this.provider);
-		this.add(this.sourceBehavior);
-		
+		this.providerBehavior = this.newDataProviderBehavior(this.columns, this.provider);
+		this.add(this.providerBehavior);
+
 		this.add(JQueryWidget.newWidgetBehavior(this)); // cannot be in ctor as the markupId may be set manually afterward
 	}
 
@@ -247,13 +228,37 @@ public class DataTable<T> extends WebComponent implements IJQueryWidget, IDataTa
 	}
 
 	@Override
+	public void onClick(AjaxRequestTarget target, String button, List<String> values)
+	{
+		// noop
+	}
+
+	@Override
 	public void onClick(AjaxRequestTarget target, ColumnButton button, String value)
 	{
 		// noop
 	}
 
 	@Override
-	public void onClick(AjaxRequestTarget target, String button, List<String> values)
+	public void onCancel(AjaxRequestTarget target)
+	{
+		// noop
+	}
+
+	@Override
+	public void onCreate(AjaxRequestTarget target, JSONObject object)
+	{
+		// noop
+	}
+
+	@Override
+	public void onUpdate(AjaxRequestTarget target, JSONObject object)
+	{
+		// noop
+	}
+
+	@Override
+	public void onDelete(AjaxRequestTarget target, JSONObject object)
 	{
 		// noop
 	}
@@ -276,15 +281,9 @@ public class DataTable<T> extends WebComponent implements IJQueryWidget, IDataTa
 			}
 
 			@Override
-			protected Options getSchemaModel()
+			protected CharSequence getProviderCallbackUrl()
 			{
-				return DataTable.this.getSchemaModel();
-			}
-
-			@Override
-			protected CharSequence getSourceCallbackUrl()
-			{
-				return DataTable.this.getSourceCallbackUrl();
+				return DataTable.this.getProviderCallbackUrl();
 			}
 
 			// Factories //
@@ -306,15 +305,15 @@ public class DataTable<T> extends WebComponent implements IJQueryWidget, IDataTa
 	// Factories //
 
 	/**
-	 * Gets a new {@link DataSourceBehavior}
+	 * Gets a new {@link DataProviderBehavior}
 	 *
 	 * @param columns the list of {@link IColumn}
 	 * @param provider the {@link IDataProvider}
 	 * @return the {@link AbstractAjaxBehavior}
 	 */
-	protected AbstractAjaxBehavior newDataSourceBehavior(final List<? extends IColumn> columns, final IDataProvider<T> provider)
+	protected AbstractAjaxBehavior newDataProviderBehavior(final List<? extends IColumn> columns, final IDataProvider<T> provider)
 	{
-		return new DataSourceBehavior<T>(columns, provider);
+		return new DataProviderBehavior<T>(columns, provider);
 	}
 
 	/**

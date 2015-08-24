@@ -83,7 +83,7 @@ public class KendoDataSource extends Options implements IKendoDataSource
 	/**
 	 * Sets the 'transport.read' callback function
 	 *
-	 * @param function the javascript function
+	 * @param target the javascript function
 	 */
 	public void setTransportRead(String function)
 	{
@@ -111,7 +111,7 @@ public class KendoDataSource extends Options implements IKendoDataSource
 	}
 
 	/**
-	 * Sets the 'transport.delete' callback function
+	 * Sets the 'transport.destroy' callback function
 	 *
 	 * @param function the javascript function
 	 */

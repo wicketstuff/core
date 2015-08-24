@@ -49,7 +49,7 @@ import com.googlecode.wicket.kendo.ui.utils.PropertyUtils;
  * @param <T> the type of the model object
  * @author Sebastien Briquet - sebfz1
  */
-public class DataSourceBehavior<T> extends AbstractAjaxBehavior
+public class DataProviderBehavior<T> extends AbstractAjaxBehavior
 {
 	private static final long serialVersionUID = 1L;
 	private static final String ASC = "asc";
@@ -66,7 +66,7 @@ public class DataSourceBehavior<T> extends AbstractAjaxBehavior
 	 * @param columns the list of {@link IColumn}
 	 * @param provider the {@link IDataProvider}
 	 */
-	public DataSourceBehavior(final List<? extends IColumn> columns, final IDataProvider<T> provider)
+	public DataProviderBehavior(final List<? extends IColumn> columns, final IDataProvider<T> provider)
 	{
 		this.columns = columns;
 		this.provider = provider;
@@ -187,7 +187,7 @@ public class DataSourceBehavior<T> extends AbstractAjaxBehavior
 							builder.append(", ");
 						}
 
-						builder.append(DataSourceBehavior.this.newJsonRow(iterator.next()));
+						builder.append(DataProviderBehavior.this.newJsonRow(iterator.next()));
 					}
 				}
 

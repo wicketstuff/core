@@ -2,6 +2,7 @@ package com.googlecode.wicket.jquery.ui.samples.data.bean;
 
 import java.util.Date;
 
+import org.apache.wicket.ajax.json.JSONObject;
 import org.apache.wicket.util.io.IClusterable;
 
 import com.googlecode.wicket.jquery.core.utils.DateUtils;
@@ -9,6 +10,11 @@ import com.googlecode.wicket.jquery.core.utils.DateUtils;
 public class Product implements IClusterable
 {
 	private static final long serialVersionUID = 1L;
+
+	public static Product of(JSONObject object)
+	{
+		return new Product(object.optInt("id"), object.optString("name"), object.optString("description"), object.optDouble("price"));
+	}
 
 	private int id;
 	private String name;
@@ -38,29 +44,59 @@ public class Product implements IClusterable
 		return this.id;
 	}
 
+	public void setId(int id)
+	{
+		this.id = id;
+	}
+
 	public String getName()
 	{
 		return this.name;
+	}
+	
+	public void setName(String name)
+	{
+		this.name = name;
 	}
 
 	public String getDescription()
 	{
 		return this.desc;
 	}
+	
+	public void setDescription(String desc)
+	{
+		this.desc = desc;
+	}
 
 	public Date getDate()
 	{
 		return new Date(this.date);
+	}
+	
+	public void setDate(Date date)
+	{
+		this.date = date.getTime();
 	}
 
 	public double getPrice()
 	{
 		return this.price;
 	}
+	
+	public void setPrice(double price)
+	{
+		this.price = price;
+	}
 
 	public Vendor getVendor()
 	{
 		return this.vendor;
+	}
+	
+	public void setVendor(Vendor vendor)
+	{
+		this.vendor = vendor;
 	}
 
 	@Override

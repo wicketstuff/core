@@ -18,8 +18,9 @@ abstract class AbstractDataTablePage extends SamplePage
 	{
 		return Arrays.asList(
 				new DemoLink(DefaultDataTablePage.class, "DataTable"),
-				new DemoLink(InfiniteDataTablePage.class, "DataTable, with infinite scroll"),
-				new DemoLink(CommandsDataTablePage.class, "DataTable, with commands")
+				new DemoLink(CommandsDataTablePage.class, "DataTable, with commands"),
+				new DemoLink(InlineDataTablePage.class, "DataTable, with inline editing"),
+				new DemoLink(InfiniteDataTablePage.class, "DataTable, with infinite scroll")
 			);
 	}
 }

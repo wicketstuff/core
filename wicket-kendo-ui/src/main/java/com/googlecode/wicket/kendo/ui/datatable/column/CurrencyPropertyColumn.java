@@ -97,6 +97,12 @@ public class CurrencyPropertyColumn extends PropertyColumn
 	}
 
 	@Override
+	public String getType()
+	{
+		return "number";
+	}
+
+	@Override
 	public String getFormat()
 	{
 		return "{0:c2}";
