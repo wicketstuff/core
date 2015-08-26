@@ -27,6 +27,7 @@ import com.googlecode.wicket.jquery.core.JQueryContainer;
 import com.googlecode.wicket.jquery.core.Options;
 import com.googlecode.wicket.jquery.core.template.IJQueryTemplate;
 import com.googlecode.wicket.kendo.ui.KendoTemplateBehavior;
+import com.googlecode.wicket.kendo.ui.KendoUIBehavior;
 import com.googlecode.wicket.kendo.ui.scheduler.resource.ResourceList;
 import com.googlecode.wicket.kendo.ui.scheduler.resource.ResourceListModel;
 import com.googlecode.wicket.kendo.ui.scheduler.views.SchedulerViewType;
@@ -138,13 +139,13 @@ public class Scheduler extends JQueryContainer implements ISchedulerListener
 	}
 
 	/**
-	 * Gets the Kendo (jQuery) object
+	 * Gets the Kendo UI widget
 	 *
 	 * @return the jQuery object
 	 */
 	protected String widget()
 	{
-		return String.format("jQuery('%s').data('%s')", JQueryWidget.getSelector(this), SchedulerBehavior.METHOD);
+		return KendoUIBehavior.widget(this, SchedulerBehavior.METHOD);
 	}
 
 	/**

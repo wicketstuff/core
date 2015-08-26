@@ -20,17 +20,13 @@ public class InfiniteDataTablePage extends AbstractDataTablePage
 	public InfiniteDataTablePage()
 	{
 		// DataTable //
-		IDataProvider<Product> provider = newDataProvider();
-		List<IColumn> columns = newColumnList();
-
 		Options options = new Options();
 		options.set("height", 430);
-		options.set("scrollable", "{ virtual: true }"); //infinite scroll
+		options.set("scrollable", "{ virtual: true }"); // infinite scroll
 
-		final DataTable<Product> table = new DataTable<Product>("datatable", columns, provider, 15, options);
+		final DataTable<Product> table = new DataTable<Product>("datatable", newColumnList(), newDataProvider(), 15, options);
 		this.add(table);
 	}
-
 
 	private static IDataProvider<Product> newDataProvider()
 	{

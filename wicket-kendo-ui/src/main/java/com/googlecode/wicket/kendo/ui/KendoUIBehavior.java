@@ -28,6 +28,7 @@ import org.apache.wicket.markup.head.JavaScriptHeaderItem;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.googlecode.wicket.jquery.core.IJQueryWidget.JQueryWidget;
 import com.googlecode.wicket.jquery.core.JQueryBehavior;
 import com.googlecode.wicket.jquery.core.Options;
 import com.googlecode.wicket.kendo.ui.KendoDestroyListener.IDestroyable;
@@ -137,24 +138,48 @@ public class KendoUIBehavior extends JQueryBehavior implements IDestroyable
 	}
 
 	/**
-	 * Gets the Kendo UI object
+	 * Gets the Kendo UI widget
 	 *
-	 * @return the Kendo UI object
+	 * @return the jQuery object
 	 */
 	public String widget()
 	{
-		return this.widget(this.method);
+		return KendoUIBehavior.widget(this.selector, this.method);
 	}
 
 	/**
-	 * Gets the Kendo UI object
+	 * Gets the Kendo UI widget
 	 *
 	 * @param method the Kendo UI method
-	 * @return the Kendo UI object
+	 * @return the jQuery object
 	 */
 	protected String widget(String method)
 	{
-		return String.format("jQuery('%s').data('%s')", this.selector, method);
+		return KendoUIBehavior.widget(this.selector, method);
+	}
+
+	/**
+	 * Gets the Kendo UI widget
+	 *
+	 * @param component the {@link Component}
+	 * @param method the Kendo UI method
+	 * @return the jQuery object
+	 */
+	public static String widget(Component component, String method)
+	{
+		return KendoUIBehavior.widget(JQueryWidget.getSelector(component), method);
+	}
+
+	/**
+	 * Gets the Kendo UI widget
+	 *
+	 * @param selector the widget selector
+	 * @param method the Kendo UI method
+	 * @return the jQuery object
+	 */
+	public static String widget(String selector, String method)
+	{
+		return String.format("jQuery('%s').data('%s')", selector, method);
 	}
 
 	@Override

@@ -27,9 +27,6 @@ public class DefaultDataTablePage extends AbstractDataTablePage
 		this.add(form);
 
 		// DataTable //
-		IDataProvider<Product> provider = newDataProvider();
-		List<IColumn> columns = newColumnList();
-
 		Options options = new Options();
 		options.set("height", 430);
 		options.set("pageable", "{ pageSizes: [ 25, 50, 100 ] }");
@@ -37,7 +34,7 @@ public class DefaultDataTablePage extends AbstractDataTablePage
 		options.set("groupable", true);
 		options.set("columnMenu", true);
 
-		final DataTable<Product> table = new DataTable<Product>("datatable", columns, provider, 25, options);
+		final DataTable<Product> table = new DataTable<Product>("datatable", newColumnList(), newDataProvider(), 25, options);
 		form.add(table);
 
 		// Button //

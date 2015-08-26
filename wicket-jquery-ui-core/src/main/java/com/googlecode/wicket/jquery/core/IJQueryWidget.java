@@ -87,7 +87,7 @@ public interface IJQueryWidget
 		 * @return the {@link JQueryBehavior}
 		 */
 		@SuppressWarnings("unchecked")
-		public static <T  extends JQueryBehavior, W extends Component & IJQueryWidget> T newWidgetBehavior(W widget)
+		public static <T extends JQueryBehavior, W extends Component & IJQueryWidget> T newWidgetBehavior(W widget)
 		{
 			return (T) widget.newWidgetBehavior(JQueryWidget.getSelector(widget));
 		}

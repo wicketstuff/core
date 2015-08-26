@@ -35,7 +35,9 @@ import com.googlecode.wicket.jquery.core.Options;
 import com.googlecode.wicket.jquery.core.ajax.IJQueryAjaxAware;
 import com.googlecode.wicket.jquery.core.ajax.JQueryAjaxBehavior;
 import com.googlecode.wicket.kendo.ui.KendoBehaviorFactory;
+import com.googlecode.wicket.kendo.ui.KendoUIBehavior;
 import com.googlecode.wicket.kendo.ui.datatable.ColumnAjaxBehavior.ClickEvent;
+import com.googlecode.wicket.kendo.ui.datatable.behavior.DataBoundBehavior;
 import com.googlecode.wicket.kendo.ui.datatable.column.IColumn;
 
 /**
@@ -91,13 +93,13 @@ public class DataTable<T> extends WebComponent implements IJQueryWidget, IDataTa
 	// Methods //
 
 	/**
-	 * Gets the Kendo (jQuery) object
+	 * Gets the Kendo UI widget
 	 *
 	 * @return the jQuery object
 	 */
 	protected String widget()
-	{
-		return String.format("jQuery('%s').data('%s')", JQueryWidget.getSelector(this), DataTableBehavior.METHOD);
+	{	
+		return KendoUIBehavior.widget(this, DataTableBehavior.METHOD);
 	}
 
 	/**
@@ -131,7 +133,11 @@ public class DataTable<T> extends WebComponent implements IJQueryWidget, IDataTa
 	 */
 	public void refresh(IPartialPageRequestHandler handler)
 	{
-		handler.appendJavaScript(String.format("var grid = %s; grid.dataSource.read(); grid.refresh();", this.widget()));
+		/*
+		 * $w.wrapper.show() - shows the datatable in order to show the spinner while loading...
+		 * $w.dataSource.page(1) - reset dataset to first page (data could be filtered server side)
+		 */
+		handler.appendJavaScript(String.format("var $w = %s; if ($w) { $w.wrapper.show(); $w.dataSource.page(1); $w.dataSource.read(); $w.refresh(); }", this.widget()));
 	}
 
 	// Properties //
@@ -192,7 +198,10 @@ public class DataTable<T> extends WebComponent implements IJQueryWidget, IDataTa
 	@Override
 	public void onConfigure(JQueryBehavior behavior)
 	{
+		behavior.setOption("noRecords", true);
 		behavior.setOption("sortable", this.provider instanceof ISortStateLocator<?>);
+		behavior.setOption("messages", this.newMessagesOptions()); // FIXME: seems to be inefficient
+		behavior.setOption("autoBind", this.getBehaviors(DataBoundBehavior.class).isEmpty()); // false if DataBoundBehavior is added
 	}
 
 	@Override
@@ -338,5 +347,19 @@ public class DataTable<T> extends WebComponent implements IJQueryWidget, IDataTa
 	protected JQueryAjaxBehavior newColumnAjaxBehavior(IJQueryAjaxAware source, ColumnButton button)
 	{
 		return new ColumnAjaxBehavior(source, button);
+	}
+
+	/**
+	 * Get a new {@code message} {@link Options}
+	 * FIXME: seems to be inefficient (norecords)
+	 * 
+	 * @return the new {@code message} options
+	 */
+	protected Options newMessagesOptions()
+	{
+		Options options = new Options();
+		options.set("noRecords", Options.asString(this.getString("messages.norecords")));
+
+		return options;
 	}
 }

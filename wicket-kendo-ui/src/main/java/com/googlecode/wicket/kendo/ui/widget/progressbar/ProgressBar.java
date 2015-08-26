@@ -23,6 +23,7 @@ import org.apache.wicket.util.lang.Args;
 import com.googlecode.wicket.jquery.core.JQueryBehavior;
 import com.googlecode.wicket.jquery.core.JQueryGenericContainer;
 import com.googlecode.wicket.jquery.core.Options;
+import com.googlecode.wicket.kendo.ui.KendoUIBehavior;
 
 /**
  * Provides a Kendo UI progress-bar based on a {@link JQueryGenericContainer}
@@ -141,13 +142,13 @@ public class ProgressBar extends JQueryGenericContainer<Integer> implements IPro
 	// Methods //
 
 	/**
-	 * Gets the Kendo (jQuery) object
+	 * Gets the Kendo UI widget
 	 *
 	 * @return the jQuery object
 	 */
 	protected String widget()
 	{
-		return String.format("jQuery('%s').data('%s')", JQueryWidget.getSelector(this), ProgressBarBehavior.METHOD);
+		return KendoUIBehavior.widget(this, ProgressBarBehavior.METHOD);
 	}
 
 	/**

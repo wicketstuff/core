@@ -210,6 +210,7 @@ public abstract class DataTableBehavior extends KendoUIBehavior implements IJQue
 		// events //
 		if (this.onToolbarClickAjaxBehavior != null)
 		{
+			// FIXME: registered on each reload (target.add)
 			this.on(this.selector + " .k-grid-toolbar .k-button", "click", this.onToolbarClickAjaxBehavior.getCallbackFunction());
 		}
 

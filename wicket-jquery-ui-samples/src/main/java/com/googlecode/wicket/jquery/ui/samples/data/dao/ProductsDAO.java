@@ -57,7 +57,7 @@ public class ProductsDAO
 
 		if (deleted != null)
 		{
-			all().remove(deleted.getId());
+			all().remove(deleted);
 		}
 	}
 
