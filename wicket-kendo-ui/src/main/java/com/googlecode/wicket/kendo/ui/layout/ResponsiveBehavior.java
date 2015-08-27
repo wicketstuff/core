@@ -206,7 +206,7 @@ public class ResponsiveBehavior extends KendoUIBehavior implements IJQueryAjaxAw
 	}
 
 	/**
-	 * Provides an event object that will be broadcasted by the {@link OnOpenAjaxBehavior} callback
+	 * Provides an event object that will be broadcasted by the {@link OnCloseAjaxBehavior} callback
 	 */
 	protected static class CloseEvent extends JQueryEvent
 	{

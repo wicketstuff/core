@@ -144,7 +144,7 @@ public class ColumnButton implements IClusterable
 	}
 
 	/**
-	 * Indicates whether the button acts as the built-in one (like create, edit, update, destroy)
+	 * Indicates whether the button acts as a built-in one (like create, edit, update, destroy)
 	 * 
 	 * @return true if no 'property' has been supplied
 	 */
