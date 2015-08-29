@@ -16,6 +16,7 @@
  */
 package com.googlecode.wicket.jquery.core.utils;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -29,7 +30,8 @@ import java.util.TimeZone;
  */
 public class DateUtils
 {
-	private static final String ISO8601 = "yyyy-MM-dd'T'HH:mmZ";
+	private static final String ISO8601 = "yyyy-MM-dd'T'HH:mm:ss.SSS";
+	private static final String ISO8601_TZ = "yyyy-MM-dd'T'HH:mm:ssZ";
 
 	public static final TimeZone UTC = TimeZone.getTimeZone("UTC");
 
@@ -79,14 +81,26 @@ public class DateUtils
 	}
 
 	/**
-	 * Converts a date to its ISO8601/javascript representation. ie: 2009-11-05T13:15:30+0200
+	 * Converts a ISO8601 string date (without timezone) to a {@link Date}
+	 *
+	 * @param date ISO8601 string date
+	 * @return the {@code Date}
+	 * @throws ParseException
+	 */
+	public static Date parse(String date) throws ParseException
+	{
+		return new SimpleDateFormat(ISO8601).parse(date);
+	}
+
+	/**
+	 * Converts a date to its ISO8601/javascript representation (with timezone). ie: 2009-11-05T13:15:00+0200
 	 *
 	 * @param date the date to convert
 	 * @return the ISO8601 date as string
 	 */
 	public static String toISO8601(Date date)
 	{
-		return new SimpleDateFormat(ISO8601).format(date);
+		return new SimpleDateFormat(ISO8601_TZ).format(date);
 	}
 
 	/**

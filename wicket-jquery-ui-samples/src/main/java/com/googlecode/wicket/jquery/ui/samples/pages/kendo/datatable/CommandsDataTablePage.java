@@ -44,7 +44,7 @@ public class CommandsDataTablePage extends AbstractDataTablePage
 		options.set("selectable", Options.asString("multiple"));
 		options.set("toolbar", "[ { name: 'view', text: 'View' }, { name: 'save', text: 'Save' } ]");
 
-		final DataTable<Product> table = new DataTable<Product>("datatable", newColumnList(), newDataProvider(), 20, options) {
+		final DataTable<Product> table = new DataTable<Product>("datatable", newColumnList(), newDataProvider(), 25, options) {
 
 			private static final long serialVersionUID = 1L;
 

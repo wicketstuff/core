@@ -45,7 +45,7 @@ public class ProductsDAO
 		{
 			updated.setName(product.getName());
 			updated.setDescription(product.getDescription());
-			updated.setDate(product.getDate()); // FIXME: date is not taken into account
+			updated.setDate(product.getDate());
 			updated.setPrice(product.getPrice());
 			// TODO: updated.setVendor(product.getVendor());
 		}

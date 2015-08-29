@@ -1,5 +1,6 @@
 package com.googlecode.wicket.jquery.ui.samples.data.bean;
 
+import java.text.ParseException;
 import java.util.Date;
 
 import org.apache.wicket.ajax.json.JSONObject;
@@ -13,7 +14,18 @@ public class Product implements IClusterable
 
 	public static Product of(JSONObject object)
 	{
-		return new Product(object.optInt("id"), object.optString("name"), object.optString("description"), object.optDouble("price"));
+		Product product = new Product(object.optInt("id"), object.optString("name"), object.optString("description"), object.optDouble("price"));
+
+		try
+		{
+			product.setDate(DateUtils.parse(object.optString("date")));
+		}
+		catch (ParseException e)
+		{
+			// not handled
+		}
+
+		return product;
 	}
 
 	private int id;
@@ -53,7 +65,7 @@ public class Product implements IClusterable
 	{
 		return this.name;
 	}
-	
+
 	public void setName(String name)
 	{
 		this.name = name;
@@ -63,7 +75,7 @@ public class Product implements IClusterable
 	{
 		return this.desc;
 	}
-	
+
 	public void setDescription(String desc)
 	{
 		this.desc = desc;
@@ -73,7 +85,7 @@ public class Product implements IClusterable
 	{
 		return new Date(this.date);
 	}
-	
+
 	public void setDate(Date date)
 	{
 		this.date = date.getTime();
@@ -83,7 +95,7 @@ public class Product implements IClusterable
 	{
 		return this.price;
 	}
-	
+
 	public void setPrice(double price)
 	{
 		this.price = price;
@@ -93,7 +105,7 @@ public class Product implements IClusterable
 	{
 		return this.vendor;
 	}
-	
+
 	public void setVendor(Vendor vendor)
 	{
 		this.vendor = vendor;

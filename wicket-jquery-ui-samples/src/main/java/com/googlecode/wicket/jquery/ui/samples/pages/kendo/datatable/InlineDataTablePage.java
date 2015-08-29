@@ -17,6 +17,7 @@ import com.googlecode.wicket.kendo.ui.datatable.CommandButton;
 import com.googlecode.wicket.kendo.ui.datatable.DataTable;
 import com.googlecode.wicket.kendo.ui.datatable.column.CommandColumn;
 import com.googlecode.wicket.kendo.ui.datatable.column.CurrencyPropertyColumn;
+import com.googlecode.wicket.kendo.ui.datatable.column.DatePropertyColumn;
 import com.googlecode.wicket.kendo.ui.datatable.column.IColumn;
 import com.googlecode.wicket.kendo.ui.datatable.column.IdPropertyColumn;
 import com.googlecode.wicket.kendo.ui.datatable.column.PropertyColumn;
@@ -36,10 +37,10 @@ public class InlineDataTablePage extends AbstractDataTablePage
 		Options options = new Options();
 		options.set("height", 430);
 		options.set("editable", Options.asString("inline"));
-		options.set("pageable", "{ pageSizes: [ 25, 50, 100 ] }");
+		options.set("pageable", true);
 		options.set("toolbar", "[ { name: 'create', text: 'New' } ]"); /* 'create' is a built-in button/command' */
 
-		final DataTable<Product> table = new DataTable<Product>("datatable", newColumnList(), newDataProvider(), 20, options) {
+		final DataTable<Product> table = new DataTable<Product>("datatable", newColumnList(), newDataProvider(), 25, options) {
 
 			private static final long serialVersionUID = 1L;
 
@@ -93,10 +94,10 @@ public class InlineDataTablePage extends AbstractDataTablePage
 	{
 		List<IColumn> columns = new ArrayList<IColumn>();
 
-		columns.add(new IdPropertyColumn("ID", "id", 40));
+		columns.add(new IdPropertyColumn("ID", "id", 40)); /* Important, for being sent back to server */
 		columns.add(new PropertyColumn("Name", "name"));
 		columns.add(new PropertyColumn("Description", "description"));
-		// columns.add(new DatePropertyColumn("Created", "date"));
+		columns.add(new DatePropertyColumn("Created", "date"));
 		columns.add(new CurrencyPropertyColumn("Price", "price", 100));
 
 		columns.add(new CommandColumn("", 170) {
@@ -106,10 +107,9 @@ public class InlineDataTablePage extends AbstractDataTablePage
 			@Override
 			public List<CommandButton> newButtons()
 			{
-				/* 'edit' and 'destroy' are built-in buttons/commands, no property has to be to supply
-				 * #onUpdate(AjaxRequestTarget target, JSONObject object) will be triggered
-				 * #onDelete(AjaxRequestTarget target, JSONObject object) will be triggered
-				 * #onClick(AjaxRequestTarget, CommandButton, String) will not be triggered 
+				/*
+				 * 'edit' and 'destroy' are built-in buttons/commands, no property has to be to supply #onUpdate(AjaxRequestTarget target, JSONObject object) will be triggered #onDelete(AjaxRequestTarget target, JSONObject object) will be
+				 * triggered #onClick(AjaxRequestTarget, CommandButton, String) will not be triggered
 				 */
 				return Arrays.asList(new CommandButton("edit", Model.of("Edit")), new CommandButton("destroy", Model.of("Delete")));
 			}
