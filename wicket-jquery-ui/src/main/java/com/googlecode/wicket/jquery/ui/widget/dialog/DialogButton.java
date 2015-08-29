@@ -55,9 +55,7 @@ public class DialogButton implements IClusterable
 	 * Constructor
 	 *
 	 * @param text the button's text
-	 * @deprecated this ctor is *not* deprecated but this warning aims to warn you about ctor change in 6.20.0, was previously (String text, String icon). Please update by adding 'name' or use Model for safety  
 	 */
-	// TODO: 6.21.0 - remove deprecation 
 	public DialogButton(String name, String text)
 	{
 		this(name, Model.of(text), null, true);
@@ -79,9 +77,7 @@ public class DialogButton implements IClusterable
 	 *
 	 * @param text the button's text
 	 * @param enabled indicates whether the button is enabled
-	 * @deprecated this ctor is *not* deprecated but this warning aims to warn you about ctor change in 6.20.0, was previously (String text, String icon, boolean enabled). Please update by adding 'name' or use Model for safety
 	 */
-	// TODO: 6.21.0 - remove deprecation
 	public DialogButton(String name, String text, boolean enabled)
 	{
 		this(name, Model.of(text), null, enabled);
