@@ -43,9 +43,9 @@ public interface IDataTableListener extends IClusterable
 	 *
 	 * @param target the {@link AjaxRequestTarget}
 	 * @param button the button being clicked
-	 * @param value value retrieved from the row, according to the property supplied to the {@link ColumnButton} that fired the event
+	 * @param value value retrieved from the row, according to the property supplied to the {@link CommandButton} that fired the event
 	 */
-	void onClick(AjaxRequestTarget target, ColumnButton button, String value);
+	void onClick(AjaxRequestTarget target, CommandButton button, String value);
 
 	/**
 	 * Triggered when an editing is cancelled

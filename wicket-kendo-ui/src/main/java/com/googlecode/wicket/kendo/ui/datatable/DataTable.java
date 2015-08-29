@@ -28,6 +28,8 @@ import org.apache.wicket.markup.ComponentTag;
 import org.apache.wicket.markup.MarkupStream;
 import org.apache.wicket.markup.html.WebComponent;
 import org.apache.wicket.markup.repeater.data.IDataProvider;
+import org.apache.wicket.model.IModel;
+import org.apache.wicket.model.Model;
 
 import com.googlecode.wicket.jquery.core.IJQueryWidget;
 import com.googlecode.wicket.jquery.core.JQueryBehavior;
@@ -36,7 +38,7 @@ import com.googlecode.wicket.jquery.core.ajax.IJQueryAjaxAware;
 import com.googlecode.wicket.jquery.core.ajax.JQueryAjaxBehavior;
 import com.googlecode.wicket.kendo.ui.KendoBehaviorFactory;
 import com.googlecode.wicket.kendo.ui.KendoUIBehavior;
-import com.googlecode.wicket.kendo.ui.datatable.ColumnAjaxBehavior.ClickEvent;
+import com.googlecode.wicket.kendo.ui.datatable.CommandAjaxBehavior.ClickEvent;
 import com.googlecode.wicket.kendo.ui.datatable.behavior.DataBoundBehavior;
 import com.googlecode.wicket.kendo.ui.datatable.column.IColumn;
 
@@ -54,7 +56,7 @@ public class DataTable<T> extends WebComponent implements IJQueryWidget, IDataTa
 	private AbstractAjaxBehavior providerBehavior;
 
 	private final Options options;
-	private final List<? extends IColumn> columns;
+	private final IModel<List<IColumn>> columns;
 	private final IDataProvider<T> provider;
 	private final long rows;
 
@@ -66,7 +68,34 @@ public class DataTable<T> extends WebComponent implements IJQueryWidget, IDataTa
 	 * @param provider the {@link IDataProvider}
 	 * @param rows the number of rows per page to be displayed
 	 */
-	public DataTable(String id, final List<? extends IColumn> columns, final IDataProvider<T> provider, final long rows)
+	public DataTable(String id, final List<IColumn> columns, final IDataProvider<T> provider, final long rows)
+	{
+		this(id, Model.ofList(columns), provider, rows, new Options());
+	}
+
+	/**
+	 * Main constructor
+	 *
+	 * @param id the markup id
+	 * @param columns the list of {@link IColumn}
+	 * @param provider the {@link IDataProvider}
+	 * @param rows the number of rows per page to be displayed
+	 * @param options the {@link Options}
+	 */
+	public DataTable(String id, final List<IColumn> columns, final IDataProvider<T> provider, final long rows, Options options)
+	{
+		this(id, Model.ofList(columns), provider, rows, options);
+	}
+
+	/**
+	 * Constructor
+	 *
+	 * @param id the markup id
+	 * @param columns the list of {@link IColumn}
+	 * @param provider the {@link IDataProvider}
+	 * @param rows the number of rows per page to be displayed
+	 */
+	public DataTable(String id, final IModel<List<IColumn>> columns, final IDataProvider<T> provider, final long rows)
 	{
 		this(id, columns, provider, rows, new Options());
 	}
@@ -80,7 +109,7 @@ public class DataTable<T> extends WebComponent implements IJQueryWidget, IDataTa
 	 * @param rows the number of rows per page to be displayed
 	 * @param options the {@link Options}
 	 */
-	public DataTable(String id, final List<? extends IColumn> columns, final IDataProvider<T> provider, final long rows, Options options)
+	public DataTable(String id, final IModel<List<IColumn>> columns, final IDataProvider<T> provider, final long rows, Options options)
 	{
 		super(id);
 
@@ -127,17 +156,34 @@ public class DataTable<T> extends WebComponent implements IJQueryWidget, IDataTa
 	}
 
 	/**
-	 * Reloads data and refreshes the {@link DataTable}
+	 * Resets the dataSource to the first page
+	 *
+	 * @param handler the {@link IPartialPageRequestHandler}
+	 */
+	public void reset(IPartialPageRequestHandler handler)
+	{
+		handler.appendJavaScript(String.format("var $w = %s; if ($w) { $w.dataSource.page(1); }", this.widget()));
+	}
+
+	/**
+	 * Reloads the {@link DataTable}<br/>
+	 * Equivalent to {@code handler.add(table);}
+	 *
+	 * @param handler the {@link IPartialPageRequestHandler}
+	 */
+	public void reload(IPartialPageRequestHandler handler)
+	{
+		handler.add(this);
+	}
+
+	/**
+	 * Reloads current data and refreshes the {@link DataTable}
 	 *
 	 * @param handler the {@link IPartialPageRequestHandler}
 	 */
 	public void refresh(IPartialPageRequestHandler handler)
 	{
-		/*
-		 * $w.wrapper.show() - shows the datatable in order to show the spinner while loading...
-		 * $w.dataSource.page(1) - reset dataset to first page (data could be filtered server side)
-		 */
-		handler.appendJavaScript(String.format("var $w = %s; if ($w) { $w.wrapper.show(); $w.dataSource.page(1); $w.dataSource.read(); $w.refresh(); }", this.widget()));
+		handler.appendJavaScript(String.format("var $w = %s; if ($w) { $w.dataSource.read(); }", this.widget()));
 	}
 
 	// Properties //
@@ -167,9 +213,9 @@ public class DataTable<T> extends WebComponent implements IJQueryWidget, IDataTa
 	 *
 	 * @return the {@link List} of {@link IColumn}{@code s}
 	 */
-	public final List<? extends IColumn> getColumns()
+	public final List<IColumn> getColumns()
 	{
-		return Collections.unmodifiableList(this.columns);
+		return Collections.unmodifiableList(this.columns.getObject());
 	}
 
 	/**
@@ -198,9 +244,7 @@ public class DataTable<T> extends WebComponent implements IJQueryWidget, IDataTa
 	@Override
 	public void onConfigure(JQueryBehavior behavior)
 	{
-		behavior.setOption("noRecords", true);
 		behavior.setOption("sortable", this.provider instanceof ISortStateLocator<?>);
-		behavior.setOption("messages", this.newMessagesOptions()); // FIXME: seems to be inefficient
 		behavior.setOption("autoBind", this.getBehaviors(DataBoundBehavior.class).isEmpty()); // false if DataBoundBehavior is added
 	}
 
@@ -243,7 +287,7 @@ public class DataTable<T> extends WebComponent implements IJQueryWidget, IDataTa
 	}
 
 	@Override
-	public void onClick(AjaxRequestTarget target, ColumnButton button, String value)
+	public void onClick(AjaxRequestTarget target, CommandButton button, String value)
 	{
 		// noop
 	}
@@ -304,7 +348,7 @@ public class DataTable<T> extends WebComponent implements IJQueryWidget, IDataTa
 			}
 
 			@Override
-			protected JQueryAjaxBehavior newButtonAjaxBehavior(IJQueryAjaxAware source, ColumnButton button)
+			protected JQueryAjaxBehavior newButtonAjaxBehavior(IJQueryAjaxAware source, CommandButton button)
 			{
 				return DataTable.this.newColumnAjaxBehavior(source, button);
 			}
@@ -320,7 +364,7 @@ public class DataTable<T> extends WebComponent implements IJQueryWidget, IDataTa
 	 * @param provider the {@link IDataProvider}
 	 * @return the {@link AbstractAjaxBehavior}
 	 */
-	protected AbstractAjaxBehavior newDataProviderBehavior(final List<? extends IColumn> columns, final IDataProvider<T> provider)
+	protected AbstractAjaxBehavior newDataProviderBehavior(final IModel<List<IColumn>> columns, final IDataProvider<T> provider)
 	{
 		return new DataProviderBehavior<T>(columns, provider);
 	}
@@ -344,22 +388,8 @@ public class DataTable<T> extends WebComponent implements IJQueryWidget, IDataTa
 	 * @param button the button that is passed to the behavior so it can be retrieved via the {@link ClickEvent}
 	 * @return the {@link JQueryAjaxBehavior}
 	 */
-	protected JQueryAjaxBehavior newColumnAjaxBehavior(IJQueryAjaxAware source, ColumnButton button)
+	protected JQueryAjaxBehavior newColumnAjaxBehavior(IJQueryAjaxAware source, CommandButton button)
 	{
-		return new ColumnAjaxBehavior(source, button);
-	}
-
-	/**
-	 * Get a new {@code message} {@link Options}
-	 * FIXME: seems to be inefficient (norecords)
-	 * 
-	 * @return the new {@code message} options
-	 */
-	protected Options newMessagesOptions()
-	{
-		Options options = new Options();
-		options.set("noRecords", Options.asString(this.getString("messages.norecords")));
-
-		return options;
+		return new CommandAjaxBehavior(source, button);
 	}
 }

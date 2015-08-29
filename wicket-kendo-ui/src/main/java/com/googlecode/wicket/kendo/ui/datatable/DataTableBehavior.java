@@ -23,6 +23,7 @@ import org.apache.wicket.Component;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.attributes.CallbackParameter;
 import org.apache.wicket.ajax.json.JSONObject;
+import org.apache.wicket.model.IModel;
 import org.apache.wicket.util.lang.Args;
 import org.apache.wicket.util.string.Strings;
 
@@ -34,9 +35,9 @@ import com.googlecode.wicket.jquery.core.utils.BuilderUtils;
 import com.googlecode.wicket.jquery.core.utils.RequestCycleUtils;
 import com.googlecode.wicket.kendo.ui.KendoDataSource;
 import com.googlecode.wicket.kendo.ui.KendoUIBehavior;
-import com.googlecode.wicket.kendo.ui.datatable.ColumnAjaxBehavior.ClickEvent;
+import com.googlecode.wicket.kendo.ui.datatable.CommandAjaxBehavior.ClickEvent;
 import com.googlecode.wicket.kendo.ui.datatable.ToolbarAjaxBehavior.ToolbarClickEvent;
-import com.googlecode.wicket.kendo.ui.datatable.column.CommandsColumn;
+import com.googlecode.wicket.kendo.ui.datatable.column.CommandColumn;
 import com.googlecode.wicket.kendo.ui.datatable.column.IColumn;
 import com.googlecode.wicket.kendo.ui.datatable.column.IdPropertyColumn;
 import com.googlecode.wicket.kendo.ui.scheduler.SchedulerBehavior;
@@ -53,6 +54,7 @@ public abstract class DataTableBehavior extends KendoUIBehavior implements IJQue
 	public static final String METHOD = "kendoGrid";
 
 	private final IDataTableListener listener;
+	private final IModel<List<IColumn>> columns;
 	private final KendoDataSource dataSource;
 
 	// TODO: private JQueryAjaxBehavior onEditAjaxBehavior;
@@ -62,8 +64,6 @@ public abstract class DataTableBehavior extends KendoUIBehavior implements IJQue
 	private JQueryAjaxBehavior onDeleteAjaxBehavior;
 	private JQueryAjaxBehavior onToolbarClickAjaxBehavior; // toolbar buttons
 
-	protected final List<? extends IColumn> columns;
-
 	/**
 	 * Constructor
 	 *
@@ -71,7 +71,7 @@ public abstract class DataTableBehavior extends KendoUIBehavior implements IJQue
 	 * @param columns the list of {@link IColumn}
 	 * @param listener the {@link IDataTableListener}
 	 */
-	public DataTableBehavior(String selector, List<? extends IColumn> columns, IDataTableListener listener)
+	public DataTableBehavior(String selector, IModel<List<IColumn>> columns, IDataTableListener listener)
 	{
 		this(selector, new Options(), columns, listener);
 	}
@@ -84,14 +84,15 @@ public abstract class DataTableBehavior extends KendoUIBehavior implements IJQue
 	 * @param columns the list of {@link IColumn}
 	 * @param listener the {@link IDataTableListener}
 	 */
-	public DataTableBehavior(String selector, Options options, List<? extends IColumn> columns, IDataTableListener listener)
+	public DataTableBehavior(String selector, Options options, IModel<List<IColumn>> columns, IDataTableListener listener)
 	{
 		super(selector, METHOD, options);
 
 		this.columns = columns;
 		this.listener = Args.notNull(listener, "listener");
 
-		this.dataSource = new KendoDataSource("gridDataSource");
+		// data source //
+		this.dataSource = new KendoDataSource("datasource" + selector.replace('#', '_'));
 		this.add(this.dataSource);
 	}
 
@@ -117,7 +118,7 @@ public abstract class DataTableBehavior extends KendoUIBehavior implements IJQue
 		component.add(this.onDeleteAjaxBehavior);
 
 		// column buttons //
-		for (ColumnButton button : this.getColumnButtons())
+		for (CommandButton button : this.getCommandButtons())
 		{
 			component.add(this.newButtonAjaxBehavior(this, button));
 		}
@@ -159,21 +160,93 @@ public abstract class DataTableBehavior extends KendoUIBehavior implements IJQue
 	}
 
 	/**
-	 * Gets the read-only {@link List} of {@link ColumnButton}
+	 * Gets the read-only {@link List} of {@link CommandButton}
 	 *
-	 * @return the {@link List} of {@link ColumnButton}
+	 * @return the {@link List} of {@link CommandButton}
 	 */
-	protected List<ColumnButton> getColumnButtons()
+	private List<CommandButton> getCommandButtons()
 	{
-		for (IColumn column : this.columns)
+		for (IColumn column : this.columns.getObject())
 		{
-			if (column instanceof CommandsColumn)
+			if (column instanceof CommandColumn)
 			{
-				return ((CommandsColumn) column).getButtons();
+				return ((CommandColumn) column).getButtons();
 			}
 		}
 
 		return Collections.emptyList();
+	}
+
+	/**
+	 * Gets the {@code List} of {@link IColumn}{@code s} as string
+	 * 
+	 * @param columns the {@code List} of {@link IColumn}{@code s}
+	 * @param behaviors the the {@code List} of {@link CommandAjaxBehavior}{@code s} associated to {@link CommandButton}{@code s}
+	 * @return the JSON string
+	 */
+	private String getColumnsAsString(List<IColumn> columns, List<CommandAjaxBehavior> behaviors)
+	{
+		StringBuilder builder = new StringBuilder("[ ");
+
+		for (int i = 0; i < columns.size(); i++)
+		{
+			IColumn column = columns.get(i);
+
+			if (i > 0)
+			{
+				builder.append(", ");
+			}
+
+			builder.append("{ ");
+			builder.append(column.toString());
+
+			if (column instanceof CommandColumn)
+			{
+				// buttons //
+				builder.append(", ");
+				builder.append(Options.QUOTE).append("command").append(Options.QUOTE).append(": ");
+				builder.append("[ ");
+
+				int n = 0;
+				for (CommandAjaxBehavior behavior : behaviors)
+				{
+					CommandButton button = behavior.getButton();
+					String css = button.getCSSClass();
+
+					if (n++ > 0)
+					{
+						builder.append(", ");
+					}
+
+					builder.append("{ ");
+					BuilderUtils.append(builder, "name", button.getName());
+					builder.append(", ");
+					BuilderUtils.append(builder, "text", button.toString());
+					builder.append(", ");
+
+					if (!Strings.isEmpty(css)) /* important */
+					{
+						BuilderUtils.append(builder, "className", css);
+						builder.append(", ");
+					}
+
+					String function = behavior.getCallbackFunction(); // function will be null for built-in commands
+
+					if (function != null)
+					{
+						builder.append("'click': ").append(function);
+					}
+
+					builder.append(" }");
+				}
+
+				builder.append(" ]");
+			}
+
+			builder.append(" }");
+		}
+
+		return builder.append(" ]").toString();
 	}
 
 	/**
@@ -207,6 +280,8 @@ public abstract class DataTableBehavior extends KendoUIBehavior implements IJQue
 	{
 		super.onConfigure(component);
 
+		List<IColumn> columns = this.columns.getObject();
+
 		// events //
 		if (this.onToolbarClickAjaxBehavior != null)
 		{
@@ -217,13 +292,14 @@ public abstract class DataTableBehavior extends KendoUIBehavior implements IJQue
 		// this.setOption("edit", this.onEditAjaxBehavior.getCallbackFunction());
 		this.setOption("cancel", this.onCancelAjaxBehavior.getCallbackFunction());
 
-		// options //
-		Options schema = new Options();
+		// columns //
+		this.setOption("columns", this.getColumnsAsString(columns, component.getBehaviors(CommandAjaxBehavior.class)));
 
 		// schema //
+		Options schema = new Options();
 		schema.set("data", Options.asString("results"));
 		schema.set("total", Options.asString("__count"));
-		schema.set("model", this.newSchemaModel());
+		schema.set("model", this.newSchemaModelOptions(columns));
 
 		// data-source //
 		this.setOption("dataSource", this.dataSource.getName());
@@ -237,69 +313,6 @@ public abstract class DataTableBehavior extends KendoUIBehavior implements IJQue
 		this.dataSource.setTransportCreate(this.onCreateAjaxBehavior.getCallbackFunction());
 		this.dataSource.setTransportUpdate(this.onUpdateAjaxBehavior.getCallbackFunction());
 		this.dataSource.setTransportDelete(this.onDeleteAjaxBehavior.getCallbackFunction());
-
-		// columns //
-		StringBuilder builder = new StringBuilder("[ ");
-
-		for (int i = 0; i < this.columns.size(); i++)
-		{
-			IColumn column = this.columns.get(i);
-
-			if (i > 0)
-			{
-				builder.append(", ");
-			}
-
-			builder.append("{ ");
-			builder.append(column.toString());
-
-			if (column instanceof CommandsColumn)
-			{
-				// buttons //
-				builder.append(", ");
-				builder.append(Options.QUOTE).append("command").append(Options.QUOTE).append(": ");
-				builder.append("[ ");
-
-				int n = 0;
-				for (ColumnAjaxBehavior behavior : component.getBehaviors(ColumnAjaxBehavior.class))
-				{
-					ColumnButton button = behavior.getButton();
-					String css = button.getCSSClass();
-
-					if (n++ > 0)
-					{
-						builder.append(", ");
-					}
-
-					builder.append("{ ");
-					BuilderUtils.append(builder, "name", button.getName());
-					builder.append(", ");
-					BuilderUtils.append(builder, "text", button.toString());
-					builder.append(", ");
-
-					if (!Strings.isEmpty(css)) /* important */
-					{
-						BuilderUtils.append(builder, "className", css);
-						builder.append(", ");
-					}
-
-					String function = behavior.getCallbackFunction();
-
-					if (function != null)
-					{
-						builder.append("'click': ").append(function);
-					}
-
-					builder.append(" }");
-				}
-
-				builder.append(" ]");
-			}
-
-			builder.append(" }");
-		}
-
-		this.setOption("columns", builder.append(" ]").toString());
 	}
 
 	@Override
@@ -347,12 +360,12 @@ public abstract class DataTableBehavior extends KendoUIBehavior implements IJQue
 	 *
 	 * @return the model, as JSON object
 	 */
-	protected Options newSchemaModel()
+	protected Options newSchemaModelOptions(List<IColumn> columns)
 	{
 		Options model = new Options();
 		Options fields = new Options();
 
-		for (IColumn column : this.columns)
+		for (IColumn column : columns)
 		{
 			if (column.getField() != null)
 			{
@@ -488,7 +501,7 @@ public abstract class DataTableBehavior extends KendoUIBehavior implements IJQue
 	 * @param button the button that is passed to the behavior so it can be retrieved via the {@link ClickEvent}
 	 * @return the {@link JQueryAjaxBehavior}
 	 */
-	protected abstract JQueryAjaxBehavior newButtonAjaxBehavior(IJQueryAjaxAware source, ColumnButton button);
+	protected abstract JQueryAjaxBehavior newButtonAjaxBehavior(IJQueryAjaxAware source, CommandButton button);
 
 	// Ajax classes //
 

@@ -30,14 +30,26 @@ public class DefaultDataTablePage extends AbstractDataTablePage
 		Options options = new Options();
 		options.set("height", 430);
 		options.set("pageable", "{ pageSizes: [ 25, 50, 100 ] }");
-		//options.set("sortable", true); // already set, as provider IS-A ISortStateLocator
+		// options.set("sortable", true); // already set, as provider IS-A ISortStateLocator
 		options.set("groupable", true);
 		options.set("columnMenu", true);
 
 		final DataTable<Product> table = new DataTable<Product>("datatable", newColumnList(), newDataProvider(), 25, options);
 		form.add(table);
 
-		// Button //
+		// Buttond //
+		form.add(new AjaxButton("reload") {
+
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			protected void onSubmit(AjaxRequestTarget target, Form<?> form)
+			{
+				table.reset(target);
+				table.reload(target);
+			}
+		});
+
 		form.add(new AjaxButton("refresh") {
 
 			private static final long serialVersionUID = 1L;
@@ -63,7 +75,7 @@ public class DefaultDataTablePage extends AbstractDataTablePage
 		columns.add(new PropertyColumn("Name", "name"));
 		columns.add(new PropertyColumn("Description", "description"));
 		columns.add(new CurrencyPropertyColumn("Price", "price", 70));
-//		columns.add(new DatePropertyColumn("Date", "date"));
+		// columns.add(new DatePropertyColumn("Date", "date"));
 		columns.add(new PropertyColumn("Vendor", "vendor.name"));
 
 		return columns;

@@ -13,9 +13,9 @@ import com.googlecode.wicket.jquery.core.Options;
 import com.googlecode.wicket.jquery.ui.samples.data.bean.Product;
 import com.googlecode.wicket.jquery.ui.samples.data.dao.ProductsDAO;
 import com.googlecode.wicket.jquery.ui.samples.data.provider.ProductDataProvider;
-import com.googlecode.wicket.kendo.ui.datatable.ColumnButton;
+import com.googlecode.wicket.kendo.ui.datatable.CommandButton;
 import com.googlecode.wicket.kendo.ui.datatable.DataTable;
-import com.googlecode.wicket.kendo.ui.datatable.column.CommandsColumn;
+import com.googlecode.wicket.kendo.ui.datatable.column.CommandColumn;
 import com.googlecode.wicket.kendo.ui.datatable.column.CurrencyPropertyColumn;
 import com.googlecode.wicket.kendo.ui.datatable.column.IColumn;
 import com.googlecode.wicket.kendo.ui.datatable.column.IdPropertyColumn;
@@ -42,26 +42,6 @@ public class InlineDataTablePage extends AbstractDataTablePage
 		final DataTable<Product> table = new DataTable<Product>("datatable", newColumnList(), newDataProvider(), 20, options) {
 
 			private static final long serialVersionUID = 1L;
-
-			/**
-			 * Triggered when a toolbar button is clicked.
-			 */
-			@Override
-			public void onClick(AjaxRequestTarget target, String button, List<String> values)
-			{
-				this.info(button + " " + values);
-				target.add(feedback);
-			}
-
-			/**
-			 * Triggered when a column button is clicked.
-			 */
-			@Override
-			public void onClick(AjaxRequestTarget target, ColumnButton button, String value)
-			{
-				this.info(button.getName() + " #" + value);
-				target.add(feedback);
-			}
 
 			@Override
 			public void onCancel(AjaxRequestTarget target)
@@ -119,14 +99,19 @@ public class InlineDataTablePage extends AbstractDataTablePage
 		// columns.add(new DatePropertyColumn("Created", "date"));
 		columns.add(new CurrencyPropertyColumn("Price", "price", 100));
 
-		columns.add(new CommandsColumn("", 170) {
+		columns.add(new CommandColumn("", 170) {
 
 			private static final long serialVersionUID = 1L;
 
 			@Override
-			public List<ColumnButton> newButtons()
+			public List<CommandButton> newButtons()
 			{
-				return Arrays.asList(new ColumnButton("edit", Model.of("Edit")), new ColumnButton("destroy", Model.of("Delete"))); // 'edit' and 'destroy' are built-in buttons/commands, no property to supply
+				/* 'edit' and 'destroy' are built-in buttons/commands, no property has to be to supply
+				 * #onUpdate(AjaxRequestTarget target, JSONObject object) will be triggered
+				 * #onDelete(AjaxRequestTarget target, JSONObject object) will be triggered
+				 * #onClick(AjaxRequestTarget, CommandButton, String) will not be triggered 
+				 */
+				return Arrays.asList(new CommandButton("edit", Model.of("Edit")), new CommandButton("destroy", Model.of("Delete")));
 			}
 		});
 

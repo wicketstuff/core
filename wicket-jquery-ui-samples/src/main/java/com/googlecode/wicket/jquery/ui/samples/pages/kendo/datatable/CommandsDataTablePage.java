@@ -15,10 +15,10 @@ import com.googlecode.wicket.jquery.core.ajax.JQueryAjaxBehavior;
 import com.googlecode.wicket.jquery.ui.samples.data.bean.Product;
 import com.googlecode.wicket.jquery.ui.samples.data.provider.ProductDataProvider;
 import com.googlecode.wicket.kendo.ui.KendoIcon;
-import com.googlecode.wicket.kendo.ui.datatable.ColumnButton;
+import com.googlecode.wicket.kendo.ui.datatable.CommandButton;
 import com.googlecode.wicket.kendo.ui.datatable.DataTable;
 import com.googlecode.wicket.kendo.ui.datatable.ToolbarAjaxBehavior;
-import com.googlecode.wicket.kendo.ui.datatable.column.CommandsColumn;
+import com.googlecode.wicket.kendo.ui.datatable.column.CommandColumn;
 import com.googlecode.wicket.kendo.ui.datatable.column.CurrencyPropertyColumn;
 import com.googlecode.wicket.kendo.ui.datatable.column.IColumn;
 import com.googlecode.wicket.kendo.ui.datatable.column.PropertyColumn;
@@ -62,7 +62,7 @@ public class CommandsDataTablePage extends AbstractDataTablePage
 			 * Triggered when a column button is clicked.
 			 */
 			@Override
-			public void onClick(AjaxRequestTarget target, ColumnButton button, String value)
+			public void onClick(AjaxRequestTarget target, CommandButton button, String value)
 			{
 				this.info(button.getName() + " #" + value);
 				target.add(feedback);
@@ -113,14 +113,14 @@ public class CommandsDataTablePage extends AbstractDataTablePage
 		columns.add(new PropertyColumn("Description", "description"));
 		columns.add(new CurrencyPropertyColumn("Price", "price", 70));
 
-		columns.add(new CommandsColumn("", 100) {
+		columns.add(new CommandColumn("", 100) {
 
 			private static final long serialVersionUID = 1L;
 
 			@Override
-			public List<ColumnButton> newButtons()
+			public List<CommandButton> newButtons()
 			{
-				return Arrays.asList(new ColumnButton("edit", Model.of("Edit"), "id"));
+				return Arrays.asList(new CommandButton("edit", Model.of("Edit"), "id"));
 			}
 		});
 

@@ -16,28 +16,30 @@
  */
 package com.googlecode.wicket.kendo.ui.datatable.column;
 
+import java.util.List;
+
 import org.apache.wicket.model.IModel;
 
+import com.googlecode.wicket.kendo.ui.datatable.CommandButton;
 import com.googlecode.wicket.kendo.ui.datatable.DataTable;
 
 /**
  * Provides a commands column for a {@link DataTable}
  *
  * @author Sebastien Briquet - sebfz1
- * @deprecated renamed CommandsColumn to CommandColumn
- * TODO: 6.23.0/7.2.0 - remove
  */
-@Deprecated
-public abstract class CommandsColumn extends CommandColumn
+public abstract class CommandColumn extends AbstractColumn
 {
 	private static final long serialVersionUID = 1L;
 
+	private List<CommandButton> buttons = null;
+
 	/**
 	 * Constructor
 	 * 
 	 * @param title the text of the column header
 	 */
-	public CommandsColumn(String title)
+	public CommandColumn(String title)
 	{
 		super(title);
 	}
@@ -48,7 +50,7 @@ public abstract class CommandsColumn extends CommandColumn
 	 * @param title the text of the column header
 	 * @param width the desired width of the column
 	 */
-	public CommandsColumn(String title, int width)
+	public CommandColumn(String title, int width)
 	{
 		super(title, width);
 	}
@@ -58,7 +60,7 @@ public abstract class CommandsColumn extends CommandColumn
 	 * 
 	 * @param title the text of the column header
 	 */
-	public CommandsColumn(IModel<String> title)
+	public CommandColumn(IModel<String> title)
 	{
 		super(title);
 	}
@@ -69,8 +71,30 @@ public abstract class CommandsColumn extends CommandColumn
 	 * @param title the text of the column header
 	 * @param width the desired width of the column
 	 */
-	public CommandsColumn(IModel<String> title, int width)
+	public CommandColumn(IModel<String> title, int width)
 	{
 		super(title, width);
+	}
+
+	/**
+	 * Gets a new {@link List} a {@link CommandButton}
+	 *
+	 * @return a new {@link List} a {@link CommandButton}
+	 */
+	protected abstract List<CommandButton> newButtons();
+
+	/**
+	 * Gets the list of {@link CommandButton}
+	 *
+	 * @return the list of {@link CommandButton}
+	 */
+	public final synchronized List<CommandButton> getButtons()
+	{
+		if (this.buttons == null)
+		{
+			this.buttons = this.newButtons();
+		}
+
+		return this.buttons;
 	}
 }

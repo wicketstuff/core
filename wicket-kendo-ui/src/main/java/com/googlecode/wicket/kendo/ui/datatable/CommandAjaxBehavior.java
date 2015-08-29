@@ -26,19 +26,19 @@ import com.googlecode.wicket.jquery.core.utils.RequestCycleUtils;
 /**
  * Provides the {@link JQueryAjaxBehavior} being called by the column button(s).
  */
-public class ColumnAjaxBehavior extends JQueryAjaxBehavior
+public class CommandAjaxBehavior extends JQueryAjaxBehavior
 {
 	private static final long serialVersionUID = 1L;
 
-	private final ColumnButton button;
+	private final CommandButton button;
 
 	/**
 	 * Constructor
 	 *
 	 * @param source the {@link IJQueryAjaxAware}
-	 * @param button the {@link ColumnButton} to attach to the {@link ClickEvent}
+	 * @param button the {@link CommandButton} to attach to the {@link ClickEvent}
 	 */
-	public ColumnAjaxBehavior(IJQueryAjaxAware source, ColumnButton button)
+	public CommandAjaxBehavior(IJQueryAjaxAware source, CommandButton button)
 	{
 		super(source);
 
@@ -46,11 +46,11 @@ public class ColumnAjaxBehavior extends JQueryAjaxBehavior
 	}
 
 	/**
-	 * Gets the {@link ColumnButton}
+	 * Gets the {@link CommandButton}
 	 *
-	 * @return the {@link ColumnButton}
+	 * @return the {@link CommandButton}
 	 */
-	public ColumnButton getButton()
+	public CommandButton getButton()
 	{
 		return this.button;
 	}
@@ -88,10 +88,10 @@ public class ColumnAjaxBehavior extends JQueryAjaxBehavior
 	 */
 	protected static class ClickEvent extends JQueryEvent
 	{
-		private final ColumnButton button;
+		private final CommandButton button;
 		private final String value;
 
-		public ClickEvent(ColumnButton button)
+		public ClickEvent(CommandButton button)
 		{
 			super();
 
@@ -104,7 +104,7 @@ public class ColumnAjaxBehavior extends JQueryAjaxBehavior
 		 *
 		 * @return the button
 		 */
-		public ColumnButton getButton()
+		public CommandButton getButton()
 		{
 			return this.button;
 		}

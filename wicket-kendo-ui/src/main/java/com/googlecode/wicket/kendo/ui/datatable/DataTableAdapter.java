@@ -31,7 +31,7 @@ public class DataTableAdapter implements IDataTableListener
 	private static final long serialVersionUID = 1L;
 
 	@Override
-	public void onClick(AjaxRequestTarget target, ColumnButton button, String value)
+	public void onClick(AjaxRequestTarget target, CommandButton button, String value)
 	{
 		// noop
 	}
