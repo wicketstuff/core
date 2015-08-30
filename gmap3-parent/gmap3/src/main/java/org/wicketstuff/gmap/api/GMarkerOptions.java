@@ -18,6 +18,7 @@
  */
 package org.wicketstuff.gmap.api;
 
+import org.apache.wicket.util.string.Strings;
 import org.wicketstuff.gmap.GMap;
 import org.wicketstuff.gmap.js.ObjectLiteral;
 
@@ -48,17 +49,49 @@ public class GMarkerOptions implements GValue, Cloneable
         this.gmap = gmap;
     }
 
+    /**
+     * Creates a GMarkerOptions instance with the specified parameters. Note
+     * that the title needs to be already escaped to not break any JavaScript. 
+     * For escaping the most common special sequences in the title, use {@link #GMarkerOptions(org.wicketstuff.gmap.GMap, org.wicketstuff.gmap.api.GLatLng, java.lang.String, boolean) }
+     * 
+     * @param gmap The GMap-instance the marker will be put on
+     * @param latLng the position the marker will be placed
+     * @param title the tooltip text for this marker
+     * @see GMap
+     * @see GLatLng
+     * @see #GMarkerOptions(org.wicketstuff.gmap.GMap, org.wicketstuff.gmap.api.GLatLng, java.lang.String, boolean) 
+     */
     public GMarkerOptions(GMap gmap, GLatLng latLng, String title)
     {
         this(gmap, latLng);
         this.title = title;
+    }
 
+    /**
+     * @param gmap The GMap-instance the marker will be placed on
+     * @param latLng the position the marker will be placed
+     * @param title the tooltip text for this marker
+     * @param escapeTitle escapes backslashes(\), quotes ("), newlines (\n), tabs (\r) and carriage returns (\r) in the title 
+     */
+    public GMarkerOptions(GMap gmap, GLatLng latLng, String title, boolean escapeTitle)
+    {
+        this(gmap, latLng, title);
+        this.title = Strings.replaceAll(this.title, "\\", "\\\\").toString();
+        this.title = Strings.replaceAll(this.title, "\n", "\\n").toString();
+        this.title = Strings.replaceAll(this.title, "\r", "\\r").toString();
+        this.title = Strings.replaceAll(this.title, "\t", "\\t").toString();
+        this.title = Strings.replaceAll(this.title, "\"", "\\\"").toString();
     }
 
     public GMarkerOptions(GMap gmap, GLatLng latLng, String title, GIcon icon)
     {
-        this(gmap, latLng);
-        this.title = title;
+        this(gmap, latLng, title);
+        this.icon = icon;
+    }
+
+    public GMarkerOptions(GMap gmap, GLatLng latLng, String title, GIcon icon, boolean escapeTitle)
+    {
+        this(gmap, latLng, title, escapeTitle);
         this.icon = icon;
     }
 
