@@ -44,7 +44,7 @@ public class HomePage extends WicketExamplePage
 
                     // create a new marker with a bounce animation
                     // the animation continues until it is set explicitly to null
-                    GMarkerOptions opt = new GMarkerOptions(map, latLng);
+                    GMarkerOptions opt = new GMarkerOptions(map, latLng, "Demonstrate how to escape\n \"special sequences\"  \n in the tooltip", true);
                     opt.setAnimation(GAnimation.BOUNCE);
                     map.addOverlay(new GMarker(opt));
 
