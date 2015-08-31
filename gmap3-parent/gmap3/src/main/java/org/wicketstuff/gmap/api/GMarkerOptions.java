@@ -26,6 +26,7 @@ import org.wicketstuff.gmap.js.ObjectLiteral;
  * http://code.google.com/apis/maps/documentation/javascript/reference.html# MarkerOptions
  *
  * @author Christian Hennig (christian.hennig@freiheit.com)
+ * @author Joachim F. Rohde
  */
 public class GMarkerOptions implements GValue, Cloneable
 {
@@ -50,37 +51,38 @@ public class GMarkerOptions implements GValue, Cloneable
     }
 
     /**
-     * Creates a GMarkerOptions instance with the specified parameters. Note
-     * that the title needs to be already escaped to not break any JavaScript. 
-     * For escaping the most common special sequences in the title, use {@link #GMarkerOptions(org.wicketstuff.gmap.GMap, org.wicketstuff.gmap.api.GLatLng, java.lang.String, boolean) }
+     * Creates a GMarkerOptions instance with the specified parameters. 
      * 
      * @param gmap The GMap-instance the marker will be put on
      * @param latLng the position the marker will be placed
-     * @param title the tooltip text for this marker
+     * @param title the tooltip text for this marker. The most common special sequences in the title will be escaped
      * @see GMap
      * @see GLatLng
      * @see #GMarkerOptions(org.wicketstuff.gmap.GMap, org.wicketstuff.gmap.api.GLatLng, java.lang.String, boolean) 
      */
     public GMarkerOptions(GMap gmap, GLatLng latLng, String title)
     {
-        this(gmap, latLng);
-        this.title = title;
+        this(gmap, latLng, title, true);
     }
 
     /**
      * @param gmap The GMap-instance the marker will be placed on
      * @param latLng the position the marker will be placed
      * @param title the tooltip text for this marker
-     * @param escapeTitle escapes backslashes(\), quotes ("), newlines (\n), tabs (\r) and carriage returns (\r) in the title 
+     * @param escapeTitle escapes backslashes(\), quotes ("), newlines (\n), tabs (\r) and carriage returns (\r) in the title, if set to true
      */
     public GMarkerOptions(GMap gmap, GLatLng latLng, String title, boolean escapeTitle)
     {
-        this(gmap, latLng, title);
-        this.title = Strings.replaceAll(this.title, "\\", "\\\\").toString();
-        this.title = Strings.replaceAll(this.title, "\n", "\\n").toString();
-        this.title = Strings.replaceAll(this.title, "\r", "\\r").toString();
-        this.title = Strings.replaceAll(this.title, "\t", "\\t").toString();
-        this.title = Strings.replaceAll(this.title, "\"", "\\\"").toString();
+        this(gmap, latLng);
+        this.title = title;
+        if (escapeTitle)
+        {
+            this.title = Strings.replaceAll(this.title, "\\", "\\\\").toString();
+            this.title = Strings.replaceAll(this.title, "\n", "\\n").toString();
+            this.title = Strings.replaceAll(this.title, "\r", "\\r").toString();
+            this.title = Strings.replaceAll(this.title, "\t", "\\t").toString();
+            this.title = Strings.replaceAll(this.title, "\"", "\\\"").toString();
+        }
     }
 
     public GMarkerOptions(GMap gmap, GLatLng latLng, String title, GIcon icon)
