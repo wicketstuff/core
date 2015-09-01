@@ -73,7 +73,6 @@ public class CommandButton implements IClusterable
 	 *
 	 * @param name the button's name
 	 * @param text the button's text
-	 * @param property the property used to retrieve the row's object value
 	 */
 	public CommandButton(String name, IModel<String> text)
 	{

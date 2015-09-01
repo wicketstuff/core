@@ -56,7 +56,6 @@ public class ColumnButton extends CommandButton
 	 *
 	 * @param name the button's name
 	 * @param text the button's text
-	 * @param property the property used to retrieve the row's object value
 	 */
 	public ColumnButton(String name, IModel<String> text)
 	{
