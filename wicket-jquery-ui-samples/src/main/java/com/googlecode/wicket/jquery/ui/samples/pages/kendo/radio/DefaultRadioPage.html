@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html xmlns:wicket="http://wicket.apache.org">
+<head>
+<wicket:head>
+	<title>Wicket - jQuery UI: kendo-ui radio</title>
+	<style type="text/css">
+	
+		.radioUL {
+			list-style: none;
+		}
+		
+		.radioUL li {
+			line-height: 25px;
+		}
+
+	</style>
+</wicket:head>
+</head>
+<body>
+<wicket:extend>
+
+	<div id="wrapper-panel-frame" class="ui-corner-all">
+		<form wicket:id="form">
+	
+			<div wicket:id="radiogroup">
+				<ul class="radioUL">
+					<li>
+						<input wicket:id="radio1" type="radio"/>
+						<label wicket:id="label1">[label]</label>
+					</li>
+					
+					<li>
+						<input wicket:id="radio2" type="radio"/>
+						<label wicket:id="label2">[label]</label>
+					</li>
+			
+					<li>
+						<input wicket:id="radio3" type="radio"/>
+						<label wicket:id="label3">[label]</label>
+					</li>
+				</ul>
+			</div>
+			<br/>
+		
+			<input wicket:id="submit" value="Submit" type="submit"></input>
+			<button wicket:id="button">Ajax Submit</button>
+			<br/><br/>
+			<div wicket:id="feedback" style="width: 360px;"></div>
+		</form>
+	</div>
+		
+</wicket:extend>
+</body>
+</html>

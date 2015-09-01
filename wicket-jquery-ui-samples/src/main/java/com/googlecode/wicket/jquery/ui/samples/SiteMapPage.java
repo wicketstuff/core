@@ -93,6 +93,7 @@ import com.googlecode.wicket.jquery.ui.samples.pages.kendo.multiselect.LazyMulti
 import com.googlecode.wicket.jquery.ui.samples.pages.kendo.notification.DefaultNotificationPage;
 import com.googlecode.wicket.jquery.ui.samples.pages.kendo.notification.FeedbackPanelPage;
 import com.googlecode.wicket.jquery.ui.samples.pages.kendo.progressbar.KendoProgressBarPage;
+import com.googlecode.wicket.jquery.ui.samples.pages.kendo.radio.DefaultRadioPage;
 import com.googlecode.wicket.jquery.ui.samples.pages.kendo.scheduler.DefaultSchedulerPage;
 import com.googlecode.wicket.jquery.ui.samples.pages.kendo.scheduler.MultipleResourceSchedulerPage;
 import com.googlecode.wicket.jquery.ui.samples.pages.kendo.scheduler.SingleResourceSchedulerPage;
@@ -212,6 +213,7 @@ public class SiteMapPage extends WebPage
 			DefaultMultiSelectPage.class,
 			DefaultNotificationPage.class,
 			DefaultProgressBarPage.class,
+			DefaultRadioPage.class,
 			DefaultResizablePage.class,
 			DefaultSchedulerPage.class,
 			DefaultSelectablePage.class,
