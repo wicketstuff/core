@@ -1,6 +1,5 @@
 package com.googlecode.wicket.kendo.ui;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
@@ -9,25 +8,28 @@ import org.apache.wicket.markup.head.JavaScriptContentHeaderItem;
 import org.apache.wicket.markup.head.JavaScriptHeaderItem;
 
 import com.googlecode.wicket.kendo.ui.resource.KendoGlobalizeResourceReference;
-import com.googlecode.wicket.kendo.ui.settings.KendoUILibrarySettings;
 
 /**
- * {@link HeaderItem} executing client side javascript call
- * 
+ * {@link HeaderItem} in charge of setting the {@code kendo.culture} and adding relevant dependencies <br/>
+ * Usage:<br/>
  * <code>
  * <pre>
+ * public void renderHead(IHeaderResponse response)
+ * {
+ * 	super.renderHead(response);
+ * 	
+ * 	response.render(new KendoCultureHeaderItem(KendoCulture.FR_FR));
+ * }
+ * <br/>
+ * This will result to:
+ * <code>
+ * <pre>
+ * &lt;script type="text/javascript" src="./resource/com.googlecode.wicket.kendo.ui.resource.KendoGlobalizeResourceReference/kendo.culture.de-DE.js"&gt;&lt;/script&gt;
  * &lt;script type="text/javascript" id="kendo-culture"&gt;
  * 	kendo.culture('de-DE');
  * &lt;/script&gt;
  * </pre>
  * </code>
- * 
- * Also guarantees dependencies to {@code KendoUILibrarySettings#getJavaScriptReference()} and to particular culture resource reference file
- * 
- * <pre>
- * &lt;script type="text/javascript" src="./resource/com.googlecode.wicket.kendo.ui.resource.KendoGlobalizeResourceReference/kendo.culture.de-DE.js"&gt;&lt;/script&gt;
- * 
- * <pre>
  * 
  * @author Patrick Davids - Patrick1701
  *
@@ -36,30 +38,45 @@ public class KendoCultureHeaderItem extends JavaScriptContentHeaderItem
 {
 	private static final long serialVersionUID = 1L;
 
-	private final Locale locale;
+	private final String culture;
 
 	/**
 	 * Constructor
 	 * 
-	 * @param locale the {@link Locale}
+	 * @param locale the {@link Locale}, ie: Locale.FRENCH
 	 */
 	public KendoCultureHeaderItem(Locale locale)
 	{
-		super(String.format("kendo.culture('%s')", locale.toLanguageTag()), "kendo-culture", null);
+		this(locale.toLanguageTag()); // java7
+	}
 
-		this.locale = locale;
+	/**
+	 * Constructor
+	 * 
+	 * @param culture the {@link KendoCulture}
+	 */
+	public KendoCultureHeaderItem(KendoCulture culture)
+	{
+		this(culture.toString());
+	}
+
+	/**
+	 * Constructor
+	 * 
+	 * @param culture the culture, ie: 'fr' or 'fr-FR'
+	 */
+	public KendoCultureHeaderItem(String culture)
+	{
+		super(String.format("kendo.culture('%s');", culture), "kendo-culture", null);
+
+		this.culture = culture;
 	}
 
 	@Override
 	public List<HeaderItem> getDependencies()
 	{
-		List<HeaderItem> dependencies = new ArrayList<HeaderItem>();
-
-		// depends on
-		dependencies.add(JavaScriptHeaderItem.forReference(KendoUILibrarySettings.get().getJavaScriptReference()));
-
-		// depends on
-		dependencies.add(JavaScriptHeaderItem.forReference(new KendoGlobalizeResourceReference(this.locale)));
+		List<HeaderItem> dependencies = super.getDependencies();
+		dependencies.add(JavaScriptHeaderItem.forReference(new KendoGlobalizeResourceReference(this.culture)));
 
 		return dependencies;
 	}

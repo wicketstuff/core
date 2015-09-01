@@ -5,15 +5,14 @@ import java.util.Locale;
 
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.markup.head.IHeaderResponse;
-import org.apache.wicket.markup.head.JavaScriptHeaderItem;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.model.Model;
 
+import com.googlecode.wicket.kendo.ui.KendoCultureHeaderItem;
 import com.googlecode.wicket.kendo.ui.form.button.AjaxButton;
 import com.googlecode.wicket.kendo.ui.form.button.Button;
 import com.googlecode.wicket.kendo.ui.form.datetime.DatePicker;
 import com.googlecode.wicket.kendo.ui.panel.KendoFeedbackPanel;
-import com.googlecode.wicket.kendo.ui.resource.KendoGlobalizeResourceReference;
 
 public class LocaleDatePickerPage extends AbstractTimePickerPage
 {
@@ -71,8 +70,8 @@ public class LocaleDatePickerPage extends AbstractTimePickerPage
 	{
 		super.renderHead(response);
 
-		// response.render(JavaScriptHeaderItem.forReference(new KendoGlobalizeResourceReference("fr"))); // or fr-FR
-		// response.render(JavaScriptHeaderItem.forReference(new KendoGlobalizeResourceReference(KendoCulture.FR_FR)));
-		response.render(JavaScriptHeaderItem.forReference(new KendoGlobalizeResourceReference(Locale.FRENCH)));
+		// response.render(new KendoCultureHeaderItem("fr")); // or fr-FR
+		// response.render(new KendoCultureHeaderItem(KendoCulture.FR_FR)); // or KendoCulture.FR
+		response.render(new KendoCultureHeaderItem(Locale.FRENCH));
 	}
 }
