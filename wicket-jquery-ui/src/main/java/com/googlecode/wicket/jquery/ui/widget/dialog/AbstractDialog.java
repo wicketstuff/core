@@ -401,9 +401,20 @@ public abstract class AbstractDialog<T extends Serializable> extends GenericPane
 	 * @see IJQueryWidget#newWidgetBehavior(String)
 	 */
 	@Override
-	public DialogBehavior newWidgetBehavior(String selector)
+	public final DialogBehavior newWidgetBehavior(String selector)
 	{
-		return new DialogBehavior(selector, this) {
+		IDialogListener listener = new DialogListenerWrapper(this) {
+
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			public void onClick(AjaxRequestTarget target, DialogButton button)
+			{
+				AbstractDialog.this.internalOnClick(target, button);
+			}
+		};
+
+		return new DialogBehavior(selector, listener) {
 
 			private static final long serialVersionUID = 1L;
 
