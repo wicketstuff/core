@@ -60,9 +60,7 @@ public class BuilderUtils
 	 */
 	public static <T> void resolve(StringBuilder builder, final T object, final String property)
 	{
-		String value = String.valueOf(PropertyResolver.getValue(property, object)); // convert to String to quote it
-
-		BuilderUtils.append(builder, property, value);
+		BuilderUtils.append(builder, property, String.valueOf(PropertyResolver.getValue(property, object))); // convert to String to quote it
 	}
 
 	/**

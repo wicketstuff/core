@@ -177,6 +177,24 @@ public class ListUtils
 		return choices;
 	}
 
+	/**
+	 * Excludes items from a {@code List} and return a new {@code List}
+	 * 
+	 * @param list the original {@link List}
+	 * @param items items to remove
+	 * @return a new {@code List} without excluded items
+	 */
+	public static List<String> exclude(List<String> list, String... items)
+	{
+		List<String> copy = new ArrayList<String>(list);
+
+		for (String item : items)
+		{
+			copy.remove(item);
+		}
+
+		return copy;
+	}
 
 	/**
 	 * Utility class
