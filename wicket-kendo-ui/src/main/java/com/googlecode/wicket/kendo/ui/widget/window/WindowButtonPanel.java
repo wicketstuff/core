@@ -24,7 +24,10 @@ import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.markup.repeater.RepeatingView;
 
+import com.googlecode.wicket.jquery.core.Options;
 import com.googlecode.wicket.kendo.ui.form.button.AjaxButton;
+import com.googlecode.wicket.kendo.ui.form.button.AjaxIndicatingButtonBehavior;
+import com.googlecode.wicket.kendo.ui.form.button.ButtonBehavior;
 
 /**
  * Provides a {@link Panel} of {@link WindowButton}{@code s} to be used in {@link Window}
@@ -145,6 +148,31 @@ public abstract class WindowButtonPanel extends Panel
 			protected void onAfterSubmit(AjaxRequestTarget target, Form<?> form)
 			{
 				WindowButtonPanel.this.onAfterSubmit(target, button);
+			}
+
+			// Factories //
+
+			@Override
+			public ButtonBehavior newWidgetBehavior(String selector)
+			{
+				if (button.isIndicating())
+				{
+					return new AjaxIndicatingButtonBehavior(selector) {
+
+						private static final long serialVersionUID = 1L;
+
+						@Override
+						protected Options newOnClickOptions()
+						{
+							Options options = super.newOnClickOptions();
+							options.set("enable", false); // disabled on click
+
+							return options;
+						}
+					};
+				}
+
+				return super.newWidgetBehavior(selector);
 			}
 		};
 	}

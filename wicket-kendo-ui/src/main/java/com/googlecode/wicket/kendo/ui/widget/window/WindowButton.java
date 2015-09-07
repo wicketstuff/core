@@ -242,6 +242,16 @@ public class WindowButton implements IClusterable
 	// TODO: #setVisible(boolean visible, AjaxRequestTarget target)
 
 	/**
+	 * Indicates whether the button has a busy indicator
+	 * 
+	 * @return {@link #getDefaultFormProcessing()} by default
+	 */
+	public boolean isIndicating()
+	{
+		return this.getDefaultFormProcessing();
+	}
+
+	/**
 	 * Indicates whether the form will be validated and updated.
 	 *
 	 * @return true by default
