@@ -28,5 +28,6 @@ script:
   - "DEPLOY_OR_TEST=install"
   - '[ "${TRAVIS_PULL_REQUEST}" = "false" ] && DEPLOY_OR_TEST=deploy'
   - "echo DEPLOY_OR_TEST=$DEPLOY_OR_TEST"
+  - "export MAVEN_OPTS='-Xmx512m -XX:MaxPermSize=128m'"
   - "cp ./config/toolchains.xml $HOME/.m2"
   - "mvn -s sonatype-settings.xml clean $DEPLOY_OR_TEST -Dmaven.javadoc.skip=true -Dsource.skip=true -B -V --quiet"
