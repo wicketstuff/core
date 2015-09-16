@@ -1058,6 +1058,7 @@
 							<include>**/*Test.java</include>
 						</includes>
 						<testFailureIgnore>false</testFailureIgnore>
+				                <argLine>-Xmx1024m</argLine>
 					</configuration>
 				</plugin>
 				<plugin>
