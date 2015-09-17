@@ -71,8 +71,6 @@ public class DateTimePicker extends FormComponentPanel<Date> implements ITextFor
 	private final String datePattern;
 	private final String timePattern;
 
-	private IConverter<Date> converter;
-
 	/**
 	 * Constructor
 	 *
@@ -165,12 +163,12 @@ public class DateTimePicker extends FormComponentPanel<Date> implements ITextFor
 	 */
 	protected String formatInput(String dateInput, String timeInput)
 	{
-		if (!this.isTimePickerEnabled())
+		if (this.isTimePickerEnabled())
 		{
-			return dateInput;
+			return String.format("%s %s", dateInput, timeInput);
 		}
 
-		return String.format("%s %s", dateInput, timeInput);
+		return dateInput;
 	}
 
 	// Properties //
@@ -181,12 +179,7 @@ public class DateTimePicker extends FormComponentPanel<Date> implements ITextFor
 	{
 		if (Date.class.isAssignableFrom(type))
 		{
-			if (this.converter == null)
-			{
-				this.converter = DateTimePicker.newConverter(this.getTextFormat());
-			}
-
-			return (IConverter<C>) this.converter;
+			return (IConverter<C>) DateTimePicker.newConverter(this.getTextFormat());
 		}
 
 		return super.getConverter(type);
@@ -266,12 +259,13 @@ public class DateTimePicker extends FormComponentPanel<Date> implements ITextFor
 	@Override
 	public final String getTextFormat()
 	{
-		if (!this.isTimePickerEnabled())
+		if (this.isTimePickerEnabled())
 		{
-			return this.getDatePattern();
+			return String.format("%s %s", this.getDatePattern(), this.getTimePattern());
 		}
 
-		return String.format("%s %s", this.getDatePattern(), this.getTimePattern());
+		return this.getDatePattern();
+
 	}
 
 	/**
