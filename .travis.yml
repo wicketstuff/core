@@ -2,6 +2,8 @@ language: java
 jdk:
   - openjdk7
 
+sudo: false
+
 notifications:
   email:
     - mgrigorov@apache.org
