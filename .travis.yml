@@ -31,4 +31,4 @@ script:
   - "echo DEPLOY_OR_TEST=$DEPLOY_OR_TEST"
   - "cp ./config/toolchains.xml $HOME/.m2"
   - "jdk_switcher use openjdk6"
-  - "mvn -s sonatype-settings.xml clean $DEPLOY_OR_TEST -N $MVN_OPTS"
+  - "mvn -s sonatype-settings.xml clean $DEPLOY_OR_TEST $MVN_OPTS"
