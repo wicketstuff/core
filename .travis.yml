@@ -32,8 +32,3 @@ script:
   - "cp ./config/toolchains.xml $HOME/.m2"
   - "jdk_switcher use openjdk6"
   - "mvn -s sonatype-settings.xml clean $DEPLOY_OR_TEST -N $MVN_OPTS"
-  - "cd jdk-1.6-parent"
-  - "mvn -s ../sonatype-settings.xml clean $DEPLOY_OR_TEST $MVN_OPTS"
-  - "cd ../jdk-1.7-parent"
-  - "jdk_switcher use oraclejdk7"
-  - "mvn -s ../sonatype-settings.xml clean $DEPLOY_OR_TEST $MVN_OPTS"
