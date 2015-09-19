@@ -1,5 +1,7 @@
 language: java
 
+sudo: false
+
 notifications:
   email:
     - mgrigorov@apache.org
@@ -27,6 +29,7 @@ script:
   - "DEPLOY_OR_TEST=test"
   - '[ "${TRAVIS_PULL_REQUEST}" = "false" ] && DEPLOY_OR_TEST=deploy'
   - "echo DEPLOY_OR_TEST=$DEPLOY_OR_TEST"
+  - "cp ./config/toolchains.xml $HOME/.m2"
   - "jdk_switcher use openjdk6"
   - "mvn -s sonatype-settings.xml clean $DEPLOY_OR_TEST -N $MVN_OPTS"
   - "cd jdk-1.6-parent"
