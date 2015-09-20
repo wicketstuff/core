@@ -232,14 +232,15 @@ public abstract class AbstractRestResource<T extends IWebSerialDeserial> impleme
 		Object result = invokeMappedMethod(mappedMethod.getMethod(), parametersValues, response);
 		onAfterMethodInvoked(mappedMethod, attributes, result);
 
-		// 5-if the invoked method returns a value, it is written to response
+		// 5-set response content type
+		response.setContentType(outputFormat);
+
+		// 6-if the invoked method returns a value, it is written to response
 		if (result != null)
 		{
 			objectToResponse(result, response, outputFormat);
 		}
 		
-		//6-set response content type
-		response.setContentType(outputFormat);
 	}
 
 
