@@ -102,6 +102,6 @@ public class NotificationBehavior extends KendoUIBehavior
 	 */
 	protected final String $(Serializable message, String level)
 	{
-		return String.format("%s.show('%s', '%s');", this.widget(), this.format(String.valueOf(message), level), level);
+		return String.format("%s.show('%s', '%s');", this.widget(), this.format(String.valueOf(message), level), level.toLowerCase());
 	}
 }

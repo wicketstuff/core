@@ -56,6 +56,7 @@ public abstract class JQueryContainer extends WebMarkupContainer implements IJQu
 	}
 
 	// Events //
+
 	@Override
 	protected void onInitialize()
 	{

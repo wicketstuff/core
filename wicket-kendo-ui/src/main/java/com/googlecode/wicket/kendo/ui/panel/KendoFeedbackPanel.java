@@ -18,8 +18,8 @@ package com.googlecode.wicket.kendo.ui.panel;
 
 import java.util.List;
 
-import org.apache.wicket.Component;
 import org.apache.wicket.IGenericComponent;
+import org.apache.wicket.core.request.handler.IPartialPageRequestHandler;
 import org.apache.wicket.feedback.FeedbackMessage;
 import org.apache.wicket.feedback.FeedbackMessagesModel;
 import org.apache.wicket.feedback.IFeedback;
@@ -46,6 +46,7 @@ public class KendoFeedbackPanel extends WebMarkupContainer implements IJQueryWid
 	private static final long serialVersionUID = 1L;
 
 	private final Options options;
+	private NotificationBehavior widgetBehavior;
 
 	/**
 	 * Constructor
@@ -72,6 +73,12 @@ public class KendoFeedbackPanel extends WebMarkupContainer implements IJQueryWid
 
 	// Methods //
 
+	@Override
+	protected IModel<?> initModel()
+	{
+		return this.newFeedbackMessagesModel();
+	}
+
 	/**
 	 * Calls {@link Strings#escapeMarkup(CharSequence, boolean, boolean)} by default, if {@link #getEscapeModelStrings()} returns {@code true}<br />
 	 * This can be overridden to provide additional escaping
@@ -84,6 +91,45 @@ public class KendoFeedbackPanel extends WebMarkupContainer implements IJQueryWid
 	protected CharSequence escape(CharSequence message, String level)
 	{
 		return Strings.escapeMarkup(message, false, false);
+	}
+
+	/**
+	 * Refreshes the {@code KendoFeedbackPanel}.
+	 *
+	 * @param handler the {@link IPartialPageRequestHandler}
+	 */
+	public final void refresh(IPartialPageRequestHandler handler)
+	{
+		for (FeedbackMessage message : this.getModelObject())
+		{
+			this.widgetBehavior.show(handler, message.getMessage(), message.getLevelAsString());
+			message.markRendered();
+		}
+	}
+
+	// Events //
+
+	@Override
+	protected void onInitialize()
+	{
+		super.onInitialize();
+
+		this.widgetBehavior = JQueryWidget.newWidgetBehavior(this);
+		this.add(this.widgetBehavior); // cannot be in ctor as the markupId may be set manually afterward
+	}
+
+	@Override
+	public void onConfigure(JQueryBehavior behavior)
+	{
+		behavior.setOption("hideOnClick", false);
+		behavior.setOption("autoHideAfter", 0);
+		behavior.setOption("appendTo", Options.asString(behavior.getSelector()));
+	}
+
+	@Override
+	public void onBeforeRender(JQueryBehavior behavior)
+	{
+		// noop
 	}
 
 	// Properties //
@@ -114,30 +160,6 @@ public class KendoFeedbackPanel extends WebMarkupContainer implements IJQueryWid
 		return (List<FeedbackMessage>) this.getDefaultModelObject();
 	}
 
-	// Events //
-
-	@Override
-	protected void onInitialize()
-	{
-		super.onInitialize();
-
-		this.setDefaultModel(this.newFeedbackMessagesModel());
-		this.add(JQueryWidget.newWidgetBehavior(this));
-	}
-
-	@Override
-	public void onConfigure(JQueryBehavior behavior)
-	{
-		behavior.setOption("hideOnClick", false);
-		behavior.setOption("autoHideAfter", 0);
-	}
-
-	@Override
-	public void onBeforeRender(JQueryBehavior behavior)
-	{
-		// noop
-	}
-
 	// IJQueryWidget //
 
 	@Override
@@ -146,14 +168,6 @@ public class KendoFeedbackPanel extends WebMarkupContainer implements IJQueryWid
 		return new NotificationBehavior(selector, this.options) {
 
 			private static final long serialVersionUID = 1L;
-
-			@Override
-			public void onConfigure(Component component)
-			{
-				super.onConfigure(component);
-
-				this.setOption("appendTo", Options.asString(this.selector));
-			}
 
 			@Override
 			protected CharSequence format(CharSequence message, String level)
@@ -173,7 +187,7 @@ public class KendoFeedbackPanel extends WebMarkupContainer implements IJQueryWid
 
 				for (FeedbackMessage message : KendoFeedbackPanel.this.getModelObject())
 				{
-					builder.append(this.$(message.getMessage(), message.getLevelAsString().toLowerCase()));
+					builder.append(this.$(message.getMessage(), message.getLevelAsString()));
 
 					message.markRendered();
 				}
