@@ -82,8 +82,6 @@ public class DateTimePicker extends FormComponentPanel<LocalDateTime> implements
 	private final String datePattern;
 	private final String timePattern;
 
-	private IConverter<LocalDateTime> converter = null;
-
 	/**
 	 * Constructor
 	 *
@@ -173,12 +171,7 @@ public class DateTimePicker extends FormComponentPanel<LocalDateTime> implements
 	{
 		if (LocalDateTime.class.isAssignableFrom(type))
 		{
-			if (this.converter == null)
-			{
-				this.converter = DateTimePicker.newConverter(this.getTextFormat());
-			}
-
-			return (IConverter<C>) this.converter;
+			return (IConverter<C>) DateTimePicker.newConverter(this.getTextFormat());
 		}
 
 		return super.getConverter(type);
