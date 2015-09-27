@@ -1,25 +1,22 @@
 package com.googlecode.wicket.jquery.ui.samples.pages.kendo.dropdown;
 
-import java.util.Arrays;
-import java.util.List;
-
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.model.Model;
 
-import com.googlecode.wicket.jquery.core.template.IJQueryTemplate;
 import com.googlecode.wicket.jquery.ui.samples.data.bean.Genre;
 import com.googlecode.wicket.jquery.ui.samples.data.dao.GenresDAO;
 import com.googlecode.wicket.kendo.ui.form.button.AjaxButton;
 import com.googlecode.wicket.kendo.ui.form.button.Button;
 import com.googlecode.wicket.kendo.ui.form.dropdown.lazy.DropDownList;
 import com.googlecode.wicket.kendo.ui.panel.KendoFeedbackPanel;
+import com.googlecode.wicket.kendo.ui.renderer.ChoiceRenderer;
 
-public class TemplateDropDownPage extends AbstractDropDownPage
+public class RendererDropDownPage extends AbstractDropDownPage
 {
 	private static final long serialVersionUID = 1L;
 
-	public TemplateDropDownPage()
+	public RendererDropDownPage()
 	{
 		Form<Void> form = new Form<Void>("form");
 		this.add(form);
@@ -29,50 +26,8 @@ public class TemplateDropDownPage extends AbstractDropDownPage
 		form.add(feedback);
 
 		// ComboBox //
-		final DropDownList<Genre> combobox = new DropDownList<Genre>("select", new Model<Genre>(), GenresDAO.all()) {
-
-			private static final long serialVersionUID = 1L;
-			
-			@Override
-			protected void onInitialize()
-			{
-				super.onInitialize();
-				
-				this.setListWidth(200);
-			}
-
-			@Override
-			protected IJQueryTemplate newTemplate()
-			{
-				return new IJQueryTemplate() {
-
-					private static final long serialVersionUID = 1L;
-
-					@Override
-					public String getText()
-					{
-						return  "\n<table style='width: 100%'>" +
-							"\n <tr>" +
-							"\n  <td>" +
-							"\n   <img src='#:data.coverUrl#' width='50px' />" +
-							"\n  </td>" +
-							"\n  <td>" +
-							"\n   #:data.name#" +
-							"\n  </td>" +
-							"\n </tr>" +
-							"\n</table>";
-					}
-
-					@Override
-					public List<String> getTextProperties()
-					{
-						return Arrays.asList("name", "coverUrl");
-					}
-				};
-			}
-		};
-
-		form.add(combobox);
+		final DropDownList<Genre> combobox = new DropDownList<Genre>("select", new Model<Genre>(), GenresDAO.all(), new ChoiceRenderer<Genre>("name", "id"));
+		form.add(combobox.setListWidth(200));
 
 		// Buttons //
 		form.add(new Button("submit") {
@@ -82,7 +37,7 @@ public class TemplateDropDownPage extends AbstractDropDownPage
 			@Override
 			public void onSubmit()
 			{
-				TemplateDropDownPage.this.info(combobox);
+				RendererDropDownPage.this.info(combobox);
 			}
 		});
 
@@ -93,7 +48,7 @@ public class TemplateDropDownPage extends AbstractDropDownPage
 			@Override
 			protected void onSubmit(AjaxRequestTarget target, Form<?> form)
 			{
-				TemplateDropDownPage.this.info(combobox);
+				RendererDropDownPage.this.info(combobox);
 				target.add(feedback);
 			}
 		});

@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.googlecode.wicket.kendo.ui.form.combobox;
+package com.googlecode.wicket.kendo.ui.form.dropdown.lazy;
 
 import org.apache.wicket.Component;
 
@@ -23,19 +23,19 @@ import com.googlecode.wicket.kendo.ui.KendoDataSource;
 import com.googlecode.wicket.kendo.ui.KendoUIBehavior;
 
 /**
- * Provides a Kendo UI ComboBox behavior
+ * Provides a Kendo UI DropDownList behavior
  *
  * @author Sebastien Briquet - sebfz1
  *
  */
-public abstract class ComboBoxBehavior extends KendoUIBehavior
+public abstract class DropDownListBehavior extends KendoUIBehavior
 {
 	private static final long serialVersionUID = 1L;
-	public static final String METHOD = "kendoComboBox";
+	public static final String METHOD = "kendoDropDownList";
 
 	private KendoDataSource dataSource;
 
-	public ComboBoxBehavior(String selector)
+	public DropDownListBehavior(String selector)
 	{
 		super(selector, METHOD);
 	}

@@ -19,7 +19,8 @@ protected IJQueryTemplate newTemplate()
 		@Override
 		public List<String> getTextProperties()
 		{
-			return Arrays.asList("name");
+			// should be specified, unless already part of the ITextRenderer
+			return Arrays.asList("name"); 
 		}
 	};
 }

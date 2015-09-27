@@ -14,42 +14,41 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.googlecode.wicket.kendo.ui.form.multiselect.lazy;
+package com.googlecode.wicket.kendo.ui.form.dropdown.lazy;
 
-import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
-import org.apache.wicket.markup.html.form.FormComponent;
+import org.apache.wicket.markup.html.form.TextField;
 import org.apache.wicket.model.IModel;
+import org.apache.wicket.model.Model;
 
 import com.googlecode.wicket.jquery.core.IJQueryWidget;
 import com.googlecode.wicket.jquery.core.JQueryBehavior;
 import com.googlecode.wicket.jquery.core.Options;
 import com.googlecode.wicket.jquery.core.behavior.ChoiceModelBehavior;
-import com.googlecode.wicket.jquery.core.data.IChoiceProvider;
+import com.googlecode.wicket.jquery.core.renderer.IChoiceRenderer;
 import com.googlecode.wicket.jquery.core.template.IJQueryTemplate;
 import com.googlecode.wicket.kendo.ui.KendoTemplateBehavior;
 import com.googlecode.wicket.kendo.ui.renderer.ChoiceRenderer;
 
 /**
- * Provides a Kendo UI MultiSelect widget.<br/>
- * This lazy version loads the list of choices asynchronously
+ * Provides a Kendo UI DropDownList widget.<br/>
+ * It should be created on a HTML &lt;input /&gt; element
  *
  * @author Sebastien Briquet - sebfz1
  *
- * @param <T> the model object type
+ * @param <T> the type of the model object
  */
-public abstract class MultiSelect<T> extends FormComponent<Collection<T>> implements IJQueryWidget, IChoiceProvider<T>
+public class DropDownList<T> extends TextField<T> implements IJQueryWidget
 {
 	private static final long serialVersionUID = 1L;
 
 	/** cache of current choices, needed to retrieve the user selected object */
-	private List<T> choices = null;
+	private final IModel<List<T>> choices;
 	private ChoiceModelBehavior<T> choiceModelBehavior;
 
 	/** the data-source renderer */
-	private ChoiceRenderer<? super T> renderer;
+	private final IChoiceRenderer<? super T> renderer;
 
 	/** the template */
 	private final IJQueryTemplate template;
@@ -62,22 +61,48 @@ public abstract class MultiSelect<T> extends FormComponent<Collection<T>> implem
 	 * Constructor
 	 *
 	 * @param id the markup id
+	 * @param choices the list of choices
 	 */
-	public MultiSelect(String id)
+	public DropDownList(String id, List<T> choices)
 	{
-		this(id, new ChoiceRenderer<T>());
+		this(id, Model.ofList(choices), new ChoiceRenderer<T>());
 	}
 
 	/**
 	 * Constructor
 	 *
 	 * @param id the markup id
-	 * @param renderer the {@link ChoiceRenderer}
+	 * @param choices the list of choices
+	 * @param renderer the renderer to be used, so the renderer item text and its values can be dissociated
 	 */
-	public MultiSelect(String id, ChoiceRenderer<? super T> renderer)
+	public DropDownList(String id, List<T> choices, IChoiceRenderer<? super T> renderer)
+	{
+		this(id, Model.ofList(choices), renderer);
+	}
+
+	/**
+	 * Constructor
+	 *
+	 * @param id the markup id
+	 * @param choices the list model of choices
+	 */
+	public DropDownList(String id, IModel<List<T>> choices)
+	{
+		this(id, choices, new ChoiceRenderer<T>());
+	}
+
+	/**
+	 * Constructor
+	 *
+	 * @param id the markup id
+	 * @param choices the list model of choices
+	 * @param renderer the renderer to be used, so the renderer item text and its values can be dissociated
+	 */
+	public DropDownList(String id, IModel<List<T>> choices, IChoiceRenderer<? super T> renderer)
 	{
 		super(id);
 
+		this.choices = choices;
 		this.renderer = renderer;
 		this.template = this.newTemplate();
 	}
@@ -87,10 +112,11 @@ public abstract class MultiSelect<T> extends FormComponent<Collection<T>> implem
 	 *
 	 * @param id the markup id
 	 * @param model the {@link IModel}
+	 * @param choices the list of choices
 	 */
-	public MultiSelect(String id, IModel<? extends Collection<T>> model)
+	public DropDownList(String id, IModel<T> model, List<T> choices)
 	{
-		this(id, model, new ChoiceRenderer<T>());
+		this(id, model, Model.ofList(choices), new ChoiceRenderer<T>());
 	}
 
 	/**
@@ -98,18 +124,50 @@ public abstract class MultiSelect<T> extends FormComponent<Collection<T>> implem
 	 *
 	 * @param id the markup id
 	 * @param model the {@link IModel}
-	 * @param renderer the {@link ChoiceRenderer}
+	 * @param choices the list model of choices
+	 * @param renderer the renderer to be used, so the renderer item text and its values can be dissociated
 	 */
-	@SuppressWarnings("unchecked")
-	public MultiSelect(String id, IModel<? extends Collection<T>> model, ChoiceRenderer<? super T> renderer)
+	public DropDownList(String id, IModel<T> model, List<T> choices, IChoiceRenderer<? super T> renderer)
 	{
-		super(id, (IModel<Collection<T>>) model);
+		this(id, model, Model.ofList(choices), renderer);
+	}
 
+	/**
+	 * Constructor
+	 *
+	 * @param id the markup id
+	 * @param model the {@link IModel}
+	 * @param choices the list model of choices
+	 */
+	public DropDownList(String id, IModel<T> model, IModel<List<T>> choices)
+	{
+		this(id, model, choices, new ChoiceRenderer<T>());
+	}
+
+	/**
+	 * Constructor
+	 *
+	 * @param id the markup id
+	 * @param model the {@link IModel}
+	 * @param choices the list model of choices
+	 * @param renderer the renderer to be used, so the renderer item text and its values can be dissociated
+	 */
+	public DropDownList(String id, IModel<T> model, IModel<List<T>> choices, IChoiceRenderer<? super T> renderer)
+	{
+		super(id, model);
+
+		this.choices = choices;
 		this.renderer = renderer;
-		this.template = this.newTemplate();
+		this.template = this.newTemplate(); // TODO: move to onInitialize (check the other classes)
 	}
 
 	// Properties //
+
+	@Override
+	protected final String getModelValue()
+	{
+		return this.renderer.getText(this.getModelObject()); // renderer cannot be null.
+	}
 
 	/**
 	 * Gets the (inner) list width.
@@ -127,7 +185,7 @@ public abstract class MultiSelect<T> extends FormComponent<Collection<T>> implem
 	 * @param width the list width
 	 * @return this, for chaining
 	 */
-	public MultiSelect<T> setListWidth(int width)
+	public DropDownList<?> setListWidth(int width)
 	{
 		this.width = width;
 
@@ -136,61 +194,19 @@ public abstract class MultiSelect<T> extends FormComponent<Collection<T>> implem
 
 	// Methods //
 
-	/**
-	 * Call {@link #getChoices()} and cache the result<br/>
-	 * Internal use only
-	 *
-	 * @return the list of choices
-	 */
-	private List<T> internalGetChoices()
-	{
-		this.choices = this.getChoices();
-
-		return this.choices;
-	}
-
 	@Override
-	protected Collection<T> convertValue(String[] values)
+	public void convertInput()
 	{
-		List<T> list = new ArrayList<>();
+		String input = this.getInput();
 
-		if (values != null && this.choices != null)
+		for (T choice : this.choices.getObject())
 		{
-			for (T object : this.choices)
+			if (this.renderer.getValue(choice).equals(input))
 			{
-				for (String value : values)
-				{
-					if (value.equals(this.renderer.getText(object)))
-					{
-						list.add(object);
-						break;
-					}
-				}
+				this.setConvertedInput(choice);
+				break;
 			}
 		}
-
-		return list;
-	}
-
-	@Override
-	public void updateModel()
-	{
-		FormComponent.updateCollectionModel(this);
-	}
-
-	// Properties //
-
-	@Override
-	protected String getModelValue()
-	{
-		List<String> values = new ArrayList<>();
-
-		for (T value : this.getModelObject())
-		{
-			values.add(String.format("{ %s }", this.renderer.render(value)));
-		}
-
-		return values.toString();
 	}
 
 	// Events //
@@ -207,7 +223,6 @@ public abstract class MultiSelect<T> extends FormComponent<Collection<T>> implem
 
 		if (this.template != null)
 		{
-			// TODO: add sample for template
 			this.templateBehavior = new KendoTemplateBehavior(this.template);
 			this.add(this.templateBehavior);
 		}
@@ -216,7 +231,6 @@ public abstract class MultiSelect<T> extends FormComponent<Collection<T>> implem
 	@Override
 	public void onConfigure(JQueryBehavior behavior)
 	{
-		behavior.setOption("value", this.getModelValue());
 		behavior.setOption("dataTextField", Options.asString(this.renderer.getTextField()));
 		behavior.setOption("dataValueField", Options.asString(this.renderer.getValueField()));
 
@@ -244,7 +258,7 @@ public abstract class MultiSelect<T> extends FormComponent<Collection<T>> implem
 	@Override
 	public JQueryBehavior newWidgetBehavior(String selector)
 	{
-		return new MultiSelectBehavior(selector) {
+		return new DropDownListBehavior(selector) {
 
 			private static final long serialVersionUID = 1L;
 
@@ -283,7 +297,7 @@ public abstract class MultiSelect<T> extends FormComponent<Collection<T>> implem
 			@Override
 			public List<T> getChoices()
 			{
-				return MultiSelect.this.internalGetChoices();
+				return DropDownList.this.choices.getObject();
 			}
 		};
 	}
