@@ -17,6 +17,7 @@
 package com.googlecode.wicket.jquery.core.utils;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 
@@ -185,6 +186,18 @@ public class ListUtils
 	 * @return a new {@code List} without excluded items
 	 */
 	public static List<String> exclude(List<String> list, String... items)
+	{
+		return ListUtils.exclude(list, Arrays.asList(items));
+	}
+
+	/**
+	 * Excludes items from a {@code List} and return a new {@code List}
+	 * 
+	 * @param list the original {@link List}
+	 * @param items items to remove
+	 * @return a new {@code List} without excluded items
+	 */
+	public static List<String> exclude(List<String> list, List<String> items)
 	{
 		List<String> copy = new ArrayList<String>(list);
 

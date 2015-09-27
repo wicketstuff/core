@@ -92,7 +92,7 @@ public abstract class DataTableBehavior extends KendoUIBehavior implements IJQue
 		this.listener = Args.notNull(listener, "listener");
 
 		// data source //
-		this.dataSource = new KendoDataSource("datasource" + selector.replace('#', '_'));
+		this.dataSource = new KendoDataSource("datasource" + selector);
 		this.add(this.dataSource);
 	}
 
@@ -257,20 +257,7 @@ public abstract class DataTableBehavior extends KendoUIBehavior implements IJQue
 	 */
 	private String getReadCallbackFunction()
 	{
-		return "function(options) {" // lf
-				+ " jQuery.ajax({" // lf
-				+ "		url: '" + this.getProviderCallbackUrl() + "'," // lf
-				+ "		data: options.data," // lf
-				+ "		cache: " + this.useCache() + "," // lf
-				+ "		dataType: 'json'," // lf
-				+ "		success: function(result) {" // lf
-				+ "			options.success(result);" // lf
-				+ "		}," // lf
-				+ "		error: function(result) {" // lf
-				+ "			options.error(result);" // lf
-				+ "		}" // lf
-				+ "	});" // lf
-				+ "}";
+		return KendoDataSource.getReadCallbackFunction(this.getProviderCallbackUrl(), this.useCache());
 	}
 
 	// Events //

@@ -16,6 +16,9 @@
  */
 package com.googlecode.wicket.kendo.ui.renderer;
 
+import java.util.Arrays;
+import java.util.List;
+
 import org.apache.wicket.ajax.json.JSONObject;
 import org.apache.wicket.core.util.lang.PropertyResolver;
 
@@ -70,6 +73,8 @@ public class ChoiceRenderer<T> extends TextRenderer<T> implements IChoiceRendere
 
 		this.valueExpression = valueExpression;
 	}
+	
+	// Properties //
 
 	@Override
 	public String getValueField()
@@ -97,6 +102,14 @@ public class ChoiceRenderer<T> extends TextRenderer<T> implements IChoiceRendere
 
 		return this.getText(object);
 	}
+	
+	@Override
+	public List<String> getFields()
+	{
+		return Arrays.asList(this.getTextField(), this.getValueField());
+	}
+
+	// Methods //
 
 	@Override
 	public String render(T object)

@@ -54,7 +54,7 @@ public class KendoDataSource extends Options implements IKendoDataSource
 	 */
 	public KendoDataSource(String name, String type)
 	{
-		this.name = Args.notNull(name, "name");
+		this.name = Args.notNull(name, "name").replace('#', '_');
 		this.transport = new Options();
 
 		this.set("type", Options.asString(type));
@@ -83,7 +83,7 @@ public class KendoDataSource extends Options implements IKendoDataSource
 	/**
 	 * Sets the 'transport.read' callback function
 	 *
-	 * @param function the javascript function
+	 * @param function the javascript function. The function can be replaced with a (quoted) url as long as read is the only callback used by the datasource
 	 */
 	public void setTransportRead(String function)
 	{
@@ -131,6 +131,50 @@ public class KendoDataSource extends Options implements IKendoDataSource
 	@Override
 	public String toScript()
 	{
-		return String.format("jQuery(function() { %s = new kendo.data.DataSource(%s); });", this.getName(), this.toString());
+		return String.format("jQuery(function() { %s = new kendo.data.DataSource(%s); });", this.getName(), super.toString());
+	}
+
+	@Override
+	public String toString()
+	{
+		return this.prepareRender().toScript();
+	}
+
+	// Helpers //
+
+	/**
+	 * Gets the 'read' callback function from an url
+	 *
+	 * @param url the callback url
+	 * @return the 'read' callback function
+	 */
+	public static String getReadCallbackFunction(CharSequence url)
+	{
+		return KendoDataSource.getReadCallbackFunction(url, false);
+	}
+
+	/**
+	 * Gets the 'read' callback function from an url
+	 *
+	 * @param url the callback url
+	 * @param useCache whether the function should use cache
+	 * @return the 'read' callback function
+	 */
+	public static String getReadCallbackFunction(CharSequence url, boolean useCache)
+	{
+		return "function(options) {" // lf
+				+ " jQuery.ajax({" // lf
+				+ "		url: '" + url + "'," // lf
+				+ "		data: options.data," // lf
+				+ "		cache: " + useCache + "," // lf
+				+ "		dataType: 'json'," // lf
+				+ "		success: function(result) {" // lf
+				+ "			options.success(result);" // lf
+				+ "		}," // lf
+				+ "		error: function(result) {" // lf
+				+ "			options.error(result);" // lf
+				+ "		}" // lf
+				+ "	});" // lf
+				+ "}";
 	}
 }

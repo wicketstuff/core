@@ -26,8 +26,8 @@ import com.googlecode.wicket.jquery.core.Options;
 import com.googlecode.wicket.jquery.core.ajax.IJQueryAjaxAware;
 import com.googlecode.wicket.jquery.core.ajax.JQueryAjaxBehavior;
 import com.googlecode.wicket.jquery.core.utils.RequestCycleUtils;
+import com.googlecode.wicket.kendo.ui.KendoDataSource;
 import com.googlecode.wicket.kendo.ui.KendoUIBehavior;
-import com.googlecode.wicket.kendo.ui.utils.DebugUtils;
 
 /**
  * Provides a Kendo UI auto-complete behavior
@@ -42,6 +42,8 @@ public abstract class AutoCompleteBehavior extends KendoUIBehavior implements IJ
 
 	private final IAutoCompleteListener listener;
 	private JQueryAjaxBehavior onSelectAjaxBehavior = null;
+
+	private KendoDataSource dataSource;
 
 	/**
 	 * Constructor
@@ -75,9 +77,17 @@ public abstract class AutoCompleteBehavior extends KendoUIBehavior implements IJ
 	{
 		super.bind(component);
 
+		// data source //
+		this.dataSource = new KendoDataSource("datasource" + this.selector);
+		this.dataSource.set("serverFiltering", true); // important
+		this.add(this.dataSource);
+
+		// ajax behaviors //
 		this.onSelectAjaxBehavior = this.newOnSelectAjaxBehavior(this);
 		component.add(this.onSelectAjaxBehavior);
 	}
+
+	// Properties //
 
 	protected abstract CharSequence getChoiceCallbackUrl();
 
@@ -88,10 +98,13 @@ public abstract class AutoCompleteBehavior extends KendoUIBehavior implements IJ
 	{
 		super.onConfigure(component);
 
+		// options //
 		this.setOption("autoBind", true); // immutable
-		this.setOption("serverFiltering", true);
-		this.setOption("dataSource", this.newDataSource());
+		this.setOption("dataSource", this.dataSource.getName());
 		this.setOption("select", this.onSelectAjaxBehavior.getCallbackFunction());
+
+		// data source //
+		this.dataSource.setTransportRead(Options.asString(this.getChoiceCallbackUrl()));
 	}
 
 	// IJQueryAjaxAware //
@@ -106,16 +119,6 @@ public abstract class AutoCompleteBehavior extends KendoUIBehavior implements IJ
 	}
 
 	// Factories //
-
-	/**
-	 * Gets a new DataSource
-	 * 
-	 * @return the new DataSource
-	 */
-	protected String newDataSource()
-	{
-		return String.format("{ serverFiltering: true, transport: { read: { url: '%s', dataType: 'json' } }, error: %s }", this.getChoiceCallbackUrl(), DebugUtils.errorCallback);
-	}
 
 	/**
 	 * Gets a new {@link JQueryAjaxBehavior} that will be wired to the 'select' event

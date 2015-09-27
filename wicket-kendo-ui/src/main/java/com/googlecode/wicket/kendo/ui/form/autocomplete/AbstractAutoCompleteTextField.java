@@ -47,13 +47,16 @@ public abstract class AbstractAutoCompleteTextField<T, C> extends TextField<T> i
 {
 	private static final long serialVersionUID = 1L;
 
-	private ChoiceModelBehavior<C> choiceModelBehavior;
-	protected final ITextRenderer<? super C> renderer;
-	private final IJQueryTemplate template;
-	private KendoTemplateBehavior templateBehavior = null;
-
 	/** cache of current choices, needed to retrieve the user selected object */
 	private List<C> choices;
+	private ChoiceModelBehavior<C> choiceModelBehavior;
+
+	/** the data-source renderer */
+	protected final ITextRenderer<? super C> renderer;
+
+	/** the template */
+	private final IJQueryTemplate template;
+	private KendoTemplateBehavior templateBehavior = null;
 
 	/** inner list width. 0 means that it will not be handled */
 	private int width = 0;
@@ -269,7 +272,7 @@ public abstract class AbstractAutoCompleteTextField<T, C> extends TextField<T> i
 	 */
 	protected ChoiceModelBehavior<C> newChoiceModelBehavior()
 	{
-		return new ChoiceModelBehavior<C>(this.renderer) {
+		return new ChoiceModelBehavior<C>(this.renderer, this.template) {
 
 			private static final long serialVersionUID = 1L;
 			private static final String TERM = "filter[filters][0][value]";
@@ -280,17 +283,6 @@ public abstract class AbstractAutoCompleteTextField<T, C> extends TextField<T> i
 				final String input = RequestCycleUtils.getQueryParameterValue(TERM).toString();
 
 				return AbstractAutoCompleteTextField.this.internalGetChoices(input);
-			}
-
-			@Override
-			protected List<String> getProperties()
-			{
-				if (AbstractAutoCompleteTextField.this.template != null)
-				{
-					return AbstractAutoCompleteTextField.this.template.getTextProperties();
-				}
-
-				return super.getProperties();
 			}
 		};
 	}

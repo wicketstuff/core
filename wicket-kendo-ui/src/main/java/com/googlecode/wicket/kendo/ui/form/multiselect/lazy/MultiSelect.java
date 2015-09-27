@@ -28,6 +28,8 @@ import com.googlecode.wicket.jquery.core.JQueryBehavior;
 import com.googlecode.wicket.jquery.core.Options;
 import com.googlecode.wicket.jquery.core.behavior.ChoiceModelBehavior;
 import com.googlecode.wicket.jquery.core.data.IChoiceProvider;
+import com.googlecode.wicket.jquery.core.template.IJQueryTemplate;
+import com.googlecode.wicket.kendo.ui.KendoTemplateBehavior;
 import com.googlecode.wicket.kendo.ui.renderer.ChoiceRenderer;
 
 /**
@@ -42,13 +44,16 @@ public abstract class MultiSelect<T> extends FormComponent<Collection<T>> implem
 {
 	private static final long serialVersionUID = 1L;
 
-	private ChoiceModelBehavior<T> choiceModelBehavior;
-
 	/** cache of current choices, needed to retrieve the user selected object */
 	private List<T> choices = null;
+	private ChoiceModelBehavior<T> choiceModelBehavior;
 
 	/** the data-source renderer */
 	private ChoiceRenderer<? super T> renderer;
+
+	/** the template */
+	private final IJQueryTemplate template;
+	private KendoTemplateBehavior templateBehavior = null;
 
 	/** inner list width. 0 means that it will not be handled */
 	private int width = 0;
@@ -60,7 +65,7 @@ public abstract class MultiSelect<T> extends FormComponent<Collection<T>> implem
 	 */
 	public MultiSelect(String id)
 	{
-		super(id);
+		this(id, new ChoiceRenderer<T>());
 	}
 
 	/**
@@ -74,6 +79,7 @@ public abstract class MultiSelect<T> extends FormComponent<Collection<T>> implem
 		super(id);
 
 		this.renderer = renderer;
+		this.template = this.newTemplate();
 	}
 
 	/**
@@ -100,6 +106,7 @@ public abstract class MultiSelect<T> extends FormComponent<Collection<T>> implem
 		super(id, (IModel<Collection<T>>) model);
 
 		this.renderer = renderer;
+		this.template = this.newTemplate();
 	}
 
 	// Properties //
@@ -197,6 +204,12 @@ public abstract class MultiSelect<T> extends FormComponent<Collection<T>> implem
 		this.add(this.choiceModelBehavior);
 
 		this.add(JQueryWidget.newWidgetBehavior(this));
+
+		if (this.template != null)
+		{
+			this.templateBehavior = new KendoTemplateBehavior(this.template);
+			this.add(this.templateBehavior);
+		}
 	}
 
 	@Override
@@ -206,6 +219,13 @@ public abstract class MultiSelect<T> extends FormComponent<Collection<T>> implem
 		behavior.setOption("dataTextField", Options.asString(this.renderer.getTextField()));
 		behavior.setOption("dataValueField", Options.asString(this.renderer.getValueField()));
 
+		// set template (if any) //
+		if (this.templateBehavior != null)
+		{
+			behavior.setOption("template", String.format("jQuery('#%s').html()", this.templateBehavior.getToken()));
+		}
+
+		// set list-width //
 		if (this.getListWidth() > 0)
 		{
 			behavior.setOption("open", String.format("function(e) { e.sender.list.width(%d); }", this.getListWidth()));
@@ -238,13 +258,24 @@ public abstract class MultiSelect<T> extends FormComponent<Collection<T>> implem
 	// Factories //
 
 	/**
+	 * Gets a new {@link IJQueryTemplate} to customize the rendering<br/>
+	 * The properties used in the template text (ie: ${data.name}) should be of the prefixed by "data." and should be identified in the list returned by {@link IJQueryTemplate#getTextProperties()} (without "data.")
+	 *
+	 * @return null by default
+	 */
+	protected IJQueryTemplate newTemplate()
+	{
+		return null;
+	}
+
+	/**
 	 * Gets a new {@link ChoiceModelBehavior}
 	 *
 	 * @return a new {@link ChoiceModelBehavior}
 	 */
 	protected ChoiceModelBehavior<T> newChoiceModelBehavior()
 	{
-		return new ChoiceModelBehavior<T>(this.renderer) {
+		return new ChoiceModelBehavior<T>(this.renderer, this.template) {
 
 			private static final long serialVersionUID = 1L;
 

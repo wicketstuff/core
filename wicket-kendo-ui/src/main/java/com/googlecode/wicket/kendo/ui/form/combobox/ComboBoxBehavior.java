@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.googlecode.wicket.kendo.ui.form.multiselect.lazy;
+package com.googlecode.wicket.kendo.ui.form.combobox;
 
 import org.apache.wicket.Component;
 
@@ -23,19 +23,19 @@ import com.googlecode.wicket.kendo.ui.KendoDataSource;
 import com.googlecode.wicket.kendo.ui.KendoUIBehavior;
 
 /**
- * Provides a Kendo UI MultiSelect behavior
+ * Provides a Kendo UI ComboBox behavior
  *
  * @author Sebastien Briquet - sebfz1
  *
  */
-public abstract class MultiSelectBehavior extends KendoUIBehavior
+public abstract class ComboBoxBehavior extends KendoUIBehavior
 {
 	private static final long serialVersionUID = 1L;
-	public static final String METHOD = "kendoMultiSelect";
+	public static final String METHOD = "kendoComboBox";
 
 	private KendoDataSource dataSource;
 
-	public MultiSelectBehavior(String selector)
+	public ComboBoxBehavior(String selector)
 	{
 		super(selector, METHOD);
 	}

@@ -359,7 +359,7 @@ public abstract class AutoCompleteTextField<T extends Serializable> extends Text
 	 */
 	private AutoCompleteChoiceModelBehavior<T> newChoiceModelBehavior()
 	{
-		return new AutoCompleteChoiceModelBehavior<T>(this.renderer) {
+		return new AutoCompleteChoiceModelBehavior<T>(this.renderer, this.template) {
 
 			private static final long serialVersionUID = 1L;
 			private static final String TERM = "term";
@@ -370,17 +370,6 @@ public abstract class AutoCompleteTextField<T extends Serializable> extends Text
 				final String input = RequestCycleUtils.getQueryParameterValue(TERM).toString();
 
 				return AutoCompleteTextField.this.internalGetChoices(input);
-			}
-
-			@Override
-			protected List<String> getProperties()
-			{
-				if (AutoCompleteTextField.this.template != null)
-				{
-					return AutoCompleteTextField.this.template.getTextProperties();
-				}
-
-				return super.getProperties();
 			}
 		};
 	}

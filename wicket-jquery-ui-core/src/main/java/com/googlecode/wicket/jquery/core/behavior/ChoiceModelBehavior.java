@@ -28,6 +28,7 @@ import org.apache.wicket.request.http.WebResponse;
 
 import com.googlecode.wicket.jquery.core.data.IChoiceProvider;
 import com.googlecode.wicket.jquery.core.renderer.ITextRenderer;
+import com.googlecode.wicket.jquery.core.template.IJQueryTemplate;
 import com.googlecode.wicket.jquery.core.utils.BuilderUtils;
 import com.googlecode.wicket.jquery.core.utils.ListUtils;
 
@@ -43,15 +44,31 @@ public abstract class ChoiceModelBehavior<T> extends AbstractAjaxBehavior implem
 	private static final long serialVersionUID = 1L;
 
 	protected final ITextRenderer<? super T> renderer;
+	protected final IJQueryTemplate template;
 
+	/**
+	 * Constructor
+	 * 
+	 * @param renderer the {@link ITextRenderer}
+	 */
 	public ChoiceModelBehavior(ITextRenderer<? super T> renderer)
 	{
-		super();
-
-		this.renderer = renderer;
+		this(renderer, null);
 	}
 
 	// Methods //
+
+	/**
+	 * Constructor
+	 * 
+	 * @param renderer the {@link ITextRenderer}
+	 * @param template the {@link IJQueryTemplate}
+	 */
+	public ChoiceModelBehavior(ITextRenderer<? super T> renderer, IJQueryTemplate template)
+	{
+		this.renderer = renderer;
+		this.template = template;
+	}
 
 	/**
 	 * Gets the property list that should be appended to the JSON response. The value corresponding to the property is retrieved from the {@link ITextRenderer#getText(Object, String)}
@@ -60,6 +77,11 @@ public abstract class ChoiceModelBehavior<T> extends AbstractAjaxBehavior implem
 	 */
 	protected List<String> getProperties()
 	{
+		if (this.template != null)
+		{
+			return ListUtils.exclude(this.template.getTextProperties(), this.renderer.getFields()); // #198
+		}
+
 		return Collections.emptyList();
 	}
 
@@ -120,8 +142,8 @@ public abstract class ChoiceModelBehavior<T> extends AbstractAjaxBehavior implem
 					// ITextRenderer //
 					builder.append(renderer.render(choice));
 
-					// Additional properties (like template properties); see #198 //
-					List<String> properties = ListUtils.exclude(ChoiceModelBehavior.this.getProperties(), renderer.getTextField());
+					// Additional properties (like template properties) //
+					List<String> properties = ChoiceModelBehavior.this.getProperties();
 
 					for (String property : properties)
 					{

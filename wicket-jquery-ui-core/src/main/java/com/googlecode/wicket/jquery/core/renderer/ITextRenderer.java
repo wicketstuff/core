@@ -16,6 +16,8 @@
  */
 package com.googlecode.wicket.jquery.core.renderer;
 
+import java.util.List;
+
 import org.apache.wicket.util.io.IClusterable;
 
 /**
@@ -49,6 +51,13 @@ public interface ITextRenderer<T> extends IClusterable
 	 * @return the text
 	 */
 	String getText(T object, String expression);
+
+	/**
+	 * Gets the list of fields used by this renderer. This can be used to prevent duplication on rendering (if a template uses same fields for instance)
+	 * 
+	 * @return the {@code List} of fields
+	 */
+	List<String> getFields();
 
 	/**
 	 * Indicates whether a search criteria matches the text representation of the supplied object

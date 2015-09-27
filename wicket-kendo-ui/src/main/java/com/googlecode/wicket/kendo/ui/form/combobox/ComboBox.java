@@ -25,12 +25,10 @@ import org.apache.wicket.model.Model;
 import com.googlecode.wicket.jquery.core.IJQueryWidget;
 import com.googlecode.wicket.jquery.core.JQueryBehavior;
 import com.googlecode.wicket.jquery.core.Options;
+import com.googlecode.wicket.jquery.core.behavior.ChoiceModelBehavior;
 import com.googlecode.wicket.jquery.core.renderer.IChoiceRenderer;
 import com.googlecode.wicket.jquery.core.template.IJQueryTemplate;
-import com.googlecode.wicket.jquery.core.utils.BuilderUtils;
-import com.googlecode.wicket.jquery.core.utils.ListUtils;
 import com.googlecode.wicket.kendo.ui.KendoTemplateBehavior;
-import com.googlecode.wicket.kendo.ui.KendoUIBehavior;
 import com.googlecode.wicket.kendo.ui.renderer.ChoiceRenderer;
 
 /**
@@ -44,10 +42,15 @@ import com.googlecode.wicket.kendo.ui.renderer.ChoiceRenderer;
 public class ComboBox<T> extends TextField<String> implements IJQueryWidget
 {
 	private static final long serialVersionUID = 1L;
-	public static final String METHOD = "kendoComboBox";
 
+	/** cache of current choices, needed to retrieve the user selected object */
 	private final IModel<List<T>> choices;
+	private ChoiceModelBehavior<T> choiceModelBehavior;
+
+	/** the data-source renderer */
 	private final IChoiceRenderer<? super T> renderer;
+
+	/** the template */
 	private final IJQueryTemplate template;
 	private KendoTemplateBehavior templateBehavior = null;
 
@@ -188,6 +191,9 @@ public class ComboBox<T> extends TextField<String> implements IJQueryWidget
 	{
 		super.onInitialize();
 
+		this.choiceModelBehavior = this.newChoiceModelBehavior();
+		this.add(this.choiceModelBehavior);
+
 		this.add(JQueryWidget.newWidgetBehavior(this));
 
 		if (this.template != null)
@@ -200,8 +206,6 @@ public class ComboBox<T> extends TextField<String> implements IJQueryWidget
 	@Override
 	public void onConfigure(JQueryBehavior behavior)
 	{
-		// set data source //
-		behavior.setOption("dataSource", this.newDataSource());
 		behavior.setOption("dataTextField", Options.asString(this.renderer.getTextField()));
 		behavior.setOption("dataValueField", Options.asString(this.renderer.getValueField()));
 
@@ -229,59 +233,19 @@ public class ComboBox<T> extends TextField<String> implements IJQueryWidget
 	@Override
 	public JQueryBehavior newWidgetBehavior(String selector)
 	{
-		return new KendoUIBehavior(selector, ComboBox.METHOD);
+		return new ComboBoxBehavior(selector) {
+
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			protected CharSequence getChoiceCallbackUrl()
+			{
+				return choiceModelBehavior.getCallbackUrl();
+			}
+		};
 	}
 
 	// Factories //
-
-	/**
-	 * Gets a new DataSource
-	 *
-	 * @return the new DataSource
-	 */
-	protected String newDataSource()
-	{
-		StringBuilder builder = new StringBuilder("[");
-
-		List<T> list = this.choices.getObject();
-
-		if (list != null)
-		{
-			for (int index = 0; index < list.size(); index++)
-			{
-				T object = list.get(index);
-
-				if (index > 0)
-				{
-					builder.append(", ");
-				}
-
-				builder.append("{ ");
-
-				// IChoiceRenderer //
-				builder.append(this.renderer.render(object));
-
-				// IJqueryTemplate //
-				if (this.template != null)
-				{
-					// Additional properties (like template properties); see #198 //
-					List<String> properties = ListUtils.exclude(this.template.getTextProperties(), this.renderer.getTextField(), this.renderer.getValueField());
-
-					for (String property : properties)
-					{
-						builder.append(", ");
-						BuilderUtils.resolve(builder, object, property);
-					}
-				}
-
-				builder.append(" }");
-			}
-		}
-
-		builder.append("]");
-
-		return builder.toString();
-	}
 
 	/**
 	 * Gets a new {@link IJQueryTemplate} to customize the rendering<br/>
@@ -292,5 +256,24 @@ public class ComboBox<T> extends TextField<String> implements IJQueryWidget
 	protected IJQueryTemplate newTemplate()
 	{
 		return null;
+	}
+
+	/**
+	 * Gets a new {@link ChoiceModelBehavior}
+	 *
+	 * @return a new {@link ChoiceModelBehavior}
+	 */
+	protected ChoiceModelBehavior<T> newChoiceModelBehavior()
+	{
+		return new ChoiceModelBehavior<T>(this.renderer, this.template) {
+
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			public List<T> getChoices()
+			{
+				return ComboBox.this.choices.getObject();
+			}
+		};
 	}
 }

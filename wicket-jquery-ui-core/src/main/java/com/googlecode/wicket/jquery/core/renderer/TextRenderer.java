@@ -16,6 +16,9 @@
  */
 package com.googlecode.wicket.jquery.core.renderer;
 
+import java.util.Arrays;
+import java.util.List;
+
 import org.apache.wicket.ajax.json.JSONObject;
 import org.apache.wicket.core.util.lang.PropertyResolver;
 
@@ -50,6 +53,8 @@ public class TextRenderer<T> implements ITextRenderer<T>
 	{
 		this.expression = expression;
 	}
+	
+	// Properties //
 
 	/**
 	 * Gets the expression supplied to the constructor
@@ -100,6 +105,14 @@ public class TextRenderer<T> implements ITextRenderer<T>
 
 		return "";
 	}
+	
+	@Override
+	public List<String> getFields()
+	{
+		return Arrays.asList(this.getTextField());
+	}
+	
+	// Methods //
 
 	@Override
 	public String render(T object)

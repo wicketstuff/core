@@ -20,6 +20,7 @@ abstract class AbstractDropDownPage extends SamplePage
 	{
 		return Arrays.asList(
 				new DemoLink(DefaultDropDownPage.class, "DropDownList"),
+				new DemoLink(TemplateDropDownPage.class, "DropDownList: custom template"),
 				new DemoLink(AjaxDropDownPage.class, "AjaxDropDownList")
 			);
 	}

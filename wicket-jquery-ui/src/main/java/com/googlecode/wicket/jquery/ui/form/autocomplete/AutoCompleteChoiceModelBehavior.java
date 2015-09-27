@@ -26,8 +26,8 @@ import org.apache.wicket.request.http.WebResponse;
 
 import com.googlecode.wicket.jquery.core.behavior.ChoiceModelBehavior;
 import com.googlecode.wicket.jquery.core.renderer.ITextRenderer;
+import com.googlecode.wicket.jquery.core.template.IJQueryTemplate;
 import com.googlecode.wicket.jquery.core.utils.BuilderUtils;
-import com.googlecode.wicket.jquery.core.utils.ListUtils;
 
 /**
  * Provides the {@link AbstractAjaxBehavior} for the {@link AutoCompleteTextField}
@@ -42,6 +42,11 @@ abstract class AutoCompleteChoiceModelBehavior<T> extends ChoiceModelBehavior<T>
 	public AutoCompleteChoiceModelBehavior(ITextRenderer<? super T> renderer)
 	{
 		super(renderer);
+	}
+
+	public AutoCompleteChoiceModelBehavior(ITextRenderer<? super T> renderer, IJQueryTemplate template)
+	{
+		super(renderer, template);
 	}
 
 	@Override
@@ -83,8 +88,8 @@ abstract class AutoCompleteChoiceModelBehavior<T> extends ChoiceModelBehavior<T>
 					builder.append(", ");
 					BuilderUtils.append(builder, "value", renderer.getText(choice)); /* 'value' is a reserved word */
 
-					// Additional properties (like template properties); see #198 //
-					List<String> properties = ListUtils.exclude(AutoCompleteChoiceModelBehavior.this.getProperties(), renderer.getTextField());
+					// Additional properties (like template properties) //
+					List<String> properties = AutoCompleteChoiceModelBehavior.this.getProperties();
 
 					for (String property : properties)
 					{
