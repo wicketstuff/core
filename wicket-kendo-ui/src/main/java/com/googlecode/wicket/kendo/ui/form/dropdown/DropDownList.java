@@ -25,7 +25,6 @@ import org.apache.wicket.model.IModel;
 import com.googlecode.wicket.jquery.core.IJQueryWidget;
 import com.googlecode.wicket.jquery.core.JQueryBehavior;
 import com.googlecode.wicket.jquery.core.template.IJQueryTemplate;
-import com.googlecode.wicket.kendo.ui.KendoTemplateBehavior;
 import com.googlecode.wicket.kendo.ui.KendoUIBehavior;
 
 /**
@@ -40,9 +39,6 @@ public class DropDownList<T> extends DropDownChoice<T> implements IJQueryWidget
 	private static final long serialVersionUID = 1L;
 
 	public static final String METHOD = "kendoDropDownList";
-
-	private IJQueryTemplate template;
-	private KendoTemplateBehavior templateBehavior = null;
 
 	/** inner list width. 0 means that it will not be handled */
 	private int width = 0;
@@ -186,25 +182,11 @@ public class DropDownList<T> extends DropDownChoice<T> implements IJQueryWidget
 		super.onInitialize();
 
 		this.add(JQueryWidget.newWidgetBehavior(this));
-
-		this.template = this.newTemplate();
-
-		if (this.template != null)
-		{
-			this.templateBehavior = new KendoTemplateBehavior(this.template);
-			this.add(this.templateBehavior);
-		}
 	}
 
 	@Override
 	public void onConfigure(JQueryBehavior behavior)
 	{
-		// set template (if any) //
-		if (this.templateBehavior != null)
-		{
-			behavior.setOption("template", String.format("jQuery('#%s').html()", this.templateBehavior.getToken()));
-		}
-
 		// set list-width //
 		if (this.getListWidth() > 0)
 		{
