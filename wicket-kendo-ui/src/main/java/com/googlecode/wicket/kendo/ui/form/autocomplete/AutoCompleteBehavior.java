@@ -30,7 +30,7 @@ import com.googlecode.wicket.kendo.ui.KendoDataSource;
 import com.googlecode.wicket.kendo.ui.KendoUIBehavior;
 
 /**
- * Provides a Kendo UI auto-complete behavior
+ * Provides a {@value #METHOD} behavior
  *
  * @author Sebastien Briquet - sebfz1
  *

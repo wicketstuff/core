@@ -29,7 +29,7 @@ import com.googlecode.wicket.kendo.ui.KendoUIBehavior;
 import com.googlecode.wicket.kendo.ui.interaction.draggable.DraggableBehavior;
 
 /**
- * Provides a Kendo UI droppable (drop target) behavior
+ * Provides a {@value #METHOD} behavior (drop target)
  *
  * @author Sebastien Briquet - sebfz1
  */

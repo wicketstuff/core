@@ -36,7 +36,7 @@ import com.googlecode.wicket.jquery.core.utils.RequestCycleUtils;
 import com.googlecode.wicket.kendo.ui.KendoUIBehavior;
 
 /**
- * Provides a Kendo UI kendoTabStrip behavior.<br/>
+ * Provides a {@value #METHOD} behavior<br/>
  * Note, this class has almost the same code as AccordionBehavior
  *
  * @author Sebastien Briquet - sebfz1

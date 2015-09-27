@@ -30,7 +30,7 @@ import com.googlecode.wicket.jquery.core.utils.RequestCycleUtils;
 import com.googlecode.wicket.kendo.ui.KendoUIBehavior;
 
 /**
- * Provides a Kendo UI splitter behavior
+ * Provides a {@value #METHOD} behavior
  *
  * @author Sebastien Briquet - sebfz1
  *

@@ -36,7 +36,7 @@ import com.googlecode.wicket.kendo.ui.KendoUIBehavior;
 import com.googlecode.wicket.kendo.ui.widget.tabs.AjaxTab;
 
 /**
- * Provides a Kendo UI kendoPanelBar behavior.
+ * Provides a {@value #METHOD} behavior
  *
  * @author Sebastien Briquet - sebfz1
  * @since 6.19.0

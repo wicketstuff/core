@@ -27,7 +27,7 @@ import com.googlecode.wicket.jquery.core.Options;
 import com.googlecode.wicket.kendo.ui.KendoUIBehavior;
 
 /**
- * Provides a Kendo UI tooltip behavior
+ * Provides a {@value #METHOD} behavior
  *
  * @since 6.20.0
  */
