@@ -159,6 +159,7 @@ public class CommandButton implements IClusterable
 	 * @param object a {@link CommandButton} to compare to
 	 * @return true if considered as equal
 	 */
+	//TODO handle by name
 	@Override
 	public boolean equals(Object object)
 	{

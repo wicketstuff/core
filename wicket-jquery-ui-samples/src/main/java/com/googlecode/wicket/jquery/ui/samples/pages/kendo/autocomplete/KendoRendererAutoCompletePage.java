@@ -40,6 +40,14 @@ public class KendoRendererAutoCompletePage extends AbstractAutoCompletePage
 			{
 				return ListUtils.contains(input, GenresDAO.all());
 			}
+			
+			@Override
+			protected void onInitialize()
+			{
+				super.onInitialize();
+				
+				this.setListWidth(350);
+			}
 
 			@Override
 			protected void onSelected(AjaxRequestTarget target, Genre choice)
@@ -67,13 +75,13 @@ public class KendoRendererAutoCompletePage extends AbstractAutoCompletePage
 					@Override
 					public List<String> getTextProperties()
 					{
-						return Arrays.asList("name", "cover");
+						return Arrays.asList("name"); // 'cover' already handled by the TextRenderer
 					}
 				};
 			}
 		};
 
-		form.add(autocomplete.setListWidth(350));
+		form.add(autocomplete);
 
 		form.add(new AjaxButton("button") {
 

@@ -16,6 +16,7 @@
  */
 package com.googlecode.wicket.kendo.ui.form.autocomplete;
 
+import java.util.Collections;
 import java.util.List;
 
 import org.apache.wicket.ajax.AjaxRequestTarget;
@@ -48,11 +49,11 @@ public abstract class AbstractAutoCompleteTextField<T, C> extends TextField<T> i
 	private static final long serialVersionUID = 1L;
 
 	/** cache of current choices, needed to retrieve the user selected object */
-	private List<C> choices;
+	private List<C> choices = null;
 	private ChoiceModelBehavior<C> choiceModelBehavior;
 
 	/** the data-source renderer */
-	protected final ITextRenderer<? super C> renderer;
+	final ITextRenderer<? super C> renderer;
 
 	/** the template */
 	private final IJQueryTemplate template;
@@ -159,6 +160,16 @@ public abstract class AbstractAutoCompleteTextField<T, C> extends TextField<T> i
 		this.choices = this.getChoices(input);
 
 		return this.choices;
+	}
+
+	public List<C> getChoices()
+	{
+		if (this.choices != null)
+		{
+			return this.choices;
+		}
+
+		return Collections.emptyList();
 	}
 
 	protected abstract List<C> getChoices(String input);
