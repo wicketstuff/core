@@ -116,11 +116,11 @@ public class CheckBox extends org.apache.wicket.markup.html.form.CheckBox
 		 * @param id the markup id
 		 * @param model the label model
 		 */
-		public Label(String id, IModel<?> model, CheckBox check)
+		public Label(String id, IModel<?> model, CheckBox checkbox)
 		{
 			super(id, model);
 
-			this.checkbox = check;
+			this.checkbox = checkbox;
 		}
 
 		@Override
