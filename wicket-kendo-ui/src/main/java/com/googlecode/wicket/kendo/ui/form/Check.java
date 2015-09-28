@@ -34,7 +34,6 @@ import com.googlecode.wicket.jquery.core.IJQueryWidget;
  * @author Sebastien Briquet - sebfz1
  *
  */
-// TODO: add sample for Check
 public class Check<T> extends org.apache.wicket.markup.html.form.Check<T>
 {
 	private static final long serialVersionUID = 1L;
@@ -102,7 +101,7 @@ public class Check<T> extends org.apache.wicket.markup.html.form.Check<T>
 	}
 
 	/**
-	 * Provides the label for the check.<br/>
+	 * Provides the label for the {@link Check}.<br/>
 	 * It should be applied on a {@code label} tag
 	 */
 	public static class Label extends org.apache.wicket.markup.html.basic.Label

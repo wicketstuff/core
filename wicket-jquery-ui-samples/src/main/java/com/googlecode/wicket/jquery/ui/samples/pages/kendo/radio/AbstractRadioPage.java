@@ -19,7 +19,9 @@ abstract class AbstractRadioPage extends SamplePage
 	protected List<DemoLink> getDemoLinks()
 	{
 		return Arrays.asList(
-				new DemoLink(DefaultRadioPage.class, "Radio")
+				new DemoLink(DefaultRadioPage.class, "Radio"),
+				new DemoLink(KendoCheckPage.class, "Check"),
+				new DemoLink(KendoCheckBoxPage.class, "CheckBox")
 			);
 	}
 }

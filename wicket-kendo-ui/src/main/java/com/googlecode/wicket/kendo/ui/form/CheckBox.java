@@ -19,22 +19,20 @@ package com.googlecode.wicket.kendo.ui.form;
 import java.io.Serializable;
 
 import org.apache.wicket.markup.ComponentTag;
-import org.apache.wicket.markup.html.form.RadioGroup;
 import org.apache.wicket.model.IModel;
 
 import com.googlecode.wicket.jquery.core.IJQueryWidget;
 
 /**
- * Provides a {@link org.apache.wicket.markup.html.form.Radio} with the Kendo-ui style<br/>
+ * Provides a {@link org.apache.wicket.markup.html.form.CheckBox} with the Kendo-ui style<br/>
  * <br/>
- * <b>Note:</b> {@link Radio} is not a {@link IJQueryWidget} (no corresponding widget is supplied by Kendo UI)<br/>
+ * <b>Note:</b> {@link CheckBox} is not a {@link IJQueryWidget} (no corresponding widget is supplied by Kendo UI)<br/>
  * It means that required Kendo UI dependencies (javascript/stylesheet) are not automatically added.
  *
- * @param <T> the model object type
- * @author Tedlabs46
+ * @author Sebastien Briquet - sebfz1
  *
  */
-public class Radio<T> extends org.apache.wicket.markup.html.form.Radio<T>
+public class CheckBox extends org.apache.wicket.markup.html.form.CheckBox
 {
 	private static final long serialVersionUID = 1L;
 
@@ -43,7 +41,7 @@ public class Radio<T> extends org.apache.wicket.markup.html.form.Radio<T>
 	 *
 	 * @param id the markup id
 	 */
-	public Radio(String id)
+	public CheckBox(String id)
 	{
 		super(id);
 	}
@@ -54,32 +52,9 @@ public class Radio<T> extends org.apache.wicket.markup.html.form.Radio<T>
 	 * @param id the markup id
 	 * @param model the {@link IModel}
 	 */
-	public Radio(String id, IModel<T> model)
+	public CheckBox(String id, IModel<Boolean> model)
 	{
 		super(id, model);
-	}
-
-	/**
-	 * Constructor
-	 * 
-	 * @param id the markup id
-	 * @param group parent {@link RadioGroup} of this radio
-	 */
-	public Radio(String id, RadioGroup<T> group)
-	{
-		super(id, group);
-	}
-
-	/**
-	 * Constructor
-	 * 
-	 * @param id the markup id
-	 * @param model the {@link IModel}
-	 * @param group parent {@link RadioGroup} of this radio
-	 */
-	public Radio(String id, IModel<T> model, RadioGroup<T> group)
-	{
-		super(id, model, group);
 	}
 
 	// Events //
@@ -97,29 +72,29 @@ public class Radio<T> extends org.apache.wicket.markup.html.form.Radio<T>
 	{
 		super.onComponentTag(tag);
 
-		tag.append("class", "k-radio", " ");
+		tag.append("class", "k-checkbox", " ");
 	}
 
 	/**
-	 * Provides the label for the {@link Radio}.<br/>
+	 * Provides the label for the {@link CheckBox}.<br/>
 	 * It should be applied on a {@code label} tag
 	 */
 	public static class Label extends org.apache.wicket.markup.html.basic.Label
 	{
 		private static final long serialVersionUID = 1L;
 
-		private final Radio<?> radio;
+		private final CheckBox checkbox;
 
 		/**
 		 * Constructor
 		 * 
 		 * @param id the markup id
 		 */
-		public Label(String id, Radio<?> radio)
+		public Label(String id, CheckBox checkbox)
 		{
 			super(id);
 
-			this.radio = radio;
+			this.checkbox = checkbox;
 		}
 
 		/**
@@ -128,11 +103,11 @@ public class Radio<T> extends org.apache.wicket.markup.html.form.Radio<T>
 		 * @param id the markup id
 		 * @param label the label
 		 */
-		public Label(String id, Serializable label, Radio<?> radio)
+		public Label(String id, Serializable label, CheckBox checkbox)
 		{
 			super(id, label);
 
-			this.radio = radio;
+			this.checkbox = checkbox;
 		}
 
 		/**
@@ -141,11 +116,11 @@ public class Radio<T> extends org.apache.wicket.markup.html.form.Radio<T>
 		 * @param id the markup id
 		 * @param model the label model
 		 */
-		public Label(String id, IModel<?> model, Radio<?> radio)
+		public Label(String id, IModel<?> model, CheckBox check)
 		{
 			super(id, model);
 
-			this.radio = radio;
+			this.checkbox = check;
 		}
 
 		@Override
@@ -153,8 +128,8 @@ public class Radio<T> extends org.apache.wicket.markup.html.form.Radio<T>
 		{
 			super.onComponentTag(tag);
 
-			tag.put("for", this.radio.getMarkupId());
-			tag.append("class", "k-radio-label", " ");
+			tag.put("for", this.checkbox.getMarkupId());
+			tag.append("class", "k-checkbox-label", " ");
 		}
 	}
 }

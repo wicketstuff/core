@@ -15,67 +15,63 @@ import com.googlecode.wicket.kendo.ui.panel.KendoFeedbackPanel;
 
 public class DefaultRadioPage extends AbstractRadioPage
 {
-    private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L;
 
-    public DefaultRadioPage(){
-        
-        final IModel<String> radioModel = new Model<String>();
+	public DefaultRadioPage()
+	{
+		// form //
+		Form<Void> form = new Form<Void>("form");
+		this.add(form);
 
-        Form<Void> form = new Form<Void>("form");
-        this.add(form);
+		// feedback //
+		form.add(new KendoFeedbackPanel("feedback"));
 
-        // FeedbackPanel //
-        form.add(new KendoFeedbackPanel("feedback"));
+		// radios //
+		final IModel<String> radioModel = new Model<String>();
 
-        // Buttons //
-        form.add(new Button("submit") {
+		final RadioGroup<String> group = new RadioGroup<String>("radiogroup", radioModel);
+		form.add(group);
 
-            private static final long serialVersionUID = 1L;
+		Radio<String> radio1 = new Radio<String>("radio1", Model.of("My radio 1"), group);
+		Label label1 = new Label("label1", "My radio 1", radio1);
+		group.add(radio1, label1);
 
-            @Override
-            public void onSubmit() {
+		Radio<String> radio2 = new Radio<String>("radio2", Model.of("My radio 2"), group);
+		Label label2 = new Label("label2", "My radio 2", radio2);
+		group.add(radio2, label2);
 
-                DefaultRadioPage.this.info(this, radioModel);
-            }
-        });
+		Radio<String> radio3 = new Radio<String>("radio3", Model.of("My radio 3"), group);
+		Label label3 = new Label("label3", "My radio 3", radio3);
+		group.add(radio3.setEnabled(false), label3);
 
-        form.add(new AjaxButton("button") {
+		// buttons //
+		form.add(new Button("submit") {
 
-            private static final long serialVersionUID = 1L;
+			private static final long serialVersionUID = 1L;
 
-            @Override
-            protected void onSubmit(AjaxRequestTarget target, Form<?> form) {
+			@Override
+			public void onSubmit()
+			{
+				DefaultRadioPage.this.info(this, radioModel);
+			}
+		});
 
-                DefaultRadioPage.this.info(this, radioModel);
-                target.add(form);
-            }
-        });
+		form.add(new AjaxButton("button") {
 
-        // Radio //
-        final RadioGroup<String> group = new RadioGroup<String>("radiogroup", radioModel);
-        form.add(group);
+			private static final long serialVersionUID = 1L;
 
-        Radio<String> radio1 = new Radio<String>("radio1", Model.of("My radio 1"), group);
-        group.add(radio1);
-        Label label1 = new Label("label1", "My radio 1", radio1);
-        group.add(label1);
+			@Override
+			protected void onSubmit(AjaxRequestTarget target, Form<?> form)
+			{
+				DefaultRadioPage.this.info(this, radioModel);
+				target.add(form);
+			}
+		});
+	}
 
-        Radio<String> radio2 = new Radio<String>("radio2", Model.of("My radio 2"), group);
-        group.add(radio2);
-        Label label2 = new Label("label2", "My radio 2", radio2);
-        group.add(label2);
-
-        Radio<String> radio3 = new Radio<String>("radio3", Model.of("My radio 3"), group);
-        group.add(radio3.setEnabled(false));
-
-        Label label3 = new Label("label3", "My radio 3", radio3);
-        group.add(label3);
-
-    }
-
-    private void info(Component component, IModel<String> model) {
-
-        this.info(component.getMarkupId() + " has been clicked");
-        this.info("The model object is: " + model.getObject());
-    }
+	private void info(Component component, IModel<String> model)
+	{
+		this.info(component.getMarkupId() + " has been clicked");
+		this.info("The model object is: " + model.getObject());
+	}
 }
