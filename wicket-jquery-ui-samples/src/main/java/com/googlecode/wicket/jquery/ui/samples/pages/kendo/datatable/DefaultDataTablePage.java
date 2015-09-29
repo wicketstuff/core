@@ -45,7 +45,6 @@ public class DefaultDataTablePage extends AbstractDataTablePage
 			@Override
 			protected void onSubmit(AjaxRequestTarget target, Form<?> form)
 			{
-				table.reset(target);
 				table.reload(target);
 			}
 		});
