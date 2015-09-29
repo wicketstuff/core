@@ -167,7 +167,7 @@ public class DataTable<T> extends WebComponent implements IJQueryWidget, IDataTa
 
 	/**
 	 * Resets & reloads the {@link DataTable}<br/>
-	 * Equivalent to {@code handler.add(table);}
+	 * Equivalent to {@code #reset(IPartialPageRequestHandler)} + {@code handler.add(table)}
 	 *
 	 * @param handler the {@link IPartialPageRequestHandler}
 	 */
