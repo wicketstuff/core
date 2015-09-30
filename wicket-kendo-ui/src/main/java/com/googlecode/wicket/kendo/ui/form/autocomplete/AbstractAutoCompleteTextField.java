@@ -69,7 +69,7 @@ public abstract class AbstractAutoCompleteTextField<T, C> extends TextField<T> i
 	 */
 	public AbstractAutoCompleteTextField(String id)
 	{
-		this(id, new TextRenderer<C>());
+		this(id, new TextRenderer<C>(), null);
 	}
 
 	/**
@@ -80,7 +80,30 @@ public abstract class AbstractAutoCompleteTextField<T, C> extends TextField<T> i
 	 */
 	public AbstractAutoCompleteTextField(String id, ITextRenderer<? super C> renderer)
 	{
-		super(id);
+		this(id, renderer, null);
+	}
+
+	/**
+	 * Constructor
+	 *
+	 * @param id the markup id
+	 * @param type type for field validation
+	 */
+	public AbstractAutoCompleteTextField(String id, Class<T> type)
+	{
+		this(id, new TextRenderer<C>(), type);
+	}
+
+	/**
+	 * Constructor
+	 *
+	 * @param id the markup id
+	 * @param renderer the {@link ChoiceRenderer}
+	 * @param type type for field validation
+	 */
+	public AbstractAutoCompleteTextField(String id, ITextRenderer<? super C> renderer, Class<T> type)
+	{
+		super(id, type);
 
 		this.renderer = renderer;
 		this.template = this.newTemplate();
@@ -94,7 +117,7 @@ public abstract class AbstractAutoCompleteTextField<T, C> extends TextField<T> i
 	 */
 	public AbstractAutoCompleteTextField(String id, IModel<T> model)
 	{
-		this(id, model, new TextRenderer<C>());
+		this(id, model, new TextRenderer<C>(), null);
 	}
 
 	/**
@@ -106,7 +129,32 @@ public abstract class AbstractAutoCompleteTextField<T, C> extends TextField<T> i
 	 */
 	public AbstractAutoCompleteTextField(String id, IModel<T> model, ITextRenderer<? super C> renderer)
 	{
-		super(id, model);
+		this(id, model, renderer, null);
+	}
+
+	/**
+	 * Constructor
+	 *
+	 * @param id the markup id
+	 * @param model the {@link IModel}
+	 * @param type type for field validation
+	 */
+	public AbstractAutoCompleteTextField(String id, IModel<T> model, Class<T> type)
+	{
+		this(id, model, new TextRenderer<C>(), type);
+	}
+
+	/**
+	 * Constructor
+	 *
+	 * @param id the markup id
+	 * @param model the {@link IModel}
+	 * @param renderer the {@link ChoiceRenderer}
+	 * @param type type for field validation
+	 */
+	public AbstractAutoCompleteTextField(String id, IModel<T> model, ITextRenderer<? super C> renderer, Class<T> type)
+	{
+		super(id, model, type);
 
 		this.renderer = renderer;
 		this.template = this.newTemplate();

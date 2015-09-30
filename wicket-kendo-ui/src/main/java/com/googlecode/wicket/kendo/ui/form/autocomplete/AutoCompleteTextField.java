@@ -16,8 +16,12 @@
  */
 package com.googlecode.wicket.kendo.ui.form.autocomplete;
 
+import java.util.List;
+import java.util.Locale;
+
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.model.IModel;
+import org.apache.wicket.util.convert.IConverter;
 
 import com.googlecode.wicket.jquery.core.renderer.ITextRenderer;
 import com.googlecode.wicket.kendo.ui.renderer.ChoiceRenderer;
@@ -33,6 +37,8 @@ public abstract class AutoCompleteTextField<T> extends AbstractAutoCompleteTextF
 {
 	private static final long serialVersionUID = 1L;
 
+	private final IConverter<T> converter;
+
 	/**
 	 * Constructor
 	 *
@@ -41,6 +47,8 @@ public abstract class AutoCompleteTextField<T> extends AbstractAutoCompleteTextF
 	public AutoCompleteTextField(String id)
 	{
 		super(id);
+
+		this.converter = this.newConverter();
 	}
 
 	/**
@@ -52,6 +60,35 @@ public abstract class AutoCompleteTextField<T> extends AbstractAutoCompleteTextF
 	public AutoCompleteTextField(String id, ITextRenderer<? super T> renderer)
 	{
 		super(id, renderer);
+
+		this.converter = this.newConverter();
+	}
+
+	/**
+	 * Constructor
+	 *
+	 * @param id the markup id
+	 * @param type type for field validation
+	 */
+	public AutoCompleteTextField(String id, Class<T> type)
+	{
+		super(id, type);
+
+		this.converter = this.newConverter();
+	}
+
+	/**
+	 * Constructor
+	 *
+	 * @param id the markup id
+	 * @param renderer the {@link ChoiceRenderer}
+	 * @param type type for field validation
+	 */
+	public AutoCompleteTextField(String id, ITextRenderer<? super T> renderer, Class<T> type)
+	{
+		super(id, renderer, type);
+
+		this.converter = this.newConverter();
 	}
 
 	/**
@@ -63,6 +100,8 @@ public abstract class AutoCompleteTextField<T> extends AbstractAutoCompleteTextF
 	public AutoCompleteTextField(String id, IModel<T> model)
 	{
 		super(id, model);
+
+		this.converter = this.newConverter();
 	}
 
 	/**
@@ -75,25 +114,34 @@ public abstract class AutoCompleteTextField<T> extends AbstractAutoCompleteTextF
 	public AutoCompleteTextField(String id, IModel<T> model, ITextRenderer<? super T> renderer)
 	{
 		super(id, model, renderer);
+
+		this.converter = this.newConverter();
 	}
 
-	// Methods //
-
-	@Override
-	public void convertInput()
+	/**
+	 * Constructor
+	 *
+	 * @param id the markup id
+	 * @param model the {@link IModel}
+	 */
+	public AutoCompleteTextField(String id, IModel<T> model, Class<T> type)
 	{
-		this.setConvertedInput(null); // resets converted input
+		super(id, model, type);
 
-		String input = this.getInput();
+		this.converter = this.newConverter();
+	}
 
-		for (T choice : this.getChoices())
-		{
-			if (this.renderer.getText(choice).equals(input))
-			{
-				this.setConvertedInput(choice);
-				break;
-			}
-		}
+	/**
+	 * Constructor
+	 *
+	 * @param id the markup id
+	 * @param model the {@link IModel}
+	 */
+	public AutoCompleteTextField(String id, IModel<T> model, ITextRenderer<? super T> renderer, Class<T> type)
+	{
+		super(id, model, renderer, type);
+
+		this.converter = this.newConverter();
 	}
 
 	// Properties //
@@ -102,6 +150,19 @@ public abstract class AutoCompleteTextField<T> extends AbstractAutoCompleteTextF
 	protected final String getModelValue()
 	{
 		return this.renderer.getText(this.getModelObject()); // renderer cannot be null.
+	}
+
+	@Override
+	@SuppressWarnings("unchecked")
+	public <C> IConverter<C> getConverter(Class<C> type)
+	{
+		// TODO add/verify sample with property (string) model
+		if (type != null && type.isAssignableFrom(this.getType()))
+		{
+			return (IConverter<C>) this.converter;
+		}
+
+		return super.getConverter(type);
 	}
 
 	// Events //
@@ -120,5 +181,60 @@ public abstract class AutoCompleteTextField<T> extends AbstractAutoCompleteTextF
 	 */
 	protected void onSelected(AjaxRequestTarget target)
 	{
+	}
+
+	// Factories //
+
+	/**
+	 * Gets a new {@link IConverter}.<br/>
+	 * Used when the form component is posted and the bean type has been supplied to the constructor.
+	 *
+	 * @return the {@link IConverter}
+	 */
+	private final IConverter<T> newConverter()
+	{
+		return new IConverter<T>() {
+
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			public T convertToObject(String value, Locale locale)
+			{
+				if (value != null)
+				{
+					if (value.equals(getModelValue()))
+					{
+						// the value already corresponds to the model object, no conversion to be done
+						return getModelObject();
+					}
+					else
+					{
+						// the value has been entered manually; try getting the object...
+						List<T> choices = getChoices(value);
+
+						if (!choices.isEmpty())
+						{
+							for (T choice : choices)
+							{
+								if (renderer.getText(choice).equals(value))
+								{
+									return choice;
+								}
+							}
+						}
+					}
+				}
+
+				// the string value does not corresponds to the current object model (ie: user specific value)
+				// and has not been found in the latest list of choice
+				return null;
+			}
+
+			@Override
+			public String convertToString(T value, Locale locale)
+			{
+				return renderer.getText(value);
+			}
+		};
 	}
 }
