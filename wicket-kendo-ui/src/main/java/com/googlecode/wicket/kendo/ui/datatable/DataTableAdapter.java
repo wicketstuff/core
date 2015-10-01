@@ -21,6 +21,9 @@ import java.util.List;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.json.JSONObject;
 
+import com.googlecode.wicket.kendo.ui.datatable.button.CommandButton;
+import com.googlecode.wicket.kendo.ui.datatable.button.ToolbarButton;
+
 /**
  * Adapter class for {@link IDataTableListener}
  *
@@ -37,7 +40,7 @@ public class DataTableAdapter implements IDataTableListener
 	}
 	
 	@Override
-	public void onClick(AjaxRequestTarget target, String button, List<String> values)
+	public void onClick(AjaxRequestTarget target, ToolbarButton button, List<String> values)
 	{
 		// noop
 	}

@@ -14,20 +14,21 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.googlecode.wicket.kendo.ui.datatable;
+package com.googlecode.wicket.kendo.ui.datatable.button;
 
-import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.util.io.IClusterable;
 import org.apache.wicket.util.string.Strings;
 
+import com.googlecode.wicket.kendo.ui.datatable.DataTable;
+
 /**
- * Provides the button object that can be used in {@link DataTable}
+ * Provides a base button object that can be used in {@link DataTable}
  *
  * @author Sebastien Briquet - sebfz1
  */
-public class CommandButton implements IClusterable
+public abstract class AbstractButton implements IClusterable
 {
 	private static final long serialVersionUID = 1L;
 	private static short sequence = 0;
@@ -39,8 +40,14 @@ public class CommandButton implements IClusterable
 	 */
 	private static synchronized int nextSequence()
 	{
-		return CommandButton.sequence++ % Short.MAX_VALUE;
+		return AbstractButton.sequence++ % Short.MAX_VALUE;
 	}
+
+	public static final String EDIT = "edit";
+	public static final String SAVE = "save";
+	public static final String CREATE = "create";
+	public static final String CANCEL = "cancel";
+	public static final String DESTROY = "destroy";
 
 	private final int id;
 	private final String name;
@@ -52,7 +59,7 @@ public class CommandButton implements IClusterable
 	 *
 	 * @param name the button's name
 	 */
-	public CommandButton(String name)
+	public AbstractButton(String name)
 	{
 		this(name, Model.of(name), null);
 	}
@@ -63,7 +70,7 @@ public class CommandButton implements IClusterable
 	 * @param name the button's name
 	 * @param property the property used to retrieve the row's object value
 	 */
-	public CommandButton(String name, String property)
+	public AbstractButton(String name, String property)
 	{
 		this(name, Model.of(name), property);
 	}
@@ -74,7 +81,7 @@ public class CommandButton implements IClusterable
 	 * @param name the button's name
 	 * @param text the button's text
 	 */
-	public CommandButton(String name, IModel<String> text)
+	public AbstractButton(String name, IModel<String> text)
 	{
 		this(name, text, null);
 	}
@@ -86,9 +93,9 @@ public class CommandButton implements IClusterable
 	 * @param text the button's text
 	 * @param property the property used to retrieve the row's object value
 	 */
-	public CommandButton(String name, IModel<String> text, String property)
+	public AbstractButton(String name, IModel<String> text, String property)
 	{
-		this.id = CommandButton.nextSequence();
+		this.id = AbstractButton.nextSequence();
 		this.name = name;
 		this.text = text;
 		this.property = property;
@@ -124,16 +131,6 @@ public class CommandButton implements IClusterable
 		return this.property;
 	}
 
-	/**
-	 * Gets the CSS class to be applied on the button
-	 *
-	 * @return the CSS class
-	 */
-	protected String getCSSClass()
-	{
-		return "";
-	}
-
 	// Methods //
 
 	@Override
@@ -145,59 +142,35 @@ public class CommandButton implements IClusterable
 	/**
 	 * Indicates whether the button acts as a built-in one (like create, edit, update, destroy)
 	 * 
-	 * @return true if no 'property' has been supplied
+	 * @return true if the button is a built-in one
 	 */
-	public boolean useBuiltIn()
-	{
-		return this.property == null;
-	}
+	public abstract boolean isBuiltIn();
 
 	/**
-	 * Indicates whether this {@link CommandButton} is equal to another {@link CommandButton}.<br/>
-	 * Are considered equals buttons having the same text representation, which is the text supplied to the constructor (if {@link #toString()} is not overridden).
+	 * Indicates whether this {@link AbstractButton} is equal to another {@link AbstractButton}. Are considered equals buttons having the same name.
 	 *
-	 * @param object a {@link CommandButton} to compare to
+	 * @param object a {@link AbstractButton} to compare to
 	 * @return true if considered as equal
 	 */
-	//TODO handle by name
 	@Override
 	public boolean equals(Object object)
 	{
-		if (object instanceof CommandButton)
+		if (object instanceof AbstractButton)
 		{
-			return this.match(object.toString());
+			return this.match(((AbstractButton) object).getName());
 		}
 
 		return super.equals(object);
 	}
 
 	/**
-	 * Indicates whether this {@link CommandButton} text representation ({@link #toString()}) match to the supplied text.
+	 * Indicates whether this {@link AbstractButton} name match to the supplied name.
 	 *
 	 * @param text the text to compare to
 	 * @return true if equal
 	 */
-	public boolean match(String text)
+	public boolean match(String name)
 	{
-		return Strings.isEqual(text, this.toString());
-	}
-
-	@Override
-	public String toString()
-	{
-		return this.text.getObject();
-	}
-
-	// Events //
-
-	/**
-	 * Triggered when the column-button is clicked
-	 * 
-	 * @param target the {@link AjaxRequestTarget}
-	 * @param value the row's object value
-	 */
-	public void onClick(AjaxRequestTarget target, String value)
-	{
-		// noop
+		return Strings.isEqual(name, this.name);
 	}
 }

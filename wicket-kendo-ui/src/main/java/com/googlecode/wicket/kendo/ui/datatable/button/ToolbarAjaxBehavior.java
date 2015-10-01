@@ -14,18 +14,20 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.googlecode.wicket.kendo.ui.datatable;
+package com.googlecode.wicket.kendo.ui.datatable.button;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.wicket.ajax.attributes.CallbackParameter;
+import org.apache.wicket.util.lang.Args;
 import org.apache.wicket.util.string.StringValue;
 
 import com.googlecode.wicket.jquery.core.JQueryEvent;
 import com.googlecode.wicket.jquery.core.ajax.IJQueryAjaxAware;
 import com.googlecode.wicket.jquery.core.ajax.JQueryAjaxBehavior;
 import com.googlecode.wicket.jquery.core.utils.RequestCycleUtils;
+import com.googlecode.wicket.kendo.ui.datatable.DataTable;
 
 /**
  * Provides the {@link JQueryAjaxBehavior} being called by the toolbar button(s).
@@ -44,10 +46,33 @@ public class ToolbarAjaxBehavior extends JQueryAjaxBehavior
 	 */
 	public static String getValuesFunction(String grid, String property)
 	{
-		return String.format("function() { var values = []; var grid = %s; grid.select().each(function(index, row) { values.push(grid.dataItem(row)['%s']); }); return values; }()", grid, property);
+		if (property != null)
+		{
+			return String.format("function() { " // lf
+					+ "var values = []; " // lf
+					+ "var grid = %s; " // lf
+					+ "grid.select().each(" // lf
+					+ "  function(index, row) { " // lf
+					+ "    values.push(grid.dataItem(row)['%s']); " // lf
+					+ "  } " // lf
+					+ "); " // lf
+					+ "return values; }()", grid, property);
+		}
+
+		return "[]";
 	}
 
-	private String property;
+	private final ToolbarButton button;
+
+	/**
+	 * Constructor
+	 *
+	 * @param source the {@link IJQueryAjaxAware}
+	 */
+	public ToolbarAjaxBehavior(IJQueryAjaxAware source)
+	{
+		this(source, null);
+	}
 
 	/**
 	 * Constructor
@@ -55,20 +80,28 @@ public class ToolbarAjaxBehavior extends JQueryAjaxBehavior
 	 * @param source the {@link IJQueryAjaxAware}
 	 * @param property the property used to retrieve the row's object value
 	 */
-	public ToolbarAjaxBehavior(IJQueryAjaxAware source, String property)
+	public ToolbarAjaxBehavior(IJQueryAjaxAware source, ToolbarButton button)
 	{
 		super(source);
 
-		this.property = property;
+		this.button = Args.notNull(button, "button");
+	}
+
+	/**
+	 * Gets the {@link ToolbarButton} name
+	 *
+	 * @return the button name
+	 */
+	public String getButtonName()
+	{
+		return this.button.getName();
 	}
 
 	@Override
 	protected CallbackParameter[] getCallbackParameters()
 	{
-		return new CallbackParameter[] { // lf
-				CallbackParameter.context("e"), // lf
-				CallbackParameter.resolved("button", "jQuery(e.target).attr('class').match(/k-grid-(\\w+)/)[1]"), // lf
-				CallbackParameter.resolved("values", getValuesFunction("jQuery(e.target).closest('.k-grid').data('kendoGrid')", this.property)) // lf
+		return new CallbackParameter[] { CallbackParameter.context("e"), // lf
+				CallbackParameter.resolved("values", getValuesFunction("jQuery(e.target).closest('.k-grid').data('kendoGrid')", this.button.getProperty())) // lf
 		};
 	}
 
@@ -77,7 +110,7 @@ public class ToolbarAjaxBehavior extends JQueryAjaxBehavior
 	@Override
 	protected JQueryEvent newEvent()
 	{
-		return new ToolbarClickEvent();
+		return new ToolbarClickEvent(this.button);
 	}
 
 	// Event objects //
@@ -85,16 +118,16 @@ public class ToolbarAjaxBehavior extends JQueryAjaxBehavior
 	/**
 	 * Provides a click event that will be transmitted to the {@link DataTable}
 	 */
-	protected static class ToolbarClickEvent extends JQueryEvent
+	public static class ToolbarClickEvent extends JQueryEvent
 	{
-		private final String button;
+		private final ToolbarButton button;
 		private final List<String> values;
 
-		public ToolbarClickEvent()
+		public ToolbarClickEvent(ToolbarButton button)
 		{
 			super();
 
-			this.button = RequestCycleUtils.getQueryParameterValue("button").toString();
+			this.button = button;
 			this.values = new ArrayList<String>();
 
 			StringValue values = RequestCycleUtils.getQueryParameterValue("values");
@@ -113,7 +146,7 @@ public class ToolbarAjaxBehavior extends JQueryAjaxBehavior
 		 *
 		 * @return the button
 		 */
-		public String getButton()
+		public ToolbarButton getButton()
 		{
 			return this.button;
 		}

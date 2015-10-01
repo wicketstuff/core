@@ -25,7 +25,7 @@ import com.googlecode.wicket.kendo.ui.datatable.DataTable;
  *
  * @author Sebastien Briquet - sebfz1
  * @deprecated renamed CommandsColumn to CommandColumn
- * TODO: 6.23.0/7.2.0 - remove
+ * TODO: 6.22.0/7.2.0 - remove
  */
 @Deprecated
 public abstract class CommandsColumn extends CommandColumn

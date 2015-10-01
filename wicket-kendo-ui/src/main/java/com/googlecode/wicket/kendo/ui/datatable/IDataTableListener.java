@@ -22,6 +22,9 @@ import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.json.JSONObject;
 import org.apache.wicket.util.io.IClusterable;
 
+import com.googlecode.wicket.kendo.ui.datatable.button.CommandButton;
+import com.googlecode.wicket.kendo.ui.datatable.button.ToolbarButton;
+
 /**
  * Event listener shared by the {@link DataTable} widget and the {@link DataTableBehavior}
  *
@@ -30,15 +33,6 @@ import org.apache.wicket.util.io.IClusterable;
 public interface IDataTableListener extends IClusterable
 {
 	/**
-	 * Triggered when a toolbar button is clicked.
-	 *
-	 * @param target the {@link AjaxRequestTarget}
-	 * @param button the button text (warning, it is not the 'name' property)
-	 * @param values the list of retrieved values
-	 */
-	void onClick(AjaxRequestTarget target, String button, List<String> values);
-
-	/**
 	 * Triggered when a column button is clicked.
 	 *
 	 * @param target the {@link AjaxRequestTarget}
@@ -46,6 +40,15 @@ public interface IDataTableListener extends IClusterable
 	 * @param value value retrieved from the row, according to the property supplied to the {@link CommandButton} that fired the event
 	 */
 	void onClick(AjaxRequestTarget target, CommandButton button, String value);
+
+	/**
+	 * Triggered when a toolbar button is clicked.
+	 *
+	 * @param target the {@link AjaxRequestTarget}
+	 * @param button the button name
+	 * @param values the list of retrieved values
+	 */
+	void onClick(AjaxRequestTarget target, ToolbarButton button, List<String> values);
 
 	/**
 	 * Triggered when an editing is cancelled

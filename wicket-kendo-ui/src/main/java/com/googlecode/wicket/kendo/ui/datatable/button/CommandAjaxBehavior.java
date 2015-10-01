@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.googlecode.wicket.kendo.ui.datatable;
+package com.googlecode.wicket.kendo.ui.datatable.button;
 
 import org.apache.wicket.ajax.attributes.CallbackParameter;
 
@@ -22,6 +22,7 @@ import com.googlecode.wicket.jquery.core.JQueryEvent;
 import com.googlecode.wicket.jquery.core.ajax.IJQueryAjaxAware;
 import com.googlecode.wicket.jquery.core.ajax.JQueryAjaxBehavior;
 import com.googlecode.wicket.jquery.core.utils.RequestCycleUtils;
+import com.googlecode.wicket.kendo.ui.datatable.DataTable;
 
 /**
  * Provides the {@link JQueryAjaxBehavior} being called by the column button(s).
@@ -67,7 +68,7 @@ public class CommandAjaxBehavior extends JQueryAjaxBehavior
 	@Override
 	public String getCallbackFunction()
 	{
-		if (this.button.useBuiltIn())
+		if (this.button.isBuiltIn())
 		{
 			return null;
 		}
@@ -86,7 +87,7 @@ public class CommandAjaxBehavior extends JQueryAjaxBehavior
 	/**
 	 * Provides a click event that will be transmitted to the {@link DataTable}
 	 */
-	protected static class ClickEvent extends JQueryEvent
+	public static class ClickEvent extends JQueryEvent
 	{
 		private final CommandButton button;
 		private final String value;

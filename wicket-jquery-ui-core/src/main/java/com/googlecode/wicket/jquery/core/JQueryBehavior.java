@@ -271,7 +271,31 @@ public class JQueryBehavior extends JQueryAbstractBehavior
 	 */
 	protected void on(String selector, String event, String callback)
 	{
-		this.on(String.format("jQuery('%s').on('%s', %s);", selector, event, callback));
+		this.register(String.format("jQuery('%s').on('%s', %s);", selector, event, callback));
+	}
+
+	/**
+	 * Registers a jQuery event statement
+	 *
+	 * @param statement the jQuery statement (ie: "jQuery('#myId').on('click', function() {});")
+	 * @deprecated use {@link #register(String)} instead
+	 */
+	@Deprecated
+	// TODO: 6.22.0/7.2.0 - remove method
+	protected void on(String statement)
+	{
+		this.register(statement);
+	}
+
+	/**
+	 * Unregisters a jQuery event callback
+	 *
+	 * @param selector the html selector (ie: "#myId")
+	 * @param event the jQuery event (ie: "click")
+	 */
+	protected void off(String selector, String event)
+	{
+		this.register(String.format("jQuery('%s').off('%s');", selector, event));
 	}
 
 	/**
@@ -279,7 +303,7 @@ public class JQueryBehavior extends JQueryAbstractBehavior
 	 *
 	 * @param statement the jQuery statement (ie: "jQuery('#myId').on('click', function() {});")
 	 */
-	protected void on(String statement)
+	protected void register(String statement)
 	{
 		if (this.events == null)
 		{

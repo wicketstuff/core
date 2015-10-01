@@ -10,14 +10,12 @@ import org.apache.wicket.markup.repeater.data.IDataProvider;
 import org.apache.wicket.model.Model;
 
 import com.googlecode.wicket.jquery.core.Options;
-import com.googlecode.wicket.jquery.core.ajax.IJQueryAjaxAware;
-import com.googlecode.wicket.jquery.core.ajax.JQueryAjaxBehavior;
 import com.googlecode.wicket.jquery.ui.samples.data.bean.Product;
 import com.googlecode.wicket.jquery.ui.samples.data.provider.ProductDataProvider;
 import com.googlecode.wicket.kendo.ui.KendoIcon;
-import com.googlecode.wicket.kendo.ui.datatable.CommandButton;
 import com.googlecode.wicket.kendo.ui.datatable.DataTable;
-import com.googlecode.wicket.kendo.ui.datatable.ToolbarAjaxBehavior;
+import com.googlecode.wicket.kendo.ui.datatable.button.CommandButton;
+import com.googlecode.wicket.kendo.ui.datatable.button.ToolbarButton;
 import com.googlecode.wicket.kendo.ui.datatable.column.CommandColumn;
 import com.googlecode.wicket.kendo.ui.datatable.column.CurrencyPropertyColumn;
 import com.googlecode.wicket.kendo.ui.datatable.column.IColumn;
@@ -48,15 +46,19 @@ public class CommandsDataTablePage extends AbstractDataTablePage
 
 			private static final long serialVersionUID = 1L;
 
-			/**
-			 * Triggered when a toolbar button is clicked.
-			 */
+			private ToolbarButton viewButton = new ToolbarButton("view", Model.of("View"), "id");
+			private ToolbarButton saveButton = new ToolbarButton("_save", Model.of("Save"), "id");
+			// 'save' is a built-in command, that's why it is prefixed by '_'
+
+			// properties //
+
 			@Override
-			public void onClick(AjaxRequestTarget target, String button, List<String> values)
+			protected List<ToolbarButton> getToolbarButtons()
 			{
-				this.info(button + " " + values);
-				target.add(feedback);
+				return Arrays.asList(this.viewButton, this.saveButton);
 			}
+
+			// events //
 
 			/**
 			 * Triggered when a column button is clicked.
@@ -64,14 +66,18 @@ public class CommandsDataTablePage extends AbstractDataTablePage
 			@Override
 			public void onClick(AjaxRequestTarget target, CommandButton button, String value)
 			{
-				this.info(button.getName() + " #" + value);
+				this.info(button.getText().getObject() + " #" + value);
 				target.add(feedback);
 			}
 
+			/**
+			 * Triggered when a toolbar button is clicked.
+			 */
 			@Override
-			protected JQueryAjaxBehavior newToolbarAjaxBehavior(IJQueryAjaxAware source)
+			public void onClick(AjaxRequestTarget target, ToolbarButton button, List<String> values)
 			{
-				return new ToolbarAjaxBehavior(source, "id");
+				this.info(button.getText().getObject() + " " + values);
+				target.add(feedback);
 			}
 		};
 
@@ -120,7 +126,8 @@ public class CommandsDataTablePage extends AbstractDataTablePage
 			@Override
 			public List<CommandButton> newButtons()
 			{
-				return Arrays.asList(new CommandButton("edit", Model.of("Edit"), "id"));
+				return Arrays.asList(new CommandButton("_edit", Model.of("Edit"), "id"));
+				// 'edit' is a built-in command, that's why it is prefixed by '_'
 			}
 		});
 

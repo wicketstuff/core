@@ -20,8 +20,8 @@ import java.util.List;
 
 import org.apache.wicket.model.IModel;
 
-import com.googlecode.wicket.kendo.ui.datatable.CommandButton;
 import com.googlecode.wicket.kendo.ui.datatable.DataTable;
+import com.googlecode.wicket.kendo.ui.datatable.button.CommandButton;
 
 /**
  * Provides a commands column for a {@link DataTable}

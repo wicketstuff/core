@@ -14,19 +14,18 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.googlecode.wicket.kendo.ui.datatable;
+package com.googlecode.wicket.kendo.ui.datatable.button;
 
 import org.apache.wicket.model.IModel;
 
+import com.googlecode.wicket.kendo.ui.datatable.DataTable;
+
 /**
- * Provides the button object that can be used in {@link DataTable}
+ * Provides a toolbar button object that can be used in {@link DataTable} toolbar
  *
  * @author Sebastien Briquet - sebfz1
- * @deprecated renamed ColumnButton to CommandButton
- * TODO: 6.23.0/7.2.0 - remove
  */
-@Deprecated
-public class ColumnButton extends CommandButton
+public class ToolbarButton extends AbstractButton
 {
 	private static final long serialVersionUID = 1L;
 
@@ -35,20 +34,9 @@ public class ColumnButton extends CommandButton
 	 *
 	 * @param name the button's name
 	 */
-	public ColumnButton(String name)
+	public ToolbarButton(String name)
 	{
 		super(name);
-	}
-
-	/**
-	 * Constructor
-	 *
-	 * @param name the button's name
-	 * @param property the property used to retrieve the row's object value
-	 */
-	public ColumnButton(String name, String property)
-	{
-		super(name, property);
 	}
 
 	/**
@@ -57,9 +45,20 @@ public class ColumnButton extends CommandButton
 	 * @param name the button's name
 	 * @param text the button's text
 	 */
-	public ColumnButton(String name, IModel<String> text)
+	public ToolbarButton(String name, IModel<String> text)
 	{
 		super(name, text);
+	}
+
+	/**
+	 * Constructor
+	 *
+	 * @param name the button's name
+	 * @param property the property used to retrieve the row's object value
+	 */
+	public ToolbarButton(String name, String property)
+	{
+		super(name, property);
 	}
 
 	/**
@@ -69,8 +68,36 @@ public class ColumnButton extends CommandButton
 	 * @param text the button's text
 	 * @param property the property used to retrieve the row's object value
 	 */
-	public ColumnButton(String name, IModel<String> text, String property)
+	public ToolbarButton(String name, IModel<String> text, String property)
 	{
 		super(name, text, property);
+	}
+
+	// Properties //
+
+	@Override
+	public boolean isBuiltIn()
+	{
+		switch (this.getName())
+		{
+		case EDIT:
+		case SAVE:
+		case CREATE:
+		case CANCEL:
+		case DESTROY:
+			return true;
+		default:
+			break;
+		}
+
+		return false;
+	}
+
+	// Methods //
+
+	@Override
+	public String toString()
+	{
+		return String.format("{ name: '%s', text: '%s' } ", this.getName(), this.getText().getObject());
 	}
 }

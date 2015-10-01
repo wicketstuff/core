@@ -38,8 +38,11 @@ import com.googlecode.wicket.jquery.core.ajax.IJQueryAjaxAware;
 import com.googlecode.wicket.jquery.core.ajax.JQueryAjaxBehavior;
 import com.googlecode.wicket.kendo.ui.KendoBehaviorFactory;
 import com.googlecode.wicket.kendo.ui.KendoUIBehavior;
-import com.googlecode.wicket.kendo.ui.datatable.CommandAjaxBehavior.ClickEvent;
 import com.googlecode.wicket.kendo.ui.datatable.behavior.DataBoundBehavior;
+import com.googlecode.wicket.kendo.ui.datatable.button.CommandAjaxBehavior;
+import com.googlecode.wicket.kendo.ui.datatable.button.CommandAjaxBehavior.ClickEvent;
+import com.googlecode.wicket.kendo.ui.datatable.button.CommandButton;
+import com.googlecode.wicket.kendo.ui.datatable.button.ToolbarButton;
 import com.googlecode.wicket.kendo.ui.datatable.column.IColumn;
 
 /**
@@ -127,7 +130,7 @@ public class DataTable<T> extends WebComponent implements IJQueryWidget, IDataTa
 	 * @return the jQuery object
 	 */
 	protected String widget()
-	{	
+	{
 		return KendoUIBehavior.widget(this, DataTableBehavior.METHOD);
 	}
 
@@ -230,6 +233,16 @@ public class DataTable<T> extends WebComponent implements IJQueryWidget, IDataTa
 		return this.providerBehavior.getCallbackUrl();
 	}
 
+	/**
+	 * Gets the {@code List} of {@link ToolbarButton}{@code s}
+	 * 
+	 * @return the {@code List} of {@code ToolbarButton}{@code s}
+	 */
+	protected List<ToolbarButton> getToolbarButtons()
+	{
+		return Collections.emptyList();
+	}
+
 	// Events //
 
 	@Override
@@ -283,13 +296,13 @@ public class DataTable<T> extends WebComponent implements IJQueryWidget, IDataTa
 	}
 
 	@Override
-	public void onClick(AjaxRequestTarget target, String button, List<String> values)
+	public void onClick(AjaxRequestTarget target, CommandButton button, String value)
 	{
 		// noop
 	}
 
 	@Override
-	public void onClick(AjaxRequestTarget target, CommandButton button, String value)
+	public void onClick(AjaxRequestTarget target, ToolbarButton button, List<String> values)
 	{
 		// noop
 	}
@@ -341,18 +354,18 @@ public class DataTable<T> extends WebComponent implements IJQueryWidget, IDataTa
 				return DataTable.this.getProviderCallbackUrl();
 			}
 
+			@Override
+			protected List<ToolbarButton> getToolbarButtons()
+			{
+				return DataTable.this.getToolbarButtons();
+			}
+
 			// Factories //
 
 			@Override
-			protected JQueryAjaxBehavior newToolbarClickAjaxBehavior(IJQueryAjaxAware source)
+			protected JQueryAjaxBehavior newCommandAjaxBehavior(IJQueryAjaxAware source, CommandButton button)
 			{
-				return DataTable.this.newToolbarAjaxBehavior(source);
-			}
-
-			@Override
-			protected JQueryAjaxBehavior newButtonAjaxBehavior(IJQueryAjaxAware source, CommandButton button)
-			{
-				return DataTable.this.newColumnAjaxBehavior(source, button);
+				return DataTable.this.newCommandAjaxBehavior(source, button);
 			}
 		};
 	}
@@ -372,17 +385,6 @@ public class DataTable<T> extends WebComponent implements IJQueryWidget, IDataTa
 	}
 
 	/**
-	 * Gets the {@link JQueryAjaxBehavior} that will be called when the user clicks a toolbar button
-	 *
-	 * @param source the {@link IJQueryAjaxAware}
-	 * @return the {@link JQueryAjaxBehavior}
-	 */
-	protected JQueryAjaxBehavior newToolbarAjaxBehavior(IJQueryAjaxAware source)
-	{
-		return null;
-	}
-
-	/**
 	 * Gets a new {@link JQueryAjaxBehavior} that will be called by the corresponding table's button.<br/>
 	 * This method may be overridden to provide additional behaviors
 	 *
@@ -390,7 +392,7 @@ public class DataTable<T> extends WebComponent implements IJQueryWidget, IDataTa
 	 * @param button the button that is passed to the behavior so it can be retrieved via the {@link ClickEvent}
 	 * @return the {@link JQueryAjaxBehavior}
 	 */
-	protected JQueryAjaxBehavior newColumnAjaxBehavior(IJQueryAjaxAware source, CommandButton button)
+	protected JQueryAjaxBehavior newCommandAjaxBehavior(IJQueryAjaxAware source, CommandButton button)
 	{
 		return new CommandAjaxBehavior(source, button);
 	}
