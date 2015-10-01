@@ -21,7 +21,7 @@ public class LambdaModelTest {
 	@Test(expected = NullPointerException.class)
 	public void testUnhandledNullModelObject() {
 		IModel<String> nameModel = new LambdaModel<>(Model.of((Person)null), Person::getName);
-		assertEquals("A", nameModel.getObject());
+		nameModel.getObject();
 	}
 	
 	@Test
