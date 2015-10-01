@@ -1,0 +1,42 @@
+<html xmlns:wicket="http://wicket.apache.org/dtds.data/wicket-xhtml1.4-strict.dtd">
+<head>
+<title>Lambda Example</title>
+<style type="text/css">
+div {
+	padding-bottom: 10px;
+}
+</style>
+</head>
+<body>
+	<div>
+		<h3 wicket:id="time">[TIME]</h3>
+	</div>
+	<div>
+		<form wicket:id="form">
+			<fieldset>
+				<legend>New Person</legend>
+				<div>
+					<label>Name</label> <input type="text" wicket:id="name" />
+				</div>
+				<div>
+					<label>Street</label> <input type="text" wicket:id="street" />
+				</div>
+				<div>
+					<label>City</label> <input type="text" wicket:id="city" />
+				</div>
+				<div>
+					<button wicket:id="add">
+						<span>Add</span>
+					</button>
+				</div>
+			</fieldset>
+		</form>
+	</div>
+	<div>
+		<div>
+			<h3>Added People</h3>
+		</div>
+		<table wicket:id="table" border="1"></table>
+	</div>
+</body>
+</html>
