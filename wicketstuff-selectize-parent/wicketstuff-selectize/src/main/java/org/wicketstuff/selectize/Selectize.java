@@ -17,9 +17,8 @@
 package org.wicketstuff.selectize;
 
 import java.io.InputStream;
-import java.util.Iterator;
-import java.util.Map;
-import java.util.Map.Entry;
+import java.util.Collection;
+import java.util.List;
 
 import org.apache.wicket.WicketRuntimeException;
 import org.apache.wicket.ajax.json.JSONArray;
@@ -52,17 +51,26 @@ public class Selectize extends FormComponent
 
 	private String placeholder;
 
+	private IModel<Collection<SelectizeOptionGroup>> optionGroups;
+
 	public Selectize(String id)
 	{
-		this(id, null);
+		this(id, null, null);
+	}
+
+	public Selectize(String id, IModel options)
+	{
+		this(id, null, options);
 	}
 
 	@SuppressWarnings("unchecked")
-	public Selectize(String id, IModel model)
+	public Selectize(String id, IModel<Collection<SelectizeOptionGroup>> optionGroups,
+		IModel options)
 	{
-		super(id, model);
+		super(id, options);
 		setOutputMarkupId(true);
 		setOutputMarkupPlaceholderTag(true);
+		this.optionGroups = optionGroups;
 	}
 
 	@Override
@@ -80,20 +88,37 @@ public class Selectize extends FormComponent
 			{
 				selectizeConfig.put("delimiter", delimiter);
 			}
-			if (getDefaultModelObject() instanceof Map<?, ?>)
+			if (getDefaultModelObject() instanceof List<?>)
 			{
-				Map<?, ?> map = (Map<?, ?>)getDefaultModelObject();
+				List<?> options = (List<?>)getDefaultModelObject();
 				JSONArray array = new JSONArray();
-				Iterator<?> iterator = map.entrySet().iterator();
-				while (iterator.hasNext())
+				for (Object option : options)
 				{
-					Entry<?, ?> next = (Entry<?, ?>)iterator.next();
-					JSONObject arrayElement = new JSONObject();
-					arrayElement.put("value", next.getKey());
-					arrayElement.put("text", next.getValue());
-					array.put(arrayElement);
+					if (option instanceof SelectizeOption)
+					{
+						array.put(option);
+					}
+					else
+					{
+						throw new WicketRuntimeException(
+							"If the options are given as list, please use " +
+								SelectizeOption.class.getName() + " for each object.");
+					}
 				}
-				selectizeConfig.put("options", array);
+				selectizeConfig.put("optionsToAdd", array);
+			}
+			if (optionGroups != null)
+			{
+				selectizeConfig.put("optgroupField", SelectizeOptionGroup.OPT_GROUP_FIELD);
+				selectizeConfig.put("optgroupLabelField",
+					SelectizeOptionGroup.OPT_GROUP_LABEL_FIELD);
+
+				JSONArray optionGroupsArray = new JSONArray();
+				for (SelectizeOptionGroup optionGroup : optionGroups.getObject())
+				{
+					optionGroupsArray.put(optionGroup);
+				}
+				selectizeConfig.put("optgroupsToAdd", optionGroupsArray);
 			}
 			String replace = string.replaceAll("%\\(selectizeConfig\\)", selectizeConfig.toString());
 			response.render(OnDomReadyHeaderItem.forScript(replace));
@@ -111,6 +136,11 @@ public class Selectize extends FormComponent
 		if (placeholder != null)
 		{
 			tag.put("placeholder", placeholder);
+		}
+		Object defaultModelObject = getDefaultModelObject();
+		if (defaultModelObject != null && !(defaultModelObject instanceof List<?>))
+		{
+			tag.put("value", getDefaultModelObjectAsString());
 		}
 	}
 

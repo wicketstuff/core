@@ -10,5 +10,12 @@ $(function(){
 		    }
 		};
 	$.extend(defaultSelectizeConfig,selectizeConfig);
-	$("#"+selectizeConfig.selectizeMarkupId).selectize(defaultSelectizeConfig);
+	var selectize = $("#"+selectizeConfig.selectizeMarkupId).selectize(defaultSelectizeConfig);
+	var selectizeRef = selectize[0].selectize;
+	$(selectizeConfig.optionsToAdd).each(function(){
+		selectizeRef.addOption(this);
+	});
+	$(selectizeConfig.optgroupsToAdd).each(function(){
+		selectizeRef.addOptionGroup(this.groupId,this);
+	});
 });

@@ -1,6 +1,7 @@
 package org.wicketstuff.selectize;
 
-import java.util.HashMap;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.apache.wicket.markup.html.WebPage;
 import org.apache.wicket.markup.html.form.Form;
@@ -15,17 +16,32 @@ public class TestPage extends WebPage
 	public TestPage()
 	{
 		Form<Void> form = new Form<Void>("form");
+		
+		// Select with text input
 		Selectize selectize1 = new Selectize("selectize1", Model.of("test"));
 		selectize1.setTheme(Theme.BOOTSTRAP3);
 		form.add(selectize1);
-		HashMap<String, String> map = new HashMap<String, String>();
-		map.put("1", "Brian Reavis");
-		map.put("2", "Nikola Tesla");
-		map.put("3", "Albert Einstein");
-		Selectize selectize2 = new Selectize("selectize2",new Model<HashMap<String, String>>(map));
-		selectize2.setPlaceholder("Select a person!");
+
+		List<SelectizeOption> options = new ArrayList<SelectizeOption>();
+		options.add(new SelectizeOption("1", "Brian Reavis", "1"));
+		options.add(new SelectizeOption("2", "Nikola Tesla", "1"));
+		options.add(new SelectizeOption("3", "Albert Einstein", "2"));
+
+		List<SelectizeOptionGroup> optionGroups = new ArrayList<SelectizeOptionGroup>();
+		optionGroups.add(new SelectizeOptionGroup("1", "1", "English"));
+		optionGroups.add(new SelectizeOptionGroup("2", "2", "German"));
+
+		// Simple Select
+		Selectize selectize2 = new Selectize("selectize2", Model.of(options));
 		selectize2.setTheme(Theme.BOOTSTRAP3);
 		form.add(selectize2);
+		
+		// Select with Groups
+		Selectize selectize3 = new Selectize("selectize3", Model.of(optionGroups),
+			Model.of(options));
+		selectize3.setPlaceholder("Select a person!");
+		selectize3.setTheme(Theme.BOOTSTRAP3);
+		form.add(selectize3);
 		add(form);
 	}
 }
