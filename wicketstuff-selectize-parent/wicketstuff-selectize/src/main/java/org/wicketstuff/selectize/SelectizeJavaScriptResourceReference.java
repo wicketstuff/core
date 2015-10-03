@@ -21,10 +21,10 @@ import java.util.List;
 
 import org.apache.wicket.markup.head.HeaderItem;
 import org.apache.wicket.markup.head.JavaScriptHeaderItem;
-import org.apache.wicket.request.resource.JavaScriptResourceReference;
+import org.apache.wicket.resource.JQueryPluginResourceReference;
 import org.apache.wicket.resource.JQueryResourceReference;
 
-public class SelectizeJavaScriptResourceReference extends JavaScriptResourceReference
+public class SelectizeJavaScriptResourceReference extends JQueryPluginResourceReference
 {
 
 	private static final long serialVersionUID = 1L;
@@ -49,13 +49,5 @@ public class SelectizeJavaScriptResourceReference extends JavaScriptResourceRefe
 	{
 		super(SelectizeJavaScriptResourceReference.class,
 			"res/selectize/js/standalone/selectize.js");
-	}
-
-	@Override
-	public List<HeaderItem> getDependencies()
-	{
-		List<HeaderItem> dependencies = new ArrayList<HeaderItem>();
-		dependencies.add(JavaScriptHeaderItem.forReference(JQueryResourceReference.get()));
-		return dependencies;
 	}
 }

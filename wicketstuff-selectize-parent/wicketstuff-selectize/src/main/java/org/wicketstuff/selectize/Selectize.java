@@ -68,7 +68,6 @@ public class Selectize extends FormComponent
 		IModel options)
 	{
 		super(id, options);
-		setOutputMarkupId(true);
 		setOutputMarkupPlaceholderTag(true);
 		this.optionGroups = optionGroups;
 	}
