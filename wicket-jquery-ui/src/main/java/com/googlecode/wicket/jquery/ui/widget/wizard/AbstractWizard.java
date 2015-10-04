@@ -27,6 +27,7 @@ import org.apache.wicket.extensions.wizard.IWizardModel;
 import org.apache.wicket.extensions.wizard.IWizardModelListener;
 import org.apache.wicket.extensions.wizard.IWizardStep;
 import org.apache.wicket.extensions.wizard.Wizard;
+import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.panel.EmptyPanel;
 import org.apache.wicket.markup.html.panel.FeedbackPanel;
@@ -51,7 +52,7 @@ public abstract class AbstractWizard<T extends Serializable> extends AbstractFor
 
 	private IWizardModel wizardModel;
 	private Form<T> form;
-	private FeedbackPanel feedback;
+	private WebMarkupContainer feedback;
 
 	// Buttons //
 	private DialogButton btnPrev;
@@ -204,7 +205,7 @@ public abstract class AbstractWizard<T extends Serializable> extends AbstractFor
 		this.form.add(new EmptyPanel(Wizard.HEADER_ID));
 
 		// Feedback //
-		this.feedback = new JQueryFeedbackPanel(Wizard.FEEDBACK_ID);
+		this.feedback = this.newFeedbackPanel(Wizard.FEEDBACK_ID);
 		this.form.add(this.feedback);
 
 		// dummy view to be replaced //
@@ -233,7 +234,7 @@ public abstract class AbstractWizard<T extends Serializable> extends AbstractFor
 	 *
 	 * @return the {@link FeedbackPanel}
 	 */
-	public FeedbackPanel getFeedbackPanel()
+	public WebMarkupContainer getFeedbackPanel()
 	{
 		return this.feedback;
 	}
@@ -429,5 +430,18 @@ public abstract class AbstractWizard<T extends Serializable> extends AbstractFor
 		}
 
 		return super.getForm(button);
+	}
+
+	// Factories //
+
+	/**
+	 * Gets a new {@code FeedbackPanel}
+	 * 
+	 * @param id the markup id
+	 * @return a new {@link JQueryFeedbackPanel} by default
+	 */
+	protected WebMarkupContainer newFeedbackPanel(String id)
+	{
+		return new JQueryFeedbackPanel(id);
 	}
 }
