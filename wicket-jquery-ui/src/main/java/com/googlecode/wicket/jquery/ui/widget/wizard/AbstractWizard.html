@@ -19,7 +19,7 @@
 	<head>
 		<wicket:head>
 			<style type="text/css">
-				.abstractWizard .feedbackPanel {
+				.abstractWizard .feedback {
 					margin-bottom: 1em;
 				}
 
@@ -38,7 +38,7 @@
 		<wicket:panel>
 			<form wicket:id="form" class="abstractWizard">
 				<div wicket:id="header">[title + summary]</div>
-				<div wicket:id="feedback">[feedback]</div>
+				<div wicket:id="feedback" class="feedback"></div>
 				<div wicket:id="view">[step view]</div>
 			</form>
 		</wicket:panel>
