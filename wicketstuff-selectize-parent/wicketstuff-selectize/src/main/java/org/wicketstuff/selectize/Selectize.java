@@ -18,7 +18,9 @@ package org.wicketstuff.selectize;
 
 import java.io.InputStream;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.wicket.WicketRuntimeException;
 import org.apache.wicket.ajax.json.JSONArray;
@@ -31,6 +33,7 @@ import org.apache.wicket.markup.head.OnDomReadyHeaderItem;
 import org.apache.wicket.markup.html.form.FormComponent;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.util.io.IOUtils;
+import org.apache.wicket.util.template.PackageTextTemplate;
 import org.wicketstuff.selectize.SelectizeCssResourceReference.Theme;
 
 /**
@@ -78,18 +81,19 @@ public class Selectize extends FormComponent
 		super.renderHead(response);
 		response.render(JavaScriptHeaderItem.forReference(SelectizeJavaScriptResourceReference.instance()));
 		response.render(CssHeaderItem.forReference(SelectizeCssResourceReference.instance(theme)));
-		try (InputStream inputStream = Selectize.class.getResourceAsStream("res/js/selectize_init.js"))
+		try (PackageTextTemplate packageTextTemplate = new PackageTextTemplate(Selectize.class, "res/js/selectize_init.js"))
 		{
-			String string = new String(IOUtils.toByteArray(inputStream));
+			
 			JSONObject selectizeConfig = new JSONObject();
 			selectizeConfig.put("selectizeMarkupId", getMarkupId());
 			if (delimiter != null)
 			{
 				selectizeConfig.put("delimiter", delimiter);
 			}
-			if (getDefaultModelObject() instanceof List<?>)
+			Object defaultModelObject = getDefaultModelObject();
+			if (defaultModelObject instanceof List<?>)
 			{
-				List<?> options = (List<?>)getDefaultModelObject();
+				List<?> options = (List<?>)defaultModelObject;
 				JSONArray array = new JSONArray();
 				for (Object option : options)
 				{
@@ -106,6 +110,10 @@ public class Selectize extends FormComponent
 				}
 				selectizeConfig.put("optionsToAdd", array);
 			}
+			if (defaultModelObject != null && !(defaultModelObject instanceof List<?>))
+			{
+				selectizeConfig.put("createAvailable", true);
+			}
 			if (optionGroups != null)
 			{
 				selectizeConfig.put("optgroupField", SelectizeOptionGroup.OPT_GROUP_FIELD);
@@ -119,8 +127,9 @@ public class Selectize extends FormComponent
 				}
 				selectizeConfig.put("optgroupsToAdd", optionGroupsArray);
 			}
-			String replace = string.replaceAll("%\\(selectizeConfig\\)", selectizeConfig.toString());
-			response.render(OnDomReadyHeaderItem.forScript(replace));
+			Map<String, String> variablesMap = new HashMap<String, String>();
+			variablesMap.put("selectizeConfig", selectizeConfig.toString());
+			response.render(OnDomReadyHeaderItem.forScript(packageTextTemplate.asString(variablesMap)));
 		}
 		catch (Exception e)
 		{

@@ -1,15 +1,20 @@
 $(function(){
-	var selectizeConfig = %(selectizeConfig);
+	var selectizeConfig = ${selectizeConfig};
 	var defaultSelectizeConfig = {
-		    persist: false,
-		    create: function(input) {
-		        return {
-		            value: input,
-		            text: input
-		        }
-		    }
+		    persist: false
+		   
 		};
 	$.extend(defaultSelectizeConfig,selectizeConfig);
+	if(selectizeConfig.createAvailable){
+		$.extend(defaultSelectizeConfig, {
+			create: function(input) {
+				return {
+					value: input,
+					text: input
+				}
+			}
+		});
+	}
 	var selectize = $("#"+selectizeConfig.selectizeMarkupId).selectize(defaultSelectizeConfig);
 	var selectizeRef = selectize[0].selectize;
 	$(selectizeConfig.optionsToAdd).each(function(){
