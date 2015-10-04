@@ -16,13 +16,15 @@
  */
 package org.wicketstuff.selectize;
 
-import java.io.InputStream;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import org.apache.wicket.WicketRuntimeException;
+import org.apache.wicket.ajax.AbstractDefaultAjaxBehavior;
+import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.json.JSONArray;
 import org.apache.wicket.ajax.json.JSONObject;
 import org.apache.wicket.markup.ComponentTag;
@@ -32,7 +34,12 @@ import org.apache.wicket.markup.head.JavaScriptHeaderItem;
 import org.apache.wicket.markup.head.OnDomReadyHeaderItem;
 import org.apache.wicket.markup.html.form.FormComponent;
 import org.apache.wicket.model.IModel;
-import org.apache.wicket.util.io.IOUtils;
+import org.apache.wicket.request.IRequestCycle;
+import org.apache.wicket.request.IRequestHandler;
+import org.apache.wicket.request.Url;
+import org.apache.wicket.request.cycle.RequestCycle;
+import org.apache.wicket.request.http.WebResponse;
+import org.apache.wicket.util.string.Strings;
 import org.apache.wicket.util.template.PackageTextTemplate;
 import org.wicketstuff.selectize.SelectizeCssResourceReference.Theme;
 
@@ -55,6 +62,40 @@ public class Selectize extends FormComponent
 	private String placeholder;
 
 	private IModel<Collection<SelectizeOptionGroup>> optionGroups;
+
+	private SelectizeAjaxBehavior selectizeAjaxBehavior;
+
+	private class SelectizeAjaxBehavior extends AbstractDefaultAjaxBehavior
+	{
+
+		private static final long serialVersionUID = 1L;
+
+		@Override
+		protected void respond(AjaxRequestTarget target)
+		{
+			RequestCycle requestCycle = RequestCycle.get();
+			final String search = requestCycle.getRequest()
+				.getQueryParameters()
+				.getParameterValue("search")
+				.toString();
+			requestCycle.scheduleRequestHandlerAfterCurrent(new IRequestHandler()
+			{
+				@Override
+				public void respond(IRequestCycle requestCycle)
+				{
+					WebResponse response = (WebResponse)requestCycle.getResponse();
+					response.setContentType("application/json");
+					response.write(response(search).toString());
+				}
+
+				@Override
+				public void detach(IRequestCycle requestCycle)
+				{
+					// NOOP
+				}
+			});
+		}
+	}
 
 	public Selectize(String id)
 	{
@@ -81,9 +122,10 @@ public class Selectize extends FormComponent
 		super.renderHead(response);
 		response.render(JavaScriptHeaderItem.forReference(SelectizeJavaScriptResourceReference.instance()));
 		response.render(CssHeaderItem.forReference(SelectizeCssResourceReference.instance(theme)));
-		try (PackageTextTemplate packageTextTemplate = new PackageTextTemplate(Selectize.class, "res/js/selectize_init.js"))
+		try (PackageTextTemplate packageTextTemplate = new PackageTextTemplate(Selectize.class,
+			"res/js/selectize_init.js"))
 		{
-			
+
 			JSONObject selectizeConfig = new JSONObject();
 			selectizeConfig.put("selectizeMarkupId", getMarkupId());
 			if (delimiter != null)
@@ -127,6 +169,14 @@ public class Selectize extends FormComponent
 				}
 				selectizeConfig.put("optgroupsToAdd", optionGroupsArray);
 			}
+
+			if (selectizeAjaxBehavior != null)
+			{
+				addAjaxBaseUrl(response);
+				selectizeConfig.put("ajaxcallback", selectizeAjaxBehavior.getCallbackUrl()
+					.toString());
+			}
+
 			Map<String, String> variablesMap = new HashMap<String, String>();
 			variablesMap.put("selectizeConfig", selectizeConfig.toString());
 			response.render(OnDomReadyHeaderItem.forScript(packageTextTemplate.asString(variablesMap)));
@@ -135,6 +185,16 @@ public class Selectize extends FormComponent
 		{
 			throw new WicketRuntimeException("Error while initializing the selectize script", e);
 		}
+	}
+
+	private void addAjaxBaseUrl(IHeaderResponse response)
+	{
+		// render ajax base url. It's required by Wicket Ajax support.
+		Url baseUrl = RequestCycle.get().getUrlRenderer().getBaseUrl();
+		CharSequence ajaxBaseUrl = Strings.escapeMarkup(baseUrl.toString());
+		response.render(JavaScriptHeaderItem.forScript("Wicket.Ajax.baseUrl=\"" + ajaxBaseUrl +
+			"\";", "wicket-ajax-base-url"));
+
 	}
 
 	@Override
@@ -183,5 +243,16 @@ public class Selectize extends FormComponent
 	public void setPlaceholder(String placeholder)
 	{
 		this.placeholder = placeholder;
+	}
+
+	public void setAjax()
+	{
+		add(this.selectizeAjaxBehavior = new SelectizeAjaxBehavior());
+	}
+
+	protected SelectizeResponse response(String search)
+	{
+		return new SelectizeResponse(Collections.<SelectizeOption> emptyList(),
+			Collections.<SelectizeOptionGroup> emptyList());
 	}
 }

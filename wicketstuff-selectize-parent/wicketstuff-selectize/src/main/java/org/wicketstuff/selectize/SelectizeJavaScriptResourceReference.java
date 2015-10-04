@@ -16,13 +16,12 @@
  */
 package org.wicketstuff.selectize;
 
-import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.wicket.ajax.WicketAjaxJQueryResourceReference;
 import org.apache.wicket.markup.head.HeaderItem;
 import org.apache.wicket.markup.head.JavaScriptHeaderItem;
 import org.apache.wicket.resource.JQueryPluginResourceReference;
-import org.apache.wicket.resource.JQueryResourceReference;
 
 public class SelectizeJavaScriptResourceReference extends JQueryPluginResourceReference
 {
@@ -50,4 +49,14 @@ public class SelectizeJavaScriptResourceReference extends JQueryPluginResourceRe
 		super(SelectizeJavaScriptResourceReference.class,
 			"res/selectize/js/standalone/selectize.js");
 	}
+	
+	@Override
+	public List<HeaderItem> getDependencies()
+	{
+		List<HeaderItem> dependencies = super.getDependencies();
+		dependencies.add(JavaScriptHeaderItem.forReference(WicketAjaxJQueryResourceReference.get()));
+		return dependencies;
+	}
+	
+	
 }
