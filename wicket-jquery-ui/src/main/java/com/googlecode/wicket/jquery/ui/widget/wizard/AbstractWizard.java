@@ -240,6 +240,26 @@ public abstract class AbstractWizard<T extends Serializable> extends AbstractFor
 		return this.feedback;
 	}
 
+	/**
+	 * Indicates whether the wizard should close when {@link #onCancel()} is triggered
+	 * 
+	 * @return {@code true} by default
+	 */
+	protected boolean closeOnCancel()
+	{
+		return true;
+	}
+
+	/**
+	 * Indicates whether the wizard should close when {@link #onFinish()} is triggered
+	 * 
+	 * @return {@code true} by default
+	 */
+	protected boolean closeOnFinish()
+	{
+		return true;
+	}
+
 	// Events //
 
 	@Override
@@ -305,13 +325,21 @@ public abstract class AbstractWizard<T extends Serializable> extends AbstractFor
 		{
 			this.onFinish();
 			this.onFinish(target);
-			this.close(target, button);
+
+			if (this.closeOnFinish())
+			{
+				this.close(target, button);
+			}
 		}
 		else if (button.equals(this.getCancelButton()))
 		{
 			this.onCancel();
 			this.onCancel(target);
-			this.close(target, button);
+
+			if (this.closeOnCancel())
+			{
+				this.close(target, button);
+			}
 		}
 		else
 		{
