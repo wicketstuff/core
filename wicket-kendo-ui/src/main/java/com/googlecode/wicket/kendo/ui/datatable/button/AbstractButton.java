@@ -131,6 +131,16 @@ public abstract class AbstractButton implements IClusterable
 		return this.property;
 	}
 
+	/**
+	 * Indicates whether the button should be visible
+	 * 
+	 * @return {@code true} by default
+	 */
+	public boolean isVisible()
+	{
+		return true;
+	}
+
 	// Methods //
 
 	@Override

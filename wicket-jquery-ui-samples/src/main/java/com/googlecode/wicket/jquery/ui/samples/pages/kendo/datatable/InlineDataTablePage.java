@@ -38,7 +38,7 @@ public class InlineDataTablePage extends AbstractDataTablePage
 		options.set("height", 430);
 		options.set("editable", Options.asString("inline"));
 		options.set("pageable", true);
-		options.set("toolbar", "[ { name: 'create', text: 'New' } ]"); /* 'create' is a built-in button/command' */
+		options.set("toolbar", "[ { name: 'create', text: 'New' } ]"); /* 'toolbar' option can be used as long as #getToolbarButtons returns no button */
 
 		final DataTable<Product> table = new DataTable<Product>("datatable", newColumnList(), newDataProvider(), 25, options) {
 

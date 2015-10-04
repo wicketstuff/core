@@ -166,17 +166,6 @@ public abstract class DataTableBehavior extends KendoUIBehavior implements IJQue
 	}
 
 	/**
-	 * Indicates whether toolbar buttons are supplied.<br/>
-	 * <b>Note:</b> if false, the {@code toolbar} option can be used (for built-in buttons only)
-	 * 
-	 * @return {@code true} or {@code false}
-	 */
-	private boolean hasToolbarButtons()
-	{
-		return !this.getToolbarButtons().isEmpty();
-	}
-
-	/**
 	 * Gets the {@code List} of {@link ToolbarButton}{@code s}
 	 * 
 	 * @return the {@code List} of {@code ToolbarButton}{@code s}
@@ -184,6 +173,37 @@ public abstract class DataTableBehavior extends KendoUIBehavior implements IJQue
 	protected List<ToolbarButton> getToolbarButtons()
 	{
 		return Collections.emptyList();
+	}
+
+	/**
+	 * Indicates whether toolbar buttons are supplied.<br/>
+	 * <b>Note:</b> if false, the {@code toolbar} option can be used (for built-in buttons only)
+	 * 
+	 * @return {@code true} or {@code false}
+	 */
+	private boolean hasVisibleToolbarButtons()
+	{
+		return !this.getToolbarButtons().isEmpty();
+	}
+
+	/**
+	 * Gets the {@code List} of visible {@link ToolbarButton}{@code s}
+	 * 
+	 * @return the {@code List} of visible {@code ToolbarButton}{@code s}
+	 */
+	protected List<ToolbarButton> getVisibleToolbarButtons()
+	{
+		List<ToolbarButton> buttons = Generics.newArrayList();
+
+		for (ToolbarButton button : this.getToolbarButtons())
+		{
+			if (button.isVisible())
+			{
+				buttons.add(button);
+			}
+		}
+
+		return buttons;
 	}
 
 	/**
@@ -202,6 +222,50 @@ public abstract class DataTableBehavior extends KendoUIBehavior implements IJQue
 		}
 
 		return Collections.emptyList();
+	}
+
+	/**
+	 * Gets the {@code List} of visible {@link CommandButton}{@code s} as json string
+	 * 
+	 * @param column the {@code CommandColumn}, containing the {@code CommandButton}{@code s}
+	 * @param behaviors the {@code List} of {@code CommandAjaxBehavior}{@code s} which may be bound to buttons
+	 * @return the {@code List} of visible {@code CommandButton} as json string
+	 */
+	private List<String> getCommandButtonsAsString(CommandColumn column, List<CommandAjaxBehavior> behaviors)
+	{
+		List<String> list = Generics.newArrayList();
+
+		for (CommandButton button : column.getButtons())
+		{
+			if (button.isVisible())
+			{
+				JQueryAjaxBehavior behavior = this.getCommandAjaxBehavior(button, behaviors);
+
+				list.add(button.toString(behavior));
+			}
+		}
+
+		return list;
+	}
+
+	/**
+	 * Gets the {@link CommandAjaxBehavior} associated to the {@link CommandButton}, if any
+	 * 
+	 * @param behaviors the {@code List} of {@code CommandAjaxBehavior}
+	 * @param button the {@code CommandButton}
+	 * @return {@code null} if no {@code CommandAjaxBehavior} if associated to the button
+	 */
+	private JQueryAjaxBehavior getCommandAjaxBehavior(CommandButton button, List<CommandAjaxBehavior> behaviors)
+	{
+		for (CommandAjaxBehavior behavior : behaviors)
+		{
+			if (button.equals(behavior.getButton()))
+			{
+				return behavior;
+			}
+		}
+
+		return null;
 	}
 
 	/**
@@ -242,47 +306,6 @@ public abstract class DataTableBehavior extends KendoUIBehavior implements IJQue
 	}
 
 	/**
-	 * Gets the {@code List} of {@link CommandButton}{@code s} as json string
-	 * 
-	 * @param column the {@code CommandColumn}, containing the {@code CommandButton}{@code s} 
-	 * @param behaviors the {@code List} of {@code CommandAjaxBehavior}{@code s} which may be bound to buttons
-	 * @return the {@code List} of {@code CommandButton} as json string
-	 */
-	private List<String> getCommandButtonsAsString(CommandColumn column, List<CommandAjaxBehavior> behaviors)
-	{
-		List<String> list = Generics.newArrayList();
-
-		for (CommandButton button : ((CommandColumn) column).getButtons())
-		{
-			JQueryAjaxBehavior behavior = this.getCommandAjaxBehavior(button, behaviors);
-
-			list.add(button.toString(behavior));
-		}
-
-		return list;
-	}
-
-	/**
-	 * Gets the {@link CommandAjaxBehavior} associated to the {@link CommandButton}, if any
-	 * 
-	 * @param behaviors the {@code List} of {@code CommandAjaxBehavior}
-	 * @param button the {@code CommandButton}
-	 * @return {@code null} if no {@code CommandAjaxBehavior} if associated to the button
-	 */
-	private JQueryAjaxBehavior getCommandAjaxBehavior(CommandButton button, List<CommandAjaxBehavior> behaviors)
-	{
-		for (CommandAjaxBehavior behavior : behaviors)
-		{
-			if (button.equals(behavior.getButton()))
-			{
-				return behavior;
-			}
-		}
-
-		return null;
-	}
-
-	/**
 	 * Gets the 'read' callback function<br/>
 	 * As create, update and destroy need to be supplied as function, we should declare read as a function as well. Weird...
 	 *
@@ -306,9 +329,9 @@ public abstract class DataTableBehavior extends KendoUIBehavior implements IJQue
 		this.setOption("cancel", this.onCancelAjaxBehavior.getCallbackFunction());
 
 		// toolbar //
-		if (this.hasToolbarButtons())
+		if (this.hasVisibleToolbarButtons())
 		{
-			this.setOption("toolbar", this.getToolbarButtons());
+			this.setOption("toolbar", this.getVisibleToolbarButtons());
 		}
 
 		// columns //
@@ -518,9 +541,10 @@ public abstract class DataTableBehavior extends KendoUIBehavior implements IJQue
 	 * Gets the {@link JQueryAjaxBehavior} that will be called when the user clicks a toolbar button
 	 *
 	 * @param source {@link IJQueryAjaxAware}
+	 * @param button the button that is passed to the behavior so it can be retrieved via the {@link ToolbarClickEvent}
 	 * @return the {@link JQueryAjaxBehavior}
 	 */
-	private JQueryAjaxBehavior newToolbarAjaxBehavior(DataTableBehavior behavior, final ToolbarButton button)
+	protected JQueryAjaxBehavior newToolbarAjaxBehavior(DataTableBehavior behavior, final ToolbarButton button)
 	{
 		return new ToolbarAjaxBehavior(behavior, button);
 	}
