@@ -34,6 +34,7 @@ import org.apache.wicket.markup.html.panel.FeedbackPanel;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.util.lang.Args;
 
+import com.googlecode.wicket.jquery.core.JQueryBehavior;
 import com.googlecode.wicket.jquery.ui.panel.JQueryFeedbackPanel;
 import com.googlecode.wicket.jquery.ui.widget.dialog.AbstractDialog;
 import com.googlecode.wicket.jquery.ui.widget.dialog.AbstractFormDialog;
@@ -253,6 +254,16 @@ public abstract class AbstractWizard<T extends Serializable> extends AbstractFor
 
 		// should be called *after* button's initialization
 		super.onInitialize();
+	}
+
+	/**
+	 * {@inheritDoc}<br/>
+	 * <b>Warning:</b> {@code autoOpen} option is not supported
+	 */
+	@Override
+	public void onConfigure(JQueryBehavior behavior)
+	{
+		super.onConfigure(behavior);
 	}
 
 	/**
