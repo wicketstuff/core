@@ -7,6 +7,7 @@ import java.util.List;
 
 import org.apache.wicket.markup.html.WebPage;
 import org.apache.wicket.markup.html.form.Form;
+import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.model.Model;
 import org.wicketstuff.selectize.SelectizeCssResourceReference.Theme;
 
@@ -56,13 +57,19 @@ public class TestPage extends WebPage
 				if (search != null && search.equals("test"))
 				{
 					SelectizeOption option = new SelectizeOption("1", "Test");
-					return new SelectizeResponse(Arrays.asList(option),
-						Collections.<SelectizeOptionGroup> emptyList());
+					SelectizeOption option2 = new SelectizeOption("2", "Test2");
+					return new SelectizeResponse(Arrays.asList(option, option2));
 				}
 				return super.response(search);
 			}
+
+			@Override
+			protected Panel responseTemplate()
+			{
+				return new TestPanel(Selectize.SELECTIZE_COMPONENT_ID);
+			}
 		};
-		selectize4.setAjax();
+		selectize4.enableAjaxHandling();
 		selectize4.setTheme(Theme.BOOTSTRAP3);
 		form.add(selectize4);
 		add(form);

@@ -27,12 +27,14 @@ import org.apache.wicket.ajax.AbstractDefaultAjaxBehavior;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.json.JSONArray;
 import org.apache.wicket.ajax.json.JSONObject;
+import org.apache.wicket.core.util.string.ComponentRenderer;
 import org.apache.wicket.markup.ComponentTag;
 import org.apache.wicket.markup.head.CssHeaderItem;
 import org.apache.wicket.markup.head.IHeaderResponse;
 import org.apache.wicket.markup.head.JavaScriptHeaderItem;
 import org.apache.wicket.markup.head.OnDomReadyHeaderItem;
 import org.apache.wicket.markup.html.form.FormComponent;
+import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.request.IRequestCycle;
 import org.apache.wicket.request.IRequestHandler;
@@ -64,6 +66,8 @@ public class Selectize extends FormComponent
 	private IModel<Collection<SelectizeOptionGroup>> optionGroups;
 
 	private SelectizeAjaxBehavior selectizeAjaxBehavior;
+
+	public static final String SELECTIZE_COMPONENT_ID = "SELECTIZE_COMPONENT_ID";
 
 	private class SelectizeAjaxBehavior extends AbstractDefaultAjaxBehavior
 	{
@@ -122,6 +126,7 @@ public class Selectize extends FormComponent
 		super.renderHead(response);
 		response.render(JavaScriptHeaderItem.forReference(SelectizeJavaScriptResourceReference.instance()));
 		response.render(CssHeaderItem.forReference(SelectizeCssResourceReference.instance(theme)));
+		response.render(JavaScriptHeaderItem.forReference(HandlebarsJavaScriptResourceReference.instance()));
 		try (PackageTextTemplate packageTextTemplate = new PackageTextTemplate(Selectize.class,
 			"res/js/selectize_init.js"))
 		{
@@ -133,6 +138,8 @@ public class Selectize extends FormComponent
 				selectizeConfig.put("delimiter", delimiter);
 			}
 			Object defaultModelObject = getDefaultModelObject();
+
+			// Options to be shown if provided
 			if (defaultModelObject instanceof List<?>)
 			{
 				List<?> options = (List<?>)defaultModelObject;
@@ -152,10 +159,14 @@ public class Selectize extends FormComponent
 				}
 				selectizeConfig.put("optionsToAdd", array);
 			}
+
+			// If the user is allowed to create items
 			if (defaultModelObject != null && !(defaultModelObject instanceof List<?>))
 			{
 				selectizeConfig.put("createAvailable", true);
 			}
+
+			// Option Groups to be shown if provided
 			if (optionGroups != null)
 			{
 				selectizeConfig.put("optgroupField", SelectizeOptionGroup.OPT_GROUP_FIELD);
@@ -170,11 +181,22 @@ public class Selectize extends FormComponent
 				selectizeConfig.put("optgroupsToAdd", optionGroupsArray);
 			}
 
+			// If Ajax is enabled, provide more information to the context like wicket base url and
+			// callback url
 			if (selectizeAjaxBehavior != null)
 			{
 				addAjaxBaseUrl(response);
-				selectizeConfig.put("ajaxcallback", selectizeAjaxBehavior.getCallbackUrl()
+				selectizeConfig.put("ajaxCallback", selectizeAjaxBehavior.getCallbackUrl()
 					.toString());
+
+				Panel responseTemplate = responseTemplate();
+				if (responseTemplate == null)
+				{
+					throw new WicketRuntimeException(
+						"A template which is going to be used to display items has to be provided!");
+				}
+				selectizeConfig.put("ajaxTemplate",
+					ComponentRenderer.renderComponent(responseTemplate));
 			}
 
 			Map<String, String> variablesMap = new HashMap<String, String>();
@@ -245,14 +267,40 @@ public class Selectize extends FormComponent
 		this.placeholder = placeholder;
 	}
 
-	public void setAjax()
+	/**
+	 * Used to enable AJAX handling. Please override the following methods to provide data<br>
+	 * <br>
+	 * 
+	 * Method for response content: {@link #response(String)}<br>
+	 * Method for template how to display: TODO
+	 * 
+	 */
+	public void enableAjaxHandling()
 	{
 		add(this.selectizeAjaxBehavior = new SelectizeAjaxBehavior());
 	}
 
+	/**
+	 * Provides the response and data for AJAX calls
+	 * 
+	 * @param search
+	 *            the search query parameter the user typed into the text field
+	 * @return the selectize response with a list of {@link SelectizeOption}'s
+	 */
 	protected SelectizeResponse response(String search)
 	{
-		return new SelectizeResponse(Collections.<SelectizeOption> emptyList(),
-			Collections.<SelectizeOptionGroup> emptyList());
+		return new SelectizeResponse(Collections.<SelectizeOption> emptyList());
+	}
+
+	/**
+	 * Provides the template to be shown in the select result<br>
+	 * <br>
+	 * <b>Important:</b> The item ({@link SelectizeOption}) to refer to is named <b>item</b>!
+	 * 
+	 * @return the Panel to be rendered in the template
+	 */
+	protected Panel responseTemplate()
+	{
+		return null;
 	}
 }

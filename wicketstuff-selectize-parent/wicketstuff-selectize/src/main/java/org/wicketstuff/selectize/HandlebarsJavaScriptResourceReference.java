@@ -16,37 +16,31 @@
  */
 package org.wicketstuff.selectize;
 
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-import java.util.Iterator;
-import java.util.List;
+import org.apache.wicket.request.resource.JavaScriptResourceReference;
 
-import org.apache.wicket.ajax.json.JSONObject;
-
-public class SelectizeResponse extends JSONObject
+public class HandlebarsJavaScriptResourceReference extends JavaScriptResourceReference
 {
+	private static final long serialVersionUID = 1L;
 
-	public SelectizeResponse(List<SelectizeOption> options)
+	/**
+	 * Singleton instance of this reference
+	 */
+	private static final HandlebarsJavaScriptResourceReference INSTANCE = new HandlebarsJavaScriptResourceReference();
+
+	/**
+	 * @return the single instance of the resource reference
+	 */
+	public static HandlebarsJavaScriptResourceReference instance()
 	{
-		put("options",options);
-	}
-	
-	private void writeObject(ObjectOutputStream out) throws IOException
-	{
-		out.writeObject(toString());
+		return INSTANCE;
 	}
 
-	@SuppressWarnings("rawtypes")
-	private void readObject(ObjectInputStream in) throws IOException,
-		ClassNotFoundException
+	/**
+	 * Private constructor.
+	 */
+	private HandlebarsJavaScriptResourceReference()
 	{
-		String read = (String)in.readObject();
-		JSONObject jsonObject = new JSONObject(read);
-		Iterator iterator = jsonObject.keySet().iterator();
-		while(iterator.hasNext()){
-			Object key = iterator.next();
-			this.put((String)key, jsonObject.get((String)key));
-		}
+		super(HandlebarsJavaScriptResourceReference.class,
+			"res/handlebars/js/handlebars-v4.0.2.js");
 	}
 }
