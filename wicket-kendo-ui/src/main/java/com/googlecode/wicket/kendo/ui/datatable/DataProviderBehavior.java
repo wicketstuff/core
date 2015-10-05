@@ -30,6 +30,7 @@ import org.apache.wicket.extensions.markup.html.repeater.data.sort.ISortStateLoc
 import org.apache.wicket.extensions.markup.html.repeater.data.sort.SortOrder;
 import org.apache.wicket.extensions.markup.html.repeater.data.table.filter.IFilterStateLocator;
 import org.apache.wicket.markup.repeater.data.IDataProvider;
+import org.apache.wicket.model.IModel;
 import org.apache.wicket.request.IRequestCycle;
 import org.apache.wicket.request.IRequestHandler;
 import org.apache.wicket.request.IRequestParameters;
@@ -58,7 +59,7 @@ public class DataProviderBehavior<T> extends AbstractAjaxBehavior
 	private static final int COLS = 20;
 
 	private final IDataProvider<T> provider;
-	private final List<IColumn> columns;
+	private final IModel<List<IColumn>> columns;
 
 	/**
 	 * Constructor
@@ -66,7 +67,7 @@ public class DataProviderBehavior<T> extends AbstractAjaxBehavior
 	 * @param columns the list of {@link IColumn}
 	 * @param provider the {@link IDataProvider}
 	 */
-	public DataProviderBehavior(final List<IColumn> columns, final IDataProvider<T> provider)
+	public DataProviderBehavior(final IModel<List<IColumn>> columns, final IDataProvider<T> provider)
 	{
 		this.columns = columns;
 		this.provider = provider;
@@ -216,7 +217,7 @@ public class DataProviderBehavior<T> extends AbstractAjaxBehavior
 
 		try
 		{
-			for (IColumn column : this.columns)
+			for (IColumn column : this.columns.getObject())
 			{
 				if (column instanceof PropertyColumn)
 				{

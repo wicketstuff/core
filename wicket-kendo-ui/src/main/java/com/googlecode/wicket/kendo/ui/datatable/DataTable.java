@@ -28,6 +28,9 @@ import org.apache.wicket.markup.ComponentTag;
 import org.apache.wicket.markup.MarkupStream;
 import org.apache.wicket.markup.html.WebComponent;
 import org.apache.wicket.markup.repeater.data.IDataProvider;
+import org.apache.wicket.model.IModel;
+import org.apache.wicket.model.Model;
+import org.apache.wicket.model.util.ListModel;
 
 import com.googlecode.wicket.jquery.core.IJQueryWidget;
 import com.googlecode.wicket.jquery.core.JQueryBehavior;
@@ -57,7 +60,7 @@ public class DataTable<T> extends WebComponent implements IJQueryWidget, IDataTa
 	private AbstractAjaxBehavior providerBehavior;
 
 	private final Options options;
-	private List<IColumn> columns;
+	private IModel<List<IColumn>> columns;
 	private final IDataProvider<T> provider;
 	private final long rows;
 
@@ -70,7 +73,7 @@ public class DataTable<T> extends WebComponent implements IJQueryWidget, IDataTa
 	 */
 	public DataTable(String id, final IDataProvider<T> provider, final long rows)
 	{
-		this(id, null, provider, rows, new Options());
+		this(id, new ListModel<IColumn>(), provider, rows, new Options());
 	}
 
 	/**
@@ -83,7 +86,7 @@ public class DataTable<T> extends WebComponent implements IJQueryWidget, IDataTa
 	 */
 	public DataTable(String id, final IDataProvider<T> provider, final long rows, Options options)
 	{
-		this(id, null, provider, rows, options);
+		this(id, new ListModel<IColumn>(), provider, rows, options);
 	}
 
 	/**
@@ -95,6 +98,33 @@ public class DataTable<T> extends WebComponent implements IJQueryWidget, IDataTa
 	 * @param rows the number of rows per page to be displayed
 	 */
 	public DataTable(String id, final List<IColumn> columns, final IDataProvider<T> provider, final long rows)
+	{
+		this(id, Model.ofList(columns), provider, rows, new Options());
+	}
+
+	/**
+	 * Main constructor
+	 *
+	 * @param id the markup id
+	 * @param columns the list of {@link IColumn}
+	 * @param provider the {@link IDataProvider}
+	 * @param rows the number of rows per page to be displayed
+	 * @param options the {@link Options}
+	 */
+	public DataTable(String id, final List<IColumn> columns, final IDataProvider<T> provider, final long rows, Options options)
+	{
+		this(id, Model.ofList(columns), provider, rows, options);
+	}
+
+	/**
+	 * Constructor
+	 *
+	 * @param id the markup id
+	 * @param columns the list of {@link IColumn}
+	 * @param provider the {@link IDataProvider}
+	 * @param rows the number of rows per page to be displayed
+	 */
+	public DataTable(String id, final IModel<List<IColumn>> columns, final IDataProvider<T> provider, final long rows)
 	{
 		this(id, columns, provider, rows, new Options());
 	}
@@ -108,7 +138,7 @@ public class DataTable<T> extends WebComponent implements IJQueryWidget, IDataTa
 	 * @param rows the number of rows per page to be displayed
 	 * @param options the {@link Options}
 	 */
-	public DataTable(String id, final List<IColumn> columns, final IDataProvider<T> provider, final long rows, Options options)
+	public DataTable(String id, final IModel<List<IColumn>> columns, final IDataProvider<T> provider, final long rows, Options options)
 	{
 		super(id);
 
@@ -204,6 +234,18 @@ public class DataTable<T> extends WebComponent implements IJQueryWidget, IDataTa
 		handler.appendJavaScript(String.format("var $w = %s; if ($w) { $w.dataSource.read(); }", this.widget()));
 	}
 
+	@Override
+	public void detachModels()
+	{
+		super.detachModels();
+
+		// FIXME: why is it called several times?
+		if (this.columns != null)
+		{
+			this.columns.detach();
+		}
+	}
+
 	// Properties //
 
 	/**
@@ -233,12 +275,12 @@ public class DataTable<T> extends WebComponent implements IJQueryWidget, IDataTa
 	 */
 	public final List<IColumn> getColumns()
 	{
-		if (this.columns == null)
+		if (this.columns.getObject() != null)
 		{
-			this.columns = this.newColumnList();
+			Collections.unmodifiableList(this.columns.getObject());
 		}
 
-		return Collections.unmodifiableList(this.columns);
+		return Collections.emptyList();
 	}
 
 	/**
@@ -268,7 +310,7 @@ public class DataTable<T> extends WebComponent implements IJQueryWidget, IDataTa
 	{
 		super.onInitialize();
 
-		this.providerBehavior = this.newDataProviderBehavior(this.getColumns(), this.getDataProvider());
+		this.providerBehavior = this.newDataProviderBehavior(this.columns, this.getDataProvider());
 		this.add(this.providerBehavior);
 
 		this.add(JQueryWidget.newWidgetBehavior(this)); // cannot be in ctor as the markupId may be set manually afterward
@@ -354,7 +396,7 @@ public class DataTable<T> extends WebComponent implements IJQueryWidget, IDataTa
 	@Override
 	public JQueryBehavior newWidgetBehavior(String selector)
 	{
-		return new DataTableBehavior(selector, this.options, this.getColumns(), this) {
+		return new DataTableBehavior(selector, this.options, this.columns, this) {
 
 			private static final long serialVersionUID = 1L;
 
@@ -391,23 +433,13 @@ public class DataTable<T> extends WebComponent implements IJQueryWidget, IDataTa
 	// Factories //
 
 	/**
-	 * TODO javadoc
-	 * 
-	 * @return
-	 */
-	protected List<IColumn> newColumnList()
-	{
-		return Collections.emptyList();
-	}
-
-	/**
 	 * Gets a new {@link DataProviderBehavior}
 	 *
 	 * @param columns the list of {@link IColumn}
 	 * @param provider the {@link IDataProvider}
 	 * @return the {@link AbstractAjaxBehavior}
 	 */
-	protected AbstractAjaxBehavior newDataProviderBehavior(final List<IColumn> columns, final IDataProvider<T> provider)
+	protected AbstractAjaxBehavior newDataProviderBehavior(final IModel<List<IColumn>> columns, final IDataProvider<T> provider)
 	{
 		return new DataProviderBehavior<T>(columns, provider);
 	}
