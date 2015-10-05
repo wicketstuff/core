@@ -32,6 +32,7 @@ public abstract class AbstractSplitButton extends GenericPanel<List<IMenuItem>>
 	private static final long serialVersionUID = 1L;
 	private static final JavaScriptResourceReference SPLITBUTTON_JS = new JavaScriptResourceReference(AbstractSplitButton.class, "SplitButton.js");
 
+	private WebMarkupContainer buttonset;
 	private AbstractLink button;
 	private boolean defaultFormProcessing = true;
 
@@ -101,16 +102,17 @@ public abstract class AbstractSplitButton extends GenericPanel<List<IMenuItem>>
 		super.onInitialize();
 
 		// button-set //
-		final WebMarkupContainer buttonset = new WebMarkupContainer("buttonset");
+		this.buttonset = new WebMarkupContainer("buttonset");
+		this.buttonset.setOutputMarkupId(true);
 		this.add(buttonset);
 
 		// main-button //
 		this.button = this.newLink("button");
-		this.button.add(newButtonSetBehavior(buttonset)); // the 'buttonset' behavior is attached to the button to be re-applied on menu click
-		buttonset.add(this.button);
+		this.button.add(newButtonSetBehavior(this.buttonset)); // the 'buttonset' behavior is attached to the button to be re-applied on menu click
+		this.buttonset.add(this.button);
 
 		// menu-button //
-		buttonset.add(newMenuContainer("select"));
+		this.buttonset.add(newMenuContainer("select"));
 	}
 
 	@Override
@@ -195,7 +197,7 @@ public abstract class AbstractSplitButton extends GenericPanel<List<IMenuItem>>
 			{
 				AbstractSplitButton.this.button.setDefaultModelObject(item);
 
-				target.add(AbstractSplitButton.this.button);
+				target.add(AbstractSplitButton.this.buttonset);
 			}
 		};
 	}
