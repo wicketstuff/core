@@ -17,12 +17,10 @@
 package com.googlecode.wicket.kendo.ui.widget.menu.item;
 
 import org.apache.wicket.Page;
-import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.request.cycle.RequestCycle;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
-import org.apache.wicket.util.reference.ClassReference;
 
 import com.googlecode.wicket.kendo.ui.KendoIcon;
 
@@ -32,12 +30,9 @@ import com.googlecode.wicket.kendo.ui.KendoIcon;
  * @author Sebastien Briquet - sebfz1
  * @since 6.15.0
  */
-public class PageMenuItem extends AbstractMenuItem
+public class PageMenuItem extends UrlMenuItem
 {
 	private static final long serialVersionUID = 1L;
-
-	private final ClassReference<? extends Page> pageReference;
-	private final PageParameters pageParameters;
 
 	/**
 	 * Constructor
@@ -132,16 +127,6 @@ public class PageMenuItem extends AbstractMenuItem
 	 */
 	public PageMenuItem(IModel<String> title, String icon, Class<? extends Page> pageClass, PageParameters parameters)
 	{
-		super(title, icon);
-
-		this.pageReference = ClassReference.of(pageClass);
-		this.pageParameters = parameters;
-	}
-
-	// Events //
-	@Override
-	public void onClick(AjaxRequestTarget target)
-	{
-		RequestCycle.get().setResponsePage(this.pageReference.get(), this.pageParameters);
+		super(title, icon, RequestCycle.get().urlFor(pageClass, parameters));
 	}
 }
