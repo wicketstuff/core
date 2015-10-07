@@ -18,6 +18,12 @@ package org.wicketstuff.selectize;
 
 import org.apache.wicket.request.resource.JavaScriptResourceReference;
 
+/**
+ * Resource Reference to load the handlebars javascript library
+ * 
+ * @author Tobias Soloschenko
+ *
+ */
 public class HandlebarsJavaScriptResourceReference extends JavaScriptResourceReference
 {
 	private static final long serialVersionUID = 1L;

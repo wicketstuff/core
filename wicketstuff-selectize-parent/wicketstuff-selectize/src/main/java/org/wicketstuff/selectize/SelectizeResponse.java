@@ -24,27 +24,33 @@ import java.util.List;
 
 import org.apache.wicket.ajax.json.JSONObject;
 
+/**
+ * The SelectizeResponse is the actual model object for ajax requests of the selectize component.
+ * 
+ * @author Tobias Soloschenko
+ *
+ */
 public class SelectizeResponse extends JSONObject
 {
 
 	public SelectizeResponse(List<SelectizeOption> options)
 	{
-		put("options",options);
+		put("options", options);
 	}
-	
+
 	private void writeObject(ObjectOutputStream out) throws IOException
 	{
 		out.writeObject(toString());
 	}
 
 	@SuppressWarnings("rawtypes")
-	private void readObject(ObjectInputStream in) throws IOException,
-		ClassNotFoundException
+	private void readObject(ObjectInputStream in) throws IOException, ClassNotFoundException
 	{
 		String read = (String)in.readObject();
 		JSONObject jsonObject = new JSONObject(read);
 		Iterator iterator = jsonObject.keySet().iterator();
-		while(iterator.hasNext()){
+		while (iterator.hasNext())
+		{
 			Object key = iterator.next();
 			this.put((String)key, jsonObject.get((String)key));
 		}

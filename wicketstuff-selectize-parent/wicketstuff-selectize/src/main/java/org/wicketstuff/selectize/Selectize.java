@@ -67,8 +67,16 @@ public class Selectize extends FormComponent
 
 	private SelectizeAjaxBehavior selectizeAjaxBehavior;
 
+	private boolean createAvailable = false;
+
 	public static final String SELECTIZE_COMPONENT_ID = "SELECTIZE_COMPONENT_ID";
 
+	/**
+	 * Ajax behavior for ajax support of the selectize component
+	 * 
+	 * @author Tobias Soloschenko
+	 *
+	 */
 	private class SelectizeAjaxBehavior extends AbstractDefaultAjaxBehavior
 	{
 
@@ -106,11 +114,32 @@ public class Selectize extends FormComponent
 		this(id, null, null);
 	}
 
+	/**
+	 * Creates a selectize component
+	 * 
+	 * @param id
+	 *            the id of the component
+	 * @param options
+	 *            the options. If the model object value is instanceof {@link java.lang.String} a
+	 *            tag representation is chosen. If the model object is instance of
+	 *            {@link org.wicketstuff.selectize.SelectizeOption} a select representation is
+	 *            chosen.
+	 */
 	public Selectize(String id, IModel options)
 	{
 		this(id, null, options);
 	}
 
+	/**
+	 * Creates a selectize component
+	 * 
+	 * @param id
+	 *            the id of the component
+	 * @param optionGroups
+	 *            the selectize groups, used for a select representation
+	 * @param options
+	 *            the selectize options, used for the selection in the select representation
+	 */
 	@SuppressWarnings("unchecked")
 	public Selectize(String id, IModel<Collection<SelectizeOptionGroup>> optionGroups,
 		IModel options)
@@ -120,6 +149,9 @@ public class Selectize extends FormComponent
 		this.optionGroups = optionGroups;
 	}
 
+	/**
+	 * Renders the required javascript / css libraries
+	 */
 	@Override
 	public void renderHead(IHeaderResponse response)
 	{
@@ -161,9 +193,10 @@ public class Selectize extends FormComponent
 			}
 
 			// If the user is allowed to create items
-			if (defaultModelObject != null && !(defaultModelObject instanceof List<?>))
+			if (defaultModelObject != null && !(defaultModelObject instanceof List<?>) &&
+				isCreateAvailable())
 			{
-				selectizeConfig.put("createAvailable", true);
+				selectizeConfig.put("createAvailable", isCreateAvailable());
 			}
 
 			// Option Groups to be shown if provided
@@ -272,7 +305,7 @@ public class Selectize extends FormComponent
 	 * <br>
 	 * 
 	 * Method for response content: {@link #response(String)}<br>
-	 * Method for template how to display: TODO
+	 * Method for template how to display: {@link #responseTemplate()}
 	 * 
 	 */
 	public void enableAjaxHandling()
@@ -281,11 +314,13 @@ public class Selectize extends FormComponent
 	}
 
 	/**
-	 * Provides the response and data for AJAX calls
+	 * Provides the response and data for AJAX calls. Please ensure {@link #enableAjaxHandling()} is
+	 * invoked when overriding {@link #response(String)}
 	 * 
 	 * @param search
 	 *            the search query parameter the user typed into the text field
-	 * @return the selectize response with a list of {@link SelectizeOption}'s
+	 * @return the selectize response with a list of {@link SelectizeOption}'s custom values can be
+	 *         applied with selectizeOption.put("key","value");
 	 */
 	protected SelectizeResponse response(String search)
 	{
@@ -295,12 +330,46 @@ public class Selectize extends FormComponent
 	/**
 	 * Provides the template to be shown in the select result<br>
 	 * <br>
-	 * <b>Important:</b> The item ({@link SelectizeOption}) to refer to is named <b>item</b>!
+	 * <b>Important:</b> The item ({@link SelectizeOption}) to refer to is named <b>item</b>!<br>
+	 * <b>Important:</b> The template uses handlebars template mechanism. To display the "text"
+	 * value of the SelectizeOption use the following syntax:
+	 * 
+	 * <pre>
+	 * &lt;div&gt;{{text}}&lt;div&gt;
+	 * </pre>
+	 * 
+	 * It is also important that you always use a &lt;div&gt; element in the response panel which
+	 * can be used of selectize to apply the selected class.<br>
+	 * <br>
+	 * Please ensure {@link #enableAjaxHandling()} is invoked when overriding
+	 * {@link #responseTemplate()}<br>
+	 * <br>
 	 * 
 	 * @return the Panel to be rendered in the template
 	 */
 	protected Panel responseTemplate()
 	{
 		return null;
+	}
+
+	/**
+	 * If selectize is enabled to create entries
+	 * 
+	 * @return if selectize is enabled to create entries
+	 */
+	public boolean isCreateAvailable()
+	{
+		return createAvailable;
+	}
+
+	/**
+	 * Set the selectize component to be enabled to create entries
+	 * 
+	 * @param createAvailable
+	 *            if selectize is enabled to create entries
+	 */
+	public void setCreateAvailable(boolean createAvailable)
+	{
+		this.createAvailable = createAvailable;
 	}
 }

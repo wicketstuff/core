@@ -23,6 +23,12 @@ import org.apache.wicket.markup.head.HeaderItem;
 import org.apache.wicket.markup.head.JavaScriptHeaderItem;
 import org.apache.wicket.resource.JQueryPluginResourceReference;
 
+/**
+ * Used to provide the selectize java script library
+ * 
+ * @author Tobias Soloschenko
+ *
+ */
 public class SelectizeJavaScriptResourceReference extends JQueryPluginResourceReference
 {
 
@@ -49,7 +55,7 @@ public class SelectizeJavaScriptResourceReference extends JQueryPluginResourceRe
 		super(SelectizeJavaScriptResourceReference.class,
 			"res/selectize/js/standalone/selectize.js");
 	}
-	
+
 	@Override
 	public List<HeaderItem> getDependencies()
 	{
@@ -57,6 +63,6 @@ public class SelectizeJavaScriptResourceReference extends JQueryPluginResourceRe
 		dependencies.add(JavaScriptHeaderItem.forReference(WicketAjaxJQueryResourceReference.get()));
 		return dependencies;
 	}
-	
-	
+
+
 }

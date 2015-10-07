@@ -24,6 +24,14 @@ import java.util.Iterator;
 
 import org.apache.wicket.ajax.json.JSONObject;
 
+/**
+ * Provides the model of the selectize component and can be customize by invoking
+ * put("key","value"); with custom values. Those values can be used within the
+ * Handlebars-Template-Panel.
+ * 
+ * @author Tobias Soloschenko
+ *
+ */
 public class SelectizeOption extends JSONObject implements Serializable
 {
 	private static final long serialVersionUID = 1L;
@@ -58,20 +66,20 @@ public class SelectizeOption extends JSONObject implements Serializable
 	{
 		put(SelectizeOptionGroup.OPT_GROUP_FIELD, groupId);
 	}
-	
+
 	private void writeObject(ObjectOutputStream out) throws IOException
 	{
 		out.writeObject(toString());
 	}
 
 	@SuppressWarnings("rawtypes")
-	private void readObject(ObjectInputStream in) throws IOException,
-		ClassNotFoundException
+	private void readObject(ObjectInputStream in) throws IOException, ClassNotFoundException
 	{
 		String read = (String)in.readObject();
 		JSONObject jsonObject = new JSONObject(read);
 		Iterator iterator = jsonObject.keySet().iterator();
-		while(iterator.hasNext()){
+		while (iterator.hasNext())
+		{
 			Object key = iterator.next();
 			this.put((String)key, jsonObject.get((String)key));
 		}

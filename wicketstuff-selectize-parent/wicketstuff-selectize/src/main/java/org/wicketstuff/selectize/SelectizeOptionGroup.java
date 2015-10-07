@@ -24,6 +24,14 @@ import java.util.Iterator;
 
 import org.apache.wicket.ajax.json.JSONObject;
 
+/**
+ * Used to provide the model for the groups to the selectize component. If the groupId of this model
+ * is equal to a groupId of a {#link {@link SelectizeOption} the option will be categorized below
+ * that group.
+ * 
+ * @author Tobias Soloschenko
+ *
+ */
 public class SelectizeOptionGroup extends JSONObject implements Serializable
 {
 
@@ -56,13 +64,13 @@ public class SelectizeOptionGroup extends JSONObject implements Serializable
 	}
 
 	@SuppressWarnings("rawtypes")
-	private void readObject(ObjectInputStream in) throws IOException,
-		ClassNotFoundException
+	private void readObject(ObjectInputStream in) throws IOException, ClassNotFoundException
 	{
 		String read = (String)in.readObject();
 		JSONObject jsonObject = new JSONObject(read);
 		Iterator iterator = jsonObject.keySet().iterator();
-		while(iterator.hasNext()){
+		while (iterator.hasNext())
+		{
 			Object key = iterator.next();
 			this.put((String)key, jsonObject.get((String)key));
 		}
