@@ -23,6 +23,7 @@ public class TestPage extends WebPage
 		// Select with text input
 		Selectize selectize1 = new Selectize("selectize1", Model.of("test"));
 		selectize1.setTheme(Theme.BOOTSTRAP3);
+		selectize1.setCreateAvailable(true);
 		form.add(selectize1);
 
 		List<SelectizeOption> options = new ArrayList<SelectizeOption>();
