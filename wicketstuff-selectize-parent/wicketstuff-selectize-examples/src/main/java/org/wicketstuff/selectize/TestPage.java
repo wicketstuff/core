@@ -54,7 +54,7 @@ public class TestPage extends WebPage
 			@Override
 			protected SelectizeResponse response(String search)
 			{
-				if (search != null && search.equals("test"))
+				if ("test".equals(search))
 				{
 					SelectizeOption option = new SelectizeOption("1", "Test");
 					SelectizeOption option2 = new SelectizeOption("2", "Test2");
