@@ -44,6 +44,11 @@ public interface IColumn extends IClusterable
 	String getField();
 
 	/**
+	 * TODO javadoc, implement & use
+	 */
+//	void getDefaultValue();
+	
+	/**
 	 * Gets the desired width of the column.
 	 *
 	 * @return the column's width

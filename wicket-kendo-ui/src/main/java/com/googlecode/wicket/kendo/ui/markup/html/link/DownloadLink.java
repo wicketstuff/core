@@ -85,7 +85,7 @@ public class DownloadLink extends org.apache.wicket.markup.html.link.DownloadLin
 	 */
 	public DownloadLink(String id, IModel<File> model, IModel<String> filename, String icon)
 	{
-		super(id, model);
+		super(id, model, filename);
 
 		this.icon = icon;
 	}

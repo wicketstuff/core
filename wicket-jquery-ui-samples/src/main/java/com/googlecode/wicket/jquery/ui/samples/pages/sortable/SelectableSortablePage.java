@@ -21,8 +21,8 @@ import com.googlecode.wicket.jquery.ui.panel.JQueryFeedbackPanel;
 
 public class SelectableSortablePage extends AbstractSortablePage implements ISelectableListener<String>
 {
-	private static final long serialVersionUID = 1L;
-	private final String HANDLE = Options.asString(".handle");
+	private static final long serialVersionUID = 1L;	
+	private static final String HANDLE = Options.asString(".handle");
 
 	private final FeedbackPanel feedback;
 

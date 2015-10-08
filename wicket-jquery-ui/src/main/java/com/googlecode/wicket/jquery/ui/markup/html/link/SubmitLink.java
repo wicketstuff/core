@@ -119,7 +119,7 @@ public class SubmitLink extends org.apache.wicket.markup.html.form.SubmitLink im
 	 */
 	public SubmitLink(String id, IModel<?> model, Form<?> form)
 	{
-		this(id, model, JQueryIcon.NONE);
+		this(id, model, form, JQueryIcon.NONE);
 	}
 
 	/**

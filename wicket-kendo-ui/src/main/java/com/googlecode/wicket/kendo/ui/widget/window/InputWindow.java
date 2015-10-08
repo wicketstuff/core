@@ -42,10 +42,8 @@ public abstract class InputWindow<T> extends Window<T>
 {
 	private static final long serialVersionUID = 1L;
 
-	/** feedback panel */
-	private final KendoFeedbackPanel feedback;
-
 	private final Form<?> form;
+	private KendoFeedbackPanel feedback;
 	private IModel<String> labelModel;
 
 	/**
@@ -102,10 +100,6 @@ public abstract class InputWindow<T> extends Window<T>
 		// form //
 		this.form = InputWindow.newForm("form");
 		this.add(this.form);
-
-		// feedback //
-		this.feedback = this.newFeedbackPanel("feedback");
-		this.form.add(this.feedback);
 	}
 
 	// Events //
@@ -114,6 +108,10 @@ public abstract class InputWindow<T> extends Window<T>
 	protected void onInitialize()
 	{
 		super.onInitialize();
+
+		// feedback //
+		this.feedback = this.newFeedbackPanel("feedback");
+		this.form.add(this.feedback);
 
 		// label //
 		this.form.add(this.newLabel("label", this.labelModel));
@@ -172,12 +170,17 @@ public abstract class InputWindow<T> extends Window<T>
 		// noop
 	}
 
-	@Override
-	protected void onDetach()
-	{
-		super.onDetach();
+	// Methods //
 
-		this.labelModel.detach();
+	@Override
+	public void detachModels()
+	{
+		super.detachModels();
+
+		if (this.labelModel != null)
+		{
+			this.labelModel.detach();
+		}
 	}
 
 	// Properties //

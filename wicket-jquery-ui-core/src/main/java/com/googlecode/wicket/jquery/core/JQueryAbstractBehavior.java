@@ -85,7 +85,7 @@ public abstract class JQueryAbstractBehavior extends Behavior
 	 * @param reference a {@link CssResourceReference}, a {@link JavaScriptResourceReference} or a {@link JQueryPluginResourceReference}
 	 * @return {@code true} (as specified by {@link Collection#add})
 	 */
-	public boolean add(ResourceReference reference)
+	public final boolean add(ResourceReference reference)
 	{
 		return this.references.add(reference);
 	}

@@ -92,7 +92,7 @@ public class DialogButton implements IClusterable
 	 */
 	public DialogButton(String name, String text, String icon, boolean enabled)
 	{
-		this(name, Model.of(text), icon, true);
+		this(name, Model.of(text), icon, enabled);
 	}
 
 	/**

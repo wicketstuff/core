@@ -205,10 +205,6 @@ public abstract class AbstractWizard<T extends Serializable> extends AbstractFor
 		// header (title + summary )//
 		this.form.add(new EmptyPanel(Wizard.HEADER_ID));
 
-		// Feedback //
-		this.feedback = this.newFeedbackPanel(Wizard.FEEDBACK_ID);
-		this.form.add(this.feedback);
-
 		// dummy view to be replaced //
 		this.form.add(new EmptyPanel(Wizard.VIEW_ID));
 		// this.form.add(newOverviewBar(Wizard.OVERVIEW_ID)); //OverviewBar not handled
@@ -265,6 +261,10 @@ public abstract class AbstractWizard<T extends Serializable> extends AbstractFor
 	@Override
 	protected void onInitialize()
 	{
+		// Feedback //
+		this.feedback = this.newFeedbackPanel(Wizard.FEEDBACK_ID);
+		this.form.add(this.feedback);
+		
 		// buttons (located in #onInitialize() for #getString() to work properly, without warnings)
 		this.btnPrev = new DialogButton("PREV", this.getString("wizard.button.prev"));
 		this.btnNext = new DialogButton("NEXT", this.getString("wizard.button.next"));

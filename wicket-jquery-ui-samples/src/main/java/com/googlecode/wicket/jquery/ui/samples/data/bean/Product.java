@@ -5,12 +5,15 @@ import java.util.Date;
 
 import org.apache.wicket.ajax.json.JSONObject;
 import org.apache.wicket.util.io.IClusterable;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.googlecode.wicket.jquery.core.utils.DateUtils;
 
 public class Product implements IClusterable
 {
 	private static final long serialVersionUID = 1L;
+	private static final Logger LOG = LoggerFactory.getLogger(Product.class);
 
 	public static Product of(JSONObject object)
 	{
@@ -22,7 +25,7 @@ public class Product implements IClusterable
 		}
 		catch (ParseException e)
 		{
-			// not handled
+			LOG.trace(e.getMessage(), e);
 		}
 
 		return product;
