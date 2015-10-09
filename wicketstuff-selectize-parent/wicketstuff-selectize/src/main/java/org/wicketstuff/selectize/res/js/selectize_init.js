@@ -46,6 +46,14 @@ $(function() {
 					return Handlebars.compile(croppedAjaxTemplate)(item);
 				}
 			},
+			onChange:function(value){
+				Wicket.Ajax.get({
+					'u' : selectizeConfig.ajaxChangeCallback,
+					'ep' : {
+						'search' : encodeURIComponent(value)
+					}
+				});
+			}
 		});
 	}
 	var selectize = $("#" + selectizeConfig.selectizeMarkupId).selectize(defaultSelectizeConfig);

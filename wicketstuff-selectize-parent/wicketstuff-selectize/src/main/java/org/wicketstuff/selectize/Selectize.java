@@ -67,6 +67,8 @@ public class Selectize extends FormComponent
 
 	private SelectizeAjaxBehavior selectizeAjaxBehavior;
 
+	private SelectizeUpdateBehavior selectizeChangeBehavior;
+
 	private boolean createAvailable = false;
 
 	public static final String SELECTIZE_COMPONENT_ID = "SELECTIZE_COMPONENT_ID";
@@ -106,6 +108,25 @@ public class Selectize extends FormComponent
 					// NOOP
 				}
 			});
+		}
+	}
+
+	/**
+	 * Invoked if the user made a selection
+	 * 
+	 * @author Tobias Soloschenko
+	 *
+	 */
+	private class SelectizeUpdateBehavior extends AbstractDefaultAjaxBehavior
+	{
+
+		private static final long serialVersionUID = 1L;
+
+		@Override
+		protected void respond(AjaxRequestTarget ajaxRequestTarget)
+		{
+			onChange(ajaxRequestTarget,
+				getRequest().getRequestParameters().getParameterValue("search").toString());
 		}
 	}
 
@@ -221,6 +242,8 @@ public class Selectize extends FormComponent
 				addAjaxBaseUrl(response);
 				selectizeConfig.put("ajaxCallback", selectizeAjaxBehavior.getCallbackUrl()
 					.toString());
+				selectizeConfig.put("ajaxChangeCallback", selectizeChangeBehavior.getCallbackUrl()
+					.toString());
 
 				Panel responseTemplate = responseTemplate();
 				if (responseTemplate == null)
@@ -311,6 +334,7 @@ public class Selectize extends FormComponent
 	public void enableAjaxHandling()
 	{
 		add(this.selectizeAjaxBehavior = new SelectizeAjaxBehavior());
+		add(this.selectizeChangeBehavior = new SelectizeUpdateBehavior());
 	}
 
 	/**
@@ -350,6 +374,21 @@ public class Selectize extends FormComponent
 	protected Panel responseTemplate()
 	{
 		return null;
+	}
+
+	/**
+	 * Is invoked when ever a user selected an option.<br>
+	 * <br>
+	 * <b>Important:</b>This method is only invoked when ajax is enabled
+	 * 
+	 * @param target
+	 *            the ajax request target to apply changes
+	 * @param value
+	 *            the selected value
+	 */
+	protected void onChange(AjaxRequestTarget target, String value)
+	{
+		// NOOP - Override to provide functionality
 	}
 
 	/**

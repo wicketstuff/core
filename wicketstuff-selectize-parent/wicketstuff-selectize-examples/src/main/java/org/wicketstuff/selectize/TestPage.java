@@ -2,10 +2,11 @@ package org.wicketstuff.selectize;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 
+import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.markup.html.WebPage;
+import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.model.Model;
@@ -47,6 +48,9 @@ public class TestPage extends WebPage
 		selectize3.setTheme(Theme.BOOTSTRAP3);
 		form.add(selectize3);
 
+		final Label label = new Label("value","Select a value");
+		label.setOutputMarkupId(true);
+		form.add(label);
 		// Select with ajax
 		Selectize selectize4 = new Selectize("selectize4")
 		{
@@ -68,6 +72,15 @@ public class TestPage extends WebPage
 			protected Panel responseTemplate()
 			{
 				return new TestPanel(Selectize.SELECTIZE_COMPONENT_ID);
+			}
+			
+			@Override
+			protected void onChange(AjaxRequestTarget target, String value)
+			{
+				label.modelChanging();
+				label.setDefaultModelObject("The selected value is: "+value);
+				label.modelChanged();
+				target.add(label);
 			}
 		};
 		selectize4.enableAjaxHandling();
