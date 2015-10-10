@@ -86,7 +86,7 @@ public class DataTable<T> extends WebComponent implements IGenericComponent<List
 	public DataTable(String id, final IDataProvider<T> provider, final long rows, Options options)
 	{
 		super(id);
-		
+
 		this.provider = provider;
 		this.options = options;
 		this.rows = rows;

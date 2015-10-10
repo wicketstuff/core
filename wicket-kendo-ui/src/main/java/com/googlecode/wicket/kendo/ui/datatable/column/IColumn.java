@@ -69,11 +69,18 @@ public interface IColumn extends IClusterable
 	/**
 	 * The template or javascript function which renders the column content.<br/>
 	 * If the template is a string (not a function), it should itself be enclosed into double quotes, ie:<br/>
-	 * {@code return Options.asString("&lt;a href='?id=#:data.id#'&gt;#:data.id#&lt;/a&gt;");}
+	 * {@code return Options.asString("<a href='?id=#:data.id#'>#:data.id#</a>");}
 	 *
 	 * @return the template or {@code null} if it does not apply
 	 */
 	String getTemplate();
+
+	/**
+	 * The template which renders the footer table cell for the column.
+	 * @return
+	 * @see <a href="http://docs.telerik.com/kendo-ui/api/javascript/ui/grid#configuration-columns.footerTemplate">columns.footerTemplate</a>
+	 */
+	String getFooterTemplate();
 
 	/**
 	 * If set to true a filter menu will be displayed for this column when filtering is enabled.<br/>

@@ -170,6 +170,12 @@ public abstract class AbstractColumn implements IColumn
 	}
 
 	@Override
+	public String getFooterTemplate()
+	{
+		return null;
+	}
+
+	@Override
 	public String getFilterable()
 	{
 		return null;
@@ -192,7 +198,7 @@ public abstract class AbstractColumn implements IColumn
 	 *
 	 * @return the list of <tt>aggregates<tt> as json array
 	 */
-	protected String getAggregatesAsString()
+	protected final String getAggregatesAsString()
 	{
 		List<String> aggregates = new ArrayList<String>();
 
@@ -264,6 +270,12 @@ public abstract class AbstractColumn implements IColumn
 		{
 			builder.append(", ");
 			BuilderUtils.append(builder, "template", this.getTemplate());
+		}
+
+		if (this.getFooterTemplate() != null)
+		{
+			builder.append(", ");
+			BuilderUtils.append(builder, "footerTemplate", this.getFooterTemplate());
 		}
 
 		if (this.getGroupHeaderTemplate() != null)
