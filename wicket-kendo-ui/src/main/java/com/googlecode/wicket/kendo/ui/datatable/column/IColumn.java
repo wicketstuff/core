@@ -46,14 +46,21 @@ public interface IColumn extends IClusterable
 	/**
 	 * TODO javadoc, implement & use
 	 */
-//	void getDefaultValue();
-	
+	// void getDefaultValue();
+
 	/**
 	 * Gets the desired width of the column.
 	 *
 	 * @return the column's width
 	 */
 	int getWidth();
+
+	/**
+	 * Provides a way to specify a custom editing UI for the column.
+	 * 
+	 * @return a {@code function} or {@code null} if it does not apply
+	 */
+	String getEditor();
 
 	/**
 	 * The format that is applied to the value before it is displayed. Takes the form "{0:format}" where "format" is a standard number format, custom number format, standard date format or a custom date format.
@@ -77,6 +84,7 @@ public interface IColumn extends IClusterable
 
 	/**
 	 * The template which renders the footer table cell for the column.
+	 * 
 	 * @return
 	 * @see <a href="http://docs.telerik.com/kendo-ui/api/javascript/ui/grid#configuration-columns.footerTemplate">columns.footerTemplate</a>
 	 */
@@ -141,10 +149,10 @@ public interface IColumn extends IClusterable
 	Boolean isNullable();
 
 	/**
-	 * Get the field's type
+	 * Get the field's type<br/>
+	 * Available options are "string", "number", "boolean", "date". 
 	 *
 	 * @return the the field's type
 	 */
 	String getType();
-
 }

@@ -344,6 +344,8 @@ public abstract class DataTableBehavior extends KendoUIBehavior implements IJQue
 		schema.set("model", this.newSchemaModelOptions(columns));
 
 		// data-source //
+		this.onConfigure(this.dataSource);
+
 		this.setOption("dataSource", this.dataSource.getName());
 
 		this.dataSource.set("pageSize", this.getRowCount());
@@ -364,6 +366,16 @@ public abstract class DataTableBehavior extends KendoUIBehavior implements IJQue
 			this.off(selector, "click");
 			this.on(selector, "click", behavior.getCallbackFunction());
 		}
+	}
+
+	/**
+	 * Configure the {@link KendoDataSource} with additional options
+	 * 
+	 * @param dataSource the {@link KendoDataSource}
+	 */
+	protected void onConfigure(KendoDataSource dataSource)
+	{
+		// noop
 	}
 
 	@Override

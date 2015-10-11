@@ -38,6 +38,7 @@ import com.googlecode.wicket.jquery.core.Options;
 import com.googlecode.wicket.jquery.core.ajax.IJQueryAjaxAware;
 import com.googlecode.wicket.jquery.core.ajax.JQueryAjaxBehavior;
 import com.googlecode.wicket.kendo.ui.KendoBehaviorFactory;
+import com.googlecode.wicket.kendo.ui.KendoDataSource;
 import com.googlecode.wicket.kendo.ui.KendoUIBehavior;
 import com.googlecode.wicket.kendo.ui.datatable.behavior.DataBoundBehavior;
 import com.googlecode.wicket.kendo.ui.datatable.button.CommandAjaxBehavior;
@@ -339,6 +340,16 @@ public class DataTable<T> extends WebComponent implements IGenericComponent<List
 		behavior.setOption("autoBind", this.getBehaviors(DataBoundBehavior.class).isEmpty()); // false if DataBoundBehavior is added
 	}
 
+	/**
+	 * Configure the {@link KendoDataSource} with additional options
+	 * 
+	 * @param dataSource the {@link KendoDataSource}
+	 */
+	protected void onConfigure(KendoDataSource dataSource)
+	{
+		// noop
+	}
+
 	@Override
 	public void onBeforeRender(JQueryBehavior behavior)
 	{
@@ -434,6 +445,14 @@ public class DataTable<T> extends WebComponent implements IGenericComponent<List
 			protected List<ToolbarButton> getToolbarButtons()
 			{
 				return DataTable.this.getToolbarButtons();
+			}
+
+			// Events //
+
+			@Override
+			protected void onConfigure(KendoDataSource dataSource)
+			{
+				DataTable.this.onConfigure(dataSource);
 			}
 
 			// Factories //

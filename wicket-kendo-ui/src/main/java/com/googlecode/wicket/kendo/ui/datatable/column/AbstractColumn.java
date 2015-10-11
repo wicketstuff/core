@@ -158,6 +158,12 @@ public abstract class AbstractColumn implements IColumn
 	}
 
 	@Override
+	public String getEditor()
+	{
+		return null;
+	}
+
+	@Override
 	public String getFormat()
 	{
 		return null;
@@ -260,6 +266,12 @@ public abstract class AbstractColumn implements IColumn
 
 		// nullable options (string) //
 
+		if (this.getField() != null)
+		{
+			builder.append(", ");
+			BuilderUtils.append(builder, "field", this.getField());
+		}
+
 		if (this.getFormat() != null)
 		{
 			builder.append(", ");
@@ -290,13 +302,15 @@ public abstract class AbstractColumn implements IColumn
 			BuilderUtils.append(builder, "groupFooterTemplate", this.getGroupFooterTemplate());
 		}
 
-		// nullable options (object) //
+		// nullable options (function) //
 
-		if (this.getField() != null)
+		if (this.getEditor() != null)
 		{
 			builder.append(", ");
-			BuilderUtils.append(builder, "field", this.getField());
+			builder.append(Options.QUOTE).append("editor").append(Options.QUOTE).append(": ").append(this.getEditor());
 		}
+
+		// nullable options (object) //
 
 		if (this.getMenu() != null)
 		{
