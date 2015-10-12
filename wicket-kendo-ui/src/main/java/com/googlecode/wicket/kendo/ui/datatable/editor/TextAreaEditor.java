@@ -16,75 +16,41 @@
  */
 package com.googlecode.wicket.kendo.ui.datatable.editor;
 
-import org.apache.wicket.ajax.json.JSONArray;
-
-import com.googlecode.wicket.jquery.core.utils.JsonUtils;
 
 /**
- * Provides a simple {@link IKendoEditor} editor, based on a list of string (not on json objects)
+ * Provides a simple {@link IKendoEditor} editor, based on a textarea
  * 
  * @author Sebastien Briquet - sebfz1
  * @see KendoEditorHeaderItem
  */
-public class DropDownListEditor implements IKendoEditor
+public class TextAreaEditor implements IKendoEditor
 {
 	protected final String name;
-	protected final JSONArray array;
 
 	/**
 	 * Constructor, for inline inclusion
-	 * 
-	 * @param values the values
 	 */
-	public DropDownListEditor(String[] values)
+	public TextAreaEditor()
 	{
-		this("", values);
-	}
-
-	/**
-	 * Constructor, for inline inclusion
-	 * 
-	 * @param values the values
-	 */
-	public DropDownListEditor(Enum<?>[] values)
-	{
-		this("", values);
+		this("");
 	}
 
 	/**
 	 * Constructor
 	 * 
 	 * @param name the name of the function
-	 * @param values the values
 	 */
-	public DropDownListEditor(String name, String[] values)
+	public TextAreaEditor(String name)
 	{
 		this.name = name;
-		this.array = JsonUtils.toArray(values);
-	}
-
-	/**
-	 * Constructor
-	 * 
-	 * @param name the name of the function
-	 * @param values the enum values
-	 */
-	public DropDownListEditor(String name, Enum<?>[] values)
-	{
-		this.name = name;
-		this.array = JsonUtils.toArray(values);
 	}
 
 	@Override
 	public String toString()
 	{
 		return "function " + this.name + "(container, options) { " // lf
-				+ "$('<input required data-bind=\"value:' + options.field + '\"/>')" // lf
-				+ ".appendTo(container)" // lf
-				+ ".kendoDropDownList({ " // lf
-				+ "  autoBind: false," // lf
-				+ "  dataSource: " + this.array // lf
-				+ " }); " // lf
+				+ "$('<textarea class=\"k-textbox\" data-bind=\"value:' + options.field + '\"></textarea>')" // lf
+				+ ".appendTo(container); " // lf
 				+ "}";
 	}
 }

@@ -25,6 +25,7 @@ import org.apache.wicket.model.Model;
 
 import com.googlecode.wicket.jquery.core.Options;
 import com.googlecode.wicket.jquery.core.utils.BuilderUtils;
+import com.googlecode.wicket.kendo.ui.datatable.editor.IKendoEditor;
 
 /**
  * Base class for {@link IColumn}{@code s} implementation
@@ -158,7 +159,7 @@ public abstract class AbstractColumn implements IColumn
 	}
 
 	@Override
-	public String getEditor()
+	public IKendoEditor getEditor()
 	{
 		return null;
 	}

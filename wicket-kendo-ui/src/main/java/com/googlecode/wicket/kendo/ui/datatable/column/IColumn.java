@@ -21,6 +21,7 @@ import java.util.List;
 import org.apache.wicket.util.io.IClusterable;
 
 import com.googlecode.wicket.kendo.ui.datatable.DataTable;
+import com.googlecode.wicket.kendo.ui.datatable.editor.IKendoEditor;
 
 /**
  * Specifies the column definition of a {@link DataTable}
@@ -60,7 +61,7 @@ public interface IColumn extends IClusterable
 	 * 
 	 * @return a {@code function} or {@code null} if it does not apply
 	 */
-	String getEditor();
+	IKendoEditor getEditor();
 
 	/**
 	 * The format that is applied to the value before it is displayed. Takes the form "{0:format}" where "format" is a standard number format, custom number format, standard date format or a custom date format.
