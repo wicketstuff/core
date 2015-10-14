@@ -61,7 +61,6 @@ public class HomePage extends WebPage
 		Select2MultiChoice<Country> countries = new Select2MultiChoice<>("countries",
 			new PropertyModel<Collection<Country>>(this, "countries"), new CountriesProvider());
 		countries.getSettings().setMinimumInputLength(1);
-		countries.add(new DragAndDropBehavior());
 		multi.add(countries);
 	}
 

@@ -35,18 +35,15 @@ public class ApplicationSettings
 	};
 
 	private ResourceReference javaScriptReference = new PackageResourceReference(
-		ApplicationSettings.class, "res/select2.js");
-	private ResourceReference mouseWheelReference = new PackageResourceReference(
-		ApplicationSettings.class, "res/jquery.mousewheel.js");
+		ApplicationSettings.class, "res/js/select2.js");
+	private ResourceReference javaScriptReferenceFull = new PackageResourceReference(
+		ApplicationSettings.class, "res/js/select2.full.js");
 	private ResourceReference cssReference = new PackageResourceReference(
-		ApplicationSettings.class, "res/select2.css");
-	private ResourceReference jqueryUIReference = new PackageResourceReference(
-		ApplicationSettings.class, "res/jquery-ui-1.9.0.min.js");
+		ApplicationSettings.class, "res/css/select2.css");
 
-	private boolean includeMouseWheel = true;
-	private boolean includeJavascript = true;
+	private boolean includeJavascriptFull = true;
+	private boolean includeJavascript = false;
 	private boolean includeCss = true;
-	private boolean includeJqueryUI = true;
 
 	/**
 	 * Private constructor, use {@link #get()} instead.
@@ -63,6 +60,9 @@ public class ApplicationSettings
 	public ApplicationSettings setIncludeJavascript(boolean includeJavascript)
 	{
 		this.includeJavascript = includeJavascript;
+		if (this.includeJavascript) {
+			this.includeJavascriptFull = false;
+		}
 		return this;
 	}
 
@@ -74,17 +74,6 @@ public class ApplicationSettings
 	public ApplicationSettings setIncludeCss(boolean includeCss)
 	{
 		this.includeCss = includeCss;
-		return this;
-	}
-
-	public boolean isIncludeJqueryUI()
-	{
-		return includeJqueryUI;
-	}
-
-	public ApplicationSettings setIncludeJqueryUI(boolean includeJqueryUI)
-	{
-		this.includeJqueryUI = includeJqueryUI;
 		return this;
 	}
 
@@ -110,36 +99,28 @@ public class ApplicationSettings
 		return this;
 	}
 
-	public boolean isIncludeMouseWheel()
+	public boolean isIncludeJavascriptFull()
 	{
-		return includeMouseWheel;
+		return includeJavascriptFull;
 	}
 
-	public ApplicationSettings setIncludeMouseWheel(boolean includeJqueryMouseWheelPlugin)
+	public ApplicationSettings setIncludeJavascriptFull(boolean includeJavascriptFull)
 	{
-		this.includeMouseWheel = includeJqueryMouseWheelPlugin;
+		this.includeJavascriptFull = includeJavascriptFull;
+		if (this.includeJavascriptFull) {
+			this.includeJavascript = false;
+		}
 		return this;
 	}
 
-	public ResourceReference getMouseWheelReference()
+	public ResourceReference getJavaScriptReferenceFull()
 	{
-		return mouseWheelReference;
+		return javaScriptReferenceFull;
 	}
 
-	public ApplicationSettings setMouseWheelReference(ResourceReference mousewheelReference)
+	public ApplicationSettings setJavascriptReferenceFull(ResourceReference javaScriptReferenceFull)
 	{
-		this.mouseWheelReference = mousewheelReference;
-		return this;
-	}
-
-	public ResourceReference getJqueryUIReference()
-	{
-		return jqueryUIReference;
-	}
-
-	public ApplicationSettings setJqueryUIReference(ResourceReference jqueryUIReference)
-	{
-		this.jqueryUIReference = jqueryUIReference;
+		this.javaScriptReferenceFull = javaScriptReferenceFull;
 		return this;
 	}
 

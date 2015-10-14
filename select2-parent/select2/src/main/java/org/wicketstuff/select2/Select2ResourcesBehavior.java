@@ -42,9 +42,9 @@ public class Select2ResourcesBehavior extends Behavior
 			.getJavaScriptLibrarySettings()
 			.getJQueryReference()));
 
-		if (settings.isIncludeMouseWheel())
+		if (settings.isIncludeJavascriptFull())
 		{
-			response.render(JavaScriptHeaderItem.forReference(settings.getMouseWheelReference()));
+			response.render(JavaScriptHeaderItem.forReference(settings.getJavaScriptReferenceFull()));
 		}
 
 		if (settings.isIncludeJavascript())

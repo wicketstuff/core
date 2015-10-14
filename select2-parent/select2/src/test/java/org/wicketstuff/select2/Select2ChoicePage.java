@@ -10,6 +10,7 @@ import org.apache.wicket.model.Model;
  */
 public class Select2ChoicePage extends WebPage
 {
+	private static final long serialVersionUID = 1L;
 
 	final TextField<String> city;
 

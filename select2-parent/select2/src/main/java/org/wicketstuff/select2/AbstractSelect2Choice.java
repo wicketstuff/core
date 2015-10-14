@@ -385,6 +385,7 @@ abstract class AbstractSelect2Choice<T, M> extends HiddenField<M> implements IRe
 		super.onDetach();
 	}
 
+	@SuppressWarnings("rawtypes")
 	private static boolean canInitializeInitialValue(Object value)
 	{
         if (value instanceof Collection)

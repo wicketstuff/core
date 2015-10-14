@@ -11,6 +11,7 @@ import org.apache.wicket.model.util.CollectionModel;
  */
 public class Select2MultiChoicePage extends WebPage
 {
+	private static final long serialVersionUID = 1L;
 
 	final TextField<String> city;
 

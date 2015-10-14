@@ -115,7 +115,7 @@ public class Select2ChoiceTest extends TestCase
 
 	private static String expectedJavaScriptMethodCall()
 	{
-		return ".select2('data', {\"id\":\"CA\",\"text\":\"Canada\"});";
+		return ".select2({'data': [{\"id\":\"CA\",\"text\":\"Canada\"}]});";
 	}
 
 }

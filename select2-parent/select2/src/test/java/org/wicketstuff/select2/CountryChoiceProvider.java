@@ -12,7 +12,7 @@ import org.apache.wicket.ajax.json.JSONWriter;
  */
 public final class CountryChoiceProvider implements ChoiceProvider<Country>
 {
-
+	private static final long serialVersionUID = 1L;
 	private static final int PAGE_SIZE = 5;
 
 	@Override
