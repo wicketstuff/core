@@ -75,9 +75,9 @@ public interface IColumn extends IClusterable
 	String getFormat();
 
 	/**
-	 * The template or javascript function which renders the column content.<br/>
-	 * If the template is a string (not a function), it should itself be enclosed into double quotes, ie:<br/>
-	 * {@code return Options.asString("<a href='?id=#:data.id#'>#:data.id#</a>");}
+	 * The template which renders the column content.<br/>
+	 * ie: {@code return "<a href='?id=#:data.id#'>#:data.id#</a>"}<br/>
+	 * TODO: make it work for function(?)
 	 *
 	 * @return the template or {@code null} if it does not apply
 	 */
@@ -151,7 +151,7 @@ public interface IColumn extends IClusterable
 
 	/**
 	 * Get the field's type<br/>
-	 * Available options are "string", "number", "boolean", "date". 
+	 * Available options are "string", "number", "boolean", "date".
 	 *
 	 * @return the the field's type
 	 */
