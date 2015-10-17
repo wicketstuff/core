@@ -132,7 +132,7 @@ public class KendoUIBehavior extends JQueryBehavior implements IDestroyable
 		{
 			for (IKendoDataSource datasource : this.datasources)
 			{
-				this.renderPriorityHeaderItem(JavaScriptHeaderItem.forScript(datasource.toString(), datasource.getToken()), response);
+				this.renderPriorityHeaderItem(JavaScriptHeaderItem.forScript(datasource.toScript(), datasource.getToken()), response);
 			}
 		}
 	}

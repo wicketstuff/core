@@ -120,8 +120,12 @@ public class KendoDataSource extends Options implements IKendoDataSource
 		this.transport.set("destroy", function);
 	}
 
-	@Override
-	public IKendoDataSource prepareRender()
+	/**
+	 * Prepares the data-source to be rendered
+	 *
+	 * @return this, for chaining
+	 */
+	public Options build()
 	{
 		this.set("transport", this.transport);
 
@@ -131,13 +135,7 @@ public class KendoDataSource extends Options implements IKendoDataSource
 	@Override
 	public String toScript()
 	{
-		return String.format("jQuery(function() { %s = new kendo.data.DataSource(%s); });", this.getName(), super.toString());
-	}
-
-	@Override
-	public String toString()
-	{
-		return this.prepareRender().toScript();
+		return String.format("jQuery(function() { %s = new kendo.data.DataSource(%s); });", this.getName(), this.build());
 	}
 
 	// Helpers //

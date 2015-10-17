@@ -53,6 +53,6 @@ public class SchedulerDataSource extends KendoDataSource
 	@Override
 	public String toScript()
 	{
-		return String.format("jQuery(function() { %s = new kendo.data.SchedulerDataSource(%s); });", this.getName(), this.toString());
+		return String.format("jQuery(function() { %s = new kendo.data.SchedulerDataSource(%s); });", this.getName(), this.build());
 	}
 }

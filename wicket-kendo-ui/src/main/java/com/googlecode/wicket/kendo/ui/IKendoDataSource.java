@@ -16,6 +16,7 @@
  */
 package com.googlecode.wicket.kendo.ui;
 
+
 /**
  * Specifies a Kendo UI data-source
  *
@@ -30,13 +31,6 @@ public interface IKendoDataSource
 	 * @return the token
 	 */
 	String getToken();
-
-	/**
-	 * Prepares the data-source to be rendered
-	 *
-	 * @return this, for chaining
-	 */
-	IKendoDataSource prepareRender();
 
 	/**
 	 * Gets the data-source jQuery statement.
