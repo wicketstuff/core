@@ -69,12 +69,12 @@ public class Options implements IClusterable
 	}
 
 	/**
-	 * Converts a list of strings to its javascript representation. ie: [ "myvalue1", "myvalue2" ] (with the double quotes)
+	 * Converts a list of objects to its javascript representation. ie: [ "myvalue1", "myvalue2" ] (with the double quotes)
 	 *
 	 * @param values the {@link List} of values
 	 * @return the JSON value
 	 */
-	public static String asString(List<String> values)
+	public static String asString(List<?> values)
 	{
 		List<String> list = new ArrayList<String>();
 
