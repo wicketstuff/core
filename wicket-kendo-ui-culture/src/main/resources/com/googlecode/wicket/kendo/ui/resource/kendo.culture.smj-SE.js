@@ -36,6 +36,8 @@
                 symbol: "%"
             },
             currency: {
+                name: "Swedish Krona",
+                abbr: "SEK",
                 pattern: ["-n $","n $"],
                 decimals: 2,
                 ",": ".",

@@ -36,6 +36,8 @@
                 symbol: "%"
             },
             currency: {
+                name: "Uzbekistan Som",
+                abbr: "UZS",
                 pattern: ["-n $","n $"],
                 decimals: 2,
                 ",": " ",

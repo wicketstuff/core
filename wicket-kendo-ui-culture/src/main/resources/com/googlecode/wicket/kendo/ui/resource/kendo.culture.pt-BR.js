@@ -36,6 +36,8 @@
                 symbol: "%"
             },
             currency: {
+                name: "Real",
+                abbr: "BRL",
                 pattern: ["-$ n","$ n"],
                 decimals: 2,
                 ",": ".",

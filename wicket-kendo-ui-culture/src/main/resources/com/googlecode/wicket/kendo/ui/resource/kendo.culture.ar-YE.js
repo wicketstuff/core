@@ -36,6 +36,8 @@
                 symbol: "%"
             },
             currency: {
+                name: "Yemeni Rial",
+                abbr: "YER",
                 pattern: ["$n-","$ n"],
                 decimals: 2,
                 ",": ",",

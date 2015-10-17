@@ -36,6 +36,8 @@
                 symbol: "%"
             },
             currency: {
+                name: "Lari",
+                abbr: "GEL",
                 pattern: ["-n $","n $"],
                 decimals: 2,
                 ",": " ",

@@ -36,6 +36,8 @@
                 symbol: "%"
             },
             currency: {
+                name: "Eastern Caribbean Dollar",
+                abbr: "XCD",
                 pattern: ["-$n","$n"],
                 decimals: 2,
                 ",": ",",

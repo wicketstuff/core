@@ -36,6 +36,8 @@
                 symbol: "%"
             },
             currency: {
+                name: "Canadian Dollar",
+                abbr: "CAD",
                 pattern: ["(n $)","n $"],
                 decimals: 2,
                 ",": " ",

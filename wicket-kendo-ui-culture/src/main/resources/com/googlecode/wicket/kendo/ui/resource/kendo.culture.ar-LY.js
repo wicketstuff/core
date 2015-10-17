@@ -36,6 +36,8 @@
                 symbol: "%"
             },
             currency: {
+                name: "Libyan Dinar",
+                abbr: "LYD",
                 pattern: ["$n-","$n"],
                 decimals: 3,
                 ",": ",",

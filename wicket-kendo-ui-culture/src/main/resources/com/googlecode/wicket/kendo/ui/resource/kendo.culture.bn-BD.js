@@ -36,6 +36,8 @@
                 symbol: "%"
             },
             currency: {
+                name: "Bangladeshi Taka",
+                abbr: "BDT",
                 pattern: ["$ -n","$ n"],
                 decimals: 2,
                 ",": ",",

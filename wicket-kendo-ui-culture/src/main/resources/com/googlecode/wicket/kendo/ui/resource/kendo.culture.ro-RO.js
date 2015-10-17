@@ -36,6 +36,8 @@
                 symbol: "%"
             },
             currency: {
+                name: "Romanian Leu",
+                abbr: "RON",
                 pattern: ["-n $","n $"],
                 decimals: 2,
                 ",": ".",

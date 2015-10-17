@@ -36,6 +36,8 @@
                 symbol: "%"
             },
             currency: {
+                name: "CFA Franc BEAC",
+                abbr: "XAF",
                 pattern: ["(n$)","n$"],
                 decimals: 2,
                 ",": " ",

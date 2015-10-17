@@ -36,6 +36,8 @@
                 symbol: "%"
             },
             currency: {
+                name: "Russian Ruble",
+                abbr: "RUB",
                 pattern: ["-n $","n $"],
                 decimals: 2,
                 ",": " ",

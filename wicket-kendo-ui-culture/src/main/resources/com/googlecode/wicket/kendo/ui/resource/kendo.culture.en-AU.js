@@ -36,6 +36,8 @@
                 symbol: "%"
             },
             currency: {
+                name: "Australian Dollar",
+                abbr: "AUD",
                 pattern: ["-$n","$n"],
                 decimals: 2,
                 ",": ",",

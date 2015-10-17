@@ -36,6 +36,8 @@
                 symbol: "%"
             },
             currency: {
+                name: "Indonesian Rupiah",
+                abbr: "IDR",
                 pattern: ["-$n","$n"],
                 decimals: 0,
                 ",": ".",

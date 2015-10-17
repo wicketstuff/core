@@ -36,6 +36,8 @@
                 symbol: "%"
             },
             currency: {
+                name: "Haitian Gourde",
+                abbr: "HTG",
                 pattern: ["(n$)","n$"],
                 decimals: 2,
                 ",": " ",

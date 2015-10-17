@@ -36,6 +36,8 @@
                 symbol: "%"
             },
             currency: {
+                name: "Trinidad Dollar",
+                abbr: "TTD",
                 pattern: ["($n)","$n"],
                 decimals: 2,
                 ",": ",",

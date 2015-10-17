@@ -36,6 +36,8 @@
                 symbol: "%"
             },
             currency: {
+                name: "South African Rand",
+                abbr: "ZAR",
                 pattern: ["$-n","$ n"],
                 decimals: 2,
                 ",": ",",

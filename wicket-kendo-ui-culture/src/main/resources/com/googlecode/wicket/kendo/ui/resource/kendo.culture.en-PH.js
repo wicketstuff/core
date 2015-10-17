@@ -36,6 +36,8 @@
                 symbol: "%"
             },
             currency: {
+                name: "Philippine Peso",
+                abbr: "PHP",
                 pattern: ["($n)","$n"],
                 decimals: 2,
                 ",": ",",

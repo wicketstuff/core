@@ -36,6 +36,8 @@
                 symbol: "%"
             },
             currency: {
+                name: "Macao Pataca",
+                abbr: "MOP",
                 pattern: ["($n)","$n"],
                 decimals: 2,
                 ",": ",",

@@ -36,6 +36,8 @@
                 symbol: "%"
             },
             currency: {
+                name: "Dominican Peso",
+                abbr: "DOP",
                 pattern: ["-$n","$n"],
                 decimals: 2,
                 ",": ",",

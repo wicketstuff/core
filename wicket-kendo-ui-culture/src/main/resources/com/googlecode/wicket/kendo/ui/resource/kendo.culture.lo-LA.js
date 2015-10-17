@@ -36,6 +36,8 @@
                 symbol: "%"
             },
             currency: {
+                name: "Kip",
+                abbr: "LAK",
                 pattern: ["-n $","n $"],
                 decimals: 2,
                 ",": ",",

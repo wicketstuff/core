@@ -36,6 +36,8 @@
                 symbol: "%"
             },
             currency: {
+                name: "Algerian Dinar",
+                abbr: "DZD",
                 pattern: ["$n-","$ n"],
                 decimals: 2,
                 ",": ",",

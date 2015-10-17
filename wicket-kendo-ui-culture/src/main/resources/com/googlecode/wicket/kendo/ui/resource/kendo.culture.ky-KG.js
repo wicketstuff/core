@@ -36,6 +36,8 @@
                 symbol: "%"
             },
             currency: {
+                name: "som",
+                abbr: "KGS",
                 pattern: ["-n $","n $"],
                 decimals: 2,
                 ",": " ",

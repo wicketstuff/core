@@ -36,6 +36,8 @@
                 symbol: "%"
             },
             currency: {
+                name: "Costa Rican Colon",
+                abbr: "CRC",
                 pattern: ["($n)","$n"],
                 decimals: 2,
                 ",": ".",

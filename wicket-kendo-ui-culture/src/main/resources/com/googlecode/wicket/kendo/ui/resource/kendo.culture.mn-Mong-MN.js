@@ -36,6 +36,8 @@
                 symbol: "%"
             },
             currency: {
+                name: "Tugrik",
+                abbr: "MNT",
                 pattern: ["$-n","$n"],
                 decimals: 2,
                 ",": ",",

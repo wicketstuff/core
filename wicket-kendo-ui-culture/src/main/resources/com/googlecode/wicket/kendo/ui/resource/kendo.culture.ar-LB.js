@@ -36,6 +36,8 @@
                 symbol: "%"
             },
             currency: {
+                name: "Lebanese Pound",
+                abbr: "LBP",
                 pattern: ["$n-","$ n"],
                 decimals: 2,
                 ",": ",",

@@ -36,6 +36,8 @@
                 symbol: "%"
             },
             currency: {
+                name: "Croatian Kuna",
+                abbr: "HRK",
                 pattern: ["-n $","n $"],
                 decimals: 2,
                 ",": ".",

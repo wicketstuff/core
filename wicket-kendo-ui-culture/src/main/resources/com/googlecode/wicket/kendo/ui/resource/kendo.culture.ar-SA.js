@@ -36,6 +36,8 @@
                 symbol: "%"
             },
             currency: {
+                name: "Saudi Riyal",
+                abbr: "SAR",
                 pattern: ["$n-","$ n"],
                 decimals: 2,
                 ",": ",",

@@ -36,6 +36,8 @@
                 symbol: "%"
             },
             currency: {
+                name: "Turkmen manat",
+                abbr: "TMT",
                 pattern: ["-n$","n$"],
                 decimals: 2,
                 ",": " ",

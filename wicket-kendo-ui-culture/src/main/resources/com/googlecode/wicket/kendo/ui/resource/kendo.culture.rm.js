@@ -36,9 +36,11 @@
                 symbol: "%"
             },
             currency: {
+                name: "",
+                abbr: "",
                 pattern: ["$-n","$ n"],
                 decimals: 2,
-                ",": " ",
+                ",": "'",
                 ".": ".",
                 groupSize: [3],
                 symbol: "fr."

@@ -36,6 +36,8 @@
                 symbol: "%"
             },
             currency: {
+                name: "Venezuelan Bolivar Fuerte",
+                abbr: "VEF",
                 pattern: ["$ -n","$ n"],
                 decimals: 2,
                 ",": ".",

@@ -36,6 +36,8 @@
                 symbol: "%"
             },
             currency: {
+                name: "",
+                abbr: "",
                 pattern: ["$n-","$ n"],
                 decimals: 2,
                 ",": ",",

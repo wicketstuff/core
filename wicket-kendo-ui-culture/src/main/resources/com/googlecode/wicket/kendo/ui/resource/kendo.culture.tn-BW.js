@@ -36,6 +36,8 @@
                 symbol: "%"
             },
             currency: {
+                name: "Pula",
+                abbr: "BWP",
                 pattern: ["$-n","$ n"],
                 decimals: 2,
                 ",": ",",

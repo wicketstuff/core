@@ -36,6 +36,8 @@
                 symbol: "%"
             },
             currency: {
+                name: "Peso Uruguayo",
+                abbr: "UYU",
                 pattern: ["-$ n","$ n"],
                 decimals: 2,
                 ",": ".",

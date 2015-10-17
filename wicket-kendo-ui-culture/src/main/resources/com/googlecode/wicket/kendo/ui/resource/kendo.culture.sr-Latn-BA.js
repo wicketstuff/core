@@ -36,6 +36,8 @@
                 symbol: "%"
             },
             currency: {
+                name: "Convertible Mark",
+                abbr: "BAM",
                 pattern: ["-n $","n $"],
                 decimals: 2,
                 ",": ".",

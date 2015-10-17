@@ -36,6 +36,8 @@
                 symbol: "%"
             },
             currency: {
+                name: "Singapore Dollar",
+                abbr: "SGD",
                 pattern: ["($n)","$n"],
                 decimals: 2,
                 ",": ",",

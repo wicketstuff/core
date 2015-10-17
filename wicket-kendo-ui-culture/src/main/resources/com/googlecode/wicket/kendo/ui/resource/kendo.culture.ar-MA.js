@@ -36,6 +36,8 @@
                 symbol: "%"
             },
             currency: {
+                name: "Moroccan Dirham",
+                abbr: "MAD",
                 pattern: ["$n-","$ n"],
                 decimals: 2,
                 ",": ",",

@@ -36,6 +36,8 @@
                 symbol: "%"
             },
             currency: {
+                name: "Eritrean Nakfa",
+                abbr: "ERN",
                 pattern: ["-$n","n$"],
                 decimals: 2,
                 ",": ",",

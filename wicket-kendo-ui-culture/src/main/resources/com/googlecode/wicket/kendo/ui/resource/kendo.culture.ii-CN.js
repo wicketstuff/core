@@ -36,6 +36,8 @@
                 symbol: "%"
             },
             currency: {
+                name: "PRC Renminbi",
+                abbr: "CNY",
                 pattern: ["$-n","$n"],
                 decimals: 2,
                 ",": ",",

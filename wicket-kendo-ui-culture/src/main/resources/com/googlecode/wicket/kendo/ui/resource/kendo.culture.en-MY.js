@@ -36,6 +36,8 @@
                 symbol: "%"
             },
             currency: {
+                name: "Malaysian Ringgit",
+                abbr: "MYR",
                 pattern: ["($n)","$n"],
                 decimals: 2,
                 ",": ",",

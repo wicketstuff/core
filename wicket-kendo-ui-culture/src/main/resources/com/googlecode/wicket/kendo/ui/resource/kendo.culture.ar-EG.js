@@ -36,6 +36,8 @@
                 symbol: "%"
             },
             currency: {
+                name: "Egyptian Pound",
+                abbr: "EGP",
                 pattern: ["$n-","$ n"],
                 decimals: 2,
                 ",": ",",

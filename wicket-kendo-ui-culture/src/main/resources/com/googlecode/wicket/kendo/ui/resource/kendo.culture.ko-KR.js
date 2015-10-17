@@ -36,6 +36,8 @@
                 symbol: "%"
             },
             currency: {
+                name: "Korean Won",
+                abbr: "KRW",
                 pattern: ["-$n","$n"],
                 decimals: 0,
                 ",": ",",

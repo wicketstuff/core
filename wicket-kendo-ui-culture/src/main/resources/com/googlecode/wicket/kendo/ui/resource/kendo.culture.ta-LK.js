@@ -36,6 +36,8 @@
                 symbol: "%"
             },
             currency: {
+                name: "Sri Lanka Rupee",
+                abbr: "LKR",
                 pattern: ["$ -n","$ n"],
                 decimals: 2,
                 ",": ",",

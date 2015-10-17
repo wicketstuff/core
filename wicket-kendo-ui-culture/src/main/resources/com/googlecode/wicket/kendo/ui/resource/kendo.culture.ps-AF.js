@@ -36,6 +36,8 @@
                 symbol: "%"
             },
             currency: {
+                name: "Afghani",
+                abbr: "AFN",
                 pattern: ["$n-","$n"],
                 decimals: 2,
                 ",": ",",

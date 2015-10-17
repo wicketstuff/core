@@ -36,6 +36,8 @@
                 symbol: "%"
             },
             currency: {
+                name: "Polish Zloty",
+                abbr: "PLN",
                 pattern: ["-n $","n $"],
                 decimals: 2,
                 ",": " ",

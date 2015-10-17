@@ -36,6 +36,8 @@
                 symbol: "%"
             },
             currency: {
+                name: "Qatari Rial",
+                abbr: "QAR",
                 pattern: ["$n-","$ n"],
                 decimals: 2,
                 ",": ",",
