@@ -28,7 +28,7 @@ public class JsonUtils
 			list.add(value);
 		}
 
-		return new JSONArray(values);
+		return new JSONArray(list);
 	}
 
 	/**
