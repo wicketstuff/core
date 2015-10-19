@@ -149,7 +149,6 @@ public abstract class JQueryAbstractBehavior extends Behavior
 	 *
 	 * @return the jQuery statement
 	 */
-	// TODO: 6.22.0/7.1.0 - mark public, no need to be protected anymore because not wrapped by #toString
 	protected abstract String $();
 
 	// Properties //
@@ -160,7 +159,7 @@ public abstract class JQueryAbstractBehavior extends Behavior
 	 * @return the token
 	 * @deprecated 6.21.0 - not used/called anymore. Please open an issue if you still need it
 	 */
-	// TODO: 6.22.0/7.1.0 - remove? 
+	// TODO: 6.22.0/7.2.0 - remove?
 	@Deprecated
 	protected String getToken()
 	{
@@ -170,15 +169,11 @@ public abstract class JQueryAbstractBehavior extends Behavior
 	/**
 	 * Gets the jQuery statement.
 	 *
-	 * @return statement like 'jQuery(function() { ... });'
-	 * @deprecated warning, not directly called anymore: check your calls and overrides!
+	 * @return {@link #$()}
 	 */
-	// TODO: 6.22.0/7.1.0 - remove deprecation
 	@Override
 	public String toString()
 	{
-		return String.format("jQuery(function() { %s });", this.$());
-		// TODO: replace by this.$() and update javadoc
-		// return this.$();
+		return this.$();
 	}
 }

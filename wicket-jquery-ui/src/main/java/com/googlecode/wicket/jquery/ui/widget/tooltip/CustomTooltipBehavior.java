@@ -102,21 +102,7 @@ public abstract class CustomTooltipBehavior extends TooltipBehavior
 	 */
 	protected String quote(String content)
 	{
-		return JSONObject.quote(this.escape(content));
-	}
-
-	/**
-	 * Provides escaping before the content is quoted
-	 *
-	 * @param content the content, likely html
-	 * @return the escaped content
-	 * @deprecated useless, prefer overriding {@link #quote(String)}
-	 * TODO: 6.22.0/7.1.0 - remove 
-	 */
-	@Deprecated
-	protected String escape(String content)
-	{
-		return content;
+		return JSONObject.quote(content);
 	}
 
 	@Override
