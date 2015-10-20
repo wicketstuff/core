@@ -164,7 +164,6 @@ public class KryoSerializer implements ISerializer
 		SynchronizedCollectionsSerializer.registerSerializers(kryo);
 		kryo.register(CGLibProxySerializer.CGLibProxyMarker.class, new CGLibProxySerializer(kryo));
 		kryo.register(InvocationHandler.class, new JdkProxySerializer(kryo));
-		kryo.register(WicketChildListSerializer.CLASS, new WicketChildListSerializer(kryo));
 
 		kryo.setRegistrationOptional(true);
 		kryo.register(Panel.class);
