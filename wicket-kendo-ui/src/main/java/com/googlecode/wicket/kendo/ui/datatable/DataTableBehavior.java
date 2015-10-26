@@ -22,7 +22,6 @@ import java.util.List;
 import org.apache.wicket.Component;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.attributes.CallbackParameter;
-import org.apache.wicket.ajax.json.JSONObject;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.util.lang.Args;
 import org.apache.wicket.util.lang.Generics;
@@ -31,7 +30,6 @@ import com.googlecode.wicket.jquery.core.JQueryEvent;
 import com.googlecode.wicket.jquery.core.Options;
 import com.googlecode.wicket.jquery.core.ajax.IJQueryAjaxAware;
 import com.googlecode.wicket.jquery.core.ajax.JQueryAjaxBehavior;
-import com.googlecode.wicket.jquery.core.utils.RequestCycleUtils;
 import com.googlecode.wicket.kendo.ui.KendoDataSource;
 import com.googlecode.wicket.kendo.ui.KendoUIBehavior;
 import com.googlecode.wicket.kendo.ui.datatable.button.CommandAjaxBehavior;
@@ -43,7 +41,6 @@ import com.googlecode.wicket.kendo.ui.datatable.button.ToolbarButton;
 import com.googlecode.wicket.kendo.ui.datatable.column.CommandColumn;
 import com.googlecode.wicket.kendo.ui.datatable.column.IColumn;
 import com.googlecode.wicket.kendo.ui.datatable.column.IdPropertyColumn;
-import com.googlecode.wicket.kendo.ui.scheduler.SchedulerBehavior;
 
 /**
  * Provides a {@value #METHOD} behavior<br/>
@@ -153,6 +150,16 @@ public abstract class DataTableBehavior extends KendoUIBehavior implements IJQue
 	 * @return the data-provider behavior's url
 	 */
 	protected abstract CharSequence getProviderCallbackUrl();
+
+	/**
+	 * Gets the {@link KendoDataSource} name
+	 * 
+	 * @return the {@code KendoDataSource} name
+	 */
+	protected String getDataSourceName()
+	{
+		return this.dataSource.getName();
+	}
 
 	/**
 	 * Indicates whether the read function should use cache
@@ -346,7 +353,7 @@ public abstract class DataTableBehavior extends KendoUIBehavior implements IJQue
 		// data-source //
 		this.onConfigure(this.dataSource);
 
-		this.setOption("dataSource", this.dataSource.getName());
+		this.setOption("dataSource", this.getDataSourceName());
 
 		this.dataSource.set("pageSize", this.getRowCount());
 		this.dataSource.set("serverPaging", true);
@@ -602,25 +609,6 @@ public abstract class DataTableBehavior extends KendoUIBehavior implements IJQue
 
 	protected static class CancelEvent extends JQueryEvent
 	{
-	}
-
-	/**
-	 * Provides a base class for {@link SchedulerBehavior} event objects
-	 */
-	protected static class DataSourceEvent extends JQueryEvent
-	{
-		private final JSONObject object;
-
-		public DataSourceEvent()
-		{
-			String data = RequestCycleUtils.getQueryParameterValue("data").toString();
-			this.object = new JSONObject(data);
-		}
-
-		public JSONObject getObject()
-		{
-			return this.object;
-		}
 	}
 
 	/**

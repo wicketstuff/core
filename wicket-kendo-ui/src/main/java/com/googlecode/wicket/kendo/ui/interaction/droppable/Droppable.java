@@ -25,7 +25,7 @@ import com.googlecode.wicket.jquery.core.JQueryGenericContainer;
 import com.googlecode.wicket.kendo.ui.interaction.draggable.Draggable;
 
 /**
- * Provides a jQuery droppable area, on which {@link Draggable}{@code s} can be dropped.
+ * Provides a Kendo UI droppable area, on which {@link Draggable}{@code s} can be dropped.
  *
  * @param <T> the model object type
  * @author Sebastien Briquet - sebfz1

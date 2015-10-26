@@ -50,7 +50,7 @@ public class Draggable<T> extends JQueryGenericContainer<T> implements IDraggabl
 		@Override
 		public String toString()
 		{
-			return this.axis;
+			return Options.asString(this.axis);
 		}
 	}
 
@@ -142,7 +142,7 @@ public class Draggable<T> extends JQueryGenericContainer<T> implements IDraggabl
 	 */
 	public Draggable<T> setAxis(Axis axis)
 	{
-		this.options.set("axis", Options.asString(axis));
+		this.options.set("axis", axis);
 
 		return this;
 	}
@@ -153,7 +153,7 @@ public class Draggable<T> extends JQueryGenericContainer<T> implements IDraggabl
 	 * @param function the javascript function
 	 * @return this, for chaining
 	 */
-	protected Draggable<T> getHint(String function)
+	protected Draggable<T> setHint(String function)
 	{
 		this.options.set("hint", function);
 

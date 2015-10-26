@@ -29,7 +29,7 @@ import com.googlecode.wicket.kendo.ui.KendoUIBehavior;
 import com.googlecode.wicket.kendo.ui.interaction.draggable.DraggableBehavior;
 
 /**
- * Provides a {@value #METHOD} behavior (drop target)
+ * Provides a {@value #METHOD} behavior
  *
  * @author Sebastien Briquet - sebfz1
  */
@@ -67,7 +67,20 @@ public class DroppableBehavior extends KendoUIBehavior implements IJQueryAjaxAwa
 	 */
 	public DroppableBehavior(String selector, Options options, IDroppableListener listener)
 	{
-		super(selector, METHOD, options);
+		this(selector, METHOD, options, listener);
+	}
+
+	/**
+	 * Constructor
+	 * 
+	 * @param selector the html selector (ie: "#myId")
+	 * @param method the kendo-ui method
+	 * @param options the {@link Options}
+	 * @param listener the {@link IDroppableListener}
+	 */
+	DroppableBehavior(String selector, String method, Options options, IDroppableListener listener)
+	{
+		super(selector, method, options);
 		
 		this.listener = Args.notNull(listener, "listener");
 	}
@@ -81,7 +94,10 @@ public class DroppableBehavior extends KendoUIBehavior implements IJQueryAjaxAwa
 
 	/**
 	 * Gets the javascript statement that will we executed on 'dragenter' event<br/>
-	 * The event variable is {@code 'e'}
+	 * The event variable is {@code 'e'}<br />
+	 * e.target Element, The current Draggable element.<br />
+	 * e.draggable kendo.ui.Draggable, Reference to the Draggable instance that enters a drop target.<br />
+	 * e.dropTarget jQuery, The current DropTarget element in the area that initiated the event.<br />
 	 * 
 	 * @return the javascript statement
 	 */
@@ -93,6 +109,9 @@ public class DroppableBehavior extends KendoUIBehavior implements IJQueryAjaxAwa
 	/**
 	 * Gets the javascript statement that will we executed on 'dragleave' event<br/>
 	 * The event variable is {@code 'e'}
+	 * e.target Element, The current Draggable element.<br />
+	 * e.draggable kendo.ui.Draggable, Reference to the Draggable instance that enters a drop target.<br />
+	 * e.dropTarget jQuery, The current DropTarget element in the area that initiated the event.<br />
 	 * 
 	 * @return the javascript statement
 	 */
@@ -104,6 +123,9 @@ public class DroppableBehavior extends KendoUIBehavior implements IJQueryAjaxAwa
 	/**
 	 * Gets the javascript statement that will we executed on 'drop' event<br/>
 	 * The event variable is {@code 'e'}
+	 * e.target Element, The current Draggable element.<br />
+	 * e.draggable kendo.ui.Draggable, Reference to the Draggable instance that enters a drop target.<br />
+	 * e.dropTarget jQuery, The current DropTarget element in the area that initiated the event.<br />
 	 * 
 	 * @return the javascript statement
 	 */
@@ -111,10 +133,10 @@ public class DroppableBehavior extends KendoUIBehavior implements IJQueryAjaxAwa
 	{
 		StringBuilder statement = new StringBuilder();
 
-		statement.append("var $clone = jQuery(e.target),");
+		statement.append("var $hint = jQuery(e.target),");
 		statement.append("$element = e.draggable.element;");
 		statement.append("$element.removeClass('").append(DraggableBehavior.CSS_HIDE).append("');");
-		statement.append("$element.offset($clone.offset());");
+		statement.append("$element.offset($hint.offset());");
 		// statement.append("e.draggable.destroy();"); // prevent dragStop to be fired (dual round-trip)
 
 		return statement.toString();
