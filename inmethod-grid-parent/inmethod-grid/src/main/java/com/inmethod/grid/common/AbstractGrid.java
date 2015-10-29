@@ -314,11 +314,6 @@ public abstract class AbstractGrid<M, I, S> extends Panel
 		setFlag(FLAG_RENDERING, false);
 	}
 
-	boolean isRendering()
-	{
-		return getFlag(FLAG_RENDERING);
-	}
-
 	private RepeatingView topToolbarContainer;
 	private RepeatingView bottomToolbarContainer;
 	private RepeatingView headerToolbarContainer;
