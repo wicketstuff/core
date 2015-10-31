@@ -23,8 +23,11 @@ import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.json.JSONException;
 import org.apache.wicket.ajax.json.JSONWriter;
 import org.apache.wicket.event.IEvent;
+import org.apache.wicket.markup.ComponentTag;
+import org.apache.wicket.markup.MarkupStream;
 import org.apache.wicket.markup.head.IHeaderResponse;
 import org.apache.wicket.markup.head.OnDomReadyHeaderItem;
+import org.apache.wicket.markup.html.form.AbstractTextComponent;
 import org.apache.wicket.markup.html.form.FormComponent;
 import org.apache.wicket.markup.html.form.HiddenField;
 import org.apache.wicket.model.IModel;
@@ -32,6 +35,7 @@ import org.apache.wicket.request.IRequestParameters;
 import org.apache.wicket.request.Request;
 import org.apache.wicket.request.http.WebRequest;
 import org.apache.wicket.request.http.WebResponse;
+import org.apache.wicket.util.string.AppendingStringBuffer;
 import org.apache.wicket.util.string.Strings;
 
 /**
@@ -43,7 +47,7 @@ import org.apache.wicket.util.string.Strings;
  *            type of model object
  * @author igor
  */
-abstract class AbstractSelect2Choice<T, M> extends HiddenField<M> implements IResourceListener
+abstract class AbstractSelect2Choice<T, M> extends AbstractTextComponent<M> implements IResourceListener
 {
 
 	private static final long serialVersionUID = 1L;
@@ -200,24 +204,7 @@ abstract class AbstractSelect2Choice<T, M> extends HiddenField<M> implements IRe
 		// initialize select2
 		response.render(OnDomReadyHeaderItem.forScript(JQuery.execute("$('#%s').select2(%s);",
 				getJquerySafeMarkupId(), getSettings().toJson())));
-		M currentValue = getCurrentValue();
-		if (canInitializeInitialValue(currentValue))
-		{
-			// select current value
-			renderInitializationScript(response, currentValue);
-		}
 	}
-
-	/**
-	 * Renders script used to initialize the value of Select2 after it is created so it matches the
-	 * current model object.
-	 *
-	 * @param response
-	 * 		header response
-	 * @param value
-	 * 		value to display
-	 */
-	protected abstract void renderInitializationScript(IHeaderResponse response, M value);
 
 	/**
 	 * @return current value, suitable for rendering as selected value in select2 component
@@ -253,9 +240,9 @@ abstract class AbstractSelect2Choice<T, M> extends HiddenField<M> implements IRe
 		{
 			AjaxSettings ajax = getSettings().getAjax(true);
 			ajax.setData(String.format(
-					"function(term, page) { return { term: term, page:page, '%s':true, '%s':[window.location.protocol, '//', window.location.host, window.location.pathname].join('')}; }",
+					"function(params) { return { q: params.term, page: params.page, '%s':true, '%s':[window.location.protocol, '//', window.location.host, window.location.pathname].join('')}; }",
 					WebRequest.PARAM_AJAX, WebRequest.PARAM_AJAX_BASE_URL));
-			ajax.setResults("function(data, page) { return data; }");
+			ajax.setProcessResults("function(data, page) { return { results: data.items };  }");
 		}
 		// configure the localized strings/renderers
 		getSettings().setFormatNoMatches(
@@ -327,7 +314,7 @@ abstract class AbstractSelect2Choice<T, M> extends HiddenField<M> implements IRe
 
 		// retrieve choices matching the search term
 
-		String term = params.getParameterValue("term").toOptionalString();
+		String term = params.getParameterValue("q").toOptionalString();
 
 		int page = params.getParameterValue("page").toInt(1);
 		// select2 uses 1-based paging, but in wicket world we are used to
@@ -342,14 +329,13 @@ abstract class AbstractSelect2Choice<T, M> extends HiddenField<M> implements IRe
 		WebResponse webResponse = (WebResponse) getRequestCycle().getResponse();
 		webResponse.setContentType("application/json");
 
-		OutputStreamWriter out = new OutputStreamWriter(webResponse.getOutputStream(),
-				getRequest().getCharset());
+		OutputStreamWriter out = new OutputStreamWriter(webResponse.getOutputStream(), getRequest().getCharset());
 		JSONWriter json = new JSONWriter(out);
 
 		try
 		{
 			json.object();
-			json.key("results").array();
+			json.key("items").array();
 			for (T item : response)
 			{
 				json.object();
@@ -385,16 +371,57 @@ abstract class AbstractSelect2Choice<T, M> extends HiddenField<M> implements IRe
 		super.onDetach();
 	}
 
-	@SuppressWarnings("rawtypes")
-	private static boolean canInitializeInitialValue(Object value)
-	{
-        if (value instanceof Collection)
-        {
-            return !((Collection) value).isEmpty();
-        } else
-        {
-            return value != null;
-        }
-    }
+	private void addOption(T choice, final AppendingStringBuffer buffer) {
+		buffer.append("<option selected=\"selected\" value=\"")
+			.append(Strings.escapeMarkup(getProvider().getIdValue(choice))).append("\">")
+			.append(Strings.escapeMarkup(getProvider().getDisplayValue(choice))).append("</option>");
+	}
 
+	/**
+	 * Processes the component tag.
+	 *
+	 * @param tag
+	 *            Tag to modify
+	 * @see org.apache.wicket.Component#onComponentTag(ComponentTag)
+	 */
+	@Override
+	protected void onComponentTag(ComponentTag tag) {
+		// Must be attached to an select tag
+		checkComponentTag(tag, "select");
+		// Default handling for component tag
+		super.onComponentTag(tag);
+	}
+
+	/**
+	 * this method will add default options
+	 *
+	 * @param markupStream
+	 *            The markup stream
+	 * @param openTag
+	 *            The open tag for the body
+	 */
+	@Override
+	public void onComponentTagBody(final MarkupStream markupStream, final ComponentTag openTag)
+	{
+		final AppendingStringBuffer buffer = new AppendingStringBuffer();
+
+		M currentValue = getCurrentValue();
+		if (currentValue instanceof Collection)
+		{
+			@SuppressWarnings("unchecked")
+			Collection<T> choices = (Collection<T>)currentValue;
+			for (T choice : choices) {
+				addOption(choice, buffer);
+			}
+		}
+		else
+        {
+			if (currentValue != null) {
+				@SuppressWarnings("unchecked")
+				T choice = (T)currentValue;
+				addOption(choice, buffer);
+			}
+        }
+		replaceComponentTagBody(markupStream, openTag, buffer);
+	}
 }

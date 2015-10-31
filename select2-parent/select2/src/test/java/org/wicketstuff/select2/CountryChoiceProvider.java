@@ -4,13 +4,10 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-import org.apache.wicket.ajax.json.JSONException;
-import org.apache.wicket.ajax.json.JSONWriter;
-
 /**
  * @author lexx
  */
-public final class CountryChoiceProvider implements ChoiceProvider<Country>
+public final class CountryChoiceProvider extends ChoiceProvider<Country>
 {
 	private static final long serialVersionUID = 1L;
 	private static final int PAGE_SIZE = 5;
@@ -23,9 +20,13 @@ public final class CountryChoiceProvider implements ChoiceProvider<Country>
 	}
 
 	@Override
-	public void toJson(Country choice, JSONWriter writer) throws JSONException
-	{
-		writer.key("id").value(choice.name()).key("text").value(choice.getDisplayName());
+	public String getIdValue(Country choice) {
+		return choice.name();
+	}
+
+	@Override
+	public String getDisplayValue(Country choice) {
+		return choice.getDisplayName();
 	}
 
 	@Override

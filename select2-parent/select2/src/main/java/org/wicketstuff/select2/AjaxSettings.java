@@ -28,21 +28,21 @@ public final class AjaxSettings implements Serializable
 	private static final long serialVersionUID = 1L;
 	private CharSequence url;
 	private String dataType = "json";
-	private int quietMillis = 100;
+	private int delay = 100;
 	private String data;
-	private String results;
+	private String processResults;
 	/** whether or not to use traditional parameter encoding. */
-	private Boolean traditional;
+	private Boolean cache;
 
 	public void toJson(JSONWriter writer) throws JSONException
 	{
 		writer.object();
 		Json.writeFunction(writer, "data", data);
 		Json.writeObject(writer, "dataType", dataType);
-		Json.writeObject(writer, "quietMillis", quietMillis);
-		Json.writeFunction(writer, "results", results);
+		Json.writeObject(writer, "delay", delay);
+		Json.writeFunction(writer, "processResults", processResults);
 		Json.writeObject(writer, "url", url);
-		Json.writeObject(writer, "traditional", traditional);
+		Json.writeObject(writer, "cache", cache);
 		writer.endObject();
 	}
 
@@ -56,9 +56,9 @@ public final class AjaxSettings implements Serializable
 		this.dataType = dataType;
 	}
 
-	public void setQuietMillis(int quietMillis)
+	public void setDelay(int delay)
 	{
-		this.quietMillis = quietMillis;
+		this.delay = delay;
 	}
 
 	public void setData(String data)
@@ -66,9 +66,9 @@ public final class AjaxSettings implements Serializable
 		this.data = data;
 	}
 
-	public void setResults(String results)
+	public void setProcessResults(String processResults)
 	{
-		this.results = results;
+		this.processResults = processResults;
 	}
 
 	public CharSequence getUrl()
@@ -81,9 +81,9 @@ public final class AjaxSettings implements Serializable
 		return dataType;
 	}
 
-	public int getQuietMillis()
+	public int getDelay()
 	{
-		return quietMillis;
+		return delay;
 	}
 
 	public String getData()
@@ -91,19 +91,19 @@ public final class AjaxSettings implements Serializable
 		return data;
 	}
 
-	public String getResults()
+	public String getProcessResults()
 	{
-		return results;
+		return processResults;
 	}
 
-	public boolean isTraditional()
+	public boolean isCache()
 	{
-		return traditional;
+		return cache;
 	}
 
-	public void setTraditional(boolean traditional)
+	public void setCache(boolean cache)
 	{
-		this.traditional = traditional;
+		this.cache = cache;
 	}
 
 }

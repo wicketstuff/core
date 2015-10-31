@@ -7,18 +7,18 @@ import java.util.Collection;
  *
  * @author Tom Götz (tom@decoded.de)
  */
-public abstract class StringTextChoiceProvider extends TextChoiceProvider<String>
+public abstract class StringTextChoiceProvider extends ChoiceProvider<String>
 {
 	private static final long serialVersionUID = 1L;
 
 	@Override
-	protected String getDisplayText(String choice)
+	public String getDisplayValue(String choice)
 	{
 		return choice;
 	}
 
 	@Override
-	protected Object getId(String choice)
+	public String getIdValue(String choice)
 	{
 		return choice;
 	}

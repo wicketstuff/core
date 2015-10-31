@@ -36,8 +36,7 @@ public class HomePage extends WebPage
 	@SuppressWarnings("unused")
 	private Country country = Country.US;
 	@SuppressWarnings("unused")
-	private List<Country> countries = new ArrayList<>(Arrays.asList(
-            new Country[] { Country.US, Country.CA }));
+	private List<Country> countries = new ArrayList<>(Arrays.asList(new Country[] { Country.US, Country.CA }));
 
 	public HomePage()
 	{
@@ -110,19 +109,19 @@ public class HomePage extends WebPage
 	 * @author igor
 	 *
 	 */
-	public static class CountriesProvider extends TextChoiceProvider<Country>
+	public static class CountriesProvider extends ChoiceProvider<Country>
 	{
 
 		private static final long serialVersionUID = 1L;
 
 		@Override
-		protected String getDisplayText(Country choice)
+		public String getDisplayValue(Country choice)
 		{
 			return choice.getDisplayName();
 		}
 
 		@Override
-		protected Object getId(Country choice)
+		public String getIdValue(Country choice)
 		{
 			return choice.name();
 		}

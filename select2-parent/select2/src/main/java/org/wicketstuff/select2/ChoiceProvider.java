@@ -40,8 +40,34 @@ import org.apache.wicket.model.IDetachable;
  * @param <T>
  *            type of choice object
  */
-public interface ChoiceProvider<T> extends IDetachable
+public abstract class ChoiceProvider<T> implements IDetachable
 {
+	private static final long serialVersionUID = 1L;
+
+	/**
+	 * Get the value for displaying to an end user.
+	 *
+	 * @param object
+	 *            the actual object
+	 * @return the value meant for displaying to an end user
+	 */
+	public abstract String getDisplayValue(T object);
+
+	/**
+	 * This method is called to get the id value of an object (used as the value attribute of a
+	 * choice element) The id can be extracted from the object like a primary key, or if the list is
+	 * stable you could just return a toString of the index.
+	 * <p>
+	 * Note that the given index can be {@code -1} if the object in question is not contained in the
+	 * available choices.
+	 *
+	 * @param object
+	 *            The object for which the id should be generated
+	 * @param index
+	 *            The index of the object in the choices list.
+	 * @return String
+	 */
+	public abstract String getIdValue(T object);
 
 	/**
 	 * Queries application for choices that match the search {@code term} and adds them to the
@@ -54,7 +80,7 @@ public interface ChoiceProvider<T> extends IDetachable
 	 * @param response
 	 *            aggregate for matching choices as well as other response options
 	 */
-	public void query(String term, int page, Response<T> response);
+	public abstract void query(String term, int page, Response<T> response);
 
 	/**
 	 * Converts the specified choice to Json.
@@ -83,7 +109,9 @@ public interface ChoiceProvider<T> extends IDetachable
 	 *            Json writer that should be used to covnert the choice
 	 * @throws JSONException
 	 */
-	public void toJson(T choice, JSONWriter writer) throws JSONException;
+	protected void toJson(T choice, JSONWriter writer) throws JSONException {
+		writer.key("id").value(getIdValue(choice)).key("text").value(getDisplayValue(choice));
+	}
 
 	/**
 	 * Converts a list of choice ids back into application's choice objects. When the choice
@@ -94,6 +122,10 @@ public interface ChoiceProvider<T> extends IDetachable
 	 *            collection containing choice ids
 	 * @return collection containing application choice objects
 	 */
-	public Collection<T> toChoices(Collection<String> ids);
+	public abstract Collection<T> toChoices(Collection<String> ids);
 
+	@Override
+	public void detach()
+	{
+	}
 }
