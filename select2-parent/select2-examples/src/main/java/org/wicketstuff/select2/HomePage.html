@@ -12,7 +12,6 @@
 
 </head>
 <body>
-
 	<div class="container">
 		<div class="hero-unit">
 			<h1>wicketstuff-select2 Examples</h1>
@@ -30,8 +29,7 @@
 			<div class="row">
 				<div class="span12">
 					<p>
-						Country currently selected: <strong><span
-							wicket:id="country"></span> </strong>
+						Country currently selected: <strong><span wicket:id="country"></span> </strong>
 					</p>
 					<form wicket:id="single">
 						<select wicket:id="country" style="width: 300px;" ></select>
@@ -49,14 +47,28 @@
 			<div class="row">
 				<div class="span12">
 					<p>
-						Countries currently selected: <strong><span
-							wicket:id="countries"></span> </strong>
+						Countries currently selected: <strong><span wicket:id="countries"></span> </strong>
 					</p>
 					<form wicket:id="multi">
 						<select wicket:id="countries" style="width: 300px;" ></select>
 						<div class="form-actions">
 							<button type="submit" class="btn">Submit</button>
 						</div>
+					</form>
+				</div>
+			</div>
+		</section>
+		<section>
+			<div class="page-header">
+				<h1>Multi-Select <small>Ajax result loading. Paging with infinite scrolling. Minimum input length. Ajax change</small></h1>
+			</div>
+			<div class="row">
+				<div class="span12">
+					<p>
+						Countries currently selected: <strong><span wicket:id="ajaxcountries"></span> </strong>
+					</p>
+					<form wicket:id="multiajax">
+						<select wicket:id="ajaxcountries" style="width: 300px;" ></select>
 					</form>
 				</div>
 			</div>

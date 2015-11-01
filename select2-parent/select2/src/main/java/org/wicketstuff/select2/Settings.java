@@ -14,6 +14,7 @@ package org.wicketstuff.select2;
 
 import java.io.Serializable;
 
+import org.apache.wicket.WicketRuntimeException;
 import org.apache.wicket.ajax.json.JSONException;
 import org.apache.wicket.ajax.json.JSONStringer;
 import org.wicketstuff.select2.json.Json;
@@ -124,9 +125,10 @@ public final class Settings implements Serializable
 		return minimumInputLength;
 	}
 
-	public void setMinimumInputLength(Integer minimumInputLength)
+	public Settings setMinimumInputLength(Integer minimumInputLength)
 	{
 		this.minimumInputLength = minimumInputLength;
+		return this;
 	}
 
 	public Integer getMinimumResultsForSearch()
@@ -134,9 +136,10 @@ public final class Settings implements Serializable
 		return minimumResultsForSearch;
 	}
 
-	public void setMinimumResultsForSearch(Integer minimumResultsForSearch)
+	public Settings setMinimumResultsForSearch(Integer minimumResultsForSearch)
 	{
 		this.minimumResultsForSearch = minimumResultsForSearch;
+		return this;
 	}
 
 	public Object getPlaceholder()
@@ -144,9 +147,10 @@ public final class Settings implements Serializable
 		return placeholder;
 	}
 
-	public void setPlaceholder(Object placeholder)
+	public Settings setPlaceholder(Object placeholder)
 	{
 		this.placeholder = placeholder;
+		return this;
 	}
 
 	public Boolean getAllowClear()
@@ -154,9 +158,13 @@ public final class Settings implements Serializable
 		return allowClear;
 	}
 
-	public void setAllowClear(Boolean allowClear)
+	public Settings setAllowClear(Boolean allowClear)
 	{
 		this.allowClear = allowClear;
+		if (Boolean.TRUE.equals(allowClear) && placeholder == null) {
+			throw new WicketRuntimeException("Placeholder need to be specified");
+		}
+		return this;
 	}
 
 	public Boolean getMultiple()
@@ -164,9 +172,10 @@ public final class Settings implements Serializable
 		return multiple;
 	}
 
-	public void setMultiple(Boolean multiple)
+	public Settings setMultiple(Boolean multiple)
 	{
 		this.multiple = multiple;
+		return this;
 	}
 
 	public Boolean getCloseOnSelect()
@@ -174,9 +183,10 @@ public final class Settings implements Serializable
 		return closeOnSelect;
 	}
 
-	public void setCloseOnSelect(Boolean closeOnSelect)
+	public Settings setCloseOnSelect(Boolean closeOnSelect)
 	{
 		this.closeOnSelect = closeOnSelect;
+		return this;
 	}
 
 	public String getId()
@@ -184,9 +194,10 @@ public final class Settings implements Serializable
 		return id;
 	}
 
-	public void setId(String id)
+	public Settings setId(String id)
 	{
 		this.id = id;
+		return this;
 	}
 
 	public String getFormatSelection()
@@ -194,9 +205,10 @@ public final class Settings implements Serializable
 		return formatSelection;
 	}
 
-	public void setFormatSelection(String formatSelection)
+	public Settings setFormatSelection(String formatSelection)
 	{
 		this.formatSelection = formatSelection;
+		return this;
 	}
 
 	public String getFormatResult()
@@ -204,9 +216,10 @@ public final class Settings implements Serializable
 		return formatResult;
 	}
 
-	public void setFormatResult(String formatResult)
+	public Settings setFormatResult(String formatResult)
 	{
 		this.formatResult = formatResult;
+		return this;
 	}
 
 	public String getFormatNoMatches()
@@ -214,9 +227,10 @@ public final class Settings implements Serializable
 		return formatNoMatches;
 	}
 
-	public void setFormatNoMatches(String formatNoMatches)
+	public Settings setFormatNoMatches(String formatNoMatches)
 	{
 		this.formatNoMatches = formatNoMatches;
+		return this;
 	}
 
 	public String getFormatInputTooShort()
@@ -224,9 +238,10 @@ public final class Settings implements Serializable
 		return formatInputTooShort;
 	}
 
-	public void setFormatInputTooShort(String formatInputTooShort)
+	public Settings setFormatInputTooShort(String formatInputTooShort)
 	{
 		this.formatInputTooShort = formatInputTooShort;
+		return this;
 	}
 
 	public String getCreateSearchChoice()
@@ -234,9 +249,10 @@ public final class Settings implements Serializable
 		return createSearchChoice;
 	}
 
-	public void setCreateSearchChoice(String createSearchChoice)
+	public Settings setCreateSearchChoice(String createSearchChoice)
 	{
 		this.createSearchChoice = createSearchChoice;
+		return this;
 	}
 
 	public String getInitSelection()
@@ -244,9 +260,10 @@ public final class Settings implements Serializable
 		return initSelection;
 	}
 
-	public void setInitSelection(String initSelection)
+	public Settings setInitSelection(String initSelection)
 	{
 		this.initSelection = initSelection;
+		return this;
 	}
 
 	public String getQuery()
@@ -254,9 +271,10 @@ public final class Settings implements Serializable
 		return query;
 	}
 
-	public void setQuery(String query)
+	public Settings setQuery(String query)
 	{
 		this.query = query;
+		return this;
 	}
 
 	public AjaxSettings getAjax()
@@ -273,9 +291,10 @@ public final class Settings implements Serializable
 		return ajax;
 	}
 
-	public void setAjax(AjaxSettings ajax)
+	public Settings setAjax(AjaxSettings ajax)
 	{
 		this.ajax = ajax;
+		return this;
 	}
 
 	public String getData()
@@ -283,9 +302,10 @@ public final class Settings implements Serializable
 		return data;
 	}
 
-	public void setData(String data)
+	public Settings setData(String data)
 	{
 		this.data = data;
+		return this;
 	}
 
 	public String getTags()
@@ -293,9 +313,10 @@ public final class Settings implements Serializable
 		return tags;
 	}
 
-	public void setTags(String tags)
+	public Settings setTags(String tags)
 	{
 		this.tags = tags;
+		return this;
 	}
 
 	public Integer getMaximumSelectionSize()
@@ -303,9 +324,10 @@ public final class Settings implements Serializable
 		return maximumSelectionSize;
 	}
 
-	public void setMaximumSelectionSize(Integer maximumSelectionSize)
+	public Settings setMaximumSelectionSize(Integer maximumSelectionSize)
 	{
 		this.maximumSelectionSize = maximumSelectionSize;
+		return this;
 	}
 
 	public String getMatcher()
@@ -313,9 +335,10 @@ public final class Settings implements Serializable
 		return matcher;
 	}
 
-	public void setMatcher(String matcher)
+	public Settings setMatcher(String matcher)
 	{
 		this.matcher = matcher;
+		return this;
 	}
 
 	public String getTokenizer()
@@ -323,9 +346,10 @@ public final class Settings implements Serializable
 		return tokenizer;
 	}
 
-	public void setTokenizer(String tokenizer)
+	public Settings setTokenizer(String tokenizer)
 	{
 		this.tokenizer = tokenizer;
+		return this;
 	}
 
 	public String getSortResults()
@@ -333,9 +357,10 @@ public final class Settings implements Serializable
 		return sortResults;
 	}
 
-	public void setSortResults(String sortResults)
+	public Settings setSortResults(String sortResults)
 	{
 		this.sortResults = sortResults;
+		return this;
 	}
 
 	public String getFormatSelectionTooBig()
@@ -343,9 +368,10 @@ public final class Settings implements Serializable
 		return formatSelectionTooBig;
 	}
 
-	public void setFormatSelectionTooBig(String formatSelectionTooBig)
+	public Settings setFormatSelectionTooBig(String formatSelectionTooBig)
 	{
 		this.formatSelectionTooBig = formatSelectionTooBig;
+		return this;
 	}
 
 	public String getFormatResultCssClass()
@@ -353,9 +379,10 @@ public final class Settings implements Serializable
 		return formatResultCssClass;
 	}
 
-	public void setFormatResultCssClass(String formatResultCssClass)
+	public Settings setFormatResultCssClass(String formatResultCssClass)
 	{
 		this.formatResultCssClass = formatResultCssClass;
+		return this;
 	}
 
 	public String getFormatLoadMore()
@@ -363,9 +390,10 @@ public final class Settings implements Serializable
 		return formatLoadMore;
 	}
 
-	public void setFormatLoadMore(String formatLoadMore)
+	public Settings setFormatLoadMore(String formatLoadMore)
 	{
 		this.formatLoadMore = formatLoadMore;
+		return this;
 	}
 
 	public String getFormatSearching()
@@ -373,9 +401,10 @@ public final class Settings implements Serializable
 		return formatSearching;
 	}
 
-	public void setFormatSearching(String formatSearching)
+	public Settings setFormatSearching(String formatSearching)
 	{
 		this.formatSearching = formatSearching;
+		return this;
 	}
 
 	public String getEscapeMarkup()
@@ -383,9 +412,10 @@ public final class Settings implements Serializable
 		return escapeMarkup;
 	}
 
-	public void setEscapeMarkup(String escapeMarkup)
+	public Settings setEscapeMarkup(String escapeMarkup)
 	{
 		this.escapeMarkup = escapeMarkup;
+		return this;
 	}
 
 	public String getWidth()
@@ -393,9 +423,10 @@ public final class Settings implements Serializable
 		return width;
 	}
 
-	public void setWidth(String width)
+	public Settings setWidth(String width)
 	{
 		this.width = width;
+		return this;
 	}
 
 	public Boolean getOpenOnEnter()
@@ -403,9 +434,10 @@ public final class Settings implements Serializable
 		return openOnEnter;
 	}
 
-	public void setOpenOnEnter(Boolean openOnEnter)
+	public Settings setOpenOnEnter(Boolean openOnEnter)
 	{
 		this.openOnEnter = openOnEnter;
+		return this;
 	}
 
 	public String getContainerCss()
@@ -413,9 +445,10 @@ public final class Settings implements Serializable
 		return containerCss;
 	}
 
-	public void setContainerCss(String containerCss)
+	public Settings setContainerCss(String containerCss)
 	{
 		this.containerCss = containerCss;
+		return this;
 	}
 
 	public String getDropdownCss()
@@ -423,9 +456,10 @@ public final class Settings implements Serializable
 		return dropdownCss;
 	}
 
-	public void setDropdownCss(String dropdownCss)
+	public Settings setDropdownCss(String dropdownCss)
 	{
 		this.dropdownCss = dropdownCss;
+		return this;
 	}
 
 	public String getContainerCssClass()
@@ -433,9 +467,10 @@ public final class Settings implements Serializable
 		return containerCssClass;
 	}
 
-	public void setContainerCssClass(String containerCssClass)
+	public Settings setContainerCssClass(String containerCssClass)
 	{
 		this.containerCssClass = containerCssClass;
+		return this;
 	}
 
 	public String getDropdownCssClass()
@@ -443,9 +478,10 @@ public final class Settings implements Serializable
 		return dropdownCssClass;
 	}
 
-	public void setDropdownCssClass(String dropdownCssClass)
+	public Settings setDropdownCssClass(String dropdownCssClass)
 	{
 		this.dropdownCssClass = dropdownCssClass;
+		return this;
 	}
 
 	public String getSeparator()
@@ -453,9 +489,10 @@ public final class Settings implements Serializable
 		return separator;
 	}
 
-	public void setSeparator(String separator)
+	public Settings setSeparator(String separator)
 	{
 		this.separator = separator;
+		return this;
 	}
 
 	public String[] getTokenSeparators()
@@ -463,9 +500,10 @@ public final class Settings implements Serializable
 		return tokenSeparators;
 	}
 
-	public void setTokenSeparators(String[] tokenSeparators)
+	public Settings setTokenSeparators(String[] tokenSeparators)
 	{
 		this.tokenSeparators = tokenSeparators;
+		return this;
 	}
 
 	public Boolean getSelectOnBlur()
@@ -473,9 +511,10 @@ public final class Settings implements Serializable
 		return selectOnBlur;
 	}
 
-	public void setSelectOnBlur(Boolean selectOnBlur)
+	public Settings setSelectOnBlur(Boolean selectOnBlur)
 	{
 		this.selectOnBlur = selectOnBlur;
+		return this;
 	}
 
 	public Boolean getDropdownAutoWidth()
@@ -483,8 +522,9 @@ public final class Settings implements Serializable
 		return dropdownAutoWidth;
 	}
 
-	public void setDropdownAutoWidth(Boolean dropdownAutoWidth)
+	public Settings setDropdownAutoWidth(Boolean dropdownAutoWidth)
 	{
 		this.dropdownAutoWidth = dropdownAutoWidth;
+		return this;
 	}
 }

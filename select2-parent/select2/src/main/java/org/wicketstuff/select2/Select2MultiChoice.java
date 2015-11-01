@@ -12,6 +12,7 @@
  */
 package org.wicketstuff.select2;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
@@ -69,11 +70,14 @@ public class Select2MultiChoice<T> extends AbstractSelect2Choice<T, Collection<T
 		}
 		else
 		{
-			String[] result = new String[value.size()];
+			List<String> result = new ArrayList<>();
 			for (int i = 0; i < value.size(); ++i) {
-				result[i] = value.get(i).toString();
+				StringValue v = value.get(i);
+				if (!v.isEmpty()) {
+					result.add(v.toString());
+				}
 			}
-			return result;
+			return result.toArray(new String[0]);
 		}
 	}
 

@@ -17,6 +17,8 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 
+import org.apache.wicket.ajax.AjaxRequestTarget;
+import org.apache.wicket.ajax.form.AjaxFormComponentUpdatingBehavior;
 import org.apache.wicket.markup.html.WebPage;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.form.Form;
@@ -37,6 +39,8 @@ public class HomePage extends WebPage
 	private Country country = Country.US;
 	@SuppressWarnings("unused")
 	private List<Country> countries = new ArrayList<>(Arrays.asList(new Country[] { Country.US, Country.CA }));
+	@SuppressWarnings("unused")
+	private List<Country> ajaxcountries = new ArrayList<>(Arrays.asList(new Country[] { Country.US, Country.CA }));
 
 	public HomePage()
 	{
@@ -48,7 +52,7 @@ public class HomePage extends WebPage
 
 		Select2Choice<Country> country = new Select2Choice<>("country", new PropertyModel<Country>(
 			this, "country"), new CountriesProvider());
-		country.getSettings().setMinimumInputLength(1);
+		country.getSettings().setMinimumInputLength(1).setPlaceholder("Please select country").setAllowClear(true);
 		form.add(country);
 
 		// multi-select example
@@ -61,6 +65,24 @@ public class HomePage extends WebPage
 			new PropertyModel<Collection<Country>>(this, "countries"), new CountriesProvider());
 		countries.getSettings().setMinimumInputLength(1);
 		multi.add(countries);
+		
+		// ajax multi-select example
+		final Label ajaxLbl = new Label("ajaxcountries", new PropertyModel<>(this, "ajaxcountries"));
+		add(ajaxLbl.setOutputMarkupId(true));
+
+		Form<?> multiajax = new Form<Void>("multiajax");
+		Select2MultiChoice<Country> ajaxcountries = new Select2MultiChoice<>("ajaxcountries",
+				new PropertyModel<Collection<Country>>(this, "ajaxcountries"), new CountriesProvider());
+		countries.getSettings().setMinimumInputLength(2);
+		ajaxcountries.add(new AjaxFormComponentUpdatingBehavior("change") {
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			protected void onUpdate(AjaxRequestTarget target) {
+				target.add(ajaxLbl);
+			}
+		});
+		add(multiajax.add(ajaxcountries));
 	}
 
 	/**
