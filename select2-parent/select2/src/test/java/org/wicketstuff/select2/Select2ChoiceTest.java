@@ -67,6 +67,9 @@ public class Select2ChoiceTest
 		Assert.assertTrue(formTester.getForm().hasError());
 		Assert.assertTrue(page.country.isValid());
 		Assert.assertFalse(page.city.isValid());
+
+		String responseAsString = this.wicketTester.getLastResponseAsString();
+		Assert.assertTrue(responseAsString.contains(expectedOption()));
 	}
 
 	@Test
@@ -79,6 +82,10 @@ public class Select2ChoiceTest
 		FormTester formTester = this.wicketTester.newFormTester(page.form.getPageRelativePath());
 		formTester.setValue(page.country, country());
 		formTester.submit();
+
+		this.wicketTester.startPage(this.wicketTester.getLastRenderedPage());
+		String responseAsString = this.wicketTester.getLastResponseAsString();
+		Assert.assertTrue(responseAsString.contains(expectedOption()));
 	}
 
 	@Test
@@ -96,6 +103,9 @@ public class Select2ChoiceTest
 		Assert.assertFalse(formTester.getForm().hasError());
 		Assert.assertEquals(Country.CA, page.country.getModelObject());
 		Assert.assertEquals(city(), page.city.getModelObject());
+
+		String responseAsString = this.wicketTester.getLastResponseAsString();
+		Assert.assertTrue(responseAsString.contains(expectedOption()));
 	}
 
 	private static String city()
@@ -106,5 +116,10 @@ public class Select2ChoiceTest
 	private static String country()
 	{
 		return Country.CA.name();
+	}
+
+	private static String expectedOption()
+	{
+		return "<option selected=\"selected\" value=\"CA\">Canada</option>";
 	}
 }
