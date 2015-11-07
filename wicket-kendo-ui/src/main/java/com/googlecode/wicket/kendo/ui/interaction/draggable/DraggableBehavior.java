@@ -51,7 +51,7 @@ public class DraggableBehavior extends KendoUIBehavior implements IJQueryAjaxAwa
 	public static final String CSS_CLONE = "kendoDraggable-clone";
 
 	/** default hint */
-	public static final String HINT = "function(element) { return element.clone().addClass('" + CSS_CLONE + "'); }";
+	public static final String FCN_HINT = "function(element) { return element.clone().addClass('" + CSS_CLONE + "'); }";
 
 	private final IDraggableListener listener;
 	private JQueryAjaxBehavior onDragStartAjaxBehavior;
@@ -149,7 +149,7 @@ public class DraggableBehavior extends KendoUIBehavior implements IJQueryAjaxAwa
 
 		if (this.getOption("hint") == null)
 		{
-			this.setOption("hint", HINT);
+			this.setOption("hint", FCN_HINT);
 		}
 
 		// behaviors //

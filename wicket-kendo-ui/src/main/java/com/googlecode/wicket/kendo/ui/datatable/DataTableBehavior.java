@@ -152,16 +152,6 @@ public abstract class DataTableBehavior extends KendoUIBehavior implements IJQue
 	protected abstract CharSequence getProviderCallbackUrl();
 
 	/**
-	 * Gets the {@link KendoDataSource} name
-	 * 
-	 * @return the {@code KendoDataSource} name
-	 */
-	protected String getDataSourceName()
-	{
-		return this.dataSource.getName();
-	}
-
-	/**
 	 * Indicates whether the read function should use cache
 	 * 
 	 * @return false by default
@@ -353,7 +343,7 @@ public abstract class DataTableBehavior extends KendoUIBehavior implements IJQue
 		// data-source //
 		this.onConfigure(this.dataSource);
 
-		this.setOption("dataSource", this.getDataSourceName());
+		this.setOption("dataSource", this.dataSource.getName());
 
 		this.dataSource.set("pageSize", this.getRowCount());
 		this.dataSource.set("serverPaging", true);

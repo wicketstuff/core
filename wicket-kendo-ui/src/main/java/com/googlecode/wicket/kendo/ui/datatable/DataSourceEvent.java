@@ -33,7 +33,7 @@ public class DataSourceEvent extends JQueryEvent
 
 	public DataSourceEvent()
 	{
-		String data = RequestCycleUtils.getQueryParameterValue("data").toString();
+		String data = RequestCycleUtils.getQueryParameterValue("data").toString("{}");
 		this.object = new JSONObject(data);
 	}
 
