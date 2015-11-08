@@ -14,31 +14,17 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.googlecode.wicket.kendo.ui.datatable;
+package com.googlecode.wicket.kendo.ui.repeater.listview;
 
-import org.apache.wicket.ajax.json.JSONObject;
+import org.apache.wicket.util.io.IClusterable;
 
-import com.googlecode.wicket.jquery.core.JQueryEvent;
-import com.googlecode.wicket.jquery.core.utils.RequestCycleUtils;
-import com.googlecode.wicket.kendo.ui.KendoDataSource;
+import com.googlecode.wicket.kendo.ui.repeater.dataview.DataView;
 
 /**
- * Provides a base class for {@link KendoDataSource} event objects
- * 
+ * Event listener shared by the {@link DataView} widget and the {@link ListViewBehavior}
+ *
  * @author Sebastien Briquet - sebfz1
  */
-public class DataSourceEvent extends JQueryEvent
+public interface IListViewListener extends IClusterable
 {
-	protected final JSONObject object;
-
-	public DataSourceEvent()
-	{
-		String data = RequestCycleUtils.getQueryParameterValue("data").toString("{}");
-		this.object = new JSONObject(data);
-	}
-
-	public JSONObject getObject()
-	{
-		return this.object;
-	}
 }

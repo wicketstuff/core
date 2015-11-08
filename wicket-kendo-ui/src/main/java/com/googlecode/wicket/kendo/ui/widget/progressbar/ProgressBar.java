@@ -146,7 +146,7 @@ public class ProgressBar extends JQueryGenericContainer<Integer> implements IPro
 	 *
 	 * @return the jQuery object
 	 */
-	protected String widget()
+	public String widget()
 	{
 		return KendoUIBehavior.widget(this, ProgressBarBehavior.METHOD);
 	}

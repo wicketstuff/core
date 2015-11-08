@@ -158,7 +158,7 @@ public class DataTable<T> extends WebComponent implements IGenericComponent<List
 	 *
 	 * @return the jQuery object
 	 */
-	protected String widget()
+	public String widget()
 	{
 		return KendoUIBehavior.widget(this, DataTableBehavior.METHOD);
 	}

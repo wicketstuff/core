@@ -143,7 +143,7 @@ public class Scheduler extends JQueryContainer implements ISchedulerListener
 	 *
 	 * @return the jQuery object
 	 */
-	protected String widget()
+	public String widget()
 	{
 		return KendoUIBehavior.widget(this, SchedulerBehavior.METHOD);
 	}
