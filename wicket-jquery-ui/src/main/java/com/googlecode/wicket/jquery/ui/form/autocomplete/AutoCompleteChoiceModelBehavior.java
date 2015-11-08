@@ -94,7 +94,7 @@ abstract class AutoCompleteChoiceModelBehavior<T> extends ChoiceModelBehavior<T>
 					for (String property : properties)
 					{
 						builder.append(", ");
-						BuilderUtils.resolve(builder, choice, property);
+						BuilderUtils.append(builder, property, renderer.getText(choice, property));
 					}
 
 					builder.append(" }");

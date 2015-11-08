@@ -149,7 +149,7 @@ public abstract class ChoiceModelBehavior<T> extends AbstractAjaxBehavior implem
 					for (String property : properties)
 					{
 						builder.append(", ");
-						BuilderUtils.resolve(builder, choice, property);
+						BuilderUtils.append(builder, property, renderer.getText(choice, property));
 					}
 
 					builder.append(" }");

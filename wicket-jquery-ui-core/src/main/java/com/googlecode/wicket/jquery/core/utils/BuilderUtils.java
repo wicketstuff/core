@@ -17,7 +17,6 @@
 package com.googlecode.wicket.jquery.core.utils;
 
 import org.apache.wicket.ajax.json.JSONObject;
-import org.apache.wicket.core.util.lang.PropertyResolver;
 
 /**
  * Utility class for {@link StringBuilder}
@@ -49,18 +48,6 @@ public class BuilderUtils
 	public static void append(StringBuilder builder, String key, String value)
 	{
 		builder.append(JSONObject.quote(key)).append(": ").append(JSONObject.quote(value));
-	}
-
-	/**
-	 * Helper method that appends a key/value JSON pair to the specified builder. The value will be resolved according to the supplied property
-	 * 
-	 * @param builder the {@link StringBuilder}
-	 * @param object the object
-	 * @param property the object's property
-	 */
-	public static <T> void resolve(StringBuilder builder, final T object, final String property)
-	{
-		BuilderUtils.append(builder, property, String.valueOf(PropertyResolver.getValue(property, object))); // convert to String to quote it
 	}
 
 	/**
