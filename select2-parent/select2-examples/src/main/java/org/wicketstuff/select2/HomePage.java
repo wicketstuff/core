@@ -19,6 +19,7 @@ import java.util.List;
 
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.form.AjaxFormComponentUpdatingBehavior;
+import org.apache.wicket.ajax.form.AjaxFormSubmitBehavior;
 import org.apache.wicket.markup.html.WebPage;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.form.Form;
@@ -43,6 +44,8 @@ public class HomePage extends WebPage
 	private List<Country> countries = new ArrayList<>(Arrays.asList(new Country[] { Country.US, Country.CA }));
 	@SuppressWarnings("unused")
 	private List<Country> ajaxcountries = new ArrayList<>(Arrays.asList(new Country[] { Country.US, Country.CA }));
+	@SuppressWarnings("unused")
+	private List<Country> ajaxcountriesns = new ArrayList<>(Arrays.asList(new Country[] { Country.US, Country.CA }));
 
 	public HomePage()
 	{
@@ -87,6 +90,39 @@ public class HomePage extends WebPage
 			}
 		});
 		add(new Form<Void>("multiajax").add(ajaxcountries));
+
+		// ajax multi-select example, no submit
+		final Label ajaxLblns = new Label("ajaxcountriesnsm", new PropertyModel<>(this, "ajaxcountriesns"));
+		add(ajaxLblns.setOutputMarkupId(true));
+
+		final Select2MultiChoice<Country> ajaxcountriesns = new Select2MultiChoice<Country>("ajaxcountriesns",
+				new PropertyModel<Collection<Country>>(this, "ajaxcountriesns"), new CountriesProvider())
+		{
+			private static final long serialVersionUID = 1L;
+			
+			@SuppressWarnings("unused")
+			public Collection<Country> getCurrent() {
+				return getCurrentValue();
+			}
+		};
+		final Label currentValue = new Label("ajaxcountriesns", new PropertyModel<Collection<String>>(ajaxcountriesns, "current"));
+        add(currentValue.setOutputMarkupId(true));
+        
+		countries.getSettings().setMinimumInputLength(2);
+		ajaxcountriesns.add(new AjaxFormSubmitBehavior("change") {
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			protected void onSubmit(AjaxRequestTarget target) {
+				target.add(ajaxLblns, currentValue, ajaxcountriesns);
+			}
+			
+			@Override
+			public boolean getDefaultProcessing() {
+				return false;
+			}
+		});
+		add(new Form<Void>("multiajaxns").add(ajaxcountriesns.setOutputMarkupId(true)));
 	}
 
 	/**
