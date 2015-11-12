@@ -36,6 +36,8 @@ public class HomePage extends WebPage
 
 	private static final int PAGE_SIZE = 10;
 	@SuppressWarnings("unused")
+	private Country country0 = Country.US;
+	@SuppressWarnings("unused")
 	private Country country = Country.US;
 	@SuppressWarnings("unused")
 	private List<Country> countries = new ArrayList<>(Arrays.asList(new Country[] { Country.US, Country.CA }));
@@ -44,33 +46,35 @@ public class HomePage extends WebPage
 
 	public HomePage()
 	{
+		// single-select no minimum example
+		add(new Label("country0", new PropertyModel<>(this, "country0")));
+
+		Select2Choice<Country> country0 = new Select2Choice<>("country0", new PropertyModel<Country>(
+			this, "country0"), new CountriesProvider());
+		country0.getSettings().setPlaceholder("Please select country").setAllowClear(true);
+		add(new Form<Void>("single0").add(country0));
+
 		// single-select example
 		add(new Label("country", new PropertyModel<>(this, "country")));
 
-		Form<?> form = new Form<Void>("single");
-		add(form);
 
 		Select2Choice<Country> country = new Select2Choice<>("country", new PropertyModel<Country>(
 			this, "country"), new CountriesProvider());
 		country.getSettings().setMinimumInputLength(1).setPlaceholder("Please select country").setAllowClear(true);
-		form.add(country);
+		add(new Form<Void>("single").add(country));
 
 		// multi-select example
 		add(new Label("countries", new PropertyModel<>(this, "countries")));
 
-		Form<?> multi = new Form<Void>("multi");
-		add(multi);
-
 		Select2MultiChoice<Country> countries = new Select2MultiChoice<>("countries",
 			new PropertyModel<Collection<Country>>(this, "countries"), new CountriesProvider());
 		countries.getSettings().setMinimumInputLength(1);
-		multi.add(countries);
+		add(new Form<Void>("multi").add(countries));
 		
 		// ajax multi-select example
 		final Label ajaxLbl = new Label("ajaxcountries", new PropertyModel<>(this, "ajaxcountries"));
 		add(ajaxLbl.setOutputMarkupId(true));
 
-		Form<?> multiajax = new Form<Void>("multiajax");
 		Select2MultiChoice<Country> ajaxcountries = new Select2MultiChoice<>("ajaxcountries",
 				new PropertyModel<Collection<Country>>(this, "ajaxcountries"), new CountriesProvider());
 		countries.getSettings().setMinimumInputLength(2);
@@ -82,7 +86,7 @@ public class HomePage extends WebPage
 				target.add(ajaxLbl);
 			}
 		});
-		add(multiajax.add(ajaxcountries));
+		add(new Form<Void>("multiajax").add(ajaxcountries));
 	}
 
 	/**
@@ -101,7 +105,7 @@ public class HomePage extends WebPage
 	private static List<Country> queryMatches(String term, int page, int pageSize)
 	{
 		List<Country> result = new ArrayList<>();
-		term = term.toUpperCase();
+		term = term == null ? "" : term.toUpperCase();
 		final int offset = page * pageSize;
 
 		int matched = 0;

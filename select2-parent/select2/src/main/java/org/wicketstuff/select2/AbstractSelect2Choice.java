@@ -322,9 +322,7 @@ abstract class AbstractSelect2Choice<T, M> extends AbstractTextComponent<M> impl
 		page -= 1;
 
 		Response<T> response = new Response<>();
-		if (term != null) {
-			getProvider().query(term, page, response);
-		}
+		getProvider().query(term, page, response);
 
 		// jsonize and write out the choices to the response
 
