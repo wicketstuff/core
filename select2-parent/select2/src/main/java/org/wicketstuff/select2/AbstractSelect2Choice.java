@@ -150,7 +150,9 @@ abstract class AbstractSelect2Choice<T, M> extends AbstractTextComponent<M> impl
 	{
 		// AbstractSelect2Choice uses ChoiceProvider to convert IDS into objects.
 		// The #getConverter() method is not supported by Select2Choice.
-		setConvertedInput(convertValue(getInputAsArray()));
+		String[] inputAsArray = getInputAsArray();
+		M convertedInput = convertValue(inputAsArray);
+		setConvertedInput(convertedInput);
 		convertInputPerformed = true;
 	}
 
@@ -221,7 +223,12 @@ abstract class AbstractSelect2Choice<T, M> extends AbstractTextComponent<M> impl
 			else
 			{
 				String raw = getRawInput();
-				return raw == null ? null : convertValue(raw.split(FormComponent.VALUE_SEPARATOR));
+				M result = null;
+				if (raw != null) {
+					String[] values = raw.split(FormComponent.VALUE_SEPARATOR);
+					result = convertValue(values);
+				}
+				return result;
 			}
 		}
 		else

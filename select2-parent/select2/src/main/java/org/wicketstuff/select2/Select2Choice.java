@@ -12,8 +12,10 @@
  */
 package org.wicketstuff.select2;
 
+import java.util.Collection;
 import java.util.Collections;
 import java.util.Iterator;
+import java.util.List;
 
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.util.convert.ConversionException;
@@ -80,7 +82,9 @@ public class Select2Choice<T> extends AbstractSelect2Choice<T, T>
 	{
 		if (value != null && value.length > 0 && !Strings.isEmpty(value[0]))
 		{
-			Iterator<T> it = convertIdsToChoices(Collections.singletonList(value[0])).iterator();
+			List<String> ids = Collections.singletonList(value[0]);
+			Collection<T> choices = convertIdsToChoices(ids);
+			Iterator<T> it = choices.iterator();
 			return it.hasNext() ? it.next() : null;
 		}
 		else

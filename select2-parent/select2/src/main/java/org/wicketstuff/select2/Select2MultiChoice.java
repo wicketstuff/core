@@ -71,13 +71,12 @@ public class Select2MultiChoice<T> extends AbstractSelect2Choice<T, Collection<T
 		else
 		{
 			List<String> result = new ArrayList<>();
-			for (int i = 0; i < value.size(); ++i) {
-				StringValue v = value.get(i);
+			for (StringValue v : value) {
 				if (!v.isEmpty()) {
 					result.add(v.toString());
 				}
 			}
-			return result.toArray(new String[0]);
+			return result.toArray(new String[result.size()]);
 		}
 	}
 
