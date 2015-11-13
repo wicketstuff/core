@@ -15,7 +15,8 @@ package org.wicketstuff.select2;
 import org.apache.wicket.Application;
 import org.apache.wicket.MetaDataKey;
 import org.apache.wicket.protocol.http.WebApplication;
-import org.apache.wicket.request.resource.PackageResourceReference;
+import org.apache.wicket.request.resource.CssResourceReference;
+import org.apache.wicket.request.resource.JavaScriptResourceReference;
 import org.apache.wicket.request.resource.ResourceReference;
 
 /**
@@ -34,11 +35,11 @@ public class ApplicationSettings
 		private static final long serialVersionUID = 1L;
 	};
 
-	private ResourceReference javaScriptReference = new PackageResourceReference(
+	private ResourceReference javaScriptReference = new JavaScriptResourceReference(
 		ApplicationSettings.class, "res/js/select2.js");
-	private ResourceReference javaScriptReferenceFull = new PackageResourceReference(
+	private ResourceReference javaScriptReferenceFull = new JavaScriptResourceReference(
 		ApplicationSettings.class, "res/js/select2.full.js");
-	private ResourceReference cssReference = new PackageResourceReference(
+	private ResourceReference cssReference = new CssResourceReference(
 		ApplicationSettings.class, "res/css/select2.css");
 
 	private boolean includeJavascriptFull = true;
