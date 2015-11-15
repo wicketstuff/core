@@ -23,8 +23,13 @@ import org.apache.wicket.util.lang.Args;
 import com.googlecode.wicket.jquery.core.JQueryEvent;
 import com.googlecode.wicket.jquery.core.Options;
 import com.googlecode.wicket.jquery.core.ajax.IJQueryAjaxAware;
+import com.googlecode.wicket.jquery.core.ajax.JQueryAjaxBehavior;
 import com.googlecode.wicket.kendo.ui.KendoDataSource;
 import com.googlecode.wicket.kendo.ui.KendoUIBehavior;
+import com.googlecode.wicket.kendo.ui.datatable.DataSourceAjaxBehavior;
+import com.googlecode.wicket.kendo.ui.datatable.DataSourceEvent.CreateEvent;
+import com.googlecode.wicket.kendo.ui.datatable.DataSourceEvent.DeleteEvent;
+import com.googlecode.wicket.kendo.ui.datatable.DataSourceEvent.UpdateEvent;
 
 /**
  * Provides a {@value #METHOD} behavior
@@ -37,9 +42,12 @@ public abstract class ListViewBehavior extends KendoUIBehavior implements IJQuer
 
 	public static final String METHOD = "kendoListView";
 
-	@SuppressWarnings("unused")
 	private final IListViewListener listener;
 	private final KendoDataSource dataSource;
+
+	private JQueryAjaxBehavior onCreateAjaxBehavior;
+	private JQueryAjaxBehavior onUpdateAjaxBehavior;
+	private JQueryAjaxBehavior onDeleteAjaxBehavior;
 
 	/**
 	 * Constructor
@@ -70,12 +78,22 @@ public abstract class ListViewBehavior extends KendoUIBehavior implements IJQuer
 		this.add(this.dataSource);
 	}
 
-	// Events //
+	// Methods //
 
 	@Override
-	public void onAjax(AjaxRequestTarget target, JQueryEvent event)
+	public void bind(Component component)
 	{
-		// noop
+		super.bind(component);
+
+		// data source //
+		this.onCreateAjaxBehavior = this.newOnCreateAjaxBehavior(this);
+		component.add(this.onCreateAjaxBehavior);
+
+		this.onUpdateAjaxBehavior = this.newOnUpdateAjaxBehavior(this);
+		component.add(this.onUpdateAjaxBehavior);
+
+		this.onDeleteAjaxBehavior = this.newOnDeleteAjaxBehavior(this);
+		component.add(this.onDeleteAjaxBehavior);
 	}
 
 	// Properties //
@@ -129,6 +147,9 @@ public abstract class ListViewBehavior extends KendoUIBehavior implements IJQuer
 
 		this.dataSource.set("pageSize", this.getRowCount());
 		this.dataSource.setTransportRead(this.getReadCallbackFunction());
+		this.dataSource.setTransportCreate(this.onCreateAjaxBehavior.getCallbackFunction());
+		this.dataSource.setTransportUpdate(this.onUpdateAjaxBehavior.getCallbackFunction());
+		this.dataSource.setTransportDelete(this.onDeleteAjaxBehavior.getCallbackFunction());
 	}
 
 	/**
@@ -139,5 +160,86 @@ public abstract class ListViewBehavior extends KendoUIBehavior implements IJQuer
 	protected void onConfigure(KendoDataSource dataSource)
 	{
 		// noop
+	}
+
+	@Override
+	public void onAjax(AjaxRequestTarget target, JQueryEvent event)
+	{
+		if (event instanceof CreateEvent)
+		{
+			this.listener.onCreate(target, ((CreateEvent) event).getObject());
+		}
+
+		if (event instanceof UpdateEvent)
+		{
+			this.listener.onUpdate(target, ((UpdateEvent) event).getObject());
+		}
+
+		if (event instanceof DeleteEvent)
+		{
+			this.listener.onDelete(target, ((DeleteEvent) event).getObject());
+		}
+	}
+
+	// Factories //
+
+	/**
+	 * Gets a new {@link JQueryAjaxBehavior} that will be wired to the datasource's 'create' event
+	 *
+	 * @param source the {@link IJQueryAjaxAware}
+	 * @return a new {@link DataSourceAjaxBehavior} by default
+	 */
+	protected JQueryAjaxBehavior newOnCreateAjaxBehavior(IJQueryAjaxAware source)
+	{
+		return new DataSourceAjaxBehavior(source) {
+
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			protected JQueryEvent newEvent()
+			{
+				return new CreateEvent();
+			}
+		};
+	}
+
+	/**
+	 * Gets a new {@link JQueryAjaxBehavior} that will be wired to the datasource's 'update' event
+	 *
+	 * @param source the {@link IJQueryAjaxAware}
+	 * @return a new {@link DataSourceAjaxBehavior} by default
+	 */
+	protected JQueryAjaxBehavior newOnUpdateAjaxBehavior(IJQueryAjaxAware source)
+	{
+		return new DataSourceAjaxBehavior(source) {
+
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			protected JQueryEvent newEvent()
+			{
+				return new UpdateEvent();
+			}
+		};
+	}
+
+	/**
+	 * Gets a new {@link JQueryAjaxBehavior} that will be wired to the datasource's 'delete' event
+	 *
+	 * @param source the {@link IJQueryAjaxAware}
+	 * @return a new {@link DataSourceAjaxBehavior} by default
+	 */
+	protected JQueryAjaxBehavior newOnDeleteAjaxBehavior(IJQueryAjaxAware source)
+	{
+		return new DataSourceAjaxBehavior(source) {
+
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			protected JQueryEvent newEvent()
+			{
+				return new DeleteEvent();
+			}
+		};
 	}
 }

@@ -41,4 +41,26 @@ public class DataSourceEvent extends JQueryEvent
 	{
 		return this.object;
 	}
+
+
+	/**
+	 * Provides an event object that will be broadcasted by the {@link DataSourceAjaxBehavior} 'create' callback
+	 */
+	public static class CreateEvent extends DataSourceEvent
+	{
+	}
+
+	/**
+	 * Provides an event object that will be broadcasted by the {@link DataSourceAjaxBehavior} 'update' callback
+	 */
+	public static class UpdateEvent extends DataSourceEvent
+	{
+	}
+
+	/**
+	 * Provides an event object that will be broadcasted by the {@link DataSourceAjaxBehavior} 'delete' callback
+	 */
+	public static class DeleteEvent extends DataSourceEvent
+	{
+	}
 }

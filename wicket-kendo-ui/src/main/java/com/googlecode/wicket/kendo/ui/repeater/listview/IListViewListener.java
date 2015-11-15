@@ -16,6 +16,8 @@
  */
 package com.googlecode.wicket.kendo.ui.repeater.listview;
 
+import org.apache.wicket.ajax.AjaxRequestTarget;
+import org.apache.wicket.ajax.json.JSONObject;
 import org.apache.wicket.util.io.IClusterable;
 
 import com.googlecode.wicket.kendo.ui.repeater.dataview.DataView;
@@ -27,4 +29,27 @@ import com.googlecode.wicket.kendo.ui.repeater.dataview.DataView;
  */
 public interface IListViewListener extends IClusterable
 {
+	/**
+	 * Triggered when datasource 'create' function is raised
+	 * 
+	 * @param target the {@link AjaxRequestTarget}
+	 * @param object the {@link JSONObject} holding the row data
+	 */
+	void onCreate(AjaxRequestTarget target, JSONObject object);
+
+	/**
+	 * Triggered when datasource 'update' function is raised
+	 * 
+	 * @param target the {@link AjaxRequestTarget}
+	 * @param object the {@link JSONObject} holding the row data
+	 */
+	void onUpdate(AjaxRequestTarget target, JSONObject object);
+
+	/**
+	 * Triggered when datasource 'destroy' function is raised
+	 * 
+	 * @param target the {@link AjaxRequestTarget}
+	 * @param object the {@link JSONObject} holding the row data
+	 */
+	void onDelete(AjaxRequestTarget target, JSONObject object);
 }

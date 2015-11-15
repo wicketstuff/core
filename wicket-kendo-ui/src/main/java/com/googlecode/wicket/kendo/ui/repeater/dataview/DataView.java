@@ -16,6 +16,8 @@
  */
 package com.googlecode.wicket.kendo.ui.repeater.dataview;
 
+import org.apache.wicket.ajax.AjaxRequestTarget;
+import org.apache.wicket.ajax.json.JSONObject;
 import org.apache.wicket.behavior.AbstractAjaxBehavior;
 import org.apache.wicket.core.request.handler.IPartialPageRequestHandler;
 import org.apache.wicket.markup.html.WebMarkupContainer;
@@ -156,42 +158,13 @@ public class DataView<T> extends WebMarkupContainer implements IJQueryWidget, IL
 	}
 
 	/**
-	 * Resets the dataSource to the first page
-	 *
-	 * @param handler the {@link IPartialPageRequestHandler}
-	 */
-	public void reset(IPartialPageRequestHandler handler)
-	{
-		handler.appendJavaScript(String.format("var $w = %s; if ($w) { $w.dataSource.page(1); }", this.widget()));
-	}
-
-	/**
 	 * Reloads the {@link DataView}<br/>
 	 * Equivalent to {@code handler.add(table)}
 	 *
 	 * @param handler the {@link IPartialPageRequestHandler}
-	 * @see DataView#reset(IPartialPageRequestHandler)
 	 */
 	public void reload(IPartialPageRequestHandler handler)
 	{
-		this.reload(handler, false);
-	}
-
-	/**
-	 * Reloads the {@link DataView}<br/>
-	 * If {@code reset} is {@code true}, equivalent to {@code #reset(IPartialPageRequestHandler)} + {@code handler.add(table)}
-	 *
-	 * @param handler the {@link IPartialPageRequestHandler}
-	 * @param reset whether to call reset or not
-	 * @see DataView#reset(IPartialPageRequestHandler)
-	 */
-	public void reload(IPartialPageRequestHandler handler, boolean reset)
-	{
-		if (reset)
-		{
-			this.reset(handler);
-		}
-
 		handler.add(this);
 	}
 
@@ -300,6 +273,24 @@ public class DataView<T> extends WebMarkupContainer implements IJQueryWidget, IL
 	 * @param handler the {@link IPartialPageRequestHandler}
 	 */
 	public void onHide(IPartialPageRequestHandler handler)
+	{
+		// noop
+	}
+
+	@Override
+	public void onCreate(AjaxRequestTarget target, JSONObject object)
+	{
+		// noop
+	}
+
+	@Override
+	public void onUpdate(AjaxRequestTarget target, JSONObject object)
+	{
+		// noop
+	}
+
+	@Override
+	public void onDelete(AjaxRequestTarget target, JSONObject object)
 	{
 		// noop
 	}

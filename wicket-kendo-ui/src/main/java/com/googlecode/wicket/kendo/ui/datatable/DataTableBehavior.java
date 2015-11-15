@@ -32,6 +32,9 @@ import com.googlecode.wicket.jquery.core.ajax.IJQueryAjaxAware;
 import com.googlecode.wicket.jquery.core.ajax.JQueryAjaxBehavior;
 import com.googlecode.wicket.kendo.ui.KendoDataSource;
 import com.googlecode.wicket.kendo.ui.KendoUIBehavior;
+import com.googlecode.wicket.kendo.ui.datatable.DataSourceEvent.CreateEvent;
+import com.googlecode.wicket.kendo.ui.datatable.DataSourceEvent.DeleteEvent;
+import com.googlecode.wicket.kendo.ui.datatable.DataSourceEvent.UpdateEvent;
 import com.googlecode.wicket.kendo.ui.datatable.button.CommandAjaxBehavior;
 import com.googlecode.wicket.kendo.ui.datatable.button.CommandAjaxBehavior.ClickEvent;
 import com.googlecode.wicket.kendo.ui.datatable.button.CommandButton;
@@ -568,57 +571,9 @@ public abstract class DataTableBehavior extends KendoUIBehavior implements IJQue
 	 */
 	protected abstract JQueryAjaxBehavior newCommandAjaxBehavior(IJQueryAjaxAware source, CommandButton button);
 
-	// Ajax classes //
-
-	/**
-	 * Provides a {@link JQueryAjaxBehavior} for handling datasource operations
-	 */
-	protected abstract class DataSourceAjaxBehavior extends JQueryAjaxBehavior
-	{
-		private static final long serialVersionUID = 1L;
-
-		public DataSourceAjaxBehavior(IJQueryAjaxAware source)
-		{
-			super(source);
-		}
-
-		@Override
-		protected CallbackParameter[] getCallbackParameters()
-		{
-			return new CallbackParameter[] { CallbackParameter.context("e"), CallbackParameter.resolved("data", "kendo.stringify(e.data)") };
-		}
-
-		@Override
-		public CharSequence getCallbackFunctionBody(CallbackParameter... parameters)
-		{
-			return super.getCallbackFunctionBody(parameters) + " e.success();";
-		}
-	}
-
 	// Event object //
 
 	protected static class CancelEvent extends JQueryEvent
-	{
-	}
-
-	/**
-	 * Provides an event object that will be broadcasted by the {@link DataSourceAjaxBehavior} 'create' callback
-	 */
-	protected static class CreateEvent extends DataSourceEvent
-	{
-	}
-
-	/**
-	 * Provides an event object that will be broadcasted by the {@link DataSourceAjaxBehavior} 'update' callback
-	 */
-	protected static class UpdateEvent extends DataSourceEvent
-	{
-	}
-
-	/**
-	 * Provides an event object that will be broadcasted by the {@link DataSourceAjaxBehavior} 'delete' callback
-	 */
-	protected static class DeleteEvent extends DataSourceEvent
 	{
 	}
 }
