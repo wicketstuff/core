@@ -29,7 +29,6 @@ public class AppNavBar extends Navbar {
                         .setIconType(GlyphIconType.home),
                 new NavbarButton<Void>(SimplePage.class, Model.of("Simple")),
                 new NavbarButton<Void>(OsmPage.class, Model.of("OpenStreetMap")),
-                new NavbarButton<Void>(BingPage.class, Model.of("Bing")),
                 new NavbarButton<Void>(MarkerPage.class, Model.of("Marker")),
                 new NavbarButton<Void>(ModifyPage.class, Model.of("Modify")),
                 new NavbarButton<Void>(PopoverPage.class, Model.of("Popover")),
