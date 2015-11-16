@@ -7,12 +7,12 @@ import java.io.Serializable;
 /**
  * Provides an object that models a format for specifying feature data.
  */
-public abstract class Feature extends JavascriptObject implements Serializable {
+public abstract class FeatureFormat extends JavascriptObject implements Serializable {
 
     /**
      * Creates a new instance.
      */
-    public Feature() {
+    public FeatureFormat() {
         super();
     }
 

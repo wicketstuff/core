@@ -37,16 +37,16 @@ window.org_wicketstuff_openlayers3['map_${componentId}'].getView().on('propertyc
         coordinateRaw, window.org_wicketstuff_openlayers3['map_${componentId}'].getView().getProjection(), '${projection}');
       }
 
-      var values = {};
+      var valuesOut = {};
       feature.getKeys().forEach(function(key) {
           if(key != 'geometry') {
-              values[key] = feature.get(key);
+              valuesOut[key] = feature.get(key);
           } else {
-              values[key] = coordinateHdms;
+              valuesOut[key] = coordinateHdms;
           }
       });
 
-      features.push(values);
+      features.push(valuesOut);
   });
 
   ${callbackFunctionName}(JSON.stringify(view), JSON.stringify(features));

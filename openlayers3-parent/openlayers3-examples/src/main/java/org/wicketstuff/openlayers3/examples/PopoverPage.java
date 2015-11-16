@@ -11,7 +11,7 @@ import org.wicketstuff.openlayers3.api.coordinate.LongLat;
 import org.wicketstuff.openlayers3.api.layer.Layer;
 import org.wicketstuff.openlayers3.api.layer.Tile;
 import org.wicketstuff.openlayers3.api.overlay.Overlay;
-import org.wicketstuff.openlayers3.api.source.Osm;
+import org.wicketstuff.openlayers3.api.source.tile.Osm;
 import org.wicketstuff.openlayers3.api.util.Color;
 import org.wicketstuff.openlayers3.behavior.ClickHandler;
 import org.wicketstuff.openlayers3.component.MarkerPopover;

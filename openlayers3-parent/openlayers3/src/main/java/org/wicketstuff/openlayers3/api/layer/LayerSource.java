@@ -1,4 +1,4 @@
-package org.wicketstuff.openlayers3.api.source;
+package org.wicketstuff.openlayers3.api.layer;
 
 import org.wicketstuff.openlayers3.api.JavascriptObject;
 
@@ -7,12 +7,12 @@ import java.io.Serializable;
 /**
  * Provides an object that models a source of map data.
  */
-public abstract class Source extends JavascriptObject implements Serializable {
+public abstract class LayerSource extends JavascriptObject implements Serializable {
 
     /**
      * Creates a new instance.
      */
-    public Source() {
+    public LayerSource() {
         super();
     }
 

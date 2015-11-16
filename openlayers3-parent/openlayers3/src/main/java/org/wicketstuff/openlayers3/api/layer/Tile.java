@@ -1,11 +1,16 @@
 package org.wicketstuff.openlayers3.api.layer;
 
-import org.wicketstuff.openlayers3.api.source.Source;
+import org.wicketstuff.openlayers3.api.source.tile.TileSource;
 
 /**
  * Provides an object that models a tile layer.
  */
 public class Tile extends Layer {
+
+    /**
+     * Tile source for this layer.
+     */
+    private TileSource source;
 
     /**
      * The title for this layer.
@@ -18,7 +23,7 @@ public class Tile extends Layer {
      * @param source
      *         The source of data for this layer
      */
-    public Tile(Source source) {
+    public Tile(TileSource source) {
         this(null, source);
     }
 
@@ -30,7 +35,7 @@ public class Tile extends Layer {
      * @param source
      *         The source of data for this layer
      */
-    public Tile(String title, Source source) {
+    public Tile(String title, TileSource source) {
         super();
 
         this.title = title;
@@ -69,14 +74,31 @@ public class Tile extends Layer {
     }
 
     /**
+     * Returns the source for this tile layer.
+     *
+     * @return Source for the layer
+     */
+    public TileSource getSource() {
+        return source;
+    }
+
+    /**
+     * Sets the source for this tile layer.
+     *
+     * @param source Source for the layer
+     */
+    public void setSource(TileSource source) {
+        this.source = source;
+    }
+
+    /**
      * Sets the source for this layer.
      *
      * @param source
      *         New value
      * @return this instance
      */
-    @Override
-    public Tile source(Source source) {
+    public Tile source(TileSource source) {
         setSource(source);
         return this;
     }

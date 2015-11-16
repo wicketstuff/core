@@ -1,4 +1,4 @@
-package org.wicketstuff.openlayers3.api.source;
+package org.wicketstuff.openlayers3.api.source.tile;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -9,7 +9,7 @@ import java.util.Map;
 /**
  * Provides an object that models a Web Map Service (WMS) data source that provides images divided into a tile grid.
  */
-public class TileWms extends Source {
+public class TileWms extends TileSource {
 
     /**
      * The URL providing the tiles for this map data source.

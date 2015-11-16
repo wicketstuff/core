@@ -1,9 +1,9 @@
-package org.wicketstuff.openlayers3.api.source;
+package org.wicketstuff.openlayers3.api.source.tile;
 
 /**
  * Provides an object that models a Bing Maps source of map data.
  */
-public class BingMaps extends Source {
+public class BingMaps extends TileSource {
 
     /**
      * Default culture for new instances.

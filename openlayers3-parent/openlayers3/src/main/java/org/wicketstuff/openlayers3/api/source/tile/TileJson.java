@@ -1,11 +1,11 @@
-package org.wicketstuff.openlayers3.api.source;
+package org.wicketstuff.openlayers3.api.source.tile;
 
 import org.wicketstuff.openlayers3.api.util.CorsPolicy;
 
 /**
  * Provides an object that models a TileJSON source of map data.
  */
-public class TileJson extends Source {
+public class TileJson extends TileSource {
 
     /**
      * URL providing the tiles for this source.

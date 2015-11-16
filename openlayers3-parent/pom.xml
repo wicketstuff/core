@@ -40,7 +40,7 @@
       <dependency>
         <groupId>org.webjars</groupId>
         <artifactId>openlayers</artifactId>
-        <version>3.2.0</version>
+        <version>3.10.1</version>
       </dependency>
     </dependencies>
   </dependencyManagement>

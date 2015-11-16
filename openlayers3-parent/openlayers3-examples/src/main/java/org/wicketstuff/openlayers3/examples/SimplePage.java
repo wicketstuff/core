@@ -9,7 +9,8 @@ import org.wicketstuff.openlayers3.api.View;
 import org.wicketstuff.openlayers3.api.coordinate.Coordinate;
 import org.wicketstuff.openlayers3.api.layer.Layer;
 import org.wicketstuff.openlayers3.api.layer.Tile;
-import org.wicketstuff.openlayers3.api.source.TileWms;
+import org.wicketstuff.openlayers3.api.source.tile.Osm;
+import org.wicketstuff.openlayers3.api.source.tile.TileWms;
 import org.wicketstuff.openlayers3.examples.base.BasePage;
 
 import java.util.Arrays;
@@ -34,13 +35,10 @@ public class SimplePage extends BasePage {
                         Arrays.<Layer>asList(
 
                                 // a new tile layer with the map of the world
-                                new Tile("Global Imagery",
+                                new Tile("Open Street Maps",
 
                                         // a new web map service tile layer
-                                        new TileWms("http://maps.opengeo.org/geowebcache/service/wms",
-
-                                                // options for the layer
-                                                ImmutableMap.of("LAYERS", "bluemarble", "VERSION", "1.1.1")))),
+                                        new Osm())),
 
                         // view for this map
                         new View(new Coordinate(0, 0), 2)))));

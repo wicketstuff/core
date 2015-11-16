@@ -21,10 +21,10 @@ import org.wicketstuff.openlayers3.api.layer.Tile;
 import org.wicketstuff.openlayers3.api.layer.Vector;
 import org.wicketstuff.openlayers3.api.overlay.Overlay;
 import org.wicketstuff.openlayers3.api.proj.Projection;
-import org.wicketstuff.openlayers3.api.source.Cluster;
-import org.wicketstuff.openlayers3.api.source.Osm;
-import org.wicketstuff.openlayers3.api.source.ServerVector;
-import org.wicketstuff.openlayers3.api.source.loader.DefaultGeoJsonLoader;
+import org.wicketstuff.openlayers3.api.source.vector.Cluster;
+import org.wicketstuff.openlayers3.api.source.tile.Osm;
+import org.wicketstuff.openlayers3.api.source.vector.VectorSource;
+import org.wicketstuff.openlayers3.api.source.vector.loader.DefaultGeoJsonLoader;
 import org.wicketstuff.openlayers3.api.style.*;
 import org.wicketstuff.openlayers3.api.util.Color;
 import org.wicketstuff.openlayers3.behavior.ClickFeatureHandler;
@@ -100,10 +100,11 @@ public class ClusterPage extends BasePage {
                                 cluster = new Vector(
 
                                         // our cluster data source
-                                        new Cluster(40,
+                                        new Cluster(new GeoJsonFormat(), new Projection("EPSG:3857", "degrees", "nue"),
+                                                40,
 
                                                 // vector data source for calculating clusters
-                                                new ServerVector(new GeoJsonFormat(),
+                                                new VectorSource(new GeoJsonFormat(),
                                                         new DefaultGeoJsonLoader(
                                                                 "http://mhc-macris.net:8080/geoserver/ows?"
                                                                         + "service=WFS"

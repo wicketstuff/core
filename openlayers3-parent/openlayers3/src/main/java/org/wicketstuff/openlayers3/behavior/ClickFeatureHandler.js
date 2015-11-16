@@ -18,11 +18,11 @@ window.org_wicketstuff_openlayers3['map_${componentId}'].on('click', function(ev
            coordinateRaw, window.org_wicketstuff_openlayers3['map_${componentId}'].getView().getProjection(), '${projection}');
      }
 
-     var values = {};
+     var valuesOut = {};
      feature.getKeys().forEach(function(key) {
 
          if(key == 'geometry') {
-             values[key] = coordinateHdms;
+             valuesOut[key] = coordinateHdms;
          } else if(key == 'features') {
 
              var featuresOut = [];
@@ -30,13 +30,13 @@ window.org_wicketstuff_openlayers3['map_${componentId}'].on('click', function(ev
                featuresOut.push(convertFeature(featureThis));
              });
 
-             values[key] = featuresOut;
+             valuesOut[key] = featuresOut;
          } else {
-             values[key] = feature.get(key);
+             valuesOut[key] = feature.get(key);
          }
      });
 
-     return values;
+     return valuesOut;
    };
 
    var feature = window.org_wicketstuff_openlayers3['map_${componentId}'].forEachFeatureAtPixel(event.pixel,
@@ -46,8 +46,8 @@ window.org_wicketstuff_openlayers3['map_${componentId}'].on('click', function(ev
 
     if(feature) {
 
-      var values = convertFeature(feature);
-      clickFeatureHandler_${componentId}_${clickHandlerId}(feature.get('id'), values["geometry"], JSON.stringify(values));
+      var valuesOut = convertFeature(feature);
+      clickFeatureHandler_${componentId}_${clickHandlerId}(feature.get('id'), valuesOut["geometry"], JSON.stringify(valuesOut));
     } else {
 
         var coordinateRaw = event.coordinate;

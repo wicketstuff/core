@@ -1,6 +1,6 @@
-package org.wicketstuff.openlayers3.api.source.loader;
+package org.wicketstuff.openlayers3.api.source.vector.loader;
 
-import org.wicketstuff.openlayers3.api.source.Source;
+import org.wicketstuff.openlayers3.api.source.vector.VectorSource;
 
 import java.io.Serializable;
 
@@ -170,7 +170,7 @@ public class DefaultGeoJsonLoader extends Loader implements Serializable {
     }
 
     @Override
-    public DefaultGeoJsonLoader source(Source source) {
+    public DefaultGeoJsonLoader source(VectorSource source) {
         setSource(source);
         return this;
     }
@@ -183,8 +183,10 @@ public class DefaultGeoJsonLoader extends Loader implements Serializable {
     public String renderBeforeConstructorJs() {
         StringBuilder builder = new StringBuilder();
         builder.append(getJsIdWithSuffix("_loadFeatures") + " = function(response) {");
-        builder.append("  " + getSource().getJsId() + ".addFeatures(" + getSource().getJsId()
-                + ".readFeatures(response));");
+        builder.append("var format = new ol.format.GeoJSON(); \n");
+        builder.append("var projectionFeatures = new ol.proj.Projection({'code': '" + projection + "','units': 'degress','axisOrientation': 'nue',}); \n");
+        builder.append("var features  = format.readFeatures(response, { 'featureProjection': projectionFeatures }); \n");
+        builder.append(getSource().getJsId() + ".addFeatures(features); \n");
 
         if (vectorFeatureDataLoadedListener != null) {
 
@@ -214,8 +216,9 @@ public class DefaultGeoJsonLoader extends Loader implements Serializable {
         builder.append("function(extent, resolution, projection) {\n");
         builder.append("var url = \"" + url + "&outputFormat=text/javascript");
         builder.append("&format_options=callback:" + getJsIdWithSuffix("_loadFeatures") + "&srsname=" + projection);
-        builder.append("&bbox=\" + extent.join(\",\") + \"," + projection + "\";\n");
-        builder.append("$.ajax({ 'url': url, 'dataType': 'jsonp', 'jsonp': false, 'type': 'GET', 'async': false,});");
+        builder.append("&bbox=\" + extent.join(\",\") + \"," + projection);
+        builder.append("&srsname=" + projection + "\";\n");
+        builder.append("$.ajax({ 'url': url, 'dataType': 'jsonp', 'jsonp': false, 'type': 'GET', 'async': false,}); \n");
         builder.append("}\n");
 
         return builder.toString();

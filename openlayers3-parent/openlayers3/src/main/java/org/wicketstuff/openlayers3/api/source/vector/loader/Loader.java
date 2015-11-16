@@ -1,8 +1,8 @@
-package org.wicketstuff.openlayers3.api.source.loader;
+package org.wicketstuff.openlayers3.api.source.vector.loader;
 
 
 import org.wicketstuff.openlayers3.api.JavascriptObject;
-import org.wicketstuff.openlayers3.api.source.Source;
+import org.wicketstuff.openlayers3.api.source.vector.VectorSource;
 
 /**
  * Provides an object that models a vector source loading strategy.
@@ -12,7 +12,7 @@ public abstract class Loader extends JavascriptObject {
     /**
      * The data source that will store the loaded features.
      */
-    private Source source;
+    private VectorSource source;
 
     /**
      * Creates a new instance.
@@ -28,7 +28,7 @@ public abstract class Loader extends JavascriptObject {
      *         New value
      * @return This instance
      */
-    public Loader source(final Source source) {
+    public Loader source(final VectorSource source) {
         this.source = source;
         return this;
     }
@@ -38,7 +38,7 @@ public abstract class Loader extends JavascriptObject {
      *
      * @return New value
      */
-    public Source getSource() {
+    public VectorSource getSource() {
         return source;
     }
 
@@ -48,7 +48,7 @@ public abstract class Loader extends JavascriptObject {
      * @param source
      *         New value
      */
-    public void setSource(Source source) {
+    public void setSource(VectorSource source) {
         this.source = source;
     }
 }

@@ -9,16 +9,16 @@ dataLoadedHandler_${dataLoaderId} = function(source) {
         var coordinateRaw = feature.getGeometry().getCoordinates();
         var coordinateHdms = coordinateRaw;
 
-        var values = {};
+        var valuesOut = {};
         feature.getKeys().forEach(function(key) {
             if(key != 'geometry') {
-                values[key] = feature.get(key);
+                valuesOut[key] = feature.get(key);
             } else {
-                values[key] = coordinateHdms;
+                valuesOut[key] = coordinateHdms;
             }
         });
 
-        features.push(values);
+        features.push(valuesOut);
     });
 
     Wicket.Ajax.post(

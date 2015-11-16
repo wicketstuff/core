@@ -35,11 +35,11 @@ var convertFeature = function(feature) {
             coordinateRaw, window.org_wicketstuff_openlayers3['map_${componentId}'].getView().getProjection(), '${projection}');
     }
 
-    var values = {};
+    var valuesOut = {};
     feature.getKeys().forEach(function(key) {
 
         if(key == 'geometry') {
-            values[key] = coordinateHdms;
+            valuesOut[key] = coordinateHdms;
         } else if(key == 'features') {
 
             var featuresOut = [];
@@ -47,13 +47,13 @@ var convertFeature = function(feature) {
                 featuresOut.push(convertFeature(featureThis));
             });
 
-            values[key] = featuresOut;
+            valuesOut[key] = featuresOut;
         } else {
-            values[key] = feature.get(key);
+            valuesOut[key] = feature.get(key);
         }
     });
 
-    return values;
+    return valuesOut;
 };
 
 /**
@@ -71,8 +71,8 @@ var restartTimeout = function() {
    window.org_wicketstuff_openlayers3['updateTimerChangeFeatureHandler_${componentId}_${changeHandlerId}'] = window.setTimeout(function() {
        console.log("Firing timer!");
        clearTimeout( window.updateTimerChangeFeatureHandler_${componentId}_${changeHandlerId});
-       var values = convertFeature(${featureId});
-       changeFeatureHandler_${componentId}_${changeHandlerId}(${featureId}, values["geometry"], JSON.stringify(values));
+       var valuesOut = convertFeature(${featureId});
+       changeFeatureHandler_${componentId}_${changeHandlerId}(${featureId}, valuesOut["geometry"], JSON.stringify(valuesOut));
     }, 500);
 };
 

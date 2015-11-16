@@ -8,11 +8,10 @@ import org.wicketstuff.openlayers3.DefaultOpenLayersMap;
 import org.wicketstuff.openlayers3.api.Extent;
 import org.wicketstuff.openlayers3.api.Map;
 import org.wicketstuff.openlayers3.api.View;
-import org.wicketstuff.openlayers3.api.coordinate.Coordinate;
 import org.wicketstuff.openlayers3.api.coordinate.LongLat;
 import org.wicketstuff.openlayers3.api.layer.Layer;
 import org.wicketstuff.openlayers3.api.layer.Tile;
-import org.wicketstuff.openlayers3.api.source.Osm;
+import org.wicketstuff.openlayers3.api.source.tile.Osm;
 import org.wicketstuff.openlayers3.examples.base.BasePage;
 
 /**

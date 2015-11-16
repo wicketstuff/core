@@ -1,9 +1,11 @@
-package org.wicketstuff.openlayers3.api.source;
+package org.wicketstuff.openlayers3.api.source.tile;
+
+import org.wicketstuff.openlayers3.api.source.tile.TileSource;
 
 /**
  * Provides an object that models an OpenStreetMap source of map data.
  */
-public class Osm extends Source {
+public class Osm extends TileSource {
 
     /**
      * Creates a new instance.

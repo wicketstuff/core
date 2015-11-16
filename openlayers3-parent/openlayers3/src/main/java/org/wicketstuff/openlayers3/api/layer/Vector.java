@@ -2,8 +2,7 @@ package org.wicketstuff.openlayers3.api.layer;
 
 import com.google.gson.JsonArray;
 import org.apache.wicket.ajax.AjaxRequestTarget;
-import org.wicketstuff.openlayers3.api.source.ServerVector;
-import org.wicketstuff.openlayers3.api.source.Source;
+import org.wicketstuff.openlayers3.api.source.vector.VectorSource;
 import org.wicketstuff.openlayers3.api.style.ClusterStyle;
 import org.wicketstuff.openlayers3.api.style.Style;
 
@@ -16,6 +15,11 @@ import java.util.List;
 public class Vector extends Layer {
 
     /**
+     * The source for the data for this layer.
+     */
+    private VectorSource source;
+
+    /**
      * List of listeners, these will be notified that data is loaded and receive that data.
      */
     private List<VectorFeatureDataLoadedListener> dataLoadedListeners =
@@ -25,7 +29,6 @@ public class Vector extends Layer {
      * List of listeners, these will be notified that data is loaded.
      */
     private List<VectorFeaturesLoadedListener> loadedListeners = new ArrayList<VectorFeaturesLoadedListener>();
-
 
     /**
      * Style for the vector layer.
@@ -43,7 +46,7 @@ public class Vector extends Layer {
      * @param source
      *         Source of data for this layer
      */
-    public Vector(Source source) {
+    public Vector(VectorSource source) {
         this(source, null, null);
     }
 
@@ -55,7 +58,7 @@ public class Vector extends Layer {
      * @param style
      *         Style used when drawing features
      */
-    public Vector(Source source, Style style) {
+    public Vector(VectorSource source, Style style) {
         super();
 
         setSource(source);
@@ -70,15 +73,55 @@ public class Vector extends Layer {
      * @param clusterStyle
      *         Style used when drawing features
      */
-    public Vector(Source source, ClusterStyle clusterStyle) {
+    public Vector(VectorSource source, ClusterStyle clusterStyle) {
         setSource(source);
         this.clusterStyle = clusterStyle;
     }
 
-    private Vector(Source source, Style style, ClusterStyle clusterStyle) {
+    /**
+     * Creates a new instance.
+     *
+     * @param source
+     *         Source of the data for this layer
+     * @param style
+     *         Style used when drawing features
+     * @param clusterStyle
+     *         Style used for drawing clustered features
+     */
+    private Vector(VectorSource source, Style style, ClusterStyle clusterStyle) {
         setSource(source);
         this.style = style;
         this.clusterStyle = clusterStyle;
+    }
+
+    /**
+     * Returns the source for this layer.
+     *
+     * @return Source for this layer
+     */
+    public VectorSource getSource() {
+        return source;
+    }
+
+    /**
+     * Sets the source for this layer.
+     *
+     * @param source
+     *         New value
+     */
+    public void setSource(VectorSource source) {
+        this.source = source;
+    }
+
+    /**
+     * Sets the source for this layer.
+     *
+     * @param source Source for the layer
+     * @return This layer instance
+     */
+    public Vector source(VectorSource source) {
+        this.setSource(source);
+        return this;
     }
 
     /**
@@ -160,10 +203,20 @@ public class Vector extends Layer {
         return this;
     }
 
+    /**
+     * Returns the list of feature data loaded listeners.
+     *
+     * @return List of listeners
+     */
     public List<VectorFeatureDataLoadedListener> getFeatureDataLoadedListeners() {
         return dataLoadedListeners;
     }
 
+    /**
+     * Returns the list of features loaded listeners.
+     *
+     * @return List of listeners
+     */
     public List<VectorFeaturesLoadedListener> getFeaturesLoadedListeners() {
         return loadedListeners;
     }
@@ -195,12 +248,6 @@ public class Vector extends Layer {
     }
 
     @Override
-    public Vector source(Source source) {
-        this.setSource(source);
-        return this;
-    }
-
-    @Override
     public String getJsType() {
         return "ol.layer.Vector";
     }
@@ -213,7 +260,7 @@ public class Vector extends Layer {
 
         builder.append("'id': \"" + getJsId() + "\",");
 
-        if (getSource() instanceof ServerVector) {
+        if (getSource() instanceof VectorSource) {
             builder.append("'source': " + getSource().getJsId() + ",");
         } else {
             builder.append("'source': new " + getSource().getJsType() + "(");

@@ -20,9 +20,9 @@ import org.wicketstuff.openlayers3.api.layer.Tile;
 import org.wicketstuff.openlayers3.api.layer.Vector;
 import org.wicketstuff.openlayers3.api.overlay.Overlay;
 import org.wicketstuff.openlayers3.api.proj.Projection;
-import org.wicketstuff.openlayers3.api.source.Osm;
-import org.wicketstuff.openlayers3.api.source.ServerVector;
-import org.wicketstuff.openlayers3.api.source.loader.DefaultGeoJsonLoader;
+import org.wicketstuff.openlayers3.api.source.tile.Osm;
+import org.wicketstuff.openlayers3.api.source.vector.VectorSource;
+import org.wicketstuff.openlayers3.api.source.vector.loader.DefaultGeoJsonLoader;
 import org.wicketstuff.openlayers3.api.style.Icon;
 import org.wicketstuff.openlayers3.api.style.Style;
 import org.wicketstuff.openlayers3.api.util.Color;
@@ -101,7 +101,7 @@ public class WfsPage extends BasePage {
                                         new Osm()),
 
                                 // add our vector layer with the data
-                                vectorLayer = new Vector(new ServerVector(new GeoJsonFormat(),
+                                vectorLayer = new Vector(new VectorSource(new GeoJsonFormat(),
                                         new DefaultGeoJsonLoader(
                                                 "http://mhc-macris.net:8080/geoserver/ows?service=WFS"
                                                         + "&version=1.0.0&request=GetFeature&typeName=MHC:in_pts"

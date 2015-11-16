@@ -17,12 +17,11 @@ import org.wicketstuff.openlayers3.api.geometry.Point;
 import org.wicketstuff.openlayers3.api.interaction.Interaction;
 import org.wicketstuff.openlayers3.api.layer.Layer;
 import org.wicketstuff.openlayers3.api.layer.Vector;
-import org.wicketstuff.openlayers3.api.source.Cluster;
-import org.wicketstuff.openlayers3.api.source.ServerVector;
-import org.wicketstuff.openlayers3.api.source.VectorSource;
-import org.wicketstuff.openlayers3.api.source.loader.DefaultGeoJsonLoader;
-import org.wicketstuff.openlayers3.api.source.loader.VectorFeatureDataLoadedListener;
-import org.wicketstuff.openlayers3.api.source.loader.VectorFeaturesLoadedListener;
+import org.wicketstuff.openlayers3.api.source.vector.Cluster;
+import org.wicketstuff.openlayers3.api.source.vector.VectorSource;
+import org.wicketstuff.openlayers3.api.source.vector.loader.DefaultGeoJsonLoader;
+import org.wicketstuff.openlayers3.api.source.vector.loader.VectorFeatureDataLoadedListener;
+import org.wicketstuff.openlayers3.api.source.vector.loader.VectorFeaturesLoadedListener;
 
 import com.google.gson.JsonArray;
 
@@ -234,61 +233,45 @@ public abstract class OpenLayersMap extends GenericPanel<Map> {
             for (Layer layer : map.getLayers()) {
 
                 // create vector data sources before the map
-                if (layer.getSource() != null && layer.getSource() instanceof VectorSource) {
+                if (layer instanceof Vector) {
 
-                    VectorSource vectorSource = (VectorSource) layer.getSource();
+                    Vector vectorLayer = (Vector) layer;
+                    VectorSource vectorSource = vectorLayer.getSource();
 
-                    if (vectorSource.getFeatures() != null) {
-                        for (Feature feature : vectorSource.getFeatures()) {
-
+                    // render any persistent features
+                    if(vectorSource.getFeatures() != null) {
+                        for(Feature feature : vectorSource.getFeatures()) {
                             if(feature instanceof PersistentFeature) {
-
-
-                                builder.append(feature.getJsId() + " = new " + feature.getJsType() + "("
-                                        + feature.renderJs() + ");\n");
-                            } else {
-
                                 builder.append(feature.getJsId() + " = new " + feature.getJsType() + "("
                                         + feature.renderJs() + ");\n");
                             }
                         }
                     }
-                }
 
-                // create vector data source before the map
-                if (layer.getSource() != null && layer.getSource() instanceof ServerVector) {
+                    // ensure our loader has a reference to our source
+                    if(vectorSource.getLoader() != null) {
+                        vectorSource.getLoader().setSource(vectorSource);
+                    }
 
-                    ServerVector vectorSource = (ServerVector) layer.getSource();
+                    // render the source for the cluster source
+                    if(vectorSource instanceof Cluster) {
+                        Cluster source = (Cluster) vectorSource;
+                        builder.append(renderServerVectorJs(source.getSource(), layer));
+                    }
+
+                    // render the vector source
                     builder.append(renderServerVectorJs(vectorSource, layer));
                 }
 
-                // create vector data sources for clusters before the map
-                if (layer.getSource() != null && layer.getSource() instanceof Cluster) {
-
-                    Cluster source = (Cluster) layer.getSource();
-
-                    // for the GeoJSON loader, render the data loading function
-                    if(source.getSource() instanceof ServerVector) {
-
-                        ServerVector vectorSource = (ServerVector) source.getSource();
-                        builder.append(renderServerVectorJs(vectorSource, layer));
-                    }
-                }
-
-                if(layer instanceof Vector) {
-                    builder.append(layer.getJsId() + " = new " + layer.getJsType() + "(" + layer.renderJs()
-                                   + ");\n");
-                } else {
-                    builder.append(layer.getJsId() + " = new " + layer.getJsType() + "(" + layer.renderJs()
+                builder.append(layer.getJsId() + " = new " + layer.getJsType() + "(" + layer.renderJs()
                         + ");\n");
-                }
             }
         }
 
         return builder.toString();
     }
 
-    private String renderServerVectorJs(ServerVector vectorSource, Layer layer) {
+    private String renderServerVectorJs(VectorSource vectorSource, Layer layer) {
 
         StringBuilder builder = new StringBuilder();
 
@@ -316,7 +299,7 @@ public abstract class OpenLayersMap extends GenericPanel<Map> {
     }
 
     /**
-     * Renders the Javascript after the construction of the map.
+     * Renders the Javascript after the construction of our OL3 objects (but not the map).
      *
      * @return String with the rendered Javascript
      */
@@ -330,9 +313,10 @@ public abstract class OpenLayersMap extends GenericPanel<Map> {
 
             for (Layer layer : map.getLayers()) {
 
-                if (layer.getSource() != null && layer.getSource() instanceof VectorSource) {
+                if(layer instanceof Vector) {
 
-                    VectorSource vectorSource = (VectorSource) layer.getSource();
+                    Vector vectorLayer = (Vector) layer;
+                    VectorSource vectorSource = vectorLayer.getSource();
 
                     if (vectorSource.getFeatures() != null) {
                         for (Feature feature : vectorSource.getFeatures()) {
@@ -340,30 +324,26 @@ public abstract class OpenLayersMap extends GenericPanel<Map> {
                         }
                     }
                 }
-
-                // create vector data sources for clusters before the map
-                if (layer.getSource() != null && layer.getSource() instanceof Cluster) {
-
-                    Cluster source = (Cluster) layer.getSource();
-
-                    // add a listener to reload our cluster data
-                    if(source.getSource() instanceof ServerVector) {
-
-                        builder.append(map.getJsId() + ".getView().on('propertychange', function(event) {");
-                        builder.append(renderClusterLoaderJs(map, layer));
-                        builder.append("});");
-                    }
-
-                    // kick off an initial cluster load
-                    builder.append(renderClusterLoaderJs(map, layer));
-                }
             }
         }
 
-		if(map.getView().getExtent() != null) {
-			builder.append(map.getJsId() + ".getView().fitExtent(" + map.getView().getExtent().renderJsForView(map.getView()) + ","
-				+ map.getJsId() + ".getSize());");
-		}
+        return builder.toString();
+    }
+
+    /**
+     * Renders the Javascript after the construction of the map.
+     *
+     * @return String with the rendered Javascript
+     */
+    public String renderAfterMapConstructorJs() {
+        StringBuilder builder = new StringBuilder();
+
+        Map map = getModelObject();
+
+        if(map.getView().getExtent() != null) {
+            builder.append(map.getJsId() + ".getView().fitExtent(" + map.getView().getExtent().renderJsForView(map.getView()) + ","
+                    + map.getJsId() + ".getSize());");
+        }
 
         return builder.toString();
     }
@@ -379,28 +359,11 @@ public abstract class OpenLayersMap extends GenericPanel<Map> {
 
         StringBuilder builder = new StringBuilder();
         builder.append(renderBeforeConstructorJs() + "\n\n");
+        builder.append(renderAfterConstructorJs());
         builder.append(map.getJsId() + " = new " + map.getJsType() + "(");
         builder.append(map.renderJs());
         builder.append(");\n\n");
-        builder.append(renderAfterConstructorJs());
-        return builder.toString();
-    }
-
-    /**
-     * Returns a String with Javascript code to load data into the cluster source for the provided layer.
-     *
-     * @param map Map instance
-     * @param layer Layer with a Cluster data source
-     * @return String with Javascript code
-     */
-    private String renderClusterLoaderJs(Map map, Layer layer) {
-
-        StringBuilder builder = new StringBuilder();
-        builder.append("  var map = " + map.getJsId() +";");
-        builder.append("  var projection = map.getView().getProjection();");
-        builder.append("  var resolution = map.getView().getResolution();");
-        builder.append("  var extent = map.getView().calculateExtent(map.getSize());");
-        builder.append("  " + layer.getJsId() + ".getSource().source_.loader_(extent, resolution, projection);");
+        builder.append(renderAfterMapConstructorJs());
         return builder.toString();
     }
 }
