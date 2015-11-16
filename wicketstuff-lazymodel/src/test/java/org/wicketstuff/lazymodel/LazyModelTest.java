@@ -868,10 +868,23 @@ public class LazyModelTest {
 
 	@Test
 	public void fromTypeErasedModelFails() {
-		final A a = new A();
+		class GenericModel<T> implements IModel<T> {
+			@Override
+			public void detach() {
+			}
 
+			@Override
+			public T getObject() {
+				return null;
+			}
+
+			@Override
+			public void setObject(T arg0) {
+			}
+		};
+		
 		try {
-			from(new Model<A>(a));
+			from(new GenericModel<A>());
 
 			fail();
 		} catch (WicketRuntimeException ex) {
