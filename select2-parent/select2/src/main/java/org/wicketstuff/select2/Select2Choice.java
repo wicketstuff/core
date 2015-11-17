@@ -12,18 +12,16 @@
  */
 package org.wicketstuff.select2;
 
-import java.util.Collections;
-import java.util.Iterator;
-import java.util.List;
-
 import org.apache.wicket.ajax.json.JSONException;
 import org.apache.wicket.markup.head.IHeaderResponse;
 import org.apache.wicket.markup.head.OnDomReadyHeaderItem;
-import org.apache.wicket.markup.html.form.IChoiceRenderer;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.util.convert.ConversionException;
 import org.apache.wicket.util.string.Strings;
 import org.wicketstuff.select2.json.JsonBuilder;
+
+import java.util.Collections;
+import java.util.Iterator;
 
 /**
  * Single-select Select2 component. Should be attached to a {@code <input type='hidden'/>} element.
@@ -40,16 +38,6 @@ public class Select2Choice<T> extends AbstractSelect2Choice<T, T>
 	public Select2Choice(String id, IModel<T> model, ChoiceProvider<T> provider)
 	{
 		super(id, model, provider);
-	}
-
-	public Select2Choice(String id, IModel<T> model, List<T> choices, IChoiceRenderer<T> renderer)
-	{
-		super(id, model, choices, renderer);
-	}
-
-	public Select2Choice(String id, List<T> choices, IChoiceRenderer<T> renderer)
-	{
-		super(id, choices, renderer);
 	}
 
 	public Select2Choice(String id, IModel<T> model)
@@ -86,14 +74,7 @@ public class Select2Choice<T> extends AbstractSelect2Choice<T, T>
 			try
 			{
 				selection.object();
-				if (isAjax())
-				{
-					getProvider().toJson(value, selection);
-				}
-				else
-				{
-					renderChoice(value, selection);
-				}
+				getProvider().toJson(value, selection);
 				selection.endObject();
 			}
 			catch (JSONException e)

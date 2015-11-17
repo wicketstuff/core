@@ -12,19 +12,15 @@
  */
 package org.wicketstuff.select2;
 
+import org.apache.wicket.markup.html.WebPage;
+import org.apache.wicket.markup.html.basic.Label;
+import org.apache.wicket.markup.html.form.Form;
+import org.apache.wicket.model.PropertyModel;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
-
-import org.apache.wicket.markup.html.WebMarkupContainer;
-import org.apache.wicket.markup.html.WebPage;
-import org.apache.wicket.markup.html.basic.Label;
-import org.apache.wicket.markup.html.form.Form;
-import org.apache.wicket.markup.html.form.IChoiceRenderer;
-import org.apache.wicket.model.IModel;
-import org.apache.wicket.model.Model;
-import org.apache.wicket.model.PropertyModel;
 
 /**
  * Example page.
@@ -70,19 +66,6 @@ public class HomePage extends WebPage
 		countries.getSettings().setMinimumInputLength(1);
 		countries.add(new DragAndDropBehavior());
 		multi.add(countries);
-
-		WebMarkupContainer clientSideSelect2ChoiceWrapper = new WebMarkupContainer("clientSideSelect2ChoiceWrapper",
-				new Model<Country>());
-		clientSideSelect2ChoiceWrapper.add(new Label("country", clientSideSelect2ChoiceWrapper.getDefaultModel()));
-		Form<Void> clientSideSelect2Form = new Form<Void>("single");
-		clientSideSelect2ChoiceWrapper.add(clientSideSelect2Form);
-		Select2Choice<Country> clientSideSelect2Choice = new Select2Choice<Country>("country",
-				(IModel<Country>) clientSideSelect2ChoiceWrapper.getDefaultModel(), Arrays.asList(Country.values()),
-				new CountryChoiceRenderer());
-		clientSideSelect2Choice.getSettings().setAllowClear(true);
-		clientSideSelect2Choice.getSettings().setPlaceholder("Select a country from the list...");
-		clientSideSelect2Form.add(clientSideSelect2Choice);
-		add(clientSideSelect2ChoiceWrapper);
 	}
 
 	/**
@@ -170,21 +153,4 @@ public class HomePage extends WebPage
 
 	}
 
-	/**
-	 * @author lexx
-	 */
-	public static class CountryChoiceRenderer implements IChoiceRenderer<Country>
-	{
-		@Override
-		public Object getDisplayValue(Country object)
-		{
-			return object == null ? "" : object.getDisplayName();
-		}
-
-		@Override
-		public String getIdValue(Country object, int index)
-		{
-			return object == null ? "" : Integer.toString(index);
-		}
-	}
 }
