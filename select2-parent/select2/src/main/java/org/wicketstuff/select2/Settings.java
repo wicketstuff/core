@@ -57,7 +57,7 @@ public final class Settings implements Serializable
 
 	private AjaxSettings ajax;
 	private String data;
-	private String tags;
+	private Boolean tags;
 	private String separator;
 	private String[] tokenSeparators;
 	private Boolean selectOnBlur;
@@ -107,7 +107,7 @@ public final class Settings implements Serializable
 				ajax.toJson(writer);
 			}
 			Json.writeFunction(writer, "data", data);
-			Json.writeFunction(writer, "tags", tags);
+			Json.writeObject(writer, "tags", tags);
 			writer.endObject();
 
 			return writer.toString();
@@ -295,12 +295,12 @@ public final class Settings implements Serializable
 		return this;
 	}
 
-	public String getTags()
+	public Boolean getTags()
 	{
 		return tags;
 	}
 
-	public Settings setTags(String tags)
+	public Settings setTags(Boolean tags)
 	{
 		this.tags = tags;
 		return this;
