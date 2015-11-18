@@ -49,7 +49,6 @@ public final class Settings implements Serializable
 	private String sortResults;
 	private String formatSelection, formatSelectionTooBig, formatResult, formatNoMatches,
 		formatInputTooShort, formatResultCssClass, formatLoadMore, formatSearching, escapeMarkup;
-	private String createSearchChoice;
 	private String initSelection;
 	private String query;
 	private String width;
@@ -90,7 +89,6 @@ public final class Settings implements Serializable
 			Json.writeFunction(writer, "formatLoadMore", formatLoadMore);
 			Json.writeFunction(writer, "formatSearching", formatSearching);
 			Json.writeFunction(writer, "escapeMarkup", escapeMarkup);
-			Json.writeFunction(writer, "createSearchChoice", createSearchChoice);
 			Json.writeFunction(writer, "initSelection", initSelection);
 			Json.writeFunction(writer, "query", query);
 			Json.writeObject(writer, "width", width);
@@ -241,17 +239,6 @@ public final class Settings implements Serializable
 	public Settings setFormatInputTooShort(String formatInputTooShort)
 	{
 		this.formatInputTooShort = formatInputTooShort;
-		return this;
-	}
-
-	public String getCreateSearchChoice()
-	{
-		return createSearchChoice;
-	}
-
-	public Settings setCreateSearchChoice(String createSearchChoice)
-	{
-		this.createSearchChoice = createSearchChoice;
 		return this;
 	}
 
