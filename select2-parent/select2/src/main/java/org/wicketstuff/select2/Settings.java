@@ -49,7 +49,6 @@ public final class Settings implements Serializable
 	private String sortResults;
 	private String formatSelection, formatSelectionTooBig, formatResult, formatNoMatches,
 		formatInputTooShort, formatResultCssClass, formatLoadMore, formatSearching, escapeMarkup;
-	private String createSearchChoice;
 	private String initSelection;
 	private String query;
 	private String width;
@@ -58,7 +57,7 @@ public final class Settings implements Serializable
 
 	private AjaxSettings ajax;
 	private String data;
-	private String tags;
+	private Boolean tags;
 	private String separator;
 	private String[] tokenSeparators;
 	private Boolean selectOnBlur;
@@ -90,7 +89,6 @@ public final class Settings implements Serializable
 			Json.writeFunction(writer, "formatLoadMore", formatLoadMore);
 			Json.writeFunction(writer, "formatSearching", formatSearching);
 			Json.writeFunction(writer, "escapeMarkup", escapeMarkup);
-			Json.writeFunction(writer, "createSearchChoice", createSearchChoice);
 			Json.writeFunction(writer, "initSelection", initSelection);
 			Json.writeFunction(writer, "query", query);
 			Json.writeObject(writer, "width", width);
@@ -109,7 +107,7 @@ public final class Settings implements Serializable
 				ajax.toJson(writer);
 			}
 			Json.writeFunction(writer, "data", data);
-			Json.writeFunction(writer, "tags", tags);
+			Json.writeObject(writer, "tags", tags);
 			writer.endObject();
 
 			return writer.toString();
@@ -244,17 +242,6 @@ public final class Settings implements Serializable
 		return this;
 	}
 
-	public String getCreateSearchChoice()
-	{
-		return createSearchChoice;
-	}
-
-	public Settings setCreateSearchChoice(String createSearchChoice)
-	{
-		this.createSearchChoice = createSearchChoice;
-		return this;
-	}
-
 	public String getInitSelection()
 	{
 		return initSelection;
@@ -308,12 +295,12 @@ public final class Settings implements Serializable
 		return this;
 	}
 
-	public String getTags()
+	public Boolean getTags()
 	{
 		return tags;
 	}
 
-	public Settings setTags(String tags)
+	public Settings setTags(Boolean tags)
 	{
 		this.tags = tags;
 		return this;
