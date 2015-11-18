@@ -212,8 +212,7 @@ public abstract class AbstractDialog<T extends Serializable> extends GenericPane
 	}
 
 	/**
-	 * Triggered when a button is clicked. This method may be overridden to handle button behaviors, but the dialog will not been closed until {@code super.onClick(event)} or {@link #close(IPartialPageRequestHandler, DialogButton)} is
-	 * called.
+	 * Triggered when a button is clicked. This method may be overridden to handle button behaviors, but the dialog will not been closed until {@code super.onClick(event)} or {@link #close(IPartialPageRequestHandler, DialogButton)} is called.
 	 */
 	@Override
 	public void onClick(AjaxRequestTarget target, DialogButton button)
