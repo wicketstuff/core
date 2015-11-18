@@ -19,19 +19,6 @@
                   <li>If you zoom out sufficiently far, you will have to
                     wait (perhaps quite a while) for the clusters to be
                     calculated.</li>
-
-                  <li>There is a known issue with the OpenLayers
-                  ClusterSource, new data is only loaded from the source
-                  when map is zoomed but not panned. For now, the
-                  library has some hacky code that forces data to be
-                  loaded when the map pans. If you need this
-                  functionality, it will only work when deployed with
-                  Wicket in "development" mode, it will fail in
-                  "production". More information can be found
-                  in <a href="https://github.com/wicketstuff/core/issues/381">this
-                  Wicketstuff issue</a> and this
-                  <a href="https://groups.google.com/forum/#!topic/ol3-dev/N7TGCRax_u0">OpenLayers
-                  discussion thread</a>.</li>
                 </ul>
 
                 <div wicket:id="popover">[POPOVER]</div>
@@ -44,12 +31,12 @@
 
                 <ul>
                     <li>
-                        <a href="https://github.com/wicketstuff/core/blob/wicket-6.x/jdk-1.6-parent/openlayers3-parent/openlayers3-examples/src/main/java/org/wicketstuff/openlayers3/examples/ClusterPage.java" target="_blank">
+                        <a href="https://github.com/wicketstuff/core/blob/master/openlayers3-parent/openlayers3-examples/src/main/java/org/wicketstuff/openlayers3/examples/ClusterPage.java" target="_blank">
                             Java Code
                         </a>
                     </li>
                     <li>
-                        <a href="https://github.com/wicketstuff/core/blob/wicket-6.x/jdk-1.6-parent/openlayers3-parent/openlayers3-examples/src/main/java/org/wicketstuff/openlayers3/examples/ClusterPage.html" target="_blank">
+                        <a href="https://github.com/wicketstuff/core/blob/master/openlayers3-parent/openlayers3-examples/src/main/java/org/wicketstuff/openlayers3/examples/ClusterPage.html" target="_blank">
                             Wicket HTML
                         </a>
                     </li>

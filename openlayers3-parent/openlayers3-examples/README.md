@@ -17,7 +17,7 @@ Installing the library is as easy as including the dependency in your project's 
     <dependency>
       <groupId>org.wicketstuff</groupId>
       <artifactId>wicketstuff-openlayers3</artifactId>
-      <version>6.0-SNAPSHOT</version>
+      <version>7.2.0-SNAPSHOT</version>
     </dependency>
     
 This will include the majority of the library's features. In addition, some components that leverage the 
@@ -27,7 +27,7 @@ application, these components make it easier to place location markers and popov
     <dependency>
       <groupId>org.wicketstuff</groupId>
       <artifactId>wicketstuff-openlayers3-bootstrap</artifactId>
-      <version>6.0-SNAPSHOT</version>
+      <version>7.2.0-SNAPSHOT</version>
     </dependency>
 
 Usage
