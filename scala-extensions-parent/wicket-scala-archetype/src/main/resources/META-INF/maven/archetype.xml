@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?><archetype>
+  <id>wicketstuff-scala-sample</id>
+  <sources>
+    <source>src/main/java/ExtendsScalaImplementation.java</source>
+    <source>src/main/java/SomeInterface.java</source>
+    <source>src/main/scala/HelloWicketWorld.scala</source>
+    <source>src/main/scala/SomeImplementation.scala</source>
+    <source>src/test/scala/SamplePageSpec.java</source>
+    <source>src/test/scala/Start.scala</source>
+  </sources>
+  <resources>
+    <resource>README</resource>
+    <resource>project/build.properties</resource>
+    <resource>project/build/Sample.scala</resource>
+    <resource>src/main/webapp/WEB-INF/web.xml</resource>
+    <resource>src/main/resources/HomePage.html</resource>
+    <resource>src/test/resources/log4j.properties</resource>
+  </resources>
+</archetype>
