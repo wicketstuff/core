@@ -16,14 +16,22 @@
  */
 package com.googlecode.wicket.kendo.ui.repeater.listview;
 
+import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 import org.apache.wicket.Component;
 import org.apache.wicket.ajax.AjaxRequestTarget;
+import org.apache.wicket.ajax.attributes.CallbackParameter;
+import org.apache.wicket.ajax.json.JSONObject;
 import org.apache.wicket.util.lang.Args;
+import org.apache.wicket.util.lang.Generics;
 
 import com.googlecode.wicket.jquery.core.JQueryEvent;
 import com.googlecode.wicket.jquery.core.Options;
 import com.googlecode.wicket.jquery.core.ajax.IJQueryAjaxAware;
 import com.googlecode.wicket.jquery.core.ajax.JQueryAjaxBehavior;
+import com.googlecode.wicket.jquery.core.utils.RequestCycleUtils;
 import com.googlecode.wicket.kendo.ui.KendoDataSource;
 import com.googlecode.wicket.kendo.ui.KendoUIBehavior;
 import com.googlecode.wicket.kendo.ui.datatable.DataSourceAjaxBehavior;
@@ -48,6 +56,8 @@ public abstract class ListViewBehavior extends KendoUIBehavior implements IJQuer
 	private JQueryAjaxBehavior onCreateAjaxBehavior;
 	private JQueryAjaxBehavior onUpdateAjaxBehavior;
 	private JQueryAjaxBehavior onDeleteAjaxBehavior;
+
+	private JQueryAjaxBehavior onChangeAjaxBehavior = null;
 
 	/**
 	 * Constructor
@@ -94,6 +104,13 @@ public abstract class ListViewBehavior extends KendoUIBehavior implements IJQuer
 
 		this.onDeleteAjaxBehavior = this.newOnDeleteAjaxBehavior(this);
 		component.add(this.onDeleteAjaxBehavior);
+
+		// events //
+		if (this.listener.isSelectable())
+		{
+			this.onChangeAjaxBehavior = this.newOnChangeAjaxBehavior(this, this.dataSource.getName());
+			component.add(this.onChangeAjaxBehavior);
+		}
 	}
 
 	// Properties //
@@ -150,6 +167,12 @@ public abstract class ListViewBehavior extends KendoUIBehavior implements IJQuer
 		this.dataSource.setTransportCreate(this.onCreateAjaxBehavior.getCallbackFunction());
 		this.dataSource.setTransportUpdate(this.onUpdateAjaxBehavior.getCallbackFunction());
 		this.dataSource.setTransportDelete(this.onDeleteAjaxBehavior.getCallbackFunction());
+
+		// events //
+		if (this.onChangeAjaxBehavior != null)
+		{
+			this.setOption("change", this.onChangeAjaxBehavior.getCallbackFunction());
+		}
 	}
 
 	/**
@@ -178,6 +201,11 @@ public abstract class ListViewBehavior extends KendoUIBehavior implements IJQuer
 		if (event instanceof DeleteEvent)
 		{
 			this.listener.onDelete(target, ((DeleteEvent) event).getObject());
+		}
+
+		if (event instanceof ChangeEvent)
+		{
+			this.listener.onChange(target, ((ChangeEvent) event).getObjects());
 		}
 	}
 
@@ -241,5 +269,89 @@ public abstract class ListViewBehavior extends KendoUIBehavior implements IJQuer
 				return new DeleteEvent();
 			}
 		};
+	}
+
+	/**
+	 * Gets a new {@link JQueryAjaxBehavior} that will be wired to the 'select' event
+	 *
+	 * @param source the {@link IJQueryAjaxAware}
+	 * @param datasource the datasource name
+	 * @return a new {@link OnChangeAjaxBehavior} by default
+	 */
+	protected JQueryAjaxBehavior newOnChangeAjaxBehavior(IJQueryAjaxAware source, String datasource)
+	{
+		return new OnChangeAjaxBehavior(source, datasource);
+	}
+
+	// Ajax classes //
+
+	/**
+	 * Provides a {@link JQueryAjaxBehavior} that aims to be wired to the 'select' event
+	 */
+	protected static class OnChangeAjaxBehavior extends JQueryAjaxBehavior
+	{
+		private static final long serialVersionUID = 1L;
+
+		private final String datasource;
+
+		public OnChangeAjaxBehavior(IJQueryAjaxAware source, String datasource)
+		{
+			super(source);
+
+			this.datasource = datasource;
+		}
+
+		@Override
+		protected CallbackParameter[] getCallbackParameters()
+		{
+			return new CallbackParameter[] { CallbackParameter.resolved("items", "items") };
+		}
+
+		@Override
+		public CharSequence getCallbackFunctionBody(CallbackParameter... parameters)
+		{
+			String variables = "";
+			variables += "var $view = " + this.datasource + ".view();";
+			variables += "var items = jQuery.map(this.select(), function(item) { var index = jQuery(item).index(); return kendo.stringify($view[index]); });";
+
+			return variables + super.getCallbackFunctionBody(parameters);
+		}
+
+		@Override
+		protected JQueryEvent newEvent()
+		{
+			return new ChangeEvent();
+		}
+	}
+
+	// Event objects //
+
+	/**
+	 * Provides an event object that will be broadcasted by the {@link OnChangeAjaxBehavior} callback
+	 */
+	protected static class ChangeEvent extends JQueryEvent
+	{
+		/** simple json object pattern */
+		private static final Pattern PATTERN = Pattern.compile("(\\{.*?\\})");
+
+		private final List<JSONObject> objects;
+
+		public ChangeEvent()
+		{
+			this.objects = Generics.newArrayList();
+
+			String input = RequestCycleUtils.getQueryParameterValue("items").toString();
+			Matcher matcher = PATTERN.matcher(input);
+
+			while (matcher.find())
+			{
+				this.objects.add(new JSONObject(matcher.group()));
+			}
+		}
+
+		public List<JSONObject> getObjects()
+		{
+			return this.objects;
+		}
 	}
 }

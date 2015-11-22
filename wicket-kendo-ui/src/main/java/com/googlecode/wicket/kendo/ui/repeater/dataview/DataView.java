@@ -16,6 +16,8 @@
  */
 package com.googlecode.wicket.kendo.ui.repeater.dataview;
 
+import java.util.List;
+
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.json.JSONObject;
 import org.apache.wicket.behavior.AbstractAjaxBehavior;
@@ -209,6 +211,12 @@ public class DataView<T> extends WebMarkupContainer implements IJQueryWidget, IL
 	{
 		return this.providerBehavior.getCallbackUrl();
 	}
+	
+	@Override
+	public boolean isSelectable()
+	{
+		return this.options.get("selectable") != null;
+	}
 
 	// Events //
 
@@ -291,6 +299,12 @@ public class DataView<T> extends WebMarkupContainer implements IJQueryWidget, IL
 
 	@Override
 	public void onDelete(AjaxRequestTarget target, JSONObject object)
+	{
+		// noop
+	}
+	
+	@Override
+	public void onChange(AjaxRequestTarget target, List<JSONObject> objects)
 	{
 		// noop
 	}
