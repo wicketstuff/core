@@ -113,6 +113,8 @@ public class RedisDataStore implements IDataStore
 		try {
 			byte[] key = makeKey(sessionId, pageId);
 			resource.set(key, data);
+			if (settings.getRecordTtl() != null) {
+				resource.expire(key, (int) settings.getRecordTtl().seconds());
 		} finally {
 			jedisPool.returnResource(resource);
 		}
