@@ -17,6 +17,12 @@
 		Use wicketstuff-selectize to implement awesome selections to your wicket page (Examples)
 	</description>
 
+	<properties>
+		<javadoc.disabled>true</javadoc.disabled>
+		<deployment.disabled>true</deployment.disabled>
+		<sources.disabled>true</sources.disabled>
+	</properties>
+
 	<developers>
 		<developer>
 			<id>tsoloschenko</id>
