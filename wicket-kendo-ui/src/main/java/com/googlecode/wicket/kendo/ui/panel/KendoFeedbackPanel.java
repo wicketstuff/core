@@ -48,6 +48,8 @@ public class KendoFeedbackPanel extends WebMarkupContainer implements IJQueryWid
 	private final Options options;
 	private NotificationBehavior widgetBehavior;
 
+	private final IFeedbackMessageFilter filter;
+
 	/**
 	 * Constructor
 	 *
@@ -55,7 +57,27 @@ public class KendoFeedbackPanel extends WebMarkupContainer implements IJQueryWid
 	 */
 	public KendoFeedbackPanel(String id)
 	{
-		this(id, new Options());
+		this(id, null, new Options());
+	}
+
+	/**
+	 * Constructor
+	 *
+	 * @param id the markup id
+	 */
+	public KendoFeedbackPanel(String id, IFeedbackMessageFilter filter)
+	{
+		this(id, filter, new Options());
+	}
+
+	/**
+	 * Constructor
+	 *
+	 * @param id the markup id
+	 */
+	public KendoFeedbackPanel(String id, Options options)
+	{
+		this(id, null, options);
 	}
 
 	/**
@@ -64,10 +86,11 @@ public class KendoFeedbackPanel extends WebMarkupContainer implements IJQueryWid
 	 * @param id the markup id
 	 * @param options the {@link Options}
 	 */
-	public KendoFeedbackPanel(String id, Options options)
+	public KendoFeedbackPanel(String id, IFeedbackMessageFilter filter, Options options)
 	{
 		super(id);
 
+		this.filter = filter;
 		this.options = Args.notNull(options, "options");
 	}
 
@@ -207,6 +230,9 @@ public class KendoFeedbackPanel extends WebMarkupContainer implements IJQueryWid
 	 */
 	protected FeedbackMessagesModel newFeedbackMessagesModel()
 	{
-		return new FeedbackMessagesModel(this);
+		FeedbackMessagesModel model = new FeedbackMessagesModel(this);
+		model.setFilter(this.filter);
+
+		return model;
 	}
 }
