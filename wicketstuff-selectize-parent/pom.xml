@@ -17,6 +17,11 @@
 		Use wicketstuff-selectize to implement awesome selections to your wicket page (parent project)
 	</description>
 
+	<modules>
+		<module>wicketstuff-selectize</module>
+		<module>wicketstuff-selectize-examples</module>
+	</modules>
+
 	<developers>
 		<developer>
 			<id>tsoloschenko</id>
