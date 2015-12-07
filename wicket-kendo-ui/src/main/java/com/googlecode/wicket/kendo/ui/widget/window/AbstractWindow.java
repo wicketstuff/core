@@ -26,6 +26,7 @@ import org.apache.wicket.util.lang.Args;
 import com.googlecode.wicket.jquery.core.IJQueryWidget;
 import com.googlecode.wicket.jquery.core.JQueryBehavior;
 import com.googlecode.wicket.jquery.core.Options;
+import com.googlecode.wicket.kendo.ui.KendoUIBehavior;
 
 /**
  * Base class for implementing Kendo UI windows
@@ -153,6 +154,16 @@ public abstract class AbstractWindow<T> extends GenericPanel<T> implements IJQue
 	}
 
 	// Methods //
+
+	/**
+	 * Gets the Kendo UI widget
+	 *
+	 * @return the jQuery object
+	 */
+	public String widget()
+	{
+		return KendoUIBehavior.widget(this, WindowBehavior.METHOD);
+	}
 
 	/**
 	 * Opens the window in ajax.

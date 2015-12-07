@@ -167,9 +167,10 @@ public class DataProviderBehavior<T> extends AbstractAjaxBehavior
 				response.setContentType("application/json; charset=" + encoding);
 				response.disableCaching();
 
+
 				final long size = provider.size();
 				final Iterator<? extends T> iterator = provider.iterator(first, count);
-
+				
 				// builds JSON result //
 				StringBuilder builder = new StringBuilder();
 

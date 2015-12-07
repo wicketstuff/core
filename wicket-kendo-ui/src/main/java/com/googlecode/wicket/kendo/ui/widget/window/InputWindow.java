@@ -20,13 +20,13 @@ import org.apache.wicket.Component;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.core.request.handler.IPartialPageRequestHandler;
 import org.apache.wicket.feedback.ContainerFeedbackMessageFilter;
-import org.apache.wicket.feedback.FeedbackMessagesModel;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.form.FormComponent;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
 
+import com.googlecode.wicket.jquery.core.JQueryAbstractBehavior;
 import com.googlecode.wicket.kendo.ui.form.TextField;
 import com.googlecode.wicket.kendo.ui.panel.KendoFeedbackPanel;
 
@@ -34,7 +34,6 @@ import com.googlecode.wicket.kendo.ui.panel.KendoFeedbackPanel;
  * Provides a Kendo UI Window having a {@link TextField}, an 'Ok' and a 'Cancel' button
  *
  * @param <T> the type of the model object
- *
  * @author Sebastien Briquet - sebfz1
  * @since 6.17.0
  */
@@ -45,6 +44,8 @@ public abstract class InputWindow<T> extends Window<T>
 	private final Form<?> form;
 	private KendoFeedbackPanel feedback;
 	private IModel<String> labelModel;
+
+	private FormComponent<T> textField;
 
 	/**
 	 * Constructor
@@ -117,7 +118,10 @@ public abstract class InputWindow<T> extends Window<T>
 		this.form.add(this.newLabel("label", this.labelModel));
 
 		// field //
-		this.form.add(this.newTextField("input", this.getModel()).setRequired(this.isRequired()));
+		this.textField = this.newTextField("input", this.getModel());
+		this.textField.setOutputMarkupId(true);
+		this.textField.setRequired(this.isRequired());
+		this.form.add(this.textField);
 
 		// buttons //
 		this.form.add(this.newButtonPanel("buttons", this.getButtons()));
@@ -206,6 +210,11 @@ public abstract class InputWindow<T> extends Window<T>
 		return true;
 	}
 
+	public String getTextFieldMarkupId()
+	{
+		return this.textField.getMarkupId();
+	}
+
 	// Factories //
 
 	/**
@@ -235,19 +244,7 @@ public abstract class InputWindow<T> extends Window<T>
 	 */
 	protected KendoFeedbackPanel newFeedbackPanel(String id)
 	{
-		return new KendoFeedbackPanel(id) {
-
-			private static final long serialVersionUID = 1L;
-
-			@Override
-			protected FeedbackMessagesModel newFeedbackMessagesModel()
-			{
-				FeedbackMessagesModel model = new FeedbackMessagesModel(this);
-				model.setFilter(new ContainerFeedbackMessageFilter(InputWindow.this));
-
-				return model;
-			}
-		};
+		return new KendoFeedbackPanel(id, new ContainerFeedbackMessageFilter(this));
 	}
 
 	/**
@@ -274,5 +271,44 @@ public abstract class InputWindow<T> extends Window<T>
 	protected FormComponent<T> newTextField(String id, IModel<T> model)
 	{
 		return new TextField<T>(id, model);
+	}
+
+	// Classes //
+
+	/**
+	 * Provides an auto-focus Behavior on {@link InputWindow}'s {@code TextField}
+	 */
+	public static class AutoFocusBehavior extends JQueryAbstractBehavior
+	{
+		private static final long serialVersionUID = 1L;
+
+		private InputWindow<?> window = null;
+
+		public AutoFocusBehavior()
+		{
+			super(WindowBehavior.METHOD + "-autofocus");
+		}
+
+		@Override
+		public void bind(Component component)
+		{
+			super.bind(component);
+
+			if (component instanceof InputWindow<?>)
+			{
+				this.window = (InputWindow<?>) component;
+			}
+		}
+
+		@Override
+		protected String $()
+		{
+			if (this.window != null)
+			{
+				return String.format("%s.bind('activate', function() { jQuery('#%s').focus(); });", this.window.widget(), this.window.getTextFieldMarkupId());
+			}
+
+			return null;
+		}
 	}
 }
