@@ -32,6 +32,7 @@
 		<module>wicket-servlet3-parent</module>
 		<module>wicket-facebook-parent</module>
 		<module>wicketstuff-gmap3-parent</module>
+		<module>dashboard-parent</module>
 	</modules>
 
 	<build>

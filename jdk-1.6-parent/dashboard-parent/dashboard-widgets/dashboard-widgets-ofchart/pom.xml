@@ -1,0 +1,34 @@
+<?xml version="1.0"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+	<modelVersion>4.0.0</modelVersion>
+
+	<parent>
+		<groupId>org.wicketstuff</groupId>
+		<artifactId>wicketstuff-dashboard-widgets</artifactId>
+		<version>1.5-SNAPSHOT</version>
+	</parent>
+
+	<artifactId>wicketstuff-dashboard-widgets-ofchart</artifactId>
+	<packaging>jar</packaging>
+	<name>Wicketstuff OpenFlashChart Widget</name>
+
+	<dependencies>
+		<!-- JOFC2 (open flash chart for java) -->
+		<dependency>
+			<groupId>jofc2</groupId>
+			<artifactId>jofc2</artifactId>
+			<version>1.0.1-SNAPSHOT</version>
+		</dependency>
+	</dependencies>
+
+	<repositories>
+		<repository>
+			<id>jofc2.maven.repo</id>
+			<name>JOFC2 GoogleCode.com Snapshot Repository</name>
+			<url>http://jofc2.googlecode.com/svn/repository/snapshots/</url>
+		</repository>
+	</repositories>
+
+</project>

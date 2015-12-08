@@ -1,0 +1,32 @@
+<?xml version="1.0"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+	<modelVersion>4.0.0</modelVersion>
+
+	<parent>
+		<groupId>org.wicketstuff</groupId>
+		<artifactId>wicketstuff-dashboard-widgets</artifactId>
+		<version>1.5-SNAPSHOT</version>
+	</parent>
+
+	<artifactId>wicketstuff-dashboard-widgets-jqplot</artifactId>
+	<packaging>jar</packaging>
+	<name>Wicketstuff JqPlot Widget</name>
+
+	<dependencies>
+		<!-- JqPlot -->
+		<dependency>
+			<groupId>org.wicketstuff</groupId>
+			<artifactId>jqplot</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>br.com.digilabs.jqplot</groupId>
+			<artifactId>jqplot4java</artifactId>
+			<version>1.2.3</version>
+		</dependency>
+	</dependencies>
+
+</project>
