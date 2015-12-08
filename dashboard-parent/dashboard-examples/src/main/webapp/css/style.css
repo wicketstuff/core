@@ -1,0 +1,50 @@
+* {
+	font-family: Verdana;
+	font-size: 11px;	
+}
+
+.left {
+	float: left;
+}
+
+.right {
+	float: right;
+}
+
+.toolbar {
+	line-height: 24px;
+    margin-bottom: 10px;
+    width: 100%;
+    float: left;
+    font-weight: bold;      
+    border-bottom: 1px solid #CACACA;
+}
+
+.widget-descriptor {
+    border-bottom: 1px dotted LightGray;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    clear: both;
+}
+
+.widget-descriptor .name {
+    color: blue;
+    font-weight: bold;
+    font-size: 13;      
+}
+
+.widget-descriptor .provider {
+    color: green;
+ }
+
+.widget-descriptor .description {
+    margin-top: 5px;
+    margin-bottom: 5px;
+ }
+
+.widget-descriptor .message {
+    font-style: italic;
+    background: Khaki;
+    padding: 3px;
+ }
+

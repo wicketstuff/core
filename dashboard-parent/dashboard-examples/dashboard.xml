@@ -1,0 +1,32 @@
+<dashboard>
+  <id>default</id>
+  <title>Default</title>
+  <columnCount>2</columnCount>
+  <widgets>
+    <org.wicketstuff.dashboard.widgets.justgage.JustGageWidget>
+      <id>cb708faa-24dc-44af-b051-9f5861b7770d</id>
+      <title>JustGage</title>
+      <collapsed>false</collapsed>
+      <settings/>
+      <location>
+        <column>0</column>
+        <row>0</row>
+      </location>
+    </org.wicketstuff.dashboard.widgets.justgage.JustGageWidget>
+    <org.wicketstuff.dashboard.widgets.ofchart.ChartWidget>
+      <id>c9218c95-3d37-4e82-8dab-73dc0d2f93b2</id>
+      <title>Chart</title>
+      <collapsed>false</collapsed>
+      <settings>
+        <entry>
+          <string>chartType</string>
+          <string>Bar</string>
+        </entry>
+      </settings>
+      <location>
+        <column>0</column>
+        <row>1</row>
+      </location>
+    </org.wicketstuff.dashboard.widgets.ofchart.ChartWidget>
+  </widgets>
+</dashboard>

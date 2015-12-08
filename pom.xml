@@ -334,6 +334,7 @@
 		<module>wicketstuff-wicket7</module>
 		<module>wicketstuff-glassfish4-integration</module>
 		<module>serializer-fast2</module>
+		<module>dashboard-parent</module>
     </modules>
 
 	<dependencies>
