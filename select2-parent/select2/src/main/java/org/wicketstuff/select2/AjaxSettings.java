@@ -32,7 +32,7 @@ public final class AjaxSettings implements Serializable
 	private String data;
 	private String processResults;
 	/** whether or not to use traditional parameter encoding. */
-	private Boolean cache;
+	private boolean cache;
 
 	public void toJson(JSONWriter writer) throws JSONException
 	{

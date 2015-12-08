@@ -42,9 +42,9 @@ public final class Settings implements Serializable
 	private Integer minimumInputLength, minimumResultsForSearch;
 	private Integer maximumSelectionSize;
 	private Object placeholder;
-	private Boolean allowClear;
-	private Boolean multiple;
-	private Boolean closeOnSelect;
+	private boolean allowClear;
+	private boolean multiple;
+	private boolean closeOnSelect;
 	private String id, matcher, tokenizer;
 	private String sortResults;
 	private String formatSelection, formatSelectionTooBig, formatResult, formatNoMatches,
@@ -52,16 +52,16 @@ public final class Settings implements Serializable
 	private String initSelection;
 	private String query;
 	private String width;
-	private Boolean openOnEnter;
+	private boolean openOnEnter;
 	private String containerCss, dropdownCss, containerCssClass, dropdownCssClass;
 
 	private AjaxSettings ajax;
 	private String data;
-	private Boolean tags;
+	private boolean tags;
 	private String separator;
 	private String[] tokenSeparators;
-	private Boolean selectOnBlur;
-	private Boolean dropdownAutoWidth;
+	private boolean selectOnBlur;
+	private boolean dropdownAutoWidth;
 
 	public CharSequence toJson()
 	{
@@ -151,37 +151,37 @@ public final class Settings implements Serializable
 		return this;
 	}
 
-	public Boolean getAllowClear()
+	public boolean getAllowClear()
 	{
 		return allowClear;
 	}
 
-	public Settings setAllowClear(Boolean allowClear)
+	public Settings setAllowClear(boolean allowClear)
 	{
 		this.allowClear = allowClear;
-		if (Boolean.TRUE.equals(allowClear) && placeholder == null) {
+		if (allowClear && placeholder == null) {
 			throw new WicketRuntimeException("Placeholder need to be specified");
 		}
 		return this;
 	}
 
-	public Boolean getMultiple()
+	public boolean getMultiple()
 	{
 		return multiple;
 	}
 
-	public Settings setMultiple(Boolean multiple)
+	public Settings setMultiple(boolean multiple)
 	{
 		this.multiple = multiple;
 		return this;
 	}
 
-	public Boolean getCloseOnSelect()
+	public boolean getCloseOnSelect()
 	{
 		return closeOnSelect;
 	}
 
-	public Settings setCloseOnSelect(Boolean closeOnSelect)
+	public Settings setCloseOnSelect(boolean closeOnSelect)
 	{
 		this.closeOnSelect = closeOnSelect;
 		return this;
@@ -295,12 +295,12 @@ public final class Settings implements Serializable
 		return this;
 	}
 
-	public Boolean getTags()
+	public boolean getTags()
 	{
 		return tags;
 	}
 
-	public Settings setTags(Boolean tags)
+	public Settings setTags(boolean tags)
 	{
 		this.tags = tags;
 		return this;
@@ -416,12 +416,12 @@ public final class Settings implements Serializable
 		return this;
 	}
 
-	public Boolean getOpenOnEnter()
+	public boolean getOpenOnEnter()
 	{
 		return openOnEnter;
 	}
 
-	public Settings setOpenOnEnter(Boolean openOnEnter)
+	public Settings setOpenOnEnter(boolean openOnEnter)
 	{
 		this.openOnEnter = openOnEnter;
 		return this;
@@ -493,23 +493,23 @@ public final class Settings implements Serializable
 		return this;
 	}
 
-	public Boolean getSelectOnBlur()
+	public boolean getSelectOnBlur()
 	{
 		return selectOnBlur;
 	}
 
-	public Settings setSelectOnBlur(Boolean selectOnBlur)
+	public Settings setSelectOnBlur(boolean selectOnBlur)
 	{
 		this.selectOnBlur = selectOnBlur;
 		return this;
 	}
 
-	public Boolean getDropdownAutoWidth()
+	public boolean getDropdownAutoWidth()
 	{
 		return dropdownAutoWidth;
 	}
 
-	public Settings setDropdownAutoWidth(Boolean dropdownAutoWidth)
+	public Settings setDropdownAutoWidth(boolean dropdownAutoWidth)
 	{
 		this.dropdownAutoWidth = dropdownAutoWidth;
 		return this;
