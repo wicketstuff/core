@@ -12,10 +12,8 @@
  */
 package org.wicketstuff.dashboard.examples;
 
-import org.eclipse.jetty.server.HttpConfiguration;
-import org.eclipse.jetty.server.HttpConnectionFactory;
 import org.eclipse.jetty.server.Server;
-import org.eclipse.jetty.server.ServerConnector;
+import org.eclipse.jetty.server.bio.SocketConnector;
 import org.eclipse.jetty.webapp.WebAppContext;
 
 /**
@@ -24,21 +22,17 @@ import org.eclipse.jetty.webapp.WebAppContext;
 public class Start {
 
 	public static void main(String[] args) throws Exception {
-        System.setProperty("wicket.configuration", "development");
+		System.setProperty("wicket.configuration", "development");
 
-        Server server = new Server();
+		Server server = new Server();
+		SocketConnector connector = new SocketConnector();
 
-        HttpConfiguration httpConfig = new HttpConfiguration();
-        httpConfig.setSecureScheme("https");
-        httpConfig.setSecurePort(8443);
-        httpConfig.setOutputBufferSize(32768);
-
-        ServerConnector http = new ServerConnector(server, new HttpConnectionFactory(httpConfig));
-        int port = Integer.parseInt(System.getProperty("jetty.port", "8081"));
-        http.setPort(port);
-        http.setIdleTimeout(1000 * 60 * 60);
-
-        server.addConnector(http);
+		// Set some timeout options to make debugging easier.
+		connector.setMaxIdleTime(1000 * 60 * 60);
+		connector.setSoLingerTime(-1);
+		int port = Integer.parseInt(System.getProperty("jetty.port", "8081"));
+		connector.setPort(port);
+		server.addConnector(connector);
 
 		WebAppContext webAppContext = new WebAppContext();
 		webAppContext.setServer(server);
