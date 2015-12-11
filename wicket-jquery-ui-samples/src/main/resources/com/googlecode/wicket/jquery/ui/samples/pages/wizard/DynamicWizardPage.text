@@ -1,6 +1,6 @@
 The Wizard component works like the built-in <code>Wizard</code> component; It uses an <code>IWizardModel</code> (<code>WizardModel</code> or <code>DynamicWizardModel</code>) which may contains several <code>WizardStep(s)</code> or <code>DynamicWizardStep(s)</code><br/> 
 <br/>
-Wizard button's text can be customized using the following resource keys, either in <i>MyPage</i>.properties or <i>MyWizard</i>.properties:
+Wizard button's text can be customized using the following resource keys, either in <i>MyApplication</i>.properties, <i>MyPage</i>.properties or <i>MyWizard</i>.properties:
 <ul>
 	<li><code>wizard.button.prev=My previous</code></li>
 	<li><code>wizard.button.next=My next</code></li>
@@ -8,5 +8,6 @@ Wizard button's text can be customized using the following resource keys, either
 	<li><code>wizard.button.finish=My finish</code></li>
 	<li><code>wizard.button.cancel=My cancel</code></li>
 </ul>
+
 <h4>Since</h4>
 wicket-jquery-ui-core-1.2.2
