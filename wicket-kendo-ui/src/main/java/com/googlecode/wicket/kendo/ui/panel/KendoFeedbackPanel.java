@@ -99,7 +99,7 @@ public class KendoFeedbackPanel extends WebMarkupContainer implements IJQueryWid
 	@Override
 	protected IModel<?> initModel()
 	{
-		return this.newFeedbackMessagesModel();
+		return this.newFeedbackMessagesModel(this.filter);
 	}
 
 	/**
