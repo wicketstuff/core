@@ -77,7 +77,7 @@ public class SelectizeOption extends JSONObject implements Serializable
 	{
 		String read = (String)in.readObject();
 		JSONObject jsonObject = new JSONObject(read);
-		Iterator iterator = jsonObject.keySet().iterator();
+		Iterator iterator = jsonObject.keys();
 		while (iterator.hasNext())
 		{
 			Object key = iterator.next();

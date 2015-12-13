@@ -34,7 +34,6 @@ import org.apache.wicket.ajax.json.JSONObject;
  */
 public class SelectizeOptionGroup extends JSONObject implements Serializable
 {
-
 	private static final long serialVersionUID = 1L;
 
 	public static final String OPT_GROUP_FIELD = "groupId";

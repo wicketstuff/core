@@ -9,4 +9,11 @@ public class TestApplication extends WebApplication{
     public Class<? extends Page> getHomePage() {
 	return TestPage.class;
     }
+
+    @Override
+    protected void init() {
+        super.init();
+
+//        getMarkupSettings().setStripWicketTags(true);
+    }
 }

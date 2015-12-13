@@ -22,6 +22,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.wicket.Component;
 import org.apache.wicket.WicketRuntimeException;
 import org.apache.wicket.ajax.AbstractDefaultAjaxBehavior;
 import org.apache.wicket.ajax.AjaxRequestTarget;
@@ -34,7 +35,6 @@ import org.apache.wicket.markup.head.IHeaderResponse;
 import org.apache.wicket.markup.head.JavaScriptHeaderItem;
 import org.apache.wicket.markup.head.OnDomReadyHeaderItem;
 import org.apache.wicket.markup.html.form.FormComponent;
-import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.request.IRequestCycle;
 import org.apache.wicket.request.IRequestHandler;
@@ -51,10 +51,8 @@ import org.wicketstuff.selectize.SelectizeCssResourceReference.Theme;
  * @author Tobias Soloschenko
  *
  */
-@SuppressWarnings("rawtypes")
-public class Selectize extends FormComponent
+public class Selectize<T> extends FormComponent<T>
 {
-
 	private static final long serialVersionUID = 1L;
 
 	private Theme theme = Theme.NONE;
@@ -81,7 +79,6 @@ public class Selectize extends FormComponent
 	 */
 	private class SelectizeAjaxBehavior extends AbstractDefaultAjaxBehavior
 	{
-
 		private static final long serialVersionUID = 1L;
 
 		@Override
@@ -115,11 +112,9 @@ public class Selectize extends FormComponent
 	 * Invoked if the user made a selection
 	 * 
 	 * @author Tobias Soloschenko
-	 *
 	 */
 	private class SelectizeUpdateBehavior extends AbstractDefaultAjaxBehavior
 	{
-
 		private static final long serialVersionUID = 1L;
 
 		@Override
@@ -146,7 +141,7 @@ public class Selectize extends FormComponent
 	 *            {@link org.wicketstuff.selectize.SelectizeOption} a select representation is
 	 *            chosen.
 	 */
-	public Selectize(String id, IModel options)
+	public Selectize(String id, IModel<T> options)
 	{
 		this(id, null, options);
 	}
@@ -162,8 +157,7 @@ public class Selectize extends FormComponent
 	 *            the selectize options, used for the selection in the select representation
 	 */
 	@SuppressWarnings("unchecked")
-	public Selectize(String id, IModel<Collection<SelectizeOptionGroup>> optionGroups,
-		IModel options)
+	public Selectize(String id, IModel<Collection<SelectizeOptionGroup>> optionGroups, IModel<T> options)
 	{
 		super(id, options);
 		setOutputMarkupPlaceholderTag(true);
@@ -177,8 +171,8 @@ public class Selectize extends FormComponent
 	public void renderHead(IHeaderResponse response)
 	{
 		super.renderHead(response);
-		response.render(JavaScriptHeaderItem.forReference(SelectizeJavaScriptResourceReference.instance()));
 		response.render(CssHeaderItem.forReference(SelectizeCssResourceReference.instance(theme)));
+		response.render(JavaScriptHeaderItem.forReference(SelectizeJavaScriptResourceReference.instance()));
 		response.render(JavaScriptHeaderItem.forReference(HandlebarsJavaScriptResourceReference.instance()));
 		try (PackageTextTemplate packageTextTemplate = new PackageTextTemplate(Selectize.class,
 			"res/js/selectize_init.js"))
@@ -245,7 +239,7 @@ public class Selectize extends FormComponent
 				selectizeConfig.put("ajaxChangeCallback", selectizeChangeBehavior.getCallbackUrl()
 					.toString());
 
-				Panel responseTemplate = responseTemplate();
+				Component responseTemplate = responseTemplate();
 				if (responseTemplate == null)
 				{
 					throw new WicketRuntimeException(
@@ -255,7 +249,7 @@ public class Selectize extends FormComponent
 					ComponentRenderer.renderComponent(responseTemplate));
 			}
 
-			Map<String, String> variablesMap = new HashMap<String, String>();
+			Map<String, String> variablesMap = new HashMap<>();
 			variablesMap.put("selectizeConfig", selectizeConfig.toString());
 			response.render(OnDomReadyHeaderItem.forScript(packageTextTemplate.asString(variablesMap)));
 		}
@@ -339,7 +333,7 @@ public class Selectize extends FormComponent
 
 	/**
 	 * Provides the response and data for AJAX calls. Please ensure {@link #enableAjaxHandling()} is
-	 * invoked when overriding {@link #response(String)}
+	 * invoked when overriding this method
 	 * 
 	 * @param search
 	 *            the search query parameter the user typed into the text field
@@ -366,12 +360,12 @@ public class Selectize extends FormComponent
 	 * can be used of selectize to apply the selected class.<br>
 	 * <br>
 	 * Please ensure {@link #enableAjaxHandling()} is invoked when overriding
-	 * {@link #responseTemplate()}<br>
+	 * this method<br>
 	 * <br>
 	 * 
 	 * @return the Panel to be rendered in the template
 	 */
-	protected Panel responseTemplate()
+	protected Component responseTemplate()
 	{
 		return null;
 	}

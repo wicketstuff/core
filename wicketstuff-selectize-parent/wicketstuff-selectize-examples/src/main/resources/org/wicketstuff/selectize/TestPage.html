@@ -17,16 +17,32 @@
 
 -->
 <!DOCTYPE html>
-<html>
-	<head>
-	</head>
+<html xmlns:wicket="http://wicket.apache.org">
 	<body>
 		<form wicket:id="form">
-			<input wicket:id="selectize1" type="text"/>
-			<select wicket:id="selectize2" />
-			<select wicket:id="selectize3" />
-			<select wicket:id="selectize4" />
-			<span wicket:id="value"/>
+			<label>Select with text input:
+				<input wicket:id="selectize1" type="text"/>
+			</label>
+			<br/><br/><br/>
+
+			<label>Simple Select (based on &lt;select&gt;):
+				<select wicket:id="selectize2">
+					<!--<option value="10">Metallica</option>-->
+					<!--<option value="20" selected>Shakira</option>-->
+					<!--<option value="30">Ronaldo</option>-->
+				</select>
+			</label>
+			<br/><br/><br/>
+
+			<label>Select with groups (based on &lt;select&gt;):
+				<select wicket:id="selectize3"></select>
+			</label>
+			<br/><br/><br/>
+
+			<label>Loads data with Ajax (enter <strong>test</strong>):
+				<select wicket:id="selectize4"></select>
+			</label>
+			<span wicket:id="value"></span>
 		</form>
 	</body>
 </html>
