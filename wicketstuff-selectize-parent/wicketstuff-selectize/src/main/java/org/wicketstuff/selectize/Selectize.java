@@ -51,7 +51,7 @@ import org.wicketstuff.selectize.SelectizeCssResourceReference.Theme;
  * @author Tobias Soloschenko
  *
  */
-public class Selectize<T> extends FormComponent<T>
+public class Selectize extends FormComponent
 {
 	private static final long serialVersionUID = 1L;
 
@@ -141,7 +141,7 @@ public class Selectize<T> extends FormComponent<T>
 	 *            {@link org.wicketstuff.selectize.SelectizeOption} a select representation is
 	 *            chosen.
 	 */
-	public Selectize(String id, IModel<T> options)
+	public Selectize(String id, IModel<?> options)
 	{
 		this(id, null, options);
 	}
@@ -157,7 +157,7 @@ public class Selectize<T> extends FormComponent<T>
 	 *            the selectize options, used for the selection in the select representation
 	 */
 	@SuppressWarnings("unchecked")
-	public Selectize(String id, IModel<Collection<SelectizeOptionGroup>> optionGroups, IModel<T> options)
+	public Selectize(String id, IModel<Collection<SelectizeOptionGroup>> optionGroups, IModel<?> options)
 	{
 		super(id, options);
 		setOutputMarkupPlaceholderTag(true);

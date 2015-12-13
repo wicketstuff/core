@@ -2,7 +2,6 @@ package org.wicketstuff.selectize;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collection;
 import java.util.List;
 
 import org.apache.wicket.Component;
@@ -23,7 +22,7 @@ public class TestPage extends WebPage
 		Form<Void> form = new Form<>("form");
 
 		// Select with text input
-		Selectize<String> selectize1 = new Selectize<>("selectize1", Model.of("test"));
+		Selectize selectize1 = new Selectize("selectize1", Model.of("test"));
 		selectize1.setTheme(Theme.BOOTSTRAP3);
 		selectize1.setCreateAvailable(true);
 		form.add(selectize1);
@@ -34,7 +33,7 @@ public class TestPage extends WebPage
 //		options.add(new SelectizeOption("3", "Albert Einstein", "2"));
 
 		// Simple Select
-		Selectize<Collection<SelectizeOption>> selectize2 = new Selectize<>("selectize2", Model.of(options));
+		Selectize selectize2 = new Selectize("selectize2", Model.of(options));
 		selectize2.setTheme(Theme.BOOTSTRAP3);
 		form.add(selectize2);
 
@@ -42,7 +41,7 @@ public class TestPage extends WebPage
 		List<SelectizeOptionGroup> optionGroups = new ArrayList<>();
 		optionGroups.add(new SelectizeOptionGroup("1", "1", "English"));
 		optionGroups.add(new SelectizeOptionGroup("2", "2", "German"));
-		Selectize<Collection<SelectizeOption>> selectize3 = new Selectize<>("selectize3", Model.of(optionGroups),
+		Selectize selectize3 = new Selectize("selectize3", Model.of(optionGroups),
 			Model.of(options));
 		selectize3.setPlaceholder("Select a person!");
 		selectize3.setTheme(Theme.BOOTSTRAP3);
@@ -52,7 +51,7 @@ public class TestPage extends WebPage
 		label.setOutputMarkupId(true);
 		form.add(label);
 		// Select with ajax
-		Selectize<Void> selectize4 = new Selectize<Void>("selectize4")
+		Selectize selectize4 = new Selectize("selectize4")
 		{
 			private static final long serialVersionUID = 1L;
 
