@@ -47,7 +47,6 @@ public class DialogButton implements IClusterable
 	private String name;
 	private String icon;
 	private boolean enabled;
-	private boolean visible = true;
 
 	private final IModel<String> model;
 
@@ -234,18 +233,13 @@ public class DialogButton implements IClusterable
 	 */
 	public void setVisible(boolean visible, IPartialPageRequestHandler handler)
 	{
-		if (this.visible != visible)
+		if (visible)
 		{
-			this.visible = visible;
-
-			if (this.visible)
-			{
-				this.show(handler);
-			}
-			else
-			{
-				this.hide(handler);
-			}
+			this.show(handler);
+		}
+		else
+		{
+			this.hide(handler);
 		}
 	}
 
