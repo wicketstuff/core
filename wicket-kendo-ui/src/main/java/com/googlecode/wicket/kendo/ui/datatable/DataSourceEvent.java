@@ -29,7 +29,7 @@ import com.googlecode.wicket.kendo.ui.KendoDataSource;
  */
 public class DataSourceEvent extends JQueryEvent
 {
-	protected final JSONObject object;
+	private final JSONObject object;
 
 	public DataSourceEvent()
 	{

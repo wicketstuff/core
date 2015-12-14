@@ -46,7 +46,7 @@ public class InputAjaxSliderPage extends AbstractSliderPage
 			public void onValueChanged(IPartialPageRequestHandler handler)
 			{
 				InputAjaxSliderPage.this.info(this);
-				handler.add(feedback); //do never add 'this' or the form here!
+				handler.add(feedback); // do never add 'this' or the form here!
 			}
 		};
 
