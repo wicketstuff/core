@@ -21,16 +21,22 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.apache.wicket.Component;
 import org.apache.wicket.markup.head.CssReferenceHeaderItem;
 import org.apache.wicket.markup.head.IHeaderResponse;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.request.resource.CssResourceReference;
+import org.apache.wicket.request.resource.JavaScriptResourceReference;
 import org.apache.wicket.util.tester.WicketTester;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mockito;
 import org.wicketstuff.jwicket.JsOption;
+
 
 /**
  * 
@@ -295,6 +301,19 @@ public class TestJQueryUiTooltip
 		tooltip.renderHead(component, response);
 
 		verify(widget).buildJS("'#" + component.getMarkupId() + "'");
+	}
+
+	@Test
+	public void shouldNotShareUserProvidedResourceReferencesBetweenInstances() {
+		JQueryUiTooltip tooltip1 = JQueryUiTooltip.tooltip_1_10_3();
+		List<JavaScriptResourceReference> resourceReferencesAfter1 = new ArrayList<>(
+				tooltip1.getUserProvidedResourceReferences());
+
+		JQueryUiTooltip tooltip2 = JQueryUiTooltip.tooltip_1_10_3();
+		List<JavaScriptResourceReference> resourceReferencesAfter2 = new ArrayList<>(
+				tooltip2.getUserProvidedResourceReferences());
+		
+		Assert.assertEquals(resourceReferencesAfter1, resourceReferencesAfter2);
 	}
 
 }
