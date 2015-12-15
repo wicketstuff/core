@@ -209,13 +209,13 @@ public abstract class JQueryAjaxBehavior extends AbstractDefaultAjaxBehavior {
 		}
 	}
 
-    private static final List<JavaScriptResourceReference> userProvidedResourceReferences = new ArrayList<JavaScriptResourceReference>();
+    private final List<JavaScriptResourceReference> userProvidedResourceReferences = new ArrayList<JavaScriptResourceReference>();
 
-	public static void addUserProvidedResourceReferences(final JavaScriptResourceReference... resources) {
+	public void addUserProvidedResourceReferences(final JavaScriptResourceReference... resources) {
 		userProvidedResourceReferences.addAll(Arrays.asList(resources));
 	}
 
-	public static List<JavaScriptResourceReference> getUserProvidedResourceReferences() {
+	public List<JavaScriptResourceReference> getUserProvidedResourceReferences() {
 		return userProvidedResourceReferences;
 	}
 
