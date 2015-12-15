@@ -306,11 +306,11 @@ public class TestJQueryUiTooltip
 	@Test
 	public void shouldNotShareUserProvidedResourceReferencesBetweenInstances() {
 		JQueryUiTooltip tooltip1 = JQueryUiTooltip.tooltip_1_10_3();
-		List<JavaScriptResourceReference> resourceReferencesAfter1 = new ArrayList<>(
+		List<JavaScriptResourceReference> resourceReferencesAfter1 = new ArrayList<JavaScriptResourceReference>(
 				tooltip1.getUserProvidedResourceReferences());
 
 		JQueryUiTooltip tooltip2 = JQueryUiTooltip.tooltip_1_10_3();
-		List<JavaScriptResourceReference> resourceReferencesAfter2 = new ArrayList<>(
+		List<JavaScriptResourceReference> resourceReferencesAfter2 = new ArrayList<JavaScriptResourceReference>(
 				tooltip2.getUserProvidedResourceReferences());
 		
 		Assert.assertEquals(resourceReferencesAfter1, resourceReferencesAfter2);
