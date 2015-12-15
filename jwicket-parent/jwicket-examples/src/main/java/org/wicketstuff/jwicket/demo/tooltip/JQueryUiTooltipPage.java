@@ -46,7 +46,6 @@ public class JQueryUiTooltipPage extends WebPage
 		super();
 
 		// jQuery 1.6+ required for the jQueryUi tooltip widget
-		JQueryUiTooltip.addUserProvidedResourceReferences(JQueryResourceReference.get());
 
 		Component individualTooltip = new WebMarkupContainer("individualTooltip");
 		individualTooltip.add(tooltip_1_10_3() /**/
