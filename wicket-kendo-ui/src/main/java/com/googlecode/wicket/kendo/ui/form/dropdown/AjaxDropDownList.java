@@ -23,6 +23,7 @@ import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.markup.html.form.FormComponent;
 import org.apache.wicket.markup.html.form.IChoiceRenderer;
 import org.apache.wicket.model.IModel;
+import org.apache.wicket.util.lang.Args;
 
 import com.googlecode.wicket.jquery.core.JQueryBehavior;
 import com.googlecode.wicket.jquery.core.JQueryEvent;
@@ -156,42 +157,35 @@ public class AjaxDropDownList<T> extends DropDownList<T> implements ISelectionCh
 	@Override
 	public void onSelectionChanged(AjaxRequestTarget target)
 	{
-		// noop
+		this.onSelectionChanged();
 	}
 
 	@Override
 	public JQueryBehavior newWidgetBehavior(String selector)
 	{
-		return new AjaxDropDownListBehavior(selector) {
-
-			private static final long serialVersionUID = 1L;
-
-			@Override
-			public void onSelectionChanged(AjaxRequestTarget target)
-			{
-				AjaxDropDownList.this.onSelectionChanged();
-				AjaxDropDownList.this.onSelectionChanged(target);
-			}
-		};
+		return new AjaxDropDownListBehavior(selector, this);
 	}
 
 	/**
 	 * Provides a Kendo UI DropDownList {@link JQueryBehavior}
 	 */
-	protected abstract static class AjaxDropDownListBehavior extends KendoUIBehavior implements IJQueryAjaxAware, ISelectionChangedListener
+	protected static class AjaxDropDownListBehavior extends KendoUIBehavior implements IJQueryAjaxAware
 	{
 		private static final long serialVersionUID = 1L;
 
+		private final ISelectionChangedListener listener;
 		private JQueryAjaxBehavior onChangeAjaxBehavior;
 
-		public AjaxDropDownListBehavior(String selector)
+		public AjaxDropDownListBehavior(String selector, ISelectionChangedListener listener)
 		{
-			super(selector, DropDownList.METHOD);
+			this(selector, DropDownList.METHOD, listener);
 		}
 
-		public AjaxDropDownListBehavior(String selector, String method)
+		public AjaxDropDownListBehavior(String selector, String method, ISelectionChangedListener listener)
 		{
-			super(selector, method);
+			super(selector, DropDownList.METHOD);
+			
+			this.listener = Args.notNull(listener, "listener");
 		}
 
 		@Override
@@ -216,7 +210,7 @@ public class AjaxDropDownList<T> extends DropDownList<T> implements ISelectionCh
 		{
 			if (event instanceof ChangeEvent)
 			{
-				this.onSelectionChanged(target);
+				this.listener.onSelectionChanged(target);
 			}
 		}
 	}
