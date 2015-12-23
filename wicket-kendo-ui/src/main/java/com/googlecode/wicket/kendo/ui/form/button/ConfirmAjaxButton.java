@@ -16,6 +16,8 @@
  */
 package com.googlecode.wicket.kendo.ui.form.button;
 
+import java.util.List;
+
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.form.Form;
@@ -45,6 +47,9 @@ public abstract class ConfirmAjaxButton extends GenericPanel<String>
 {
 	private static final long serialVersionUID = 1L;
 
+	private final IModel<String> labelModel;
+	private final IModel<String> titleModel;
+
 	/**
 	 * Constructor
 	 *
@@ -70,7 +75,17 @@ public abstract class ConfirmAjaxButton extends GenericPanel<String>
 	{
 		super(id, message);
 
-		final AbstractWindow<?> window = this.newWindow("window", title, this.getModel());
+		this.labelModel = label;
+		this.titleModel = title;
+	}
+
+	// Events //
+
+	@Override
+	protected void onInitialize()
+	{
+		super.onInitialize();
+		final AbstractWindow<?> window = this.newWindow("window", this.titleModel, this.getModel(), this.newWindowButtons());
 		this.add(window);
 
 		final AjaxButton button = new AjaxButton("button") {
@@ -82,7 +97,7 @@ public abstract class ConfirmAjaxButton extends GenericPanel<String>
 			{
 				return ConfirmAjaxButton.this.getIcon();
 			}
-			
+
 			@Override
 			protected void onInitialize()
 			{
@@ -101,21 +116,8 @@ public abstract class ConfirmAjaxButton extends GenericPanel<String>
 
 		this.add(button);
 
-		button.add(new Label("label", label).setRenderBodyOnly(true));
+		button.add(new Label("label", this.labelModel).setRenderBodyOnly(true));
 	}
-
-	// Properties //
-	/**
-	 * Gets the icon being displayed in the button
-	 *
-	 * @return the {@link KendoIcon}
-	 */
-	protected String getIcon()
-	{
-		return KendoIcon.NOTE;
-	}
-
-	// Events //
 
 	/**
 	 * Triggered when the form is submitted, but the validation failed
@@ -138,6 +140,18 @@ public abstract class ConfirmAjaxButton extends GenericPanel<String>
 	 */
 	protected abstract void onCancel(AjaxRequestTarget target);
 
+	// Properties //
+
+	/**
+	 * Gets the icon being displayed in the button
+	 *
+	 * @return the {@link KendoIcon}
+	 */
+	protected String getIcon()
+	{
+		return KendoIcon.NOTE;
+	}
+
 	// Factories //
 
 	/**
@@ -149,12 +163,12 @@ public abstract class ConfirmAjaxButton extends GenericPanel<String>
 	 * @param message the message to be displayed
 	 * @return the dialog instance
 	 */
-	protected Window<?> newWindow(String id, IModel<String> title, IModel<String> message)
+	protected Window<?> newWindow(String id, IModel<String> title, IModel<String> message, List<WindowButton> buttons)
 	{
-		return new MessageWindow(id, title, message, WindowButtons.OK_CANCEL, KendoIcon.NOTE) {
+		return new MessageWindow(id, title, message, buttons, KendoIcon.NOTE) {
 
 			private static final long serialVersionUID = 1L;
-			
+
 			@Override
 			protected Form<?> getForm()
 			{
@@ -185,5 +199,18 @@ public abstract class ConfirmAjaxButton extends GenericPanel<String>
 				}
 			}
 		};
+	}
+
+	/**
+	 * Gets the {@code List} of {@link WindowButton}{@code s}<br/>
+	 * This can be overridden to disable to default form processing of the OK button<br/>
+	 * <br/> 
+	 * <b>Caution:</b> button *names* should be OK and Cancel
+	 * 
+	 * @return {@link WindowButtons#OK_CANCEL} by default
+	 */
+	protected List<WindowButton> newWindowButtons()
+	{
+		return WindowButtons.OK_CANCEL.toList();
 	}
 }

@@ -135,7 +135,7 @@ public class WindowBehavior extends KendoUIBehavior implements IJQueryAjaxAware
 
 		if (this.onActionAjaxBehavior != null)
 		{
-			// TODO verify if registred multiple times
+			// TODO verify if registered multiple times
 			this.register(String.format("%s.wrapper.find('a.k-window-action').click(%s);", this.widget(), this.onActionAjaxBehavior.getCallbackFunction()));
 		}
 

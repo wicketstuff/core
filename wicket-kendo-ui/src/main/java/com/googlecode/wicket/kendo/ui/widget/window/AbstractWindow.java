@@ -266,17 +266,17 @@ public abstract class AbstractWindow<T> extends GenericPanel<T> implements IJQue
 	/**
 	 * Indicates whether the window is centered
 	 *
-	 * @return false by default
+	 * @return {@code true }by default
 	 */
 	public boolean isCentered()
 	{
-		return false;
+		return true;
 	}
 
 	/**
 	 * Indicates whether the window is resizable
 	 *
-	 * @return false by default
+	 * @return {@code false} by default
 	 * @see WindowBehavior#isCentered()
 	 */
 	public boolean isResizable()
