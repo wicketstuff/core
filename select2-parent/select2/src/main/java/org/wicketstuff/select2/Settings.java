@@ -40,27 +40,28 @@ public final class Settings implements Serializable
 	}
 
 	private Integer minimumInputLength, minimumResultsForSearch;
-	private Integer maximumSelectionSize;
+	private Integer maximumSelectionLength;
 	private Object placeholder;
 	private boolean allowClear;
 	private boolean multiple;
 	private boolean closeOnSelect;
 	private String id, matcher, tokenizer;
-	private String sortResults;
-	private String formatSelection, formatSelectionTooBig, formatResult, formatNoMatches,
-		formatInputTooShort, formatResultCssClass, formatLoadMore, formatSearching, escapeMarkup;
-	private String initSelection;
+	private String sorter;
+	private String templateSelection, templateResult, escapeMarkup
+		, formatSelectionTooBig, formatNoMatches //TODO this will not work
+		, formatInputTooShort, formatResultCssClass, formatLoadMore, formatSearching; //TODO this will not work
+	private String initSelection;  //TODO this will not work
 	private String query;
 	private String width;
-	private boolean openOnEnter;
-	private String containerCss, dropdownCss, containerCssClass, dropdownCssClass;
+	private String theme;
+	private String containerCss, dropdownCss, containerCssClass, dropdownCssClass; //TODO deprecated
 
 	private AjaxSettings ajax;
 	private String data;
 	private boolean tags;
 	private String separator;
 	private String[] tokenSeparators;
-	private boolean selectOnBlur;
+	private boolean selectOnClose;
 	private boolean dropdownAutoWidth;
 
 	public CharSequence toJson()
@@ -71,7 +72,7 @@ public final class Settings implements Serializable
 			writer.object();
 			Json.writeObject(writer, "minimumInputLength", minimumInputLength);
 			Json.writeObject(writer, "minimumResultsForSearch", minimumResultsForSearch);
-			Json.writeObject(writer, "maximumSelectionSize", maximumSelectionSize);
+			Json.writeObject(writer, "maximumSelectionLength", maximumSelectionLength);
 			Json.writeObject(writer, "placeholder", placeholder);
 			Json.writeObject(writer, "allowClear", allowClear);
 			Json.writeObject(writer, "multiple", multiple);
@@ -79,9 +80,9 @@ public final class Settings implements Serializable
 			Json.writeFunction(writer, "id", id);
 			Json.writeFunction(writer, "matcher", matcher);
 			Json.writeFunction(writer, "tokenizer", tokenizer);
-			Json.writeFunction(writer, "sortResults", sortResults);
-			Json.writeFunction(writer, "formatSelection", formatSelection);
-			Json.writeFunction(writer, "formatResult", formatResult);
+			Json.writeFunction(writer, "sorter", sorter);
+			Json.writeFunction(writer, "templateSelection", templateSelection);
+			Json.writeFunction(writer, "templateResult", templateResult);
 			Json.writeFunction(writer, "formatNoMatches", formatNoMatches);
 			Json.writeFunction(writer, "formatInputTooShort", formatInputTooShort);
 			Json.writeFunction(writer, "formatResultCssClass", formatResultCssClass);
@@ -92,14 +93,14 @@ public final class Settings implements Serializable
 			Json.writeFunction(writer, "initSelection", initSelection);
 			Json.writeFunction(writer, "query", query);
 			Json.writeObject(writer, "width", width);
-			Json.writeObject(writer, "openOnEnter", openOnEnter);
+			Json.writeObject(writer, "theme", theme);
 			Json.writeFunction(writer, "containerCss", containerCss);
 			Json.writeObject(writer, "containerCssClass", containerCssClass);
 			Json.writeFunction(writer, "dropdownCss", dropdownCss);
 			Json.writeObject(writer, "dropdownCssClass", dropdownCssClass);
 			Json.writeObject(writer, "separator", separator);
 			Json.writeObject(writer, "tokenSeparators", tokenSeparators);
-			Json.writeObject(writer, "selectOnBlur", selectOnBlur);
+			Json.writeObject(writer, "selectOnClose", selectOnClose);
 			Json.writeObject(writer, "dropdownAutoWidth", dropdownAutoWidth);
 			if (ajax != null)
 			{
@@ -198,25 +199,25 @@ public final class Settings implements Serializable
 		return this;
 	}
 
-	public String getFormatSelection()
+	public String getTemplateSelection()
 	{
-		return formatSelection;
+		return templateSelection;
 	}
 
-	public Settings setFormatSelection(String formatSelection)
+	public Settings setTemplateSelection(String templateSelection)
 	{
-		this.formatSelection = formatSelection;
+		this.templateSelection = templateSelection;
 		return this;
 	}
 
-	public String getFormatResult()
+	public String getTemplateResult()
 	{
-		return formatResult;
+		return templateResult;
 	}
 
-	public Settings setFormatResult(String formatResult)
+	public Settings setTemplateResult(String templateResult)
 	{
-		this.formatResult = formatResult;
+		this.templateResult = templateResult;
 		return this;
 	}
 
@@ -306,14 +307,14 @@ public final class Settings implements Serializable
 		return this;
 	}
 
-	public Integer getMaximumSelectionSize()
+	public Integer getMaximumSelectionLength()
 	{
-		return maximumSelectionSize;
+		return maximumSelectionLength;
 	}
 
-	public Settings setMaximumSelectionSize(Integer maximumSelectionSize)
+	public Settings setMaximumSelectionLength(Integer maximumSelectionLength)
 	{
-		this.maximumSelectionSize = maximumSelectionSize;
+		this.maximumSelectionLength = maximumSelectionLength;
 		return this;
 	}
 
@@ -339,14 +340,14 @@ public final class Settings implements Serializable
 		return this;
 	}
 
-	public String getSortResults()
+	public String getSorter()
 	{
-		return sortResults;
+		return sorter;
 	}
 
-	public Settings setSortResults(String sortResults)
+	public Settings setSorter(String sorter)
 	{
-		this.sortResults = sortResults;
+		this.sorter = sorter;
 		return this;
 	}
 
@@ -416,14 +417,14 @@ public final class Settings implements Serializable
 		return this;
 	}
 
-	public boolean getOpenOnEnter()
+	public String getTheme()
 	{
-		return openOnEnter;
+		return theme;
 	}
 
-	public Settings setOpenOnEnter(boolean openOnEnter)
+	public Settings setTheme(String theme)
 	{
-		this.openOnEnter = openOnEnter;
+		this.theme = theme;
 		return this;
 	}
 
@@ -493,14 +494,14 @@ public final class Settings implements Serializable
 		return this;
 	}
 
-	public boolean getSelectOnBlur()
+	public boolean getSelectOnClose()
 	{
-		return selectOnBlur;
+		return selectOnClose;
 	}
 
-	public Settings setSelectOnBlur(boolean selectOnBlur)
+	public Settings setSelectOnClose(boolean selectOnClose)
 	{
-		this.selectOnBlur = selectOnBlur;
+		this.selectOnClose = selectOnClose;
 		return this;
 	}
 
