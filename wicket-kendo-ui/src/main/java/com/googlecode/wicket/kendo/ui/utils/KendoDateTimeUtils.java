@@ -29,9 +29,9 @@ public class KendoDateTimeUtils
 {
 	static final String PATTERN = "yyyy-MM-dd'T'HH:mm:sszzz";
 
-	static final String j_chars = "GyMdkHmsSEDFwWahKzZ";
-	static final String k_chars = "GyMdkHmsfEDFwWthKzZ"; // 'S' > 'f', 'a' > 't'
-	static final int chars_lenth = 19;
+	static final String j_chars = "GyYMwWDdFEuaHkKhmsSzZX";
+	static final String k_chars = "GyYMwWDdFdutHkKhmsfzZX"; // S > f, a > t, E > d
+	static final int chars_lenth = j_chars.length();
 
 	/**
 	 * Converts a java datetime pattern to a kendo-ui datetime pattern
