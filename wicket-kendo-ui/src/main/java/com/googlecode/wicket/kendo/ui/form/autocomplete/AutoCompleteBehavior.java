@@ -89,6 +89,12 @@ public abstract class AutoCompleteBehavior extends KendoUIBehavior implements IJ
 
 	// Properties //
 
+	@Override
+	public boolean isEnabled(Component component)
+	{
+		return component.isEnabledInHierarchy();
+	}
+
 	protected abstract CharSequence getChoiceCallbackUrl();
 
 	// Events //
@@ -104,7 +110,10 @@ public abstract class AutoCompleteBehavior extends KendoUIBehavior implements IJ
 		this.setOption("select", this.onSelectAjaxBehavior.getCallbackFunction());
 
 		// data source //
-		this.dataSource.setTransportRead(Options.asString(this.getChoiceCallbackUrl()));
+		if (this.isEnabled(component))
+		{
+			this.dataSource.setTransportRead(Options.asString(this.getChoiceCallbackUrl()));
+		}
 	}
 
 	// IJQueryAjaxAware //

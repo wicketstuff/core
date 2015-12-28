@@ -79,6 +79,14 @@ public abstract class AutoCompleteBehavior extends JQueryUIBehavior implements I
 		component.add(this.onSelectAjaxBehavior);
 	}
 
+    // Properties //
+
+    @Override
+    public boolean isEnabled(Component component)
+    {
+        return component.isEnabledInHierarchy();
+    }
+
 	protected abstract CharSequence getChoiceCallbackUrl();
 
 	// Events //
@@ -88,8 +96,12 @@ public abstract class AutoCompleteBehavior extends JQueryUIBehavior implements I
 	{
 		super.onConfigure(component);
 
-		this.setOption("source", Options.asString(this.getChoiceCallbackUrl()));
 		this.setOption("select", this.onSelectAjaxBehavior.getCallbackFunction());
+		
+        if (this.isEnabled(component))
+        {
+            this.setOption("source", Options.asString(this.getChoiceCallbackUrl()));
+        }
 	}
 
 	// IJQueryAjaxAware //

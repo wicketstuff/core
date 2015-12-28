@@ -53,6 +53,12 @@ public abstract class DropDownListBehavior extends KendoUIBehavior
 	}
 
 	// Properties //
+	
+	@Override
+	public boolean isEnabled(Component component)
+	{
+		return component.isEnabledInHierarchy();
+	}
 
 	protected abstract CharSequence getChoiceCallbackUrl();
 
@@ -67,6 +73,9 @@ public abstract class DropDownListBehavior extends KendoUIBehavior
 		this.setOption("dataSource", this.dataSource.getName());
 
 		// data source //
-		this.dataSource.setTransportRead(Options.asString(this.getChoiceCallbackUrl()));
+		if (this.isEnabled(component))
+		{
+			this.dataSource.setTransportRead(Options.asString(this.getChoiceCallbackUrl()));
+		}
 	}
 }

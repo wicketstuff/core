@@ -54,6 +54,12 @@ public abstract class ComboBoxBehavior extends KendoUIBehavior
 
 	// Properties //
 
+	@Override
+	public boolean isEnabled(Component component)
+	{
+		return component.isEnabledInHierarchy();
+	}
+
 	protected abstract CharSequence getChoiceCallbackUrl();
 
 	// Events //
@@ -67,6 +73,9 @@ public abstract class ComboBoxBehavior extends KendoUIBehavior
 		this.setOption("dataSource", this.dataSource.getName());
 
 		// data source //
-		this.dataSource.setTransportRead(Options.asString(this.getChoiceCallbackUrl()));
+		if (this.isEnabled(component))
+		{
+			this.dataSource.setTransportRead(Options.asString(this.getChoiceCallbackUrl()));
+		}
 	}
 }

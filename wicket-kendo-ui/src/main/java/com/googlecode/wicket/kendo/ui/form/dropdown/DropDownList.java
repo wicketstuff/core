@@ -24,7 +24,6 @@ import org.apache.wicket.model.IModel;
 
 import com.googlecode.wicket.jquery.core.IJQueryWidget;
 import com.googlecode.wicket.jquery.core.JQueryBehavior;
-import com.googlecode.wicket.jquery.core.template.IJQueryTemplate;
 import com.googlecode.wicket.kendo.ui.KendoUIBehavior;
 
 /**
@@ -206,18 +205,5 @@ public class DropDownList<T> extends DropDownChoice<T> implements IJQueryWidget
 	public JQueryBehavior newWidgetBehavior(String selector)
 	{
 		return new KendoUIBehavior(selector, DropDownList.METHOD);
-	}
-
-	// Factories //
-
-	/**
-	 * Gets a new {@link IJQueryTemplate} to customize the rendering<br/>
-	 * The properties used in the template text (ie: ${data.name}) should be of the prefixed by "data." and should be identified in the list returned by {@link IJQueryTemplate#getTextProperties()} (without "data.")
-	 *
-	 * @return null by default
-	 */
-	protected IJQueryTemplate newTemplate()
-	{
-		return null;
 	}
 }

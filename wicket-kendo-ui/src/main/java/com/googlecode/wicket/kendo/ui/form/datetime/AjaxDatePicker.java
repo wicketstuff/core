@@ -271,6 +271,7 @@ public class AjaxDatePicker extends DatePicker implements IJQueryAjaxAware, IVal
 		}
 
 		// Events //
+
 		@Override
 		public void onConfigure(Component component)
 		{
