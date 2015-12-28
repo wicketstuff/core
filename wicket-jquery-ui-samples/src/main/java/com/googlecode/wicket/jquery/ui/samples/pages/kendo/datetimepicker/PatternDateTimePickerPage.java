@@ -28,7 +28,7 @@ public class PatternDateTimePickerPage extends AbstractTimePickerPage
 
 		// TimePicker //
 		Calendar calendar = Calendar.getInstance();
-		calendar.set(2012, 05, 27, 02, 00, 00);
+		calendar.set(2012, 5, 27, 2, 0, 0);
 
 		IModel<Date> model = Model.of(calendar.getTime());
 

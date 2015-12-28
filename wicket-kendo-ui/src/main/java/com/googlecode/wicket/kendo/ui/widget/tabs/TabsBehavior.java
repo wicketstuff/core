@@ -185,9 +185,9 @@ public abstract class TabsBehavior extends KendoUIBehavior implements IJQueryAja
 	@Override
 	public void onAjax(AjaxRequestTarget target, JQueryEvent event)
 	{
-		if (event instanceof AbstractTabEvent)
+		if (event instanceof TabEvent)
 		{
-			int index = ((AbstractTabEvent) event).getIndex();
+			int index = ((TabEvent) event).getIndex();
 			final List<ITab> tabs = this.getVisibleTabs();
 
 			if (-1 < index && index < tabs.size()) /* index could be unknown depending on options and user action */
@@ -255,13 +255,13 @@ public abstract class TabsBehavior extends KendoUIBehavior implements IJQueryAja
 	// Ajax classes //
 
 	/**
-	 * Provides a {@link JQueryAjaxBehavior} that aims to be wired to the 'select' event
+	 * Provides an abstract {@link JQueryAjaxBehavior} that aims to be wired to the {@code TabsBehavior} events
 	 */
-	protected static class OnSelectAjaxBehavior extends JQueryAjaxBehavior
+	abstract static class TabAjaxBehavior extends JQueryAjaxBehavior
 	{
 		private static final long serialVersionUID = 1L;
 
-		public OnSelectAjaxBehavior(IJQueryAjaxAware source)
+		public TabAjaxBehavior(IJQueryAjaxAware source)
 		{
 			super(source);
 		}
@@ -269,8 +269,20 @@ public abstract class TabsBehavior extends KendoUIBehavior implements IJQueryAja
 		@Override
 		protected CallbackParameter[] getCallbackParameters()
 		{
-			return new CallbackParameter[] { CallbackParameter.context("e"), // lf
-					CallbackParameter.resolved("index", "jQuery(e.item).index()") };
+			return new CallbackParameter[] { CallbackParameter.context("e"), CallbackParameter.resolved("index", "jQuery(e.item).index()") };
+		}
+	}
+
+	/**
+	 * Provides a {@link JQueryAjaxBehavior} that aims to be wired to the 'select' event
+	 */
+	protected static class OnSelectAjaxBehavior extends TabAjaxBehavior
+	{
+		private static final long serialVersionUID = 1L;
+
+		public OnSelectAjaxBehavior(IJQueryAjaxAware source)
+		{
+			super(source);
 		}
 
 		@Override
@@ -283,20 +295,13 @@ public abstract class TabsBehavior extends KendoUIBehavior implements IJQueryAja
 	/**
 	 * Provides a {@link JQueryAjaxBehavior} that aims to be wired to the 'show' event
 	 */
-	protected static class OnShowAjaxBehavior extends JQueryAjaxBehavior
+	protected static class OnShowAjaxBehavior extends TabAjaxBehavior
 	{
 		private static final long serialVersionUID = 1L;
 
 		public OnShowAjaxBehavior(IJQueryAjaxAware source)
 		{
 			super(source);
-		}
-
-		@Override
-		protected CallbackParameter[] getCallbackParameters()
-		{
-			return new CallbackParameter[] { CallbackParameter.context("e"), // lf
-					CallbackParameter.resolved("index", "jQuery(e.item).index()") };
 		}
 
 		@Override
@@ -309,20 +314,13 @@ public abstract class TabsBehavior extends KendoUIBehavior implements IJQueryAja
 	/**
 	 * Provides a {@link JQueryAjaxBehavior} that aims to be wired to the 'activate' event
 	 */
-	protected static class OnActivateAjaxBehavior extends JQueryAjaxBehavior
+	protected static class OnActivateAjaxBehavior extends TabAjaxBehavior
 	{
 		private static final long serialVersionUID = 1L;
 
 		public OnActivateAjaxBehavior(IJQueryAjaxAware source)
 		{
 			super(source);
-		}
-
-		@Override
-		protected CallbackParameter[] getCallbackParameters()
-		{
-			return new CallbackParameter[] { CallbackParameter.context("e"), // lf
-					CallbackParameter.resolved("index", "jQuery(e.item).index()") };
 		}
 
 		@Override
@@ -337,14 +335,14 @@ public abstract class TabsBehavior extends KendoUIBehavior implements IJQueryAja
 	/**
 	 * Provides a base class for {@link TabsBehavior} event objects
 	 */
-	protected abstract static class AbstractTabEvent extends JQueryEvent
+	abstract static class TabEvent extends JQueryEvent
 	{
 		private final int index;
 
 		/**
 		 * Constructor
 		 */
-		public AbstractTabEvent()
+		public TabEvent()
 		{
 			super();
 
@@ -365,21 +363,21 @@ public abstract class TabsBehavior extends KendoUIBehavior implements IJQueryAja
 	/**
 	 * Provides an event object that will be broadcasted by the {@link OnSelectAjaxBehavior} callback
 	 */
-	protected static class SelectEvent extends AbstractTabEvent
+	protected static class SelectEvent extends TabEvent
 	{
 	}
 
 	/**
 	 * Provides an event object that will be broadcasted by the {@link OnShowAjaxBehavior} callback
 	 */
-	protected static class ShowEvent extends AbstractTabEvent
+	protected static class ShowEvent extends TabEvent
 	{
 	}
 
 	/**
 	 * Provides an event object that will be broadcasted by the {@link OnActivateAjaxBehavior} callback
 	 */
-	protected static class ActivateEvent extends AbstractTabEvent
+	protected static class ActivateEvent extends TabEvent
 	{
 	}
 }

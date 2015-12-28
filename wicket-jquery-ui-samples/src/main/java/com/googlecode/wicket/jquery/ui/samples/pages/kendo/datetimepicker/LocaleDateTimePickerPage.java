@@ -33,7 +33,7 @@ public class LocaleDateTimePickerPage extends AbstractTimePickerPage
 
 		// TimePicker //
 		Calendar calendar = Calendar.getInstance();
-		calendar.set(2012, 05, 27, 02, 00);
+		calendar.set(2012, 5, 27, 2, 0);
 
 		final DateTimePicker datetimepicker = new DateTimePicker("datetimepicker", Model.of(calendar.getTime())) {
 
