@@ -7,7 +7,7 @@ import org.apache.wicket.markup.head.HeaderItem;
 import org.apache.wicket.markup.head.JavaScriptContentHeaderItem;
 import org.apache.wicket.markup.head.JavaScriptHeaderItem;
 
-import com.googlecode.wicket.kendo.ui.resource.KendoGlobalizeResourceReference;
+import com.googlecode.wicket.kendo.ui.resource.KendoCultureResourceReference;
 
 /**
  * {@link HeaderItem} in charge of setting the {@code kendo.culture} and adding relevant dependencies <br/>
@@ -76,7 +76,7 @@ public class KendoCultureHeaderItem extends JavaScriptContentHeaderItem
 	public List<HeaderItem> getDependencies()
 	{
 		List<HeaderItem> dependencies = super.getDependencies();
-		dependencies.add(JavaScriptHeaderItem.forReference(new KendoGlobalizeResourceReference(this.culture)));
+		dependencies.add(JavaScriptHeaderItem.forReference(new KendoCultureResourceReference(this.culture)));
 
 		return dependencies;
 	}

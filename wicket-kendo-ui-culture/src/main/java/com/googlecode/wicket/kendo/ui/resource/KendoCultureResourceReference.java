@@ -34,18 +34,18 @@ import com.googlecode.wicket.kendo.ui.settings.KendoUILibrarySettings;
  * @author Sebastien Briquet - sebfz1
  *
  */
-public class KendoGlobalizeResourceReference extends JQueryPluginResourceReference
+public class KendoCultureResourceReference extends JQueryPluginResourceReference
 {
 	private static final long serialVersionUID = 1L;
 
-	public static final String FILENAME_PATTERN = "kendo.culture.%s.js";
+	public static final String FILENAME_PATTERN = "cultures/kendo.culture.%s.js";
 
 	/**
 	 * Constructor
 	 *
 	 * @param locale the {@link Locale}
 	 */
-	public KendoGlobalizeResourceReference(Locale locale)
+	public KendoCultureResourceReference(Locale locale)
 	{
 		this(locale.toLanguageTag()); // java7
 	}
@@ -55,7 +55,7 @@ public class KendoGlobalizeResourceReference extends JQueryPluginResourceReferen
 	 *
 	 * @param culture the {@link KendoCulture}
 	 */
-	public KendoGlobalizeResourceReference(KendoCulture culture)
+	public KendoCultureResourceReference(KendoCulture culture)
 	{
 		this(culture.toString());
 	}
@@ -65,9 +65,9 @@ public class KendoGlobalizeResourceReference extends JQueryPluginResourceReferen
 	 *
 	 * @param culture the culture, ie: 'fr' or 'fr-FR'
 	 */
-	public KendoGlobalizeResourceReference(String culture)
+	public KendoCultureResourceReference(String culture)
 	{
-		super(KendoGlobalizeResourceReference.class, String.format(FILENAME_PATTERN, culture));
+		super(KendoCultureResourceReference.class, String.format(FILENAME_PATTERN, culture));
 	}
 
 	@Override
