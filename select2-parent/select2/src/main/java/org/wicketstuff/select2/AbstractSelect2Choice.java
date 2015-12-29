@@ -245,7 +245,7 @@ abstract class AbstractSelect2Choice<T, M> extends AbstractTextComponent<M> impl
 		super.onInitialize();
 
 		// configure the ajax callbacks
-		if (isAjax() && !settings.isStateless())
+		if (isAjax() || settings.isStateless())
 		{
 			AjaxSettings ajax = getSettings().getAjax(true);
 			ajax.setData(String.format(
@@ -337,7 +337,7 @@ abstract class AbstractSelect2Choice<T, M> extends AbstractTextComponent<M> impl
 
         // retrieve choices matching the search term
 
-        String term = params.getParameterValue("term").toOptionalString();
+        String term = params.getParameterValue("q").toOptionalString();
 
         int page = params.getParameterValue("page").toInt(1);
         // select2 uses 1-based paging, but in wicket world we are used to
@@ -355,7 +355,7 @@ abstract class AbstractSelect2Choice<T, M> extends AbstractTextComponent<M> impl
         try 
         {
             json.object();
-            json.key("results").array();
+            json.key("items").array();
             for (T item : response) 
             {
                 json.object();
