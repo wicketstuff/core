@@ -77,7 +77,13 @@ public class Select2Choice<T> extends AbstractSelect2Choice<T, T>
 		super(id, provider);
 	}
 
-	@Override
+    // needed to be able override the class on Scala
+    @Override
+    protected void onInitialize() {
+        super.onInitialize();
+    }
+
+    @Override
 	protected final T convertValue(String[] value) throws ConversionException
 	{
 		if (value != null && value.length > 0 && !Strings.isEmpty(value[0]))
