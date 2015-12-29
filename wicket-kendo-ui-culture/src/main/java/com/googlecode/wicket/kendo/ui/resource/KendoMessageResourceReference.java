@@ -17,55 +17,44 @@
 package com.googlecode.wicket.kendo.ui.resource;
 
 import java.util.List;
-import java.util.Locale;
 
 import org.apache.wicket.markup.head.HeaderItem;
 import org.apache.wicket.markup.head.JavaScriptHeaderItem;
 import org.apache.wicket.resource.JQueryPluginResourceReference;
 
-import com.googlecode.wicket.kendo.ui.KendoCulture;
+import com.googlecode.wicket.kendo.ui.KendoMessage;
 import com.googlecode.wicket.kendo.ui.settings.KendoUILibrarySettings;
 
 /**
- * The resource reference for the Kendo Culture javascript library.
+ * The resource reference for the Kendo Message javascript library.
  *
  * @author Sebastien Briquet - sebfz1
  *
  */
-public class KendoCultureResourceReference extends JQueryPluginResourceReference
+public class KendoMessageResourceReference extends JQueryPluginResourceReference
 {
 	private static final long serialVersionUID = 1L;
 
-	public static final String FILENAME_PATTERN = "cultures/kendo.culture.%s.js";
+	public static final String FILENAME_PATTERN = "messages/kendo.messages.%s.js";
 
 	/**
 	 * Constructor
 	 *
-	 * @param locale the {@link Locale}
+	 * @param message the {@link KendoMessage}
 	 */
-	public KendoCultureResourceReference(Locale locale)
+	public KendoMessageResourceReference(KendoMessage message)
 	{
-		this(locale.toLanguageTag()); // java7
+		this(message.toString());
 	}
 
 	/**
 	 * Constructor
 	 *
-	 * @param culture the {@link KendoCulture}
+	 * @param language the language, ie: 'fr-FR'
 	 */
-	public KendoCultureResourceReference(KendoCulture culture)
+	public KendoMessageResourceReference(String language)
 	{
-		this(culture.toString());
-	}
-
-	/**
-	 * Constructor
-	 *
-	 * @param culture the culture, ie: 'fr' or 'fr-FR'
-	 */
-	public KendoCultureResourceReference(String culture)
-	{
-		super(KendoCultureResourceReference.class, String.format(FILENAME_PATTERN, culture));
+		super(KendoMessageResourceReference.class, String.format(FILENAME_PATTERN, language));
 	}
 
 	@Override

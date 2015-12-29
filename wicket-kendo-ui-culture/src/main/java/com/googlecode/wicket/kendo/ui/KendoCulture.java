@@ -17,7 +17,7 @@
 package com.googlecode.wicket.kendo.ui;
 
 /**
- * Provides all Kendo UI culture identifiers
+ * Provides all Kendo UI supported culture identifiers
  * 
  * @author Sebastien Briquet - sebfz1
  */

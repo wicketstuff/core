@@ -18,7 +18,7 @@ import org.apache.wicket.markup.html.IHeaderContributor;
  * 	{
  * 		super.init();
  * 		
- * 		getHeaderContributorListenerCollection().add(new KendoCultureHeaderContributor(Locale.GERMANY));
+ * 		this.getHeaderContributorListenerCollection().add(new KendoCultureHeaderContributor(Locale.GERMANY));
  * 	}
  * }
  * </code>
