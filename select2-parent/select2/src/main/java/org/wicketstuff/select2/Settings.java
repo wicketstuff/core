@@ -64,6 +64,17 @@ public final class Settings implements Serializable
 	private boolean selectOnClose;
 	private boolean dropdownAutoWidth;
 
+    /**
+     * If stateless is set to true then component will not be used as context 
+     * for serving JSON.
+     */
+    private boolean stateless = false;
+
+    /**
+     * Path to which JSON producing resource will be attached.
+     */
+    private String mountPath;
+
 	public CharSequence toJson()
 	{
 		try
@@ -515,4 +526,24 @@ public final class Settings implements Serializable
 		this.dropdownAutoWidth = dropdownAutoWidth;
 		return this;
 	}
+
+    public boolean isStateless() 
+    {
+        return stateless;
+    }
+
+    public void setStateless(boolean stateless) 
+    {
+        this.stateless = stateless;
+    }
+
+    public String getMountPath() 
+    {
+        return mountPath;
+    }
+
+    public void setMountPath(String mountPath) 
+    {
+        this.mountPath = mountPath;
+    }
 }

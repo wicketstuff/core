@@ -13,6 +13,7 @@
 package org.wicketstuff.select2;
 
 import java.io.IOException;
+import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.util.Collection;
 import java.util.Collections;
@@ -33,6 +34,7 @@ import org.apache.wicket.markup.html.form.HiddenField;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.request.IRequestParameters;
 import org.apache.wicket.request.Request;
+import org.apache.wicket.request.cycle.RequestCycle;
 import org.apache.wicket.request.http.WebRequest;
 import org.apache.wicket.request.http.WebResponse;
 import org.apache.wicket.util.string.AppendingStringBuffer;
@@ -54,7 +56,7 @@ abstract class AbstractSelect2Choice<T, M> extends AbstractTextComponent<M> impl
 
 	private final Settings settings = new Settings();
 
-	private ChoiceProvider<T> provider;
+	private ChoiceProvider<T>provider;
 
 	private boolean convertInputPerformed = false;
 
@@ -243,7 +245,7 @@ abstract class AbstractSelect2Choice<T, M> extends AbstractTextComponent<M> impl
 		super.onInitialize();
 
 		// configure the ajax callbacks
-		if (isAjax())
+		if (isAjax() && !settings.isStateless())
 		{
 			AjaxSettings ajax = getSettings().getAjax(true);
 			ajax.setData(String.format(
@@ -273,7 +275,14 @@ abstract class AbstractSelect2Choice<T, M> extends AbstractTextComponent<M> impl
 	protected void onConfigure()
 	{
 		super.onConfigure();
-		if (isAjax())
+        if(getSettings().isStateless()) 
+        {
+            if(Strings.isEmpty(getSettings().getMountPath())) 
+            {
+                throw new IllegalStateException("Select2 in stateless mode should specify a mountPath");
+            }
+            getSettings().getAjax(true).setUrl(getSettings().getMountPath());
+        } else if (isAjax())
 		{
 			getSettings().getAjax().setUrl(urlFor(IResourceListener.INTERFACE, null));
 		}
@@ -301,6 +310,10 @@ abstract class AbstractSelect2Choice<T, M> extends AbstractTextComponent<M> impl
 	@Override
 	protected boolean getStatelessHint()
 	{
+        if( settings.isStateless() )
+        {
+            return true;
+        }
 		return !isAjax();
 	}
 
@@ -309,63 +322,69 @@ abstract class AbstractSelect2Choice<T, M> extends AbstractTextComponent<M> impl
 		return provider != null;
 	}
 
+    /**
+     * Utility method to generate JSON response.
+     *
+     * @param provider
+     * @param outputStream
+     */
+    public static <T> void generateJSON(ChoiceProvider<T> provider, OutputStream outputStream) 
+    {
+        // this is the callback that retrieves matching choices used to populate the dropdown
+
+        Request request = RequestCycle.get().getRequest();
+        IRequestParameters params = request.getRequestParameters();
+
+        // retrieve choices matching the search term
+
+        String term = params.getParameterValue("term").toOptionalString();
+
+        int page = params.getParameterValue("page").toInt(1);
+        // select2 uses 1-based paging, but in wicket world we are used to
+        // 0-based
+        page -= 1;
+
+        Response<T> response = new Response<>();
+        provider.query(term, page, response);
+
+        // jsonize and write out the choices to the response
+
+        OutputStreamWriter out = new OutputStreamWriter(outputStream, request.getCharset());
+        JSONWriter json = new JSONWriter(out);
+
+        try 
+        {
+            json.object();
+            json.key("results").array();
+            for (T item : response) 
+            {
+                json.object();
+                provider.toJson(item, json);
+                json.endObject();
+            }
+            json.endArray();
+            json.key("more").value(response.getHasMore()).endObject();
+        } catch (JSONException e) 
+        {
+            throw new RuntimeException("Could not write Json response", e);
+        }
+
+        try 
+        {
+            out.flush();
+        } catch (IOException e) 
+        {
+            throw new RuntimeException("Could not write Json to servlet response", e);
+        }
+    }
+
 	@Override
 	public void onResourceRequested()
 	{
-
-		// this is the callback that retrieves matching choices used to populate
-		// the dropdown
-
-		Request request = getRequestCycle().getRequest();
-		IRequestParameters params = request.getRequestParameters();
-
-		// retrieve choices matching the search term
-
-		String term = params.getParameterValue("q").toOptionalString();
-
-		int page = params.getParameterValue("page").toInt(1);
-		// select2 uses 1-based paging, but in wicket world we are used to
-		// 0-based
-		page -= 1;
-
-		Response<T> response = new Response<>();
-		getProvider().query(term, page, response);
-
-		// jsonize and write out the choices to the response
-
-		WebResponse webResponse = (WebResponse) getRequestCycle().getResponse();
-		webResponse.setContentType("application/json");
-
-		OutputStreamWriter out = new OutputStreamWriter(webResponse.getOutputStream(), getRequest().getCharset());
-		JSONWriter json = new JSONWriter(out);
-
-		try
-		{
-			json.object();
-			json.key("items").array();
-			for (T item : response)
-			{
-				json.object();
-				getProvider().toJson(item, json);
-				json.endObject();
-			}
-			json.endArray();
-			json.key("more").value(response.getHasMore()).endObject();
-		}
-		catch (JSONException e)
-		{
-			throw new RuntimeException("Could not write Json response", e);
-		}
-
-		try
-		{
-			out.flush();
-		}
-		catch (IOException e)
-		{
-			throw new RuntimeException("Could not write Json to servlet response", e);
-		}
-	}
+        WebResponse webResponse = (WebResponse) getRequestCycle().getResponse();
+        webResponse.setContentType("application/json");
+        generateJSON(provider, webResponse.getOutputStream());
+    }
 
 	@Override
 	protected void onDetach()

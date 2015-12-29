@@ -123,6 +123,22 @@ public class HomePage extends WebPage
 			}
 		});
 		add(new Form<Void>("multiajaxns").add(ajaxcountriesns.setOutputMarkupId(true)));
+        
+        Form<Void> stateless = new Form<>("stateless");
+        add(stateless);
+
+        final Select2MultiChoice<Country> statelessCountries = new Select2MultiChoice<Country>("statelessCountries")
+        {
+            private static final long serialVersionUID = 1L;
+
+            @SuppressWarnings("unused")
+            public Collection<Country> getCurrent() {
+                return getCurrentValue();
+            }
+        };
+        statelessCountries.getSettings().setStateless(true);
+        statelessCountries.getSettings().setMountPath(WicketApplication.COUNTRIES_MOUNT_PATH);
+        stateless.add(statelessCountries);
 	}
 
 	/**
