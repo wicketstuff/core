@@ -14,45 +14,44 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.googlecode.wicket.kendo.ui.form.datetime;
+package com.googlecode.wicket.jquery.ui.form.spinner;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 
 import org.apache.wicket.extensions.markup.html.form.DateTextField;
+import org.apache.wicket.markup.html.form.TextField;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.util.lang.Args;
 
-import com.googlecode.wicket.jquery.core.IJQueryWidget;
+import com.googlecode.wicket.jquery.core.IJQueryCultureWidget;
 import com.googlecode.wicket.jquery.core.JQueryBehavior;
 import com.googlecode.wicket.jquery.core.Options;
 import com.googlecode.wicket.jquery.core.utils.LocaleUtils;
-import com.googlecode.wicket.kendo.ui.KendoUIBehavior;
-import com.googlecode.wicket.kendo.ui.utils.KendoDateTimeUtils;
+import com.googlecode.wicket.jquery.ui.JQueryUIBehavior;
 
 /**
- * Provides a Kendo UI time-picker<br/>
- * It should be created on a HTML &lt;input type="text" /&gt; element
+ * Provides an time jQuery spinner based on a {@link TextField}
  *
  * @author Sebastien Briquet - sebfz1
+ * @since 6.22.0
+ * @since 7.1.2
  */
-public class TimePicker extends DateTextField implements IJQueryWidget
+public class TimeSpinner extends DateTextField implements IJQueryCultureWidget
 {
 	private static final long serialVersionUID = 1L;
 
-	public static final String METHOD = "kendoTimePicker";
-
 	protected static final String DEFAULT_PATTERN = "h:mm aa"; // default java time pattern TODO move to DateUtils
 
-	final Options options;
+	private final Options options;
 
 	/**
 	 * Constructor
 	 * 
 	 * @param id the markup id
 	 */
-	public TimePicker(String id)
+	public TimeSpinner(String id)
 	{
 		this(id, DEFAULT_PATTERN, new Options());
 	}
@@ -63,7 +62,7 @@ public class TimePicker extends DateTextField implements IJQueryWidget
 	 * @param id the markup id
 	 * @param options {@link Options}
 	 */
-	public TimePicker(String id, Options options)
+	public TimeSpinner(String id, Options options)
 	{
 		this(id, DEFAULT_PATTERN, options);
 	}
@@ -74,7 +73,7 @@ public class TimePicker extends DateTextField implements IJQueryWidget
 	 * @param id the markup id
 	 * @param pattern a {@code SimpleDateFormat} pattern
 	 */
-	public TimePicker(String id, String pattern)
+	public TimeSpinner(String id, String pattern)
 	{
 		this(id, pattern, new Options());
 	}
@@ -86,7 +85,7 @@ public class TimePicker extends DateTextField implements IJQueryWidget
 	 * @param pattern a {@code SimpleDateFormat} pattern
 	 * @param options {@link Options}
 	 */
-	public TimePicker(String id, String pattern, Options options)
+	public TimeSpinner(String id, String pattern, Options options)
 	{
 		super(id, pattern);
 
@@ -94,24 +93,24 @@ public class TimePicker extends DateTextField implements IJQueryWidget
 	}
 
 	/**
-	 * Constructor, which use {@link Locale} and Kendo UI Globalization
+	 * Constructor, which use {@link Locale} and Query UI Globalization
 	 * 
 	 * @param id the markup id
 	 * @param locale the {@link Locale}
 	 */
-	public TimePicker(String id, Locale locale)
+	public TimeSpinner(String id, Locale locale)
 	{
 		this(id, locale, new Options());
 	}
 
 	/**
-	 * Constructor, which use {@link Locale} and Kendo UI Globalization
+	 * Constructor, which use {@link Locale} and Query UI Globalization
 	 * 
 	 * @param id the markup id
 	 * @param locale the {@link Locale}
 	 * @param options the {@link Options}
 	 */
-	public TimePicker(String id, Locale locale, Options options)
+	public TimeSpinner(String id, Locale locale, Options options)
 	{
 		this(id, LocaleUtils.getLocaleTimePattern(locale, DEFAULT_PATTERN), options.set("culture", Options.asString(LocaleUtils.getLangageCode(locale))));
 	}
@@ -122,7 +121,7 @@ public class TimePicker extends DateTextField implements IJQueryWidget
 	 * @param id the markup id
 	 * @param model the {@link IModel}
 	 */
-	public TimePicker(String id, IModel<Date> model)
+	public TimeSpinner(String id, IModel<Date> model)
 	{
 		this(id, model, DEFAULT_PATTERN, new Options());
 	}
@@ -134,7 +133,7 @@ public class TimePicker extends DateTextField implements IJQueryWidget
 	 * @param model the {@link IModel}
 	 * @param options {@link Options}
 	 */
-	public TimePicker(String id, IModel<Date> model, Options options)
+	public TimeSpinner(String id, IModel<Date> model, Options options)
 	{
 		this(id, model, DEFAULT_PATTERN, options);
 	}
@@ -146,7 +145,7 @@ public class TimePicker extends DateTextField implements IJQueryWidget
 	 * @param model the {@link IModel}
 	 * @param pattern a {@code SimpleDateFormat} pattern
 	 */
-	public TimePicker(String id, IModel<Date> model, String pattern)
+	public TimeSpinner(String id, IModel<Date> model, String pattern)
 	{
 		this(id, model, pattern, new Options());
 	}
@@ -159,7 +158,7 @@ public class TimePicker extends DateTextField implements IJQueryWidget
 	 * @param pattern a {@code SimpleDateFormat} pattern.
 	 * @param options {@link Options}
 	 */
-	public TimePicker(String id, IModel<Date> model, String pattern, Options options)
+	public TimeSpinner(String id, IModel<Date> model, String pattern, Options options)
 	{
 		super(id, model, pattern);
 
@@ -167,28 +166,58 @@ public class TimePicker extends DateTextField implements IJQueryWidget
 	}
 
 	/**
-	 * Constructor, which use {@link Locale} and Kendo UI Globalization
+	 * Constructor, which use {@link Locale} and Query UI Globalization
 	 * 
 	 * @param id the markup id
 	 * @param model the {@link IModel}
 	 * @param locale the {@link Locale}
 	 */
-	public TimePicker(String id, IModel<Date> model, Locale locale)
+	public TimeSpinner(String id, IModel<Date> model, Locale locale)
 	{
 		this(id, model, locale, new Options());
 	}
 
 	/**
-	 * Constructor, which use {@link Locale} and Kendo UI Globalization
+	 * Constructor, which use {@link Locale} and jQuery UI Globalization
 	 * 
 	 * @param id the markup id
 	 * @param model the {@link IModel}
 	 * @param locale the {@link Locale}
 	 * @param options the {@link Options}
 	 */
-	public TimePicker(String id, IModel<Date> model, Locale locale, Options options)
+	public TimeSpinner(String id, IModel<Date> model, Locale locale, Options options)
 	{
 		this(id, model, LocaleUtils.getLocaleTimePattern(locale, DEFAULT_PATTERN), options.set("culture", Options.asString(LocaleUtils.getLangageCode(locale))));
+	}
+
+	// Events //
+
+	@Override
+	protected void onInitialize()
+	{
+		super.onInitialize();
+
+		this.add(JQueryWidget.newWidgetBehavior(this)); // cannot be in ctor as the markupId may be set manually afterward
+	}
+
+	@Override
+	protected void onConfigure()
+	{
+		super.onConfigure();
+
+		this.setDisabled(!this.isEnabledInHierarchy());
+	}
+
+	@Override
+	public void onConfigure(JQueryBehavior behavior)
+	{
+		// noop
+	}
+
+	@Override
+	public void onBeforeRender(JQueryBehavior behavior)
+	{
+		// noop
 	}
 
 	// Properties //
@@ -219,36 +248,48 @@ public class TimePicker extends DateTextField implements IJQueryWidget
 		return "";
 	}
 
-	// Events //
+	// Options //
 
+	/**
+	 * Sets the culture to use for parsing and formatting the value.<br/>
+	 * <b>More:</b> https://github.com/jquery/globalize
+	 *
+	 * @param culture the culture to be used
+	 * @return this, for chaining
+	 *
+	 */
 	@Override
-	protected void onInitialize()
+	public TimeSpinner setCulture(final String culture)
 	{
-		super.onInitialize();
+		this.options.set("culture", Options.asString(culture));
 
-		this.add(JQueryWidget.newWidgetBehavior(this)); // cannot be in ctor as the markupId may be set manually afterward
+		return this;
 	}
 
 	@Override
-	public void onConfigure(JQueryBehavior behavior)
+	public String getCulture()
 	{
-		if (behavior.getOption("format") == null)
-		{
-			behavior.setOption("format", Options.asString(KendoDateTimeUtils.toPattern(this.getTextFormat())));
-		}
+		return this.options.get("culture");
 	}
 
-	@Override
-	public void onBeforeRender(JQueryBehavior behavior)
+	/**
+	 * Disables the spinner, if set to true.
+	 *
+	 * @param disabled whether the spinner is (visually) disabled
+	 * @return this, for chaining
+	 */
+	private TimeSpinner setDisabled(final boolean disabled)
 	{
-		// noop
+		this.options.set("disabled", disabled);
+
+		return this;
 	}
 
 	// IJQueryWidget //
-	
+
 	@Override
-	public JQueryBehavior newWidgetBehavior(String selector)
+	public JQueryUIBehavior newWidgetBehavior(String selector)
 	{
-		return new KendoUIBehavior(selector, TimePicker.METHOD, this.options);
+		return new TimeSpinnerBehavior(selector, new SpinnerAdapter(), this.options);
 	}
 }

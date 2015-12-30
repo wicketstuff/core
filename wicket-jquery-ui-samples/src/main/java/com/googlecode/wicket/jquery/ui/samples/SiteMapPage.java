@@ -140,10 +140,10 @@ import com.googlecode.wicket.jquery.ui.samples.pages.sortable.CustomSortablePage
 import com.googlecode.wicket.jquery.ui.samples.pages.sortable.DefaultSortablePage;
 import com.googlecode.wicket.jquery.ui.samples.pages.sortable.SelectableSortablePage;
 import com.googlecode.wicket.jquery.ui.samples.pages.spinner.DefaultSpinnerPage;
+import com.googlecode.wicket.jquery.ui.samples.pages.spinner.CultureSpinnerPage;
 import com.googlecode.wicket.jquery.ui.samples.pages.tabs.AdvancedTabsPage;
 import com.googlecode.wicket.jquery.ui.samples.pages.tabs.DefaultTabsPage;
 import com.googlecode.wicket.jquery.ui.samples.pages.tabs.TabbedPanelPage;
-import com.googlecode.wicket.jquery.ui.samples.pages.test.OptionSpinnerPage;
 import com.googlecode.wicket.jquery.ui.samples.pages.test.PalettePage;
 import com.googlecode.wicket.jquery.ui.samples.pages.test.TestPage;
 import com.googlecode.wicket.jquery.ui.samples.pages.test.editor.EditorPage;
@@ -271,7 +271,7 @@ public class SiteMapPage extends WebPage
 			ObjectCalendarPage.class,
 			OptionSliderPage.class,
 			OptionSnippetPage.class,
-			OptionSpinnerPage.class,
+			CultureSpinnerPage.class,
 			PalettePage.class,
 			PatternDatePickerPage.class,
 			PatternDateTimePickerPage.class,

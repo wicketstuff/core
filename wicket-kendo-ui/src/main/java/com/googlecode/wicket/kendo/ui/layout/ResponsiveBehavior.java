@@ -19,6 +19,7 @@ package com.googlecode.wicket.kendo.ui.layout;
 import org.apache.wicket.Component;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.attributes.CallbackParameter;
+import org.apache.wicket.util.lang.Args;
 
 import com.googlecode.wicket.jquery.core.JQueryEvent;
 import com.googlecode.wicket.jquery.core.Options;
@@ -65,7 +66,7 @@ public class ResponsiveBehavior extends KendoUIBehavior implements IJQueryAjaxAw
 	{
 		super(selector, METHOD, options);
 
-		this.listener = listener;
+		this.listener = Args.notNull(listener, "listener");
 	}
 
 	// Methods //

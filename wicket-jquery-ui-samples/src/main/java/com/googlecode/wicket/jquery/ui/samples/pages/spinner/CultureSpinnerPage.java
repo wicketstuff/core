@@ -1,4 +1,4 @@
-package com.googlecode.wicket.jquery.ui.samples.pages.test;
+package com.googlecode.wicket.jquery.ui.samples.pages.spinner;
 
 import java.util.Arrays;
 
@@ -16,17 +16,16 @@ import com.googlecode.wicket.jquery.ui.form.button.Button;
 import com.googlecode.wicket.jquery.ui.form.spinner.Spinner;
 import com.googlecode.wicket.jquery.ui.panel.JQueryFeedbackPanel;
 import com.googlecode.wicket.jquery.ui.samples.SampleApplication;
-import com.googlecode.wicket.jquery.ui.samples.SamplePage;
 import com.googlecode.wicket.kendo.ui.form.dropdown.AjaxDropDownList;
 
-public class OptionSpinnerPage extends SamplePage
+public class CultureSpinnerPage extends AbstractSpinnerPage
 {
 	private static final long serialVersionUID = 1L;
 
 	private FeedbackPanel feedback;
 	private CultureSpinner spinner;
 
-	public OptionSpinnerPage()
+	public CultureSpinnerPage()
 	{
 		final Form<Double> form = new Form<Double>("form", Model.of(new Double(1.5)));
 		this.add(form);
@@ -66,7 +65,7 @@ public class OptionSpinnerPage extends SamplePage
 			@Override
 			public void onSubmit()
 			{
-				OptionSpinnerPage.this.info(this, form);
+				CultureSpinnerPage.this.info(this, form);
 			}
 		});
 
@@ -77,17 +76,16 @@ public class OptionSpinnerPage extends SamplePage
 			@Override
 			protected void onError(AjaxRequestTarget target, Form<?> form)
 			{
-				target.add(OptionSpinnerPage.this.feedback);
+				target.add(CultureSpinnerPage.this.feedback);
 			}
 
 			@Override
 			protected void onSubmit(AjaxRequestTarget target, Form<?> unused)
 			{
-				OptionSpinnerPage.this.info(this, form);
+				CultureSpinnerPage.this.info(this, form);
 				target.add(form);
 			}
 		});
-
 	}
 
 	private void info(Component component, Form<?> form)

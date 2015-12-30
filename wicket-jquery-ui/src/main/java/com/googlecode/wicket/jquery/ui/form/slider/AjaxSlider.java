@@ -95,7 +95,7 @@ public class AjaxSlider extends Slider implements IJQueryAjaxAware, IValueChange
 		if (event instanceof ChangeEvent)
 		{
 			// In case of issue, consider copying code from AjaxFormComponentUpdatingBehavior.onEvent
-			super.input.processInput();
+			this.input.processInput();
 			this.validate();
 
 			if (this.isValid() && super.input.isValid())
@@ -130,7 +130,7 @@ public class AjaxSlider extends Slider implements IJQueryAjaxAware, IValueChange
 	@Override
 	public JQueryBehavior newWidgetBehavior(String selector)
 	{
-		return new AjaxSliderBehavior(selector, super.options) {
+		return new AjaxSliderBehavior(selector, this.options) {
 
 			private static final long serialVersionUID = 1L;
 

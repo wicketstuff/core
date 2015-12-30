@@ -21,6 +21,7 @@ import java.util.Map;
 import org.apache.wicket.Component;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.attributes.CallbackParameter;
+import org.apache.wicket.util.lang.Args;
 
 import com.googlecode.wicket.jquery.core.JQueryEvent;
 import com.googlecode.wicket.jquery.core.Options;
@@ -89,7 +90,7 @@ public abstract class MenuBehavior extends KendoUIBehavior implements IJQueryAja
 	{
 		super(selector, method, options);
 		
-		this.listener = listener;
+		this.listener = Args.notNull(listener, "listener");
 	}
 
 	// Properties //

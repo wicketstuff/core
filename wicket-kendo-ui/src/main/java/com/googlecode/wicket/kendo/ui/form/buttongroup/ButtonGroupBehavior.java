@@ -19,6 +19,7 @@ package com.googlecode.wicket.kendo.ui.form.buttongroup;
 import org.apache.wicket.Component;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.attributes.CallbackParameter;
+import org.apache.wicket.util.lang.Args;
 
 import com.googlecode.wicket.jquery.core.JQueryEvent;
 import com.googlecode.wicket.jquery.core.Options;
@@ -43,7 +44,7 @@ public class ButtonGroupBehavior extends KendoUIBehavior implements IJQueryAjaxA
 	static final int NONE = -1;
 
 	private final IButtonGroupListener listener;
-	private JQueryAjaxBehavior onSelectAjaxBehavior = null;
+	private JQueryAjaxBehavior onSelectAjaxBehavior;
 
 	/**
 	 * Constructor
@@ -67,7 +68,7 @@ public class ButtonGroupBehavior extends KendoUIBehavior implements IJQueryAjaxA
 	{
 		super(selector, METHOD, options);
 
-		this.listener = listener;
+		this.listener = Args.notNull(listener, "listener");
 	}
 
 	// Methods //

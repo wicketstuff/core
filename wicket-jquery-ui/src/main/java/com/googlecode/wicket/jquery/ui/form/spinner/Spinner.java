@@ -36,7 +36,7 @@ public class Spinner<T extends Number> extends TextField<T> implements IJQueryCu
 {
 	private static final long serialVersionUID = 1L;
 
-	private final Options options;
+	final Options options;
 
 	/**
 	 * Constructor
@@ -135,6 +135,7 @@ public class Spinner<T extends Number> extends TextField<T> implements IJQueryCu
 	}
 
 	// Events //
+
 	@Override
 	protected void onInitialize()
 	{
@@ -301,27 +302,8 @@ public class Spinner<T extends Number> extends TextField<T> implements IJQueryCu
 	// IJQueryWidget //
 
 	@Override
-	public SpinnerBehavior newWidgetBehavior(String selector)
+	public JQueryUIBehavior newWidgetBehavior(String selector)
 	{
-		return new SpinnerBehavior(selector, this.options);
-	}
-
-	/**
-	 * Provides a jQuery spinner {@link JQueryBehavior}
-	 */
-	public static class SpinnerBehavior extends JQueryUIBehavior
-	{
-		private static final long serialVersionUID = 1L;
-		public static final String METHOD = "spinner";
-
-		public SpinnerBehavior(String selector)
-		{
-			super(selector, METHOD);
-		}
-
-		public SpinnerBehavior(String selector, Options options)
-		{
-			super(selector, METHOD, options);
-		}
+		return new SpinnerBehavior(selector, new SpinnerAdapter(), this.options);
 	}
 }

@@ -26,6 +26,7 @@ import org.apache.wicket.ajax.attributes.CallbackParameter;
 import org.apache.wicket.core.request.handler.IPartialPageRequestHandler;
 import org.apache.wicket.extensions.markup.html.tabs.ITab;
 import org.apache.wicket.markup.head.IHeaderResponse;
+import org.apache.wicket.util.lang.Args;
 
 import com.googlecode.wicket.jquery.core.JQueryEvent;
 import com.googlecode.wicket.jquery.core.Options;
@@ -80,7 +81,7 @@ public abstract class AccordionBehavior extends KendoUIBehavior implements IJQue
 	{
 		super(selector, METHOD, options);
 
-		this.listener = listener;
+		this.listener = Args.notNull(listener, "listener");
 	}
 
 	// Properties //
