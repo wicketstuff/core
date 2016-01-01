@@ -21,7 +21,7 @@
 	</parent>
 
 	<artifactId>wicketstuff-tinymce4</artifactId>
-	<packaging>jar</packaging>
+	<packaging>bundle</packaging>
 
 	<name>TinyMCE4</name>
 	<description>

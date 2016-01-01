@@ -9,7 +9,7 @@
 	</parent>
 
 	<artifactId>wicketstuff-input-events</artifactId>
-	<packaging>jar</packaging>
+	<packaging>bundle</packaging>
 
 	<name>Input Events</name>
 	<description>
