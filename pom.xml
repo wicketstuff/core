@@ -918,6 +918,13 @@
 					</toolchains>
 				</configuration>
 			</plugin>
+			<plugin>
+				<groupId>org.apache.felix</groupId>
+				<artifactId>maven-bundle-plugin</artifactId>
+				<version>2.5.3</version>
+				<inherited>true</inherited>
+				<extensions>true</extensions>
+			</plugin>
 		</plugins>
 		<pluginManagement>
 			<plugins>

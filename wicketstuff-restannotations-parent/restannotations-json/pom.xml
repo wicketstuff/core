@@ -21,7 +21,7 @@
 	</parent>
 
 	<artifactId>wicketstuff-restannotations-json</artifactId>
-	<packaging>jar</packaging>
+	<packaging>bundle</packaging>
 
 	<name>wicketstuff-restannotations-json</name>
 
