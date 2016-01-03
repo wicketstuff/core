@@ -19,7 +19,9 @@ package com.googlecode.wicket.kendo.ui.panel;
 import java.util.List;
 
 import org.apache.wicket.IGenericComponent;
+import org.apache.wicket.MarkupContainer;
 import org.apache.wicket.core.request.handler.IPartialPageRequestHandler;
+import org.apache.wicket.feedback.ContainerFeedbackMessageFilter;
 import org.apache.wicket.feedback.FeedbackMessage;
 import org.apache.wicket.feedback.FeedbackMessagesModel;
 import org.apache.wicket.feedback.IFeedback;
@@ -57,13 +59,25 @@ public class KendoFeedbackPanel extends WebMarkupContainer implements IJQueryWid
 	 */
 	public KendoFeedbackPanel(String id)
 	{
-		this(id, null, new Options());
+		this(id, (IFeedbackMessageFilter) null, new Options());
 	}
 
 	/**
 	 * Constructor
 	 *
 	 * @param id the markup id
+	 * @param container the container that message reporters must be a child of
+	 */
+	public KendoFeedbackPanel(String id, MarkupContainer container)
+	{
+		this(id, new ContainerFeedbackMessageFilter(container), new Options());
+	}
+
+	/**
+	 * Constructor
+	 *
+	 * @param id the markup id
+	 * @param filter the {@link IFeedbackMessageFilter}
 	 */
 	public KendoFeedbackPanel(String id, IFeedbackMessageFilter filter)
 	{
@@ -74,16 +88,31 @@ public class KendoFeedbackPanel extends WebMarkupContainer implements IJQueryWid
 	 * Constructor
 	 *
 	 * @param id the markup id
+	 * @param options the {@link Options}
 	 */
 	public KendoFeedbackPanel(String id, Options options)
 	{
-		this(id, null, options);
+		this(id, (IFeedbackMessageFilter) null, options);
+
 	}
 
 	/**
 	 * Constructor
 	 *
 	 * @param id the markup id
+	 * @param container the container that message reporters must be a child of
+	 * @param options the {@link Options}
+	 */
+	public KendoFeedbackPanel(String id, MarkupContainer container, Options options)
+	{
+		this(id, new ContainerFeedbackMessageFilter(container), options);
+	}
+
+	/**
+	 * Constructor
+	 *
+	 * @param id the markup id
+	 * @param filter the {@link IFeedbackMessageFilter}
 	 * @param options the {@link Options}
 	 */
 	public KendoFeedbackPanel(String id, IFeedbackMessageFilter filter, Options options)
