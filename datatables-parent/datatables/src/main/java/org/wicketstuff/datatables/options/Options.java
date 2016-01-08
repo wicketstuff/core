@@ -113,15 +113,22 @@ public class Options extends AbstractConfig {
     public static final IKey<Boolean> ScrollX = new Key<>("scrollX", false);
 
     /**
+     * https://datatables.net/manual/server-side
      * https://datatables.net/reference/option/serverSide
      * https://datatables.net/extensions/scroller/examples/initialisation/server-side_processing.html
      */
     public static final IKey<Boolean> ServerSide = new Key<>("serverSide", false);
+
     public static final IKey<Boolean> Ordering = new Key<>("ordering", true);
+
     public static final IKey<Boolean> Searching = new Key<>("searching", true);
+
     public static final IKey<Boolean> DeferRender = new Key<>("deferRender", false);
+
     public static final IKey<Boolean> Info = new Key<>("info", true);
+
     public static final IKey<Boolean> Processing = new Key<>("processing", false);
+
     public static final IKey<String> Ajax = new Key<>("ajax", null);
 
     /**

@@ -37,8 +37,14 @@ public class InfiniteScrollResourceReference extends ResourceReference {
 		};
 	}
 
+	/**
+	 * Generates the JSON response for infinite scrolling/paging.
+	 * See <a href="https://datatables.net/manual/server-side">DataTables server side docs.</a>
+	 *
+	 * @param parameters The request parameters
+	 * @return
+	 */
 	private String generateResponse(PageParameters parameters) {
-//		"length", start, ;
 		int length = parameters.get("length").toInt(10);
 		if (length == -1) {
 			length = 10;

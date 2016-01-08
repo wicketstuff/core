@@ -22,9 +22,13 @@ import java.util.LinkedList;
 import java.util.List;
 
 import org.apache.wicket.AttributeModifier;
+import org.apache.wicket.Component;
+import org.apache.wicket.behavior.Behavior;
 import org.apache.wicket.extensions.markup.html.repeater.data.table.AbstractToolbar;
 import org.apache.wicket.extensions.markup.html.repeater.data.table.DataTable;
 import org.apache.wicket.extensions.markup.html.repeater.data.table.IColumn;
+import org.apache.wicket.extensions.markup.html.repeater.data.table.IStyledColumn;
+import org.apache.wicket.markup.ComponentTag;
 import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.markup.repeater.Item;
 import org.apache.wicket.markup.repeater.RefreshingView;
@@ -92,6 +96,24 @@ public class SpanHeadersToolbar<S> extends AbstractToolbar
 					if (dtColumn.getRowspan() > 0) {
 						header.add(AttributeModifier.replace("rowspan", dtColumn.getRowspan() - 1));
 					}
+				}
+
+				if (column instanceof IStyledColumn)
+				{
+					Behavior cssAttributeBehavior = new Behavior()
+					{
+						private static final long serialVersionUID = 1L;
+
+						@Override
+						public void onComponentTag(final Component component, final ComponentTag tag) {
+							super.onComponentTag(component, tag);
+
+							String cssClass = ((IStyledColumn<?, S>) column).getCssClass();
+							tag.append("class", cssClass, " ");
+						}
+					};
+
+					header.add(cssAttributeBehavior);
 				}
 
 				item.add(header);

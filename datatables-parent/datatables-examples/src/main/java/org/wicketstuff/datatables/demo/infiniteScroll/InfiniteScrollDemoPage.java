@@ -16,6 +16,7 @@ import org.apache.wicket.request.resource.CssResourceReference;
 import org.wicketstuff.datatables.DataTables;
 import org.wicketstuff.datatables.demo.PeopleDataProvider;
 import org.wicketstuff.datatables.demo.Person;
+import org.wicketstuff.datatables.demo.SpanColumn;
 import org.wicketstuff.datatables.demo.SpanHeadersToolbar;
 import org.wicketstuff.datatables.options.Options;
 import org.wicketstuff.datatables.options.ScrollerOptions;
@@ -35,10 +36,10 @@ public class InfiniteScrollDemoPage extends WebPage {
         super(parameters);
 
         List<IColumn<Person, String>> columns = new ArrayList<>();
-        columns.add(new PropertyColumn<Person, String>(Model.of("Nr."), "number"));
-        columns.add(new PropertyColumn<Person, String>(Model.of("First"), "firstName", "firstName"));
-        columns.add(new PropertyColumn<Person, String>(Model.of("Last"), "lastName", "lastName"));
-        columns.add(new PropertyColumn<Person, String>(Model.of("Age"), "age", "age"));
+        columns.add(new SpanColumn<Person, String>(Model.of("Nr."), "number"));
+        columns.add(new SpanColumn<Person, String>(Model.of("First"), "firstName"));
+        columns.add(new SpanColumn<Person, String>(Model.of("Last"), "lastName"));
+        columns.add(new SpanColumn<Person, String>(Model.of("Age"), "age"));
 
         PeopleDataProvider dataProvider = new PeopleDataProvider();
 
