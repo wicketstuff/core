@@ -2,7 +2,6 @@ package org.wicketstuff.datatables.demo.infiniteScroll;
 
 import org.apache.wicket.ajax.json.JSONArray;
 import org.apache.wicket.ajax.json.JSONObject;
-import org.apache.wicket.request.Response;
 import org.apache.wicket.request.http.WebResponse;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
 import org.apache.wicket.request.resource.CharSequenceResource;
@@ -56,7 +55,10 @@ public class InfiniteScrollResourceReference extends ResourceReference {
 		while (peopleItor.hasNext()) {
 			Person person = peopleItor.next();
 			JSONArray personData = new JSONArray();
-			personData.put(person.number);
+
+			// make sure this is a "truthy" value, otherwise DataTables will skip it
+			personData.put("PK_" + person.number);
+
 			personData.put(person.firstName);
 			personData.put(person.lastName);
 			personData.put(person.age);

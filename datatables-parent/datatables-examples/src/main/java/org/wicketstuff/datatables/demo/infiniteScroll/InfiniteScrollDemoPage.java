@@ -1,15 +1,18 @@
 package org.wicketstuff.datatables.demo.infiniteScroll;
 
 import de.agilecoders.wicket.jquery.function.JavaScriptInlineFunction;
+import de.agilecoders.wicket.jquery.util.Json;
 import org.apache.wicket.extensions.markup.html.repeater.data.grid.DataGridView;
 import org.apache.wicket.extensions.markup.html.repeater.data.table.IColumn;
 import org.apache.wicket.extensions.markup.html.repeater.data.table.PropertyColumn;
+import org.apache.wicket.markup.head.CssHeaderItem;
 import org.apache.wicket.markup.head.IHeaderResponse;
 import org.apache.wicket.markup.head.OnDomReadyHeaderItem;
 import org.apache.wicket.markup.html.WebPage;
 import org.apache.wicket.markup.repeater.data.IDataProvider;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
+import org.apache.wicket.request.resource.CssResourceReference;
 import org.wicketstuff.datatables.DataTables;
 import org.wicketstuff.datatables.demo.PeopleDataProvider;
 import org.wicketstuff.datatables.demo.Person;
@@ -61,6 +64,8 @@ public class InfiniteScrollDemoPage extends WebPage {
             public void renderHead(IHeaderResponse response) {
                 super.renderHead(response);
 
+                response.render(CssHeaderItem.forReference(new CssResourceReference(InfiniteScrollDemoPage.class, "res/InfiniteScrollDemoPage.css")));
+
                 // see rowSelector below
                 response.render(OnDomReadyHeaderItem.forScript($(this).on("click", "tr", new JavaScriptInlineFunction("$(this).toggleClass('selected');")).get()));
             }
@@ -86,7 +91,7 @@ public class InfiniteScrollDemoPage extends WebPage {
             .serverSide(true)
             .ordering(false)
             .searching(false)
-            .scrollY("200")
+            .scrollY("300")
             .deferRender(false)
             .scroller(scrollerOptions)
             .ajax(ajaxUrl)
@@ -95,6 +100,10 @@ public class InfiniteScrollDemoPage extends WebPage {
 //            .stateSave(true)
             .info(true)
             .processing(true)
+
+            // set the value of the first column as an identifier of the row
+            // The first column is actually hidden with a CSS rule, see InfiniteScrollDemoPage.css
+            .rowId(new Json.RawValue("0"))
         ;
     }
 }

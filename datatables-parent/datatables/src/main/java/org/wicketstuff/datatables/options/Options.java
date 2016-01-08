@@ -112,9 +112,9 @@ public class Options extends AbstractConfig {
      */
     public static final IKey<Boolean> ScrollX = new Key<>("scrollX", false);
 
-	/**
+    /**
      * https://datatables.net/reference/option/serverSide
-	 * https://datatables.net/extensions/scroller/examples/initialisation/server-side_processing.html
+     * https://datatables.net/extensions/scroller/examples/initialisation/server-side_processing.html
      */
     public static final IKey<Boolean> ServerSide = new Key<>("serverSide", false);
     public static final IKey<Boolean> Ordering = new Key<>("ordering", true);
@@ -123,6 +123,12 @@ public class Options extends AbstractConfig {
     public static final IKey<Boolean> Info = new Key<>("info", true);
     public static final IKey<Boolean> Processing = new Key<>("processing", false);
     public static final IKey<String> Ajax = new Key<>("ajax", null);
+
+    /**
+     * https://datatables.net/reference/option/rowId
+     */
+    public static final IKey<Json.RawValue> RowId = new Key<>("rowId", new Json.RawValue("'DT_RowId'"));
+
     public static final IKey<ScrollerOptions> Scroller = new Key<>("scroller", null);
 
     /**
@@ -143,6 +149,11 @@ public class Options extends AbstractConfig {
      * https://datatables.net/reference/option/createdRow
      */
     public static final IKey<Json.RawValue> CreatedRow = new Key<>("createdRow", null);
+
+    /**
+     * https://datatables.net/manual/data/renderers
+     */
+    public static final IKey<Json.RawValue> Render = new Key<>("render", null);
 
     /**
      * https://datatables.net/examples/advanced_init/length_menu.html
@@ -174,6 +185,11 @@ public class Options extends AbstractConfig {
 
     public Options createdRow(Json.RawValue createdRow) {
         put(CreatedRow, createdRow);
+        return this;
+    }
+
+    public Options render(Json.RawValue render) {
+        put(Render, render);
         return this;
     }
 
@@ -244,6 +260,11 @@ public class Options extends AbstractConfig {
 
     public Options scrollY(String scrollY) {
         put(ScrollY, scrollY);
+        return this;
+    }
+
+    public Options rowId(Json.RawValue rowId) {
+        put(RowId, rowId);
         return this;
     }
 
