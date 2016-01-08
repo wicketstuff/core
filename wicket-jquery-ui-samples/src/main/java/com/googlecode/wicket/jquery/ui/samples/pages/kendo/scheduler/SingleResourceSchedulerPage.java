@@ -8,7 +8,7 @@ import java.util.List;
 
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.markup.html.form.Form;
-import org.apache.wicket.model.util.ListModel;
+import org.apache.wicket.model.Model;
 
 import com.googlecode.wicket.jquery.core.Options;
 import com.googlecode.wicket.jquery.core.template.IJQueryTemplate;
@@ -25,8 +25,8 @@ import com.googlecode.wicket.kendo.ui.scheduler.resource.ResourceList;
 
 public class SingleResourceSchedulerPage extends AbstractSchedulerPage
 {
-    private static final long serialVersionUID = 1L;
-    private static final String AGENDA_1 = "Sebastien";
+	private static final long serialVersionUID = 1L;
+	private static final String AGENDA_1 = "Sebastien";
 	private static final String AGENDA_2 = "Samantha";
 
 	private List<String> agendas;
@@ -46,7 +46,7 @@ public class SingleResourceSchedulerPage extends AbstractSchedulerPage
 		this.agendas = new ArrayList<String>();
 		this.agendas.add(AGENDA_1);
 
-		final MultiSelect<String> multiselect = new MultiSelect<String>("select", new ListModel<String>(this.agendas), Arrays.asList(AGENDA_1, AGENDA_2));
+		final MultiSelect<String> multiselect = new MultiSelect<String>("select", Model.ofList(this.agendas), Arrays.asList(AGENDA_1, AGENDA_2));
 		form.add(multiselect);
 
 		// Scheduler //

@@ -8,7 +8,7 @@ import java.util.List;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.markup.html.form.ChoiceRenderer;
 import org.apache.wicket.markup.html.form.Form;
-import org.apache.wicket.model.util.ListModel;
+import org.apache.wicket.model.Model;
 
 import com.googlecode.wicket.jquery.core.Options;
 import com.googlecode.wicket.jquery.ui.samples.data.dao.scheduler.EmployeeEventsDAO;
@@ -37,7 +37,7 @@ public class MultipleResourceSchedulerPage extends AbstractSchedulerPage
 		form.add(feedback.setOutputMarkupId(true));
 
 		// MultiSelect //
-		final MultiSelect<Resource> multiselect = new MultiSelect<Resource>("rooms", new ListModel<Resource>(newRoomList()), newRoomList(), new ChoiceRenderer<Resource>("text"));
+		final MultiSelect<Resource> multiselect = new MultiSelect<Resource>("rooms", Model.ofList(newRoomList()), newRoomList(), new ChoiceRenderer<Resource>("text"));
 		form.add(multiselect);
 
 		// Scheduler //

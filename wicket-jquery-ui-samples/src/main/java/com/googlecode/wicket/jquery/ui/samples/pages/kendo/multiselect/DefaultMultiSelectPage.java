@@ -7,7 +7,7 @@ import java.util.List;
 
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.markup.html.form.Form;
-import org.apache.wicket.model.util.ListModel;
+import org.apache.wicket.model.Model;
 
 import com.googlecode.wicket.kendo.ui.form.button.AjaxButton;
 import com.googlecode.wicket.kendo.ui.form.button.Button;
@@ -33,7 +33,7 @@ public class DefaultMultiSelectPage extends AbstractMultiSelectPage
 		selected.add("Heavy Metal");
 		selected.add("Trash Metal");
 
-		final MultiSelect<String> multiselect = new MultiSelect<String>("select", new ListModel<String>(selected), new ListModel<String>(GENRES));
+		final MultiSelect<String> multiselect = new MultiSelect<String>("select", Model.ofList(selected), Model.ofList(GENRES));
 		form.add(multiselect.setOutputMarkupId(true));
 
 		// Buttons //

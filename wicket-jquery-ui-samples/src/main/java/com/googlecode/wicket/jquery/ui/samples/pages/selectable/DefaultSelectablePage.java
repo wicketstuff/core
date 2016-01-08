@@ -8,7 +8,7 @@ import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.list.ListItem;
 import org.apache.wicket.markup.html.list.ListView;
 import org.apache.wicket.markup.html.panel.FeedbackPanel;
-import org.apache.wicket.model.util.ListModel;
+import org.apache.wicket.model.Model;
 
 import com.googlecode.wicket.jquery.ui.interaction.selectable.Selectable;
 import com.googlecode.wicket.jquery.ui.panel.JQueryFeedbackPanel;
@@ -27,7 +27,7 @@ public class DefaultSelectablePage extends AbstractSelectablePage
 		this.add(feedback.setOutputMarkupId(true));
 
 		// Selectable //
-		final Selectable<String> selectable = new Selectable<String>("selectable", new ListModel<String>(selected), list) {
+		final Selectable<String> selectable = new Selectable<String>("selectable", Model.ofList(selected), list) {
 
 			private static final long serialVersionUID = 1L;
 

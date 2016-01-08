@@ -158,7 +158,7 @@ public class SiteMapPage extends WebPage
 
 	private static final String BASE_URL = "http://www.7thweb.net/wicket-jquery-ui/";
 	private static final Pattern PATTERN = Pattern.compile("^\\./");
-	private static final String LASTMOD = "2015-05-16";
+	private static final String LASTMOD = "2016-01-03";
 
 	private static final List<? extends Class<? extends WebPage>> LIST = Arrays.asList(
 			AccordionPanelPage.class,

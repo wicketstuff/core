@@ -26,7 +26,7 @@ import org.apache.wicket.event.IEvent;
 import org.apache.wicket.markup.html.list.ListItem;
 import org.apache.wicket.markup.html.list.ListView;
 import org.apache.wicket.model.IModel;
-import org.apache.wicket.model.util.ListModel;
+import org.apache.wicket.model.Model;
 import org.apache.wicket.util.lang.Args;
 
 import com.googlecode.wicket.jquery.core.JQueryBehavior;
@@ -63,7 +63,7 @@ public abstract class Sortable<T> extends JQueryGenericContainer<List<T>> implem
 	 */
 	public Sortable(String id, List<T> list)
 	{
-		this(id, new ListModel<T>(list), new Options());
+		this(id, Model.ofList(list), new Options());
 	}
 
 	/**
@@ -75,7 +75,7 @@ public abstract class Sortable<T> extends JQueryGenericContainer<List<T>> implem
 	 */
 	public Sortable(String id, List<T> list, Options options)
 	{
-		this(id, new ListModel<T>(list), options);
+		this(id, Model.ofList(list), options);
 	}
 
 	/**

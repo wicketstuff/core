@@ -16,7 +16,6 @@ import org.apache.wicket.markup.html.panel.FeedbackPanel;
 import org.apache.wicket.model.CompoundPropertyModel;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
-import org.apache.wicket.model.util.ListModel;
 
 import com.googlecode.wicket.jquery.ui.JQueryIcon;
 import com.googlecode.wicket.jquery.ui.form.RadioChoice;
@@ -41,7 +40,7 @@ public class UserDialogPage extends AbstractDialogPage
 
 	private void initialize()
 	{
-		final Form<List<User>> form = new Form<List<User>>("form", new ListModel<>(this.users));
+		final Form<List<User>> form = new Form<List<User>>("form", Model.ofList(this.users));
 		this.add(form);
 
 		// FeedbackPanel //

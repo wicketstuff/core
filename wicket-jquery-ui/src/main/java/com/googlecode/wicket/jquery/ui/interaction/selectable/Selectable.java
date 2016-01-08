@@ -23,6 +23,7 @@ import org.apache.wicket.Component;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.markup.ComponentTag;
 import org.apache.wicket.model.IModel;
+import org.apache.wicket.model.Model;
 import org.apache.wicket.model.util.ListModel;
 
 import com.googlecode.wicket.jquery.core.JQueryAbstractBehavior;
@@ -74,7 +75,7 @@ public class Selectable<T extends Serializable> extends JQueryGenericContainer<L
 	 */
 	public Selectable(String id, List<T> items)
 	{
-		this(id, new ListModel<T>(items));
+		this(id, Model.ofList(items));
 	}
 
 	/**
@@ -99,7 +100,7 @@ public class Selectable<T extends Serializable> extends JQueryGenericContainer<L
 	 */
 	public Selectable(String id, IModel<? extends List<T>> model, List<T> items)
 	{
-		this(id, model, new ListModel<T>(items));
+		this(id, model, Model.ofList(items));
 	}
 
 	/**

@@ -6,7 +6,7 @@ import java.util.List;
 
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.markup.html.form.Form;
-import org.apache.wicket.model.util.ListModel;
+import org.apache.wicket.model.Model;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -35,7 +35,7 @@ public class LazyMultiSelectPage extends AbstractMultiSelectPage
 		selected.add("Heavy Metal");
 		selected.add("Trash Metal");
 
-		final MultiSelect<String> multiselect = new MultiSelect<String>("select", new ListModel<String>(selected)) {
+		final MultiSelect<String> multiselect = new MultiSelect<String>("select", Model.ofList(selected)) {
 
 			private static final long serialVersionUID = 1L;
 

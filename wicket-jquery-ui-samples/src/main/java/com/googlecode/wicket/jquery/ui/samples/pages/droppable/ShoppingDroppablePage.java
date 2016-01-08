@@ -14,8 +14,8 @@ import org.apache.wicket.markup.html.list.ListView;
 import org.apache.wicket.markup.html.panel.Fragment;
 import org.apache.wicket.model.AbstractReadOnlyModel;
 import org.apache.wicket.model.IModel;
+import org.apache.wicket.model.Model;
 import org.apache.wicket.model.PropertyModel;
-import org.apache.wicket.model.util.ListModel;
 import org.apache.wicket.util.io.IClusterable;
 import org.apache.wicket.util.string.Strings;
 
@@ -49,7 +49,7 @@ public class ShoppingDroppablePage extends AbstractDroppablePage
 	private void initialize()
 	{
 		// Shopping card //
-		final Form<List<Book>> form = new Form<List<Book>>("form", new ListModel<Book>(this.orders));
+		final Form<List<Book>> form = new Form<List<Book>>("form", Model.ofList(this.orders));
 		this.add(form);
 
 		// the droppable area

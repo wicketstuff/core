@@ -6,7 +6,6 @@ import java.util.List;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.model.Model;
-import org.apache.wicket.model.util.ListModel;
 
 import com.googlecode.wicket.kendo.ui.form.button.AjaxButton;
 import com.googlecode.wicket.kendo.ui.form.button.Button;
@@ -28,7 +27,7 @@ public class DefaultDropDownPage extends AbstractDropDownPage
 		form.add(feedback);
 
 		// DropDownList //
-		final DropDownList<String> dropdown = new DropDownList<String>("select", new Model<String>(), new ListModel<String>(GENRES));
+		final DropDownList<String> dropdown = new DropDownList<String>("select", new Model<String>(), Model.ofList(GENRES));
 		form.add(dropdown.setOutputMarkupId(true));
 
 		// Buttons //
@@ -58,7 +57,7 @@ public class DefaultDropDownPage extends AbstractDropDownPage
 
 	private void info(DropDownList<String> dropdown)
 	{
-		String choice =  dropdown.getModelObject();
+		String choice = dropdown.getModelObject();
 
 		this.info(choice != null ? choice : "no choice");
 	}
