@@ -1,11 +1,14 @@
 package org.wicketstuff.datatables.themes;
 
+import de.agilecoders.wicket.webjars.request.resource.WebjarsCssResourceReference;
 import org.apache.wicket.Component;
 import org.apache.wicket.behavior.Behavior;
 import org.apache.wicket.markup.ComponentTag;
 import org.apache.wicket.markup.head.CssHeaderItem;
 import org.apache.wicket.markup.head.IHeaderResponse;
 import org.apache.wicket.markup.head.JavaScriptHeaderItem;
+import org.wicketstuff.datatables.res.DataTablesBootstrapCssReference;
+import org.wicketstuff.datatables.res.DataTablesBootstrapJsReference;
 
 /**
  *
@@ -23,9 +26,8 @@ public class BootstrapTheme extends Behavior {
     public void renderHead(Component component, IHeaderResponse response) {
         super.renderHead(component, response);
 
-        response.render(CssHeaderItem.forUrl("//netdna.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css"));
-        response.render(CssHeaderItem.forUrl("//cdn.datatables.net/plug-ins/725b2a2115b/integration/bootstrap/3/dataTables.bootstrap.css"));
-
-        response.render(JavaScriptHeaderItem.forUrl("//cdn.datatables.net/plug-ins/725b2a2115b/integration/bootstrap/3/dataTables.bootstrap.js"));
+        response.render(CssHeaderItem.forReference(new WebjarsCssResourceReference("/bootstrap/current/css/bootstrap.css")));
+        response.render(CssHeaderItem.forReference(new DataTablesBootstrapCssReference()));
+        response.render(JavaScriptHeaderItem.forReference(new DataTablesBootstrapJsReference()));
     }
 }

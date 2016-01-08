@@ -16,9 +16,14 @@
  */
 package org.wicketstuff.datatables.demo;
 
+import de.agilecoders.wicket.jquery.WicketJquerySelectors;
 import de.agilecoders.wicket.webjars.WicketWebjars;
 import org.apache.wicket.Page;
+import org.apache.wicket.markup.html.IPackageResourceGuard;
+import org.apache.wicket.markup.html.SecurePackageResourceGuard;
 import org.apache.wicket.protocol.http.WebApplication;
+import org.wicketstuff.datatables.demo.infiniteScroll.InfiniteScrollDemoPage;
+import org.wicketstuff.datatables.demo.infiniteScroll.InfiniteScrollResourceReference;
 
 public class DemoApplication extends WebApplication
 {
@@ -34,9 +39,24 @@ public class DemoApplication extends WebApplication
         super.init();
 
         WicketWebjars.install(this);
+        WicketJquerySelectors.install(this);
 
         mountPage("new", NewPage.class);
 
+        infiniteScroll();
+
         getMarkupSettings().setStripWicketTags(true);
+
+	    configureResourceGuard();
     }
+
+	private void configureResourceGuard() {
+		SecurePackageResourceGuard packageResourceGuard = (SecurePackageResourceGuard) getResourceSettings().getPackageResourceGuard();
+		packageResourceGuard.addPattern("+*.css.map");
+	}
+
+	private void infiniteScroll() {
+		mountPage("infiniteScroll", InfiniteScrollDemoPage.class);
+		mountResource("infiniteScrollData", new InfiniteScrollResourceReference());
+	}
 }

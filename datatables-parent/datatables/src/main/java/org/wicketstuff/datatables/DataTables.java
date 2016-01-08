@@ -9,6 +9,7 @@ import org.apache.wicket.extensions.markup.html.repeater.data.table.IColumn;
 import org.apache.wicket.markup.head.IHeaderResponse;
 import org.apache.wicket.markup.head.OnDomReadyHeaderItem;
 import org.apache.wicket.markup.repeater.data.IDataProvider;
+import org.wicketstuff.datatables.options.Options;
 
 /**
  *
@@ -23,7 +24,7 @@ public class DataTables<T, S> extends DataTable<T, S> {
         setOutputMarkupId(true);
         this.options = new Options();
         
-        add(new DataTablesBehavior());
+        add(new DataTablesBehavior(options));
     }
 
     public Options getOptions() {

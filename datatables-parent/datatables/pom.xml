@@ -46,9 +46,15 @@
 			<version>0.5.3</version>
 		</dependency>
 		<dependency>
-			<groupId>org.webjars</groupId>
+			<groupId>org.webjars.bower</groupId>
 			<artifactId>datatables</artifactId>
-			<version>1.10.9</version>
+			<version>1.10.10</version>
+		</dependency>
+		<dependency>
+			<groupId>org.webjars</groupId>
+			<artifactId>bootstrap</artifactId>
+			<version>3.3.6</version>
+			<optional>true</optional>
 		</dependency>
 		<dependency>
 			<groupId>de.agilecoders.wicket</groupId>

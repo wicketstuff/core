@@ -10,7 +10,7 @@ import org.apache.wicket.markup.html.WebPage;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
 import org.wicketstuff.datatables.DataTables;
-import org.wicketstuff.datatables.Options;
+import org.wicketstuff.datatables.options.Options;
 import org.wicketstuff.datatables.Sort;
 import org.wicketstuff.datatables.themes.BootstrapTheme;
 
@@ -37,12 +37,7 @@ public class NewPage extends WebPage {
             }
         });
 
-        List<Person> people = new ArrayList<>();
-        people.add(new Person("John", "Doe", 32));
-        people.add(new Person("Jane", "Doe", 29));
-        people.add(new Person("Johnny", "Doe", 3));
-
-        PeopleDataProvider dataProvider = new PeopleDataProvider(people);
+        PeopleDataProvider dataProvider = new PeopleDataProvider();
 
         final DataTables<Person, String> table = new DataTables<Person, String>("table", columns, dataProvider, 2) {
             @Override

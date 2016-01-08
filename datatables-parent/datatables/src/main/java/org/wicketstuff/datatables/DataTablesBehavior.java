@@ -6,11 +6,21 @@ import org.apache.wicket.markup.ComponentTag;
 import org.apache.wicket.markup.head.CssHeaderItem;
 import org.apache.wicket.markup.head.IHeaderResponse;
 import org.apache.wicket.markup.head.JavaScriptHeaderItem;
+import org.wicketstuff.datatables.options.Options;
+import org.wicketstuff.datatables.res.DataTablesCssReference;
+import org.wicketstuff.datatables.res.DataTablesJsReference;
+import org.wicketstuff.datatables.res.DataTablesScrollerJsReference;
 
 /**
  *
  */
 public class DataTablesBehavior extends Behavior {
+
+    private final Options options;
+
+    public DataTablesBehavior(final Options options) {
+        this.options = options;
+    }
 
     @Override
     public void onComponentTag(Component component, ComponentTag tag) {
@@ -25,5 +35,13 @@ public class DataTablesBehavior extends Behavior {
     
         response.render(CssHeaderItem.forReference(new DataTablesCssReference()));
         response.render(JavaScriptHeaderItem.forReference(new DataTablesJsReference()));
+
+        Options.Style style = options.getStyle();
+        style.renderHead(response, "dataTables");
+
+        if (options.contains(Options.Scroller)) {
+            style.renderHead(response, "scroller");
+            response.render(JavaScriptHeaderItem.forReference(new DataTablesScrollerJsReference()));
+        }
     }
 }
