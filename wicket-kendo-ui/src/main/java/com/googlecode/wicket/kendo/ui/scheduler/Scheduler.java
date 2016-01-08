@@ -20,6 +20,7 @@ import java.util.List;
 
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.core.request.handler.IPartialPageRequestHandler;
+import org.apache.wicket.model.util.ListModel;
 import org.apache.wicket.util.lang.Args;
 
 import com.googlecode.wicket.jquery.core.JQueryBehavior;
@@ -51,7 +52,7 @@ public class Scheduler extends JQueryContainer implements ISchedulerListener
 	private final Options options;
 	private SchedulerModelBehavior modelBehavior; // load events
 
-	private final ResourceListModel resourceListModel = new ResourceListModel();
+	private final ResourceListModel resourceListModel;
 
 	// template //
 	private final IJQueryTemplate template;
@@ -64,7 +65,7 @@ public class Scheduler extends JQueryContainer implements ISchedulerListener
 	 */
 	public Scheduler(String id)
 	{
-		this(id, null, new Options());
+		this(id, null, new ResourceListModel(), new Options());
 	}
 
 	/**
@@ -75,7 +76,7 @@ public class Scheduler extends JQueryContainer implements ISchedulerListener
 	 */
 	public Scheduler(String id, Options options)
 	{
-		this(id, null, options);
+		this(id, null, new ResourceListModel(), options);
 	}
 
 	/**
@@ -86,7 +87,7 @@ public class Scheduler extends JQueryContainer implements ISchedulerListener
 	 */
 	public Scheduler(String id, SchedulerModel model)
 	{
-		this(id, model, new Options());
+		this(id, model, new ResourceListModel(), new Options());
 	}
 
 	/**
@@ -98,10 +99,7 @@ public class Scheduler extends JQueryContainer implements ISchedulerListener
 	 */
 	public Scheduler(String id, SchedulerModel model, Options options)
 	{
-		super(id, model);
-
-		this.options = Args.notNull(options, "options");
-		this.template = this.newTemplate();
+		this(id, model, new ResourceListModel(), options);
 	}
 
 	/**
@@ -113,7 +111,7 @@ public class Scheduler extends JQueryContainer implements ISchedulerListener
 	 */
 	public Scheduler(String id, SchedulerModel model, ResourceList resourceList)
 	{
-		this(id, model, resourceList, new Options());
+		this(id, model, new ResourceListModel(resourceList), new Options());
 	}
 
 	/**
@@ -126,13 +124,47 @@ public class Scheduler extends JQueryContainer implements ISchedulerListener
 	 */
 	public Scheduler(String id, SchedulerModel model, ResourceList resourceList, Options options)
 	{
-		this(id, model, options);
+		this(id, model, new ResourceListModel(resourceList), options);
+	}
 
-		this.resourceListModel.add(resourceList);
+	/**
+	 * Constructor
+	 *
+	 * @param id the markup id
+	 * @param model the {@link SchedulerModel}
+	 * @param resourceList a {@link ResourceList}
+	 */
+	public Scheduler(String id, SchedulerModel model, ResourceListModel resourceListModel)
+	{
+		this(id, model, resourceListModel, new Options());
+	}
+
+	/**
+	 * Constructor
+	 *
+	 * @param id the markup id
+	 * @param model the {@link SchedulerModel}
+	 * @param resourceList a {@link ResourceList}
+	 * @param options {@link Options}
+	 */
+	public Scheduler(String id, SchedulerModel model, ResourceListModel resourceListModel, Options options)
+	{
+		super(id, model);
+
+		this.resourceListModel = resourceListModel;
+		this.options = Args.notNull(options, "options");
+		this.template = this.newTemplate();
 	}
 
 	// Methods //
 
+	/**
+	 * Adds a {@link ResourceList} to the internal {@link ListModel} of {@link ResourceList}{@code s}
+	 * 
+	 * @param resourceList the {@code ResourceList}
+	 * @deprecated use {@link #getResourceListModel()}
+	 */
+	@Deprecated
 	public void add(ResourceList resourceList)
 	{
 		this.resourceListModel.add(resourceList);
@@ -167,13 +199,23 @@ public class Scheduler extends JQueryContainer implements ISchedulerListener
 	}
 
 	/**
-	 * Gets the calendar's model
+	 * Gets the sheduler's model
 	 *
-	 * @return a {@link SchedulerModel}
+	 * @return the {@link SchedulerModel}
 	 */
 	public SchedulerModel getModel()
 	{
 		return (SchedulerModel) this.getDefaultModel();
+	}
+	
+	/**
+	 * Gets the sheduler's {@link ResourceListModel} 
+	 *
+	 * @return the {@link ResourceListModel}
+	 */
+	public ResourceListModel getResourceListModel()
+	{
+		return this.resourceListModel;
 	}
 
 	/**

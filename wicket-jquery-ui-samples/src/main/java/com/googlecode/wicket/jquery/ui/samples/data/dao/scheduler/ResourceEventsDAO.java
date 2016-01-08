@@ -24,11 +24,11 @@ public class ResourceEventsDAO extends AbstractSchedulerEventsDAO
 	{
 		SchedulerEvent event1 = new SchedulerEvent(this.newId(), "Event #1", new Date());
 		event1.setResource(AGENDA_ID, 1);
-		super.list.add(event1);
+		this.list.add(event1);
 
 		SchedulerEvent event2 = new SchedulerEvent(this.newId(), "Event #2", new Date());
 		event2.setResource(AGENDA_ID, 2);
-		super.list.add(event2);
+		this.list.add(event2);
 	}
 
 	@Override

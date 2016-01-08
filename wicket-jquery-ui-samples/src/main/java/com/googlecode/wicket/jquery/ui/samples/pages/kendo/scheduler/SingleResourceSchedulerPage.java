@@ -25,7 +25,9 @@ import com.googlecode.wicket.kendo.ui.scheduler.resource.ResourceList;
 
 public class SingleResourceSchedulerPage extends AbstractSchedulerPage
 {
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
+    private static final String AGENDA_1 = "Sebastien";
+	private static final String AGENDA_2 = "Samantha";
 
 	private List<String> agendas;
 	private ResourceList resources;
@@ -42,9 +44,9 @@ public class SingleResourceSchedulerPage extends AbstractSchedulerPage
 
 		// MultiSelect //
 		this.agendas = new ArrayList<String>();
-		this.agendas.add("Sebastien");
+		this.agendas.add(AGENDA_1);
 
-		final MultiSelect<String> multiselect = new MultiSelect<String>("select", new ListModel<String>(this.agendas), Arrays.asList("Sebastien", "Samantha"));
+		final MultiSelect<String> multiselect = new MultiSelect<String>("select", new ListModel<String>(this.agendas), Arrays.asList(AGENDA_1, AGENDA_2));
 		form.add(multiselect);
 
 		// Scheduler //
@@ -160,7 +162,10 @@ public class SingleResourceSchedulerPage extends AbstractSchedulerPage
 			{
 				Integer agendaId = (Integer) event.getValue(ResourceEventsDAO.AGENDA_ID);
 
-				event.setVisible(isAgendaSelected(agendaId));
+				if (agendaId != null)
+				{
+				    event.setVisible(isAgendaSelected(agendaId));
+				}
 			}
 		};
 	}
@@ -168,8 +173,8 @@ public class SingleResourceSchedulerPage extends AbstractSchedulerPage
 	static ResourceList newResourceList()
 	{
 		ResourceList list = new ResourceList("Agenda", ResourceEventsDAO.AGENDA_ID);
-		list.add(new Resource(1, "Sebastien", "#6699cc"));
-		list.add(new Resource(2, "Samantha", "#cc6699"));
+		list.add(new Resource(1, AGENDA_1, "#6699cc"));
+		list.add(new Resource(2, AGENDA_2, "#cc6699"));
 
 		return list;
 	}

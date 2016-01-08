@@ -24,8 +24,7 @@ import org.apache.wicket.model.util.ListModel;
 import com.googlecode.wicket.jquery.core.utils.BuilderUtils;
 
 /**
- * INTERNAL USE<br/>
- * {@link ListModel} of {@link ResourceList} (a {@code List} of {@code List})
+ * Provides a {@link ListModel} of {@link ResourceList}{@code s} (a {@code List} of {@code List})
  *
  * @author Sebastien Briquet - sebfz1
  *
@@ -40,6 +39,23 @@ public class ResourceListModel extends ListModel<ResourceList>
 	public ResourceListModel()
 	{
 		super(new ArrayList<ResourceList>());
+	}
+
+	/**
+	 * Constructor
+	 */
+	public ResourceListModel(ResourceList list)
+	{
+		this();
+		this.add(list);
+	}
+
+	/**
+	 * Clears the {@code ResourceList} {@code List}
+	 */
+	public void clear()
+	{
+		this.getObject().clear();
 	}
 
 	/**

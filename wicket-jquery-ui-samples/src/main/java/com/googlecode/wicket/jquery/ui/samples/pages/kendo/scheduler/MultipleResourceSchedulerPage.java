@@ -1,19 +1,26 @@
 package com.googlecode.wicket.jquery.ui.samples.pages.kendo.scheduler;
 
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 
 import org.apache.wicket.ajax.AjaxRequestTarget;
+import org.apache.wicket.markup.html.form.ChoiceRenderer;
 import org.apache.wicket.markup.html.form.Form;
+import org.apache.wicket.model.util.ListModel;
 
 import com.googlecode.wicket.jquery.core.Options;
 import com.googlecode.wicket.jquery.ui.samples.data.dao.scheduler.EmployeeEventsDAO;
+import com.googlecode.wicket.kendo.ui.form.button.AjaxButton;
+import com.googlecode.wicket.kendo.ui.form.multiselect.MultiSelect;
 import com.googlecode.wicket.kendo.ui.panel.KendoFeedbackPanel;
 import com.googlecode.wicket.kendo.ui.scheduler.Scheduler;
 import com.googlecode.wicket.kendo.ui.scheduler.SchedulerEvent;
 import com.googlecode.wicket.kendo.ui.scheduler.SchedulerModel;
 import com.googlecode.wicket.kendo.ui.scheduler.resource.Resource;
 import com.googlecode.wicket.kendo.ui.scheduler.resource.ResourceList;
+import com.googlecode.wicket.kendo.ui.scheduler.resource.ResourceListModel;
 
 public class MultipleResourceSchedulerPage extends AbstractSchedulerPage
 {
@@ -29,6 +36,10 @@ public class MultipleResourceSchedulerPage extends AbstractSchedulerPage
 		final KendoFeedbackPanel feedback = new KendoFeedbackPanel("feedback");
 		form.add(feedback.setOutputMarkupId(true));
 
+		// MultiSelect //
+		final MultiSelect<Resource> multiselect = new MultiSelect<Resource>("rooms", new ListModel<Resource>(newRoomList()), newRoomList(), new ChoiceRenderer<Resource>("text"));
+		form.add(multiselect);
+
 		// Scheduler //
 		Options options = new Options();
 		options.set("date", "Date.now()");
@@ -40,14 +51,15 @@ public class MultipleResourceSchedulerPage extends AbstractSchedulerPage
 		final Scheduler scheduler = new Scheduler("scheduler", newSchedulerModel(), options) {
 
 			private static final long serialVersionUID = 1L;
-			
-			@Override
-			protected void onInitialize()
-			{
-				super.onInitialize();
 
-				this.add(newRoomList());
-				this.add(newEmployeeList());
+			@Override
+			protected void onConfigure()
+			{
+				super.onConfigure();
+
+				this.getResourceListModel().clear();
+				this.getResourceListModel().add(newRoomList(multiselect.getModelObject()));
+				this.getResourceListModel().add(newEmployeeList());
 			}
 
 			@Override
@@ -79,6 +91,19 @@ public class MultipleResourceSchedulerPage extends AbstractSchedulerPage
 		};
 
 		form.add(scheduler);
+
+		// Buttons //
+
+		form.add(new AjaxButton("refresh") {
+
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			protected void onSubmit(AjaxRequestTarget target, Form<?> form)
+			{
+				target.add(scheduler);
+			}
+		});
 	}
 
 	// Factories //
@@ -98,11 +123,33 @@ public class MultipleResourceSchedulerPage extends AbstractSchedulerPage
 		};
 	}
 
+	static ResourceListModel newResourceListModel()
+	{
+		ResourceListModel listModel = new ResourceListModel();
+
+		listModel.add(newRoomList());
+		listModel.add(newEmployeeList());
+
+		return listModel;
+	}
+
 	static ResourceList newRoomList()
 	{
-		ResourceList list = new ResourceList("Room", "roomId", "Rooms"); // grouping by "Rooms" (optional)
+		List<Resource> list = new ArrayList<Resource>();
 		list.add(new Resource(1, "Room #1", "#6699cc"));
 		list.add(new Resource(2, "Room #2", "#9966cc"));
+
+		return newRoomList(list);
+	}
+
+	static ResourceList newRoomList(Collection<Resource> resources)
+	{
+		ResourceList list = new ResourceList("Room", "roomId", "Rooms"); // grouping by "Rooms" (optional)
+
+		for (Resource resource : resources)
+		{
+			list.add(resource);
+		}
 
 		return list;
 	}
