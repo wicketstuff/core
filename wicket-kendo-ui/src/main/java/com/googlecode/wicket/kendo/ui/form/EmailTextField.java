@@ -28,7 +28,6 @@ import com.googlecode.wicket.jquery.core.IJQueryWidget;
  * <b>Note:</b> {@link EmailTextField} is not a {@link IJQueryWidget} (no corresponding widget is supplied by Kendo UI)<br/>
  * It means that required Kendo UI dependencies (javascript/stylesheet) are not automatically added.
  *
- * @param <T> the model object type
  * @author Sebastien Briquet - sebfz1
  *
  */

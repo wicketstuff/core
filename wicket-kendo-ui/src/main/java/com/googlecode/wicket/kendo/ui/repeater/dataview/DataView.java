@@ -36,7 +36,6 @@ import com.googlecode.wicket.kendo.ui.KendoDataSource;
 import com.googlecode.wicket.kendo.ui.KendoTemplateBehavior;
 import com.googlecode.wicket.kendo.ui.KendoUIBehavior;
 import com.googlecode.wicket.kendo.ui.datatable.behavior.DataBoundBehavior;
-import com.googlecode.wicket.kendo.ui.datatable.column.IColumn;
 import com.googlecode.wicket.kendo.ui.repeater.listview.IListViewListener;
 import com.googlecode.wicket.kendo.ui.repeater.listview.ListViewBehavior;
 
@@ -358,8 +357,9 @@ public class DataView<T> extends WebMarkupContainer implements IJQueryWidget, IL
 	/**
 	 * Gets a new {@link DataProviderBehavior}
 	 *
-	 * @param columns the list of {@link IColumn}
 	 * @param provider the {@link IDataProvider}
+	 * @param renderer the {@link ITextRenderer}
+	 * @param template the {@link IJQueryTemplate}
 	 * @return the {@link AbstractAjaxBehavior}
 	 */
 	protected AbstractAjaxBehavior newDataProviderBehavior(IDataProvider<T> provider, ITextRenderer<? super T> renderer, IJQueryTemplate template)

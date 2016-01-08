@@ -42,7 +42,7 @@ public class RangeDatePicker extends JQueryGenericContainer<DateRange> implement
 	 * Constructor
 	 *
 	 * @param id the markup id
-	 * @param options {@link Options}
+	 * @param options the {@link Options}
 	 */
 	public RangeDatePicker(String id, Options options)
 	{
@@ -56,7 +56,7 @@ public class RangeDatePicker extends JQueryGenericContainer<DateRange> implement
 	 *
 	 * @param id the markup id
 	 * @param model the {@link IModel}
-	 * @param options {@link Options}
+	 * @param options the {@link Options}
 	 */
 	public RangeDatePicker(String id, IModel<DateRange> model, Options options)
 	{

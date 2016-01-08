@@ -82,7 +82,7 @@ public class CommandButton extends AbstractButton
 	/**
 	 * {@inheritDoc}<br/>
 	 * 
-	 * @see http://docs.telerik.com/kendo-ui/api/javascript/ui/grid#configuration-columns.command
+	 * @see <a href="http://docs.telerik.com/kendo-ui/api/javascript/ui/grid#configuration-columns.command">http://docs.telerik.com/kendo-ui/api/javascript/ui/grid#configuration-columns.command</a>
 	 */
 	@Override
 	public boolean isBuiltIn()

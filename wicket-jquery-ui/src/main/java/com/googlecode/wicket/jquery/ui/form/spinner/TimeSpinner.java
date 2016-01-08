@@ -60,7 +60,7 @@ public class TimeSpinner extends DateTextField implements IJQueryCultureWidget
 	 * Constructor
 	 * 
 	 * @param id the markup id
-	 * @param options {@link Options}
+	 * @param options the {@link Options}
 	 */
 	public TimeSpinner(String id, Options options)
 	{
@@ -83,7 +83,7 @@ public class TimeSpinner extends DateTextField implements IJQueryCultureWidget
 	 * 
 	 * @param id the markup id
 	 * @param pattern a {@code SimpleDateFormat} pattern
-	 * @param options {@link Options}
+	 * @param options the {@link Options}
 	 */
 	public TimeSpinner(String id, String pattern, Options options)
 	{
@@ -131,7 +131,7 @@ public class TimeSpinner extends DateTextField implements IJQueryCultureWidget
 	 * 
 	 * @param id the markup id
 	 * @param model the {@link IModel}
-	 * @param options {@link Options}
+	 * @param options the {@link Options}
 	 */
 	public TimeSpinner(String id, IModel<Date> model, Options options)
 	{
@@ -156,7 +156,7 @@ public class TimeSpinner extends DateTextField implements IJQueryCultureWidget
 	 * @param id the markup id
 	 * @param model the {@link IModel}
 	 * @param pattern a {@code SimpleDateFormat} pattern.
-	 * @param options {@link Options}
+	 * @param options the {@link Options}
 	 */
 	public TimeSpinner(String id, IModel<Date> model, String pattern, Options options)
 	{

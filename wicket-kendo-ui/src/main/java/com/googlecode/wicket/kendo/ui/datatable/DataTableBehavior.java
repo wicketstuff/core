@@ -553,13 +553,13 @@ public abstract class DataTableBehavior extends KendoUIBehavior implements IJQue
 	/**
 	 * Gets the {@link JQueryAjaxBehavior} that will be called when the user clicks a toolbar button
 	 *
-	 * @param source {@link IJQueryAjaxAware}
+	 * @param source the {@link IJQueryAjaxAware}
 	 * @param button the button that is passed to the behavior so it can be retrieved via the {@link ToolbarClickEvent}
 	 * @return the {@link JQueryAjaxBehavior}
 	 */
-	protected JQueryAjaxBehavior newToolbarAjaxBehavior(DataTableBehavior behavior, final ToolbarButton button)
+	protected JQueryAjaxBehavior newToolbarAjaxBehavior(DataTableBehavior source, final ToolbarButton button)
 	{
-		return new ToolbarAjaxBehavior(behavior, button);
+		return new ToolbarAjaxBehavior(source, button);
 	}
 
 	/**

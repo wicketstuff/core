@@ -72,7 +72,7 @@ public class Scheduler extends JQueryContainer implements ISchedulerListener
 	 * Constructor
 	 *
 	 * @param id the markup id
-	 * @param options {@link Options}
+	 * @param options the {@link Options}
 	 */
 	public Scheduler(String id, Options options)
 	{
@@ -95,7 +95,7 @@ public class Scheduler extends JQueryContainer implements ISchedulerListener
 	 *
 	 * @param id the markup id
 	 * @param model the {@link SchedulerModel}
-	 * @param options {@link Options}
+	 * @param options the {@link Options}
 	 */
 	public Scheduler(String id, SchedulerModel model, Options options)
 	{
@@ -120,7 +120,7 @@ public class Scheduler extends JQueryContainer implements ISchedulerListener
 	 * @param id the markup id
 	 * @param model the {@link SchedulerModel}
 	 * @param resourceList a {@link ResourceList}
-	 * @param options {@link Options}
+	 * @param options the {@link Options}
 	 */
 	public Scheduler(String id, SchedulerModel model, ResourceList resourceList, Options options)
 	{
@@ -132,7 +132,7 @@ public class Scheduler extends JQueryContainer implements ISchedulerListener
 	 *
 	 * @param id the markup id
 	 * @param model the {@link SchedulerModel}
-	 * @param resourceList a {@link ResourceList}
+	 * @param resourceListModel the {@link ResourceListModel}
 	 */
 	public Scheduler(String id, SchedulerModel model, ResourceListModel resourceListModel)
 	{
@@ -144,8 +144,8 @@ public class Scheduler extends JQueryContainer implements ISchedulerListener
 	 *
 	 * @param id the markup id
 	 * @param model the {@link SchedulerModel}
-	 * @param resourceList a {@link ResourceList}
-	 * @param options {@link Options}
+	 * @param resourceListModel the {@link ResourceListModel}
+	 * @param options the {@link Options}
 	 */
 	public Scheduler(String id, SchedulerModel model, ResourceListModel resourceListModel, Options options)
 	{

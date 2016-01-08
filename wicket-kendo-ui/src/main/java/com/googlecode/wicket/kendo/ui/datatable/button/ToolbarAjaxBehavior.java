@@ -78,7 +78,7 @@ public class ToolbarAjaxBehavior extends JQueryAjaxBehavior
 	 * Constructor
 	 *
 	 * @param source the {@link IJQueryAjaxAware}
-	 * @param property the property used to retrieve the row's object value
+	 * @param button the button that is passed to the behavior so it can be retrieved via the {@link ToolbarClickEvent}
 	 */
 	public ToolbarAjaxBehavior(IJQueryAjaxAware source, ToolbarButton button)
 	{

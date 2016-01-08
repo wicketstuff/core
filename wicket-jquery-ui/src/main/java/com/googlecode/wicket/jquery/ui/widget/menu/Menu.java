@@ -82,7 +82,7 @@ public class Menu extends JQueryPanel implements IMenuListener
 	 * Constructor
 	 *
 	 * @param id the markup id
-	 * @param options {@link Options}
+	 * @param options the {@link Options}
 	 */
 	public Menu(String id, Options options)
 	{
@@ -94,7 +94,7 @@ public class Menu extends JQueryPanel implements IMenuListener
 	 *
 	 * @param id the markup id
 	 * @param items the list of {@link IMenuItem}
-	 * @param options {@link Options}
+	 * @param options the {@link Options}
 	 */
 	public Menu(String id, List<IMenuItem> items, Options options)
 	{

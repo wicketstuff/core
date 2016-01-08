@@ -81,7 +81,7 @@ public class SfMenu extends JQueryPanel
 	 *
 	 * @param id the markup id
 	 * @param items the menu-items
-	 * @param options {@link Options}
+	 * @param options the {@link Options}
 	 */
 	public SfMenu(String id, List<ISfMenuItem> items, Options options)
 	{
@@ -93,7 +93,7 @@ public class SfMenu extends JQueryPanel
 	 *
 	 * @param id the markup id
 	 * @param items the menu-items
-	 * @param options {@link Options}
+	 * @param options the {@link Options}
 	 * @param isVertical Vertical Superfish Menu if true
 	 */
 	public SfMenu(String id, List<ISfMenuItem> items, Options options, Boolean isVertical)

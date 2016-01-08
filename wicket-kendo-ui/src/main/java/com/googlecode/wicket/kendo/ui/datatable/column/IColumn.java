@@ -86,7 +86,7 @@ public interface IColumn extends IClusterable
 	/**
 	 * The template which renders the footer table cell for the column.
 	 * 
-	 * @return
+	 * @return the template or {@code null} if it does not apply
 	 * @see <a href="http://docs.telerik.com/kendo-ui/api/javascript/ui/grid#configuration-columns.footerTemplate">columns.footerTemplate</a>
 	 */
 	String getFooterTemplate();

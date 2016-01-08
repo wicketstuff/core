@@ -52,7 +52,7 @@ public class Spinner<T extends Number> extends TextField<T> implements IJQueryCu
 	 * Constructor
 	 *
 	 * @param id the markup id
-	 * @param options {@link Options}
+	 * @param options the {@link Options}
 	 */
 	public Spinner(String id, Options options)
 	{
@@ -74,7 +74,7 @@ public class Spinner<T extends Number> extends TextField<T> implements IJQueryCu
 	 * Constructor
 	 *
 	 * @param id the markup id
-	 * @param options {@link Options}
+	 * @param options the {@link Options}
 	 * @param type Type for field validation
 	 */
 	public Spinner(final String id, Options options, final Class<T> type)
@@ -100,7 +100,7 @@ public class Spinner<T extends Number> extends TextField<T> implements IJQueryCu
 	 *
 	 * @param id the markup id
 	 * @param model the {@link IModel}
-	 * @param options {@link Options}
+	 * @param options the {@link Options}
 	 */
 	public Spinner(String id, final IModel<T> model, Options options)
 	{
@@ -124,7 +124,7 @@ public class Spinner<T extends Number> extends TextField<T> implements IJQueryCu
 	 *
 	 * @param id the markup id
 	 * @param model the {@link IModel}
-	 * @param options {@link Options}
+	 * @param options the {@link Options}
 	 * @param type Type for field validation
 	 */
 	public Spinner(final String id, final IModel<T> model, Options options, final Class<T> type)

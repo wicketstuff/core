@@ -62,7 +62,7 @@ public class ContextMenu extends Menu
 	 * Constructor
 	 *
 	 * @param id the markup id
-	 * @param options {@link Options}
+	 * @param options the {@link Options}
 	 */
 	public ContextMenu(String id, Options options)
 	{
@@ -74,7 +74,7 @@ public class ContextMenu extends Menu
 	 *
 	 * @param id the markup id
 	 * @param items the menu-items
-	 * @param options {@link Options}
+	 * @param options the {@link Options}
 	 */
 	public ContextMenu(String id, List<IMenuItem> items, Options options)
 	{

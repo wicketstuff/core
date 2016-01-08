@@ -52,7 +52,7 @@ public class AjaxSpinner<T extends Number> extends Spinner<T> implements ISpinne
 	 * Constructor
 	 *
 	 * @param id the markup id
-	 * @param options {@link Options}
+	 * @param options the {@link Options}
 	 * @param type Type for field validation
 	 */
 	public AjaxSpinner(final String id, Options options, final Class<T> type)
@@ -77,7 +77,7 @@ public class AjaxSpinner<T extends Number> extends Spinner<T> implements ISpinne
 	 *
 	 * @param id the markup id
 	 * @param model the {@link IModel}
-	 * @param options {@link Options}
+	 * @param options the {@link Options}
 	 * @param type Type for field validation
 	 */
 	public AjaxSpinner(final String id, final IModel<T> model, Options options, final Class<T> type)

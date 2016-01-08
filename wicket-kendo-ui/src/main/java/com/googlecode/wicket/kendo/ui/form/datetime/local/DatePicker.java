@@ -159,7 +159,7 @@ public class DatePicker extends LocalTextField<LocalDate>
 	 *
 	 * @param id the markup id
 	 * @param model the {@link IModel}
-	 * @param options {@link Options}
+	 * @param options the {@link Options}
 	 */
 	public DatePicker(String id, IModel<LocalDate> model, Options options)
 	{
@@ -184,7 +184,7 @@ public class DatePicker extends LocalTextField<LocalDate>
 	 * @param id the markup id
 	 * @param model the {@link IModel}
 	 * @param pattern a {@code SimpleDateFormat} pattern
-	 * @param options {@link Options}
+	 * @param options the {@link Options}
 	 */
 	public DatePicker(String id, IModel<LocalDate> model, final String pattern, Options options)
 	{

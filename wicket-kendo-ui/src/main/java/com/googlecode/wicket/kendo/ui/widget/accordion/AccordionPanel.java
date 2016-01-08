@@ -61,7 +61,7 @@ public class AccordionPanel extends JQueryGenericPanel<List<ITab>> implements IA
 	 *
 	 * @param id the markup id
 	 * @param tabs the list of {@link ITab}{@code s}
-	 * @param options {@link Options}
+	 * @param options the {@link Options}
 	 */
 	public AccordionPanel(String id, List<ITab> tabs, Options options)
 	{
@@ -84,7 +84,7 @@ public class AccordionPanel extends JQueryGenericPanel<List<ITab>> implements IA
 	 *
 	 * @param id the markup id
 	 * @param model the list model of {@link ITab}{@code s}
-	 * @param options {@link Options}
+	 * @param options the {@link Options}
 	 */
 	public AccordionPanel(String id, IModel<List<ITab>> model, Options options)
 	{

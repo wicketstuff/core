@@ -176,7 +176,7 @@ public abstract class AbstractButton implements IClusterable
 	/**
 	 * Indicates whether this {@link AbstractButton} name match to the supplied name.
 	 *
-	 * @param text the text to compare to
+	 * @param name the name to compare to
 	 * @return true if equal
 	 */
 	public boolean match(String name)

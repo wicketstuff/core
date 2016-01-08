@@ -61,7 +61,7 @@ public class TabbedPanel extends JQueryGenericPanel<List<ITab>> implements ITabs
 	 * Constructor with empty list of Tabs.<br/>
 	 *
 	 * @param id the markup id
-	 * @param options {@link Options}
+	 * @param options the {@link Options}
 	 * @see #add(ITab)
 	 */
 	public TabbedPanel(String id, Options options)
@@ -85,7 +85,7 @@ public class TabbedPanel extends JQueryGenericPanel<List<ITab>> implements ITabs
 	 *
 	 * @param id the markup id
 	 * @param tabs the list of {@link ITab}{@code s}
-	 * @param options {@link Options}
+	 * @param options the {@link Options}
 	 */
 	public TabbedPanel(String id, List<ITab> tabs, Options options)
 	{
@@ -108,7 +108,7 @@ public class TabbedPanel extends JQueryGenericPanel<List<ITab>> implements ITabs
 	 *
 	 * @param id the markup id
 	 * @param model the list model of {@link ITab}{@code s}
-	 * @param options {@link Options}
+	 * @param options the {@link Options}
 	 */
 	public TabbedPanel(String id, IModel<List<ITab>> model, Options options)
 	{

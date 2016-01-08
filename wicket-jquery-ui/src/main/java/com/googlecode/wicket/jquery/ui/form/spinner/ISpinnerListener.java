@@ -20,7 +20,7 @@ import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.util.io.IClusterable;
 
 /**
- * Event listener shared by the {@link DatePicker} widget and the {@link DatePickerBehavior}
+ * Event listener shared by the {@link Spinner} widget and the {@link SpinnerBehavior}
  *
  * @author Sebastien Briquet - sebfz1
  *

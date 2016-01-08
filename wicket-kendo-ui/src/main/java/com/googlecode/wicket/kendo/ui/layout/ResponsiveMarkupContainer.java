@@ -51,7 +51,7 @@ public class ResponsiveMarkupContainer extends WebMarkupContainer implements IJQ
 	 * Constructor
 	 *
 	 * @param id the markup id
-	 * @param options {@link Options}
+	 * @param options the {@link Options}
 	 */
 	public ResponsiveMarkupContainer(String id, Options options)
 	{
@@ -76,7 +76,7 @@ public class ResponsiveMarkupContainer extends WebMarkupContainer implements IJQ
 	 *
 	 * @param id the markup id
 	 * @param model the model
-	 * @param options {@link Options}
+	 * @param options the {@link Options}
 	 */
 	public ResponsiveMarkupContainer(String id, IModel<?> model, Options options)
 	{
