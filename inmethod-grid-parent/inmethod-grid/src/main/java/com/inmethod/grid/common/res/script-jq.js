@@ -151,29 +151,6 @@ if (typeof(InMethod) === "undefined") {
             ev.data.updatePrelight(e);	
     };
 
-    var ignorePrelight = function(element)
-    {
-            // We need to ignore prelight on table rows for all browsers but IE<=6.
-            // For all other browsers we use :hover, it's much faster in IE7
-            return !(element.tagName.toLowerCase() === "tr" && Wicket.Browser.isIELessThan7()) && hasClass(element, "imxt-grid-row");
-    }
-
-    var attachPrelight = function(elements, instance) {
-
-            for (var i = 0; i < elements.length; ++i) {
-                    var element = elements[i];
-
-                    if (element.imxtPrelightAttached !== true && !ignorePrelight(element)) {			
-                            if (curPrelight != null && curPrelight[getElementId(element)] != null) {
-                                    Wicket.bind(mouseIn,element)(null, instance);
-                            }					
-                            addListener(element, "mouseover", mouseIn, instance, false);
-                            addListener(element, "mouseout", mouseOut, instance, false);
-                            element.imxtPrelightAttached = true;						
-                    }			
-            }
-    };
-
 window.setInterval(purgeInactiveListeners, 10000); 
 
 $(window).on("unload", function() { elementsWithListeners = null; });
@@ -370,7 +347,6 @@ InMethod.XTable.prototype = {
                 //Store browser version in variables, calls to Wicket.Browser methods burn CPU.
                 this.isIE = Wicket.Browser.isIE();
                 this.isIEQuirks = Wicket.Browser.isIEQuirks();
-                this.isIELessThan7 = Wicket.Browser.isIELessThan7();
                 this.isGecko = Wicket.Browser.isGecko();
                 this.isOpera = Wicket.Browser.isOpera();
                 this.isSafari = Wicket.Browser.isSafari();		
@@ -793,7 +769,7 @@ InMethod.XTable.prototype = {
 	updateHandles: function(force) {
 		// this is slow on IE so we only do it on every tenth update
 		
-		if (this.isIELessThan7 || this.isIEQuirks) {
+		if (this.isIEQuirks) {
 			var c = this.counter || 0;
 			if (force)
 				c = 0;
@@ -1447,8 +1423,6 @@ InMethod.XTable.prototype = {
 	attachPrelight: function() {
 		var elements = this.getElements("*", "imxt-want-prelight");
 	
-		attachPrelight(elements, this);
-		
 		// Issue #44:
 		// Workaround for an IE9 rendering bug. IE9 miscalculates
 		// the tables sizes on hover in/out ... This leads to issue #44.
@@ -1557,8 +1531,6 @@ InMethod.XTable.prototype = {
 			elements.push(rowElement);
 		}		
 
-		attachPrelight(elements, this);
-		
 		this.updateSelectCheckBoxes();
 		this.initCells(rowElement);
 	},
@@ -1632,11 +1604,7 @@ InMethod.XTableManager.prototype = {
 	current: new Object(),
 
 	initialize: function() {
-		var interval = 100;
-		if (Wicket.Browser.isIELessThan7()) {
-			interval = 500;
-		}
-		window.setInterval(Wicket.bind(this.update, this), interval);
+		window.setInterval(Wicket.bind(this.update, this), 100);
 	},
 	
 	update: function() {						
