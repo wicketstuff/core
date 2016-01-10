@@ -115,7 +115,6 @@ public class JamonMonitorDetailsPanel extends Panel
 	{
 		super(id);
 		setOutputMarkupId(true);
-		setMarkupId(id);
 		final Monitor monitor = getJamonRepository().findMonitorByLabel(monitorLabel);
 		FrequencyDist[] frequencyDists = monitor.getRange().getFrequencyDists();
 		add(new FrequencyListView(ID_OF_LIST_VIEW, asList(frequencyDists)));

@@ -29,7 +29,7 @@ public class EmptyMarkupContainer extends WebMarkupContainer
 {
 
 	/**
-	 * Construct. Will use the given id as {@link #setMarkupId(String) markupId} and set the
+	 * Construct. Will use the given id and set the
 	 * {@link #setOutputMarkupId(boolean) outputMarkupId} flag to <code>true</code>.
 	 * 
 	 * @param id
@@ -37,7 +37,6 @@ public class EmptyMarkupContainer extends WebMarkupContainer
 	public EmptyMarkupContainer(String id)
 	{
 		super(id);
-		setMarkupId(id);
 		setOutputMarkupId(true);
 	}
 
