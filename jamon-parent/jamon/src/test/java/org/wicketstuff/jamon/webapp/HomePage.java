@@ -18,6 +18,7 @@ package org.wicketstuff.jamon.webapp;
 
 import org.apache.wicket.markup.html.WebPage;
 import org.apache.wicket.markup.html.link.Link;
+import org.apache.wicket.request.mapper.parameter.PageParameters;
 import org.wicketstuff.jamon.component.JamonAdminPage;
 
 /**
@@ -37,7 +38,8 @@ public class HomePage extends WebPage
 			@Override
 			public void onClick()
 			{
-				setResponsePage(new JamonAdminPage(100));
+				setResponsePage(
+					new JamonAdminPage(new PageParameters().set(JamonAdminPage.PARAM_ITEMS, 100)));
 			}
 		});
 		add(new Link<Void>("toAjaxPage")

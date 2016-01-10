@@ -19,6 +19,7 @@ package org.wicketstuff.jamon.component;
 import static org.wicketstuff.jamon.component.JamonMonitorTable.DEFAULT_ROWS_PER_PAGE;
 
 import org.apache.wicket.markup.html.WebPage;
+import org.apache.wicket.request.mapper.parameter.PageParameters;
 import org.wicketstuff.jamon.monitor.AlwaysSatisfiedMonitorSpecification;
 
 
@@ -32,31 +33,36 @@ import org.wicketstuff.jamon.monitor.AlwaysSatisfiedMonitorSpecification;
 public class JamonAdminPage extends WebPage
 {
 
+	public static final String PARAM_ITEMS = "items";
+
 	public static final String PATH_TO_STATISTICS_TABLE = "jamonStatistics";
 
 	public static final String PATH_TO_MONITOR_DETAILS = "monitorDetails";
 
+	public JamonAdminPage()
+	{
+		this(null);
+	}
+
 	/**
 	 * Construct.
+	 * 
+	 * You are able to set rows per page by page parameter "items". Otherwise
+	 * {@link JamonMonitorTable#DEFAULT_ROWS_PER_PAGE default} size is used.
 	 * 
 	 * @param rowsPerPage
 	 *            How many monitors per page should be rendered?
 	 */
-	public JamonAdminPage(int rowsPerPage)
+	public JamonAdminPage(PageParameters parameters)
 	{
+		super(parameters);
+
+		int rowsPerPage = getPageParameters().get(PARAM_ITEMS).toInt(DEFAULT_ROWS_PER_PAGE);
+
 		add(new JamonAdminPanel("adminPanel"));
 		add(new JamonMonitorTable(PATH_TO_STATISTICS_TABLE,
 			new AlwaysSatisfiedMonitorSpecification(), rowsPerPage));
 		add(new EmptyMarkupContainer(PATH_TO_MONITOR_DETAILS));
-	}
-
-	/**
-	 * Construct. It will use the {@link JamonMonitorTable#DEFAULT_ROWS_PER_PAGE} for determining
-	 * how many monitors on one page are shown.
-	 */
-	public JamonAdminPage()
-	{
-		this(DEFAULT_ROWS_PER_PAGE);
 	}
 
 }
