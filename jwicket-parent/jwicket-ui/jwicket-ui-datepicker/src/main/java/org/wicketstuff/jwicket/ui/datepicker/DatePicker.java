@@ -1609,7 +1609,7 @@ public class DatePicker extends JQueryDurableAjaxBehavior implements IStyleResol
     public JQueryCssResourceReference[] getCssResources() {
         return new JQueryCssResourceReference[]{
                 new JQueryCssResourceReference(DatePicker.class, "css/jquery-ui.css"),
-                new JQueryCssResourceReference(DatePicker.class, "css/jquery.ui.base.css"),
+                new JQueryCssResourceReference(DatePicker.class, "css/jquery.ui.core.css"),
                 new JQueryCssResourceReference(DatePicker.class, "css/jquery.ui.theme.css")
         };
     }
