@@ -370,12 +370,23 @@ abstract class AbstractSelect2Choice<T, M> extends AbstractTextComponent<M> impl
 
         try 
         {
-            out.flush();
-            out.close();
-        } catch (IOException e) 
+            out.flush();           
+        } 
+        catch (IOException e) 
         {
             throw new RuntimeException("Could not write Json to servlet response", e);
         }
+
+        try
+        {
+            out.close();
+        }
+        catch (IOException e)
+        {
+            throw new RuntimeException("Could not write Json to servlet response", e);
+        }
+
+
     }
 
 	@Override
