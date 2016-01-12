@@ -9,6 +9,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 
 
@@ -61,6 +62,12 @@ public abstract class JsonResourceReference<T> extends ResourceReference
         try {
             resourceStream = new StringResourceStream(webResponse.toString("UTF-8"), "application/json");
         } catch (UnsupportedEncodingException e) {
+            logger.error("getResource", e);
+            throw new WicketRuntimeException(e);
+        }
+        try {
+            webResponse.close();           
+        } catch (IOException e) {
             logger.error("getResource", e);
             throw new WicketRuntimeException(e);
         }
