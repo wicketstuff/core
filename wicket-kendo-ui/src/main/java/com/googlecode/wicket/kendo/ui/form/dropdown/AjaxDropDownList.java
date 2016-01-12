@@ -157,13 +157,21 @@ public class AjaxDropDownList<T> extends DropDownList<T> implements ISelectionCh
 	@Override
 	public void onSelectionChanged(AjaxRequestTarget target)
 	{
-		this.onSelectionChanged();
+		// noop
 	}
 
 	@Override
 	public JQueryBehavior newWidgetBehavior(String selector)
 	{
-		return new AjaxDropDownListBehavior(selector, this);
+		return new AjaxDropDownListBehavior(selector, new ISelectionChangedListener() {
+
+			@Override
+			public void onSelectionChanged(AjaxRequestTarget target)
+			{
+				AjaxDropDownList.this.onSelectionChanged(); // updates the model
+				AjaxDropDownList.this.onSelectionChanged(target);
+			}
+		});
 	}
 
 	/**
@@ -184,7 +192,7 @@ public class AjaxDropDownList<T> extends DropDownList<T> implements ISelectionCh
 		public AjaxDropDownListBehavior(String selector, String method, ISelectionChangedListener listener)
 		{
 			super(selector, DropDownList.METHOD);
-			
+
 			this.listener = Args.notNull(listener, "listener");
 		}
 
