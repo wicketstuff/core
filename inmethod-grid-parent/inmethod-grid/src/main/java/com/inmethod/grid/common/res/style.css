@@ -331,10 +331,11 @@ div.imxt-paging-navigator {
 	padding-bottom: 0.1em;	
 	float:left;		
 }
-div.imxt-paging-navigator em {
+div.imxt-paging-navigator a[disabled='disabled'] {
 	font-style: normal;
 	display: block;			
-	color: #aaa;		
+	color: #aaa;
+	cursor: default;
 }
 div.imxt-paging-navigator .imxt-navigator-float {
 	float: left;			
@@ -356,7 +357,7 @@ span.imxt-navigator-float span.imxt-paging-navigator-button {
 	margin: 0px;			
 }
 
-span.imxt-navigator-float span.imxt-paging-navigator-button em {
+span.imxt-navigator-float span.imxt-paging-navigator-button a[disabled='disabled'] {
 	color: black;
 }
 
@@ -364,6 +365,11 @@ a.imxt-paging-navigator-button:hover {
 	background-color: #EFFAFF;
 	border: 1px solid #CFF1FF;
 	margin: 0px;
+}
+a.imxt-paging-navigator-button[disabled='disabled']:hover {
+	background:none;
+	border:none;
+	margin: 1px;
 }
 
 div.imxt-no-records-toolbar {
