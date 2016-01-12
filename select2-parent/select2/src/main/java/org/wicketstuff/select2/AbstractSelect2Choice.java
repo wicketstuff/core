@@ -245,14 +245,18 @@ abstract class AbstractSelect2Choice<T, M> extends AbstractTextComponent<M> impl
 		super.onInitialize();
 
 		// configure the ajax callbacks
-        if (isAjax() || settings.isStateless())
+        if (isAjax() && !settings.isStateless())
 		{
 			AjaxSettings ajax = getSettings().getAjax(true);
 			ajax.setData(String.format(
 					"function(params) { return { q: params.term, page: params.page, '%s':true, '%s':[window.location.protocol, '//', window.location.host, window.location.pathname].join('')}; }",
 					WebRequest.PARAM_AJAX, WebRequest.PARAM_AJAX_BASE_URL));
 			ajax.setProcessResults("function(data, page) { return { results: data.items, pagination: { more: data.more } };  }");
-		}
+		} else if(settings.isStateless()) 
+        {
+            AjaxSettings ajax = getSettings().getAjax(true);
+            ajax.setProcessResults("function(data, page) { return { results: data.items, pagination: { more: data.more } };  }");
+        }
 		// configure the localized strings/renderers
 		getSettings().setFormatNoMatches(
 				"function() { return '" + getEscapedJsString("noMatches") + "';}");
