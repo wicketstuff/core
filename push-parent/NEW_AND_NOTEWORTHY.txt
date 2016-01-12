@@ -1,0 +1,19 @@
+This is a major rewrite of the wicket-push project.
+
++ major API simplification
++ push event handler now directly works with Wicket's AjaxRequestTarget object
++ wicket-push now works with asynchronous listeners on background services
+  - no more serialization problems
+  - no more WicketRuntimeException "There is no application attached to current thread"
+  - no more WicketRuntimeException "There is no session attached to current thread"
++ disconnect listeners are now working as expected
++ added onunload event to push behavior allowing faster detection of channel disconnects
++ cometd: implementation does not require DOJO anymore (thanks to Rodolfo Hansen)
++ cometd: not every push event necessarily results in an AJAX round trip anymore. Events are queued and processed in one go, if currently another AJAX callback request is processed. Useful for pages with a very high frequency of push events.
++ timer: periodically cleanup task ensures no in-memory left overs
+
++ improvements in the examples:
+  + code cleanup, HTML beautifying and documentation
+  + added a chat service that sends the messages asynchronously via a background thread to demonstrate async capabilities of wickt-push
+  + persistent chat history
+  + chatting between timer and cometd based chat pages

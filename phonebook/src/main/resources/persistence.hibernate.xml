@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+
+<beans>
+
+	<!-- setup hibernate session factory -->
+	<bean id="sessionFactory" class="org.springframework.orm.hibernate3.LocalSessionFactoryBean">
+		<property name="dataSource" ref="dataSource"/>
+		<property name="mappingResources">
+			<list>
+				<value>Contact.hbm.xml</value>
+			</list>
+		</property>
+
+		<property name="hibernateProperties">
+			<props>
+				<prop key="hibernate.hbm2ddl.auto">create</prop>
+				<prop key="hibernate.dialect">${hibernate.dialect}</prop>
+				<prop key="hibernate.connection.pool_size">5</prop>
+				<prop key="hibernate.show_sql">true</prop>
+				<prop key="hibernate.format_sql">true</prop>
+				<prop key="hibernate.bytecode.use_reflection_optimizer">true</prop>
+				<prop key="hibernate.cache.region.factory_class">net.sf.ehcache.hibernate.EhCacheRegionFactory</prop>
+				<prop key="hibernate.cache.use_query_cache">true</prop>
+			</props>
+		</property>
+	</bean>
+
+	<!-- setup transaction manager	-->
+    <bean id="transactionManager" class="org.springframework.orm.hibernate3.HibernateTransactionManager">
+       <property name="sessionFactory"><ref bean="sessionFactory"/></property>
+    </bean>
+
+	<!--
+		setup contact dao
+	-->
+	<bean id="contactDaoTarget" class="wicket.contrib.phonebook.HibernateContactDao">
+		<property name="sessionFactory" ref="sessionFactory"/>
+	</bean>
+
+	<!-- this is a transactional proxy for contact dao which ensures proper transaction handling -->
+	<bean id="contactDao" class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+		<property name="transactionManager" ref="transactionManager"/>
+		<property name="target" ref="contactDaoTarget"/>
+		<property name="transactionAttributes">
+			<props>
+				<prop key="save">PROPAGATION_REQUIRED</prop>
+				<prop key="delete">PROPAGATION_REQUIRED</prop>
+				<prop key="*">PROPAGATION_REQUIRED,readOnly</prop>
+			</props>
+		</property>
+	</bean>
+
+</beans>

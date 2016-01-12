@@ -1,6 +1,9 @@
 Wicket Stuff Core
 ==================
 
+![](https://travis-ci.org/wicketstuff/core.svg?branch=master&style=flat)
+
+
 Overview:
 ---------
 
@@ -26,3 +29,7 @@ Project Documentation (Wiki):
 
 https://github.com/wicketstuff/core/wiki
 
+Project Documentation (JavaDoc):
+----------------------
+
+http://wicketstuff.org/core/javadoc7/apidocs/index.html

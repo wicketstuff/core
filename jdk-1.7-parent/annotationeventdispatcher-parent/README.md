@@ -1,1 +1,0 @@
-Annotation based event dispatcher.

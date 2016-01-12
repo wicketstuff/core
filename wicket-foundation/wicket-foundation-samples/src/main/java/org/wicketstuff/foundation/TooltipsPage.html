@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html xmlns:wicket="http://wicket.apache.org">
+<head>
+<meta charset="utf-8" />
+<title>wicket-foundation</title>
+</head>
+<body>
+    <wicket:extend>
+
+        <div class="row">
+            <h1 id="tooltips">Tooltips</h1>
+            <h3 class="subheader">
+                Tooltips are a quick way to provide extended
+                    information on a term or action on a page.
+            </h3>
+
+            <hr>
+            <h2>Basic</h2>
+
+            <p>You can create a tooltip using minimal markup.</p>
+            <div>
+                <div>
+                    <h4>HTML</h4>
+                    
+<pre><code class="language-html"><div class="code-container"><span class="tag">&lt;<span class="title">span</span> <span class="attribute">wicket:id</span>=<span class="value">&quot;basic&quot;</span>&gt;</span><span class="tag">&lt;/<span class="title">span</span>&gt;</span>
+</div></code>
+</pre>
+                </div>
+                <div>
+                    <h4>Java</h4>
+                    
+<pre><code class="language-html"><div class="code-container">Label basic = new Label(&quot;basic&quot;, Model.of(&quot;Hover on desktop or touch me on mobile!&quot;));
+basic.add(new FoundationTooltipBehavior(&quot;Tooltips are awesome, you should totally use them!&quot;));
+add(basic);
+</div></code>
+</pre>
+                </div>
+                <div>
+                    <h4>Rendered HTML</h4>
+                    <span wicket:id="basic"></span>
+                </div>
+            </div>
+
+            <hr>
+            <h2>Advanced</h2>
+
+            <p>Additional classes can be added to your tooltips to
+                change its appearance.</p>
+                
+                <div>
+                    <h4>HTML</h4>
+                    
+<pre><code class="language-html"><div class="code-container"><span class="tag">&lt;<span class="title">span</span> <span class="attribute">wicket:id</span>=<span class="value">&quot;advanced&quot;</span>&gt;</span><span class="tag">&lt;/<span class="title">span</span>&gt;</span>
+</div></code>
+</pre>
+                </div>
+                <div>
+                    <h4>Java</h4>
+                    
+<pre><code class="language-html"><div class="code-container">Label advanced = new Label(&quot;advanced&quot;, Model.of(&quot;Hover on desktop or touch me on mobile!&quot;));
+TooltipOptions options = new TooltipOptions(TooltipPosition.TIP_TOP).setRadius(ButtonRadius.ROUND);
+advanced.add(new FoundationTooltipBehavior(&quot;Tooltips are awesome, you should totally use them!&quot;, options));
+add(advanced);
+</div></code>
+</pre>
+                </div>
+
+            <h4>Rendered HTML</h4>
+
+            <p>
+                <span wicket:id="advanced"></span>
+            </p>
+            
+            <h3>Visibility</h3>
+            
+            <p>
+                You can now also add
+                <code>show_on</code>
+                to your
+                <code>data-options</code>
+                attribute to allow your tooltips to show on
+                <code>small</code>
+                ,
+                <code>medium</code>
+                , or
+                <code>large</code>
+                when the page loads. They will show on all screen sizes
+                by default.
+            </p>
+
+            <div>
+            
+                <div>
+                    <h4>HTML</h4>
+                    
+<pre><code class="language-html"><div class="code-container"><span class="tag">&lt;<span class="title">span</span> <span class="attribute">wicket:id</span>=<span class="value">&quot;visibility&quot;</span>&gt;</span><span class="tag">&lt;/<span class="title">span</span>&gt;</span>
+</div></code>
+</pre>
+                </div>
+                <div>
+                    <h4>Java</h4>
+                    
+<pre><code class="language-html"><div class="code-container">Label visibility = new Label(&quot;visibility&quot;, Model.of(&quot;This one shows tooltip only on large displays!&quot;));
+TooltipOptions visibilityOptions = new TooltipOptions(TooltipVisibility.LARGE);
+visibility.add(new FoundationTooltipBehavior(&quot;Tooltips are awesome, you should totally use them!&quot;, visibilityOptions));
+add(visibility);
+</div></code>
+</pre>
+                </div>
+                <div>
+                    <h4>Rendered HTML</h4>
+                    <span wicket:id="visibility"></span>
+                </div>
+            </div>
+
+            <p>&nbsp;</p>
+            <h3>Disable for touch events</h3>
+
+            <p>If you don&#39;t want tooltips to interfere with a
+                touch event, you can disable them for those devices,
+                like so:</p>
+                
+                <div>
+                    <h4>HTML</h4>
+                    
+<pre><code class="language-html"><div class="code-container"><span class="tag">&lt;<span class="title">span</span> <span class="attribute">wicket:id</span>=<span class="value">&quot;disableForTouch&quot;</span>&gt;</span><span class="tag">&lt;/<span class="title">span</span>&gt;</span>
+</div></code>
+</pre>
+                </div>
+                <div>
+                    <h4>Java</h4>
+                    
+<pre><code class="language-html"><div class="code-container">Label disableForTouch = new Label(&quot;disableForTouch&quot;, Model.of(&quot;This one's tooltip is disabled for touch devices!&quot;));
+TooltipOptions touchOptions = new TooltipOptions(true);
+disableForTouch.add(new FoundationTooltipBehavior(&quot;Tooltips are awesome, you should totally use them!&quot;, touchOptions));
+add(disableForTouch);
+</div></code>
+</pre>
+                </div>
+
+
+                <div class="verticalPadding50">
+                    <h4>Rendered HTML</h4>
+                    <span wicket:id="disableForTouch"></span>
+                </div>
+        </div>
+
+    </wicket:extend>
+</body>
+</html>

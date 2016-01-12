@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html xmlns:wicket="http://wicket.apache.org">
+<head>
+<meta charset="utf-8" />
+<title>wicket-foundation</title>
+</head>
+<body>
+	<wicket:extend>
+		<div class="row">
+			<h1 id="split-buttons">Split Buttons</h1>
+			<h3 class="subheader">
+				We&#39;ve simplified our split downdrop buttons by removing the
+				dedicated ones associated with a style of button. Instead,
+				you&#39;ll use our <a href="dropdown.html">new dropdown plugin</a>
+				to attach a split button to the button style of your choice.
+			</h3>
+
+			<hr>
+			<h2>Basic</h2>
+
+			<p>You can create a split button using minimal markup.</p>
+			<div>
+				<div>
+				
+          <h4>HTML</h4>
+<pre><code class="language-html"><div class="code-container"><span class="tag">&lt;<span class="title">div</span> <span class="attribute">wicket:id</span>=<span class="value">&quot;basic&quot;</span>&gt;</span><span class="tag">&lt;/<span class="title">div</span>&gt;</span>
+</div></code>
+</pre>
+
+          <h4>Java</h4>
+<pre><code class="language-html"><div class="code-container">add(new FoundationSplitButton(&quot;basic&quot;, &quot;Split Button&quot;, Arrays.asList(&quot;This is a link&quot;, &quot;This is another&quot;, &quot;Yet another&quot;)) {
+
+	private static final long serialVersionUID = 1L;
+
+	@Override
+	public AbstractLink createButton(String id) {
+		return new Link&lt;Void&gt;(id) {
+
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			public void onClick() {
+			}
+		};
+	}
+
+	@Override
+	public AbstractLink createDropdownLink(String id, int idx) {
+		return new Link&lt;Void&gt;(id) {
+
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			public void onClick() {
+			}
+		};
+	}
+});
+</div></code>
+</pre>
+
+				</div>
+				<div>
+					<h4>Rendered HTML</h4>
+	
+					<div wicket:id="basic"></div>
+				</div>
+			</div>
+
+			<hr>
+			<h2>Advanced</h2>
+
+			<p>Additional classes can be added to your split buttons to
+				change its appearance.</p>
+			<div>
+				<div>
+				
+          <h4>HTML</h4>
+<pre><code class="language-html"><div class="code-container"><span class="tag">&lt;<span class="title">div</span> <span class="attribute">wicket:id</span>=<span class="value">&quot;advanced&quot;</span>&gt;</span><span class="tag">&lt;/<span class="title">div</span>&gt;</span>
+</div></code>
+</pre>
+
+          <h4>Java</h4>
+<pre><code class="language-html"><div class="code-container">SplitButtonOptions options = new SplitButtonOptions(ButtonSize.SMALL).setColor(ButtonColor.ALERT).setRadius(ButtonRadius.ROUND);
+add(new FoundationSplitButton(&quot;advanced&quot;, &quot;Split Button&quot;, Arrays.asList(&quot;This is a link&quot;, &quot;This is another&quot;, &quot;Yet another&quot;), options) {
+
+	private static final long serialVersionUID = 1L;
+
+	@Override
+	public AbstractLink createButton(String id) {
+		return new Link&lt;Void&gt;(id) {
+
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			public void onClick() {
+			}
+		};
+	}
+
+	@Override
+	public AbstractLink createDropdownLink(String id, int idx) {
+		return new Link&lt;Void&gt;(id) {
+
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			public void onClick() {
+			}
+		};
+	}
+});
+</div></code>
+</pre>
+
+				</div>
+				<div>
+					<h4>HTML Rendered</h4>
+					<div wicket:id="advanced"></div>
+				</div>
+			</div>
+		</div>
+	</wicket:extend>
+</body>
+</html>

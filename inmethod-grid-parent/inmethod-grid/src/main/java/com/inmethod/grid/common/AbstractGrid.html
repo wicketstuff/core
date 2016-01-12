@@ -1,0 +1,53 @@
+<wicket:panel xmlns:wicket="http://wicket.apache.org">
+	
+	<div class="imxt-container1">	
+	
+	<table class="imxt-container-table"><tr class="imxt-container-table"><td class="imxt-container-table">		
+	
+		<div class="imxt-top-toolbar-container">		
+			<div wicket:id="topToolbarContainer">
+				<div wicket:id="item"></div>
+			</div>
+		</div>
+
+		<div class="imxt-head-container">
+			<!-- div used as right padding for header (needs to be padded when the content has scrollbar)-->
+			<div class="imxt-head-container1">								
+				<div class="imxt-head-container2">			
+					<table class="imxt-head">
+					
+						<tr wicket:id="header"></tr>
+					
+						<tr wicket:id="headerToolbarContainer">
+							<div wicket:id="item"></div>
+							<td class="imxt-padding"></td>
+						</tr>
+					
+					</table>			
+				</div>
+			</div>
+		</div>
+		
+		<form wicket:id="form" class="imxt-form"><fieldset class="imxt-fieldset">
+		<div wicket:id="bodyContainer" class="imxt-body-container1">
+      		<div class="imxt-body-container2">      		
+	      		<table class="imxt-body">
+					<tr class="imxt-empty-row" wicket:id="firstRow"></tr>
+					<tr wicket:id="body">
+					</tr>					
+				</table>
+			</div>
+		</div>
+		</fieldset></form>
+		
+		<div class="imxt-bottom-toolbar-container">
+			<div wicket:id="bottomToolbarContainer">
+				<div wicket:id="item">
+				</div>
+			</div>
+		</div>
+	
+	</td></tr></table>
+			
+	</div>	
+</wicket:panel>

@@ -1,0 +1,7 @@
+.popover {
+    min-width: 225px;
+}
+
+.popover-content li {
+    margin-left: 0.5em;
+}

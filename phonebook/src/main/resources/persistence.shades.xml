@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+
+<beans>
+
+
+	<!-- setup transaction manager	-->
+    <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource" ref="dataSource"/>
+    </bean>
+
+	<!-- setup contact dao -->
+	<bean id="contactDaoTarget" class="wicket.contrib.phonebook.ShadesContactDao">
+		<property name="dataSource" ref="dataSource"/>
+	</bean>
+
+	<!-- this is a transactional proxy for contact dao which ensures proper transaction handling -->
+	<bean id="contactDao" class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+		<property name="transactionManager" ref="transactionManager"/>
+		<property name="target" ref="contactDaoTarget"/>
+		<property name="transactionAttributes">
+			<props>
+				<prop key="save">PROPAGATION_REQUIRED</prop>
+				<prop key="delete">PROPAGATION_REQUIRED</prop>
+				<prop key="*">PROPAGATION_REQUIRED,readOnly</prop>
+			</props>
+		</property>
+	</bean>
+
+
+	<!-- setup database table when the app starts up -->
+	<bean id="tableCreator" class="wicket.contrib.phonebook.ShadesORMDictionary">
+		<property name="dataSource" ref="dataSource"/>
+	</bean>
+
+</beans>

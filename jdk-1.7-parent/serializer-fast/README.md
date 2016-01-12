@@ -1,4 +1,0 @@
-Fast Wicket Serializer Project
-===
-
-

@@ -1,0 +1,9 @@
+grant principal org.apache.wicket.security.examples.authorization.MyPrincipal "basic"
+{
+	permission ${ComponentPermission} "org.apache.wicket.security.examples.httplogin.basic.pages.HomePage", "render, enable";
+};
+//shared homepage, that is why both principals have the same permissions
+grant principal org.apache.wicket.security.examples.authorization.MyPrincipal "digest"
+{
+	permission ${ComponentPermission} "org.apache.wicket.security.examples.httplogin.basic.pages.HomePage", "render, enable";
+};
