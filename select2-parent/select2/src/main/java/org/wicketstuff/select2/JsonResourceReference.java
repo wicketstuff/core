@@ -65,12 +65,6 @@ public abstract class JsonResourceReference<T> extends ResourceReference
             logger.error("getResource", e);
             throw new WicketRuntimeException(e);
         }
-        try {
-            webResponse.close();           
-        } catch (IOException e) {
-            logger.error("getResource", e);
-            throw new WicketRuntimeException(e);
-        }
         return new ResourceStreamResource(resourceStream);
 	}
 
