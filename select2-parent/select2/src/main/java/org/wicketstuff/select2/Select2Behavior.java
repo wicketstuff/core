@@ -4,6 +4,7 @@ import org.apache.wicket.Component;
 import org.apache.wicket.behavior.Behavior;
 import org.apache.wicket.markup.head.IHeaderResponse;
 import org.apache.wicket.markup.head.OnDomReadyHeaderItem;
+import org.apache.wicket.markup.html.form.DropDownChoice;
 
 /**
  * Behavior that adds a select2 to a dropdown choice.
@@ -12,6 +13,7 @@ import org.apache.wicket.markup.head.OnDomReadyHeaderItem;
  */
 public class Select2Behavior extends Behavior 
 {
+    // TODO: add settings!
 
     @Override
     public void renderHead(Component component, IHeaderResponse response) {
@@ -23,5 +25,8 @@ public class Select2Behavior extends Behavior
     @Override
     public void bind(Component component) {
         component.setOutputMarkupId(true);
+        if(!(component instanceof DropDownChoice)) {
+            throw new IllegalArgumentException("This behavior should only be used on DropDownChoice components");
+        }
     }
 }

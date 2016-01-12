@@ -56,7 +56,7 @@ abstract class AbstractSelect2Choice<T, M> extends AbstractTextComponent<M> impl
 
 	private final Settings settings = new Settings();
 
-	private ChoiceProvider<T>provider;
+	private ChoiceProvider<T> provider;
 
 	private boolean convertInputPerformed = false;
 
@@ -245,7 +245,7 @@ abstract class AbstractSelect2Choice<T, M> extends AbstractTextComponent<M> impl
 		super.onInitialize();
 
 		// configure the ajax callbacks
-		if (isAjax() || settings.isStateless())
+        if (isAjax() || settings.isStateless())
 		{
 			AjaxSettings ajax = getSettings().getAjax(true);
 			ajax.setData(String.format(
@@ -275,7 +275,7 @@ abstract class AbstractSelect2Choice<T, M> extends AbstractTextComponent<M> impl
 	protected void onConfigure()
 	{
 		super.onConfigure();
-        if(getSettings().isStateless()) 
+        if(getSettings().isStateless())
         {
             if(Strings.isEmpty(getSettings().getMountPath())) 
             {
@@ -336,7 +336,6 @@ abstract class AbstractSelect2Choice<T, M> extends AbstractTextComponent<M> impl
         IRequestParameters params = request.getRequestParameters();
 
         // retrieve choices matching the search term
-
         String term = params.getParameterValue("q").toOptionalString();
 
         int page = params.getParameterValue("page").toInt(1);
@@ -372,6 +371,7 @@ abstract class AbstractSelect2Choice<T, M> extends AbstractTextComponent<M> impl
         try 
         {
             out.flush();
+            out.close();
         } catch (IOException e) 
         {
             throw new RuntimeException("Could not write Json to servlet response", e);

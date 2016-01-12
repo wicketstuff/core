@@ -26,7 +26,7 @@ public class WicketApplication extends WebApplication
         super.init();
         
         // mount a countries resource
-        mountResource(COUNTRIES_MOUNT_PATH, new JsonResourceReference<Country>() {
+        mountResource(COUNTRIES_MOUNT_PATH, new JsonResourceReference<Country>("countries") {
 
             @Override
             protected ChoiceProvider<Country> getChoiceProvider() {

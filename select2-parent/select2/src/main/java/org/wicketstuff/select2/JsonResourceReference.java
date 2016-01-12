@@ -1,11 +1,15 @@
 package org.wicketstuff.select2;
 
+import org.apache.wicket.WicketRuntimeException;
 import org.apache.wicket.request.resource.IResource;
 import org.apache.wicket.request.resource.ResourceReference;
 import org.apache.wicket.request.resource.ResourceStreamResource;
 import org.apache.wicket.util.resource.StringResourceStream;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.ByteArrayOutputStream;
+import java.io.UnsupportedEncodingException;
 
 
 /**
@@ -13,7 +17,7 @@ import java.io.ByteArrayOutputStream;
  * 
  * <p>
  * <pre>
- * 	mountResource(CATEGORIES_JSON, new JsonResourceReference<CategoryTranslation>() {
+ * 	mountResource(CATEGORIES_JSON, new JsonResourceReference<CategoryTranslation>("categories") {
  * 			
  * 			private static final long serialVersionUID = 1L;
  * 	
@@ -40,10 +44,12 @@ import java.io.ByteArrayOutputStream;
 public abstract class JsonResourceReference<T> extends ResourceReference 
 {
 	private static final long serialVersionUID = 1L;
+    
+    private static Logger logger = LoggerFactory.getLogger(JsonResourceReference.class);
 
-	public JsonResourceReference() 
+	public JsonResourceReference(String name)
     {
-		super(JsonResourceReference.class, "images");
+		super(JsonResourceReference.class, name);
 	}
 
 	@Override
@@ -51,14 +57,20 @@ public abstract class JsonResourceReference<T> extends ResourceReference
     {
 	    ByteArrayOutputStream webResponse = new ByteArrayOutputStream();
 	    AbstractSelect2Choice.generateJSON(getChoiceProvider(), webResponse);
-	    StringResourceStream resourceStream = new StringResourceStream(webResponse.toString(), "application/json");
-	    return new ResourceStreamResource(resourceStream);
+        StringResourceStream resourceStream;
+        try {
+            resourceStream = new StringResourceStream(webResponse.toString("UTF-8"), "application/json");
+        } catch (UnsupportedEncodingException e) {
+            logger.error("getResource", e);
+            throw new WicketRuntimeException(e);
+        }
+        return new ResourceStreamResource(resourceStream);
 	}
 
 	/**
 	 * The choice provider.
 	 * 
-	 * @return
+	 * @return The ChoiceProvider
 	 */
 	protected abstract ChoiceProvider<T> getChoiceProvider();
 
