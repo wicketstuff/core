@@ -35,7 +35,6 @@ public class InfiniteScrollDemoPage extends WebPage {
         columns.add(new SpanColumn<Person, String>(Model.of("Age"), "age"));
 
         final DataTables<Person, String> table = new DataTables<Person, String>("table", columns) {
-
             @Override
             public void renderHead(IHeaderResponse response) {
                 super.renderHead(response);
@@ -81,6 +80,7 @@ public class InfiniteScrollDemoPage extends WebPage {
             .stateSave(true)
             .info(true)
             .processing(false)
+            .retrieve(true)
         ;
     }
 }

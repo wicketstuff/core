@@ -11,7 +11,7 @@ import org.apache.wicket.util.lang.Args;
 import org.wicketstuff.datatables.Sort;
 import org.wicketstuff.datatables.res.DataTablesCssReference;
 
-import java.util.ArrayList;
+import java.awt.print.Book;
 import java.util.List;
 
 /**
@@ -173,6 +173,11 @@ public class Options extends AbstractConfig {
 
     public static final IKey<List<Column>> Columns = new Key<>("columns", null);
 
+	/**
+	 * http://datatables.net/reference/option/retrieve
+     */
+    public static final IKey<Boolean> Retrieve = new Key<>("retrieve", false);
+
     private Style style = Style.none;
 
     public Options style(Style style) {
@@ -232,6 +237,11 @@ public class Options extends AbstractConfig {
 
     public Options info(boolean info) {
         put(Info, info);
+        return this;
+    }
+
+    public Options retrieve(boolean retrieve) {
+        put(Retrieve, retrieve);
         return this;
     }
 

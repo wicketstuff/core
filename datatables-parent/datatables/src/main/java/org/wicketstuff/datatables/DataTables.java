@@ -24,7 +24,7 @@ public class DataTables<T, S> extends DataTable<T, S> {
     private final Options options;
     private final long rowsPerPage;
 
-	/**
+   /**
      * Constructor that should be used for virtual scrolling
      *
      * @param id The component id
