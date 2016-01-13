@@ -165,6 +165,8 @@ public class AjaxDropDownList<T> extends DropDownList<T> implements ISelectionCh
 	{
 		return new AjaxDropDownListBehavior(selector, new ISelectionChangedListener() {
 
+			private static final long serialVersionUID = 1L;
+
 			@Override
 			public void onSelectionChanged(AjaxRequestTarget target)
 			{

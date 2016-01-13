@@ -17,13 +17,14 @@
 package com.googlecode.wicket.jquery.ui.plugins.datepicker;
 
 import org.apache.wicket.ajax.AjaxRequestTarget;
+import org.apache.wicket.util.io.IClusterable;
 
 /**
  * Specifies that a widget handles a value-changed AJAX behavior, with a {@link DateRange}
  *
  * @author Sebastien Briquet - sebfz1
  */
-public interface IRangeDatePickerListener
+public interface IRangeDatePickerListener extends IClusterable
 {
 	/**
 	/**

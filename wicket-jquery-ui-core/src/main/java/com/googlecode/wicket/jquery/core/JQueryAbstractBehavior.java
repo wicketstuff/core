@@ -80,9 +80,9 @@ public abstract class JQueryAbstractBehavior extends Behavior
 	 *
 	 * @param name the name of the behavior. It is used in the token so the behavior can be identified in the generated page.
 	 * @deprecated name is no longer required, use {@link #JQueryAbstractBehavior()} instead.
-	 * TODO 7.3.0 remove
 	 */
 	@Deprecated
+	// XXX: 7.3.0 remove
 	public JQueryAbstractBehavior(String name)
 	{
 		this();

@@ -17,13 +17,14 @@
 package com.googlecode.wicket.jquery.core.event;
 
 import org.apache.wicket.ajax.AjaxRequestTarget;
+import org.apache.wicket.util.io.IClusterable;
 
 /**
  * Specifies that a widget handles a selection-changed AJAX behavior
  *
  * @author Sebastien Briquet - sebfz1
  */
-public interface ISelectionChangedListener
+public interface ISelectionChangedListener extends IClusterable
 {
 	/**
 	 * Triggers when the selection has changed
