@@ -234,7 +234,7 @@ public class RangeSlider extends AbstractSlider<RangeValue>
 	 */
 	private JQueryAbstractBehavior newLowerBehavior()
 	{
-		return new JQueryAbstractBehavior("slider-lower") {
+		return new JQueryAbstractBehavior() {
 
 			private static final long serialVersionUID = 1L;
 
@@ -259,7 +259,7 @@ public class RangeSlider extends AbstractSlider<RangeValue>
 	 */
 	private JQueryAbstractBehavior newUpperBehavior()
 	{
-		return new JQueryAbstractBehavior("slider-upper") {
+		return new JQueryAbstractBehavior() {
 
 			private static final long serialVersionUID = 1L;
 

@@ -208,7 +208,7 @@ public class Slider extends AbstractSlider<Integer>
 	 */
 	private JQueryAbstractBehavior newInputBehavior()
 	{
-		return new JQueryAbstractBehavior("slider-input") {
+		return new JQueryAbstractBehavior() {
 
 			private static final long serialVersionUID = 1L;
 

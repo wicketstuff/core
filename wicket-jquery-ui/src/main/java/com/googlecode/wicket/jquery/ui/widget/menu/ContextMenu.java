@@ -146,7 +146,7 @@ public class ContextMenu extends Menu
 	 */
 	protected JQueryAbstractBehavior newContextMenuDocumentBehavior()
 	{
-		return new JQueryAbstractBehavior("context-menu-document") {
+		return new JQueryAbstractBehavior() {
 
 			private static final long serialVersionUID = 1L;
 

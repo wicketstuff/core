@@ -39,16 +39,6 @@ public abstract class ConsoleBehavior extends JQueryAbstractBehavior
 	 */
 	public ConsoleBehavior()
 	{
-		super("console");
-
-		this.initReferences();
-	}
-
-	/**
-	 * Initializes CSS & JavaScript resource references
-	 */
-	private void initReferences()
-	{
 		ConsoleLibrarySettings settings = ConsoleLibrarySettings.get();
 
 		// console.css //

@@ -62,9 +62,6 @@ public abstract class JQueryAbstractBehavior extends Behavior
 		return null;
 	}
 
-	/** Behavior name */
-	private final String name;
-
 	/** Additional references */
 	private final List<ResourceReference> references;
 
@@ -73,10 +70,22 @@ public abstract class JQueryAbstractBehavior extends Behavior
 	 *
 	 * @param name the name of the behavior. It is used in the token so the behavior can be identified in the generated page.
 	 */
-	public JQueryAbstractBehavior(final String name)
+	public JQueryAbstractBehavior()
 	{
-		this.name = name;
 		this.references = new ArrayList<ResourceReference>();
+	}
+
+	/**
+	 * Constructor.
+	 *
+	 * @param name the name of the behavior. It is used in the token so the behavior can be identified in the generated page.
+	 * @deprecated name is no longer required, use {@link #JQueryAbstractBehavior()} instead.
+	 * TODO 7.3.0 remove
+	 */
+	@Deprecated
+	public JQueryAbstractBehavior(String name)
+	{
+		this();
 	}
 
 	/**
@@ -152,19 +161,6 @@ public abstract class JQueryAbstractBehavior extends Behavior
 	protected abstract String $();
 
 	// Properties //
-
-	/**
-	 * Get the unique behavior token that act as the script id.
-	 *
-	 * @return the token
-	 * @deprecated 6.21.0 - not used/called anymore. Please open an issue if you still need it
-	 */
-	// TODO: 6.22.0/7.2.0 - remove?
-	@Deprecated
-	protected String getToken()
-	{
-		return String.format("jquery-%s-%d", this.name, this.hashCode());
-	}
 
 	/**
 	 * Gets the jQuery statement.

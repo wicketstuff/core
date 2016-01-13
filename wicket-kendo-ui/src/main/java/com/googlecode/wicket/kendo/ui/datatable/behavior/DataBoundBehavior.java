@@ -37,12 +37,6 @@ public abstract class DataBoundBehavior extends JQueryAbstractBehavior
 
 	public DataBoundBehavior()
 	{
-		this(DataTableBehavior.METHOD + "-databound");
-	}
-
-	public DataBoundBehavior(String name)
-	{
-		super(name);
 	}
 
 	@Override

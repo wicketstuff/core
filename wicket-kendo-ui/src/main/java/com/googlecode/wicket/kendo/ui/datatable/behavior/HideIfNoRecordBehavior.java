@@ -17,7 +17,6 @@
 package com.googlecode.wicket.kendo.ui.datatable.behavior;
 
 import com.googlecode.wicket.kendo.ui.datatable.DataTable;
-import com.googlecode.wicket.kendo.ui.datatable.DataTableBehavior;
 
 /**
  * Provides a {@link DataTable} {@code Behavior} that will hide the datatable if datasource returns no row.<br/>
@@ -31,7 +30,6 @@ public class HideIfNoRecordBehavior extends DataBoundBehavior
 
 	public HideIfNoRecordBehavior()
 	{
-		super(DataTableBehavior.METHOD + "-hide");
 	}
 
 	@Override

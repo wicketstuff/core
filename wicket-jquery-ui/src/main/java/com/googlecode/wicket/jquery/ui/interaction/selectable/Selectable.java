@@ -184,7 +184,7 @@ public class Selectable<T extends Serializable> extends JQueryGenericContainer<L
 	 */
 	protected JQueryAbstractBehavior newSelectedBehavior()
 	{
-		return new JQueryAbstractBehavior("selected") {
+		return new JQueryAbstractBehavior() {
 
 			private static final long serialVersionUID = 1L;
 

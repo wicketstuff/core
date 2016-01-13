@@ -57,8 +57,6 @@ public class ContextMenuBehavior extends JQueryAbstractBehavior implements IJQue
 	 */
 	public ContextMenuBehavior(ContextMenu menu)
 	{
-		super("context-menu");
-
 		this.menu = Args.notNull(menu, "menu");
 	}
 

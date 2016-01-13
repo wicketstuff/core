@@ -285,7 +285,6 @@ public abstract class InputWindow<T> extends Window<T>
 
 		public AutoFocusBehavior()
 		{
-			super(WindowBehavior.METHOD + "-autofocus");
 		}
 
 		@Override

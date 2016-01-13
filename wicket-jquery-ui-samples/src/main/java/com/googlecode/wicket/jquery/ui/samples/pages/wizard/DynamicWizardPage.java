@@ -293,7 +293,7 @@ public class DynamicWizardPage extends AbstractWizardPage
 						// adds the css class
 						if (UserWizard.this.getModelObject().getAvatar() != null && UserWizard.this.getModelObject().getAvatar().getId() == item.getModelObject().getId())
 						{
-							item.add(new JQueryAbstractBehavior("item-selected") {
+							item.add(new JQueryAbstractBehavior() {
 
 								private static final long serialVersionUID = 1L;
 
@@ -304,7 +304,6 @@ public class DynamicWizardPage extends AbstractWizardPage
 								}
 							});
 						}
-
 					}
 				});
 			}

@@ -253,7 +253,7 @@ public class RangeDatePickerTextField extends FormComponentPanel<DateRange> impl
 	 */
 	private JQueryAbstractBehavior newToggleBehavior()
 	{
-		return new JQueryAbstractBehavior("datepicker-toggle") {
+		return new JQueryAbstractBehavior() {
 
 			private static final long serialVersionUID = 1L;
 
