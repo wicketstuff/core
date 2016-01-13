@@ -278,7 +278,7 @@ public class DynamicWizardPage extends AbstractWizardPage
 						final Avatar avatar = item.getModelObject();
 
 						item.add(new ContextImage("item", avatar.getImagePath()));
-						item.add(new AjaxEventBehavior("onclick") {
+						item.add(new AjaxEventBehavior("click") {
 
 							private static final long serialVersionUID = 1L;
 
