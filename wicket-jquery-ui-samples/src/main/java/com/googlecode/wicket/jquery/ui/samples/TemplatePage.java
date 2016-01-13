@@ -5,6 +5,7 @@ import java.util.Map;
 
 import org.apache.wicket.Component;
 import org.apache.wicket.behavior.Behavior;
+import org.apache.wicket.devutils.debugbar.DebugBar;
 import org.apache.wicket.markup.head.IHeaderResponse;
 import org.apache.wicket.markup.head.JavaScriptHeaderItem;
 import org.apache.wicket.markup.html.WebPage;
@@ -23,6 +24,10 @@ public abstract class TemplatePage extends WebPage
 	{
 		super();
 
+		// debug //
+		this.add(new DebugBar("debug", false));
+
+		// version //
 		this.add(new Label("version", getApplication().getFrameworkSettings().getVersion()));
 	}
 
