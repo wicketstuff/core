@@ -21,7 +21,9 @@ import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.request.cycle.RequestCycle;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
+import org.apache.wicket.util.reference.ClassReference;
 
+import com.googlecode.wicket.jquery.core.utils.RequestCycleUtils;
 import com.googlecode.wicket.kendo.ui.KendoIcon;
 
 /**
@@ -33,6 +35,8 @@ import com.googlecode.wicket.kendo.ui.KendoIcon;
 public class PageMenuItem extends UrlMenuItem
 {
 	private static final long serialVersionUID = 1L;
+
+	private final ClassReference<? extends Page> pageReference;
 
 	/**
 	 * Constructor
@@ -128,5 +132,13 @@ public class PageMenuItem extends UrlMenuItem
 	public PageMenuItem(IModel<String> title, String icon, Class<? extends Page> pageClass, PageParameters parameters)
 	{
 		super(title, icon, RequestCycle.get().urlFor(pageClass, parameters));
+
+		this.pageReference = ClassReference.of(pageClass);
+	}
+
+	@Override
+	public boolean isEnabled()
+	{
+		return !RequestCycleUtils.getPageClass().isAssignableFrom(this.pageReference.get());
 	}
 }
