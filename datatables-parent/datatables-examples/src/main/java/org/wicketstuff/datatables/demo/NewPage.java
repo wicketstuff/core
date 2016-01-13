@@ -39,7 +39,7 @@ public class NewPage extends WebPage {
 
         PeopleDataProvider dataProvider = new PeopleDataProvider();
 
-        final DataTables<Person, String> table = new DataTables<Person, String>("table", columns, dataProvider, 2) {
+        final DataTables<Person, String> table = new DataTables<Person, String>("table", columns, dataProvider, 10) {
             @Override
             public void renderHead(IHeaderResponse response) {
                 super.renderHead(response);
@@ -68,7 +68,6 @@ public class NewPage extends WebPage {
         options
             .stateDuration(3600)
             .stateSave(true)
-
             .pagingType(Options.PagingType.simple)
 
 //            .paging(false)

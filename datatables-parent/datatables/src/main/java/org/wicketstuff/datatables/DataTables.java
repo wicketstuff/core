@@ -1,27 +1,43 @@
 package org.wicketstuff.datatables;
 
-import static de.agilecoders.wicket.jquery.JQuery.$;
-
-import java.util.List;
-
 import de.agilecoders.wicket.jquery.util.Strings2;
+import org.apache.wicket.extensions.markup.html.repeater.data.grid.DataGridView;
 import org.apache.wicket.extensions.markup.html.repeater.data.table.DataTable;
 import org.apache.wicket.extensions.markup.html.repeater.data.table.IColumn;
 import org.apache.wicket.markup.head.IHeaderResponse;
 import org.apache.wicket.markup.head.OnDomReadyHeaderItem;
+import org.apache.wicket.markup.repeater.data.EmptyDataProvider;
 import org.apache.wicket.markup.repeater.data.IDataProvider;
 import org.wicketstuff.datatables.options.Options;
+
+import java.util.List;
+
+import static de.agilecoders.wicket.jquery.JQuery.$;
 
 /**
  *
  */
 public class DataTables<T, S> extends DataTable<T, S> {
 
-    private final Options options;
+    public static final int ZERO_ROWS_PER_PAGE = Integer.MIN_VALUE;
 
-    public DataTables(String id, List<? extends IColumn<T, S>> iColumns, IDataProvider<T> dataProvider, long rowsPerPage) {
-        super(id, iColumns, dataProvider, rowsPerPage);
-        
+    private final Options options;
+    private final long rowsPerPage;
+
+	/**
+     * Constructor that should be used for virtual scrolling
+     *
+     * @param id The component id
+     * @param columns The table columns
+     */
+    public DataTables(final String id, final List<? extends IColumn<T, S>> columns) {
+        this(id, columns, new EmptyDataProvider<T>(), ZERO_ROWS_PER_PAGE);
+    }
+
+    public DataTables(final String id, final List<? extends IColumn<T, S>> iColumns, final IDataProvider<T> dataProvider, final long rowsPerPage) {
+        super(id, iColumns, dataProvider, rowsPerPage == ZERO_ROWS_PER_PAGE ? 1 : rowsPerPage);
+        this.rowsPerPage = rowsPerPage;
+
         setOutputMarkupId(true);
         this.options = new Options();
         
@@ -48,5 +64,15 @@ public class DataTables<T, S> extends DataTable<T, S> {
 
         // WicketStuff_DataTables_markupId
         return "WS_DT_" + Strings2.escapeMarkupId(getMarkupId());
+    }
+
+    @Override
+    protected DataGridView<T> newDataGridView(final String id, final List<? extends IColumn<T, S>> iColumns, final IDataProvider<T> dataProvider) {
+        return new DataGridView<T>(id, iColumns, dataProvider) {
+            @Override
+            public long getItemsPerPage() {
+                return rowsPerPage;
+            }
+        };
     }
 }

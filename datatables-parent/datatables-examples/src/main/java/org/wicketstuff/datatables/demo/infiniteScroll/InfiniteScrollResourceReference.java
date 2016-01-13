@@ -60,14 +60,14 @@ public class InfiniteScrollResourceReference extends ResourceReference {
 
 		while (peopleItor.hasNext()) {
 			Person person = peopleItor.next();
-			JSONArray personData = new JSONArray();
 
-			// make sure this is a "truthy" value, otherwise DataTables will skip it
-			personData.put("PK_" + person.number);
+			JSONObject personData = new JSONObject();
 
-			personData.put(person.firstName);
-			personData.put(person.lastName);
-			personData.put(person.age);
+			personData.put("DT_RowId", "PK_" + person.number);
+			personData.put("DT_RowClass", "custom");
+			personData.put("firstName", person.firstName);
+			personData.put("lastName", person.lastName);
+			personData.put("age", person.age);
 			data.put(personData);
 		}
 

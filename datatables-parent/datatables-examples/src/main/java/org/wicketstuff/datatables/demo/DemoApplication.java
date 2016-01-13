@@ -19,7 +19,6 @@ package org.wicketstuff.datatables.demo;
 import de.agilecoders.wicket.jquery.WicketJquerySelectors;
 import de.agilecoders.wicket.webjars.WicketWebjars;
 import org.apache.wicket.Page;
-import org.apache.wicket.markup.html.IPackageResourceGuard;
 import org.apache.wicket.markup.html.SecurePackageResourceGuard;
 import org.apache.wicket.protocol.http.WebApplication;
 import org.wicketstuff.datatables.demo.infiniteScroll.InfiniteScrollDemoPage;

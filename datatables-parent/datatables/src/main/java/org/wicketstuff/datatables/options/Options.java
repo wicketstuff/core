@@ -11,6 +11,9 @@ import org.apache.wicket.util.lang.Args;
 import org.wicketstuff.datatables.Sort;
 import org.wicketstuff.datatables.res.DataTablesCssReference;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  *
  */
@@ -168,6 +171,8 @@ public class Options extends AbstractConfig {
      */
     public static final IKey<Object[][]> LengthMenu = new Key<>("lengthMenu", null);
 
+    public static final IKey<List<Column>> Columns = new Key<>("columns", null);
+
     private Style style = Style.none;
 
     public Options style(Style style) {
@@ -180,6 +185,11 @@ public class Options extends AbstractConfig {
 
     public Style getStyle() {
         return style;
+    }
+
+    public Options columns(List<Column> columns) {
+        put(Columns, columns);
+        return this;
     }
 
     public Options lengthMenu(Integer[] values, String[] displayValues) {
@@ -251,6 +261,9 @@ public class Options extends AbstractConfig {
     }
 
     public Options scroller(ScrollerOptions scroller) {
+        scrollCollapse(false);
+        paging(true);
+
         put(Scroller, scroller);
         return this;
     }

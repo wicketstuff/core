@@ -1,8 +1,0 @@
-/**
- * Hides the first row that is used only as "rowId", i.e.
- * to set an id for the row
- */
-table tr th:first-of-type,
-table tr td:first-of-type {
-	display: none;
-}

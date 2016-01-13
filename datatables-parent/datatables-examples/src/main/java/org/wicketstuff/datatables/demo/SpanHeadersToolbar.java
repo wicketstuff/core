@@ -34,6 +34,7 @@ import org.apache.wicket.markup.repeater.Item;
 import org.apache.wicket.markup.repeater.RefreshingView;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
+import org.apache.wicket.util.string.Strings;
 import org.wicketstuff.datatables.IDataTablesColumn;
 
 
@@ -109,7 +110,9 @@ public class SpanHeadersToolbar<S> extends AbstractToolbar
 							super.onComponentTag(component, tag);
 
 							String cssClass = ((IStyledColumn<?, S>) column).getCssClass();
-							tag.append("class", cssClass, " ");
+							if (!Strings.isEmpty(cssClass)) {
+								tag.append("class", cssClass, " ");
+							}
 						}
 					};
 
