@@ -1,4 +1,4 @@
-package org.wicketstuff.datatables.demo;
+package org.wicketstuff.datatables.columns;
 
 import org.apache.wicket.extensions.markup.html.repeater.data.grid.ICellPopulator;
 import org.apache.wicket.extensions.markup.html.repeater.data.table.AbstractColumn;

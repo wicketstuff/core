@@ -11,7 +11,6 @@ import org.apache.wicket.util.lang.Args;
 import org.wicketstuff.datatables.Sort;
 import org.wicketstuff.datatables.res.DataTablesCssReference;
 
-import java.awt.print.Book;
 import java.util.List;
 
 /**
@@ -173,6 +172,8 @@ public class Options extends AbstractConfig {
 
     public static final IKey<List<Column>> Columns = new Key<>("columns", null);
 
+    public static final IKey<Integer> PageLength = new Key<>("pageLength", null);
+
 	/**
 	 * http://datatables.net/reference/option/retrieve
      */
@@ -315,6 +316,11 @@ public class Options extends AbstractConfig {
 
     public Options stateSave(boolean stateSave) {
         put(StateSave, stateSave);
+        return this;
+    }
+
+    public Options pageLength(int pageLength) {
+        put(PageLength, pageLength);
         return this;
     }
 

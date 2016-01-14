@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.wicketstuff.datatables.demo;
+package org.wicketstuff.datatables.columns;
 
 import java.util.Arrays;
 import java.util.Iterator;
@@ -42,10 +42,10 @@ import org.wicketstuff.datatables.IDataTablesColumn;
  * Toolbars that displays spanning column headers.
  * If the column has a rowspan or a colspan they will be rendered as
  * attributes of the &lt;th&gt; element.
- * 
+ *
  * @param <S>
  *            the type of the sorting parameter
- * 
+ *
  */
 public class SpanHeadersToolbar<S> extends AbstractToolbar
 {

@@ -1,4 +1,4 @@
-package org.wicketstuff.datatables.demo;
+package org.wicketstuff.datatables.columns;
 
 import org.apache.wicket.extensions.markup.html.repeater.data.table.PropertyColumn;
 import org.apache.wicket.model.IModel;
