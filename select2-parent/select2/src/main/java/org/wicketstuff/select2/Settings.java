@@ -64,6 +64,9 @@ public final class Settings implements Serializable
 	private String[] tokenSeparators;
 	private boolean selectOnClose;
 	private boolean dropdownAutoWidth;
+    /**
+     * Theme is an interface that might contribute to the headers.
+     */
     private ISelect2Theme theme;
 
     /**

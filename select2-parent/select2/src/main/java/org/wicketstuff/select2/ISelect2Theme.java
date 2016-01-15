@@ -9,7 +9,17 @@ import org.apache.wicket.markup.head.IHeaderResponse;
  */
 public interface ISelect2Theme {
 
-    void renderHead(final Component varComponent, final IHeaderResponse varResponse);
-    
+    /**
+     * Allows theme to contribute headers (e.g. extra CSS resources) 
+     *  
+     * @param component The component
+     * @param response The header response
+     */
+    void renderHead(final Component component, final IHeaderResponse response);
+
+    /**
+     *
+     * @return The name of the theme.
+     */
     String name();
 }

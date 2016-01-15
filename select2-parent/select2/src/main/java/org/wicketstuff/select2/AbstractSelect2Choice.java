@@ -263,7 +263,7 @@ abstract class AbstractSelect2Choice<T, M> extends AbstractTextComponent<M> impl
 					"function(params) { return { q: params.term, page: params.page, '%s':true, '%s':[window.location.protocol, '//', window.location.host, window.location.pathname].join('')}; }",
 					WebRequest.PARAM_AJAX, WebRequest.PARAM_AJAX_BASE_URL));
 			ajax.setProcessResults("function(data, page) { return { results: data.items, pagination: { more: data.more } };  }");
-		} else if(settings.isStateless()) 
+		} else if(settings.isStateless()) //configure stateless mode
         {
             AjaxSettings ajax = getSettings().getAjax(true);
             ajax.setProcessResults("function(data, page) { return { results: data.items, pagination: { more: data.more } };  }");
