@@ -46,7 +46,13 @@ public class NashornResourceReference extends ResourceReference
 
 	private long delay;
 
-	private TimeUnit unit;
+	private TimeUnit delayUnit;
+
+	private long wait;
+
+	private TimeUnit waitUnit;
+
+	private long maxScriptMemorySize;
 
 	private boolean debug;
 
@@ -59,15 +65,45 @@ public class NashornResourceReference extends ResourceReference
 	 *            the core size of the script execution pool
 	 * @param delay
 	 *            the delay until a script execution is going to be terminated
-	 * @param unit
+	 * @param delayUnit
 	 *            the unit until a script execution is going to be terminated
 	 */
-	public NashornResourceReference(String name, int coreSize, long delay, TimeUnit unit)
+	public NashornResourceReference(String name, int coreSize, long delay, TimeUnit delayUnit)
 	{
 		super(name);
 		scheduledExecutorService = Executors.newScheduledThreadPool(coreSize);
 		this.delay = delay;
-		this.unit = unit;
+		this.delayUnit = delayUnit;
+	}
+
+	/**
+	 * Creates a nashorn resource reference with the given name
+	 * 
+	 * @param name
+	 *            the name of the nashorn resource reference
+	 * @param coreSize
+	 *            the core size of the script execution pool
+	 * @param delay
+	 *            the delay until a script execution is going to be terminated
+	 * @param delayUnit
+	 *            the unit until a script execution is going to be terminated
+	 * @param wait
+	 *            how long to w8 until the next memory check occurs
+	 * @param waitUnit
+	 *            the unit until the next memory check occurs
+	 * @param maxScriptMemorySize
+	 *            the memory usage the script process should use - else it will be aborted
+	 */
+	public NashornResourceReference(String name, int coreSize, long delay, TimeUnit delayUnit,
+		long wait, TimeUnit waitUnit, long maxScriptMemorySize)
+	{
+		super(name);
+		scheduledExecutorService = Executors.newScheduledThreadPool(coreSize);
+		this.delay = delay;
+		this.delayUnit = delayUnit;
+		this.wait = wait;
+		this.waitUnit = waitUnit;
+		this.maxScriptMemorySize = maxScriptMemorySize;
 	}
 
 	private static final long serialVersionUID = 1L;
@@ -75,7 +111,8 @@ public class NashornResourceReference extends ResourceReference
 	@Override
 	public IResource getResource()
 	{
-		return new NashornResource(scheduledExecutorService, this.delay, this.unit)
+		return new NashornResource(scheduledExecutorService, this.delay, this.delayUnit, this.wait,
+			this.waitUnit, this.maxScriptMemorySize)
 		{
 			private static final long serialVersionUID = 1L;
 
@@ -102,13 +139,13 @@ public class NashornResourceReference extends ResourceReference
 			{
 				return NashornResourceReference.this.isDebug();
 			}
-			
+
 			@Override
 			protected Writer getWriter()
 			{
 				return NashornResourceReference.this.getWriter();
 			}
-			
+
 			@Override
 			protected Writer getErrorWriter()
 			{
@@ -141,7 +178,7 @@ public class NashornResourceReference extends ResourceReference
 	{
 		// NOOP
 	}
-	
+
 	/**
 	 * Gets the class filter to apply to the scripting engine
 	 * 

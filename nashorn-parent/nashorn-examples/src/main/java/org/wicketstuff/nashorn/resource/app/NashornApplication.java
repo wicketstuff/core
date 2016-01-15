@@ -26,7 +26,9 @@ public class NashornApplication extends WebApplication
 	@Override
 	protected void init()
 	{
-		mountResource("/nashorn", new NashornResourceReference("nashorn", 10, 5, TimeUnit.SECONDS)
+		// 31457280 => 30mb
+		mountResource("/nashorn", new NashornResourceReference("nashorn", 10, 5, TimeUnit.SECONDS,
+			10, TimeUnit.MILLISECONDS, 31457280)
 		{
 
 			private static final long serialVersionUID = 1L;
@@ -54,7 +56,6 @@ public class NashornApplication extends WebApplication
 			{
 				return true;
 			}
-
 		});
 	}
 }

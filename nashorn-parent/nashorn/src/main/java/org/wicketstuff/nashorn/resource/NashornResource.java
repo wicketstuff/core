@@ -18,19 +18,12 @@ package org.wicketstuff.nashorn.resource;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.StringReader;
 import java.io.Writer;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.concurrent.Callable;
 import java.util.concurrent.Future;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
 import javax.script.Bindings;
-import javax.script.ScriptContext;
-import javax.script.ScriptEngine;
-import javax.script.SimpleScriptContext;
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.io.IOUtils;
@@ -41,7 +34,6 @@ import org.apache.wicket.request.resource.AbstractResource;
 import org.apache.wicket.request.resource.PartWriterCallback;
 
 import jdk.nashorn.api.scripting.ClassFilter;
-import jdk.nashorn.api.scripting.NashornScriptEngineFactory;
 
 /**
  * A nashorn resource to execute java script on server side
@@ -59,7 +51,13 @@ public class NashornResource extends AbstractResource
 
 	private long delay;
 
-	private TimeUnit unit;
+	private TimeUnit delayUnit;
+
+	private long wait;
+
+	private TimeUnit waitUnit;
+
+	private long maxScriptMemorySize;
 
 	/**
 	 * Creates a new nashorn resource
@@ -68,15 +66,24 @@ public class NashornResource extends AbstractResource
 	 *            the scheduled executor service to run scripts
 	 * @param delay
 	 *            the delay until a script execution is going to be terminated
-	 * @param unit
+	 * @param delayUnit
 	 *            the unit until a script execution is going to be terminated
+	 * @param wait
+	 *            how long to w8 until the next memory check occurs
+	 * @param waitUnit
+	 *            the unit until the next memory check occurs
+	 * @param maxScriptMemorySize
+	 *            the memory usage the script process should use - else it will be aborted
 	 */
 	public NashornResource(ScheduledExecutorService scheduledExecutorService, long delay,
-		TimeUnit unit)
+		TimeUnit delayUnit, long wait, TimeUnit waitUnit, long maxScriptMemorySize)
 	{
 		this.scheduledExecutorService = scheduledExecutorService;
 		this.delay = delay;
-		this.unit = unit;
+		this.delayUnit = delayUnit;
+		this.wait = wait;
+		this.waitUnit = waitUnit;
+		this.maxScriptMemorySize = maxScriptMemorySize;
 	}
 
 	/**
@@ -93,8 +100,22 @@ public class NashornResource extends AbstractResource
 		try (InputStream inputStream = httpServletRequest.getInputStream())
 		{
 			String script = IOUtils.toString(inputStream);
+			if (script.contains("nashornResourceReferenceScriptExecutionThread"))
+			{
+				throw new IllegalAccessException(
+					"It is not allowed to gain access to the nashorn thread itself! (nashornResourceReferenceScriptExecutionThread)");
+			}
 			String saveScript = ensureSavetyScript(script, attributes);
-			Object scriptResult = executeScript(new ScriptCallable(saveScript, attributes));
+			NashornScriptCallable nashornScriptCallable = new NashornScriptCallable(saveScript,
+				attributes, getClassFilter(), getWriter(), getErrorWriter())
+			{
+				@Override
+				protected void setup(Attributes attributes, Bindings bindings)
+				{
+					NashornResource.this.setup(attributes, bindings);
+				}
+			};
+			Object scriptResult = executeScript(nashornScriptCallable, true);
 			ResourceResponse resourceResponse = new ResourceResponse();
 			resourceResponse.setContentType("text/plain");
 			resourceResponse.setWriteCallback(new PartWriterCallback(
@@ -132,22 +153,27 @@ public class NashornResource extends AbstractResource
 	 */
 	private String ensureSavetyScript(String script, Attributes attributes) throws Exception
 	{
-		ScriptCallable scriptCallable = new ScriptCallable(
-			getScriptByName(NashornResource.class.getSimpleName() + ".js"), attributes);
-		Map<String, Object> extraBindings = new HashMap<>();
-		extraBindings.put("script", script);
-		extraBindings.put("debug", isDebug());
-		extraBindings.put("debug_log_prefix", NashornResource.class.getSimpleName() + " - ");
-		scriptCallable.setExtraBindings(extraBindings);
-		scriptCallable.setOverrideClassFilter(new ClassFilter()
+		ClassFilter classFilter = new ClassFilter()
 		{
 			@Override
 			public boolean exposeToScripts(String arg0)
 			{
 				return true;
 			}
-		});
-		return executeScript(scriptCallable).toString();
+		};
+		NashornScriptCallable nashornScriptCallable = new NashornScriptCallable(
+			getScriptByName(NashornResource.class.getSimpleName() + ".js"), attributes, classFilter,
+			getWriter(), getErrorWriter())
+		{
+			@Override
+			protected void setup(Attributes attributes, Bindings bindings)
+			{
+				bindings.put("script", script);
+				bindings.put("debug", isDebug());
+				bindings.put("debug_log_prefix", NashornResource.class.getSimpleName() + " - ");
+			}
+		};
+		return executeScript(nashornScriptCallable, false).toString();
 	}
 
 
@@ -176,106 +202,24 @@ public class NashornResource extends AbstractResource
 	 * 
 	 * @param executeScript
 	 *            the script callable to execute
+	 * @param watch
+	 *            if the script execution should be watched
 	 * @return the script result
 	 * @throws Exception
 	 */
-	private Object executeScript(ScriptCallable executeScript) throws Exception
+	private Object executeScript(NashornScriptCallable executeScript, boolean watch)
+		throws Exception
 	{
 		Future<Object> scriptTask = scheduledExecutorService.submit(executeScript);
+		if (watch && waitUnit != null)
+		{
+			scheduledExecutorService.execute(new NashornMemoryWatcher(executeScript, scriptTask,
+				wait, waitUnit, maxScriptMemorySize, isDebug(), getErrorWriter()));
+		}
 		scheduledExecutorService.schedule(() -> {
 			scriptTask.cancel(true);
-		} , this.delay, this.unit);
+		} , this.delay, this.delayUnit);
 		return scriptTask.get();
-	}
-
-	/**
-	 * The callable to execute the script
-	 * 
-	 * @author Tobias Soloschenko
-	 *
-	 */
-	private class ScriptCallable implements Callable<Object>
-	{
-
-		private String script;
-
-		private Attributes attributes;
-
-		private Map<? extends String, ? extends Object> extraBindings = new HashMap<>();
-
-		private ClassFilter overrideClassFilter;
-
-		/**
-		 * Creates a script result
-		 * 
-		 * @param script
-		 *            the script to be executed
-		 * @param attributes
-		 *            the attributes to
-		 */
-		public ScriptCallable(String script, Attributes attributes)
-		{
-			this.script = script;
-			this.attributes = attributes;
-		}
-
-		@Override
-		public Object call() throws Exception
-		{
-			ScriptEngine scriptEngine = new NashornScriptEngineFactory().getScriptEngine(
-				overrideClassFilter != null ? overrideClassFilter : getClassFilter());
-			Bindings bindings = scriptEngine.createBindings();
-			bindings.putAll(extraBindings);
-			SimpleScriptContext scriptContext = new SimpleScriptContext();
-			scriptContext.setWriter(getWriter());
-			scriptContext.setErrorWriter(getErrorWriter());
-			NashornResource.this.setup(attributes, bindings);
-			bindings.put("nashornResourceReferenceScriptExecutionThread", Thread.currentThread());
-			scriptContext.setBindings(bindings, ScriptContext.ENGINE_SCOPE);
-			return scriptEngine.eval(new StringReader(script), scriptContext);
-		}
-
-		/**
-		 * Gets the extra bindings to be used to execute the script
-		 * 
-		 * @return the extra bindings
-		 */
-		public Map<? extends String, ? extends Object> getExtraBindings()
-		{
-			return extraBindings;
-		}
-
-		/**
-		 * Sets the extra bindings to be used to execute the script
-		 * 
-		 * @param extraBindings
-		 *            the extra bindings to be used to execute the script
-		 */
-		public void setExtraBindings(Map<? extends String, ? extends Object> extraBindings)
-		{
-			this.extraBindings = extraBindings;
-		}
-
-		/**
-		 * Gets the override class filter to be used to execute the script
-		 * 
-		 * @return the override class filter
-		 */
-		public ClassFilter getOverrideClassFilter()
-		{
-			return overrideClassFilter;
-		}
-
-		/**
-		 * Sets the override class filter to be used to execute the script
-		 * 
-		 * @param overrideClassFilter
-		 *            the override class filter
-		 */
-		public void setOverrideClassFilter(ClassFilter overrideClassFilter)
-		{
-			this.overrideClassFilter = overrideClassFilter;
-		}
 	}
 
 	/**
