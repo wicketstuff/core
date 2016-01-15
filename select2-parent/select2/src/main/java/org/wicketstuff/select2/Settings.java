@@ -106,7 +106,7 @@ public final class Settings implements Serializable
 			Json.writeFunction(writer, "initSelection", initSelection);
 			Json.writeFunction(writer, "query", query);
 			Json.writeObject(writer, "width", width);
-			Json.writeObject(writer, "theme", theme.name());
+			Json.writeObject(writer, "theme", theme != null? theme.name(): null);
 			Json.writeFunction(writer, "containerCss", containerCss);
 			Json.writeObject(writer, "containerCssClass", containerCssClass);
 			Json.writeFunction(writer, "dropdownCss", dropdownCss);
