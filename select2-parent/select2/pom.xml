@@ -49,6 +49,11 @@
 			<artifactId>slf4j-simple</artifactId>
 			<scope>test</scope>
 		</dependency>
+        <dependency>
+            <groupId>de.agilecoders.wicket.webjars</groupId>
+            <artifactId>wicket-webjars</artifactId>
+            <version>0.5.3</version>
+        </dependency>
 	</dependencies>
 	<build>
 		<resources>

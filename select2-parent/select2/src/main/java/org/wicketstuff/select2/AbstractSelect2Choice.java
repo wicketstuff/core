@@ -19,6 +19,7 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
+import org.apache.wicket.Component;
 import org.apache.wicket.IResourceListener;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.json.JSONException;
@@ -111,7 +112,17 @@ abstract class AbstractSelect2Choice<T, M> extends AbstractTextComponent<M> impl
 	{
 		super(id, model);
 		this.provider = provider;
-		add(new Select2ResourcesBehavior());
+		add(new Select2ResourcesBehavior() {
+
+            @Override
+            public void renderHead(Component component, IHeaderResponse response) {
+                super.renderHead(component, response);
+                // render theme related resources if any
+                if(settings.getTheme() != null) {
+                    settings.getTheme().renderHead(component, response);
+                }
+            }
+        });
 		setOutputMarkupId(true);
 	}
 
@@ -147,7 +158,7 @@ abstract class AbstractSelect2Choice<T, M> extends AbstractTextComponent<M> impl
 		return provider;
 	}
 
-	@Override
+    @Override
 	public final void convertInput()
 	{
 		// AbstractSelect2Choice uses ChoiceProvider to convert IDS into objects.
