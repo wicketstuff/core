@@ -84,13 +84,23 @@ function manipulateTree(astObject) {
 				// skip empty arrays
 				continue;
 			}
+			// if any kind of loop inject abort statement
 			if (node.type == 'WhileStatement'
 					|| node.type == 'DoWhileStatement'
 					|| node.type == 'ForStatement') {
+				
+				// if the loop has an empty statement change to block 
+				// statement and inject the abort statement
+				if(node.body.type == 'EmptyStatement'){
+					node.body.type = 'BlockStatement';
+					node.body.body = new Array();
+				}
 				node.body.body.unshift(getAbortStatement("loop"));
+			// also if the node is a function, because of recursive invocation
 			} else if (node.type == 'FunctionDeclaration') {
 				node.body.body.unshift(getAbortStatement("function"));
 			} else {
+				// walk through the tree
 				manipulateTree(node);
 			}
 		}
