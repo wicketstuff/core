@@ -98,7 +98,7 @@ public class NashornMemoryWatcher implements Runnable
 						try
 						{
 							errorWriter.write("The script process with the thread id: " + threadId
-								+ " has been aborted due to memory abuse!\nSave Script: "
+								+ " has been aborted due to memory abuse!\nSafe Script: "
 								+ nashornScriptCallable.getScript() + "\n");
 							errorWriter.flush();
 						}

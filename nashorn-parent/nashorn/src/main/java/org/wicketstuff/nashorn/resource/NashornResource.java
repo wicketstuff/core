@@ -105,8 +105,8 @@ public class NashornResource extends AbstractResource
 				throw new IllegalAccessException(
 					"It is not allowed to gain access to the nashorn thread itself! (nashornResourceReferenceScriptExecutionThread)");
 			}
-			String saveScript = ensureSavetyScript(script, attributes);
-			NashornScriptCallable nashornScriptCallable = new NashornScriptCallable(saveScript,
+			String safeScript = ensureSafetyScript(script, attributes);
+			NashornScriptCallable nashornScriptCallable = new NashornScriptCallable(safeScript,
 				attributes, getClassFilter(), getWriter(), getErrorWriter())
 			{
 				@Override
@@ -141,17 +141,17 @@ public class NashornResource extends AbstractResource
 	}
 
 	/**
-	 * Ensure that the given script is going to be save. Save because of endless loops for example.
+	 * Ensure that the given script is going to be safe. Safe because of endless loops for example.
 	 * 
 	 * @param script
-	 *            the script to be make save
+	 *            the script to be make safe
 	 * @param attributes
 	 *            the attributes
-	 * @return the save script
+	 * @return the safe script
 	 * @throws Exception
-	 *             if an error occured while making the script save
+	 *             if an error occured while making the script safe
 	 */
-	private String ensureSavetyScript(String script, Attributes attributes) throws Exception
+	private String ensureSafetyScript(String script, Attributes attributes) throws Exception
 	{
 		ClassFilter classFilter = new ClassFilter()
 		{

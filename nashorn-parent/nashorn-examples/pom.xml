@@ -27,6 +27,9 @@
 	<properties>
 		<servlet.jsp.api.version>3.1.0</servlet.jsp.api.version>
 		<jetty.version>9.1.6.v20160112</jetty.version>
+		<javadoc.disabled>true</javadoc.disabled>
+		<deployment.disabled>true</deployment.disabled>
+		<sources.disabled>true</sources.disabled>
 	</properties>
 
 	<dependencies>

@@ -110,12 +110,12 @@ function manipulateTree(astObject) {
 manipulateTree(astObject);
 
 // generate the script again
-var saveScript = escodegen.generate(astObject);
+var safeScript = escodegen.generate(astObject);
 
 if (debug) {
-	print(debug_log_prefix + "Save Script AST: " + JSON.stringify(astObject));
-	print(debug_log_prefix + "Save Script: " + saveScript);
+	print(debug_log_prefix + "Safe Script AST: " + JSON.stringify(astObject));
+	print(debug_log_prefix + "Safe Script: " + safeScript);
 }
 
 // return value
-saveScript;
+safeScript;
