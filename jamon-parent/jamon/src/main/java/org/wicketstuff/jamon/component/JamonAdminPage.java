@@ -20,7 +20,7 @@ import static org.wicketstuff.jamon.component.JamonMonitorTable.DEFAULT_ROWS_PER
 
 import org.apache.wicket.markup.html.WebPage;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
-import org.wicketstuff.jamon.monitor.AlwaysSatisfiedMonitorSpecification;
+import org.wicketstuff.jamon.monitor.AlwaysHitedMonitorSpecification;
 
 
 /**
@@ -61,7 +61,7 @@ public class JamonAdminPage extends WebPage
 
 		add(new JamonAdminPanel("adminPanel"));
 		add(new JamonMonitorTable(PATH_TO_STATISTICS_TABLE,
-			new AlwaysSatisfiedMonitorSpecification(), rowsPerPage));
+			new AlwaysHitedMonitorSpecification(), rowsPerPage));
 		add(new EmptyMarkupContainer(PATH_TO_MONITOR_DETAILS));
 	}
 
