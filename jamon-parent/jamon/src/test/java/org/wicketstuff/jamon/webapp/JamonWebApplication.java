@@ -16,14 +16,10 @@
  */
 package org.wicketstuff.jamon.webapp;
 
-import org.apache.wicket.IRequestCycleProvider;
 import org.apache.wicket.markup.html.WebPage;
 import org.apache.wicket.protocol.http.WebApplication;
-import org.apache.wicket.request.cycle.RequestCycle;
-import org.apache.wicket.request.cycle.RequestCycleContext;
-import org.wicketstuff.jamon.request.cycle.JamonAwareRequestCycleListener;
-import org.wicketstuff.jamon.request.cycle.JamonMonitoredRequestCycle;
 import org.wicketstuff.jamon.component.JamonTestUtil;
+import org.wicketstuff.jamon.request.cycle.JamonAwareRequestCycleListener;
 
 /**
  * WebApplication so Jamon Monitoring can be tested.
@@ -54,15 +50,6 @@ public class JamonWebApplication extends WebApplication
 	{
 		super.init();
 
-		setRequestCycleProvider(new IRequestCycleProvider()
-		{
-
-			public RequestCycle get(RequestCycleContext context)
-			{
-				return new JamonMonitoredRequestCycle(context, true);
-			}
-		});
-
-		getRequestCycleListeners().add(new JamonAwareRequestCycleListener());
+		getRequestCycleListeners().add(new JamonAwareRequestCycleListener(true));
 	}
 }

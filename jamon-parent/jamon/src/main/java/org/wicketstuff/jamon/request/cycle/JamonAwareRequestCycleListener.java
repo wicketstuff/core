@@ -58,34 +58,54 @@ public class JamonAwareRequestCycleListener extends AbstractRequestCycleListener
 {
 
 	private static final String DELIMETER = ":";
+	private final boolean includeSourceNameInMonitorLabel;
+
+	public JamonAwareRequestCycleListener(boolean includeSourceNameInMonitorLabel)
+	{
+		this.includeSourceNameInMonitorLabel = includeSourceNameInMonitorLabel;
+	}
+
+	@Override
+	public void onBeginRequest(RequestCycle cycle)
+	{
+		JamonMonitoredRequestCycleContext.registerTo(cycle, includeSourceNameInMonitorLabel);
+		getContextOf(cycle).startTimeRequest();
+		super.onBeginRequest(cycle);
+	}
+
+	private JamonMonitoredRequestCycleContext getContextOf(RequestCycle cycle)
+	{
+		return JamonMonitoredRequestCycleContext.get(cycle);
+	}
+
+	@Override
+	public void onEndRequest(RequestCycle cycle)
+	{
+		super.onEndRequest(cycle);
+		getContextOf(cycle).stopTimeRequest();
+	}
 
 	@Override
 	public void onRequestHandlerResolved(RequestCycle cycle, IRequestHandler handler)
 	{
 		super.onRequestHandlerResolved(cycle, handler);
-		JamonMonitoredRequestCycle jamonMonitoredWebRequestCycle = castToJamonMonitoredRequestCycle(
-			cycle);
-		resolveSourceLabel(handler, jamonMonitoredWebRequestCycle);
+		resolveSourceLabel(handler, cycle);
 	}
 
 	@Override
 	public void onRequestHandlerExecuted(RequestCycle cycle, IRequestHandler handler)
 	{
 		super.onRequestHandlerExecuted(cycle, handler);
-		JamonMonitoredRequestCycle jamonMonitoredWebRequestCycle = castToJamonMonitoredRequestCycle(
-			cycle);
 		// this is the last request target.
-		resolveTargetLabel(handler, jamonMonitoredWebRequestCycle);
+		resolveTargetLabel(handler, cycle);
 	}
 
 	@Override
 	public void onRequestHandlerScheduled(RequestCycle cycle, IRequestHandler handler)
 	{
 		super.onRequestHandlerScheduled(cycle, handler);
-		JamonMonitoredRequestCycle jamonMonitoredWebRequestCycle = castToJamonMonitoredRequestCycle(
-			cycle);
 		// this is the last request target.
-		resolveTargetLabel(handler, jamonMonitoredWebRequestCycle);
+		resolveTargetLabel(handler, cycle);
 	}
 
 	/**
@@ -108,8 +128,7 @@ public class JamonAwareRequestCycleListener extends AbstractRequestCycleListener
 	 * @param cycle
 	 *            The {@link JamonMonitoredRequestCycle}.
 	 */
-	protected void doResolveSourceLabel(IRequestHandler requestHandler,
-		JamonMonitoredRequestCycle cycle)
+	protected void doResolveSourceLabel(IRequestHandler requestHandler, RequestCycle cycle)
 	{
 	}
 
@@ -129,8 +148,7 @@ public class JamonAwareRequestCycleListener extends AbstractRequestCycleListener
 	 * @param cycle
 	 *            The {@link JamonMonitoredRequestCycle}.
 	 */
-	protected void doResolveTargetLabel(IRequestHandler requestHandler,
-		JamonMonitoredRequestCycle cycle)
+	protected void doResolveTargetLabel(IRequestHandler requestHandler, RequestCycle cycle)
 	{
 	}
 
@@ -139,23 +157,25 @@ public class JamonAwareRequestCycleListener extends AbstractRequestCycleListener
 	 * direct page access, checkbox etc. The source label is then setup upon the given cycle in the
 	 * for of: PageClassName.componentId.
 	 */
-	private void resolveSourceLabel(IRequestHandler requestHandler,
-		JamonMonitoredRequestCycle cycle)
+	private void resolveSourceLabel(IRequestHandler requestHandler, RequestCycle cycle)
 	{
+		JamonMonitoredRequestCycleContext context;
 		if (requestHandler instanceof BookmarkablePageRequestHandler)
 		{
+			context = getContextOf(cycle);
 			BookmarkablePageRequestHandler handler = (BookmarkablePageRequestHandler)requestHandler;
-			cycle.comesFromPage(handler.getPageClass());
-			cycle.setSource(handler.getPageClass().getSimpleName());
+			context.comesFromPage(handler.getPageClass());
+			context.setSource(handler.getPageClass().getSimpleName());
 		}
 		else if (requestHandler instanceof ListenerInterfaceRequestHandler)
 		{
+			context = getContextOf(cycle);
 			ListenerInterfaceRequestHandler handler = (ListenerInterfaceRequestHandler)requestHandler;
 			Class<? extends IRequestablePage> pageClass = handler.getPageClass();
-			cycle.comesFromPage(pageClass);
+			context.comesFromPage(pageClass);
 			String source = addComponentNameToLabelIfNotRedirectPageRequestTarget(handler,
 				pageClass.getSimpleName());
-			cycle.setSource(source);
+			context.setSource(source);
 		}
 		else
 		{
@@ -191,34 +211,26 @@ public class JamonAwareRequestCycleListener extends AbstractRequestCycleListener
 	 * Resolves the target label. This is where the request resolves to. In all cases this will be
 	 * the name of the page class that is (partially in case of Ajax) rendered.
 	 */
-	private void resolveTargetLabel(IRequestHandler requestHandler,
-		JamonMonitoredRequestCycle cycle)
+	private void resolveTargetLabel(IRequestHandler requestHandler, RequestCycle cycle)
 	{
+		JamonMonitoredRequestCycleContext context;
 		if (requestHandler instanceof BookmarkablePageRequestHandler)
 		{
+			context = getContextOf(cycle);
 			BookmarkablePageRequestHandler target = (BookmarkablePageRequestHandler)requestHandler;
 			Class<? extends IRequestablePage> pageClass = target.getPageClass();
-			cycle.setTarget(pageClass);
+			context.setTarget(pageClass);
 		}
 		else if (requestHandler instanceof IPageRequestHandler)
 		{
+			context = getContextOf(cycle);
 			IPageRequestHandler target = (IPageRequestHandler)requestHandler;
 			Class<? extends IRequestablePage> pageClass = target.getPageClass();
-			cycle.setTarget(pageClass);
+			context.setTarget(pageClass);
 		}
 		else
 		{
 			doResolveTargetLabel(requestHandler, cycle);
 		}
-	}
-
-	private JamonMonitoredRequestCycle castToJamonMonitoredRequestCycle(RequestCycle requestCycle)
-	{
-		if (!(requestCycle instanceof JamonMonitoredRequestCycle))
-		{
-			throw new IllegalStateException(
-				"You can only use the JamonAwareRequestCycleListener in combination with the JamonMonitoredRequestCycle");
-		}
-		return (JamonMonitoredRequestCycle)requestCycle;
 	}
 }

@@ -16,10 +16,8 @@
  */
 package org.wicketstuff.jamon.request.cycle;
 
-import org.apache.wicket.protocol.http.WebApplication;
 import org.apache.wicket.request.component.IRequestablePage;
 import org.apache.wicket.request.cycle.RequestCycle;
-import org.apache.wicket.request.cycle.RequestCycleContext;
 import org.wicketstuff.jamon.component.JamonAdminPage;
 
 import com.jamonapi.Monitor;
@@ -28,23 +26,23 @@ import com.jamonapi.MonitorFactory;
 
 /**
  * <p>
- * To use this class simply override the method {@link WebApplication#init} in your
- * {@link WebApplication}. You can only use this class in combination with the
- * {@link JamonAwareRequestCycleListener}.
+ * To use this class simply create an instance and register it to request cycle. As a shortcut to
+ * register context in request cycle you can use {@link #registerTo(RequestCycle, boolean)}
  * </p>
  * <p>
- * The responsibility of the {@link JamonMonitoredRequestCycle} is to add a monitor for all actions
- * that will cause pages or parts of pages to be rendered. <br>
+ * The responsibility of the {@link JamonMonitoredRequestCycleContext} is to add a monitor for all
+ * actions that will cause pages or parts of pages to be rendered. <br>
  * The labels of the {@link Monitor}s come in these formats:
  * 
  * <ul>
  * <li>"PageName" - When a user navigates directly to a Page, for instance the HomePage, or a
  * bookmarked Page.</li>
  * <li>"PageName.toNextPage -> NextPage" - When the component toNextPage on the PageName page causes
- * the user to navigate to the "NextPage" page <b>and</b> this {@link JamonMonitoredRequestCycle}
- * has its property {@link #includeSourceNameInMonitorLabel} set to <code>true</code>.</li>
+ * the user to navigate to the "NextPage" page <b>and</b> this
+ * {@link JamonMonitoredRequestCycleContext} has its property
+ * {@link #includeSourceNameInMonitorLabel} set to <code>true</code>.</li>
  * <li>"NextPage" - When the user navigates to the "NextPage" page from whatever page he was on
- * <b>and</b> this {@link JamonMonitoredRequestCycle} has its property
+ * <b>and</b> this {@link JamonMonitoredRequestCycleContext} has its property
  * {@link #includeSourceNameInMonitorLabel} set to <code>false</code>.</li>
  * </ul>
  * 
@@ -54,7 +52,7 @@ import com.jamonapi.MonitorFactory;
  * @author lars
  * 
  */
-public class JamonMonitoredRequestCycle extends RequestCycle
+public class JamonMonitoredRequestCycleContext
 {
 
 	static final String UNIT = "ms.";
@@ -87,18 +85,6 @@ public class JamonMonitoredRequestCycle extends RequestCycle
 	private boolean dontMonitorThisRequest;
 
 	/**
-	 * Constructs a {@link JamonMonitoredRequestCycle} that will <b>not</b> use the {@link #source}
-	 * in the Monitors label.
-	 * 
-	 * @param requestCycleContext
-	 *            context for the request cycle.
-	 */
-	public JamonMonitoredRequestCycle(RequestCycleContext requestCycleContext)
-	{
-		this(requestCycleContext, false);
-	}
-
-	/**
 	 * Construct.
 	 * 
 	 * @param requestCycleContext
@@ -106,26 +92,32 @@ public class JamonMonitoredRequestCycle extends RequestCycle
 	 * @param includeSourceNameInMonitorLabel
 	 *            whether or not to include the name of the {@link #source} in the Monitors label.
 	 */
-	public JamonMonitoredRequestCycle(RequestCycleContext requestCycleContext,
-		boolean includeSourceNameInMonitorLabel)
+	public JamonMonitoredRequestCycleContext(boolean includeSourceNameInMonitorLabel)
 	{
-		super(requestCycleContext);
 		this.includeSourceNameInMonitorLabel = includeSourceNameInMonitorLabel;
 		this.startTimeRequest = 0;
 	}
 
-
-	@Override
-	protected void onBeginRequest()
+	public static void registerTo(RequestCycle cycle, boolean includeSourceNameInMonitorLabel)
 	{
-		this.startTimeRequest = System.currentTimeMillis();
-		super.onBeginRequest();
+		RequestCycle requestCycle = cycle == null ? RequestCycle.get() : cycle;
+		requestCycle.setMetaData(JamonMonitoredRequestCycleContextKey.KEY,
+			new JamonMonitoredRequestCycleContext(includeSourceNameInMonitorLabel));
 	}
 
-	@Override
-	protected void onEndRequest()
+	public static JamonMonitoredRequestCycleContext get(RequestCycle cycle)
 	{
-		super.onEndRequest();
+		RequestCycle requestCycle = cycle == null ? RequestCycle.get() : cycle;
+		return requestCycle.getMetaData(JamonMonitoredRequestCycleContextKey.KEY);
+	}
+
+	public final void startTimeRequest()
+	{
+		this.startTimeRequest = System.currentTimeMillis();
+	}
+
+	public final void stopTimeRequest()
+	{
 		calculateDurationAndAddToMonitor();
 	}
 

@@ -14,32 +14,19 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.wicketstuff.jamon.example;
+package org.wicketstuff.jamon.request.cycle;
 
-import org.apache.wicket.markup.html.WebPage;
-import org.apache.wicket.protocol.http.WebApplication;
-import org.wicketstuff.jamon.request.cycle.JamonAwareRequestCycleListener;
+import org.apache.wicket.MetaDataKey;
 
 /**
- * WebApplication so Jamon Monitoring can be tested.
+ * Metadata key for registering {@link #JamonMonitoredRequestCycleContext()}
  * 
- * @author lars
- *
+ * @author René
  */
-public class JamonWebApplication extends WebApplication
+public class JamonMonitoredRequestCycleContextKey
+	extends
+		MetaDataKey<JamonMonitoredRequestCycleContext>
 {
-
-	@Override
-	public Class<? extends WebPage> getHomePage()
-	{
-		return HomePage.class;
-	}
-
-	@Override
-	protected void init()
-	{
-		super.init();
-
-		getRequestCycleListeners().add(new JamonAwareRequestCycleListener(true));
-	}
+	private static final long serialVersionUID = 1L;
+	public static final JamonMonitoredRequestCycleContextKey KEY = new JamonMonitoredRequestCycleContextKey();
 }
