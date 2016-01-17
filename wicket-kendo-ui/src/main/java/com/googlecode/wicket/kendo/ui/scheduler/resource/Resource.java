@@ -89,7 +89,7 @@ public class Resource implements Serializable
 	 * @param id - the resource id
 	 * @param text - the text (ie: the name of the resource)
 	 */
-	public Resource(Integer id, String text)
+	public Resource(Number id, String text)
 	{
 		this(Id.valueOf(id), text, null);
 	}

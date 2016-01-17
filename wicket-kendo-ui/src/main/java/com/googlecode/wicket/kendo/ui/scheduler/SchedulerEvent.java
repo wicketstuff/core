@@ -97,7 +97,6 @@ public class SchedulerEvent implements Serializable
 	 * @param start - the start date
 	 */
 	public SchedulerEvent(int id, String title, long start)
-
 	{
 		this(id, title, start, DateUtils.addHours(start, DEFAULT_RANGE));
 	}
@@ -124,7 +123,6 @@ public class SchedulerEvent implements Serializable
 	 * @param end - the end date
 	 */
 	public SchedulerEvent(int id, String title, long start, long end)
-
 	{
 		this.id = id;
 		this.title = title;
@@ -424,7 +422,7 @@ public class SchedulerEvent implements Serializable
 	 * @param field - the resource field (ie: 'resourceId')
 	 * @param id - the id-value
 	 */
-	public final void setResource(String field, Integer id)
+	public final void setResource(String field, Number id)
 	{
 		this.resources.put(field, Id.valueOf(id));
 	}

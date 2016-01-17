@@ -54,9 +54,11 @@ public class Scheduler extends JQueryContainer implements ISchedulerListener
 
 	private final ResourceListModel resourceListModel;
 
-	// template //
-	private final IJQueryTemplate template;
-	private KendoTemplateBehavior templateBehavior = null;
+	// templates //
+	private IJQueryTemplate editTemplate;
+	private IJQueryTemplate eventTemplate;
+	private KendoTemplateBehavior editTemplateBehavior = null;
+	private KendoTemplateBehavior eventTemplateBehavior = null;
 
 	/**
 	 * Constructor
@@ -153,7 +155,6 @@ public class Scheduler extends JQueryContainer implements ISchedulerListener
 
 		this.resourceListModel = resourceListModel;
 		this.options = Args.notNull(options, "options");
-		this.template = this.newTemplate();
 	}
 
 	// Methods //
@@ -207,9 +208,9 @@ public class Scheduler extends JQueryContainer implements ISchedulerListener
 	{
 		return (SchedulerModel) this.getDefaultModel();
 	}
-	
+
 	/**
-	 * Gets the sheduler's {@link ResourceListModel} 
+	 * Gets the sheduler's {@link ResourceListModel}
 	 *
 	 * @return the {@link ResourceListModel}
 	 */
@@ -238,10 +239,22 @@ public class Scheduler extends JQueryContainer implements ISchedulerListener
 		this.modelBehavior = this.newSchedulerModelBehavior(this.getModel());
 		this.add(this.modelBehavior);
 
-		if (this.template != null)
+		// templates //
+
+		this.editTemplate = this.newEditTemplate();
+
+		if (this.editTemplate != null)
 		{
-			this.templateBehavior = new KendoTemplateBehavior(this.template);
-			this.add(this.templateBehavior);
+			this.editTemplateBehavior = new KendoTemplateBehavior(this.editTemplate);
+			this.add(this.editTemplateBehavior);
+		}
+
+		this.eventTemplate = this.newEventTemplate();
+
+		if (this.eventTemplate != null)
+		{
+			this.eventTemplateBehavior = new KendoTemplateBehavior(this.eventTemplate);
+			this.add(this.eventTemplateBehavior);
 		}
 	}
 
@@ -263,10 +276,15 @@ public class Scheduler extends JQueryContainer implements ISchedulerListener
 			behavior.setOption("group", options);
 		}
 
-		// set template (if any) //
-		if (this.templateBehavior != null)
+		// set templates (if any) //
+		if (this.editTemplateBehavior != null)
 		{
-			behavior.setOption("eventTemplate", String.format("jQuery('#%s').html()", this.templateBehavior.getToken()));
+			behavior.setOption("editable", String.format("{ template: jQuery('#%s').html() }", this.editTemplateBehavior.getToken()));
+		}
+
+		if (this.eventTemplateBehavior != null)
+		{
+			behavior.setOption("eventTemplate", String.format("jQuery('#%s').html()", this.eventTemplateBehavior.getToken()));
 		}
 	}
 
@@ -329,12 +347,24 @@ public class Scheduler extends JQueryContainer implements ISchedulerListener
 	// Factory methods //
 
 	/**
+	 * Gets a new {@link IJQueryTemplate} to customize the built-in edit window
+	 * 
+	 * @return null by default
+	 * @see <a href="http://docs.telerik.com/kendo-ui/controls/scheduling/scheduler/how-to/custom-edit-and-event-templates">http://docs.telerik.com/kendo-ui/controls/scheduling/scheduler/how-to/custom-edit-and-event-templates</a>
+	 */
+	protected IJQueryTemplate newEditTemplate()
+	{
+		return null;
+	}
+
+	/**
 	 * Gets a new {@link IJQueryTemplate} to customize the event rendering
 	 * 
 	 * @return null by default
+	 * @see <a href="http://docs.telerik.com/kendo-ui/controls/scheduling/scheduler/how-to/custom-edit-and-event-templates">http://docs.telerik.com/kendo-ui/controls/scheduling/scheduler/how-to/custom-edit-and-event-templates</a>
 	 */
 	// TODO: add ISchedulerTemplate? (#getTextProperties seems to be useless, to be double checked)
-	protected IJQueryTemplate newTemplate()
+	protected IJQueryTemplate newEventTemplate()
 	{
 		return null;
 	}

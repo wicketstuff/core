@@ -2,7 +2,6 @@ package com.googlecode.wicket.jquery.ui.samples.pages.kendo.scheduler;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
@@ -12,6 +11,7 @@ import org.apache.wicket.model.Model;
 
 import com.googlecode.wicket.jquery.core.Options;
 import com.googlecode.wicket.jquery.core.template.IJQueryTemplate;
+import com.googlecode.wicket.jquery.core.template.JQueryTemplate;
 import com.googlecode.wicket.jquery.ui.samples.data.dao.scheduler.ResourceEventsDAO;
 import com.googlecode.wicket.kendo.ui.form.button.AjaxButton;
 import com.googlecode.wicket.kendo.ui.form.multiselect.MultiSelect;
@@ -91,9 +91,9 @@ public class SingleResourceSchedulerPage extends AbstractSchedulerPage
 			}
 
 			@Override
-			protected IJQueryTemplate newTemplate()
+			protected IJQueryTemplate newEventTemplate()
 			{
-				return new IJQueryTemplate() {
+				return new JQueryTemplate() {
 
 					private static final long serialVersionUID = 1L;
 
@@ -104,12 +104,6 @@ public class SingleResourceSchedulerPage extends AbstractSchedulerPage
 								+ "#= kendo.toString(start, 'hh:mm') # - " // lf
 								+ "# } #" // lf
 								+ "#= title #";
-					}
-
-					@Override
-					public List<String> getTextProperties()
-					{
-						return Collections.emptyList(); // not needed for Scheduler
 					}
 				};
 			}

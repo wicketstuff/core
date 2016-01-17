@@ -538,7 +538,7 @@ public abstract class SchedulerBehavior extends KendoUIBehavior implements IJQue
 				}
 				else if (!values.isEmpty())
 				{
-					this.event.setResource(field, values.get(0)); // if the underlying value is a number (even a string-number), it will handled by Id#valueOf(I)
+					this.event.setResource(field, values.get(0)); // if the underlying value is a number (even a string-number), it will be handled by Id#valueOf(I)
 				}
 			}
 
