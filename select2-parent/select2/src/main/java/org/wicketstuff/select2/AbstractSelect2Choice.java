@@ -465,4 +465,12 @@ abstract class AbstractSelect2Choice<T, M> extends AbstractTextComponent<M> impl
         }
 		replaceComponentTagBody(markupStream, openTag, buffer);
 	}
+	
+	/**
+	 * Empty input is acceptable
+	 */
+	@Override
+	public boolean isInputNullable() {
+		return true;
+	}
 }
