@@ -1,6 +1,7 @@
 package org.wicketstuff.datatables;
 
 import de.agilecoders.wicket.jquery.util.Strings2;
+import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.extensions.markup.html.repeater.data.grid.DataGridView;
 import org.apache.wicket.extensions.markup.html.repeater.data.table.DataTable;
 import org.apache.wicket.extensions.markup.html.repeater.data.table.IColumn;
@@ -48,11 +49,15 @@ public class DataTables<T, S> extends DataTable<T, S> {
         return options;
     }
 
+    public void repaint(AjaxRequestTarget target) {
+        target.appendJavaScript(String.format("window['%s'].api().ajax.reload();", getJsHandle()));
+    }
+
     @Override
     public void renderHead(IHeaderResponse response) {
         super.renderHead(response);
 
-        String dataTableFn = $(this).chain("dataTable", options).get();
+        String dataTableFn = $(this).chain("dataTable", getOptions()).get();
         String setup = String.format("window['%s'] = %s", getJsHandle(), dataTableFn);
         response.render(OnDomReadyHeaderItem.forScript(setup));
     }
