@@ -200,21 +200,46 @@ public class Menu extends JQueryPanel implements IMenuListener
 					Menu.this.map.put(menuItemId, menuItem);
 					item.add(AttributeModifier.replace("id", menuItemId));
 
-					// TODO: #addMenuItem & #hasSubMenus(?) - see kendo implementation
-					item.add(new ItemFragment("item", menuItem));
+					Menu.this.addMenuItem(item, menuItem);
 
-					if (menuItem.isEnabled())
+					if (!menuItem.isEnabled())
 					{
-						item.add(new MenuFragment("menu", menuItem.getItems()));
-					}
-					else
-					{
-						item.add(new EmptyPanel("menu"));
 						item.add(AttributeModifier.append("class", Model.of("ui-state-disabled")));
 					}
 				}
 			});
 		}
+	}
+
+	/**
+	 * Adds the needed Wicket components to render the given {@code IMenuItem}
+	 *
+	 * @param item the ListView item
+	 * @param menuItem the menu item to render
+	 */
+	protected void addMenuItem(ListItem<IMenuItem> item, IMenuItem menuItem)
+	{
+		item.add(new ItemFragment("item", menuItem));
+
+		if (this.hasSubMenus(menuItem))
+		{
+			item.add(new MenuFragment("menu", menuItem.getItems()));
+		}
+		else
+		{
+			item.add(new EmptyPanel("menu"));					
+		}
+	}
+
+	/**
+	 * Checks whether a menu item has sub menu items
+	 *
+	 * @param item the menu item to check for sub menu items
+	 * @return {@code true} if the item has sub items, otherwise {@code false}
+	 */
+	protected boolean hasSubMenus(IMenuItem item)
+	{
+		return item.isEnabled() && !item.getItems().isEmpty(); // do not render sub-menus if item is disabled
 	}
 
 	/**
