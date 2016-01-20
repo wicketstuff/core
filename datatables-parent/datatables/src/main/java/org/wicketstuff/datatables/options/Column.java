@@ -11,8 +11,19 @@ import java.io.Serializable;
  */
 public class Column implements Serializable {
 
+    /**
+     * https://datatables.net/reference/option/columns.data
+     */
     private final String data;
+
+    /**
+     * https://datatables.net/reference/option/columns.orderable
+     */
     private final boolean orderable;
+
+    /**
+     * https://datatables.net/reference/option/columns.render
+     */
     private Json.RawValue render;
 
     public Column(final String data) {

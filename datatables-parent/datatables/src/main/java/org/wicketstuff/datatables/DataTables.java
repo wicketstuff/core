@@ -2,6 +2,7 @@ package org.wicketstuff.datatables;
 
 import de.agilecoders.wicket.jquery.util.Strings2;
 import org.apache.wicket.ajax.AjaxRequestTarget;
+import org.apache.wicket.behavior.Behavior;
 import org.apache.wicket.extensions.markup.html.repeater.data.grid.DataGridView;
 import org.apache.wicket.extensions.markup.html.repeater.data.table.DataTable;
 import org.apache.wicket.extensions.markup.html.repeater.data.table.IColumn;
@@ -42,7 +43,17 @@ public class DataTables<T, S> extends DataTable<T, S> {
         setOutputMarkupId(true);
         this.options = new Options();
         
-        add(new DataTablesBehavior(options));
+    }
+
+    @Override
+    protected void onInitialize() {
+        super.onInitialize();
+
+        add(newDataTablesBehavior());
+    }
+
+    protected Behavior newDataTablesBehavior() {
+        return new DataTablesBehavior(options);
     }
 
     public Options getOptions() {

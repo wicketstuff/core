@@ -33,21 +33,35 @@ public class DataTablesBehavior extends Behavior {
     @Override
     public void renderHead(Component component, IHeaderResponse response) {
         super.renderHead(component, response);
-    
-        response.render(CssHeaderItem.forReference(new DataTablesCssReference()));
+
+        boolean shouldRenderCss = shouldRenderCss();
+
+        if (shouldRenderCss) {
+            response.render(CssHeaderItem.forReference(new DataTablesCssReference()));
+        }
         response.render(JavaScriptHeaderItem.forReference(new DataTablesJsReference()));
 
         Options.Style style = options.getStyle();
-        style.renderHead(response, "dataTables");
+        if (shouldRenderCss) {
+            style.renderHead(response, "dataTables");
+        }
 
         if (options.contains(Options.Scroller)) {
-            style.renderHead(response, "scroller");
+            if (shouldRenderCss) {
+                style.renderHead(response, "scroller");
+            }
             response.render(JavaScriptHeaderItem.forReference(new DataTablesScrollerJsReference()));
         }
 
         if (options.contains(Options.Select)) {
-            style.renderHead(response, "select");
+            if (shouldRenderCss) {
+                style.renderHead(response, "select");
+            }
             response.render(JavaScriptHeaderItem.forReference(new DataTablesSelectJsReference()));
         }
+    }
+
+    protected boolean shouldRenderCss() {
+        return true;
     }
 }
