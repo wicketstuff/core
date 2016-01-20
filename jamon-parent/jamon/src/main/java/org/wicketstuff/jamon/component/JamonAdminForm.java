@@ -25,7 +25,7 @@ import org.apache.wicket.ajax.markup.html.form.AjaxButton;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.form.TextField;
 import org.apache.wicket.model.Model;
-import org.wicketstuff.jamon.monitor.AlwaysSatisfiedMonitorSpecification;
+import org.wicketstuff.jamon.monitor.AlwaysHitedMonitorSpecification;
 import org.wicketstuff.jamon.monitor.JamonRepository;
 import org.wicketstuff.jamon.monitor.MonitorLabelPrefixSpecification;
 import org.wicketstuff.jamon.monitor.MonitorSpecification;
@@ -65,7 +65,7 @@ public class JamonAdminForm extends Form<Void>
 			{
 				JamonRepository.clear();
 				replaceJamonMonitorTable(monitorLabel, target,
-					new AlwaysSatisfiedMonitorSpecification());
+					new AlwaysHitedMonitorSpecification());
 				replaceMonitorDetailsPanel(target);
 			}
 
