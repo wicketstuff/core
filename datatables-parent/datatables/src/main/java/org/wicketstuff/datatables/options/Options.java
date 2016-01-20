@@ -140,6 +140,11 @@ public class Options extends AbstractConfig {
 
     public static final IKey<ScrollerOptions> Scroller = new Key<>("scroller", null);
 
+	/**
+	 * https://datatables.net/extensions/select/
+     */
+    public static final IKey<SelectOptions> Select = new Key<>("select", null);
+
     /**
      * https://datatables.net/examples/server_side/select_rows.html
      * https://datatables.net/reference/option/rowCallback
@@ -276,6 +281,11 @@ public class Options extends AbstractConfig {
         paging(true);
 
         put(Scroller, scroller);
+        return this;
+    }
+
+    public Options select(SelectOptions select) {
+        put(Select, select);
         return this;
     }
 

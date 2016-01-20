@@ -10,6 +10,7 @@ import org.wicketstuff.datatables.options.Options;
 import org.wicketstuff.datatables.res.DataTablesCssReference;
 import org.wicketstuff.datatables.res.DataTablesJsReference;
 import org.wicketstuff.datatables.res.DataTablesScrollerJsReference;
+import org.wicketstuff.datatables.res.DataTablesSelectJsReference;
 
 /**
  *
@@ -42,6 +43,11 @@ public class DataTablesBehavior extends Behavior {
         if (options.contains(Options.Scroller)) {
             style.renderHead(response, "scroller");
             response.render(JavaScriptHeaderItem.forReference(new DataTablesScrollerJsReference()));
+        }
+
+        if (options.contains(Options.Select)) {
+            style.renderHead(response, "select");
+            response.render(JavaScriptHeaderItem.forReference(new DataTablesSelectJsReference()));
         }
     }
 }

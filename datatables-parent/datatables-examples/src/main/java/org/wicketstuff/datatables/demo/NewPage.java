@@ -63,9 +63,9 @@ public class NewPage extends WebPage {
         table.addTopToolbar(new SpanHeadersToolbar<>(table));
 //        table.addTopToolbar(new HeadersToolbar<String>(table, dataProvider));
 
-        table.add(new BootstrapTheme());
 
         Options options = table.getOptions();
+        table.add(new BootstrapTheme(options));
         options.order(new Sort(2, Sort.Direction.ASC)); // single column ordering
 //        table.getOptions().order(new Sort(2, Sort.Direction.DESC), new Sort(0, Sort.Direction.ASC)); // multi column ordering
         options

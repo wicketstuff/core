@@ -14,6 +14,7 @@ import org.wicketstuff.datatables.demo.Person;
 import org.wicketstuff.datatables.options.Column;
 import org.wicketstuff.datatables.options.Options;
 import org.wicketstuff.datatables.options.ScrollerOptions;
+import org.wicketstuff.datatables.options.SelectOptions;
 import org.wicketstuff.datatables.themes.BootstrapTheme;
 
 import java.util.ArrayList;
@@ -40,13 +41,12 @@ public class InfiniteScrollDemoPage extends WebPage {
                 super.renderHead(response);
 
                 // see rowSelector below
-                response.render(OnDomReadyHeaderItem.forScript($(this).on("click", "tr", new JavaScriptInlineFunction("$(this).toggleClass('selected');")).get()));
+//                response.render(OnDomReadyHeaderItem.forScript($(this).on("click", "tr", new JavaScriptInlineFunction("$(this).toggleClass('selected');")).get()));
             }
         };
         add(table);
 
         table.addTopToolbar(new SpanHeadersToolbar<>(table));
-        table.add(new BootstrapTheme());
 
         CharSequence ajaxUrl = urlFor(new InfiniteScrollResourceReference(), null);
 
@@ -57,6 +57,9 @@ public class InfiniteScrollDemoPage extends WebPage {
             .serverWait(500)
         ;
 
+        SelectOptions selectOptions = new SelectOptions()
+                .style(SelectOptions.Style.OS);
+
         // the column definitions needed by DataTables.js to map the Ajax response data to the
         // table columns
         List<Column> jsColumns = new ArrayList<>();
@@ -66,8 +69,10 @@ public class InfiniteScrollDemoPage extends WebPage {
 
 
         Options options = table.getOptions();
+        table.add(new BootstrapTheme(options));
         options
             .columns(jsColumns)
+            .select(selectOptions)
             .serverSide(true)
             .ordering(false)
             .searching(true)

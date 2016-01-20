@@ -7,13 +7,20 @@ import org.apache.wicket.markup.ComponentTag;
 import org.apache.wicket.markup.head.CssHeaderItem;
 import org.apache.wicket.markup.head.IHeaderResponse;
 import org.apache.wicket.markup.head.JavaScriptHeaderItem;
+import org.wicketstuff.datatables.options.Options;
 import org.wicketstuff.datatables.res.DataTablesBootstrapCssReference;
 import org.wicketstuff.datatables.res.DataTablesBootstrapJsReference;
+import org.wicketstuff.datatables.res.DataTablesScrollerJsReference;
+import org.wicketstuff.datatables.res.DataTablesSelectJsReference;
 
 /**
  *
  */
 public class BootstrapTheme extends Behavior {
+
+    public BootstrapTheme(Options options) {
+        options.style(Options.Style.bootstrap);
+    }
 
     @Override
     public void onComponentTag(Component component, ComponentTag tag) {
