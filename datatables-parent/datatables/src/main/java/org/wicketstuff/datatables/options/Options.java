@@ -55,7 +55,7 @@ public class Options extends AbstractConfig {
         public void renderHead(IHeaderResponse response, String pluginName) {
             if (none != this) {
                 if (!(dataTables == this && "dataTables".equals(pluginName))) {
-                    String name = pluginName + "." + name() + ".css";
+                    String name = "css/" + pluginName + "." + name() + ".css";
                     CssResourceReference cssReference = new CssResourceReference(DataTablesCssReference.class, name);
                     response.render(CssHeaderItem.forReference(cssReference));
                 }
