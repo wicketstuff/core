@@ -1,5 +1,7 @@
 package org.wicketstuff.datatables.options;
 
+import de.agilecoders.wicket.jquery.util.Json;
+
 import java.io.Serializable;
 
 /**
@@ -11,6 +13,7 @@ public class Column implements Serializable {
 
     private final String data;
     private final boolean orderable;
+    private Json.RawValue render;
 
     public Column(final String data) {
         this(data, true);
@@ -27,5 +30,13 @@ public class Column implements Serializable {
 
     public boolean isOrderable() {
         return orderable;
+    }
+
+    public Json.RawValue getRender() {
+        return render;
+    }
+
+    public void setRender(final Json.RawValue renderFunction) {
+        this.render = renderFunction;
     }
 }
