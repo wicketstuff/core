@@ -353,6 +353,7 @@
 		<module>wicketstuff-glassfish4-integration</module>
 		<module>wicket-foundation</module>
 		<module>dashboard-parent</module>
+		<module>jamon-parent</module>
 	</modules>
 
 	<dependencies>
