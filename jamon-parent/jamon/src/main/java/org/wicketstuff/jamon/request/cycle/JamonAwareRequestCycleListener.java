@@ -21,6 +21,9 @@ import org.apache.wicket.request.IRequestHandler;
 import org.apache.wicket.request.component.IRequestablePage;
 import org.apache.wicket.request.cycle.AbstractRequestCycleListener;
 import org.apache.wicket.request.cycle.RequestCycle;
+import org.wicketstuff.jamon.component.JamonRepositoryKey;
+import org.wicketstuff.jamon.monitor.JamonRepository;
+import org.apache.wicket.Application;
 import org.apache.wicket.core.request.handler.BookmarkablePageRequestHandler;
 import org.apache.wicket.core.request.handler.IPageRequestHandler;
 import org.apache.wicket.core.request.handler.ListenerInterfaceRequestHandler;
@@ -60,8 +63,9 @@ public class JamonAwareRequestCycleListener extends AbstractRequestCycleListener
 	private static final String DELIMETER = ":";
 	private final boolean includeSourceNameInMonitorLabel;
 
-	public JamonAwareRequestCycleListener(boolean includeSourceNameInMonitorLabel)
+	public JamonAwareRequestCycleListener(Application app, boolean includeSourceNameInMonitorLabel)
 	{
+		app.setMetaData(JamonRepositoryKey.KEY, new JamonRepository());
 		this.includeSourceNameInMonitorLabel = includeSourceNameInMonitorLabel;
 	}
 

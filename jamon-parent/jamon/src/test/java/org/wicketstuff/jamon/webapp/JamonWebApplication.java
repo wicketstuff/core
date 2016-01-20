@@ -50,6 +50,6 @@ public class JamonWebApplication extends WebApplication
 	{
 		super.init();
 
-		getRequestCycleListeners().add(new JamonAwareRequestCycleListener(true));
+		getRequestCycleListeners().add(new JamonAwareRequestCycleListener(this, true));
 	}
 }

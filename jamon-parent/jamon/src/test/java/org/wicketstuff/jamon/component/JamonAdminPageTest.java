@@ -22,6 +22,7 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.wicketstuff.jamon.component.JamonAdminPage;
+import org.wicketstuff.jamon.monitor.JamonRepository;
 
 import com.jamonapi.MonitorFactory;
 
@@ -35,6 +36,7 @@ public class JamonAdminPageTest
 	public void beforeEachTest()
 	{
 		wicketTester = new WicketTester(JamonAdminPage.class);
+		wicketTester.getApplication().setMetaData(JamonRepositoryKey.KEY, new JamonRepository());
 	}
 
 	@After

@@ -20,6 +20,7 @@ import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
+import org.apache.wicket.Application;
 import org.apache.wicket.extensions.markup.html.repeater.data.sort.SortOrder;
 import org.apache.wicket.extensions.markup.html.repeater.util.SortableDataProvider;
 import org.apache.wicket.model.IModel;
@@ -44,7 +45,7 @@ public class JamonProvider extends SortableDataProvider<Monitor, String>
 	public JamonProvider(MonitorSpecification specification)
 	{
 		this.specification = specification;
-		jamonRepository = JamonRepository.getJamonRepository();
+		jamonRepository = Application.get().getMetaData(JamonRepositoryKey.KEY);
 		setSort("label", SortOrder.ASCENDING);
 	}
 

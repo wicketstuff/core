@@ -19,7 +19,6 @@ package org.wicketstuff.jamon.component;
 import static java.lang.String.format;
 import static java.lang.String.valueOf;
 import static java.util.Arrays.asList;
-import static org.wicketstuff.jamon.monitor.JamonRepository.getJamonRepository;
 
 import java.util.List;
 
@@ -115,7 +114,8 @@ public class JamonMonitorDetailsPanel extends Panel
 	{
 		super(id);
 		setOutputMarkupId(true);
-		final Monitor monitor = getJamonRepository().findMonitorByLabel(monitorLabel);
+		final Monitor monitor = getApplication().getMetaData(JamonRepositoryKey.KEY)
+			.findMonitorByLabel(monitorLabel);
 		FrequencyDist[] frequencyDists = monitor.getRange().getFrequencyDists();
 		add(new FrequencyListView(ID_OF_LIST_VIEW, asList(frequencyDists)));
 		add(new Label(ID_OF_TITLE,

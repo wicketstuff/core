@@ -43,18 +43,8 @@ import com.jamonapi.MonitorFactory;
 @SuppressWarnings("serial")
 public class JamonRepository implements Serializable
 {
-	private static final JamonRepository jamonRepository = new JamonRepository();
-
-	private JamonRepository()
+	public JamonRepository()
 	{
-	}
-
-	/**
-	 * @return The sole instance of the {@link JamonRepository}.
-	 */
-	public static JamonRepository getJamonRepository()
-	{
-		return jamonRepository;
 	}
 
 	/**

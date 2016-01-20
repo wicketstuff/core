@@ -38,7 +38,7 @@ public class JamonRepositoryTest
 	@Before
 	public void setup()
 	{
-		jamonRepository = JamonRepository.getJamonRepository();
+		jamonRepository = new JamonRepository();
 		JamonRepository.clear();
 	}
 
