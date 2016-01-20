@@ -33,4 +33,4 @@ script:
   - "echo DEPLOY_OR_TEST=$DEPLOY_OR_TEST"
   - "export MAVEN_OPTS='-Xms256m -Xmx2048m -XX:MaxPermSize=1024m'"
   - "cp ./config/toolchains.xml $HOME/.m2"
-  - "mvn -s sonatype-settings.xml clean $DEPLOY_OR_TEST -Dmaven.javadoc.skip=true -Dsource.skip=true -B -V --quiet"
+  - "mvn -s sonatype-settings.xml clean $DEPLOY_OR_TEST -Dsource.skip=true -B -V --quiet"
