@@ -18,6 +18,7 @@ package org.wicketstuff.jamon.component;
 
 import org.apache.wicket.util.tester.WicketTester;
 import org.junit.After;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.wicketstuff.jamon.component.JamonAdminPage;
@@ -48,6 +49,9 @@ public class JamonAdminPageTest
 		JamonTestUtil.startThisManyMonitors(1);
 		wicketTester.startPage(new JamonAdminPage());
 		wicketTester.assertRenderedPage(JamonAdminPage.class);
+		Assert.assertEquals(1, wicketTester.getTagsByWicketId("linkText").size());
+		Assert.assertTrue(
+			wicketTester.getTagsByWicketId("linkText").get(0).getValue().equals("mon0"));
 	}
 
 	@Test
@@ -56,5 +60,10 @@ public class JamonAdminPageTest
 		JamonTestUtil.startThisManyMonitors(2);
 		wicketTester.startPage(new JamonAdminPage());
 		wicketTester.assertRenderedPage(JamonAdminPage.class);
+		Assert.assertEquals(2, wicketTester.getTagsByWicketId("linkText").size());
+		Assert.assertTrue(
+			wicketTester.getTagsByWicketId("linkText").get(0).getValue().equals("mon0"));
+		Assert.assertTrue(
+			wicketTester.getTagsByWicketId("linkText").get(1).getValue().equals("mon1"));
 	}
 }
