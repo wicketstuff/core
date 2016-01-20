@@ -1,12 +1,21 @@
 package org.wicketstuff.datatables.demo.infiniteScroll;
 
-import de.agilecoders.wicket.jquery.function.JavaScriptInlineFunction;
+import org.apache.wicket.Component;
+import org.apache.wicket.ajax.AjaxEventBehavior;
+import org.apache.wicket.ajax.AjaxRequestTarget;
+import org.apache.wicket.ajax.attributes.AjaxRequestAttributes;
+import org.apache.wicket.ajax.attributes.CallbackParameter;
 import org.apache.wicket.extensions.markup.html.repeater.data.table.IColumn;
 import org.apache.wicket.markup.head.IHeaderResponse;
 import org.apache.wicket.markup.head.OnDomReadyHeaderItem;
 import org.apache.wicket.markup.html.WebPage;
+import org.apache.wicket.markup.html.panel.FeedbackPanel;
 import org.apache.wicket.model.Model;
+import org.apache.wicket.request.Request;
+import org.apache.wicket.request.cycle.RequestCycle;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
+import org.apache.wicket.resource.CoreLibrariesContributor;
+import org.apache.wicket.util.string.StringValue;
 import org.wicketstuff.datatables.DataTables;
 import org.wicketstuff.datatables.columns.SpanColumn;
 import org.wicketstuff.datatables.columns.SpanHeadersToolbar;
@@ -19,8 +28,6 @@ import org.wicketstuff.datatables.themes.BootstrapTheme;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import static de.agilecoders.wicket.jquery.JQuery.$;
 
 /**
  *
@@ -35,16 +42,50 @@ public class InfiniteScrollDemoPage extends WebPage {
         columns.add(new SpanColumn<Person, String>(Model.of("Last"), "lastName"));
         columns.add(new SpanColumn<Person, String>(Model.of("Age"), "age"));
 
+        final FeedbackPanel feedback = new FeedbackPanel("feedback");
+        add(feedback);
+        feedback.setOutputMarkupId(true);
+
+        final AjaxEventBehavior selectBehavior = new AjaxEventBehavior("select.dt") {
+            @Override
+            protected void onEvent(final AjaxRequestTarget target) {
+                Request request = RequestCycle.get().getRequest();
+                List<StringValue> values = request.getRequestParameters().getParameterValues("id");
+                info("Selected: " + values);
+                target.add(feedback);
+            }
+
+            @Override
+            protected void updateAjaxAttributes(final AjaxRequestAttributes attributes) {
+                super.updateAjaxAttributes(attributes);
+
+                attributes.getDynamicExtraParameters().add("var arr=[]; dt.rows(indexes).every(function() {arr=arr.concat({\"name\":\"id\","
+                                                           + "\"value\": $(this.node()).attr('id')})}); return arr;");
+            }
+
+            @Override
+            public void renderHead(final Component component, final IHeaderResponse response) {
+                // do not contribute the default
+            }
+        };
+
         final DataTables<Person, String> table = new DataTables<Person, String>("table", columns) {
             @Override
             public void renderHead(IHeaderResponse response) {
                 super.renderHead(response);
 
-                // see rowSelector below
-//                response.render(OnDomReadyHeaderItem.forScript($(this).on("click", "tr", new JavaScriptInlineFunction("$(this).toggleClass('selected');")).get()));
+                CoreLibrariesContributor.contributeAjax(getApplication(), response);
+
+                CallbackParameter evt = CallbackParameter.explicit("evt");
+                CallbackParameter dt = CallbackParameter.explicit("dt");
+                CallbackParameter type = CallbackParameter.explicit("type");
+                CallbackParameter indexes = CallbackParameter.explicit("indexes");
+                String callbackFunction = selectBehavior.getCallbackFunction(evt, dt, type, indexes).toString();
+                response.render(OnDomReadyHeaderItem.forScript(String.format("$('#%s').on('select.dt', %s)", getMarkupId(), callbackFunction)));
             }
         };
         add(table);
+        table.add(selectBehavior);
 
         table.addTopToolbar(new SpanHeadersToolbar<>(table));
 
