@@ -25,7 +25,8 @@ import org.wicketstuff.jamon.component.JamonRepositoryKey;
 import org.wicketstuff.jamon.monitor.JamonRepository;
 import org.apache.wicket.Application;
 import org.apache.wicket.core.request.handler.BookmarkablePageRequestHandler;
-import org.apache.wicket.core.request.handler.IPageRequestHandler;
+import org.apache.wicket.core.request.handler.BufferedResponseRequestHandler;
+import org.apache.wicket.core.request.handler.IPageClassRequestHandler;
 import org.apache.wicket.core.request.handler.ListenerInterfaceRequestHandler;
 
 import com.jamonapi.Monitor;
@@ -164,14 +165,7 @@ public class JamonAwareRequestCycleListener extends AbstractRequestCycleListener
 	private void resolveSourceLabel(IRequestHandler requestHandler, RequestCycle cycle)
 	{
 		JamonMonitoredRequestCycleContext context;
-		if (requestHandler instanceof BookmarkablePageRequestHandler)
-		{
-			context = getContextOf(cycle);
-			BookmarkablePageRequestHandler handler = (BookmarkablePageRequestHandler)requestHandler;
-			context.comesFromPage(handler.getPageClass());
-			context.setSource(handler.getPageClass().getSimpleName());
-		}
-		else if (requestHandler instanceof ListenerInterfaceRequestHandler)
+		if (requestHandler instanceof ListenerInterfaceRequestHandler)
 		{
 			context = getContextOf(cycle);
 			ListenerInterfaceRequestHandler handler = (ListenerInterfaceRequestHandler)requestHandler;
@@ -180,6 +174,13 @@ public class JamonAwareRequestCycleListener extends AbstractRequestCycleListener
 			String source = addComponentNameToLabelIfNotRedirectPageRequestTarget(handler,
 				pageClass.getSimpleName());
 			context.setSource(source);
+		}
+		else if (requestHandler instanceof IPageClassRequestHandler)
+		{
+			context = getContextOf(cycle);
+			IPageClassRequestHandler handler = (IPageClassRequestHandler)requestHandler;
+			context.comesFromPage(handler.getPageClass());
+			context.setSource(handler.getPageClass().getSimpleName());
 		}
 		else
 		{
@@ -218,19 +219,16 @@ public class JamonAwareRequestCycleListener extends AbstractRequestCycleListener
 	private void resolveTargetLabel(IRequestHandler requestHandler, RequestCycle cycle)
 	{
 		JamonMonitoredRequestCycleContext context;
-		if (requestHandler instanceof BookmarkablePageRequestHandler)
+		if (requestHandler instanceof IPageClassRequestHandler)
 		{
 			context = getContextOf(cycle);
-			BookmarkablePageRequestHandler target = (BookmarkablePageRequestHandler)requestHandler;
+			IPageClassRequestHandler target = (IPageClassRequestHandler)requestHandler;
 			Class<? extends IRequestablePage> pageClass = target.getPageClass();
 			context.setTarget(pageClass);
 		}
-		else if (requestHandler instanceof IPageRequestHandler)
-		{
+		else if (requestHandler instanceof BufferedResponseRequestHandler) {
 			context = getContextOf(cycle);
-			IPageRequestHandler target = (IPageRequestHandler)requestHandler;
-			Class<? extends IRequestablePage> pageClass = target.getPageClass();
-			context.setTarget(pageClass);
+			context.dontMonitorThisRequest();
 		}
 		else
 		{

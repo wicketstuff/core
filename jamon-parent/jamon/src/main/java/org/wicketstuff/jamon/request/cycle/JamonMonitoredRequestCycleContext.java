@@ -181,4 +181,9 @@ public class JamonMonitoredRequestCycleContext
 			return String.format("%s -> %s", source, target);
 		}
 	}
+
+	public final void dontMonitorThisRequest()
+	{
+		this.dontMonitorThisRequest = true;
+	}
 }
