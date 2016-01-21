@@ -89,7 +89,7 @@ public class InfiniteScrollDemoPage extends WebPage {
 
         table.addTopToolbar(new SpanHeadersToolbar<>(table));
 
-        CharSequence ajaxUrl = urlFor(new InfiniteScrollResourceReference(), null);
+        CharSequence ajaxUrl = urlFor(new VirtualScrollDemoResourceReference(), null);
 
         ScrollerOptions scrollerOptions = new ScrollerOptions();
         scrollerOptions

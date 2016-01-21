@@ -22,7 +22,7 @@ import org.apache.wicket.Page;
 import org.apache.wicket.markup.html.SecurePackageResourceGuard;
 import org.apache.wicket.protocol.http.WebApplication;
 import org.wicketstuff.datatables.demo.infiniteScroll.InfiniteScrollDemoPage;
-import org.wicketstuff.datatables.demo.infiniteScroll.InfiniteScrollResourceReference;
+import org.wicketstuff.datatables.demo.infiniteScroll.VirtualScrollDemoResourceReference;
 
 public class DemoApplication extends WebApplication
 {
@@ -56,6 +56,6 @@ public class DemoApplication extends WebApplication
 
 	private void infiniteScroll() {
 		mountPage("infiniteScroll", InfiniteScrollDemoPage.class);
-		mountResource("infiniteScrollData", new InfiniteScrollResourceReference());
+		mountResource("infiniteScrollData", new VirtualScrollDemoResourceReference());
 	}
 }
