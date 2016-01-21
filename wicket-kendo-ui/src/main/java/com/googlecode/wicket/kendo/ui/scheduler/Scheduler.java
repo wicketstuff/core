@@ -50,6 +50,7 @@ public class Scheduler extends JQueryContainer implements ISchedulerListener
 	}
 
 	private final Options options;
+	private SchedulerEventFactory factory;
 	private SchedulerModelBehavior modelBehavior; // load events
 
 	private final ResourceListModel resourceListModel;
@@ -210,6 +211,21 @@ public class Scheduler extends JQueryContainer implements ISchedulerListener
 	}
 
 	/**
+	 * Gets the {@link SchedulerEventFactory}
+	 * 
+	 * @return the {@code SchedulerEventFactory}
+	 */
+	private SchedulerEventFactory getSchedulerEventFactory()
+	{
+		if (this.factory == null)
+		{
+			this.factory = this.newSchedulerEventFactory();
+		}
+
+		return this.factory;
+	}
+
+	/**
 	 * Gets the sheduler's {@link ResourceListModel}
 	 *
 	 * @return the {@link ResourceListModel}
@@ -326,7 +342,7 @@ public class Scheduler extends JQueryContainer implements ISchedulerListener
 	@Override
 	public JQueryBehavior newWidgetBehavior(String selector)
 	{
-		return new SchedulerBehavior(selector, this.options, this) {
+		return new SchedulerBehavior(selector, this.options, this.getSchedulerEventFactory(), this) {
 
 			private static final long serialVersionUID = 1L;
 
@@ -370,6 +386,16 @@ public class Scheduler extends JQueryContainer implements ISchedulerListener
 	}
 
 	/**
+	 * Gets a new {@link SchedulerEventFactory}
+	 * 
+	 * @return a new {@code SchedulerEventFactory}
+	 */
+	protected SchedulerEventFactory newSchedulerEventFactory()
+	{
+		return new SchedulerEventFactory();
+	}
+
+	/**
 	 * Gets a new {@link SchedulerModelBehavior}
 	 *
 	 * @param model the {@link SchedulerModel}
@@ -377,6 +403,6 @@ public class Scheduler extends JQueryContainer implements ISchedulerListener
 	 */
 	protected SchedulerModelBehavior newSchedulerModelBehavior(final SchedulerModel model)
 	{
-		return new SchedulerModelBehavior(model);
+		return new SchedulerModelBehavior(model, this.getSchedulerEventFactory());
 	}
 }

@@ -25,6 +25,7 @@ import org.apache.wicket.request.IRequestHandler;
 import org.apache.wicket.request.IRequestParameters;
 import org.apache.wicket.request.cycle.RequestCycle;
 import org.apache.wicket.request.http.WebResponse;
+import org.apache.wicket.util.lang.Args;
 
 /**
  * Provides the behavior that loads {@link SchedulerEvent}{@code s} according to {@link SchedulerModel} start &amp; end dates
@@ -37,15 +38,17 @@ public class SchedulerModelBehavior extends AbstractAjaxBehavior
 	private static final long serialVersionUID = 1L;
 
 	private final SchedulerModel model;
+	private final SchedulerEventFactory factory;
 
 	/**
 	 * Constructor
 	 *
 	 * @param model the {@link SchedulerModel}
 	 */
-	public SchedulerModelBehavior(final SchedulerModel model)
+	public SchedulerModelBehavior(final SchedulerModel model, SchedulerEventFactory factory)
 	{
 		this.model = model;
+		this.factory = Args.notNull(factory, "factory");
 	}
 
 	@Override
@@ -137,7 +140,7 @@ public class SchedulerModelBehavior extends AbstractAjaxBehavior
 								builder.append(", ");
 							}
 
-							builder.append(event.toJson());
+							builder.append(factory.toJson(event));
 						}
 					}
 

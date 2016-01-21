@@ -68,6 +68,18 @@ public class DateUtils
 	}
 
 	/**
+	 * Converts a ISO8601 string date to an {@code UTC} {@link Date}
+	 * 
+	 * @param date the date to convert
+	 * @return the UTC date
+	 * @throws ParseException 
+	 */
+	public static long utc(String date) throws ParseException
+	{
+		return DateUtils.utc(DateUtils.parse(date).getTime());
+	}
+
+	/**
 	 * Gets the current timezone offset
 	 * 
 	 * @param time

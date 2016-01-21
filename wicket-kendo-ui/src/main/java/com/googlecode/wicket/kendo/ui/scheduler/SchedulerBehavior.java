@@ -16,19 +16,14 @@
  */
 package com.googlecode.wicket.kendo.ui.scheduler;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
 import org.apache.wicket.Component;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.attributes.CallbackParameter;
+import org.apache.wicket.ajax.json.JSONObject;
 import org.apache.wicket.markup.head.IHeaderResponse;
 import org.apache.wicket.markup.head.JavaScriptHeaderItem;
 import org.apache.wicket.request.resource.JavaScriptResourceReference;
 import org.apache.wicket.util.lang.Args;
-import org.apache.wicket.util.string.StringValue;
 
 import com.googlecode.wicket.jquery.core.JQueryEvent;
 import com.googlecode.wicket.jquery.core.Options;
@@ -36,7 +31,6 @@ import com.googlecode.wicket.jquery.core.ajax.IJQueryAjaxAware;
 import com.googlecode.wicket.jquery.core.ajax.JQueryAjaxBehavior;
 import com.googlecode.wicket.jquery.core.utils.RequestCycleUtils;
 import com.googlecode.wicket.kendo.ui.KendoUIBehavior;
-import com.googlecode.wicket.kendo.ui.scheduler.resource.ResourceList;
 import com.googlecode.wicket.kendo.ui.scheduler.resource.ResourceListModel;
 import com.googlecode.wicket.kendo.ui.scheduler.views.SchedulerViewType;
 
@@ -54,6 +48,7 @@ public abstract class SchedulerBehavior extends KendoUIBehavior implements IJQue
 	public static final String METHOD = "kendoScheduler";
 
 	private final ISchedulerListener listener;
+	private final SchedulerEventFactory factory;
 	private final SchedulerDataSource dataSource;
 
 	private JQueryAjaxBehavior onEditAjaxBehavior = null;
@@ -67,11 +62,12 @@ public abstract class SchedulerBehavior extends KendoUIBehavior implements IJQue
 	 * Constructor
 	 *
 	 * @param selector the html selector (ie: "#myId")
+	 * @param factory the {@link SchedulerEventFactory}
 	 * @param listener the {@link ISchedulerListener}
 	 */
-	public SchedulerBehavior(final String selector, ISchedulerListener listener)
+	public SchedulerBehavior(final String selector, SchedulerEventFactory factory, ISchedulerListener listener)
 	{
-		this(selector, new Options(), listener);
+		this(selector, new Options(), factory, listener);
 	}
 
 	/**
@@ -79,12 +75,14 @@ public abstract class SchedulerBehavior extends KendoUIBehavior implements IJQue
 	 *
 	 * @param selector the html selector (ie: "#myId")
 	 * @param options the {@link Options}
+	 * @param factory the {@link SchedulerEventFactory}
 	 * @param listener the {@link ISchedulerListener}
 	 */
-	public SchedulerBehavior(final String selector, Options options, ISchedulerListener listener)
+	public SchedulerBehavior(final String selector, Options options, SchedulerEventFactory factory, ISchedulerListener listener)
 	{
 		super(selector, METHOD, options);
 
+		this.factory = Args.notNull(factory, "factory");
 		this.listener = Args.notNull(listener, "listener");
 		this.dataSource = new SchedulerDataSource("schedulerDataSource");
 		this.add(this.dataSource);
@@ -213,25 +211,26 @@ public abstract class SchedulerBehavior extends KendoUIBehavior implements IJQue
 		if (event instanceof SchedulerPayload)
 		{
 			SchedulerPayload payload = (SchedulerPayload) event;
+			SchedulerEvent schedulerEvent = this.factory.toObject(payload.getObject(), this.getResourceListModel().getObject());
 
 			if (event instanceof EditEvent)
 			{
-				this.listener.onEdit(target, payload.getEvent(), payload.getView());
+				this.listener.onEdit(target, schedulerEvent, payload.getView());
 			}
 
 			if (event instanceof CreateEvent)
 			{
-				this.listener.onCreate(target, payload.getEvent());
+				this.listener.onCreate(target, schedulerEvent);
 			}
 
 			if (event instanceof UpdateEvent)
 			{
-				this.listener.onUpdate(target, payload.getEvent());
+				this.listener.onUpdate(target, schedulerEvent);
 			}
 
 			if (event instanceof DeleteEvent)
 			{
-				this.listener.onDelete(target, payload.getEvent());
+				this.listener.onDelete(target, schedulerEvent);
 			}
 		}
 	}
@@ -264,7 +263,7 @@ public abstract class SchedulerBehavior extends KendoUIBehavior implements IJQue
 			@Override
 			protected JQueryEvent newEvent()
 			{
-				return new EditEvent(SchedulerBehavior.this.getResourceListModel());
+				return new EditEvent();
 			}
 		};
 	}
@@ -284,7 +283,7 @@ public abstract class SchedulerBehavior extends KendoUIBehavior implements IJQue
 			@Override
 			protected JQueryEvent newEvent()
 			{
-				return new CreateEvent(SchedulerBehavior.this.getResourceListModel());
+				return new CreateEvent();
 			}
 		};
 	}
@@ -304,7 +303,7 @@ public abstract class SchedulerBehavior extends KendoUIBehavior implements IJQue
 			@Override
 			protected JQueryEvent newEvent()
 			{
-				return new UpdateEvent(SchedulerBehavior.this.getResourceListModel());
+				return new UpdateEvent();
 			}
 		};
 	}
@@ -324,7 +323,7 @@ public abstract class SchedulerBehavior extends KendoUIBehavior implements IJQue
 			@Override
 			protected JQueryEvent newEvent()
 			{
-				return new DeleteEvent(SchedulerBehavior.this.getResourceListModel());
+				return new DeleteEvent();
 			}
 		};
 	}
@@ -372,40 +371,22 @@ public abstract class SchedulerBehavior extends KendoUIBehavior implements IJQue
 		@Override
 		protected CallbackParameter[] getCallbackParameters()
 		{
-			List<CallbackParameter> parameters = new ArrayList<CallbackParameter>();
-
-			parameters.add(CallbackParameter.context("e"));
-
-			// event //
-			parameters.add(CallbackParameter.resolved("id", "e.event.id")); // retrieved
-			parameters.add(CallbackParameter.resolved("title", "e.event.title")); // retrieved
-			parameters.add(CallbackParameter.resolved("description", "e.event.description")); // retrieved
-
-			parameters.add(CallbackParameter.resolved("start", "e.event.start.getTime()")); // retrieved
-			parameters.add(CallbackParameter.resolved("end", "e.event.end.getTime()")); // retrieved
-			parameters.add(CallbackParameter.resolved("isAllDay", "e.event.isAllDay")); // retrieved
-
-			// recurrence //
-			parameters.add(CallbackParameter.resolved("recurrenceId", "e.event.recurrenceId")); // retrieved
-			parameters.add(CallbackParameter.resolved("recurrenceRule", "e.event.recurrenceRule")); // retrieved
-			parameters.add(CallbackParameter.resolved("recurrenceException", "e.event.recurrenceException")); // retrieved
-
-			// resources //
-			for (String field : SchedulerBehavior.this.getResourceListModel().getFields())
-			{
-				parameters.add(CallbackParameter.resolved(field, String.format("jQuery.makeArray(e.event.%s)", field))); // retrieved
-			}
-
-			parameters.add(CallbackParameter.resolved("view", "e.sender.view().name")); // retrieved
-
-			// view //
-			return parameters.toArray(new CallbackParameter[] {});
+			return new CallbackParameter[] { CallbackParameter.context("e"), // lf
+					CallbackParameter.resolved("data", "kendo.stringify(e.event)"), // lf
+					CallbackParameter.resolved("view", "e.sender.view().name") };
 		}
 
 		@Override
 		public CharSequence getCallbackFunctionBody(CallbackParameter... parameters)
 		{
-			return super.getCallbackFunctionBody(parameters) + " e.preventDefault();"; // avoid propagation of KendoUIs edit-event on client-side
+			String statement = "";
+			// we need to convert to timestamp before sending (probably an issue)
+			statement += "e.sender.start = e.sender.start.getTime();";
+			statement += "e.sender.end = e.sender.end.getTime();";
+			statement += super.getCallbackFunctionBody(parameters);
+			statement += "e.preventDefault();"; // avoid propagation of KendoUI's edit-event on client-side
+
+			return statement;
 		}
 	}
 
@@ -424,37 +405,22 @@ public abstract class SchedulerBehavior extends KendoUIBehavior implements IJQue
 		@Override
 		protected CallbackParameter[] getCallbackParameters()
 		{
-			List<CallbackParameter> parameters = new ArrayList<CallbackParameter>();
-
-			parameters.add(CallbackParameter.context("e"));
-
-			// event //
-			parameters.add(CallbackParameter.resolved("id", "e.data.id")); // retrieved
-			parameters.add(CallbackParameter.resolved("title", "e.data.title")); // retrieved
-			parameters.add(CallbackParameter.resolved("description", "e.data.description")); // retrieved
-
-			parameters.add(CallbackParameter.resolved("start", "e.data.start.getTime()")); // retrieved
-			parameters.add(CallbackParameter.resolved("end", "e.data.end.getTime()")); // retrieved
-			parameters.add(CallbackParameter.resolved("isAllDay", "e.data.isAllDay")); // retrieved
-
-			// recurrence //
-			parameters.add(CallbackParameter.resolved("recurrenceId", "e.data.recurrenceId")); // retrieved
-			parameters.add(CallbackParameter.resolved("recurrenceRule", "e.data.recurrenceRule")); // retrieved
-			parameters.add(CallbackParameter.resolved("recurrenceException", "e.data.recurrenceException")); // retrieved
-
-			// resources //
-			for (String field : SchedulerBehavior.this.getResourceListModel().getFields())
-			{
-				parameters.add(CallbackParameter.resolved(field, "e.data." + field)); // retrieved
-			}
-
-			return parameters.toArray(new CallbackParameter[] {});
+			return new CallbackParameter[] { CallbackParameter.context("e"), // lf
+					CallbackParameter.resolved("data", "kendo.stringify(e.data)") // lf
+			};
 		}
 
 		@Override
 		public CharSequence getCallbackFunctionBody(CallbackParameter... parameters)
 		{
-			return super.getCallbackFunctionBody(parameters) + " e.success();";
+			String statement = "";
+			// we need to convert to timestamp before sending (probably an issue)
+			statement += "e.data.start = e.data.start.getTime();";
+			statement += "e.data.end = e.data.end.getTime();";
+			statement += super.getCallbackFunctionBody(parameters);
+			statement += "e.success();";
+
+			return statement;
 		}
 	}
 
@@ -488,59 +454,13 @@ public abstract class SchedulerBehavior extends KendoUIBehavior implements IJQue
 	 */
 	protected static class SchedulerPayload extends JQueryEvent
 	{
-		private final SchedulerEvent event;
 		private SchedulerViewType view = null;
+		private JSONObject object;
 
-		public SchedulerPayload(final ResourceListModel listModel)
+		public SchedulerPayload()
 		{
-			int id = RequestCycleUtils.getQueryParameterValue("id").toInt();
-			String title = RequestCycleUtils.getQueryParameterValue("title").toString();
-			String description = RequestCycleUtils.getQueryParameterValue("description").toString();
-
-			long start = RequestCycleUtils.getQueryParameterValue("start").toLong();
-			long end = RequestCycleUtils.getQueryParameterValue("end").toLong();
-			boolean allDay = RequestCycleUtils.getQueryParameterValue("isAllDay").toBoolean();
-
-			String recurrenceId = RequestCycleUtils.getQueryParameterValue("recurrenceId").toString();
-			String recurrenceRule = RequestCycleUtils.getQueryParameterValue("recurrenceRule").toString();
-			String recurrenceException = RequestCycleUtils.getQueryParameterValue("recurrenceException").toString();
-
-			this.event = new SchedulerEvent(id, title, start, end);
-			this.event.setAllDay(allDay);
-			this.event.setDescription(description);
-			this.event.setRecurrenceId(recurrenceId);
-			this.event.setRecurrenceRule(recurrenceRule);
-			this.event.setRecurrenceException(recurrenceException);
-
-			// Resources //
-			Pattern pattern = Pattern.compile("([\\w-]+)");
-
-			for (ResourceList list : listModel.getObject())
-			{
-				String field = list.getField();
-				StringValue value = RequestCycleUtils.getQueryParameterValue(field);
-
-				List<String> values = new ArrayList<String>();
-
-				if (value != null)
-				{
-					Matcher matcher = pattern.matcher(value.toString());
-
-					while (matcher.find())
-					{
-						values.add(matcher.group());
-					}
-				}
-
-				if (list.isMultiple())
-				{
-					this.event.setResource(field, values);
-				}
-				else if (!values.isEmpty())
-				{
-					this.event.setResource(field, values.get(0)); // if the underlying value is a number (even a string-number), it will be handled by Id#valueOf(I)
-				}
-			}
+			String data = RequestCycleUtils.getQueryParameterValue("data").toString();
+			this.object = new JSONObject(data);
 
 			// View //
 			String view = RequestCycleUtils.getQueryParameterValue("view").toString();
@@ -551,9 +471,9 @@ public abstract class SchedulerBehavior extends KendoUIBehavior implements IJQue
 			}
 		}
 
-		public SchedulerEvent getEvent()
+		public JSONObject getObject()
 		{
-			return this.event;
+			return this.object;
 		}
 
 		public SchedulerViewType getView()
@@ -567,10 +487,6 @@ public abstract class SchedulerBehavior extends KendoUIBehavior implements IJQue
 	 */
 	protected static class EditEvent extends SchedulerPayload
 	{
-		public EditEvent(ResourceListModel listModel)
-		{
-			super(listModel);
-		}
 	}
 
 	/**
@@ -578,10 +494,6 @@ public abstract class SchedulerBehavior extends KendoUIBehavior implements IJQue
 	 */
 	protected static class CreateEvent extends SchedulerPayload
 	{
-		public CreateEvent(ResourceListModel listModel)
-		{
-			super(listModel);
-		}
 	}
 
 	/**
@@ -589,10 +501,6 @@ public abstract class SchedulerBehavior extends KendoUIBehavior implements IJQue
 	 */
 	protected static class UpdateEvent extends SchedulerPayload
 	{
-		public UpdateEvent(ResourceListModel listModel)
-		{
-			super(listModel);
-		}
 	}
 
 	/**
@@ -600,9 +508,5 @@ public abstract class SchedulerBehavior extends KendoUIBehavior implements IJQue
 	 */
 	protected static class DeleteEvent extends SchedulerPayload
 	{
-		public DeleteEvent(ResourceListModel listModel)
-		{
-			super(listModel);
-		}
 	}
 }
