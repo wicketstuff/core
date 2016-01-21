@@ -252,7 +252,7 @@ public class Scheduler extends JQueryContainer implements ISchedulerListener
 	{
 		super.onInitialize();
 
-		this.modelBehavior = this.newSchedulerModelBehavior(this.getModel());
+		this.modelBehavior = this.newSchedulerModelBehavior(this.getModel(), this.getSchedulerEventFactory());
 		this.add(this.modelBehavior);
 
 		// templates //
@@ -399,10 +399,11 @@ public class Scheduler extends JQueryContainer implements ISchedulerListener
 	 * Gets a new {@link SchedulerModelBehavior}
 	 *
 	 * @param model the {@link SchedulerModel}
+	 * @param schedulerEventFactory 
 	 * @return the {@link SchedulerModelBehavior}
 	 */
-	protected SchedulerModelBehavior newSchedulerModelBehavior(final SchedulerModel model)
+	protected SchedulerModelBehavior newSchedulerModelBehavior(final SchedulerModel model, SchedulerEventFactory factory)
 	{
-		return new SchedulerModelBehavior(model, this.getSchedulerEventFactory());
+		return new SchedulerModelBehavior(model, factory);
 	}
 }
