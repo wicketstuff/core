@@ -20,21 +20,21 @@ public abstract class AbstractVirtualScrollResourceReference<T> extends Resource
 	/*
 	 * The names of the request parameters sent by DataTables when "serverSide" option is enabled
 	 */
-	protected static final String LENGTH_PARAMETER = "length";
-	protected static final String START_PARAMETER = "start";
-	protected static final String DRAW_PARAMETER = "draw";
-	protected static final String ORDER_0_COLUMN_PARAMETER = "order[0][column]";
-	protected static final String ORDER_0_DIRECTION_PARAMETER = "order[0][dir]";
-	protected static final String ASCENDING_DIRECTION = "asc";
-	protected static final String DESCENDING_DIRECTION = "desc";
+	public static final String LENGTH_PARAMETER = "length";
+	public static final String START_PARAMETER = "start";
+	public static final String DRAW_PARAMETER = "draw";
+	public static final String ORDER_0_COLUMN_PARAMETER = "order[0][column]";
+	public static final String ORDER_0_DIRECTION_PARAMETER = "order[0][dir]";
+	public static final String ASCENDING_DIRECTION = "asc";
+	public static final String DESCENDING_DIRECTION = "desc";
 
 	/*
 	 * The names of the fields in the JSON response
 	 */
-	protected static final String RECORDS_TOTAL_RESPONSE_FIELD = "recordsTotal";
-	protected static final String RECORDS_FILTERED_RESPONSE_FIELD = "recordsFiltered";
-	protected static final String DRAW_RESPONSE_FIELD = "draw";
-	protected static final String DATA_RESPONSE_FIELD = "data";
+	public static final String RECORDS_TOTAL_RESPONSE_FIELD = "recordsTotal";
+	public static final String RECORDS_FILTERED_RESPONSE_FIELD = "recordsFiltered";
+	public static final String DRAW_RESPONSE_FIELD = "draw";
+	public static final String DATA_RESPONSE_FIELD = "data";
 
 	public AbstractVirtualScrollResourceReference(final Key key) {
 		super(key);
