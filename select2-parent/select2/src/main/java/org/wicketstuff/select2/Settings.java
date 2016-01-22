@@ -64,21 +64,21 @@ public final class Settings implements Serializable
 	private String[] tokenSeparators;
 	private boolean selectOnClose;
 	private boolean dropdownAutoWidth;
-    /**
-     * Theme is an interface that might contribute to the headers.
-     */
-    private ISelect2Theme theme;
+	/**
+	 * Theme is an interface that might contribute to the headers.
+	 */
+	private ISelect2Theme theme;
 
-    /**
-     * If stateless is set to true then component will not be used as context 
-     * for serving JSON.
-     */
-    private boolean stateless = false;
+	/**
+	 * If stateless is set to true then component will not be used as context
+	 * for serving JSON.
+	 */
+	private boolean stateless = false;
 
-    /**
-     * Path to which JSON producing resource will be attached.
-     */
-    private String mountPath;
+	/**
+	 * Path to which JSON producing resource will be attached.
+	 */
+	private String mountPath;
 
 	public CharSequence toJson()
 	{
@@ -109,7 +109,7 @@ public final class Settings implements Serializable
 			Json.writeFunction(writer, "initSelection", initSelection);
 			Json.writeFunction(writer, "query", query);
 			Json.writeObject(writer, "width", width);
-			Json.writeObject(writer, "theme", theme != null? theme.name(): null);
+			Json.writeObject(writer, "theme", theme != null ? theme.name() : null);
 			Json.writeFunction(writer, "containerCss", containerCss);
 			Json.writeObject(writer, "containerCssClass", containerCssClass);
 			Json.writeFunction(writer, "dropdownCss", dropdownCss);
@@ -442,24 +442,23 @@ public final class Settings implements Serializable
 	{
 		this.theme = new ISelect2Theme() {
             
-            @Override
-            public void renderHead(Component varComponent, IHeaderResponse varResponse) {
-                
-            }
+			@Override
+			public void renderHead(Component varComponent, IHeaderResponse varResponse) {
+			}
 
-            @Override
-            public String name() {
-                return theme;
-            }
-        };
+			@Override
+			public String name() {
+				return theme;
+			}
+		};
 		return this;
 	}
 
 
-    public Settings setTheme(ISelect2Theme theme) {
-        this.theme = theme;
-        return this;
-    }
+	public Settings setTheme(ISelect2Theme theme) {
+		this.theme = theme;
+		return this;
+	}
 
 	public String getContainerCss()
 	{
@@ -549,23 +548,23 @@ public final class Settings implements Serializable
 		return this;
 	}
 
-    public boolean isStateless() 
-    {
-        return stateless;
-    }
+	public boolean isStateless()
+	{
+		return stateless;
+	}
 
-    public void setStateless(boolean stateless) 
-    {
-        this.stateless = stateless;
-    }
+	public void setStateless(boolean stateless)
+	{
+		this.stateless = stateless;
+	}
 
-    public String getMountPath() 
-    {
-        return mountPath;
-    }
+	public String getMountPath()
+	{
+		return mountPath;
+	}
 
-    public void setMountPath(String mountPath) 
-    {
-        this.mountPath = mountPath;
-    }
+	public void setMountPath(String mountPath)
+	{
+		this.mountPath = mountPath;
+	}
 }

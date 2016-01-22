@@ -114,15 +114,15 @@ abstract class AbstractSelect2Choice<T, M> extends AbstractTextComponent<M> impl
 		this.provider = provider;
 		add(new Select2ResourcesBehavior() {
 
-            @Override
-            public void renderHead(Component component, IHeaderResponse response) {
-                super.renderHead(component, response);
-                // render theme related resources if any
-                if(settings.getTheme() != null) {
-                    settings.getTheme().renderHead(component, response);
-                }
-            }
-        });
+			@Override
+			public void renderHead(Component component, IHeaderResponse response) {
+				super.renderHead(component, response);
+				// render theme related resources if any
+				if(settings.getTheme() != null) {
+					settings.getTheme().renderHead(component, response);
+				}
+			}
+		});
 		setOutputMarkupId(true);
 	}
 
@@ -158,7 +158,7 @@ abstract class AbstractSelect2Choice<T, M> extends AbstractTextComponent<M> impl
 		return provider;
 	}
 
-    @Override
+	@Override
 	public final void convertInput()
 	{
 		// AbstractSelect2Choice uses ChoiceProvider to convert IDS into objects.
@@ -256,18 +256,19 @@ abstract class AbstractSelect2Choice<T, M> extends AbstractTextComponent<M> impl
 		super.onInitialize();
 
 		// configure the ajax callbacks
-        if (isAjax() && !settings.isStateless())
+		if (isAjax() && !settings.isStateless())
 		{
 			AjaxSettings ajax = getSettings().getAjax(true);
 			ajax.setData(String.format(
 					"function(params) { return { q: params.term, page: params.page, '%s':true, '%s':[window.location.protocol, '//', window.location.host, window.location.pathname].join('')}; }",
 					WebRequest.PARAM_AJAX, WebRequest.PARAM_AJAX_BASE_URL));
 			ajax.setProcessResults("function(data, page) { return { results: data.items, pagination: { more: data.more } };  }");
-		} else if(settings.isStateless()) //configure stateless mode
-        {
-            AjaxSettings ajax = getSettings().getAjax(true);
-            ajax.setProcessResults("function(data, page) { return { results: data.items, pagination: { more: data.more } };  }");
-        }
+		}
+		else if (settings.isStateless()) //configure stateless mode
+		{
+			AjaxSettings ajax = getSettings().getAjax(true);
+			ajax.setProcessResults("function(data, page) { return { results: data.items, pagination: { more: data.more } };  }");
+		}
 		// configure the localized strings/renderers
 		getSettings().setFormatNoMatches(
 				"function() { return '" + getEscapedJsString("noMatches") + "';}");
@@ -290,14 +291,15 @@ abstract class AbstractSelect2Choice<T, M> extends AbstractTextComponent<M> impl
 	protected void onConfigure()
 	{
 		super.onConfigure();
-        if(getSettings().isStateless())
-        {
-            if(Strings.isEmpty(getSettings().getMountPath())) 
-            {
-                throw new IllegalStateException("Select2 in stateless mode should specify a mountPath");
-            }
-            getSettings().getAjax(true).setUrl(getSettings().getMountPath());
-        } else if (isAjax())
+		if(getSettings().isStateless())
+		{
+			if(Strings.isEmpty(getSettings().getMountPath()))
+			{
+				throw new IllegalStateException("Select2 in stateless mode should specify a mountPath");
+			}
+			getSettings().getAjax(true).setUrl(getSettings().getMountPath());
+		}
+		else if (isAjax())
 		{
 			getSettings().getAjax().setUrl(urlFor(IResourceListener.INTERFACE, null));
 		}
@@ -325,10 +327,10 @@ abstract class AbstractSelect2Choice<T, M> extends AbstractTextComponent<M> impl
 	@Override
 	protected boolean getStatelessHint()
 	{
-        if( settings.isStateless() )
-        {
-            return true;
-        }
+		if(settings.isStateless())
+		{
+			return true;
+		}
 		return !isAjax();
 	}
 
@@ -407,10 +409,10 @@ abstract class AbstractSelect2Choice<T, M> extends AbstractTextComponent<M> impl
 	@Override
 	public void onResourceRequested()
 	{
-        WebResponse webResponse = (WebResponse) getRequestCycle().getResponse();
-        webResponse.setContentType("application/json");
-        generateJSON(provider, webResponse.getOutputStream());
-    }
+		WebResponse webResponse = (WebResponse) getRequestCycle().getResponse();
+		webResponse.setContentType("application/json");
+		generateJSON(provider, webResponse.getOutputStream());
+	}
 
 	@Override
 	protected void onDetach()
@@ -467,13 +469,14 @@ abstract class AbstractSelect2Choice<T, M> extends AbstractTextComponent<M> impl
 			}
 		}
 		else
-        {
+		{
 			if (currentValue != null) {
 				@SuppressWarnings("unchecked")
 				T choice = (T)currentValue;
 				addOption(choice, buffer);
 			}
-        }
+		}
 		replaceComponentTagBody(markupStream, openTag, buffer);
 	}
 }
+
