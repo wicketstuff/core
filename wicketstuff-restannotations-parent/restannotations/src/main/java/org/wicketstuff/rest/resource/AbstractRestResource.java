@@ -208,8 +208,7 @@ public abstract class AbstractRestResource<T extends IWebSerialDeserial> impleme
 		// 1-check if user is authorized to invoke the method
 		if (!isUserAuthorized(methodInfo.getRoles()))
 		{
-			response.write(USER_IS_NOT_ALLOWED);
-			response.setStatus(401);
+			unauthorizedMethodAccess(response, methodInfo);
 			return;
 		}
 
@@ -271,6 +270,18 @@ public abstract class AbstractRestResource<T extends IWebSerialDeserial> impleme
 		{
 			return roleCheckingStrategy.hasAnyRole(roles);
 		}
+	}
+
+	/**
+	 * Handle unauthorized user access. Default: set response Status to 401. Override this method to implement
+	 * customized handling
+	 * @param response Response-Object
+	 * @param methodInfo The mapped method
+	 */
+	protected void unauthorizedMethodAccess(WebResponse response, MethodMappingInfo methodInfo)
+	{
+		response.write(USER_IS_NOT_ALLOWED);
+		response.setStatus(401);
 	}
 
 	/**
