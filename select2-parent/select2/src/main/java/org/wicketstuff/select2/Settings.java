@@ -14,9 +14,11 @@ package org.wicketstuff.select2;
 
 import java.io.Serializable;
 
+import org.apache.wicket.Component;
 import org.apache.wicket.WicketRuntimeException;
 import org.apache.wicket.ajax.json.JSONException;
 import org.apache.wicket.ajax.json.JSONStringer;
+import org.apache.wicket.markup.head.IHeaderResponse;
 import org.wicketstuff.select2.json.Json;
 
 /**
@@ -53,7 +55,6 @@ public final class Settings implements Serializable
 	private String initSelection;  //TODO this will not work
 	private String query;
 	private String width;
-	private String theme;
 	private String containerCss, dropdownCss, containerCssClass, dropdownCssClass; //TODO deprecated
 
 	private AjaxSettings ajax;
@@ -63,6 +64,10 @@ public final class Settings implements Serializable
 	private String[] tokenSeparators;
 	private boolean selectOnClose;
 	private boolean dropdownAutoWidth;
+    /**
+     * Theme is an interface that might contribute to the headers.
+     */
+    private ISelect2Theme theme;
 
     /**
      * If stateless is set to true then component will not be used as context 
@@ -104,7 +109,7 @@ public final class Settings implements Serializable
 			Json.writeFunction(writer, "initSelection", initSelection);
 			Json.writeFunction(writer, "query", query);
 			Json.writeObject(writer, "width", width);
-			Json.writeObject(writer, "theme", theme);
+			Json.writeObject(writer, "theme", theme != null? theme.name(): null);
 			Json.writeFunction(writer, "containerCss", containerCss);
 			Json.writeObject(writer, "containerCssClass", containerCssClass);
 			Json.writeFunction(writer, "dropdownCss", dropdownCss);
@@ -428,16 +433,33 @@ public final class Settings implements Serializable
 		return this;
 	}
 
-	public String getTheme()
+	public ISelect2Theme getTheme()
 	{
 		return theme;
 	}
 
-	public Settings setTheme(String theme)
+	public Settings setTheme(final String theme)
 	{
-		this.theme = theme;
+		this.theme = new ISelect2Theme() {
+            
+            @Override
+            public void renderHead(Component varComponent, IHeaderResponse varResponse) {
+                
+            }
+
+            @Override
+            public String name() {
+                return theme;
+            }
+        };
 		return this;
 	}
+
+
+    public Settings setTheme(ISelect2Theme theme) {
+        this.theme = theme;
+        return this;
+    }
 
 	public String getContainerCss()
 	{
