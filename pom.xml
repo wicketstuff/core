@@ -335,6 +335,8 @@
 		<module>wicketstuff-glassfish4-integration</module>
 		<module>serializer-fast2</module>
 		<module>dashboard-parent</module>
+		
+		<module>jamon-parent</module>
     </modules>
 
 	<dependencies>
