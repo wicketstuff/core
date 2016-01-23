@@ -17,7 +17,7 @@
 package org.wicketstuff.jamon.webapp;
 
 import org.apache.wicket.markup.html.WebPage;
-import org.apache.wicket.markup.html.link.Link;
+import org.apache.wicket.markup.html.link.BookmarkablePageLink;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
 import org.wicketstuff.jamon.component.JamonAdminPage;
 
@@ -32,24 +32,9 @@ public class HomePage extends WebPage
 {
 	public HomePage()
 	{
-		add(new Link<Void>("toStatisticsPage")
-		{
+		add(new BookmarkablePageLink<Void>("toStatisticsPage", JamonAdminPage.class,
+			new PageParameters().set(JamonAdminPage.PARAM_ITEMS, 100)));
 
-			@Override
-			public void onClick()
-			{
-				setResponsePage(
-					new JamonAdminPage(new PageParameters().set(JamonAdminPage.PARAM_ITEMS, 100)));
-			}
-		});
-		add(new Link<Void>("toAjaxPage")
-		{
-
-			@Override
-			public void onClick()
-			{
-				setResponsePage(new AjaxPage());
-			}
-		});
+		add(new BookmarkablePageLink<Void>("toAjaxPage", AjaxPage.class));
 	}
 }
