@@ -76,11 +76,9 @@ public class NashornMemoryWatcher implements Runnable
 		boolean debug, Writer errorWriter)
 	{
 		this.threadMXBean = (ThreadMXBean)ManagementFactory.getThreadMXBean();
-		if (this.threadAllocatedMemorySupported = this.threadMXBean
-			.isThreadAllocatedMemorySupported())
-		{
-			this.threadMXBean.setThreadAllocatedMemoryEnabled(true);
-		}
+		this.threadMXBean
+			.setThreadAllocatedMemoryEnabled(this.threadAllocatedMemorySupported = this.threadMXBean
+				.isThreadAllocatedMemorySupported());
 		this.nashornScriptCallable = nashornScriptCallable;
 		this.scriptTask = scriptTask;
 		this.wait = wait;
@@ -108,9 +106,9 @@ public class NashornMemoryWatcher implements Runnable
 							try
 							{
 								errorWriter
-									.write("The script process with the thread id: " + threadId
-										+ " has been aborted due to memory abuse!\nSafe Script: "
-										+ nashornScriptCallable.getScript() + "\n");
+									.write("The script process with the thread id: " + threadId +
+										" has been aborted due to memory abuse!\nSafe Script: " +
+										nashornScriptCallable.getScript() + "\n");
 								errorWriter.flush();
 							}
 							catch (IOException e)
@@ -135,8 +133,8 @@ public class NashornMemoryWatcher implements Runnable
 		else
 		{
 			throw new IllegalStateException(
-				"The measurement of allocated memory is not enabled / supported! This may cause scripts to abuse memory consumption! To deactivate the watch feature don't apply the corresponding parameters at the "
-					+ NashornResourceReference.class.getName());
+				"The measurement of allocated memory is not enabled / supported! This may cause scripts to abuse memory consumption! To deactivate the watch feature don't apply the corresponding parameters at the " +
+					NashornResourceReference.class.getName());
 		}
 	}
 }
