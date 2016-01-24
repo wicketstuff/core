@@ -61,6 +61,12 @@ public class NashornScriptCallable implements Callable<Object>
 	 *            the script to be executed
 	 * @param attributes
 	 *            the attributes to
+	 * @param classFilter
+	 *            the class filter to be applied
+	 * @param writer
+	 *            the writer to output script prints
+	 * @param errorWriter
+	 *            the writer to output errors
 	 */
 	public NashornScriptCallable(String script, Attributes attributes, ClassFilter classFilter,
 		Writer writer, Writer errorWriter)
@@ -75,6 +81,7 @@ public class NashornScriptCallable implements Callable<Object>
 	@Override
 	public Object call() throws Exception
 	{
+		enableSecurity();
 		ScriptEngine scriptEngine = new NashornScriptEngineFactory()
 			.getScriptEngine(getClassFilter());
 		Bindings bindings = scriptEngine.createBindings();
@@ -87,6 +94,18 @@ public class NashornScriptCallable implements Callable<Object>
 		bindings.put("nashornResourceReferenceScriptExecutionThread", thread);
 		scriptContext.setBindings(bindings, ScriptContext.ENGINE_SCOPE);
 		return scriptEngine.eval(new StringReader(getScript()), scriptContext);
+	}
+
+	/**
+	 * Enables the security for the current thread
+	 */
+	private void enableSecurity()
+	{
+		SecurityManager securityManager = System.getSecurityManager();
+		if (securityManager != null && securityManager instanceof NashornSecurityManager)
+		{
+			((NashornSecurityManager)securityManager).enable();
+		}
 	}
 
 	/**

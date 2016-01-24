@@ -35,7 +35,9 @@ import com.sun.management.ThreadMXBean;
 public class NashornMemoryWatcher implements Runnable
 {
 
-	private ThreadMXBean threadMXBean = (ThreadMXBean)ManagementFactory.getThreadMXBean();
+	private ThreadMXBean threadMXBean;
+
+	private boolean threadAllocatedMemorySupported;
 
 	private NashornScriptCallable nashornScriptCallable;
 
@@ -73,6 +75,12 @@ public class NashornMemoryWatcher implements Runnable
 		final Future<Object> scriptTask, long wait, TimeUnit unit, long maxMemoryUsage,
 		boolean debug, Writer errorWriter)
 	{
+		this.threadMXBean = (ThreadMXBean)ManagementFactory.getThreadMXBean();
+		if (this.threadAllocatedMemorySupported = this.threadMXBean
+			.isThreadAllocatedMemorySupported())
+		{
+			this.threadMXBean.setThreadAllocatedMemoryEnabled(true);
+		}
 		this.nashornScriptCallable = nashornScriptCallable;
 		this.scriptTask = scriptTask;
 		this.wait = wait;
@@ -85,40 +93,50 @@ public class NashornMemoryWatcher implements Runnable
 	@Override
 	public void run()
 	{
-		while (!scriptTask.isDone())
+		if (threadAllocatedMemorySupported)
 		{
-			long threadId = nashornScriptCallable.getThreadId();
-			if (threadId >= 0)
+			while (!scriptTask.isDone())
 			{
-				long threadAllocatedBytes = threadMXBean.getThreadAllocatedBytes(threadId);
-				if (threadAllocatedBytes > maxMemoryUsage)
+				long threadId = nashornScriptCallable.getThreadId();
+				if (threadId >= 0)
 				{
-					if (debug)
+					long threadAllocatedBytes = threadMXBean.getThreadAllocatedBytes(threadId);
+					if (threadAllocatedBytes > maxMemoryUsage)
 					{
-						try
+						if (debug)
 						{
-							errorWriter.write("The script process with the thread id: " + threadId
-								+ " has been aborted due to memory abuse!\nSafe Script: "
-								+ nashornScriptCallable.getScript() + "\n");
-							errorWriter.flush();
+							try
+							{
+								errorWriter
+									.write("The script process with the thread id: " + threadId
+										+ " has been aborted due to memory abuse!\nSafe Script: "
+										+ nashornScriptCallable.getScript() + "\n");
+								errorWriter.flush();
+							}
+							catch (IOException e)
+							{
+								// NOOP
+							}
 						}
-						catch (IOException e)
-						{
-							// NOOP
-						}
-					}
-					scriptTask.cancel(true);
+						scriptTask.cancel(true);
 
+					}
+				}
+				try
+				{
+					unit.sleep(wait);
+				}
+				catch (InterruptedException e)
+				{
+					// NOOP
 				}
 			}
-			try
-			{
-				unit.sleep(wait);
-			}
-			catch (InterruptedException e)
-			{
-				// NOOP
-			}
+		}
+		else
+		{
+			throw new IllegalStateException(
+				"The measurement of allocated memory is not enabled / supported! This may cause scripts to abuse memory consumption! To deactivate the watch feature don't apply the corresponding parameters at the "
+					+ NashornResourceReference.class.getName());
 		}
 	}
 }

@@ -33,7 +33,9 @@ import jdk.nashorn.api.scripting.ClassFilter;
 import org.apache.wicket.request.resource.ResourceReference;
 
 /**
- * Creates a nashorn resource reference to accept java script code from the client side
+ * Creates a nashorn resource reference to accept java script code from the client side.<br>
+ * <br>
+ * Please ensure to use the {@link NashornSecurityManager} to restrict class access.
  * 
  * @author Tobias Soloschenko
  *

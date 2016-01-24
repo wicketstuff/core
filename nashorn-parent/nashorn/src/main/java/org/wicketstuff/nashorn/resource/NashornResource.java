@@ -36,7 +36,9 @@ import org.apache.wicket.request.resource.PartWriterCallback;
 import jdk.nashorn.api.scripting.ClassFilter;
 
 /**
- * A nashorn resource to execute java script on server side
+ * A nashorn resource to execute java script on server side.<br>
+ * <br>
+ * Please ensure to use the {@link NashornSecurityManager} to restrict class access.
  * 
  * @author Tobias Soloschenko
  *
