@@ -126,7 +126,7 @@ public class SchedulerEventFactory implements IClusterable
 	{
 		try
 		{
-			SchedulerEvent event = new SchedulerEvent();
+			SchedulerEvent event = this.newSchedulerEvent();
 			event.setId(object.getInt("id"));
 			event.setTitle(object.optString("title"));
 			event.setDescription(object.optString("description"));
@@ -176,5 +176,15 @@ public class SchedulerEventFactory implements IClusterable
 		}
 
 		return null;
+	}
+
+	/**
+	 * Gets a new {@link SchedulerEvent} object
+	 * 
+	 * @return a new {@link SchedulerEvent} object
+	 */
+	protected SchedulerEvent newSchedulerEvent()
+	{
+		return new SchedulerEvent();
 	}
 }
