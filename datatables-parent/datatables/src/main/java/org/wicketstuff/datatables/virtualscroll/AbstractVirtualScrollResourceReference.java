@@ -27,6 +27,8 @@ public abstract class AbstractVirtualScrollResourceReference<T> extends Resource
 	public static final String ORDER_0_DIRECTION_PARAMETER = "order[0][dir]";
 	public static final String ASCENDING_DIRECTION = "asc";
 	public static final String DESCENDING_DIRECTION = "desc";
+	public static final String SEARCH_VALUE_PARAMETER = "search[value]";
+	public static final String SEARCH_REGEX_PARAMETER = "search[regex]";
 
 	/*
 	 * The names of the fields in the JSON response
