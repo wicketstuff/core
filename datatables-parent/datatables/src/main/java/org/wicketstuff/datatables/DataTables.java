@@ -68,9 +68,11 @@ public class DataTables<T, S> extends DataTable<T, S> {
     public void renderHead(IHeaderResponse response) {
         super.renderHead(response);
 
-        String dataTableFn = $(this).chain("dataTable", getOptions()).get();
-        String setup = String.format("window['%s'] = %s", getJsHandle(), dataTableFn);
-        response.render(OnDomReadyHeaderItem.forScript(setup));
+        if (isEnabledInHierarchy()) {
+            String dataTableFn = $(this).chain("dataTable", getOptions()).get();
+            String setup = String.format("window['%s'] = %s", getJsHandle(), dataTableFn);
+            response.render(OnDomReadyHeaderItem.forScript(setup));
+        }
     }
 
     /**
