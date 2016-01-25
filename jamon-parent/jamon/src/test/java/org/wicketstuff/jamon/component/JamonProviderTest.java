@@ -23,11 +23,12 @@ import static org.wicketstuff.jamon.component.JamonTestUtil.startThisManyMonitor
 import java.util.Iterator;
 
 import org.apache.wicket.extensions.markup.html.repeater.data.sort.SortOrder;
+import org.apache.wicket.util.tester.WicketTester;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import org.wicketstuff.jamon.component.JamonProvider;
 import org.wicketstuff.jamon.monitor.AlwaysSatisfiedMonitorSpecification;
+import org.wicketstuff.jamon.monitor.JamonRepository;
 
 import com.jamonapi.Monitor;
 import com.jamonapi.MonitorFactory;
@@ -37,10 +38,15 @@ public class JamonProviderTest
 {
 
 	private JamonProvider jamonProvider;
-
+	
+	private WicketTester wicketTester;
+	
 	@Before
 	public void setup()
 	{
+		wicketTester = new WicketTester(JamonAdminPage.class);
+		wicketTester.getApplication().setMetaData(JamonRepositoryKey.KEY, new JamonRepository());
+		
 		jamonProvider = new JamonProvider(new AlwaysSatisfiedMonitorSpecification());
 	}
 
