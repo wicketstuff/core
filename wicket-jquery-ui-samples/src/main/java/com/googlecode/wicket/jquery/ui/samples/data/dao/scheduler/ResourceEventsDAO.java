@@ -23,11 +23,11 @@ public class ResourceEventsDAO extends AbstractSchedulerEventsDAO
 	protected ResourceEventsDAO()
 	{
 		SchedulerEvent event1 = new SchedulerEvent(this.newId(), "Event #1", new Date());
-		event1.setResource(AGENDA_ID, 1);
+		event1.setValue(AGENDA_ID, 1);
 		this.list.add(event1);
 
 		SchedulerEvent event2 = new SchedulerEvent(this.newId(), "Event #2", new Date());
-		event2.setResource(AGENDA_ID, 2);
+		event2.setValue(AGENDA_ID, 2);
 		this.list.add(event2);
 	}
 
@@ -38,7 +38,7 @@ public class ResourceEventsDAO extends AbstractSchedulerEventsDAO
 
 		if (e != null)
 		{
-			e.setResource(AGENDA_ID, (Integer) event.getValue(AGENDA_ID));
+			e.setValue(AGENDA_ID, (Integer) event.getValue(AGENDA_ID));
 		}
 
 		return e;

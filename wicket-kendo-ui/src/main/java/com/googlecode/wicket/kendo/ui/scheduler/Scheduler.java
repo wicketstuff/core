@@ -304,6 +304,16 @@ public class Scheduler extends JQueryContainer implements ISchedulerListener
 		}
 	}
 
+	/**
+	 * Configure the {@link SchedulerDataSource} with additional options
+	 * 
+	 * @param dataSource the {@link SchedulerDataSource}
+	 */
+	protected void onConfigure(SchedulerDataSource dataSource)
+	{
+		// noop
+	}
+
 	@Override
 	public void onEdit(AjaxRequestTarget target, SchedulerEvent event, SchedulerViewType view)
 	{
@@ -346,6 +356,8 @@ public class Scheduler extends JQueryContainer implements ISchedulerListener
 
 			private static final long serialVersionUID = 1L;
 
+			// Properties //
+
 			@Override
 			protected CharSequence getDataSourceUrl()
 			{
@@ -356,6 +368,14 @@ public class Scheduler extends JQueryContainer implements ISchedulerListener
 			protected ResourceListModel getResourceListModel()
 			{
 				return Scheduler.this.resourceListModel;
+			}
+
+			// Events //
+
+			@Override
+			protected void onConfigure(SchedulerDataSource dataSource)
+			{
+				Scheduler.this.onConfigure(dataSource);
 			}
 		};
 	}
@@ -399,7 +419,7 @@ public class Scheduler extends JQueryContainer implements ISchedulerListener
 	 * Gets a new {@link SchedulerModelBehavior}
 	 *
 	 * @param model the {@link SchedulerModel}
-	 * @param schedulerEventFactory 
+	 * @param schedulerEventFactory
 	 * @return the {@link SchedulerModelBehavior}
 	 */
 	protected SchedulerModelBehavior newSchedulerModelBehavior(final SchedulerModel model, SchedulerEventFactory factory)

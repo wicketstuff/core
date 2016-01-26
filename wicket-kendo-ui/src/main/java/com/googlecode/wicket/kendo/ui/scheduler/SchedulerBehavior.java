@@ -186,6 +186,7 @@ public abstract class SchedulerBehavior extends KendoUIBehavior implements IJQue
 		}
 
 		// data-source //
+		this.onConfigure(this.dataSource);
 		this.setOption("dataSource", this.dataSource.getName());
 
 		this.dataSource.setTransportRead(this.getReadCallbackFunction());
@@ -198,6 +199,16 @@ public abstract class SchedulerBehavior extends KendoUIBehavior implements IJQue
 
 		// resource //
 		this.setOption("resources", this.getResourceListModel());
+	}
+
+	/**
+	 * Configure the {@link SchedulerDataSource} with additional options
+	 * 
+	 * @param dataSource the {@link SchedulerDataSource}
+	 */
+	protected void onConfigure(SchedulerDataSource dataSource)
+	{
+		// noop
 	}
 
 	@Override

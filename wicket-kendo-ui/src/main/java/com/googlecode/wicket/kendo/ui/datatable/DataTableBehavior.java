@@ -345,7 +345,6 @@ public abstract class DataTableBehavior extends KendoUIBehavior implements IJQue
 
 		// data-source //
 		this.onConfigure(this.dataSource);
-
 		this.setOption("dataSource", this.dataSource.getName());
 
 		this.dataSource.set("pageSize", this.getRowCount());

@@ -160,11 +160,11 @@ public class SchedulerEventFactory implements IClusterable
 
 				if (list.isMultiple())
 				{
-					event.setResource(field, values);
+					event.setValue(field, values);
 				}
 				else if (!values.isEmpty())
 				{
-					event.setResource(field, values.get(0)); // if the underlying value is a number (even a string-number), it will be handled by Id#valueOf(I)
+					event.setValue(field, values.get(0)); // if the underlying value is a number (even a string-number), it will be handled by Id#valueOf(I)
 				}
 			}
 

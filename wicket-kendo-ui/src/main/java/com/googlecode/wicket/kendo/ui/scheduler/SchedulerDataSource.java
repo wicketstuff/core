@@ -16,6 +16,7 @@
  */
 package com.googlecode.wicket.kendo.ui.scheduler;
 
+import com.googlecode.wicket.jquery.core.Options;
 import com.googlecode.wicket.kendo.ui.KendoDataSource;
 
 /**
@@ -54,5 +55,28 @@ public class SchedulerDataSource extends KendoDataSource
 	public String toScript()
 	{
 		return String.format("jQuery(function() { %s = new kendo.data.SchedulerDataSource(%s); });", this.getName(), this.build());
+	}
+
+	/**
+	 * Gets default schema fields<br/>
+	 * This can be used for advanced usage/mapping
+	 * 
+	 * @return an {@link Options} of default schema fields
+	 */
+	public static Options newDefaultFields()
+	{
+		Options options = new Options();
+
+		options.set("id", "{ type: 'number' }");
+		options.set("title", "{ validation: { required: true } }");
+		options.set("start", "{ type: 'date' }");
+		options.set("end", "{ type: 'date' }");
+		options.set("description", "{  }");
+		options.set("recurrenceId", "{  }");
+		options.set("recurrenceRule", "{ }");
+		options.set("recurrenceException", "{  }");
+		options.set("isAllDay", "{ type: 'boolean' }");
+
+		return options;
 	}
 }
