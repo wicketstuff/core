@@ -1,22 +1,35 @@
-/**
- * Copyright 2015 Telerik AD
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-(function(f, define){
-    define([], f);
-})(function(){
+/** 
+ * Copyright 2016 Telerik AD                                                                                                                                                                            
+ *                                                                                                                                                                                                      
+ * Licensed under the Apache License, Version 2.0 (the "License");                                                                                                                                      
+ * you may not use this file except in compliance with the License.                                                                                                                                     
+ * You may obtain a copy of the License at                                                                                                                                                              
+ *                                                                                                                                                                                                      
+ *     http://www.apache.org/licenses/LICENSE-2.0                                                                                                                                                       
+ *                                                                                                                                                                                                      
+ * Unless required by applicable law or agreed to in writing, software                                                                                                                                  
+ * distributed under the License is distributed on an "AS IS" BASIS,                                                                                                                                    
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.                                                                                                                             
+ * See the License for the specific language governing permissions and                                                                                                                                  
+ * limitations under the License.                                                                                                                                                                       
+                                                                                                                                                                                                       
+                                                                                                                                                                                                       
+                                                                                                                                                                                                       
+                                                                                                                                                                                                       
+                                                                                                                                                                                                       
+                                                                                                                                                                                                       
+                                                                                                                                                                                                       
+                                                                                                                                                                                                       
 
+*/
+
+(function(f){
+    if (typeof define === 'function' && define.amd) {
+        define([ "./kendo.core" ], f);
+    } else {
+        f();
+    }
+}(function(){
 (function ($, undefined) {
 /* Filter cell operator messages */
 
@@ -100,8 +113,8 @@ $.extend(true, kendo.ui.ColumnMenu.prototype.options.messages,{
   "done": "Feito",
   "sortAscending": "Ordenar Ascendente",
   "sortDescending": "Ordenar Descendente",
-  "lock": "Travar",
-  "unlock": "Destravar"
+  "lock": "Congelar",
+  "unlock": "Descongelar"
 });
 }
 
@@ -111,7 +124,7 @@ if (kendo.ui.RecurrenceEditor) {
 kendo.ui.RecurrenceEditor.prototype.options.messages =
 $.extend(true, kendo.ui.RecurrenceEditor.prototype.options.messages,{
   "daily": {
-    "days": "dia(s)",
+    "interval": "dia(s)",
     "repeatEvery": "Repetir todo:"
   },
   "end": {
@@ -131,7 +144,7 @@ $.extend(true, kendo.ui.RecurrenceEditor.prototype.options.messages,{
   },
   "monthly": {
     "day": "Dia",
-    "months": "mês(es)",
+    "interval": "mês(es)",
     "repeatEvery": "Repetir todo:",
     "repeatOn": "Repetir em:"
   },
@@ -145,13 +158,13 @@ $.extend(true, kendo.ui.RecurrenceEditor.prototype.options.messages,{
   "weekly": {
     "repeatEvery": "Repetir todo:",
     "repeatOn": "Repetir em:",
-    "weeks": "semana(s)"
+    "interval": "semana(s)"
   },
   "yearly": {
     "of": "de",
     "repeatEvery": "Repetir todo:",
     "repeatOn": "Repetir em:",
-    "years": "ano(s)"
+    "interval": "ano(s)"
   }
 });
 }
@@ -176,7 +189,7 @@ $.extend(true, kendo.ui.Editor.prototype.options.messages,{
   "dialogCancel": "Cancelar",
   "dialogInsert": "Inserir",
   "directoryNotFound": "Um diretório com este nome não foi encontrado.",
-  "dropFilesHere": "drop files here to upload",
+  "dropFilesHere": "Arraste e solte arquyivos aqui para enviá-los",
   "emptyFolder": "Pasta vazia",
   "fontName": "Fonte",
   "fontNameInherit": "(fonte herdada)",
@@ -211,13 +224,13 @@ $.extend(true, kendo.ui.Editor.prototype.options.messages,{
   "styles": "Estilo",
   "subscript": "Subscrito",
   "superscript": "Sobrescrito",
-  "underline": "Remover Link",
-  "unlink": "Remove hyperlink",
+  "underline": "Sublinhado",
+  "unlink": "Remove Hyperlink",
   "uploadFile": "Enviar arquivo",
-  "formatting": "Format",
-  "viewHtml": "View HTML",
-  "dialogUpdate": "Update",
-  "insertFile": "Insert file"
+  "formatting": "Formato",
+  "viewHtml": "Exibir código HTML",
+  "dialogUpdate": "Atualizar",
+  "insertFile": "Inserir arquivo"
 });
 }
 
@@ -248,7 +261,7 @@ $.extend(true, kendo.ui.FilterMenu.prototype.options.messages,{
   "isTrue": "É verdade",
   "operator": "Operador",
   "or": "Ou",
-  "selectValue": "-Select value-",
+  "selectValue": "-Selecione uma opção-",
   "value": "Valor"
 });
 }
@@ -301,7 +314,7 @@ $.extend(true, kendo.ui.Pager.prototype.options.messages,{
   "next": "Ir para a próxima página",
   "of": "de {0}",
   "page": "Página",
-  "previous": "Vá para a página anterior",
+  "previous": "Ir para a página anterior",
   "refresh": "Atualizar",
   "morePages": "Mais páginas"
 });
@@ -334,7 +347,7 @@ $.extend(true, kendo.ui.Scheduler.prototype.options.messages,{
     "timezoneEditorButton": "Fuso horário",
     "timezoneEditorTitle": "Fusos-horários",
     "title": "Título",
-    "noTimezone": "No timezone"
+    "noTimezone": "Sem fuso-horário"
   },
   "event": "Evento",
   "recurrenceMessages": {
@@ -357,7 +370,7 @@ $.extend(true, kendo.ui.Scheduler.prototype.options.messages,{
     "day": "Dia",
     "month": "Mês",
     "week": "Semana",
-    "workWeek": "Work Week"
+    "workWeek": "Semana de trabalho"
   }
 });
 }
@@ -369,22 +382,16 @@ kendo.ui.Upload.prototype.options.localization =
 $.extend(true, kendo.ui.Upload.prototype.options.localization,{
   "cancel": "Cancelar",
   "dropFilesHere": "arraste arquivos aqui para enviar",
-  "headerStatusUploaded": "Done",
-  "headerStatusUploading": "Uploading...",
+  "headerStatusUploaded": "Pronto",
+  "headerStatusUploading": "Carregando...",
   "remove": "Remover",
   "retry": "Tentar novamente",
   "select": "Selecionar...",
   "statusFailed": "falhou",
   "statusUploaded": "enviado",
   "statusUploading": "enviando",
-  "statusUploading1": "enviando",
-  "uploadSelectedFiles": "Enviar arquivos",
-  "uploadSelectedFiles1": "Enviar arquivos"
+  "uploadSelectedFiles": "Enviar arquivos"
 });
 }
 })(window.kendo.jQuery);
-
-
-return window.kendo;
-
-}, typeof define == 'function' && define.amd ? define : function(_, f){ f(); });
+}));

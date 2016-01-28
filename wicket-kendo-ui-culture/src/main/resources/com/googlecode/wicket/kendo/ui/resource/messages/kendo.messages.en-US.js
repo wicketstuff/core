@@ -1,22 +1,35 @@
-/**
- * Copyright 2015 Telerik AD
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-(function(f, define){
-    define([], f);
-})(function(){
+/** 
+ * Copyright 2016 Telerik AD                                                                                                                                                                            
+ *                                                                                                                                                                                                      
+ * Licensed under the Apache License, Version 2.0 (the "License");                                                                                                                                      
+ * you may not use this file except in compliance with the License.                                                                                                                                     
+ * You may obtain a copy of the License at                                                                                                                                                              
+ *                                                                                                                                                                                                      
+ *     http://www.apache.org/licenses/LICENSE-2.0                                                                                                                                                       
+ *                                                                                                                                                                                                      
+ * Unless required by applicable law or agreed to in writing, software                                                                                                                                  
+ * distributed under the License is distributed on an "AS IS" BASIS,                                                                                                                                    
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.                                                                                                                             
+ * See the License for the specific language governing permissions and                                                                                                                                  
+ * limitations under the License.                                                                                                                                                                       
+                                                                                                                                                                                                       
+                                                                                                                                                                                                       
+                                                                                                                                                                                                       
+                                                                                                                                                                                                       
+                                                                                                                                                                                                       
+                                                                                                                                                                                                       
+                                                                                                                                                                                                       
+                                                                                                                                                                                                       
 
+*/
+
+(function(f){
+    if (typeof define === 'function' && define.amd) {
+        define([ "./kendo.core" ], f);
+    } else {
+        f();
+    }
+}(function(){
 (function ($, undefined) {
 /* FlatColorPicker messages */
 
@@ -528,7 +541,11 @@ $.extend(true, kendo.spreadsheet.messages.borderPalette,{
   "topBorder": "Top border",
   "rightBorder": "Right border",
   "bottomBorder": "Bottom border",
-  "noBorders": "No border"
+  "noBorders": "No border",
+  "reset": "Reset color",
+  "customColor": "Custom color...",
+  "apply": "Apply",
+  "cancel": "Cancel"
 });
 }
 
@@ -596,7 +613,8 @@ $.extend(true, kendo.spreadsheet.messages.dialogs,{
       "number": "Number",
       "text": "Text",
       "date": "Date",
-      "custom": "Custom Formula"
+      "custom": "Custom Formula",
+      "list": "List"
     },
     "comparers": {
       "greaterThan": "greater than",
@@ -632,7 +650,8 @@ $.extend(true, kendo.spreadsheet.messages.dialogs,{
       "showWarning": "Show warning",
       "showHint": "Show hint",
       "hintTitle": "Hint title",
-      "hintMessage": "Hint message"
+      "hintMessage": "Hint message",
+      "ignoreBlank": "Ignore blank"
     },
     "placeholders": {
       "typeTitle": "Type title",
@@ -646,8 +665,21 @@ $.extend(true, kendo.spreadsheet.messages.dialogs,{
       "saveAsType": "Save as type"
     }
   },
-  "excelExportDialog": {
-    "title": "Export to Excel..."
+  "exportAsDialog": {
+    "title": "Export...",
+    "labels": {
+      "fileName": "File name",
+      "saveAsType": "Save as type",
+      "exportArea": "Export",
+      "paperSize": "Paper size",
+      "margins": "Margins",
+      "orientation": "Orientation",
+      "print": "Print",
+      "guidelines": "Guidelines",
+      "center": "Center",
+      "horizontally": "Horizontally",
+      "vertically": "Vertically"
+    }
   },
   "modifyMergedDialog": {
     "errorMessage": "Cannot change part of a merged cell."
@@ -663,6 +695,46 @@ $.extend(true, kendo.spreadsheet.messages.dialogs,{
   },
   "unsupportedSelectionDialog": {
     "errorMessage": "That action cannot be performed on multiple selection."
+  }
+});
+}
+
+if (kendo.spreadsheet && kendo.spreadsheet.messages.filterMenu) {
+kendo.spreadsheet.messages.filterMenu =
+$.extend(true, kendo.spreadsheet.messages.filterMenu,{
+  "sortAscending": "Sort range A to Z",
+  "sortDescending": "Sort range Z to A",
+  "filterByValue": "Filter by value",
+  "filterByCondition": "Filter by condition",
+  "apply": "Apply",
+  "search": "Search",
+  "addToCurrent": "Add to current selection",
+  "clear": "Clear",
+  "blanks": "(Blanks)",
+  "operatorNone": "None",
+  "and": "AND",
+  "or": "OR",
+  "operators": {
+    "string": {
+      "contains": "Text contains",
+      "doesnotcontain": "Text does not contain",
+      "startswith": "Text starts with",
+      "endswith": "Text ends with"
+    },
+    "date": {
+      "eq":  "Date is",
+      "neq": "Date is not",
+      "lt":  "Date is before",
+      "gt":  "Date is after"
+    },
+    "number": {
+      "eq": "Is equal to",
+      "neq": "Is not equal to",
+      "gte": "Is greater than or equal to",
+      "gt": "Is greater than",
+      "lte": "Is less than or equal to",
+      "lt": "Is less than"
+    }
   }
 });
 }
@@ -687,11 +759,15 @@ $.extend(true, kendo.spreadsheet.messages.toolbar,{
   "backgroundColor": "Background",
   "bold": "Bold",
   "borders": "Borders",
+  "colorPicker": {
+    "reset": "Reset color",
+    "customColor": "Custom color..."
+  },
   "copy": "Copy",
   "cut": "Cut",
   "deleteColumn": "Delete column",
   "deleteRow": "Delete row",
-  "excelExport": "Export to Excel...",
+  "excelImport": "Import from Excel...",
   "filter": "Filter",
   "fontFamily": "Font",
   "fontSize": "Font size",
@@ -725,11 +801,13 @@ $.extend(true, kendo.spreadsheet.messages.toolbar,{
     "mergeVertically": "Merge vertically",
     "unmerge": "Unmerge"
   },
+  "open": "Open...",
   "paste": "Paste",
   "quickAccess": {
     "redo": "Redo",
     "undo": "Undo"
   },
+  "saveAs": "Save As...",
   "sortAsc": "Sort ascending",
   "sortDesc": "Sort descending",
   "sortButtons": {
@@ -749,7 +827,9 @@ if (kendo.spreadsheet && kendo.spreadsheet.messages.view) {
 kendo.spreadsheet.messages.view =
 $.extend(true, kendo.spreadsheet.messages.view,{
   "errors": {
-    "shiftingNonblankCells": "Cannot insert cells due to data loss possibility. Select another insert location or delete the data from the end of your worksheet."
+    "shiftingNonblankCells": "Cannot insert cells due to data loss possibility. Select another insert location or delete the data from the end of your worksheet.",
+    "filterRangeContainingMerges": "Cannot create a filter within a range containing merges",
+    "validationError": "The value that you entered violates the validation rules set on the cell."
   },
   "tabs": {
     "home": "Home",
@@ -839,8 +919,4 @@ $.extend(true, kendo.ui.Validator.prototype.options.messages,{
 });
 }
 })(window.kendo.jQuery);
-
-
-return window.kendo;
-
-}, typeof define == 'function' && define.amd ? define : function(_, f){ f(); });
+}));
