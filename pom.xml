@@ -58,10 +58,12 @@
 				<enabled>true</enabled>
 			</snapshots>
 		</repository>
+		<!-- 
 		<repository>
 			<id>Wicket Nexus Staging</id>
-			<url>https://repository.apache.org/content/repositories/orgapachewicket-1060-</url>
+			<url>https://repository.apache.org/content/repositories/orgapachewicket-1062</url>
 		</repository>
+		-->
 	</repositories>
 
 	<distributionManagement>
