@@ -1,22 +1,35 @@
-/**
- * Copyright 2015 Telerik AD
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-(function(f, define){
-    define([], f);
-})(function(){
+/** 
+ * Copyright 2016 Telerik AD                                                                                                                                                                            
+ *                                                                                                                                                                                                      
+ * Licensed under the Apache License, Version 2.0 (the "License");                                                                                                                                      
+ * you may not use this file except in compliance with the License.                                                                                                                                     
+ * You may obtain a copy of the License at                                                                                                                                                              
+ *                                                                                                                                                                                                      
+ *     http://www.apache.org/licenses/LICENSE-2.0                                                                                                                                                       
+ *                                                                                                                                                                                                      
+ * Unless required by applicable law or agreed to in writing, software                                                                                                                                  
+ * distributed under the License is distributed on an "AS IS" BASIS,                                                                                                                                    
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.                                                                                                                             
+ * See the License for the specific language governing permissions and                                                                                                                                  
+ * limitations under the License.                                                                                                                                                                       
+                                                                                                                                                                                                       
+                                                                                                                                                                                                       
+                                                                                                                                                                                                       
+                                                                                                                                                                                                       
+                                                                                                                                                                                                       
+                                                                                                                                                                                                       
+                                                                                                                                                                                                       
+                                                                                                                                                                                                       
 
+*/
+
+(function(f){
+    if (typeof define === 'function' && define.amd) {
+        define([ "./kendo.core" ], f);
+    } else {
+        f();
+    }
+}(function(){
 (function ($, undefined) {
 /* Filter cell operator messages */
 
@@ -45,7 +58,7 @@ $.extend(true, kendo.ui.FilterCell.prototype.options.operators,{
     "neq": "Er forskellig fra",
     "startswith": "Begynder med",
     "contains": "Indeholder",
-    "doesnotcontain": "Indeholder ikke"
+    "doesnotcontain": "Ikke indeholder"
   },
   "enums": {
     "eq": "Er lig med",
@@ -81,7 +94,7 @@ $.extend(true, kendo.ui.FilterMenu.prototype.options.operators,{
     "neq": "Er forskellig fra",
     "startswith": "Begynder med",
     "contains": "Indeholder",
-    "doesnotcontain": "Indeholder ikke"
+    "doesnotcontain": "Ikke indeholder"
   },
   "enums": {
     "eq": "Er lig med",
@@ -212,7 +225,7 @@ if (kendo.ui.FilterCell) {
 kendo.ui.FilterCell.prototype.options.messages =
 $.extend(true, kendo.ui.FilterCell.prototype.options.messages,{
   "filter": "Filter",
-  "clear": "Fjern filter",
+  "clear": "Nulstil",
   "isFalse": "er falskt",
   "isTrue": "er sandt",
   "operator": "Operatør"
@@ -226,13 +239,13 @@ kendo.ui.FilterMenu.prototype.options.messages =
 $.extend(true, kendo.ui.FilterMenu.prototype.options.messages,{
   "filter": "Filter",
   "and": "Og",
-  "clear": "Fjern filter",
-  "info": "Vis rækker med en værdi der",
+  "clear": "Nulstil",
+  "info": "Vis rækker som",
   "selectValue": "-Vælg værdi-",
   "isFalse": "er falskt",
   "isTrue": "er sandt",
   "cancel": "Annuller",
-  "operator": "Operatør",
+  "operator": "Operator",
   "value": "Value",
   "or": "Eller"
 });
@@ -272,8 +285,8 @@ $.extend(true, kendo.ui.Editor.prototype.options.messages,{
   "outdent": "Ryk ud",
   "strikethrough": "Gennemstreget",
   "styles": "Stilarter",
-  "subscript": "Subscript",
-  "superscript": "Superscript",
+  "subscript": "Sænket skrift",
+  "superscript": "Hævet skrift",
   "underline": "Understreget",
   "unlink": "Fjern link",
   "deleteFile": "Er du sikker på, at du ønsker at slette \"{0}\"?",
@@ -288,21 +301,21 @@ $.extend(true, kendo.ui.Editor.prototype.options.messages,{
   "backColor": "Baggrundsfarve",
   "foreColor": "Farve",
   "dialogButtonSeparator": "eller",
-  "dialogCancel": "Cancel",
-  "dialogInsert": "Insert",
-  "imageAltText": "Alternate text",
-  "imageWebAddress": "Web address",
-  "linkOpenInNewWindow": "Open link in new window",
-  "linkText": "Text",
-  "linkToolTip": "ToolTip",
-  "linkWebAddress": "Web address",
+  "dialogCancel": "Fortryd",
+  "dialogInsert": "Insæt",
+  "imageAltText": "Alternativ tekst",
+  "imageWebAddress": "Web adresse",
+  "linkOpenInNewWindow": "Åben link i nyt vindue",
+  "linkText": "Teskt",
+  "linkToolTip": "Tooltip",
+  "linkWebAddress": "Web adresse",
   "search": "Søg",
   "addColumnLeft": "Tilføj kolonne til venstre",
   "addColumnRight": "Tilføj kolonne til højre",
   "addRowAbove": "Tilføj kolonne over",
   "addRowBelow": "Tilføj kolonne under",
   "deleteColumn": "Slet kolonne",
-  "deleteRow": "Slet række row",
+  "deleteRow": "Slet række",
   "createTable": "Opret tabel",
   "dropFilesHere": "træk og slip filer for at uploade",
   "formatting": "Formatér",
@@ -336,58 +349,54 @@ $.extend(true, kendo.ui.Upload.prototype.options.localization,{
 if (kendo.ui.Scheduler) {
 kendo.ui.Scheduler.prototype.options.messages =
 $.extend(true, kendo.ui.Scheduler.prototype.options.messages,{
-  "allDay": "all day",
-  "cancel": "Cancel",
+  "allDay": "hele dagen",
+  "cancel": "Fortryd",
   "editable": {
-    "confirmation": "Are you sure you want to delete this event?"
+    "confirmation": "Er du sikker på at du vil slette denne begivenhed?"
   },
-  "date": "Date",
-  "destroy": "Delete",
+  "date": "Dato",
+  "destroy": "Slet",
   "editor": {
-    "allDayEvent": "All day event",
-    "description": "Description",
-    "editorTitle": "Event",
-    "end": "End",
-    "endTimezone": "End timezone",
-    "repeat": "Repeat",
-    "separateTimezones": "Use separate start and end time zones",
+    "allDayEvent": "Hele dagen",
+    "description": "Beskrivelse",
+    "editorTitle": "Begivenhed",
+    "end": "Slut",
+    "endTimezone": "Slut tidszone",
+    "repeat": "Gentag",
+    "separateTimezones": "Brug forskellige start og slut tidszoner",
     "start": "Start",
-    "startTimezone": "Start timezone",
+    "startTimezone": "Start tidszone",
     "timezone": " ",
-    "timezoneEditorButton": "Time zone",
-    "timezoneEditorTitle": "Timezones",
-    "title": "Title",
-    "noTimezone": "No timezone"
+    "timezoneEditorButton": "Tidszone",
+    "timezoneEditorTitle": "Tidszoner",
+    "title": "Titel",
+    "noTimezone": "Ingen tidszone"
   },
-  "event": "Event",
+  "event": "Begivenhed",
   "recurrenceMessages": {
-    "deleteRecurring": "Do you want to delete only this event occurrence or the whole series?",
-    "deleteWindowOccurrence": "Delete current occurrence",
-    "deleteWindowSeries": "Delete the series",
-    "deleteWindowTitle": "Delete Recurring Item",
-    "editRecurring": "Do you want to edit only this event occurrence or the whole series?",
-    "editWindowOccurrence": "Edit current occurrence",
-    "editWindowSeries": "Edit the series",
-    "editWindowTitle": "Edit Recurring Item"
+    "deleteRecurring": "Vil du kun slette denne hændelse eller hele serien?",
+    "deleteWindowOccurrence": "Slet denne hændelse",
+    "deleteWindowSeries": "Slet hele serien",
+    "deleteWindowTitle": "Slet tilbagevendende hændelse",
+    "editRecurring": "Vil du kun redigere denne hændelse eller hele serien?",
+    "editWindowOccurrence": "Rediger denne hændelse",
+    "editWindowSeries": "Rediger hele serien",
+    "editWindowTitle": "Rediger tilbagevendende hændelse"
   },
-  "save": "Save",
-  "time": "Time",
-  "today": "Today",
+  "save": "Gem",
+  "time": "Tid",
+  "today": "I dag",
   "views": {
     "agenda": "Agenda",
-    "day": "Day",
-    "month": "Month",
-    "week": "Week",
-    "workWeek": "Work Week"
+    "day": "Dag",
+    "month": "Måned",
+    "week": "Uge",
+    "workWeek": "Arbejdsuge"
   },
-  "deleteWindowTitle": "Delete event",
-  "showFullDay": "Show full day",
-  "showWorkDay": "Show business hours"
+  "deleteWindowTitle": "Slet begivenhed",
+  "showFullDay": "Vis hel dag",
+  "showWorkDay": "Vis arbejdsdag"
 });
 }
 })(window.kendo.jQuery);
-
-
-return window.kendo;
-
-}, typeof define == 'function' && define.amd ? define : function(_, f){ f(); });
+}));

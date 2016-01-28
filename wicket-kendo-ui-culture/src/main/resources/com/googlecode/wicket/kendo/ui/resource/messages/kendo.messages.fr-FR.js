@@ -1,22 +1,35 @@
-/**
- * Copyright 2015 Telerik AD
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-(function(f, define){
-    define([], f);
-})(function(){
+/** 
+ * Copyright 2016 Telerik AD                                                                                                                                                                            
+ *                                                                                                                                                                                                      
+ * Licensed under the Apache License, Version 2.0 (the "License");                                                                                                                                      
+ * you may not use this file except in compliance with the License.                                                                                                                                     
+ * You may obtain a copy of the License at                                                                                                                                                              
+ *                                                                                                                                                                                                      
+ *     http://www.apache.org/licenses/LICENSE-2.0                                                                                                                                                       
+ *                                                                                                                                                                                                      
+ * Unless required by applicable law or agreed to in writing, software                                                                                                                                  
+ * distributed under the License is distributed on an "AS IS" BASIS,                                                                                                                                    
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.                                                                                                                             
+ * See the License for the specific language governing permissions and                                                                                                                                  
+ * limitations under the License.                                                                                                                                                                       
+                                                                                                                                                                                                       
+                                                                                                                                                                                                       
+                                                                                                                                                                                                       
+                                                                                                                                                                                                       
+                                                                                                                                                                                                       
+                                                                                                                                                                                                       
+                                                                                                                                                                                                       
+                                                                                                                                                                                                       
 
+*/
+
+(function(f){
+    if (typeof define === 'function' && define.amd) {
+        define([ "./kendo.core" ], f);
+    } else {
+        f();
+    }
+}(function(){
 (function ($, undefined) {
 /* Filter cell operator messages */
 
@@ -400,16 +413,16 @@ $.extend(true, kendo.ui.Scheduler.prototype.options.messages,{
     "title": "Titre",
     "noTimezone": "No timezone"
   },
-  "event": "Event",
+  "event": "Evènement",
   "recurrenceMessages": {
-    "deleteRecurring": "Voulez-vous supprimer seulement cet événement ou toute la série?",
+    "deleteRecurring": "Voulez-vous supprimer seulement cet évènement ou toute la série?",
     "deleteWindowOccurrence": "Suppression de l'élément courant",
     "deleteWindowSeries": "Suppression de toute la série",
     "deleteWindowTitle": "Suppression d'un élément récurrent",
-    "editRecurring": "Do you want to edit only this event occurrence or the whole series?",
-    "editWindowOccurrence": "Edit current occurrence",
-    "editWindowSeries": "Edit the series",
-    "editWindowTitle": "Edit Recurring Item"
+    "editRecurring": "Voulez-vous modifier seulement cet évènement ou toute la série?",
+    "editWindowOccurrence": "Modifier l'occurrence courante",
+    "editWindowSeries": "Modifier la série",
+    "editWindowTitle": "Modification de l'élément courant"
   },
   "save": "Sauvegarder",
   "time": "Time",
@@ -419,7 +432,7 @@ $.extend(true, kendo.ui.Scheduler.prototype.options.messages,{
     "day": "Jour",
     "month": "Mois",
     "week": "Semaine",
-    "workWeek": "Work Week"
+    "workWeek": "Semaine de travail"
   },
   "deleteWindowTitle": "Suppression de l'élément",
   "showFullDay": "Montrer toute la journée",
@@ -427,8 +440,4 @@ $.extend(true, kendo.ui.Scheduler.prototype.options.messages,{
 });
 }
 })(window.kendo.jQuery);
-
-
-return window.kendo;
-
-}, typeof define == 'function' && define.amd ? define : function(_, f){ f(); });
+}));
