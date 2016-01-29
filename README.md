@@ -35,4 +35,5 @@ Project Documentation (JavaDoc):
 JavaDocs are hosted at [http://www.javadoc.io](http://www.javadoc.io). Just append to 'http://www.javadoc.io/doc' the group id and the artifact id of a module to get its javadoc. For example:
 
 -http://www.javadoc.io/doc/org.wicketstuff/wicketstuff-stateless
+
 -http://www.javadoc.io/doc/org.wicketstuff/wicketstuff-restannotations
