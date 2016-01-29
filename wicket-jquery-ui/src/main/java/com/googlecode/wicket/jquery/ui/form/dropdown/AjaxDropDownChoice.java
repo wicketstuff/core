@@ -23,6 +23,7 @@ import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.markup.html.form.FormComponent;
 import org.apache.wicket.markup.html.form.IChoiceRenderer;
 import org.apache.wicket.model.IModel;
+import org.apache.wicket.util.lang.Args;
 
 import com.googlecode.wicket.jquery.core.JQueryBehavior;
 import com.googlecode.wicket.jquery.core.JQueryEvent;
@@ -160,40 +161,43 @@ public class AjaxDropDownChoice<T> extends DropDownChoice<T> implements ISelecti
 	}
 
 	// IJQueryWidget //
-	
+
 	@Override
 	public JQueryBehavior newWidgetBehavior(String selector)
 	{
-		return new AjaxDropDownChoiceBehavior(selector) {
+		return new AjaxDropDownChoiceBehavior(selector, new ISelectionChangedListener() {
 
 			private static final long serialVersionUID = 1L;
 
 			@Override
 			public void onSelectionChanged(AjaxRequestTarget target)
 			{
-				AjaxDropDownChoice.this.onSelectionChanged();
+				AjaxDropDownChoice.this.onSelectionChanged(); // updates the model
 				AjaxDropDownChoice.this.onSelectionChanged(target);
 			}
-		};
+		});
 	}
 
 	/**
 	 * Provides a JQuery UI Selectmenu (DropDownChoice) {@link JQueryBehavior}
 	 */
-	protected abstract static class AjaxDropDownChoiceBehavior extends JQueryUIBehavior implements IJQueryAjaxAware, ISelectionChangedListener
+	protected static class AjaxDropDownChoiceBehavior extends JQueryUIBehavior implements IJQueryAjaxAware
 	{
 		private static final long serialVersionUID = 1L;
 
+		private final ISelectionChangedListener listener;
 		private JQueryAjaxBehavior onChangeAjaxBehavior;
 
-		public AjaxDropDownChoiceBehavior(String selector)
+		public AjaxDropDownChoiceBehavior(String selector, ISelectionChangedListener listener)
 		{
-			super(selector, DropDownChoice.METHOD);
+			this(selector, DropDownChoice.METHOD, listener);
 		}
 
-		public AjaxDropDownChoiceBehavior(String selector, String method)
+		public AjaxDropDownChoiceBehavior(String selector, String method, ISelectionChangedListener listener)
 		{
 			super(selector, method);
+
+			this.listener = Args.notNull(listener, "listener");
 		}
 
 		@Override
@@ -218,7 +222,7 @@ public class AjaxDropDownChoice<T> extends DropDownChoice<T> implements ISelecti
 		{
 			if (event instanceof ChangeEvent)
 			{
-				this.onSelectionChanged(target);
+				this.listener.onSelectionChanged(target);
 			}
 		}
 	}

@@ -193,7 +193,7 @@ public class AjaxDropDownList<T> extends DropDownList<T> implements ISelectionCh
 
 		public AjaxDropDownListBehavior(String selector, String method, ISelectionChangedListener listener)
 		{
-			super(selector, DropDownList.METHOD);
+			super(selector, method);
 
 			this.listener = Args.notNull(listener, "listener");
 		}
