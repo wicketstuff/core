@@ -19,6 +19,7 @@ package com.googlecode.wicket.kendo.ui.form.button;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.model.IModel;
 
+import com.googlecode.wicket.jquery.core.JQueryBehavior;
 import com.googlecode.wicket.jquery.core.Options;
 
 /**
@@ -64,6 +65,16 @@ public class IndicatingButton extends Button
 	protected boolean isDisabledOnClick()
 	{
 		return false;
+	}
+
+	// Event //
+	
+	@Override
+	public void onConfigure(JQueryBehavior behavior)
+	{
+		super.onConfigure(behavior);
+
+		behavior.setOption("enable", this.isEnabledInHierarchy());
 	}
 
 	// IJQueryWidget //

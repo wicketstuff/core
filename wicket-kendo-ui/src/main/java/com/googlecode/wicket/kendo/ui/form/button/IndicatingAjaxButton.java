@@ -65,6 +65,7 @@ public class IndicatingAjaxButton extends AjaxButton
 	}
 
 	// Event //
+	
 	@Override
 	public void onConfigure(JQueryBehavior behavior)
 	{
