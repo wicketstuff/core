@@ -404,11 +404,11 @@ public class SchedulerEvent implements Serializable
 	}
 
 	/**
-	 * TODO javadoc
-	 * 
-	 * @param field
-	 * @param type
-	 * @return
+	 * Gets a field value
+	 *
+	 * @param field the field (ie: 'resourceId')
+	 * @param type the return type
+	 * @return the typed value
 	 */
 	@SuppressWarnings("unchecked")
 	public final <T> T getValue(String field, Class<T> type)
@@ -424,11 +424,12 @@ public class SchedulerEvent implements Serializable
 	}
 
 	/**
-	 * TODO javadoc
-	 * @param field
-	 * @param type
-	 * @param defaultValue
-	 * @return
+	 * Gets a field value
+	 *
+	 * @param field the field (ie: 'resourceId')
+	 * @param type the return type
+	 * @param defaultValue the value to return if field's value is {@code null} or does not exist
+	 * @return the typed value
 	 */
 	public final <T> T getValue(String field, Class<T> type, T defaultValue)
 	{
