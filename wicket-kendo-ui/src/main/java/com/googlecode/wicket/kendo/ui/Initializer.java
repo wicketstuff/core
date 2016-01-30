@@ -18,6 +18,8 @@ package com.googlecode.wicket.kendo.ui;
 
 import org.apache.wicket.Application;
 import org.apache.wicket.IInitializer;
+import org.apache.wicket.markup.html.IPackageResourceGuard;
+import org.apache.wicket.markup.html.SecurePackageResourceGuard;
 import org.apache.wicket.protocol.http.WebApplication;
 
 /**
@@ -34,6 +36,14 @@ public class Initializer implements IInitializer
 		{
 			WebApplication webApplication = (WebApplication) application;
 			webApplication.getAjaxRequestTargetListeners().add(new KendoDestroyListener());
+
+			// registers .js.map pattern //
+			IPackageResourceGuard packageResourceGuard = webApplication.getResourceSettings().getPackageResourceGuard();
+
+			if (packageResourceGuard instanceof SecurePackageResourceGuard)
+			{
+				((SecurePackageResourceGuard) packageResourceGuard).addPattern("+*.js.map");
+			}
 		}
 	}
 
