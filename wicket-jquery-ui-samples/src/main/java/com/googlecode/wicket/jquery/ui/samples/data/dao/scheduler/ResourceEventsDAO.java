@@ -38,7 +38,7 @@ public class ResourceEventsDAO extends AbstractSchedulerEventsDAO
 
 		if (e != null)
 		{
-			e.setValue(AGENDA_ID, (Integer) event.getValue(AGENDA_ID));
+			e.setValue(AGENDA_ID, event.getValue(AGENDA_ID, Integer.class));
 		}
 
 		return e;

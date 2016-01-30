@@ -42,15 +42,14 @@ public class EmployeeEventsDAO extends AbstractSchedulerEventsDAO
 	}
 
 	@Override
-	@SuppressWarnings("unchecked")
 	public SchedulerEvent update(SchedulerEvent event)
 	{
 		SchedulerEvent e = super.update(event);
 
 		if (e != null)
 		{
-			e.setValue(ROOM_ID, (Integer) event.getValue(ROOM_ID));
-			e.setValue(EMPLOYEE_ID, (List<Integer>) event.getValue(EMPLOYEE_ID));
+			e.setValue(ROOM_ID, event.getValue(ROOM_ID, Integer.class));
+			e.setValue(EMPLOYEE_ID, event.getValue(EMPLOYEE_ID, List.class));
 		}
 
 		return e;

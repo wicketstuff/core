@@ -164,9 +164,8 @@ public class Scheduler extends JQueryContainer implements ISchedulerListener
 	 * Adds a {@link ResourceList} to the internal {@link ListModel} of {@link ResourceList}{@code s}
 	 * 
 	 * @param resourceList the {@code ResourceList}
-	 * @deprecated use {@link #getResourceListModel()}
+	 * @see #getResourceListModel()
 	 */
-	@Deprecated
 	public void add(ResourceList resourceList)
 	{
 		this.resourceListModel.add(resourceList);

@@ -154,7 +154,7 @@ public class SingleResourceSchedulerPage extends AbstractSchedulerPage
 			@Override
 			public void visit(SchedulerEvent event)
 			{
-				Integer agendaId = (Integer) event.getValue(ResourceEventsDAO.AGENDA_ID);
+				Integer agendaId = event.getValue(ResourceEventsDAO.AGENDA_ID, Integer.class);
 
 				if (agendaId != null)
 				{
