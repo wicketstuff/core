@@ -22,6 +22,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import org.apache.wicket.util.io.IClusterable;
+import org.apache.wicket.util.lang.Args;
 
 import com.googlecode.wicket.jquery.core.Options;
 
@@ -123,6 +124,8 @@ public class Id<T> implements IClusterable
 	 */
 	public static <I> Id<?> valueOf(I id)
 	{
+		Args.notNull(id, "id");
+		
 		if (id instanceof String)
 		{
 			String value = String.valueOf(id);

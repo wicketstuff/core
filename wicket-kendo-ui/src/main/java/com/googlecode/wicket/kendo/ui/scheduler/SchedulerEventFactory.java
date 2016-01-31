@@ -102,7 +102,7 @@ public class SchedulerEventFactory implements IClusterable
 			// resources //
 			for (String field : event.getFields())
 			{
-				object.put(field, event.getValue(field)); // value is type of Object (String, Integer, List<String> or List<Integer>)
+				object.put(field, event.getValue(field)); // value is type of Object
 			}
 
 			return object;
@@ -126,7 +126,7 @@ public class SchedulerEventFactory implements IClusterable
 	{
 		try
 		{
-			SchedulerEvent event = this.newSchedulerEvent();
+			SchedulerEvent event = new SchedulerEvent();
 			event.setId(object.getInt("id"));
 			event.setTitle(object.optString("title"));
 			event.setDescription(object.optString("description"));
@@ -160,11 +160,11 @@ public class SchedulerEventFactory implements IClusterable
 
 				if (list.isMultiple())
 				{
-					event.setValue(field, values);
+					event.setResource(field, values);
 				}
 				else if (!values.isEmpty())
 				{
-					event.setValue(field, values.get(0)); // if the underlying value is a number (even a string-number), it will be handled by Id#valueOf(I)
+					event.setResource(field, values.get(0)); // if the underlying value is a number (even a string-number), it will be handled by Id#valueOf(I)
 				}
 			}
 
@@ -176,15 +176,5 @@ public class SchedulerEventFactory implements IClusterable
 		}
 
 		return null;
-	}
-
-	/**
-	 * Gets a new {@link SchedulerEvent} object
-	 * 
-	 * @return a new {@link SchedulerEvent} object
-	 */
-	protected SchedulerEvent newSchedulerEvent()
-	{
-		return new SchedulerEvent();
 	}
 }

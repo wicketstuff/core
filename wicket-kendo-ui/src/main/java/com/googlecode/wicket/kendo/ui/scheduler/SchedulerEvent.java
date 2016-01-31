@@ -381,7 +381,7 @@ public class SchedulerEvent implements Serializable
 	@SuppressWarnings("unchecked")
 	public final Object getValue(String field)
 	{
-		Object object = this.fields.get(field); // either an Id or a List<Id<?>>
+		Object object = this.fields.get(field); // either an Object, an Id or a List<Id<?>>
 
 		if (object instanceof Id<?>)
 		{
@@ -400,7 +400,7 @@ public class SchedulerEvent implements Serializable
 			return list;
 		}
 
-		return null;
+		return object;
 	}
 
 	/**
@@ -446,47 +446,45 @@ public class SchedulerEvent implements Serializable
 	/**
 	 * Sets a resource value
 	 *
+	 * @param field the field
+	 * @param value the value
+	 */
+	public final void setValue(String field, String value)
+	{
+		this.fields.put(field, value);
+	}
+
+	/**
+	 * Sets a resource value
+	 *
+	 * @param field the field
+	 * @param value the value
+	 */
+	public final void setValue(String field, Number value)
+	{
+		this.fields.put(field, value);
+	}
+
+	/**
+	 * Sets a resource value
+	 *
+	 * @param field the field
+	 * @param value the values
+	 */
+	public final void setValue(String field, List<?> value)
+	{
+		this.fields.put(field, value);
+	}
+
+	/**
+	 * Sets a resource value
+	 *
 	 * @param field the field (ie: 'resourceId')
 	 * @param id the id-value
 	 */
-	public final void setValue(String field, String id)
-	{
-		this.fields.put(field, Id.valueOf(id));
-	}
-
-	/**
-	 * Sets a resource value
-	 *
-	 * @param field the resource field (ie: 'resourceId')
-	 * @param id the id-value
-	 */
-	public final void setValue(String field, Number id)
-	{
-		this.fields.put(field, Id.valueOf(id));
-	}
-
-	/**
-	 * Sets a resource value
-	 *
-	 * @param field the resource field (ie: 'resourceId')
-	 * @param ids the id-values
-	 */
-	public final void setValue(String field, List<?> ids)
-	{
-		this.fields.put(field, Id.valueOf(ids));
-	}
-
-	/**
-	 * Sets a resource value
-	 *
-	 * @param field the field (ie: 'resourceId')
-	 * @param id the id-value
-	 * @deprecated use {@link #setValue(String, String)} instead
-	 */
-	@Deprecated
 	public final void setResource(String field, String id)
 	{
-		this.setValue(field, id);
+		this.fields.put(field, Id.valueOf(id));
 	}
 
 	/**
@@ -494,12 +492,10 @@ public class SchedulerEvent implements Serializable
 	 *
 	 * @param field the resource field (ie: 'resourceId')
 	 * @param id the id-value
-	 * @deprecated use {@link #setValue(String, Number)} instead
 	 */
-	@Deprecated
 	public final void setResource(String field, Number id)
 	{
-		this.setValue(field, id);
+		this.fields.put(field, Id.valueOf(id));
 	}
 
 	/**
@@ -507,12 +503,10 @@ public class SchedulerEvent implements Serializable
 	 *
 	 * @param field the resource field (ie: 'resourceId')
 	 * @param ids the id-values
-	 * @deprecated use {@link #setValue(String, List)} instead
 	 */
-	@Deprecated
 	public final void setResource(String field, List<?> ids)
 	{
-		this.setValue(field, ids);
+		this.fields.put(field, Id.valueOf(ids));
 	}
 
 	// methods //

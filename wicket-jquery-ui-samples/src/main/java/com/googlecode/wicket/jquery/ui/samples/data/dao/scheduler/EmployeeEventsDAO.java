@@ -31,13 +31,13 @@ public class EmployeeEventsDAO extends AbstractSchedulerEventsDAO
 		super();
 
 		SchedulerEvent event1 = new SchedulerEvent(this.newId(), "Meeting #1", new Date());
-		event1.setValue(ROOM_ID, 1);
-		event1.setValue(EMPLOYEE_ID, Arrays.asList(EMPLOYEE_1, EMPLOYEE_2));
+		event1.setResource(ROOM_ID, 1);
+		event1.setResource(EMPLOYEE_ID, Arrays.asList(EMPLOYEE_1, EMPLOYEE_2));
 		super.list.add(event1);
 
 		SchedulerEvent event2 = new SchedulerEvent(this.newId(), "Meeting #2", new Date());
-		event2.setValue(ROOM_ID, 2);
-		event2.setValue(EMPLOYEE_ID, Arrays.asList(EMPLOYEE_1, EMPLOYEE_2));
+		event2.setResource(ROOM_ID, 2);
+		event2.setResource(EMPLOYEE_ID, Arrays.asList(EMPLOYEE_1, EMPLOYEE_2));
 		super.list.add(event2);
 	}
 
@@ -48,8 +48,8 @@ public class EmployeeEventsDAO extends AbstractSchedulerEventsDAO
 
 		if (e != null)
 		{
-			e.setValue(ROOM_ID, event.getValue(ROOM_ID, Integer.class));
-			e.setValue(EMPLOYEE_ID, event.getValue(EMPLOYEE_ID, List.class));
+			e.setResource(ROOM_ID, event.getValue(ROOM_ID, Integer.class));
+			e.setResource(EMPLOYEE_ID, event.getValue(EMPLOYEE_ID, List.class));
 		}
 
 		return e;

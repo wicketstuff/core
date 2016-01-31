@@ -231,8 +231,6 @@ public class DropDownList<T> extends TextField<T> implements IJQueryWidget
 	@Override
 	public void onConfigure(JQueryBehavior behavior)
 	{
-		System.out.println("model value: " + this.getModelValue()); //TODO remove
-//		behavior.setOption("value", this.getModelValue()); // already handled by TextField
 		behavior.setOption("dataTextField", Options.asString(this.renderer.getTextField()));
 		behavior.setOption("dataValueField", Options.asString(this.renderer.getValueField()));
 
