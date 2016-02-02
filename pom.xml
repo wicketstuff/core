@@ -275,7 +275,7 @@
 	</prerequisites>
 
 	<modules>
-		<module>wicketstuff-nashorn-parent</module>
+		<module>nashorn-parent</module>
 		<module>lightbox2-parent</module>
 		<module>jqplot-parent</module>
 		<module>annotation</module>
