@@ -182,7 +182,7 @@ abstract class AbstractSelect2Choice<T, M> extends AbstractTextComponent<M> impl
 		{
 			return Collections.emptyList();
 		}
-        return getProvider().toChoices(ids);
+		return getProvider().toChoices(ids);
 	}
 
 	/**
@@ -207,7 +207,6 @@ abstract class AbstractSelect2Choice<T, M> extends AbstractTextComponent<M> impl
 	protected String getEscapedJsString(String key)
 	{
 		String value = getString(key);
-
 		return Strings.replaceAll(value, "'", "\\'").toString();
 	}
 
@@ -314,7 +313,6 @@ abstract class AbstractSelect2Choice<T, M> extends AbstractTextComponent<M> impl
 			AjaxRequestTarget target = (AjaxRequestTarget)event.getPayload();
 			if (target.getComponents().contains(this))
 			{
-
 				// if this component is being repainted by ajax, directly, we
 				// must destroy Select2 so it removes
 				// its elements from DOM
@@ -339,72 +337,71 @@ abstract class AbstractSelect2Choice<T, M> extends AbstractTextComponent<M> impl
 		return provider != null;
 	}
 
-    /**
-     * Utility method to generate JSON response.
-     *
-     * @param provider
-     * @param outputStream
-     */
-    public static <T> void generateJSON(ChoiceProvider<T> provider, OutputStream outputStream) 
-    {
-        // this is the callback that retrieves matching choices used to populate the dropdown
+	/**
+	 * Utility method to generate JSON response.
+	 *
+	 * @param provider
+	 * @param outputStream
+	 */
+	public static <T> void generateJSON(ChoiceProvider<T> provider, OutputStream outputStream) 
+	{
+		// this is the callback that retrieves matching choices used to populate the dropdown
 
-        Request request = RequestCycle.get().getRequest();
-        IRequestParameters params = request.getRequestParameters();
+		Request request = RequestCycle.get().getRequest();
+		IRequestParameters params = request.getRequestParameters();
 
-        // retrieve choices matching the search term
-        String term = params.getParameterValue("q").toOptionalString();
+		// retrieve choices matching the search term
+		String term = params.getParameterValue("q").toOptionalString();
 
-        int page = params.getParameterValue("page").toInt(1);
-        // select2 uses 1-based paging, but in wicket world we are used to
-        // 0-based
-        page -= 1;
+		int page = params.getParameterValue("page").toInt(1);
+		// select2 uses 1-based paging, but in wicket world we are used to
+		// 0-based
+		page -= 1;
 
-        Response<T> response = new Response<>();
-        provider.query(term, page, response);
+		Response<T> response = new Response<>();
+		provider.query(term, page, response);
 
-        // jsonize and write out the choices to the response
+		// jsonize and write out the choices to the response
 
-        OutputStreamWriter out = new OutputStreamWriter(outputStream, request.getCharset());
-        JSONWriter json = new JSONWriter(out);
+		OutputStreamWriter out = new OutputStreamWriter(outputStream, request.getCharset());
+		JSONWriter json = new JSONWriter(out);
 
-        try 
-        {
-            json.object();
-            json.key("items").array();
-            for (T item : response) 
-            {
-                json.object();
-                provider.toJson(item, json);
-                json.endObject();
-            }
-            json.endArray();
-            json.key("more").value(response.getHasMore()).endObject();
-        } catch (JSONException e) 
-        {
-            throw new RuntimeException("Could not write Json response", e);
-        }
+		try
+		{
+			json.object();
+			json.key("items").array();
+			for (T item : response) 
+			{
+				json.object();
+				provider.toJson(item, json);
+				json.endObject();
+			}
+			json.endArray();
+			json.key("more").value(response.getHasMore()).endObject();
+		}
+		catch (JSONException e) 
+		{
+			throw new RuntimeException("Could not write Json response", e);
+		}
 
-        try 
-        {
-            out.flush();           
-        } 
-        catch (IOException e) 
-        {
-            throw new RuntimeException("Could not write Json to servlet response", e);
-        }
+		try 
+		{
+			out.flush();           
+		}
+		catch (IOException e) 
+		{
+			throw new RuntimeException("Could not write Json to servlet response", e);
+		}
 
-        try
-        {
-            out.close();
-        }
-        catch (IOException e)
-        {
-            throw new RuntimeException("Could not write Json to servlet response", e);
-        }
-
-
-    }
+		try
+		{
+			out.close();
+		}
+		catch (IOException e)
+		{
+			throw new RuntimeException("Could not write Json to servlet response", e);
+		}
+	}
 
 	@Override
 	public void onResourceRequested()
