@@ -3,11 +3,13 @@ package org.wicketstuff.select2;
 import org.apache.wicket.Component;
 import org.apache.wicket.markup.head.IHeaderResponse;
 
+import java.io.Serializable;
+
 /**
  * Defines a select2 theme.
  *  
  */
-public interface ISelect2Theme {
+public interface ISelect2Theme extends Serializable {
 
     /**
      * Allows theme to contribute headers (e.g. extra CSS resources) 
