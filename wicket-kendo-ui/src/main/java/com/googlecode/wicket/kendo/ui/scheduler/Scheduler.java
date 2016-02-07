@@ -185,9 +185,11 @@ public class Scheduler extends JQueryContainer implements ISchedulerListener
 	 *
 	 * @param handler the {@link IPartialPageRequestHandler}
 	 */
-	public void refresh(IPartialPageRequestHandler handler)
+	public final void refresh(IPartialPageRequestHandler handler)
 	{
 		handler.appendJavaScript(String.format("var widget = %s; widget.dataSource.read(); widget.refresh();", this.widget()));
+
+		this.onRefresh(handler);
 	}
 
 	// Properties //
@@ -308,6 +310,16 @@ public class Scheduler extends JQueryContainer implements ISchedulerListener
 	 * @param dataSource the {@link SchedulerDataSource}
 	 */
 	protected void onConfigure(SchedulerDataSource dataSource)
+	{
+		// noop
+	}
+
+	/**
+	 * Triggered when {@link #refresh(IPartialPageRequestHandler)} has been called
+	 * 
+	 * @param handler the {@link IPartialPageRequestHandler}
+	 */
+	protected void onRefresh(IPartialPageRequestHandler handler)
 	{
 		// noop
 	}
