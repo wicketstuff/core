@@ -42,11 +42,6 @@ public class SchedulerEvent implements Serializable
 	/** new event id */
 	public static final int NEW_ID = 0;
 
-	public static boolean isNew(SchedulerEvent event)
-	{
-		return event != null && event.id == NEW_ID;
-	}
-
 	private int id;
 	private String title;
 	private String description;
@@ -63,7 +58,7 @@ public class SchedulerEvent implements Serializable
 	private boolean visible = true;
 
 	/** fields map */
-	private Map<String, Object> fields = new HashMap<String, Object>();
+	private final Map<String, Object> fields = new HashMap<String, Object>();
 
 	/**
 	 * Constructor
@@ -509,7 +504,7 @@ public class SchedulerEvent implements Serializable
 		this.fields.put(field, Id.valueOf(ids));
 	}
 
-	// methods //
+	// Methods //
 
 	/**
 	 * Visitor accept method
@@ -525,5 +520,11 @@ public class SchedulerEvent implements Serializable
 	public String toString()
 	{
 		return this.title;
+	}
+	
+	// Static //
+	public static boolean isNew(SchedulerEvent event)
+	{
+		return event != null && event.id == NEW_ID;
 	}
 }

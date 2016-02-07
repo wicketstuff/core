@@ -26,10 +26,4 @@ import com.googlecode.wicket.jquery.core.ajax.JQueryAjaxBehavior;
  */
 public class JQueryEvent
 {
-	/**
-	 * Constructor
-	 */
-	public JQueryEvent()
-	{
-	}
 }

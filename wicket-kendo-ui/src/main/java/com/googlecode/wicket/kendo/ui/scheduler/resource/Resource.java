@@ -17,6 +17,9 @@
 package com.googlecode.wicket.kendo.ui.scheduler.resource;
 
 import java.io.Serializable;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Map.Entry;
 
 import com.googlecode.wicket.jquery.core.Options;
 
@@ -37,6 +40,9 @@ public class Resource implements Serializable
 	private final Id<?> id;
 	private String text;
 	private String color;
+	
+	/** optional fields */
+	private final Map<String, Object> fields = new HashMap<String, Object>();
 
 	/**
 	 * Constructor
@@ -175,6 +181,17 @@ public class Resource implements Serializable
 
 	// Methods //
 
+	/**
+	 * Sets a field's value
+	 * 
+	 * @param field the field name
+	 * @param value the value
+	 */
+	public void set(String field, Object value)
+	{
+		this.fields.put(field, value);
+	}
+
 	@Override
 	public int hashCode()
 	{
@@ -234,6 +251,11 @@ public class Resource implements Serializable
 		if (this.color != null)
 		{
 			value.set("color", Options.asString(this.color));
+		}
+
+		for (Entry<String, Object> entry : this.fields.entrySet())
+		{
+			value.set(entry.getKey(), Options.asString(entry.getValue()));
 		}
 
 		return value.toString();
