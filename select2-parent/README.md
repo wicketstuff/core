@@ -5,6 +5,7 @@ This project provides [Apache Wicket](http://wicket.apache.org) components that 
 
 Installation
 ------------
+
 ```xml
 <dependency>
     <groupId>org.wicketstuff</groupId>
@@ -12,6 +13,10 @@ Installation
 	<version>...</version>
 </dependency>
 ```
+
+*Use version 7.2 if you use Wicket 7 to use the select tag as specified by [Select2 v4](https://select2.github.io/announcements-4.0.html#migrating-from-select2-35)
+
+
 You may want to check for the latest released version using [Maven Search](http://search.maven.org/#search%7Cga%7C1%7Cg%3A%22org.wicketstuff%22%20AND%20a%3A%22wicketstuff-select2%22)
 
 Configuration
@@ -57,6 +62,8 @@ public abstract class ChoiceProvider<T> implements IDetachable {
 }
 ```
 Once you implement this interface your application can communicate with the Select2 components. Then its simply a matter of adding any one of the provided components to your page and configuring various Select2 options through the component. For example a single-select component can be added and configured like this:
+
+Java
 ```java
 // add the single-select component
 Select2Choice<Country> country = new Select2Choice<Country>(
@@ -66,6 +73,14 @@ form.add(country);
 // configure various Select2 options
 country.getSettings().setMinimumInputLength(1);
 ```
+
+Html
+```html
+   ...
+   <select wicket:id="country"></select>
+   ...
+```
+
 The two main Select2 components are the `Select2Choice` which provides single-selection and `Select2MultiChoice` which provides multi-selection.
 
 See the `wicketstuff-select2-examples` submodule for  code examples.
