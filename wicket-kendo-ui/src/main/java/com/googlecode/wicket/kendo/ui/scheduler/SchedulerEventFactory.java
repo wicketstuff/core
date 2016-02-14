@@ -75,12 +75,12 @@ public class SchedulerEventFactory implements IClusterable
 
 			if (event.getStart() != null)
 			{
-				object.put("start", DateUtils.toISO8601(event.getStart()));
+				object.put("start", DateUtils.toUTCString(event.getStart()));
 			}
 
 			if (event.getEnd() != null)
 			{
-				object.put("end", DateUtils.toISO8601(event.getEnd()));
+				object.put("end", DateUtils.toUTCString(event.getEnd()));
 			}
 
 			// recurrence //
@@ -130,6 +130,7 @@ public class SchedulerEventFactory implements IClusterable
 			event.setId(object.getInt("id"));
 			event.setTitle(object.optString("title"));
 			event.setDescription(object.optString("description"));
+			
 			event.setStart(object.getLong("start"));
 			event.setEnd(object.getLong("end"));
 			event.setAllDay(object.getBoolean("isAllDay"));

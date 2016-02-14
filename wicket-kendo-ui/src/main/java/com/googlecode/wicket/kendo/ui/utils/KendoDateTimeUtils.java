@@ -27,7 +27,8 @@ import java.util.Date;
  */
 public class KendoDateTimeUtils
 {
-	static final String PATTERN = "yyyy-MM-dd'T'HH:mm:sszzz";
+	/** Time Zone */
+	static final String PATTERN_TZ = "yyyy-MM-dd'T'HH:mm:ss.SSSzzz";
 
 	static final String j_chars = "GyYMwWDdFEuaHkKhmsSzZX";
 	static final String k_chars = "GyYMwWDdFdutHkKhmsfzZX"; // S > f, a > t, E > d
@@ -65,14 +66,14 @@ public class KendoDateTimeUtils
 	}
 
 	/**
-	 * Converts a {@link Date} to a compatible kendo-ui date-string format
+	 * Converts a {@link Date} to a compatible kendo-ui date-string format (with timezone)
 	 *
 	 * @param date the date
 	 * @return the compatible kendo ui date string
 	 */
 	public static String toString(Date date)
 	{
-		return new SimpleDateFormat(PATTERN).format(date);
+		return new SimpleDateFormat(PATTERN_TZ).format(date);
 	}
 
 	/**
@@ -81,4 +82,5 @@ public class KendoDateTimeUtils
 	private KendoDateTimeUtils()
 	{
 	}
+
 }

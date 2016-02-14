@@ -27,6 +27,7 @@ import org.apache.wicket.util.lang.Args;
 import com.googlecode.wicket.jquery.core.IJQueryWidget;
 import com.googlecode.wicket.jquery.core.JQueryBehavior;
 import com.googlecode.wicket.jquery.core.Options;
+import com.googlecode.wicket.jquery.core.utils.DateUtils;
 import com.googlecode.wicket.jquery.core.utils.LocaleUtils;
 import com.googlecode.wicket.kendo.ui.KendoUIBehavior;
 import com.googlecode.wicket.kendo.ui.utils.KendoDateTimeUtils;
@@ -43,8 +44,6 @@ public class TimePicker extends DateTextField implements IJQueryWidget
 
 	public static final String METHOD = "kendoTimePicker";
 
-	protected static final String DEFAULT_PATTERN = "h:mm aa"; // default java time pattern TODO move to DateUtils
-
 	final Options options;
 
 	/**
@@ -54,7 +53,7 @@ public class TimePicker extends DateTextField implements IJQueryWidget
 	 */
 	public TimePicker(String id)
 	{
-		this(id, DEFAULT_PATTERN, new Options());
+		this(id, DateUtils.TIME_PATTERN, new Options());
 	}
 
 	/**
@@ -65,7 +64,7 @@ public class TimePicker extends DateTextField implements IJQueryWidget
 	 */
 	public TimePicker(String id, Options options)
 	{
-		this(id, DEFAULT_PATTERN, options);
+		this(id, DateUtils.TIME_PATTERN, options);
 	}
 
 	/**
@@ -113,7 +112,7 @@ public class TimePicker extends DateTextField implements IJQueryWidget
 	 */
 	public TimePicker(String id, Locale locale, Options options)
 	{
-		this(id, LocaleUtils.getLocaleTimePattern(locale, DEFAULT_PATTERN), options.set("culture", Options.asString(LocaleUtils.getLangageCode(locale))));
+		this(id, LocaleUtils.getLocaleTimePattern(locale, DateUtils.TIME_PATTERN), options.set("culture", Options.asString(LocaleUtils.getLangageCode(locale))));
 	}
 
 	/**
@@ -124,7 +123,7 @@ public class TimePicker extends DateTextField implements IJQueryWidget
 	 */
 	public TimePicker(String id, IModel<Date> model)
 	{
-		this(id, model, DEFAULT_PATTERN, new Options());
+		this(id, model, DateUtils.TIME_PATTERN, new Options());
 	}
 
 	/**
@@ -136,7 +135,7 @@ public class TimePicker extends DateTextField implements IJQueryWidget
 	 */
 	public TimePicker(String id, IModel<Date> model, Options options)
 	{
-		this(id, model, DEFAULT_PATTERN, options);
+		this(id, model, DateUtils.TIME_PATTERN, options);
 	}
 
 	/**
@@ -188,7 +187,7 @@ public class TimePicker extends DateTextField implements IJQueryWidget
 	 */
 	public TimePicker(String id, IModel<Date> model, Locale locale, Options options)
 	{
-		this(id, model, LocaleUtils.getLocaleTimePattern(locale, DEFAULT_PATTERN), options.set("culture", Options.asString(LocaleUtils.getLangageCode(locale))));
+		this(id, model, LocaleUtils.getLocaleTimePattern(locale, DateUtils.TIME_PATTERN), options.set("culture", Options.asString(LocaleUtils.getLangageCode(locale))));
 	}
 
 	// Properties //

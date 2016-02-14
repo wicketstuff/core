@@ -27,6 +27,7 @@ import org.threeten.bp.format.DateTimeFormatter;
 import org.threeten.bp.format.DateTimeParseException;
 
 import com.googlecode.wicket.jquery.core.Options;
+import com.googlecode.wicket.jquery.core.utils.DateUtils;
 import com.googlecode.wicket.jquery.core.utils.LocaleUtils;
 
 /**
@@ -40,8 +41,6 @@ public class DatePicker extends LocalTextField<LocalDate>
 	private static final long serialVersionUID = 1L;
 
 	public static final String METHOD = "kendoDatePicker";
-
-	protected static final String DEFAULT_PATTERN = "MM/dd/yyyy"; // default java date pattern
 
 	/**
 	 * Gets a new date {@link IConverter}.
@@ -83,7 +82,7 @@ public class DatePicker extends LocalTextField<LocalDate>
 	 */
 	public DatePicker(String id)
 	{
-		this(id, DEFAULT_PATTERN, new Options());
+		this(id, DateUtils.DATE_PATTERN, new Options());
 	}
 
 	/**
@@ -94,7 +93,7 @@ public class DatePicker extends LocalTextField<LocalDate>
 	 */
 	public DatePicker(String id, Options options)
 	{
-		this(id, DEFAULT_PATTERN, options);
+		this(id, DateUtils.DATE_PATTERN, options);
 	}
 
 	/**
@@ -140,7 +139,7 @@ public class DatePicker extends LocalTextField<LocalDate>
 	 */
 	public DatePicker(String id, Locale locale, Options options)
 	{
-		this(id, null, LocaleUtils.getLocaleDatePattern(locale, DEFAULT_PATTERN), options.set("culture", Options.asString(LocaleUtils.getLangageCode(locale))));
+		this(id, null, LocaleUtils.getLocaleDatePattern(locale, DateUtils.DATE_PATTERN), options.set("culture", Options.asString(LocaleUtils.getLangageCode(locale))));
 	}
 
 	/**
@@ -151,7 +150,7 @@ public class DatePicker extends LocalTextField<LocalDate>
 	 */
 	public DatePicker(String id, IModel<LocalDate> model)
 	{
-		this(id, model, DEFAULT_PATTERN, new Options());
+		this(id, model, DateUtils.DATE_PATTERN, new Options());
 	}
 
 	/**
@@ -163,7 +162,7 @@ public class DatePicker extends LocalTextField<LocalDate>
 	 */
 	public DatePicker(String id, IModel<LocalDate> model, Options options)
 	{
-		this(id, model, DEFAULT_PATTERN, options);
+		this(id, model, DateUtils.DATE_PATTERN, options);
 	}
 
 	/**
@@ -213,7 +212,7 @@ public class DatePicker extends LocalTextField<LocalDate>
 	 */
 	public DatePicker(String id, IModel<LocalDate> model, Locale locale, Options options)
 	{
-		this(id, model, LocaleUtils.getLocaleDatePattern(locale, DEFAULT_PATTERN), options.set("culture", Options.asString(LocaleUtils.getLangageCode(locale))));
+		this(id, model, LocaleUtils.getLocaleDatePattern(locale, DateUtils.DATE_PATTERN), options.set("culture", Options.asString(LocaleUtils.getLangageCode(locale))));
 	}
 
 	@Override

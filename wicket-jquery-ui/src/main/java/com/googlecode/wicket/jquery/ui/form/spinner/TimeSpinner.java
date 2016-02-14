@@ -28,6 +28,7 @@ import org.apache.wicket.util.lang.Args;
 import com.googlecode.wicket.jquery.core.IJQueryCultureWidget;
 import com.googlecode.wicket.jquery.core.JQueryBehavior;
 import com.googlecode.wicket.jquery.core.Options;
+import com.googlecode.wicket.jquery.core.utils.DateUtils;
 import com.googlecode.wicket.jquery.core.utils.LocaleUtils;
 import com.googlecode.wicket.jquery.ui.JQueryUIBehavior;
 
@@ -42,8 +43,6 @@ public class TimeSpinner extends DateTextField implements IJQueryCultureWidget
 {
 	private static final long serialVersionUID = 1L;
 
-	protected static final String DEFAULT_PATTERN = "h:mm aa"; // default java time pattern TODO move to DateUtils
-
 	private final Options options;
 
 	/**
@@ -53,7 +52,7 @@ public class TimeSpinner extends DateTextField implements IJQueryCultureWidget
 	 */
 	public TimeSpinner(String id)
 	{
-		this(id, DEFAULT_PATTERN, new Options());
+		this(id, DateUtils.TIME_PATTERN, new Options());
 	}
 
 	/**
@@ -64,7 +63,7 @@ public class TimeSpinner extends DateTextField implements IJQueryCultureWidget
 	 */
 	public TimeSpinner(String id, Options options)
 	{
-		this(id, DEFAULT_PATTERN, options);
+		this(id, DateUtils.TIME_PATTERN, options);
 	}
 
 	/**
@@ -112,7 +111,7 @@ public class TimeSpinner extends DateTextField implements IJQueryCultureWidget
 	 */
 	public TimeSpinner(String id, Locale locale, Options options)
 	{
-		this(id, LocaleUtils.getLocaleTimePattern(locale, DEFAULT_PATTERN), options.set("culture", Options.asString(LocaleUtils.getLangageCode(locale))));
+		this(id, LocaleUtils.getLocaleTimePattern(locale, DateUtils.TIME_PATTERN), options.set("culture", Options.asString(LocaleUtils.getLangageCode(locale))));
 	}
 
 	/**
@@ -123,7 +122,7 @@ public class TimeSpinner extends DateTextField implements IJQueryCultureWidget
 	 */
 	public TimeSpinner(String id, IModel<Date> model)
 	{
-		this(id, model, DEFAULT_PATTERN, new Options());
+		this(id, model, DateUtils.TIME_PATTERN, new Options());
 	}
 
 	/**
@@ -135,7 +134,7 @@ public class TimeSpinner extends DateTextField implements IJQueryCultureWidget
 	 */
 	public TimeSpinner(String id, IModel<Date> model, Options options)
 	{
-		this(id, model, DEFAULT_PATTERN, options);
+		this(id, model, DateUtils.TIME_PATTERN, options);
 	}
 
 	/**
@@ -187,7 +186,7 @@ public class TimeSpinner extends DateTextField implements IJQueryCultureWidget
 	 */
 	public TimeSpinner(String id, IModel<Date> model, Locale locale, Options options)
 	{
-		this(id, model, LocaleUtils.getLocaleTimePattern(locale, DEFAULT_PATTERN), options.set("culture", Options.asString(LocaleUtils.getLangageCode(locale))));
+		this(id, model, LocaleUtils.getLocaleTimePattern(locale, DateUtils.TIME_PATTERN), options.set("culture", Options.asString(LocaleUtils.getLangageCode(locale))));
 	}
 
 	// Events //

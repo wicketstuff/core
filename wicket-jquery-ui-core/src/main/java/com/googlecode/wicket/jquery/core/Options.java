@@ -105,7 +105,7 @@ public class Options implements IClusterable
 	 */
 	public static String asDate(Date date)
 	{
-		return Options.asString(DateUtils.toISO8601(date));
+		return Options.asString(DateUtils.toString(date));
 	}
 
 	/**

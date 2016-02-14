@@ -30,8 +30,16 @@ import java.util.TimeZone;
  */
 public class DateUtils
 {
-	private static final String ISO8601 = "yyyy-MM-dd'T'HH:mm:ss.SSS";
-	private static final String ISO8601_TZ = "yyyy-MM-dd'T'HH:mm:ssZ";
+	public static final String ISO8601 = "yyyy-MM-dd'T'HH:mm:ss.SSS";
+	public static final String ISO8601_TZ = "yyyy-MM-dd'T'HH:mm:ss.SSSZ";
+	public static final String ISO8601_UTC = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'";
+	
+	/** default java date pattern */
+	public static final String DATE_PATTERN = "MM/dd/yyyy"; 
+
+	/** default java time pattern */
+	public static final String TIME_PATTERN = "h:mm aa";
+
 
 	public static final TimeZone UTC = TimeZone.getTimeZone("UTC");
 
@@ -72,7 +80,7 @@ public class DateUtils
 	 * 
 	 * @param date the date to convert
 	 * @return the UTC date
-	 * @throws ParseException 
+	 * @throws ParseException
 	 */
 	public static long utc(String date) throws ParseException
 	{
@@ -105,14 +113,28 @@ public class DateUtils
 	}
 
 	/**
-	 * Converts a date to its ISO8601/javascript representation (with timezone). ie: 2009-11-05T13:15:00+0200
+	 * Converts a date to its ISO8601/javascript representation (with timezone). ie: 2009-11-05T13:15:00.000+0200
 	 *
 	 * @param date the date to convert
 	 * @return the ISO8601 date as string
 	 */
-	public static String toISO8601(Date date)
+	public static String toString(Date date)
 	{
 		return new SimpleDateFormat(ISO8601_TZ).format(date);
+	}
+
+	/**
+	 * Converts a date to its ISO8601/javascript representation (UTC). ie: 2009-11-05T13:15:00.000Z
+	 *
+	 * @param date the date to convert
+	 * @return the ISO8601 date as string
+	 */
+	public static String toUTCString(Date date)
+	{
+		SimpleDateFormat formatter = new SimpleDateFormat(ISO8601_UTC);
+		formatter.setTimeZone(DateUtils.UTC);
+
+		return formatter.format(date);
 	}
 
 	/**

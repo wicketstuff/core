@@ -33,6 +33,8 @@ import org.threeten.bp.LocalTime;
 import org.threeten.bp.format.DateTimeFormatter;
 import org.threeten.bp.format.DateTimeParseException;
 
+import com.googlecode.wicket.jquery.core.utils.DateUtils;
+
 /**
  * Provides a datetime-picker based on a {@link DatePicker} and a {@link TimePicker}
  *
@@ -89,7 +91,7 @@ public class DateTimePicker extends FormComponentPanel<LocalDateTime> implements
 	 */
 	public DateTimePicker(String id)
 	{
-		this(id, DatePicker.DEFAULT_PATTERN, TimePicker.DEFAULT_PATTERN);
+		this(id, DateUtils.DATE_PATTERN, DateUtils.TIME_PATTERN);
 	}
 
 	/**
@@ -115,7 +117,7 @@ public class DateTimePicker extends FormComponentPanel<LocalDateTime> implements
 	 */
 	public DateTimePicker(String id, IModel<LocalDateTime> date)
 	{
-		this(id, date, DatePicker.DEFAULT_PATTERN, TimePicker.DEFAULT_PATTERN);
+		this(id, date, DateUtils.DATE_PATTERN, DateUtils.TIME_PATTERN);
 	}
 
 	/**

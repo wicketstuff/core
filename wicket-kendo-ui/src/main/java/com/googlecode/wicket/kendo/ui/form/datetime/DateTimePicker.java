@@ -33,6 +33,8 @@ import org.apache.wicket.validation.ValidationError;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.googlecode.wicket.jquery.core.utils.DateUtils;
+
 /**
  * Provides a datetime-picker based on a {@link DatePicker} and a {@link TimePicker}
  *
@@ -78,7 +80,7 @@ public class DateTimePicker extends FormComponentPanel<Date> implements ITextFor
 	 */
 	public DateTimePicker(String id)
 	{
-		this(id, DatePicker.DEFAULT_PATTERN, TimePicker.DEFAULT_PATTERN);
+		this(id, DateUtils.DATE_PATTERN, DateUtils.TIME_PATTERN);
 	}
 
 	/**
@@ -104,7 +106,7 @@ public class DateTimePicker extends FormComponentPanel<Date> implements ITextFor
 	 */
 	public DateTimePicker(String id, IModel<Date> date)
 	{
-		this(id, date, DatePicker.DEFAULT_PATTERN, TimePicker.DEFAULT_PATTERN);
+		this(id, date, DateUtils.DATE_PATTERN, DateUtils.TIME_PATTERN);
 	}
 
 	/**

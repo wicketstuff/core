@@ -32,7 +32,7 @@ public abstract class SamplePage extends TemplatePage
 	private static String getSource(Source source, Class<? extends SamplePage> scope)
 	{
 		PackageTextTemplate stream = new PackageTextTemplate(scope, String.format("%s.%s", scope.getSimpleName(), source.toString().toLowerCase()));
-		String string = ResourceUtil.readString(stream); //TODO replace with steam#asString
+		String string = ResourceUtil.readString(stream);
 
 		try
 		{
