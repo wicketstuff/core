@@ -13,6 +13,7 @@ import com.googlecode.wicket.jquery.ui.samples.pages.calendar.DefaultCalendarPag
 import com.googlecode.wicket.jquery.ui.samples.pages.datepicker.DefaultDatePickerPage;
 import com.googlecode.wicket.jquery.ui.samples.pages.dialog.MessageDialogPage;
 import com.googlecode.wicket.jquery.ui.samples.pages.draggable.DefaultDraggablePage;
+import com.googlecode.wicket.jquery.ui.samples.pages.dropdown.DefaultSelectMenuPage;
 import com.googlecode.wicket.jquery.ui.samples.pages.droppable.DefaultDroppablePage;
 import com.googlecode.wicket.jquery.ui.samples.pages.effect.DefaultEffectPage;
 import com.googlecode.wicket.jquery.ui.samples.pages.kendo.accordion.KendoAccordionPage;
@@ -75,6 +76,7 @@ public class SampleApplication extends WebApplication
 		this.mountPackage("/dialog", MessageDialogPage.class);
 		this.mountPackage("/menu", DefaultMenuPage.class);
 		this.mountPackage("/progressbar", ButtonProgressBarPage.class);
+		this.mountPackage("/selectmenu", DefaultSelectMenuPage.class);
 		this.mountPackage("/slider", DefaultSliderPage.class);
 		this.mountPackage("/spinner", DefaultSpinnerPage.class);
 		this.mountPackage("/tabs", DefaultTabsPage.class);
@@ -111,7 +113,7 @@ public class SampleApplication extends WebApplication
 		this.mountPackage("/kendo/tabs", KendoTabsPage.class);
 		this.mountPackage("/kendo/tooltip", DefaultKendoTooltipPage.class);
 		this.mountPackage("/kendo/window", DefaultWindowPage.class);
-		
+
 		// Kendo interactions //
 		this.mountPackage("/kendo/draggable", BehaviorDragDropPage.class);
 

@@ -523,6 +523,7 @@ public class SchedulerEvent implements Serializable
 	}
 	
 	// Static //
+
 	public static boolean isNew(SchedulerEvent event)
 	{
 		return event != null && event.id == NEW_ID;

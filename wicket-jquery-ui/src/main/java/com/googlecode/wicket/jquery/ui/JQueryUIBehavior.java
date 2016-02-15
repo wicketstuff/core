@@ -22,6 +22,7 @@ import org.apache.wicket.core.request.handler.IPartialPageRequestHandler;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.googlecode.wicket.jquery.core.IJQueryWidget.JQueryWidget;
 import com.googlecode.wicket.jquery.core.JQueryBehavior;
 import com.googlecode.wicket.jquery.core.Options;
 import com.googlecode.wicket.jquery.core.utils.JQueryUtils;
@@ -91,7 +92,7 @@ public class JQueryUIBehavior extends JQueryBehavior implements IDestroyable
 	 */
 	public String widget()
 	{
-		return this.widget(this.method);
+		return JQueryUIBehavior.widget(this.selector, this.method);
 	}
 
 	/**
@@ -102,9 +103,33 @@ public class JQueryUIBehavior extends JQueryBehavior implements IDestroyable
 	 */
 	protected String widget(String method)
 	{
-		return String.format("jQuery('%s').%s('instance')", this.selector, method);
+		return JQueryUIBehavior.widget(this.selector, method);
 	}
 
+	/**
+	 * Gets the jQuery UI widget
+	 *
+	 * @param selector the widget selector
+	 * @param method the jQuery UI method
+	 * @return the jQuery object
+	 */
+	public static String widget(String selector, String method)
+	{
+		return String.format("jQuery('%s').%s('instance')", selector, method);
+	}
+
+	/**
+	 * Gets the jQuery UI widget
+	 *
+	 * @param component the {@link Component}
+	 * @param method the jQuery UI method
+	 * @return the jQuery object
+	 */
+	public static String widget(Component component, String method)
+	{
+		return JQueryUIBehavior.widget(JQueryWidget.getSelector(component), method);
+	}
+	
 	@Override
 	public void destroy(IPartialPageRequestHandler handler)
 	{

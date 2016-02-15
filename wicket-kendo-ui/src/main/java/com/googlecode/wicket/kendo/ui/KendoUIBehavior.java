@@ -161,18 +161,6 @@ public class KendoUIBehavior extends JQueryBehavior implements IDestroyable
 	/**
 	 * Gets the Kendo UI widget
 	 *
-	 * @param component the {@link Component}
-	 * @param method the Kendo UI method
-	 * @return the jQuery object
-	 */
-	public static String widget(Component component, String method)
-	{
-		return KendoUIBehavior.widget(JQueryWidget.getSelector(component), method);
-	}
-
-	/**
-	 * Gets the Kendo UI widget
-	 *
 	 * @param selector the widget selector
 	 * @param method the Kendo UI method
 	 * @return the jQuery object
@@ -180,6 +168,18 @@ public class KendoUIBehavior extends JQueryBehavior implements IDestroyable
 	public static String widget(String selector, String method)
 	{
 		return String.format("jQuery('%s').data('%s')", selector, method);
+	}
+
+	/**
+	 * Gets the Kendo UI widget
+	 *
+	 * @param component the {@link Component}
+	 * @param method the Kendo UI method
+	 * @return the jQuery object
+	 */
+	public static String widget(Component component, String method)
+	{
+		return KendoUIBehavior.widget(JQueryWidget.getSelector(component), method);
 	}
 
 	@Override

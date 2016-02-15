@@ -144,6 +144,18 @@ public class DropDownChoice<T> extends org.apache.wicket.markup.html.form.DropDo
 	{
 		super(id, model, choices, renderer);
 	}
+	
+	// Method //
+	
+	/**
+	 * Gets the jQuery UI widget
+	 *
+	 * @return the jQuery object
+	 */
+	public String widget()
+	{
+		return JQueryUIBehavior.widget(this, DropDownChoice.METHOD);
+	}
 
 	// Events //
 
@@ -158,7 +170,8 @@ public class DropDownChoice<T> extends org.apache.wicket.markup.html.form.DropDo
 	@Override
 	public void onConfigure(JQueryBehavior behavior)
 	{
-		// noop
+		// middle-aligned by default
+		behavior.setOption("create", String.format("function( event, ui ) { %s.button.css('vertical-align', 'middle'); }", this.widget()));
 	}
 
 	@Override
