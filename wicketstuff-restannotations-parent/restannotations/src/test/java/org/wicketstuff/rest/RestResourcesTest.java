@@ -126,6 +126,14 @@ public class RestResourcesTest
 	}
 
 	@Test
+	public void testSimilarMountedPath() throws Exception
+	{
+		tester.getRequest().setMethod("GET");
+		tester.executeUrl("./api/path/get_from_another_path?term=ff");
+		testIfResponseStringIsEqual("getFromAnotherPath");
+	}
+	
+	@Test
 	public void testJsonDeserializedParamRequest()
 	{
 		// test @RequestBody annotation

@@ -139,7 +139,7 @@ public class ScoreMethodAndExtractPathVars implements ISegmentVisitor
 
 	public void addScore(int partialSocre)
 	{
-		this.score =+ partialSocre;
+		this.score += partialSocre;
 	}
 
 	public int getScore()

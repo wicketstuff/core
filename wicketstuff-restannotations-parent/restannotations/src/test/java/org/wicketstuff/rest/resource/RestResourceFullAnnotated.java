@@ -216,6 +216,16 @@ public class RestResourceFullAnnotated extends AbstractRestResource<TextualWebSe
 	{
 		return new Person("Mary", "Smith", "m.smith@gmail.com");
 	}
+	
+	@MethodMapping(value = "/path/get_from_path", produces = RestMimeTypes.TEXT_PLAIN)
+	public String getFromPath(@RequestParam("term") String term) {
+	    return "getFromPath";
+	}
+
+	@MethodMapping(value = "/path/get_from_another_path", produces = RestMimeTypes.TEXT_PLAIN)
+	public String getFromAnotherPath(@RequestParam("term") String term) {
+	    return "getFromAnotherPath";
+	}
 }
 
 @Retention(RetentionPolicy.RUNTIME)
