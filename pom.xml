@@ -7,7 +7,7 @@
 	<groupId>org.wicketstuff</groupId>
 	<artifactId>wicketstuff-core</artifactId>
 	<packaging>pom</packaging>
-	<version>7.2.0-SNAPSHOT</version>
+	<version>7.3.0-SNAPSHOT</version>
 	<name>WicketStuff Core Parent</name>
 	<description>
 		WicketStuff Core Parent is the parent project for all of the core WicketStuff projects.  It tries
@@ -244,7 +244,7 @@
 	<!-- mocleiri: for distribution in to central repository sections in the main pom are not allowed -->
 
 	<properties>
-		<wicket.version>7.1.0</wicket.version>
+		<wicket.version>7.3.0-SNAPSHOT</wicket.version>
 
 		<maven.compiler.source>1.7</maven.compiler.source>
 		<maven.compiler.target>1.7</maven.compiler.target>
@@ -256,7 +256,7 @@
 		<deployment.disabled>false</deployment.disabled>
 		<sources.disabled>false</sources.disabled>
 
-		<hibernate.version>4.3.6.Final</hibernate.version>
+		<hibernate.version>4.3.11.Final</hibernate.version>
 		<javassist.version>3.18.2-GA</javassist.version>
 		<jetty.version>8.1.16.v20140903</jetty.version>
 		<sf-jung.version>2.0.1</sf-jung.version>
