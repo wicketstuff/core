@@ -46,6 +46,8 @@ public class HomePage extends WebPage
 	private List<Country> ajaxcountries = new ArrayList<>(Arrays.asList(new Country[] { Country.US, Country.CA }));
 	@SuppressWarnings("unused")
 	private List<Country> ajaxcountriesns = new ArrayList<>(Arrays.asList(new Country[] { Country.US, Country.CA }));
+	@SuppressWarnings("unused")
+	private List<String> tags = new ArrayList<>(Arrays.asList("tag1", "tag2"));
 
 	public HomePage()
 	{
@@ -123,7 +125,37 @@ public class HomePage extends WebPage
 			}
 		});
 		add(new Form<Void>("multiajaxns").add(ajaxcountriesns.setOutputMarkupId(true)));
-        
+
+		// tags example
+		add(new Label("tagsLabel", new PropertyModel<>(this, "tags")));
+		Select2MultiChoice<String> tags = new Select2MultiChoice<>("tagsSelect",
+				new PropertyModel<Collection<String>>(this, "tags"), new TagProvider());
+		tags.getSettings().setMinimumInputLength(1);
+		tags.getSettings().setCloseOnSelect(true);
+		tags.getSettings().setTags(true);
+
+		// append "(new)" next to new tags (source http://stackoverflow.com/a/30021059)
+		String tagNew = getString("tag.new");
+		tags.getSettings().setCreateTag(
+				"function (params) {\n" +
+				"    return {\n" +
+				"      id: params.term,\n" +
+				"      text: params.term,\n" +
+				"      newOption: true\n" +
+				"    };\n" +
+				"}");
+		tags.getSettings().setTemplateResult(
+				"function (data) {\n" +
+				"    var result = $('<span></span>');\n" +
+				"    result.text(data.text);\n" +
+				"    if (data.newOption) {\n" +
+				"      result.append(' <em>" + tagNew + "</em>');\n" +
+				"    }\n" +
+				"    return result;\n" +
+				"}");
+		add(new Form<Void>("tagsForm").add(tags));
+
+		// stateless
         Form<Void> stateless = new Form<>("stateless");
         add(stateless);
 
@@ -223,4 +255,17 @@ public class HomePage extends WebPage
 		}
 	}
 
+	public static class TagProvider extends StringTextChoiceProvider
+	{
+		@Override
+		public void query(String term, int page, Response<String> response)
+		{
+			List<Country> matches = queryMatches(term, page, PAGE_SIZE);
+			for (Country match : matches)
+			{
+				response.add(match.getDisplayName());
+			}
+			response.setHasMore(response.size() == PAGE_SIZE);
+		}
+	}
 }

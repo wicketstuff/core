@@ -60,6 +60,7 @@ public final class Settings implements Serializable
 	private AjaxSettings ajax;
 	private String data;
 	private boolean tags;
+	private String createTag;
 	private String separator;
 	private String[] tokenSeparators;
 	private boolean selectOnClose;
@@ -125,6 +126,7 @@ public final class Settings implements Serializable
 			}
 			Json.writeFunction(writer, "data", data);
 			Json.writeObject(writer, "tags", tags);
+			Json.writeFunction(writer, "createTag", createTag);
 			writer.endObject();
 
 			return writer.toString();
@@ -320,6 +322,17 @@ public final class Settings implements Serializable
 	public Settings setTags(boolean tags)
 	{
 		this.tags = tags;
+		return this;
+	}
+
+	public String getCreateTag()
+	{
+		return createTag;
+	}
+
+	public Settings setCreateTag(String createTag)
+	{
+		this.createTag = createTag;
 		return this;
 	}
 
