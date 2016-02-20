@@ -16,6 +16,7 @@
  */
 package com.googlecode.wicket.kendo.ui.widget.progressbar;
 
+import org.apache.wicket.Component;
 import org.apache.wicket.core.request.handler.IPartialPageRequestHandler;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.util.lang.Args;
@@ -121,9 +122,10 @@ public class ProgressBar extends JQueryGenericContainer<Integer> implements IPro
 	 * Sets the progress-bar value
 	 *
 	 * @param value value which should be greater than or equals to {@link #MIN} and less than or equals to {@link #MAX}
+	 * @return 
 	 */
 	@Override
-	public void setModelObject(Integer value)
+	public Component setModelObject(Integer value)
 	{
 		Integer v = Args.notNull(value, "value");
 
@@ -136,7 +138,7 @@ public class ProgressBar extends JQueryGenericContainer<Integer> implements IPro
 			v = this.getMax();
 		}
 
-		this.setDefaultModelObject(v);
+		return this.setDefaultModelObject(v);
 	}
 
 	// Methods //

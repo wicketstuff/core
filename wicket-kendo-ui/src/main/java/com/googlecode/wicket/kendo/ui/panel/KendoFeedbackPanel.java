@@ -18,6 +18,7 @@ package com.googlecode.wicket.kendo.ui.panel;
 
 import java.util.List;
 
+import org.apache.wicket.Component;
 import org.apache.wicket.IGenericComponent;
 import org.apache.wicket.MarkupContainer;
 import org.apache.wicket.core.request.handler.IPartialPageRequestHandler;
@@ -194,15 +195,15 @@ public class KendoFeedbackPanel extends WebMarkupContainer implements IJQueryWid
 	}
 
 	@Override
-	public void setModel(IModel<List<FeedbackMessage>> model)
+	public MarkupContainer setModel(IModel<List<FeedbackMessage>> model)
 	{
-		this.setDefaultModel(model);
+		return this.setDefaultModel(model);
 	}
 
 	@Override
-	public void setModelObject(List<FeedbackMessage> object)
+	public Component setModelObject(List<FeedbackMessage> object)
 	{
-		this.setDefaultModelObject(object);
+		return this.setDefaultModelObject(object);
 	}
 
 	@Override

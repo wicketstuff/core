@@ -16,6 +16,7 @@
  */
 package com.googlecode.wicket.jquery.ui.widget.progressbar;
 
+import org.apache.wicket.Component;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.core.request.handler.IPartialPageRequestHandler;
 import org.apache.wicket.model.IModel;
@@ -70,7 +71,7 @@ public class ProgressBar extends JQueryGenericContainer<Integer> implements IJQu
 	 * @param value value which should be greater than or equals to {@link #MIN} and less than or equals to {@link #MAX}
 	 */
 	@Override
-	public void setModelObject(Integer value)
+	public Component setModelObject(Integer value)
 	{
 		Integer v = Args.notNull(value, "value");
 
@@ -83,7 +84,7 @@ public class ProgressBar extends JQueryGenericContainer<Integer> implements IJQu
 			v = MAX;
 		}
 
-		super.setModelObject(v);
+		return super.setModelObject(v);
 	}
 
 	// Methods //
