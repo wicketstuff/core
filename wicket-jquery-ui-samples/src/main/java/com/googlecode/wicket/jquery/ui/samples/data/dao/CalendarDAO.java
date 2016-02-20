@@ -1,10 +1,9 @@
 package com.googlecode.wicket.jquery.ui.samples.data.dao;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-
-import org.threeten.bp.LocalDate;
-import org.threeten.bp.LocalDateTime;
 
 import com.googlecode.wicket.jquery.ui.samples.data.DemoCalendarEvent;
 import com.googlecode.wicket.jquery.ui.samples.data.DemoCalendarEvent.Category;

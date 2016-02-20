@@ -16,9 +16,10 @@
  */
 package com.googlecode.wicket.jquery.ui.calendar;
 
+import java.time.LocalDateTime;
+
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.util.io.IClusterable;
-import org.threeten.bp.LocalDateTime;
 
 /**
  * Event listener shared by the {@link Calendar} widget and the {@link CalendarBehavior}

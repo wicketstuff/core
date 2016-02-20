@@ -1,6 +1,6 @@
 package com.googlecode.wicket.jquery.ui.samples.data;
 
-import org.threeten.bp.LocalDateTime;
+import java.time.LocalDateTime;
 
 import com.googlecode.wicket.jquery.ui.calendar.CalendarEvent;
 

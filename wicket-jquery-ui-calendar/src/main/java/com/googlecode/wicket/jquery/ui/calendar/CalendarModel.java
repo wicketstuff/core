@@ -16,10 +16,10 @@
  */
 package com.googlecode.wicket.jquery.ui.calendar;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import org.apache.wicket.model.LoadableDetachableModel;
-import org.threeten.bp.LocalDate;
 
 /**
  * Base class for implementing the list model of {@link CalendarEvent} to be retrieved.<br/>

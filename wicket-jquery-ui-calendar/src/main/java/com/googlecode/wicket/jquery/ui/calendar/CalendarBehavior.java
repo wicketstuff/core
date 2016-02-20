@@ -16,6 +16,9 @@
  */
 package com.googlecode.wicket.jquery.ui.calendar;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+
 import org.apache.wicket.Component;
 import org.apache.wicket.ajax.AbstractDefaultAjaxBehavior;
 import org.apache.wicket.ajax.AjaxRequestTarget;
@@ -28,8 +31,6 @@ import org.apache.wicket.request.cycle.RequestCycle;
 import org.apache.wicket.request.handler.resource.ResourceReferenceRequestHandler;
 import org.apache.wicket.util.lang.Args;
 import org.apache.wicket.util.string.Strings;
-import org.threeten.bp.LocalDate;
-import org.threeten.bp.LocalDateTime;
 
 import com.googlecode.wicket.jquery.core.JQueryBehavior;
 import com.googlecode.wicket.jquery.core.JQueryEvent;

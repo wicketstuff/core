@@ -17,8 +17,7 @@
 package com.googlecode.wicket.jquery.ui.calendar;
 
 import java.io.Serializable;
-
-import org.threeten.bp.LocalDateTime;
+import java.time.LocalDateTime;
 
 import com.googlecode.wicket.jquery.core.Options;
 

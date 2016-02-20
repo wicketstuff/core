@@ -16,6 +16,7 @@
  */
 package com.googlecode.wicket.kendo.ui.form.datetime.local;
 
+import java.time.LocalDate;
 import java.util.Locale;
 
 import org.apache.wicket.Component;
@@ -24,7 +25,6 @@ import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.core.request.handler.IPartialPageRequestHandler;
 import org.apache.wicket.markup.html.form.FormComponent;
 import org.apache.wicket.model.IModel;
-import org.threeten.bp.LocalDate;
 
 import com.googlecode.wicket.jquery.core.JQueryBehavior;
 import com.googlecode.wicket.jquery.core.JQueryEvent;
