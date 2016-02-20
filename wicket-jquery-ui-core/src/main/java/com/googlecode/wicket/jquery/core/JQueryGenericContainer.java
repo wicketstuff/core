@@ -1,6 +1,8 @@
 package com.googlecode.wicket.jquery.core;
 
+import org.apache.wicket.Component;
 import org.apache.wicket.IGenericComponent;
+import org.apache.wicket.MarkupContainer;
 import org.apache.wicket.model.IModel;
 
 /**
@@ -43,9 +45,9 @@ public abstract class JQueryGenericContainer<T> extends JQueryContainer implemen
 	}
 
 	@Override
-	public void setModel(IModel<T> model)
+	public MarkupContainer setModel(IModel<T> model)
 	{
-		this.setDefaultModel(model);
+		return this.setDefaultModel(model);
 	}
 
 	@Override
@@ -56,8 +58,8 @@ public abstract class JQueryGenericContainer<T> extends JQueryContainer implemen
 	}
 
 	@Override
-	public void setModelObject(T object)
+	public Component setModelObject(T object)
 	{
-		this.setDefaultModelObject(object);
+		return this.setDefaultModelObject(object);
 	}
 }

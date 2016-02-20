@@ -19,6 +19,7 @@ package com.googlecode.wicket.kendo.ui.datatable;
 import java.util.Collections;
 import java.util.List;
 
+import org.apache.wicket.Component;
 import org.apache.wicket.IGenericComponent;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.json.JSONObject;
@@ -247,9 +248,9 @@ public class DataTable<T> extends WebComponent implements IGenericComponent<List
 	}
 
 	@Override
-	public void setModel(IModel<List<IColumn>> model)
+	public Component setModel(IModel<List<IColumn>> model)
 	{
-		this.setDefaultModel(model);
+		return this.setDefaultModel(model);
 	}
 
 	@Override
@@ -260,9 +261,9 @@ public class DataTable<T> extends WebComponent implements IGenericComponent<List
 	}
 
 	@Override
-	public void setModelObject(List<IColumn> object)
+	public Component setModelObject(List<IColumn> object)
 	{
-		this.setDefaultModelObject(object);
+		return this.setDefaultModelObject(object);
 	}
 
 	/**
