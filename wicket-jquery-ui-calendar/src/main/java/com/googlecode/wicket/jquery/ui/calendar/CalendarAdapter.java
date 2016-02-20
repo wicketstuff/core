@@ -16,8 +16,9 @@
  */
 package com.googlecode.wicket.jquery.ui.calendar;
 
+import java.time.LocalDateTime;
+
 import org.apache.wicket.ajax.AjaxRequestTarget;
-import org.threeten.bp.LocalDateTime;
 
 /**
  * Adapter class for {@link ICalendarListener}

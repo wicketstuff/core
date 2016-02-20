@@ -1,8 +1,7 @@
 package com.googlecode.wicket.jquery.ui.samples.data;
 
+import java.time.LocalDate;
 import java.util.List;
-
-import org.threeten.bp.LocalDate;
 
 import com.googlecode.wicket.jquery.ui.calendar.CalendarEvent;
 import com.googlecode.wicket.jquery.ui.calendar.CalendarModel;

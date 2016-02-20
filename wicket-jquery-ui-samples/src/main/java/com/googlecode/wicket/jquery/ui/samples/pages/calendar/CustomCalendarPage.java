@@ -1,10 +1,10 @@
 package com.googlecode.wicket.jquery.ui.samples.pages.calendar;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.wicket.markup.html.panel.FeedbackPanel;
-import org.threeten.bp.LocalDateTime;
 
 import com.googlecode.wicket.jquery.core.Options;
 import com.googlecode.wicket.jquery.ui.calendar.Calendar;

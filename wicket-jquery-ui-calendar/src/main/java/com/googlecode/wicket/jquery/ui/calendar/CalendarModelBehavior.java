@@ -16,6 +16,7 @@
  */
 package com.googlecode.wicket.jquery.ui.calendar;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import org.apache.wicket.Application;
@@ -25,7 +26,6 @@ import org.apache.wicket.request.IRequestHandler;
 import org.apache.wicket.request.IRequestParameters;
 import org.apache.wicket.request.cycle.RequestCycle;
 import org.apache.wicket.request.http.WebResponse;
-import org.threeten.bp.LocalDate;
 
 /**
  * Provides the behavior that loads {@link CalendarEvent}{@code s} according to {@link CalendarModel} start &amp; end dates
