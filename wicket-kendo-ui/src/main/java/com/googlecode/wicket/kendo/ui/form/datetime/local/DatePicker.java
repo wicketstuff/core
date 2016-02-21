@@ -214,10 +214,18 @@ public class DatePicker extends LocalTextField<LocalDate>
 	{
 		this(id, model, LocaleUtils.getLocaleDatePattern(locale, DateUtils.DATE_PATTERN), options.set("culture", Options.asString(LocaleUtils.getLangageCode(locale))));
 	}
+	
+	// Properties //
 
 	@Override
 	protected String getMethod()
 	{
 		return METHOD;
+	}
+
+	@Override
+	protected String[] getInputTypes()
+	{
+		return new String[] { "text", "date" };
 	}
 }

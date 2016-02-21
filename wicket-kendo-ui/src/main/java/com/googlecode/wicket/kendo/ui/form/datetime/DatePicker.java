@@ -190,7 +190,8 @@ public class DatePicker extends DateTextField implements IJQueryWidget
 		this(id, model, LocaleUtils.getLocaleDatePattern(locale, DateUtils.DATE_PATTERN), options.set("culture", Options.asString(LocaleUtils.getLangageCode(locale))));
 	}
 
-	// Getters //
+	// Properties //
+
 	/**
 	 * Marked as final. It is - probably - not consistent to have a pattern different from the display
 	 */
@@ -242,6 +243,7 @@ public class DatePicker extends DateTextField implements IJQueryWidget
 	}
 
 	// IJQueryWidget //
+
 	@Override
 	public JQueryBehavior newWidgetBehavior(String selector)
 	{
