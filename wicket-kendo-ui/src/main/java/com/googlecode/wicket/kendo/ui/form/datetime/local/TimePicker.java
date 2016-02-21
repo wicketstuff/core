@@ -214,10 +214,18 @@ public class TimePicker extends LocalTextField<LocalTime>
 	{
 		this(id, model, LocaleUtils.getLocaleTimePattern(locale, DateUtils.TIME_PATTERN), options.set("culture", Options.asString(LocaleUtils.getLangageCode(locale))));
 	}
+	
+	// Properties //
 
 	@Override
 	protected String getMethod()
 	{
 		return METHOD;
+	}
+	
+	@Override
+	protected String[] getInputTypes()
+	{
+		return new String[] { "text", "time" };
 	}
 }

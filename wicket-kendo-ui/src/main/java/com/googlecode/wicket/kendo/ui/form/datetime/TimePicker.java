@@ -192,6 +192,12 @@ public class TimePicker extends DateTextField implements IJQueryWidget
 
 	// Properties //
 
+	@Override
+	protected String[] getInputTypes()
+	{
+		return new String[] { "text", "time" };
+	}
+
 	/**
 	 * Marked as final. It is - probably - not consistent to have a pattern different from the display
 	 */
