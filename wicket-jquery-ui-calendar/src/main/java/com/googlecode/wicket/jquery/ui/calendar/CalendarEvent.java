@@ -208,7 +208,7 @@ public class CalendarEvent implements Serializable
 	/**
 	 * Create an {@link Options} JSON-object that will embed the (default) properties of this {@link CalendarEvent}
 	 *
-	 * @return a new {@link Options} object
+	 * @return a new {@code Options} object
 	 */
 	protected Options createOptions()
 	{

@@ -95,7 +95,7 @@ public class RangeDatePickerBehavior extends JQueryBehavior implements IJQueryAj
 	 * Gets a new {@link JQueryAjaxBehavior} that will be wired to the 'onRangeChange' event
 	 *
 	 * @param source the {@link IJQueryAjaxAware}
-	 * @return a new {@link OnRangeChangeAjaxBehavior} by default
+	 * @return a new {@code OnRangeChangeAjaxBehavior} by default
 	 */
 	private JQueryAjaxBehavior newOnRangeChangeAjaxBehavior(IJQueryAjaxAware source)
 	{

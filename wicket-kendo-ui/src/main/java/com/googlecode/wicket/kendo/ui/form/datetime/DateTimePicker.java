@@ -33,6 +33,7 @@ import org.apache.wicket.validation.ValidationError;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.googlecode.wicket.jquery.core.Options;
 import com.googlecode.wicket.jquery.core.utils.DateUtils;
 
 /**
@@ -294,8 +295,8 @@ public class DateTimePicker extends FormComponentPanel<Date> implements ITextFor
 	{
 		super.onInitialize();
 
-		this.datePicker = this.newDatePicker("datepicker", this.getModel(), this.datePattern);
-		this.timePicker = this.newTimePicker("timepicker", this.getModel(), this.timePattern);
+		this.datePicker = this.newDatePicker("datepicker", this.getModel(), this.datePattern, new Options());
+		this.timePicker = this.newTimePicker("timepicker", this.getModel(), this.timePattern, new Options());
 
 		this.add(this.datePicker);
 		this.add(this.timePicker);
@@ -312,9 +313,9 @@ public class DateTimePicker extends FormComponentPanel<Date> implements ITextFor
 	 *
 	 * @return the {@link DatePicker}
 	 */
-	protected DatePicker newDatePicker(String id, IModel<Date> model, String datePattern)
+	protected DatePicker newDatePicker(String id, IModel<Date> model, String datePattern, Options options)
 	{
-		return new DatePicker(id, model, datePattern);
+		return new DatePicker(id, model, datePattern, options);
 	}
 
 	/**
@@ -326,8 +327,8 @@ public class DateTimePicker extends FormComponentPanel<Date> implements ITextFor
 	 *
 	 * @return the {@link TimePicker}
 	 */
-	protected TimePicker newTimePicker(String id, IModel<Date> model, String timePattern)
+	protected TimePicker newTimePicker(String id, IModel<Date> model, String timePattern, Options options)
 	{
-		return new TimePicker(id, model, timePattern);
+		return new TimePicker(id, model, timePattern, options);
 	}
 }

@@ -44,7 +44,7 @@ public class DateRange implements IClusterable
 	 * 
 	 * @param start the local start date
 	 * @param end the local end date
-	 * @return a new {@link DateRange}
+	 * @return a new {@code DateRange}
 	 */
 	public static DateRange of(Date start, Date end)
 	{
@@ -57,7 +57,7 @@ public class DateRange implements IClusterable
 	 * 
 	 * @param start the UTC start date
 	 * @param end the UTC end date
-	 * @return a new {@link DateRange}
+	 * @return a new {@code DateRange}
 	 */
 	public static DateRange of(long start, long end)
 	{
@@ -91,7 +91,7 @@ public class DateRange implements IClusterable
 	/**
 	 * Gets a new UTC {@link DateFormat} using ISO8601 pattern, but timezone agnostic
 	 * 
-	 * @return a new {@link DateFormat}
+	 * @return a new {@code DateFormat}
 	 */
 	public static DateFormat newDateFormat()
 	{

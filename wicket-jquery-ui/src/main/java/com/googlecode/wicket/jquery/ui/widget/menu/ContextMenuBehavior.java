@@ -102,7 +102,7 @@ public class ContextMenuBehavior extends JQueryAbstractBehavior implements IJQue
 	 * Gets a new {@link JQueryAjaxBehavior} that will be wired to the 'contextmenu' event
 	 *
 	 * @param source the {@link IJQueryAjaxAware}
-	 * @return a new {@link OnContextMenuAjaxBehavior} by default
+	 * @return a new {@code OnContextMenuAjaxBehavior} by default
 	 */
 	private JQueryAjaxBehavior newOnContextMenuAjaxBehavior(IJQueryAjaxAware source)
 	{

@@ -477,7 +477,7 @@ public abstract class AbstractWizard<T extends Serializable> extends AbstractFor
 	 * Gets a new {@code FeedbackPanel}
 	 * 
 	 * @param id the markup id
-	 * @return a new {@link JQueryFeedbackPanel} by default
+	 * @return a new {@code JQueryFeedbackPanel} by default
 	 */
 	protected WebMarkupContainer newFeedbackPanel(String id)
 	{

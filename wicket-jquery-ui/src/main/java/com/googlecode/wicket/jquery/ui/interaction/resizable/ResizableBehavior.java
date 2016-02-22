@@ -133,7 +133,7 @@ public class ResizableBehavior extends JQueryUIBehavior implements IJQueryAjaxAw
 	 * Gets a new {@link JQueryAjaxBehavior} that will be wired to the 'start' event
 	 *
 	 * @param source the {@link IJQueryAjaxAware}
-	 * @return a new {@link OnResizeStartAjaxBehavior} by default
+	 * @return a new {@code OnResizeStartAjaxBehavior} by default
 	 */
 	protected JQueryAjaxBehavior newOnResizeStartAjaxBehavior(IJQueryAjaxAware source)
 	{
@@ -144,7 +144,7 @@ public class ResizableBehavior extends JQueryUIBehavior implements IJQueryAjaxAw
 	 * Gets a new {@link JQueryAjaxBehavior} that will be wired to the 'stop' event
 	 *
 	 * @param source the {@link IJQueryAjaxAware}
-	 * @return a new {@link OnResizeStopAjaxBehavior} by default
+	 * @return a new {@code OnResizeStopAjaxBehavior} by default
 	 */
 	protected JQueryAjaxBehavior newOnResizeStopAjaxBehavior(IJQueryAjaxAware source)
 	{

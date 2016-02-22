@@ -201,7 +201,7 @@ public abstract class TabsBehavior extends JQueryUIBehavior implements IJQueryAj
 	 * Gets a new {@link JQueryAjaxBehavior} that will be wired to the 'activate' event
 	 *
 	 * @param source the {@link IJQueryAjaxAware}
-	 * @return a new {@link OnActivateAjaxBehavior} by default
+	 * @return a new {@code OnActivateAjaxBehavior} by default
 	 */
 	protected JQueryAjaxBehavior newOnActivateAjaxBehavior(IJQueryAjaxAware source)
 	{
@@ -212,7 +212,7 @@ public abstract class TabsBehavior extends JQueryUIBehavior implements IJQueryAj
 	 * Gets a new {@link JQueryAjaxBehavior} that will be wired to the 'beforeActivate' event
 	 *
 	 * @param source the {@link IJQueryAjaxAware}
-	 * @return a new {@link OnActivateAjaxBehavior} by default
+	 * @return a new {@code OnActivateAjaxBehavior} by default
 	 */
 	protected JQueryAjaxBehavior newOnActivatingAjaxBehavior(IJQueryAjaxAware source)
 	{

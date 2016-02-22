@@ -142,7 +142,7 @@ public abstract class SelectableBehavior<T extends Serializable> extends JQueryU
 	 * Gets a new {@link JQueryAjaxBehavior} that will be wired to the 'stop' event, triggered when the user has selected items
 	 *
 	 * @param source the {@link IJQueryAjaxAware}
-	 * @return a new {@link OnStopAjaxBehavior} by default
+	 * @return a new {@code OnStopAjaxBehavior} by default
 	 */
 	protected JQueryAjaxBehavior newOnStopAjaxBehavior(IJQueryAjaxAware source)
 	{

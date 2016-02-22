@@ -184,7 +184,7 @@ public abstract class AccordionBehavior extends JQueryUIBehavior implements IJQu
 	 * Gets a new {@link JQueryAjaxBehavior} that will be wired to the 'activate' event
 	 *
 	 * @param source the {@link IJQueryAjaxAware}
-	 * @return a new {@link OnActivateAjaxBehavior} by default
+	 * @return a new {@code OnActivateAjaxBehavior} by default
 	 */
 	protected JQueryAjaxBehavior newOnActivateAjaxBehavior(IJQueryAjaxAware source)
 	{

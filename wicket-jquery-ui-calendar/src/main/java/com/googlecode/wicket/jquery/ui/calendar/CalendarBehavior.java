@@ -307,7 +307,7 @@ public class CalendarBehavior extends JQueryBehavior implements IJQueryAjaxAware
 	 * Gets a new {@link JQueryAjaxBehavior} that will be wired to the 'select' event, triggered when the user select a cell range
 	 *
 	 * @param source the {@link IJQueryAjaxAware}
-	 * @return a new {@link OnSelectAjaxBehavior} by default
+	 * @return a new {@code OnSelectAjaxBehavior} by default
 	 */
 	protected JQueryAjaxBehavior newOnSelectAjaxBehavior(IJQueryAjaxAware source)
 	{
@@ -318,7 +318,7 @@ public class CalendarBehavior extends JQueryBehavior implements IJQueryAjaxAware
 	 * Gets a new {@link JQueryAjaxBehavior} that will be wired to the 'dayClick' event, triggered when the user clicks on a day cell
 	 *
 	 * @param source the {@link IJQueryAjaxAware}
-	 * @return a new {@link OnDayClickAjaxBehavior} by default
+	 * @return a new {@code OnDayClickAjaxBehavior} by default
 	 */
 	protected JQueryAjaxBehavior newOnDayClickAjaxBehavior(IJQueryAjaxAware source)
 	{
@@ -329,7 +329,7 @@ public class CalendarBehavior extends JQueryBehavior implements IJQueryAjaxAware
 	 * Gets a new {@link JQueryAjaxBehavior} that will be wired to the 'eventClick' event, triggered when the user clicks on an event
 	 *
 	 * @param source the {@link IJQueryAjaxAware}
-	 * @return a new {@link OnEventClickAjaxBehavior} by default
+	 * @return a new {@code OnEventClickAjaxBehavior} by default
 	 */
 	protected JQueryAjaxBehavior newOnEventClickAjaxBehavior(IJQueryAjaxAware source)
 	{
@@ -340,7 +340,7 @@ public class CalendarBehavior extends JQueryBehavior implements IJQueryAjaxAware
 	 * Gets a new {@link JQueryAjaxBehavior} that will be wired to the 'eventDrop' event, triggered when the user moves (drag & drop) an event
 	 *
 	 * @param source the {@link IJQueryAjaxAware}
-	 * @return a new {@link OnEventDropAjaxBehavior} by default
+	 * @return a new {@code OnEventDropAjaxBehavior} by default
 	 */
 	protected JQueryAjaxBehavior newOnEventDropAjaxBehavior(IJQueryAjaxAware source, CharSequence precondition)
 	{
@@ -351,7 +351,7 @@ public class CalendarBehavior extends JQueryBehavior implements IJQueryAjaxAware
 	 * Gets a new {@link JQueryAjaxBehavior} that will be wired to the 'eventResize' event, triggered when the user resizes an event
 	 *
 	 * @param source the {@link IJQueryAjaxAware}
-	 * @return a new {@link OnEventResizeAjaxBehavior} by default
+	 * @return a new {@code OnEventResizeAjaxBehavior} by default
 	 */
 	protected JQueryAjaxBehavior newOnEventResizeAjaxBehavior(IJQueryAjaxAware source, CharSequence precondition)
 	{
@@ -362,7 +362,7 @@ public class CalendarBehavior extends JQueryBehavior implements IJQueryAjaxAware
 	 * Gets a new {@link JQueryAjaxBehavior} that will be wired to the 'drop' event, triggered when the user drops an event object
 	 *
 	 * @param source the {@link IJQueryAjaxAware}
-	 * @return a new {@link OnObjectDropAjaxBehavior} by default
+	 * @return a new {@code OnObjectDropAjaxBehavior} by default
 	 */
 	protected JQueryAjaxBehavior newOnObjectDropAjaxBehavior(IJQueryAjaxAware source)
 	{
@@ -373,7 +373,7 @@ public class CalendarBehavior extends JQueryBehavior implements IJQueryAjaxAware
 	 * Gets a new {@link JQueryAjaxBehavior} that will be wired to the 'viewRender' event, triggered when the user changes the view, or when any of the date navigation methods are called.
 	 *
 	 * @param source the {@link IJQueryAjaxAware}
-	 * @return a new {@link OnViewRenderAjaxBehavior} by default
+	 * @return a new {@code OnViewRenderAjaxBehavior} by default
 	 */
 	protected JQueryAjaxBehavior newOnViewRenderAjaxBehavior(IJQueryAjaxAware source)
 	{

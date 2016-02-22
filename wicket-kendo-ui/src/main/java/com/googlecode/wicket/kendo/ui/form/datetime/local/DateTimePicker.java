@@ -33,6 +33,7 @@ import org.threeten.bp.LocalTime;
 import org.threeten.bp.format.DateTimeFormatter;
 import org.threeten.bp.format.DateTimeParseException;
 
+import com.googlecode.wicket.jquery.core.Options;
 import com.googlecode.wicket.jquery.core.utils.DateUtils;
 
 /**
@@ -285,8 +286,8 @@ public class DateTimePicker extends FormComponentPanel<LocalDateTime> implements
 	{
 		super.onInitialize();
 
-		this.datePicker = this.newDatePicker("datepicker", new PropertyModel<LocalDate>(this.getModel(), "date"), this.datePattern);
-		this.timePicker = this.newTimePicker("timepicker", new PropertyModel<LocalTime>(this.getModel(), "time"), this.timePattern);
+		this.datePicker = this.newDatePicker("datepicker", new PropertyModel<LocalDate>(this.getModel(), "date"), this.datePattern, new Options());
+		this.timePicker = this.newTimePicker("timepicker", new PropertyModel<LocalTime>(this.getModel(), "time"), this.timePattern, new Options());
 
 		this.add(this.datePicker);
 		this.add(this.timePicker);
@@ -300,12 +301,12 @@ public class DateTimePicker extends FormComponentPanel<LocalDateTime> implements
 	 * @param id the markup id
 	 * @param model the {@link IModel}
 	 * @param datePattern the date pattern to be used
-	 *
+	 * @param options the {@code Options}
 	 * @return the {@link DatePicker}
 	 */
-	protected DatePicker newDatePicker(String id, IModel<LocalDate> model, String datePattern)
+	protected DatePicker newDatePicker(String id, IModel<LocalDate> model, String datePattern, Options options)
 	{
-		return new DatePicker(id, model, datePattern);
+		return new DatePicker(id, model, datePattern, options);
 	}
 
 	/**
@@ -314,11 +315,11 @@ public class DateTimePicker extends FormComponentPanel<LocalDateTime> implements
 	 * @param id the markup id
 	 * @param model the {@link IModel}
 	 * @param timePattern the date pattern to be used
-	 *
+	 * @param options the {@code Options}
 	 * @return the {@link TimePicker}
 	 */
-	protected TimePicker newTimePicker(String id, IModel<LocalTime> model, String timePattern)
+	protected TimePicker newTimePicker(String id, IModel<LocalTime> model, String timePattern, Options options)
 	{
-		return new TimePicker(id, model, timePattern);
+		return new TimePicker(id, model, timePattern, options);
 	}
 }

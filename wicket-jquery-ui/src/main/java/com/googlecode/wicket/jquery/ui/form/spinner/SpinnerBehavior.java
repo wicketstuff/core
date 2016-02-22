@@ -87,7 +87,7 @@ public class SpinnerBehavior extends JQueryUIBehavior implements IJQueryAjaxAwar
 	 * Gets a new {@link JQueryAjaxBehavior} that will be wired to the 'stop' event
 	 *
 	 * @param source the {@link IJQueryAjaxAware}
-	 * @return a new {@link OnStopAjaxBehavior} by default
+	 * @return a new {@code OnStopAjaxBehavior} by default
 	 */
 	protected JQueryAjaxBehavior newOnSpinAjaxBehavior(IJQueryAjaxAware source)
 	{
@@ -98,7 +98,7 @@ public class SpinnerBehavior extends JQueryUIBehavior implements IJQueryAjaxAwar
 	 * Gets a new {@link JQueryAjaxBehavior} that will be wired to the 'stop' event
 	 *
 	 * @param source the {@link IJQueryAjaxAware}
-	 * @return a new {@link OnStopAjaxBehavior} by default
+	 * @return a new {@code OnStopAjaxBehavior} by default
 	 */
 	protected JQueryAjaxBehavior newOnStopAjaxBehavior(IJQueryAjaxAware source)
 	{

@@ -285,7 +285,7 @@ public class TabbedPanel extends JQueryGenericPanel<List<ITab>> implements ITabs
 	 *
 	 * @param id the markup id
 	 * @param title the tab's title model
-	 * @return a new {@link Label}
+	 * @return a new {@code Label}
 	 */
 	protected Label newTitleLabel(String id, IModel<String> title)
 	{

@@ -193,7 +193,7 @@ public class DraggableBehavior extends JQueryUIBehavior implements IJQueryAjaxAw
 	 * Gets a new {@link JQueryAjaxBehavior} that will be wired to the 'start' event
 	 *
 	 * @param source the {@link IJQueryAjaxAware}
-	 * @return a new {@link OnDragStartAjaxBehavior} by default
+	 * @return a new {@code OnDragStartAjaxBehavior} by default
 	 */
 	protected JQueryAjaxBehavior newOnDragStartAjaxBehavior(IJQueryAjaxAware source)
 	{
@@ -204,7 +204,7 @@ public class DraggableBehavior extends JQueryUIBehavior implements IJQueryAjaxAw
 	 * Gets a new {@link JQueryAjaxBehavior} that will be wired to the 'stop' event
 	 *
 	 * @param source the {@link IJQueryAjaxAware}
-	 * @return a new {@link OnDragStopAjaxBehavior} by default
+	 * @return a new {@code OnDragStopAjaxBehavior} by default
 	 */
 	protected JQueryAjaxBehavior newOnDragStopAjaxBehavior(IJQueryAjaxAware source)
 	{
