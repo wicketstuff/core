@@ -137,7 +137,7 @@ public abstract class AbstractSplitButton extends GenericPanel<List<IMenuItem>>
 	 * Gets a new buttonset behavior
 	 *
 	 * @param component the component on which the behavior should apply
-	 * @return a new {@link JQueryUIBehavior}
+	 * @return a new {@code JQueryUIBehavior}
 	 */
 	private static JQueryUIBehavior newButtonSetBehavior(Component component)
 	{
@@ -148,7 +148,7 @@ public abstract class AbstractSplitButton extends GenericPanel<List<IMenuItem>>
 	 * Gets a new {@link WebMarkupContainer} responsible for showing the {@link Menu}
 	 *
 	 * @param id the markup id
-	 * @return a new {@link WebMarkupContainer}
+	 * @return a new {@code WebMarkupContainer}
 	 */
 	private static WebMarkupContainer newMenuContainer(String id)
 	{
@@ -184,7 +184,7 @@ public abstract class AbstractSplitButton extends GenericPanel<List<IMenuItem>>
 	 *
 	 * @param id the markup id
 	 * @param items the list of {@link IMenuItem}
-	 * @return a new {@link Menu}
+	 * @return a new {@code Menu}
 	 */
 	private Menu newMenu(String id, List<IMenuItem> list)
 	{

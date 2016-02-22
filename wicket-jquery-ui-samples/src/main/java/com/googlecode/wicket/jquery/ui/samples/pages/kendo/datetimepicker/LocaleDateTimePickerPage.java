@@ -10,6 +10,7 @@ import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
 
+import com.googlecode.wicket.jquery.core.Options;
 import com.googlecode.wicket.kendo.ui.KendoCultureHeaderItem;
 import com.googlecode.wicket.kendo.ui.form.button.AjaxButton;
 import com.googlecode.wicket.kendo.ui.form.button.Button;
@@ -40,15 +41,15 @@ public class LocaleDateTimePickerPage extends AbstractTimePickerPage
 			private static final long serialVersionUID = 1L;
 
 			@Override
-			protected DatePicker newDatePicker(String id, IModel<Date> model, String datePattern)
+			protected DatePicker newDatePicker(String id, IModel<Date> model, String datePattern, Options options)
 			{
-				return new DatePicker(id, model, Locale.FRENCH);
+				return new DatePicker(id, model, Locale.FRENCH, options);
 			}
 
 			@Override
-			protected TimePicker newTimePicker(String id, IModel<Date> model, String timePattern)
+			protected TimePicker newTimePicker(String id, IModel<Date> model, String timePattern, Options options)
 			{
-				return new TimePicker(id, model, Locale.FRENCH);
+				return new TimePicker(id, model, Locale.FRENCH, options);
 			}
 		};
 

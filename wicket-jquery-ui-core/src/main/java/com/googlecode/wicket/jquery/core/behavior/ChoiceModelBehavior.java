@@ -101,7 +101,7 @@ public abstract class ChoiceModelBehavior<T> extends AbstractAjaxBehavior implem
 	/**
 	 * Gets a new {@link IRequestHandler} that will call {@link #getChoices()} and will build be JSON response
 	 *
-	 * @return a new {@link IRequestHandler}
+	 * @return a new {@code IRequestHandler}
 	 */
 	protected IRequestHandler newRequestHandler()
 	{

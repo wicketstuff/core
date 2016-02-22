@@ -209,7 +209,7 @@ public abstract class SortableBehavior<T> extends JQueryUIBehavior implements IJ
 	 * Gets a new {@link JQueryAjaxBehavior} that will be wired to the 'update' event, triggered when the user stopped sorting
 	 *
 	 * @param source the {@link IJQueryAjaxAware}
-	 * @return a new {@link OnUpdateAjaxBehavior} by default
+	 * @return a new {@code OnUpdateAjaxBehavior} by default
 	 */
 	protected JQueryAjaxBehavior newOnUpdateAjaxBehavior(IJQueryAjaxAware source)
 	{
@@ -220,7 +220,7 @@ public abstract class SortableBehavior<T> extends JQueryUIBehavior implements IJ
 	 * Gets a new {@link JQueryAjaxBehavior} that will be wired to the 'receive' event, triggered when a connected sortable list has received an item from another list.
 	 *
 	 * @param source the {@link IJQueryAjaxAware}
-	 * @return a new {@link OnReceiveAjaxBehavior} by default
+	 * @return a new {@code OnReceiveAjaxBehavior} by default
 	 */
 	protected JQueryAjaxBehavior newOnReceiveAjaxBehavior(IJQueryAjaxAware source)
 	{
@@ -231,7 +231,7 @@ public abstract class SortableBehavior<T> extends JQueryUIBehavior implements IJ
 	 * Gets a new {@link JQueryAjaxBehavior} that will be wired to the 'remove' event, triggered when a sortable item has been dragged out from the list and into another.
 	 *
 	 * @param source the {@link IJQueryAjaxAware}
-	 * @return a new {@link OnRemoveAjaxBehavior} by default
+	 * @return a new {@code OnRemoveAjaxBehavior} by default
 	 */
 	protected JQueryAjaxBehavior newOnRemoveAjaxBehavior(IJQueryAjaxAware source)
 	{

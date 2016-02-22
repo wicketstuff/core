@@ -26,7 +26,6 @@ import com.googlecode.wicket.jquery.core.Options;
 import com.googlecode.wicket.jquery.core.ajax.IJQueryAjaxAware;
 import com.googlecode.wicket.jquery.core.ajax.JQueryAjaxBehavior;
 import com.googlecode.wicket.jquery.core.ajax.JQueryAjaxPostBehavior;
-import com.googlecode.wicket.jquery.ui.ajax.OnChangeAjaxBehavior;
 import com.googlecode.wicket.jquery.ui.form.slider.AbstractSlider.SliderBehavior;
 
 /**
@@ -77,7 +76,7 @@ public abstract class AjaxSliderBehavior extends SliderBehavior implements IJQue
 	 * Gets a new {@link JQueryAjaxPostBehavior} that will be wired to the 'change' event
 	 *
 	 * @param source the {@link IJQueryAjaxAware}
-	 * @return a new {@link OnChangeAjaxBehavior} by default
+	 * @return a new {@code OnChangeAjaxBehavior} by default
 	 */
 	protected abstract JQueryAjaxPostBehavior newOnChangeAjaxBehavior(IJQueryAjaxAware source);
 }

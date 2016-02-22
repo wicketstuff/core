@@ -26,6 +26,7 @@ import org.threeten.bp.LocalTime;
 
 import com.googlecode.wicket.jquery.core.JQueryBehavior;
 import com.googlecode.wicket.jquery.core.JQueryEvent;
+import com.googlecode.wicket.jquery.core.Options;
 import com.googlecode.wicket.jquery.core.ajax.IJQueryAjaxAware;
 import com.googlecode.wicket.jquery.core.ajax.JQueryAjaxPostBehavior;
 import com.googlecode.wicket.jquery.core.event.IValueChangedListener;
@@ -108,9 +109,9 @@ public class AjaxDateTimePicker extends DateTimePicker implements IJQueryAjaxAwa
 	// Factories //
 
 	@Override
-	protected DatePicker newDatePicker(String id, IModel<LocalDate> model, String datePattern)
+	protected DatePicker newDatePicker(String id, IModel<LocalDate> model, String datePattern, Options options)
 	{
-		return new AjaxDatePicker(id, model, datePattern) {
+		return new AjaxDatePicker(id, model, datePattern, options) {
 
 			private static final long serialVersionUID = 1L;
 
@@ -138,9 +139,9 @@ public class AjaxDateTimePicker extends DateTimePicker implements IJQueryAjaxAwa
 	}
 
 	@Override
-	protected TimePicker newTimePicker(String id, IModel<LocalTime> model, String timePattern)
+	protected TimePicker newTimePicker(String id, IModel<LocalTime> model, String timePattern, Options options)
 	{
-		return new AjaxTimePicker(id, model, timePattern) {
+		return new AjaxTimePicker(id, model, timePattern, options) {
 
 			private static final long serialVersionUID = 1L;
 

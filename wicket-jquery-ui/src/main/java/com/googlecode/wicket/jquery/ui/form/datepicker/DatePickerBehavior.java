@@ -124,7 +124,7 @@ public abstract class DatePickerBehavior extends JQueryUIBehavior implements IJQ
 	 * Gets a new {@link JQueryAjaxPostBehavior} that will be wired to the 'onSelect' event
 	 *
 	 * @param source the {@link IJQueryAjaxAware}
-	 * @return a new {@link OnSelectAjaxBehavior} by default
+	 * @return a new {@code OnSelectAjaxBehavior} by default
 	 */
 	protected abstract JQueryAjaxPostBehavior newOnSelectAjaxBehavior(IJQueryAjaxAware source);
 

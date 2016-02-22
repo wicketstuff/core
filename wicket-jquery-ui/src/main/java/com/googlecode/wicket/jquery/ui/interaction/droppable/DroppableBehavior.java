@@ -147,7 +147,7 @@ public class DroppableBehavior extends JQueryUIBehavior implements IJQueryAjaxAw
 	 * Gets a new {@link JQueryAjaxBehavior} that will be wired to the 'drop' event
 	 *
 	 * @param source the {@link IJQueryAjaxAware}
-	 * @return a new {@link OnDropAjaxBehavior} by default
+	 * @return a new {@code OnDropAjaxBehavior} by default
 	 */
 	protected JQueryAjaxBehavior newOnDropAjaxBehavior(IJQueryAjaxAware source)
 	{
@@ -158,7 +158,7 @@ public class DroppableBehavior extends JQueryUIBehavior implements IJQueryAjaxAw
 	 * Gets a new {@link JQueryAjaxBehavior} that will be wired to the 'over' event
 	 *
 	 * @param source the {@link IJQueryAjaxAware}
-	 * @return a new {@link OnOverAjaxBehavior} by default
+	 * @return a new {@code OnOverAjaxBehavior} by default
 	 */
 	protected JQueryAjaxBehavior newOnOverAjaxBehavior(IJQueryAjaxAware source)
 	{
@@ -169,7 +169,7 @@ public class DroppableBehavior extends JQueryUIBehavior implements IJQueryAjaxAw
 	 * Gets a new {@link JQueryAjaxBehavior} that will be wired to the 'exit' event
 	 *
 	 * @param source the {@link IJQueryAjaxAware}
-	 * @return a new {@link OnExitAjaxBehavior} by default
+	 * @return a new {@code OnExitAjaxBehavior} by default
 	 */
 	protected JQueryAjaxBehavior newOnExitAjaxBehavior(IJQueryAjaxAware source)
 	{

@@ -177,7 +177,7 @@ public class RangeDatePickerTextField extends FormComponentPanel<DateRange> impl
 	 * 
 	 * @param start the start date
 	 * @param end the end date
-	 * @return a new {@link DateRange} object, starting at 0:00:00.000 and ending at 23:59:59.999 by default
+	 * @return a new {@code DateRange} object, starting at 0:00:00.000 and ending at 23:59:59.999 by default
 	 */
 	protected DateRange newDateRange(Date start, Date end)
 	{
