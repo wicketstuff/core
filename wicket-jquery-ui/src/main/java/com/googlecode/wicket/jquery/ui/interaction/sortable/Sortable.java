@@ -29,6 +29,7 @@ import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.util.lang.Args;
 
+import com.googlecode.wicket.jquery.core.IJQueryWidget;
 import com.googlecode.wicket.jquery.core.JQueryBehavior;
 import com.googlecode.wicket.jquery.core.JQueryGenericContainer;
 import com.googlecode.wicket.jquery.core.Options;
@@ -186,7 +187,7 @@ public abstract class Sortable<T> extends JQueryGenericContainer<List<T>> implem
 
 		sortable.connect(this); // eq. to sortable.connectedSortable = this;
 
-		return this.connectWith(JQueryWidget.getSelector(sortable));
+		return this.connectWith(IJQueryWidget.getSelector(sortable));
 	}
 
 	/**

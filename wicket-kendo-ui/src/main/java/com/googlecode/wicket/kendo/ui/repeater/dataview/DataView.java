@@ -227,7 +227,7 @@ public class DataView<T> extends WebMarkupContainer implements IJQueryWidget, IL
 		this.providerBehavior = this.newDataProviderBehavior(this.getDataProvider(), this.renderer, this.template);
 		this.add(this.providerBehavior);
 
-		this.add(JQueryWidget.newWidgetBehavior(this)); // cannot be in ctor as the markupId may be set manually afterward
+		this.add(IJQueryWidget.newWidgetBehavior(this)); // cannot be in ctor as the markupId may be set manually afterward
 
 		if (this.template != null)
 		{

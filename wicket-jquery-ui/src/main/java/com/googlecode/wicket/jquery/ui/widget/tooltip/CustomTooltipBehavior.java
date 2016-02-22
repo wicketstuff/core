@@ -22,7 +22,7 @@ import org.apache.wicket.ajax.json.JSONObject;
 import org.apache.wicket.core.util.string.ComponentRenderer;
 import org.apache.wicket.markup.html.WebMarkupContainer;
 
-import com.googlecode.wicket.jquery.core.IJQueryWidget.JQueryWidget;
+import com.googlecode.wicket.jquery.core.IJQueryWidget;
 import com.googlecode.wicket.jquery.core.Options;
 
 /**
@@ -66,7 +66,7 @@ public abstract class CustomTooltipBehavior extends TooltipBehavior
 
 		component.add(AttributeModifier.replace("data-tooltip", true));
 
-		this.selector = JQueryWidget.getSelector(component);
+		this.selector = IJQueryWidget.getSelector(component);
 		this.setOption("items", Options.asString("[data-tooltip]"));
 		this.setOption("content", String.format("function() { return %s; }", this.render(this.newContent(CONTENT_ID))));
 	}

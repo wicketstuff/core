@@ -62,7 +62,7 @@ public abstract class JQueryContainer extends WebMarkupContainer implements IJQu
 	{
 		super.onInitialize();
 
-		this.widgetBehavior = JQueryWidget.newWidgetBehavior(this);
+		this.widgetBehavior = IJQueryWidget.newWidgetBehavior(this);
 		this.add(this.widgetBehavior); // cannot be in ctor as the markupId may be set manually afterward
 	}
 

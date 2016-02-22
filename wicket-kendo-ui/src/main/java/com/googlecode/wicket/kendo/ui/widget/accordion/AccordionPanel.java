@@ -29,6 +29,7 @@ import org.apache.wicket.markup.html.list.LoopItem;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
 
+import com.googlecode.wicket.jquery.core.IJQueryWidget;
 import com.googlecode.wicket.jquery.core.JQueryGenericPanel;
 import com.googlecode.wicket.jquery.core.Options;
 
@@ -232,7 +233,7 @@ public class AccordionPanel extends JQueryGenericPanel<List<ITab>> implements IA
 			}
 		});
 
-		this.widgetBehavior = JQueryWidget.newWidgetBehavior(this, root);
+		this.widgetBehavior = (AccordionBehavior) IJQueryWidget.newWidgetBehavior(this, root);
 		this.add(this.widgetBehavior);
 	}
 

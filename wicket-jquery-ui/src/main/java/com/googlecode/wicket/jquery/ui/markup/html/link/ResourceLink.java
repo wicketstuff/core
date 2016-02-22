@@ -123,7 +123,7 @@ public class ResourceLink<T> extends org.apache.wicket.markup.html.link.Resource
 	{
 		super.onInitialize();
 
-		this.add(JQueryWidget.newWidgetBehavior(this));
+		this.add(IJQueryWidget.newWidgetBehavior(this));
 	}
 
 	@Override

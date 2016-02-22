@@ -22,7 +22,7 @@ import org.apache.wicket.model.AbstractReadOnlyModel;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
 
-import com.googlecode.wicket.jquery.core.IJQueryWidget.JQueryWidget;
+import com.googlecode.wicket.jquery.core.IJQueryWidget;
 import com.googlecode.wicket.jquery.core.Options;
 import com.googlecode.wicket.kendo.ui.KendoUIBehavior;
 
@@ -125,7 +125,7 @@ public class TooltipBehavior extends KendoUIBehavior
 		super.bind(component);
 
 		// seems that kendo-ui tooltip only apply to the component it is bound to (applying to document doesn't have any effect)
-		this.selector = JQueryWidget.getSelector(component);
+		this.selector = IJQueryWidget.getSelector(component);
 	}
 
 	@Override

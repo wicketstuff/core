@@ -19,7 +19,7 @@ package com.googlecode.wicket.kendo.ui;
 import org.apache.wicket.Component;
 import org.apache.wicket.core.request.handler.IPartialPageRequestHandler;
 
-import com.googlecode.wicket.jquery.core.IJQueryWidget.JQueryWidget;
+import com.googlecode.wicket.jquery.core.IJQueryWidget;
 import com.googlecode.wicket.jquery.core.JQueryBehavior;
 
 /**
@@ -38,7 +38,7 @@ public final class KendoBehaviorFactory
 	 */
 	public static void show(IPartialPageRequestHandler handler, Component component)
 	{
-		KendoBehaviorFactory.show(handler, JQueryWidget.getSelector(component));
+		KendoBehaviorFactory.show(handler, IJQueryWidget.getSelector(component));
 	}
 
 	/**
@@ -60,7 +60,7 @@ public final class KendoBehaviorFactory
 	 */
 	public static void hide(IPartialPageRequestHandler handler, Component component)
 	{
-		KendoBehaviorFactory.hide(handler, JQueryWidget.getSelector(component));
+		KendoBehaviorFactory.hide(handler, IJQueryWidget.getSelector(component));
 	}
 
 	/**
@@ -82,7 +82,7 @@ public final class KendoBehaviorFactory
 	 */
 	public static JQueryBehavior newShowBehavior(Component component)
 	{
-		return KendoBehaviorFactory.newShowBehavior(JQueryWidget.getSelector(component));
+		return KendoBehaviorFactory.newShowBehavior(IJQueryWidget.getSelector(component));
 	}
 
 	/**
@@ -113,7 +113,7 @@ public final class KendoBehaviorFactory
 	 */
 	public static JQueryBehavior newHideBehavior(Component component)
 	{
-		return KendoBehaviorFactory.newHideBehavior(JQueryWidget.getSelector(component));
+		return KendoBehaviorFactory.newHideBehavior(IJQueryWidget.getSelector(component));
 	}
 
 	/**

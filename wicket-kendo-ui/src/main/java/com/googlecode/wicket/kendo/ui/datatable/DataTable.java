@@ -331,7 +331,7 @@ public class DataTable<T> extends WebComponent implements IGenericComponent<List
 		this.providerBehavior = this.newDataProviderBehavior(this.getModel(), this.getDataProvider());
 		this.add(this.providerBehavior);
 
-		this.add(JQueryWidget.newWidgetBehavior(this)); // cannot be in ctor as the markupId may be set manually afterward
+		this.add(IJQueryWidget.newWidgetBehavior(this)); // cannot be in ctor as the markupId may be set manually afterward
 	}
 
 	@Override

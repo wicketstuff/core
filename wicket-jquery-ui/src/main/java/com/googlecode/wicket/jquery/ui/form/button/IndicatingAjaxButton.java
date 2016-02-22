@@ -104,7 +104,7 @@ public abstract class IndicatingAjaxButton extends AjaxButton implements IJQuery
 	{
 		super.onInitialize();
 
-		this.add(JQueryWidget.newWidgetBehavior(this));
+		this.add(IJQueryWidget.newWidgetBehavior(this));
 	}
 
 	@Override

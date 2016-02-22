@@ -98,7 +98,8 @@ public abstract class AjaxButton extends org.apache.wicket.ajax.markup.html.form
 	{
 		super.onInitialize();
 
-		this.add(JQueryWidget.newWidgetBehavior(this)); // cannot be in ctor as the markupId may be set manually afterward
+		this.add(new ButtonBehavior("#" + this.setOutputMarkupId(true).getMarkupId())); // cannot be in ctor as the markupId may be set manually afterward
+		//this.add(IJQueryWidget.newWidgetBehavior(this)); // cannot be in ctor as the markupId may be set manually afterward
 	}
 
 	@Override

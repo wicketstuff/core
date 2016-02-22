@@ -29,6 +29,7 @@ import org.apache.wicket.markup.html.panel.Fragment;
 import org.apache.wicket.util.lang.Args;
 import org.apache.wicket.util.string.Strings;
 
+import com.googlecode.wicket.jquery.core.IJQueryWidget;
 import com.googlecode.wicket.jquery.core.JQueryBehavior;
 import com.googlecode.wicket.jquery.core.JQueryPanel;
 import com.googlecode.wicket.jquery.core.Options;
@@ -139,7 +140,7 @@ public class SfMenu extends JQueryPanel
 	{
 		super.onInitialize();
 
-		this.add(JQueryWidget.newWidgetBehavior(this, JQueryWidget.getSelector(this.root)));
+		this.add(IJQueryWidget.newWidgetBehavior(this, IJQueryWidget.getSelector(this.root)));
 	}
 
 	// IJQueryWidget //

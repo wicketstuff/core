@@ -167,7 +167,7 @@ public class KendoFeedbackPanel extends WebMarkupContainer implements IJQueryWid
 	{
 		super.onInitialize();
 
-		this.widgetBehavior = JQueryWidget.newWidgetBehavior(this);
+		this.widgetBehavior = (NotificationBehavior) IJQueryWidget.newWidgetBehavior(this);
 		this.add(this.widgetBehavior); // cannot be in ctor as the markupId may be set manually afterward
 	}
 

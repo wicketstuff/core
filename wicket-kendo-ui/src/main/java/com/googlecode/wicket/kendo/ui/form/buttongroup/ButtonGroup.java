@@ -133,7 +133,7 @@ public class ButtonGroup<T extends Serializable> extends FormComponentPanel<T> i
 			}
 		});
 
-		this.add(JQueryWidget.newWidgetBehavior(this, group));
+		this.add(IJQueryWidget.newWidgetBehavior(this, group));
 	}
 
 	@Override

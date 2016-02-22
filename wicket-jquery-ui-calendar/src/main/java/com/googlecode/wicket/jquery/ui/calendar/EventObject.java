@@ -90,7 +90,7 @@ public class EventObject extends Label implements IJQueryWidget
 	{
 		super.onInitialize();
 
-		this.add(JQueryWidget.newWidgetBehavior(this));
+		this.add(IJQueryWidget.newWidgetBehavior(this));
 	}
 
 	// Events //

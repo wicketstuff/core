@@ -106,7 +106,7 @@ public class ResponsiveMarkupContainer extends WebMarkupContainer implements IJQ
 	{
 		super.onInitialize();
 
-		this.add(JQueryWidget.newWidgetBehavior(this));
+		this.add(IJQueryWidget.newWidgetBehavior(this));
 	}
 
 	@Override

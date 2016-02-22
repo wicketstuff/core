@@ -65,7 +65,7 @@ public abstract class StatelessLink<T> extends org.apache.wicket.markup.html.lin
 	{
 		super.onInitialize();
 
-		this.add(JQueryWidget.newWidgetBehavior(this));
+		this.add(IJQueryWidget.newWidgetBehavior(this));
 	}
 
 	@Override

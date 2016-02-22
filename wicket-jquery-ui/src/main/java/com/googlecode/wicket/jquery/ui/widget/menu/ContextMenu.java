@@ -22,6 +22,7 @@ import org.apache.wicket.Component;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.markup.ComponentTag;
 
+import com.googlecode.wicket.jquery.core.IJQueryWidget;
 import com.googlecode.wicket.jquery.core.JQueryAbstractBehavior;
 import com.googlecode.wicket.jquery.core.Options;
 
@@ -91,7 +92,7 @@ public class ContextMenu extends Menu
 	 */
 	protected String getPositionOption(Component component)
 	{
-		return String.format("{ my: 'left top', collision: 'none', of: jQuery('%s') }", JQueryWidget.getSelector(component));
+		return String.format("{ my: 'left top', collision: 'none', of: jQuery('%s') }", IJQueryWidget.getSelector(component));
 	}
 
 	// Events //
@@ -124,7 +125,7 @@ public class ContextMenu extends Menu
 		this.onContextMenu(target, component);
 
 		target.add(this);
-		target.appendJavaScript(String.format("jQuery('%s').show().position(%s);", JQueryWidget.getSelector(this), this.getPositionOption(component)));
+		target.appendJavaScript(String.format("jQuery('%s').show().position(%s);", IJQueryWidget.getSelector(this), this.getPositionOption(component)));
 	}
 
 	/**
@@ -154,7 +155,7 @@ public class ContextMenu extends Menu
 			protected String $()
 			{
 				StringBuilder builder = new StringBuilder();
-				String selector = JQueryWidget.getSelector(ContextMenu.this);
+				String selector = IJQueryWidget.getSelector(ContextMenu.this);
 
 				// hide on left-click //
 				builder.append("jQuery(document).click(function(e) { if (e.which == 1) { jQuery('").append(selector).append("').hide(); } } );\n");

@@ -144,7 +144,7 @@ public class SubmitLink extends org.apache.wicket.markup.html.form.SubmitLink im
 	{
 		super.onInitialize();
 
-		this.add(JQueryWidget.newWidgetBehavior(this));
+		this.add(IJQueryWidget.newWidgetBehavior(this));
 	}
 
 	@Override

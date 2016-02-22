@@ -23,7 +23,7 @@ import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.attributes.CallbackParameter;
 import org.apache.wicket.util.lang.Args;
 
-import com.googlecode.wicket.jquery.core.IJQueryWidget.JQueryWidget;
+import com.googlecode.wicket.jquery.core.IJQueryWidget;
 import com.googlecode.wicket.jquery.core.JQueryAbstractBehavior;
 import com.googlecode.wicket.jquery.core.JQueryEvent;
 import com.googlecode.wicket.jquery.core.ajax.IJQueryAjaxAware;
@@ -82,7 +82,7 @@ public class ContextMenuBehavior extends JQueryAbstractBehavior implements IJQue
 	@Override
 	protected String $()
 	{
-		return String.format("jQuery('%s').on('contextmenu', %s);", JQueryWidget.getSelector(this.component), this.onContextMenuAjaxBehavior.getCallbackFunction());
+		return String.format("jQuery('%s').on('contextmenu', %s);", IJQueryWidget.getSelector(this.component), this.onContextMenuAjaxBehavior.getCallbackFunction());
 	}
 
 	// Events //

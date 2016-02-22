@@ -22,7 +22,7 @@ import org.apache.wicket.markup.html.form.IFormSubmittingComponent;
 import org.apache.wicket.markup.html.panel.GenericPanel;
 import org.apache.wicket.model.IModel;
 
-import com.googlecode.wicket.jquery.core.IJQueryWidget.JQueryWidget;
+import com.googlecode.wicket.jquery.core.IJQueryWidget;
 
 /**
  * Provides a {@code GenericPanel} that implements {@link IFormSubmittingComponent}, so it is able to perform a form submit trough HTTP
@@ -79,7 +79,7 @@ public abstract class FormSubmittingPanel<T> extends GenericPanel<T> implements 
 		 */
 		String input = String.format("<input type=\"hidden\" name=\"%s\" value=\"\" />", this.getInputName());
 
-		handler.appendJavaScript(String.format("jQuery('%s').append('%s').submit();", JQueryWidget.getSelector(this.getForm()), input)); // not tested in nested forms
+		handler.appendJavaScript(String.format("jQuery('%s').append('%s').submit();", IJQueryWidget.getSelector(this.getForm()), input)); // not tested in nested forms
 	}
 
 	// IFormSubmittingComponent //

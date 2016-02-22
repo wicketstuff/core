@@ -95,7 +95,7 @@ public class ExternalLink extends org.apache.wicket.markup.html.link.ExternalLin
 	{
 		super.onInitialize();
 
-		this.add(JQueryWidget.newWidgetBehavior(this));
+		this.add(IJQueryWidget.newWidgetBehavior(this));
 	}
 
 	@Override

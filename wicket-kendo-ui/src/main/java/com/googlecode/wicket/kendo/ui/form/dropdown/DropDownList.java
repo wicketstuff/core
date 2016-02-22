@@ -180,7 +180,7 @@ public class DropDownList<T> extends DropDownChoice<T> implements IJQueryWidget
 	{
 		super.onInitialize();
 
-		this.add(JQueryWidget.newWidgetBehavior(this));
+		this.add(IJQueryWidget.newWidgetBehavior(this));
 	}
 
 	@Override

@@ -91,7 +91,7 @@ public abstract class AjaxSubmitLink extends org.apache.wicket.ajax.markup.html.
 	{
 		super.onInitialize();
 
-		this.add(JQueryWidget.newWidgetBehavior(this));
+		this.add(IJQueryWidget.newWidgetBehavior(this));
 	}
 
 	@Override

@@ -25,7 +25,7 @@ import org.apache.wicket.util.visit.IVisit;
 import org.apache.wicket.util.visit.IVisitor;
 import org.apache.wicket.util.visit.Visits;
 
-import com.googlecode.wicket.jquery.core.IJQueryWidget.JQueryWidget;
+import com.googlecode.wicket.jquery.core.IJQueryWidget;
 import com.googlecode.wicket.jquery.core.JQueryEvent;
 import com.googlecode.wicket.jquery.core.Options;
 import com.googlecode.wicket.jquery.core.ajax.IJQueryAjaxAware;
@@ -121,7 +121,7 @@ public class DraggableBehavior extends KendoUIBehavior implements IJQueryAjaxAwa
 
 		if (this.selector == null)
 		{
-			this.selector = JQueryWidget.getSelector(this.component);
+			this.selector = IJQueryWidget.getSelector(this.component);
 		}
 
 		this.onDragStartAjaxBehavior = this.newOnDragStartAjaxBehavior(this);

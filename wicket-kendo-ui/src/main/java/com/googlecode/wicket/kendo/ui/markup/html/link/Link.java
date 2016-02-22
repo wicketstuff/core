@@ -92,7 +92,7 @@ public abstract class Link<T> extends org.apache.wicket.markup.html.link.Link<T>
 	{
 		super.onInitialize();
 
-		this.add(JQueryWidget.newWidgetBehavior(this));
+		this.add(IJQueryWidget.newWidgetBehavior(this));
 	}
 
 	@Override

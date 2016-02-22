@@ -36,7 +36,7 @@ public class WysiwygEditorPage extends SamplePage
 		// Feedback//
 		final FeedbackPanel feedback = new JQueryFeedbackPanel("feedback");
 		form.add(feedback);
-		
+
 		// Buttons //
 		this.add(new AjaxButton("display", form) {
 
@@ -65,7 +65,7 @@ public class WysiwygEditorPage extends SamplePage
 			{
 				super.onInitialize();
 
-				this.add(new ButtonBehavior(IJQueryWidget.JQueryWidget.getSelector(this)));
+				this.add(new ButtonBehavior(IJQueryWidget.getSelector(this)));
 			}
 
 			@Override

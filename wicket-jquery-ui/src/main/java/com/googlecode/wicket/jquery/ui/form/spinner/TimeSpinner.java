@@ -26,6 +26,7 @@ import org.apache.wicket.model.IModel;
 import org.apache.wicket.util.lang.Args;
 
 import com.googlecode.wicket.jquery.core.IJQueryCultureWidget;
+import com.googlecode.wicket.jquery.core.IJQueryWidget;
 import com.googlecode.wicket.jquery.core.JQueryBehavior;
 import com.googlecode.wicket.jquery.core.Options;
 import com.googlecode.wicket.jquery.core.utils.DateUtils;
@@ -196,7 +197,7 @@ public class TimeSpinner extends DateTextField implements IJQueryCultureWidget
 	{
 		super.onInitialize();
 
-		this.add(JQueryWidget.newWidgetBehavior(this)); // cannot be in ctor as the markupId may be set manually afterward
+		this.add(IJQueryWidget.newWidgetBehavior(this)); // cannot be in ctor as the markupId may be set manually afterward
 	}
 
 	@Override

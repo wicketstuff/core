@@ -18,7 +18,7 @@ package com.googlecode.wicket.kendo.ui.widget.accordion;
 
 import org.apache.wicket.Component;
 
-import com.googlecode.wicket.jquery.core.IJQueryWidget.JQueryWidget;
+import com.googlecode.wicket.jquery.core.IJQueryWidget;
 import com.googlecode.wicket.kendo.ui.KendoUIBehavior;
 
 /**
@@ -82,7 +82,7 @@ public class ExpandBehavior extends KendoUIBehavior
 	 */
 	public ExpandBehavior(Component component, String children)
 	{
-		super(JQueryWidget.getSelector(component), AccordionBehavior.METHOD);
+		super(IJQueryWidget.getSelector(component), AccordionBehavior.METHOD);
 		
 		this.children = children;
 	}

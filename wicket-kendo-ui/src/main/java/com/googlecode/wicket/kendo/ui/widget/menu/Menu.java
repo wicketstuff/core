@@ -33,6 +33,7 @@ import org.apache.wicket.markup.html.panel.Fragment;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.util.lang.Args;
 
+import com.googlecode.wicket.jquery.core.IJQueryWidget;
 import com.googlecode.wicket.jquery.core.JQueryPanel;
 import com.googlecode.wicket.jquery.core.Options;
 import com.googlecode.wicket.kendo.ui.KendoIcon;
@@ -144,7 +145,7 @@ public class Menu extends JQueryPanel implements IMenuListener
 	{
 		super.onInitialize();
 
-		this.add(JQueryWidget.newWidgetBehavior(this, this.root));
+		this.add(IJQueryWidget.newWidgetBehavior(this, this.root));
 	}
 
 	@Override

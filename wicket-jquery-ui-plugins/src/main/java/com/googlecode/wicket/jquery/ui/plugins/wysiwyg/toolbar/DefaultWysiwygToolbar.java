@@ -24,7 +24,7 @@ import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.ResourceModel;
 
-import com.googlecode.wicket.jquery.core.IJQueryWidget.JQueryWidget;
+import com.googlecode.wicket.jquery.core.IJQueryWidget;
 
 /**
  * Provides a default {@link IWysiwygToolbar}
@@ -95,6 +95,6 @@ public class DefaultWysiwygToolbar extends Panel implements IWysiwygToolbar
 	@Override
 	public void attachToEditor(Component editor)
 	{
-		this.toolbar.add(AttributeModifier.replace("data-target", JQueryWidget.getSelector(editor)));
+		this.toolbar.add(AttributeModifier.replace("data-target", IJQueryWidget.getSelector(editor)));
 	}
 }

@@ -96,7 +96,7 @@ public class Editor<T> extends TextArea<T> implements IJQueryWidget
 		super.onInitialize();
 
 		this.setEscapeModelStrings(false);
-		this.add(JQueryWidget.newWidgetBehavior(this));
+		this.add(IJQueryWidget.newWidgetBehavior(this));
 	}
 
 	@Override

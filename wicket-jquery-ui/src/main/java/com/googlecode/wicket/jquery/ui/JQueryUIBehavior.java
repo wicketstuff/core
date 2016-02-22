@@ -22,7 +22,7 @@ import org.apache.wicket.core.request.handler.IPartialPageRequestHandler;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.googlecode.wicket.jquery.core.IJQueryWidget.JQueryWidget;
+import com.googlecode.wicket.jquery.core.IJQueryWidget;
 import com.googlecode.wicket.jquery.core.JQueryBehavior;
 import com.googlecode.wicket.jquery.core.Options;
 import com.googlecode.wicket.jquery.core.utils.JQueryUtils;
@@ -127,7 +127,7 @@ public class JQueryUIBehavior extends JQueryBehavior implements IDestroyable
 	 */
 	public static String widget(Component component, String method)
 	{
-		return JQueryUIBehavior.widget(JQueryWidget.getSelector(component), method);
+		return JQueryUIBehavior.widget(IJQueryWidget.getSelector(component), method);
 	}
 	
 	@Override

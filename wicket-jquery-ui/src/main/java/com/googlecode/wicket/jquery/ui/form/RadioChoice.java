@@ -148,7 +148,7 @@ public class RadioChoice<T> extends org.apache.wicket.markup.html.form.RadioChoi
 	{
 		super.onInitialize();
 
-		this.add(JQueryWidget.newWidgetBehavior(this)); // cannot be in ctor as the markupId may be set manually afterward
+		this.add(IJQueryWidget.newWidgetBehavior(this)); // cannot be in ctor as the markupId may be set manually afterward
 	}
 
 	@Override

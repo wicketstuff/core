@@ -199,7 +199,7 @@ public abstract class MultiSelect<T> extends FormComponent<Collection<T>> implem
 		this.choiceModelBehavior = this.newChoiceModelBehavior();
 		this.add(this.choiceModelBehavior);
 
-		this.add(JQueryWidget.newWidgetBehavior(this));
+		this.add(IJQueryWidget.newWidgetBehavior(this));
 
 		if (this.template != null)
 		{

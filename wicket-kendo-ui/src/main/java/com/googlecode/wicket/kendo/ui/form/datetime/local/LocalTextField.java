@@ -130,7 +130,7 @@ public abstract class LocalTextField<T> extends TextField<T> implements ITextFor
 	{
 		super.onInitialize();
 
-		this.add(JQueryWidget.newWidgetBehavior(this)); // cannot be in ctor as the markupId may be set manually afterward
+		this.add(IJQueryWidget.newWidgetBehavior(this)); // cannot be in ctor as the markupId may be set manually afterward
 	}
 
 	@Override

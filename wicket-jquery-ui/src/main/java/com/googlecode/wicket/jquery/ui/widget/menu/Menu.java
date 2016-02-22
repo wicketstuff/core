@@ -33,6 +33,7 @@ import org.apache.wicket.model.Model;
 import org.apache.wicket.model.PropertyModel;
 import org.apache.wicket.util.lang.Args;
 
+import com.googlecode.wicket.jquery.core.IJQueryWidget;
 import com.googlecode.wicket.jquery.core.JQueryBehavior;
 import com.googlecode.wicket.jquery.core.JQueryPanel;
 import com.googlecode.wicket.jquery.core.Options;
@@ -132,7 +133,7 @@ public class Menu extends JQueryPanel implements IMenuListener
 	{
 		super.onInitialize();
 
-		this.add(JQueryWidget.newWidgetBehavior(this, this.root));
+		this.add(IJQueryWidget.newWidgetBehavior(this, this.root));
 	}
 
 	@Override

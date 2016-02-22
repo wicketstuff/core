@@ -21,6 +21,7 @@ import org.apache.wicket.model.IModel;
 import org.apache.wicket.util.lang.Args;
 
 import com.googlecode.wicket.jquery.core.IJQueryCultureWidget;
+import com.googlecode.wicket.jquery.core.IJQueryWidget;
 import com.googlecode.wicket.jquery.core.JQueryBehavior;
 import com.googlecode.wicket.jquery.core.Options;
 import com.googlecode.wicket.jquery.ui.JQueryUIBehavior;
@@ -141,7 +142,7 @@ public class Spinner<T extends Number> extends TextField<T> implements IJQueryCu
 	{
 		super.onInitialize();
 
-		this.add(JQueryWidget.newWidgetBehavior(this)); // cannot be in ctor as the markupId may be set manually afterward
+		this.add(IJQueryWidget.newWidgetBehavior(this)); // cannot be in ctor as the markupId may be set manually afterward
 	}
 
 	@Override

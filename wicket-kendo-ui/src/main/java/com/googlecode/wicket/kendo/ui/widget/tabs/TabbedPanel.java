@@ -30,6 +30,7 @@ import org.apache.wicket.markup.repeater.RepeatingView;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
 
+import com.googlecode.wicket.jquery.core.IJQueryWidget;
 import com.googlecode.wicket.jquery.core.JQueryGenericPanel;
 import com.googlecode.wicket.jquery.core.Options;
 
@@ -265,7 +266,7 @@ public class TabbedPanel extends JQueryGenericPanel<List<ITab>> implements ITabs
 			}
 		});
 
-		this.widgetBehavior = JQueryWidget.newWidgetBehavior(this);
+		this.widgetBehavior = (TabsBehavior) IJQueryWidget.newWidgetBehavior(this);
 		this.add(this.widgetBehavior);
 	}
 

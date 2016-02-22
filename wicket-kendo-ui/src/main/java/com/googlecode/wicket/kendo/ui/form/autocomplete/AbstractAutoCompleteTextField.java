@@ -233,7 +233,7 @@ public abstract class AbstractAutoCompleteTextField<T, C> extends TextField<T> i
 		this.add(this.choiceModelBehavior);
 
 		// choiceModelBehavior should be set at this point
-		this.add(JQueryWidget.newWidgetBehavior(this));
+		this.add(IJQueryWidget.newWidgetBehavior(this));
 
 		if (this.template != null)
 		{

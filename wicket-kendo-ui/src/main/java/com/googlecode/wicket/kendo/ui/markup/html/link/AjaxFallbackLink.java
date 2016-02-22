@@ -92,7 +92,7 @@ public abstract class AjaxFallbackLink<T> extends org.apache.wicket.ajax.markup.
 	{
 		super.onInitialize();
 
-		this.add(JQueryWidget.newWidgetBehavior(this));
+		this.add(IJQueryWidget.newWidgetBehavior(this));
 	}
 
 	@Override
