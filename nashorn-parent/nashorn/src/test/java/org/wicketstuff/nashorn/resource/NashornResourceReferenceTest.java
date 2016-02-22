@@ -61,9 +61,10 @@ public class NashornResourceReferenceTest extends WicketTestCase
 					.getResourceAsStream("NashornResourceReferenceTest.js"));
 			}
 		};
+		
 		wicketTester.setRequest(mockHttpServletRequest);
 		NashornResourceReference nashornResourceReference = new NashornResourceReference("nashorn",
-			10, 5, TimeUnit.SECONDS)
+			10, 10, TimeUnit.SECONDS)
 		{
 			private static final long serialVersionUID = 1L;
 
@@ -103,7 +104,6 @@ public class NashornResourceReferenceTest extends WicketTestCase
 		}
 		Assert.assertEquals("4.0", wicketTester.getLastResponseAsString());
 	}
-
 	private class MockInputStream extends ServletInputStream
 	{
 
