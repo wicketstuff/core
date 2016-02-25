@@ -107,6 +107,24 @@
 				</div>
 			</div>
 		</section>
+		<section>
+			<div class="page-header">
+				<h1>Multi-Select <small>Ajax result loading. Paging with infinite scrolling. Minimum input length. Close on select. Tags</small></h1>
+			</div>
+			<div class="row">
+				<div class="span12">
+					<p>
+						Tags currently selected: <strong><span wicket:id="tagsLabel"></span> </strong>
+					</p>
+					<form wicket:id="tagsForm">
+						<select wicket:id="tagsSelect" style="width: 300px;" ></select>
+						<div class="form-actions">
+							<button type="submit" class="btn">Submit</button>
+						</div>
+					</form>
+				</div>
+			</div>
+		</section>
         <section>
             <div class="page-header">
                 <h1>Stateless</h1>
