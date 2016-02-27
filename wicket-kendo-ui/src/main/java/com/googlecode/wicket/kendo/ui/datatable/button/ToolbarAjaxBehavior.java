@@ -16,12 +16,12 @@
  */
 package com.googlecode.wicket.kendo.ui.datatable.button;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.wicket.ajax.attributes.CallbackParameter;
 import org.apache.wicket.util.lang.Args;
-import org.apache.wicket.util.string.StringValue;
+import org.apache.wicket.util.lang.Generics;
+import org.apache.wicket.util.string.Strings;
 
 import com.googlecode.wicket.jquery.core.JQueryEvent;
 import com.googlecode.wicket.jquery.core.ajax.IJQueryAjaxAware;
@@ -35,32 +35,6 @@ import com.googlecode.wicket.kendo.ui.datatable.DataTable;
 public class ToolbarAjaxBehavior extends JQueryAjaxBehavior
 {
 	private static final long serialVersionUID = 1L;
-
-	/**
-	 * Gets the self executing function statement to retrieve selected values
-	 *
-	 * @param grid the kendoGrid object
-	 * @param property the property used to retrieve the row's object value
-	 *
-	 * @return the function statement
-	 */
-	public static String getValuesFunction(String grid, String property)
-	{
-		if (property != null)
-		{
-			return String.format("function() { " // lf
-					+ "var values = []; " // lf
-					+ "var grid = %s; " // lf
-					+ "grid.select().each(" // lf
-					+ "  function(index, row) { " // lf
-					+ "    values.push(grid.dataItem(row)['%s']); " // lf
-					+ "  } " // lf
-					+ "); " // lf
-					+ "return values; }()", grid, property);
-		}
-
-		return "[]";
-	}
 
 	private final ToolbarButton button;
 
@@ -105,6 +79,32 @@ public class ToolbarAjaxBehavior extends JQueryAjaxBehavior
 		};
 	}
 
+	/**
+	 * Gets the self executing function statement to retrieve selected values
+	 *
+	 * @param grid the kendoGrid object
+	 * @param property the property used to retrieve the row's object value
+	 *
+	 * @return the function statement
+	 */
+	public static String getValuesFunction(String grid, String property)
+	{
+		if (property != null)
+		{
+			return String.format("function() { " // lf
+					+ "var values = []; " // lf
+					+ "var $grid = %s; " // lf
+					+ "$grid.select().each(" // lf
+					+ "  function(index, row) { " // lf
+					+ "    values.push(grid.dataItem(row)['%s']); " // lf
+					+ "  } " // lf
+					+ "); " // lf
+					+ "return values; }()", grid, property);
+		}
+
+		return "[]";
+	}
+
 	// Factories //
 
 	@Override
@@ -128,13 +128,13 @@ public class ToolbarAjaxBehavior extends JQueryAjaxBehavior
 			super();
 
 			this.button = button;
-			this.values = new ArrayList<String>();
+			this.values = Generics.newArrayList();
 
-			StringValue values = RequestCycleUtils.getQueryParameterValue("values");
+			String values = RequestCycleUtils.getQueryParameterValue("values").toString("");
 
-			if (values != null)
+			if (!Strings.isEmpty(values))
 			{
-				for (String value : values.toString().split(","))
+				for (String value : values.split(","))
 				{
 					this.values.add(value);
 				}
