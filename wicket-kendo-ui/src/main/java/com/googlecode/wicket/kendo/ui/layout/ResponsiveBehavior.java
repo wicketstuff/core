@@ -127,7 +127,7 @@ public class ResponsiveBehavior extends KendoUIBehavior implements IJQueryAjaxAw
 	 * Gets a new {@link JQueryAjaxBehavior} that will be wired to the 'open' event
 	 *
 	 * @param source the {@link IJQueryAjaxAware}
-	 * @return a new {@link OnOpenAjaxBehavior} by default
+	 * @return a new {@code OnOpenAjaxBehavior} by default
 	 */
 	protected JQueryAjaxBehavior newOnOpenAjaxBehavior(IJQueryAjaxAware source)
 	{
@@ -138,7 +138,7 @@ public class ResponsiveBehavior extends KendoUIBehavior implements IJQueryAjaxAw
 	 * Gets a new {@link JQueryAjaxBehavior} that will be wired to the 'close' event
 	 *
 	 * @param source the {@link IJQueryAjaxAware}
-	 * @return a new {@link OnCloseAjaxBehavior} by default
+	 * @return a new {@code OnCloseAjaxBehavior} by default
 	 */
 	protected JQueryAjaxBehavior newOnCloseAjaxBehavior(IJQueryAjaxAware source)
 	{

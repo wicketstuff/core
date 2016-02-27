@@ -25,7 +25,6 @@ import org.apache.wicket.ajax.AjaxRequestTarget;
 import com.googlecode.wicket.jquery.core.Options;
 import com.googlecode.wicket.jquery.core.ajax.IJQueryAjaxAware;
 import com.googlecode.wicket.jquery.core.ajax.JQueryAjaxBehavior;
-import com.googlecode.wicket.kendo.ui.widget.menu.ContextMenuBehavior.OnOpenAjaxBehavior;
 import com.googlecode.wicket.kendo.ui.widget.menu.item.IMenuItem;
 
 /**
@@ -104,7 +103,7 @@ public class ContextMenu extends Menu implements IContextMenuListener
 	 * Gets a new {@link JQueryAjaxBehavior} that will be wired to the 'open' event
 	 *
 	 * @param source the {@link IJQueryAjaxAware}
-	 * @return a new {@link OnOpenAjaxBehavior} by default
+	 * @return a new {@code OnOpenAjaxBehavior} by default
 	 */
 	protected JQueryAjaxBehavior newOnOpenAjaxBehavior(IJQueryAjaxAware source)
 	{

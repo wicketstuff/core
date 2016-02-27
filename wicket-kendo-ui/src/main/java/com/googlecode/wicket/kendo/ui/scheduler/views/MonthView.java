@@ -13,7 +13,7 @@ public class MonthView extends SchedulerView
 	/**
 	 * Gets a new instance of {@code MonthView}
 	 *
-	 * @return a new {@link MonthView}
+	 * @return a new {@code MonthView}
 	 */
 	public static MonthView newInstance()
 	{

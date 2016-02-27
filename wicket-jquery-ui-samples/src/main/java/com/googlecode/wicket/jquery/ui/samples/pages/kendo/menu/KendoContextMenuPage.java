@@ -66,7 +66,7 @@ public class KendoContextMenuPage extends AbstractMenuPage
 					this.info("Clicked " + item.getTitle().getObject());
 				}
 
-				this.refresh(target);
+				this.reload(target);
 				target.add(feedback);
 			}
 		});

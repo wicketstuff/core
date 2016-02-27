@@ -186,13 +186,13 @@ public class AccordionPanel extends JQueryGenericPanel<List<ITab>> implements IA
 	// Methods //
 
 	/**
-	 * Refreshes the {@link AccordionPanel}<br/>
+	 * Reloads the {@link AccordionPanel}<br/>
 	 * <br/>
 	 * <b>Note:</b> This method should be used instead of {@code target.add(tabbedPanel)} if the underlying model is-a {@link TabListModel}
 	 * 
 	 * @param handler the {@link IPartialPageRequestHandler}
 	 */
-	public void refresh(IPartialPageRequestHandler handler)
+	public void reload(IPartialPageRequestHandler handler)
 	{
 		IModel<?> model = this.getModel();
 
@@ -246,7 +246,7 @@ public class AccordionPanel extends JQueryGenericPanel<List<ITab>> implements IA
 	{
 		// noop
 	}
-	
+
 	// Factories //
 
 	/**

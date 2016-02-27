@@ -20,7 +20,6 @@ import java.util.Date;
 
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.core.request.handler.IPartialPageRequestHandler;
-import org.apache.wicket.markup.html.form.FormComponent;
 import org.apache.wicket.model.IModel;
 
 import com.googlecode.wicket.jquery.core.JQueryBehavior;
@@ -128,7 +127,7 @@ public class AjaxDateTimePicker extends DateTimePicker implements IJQueryAjaxAwa
 					}
 
 					@Override
-					protected JQueryAjaxPostBehavior newOnChangeAjaxBehavior(IJQueryAjaxAware source, FormComponent<?> component)
+					protected JQueryAjaxPostBehavior newOnChangeAjaxBehavior(IJQueryAjaxAware source)
 					{
 						return new OnChangeAjaxBehavior(source, AjaxDateTimePicker.this.datePicker, AjaxDateTimePicker.this.timePicker);
 					}
@@ -158,7 +157,7 @@ public class AjaxDateTimePicker extends DateTimePicker implements IJQueryAjaxAwa
 					}
 
 					@Override
-					protected JQueryAjaxPostBehavior newOnChangeAjaxBehavior(IJQueryAjaxAware source, FormComponent<?> component)
+					protected JQueryAjaxPostBehavior newOnChangeAjaxBehavior(IJQueryAjaxAware source)
 					{
 						return new OnChangeAjaxBehavior(source, AjaxDateTimePicker.this.datePicker, AjaxDateTimePicker.this.timePicker);
 					}

@@ -67,25 +67,10 @@ public abstract class JQueryAbstractBehavior extends Behavior
 
 	/**
 	 * Constructor.
-	 *
-	 * @param name the name of the behavior. It is used in the token so the behavior can be identified in the generated page.
 	 */
 	public JQueryAbstractBehavior()
 	{
 		this.references = new ArrayList<ResourceReference>();
-	}
-
-	/**
-	 * Constructor.
-	 *
-	 * @param name the name of the behavior. It is used in the token so the behavior can be identified in the generated page.
-	 * @deprecated name is no longer required, use {@link #JQueryAbstractBehavior()} instead.
-	 */
-	@Deprecated
-	// XXX: 7.3.0 remove
-	public JQueryAbstractBehavior(String name)
-	{
-		this();
 	}
 
 	/**

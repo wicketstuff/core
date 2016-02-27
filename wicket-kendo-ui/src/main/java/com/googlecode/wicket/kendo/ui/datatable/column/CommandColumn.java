@@ -79,7 +79,7 @@ public abstract class CommandColumn extends AbstractColumn
 	/**
 	 * Gets a new {@link List} a {@link CommandButton}
 	 *
-	 * @return a new {@link List} a {@link CommandButton}
+	 * @return a new {@code List} a {@link CommandButton}
 	 */
 	protected abstract List<CommandButton> newButtons();
 

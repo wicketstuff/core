@@ -16,7 +16,6 @@
  */
 package com.googlecode.wicket.jquery.core;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map.Entry;
 
@@ -24,6 +23,7 @@ import org.apache.wicket.Component;
 import org.apache.wicket.core.request.handler.IPartialPageRequestHandler;
 import org.apache.wicket.markup.head.IHeaderResponse;
 import org.apache.wicket.util.lang.Args;
+import org.apache.wicket.util.lang.Generics;
 
 /**
  * Provides a default implementation of {@link JQueryAbstractBehavior}.
@@ -290,7 +290,7 @@ public class JQueryBehavior extends JQueryAbstractBehavior
 	{
 		if (this.events == null)
 		{
-			this.events = new ArrayList<>();
+			this.events = Generics.newArrayList();
 		}
 
 		this.events.add(statement);

@@ -17,10 +17,18 @@
 package com.googlecode.wicket.kendo.ui.form.dropdown.lazy;
 
 import org.apache.wicket.Component;
+import org.apache.wicket.ajax.AjaxRequestTarget;
+import org.apache.wicket.util.lang.Args;
 
+import com.googlecode.wicket.jquery.core.JQueryEvent;
 import com.googlecode.wicket.jquery.core.Options;
+import com.googlecode.wicket.jquery.core.ajax.IJQueryAjaxAware;
+import com.googlecode.wicket.jquery.core.ajax.JQueryAjaxBehavior;
+import com.googlecode.wicket.jquery.core.event.ISelectionChangedListener;
 import com.googlecode.wicket.kendo.ui.KendoDataSource;
 import com.googlecode.wicket.kendo.ui.KendoUIBehavior;
+import com.googlecode.wicket.kendo.ui.ajax.OnChangeAjaxBehavior;
+import com.googlecode.wicket.kendo.ui.ajax.OnChangeAjaxBehavior.ChangeEvent;
 
 /**
  * Provides a {@value #METHOD} behavior
@@ -28,16 +36,21 @@ import com.googlecode.wicket.kendo.ui.KendoUIBehavior;
  * @author Sebastien Briquet - sebfz1
  *
  */
-public abstract class DropDownListBehavior extends KendoUIBehavior
+public abstract class DropDownListBehavior extends KendoUIBehavior implements IJQueryAjaxAware
 {
 	private static final long serialVersionUID = 1L;
 	public static final String METHOD = "kendoDropDownList";
 
+	private final ISelectionChangedListener listener;
 	private KendoDataSource dataSource;
 
-	public DropDownListBehavior(String selector)
+	private JQueryAjaxBehavior onChangeAjaxBehavior;
+
+	public DropDownListBehavior(String selector, ISelectionChangedListener listener)
 	{
 		super(selector, METHOD);
+
+		this.listener = Args.notNull(listener, "listener");
 	}
 
 	// Methods //
@@ -47,20 +60,24 @@ public abstract class DropDownListBehavior extends KendoUIBehavior
 	{
 		super.bind(component);
 
-		// data source //
+		// events //
+		this.onChangeAjaxBehavior = new OnChangeAjaxBehavior(this);
+		component.add(this.onChangeAjaxBehavior);
+
+		// data-source //
 		this.dataSource = new KendoDataSource("datasource" + this.selector);
 		this.add(this.dataSource);
 	}
 
 	// Properties //
-	
+
 	@Override
 	public boolean isEnabled(Component component)
 	{
 		return component.isEnabledInHierarchy();
 	}
 
-	protected abstract CharSequence getChoiceCallbackUrl();
+	protected abstract CharSequence getDataSourceUrl();
 
 	// Events //
 
@@ -70,12 +87,26 @@ public abstract class DropDownListBehavior extends KendoUIBehavior
 		super.onConfigure(component);
 
 		this.setOption("autoBind", true); // immutable
+
+		// events //
+		this.setOption("change", this.onChangeAjaxBehavior.getCallbackFunction());
+
+		// data-source //
+		// TODO onConfigure (see MultiSelectBehavior)
 		this.setOption("dataSource", this.dataSource.getName());
 
-		// data source //
 		if (this.isEnabled(component))
 		{
-			this.dataSource.setTransportRead(Options.asString(this.getChoiceCallbackUrl()));
+			this.dataSource.setTransportRead(Options.asString(this.getDataSourceUrl()));
+		}
+	}
+
+	@Override
+	public void onAjax(AjaxRequestTarget target, JQueryEvent event)
+	{
+		if (event instanceof ChangeEvent)
+		{
+			this.listener.onSelectionChanged(target);
 		}
 	}
 }

@@ -257,7 +257,7 @@ public abstract class AccordionBehavior extends KendoUIBehavior implements IJQue
 	 * Gets a new {@link JQueryAjaxBehavior} that will be wired to the 'select' event
 	 *
 	 * @param source the {@link IJQueryAjaxAware}
-	 * @return a new {@link OnSelectAjaxBehavior} by default
+	 * @return a new {@code OnSelectAjaxBehavior} by default
 	 */
 	protected JQueryAjaxBehavior newOnSelectAjaxBehavior(IJQueryAjaxAware source)
 	{
@@ -268,7 +268,7 @@ public abstract class AccordionBehavior extends KendoUIBehavior implements IJQue
 	 * Gets a new {@link JQueryAjaxBehavior} that will be wired to the 'activate' event
 	 *
 	 * @param source the {@link IJQueryAjaxAware}
-	 * @return a new {@link OnActivateAjaxBehavior} by default
+	 * @return a new {@code OnActivateAjaxBehavior} by default
 	 */
 	protected JQueryAjaxBehavior newOnActivateAjaxBehavior(IJQueryAjaxAware source)
 	{
@@ -279,7 +279,7 @@ public abstract class AccordionBehavior extends KendoUIBehavior implements IJQue
 	 * Gets a new {@link JQueryAjaxBehavior} that will be wired to the 'expand' event
 	 *
 	 * @param source the {@link IJQueryAjaxAware}
-	 * @return a new {@link OnExpandAjaxBehavior} by default
+	 * @return a new {@code OnExpandAjaxBehavior} by default
 	 */
 	protected JQueryAjaxBehavior newOnExpandAjaxBehavior(IJQueryAjaxAware source)
 	{
@@ -290,7 +290,7 @@ public abstract class AccordionBehavior extends KendoUIBehavior implements IJQue
 	 * Gets a new {@link JQueryAjaxBehavior} that will be wired to the 'collapse' event
 	 *
 	 * @param source the {@link IJQueryAjaxAware}
-	 * @return a new {@link OnCollapseAjaxBehavior} by default
+	 * @return a new {@code OnCollapseAjaxBehavior} by default
 	 */
 	protected JQueryAjaxBehavior newOnCollapseAjaxBehavior(IJQueryAjaxAware source)
 	{

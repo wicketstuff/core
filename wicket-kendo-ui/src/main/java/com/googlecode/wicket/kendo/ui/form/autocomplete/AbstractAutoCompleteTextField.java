@@ -32,6 +32,7 @@ import com.googlecode.wicket.jquery.core.renderer.ITextRenderer;
 import com.googlecode.wicket.jquery.core.renderer.TextRenderer;
 import com.googlecode.wicket.jquery.core.template.IJQueryTemplate;
 import com.googlecode.wicket.jquery.core.utils.RequestCycleUtils;
+import com.googlecode.wicket.kendo.ui.KendoDataSource;
 import com.googlecode.wicket.kendo.ui.KendoTemplateBehavior;
 import com.googlecode.wicket.kendo.ui.renderer.ChoiceRenderer;
 
@@ -163,6 +164,16 @@ public abstract class AbstractAutoCompleteTextField<T, C> extends TextField<T> i
 	// Properties //
 
 	/**
+	 * Gets the {@link ChoiceModelBehavior} callback url
+	 * 
+	 * @return the {@code ChoiceModelBehavior} callback url
+	 */
+	protected CharSequence getCallbackUrl()
+	{
+		return this.choiceModelBehavior.getCallbackUrl();
+	}
+
+	/**
 	 * Gets the (inner) list width.
 	 *
 	 * @return the list width
@@ -261,6 +272,18 @@ public abstract class AbstractAutoCompleteTextField<T, C> extends TextField<T> i
 		}
 	}
 
+	// Events //
+
+	/**
+	 * Configure the {@link KendoDataSource} with additional options
+	 * 
+	 * @param dataSource the {@link KendoDataSource}
+	 */
+	protected void onConfigure(KendoDataSource dataSource)
+	{
+		// noop
+	}	
+
 	@Override
 	public void onBeforeRender(JQueryBehavior behavior)
 	{
@@ -292,6 +315,7 @@ public abstract class AbstractAutoCompleteTextField<T, C> extends TextField<T> i
 	 */
 	protected void onSelected(AjaxRequestTarget target, C choice)
 	{
+		// noop
 	}
 
 	// IJQueryWidget //
@@ -303,11 +327,21 @@ public abstract class AbstractAutoCompleteTextField<T, C> extends TextField<T> i
 
 			private static final long serialVersionUID = 1L;
 
+			// Properties //
+			
 			@Override
-			protected CharSequence getChoiceCallbackUrl()
+			protected CharSequence getDataSourceUrl()
 			{
-				return choiceModelBehavior.getCallbackUrl();
+				return AbstractAutoCompleteTextField.this.getCallbackUrl();
 			}
+			
+			// Events //
+
+			@Override
+			protected void onConfigure(KendoDataSource dataSource)
+			{
+				AbstractAutoCompleteTextField.this.onConfigure(dataSource);
+			}			
 		};
 	}
 
@@ -327,7 +361,7 @@ public abstract class AbstractAutoCompleteTextField<T, C> extends TextField<T> i
 	/**
 	 * Gets a new {@link ChoiceModelBehavior}
 	 *
-	 * @return a new {@link ChoiceModelBehavior}
+	 * @return a new {@code ChoiceModelBehavior}
 	 */
 	protected ChoiceModelBehavior<C> newChoiceModelBehavior()
 	{

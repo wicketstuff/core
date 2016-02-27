@@ -164,6 +164,16 @@ public class ComboBox<T> extends TextField<String> implements IJQueryWidget
 	// Properties //
 
 	/**
+	 * Gets the {@link ChoiceModelBehavior} callback url
+	 * 
+	 * @return the {@code ChoiceModelBehavior} callback url
+	 */
+	protected CharSequence getCallbackUrl()
+	{
+		return this.choiceModelBehavior.getCallbackUrl();
+	}
+
+	/**
 	 * Gets the (inner) list width.
 	 *
 	 * @return the list width
@@ -240,9 +250,9 @@ public class ComboBox<T> extends TextField<String> implements IJQueryWidget
 			private static final long serialVersionUID = 1L;
 
 			@Override
-			protected CharSequence getChoiceCallbackUrl()
+			protected CharSequence getDataSourceUrl()
 			{
-				return choiceModelBehavior.getCallbackUrl();
+				return ComboBox.this.getCallbackUrl();
 			}
 		};
 	}
@@ -263,7 +273,7 @@ public class ComboBox<T> extends TextField<String> implements IJQueryWidget
 	/**
 	 * Gets a new {@link ChoiceModelBehavior}
 	 *
-	 * @return a new {@link ChoiceModelBehavior}
+	 * @return a new {@code ChoiceModelBehavior}
 	 */
 	protected ChoiceModelBehavior<T> newChoiceModelBehavior()
 	{

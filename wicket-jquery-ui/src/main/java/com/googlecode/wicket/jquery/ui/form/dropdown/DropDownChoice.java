@@ -23,10 +23,11 @@ import org.apache.wicket.model.IModel;
 
 import com.googlecode.wicket.jquery.core.IJQueryWidget;
 import com.googlecode.wicket.jquery.core.JQueryBehavior;
+import com.googlecode.wicket.jquery.core.event.SelectionChangedAdapter;
 import com.googlecode.wicket.jquery.ui.JQueryUIBehavior;
 
 /**
- * Provides a JQuery UI Selectmenu widget (DropDownChoice). It extends built-in {@link org.apache.wicket.markup.html.form.DropDownChoice}<br/>
+ * Provides a JQuery UI Selectmenu widget (DropDownChoice). It extends built-in {@link org.apache.wicket.markup.html.form.DropDownChoice}
  *
  * @author Patrick Davids - Patrick1701
  *
@@ -34,10 +35,7 @@ import com.googlecode.wicket.jquery.ui.JQueryUIBehavior;
  */
 public class DropDownChoice<T> extends org.apache.wicket.markup.html.form.DropDownChoice<T> implements IJQueryWidget
 {
-
 	private static final long serialVersionUID = 1L;
-
-	public static final String METHOD = "selectmenu";
 
 	/**
 	 * Constructor
@@ -144,9 +142,9 @@ public class DropDownChoice<T> extends org.apache.wicket.markup.html.form.DropDo
 	{
 		super(id, model, choices, renderer);
 	}
-	
+
 	// Method //
-	
+
 	/**
 	 * Gets the jQuery UI widget
 	 *
@@ -154,7 +152,7 @@ public class DropDownChoice<T> extends org.apache.wicket.markup.html.form.DropDo
 	 */
 	public String widget()
 	{
-		return JQueryUIBehavior.widget(this, DropDownChoice.METHOD);
+		return JQueryUIBehavior.widget(this, DropDownChoiceBehavior.METHOD);
 	}
 
 	// Events //
@@ -185,6 +183,6 @@ public class DropDownChoice<T> extends org.apache.wicket.markup.html.form.DropDo
 	@Override
 	public JQueryBehavior newWidgetBehavior(String selector)
 	{
-		return new JQueryUIBehavior(selector, DropDownChoice.METHOD);
+		return new DropDownChoiceBehavior(selector, new SelectionChangedAdapter());
 	}
 }

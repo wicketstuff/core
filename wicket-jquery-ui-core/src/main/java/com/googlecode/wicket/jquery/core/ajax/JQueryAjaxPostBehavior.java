@@ -38,7 +38,7 @@ public abstract class JQueryAjaxPostBehavior extends JQueryAjaxBehavior
 	/**
 	 * Constructor
 	 * @param source {@link Component} to which the event returned by {@link #newEvent()} will be broadcasted.
-	 * @param components the form components to post.
+	 * @param components the form components to post, if different from the source.
 	 */
 	public JQueryAjaxPostBehavior(IJQueryAjaxAware source, FormComponent<?>... components)
 	{

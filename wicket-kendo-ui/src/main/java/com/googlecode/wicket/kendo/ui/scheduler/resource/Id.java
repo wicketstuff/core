@@ -120,7 +120,7 @@ public class Id<T> implements IClusterable
 	 * Converts an id of type I to its corresponding {@link Id} type
 	 *
 	 * @param id the id-value
-	 * @return a new {@link Id}
+	 * @return a new {@code Id}
 	 */
 	public static <I> Id<?> valueOf(I id)
 	{
@@ -151,7 +151,7 @@ public class Id<T> implements IClusterable
 	 * Converts a list of ids of type I to its corresponding {@code List} of {@link Id}
 	 *
 	 * @param ids the id-values
-	 * @return a new {@link Id}
+	 * @return a new {@code Id}
 	 */
 	public static <I> List<Id<?>> valueOf(List<I> ids)
 	{

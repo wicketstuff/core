@@ -16,20 +16,25 @@
  */
 package com.googlecode.wicket.kendo.ui.form.multiselect.lazy;
 
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.markup.html.form.FormComponent;
 import org.apache.wicket.model.IModel;
+import org.apache.wicket.util.lang.Generics;
 
 import com.googlecode.wicket.jquery.core.IJQueryWidget;
 import com.googlecode.wicket.jquery.core.JQueryBehavior;
 import com.googlecode.wicket.jquery.core.Options;
 import com.googlecode.wicket.jquery.core.behavior.ChoiceModelBehavior;
 import com.googlecode.wicket.jquery.core.data.IChoiceProvider;
+import com.googlecode.wicket.jquery.core.event.SelectionChangedAdapter;
+import com.googlecode.wicket.jquery.core.renderer.IChoiceRenderer;
 import com.googlecode.wicket.jquery.core.template.IJQueryTemplate;
+import com.googlecode.wicket.kendo.ui.KendoDataSource;
 import com.googlecode.wicket.kendo.ui.KendoTemplateBehavior;
+import com.googlecode.wicket.kendo.ui.KendoUIBehavior;
 import com.googlecode.wicket.kendo.ui.renderer.ChoiceRenderer;
 
 /**
@@ -49,7 +54,7 @@ public abstract class MultiSelect<T> extends FormComponent<Collection<T>> implem
 	private ChoiceModelBehavior<T> choiceModelBehavior;
 
 	/** the data-source renderer */
-	private ChoiceRenderer<? super T> renderer;
+	private IChoiceRenderer<? super T> renderer;
 
 	/** the template */
 	private final IJQueryTemplate template;
@@ -72,9 +77,20 @@ public abstract class MultiSelect<T> extends FormComponent<Collection<T>> implem
 	 * Constructor
 	 *
 	 * @param id the markup id
-	 * @param renderer the {@link ChoiceRenderer}
+	 * @param model the {@link IModel}
 	 */
-	public MultiSelect(String id, ChoiceRenderer<? super T> renderer)
+	public MultiSelect(String id, IModel<? extends Collection<T>> model)
+	{
+		this(id, model, new ChoiceRenderer<T>());
+	}
+
+	/**
+	 * Constructor
+	 *
+	 * @param id the markup id
+	 * @param renderer the {@link IChoiceRenderer}
+	 */
+	public MultiSelect(String id, IChoiceRenderer<? super T> renderer)
 	{
 		super(id);
 
@@ -87,21 +103,10 @@ public abstract class MultiSelect<T> extends FormComponent<Collection<T>> implem
 	 *
 	 * @param id the markup id
 	 * @param model the {@link IModel}
-	 */
-	public MultiSelect(String id, IModel<? extends Collection<T>> model)
-	{
-		this(id, model, new ChoiceRenderer<T>());
-	}
-
-	/**
-	 * Constructor
-	 *
-	 * @param id the markup id
-	 * @param model the {@link IModel}
 	 * @param renderer the {@link ChoiceRenderer}
 	 */
 	@SuppressWarnings("unchecked")
-	public MultiSelect(String id, IModel<? extends Collection<T>> model, ChoiceRenderer<? super T> renderer)
+	public MultiSelect(String id, IModel<? extends Collection<T>> model, IChoiceRenderer<? super T> renderer)
 	{
 		super(id, (IModel<Collection<T>>) model);
 
@@ -110,6 +115,16 @@ public abstract class MultiSelect<T> extends FormComponent<Collection<T>> implem
 	}
 
 	// Properties //
+
+	/**
+	 * Gets the {@link ChoiceModelBehavior} callback url
+	 * 
+	 * @return the {@code ChoiceModelBehavior} callback url
+	 */
+	protected CharSequence getCallbackUrl()
+	{
+		return this.choiceModelBehavior.getCallbackUrl();
+	}
 
 	/**
 	 * Gets the (inner) list width.
@@ -152,7 +167,7 @@ public abstract class MultiSelect<T> extends FormComponent<Collection<T>> implem
 	@Override
 	public void convertInput()
 	{
-		List<T> list = new ArrayList<>();
+		List<T> list = Generics.newArrayList();
 
 		for (String value : this.getInputAsArray())
 		{
@@ -174,12 +189,32 @@ public abstract class MultiSelect<T> extends FormComponent<Collection<T>> implem
 		FormComponent.updateCollectionModel(this);
 	}
 
+	/**
+	 * Gets the Kendo UI widget
+	 *
+	 * @return the jQuery object
+	 */
+	public String widget()
+	{
+		return KendoUIBehavior.widget(this, MultiSelectBehavior.METHOD);
+	}
+
+	/**
+	 * Refreshes the widget by reading from the datasource
+	 *
+	 * @param target the {@link AjaxRequestTarget}
+	 */
+	public void refresh(AjaxRequestTarget target)
+	{
+		target.appendJavaScript(String.format("var $w = %s; if ($w) { $w.dataSource.read(); }", this.widget()));
+	}
+
 	// Properties //
 
 	@Override
 	protected String getModelValue()
 	{
-		List<String> values = new ArrayList<>();
+		List<String> values = Generics.newArrayList();
 
 		for (T value : this.getModelObject())
 		{
@@ -229,6 +264,16 @@ public abstract class MultiSelect<T> extends FormComponent<Collection<T>> implem
 		}
 	}
 
+	/**
+	 * Configure the {@link KendoDataSource} with additional options
+	 * 
+	 * @param dataSource the {@link KendoDataSource}
+	 */
+	protected void onConfigure(KendoDataSource dataSource)
+	{
+		// noop
+	}
+
 	@Override
 	public void onBeforeRender(JQueryBehavior behavior)
 	{
@@ -240,14 +285,24 @@ public abstract class MultiSelect<T> extends FormComponent<Collection<T>> implem
 	@Override
 	public JQueryBehavior newWidgetBehavior(String selector)
 	{
-		return new MultiSelectBehavior(selector) {
+		return new MultiSelectBehavior(selector, new SelectionChangedAdapter()) {
 
 			private static final long serialVersionUID = 1L;
 
+			// Properties //
+
 			@Override
-			protected CharSequence getChoiceCallbackUrl()
+			protected CharSequence getDataSourceUrl()
 			{
-				return choiceModelBehavior.getCallbackUrl();
+				return MultiSelect.this.getCallbackUrl();
+			}
+
+			// Events //
+
+			@Override
+			protected void onConfigure(KendoDataSource dataSource)
+			{
+				MultiSelect.this.onConfigure(dataSource);
 			}
 		};
 	}
@@ -268,7 +323,7 @@ public abstract class MultiSelect<T> extends FormComponent<Collection<T>> implem
 	/**
 	 * Gets a new {@link ChoiceModelBehavior}
 	 *
-	 * @return a new {@link ChoiceModelBehavior}
+	 * @return a new {@code ChoiceModelBehavior}
 	 */
 	protected ChoiceModelBehavior<T> newChoiceModelBehavior()
 	{

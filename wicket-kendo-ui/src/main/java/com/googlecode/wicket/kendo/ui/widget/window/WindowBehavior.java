@@ -165,7 +165,7 @@ public class WindowBehavior extends KendoUIBehavior implements IJQueryAjaxAware
 	 * Gets a new {@link JQueryAjaxBehavior} that will be wired to the 'a.k-window-action click' event, triggered when the user clicks on an action icon
 	 *
 	 * @param source the {@link IJQueryAjaxAware}
-	 * @return a new {@link OnActionAjaxBehavior} by default
+	 * @return a new {@code OnActionAjaxBehavior} by default
 	 */
 	protected JQueryAjaxBehavior newOnActionAjaxBehavior(IJQueryAjaxAware source)
 	{
@@ -176,7 +176,7 @@ public class WindowBehavior extends KendoUIBehavior implements IJQueryAjaxAware
 	 * Gets a new {@link JQueryAjaxBehavior} that will be wired to the 'close' event, triggered when the user clicks on the X-icon
 	 *
 	 * @param source the {@link IJQueryAjaxAware}
-	 * @return a new {@link OnCloseAjaxBehavior} by default
+	 * @return a new {@code OnCloseAjaxBehavior} by default
 	 */
 	protected JQueryAjaxBehavior newOnCloseAjaxBehavior(IJQueryAjaxAware source)
 	{

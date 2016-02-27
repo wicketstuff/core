@@ -15,7 +15,7 @@ public class TimelineView extends SchedulerView
 	/**
 	 * Gets a new instance of {@code AgendaView}
 	 *
-	 * @return a new {@link TimelineView}
+	 * @return a new {@code TimelineView}
 	 */
 	public static TimelineView newInstance()
 	{

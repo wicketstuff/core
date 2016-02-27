@@ -13,7 +13,7 @@ public class AgendaView extends SchedulerView
 	/**
 	 * Gets a new instance of {@code AgendaView}
 	 *
-	 * @return a new {@link AgendaView}
+	 * @return a new {@code AgendaView}
 	 */
 	public static AgendaView newInstance()
 	{

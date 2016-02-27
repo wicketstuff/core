@@ -217,7 +217,7 @@ public class DraggableBehavior extends KendoUIBehavior implements IJQueryAjaxAwa
 	 * Gets a new {@link JQueryAjaxBehavior} that will be wired to the 'dragstart' event
 	 *
 	 * @param source the {@link IJQueryAjaxAware}
-	 * @return a new {@link OnDragStartAjaxBehavior} by default
+	 * @return a new {@code OnDragStartAjaxBehavior} by default
 	 */
 	protected JQueryAjaxBehavior newOnDragStartAjaxBehavior(IJQueryAjaxAware source)
 	{
@@ -228,7 +228,7 @@ public class DraggableBehavior extends KendoUIBehavior implements IJQueryAjaxAwa
 	 * Gets a new {@link JQueryAjaxBehavior} that will be wired to the 'dragend' event
 	 *
 	 * @param source the {@link IJQueryAjaxAware}
-	 * @return a new {@link OnDragStopAjaxBehavior} by default
+	 * @return a new {@code OnDragStopAjaxBehavior} by default
 	 */
 	protected JQueryAjaxBehavior newOnDragStopAjaxBehavior(IJQueryAjaxAware source)
 	{
@@ -239,7 +239,7 @@ public class DraggableBehavior extends KendoUIBehavior implements IJQueryAjaxAwa
 	 * Gets a new {@link JQueryAjaxBehavior} that will be wired to the 'dragcancel' event
 	 *
 	 * @param source the {@link IJQueryAjaxAware}
-	 * @return a new {@link OnDragCancelAjaxBehavior} by default
+	 * @return a new {@code OnDragCancelAjaxBehavior} by default
 	 */
 	protected JQueryAjaxBehavior newOnDragCancelAjaxBehavior(IJQueryAjaxAware source)
 	{

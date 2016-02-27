@@ -13,7 +13,7 @@ public class WeekView extends SchedulerView
 	/**
 	 * Gets a new instance of {@code WeekView}
 	 *
-	 * @return a new {@link WeekView}
+	 * @return a new {@code WeekView}
 	 */
 	public static WeekView newInstance()
 	{

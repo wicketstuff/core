@@ -29,6 +29,7 @@ public interface IProgressBarListener extends IValueChangedListener
 {
 	/**
 	 * Triggers when the value has changed
+	 * 
 	 * @param handler the {@link IPartialPageRequestHandler}
 	 */
 	void onComplete(IPartialPageRequestHandler handler);

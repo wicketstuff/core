@@ -223,7 +223,7 @@ public abstract class TabsBehavior extends KendoUIBehavior implements IJQueryAja
 	 * Gets a new {@link JQueryAjaxBehavior} that will be wired to the 'select' event
 	 *
 	 * @param source the {@link IJQueryAjaxAware}
-	 * @return a new {@link OnSelectAjaxBehavior} by default
+	 * @return a new {@code OnSelectAjaxBehavior} by default
 	 */
 	protected JQueryAjaxBehavior newOnSelectAjaxBehavior(IJQueryAjaxAware source)
 	{
@@ -234,7 +234,7 @@ public abstract class TabsBehavior extends KendoUIBehavior implements IJQueryAja
 	 * Gets a new {@link JQueryAjaxBehavior} that will be wired to the 'show' event
 	 *
 	 * @param source the {@link IJQueryAjaxAware}
-	 * @return a new {@link OnShowAjaxBehavior} by default
+	 * @return a new {@code OnShowAjaxBehavior} by default
 	 */
 	protected JQueryAjaxBehavior newOnShowAjaxBehavior(IJQueryAjaxAware source)
 	{
@@ -245,7 +245,7 @@ public abstract class TabsBehavior extends KendoUIBehavior implements IJQueryAja
 	 * Gets a new {@link JQueryAjaxBehavior} that will be wired to the 'activate' event
 	 *
 	 * @param source the {@link IJQueryAjaxAware}
-	 * @return a new {@link OnActivateAjaxBehavior} by default
+	 * @return a new {@code OnActivateAjaxBehavior} by default
 	 */
 	protected JQueryAjaxBehavior newOnActivateAjaxBehavior(IJQueryAjaxAware source)
 	{

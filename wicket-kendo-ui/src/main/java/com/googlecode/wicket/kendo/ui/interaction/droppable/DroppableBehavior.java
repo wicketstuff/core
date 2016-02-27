@@ -212,7 +212,7 @@ public class DroppableBehavior extends KendoUIBehavior implements IJQueryAjaxAwa
 	 *
 	 * @param source the {@link IJQueryAjaxAware}
 	 * @param statement the statement to execute just before the ajax call
-	 * @return a new {@link OnDragEnterAjaxBehavior} by default
+	 * @return a new {@code OnDragEnterAjaxBehavior} by default
 	 */
 	protected JQueryAjaxBehavior newOnDragEnterAjaxBehavior(IJQueryAjaxAware source, String statement)
 	{
@@ -224,7 +224,7 @@ public class DroppableBehavior extends KendoUIBehavior implements IJQueryAjaxAwa
 	 *
 	 * @param source the {@link IJQueryAjaxAware}
 	 * @param statement the statement to execute just before the ajax call
-	 * @return a new {@link OnDragLeaveAjaxBehavior} by default
+	 * @return a new {@code OnDragLeaveAjaxBehavior} by default
 	 */
 	protected JQueryAjaxBehavior newOnDragLeaveAjaxBehavior(IJQueryAjaxAware source, String statement)
 	{
@@ -236,7 +236,7 @@ public class DroppableBehavior extends KendoUIBehavior implements IJQueryAjaxAwa
 	 *
 	 * @param source the {@link IJQueryAjaxAware}
 	 * @param statement the statement to execute just before the ajax call
-	 * @return a new {@link OnDropAjaxBehavior} by default
+	 * @return a new {@code OnDropAjaxBehavior} by default
 	 */
 	protected JQueryAjaxBehavior newOnDropAjaxBehavior(IJQueryAjaxAware source, String statement)
 	{

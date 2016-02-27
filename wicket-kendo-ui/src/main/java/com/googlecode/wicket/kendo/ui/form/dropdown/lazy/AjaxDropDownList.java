@@ -19,18 +19,12 @@ package com.googlecode.wicket.kendo.ui.form.dropdown.lazy;
 import java.util.List;
 
 import org.apache.wicket.ajax.AjaxRequestTarget;
-import org.apache.wicket.markup.html.form.FormComponent;
 import org.apache.wicket.model.IModel;
 
-import com.googlecode.wicket.jquery.core.IJQueryWidget;
 import com.googlecode.wicket.jquery.core.JQueryBehavior;
-import com.googlecode.wicket.jquery.core.JQueryEvent;
-import com.googlecode.wicket.jquery.core.ajax.IJQueryAjaxAware;
-import com.googlecode.wicket.jquery.core.ajax.JQueryAjaxBehavior;
 import com.googlecode.wicket.jquery.core.event.ISelectionChangedListener;
 import com.googlecode.wicket.jquery.core.renderer.IChoiceRenderer;
 import com.googlecode.wicket.kendo.ui.ajax.OnChangeAjaxBehavior;
-import com.googlecode.wicket.kendo.ui.ajax.OnChangeAjaxBehavior.ChangeEvent;
 
 /**
  * Provides a Kendo UI DropDownList widget.<br/>
@@ -41,12 +35,9 @@ import com.googlecode.wicket.kendo.ui.ajax.OnChangeAjaxBehavior.ChangeEvent;
  *
  * @param <T> the type of the model object
  */
-public class AjaxDropDownList<T> extends DropDownList<T> implements IJQueryWidget, IJQueryAjaxAware, ISelectionChangedListener
+public class AjaxDropDownList<T> extends DropDownList<T> implements ISelectionChangedListener
 {
 	private static final long serialVersionUID = 1L;
-	
-	/**	AjaxBehavior, exceptionally hold in component */
-	private JQueryAjaxBehavior onChangeAjaxBehavior;
 
 	/**
 	 * Constructor
@@ -144,34 +135,15 @@ public class AjaxDropDownList<T> extends DropDownList<T> implements IJQueryWidge
 		super(id, model, choices, renderer);
 	}
 
+	// Properties //
+
+	@Override
+	public boolean isSelectionChangedEventEnabled()
+	{
+		return true;
+	}
+
 	// Events //
-	
-	@Override
-	protected void onInitialize()
-	{
-		super.onInitialize();
-		
-		this.onChangeAjaxBehavior = new OnChangeAjaxBehavior(this, (FormComponent<?>) this);
-		this.add(this.onChangeAjaxBehavior);		
-	}
-
-	@Override
-	public void onConfigure(JQueryBehavior behavior)
-	{
-		super.onConfigure(behavior);
-
-		behavior.setOption("change", this.onChangeAjaxBehavior.getCallbackFunction());
-	}
-
-	@Override
-	public void onAjax(AjaxRequestTarget target, JQueryEvent event)
-	{
-		if (event instanceof ChangeEvent)
-		{
-			this.onSelectionChanged();
-			this.onSelectionChanged(target);
-		}
-	}
 
 	/**
 	 * @see org.apache.wicket.markup.html.form.DropDownChoice#onSelectionChanged()
@@ -186,5 +158,34 @@ public class AjaxDropDownList<T> extends DropDownList<T> implements IJQueryWidge
 	public void onSelectionChanged(AjaxRequestTarget target)
 	{
 		// noop
+	}
+	
+	// Factories //
+
+	@Override
+	public final JQueryBehavior newWidgetBehavior(String selector)
+	{
+		final ISelectionChangedListener listener = new SelectionChangedListenerWrapper(this) {
+
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			public void onSelectionChanged(AjaxRequestTarget target)
+			{
+				AjaxDropDownList.this.onSelectionChanged(); // updates the model
+				AjaxDropDownList.this.onSelectionChanged(target);
+			}
+		};
+
+		return new DropDownListBehavior(selector, listener) {
+
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			protected CharSequence getDataSourceUrl()
+			{
+				return AjaxDropDownList.this.getCallbackUrl();
+			}
+		};
 	}
 }

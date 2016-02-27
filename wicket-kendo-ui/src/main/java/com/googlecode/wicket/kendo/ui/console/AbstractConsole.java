@@ -148,7 +148,7 @@ public abstract class AbstractConsole extends WebMarkupContainer
 	/**
 	 * Gets a new {@link ConsoleBehavior}
 	 *
-	 * @return a new {@link ConsoleBehavior}
+	 * @return a new {@code ConsoleBehavior}
 	 */
 	protected ConsoleBehavior newConsoleBehavior()
 	{

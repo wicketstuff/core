@@ -1,6 +1,5 @@
 package com.googlecode.wicket.jquery.ui.samples.pages.dialog;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -16,6 +15,7 @@ import org.apache.wicket.markup.html.panel.FeedbackPanel;
 import org.apache.wicket.model.CompoundPropertyModel;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
+import org.apache.wicket.util.lang.Generics;
 
 import com.googlecode.wicket.jquery.ui.JQueryIcon;
 import com.googlecode.wicket.jquery.ui.form.RadioChoice;
@@ -33,7 +33,7 @@ public class UserDialogPage extends AbstractDialogPage
 
 	public UserDialogPage()
 	{
-		this.users = new ArrayList<>();
+		this.users = Generics.newArrayList();
 
 		this.initialize();
 	}

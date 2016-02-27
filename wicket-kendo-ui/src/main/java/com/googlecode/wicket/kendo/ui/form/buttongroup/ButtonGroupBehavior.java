@@ -107,7 +107,7 @@ public class ButtonGroupBehavior extends KendoUIBehavior implements IJQueryAjaxA
 	 * Gets a new {@link JQueryAjaxBehavior} that will be wired to the 'select' event
 	 *
 	 * @param source the {@link IJQueryAjaxAware}
-	 * @return a new {@link OnSelectAjaxBehavior} by default
+	 * @return a new {@code OnSelectAjaxBehavior} by default
 	 */
 	protected JQueryAjaxBehavior newOnSelectAjaxBehavior(IJQueryAjaxAware source)
 	{

@@ -20,11 +20,9 @@ import java.util.Date;
 import java.util.Locale;
 
 import org.apache.wicket.Component;
-import org.apache.wicket.WicketRuntimeException;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.core.request.handler.IPartialPageRequestHandler;
 import org.apache.wicket.extensions.markup.html.form.DateTextField;
-import org.apache.wicket.markup.html.form.FormComponent;
 import org.apache.wicket.model.IModel;
 
 import com.googlecode.wicket.jquery.core.JQueryBehavior;
@@ -259,15 +257,8 @@ public class AjaxDatePicker extends DatePicker implements IJQueryAjaxAware, IVal
 		{
 			super.bind(component);
 
-			if (component instanceof FormComponent<?>)
-			{
-				this.onChangeAjaxBehavior = this.newOnChangeAjaxBehavior(this, (FormComponent<?>) component);
-				component.add(this.onChangeAjaxBehavior);
-			}
-			else
-			{
-				throw new WicketRuntimeException(new IllegalArgumentException("'component' should be an intance of FormComponent"));
-			}
+			this.onChangeAjaxBehavior = this.newOnChangeAjaxBehavior(this);
+			component.add(this.onChangeAjaxBehavior);
 		}
 
 		// Events //
@@ -289,12 +280,11 @@ public class AjaxDatePicker extends DatePicker implements IJQueryAjaxAware, IVal
 		 * Gets a new {@link JQueryAjaxPostBehavior} that will be wired to the 'change' event
 		 *
 		 * @param source the {@link IJQueryAjaxAware}
-		 * @param component the bound {@link Component}
-		 * @return a new {@link OnChangeAjaxBehavior} by default
+		 * @return a new {@code OnChangeAjaxBehavior} by default
 		 */
-		protected JQueryAjaxPostBehavior newOnChangeAjaxBehavior(IJQueryAjaxAware source, FormComponent<?> component)
+		protected JQueryAjaxPostBehavior newOnChangeAjaxBehavior(IJQueryAjaxAware source)
 		{
-			return new OnChangeAjaxBehavior(source, component);
+			return new OnChangeAjaxBehavior(source);
 		}
 	}
 }

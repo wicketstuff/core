@@ -206,7 +206,7 @@ public class DataView<T> extends WebMarkupContainer implements IJQueryWidget, IL
 	 *
 	 * @return the data-provider behavior's url
 	 */
-	protected final CharSequence getProviderCallbackUrl()
+	protected final CharSequence getCallbackUrl()
 	{
 		return this.providerBehavior.getCallbackUrl();
 	}
@@ -326,9 +326,9 @@ public class DataView<T> extends WebMarkupContainer implements IJQueryWidget, IL
 			}
 
 			@Override
-			protected CharSequence getProviderCallbackUrl()
+			protected CharSequence getProviderUrl()
 			{
-				return DataView.this.getProviderCallbackUrl();
+				return DataView.this.getCallbackUrl();
 			}
 
 			// Events //

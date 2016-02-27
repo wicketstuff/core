@@ -79,7 +79,7 @@ public class AdvancedTabsPage extends AbstractTabsPage
 			@Override
 			protected void onSubmit(AjaxRequestTarget target, Form<?> form)
 			{
-				tabPanel.refresh(target); // will force reload model
+				tabPanel.reload(target); // will force reload model
 			}
 		});
 

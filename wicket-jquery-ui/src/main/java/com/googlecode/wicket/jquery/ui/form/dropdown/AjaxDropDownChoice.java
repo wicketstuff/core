@@ -18,21 +18,13 @@ package com.googlecode.wicket.jquery.ui.form.dropdown;
 
 import java.util.List;
 
-import org.apache.wicket.Component;
 import org.apache.wicket.ajax.AjaxRequestTarget;
-import org.apache.wicket.markup.html.form.FormComponent;
 import org.apache.wicket.markup.html.form.IChoiceRenderer;
 import org.apache.wicket.model.IModel;
-import org.apache.wicket.util.lang.Args;
 
 import com.googlecode.wicket.jquery.core.JQueryBehavior;
-import com.googlecode.wicket.jquery.core.JQueryEvent;
-import com.googlecode.wicket.jquery.core.ajax.IJQueryAjaxAware;
-import com.googlecode.wicket.jquery.core.ajax.JQueryAjaxBehavior;
 import com.googlecode.wicket.jquery.core.event.ISelectionChangedListener;
-import com.googlecode.wicket.jquery.ui.JQueryUIBehavior;
 import com.googlecode.wicket.jquery.ui.ajax.OnChangeAjaxBehavior;
-import com.googlecode.wicket.jquery.ui.ajax.OnChangeAjaxBehavior.ChangeEvent;
 
 /**
  * Provides a JQuery UI Selectmenu widget (DropDownChoice).<br/>
@@ -152,6 +144,14 @@ public class AjaxDropDownChoice<T> extends DropDownChoice<T> implements ISelecti
 		super(id, model, choices, renderer);
 	}
 
+	// Properties //
+
+	@Override
+	public boolean isSelectionChangedEventEnabled()
+	{
+		return true;
+	}
+
 	// Events //
 
 	@Override
@@ -163,9 +163,9 @@ public class AjaxDropDownChoice<T> extends DropDownChoice<T> implements ISelecti
 	// IJQueryWidget //
 
 	@Override
-	public JQueryBehavior newWidgetBehavior(String selector)
+	public final JQueryBehavior newWidgetBehavior(String selector)
 	{
-		return new AjaxDropDownChoiceBehavior(selector, new ISelectionChangedListener() {
+		return new DropDownChoiceBehavior(selector, new SelectionChangedListenerWrapper(this) {
 
 			private static final long serialVersionUID = 1L;
 
@@ -176,54 +176,5 @@ public class AjaxDropDownChoice<T> extends DropDownChoice<T> implements ISelecti
 				AjaxDropDownChoice.this.onSelectionChanged(target);
 			}
 		});
-	}
-
-	/**
-	 * Provides a JQuery UI Selectmenu (DropDownChoice) {@link JQueryBehavior}
-	 */
-	protected static class AjaxDropDownChoiceBehavior extends JQueryUIBehavior implements IJQueryAjaxAware
-	{
-		private static final long serialVersionUID = 1L;
-
-		private final ISelectionChangedListener listener;
-		private JQueryAjaxBehavior onChangeAjaxBehavior;
-
-		public AjaxDropDownChoiceBehavior(String selector, ISelectionChangedListener listener)
-		{
-			this(selector, DropDownChoice.METHOD, listener);
-		}
-
-		public AjaxDropDownChoiceBehavior(String selector, String method, ISelectionChangedListener listener)
-		{
-			super(selector, method);
-
-			this.listener = Args.notNull(listener, "listener");
-		}
-
-		@Override
-		public void bind(Component component)
-		{
-			super.bind(component);
-
-			this.onChangeAjaxBehavior = new OnChangeAjaxBehavior(this, (FormComponent<?>) component);
-			component.add(this.onChangeAjaxBehavior);
-		}
-
-		@Override
-		public void onConfigure(Component component)
-		{
-			super.onConfigure(component);
-
-			this.setOption("change", this.onChangeAjaxBehavior.getCallbackFunction());
-		}
-
-		@Override
-		public void onAjax(AjaxRequestTarget target, JQueryEvent event)
-		{
-			if (event instanceof ChangeEvent)
-			{
-				this.listener.onSelectionChanged(target);
-			}
-		}
 	}
 }

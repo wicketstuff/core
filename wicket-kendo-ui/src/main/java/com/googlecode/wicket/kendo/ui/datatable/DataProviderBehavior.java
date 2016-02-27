@@ -140,7 +140,7 @@ public class DataProviderBehavior<T> extends AbstractAjaxBehavior
 	/**
 	 * Get a new {@link PropertyResolverConverter}
 	 *
-	 * @return a new {@link PropertyResolverConverter}
+	 * @return a new {@code PropertyResolverConverter}
 	 */
 	protected PropertyResolverConverter newPropertyResolverConverter()
 	{
@@ -152,7 +152,7 @@ public class DataProviderBehavior<T> extends AbstractAjaxBehavior
 	 *
 	 * @param first the first row number
 	 * @param count the count of rows
-	 * @return a new {@link IRequestHandler}
+	 * @return a new {@code IRequestHandler}
 	 */
 	private IRequestHandler newRequestHandler(final int first, final int count)
 	{

@@ -60,7 +60,7 @@ public abstract class ComboBoxBehavior extends KendoUIBehavior
 		return component.isEnabledInHierarchy();
 	}
 
-	protected abstract CharSequence getChoiceCallbackUrl();
+	protected abstract CharSequence getDataSourceUrl();
 
 	// Events //
 
@@ -75,7 +75,7 @@ public abstract class ComboBoxBehavior extends KendoUIBehavior
 		// data source //
 		if (this.isEnabled(component))
 		{
-			this.dataSource.setTransportRead(Options.asString(this.getChoiceCallbackUrl()));
+			this.dataSource.setTransportRead(Options.asString(this.getDataSourceUrl()));
 		}
 	}
 }

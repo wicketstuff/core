@@ -119,11 +119,11 @@ public class Menu extends JQueryPanel implements IMenuListener
 	}
 
 	/**
-	 * Refreshes the {@link Menu}
+	 * Reloads the {@link Menu}
 	 * 
 	 * @param handler the {@link IPartialPageRequestHandler}
 	 */
-	public void refresh(IPartialPageRequestHandler handler)
+	public void reload(IPartialPageRequestHandler handler)
 	{
 		handler.add(this);
 	}

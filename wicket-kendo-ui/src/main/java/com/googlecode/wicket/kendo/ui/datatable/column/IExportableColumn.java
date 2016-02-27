@@ -29,7 +29,7 @@ public interface IExportableColumn extends IColumn
 	 * Gets a new {@link IModel} of the data represented by this {@link IExportableColumn}, for the supplied row model
 	 *
 	 * @param rowModel the row model
-	 * @return a new {@link IModel} of the data represented by this {@link IExportableColumn}
+	 * @return a new {@code IModel} of the data represented by this {@link IExportableColumn}
 	 */
 	IModel<Object> newDataModel(IModel<?> rowModel);
 }

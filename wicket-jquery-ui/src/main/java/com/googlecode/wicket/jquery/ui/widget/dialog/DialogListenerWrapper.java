@@ -18,6 +18,7 @@ package com.googlecode.wicket.jquery.ui.widget.dialog;
 
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.core.request.handler.IPartialPageRequestHandler;
+import org.apache.wicket.util.lang.Args;
 
 /**
  * Wrapper/Delegate class for {@link IDialogListener}
@@ -33,7 +34,7 @@ public class DialogListenerWrapper implements IDialogListener
 	
 	public DialogListenerWrapper(IDialogListener listener)
 	{
-		this.listener = listener;
+		this.listener = Args.notNull(listener, "listener");
 	}
 
 	@Override

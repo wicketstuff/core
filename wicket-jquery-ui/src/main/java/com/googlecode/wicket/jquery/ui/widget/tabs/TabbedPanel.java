@@ -184,13 +184,13 @@ public class TabbedPanel extends JQueryGenericPanel<List<ITab>> implements ITabs
 	}
 
 	/**
-	 * Refreshes the {@link TabbedPanel}<br/>
+	 * Reloads the {@link TabbedPanel}<br/>
 	 * <br/>
 	 * <b>Note:</b> This method should be used instead of {@code target.add(tabbedPanel)} if the underlying model is-a {@link TabListModel}
 	 * 
 	 * @param handler the {@link IPartialPageRequestHandler}
 	 */
-	public void refresh(IPartialPageRequestHandler handler)
+	public void reload(IPartialPageRequestHandler handler)
 	{
 		IModel<?> model = this.getModel();
 

@@ -122,7 +122,6 @@ public class ProgressBar extends JQueryGenericContainer<Integer> implements IPro
 	 * Sets the progress-bar value
 	 *
 	 * @param value value which should be greater than or equals to {@link #MIN} and less than or equals to {@link #MAX}
-	 * @return 
 	 */
 	@Override
 	public Component setModelObject(Integer value)

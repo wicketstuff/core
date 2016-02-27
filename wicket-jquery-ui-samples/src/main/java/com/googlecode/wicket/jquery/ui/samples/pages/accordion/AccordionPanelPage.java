@@ -64,7 +64,7 @@ public class AccordionPanelPage extends AbstractAccordionPage
 			@Override
 			protected void onSubmit(AjaxRequestTarget target, Form<?> form)
 			{
-				accordion.setActiveTab(0).refresh(target); // resets active tab and forces reload model
+				accordion.setActiveTab(0).reload(target); // resets active tab and forces reload model
 			}
 		});
  

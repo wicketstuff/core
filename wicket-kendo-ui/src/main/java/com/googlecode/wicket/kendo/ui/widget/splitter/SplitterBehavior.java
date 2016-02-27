@@ -151,7 +151,7 @@ public class SplitterBehavior extends KendoUIBehavior implements IJQueryAjaxAwar
 	 * Gets a new {@link JQueryAjaxBehavior} that will be wired to the 'expand' event
 	 *
 	 * @param source the {@link IJQueryAjaxAware}
-	 * @return a new {@link OnExpandAjaxBehavior} by default
+	 * @return a new {@code OnExpandAjaxBehavior} by default
 	 */
 	protected JQueryAjaxBehavior newOnExpandAjaxBehavior(IJQueryAjaxAware source)
 	{
@@ -162,7 +162,7 @@ public class SplitterBehavior extends KendoUIBehavior implements IJQueryAjaxAwar
 	 * Gets a new {@link JQueryAjaxBehavior} that will be wired to the 'collapse' event
 	 *
 	 * @param source the {@link IJQueryAjaxAware}
-	 * @return a new {@link OnCollapseAjaxBehavior} by default
+	 * @return a new {@code OnCollapseAjaxBehavior} by default
 	 */
 	protected JQueryAjaxBehavior newOnCollapseAjaxBehavior(IJQueryAjaxAware source)
 	{

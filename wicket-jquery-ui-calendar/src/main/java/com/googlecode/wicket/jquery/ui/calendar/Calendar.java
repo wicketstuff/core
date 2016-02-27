@@ -17,12 +17,12 @@
 package com.googlecode.wicket.jquery.ui.calendar;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.core.request.handler.IPartialPageRequestHandler;
 import org.apache.wicket.util.lang.Args;
+import org.apache.wicket.util.lang.Generics;
 
 import com.googlecode.wicket.jquery.core.IJQueryWidget;
 import com.googlecode.wicket.jquery.core.JQueryBehavior;
@@ -104,7 +104,7 @@ public class Calendar extends JQueryContainer implements ICalendarListener
 	{
 		if (this.sources == null)
 		{
-			this.sources = new ArrayList<>();
+			this.sources = Generics.newArrayList();
 		}
 
 		this.sources.add(source);

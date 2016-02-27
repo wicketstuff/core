@@ -20,7 +20,8 @@ abstract class AbstractMultiSelectPage extends SamplePage
 	{
 		return Arrays.asList(
 				new DemoLink(DefaultMultiSelectPage.class, "MultiSelect"),
-				new DemoLink(LazyMultiSelectPage.class, "MultiSelect: lazy load")
+				new DemoLink(LazyMultiSelectPage.class, "MultiSelect: lazy load"),
+				new DemoLink(AjaxMultiSelectPage.class, "AjaxMultiSelect: lazy load")
 			);
 	}
 }

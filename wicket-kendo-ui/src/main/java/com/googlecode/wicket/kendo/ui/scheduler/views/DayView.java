@@ -14,7 +14,7 @@ public class DayView extends SchedulerView
 	/**
 	 * Gets a new instance of {@code DayView}
 	 *
-	 * @return a new {@link DayView}
+	 * @return a new {@code DayView}
 	 */
 	public static DayView newInstance()
 	{

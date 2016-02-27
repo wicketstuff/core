@@ -20,7 +20,6 @@ import org.apache.wicket.Component;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.attributes.CallbackParameter;
 import org.apache.wicket.core.request.handler.IPartialPageRequestHandler;
-import org.apache.wicket.markup.html.form.FormComponent;
 import org.apache.wicket.util.lang.Args;
 
 import com.googlecode.wicket.jquery.core.JQueryEvent;
@@ -137,9 +136,9 @@ public abstract class DatePickerBehavior extends JQueryUIBehavior implements IJQ
 	{
 		private static final long serialVersionUID = 1L;
 
-		public OnSelectAjaxBehavior(final IJQueryAjaxAware source, final FormComponent<?> component)
+		public OnSelectAjaxBehavior(final IJQueryAjaxAware source)
 		{
-			super(source, component);
+			super(source);
 		}
 
 		@Override

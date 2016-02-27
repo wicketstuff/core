@@ -167,7 +167,7 @@ public class FeedbackConsole extends AbstractConsole implements IFeedback
 	 * Gets a new instance of the FeedbackMessagesModel to use.<br/>
 	 * This method can be overridden to provide a {@link IFeedbackMessageFilter}
 	 *
-	 * @return a new {@link FeedbackMessagesModel}
+	 * @return a new {@code FeedbackMessagesModel}
 	 */
 	protected FeedbackMessagesModel newFeedbackMessagesModel()
 	{

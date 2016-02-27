@@ -42,7 +42,7 @@ public class WindowButton implements IClusterable
 	 * @param name the button's name
 	 * @param model the button's text
 	 * @param formProcessing whether the form will be validated and updated
-	 * @return a new {@link WindowButton}
+	 * @return a new {@code WindowButton}
 	 */
 	public static WindowButton of(String name, IModel<String> model, boolean formProcessing)
 	{
@@ -56,7 +56,7 @@ public class WindowButton implements IClusterable
 	 * @param model the button's text
 	 * @param icon the button's icon
 	 * @param formProcessing whether the form will be validated and updated
-	 * @return a new {@link WindowButton}
+	 * @return a new {@code WindowButton}
 	 */
 	public static WindowButton of(String name, IModel<String> model, String icon, boolean formProcessing)
 	{

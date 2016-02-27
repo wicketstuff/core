@@ -220,7 +220,7 @@ public class ButtonGroup<T extends Serializable> extends FormComponentPanel<T> i
 	/**
 	 * Gets a new {@link IModel} for the current choice index
 	 * 
-	 * @return a new {@link IModel}
+	 * @return a new {@code IModel}
 	 */
 	private IModel<Integer> newIndexModel()
 	{
@@ -265,7 +265,7 @@ public class ButtonGroup<T extends Serializable> extends FormComponentPanel<T> i
 	 * 
 	 * @param id the label markup id
 	 * @param model the label {@link IModel}
-	 * @return a new {@link Component}
+	 * @return a new {@code Component}
 	 */
 	protected Component newLabel(String id, IModel<T> model)
 	{

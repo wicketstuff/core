@@ -37,7 +37,7 @@ public class OnChangeAjaxBehavior extends JQueryAjaxPostBehavior
 	 * Constructor
 	 *
 	 * @param source the {@link Behavior} that will broadcast the event.
-	 * @param components the form components to post
+	 * @param components the form components to post, if different from the source.
 	 */
 	public OnChangeAjaxBehavior(final IJQueryAjaxAware source, final FormComponent<?>... components)
 	{
