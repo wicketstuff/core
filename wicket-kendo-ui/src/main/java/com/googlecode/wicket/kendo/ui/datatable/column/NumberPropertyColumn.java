@@ -16,21 +16,16 @@
  */
 package com.googlecode.wicket.kendo.ui.datatable.column;
 
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.util.Date;
-
 import org.apache.wicket.model.IModel;
 
 import com.googlecode.wicket.kendo.ui.datatable.DataTable;
-import com.googlecode.wicket.kendo.ui.utils.KendoDateTimeUtils;
 
 /**
- * Provides a date property column for a {@link DataTable}
+ * Provides a number property column for a {@link DataTable}
  *
  * @author Sebastien Briquet - sebfz1
  */
-public class DatePropertyColumn extends PropertyColumn
+public class NumberPropertyColumn extends PropertyColumn
 {
 	private static final long serialVersionUID = 1L;
 
@@ -39,7 +34,7 @@ public class DatePropertyColumn extends PropertyColumn
 	 *
 	 * @param title the text of the column header
 	 */
-	public DatePropertyColumn(String title)
+	public NumberPropertyColumn(String title)
 	{
 		super(title);
 	}
@@ -50,7 +45,7 @@ public class DatePropertyColumn extends PropertyColumn
 	 * @param title the text of the column header
 	 * @param width the desired width of the column
 	 */
-	public DatePropertyColumn(String title, int width)
+	public NumberPropertyColumn(String title, int width)
 	{
 		super(title, width);
 	}
@@ -61,7 +56,7 @@ public class DatePropertyColumn extends PropertyColumn
 	 * @param title the text of the column header
 	 * @param property the object property name
 	 */
-	public DatePropertyColumn(String title, String property)
+	public NumberPropertyColumn(String title, String property)
 	{
 		super(title, property);
 	}
@@ -73,7 +68,7 @@ public class DatePropertyColumn extends PropertyColumn
 	 * @param property the object property name
 	 * @param width the desired width of the column
 	 */
-	public DatePropertyColumn(String title, String property, int width)
+	public NumberPropertyColumn(String title, String property, int width)
 	{
 		super(title, property, width);
 	}
@@ -84,7 +79,7 @@ public class DatePropertyColumn extends PropertyColumn
 	 * @param title the text of the column header
 	 * @param property the object property name
 	 */
-	public DatePropertyColumn(IModel<String> title, String property)
+	public NumberPropertyColumn(IModel<String> title, String property)
 	{
 		super(title, property);
 	}
@@ -96,7 +91,7 @@ public class DatePropertyColumn extends PropertyColumn
 	 * @param property the object property name
 	 * @param width the desired width of the column
 	 */
-	public DatePropertyColumn(IModel<String> title, String property, int width)
+	public NumberPropertyColumn(IModel<String> title, String property, int width)
 	{
 		super(title, property, width);
 	}
@@ -104,35 +99,12 @@ public class DatePropertyColumn extends PropertyColumn
 	@Override
 	public String getType()
 	{
-		return "date";
+		return "number";
 	}
 
 	@Override
 	public String getFormat()
 	{
-		return "{0:yyyy-MM-dd}";
-	}
-
-	@Override
-	public String getValue(Object object)
-	{
-		Object date = super.getValue(object);
-
-		if (date instanceof Date)
-		{
-			return KendoDateTimeUtils.toString((Date) date);
-		}
-
-		if (date instanceof LocalDate)
-		{
-			return KendoDateTimeUtils.toString((LocalDate) date);
-		}
-
-		if (date instanceof LocalDateTime)
-		{
-			return KendoDateTimeUtils.toString((LocalDateTime) date);
-		}
-
-		return null;
+		return "{0:n0}";
 	}
 }

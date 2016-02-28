@@ -16,7 +16,6 @@
  */
 package com.googlecode.wicket.jquery.core;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Date;
@@ -28,6 +27,7 @@ import java.util.Set;
 
 import org.apache.wicket.ajax.json.JSONObject;
 import org.apache.wicket.util.io.IClusterable;
+import org.apache.wicket.util.lang.Generics;
 
 import com.googlecode.wicket.jquery.core.utils.BuilderUtils;
 import com.googlecode.wicket.jquery.core.utils.DateUtils;
@@ -76,7 +76,7 @@ public class Options implements IClusterable
 	 */
 	public static String asString(List<?> values)
 	{
-		List<String> list = new ArrayList<String>();
+		List<String> list = Generics.newArrayList();
 
 		for (Object object : values)
 		{
