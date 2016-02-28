@@ -36,7 +36,6 @@ public class TestPage extends WebPage implements IRunnableFactory {
             @Override
             protected void onTaskSuccess(AjaxRequestTarget ajaxRequestTarget) {
                 taskSuccess = true;
-                latch.countDown();
             }
 
             @Override
