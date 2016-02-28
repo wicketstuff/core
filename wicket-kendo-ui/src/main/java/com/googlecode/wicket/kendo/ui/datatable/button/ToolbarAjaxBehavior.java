@@ -96,7 +96,7 @@ public class ToolbarAjaxBehavior extends JQueryAjaxBehavior
 					+ "var $grid = %s; " // lf
 					+ "$grid.select().each(" // lf
 					+ "  function(index, row) { " // lf
-					+ "    values.push(grid.dataItem(row)['%s']); " // lf
+					+ "    values.push($grid.dataItem(row)['%s']); " // lf
 					+ "  } " // lf
 					+ "); " // lf
 					+ "return values; }()", grid, property);
