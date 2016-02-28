@@ -1,6 +1,9 @@
 package org.wicketstuff.async.components;
 
-import org.wicketstuff.async.task.DefaultTaskManager;
+import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.TimeUnit;
+
+import org.apache.wicket.WicketRuntimeException;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.markup.html.WebPage;
 import org.apache.wicket.markup.html.form.Form;
@@ -9,14 +12,12 @@ import org.apache.wicket.util.time.Duration;
 import org.wicketstuff.async.task.AbstractTaskContainer;
 import org.wicketstuff.async.task.DefaultTaskManager;
 
-import java.util.concurrent.TimeUnit;
-
 public class TestPage extends WebPage implements IRunnableFactory {
 
     private final Form<?> form;
     private final ProgressButton button;
     private final ProgressBar bar;
-
+    private final CountDownLatch latch = new CountDownLatch(1);
     private Runnable runnable;
 
     private boolean taskStart, taskSuccess, taskCancel, taskError;
@@ -35,6 +36,7 @@ public class TestPage extends WebPage implements IRunnableFactory {
             @Override
             protected void onTaskSuccess(AjaxRequestTarget ajaxRequestTarget) {
                 taskSuccess = true;
+                latch.countDown();
             }
 
             @Override
@@ -92,5 +94,18 @@ public class TestPage extends WebPage implements IRunnableFactory {
 
     public ProgressBar getBar() {
         return bar;
+    }
+    
+    public void countDownLatch() {
+    	latch.countDown();
+	}
+    
+    public void waitForTaskToComplete() {
+    	try {
+			latch.await();
+		}
+		catch (InterruptedException e) {
+			throw new WicketRuntimeException(e);
+		}
     }
 }

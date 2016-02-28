@@ -1,14 +1,14 @@
 package org.wicketstuff.async.components;
 
+import static org.testng.Assert.assertFalse;
+import static org.testng.Assert.assertTrue;
+
 import org.apache.wicket.ajax.AbstractAjaxTimerBehavior;
 import org.apache.wicket.behavior.Behavior;
 import org.apache.wicket.util.tester.FormTester;
 import org.apache.wicket.util.tester.WicketTester;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
-
-import static org.testng.Assert.assertFalse;
-import static org.testng.Assert.assertTrue;
 
 public class ProgressButtonTest {
 
@@ -38,6 +38,7 @@ public class ProgressButtonTest {
             @Override
             public void run() {
                 result[0] = true;
+                page.countDownLatch();
             }
         });
 
@@ -46,12 +47,12 @@ public class ProgressButtonTest {
 
         FormTester formTester = tester.newFormTester("form");
         formTester.submit("button");
-
+        
+        page.waitForTaskToComplete();
+        
         assertTrue(result[0]);
         assertTrue(page.isTaskStart());
-//        assertTrue(page.isTaskSuccess());
         assertFalse(page.isTaskCancel());
-//        assertFalse(page.isTaskError());
     }
 
     @Test
