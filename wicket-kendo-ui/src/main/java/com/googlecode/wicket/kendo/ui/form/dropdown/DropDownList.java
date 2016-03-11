@@ -189,6 +189,7 @@ public class DropDownList<T> extends DropDownChoice<T> implements IJQueryWidget
 		// set list-width //
 		if (this.getListWidth() > 0)
 		{
+			// TODO: should now be configurable on widget initialization
 			behavior.setOption("open", String.format("function(e) { e.sender.list.width(%d); }", this.getListWidth()));
 		}
 	}

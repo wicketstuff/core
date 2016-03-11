@@ -51,7 +51,7 @@ public class SpinnerBehavior extends JQueryUIBehavior implements IJQueryAjaxAwar
 
 	public SpinnerBehavior(String selector, ISpinnerListener listener, Options options)
 	{
-		this(selector, METHOD, listener, new Options());
+		this(selector, METHOD, listener, options);
 	}
 
 	SpinnerBehavior(String selector, String method, ISpinnerListener listener, Options options)

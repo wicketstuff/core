@@ -256,7 +256,7 @@ public class KendoFeedbackPanel extends WebMarkupContainer implements IJQueryWid
 	 * Gets a new instance of the FeedbackMessagesModel to use.
 	 * 
 	 * @param filter the {@link IFeedbackMessageFilter}
-	 * @return a new {@link FeedbackMessagesModel}
+	 * @return a new {@code FeedbackMessagesModel}
 	 */
 	protected FeedbackMessagesModel newFeedbackMessagesModel(IFeedbackMessageFilter filter)
 	{
