@@ -390,8 +390,8 @@ public abstract class SchedulerBehavior extends KendoUIBehavior implements IJQue
 			String statement = "";
 
 			// convert to timestamp before sending
-			statement += "e.sender.start = e.sender.start.getTime();";
-			statement += "e.sender.end = e.sender.end.getTime();";
+			statement += "e.event.start = e.event.start.getTime();";
+			statement += "e.event.end = e.event.end.getTime();";
 			statement += super.getCallbackFunctionBody(parameters);
 			statement += "e.preventDefault();"; // avoid propagation of KendoUI's edit-event on client-side
 

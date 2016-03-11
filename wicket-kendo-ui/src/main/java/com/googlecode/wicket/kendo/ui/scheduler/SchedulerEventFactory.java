@@ -42,13 +42,6 @@ public class SchedulerEventFactory implements IClusterable
 	private static final Logger LOG = LoggerFactory.getLogger(SchedulerEventFactory.class);
 
 	/**
-	 * Factory class
-	 */
-	public SchedulerEventFactory()
-	{
-	}
-
-	/**
 	 * Converts a {@link SchedulerEvent} to a {@link JSONObject}
 	 *
 	 * @param event the {@code SchedulerEvent}
