@@ -16,7 +16,6 @@
  */
 package com.googlecode.wicket.kendo.ui.form.datetime;
 
-import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
@@ -26,15 +25,10 @@ import org.apache.wicket.core.request.handler.IPartialPageRequestHandler;
 import org.apache.wicket.markup.html.form.AbstractTextComponent.ITextFormatProvider;
 import org.apache.wicket.markup.html.form.FormComponentPanel;
 import org.apache.wicket.model.IModel;
-import org.apache.wicket.util.convert.ConversionException;
-import org.apache.wicket.util.convert.IConverter;
-import org.apache.wicket.util.convert.converter.DateConverter;
-import org.apache.wicket.validation.ValidationError;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import com.googlecode.wicket.jquery.core.Options;
 import com.googlecode.wicket.jquery.core.utils.DateUtils;
+import com.googlecode.wicket.jquery.core.utils.LocaleUtils;
 
 /**
  * Provides a datetime-picker based on a {@link DatePicker} and a {@link TimePicker}
@@ -44,33 +38,13 @@ import com.googlecode.wicket.jquery.core.utils.DateUtils;
 public class DateTimePicker extends FormComponentPanel<Date> implements ITextFormatProvider
 {
 	private static final long serialVersionUID = 1L;
-	private static final Logger LOG = LoggerFactory.getLogger(DateTimePicker.class);
 
 	private static final String ERROR_NOT_INITIALIZED = "Internal timePicker is not initialized (#onInitialize() has not yet been called).";
-
-	/**
-	 * Gets a new date converter.
-	 * 
-	 * @param format the date format
-	 * @return the converter
-	 */
-	private static IConverter<Date> newConverter(final String format)
-	{
-		return new DateConverter() {
-
-			private static final long serialVersionUID = 1L;
-
-			@Override
-			public DateFormat getDateFormat(Locale locale)
-			{
-				return new SimpleDateFormat(format, locale != null ? locale : Locale.getDefault());
-			}
-		};
-	}
 
 	DatePicker datePicker;
 	TimePicker timePicker;
 
+	private final Locale locale;
 	private final String datePattern;
 	private final String timePattern;
 
@@ -81,7 +55,18 @@ public class DateTimePicker extends FormComponentPanel<Date> implements ITextFor
 	 */
 	public DateTimePicker(String id)
 	{
-		this(id, DateUtils.DATE_PATTERN, DateUtils.TIME_PATTERN);
+		this(id, null, null, DateUtils.DATE_PATTERN, DateUtils.TIME_PATTERN);
+	}
+
+	/**
+	 * Constructor
+	 *
+	 * @param id the markup id
+	 * @param locale the {@code Locale}
+	 */
+	public DateTimePicker(String id, Locale locale)
+	{
+		this(id, null, locale, LocaleUtils.getLocaleDatePattern(locale, DateUtils.DATE_PATTERN), LocaleUtils.getLocaleTimePattern(locale, DateUtils.TIME_PATTERN));
 	}
 
 	/**
@@ -93,99 +78,131 @@ public class DateTimePicker extends FormComponentPanel<Date> implements ITextFor
 	 */
 	public DateTimePicker(String id, String datePattern, String timePattern)
 	{
-		super(id);
+		this(id, null, null, datePattern, timePattern);
+	}
 
-		this.datePattern = datePattern;
-		this.timePattern = timePattern;
+	/**
+	 * constructor
+	 *
+	 * @param id the markup id
+	 * @param locale the {@code Locale}
+	 * @param datePattern the SimpleDateFormat pattern for the date
+	 * @param timePattern the SimpleDateFormat pattern for the time
+	 */
+	public DateTimePicker(String id, Locale locale, String datePattern, String timePattern)
+	{
+		this(id, null, locale, datePattern, timePattern);
 	}
 
 	/**
 	 * Constructor
 	 *
 	 * @param id the markup id
-	 * @param date the initial date
+	 * @param model the date {@code IModel}
 	 */
 	public DateTimePicker(String id, IModel<Date> date)
 	{
-		this(id, date, DateUtils.DATE_PATTERN, DateUtils.TIME_PATTERN);
+		this(id, date, null, DateUtils.DATE_PATTERN, DateUtils.TIME_PATTERN);
 	}
 
 	/**
 	 * Constructor
 	 *
 	 * @param id the markup id
-	 * @param date the initial date
+	 * @param model the date {@code IModel}
+	 * @param locale the {@code LocalDate}
+	 */
+	public DateTimePicker(String id, IModel<Date> date, Locale locale)
+	{
+		this(id, date, locale, LocaleUtils.getLocaleDatePattern(locale, DateUtils.DATE_PATTERN), LocaleUtils.getLocaleTimePattern(locale, DateUtils.TIME_PATTERN));
+	}
+
+	/**
+	 * Constructor
+	 *
+	 * @param id the markup id
+	 * @param model the date {@code IModel}
 	 * @param datePattern the SimpleDateFormat pattern for the date
 	 * @param timePattern the SimpleDateFormat pattern for the time
 	 */
 	public DateTimePicker(String id, IModel<Date> date, String datePattern, String timePattern)
 	{
+		this(id, date, null, datePattern, timePattern);
+	}
+
+	/**
+	 * Main constructor
+	 *
+	 * @param id the markup id
+	 * @param model the date {@code IModel}
+	 * @param locale the {@code Locale}
+	 * @param datePattern the SimpleDateFormat pattern for the date
+	 * @param timePattern the SimpleDateFormat pattern for the time
+	 */
+	public DateTimePicker(String id, IModel<Date> date, Locale locale, String datePattern, String timePattern)
+	{
 		super(id, date);
 
+		this.locale = locale;
 		this.datePattern = datePattern;
 		this.timePattern = timePattern;
 	}
 
 	// Methods //
+
 	@Override
 	public void convertInput()
 	{
-		final IConverter<Date> converter = this.getConverter(Date.class);
+		Date date = this.datePicker.getConvertedInput();
+		Date time = this.timePicker.getConvertedInput();
 
-		String dateInput = this.datePicker.getInput();
-		String timeInput = this.timePicker.getInput();
-
-		try
-		{
-			Date date = converter.convertToObject(this.formatInput(dateInput, timeInput), this.getLocale());
-			this.setConvertedInput(date);
-		}
-		catch (ConversionException e)
-		{
-			if (LOG.isDebugEnabled())
-			{
-				LOG.debug(e.getMessage(), e);
-			}
-
-			ValidationError error = new ValidationError();
-			error.addKey("DateTimePicker.ConversionError"); // wicket6
-			error.setVariable("date", dateInput);
-			error.setVariable("time", timeInput);
-
-			this.error(error);
-		}
-	}
-
-	/**
-	 * Gets a formated value of input(s)<br/>
-	 * This method is designed to provide the 'value' argument of {@link IConverter#convertToObject(String, Locale)}
-	 *
-	 * @param dateInput the date input
-	 * @param timeInput the time input
-	 * @return a formated value
-	 */
-	protected String formatInput(String dateInput, String timeInput)
-	{
-		if (this.isTimePickerEnabled())
-		{
-			return String.format("%s %s", dateInput, timeInput);
-		}
-
-		return dateInput;
+		this.setConvertedInput(DateUtils.dateOf(date, time));
 	}
 
 	// Properties //
 
 	@Override
-	@SuppressWarnings("unchecked")
-	public <C> IConverter<C> getConverter(Class<C> type)
+	public Locale getLocale()
 	{
-		if (Date.class.isAssignableFrom(type))
+		if (this.locale != null)
 		{
-			return (IConverter<C>) DateTimePicker.newConverter(this.getTextFormat());
+			return this.locale;
 		}
 
-		return super.getConverter(type);
+		return super.getLocale();
+	}
+
+	/**
+	 * Returns the date-time pattern.
+	 *
+	 * @see org.apache.wicket.markup.html.form.AbstractTextComponent.ITextFormatProvider#getTextFormat()
+	 */
+	@Override
+	public final String getTextFormat()
+	{
+		if (this.isTimePickerEnabled())
+		{
+			return String.format("%s %s", this.getDatePattern(), this.getTimePattern());
+		}
+
+		return this.getDatePattern();
+	}
+
+	/**
+	 * Gets a (localized) string representation of the model object, given the date-time pattern in use.
+	 *
+	 * @return the model object as string
+	 */
+	public String getModelObjectAsString()
+	{
+		Date date = this.getModelObject();
+
+		if (date != null)
+		{
+			return new SimpleDateFormat(this.getTextFormat(), this.getLocale()).format(date);
+		}
+
+		return "";
 	}
 
 	/**
@@ -254,40 +271,6 @@ public class DateTimePicker extends FormComponentPanel<Date> implements ITextFor
 		handler.add(this.timePicker);
 	}
 
-	/**
-	 * Returns the date-time pattern.
-	 *
-	 * @see org.apache.wicket.markup.html.form.AbstractTextComponent.ITextFormatProvider#getTextFormat()
-	 */
-	@Override
-	public final String getTextFormat()
-	{
-		if (this.isTimePickerEnabled())
-		{
-			return String.format("%s %s", this.getDatePattern(), this.getTimePattern());
-		}
-
-		return this.getDatePattern();
-
-	}
-
-	/**
-	 * Gets a string representation of the model object, given the date-time pattern in use.
-	 *
-	 * @return the model object as string
-	 */
-	public String getModelObjectAsString()
-	{
-		Date date = this.getModelObject();
-
-		if (date != null)
-		{
-			return new SimpleDateFormat(this.getTextFormat()).format(date);
-		}
-
-		return "";
-	}
-
 	// Events //
 
 	@Override
@@ -295,11 +278,11 @@ public class DateTimePicker extends FormComponentPanel<Date> implements ITextFor
 	{
 		super.onInitialize();
 
-		this.datePicker = this.newDatePicker("datepicker", this.getModel(), this.datePattern, new Options());
-		this.timePicker = this.newTimePicker("timepicker", this.getModel(), this.timePattern, new Options());
+		this.datePicker = this.newDatePicker("datepicker", this.getModel(), this.locale, this.datePattern, new Options());
+		this.timePicker = this.newTimePicker("timepicker", this.getModel(), this.locale, this.timePattern, new Options());
 
-		this.add(this.datePicker);
-		this.add(this.timePicker);
+		this.add(this.datePicker.setConvertEmptyInputStringToNull(false)); // will force to use the converter (null bypasses)
+		this.add(this.timePicker.setConvertEmptyInputStringToNull(false)); // will force to use the converter (null bypasses)
 	}
 
 	// Factories //
@@ -309,13 +292,14 @@ public class DateTimePicker extends FormComponentPanel<Date> implements ITextFor
 	 *
 	 * @param id the markup id
 	 * @param model the {@link IModel}
+	 * @param locale2
 	 * @param datePattern the date pattern to be used
-	 *
+	 * @param options the {@code Options}
 	 * @return the {@link DatePicker}
 	 */
-	protected DatePicker newDatePicker(String id, IModel<Date> model, String datePattern, Options options)
+	protected DatePicker newDatePicker(String id, IModel<Date> model, Locale locale, String datePattern, Options options)
 	{
-		return new DatePicker(id, model, datePattern, options);
+		return new DatePicker(id, model, locale, datePattern, options);
 	}
 
 	/**
@@ -324,11 +308,11 @@ public class DateTimePicker extends FormComponentPanel<Date> implements ITextFor
 	 * @param id the markup id
 	 * @param model the {@link IModel}
 	 * @param timePattern the date pattern to be used
-	 *
+	 * @param options the {@code Options}
 	 * @return the {@link TimePicker}
 	 */
-	protected TimePicker newTimePicker(String id, IModel<Date> model, String timePattern, Options options)
+	protected TimePicker newTimePicker(String id, IModel<Date> model, Locale locale, String timePattern, Options options)
 	{
-		return new TimePicker(id, model, timePattern, options);
+		return new TimePicker(id, model, locale, timePattern, options);
 	}
 }

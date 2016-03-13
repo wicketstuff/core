@@ -39,6 +39,7 @@ import com.googlecode.wicket.kendo.ui.ajax.OnChangeAjaxBehavior.ChangeEvent;
 public abstract class DropDownListBehavior extends KendoUIBehavior implements IJQueryAjaxAware
 {
 	private static final long serialVersionUID = 1L;
+
 	public static final String METHOD = "kendoDropDownList";
 
 	private final ISelectionChangedListener listener;

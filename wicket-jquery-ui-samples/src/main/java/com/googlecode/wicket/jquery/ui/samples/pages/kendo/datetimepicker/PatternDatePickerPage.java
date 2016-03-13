@@ -1,12 +1,13 @@
 package com.googlecode.wicket.jquery.ui.samples.pages.kendo.datetimepicker;
 
 import java.util.Date;
+import java.util.Locale;
 
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.markup.html.form.Form;
-import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
 
+import com.googlecode.wicket.jquery.core.utils.LocaleUtils;
 import com.googlecode.wicket.kendo.ui.form.button.AjaxButton;
 import com.googlecode.wicket.kendo.ui.form.button.Button;
 import com.googlecode.wicket.kendo.ui.form.datetime.DatePicker;
@@ -18,18 +19,17 @@ public class PatternDatePickerPage extends AbstractTimePickerPage
 
 	public PatternDatePickerPage()
 	{
-		final Form<Date> form = new Form<Date>("form");
+		final Form<?> form = new Form<Void>("form");
 		this.add(form);
 
 		// FeedbackPanel //
 		final KendoFeedbackPanel feedback = new KendoFeedbackPanel("feedback");
 		form.add(feedback);
 
-		// Date Picker //
-		IModel<Date> model = Model.of(new Date());
-		String pattern = "dd MMM yyyy"; //java & kendo-ui patterns are compatible
+		// DatePicker //
+		final String pattern = LocaleUtils.getLocaleDatePattern(Locale.FRENCH); // gives the french date pattern, ie: dd/MM/yyyy  
 
-		final DatePicker datepicker = new DatePicker("datepicker", model, pattern); //not needed anymore: new Options("format", Options.asString(pattern)));
+		final DatePicker datepicker = new DatePicker("datepicker", Model.of(new Date()), pattern);
 		form.add(datepicker);
 
 		// Buttons //
@@ -40,7 +40,7 @@ public class PatternDatePickerPage extends AbstractTimePickerPage
 			@Override
 			public void onSubmit()
 			{
-				this.info(datepicker.getModelObjectAsString());
+				this.info("Date: " + datepicker.getModelObject());
 			}
 		});
 
@@ -51,7 +51,7 @@ public class PatternDatePickerPage extends AbstractTimePickerPage
 			@Override
 			protected void onSubmit(AjaxRequestTarget target, Form<?> form)
 			{
-				this.info(datepicker.getModelObjectAsString());
+				this.info("Date: " + datepicker.getModelObject());
 				target.add(form);
 			}
 

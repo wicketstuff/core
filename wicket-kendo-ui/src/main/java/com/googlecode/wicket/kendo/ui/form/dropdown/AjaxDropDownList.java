@@ -24,6 +24,7 @@ import org.apache.wicket.model.IModel;
 
 import com.googlecode.wicket.jquery.core.JQueryBehavior;
 import com.googlecode.wicket.jquery.core.event.ISelectionChangedListener;
+import com.googlecode.wicket.jquery.core.event.SelectionChangedWrapper;
 import com.googlecode.wicket.kendo.ui.ajax.OnChangeAjaxBehavior;
 
 /**
@@ -163,7 +164,7 @@ public class AjaxDropDownList<T> extends DropDownList<T> implements ISelectionCh
 	@Override
 	public final JQueryBehavior newWidgetBehavior(String selector)
 	{
-		return new DropDownListBehavior(selector, new SelectionChangedListenerWrapper(this) {
+		return new DropDownListBehavior(selector, new SelectionChangedWrapper(this) {
 
 			private static final long serialVersionUID = 1L;
 

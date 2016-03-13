@@ -23,6 +23,7 @@ import com.googlecode.wicket.jquery.ui.samples.pages.kendo.combobox.DefaultCombo
 import com.googlecode.wicket.jquery.ui.samples.pages.kendo.console.DefaultConsolePage;
 import com.googlecode.wicket.jquery.ui.samples.pages.kendo.datatable.DefaultDataTablePage;
 import com.googlecode.wicket.jquery.ui.samples.pages.kendo.datetimepicker.KendoDatePickerPage;
+import com.googlecode.wicket.jquery.ui.samples.pages.kendo.datetimepicker.local.LocalDatePickerPage;
 import com.googlecode.wicket.jquery.ui.samples.pages.kendo.dragdrop.BehaviorDragDropPage;
 import com.googlecode.wicket.jquery.ui.samples.pages.kendo.dropdown.DefaultDropDownPage;
 import com.googlecode.wicket.jquery.ui.samples.pages.kendo.editor.DefaultEditorPage;
@@ -102,6 +103,7 @@ public class SampleApplication extends WebApplication
 		this.mountPackage("/kendo/combobox", DefaultComboBoxPage.class);
 		this.mountPackage("/kendo/datatable", DefaultDataTablePage.class);
 		this.mountPackage("/kendo/datetimepicker", KendoDatePickerPage.class);
+		this.mountPackage("/kendo/datetimepicker/local", LocalDatePickerPage.class);
 		this.mountPackage("/kendo/dropdown", DefaultDropDownPage.class);
 		this.mountPackage("/kendo/editor", DefaultEditorPage.class);
 		this.mountPackage("/kendo/menu", KendoMenuPage.class);

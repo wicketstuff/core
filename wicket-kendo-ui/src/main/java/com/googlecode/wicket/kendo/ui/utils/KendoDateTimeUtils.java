@@ -54,6 +54,13 @@ public class KendoDateTimeUtils
 	{
 		String converted = pattern;
 
+		// realign kendo pattern:
+		// single 't' is *not* allowed in kendo, whereas 'a' is allowed in java date and and 'aa' is *not* allowed in LocalTime pattern
+		if (converted.contains("a") && !converted.contains("aa"))
+		{
+			converted = converted.replace("a", "aa");
+		}
+
 		for (int i = 0; i < chars_lenth; i++)
 		{
 			char j = j_chars.charAt(i);
@@ -63,13 +70,6 @@ public class KendoDateTimeUtils
 			{
 				converted = converted.replace(j, k);
 			}
-		}
-
-		// realign kendo pattern:
-		// single 't' is *not* allowed in kendo, whereas 'a' is allowed in java date and and 'aa' is *not* allowed in LocalTime pattern
-		if (converted.contains("t") && !converted.contains("tt"))
-		{
-			converted = converted.replace("t", "tt");
 		}
 
 		return converted;

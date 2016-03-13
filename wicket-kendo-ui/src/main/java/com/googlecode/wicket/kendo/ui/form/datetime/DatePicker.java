@@ -22,7 +22,6 @@ import java.util.Locale;
 
 import org.apache.wicket.extensions.markup.html.form.DateTextField;
 import org.apache.wicket.model.IModel;
-import org.apache.wicket.util.lang.Args;
 
 import com.googlecode.wicket.jquery.core.IJQueryWidget;
 import com.googlecode.wicket.jquery.core.JQueryBehavior;
@@ -42,7 +41,7 @@ public class DatePicker extends DateTextField implements IJQueryWidget
 {
 	private static final long serialVersionUID = 1L;
 
-	public static final String METHOD = "kendoDatePicker";
+	private final Locale locale;
 
 	final Options options;
 
@@ -53,7 +52,7 @@ public class DatePicker extends DateTextField implements IJQueryWidget
 	 */
 	public DatePicker(String id)
 	{
-		this(id, DateUtils.DATE_PATTERN, new Options());
+		this(id, new Options());
 	}
 
 	/**
@@ -64,32 +63,7 @@ public class DatePicker extends DateTextField implements IJQueryWidget
 	 */
 	public DatePicker(String id, Options options)
 	{
-		this(id, DateUtils.DATE_PATTERN, options);
-	}
-
-	/**
-	 * Constructor
-	 *
-	 * @param id the markup id
-	 * @param pattern a {@code SimpleDateFormat} pattern
-	 */
-	public DatePicker(String id, String pattern)
-	{
-		this(id, pattern, new Options());
-	}
-
-	/**
-	 * Main constructor
-	 *
-	 * @param id the markup id
-	 * @param pattern a {@code SimpleDateFormat} pattern
-	 * @param options the {@link Options}
-	 */
-	public DatePicker(String id, String pattern, Options options)
-	{
-		super(id, pattern);
-
-		this.options = Args.notNull(options, "options");
+		this(id, null, null, DateUtils.DATE_PATTERN, options);
 	}
 
 	/**
@@ -112,7 +86,57 @@ public class DatePicker extends DateTextField implements IJQueryWidget
 	 */
 	public DatePicker(String id, Locale locale, Options options)
 	{
-		this(id, LocaleUtils.getLocaleDatePattern(locale, DateUtils.DATE_PATTERN), options.set("culture", Options.asString(LocaleUtils.getLangageCode(locale))));
+		this(id, null, locale, LocaleUtils.getLocaleDatePattern(locale, DateUtils.DATE_PATTERN), options);
+	}
+
+	/**
+	 * Constructor
+	 *
+	 * @param id the markup id
+	 * @param model the {@link IModel}
+	 * @param pattern a {@code SimpleDateFormat} pattern
+	 */
+	public DatePicker(String id, String pattern)
+	{
+		this(id, pattern, new Options());
+	}
+
+	/**
+	 * Constructor
+	 *
+	 * @param id the markup id
+	 * @param pattern a {@code SimpleDateFormat} pattern
+	 * @param options the {@link Options}
+	 */
+	public DatePicker(String id, String pattern, Options options)
+	{
+		this(id, null, null, pattern, options);
+	}
+
+	/**
+	 * Constructor
+	 *
+	 * @param id the markup id
+	 * @param locale the {@link Locale}
+	 * @param pattern a {@code SimpleDateFormat} pattern
+	 * @param options the {@link Options}
+	 */
+	public DatePicker(String id, final Locale locale, String pattern)
+	{
+		this(id, locale, pattern, new Options());
+	}
+
+	/**
+	 * Constructor
+	 *
+	 * @param id the markup id
+	 * @param locale the {@link Locale}
+	 * @param pattern a {@code SimpleDateFormat} pattern
+	 * @param options the {@link Options}
+	 */
+	public DatePicker(String id, final Locale locale, final String pattern, Options options)
+	{
+		this(id, null, locale, pattern, options);
 	}
 
 	/**
@@ -123,7 +147,7 @@ public class DatePicker extends DateTextField implements IJQueryWidget
 	 */
 	public DatePicker(String id, IModel<Date> model)
 	{
-		this(id, model, DateUtils.DATE_PATTERN, new Options());
+		this(id, model, new Options());
 	}
 
 	/**
@@ -135,34 +159,7 @@ public class DatePicker extends DateTextField implements IJQueryWidget
 	 */
 	public DatePicker(String id, IModel<Date> model, Options options)
 	{
-		this(id, model, DateUtils.DATE_PATTERN, options);
-	}
-
-	/**
-	 * Constructor
-	 *
-	 * @param id the markup id
-	 * @param model the {@link IModel}
-	 * @param pattern a {@code SimpleDateFormat} pattern
-	 */
-	public DatePicker(String id, IModel<Date> model, String pattern)
-	{
-		this(id, model, pattern, new Options());
-	}
-
-	/**
-	 * Main constructor
-	 *
-	 * @param id the markup id
-	 * @param model the {@link IModel}
-	 * @param pattern a {@code SimpleDateFormat} pattern
-	 * @param options the {@link Options}
-	 */
-	public DatePicker(String id, IModel<Date> model, String pattern, Options options)
-	{
-		super(id, model, pattern);
-
-		this.options = Args.notNull(options, "options");
+		this(id, model, null, DateUtils.DATE_PATTERN, options);
 	}
 
 	/**
@@ -187,15 +184,76 @@ public class DatePicker extends DateTextField implements IJQueryWidget
 	 */
 	public DatePicker(String id, IModel<Date> model, Locale locale, Options options)
 	{
-		this(id, model, LocaleUtils.getLocaleDatePattern(locale, DateUtils.DATE_PATTERN), options.set("culture", Options.asString(LocaleUtils.getLangageCode(locale))));
+		this(id, model, locale, LocaleUtils.getLocaleDatePattern(locale, DateUtils.DATE_PATTERN), options);
+	}
+
+	/**
+	 * Constructor
+	 *
+	 * @param id the markup id
+	 * @param model the {@link IModel}
+	 * @param pattern a {@code SimpleDateFormat} pattern
+	 */
+	public DatePicker(String id, IModel<Date> model, String pattern)
+	{
+		this(id, model, pattern, new Options());
+	}
+
+	/**
+	 * Constructor
+	 *
+	 * @param id the markup id
+	 * @param model the {@link IModel}
+	 * @param pattern a {@code SimpleDateFormat} pattern
+	 * @param options the {@link Options}
+	 */
+	public DatePicker(String id, IModel<Date> model, String pattern, Options options)
+	{
+		this(id, model, null, pattern, options);
+	}
+
+	/**
+	 * Constructor
+	 *
+	 * @param id the markup id
+	 * @param model the {@link IModel}
+	 * @param locale the {@link Locale}
+	 * @param pattern a {@code SimpleDateFormat} pattern
+	 * @param options the {@link Options}
+	 */
+	public DatePicker(String id, IModel<Date> model, final Locale locale, String pattern)
+	{
+		this(id, model, locale, pattern, new Options());
+	}
+
+	/**
+	 * Main constructor
+	 *
+	 * @param id the markup id
+	 * @param model the {@link IModel}
+	 * @param locale the {@link Locale}
+	 * @param pattern a {@code SimpleDateFormat} pattern
+	 * @param options the {@link Options}
+	 */
+	public DatePicker(String id, IModel<Date> model, final Locale locale, final String pattern, Options options)
+	{
+		super(id, model, pattern);
+
+		this.locale = locale;
+		this.options = options;
 	}
 
 	// Properties //
 
 	@Override
-	protected String[] getInputTypes()
+	public Locale getLocale()
 	{
-		return new String[] { "text", "date" };
+		if (this.locale != null)
+		{
+			return this.locale;
+		}
+
+		return super.getLocale();
 	}
 
 	/**
@@ -218,13 +276,20 @@ public class DatePicker extends DateTextField implements IJQueryWidget
 
 		if (date != null)
 		{
-			return new SimpleDateFormat(this.getTextFormat()).format(date);
+			return new SimpleDateFormat(this.getTextFormat(), this.getLocale()).format(date);
 		}
 
 		return "";
 	}
 
+	@Override
+	protected String[] getInputTypes()
+	{
+		return new String[] { "text", "date" };
+	}
+
 	// Events //
+
 	@Override
 	protected void onInitialize()
 	{
@@ -236,6 +301,11 @@ public class DatePicker extends DateTextField implements IJQueryWidget
 	@Override
 	public void onConfigure(JQueryBehavior behavior)
 	{
+		if (behavior.getOption("culture") == null)
+		{
+			behavior.setOption("culture", Options.asString(LocaleUtils.getLangageCode(this.getLocale())));
+		}
+
 		if (behavior.getOption("format") == null)
 		{
 			behavior.setOption("format", Options.asString(KendoDateTimeUtils.toPattern(this.getTextFormat())));
@@ -253,6 +323,6 @@ public class DatePicker extends DateTextField implements IJQueryWidget
 	@Override
 	public JQueryBehavior newWidgetBehavior(String selector)
 	{
-		return new KendoUIBehavior(selector, DatePicker.METHOD, this.options);
+		return new KendoUIBehavior(selector, DatePickerBehavior.METHOD, this.options);
 	}
 }

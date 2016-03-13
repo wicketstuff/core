@@ -37,8 +37,6 @@ public class DropDownList<T> extends DropDownChoice<T> implements IJQueryWidget
 {
 	private static final long serialVersionUID = 1L;
 
-	public static final String METHOD = "kendoDropDownList";
-
 	/** inner list width. 0 means that it will not be handled */
 	private int width = 0;
 

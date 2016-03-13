@@ -28,6 +28,7 @@ public interface IValueChangedListener extends IClusterable
 {
 	/**
 	 * Triggers when the value has changed
+	 * 
 	 * @param handler the {@link IPartialPageRequestHandler}
 	 */
 	void onValueChanged(IPartialPageRequestHandler handler);

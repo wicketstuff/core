@@ -24,11 +24,11 @@ import java.util.Locale;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.util.convert.ConversionException;
 import org.apache.wicket.util.convert.IConverter;
-import org.apache.wicket.util.string.Strings;
 
 import com.googlecode.wicket.jquery.core.Options;
 import com.googlecode.wicket.jquery.core.utils.DateUtils;
 import com.googlecode.wicket.jquery.core.utils.LocaleUtils;
+import com.googlecode.wicket.kendo.ui.form.datetime.TimePickerBehavior;
 
 /**
  * Provides a Kendo UI time-picker based on a {@link LocalTextField}<br/>
@@ -40,41 +40,6 @@ public class TimePicker extends LocalTextField<LocalTime>
 {
 	private static final long serialVersionUID = 1L;
 
-	public static final String METHOD = "kendoTimePicker";
-
-	/**
-	 * Gets a new time {@link IConverter}.
-	 * 
-	 * @param format the time format
-	 * @return the converter
-	 */
-	private static IConverter<LocalTime> newConverter(final String pattern)
-	{
-		return new IConverter<LocalTime>() {
-
-			private static final long serialVersionUID = 1L;
-
-			@Override
-			public LocalTime convertToObject(String value, Locale locale) throws ConversionException
-			{
-				try
-				{
-					return Strings.isEmpty(value) ? null : LocalTime.parse(value, DateTimeFormatter.ofPattern(pattern));
-				}
-				catch (DateTimeParseException e)
-				{
-					throw new ConversionException(e.getMessage(), e);
-				}
-			}
-
-			@Override
-			public String convertToString(LocalTime date, Locale locale)
-			{
-				return date == null ? null : date.format(DateTimeFormatter.ofPattern(pattern));
-			}
-		};
-	}
-
 	/**
 	 * Constructor
 	 *
@@ -82,7 +47,7 @@ public class TimePicker extends LocalTextField<LocalTime>
 	 */
 	public TimePicker(String id)
 	{
-		this(id, DateUtils.TIME_PATTERN, new Options());
+		this(id, new Options());
 	}
 
 	/**
@@ -93,30 +58,7 @@ public class TimePicker extends LocalTextField<LocalTime>
 	 */
 	public TimePicker(String id, Options options)
 	{
-		this(id, DateUtils.TIME_PATTERN, options);
-	}
-
-	/**
-	 * Constructor
-	 *
-	 * @param id the markup id
-	 * @param pattern a {@code SimpleDateFormat} pattern
-	 */
-	public TimePicker(String id, String pattern)
-	{
-		this(id, pattern, new Options());
-	}
-
-	/**
-	 * Constructor
-	 *
-	 * @param id the markup id
-	 * @param pattern a {@code SimpleDateFormat} pattern
-	 * @param options the {@link Options}
-	 */
-	public TimePicker(String id, String pattern, Options options)
-	{
-		this(id, null, pattern, options);
+		this(id, null, null, DateUtils.LOCAL_TIME_PATTERN, options);
 	}
 
 	/**
@@ -139,7 +81,57 @@ public class TimePicker extends LocalTextField<LocalTime>
 	 */
 	public TimePicker(String id, Locale locale, Options options)
 	{
-		this(id, null, LocaleUtils.getLocaleTimePattern(locale, DateUtils.TIME_PATTERN), options.set("culture", Options.asString(LocaleUtils.getLangageCode(locale))));
+		this(id, null, locale, LocaleUtils.getLocaleTimePattern(locale, DateUtils.LOCAL_TIME_PATTERN), options);
+	}
+
+	/**
+	 * Constructor
+	 *
+	 * @param id the markup id
+	 * @param model the {@link IModel}
+	 * @param pattern a {@code SimpleDateFormat} pattern
+	 */
+	public TimePicker(String id, String pattern)
+	{
+		this(id, pattern, new Options());
+	}
+
+	/**
+	 * Constructor
+	 *
+	 * @param id the markup id
+	 * @param pattern a {@code SimpleDateFormat} pattern
+	 * @param options the {@link Options}
+	 */
+	public TimePicker(String id, String pattern, Options options)
+	{
+		this(id, null, null, pattern, options);
+	}
+
+	/**
+	 * Constructor
+	 *
+	 * @param id the markup id
+	 * @param locale the {@link Locale}
+	 * @param pattern a {@code SimpleDateFormat} pattern
+	 * @param options the {@link Options}
+	 */
+	public TimePicker(String id, final Locale locale, String pattern)
+	{
+		this(id, locale, pattern, new Options());
+	}
+
+	/**
+	 * Constructor
+	 *
+	 * @param id the markup id
+	 * @param locale the {@link Locale}
+	 * @param pattern a {@code SimpleDateFormat} pattern
+	 * @param options the {@link Options}
+	 */
+	public TimePicker(String id, final Locale locale, final String pattern, Options options)
+	{
+		this(id, null, locale, pattern, options);
 	}
 
 	/**
@@ -150,7 +142,7 @@ public class TimePicker extends LocalTextField<LocalTime>
 	 */
 	public TimePicker(String id, IModel<LocalTime> model)
 	{
-		this(id, model, DateUtils.TIME_PATTERN, new Options());
+		this(id, model, new Options());
 	}
 
 	/**
@@ -162,32 +154,7 @@ public class TimePicker extends LocalTextField<LocalTime>
 	 */
 	public TimePicker(String id, IModel<LocalTime> model, Options options)
 	{
-		this(id, model, DateUtils.TIME_PATTERN, options);
-	}
-
-	/**
-	 * Constructor
-	 *
-	 * @param id the markup id
-	 * @param model the {@link IModel}
-	 * @param pattern a {@code SimpleDateFormat} pattern
-	 */
-	public TimePicker(String id, IModel<LocalTime> model, String pattern)
-	{
-		this(id, model, pattern, new Options());
-	}
-
-	/**
-	 * Main constructor
-	 *
-	 * @param id the markup id
-	 * @param model the {@link IModel}
-	 * @param pattern a {@code SimpleDateFormat} pattern
-	 * @param options the {@link Options}
-	 */
-	public TimePicker(String id, IModel<LocalTime> model, final String pattern, Options options)
-	{
-		super(id, model, pattern, options, LocalTime.class, TimePicker.newConverter(pattern));
+		this(id, model, null, DateUtils.LOCAL_TIME_PATTERN, options);
 	}
 
 	/**
@@ -212,20 +179,108 @@ public class TimePicker extends LocalTextField<LocalTime>
 	 */
 	public TimePicker(String id, IModel<LocalTime> model, Locale locale, Options options)
 	{
-		this(id, model, LocaleUtils.getLocaleTimePattern(locale, DateUtils.TIME_PATTERN), options.set("culture", Options.asString(LocaleUtils.getLangageCode(locale))));
+		this(id, model, locale, LocaleUtils.getLocaleTimePattern(locale, DateUtils.LOCAL_TIME_PATTERN), options);
 	}
-	
+
+	/**
+	 * Constructor
+	 *
+	 * @param id the markup id
+	 * @param model the {@link IModel}
+	 * @param pattern a {@code SimpleDateFormat} pattern
+	 */
+	public TimePicker(String id, IModel<LocalTime> model, String pattern)
+	{
+		this(id, model, pattern, new Options());
+	}
+
+	/**
+	 * Constructor
+	 *
+	 * @param id the markup id
+	 * @param model the {@link IModel}
+	 * @param pattern a {@code SimpleDateFormat} pattern
+	 * @param options the {@link Options}
+	 */
+	public TimePicker(String id, IModel<LocalTime> model, String pattern, Options options)
+	{
+		this(id, model, null, pattern, options);
+	}
+
+	/**
+	 * Constructor
+	 *
+	 * @param id the markup id
+	 * @param model the {@link IModel}
+	 * @param locale the {@link Locale}
+	 * @param pattern a {@code SimpleDateFormat} pattern
+	 * @param options the {@link Options}
+	 */
+	public TimePicker(String id, IModel<LocalTime> model, final Locale locale, String pattern)
+	{
+		this(id, model, locale, pattern, new Options());
+	}
+
+	/**
+	 * Main constructor
+	 *
+	 * @param id the markup id
+	 * @param model the {@link IModel}
+	 * @param locale the {@link Locale}
+	 * @param pattern a {@code SimpleDateFormat} pattern
+	 * @param options the {@link Options}
+	 */
+	public TimePicker(String id, IModel<LocalTime> model, final Locale locale, final String pattern, Options options)
+	{
+		super(id, model, locale, pattern, options, LocalTime.class, TimePicker.newConverter(pattern));
+	}
+
 	// Properties //
 
 	@Override
 	protected String getMethod()
 	{
-		return METHOD;
+		return TimePickerBehavior.METHOD;
 	}
-	
+
 	@Override
 	protected String[] getInputTypes()
 	{
 		return new String[] { "text", "time" };
+	}
+
+	// Factories //
+
+	/**
+	 * Gets a new time {@link IConverter}.
+	 * 
+	 * @param format the time format
+	 * @return the converter
+	 */
+	private static IConverter<LocalTime> newConverter(final String pattern)
+	{
+		return new IConverter<LocalTime>() {
+
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			public LocalTime convertToObject(String value, Locale locale) throws ConversionException
+			{
+				try
+				{
+					return LocalTime.parse(value, DateTimeFormatter.ofPattern(pattern, locale));
+				}
+				catch (DateTimeParseException e)
+				{
+					throw new ConversionException(e.getMessage(), e);
+				}
+			}
+
+			@Override
+			public String convertToString(LocalTime time, Locale locale)
+			{
+				return time != null ? time.format(DateTimeFormatter.ofPattern(pattern, locale)) : null;
+			}
+		};
 	}
 }

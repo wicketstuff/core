@@ -17,7 +17,7 @@ public class KendoDatePickerPage extends AbstractTimePickerPage
 
 	public KendoDatePickerPage()
 	{
-		final Form<Date> form = new Form<Date>("form");
+		final Form<?> form = new Form<Void>("form");
 		this.add(form);
 
 		// FeedbackPanel //
@@ -36,7 +36,7 @@ public class KendoDatePickerPage extends AbstractTimePickerPage
 			@Override
 			public void onSubmit()
 			{
-				this.info(datepicker.getModelObjectAsString());
+				this.info("Date: " + datepicker.getModelObject());
 			}
 		});
 
@@ -47,7 +47,7 @@ public class KendoDatePickerPage extends AbstractTimePickerPage
 			@Override
 			protected void onSubmit(AjaxRequestTarget target, Form<?> form)
 			{
-				this.info(datepicker.getModelObjectAsString());
+				this.info("Date: " + datepicker.getModelObject());
 				target.add(form);
 			}
 

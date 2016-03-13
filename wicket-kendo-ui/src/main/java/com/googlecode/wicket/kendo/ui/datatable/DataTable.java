@@ -19,7 +19,6 @@ package com.googlecode.wicket.kendo.ui.datatable;
 import java.util.Collections;
 import java.util.List;
 
-import org.apache.wicket.Component;
 import org.apache.wicket.IGenericComponent;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.json.JSONObject;
@@ -54,7 +53,7 @@ import com.googlecode.wicket.kendo.ui.datatable.column.IColumn;
  * @param <T> the model object type
  * @author Sebastien Briquet - sebfz1
  */
-public class DataTable<T> extends WebComponent implements IGenericComponent<List<IColumn>>, IJQueryWidget, IDataTableListener
+public class DataTable<T> extends WebComponent implements IGenericComponent<List<IColumn>, DataTable<T>>, IJQueryWidget, IDataTableListener
 {
 	private static final long serialVersionUID = 1L;
 
@@ -239,32 +238,6 @@ public class DataTable<T> extends WebComponent implements IGenericComponent<List
 	}
 
 	// Properties //
-
-	@Override
-	@SuppressWarnings("unchecked")
-	public IModel<List<IColumn>> getModel()
-	{
-		return (IModel<List<IColumn>>) this.getDefaultModel();
-	}
-
-	@Override
-	public Component setModel(IModel<List<IColumn>> model)
-	{
-		return this.setDefaultModel(model);
-	}
-
-	@Override
-	@SuppressWarnings("unchecked")
-	public List<IColumn> getModelObject()
-	{
-		return (List<IColumn>) this.getDefaultModelObject();
-	}
-
-	@Override
-	public Component setModelObject(List<IColumn> object)
-	{
-		return this.setDefaultModelObject(object);
-	}
 
 	/**
 	 * Gets the {@link IDataProvider}

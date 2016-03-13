@@ -16,6 +16,8 @@
  */
 package com.googlecode.wicket.kendo.ui.form.datetime.local;
 
+import java.util.Locale;
+
 import org.apache.wicket.markup.html.form.AbstractTextComponent.ITextFormatProvider;
 import org.apache.wicket.markup.html.form.TextField;
 import org.apache.wicket.model.IModel;
@@ -24,6 +26,7 @@ import org.apache.wicket.util.convert.IConverter;
 import com.googlecode.wicket.jquery.core.IJQueryWidget;
 import com.googlecode.wicket.jquery.core.JQueryBehavior;
 import com.googlecode.wicket.jquery.core.Options;
+import com.googlecode.wicket.jquery.core.utils.LocaleUtils;
 import com.googlecode.wicket.kendo.ui.KendoUIBehavior;
 import com.googlecode.wicket.kendo.ui.utils.KendoDateTimeUtils;
 
@@ -37,6 +40,8 @@ import com.googlecode.wicket.kendo.ui.utils.KendoDateTimeUtils;
 public abstract class LocalTextField<T> extends TextField<T> implements ITextFormatProvider, IJQueryWidget
 {
 	private static final long serialVersionUID = 1L;
+
+	private final Locale locale;
 
 	/** the date pattern of the TextField */
 	private final String pattern;
@@ -56,13 +61,27 @@ public abstract class LocalTextField<T> extends TextField<T> implements ITextFor
 	 * @param type the class type
 	 * @param converter the {@link IConverter}
 	 */
-	public LocalTextField(String id, IModel<T> model, String pattern, Options options, Class<T> type, IConverter<T> converter)
+	public LocalTextField(String id, IModel<T> model, Locale locale, String pattern, Options options, Class<T> type, IConverter<T> converter)
 	{
 		super(id, model, type);
 
+		this.locale = locale;
 		this.pattern = pattern;
 		this.options = options;
 		this.converter = converter;
+	}
+
+	// Properties //
+
+	@Override
+	public Locale getLocale()
+	{
+		if (this.locale != null)
+		{
+			return this.locale;
+		}
+
+		return super.getLocale();
 	}
 
 	/**
@@ -76,6 +95,27 @@ public abstract class LocalTextField<T> extends TextField<T> implements ITextFor
 	public final String getTextFormat()
 	{
 		return this.pattern;
+	}
+
+	/**
+	 * Returns the default converter if created without pattern; otherwise it returns a pattern-specific converter.
+	 *
+	 * @param type The type for which the convertor should work
+	 * @return A pattern-specific converter
+	 * @see org.apache.wicket.markup.html.form.TextField
+	 */
+	@SuppressWarnings("unchecked")
+	@Override
+	public <C> IConverter<C> getConverter(final Class<C> type)
+	{
+		if (this.getType().isAssignableFrom(type))
+		{
+			return (IConverter<C>) this.converter;
+		}
+		else
+		{
+			return super.getConverter(type);
+		}
 	}
 
 	/**
@@ -93,27 +133,6 @@ public abstract class LocalTextField<T> extends TextField<T> implements ITextFor
 		}
 
 		return "";
-	}
-
-	/**
-	 * Returns the default converter if created without pattern; otherwise it returns a pattern-specific converter.
-	 *
-	 * @param type The type for which the convertor should work
-	 * @return A pattern-specific converter
-	 * @see org.apache.wicket.markup.html.form.TextField
-	 */
-	@SuppressWarnings("unchecked")
-	@Override
-	public <C> IConverter<C> getConverter(final Class<C> type)
-	{
-		if (getType().isAssignableFrom(type))
-		{
-			return (IConverter<C>) this.converter;
-		}
-		else
-		{
-			return super.getConverter(type);
-		}
 	}
 
 	/**
@@ -136,6 +155,11 @@ public abstract class LocalTextField<T> extends TextField<T> implements ITextFor
 	@Override
 	public void onConfigure(JQueryBehavior behavior)
 	{
+		if (behavior.getOption("culture") == null)
+		{
+			behavior.setOption("culture", Options.asString(LocaleUtils.getLangageCode(this.getLocale())));
+		}
+
 		if (behavior.getOption("format") == null)
 		{
 			behavior.setOption("format", Options.asString(KendoDateTimeUtils.toPattern(this.getTextFormat())));

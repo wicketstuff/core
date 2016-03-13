@@ -1,6 +1,6 @@
-package com.googlecode.wicket.jquery.ui.samples.pages.kendo.datetimepicker;
+package com.googlecode.wicket.jquery.ui.samples.pages.kendo.datetimepicker.local;
 
-import java.util.Calendar;
+import java.time.LocalTime;
 
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.markup.html.form.Form;
@@ -8,16 +8,16 @@ import org.apache.wicket.model.Model;
 
 import com.googlecode.wicket.kendo.ui.form.button.AjaxButton;
 import com.googlecode.wicket.kendo.ui.form.button.Button;
-import com.googlecode.wicket.kendo.ui.form.datetime.TimePicker;
+import com.googlecode.wicket.kendo.ui.form.datetime.local.TimePicker;
 import com.googlecode.wicket.kendo.ui.panel.KendoFeedbackPanel;
 
-public class DefaultTimePickerPage extends AbstractTimePickerPage
+public class PatternTimePickerPage extends AbstractTimePickerPage
 {
 	private static final long serialVersionUID = 1L;
 
-	public DefaultTimePickerPage()
+	public PatternTimePickerPage()
 	{
-		Form<Void> form = new Form<Void>("form");
+		Form<?> form = new Form<Void>("form");
 		this.add(form);
 
 		// FeedbackPanel //
@@ -25,10 +25,7 @@ public class DefaultTimePickerPage extends AbstractTimePickerPage
 		form.add(feedback);
 
 		// TimePicker //
-		Calendar calendar = Calendar.getInstance();
-		calendar.set(0, 0, 0, 14, 0); // 2:00 PM
-
-		final TimePicker timepicker = new TimePicker("timepicker", Model.of(calendar.getTime()));
+		final TimePicker timepicker = new TimePicker("timepicker", Model.of(LocalTime.NOON), "hh:mm:ss a");
 		form.add(timepicker);
 
 		// Buttons //
@@ -39,7 +36,7 @@ public class DefaultTimePickerPage extends AbstractTimePickerPage
 			@Override
 			public void onSubmit()
 			{
-				this.info(timepicker.getModelObjectAsString());
+				this.info("Time: " + timepicker.getModelObject());
 			}
 		});
 
@@ -50,7 +47,7 @@ public class DefaultTimePickerPage extends AbstractTimePickerPage
 			@Override
 			protected void onSubmit(AjaxRequestTarget target, Form<?> form)
 			{
-				this.info(timepicker.getModelObjectAsString());
+				this.info("Time: " + timepicker.getModelObject());
 				target.add(feedback);
 			}
 

@@ -5,14 +5,15 @@ import java.util.Locale;
 
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.markup.head.IHeaderResponse;
+import org.apache.wicket.markup.head.JavaScriptHeaderItem;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.model.Model;
 
-import com.googlecode.wicket.kendo.ui.KendoCultureHeaderItem;
 import com.googlecode.wicket.kendo.ui.form.button.AjaxButton;
 import com.googlecode.wicket.kendo.ui.form.button.Button;
 import com.googlecode.wicket.kendo.ui.form.datetime.DatePicker;
 import com.googlecode.wicket.kendo.ui.panel.KendoFeedbackPanel;
+import com.googlecode.wicket.kendo.ui.resource.KendoCultureResourceReference;
 
 public class LocaleDatePickerPage extends AbstractTimePickerPage
 {
@@ -20,15 +21,15 @@ public class LocaleDatePickerPage extends AbstractTimePickerPage
 
 	public LocaleDatePickerPage()
 	{
-		final Form<Date> form = new Form<Date>("form");
+		final Form<?> form = new Form<Void>("form");
 		this.add(form);
 
 		// FeedbackPanel //
 		final KendoFeedbackPanel feedback = new KendoFeedbackPanel("feedback");
 		form.add(feedback);
 
-		// Date Picker //
-		final DatePicker datepicker = new DatePicker("datepicker", Model.of(new Date()), Locale.FRANCE);
+		// DatePicker //
+		final DatePicker datepicker = new DatePicker("datepicker", Model.of(new Date()), Locale.FRANCE, "EEE dd MMM yyyy");
 		form.add(datepicker);
 
 		// Buttons //
@@ -39,7 +40,7 @@ public class LocaleDatePickerPage extends AbstractTimePickerPage
 			@Override
 			public void onSubmit()
 			{
-				this.info(datepicker.getModelObjectAsString());
+				this.info("Date: " + datepicker.getModelObject());
 			}
 		});
 
@@ -50,7 +51,7 @@ public class LocaleDatePickerPage extends AbstractTimePickerPage
 			@Override
 			protected void onSubmit(AjaxRequestTarget target, Form<?> form)
 			{
-				this.info(datepicker.getModelObjectAsString());
+				this.info("Date: " + datepicker.getModelObject());
 				target.add(form);
 			}
 
@@ -70,8 +71,6 @@ public class LocaleDatePickerPage extends AbstractTimePickerPage
 	{
 		super.renderHead(response);
 
-		// response.render(new KendoCultureHeaderItem("fr")); // or fr-FR
-		// response.render(new KendoCultureHeaderItem(KendoCulture.FR_FR)); // or KendoCulture.FR
-		response.render(new KendoCultureHeaderItem(Locale.FRENCH));
+		response.render(JavaScriptHeaderItem.forReference(new KendoCultureResourceReference(Locale.FRANCE)));
 	}
 }

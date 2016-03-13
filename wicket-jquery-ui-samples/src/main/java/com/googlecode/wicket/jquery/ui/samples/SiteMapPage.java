@@ -72,8 +72,8 @@ import com.googlecode.wicket.jquery.ui.samples.pages.kendo.datatable.DefaultData
 import com.googlecode.wicket.jquery.ui.samples.pages.kendo.datatable.InfiniteDataTablePage;
 import com.googlecode.wicket.jquery.ui.samples.pages.kendo.datetimepicker.AjaxDateTimePickerPage;
 import com.googlecode.wicket.jquery.ui.samples.pages.kendo.datetimepicker.AjaxTimePickerPage;
-import com.googlecode.wicket.jquery.ui.samples.pages.kendo.datetimepicker.DateTimePickerPage;
-import com.googlecode.wicket.jquery.ui.samples.pages.kendo.datetimepicker.DefaultTimePickerPage;
+import com.googlecode.wicket.jquery.ui.samples.pages.kendo.datetimepicker.KendoDateTimePickerPage;
+import com.googlecode.wicket.jquery.ui.samples.pages.kendo.datetimepicker.KendoTimePickerPage;
 import com.googlecode.wicket.jquery.ui.samples.pages.kendo.datetimepicker.KendoDatePickerPage;
 import com.googlecode.wicket.jquery.ui.samples.pages.kendo.datetimepicker.LocaleDatePickerPage;
 import com.googlecode.wicket.jquery.ui.samples.pages.kendo.datetimepicker.LocaleDateTimePickerPage;
@@ -194,7 +194,7 @@ public class SiteMapPage extends WebPage
 			CustomDialogPage.class,
 			CustomSortablePage.class,
 			CustomTooltipPage.class,
-			DateTimePickerPage.class,
+			KendoDateTimePickerPage.class,
 			DefaultAccordionPage.class,
 			DefaultAutoCompletePage.class,
 			DefaultButtonPage.class,
@@ -224,7 +224,7 @@ public class SiteMapPage extends WebPage
 			DefaultSpinnerPage.class,
 			DefaultSplitterPage.class,
 			DefaultTabsPage.class,
-			DefaultTimePickerPage.class,
+			KendoTimePickerPage.class,
 			DefaultTooltipPage.class,
 			DefaultWindowPage.class,
 			DefaultWizardPage.class,

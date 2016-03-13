@@ -16,14 +16,21 @@
  */
 package com.googlecode.wicket.kendo.ui.form.datetime;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Locale;
 
-import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.core.request.handler.IPartialPageRequestHandler;
 import org.apache.wicket.model.IModel;
+import org.apache.wicket.util.convert.ConversionException;
+import org.apache.wicket.util.convert.IConverter;
+import org.apache.wicket.util.convert.converter.DateConverter;
+import org.apache.wicket.validation.ValidationError;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.googlecode.wicket.jquery.core.JQueryBehavior;
-import com.googlecode.wicket.jquery.core.JQueryEvent;
 import com.googlecode.wicket.jquery.core.Options;
 import com.googlecode.wicket.jquery.core.ajax.IJQueryAjaxAware;
 import com.googlecode.wicket.jquery.core.ajax.JQueryAjaxPostBehavior;
@@ -36,9 +43,10 @@ import com.googlecode.wicket.kendo.ui.ajax.OnChangeAjaxBehavior;
  *
  * @author Sebastien Briquet - sebfz1
  */
-public class AjaxDateTimePicker extends DateTimePicker implements IJQueryAjaxAware, IValueChangedListener
+public class AjaxDateTimePicker extends DateTimePicker implements IValueChangedListener
 {
 	private static final long serialVersionUID = 1L;
+	private static final Logger LOG = LoggerFactory.getLogger(AjaxDateTimePicker.class);
 
 	/**
 	 * Constructor
@@ -54,6 +62,17 @@ public class AjaxDateTimePicker extends DateTimePicker implements IJQueryAjaxAwa
 	 * Constructor
 	 *
 	 * @param id the markup id
+	 * @param locale the {@code Locale}
+	 */
+	public AjaxDateTimePicker(String id, Locale locale)
+	{
+		super(id, locale);
+	}
+
+	/**
+	 * Constructor
+	 *
+	 * @param id the markup id
 	 * @param datePattern the SimpleDateFormat pattern for the date
 	 * @param timePattern the SimpleDateFormat pattern for the time
 	 */
@@ -63,10 +82,23 @@ public class AjaxDateTimePicker extends DateTimePicker implements IJQueryAjaxAwa
 	}
 
 	/**
+	 * constructor
+	 *
+	 * @param id the markup id
+	 * @param locale the {@code Locale}
+	 * @param datePattern the SimpleDateFormat pattern for the date
+	 * @param timePattern the SimpleDateFormat pattern for the time
+	 */
+	public AjaxDateTimePicker(String id, Locale locale, String datePattern, String timePattern)
+	{
+		super(id, locale, datePattern, timePattern);
+	}
+
+	/**
 	 * Constructor
 	 *
 	 * @param id the markup id
-	 * @param date the initial date
+	 * @param model the date {@code IModel}
 	 */
 	public AjaxDateTimePicker(String id, IModel<Date> date)
 	{
@@ -77,7 +109,19 @@ public class AjaxDateTimePicker extends DateTimePicker implements IJQueryAjaxAwa
 	 * Constructor
 	 *
 	 * @param id the markup id
-	 * @param date the initial date
+	 * @param model the date {@code IModel}
+	 * @param locale the {@code LocalDate}
+	 */
+	public AjaxDateTimePicker(String id, IModel<Date> date, Locale locale)
+	{
+		super(id, date, locale);
+	}
+
+	/**
+	 * Constructor
+	 *
+	 * @param id the markup id
+	 * @param model the date {@code IModel}
 	 * @param datePattern the SimpleDateFormat pattern for the date
 	 * @param timePattern the SimpleDateFormat pattern for the time
 	 */
@@ -86,17 +130,84 @@ public class AjaxDateTimePicker extends DateTimePicker implements IJQueryAjaxAwa
 		super(id, date, datePattern, timePattern);
 	}
 
-	// Events //
 	/**
-	 * {@inheritDoc} <br/>
-	 * <i>Not intended to be overridden</i>
+	 * Main constructor
+	 *
+	 * @param id the markup id
+	 * @param model the date {@code IModel}
+	 * @param locale the {@code Locale}
+	 * @param datePattern the SimpleDateFormat pattern for the date
+	 * @param timePattern the SimpleDateFormat pattern for the time
 	 */
-	@Override
-	public void onAjax(AjaxRequestTarget target, JQueryEvent event)
+	public AjaxDateTimePicker(String id, IModel<Date> date, Locale locale, String datePattern, String timePattern)
 	{
-		this.processInput();
-		this.onValueChanged(target);
+		super(id, date, locale, datePattern, timePattern);
 	}
+
+	// Methods //
+
+	/**
+	 * Gets a formated value of input(s)<br/>
+	 * This method is designed to provide the 'value' argument of {@link IConverter#convertToObject(String, Locale)}
+	 *
+	 * @param dateInput the date input
+	 * @param timeInput the time input
+	 * @return a formated value
+	 */
+	protected String formatInput(String dateInput, String timeInput)
+	{
+		if (this.isTimePickerEnabled())
+		{
+			return String.format("%s %s", dateInput, timeInput);
+		}
+
+		return dateInput;
+	}
+
+	@Override
+	public void convertInput()
+	{
+		final IConverter<Date> converter = this.getConverter(Date.class);
+
+		String dateInput = this.datePicker.getInput();
+		String timeInput = this.timePicker.getInput();
+
+		try
+		{
+			String value = this.formatInput(dateInput, timeInput);
+			this.setConvertedInput(converter.convertToObject(value, this.getLocale()));
+		}
+		catch (ConversionException e)
+		{
+			if (LOG.isDebugEnabled())
+			{
+				LOG.debug(e.getMessage(), e);
+			}
+
+			ValidationError error = new ValidationError();
+			error.addKey("AjaxDateTimePicker.ConversionError"); // wicket6
+			error.setVariable("date", dateInput);
+			error.setVariable("time", timeInput);
+
+			this.error(error);
+		}
+	}
+
+	// Properties //
+
+	@Override
+	@SuppressWarnings("unchecked")
+	public <C> IConverter<C> getConverter(Class<C> type)
+	{
+		if (Date.class.isAssignableFrom(type))
+		{
+			return (IConverter<C>) AjaxDateTimePicker.newConverter(this.getTextFormat());
+		}
+
+		return super.getConverter(type);
+	}
+
+	// Events //
 
 	@Override
 	public void onValueChanged(IPartialPageRequestHandler handler)
@@ -106,25 +217,51 @@ public class AjaxDateTimePicker extends DateTimePicker implements IJQueryAjaxAwa
 
 	// Factories //
 
-	@Override
-	protected DatePicker newDatePicker(String id, IModel<Date> model, String datePattern, Options options)
+	/**
+	 * Gets a new {@link Date} {@link IConverter}.
+	 * 
+	 * @param format the time format
+	 * @return the converter
+	 */
+	private static IConverter<Date> newConverter(final String pattern)
 	{
-		return new AjaxDatePicker(id, model, datePattern, options) {
+		return new DateConverter() {
+
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			public DateFormat getDateFormat(Locale locale)
+			{
+				return new SimpleDateFormat(pattern, locale != null ? locale : Locale.getDefault());
+			}
+		};
+	}
+
+	@Override
+	protected DatePicker newDatePicker(String id, IModel<Date> model, Locale locale, String datePattern, Options options)
+	{
+		return new AjaxDatePicker(id, model, locale, datePattern, options) {
 
 			private static final long serialVersionUID = 1L;
 
 			@Override
 			public JQueryBehavior newWidgetBehavior(String selector)
 			{
-				return new DatePickerBehavior(selector, this.options) {
+				IValueChangedListener listener = new IValueChangedListener() {
 
 					private static final long serialVersionUID = 1L;
 
 					@Override
-					public void onAjax(AjaxRequestTarget target, JQueryEvent event)
+					public void onValueChanged(IPartialPageRequestHandler handler)
 					{
-						AjaxDateTimePicker.this.onAjax(target, event);
+						AjaxDateTimePicker.this.processInput();
+						AjaxDateTimePicker.this.onValueChanged(handler);
 					}
+				};
+
+				return new DatePickerBehavior(selector, this.options, listener) {
+
+					private static final long serialVersionUID = 1L;
 
 					@Override
 					protected JQueryAjaxPostBehavior newOnChangeAjaxBehavior(IJQueryAjaxAware source)
@@ -137,24 +274,30 @@ public class AjaxDateTimePicker extends DateTimePicker implements IJQueryAjaxAwa
 	}
 
 	@Override
-	protected TimePicker newTimePicker(String id, IModel<Date> model, String timePattern, Options options)
+	protected TimePicker newTimePicker(String id, IModel<Date> model, Locale locale, String timePattern, Options options)
 	{
-		return new AjaxTimePicker(id, model, timePattern, options) {
+		return new AjaxTimePicker(id, model, locale, timePattern, options) {
 
 			private static final long serialVersionUID = 1L;
 
 			@Override
 			public JQueryBehavior newWidgetBehavior(String selector)
 			{
-				return new TimePickerBehavior(selector, this.options) {
+				IValueChangedListener listener = new IValueChangedListener() {
 
 					private static final long serialVersionUID = 1L;
 
 					@Override
-					public void onAjax(AjaxRequestTarget target, JQueryEvent event)
+					public void onValueChanged(IPartialPageRequestHandler handler)
 					{
-						AjaxDateTimePicker.this.onAjax(target, event);
+						AjaxDateTimePicker.this.processInput();
+						AjaxDateTimePicker.this.onValueChanged(handler);
 					}
+				};
+
+				return new TimePickerBehavior(selector, this.options, listener) {
+
+					private static final long serialVersionUID = 1L;
 
 					@Override
 					protected JQueryAjaxPostBehavior newOnChangeAjaxBehavior(IJQueryAjaxAware source)

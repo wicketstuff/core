@@ -19,28 +19,20 @@ package com.googlecode.wicket.kendo.ui.form.datetime;
 import java.util.Date;
 import java.util.Locale;
 
-import org.apache.wicket.Component;
-import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.core.request.handler.IPartialPageRequestHandler;
 import org.apache.wicket.model.IModel;
 
 import com.googlecode.wicket.jquery.core.JQueryBehavior;
-import com.googlecode.wicket.jquery.core.JQueryEvent;
 import com.googlecode.wicket.jquery.core.Options;
-import com.googlecode.wicket.jquery.core.ajax.IJQueryAjaxAware;
-import com.googlecode.wicket.jquery.core.ajax.JQueryAjaxBehavior;
-import com.googlecode.wicket.jquery.core.ajax.JQueryAjaxPostBehavior;
 import com.googlecode.wicket.jquery.core.event.IValueChangedListener;
-import com.googlecode.wicket.kendo.ui.KendoUIBehavior;
-import com.googlecode.wicket.kendo.ui.ajax.OnChangeAjaxBehavior;
 
 /**
- * Provides a Kendo UI time-picker<br/>
- * This ajax version will post the {@link Component}, using a {@link JQueryAjaxPostBehavior}, when the 'change' javascript method is called.
+ * Provides a Kendo UI ajax date-picker<br/>
+ * {@code AjaxTimePicker} & {@code local.AjaxTimePicker} share the same code
  *
  * @author Sebastien Briquet - sebfz1
  */
-public class AjaxTimePicker extends TimePicker implements IJQueryAjaxAware, IValueChangedListener
+public class AjaxTimePicker extends TimePicker implements IValueChangedListener
 {
 	private static final long serialVersionUID = 1L;
 
@@ -63,29 +55,6 @@ public class AjaxTimePicker extends TimePicker implements IJQueryAjaxAware, IVal
 	public AjaxTimePicker(String id, Options options)
 	{
 		super(id, options);
-	}
-
-	/**
-	 * Constructor
-	 *
-	 * @param id the markup id
-	 * @param pattern a {@code SimpleDateFormat} pattern
-	 */
-	public AjaxTimePicker(String id, String pattern)
-	{
-		super(id, pattern);
-	}
-
-	/**
-	 * Main constructor
-	 *
-	 * @param id the markup id
-	 * @param pattern a {@code SimpleDateFormat} pattern
-	 * @param options the {@link Options}
-	 */
-	public AjaxTimePicker(String id, String pattern, Options options)
-	{
-		super(id, pattern, options);
 	}
 
 	/**
@@ -116,6 +85,56 @@ public class AjaxTimePicker extends TimePicker implements IJQueryAjaxAware, IVal
 	 *
 	 * @param id the markup id
 	 * @param model the {@link IModel}
+	 * @param pattern a {@code SimpleDateFormat} pattern
+	 */
+	public AjaxTimePicker(String id, String pattern)
+	{
+		super(id, pattern);
+	}
+
+	/**
+	 * Constructor
+	 *
+	 * @param id the markup id
+	 * @param pattern a {@code SimpleDateFormat} pattern
+	 * @param options the {@link Options}
+	 */
+	public AjaxTimePicker(String id, String pattern, Options options)
+	{
+		super(id, pattern, options);
+	}
+
+	/**
+	 * Constructor
+	 *
+	 * @param id the markup id
+	 * @param locale the {@link Locale}
+	 * @param pattern a {@code SimpleDateFormat} pattern
+	 * @param options the {@link Options}
+	 */
+	public AjaxTimePicker(String id, final Locale locale, String pattern)
+	{
+		super(id, locale, pattern);
+	}
+
+	/**
+	 * Constructor
+	 *
+	 * @param id the markup id
+	 * @param locale the {@link Locale}
+	 * @param pattern a {@code SimpleDateFormat} pattern
+	 * @param options the {@link Options}
+	 */
+	public AjaxTimePicker(String id, final Locale locale, final String pattern, Options options)
+	{
+		super(id, locale, pattern, options);
+	}
+
+	/**
+	 * Constructor
+	 *
+	 * @param id the markup id
+	 * @param model the {@link IModel}
 	 */
 	public AjaxTimePicker(String id, IModel<Date> model)
 	{
@@ -132,31 +151,6 @@ public class AjaxTimePicker extends TimePicker implements IJQueryAjaxAware, IVal
 	public AjaxTimePicker(String id, IModel<Date> model, Options options)
 	{
 		super(id, model, options);
-	}
-
-	/**
-	 * Constructor
-	 *
-	 * @param id the markup id
-	 * @param model the {@link IModel}
-	 * @param pattern a {@code SimpleDateFormat} pattern
-	 */
-	public AjaxTimePicker(String id, IModel<Date> model, String pattern)
-	{
-		super(id, model, pattern);
-	}
-
-	/**
-	 * Main constructor
-	 *
-	 * @param id the markup id
-	 * @param model the {@link IModel}
-	 * @param pattern a {@code SimpleDateFormat} pattern
-	 * @param options the {@link Options}
-	 */
-	public AjaxTimePicker(String id, IModel<Date> model, String pattern, Options options)
-	{
-		super(id, model, pattern, options);
 	}
 
 	/**
@@ -184,17 +178,60 @@ public class AjaxTimePicker extends TimePicker implements IJQueryAjaxAware, IVal
 		super(id, model, locale, options);
 	}
 
-	// Events //
 	/**
-	 * {@inheritDoc} <br/>
-	 * <i>Not intended to be overridden</i>
+	 * Constructor
+	 *
+	 * @param id the markup id
+	 * @param model the {@link IModel}
+	 * @param pattern a {@code SimpleDateFormat} pattern
 	 */
-	@Override
-	public void onAjax(AjaxRequestTarget target, JQueryEvent event)
+	public AjaxTimePicker(String id, IModel<Date> model, String pattern)
 	{
-		this.processInput();
-		this.onValueChanged(target);
+		super(id, model, pattern);
 	}
+
+	/**
+	 * Constructor
+	 *
+	 * @param id the markup id
+	 * @param model the {@link IModel}
+	 * @param pattern a {@code SimpleDateFormat} pattern
+	 * @param options the {@link Options}
+	 */
+	public AjaxTimePicker(String id, IModel<Date> model, String pattern, Options options)
+	{
+		super(id, model, pattern, options);
+	}
+
+	/**
+	 * Constructor
+	 *
+	 * @param id the markup id
+	 * @param model the {@link IModel}
+	 * @param locale the {@link Locale}
+	 * @param pattern a {@code SimpleDateFormat} pattern
+	 * @param options the {@link Options}
+	 */
+	public AjaxTimePicker(String id, IModel<Date> model, final Locale locale, String pattern)
+	{
+		super(id, model, locale, pattern);
+	}
+
+	/**
+	 * Main constructor
+	 *
+	 * @param id the markup id
+	 * @param model the {@link IModel}
+	 * @param locale the {@link Locale}
+	 * @param pattern a {@code SimpleDateFormat} pattern
+	 * @param options the {@link Options}
+	 */
+	public AjaxTimePicker(String id, IModel<Date> model, final Locale locale, final String pattern, Options options)
+	{
+		super(id, model, locale, pattern, options);
+	}
+
+	// Events //
 
 	@Override
 	public void onValueChanged(IPartialPageRequestHandler handler)
@@ -203,87 +240,22 @@ public class AjaxTimePicker extends TimePicker implements IJQueryAjaxAware, IVal
 	}
 
 	// IJQueryWidget //
+
 	@Override
 	public JQueryBehavior newWidgetBehavior(String selector)
 	{
-		return new TimePickerBehavior(selector, this.options) {
+		IValueChangedListener listener = new IValueChangedListener() {
 
 			private static final long serialVersionUID = 1L;
 
 			@Override
-			public void onAjax(AjaxRequestTarget target, JQueryEvent event)
+			public void onValueChanged(IPartialPageRequestHandler handler)
 			{
-				AjaxTimePicker.this.onAjax(target, event);
+				AjaxTimePicker.this.processInput();
+				AjaxTimePicker.this.onValueChanged(handler);
 			}
 		};
-	}
 
-	/**
-	 * Provides a jQuery timepicker behavior
-	 */
-	// TODO: ITimePickerListener
-	protected abstract static class TimePickerBehavior extends KendoUIBehavior implements IJQueryAjaxAware
-	{
-		private static final long serialVersionUID = 1L;
-
-		private JQueryAjaxBehavior onChangeAjaxBehavior = null;
-
-		/**
-		 * Constructor
-		 *
-		 * @param selector the html selector (ie: "#myId")
-		 */
-		public TimePickerBehavior(String selector)
-		{
-			this(selector, new Options());
-		}
-
-		/**
-		 * Constructor
-		 *
-		 * @param selector the html selector (ie: "#myId")
-		 * @param options the {@link Options}
-		 */
-		public TimePickerBehavior(String selector, Options options)
-		{
-			super(selector, TimePicker.METHOD, options);
-		}
-
-		// Methods //
-
-		@Override
-		public void bind(Component component)
-		{
-			super.bind(component);
-
-			this.onChangeAjaxBehavior = this.newOnChangeAjaxBehavior(this);
-			component.add(this.onChangeAjaxBehavior);
-		}
-
-		// Events //
-
-		@Override
-		public void onConfigure(Component component)
-		{
-			super.onConfigure(component);
-
-			if (this.onChangeAjaxBehavior != null)
-			{
-				this.setOption("change", this.onChangeAjaxBehavior.getCallbackFunction());
-			}
-		}
-
-		// Factories //
-
-		/**
-		 * Gets a new {@link JQueryAjaxPostBehavior} that will be wired to the 'change' event
-		 *
-		 * @param source the {@link IJQueryAjaxAware}
-		 * @return a new {@code OnChangeAjaxBehavior} by default
-		 */
-		protected JQueryAjaxPostBehavior newOnChangeAjaxBehavior(IJQueryAjaxAware source)
-		{
-			return new OnChangeAjaxBehavior(source);
-		}
+		return new TimePickerBehavior(selector, this.options, listener);
 	}
 }

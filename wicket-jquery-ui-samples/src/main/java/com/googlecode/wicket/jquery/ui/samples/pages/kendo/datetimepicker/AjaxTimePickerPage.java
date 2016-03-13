@@ -1,11 +1,14 @@
 package com.googlecode.wicket.jquery.ui.samples.pages.kendo.datetimepicker;
 
-import java.util.Calendar;
+import java.util.Date;
 
+import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.core.request.handler.IPartialPageRequestHandler;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.model.Model;
 
+import com.googlecode.wicket.kendo.ui.form.button.AjaxButton;
+import com.googlecode.wicket.kendo.ui.form.button.Button;
 import com.googlecode.wicket.kendo.ui.form.datetime.AjaxTimePicker;
 import com.googlecode.wicket.kendo.ui.form.datetime.TimePicker;
 import com.googlecode.wicket.kendo.ui.panel.KendoFeedbackPanel;
@@ -16,7 +19,7 @@ public class AjaxTimePickerPage extends AbstractTimePickerPage
 
 	public AjaxTimePickerPage()
 	{
-		Form<Void> form = new Form<Void>("form");
+		Form<?> form = new Form<Void>("form");
 		this.add(form);
 
 		// FeedbackPanel //
@@ -24,22 +27,49 @@ public class AjaxTimePickerPage extends AbstractTimePickerPage
 		form.add(feedback);
 
 		// TimePicker //
-		Calendar calendar = Calendar.getInstance();
-		calendar.set(0, 0, 0, 14, 0); //2:00 PM
-
-		final TimePicker timepicker = new AjaxTimePicker("timepicker", Model.of(calendar.getTime())) {
+		final TimePicker timepicker = new AjaxTimePicker("timepicker", Model.of(new Date())) {
 
 			private static final long serialVersionUID = 1L;
 
 			@Override
 			public void onValueChanged(IPartialPageRequestHandler handler)
 			{
-				this.info(this.getModelObjectAsString());
+				this.info("Value Changed: " + this.getModelObject());
 
 				handler.add(feedback);
 			}
 		};
 
 		form.add(timepicker);
+
+		// Buttons //
+		form.add(new Button("submit") {
+
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			public void onSubmit()
+			{
+				this.info("Time: " + timepicker.getModelObject()); // warning, model object can be null
+			}
+		});
+
+		form.add(new AjaxButton("button") {
+
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			protected void onSubmit(AjaxRequestTarget target, Form<?> form)
+			{
+				this.info("Time: " + timepicker.getModelObject()); // warning, model object can be null
+				target.add(feedback);
+			}
+
+			@Override
+			protected void onError(AjaxRequestTarget target, Form<?> form)
+			{
+				target.add(feedback);
+			}
+		});
 	}
 }

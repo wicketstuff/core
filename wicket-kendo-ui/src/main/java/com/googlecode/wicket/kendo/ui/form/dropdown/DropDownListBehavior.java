@@ -30,7 +30,7 @@ import com.googlecode.wicket.kendo.ui.ajax.OnChangeAjaxBehavior;
 import com.googlecode.wicket.kendo.ui.ajax.OnChangeAjaxBehavior.ChangeEvent;
 
 /**
- * Provides a Kendo UI DropDownList {@link JQueryBehavior}
+ * Provides a {@value METHOD} {@link JQueryBehavior}
  * 
  * @author Sebastien Briquet - sebfz1
  */
@@ -38,12 +38,14 @@ public class DropDownListBehavior extends KendoUIBehavior implements IJQueryAjax
 {
 	private static final long serialVersionUID = 1L;
 
+	public static final String METHOD = "kendoDropDownList";
+
 	private final ISelectionChangedListener listener;
 	private JQueryAjaxBehavior onChangeAjaxBehavior;
 
 	public DropDownListBehavior(String selector, ISelectionChangedListener listener)
 	{
-		this(selector, DropDownList.METHOD, listener);
+		this(selector, METHOD, listener);
 	}
 
 	public DropDownListBehavior(String selector, String method, ISelectionChangedListener listener)

@@ -20,7 +20,6 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
-import java.time.format.DateTimeParseException;
 import java.util.Locale;
 
 import org.apache.wicket.WicketRuntimeException;
@@ -29,12 +28,10 @@ import org.apache.wicket.markup.html.form.AbstractTextComponent.ITextFormatProvi
 import org.apache.wicket.markup.html.form.FormComponentPanel;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.PropertyModel;
-import org.apache.wicket.util.convert.ConversionException;
-import org.apache.wicket.util.convert.IConverter;
-import org.apache.wicket.util.string.Strings;
 
 import com.googlecode.wicket.jquery.core.Options;
 import com.googlecode.wicket.jquery.core.utils.DateUtils;
+import com.googlecode.wicket.jquery.core.utils.LocaleUtils;
 
 /**
  * Provides a datetime-picker based on a {@link DatePicker} and a {@link TimePicker}
@@ -44,44 +41,13 @@ import com.googlecode.wicket.jquery.core.utils.DateUtils;
 public class DateTimePicker extends FormComponentPanel<LocalDateTime> implements ITextFormatProvider
 {
 	private static final long serialVersionUID = 1L;
+
 	private static final String ERROR_NOT_INITIALIZED = "Internal timePicker is not initialized (#onInitialize() has not yet been called).";
-
-	/**
-	 * Gets a new datetime {@link IConverter}.
-	 * 
-	 * @param format the date format
-	 * @return the converter
-	 */
-	private static IConverter<LocalDateTime> newConverter(final String format)
-	{
-		return new IConverter<LocalDateTime>() {
-
-			private static final long serialVersionUID = 1L;
-
-			@Override
-			public LocalDateTime convertToObject(String value, Locale locale) throws ConversionException
-			{
-				try
-				{
-					return Strings.isEmpty(value) ? null : LocalDateTime.parse(value, DateTimeFormatter.ofPattern(format));
-				}
-				catch (DateTimeParseException e)
-				{
-					throw new ConversionException(e.getMessage(), e);
-				}
-			}
-
-			@Override
-			public String convertToString(LocalDateTime date, Locale locale)
-			{
-				return date == null ? null : date.format(DateTimeFormatter.ofPattern(format));
-			}
-		};
-	}
 
 	DatePicker datePicker;
 	TimePicker timePicker;
 
+	private final Locale locale;
 	private final String datePattern;
 	private final String timePattern;
 
@@ -92,7 +58,18 @@ public class DateTimePicker extends FormComponentPanel<LocalDateTime> implements
 	 */
 	public DateTimePicker(String id)
 	{
-		this(id, DateUtils.DATE_PATTERN, DateUtils.TIME_PATTERN);
+		this(id, null, null, DateUtils.LOCAL_DATE_PATTERN, DateUtils.LOCAL_TIME_PATTERN);
+	}
+
+	/**
+	 * Constructor
+	 *
+	 * @param id the markup id
+	 * @param locale the {@code Locale}
+	 */
+	public DateTimePicker(String id, Locale locale)
+	{
+		this(id, null, locale, LocaleUtils.getLocaleDatePattern(locale, DateUtils.LOCAL_DATE_PATTERN), LocaleUtils.getLocaleTimePattern(locale, DateUtils.LOCAL_TIME_PATTERN));
 	}
 
 	/**
@@ -104,35 +81,72 @@ public class DateTimePicker extends FormComponentPanel<LocalDateTime> implements
 	 */
 	public DateTimePicker(String id, String datePattern, String timePattern)
 	{
-		super(id);
+		this(id, null, null, datePattern, timePattern);
+	}
 
-		this.datePattern = datePattern;
-		this.timePattern = timePattern;
+	/**
+	 * constructor
+	 *
+	 * @param id the markup id
+	 * @param locale the {@code Locale}
+	 * @param datePattern the SimpleDateFormat pattern for the date
+	 * @param timePattern the SimpleDateFormat pattern for the time
+	 */
+	public DateTimePicker(String id, Locale locale, String datePattern, String timePattern)
+	{
+		this(id, null, locale, datePattern, timePattern);
 	}
 
 	/**
 	 * Constructor
 	 *
 	 * @param id the markup id
-	 * @param date the initial date
+	 * @param model the date {@code IModel}
 	 */
 	public DateTimePicker(String id, IModel<LocalDateTime> date)
 	{
-		this(id, date, DateUtils.DATE_PATTERN, DateUtils.TIME_PATTERN);
+		this(id, date, null, DateUtils.LOCAL_DATE_PATTERN, DateUtils.LOCAL_TIME_PATTERN);
 	}
 
 	/**
 	 * Constructor
 	 *
 	 * @param id the markup id
-	 * @param date the initial date
+	 * @param model the date {@code IModel}
+	 * @param locale the {@code LocalDate}
+	 */
+	public DateTimePicker(String id, IModel<LocalDateTime> date, Locale locale)
+	{
+		this(id, date, locale, LocaleUtils.getLocaleDatePattern(locale, DateUtils.LOCAL_DATE_PATTERN), LocaleUtils.getLocaleTimePattern(locale, DateUtils.LOCAL_TIME_PATTERN));
+	}
+
+	/**
+	 * Constructor
+	 *
+	 * @param id the markup id
+	 * @param model the date {@code IModel}
 	 * @param datePattern the SimpleDateFormat pattern for the date
 	 * @param timePattern the SimpleDateFormat pattern for the time
 	 */
 	public DateTimePicker(String id, IModel<LocalDateTime> date, String datePattern, String timePattern)
 	{
+		this(id, date, null, datePattern, timePattern);
+	}
+
+	/**
+	 * Main constructor
+	 *
+	 * @param id the markup id
+	 * @param model the date {@code IModel}
+	 * @param locale the {@code Locale}
+	 * @param datePattern the SimpleDateFormat pattern for the date
+	 * @param timePattern the SimpleDateFormat pattern for the time
+	 */
+	public DateTimePicker(String id, IModel<LocalDateTime> date, Locale locale, String datePattern, String timePattern)
+	{
 		super(id, date);
 
+		this.locale = locale;
 		this.datePattern = datePattern;
 		this.timePattern = timePattern;
 	}
@@ -142,42 +156,56 @@ public class DateTimePicker extends FormComponentPanel<LocalDateTime> implements
 	@Override
 	public void convertInput()
 	{
-		LocalDate date = datePicker.getConvertedInput();
-		LocalTime time = timePicker.getConvertedInput();
+		LocalDate date = this.datePicker.getConvertedInput();
+		LocalTime time = this.timePicker.getConvertedInput();
 
-		this.setConvertedInput(date == null ? null : LocalDateTime.of(date, time == null ? LocalTime.MIDNIGHT : time));
-	}
-
-	/**
-	 * Gets a formated value of input(s)<br/>
-	 * This method is designed to provide the 'value' argument of {@link IConverter#convertToObject(String, Locale)}
-	 *
-	 * @param dateInput the date input
-	 * @param timeInput the time input
-	 * @return a formated value
-	 */
-	protected String formatInput(String dateInput, String timeInput)
-	{
-		if (this.isTimePickerEnabled())
-		{
-			return String.format("%s %s", dateInput, timeInput);
-		}
-
-		return dateInput;
+		this.setConvertedInput(LocalDateTime.of(date, time != null ? time : LocalTime.MIDNIGHT));
 	}
 
 	// Properties //
 
 	@Override
-	@SuppressWarnings("unchecked")
-	public <C> IConverter<C> getConverter(Class<C> type)
+	public Locale getLocale()
 	{
-		if (LocalDateTime.class.isAssignableFrom(type))
+		if (this.locale != null)
 		{
-			return (IConverter<C>) DateTimePicker.newConverter(this.getTextFormat());
+			return this.locale;
 		}
 
-		return super.getConverter(type);
+		return super.getLocale();
+	}
+
+	/**
+	 * Returns the date-time pattern.
+	 *
+	 * @see org.apache.wicket.markup.html.form.AbstractTextComponent.ITextFormatProvider#getTextFormat()
+	 */
+	@Override
+	public final String getTextFormat()
+	{
+		if (this.isTimePickerEnabled())
+		{
+			return String.format("%s %s", this.getDatePattern(), this.getTimePattern());
+		}
+
+		return this.getDatePattern();
+	}
+
+	/**
+	 * Gets a (localized) string representation of the model object, given the date-time pattern in use.
+	 *
+	 * @return the model object as string
+	 */
+	public String getModelObjectAsString()
+	{
+		LocalDateTime date = this.getModelObject();
+
+		if (date != null)
+		{
+			return date.format(DateTimeFormatter.ofPattern(this.getTextFormat(), this.getLocale()));
+		}
+
+		return "";
 	}
 
 	/**
@@ -246,39 +274,6 @@ public class DateTimePicker extends FormComponentPanel<LocalDateTime> implements
 		handler.add(this.timePicker);
 	}
 
-	/**
-	 * Returns the date-time pattern.
-	 *
-	 * @see org.apache.wicket.markup.html.form.AbstractTextComponent.ITextFormatProvider#getTextFormat()
-	 */
-	@Override
-	public final String getTextFormat()
-	{
-		if (this.isTimePickerEnabled())
-		{
-			return String.format("%s %s", this.getDatePattern(), this.getTimePattern());
-		}
-
-		return this.getDatePattern();
-	}
-
-	/**
-	 * Gets a string representation of the model object, given the date-time pattern in use.
-	 *
-	 * @return the model object as string
-	 */
-	public String getModelObjectAsString()
-	{
-		LocalDateTime date = this.getModelObject();
-
-		if (date != null)
-		{
-			return date.format(DateTimeFormatter.ofPattern(this.getTextFormat()));
-		}
-
-		return "";
-	}
-
 	// Events //
 
 	@Override
@@ -286,11 +281,11 @@ public class DateTimePicker extends FormComponentPanel<LocalDateTime> implements
 	{
 		super.onInitialize();
 
-		this.datePicker = this.newDatePicker("datepicker", new PropertyModel<LocalDate>(this.getModel(), "date"), this.datePattern, new Options());
-		this.timePicker = this.newTimePicker("timepicker", new PropertyModel<LocalTime>(this.getModel(), "time"), this.timePattern, new Options());
+		this.datePicker = this.newDatePicker("datepicker", new PropertyModel<LocalDate>(this.getModel(), "date"), this.locale, this.datePattern, new Options());
+		this.timePicker = this.newTimePicker("timepicker", new PropertyModel<LocalTime>(this.getModel(), "time"), this.locale, this.timePattern, new Options());
 
-		this.add(this.datePicker);
-		this.add(this.timePicker);
+		this.add(this.datePicker.setConvertEmptyInputStringToNull(false)); // will force to use the converter (null bypasses)
+		this.add(this.timePicker.setConvertEmptyInputStringToNull(false)); // will force to use the converter (null bypasses)
 	}
 
 	// Factories //
@@ -300,13 +295,14 @@ public class DateTimePicker extends FormComponentPanel<LocalDateTime> implements
 	 *
 	 * @param id the markup id
 	 * @param model the {@link IModel}
+	 * @param locale2
 	 * @param datePattern the date pattern to be used
 	 * @param options the {@code Options}
 	 * @return the {@link DatePicker}
 	 */
-	protected DatePicker newDatePicker(String id, IModel<LocalDate> model, String datePattern, Options options)
+	protected DatePicker newDatePicker(String id, IModel<LocalDate> model, Locale locale, String datePattern, Options options)
 	{
-		return new DatePicker(id, model, datePattern, options);
+		return new DatePicker(id, model, locale, datePattern, options);
 	}
 
 	/**
@@ -318,8 +314,8 @@ public class DateTimePicker extends FormComponentPanel<LocalDateTime> implements
 	 * @param options the {@code Options}
 	 * @return the {@link TimePicker}
 	 */
-	protected TimePicker newTimePicker(String id, IModel<LocalTime> model, String timePattern, Options options)
+	protected TimePicker newTimePicker(String id, IModel<LocalTime> model, Locale locale, String timePattern, Options options)
 	{
-		return new TimePicker(id, model, timePattern, options);
+		return new TimePicker(id, model, locale, timePattern, options);
 	}
 }

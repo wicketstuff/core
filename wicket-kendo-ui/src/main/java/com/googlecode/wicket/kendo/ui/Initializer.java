@@ -38,6 +38,7 @@ public class Initializer implements IInitializer
 			webApplication.getAjaxRequestTargetListeners().add(new KendoDestroyListener());
 
 			// registers .js.map pattern //
+			// TODO will be added to wicket directly, might be removed
 			IPackageResourceGuard packageResourceGuard = webApplication.getResourceSettings().getPackageResourceGuard();
 
 			if (packageResourceGuard instanceof SecurePackageResourceGuard)

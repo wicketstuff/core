@@ -18,7 +18,6 @@ package com.googlecode.wicket.jquery.core.event;
 
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.util.io.IClusterable;
-import org.apache.wicket.util.lang.Args;
 
 /**
  * Specifies that a widget handles a selection-changed AJAX behavior
@@ -41,34 +40,4 @@ public interface ISelectionChangedListener extends IClusterable
 	 * @param target the {@link AjaxRequestTarget}
 	 */
 	void onSelectionChanged(AjaxRequestTarget target);
-
-	/**
-	 * Wrapper/Delegate class for {@link ISelectionChangedListener}
-	 *
-	 * @author Sebastien Briquet - sebfz1
-	 *
-	 */
-	class SelectionChangedListenerWrapper implements ISelectionChangedListener
-	{
-		private static final long serialVersionUID = 1L;
-
-		private final ISelectionChangedListener listener;
-
-		public SelectionChangedListenerWrapper(ISelectionChangedListener listener)
-		{
-			this.listener = Args.notNull(listener, "listener");
-		}
-
-		@Override
-		public boolean isSelectionChangedEventEnabled()
-		{
-			return this.listener.isSelectionChangedEventEnabled();
-		}
-
-		@Override
-		public void onSelectionChanged(AjaxRequestTarget target)
-		{
-			this.listener.onSelectionChanged(target);
-		}
-	}
 }

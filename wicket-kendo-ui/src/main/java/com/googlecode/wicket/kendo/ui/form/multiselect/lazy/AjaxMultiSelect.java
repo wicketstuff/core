@@ -25,6 +25,7 @@ import org.apache.wicket.model.IModel;
 import com.googlecode.wicket.jquery.core.JQueryBehavior;
 import com.googlecode.wicket.jquery.core.ajax.JQueryAjaxPostBehavior;
 import com.googlecode.wicket.jquery.core.event.ISelectionChangedListener;
+import com.googlecode.wicket.jquery.core.event.SelectionChangedWrapper;
 import com.googlecode.wicket.jquery.core.renderer.IChoiceRenderer;
 import com.googlecode.wicket.kendo.ui.renderer.ChoiceRenderer;
 
@@ -112,7 +113,7 @@ public abstract class AjaxMultiSelect<T> extends MultiSelect<T> implements ISele
 	@Override
 	public final JQueryBehavior newWidgetBehavior(String selector)
 	{
-		final ISelectionChangedListener listener = new SelectionChangedListenerWrapper(this) {
+		final ISelectionChangedListener listener = new SelectionChangedWrapper(this) {
 
 			private static final long serialVersionUID = 1L;
 

@@ -10,17 +10,20 @@ For instance:<br/>
 <code>wicket-kendo-ui-culture</code> dependency does already embeds all culture files. Its usage is the following:  
 <br/>
 <pre>
-	@Override
-	public void renderHead(IHeaderResponse response)
-	{
-		super.renderHead(response);
+@Override
+public void renderHead(IHeaderResponse response)
+{
+	super.renderHead(response);
 
-		response.render(JavaScriptHeaderItem.forReference(new KendoGlobalizeResourceReference(Locale.FRANCE)));
-	}
+	// adds kendo-ui culture file
+	response.render(JavaScriptHeaderItem.forReference(new KendoCultureResourceReference(Locale.FRANCE)));
+
+	// adds kendo-ui culture file, and set the default cuture
+	// response.render(new KendoCultureHeaderItem("fr")); // or fr-FR
+	// response.render(new KendoCultureHeaderItem(KendoCulture.FR)); // or KendoCulture.FR_FR
+	// response.render(new KendoCultureHeaderItem(Locale.FRENCH)); // or Locale.FRANCE
+}
 </pre>
-
-<h4>Warning</h4>
-When globalize.js is registered before Kendo scripts, then Kendo will use globalize.js features instead of Kendo Globalization.
 
 <br/>
 <h4>Since</h4>

@@ -1,6 +1,6 @@
 package com.googlecode.wicket.jquery.ui.samples.pages.kendo.datetimepicker;
 
-import java.util.Calendar;
+import java.util.Date;
 
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.markup.html.form.Form;
@@ -17,7 +17,7 @@ public class PatternTimePickerPage extends AbstractTimePickerPage
 
 	public PatternTimePickerPage()
 	{
-		Form<Void> form = new Form<Void>("form");
+		Form<?> form = new Form<Void>("form");
 		this.add(form);
 
 		// FeedbackPanel //
@@ -25,10 +25,7 @@ public class PatternTimePickerPage extends AbstractTimePickerPage
 		form.add(feedback);
 
 		// TimePicker //
-		Calendar calendar = Calendar.getInstance();
-		calendar.set(0, 0, 0, 14, 0, 0); //2:00:00 PM
-
-		final TimePicker timepicker = new TimePicker("timepicker", Model.of(calendar.getTime()), "hh:mm:ss aa");
+		final TimePicker timepicker = new TimePicker("timepicker", Model.of(new Date()), "hh:mm:ss a");
 		form.add(timepicker);
 
 		// Buttons //
@@ -39,7 +36,7 @@ public class PatternTimePickerPage extends AbstractTimePickerPage
 			@Override
 			public void onSubmit()
 			{
-				this.info(timepicker.getModelObjectAsString());
+				this.info("Time: " + timepicker.getModelObject());
 			}
 		});
 
@@ -50,7 +47,7 @@ public class PatternTimePickerPage extends AbstractTimePickerPage
 			@Override
 			protected void onSubmit(AjaxRequestTarget target, Form<?> form)
 			{
-				this.info(timepicker.getModelObjectAsString());
+				this.info("Time: " + timepicker.getModelObject());
 				target.add(feedback);
 			}
 

@@ -18,7 +18,6 @@ package com.googlecode.wicket.kendo.ui.panel;
 
 import java.util.List;
 
-import org.apache.wicket.Component;
 import org.apache.wicket.IGenericComponent;
 import org.apache.wicket.MarkupContainer;
 import org.apache.wicket.core.request.handler.IPartialPageRequestHandler;
@@ -44,7 +43,7 @@ import com.googlecode.wicket.kendo.ui.widget.notification.NotificationBehavior;
  * @author Sebastien Briquet - sebfz1
  *
  */
-public class KendoFeedbackPanel extends WebMarkupContainer implements IJQueryWidget, IFeedback, IGenericComponent<List<FeedbackMessage>>
+public class KendoFeedbackPanel extends WebMarkupContainer implements IJQueryWidget, IFeedback, IGenericComponent<List<FeedbackMessage>, KendoFeedbackPanel>
 {
 	private static final long serialVersionUID = 1L;
 
@@ -183,34 +182,6 @@ public class KendoFeedbackPanel extends WebMarkupContainer implements IJQueryWid
 	public void onBeforeRender(JQueryBehavior behavior)
 	{
 		// noop
-	}
-
-	// Properties //
-
-	@Override
-	@SuppressWarnings("unchecked")
-	public IModel<List<FeedbackMessage>> getModel()
-	{
-		return (IModel<List<FeedbackMessage>>) this.getDefaultModel();
-	}
-
-	@Override
-	public MarkupContainer setModel(IModel<List<FeedbackMessage>> model)
-	{
-		return this.setDefaultModel(model);
-	}
-
-	@Override
-	public Component setModelObject(List<FeedbackMessage> object)
-	{
-		return this.setDefaultModelObject(object);
-	}
-
-	@Override
-	@SuppressWarnings("unchecked")
-	public List<FeedbackMessage> getModelObject()
-	{
-		return (List<FeedbackMessage>) this.getDefaultModelObject();
 	}
 
 	// IJQueryWidget //

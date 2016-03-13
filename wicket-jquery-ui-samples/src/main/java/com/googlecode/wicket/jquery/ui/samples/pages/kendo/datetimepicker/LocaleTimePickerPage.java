@@ -1,18 +1,19 @@
 package com.googlecode.wicket.jquery.ui.samples.pages.kendo.datetimepicker;
 
-import java.util.Calendar;
+import java.util.Date;
 import java.util.Locale;
 
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.markup.head.IHeaderResponse;
+import org.apache.wicket.markup.head.JavaScriptHeaderItem;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.model.Model;
 
-import com.googlecode.wicket.kendo.ui.KendoCultureHeaderItem;
 import com.googlecode.wicket.kendo.ui.form.button.AjaxButton;
 import com.googlecode.wicket.kendo.ui.form.button.Button;
 import com.googlecode.wicket.kendo.ui.form.datetime.TimePicker;
 import com.googlecode.wicket.kendo.ui.panel.KendoFeedbackPanel;
+import com.googlecode.wicket.kendo.ui.resource.KendoCultureResourceReference;
 
 public class LocaleTimePickerPage extends AbstractTimePickerPage
 {
@@ -20,7 +21,7 @@ public class LocaleTimePickerPage extends AbstractTimePickerPage
 
 	public LocaleTimePickerPage()
 	{
-		Form<Void> form = new Form<Void>("form");
+		Form<?> form = new Form<Void>("form");
 		this.add(form);
 
 		// FeedbackPanel //
@@ -28,10 +29,7 @@ public class LocaleTimePickerPage extends AbstractTimePickerPage
 		form.add(feedback);
 
 		// TimePicker //
-		Calendar calendar = Calendar.getInstance();
-		calendar.set(0, 0, 0, 14, 0); // 2:00 PM
-
-		final TimePicker timepicker = new TimePicker("timepicker", Model.of(calendar.getTime()), Locale.FRENCH);
+		final TimePicker timepicker = new TimePicker("timepicker", Model.of(new Date()), Locale.FRANCE);
 		form.add(timepicker);
 
 		// Buttons //
@@ -42,7 +40,7 @@ public class LocaleTimePickerPage extends AbstractTimePickerPage
 			@Override
 			public void onSubmit()
 			{
-				this.info(timepicker.getModelObjectAsString());
+				this.info("Time: " + timepicker.getModelObject());
 			}
 		});
 
@@ -53,7 +51,7 @@ public class LocaleTimePickerPage extends AbstractTimePickerPage
 			@Override
 			protected void onSubmit(AjaxRequestTarget target, Form<?> form)
 			{
-				this.info(timepicker.getModelObjectAsString());
+				this.info("Time: " + timepicker.getModelObject());
 				target.add(feedback);
 			}
 
@@ -73,8 +71,6 @@ public class LocaleTimePickerPage extends AbstractTimePickerPage
 	{
 		super.renderHead(response);
 
-		// response.render(new KendoCultureHeaderItem("fr")); // or fr-FR
-		// response.render(new KendoCultureHeaderItem(KendoCulture.FR)); // or KendoCulture.FR_FR
-		response.render(new KendoCultureHeaderItem(Locale.FRENCH));
+		response.render(JavaScriptHeaderItem.forReference(new KendoCultureResourceReference(Locale.FRANCE)));
 	}
 }

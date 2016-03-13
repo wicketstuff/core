@@ -1,8 +1,6 @@
 package com.googlecode.wicket.jquery.core;
 
-import org.apache.wicket.Component;
 import org.apache.wicket.IGenericComponent;
-import org.apache.wicket.MarkupContainer;
 import org.apache.wicket.model.IModel;
 
 /**
@@ -10,7 +8,8 @@ import org.apache.wicket.model.IModel;
  *
  * @param <T> the type of the model object
  */
-public abstract class JQueryGenericPanel<T> extends JQueryPanel implements IGenericComponent<T>
+
+public abstract class JQueryGenericPanel<T> extends JQueryPanel implements IGenericComponent<T, JQueryGenericPanel<T>>
 {
 	private static final long serialVersionUID = 1L;
 
@@ -56,33 +55,5 @@ public abstract class JQueryGenericPanel<T> extends JQueryPanel implements IGene
 	public JQueryGenericPanel(String id, IModel<?> model, Options options)
 	{
 		super(id, model, options);
-	}
-
-	// Properties //
-
-	@Override
-	@SuppressWarnings("unchecked")
-	public IModel<T> getModel()
-	{
-		return (IModel<T>) this.getDefaultModel();
-	}
-
-	@Override
-	public MarkupContainer setModel(IModel<T> model)
-	{
-		return this.setDefaultModel(model);
-	}
-
-	@Override
-	@SuppressWarnings("unchecked")
-	public T getModelObject()
-	{
-		return (T) this.getDefaultModelObject();
-	}
-
-	@Override
-	public Component setModelObject(T object)
-	{
-		return this.setDefaultModelObject(object);
 	}
 }
