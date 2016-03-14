@@ -31,7 +31,6 @@ import org.apache.wicket.markup.head.IHeaderResponse;
 import org.apache.wicket.markup.head.OnDomReadyHeaderItem;
 import org.apache.wicket.markup.html.form.AbstractTextComponent;
 import org.apache.wicket.markup.html.form.FormComponent;
-import org.apache.wicket.markup.html.form.HiddenField;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.request.IRequestParameters;
 import org.apache.wicket.request.Request;
@@ -52,7 +51,6 @@ import org.apache.wicket.util.string.Strings;
  */
 abstract class AbstractSelect2Choice<T, M> extends AbstractTextComponent<M> implements IResourceListener
 {
-
 	private static final long serialVersionUID = 1L;
 
 	private final Settings settings = new Settings();
@@ -105,20 +103,24 @@ abstract class AbstractSelect2Choice<T, M> extends AbstractTextComponent<M> impl
 	 *            markup id
 	 * @param model
 	 *            model for select
-	 *
-	 * @see HiddenField#HiddenField(String, IModel)
+	 * @param provider
+	 *            choice provider
 	 */
 	public AbstractSelect2Choice(String id, IModel<M> model, ChoiceProvider<T> provider)
 	{
 		super(id, model);
 		this.provider = provider;
-		add(new Select2ResourcesBehavior() {
+		add(new Select2ResourcesBehavior()
+		{
+			private static final long serialVersionUID = 1L;
 
 			@Override
-			public void renderHead(Component component, IHeaderResponse response) {
+			public void renderHead(Component component, IHeaderResponse response)
+			{
 				super.renderHead(component, response);
 				// render theme related resources if any
-				if(settings.getTheme() != null) {
+				if(settings.getTheme() != null)
+				{
 					settings.getTheme().renderHead(component, response);
 				}
 			}
@@ -236,7 +238,8 @@ abstract class AbstractSelect2Choice<T, M> extends AbstractTextComponent<M> impl
 			{
 				String raw = getRawInput();
 				M result = null;
-				if (raw != null) {
+				if (raw != null)
+				{
 					String[] values = raw.split(FormComponent.VALUE_SEPARATOR);
 					result = convertValue(values);
 				}
@@ -283,7 +286,7 @@ abstract class AbstractSelect2Choice<T, M> extends AbstractTextComponent<M> impl
 		getSettings().setFormatLoadMore(
 				"function() { return '" + getEscapedJsString("loadMore") + "';}");
 		getSettings().setFormatSearching(
-                "function() { return '" + getEscapedJsString("searching") + "';}");
+				"function() { return '" + getEscapedJsString("searching") + "';}");
 	}
 
 	@Override
@@ -386,7 +389,7 @@ abstract class AbstractSelect2Choice<T, M> extends AbstractTextComponent<M> impl
 
 		try 
 		{
-			out.flush();           
+			out.flush();
 		}
 		catch (IOException e) 
 		{
@@ -422,7 +425,8 @@ abstract class AbstractSelect2Choice<T, M> extends AbstractTextComponent<M> impl
 		super.onDetach();
 	}
 
-	private void addOption(T choice, final AppendingStringBuffer buffer) {
+	private void addOption(T choice, final AppendingStringBuffer buffer)
+	{
 		buffer.append("<option selected=\"selected\" value=\"")
 			.append(Strings.escapeMarkup(getProvider().getIdValue(choice))).append("\">")
 			.append(Strings.escapeMarkup(getProvider().getDisplayValue(choice))).append("</option>");
@@ -436,7 +440,8 @@ abstract class AbstractSelect2Choice<T, M> extends AbstractTextComponent<M> impl
 	 * @see org.apache.wicket.Component#onComponentTag(ComponentTag)
 	 */
 	@Override
-	protected void onComponentTag(ComponentTag tag) {
+	protected void onComponentTag(ComponentTag tag)
+	{
 		// Must be attached to an select tag
 		checkComponentTag(tag, "select");
 		// Default handling for component tag
@@ -461,13 +466,15 @@ abstract class AbstractSelect2Choice<T, M> extends AbstractTextComponent<M> impl
 		{
 			@SuppressWarnings("unchecked")
 			Collection<T> choices = (Collection<T>)currentValue;
-			for (T choice : choices) {
+			for (T choice : choices)
+			{
 				addOption(choice, buffer);
 			}
 		}
 		else
 		{
-			if (currentValue != null) {
+			if (currentValue != null)
+			{
 				@SuppressWarnings("unchecked")
 				T choice = (T)currentValue;
 				addOption(choice, buffer);
@@ -480,7 +487,8 @@ abstract class AbstractSelect2Choice<T, M> extends AbstractTextComponent<M> impl
 	 * Empty input is acceptable
 	 */
 	@Override
-	public boolean isInputNullable() {
+	public boolean isInputNullable()
+	{
 		return true;
 	}
 }
