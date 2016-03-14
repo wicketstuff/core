@@ -15,26 +15,31 @@ import org.apache.wicket.request.resource.ResourceReference;
  * @author Ernesto Reinaldo Barreiro (reirn70@gmail.com)
  *  
  */
-public class Select2BootstrapTheme implements  ISelect2Theme {
+public class Select2BootstrapTheme implements  ISelect2Theme
+{
+	private static final long serialVersionUID = 1L;
 
-    private boolean useBootstrapWebJar = false;
-    
-    private static final ResourceReference CSS = new CssResourceReference(Select2BootstrapTheme.class, "/res/bootstrap/select2-bootstrap.css");
+	private boolean useBootstrapWebJar = false;
 
-    
-    public Select2BootstrapTheme(boolean useBootstrapWebJar) {
-        this.useBootstrapWebJar = useBootstrapWebJar;
-    }
+	private static final ResourceReference CSS = new CssResourceReference(Select2BootstrapTheme.class, "/res/bootstrap/select2-bootstrap.css");
 
-    public void renderHead(final Component varComponent, final IHeaderResponse response) {
-        if(useBootstrapWebJar) {
-            response.render(CssHeaderItem.forReference(new WebjarsCssResourceReference("/bootstrap/current/css/bootstrap.css")));
-        }
-        response.render(CssHeaderItem.forReference(CSS));
-    }
+	public Select2BootstrapTheme(boolean useBootstrapWebJar)
+	{
+		this.useBootstrapWebJar = useBootstrapWebJar;
+	}
 
-    @Override
-    public String name() {
-        return "bootstrap";
-    }
+	public void renderHead(final Component varComponent, final IHeaderResponse response)
+	{
+		if (useBootstrapWebJar)
+		{
+			response.render(CssHeaderItem.forReference(new WebjarsCssResourceReference("/bootstrap/current/css/bootstrap.css")));
+		}
+		response.render(CssHeaderItem.forReference(CSS));
+	}
+
+	@Override
+	public String name()
+	{
+		return "bootstrap";
+	}
 }

@@ -453,14 +453,18 @@ public final class Settings implements Serializable
 
 	public Settings setTheme(final String theme)
 	{
-		this.theme = new ISelect2Theme() {
-            
+		this.theme = new ISelect2Theme()
+		{
+			private static final long serialVersionUID = 1L;
+
 			@Override
-			public void renderHead(Component varComponent, IHeaderResponse varResponse) {
+			public void renderHead(Component varComponent, IHeaderResponse varResponse)
+			{
 			}
 
 			@Override
-			public String name() {
+			public String name()
+			{
 				return theme;
 			}
 		};
@@ -468,7 +472,8 @@ public final class Settings implements Serializable
 	}
 
 
-	public Settings setTheme(ISelect2Theme theme) {
+	public Settings setTheme(ISelect2Theme theme)
+	{
 		this.theme = theme;
 		return this;
 	}

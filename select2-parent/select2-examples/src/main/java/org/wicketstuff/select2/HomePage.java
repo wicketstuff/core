@@ -32,7 +32,6 @@ import org.apache.wicket.model.PropertyModel;
  */
 public class HomePage extends WebPage
 {
-
 	private static final long serialVersionUID = 1L;
 
 	private static final int PAGE_SIZE = 10;
@@ -108,8 +107,8 @@ public class HomePage extends WebPage
 			}
 		};
 		final Label currentValue = new Label("ajaxcountriesns", new PropertyModel<Collection<String>>(ajaxcountriesns, "current"));
-        add(currentValue.setOutputMarkupId(true));
-        
+		add(currentValue.setOutputMarkupId(true));
+
 		countries.getSettings().setMinimumInputLength(2);
 		ajaxcountriesns.add(new AjaxFormSubmitBehavior("change") {
 			private static final long serialVersionUID = 1L;
@@ -138,39 +137,39 @@ public class HomePage extends WebPage
 		String tagNew = getString("tag.new");
 		tags.getSettings().setCreateTag(
 				"function (params) {\n" +
-				"    return {\n" +
-				"      id: params.term,\n" +
-				"      text: params.term,\n" +
-				"      newOption: true\n" +
-				"    };\n" +
+				"	return {\n" +
+				"		id: params.term,\n" +
+				"		text: params.term,\n" +
+				"		newOption: true\n" +
+				"	};\n" +
 				"}");
 		tags.getSettings().setTemplateResult(
 				"function (data) {\n" +
-				"    var result = $('<span></span>');\n" +
-				"    result.text(data.text);\n" +
-				"    if (data.newOption) {\n" +
-				"      result.append(' <em>" + tagNew + "</em>');\n" +
-				"    }\n" +
-				"    return result;\n" +
+				"	var result = $('<span></span>');\n" +
+				"	result.text(data.text);\n" +
+				"	if (data.newOption) {\n" +
+				"		result.append(' <em>" + tagNew + "</em>');\n" +
+				"	}\n" +
+				"	return result;\n" +
 				"}");
 		add(new Form<Void>("tagsForm").add(tags));
 
 		// stateless
-        Form<Void> stateless = new Form<>("stateless");
-        add(stateless);
+		Form<Void> stateless = new Form<>("stateless");
+		add(stateless);
 
-        final Select2MultiChoice<Country> statelessCountries = new Select2MultiChoice<Country>("statelessCountries")
-        {
-            private static final long serialVersionUID = 1L;
+		final Select2MultiChoice<Country> statelessCountries = new Select2MultiChoice<Country>("statelessCountries")
+		{
+			private static final long serialVersionUID = 1L;
 
-            @SuppressWarnings("unused")
-            public Collection<Country> getCurrent() {
-                return getCurrentValue();
-            }
-        };
-        statelessCountries.getSettings().setStateless(true);
-        statelessCountries.getSettings().setMountPath(WicketApplication.COUNTRIES_MOUNT_PATH);
-        stateless.add(statelessCountries);
+			@SuppressWarnings("unused")
+			public Collection<Country> getCurrent() {
+				return getCurrentValue();
+			}
+		};
+		statelessCountries.getSettings().setStateless(true);
+		statelessCountries.getSettings().setMountPath(WicketApplication.COUNTRIES_MOUNT_PATH);
+		stateless.add(statelessCountries);
 	}
 
 	/**
@@ -257,6 +256,8 @@ public class HomePage extends WebPage
 
 	public static class TagProvider extends StringTextChoiceProvider
 	{
+		private static final long serialVersionUID = 1L;
+
 		@Override
 		public void query(String term, int page, Response<String> response)
 		{
