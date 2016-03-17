@@ -27,8 +27,6 @@ import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import org.wicketstuff.pageserializer.fast2.Fast2WicketSerialException;
-import org.wicketstuff.pageserializer.fast2.Fast2WicketSerializer;
 import org.wicketstuff.pageserializer.fast2.pages.NotSerializablePage;
 import org.wicketstuff.pageserializer.fast2.pages.SamplePage;
 
@@ -66,7 +64,7 @@ public class Fast2SerializerTest
 		Assert.assertNotNull("The produced data should not be null!", data);
 
 		// data length can fluctuate based on the object field values
-		Assert.assertEquals("The produced data length is not correct!", 600, data.length);
+		Assert.assertEquals("The produced data length is not correct!", 618, data.length);
 
 		Object object = pageSerializer.deserialize(data);
 		Assert.assertTrue(
