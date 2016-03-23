@@ -3,8 +3,6 @@ package org.apache.wicket.portlet.request.mapper;
 import org.apache.wicket.Application;
 import org.apache.wicket.core.request.handler.PageProvider;
 import org.apache.wicket.core.request.handler.RenderPageRequestHandler;
-import org.apache.wicket.core.request.mapper.BookmarkableMapper;
-import org.apache.wicket.core.request.mapper.HomePageMapper;
 import org.apache.wicket.core.request.mapper.IPageSource;
 import org.apache.wicket.protocol.http.PageExpiredException;
 import org.apache.wicket.request.IRequestHandler;
@@ -18,8 +16,8 @@ import org.apache.wicket.util.lang.Args;
 
 /**
  * <p>
- * Performs the processHybrid and encodePageParameters tasks for the {@link BookmarkableMapper}
- * and {@link HomePageMapper} instances which are encapsulated in {@link PortletSystemMapper}
+ * Performs the processHybrid and encodePageParameters tasks for the {@link org.apache.wicket.core.request.mapper.BookmarkableMapper}
+ * and {@link org.apache.wicket.core.request.mapper.HomePageMapper} instances which are encapsulated in {@link PortletSystemMapper}
  * </p>
  * <p>
  * See also {@link PortletSystemMapper#newBookmarkableMapper()} and
