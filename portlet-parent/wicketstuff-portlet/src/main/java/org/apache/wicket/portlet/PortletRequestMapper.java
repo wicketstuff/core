@@ -30,18 +30,24 @@ import org.apache.wicket.IResourceListener;
 import org.apache.wicket.RequestListenerInterface;
 import org.apache.wicket.SystemMapper;
 import org.apache.wicket.behavior.IBehaviorListener;
-import org.apache.wicket.request.IRequestHandler;
-import org.apache.wicket.request.Request;
-import org.apache.wicket.request.Url;
-import org.apache.wicket.request.cycle.RequestCycle;
+import org.apache.wicket.core.request.handler.BookmarkableListenerInterfaceRequestHandler;
 import org.apache.wicket.core.request.handler.BookmarkablePageRequestHandler;
 import org.apache.wicket.core.request.handler.ListenerInterfaceRequestHandler;
 import org.apache.wicket.core.request.handler.RenderPageRequestHandler;
-import org.apache.wicket.request.handler.resource.ResourceReferenceRequestHandler;
 import org.apache.wicket.core.request.mapper.AbstractComponentMapper;
+import org.apache.wicket.markup.html.WebPage;
+import org.apache.wicket.portlet.request.mapper.PortletSystemMapper;
+import org.apache.wicket.request.IRequestHandler;
+import org.apache.wicket.request.IRequestMapper;
+import org.apache.wicket.request.Request;
+import org.apache.wicket.request.Url;
+import org.apache.wicket.request.component.IRequestablePage;
+import org.apache.wicket.request.cycle.RequestCycle;
+import org.apache.wicket.request.handler.resource.ResourceReferenceRequestHandler;
 import org.apache.wicket.request.resource.IResource;
 import org.apache.wicket.request.resource.PackageResource;
 import org.apache.wicket.request.resource.SharedResourceReference;
+import org.apache.wicket.util.IProvider;
 import org.apache.wicket.util.crypt.Base64;
 
 /**
@@ -52,12 +58,13 @@ import org.apache.wicket.util.crypt.Base64;
  * 1.4.
  * 
  * @author Peter Pastrnak
+ * @author Konstantinos Karavitis
  */
 public class PortletRequestMapper extends AbstractComponentMapper {
 	private SystemMapper systemMapper;
 
-	public PortletRequestMapper(Application application) {
-		this.systemMapper = new SystemMapper(application);
+	public PortletRequestMapper(final Application application) {
+		systemMapper = new PortletSystemMapper(application);
 	}
 
 	@Override
@@ -73,7 +80,7 @@ public class PortletRequestMapper extends AbstractComponentMapper {
 	@Override
 	public Url mapHandler(IRequestHandler requestHandler) {
 		Url url = systemMapper.mapHandler(requestHandler);
-		if (ThreadPortletContext.getPortletRequest() == null) {
+		if (ThreadPortletContext.getPortletRequest() == null || url == null) {
 			return url;
 		}
 
@@ -99,22 +106,23 @@ public class PortletRequestMapper extends AbstractComponentMapper {
 		else if (requestHandler instanceof BookmarkablePageRequestHandler) {
 			url = encodeRenderUrl(url, true);
 		}
-		else if (requestHandler instanceof ListenerInterfaceRequestHandler) {
-			ListenerInterfaceRequestHandler listenerInterfaceRequestHandler = (ListenerInterfaceRequestHandler) requestHandler;
+		//added mapping for request handlers with type of BookmarkableListenerInterfaceRequestHandler. The handling is the same as for handlers of type ListenerInterfaceRequestHandler 
+		else if (requestHandler instanceof ListenerInterfaceRequestHandler || requestHandler instanceof BookmarkableListenerInterfaceRequestHandler) { 
+			RequestListenerInterface listenerInterface;
 
-			RequestListenerInterface listenerInterface = listenerInterfaceRequestHandler.getListenerInterface();
+			if (requestHandler instanceof ListenerInterfaceRequestHandler) {
+				listenerInterface = ((ListenerInterfaceRequestHandler) requestHandler).getListenerInterface();
+			}
+			else {
+				listenerInterface = ((BookmarkableListenerInterfaceRequestHandler)requestHandler).getListenerInterface();
+			}
+
 			Class<?> listenerClass = listenerInterface.getMethod().getDeclaringClass();
-
 			if ((IResourceListener.class.isAssignableFrom(listenerClass)) || (IBehaviorListener.class.isAssignableFrom(listenerClass))) {
 				url = encodeResourceUrl(url);
 			}
 			else {
-				if (ThreadPortletContext.isAjax()) {
-					url = encodeActionUrl(url, true);
-				}
-				else {
-					url = encodeActionUrl(url, false);
-				}
+				url = encodeActionUrl(url, ThreadPortletContext.isAjax());
 			}
 		}
 

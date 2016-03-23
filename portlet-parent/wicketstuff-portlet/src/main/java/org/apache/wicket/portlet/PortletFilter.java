@@ -34,6 +34,9 @@ import org.apache.wicket.protocol.http.WebApplication;
 import org.apache.wicket.protocol.http.WicketFilter;
 import org.apache.wicket.settings.RequestCycleSettings.RenderStrategy;
 import org.apache.wicket.util.crypt.Base64;
+import org.apache.wicket.IPageRendererProvider;
+import org.apache.wicket.core.request.handler.RenderPageRequestHandler;
+import org.apache.wicket.request.handler.render.PageRenderer;
 
 /**
  * This class subclasses the original WicketFilter to add the necessary porlet
@@ -42,6 +45,7 @@ import org.apache.wicket.util.crypt.Base64;
  * portlet response objects by an http servlet request / response wrapper.
  * 
  * @author Peter Pastrnak
+ * @author Konstantinos Karavitis
  */
 public class PortletFilter extends WicketFilter {
 	public static final String SHARED_RESOURCE_URL_PORTLET_WINDOW_ID_PREFIX = "/ps:";
@@ -82,6 +86,13 @@ public class PortletFilter extends WicketFilter {
 		this.application.getRequestCycleSettings().addResponseFilter(new PortletInvalidMarkupFilter());
 		this.application.getComponentInitializationListeners().add(new MarkupIdPrepender());
 		this.application.setRootRequestMapper(new PortletRequestMapper(application));
+		//Application must use the portlet specific page renderer provider.
+		this.application.setPageRendererProvider(new IPageRendererProvider() {
+			@Override
+			public PageRenderer get(RenderPageRequestHandler handler) {
+				return new PortletPageRenderer(handler);
+			}
+		});
 	}
 
 	@Override
