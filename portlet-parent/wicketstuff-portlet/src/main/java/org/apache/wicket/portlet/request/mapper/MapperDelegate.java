@@ -16,7 +16,8 @@ import org.apache.wicket.request.mapper.parameter.PageParameters;
 import org.apache.wicket.util.lang.Args;
 
 /**
- * Handles the processHybrid and encodePageParameters requests of {@link BookmarkableMapper} and {@link HomePageMapper} 
+ * Handles the processHybrid and encodePageParameters requests of {@link BookmarkableMapper} and
+ * {@link HomePageMapper}
  */
 public class MapperDelegate
 {
@@ -38,23 +39,24 @@ public class MapperDelegate
 	{
 		PageProvider provider = new PageProvider(pageInfo.getPageId(), pageClass, pageParameters,
 			renderCount);
-		provider.setPageSource((IPageSource)Application.get().getMapperContext());
-		if (provider.isNewPageInstance() &&
-			!WebApplication.get().getPageSettings().getRecreateBookmarkablePagesAfterExpiry())
+		Application application = Application.get();
+		provider.setPageSource((IPageSource)application.getMapperContext());
+		if (provider.isNewPageInstance()
+			&& !application.getPageSettings().getRecreateBookmarkablePagesAfterExpiry())
 		{
-			throw new PageExpiredException(String.format("Bookmarkable page id '%d' has expired.",
-				pageInfo.getPageId()));
+			throw new PageExpiredException(String.format("Bookmarkable page id '%d' class '%s' has expired.",
+				pageInfo.getPageId(), pageClass.getName()));
 		}
 		else
 		{
 			// The https://issues.apache.org/jira/browse/WICKET-5734 fix removed because
-			// at every render phase which follows the action phase of a wicket portlet,  
-			// a fresh page instance was created through the creation of a new page provider. 
-			// Because of the above, the portlet after an action was rendered 
-			// like it was rendered for the first time. 
-			// In other words the result of the action phase (e.g a validation error) 
-			// was not be transfered to render phase. 
-			 
+			// at every render phase which follows the action phase of a wicket portlet,
+			// a fresh page instance was created through the creation of a new page provider.
+			// Because of the above, the portlet after an action was rendered
+			// like it was rendered for the first time.
+			// In other words the result of the action phase (e.g a validation error)
+			// was not be transfered to render phase.
+
 			return new RenderPageRequestHandler(provider);
 		}
 	}
@@ -91,7 +93,7 @@ public class MapperDelegate
 			}
 			for (QueryParameter p : parametersUrl.getQueryParameters())
 			{
-				//if there is no parameter with the same name add it.
+				// if there is no parameter with the same name add it.
 				if (!url.getQueryParameters().contains(p))
 				{
 					url.getQueryParameters().add(p);
