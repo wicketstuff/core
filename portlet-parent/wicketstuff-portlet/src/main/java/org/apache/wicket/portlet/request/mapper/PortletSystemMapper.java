@@ -14,11 +14,10 @@ import org.apache.wicket.request.mapper.parameter.PageParameters;
 import org.apache.wicket.util.IProvider;
 
 /**
- * see {@link org.apache.wicket.SystemMapper}.
- * 
- * PortletSystemMapper encapsulates the {@link HomePageMapper} instead of the
- * {@link org.apache.wicket.core.request.mapper.HomePageMapper} and the {@link BookmarkableMapper}
- * instead of the {@link org.apache.wicket.core.request.mapper.BookmarkableMapper}
+ * <p>
+ * PortletSystemMapper modifies the behavior of its encapsulated {@link BookmarkableMapper} and
+ * {@link HomePageMapper} in order to make wicket functional in portlet environment.
+ * </p>
  * 
  * @author Konstantinos Karavitis
  */
@@ -32,7 +31,6 @@ public class PortletSystemMapper extends SystemMapper
 	 */
 	public PortletSystemMapper(Application application)
 	{
-		// TODO Implement this method.
 		super(application);
 	}
 

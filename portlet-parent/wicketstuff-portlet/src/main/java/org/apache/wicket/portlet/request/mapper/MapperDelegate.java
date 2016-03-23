@@ -3,9 +3,10 @@ package org.apache.wicket.portlet.request.mapper;
 import org.apache.wicket.Application;
 import org.apache.wicket.core.request.handler.PageProvider;
 import org.apache.wicket.core.request.handler.RenderPageRequestHandler;
+import org.apache.wicket.core.request.mapper.BookmarkableMapper;
+import org.apache.wicket.core.request.mapper.HomePageMapper;
 import org.apache.wicket.core.request.mapper.IPageSource;
 import org.apache.wicket.protocol.http.PageExpiredException;
-import org.apache.wicket.protocol.http.WebApplication;
 import org.apache.wicket.request.IRequestHandler;
 import org.apache.wicket.request.Url;
 import org.apache.wicket.request.Url.QueryParameter;
@@ -16,8 +17,16 @@ import org.apache.wicket.request.mapper.parameter.PageParameters;
 import org.apache.wicket.util.lang.Args;
 
 /**
- * Handles the processHybrid and encodePageParameters requests of {@link BookmarkableMapper} and
- * {@link HomePageMapper}
+ * <p>
+ * Performs the processHybrid and encodePageParameters tasks for the {@link BookmarkableMapper}
+ * and {@link HomePageMapper} instances which are encapsulated in {@link PortletSystemMapper}
+ * </p>
+ * <p>
+ * See also {@link PortletSystemMapper#newBookmarkableMapper()} and
+ * {@link PortletSystemMapper#newHomePageMapper(org.apache.wicket.util.IProvider)}
+ * </p>
+ * 
+ * @author Konstantinos Karavitis
  */
 public class MapperDelegate
 {
@@ -41,11 +50,12 @@ public class MapperDelegate
 			renderCount);
 		Application application = Application.get();
 		provider.setPageSource((IPageSource)application.getMapperContext());
-		if (provider.isNewPageInstance()
-			&& !application.getPageSettings().getRecreateBookmarkablePagesAfterExpiry())
+		if (provider.isNewPageInstance() &&
+			!application.getPageSettings().getRecreateBookmarkablePagesAfterExpiry())
 		{
-			throw new PageExpiredException(String.format("Bookmarkable page id '%d' class '%s' has expired.",
-				pageInfo.getPageId(), pageClass.getName()));
+			throw new PageExpiredException(String.format(
+				"Bookmarkable page id '%d' class '%s' has expired.", pageInfo.getPageId(),
+				pageClass.getName()));
 		}
 		else
 		{
@@ -93,7 +103,7 @@ public class MapperDelegate
 			}
 			for (QueryParameter p : parametersUrl.getQueryParameters())
 			{
-				// if there is no parameter with the same name add it.
+				// avoid duplicate parameter names.
 				if (!url.getQueryParameters().contains(p))
 				{
 					url.getQueryParameters().add(p);
@@ -103,5 +113,4 @@ public class MapperDelegate
 
 		return url;
 	}
-
 }
