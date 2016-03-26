@@ -42,15 +42,15 @@ public class HttpUtils
 	 */
 	public static String readStringFromRequest(WebRequest request) throws IOException
 	{
-		HttpServletRequest httpRequest = (HttpServletRequest)request.getContainerRequest();
-		BufferedReader bufReader = httpRequest.getReader();
-		StringBuilder builder = new StringBuilder();
-		String stringLine;
+        HttpServletRequest httpRequest = (HttpServletRequest)request.getContainerRequest();
+        BufferedReader bufReader = httpRequest.getReader();
+        StringBuilder builder = new StringBuilder();
+        int character = 0;
 
-		while ((stringLine = bufReader.readLine()) != null)
-			builder.append(stringLine);
+        while ((character = bufReader.read()) != -1)
+            builder.append((char) character);
 
-		return builder.toString();
+        return builder.toString();
 	}
 
 	/**
