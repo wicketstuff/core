@@ -16,11 +16,11 @@
  */
 package org.wicketstuff.rest.utils.http;
 
-import java.io.BufferedReader;
 import java.io.IOException;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.commons.io.IOUtils;
 import org.apache.wicket.request.Request;
 import org.apache.wicket.request.http.WebRequest;
 
@@ -43,14 +43,7 @@ public class HttpUtils
 	public static String readStringFromRequest(WebRequest request) throws IOException
 	{
 		HttpServletRequest httpRequest = (HttpServletRequest)request.getContainerRequest();
-		BufferedReader bufReader = httpRequest.getReader();
-		StringBuilder builder = new StringBuilder();
-		String stringLine;
-
-		while ((stringLine = bufReader.readLine()) != null)
-			builder.append(stringLine);
-
-		return builder.toString();
+		return IOUtils.toString(httpRequest.getReader());
 	}
 
 	/**
