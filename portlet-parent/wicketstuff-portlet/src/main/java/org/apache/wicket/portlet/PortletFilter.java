@@ -29,14 +29,18 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.apache.wicket.IPageRendererProvider;
+import org.apache.wicket.IRequestCycleProvider;
+import org.apache.wicket.core.request.handler.RenderPageRequestHandler;
 import org.apache.wicket.protocol.http.IWebApplicationFactory;
 import org.apache.wicket.protocol.http.WebApplication;
 import org.apache.wicket.protocol.http.WicketFilter;
+import org.apache.wicket.request.UrlRenderer;
+import org.apache.wicket.request.cycle.RequestCycle;
+import org.apache.wicket.request.cycle.RequestCycleContext;
+import org.apache.wicket.request.handler.render.PageRenderer;
 import org.apache.wicket.settings.RequestCycleSettings.RenderStrategy;
 import org.apache.wicket.util.crypt.Base64;
-import org.apache.wicket.IPageRendererProvider;
-import org.apache.wicket.core.request.handler.RenderPageRequestHandler;
-import org.apache.wicket.request.handler.render.PageRenderer;
 
 /**
  * This class subclasses the original WicketFilter to add the necessary porlet
@@ -91,6 +95,18 @@ public class PortletFilter extends WicketFilter {
 			@Override
 			public PageRenderer get(RenderPageRequestHandler handler) {
 				return new PortletPageRenderer(handler);
+			}
+		});
+		// fix for https://github.com/wicketstuff/core/issues/478 issue
+		this.application.setRequestCycleProvider(new IRequestCycleProvider() {
+			@Override
+			public RequestCycle get(RequestCycleContext context) {
+				return new RequestCycle(context) {
+					@Override
+					protected UrlRenderer newUrlRenderer() {
+						return new PortletUrlRenderer(getRequest());
+					}
+				};
 			}
 		});
 	}
