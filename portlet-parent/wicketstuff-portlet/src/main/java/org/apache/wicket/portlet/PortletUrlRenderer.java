@@ -1,7 +1,5 @@
 package org.apache.wicket.portlet;
 
-import javax.portlet.PortletRequest;
-
 import org.apache.wicket.request.Request;
 import org.apache.wicket.request.UrlRenderer;
 import org.apache.wicket.util.lang.Args;
