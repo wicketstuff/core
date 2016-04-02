@@ -17,6 +17,7 @@
 package com.googlecode.wicket.jquery.core.template;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.wicket.util.lang.Generics;
 import org.apache.wicket.util.template.PackageTextTemplate;
@@ -46,7 +47,9 @@ public abstract class JQueryTemplate implements IJQueryTemplate
 	public static class JQueryPackageTextTemplate extends JQueryTemplate
 	{
 		private static final long serialVersionUID = 1L;
+		
 		private final PackageTextTemplate template;
+		private Map<String, ?> variables = null;
 
 		public JQueryPackageTextTemplate(Class<?> clazz, String fileName)
 		{
@@ -63,10 +66,28 @@ public abstract class JQueryTemplate implements IJQueryTemplate
 			this.template = new PackageTextTemplate(clazz, fileName, contentType, encoding);
 		}
 
+		public JQueryPackageTextTemplate(Class<?> clazz, String fileName, Map<String, ?> variables)
+		{
+			this.template = new PackageTextTemplate(clazz, fileName);
+			this.variables = variables;
+		}
+
+		public JQueryPackageTextTemplate(Class<?> clazz, String fileName, String contentType, Map<String, ?> variables)
+		{
+			this.template = new PackageTextTemplate(clazz, fileName, contentType);
+			this.variables = variables;
+		}
+
+		public JQueryPackageTextTemplate(Class<?> clazz, String fileName, String contentType, String encoding, Map<String, ?> variables)
+		{
+			this.template = new PackageTextTemplate(clazz, fileName, contentType, encoding);
+			this.variables = variables;
+		}
+
 		@Override
 		public String getText()
 		{
-			return this.template.asString();
+			return this.template.asString(this.variables);
 		}
 	}
 }

@@ -87,7 +87,7 @@ public class KendoDateTimeUtils
 	}
 
 	/**
-	 * Converts a {@link Date} to a compatible kendo-ui date-string format (with timezone)
+	 * Converts a {@link LocalDate} to a compatible kendo-ui date-string format (with timezone)
 	 *
 	 * @param date the date
 	 * @return the compatible kendo ui date string
@@ -98,7 +98,7 @@ public class KendoDateTimeUtils
 	}
 
 	/**
-	 * Converts a {@link Date} to a compatible kendo-ui date-string format (with timezone)
+	 * Converts a {@link LocalDateTime} to a compatible kendo-ui date-string format (with timezone)
 	 *
 	 * @param date the date
 	 * @return the compatible kendo ui date string
