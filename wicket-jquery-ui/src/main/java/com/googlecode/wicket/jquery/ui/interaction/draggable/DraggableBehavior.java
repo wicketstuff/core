@@ -230,8 +230,8 @@ public class DraggableBehavior extends JQueryUIBehavior implements IJQueryAjaxAw
 		{
 			return new CallbackParameter[] { CallbackParameter.context("event"), // lf
 					CallbackParameter.context("ui"), // lf
-					CallbackParameter.resolved("top", "ui.position.top"), // lf
-					CallbackParameter.resolved("left", "ui.position.left"), // lf
+					CallbackParameter.resolved("top", "ui.position.top | 0"), // cast to int, no rounding
+					CallbackParameter.resolved("left", "ui.position.left | 0"), // cast to int, no rounding
 					CallbackParameter.resolved("offsetTop", "ui.offset.top | 0"), // cast to int, no rounding
 					CallbackParameter.resolved("offsetLeft", "ui.offset.left | 0") // cast to int, no rounding
 			};
@@ -261,8 +261,8 @@ public class DraggableBehavior extends JQueryUIBehavior implements IJQueryAjaxAw
 		{
 			return new CallbackParameter[] { CallbackParameter.context("event"), // lf
 					CallbackParameter.context("ui"), // lf
-					CallbackParameter.resolved("top", "ui.position.top"), // lf
-					CallbackParameter.resolved("left", "ui.position.left"), // lf
+					CallbackParameter.resolved("top", "ui.position.top | 0"), // cast to int, no rounding
+					CallbackParameter.resolved("left", "ui.position.left | 0"), // cast to int, no rounding
 					CallbackParameter.resolved("offsetTop", "ui.offset.top | 0"), // cast to int, no rounding
 					CallbackParameter.resolved("offsetLeft", "ui.offset.left | 0") // cast to int, no rounding
 			};
