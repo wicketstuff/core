@@ -26,7 +26,7 @@ import org.apache.ignite.IgniteCache;
 import org.apache.ignite.IgniteException;
 
 /**
- * An IDataStore that saves the pages' bytes in Apache Ignite
+ * An IDataStore implementation that saves serialized pages in Apache Ignite
  *
  * @author Alexey Prudnikov
  */
@@ -94,7 +94,7 @@ public class IgniteDataStore implements IDataStore
 	{
 		IgniteCache<Integer, byte[]> cache = getIgniteCache(sessionId);
 		if (cache != null)
-        {
+		{
 			cache.destroy();
 			if (LOGGER.isDebugEnabled())
 			{
@@ -123,13 +123,13 @@ public class IgniteDataStore implements IDataStore
 		if (ignite != null)
 		{
 			try
-            {
-                ignite.close();
-            }
-            catch (IgniteException e)
-            {
-                LOGGER.error("Can't close ignite instance", e);
-            }
+			{
+				ignite.close();
+			}
+			catch (IgniteException e)
+			{
+				LOGGER.error("Can't close ignite instance", e);
+			}
 		}
 	}
 

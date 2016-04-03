@@ -23,12 +23,14 @@ import org.wicketstuff.datastores.common.BaseDataStoreTest;
 public class IgniteDataStoreTest extends BaseDataStoreTest {
 	
 	@Override
-	protected IDataStore createDataStore() throws Exception {
+	protected IDataStore createDataStore() throws Exception
+	{
 		return new IgniteDataStore(Ignition.start());
 	}
 
 	@Override
-	protected boolean isEnabled() {
+	protected boolean isEnabled()
+	{
 		// disable to make the build faster
 		return false;
 	}

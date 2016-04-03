@@ -9,7 +9,8 @@ import org.apache.ignite.Ignition;
 public class IgniteDataStoreApplication extends BaseDataStoreApplication {
 	
 	@Override
-	protected IDataStore createDataStore() {
+	protected IDataStore createDataStore()
+	{
 		return new IgniteDataStore(Ignition.start());
 	}
 }
