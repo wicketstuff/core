@@ -20,6 +20,7 @@
 		<module>datastore-common</module>
 		<module>datastore-cassandra</module>
 		<module>datastore-hazelcast</module>
+		<module>datastore-ignite</module>
 		<module>datastore-memcached</module>
 		<module>datastore-redis</module>
 	</modules>
