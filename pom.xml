@@ -275,6 +275,7 @@
 	</prerequisites>
 
 	<modules>
+		<module>offline-mode-parent</module>
 		<module>nashorn-parent</module>
 		<module>lightbox2-parent</module>
 		<module>jqplot-parent</module>
