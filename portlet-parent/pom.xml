@@ -25,7 +25,6 @@
 
 	<modules>
 		<module>wicketstuff-portlet</module>
-		<module>wicketstuff-portlet-examples</module>
 	</modules>
 
 	<developers>

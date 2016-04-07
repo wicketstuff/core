@@ -1,6 +1,0 @@
-Manifest-Version: 1.0
-Class-Path: wicketstuff-portlet.jar wicket-core-7.3.0-SNAPSHOT.jar com
- mons-collections4-4.0.jar wicket-request-7.3.0-SNAPSHOT.jar wicket-ut
- il-7.3.0-SNAPSHOT.jar commons-fileupload-1.3.1.jar commons-io-2.4.jar
-  slf4j-api-1.7.12.jar wicket-examples-7.3.0-SNAPSHOT.war
-
