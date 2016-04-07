@@ -16,16 +16,20 @@
  */
 package com.googlecode.wicket.kendo.ui.widget.treeview;
 
+import java.util.Arrays;
+import java.util.List;
+
+import org.apache.wicket.Component;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.core.request.handler.IPartialPageRequestHandler;
-import org.apache.wicket.markup.head.IHeaderResponse;
-import org.apache.wicket.markup.head.OnDomReadyHeaderItem;
 import org.apache.wicket.util.lang.Args;
 
+import com.googlecode.wicket.jquery.core.JQueryAbstractBehavior;
 import com.googlecode.wicket.jquery.core.JQueryBehavior;
 import com.googlecode.wicket.jquery.core.JQueryContainer;
 import com.googlecode.wicket.jquery.core.Options;
 import com.googlecode.wicket.jquery.core.template.IJQueryTemplate;
+import com.googlecode.wicket.jquery.core.utils.JQueryUtils;
 import com.googlecode.wicket.kendo.ui.KendoTemplateBehavior;
 import com.googlecode.wicket.kendo.ui.KendoUIBehavior;
 import com.googlecode.wicket.kendo.ui.scheduler.SchedulerEventFactory;
@@ -85,15 +89,15 @@ public class AjaxTreeView extends JQueryContainer implements ITreeViewListener
 	}
 
 	/**
-	 * Expand the {@link AjaxTreeView} to the specified path
-	 * 
-	 * @param response the {@link IHeaderResponse}
-	 * @param path the path to the node, as an id-array, ie: [1, 2, 3]
-	 * @see AjaxTreeView#renderHead(org.apache.wicket.Component, IHeaderResponse)
+	 * Refreshes the widget by reading from the datasource
+	 *
+	 * @param handler the {@link IPartialPageRequestHandler}
 	 */
-	public void expandPath(IHeaderResponse response, String path)
+	public void refresh(IPartialPageRequestHandler handler)
 	{
-		response.render(OnDomReadyHeaderItem.forScript(String.format("%s.expandPath(%s)", this.widget(), path)));
+		handler.appendJavaScript(String.format("var $w = %s; if ($w) { $w.dataSource.read(); }", this.widget()));
+
+		this.onRefresh(handler);
 	}
 
 	/**
@@ -102,22 +106,25 @@ public class AjaxTreeView extends JQueryContainer implements ITreeViewListener
 	 * @param handler the {@link IPartialPageRequestHandler}
 	 * @param path the path to the node, as an id-array, ie: [1, 2, 3]
 	 */
-
 	public void expandPath(IPartialPageRequestHandler handler, String path)
 	{
-		handler.appendJavaScript(String.format("%s.expandPath(%s)", this.widget(), path));
+		String statement = String.format("%s.expandPath(%s);", this.widget(), path);
+		handler.appendJavaScript(JQueryUtils.trycatch(statement));
 	}
 
 	/**
-	 * Refreshes the widget by reading from the datasource
-	 *
-	 * @param target the {@link AjaxRequestTarget}
+	 * Expand the {@link AjaxTreeView} to all specified paths
+	 * 
+	 * @param handler the {@link IPartialPageRequestHandler}
+	 * @param paths the path list to the node, as id-arrays
+	 * @see #expandPath(IPartialPageRequestHandler, String)
 	 */
-	public void refresh(AjaxRequestTarget target)
+	public void expandPaths(IPartialPageRequestHandler handler, List<String> paths)
 	{
-		target.appendJavaScript(String.format("var $w = %s; if ($w) { $w.dataSource.read(); $w.refresh(); }", this.widget()));
-		// TODO verify if #refresh() is needed
-		this.onRefresh(target);
+		for (String path : paths)
+		{
+			this.expandPath(handler, path);
+		}
 	}
 
 	// Properties //
@@ -201,11 +208,11 @@ public class AjaxTreeView extends JQueryContainer implements ITreeViewListener
 	}
 
 	/**
-	 * Triggered when {@link #refresh(AjaxRequestTarget)} has been called
+	 * Triggered when {@link #refresh(IPartialPageRequestHandler)} has been called
 	 * 
-	 * @param target the {@link AjaxRequestTarget}
+	 * @param handler the {@link IPartialPageRequestHandler}
 	 */
-	protected void onRefresh(AjaxRequestTarget target)
+	protected void onRefresh(IPartialPageRequestHandler handler)
 	{
 		// noop
 	}
@@ -283,5 +290,71 @@ public class AjaxTreeView extends JQueryContainer implements ITreeViewListener
 	protected TreeViewModelBehavior newTreeViewModelBehavior(final TreeViewModel model, final TreeNodeFactory factory)
 	{
 		return new TreeViewModelBehavior(model, factory);
+	}
+
+	// Classes //
+
+	/**
+	 * Provides a databound behavior that extends node(s)
+	 */
+	public static class ExpandBehavior extends JQueryAbstractBehavior
+	{
+		private static final long serialVersionUID = 1L;
+
+		private String widget;
+		private final List<String> paths;
+
+		/**
+		 * Constructor
+		 * 
+		 * @param path the path to the node, as an id-array, ie: [1, 2, 3]
+		 */
+		public ExpandBehavior(String path)
+		{
+			this(Arrays.asList(path));
+		}
+
+		/**
+		 * Constructor
+		 * 
+		 * @param paths the {@code List} of paths to the node, as an id-array list
+		 */
+		public ExpandBehavior(List<String> paths)
+		{
+			this.paths = paths;
+		}
+
+		// Methods //
+
+		@Override
+		public void bind(Component component)
+		{
+			super.bind(component);
+
+			this.widget = KendoUIBehavior.widget(component, AjaxTreeViewBehavior.METHOD);
+		}
+
+		/**
+		 * Gets the callback/handler to be triggered on 'dataBound' event
+		 * 
+		 * @return statement like function(e) {...}
+		 */
+		protected String getDataBoundCallback()
+		{
+			String statement = "";
+
+			for (String path : this.paths)
+			{
+				statement += String.format("this.expandPath(%s);", path);
+			}
+
+			return statement;
+		}
+
+		@Override
+		protected String $()
+		{
+			return String.format("var $w = %s; $w.bind('dataBound', function(e) { %s }); ", this.widget, this.getDataBoundCallback());
+		}
 	}
 }

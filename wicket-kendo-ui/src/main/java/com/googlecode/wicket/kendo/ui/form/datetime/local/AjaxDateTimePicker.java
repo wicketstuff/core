@@ -147,7 +147,6 @@ public class AjaxDateTimePicker extends DateTimePicker implements IValueChangedL
 		super(id, date, locale, datePattern, timePattern);
 	}
 
-
 	// Methods //
 
 	/**
@@ -253,7 +252,7 @@ public class AjaxDateTimePicker extends DateTimePicker implements IValueChangedL
 			}
 		};
 	}
-	
+
 	@Override
 	protected DatePicker newDatePicker(String id, IModel<LocalDate> model, Locale locale, String datePattern, Options options)
 	{
