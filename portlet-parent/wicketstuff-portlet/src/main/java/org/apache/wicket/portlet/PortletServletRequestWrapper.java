@@ -151,14 +151,6 @@ public class PortletServletRequestWrapper extends HttpServletRequestWrapper {
 		// if request is an include
 		if ((contextPath = (String) request.getAttribute("javax.servlet.include.context_path")) != null) {
 			requestURI = (String) request.getAttribute("javax.servlet.include.request_uri");
-			
-			for (String pattern : new String[]{"wicket/", "wicket/bookmarkable/"})
-			{
-				if (requestURI.endsWith(pattern)) {
-					requestURI = requestURI.substring(0, requestURI.length() - pattern.length());
-				}
-			}
-			
 			String wicketQueryString = (String) request.getAttribute("javax.servlet.include.query_string");
 			queryString = mergeQueryString(request.getParameterMap(), request.getQueryString(), wicketQueryString);
 		}

@@ -652,10 +652,10 @@ public class WicketPortlet extends GenericPortlet {
 		if ((url != null) && (requestUrl != null) && (!ABSOLUTE_URI_PATTERN.matcher(url).matches())) {
 			try {
 				if (!requestUrl.startsWith("http")) {
-					return new URL(new URL("http:" + requestUrl), url).toString().substring(5);
+					return new URL(new URL("http:" + wicketFilterPath), url).toString().substring(5);
 				}
 				else {
-					return new URL(new URL(requestUrl), url).getPath();
+					return new URL(new URL(wicketFilterPath), url).getPath();
 				}
 			}
 			catch (Exception e) {
