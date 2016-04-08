@@ -2,56 +2,8 @@
 <portlet-app xmlns="http://java.sun.com/xml/ns/portlet/portlet-app_2_0.xsd"
 	version="2.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://java.sun.com/xml/ns/portlet/portlet-app_2_0.xsd http://java.sun.com/xml/ns/portlet/portlet-app_2_0.xsd"
-	id="gr.interamerican.wicket7bridge">
-	
-	<portlet>
-		<portlet-name>wicket7portlet</portlet-name>
-		<display-name>WICKET 7 PORTLET DEMO</display-name>
-		<portlet-class>org.apache.wicket.portlet.WicketPortlet</portlet-class>
-		<init-param>
-			<name>wicketFilterPath</name>
-			<value>/wicket7portlet</value>
-		</init-param>
-		<init-param>
-			<name>check-auth-token</name>
-			<value>false</value>
-		</init-param>
-		<expiration-cache>0</expiration-cache>
-		<supports>
-			<mime-type>text/html</mime-type>
-			<portlet-mode>VIEW</portlet-mode>
-			<portlet-mode>EDIT</portlet-mode>
-		</supports>
-		<supports>
-			<mime-type>text/xml</mime-type>
-			<portlet-mode>VIEW</portlet-mode>
-			<portlet-mode>EDIT</portlet-mode>
-		</supports>
-		<supports>
-			<mime-type>text/css</mime-type>
-			<portlet-mode>VIEW</portlet-mode>
-			<portlet-mode>EDIT</portlet-mode>
-		</supports>
-		<portlet-info>
-			<title>WICKET 7 PORTLET DEMO</title>
-			<short-title>WICKET 7 PORTLET DEMO</short-title>
-			<keywords>WICKET 7 PORTLET DEMO</keywords>
-		</portlet-info>
-		<security-role-ref>
-			<role-name>administrator</role-name>
-		</security-role-ref>
-		<security-role-ref>
-			<role-name>guest</role-name>
-		</security-role-ref>
-		<security-role-ref>
-			<role-name>power-user</role-name>
-		</security-role-ref>
-		<security-role-ref>
-			<role-name>user</role-name>
-		</security-role-ref>
-	</portlet>
-	
-	
+	id="wicketstuff-portlet-examples">
+
 	<portlet>
 		<portlet-name>wicket7echoPortlet</portlet-name>
 		<display-name>WICKET 7 ECHO PORTLET</display-name>
