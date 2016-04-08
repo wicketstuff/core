@@ -42,9 +42,9 @@ import javax.portlet.ResourceResponse;
 import javax.servlet.RequestDispatcher;
 
 import org.apache.wicket.protocol.http.WicketFilter;
-import org.apache.wicket.settings.IRequestCycleSettings;
 import org.apache.wicket.util.file.File;
 import org.apache.wicket.util.string.Strings;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -74,6 +74,7 @@ import org.slf4j.LoggerFactory;
  * @author Ate Douma
  * @author <a href="http://sebthom.de/">Sebastian Thomschke</a>
  * @author Peter Pastrnak
+ * @author Konstantinos Karavitis
  */
 public class WicketPortlet extends GenericPortlet {
 	private static final Pattern PROTECTED_RESOURCES = Pattern.compile("\\A\\s*[/\\\\]*\\s*(WEB|META)[-]INF(.*)", Pattern.CASE_INSENSITIVE | Pattern.MULTILINE);
@@ -292,8 +293,11 @@ public class WicketPortlet extends GenericPortlet {
 		else {
 			// try to lookup the passed in wicket url parameter, suffixed with
 			// the portlet mode
-			final String parameterName = WICKET_URL_PORTLET_PARAMETER + request.getPortletMode().toString();
-			wicketURL = request.getParameter(parameterName);
+			String redirectUrlKey = WICKET_URL_PORTLET_PARAMETER + request.getPortletMode().toString();
+			String redirectUrl = request.getParameter(redirectUrlKey);
+			// if the wicket url is not in request parameters try to lookup into the action scoped
+			// attributes.
+			wicketURL = redirectUrl == null ? (String)request.getAttribute(redirectUrlKey) : redirectUrl;
 		}
 
 		// if the wicketURL could not be retrieved, return the url for the
@@ -308,6 +312,9 @@ public class WicketPortlet extends GenericPortlet {
 	 */
 	@Override
 	public void init(final PortletConfig config) throws PortletException {
+		// enable action-scoped request attributes support (see JSR286 specification PLT.10.4.4)
+		config.getContainerRuntimeOptions().put("javax.portlet.actionScopedRequestAttributes",
+			new String[] { "true", "numberOfCachedScopes", "10" });
 		super.init(config);
 
 		wicketFilterPath = buildWicketFilterPath(config.getInitParameter(WICKET_FILTER_PATH_PARAM));
@@ -363,12 +370,13 @@ public class WicketPortlet extends GenericPortlet {
 		String redirectLocationUrl = responseState.getRedirectLocation();
 		if (LOG.isDebugEnabled())
 			LOG.debug("redirectURL after include:" + redirectLocationUrl);
-		if (redirectLocationUrl != null) {
+		if (redirectLocationUrl != null && !redirectLocationUrl.isEmpty()) {
 			redirectLocationUrl = fixWicketUrl(wicketURL, redirectLocationUrl);
 			if (redirectLocationUrl.startsWith(wicketFilterPath)) {
 				final String portletMode = request.getPortletMode().toString();
 				final String redirectUrlKey = WICKET_URL_PORTLET_PARAMETER + portletMode;
-				response.setRenderParameter(redirectUrlKey, redirectLocationUrl);
+				// put the redirect location into the "_wuview" action scoped request attribute
+				request.setAttribute(redirectUrlKey, redirectLocationUrl);
 			}
 			else
 				response.sendRedirect(redirectLocationUrl);
@@ -411,12 +419,24 @@ public class WicketPortlet extends GenericPortlet {
 				// processing the request
 
 				String redirectLocation = responseState.getRedirectLocation();
-				if (LOG.isDebugEnabled()) {
-					LOG.debug("redirect url after inclusion:" + redirectLocation);
+				String ajaxRedirectLocation = responseState.getAjaxRedirectLocation();
+				if (ajaxRedirectLocation != null) {
+					// Ajax redirect
+					ajaxRedirectLocation = fixWicketUrl(wicketURL, ajaxRedirectLocation);
+					responseState.clear();
+					responseState.setDateHeader("Date", System.currentTimeMillis());
+					responseState.setDateHeader("Expires", 0);
+					responseState.setHeader("Pragma", "no-cache");
+					responseState.setHeader("Cache-Control", "no-cache, no-store");
+					//client side javascript needs the Ajax-Location header see wicket-ajax-jquery.js line 771
+					responseState.setHeader("Ajax-Location", ajaxRedirectLocation);//
+					responseState.setContentType("text/xml;charset=UTF-8");
+					responseState.getWriter().write(
+						"<ajax-response><redirect><![CDATA[" + ajaxRedirectLocation +
+							"]]></redirect></ajax-response>");
+					responseState.flushAndClose();
 				}
-
-				if (redirectLocation != null) {
-
+				else if (redirectLocation != null) {
 					// TODO: check if its redirect to wicket page (find _wu or
 					// _wuPortletMode or resourceId parameter)
 
@@ -499,27 +519,11 @@ public class WicketPortlet extends GenericPortlet {
 					}
 				}
 				else {
-					redirectLocation = responseState.getAjaxRedirectLocation();
-					if (redirectLocation != null) {
-
-						// Ajax redirect
-						redirectLocation = fixWicketUrl(wicketURL, redirectLocation);
-						responseState.clear();
-						responseState.setDateHeader("Date", System.currentTimeMillis());
-						responseState.setDateHeader("Expires", 0);
-						responseState.setHeader("Pragma", "no-cache");
-						responseState.setHeader("Cache-Control", "no-cache, no-store");
-						responseState.setContentType("text/xml;charset=UTF-8");
-						responseState.getWriter().write("<ajax-response><redirect><![CDATA[" + redirectLocation + "]]></redirect></ajax-response>");
-						responseState.flushAndClose();
+					if (LOG.isDebugEnabled()) {
+						LOG.debug("ajax redirect url after inclusion:" + redirectLocation);
 					}
-					else {
-						if (LOG.isDebugEnabled()) {
-							LOG.debug("ajax redirect url after inclusion:" + redirectLocation);
-						}
-						// write response state out to the PortletResponse
-						responseState.flushAndClose();
-					}
+					// write response state out to the PortletResponse
+					responseState.flushAndClose();
 				}
 			}
 			break;
@@ -648,10 +652,10 @@ public class WicketPortlet extends GenericPortlet {
 		if ((url != null) && (requestUrl != null) && (!ABSOLUTE_URI_PATTERN.matcher(url).matches())) {
 			try {
 				if (!requestUrl.startsWith("http")) {
-					return new URL(new URL("http:" + requestUrl), url).toString().substring(5);
+					return new URL(new URL("http:" + wicketFilterPath), url).toString().substring(5);
 				}
 				else {
-					return new URL(new URL(requestUrl), url).getPath();
+					return new URL(new URL(wicketFilterPath), url).getPath();
 				}
 			}
 			catch (Exception e) {
