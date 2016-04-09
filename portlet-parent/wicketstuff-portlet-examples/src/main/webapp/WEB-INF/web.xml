@@ -1,0 +1,1116 @@
+<?xml version="1.0"?>
+<web-app xmlns="http://java.sun.com/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	metadata-complete="true" id="WebApp_ID" version="2.5"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd">
+	<display-name>wicketstuff portlet examples</display-name>
+
+	<filter>
+		<filter-name>wicket6echoPortlet</filter-name>
+		<filter-class>org.apache.wicket.portlet.PortletFilter</filter-class>
+		<init-param>
+			<param-name>applicationClassName</param-name>
+			<param-value>org.apache.wicket.examples.echo.EchoApplication</param-value>
+		</init-param>
+	</filter>
+	<filter-mapping>
+		<filter-name>wicket6echoPortlet</filter-name>
+		<url-pattern>/wicket6echoPortlet/*</url-pattern>
+		<dispatcher>FORWARD</dispatcher>
+		<dispatcher>REQUEST</dispatcher>
+		<dispatcher>INCLUDE</dispatcher>
+	</filter-mapping>
+
+	<filter>
+		<filter-name>wicket6formInputPortlet</filter-name>
+		<filter-class>org.apache.wicket.portlet.PortletFilter</filter-class>
+		<init-param>
+			<param-name>applicationClassName</param-name>
+			<param-value>org.apache.wicket.examples.forminput.FormInputApplication</param-value>
+		</init-param>
+	</filter>
+	<filter-mapping>
+		<filter-name>wicket6formInputPortlet</filter-name>
+		<url-pattern>/wicket6formInputPortlet/*</url-pattern>
+		<dispatcher>FORWARD</dispatcher>
+		<dispatcher>REQUEST</dispatcher>
+		<dispatcher>INCLUDE</dispatcher>
+	</filter-mapping>
+
+	<filter>
+		<filter-name>wicket6comprefPortlet</filter-name>
+		<filter-class>org.apache.wicket.portlet.PortletFilter</filter-class>
+		<init-param>
+			<param-name>applicationClassName</param-name>
+			<param-value>org.apache.wicket.examples.compref.ComponentReferenceApplication</param-value>
+		</init-param>
+	</filter>
+	<filter-mapping>
+		<filter-name>wicket6comprefPortlet</filter-name>
+		<url-pattern>/wicket6comprefPortlet/*</url-pattern>
+		<dispatcher>FORWARD</dispatcher>
+		<dispatcher>REQUEST</dispatcher>
+		<dispatcher>INCLUDE</dispatcher>
+	</filter-mapping>
+
+	<filter>
+		<filter-name>wicket6imagesPortlet</filter-name>
+		<filter-class>org.apache.wicket.portlet.PortletFilter</filter-class>
+		<init-param>
+			<param-name>applicationClassName</param-name>
+			<param-value>org.apache.wicket.examples.images.ImagesApplication</param-value>
+		</init-param>
+	</filter>
+	<filter-mapping>
+		<filter-name>wicket6imagesPortlet</filter-name>
+		<url-pattern>/wicket6imagesPortlet/*</url-pattern>
+		<dispatcher>FORWARD</dispatcher>
+		<dispatcher>REQUEST</dispatcher>
+		<dispatcher>INCLUDE</dispatcher>
+	</filter-mapping>
+
+	<filter>
+		<filter-name>wicket6linkomaticPortlet</filter-name>
+		<filter-class>org.apache.wicket.portlet.PortletFilter</filter-class>
+		<init-param>
+			<param-name>applicationClassName</param-name>
+			<param-value>org.apache.wicket.examples.linkomatic.LinkomaticApplication</param-value>
+		</init-param>
+	</filter>
+	<filter-mapping>
+		<filter-name>wicket6linkomaticPortlet</filter-name>
+		<url-pattern>/wicket6linkomaticPortlet/*</url-pattern>
+		<dispatcher>FORWARD</dispatcher>
+		<dispatcher>REQUEST</dispatcher>
+		<dispatcher>INCLUDE</dispatcher>
+	</filter-mapping>
+
+	<filter>
+		<filter-name>wicket6navomaticPortlet</filter-name>
+		<filter-class>org.apache.wicket.portlet.PortletFilter</filter-class>
+		<init-param>
+			<param-name>applicationClassName</param-name>
+			<param-value>org.apache.wicket.examples.navomatic.NavomaticApplication</param-value>
+		</init-param>
+	</filter>
+	<filter-mapping>
+		<filter-name>wicket6navomaticPortlet</filter-name>
+		<url-pattern>/wicket6navomaticPortlet/*</url-pattern>
+		<dispatcher>FORWARD</dispatcher>
+		<dispatcher>REQUEST</dispatcher>
+		<dispatcher>INCLUDE</dispatcher>
+	</filter-mapping>
+
+	<filter>
+		<filter-name>wicket6pubPortlet</filter-name>
+		<filter-class>org.apache.wicket.portlet.PortletFilter</filter-class>
+		<init-param>
+			<param-name>applicationClassName</param-name>
+			<param-value>org.apache.wicket.examples.pub.PubApplication</param-value>
+		</init-param>
+	</filter>
+	<filter-mapping>
+		<filter-name>wicket6pubPortlet</filter-name>
+		<url-pattern>/wicket6pubPortlet/*</url-pattern>
+		<dispatcher>FORWARD</dispatcher>
+		<dispatcher>REQUEST</dispatcher>
+		<dispatcher>INCLUDE</dispatcher>
+	</filter-mapping>
+
+	<filter>
+		<filter-name>wicket6pub2Portlet</filter-name>
+		<filter-class>org.apache.wicket.portlet.PortletFilter</filter-class>
+		<init-param>
+			<param-name>applicationClassName</param-name>
+			<param-value>org.apache.wicket.examples.pub2.PubApplication</param-value>
+		</init-param>
+	</filter>
+	<filter-mapping>
+		<filter-name>wicket6pub2Portlet</filter-name>
+		<url-pattern>/wicket6pub2Portlet/*</url-pattern>
+		<dispatcher>FORWARD</dispatcher>
+		<dispatcher>REQUEST</dispatcher>
+		<dispatcher>INCLUDE</dispatcher>
+	</filter-mapping>
+
+	<filter>
+		<filter-name>wicket6unicodeConverterPortlet</filter-name>
+		<filter-class>org.apache.wicket.portlet.PortletFilter</filter-class>
+		<init-param>
+			<param-name>applicationClassName</param-name>
+			<param-value>org.apache.wicket.examples.unicodeconverter.UnicodeConverterApplication</param-value>
+		</init-param>
+	</filter>
+	<filter-mapping>
+		<filter-name>wicket6unicodeConverterPortlet</filter-name>
+		<url-pattern>/wicket6unicodeConverterPortlet/*</url-pattern>
+		<dispatcher>FORWARD</dispatcher>
+		<dispatcher>REQUEST</dispatcher>
+		<dispatcher>INCLUDE</dispatcher>
+	</filter-mapping>
+
+	<filter>
+		<filter-name>wicket6niceUrlPortlet</filter-name>
+		<filter-class>org.apache.wicket.portlet.PortletFilter</filter-class>
+		<init-param>
+			<param-name>applicationClassName</param-name>
+			<param-value>org.apache.wicket.examples.niceurl.NiceUrlApplication</param-value>
+		</init-param>
+	</filter>
+	<filter-mapping>
+		<filter-name>wicket6niceUrlPortlet</filter-name>
+		<url-pattern>/wicket6niceUrlPortlet/*</url-pattern>
+		<dispatcher>FORWARD</dispatcher>
+		<dispatcher>REQUEST</dispatcher>
+		<dispatcher>INCLUDE</dispatcher>
+	</filter-mapping>
+
+	<filter>
+		<filter-name>wicket6ajaxPortlet</filter-name>
+		<filter-class>org.apache.wicket.portlet.PortletFilter</filter-class>
+		<init-param>
+			<param-name>applicationClassName</param-name>
+			<param-value>org.apache.wicket.examples.ajax.builtin.AjaxApplication</param-value>
+		</init-param>
+	</filter>
+	<filter-mapping>
+		<filter-name>wicket6ajaxPortlet</filter-name>
+		<url-pattern>/wicket6ajaxPortlet/*</url-pattern>
+		<dispatcher>FORWARD</dispatcher>
+		<dispatcher>REQUEST</dispatcher>
+		<dispatcher>INCLUDE</dispatcher>
+	</filter-mapping>
+
+	<filter>
+		<filter-name>wicket6repeaterPortlet</filter-name>
+		<filter-class>org.apache.wicket.portlet.PortletFilter</filter-class>
+		<init-param>
+			<param-name>applicationClassName</param-name>
+			<param-value>org.apache.wicket.examples.repeater.RepeaterApplication</param-value>
+		</init-param>
+	</filter>
+	<filter-mapping>
+		<filter-name>wicket6repeaterPortlet</filter-name>
+		<url-pattern>/wicket6repeaterPortlet/*</url-pattern>
+		<dispatcher>FORWARD</dispatcher>
+		<dispatcher>REQUEST</dispatcher>
+		<dispatcher>INCLUDE</dispatcher>
+	</filter-mapping>
+
+	<filter>
+		<filter-name>wicket6treePortlet</filter-name>
+		<filter-class>org.apache.wicket.portlet.PortletFilter</filter-class>
+		<init-param>
+			<param-name>applicationClassName</param-name>
+			<param-value>org.apache.wicket.examples.tree.TreeApplication</param-value>
+		</init-param>
+	</filter>
+	<filter-mapping>
+		<filter-name>wicket6treePortlet</filter-name>
+		<url-pattern>/wicket6treePortlet/*</url-pattern>
+		<dispatcher>FORWARD</dispatcher>
+		<dispatcher>REQUEST</dispatcher>
+		<dispatcher>INCLUDE</dispatcher>
+	</filter-mapping>
+
+	<filter>
+		<filter-name>wicket6uploadPortlet</filter-name>
+		<filter-class>org.apache.wicket.portlet.PortletFilter</filter-class>
+		<init-param>
+			<param-name>applicationClassName</param-name>
+			<param-value>org.apache.wicket.examples.upload.UploadApplication</param-value>
+		</init-param>
+	</filter>
+	<filter-mapping>
+		<filter-name>wicket6uploadPortlet</filter-name>
+		<url-pattern>/wicket6uploadPortlet/*</url-pattern>
+		<dispatcher>FORWARD</dispatcher>
+		<dispatcher>REQUEST</dispatcher>
+		<dispatcher>INCLUDE</dispatcher>
+	</filter-mapping>
+
+	<filter>
+		<filter-name>wicket6templatePortlet</filter-name>
+		<filter-class>org.apache.wicket.portlet.PortletFilter</filter-class>
+		<init-param>
+			<param-name>applicationClassName</param-name>
+			<param-value>org.apache.wicket.examples.template.TemplateApplication</param-value>
+		</init-param>
+	</filter>
+	<filter-mapping>
+		<filter-name>wicket6templatePortlet</filter-name>
+		<url-pattern>/wicket6templatePortlet/*</url-pattern>
+		<dispatcher>FORWARD</dispatcher>
+		<dispatcher>REQUEST</dispatcher>
+		<dispatcher>INCLUDE</dispatcher>
+	</filter-mapping>
+
+	<filter>
+		<filter-name>wicket6mailTemplatePortlet</filter-name>
+		<filter-class>org.apache.wicket.portlet.PortletFilter</filter-class>
+		<init-param>
+			<param-name>applicationClassName</param-name>
+			<param-value>org.apache.wicket.examples.asemail.MailTemplateApplication</param-value>
+		</init-param>
+	</filter>
+	<filter-mapping>
+		<filter-name>wicket6mailTemplatePortlet</filter-name>
+		<url-pattern>/wicket6mailTemplatePortlet/*</url-pattern>
+		<dispatcher>FORWARD</dispatcher>
+		<dispatcher>REQUEST</dispatcher>
+		<dispatcher>INCLUDE</dispatcher>
+	</filter-mapping>
+
+	<filter>
+		<filter-name>wicket6browserInfoPortlet</filter-name>
+		<filter-class>org.apache.wicket.portlet.PortletFilter</filter-class>
+		<init-param>
+			<param-name>applicationClassName</param-name>
+			<param-value>org.apache.wicket.examples.hellobrowser.HelloBrowserApplication</param-value>
+		</init-param>
+	</filter>
+	<filter-mapping>
+		<filter-name>wicket6browserInfoPortlet</filter-name>
+		<url-pattern>/wicket6browserInfoPortlet/*</url-pattern>
+		<dispatcher>FORWARD</dispatcher>
+		<dispatcher>REQUEST</dispatcher>
+		<dispatcher>INCLUDE</dispatcher>
+	</filter-mapping>
+
+	<filter>
+		<filter-name>wicket6ajaxBrowserInfoPortlet</filter-name>
+		<filter-class>org.apache.wicket.portlet.PortletFilter</filter-class>
+		<init-param>
+			<param-name>applicationClassName</param-name>
+			<param-value>org.apache.wicket.examples.ajaxhellobrowser.HelloBrowserApplication</param-value>
+		</init-param>
+	</filter>
+	<filter-mapping>
+		<filter-name>wicket6ajaxBrowserInfoPortlet</filter-name>
+		<url-pattern>/wicket6ajaxBrowserInfoPortlet/*</url-pattern>
+		<dispatcher>FORWARD</dispatcher>
+		<dispatcher>REQUEST</dispatcher>
+		<dispatcher>INCLUDE</dispatcher>
+	</filter-mapping>
+
+	<filter>
+		<filter-name>wicket6framesPortlet</filter-name>
+		<filter-class>org.apache.wicket.portlet.PortletFilter</filter-class>
+		<init-param>
+			<param-name>applicationClassName</param-name>
+			<param-value>org.apache.wicket.examples.frames.FramesApplication</param-value>
+		</init-param>
+	</filter>
+	<filter-mapping>
+		<filter-name>wicket6framesPortlet</filter-name>
+		<url-pattern>/wicket6framesPortlet/*</url-pattern>
+		<dispatcher>FORWARD</dispatcher>
+		<dispatcher>REQUEST</dispatcher>
+		<dispatcher>INCLUDE</dispatcher>
+	</filter-mapping>
+
+	<filter>
+		<filter-name>wicket6prototypePortlet</filter-name>
+		<filter-class>org.apache.wicket.portlet.PortletFilter</filter-class>
+		<init-param>
+			<param-name>applicationClassName</param-name>
+			<param-value>org.apache.wicket.examples.ajax.prototype.PrototypeApplication</param-value>
+		</init-param>
+	</filter>
+	<filter-mapping>
+		<filter-name>wicket6prototypePortlet</filter-name>
+		<url-pattern>/wicket6prototypePortlet/*</url-pattern>
+		<dispatcher>FORWARD</dispatcher>
+		<dispatcher>REQUEST</dispatcher>
+		<dispatcher>INCLUDE</dispatcher>
+	</filter-mapping>
+
+	<filter>
+		<filter-name>wicket6abacadabraPortlet</filter-name>
+		<filter-class>org.apache.wicket.portlet.PortletFilter</filter-class>
+		<init-param>
+			<param-name>applicationClassName</param-name>
+			<param-value>org.apache.wicket.examples.wizard.WizardApplication</param-value>
+		</init-param>
+	</filter>
+	<filter-mapping>
+		<filter-name>wicket6abacadabraPortlet</filter-name>
+		<url-pattern>/wicket6abacadabraPortlet/*</url-pattern>
+		<dispatcher>FORWARD</dispatcher>
+		<dispatcher>REQUEST</dispatcher>
+		<dispatcher>INCLUDE</dispatcher>
+	</filter-mapping>
+
+	<filter>
+		<filter-name>wicket6customTemplateLoadingPortlet</filter-name>
+		<filter-class>org.apache.wicket.portlet.PortletFilter</filter-class>
+		<init-param>
+			<param-name>applicationClassName</param-name>
+			<param-value>org.apache.wicket.examples.customresourceloading.CustomResourceLoadingApplication</param-value>
+		</init-param>
+	</filter>
+	<filter-mapping>
+		<filter-name>wicket6customTemplateLoadingPortlet</filter-name>
+		<url-pattern>/wicket6customTemplateLoadingPortlet/*</url-pattern>
+		<dispatcher>FORWARD</dispatcher>
+		<dispatcher>REQUEST</dispatcher>
+		<dispatcher>INCLUDE</dispatcher>
+	</filter-mapping>
+
+	<filter>
+		<filter-name>wicket6breadcrumbPortlet</filter-name>
+		<filter-class>org.apache.wicket.portlet.PortletFilter</filter-class>
+		<init-param>
+			<param-name>applicationClassName</param-name>
+			<param-value>org.apache.wicket.examples.customresourceloading.CustomResourceLoadingApplication</param-value>
+		</init-param>
+	</filter>
+	<filter-mapping>
+		<filter-name>wicket6breadcrumbPortlet</filter-name>
+		<url-pattern>/wicket6breadcrumbPortlet/*</url-pattern>
+		<dispatcher>FORWARD</dispatcher>
+		<dispatcher>REQUEST</dispatcher>
+		<dispatcher>INCLUDE</dispatcher>
+	</filter-mapping>
+
+	<filter>
+		<filter-name>wicket6captchaPortlet</filter-name>
+		<filter-class>org.apache.wicket.portlet.PortletFilter</filter-class>
+		<init-param>
+			<param-name>applicationClassName</param-name>
+			<param-value>org.apache.wicket.examples.captcha.CaptchaApplication</param-value>
+		</init-param>
+	</filter>
+	<filter-mapping>
+		<filter-name>wicket6captchaPortlet</filter-name>
+		<url-pattern>/wicket6captchaPortlet/*</url-pattern>
+		<dispatcher>FORWARD</dispatcher>
+		<dispatcher>REQUEST</dispatcher>
+		<dispatcher>INCLUDE</dispatcher>
+	</filter-mapping>
+
+	<filter>
+		<filter-name>wicket6kittenCaptchaPortlet</filter-name>
+		<filter-class>org.apache.wicket.portlet.PortletFilter</filter-class>
+		<init-param>
+			<param-name>applicationClassName</param-name>
+			<param-value>org.apache.wicket.examples.kittenCaptcha.WicketApplication</param-value>
+		</init-param>
+	</filter>
+	<filter-mapping>
+		<filter-name>wicket6kittenCaptchaPortlet</filter-name>
+		<url-pattern>/wicket6kittenCaptchaPortlet/*</url-pattern>
+		<dispatcher>FORWARD</dispatcher>
+		<dispatcher>REQUEST</dispatcher>
+		<dispatcher>INCLUDE</dispatcher>
+	</filter-mapping>
+
+	<filter>
+		<filter-name>wicket6datesPortlet</filter-name>
+		<filter-class>org.apache.wicket.portlet.PortletFilter</filter-class>
+		<init-param>
+			<param-name>applicationClassName</param-name>
+			<param-value>org.apache.wicket.examples.dates.DatesApplication</param-value>
+		</init-param>
+	</filter>
+	<filter-mapping>
+		<filter-name>wicket6datesPortlet</filter-name>
+		<url-pattern>/wicket6datesPortlet/*</url-pattern>
+		<dispatcher>FORWARD</dispatcher>
+		<dispatcher>REQUEST</dispatcher>
+		<dispatcher>INCLUDE</dispatcher>
+	</filter-mapping>
+
+
+	<filter>
+		<filter-name>wicket6stockquotePortlet</filter-name>
+		<filter-class>org.apache.wicket.portlet.PortletFilter</filter-class>
+		<init-param>
+			<param-name>applicationClassName</param-name>
+			<param-value>org.apache.wicket.examples.stockquote.StockQuoteApplication</param-value>
+		</init-param>
+	</filter>
+	<filter-mapping>
+		<filter-name>wicket6stockquotePortlet</filter-name>
+		<url-pattern>/wicket6stockquotePortlet/*</url-pattern>
+		<dispatcher>FORWARD</dispatcher>
+		<dispatcher>REQUEST</dispatcher>
+		<dispatcher>INCLUDE</dispatcher>
+	</filter-mapping>
+
+	<filter>
+		<filter-name>wicket6guestbookPortlet</filter-name>
+		<filter-class>org.apache.wicket.portlet.PortletFilter</filter-class>
+		<init-param>
+			<param-name>applicationClassName</param-name>
+			<param-value>org.apache.wicket.examples.guestbook.GuestBookApplication</param-value>
+		</init-param>
+	</filter>
+	<filter-mapping>
+		<filter-name>wicket6guestbookPortlet</filter-name>
+		<url-pattern>/wicket6guestbookPortlet/*</url-pattern>
+		<dispatcher>FORWARD</dispatcher>
+		<dispatcher>REQUEST</dispatcher>
+		<dispatcher>INCLUDE</dispatcher>
+	</filter-mapping>
+
+	<filter>
+		<filter-name>wicket6hangmanPortlet</filter-name>
+		<filter-class>org.apache.wicket.portlet.PortletFilter</filter-class>
+		<init-param>
+			<param-name>applicationClassName</param-name>
+			<param-value>org.apache.wicket.examples.hangman.HangmanApplication</param-value>
+		</init-param>
+	</filter>
+	<filter-mapping>
+		<filter-name>wicket6hangmanPortlet</filter-name>
+		<url-pattern>/wicket6hangmanPortlet/*</url-pattern>
+		<dispatcher>FORWARD</dispatcher>
+		<dispatcher>REQUEST</dispatcher>
+		<dispatcher>INCLUDE</dispatcher>
+	</filter-mapping>
+
+	<filter>
+		<filter-name>wicket6guicePortlet</filter-name>
+		<filter-class>org.apache.wicket.portlet.PortletFilter</filter-class>
+		<init-param>
+			<param-name>applicationClassName</param-name>
+			<param-value>org.apache.wicket.examples.guice.GuiceApplication</param-value>
+		</init-param>
+	</filter>
+	<filter-mapping>
+		<filter-name>wicket6guicePortlet</filter-name>
+		<url-pattern>/wicket6guicePortlet/*</url-pattern>
+		<dispatcher>FORWARD</dispatcher>
+		<dispatcher>REQUEST</dispatcher>
+		<dispatcher>INCLUDE</dispatcher>
+	</filter-mapping>
+
+	<filter>
+		<filter-name>wicket6beanValidationPortlet</filter-name>
+		<filter-class>org.apache.wicket.portlet.PortletFilter</filter-class>
+		<init-param>
+			<param-name>applicationClassName</param-name>
+			<param-value>org.apache.wicket.examples.bean.validation.BeanValidationApplication</param-value>
+		</init-param>
+	</filter>
+	<filter-mapping>
+		<filter-name>wicket6beanValidationPortlet</filter-name>
+		<url-pattern>/wicket6beanValidationPortlet/*</url-pattern>
+		<dispatcher>FORWARD</dispatcher>
+		<dispatcher>REQUEST</dispatcher>
+		<dispatcher>INCLUDE</dispatcher>
+	</filter-mapping>
+
+	<filter>
+		<filter-name>wicket6resourceDecorationPortlet</filter-name>
+		<filter-class>org.apache.wicket.portlet.PortletFilter</filter-class>
+		<init-param>
+			<param-name>applicationClassName</param-name>
+			<param-value>org.apache.wicket.examples.resourcedecoration.ResourceDecorationApplication</param-value>
+		</init-param>
+	</filter>
+	<filter-mapping>
+		<filter-name>wicket6resourceDecorationPortlet</filter-name>
+		<url-pattern>/wicket6resourceDecorationPortlet/*</url-pattern>
+		<dispatcher>FORWARD</dispatcher>
+		<dispatcher>REQUEST</dispatcher>
+		<dispatcher>INCLUDE</dispatcher>
+	</filter-mapping>
+
+	<filter>
+		<filter-name>wicket6eventsPortlet</filter-name>
+		<filter-class>org.apache.wicket.portlet.PortletFilter</filter-class>
+		<init-param>
+			<param-name>applicationClassName</param-name>
+			<param-value>org.apache.wicket.examples.events.EventsApplication</param-value>
+		</init-param>
+	</filter>
+	<filter-mapping>
+		<filter-name>wicket6eventsPortlet</filter-name>
+		<url-pattern>/wicket6eventsPortlet/*</url-pattern>
+		<dispatcher>FORWARD</dispatcher>
+		<dispatcher>REQUEST</dispatcher>
+		<dispatcher>INCLUDE</dispatcher>
+	</filter-mapping>
+
+	<filter>
+		<filter-name>wicket6requestMapperPortlet</filter-name>
+		<filter-class>org.apache.wicket.portlet.PortletFilter</filter-class>
+		<init-param>
+			<param-name>applicationClassName</param-name>
+			<param-value>org.apache.wicket.examples.requestmapper.RequestMapperApplication</param-value>
+		</init-param>
+	</filter>
+	<filter-mapping>
+		<filter-name>wicket6requestMapperPortlet</filter-name>
+		<url-pattern>/wicket6requestMapperPortlet/*</url-pattern>
+		<dispatcher>FORWARD</dispatcher>
+		<dispatcher>REQUEST</dispatcher>
+		<dispatcher>INCLUDE</dispatcher>
+	</filter-mapping>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	<servlet>
+		<servlet-name>PortletServletwicket6echoPortlet</servlet-name>
+		<servlet-class>com.liferay.portal.kernel.servlet.PortletServlet</servlet-class>
+		<init-param>
+			<param-name>portlet-class</param-name>
+			<param-value>org.apache.wicket.portlet.WicketPortlet</param-value>
+		</init-param>
+		<load-on-startup>1</load-on-startup>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>PortletServletwicket6echoPortlet</servlet-name>
+		<url-pattern>/wicket6echoPortlet/*</url-pattern>
+	</servlet-mapping>
+
+
+
+	<servlet>
+		<servlet-name>PortletServletwicket6formInputPortlet</servlet-name>
+		<servlet-class>com.liferay.portal.kernel.servlet.PortletServlet</servlet-class>
+		<init-param>
+			<param-name>portlet-class</param-name>
+			<param-value>org.apache.wicket.portlet.WicketPortlet</param-value>
+		</init-param>
+		<load-on-startup>1</load-on-startup>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>PortletServletwicket6formInputPortlet</servlet-name>
+		<url-pattern>/wicket6formInputPortlet/*</url-pattern>
+	</servlet-mapping>
+
+
+
+
+	<servlet>
+		<servlet-name>PortletServletwicket6comprefPortlet</servlet-name>
+		<servlet-class>com.liferay.portal.kernel.servlet.PortletServlet</servlet-class>
+		<init-param>
+			<param-name>portlet-class</param-name>
+			<param-value>org.apache.wicket.portlet.WicketPortlet</param-value>
+		</init-param>
+		<load-on-startup>1</load-on-startup>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>PortletServletwicket6comprefPortlet</servlet-name>
+		<url-pattern>/wicket6comprefPortlet/*</url-pattern>
+	</servlet-mapping>
+
+
+
+	<servlet>
+		<servlet-name>PortletServletwicket6imagesPortlet</servlet-name>
+		<servlet-class>com.liferay.portal.kernel.servlet.PortletServlet</servlet-class>
+		<init-param>
+			<param-name>portlet-class</param-name>
+			<param-value>org.apache.wicket.portlet.WicketPortlet</param-value>
+		</init-param>
+		<load-on-startup>1</load-on-startup>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>PortletServletwicket6imagesPortlet</servlet-name>
+		<url-pattern>/wicket6imagesPortlet/*</url-pattern>
+	</servlet-mapping>
+
+
+
+
+	<servlet>
+		<servlet-name>PortletServletwicket6linkomaticPortlet</servlet-name>
+		<servlet-class>com.liferay.portal.kernel.servlet.PortletServlet</servlet-class>
+		<init-param>
+			<param-name>portlet-class</param-name>
+			<param-value>org.apache.wicket.portlet.WicketPortlet</param-value>
+		</init-param>
+		<load-on-startup>1</load-on-startup>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>PortletServletwicket6linkomaticPortlet</servlet-name>
+		<url-pattern>/wicket6linkomaticPortlet/*</url-pattern>
+	</servlet-mapping>
+
+
+
+	<servlet>
+		<servlet-name>PortletServletwicket6navomaticPortlet</servlet-name>
+		<servlet-class>com.liferay.portal.kernel.servlet.PortletServlet</servlet-class>
+		<init-param>
+			<param-name>portlet-class</param-name>
+			<param-value>org.apache.wicket.portlet.WicketPortlet</param-value>
+		</init-param>
+		<load-on-startup>1</load-on-startup>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>PortletServletwicket6navomaticPortlet</servlet-name>
+		<url-pattern>/wicket6navomaticPortlet/*</url-pattern>
+	</servlet-mapping>
+
+
+	<servlet>
+		<servlet-name>PortletServletwicket6pubPortlet</servlet-name>
+		<servlet-class>com.liferay.portal.kernel.servlet.PortletServlet</servlet-class>
+		<init-param>
+			<param-name>portlet-class</param-name>
+			<param-value>org.apache.wicket.portlet.WicketPortlet</param-value>
+		</init-param>
+		<load-on-startup>1</load-on-startup>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>PortletServletwicket6pubPortlet</servlet-name>
+		<url-pattern>/wicket6pubPortlet/*</url-pattern>
+	</servlet-mapping>
+
+
+
+	<servlet>
+		<servlet-name>PortletServletwicket6pub2Portlet</servlet-name>
+		<servlet-class>com.liferay.portal.kernel.servlet.PortletServlet</servlet-class>
+		<init-param>
+			<param-name>portlet-class</param-name>
+			<param-value>org.apache.wicket.portlet.WicketPortlet</param-value>
+		</init-param>
+		<load-on-startup>1</load-on-startup>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>PortletServletwicket6pub2Portlet</servlet-name>
+		<url-pattern>/wicket6pub2Portlet/*</url-pattern>
+	</servlet-mapping>
+
+
+
+	<servlet>
+		<servlet-name>PortletServletwicket6unicodeConverterPortlet</servlet-name>
+		<servlet-class>com.liferay.portal.kernel.servlet.PortletServlet</servlet-class>
+		<init-param>
+			<param-name>portlet-class</param-name>
+			<param-value>org.apache.wicket.portlet.WicketPortlet</param-value>
+		</init-param>
+		<load-on-startup>1</load-on-startup>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>PortletServletwicket6unicodeConverterPortlet</servlet-name>
+		<url-pattern>/wicket6unicodeConverterPortlet/*</url-pattern>
+	</servlet-mapping>
+
+
+
+	<servlet>
+		<servlet-name>PortletServletwicket6niceUrlPortlet</servlet-name>
+		<servlet-class>com.liferay.portal.kernel.servlet.PortletServlet</servlet-class>
+		<init-param>
+			<param-name>portlet-class</param-name>
+			<param-value>org.apache.wicket.portlet.WicketPortlet</param-value>
+		</init-param>
+		<load-on-startup>1</load-on-startup>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>PortletServletwicket6niceUrlPortlet</servlet-name>
+		<url-pattern>/wicket6niceUrlPortlet/*</url-pattern>
+	</servlet-mapping>
+
+
+
+	<servlet>
+		<servlet-name>PortletServletwicket6ajaxPortlet</servlet-name>
+		<servlet-class>com.liferay.portal.kernel.servlet.PortletServlet</servlet-class>
+		<init-param>
+			<param-name>portlet-class</param-name>
+			<param-value>org.apache.wicket.portlet.WicketPortlet</param-value>
+		</init-param>
+		<load-on-startup>1</load-on-startup>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>PortletServletwicket6ajaxPortlet</servlet-name>
+		<url-pattern>/wicket6ajaxPortlet/*</url-pattern>
+	</servlet-mapping>
+
+
+
+	<servlet>
+		<servlet-name>PortletServletwicket6repeaterPortlet</servlet-name>
+		<servlet-class>com.liferay.portal.kernel.servlet.PortletServlet</servlet-class>
+		<init-param>
+			<param-name>portlet-class</param-name>
+			<param-value>org.apache.wicket.portlet.WicketPortlet</param-value>
+		</init-param>
+		<load-on-startup>1</load-on-startup>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>PortletServletwicket6repeaterPortlet</servlet-name>
+		<url-pattern>/wicket6repeaterPortlet/*</url-pattern>
+	</servlet-mapping>
+
+
+
+	<servlet>
+		<servlet-name>PortletServletwicket6treePortlet</servlet-name>
+		<servlet-class>com.liferay.portal.kernel.servlet.PortletServlet</servlet-class>
+		<init-param>
+			<param-name>portlet-class</param-name>
+			<param-value>org.apache.wicket.portlet.WicketPortlet</param-value>
+		</init-param>
+		<load-on-startup>1</load-on-startup>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>PortletServletwicket6treePortlet</servlet-name>
+		<url-pattern>/wicket6treePortlet/*</url-pattern>
+	</servlet-mapping>
+
+
+	<servlet>
+		<servlet-name>PortletServletwicket6uploadPortlet</servlet-name>
+		<servlet-class>com.liferay.portal.kernel.servlet.PortletServlet</servlet-class>
+		<init-param>
+			<param-name>portlet-class</param-name>
+			<param-value>org.apache.wicket.portlet.WicketPortlet</param-value>
+		</init-param>
+		<load-on-startup>1</load-on-startup>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>PortletServletwicket6uploadPortlet</servlet-name>
+		<url-pattern>/wicket6uploadPortlet/*</url-pattern>
+	</servlet-mapping>
+
+
+	<servlet>
+		<servlet-name>PortletServletwicket6templatePortlet</servlet-name>
+		<servlet-class>com.liferay.portal.kernel.servlet.PortletServlet</servlet-class>
+		<init-param>
+			<param-name>portlet-class</param-name>
+			<param-value>org.apache.wicket.portlet.WicketPortlet</param-value>
+		</init-param>
+		<load-on-startup>1</load-on-startup>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>PortletServletwicket6templatePortlet</servlet-name>
+		<url-pattern>/wicket6templatePortlet/*</url-pattern>
+	</servlet-mapping>
+
+
+	<servlet>
+		<servlet-name>PortletServletwicket6mailTemplatePortlet</servlet-name>
+		<servlet-class>com.liferay.portal.kernel.servlet.PortletServlet</servlet-class>
+		<init-param>
+			<param-name>portlet-class</param-name>
+			<param-value>org.apache.wicket.portlet.WicketPortlet</param-value>
+		</init-param>
+		<load-on-startup>1</load-on-startup>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>PortletServletwicket6mailTemplatePortlet</servlet-name>
+		<url-pattern>/wicket6mailTemplatePortlet/*</url-pattern>
+	</servlet-mapping>
+
+
+	<servlet>
+		<servlet-name>PortletServletwicket6browserInfoPortlet</servlet-name>
+		<servlet-class>com.liferay.portal.kernel.servlet.PortletServlet</servlet-class>
+		<init-param>
+			<param-name>portlet-class</param-name>
+			<param-value>org.apache.wicket.portlet.WicketPortlet</param-value>
+		</init-param>
+		<load-on-startup>1</load-on-startup>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>PortletServletwicket6browserInfoPortlet</servlet-name>
+		<url-pattern>/wicket6browserInfoPortlet/*</url-pattern>
+	</servlet-mapping>
+
+
+	<servlet>
+		<servlet-name>PortletServletwicket6ajaxBrowserInfoPortlet</servlet-name>
+		<servlet-class>com.liferay.portal.kernel.servlet.PortletServlet</servlet-class>
+		<init-param>
+			<param-name>portlet-class</param-name>
+			<param-value>org.apache.wicket.portlet.WicketPortlet</param-value>
+		</init-param>
+		<load-on-startup>1</load-on-startup>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>PortletServletwicket6ajaxBrowserInfoPortlet</servlet-name>
+		<url-pattern>/wicket6ajaxBrowserInfoPortlet/*</url-pattern>
+	</servlet-mapping>
+
+
+	<servlet>
+		<servlet-name>PortletServletwicket6framesPortlet</servlet-name>
+		<servlet-class>com.liferay.portal.kernel.servlet.PortletServlet</servlet-class>
+		<init-param>
+			<param-name>portlet-class</param-name>
+			<param-value>org.apache.wicket.portlet.WicketPortlet</param-value>
+		</init-param>
+		<load-on-startup>1</load-on-startup>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>PortletServletwicket6framesPortlet</servlet-name>
+		<url-pattern>/wicket6framesPortlet/*</url-pattern>
+	</servlet-mapping>
+
+
+	<servlet>
+		<servlet-name>PortletServletwicket6prototypePortlet</servlet-name>
+		<servlet-class>com.liferay.portal.kernel.servlet.PortletServlet</servlet-class>
+		<init-param>
+			<param-name>portlet-class</param-name>
+			<param-value>org.apache.wicket.portlet.WicketPortlet</param-value>
+		</init-param>
+		<load-on-startup>1</load-on-startup>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>PortletServletwicket6prototypePortlet</servlet-name>
+		<url-pattern>/wicket6prototypePortlet/*</url-pattern>
+	</servlet-mapping>
+
+
+	<servlet>
+		<servlet-name>PortletServletwicket6abacadabraPortlet</servlet-name>
+		<servlet-class>com.liferay.portal.kernel.servlet.PortletServlet</servlet-class>
+		<init-param>
+			<param-name>portlet-class</param-name>
+			<param-value>org.apache.wicket.portlet.WicketPortlet</param-value>
+		</init-param>
+		<load-on-startup>1</load-on-startup>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>PortletServletwicket6abacadabraPortlet</servlet-name>
+		<url-pattern>/wicket6abacadabraPortlet/*</url-pattern>
+	</servlet-mapping>
+
+
+	<servlet>
+		<servlet-name>PortletServletwicket6customTemplateLoadingPortlet</servlet-name>
+		<servlet-class>com.liferay.portal.kernel.servlet.PortletServlet</servlet-class>
+		<init-param>
+			<param-name>portlet-class</param-name>
+			<param-value>org.apache.wicket.portlet.WicketPortlet</param-value>
+		</init-param>
+		<load-on-startup>1</load-on-startup>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>PortletServletwicket6customTemplateLoadingPortlet</servlet-name>
+		<url-pattern>/wicket6customTemplateLoadingPortlet/*</url-pattern>
+	</servlet-mapping>
+
+
+	<servlet>
+		<servlet-name>PortletServletwicket6breadcrumbPortlet</servlet-name>
+		<servlet-class>com.liferay.portal.kernel.servlet.PortletServlet</servlet-class>
+		<init-param>
+			<param-name>portlet-class</param-name>
+			<param-value>org.apache.wicket.portlet.WicketPortlet</param-value>
+		</init-param>
+		<load-on-startup>1</load-on-startup>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>PortletServletwicket6breadcrumbPortlet</servlet-name>
+		<url-pattern>/wicket6breadcrumbPortlet/*</url-pattern>
+	</servlet-mapping>
+
+
+	<servlet>
+		<servlet-name>PortletServletwicket6captchaPortlet</servlet-name>
+		<servlet-class>com.liferay.portal.kernel.servlet.PortletServlet</servlet-class>
+		<init-param>
+			<param-name>portlet-class</param-name>
+			<param-value>org.apache.wicket.portlet.WicketPortlet</param-value>
+		</init-param>
+		<load-on-startup>1</load-on-startup>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>PortletServletwicket6captchaPortlet</servlet-name>
+		<url-pattern>/wicket6captchaPortlet/*</url-pattern>
+	</servlet-mapping>
+
+
+	<servlet>
+		<servlet-name>PortletServletwicket6kittenCaptchaPortlet</servlet-name>
+		<servlet-class>com.liferay.portal.kernel.servlet.PortletServlet</servlet-class>
+		<init-param>
+			<param-name>portlet-class</param-name>
+			<param-value>org.apache.wicket.portlet.WicketPortlet</param-value>
+		</init-param>
+		<load-on-startup>1</load-on-startup>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>PortletServletwicket6kittenCaptchaPortlet</servlet-name>
+		<url-pattern>/wicket6kittenCaptchaPortlet/*</url-pattern>
+	</servlet-mapping>
+
+
+	<servlet>
+		<servlet-name>PortletServletwicket6datesPortlet</servlet-name>
+		<servlet-class>com.liferay.portal.kernel.servlet.PortletServlet</servlet-class>
+		<init-param>
+			<param-name>portlet-class</param-name>
+			<param-value>org.apache.wicket.portlet.WicketPortlet</param-value>
+		</init-param>
+		<load-on-startup>1</load-on-startup>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>PortletServletwicket6datesPortlet</servlet-name>
+		<url-pattern>/wicket6datesPortlet/*</url-pattern>
+	</servlet-mapping>
+
+
+	<servlet>
+		<servlet-name>PortletServletwicket6stockquotePortlet</servlet-name>
+		<servlet-class>com.liferay.portal.kernel.servlet.PortletServlet</servlet-class>
+		<init-param>
+			<param-name>portlet-class</param-name>
+			<param-value>org.apache.wicket.portlet.WicketPortlet</param-value>
+		</init-param>
+		<load-on-startup>1</load-on-startup>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>PortletServletwicket6stockquotePortlet</servlet-name>
+		<url-pattern>/wicket6stockquotePortlet/*</url-pattern>
+	</servlet-mapping>
+
+
+	<servlet>
+		<servlet-name>PortletServletwicket6guestbookPortlet</servlet-name>
+		<servlet-class>com.liferay.portal.kernel.servlet.PortletServlet</servlet-class>
+		<init-param>
+			<param-name>portlet-class</param-name>
+			<param-value>org.apache.wicket.portlet.WicketPortlet</param-value>
+		</init-param>
+		<load-on-startup>1</load-on-startup>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>PortletServletwicket6guestbookPortlet</servlet-name>
+		<url-pattern>/wicket6guestbookPortlet/*</url-pattern>
+	</servlet-mapping>
+
+
+	<servlet>
+		<servlet-name>PortletServletwicket6hangmanPortlet</servlet-name>
+		<servlet-class>com.liferay.portal.kernel.servlet.PortletServlet</servlet-class>
+		<init-param>
+			<param-name>portlet-class</param-name>
+			<param-value>org.apache.wicket.portlet.WicketPortlet</param-value>
+		</init-param>
+		<load-on-startup>1</load-on-startup>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>PortletServletwicket6hangmanPortlet</servlet-name>
+		<url-pattern>/wicket6hangmanPortlet/*</url-pattern>
+	</servlet-mapping>
+
+
+	<servlet>
+		<servlet-name>PortletServletwicket6guicePortlet</servlet-name>
+		<servlet-class>com.liferay.portal.kernel.servlet.PortletServlet</servlet-class>
+		<init-param>
+			<param-name>portlet-class</param-name>
+			<param-value>org.apache.wicket.portlet.WicketPortlet</param-value>
+		</init-param>
+		<load-on-startup>1</load-on-startup>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>PortletServletwicket6guicePortlet</servlet-name>
+		<url-pattern>/wicket6guicePortlet/*</url-pattern>
+	</servlet-mapping>
+
+
+	<servlet>
+		<servlet-name>PortletServletwicket6beanValidationPortlet</servlet-name>
+		<servlet-class>com.liferay.portal.kernel.servlet.PortletServlet</servlet-class>
+		<init-param>
+			<param-name>portlet-class</param-name>
+			<param-value>org.apache.wicket.portlet.WicketPortlet</param-value>
+		</init-param>
+		<load-on-startup>1</load-on-startup>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>PortletServletwicket6beanValidationPortlet</servlet-name>
+		<url-pattern>/wicket6beanValidationPortlet/*</url-pattern>
+	</servlet-mapping>
+
+
+	<servlet>
+		<servlet-name>PortletServletwicket6resourceDecorationPortlet</servlet-name>
+		<servlet-class>com.liferay.portal.kernel.servlet.PortletServlet</servlet-class>
+		<init-param>
+			<param-name>portlet-class</param-name>
+			<param-value>org.apache.wicket.portlet.WicketPortlet</param-value>
+		</init-param>
+		<load-on-startup>1</load-on-startup>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>PortletServletwicket6resourceDecorationPortlet</servlet-name>
+		<url-pattern>/wicket6resourceDecorationPortlet/*</url-pattern>
+	</servlet-mapping>
+
+
+	<servlet>
+		<servlet-name>PortletServletwicket6eventsPortlet</servlet-name>
+		<servlet-class>com.liferay.portal.kernel.servlet.PortletServlet</servlet-class>
+		<init-param>
+			<param-name>portlet-class</param-name>
+			<param-value>org.apache.wicket.portlet.WicketPortlet</param-value>
+		</init-param>
+		<load-on-startup>1</load-on-startup>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>PortletServletwicket6eventsPortlet</servlet-name>
+		<url-pattern>/wicket6eventsPortlet/*</url-pattern>
+	</servlet-mapping>
+
+
+	<servlet>
+		<servlet-name>PortletServletwicket6requestMapperPortlet</servlet-name>
+		<servlet-class>com.liferay.portal.kernel.servlet.PortletServlet</servlet-class>
+		<init-param>
+			<param-name>portlet-class</param-name>
+			<param-value>org.apache.wicket.portlet.WicketPortlet</param-value>
+		</init-param>
+		<load-on-startup>1</load-on-startup>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>PortletServletwicket6requestMapperPortlet</servlet-name>
+		<url-pattern>/wicket6requestMapperPortlet/*</url-pattern>
+	</servlet-mapping>
+
+
+	<!-- Liferay listeners -->
+
+	<listener>
+		<listener-class>com.liferay.portal.kernel.servlet.PluginContextListener</listener-class>
+	</listener>
+	<listener>
+		<listener-class>com.liferay.portal.kernel.servlet.SerializableSessionAttributeListener</listener-class>
+	</listener>
+
+	<context-param>
+		<param-name>configuration</param-name>
+		<param-value>deployment</param-value>
+	</context-param>
+
+	<context-param>
+		<param-name>com.ibm.websphere.portletcontainer.PortletDeploymentEnabled</param-name>
+		<param-value>false</param-value>
+	</context-param>
+</web-app>

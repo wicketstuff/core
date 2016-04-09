@@ -1,0 +1,206 @@
+<?xml version="1.0"?>
+<!DOCTYPE liferay-portlet-app PUBLIC "-//Liferay//DTD Portlet Application 6.2.0//EN" "http://www.liferay.com/dtd/liferay-portlet-app_6_2_0.dtd">
+
+<liferay-portlet-app>
+	<portlet>
+		<portlet-name>wicket6echoPortlet</portlet-name>
+		<instanceable>true</instanceable>
+	</portlet>
+
+	<portlet>
+		<portlet-name>wicket6formInputPortlet</portlet-name>
+		<instanceable>true</instanceable>
+	</portlet>
+
+	<portlet>
+		<portlet-name>wicket6comprefPortlet</portlet-name>
+		<instanceable>true</instanceable>
+	</portlet>
+
+	<portlet>
+		<portlet-name>wicket6imagesPortlet</portlet-name>
+		<instanceable>true</instanceable>
+	</portlet>
+
+	<portlet>
+		<portlet-name>wicket6linkomaticPortlet</portlet-name>
+		<instanceable>true</instanceable>
+	</portlet>
+
+	<portlet>
+		<portlet-name>wicket6navomaticPortlet</portlet-name>
+		<instanceable>true</instanceable>
+	</portlet>
+
+	<portlet>
+		<portlet-name>wicket6pubPortlet</portlet-name>
+		<instanceable>true</instanceable>
+	</portlet>
+
+	<portlet>
+		<portlet-name>wicket6pub2Portlet</portlet-name>
+		<instanceable>true</instanceable>
+	</portlet>
+
+
+	<portlet>
+		<portlet-name>wicket6unicodeConverterPortlet</portlet-name>
+		<instanceable>true</instanceable>
+	</portlet>
+
+
+	<portlet>
+		<portlet-name>wicket6niceUrlPortlet</portlet-name>
+		<instanceable>true</instanceable>
+	</portlet>
+
+
+	<portlet>
+		<portlet-name>wicket6ajaxPortlet</portlet-name>
+		<instanceable>true</instanceable>
+	</portlet>
+
+
+	<portlet>
+		<portlet-name>wicket6repeaterPortlet</portlet-name>
+		<instanceable>true</instanceable>
+	</portlet>
+
+
+	<portlet>
+		<portlet-name>wicket6treePortlet</portlet-name>
+		<instanceable>true</instanceable>
+	</portlet>
+
+
+	<portlet>
+		<portlet-name>wicket6uploadPortlet</portlet-name>
+		<instanceable>true</instanceable>
+	</portlet>
+
+
+	<portlet>
+		<portlet-name>wicket6templatePortlet</portlet-name>
+		<instanceable>true</instanceable>
+	</portlet>
+
+
+	<portlet>
+		<portlet-name>wicket6mailTemplatePortlet</portlet-name>
+		<instanceable>true</instanceable>
+	</portlet>
+
+
+	<portlet>
+		<portlet-name>wicket6browserInfoPortlet</portlet-name>
+		<instanceable>true</instanceable>
+	</portlet>
+
+
+	<portlet>
+		<portlet-name>wicket6ajaxBrowserInfoPortlet</portlet-name>
+		<instanceable>true</instanceable>
+	</portlet>
+
+
+	<portlet>
+		<portlet-name>wicket6framesPortlet</portlet-name>
+		<instanceable>true</instanceable>
+	</portlet>
+
+
+	<portlet>
+		<portlet-name>wicket6prototypePortlet</portlet-name>
+		<instanceable>true</instanceable>
+	</portlet>
+
+
+	<portlet>
+		<portlet-name>wicket6abacadabraPortlet</portlet-name>
+		<instanceable>true</instanceable>
+	</portlet>
+
+
+	<portlet>
+		<portlet-name>wicket6customTemplateLoadingPortlet</portlet-name>
+		<instanceable>true</instanceable>
+	</portlet>
+
+
+	<portlet>
+		<portlet-name>wicket6breadcrumbPortlet</portlet-name>
+		<instanceable>true</instanceable>
+	</portlet>
+
+
+	<portlet>
+		<portlet-name>wicket6captchaPortlet</portlet-name>
+		<instanceable>true</instanceable>
+	</portlet>
+
+
+	<portlet>
+		<portlet-name>wicket6kittenCaptchaPortlet</portlet-name>
+		<instanceable>true</instanceable>
+	</portlet>
+
+
+	<portlet>
+		<portlet-name>wicket6datesPortlet</portlet-name>
+		<instanceable>true</instanceable>
+	</portlet>
+
+
+	<portlet>
+		<portlet-name>wicket6stockquotePortlet</portlet-name>
+		<instanceable>true</instanceable>
+	</portlet>
+
+
+	<portlet>
+		<portlet-name>wicket6guestbookPortlet</portlet-name>
+		<instanceable>true</instanceable>
+	</portlet>
+
+
+	<portlet>
+		<portlet-name>wicket6hangmanPortlet</portlet-name>
+		<instanceable>true</instanceable>
+	</portlet>
+
+
+	<portlet>
+		<portlet-name>wicket6guicePortlet</portlet-name>
+		<instanceable>true</instanceable>
+	</portlet>
+
+
+	<portlet>
+		<portlet-name>wicket6beanValidationPortlet</portlet-name>
+		<instanceable>true</instanceable>
+	</portlet>
+
+
+	<portlet>
+		<portlet-name>wicket6resourceDecorationPortlet</portlet-name>
+		<instanceable>true</instanceable>
+	</portlet>
+
+
+	<portlet>
+		<portlet-name>wicket6eventsPortlet</portlet-name>
+		<instanceable>true</instanceable>
+	</portlet>
+
+
+	<portlet>
+		<portlet-name>wicket6requestMapperPortlet</portlet-name>
+		<instanceable>true</instanceable>
+	</portlet>
+</liferay-portlet-app>
+
+
+
+
+
+

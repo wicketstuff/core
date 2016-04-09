@@ -1,0 +1,41 @@
+<?xml version="1.0"?>
+<!DOCTYPE display PUBLIC "-//Liferay//DTD Display 6.2.0//EN" "http://www.liferay.com/dtd/liferay-display_6_2_0.dtd">
+
+<display>
+	<category name="WICKET 6 PORTLETS">
+		<portlet id="wicket6echoPortlet"></portlet>
+		<portlet id="wicket6formInputPortlet"></portlet>
+		<portlet id="wicket6comprefPortlet"></portlet>
+		<portlet id="wicket6imagesPortlet"></portlet>
+		<portlet id="wicket6linkomaticPortlet"></portlet>
+		<portlet id="wicket6navomaticPortlet"></portlet>
+		<portlet id="wicket6pubPortlet"></portlet>
+		<portlet id="wicket6pub2Portlet"></portlet>
+		<portlet id="wicket6unicodeConverterPortlet"></portlet>
+		<portlet id="wicket6niceUrlPortlet"></portlet>
+		<portlet id="wicket6ajaxPortlet"></portlet>
+		<portlet id="wicket6repeaterPortlet"></portlet>
+		<portlet id="wicket6treePortlet"></portlet>
+		<portlet id="wicket6uploadPortlet"></portlet>
+		<portlet id="wicket6templatePortlet"></portlet>
+		<portlet id="wicket6mailTemplatePortlet"></portlet>
+		<portlet id="wicket6browserInfoPortlet"></portlet>
+		<portlet id="wicket6ajaxBrowserInfoPortlet"></portlet>
+		<portlet id="wicket6framesPortlet"></portlet>
+		<portlet id="wicket6prototypePortlet"></portlet>
+		<portlet id="wicket6abacadabraPortlet"></portlet>
+		<portlet id="wicket6customTemplateLoadingPortlet"></portlet>
+		<portlet id="wicket6breadcrumbPortlet"></portlet>
+		<portlet id="wicket6captchaPortlet"></portlet>
+		<portlet id="wicket6kittenCaptchaPortlet"></portlet>
+		<portlet id="wicket6datesPortlet"></portlet>
+		<portlet id="wicket6stockquotePortlet"></portlet>
+		<portlet id="wicket6guestbookPortlet"></portlet>
+		<portlet id="wicket6hangmanPortlet"></portlet>
+		<portlet id="wicket6guicePortlet"></portlet>
+		<portlet id="wicket6beanValidationPortlet"></portlet>
+		<portlet id="wicket6resourceDecorationPortlet"></portlet>
+		<portlet id="wicket6eventsPortlet"></portlet>
+		<portlet id="wicket6requestMapperPortlet"></portlet>
+	</category>
+</display>

@@ -29,9 +29,16 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.apache.wicket.IPageRendererProvider;
+import org.apache.wicket.IRequestCycleProvider;
+import org.apache.wicket.core.request.handler.RenderPageRequestHandler;
 import org.apache.wicket.protocol.http.IWebApplicationFactory;
 import org.apache.wicket.protocol.http.WebApplication;
 import org.apache.wicket.protocol.http.WicketFilter;
+import org.apache.wicket.request.UrlRenderer;
+import org.apache.wicket.request.cycle.RequestCycle;
+import org.apache.wicket.request.cycle.RequestCycleContext;
+import org.apache.wicket.request.handler.render.PageRenderer;
 import org.apache.wicket.settings.IRequestCycleSettings.RenderStrategy;
 import org.apache.wicket.util.crypt.Base64;
 
@@ -42,6 +49,7 @@ import org.apache.wicket.util.crypt.Base64;
  * portlet response objects by an http servlet request / response wrapper.
  * 
  * @author Peter Pastrnak
+ * @author Konstantinos Karavitis
  */
 public class PortletFilter extends WicketFilter {
 	public static final String SHARED_RESOURCE_URL_PORTLET_WINDOW_ID_PREFIX = "/ps:";
@@ -82,6 +90,23 @@ public class PortletFilter extends WicketFilter {
 		this.application.getRequestCycleSettings().addResponseFilter(new PortletInvalidMarkupFilter());
 		this.application.getComponentInitializationListeners().add(new MarkupIdPrepender());
 		this.application.setRootRequestMapper(new PortletRequestMapper(application));
+		this.application.setPageRendererProvider(new IPageRendererProvider() {
+			@Override
+			public PageRenderer get(RenderPageRequestHandler handler) {
+				return new PortletPageRenderer(handler);
+			}
+		});
+		this.application.setRequestCycleProvider(new IRequestCycleProvider() {
+			@Override
+			public RequestCycle get(RequestCycleContext context) {
+				return new RequestCycle(context) {
+					@Override
+					protected UrlRenderer newUrlRenderer() {
+						return new PortletUrlRenderer(getRequest());
+					}
+				};
+			}
+		});
 	}
 
 	@Override

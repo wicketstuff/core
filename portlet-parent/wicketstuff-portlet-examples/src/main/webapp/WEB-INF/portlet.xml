@@ -1,0 +1,1608 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<portlet-app xmlns="http://java.sun.com/xml/ns/portlet/portlet-app_2_0.xsd"
+	version="2.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/portlet/portlet-app_2_0.xsd http://java.sun.com/xml/ns/portlet/portlet-app_2_0.xsd"
+	id="wicketstuff-portlet-examples">
+
+	<portlet>
+		<portlet-name>wicket6echoPortlet</portlet-name>
+		<display-name>WICKET 6 ECHO PORTLET</display-name>
+		<portlet-class>org.apache.wicket.portlet.WicketPortlet</portlet-class>
+		<init-param>
+			<name>wicketFilterPath</name>
+			<value>/wicket6echoPortlet</value>
+		</init-param>
+		<init-param>
+			<name>check-auth-token</name>
+			<value>false</value>
+		</init-param>
+		<expiration-cache>0</expiration-cache>
+		<supports>
+			<mime-type>text/html</mime-type>
+			<portlet-mode>VIEW</portlet-mode>
+			<portlet-mode>EDIT</portlet-mode>
+		</supports>
+		<supports>
+			<mime-type>text/xml</mime-type>
+			<portlet-mode>VIEW</portlet-mode>
+			<portlet-mode>EDIT</portlet-mode>
+		</supports>
+		<supports>
+			<mime-type>text/css</mime-type>
+			<portlet-mode>VIEW</portlet-mode>
+			<portlet-mode>EDIT</portlet-mode>
+		</supports>
+		<portlet-info>
+			<title>WICKET 6 ECHO PORTLET</title>
+			<short-title>WICKET 6 ECHO PORTLET</short-title>
+			<keywords>WICKET 6 ECHO PORTLET</keywords>
+		</portlet-info>
+		<security-role-ref>
+			<role-name>administrator</role-name>
+		</security-role-ref>
+		<security-role-ref>
+			<role-name>guest</role-name>
+		</security-role-ref>
+		<security-role-ref>
+			<role-name>power-user</role-name>
+		</security-role-ref>
+		<security-role-ref>
+			<role-name>user</role-name>
+		</security-role-ref>
+	</portlet>
+	
+	<portlet>
+		<portlet-name>wicket6formInputPortlet</portlet-name>
+		<display-name>WICKET 6 FORM INPUT PORTLET</display-name>
+		<portlet-class>org.apache.wicket.portlet.WicketPortlet</portlet-class>
+		<init-param>
+			<name>wicketFilterPath</name>
+			<value>/wicket6formInputPortlet</value>
+		</init-param>
+		<init-param>
+			<name>check-auth-token</name>
+			<value>false</value>
+		</init-param>
+		<expiration-cache>0</expiration-cache>
+		<supports>
+			<mime-type>text/html</mime-type>
+			<portlet-mode>VIEW</portlet-mode>
+			<portlet-mode>EDIT</portlet-mode>
+		</supports>
+		<supports>
+			<mime-type>text/xml</mime-type>
+			<portlet-mode>VIEW</portlet-mode>
+			<portlet-mode>EDIT</portlet-mode>
+		</supports>
+		<supports>
+			<mime-type>text/css</mime-type>
+			<portlet-mode>VIEW</portlet-mode>
+			<portlet-mode>EDIT</portlet-mode>
+		</supports>
+		<portlet-info>
+			<title>WICKET 6 FORM INPUT PORTLET</title>
+			<short-title>WICKET 6 FORM INPUT PORTLET</short-title>
+			<keywords>WICKET 6 FORM INPUT PORTLET</keywords>
+		</portlet-info>
+		<security-role-ref>
+			<role-name>administrator</role-name>
+		</security-role-ref>
+		<security-role-ref>
+			<role-name>guest</role-name>
+		</security-role-ref>
+		<security-role-ref>
+			<role-name>power-user</role-name>
+		</security-role-ref>
+		<security-role-ref>
+			<role-name>user</role-name>
+		</security-role-ref>
+	</portlet>
+	
+	<portlet>
+		<portlet-name>wicket6comprefPortlet</portlet-name>
+		<display-name>WICKET 6 COMPONENT REFERENCE PORTLET</display-name>
+		<portlet-class>org.apache.wicket.portlet.WicketPortlet</portlet-class>
+		<init-param>
+			<name>wicketFilterPath</name>
+			<value>/wicket6comprefPortlet</value>
+		</init-param>
+		<init-param>
+			<name>check-auth-token</name>
+			<value>false</value>
+		</init-param>
+		<expiration-cache>0</expiration-cache>
+		<supports>
+			<mime-type>text/html</mime-type>
+			<portlet-mode>VIEW</portlet-mode>
+			<portlet-mode>EDIT</portlet-mode>
+		</supports>
+		<supports>
+			<mime-type>text/xml</mime-type>
+			<portlet-mode>VIEW</portlet-mode>
+			<portlet-mode>EDIT</portlet-mode>
+		</supports>
+		<supports>
+			<mime-type>text/css</mime-type>
+			<portlet-mode>VIEW</portlet-mode>
+			<portlet-mode>EDIT</portlet-mode>
+		</supports>
+		<portlet-info>
+			<title>WICKET 6 COMPONENT REFERENCE PORTLET</title>
+			<short-title>WICKET 6 COMPONENT REFERENCE PORTLET</short-title>
+			<keywords>WICKET 6 COMPONENT REFERENCE PORTLET</keywords>
+		</portlet-info>
+		<security-role-ref>
+			<role-name>administrator</role-name>
+		</security-role-ref>
+		<security-role-ref>
+			<role-name>guest</role-name>
+		</security-role-ref>
+		<security-role-ref>
+			<role-name>power-user</role-name>
+		</security-role-ref>
+		<security-role-ref>
+			<role-name>user</role-name>
+		</security-role-ref>
+	</portlet>
+	
+	<portlet>
+		<portlet-name>wicket6imagesPortlet</portlet-name>
+		<display-name>WICKET 6 IMAGES PORTLET</display-name>
+		<portlet-class>org.apache.wicket.portlet.WicketPortlet</portlet-class>
+		<init-param>
+			<name>wicketFilterPath</name>
+			<value>/wicket6imagesPortlet</value>
+		</init-param>
+		<init-param>
+			<name>check-auth-token</name>
+			<value>false</value>
+		</init-param>
+		<expiration-cache>0</expiration-cache>
+		<supports>
+			<mime-type>text/html</mime-type>
+			<portlet-mode>VIEW</portlet-mode>
+			<portlet-mode>EDIT</portlet-mode>
+		</supports>
+		<supports>
+			<mime-type>text/xml</mime-type>
+			<portlet-mode>VIEW</portlet-mode>
+			<portlet-mode>EDIT</portlet-mode>
+		</supports>
+		<supports>
+			<mime-type>text/css</mime-type>
+			<portlet-mode>VIEW</portlet-mode>
+			<portlet-mode>EDIT</portlet-mode>
+		</supports>
+		<portlet-info>
+			<title>WICKET 6 IMAGES PORTLET</title>
+			<short-title>WICKET 6 IMAGES PORTLET</short-title>
+			<keywords>WICKET 6 IMAGES PORTLET</keywords>
+		</portlet-info>
+		<security-role-ref>
+			<role-name>administrator</role-name>
+		</security-role-ref>
+		<security-role-ref>
+			<role-name>guest</role-name>
+		</security-role-ref>
+		<security-role-ref>
+			<role-name>power-user</role-name>
+		</security-role-ref>
+		<security-role-ref>
+			<role-name>user</role-name>
+		</security-role-ref>
+	</portlet>
+	
+	<portlet>
+		<portlet-name>wicket6linkomaticPortlet</portlet-name>
+		<display-name>WICKET 6 LINKS PORTLET</display-name>
+		<portlet-class>org.apache.wicket.portlet.WicketPortlet</portlet-class>
+		<init-param>
+			<name>wicketFilterPath</name>
+			<value>/wicket6linkomaticPortlet</value>
+		</init-param>
+		<init-param>
+			<name>check-auth-token</name>
+			<value>false</value>
+		</init-param>
+		<expiration-cache>0</expiration-cache>
+		<supports>
+			<mime-type>text/html</mime-type>
+			<portlet-mode>VIEW</portlet-mode>
+			<portlet-mode>EDIT</portlet-mode>
+		</supports>
+		<supports>
+			<mime-type>text/xml</mime-type>
+			<portlet-mode>VIEW</portlet-mode>
+			<portlet-mode>EDIT</portlet-mode>
+		</supports>
+		<supports>
+			<mime-type>text/css</mime-type>
+			<portlet-mode>VIEW</portlet-mode>
+			<portlet-mode>EDIT</portlet-mode>
+		</supports>
+		<portlet-info>
+			<title>WICKET 6 LINKS PORTLET</title>
+			<short-title>WICKET 6 LINKS PORTLET</short-title>
+			<keywords>WICKET 6 LINKS PORTLET</keywords>
+		</portlet-info>
+		<security-role-ref>
+			<role-name>administrator</role-name>
+		</security-role-ref>
+		<security-role-ref>
+			<role-name>guest</role-name>
+		</security-role-ref>
+		<security-role-ref>
+			<role-name>power-user</role-name>
+		</security-role-ref>
+		<security-role-ref>
+			<role-name>user</role-name>
+		</security-role-ref>
+	</portlet>
+
+	<portlet>
+		<portlet-name>wicket6navomaticPortlet</portlet-name>
+		<display-name>WICKET 6 NAVIGATION PORTLET</display-name>
+		<portlet-class>org.apache.wicket.portlet.WicketPortlet</portlet-class>
+		<init-param>
+			<name>wicketFilterPath</name>
+			<value>/wicket6navomaticPortlet</value>
+		</init-param>
+		<init-param>
+			<name>check-auth-token</name>
+			<value>false</value>
+		</init-param>
+		<expiration-cache>0</expiration-cache>
+		<supports>
+			<mime-type>text/html</mime-type>
+			<portlet-mode>VIEW</portlet-mode>
+			<portlet-mode>EDIT</portlet-mode>
+		</supports>
+		<supports>
+			<mime-type>text/xml</mime-type>
+			<portlet-mode>VIEW</portlet-mode>
+			<portlet-mode>EDIT</portlet-mode>
+		</supports>
+		<supports>
+			<mime-type>text/css</mime-type>
+			<portlet-mode>VIEW</portlet-mode>
+			<portlet-mode>EDIT</portlet-mode>
+		</supports>
+		<portlet-info>
+			<title>WICKET 6 NAVIGATION PORTLET</title>
+			<short-title>WICKET 6 NAVIGATION PORTLETT</short-title>
+			<keywords>WICKET 6 NAVIGATION PORTLET</keywords>
+		</portlet-info>
+		<security-role-ref>
+			<role-name>administrator</role-name>
+		</security-role-ref>
+		<security-role-ref>
+			<role-name>guest</role-name>
+		</security-role-ref>
+		<security-role-ref>
+			<role-name>power-user</role-name>
+		</security-role-ref>
+		<security-role-ref>
+			<role-name>user</role-name>
+		</security-role-ref>
+	</portlet>
+	
+	<portlet>
+		<portlet-name>wicket6pubPortlet</portlet-name>
+		<display-name>WICKET 6 PUB PORTLET</display-name>
+		<portlet-class>org.apache.wicket.portlet.WicketPortlet</portlet-class>
+		<init-param>
+			<name>wicketFilterPath</name>
+			<value>/wicket6pubPortlet</value>
+		</init-param>
+		<init-param>
+			<name>check-auth-token</name>
+			<value>false</value>
+		</init-param>
+		<expiration-cache>0</expiration-cache>
+		<supports>
+			<mime-type>text/html</mime-type>
+			<portlet-mode>VIEW</portlet-mode>
+			<portlet-mode>EDIT</portlet-mode>
+		</supports>
+		<supports>
+			<mime-type>text/xml</mime-type>
+			<portlet-mode>VIEW</portlet-mode>
+			<portlet-mode>EDIT</portlet-mode>
+		</supports>
+		<supports>
+			<mime-type>text/css</mime-type>
+			<portlet-mode>VIEW</portlet-mode>
+			<portlet-mode>EDIT</portlet-mode>
+		</supports>
+		<portlet-info>
+			<title>WICKET 6 PUB PORTLET</title>
+			<short-title>WICKET 6 PUB PORTLETT</short-title>
+			<keywords>WICKET 6 PUB PORTLET</keywords>
+		</portlet-info>
+		<security-role-ref>
+			<role-name>administrator</role-name>
+		</security-role-ref>
+		<security-role-ref>
+			<role-name>guest</role-name>
+		</security-role-ref>
+		<security-role-ref>
+			<role-name>power-user</role-name>
+		</security-role-ref>
+		<security-role-ref>
+			<role-name>user</role-name>
+		</security-role-ref>
+	</portlet>
+	
+	<portlet>
+		<portlet-name>wicket6pub2Portlet</portlet-name>
+		<display-name>WICKET 6 PUB PORTLET</display-name>
+		<portlet-class>org.apache.wicket.portlet.WicketPortlet</portlet-class>
+		<init-param>
+			<name>wicketFilterPath</name>
+			<value>/wicket6pub2Portlet</value>
+		</init-param>
+		<init-param>
+			<name>check-auth-token</name>
+			<value>false</value>
+		</init-param>
+		<expiration-cache>0</expiration-cache>
+		<supports>
+			<mime-type>text/html</mime-type>
+			<portlet-mode>VIEW</portlet-mode>
+			<portlet-mode>EDIT</portlet-mode>
+		</supports>
+		<supports>
+			<mime-type>text/xml</mime-type>
+			<portlet-mode>VIEW</portlet-mode>
+			<portlet-mode>EDIT</portlet-mode>
+		</supports>
+		<supports>
+			<mime-type>text/css</mime-type>
+			<portlet-mode>VIEW</portlet-mode>
+			<portlet-mode>EDIT</portlet-mode>
+		</supports>
+		<portlet-info>
+			<title>WICKET 6 PUB2 PORTLET</title>
+			<short-title>WICKET 6 PUB2 PORTLET</short-title>
+			<keywords>WICKET 6 PUB2 PORTLET</keywords>
+		</portlet-info>
+		<security-role-ref>
+			<role-name>administrator</role-name>
+		</security-role-ref>
+		<security-role-ref>
+			<role-name>guest</role-name>
+		</security-role-ref>
+		<security-role-ref>
+			<role-name>power-user</role-name>
+		</security-role-ref>
+		<security-role-ref>
+			<role-name>user</role-name>
+		</security-role-ref>
+	</portlet>
+	
+	<portlet>
+		<portlet-name>wicket6unicodeConverterPortlet</portlet-name>
+		<display-name>WICKET 6 UNICODE CONVERTER PORTLET</display-name>
+		<portlet-class>org.apache.wicket.portlet.WicketPortlet</portlet-class>
+		<init-param>
+			<name>wicketFilterPath</name>
+			<value>/wicket6unicodeConverterPortlet</value>
+		</init-param>
+		<init-param>
+			<name>check-auth-token</name>
+			<value>false</value>
+		</init-param>
+		<expiration-cache>0</expiration-cache>
+		<supports>
+			<mime-type>text/html</mime-type>
+			<portlet-mode>VIEW</portlet-mode>
+			<portlet-mode>EDIT</portlet-mode>
+		</supports>
+		<supports>
+			<mime-type>text/xml</mime-type>
+			<portlet-mode>VIEW</portlet-mode>
+			<portlet-mode>EDIT</portlet-mode>
+		</supports>
+		<supports>
+			<mime-type>text/css</mime-type>
+			<portlet-mode>VIEW</portlet-mode>
+			<portlet-mode>EDIT</portlet-mode>
+		</supports>
+		<portlet-info>
+			<title>WICKET 6 UNICODE CONVERTER PORTLET</title>
+			<short-title>WICKET 6 UNICODE CONVERTER PORTLET</short-title>
+			<keywords>WICKET 6 UNICODE CONVERTER PORTLET</keywords>
+		</portlet-info>
+		<security-role-ref>
+			<role-name>administrator</role-name>
+		</security-role-ref>
+		<security-role-ref>
+			<role-name>guest</role-name>
+		</security-role-ref>
+		<security-role-ref>
+			<role-name>power-user</role-name>
+		</security-role-ref>
+		<security-role-ref>
+			<role-name>user</role-name>
+		</security-role-ref>
+	</portlet>
+	
+	<portlet>
+		<portlet-name>wicket6niceUrlPortlet</portlet-name>
+		<display-name>WICKET 6 NICE URL PORTLET</display-name>
+		<portlet-class>org.apache.wicket.portlet.WicketPortlet</portlet-class>
+		<init-param>
+			<name>wicketFilterPath</name>
+			<value>/wicket6niceUrlPortlet</value>
+		</init-param>
+		<init-param>
+			<name>check-auth-token</name>
+			<value>false</value>
+		</init-param>
+		<expiration-cache>0</expiration-cache>
+		<supports>
+			<mime-type>text/html</mime-type>
+			<portlet-mode>VIEW</portlet-mode>
+			<portlet-mode>EDIT</portlet-mode>
+		</supports>
+		<supports>
+			<mime-type>text/xml</mime-type>
+			<portlet-mode>VIEW</portlet-mode>
+			<portlet-mode>EDIT</portlet-mode>
+		</supports>
+		<supports>
+			<mime-type>text/css</mime-type>
+			<portlet-mode>VIEW</portlet-mode>
+			<portlet-mode>EDIT</portlet-mode>
+		</supports>
+		<portlet-info>
+			<title>WICKET 6 NICE URL PORTLET</title>
+			<short-title>WICKET 6 NICE URL PORTLET</short-title>
+			<keywords>WICKET 6 NICE URL PORTLET</keywords>
+		</portlet-info>
+		<security-role-ref>
+			<role-name>administrator</role-name>
+		</security-role-ref>
+		<security-role-ref>
+			<role-name>guest</role-name>
+		</security-role-ref>
+		<security-role-ref>
+			<role-name>power-user</role-name>
+		</security-role-ref>
+		<security-role-ref>
+			<role-name>user</role-name>
+		</security-role-ref>
+	</portlet>
+	
+	<portlet>
+		<portlet-name>wicket6ajaxPortlet</portlet-name>
+		<display-name>WICKET 6 AJAX BUILTIN PORTLET</display-name>
+		<portlet-class>org.apache.wicket.portlet.WicketPortlet</portlet-class>
+		<init-param>
+			<name>wicketFilterPath</name>
+			<value>/wicket6ajaxPortlet</value>
+		</init-param>
+		<init-param>
+			<name>check-auth-token</name>
+			<value>false</value>
+		</init-param>
+		<expiration-cache>0</expiration-cache>
+		<supports>
+			<mime-type>text/html</mime-type>
+			<portlet-mode>VIEW</portlet-mode>
+			<portlet-mode>EDIT</portlet-mode>
+		</supports>
+		<supports>
+			<mime-type>text/xml</mime-type>
+			<portlet-mode>VIEW</portlet-mode>
+			<portlet-mode>EDIT</portlet-mode>
+		</supports>
+		<supports>
+			<mime-type>text/css</mime-type>
+			<portlet-mode>VIEW</portlet-mode>
+			<portlet-mode>EDIT</portlet-mode>
+		</supports>
+		<portlet-info>
+			<title>WICKET 6 AJAX BUILTIN PORTLET</title>
+			<short-title>WICKET 6 AJAX BUILTIN PORTLET</short-title>
+			<keywords>WICKET 6 AJAX BUILTIN PORTLET</keywords>
+		</portlet-info>
+		<security-role-ref>
+			<role-name>administrator</role-name>
+		</security-role-ref>
+		<security-role-ref>
+			<role-name>guest</role-name>
+		</security-role-ref>
+		<security-role-ref>
+			<role-name>power-user</role-name>
+		</security-role-ref>
+		<security-role-ref>
+			<role-name>user</role-name>
+		</security-role-ref>
+	</portlet>
+	
+	<portlet>
+		<portlet-name>wicket6repeaterPortlet</portlet-name>
+		<display-name>WICKET 6 REPEATERS PORTLET</display-name>
+		<portlet-class>org.apache.wicket.portlet.WicketPortlet</portlet-class>
+		<init-param>
+			<name>wicketFilterPath</name>
+			<value>/wicket6repeaterPortlet</value>
+		</init-param>
+		<init-param>
+			<name>check-auth-token</name>
+			<value>false</value>
+		</init-param>
+		<expiration-cache>0</expiration-cache>
+		<supports>
+			<mime-type>text/html</mime-type>
+			<portlet-mode>VIEW</portlet-mode>
+			<portlet-mode>EDIT</portlet-mode>
+		</supports>
+		<supports>
+			<mime-type>text/xml</mime-type>
+			<portlet-mode>VIEW</portlet-mode>
+			<portlet-mode>EDIT</portlet-mode>
+		</supports>
+		<supports>
+			<mime-type>text/css</mime-type>
+			<portlet-mode>VIEW</portlet-mode>
+			<portlet-mode>EDIT</portlet-mode>
+		</supports>
+		<portlet-info>
+			<title>WICKET 6 REPEATERS PORTLET</title>
+			<short-title>WICKET 6 REPEATERS PORTLET</short-title>
+			<keywords>WICKET 6 REPEATERS PORTLET</keywords>
+		</portlet-info>
+		<security-role-ref>
+			<role-name>administrator</role-name>
+		</security-role-ref>
+		<security-role-ref>
+			<role-name>guest</role-name>
+		</security-role-ref>
+		<security-role-ref>
+			<role-name>power-user</role-name>
+		</security-role-ref>
+		<security-role-ref>
+			<role-name>user</role-name>
+		</security-role-ref>
+	</portlet>
+	
+	<portlet>
+		<portlet-name>wicket6treePortlet</portlet-name>
+		<display-name>WICKET 6 TREE PORTLET</display-name>
+		<portlet-class>org.apache.wicket.portlet.WicketPortlet</portlet-class>
+		<init-param>
+			<name>wicketFilterPath</name>
+			<value>/wicket6treePortlet</value>
+		</init-param>
+		<init-param>
+			<name>check-auth-token</name>
+			<value>false</value>
+		</init-param>
+		<expiration-cache>0</expiration-cache>
+		<supports>
+			<mime-type>text/html</mime-type>
+			<portlet-mode>VIEW</portlet-mode>
+			<portlet-mode>EDIT</portlet-mode>
+		</supports>
+		<supports>
+			<mime-type>text/xml</mime-type>
+			<portlet-mode>VIEW</portlet-mode>
+			<portlet-mode>EDIT</portlet-mode>
+		</supports>
+		<supports>
+			<mime-type>text/css</mime-type>
+			<portlet-mode>VIEW</portlet-mode>
+			<portlet-mode>EDIT</portlet-mode>
+		</supports>
+		<portlet-info>
+			<title>WICKET 6 TREE PORTLET</title>
+			<short-title>WICKET 6 TREE PORTLET</short-title>
+			<keywords>WICKET 6 TREE PORTLET</keywords>
+		</portlet-info>
+		<security-role-ref>
+			<role-name>administrator</role-name>
+		</security-role-ref>
+		<security-role-ref>
+			<role-name>guest</role-name>
+		</security-role-ref>
+		<security-role-ref>
+			<role-name>power-user</role-name>
+		</security-role-ref>
+		<security-role-ref>
+			<role-name>user</role-name>
+		</security-role-ref>
+	</portlet>
+	
+	<portlet>
+		<portlet-name>wicket6uploadPortlet</portlet-name>
+		<display-name>WICKET 6 UPLOAD PORTLET</display-name>
+		<portlet-class>org.apache.wicket.portlet.WicketPortlet</portlet-class>
+		<init-param>
+			<name>wicketFilterPath</name>
+			<value>/wicket6uploadPortlet</value>
+		</init-param>
+		<init-param>
+			<name>check-auth-token</name>
+			<value>false</value>
+		</init-param>
+		<expiration-cache>0</expiration-cache>
+		<supports>
+			<mime-type>text/html</mime-type>
+			<portlet-mode>VIEW</portlet-mode>
+			<portlet-mode>EDIT</portlet-mode>
+		</supports>
+		<supports>
+			<mime-type>text/xml</mime-type>
+			<portlet-mode>VIEW</portlet-mode>
+			<portlet-mode>EDIT</portlet-mode>
+		</supports>
+		<supports>
+			<mime-type>text/css</mime-type>
+			<portlet-mode>VIEW</portlet-mode>
+			<portlet-mode>EDIT</portlet-mode>
+		</supports>
+		<portlet-info>
+			<title>WICKET 6 UPLOAD PORTLET</title>
+			<short-title>WICKET 6 UPLOAD PORTLET</short-title>
+			<keywords>WICKET 6 UPLOAD PORTLET</keywords>
+		</portlet-info>
+		<security-role-ref>
+			<role-name>administrator</role-name>
+		</security-role-ref>
+		<security-role-ref>
+			<role-name>guest</role-name>
+		</security-role-ref>
+		<security-role-ref>
+			<role-name>power-user</role-name>
+		</security-role-ref>
+		<security-role-ref>
+			<role-name>user</role-name>
+		</security-role-ref>
+	</portlet>
+	
+	<portlet>
+		<portlet-name>wicket6templatePortlet</portlet-name>
+		<display-name>WICKET 6 TEMPLATE PORTLET</display-name>
+		<portlet-class>org.apache.wicket.portlet.WicketPortlet</portlet-class>
+		<init-param>
+			<name>wicketFilterPath</name>
+			<value>/wicket6templatePortlet</value>
+		</init-param>
+		<init-param>
+			<name>check-auth-token</name>
+			<value>false</value>
+		</init-param>
+		<expiration-cache>0</expiration-cache>
+		<supports>
+			<mime-type>text/html</mime-type>
+			<portlet-mode>VIEW</portlet-mode>
+			<portlet-mode>EDIT</portlet-mode>
+		</supports>
+		<supports>
+			<mime-type>text/xml</mime-type>
+			<portlet-mode>VIEW</portlet-mode>
+			<portlet-mode>EDIT</portlet-mode>
+		</supports>
+		<supports>
+			<mime-type>text/css</mime-type>
+			<portlet-mode>VIEW</portlet-mode>
+			<portlet-mode>EDIT</portlet-mode>
+		</supports>
+		<portlet-info>
+			<title>WICKET 6 TEMPLATE PORTLET</title>
+			<short-title>WICKET 6 TEMPLATE PORTLET</short-title>
+			<keywords>WICKET 6 TEMPLATE PORTLET</keywords>
+		</portlet-info>
+		<security-role-ref>
+			<role-name>administrator</role-name>
+		</security-role-ref>
+		<security-role-ref>
+			<role-name>guest</role-name>
+		</security-role-ref>
+		<security-role-ref>
+			<role-name>power-user</role-name>
+		</security-role-ref>
+		<security-role-ref>
+			<role-name>user</role-name>
+		</security-role-ref>
+	</portlet>
+	
+	<portlet>
+		<portlet-name>wicket6mailTemplatePortlet</portlet-name>
+		<display-name>WICKET 6 MAIL TEMPLATE PORTLET</display-name>
+		<portlet-class>org.apache.wicket.portlet.WicketPortlet</portlet-class>
+		<init-param>
+			<name>wicketFilterPath</name>
+			<value>/wicket6mailTemplatePortlet</value>
+		</init-param>
+		<init-param>
+			<name>check-auth-token</name>
+			<value>false</value>
+		</init-param>
+		<expiration-cache>0</expiration-cache>
+		<supports>
+			<mime-type>text/html</mime-type>
+			<portlet-mode>VIEW</portlet-mode>
+			<portlet-mode>EDIT</portlet-mode>
+		</supports>
+		<supports>
+			<mime-type>text/xml</mime-type>
+			<portlet-mode>VIEW</portlet-mode>
+			<portlet-mode>EDIT</portlet-mode>
+		</supports>
+		<supports>
+			<mime-type>text/css</mime-type>
+			<portlet-mode>VIEW</portlet-mode>
+			<portlet-mode>EDIT</portlet-mode>
+		</supports>
+		<portlet-info>
+			<title>WICKET 6 MAIL TEMPLATE PORTLET</title>
+			<short-title>WICKET 6 MAIL TEMPLATE PORTLET</short-title>
+			<keywords>WICKET 6 MAIL TEMPLATE PORTLET</keywords>
+		</portlet-info>
+		<security-role-ref>
+			<role-name>administrator</role-name>
+		</security-role-ref>
+		<security-role-ref>
+			<role-name>guest</role-name>
+		</security-role-ref>
+		<security-role-ref>
+			<role-name>power-user</role-name>
+		</security-role-ref>
+		<security-role-ref>
+			<role-name>user</role-name>
+		</security-role-ref>
+	</portlet>
+	
+	<portlet>
+		<portlet-name>wicket6browserInfoPortlet</portlet-name>
+		<display-name>WICKET 6 BROWSER INFO PORTLET</display-name>
+		<portlet-class>org.apache.wicket.portlet.WicketPortlet</portlet-class>
+		<init-param>
+			<name>wicketFilterPath</name>
+			<value>/wicket6browserInfoPortlet</value>
+		</init-param>
+		<init-param>
+			<name>check-auth-token</name>
+			<value>false</value>
+		</init-param>
+		<expiration-cache>0</expiration-cache>
+		<supports>
+			<mime-type>text/html</mime-type>
+			<portlet-mode>VIEW</portlet-mode>
+			<portlet-mode>EDIT</portlet-mode>
+		</supports>
+		<supports>
+			<mime-type>text/xml</mime-type>
+			<portlet-mode>VIEW</portlet-mode>
+			<portlet-mode>EDIT</portlet-mode>
+		</supports>
+		<supports>
+			<mime-type>text/css</mime-type>
+			<portlet-mode>VIEW</portlet-mode>
+			<portlet-mode>EDIT</portlet-mode>
+		</supports>
+		<portlet-info>
+			<title>WICKET 6 BROWSER INFO PORTLET</title>
+			<short-title>WICKET 6 BROWSER INFO PORTLET</short-title>
+			<keywords>WICKET 6 BROWSER INFO PORTLET</keywords>
+		</portlet-info>
+		<security-role-ref>
+			<role-name>administrator</role-name>
+		</security-role-ref>
+		<security-role-ref>
+			<role-name>guest</role-name>
+		</security-role-ref>
+		<security-role-ref>
+			<role-name>power-user</role-name>
+		</security-role-ref>
+		<security-role-ref>
+			<role-name>user</role-name>
+		</security-role-ref>
+	</portlet>
+	
+	<portlet>
+		<portlet-name>wicket6ajaxBrowserInfoPortlet</portlet-name>
+		<display-name>WICKET 6 AJAX BROWSER INFO PORTLET</display-name>
+		<portlet-class>org.apache.wicket.portlet.WicketPortlet</portlet-class>
+		<init-param>
+			<name>wicketFilterPath</name>
+			<value>/wicket6ajaxBrowserInfoPortlet</value>
+		</init-param>
+		<init-param>
+			<name>check-auth-token</name>
+			<value>false</value>
+		</init-param>
+		<expiration-cache>0</expiration-cache>
+		<supports>
+			<mime-type>text/html</mime-type>
+			<portlet-mode>VIEW</portlet-mode>
+			<portlet-mode>EDIT</portlet-mode>
+		</supports>
+		<supports>
+			<mime-type>text/xml</mime-type>
+			<portlet-mode>VIEW</portlet-mode>
+			<portlet-mode>EDIT</portlet-mode>
+		</supports>
+		<supports>
+			<mime-type>text/css</mime-type>
+			<portlet-mode>VIEW</portlet-mode>
+			<portlet-mode>EDIT</portlet-mode>
+		</supports>
+		<portlet-info>
+			<title>WICKET 6 AJAX BROWSER INFO PORTLET</title>
+			<short-title>WICKET 6 AJAX BROWSER INFO PORTLET</short-title>
+			<keywords>WICKET 6 AJAX BROWSER INFO PORTLET</keywords>
+		</portlet-info>
+		<security-role-ref>
+			<role-name>administrator</role-name>
+		</security-role-ref>
+		<security-role-ref>
+			<role-name>guest</role-name>
+		</security-role-ref>
+		<security-role-ref>
+			<role-name>power-user</role-name>
+		</security-role-ref>
+		<security-role-ref>
+			<role-name>user</role-name>
+		</security-role-ref>
+	</portlet>
+	
+	<portlet>
+		<portlet-name>wicket6framesPortlet</portlet-name>
+		<display-name>WICKET 6 FRAMES PORTLET</display-name>
+		<portlet-class>org.apache.wicket.portlet.WicketPortlet</portlet-class>
+		<init-param>
+			<name>wicketFilterPath</name>
+			<value>/wicket6framesPortlet</value>
+		</init-param>
+		<init-param>
+			<name>check-auth-token</name>
+			<value>false</value>
+		</init-param>
+		<expiration-cache>0</expiration-cache>
+		<supports>
+			<mime-type>text/html</mime-type>
+			<portlet-mode>VIEW</portlet-mode>
+			<portlet-mode>EDIT</portlet-mode>
+		</supports>
+		<supports>
+			<mime-type>text/xml</mime-type>
+			<portlet-mode>VIEW</portlet-mode>
+			<portlet-mode>EDIT</portlet-mode>
+		</supports>
+		<supports>
+			<mime-type>text/css</mime-type>
+			<portlet-mode>VIEW</portlet-mode>
+			<portlet-mode>EDIT</portlet-mode>
+		</supports>
+		<portlet-info>
+			<title>WICKET 6 FRAMES PORTLET</title>
+			<short-title>WICKET 6 FRAMES PORTLET</short-title>
+			<keywords>WICKET 6 FRAMES PORTLET</keywords>
+		</portlet-info>
+		<security-role-ref>
+			<role-name>administrator</role-name>
+		</security-role-ref>
+		<security-role-ref>
+			<role-name>guest</role-name>
+		</security-role-ref>
+		<security-role-ref>
+			<role-name>power-user</role-name>
+		</security-role-ref>
+		<security-role-ref>
+			<role-name>user</role-name>
+		</security-role-ref>
+	</portlet>
+	
+	<portlet>
+		<portlet-name>wicket6prototypePortlet</portlet-name>
+		<display-name>WICKET 6 PROTOTYPE PORTLET</display-name>
+		<portlet-class>org.apache.wicket.portlet.WicketPortlet</portlet-class>
+		<init-param>
+			<name>wicketFilterPath</name>
+			<value>/wicket6prototypePortlet</value>
+		</init-param>
+		<init-param>
+			<name>check-auth-token</name>
+			<value>false</value>
+		</init-param>
+		<expiration-cache>0</expiration-cache>
+		<supports>
+			<mime-type>text/html</mime-type>
+			<portlet-mode>VIEW</portlet-mode>
+			<portlet-mode>EDIT</portlet-mode>
+		</supports>
+		<supports>
+			<mime-type>text/xml</mime-type>
+			<portlet-mode>VIEW</portlet-mode>
+			<portlet-mode>EDIT</portlet-mode>
+		</supports>
+		<supports>
+			<mime-type>text/css</mime-type>
+			<portlet-mode>VIEW</portlet-mode>
+			<portlet-mode>EDIT</portlet-mode>
+		</supports>
+		<portlet-info>
+			<title>WICKET 6 PROTOTYPE PORTLET</title>
+			<short-title>WICKET 6 PROTOTYPE PORTLET</short-title>
+			<keywords>WICKET 6 PROTOTYPE PORTLET</keywords>
+		</portlet-info>
+		<security-role-ref>
+			<role-name>administrator</role-name>
+		</security-role-ref>
+		<security-role-ref>
+			<role-name>guest</role-name>
+		</security-role-ref>
+		<security-role-ref>
+			<role-name>power-user</role-name>
+		</security-role-ref>
+		<security-role-ref>
+			<role-name>user</role-name>
+		</security-role-ref>
+	</portlet>
+	
+	<portlet>
+		<portlet-name>wicket6abacadabraPortlet</portlet-name>
+		<display-name>WICKET 6 WIZARD PORTLET</display-name>
+		<portlet-class>org.apache.wicket.portlet.WicketPortlet</portlet-class>
+		<init-param>
+			<name>wicketFilterPath</name>
+			<value>/wicket6abacadabraPortlet</value>
+		</init-param>
+		<init-param>
+			<name>check-auth-token</name>
+			<value>false</value>
+		</init-param>
+		<expiration-cache>0</expiration-cache>
+		<supports>
+			<mime-type>text/html</mime-type>
+			<portlet-mode>VIEW</portlet-mode>
+			<portlet-mode>EDIT</portlet-mode>
+		</supports>
+		<supports>
+			<mime-type>text/xml</mime-type>
+			<portlet-mode>VIEW</portlet-mode>
+			<portlet-mode>EDIT</portlet-mode>
+		</supports>
+		<supports>
+			<mime-type>text/css</mime-type>
+			<portlet-mode>VIEW</portlet-mode>
+			<portlet-mode>EDIT</portlet-mode>
+		</supports>
+		<portlet-info>
+			<title>WICKET 6 WIZARD PORTLET</title>
+			<short-title>WICKET 6 WIZARD PORTLET</short-title>
+			<keywords>WICKET 6 WIZARD PORTLET</keywords>
+		</portlet-info>
+		<security-role-ref>
+			<role-name>administrator</role-name>
+		</security-role-ref>
+		<security-role-ref>
+			<role-name>guest</role-name>
+		</security-role-ref>
+		<security-role-ref>
+			<role-name>power-user</role-name>
+		</security-role-ref>
+		<security-role-ref>
+			<role-name>user</role-name>
+		</security-role-ref>
+	</portlet>
+	
+	<portlet>
+		<portlet-name>wicket6customTemplateLoadingPortlet</portlet-name>
+		<display-name>WICKET 6 CUSTOM TEMPLATE LOADING PORTLET</display-name>
+		<portlet-class>org.apache.wicket.portlet.WicketPortlet</portlet-class>
+		<init-param>
+			<name>wicketFilterPath</name>
+			<value>/wicket6customTemplateLoadingPortlet</value>
+		</init-param>
+		<init-param>
+			<name>check-auth-token</name>
+			<value>false</value>
+		</init-param>
+		<expiration-cache>0</expiration-cache>
+		<supports>
+			<mime-type>text/html</mime-type>
+			<portlet-mode>VIEW</portlet-mode>
+			<portlet-mode>EDIT</portlet-mode>
+		</supports>
+		<supports>
+			<mime-type>text/xml</mime-type>
+			<portlet-mode>VIEW</portlet-mode>
+			<portlet-mode>EDIT</portlet-mode>
+		</supports>
+		<supports>
+			<mime-type>text/css</mime-type>
+			<portlet-mode>VIEW</portlet-mode>
+			<portlet-mode>EDIT</portlet-mode>
+		</supports>
+		<portlet-info>
+			<title>WICKET 6 CUSTOM TEMPLATE LOADING PORTLET</title>
+			<short-title>WICKET 6 CUSTOM TEMPLATE LOADING PORTLET</short-title>
+			<keywords>WICKET 6 CUSTOM TEMPLATE LOADING PORTLET</keywords>
+		</portlet-info>
+		<security-role-ref>
+			<role-name>administrator</role-name>
+		</security-role-ref>
+		<security-role-ref>
+			<role-name>guest</role-name>
+		</security-role-ref>
+		<security-role-ref>
+			<role-name>power-user</role-name>
+		</security-role-ref>
+		<security-role-ref>
+			<role-name>user</role-name>
+		</security-role-ref>
+	</portlet>
+	
+	<portlet>
+		<portlet-name>wicket6breadcrumbPortlet</portlet-name>
+		<display-name>WICKET 6 BREADCRUB PORTLET</display-name>
+		<portlet-class>org.apache.wicket.portlet.WicketPortlet</portlet-class>
+		<init-param>
+			<name>wicketFilterPath</name>
+			<value>/wicket6breadcrumbPortlet</value>
+		</init-param>
+		<init-param>
+			<name>check-auth-token</name>
+			<value>false</value>
+		</init-param>
+		<expiration-cache>0</expiration-cache>
+		<supports>
+			<mime-type>text/html</mime-type>
+			<portlet-mode>VIEW</portlet-mode>
+			<portlet-mode>EDIT</portlet-mode>
+		</supports>
+		<supports>
+			<mime-type>text/xml</mime-type>
+			<portlet-mode>VIEW</portlet-mode>
+			<portlet-mode>EDIT</portlet-mode>
+		</supports>
+		<supports>
+			<mime-type>text/css</mime-type>
+			<portlet-mode>VIEW</portlet-mode>
+			<portlet-mode>EDIT</portlet-mode>
+		</supports>
+		<portlet-info>
+			<title>WICKET 6 BREADCRUB PORTLET</title>
+			<short-title>WICKET 6 BREADCRUB PORTLET</short-title>
+			<keywords>WICKET 6 BREADCRUB PORTLET</keywords>
+		</portlet-info>
+		<security-role-ref>
+			<role-name>administrator</role-name>
+		</security-role-ref>
+		<security-role-ref>
+			<role-name>guest</role-name>
+		</security-role-ref>
+		<security-role-ref>
+			<role-name>power-user</role-name>
+		</security-role-ref>
+		<security-role-ref>
+			<role-name>user</role-name>
+		</security-role-ref>
+	</portlet>
+	
+	<portlet>
+		<portlet-name>wicket6captchaPortlet</portlet-name>
+		<display-name>WICKET 6 CAPTCHA PORTLET</display-name>
+		<portlet-class>org.apache.wicket.portlet.WicketPortlet</portlet-class>
+		<init-param>
+			<name>wicketFilterPath</name>
+			<value>/wicket6captchaPortlet</value>
+		</init-param>
+		<init-param>
+			<name>check-auth-token</name>
+			<value>false</value>
+		</init-param>
+		<expiration-cache>0</expiration-cache>
+		<supports>
+			<mime-type>text/html</mime-type>
+			<portlet-mode>VIEW</portlet-mode>
+			<portlet-mode>EDIT</portlet-mode>
+		</supports>
+		<supports>
+			<mime-type>text/xml</mime-type>
+			<portlet-mode>VIEW</portlet-mode>
+			<portlet-mode>EDIT</portlet-mode>
+		</supports>
+		<supports>
+			<mime-type>text/css</mime-type>
+			<portlet-mode>VIEW</portlet-mode>
+			<portlet-mode>EDIT</portlet-mode>
+		</supports>
+		<portlet-info>
+			<title>WICKET 6 CAPTCHA PORTLET</title>
+			<short-title>WICKET 6 CAPTCHA PORTLET</short-title>
+			<keywords>WICKET 6 CAPTCHA PORTLET</keywords>
+		</portlet-info>
+		<security-role-ref>
+			<role-name>administrator</role-name>
+		</security-role-ref>
+		<security-role-ref>
+			<role-name>guest</role-name>
+		</security-role-ref>
+		<security-role-ref>
+			<role-name>power-user</role-name>
+		</security-role-ref>
+		<security-role-ref>
+			<role-name>user</role-name>
+		</security-role-ref>
+	</portlet>
+	
+	<portlet>
+		<portlet-name>wicket6kittenCaptchaPortlet</portlet-name>
+		<display-name>WICKET 6 KITTEN CAPTCHA PORTLET</display-name>
+		<portlet-class>org.apache.wicket.portlet.WicketPortlet</portlet-class>
+		<init-param>
+			<name>wicketFilterPath</name>
+			<value>/wicket6kittenCaptchaPortlet</value>
+		</init-param>
+		<init-param>
+			<name>check-auth-token</name>
+			<value>false</value>
+		</init-param>
+		<expiration-cache>0</expiration-cache>
+		<supports>
+			<mime-type>text/html</mime-type>
+			<portlet-mode>VIEW</portlet-mode>
+			<portlet-mode>EDIT</portlet-mode>
+		</supports>
+		<supports>
+			<mime-type>text/xml</mime-type>
+			<portlet-mode>VIEW</portlet-mode>
+			<portlet-mode>EDIT</portlet-mode>
+		</supports>
+		<supports>
+			<mime-type>text/css</mime-type>
+			<portlet-mode>VIEW</portlet-mode>
+			<portlet-mode>EDIT</portlet-mode>
+		</supports>
+		<portlet-info>
+			<title>WICKET 6 KITTEN CAPTCHA PORTLET</title>
+			<short-title>WICKET 6 KITTEN CAPTCHA PORTLET</short-title>
+			<keywords>WICKET 6 KITTEN CAPTCHA PORTLET</keywords>
+		</portlet-info>
+		<security-role-ref>
+			<role-name>administrator</role-name>
+		</security-role-ref>
+		<security-role-ref>
+			<role-name>guest</role-name>
+		</security-role-ref>
+		<security-role-ref>
+			<role-name>power-user</role-name>
+		</security-role-ref>
+		<security-role-ref>
+			<role-name>user</role-name>
+		</security-role-ref>
+	</portlet>
+	
+	<portlet>
+		<portlet-name>wicket6datesPortlet</portlet-name>
+		<display-name>WICKET 6 DATES PORTLET</display-name>
+		<portlet-class>org.apache.wicket.portlet.WicketPortlet</portlet-class>
+		<init-param>
+			<name>wicketFilterPath</name>
+			<value>/wicket6datesPortlet</value>
+		</init-param>
+		<init-param>
+			<name>check-auth-token</name>
+			<value>false</value>
+		</init-param>
+		<expiration-cache>0</expiration-cache>
+		<supports>
+			<mime-type>text/html</mime-type>
+			<portlet-mode>VIEW</portlet-mode>
+			<portlet-mode>EDIT</portlet-mode>
+		</supports>
+		<supports>
+			<mime-type>text/xml</mime-type>
+			<portlet-mode>VIEW</portlet-mode>
+			<portlet-mode>EDIT</portlet-mode>
+		</supports>
+		<supports>
+			<mime-type>text/css</mime-type>
+			<portlet-mode>VIEW</portlet-mode>
+			<portlet-mode>EDIT</portlet-mode>
+		</supports>
+		<portlet-info>
+			<title>WICKET 6 DATES PORTLET</title>
+			<short-title>WICKET 6 DATES PORTLET</short-title>
+			<keywords>WICKET 6 DATES PORTLET</keywords>
+		</portlet-info>
+		<security-role-ref>
+			<role-name>administrator</role-name>
+		</security-role-ref>
+		<security-role-ref>
+			<role-name>guest</role-name>
+		</security-role-ref>
+		<security-role-ref>
+			<role-name>power-user</role-name>
+		</security-role-ref>
+		<security-role-ref>
+			<role-name>user</role-name>
+		</security-role-ref>
+	</portlet>
+	
+	<portlet>
+		<portlet-name>wicket6stockquotePortlet</portlet-name>
+		<display-name>WICKET 6 STOCK QUOTE PORTLET</display-name>
+		<portlet-class>org.apache.wicket.portlet.WicketPortlet</portlet-class>
+		<init-param>
+			<name>wicketFilterPath</name>
+			<value>/wicket6stockquotePortlet</value>
+		</init-param>
+		<init-param>
+			<name>check-auth-token</name>
+			<value>false</value>
+		</init-param>
+		<expiration-cache>0</expiration-cache>
+		<supports>
+			<mime-type>text/html</mime-type>
+			<portlet-mode>VIEW</portlet-mode>
+			<portlet-mode>EDIT</portlet-mode>
+		</supports>
+		<supports>
+			<mime-type>text/xml</mime-type>
+			<portlet-mode>VIEW</portlet-mode>
+			<portlet-mode>EDIT</portlet-mode>
+		</supports>
+		<supports>
+			<mime-type>text/css</mime-type>
+			<portlet-mode>VIEW</portlet-mode>
+			<portlet-mode>EDIT</portlet-mode>
+		</supports>
+		<portlet-info>
+			<title>WICKET 6 STOCK QUOTE PORTLET</title>
+			<short-title>WICKET 6 STOCK QUOTE PORTLET</short-title>
+			<keywords>WICKET 6 STOCK QUOTE PORTLET</keywords>
+		</portlet-info>
+		<security-role-ref>
+			<role-name>administrator</role-name>
+		</security-role-ref>
+		<security-role-ref>
+			<role-name>guest</role-name>
+		</security-role-ref>
+		<security-role-ref>
+			<role-name>power-user</role-name>
+		</security-role-ref>
+		<security-role-ref>
+			<role-name>user</role-name>
+		</security-role-ref>
+	</portlet>
+	
+	<portlet>
+		<portlet-name>wicket6guestbookPortlet</portlet-name>
+		<display-name>WICKET 6 GUEST BOOK PORTLET</display-name>
+		<portlet-class>org.apache.wicket.portlet.WicketPortlet</portlet-class>
+		<init-param>
+			<name>wicketFilterPath</name>
+			<value>/wicket6guestbookPortlet</value>
+		</init-param>
+		<init-param>
+			<name>check-auth-token</name>
+			<value>false</value>
+		</init-param>
+		<expiration-cache>0</expiration-cache>
+		<supports>
+			<mime-type>text/html</mime-type>
+			<portlet-mode>VIEW</portlet-mode>
+			<portlet-mode>EDIT</portlet-mode>
+		</supports>
+		<supports>
+			<mime-type>text/xml</mime-type>
+			<portlet-mode>VIEW</portlet-mode>
+			<portlet-mode>EDIT</portlet-mode>
+		</supports>
+		<supports>
+			<mime-type>text/css</mime-type>
+			<portlet-mode>VIEW</portlet-mode>
+			<portlet-mode>EDIT</portlet-mode>
+		</supports>
+		<portlet-info>
+			<title>WICKET 6 GUEST BOOK PORTLET</title>
+			<short-title>WICKET 6 GUEST BOOK PORTLET</short-title>
+			<keywords>WICKET 6 GUEST BOOK PORTLET</keywords>
+		</portlet-info>
+		<security-role-ref>
+			<role-name>administrator</role-name>
+		</security-role-ref>
+		<security-role-ref>
+			<role-name>guest</role-name>
+		</security-role-ref>
+		<security-role-ref>
+			<role-name>power-user</role-name>
+		</security-role-ref>
+		<security-role-ref>
+			<role-name>user</role-name>
+		</security-role-ref>
+	</portlet>
+	
+	<portlet>
+		<portlet-name>wicket6hangmanPortlet</portlet-name>
+		<display-name>WICKET 6 HANG MAN PORTLET</display-name>
+		<portlet-class>org.apache.wicket.portlet.WicketPortlet</portlet-class>
+		<init-param>
+			<name>wicketFilterPath</name>
+			<value>/wicket6hangmanPortlet</value>
+		</init-param>
+		<init-param>
+			<name>check-auth-token</name>
+			<value>false</value>
+		</init-param>
+		<expiration-cache>0</expiration-cache>
+		<supports>
+			<mime-type>text/html</mime-type>
+			<portlet-mode>VIEW</portlet-mode>
+			<portlet-mode>EDIT</portlet-mode>
+		</supports>
+		<supports>
+			<mime-type>text/xml</mime-type>
+			<portlet-mode>VIEW</portlet-mode>
+			<portlet-mode>EDIT</portlet-mode>
+		</supports>
+		<supports>
+			<mime-type>text/css</mime-type>
+			<portlet-mode>VIEW</portlet-mode>
+			<portlet-mode>EDIT</portlet-mode>
+		</supports>
+		<portlet-info>
+			<title>WICKET 6 HANG MAN PORTLET</title>
+			<short-title>WICKET 6 HANG MAN PORTLET</short-title>
+			<keywords>WICKET 6 HANG MAN PORTLET</keywords>
+		</portlet-info>
+		<security-role-ref>
+			<role-name>administrator</role-name>
+		</security-role-ref>
+		<security-role-ref>
+			<role-name>guest</role-name>
+		</security-role-ref>
+		<security-role-ref>
+			<role-name>power-user</role-name>
+		</security-role-ref>
+		<security-role-ref>
+			<role-name>user</role-name>
+		</security-role-ref>
+	</portlet>
+	
+	<portlet>
+		<portlet-name>wicket6guicePortlet</portlet-name>
+		<display-name>WICKET 6 GUICE PORTLET</display-name>
+		<portlet-class>org.apache.wicket.portlet.WicketPortlet</portlet-class>
+		<init-param>
+			<name>wicketFilterPath</name>
+			<value>/wicket6guicePortlet</value>
+		</init-param>
+		<init-param>
+			<name>check-auth-token</name>
+			<value>false</value>
+		</init-param>
+		<expiration-cache>0</expiration-cache>
+		<supports>
+			<mime-type>text/html</mime-type>
+			<portlet-mode>VIEW</portlet-mode>
+			<portlet-mode>EDIT</portlet-mode>
+		</supports>
+		<supports>
+			<mime-type>text/xml</mime-type>
+			<portlet-mode>VIEW</portlet-mode>
+			<portlet-mode>EDIT</portlet-mode>
+		</supports>
+		<supports>
+			<mime-type>text/css</mime-type>
+			<portlet-mode>VIEW</portlet-mode>
+			<portlet-mode>EDIT</portlet-mode>
+		</supports>
+		<portlet-info>
+			<title>WICKET 6 GUICE PORTLET</title>
+			<short-title>WICKET 6 GUICE PORTLET</short-title>
+			<keywords>WICKET 6 GUICE PORTLET</keywords>
+		</portlet-info>
+		<security-role-ref>
+			<role-name>administrator</role-name>
+		</security-role-ref>
+		<security-role-ref>
+			<role-name>guest</role-name>
+		</security-role-ref>
+		<security-role-ref>
+			<role-name>power-user</role-name>
+		</security-role-ref>
+		<security-role-ref>
+			<role-name>user</role-name>
+		</security-role-ref>
+	</portlet>
+	
+	
+	<portlet>
+		<portlet-name>wicket6beanValidationPortlet</portlet-name>
+		<display-name>WICKET 6 BEAN VALIDATION PORTLET</display-name>
+		<portlet-class>org.apache.wicket.portlet.WicketPortlet</portlet-class>
+		<init-param>
+			<name>wicketFilterPath</name>
+			<value>/wicket6beanValidationPortlet</value>
+		</init-param>
+		<init-param>
+			<name>check-auth-token</name>
+			<value>false</value>
+		</init-param>
+		<expiration-cache>0</expiration-cache>
+		<supports>
+			<mime-type>text/html</mime-type>
+			<portlet-mode>VIEW</portlet-mode>
+			<portlet-mode>EDIT</portlet-mode>
+		</supports>
+		<supports>
+			<mime-type>text/xml</mime-type>
+			<portlet-mode>VIEW</portlet-mode>
+			<portlet-mode>EDIT</portlet-mode>
+		</supports>
+		<supports>
+			<mime-type>text/css</mime-type>
+			<portlet-mode>VIEW</portlet-mode>
+			<portlet-mode>EDIT</portlet-mode>
+		</supports>
+		<portlet-info>
+			<title>WICKET 6 BEAN VALIDATION PORTLET</title>
+			<short-title>WICKET 6 BEAN VALIDATION PORTLET</short-title>
+			<keywords>WICKET 6 BEAN VALIDATION PORTLET</keywords>
+		</portlet-info>
+		<security-role-ref>
+			<role-name>administrator</role-name>
+		</security-role-ref>
+		<security-role-ref>
+			<role-name>guest</role-name>
+		</security-role-ref>
+		<security-role-ref>
+			<role-name>power-user</role-name>
+		</security-role-ref>
+		<security-role-ref>
+			<role-name>user</role-name>
+		</security-role-ref>
+	</portlet>
+	
+	<portlet>
+		<portlet-name>wicket6resourceDecorationPortlet</portlet-name>
+		<display-name>WICKET 6 RESOURCE DECORATION PORTLET</display-name>
+		<portlet-class>org.apache.wicket.portlet.WicketPortlet</portlet-class>
+		<init-param>
+			<name>wicketFilterPath</name>
+			<value>/wicket6resourceDecorationPortlet</value>
+		</init-param>
+		<init-param>
+			<name>check-auth-token</name>
+			<value>false</value>
+		</init-param>
+		<expiration-cache>0</expiration-cache>
+		<supports>
+			<mime-type>text/html</mime-type>
+			<portlet-mode>VIEW</portlet-mode>
+			<portlet-mode>EDIT</portlet-mode>
+		</supports>
+		<supports>
+			<mime-type>text/xml</mime-type>
+			<portlet-mode>VIEW</portlet-mode>
+			<portlet-mode>EDIT</portlet-mode>
+		</supports>
+		<supports>
+			<mime-type>text/css</mime-type>
+			<portlet-mode>VIEW</portlet-mode>
+			<portlet-mode>EDIT</portlet-mode>
+		</supports>
+		<portlet-info>
+			<title>WICKET 6 RESOURCE DECORATION PORTLET</title>
+			<short-title>WICKET 6 RESOURCE DECORATION PORTLET</short-title>
+			<keywords>WICKET 6 RESOURCE DECORATION PORTLET</keywords>
+		</portlet-info>
+		<security-role-ref>
+			<role-name>administrator</role-name>
+		</security-role-ref>
+		<security-role-ref>
+			<role-name>guest</role-name>
+		</security-role-ref>
+		<security-role-ref>
+			<role-name>power-user</role-name>
+		</security-role-ref>
+		<security-role-ref>
+			<role-name>user</role-name>
+		</security-role-ref>
+	</portlet>
+	
+	<portlet>
+		<portlet-name>wicket6eventsPortlet</portlet-name>
+		<display-name>WICKET 6 EVENTS PORTLET</display-name>
+		<portlet-class>org.apache.wicket.portlet.WicketPortlet</portlet-class>
+		<init-param>
+			<name>wicketFilterPath</name>
+			<value>/wicket6eventsPortlet</value>
+		</init-param>
+		<init-param>
+			<name>check-auth-token</name>
+			<value>false</value>
+		</init-param>
+		<expiration-cache>0</expiration-cache>
+		<supports>
+			<mime-type>text/html</mime-type>
+			<portlet-mode>VIEW</portlet-mode>
+			<portlet-mode>EDIT</portlet-mode>
+		</supports>
+		<supports>
+			<mime-type>text/xml</mime-type>
+			<portlet-mode>VIEW</portlet-mode>
+			<portlet-mode>EDIT</portlet-mode>
+		</supports>
+		<supports>
+			<mime-type>text/css</mime-type>
+			<portlet-mode>VIEW</portlet-mode>
+			<portlet-mode>EDIT</portlet-mode>
+		</supports>
+		<portlet-info>
+			<title>WICKET 6 EVENTS PORTLET</title>
+			<short-title>WICKET 6 EVENTS PORTLET</short-title>
+			<keywords>WICKET 6 EVENTS PORTLET</keywords>
+		</portlet-info>
+		<security-role-ref>
+			<role-name>administrator</role-name>
+		</security-role-ref>
+		<security-role-ref>
+			<role-name>guest</role-name>
+		</security-role-ref>
+		<security-role-ref>
+			<role-name>power-user</role-name>
+		</security-role-ref>
+		<security-role-ref>
+			<role-name>user</role-name>
+		</security-role-ref>
+	</portlet>
+	
+	<portlet>
+		<portlet-name>wicket6requestMapperPortlet</portlet-name>
+		<display-name>WICKET 6 REQUEST MAPPER PORTLET</display-name>
+		<portlet-class>org.apache.wicket.portlet.WicketPortlet</portlet-class>
+		<init-param>
+			<name>wicketFilterPath</name>
+			<value>/wicket6requestMapperPortlet</value>
+		</init-param>
+		<init-param>
+			<name>check-auth-token</name>
+			<value>false</value>
+		</init-param>
+		<expiration-cache>0</expiration-cache>
+		<supports>
+			<mime-type>text/html</mime-type>
+			<portlet-mode>VIEW</portlet-mode>
+			<portlet-mode>EDIT</portlet-mode>
+		</supports>
+		<supports>
+			<mime-type>text/xml</mime-type>
+			<portlet-mode>VIEW</portlet-mode>
+			<portlet-mode>EDIT</portlet-mode>
+		</supports>
+		<supports>
+			<mime-type>text/css</mime-type>
+			<portlet-mode>VIEW</portlet-mode>
+			<portlet-mode>EDIT</portlet-mode>
+		</supports>
+		<portlet-info>
+			<title>WICKET 6 REQUEST MAPPER PORTLET</title>
+			<short-title>WICKET 6 REQUEST MAPPER PORTLET</short-title>
+			<keywords>WICKET 6 REQUEST MAPPER PORTLET</keywords>
+		</portlet-info>
+		<security-role-ref>
+			<role-name>administrator</role-name>
+		</security-role-ref>
+		<security-role-ref>
+			<role-name>guest</role-name>
+		</security-role-ref>
+		<security-role-ref>
+			<role-name>power-user</role-name>
+		</security-role-ref>
+		<security-role-ref>
+			<role-name>user</role-name>
+		</security-role-ref>
+	</portlet>
+	
+	
+	
+</portlet-app>
