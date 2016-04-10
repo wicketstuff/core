@@ -1,4 +1,4 @@
-# Deploy wicketstuff portlets in Liferay 6.2
+# How to deploy wicketstuff portlets in Liferay 6.2
 
 Download liferay 6.2 community edition ga6 from 
 
