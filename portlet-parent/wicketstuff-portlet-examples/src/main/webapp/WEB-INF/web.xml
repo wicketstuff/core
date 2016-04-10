@@ -1,7 +1,10 @@
 <?xml version="1.0"?>
-<web-app xmlns="http://java.sun.com/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	metadata-complete="true" id="WebApp_ID" version="2.5"
-	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd">
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+xmlns="http://java.sun.com/xml/ns/javaee"
+xmlns:web="http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"
+xsi:schemaLocation="http://java.sun.com/xml/ns/javaee
+http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd" 
+id="WebApp_ID" version="3.0">
 	<display-name>wicketstuff portlet examples</display-name>
 
 	<filter>
@@ -548,30 +551,8 @@
 		<dispatcher>REQUEST</dispatcher>
 		<dispatcher>INCLUDE</dispatcher>
 	</filter-mapping>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+		
+<!-- 
 	<servlet>
 		<servlet-name>PortletServletwicket7echoPortlet</servlet-name>
 		<servlet-class>com.liferay.portal.kernel.servlet.PortletServlet</servlet-class>
@@ -585,8 +566,6 @@
 		<servlet-name>PortletServletwicket7echoPortlet</servlet-name>
 		<url-pattern>/wicket7echoPortlet/*</url-pattern>
 	</servlet-mapping>
-
-
 
 	<servlet>
 		<servlet-name>PortletServletwicket7formInputPortlet</servlet-name>
@@ -602,9 +581,6 @@
 		<url-pattern>/wicket7formInputPortlet/*</url-pattern>
 	</servlet-mapping>
 
-
-
-
 	<servlet>
 		<servlet-name>PortletServletwicket7comprefPortlet</servlet-name>
 		<servlet-class>com.liferay.portal.kernel.servlet.PortletServlet</servlet-class>
@@ -618,8 +594,6 @@
 		<servlet-name>PortletServletwicket7comprefPortlet</servlet-name>
 		<url-pattern>/wicket7comprefPortlet/*</url-pattern>
 	</servlet-mapping>
-
-
 
 	<servlet>
 		<servlet-name>PortletServletwicket7imagesPortlet</servlet-name>
@@ -635,9 +609,6 @@
 		<url-pattern>/wicket7imagesPortlet/*</url-pattern>
 	</servlet-mapping>
 
-
-
-
 	<servlet>
 		<servlet-name>PortletServletwicket7linkomaticPortlet</servlet-name>
 		<servlet-class>com.liferay.portal.kernel.servlet.PortletServlet</servlet-class>
@@ -651,8 +622,6 @@
 		<servlet-name>PortletServletwicket7linkomaticPortlet</servlet-name>
 		<url-pattern>/wicket7linkomaticPortlet/*</url-pattern>
 	</servlet-mapping>
-
-
 
 	<servlet>
 		<servlet-name>PortletServletwicket7navomaticPortlet</servlet-name>
@@ -668,7 +637,6 @@
 		<url-pattern>/wicket7navomaticPortlet/*</url-pattern>
 	</servlet-mapping>
 
-
 	<servlet>
 		<servlet-name>PortletServletwicket7pubPortlet</servlet-name>
 		<servlet-class>com.liferay.portal.kernel.servlet.PortletServlet</servlet-class>
@@ -682,8 +650,6 @@
 		<servlet-name>PortletServletwicket7pubPortlet</servlet-name>
 		<url-pattern>/wicket7pubPortlet/*</url-pattern>
 	</servlet-mapping>
-
-
 
 	<servlet>
 		<servlet-name>PortletServletwicket7pub2Portlet</servlet-name>
@@ -699,8 +665,6 @@
 		<url-pattern>/wicket7pub2Portlet/*</url-pattern>
 	</servlet-mapping>
 
-
-
 	<servlet>
 		<servlet-name>PortletServletwicket7unicodeConverterPortlet</servlet-name>
 		<servlet-class>com.liferay.portal.kernel.servlet.PortletServlet</servlet-class>
@@ -714,8 +678,6 @@
 		<servlet-name>PortletServletwicket7unicodeConverterPortlet</servlet-name>
 		<url-pattern>/wicket7unicodeConverterPortlet/*</url-pattern>
 	</servlet-mapping>
-
-
 
 	<servlet>
 		<servlet-name>PortletServletwicket7niceUrlPortlet</servlet-name>
@@ -731,8 +693,6 @@
 		<url-pattern>/wicket7niceUrlPortlet/*</url-pattern>
 	</servlet-mapping>
 
-
-
 	<servlet>
 		<servlet-name>PortletServletwicket7ajaxPortlet</servlet-name>
 		<servlet-class>com.liferay.portal.kernel.servlet.PortletServlet</servlet-class>
@@ -746,8 +706,6 @@
 		<servlet-name>PortletServletwicket7ajaxPortlet</servlet-name>
 		<url-pattern>/wicket7ajaxPortlet/*</url-pattern>
 	</servlet-mapping>
-
-
 
 	<servlet>
 		<servlet-name>PortletServletwicket7repeaterPortlet</servlet-name>
@@ -763,8 +721,6 @@
 		<url-pattern>/wicket7repeaterPortlet/*</url-pattern>
 	</servlet-mapping>
 
-
-
 	<servlet>
 		<servlet-name>PortletServletwicket7treePortlet</servlet-name>
 		<servlet-class>com.liferay.portal.kernel.servlet.PortletServlet</servlet-class>
@@ -778,7 +734,6 @@
 		<servlet-name>PortletServletwicket7treePortlet</servlet-name>
 		<url-pattern>/wicket7treePortlet/*</url-pattern>
 	</servlet-mapping>
-
 
 	<servlet>
 		<servlet-name>PortletServletwicket7uploadPortlet</servlet-name>
@@ -794,7 +749,6 @@
 		<url-pattern>/wicket7uploadPortlet/*</url-pattern>
 	</servlet-mapping>
 
-
 	<servlet>
 		<servlet-name>PortletServletwicket7templatePortlet</servlet-name>
 		<servlet-class>com.liferay.portal.kernel.servlet.PortletServlet</servlet-class>
@@ -808,7 +762,6 @@
 		<servlet-name>PortletServletwicket7templatePortlet</servlet-name>
 		<url-pattern>/wicket7templatePortlet/*</url-pattern>
 	</servlet-mapping>
-
 
 	<servlet>
 		<servlet-name>PortletServletwicket7mailTemplatePortlet</servlet-name>
@@ -824,7 +777,6 @@
 		<url-pattern>/wicket7mailTemplatePortlet/*</url-pattern>
 	</servlet-mapping>
 
-
 	<servlet>
 		<servlet-name>PortletServletwicket7browserInfoPortlet</servlet-name>
 		<servlet-class>com.liferay.portal.kernel.servlet.PortletServlet</servlet-class>
@@ -838,7 +790,6 @@
 		<servlet-name>PortletServletwicket7browserInfoPortlet</servlet-name>
 		<url-pattern>/wicket7browserInfoPortlet/*</url-pattern>
 	</servlet-mapping>
-
 
 	<servlet>
 		<servlet-name>PortletServletwicket7ajaxBrowserInfoPortlet</servlet-name>
@@ -854,7 +805,6 @@
 		<url-pattern>/wicket7ajaxBrowserInfoPortlet/*</url-pattern>
 	</servlet-mapping>
 
-
 	<servlet>
 		<servlet-name>PortletServletwicket7framesPortlet</servlet-name>
 		<servlet-class>com.liferay.portal.kernel.servlet.PortletServlet</servlet-class>
@@ -869,7 +819,6 @@
 		<url-pattern>/wicket7framesPortlet/*</url-pattern>
 	</servlet-mapping>
 
-
 	<servlet>
 		<servlet-name>PortletServletwicket7prototypePortlet</servlet-name>
 		<servlet-class>com.liferay.portal.kernel.servlet.PortletServlet</servlet-class>
@@ -883,8 +832,7 @@
 		<servlet-name>PortletServletwicket7prototypePortlet</servlet-name>
 		<url-pattern>/wicket7prototypePortlet/*</url-pattern>
 	</servlet-mapping>
-
-
+	
 	<servlet>
 		<servlet-name>PortletServletwicket7abacadabraPortlet</servlet-name>
 		<servlet-class>com.liferay.portal.kernel.servlet.PortletServlet</servlet-class>
@@ -898,7 +846,6 @@
 		<servlet-name>PortletServletwicket7abacadabraPortlet</servlet-name>
 		<url-pattern>/wicket7abacadabraPortlet/*</url-pattern>
 	</servlet-mapping>
-
 
 	<servlet>
 		<servlet-name>PortletServletwicket7customTemplateLoadingPortlet</servlet-name>
@@ -914,7 +861,6 @@
 		<url-pattern>/wicket7customTemplateLoadingPortlet/*</url-pattern>
 	</servlet-mapping>
 
-
 	<servlet>
 		<servlet-name>PortletServletwicket7breadcrumbPortlet</servlet-name>
 		<servlet-class>com.liferay.portal.kernel.servlet.PortletServlet</servlet-class>
@@ -928,7 +874,6 @@
 		<servlet-name>PortletServletwicket7breadcrumbPortlet</servlet-name>
 		<url-pattern>/wicket7breadcrumbPortlet/*</url-pattern>
 	</servlet-mapping>
-
 
 	<servlet>
 		<servlet-name>PortletServletwicket7captchaPortlet</servlet-name>
@@ -944,7 +889,6 @@
 		<url-pattern>/wicket7captchaPortlet/*</url-pattern>
 	</servlet-mapping>
 
-
 	<servlet>
 		<servlet-name>PortletServletwicket7kittenCaptchaPortlet</servlet-name>
 		<servlet-class>com.liferay.portal.kernel.servlet.PortletServlet</servlet-class>
@@ -958,7 +902,6 @@
 		<servlet-name>PortletServletwicket7kittenCaptchaPortlet</servlet-name>
 		<url-pattern>/wicket7kittenCaptchaPortlet/*</url-pattern>
 	</servlet-mapping>
-
 
 	<servlet>
 		<servlet-name>PortletServletwicket7datesPortlet</servlet-name>
@@ -974,7 +917,6 @@
 		<url-pattern>/wicket7datesPortlet/*</url-pattern>
 	</servlet-mapping>
 
-
 	<servlet>
 		<servlet-name>PortletServletwicket7stockquotePortlet</servlet-name>
 		<servlet-class>com.liferay.portal.kernel.servlet.PortletServlet</servlet-class>
@@ -988,7 +930,6 @@
 		<servlet-name>PortletServletwicket7stockquotePortlet</servlet-name>
 		<url-pattern>/wicket7stockquotePortlet/*</url-pattern>
 	</servlet-mapping>
-
 
 	<servlet>
 		<servlet-name>PortletServletwicket7guestbookPortlet</servlet-name>
@@ -1004,7 +945,6 @@
 		<url-pattern>/wicket7guestbookPortlet/*</url-pattern>
 	</servlet-mapping>
 
-
 	<servlet>
 		<servlet-name>PortletServletwicket7hangmanPortlet</servlet-name>
 		<servlet-class>com.liferay.portal.kernel.servlet.PortletServlet</servlet-class>
@@ -1018,7 +958,6 @@
 		<servlet-name>PortletServletwicket7hangmanPortlet</servlet-name>
 		<url-pattern>/wicket7hangmanPortlet/*</url-pattern>
 	</servlet-mapping>
-
 
 	<servlet>
 		<servlet-name>PortletServletwicket7guicePortlet</servlet-name>
@@ -1034,7 +973,6 @@
 		<url-pattern>/wicket7guicePortlet/*</url-pattern>
 	</servlet-mapping>
 
-
 	<servlet>
 		<servlet-name>PortletServletwicket7beanValidationPortlet</servlet-name>
 		<servlet-class>com.liferay.portal.kernel.servlet.PortletServlet</servlet-class>
@@ -1048,7 +986,6 @@
 		<servlet-name>PortletServletwicket7beanValidationPortlet</servlet-name>
 		<url-pattern>/wicket7beanValidationPortlet/*</url-pattern>
 	</servlet-mapping>
-
 
 	<servlet>
 		<servlet-name>PortletServletwicket7resourceDecorationPortlet</servlet-name>
@@ -1064,7 +1001,6 @@
 		<url-pattern>/wicket7resourceDecorationPortlet/*</url-pattern>
 	</servlet-mapping>
 
-
 	<servlet>
 		<servlet-name>PortletServletwicket7eventsPortlet</servlet-name>
 		<servlet-class>com.liferay.portal.kernel.servlet.PortletServlet</servlet-class>
@@ -1079,7 +1015,6 @@
 		<url-pattern>/wicket7eventsPortlet/*</url-pattern>
 	</servlet-mapping>
 
-
 	<servlet>
 		<servlet-name>PortletServletwicket7requestMapperPortlet</servlet-name>
 		<servlet-class>com.liferay.portal.kernel.servlet.PortletServlet</servlet-class>
@@ -1093,7 +1028,7 @@
 		<servlet-name>PortletServletwicket7requestMapperPortlet</servlet-name>
 		<url-pattern>/wicket7requestMapperPortlet/*</url-pattern>
 	</servlet-mapping>
-
+-->
 
 	<!-- Liferay listeners -->
 
@@ -1107,10 +1042,5 @@
 	<context-param>
 		<param-name>configuration</param-name>
 		<param-value>deployment</param-value>
-	</context-param>
-
-	<context-param>
-		<param-name>com.ibm.websphere.portletcontainer.PortletDeploymentEnabled</param-name>
-		<param-value>false</param-value>
 	</context-param>
 </web-app>
