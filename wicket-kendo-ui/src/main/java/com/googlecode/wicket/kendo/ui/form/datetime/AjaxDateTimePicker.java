@@ -185,7 +185,7 @@ public class AjaxDateTimePicker extends DateTimePicker implements IValueChangedL
 			}
 
 			ValidationError error = new ValidationError();
-			error.addKey("AjaxDateTimePicker.ConversionError"); // wicket6
+			error.addKey("DateTimePicker.ConversionError"); // wicket6
 			error.setVariable("date", dateInput);
 			error.setVariable("time", timeInput);
 
