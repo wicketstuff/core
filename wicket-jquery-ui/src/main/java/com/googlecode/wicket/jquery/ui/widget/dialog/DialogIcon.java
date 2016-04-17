@@ -27,7 +27,7 @@ public enum DialogIcon
 	INFO(JQueryFeedbackPanel.INFO_ICO, JQueryFeedbackPanel.INFO_CSS),
 	WARN(JQueryFeedbackPanel.WARN_ICO, JQueryFeedbackPanel.WARN_CSS),
 	ERROR(JQueryFeedbackPanel.ERROR_ICO, JQueryFeedbackPanel.ERROR_CSS),
-	LIGHT(JQueryFeedbackPanel.LIGHT_ICO, JQueryFeedbackPanel.LIGHT_ICO);
+	LIGHT(JQueryFeedbackPanel.LIGHT_ICO, JQueryFeedbackPanel.LIGHT_CSS);
 
 	private final String icon;
 	private final String style;
