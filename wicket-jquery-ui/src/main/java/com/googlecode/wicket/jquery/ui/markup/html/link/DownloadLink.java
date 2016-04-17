@@ -97,7 +97,7 @@ public class DownloadLink extends org.apache.wicket.markup.html.link.DownloadLin
 	{
 		super.onInitialize();
 
-		this.add(IJQueryWidget.newWidgetBehavior(this));
+		this.add(JQueryWidget.newWidgetBehavior(this));
 	}
 
 	@Override

@@ -43,7 +43,7 @@ public class SnippetLabel extends Label implements IJQueryWidget
 	{
 		super.onInitialize();
 
-		this.add(IJQueryWidget.newWidgetBehavior(this));
+		this.add(JQueryWidget.newWidgetBehavior(this));
 		// shortcut for:
 		// this.add(this.newWidgetBehavior("#" + this.setOutputMarkupId(true).getMarkupId()));
 	}

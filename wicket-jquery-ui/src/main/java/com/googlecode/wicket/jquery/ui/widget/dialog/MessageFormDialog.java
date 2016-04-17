@@ -149,7 +149,7 @@ public abstract class MessageFormDialog extends AbstractFormDialog<String>
 	public MessageFormDialog(String id, IModel<String> title, IModel<String> message, List<DialogButton> buttons, DialogIcon icon)
 	{
 		super(id, title, message, true);
-		
+
 		// buttons //
 		this.buttons = Args.notNull(buttons, "buttons");
 
@@ -162,15 +162,15 @@ public abstract class MessageFormDialog extends AbstractFormDialog<String>
 	}
 
 	// Properties //
-	
+
 	@Override
 	protected final List<DialogButton> getButtons()
 	{
 		return this.buttons;
 	}
-	
+
 	// Events //
-	
+
 	@Override
 	protected void onInitialize()
 	{
@@ -190,7 +190,7 @@ public abstract class MessageFormDialog extends AbstractFormDialog<String>
 	@Override
 	public void onClose(IPartialPageRequestHandler handler, DialogButton button)
 	{
-		//not mandatory to override
+		// not mandatory to override
 	}
 
 	// Factories //

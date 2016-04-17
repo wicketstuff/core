@@ -8,7 +8,6 @@ import org.apache.wicket.model.IModel;
  *
  * @param <T> the type of the model object
  */
-
 public abstract class JQueryGenericPanel<T> extends JQueryPanel implements IGenericComponent<T, JQueryGenericPanel<T>>
 {
 	private static final long serialVersionUID = 1L;

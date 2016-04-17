@@ -16,7 +16,10 @@
  */
 package com.googlecode.wicket.kendo.ui.form.button;
 
+import org.apache.wicket.markup.ComponentTag;
 import org.apache.wicket.model.IModel;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.googlecode.wicket.jquery.core.JQueryBehavior;
 import com.googlecode.wicket.jquery.core.Options;
@@ -30,6 +33,7 @@ import com.googlecode.wicket.jquery.core.Options;
 public class IndicatingAjaxButton extends AjaxButton
 {
 	private static final long serialVersionUID = 1L;
+	private static final Logger LOG = LoggerFactory.getLogger(IndicatingAjaxButton.class);
 
 	/**
 	 * Constructor
@@ -65,7 +69,7 @@ public class IndicatingAjaxButton extends AjaxButton
 	}
 
 	// Event //
-	
+
 	@Override
 	public void onConfigure(JQueryBehavior behavior)
 	{
@@ -73,6 +77,17 @@ public class IndicatingAjaxButton extends AjaxButton
 
 		// explicitly sets the enable flag to be able to restore the state after click with isDisabledOnClick true
 		behavior.setOption("enable", this.isEnabledInHierarchy());
+	}
+
+	@Override
+	protected void onComponentTag(ComponentTag tag)
+	{
+		super.onComponentTag(tag);
+
+		if (!"button".equalsIgnoreCase(tag.getName()))
+		{
+			LOG.warn("IndicatingAjaxButton should be applied on a 'button' tag");
+		}
 	}
 
 	// IJQueryWidget //

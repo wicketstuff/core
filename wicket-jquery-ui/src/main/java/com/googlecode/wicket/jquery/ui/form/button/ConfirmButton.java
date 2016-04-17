@@ -26,6 +26,7 @@ import org.apache.wicket.model.Model;
 import com.googlecode.wicket.jquery.core.panel.FormSubmittingPanel;
 import com.googlecode.wicket.jquery.ui.JQueryIcon;
 import com.googlecode.wicket.jquery.ui.widget.dialog.AbstractDialog;
+import com.googlecode.wicket.jquery.ui.widget.dialog.AbstractFormDialog;
 import com.googlecode.wicket.jquery.ui.widget.dialog.DialogButton;
 import com.googlecode.wicket.jquery.ui.widget.dialog.DialogButtons;
 import com.googlecode.wicket.jquery.ui.widget.dialog.DialogIcon;
@@ -88,32 +89,7 @@ public abstract class ConfirmButton extends FormSubmittingPanel<String>
 		final AbstractDialog<?> dialog = this.newDialog("dialog", this.titleModel, this.getModel());
 		this.add(dialog);
 
-		final AjaxButton button = new AjaxButton("button") {
-
-			private static final long serialVersionUID = 1L;
-
-			@Override
-			protected void onInitialize()
-			{
-				super.onInitialize();
-
-				// does not validate the form before the window is being displayed
-				this.setDefaultFormProcessing(false);
-			}
-
-			@Override
-			protected String getIcon()
-			{
-				return ConfirmButton.this.getIcon();
-			}
-
-			@Override
-			protected void onSubmit(AjaxRequestTarget target, Form<?> form)
-			{
-				dialog.open(target);
-			}
-		};
-
+		final AjaxButton button = this.newAjaxButton("button", dialog);
 		this.add(button);
 
 		button.add(new Label("label", this.labelModel).setRenderBodyOnly(true));
@@ -164,6 +140,42 @@ public abstract class ConfirmButton extends FormSubmittingPanel<String>
 				{
 					ConfirmButton.this.submit(handler);
 				}
+			}
+		};
+	}
+
+	/**
+	 * Gets the new {@link AjaxButton} that will open the supplied dialog
+	 * 
+	 * @param id the markupId
+	 * @param dialog the {@link AbstractFormDialog}
+	 * @return the new {@code AjaxButton}
+	 */
+	protected AjaxButton newAjaxButton(String id, final AbstractDialog<?> dialog)
+	{
+		return new AjaxButton(id) {
+
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			protected void onInitialize()
+			{
+				super.onInitialize();
+
+				// does not validate the form before the window is being displayed
+				this.setDefaultFormProcessing(false);
+			}
+
+			@Override
+			protected String getIcon()
+			{
+				return ConfirmButton.this.getIcon();
+			}
+
+			@Override
+			protected void onSubmit(AjaxRequestTarget target, Form<?> form)
+			{
+				dialog.open(target);
 			}
 		};
 	}

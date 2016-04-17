@@ -11,7 +11,6 @@ import org.apache.wicket.markup.html.panel.EmptyPanel;
 import org.apache.wicket.markup.html.panel.FeedbackPanel;
 import org.apache.wicket.model.IModel;
 
-import com.googlecode.wicket.jquery.core.IJQueryWidget;
 import com.googlecode.wicket.jquery.core.Options;
 import com.googlecode.wicket.jquery.ui.JQueryIcon;
 import com.googlecode.wicket.jquery.ui.interaction.selectable.ISelectableListener;
@@ -45,7 +44,7 @@ public class SelectableSortablePage extends AbstractSortablePage implements ISel
 			{
 				super.onInitialize();
 
-				this.add(SelectableSortablePage.this.newSelectableBehavior(IJQueryWidget.getSelector(this), list));
+				this.add(SelectableSortablePage.this.newSelectableBehavior(JQueryWidget.getSelector(this), list));
 			}
 
 			@Override

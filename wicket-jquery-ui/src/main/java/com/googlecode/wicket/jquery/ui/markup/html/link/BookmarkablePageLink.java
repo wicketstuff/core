@@ -97,7 +97,7 @@ public class BookmarkablePageLink<T> extends org.apache.wicket.markup.html.link.
 	{
 		super.onInitialize();
 
-		this.add(IJQueryWidget.newWidgetBehavior(this));
+		this.add(JQueryWidget.newWidgetBehavior(this));
 	}
 
 	@Override

@@ -13,7 +13,7 @@ import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.request.resource.JavaScriptResourceReference;
 
-import com.googlecode.wicket.jquery.core.IJQueryWidget;
+import com.googlecode.wicket.jquery.core.IJQueryWidget.JQueryWidget;
 import com.googlecode.wicket.jquery.core.Options;
 import com.googlecode.wicket.jquery.ui.JQueryIcon;
 import com.googlecode.wicket.jquery.ui.JQueryUIBehavior;
@@ -141,7 +141,7 @@ public abstract class AbstractSplitButton extends GenericPanel<List<IMenuItem>>
 	 */
 	private static JQueryUIBehavior newButtonSetBehavior(Component component)
 	{
-		return new JQueryUIBehavior(IJQueryWidget.getSelector(component), "buttonset");
+		return new JQueryUIBehavior(JQueryWidget.getSelector(component), "buttonset");
 	}
 
 	/**
@@ -154,7 +154,7 @@ public abstract class AbstractSplitButton extends GenericPanel<List<IMenuItem>>
 	{
 		WebMarkupContainer container = new WebMarkupContainer(id);
 
-		container.add(new ButtonBehavior(IJQueryWidget.getSelector(container)) {
+		container.add(new ButtonBehavior(JQueryWidget.getSelector(container)) {
 
 			private static final long serialVersionUID = 1L;
 

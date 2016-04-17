@@ -185,9 +185,9 @@ public class Scheduler extends JQueryContainer implements ISchedulerListener
 	 *
 	 * @param handler the {@link IPartialPageRequestHandler}
 	 */
-	public final void refresh(IPartialPageRequestHandler handler)
+	public void refresh(IPartialPageRequestHandler handler)
 	{
-		handler.appendJavaScript(String.format("var widget = %s; widget.dataSource.read(); widget.refresh();", this.widget()));
+		handler.appendJavaScript(String.format("var $w = %s; if ($w) { $w.dataSource.read(); $w.refresh(); }", this.widget()));
 
 		this.onRefresh(handler);
 	}

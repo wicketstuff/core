@@ -201,7 +201,7 @@ public abstract class InputDialog<T extends Serializable> extends AbstractFormDi
 	}
 
 	@Override
-	protected DialogButton getSubmitButton()
+	public DialogButton getSubmitButton()
 	{
 		return this.findButton(OK);
 	}

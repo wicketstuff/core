@@ -134,7 +134,7 @@ public abstract class AbstractSlider<T> extends FormComponentPanel<T> implements
 		super.onInitialize();
 
 		this.add(this.newInputFragment("model")); // cannot be in ctor as the model may not have been initialized before.
-		this.add(IJQueryWidget.newWidgetBehavior(this, this.label)); // cannot be in ctor as the markupId may be set manually afterward
+		this.add(JQueryWidget.newWidgetBehavior(this, this.label)); // cannot be in ctor as the markupId may be set manually afterward
 	}
 
 	@Override

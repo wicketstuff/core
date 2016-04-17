@@ -16,8 +16,11 @@
  */
 package com.googlecode.wicket.kendo.ui.form.button;
 
+import org.apache.wicket.markup.ComponentTag;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.protocol.http.WebSession;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.googlecode.wicket.jquery.core.IJQuerySecurityProvider;
 import com.googlecode.wicket.kendo.ui.KendoIcon;
@@ -32,6 +35,7 @@ import com.googlecode.wicket.kendo.ui.KendoIcon;
 public abstract class SecuredButton extends Button
 {
 	private static final long serialVersionUID = 1L;
+	private static final Logger LOG = LoggerFactory.getLogger(SecuredButton.class);
 
 	private final IJQuerySecurityProvider provider;
 	private String[] roles;
@@ -123,5 +127,16 @@ public abstract class SecuredButton extends Button
 		super.onConfigure();
 
 		this.setEnabled(!this.isLocked());
+	}
+
+	@Override
+	protected void onComponentTag(ComponentTag tag)
+	{
+		super.onComponentTag(tag);
+
+		if (!"button".equalsIgnoreCase(tag.getName()))
+		{
+			LOG.warn("SecuredButton should be applied on a 'button' tag");
+		}
 	}
 }

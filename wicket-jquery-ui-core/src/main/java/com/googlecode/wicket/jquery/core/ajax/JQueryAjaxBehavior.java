@@ -52,7 +52,7 @@ import com.googlecode.wicket.jquery.core.JQueryEvent;
  * 	{
  * 		super.onInitialize();
  * 
- * 		this.add(IJQueryWidget.newWidgetBehavior(this));
+ * 		this.add(JQueryWidget.newWidgetBehavior(this));
  * 	}
  * 
  * 	public void onMyEvent(AjaxRequestTarget target)

@@ -178,7 +178,7 @@ public class DropDownList<T> extends DropDownChoice<T> implements IJQueryWidget
 	{
 		super.onInitialize();
 
-		this.add(IJQueryWidget.newWidgetBehavior(this));
+		this.add(JQueryWidget.newWidgetBehavior(this));
 	}
 
 	@Override

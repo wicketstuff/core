@@ -92,7 +92,7 @@ public abstract class AjaxLink<T> extends org.apache.wicket.ajax.markup.html.Aja
 	{
 		super.onInitialize();
 
-		this.add(IJQueryWidget.newWidgetBehavior(this));
+		this.add(JQueryWidget.newWidgetBehavior(this));
 	}
 
 	@Override

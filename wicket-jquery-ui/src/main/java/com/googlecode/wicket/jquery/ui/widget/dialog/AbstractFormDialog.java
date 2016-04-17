@@ -142,7 +142,7 @@ public abstract class AbstractFormDialog<T extends Serializable> extends Abstrac
 	 *
 	 * @return the submit button
 	 */
-	protected abstract DialogButton getSubmitButton();
+	public abstract DialogButton getSubmitButton();
 
 	/**
 	 * Returns whether form should be processed the default way. When false (default is true), all validation and form updating is bypassed and the onSubmit method of that button is called directly, and the onSubmit method of the parent

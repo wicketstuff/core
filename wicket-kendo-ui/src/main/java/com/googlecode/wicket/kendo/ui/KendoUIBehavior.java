@@ -28,7 +28,7 @@ import org.apache.wicket.markup.head.JavaScriptHeaderItem;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.googlecode.wicket.jquery.core.IJQueryWidget;
+import com.googlecode.wicket.jquery.core.IJQueryWidget.JQueryWidget;
 import com.googlecode.wicket.jquery.core.JQueryBehavior;
 import com.googlecode.wicket.jquery.core.Options;
 import com.googlecode.wicket.kendo.ui.KendoDestroyListener.IDestroyable;
@@ -179,7 +179,7 @@ public class KendoUIBehavior extends JQueryBehavior implements IDestroyable
 	 */
 	public static String widget(Component component, String method)
 	{
-		return KendoUIBehavior.widget(IJQueryWidget.getSelector(component), method);
+		return KendoUIBehavior.widget(JQueryWidget.getSelector(component), method);
 	}
 
 	@Override

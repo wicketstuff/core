@@ -18,7 +18,7 @@ package com.googlecode.wicket.jquery.ui.interaction.behavior;
 
 import org.apache.wicket.Component;
 
-import com.googlecode.wicket.jquery.core.IJQueryWidget;
+import com.googlecode.wicket.jquery.core.IJQueryWidget.JQueryWidget;
 import com.googlecode.wicket.jquery.ui.JQueryUIBehavior;
 
 /**
@@ -61,7 +61,7 @@ public class PositionBehavior extends JQueryUIBehavior
 	{
 		super.bind(component);
 
-		this.selector = IJQueryWidget.getSelector(component);
+		this.selector = JQueryWidget.getSelector(component);
 	}
 
 	@Override

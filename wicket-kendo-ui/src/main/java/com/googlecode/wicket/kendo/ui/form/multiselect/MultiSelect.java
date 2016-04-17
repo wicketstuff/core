@@ -181,7 +181,7 @@ public class MultiSelect<T> extends ListMultipleChoice<T> implements IJQueryWidg
 	{
 		super.onInitialize();
 
-		this.add(IJQueryWidget.newWidgetBehavior(this));
+		this.add(JQueryWidget.newWidgetBehavior(this));
 	}
 
 	@Override

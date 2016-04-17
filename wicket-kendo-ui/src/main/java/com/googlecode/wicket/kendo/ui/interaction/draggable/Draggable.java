@@ -21,7 +21,6 @@ import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.util.lang.Args;
 
-import com.googlecode.wicket.jquery.core.IJQueryWidget;
 import com.googlecode.wicket.jquery.core.JQueryBehavior;
 import com.googlecode.wicket.jquery.core.JQueryGenericContainer;
 import com.googlecode.wicket.jquery.core.Options;
@@ -182,7 +181,7 @@ public class Draggable<T> extends JQueryGenericContainer<T> implements IDraggabl
 	 */
 	public Draggable<T> setContainer(Component component)
 	{
-		return this.setContainer(IJQueryWidget.getSelector(component));
+		return this.setContainer(JQueryWidget.getSelector(component));
 	}
 
 	/**

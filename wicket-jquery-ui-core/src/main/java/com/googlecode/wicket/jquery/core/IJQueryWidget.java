@@ -33,7 +33,7 @@ import org.apache.wicket.Component;
  * {
  * 	super.onInitialize();
  * 
- * 	this.add(IJQueryWidget.newWidgetBehavior(this));
+ * 	this.add(JQueryWidget.newWidgetBehavior(this));
  * }
  * </pre>
  *
@@ -65,52 +65,64 @@ public interface IJQueryWidget
 	 */
 	JQueryBehavior newWidgetBehavior(String selector);
 
-	// Statics //
-
-	/**
-	 * Helper method that returns the component's html selector (ie: '#myId').
-	 * 
-	 * @param component the {@link Component}
-	 * @return the html selector
-	 */
-	public static String getSelector(Component component)
+	/** static class */
+	class JQueryWidget
 	{
-		return "#" + component.setOutputMarkupId(true).getMarkupId();
-	}
+		/**
+		 * Helper method that returns the component's html selector (ie: '#myId').
+		 * 
+		 * @param component the {@link Component}
+		 * @return the html selector
+		 */
+		public static String getSelector(Component component)
+		{
+			return "#" + component.setOutputMarkupId(true).getMarkupId();
+		}
 
-	/**
-	 * Factory method that gets a new {@link JQueryBehavior} by invoking {@link IJQueryWidget#newWidgetBehavior(String)} on the supplied widget.
-	 * 
-	 * @param <W> the type
-	 * @param widget the {@link IJQueryWidget} object
-	 * @return the {@link JQueryBehavior}
-	 */
-	public static <W extends Component & IJQueryWidget> JQueryBehavior newWidgetBehavior(W widget)
-	{
-		return widget.newWidgetBehavior(IJQueryWidget.getSelector(widget));
-	}
+		/**
+		 * Factory method that gets a new {@link JQueryBehavior} by invoking {@link IJQueryWidget#newWidgetBehavior(String)} on the supplied widget.
+		 * 
+		 * @param <W> the type
+		 * @param widget the {@link IJQueryWidget} object
+		 * @return the {@link JQueryBehavior}
+		 */
+		@SuppressWarnings("unchecked")
+		public static <T extends JQueryBehavior, W extends Component & IJQueryWidget> T newWidgetBehavior(W widget)
+		{
+			return (T) widget.newWidgetBehavior(JQueryWidget.getSelector(widget));
+		}
 
-	/**
-	 * Factory method that gets a new {@link JQueryBehavior} by invoking {@link IJQueryWidget#newWidgetBehavior(String)} on the supplied widget.
-	 * 
-	 * @param widget object implementing the {@link IJQueryWidget} interface.
-	 * @param component the {@link Component} the selector will be calculated from.
-	 * @return the {@link JQueryBehavior}
-	 */
-	public static JQueryBehavior newWidgetBehavior(IJQueryWidget widget, Component component)
-	{
-		return widget.newWidgetBehavior(IJQueryWidget.getSelector(component));
-	}
+		/**
+		 * Factory method that gets a new {@link JQueryBehavior} by invoking {@link IJQueryWidget#newWidgetBehavior(String)} on the supplied widget.
+		 * 
+		 * @param widget object implementing the {@link IJQueryWidget} interface.
+		 * @param component the {@link Component} the selector will be calculated from.
+		 * @return the {@link JQueryBehavior}
+		 */
+		@SuppressWarnings("unchecked")
+		public static <T extends JQueryBehavior> T newWidgetBehavior(IJQueryWidget widget, Component component)
+		{
+			return (T) widget.newWidgetBehavior(JQueryWidget.getSelector(component));
+		}
 
-	/**
-	 * Factory method that gets a new {@link JQueryBehavior} by invoking {@link IJQueryWidget#newWidgetBehavior(String)} on the supplied widget.
-	 * 
-	 * @param widget object implementing the {@link IJQueryWidget} interface.
-	 * @param selector the html selector (ie: '#myId')
-	 * @return the {@link JQueryBehavior}
-	 */
-	public static JQueryBehavior newWidgetBehavior(IJQueryWidget widget, String selector)
-	{
-		return widget.newWidgetBehavior(selector);
+		/**
+		 * Factory method that gets a new {@link JQueryBehavior} by invoking {@link IJQueryWidget#newWidgetBehavior(String)} on the supplied widget.
+		 * 
+		 * @param widget object implementing the {@link IJQueryWidget} interface.
+		 * @param selector the html selector (ie: '#myId')
+		 * @return the {@link JQueryBehavior}
+		 */
+		@SuppressWarnings("unchecked")
+		public static <T extends JQueryBehavior> T newWidgetBehavior(IJQueryWidget widget, String selector)
+		{
+			return (T) widget.newWidgetBehavior(selector);
+		}
+
+		/**
+		 * Utility class
+		 */
+		private JQueryWidget()
+		{
+		}
 	}
 }

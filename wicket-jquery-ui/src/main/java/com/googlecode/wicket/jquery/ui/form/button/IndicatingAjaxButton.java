@@ -16,30 +16,25 @@
  */
 package com.googlecode.wicket.jquery.ui.form.button;
 
-import org.apache.wicket.Component;
-import org.apache.wicket.ajax.AbstractDefaultAjaxBehavior;
-import org.apache.wicket.ajax.AjaxRequestTarget;
-import org.apache.wicket.ajax.markup.html.form.AjaxButton;
-import org.apache.wicket.markup.head.CssHeaderItem;
-import org.apache.wicket.markup.head.IHeaderResponse;
+import org.apache.wicket.markup.ComponentTag;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.model.IModel;
-import org.apache.wicket.request.IRequestHandler;
-import org.apache.wicket.request.cycle.RequestCycle;
-import org.apache.wicket.request.handler.resource.ResourceReferenceRequestHandler;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
-import com.googlecode.wicket.jquery.core.IJQueryWidget;
 import com.googlecode.wicket.jquery.core.JQueryBehavior;
+import com.googlecode.wicket.jquery.core.Options;
 
 /**
- * Provides a jQuery button based on the built-in AjaxButton, with an ajax indicator the time the {@link #onSubmit()} process.
+ * Provides a jQuery button based on the {@link AjaxButton}, with an ajax indicator the time the {@link #onSubmit()} process.
  *
  * @since 6.0
  * @author Sebastien Briquet - sebfz1
  */
-public abstract class IndicatingAjaxButton extends AjaxButton implements IJQueryWidget
+public abstract class IndicatingAjaxButton extends AjaxButton
 {
 	private static final long serialVersionUID = 1L;
+	private static final Logger LOG = LoggerFactory.getLogger(IndicatingAjaxButton.class);
 
 	public enum Position
 	{
@@ -99,63 +94,63 @@ public abstract class IndicatingAjaxButton extends AjaxButton implements IJQuery
 	}
 
 	// Events //
-	@Override
-	protected void onInitialize()
-	{
-		super.onInitialize();
 
-		this.add(IJQueryWidget.newWidgetBehavior(this));
+	@Override
+	protected void onComponentTag(ComponentTag tag)
+	{
+		super.onComponentTag(tag);
+
+		if (!"button".equalsIgnoreCase(tag.getName()))
+		{
+			LOG.warn("IndicatingAjaxButton should be applied on a 'button' tag");
+		}
 	}
 
-	@Override
-	public void onConfigure(JQueryBehavior behavior)
-	{
-		// noop
-	}
+	// Properties //
 
-	@Override
-	public void onBeforeRender(JQueryBehavior behavior)
+	/**
+	 * Indicates whether the button will be disabled on-click to prevent double submit
+	 *
+	 * @return false by default
+	 */
+	protected boolean isDisabledOnClick()
 	{
-		// noop
-	}
-
-	@Override
-	protected void onError(AjaxRequestTarget target, Form<?> form)
-	{
-		// noop
+		return false;
 	}
 
 	// IJQueryWidget //
+
 	@Override
 	public JQueryBehavior newWidgetBehavior(String selector)
 	{
-		return new ButtonBehavior(selector) {
+		return new AjaxIndicatingButtonBehavior(selector, this.getIcon(), this.position) {
 
 			private static final long serialVersionUID = 1L;
 
 			@Override
-			public void renderHead(Component component, IHeaderResponse response)
+			protected Options newOnClickOptions()
 			{
-				super.renderHead(component, response);
+				Options options = super.newOnClickOptions();
 
-				// adds the busy indicator style //
-				IRequestHandler handler = new ResourceReferenceRequestHandler(AbstractDefaultAjaxBehavior.INDICATOR);
-				String css = String.format(".ui-icon.ui-icon-indicator { background-image: url(%s) !important; background-position: 0 0; }", RequestCycle.get().urlFor(handler));
+				if (IndicatingAjaxButton.this.isDisabledOnClick())
+				{
+					options.set("disabled", true);
+				}
 
-				response.render(CssHeaderItem.forCSS(css, "jquery-ui-icon-indicator"));
+				return options;
 			}
 
 			@Override
-			protected String $()
+			protected Options newOnAjaxStopOptions()
 			{
-				// configure the busy indicator start & stop //
-				StringBuilder builder = new StringBuilder(super.$());
+				Options options = super.newOnAjaxStopOptions();
 
-				builder.append("jQuery('").append(this.selector).append("')").append(".click(function() { jQuery(this).button('option', 'icons', {").append(position == Position.LEFT ? "primary" : "secondary")
-						.append(": 'ui-icon-indicator' }); }); ");
-				builder.append("jQuery(document).ajaxStop(function() { jQuery('").append(this.selector).append("').button('option', 'icons', {").append(position == Position.LEFT ? "primary" : "secondary").append(": null }); }); ");
+				if (IndicatingAjaxButton.this.isDisabledOnClick())
+				{
+					options.set("disabled", !IndicatingAjaxButton.this.isEnabledInHierarchy());
+				}
 
-				return builder.toString();
+				return options;
 			}
 		};
 	}

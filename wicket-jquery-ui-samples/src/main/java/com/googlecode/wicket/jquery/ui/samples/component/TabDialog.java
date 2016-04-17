@@ -53,7 +53,7 @@ public abstract class TabDialog extends AbstractFormDialog<TabItem>
 	}
 
 	@Override
-	protected DialogButton getSubmitButton()
+	public DialogButton getSubmitButton()
 	{
 		return this.btnSubmit;
 	}

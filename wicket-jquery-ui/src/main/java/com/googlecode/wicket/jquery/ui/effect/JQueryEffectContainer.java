@@ -21,7 +21,7 @@ import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.core.request.handler.IPartialPageRequestHandler;
 import org.apache.wicket.markup.html.WebMarkupContainer;
 
-import com.googlecode.wicket.jquery.core.IJQueryWidget;
+import com.googlecode.wicket.jquery.core.IJQueryWidget.JQueryWidget;
 import com.googlecode.wicket.jquery.core.JQueryBehavior;
 import com.googlecode.wicket.jquery.core.Options;
 import com.googlecode.wicket.jquery.ui.JQueryUIBehavior;
@@ -89,7 +89,7 @@ public class JQueryEffectContainer extends WebMarkupContainer implements IEffect
 	 */
 	public void show(IPartialPageRequestHandler handler)
 	{
-		JQueryBehavior behavior = new JQueryUIBehavior(IJQueryWidget.getSelector(this), "fadeIn");
+		JQueryBehavior behavior = new JQueryUIBehavior(JQueryWidget.getSelector(this), "fadeIn");
 		handler.appendJavaScript(behavior.toString());
 	}
 
@@ -100,7 +100,7 @@ public class JQueryEffectContainer extends WebMarkupContainer implements IEffect
 	 */
 	public void hide(IPartialPageRequestHandler handler)
 	{
-		JQueryBehavior behavior = new JQueryUIBehavior(IJQueryWidget.getSelector(this), "fadeOut");
+		JQueryBehavior behavior = new JQueryUIBehavior(JQueryWidget.getSelector(this), "fadeOut");
 		handler.appendJavaScript(behavior.toString());
 	}
 
@@ -111,7 +111,7 @@ public class JQueryEffectContainer extends WebMarkupContainer implements IEffect
 		super.onInitialize();
 
 		// cannot be in ctor as the markupId may be set manually afterward
-		this.effectBehavior = this.newEffectBehavior(IJQueryWidget.getSelector(this));
+		this.effectBehavior = this.newEffectBehavior(JQueryWidget.getSelector(this));
 		this.add(this.effectBehavior);
 	}
 

@@ -65,7 +65,7 @@ public class WysiwygEditorPage extends SamplePage
 			{
 				super.onInitialize();
 
-				this.add(new ButtonBehavior(IJQueryWidget.getSelector(this)));
+				this.add(new ButtonBehavior(IJQueryWidget.JQueryWidget.getSelector(this)));
 			}
 
 			@Override

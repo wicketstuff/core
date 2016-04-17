@@ -30,7 +30,7 @@ public class MyJQueryLabel extends Label implements IJQueryWidget, IMyJQueryList
 	{
 		super.onInitialize();
 
-		this.add(IJQueryWidget.newWidgetBehavior(this));
+		this.add(JQueryWidget.newWidgetBehavior(this));
 	}
 
 	@Override

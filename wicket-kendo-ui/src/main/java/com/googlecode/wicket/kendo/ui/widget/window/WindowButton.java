@@ -188,7 +188,7 @@ public class WindowButton implements IClusterable
 	 * INTERNAL USE<br/>
 	 * Gets the model of the button's text<br/>
 	 * <br/>
-	 * <b>Warning: </b> It may throw an Exception if not wrapped to a component
+	 * <b>Warning:</b> it may throw an Exception if not wrapped to a component
 	 *
 	 * @return the {@link IModel}
 	 */

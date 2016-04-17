@@ -49,7 +49,7 @@ public abstract class JQueryTemplate implements IJQueryTemplate
 		private static final long serialVersionUID = 1L;
 		
 		private final PackageTextTemplate template;
-		private Map<String, ?> variables = null;
+		private transient Map<String, ?> variables = null;
 
 		public JQueryPackageTextTemplate(Class<?> clazz, String fileName)
 		{

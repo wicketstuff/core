@@ -162,7 +162,7 @@ public class DropDownChoice<T> extends org.apache.wicket.markup.html.form.DropDo
 	{
 		super.onInitialize();
 
-		this.add(IJQueryWidget.newWidgetBehavior(this));
+		this.add(JQueryWidget.newWidgetBehavior(this));
 	}
 
 	@Override

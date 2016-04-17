@@ -26,7 +26,6 @@ import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.model.util.ListModel;
 
-import com.googlecode.wicket.jquery.core.IJQueryWidget;
 import com.googlecode.wicket.jquery.core.JQueryAbstractBehavior;
 import com.googlecode.wicket.jquery.core.JQueryBehavior;
 import com.googlecode.wicket.jquery.core.JQueryGenericContainer;
@@ -197,7 +196,7 @@ public class Selectable<T extends Serializable> extends JQueryGenericContainer<L
 
 			private String getSelector()
 			{
-				return String.format("%s %s", IJQueryWidget.getSelector(Selectable.this), Selectable.this.getItemSelector());
+				return String.format("%s %s", JQueryWidget.getSelector(Selectable.this), Selectable.this.getItemSelector());
 			}
 
 			@Override
@@ -272,7 +271,7 @@ public class Selectable<T extends Serializable> extends JQueryGenericContainer<L
 	 */
 	public Draggable<?> createDraggable(String id, SelectableDraggableFactory factory)
 	{
-		return factory.create(id, IJQueryWidget.getSelector(this)); // let throw a NPE if no factory is defined
+		return factory.create(id, JQueryWidget.getSelector(this)); // let throw a NPE if no factory is defined
 	}
 
 	// Default Draggable Factory //

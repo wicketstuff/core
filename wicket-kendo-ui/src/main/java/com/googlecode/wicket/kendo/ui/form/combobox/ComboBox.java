@@ -206,7 +206,7 @@ public class ComboBox<T> extends TextField<String> implements IJQueryWidget
 		this.choiceModelBehavior = this.newChoiceModelBehavior();
 		this.add(this.choiceModelBehavior);
 
-		this.add(IJQueryWidget.newWidgetBehavior(this));
+		this.add(JQueryWidget.newWidgetBehavior(this));
 
 		if (this.template != null)
 		{

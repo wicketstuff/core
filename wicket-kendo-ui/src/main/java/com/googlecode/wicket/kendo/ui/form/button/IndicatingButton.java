@@ -16,8 +16,11 @@
  */
 package com.googlecode.wicket.kendo.ui.form.button;
 
+import org.apache.wicket.markup.ComponentTag;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.model.IModel;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.googlecode.wicket.jquery.core.JQueryBehavior;
 import com.googlecode.wicket.jquery.core.Options;
@@ -31,6 +34,7 @@ import com.googlecode.wicket.jquery.core.Options;
 public class IndicatingButton extends Button
 {
 	private static final long serialVersionUID = 1L;
+	private static final Logger LOG = LoggerFactory.getLogger(IndicatingButton.class);
 
 	/**
 	 * Constructor
@@ -75,6 +79,17 @@ public class IndicatingButton extends Button
 		super.onConfigure(behavior);
 
 		behavior.setOption("enable", this.isEnabledInHierarchy());
+	}
+
+	@Override
+	protected void onComponentTag(ComponentTag tag)
+	{
+		super.onComponentTag(tag);
+
+		if (!"button".equalsIgnoreCase(tag.getName()))
+		{
+			LOG.warn("IndicatingButton should be applied on a 'button' tag");
+		}
 	}
 
 	// IJQueryWidget //

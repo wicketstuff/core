@@ -96,7 +96,7 @@ public abstract class DemoCalendarDialog extends AbstractFormDialog<DemoCalendar
 	}
 
 	@Override
-	protected DialogButton getSubmitButton()
+	public DialogButton getSubmitButton()
 	{
 		return this.btnSubmit;
 	}

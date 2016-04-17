@@ -24,7 +24,6 @@ import org.apache.wicket.core.request.handler.IPartialPageRequestHandler;
 import org.apache.wicket.util.lang.Args;
 import org.apache.wicket.util.lang.Generics;
 
-import com.googlecode.wicket.jquery.core.IJQueryWidget;
 import com.googlecode.wicket.jquery.core.JQueryBehavior;
 import com.googlecode.wicket.jquery.core.JQueryContainer;
 import com.googlecode.wicket.jquery.core.Options;
@@ -117,7 +116,7 @@ public class Calendar extends JQueryContainer implements ICalendarListener
 	 */
 	public void refresh(IPartialPageRequestHandler handler)
 	{
-		handler.appendJavaScript(String.format("jQuery('%s').fullCalendar('refetchEvents');", IJQueryWidget.getSelector(this)));
+		handler.appendJavaScript(String.format("jQuery('%s').fullCalendar('refetchEvents');", JQueryWidget.getSelector(this)));
 	}
 
 	// Properties //

@@ -6,7 +6,6 @@ import org.apache.wicket.markup.html.panel.FeedbackPanel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.googlecode.wicket.jquery.core.IJQueryWidget;
 import com.googlecode.wicket.jquery.core.JQueryBehavior;
 import com.googlecode.wicket.jquery.ui.form.button.AjaxButton;
 import com.googlecode.wicket.jquery.ui.panel.JQueryFeedbackPanel;
@@ -53,7 +52,7 @@ public class TestPage extends SamplePage
 				LOG.info("Component#onConfigure()");
 				// this.setEnabled(false);
 
-				this.add(new JQueryBehavior(IJQueryWidget.getSelector(this)) {
+				this.add(new JQueryBehavior(JQueryWidget.getSelector(this)) {
 
 					private static final long serialVersionUID = 1L;
 

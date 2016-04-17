@@ -145,7 +145,7 @@ public class NumberTextField<T extends Number & Comparable<T>> extends org.apach
 	{
 		super.onInitialize();
 
-		this.add(IJQueryWidget.newWidgetBehavior(this)); // cannot be in ctor as the markupId may be set manually afterward
+		this.add(JQueryWidget.newWidgetBehavior(this)); // cannot be in ctor as the markupId may be set manually afterward
 	}
 
 	@Override
