@@ -232,7 +232,7 @@ public class AccordionPanel extends JQueryGenericPanel<List<ITab>> implements IA
 			}
 		});
 
-		this.widgetBehavior = JQueryWidget.newWidgetBehavior(this, root);
+		this.widgetBehavior = (AccordionBehavior) JQueryWidget.newWidgetBehavior(this, root);
 		this.add(this.widgetBehavior);
 	}
 

@@ -265,7 +265,7 @@ public class TabbedPanel extends JQueryGenericPanel<List<ITab>> implements ITabs
 			}
 		});
 
-		this.widgetBehavior = JQueryWidget.newWidgetBehavior(this);
+		this.widgetBehavior = (TabsBehavior) JQueryWidget.newWidgetBehavior(this);
 		this.add(this.widgetBehavior);
 	}
 

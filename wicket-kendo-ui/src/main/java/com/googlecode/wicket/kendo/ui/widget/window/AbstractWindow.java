@@ -303,7 +303,7 @@ public abstract class AbstractWindow<T> extends GenericPanel<T> implements IJQue
 	{
 		super.onInitialize();
 
-		this.widgetBehavior = JQueryWidget.newWidgetBehavior(this);
+		this.widgetBehavior = (WindowBehavior) JQueryWidget.newWidgetBehavior(this);
 		this.add(this.widgetBehavior);
 	}
 

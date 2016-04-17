@@ -69,6 +69,13 @@ public interface IJQueryWidget
 	class JQueryWidget
 	{
 		/**
+		 * Utility class
+		 */
+		private JQueryWidget()
+		{
+		}
+
+		/**
 		 * Helper method that returns the component's html selector (ie: '#myId').
 		 * 
 		 * @param component the {@link Component}
@@ -82,27 +89,13 @@ public interface IJQueryWidget
 		/**
 		 * Factory method that gets a new {@link JQueryBehavior} by invoking {@link IJQueryWidget#newWidgetBehavior(String)} on the supplied widget.
 		 * 
-		 * @param <W> the type
-		 * @param widget the {@link IJQueryWidget} object
-		 * @return the {@link JQueryBehavior}
-		 */
-		@SuppressWarnings("unchecked")
-		public static <T extends JQueryBehavior, W extends Component & IJQueryWidget> T newWidgetBehavior(W widget)
-		{
-			return (T) widget.newWidgetBehavior(JQueryWidget.getSelector(widget));
-		}
-
-		/**
-		 * Factory method that gets a new {@link JQueryBehavior} by invoking {@link IJQueryWidget#newWidgetBehavior(String)} on the supplied widget.
-		 * 
 		 * @param widget object implementing the {@link IJQueryWidget} interface.
 		 * @param component the {@link Component} the selector will be calculated from.
 		 * @return the {@link JQueryBehavior}
 		 */
-		@SuppressWarnings("unchecked")
-		public static <T extends JQueryBehavior> T newWidgetBehavior(IJQueryWidget widget, Component component)
+		public static JQueryBehavior newWidgetBehavior(IJQueryWidget widget, Component component)
 		{
-			return (T) widget.newWidgetBehavior(JQueryWidget.getSelector(component));
+			return widget.newWidgetBehavior(JQueryWidget.getSelector(component));
 		}
 
 		/**
@@ -112,17 +105,21 @@ public interface IJQueryWidget
 		 * @param selector the html selector (ie: '#myId')
 		 * @return the {@link JQueryBehavior}
 		 */
-		@SuppressWarnings("unchecked")
-		public static <T extends JQueryBehavior> T newWidgetBehavior(IJQueryWidget widget, String selector)
+		public static JQueryBehavior newWidgetBehavior(IJQueryWidget widget, String selector)
 		{
-			return (T) widget.newWidgetBehavior(selector);
+			return widget.newWidgetBehavior(selector);
 		}
 
 		/**
-		 * Utility class
+		 * Factory method that gets a new {@link JQueryBehavior} by invoking {@link IJQueryWidget#newWidgetBehavior(String)} on the supplied widget.
+		 * 
+		 * @param <W> the type
+		 * @param widget the {@link IJQueryWidget} object
+		 * @return the {@link JQueryBehavior}
 		 */
-		private JQueryWidget()
+		public static <W extends Component & IJQueryWidget> JQueryBehavior newWidgetBehavior(W widget)
 		{
+			return JQueryWidget.newWidgetBehavior(widget, JQueryWidget.getSelector(widget));
 		}
 	}
 }

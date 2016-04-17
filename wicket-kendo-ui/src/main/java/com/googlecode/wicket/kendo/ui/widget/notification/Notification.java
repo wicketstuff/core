@@ -74,7 +74,7 @@ public class Notification extends WebMarkupContainer implements IJQueryWidget
 	{
 		super.onInitialize();
 
-		this.widgetBehavior = JQueryWidget.newWidgetBehavior(this);
+		this.widgetBehavior = (NotificationBehavior) JQueryWidget.newWidgetBehavior(this);
 		this.add(this.widgetBehavior);
 	}
 
