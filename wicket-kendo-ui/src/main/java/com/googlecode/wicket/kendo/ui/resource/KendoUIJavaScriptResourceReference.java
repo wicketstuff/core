@@ -45,6 +45,6 @@ public class KendoUIJavaScriptResourceReference extends JQueryPluginResourceRefe
 	 */
 	private KendoUIJavaScriptResourceReference()
 	{
-		super(KendoUIJavaScriptResourceReference.class, "kendo.ui.core.js");
+		super(KendoUIJavaScriptResourceReference.class, "kendo.ui.core.min.js");
 	}
 }

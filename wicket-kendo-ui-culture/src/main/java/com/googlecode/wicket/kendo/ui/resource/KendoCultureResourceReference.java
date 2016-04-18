@@ -36,7 +36,7 @@ public class KendoCultureResourceReference extends JQueryPluginResourceReference
 {
 	private static final long serialVersionUID = 1L;
 
-	public static final String FILENAME_PATTERN = "cultures/kendo.culture.%s.js";
+	public static final String FILENAME_PATTERN = "cultures/kendo.culture.%s.min.js";
 
 	/**
 	 * Constructor

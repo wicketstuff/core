@@ -35,7 +35,7 @@ public class KendoMessageResourceReference extends JQueryPluginResourceReference
 {
 	private static final long serialVersionUID = 1L;
 
-	public static final String FILENAME_PATTERN = "messages/kendo.messages.%s.js";
+	public static final String FILENAME_PATTERN = "messages/kendo.messages.%s.min.js";
 
 	/**
 	 * Constructor
