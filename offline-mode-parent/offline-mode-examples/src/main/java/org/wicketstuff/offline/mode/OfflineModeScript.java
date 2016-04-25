@@ -9,7 +9,7 @@ public class OfflineModeScript extends JavaScriptResourceReference
 {
 	private static final long serialVersionUID = 1L;
 
-	private static OfflineModeScript self;
+	private static final OfflineModeScript self = new OfflineModeScript();
 
 	private static String id = UUID.randomUUID().toString();
 
@@ -18,12 +18,8 @@ public class OfflineModeScript extends JavaScriptResourceReference
 		super(OfflineModeScript.class, OfflineModeScript.class.getSimpleName() + ".js");
 	}
 
-	public static synchronized OfflineModeScript getInstance()
+	public static OfflineModeScript getInstance()
 	{
-		if (self == null)
-		{
-			self = new OfflineModeScript();
-		}
 		return self;
 	}
 
@@ -41,7 +37,7 @@ public class OfflineModeScript extends JavaScriptResourceReference
 				String response = new String(processResponse);
 				response = response.replace("$(scriptId)", "\"" + id + "\"");
 				return response.getBytes();
-			};
+			}
 		};
 		removeCompressFlagIfUnnecessary(resource);
 		return resource;

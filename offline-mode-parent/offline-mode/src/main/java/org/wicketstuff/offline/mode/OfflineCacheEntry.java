@@ -63,7 +63,7 @@ public class OfflineCacheEntry
 
 		private String realName;
 
-		private Cors(String realName)
+		Cors(String realName)
 		{
 			this.realName = realName;
 		}

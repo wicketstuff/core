@@ -16,12 +16,12 @@
  */
 package org.wicketstuff.offline.mode;
 
-import java.util.ArrayList;
-import java.util.List;
-
+import org.apache.wicket.MetaDataKey;
 import org.apache.wicket.markup.head.IHeaderResponse;
 import org.apache.wicket.markup.head.JavaScriptHeaderItem;
 import org.apache.wicket.protocol.http.WebApplication;
+
+import java.util.List;
 
 /**
  * The offline cache to initialize / load the client side cache.<br>
@@ -37,15 +37,15 @@ import org.apache.wicket.protocol.http.WebApplication;
  * </code>
  * </pre>
  * 
- * To load the offline cache use the following snippet in the renderHead method of a page:
+ * To contribute the offline cache use the following snippet in the renderHead method of a page:
  * 
  * <pre>
  * <code>
- * OfflineCache.load(response);
+ * OfflineCache.renderHead(response);
  * </code>
  * </pre>
  * 
- * If the cache name is going to be changed all resources are going to be load again. This happens
+ * If the cache name is going to be changed all resources are going to be reloaded again. This happens
  * if the browser loads the new service worker content (after a browser refresh). The new service
  * worker is going to be initialized as "waiting". (See chapter "How to Update a Service Worker" of
  * the html5 rocks article) If you then switch the page to google for example and switch back, the
@@ -70,8 +70,8 @@ import org.apache.wicket.protocol.http.WebApplication;
  */
 public class OfflineCache
 {
-
-	private static List<OfflineCacheEntry> offlineCacheEntries = new ArrayList<>();
+	private static final MetaDataKey<List<OfflineCacheEntry>> OFFLINE_CACHE_ENTRIES = new MetaDataKey<List<OfflineCacheEntry>>()
+	{ };
 
 	/**
 	 * Initializes the offline cache (used in the init method of a wicket application)
@@ -86,11 +86,11 @@ public class OfflineCache
 	public static void init(WebApplication webApplication, String cacheName,
 		List<OfflineCacheEntry> offlineCacheEntries)
 	{
-		OfflineCache.setOfflineCacheEntries(offlineCacheEntries);
-		webApplication.mountResource("/wicketserviceworkerregistration",
+		OfflineCache.setOfflineCacheEntries(webApplication, offlineCacheEntries);
+		webApplication.mountResource("wicket-offlinecache-serviceworkerregistration",
 			ServiceWorkerRegistration.getInstance());
-		webApplication.mountResource("/wicketserviceworker",
-			new ServiceWorker(cacheName, getOfflineCacheEntries()));
+		webApplication.mountResource("wicket-offlinecache-serviceworker",
+			new ServiceWorker(cacheName, offlineCacheEntries));
 	}
 
 	/**
@@ -98,11 +98,10 @@ public class OfflineCache
 	 * references
 	 * 
 	 * @param response
-	 *            the response to load the offline cache references
+	 *            the response to contribute the offline cache references
 	 */
-	public static void load(IHeaderResponse response)
+	public static void renderHead(IHeaderResponse response)
 	{
-		response.render(JavaScriptHeaderItem.forReference(ServiceWorkerRegistration.getInstance()));
 		response.render(JavaScriptHeaderItem.forReference(ServiceWorker.getInstance()));
 	}
 
@@ -111,20 +110,22 @@ public class OfflineCache
 	 * 
 	 * @return the offline cache entries
 	 */
-	public static List<OfflineCacheEntry> getOfflineCacheEntries()
+	public static List<OfflineCacheEntry> getOfflineCacheEntries(WebApplication application)
 	{
-		return offlineCacheEntries;
+		return application.getMetaData(OFFLINE_CACHE_ENTRIES);
 	}
 
 	/**
 	 * Sets the offline cache entries (can only be used if the offline cache hasn't been initialized
 	 * yet)
-	 * 
+	 *
+	 * @param application
+	 *          the application instance
 	 * @param offlineCacheEntries
-	 *            the offline cache entries
+	 *          the offline cache entries to store
 	 */
-	public static void setOfflineCacheEntries(List<OfflineCacheEntry> offlineCacheEntries)
+	public static void setOfflineCacheEntries(final WebApplication application, List<OfflineCacheEntry> offlineCacheEntries)
 	{
-		OfflineCache.offlineCacheEntries = offlineCacheEntries;
+		application.setMetaData(OFFLINE_CACHE_ENTRIES, offlineCacheEntries);
 	}
 }

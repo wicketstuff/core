@@ -19,10 +19,10 @@ var wicketCacheName = '$(cacheName)';
 // register cache
 self.addEventListener('install', function(event) {
 	var offlineCacheEntries = $(offlineCacheEntries);
-	console.log("Received the following settings to be cached: "+JSON.stringify(offlineCacheEntries)+", entries with cors are going to be translated to a Request object");
+	console.info("Received the following settings to be cached: "+JSON.stringify(offlineCacheEntries)+", entries with CORS are going to be translated to a Request object");
 	
-	// Handle cors settings
-	for(i = 0; i < offlineCacheEntries.length; i++) {
+	// Handle CORS settings
+	for(var i = 0; i < offlineCacheEntries.length; i++) {
 		if(offlineCacheEntries[i].cors) {
 			offlineCacheEntries[i] = new Request(offlineCacheEntries[i].url, { mode : offlineCacheEntries[i].cors } );
 		}else{
@@ -42,7 +42,7 @@ self.addEventListener('fetch', function(event) {
 			return cache.match(event.request).then(function(response) {
 				// Handles requests
 				var responseValue = response || fetch(event.request);
-				console.log('Found response in cache:', responseValue);
+				console.info('Found response in cache:', responseValue);
 				return responseValue;
 			}).catch(function(error) {
 				// Handles exceptions that arise from match() or fetch().
