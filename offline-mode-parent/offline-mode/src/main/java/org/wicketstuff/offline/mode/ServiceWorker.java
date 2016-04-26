@@ -23,6 +23,8 @@ import org.apache.wicket.Page;
 import org.apache.wicket.WicketRuntimeException;
 import org.apache.wicket.ajax.json.JSONArray;
 import org.apache.wicket.ajax.json.JSONObject;
+import org.apache.wicket.markup.head.HeaderItem;
+import org.apache.wicket.markup.head.JavaScriptHeaderItem;
 import org.apache.wicket.request.IRequestHandler;
 import org.apache.wicket.request.cycle.RequestCycle;
 import org.apache.wicket.request.http.WebResponse;
@@ -45,9 +47,9 @@ public class ServiceWorker extends JavaScriptResourceReference
 
 	private static ServiceWorker self;
 
-	private String cacheName;
+	private final String cacheName;
 
-	private List<OfflineCacheEntry> offlineCacheEntries;
+	private final List<OfflineCacheEntry> offlineCacheEntries;
 
 	/**
 	 * Creates the service worker
@@ -70,7 +72,7 @@ public class ServiceWorker extends JavaScriptResourceReference
 	 * 
 	 * @return the service worker instance
 	 */
-	public synchronized static ServiceWorker getInstance()
+	public static ServiceWorker getInstance()
 	{
 		return self;
 	}
@@ -122,7 +124,7 @@ public class ServiceWorker extends JavaScriptResourceReference
 								"Please provide a cache object to each OfflineCacheEntry.");
 						}
 
-						CharSequence urlFor = null;
+						CharSequence urlFor;
 						if (cacheObject instanceof ResourceReference)
 						{
 							urlFor = requestCycle.urlFor((ResourceReference)cacheObject,
@@ -148,7 +150,7 @@ public class ServiceWorker extends JavaScriptResourceReference
 						}
 						else if (urlFor.toString().startsWith("."))
 						{
-							urlFor = urlFor.toString().substring(0 + 1);
+							urlFor = urlFor.toString().substring(1);
 						}
 
 						String url = urlFor.toString() + (suffix != null ? suffix : "");
@@ -175,4 +177,10 @@ public class ServiceWorker extends JavaScriptResourceReference
 		return resource;
 	}
 
+	@Override
+	public List<HeaderItem> getDependencies() {
+		List<HeaderItem> dependencies = super.getDependencies();
+		dependencies.add(JavaScriptHeaderItem.forReference(ServiceWorkerRegistration.getInstance()));
+		return dependencies;
+	}
 }

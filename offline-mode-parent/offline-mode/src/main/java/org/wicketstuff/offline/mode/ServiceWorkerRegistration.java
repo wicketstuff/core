@@ -30,7 +30,7 @@ public class ServiceWorkerRegistration extends JavaScriptResourceReference
 {
 	private static final long serialVersionUID = -1356650275121621624L;
 
-	private static ServiceWorkerRegistration self;
+	private static final ServiceWorkerRegistration self = new ServiceWorkerRegistration();
 
 	/**
 	 * Creates a new service worker registration
@@ -46,12 +46,8 @@ public class ServiceWorkerRegistration extends JavaScriptResourceReference
 	 * 
 	 * @return the current service worker registration instance
 	 */
-	public synchronized static ServiceWorkerRegistration getInstance()
+	public static ServiceWorkerRegistration getInstance()
 	{
-		if (self == null)
-		{
-			self = new ServiceWorkerRegistration();
-		}
 		return self;
 	}
 
