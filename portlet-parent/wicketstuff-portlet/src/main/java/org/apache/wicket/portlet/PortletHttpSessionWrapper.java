@@ -29,20 +29,26 @@ import java.util.Set;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.apache.wicket.protocol.http.WebApplication;
+
 /**
+ * <p>
  * Proxy for a Servlet HttpSession to attach to a PortletSession, providing only access to
  * PORTLET_SCOPE session attributes and hiding the APPLICATION_SCOPE attributes from the Servlet. <br/>
  * This Proxy can be used to isolate two instances of the same Portlet dispatching to Servlets so
- * they don't overwrite or read each others session attributes. <br/>
- * Caveat: APPLICATION_SCOPE sessions attributes cannot be used anymore (directly) for inter-portlet
- * communication, or when using Servlets directly which also need to "attach" to the PORTLET_SCOPE
- * session attributes.<br/>
- * The {@link org.apache.portals.bridges.util.PortletWindowUtils} class can help out with that
- * though. <br/>
- * Note: copied and adapted from the Apache Portal Bridges Common project
+ * they don't overwrite or read each others session attributes.
+ * </p>
+ * <p>
+ * Note: If an APPLICATION_SCOPE session attribute is going to be stored with a name which does
+ * not start with a wicket prefix (look at
+ * {@link WebApplication#getSessionAttributePrefix(org.apache.wicket.request.http.WebRequest, String)}
+ * ) then the attribute will be stored normally as APPLICATION_SCOPED session attribute and this
+ * attribute will be accessible from every wicket portlet.
+ * </p>
  * 
  * @author <a href="mailto:ate@douma.nu">Ate Douma</a>
  * @author <a href="http://sebthom.de/">Sebastian Thomschke</a>
+ * @author Konstantinos Karavitis
  */
 public class PortletHttpSessionWrapper implements InvocationHandler
 {
@@ -94,7 +100,7 @@ public class PortletHttpSessionWrapper implements InvocationHandler
 	}
 
 	public static HttpSession createProxy(final HttpServletRequest request,
-		final String portletWindowId)
+		final String portletWindowId, final String wicketSessionAttributePrefix)
 	{
 		final String portletWindowNamespace = "javax.portlet.p." + portletWindowId;
 		final HttpSession servletSession = request.getSession();
@@ -113,20 +119,24 @@ public class PortletHttpSessionWrapper implements InvocationHandler
 			{
 				current = null;
 			}
-		final Object proxy = Proxy.newProxyInstance(servletSession.getClass().getClassLoader(),
-			interfaces.toArray(new Class[interfaces.size()]), new PortletHttpSessionWrapper(
-				request.getSession(), portletWindowNamespace));
-		return (HttpSession)proxy;
+
+		return (HttpSession)Proxy.newProxyInstance(servletSession.getClass().getClassLoader(),
+			interfaces.toArray(new Class[interfaces.size()]),
+			new PortletHttpSessionWrapper(request.getSession(), portletWindowNamespace,
+				wicketSessionAttributePrefix));
+
 	}
 
 	private final HttpSession servletSession;
 	private final String portletWindowPrefix;
+	private final String wicketSessionAttributePrefix;
 
 	private PortletHttpSessionWrapper(final HttpSession servletSession,
-		final String portletWindowPrefix)
+		final String portletWindowPrefix, final String wicketSessionAttributePrefix)
 	{
 		this.servletSession = servletSession;
 		this.portletWindowPrefix = portletWindowPrefix;
+		this.wicketSessionAttributePrefix = wicketSessionAttributePrefix;
 	}
 
 	/**
@@ -134,20 +144,24 @@ public class PortletHttpSessionWrapper implements InvocationHandler
 	 */
 	@SuppressWarnings("unchecked")
 	public Object invoke(final Object proxy, final Method m, final Object[] args) throws Throwable
-	{
-		if (("getAttribute".equals(m.getName()) || "getValue".equals(m.getName())) &&
-			args.length == 1 && args[0] instanceof String)
-			return servletSession.getAttribute(portletWindowPrefix + (String)args[0]);
-
-		if (("setAttribute".equals(m.getName()) || "putValue".equals(m.getName())) &&
-			args.length == 2 && args[0] instanceof String)
+	{	
+		if (("getAttribute".equals(m.getName()) || "getValue".equals(m.getName()))
+			&& args.length == 1 && args[0] instanceof String)
 		{
-			servletSession.setAttribute(portletWindowPrefix + (String)args[0], args[1]);
+			// fix for #488 issue : https://github.com/wicketstuff/core/issues/488
+			return servletSession.getAttribute(fixAttributeName((String)args[0]));
+		}
+
+		if (("setAttribute".equals(m.getName()) || "putValue".equals(m.getName()))
+			&& args.length == 2 && args[0] instanceof String)
+		{
+			// fix for #488 issue : https://github.com/wicketstuff/core/issues/488
+			servletSession.setAttribute(fixAttributeName((String)args[0]), args[1]);
 			return null;
 		}
 
-		if (("removeAttribute".equals(m.getName()) || "removeValue".equals(m.getName())) &&
-			args.length == 1 && args[0] instanceof String)
+		if (("removeAttribute".equals(m.getName()) || "removeValue".equals(m.getName()))
+			&& args.length == 1 && args[0] instanceof String)
 		{
 			servletSession.removeAttribute(portletWindowPrefix + (String)args[0]);
 			return null;
@@ -166,5 +180,18 @@ public class PortletHttpSessionWrapper implements InvocationHandler
 			return list.toArray(new String[list.size()]);
 		}
 		return m.invoke(servletSession, args);
+	}
+	
+	/***
+	 * fix for #488 issue : https://github.com/wicketstuff/core/issues/488
+	 * @return session attribute fixed name
+	 * */
+	private String fixAttributeName(String attributeName)
+	{
+		if (attributeName.startsWith(wicketSessionAttributePrefix))
+		{
+			attributeName = portletWindowPrefix + attributeName;
+		}
+		return attributeName;
 	}
 }
