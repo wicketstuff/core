@@ -37,6 +37,7 @@ import org.apache.wicket.request.http.WebResponse;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
 import org.apache.wicket.request.resource.IResource;
 import org.apache.wicket.util.collections.MultiMap;
+import org.apache.wicket.util.convert.ConversionException;
 import org.apache.wicket.util.convert.IConverter;
 import org.apache.wicket.util.lang.Args;
 import org.apache.wicket.util.string.Strings;
@@ -68,7 +69,7 @@ import org.wicketstuff.rest.utils.wicket.bundle.DefaultBundleResolver;
  */
 public abstract class AbstractRestResource<T extends IWebSerialDeserial> implements IResource
 {
-        private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L;
 
 	public static final String NO_SUITABLE_METHOD_FOUND = "No suitable method found.";
 
@@ -83,11 +84,11 @@ public abstract class AbstractRestResource<T extends IWebSerialDeserial> impleme
 	private final Map<String, List<MethodMappingInfo>> mappedMethods;
 
 	/**
-	 * Another HashMap that stores every mapped method of the class. 
+	 * Another HashMap that stores every mapped method of the class.
 	 * The key of the map is {@link Method}.
 	 */
 	private final Map<Method, MethodMappingInfo> mappedMethodsInfo;
-	
+
 	/**
 	 * HashMap that stores the validators registered by the resource.
 	 */
@@ -139,23 +140,23 @@ public abstract class AbstractRestResource<T extends IWebSerialDeserial> impleme
 	}
 
 	/**
-         * Build a list of classes to use to search for a valid bundle. This list is
-         * made of the classes of the validators registered with abstractResource
-         * and of the class of the abstractResource.
-         *
-         * @param abstractResource
-         *            the abstract REST resource that is using the validator
-         * @return the list of the classes to use.
-         */
+	 * Build a list of classes to use to search for a valid bundle. This list is
+	 * made of the classes of the validators registered with abstractResource
+	 * and of the class of the abstractResource.
+	 *
+	 * @param abstractResource
+	 *            the abstract REST resource that is using the validator
+	 * @return the list of the classes to use.
+	 */
 	private List<Class<?>> loadBoundleClasses()
 	{
-            Collection<IValidator<?>> validators = declaredValidators.values();
-            List<Class<?>> validatorsClasses = ReflectionUtils.getElementsClasses(validators);
-    
-            validatorsClasses.add(this.getClass());
-    
-            return validatorsClasses;
-        }
+		Collection<IValidator<?>> validators = declaredValidators.values();
+		List<Class<?>> validatorsClasses = ReflectionUtils.getElementsClasses(validators);
+
+		validatorsClasses.add(this.getClass());
+
+		return validatorsClasses;
+	}
 
 	/***
 	 * Handles a REST request invoking one of the methods annotated with {@link MethodMapping}. If
@@ -200,9 +201,8 @@ public abstract class AbstractRestResource<T extends IWebSerialDeserial> impleme
 		ScoreMethodAndExtractPathVars mappedMethod)
 	{
 		WebResponse response = attributesWrapper.getWebResponse();
-		HttpMethod httpMethod = attributesWrapper.getHttpMethod();
-		Attributes attributes = attributesWrapper.getOriginalAttributes();
 		MethodMappingInfo methodInfo = mappedMethod.getMethodInfo();
+		Attributes attributes = attributesWrapper.getOriginalAttributes();
 		String outputFormat = methodInfo.getOutputFormat();
 
 		// 1-check if user is authorized to invoke the method
@@ -213,11 +213,15 @@ public abstract class AbstractRestResource<T extends IWebSerialDeserial> impleme
 		}
 
 		// 2-extract method parameters
-		List<?> parametersValues = extractMethodParameters(mappedMethod, attributesWrapper);
+		List<?> parametersValues = null;
 
-		if (parametersValues == null)
+		try
 		{
-			noSuitableMethodFound(response, httpMethod);
+			parametersValues = extractMethodParameters(mappedMethod, attributesWrapper);
+		}
+		catch (RuntimeException e)
+		{
+			setResponseStatusCode(400);
 			return;
 		}
 
@@ -248,8 +252,8 @@ public abstract class AbstractRestResource<T extends IWebSerialDeserial> impleme
 		if (result != null)
 		{
 			objectToResponse(result, response, outputFormat);
-		}		
-		
+		}
+
 	}
 
 
@@ -317,15 +321,15 @@ public abstract class AbstractRestResource<T extends IWebSerialDeserial> impleme
 
 		for (MethodParameter<?> methodParameter : methodParameters)
 		{
-		    	String validatorKey = methodParameter.getValdatorKey();
-			
+			String validatorKey = methodParameter.getValdatorKey();
+
 			if (!Strings.isEmpty(validatorKey))
 			{
-			    int i = methodParameters.indexOf(methodParameter);
-			    Object parameterValue = parametersValues.get(i);
-			    
-			    validateMethodParameter(errors, validatorKey,
-				parameterValue);
+				int i = methodParameters.indexOf(methodParameter);
+				Object parameterValue = parametersValues.get(i);
+
+				validateMethodParameter(errors, validatorKey,
+					parameterValue);
 			}
 		}
 
@@ -334,7 +338,7 @@ public abstract class AbstractRestResource<T extends IWebSerialDeserial> impleme
 
 	/**
 	 * Validate a single parameter value of the mapped method we want to execute.
-	 * 
+	 *
 	 * @param errors
 	 * 	the list of validation errors
 	 * @param validatorKey
@@ -345,18 +349,18 @@ public abstract class AbstractRestResource<T extends IWebSerialDeserial> impleme
 	private <E> void validateMethodParameter(List<IValidationError> errors,
 		String validatorKey, E parameterValue)
 	{
-	    IValidator<E> validator = getValidator(validatorKey, parameterValue);
-	    Validatable<E> validatable = new Validatable<>(parameterValue);
+		IValidator<E> validator = getValidator(validatorKey, parameterValue);
+		Validatable<E> validatable = new Validatable<>(parameterValue);
 
-	    if (validator != null)
-	    {
-	    	validator.validate(validatable);
-	    	errors.addAll(validatable.getErrors());
-	    }
-	    else
-	    {
-	    	log.debug("No validator found for key '" + validatorKey + "'");
-	    }
+		if (validator != null)
+		{
+			validator.validate(validatable);
+			errors.addAll(validatable.getErrors());
+		}
+		else
+		{
+			log.debug("No validator found for key '" + validatorKey + "'");
+		}
 	}
 
 	/**
@@ -436,19 +440,19 @@ public abstract class AbstractRestResource<T extends IWebSerialDeserial> impleme
 
 		for (MethodMappingInfo mappedMethod : mappedMethodsCandidates)
 		{
-			ScoreMethodAndExtractPathVars scoredMethod = 
+			ScoreMethodAndExtractPathVars scoredMethod =
 				new ScoreMethodAndExtractPathVars(mappedMethod, pageParameters);
-			
+
 			for (AbstractURLSegment segment : mappedMethod.getSegments())
 			{
 				segment.accept(scoredMethod);
-				
+
 				if(!scoredMethod.isSegmentValid())
 				{
 					break;
 				}
 			}
-			
+
 			if(highestScore > 0 && scoredMethod.getScore() == highestScore)
 			{
 				// if we have more than one method with the highest score, throw
@@ -460,9 +464,9 @@ public abstract class AbstractRestResource<T extends IWebSerialDeserial> impleme
 			{
 				highestScore = scoredMethod.getScore();
 				highiestScoredMethod = scoredMethod;
-			} 
+			}
 		}
-				
+
 		return highiestScoredMethod;
 	}
 
@@ -546,19 +550,19 @@ public abstract class AbstractRestResource<T extends IWebSerialDeserial> impleme
 
 		return CollectionUtils.makeListMapImmutable(mappedMethods);
 	}
-	
-	private Map<Method, MethodMappingInfo> loadAnnotatedMethodsInfo() 
+
+	private Map<Method, MethodMappingInfo> loadAnnotatedMethodsInfo()
 	{
 		Map<Method, MethodMappingInfo> methodsInfo = new HashMap<Method, MethodMappingInfo>();
-		
-		for (List<MethodMappingInfo> methodInfoList : mappedMethods.values()) 
+
+		for (List<MethodMappingInfo> methodInfoList : mappedMethods.values())
 		{
-			for (MethodMappingInfo methodMappedInfo : methodInfoList) 
+			for (MethodMappingInfo methodMappedInfo : methodInfoList)
 			{
 				methodsInfo.put(methodMappedInfo.getMethod(), methodMappedInfo);
 			}
 		}
-		
+
 		return Collections.unmodifiableMap(methodsInfo);
 	}
 
@@ -587,7 +591,10 @@ public abstract class AbstractRestResource<T extends IWebSerialDeserial> impleme
 			// if parameter is null and is required, abort extraction.
 			if (paramValue == null && methodParameter.isRequired())
 			{
-				return null;
+				String exMsg = String.format("No valid value could be found the given method parameter: method %s, parameter index %i",
+					mappedMethod.getMethodInfo().getMethod().getName(), methodParameter.getParamIndex());
+				log.debug(exMsg);
+				throw new WicketRuntimeException(exMsg);
 			}
 
 			parametersValues.add(paramValue);
@@ -622,13 +629,13 @@ public abstract class AbstractRestResource<T extends IWebSerialDeserial> impleme
 
 		return null;
 	}
-	
+
 	/**
-     * Handle Exception. Default: set response Status to 500. Override this method to implement
-     * customized error handling
-     * @param exception The Exception
-     * @param response Response-Object
-     */
+	 * Handle Exception. Default: set response Status to 500. Override this method to implement
+	 * customized error handling
+	 * @param exception The Exception
+	 * @param response Response-Object
+	 */
 	protected void handleException(WebResponse response, Exception exception)
 	{
 		response.setStatus(500);
@@ -686,27 +693,39 @@ public abstract class AbstractRestResource<T extends IWebSerialDeserial> impleme
 	 * @return the object corresponding to the converted string value, or null if value parameter is
 	 *         null
 	 */
-	public static Object toObject(Class<?> clazz, String value) throws IllegalArgumentException
+	public static Object toObject(Class<?> clazz, String value) throws RuntimeException
 	{
 		if (value == null)
+		{
 			return null;
+		}
+
 		// we use the standard Wicket conversion mechanism to obtain the
 		// converted value.
+		WebResponse response = getCurrentWebResponse();
+		IConverter<?> converter = Application.get().getConverterLocator().getConverter(clazz);
+
+		if (converter == null)
+		{
+			String exMsg = String.format("Could not find a suitable converter for value '%s' of type '%s'",
+				value, clazz.getName());
+			log.debug(exMsg);
+
+			throw new WicketRuntimeException(exMsg);
+		}
+
 		try
 		{
-			IConverter<?> converter = Application.get().getConverterLocator().getConverter(clazz);
-
 			return converter.convertToObject(value, Session.get().getLocale());
 		}
-		catch (Exception e)
+		catch (ConversionException exception)
 		{
-			WebResponse response = getCurrentWebResponse();
+			String exMsg = String.format("Value '%s' can not be converted to type '%s'",
+				value, clazz.getName());
 
-			response.setStatus(400);
-			log.debug("Could not find a suitable converter for value '" + value + "' of type '" +
-				clazz + "'");
+			log.debug(exMsg);
 
-			return null;
+			throw new WicketRuntimeException(exMsg, exception);
 		}
 	}
 
@@ -795,8 +814,8 @@ public abstract class AbstractRestResource<T extends IWebSerialDeserial> impleme
 	{
 		return mappedMethodsInfo;
 	}
-	
-	public MethodMappingInfo getMethodInfo(Method method) 
+
+	public MethodMappingInfo getMethodInfo(Method method)
 	{
 		return mappedMethodsInfo.get(method);
 	}
