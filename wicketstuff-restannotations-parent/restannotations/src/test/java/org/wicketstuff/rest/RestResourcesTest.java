@@ -18,6 +18,11 @@ package org.wicketstuff.rest;
 
 import static org.junit.Assert.assertEquals;
 
+import java.io.BufferedReader;
+import java.io.StringReader;
+import java.io.StringWriter;
+import java.util.Collections;
+
 import javax.servlet.http.Cookie;
 import javax.xml.bind.JAXB;
 import javax.xml.transform.stream.StreamResult;
@@ -39,11 +44,6 @@ import org.wicketstuff.rest.resource.AbstractRestResource;
 import org.wicketstuff.rest.resource.RestResourceFullAnnotated;
 import org.wicketstuff.rest.utils.test.BufferedMockRequest;
 import org.wicketstuff.rest.utils.wicket.bundle.DefaultBundleResolver;
-
-import java.io.BufferedReader;
-import java.io.StringReader;
-import java.io.StringWriter;
-import java.util.Collections;
 
 import junit.framework.Assert;
 
@@ -126,6 +126,15 @@ public class RestResourcesTest
 		testIfResponseStringIsEqual("testRequiredDefault");
 	}
 
+	@Test
+	public void testWrongParamValue() throws Exception
+	{
+		tester.getRequest().setMethod("GET");
+		tester.executeUrl("./api/wrongParamValue?intValue=AAA");
+		testIfResponseStringIsEqual("");
+		Assert.assertEquals(400, tester.getLastResponse().getStatus());
+	}
+	
 	@Test
 	public void testJsonDeserializedParamRequest()
 	{

@@ -38,6 +38,7 @@ import org.apache.wicket.request.http.WebResponse;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
 import org.apache.wicket.request.resource.IResource;
 import org.apache.wicket.util.collections.MultiMap;
+import org.apache.wicket.util.convert.ConversionException;
 import org.apache.wicket.util.convert.IConverter;
 import org.apache.wicket.util.lang.Args;
 import org.apache.wicket.util.string.Strings;
@@ -204,11 +205,15 @@ public abstract class AbstractRestResource<T extends IWebSerialDeserial> impleme
 		}
 
 		// 2-extract method parameters
-		List parametersValues = extractMethodParameters(mappedMethod, attributesWrapper);
+		List<?> parametersValues = null;
 
-		if (parametersValues == null)
+		try
 		{
-			noSuitableMethodFound(response, httpMethod);
+			parametersValues = extractMethodParameters(mappedMethod, attributesWrapper);
+		}
+		catch (RuntimeException e)
+		{
+			setResponseStatusCode(400);
 			return;
 		}
 
@@ -551,7 +556,7 @@ public abstract class AbstractRestResource<T extends IWebSerialDeserial> impleme
 	private List extractMethodParameters(MethodMappingInfo mappedMethod,
 		AttributesWrapper attributesWrapper)
 	{
-		List parametersValues = new ArrayList();
+		List<Object> parametersValues = new ArrayList<Object>();
 
 		PageParameters pageParameters = attributesWrapper.getPageParameters();
 		LinkedHashMap<String, String> pathParameters = mappedMethod.populatePathParameters(pageParameters);
@@ -562,10 +567,12 @@ public abstract class AbstractRestResource<T extends IWebSerialDeserial> impleme
 		{
 			Object paramValue = methodParameter.extractParameterValue(parameterContext);
 
-			// if parameter is null and is required, abort extraction.
 			if (paramValue == null && methodParameter.isRequired())
 			{
-				return null;
+				String exMsg = String.format("No valid value could be found the given method parameter: method %s, parameter index %i",
+					mappedMethod.getMethod().getName(), methodParameter.getParamIndex());
+				log.debug(exMsg);
+				throw new WicketRuntimeException(exMsg);
 			}
 
 			parametersValues.add(paramValue);
@@ -664,27 +671,38 @@ public abstract class AbstractRestResource<T extends IWebSerialDeserial> impleme
 	 * @return the object corresponding to the converted string value, or null if value parameter is
 	 *         null
 	 */
-	public static Object toObject(Class clazz, String value) throws IllegalArgumentException
+	public static Object toObject(Class clazz, String value) throws RuntimeException
 	{
 		if (value == null)
+		{
 			return null;
+		}
+
 		// we use the standard Wicket conversion mechanism to obtain the
 		// converted value.
+		IConverter<?> converter = Application.get().getConverterLocator().getConverter(clazz);
+
+		if (converter == null)
+		{
+			String exMsg = String.format("Could not find a suitable converter for value '%s' of type '%s'",
+				value, clazz.getName());
+			log.debug(exMsg);
+
+			throw new WicketRuntimeException(exMsg);
+		}
+
 		try
 		{
-			IConverter converter = Application.get().getConverterLocator().getConverter(clazz);
-
 			return converter.convertToObject(value, Session.get().getLocale());
 		}
-		catch (Exception e)
+		catch (ConversionException exception)
 		{
-			WebResponse response = getCurrentWebResponse();
+			String exMsg = String.format("Value '%s' can not be converted to type '%s'",
+				value, clazz.getName());
 
-			response.setStatus(400);
-			log.debug("Could not find a suitable converter for value '" + value + "' of type '" +
-				clazz + "'");
+			log.debug(exMsg);
 
-			return null;
+			throw new WicketRuntimeException(exMsg, exception);
 		}
 	}
 

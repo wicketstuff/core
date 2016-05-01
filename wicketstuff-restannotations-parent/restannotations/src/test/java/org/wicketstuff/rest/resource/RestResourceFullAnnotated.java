@@ -21,8 +21,6 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
-import junit.framework.Assert;
-
 import org.apache.wicket.authroles.authorization.strategies.role.IRoleCheckingStrategy;
 import org.apache.wicket.util.lang.Args;
 import org.apache.wicket.validation.validator.EmailAddressValidator;
@@ -40,6 +38,8 @@ import org.wicketstuff.rest.annotations.parameters.ValidatorKey;
 import org.wicketstuff.rest.contenthandling.RestMimeTypes;
 import org.wicketstuff.rest.contenthandling.serialdeserial.TestJsonDesSer;
 import org.wicketstuff.rest.utils.http.HttpMethod;
+
+import junit.framework.Assert;
 
 public class RestResourceFullAnnotated extends AbstractRestResource<TestJsonDesSer>
 {
@@ -211,6 +211,12 @@ public class RestResourceFullAnnotated extends AbstractRestResource<TestJsonDesS
 		Assert.assertEquals(Float.parseFloat("12.6"), price);
 
 		return "testRequiredDefault";
+	}
+	
+	@MethodMapping(value = "/wrongParamValue", produces = RestMimeTypes.TEXT_PLAIN)
+	public String wrongParamValue(@RequestParam("intValue") int intValue)
+	{
+		return "wrongParamValue";
 	}
 
 	public static Person createTestPerson()
