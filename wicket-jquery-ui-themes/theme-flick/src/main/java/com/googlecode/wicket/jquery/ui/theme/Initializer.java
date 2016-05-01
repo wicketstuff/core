@@ -46,6 +46,6 @@ public class Initializer implements IInitializer
 	@Override
 	public String toString()
 	{
-		return "Wicket extensions initializer (wicket-jquery-ui-theme-flick)";
+		return "Wicket jQuery UI initializer (theme-flick)";
 	}
 }

@@ -18,9 +18,6 @@ package com.googlecode.wicket.jquery.ui.plugins;
 
 import org.apache.wicket.Application;
 import org.apache.wicket.IInitializer;
-import org.apache.wicket.markup.html.IPackageResourceGuard;
-import org.apache.wicket.markup.html.SecurePackageResourceGuard;
-import org.apache.wicket.markup.html.SecurePackageResourceGuard.SearchPattern;
 
 /**
  * Provides the {@link IInitializer} for this module
@@ -32,20 +29,7 @@ public class Initializer implements IInitializer
 	@Override
 	public void init(Application application)
 	{
-		// Wysiwyg Plugin //
-		IPackageResourceGuard packageResourceGuard = application.getResourceSettings().getPackageResourceGuard();
-
-		if (packageResourceGuard instanceof SecurePackageResourceGuard)
-		{
-			SecurePackageResourceGuard guard = (SecurePackageResourceGuard) packageResourceGuard;
-
-			if (!guard.getPattern().contains(new SearchPattern("+*.eot")))
-			{
-				guard.addPattern("+*.eot");
-				guard.addPattern("+*.woff");
-				guard.addPattern("+*.ttf");
-			}
-		}
+		// noop
 	}
 
 	@Override
@@ -57,6 +41,6 @@ public class Initializer implements IInitializer
 	@Override
 	public String toString()
 	{
-		return "Wicket extensions initializer (wicket-jquery-ui-plugins)";
+		return "Wicket jQuery UI initializer (plugins)";
 	}
 }

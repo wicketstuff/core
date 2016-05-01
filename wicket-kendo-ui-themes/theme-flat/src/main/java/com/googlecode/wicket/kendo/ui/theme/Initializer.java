@@ -49,6 +49,6 @@ public class Initializer implements IInitializer
 	@Override
 	public String toString()
 	{
-		return "Wicket extensions initializer (wicket-kendo-ui-theme-flat)";
+		return "Wicket Kendo UI initializer (theme-flat)";
 	}
 }
