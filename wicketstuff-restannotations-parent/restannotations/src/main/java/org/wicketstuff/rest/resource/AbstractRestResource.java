@@ -702,7 +702,6 @@ public abstract class AbstractRestResource<T extends IWebSerialDeserial> impleme
 
 		// we use the standard Wicket conversion mechanism to obtain the
 		// converted value.
-		WebResponse response = getCurrentWebResponse();
 		IConverter<?> converter = Application.get().getConverterLocator().getConverter(clazz);
 
 		if (converter == null)
