@@ -433,6 +433,7 @@ public abstract class AbstractRestResource<T extends IWebSerialDeserial> impleme
 		 * score method calculateScore is executed for every segment.
 		 */
 		int highestScore = 0;
+		int highestCount = 0;
 
 		for (MethodMappingInfo mappedMethod : mappedMethodsCandidates)
 		{
@@ -448,19 +449,24 @@ public abstract class AbstractRestResource<T extends IWebSerialDeserial> impleme
 					break;
 				}
 			}
-			
-			if(highestScore > 0 && scoredMethod.getScore() == highestScore)
-			{
-				// if we have more than one method with the highest score, throw
-				// ambiguous exception.
-				throwAmbiguousMethodsException(scoredMethod, highiestScoredMethod);
-			}
 
 			if (scoredMethod.getScore() >= highestScore)
 			{
+				if(scoredMethod.getScore() == highestScore) {
+					highestCount++;
+				} else {
+					highestCount = 1;
+				}
 				highestScore = scoredMethod.getScore();
 				highiestScoredMethod = scoredMethod;
-			} 
+			}
+		}
+
+		// if we have more than one method with the highest score, throw
+		// ambiguous exception.
+		if(highestCount > 1)
+		{
+			throwAmbiguousMethodsException(highiestScoredMethod);
 		}
 				
 		return highiestScoredMethod;
