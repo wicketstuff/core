@@ -226,6 +226,11 @@ public class RestResourceFullAnnotated extends AbstractRestResource<TextualWebSe
 	public String getFromAnotherPath(@RequestParam("term") String term) {
 	    return "getFromAnotherPath";
 	}
+	
+	@MethodMapping(value = "/path/get_from_another_path2", produces = RestMimeTypes.TEXT_PLAIN)
+	public String getFromAnotherPath2(@RequestParam("term") String term) {
+	    return "getFromPath2";
+	}
 }
 
 @Retention(RetentionPolicy.RUNTIME)
