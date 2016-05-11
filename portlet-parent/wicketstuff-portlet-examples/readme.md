@@ -10,7 +10,7 @@ Build wicketstuff-portlet-examples with maven to produce its war file.
 
 > cd core/portlet-parent/wicketstuff-portlet-examples
 
-> mvn install
+> mvn install -P liferay
 
 Start liferay portal and login as administrator. Default credentials are test@liferay.com/test.
 
