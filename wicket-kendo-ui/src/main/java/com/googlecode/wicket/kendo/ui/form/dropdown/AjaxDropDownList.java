@@ -171,7 +171,7 @@ public class AjaxDropDownList<T> extends DropDownList<T> implements ISelectionCh
 			@Override
 			public void onSelectionChanged(AjaxRequestTarget target)
 			{
-				AjaxDropDownList.this.onSelectionChanged(); // updates the model
+				AjaxDropDownList.this.onRequest(); // updates the model
 				AjaxDropDownList.this.onSelectionChanged(target);
 			}
 		});
