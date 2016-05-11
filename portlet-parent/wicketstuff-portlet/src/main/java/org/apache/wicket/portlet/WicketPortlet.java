@@ -20,6 +20,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.PrintWriter;
 import java.net.URL;
+import java.net.URLDecoder;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
@@ -41,10 +42,10 @@ import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
 import javax.servlet.RequestDispatcher;
 
+import org.apache.commons.fileupload.portlet.PortletRequestContext;
 import org.apache.wicket.protocol.http.WicketFilter;
 import org.apache.wicket.util.file.File;
 import org.apache.wicket.util.string.Strings;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -652,7 +653,21 @@ public class WicketPortlet extends GenericPortlet {
 		if ((url != null) && (requestUrl != null) && (!ABSOLUTE_URI_PATTERN.matcher(url).matches())) {
 			try {
 				if (!requestUrl.startsWith("http")) {
-					return new URL(new URL("http:" + wicketFilterPath), url).toString().substring(5);
+					URL fixedUrl = new URL("http:" + url);
+					String query = fixedUrl.getQuery();
+					if (query != null) {
+						for (String queryParamValuePair : query.split("&")) {
+							String wuViewParam = "_wuview=";
+							if (queryParamValuePair.startsWith(wuViewParam)) {
+								return URLDecoder.decode(queryParamValuePair
+										.replace(wuViewParam, ""), "UTF-8")
+										+ "?" + query;
+							}
+						}
+					}
+
+					return new URL(new URL("http:" + wicketFilterPath), url)
+							.toString().substring(5);
 				}
 				else {
 					return new URL(new URL(wicketFilterPath), url).getPath();
