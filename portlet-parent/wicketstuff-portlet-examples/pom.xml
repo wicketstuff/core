@@ -304,6 +304,10 @@
 						<configuration>
 							<webXml>src/main/webapp/WEB-INF/liferay/web.xml</webXml>
 							<packagingExcludes>
+							    WEB-INF/liferay,
+								WEB-INF/liferay/web.xml,
+								WEB-INF/websphere,
+								WEB-INF/websphere/web.xml,
 								WEB-INF/ibm-*.xml
 							</packagingExcludes>
 						</configuration>
@@ -322,7 +326,11 @@
 						<configuration>
 							<webXml>src/main/webapp/WEB-INF/websphere/web.xml</webXml>
 							<packagingExcludes>
-								WEB-INF/liferay-*.xml
+								WEB-INF/liferay,
+								WEB-INF/liferay/web.xml,
+								WEB-INF/websphere,
+								WEB-INF/websphere/web.xml,
+								WEB-INF/liferay*
 							</packagingExcludes>
 						</configuration>
 					</plugin>

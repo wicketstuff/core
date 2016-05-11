@@ -656,8 +656,8 @@ public class WicketPortlet extends GenericPortlet {
 					URL fixedUrl = new URL("http:" + url);
 					String query = fixedUrl.getQuery();
 					if (query != null) {
+						String wuViewParam = "_wuview=";
 						for (String queryParamValuePair : query.split("&")) {
-							String wuViewParam = "_wuview=";
 							if (queryParamValuePair.startsWith(wuViewParam)) {
 								return URLDecoder.decode(queryParamValuePair
 										.replace(wuViewParam, ""), "UTF-8")
