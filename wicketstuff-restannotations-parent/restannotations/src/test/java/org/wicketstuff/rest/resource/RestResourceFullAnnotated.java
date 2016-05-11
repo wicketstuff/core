@@ -189,9 +189,9 @@ public class RestResourceFullAnnotated extends AbstractRestResource<TextualWebSe
 	{
 		return email;
 	}
-	
+
 	@MethodMapping(value = "/customvalidator", produces = RestMimeTypes.TEXT_PLAIN)
-	public String testCustomValidator( 
+	public String testCustomValidator(
 		@RequestParam("customvalidator") @ValidatorKey("customvalidator") String customfield)
 	{
 		return customfield;
@@ -216,16 +216,26 @@ public class RestResourceFullAnnotated extends AbstractRestResource<TextualWebSe
 	{
 		return new Person("Mary", "Smith", "m.smith@gmail.com");
 	}
-	
+
 	@MethodMapping(value = "/path/get_from_path", produces = RestMimeTypes.TEXT_PLAIN)
-	public String getFromPath(@RequestParam("term") String term) {
-	    return "getFromPath";
+	public String getFromPath(@RequestParam("term") String term)
+	{
+		return "getFromPath";
 	}
 
 	@MethodMapping(value = "/path/get_from_another_path", produces = RestMimeTypes.TEXT_PLAIN)
-	public String getFromAnotherPath(@RequestParam("term") String term) {
-	    return "getFromAnotherPath";
+	public String getFromAnotherPath(@RequestParam("term") String term)
+	{
+		return "getFromAnotherPath";
 	}
+
+	@MethodMapping(value = "/wrongParamValue", produces = RestMimeTypes.TEXT_PLAIN)
+	public String wrongParamValue(@RequestParam("intValue") int intValue)
+	{
+		return "wrongParamValue";
+	}
+
+
 }
 
 @Retention(RetentionPolicy.RUNTIME)

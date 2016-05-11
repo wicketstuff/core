@@ -13,7 +13,6 @@
 	<description />
 
 	<properties>
-		<wicket.version>7.3.0-SNAPSHOT</wicket.version>
 		<jetty9.version>9.2.13.v20150730</jetty9.version>
 		<log4j.version>2.5</log4j.version>
 		<junit.version>4.12</junit.version>
@@ -193,7 +192,7 @@
 		<dependency>
 			<groupId>org.wicketstuff</groupId>
 			<artifactId>wicketstuff-portlet</artifactId>
-			<version>${wicket.version}</version>
+			<version>${project.version}</version>
 		</dependency>
 	</dependencies>
 

@@ -24,7 +24,7 @@ public class OfflineModeHomePage extends WebPage
 		super.renderHead(response);
 		response.render(JavaScriptHeaderItem.forReference(OfflineModeScript.getInstance()));
 
-		// load the offline mode scripts on page request
-		OfflineCache.load(response);
+		// contribute the offline mode scripts on page request
+		OfflineCache.renderHead(response);
 	}
 }

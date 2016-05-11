@@ -15,12 +15,12 @@
  * limitations under the License.
  */
 if ('serviceWorker' in navigator) {
-	navigator.serviceWorker.register('wicketserviceworker' /*, {scope: './'}*/).then(function(registration) {
-		console.log('wicketserviceworker has been initialized');
+	navigator.serviceWorker.register('wicket-offlinecache-serviceworker' /*, {scope: './'}*/).then(function(registration) {
+		console.info('Wicket Service Worker has been initialized');
 	}).catch(function(error) {
-		console.log('Error while initializing the wicketserviceworker: '+error);
-		throw 'Error while initializing the wicketserviceworker: '+error;
+		console.error('Error while initializing the Wicket Service Worker: '+error);
+		throw 'Error while initializing the Wicket Offline Cache Service Worker: '+error;
 	});
 } else {
-	console.log('wicketserviceworker is not supported within the current browser');
+	console.warn('Service Worker is not supported within the current browser');
 }

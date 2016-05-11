@@ -53,7 +53,7 @@ import org.wicketstuff.rest.utils.wicket.bundle.DefaultBundleResolver;
 public class RestResourcesTest
 {
 	private WicketTester tester;
-	private Roles roles = new Roles();
+	private final Roles roles = new Roles();
 
 	@Rule
 	public ExpectedException exception = ExpectedException.none();
@@ -61,7 +61,7 @@ public class RestResourcesTest
 	@Before
 	public void setUp()
 	{
-        tester = new WicketTester(new WicketApplication(roles));
+		tester = new WicketTester(new WicketApplication(roles));
 	}
 
 	@After
@@ -126,13 +126,22 @@ public class RestResourcesTest
 	}
 
 	@Test
+	public void testWrongParamValue() throws Exception
+	{
+		tester.getRequest().setMethod("GET");
+		tester.executeUrl("./api/wrongParamValue?intValue=AAA");
+		testIfResponseStringIsEqual("");
+		Assert.assertEquals(400, tester.getLastResponse().getStatus());
+	}
+
+	@Test
 	public void testSimilarMountedPath() throws Exception
 	{
 		tester.getRequest().setMethod("GET");
 		tester.executeUrl("./api/path/get_from_another_path?term=ff");
 		testIfResponseStringIsEqual("getFromAnotherPath");
 	}
-	
+
 	@Test
 	public void testJsonDeserializedParamRequest()
 	{
@@ -152,10 +161,10 @@ public class RestResourcesTest
 		tester.getRequest().setMethod("POST");
 		tester.executeUrl("./api");
 
-                JSONObject actual = new JSONObject(tester.getLastResponseAsString());
-                Assert.assertEquals("Smith", actual.getString("surname"));
-                Assert.assertEquals("Mary", actual.getString("name"));
-                Assert.assertEquals("m.smith@gmail.com", actual.getString("email"));
+		JSONObject actual = new JSONObject(tester.getLastResponseAsString());
+		Assert.assertEquals("Smith", actual.getString("surname"));
+		Assert.assertEquals("Mary", actual.getString("name"));
+		Assert.assertEquals("m.smith@gmail.com", actual.getString("email"));
 	}
 
 	@Test

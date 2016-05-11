@@ -20,14 +20,14 @@
 <taglib xmlns="http://java.sun.com/xml/ns/j2ee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee/web-jsptaglibrary_2_0.xsd"
 	version="2.0">
-	<tlibversion>2.0</tlibversion>
-	<jspversion>2.2</jspversion>
-	<shortname>wicketstuff-jee-web</shortname>
-	<info>This taglib contains functions to be used in JSPs embedded into
-		Wicket pages.</info>
+	<tlib-version>2.0</tlib-version>
+	<jsp-version>2.2</jsp-version>
+	<short-name>wicketstuff-jee-web</short-name>
+	<description>This taglib contains functions to be used in JSPs embedded into
+		Wicket pages.</description>
 	<uri>http://wicketstuff-jee-web.org/functions/jsp</uri>
 	
-	<function>
+    <function>
         <name>url</name>
         <function-class>org.wicketstuff.jeeweb.el.ELFunctions</function-class>
         <function-signature>java.lang.String url(java.lang.String)</function-signature>
@@ -38,26 +38,26 @@
         <function-class>org.wicketstuff.jeeweb.el.ELFunctions</function-class>
         <function-signature>java.lang.String urlWithQuery(java.lang.String, java.lang.String)</function-signature>
     </function>
-    
-	<function>
+
+    <function>
         <name>ajaxGet</name>
         <function-class>org.wicketstuff.jeeweb.el.ELFunctions</function-class>
         <function-signature>java.lang.String ajaxGet()</function-signature>
-    </function>    
-	
-	<function>
+    </function>
+
+    <function>
         <name>ajaxGetWithQuery</name>
         <function-class>org.wicketstuff.jeeweb.el.ELFunctions</function-class>
         <function-signature>java.lang.String ajaxGetWithQuery(java.lang.String)</function-signature>
     </function>
-    
-   	<function>
+
+    <function>
         <name>ajaxCallbackUrlWithQuery</name>
         <function-class>org.wicketstuff.jeeweb.el.ELFunctions</function-class>
         <function-signature>java.lang.String ajaxCallbackUrlWithQuery(java.lang.String)</function-signature>
     </function>
-    
-	<function>
+
+    <function>
         <name>ajaxCallbackUrl</name>
         <function-class>org.wicketstuff.jeeweb.el.ELFunctions</function-class>
         <function-signature>java.lang.String ajaxCallbackUrl()</function-signature>
@@ -71,8 +71,8 @@
     
 	<tag>
 		<name>url</name>
-		<tagclass>org.wicketstuff.jeeweb.jsp.JspUrlTagSupport</tagclass>
-		<info>Used to generate Wicket page URLs within jsp files.</info>
+		<tag-class>org.wicketstuff.jeeweb.jsp.JspUrlTagSupport</tag-class>
+		<description>Used to generate Wicket page URLs within jsp files.</description>
 		<attribute>
 			<name>page</name>
 			<required>true</required>
