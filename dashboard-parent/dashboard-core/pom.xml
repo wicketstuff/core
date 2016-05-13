@@ -15,7 +15,7 @@
 	<name>Wicketstuff Dashboard Core</name>
 
 	<properties>
-		<xstream.version>1.4.3</xstream.version>
+		<xstream.version>1.4.9</xstream.version>
 	</properties>
 
 	<dependencies>
