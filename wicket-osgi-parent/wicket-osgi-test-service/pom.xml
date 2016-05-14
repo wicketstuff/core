@@ -3,7 +3,7 @@
 	<parent>
 		<artifactId>wicket-osgi-parent</artifactId>
 		<groupId>org.wicketstuff</groupId>
-		<version>7.3.0-SNAPSHOT</version>
+		<version>7.4.0-SNAPSHOT</version>
 	</parent>
 	<artifactId>wicket-osgi-test-service</artifactId>
 	<packaging>bundle</packaging>

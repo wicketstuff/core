@@ -7,7 +7,7 @@
     <parent>
         <artifactId>wicket-foundation-parent</artifactId>
         <groupId>org.wicketstuff.foundation</groupId>
-        <version>7.3.0-SNAPSHOT</version>
+        <version>7.4.0-SNAPSHOT</version>
     </parent>
 
     <artifactId>wicket-foundation-samples</artifactId>

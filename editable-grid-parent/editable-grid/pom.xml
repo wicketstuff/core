@@ -4,7 +4,7 @@
 	<parent>
 		<groupId>org.wicketstuff</groupId>
 		<artifactId>editable-grid-parent</artifactId>
-		<version>7.3.0-SNAPSHOT</version>
+		<version>7.4.0-SNAPSHOT</version>
 	</parent>
 	<artifactId>wicketstuff-editable-grid</artifactId>
 	<name>Editable Grid component for Apache Wicket</name>
