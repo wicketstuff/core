@@ -87,6 +87,10 @@ abstract class AutoCompleteChoiceModelBehavior<T> extends ChoiceModelBehavior<T>
 					BuilderUtils.append(builder, "id", Integer.toString(index)); /* 'id' is a reserved word */
 					builder.append(", ");
 					BuilderUtils.append(builder, "value", renderer.getText(choice)); /* 'value' is a reserved word */
+					builder.append(", ");
+
+					// ITextRenderer //
+					builder.append(renderer.render(choice)); // #198
 
 					// Additional properties (like template properties) //
 					List<String> properties = AutoCompleteChoiceModelBehavior.this.getProperties();
