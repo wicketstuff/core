@@ -17,17 +17,9 @@
 	<dependencies>
 		<!-- JOFC2 (open flash chart for java) -->
 		<dependency>
-			<groupId>jofc2</groupId>
+			<groupId>ro.nextreports</groupId>
 			<artifactId>jofc2</artifactId>
 			<version>${jofc2.version}</version>
 		</dependency>
 	</dependencies>
-
-	<repositories>
-		<repository>
-			<id>jofc2.maven.repo</id>
-			<name>JOFC2 GoogleCode.com Snapshot Repository</name>
-			<url>http://jofc2.googlecode.com/svn/repository/snapshots/</url>
-		</repository>
-	</repositories>
 </project>

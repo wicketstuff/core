@@ -15,7 +15,7 @@
 	<name>Wicketstuff Dashboard Widgets</name>
 
 	<properties>
-		<jofc2.version>1.0.1-SNAPSHOT</jofc2.version>
+		<jofc2.version>1.0.1</jofc2.version>
 		<jqPlot.version>${project.version}</jqPlot.version>
 		<loremipsum.version>1.0</loremipsum.version>
 		<justGage.version>1.0.1</justGage.version>
