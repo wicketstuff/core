@@ -170,10 +170,10 @@ public class RestResourcesTest
 	@Test
 	public void testMethodNotFound() throws Exception
 	{
-		tester.executeUrl("./api/xxxxxxx");
+		tester.executeUrl("./api2/foo");
 		String response = tester.getLastResponseAsString();
 
-		response.contains(AbstractRestResource.NO_SUITABLE_METHOD_FOUND);
+		Assert.assertTrue(response.contains(AbstractRestResource.NO_SUITABLE_METHOD_FOUND));
 	}
 
 	@Test

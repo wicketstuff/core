@@ -426,7 +426,7 @@ public abstract class AbstractRestResource<T extends IWebSerialDeserial> impleme
 		List<MethodMappingInfo> mappedMethodsCandidates = mappedMethods.get(pageParameters.getIndexedCount() +
 			"_" + attributesWrapper.getHttpMethod());
 
-		ScoreMethodAndExtractPathVars highiestScoredMethod = null;
+		MultiMap<Integer, ScoreMethodAndExtractPathVars> scoredMethods = new MultiMap<>();
 
 		// no method mapped
 		if (mappedMethodsCandidates == null || mappedMethodsCandidates.size() == 0)
@@ -453,21 +453,26 @@ public abstract class AbstractRestResource<T extends IWebSerialDeserial> impleme
 				}
 			}
 
-			if(highestScore > 0 && scoredMethod.getScore() == highestScore)
+			int methodScore = scoredMethod.getScore();
+			
+			if (methodScore >= highestScore)
 			{
-				// if we have more than one method with the highest score, throw
-				// ambiguous exception.
-				throwAmbiguousMethodsException(scoredMethod, highiestScoredMethod);
-			}
-
-			if (scoredMethod.getScore() >= highestScore)
-			{
-				highestScore = scoredMethod.getScore();
-				highiestScoredMethod = scoredMethod;
+				highestScore = methodScore;
+				scoredMethods.addValue(highestScore, scoredMethod);
 			}
 		}
 
-		return highiestScoredMethod;
+		List<ScoreMethodAndExtractPathVars> methodsWithScore 
+			= scoredMethods.get(highestScore);
+		
+		if(methodsWithScore != null && methodsWithScore.size() > 1)
+		{
+			// if we have more than one method with the highest score, throw
+			// ambiguous exception.
+			throwAmbiguousMethodsException(scoredMethods.getFirstValue(highestScore));
+		}
+		
+		return scoredMethods.getFirstValue(highestScore);
 	}
 
 	/**
