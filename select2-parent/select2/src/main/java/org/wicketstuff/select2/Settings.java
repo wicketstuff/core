@@ -15,6 +15,7 @@ package org.wicketstuff.select2;
 import java.io.Serializable;
 
 import org.apache.wicket.Component;
+import org.apache.wicket.Session;
 import org.apache.wicket.WicketRuntimeException;
 import org.apache.wicket.ajax.json.JSONException;
 import org.apache.wicket.ajax.json.JSONStringer;
@@ -49,10 +50,8 @@ public final class Settings implements Serializable
 	private boolean closeOnSelect;
 	private String id, matcher, tokenizer;
 	private String sorter;
-	private String templateSelection, templateResult, escapeMarkup
-		, formatSelectionTooBig, formatNoMatches //TODO this will not work
-		, formatInputTooShort, formatResultCssClass, formatLoadMore, formatSearching; //TODO this will not work
-	private String initSelection;  //TODO this will not work
+	private String templateSelection, templateResult, escapeMarkup;
+	private String initSelection;  //TODO Deprecated in Select2 4.0
 	private String query;
 	private String width;
 	private String containerCss, dropdownCss, containerCssClass, dropdownCssClass; //TODO deprecated
@@ -100,12 +99,6 @@ public final class Settings implements Serializable
 			Json.writeFunction(writer, "sorter", sorter);
 			Json.writeFunction(writer, "templateSelection", templateSelection);
 			Json.writeFunction(writer, "templateResult", templateResult);
-			Json.writeFunction(writer, "formatNoMatches", formatNoMatches);
-			Json.writeFunction(writer, "formatInputTooShort", formatInputTooShort);
-			Json.writeFunction(writer, "formatResultCssClass", formatResultCssClass);
-			Json.writeFunction(writer, "formatSelectionTooBig", formatSelectionTooBig);
-			Json.writeFunction(writer, "formatLoadMore", formatLoadMore);
-			Json.writeFunction(writer, "formatSearching", formatSearching);
 			Json.writeFunction(writer, "escapeMarkup", escapeMarkup);
 			Json.writeFunction(writer, "initSelection", initSelection);
 			Json.writeFunction(writer, "query", query);
@@ -127,6 +120,7 @@ public final class Settings implements Serializable
 			Json.writeFunction(writer, "data", data);
 			Json.writeObject(writer, "tags", tags);
 			Json.writeFunction(writer, "createTag", createTag);
+			writer.key("language").value(Session.get().getLocale().toLanguageTag());
 			writer.endObject();
 
 			return writer.toString();
@@ -236,28 +230,6 @@ public final class Settings implements Serializable
 	public Settings setTemplateResult(String templateResult)
 	{
 		this.templateResult = templateResult;
-		return this;
-	}
-
-	public String getFormatNoMatches()
-	{
-		return formatNoMatches;
-	}
-
-	public Settings setFormatNoMatches(String formatNoMatches)
-	{
-		this.formatNoMatches = formatNoMatches;
-		return this;
-	}
-
-	public String getFormatInputTooShort()
-	{
-		return formatInputTooShort;
-	}
-
-	public Settings setFormatInputTooShort(String formatInputTooShort)
-	{
-		this.formatInputTooShort = formatInputTooShort;
 		return this;
 	}
 
@@ -377,50 +349,6 @@ public final class Settings implements Serializable
 	public Settings setSorter(String sorter)
 	{
 		this.sorter = sorter;
-		return this;
-	}
-
-	public String getFormatSelectionTooBig()
-	{
-		return formatSelectionTooBig;
-	}
-
-	public Settings setFormatSelectionTooBig(String formatSelectionTooBig)
-	{
-		this.formatSelectionTooBig = formatSelectionTooBig;
-		return this;
-	}
-
-	public String getFormatResultCssClass()
-	{
-		return formatResultCssClass;
-	}
-
-	public Settings setFormatResultCssClass(String formatResultCssClass)
-	{
-		this.formatResultCssClass = formatResultCssClass;
-		return this;
-	}
-
-	public String getFormatLoadMore()
-	{
-		return formatLoadMore;
-	}
-
-	public Settings setFormatLoadMore(String formatLoadMore)
-	{
-		this.formatLoadMore = formatLoadMore;
-		return this;
-	}
-
-	public String getFormatSearching()
-	{
-		return formatSearching;
-	}
-
-	public Settings setFormatSearching(String formatSearching)
-	{
-		this.formatSearching = formatSearching;
 		return this;
 	}
 

@@ -12,12 +12,16 @@
  */
 package org.wicketstuff.select2;
 
+import java.net.URL;
+
 import org.apache.wicket.Application;
 import org.apache.wicket.Component;
+import org.apache.wicket.Session;
 import org.apache.wicket.behavior.Behavior;
 import org.apache.wicket.markup.head.CssHeaderItem;
 import org.apache.wicket.markup.head.IHeaderResponse;
 import org.apache.wicket.markup.head.JavaScriptHeaderItem;
+import org.apache.wicket.request.resource.JavaScriptResourceReference;
 
 /**
  * Adds various resources needed by Select2 such as JavaScript and CSS. Which resources are added is
@@ -56,6 +60,20 @@ public class Select2ResourcesBehavior extends Behavior
 		{
 			response.render(CssHeaderItem.forReference(settings.getCssReference()));
 		}
+		//i18n
+		try
+		{
+			String name = String.format("res/js/i18n/%s.js", Session.get().getLocale().toLanguageTag());
+			URL lang = getClass().getResource(name);
+			if (lang != null)
+			{
+				//localization found
+				response.render(JavaScriptHeaderItem.forReference(new JavaScriptResourceReference(getClass(), name)));
+			}
+		}
+		catch (Exception e)
+		{
+			//no-op
+		}
 	}
-
 }

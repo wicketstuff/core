@@ -271,22 +271,6 @@ abstract class AbstractSelect2Choice<T, M> extends AbstractTextComponent<M> impl
 			AjaxSettings ajax = getSettings().getAjax(true);
 			ajax.setProcessResults("function(data, page) { return { results: data.items, pagination: { more: data.more } };  }");
 		}
-		// configure the localized strings/renderers
-		getSettings().setFormatNoMatches(
-				"function() { return '" + getEscapedJsString("noMatches") + "';}");
-		getSettings().setFormatInputTooShort(
-				"function(input, min) { return min - input.length == 1 ? '" +
-						getEscapedJsString("inputTooShortSingular") + "' : '" +
-						getEscapedJsString("inputTooShortPlural") +
-						"'.replace('{number}', min - input.length); }");
-		getSettings().setFormatSelectionTooBig(
-				"function(limit) { return limit == 1 ? '" +
-						getEscapedJsString("selectionTooBigSingular") + "' : '" +
-						getEscapedJsString("selectionTooBigPlural") + "'.replace('{limit}', limit); }");
-		getSettings().setFormatLoadMore(
-				"function() { return '" + getEscapedJsString("loadMore") + "';}");
-		getSettings().setFormatSearching(
-				"function() { return '" + getEscapedJsString("searching") + "';}");
 	}
 
 	@Override
