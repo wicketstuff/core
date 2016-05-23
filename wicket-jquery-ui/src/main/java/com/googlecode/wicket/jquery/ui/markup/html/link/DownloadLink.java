@@ -26,7 +26,7 @@ import com.googlecode.wicket.jquery.ui.JQueryIcon;
 import com.googlecode.wicket.jquery.ui.form.button.ButtonBehavior;
 
 /**
- * Provides a Kendo UI button based on a built-in {@code DownloadLink}
+ * Provides a jQuery UI button based on a built-in {@code DownloadLink}
  *
  * @author Sebastien Briquet - sebfz1
  * @since 6.19.0
