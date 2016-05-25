@@ -13,7 +13,7 @@ public class GMapMarkerClustererHeaderContributor extends Behavior
 {
     private static final long serialVersionUID = 1L;
 
-    private static final String GMAP_CLUSTERER_URL = "//google-maps-utility-library-v3.googlecode.com/svn/trunk/markerclusterer/src/markerclusterer.js";
+    private static final String GMAP_CLUSTERER_URL = "//rawgit.com/googlemaps/js-marker-clusterer/gh-pages/src/markerclusterer.js";
 
     /**
      * Constructor.
