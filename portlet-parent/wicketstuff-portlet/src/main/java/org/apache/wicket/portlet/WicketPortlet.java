@@ -20,7 +20,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.PrintWriter;
 import java.net.URL;
-import java.net.URLDecoder;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
@@ -653,24 +652,10 @@ public class WicketPortlet extends GenericPortlet {
 		if ((url != null) && (requestUrl != null) && (!ABSOLUTE_URI_PATTERN.matcher(url).matches())) {
 			try {
 				if (!requestUrl.startsWith("http")) {
-					URL fixedUrl = new URL("http:" + url);
-					String query = fixedUrl.getQuery();
-					if (query != null) {
-						String wuViewParam = "_wuview=";
-						for (String queryParamValuePair : query.split("&")) {
-							if (queryParamValuePair.startsWith(wuViewParam)) {
-								return URLDecoder.decode(queryParamValuePair
-										.replace(wuViewParam, ""), "UTF-8")
-										+ "?" + query;
-							}
-						}
-					}
-
-					return new URL(new URL("http:" + wicketFilterPath), url)
-							.toString().substring(5);
+					return new URL(new URL("http:" + requestUrl), url).toString().substring(5);
 				}
 				else {
-					return new URL(new URL(wicketFilterPath), url).getPath();
+					return new URL(new URL(requestUrl), url).getPath();
 				}
 			}
 			catch (Exception e) {
