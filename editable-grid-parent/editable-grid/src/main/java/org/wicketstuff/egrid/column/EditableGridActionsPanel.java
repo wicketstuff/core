@@ -100,9 +100,10 @@ public abstract class EditableGridActionsPanel<T> extends Panel
 			@Override
 			public void onClick(AjaxRequestTarget target)
 			{
+				EditableDataTable eventTarget = rowItem.findParent(EditableDataTable.class);
 				send(getPage(), Broadcast.BREADTH, new GridOperationData<T>(OperationType.DELETE,
-					(T)rowItem.getDefaultModelObject()));
-				target.add(rowItem.findParent(EditableDataTable.class));
+					(T)rowItem.getDefaultModelObject(), eventTarget));
+				target.add(eventTarget);
 				onDelete(target);
 			}
 

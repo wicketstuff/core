@@ -525,7 +525,8 @@ public class EditableDataTable<T, S> extends Panel implements IPageableItems, IC
 			@SuppressWarnings("unchecked")
 			GridOperationData<T> gridOperationData = (GridOperationData<T>)event.getPayload();
 			if (null != gridOperationData &&
-				OperationType.DELETE.equals(gridOperationData.getOperationType()))
+				OperationType.DELETE.equals(gridOperationData.getOperationType()) &&
+						  this.equals(gridOperationData.getTarget()))
 			{
 				getDataProvider().remove(gridOperationData.getData());
 				event.stop();
