@@ -95,6 +95,11 @@ public class GMap extends Panel implements GOverlayContainer
         this(id, new GMapHeaderContributor());
     }
 
+    /**
+     * @deprecated Since the sensor-parameter is no longer required from Google
+     * you should use {@link #GMap(java.lang.String) } instead of this
+     * constructor
+     */
     public GMap(final String id, final boolean sensor)
     {
         this(id, new GMapHeaderContributor(sensor));

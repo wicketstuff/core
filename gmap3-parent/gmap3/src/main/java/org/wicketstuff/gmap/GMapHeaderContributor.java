@@ -10,7 +10,7 @@ public class GMapHeaderContributor extends Behavior
 
     private static final long serialVersionUID = 1L;
     // URL for Google Maps' API endpoint.
-    private static final String GMAP_API_URL = "%s://maps.google.com/maps/api/js?v=3&amp;sensor=%s";
+    private static final String GMAP_API_URL = "%s://maps.google.com/maps/api/js?v=3&amp";
     private static final String HTTP = "http";
     // We have some custom Javascript.
     private String scheme;
@@ -21,6 +21,12 @@ public class GMapHeaderContributor extends Behavior
         this(HTTP, false);
     }
 
+    /**
+     * @param sensor this parameter will be ignored
+     * @deprecated Since the sensor-parameter is no longer required from Google
+     * you should use {@link #GMapHeaderContributor() } instead of this
+     * constructor
+     */
     public GMapHeaderContributor(final boolean sensor)
     {
         this(HTTP, sensor);
@@ -37,7 +43,11 @@ public class GMapHeaderContributor extends Behavior
      * Should be added to the page.
      *
      * @param scheme http or https?
-     * @param sensor
+     * @param sensor this parameter will be ignored
+     * 
+     * @deprecated Since the sensor-parameter is no longer required from Google
+     * you should use {@link #GMapHeaderContributor(java.lang.String) } instead of this
+     * constructor
      */
     public GMapHeaderContributor(final String scheme, final boolean sensor)
     {
@@ -53,9 +63,13 @@ public class GMapHeaderContributor extends Behavior
     {
         super.renderHead(component, response);
         response.render(JavaScriptHeaderItem.forReference(WicketGMapJsReference.INSTANCE));
-        response.render(JavaScriptHeaderItem.forUrl(String.format(GMAP_API_URL, scheme, sensor)));
+        response.render(JavaScriptHeaderItem.forUrl(String.format(GMAP_API_URL, scheme)));
     }
 
+    /**
+     * @deprecated Since the sensor-parameter is no longer required from Google
+     * this method will be removed in future versions
+     */
     public String getSensor()
     {
         return sensor;
