@@ -53,7 +53,7 @@ public class Geocoder implements Serializable
     public static final String OUTPUT_JSON = "json";
     private final String output = OUTPUT_JSON;
     /**
-     * Result-Object of a gecoder request
+     * Result-Object of a geocoder request
      */
     private GeocoderResult geocoderResult;
     private ObjectMapper objectMapper;
@@ -88,7 +88,7 @@ public class Geocoder implements Serializable
      * all hits are available in {@link #geocoderResult}
      * 
      * @param response
-     *            - JSON respone from Google Geocoder Service
+     *            - JSON response from Google Geocoder Service
      * @return firstHit - First hit of {@link #geocoderResult}
      * @throws GeocoderException
      *             - When GeocoderStatus unequal to {@link GeocoderStatus#OK}
@@ -143,14 +143,13 @@ public class Geocoder implements Serializable
         sb.append(output);
         sb.append("?");
         sb.append("address=").append(urlEncode(address));
-        sb.append("&sensor=false");
         return sb.toString();
     }
 
     /**
      * Invoke a geocoder request to the GoogleMaps API.<br/>
      * Only return the first element of {@link #geocoderResult} to be backward compatible.<br/>
-     * After succeful call of {@link #geocode(String)} you can get all results from
+     * After successful call of {@link #geocode(String)} you can get all results from
      * {@link #geocoderResult}
      * 
      * @param address

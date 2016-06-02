@@ -27,7 +27,7 @@ public class GeocoderTest
 	{
 		String encode = coder.encode("Salzburgerstraße 205, 4030 Linz, Österreich");
 		Assert.assertEquals(
-			"http://maps.googleapis.com/maps/api/geocode/json?address=Salzburgerstra%C3%9Fe+205%2C+4030+Linz%2C+%C3%96sterreich&sensor=false",
+			"http://maps.googleapis.com/maps/api/geocode/json?address=Salzburgerstra%C3%9Fe+205%2C+4030+Linz%2C+%C3%96sterreich",
 			encode);
 	}
 
