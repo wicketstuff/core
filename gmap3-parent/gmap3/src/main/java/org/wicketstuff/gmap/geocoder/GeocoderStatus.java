@@ -22,16 +22,35 @@ package org.wicketstuff.gmap.geocoder;
  */
 public enum GeocoderStatus {
 
-    /** indicates that no errors occurred; the address was successfully parsed and at least one geocode was returned. */
+    /**
+     * indicates that no errors occurred; the address was successfully parsed
+     * and at least one geocode was returned.
+     */
     OK,
-    /** indicates that the geocode was successful but returned no results. This may occur if the geocode was passed a non-existent address or a latlng in a remote location. */
+    /**
+     * indicates that the geocode was successful but returned no results. This
+     * may occur if the geocode was passed a non-existent address or a latlng in
+     * a remote location.
+     */
     ZERO_RESULTS,
-    /** indicates that you are over your quota. */
+    /**
+     * indicates that you are over your quota.
+     */
     OVER_QUERY_LIMIT,
-    /** indicates that your request was denied, generally because of lack of a sensor parameter. */
+    /**
+     * indicates that your request was denied, possibly because the request
+     * includes a result_type or location_type parameter but does not include an
+     * API key or client ID.
+     */
     REQUEST_DENIED,
-    /** generally indicates that the query (address or latlng) is missing. */
+    /**
+     * generally indicates that the query (address, components or latlng) is
+     * missing or an invalid result_type or location_type was given.
+     */
     INVALID_REQUEST,
-    /** indicates that the request could not be processed due to a server error. The request may succeed if you try again. */
+    /**
+     * indicates that the request could not be processed due to a server error.
+     * The request may succeed if you try again.
+     */
     UNKNOWN_ERROR
 }

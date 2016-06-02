@@ -2,16 +2,14 @@ package org.wicketstuff.examples.gmap.clustering;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import org.wicketstuff.examples.gmap.WicketExamplePage;
 import org.wicketstuff.gmap.GMap;
 import org.wicketstuff.gmap.api.GLatLng;
 import org.wicketstuff.gmap.api.GMarker;
+import org.wicketstuff.gmap.api.GMarkerCluster;
 import org.wicketstuff.gmap.api.GMarkerClusterOptions;
 import org.wicketstuff.gmap.api.GMarkerClusterStyle;
 import org.wicketstuff.gmap.api.GMarkerOptions;
-import org.wicketstuff.gmap.api.GMarkerCluster;
-import org.wicketstuff.gmap.event.ClickListener;
 
 /**
  * Demonstrates how to use the clustering markers
@@ -20,9 +18,9 @@ public class HomePage extends WicketExamplePage
 {
     private static final long serialVersionUID = 1L;
     
-    private final static String image1 = "http://google-maps-utility-library-v3.googlecode.com/svn/trunk/markerclusterer/images/heart30.png";
-    private final static String image2 = "http://google-maps-utility-library-v3.googlecode.com/svn/trunk/markerclusterer/images/heart40.png";
-    private final static String image3 = "http://google-maps-utility-library-v3.googlecode.com/svn/trunk/markerclusterer/images/heart50.png";
+    private final static String image1 = "https://rawgit.com/googlemaps/js-marker-clusterer/gh-pages/images/heart30.png";
+    private final static String image2 = "https://rawgit.com/googlemaps/js-marker-clusterer/gh-pages/images/heart40.png";
+    private final static String image3 = "https://rawgit.com/googlemaps/js-marker-clusterer/gh-pages/images/heart50.png";
     
     
     public HomePage()
