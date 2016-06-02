@@ -49,8 +49,6 @@ import javax.servlet.ServletContext;
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.Cookie;
 
-import org.apache.wicket.settings.RequestCycleSettings;
-
 /**
  * Temporarily holds the current state of a Wicket response when invoked from
  * WicketPortlet: buffer, headers, state and the redirect location to be

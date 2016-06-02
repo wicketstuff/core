@@ -142,7 +142,6 @@ public class PortletHttpSessionWrapper implements InvocationHandler
 	/**
 	 * {@inheritDoc}
 	 */
-	@SuppressWarnings("unchecked")
 	public Object invoke(final Object proxy, final Method m, final Object[] args) throws Throwable
 	{	
 		if (("getAttribute".equals(m.getName()) || "getValue".equals(m.getName()))
