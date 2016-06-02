@@ -241,4 +241,53 @@
 			</plugin>
 		</plugins>
 	</build>
+	
+	<profiles>
+		<profile>
+			<id>liferay</id>
+			<activation>
+				<activeByDefault>true</activeByDefault>
+			</activation>
+			<build>
+				<plugins>
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-war-plugin</artifactId>
+						<configuration>
+							<webXml>src/main/webapp/WEB-INF/liferay/web.xml</webXml>
+							<packagingExcludes>
+							    WEB-INF/liferay,
+								WEB-INF/liferay/web.xml,
+								WEB-INF/websphere,
+								WEB-INF/websphere/web.xml,
+								WEB-INF/ibm-*.xml
+							</packagingExcludes>
+						</configuration>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+
+		<profile>
+			<id>websphere</id>
+			<build>
+				<plugins>
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-war-plugin</artifactId>
+						<configuration>
+							<webXml>src/main/webapp/WEB-INF/websphere/web.xml</webXml>
+							<packagingExcludes>
+								WEB-INF/liferay,
+								WEB-INF/liferay/web.xml,
+								WEB-INF/websphere,
+								WEB-INF/websphere/web.xml,
+								WEB-INF/liferay*
+							</packagingExcludes>
+						</configuration>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+	</profiles>
 </project>

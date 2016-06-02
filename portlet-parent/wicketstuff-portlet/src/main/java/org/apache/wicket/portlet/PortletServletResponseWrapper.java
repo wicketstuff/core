@@ -25,7 +25,6 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpServletResponseWrapper;
 
-import org.apache.wicket.settings.IRequestCycleSettings;
 
 /**
  * General class for all Portal responses, wrapping Servlet responses with

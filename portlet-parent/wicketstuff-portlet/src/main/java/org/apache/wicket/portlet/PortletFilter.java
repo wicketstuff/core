@@ -32,8 +32,6 @@ import javax.servlet.http.HttpSession;
 import org.apache.wicket.IPageRendererProvider;
 import org.apache.wicket.IRequestCycleProvider;
 import org.apache.wicket.core.request.handler.RenderPageRequestHandler;
-import org.apache.wicket.protocol.http.IWebApplicationFactory;
-import org.apache.wicket.protocol.http.WebApplication;
 import org.apache.wicket.protocol.http.WicketFilter;
 import org.apache.wicket.request.UrlRenderer;
 import org.apache.wicket.request.cycle.RequestCycle;
@@ -55,48 +53,25 @@ public class PortletFilter extends WicketFilter {
 	public static final String SHARED_RESOURCE_URL_PORTLET_WINDOW_ID_PREFIX = "/ps:";
 
 	private FilterConfig filterConfig;
-
-	private WebApplication application;
-
-	/**
-	 * Hack to access the application object (TODO: remove)
-	 * 
-	 * @see org.apache.wicket.protocol.http.WicketFilter#getApplicationFactory()
-	 */
-	@Override
-	protected IWebApplicationFactory getApplicationFactory() {
-		final IWebApplicationFactory applicationFactory = super.getApplicationFactory();
-
-		return new IWebApplicationFactory() {
-			@Override
-			public WebApplication createApplication(WicketFilter filter) {
-				application = applicationFactory.createApplication(filter);
-				return application;
-			}
-
-			@Override
-			public void destroy(WicketFilter filter) {
-				applicationFactory.destroy(filter);
-			}
-		};
-	}
-
+	
 	@Override
 	public void init(boolean isServlet, FilterConfig filterConfig) throws ServletException {
 		super.init(isServlet, filterConfig);
 		this.filterConfig = filterConfig;
-
-		this.application.getRequestCycleSettings().setRenderStrategy(RenderStrategy.REDIRECT_TO_RENDER);
-		this.application.getRequestCycleSettings().addResponseFilter(new PortletInvalidMarkupFilter());
-		this.application.getComponentInitializationListeners().add(new MarkupIdPrepender());
-		this.application.setRootRequestMapper(new PortletRequestMapper(application));
-		this.application.setPageRendererProvider(new IPageRendererProvider() {
+		getApplication().getRequestCycleSettings().setRenderStrategy(RenderStrategy.REDIRECT_TO_RENDER);
+		getApplication().getRequestCycleSettings().addResponseFilter(new PortletInvalidMarkupFilter());
+		//fix for https://github.com/wicketstuff/core/issues/487
+		getApplication().setMarkupIdGenerator(new PortletMarkupIdGenerator());
+		getApplication().setRootRequestMapper(new PortletRequestMapper(getApplication()));
+		//Application must use the portlet specific page renderer provider.
+		getApplication().setPageRendererProvider(new IPageRendererProvider() {
 			@Override
 			public PageRenderer get(RenderPageRequestHandler handler) {
 				return new PortletPageRenderer(handler);
 			}
 		});
-		this.application.setRequestCycleProvider(new IRequestCycleProvider() {
+		// fix for https://github.com/wicketstuff/core/issues/478 issue
+		getApplication().setRequestCycleProvider(new IRequestCycleProvider() {
 			@Override
 			public RequestCycle get(RequestCycleContext context) {
 				return new RequestCycle(context) {
@@ -126,7 +101,10 @@ public class PortletFilter extends WicketFilter {
 					return;
 				}
 
-				HttpSession proxiedSession = PortletHttpSessionWrapper.createProxy(httpServletRequest, portletRequest.getWindowID());
+				HttpSession proxiedSession = PortletHttpSessionWrapper.createProxy(
+					httpServletRequest, portletRequest.getWindowID(), getApplication()
+						.getSessionAttributePrefix(null, filterConfig.getFilterName()));
+				
 				httpServletRequest = new PortletServletRequestWrapper(filterConfig.getServletContext(), httpServletRequest, proxiedSession, filterPath);
 				httpServletResponse = new PortletServletResponseWrapper(httpServletResponse, responseState);
 			}
@@ -140,7 +118,12 @@ public class PortletFilter extends WicketFilter {
 				int nextSeparator = pathInfo.indexOf('/', 1);
 				if (nextSeparator > 0) {
 					String windowId = new String(Base64.decodeBase64(pathInfo.substring(SHARED_RESOURCE_URL_PORTLET_WINDOW_ID_PREFIX.length(), nextSeparator)));
-					HttpSession proxiedSession = PortletHttpSessionWrapper.createProxy(httpServletRequest, windowId);
+					
+					HttpSession proxiedSession = PortletHttpSessionWrapper.createProxy(
+						httpServletRequest,
+						windowId,
+						getApplication().getSessionAttributePrefix(null,
+							filterConfig.getFilterName()));
 					
 					pathInfo = pathInfo.substring(nextSeparator);
 					httpServletRequest = new PortletServletRequestWrapper(filterConfig.getServletContext(), httpServletRequest, proxiedSession, filterPath, pathInfo);

@@ -44,7 +44,6 @@ import javax.servlet.RequestDispatcher;
 import org.apache.wicket.protocol.http.WicketFilter;
 import org.apache.wicket.util.file.File;
 import org.apache.wicket.util.string.Strings;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -652,10 +651,10 @@ public class WicketPortlet extends GenericPortlet {
 		if ((url != null) && (requestUrl != null) && (!ABSOLUTE_URI_PATTERN.matcher(url).matches())) {
 			try {
 				if (!requestUrl.startsWith("http")) {
-					return new URL(new URL("http:" + wicketFilterPath), url).toString().substring(5);
+					return new URL(new URL("http:" + requestUrl), url).toString().substring(5);
 				}
 				else {
-					return new URL(new URL(wicketFilterPath), url).getPath();
+					return new URL(new URL(requestUrl), url).getPath();
 				}
 			}
 			catch (Exception e) {
