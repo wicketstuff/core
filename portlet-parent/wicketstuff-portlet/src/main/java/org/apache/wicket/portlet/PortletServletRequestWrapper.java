@@ -265,15 +265,14 @@ public class PortletServletRequestWrapper extends HttpServletRequestWrapper {
 		return header;
 	}
 
-	@SuppressWarnings("rawtypes")
+	@SuppressWarnings({ "rawtypes", "unchecked" })
 	@Override
 	public Enumeration getHeaders(String name) {		
 		Enumeration headers = super.getHeaders(name);
 		if (!headers.hasMoreElements()) {
 			// GateIn: SimpleMultiValuedPropertyMap does not 
 			// load values with equalsIgnoreCase like MimeHeaders do 
-			// in Request		
-			@SuppressWarnings("unchecked")
+			// in Request
 			Enumeration<String> headerNames = this.getHeaderNames();
 			while (headerNames.hasMoreElements()) {
 				String headerName = headerNames.nextElement();
