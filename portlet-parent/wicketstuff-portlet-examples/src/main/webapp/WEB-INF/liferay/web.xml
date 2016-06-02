@@ -549,29 +549,7 @@
 		<dispatcher>INCLUDE</dispatcher>
 	</filter-mapping>
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+<!-- 
 	<servlet>
 		<servlet-name>PortletServletwicket6echoPortlet</servlet-name>
 		<servlet-class>com.liferay.portal.kernel.servlet.PortletServlet</servlet-class>
@@ -1094,7 +1072,7 @@
 		<url-pattern>/wicket6requestMapperPortlet/*</url-pattern>
 	</servlet-mapping>
 
-
+-->
 	<!-- Liferay listeners -->
 
 	<listener>

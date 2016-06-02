@@ -3,7 +3,7 @@
 
 <plugin-package>
 	<name>wicketstuff-portlet-examples</name>
-	<module-id>liferay/wicketstuff-portlet-examples/6.2.0/war</module-id>
+	<module-id>liferay/wicketstuff-portlet-examples/7.3.0/war</module-id>
 	<types>
 		<type>portlet</type>
 	</types>
@@ -17,6 +17,6 @@
 		<license osi-approved="true">LGPL</license>
 	</licenses>
 	<liferay-versions>
-		<liferay-version>6.2.0</liferay-version>
+		<liferay-version>6.2.0+</liferay-version>
 	</liferay-versions>
 </plugin-package>
