@@ -2,7 +2,7 @@ package org.wicketstuff.gmap.api;
 
 import java.util.ArrayList;
 import java.util.List;
-
+import org.wicketstuff.gmap.GMapMarkerClustererHeaderContributor;
 import org.wicketstuff.gmap.js.Array;
 import org.wicketstuff.gmap.js.ObjectLiteral;
 
@@ -10,7 +10,7 @@ import org.wicketstuff.gmap.js.ObjectLiteral;
  * Options object for using specific settings in marker clustering. 
  * Like custom icons or zoom restrictions.
  * 
- * http://google-maps-utility-library-v3.googlecode.com/svn/trunk/markerclusterer/docs/reference.html
+ * https://googlemaps.github.io/js-marker-clusterer/docs/reference.html
  * 
  * Docs from the js file:
  *  'gridSize': (number) The grid size of a cluster in pixels.
@@ -54,7 +54,8 @@ public class GMarkerClusterOptions implements GValue
     public String getJSconstructor()
     {
         ObjectLiteral literal = new ObjectLiteral();
-        
+        // we need to overwrite the imagePath so that the script can find the PNGs in the org.wicketstuff.gmap package.
+        literal.set("imagePath", "\"wicket/resource/" + GMapMarkerClustererHeaderContributor.INSTANCE.getResource().getScope().getCanonicalName() + "/m\"");
         literal.set("gridSize", getGridSize().toString());
         literal.set("maxZoom", getMaxZoom().toString());
         literal.setString("zoomOnClick", (isZoomOnClick())?"true":"false");
