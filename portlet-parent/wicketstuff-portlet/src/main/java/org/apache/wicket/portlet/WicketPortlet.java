@@ -41,7 +41,6 @@ import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
 import javax.servlet.RequestDispatcher;
 
-import org.apache.commons.fileupload.portlet.PortletRequestContext;
 import org.apache.wicket.protocol.http.WicketFilter;
 import org.apache.wicket.util.file.File;
 import org.apache.wicket.util.string.Strings;
