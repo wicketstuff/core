@@ -90,6 +90,7 @@ public class Chart extends WebComponent implements Serializable {
             addParameter(url, "chm", render(provider.getRangeMarkers()));
             addParameter(url, "chls", render(provider.getLineStyles()));
             addParameter(url, "chm", render(provider.getFillAreas()));
+            addParameter(url, "chm", render(provider.getTextValueMarkers()));
             addParameter(url, "chl", render(provider.getPieLabels()));
 
             return url;
@@ -524,6 +525,29 @@ public class Chart extends WebComponent implements Serializable {
             back.append(0).append(',');
             back.append(marker.getStart()).append(',');
             back.append(marker.getEnd()).append('|');
+        }
+
+        if (back.length() > 0) {
+            back.setLength(back.length() - 1);
+        }
+
+        return back;
+    }
+
+    private CharSequence render(ITextValueMarker[] markers) {
+        if (markers == null) {
+            return null;
+        }
+
+        StringBuilder back = new StringBuilder();
+
+        for (ITextValueMarker marker : markers) {
+            back.append(render(marker.getType()));
+            back.append(render(marker.getText())).append(',');
+            back.append(render(marker.getColor())).append(',');
+            back.append(marker.getIndex()).append(',');
+            back.append(marker.getPoint()).append(',');
+            back.append(marker.getSize()).append('|');
         }
 
         if (back.length() > 0) {
