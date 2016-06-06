@@ -5,3 +5,7 @@ velocity.log
 .settings
 .externalToolBuilders
 *~
+
+# IntelliJ
+.idea
+*.iml
