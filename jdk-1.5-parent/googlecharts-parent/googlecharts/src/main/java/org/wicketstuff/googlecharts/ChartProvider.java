@@ -27,6 +27,7 @@ public class ChartProvider implements IChartProvider {
     private String[] pieLabels;
     private List<IRangeMarker> rangeMarkers = new ArrayList<IRangeMarker>();
     private List<IShapeMarker> shapeMarkers = new ArrayList<IShapeMarker>();
+    private List<ITextValueMarker> textValueMarkers = new ArrayList<ITextValueMarker>();
     private Dimension size;
     private String title;
     private ChartType type;
@@ -88,6 +89,10 @@ public class ChartProvider implements IChartProvider {
 
     public IShapeMarker[] getShapeMarkers() {
         return shapeMarkers.toArray(new IShapeMarker[shapeMarkers.size()]);
+    }
+
+    public ITextValueMarker[] getTextValueMarkers() {
+        return textValueMarkers.toArray(new ITextValueMarker[textValueMarkers.size()]);
     }
 
     public Dimension getSize() {
@@ -152,6 +157,10 @@ public class ChartProvider implements IChartProvider {
 
     public void addShapeMarker(IShapeMarker shapeMarker) {
         shapeMarkers.add(shapeMarker);
+    }
+
+    public void addTextValueMarker(ITextValueMarker textValueMarker) {
+        textValueMarkers.add(textValueMarker);
     }
 
     public void setSize(Dimension size) {

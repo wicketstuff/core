@@ -45,4 +45,6 @@ public interface IChartProvider extends Serializable {
     public IRangeMarker[] getRangeMarkers();
 
     public IFillArea[] getFillAreas();
+
+    public ITextValueMarker[] getTextValueMarkers();
 }
