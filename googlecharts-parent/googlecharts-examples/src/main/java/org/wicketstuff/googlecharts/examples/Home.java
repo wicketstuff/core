@@ -20,6 +20,8 @@ import org.wicketstuff.googlecharts.LinearGradientFill;
 import org.wicketstuff.googlecharts.MarkerType;
 import org.wicketstuff.googlecharts.ShapeMarker;
 import org.wicketstuff.googlecharts.SolidFill;
+import org.wicketstuff.googlecharts.TextValueMarker;
+import org.wicketstuff.googlecharts.TextValueMarkerType;
 
 /**
  * @author Daniel Spiewak
@@ -92,6 +94,7 @@ public class Home extends WebPage
 		provider.addShapeMarker(new ShapeMarker(MarkerType.SQUARE, Color.BLUE, 1, -1, 5));
 		provider.addShapeMarker(new ShapeMarker(MarkerType.SQUARE, Color.decode("#00aa00"), 2, -1,
 			5));
+		provider.addTextValueMarker(new TextValueMarker(TextValueMarkerType.FORMATTING_STRING, "*f0*", 0, Color.GREEN, -1, 11));
 
 		add(new Chart("lineChart", provider));
 
