@@ -48,11 +48,14 @@ public class TreeTablePageTest {
 		tester.clickLink("tree:i:0:sideBodyColumns:0:comp:link");
 		MockHttpServletResponse opaLinkResponse = tester.getLastResponse();
 
-		String opaResponseBody = opaLinkResponse.getDocument();
+		final String opaResponseBody = opaLinkResponse.getDocument();
 
 		// assert that all rendered AJAX links their client side event handlers are registered 
-		page.visitChildren(AjaxLink.class, (v, r) -> {
-			assertThat(opaResponseBody, containsString("\"c\":\"" + v.getMarkupId() + "\""));
+		page.visitChildren(AjaxLink.class, new IVisitor<AjaxLink, Void>() {
+			@Override
+			public void component(AjaxLink ajaxLink, IVisit<Void> iVisit) {
+				assertThat(opaResponseBody, containsString("\"c\":\"" + ajaxLink.getMarkupId() + "\""));
+			}
 		});
 
 //		tester.clickLink("tree:i:2:sideBodyColumns:0:comp:link");
