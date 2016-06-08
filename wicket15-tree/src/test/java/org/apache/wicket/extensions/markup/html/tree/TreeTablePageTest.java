@@ -16,14 +16,16 @@
  */
 package org.apache.wicket.extensions.markup.html.tree;
 
-import static org.hamcrest.CoreMatchers.containsString;
-import static org.junit.Assert.assertThat;
-
 import org.apache.wicket.ajax.markup.html.AjaxLink;
 import org.apache.wicket.protocol.http.mock.MockHttpServletResponse;
 import org.apache.wicket.util.tester.WicketTester;
+import org.apache.wicket.util.visit.IVisit;
+import org.apache.wicket.util.visit.IVisitor;
 import org.junit.Before;
 import org.junit.Test;
+
+import static org.hamcrest.CoreMatchers.containsString;
+import static org.junit.Assert.assertThat;
 
 public class TreeTablePageTest {
 	private WicketTester tester;
