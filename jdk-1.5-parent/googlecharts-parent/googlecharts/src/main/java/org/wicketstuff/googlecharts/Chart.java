@@ -49,6 +49,7 @@ public class Chart extends WebComponent implements Serializable {
 
             addParameter(url, "chs", render(provider.getSize()));
             addParameter(url, "chd", render(provider.getData()));
+            addParameter(url, "chds", render(provider.getDataScaling()));
             addParameter(url, "cht", render(provider.getType()));
             addParameter(url, "chbh", render(provider.getBarWidth(), provider.getBarGroupSpacing()));
             addParameter(url, "chtt", render(provider.getTitle()));
@@ -602,6 +603,34 @@ public class Chart extends WebComponent implements Serializable {
         }
 
         return back;
+    }
+
+    private CharSequence render(IDataScaling[] dataScaling) {
+        if (dataScaling == null) {
+            return null;
+        }
+
+        StringBuilder param = new StringBuilder();
+
+        for (IDataScaling scaling : dataScaling) {
+            if (scaling == null) {
+                param.append('|');
+                continue;
+            }
+
+            if (scaling.isAutoScale()) {
+                param.append('a').append('|');
+            } else {
+                param.append(scaling.getMinimum()).append(',');
+                param.append(scaling.getMaximum()).append('|');
+            }
+        }
+
+        if (param.length() > 0) {
+            param.setLength(param.length() - 1);
+        }
+
+        return param;
     }
 
     @Override

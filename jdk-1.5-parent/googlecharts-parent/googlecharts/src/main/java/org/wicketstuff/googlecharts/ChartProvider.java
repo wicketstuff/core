@@ -32,6 +32,7 @@ public class ChartProvider implements IChartProvider {
     private String title;
     private ChartType type;
     private IChartData data;
+    private List<IDataScaling> dataScalingList = new ArrayList<IDataScaling>();
 
     public ChartProvider(Dimension size, ChartType type, IChartData data) {
         this.size = size;
@@ -93,6 +94,14 @@ public class ChartProvider implements IChartProvider {
 
     public ITextValueMarker[] getTextValueMarkers() {
         return textValueMarkers.toArray(new ITextValueMarker[textValueMarkers.size()]);
+    }
+
+    public void addDataScaling(IDataScaling dataScaling) {
+        dataScalingList.add(dataScaling);
+    }
+
+    public IDataScaling[] getDataScaling() {
+        return dataScalingList.toArray(new IDataScaling[dataScalingList.size()]);
     }
 
     public Dimension getSize() {
