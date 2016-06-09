@@ -264,9 +264,8 @@ public abstract class AbstractTree extends Panel
 		}
 
 		@Override
-		public void renderHead(final IHeaderResponse response)
-		{
-			super.renderHead(response);
+		public void internalRenderHead(final HtmlHeaderContainer container) {
+			super.internalRenderHead(container);
 
 			if (isRenderChildren())
 			{
@@ -278,7 +277,7 @@ public abstract class AbstractTree extends Panel
 					{
 						if (item.isVisible())
 						{
-							item.renderHead(response);
+							item.internalRenderHead(container);
 						}
 
 						// write header contributions from the children of item
@@ -290,7 +289,7 @@ public abstract class AbstractTree extends Panel
 							{
 								if (component.isVisible())
 								{
-									component.renderHead(response);
+									component.internalRenderHead(container);
 								}
 								else
 								{

@@ -10,3 +10,18 @@
 
 # virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
 hs_err_pid*
+
+.settings
+.project
+target/
+.classpath
+*.i[mpw][lrs]
+.idea/
+!faces.taglib.xml
+!jsp.taglib.tld
+.scala_dependencies
+nb-configuration.xml
+*~
+rebel.xml
+.springBeans
+workbench.xmi

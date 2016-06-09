@@ -16,14 +16,16 @@
  */
 package org.apache.wicket.extensions.markup.html.tree;
 
-import static org.hamcrest.CoreMatchers.containsString;
-import static org.junit.Assert.assertThat;
-
 import org.apache.wicket.ajax.markup.html.AjaxLink;
 import org.apache.wicket.protocol.http.mock.MockHttpServletResponse;
 import org.apache.wicket.util.tester.WicketTester;
+import org.apache.wicket.util.visit.IVisit;
+import org.apache.wicket.util.visit.IVisitor;
 import org.junit.Before;
 import org.junit.Test;
+
+import static org.hamcrest.CoreMatchers.containsString;
+import static org.junit.Assert.assertThat;
 
 public class TreeTablePageTest {
 	private WicketTester tester;
@@ -48,11 +50,14 @@ public class TreeTablePageTest {
 		tester.clickLink("tree:i:0:sideBodyColumns:0:comp:link");
 		MockHttpServletResponse opaLinkResponse = tester.getLastResponse();
 
-		String opaResponseBody = opaLinkResponse.getDocument();
+		final String opaResponseBody = opaLinkResponse.getDocument();
 
 		// assert that all rendered AJAX links their client side event handlers are registered 
-		page.visitChildren(AjaxLink.class, (v, r) -> {
-			assertThat(opaResponseBody, containsString("\"c\":\"" + v.getMarkupId() + "\""));
+		page.visitChildren(AjaxLink.class, new IVisitor<AjaxLink, Void>() {
+			@Override
+			public void component(AjaxLink ajaxLink, IVisit<Void> iVisit) {
+				assertThat(opaResponseBody, containsString("\"c\":\"" + ajaxLink.getMarkupId() + "\""));
+			}
 		});
 
 //		tester.clickLink("tree:i:2:sideBodyColumns:0:comp:link");
