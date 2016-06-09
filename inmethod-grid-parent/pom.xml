@@ -56,7 +56,7 @@
 		<dependency>
 			<groupId>org.wicketstuff</groupId>
 			<artifactId>wicket15-tree</artifactId>
-			<version>7.0.0</version>
+			<version>7.1.0</version>
 		</dependency>
 
 		<!-- LOGGING DEPENDENCIES - LOG4J -->
