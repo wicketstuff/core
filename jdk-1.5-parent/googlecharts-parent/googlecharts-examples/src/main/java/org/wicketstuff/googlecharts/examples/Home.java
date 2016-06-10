@@ -13,6 +13,7 @@ import org.wicketstuff.googlecharts.ChartAxisType;
 import org.wicketstuff.googlecharts.ChartDataEncoding;
 import org.wicketstuff.googlecharts.ChartProvider;
 import org.wicketstuff.googlecharts.ChartType;
+import org.wicketstuff.googlecharts.DataScaling;
 import org.wicketstuff.googlecharts.IChartData;
 import org.wicketstuff.googlecharts.LineStyle;
 import org.wicketstuff.googlecharts.LinearGradientFill;
@@ -179,5 +180,34 @@ public class Home extends WebPage {
         provider.addAxis(axis);
 
         add(new Chart("alex", provider));
+
+        // Data scaling example
+        data = new AbstractChartData(ChartDataEncoding.TEXT, 1.0d) {
+
+            public double[][] getData() {
+                return new double[][]{
+                        {0.114, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0},
+                        {0.0, 0.275, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0},
+                        {0.0, 0.0, 0.024, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0},
+                        {0.0, 0.0, 0.0, 0.024, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0},
+                        {0.0, 0.0, 0.0, 0.0, 0.054000000000000006, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0},
+                        {0.0, 0.0, 0.0, 0.0, 0.0, 0.102, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0},
+                        {0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.078, 0.0, 0.0, 0.0, 0.0, 0.0},
+                        {0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.054000000000000006, 0.0, 0.0, 0.0, 0.0},
+                        {0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.084, 0.0, 0.0, 0.0},
+                        {0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.066, 0.0, 0.0},
+                        {0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.084, 0.0},
+                        {0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.042}
+                };
+            }
+        };
+
+        provider = new ChartProvider(new Dimension(600, 250), ChartType.BAR_VERTICAL_SET, data);
+        provider.addDataScaling(new DataScaling(0.0f, 1.0f));
+        provider.setColors(new Color[]{Color.GREEN, Color.BLUE, Color.RED});
+        provider.setLegend(new String[]{"2005", "2006", "2007"});
+        provider.setBackgroundFill(new SolidFill(new Color(0, 0, 0, 0)));
+
+        add(new Chart("dataScaling", provider));
     }
 }
