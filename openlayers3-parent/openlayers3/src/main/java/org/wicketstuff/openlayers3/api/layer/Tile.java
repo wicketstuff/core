@@ -1,5 +1,6 @@
 package org.wicketstuff.openlayers3.api.layer;
 
+import org.apache.wicket.model.IModel;
 import org.wicketstuff.openlayers3.api.source.tile.TileSource;
 
 /**
@@ -37,6 +38,21 @@ public class Tile extends Layer {
      */
     public Tile(String title, TileSource source) {
         super();
+
+        this.title = title;
+        setSource(source);
+    }
+
+    /**
+     * Creates a new instance.
+     *
+     * @param title
+     *         The title for the layer
+     * @param source
+     *         The source of data for this layer
+     */
+    public Tile(String title, TileSource source, IModel<Boolean> visibleModel) {
+        super(visibleModel);
 
         this.title = title;
         setSource(source);
@@ -117,6 +133,10 @@ public class Tile extends Layer {
 
         if (title != null) {
             builder.append("'title': '" + getTitle() + "',");
+        }
+
+        if (getVisibleModel() != null) {
+            builder.append("'visible': " + getVisibleModel().getObject() + ",");
         }
 
         builder.append("'source': new " + getSource().getJsType() + "(");
