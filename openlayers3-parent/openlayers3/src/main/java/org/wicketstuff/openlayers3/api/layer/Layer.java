@@ -12,6 +12,7 @@ import org.wicketstuff.openlayers3.api.JavascriptObject;
 public abstract class Layer extends JavascriptObject implements Serializable {
 
     private IModel<Boolean> visibleModel;
+    private IModel<? extends Number> opacityModel;
 
     /**
      * Creates a new Layer.
@@ -52,13 +53,41 @@ public abstract class Layer extends JavascriptObject implements Serializable {
         if (visibleModel != null) {
             target.appendJavaScript(getJsId() + ".setVisible(" + visibleModel.getObject() + ")");
         }
+        if (opacityModel != null) {
+            target.appendJavaScript(getJsId() + ".setOpacity(" + opacityModel.getObject() + ")");
+        }
     }
 
     /**
      * @return the model of the visibility of the layer
      */
-    protected IModel<Boolean> getVisibleModel() {
+    public IModel<Boolean> getVisibleModel() {
         return visibleModel;
+    }
+
+    /**
+     * @param visibleModel visible model to set
+     * @return this
+     */
+    public Layer setVisibleModel(IModel<Boolean> visibleModel) {
+        this.visibleModel = visibleModel;
+        return this;
+    }
+
+    /**
+     * @return the model of the opacity of the layer
+     */
+    public IModel<? extends Number> getOpacityModel() {
+        return opacityModel;
+    }
+
+    /**
+     * @param opacityModel opacity model to set
+     * @return this
+     */
+    public Layer setOpacityModel(IModel<? extends Number> opacityModel) {
+        this.opacityModel = opacityModel;
+        return this;
     }
 
     /**
@@ -67,6 +96,9 @@ public abstract class Layer extends JavascriptObject implements Serializable {
     public void detach() {
         if (visibleModel != null) {
             visibleModel.detach();
+        }
+        if (opacityModel != null) {
+            opacityModel.detach();
         }
     }
 

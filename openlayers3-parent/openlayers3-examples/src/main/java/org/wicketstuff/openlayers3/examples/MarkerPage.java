@@ -1,9 +1,11 @@
 package org.wicketstuff.openlayers3.examples;
 
 import java.util.Arrays;
+import java.util.Collection;
 
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.form.AjaxFormComponentUpdatingBehavior;
+import org.apache.wicket.markup.html.form.EnumChoiceRenderer;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.LoadableDetachableModel;
@@ -18,6 +20,7 @@ import org.wicketstuff.openlayers3.api.layer.Layer;
 import org.wicketstuff.openlayers3.api.layer.Tile;
 import org.wicketstuff.openlayers3.api.overlay.Overlay;
 import org.wicketstuff.openlayers3.api.source.tile.Osm;
+import org.wicketstuff.openlayers3.api.source.tile.TileArcGISRest;
 import org.wicketstuff.openlayers3.api.source.tile.XYZ;
 import org.wicketstuff.openlayers3.api.util.Color;
 import org.wicketstuff.openlayers3.component.Marker;
@@ -34,25 +37,27 @@ import de.agilecoders.wicket.extensions.markup.html.bootstrap.form.select.Bootst
 public class MarkerPage extends BasePage {
 
     private static final String MA_ORTHO_URL = "http://tiles.arcgis.com/tiles/hGdibHYSPO59RG1h/arcgis/rest/services/USGS_Orthos_2013_2014/MapServer/tile/{z}/{y}/{x}";
+    private static final String MA_OPEN_SPACE_URL = "http://gisprpxy.itd.state.ma.us/arcgisserver/rest/services/AGOL/OpenSpaceLevProt/MapServer";
 
     private enum LayerOption {
         STREET,
-        SATELLITE;
+        SATELLITE,
+        OPEN_SPACE;
     }
 
     private static class LayerSelectedModel extends LoadableDetachableModel<Boolean> {
 
         private IModel<LayerOption> model;
-        private LayerOption layerOption;
+        private Collection<LayerOption> layerOption;
 
-        public LayerSelectedModel(IModel<LayerOption> model, LayerOption layerOption) {
+        public LayerSelectedModel(IModel<LayerOption> model, LayerOption... layerOption) {
             this.model = model;
-            this.layerOption = layerOption;
+            this.layerOption = Arrays.asList(layerOption);
         }
 
         @Override
         protected Boolean load() {
-            return layerOption.equals(model.getObject());
+            return layerOption.contains(model.getObject());
         }
 
     }
@@ -89,8 +94,18 @@ public class MarkerPage extends BasePage {
 
                                         // MA ortho-imagery layer
                                         new XYZ().setUrl(MA_ORTHO_URL),
-                                        // visible when the layer selector is satellite
-                                        new LayerSelectedModel(model, LayerOption.SATELLITE))),
+                                        // visible when the layer selector is satellite or open space
+                                        new LayerSelectedModel(model, LayerOption.OPEN_SPACE, LayerOption.SATELLITE)),
+
+                                // a new tile layer with the open space map of Noho
+                                new Tile("Open Space",
+
+                                        // MA open space layer
+                                        new TileArcGISRest().setUrl(MA_OPEN_SPACE_URL),
+                                        // visible when the layer selector is open space
+                                        new LayerSelectedModel(model, LayerOption.OPEN_SPACE))
+                                    // fractional opacity so we can see the base map underneath
+                                    .setOpacityModel(Model.of(.5))),
 
                         // list of overlays
                         Arrays.<Overlay>asList(
@@ -122,7 +137,8 @@ public class MarkerPage extends BasePage {
         // layer selector -- refresh the map's layers on change
         form.add(new FormGroup("layer")
                 .add(new BootstrapSelect<>("layerSelector", model,
-                        new ListModel<>(Arrays.asList(LayerOption.values())))
+                        new ListModel<>(Arrays.asList(LayerOption.values())),
+                        new EnumChoiceRenderer<LayerOption>())
                     .setLabel(Model.of("Layer"))
                     .add(new AjaxFormComponentUpdatingBehavior("change") {
 
