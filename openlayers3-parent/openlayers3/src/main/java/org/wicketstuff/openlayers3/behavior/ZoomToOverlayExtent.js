@@ -14,4 +14,4 @@ if('${buffer}' != 'NULL') {
   extent = ol.extent.buffer(extent, parseFloat('${buffer}'));
 }
 
-map.getView().fitExtent(extent, map.getSize());
+map.getView().fit(extent, map.getSize());

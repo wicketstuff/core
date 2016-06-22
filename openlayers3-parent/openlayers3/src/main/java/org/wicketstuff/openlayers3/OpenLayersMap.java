@@ -145,7 +145,7 @@ public abstract class OpenLayersMap extends GenericPanel<Map> {
         builder.append("extent = ol.extent.buffer(extent, parseFloat('" + buffer + "'));");
 
         String jsId = getModelObject().getJsId();
-        builder.append(jsId + ".getView().fitExtent(extent, " + jsId + ".getSize());");
+        builder.append(jsId + ".getView().fit(extent, " + jsId + ".getSize());");
 
         target.appendJavaScript(builder.toString());
     }
@@ -206,7 +206,7 @@ public abstract class OpenLayersMap extends GenericPanel<Map> {
      * @param extent Extent to which the map will be zoomed
      */
 	public void zoomToExtent(AjaxRequestTarget target, Extent extent) {
-		target.appendJavaScript(JavascriptObject.JS_GLOBAL + "['map_" + getMarkupId() + "'].getView().fitExtent("
+		target.appendJavaScript(JavascriptObject.JS_GLOBAL + "['map_" + getMarkupId() + "'].getView().fit("
 			+ getModelObject().getView().getExtent().renderJsForView(getModelObject().getView()) + ","
 			+ JavascriptObject.JS_GLOBAL + "['map_" + getMarkupId() + "']" + ".getSize());");
 	}
@@ -341,7 +341,7 @@ public abstract class OpenLayersMap extends GenericPanel<Map> {
         Map map = getModelObject();
 
         if(map.getView().getExtent() != null) {
-            builder.append(map.getJsId() + ".getView().fitExtent(" + map.getView().getExtent().renderJsForView(map.getView()) + ","
+            builder.append(map.getJsId() + ".getView().fit(" + map.getView().getExtent().renderJsForView(map.getView()) + ","
                     + map.getJsId() + ".getSize());");
         }
 
