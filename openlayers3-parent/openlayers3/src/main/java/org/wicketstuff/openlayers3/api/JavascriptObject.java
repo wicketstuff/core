@@ -1,16 +1,11 @@
 package org.wicketstuff.openlayers3.api;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import java.util.HashMap;
 
 /**
  * Provides an interface that all Javascript objects must implement in order to be rendered properly.
  */
 public abstract class JavascriptObject implements IJavascriptObject {
-
-    private static Logger logger = LoggerFactory.getLogger(JavascriptObject.class);
 
 	/**
 	 * Global variable for holding all of our Javascript objects and data.

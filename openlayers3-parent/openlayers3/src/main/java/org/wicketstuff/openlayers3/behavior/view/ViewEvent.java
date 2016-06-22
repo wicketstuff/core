@@ -1,24 +1,21 @@
 package org.wicketstuff.openlayers3.behavior.view;
 
-import com.google.gson.JsonArray;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonPrimitive;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.wicketstuff.openlayers3.api.coordinate.CoordinateProjected;
-
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import org.wicketstuff.openlayers3.api.coordinate.CoordinateProjected;
+
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonPrimitive;
+
 /**
  * Provides a data object that models an event emitted by the map's ol.View.
  */
 public class ViewEvent implements Serializable {
-
-    private final static Logger logger = LoggerFactory.getLogger(ViewEvent.class);
 
     /**
      * The JsonObject that backs this instance.

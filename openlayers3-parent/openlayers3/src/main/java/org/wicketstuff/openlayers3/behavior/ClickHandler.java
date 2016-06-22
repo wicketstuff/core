@@ -1,16 +1,15 @@
 package org.wicketstuff.openlayers3.behavior;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.apache.wicket.Component;
 import org.apache.wicket.ajax.AbstractDefaultAjaxBehavior;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.markup.head.IHeaderResponse;
-import org.apache.wicket.markup.head.OnDomReadyHeaderItem;
 import org.apache.wicket.request.cycle.RequestCycle;
-import org.apache.wicket.util.template.PackageTextTemplate;
 import org.wicketstuff.openlayers3.api.coordinate.LongLat;
-
-import java.util.HashMap;
-import java.util.Map;
+import org.wicketstuff.openlayers3.api.util.HeaderUtils;
 
 /**
  * Provides a behavior that handles clicks on the map.
@@ -77,7 +76,7 @@ public abstract class ClickHandler extends AbstractDefaultAjaxBehavior {
         params.put("clickHandlerId", (counter++).toString());
         params.put("projection", projection != null ? projection : "NULL");
 
-        PackageTextTemplate template = new PackageTextTemplate(ClickHandler.class, "ClickHandler.js");
-        response.render(OnDomReadyHeaderItem.forScript(template.asString(params)));
+        HeaderUtils.renderOnDomReady(response, ClickHandler.class,
+                "ClickHandler.js", params);
     }
 }

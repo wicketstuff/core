@@ -1,18 +1,15 @@
 package org.wicketstuff.openlayers3.behavior;
 
-import org.apache.wicket.Component;
-import org.apache.wicket.behavior.Behavior;
-import org.apache.wicket.markup.head.IHeaderResponse;
-import org.apache.wicket.markup.head.OnDomReadyHeaderItem;
-import org.apache.wicket.util.template.PackageTextTemplate;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.wicketstuff.openlayers3.api.layer.Layer;
-
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import org.apache.wicket.Component;
+import org.apache.wicket.behavior.Behavior;
+import org.apache.wicket.markup.head.IHeaderResponse;
+import org.wicketstuff.openlayers3.api.layer.Layer;
+import org.wicketstuff.openlayers3.api.util.HeaderUtils;
 
 /**
  * Provides a behavior that zooms to the map to include all features, excluding features loaded from a remote data
@@ -20,8 +17,6 @@ import java.util.Map;
  * VectorLayerFeaturesLoaded listener.
  */
 public class ZoomToFeatureExtent extends Behavior {
-
-    private final static Logger logger = LoggerFactory.getLogger(ZoomToFeatureExtent.class);
 
     /**
      * Buffer to place around the zoomed extent.
@@ -37,7 +32,7 @@ public class ZoomToFeatureExtent extends Behavior {
      * Creates a new instance.
      */
     public ZoomToFeatureExtent() {
-        this.buffer = buffer;
+        this.buffer = null;
         this.layers = null;
     }
 
@@ -92,7 +87,7 @@ public class ZoomToFeatureExtent extends Behavior {
      * @param layers
      *         List of layers to use when calculating extent
      */
-    public ZoomToFeatureExtent(Number buffer, List layers) {
+    public ZoomToFeatureExtent(Number buffer, List<Layer> layers) {
         this.buffer = buffer;
         this.layers = layers;
     }
@@ -184,7 +179,7 @@ public class ZoomToFeatureExtent extends Behavior {
             params.put("layers", "NULL");
         }
 
-        PackageTextTemplate template = new PackageTextTemplate(ZoomToOverlayExtent.class, "ZoomToFeatureExtent.js");
-        response.render(OnDomReadyHeaderItem.forScript(template.asString(params)));
+        HeaderUtils.renderOnDomReady(response, ZoomToFeatureExtent.class,
+                "ZoomToFeatureExtent.js", params);
     }
 }

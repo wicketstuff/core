@@ -1,13 +1,10 @@
 package org.wicketstuff.openlayers3.examples;
 
-import com.google.gson.JsonArray;
-import com.google.gson.JsonNull;
-import com.google.gson.JsonObject;
+import java.util.Arrays;
+
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.util.string.Strings;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.wicketstuff.annotation.mount.MountPath;
 import org.wicketstuff.openlayers3.DefaultOpenLayersMap;
 import org.wicketstuff.openlayers3.OpenLayersMap;
@@ -32,15 +29,15 @@ import org.wicketstuff.openlayers3.component.MarkerPopover;
 import org.wicketstuff.openlayers3.component.PopoverPanel;
 import org.wicketstuff.openlayers3.examples.base.BasePage;
 
-import java.util.Arrays;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonNull;
+import com.google.gson.JsonObject;
 
 /**
  * Provides a page demonstrating WFS (Web Feature Service) data.
  */
 @MountPath("/wfs")
 public class WfsPage extends BasePage {
-
-    private final static Logger logger = LoggerFactory.getLogger(WfsPage.class);
 
     /**
      * Popover for providing detail on markers.
@@ -56,11 +53,6 @@ public class WfsPage extends BasePage {
      * Marker over Miles' office.
      */
     private MarkerPopover markerPopover;
-
-    /**
-     * Layer with our vector data of features.
-     */
-    private Vector vectorLayer;
 
     @Override
     protected void onInitialize() {
@@ -101,7 +93,7 @@ public class WfsPage extends BasePage {
                                         new Osm()),
 
                                 // add our vector layer with the data
-                                vectorLayer = new Vector(new VectorSource(new GeoJsonFormat(),
+                                new Vector(new VectorSource(new GeoJsonFormat(),
                                         new DefaultGeoJsonLoader(
                                                 "http://mhc-macris.net:8080/geoserver/ows?service=WFS"
                                                         + "&version=1.0.0&request=GetFeature&typeName=MHC:in_pts"

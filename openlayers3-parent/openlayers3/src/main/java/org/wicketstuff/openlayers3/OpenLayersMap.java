@@ -6,8 +6,6 @@ import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.markup.head.IHeaderResponse;
 import org.apache.wicket.markup.html.panel.GenericPanel;
 import org.apache.wicket.model.IModel;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.wicketstuff.openlayers3.api.Extent;
 import org.wicketstuff.openlayers3.api.Feature;
 import org.wicketstuff.openlayers3.api.JavascriptObject;
@@ -29,8 +27,6 @@ import com.google.gson.JsonArray;
  * Provides the base class for all panels containing an OpenLayers map.
  */
 public abstract class OpenLayersMap extends GenericPanel<Map> {
-
-    private final static Logger logger = LoggerFactory.getLogger(OpenLayersMap.class);
 
     /**
      * Map of layers to the data loaded handler that notifies their listeners.
@@ -284,13 +280,13 @@ public abstract class OpenLayersMap extends GenericPanel<Map> {
             if (layerDataLoadedMap.get(layer) != null) {
 
                 // add our listener for the feature data loading
-                loader.vectorFeatureDataLoadedListener(layerDataLoadedMap.get((Vector) layer));
+                loader.vectorFeatureDataLoadedListener(layerDataLoadedMap.get(layer));
             }
 
             if (layerLoadedMap.get(layer) != null) {
 
                 // add our listener for the feature loading
-                loader.vectorFeaturesLoadedListener(layerLoadedMap.get((Vector) layer));
+                loader.vectorFeaturesLoadedListener(layerLoadedMap.get(layer));
             }
             builder.append(loader.renderBeforeConstructorJs() + ";\n");
         }

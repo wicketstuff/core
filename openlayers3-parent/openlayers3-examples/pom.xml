@@ -55,6 +55,10 @@
             <groupId>log4j</groupId>
             <artifactId>log4j</artifactId>
         </dependency>
+        <dependency>
+            <groupId>commons-logging</groupId>
+            <artifactId>commons-logging</artifactId>
+        </dependency>
 
         <!-- JUNIT DEPENDENCY FOR TESTING -->
         <dependency>

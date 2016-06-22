@@ -1,12 +1,12 @@
 package org.wicketstuff.openlayers3.api.interaction;
 
+import java.io.Serializable;
+import java.util.List;
+
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.wicketstuff.openlayers3.api.Feature;
 import org.wicketstuff.openlayers3.api.layer.Vector;
 import org.wicketstuff.openlayers3.api.style.Style;
-
-import java.io.Serializable;
-import java.util.List;
 
 /**
  * Provides an object that models a map modify interaction.
@@ -47,9 +47,7 @@ public class Modify extends Interaction implements Serializable {
      *         Features for this interaction
      */
     public Modify(Style style, Feature... features) {
-        this.features = features;
-        this.vector = null;
-        this.style = style;
+        this(style, null, features);
     }
 
     /**
@@ -71,11 +69,7 @@ public class Modify extends Interaction implements Serializable {
      *         Vector of features for this interaction
      */
     public Modify(Style style, Vector vector) {
-        super();
-
-        this.features = null;
-        this.vector = vector;
-        this.style = style;
+        this(style, vector, (Feature[]) null);
     }
 
     /**
@@ -88,7 +82,7 @@ public class Modify extends Interaction implements Serializable {
      * @param features
      *         Features for this interaction
      */
-    private Modify(Style style, Vector vector, Feature... features) {
+    public Modify(Style style, Vector vector, Feature... features) {
         super();
 
         this.features = features;

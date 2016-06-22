@@ -1,13 +1,12 @@
 package org.wicketstuff.openlayers3.behavior;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.apache.wicket.Component;
 import org.apache.wicket.behavior.Behavior;
 import org.apache.wicket.markup.head.IHeaderResponse;
-import org.apache.wicket.markup.head.OnDomReadyHeaderItem;
-import org.apache.wicket.util.template.PackageTextTemplate;
-
-import java.util.HashMap;
-import java.util.Map;
+import org.wicketstuff.openlayers3.api.util.HeaderUtils;
 
 /**
  * Provides a behavior that zooms the map to include all overlays.
@@ -75,7 +74,7 @@ public class ZoomToOverlayExtent extends Behavior {
         params.put("componentId", component.getMarkupId());
         params.put("buffer", buffer != null ? buffer.toString() : "NULL");
 
-        PackageTextTemplate template = new PackageTextTemplate(ZoomToOverlayExtent.class, "ZoomToOverlayExtent.js");
-        response.render(OnDomReadyHeaderItem.forScript(template.asString(params)));
+        HeaderUtils.renderOnDomReady(response, ZoomToOverlayExtent.class,
+                "ZoomToOverlayExtent.js", params);
     }
 }

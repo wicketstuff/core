@@ -1,14 +1,10 @@
 package org.wicketstuff.openlayers3.examples;
 
-import com.google.gson.JsonArray;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonNull;
-import com.google.gson.JsonObject;
+import java.util.Arrays;
+
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.util.string.Strings;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.wicketstuff.annotation.mount.MountPath;
 import org.wicketstuff.openlayers3.DefaultOpenLayersMap;
 import org.wicketstuff.openlayers3.OpenLayersMap;
@@ -21,26 +17,31 @@ import org.wicketstuff.openlayers3.api.layer.Tile;
 import org.wicketstuff.openlayers3.api.layer.Vector;
 import org.wicketstuff.openlayers3.api.overlay.Overlay;
 import org.wicketstuff.openlayers3.api.proj.Projection;
-import org.wicketstuff.openlayers3.api.source.vector.Cluster;
 import org.wicketstuff.openlayers3.api.source.tile.Osm;
+import org.wicketstuff.openlayers3.api.source.vector.Cluster;
 import org.wicketstuff.openlayers3.api.source.vector.VectorSource;
 import org.wicketstuff.openlayers3.api.source.vector.loader.DefaultGeoJsonLoader;
-import org.wicketstuff.openlayers3.api.style.*;
+import org.wicketstuff.openlayers3.api.style.Circle;
+import org.wicketstuff.openlayers3.api.style.ClusterStyle;
+import org.wicketstuff.openlayers3.api.style.Fill;
+import org.wicketstuff.openlayers3.api.style.Stroke;
+import org.wicketstuff.openlayers3.api.style.Text;
 import org.wicketstuff.openlayers3.api.util.Color;
 import org.wicketstuff.openlayers3.behavior.ClickFeatureHandler;
 import org.wicketstuff.openlayers3.component.MarkerPopover;
 import org.wicketstuff.openlayers3.component.PopoverPanel;
 import org.wicketstuff.openlayers3.examples.base.BasePage;
 
-import java.util.Arrays;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonNull;
+import com.google.gson.JsonObject;
 
 /**
  * Provides a page demonstrating clustered data.
  */
 @MountPath("/cluster")
 public class ClusterPage extends BasePage {
-
-    private final static Logger logger = LoggerFactory.getLogger(ClusterPage.class);
 
     /**
      * Popover for providing detail on markers.
@@ -56,11 +57,6 @@ public class ClusterPage extends BasePage {
      * Marker over Miles' office.
      */
     private MarkerPopover markerPopover;
-
-    /**
-     * Layer with our clusters of features.
-     */
-    private Vector cluster;
 
     @Override
     protected void onInitialize() {
@@ -97,7 +93,7 @@ public class ClusterPage extends BasePage {
                                         new Osm()),
 
                                 // add our vector layer for the clusters
-                                cluster = new Vector(
+                                new Vector(
 
                                         // our cluster data source
                                         new Cluster(new GeoJsonFormat(), new Projection("EPSG:3857", "degrees", "nue"),
@@ -209,7 +205,6 @@ public class ClusterPage extends BasePage {
 
                     // parse out constructed and architecture
                     String constructed = parseField(featureThis, "CONSTRUCTI");
-                    String architecture = parseField(featureThis, "ARCHITECTU");
 
                     // assemble our description
                     StringBuilder description = new StringBuilder();
