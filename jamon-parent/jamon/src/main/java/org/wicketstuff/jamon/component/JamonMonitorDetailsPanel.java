@@ -114,7 +114,7 @@ public class JamonMonitorDetailsPanel extends Panel
 	{
 		super(id);
 		setOutputMarkupId(true);
-		final Monitor monitor = getApplication().getMetaData(JamonRepositoryKey.KEY)
+		final Monitor monitor = getApplication().getMetaData(MonitoringRepositoryKey.KEY)
 			.findMonitorByLabel(monitorLabel);
 		FrequencyDist[] frequencyDists = monitor.getRange().getFrequencyDists();
 		add(new FrequencyListView(ID_OF_LIST_VIEW, asList(frequencyDists)));

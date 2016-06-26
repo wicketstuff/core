@@ -21,8 +21,6 @@ import org.apache.wicket.request.IRequestHandler;
 import org.apache.wicket.request.component.IRequestablePage;
 import org.apache.wicket.request.cycle.AbstractRequestCycleListener;
 import org.apache.wicket.request.cycle.RequestCycle;
-import org.wicketstuff.jamon.component.JamonRepositoryKey;
-import org.wicketstuff.jamon.monitor.JamonRepository;
 import org.apache.wicket.Application;
 import org.apache.wicket.core.request.handler.BookmarkablePageRequestHandler;
 import org.apache.wicket.core.request.handler.BufferedResponseRequestHandler;
@@ -66,7 +64,6 @@ public class JamonAwareRequestCycleListener extends AbstractRequestCycleListener
 
 	public JamonAwareRequestCycleListener(Application app, boolean includeSourceNameInMonitorLabel)
 	{
-		app.setMetaData(JamonRepositoryKey.KEY, new JamonRepository());
 		this.includeSourceNameInMonitorLabel = includeSourceNameInMonitorLabel;
 	}
 
