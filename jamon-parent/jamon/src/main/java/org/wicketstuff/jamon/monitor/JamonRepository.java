@@ -41,7 +41,7 @@ import com.jamonapi.MonitorFactory;
  * 
  */
 @SuppressWarnings("serial")
-public class JamonRepository implements Serializable
+public class JamonRepository implements Serializable, MonitoringRepository
 {
 	public JamonRepository()
 	{
@@ -66,11 +66,10 @@ public class JamonRepository implements Serializable
 		}
 	}
 
-	/**
-	 * Returns the number of {@link Monitor}s in this repository.
-	 * 
-	 * @return the number of {@link Monitor}s.
+	/* (non-Javadoc)
+	 * @see org.wicketstuff.jamon.monitor.MonitoringRepository#count()
 	 */
+	@Override
 	public int count()
 	{
 		return getAll().size();
@@ -85,13 +84,10 @@ public class JamonRepository implements Serializable
 		MonitorFactory.getFactory().reset();
 	}
 
-	/**
-	 * Returns {@link Monitor} that registered under the given <code>monitorLabel</code>
-	 * 
-	 * @param monitorLabel
-	 *            The label of the monitor to be returned
-	 * @return The found monitor or <code>null</code>.
+	/* (non-Javadoc)
+	 * @see org.wicketstuff.jamon.monitor.MonitoringRepository#findMonitorByLabel(java.lang.String)
 	 */
+	@Override
 	public Monitor findMonitorByLabel(String monitorLabel)
 	{
 		if (monitorLabel == null)
@@ -108,13 +104,10 @@ public class JamonRepository implements Serializable
 		return monitors.isEmpty() ? null : monitors.get(0);
 	}
 
-	/**
-	 * Returns all {@link Monitor} that satisfy the given {@link MonitorSpecification}.
-	 * 
-	 * @param specification
-	 *            The {@link MonitorSpecification} to satisfy
-	 * @return All monitors that satisfy the given {@link MonitorSpecification}.
+	/* (non-Javadoc)
+	 * @see org.wicketstuff.jamon.monitor.MonitoringRepository#find(org.wicketstuff.jamon.monitor.MonitorSpecification)
 	 */
+	@Override
 	public List<Monitor> find(MonitorSpecification specification)
 	{
 		List<Monitor> result = new ArrayList<Monitor>();

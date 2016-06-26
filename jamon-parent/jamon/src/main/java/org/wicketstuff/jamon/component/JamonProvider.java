@@ -24,8 +24,8 @@ import org.apache.wicket.Application;
 import org.apache.wicket.extensions.markup.html.repeater.data.sort.SortOrder;
 import org.apache.wicket.extensions.markup.html.repeater.util.SortableDataProvider;
 import org.apache.wicket.model.IModel;
-import org.wicketstuff.jamon.monitor.JamonRepository;
 import org.wicketstuff.jamon.monitor.MonitorSpecification;
+import org.wicketstuff.jamon.monitor.MonitoringRepository;
 
 import com.jamonapi.Monitor;
 
@@ -38,14 +38,14 @@ public class JamonProvider extends SortableDataProvider<Monitor, String>
 {
 	private static final Iterator<Monitor> EMPTY_ITERATOR = Collections.<Monitor> emptyList().iterator();
 
-	private JamonRepository jamonRepository;
+	private MonitoringRepository jamonRepository;
 
 	private final MonitorSpecification specification;
 
 	public JamonProvider(MonitorSpecification specification)
 	{
 		this.specification = specification;
-		jamonRepository = Application.get().getMetaData(JamonRepositoryKey.KEY);
+		jamonRepository = Application.get().getMetaData(MonitoringRepositoryKey.KEY);
 		setSort("label", SortOrder.ASCENDING);
 	}
 
