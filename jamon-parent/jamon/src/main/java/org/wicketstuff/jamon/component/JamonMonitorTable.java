@@ -56,6 +56,7 @@ public class JamonMonitorTable extends DefaultDataTable<Monitor, String>
 		cols.add(createColumn("average", "avg"));
 		cols.add(createColumn("total", "total"));
 		cols.add(createColumn("stdDev", "stdDev"));
+		cols.add(createColumn("lastValue", "lastValue"));
 
 		cols.add(createColumn("min", "min"));
 		cols.add(createColumn("max", "max"));
@@ -66,7 +67,6 @@ public class JamonMonitorTable extends DefaultDataTable<Monitor, String>
 
 		cols.add(createColumn("firstAccess", "firstAccess"));
 		cols.add(createColumn("lastAccess", "lastAccess"));
-		cols.add(createColumn("lastValue", "lastValue"));
 
 		return cols;
 	}
