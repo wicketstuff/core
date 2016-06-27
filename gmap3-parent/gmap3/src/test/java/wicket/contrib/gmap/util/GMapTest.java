@@ -28,7 +28,7 @@ public class GMapTest
 		GMap map = new GMap("someId");
 		tester.startComponentInPage(map);
 		Assert.assertFalse(
-			"If the property bounds is not set, it shoudn'd be render the JS-Methode",
+			"If the property bounds is not set, it shouldn't render the JS-method",
 			map.getJSinit().contains("fitBounds("));
 	}
 
@@ -48,7 +48,7 @@ public class GMapTest
 		));
 		tester.startComponentInPage(map);
 		Assert.assertTrue(
-			"If the property bounds is not set, it shoudn'd be render the JS-Methode",
+			"If the property bounds is not set, it shouldn't render the JS-method",
 			map.getJSinit()//
 				.contains(
 					"fitBounds(new google.maps.LatLngBounds("
