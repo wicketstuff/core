@@ -14,23 +14,14 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.wicketstuff.jamon.example;
+package org.wicketstuff.jamon.component;
 
-import org.apache.wicket.markup.html.WebPage;
-import org.apache.wicket.protocol.http.WebApplication;
+import org.apache.wicket.MetaDataKey;
+import org.wicketstuff.jamon.monitor.MonitoringRepository;
 
-/**
- * WebApplication so Jamon Monitoring can be tested.
- * 
- * @author lars
- *
- */
-public class JamonWebApplication extends WebApplication
+public class MonitoringRepositoryKey extends MetaDataKey<MonitoringRepository>
 {
 
-	@Override
-	public Class<? extends WebPage> getHomePage()
-	{
-		return HomePage.class;
-	}
+	private static final long serialVersionUID = 1L;
+	public static final MonitoringRepositoryKey KEY = new MonitoringRepositoryKey();
 }
