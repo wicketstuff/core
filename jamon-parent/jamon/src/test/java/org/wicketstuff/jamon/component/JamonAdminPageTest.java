@@ -36,7 +36,7 @@ public class JamonAdminPageTest
 	public void beforeEachTest()
 	{
 		wicketTester = new WicketTester(JamonAdminPage.class);
-		wicketTester.getApplication().setMetaData(JamonRepositoryKey.KEY, new JamonRepository());
+		wicketTester.getApplication().setMetaData(MonitoringRepositoryKey.KEY, new JamonRepository());
 	}
 
 	@After
