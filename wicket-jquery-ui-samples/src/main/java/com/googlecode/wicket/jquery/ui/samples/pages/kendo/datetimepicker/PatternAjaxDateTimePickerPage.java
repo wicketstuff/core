@@ -59,14 +59,14 @@ public class PatternAjaxDateTimePickerPage extends AbstractTimePickerPage
 			private static final long serialVersionUID = 1L;
 
 			@Override
-			protected void onSubmit(AjaxRequestTarget target, Form<?> form)
+			protected void onSubmit(AjaxRequestTarget target)
 			{
 				this.info("Date & Time: " + datetimepicker.getModelObject());
 				target.add(feedback);
 			}
 
 			@Override
-			protected void onError(AjaxRequestTarget target, Form<?> form)
+			protected void onError(AjaxRequestTarget target)
 			{
 				target.add(feedback);
 			}

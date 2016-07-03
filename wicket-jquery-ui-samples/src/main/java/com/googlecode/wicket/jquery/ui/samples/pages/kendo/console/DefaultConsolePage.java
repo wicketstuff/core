@@ -45,13 +45,13 @@ public class DefaultConsolePage extends AbstractConsolePage
 			private static final long serialVersionUID = 1L;
 
 			@Override
-			protected void onSubmit(AjaxRequestTarget target, Form<?> form)
+			protected void onSubmit(AjaxRequestTarget target)
 			{
 				console.info(target, textField.getModelObject());
 			}
 
 			@Override
-			protected void onError(AjaxRequestTarget target, Form<?> form)
+			protected void onError(AjaxRequestTarget target)
 			{
 				for (FeedbackMessage message : errorFeedbackMessagesModel.getObject())
 				{

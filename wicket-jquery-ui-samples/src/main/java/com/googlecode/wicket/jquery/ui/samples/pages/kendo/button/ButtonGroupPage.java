@@ -46,7 +46,7 @@ public class ButtonGroupPage extends AbstractButtonPage
 			private static final long serialVersionUID = 1L;
 
 			@Override
-			protected void onSubmit(AjaxRequestTarget target, Form<?> form)
+			protected void onSubmit(AjaxRequestTarget target)
 			{
 				ButtonGroupPage.this.info(form);
 				target.add(form);

@@ -62,7 +62,7 @@ public class AccordionPanelPage extends AbstractAccordionPage
 			private static final long serialVersionUID = 1L;
 
 			@Override
-			protected void onSubmit(AjaxRequestTarget target, Form<?> form)
+			protected void onSubmit(AjaxRequestTarget target)
 			{
 				accordion.setActiveTab(0).reload(target); // resets active tab and forces reload model
 			}
@@ -73,7 +73,7 @@ public class AccordionPanelPage extends AbstractAccordionPage
 			private static final long serialVersionUID = 1L;
 
 			@Override
-			protected void onSubmit(AjaxRequestTarget target, Form<?> form)
+			protected void onSubmit(AjaxRequestTarget target)
 			{
 				target.add(accordion.setActiveTab(accordion.getLastTabIndex()));
 			}

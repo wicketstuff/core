@@ -46,7 +46,7 @@ public class DefaultSliderPage extends AbstractSliderPage
 			private static final long serialVersionUID = 1L;
 
 			@Override
-			protected void onSubmit(AjaxRequestTarget target, Form<?> form)
+			protected void onSubmit(AjaxRequestTarget target)
 			{
 				DefaultSliderPage.this.info(this, form);
 				target.add(form);

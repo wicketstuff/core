@@ -47,7 +47,7 @@ public class DefaultDropDownPage extends AbstractDropDownPage
 			private static final long serialVersionUID = 1L;
 
 			@Override
-			protected void onSubmit(AjaxRequestTarget target, Form<?> form)
+			protected void onSubmit(AjaxRequestTarget target)
 			{
 				DefaultDropDownPage.this.info(dropdown);
 				target.add(feedback);

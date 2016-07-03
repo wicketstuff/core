@@ -67,7 +67,7 @@ public class ButtonProgressBarPage extends AbstractProgressBarPage
 			}
 
 			@Override
-			protected void onSubmit(AjaxRequestTarget target, Form<?> form)
+			protected void onSubmit(AjaxRequestTarget target)
 			{
 				progressBar.backward(target);
 			}
@@ -84,7 +84,7 @@ public class ButtonProgressBarPage extends AbstractProgressBarPage
 			}
 
 			@Override
-			protected void onSubmit(AjaxRequestTarget target, Form<?> form)
+			protected void onSubmit(AjaxRequestTarget target)
 			{
 				progressBar.forward(target);
 			}

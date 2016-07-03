@@ -46,7 +46,7 @@ public class RendererSelectMenuPage extends AbstractSelectMenuPage
 			private static final long serialVersionUID = 1L;
 
 			@Override
-			protected void onSubmit(AjaxRequestTarget target, Form<?> form)
+			protected void onSubmit(AjaxRequestTarget target)
 			{
 				RendererSelectMenuPage.this.info(dropdown);
 				target.add(feedback);

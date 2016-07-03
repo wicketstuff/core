@@ -64,7 +64,7 @@ public class KendoCheckBoxPage extends AbstractRadioPage
 			private static final long serialVersionUID = 1L;
 
 			@Override
-			protected void onSubmit(AjaxRequestTarget target, Form<?> unused)
+			protected void onSubmit(AjaxRequestTarget target)
 			{
 				KendoCheckBoxPage.this.info(this, form.getModel());
 				target.add(form);

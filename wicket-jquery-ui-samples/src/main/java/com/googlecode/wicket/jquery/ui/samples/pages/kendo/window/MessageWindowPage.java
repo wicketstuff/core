@@ -66,7 +66,7 @@ public class MessageWindowPage extends AbstractWindowPage
 			}
 
 			@Override
-			protected void onSubmit(AjaxRequestTarget target, Form<?> form)
+			protected void onSubmit(AjaxRequestTarget target)
 			{
 				window.open(target);
 			}

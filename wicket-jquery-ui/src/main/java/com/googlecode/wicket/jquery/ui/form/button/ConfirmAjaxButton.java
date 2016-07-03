@@ -114,17 +114,15 @@ public abstract class ConfirmAjaxButton extends GenericPanel<String>
 	 * Triggered when the form is submitted, but the validation failed
 	 *
 	 * @param target the {@link AjaxRequestTarget}
-	 * @param form the {@link Form}
 	 */
-	protected abstract void onError(AjaxRequestTarget target, Form<?> form);
+	protected abstract void onError(AjaxRequestTarget target);
 
 	/**
 	 * Triggered when the form is submitted, and the validation succeed
 	 *
 	 * @param target the {@link AjaxRequestTarget}
-	 * @param form the {@link Form}
 	 */
-	protected abstract void onSubmit(AjaxRequestTarget target, Form<?> form);
+	protected abstract void onSubmit(AjaxRequestTarget target);
 
 	@Override
 	protected void onDetach()
@@ -181,13 +179,13 @@ public abstract class ConfirmAjaxButton extends GenericPanel<String>
 			{
 				super.close(target, null); // closes the dialog on error.
 
-				ConfirmAjaxButton.this.onError(target, this.getForm());
+				ConfirmAjaxButton.this.onError(target);
 			}
 
 			@Override
 			protected void onSubmit(AjaxRequestTarget target)
 			{
-				ConfirmAjaxButton.this.onSubmit(target, this.getForm());
+				ConfirmAjaxButton.this.onSubmit(target);
 			}
 		};
 	}
@@ -220,7 +218,7 @@ public abstract class ConfirmAjaxButton extends GenericPanel<String>
 			}
 
 			@Override
-			protected void onSubmit(AjaxRequestTarget target, Form<?> form)
+			protected void onSubmit(AjaxRequestTarget target)
 			{
 				dialog.open(target);
 			}

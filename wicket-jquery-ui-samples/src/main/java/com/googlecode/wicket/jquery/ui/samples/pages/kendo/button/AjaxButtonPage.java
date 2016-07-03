@@ -31,7 +31,7 @@ public class AjaxButtonPage extends AbstractButtonPage
 			private static final long serialVersionUID = 1L;
 
 			@Override
-			protected void onSubmit(AjaxRequestTarget target, Form<?> form)
+			protected void onSubmit(AjaxRequestTarget target)
 			{
 				AjaxButtonPage.this.info(this);
 				target.add(feedback);
@@ -43,7 +43,7 @@ public class AjaxButtonPage extends AbstractButtonPage
 			private static final long serialVersionUID = 1L;
 
 			@Override
-			protected void onSubmit(AjaxRequestTarget target, Form<?> form)
+			protected void onSubmit(AjaxRequestTarget target)
 			{
 				AjaxButtonPage.this.info(this);
 				target.add(form);

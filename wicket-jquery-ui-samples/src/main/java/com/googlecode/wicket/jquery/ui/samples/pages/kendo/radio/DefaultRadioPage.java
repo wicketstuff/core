@@ -61,7 +61,7 @@ public class DefaultRadioPage extends AbstractRadioPage
 			private static final long serialVersionUID = 1L;
 
 			@Override
-			protected void onSubmit(AjaxRequestTarget target, Form<?> form)
+			protected void onSubmit(AjaxRequestTarget target)
 			{
 				DefaultRadioPage.this.info(this, radioModel);
 				target.add(form);

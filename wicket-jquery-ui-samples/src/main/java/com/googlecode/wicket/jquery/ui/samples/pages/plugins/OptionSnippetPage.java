@@ -59,7 +59,7 @@ public class OptionSnippetPage extends AbstractSnippetPage
 			private static final long serialVersionUID = 1L;
 
 			@Override
-			protected void onSubmit(AjaxRequestTarget target, Form<?> form)
+			protected void onSubmit(AjaxRequestTarget target)
 			{
 				label.setStyle(this.getModelObject());
 				target.add(container);
@@ -71,7 +71,7 @@ public class OptionSnippetPage extends AbstractSnippetPage
 			private static final long serialVersionUID = 1L;
 
 			@Override
-			protected void onSubmit(AjaxRequestTarget target, Form<?> form)
+			protected void onSubmit(AjaxRequestTarget target)
 			{
 				label.setStyle(this.getModelObject());
 				target.add(container);

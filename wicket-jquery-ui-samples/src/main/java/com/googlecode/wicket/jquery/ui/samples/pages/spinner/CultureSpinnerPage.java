@@ -74,13 +74,13 @@ public class CultureSpinnerPage extends AbstractSpinnerPage
 			private static final long serialVersionUID = 1L;
 
 			@Override
-			protected void onError(AjaxRequestTarget target, Form<?> form)
+			protected void onError(AjaxRequestTarget target)
 			{
 				target.add(CultureSpinnerPage.this.feedback);
 			}
 
 			@Override
-			protected void onSubmit(AjaxRequestTarget target, Form<?> unused)
+			protected void onSubmit(AjaxRequestTarget target)
 			{
 				CultureSpinnerPage.this.info(this, form);
 				target.add(form);

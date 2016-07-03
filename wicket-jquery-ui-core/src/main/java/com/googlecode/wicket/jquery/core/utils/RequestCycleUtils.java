@@ -41,7 +41,7 @@ public class RequestCycleUtils
 	 */
 	public static AjaxRequestTarget getAjaxRequestTarget()
 	{
-		return RequestCycle.get().find(AjaxRequestTarget.class);
+		return RequestCycle.get().find(AjaxRequestTarget.class).get();
 	}
 
 	/**
@@ -51,7 +51,7 @@ public class RequestCycleUtils
 	 */
 	public static IPartialPageRequestHandler getRequestHandler()
 	{
-		return RequestCycle.get().find(IPartialPageRequestHandler.class);
+		return RequestCycle.get().find(IPartialPageRequestHandler.class).get();
 	}
 
 	/**
@@ -61,7 +61,7 @@ public class RequestCycleUtils
 	 */
 	public static Class<? extends IRequestablePage> getPageClass()
 	{
-		IPageClassRequestHandler handler = RequestCycle.get().find(IPageClassRequestHandler.class);
+		IPageClassRequestHandler handler = RequestCycle.get().find(IPageClassRequestHandler.class).get();
 
 		if (handler != null)
 		{

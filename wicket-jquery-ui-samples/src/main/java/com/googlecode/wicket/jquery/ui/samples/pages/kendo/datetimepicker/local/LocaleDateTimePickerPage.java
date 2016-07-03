@@ -52,14 +52,14 @@ public class LocaleDateTimePickerPage extends AbstractTimePickerPage
 			private static final long serialVersionUID = 1L;
 
 			@Override
-			protected void onSubmit(AjaxRequestTarget target, Form<?> form)
+			protected void onSubmit(AjaxRequestTarget target)
 			{
 				this.info("Date & Time: " + datetimepicker.getModelObject()); // warning, model object can be null
 				target.add(feedback);
 			}
 
 			@Override
-			protected void onError(AjaxRequestTarget target, Form<?> form)
+			protected void onError(AjaxRequestTarget target)
 			{
 				target.add(feedback);
 			}

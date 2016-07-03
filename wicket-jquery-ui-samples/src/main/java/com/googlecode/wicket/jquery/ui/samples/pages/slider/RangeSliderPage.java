@@ -48,7 +48,7 @@ public class RangeSliderPage extends AbstractSliderPage
 			private static final long serialVersionUID = 1L;
 
 			@Override
-			protected void onSubmit(AjaxRequestTarget target, Form<?> form)
+			protected void onSubmit(AjaxRequestTarget target)
 			{
 				RangeSliderPage.this.info(this, form);
 				target.add(form);

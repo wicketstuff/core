@@ -57,13 +57,13 @@ public class InputRangeSliderPage extends AbstractSliderPage
 			private static final long serialVersionUID = 1L;
 
 			@Override
-			protected void onError(AjaxRequestTarget target, Form<?> form)
+			protected void onError(AjaxRequestTarget target)
 			{
 				target.add(form);
 			}
 
 			@Override
-			protected void onSubmit(AjaxRequestTarget target, Form<?> form)
+			protected void onSubmit(AjaxRequestTarget target)
 			{
 				InputRangeSliderPage.this.info(this, form);
 				target.add(form);

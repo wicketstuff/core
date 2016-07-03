@@ -58,7 +58,7 @@ public class AdvancedTabsPage extends AbstractTabsPage
 			private static final long serialVersionUID = 1L;
 
 			@Override
-			protected void onSubmit(AjaxRequestTarget target, Form<?> form)
+			protected void onSubmit(AjaxRequestTarget target)
 			{
 				dialog.open(target);
 			}

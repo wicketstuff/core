@@ -92,7 +92,7 @@ public class UserDialogPage extends AbstractDialogPage
 					private static final long serialVersionUID = 1L;
 
 					@Override
-					protected void onSubmit(AjaxRequestTarget target, Form<?> form)
+					protected void onSubmit(AjaxRequestTarget target)
 					{
 						User user = item.getModelObject();
 
@@ -110,7 +110,7 @@ public class UserDialogPage extends AbstractDialogPage
 			private static final long serialVersionUID = 1L;
 
 			@Override
-			protected void onSubmit(AjaxRequestTarget target, Form<?> form)
+			protected void onSubmit(AjaxRequestTarget target)
 			{
 				dialog.setTitle(target, "Create new user");
 				dialog.setModelObject(new User()); // Provides a new model object to the dialog

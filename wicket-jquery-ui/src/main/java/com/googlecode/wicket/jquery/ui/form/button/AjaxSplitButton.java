@@ -52,7 +52,7 @@ public class AjaxSplitButton extends SplitButton
 	 * @param target the {@link AjaxRequestTarget}
 	 * @param form the {@link Form}
 	 */
-	protected void onError(AjaxRequestTarget target, Form<?> form)
+	protected void onError(AjaxRequestTarget target)
 	{
 		// noop
 	}
@@ -123,9 +123,9 @@ public class AjaxSplitButton extends SplitButton
 			}
 
 			@Override
-			protected void onSubmit(AjaxRequestTarget target, Form<?> form)
+			protected void onSubmit(AjaxRequestTarget target)
 			{
-				super.onSubmit(target, form);
+				super.onSubmit(target);
 
 				if (this.getDefaultModelObject() != null)
 				{
@@ -134,11 +134,11 @@ public class AjaxSplitButton extends SplitButton
 			}
 
 			@Override
-			protected void onError(AjaxRequestTarget target, Form<?> form)
+			protected void onError(AjaxRequestTarget target)
 			{
-				super.onError(target, form);
+				super.onError(target);
 
-				AjaxSplitButton.this.onError(target, form);
+				AjaxSplitButton.this.onError(target);
 			}
 		};
 	}

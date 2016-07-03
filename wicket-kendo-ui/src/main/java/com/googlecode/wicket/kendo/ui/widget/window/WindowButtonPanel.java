@@ -133,19 +133,19 @@ public abstract class WindowButtonPanel extends Panel
 			}
 
 			@Override
-			protected void onSubmit(AjaxRequestTarget target, Form<?> form)
+			protected void onSubmit(AjaxRequestTarget target)
 			{
 				WindowButtonPanel.this.onSubmit(target, button);
 			}
 
 			@Override
-			protected void onError(AjaxRequestTarget target, Form<?> form)
+			protected void onError(AjaxRequestTarget target)
 			{
 				WindowButtonPanel.this.onError(target, button);
 			}
 
 			@Override
-			protected void onAfterSubmit(AjaxRequestTarget target, Form<?> form)
+			protected void onAfterSubmit(AjaxRequestTarget target)
 			{
 				WindowButtonPanel.this.onAfterSubmit(target, button);
 			}

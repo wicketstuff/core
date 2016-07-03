@@ -80,7 +80,7 @@ public class KendoCheckPage extends AbstractRadioPage
 			private static final long serialVersionUID = 1L;
 
 			@Override
-			protected void onSubmit(AjaxRequestTarget target, Form<?> unused)
+			protected void onSubmit(AjaxRequestTarget target)
 			{
 				KendoCheckPage.this.info(this, form.getModel());
 				target.add(form);

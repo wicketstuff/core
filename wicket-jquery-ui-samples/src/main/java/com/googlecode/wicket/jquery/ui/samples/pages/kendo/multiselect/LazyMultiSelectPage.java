@@ -78,7 +78,7 @@ public class LazyMultiSelectPage extends AbstractMultiSelectPage
 			private static final long serialVersionUID = 1L;
 
 			@Override
-			protected void onSubmit(AjaxRequestTarget target, Form<?> form)
+			protected void onSubmit(AjaxRequestTarget target)
 			{
 				LazyMultiSelectPage.this.info(multiselect);
 				target.add(feedback);

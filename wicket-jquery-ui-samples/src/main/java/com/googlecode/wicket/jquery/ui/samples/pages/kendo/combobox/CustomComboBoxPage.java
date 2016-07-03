@@ -45,7 +45,7 @@ public class CustomComboBoxPage extends AbstractComboBoxPage
 			private static final long serialVersionUID = 1L;
 
 			@Override
-			protected void onSubmit(AjaxRequestTarget target, Form<?> form)
+			protected void onSubmit(AjaxRequestTarget target)
 			{
 				CustomComboBoxPage.this.info(combobox);
 				target.add(feedback);

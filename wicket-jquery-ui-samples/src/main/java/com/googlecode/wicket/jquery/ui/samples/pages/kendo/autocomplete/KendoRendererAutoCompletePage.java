@@ -88,7 +88,7 @@ public class KendoRendererAutoCompletePage extends AbstractAutoCompletePage
 			private static final long serialVersionUID = 1L;
 
 			@Override
-			protected void onSubmit(AjaxRequestTarget target, Form<?> form)
+			protected void onSubmit(AjaxRequestTarget target)
 			{
 				this.info("Value: " + autocomplete.getValue());
 

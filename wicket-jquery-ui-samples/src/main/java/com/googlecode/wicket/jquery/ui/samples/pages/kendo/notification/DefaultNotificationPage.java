@@ -26,7 +26,7 @@ public class DefaultNotificationPage extends AbstractNotificationPage
 			private static final long serialVersionUID = 1L;
 
 			@Override
-			protected void onSubmit(AjaxRequestTarget target, Form<?> form)
+			protected void onSubmit(AjaxRequestTarget target)
 			{
 				notification.info(target, "Sample info message");
 			}
@@ -37,7 +37,7 @@ public class DefaultNotificationPage extends AbstractNotificationPage
 			private static final long serialVersionUID = 1L;
 
 			@Override
-			protected void onSubmit(AjaxRequestTarget target, Form<?> form)
+			protected void onSubmit(AjaxRequestTarget target)
 			{
 				notification.success(target, "Sample success message");
 			}
@@ -48,7 +48,7 @@ public class DefaultNotificationPage extends AbstractNotificationPage
 			private static final long serialVersionUID = 1L;
 
 			@Override
-			protected void onSubmit(AjaxRequestTarget target, Form<?> form)
+			protected void onSubmit(AjaxRequestTarget target)
 			{
 				notification.warn(target, "Sample warning message");
 			}
@@ -59,7 +59,7 @@ public class DefaultNotificationPage extends AbstractNotificationPage
 			private static final long serialVersionUID = 1L;
 
 			@Override
-			protected void onSubmit(AjaxRequestTarget target, Form<?> form)
+			protected void onSubmit(AjaxRequestTarget target)
 			{
 				notification.error(target, "Sample error message");
 			}

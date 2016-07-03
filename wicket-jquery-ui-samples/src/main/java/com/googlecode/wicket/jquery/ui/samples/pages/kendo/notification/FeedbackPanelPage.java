@@ -30,7 +30,7 @@ public class FeedbackPanelPage extends AbstractNotificationPage
 			private static final long serialVersionUID = 1L;
 
 			@Override
-			protected void onSubmit(AjaxRequestTarget target, Form<?> form)
+			protected void onSubmit(AjaxRequestTarget target)
 			{
 				this.info("Sample info message");
 
@@ -43,7 +43,7 @@ public class FeedbackPanelPage extends AbstractNotificationPage
 			private static final long serialVersionUID = 1L;
 
 			@Override
-			protected void onSubmit(AjaxRequestTarget target, Form<?> form)
+			protected void onSubmit(AjaxRequestTarget target)
 			{
 				this.success("Sample success message");
 
@@ -56,7 +56,7 @@ public class FeedbackPanelPage extends AbstractNotificationPage
 			private static final long serialVersionUID = 1L;
 
 			@Override
-			protected void onSubmit(AjaxRequestTarget target, Form<?> form)
+			protected void onSubmit(AjaxRequestTarget target)
 			{
 				this.warn("Sample warning message");
 
@@ -69,7 +69,7 @@ public class FeedbackPanelPage extends AbstractNotificationPage
 			private static final long serialVersionUID = 1L;
 
 			@Override
-			protected void onSubmit(AjaxRequestTarget target, Form<?> form)
+			protected void onSubmit(AjaxRequestTarget target)
 			{
 				this.error("Sample error message");
 
@@ -82,7 +82,7 @@ public class FeedbackPanelPage extends AbstractNotificationPage
 			private static final long serialVersionUID = 1L;
 
 			@Override
-			protected void onSubmit(AjaxRequestTarget target, Form<?> form)
+			protected void onSubmit(AjaxRequestTarget target)
 			{
 				this.info("Sample info message");
 				this.success("Sample success message");

@@ -30,7 +30,7 @@ public class EditorPage extends SamplePage
 			private static final long serialVersionUID = 1L;
 
 			@Override
-			protected void onSubmit(AjaxRequestTarget target, Form<?> form)
+			protected void onSubmit(AjaxRequestTarget target)
 		     {
 		         popup.show(target);
 		     }
@@ -41,7 +41,7 @@ public class EditorPage extends SamplePage
 			private static final long serialVersionUID = 1L;
 
 			@Override
-			protected void onSubmit(AjaxRequestTarget target, Form<?> form)
+			protected void onSubmit(AjaxRequestTarget target)
 		     {
 		         model.setObject(new Html("my new model object"));
 		     }

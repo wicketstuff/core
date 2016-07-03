@@ -77,13 +77,13 @@ public class KendoConverterAutoCompletePage extends AbstractAutoCompletePage
 			private static final long serialVersionUID = 1L;
 
 			@Override
-			protected void onError(AjaxRequestTarget target, Form<?> unused)
+			protected void onError(AjaxRequestTarget target)
 			{
 				target.add(feedback);
 			}
 
 			@Override
-			protected void onSubmit(AjaxRequestTarget target, Form<?> unused)
+			protected void onSubmit(AjaxRequestTarget target)
 			{
 				if (genre != null)
 				{

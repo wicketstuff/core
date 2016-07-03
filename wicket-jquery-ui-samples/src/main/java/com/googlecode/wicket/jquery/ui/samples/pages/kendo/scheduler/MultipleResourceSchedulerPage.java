@@ -99,7 +99,7 @@ public class MultipleResourceSchedulerPage extends AbstractSchedulerPage
 			private static final long serialVersionUID = 1L;
 
 			@Override
-			protected void onSubmit(AjaxRequestTarget target, Form<?> form)
+			protected void onSubmit(AjaxRequestTarget target)
 			{
 				target.add(scheduler);
 			}

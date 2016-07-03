@@ -1,7 +1,6 @@
 package com.googlecode.wicket.jquery.ui.samples.component;
 
 import org.apache.wicket.ajax.AjaxRequestTarget;
-import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.panel.Panel;
 
 import com.googlecode.wicket.jquery.ui.JQueryIcon;
@@ -51,7 +50,7 @@ public class NavigationAjaxButton extends Panel
 			}
 
 			@Override
-			protected void onSubmit(AjaxRequestTarget target, Form<?> form)
+			protected void onSubmit(AjaxRequestTarget target)
 			{
 				NavigationAjaxButton.this.onBackward(target, this);
 			}
@@ -71,7 +70,7 @@ public class NavigationAjaxButton extends Panel
 			}
 
 			@Override
-			protected void onSubmit(AjaxRequestTarget target, Form<?> form)
+			protected void onSubmit(AjaxRequestTarget target)
 			{
 				NavigationAjaxButton.this.onForward(target, this);
 			}

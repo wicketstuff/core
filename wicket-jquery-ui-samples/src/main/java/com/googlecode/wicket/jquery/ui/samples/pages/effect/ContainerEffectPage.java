@@ -46,7 +46,7 @@ public class ContainerEffectPage extends AbstractEffectPage
 			private static final long serialVersionUID = 1L;
 
 			@Override
-			protected void onSubmit(AjaxRequestTarget target, Form<?> form)
+			protected void onSubmit(AjaxRequestTarget target)
 			{
 				container.play(target, dropdown.getModelObject()); //Effect enum available since core 1.1
 				//container.play(target, "fold"); //also available

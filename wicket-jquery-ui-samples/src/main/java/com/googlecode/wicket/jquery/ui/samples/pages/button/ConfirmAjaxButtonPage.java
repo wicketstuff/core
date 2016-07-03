@@ -42,14 +42,14 @@ public class ConfirmAjaxButtonPage extends AbstractButtonPage
 			private static final long serialVersionUID = 1L;
 
 			@Override
-			protected void onError(AjaxRequestTarget target, Form<?> form)
+			protected void onError(AjaxRequestTarget target)
 			{
 				this.error("Validation failed!");
 				target.add(feedback);
 			}
 
 			@Override
-			protected void onSubmit(AjaxRequestTarget target, Form<?> form)
+			protected void onSubmit(AjaxRequestTarget target)
 			{
 				this.info("Model object: " + textField.getModelObject());
 				target.add(feedback);

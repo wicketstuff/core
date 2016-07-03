@@ -46,13 +46,13 @@ public class DefaultSpinnerPage extends AbstractSpinnerPage
 			private static final long serialVersionUID = 1L;
 
 			@Override
-			protected void onError(AjaxRequestTarget target, Form<?> form)
+			protected void onError(AjaxRequestTarget target)
 			{
 				target.add(DefaultSpinnerPage.this.feedback);
 			}
 
 			@Override
-			protected void onSubmit(AjaxRequestTarget target, Form<?> unused)
+			protected void onSubmit(AjaxRequestTarget target)
 			{
 				DefaultSpinnerPage.this.info(this, form);
 				target.add(form);
@@ -63,13 +63,13 @@ public class DefaultSpinnerPage extends AbstractSpinnerPage
 			private static final long serialVersionUID = 1L;
 
 			@Override
-			protected void onError(AjaxRequestTarget target, Form<?> form)
+			protected void onError(AjaxRequestTarget target)
 			{
 				target.add(DefaultSpinnerPage.this.feedback);
 			}
 
 			@Override
-			protected void onSubmit(AjaxRequestTarget target, Form<?> unused)
+			protected void onSubmit(AjaxRequestTarget target)
 			{
 				spinner.setEnabled(!spinner.isEnabled());
 				target.add(form);

@@ -91,7 +91,7 @@ public class ShoppingDroppablePage extends AbstractDroppablePage
 					private static final long serialVersionUID = 1L;
 
 					@Override
-					protected void onSubmit(AjaxRequestTarget target, Form<?> form)
+					protected void onSubmit(AjaxRequestTarget target)
 					{
 						orders.remove(book);
 						target.add(form);

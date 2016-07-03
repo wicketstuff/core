@@ -53,7 +53,7 @@ public class DefaultMultiSelectPage extends AbstractMultiSelectPage
 			private static final long serialVersionUID = 1L;
 
 			@Override
-			protected void onSubmit(AjaxRequestTarget target, Form<?> form)
+			protected void onSubmit(AjaxRequestTarget target)
 			{
 				DefaultMultiSelectPage.this.info(multiselect);
 				target.add(feedback);

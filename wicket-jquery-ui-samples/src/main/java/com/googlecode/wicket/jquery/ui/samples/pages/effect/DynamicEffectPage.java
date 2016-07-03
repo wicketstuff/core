@@ -25,7 +25,7 @@ public class DynamicEffectPage extends AbstractEffectPage
 			private static final long serialVersionUID = 1L;
 
 			@Override
-			protected void onSubmit(AjaxRequestTarget target, Form<?> form)
+			protected void onSubmit(AjaxRequestTarget target)
 			{
 				// run effect with default speed //
 				target.appendJavaScript(JQueryEffectBehavior.toString("#tabs", Effect.Explode));

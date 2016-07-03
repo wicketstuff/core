@@ -49,7 +49,7 @@ public class FeedbackConsolePage extends AbstractConsolePage
 			private static final long serialVersionUID = 1L;
 
 			@Override
-			protected void onSubmit(AjaxRequestTarget target, Form<?> form)
+			protected void onSubmit(AjaxRequestTarget target)
 			{
 				this.info(textField.getModelObject());
 
@@ -57,7 +57,7 @@ public class FeedbackConsolePage extends AbstractConsolePage
 			}
 
 			@Override
-			protected void onError(AjaxRequestTarget target, Form<?> form)
+			protected void onError(AjaxRequestTarget target)
 			{
 				console.refresh(target);
 			}

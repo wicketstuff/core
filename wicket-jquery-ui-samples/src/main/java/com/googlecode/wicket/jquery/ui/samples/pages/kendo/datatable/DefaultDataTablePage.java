@@ -43,7 +43,7 @@ public class DefaultDataTablePage extends AbstractDataTablePage
 			private static final long serialVersionUID = 1L;
 
 			@Override
-			protected void onSubmit(AjaxRequestTarget target, Form<?> form)
+			protected void onSubmit(AjaxRequestTarget target)
 			{
 				table.reload(target, true);
 			}
@@ -54,7 +54,7 @@ public class DefaultDataTablePage extends AbstractDataTablePage
 			private static final long serialVersionUID = 1L;
 
 			@Override
-			protected void onSubmit(AjaxRequestTarget target, Form<?> form)
+			protected void onSubmit(AjaxRequestTarget target)
 			{
 				table.refresh(target);
 			}
