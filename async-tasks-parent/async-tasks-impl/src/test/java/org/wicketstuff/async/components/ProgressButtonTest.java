@@ -92,9 +92,7 @@ public class ProgressButtonTest {
         formTester.submit("button");
 
         assertTrue(page.isTaskStart());
-//        assertFalse(page.isTaskSuccess());
         assertFalse(page.isTaskCancel());
-//        assertTrue(page.isTaskError());
     }
 
     @Test
