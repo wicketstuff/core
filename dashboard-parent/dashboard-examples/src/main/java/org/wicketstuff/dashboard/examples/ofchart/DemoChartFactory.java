@@ -17,13 +17,13 @@ import java.util.Date;
 import java.util.List;
 import java.util.Random;
 
-import jofc2.model.Chart;
-import jofc2.model.axis.XAxis;
-import jofc2.model.axis.YAxis;
-import jofc2.model.elements.BarChart;
-import jofc2.model.elements.LineChart;
-import jofc2.model.elements.PieChart;
-import jofc2.model.elements.ScatterChart;
+import ro.nextreports.jofc2.model.Chart;
+import ro.nextreports.jofc2.model.axis.XAxis;
+import ro.nextreports.jofc2.model.axis.YAxis;
+import ro.nextreports.jofc2.model.elements.BarChart;
+import ro.nextreports.jofc2.model.elements.LineChart;
+import ro.nextreports.jofc2.model.elements.PieChart;
+import ro.nextreports.jofc2.model.elements.ScatterChart;
 
 /**
  * @author Decebal Suiu

@@ -17,7 +17,7 @@ import java.util.Map;
 import org.wicketstuff.dashboard.widgets.ofchart.ChartDataFactory;
 import org.wicketstuff.dashboard.widgets.ofchart.ChartWidget;
 
-import jofc2.model.Chart;
+import ro.nextreports.jofc2.model.Chart;
 
 /**
  * @author Decebal Suiu
