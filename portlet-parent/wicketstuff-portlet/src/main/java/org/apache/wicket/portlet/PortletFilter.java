@@ -37,6 +37,8 @@ import org.apache.wicket.request.UrlRenderer;
 import org.apache.wicket.request.cycle.RequestCycle;
 import org.apache.wicket.request.cycle.RequestCycleContext;
 import org.apache.wicket.request.handler.render.PageRenderer;
+import org.apache.wicket.request.http.WebResponse;
+import org.apache.wicket.request.http.flow.AbortWithHttpErrorCodeException;
 import org.apache.wicket.settings.RequestCycleSettings.RenderStrategy;
 import org.apache.wicket.util.crypt.Base64;
 
@@ -51,6 +53,8 @@ import org.apache.wicket.util.crypt.Base64;
  */
 public class PortletFilter extends WicketFilter {
 	public static final String SHARED_RESOURCE_URL_PORTLET_WINDOW_ID_PREFIX = "/ps:";
+	
+	private static String NOT_MOUNTED_PATH = "notMountedPath";
 
 	private FilterConfig filterConfig;
 	
@@ -132,5 +136,26 @@ public class PortletFilter extends WicketFilter {
 		}
 
 		super.doFilter(httpServletRequest, httpServletResponse, filterChain);
+	}
+	
+	protected boolean processRequestCycle(RequestCycle requestCycle, WebResponse webResponse,
+			HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, final FilterChain chain)
+			throws IOException, ServletException {
+		// Assume we are able to handle the request
+		boolean res = true;
+
+		if (requestCycle.processRequestAndDetach()) {
+			webResponse.flush();
+		} else if (httpServletRequest.getPathInfo() != null
+				&& httpServletRequest.getPathInfo().equals(httpServletRequest.getAttribute(NOT_MOUNTED_PATH))) {
+			throw new AbortWithHttpErrorCodeException(404, httpServletRequest.getPathInfo() + " is not mounted to any Page");
+		} else {
+			if (chain != null) {
+				httpServletRequest.setAttribute(NOT_MOUNTED_PATH, httpServletRequest.getPathInfo());
+				chain.doFilter(httpServletRequest, httpServletResponse);
+			}
+			res = false;
+		}
+		return res;
 	}
 }
