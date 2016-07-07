@@ -3,7 +3,7 @@
 
 <plugin-package>
 	<name>wicketstuff-portlet-examples</name>
-	<module-id>liferay/wicketstuff-portlet-examples/6.22.0/war</module-id>
+	<module-id>liferay/wicketstuff-portlet-examples/7.4.0/war</module-id>
 	<types>
 		<type>portlet</type>
 	</types>
