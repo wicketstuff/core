@@ -1,5 +1,7 @@
 package org.wicketstuff.egrid.model;
 
+import org.wicketstuff.egrid.component.EditableDataTable;
+
 import java.io.Serializable;
 /**
  * 
@@ -12,11 +14,13 @@ public class GridOperationData<D> implements Serializable
 	private static final long serialVersionUID = 1L;
 	private OperationType operationType;
 	private D data;
+	private EditableDataTable target;
 
-	public GridOperationData(final OperationType newOperationType, final D newData)
+	public GridOperationData(final OperationType newOperationType, final D newData, EditableDataTable target)
 	{
 		this.operationType = newOperationType;
-		this.data			=  newData;
+		this.data			 = newData;
+		this.target        = target;
 	}
 	
 	public OperationType getOperationType()
@@ -34,5 +38,9 @@ public class GridOperationData<D> implements Serializable
 	public void setData(D data)
 	{
 		this.data = data;
+	}
+	public EditableDataTable getTarget()
+	{
+		return target;
 	}
 }

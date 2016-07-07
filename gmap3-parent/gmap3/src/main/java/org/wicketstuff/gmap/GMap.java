@@ -84,11 +84,48 @@ public class GMap extends Panel implements GOverlayContainer
     private GMarkerCluster markerCluster;
 
     /**
-     * Construct.
+     * Constructor.
      *
-     * Default the header contributor of the component will added and the gmap will be inited directly on rendering of the map.
+     * Default the header contributor of the component will added and the gmap
+     * will be initiated directly on rendering of the map.
      *
      * @param id wicket id
+     * @param apiKey your Google API key
+     */
+    public GMap(final String id, String apiKey)
+    {
+        this(id, new GMapHeaderContributor("http", apiKey));
+    }
+
+    /**
+     * Constructor.
+     *
+     * Default the header contributor of the component will added and the gmap
+     * will be initiated directly on rendering of the map.
+     *
+     * @param id wicket id
+     * @param scheme the scheme ("http" or "https") which should be used
+     * @param apiKey your Google API key
+     */
+    public GMap(final String id, String apiKey, String scheme)
+    {
+        this(id, new GMapHeaderContributor(scheme, apiKey));
+    }
+
+    /**
+     * Construct.
+     *
+     * Default the header contributor of the component will added and the gmap
+     * will be initiated directly on rendering of the map.
+     *
+     * @param id wicket id
+     * @deprecated since 22th June 2016 Google Maps requires an API-key,
+     * therefore you should use
+     * {@link #GMap(java.lang.String, java.lang.String) } or {@link #GMap(java.lang.String, java.lang.String, java.lang.String)
+     * }
+     * instead of this constructor
+     * @see
+     * http://googlegeodevelopers.blogspot.de/2016/06/building-for-scale-updates-to-google.html
      */
     public GMap(final String id)
     {
@@ -97,8 +134,9 @@ public class GMap extends Panel implements GOverlayContainer
 
     /**
      * @deprecated Since the sensor-parameter is no longer required from Google
-     * you should use {@link #GMap(java.lang.String) } instead of this
-     * constructor
+     * {@link #GMap(java.lang.String, java.lang.String) } or {@link #GMap(java.lang.String, java.lang.String, java.lang.String)
+     * }
+     * instead of this constructor
      */
     public GMap(final String id, final boolean sensor)
     {

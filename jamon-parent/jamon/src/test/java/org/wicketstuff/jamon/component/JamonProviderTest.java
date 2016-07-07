@@ -45,7 +45,7 @@ public class JamonProviderTest
 	public void setup()
 	{
 		wicketTester = new WicketTester(JamonAdminPage.class);
-		wicketTester.getApplication().setMetaData(JamonRepositoryKey.KEY, new JamonRepository());
+		wicketTester.getApplication().setMetaData(MonitoringRepositoryKey.KEY, new JamonRepository());
 		
 		jamonProvider = new JamonProvider(new AlwaysSatisfiedMonitorSpecification());
 	}

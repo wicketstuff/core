@@ -18,7 +18,7 @@ public class TestPage extends WebPage implements IRunnableFactory {
     private final ProgressButton button;
     private final ProgressBar bar;
     private final CountDownLatch latch = new CountDownLatch(1);
-    private Runnable runnable;
+    private volatile Runnable runnable;
 
     private boolean taskStart, taskSuccess, taskCancel, taskError;
 
