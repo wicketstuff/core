@@ -4,7 +4,6 @@ target/
 .classpath
 *.i[mpw][lrs]
 .idea/
-META-INF
 !faces.taglib.xml
 !jsp.taglib.tld
 .scala_dependencies
