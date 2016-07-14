@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html xmlns:wicket="http://wicket.apache.org">
+<head>
+<wicket:head>
+	<title>Wicket jQuery UI: sortable (connect with)</title>
+	<style type="text/css">
+		.sortable { list-style-type: none; margin: 0; padding: 0; width: 40%; }
+		.sortable li { margin: 0.3em; padding: 0.3em; x-padding-left: 1.5em; font-size: 1.1em; background-color: #fff; }
+		
+		.sortable1 { float: left; }
+		.sortable2 { float: right; }
+	</style>
+</wicket:head>
+</head>
+<body>
+<wicket:extend>
+	<div>
+		<ul wicket:id="sortable1" class="sortable sortable1">
+			<li wicket:id="items">
+				<span wicket:id="icon">[icon]</span>
+				<span wicket:id="item" class="item">[label]</span>
+			</li>
+		</ul>
+		<ul wicket:id="sortable2" class="sortable sortable2">
+			<li wicket:id="items">
+				<span wicket:id="icon">[icon]</span>
+				<span wicket:id="item" class="item">[label]</span>
+			</li>
+		</ul>
+		<br style="clear: both;" />
+		<div wicket:id="feedback"></div>
+	</div>
+</wicket:extend>
+</body>
+</html>

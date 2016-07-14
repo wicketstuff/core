@@ -1,132 +1,162 @@
+
 <!DOCTYPE html>
-<html xmlns:wicket="http://wicket.apache.org">
+<html xmlns:wicket="http://wicket.apache.org" class="no-js">
 <head>
 	<meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 	<meta name="description" content="Wicket jQuery UI integration" />
 	<meta name="keywords" content="wicket jquery, wicket jquery ui, autocomplete, dialog, draggable, droppable, progress bar, wizard, kendo ui, border layout, calendar" />
-	<link rel="stylesheet" type="text/css" href="styles/styles.css" media="all" />
+
+    <link rel="stylesheet" href="css/normalize.css">
+    <link rel="stylesheet" href="css/main.css">
+
+    <script src="js/modernizr-custom.js"></script>
+    <script src="js/jquery.collapse.js"></script>
+	<script src="js/jquery.collapse_storage.js"></script>
+
+	<script type="text/javascript">
+		$(function() {
+			$(".linkZone").collapse({
+				persist : true,
+				query : 'h2.tButton',
+				open : function() {
+					this.slideDown(200);
+				},
+				close : function() {
+					this.slideUp(200);
+				}
+			});
+		});
+	</script>
 </head>
 <body>
-	<div wicket:id="debug">[debug]</div>
-	<table id="wrapper" class="layout-grid">
-		<thead>
-			<tr>
-				<td width="20%"><br /></td>
-				<td width="80%">
-				 	<div id="wrapper-header" class="ui-widget-header ui-corner-all">
-						<h1>Wicket - jQuery UI</h1>
-						<h3><i>jQuery UI integration in Wicket 1.5, Wicket 6.x &#38; Wicket 7.x</i></h3>
-					</div>
-				</td>
-			</tr>
-		</thead>
-		<tbody>
-			<tr>
-				<td class="top">
-					<div id="wrapper-menu" class="ui-widget">
-						<wicket:link>
-							<div class="ui-widget-header ui-corner-all">Widgets</div>
-							<div class="ui-widget-content ui-corner-all">
-								<a href="/com/googlecode/wicket/jquery/ui/samples/pages/accordion/DefaultAccordionPage.html">Accordion</a>
-								<a href="/com/googlecode/wicket/jquery/ui/samples/pages/autocomplete/DefaultAutoCompletePage.html">AutoComplete</a>
-								<a href="/com/googlecode/wicket/jquery/ui/samples/pages/button/DefaultButtonPage.html">Button</a>
-								<a href="/com/googlecode/wicket/jquery/ui/samples/pages/datepicker/DefaultDatePickerPage.html">DatePicker</a>
-								<a href="/com/googlecode/wicket/jquery/ui/samples/pages/dialog/MessageDialogPage.html">Dialog</a>
-								<a href="/com/googlecode/wicket/jquery/ui/samples/pages/dropdown/DefaultSelectMenuPage.html">SelectMenu</a>
-								<a href="/com/googlecode/wicket/jquery/ui/samples/pages/menu/DefaultMenuPage.html">Menu</a>
+	<!--[if lt IE 8]>
+		<p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a class="site" href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+	<!--[endif]-->
 
-								<a href="/com/googlecode/wicket/jquery/ui/samples/pages/progressbar/DefaultProgressBarPage.html">ProgressBar</a>
-								<a href="/com/googlecode/wicket/jquery/ui/samples/pages/slider/DefaultSliderPage.html">Slider</a>
-								<a href="/com/googlecode/wicket/jquery/ui/samples/pages/spinner/DefaultSpinnerPage.html">Spinner</a>
-								<a href="/com/googlecode/wicket/jquery/ui/samples/pages/tabs/DefaultTabsPage.html">Tabs</a>
-								<a href="/com/googlecode/wicket/jquery/ui/samples/pages/tooltip/DefaultTooltipPage.html">Tooltip</a>
-
-								<a href="/com/googlecode/wicket/jquery/ui/samples/pages/wizard/DefaultWizardPage.html">Wizard</a>
-							</div>
-
-							<div class="ui-widget-header ui-corner-all">Interactions</div>
-							<div class="ui-widget-content ui-corner-all">
-								<a href="/com/googlecode/wicket/jquery/ui/samples/pages/draggable/DefaultDraggablePage.html">Draggable</a>
-								<a href="/com/googlecode/wicket/jquery/ui/samples/pages/droppable/DefaultDroppablePage.html">Droppable</a>
-								<a href="/com/googlecode/wicket/jquery/ui/samples/pages/resizable/DefaultResizablePage.html">Resizable</a>
-								<a href="/com/googlecode/wicket/jquery/ui/samples/pages/selectable/DefaultSelectablePage.html">Selectable</a>
-								<a href="/com/googlecode/wicket/jquery/ui/samples/pages/sortable/DefaultSortablePage.html">Sortable</a>
-							</div>
-
-							<div class="ui-widget-header ui-corner-all">Effects</div>
-							<div class="ui-widget-content ui-corner-all">
-								<a href="/com/googlecode/wicket/jquery/ui/samples/pages/effect/DefaultEffectPage.html">Effects</a>
-							</div>
-
-							<div class="ui-widget-header ui-corner-all">Kendo UI</div>
-							<div class="ui-widget-content ui-corner-all">
-								<a href="/com/googlecode/wicket/jquery/ui/samples/pages/kendo/accordion/KendoAccordionPage.html">Accordion</a>
-								<a href="/com/googlecode/wicket/jquery/ui/samples/pages/kendo/autocomplete/KendoAutoCompletePage.html">AutoComplete</a>
-								<a href="/com/googlecode/wicket/jquery/ui/samples/pages/kendo/button/KendoButtonPage.html">Button</a>
-								<a href="/com/googlecode/wicket/jquery/ui/samples/pages/kendo/console/DefaultConsolePage.html">Console</a>
-								<a href="/com/googlecode/wicket/jquery/ui/samples/pages/kendo/combobox/DefaultComboBoxPage.html">ComboBox</a>
-								<a href="/com/googlecode/wicket/jquery/ui/samples/pages/kendo/datatable/DefaultDataTablePage.html">DataTable (Pro)</a>
-								<a href="/com/googlecode/wicket/jquery/ui/samples/pages/kendo/datetimepicker/KendoDatePickerPage.html">Date/Time Pickers</a>
-								<a href="/com/googlecode/wicket/jquery/ui/samples/pages/kendo/datetimepicker/local/LocalDatePickerPage.html">Date/Time Pickers [Local]</a>
-								<a href="/com/googlecode/wicket/jquery/ui/samples/pages/kendo/dropdown/DefaultDropDownPage.html">DropDown</a>
-								<a href="/com/googlecode/wicket/jquery/ui/samples/pages/kendo/editor/DefaultEditorPage.html">Editor (Pro)</a>
-								<a href="/com/googlecode/wicket/jquery/ui/samples/pages/kendo/menu/KendoMenuPage.html">Menu</a>
-								<a href="/com/googlecode/wicket/jquery/ui/samples/pages/kendo/multiselect/DefaultMultiSelectPage.html">MultiSelect</a>
-								<a href="/com/googlecode/wicket/jquery/ui/samples/pages/kendo/notification/DefaultNotificationPage.html">Notification</a>
-								<a href="/com/googlecode/wicket/jquery/ui/samples/pages/kendo/progressbar/KendoProgressBarPage.html">ProgressBar</a>
-								<a href="/com/googlecode/wicket/jquery/ui/samples/pages/kendo/radio/DefaultRadioPage.html">Radio / Check</a>
-								<a href="/com/googlecode/wicket/jquery/ui/samples/pages/kendo/scheduler/DefaultSchedulerPage.html">Scheduler (Pro)</a>
-								<a href="/com/googlecode/wicket/jquery/ui/samples/pages/kendo/splitter/DefaultSplitterPage.html">Splitter &#38; Border Layout</a>
-								<a href="/com/googlecode/wicket/jquery/ui/samples/pages/kendo/tabs/KendoTabsPage.html">Tabs</a>
-								<a href="/com/googlecode/wicket/jquery/ui/samples/pages/kendo/tooltip/DefaultKendoTooltipPage.html">Tooltip</a>
-								<a href="/com/googlecode/wicket/jquery/ui/samples/pages/kendo/treeview/DefaultTreeViewPage.html">TreeView</a>
-								<a href="/com/googlecode/wicket/jquery/ui/samples/pages/kendo/window/DefaultWindowPage.html">Window</a>
-							</div>
-
-
-							<div class="ui-widget-header ui-corner-all">Kendo UI - Interactions</div>
-							<div class="ui-widget-content ui-corner-all">
-								<a href="/com/googlecode/wicket/jquery/ui/samples/pages/kendo/dragdrop/BehaviorDragDropPage.html">Drag &#38; Drop</a>
-							</div>
-
-							<div class="ui-widget-header ui-corner-all">Calendar</div>
-							<div class="ui-widget-content ui-corner-all">
-								<a href="/com/googlecode/wicket/jquery/ui/samples/pages/calendar/DefaultCalendarPage.html">Calendar</a>
-							</div>
-
-							<div class="ui-widget-header ui-corner-all">Plugins</div>
-							<div class="ui-widget-content ui-corner-all">
-								<a href="/com/googlecode/wicket/jquery/ui/samples/pages/plugins/FontSizePage.html">FontSize</a>
-								<a href="/com/googlecode/wicket/jquery/ui/samples/pages/plugins/DefaultSnippetPage.html">Snippet</a>
-								<a href="/com/googlecode/wicket/jquery/ui/samples/pages/plugins/EmoticonsPage.html">Emoticons</a>
-								<a href="/com/googlecode/wicket/jquery/ui/samples/pages/plugins/wysiwyg/WysiwygEditorPage.html">Wysiwyg Editor</a>
-								<a href="/com/googlecode/wicket/jquery/ui/samples/pages/plugins/datepicker/RangeDatePickerPage.html">RangeDatePicker</a>
-								<a href="/com/googlecode/wicket/jquery/ui/samples/pages/plugins/sfmenu/DefaultSfMenuPage.html">Superfish Menu</a>
-							</div>
-						</wicket:link>
-					</div>
-				</td>
-				<td>
-					<div id="wrapper-panel" class="ui-corner-all">
-						<wicket:child />
-					</div>
-				</td>
-			</tr>
-		</tbody>
-		<tfoot>
-			<tr>
-				<td colspan="2">
-					<div id="wrapper-footer" class="ui-state-default ui-corner-all">
-						<form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
-							<a href="http://wicket.apache.org/" style="display: inline-block; margin: 6px 0px;">Apache Wicket <span wicket:id="version"></span></a>
-							<input type="hidden" name="cmd" value="_s-xclick">
-							<input type="hidden" name="encrypted" value="-----BEGIN PKCS7-----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-----END PKCS7-----">
-							<input type="image" src="https://www.paypalobjects.com/en_US/i/btn/btn_donate_LG.gif" name="submit" alt="Support the development of wicket-jquery-ui!" style="float: right;">
-						</form>
-					</div>
-				</td>
-			</tr>
-		</tfoot>
-	</table>
+	<div class="more">
+		<div class="left">
+			<div class="infos">
+				<p class="icon-info_outline">
+					<a class="site" href="javascript:;">Legal Notice</a>
+				</p>
+			</div>
+		</div>
+		<div class="right">
+			<div class="donation">
+				<form action="https://www.paypal.com/cgi-bin/webscr" method="post"
+					target="_new">
+					<p class="icon-coffee2">Buy me a coffee :)</p>
+					 <input type="hidden" name="cmd" value="_s-xclick">
+					<input type="hidden" name="encrypted" value="-----BEGIN PKCS7-----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-----END PKCS7-----">
+					<button type="submit" class="site donate">Donate</button>
+				</form>
+			</div>
+		</div>
+	</div>
+    <header>
+		<div wicket:id="debug">[debug]</div>
+        <div class="title">
+            <h1>Wicket - jQuery UI</h1>
+            <p class="description">jQuery UI integration in Wicket 6.x &#38; Wicket 7.x</p>
+        </div>
+    </header>
+    <nav class="home">
+	        <ul>
+    			<wicket:link>
+    				<li><a class="site" href="/com/googlecode/wicket/jquery/ui/samples/HomePage.html">Home</a></li>
+		            <li><a class="site" href="/com/googlecode/wicket/jquery/ui/samples/HowtoPage.html">Getting started</a></li>
+		            <li><a class="site" href="/com/googlecode/wicket/jquery/ui/samples/AboutPage.html">About</a></li>
+		        </wicket:link>
+	        </ul>
+    </nav>
+    <section class="main">
+        <aside id="jqueryui" class="linkZone jQueryZone">
+            <nav>
+                <button wicket:id="btnJQueryUI" class="site">jQuery UI</button>
+                <wicket:link>
+	                <h2 class="tButton open"><span></span>Widgets</h2>
+	                <ul>
+						<li><a class="site" href="/com/googlecode/wicket/jquery/ui/samples/jqueryui/accordion/DefaultAccordionPage.html">Accordion</a></li>
+						<li><a class="site" href="/com/googlecode/wicket/jquery/ui/samples/jqueryui/autocomplete/DefaultAutoCompletePage.html">AutoComplete</a></li>
+						<li><a class="site" href="/com/googlecode/wicket/jquery/ui/samples/jqueryui/button/DefaultButtonPage.html">Button</a></li>
+						<li><a class="site" href="/com/googlecode/wicket/jquery/ui/samples/jqueryui/datepicker/DefaultDatePickerPage.html">DatePicker</a></li>
+						<li><a class="site" href="/com/googlecode/wicket/jquery/ui/samples/jqueryui/dialog/MessageDialogPage.html">Dialog</a></li>
+						<li><a class="site" href="/com/googlecode/wicket/jquery/ui/samples/jqueryui/dropdown/DefaultSelectMenuPage.html">SelectMenu</a></li>
+						<li><a class="site" href="/com/googlecode/wicket/jquery/ui/samples/jqueryui/menu/DefaultMenuPage.html">Menu</a></li>
+						<li><a class="site" href="/com/googlecode/wicket/jquery/ui/samples/jqueryui/progressbar/DefaultProgressBarPage.html">ProgressBar</a></li>
+						<li><a class="site" href="/com/googlecode/wicket/jquery/ui/samples/jqueryui/slider/DefaultSliderPage.html">Slider</a></li>
+						<li><a class="site" href="/com/googlecode/wicket/jquery/ui/samples/jqueryui/spinner/DefaultSpinnerPage.html">Spinner</a></li>
+						<li><a class="site" href="/com/googlecode/wicket/jquery/ui/samples/jqueryui/tabs/DefaultTabsPage.html">Tabs</a></li>
+						<li><a class="site" href="/com/googlecode/wicket/jquery/ui/samples/jqueryui/tooltip/DefaultTooltipPage.html">Tooltip</a></li>
+						<li><a class="site" href="/com/googlecode/wicket/jquery/ui/samples/jqueryui/wizard/DefaultWizardPage.html">Wizard</a></li>
+	                </ul>
+	                <h2 class="tButton"><span></span>Interactions</h2>
+	                <ul>
+						<li><a class="site" href="/com/googlecode/wicket/jquery/ui/samples/jqueryui/draggable/DefaultDraggablePage.html">Draggable</a></li>
+						<li><a class="site" href="/com/googlecode/wicket/jquery/ui/samples/jqueryui/droppable/DefaultDroppablePage.html">Droppable</a></li>
+						<li><a class="site" href="/com/googlecode/wicket/jquery/ui/samples/jqueryui/resizable/DefaultResizablePage.html">Resizable</a></li>
+						<li><a class="site" href="/com/googlecode/wicket/jquery/ui/samples/jqueryui/selectable/DefaultSelectablePage.html">Selectable</a></li>
+						<li><a class="site" href="/com/googlecode/wicket/jquery/ui/samples/jqueryui/sortable/DefaultSortablePage.html">Sortable</a></li>
+	                </ul>
+	                <h2 class="tButton open"><span></span>Effects</h2>
+	                <ul>
+	                    <li><a class="site" href="/com/googlecode/wicket/jquery/ui/samples/jqueryui/effect/DefaultEffectPage.html">Effects</a></li>
+	                </ul>
+	                <h2 class="tButton open"><span></span>Calendar</h2>
+	                <ul>
+	                    <li><a class="site" href="/com/googlecode/wicket/jquery/ui/samples/jqueryui/calendar/DefaultCalendarPage.html">Calendar</a></li>
+	                </ul>
+	                <h2 class="tButton"><span></span>Plugins</h2>
+	                <ul>
+	                    <li><a class="site" href="/com/googlecode/wicket/jquery/ui/samples/jqueryui/plugins/FontSizePage.html">FontSize</a></li>
+	                    <li><a class="site" href="/com/googlecode/wicket/jquery/ui/samples/jqueryui/plugins/DefaultSnippetPage.html">Snippet</a></li>
+	                    <li><a class="site" href="/com/googlecode/wicket/jquery/ui/samples/jqueryui/plugins/EmoticonsPage.html">Emoticons</a></li>
+	                    <li><a class="site" href="/com/googlecode/wicket/jquery/ui/samples/jqueryui/plugins/wysiwyg/WysiwygEditorPage.html">Wysiwyg Editor</a></li>
+	                    <li><a class="site" href="/com/googlecode/wicket/jquery/ui/samples/jqueryui/plugins/datepicker/RangeDatePickerPage.html">RangeDatePicker</a></li>
+	                    <li><a class="site" href="/com/googlecode/wicket/jquery/ui/samples/jqueryui/plugins/sfmenu/DefaultSfMenuPage.html">Superfish Menu</a></li>
+	                </ul>
+                </wicket:link>
+            </nav>
+		</aside>
+        <article class="contentZone">
+			<wicket:child />
+		</article>
+        <aside id="kendoui" class="linkZone kendoZone">
+            <nav>
+                <button wicket:id="btnKendoUI" class="site">Kendo UI</button>
+                <wicket:link>
+	                <h2 class="tButton open"><span></span>Widgets</h2>   
+	                <ul>
+						<li><a class="site" href="/com/googlecode/wicket/jquery/ui/samples/kendoui/accordion/KendoAccordionPage.html">Accordion</a></li>
+						<li><a class="site" href="/com/googlecode/wicket/jquery/ui/samples/kendoui/autocomplete/KendoAutoCompletePage.html">AutoComplete</a></li>
+						<li><a class="site" href="/com/googlecode/wicket/jquery/ui/samples/kendoui/button/KendoButtonPage.html">Button</a></li>
+						<li><a class="site" href="/com/googlecode/wicket/jquery/ui/samples/kendoui/console/DefaultConsolePage.html">Console</a></li>
+						<li><a class="site" href="/com/googlecode/wicket/jquery/ui/samples/kendoui/combobox/DefaultComboBoxPage.html">ComboBox</a></li>
+						<li><a class="site" href="/com/googlecode/wicket/jquery/ui/samples/kendoui/datatable/DefaultDataTablePage.html">DataTable (Pro)</a></li>
+						<li><a class="site" href="/com/googlecode/wicket/jquery/ui/samples/kendoui/datetimepicker/KendoDatePickerPage.html">Date/Time Pickers</a></li>
+						<li><a class="site" href="/com/googlecode/wicket/jquery/ui/samples/kendoui/datetimepicker/local/LocalDatePickerPage.html">Date/Time Pickers [Local]</a></li>
+						<li><a class="site" href="/com/googlecode/wicket/jquery/ui/samples/kendoui/dropdown/DefaultDropDownPage.html">DropDown</a></li>
+						<li><a class="site" href="/com/googlecode/wicket/jquery/ui/samples/kendoui/editor/DefaultEditorPage.html">Editor (Pro)</a></li>
+						<li><a class="site" href="/com/googlecode/wicket/jquery/ui/samples/kendoui/menu/KendoMenuPage.html">Menu</a></li>
+						<li><a class="site" href="/com/googlecode/wicket/jquery/ui/samples/kendoui/multiselect/DefaultMultiSelectPage.html">MultiSelect</a></li>
+						<li><a class="site" href="/com/googlecode/wicket/jquery/ui/samples/kendoui/notification/DefaultNotificationPage.html">Notification</a></li>
+						<li><a class="site" href="/com/googlecode/wicket/jquery/ui/samples/kendoui/progressbar/KendoProgressBarPage.html">ProgressBar</a></li>
+						<li><a class="site" href="/com/googlecode/wicket/jquery/ui/samples/kendoui/radio/DefaultRadioPage.html">Radio / Check</a></li>
+						<li><a class="site" href="/com/googlecode/wicket/jquery/ui/samples/kendoui/scheduler/DefaultSchedulerPage.html">Scheduler (Pro)</a></li>
+						<li><a class="site" href="/com/googlecode/wicket/jquery/ui/samples/kendoui/splitter/DefaultSplitterPage.html">Splitter &#38; Border Layout</a></li>
+						<li><a class="site" href="/com/googlecode/wicket/jquery/ui/samples/kendoui/tabs/KendoTabsPage.html">Tabs</a></li>
+						<li><a class="site" href="/com/googlecode/wicket/jquery/ui/samples/kendoui/tooltip/DefaultKendoTooltipPage.html">Tooltip</a></li>
+						<li><a class="site" href="/com/googlecode/wicket/jquery/ui/samples/kendoui/treeview/DefaultTreeViewPage.html">TreeView</a></li>
+						<li><a class="site" href="/com/googlecode/wicket/jquery/ui/samples/kendoui/window/DefaultWindowPage.html">Window</a></li>                
+	                </ul>
+	                <h2 class="tButton open"><span></span>Interactions</h2>  
+	                <ul>
+	                    <li><a class="site" href="/com/googlecode/wicket/jquery/ui/samples/kendoui/dragdrop/BehaviorDragDropPage.html">Drag &#38; Drop</a></li>
+	                </ul>
+                </wicket:link>
+            </nav>
+        </aside>
+    </section>
 </body>
 </html>

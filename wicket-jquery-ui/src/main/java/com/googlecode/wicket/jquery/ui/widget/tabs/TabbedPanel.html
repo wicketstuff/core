@@ -18,8 +18,12 @@
 <wicket:panel xmlns:wicket="http://wicket.apache.org">
 	<ul>
 		<li wicket:id="tabs">
-			<a wicket:id="link">[title]</a>
+			<wicket:container wicket:id="tab"></wicket:container>
 		</li>
 	</ul>
 	<div wicket:id="panels">[panel]</div>
+	
+	<wicket:fragment wicket:id="tab-fragment">
+		<a wicket:id="link">[title]</a>
+	</wicket:fragment>
 </wicket:panel>

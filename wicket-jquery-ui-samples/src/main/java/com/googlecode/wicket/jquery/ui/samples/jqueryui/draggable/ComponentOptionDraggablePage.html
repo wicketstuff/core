@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html xmlns:wicket="http://wicket.apache.org">
+<head>
+<wicket:head>
+	<title>Wicket jQuery UI: draggable component with option</title>
+	<style type="text/css">
+		.ui-draggable { width: 130px; height: 60px; margin: 0.2em; padding: 0.5em; z-index: 99; }
+	</style>
+</wicket:head>
+</head>
+<body>
+<wicket:extend>
+	<div id="demo-panel">
+		<div wicket:id="draggable1" class="ui-widget-content" style="float: right;">
+			<p>draggable 1</p>
+		</div>
+		<div id="container" class="ui-corner-all" style="width: 200px; height: 200px; border: 1px solid #369;">
+			<div wicket:id="draggable2" class="ui-widget-content">
+				<p>draggable 2</p>
+			</div>
+		</div>
+		<br/>
+		<div wicket:id="feedback" style="width: 360px;"></div>
+	</div>
+</wicket:extend>
+</body>
+</html>

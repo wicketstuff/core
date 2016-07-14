@@ -4,60 +4,40 @@ import java.io.IOException;
 import java.util.Collections;
 import java.util.List;
 
+import org.apache.wicket.MarkupContainer;
+import org.apache.wicket.extensions.markup.html.tabs.AbstractTab;
+import org.apache.wicket.extensions.markup.html.tabs.ITab;
+import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.link.BookmarkablePageLink;
 import org.apache.wicket.markup.html.link.Link;
 import org.apache.wicket.markup.html.list.ListItem;
 import org.apache.wicket.markup.html.list.ListView;
+import org.apache.wicket.markup.html.panel.Fragment;
+import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.resource.ResourceUtil;
 import org.apache.wicket.util.io.IClusterable;
+import org.apache.wicket.util.lang.Generics;
 import org.apache.wicket.util.reference.ClassReference;
 import org.apache.wicket.util.template.PackageTextTemplate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import com.googlecode.wicket.jquery.ui.JQueryUIBehavior;
 
 public abstract class SamplePage extends TemplatePage
 {
 	private static final long serialVersionUID = 1L;
 	private static final Logger LOG = LoggerFactory.getLogger(SamplePage.class);
 
-	private enum Source
+	protected enum Source
 	{
 		HTML, JAVA, TEXT
 	}
 
-	private static String getSource(Source source, Class<? extends SamplePage> scope)
-	{
-		PackageTextTemplate stream = new PackageTextTemplate(scope, String.format("%s.%s", scope.getSimpleName(), source.toString().toLowerCase()));
-		String string = ResourceUtil.readString(stream);
-
-		try
-		{
-			stream.close();
-		}
-		catch (IOException e)
-		{
-			if (LOG.isDebugEnabled())
-			{
-				LOG.debug(e.getMessage(), e);
-			}
-		}
-
-		return string;
-	}
-
 	public SamplePage()
 	{
-		super();
-
 		this.add(new Label("title", this.getResourceString("title")));
 		this.add(new Label("source-desc", this.getSource(Source.TEXT)).setEscapeModelStrings(false));
-		this.add(new Label("source-java", this.getSource(Source.JAVA)));
-		this.add(new Label("source-html", this.getSource(Source.HTML)));
-		this.add(new JQueryUIBehavior("#wrapper-panel-source", "tabs"));
 	}
 
 	@Override
@@ -84,7 +64,6 @@ public abstract class SamplePage extends TemplatePage
 			{
 				return !this.getModelObject().isEmpty(); // model object cannot be null
 			}
-
 		});
 	}
 
@@ -93,14 +72,99 @@ public abstract class SamplePage extends TemplatePage
 		return this.getString(String.format("%s.%s", this.getClass().getSimpleName(), string));
 	}
 
-	private String getSource(Source source)
+	protected IModel<String> getSource(Source source)
 	{
-		return SamplePage.getSource(source, this.getClass());
+		return Model.of(SamplePage.getSource(source, this.getClass()));
 	}
 
 	protected List<DemoLink> getDemoLinks()
 	{
 		return Collections.emptyList();
+	}
+
+	private static String getSource(Source source, Class<? extends SamplePage> scope)
+	{
+		final String filename = String.format("%s.%s", scope.getSimpleName(), source.toString().toLowerCase());
+
+		try (PackageTextTemplate stream = new PackageTextTemplate(scope, filename))
+		{
+			return ResourceUtil.readString(stream);
+		}
+		catch (IOException e)
+		{
+			if (LOG.isDebugEnabled())
+			{
+				LOG.debug(e.getMessage(), e);
+			}
+		}
+
+		return "";
+	}
+
+	protected final List<ITab> newSourceTabList()
+	{
+		List<ITab> tabs = Generics.newArrayList(2);
+
+		tabs.add(this.newJavaAjaxTab());
+		tabs.add(this.newHtmlAjaxTab());
+
+		return tabs;
+	}
+
+	private ITab newJavaAjaxTab()
+	{
+		return new AbstractTab(Model.of("Java")) {
+
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			public WebMarkupContainer getPanel(String panelId)
+			{
+				return new JavaFragment(panelId, SamplePage.this, getSource(Source.JAVA));
+			}
+		};
+	}
+
+	private ITab newHtmlAjaxTab()
+	{
+		return new AbstractTab(Model.of("HTML")) {
+
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			public WebMarkupContainer getPanel(String panelId)
+			{
+				return new HtmlFragment(panelId, SamplePage.this, getSource(Source.HTML));
+			}
+		};
+	}
+
+	// Classes //
+
+	protected static class JavaFragment extends Fragment
+	{
+		private static final long serialVersionUID = 1L;
+
+		public JavaFragment(String id, MarkupContainer provider, IModel<String> model)
+		{
+			super(id, "fragment-java", provider);
+
+			this.add(new Label("code", model));
+			// this.add(new SnippetLabel("code", "java", model, new Options("style", Options.asString("ide-eclipse"))));
+		}
+	}
+
+	protected static class HtmlFragment extends Fragment
+	{
+		private static final long serialVersionUID = 1L;
+
+		public HtmlFragment(String id, MarkupContainer provider, IModel<String> model)
+		{
+			super(id, "fragment-html", provider);
+
+			this.add(new Label("code", model));
+			// this.add(new SnippetLabel("code", "html", model, new Options("style", Options.asString("ide-eclipse"))));
+		}
 	}
 
 	protected static class DemoLink implements IClusterable

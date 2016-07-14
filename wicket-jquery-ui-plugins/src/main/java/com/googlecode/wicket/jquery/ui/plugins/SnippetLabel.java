@@ -16,10 +16,10 @@ public class SnippetLabel extends Label implements IJQueryWidget
 
 	public SnippetLabel(String id, String language, IModel<String> model)
 	{
-		this(id, language, new Options(), model);
+		this(id, language, model, new Options());
 	}
 
-	public SnippetLabel(String id, String language, Options options, IModel<String> model)
+	public SnippetLabel(String id, String language, IModel<String> model, Options options)
 	{
 		super(id, model);
 

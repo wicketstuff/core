@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html xmlns:wicket="http://wicket.apache.org">
+<head>
+<wicket:head>
+	<title>Wicket jQuery UI: color picker</title>
+	<style type="text/css">
+		th, td { padding: 5px; }
+
+		/* style copied from http://jqueryui.com/demos/slider/#colorpicker */
+		#red .ui-slider-range { background: #ef2929; }
+		#red .ui-slider-handle { border-color: #ef2929; }
+		#green .ui-slider-range { background: #8ae234; }
+		#green .ui-slider-handle { border-color: #8ae234; }
+		#blue .ui-slider-range { background: #729fcf; }
+		#blue .ui-slider-handle { border-color: #729fcf; }
+		
+		.color-box span {
+			padding: 25px;
+		}
+	</style>
+</wicket:head>
+</head>
+<body>
+<wicket:extend>
+	<div id="demo-panel">
+		<form wicket:id="form">
+			<table>
+				<tr>
+					<td width="240">
+						<div wicket:id="picker"></div>
+					</td>
+					<td class="color-box">
+						<span wicket:id="color" class="ui-corner-all"><br/></span>
+					</td>
+				</tr>
+			</table>
+			<br/>
+			<div wicket:id="feedback" style="width: 360px;"></div>
+		</form>
+	</div>
+
+	<wicket:fragment wicket:id="color-picker">
+		<div wicket:id="r" id="red"></div>
+		<br/>
+		<div wicket:id="g" id="green"></div>
+		<br/>
+		<div wicket:id="b" id="blue"></div>
+	</wicket:fragment>
+</wicket:extend>
+</body>
+</html>

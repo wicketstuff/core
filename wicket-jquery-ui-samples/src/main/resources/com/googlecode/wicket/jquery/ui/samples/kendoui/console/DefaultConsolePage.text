@@ -1,0 +1,11 @@
+The Kendo UI's console is not a Kendo standard widget, but is used in the Kendo UI's demo website.<br/>
+For this reason, the style is not part of the Kendo UI's theme. It can however be customized using <code>IConsoleLibrarySettings</code>
+
+<br/>
+<h4>Since</h4>
+wicket-jquery-ui-kendo-6.12.0
+
+<br/>
+<h4>Licensing</h4>
+Kendo UI Console does not belongs to the Kendo UI Web framework.<br/>
+A part of the underlying javascript is licensed under the MIT and GPL licenses.

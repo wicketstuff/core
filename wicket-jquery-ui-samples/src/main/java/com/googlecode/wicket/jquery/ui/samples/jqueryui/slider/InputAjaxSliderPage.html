@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html xmlns:wicket="http://wicket.apache.org">
+<head>
+<wicket:head>
+	<title>Wicket jQuery UI: ajax slider, with input</title>
+	<style type="text/css">
+		th, td { padding: 5px; }
+	</style>
+</wicket:head>
+</head>
+<body>
+<wicket:extend>
+	<div id="demo-panel">
+		<form wicket:id="form">
+			<table>
+				<tr>
+					<td width="240">
+						<div wicket:id="slider"></div>
+					</td>
+					<td width="100">
+						<input wicket:id="input" type="text" size="4" />
+					</td>
+				</tr>
+			</table>
+			<br/>
+			<div wicket:id="feedback" style="width: 360px;"></div>		
+		</form>
+	</div>
+</wicket:extend>
+</body>
+</html>

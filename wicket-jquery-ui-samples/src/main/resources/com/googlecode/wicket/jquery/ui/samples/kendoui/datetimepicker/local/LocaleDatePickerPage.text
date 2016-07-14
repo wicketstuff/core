@@ -1,0 +1,42 @@
+Kendo-UI DatePicker that use a Java Locale and the Kendo-UI Globalization<br/>
+<br/>
+The Kendo-UI culture file, corresponding to the Locale to be handled, should be included to the page or to the component.<br/>
+For instance:<br/>
+<ul>
+<li><tt>Locale.FRENCH</tt> corresponds to <tt>kendo.culture.fr.min.js</tt>
+<li><tt>Locale.FRANCE</tt> corresponds to <tt>kendo.culture.fr-FR.min.js</tt>
+</ul>
+<br/>
+<code>wicket-kendo-ui-culture</code> dependency does already embeds all culture files. Its usage is the following:  
+<br/>
+<pre>
+@Override
+public void renderHead(IHeaderResponse response)
+{
+	super.renderHead(response);
+
+	// adds kendo-ui culture file
+	response.render(JavaScriptHeaderItem.forReference(new KendoCultureResourceReference(Locale.FRANCE)));
+
+	// adds kendo-ui culture file, and sets the default cuture to kendo-ui widgets
+	// response.render(new KendoCultureHeaderItem("fr")); // or fr-FR
+	// response.render(new KendoCultureHeaderItem(KendoCulture.FR)); // or KendoCulture.FR_FR
+	// response.render(new KendoCultureHeaderItem(Locale.FRENCH)); // or Locale.FRANCE
+}
+</pre>
+
+<br/>
+<h4>Since</h4>
+wicket-jquery-ui-kendo-6.7.0
+
+<br/>
+<h4>Licensing</h4>
+Kendo UI "Core" is <b>Apache License 2.0 licensed</b>, starting from version <b>2014.1.416</b>.<br/>
+Prior to version 2014.1.416, Kendo UI "Web" was licensed under <b>GPLv3</b>.<br/>
+<br/>
+A pro version - with a <b>commercial license</b> - is also available, it provides additional widgets like the <b>Grid</b> (DataTable) and the <b>Editor</b>.<br/>
+To be able to use it, you need to change the <code>ResourceReference</code> with <code>kendo.all.min.js</code>
+
+<br/>
+<h4>See also</h4>
+<a class="site icon-new-tab" target="_blank" href="https://github.com/sebfz1/wicket-jquery-ui/wiki/%5Bhowto%5D-change-resource-references">[howto]-change-resource-references</a><br/>

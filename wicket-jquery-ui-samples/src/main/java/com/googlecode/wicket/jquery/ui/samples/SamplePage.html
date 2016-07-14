@@ -1,44 +1,76 @@
 <!DOCTYPE html>
 <html xmlns:wicket="http://wicket.apache.org">
 <head>
+	<wicket:head>
+		<style type="text/css">
+			.demo, .sources {
+				font-size: 0.8em !important;
+				font-family: Arial,​sans-serif
+			}
+			
+			.k-widget {
+			    font-size: 13px;
+				font-family: Arial,​sans-serif
+			}
+
+			.ui-widget {
+    			x-font-size: 0.8em !important;
+			}
+			
+			#wicketDebugLink {
+				color: #e15a2d !important;
+				left: 1em !important;
+				right: 0 !important;
+				display: none;
+			}
+		</style>
+		
+		<script type="text/javascript">
+			$(function() { $('#close').click(function() { $('.component').fadeOut(); }); });
+		</script>
+	</wicket:head>
 </head>
 <body>
 	<wicket:extend>
-		<a href="/wicket-jquery-ui/" style="float: right;">Home</a>
-		<h2 wicket:id="title"></h2>
-		<wicket:child />
+
+		<div class="component">
+			<button type="button" id="close" class="site close">x</button>
+			<h2 wicket:id="title">[title]</h2>
 	
-		<wicket:enclosure child="demo-list">
-			<br/>
-			<h3>Components / Samples</h3>
-			<div id="wrapper-panel-links">
-				<ul>
-					<li wicket:id="demo-list">
-						<a href="javascript:;" wicket:id="link"><span wicket:id="label">[link title]</span></a>
-					</li>
-				</ul>
+			<div class="demo">
+				<wicket:child />
 			</div>
-		</wicket:enclosure>
-		
-		<br/>
-		<h3>Description</h3>
-		<div id="wrapper-panel-description" wicket:id="source-desc">
+	
+			<wicket:enclosure child="demo-list">
+				<h3>Components / Samples</h3>
+				<nav>
+					<ul>
+						<li wicket:id="demo-list">
+							<a href="javascript:;" wicket:id="link" class="site"><span wicket:id="label">[label]</span></a>
+						</li>
+					</ul>
+				</nav>
+			</wicket:enclosure>
+	
+			<div class="componentDescription">
+				<h3>Description</h3>
+				<p wicket:id="source-desc">[description]</p>
+			</div>
+	
+			<div class="componentSource">
+				<h3>Sources</h3>
+				<div wicket:id="sources" class="sources">[sources]</div>
+			</div>
 		</div>
 
-		<br/>
-		<h3>Sources</h3>
-		<div id="wrapper-panel-source">
-			<ul>
-				<li><a href="#tabs-java">Java</a></li>
-				<li><a href="#tabs-html">HTML</a></li>
-			</ul>
-			<div id="tabs-java" style="display: block;">
-				<pre><code wicket:id="source-java"></code></pre>
-			</div>
-			<div id="tabs-html" style="display: block;">
-				<pre><code wicket:id="source-html"></code></pre>
-			</div>
-		</div>
+		<wicket:fragment wicket:id="fragment-java">
+			<pre wicket:id="code" class="code">[code]</pre>
+		</wicket:fragment>
+
+		<wicket:fragment wicket:id="fragment-html">
+			<pre wicket:id="code" class="code">[code]</pre>
+		</wicket:fragment>
+
 	</wicket:extend>
 </body>
 </html>

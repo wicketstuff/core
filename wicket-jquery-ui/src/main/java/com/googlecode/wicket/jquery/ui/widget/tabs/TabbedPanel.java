@@ -23,9 +23,11 @@ import org.apache.wicket.AttributeModifier;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.core.request.handler.IPartialPageRequestHandler;
 import org.apache.wicket.extensions.markup.html.tabs.ITab;
+import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.list.ListItem;
 import org.apache.wicket.markup.html.list.ListView;
+import org.apache.wicket.markup.html.panel.Fragment;
 import org.apache.wicket.markup.repeater.RepeatingView;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
@@ -251,10 +253,8 @@ public class TabbedPanel extends JQueryGenericPanel<List<ITab>> implements ITabs
 				{
 					final String newId = panels.newChildId();
 
-					// link (tab) //
-					Label link = TabbedPanel.this.newTitleLabel("link", tab.getTitle());
-					link.add(AttributeModifier.replace("href", "#" + newId));
-					item.add(link);
+					// tab //
+					item.add(TabbedPanel.this.newTabContainer("tab", newId, tab, item.getIndex()));
 
 					// panel //
 					panels.add(tab.getPanel(newId).setMarkupId(newId).setOutputMarkupId(true));
@@ -290,6 +290,28 @@ public class TabbedPanel extends JQueryGenericPanel<List<ITab>> implements ITabs
 	protected Label newTitleLabel(String id, IModel<String> title)
 	{
 		return new Label(id, title);
+	}
+
+	/**
+	 * Gets a new tab container that contains the tab's title<br/>
+	 * <b>Warning:</b> override with care!
+	 * 
+	 * @param id the container's markup-id
+	 * @param tabId the tab html-id
+	 * @param tab the {@link ITab}
+	 * @param index the tab index
+	 * @return a new {@link WebMarkupContainer}
+	 */
+	protected WebMarkupContainer newTabContainer(String id, String tabId, ITab tab, int index)
+	{
+		WebMarkupContainer container = new Fragment(id, "tab-fragment", TabbedPanel.this);
+
+		// link //
+		Label link = TabbedPanel.this.newTitleLabel("link", tab.getTitle());
+		link.add(AttributeModifier.replace("href", "#" + tabId));
+		container.add(link);
+
+		return container;
 	}
 
 	// IJQueryWidget //

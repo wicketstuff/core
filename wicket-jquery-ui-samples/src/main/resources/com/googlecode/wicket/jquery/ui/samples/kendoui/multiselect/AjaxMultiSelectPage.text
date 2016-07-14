@@ -1,0 +1,25 @@
+This sample shows how to use the Kendo UI <tt>MultiSelect</tt>.
+
+<br/>
+<h4>Note</h4>
+<tt>MultiSelect</tt> inherits from <tt>ListMultipleChoice</tt>, but <tt>#setMaxRows(int)</tt> has not effect with this widget. The <tt>height</tt> option can be used instead.
+
+<br/>
+<h4>Warning</h4>
+Do not re-attach the <tt>MultiSelect</tt> directly to the <tt>AjaxRequestTarget</tt>, attach its container instead (the form for instance) 
+
+<br/>
+<h4>Since</h4>
+wicket-kendo-ui-6.14.0
+
+<br/>
+<h4>Licensing</h4>
+Kendo UI "Core" is <b>Apache License 2.0 licensed</b>, starting from version <b>2014.1.416</b>.<br/>
+Prior to version 2014.1.416, Kendo UI "Web" was licensed under <b>GPLv3</b>.<br/>
+<br/>
+A pro version - with a <b>commercial license</b> - is also available, it provides additional widgets like the <b>Grid</b> (DataTable) and the <b>Editor</b>.<br/>
+To be able to use it, you need to change the <code>ResourceReference</code> with <code>kendo.all.min.js</code>
+
+<br/>
+<h4>See also</h4>
+<a class="site icon-new-tab" target="_blank" href="https://github.com/sebfz1/wicket-jquery-ui/wiki/%5Bhowto%5D-change-resource-references">[howto]-change-resource-references</a><br/>

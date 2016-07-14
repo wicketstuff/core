@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html xmlns:wicket="http://wicket.apache.org">
+<head>
+<wicket:head>
+	<title>Wicket - Kendo UI: draggable</title>
+	<style type="text/css">
+        #wrapper-panel-frame {
+            height: 256px;
+        }
+        
+		.draggable {
+            cursor: move;
+            width: 96px;
+            height: 48px;
+            border-radius: 1em;
+            background-color: orange;
+        }
+        
+        .draggable DIV {
+        	padding: 1em;
+        }
+        
+        .console {
+	        height: 128px;
+        }
+
+        /* class of the element being dragged */
+        .kendoDraggable-clone
+        {
+        	border: 2px solid gray;
+        }
+
+		/* class added on the original element */
+        .kendoDraggable-hide
+        {
+        	display: none;
+        }
+	</style>
+</wicket:head>
+</head>
+<body>
+<wicket:extend>
+	<div id="demo-panel">
+		Drag everywhere here...<br/>
+		<br/>
+		<div wicket:id="draggable" class="draggable">
+			<div>Drag me!</div>
+		</div>
+	</div>
+	<br/>
+	<div wicket:id="console"></div>
+</wicket:extend>
+</body>
+</html>

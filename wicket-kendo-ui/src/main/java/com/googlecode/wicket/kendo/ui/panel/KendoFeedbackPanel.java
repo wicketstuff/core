@@ -159,6 +159,32 @@ public class KendoFeedbackPanel extends WebMarkupContainer implements IJQueryWid
 		}
 	}
 
+	/**
+	 * Refreshes the {@code KendoFeedbackPanel}.
+	 * 
+	 * @param handler the {@link IPartialPageRequestHandler}
+	 * @param hide whether previous notifications should be hidden
+	 */
+	public final void refresh(IPartialPageRequestHandler handler, Boolean hide)
+	{
+		if (hide)
+		{
+			this.hide(handler);
+		}
+		
+		this.refresh(handler);
+	}
+
+	/**
+	 * Hides all notifications
+	 *
+	 * @param handler the {@link IPartialPageRequestHandler}
+	 */
+	public final void hide(IPartialPageRequestHandler handler)
+	{
+		this.widgetBehavior.hide(handler);
+	}
+
 	// Events //
 
 	@Override

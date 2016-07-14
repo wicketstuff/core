@@ -37,6 +37,7 @@
 	</dependencies>
 
 	<modules>
+		<module>theme-base</module>
 		<module>theme-black-tie</module>
 		<module>theme-blitzer</module>
 		<module>theme-cupertino</module>

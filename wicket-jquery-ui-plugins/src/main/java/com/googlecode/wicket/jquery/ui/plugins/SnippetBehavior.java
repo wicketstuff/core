@@ -27,6 +27,11 @@ public class SnippetBehavior extends JQueryBehavior
 	private static final long serialVersionUID = 1L;
 	private final String language;
 
+	public SnippetBehavior(String selector, String language)
+	{
+		this(selector, language, new Options());
+	}
+
 	public SnippetBehavior(String selector, String language, Options options)
 	{
 		super(selector, "snippet", options);

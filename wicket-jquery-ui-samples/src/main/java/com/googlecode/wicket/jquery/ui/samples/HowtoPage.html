@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html xmlns:wicket="http://wicket.apache.org">
+<head>
+<wicket:head>
+	<title>Wicket - jQuery UI</title>
+</wicket:head>
+</head>
+<body>
+    <wicket:extend>
+    	<div class="component">
+	        <h1>Welcome!</h1>
+	        <div>
+	            Welcome to the demo site of the <b>Wicket - jQuery UI</b> API.<br/>
+	            <br/>
+	            The goal of this API is to provide a bridge between <a class="site icon-new-tab" target="_blank" href="http://wicket.apache.org/">Apache Wicket</a> and <a class="site icon-new-tab" href="http://jqueryui.com/" target="_new">jQuery UI</a>.<br/>
+	            The 'core' provides all jQuery UI built-in components.<br/>
+	            <br/>
+	            Useful links:
+	            <ul>
+		            <li>
+		            	Source: <a class="site icon-new-tab" target="_blank" href="https://github.com/sebfz1/wicket-jquery-ui">https://github.com/sebfz1/wicket-jquery-ui</a>
+		            </li>
+		            <li>
+		            	Issues: <a class="site icon-new-tab" target="_blank" href="https://github.com/sebfz1/wicket-jquery-ui/issues">https://github.com/sebfz1/wicket-jquery-ui/issues</a>
+		            </li>
+		            <li>
+		            	Changelogs: <a class="site icon-new-tab" target="_blank" href="https://github.com/sebfz1/wicket-jquery-ui/releases">https://github.com/sebfz1/wicket-jquery-ui/releases</a>
+		            </li>
+		            <li>
+		            	Questions: <a class="site icon-new-tab" target="_blank" href="http://groups.google.com/group/wicket-jquery-ui/">http://groups.google.com/group/wicket-jquery-ui</a>
+		            </li>
+	            </ul>
+	        </div>
+	        <br/>
+	        <h2>Getting started</h2>
+	        <div>
+	            In order to get started using this API, you may download appropriate jar(s) or set a maven dependency.<br/>
+	            
+	            <h3>Download jar(s)</h3>
+	            <div>
+	                If you are not using maven, you need to download the core jar here:<br/>
+	                <a class="site icon-new-tab" target="_blank" href="http://central.maven.org/maven2/com/googlecode/wicket-jquery-ui/">http://central.maven.org/maven2/com/googlecode/wicket-jquery-ui/</a><br/>
+	                <br/>
+	                You may also download other jars as required (ie: <code>wicket-kendo-ui</code>). Once done, just include the jar(s) in your project's build path.
+	            </div>
+	            
+	            <h3>Using Maven</h3>
+	            <div>
+<pre>
+&lt;dependency&gt;
+    &lt;groupId&gt;com.googlecode.wicket-jquery-ui&lt;/groupId&gt;
+    &lt;artifactId&gt;wicket-jquery-ui&lt;/artifactId&gt;
+    &lt;version&gt;7.3.0&lt;/version&gt; &lt;!-- <i>or</i> 6.23.0 --&gt;
+&lt;/dependency&gt;
+</pre>
+                	If the version you specified is 'snapshot', you may define this repository:
+<pre>
+&lt;repositories&gt;
+	&lt;repository&gt;
+		&lt;id&gt;sonatype-snapshots&lt;/id&gt;
+		&lt;name&gt;Sonatype Snapshots Repository&lt;/name&gt;
+		&lt;url&gt;https://oss.sonatype.org/content/repositories/snapshots/&lt;/url&gt;
+		&lt;snapshots&gt;
+			&lt;enabled&gt;true&lt;/enabled&gt;
+		&lt;/snapshots&gt;
+	&lt;/repository&gt;
+&lt;/repositories&gt; 
+</pre>
+	            </div>
+	            <h3>Setting up the jQuery UI theme</h3>
+	            <h4>Using standard themes</h4>
+	            <div>
+	            	To use wicket-jquery-ui with a standard theme, just add the corresponding theme dependency to your webapp pom
+<pre>
+&lt;dependency&gt;
+	&lt;groupId&gt;com.googlecode.wicket-jquery-ui&lt;/groupId&gt;
+	&lt;artifactId&gt;wicket-jquery-ui-theme-uilightness&lt;/artifactId&gt;
+	&lt;version&gt;7.3.0&lt;/version&gt;
+&lt;/dependency&gt;
+</pre>
+	            </div>
+	            <h4>Using a custom theme</h4>
+	            <div>
+	                Please follow the instruction on <a class="site icon-new-tab" target="_blank" href="https://github.com/sebfz1/wicket-jquery-ui/wiki/%5Bhowto%5D-change-resource-references">How to change resource references</a>
+	            </div>
+	
+	            <h3>Setting up the Kendo UI theme</h3>
+	            <h4>Using standard themes</h4>
+	            <div>
+	            	To use wicket-kendo-ui with a standard theme, just add the corresponding theme dependency to your webapp pom
+<pre>
+&lt;dependency&gt;
+	&lt;groupId&gt;com.googlecode.wicket-jquery-ui&lt;/groupId&gt;
+	&lt;artifactId&gt;wicket-kendo-ui-theme-default&lt;/artifactId&gt;
+	&lt;version&gt;7.3.0&lt;/version&gt;
+&lt;/dependency&gt;
+</pre>
+	            </div>
+	            <h4>Using a custom theme</h4>
+	            <div>
+					Please follow the instruction on <a class="site icon-new-tab" target="_blank" href="https://github.com/sebfz1/wicket-jquery-ui/wiki/%5Bhowto%5D-change-resource-references">How to change resource references</a>
+	            </div>
+	
+	            <h3>You are now ready to use wicket-jquery-ui!</h3>
+	            <div>
+	            Look at the samples provided here to get started with the code...
+	            </div>
+	        </div>
+        </div>
+    </wicket:extend>
+</body>
+</html>
