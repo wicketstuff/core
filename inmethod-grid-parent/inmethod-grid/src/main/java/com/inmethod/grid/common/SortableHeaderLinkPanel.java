@@ -2,6 +2,7 @@ package com.inmethod.grid.common;
 
 import org.apache.wicket.ajax.AjaxEventBehavior;
 import org.apache.wicket.ajax.AjaxRequestTarget;
+import org.apache.wicket.ajax.attributes.AjaxRequestAttributes;
 import org.apache.wicket.markup.ComponentTag;
 import org.apache.wicket.markup.html.panel.Panel;
 
@@ -57,6 +58,13 @@ public abstract class SortableHeaderLinkPanel<S> extends Panel
 				}
 
 				sortStateChanged(target);
+			}
+
+			@Override
+			protected void updateAjaxAttributes(AjaxRequestAttributes attributes)
+			{
+				super.updateAjaxAttributes(attributes);
+				attributes.setPreventDefault(true);
 			}
 		});
 	}
