@@ -1,4 +1,4 @@
-/*! jQuery UI - v1.12.0-rc.2 - 2016-04-21
+/*! jQuery UI - v1.12.0 - 2016-07-08
 * http://jqueryui.com
 * Includes: widget.js, position.js, data.js, disable-selection.js, effect.js, effects/effect-blind.js, effects/effect-bounce.js, effects/effect-clip.js, effects/effect-drop.js, effects/effect-explode.js, effects/effect-fade.js, effects/effect-fold.js, effects/effect-highlight.js, effects/effect-puff.js, effects/effect-pulsate.js, effects/effect-scale.js, effects/effect-shake.js, effects/effect-size.js, effects/effect-slide.js, effects/effect-transfer.js, focusable.js, form-reset-mixin.js, jquery-1-7.js, keycode.js, labels.js, scroll-parent.js, tabbable.js, unique-id.js, widgets/accordion.js, widgets/autocomplete.js, widgets/button.js, widgets/checkboxradio.js, widgets/controlgroup.js, widgets/datepicker.js, widgets/dialog.js, widgets/draggable.js, widgets/droppable.js, widgets/menu.js, widgets/mouse.js, widgets/progressbar.js, widgets/resizable.js, widgets/selectable.js, widgets/selectmenu.js, widgets/slider.js, widgets/sortable.js, widgets/spinner.js, widgets/tabs.js, widgets/tooltip.js
 * Copyright jQuery Foundation and other contributors; Licensed MIT */
@@ -17,11 +17,11 @@
 
 $.ui = $.ui || {};
 
-var version = $.ui.version = "1.12.0-rc.2";
+var version = $.ui.version = "1.12.0";
 
 
 /*!
- * jQuery UI Widget 1.12.0-rc.2
+ * jQuery UI Widget 1.12.0
  * http://jqueryui.com
  *
  * Copyright jQuery Foundation and other contributors
@@ -724,7 +724,7 @@ var widget = $.widget;
 
 
 /*!
- * jQuery UI Position 1.12.0-rc.2
+ * jQuery UI Position 1.12.0
  * http://jqueryui.com
  *
  * Copyright jQuery Foundation and other contributors
@@ -1239,7 +1239,7 @@ var position = $.ui.position;
 
 
 /*!
- * jQuery UI :data 1.12.0-rc.2
+ * jQuery UI :data 1.12.0
  * http://jqueryui.com
  *
  * Copyright jQuery Foundation and other contributors
@@ -1268,7 +1268,7 @@ var data = $.extend( $.expr[ ":" ], {
 } );
 
 /*!
- * jQuery UI Disable Selection 1.12.0-rc.2
+ * jQuery UI Disable Selection 1.12.0
  * http://jqueryui.com
  *
  * Copyright jQuery Foundation and other contributors
@@ -1304,7 +1304,7 @@ var disableSelection = $.fn.extend( {
 
 
 /*!
- * jQuery UI Effects 1.12.0-rc.2
+ * jQuery UI Effects 1.12.0
  * http://jqueryui.com
  *
  * Copyright jQuery Foundation and other contributors
@@ -2363,7 +2363,7 @@ if ( $.uiBackCompat !== false ) {
 }
 
 $.extend( $.effects, {
-	version: "1.12.0-rc.2",
+	version: "1.12.0",
 
 	define: function( name, mode, effect ) {
 		if ( !effect ) {
@@ -2929,7 +2929,7 @@ var effect = $.effects;
 
 
 /*!
- * jQuery UI Effects Blind 1.12.0-rc.2
+ * jQuery UI Effects Blind 1.12.0
  * http://jqueryui.com
  *
  * Copyright jQuery Foundation and other contributors
@@ -2985,7 +2985,7 @@ var effectsEffectBlind = $.effects.define( "blind", "hide", function( options, d
 
 
 /*!
- * jQuery UI Effects Bounce 1.12.0-rc.2
+ * jQuery UI Effects Bounce 1.12.0
  * http://jqueryui.com
  *
  * Copyright jQuery Foundation and other contributors
@@ -3081,7 +3081,7 @@ var effectsEffectBounce = $.effects.define( "bounce", function( options, done ) 
 
 
 /*!
- * jQuery UI Effects Clip 1.12.0-rc.2
+ * jQuery UI Effects Clip 1.12.0
  * http://jqueryui.com
  *
  * Copyright jQuery Foundation and other contributors
@@ -3132,7 +3132,7 @@ var effectsEffectClip = $.effects.define( "clip", "hide", function( options, don
 
 
 /*!
- * jQuery UI Effects Drop 1.12.0-rc.2
+ * jQuery UI Effects Drop 1.12.0
  * http://jqueryui.com
  *
  * Copyright jQuery Foundation and other contributors
@@ -3187,7 +3187,7 @@ var effectsEffectDrop = $.effects.define( "drop", "hide", function( options, don
 
 
 /*!
- * jQuery UI Effects Explode 1.12.0-rc.2
+ * jQuery UI Effects Explode 1.12.0
  * http://jqueryui.com
  *
  * Copyright jQuery Foundation and other contributors
@@ -3284,7 +3284,7 @@ var effectsEffectExplode = $.effects.define( "explode", "hide", function( option
 
 
 /*!
- * jQuery UI Effects Fade 1.12.0-rc.2
+ * jQuery UI Effects Fade 1.12.0
  * http://jqueryui.com
  *
  * Copyright jQuery Foundation and other contributors
@@ -3317,7 +3317,7 @@ var effectsEffectFade = $.effects.define( "fade", "toggle", function( options, d
 
 
 /*!
- * jQuery UI Effects Fold 1.12.0-rc.2
+ * jQuery UI Effects Fold 1.12.0
  * http://jqueryui.com
  *
  * Copyright jQuery Foundation and other contributors
@@ -3392,7 +3392,7 @@ var effectsEffectFold = $.effects.define( "fold", "hide", function( options, don
 
 
 /*!
- * jQuery UI Effects Highlight 1.12.0-rc.2
+ * jQuery UI Effects Highlight 1.12.0
  * http://jqueryui.com
  *
  * Copyright jQuery Foundation and other contributors
@@ -3435,7 +3435,7 @@ var effectsEffectHighlight = $.effects.define( "highlight", "show", function( op
 
 
 /*!
- * jQuery UI Effects Size 1.12.0-rc.2
+ * jQuery UI Effects Size 1.12.0
  * http://jqueryui.com
  *
  * Copyright jQuery Foundation and other contributors
@@ -3612,7 +3612,7 @@ var effectsEffectSize = $.effects.define( "size", function( options, done ) {
 
 
 /*!
- * jQuery UI Effects Scale 1.12.0-rc.2
+ * jQuery UI Effects Scale 1.12.0
  * http://jqueryui.com
  *
  * Copyright jQuery Foundation and other contributors
@@ -3653,7 +3653,7 @@ var effectsEffectScale = $.effects.define( "scale", function( options, done ) {
 
 
 /*!
- * jQuery UI Effects Puff 1.12.0-rc.2
+ * jQuery UI Effects Puff 1.12.0
  * http://jqueryui.com
  *
  * Copyright jQuery Foundation and other contributors
@@ -3680,7 +3680,7 @@ var effectsEffectPuff = $.effects.define( "puff", "hide", function( options, don
 
 
 /*!
- * jQuery UI Effects Pulsate 1.12.0-rc.2
+ * jQuery UI Effects Pulsate 1.12.0
  * http://jqueryui.com
  *
  * Copyright jQuery Foundation and other contributors
@@ -3730,7 +3730,7 @@ var effectsEffectPulsate = $.effects.define( "pulsate", "show", function( option
 
 
 /*!
- * jQuery UI Effects Shake 1.12.0-rc.2
+ * jQuery UI Effects Shake 1.12.0
  * http://jqueryui.com
  *
  * Copyright jQuery Foundation and other contributors
@@ -3790,7 +3790,7 @@ var effectsEffectShake = $.effects.define( "shake", function( options, done ) {
 
 
 /*!
- * jQuery UI Effects Slide 1.12.0-rc.2
+ * jQuery UI Effects Slide 1.12.0
  * http://jqueryui.com
  *
  * Copyright jQuery Foundation and other contributors
@@ -3852,7 +3852,7 @@ var effectsEffectSlide = $.effects.define( "slide", "show", function( options, d
 
 
 /*!
- * jQuery UI Effects Transfer 1.12.0-rc.2
+ * jQuery UI Effects Transfer 1.12.0
  * http://jqueryui.com
  *
  * Copyright jQuery Foundation and other contributors
@@ -3878,7 +3878,7 @@ var effectsEffectTransfer = effect;
 
 
 /*!
- * jQuery UI Focusable 1.12.0-rc.2
+ * jQuery UI Focusable 1.12.0
  * http://jqueryui.com
  *
  * Copyright jQuery Foundation and other contributors
@@ -3895,8 +3895,9 @@ var effectsEffectTransfer = effect;
 
 // Selectors
 $.ui.focusable = function( element, hasTabindex ) {
-	var map, mapName, img,
+	var map, mapName, img, focusableIfVisible, fieldset,
 		nodeName = element.nodeName.toLowerCase();
+
 	if ( "area" === nodeName ) {
 		map = element.parentNode;
 		mapName = map.name;
@@ -3906,12 +3907,28 @@ $.ui.focusable = function( element, hasTabindex ) {
 		img = $( "img[usemap='#" + mapName + "']" );
 		return img.length > 0 && img.is( ":visible" );
 	}
-	return ( /^(input|select|textarea|button|object)$/.test( nodeName ) ?
-		!element.disabled :
-		"a" === nodeName ?
-			element.href || hasTabindex :
-			hasTabindex ) &&
-		$( element ).is( ":visible" ) && visible( $( element ) );
+
+	if ( /^(input|select|textarea|button|object)$/.test( nodeName ) ) {
+		focusableIfVisible = !element.disabled;
+
+		if ( focusableIfVisible ) {
+
+			// Form controls within a disabled fieldset are disabled.
+			// However, controls within the fieldset's legend do not get disabled.
+			// Since controls generally aren't placed inside legends, we skip
+			// this portion of the check.
+			fieldset = $( element ).closest( "fieldset" )[ 0 ];
+			if ( fieldset ) {
+				focusableIfVisible = !fieldset.disabled;
+			}
+		}
+	} else if ( "a" === nodeName ) {
+		focusableIfVisible = element.href || hasTabindex;
+	} else {
+		focusableIfVisible = hasTabindex;
+	}
+
+	return focusableIfVisible && $( element ).is( ":visible" ) && visible( $( element ) );
 };
 
 // Support: IE 8 only
@@ -3945,7 +3962,7 @@ var form = $.fn.form = function() {
 
 
 /*!
- * jQuery UI Form Reset Mixin 1.12.0-rc.2
+ * jQuery UI Form Reset Mixin 1.12.0
  * http://jqueryui.com
  *
  * Copyright jQuery Foundation and other contributors
@@ -4008,7 +4025,7 @@ var formResetMixin = $.ui.formResetMixin = {
 
 
 /*!
- * jQuery UI Support for jQuery core 1.7.x 1.12.0-rc.2
+ * jQuery UI Support for jQuery core 1.7.x 1.12.0
  * http://jqueryui.com
  *
  * Copyright jQuery Foundation and other contributors
@@ -4087,7 +4104,7 @@ if ( $.fn.jquery.substring( 0, 3 ) === "1.7" ) {
 
 ;
 /*!
- * jQuery UI Keycode 1.12.0-rc.2
+ * jQuery UI Keycode 1.12.0
  * http://jqueryui.com
  *
  * Copyright jQuery Foundation and other contributors
@@ -4133,7 +4150,7 @@ var escapeSelector = $.ui.escapeSelector = ( function() {
 
 
 /*!
- * jQuery UI Labels 1.12.0-rc.2
+ * jQuery UI Labels 1.12.0
  * http://jqueryui.com
  *
  * Copyright jQuery Foundation and other contributors
@@ -4185,7 +4202,7 @@ var labels = $.fn.labels = function() {
 
 
 /*!
- * jQuery UI Scroll Parent 1.12.0-rc.2
+ * jQuery UI Scroll Parent 1.12.0
  * http://jqueryui.com
  *
  * Copyright jQuery Foundation and other contributors
@@ -4220,7 +4237,7 @@ var scrollParent = $.fn.scrollParent = function( includeHidden ) {
 
 
 /*!
- * jQuery UI Tabbable 1.12.0-rc.2
+ * jQuery UI Tabbable 1.12.0
  * http://jqueryui.com
  *
  * Copyright jQuery Foundation and other contributors
@@ -4245,7 +4262,7 @@ var tabbable = $.extend( $.expr[ ":" ], {
 
 
 /*!
- * jQuery UI Unique ID 1.12.0-rc.2
+ * jQuery UI Unique ID 1.12.0
  * http://jqueryui.com
  *
  * Copyright jQuery Foundation and other contributors
@@ -4284,7 +4301,7 @@ var uniqueId = $.fn.extend( {
 
 
 /*!
- * jQuery UI Accordion 1.12.0-rc.2
+ * jQuery UI Accordion 1.12.0
  * http://jqueryui.com
  *
  * Copyright jQuery Foundation and other contributors
@@ -4306,7 +4323,7 @@ var uniqueId = $.fn.extend( {
 
 
 var widgetsAccordion = $.widget( "ui.accordion", {
-	version: "1.12.0-rc.2",
+	version: "1.12.0",
 	options: {
 		active: 0,
 		animate: {},
@@ -4911,7 +4928,7 @@ var safeActiveElement = $.ui.safeActiveElement = function( document ) {
 
 
 /*!
- * jQuery UI Menu 1.12.0-rc.2
+ * jQuery UI Menu 1.12.0
  * http://jqueryui.com
  *
  * Copyright jQuery Foundation and other contributors
@@ -4931,7 +4948,7 @@ var safeActiveElement = $.ui.safeActiveElement = function( document ) {
 
 
 var widgetsMenu = $.widget( "ui.menu", {
-	version: "1.12.0-rc.2",
+	version: "1.12.0",
 	defaultElement: "<ul>",
 	delay: 300,
 	options: {
@@ -5563,7 +5580,7 @@ var widgetsMenu = $.widget( "ui.menu", {
 
 
 /*!
- * jQuery UI Autocomplete 1.12.0-rc.2
+ * jQuery UI Autocomplete 1.12.0
  * http://jqueryui.com
  *
  * Copyright jQuery Foundation and other contributors
@@ -5583,7 +5600,7 @@ var widgetsMenu = $.widget( "ui.menu", {
 
 
 $.widget( "ui.autocomplete", {
-	version: "1.12.0-rc.2",
+	version: "1.12.0",
 	defaultElement: "<input>",
 	options: {
 		appendTo: null,
@@ -6227,7 +6244,7 @@ var widgetsAutocomplete = $.ui.autocomplete;
 
 
 /*!
- * jQuery UI Controlgroup 1.12.0-rc.2
+ * jQuery UI Controlgroup 1.12.0
  * http://jqueryui.com
  *
  * Copyright jQuery Foundation and other contributors
@@ -6245,9 +6262,10 @@ var widgetsAutocomplete = $.ui.autocomplete;
 //>>css.theme: ../../themes/base/theme.css
 
 
+var controlgroupCornerRegex = /ui-corner-([a-z]){2,6}/g;
 
 var widgetsControlgroup = $.widget( "ui.controlgroup", {
-	version: "1.12.0-rc.2",
+	version: "1.12.0",
 	defaultElement: "<div>",
 	options: {
 		direction: "horizontal",
@@ -6301,7 +6319,12 @@ var widgetsControlgroup = $.widget( "ui.controlgroup", {
 			if ( widget === "controlgroupLabel" ) {
 				labels = that.element.find( selector );
 				labels.each( function() {
-					$( this ).contents()
+					var element = $( this );
+
+					if ( element.children( ".ui-controlgroup-label-contents" ).length ) {
+						return;
+					}
+					element.contents()
 						.wrapAll( "<span class='ui-controlgroup-label-contents'></span>" );
 				} );
 				that._addClass( labels, null, "ui-widget ui-widget-content ui-state-default" );
@@ -6322,15 +6345,36 @@ var widgetsControlgroup = $.widget( "ui.controlgroup", {
 
 			// Find instances of this widget inside controlgroup and init them
 			that.element
-				.find( selector )[ widget ]( options )
+				.find( selector )
 				.each( function() {
 					var element = $( this );
+					var instance = element[ widget ]( "instance" );
+
+					// We need to clone the default options for this type of widget to avoid
+					// polluting the variable options which has a wider scope than a single widget.
+					var instanceOptions = $.widget.extend( {}, options );
+
+					// If the button is the child of a spinner ignore it
+					// TODO: Find a more generic solution
+					if ( widget === "button" && element.parent( ".ui-spinner" ).length ) {
+						return;
+					}
+
+					// Create the widget if it doesn't exist
+					if ( !instance ) {
+						instance = element[ widget ]()[ widget ]( "instance" );
+					}
+					if ( instance ) {
+						instanceOptions.classes =
+							that._resolveClassesValues( instanceOptions.classes, instance );
+					}
+					element[ widget ]( instanceOptions );
 
 					// Store an instance of the controlgroup to be able to reference
 					// from the outermost element for changing options and refresh
 					var widgetElement = element[ widget ]( "widget" );
 					$.data( widgetElement[ 0 ], "ui-controlgroup-data",
-						element[ widget ]( "instance" ) );
+						instance ? instance : element[ widget ]( "instance" ) );
 
 					childWidgets.push( widgetElement[ 0 ] );
 				} );
@@ -6351,7 +6395,7 @@ var widgetsControlgroup = $.widget( "ui.controlgroup", {
 	},
 
 	_updateCornerClass: function( element, position ) {
-		var remove = "ui-corner-top ui-corner-bottom ui-corner-left ui-corner-right";
+		var remove = "ui-corner-top ui-corner-bottom ui-corner-left ui-corner-right ui-corner-all";
 		var add = this._buildSimpleOptions( position, "label" ).classes.label;
 
 		this._removeClass( element, null, remove );
@@ -6364,9 +6408,10 @@ var widgetsControlgroup = $.widget( "ui.controlgroup", {
 			classes: {}
 		};
 		result.classes[ key ] = {
-			"middle": null,
+			"middle": "",
 			"first": "ui-corner-" + ( direction ? "top" : "left" ),
-			"last": "ui-corner-" + ( direction ? "bottom" : "right" )
+			"last": "ui-corner-" + ( direction ? "bottom" : "right" ),
+			"only": "ui-corner-all"
 		}[ position ];
 
 		return result;
@@ -6395,20 +6440,34 @@ var widgetsControlgroup = $.widget( "ui.controlgroup", {
 			width: direction ? "auto" : false,
 			classes: {
 				middle: {
-					"ui-selectmenu-button-open": null,
-					"ui-selectmenu-button-closed": null
+					"ui-selectmenu-button-open": "",
+					"ui-selectmenu-button-closed": ""
 				},
 				first: {
 					"ui-selectmenu-button-open": "ui-corner-" + ( direction ? "top" : "tl" ),
 					"ui-selectmenu-button-closed": "ui-corner-" + ( direction ? "top" : "left" )
 				},
 				last: {
-					"ui-selectmenu-button-open": direction ? null : "ui-corner-tr",
+					"ui-selectmenu-button-open": direction ? "" : "ui-corner-tr",
 					"ui-selectmenu-button-closed": "ui-corner-" + ( direction ? "bottom" : "right" )
+				},
+				only: {
+					"ui-selectmenu-button-open": "ui-corner-top",
+					"ui-selectmenu-button-closed": "ui-corner-all"
 				}
 
 			}[ position ]
 		};
+	},
+
+	_resolveClassesValues: function( classes, instance ) {
+		var result = {};
+		$.each( classes, function( key ) {
+			var current = instance.options.classes[ key ] || "";
+			current = current.replace( controlgroupCornerRegex, "" ).trim();
+			result[ key ] = ( current + " " + classes[ key ] ).replace( /\s+/g, " " );
+		} );
+		return result;
 	},
 
 	_setOption: function( key, value ) {
@@ -6451,9 +6510,11 @@ var widgetsControlgroup = $.widget( "ui.controlgroup", {
 				var instance = children[ value ]().data( "ui-controlgroup-data" );
 
 				if ( instance && that[ "_" + instance.widgetName + "Options" ] ) {
-					instance.element[ instance.widgetName ](
-						that[ "_" + instance.widgetName + "Options" ]( value )
+					var options = that[ "_" + instance.widgetName + "Options" ](
+						children.length === 1 ? "only" : value
 					);
+					options.classes = that._resolveClassesValues( options.classes, instance );
+					instance.element[ instance.widgetName ]( options );
 				} else {
 					that._updateCornerClass( children[ value ](), value );
 				}
@@ -6466,7 +6527,7 @@ var widgetsControlgroup = $.widget( "ui.controlgroup", {
 } );
 
 /*!
- * jQuery UI Checkboxradio 1.12.0-rc.2
+ * jQuery UI Checkboxradio 1.12.0
  * http://jqueryui.com
  *
  * Copyright jQuery Foundation and other contributors
@@ -6487,7 +6548,7 @@ var widgetsControlgroup = $.widget( "ui.controlgroup", {
 
 
 $.widget( "ui.checkboxradio", [ $.ui.formResetMixin, {
-	version: "1.12.0-rc.2",
+	version: "1.12.0",
 	options: {
 		disabled: null,
 		label: null,
@@ -6627,11 +6688,10 @@ $.widget( "ui.checkboxradio", [ $.ui.formResetMixin, {
 		this._toggleClass( this.label, "ui-checkboxradio-checked", "ui-state-active", checked );
 
 		if ( this.options.icon && this.type === "checkbox" ) {
-
-			// We add ui-state-highlight to change the icon color
-			this._toggleClass( this.icon, null, "ui-icon-check ui-state-highlight", checked )
+			this._toggleClass( this.icon, null, "ui-icon-check ui-state-checked", checked )
 				._toggleClass( this.icon, null, "ui-icon-blank", !checked );
 		}
+
 		if ( this.type === "radio" ) {
 			this._getRadioGroup()
 				.each( function() {
@@ -6684,14 +6744,14 @@ $.widget( "ui.checkboxradio", [ $.ui.formResetMixin, {
 			}
 
 			if ( this.type === "checkbox" ) {
-				toAdd += checked ? "ui-icon-check ui-state-highlight" : "ui-icon-blank";
+				toAdd += checked ? "ui-icon-check ui-state-checked" : "ui-icon-blank";
 				this._removeClass( this.icon, null, checked ? "ui-icon-blank" : "ui-icon-check" );
 			} else {
 				toAdd += "ui-icon-blank";
 			}
 			this._addClass( this.icon, "ui-checkboxradio-icon", toAdd );
 			if ( !checked ) {
-				this._removeClass( this.icon, null, "ui-icon-check ui-state-highlight" );
+				this._removeClass( this.icon, null, "ui-icon-check ui-state-checked" );
 			}
 			this.icon.prependTo( this.label ).after( this.iconSpace );
 		} else if ( this.icon !== undefined ) {
@@ -6729,7 +6789,7 @@ var widgetsCheckboxradio = $.ui.checkboxradio;
 
 
 /*!
- * jQuery UI Button 1.12.0-rc.2
+ * jQuery UI Button 1.12.0
  * http://jqueryui.com
  *
  * Copyright jQuery Foundation and other contributors
@@ -6749,7 +6809,7 @@ var widgetsCheckboxradio = $.ui.checkboxradio;
 
 
 $.widget( "ui.button", {
-	version: "1.12.0-rc.2",
+	version: "1.12.0",
 	defaultElement: "<button>",
 	options: {
 		classes: {
@@ -7097,7 +7157,7 @@ var widgetsButton = $.ui.button;
 // jscs:disable maximumLineLength
 /* jscs:disable requireCamelCaseOrUpperCaseIdentifiers */
 /*!
- * jQuery UI Datepicker 1.12.0-rc.2
+ * jQuery UI Datepicker 1.12.0
  * http://jqueryui.com
  *
  * Copyright jQuery Foundation and other contributors
@@ -7116,7 +7176,7 @@ var widgetsButton = $.ui.button;
 
 
 
-$.extend( $.ui, { datepicker: { version: "1.12.0-rc.2" } } );
+$.extend( $.ui, { datepicker: { version: "1.12.0" } } );
 
 var datepicker_instActive;
 
@@ -9195,7 +9255,7 @@ $.fn.datepicker = function( options ) {
 $.datepicker = new Datepicker(); // singleton instance
 $.datepicker.initialized = false;
 $.datepicker.uuid = new Date().getTime();
-$.datepicker.version = "1.12.0-rc.2";
+$.datepicker.version = "1.12.0";
 
 var widgetsDatepicker = $.datepicker;
 
@@ -9206,7 +9266,7 @@ var widgetsDatepicker = $.datepicker;
 var ie = $.ui.ie = !!/msie [\w.]+/.exec( navigator.userAgent.toLowerCase() );
 
 /*!
- * jQuery UI Mouse 1.12.0-rc.2
+ * jQuery UI Mouse 1.12.0
  * http://jqueryui.com
  *
  * Copyright jQuery Foundation and other contributors
@@ -9227,7 +9287,7 @@ $( document ).on( "mouseup", function() {
 } );
 
 var widgetsMouse = $.widget( "ui.mouse", {
-	version: "1.12.0-rc.2",
+	version: "1.12.0",
 	options: {
 		cancel: "input, textarea, button, select, option",
 		distance: 1,
@@ -9462,7 +9522,7 @@ var safeBlur = $.ui.safeBlur = function( element ) {
 
 
 /*!
- * jQuery UI Draggable 1.12.0-rc.2
+ * jQuery UI Draggable 1.12.0
  * http://jqueryui.com
  *
  * Copyright jQuery Foundation and other contributors
@@ -9480,7 +9540,7 @@ var safeBlur = $.ui.safeBlur = function( element ) {
 
 
 $.widget( "ui.draggable", $.ui.mouse, {
-	version: "1.12.0-rc.2",
+	version: "1.12.0",
 	widgetEventPrefix: "drag",
 	options: {
 		addClasses: true,
@@ -10693,7 +10753,7 @@ var widgetsDraggable = $.ui.draggable;
 
 
 /*!
- * jQuery UI Resizable 1.12.0-rc.2
+ * jQuery UI Resizable 1.12.0
  * http://jqueryui.com
  *
  * Copyright jQuery Foundation and other contributors
@@ -10713,7 +10773,7 @@ var widgetsDraggable = $.ui.draggable;
 
 
 $.widget( "ui.resizable", $.ui.mouse, {
-	version: "1.12.0-rc.2",
+	version: "1.12.0",
 	widgetEventPrefix: "resize",
 	options: {
 		alsoResize: false,
@@ -11877,7 +11937,7 @@ var widgetsResizable = $.ui.resizable;
 
 
 /*!
- * jQuery UI Dialog 1.12.0-rc.2
+ * jQuery UI Dialog 1.12.0
  * http://jqueryui.com
  *
  * Copyright jQuery Foundation and other contributors
@@ -11897,7 +11957,7 @@ var widgetsResizable = $.ui.resizable;
 
 
 $.widget( "ui.dialog", {
-	version: "1.12.0-rc.2",
+	version: "1.12.0",
 	options: {
 		appendTo: "body",
 		autoOpen: true,
@@ -12782,7 +12842,7 @@ var widgetsDialog = $.ui.dialog;
 
 
 /*!
- * jQuery UI Droppable 1.12.0-rc.2
+ * jQuery UI Droppable 1.12.0
  * http://jqueryui.com
  *
  * Copyright jQuery Foundation and other contributors
@@ -12799,7 +12859,7 @@ var widgetsDialog = $.ui.dialog;
 
 
 $.widget( "ui.droppable", {
-	version: "1.12.0-rc.2",
+	version: "1.12.0",
 	widgetEventPrefix: "drop",
 	options: {
 		accept: "*",
@@ -13020,7 +13080,7 @@ $.widget( "ui.droppable", {
 	}
 } );
 
-var intersect = ( function() {
+var intersect = $.ui.intersect = ( function() {
 	function isOverAxis( x, reference, size ) {
 		return ( x >= reference ) && ( x < ( reference + size ) );
 	}
@@ -13263,7 +13323,7 @@ var widgetsDroppable = $.ui.droppable;
 
 
 /*!
- * jQuery UI Progressbar 1.12.0-rc.2
+ * jQuery UI Progressbar 1.12.0
  * http://jqueryui.com
  *
  * Copyright jQuery Foundation and other contributors
@@ -13285,7 +13345,7 @@ var widgetsDroppable = $.ui.droppable;
 
 
 var widgetsProgressbar = $.widget( "ui.progressbar", {
-	version: "1.12.0-rc.2",
+	version: "1.12.0",
 	options: {
 		classes: {
 			"ui-progressbar": "ui-corner-all",
@@ -13427,7 +13487,7 @@ var widgetsProgressbar = $.widget( "ui.progressbar", {
 
 
 /*!
- * jQuery UI Selectable 1.12.0-rc.2
+ * jQuery UI Selectable 1.12.0
  * http://jqueryui.com
  *
  * Copyright jQuery Foundation and other contributors
@@ -13445,7 +13505,7 @@ var widgetsProgressbar = $.widget( "ui.progressbar", {
 
 
 var widgetsSelectable = $.widget( "ui.selectable", $.ui.mouse, {
-	version: "1.12.0-rc.2",
+	version: "1.12.0",
 	options: {
 		appendTo: "body",
 		autoRefresh: true,
@@ -13722,7 +13782,7 @@ var widgetsSelectable = $.widget( "ui.selectable", $.ui.mouse, {
 
 
 /*!
- * jQuery UI Selectmenu 1.12.0-rc.2
+ * jQuery UI Selectmenu 1.12.0
  * http://jqueryui.com
  *
  * Copyright jQuery Foundation and other contributors
@@ -13744,7 +13804,7 @@ var widgetsSelectable = $.widget( "ui.selectable", $.ui.mouse, {
 
 
 var widgetsSelectmenu = $.widget( "ui.selectmenu", [ $.ui.formResetMixin, {
-	version: "1.12.0-rc.2",
+	version: "1.12.0",
 	defaultElement: "<select>",
 	options: {
 		appendTo: null,
@@ -14388,7 +14448,7 @@ var widgetsSelectmenu = $.widget( "ui.selectmenu", [ $.ui.formResetMixin, {
 
 
 /*!
- * jQuery UI Slider 1.12.0-rc.2
+ * jQuery UI Slider 1.12.0
  * http://jqueryui.com
  *
  * Copyright jQuery Foundation and other contributors
@@ -14408,7 +14468,7 @@ var widgetsSelectmenu = $.widget( "ui.selectmenu", [ $.ui.formResetMixin, {
 
 
 var widgetsSlider = $.widget( "ui.slider", $.ui.mouse, {
-	version: "1.12.0-rc.2",
+	version: "1.12.0",
 	widgetEventPrefix: "slide",
 
 	options: {
@@ -15122,7 +15182,7 @@ var widgetsSlider = $.widget( "ui.slider", $.ui.mouse, {
 
 
 /*!
- * jQuery UI Sortable 1.12.0-rc.2
+ * jQuery UI Sortable 1.12.0
  * http://jqueryui.com
  *
  * Copyright jQuery Foundation and other contributors
@@ -15140,7 +15200,7 @@ var widgetsSlider = $.widget( "ui.slider", $.ui.mouse, {
 
 
 var widgetsSortable = $.widget( "ui.sortable", $.ui.mouse, {
-	version: "1.12.0-rc.2",
+	version: "1.12.0",
 	widgetEventPrefix: "sort",
 	ready: false,
 	options: {
@@ -16658,7 +16718,7 @@ var widgetsSortable = $.widget( "ui.sortable", $.ui.mouse, {
 
 
 /*!
- * jQuery UI Spinner 1.12.0-rc.2
+ * jQuery UI Spinner 1.12.0
  * http://jqueryui.com
  *
  * Copyright jQuery Foundation and other contributors
@@ -16689,7 +16749,7 @@ function spinnerModifer( fn ) {
 }
 
 $.widget( "ui.spinner", {
-	version: "1.12.0-rc.2",
+	version: "1.12.0",
 	defaultElement: "<input>",
 	widgetEventPrefix: "spin",
 	options: {
@@ -17216,7 +17276,7 @@ var widgetsSpinner = $.ui.spinner;
 
 
 /*!
- * jQuery UI Tabs 1.12.0-rc.2
+ * jQuery UI Tabs 1.12.0
  * http://jqueryui.com
  *
  * Copyright jQuery Foundation and other contributors
@@ -17236,15 +17296,15 @@ var widgetsSpinner = $.ui.spinner;
 
 
 $.widget( "ui.tabs", {
-	version: "1.12.0-rc.2",
+	version: "1.12.0",
 	delay: 300,
 	options: {
 		active: null,
 		classes: {
 			"ui-tabs": "ui-corner-all",
 			"ui-tabs-nav": "ui-corner-all",
-			"ui-tab": "ui-corner-top",
-			"ui-tabs-panel": "ui-corner-bottom"
+			"ui-tabs-panel": "ui-corner-bottom",
+			"ui-tabs-tab": "ui-corner-top"
 		},
 		collapsible: false,
 		event: "click",
@@ -18119,7 +18179,7 @@ var widgetsTabs = $.ui.tabs;
 
 
 /*!
- * jQuery UI Tooltip 1.12.0-rc.2
+ * jQuery UI Tooltip 1.12.0
  * http://jqueryui.com
  *
  * Copyright jQuery Foundation and other contributors
@@ -18139,7 +18199,7 @@ var widgetsTabs = $.ui.tabs;
 
 
 $.widget( "ui.tooltip", {
-	version: "1.12.0-rc.2",
+	version: "1.12.0",
 	options: {
 		classes: {
 			"ui-tooltip": "ui-corner-all ui-widget-shadow"
