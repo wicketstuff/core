@@ -1,5 +1,7 @@
 package org.wicketstuff.gmap.api;
 
+import java.util.Optional;
+
 import org.apache.wicket.Component;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.request.cycle.RequestCycle;
@@ -121,11 +123,8 @@ public class GInfoWindow extends GOverlay
         marker = null;
         latLng = null;
 
-        AjaxRequestTarget target = RequestCycle.get().find(AjaxRequestTarget.class);
-        if (target != null)
-        {
-            target.appendJavaScript(super.getJSremove());
-        }
+        Optional<AjaxRequestTarget> targetOptional = RequestCycle.get().find(AjaxRequestTarget.class);
+        targetOptional.ifPresent(target -> target.appendJavaScript(super.getJSremove()));
     }
 
     public GLatLng getLatLng()

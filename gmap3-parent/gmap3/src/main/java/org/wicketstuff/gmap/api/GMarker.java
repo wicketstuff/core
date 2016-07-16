@@ -16,6 +16,9 @@
 package org.wicketstuff.gmap.api;
 
 import static org.apache.wicket.ThreadContext.getRequestCycle;
+
+import java.util.Optional;
+
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.request.Request;
 import org.apache.wicket.request.cycle.RequestCycle;
@@ -62,10 +65,9 @@ public class GMarker extends GOverlay
      * @see org.wicketstuff.gmap.api.GAnimation
      */
     public void setAnimation(GAnimation animation)
-    {   
-        AjaxRequestTarget target = getRequestCycle().find(AjaxRequestTarget.class);        
-        if (target != null)            
-        {                
+    {
+        Optional<AjaxRequestTarget> targetOptional = getRequestCycle().find(AjaxRequestTarget.class);
+        targetOptional.ifPresent(target -> {
             options.setAnimation(animation);
             String animationToSet = null;
             if (animation != null)
@@ -74,7 +76,7 @@ public class GMarker extends GOverlay
             }
             
             target.appendJavaScript(getParent().getJsReference() + ".overlays['overlay" + getId() + "'].setAnimation("+animationToSet+")");
-        }            
+        });
     }
 
     /**

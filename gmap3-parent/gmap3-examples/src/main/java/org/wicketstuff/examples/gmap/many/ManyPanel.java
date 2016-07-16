@@ -1,11 +1,10 @@
 package org.wicketstuff.examples.gmap.many;
 
 import org.apache.wicket.ajax.AjaxRequestTarget;
-import org.apache.wicket.ajax.markup.html.AjaxFallbackLink;
+import org.apache.wicket.ajax.markup.html.AjaxLink;
 import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.markup.html.panel.Panel;
 import org.wicketstuff.gmap.GMap;
-import org.wicketstuff.gmap.GMap.PanDirectionBehavior;
 import org.wicketstuff.gmap.api.GMapType;
 
 public abstract class ManyPanel extends Panel
@@ -22,7 +21,7 @@ public abstract class ManyPanel extends Panel
         gMap.setZoom(7);
         gMap.setOutputMarkupId(true);
         add(gMap);
-        final AjaxFallbackLink<Void> normal = new AjaxFallbackLink<Void>("normal")
+        final AjaxLink<Void> normal = new AjaxLink<Void>("normal")
         {
             private static final long serialVersionUID = 1L;
 
@@ -33,7 +32,7 @@ public abstract class ManyPanel extends Panel
             }
         };
         add(normal);
-        final AjaxFallbackLink<Void> satellite = new AjaxFallbackLink<Void>("satellite")
+        final AjaxLink<Void> satellite = new AjaxLink<Void>("satellite")
         {
             private static final long serialVersionUID = 1L;
 
@@ -44,7 +43,7 @@ public abstract class ManyPanel extends Panel
             }
         };
         add(satellite);
-        final AjaxFallbackLink<Void> hybrid = new AjaxFallbackLink<Void>("hybrid")
+        final AjaxLink<Void> hybrid = new AjaxLink<Void>("hybrid")
         {
             private static final long serialVersionUID = 1L;
 
@@ -81,7 +80,7 @@ public abstract class ManyPanel extends Panel
         w.add(gMap.new PanDirectionBehavior("onclick", 1, 0));
         nw.add(gMap.new PanDirectionBehavior("onclick", 1, 1));
 
-        AjaxFallbackLink<Object> close = new AjaxFallbackLink<Object>("close")
+        AjaxLink<Object> close = new AjaxLink<Object>("close")
         {
             private static final long serialVersionUID = 1L;
 
