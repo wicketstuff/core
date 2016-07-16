@@ -110,19 +110,11 @@ public class AjaxIndicatingButtonBehavior extends ButtonBehavior
 	 */
 	protected Options newOnClickOptions()
 	{
-		Options icons = new Options();
+		Options options = new Options();
+		options.set("icon", Options.asString(CSS_INDICATOR));
+		options.set("iconPosition", this.position == Position.LEFT ? "''" : "'end'");
 
-		if (this.position == Position.LEFT)
-		{
-			icons.set("primary", Options.asString(CSS_INDICATOR));
-		}
-		else
-		{
-			icons.set("primary", JQueryIcon.isNone(this.icon) ? "null" : Options.asString(this.icon));
-			icons.set("secondary", Options.asString(CSS_INDICATOR));
-		}
-
-		return new Options("icons", icons);
+		return options;
 	}
 
 	/**
@@ -132,11 +124,11 @@ public class AjaxIndicatingButtonBehavior extends ButtonBehavior
 	 */
 	protected Options newOnAjaxStopOptions()
 	{
-		Options icons = new Options();
+		Options options = new Options();
 
-		icons.set("primary", JQueryIcon.isNone(this.icon) ? "null" : Options.asString(this.icon));
-		icons.set("secondary", "null");
+		options.set("icon", JQueryIcon.isNone(this.icon) ? Options.asString(JQueryIcon.BLANK) : Options.asString(this.icon));
+		options.set("iconPosition", this.position == Position.LEFT ? "''" : "'end'");
 
-		return new Options("icons", icons);
+		return options;
 	}
 }

@@ -42,6 +42,6 @@ public class ButtonBehavior extends JQueryUIBehavior
 
 	public ButtonBehavior(String selector, String icon)
 	{
-		super(selector, METHOD, new Options("icons", String.format("{ primary: '%s' }", icon)));
+		super(selector, METHOD, new Options("icon", String.format("'%s'", icon)));
 	}
 }

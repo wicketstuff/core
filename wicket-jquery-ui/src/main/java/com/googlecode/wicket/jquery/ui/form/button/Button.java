@@ -20,6 +20,7 @@ import org.apache.wicket.model.IModel;
 
 import com.googlecode.wicket.jquery.core.IJQueryWidget;
 import com.googlecode.wicket.jquery.core.JQueryBehavior;
+import com.googlecode.wicket.jquery.core.Options;
 import com.googlecode.wicket.jquery.ui.JQueryIcon;
 
 /**
@@ -78,7 +79,8 @@ public class Button extends org.apache.wicket.markup.html.form.Button implements
 	{
 		if (!JQueryIcon.isNone(this.getIcon()))
 		{
-			behavior.setOption("icons", String.format("{ primary: '%s' }", this.getIcon()));
+			//behavior.setOption("icons", String.format("{ primary: '%s' }", this.getIcon())); //FIWME WIP
+			behavior.setOption("icon", Options.asString(this.getIcon()));
 		}
 	}
 

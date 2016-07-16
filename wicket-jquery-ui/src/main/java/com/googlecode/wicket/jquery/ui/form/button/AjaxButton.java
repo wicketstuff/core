@@ -22,6 +22,7 @@ import org.apache.wicket.model.IModel;
 
 import com.googlecode.wicket.jquery.core.IJQueryWidget;
 import com.googlecode.wicket.jquery.core.JQueryBehavior;
+import com.googlecode.wicket.jquery.core.Options;
 import com.googlecode.wicket.jquery.ui.JQueryIcon;
 
 /**
@@ -97,7 +98,7 @@ public abstract class AjaxButton extends org.apache.wicket.ajax.markup.html.form
 	{
 		if (!JQueryIcon.isNone(this.getIcon()))
 		{
-			behavior.setOption("icons", String.format("{ primary: '%s' }", this.getIcon()));
+			behavior.setOption("icon", Options.asString(this.getIcon()));
 		}
 	}
 

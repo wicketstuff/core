@@ -12,7 +12,6 @@ import org.apache.wicket.markup.html.image.ContextImage;
 import org.apache.wicket.markup.html.list.ListItem;
 import org.apache.wicket.markup.html.list.ListView;
 import org.apache.wicket.markup.html.panel.Fragment;
-import org.apache.wicket.model.AbstractReadOnlyModel;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.model.PropertyModel;
@@ -101,7 +100,7 @@ public class ShoppingDroppablePage extends AbstractDroppablePage
 		});
 
 		// the card total amount
-		droppable.add(new Label("card-amount", new AbstractReadOnlyModel<String>() {
+		droppable.add(new Label("card-amount", new IModel<String>() {
 
 			private static final long serialVersionUID = 1L;
 

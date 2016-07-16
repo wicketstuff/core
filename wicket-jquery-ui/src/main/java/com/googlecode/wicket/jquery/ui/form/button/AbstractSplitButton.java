@@ -172,7 +172,7 @@ public abstract class AbstractSplitButton extends GenericPanel<List<IMenuItem>>
 				super.onConfigure(component);
 
 				this.setOption("text", false);
-				this.setOption("icons", new Options("primary", Options.asString(JQueryIcon.TRIANGLE_1_S)));
+				this.setOption("icon", Options.asString(JQueryIcon.TRIANGLE_1_S));
 			}
 		});
 
