@@ -29,7 +29,7 @@ import java.util.Set;
 import org.apache.wicket.Application;
 import org.apache.wicket.Component;
 import org.apache.wicket.event.IEvent;
-import org.apache.wicket.request.RequestHandlerStack.ReplaceHandlerException;
+import org.apache.wicket.request.RequestHandlerExecutor;
 import org.apache.wicket.util.collections.ClassMetaCache;
 import org.apache.wicket.util.visit.Visit;
 
@@ -135,7 +135,7 @@ class AnnotationEventSink
 		{
 			for (Method method : onEventMethods)
 			{
-				if (canCallListenerInterface(sink, method))
+				if (canCallListenerInterface(sink))
 				{
 					OnEvent onEvent = method.getAnnotation(OnEvent.class);
 					if (isPayloadApplicableToHandler(onEvent, payload))
@@ -164,9 +164,9 @@ class AnnotationEventSink
 			}
 		} catch (InvocationTargetException e)
 		{
-			if (e.getCause() instanceof ReplaceHandlerException)
+			if (e.getCause() instanceof RequestHandlerExecutor.ReplaceHandlerException)
 			{
-				throw ((ReplaceHandlerException)e.getCause());
+				throw ((RequestHandlerExecutor.ReplaceHandlerException)e.getCause());
 			}
 			else
 			{
@@ -178,13 +178,13 @@ class AnnotationEventSink
 		}
 	}
 
-	private boolean canCallListenerInterface(final Object obj, final Method method)
+	private boolean canCallListenerInterface(final Object obj)
 	{
 		boolean canCall = true;
 		if (obj instanceof Component)
 		{
 			Component c = (Component) obj;
-			canCall = c.canCallListenerInterface(method);
+			canCall = c.canCallListenerInterface();
 		}
 		return canCall;
 	}
