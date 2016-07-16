@@ -29,7 +29,7 @@ public class GaePageManagerProvider extends DefaultPageManagerProvider
 	}
 
 	@Override
-	public IPageManager get(IPageManagerContext pageManagerContext)
+	public IPageManager apply(IPageManagerContext pageManagerContext)
 	{
 		IDataStore dataStore = new HttpSessionDataStore(pageManagerContext, evictionStrategy);
 
