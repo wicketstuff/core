@@ -51,17 +51,10 @@ public class AddRecordsToolbar<D extends IDataSource<T>, T extends Serializable,
     AjaxButton addButton = new AjaxButton("add")
                            {
                               @Override
-                              protected void onSubmit(AjaxRequestTarget target,
-                                                      Form<?> form)
+                              protected void onSubmit(AjaxRequestTarget target)
                               {
                                 insert();
                                 //target.add(findParent(DataGrid.class).getParent());
-                              }
-
-                              @Override
-                              protected void onError(AjaxRequestTarget target, Form<?> form)
-                              { //TODO: should this be a feedbackPanel check?
-                                return;
                               }
                            };
     addButton.setLabel(labelModel);

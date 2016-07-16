@@ -392,7 +392,7 @@ public class DataGrid<D extends IDataSource<T>, T, S> extends AbstractGrid<D, T,
 	@Override
 	public void update()
 	{
-		AjaxRequestTarget target = getRequestCycle().find(AjaxRequestTarget.class);
+		AjaxRequestTarget target = getRequestCycle().find(AjaxRequestTarget.class).get();
 		if (allDirty)
 		{
 			target.add(this);
@@ -444,8 +444,8 @@ public class DataGrid<D extends IDataSource<T>, T, S> extends AbstractGrid<D, T,
      //markAllItemsDirty();
      //update();
                                
-     AjaxRequestTarget target = RequestCycle.get().find(AjaxRequestTarget.class);
-     target.add(this.getParent());
+     Optional<AjaxRequestTarget> targetOptional = RequestCycle.get().find(AjaxRequestTarget.class);
+     targetOptional.ifPresent(target -> target.add(this.getParent()));
      return item;
   }
 

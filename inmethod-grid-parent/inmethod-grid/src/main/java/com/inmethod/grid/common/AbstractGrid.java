@@ -6,6 +6,13 @@ import java.util.List;
 
 import javax.swing.tree.TreeModel;
 
+import com.inmethod.grid.IGridColumn;
+import com.inmethod.grid.IGridSortState;
+import com.inmethod.grid.SizeUnit;
+import com.inmethod.grid.datagrid.DataGrid;
+import com.inmethod.grid.toolbar.AbstractHeaderToolbar;
+import com.inmethod.grid.toolbar.AbstractToolbar;
+import com.inmethod.grid.treegrid.TreeGrid;
 import org.apache.wicket.Component;
 import org.apache.wicket.MetaDataKey;
 import org.apache.wicket.ajax.AbstractDefaultAjaxBehavior;
@@ -36,14 +43,6 @@ import org.apache.wicket.util.string.AppendingStringBuffer;
 import org.apache.wicket.util.string.Strings;
 import org.apache.wicket.util.visit.IVisit;
 import org.apache.wicket.util.visit.IVisitor;
-
-import com.inmethod.grid.IGridColumn;
-import com.inmethod.grid.IGridSortState;
-import com.inmethod.grid.SizeUnit;
-import com.inmethod.grid.datagrid.DataGrid;
-import com.inmethod.grid.toolbar.AbstractHeaderToolbar;
-import com.inmethod.grid.toolbar.AbstractToolbar;
-import com.inmethod.grid.treegrid.TreeGrid;
 
 /**
  * Provides common functionality for {@link DataGrid} and {@link TreeGrid}.
@@ -837,7 +836,6 @@ public abstract class AbstractGrid<M, I, S> extends Panel
 				CharSequence precondition = "return InMethod.XTable.canSelectRow(attrs.event);";
 				AjaxCallListener ajaxCallListener = new AjaxCallListener();
 				ajaxCallListener.onPrecondition(precondition);
-				attributes.setAllowDefault(true);
 				attributes.getAjaxCallListeners().add(ajaxCallListener);
 			}
       

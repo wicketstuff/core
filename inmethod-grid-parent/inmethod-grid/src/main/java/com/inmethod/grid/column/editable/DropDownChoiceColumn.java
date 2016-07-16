@@ -6,7 +6,7 @@ import java.util.List;
 import org.apache.wicket.extensions.markup.html.repeater.data.sort.ISortState;
 import org.apache.wicket.markup.html.form.IChoiceRenderer;
 import org.apache.wicket.model.IModel;
-import org.apache.wicket.model.util.WildcardListModel;
+import org.apache.wicket.model.Model;
 
 /**
  * Property column that uses a {@link DropDownChoicePanel} as cell component
@@ -19,7 +19,7 @@ public class DropDownChoiceColumn<M, I, T, S> extends EditablePropertyColumn<M, 
 	private static final long serialVersionUID = 1L;
 
   /** following {@Link AbstractChoice}'s example
-   *  and using {@link WildcardListModel} as default model*/
+   *  and using {@link Model#ofList(List)} as default model*/
   private IModel<? extends List<? extends T>> choicesModel;
   private IChoiceRenderer<T> choiceRenderer = null;
 
@@ -293,7 +293,7 @@ public class DropDownChoiceColumn<M, I, T, S> extends EditablePropertyColumn<M, 
                               List<T> choices)
   {
     super(columnId, headerModel, propertyExpression, sortProperty);
-    choicesModel = new WildcardListModel(choices);
+    choicesModel = Model.ofList(choices);
   }
 
   /**
@@ -313,7 +313,7 @@ public class DropDownChoiceColumn<M, I, T, S> extends EditablePropertyColumn<M, 
                               String propertyExpression, List<T> choices)
   {
     super(columnId, headerModel, propertyExpression);
-    choicesModel = new WildcardListModel(choices);
+    choicesModel = Model.ofList(choices);
   }
 
   /**
@@ -336,7 +336,7 @@ public class DropDownChoiceColumn<M, I, T, S> extends EditablePropertyColumn<M, 
                               List<T> choices)
   {
     super(headerModel, propertyExpression, sortProperty);
-    choicesModel = new WildcardListModel(choices);
+    choicesModel = Model.ofList(choices);
   }
 
   /**
@@ -354,7 +354,7 @@ public class DropDownChoiceColumn<M, I, T, S> extends EditablePropertyColumn<M, 
                               List<T> choices)
   {
     super(headerModel, propertyExpression);
-    choicesModel = new WildcardListModel(choices);
+    choicesModel = Model.ofList(choices);
   }
 
   /**
@@ -379,7 +379,7 @@ public class DropDownChoiceColumn<M, I, T, S> extends EditablePropertyColumn<M, 
                               List<T> choices, IChoiceRenderer<T> renderer)
   {
     super(columnId, headerModel, propertyExpression, sortProperty);
-    choicesModel = new WildcardListModel(choices);
+    choicesModel = Model.ofList(choices);
     choiceRenderer = renderer;
   }
 
@@ -404,7 +404,7 @@ public class DropDownChoiceColumn<M, I, T, S> extends EditablePropertyColumn<M, 
                               IChoiceRenderer<T> renderer)
   {
     super(columnId, headerModel, propertyExpression);
-    choicesModel = new WildcardListModel(choices);
+    choicesModel = Model.ofList(choices);
     choiceRenderer = renderer;
   }
 
@@ -430,7 +430,7 @@ public class DropDownChoiceColumn<M, I, T, S> extends EditablePropertyColumn<M, 
                               List<T> choices, IChoiceRenderer<T> renderer)
   {
     super(headerModel, propertyExpression, sortProperty);
-    choicesModel = new WildcardListModel(choices);
+    choicesModel = Model.ofList(choices);
     choiceRenderer = renderer;
   }
 
@@ -451,7 +451,7 @@ public class DropDownChoiceColumn<M, I, T, S> extends EditablePropertyColumn<M, 
                               List<T> choices, IChoiceRenderer<T> renderer)
   {
     super(headerModel, propertyExpression);
-    choicesModel = new WildcardListModel(choices);
+    choicesModel = Model.ofList(choices);
     choiceRenderer = renderer;
   }
 
