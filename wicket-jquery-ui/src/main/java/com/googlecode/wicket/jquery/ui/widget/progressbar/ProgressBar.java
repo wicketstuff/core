@@ -87,7 +87,7 @@ public class ProgressBar extends JQueryGenericContainer<Integer> implements IJQu
 	}
 
 	// Methods //
-	
+
 	/**
 	 * Increments the progress-bar value by 1
 	 *

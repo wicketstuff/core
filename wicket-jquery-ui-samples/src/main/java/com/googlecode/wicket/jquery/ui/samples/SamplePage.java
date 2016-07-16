@@ -150,7 +150,6 @@ public abstract class SamplePage extends TemplatePage
 			super(id, "fragment-java", provider);
 
 			this.add(new Label("code", model));
-			// this.add(new SnippetLabel("code", "java", model, new Options("style", Options.asString("ide-eclipse"))));
 		}
 	}
 
@@ -163,7 +162,6 @@ public abstract class SamplePage extends TemplatePage
 			super(id, "fragment-html", provider);
 
 			this.add(new Label("code", model));
-			// this.add(new SnippetLabel("code", "html", model, new Options("style", Options.asString("ide-eclipse"))));
 		}
 	}
 

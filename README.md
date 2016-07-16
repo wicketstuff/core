@@ -47,7 +47,8 @@ If the version you specified is *snapshot*, you might define this repository:
 
 <table>
 <tr><th>wicket-jquery-ui</th><th>Wicket</th><th>jQuery UI</th></tr>
-<tr><td>7.3.1</td><td>7.3.0</td><td>1.12.0-rc.2</td></tr>
+<tr><td>8.0.0-M1</td><td>8.0.0-M1</td><td>1.12.0</td></tr>
+<tr><td>7.3.1</td><td>7.3.0</td><td>1.12.0</td></tr>
 <tr><td>7.3.0</td><td>7.3.0</td><td>1.11.4</td></tr>
 <tr><td>7.2.0</td><td>7.2.0</td><td>1.11.4</td></tr>
 <tr><td>7.1.0</td><td>7.1.0</td><td>1.11.4</td></tr>
@@ -76,7 +77,8 @@ If the version you specified is *snapshot*, you might define this repository:
 
 <table>
 <tr><th>wicket-kendo-ui</th><th>Wicket</th><th>Kendo UI</th></tr>
-<tr><td>7.3.1</td><td>7.3.0</td><td>2016.2.504 (ASFv2)</td></tr>
+<tr><td>8.0.0-M1</td><td>8.0.0-M1</td><td>2016.2.714 (ASFv2)</td></tr>
+<tr><td>7.3.1</td><td>7.3.0</td><td>2016.2.714 (ASFv2)</td></tr>
 <tr><td>7.3.0</td><td>7.3.0</td><td>2016.1.112 (ASFv2)</td></tr>
 <tr><td>7.2.0</td><td>7.2.0</td><td>2016.1.112 (ASFv2)</td></tr>
 <tr><td>7.1.0</td><td>7.1.0</td><td>2015.3.930 (ASFv2)</td></tr>

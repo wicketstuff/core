@@ -1,12 +1,12 @@
 package com.googlecode.wicket.jquery.ui.samples.kendoui.tooltip;
 
-import com.googlecode.wicket.jquery.core.Options;
-import com.googlecode.wicket.kendo.ui.widget.tooltip.TooltipBehavior;
-
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.model.Model;
 
-public class DefaultKendoTooltipPage extends com.googlecode.wicket.jquery.ui.samples.kendoui.tooltip.AbstractTooltipPage
+import com.googlecode.wicket.jquery.core.Options;
+import com.googlecode.wicket.kendo.ui.widget.tooltip.TooltipBehavior;
+
+public class DefaultKendoTooltipPage extends AbstractTooltipPage
 {
 	private static final long serialVersionUID = 1L;
 

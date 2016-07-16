@@ -29,7 +29,7 @@ public class PatternAjaxDatePickerPage extends AbstractTimePickerPage
 		form.add(feedback);
 
 		// DatePicker //
-		final String pattern = LocaleUtils.getLocaleDatePattern(Locale.FRENCH); // gives the french date pattern, ie: dd/MM/yyyy  
+		final String pattern = LocaleUtils.getLocaleDatePattern(Locale.FRENCH); // gives the french date pattern, ie: dd/MM/yyyy
 
 		final DatePicker datepicker = new AjaxDatePicker("datepicker", Model.of(LocalDate.now()), pattern) {
 
