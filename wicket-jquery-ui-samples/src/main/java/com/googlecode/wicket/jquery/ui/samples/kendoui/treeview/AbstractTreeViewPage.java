@@ -12,9 +12,9 @@ abstract class AbstractTreeViewPage extends KendoSamplePage
 	@Override
 	protected List<DemoLink> getDemoLinks()
 	{
-		return Arrays.asList(
-				new DemoLink(DefaultTreeViewPage.class, "Behavior (static html)"),
-				new DemoLink(AjaxTreeViewPage.class, "AjaxTreeView (custom beans)")
+		return Arrays.asList( // lf
+				new DemoLink(DefaultTreeViewPage.class, "Behavior (static html)"), // lf
+				new DemoLink(AjaxTreeViewPage.class, "AjaxTreeView (custom beans)") // lf
 			);
 	}
 }
