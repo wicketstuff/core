@@ -1,5 +1,6 @@
 package org.wicketstuff.async.components;
 
+import java.util.Optional;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
 
@@ -29,22 +30,22 @@ public class TestPage extends WebPage implements IRunnableFactory {
         form = new Form<Void>("form");
         button = new ProgressButton("button", form, Model.of(taskContainer), this, Duration.milliseconds(300L)) {
             @Override
-            protected void onTaskStart(AjaxRequestTarget ajaxRequestTarget) {
+            protected void onTaskStart(Optional<AjaxRequestTarget> ajaxRequestTarget) {
                 taskStart = true;
             }
 
             @Override
-            protected void onTaskSuccess(AjaxRequestTarget ajaxRequestTarget) {
+            protected void onTaskSuccess(Optional<AjaxRequestTarget> ajaxRequestTarget) {
                 taskSuccess = true;
             }
 
             @Override
-            protected void onTaskCancel(AjaxRequestTarget ajaxRequestTarget) {
+            protected void onTaskCancel(Optional<AjaxRequestTarget> ajaxRequestTarget) {
                 taskCancel = true;
             }
 
             @Override
-            protected void onTaskError(AjaxRequestTarget ajaxRequestTarget) {
+            protected void onTaskError(Optional<AjaxRequestTarget> ajaxRequestTarget) {
                 taskError = true;
             }
         };
