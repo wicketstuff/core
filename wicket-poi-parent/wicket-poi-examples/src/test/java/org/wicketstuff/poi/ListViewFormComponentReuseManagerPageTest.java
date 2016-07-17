@@ -20,7 +20,7 @@ import java.io.IOException;
 
 import junit.framework.TestCase;
 
-import org.apache.wicket.markup.html.link.ILinkListener;
+import org.apache.wicket.IRequestListener;
 import org.apache.wicket.request.IRequestHandler;
 import org.apache.wicket.request.cycle.RequestCycle;
 import org.apache.wicket.util.tester.WicketTester;
@@ -35,17 +35,18 @@ public class ListViewFormComponentReuseManagerPageTest extends TestCase
 	{
 		WicketTester tester = new WicketTester(new WicketApplication());
 		tester.startPage(TestPage.class);
-		tester.executeListener(tester.getLastRenderedPage(), ILinkListener.INTERFACE);
+		tester.executeListener(tester.getLastRenderedPage());
 		assertTrue(tester.getLastResponse().getHeader("Content-Disposition").contains(".xls"));
 		// openFileInResponse(tester);
 	}
 
 	public static class TestPage extends ListViewFormComponentReuseManagerPage implements
-		ILinkListener
+			IRequestListener
 	{
 		private static final long serialVersionUID = 1L;
 
-		public void onLinkClicked()
+		@Override
+		public void onRequest()
 		{
 			IRequestHandler handler = new TableComponentAsXlsHandler(get("rowsForm:rowsList"),
 				"example.xls");
