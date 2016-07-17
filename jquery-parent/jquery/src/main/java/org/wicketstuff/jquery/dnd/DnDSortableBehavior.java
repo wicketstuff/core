@@ -23,7 +23,6 @@ import org.apache.wicket.Component;
 import org.apache.wicket.MarkupContainer;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.behavior.AttributeAppender;
-import org.apache.wicket.behavior.IBehaviorListener;
 import org.apache.wicket.markup.head.IHeaderResponse;
 import org.apache.wicket.markup.head.JavaScriptHeaderItem;
 import org.apache.wicket.markup.head.StringHeaderItem;
@@ -38,7 +37,7 @@ import org.wicketstuff.jquery.Options;
 
 // TODO: disable callback to serverside if clientsideonly
 @SuppressWarnings("serial")
-public class DnDSortableBehavior extends JQueryBehavior implements IBehaviorListener
+public class DnDSortableBehavior extends JQueryBehavior
 {
 	public static final ResourceReference DNDSORTABLEBEHAVIOR_JS = new PackageResourceReference(
 		DnDSortableBehavior.class, DnDSortableBehavior.class.getSimpleName() + ".js");
