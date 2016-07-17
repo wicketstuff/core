@@ -116,14 +116,14 @@ public class ContentPanel extends Panel
 			private static final long serialVersionUID = 1L;
 
 			@Override
-			protected void onBookmarkableSubmit(AjaxRequestTarget target, Form<?> form)
+			protected void onBookmarkableSubmit(AjaxRequestTarget target)
 			{
 				urlFragment().putParameter("formParam", formModel.getObject());
 				target.add(form);
 			}
 
 			@Override
-			protected void onBookmarkableError(AjaxRequestTarget target, Form<?> form)
+			protected void onBookmarkableError(AjaxRequestTarget target)
 			{
 			}
 		});

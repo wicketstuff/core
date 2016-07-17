@@ -55,18 +55,18 @@ public abstract class BookmarkableAjaxButton extends AjaxButton implements IBook
 	}
 
 	@Override
-	protected void onSubmit(AjaxRequestTarget target, Form<?> form)
+	protected void onSubmit(AjaxRequestTarget target)
 	{
 		this.target = target;
-		this.onBookmarkableSubmit(target, form);
+		this.onBookmarkableSubmit(target);
 		this.target = null;
 	}
 
 	@Override
-	protected void onError(AjaxRequestTarget target, Form<?> form)
+	protected void onError(AjaxRequestTarget target)
 	{
 		this.target = target;
-		this.onBookmarkableError(target, form);
+		this.onBookmarkableError(target);
 		this.target = null;
 	}
 
@@ -76,7 +76,7 @@ public abstract class BookmarkableAjaxButton extends AjaxButton implements IBook
 	 * @param target
 	 * @param form
 	 */
-	protected abstract void onBookmarkableSubmit(AjaxRequestTarget target, Form<?> form);
+	protected abstract void onBookmarkableSubmit(AjaxRequestTarget target);
 
 	/**
 	 * Override to handle the error event. You can use {@link #urlFragment()} inside this method.
@@ -84,7 +84,7 @@ public abstract class BookmarkableAjaxButton extends AjaxButton implements IBook
 	 * @param target
 	 * @param form
 	 */
-	protected abstract void onBookmarkableError(AjaxRequestTarget target, Form<?> form);
+	protected abstract void onBookmarkableError(AjaxRequestTarget target);
 
 	@Override
 	@Deprecated
