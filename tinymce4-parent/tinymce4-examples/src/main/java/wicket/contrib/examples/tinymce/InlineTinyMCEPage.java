@@ -28,9 +28,9 @@ public class InlineTinyMCEPage extends TinyMCEBasePage
 		{
             private static final long serialVersionUID = 1L;
 			@Override
-			protected void onSubmit(AjaxRequestTarget target, Form<?> form)
+			protected void onSubmit(AjaxRequestTarget target)
 			{
-				super.onSubmit(target, form);
+				super.onSubmit(target);
 				target.add(modelValue);
 			}
 		});
