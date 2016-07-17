@@ -20,7 +20,7 @@ import java.util.Collections;
 import java.util.List;
 
 import org.apache.wicket.Component;
-import org.apache.wicket.IResourceListener;
+import org.apache.wicket.IRequestListener;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.json.JSONException;
 import org.apache.wicket.ajax.json.JSONWriter;
@@ -49,7 +49,7 @@ import org.apache.wicket.util.string.Strings;
  *            type of model object
  * @author igor
  */
-abstract class AbstractSelect2Choice<T, M> extends AbstractTextComponent<M> implements IResourceListener
+abstract class AbstractSelect2Choice<T, M> extends AbstractTextComponent<M> implements IRequestListener
 {
 	private static final long serialVersionUID = 1L;
 
@@ -287,7 +287,7 @@ abstract class AbstractSelect2Choice<T, M> extends AbstractTextComponent<M> impl
 		}
 		else if (isAjax())
 		{
-			getSettings().getAjax().setUrl(urlFor(IResourceListener.INTERFACE, null));
+			getSettings().getAjax().setUrl(urlForListener(null));
 		}
 	}
 
@@ -391,7 +391,7 @@ abstract class AbstractSelect2Choice<T, M> extends AbstractTextComponent<M> impl
 	}
 
 	@Override
-	public void onResourceRequested()
+	public void onRequest()
 	{
 		WebResponse webResponse = (WebResponse) getRequestCycle().getResponse();
 		webResponse.setContentType("application/json");
