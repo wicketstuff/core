@@ -42,7 +42,7 @@ import org.apache.wicket.request.resource.PackageResourceReference;
  */
 public abstract class UrlParametersReceivingBehavior extends AbstractDefaultAjaxBehavior
 {
-
+	private static final long serialVersionUID = 1L;
 	private final Component[] components;
 	private final Map<String, String> options;
 

@@ -1,0 +1,272 @@
+diff --git a/urlfragment-parent/urlfragment-example/pom.xml b/urlfragment-parent/urlfragment-example/pom.xml
+index c2ae2b9..bb42cfc 100644
+--- a/urlfragment-parent/urlfragment-example/pom.xml
++++ b/urlfragment-parent/urlfragment-example/pom.xml
+@@ -48,7 +48,6 @@
+ 		<dependency>
+ 			<groupId>org.apache.wicket</groupId>
+ 			<artifactId>wicket-core</artifactId>
+-			<version>${wicket.version}</version>
+ 		</dependency>
+ 
+ 		<!-- LOGGING DEPENDENCIES - LOG4J -->
+@@ -83,7 +82,6 @@
+ 		<dependency>
+ 			<groupId>org.eclipse.jetty.aggregate</groupId>
+ 			<artifactId>jetty-all-server</artifactId>
+-			<version>${jetty.version}</version>
+ 			<scope>provided</scope>
+ 		</dependency>
+ 
+diff --git a/urlfragment-parent/urlfragment-example/src/main/java/org/wicketstuff/urlfragment/example/asyncpage/AsyncHomePage.java b/urlfragment-parent/urlfragment-example/src/main/java/org/wicketstuff/urlfragment/example/asyncpage/AsyncHomePage.java
+index 677881b..42f32ca 100644
+--- a/urlfragment-parent/urlfragment-example/src/main/java/org/wicketstuff/urlfragment/example/asyncpage/AsyncHomePage.java
++++ b/urlfragment-parent/urlfragment-example/src/main/java/org/wicketstuff/urlfragment/example/asyncpage/AsyncHomePage.java
+@@ -7,6 +7,7 @@ import org.wicketstuff.urlfragment.AsyncUrlFragmentAwarePage;
+ 
+ public class AsyncHomePage extends AsyncUrlFragmentAwarePage
+ {
++	private static final long serialVersionUID = 1L;
+ 
+ 	@Override
+ 	protected void onInitialize()
+diff --git a/urlfragment-parent/urlfragment-example/src/main/java/org/wicketstuff/urlfragment/example/asyncpage/ContentPanel.html b/urlfragment-parent/urlfragment-example/src/main/java/org/wicketstuff/urlfragment/example/asyncpage/ContentPanel.html
+index 50757a9..fc098af 100644
+--- a/urlfragment-parent/urlfragment-example/src/main/java/org/wicketstuff/urlfragment/example/asyncpage/ContentPanel.html
++++ b/urlfragment-parent/urlfragment-example/src/main/java/org/wicketstuff/urlfragment/example/asyncpage/ContentPanel.html
+@@ -1,3 +1,5 @@
++<?xml version="1.0" encoding="UTF-8"?>
++<html xmlns:wicket="http://wicket.apache.org">
+ <wicket:panel>
+     <p>parameter 'linkParam' from initial page request (reload page to update): <span wicket:id="fragment"></span></p>
+     
+@@ -11,4 +13,5 @@
+         <input wicket:id="formParam" type="text" />
+         <input wicket:id="submit" type="submit" />
+     </form>
+-</wicket:panel>
+\ No newline at end of file
++</wicket:panel>
++</html>
+diff --git a/urlfragment-parent/urlfragment-example/src/main/java/org/wicketstuff/urlfragment/example/asyncpage/ContentPanel.java b/urlfragment-parent/urlfragment-example/src/main/java/org/wicketstuff/urlfragment/example/asyncpage/ContentPanel.java
+index 98d65af..4cc4c77 100644
+--- a/urlfragment-parent/urlfragment-example/src/main/java/org/wicketstuff/urlfragment/example/asyncpage/ContentPanel.java
++++ b/urlfragment-parent/urlfragment-example/src/main/java/org/wicketstuff/urlfragment/example/asyncpage/ContentPanel.java
+@@ -16,7 +16,7 @@ import org.wicketstuff.urlfragment.BookmarkableAjaxLink;
+ 
+ public class ContentPanel extends Panel
+ {
+-
++	private static final long serialVersionUID = 1L;
+ 	private final StringValue linkParam;
+ 
+ 	public ContentPanel(String id, IRequestParameters requestParameters)
+@@ -44,6 +44,7 @@ public class ContentPanel extends Panel
+ 
+ 		add(new BookmarkableAjaxLink<Void>("setFragment")
+ 		{
++			private static final long serialVersionUID = 1L;
+ 
+ 			@Override
+ 			public void onBookmarkableClick(AjaxRequestTarget target)
+@@ -56,6 +57,7 @@ public class ContentPanel extends Panel
+ 
+ 		add(new BookmarkableAjaxLink<Void>("setFragmentParameter")
+ 		{
++			private static final long serialVersionUID = 1L;
+ 
+ 			@Override
+ 			public void onBookmarkableClick(AjaxRequestTarget target)
+@@ -68,6 +70,7 @@ public class ContentPanel extends Panel
+ 
+ 		add(new BookmarkableAjaxLink<Void>("appendParam")
+ 		{
++			private static final long serialVersionUID = 1L;
+ 
+ 			@Override
+ 			public void onBookmarkableClick(AjaxRequestTarget target)
+@@ -80,6 +83,7 @@ public class ContentPanel extends Panel
+ 
+ 		add(new BookmarkableAjaxLink<Void>("putParam")
+ 		{
++			private static final long serialVersionUID = 1L;
+ 
+ 			@Override
+ 			public void onBookmarkableClick(AjaxRequestTarget target)
+@@ -92,6 +96,7 @@ public class ContentPanel extends Panel
+ 
+ 		add(new BookmarkableAjaxLink<Void>("removeParam")
+ 		{
++			private static final long serialVersionUID = 1L;
+ 
+ 			@Override
+ 			public void onBookmarkableClick(AjaxRequestTarget target)
+@@ -108,6 +113,7 @@ public class ContentPanel extends Panel
+ 		form.add(new TextField<String>("formParam", formModel));
+ 		form.add(new BookmarkableAjaxButton("submit")
+ 		{
++			private static final long serialVersionUID = 1L;
+ 
+ 			@Override
+ 			protected void onBookmarkableSubmit(AjaxRequestTarget target, Form<?> form)
+diff --git a/urlfragment-parent/urlfragment-example/src/main/java/org/wicketstuff/urlfragment/example/asyncpanel/AsyncContentPanel.html b/urlfragment-parent/urlfragment-example/src/main/java/org/wicketstuff/urlfragment/example/asyncpanel/AsyncContentPanel.html
+index c778c15..cd04c24 100644
+--- a/urlfragment-parent/urlfragment-example/src/main/java/org/wicketstuff/urlfragment/example/asyncpanel/AsyncContentPanel.html
++++ b/urlfragment-parent/urlfragment-example/src/main/java/org/wicketstuff/urlfragment/example/asyncpanel/AsyncContentPanel.html
+@@ -1,5 +1,8 @@
++<!DOCTYPE html>
++<html xmlns:wicket="http://wicket.apache.org">
+ <wicket:panel>
+     <p><a wicket:id="zins_asc">ASC</a></p>
+     <p><a wicket:id="zins_desc">DESC</a></p>
+     <p>sorting: <span wicket:id="sorting"></span></p>
+-</wicket:panel>
+\ No newline at end of file
++</wicket:panel>
++</html>
+diff --git a/urlfragment-parent/urlfragment-example/src/main/java/org/wicketstuff/urlfragment/example/asyncpanel/AsyncContentPanel.java b/urlfragment-parent/urlfragment-example/src/main/java/org/wicketstuff/urlfragment/example/asyncpanel/AsyncContentPanel.java
+index d0d1c41..15e6650 100644
+--- a/urlfragment-parent/urlfragment-example/src/main/java/org/wicketstuff/urlfragment/example/asyncpanel/AsyncContentPanel.java
++++ b/urlfragment-parent/urlfragment-example/src/main/java/org/wicketstuff/urlfragment/example/asyncpanel/AsyncContentPanel.java
+@@ -10,7 +10,7 @@ import org.wicketstuff.urlfragment.BookmarkableAjaxLink;
+ 
+ public class AsyncContentPanel extends AsyncUrlFragmentAwarePanel
+ {
+-
++	private static final long serialVersionUID = 1L;
+ 	private final IModel<String> sortingModel;
+ 	private final Label sortingLabel;
+ 
+@@ -26,6 +26,7 @@ public class AsyncContentPanel extends AsyncUrlFragmentAwarePanel
+ 
+ 		add(new BookmarkableAjaxLink<Void>("zins_asc", "sorting", "zins_asc")
+ 		{
++			private static final long serialVersionUID = 1L;
+ 
+ 			@Override
+ 			public void onBookmarkableClick(AjaxRequestTarget target)
+@@ -38,6 +39,7 @@ public class AsyncContentPanel extends AsyncUrlFragmentAwarePanel
+ 
+ 		add(new BookmarkableAjaxLink<Void>("zins_desc", "sorting", "zins_desc")
+ 		{
++			private static final long serialVersionUID = 1L;
+ 
+ 			@Override
+ 			public void onBookmarkableClick(AjaxRequestTarget target)
+diff --git a/urlfragment-parent/urlfragment-example/src/main/java/org/wicketstuff/urlfragment/example/asyncpanel/HomePage.java b/urlfragment-parent/urlfragment-example/src/main/java/org/wicketstuff/urlfragment/example/asyncpanel/HomePage.java
+index 2137377..14b831b 100644
+--- a/urlfragment-parent/urlfragment-example/src/main/java/org/wicketstuff/urlfragment/example/asyncpanel/HomePage.java
++++ b/urlfragment-parent/urlfragment-example/src/main/java/org/wicketstuff/urlfragment/example/asyncpanel/HomePage.java
+@@ -5,6 +5,7 @@ import org.apache.wicket.request.mapper.parameter.PageParameters;
+ 
+ public class HomePage extends WebPage
+ {
++	private static final long serialVersionUID = 1L;
+ 
+ 	public HomePage(final PageParameters parameters)
+ 	{
+diff --git a/urlfragment-parent/urlfragment/pom.xml b/urlfragment-parent/urlfragment/pom.xml
+index f6943d1..ab6499e 100644
+--- a/urlfragment-parent/urlfragment/pom.xml
++++ b/urlfragment-parent/urlfragment/pom.xml
+@@ -40,7 +40,6 @@
+ 		<dependency>
+ 			<groupId>org.apache.wicket</groupId>
+ 			<artifactId>wicket-core</artifactId>
+-			<version>${wicket.version}</version>
+ 		</dependency>
+ 		<!--  JUNIT DEPENDENCY FOR TESTING -->
+ 		<dependency>
+diff --git a/urlfragment-parent/urlfragment/src/main/java/org/wicketstuff/urlfragment/AsyncUrlFragmentAwarePage.java b/urlfragment-parent/urlfragment/src/main/java/org/wicketstuff/urlfragment/AsyncUrlFragmentAwarePage.java
+index 5e7ea36..040d7b3 100644
+--- a/urlfragment-parent/urlfragment/src/main/java/org/wicketstuff/urlfragment/AsyncUrlFragmentAwarePage.java
++++ b/urlfragment-parent/urlfragment/src/main/java/org/wicketstuff/urlfragment/AsyncUrlFragmentAwarePage.java
+@@ -45,7 +45,7 @@ import org.apache.wicket.request.mapper.parameter.PageParameters;
+  */
+ public abstract class AsyncUrlFragmentAwarePage extends WebPage implements IBookmarkableComponent
+ {
+-
++	private static final long serialVersionUID = 1L;
+ 	private transient AjaxRequestTarget target = null;
+ 	protected UrlParametersReceivingBehavior urlParametersReceivingBehavior;
+ 
+@@ -70,6 +70,8 @@ public abstract class AsyncUrlFragmentAwarePage extends WebPage implements IBook
+ 		super.onInitialize();
+ 		urlParametersReceivingBehavior = new UrlParametersReceivingBehavior(getOptions())
+ 		{
++			private static final long serialVersionUID = 1L;
++
+ 			@Override
+ 			protected void onParameterArrival(IRequestParameters requestParameters,
+ 				AjaxRequestTarget target)
+diff --git a/urlfragment-parent/urlfragment/src/main/java/org/wicketstuff/urlfragment/AsyncUrlFragmentAwarePanel.java b/urlfragment-parent/urlfragment/src/main/java/org/wicketstuff/urlfragment/AsyncUrlFragmentAwarePanel.java
+index 970bcd3..1d4f118 100644
+--- a/urlfragment-parent/urlfragment/src/main/java/org/wicketstuff/urlfragment/AsyncUrlFragmentAwarePanel.java
++++ b/urlfragment-parent/urlfragment/src/main/java/org/wicketstuff/urlfragment/AsyncUrlFragmentAwarePanel.java
+@@ -44,7 +44,7 @@ import org.apache.wicket.request.IRequestParameters;
+  */
+ public abstract class AsyncUrlFragmentAwarePanel extends Panel implements IBookmarkableComponent
+ {
+-
++	private static final long serialVersionUID = 1L;
+ 	private transient AjaxRequestTarget target = null;
+ 
+ 	public AsyncUrlFragmentAwarePanel(String id)
+@@ -64,6 +64,7 @@ public abstract class AsyncUrlFragmentAwarePanel extends Panel implements IBookm
+ 		this.setOutputMarkupId(true);
+ 		add(new UrlParametersReceivingBehavior(getOptions())
+ 		{
++			private static final long serialVersionUID = 1L;
+ 
+ 			@Override
+ 			protected void onParameterArrival(IRequestParameters requestParameters,
+diff --git a/urlfragment-parent/urlfragment/src/main/java/org/wicketstuff/urlfragment/BookmarkableAjaxButton.java b/urlfragment-parent/urlfragment/src/main/java/org/wicketstuff/urlfragment/BookmarkableAjaxButton.java
+index 476eb07..b63f88c 100644
+--- a/urlfragment-parent/urlfragment/src/main/java/org/wicketstuff/urlfragment/BookmarkableAjaxButton.java
++++ b/urlfragment-parent/urlfragment/src/main/java/org/wicketstuff/urlfragment/BookmarkableAjaxButton.java
+@@ -31,7 +31,7 @@ import org.apache.wicket.model.IModel;
+  */
+ public abstract class BookmarkableAjaxButton extends AjaxButton implements IBookmarkableComponent
+ {
+-
++	private static final long serialVersionUID = 1L;
+ 	private transient AjaxRequestTarget target = null;
+ 
+ 	public BookmarkableAjaxButton(String id)
+diff --git a/urlfragment-parent/urlfragment/src/main/java/org/wicketstuff/urlfragment/BookmarkableAjaxLink.java b/urlfragment-parent/urlfragment/src/main/java/org/wicketstuff/urlfragment/BookmarkableAjaxLink.java
+index 760ce2b..b5b242f 100644
+--- a/urlfragment-parent/urlfragment/src/main/java/org/wicketstuff/urlfragment/BookmarkableAjaxLink.java
++++ b/urlfragment-parent/urlfragment/src/main/java/org/wicketstuff/urlfragment/BookmarkableAjaxLink.java
+@@ -33,6 +33,7 @@ import org.apache.wicket.model.IModel;
+  */
+ public abstract class BookmarkableAjaxLink<T> extends AjaxLink<T> implements IBookmarkableComponent
+ {
++	private static final long serialVersionUID = 1L;
+ 
+ 	private transient AjaxRequestTarget target = null;
+ 
+diff --git a/urlfragment-parent/urlfragment/src/main/java/org/wicketstuff/urlfragment/CrawlableAsyncUrlFragmentAwarePage.java b/urlfragment-parent/urlfragment/src/main/java/org/wicketstuff/urlfragment/CrawlableAsyncUrlFragmentAwarePage.java
+index a8f31b1..0074cc0 100644
+--- a/urlfragment-parent/urlfragment/src/main/java/org/wicketstuff/urlfragment/CrawlableAsyncUrlFragmentAwarePage.java
++++ b/urlfragment-parent/urlfragment/src/main/java/org/wicketstuff/urlfragment/CrawlableAsyncUrlFragmentAwarePage.java
+@@ -24,6 +24,7 @@ import org.apache.wicket.request.mapper.parameter.PageParameters;
+  */
+ public abstract class CrawlableAsyncUrlFragmentAwarePage extends AsyncUrlFragmentAwarePage
+ {
++	private static final long serialVersionUID = 1L;
+ 
+ 	@Override
+ 	protected void onInitialize()
+diff --git a/urlfragment-parent/urlfragment/src/main/java/org/wicketstuff/urlfragment/UrlParametersReceivingBehavior.java b/urlfragment-parent/urlfragment/src/main/java/org/wicketstuff/urlfragment/UrlParametersReceivingBehavior.java
+index 5499892..df668e2 100644
+--- a/urlfragment-parent/urlfragment/src/main/java/org/wicketstuff/urlfragment/UrlParametersReceivingBehavior.java
++++ b/urlfragment-parent/urlfragment/src/main/java/org/wicketstuff/urlfragment/UrlParametersReceivingBehavior.java
+@@ -42,7 +42,7 @@ import org.apache.wicket.request.resource.PackageResourceReference;
+  */
+ public abstract class UrlParametersReceivingBehavior extends AbstractDefaultAjaxBehavior
+ {
+-
++	private static final long serialVersionUID = 1L;
+ 	private final Component[] components;
+ 	private final Map<String, String> options;
+ 
