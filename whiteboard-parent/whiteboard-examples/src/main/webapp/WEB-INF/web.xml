@@ -3,7 +3,7 @@
          xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
          version="2.5">
 
-    <display-name>whiteboard-examples-6.0-SNAPSHOT</display-name>
+    <display-name>whiteboard-examples</display-name>
 
     <!--<filter>-->
     <!--<filter-name>wicket.Whiteboard</filter-name>-->
@@ -15,7 +15,7 @@
     <!--</filter>-->
     <filter>
         <filter-name>wicket.Whiteboard.WebSocket</filter-name>
-        <filter-class>org.apache.wicket.protocol.ws.jetty.Jetty7WebSocketFilter</filter-class>
+        <filter-class>org.apache.wicket.protocol.ws.javax.JavaxWebSocketFilter</filter-class>
         <init-param>
             <param-name>applicationClassName</param-name>
             <param-value>org.wicketstuff.whiteboard.sample.WicketApplication</param-value>
