@@ -70,7 +70,8 @@ public class DemoChartFactory implements ChartFactory {
         return areaChart;
     }
 
-    public static Chart<?> barChart() {
+    @SuppressWarnings("deprecation")
+	public static Chart<?> barChart() {
         BarChart<Integer> barChart;
         barChart = new BarChart<Integer>("Bar Chart");
 
