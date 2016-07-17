@@ -54,7 +54,7 @@ public class JqPlotSettingsPanel extends GenericPanel<JqPlotWidget> implements D
 			private static final long serialVersionUID = 1L;
 
 			@Override
-			protected void onSubmit(AjaxRequestTarget target, Form<?> form) {
+			protected void onSubmit(AjaxRequestTarget target) {
             	getModelObject().getSettings().put("chartType", chartType);
 				Dashboard dashboard = findParent(DashboardPanel.class).getDashboard();
 				dashboardContext.getDashboardPersister().save(dashboard);
@@ -67,7 +67,7 @@ public class JqPlotSettingsPanel extends GenericPanel<JqPlotWidget> implements D
 			}
 
 			@Override
-			protected void onError(AjaxRequestTarget target, Form<?> form) {
+			protected void onError(AjaxRequestTarget target) {
 			}
 
         });

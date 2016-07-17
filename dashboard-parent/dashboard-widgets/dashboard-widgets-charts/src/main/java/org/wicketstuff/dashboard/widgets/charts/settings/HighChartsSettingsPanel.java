@@ -57,7 +57,7 @@ public class HighChartsSettingsPanel extends GenericPanel<HighChartsWidget> impl
         form.add(new AjaxSubmitLink("submit") {
             private static final long serialVersionUID = 1L;
             @Override
-            protected void onSubmit(AjaxRequestTarget target, Form<?> form) {
+            protected void onSubmit(AjaxRequestTarget target) {
                 getModelObject().getSettings().put(Settings.seriesType.name(), seriesType.name());
                 getModelObject().updateChart();
 
@@ -72,13 +72,15 @@ public class HighChartsSettingsPanel extends GenericPanel<HighChartsWidget> impl
                 HighChartsWidgetView widgetView = (HighChartsWidgetView) widgetPanel.getWidgetView();
                 target.add(widgetView);
             }
+
             @Override
-            protected void onError(AjaxRequestTarget target, Form<?> form) {
+            protected void onError(AjaxRequestTarget target) {
             }
         });
 
         form.add(new AjaxLink<Void>("cancel") {
             private static final long serialVersionUID = 1L;
+
             @Override
             public void onClick(AjaxRequestTarget target) {
                 hideSettingPanel(target);

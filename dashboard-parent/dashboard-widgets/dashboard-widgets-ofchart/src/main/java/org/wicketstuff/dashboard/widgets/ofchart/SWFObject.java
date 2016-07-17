@@ -14,6 +14,7 @@ package org.wicketstuff.dashboard.widgets.ofchart;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 
 import org.apache.wicket.Component;
 import org.apache.wicket.ajax.AjaxRequestTarget;
@@ -77,9 +78,9 @@ public class SWFObject extends Behavior {
 				flashUrl, id, width, height, version, "expressInstall.swf", parObj, attObj);
 
 		 // see http://old.nabble.com/Re%3A-Graphs%2C-Charts-and-Wicket-p21987222.html
-		AjaxRequestTarget target = RequestCycle.get().find(AjaxRequestTarget.class);
-		if (target != null) {
-			target.appendJavaScript(javascript);
+		Optional<AjaxRequestTarget> target = RequestCycle.get().find(AjaxRequestTarget.class);
+		if (target.isPresent()) {
+			target.get().appendJavaScript(javascript);
 		}
 		
 		return javascript;
