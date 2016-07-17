@@ -13,7 +13,6 @@ import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.model.PropertyModel;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
-
 import wicket.contrib.input.events.EventType;
 import wicket.contrib.input.events.InputBehavior;
 import wicket.contrib.input.events.key.KeyType;
@@ -144,15 +143,10 @@ public class HomePage extends WebPage
 			private static final long serialVersionUID = 1L;
 
 			@Override
-			public void onSubmit(AjaxRequestTarget target, Form<?> form)
+			public void onSubmit(AjaxRequestTarget target)
 			{
 				counter++;
 				target.add(counterLabel);
-			}
-
-			@Override
-			protected void onError(AjaxRequestTarget target, Form<?> form)
-			{
 			}
 		};
 		increaseButton.add(new InputBehavior(new KeyType[] { KeyType.Up }, EventType.click));
@@ -164,18 +158,9 @@ public class HomePage extends WebPage
 			private static final long serialVersionUID = 1L;
 
 			@Override
-			protected void onSubmit(AjaxRequestTarget target, Form<?> form)
+			protected void onSubmit(AjaxRequestTarget target)
 			{
-				if (target == null)
-				{
-					throw new NullPointerException("This must be an AJAX request.");
-				}
 				target.add(ajaxContainer);
-			}
-
-			@Override
-			protected void onError(AjaxRequestTarget target, Form<?> form)
-			{
 			}
 		};
 		ajaxContainer.add(refreshButton);
