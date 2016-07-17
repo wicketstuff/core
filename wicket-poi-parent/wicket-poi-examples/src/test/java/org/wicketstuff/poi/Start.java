@@ -30,7 +30,6 @@ public class Start
 		bb.setWar("src/main/webapp");
 
 
-
 		// START JMX SERVER
 		// MBeanServer mBeanServer = ManagementFactory.getPlatformMBeanServer();
 		// MBeanContainer mBeanContainer = new MBeanContainer(mBeanServer);
