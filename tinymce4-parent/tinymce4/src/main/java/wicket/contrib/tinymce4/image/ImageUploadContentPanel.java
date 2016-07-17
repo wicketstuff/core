@@ -51,7 +51,7 @@ public class ImageUploadContentPanel extends Panel
 			private static final long serialVersionUID = 1L;
 
 			@Override
-			protected void onSubmit(AjaxRequestTarget pTarget, Form<?> pForm)
+			protected void onSubmit(AjaxRequestTarget pTarget)
 			{
 				FileUpload fileUpload = fileUploadField.getFileUpload();
 				String fileName = fileUpload.getClientFileName();
@@ -81,7 +81,7 @@ public class ImageUploadContentPanel extends Panel
 			}
 
 			@Override
-			protected void onError(AjaxRequestTarget pTarget, Form<?> pForm)
+			protected void onError(AjaxRequestTarget pTarget)
 			{
 				pTarget.add(feedback);
 			}

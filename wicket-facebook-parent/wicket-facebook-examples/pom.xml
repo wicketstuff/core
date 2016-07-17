@@ -50,7 +50,8 @@
 		<!-- JETTY DEPENDENCIES FOR TESTING -->
 		<dependency>
 			<groupId>org.eclipse.jetty.aggregate</groupId>
-			<artifactId>jetty-all-server</artifactId>
+			<artifactId>jetty-all</artifactId>
+            <classifier>uber</classifier>
 		</dependency>
 	</dependencies>
 </project>

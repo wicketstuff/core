@@ -73,19 +73,19 @@
 
         <!--  JETTY DEPENDENCIES FOR TESTING  -->
         <dependency>
-            <groupId>org.mortbay.jetty</groupId>
+            <groupId>org.eclipse.jetty</groupId>
             <artifactId>jetty</artifactId>
             <scope>provided</scope>
             <version>${jetty.ver}</version>
         </dependency>
         <dependency>
-            <groupId>org.mortbay.jetty</groupId>
+            <groupId>org.eclipse.jetty</groupId>
             <artifactId>jetty-util</artifactId>
             <scope>provided</scope>
             <version>${jetty.ver}</version>
         </dependency>
         <dependency>
-            <groupId>org.mortbay.jetty</groupId>
+            <groupId>org.eclipse.jetty</groupId>
             <artifactId>jetty-management</artifactId>
             <scope>provided</scope>
             <version>${jetty.ver}</version>

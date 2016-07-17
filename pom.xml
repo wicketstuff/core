@@ -523,9 +523,10 @@
 			</dependency>
 			<dependency>
 				<groupId>org.eclipse.jetty.aggregate</groupId>
-				<artifactId>jetty-all-server</artifactId>
+				<artifactId>jetty-all</artifactId>
 				<version>${jetty.version}</version>
 				<scope>test</scope>
+				<classifier>uber</classifier>
 			</dependency>
 			<dependency>
 				<groupId>org.springframework</groupId>
@@ -1143,7 +1144,7 @@
 					</executions>
 				</plugin>
 				<plugin>
-					<groupId>org.mortbay.jetty</groupId>
+					<groupId>org.eclipse.jetty</groupId>
 					<artifactId>jetty-maven-plugin</artifactId>
 					<version>${jetty.version}</version>
 				</plugin>

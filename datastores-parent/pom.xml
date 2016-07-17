@@ -39,8 +39,9 @@
 
 		<dependency>
 			<groupId>org.eclipse.jetty.aggregate</groupId>
-			<artifactId>jetty-all-server</artifactId>
+			<artifactId>jetty-all</artifactId>
 			<scope>provided</scope>
+            <classifier>uber</classifier>
 		</dependency>
 		<dependency>
 			<groupId>org.slf4j</groupId>
