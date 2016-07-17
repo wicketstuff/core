@@ -150,7 +150,7 @@ public abstract class UrlParametersReceivingBehavior extends AbstractDefaultAjax
 	 * 
 	 * @param scope
 	 *            the scope of the {@link PackageResourceReference}
-	 * @return
+	 * @return {@link HeaderItem} for chaining
 	 */
 	protected static HeaderItem getJS(Class<?> scope)
 	{

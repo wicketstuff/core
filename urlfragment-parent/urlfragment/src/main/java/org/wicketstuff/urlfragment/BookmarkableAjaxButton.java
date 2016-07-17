@@ -23,7 +23,7 @@ import org.apache.wicket.model.IModel;
 /**
  * This is an {@link AjaxButton} with the ability to set and remove URL fragment parameters.
  * <p>
- * You can set or remove parameters using {@link #setFragmentParameter(String, String)} or
+ * You can set or remove parameters using {@link #setFragmentParameter(String, Object)} or
  * {@link #removeFragmentParameter(String)} during your handling of the submit and error event.
  * </p>
  * 
@@ -73,16 +73,14 @@ public abstract class BookmarkableAjaxButton extends AjaxButton implements IBook
 	/**
 	 * Override to handle the submit event. You can use {@link #urlFragment()} inside this method.
 	 * 
-	 * @param target
-	 * @param form
+	 * @param target {@link AjaxRequestTarget} can be used to perform update
 	 */
 	protected abstract void onBookmarkableSubmit(AjaxRequestTarget target);
 
 	/**
 	 * Override to handle the error event. You can use {@link #urlFragment()} inside this method.
 	 * 
-	 * @param target
-	 * @param form
+	 * @param target {@link AjaxRequestTarget} can be used to perform update
 	 */
 	protected abstract void onBookmarkableError(AjaxRequestTarget target);
 
@@ -120,7 +118,7 @@ public abstract class BookmarkableAjaxButton extends AjaxButton implements IBook
 	 * Returns a {@link UrlFragment} connected to the current {@link AjaxRequestTarget}. Use the
 	 * {@link UrlFragment} to update the URL fragment in the browser after the current AJAX event.
 	 * 
-	 * @return
+	 * @return created {@link UrlFragment} for chaining
 	 */
 	protected UrlFragment urlFragment()
 	{

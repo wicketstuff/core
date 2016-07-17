@@ -34,8 +34,8 @@ public class UrlFragment
 	/**
 	 * Sets the value of window.location.hash to the given String.
 	 * 
-	 * @param urlFragment
-	 * @return
+	 * @param urlFragment JS function to handle location hash
+	 * @return this for chaining
 	 */
 	public UrlFragment set(Object urlFragment)
 	{
@@ -48,9 +48,9 @@ public class UrlFragment
 	/**
 	 * Sets the value of window.location.hash to the given key-value-pair.
 	 * 
-	 * @param parameterName
-	 * @param parameterValue
-	 * @return
+	 * @param parameterName the name to be set
+	 * @param parameterValue the value of the parameter being set
+	 * @return this for chaining
 	 */
 	public UrlFragment set(String parameterName, Object parameterValue)
 	{
@@ -63,9 +63,9 @@ public class UrlFragment
 	/**
 	 * Puts the given key-value-pair into window.location.hash.
 	 * 
-	 * @param parameterName
-	 * @param parameterValue
-	 * @return
+	 * @param parameterName the name to be set
+	 * @param parameterValue the value of the parameter being set
+	 * @return this for chaining
 	 */
 	public UrlFragment putParameter(String parameterName, Object parameterValue)
 	{
@@ -79,10 +79,10 @@ public class UrlFragment
 	 * Puts the given key-value-pair into window.location.hash. If the key already exists the value
 	 * will be appended to the existing value with the given delimiter.
 	 * 
-	 * @param parameterName
-	 * @param parameterValue
-	 * @param valueDelimiter
-	 * @return
+	 * @param parameterName the name to be set
+	 * @param parameterValue the value of the parameter being set
+	 * @param valueDelimiter parameter value delimiter to set multiple values
+	 * @return this for chaining
 	 */
 	public UrlFragment putParameter(String parameterName, Object parameterValue,
 		String valueDelimiter)
@@ -97,8 +97,8 @@ public class UrlFragment
 	 * Removes the key-value-pair from window.location.hash that is identified by the given
 	 * parameter name.
 	 * 
-	 * @param parameterName
-	 * @return
+	 * @param parameterName the name to be removed
+	 * @return this for chaining
 	 */
 	public UrlFragment removeParameter(String parameterName)
 	{

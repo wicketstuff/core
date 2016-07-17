@@ -59,7 +59,7 @@ public abstract class CrawlableAsyncUrlFragmentAwarePage extends AsyncUrlFragmen
 	 * '_escaped_fragment_' URL query parameter. All escaped URL fragment parameters were put in the
 	 * given {@link PageParameters}.
 	 * 
-	 * @param parameters
+	 * @param parameters {@link PageParameters} received
 	 */
 	protected abstract void onEscapedFragmentIncome(PageParameters parameters);
 }
