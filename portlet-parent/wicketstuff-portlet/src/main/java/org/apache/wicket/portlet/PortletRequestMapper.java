@@ -26,10 +26,8 @@ import javax.portlet.ResourceURL;
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.wicket.Application;
-import org.apache.wicket.IResourceListener;
-import org.apache.wicket.RequestListenerInterface;
+import org.apache.wicket.IRequestListener;
 import org.apache.wicket.SystemMapper;
-import org.apache.wicket.behavior.IBehaviorListener;
 import org.apache.wicket.core.request.handler.BookmarkableListenerInterfaceRequestHandler;
 import org.apache.wicket.core.request.handler.BookmarkablePageRequestHandler;
 import org.apache.wicket.core.request.handler.ListenerInterfaceRequestHandler;
@@ -39,6 +37,7 @@ import org.apache.wicket.portlet.request.mapper.PortletSystemMapper;
 import org.apache.wicket.request.IRequestHandler;
 import org.apache.wicket.request.Request;
 import org.apache.wicket.request.Url;
+import org.apache.wicket.request.component.IRequestableComponent;
 import org.apache.wicket.request.cycle.RequestCycle;
 import org.apache.wicket.request.handler.resource.ResourceReferenceRequestHandler;
 import org.apache.wicket.request.resource.IResource;
@@ -104,17 +103,16 @@ public class PortletRequestMapper extends AbstractComponentMapper {
 		}
 		//added mapping for request handlers with type of BookmarkableListenerInterfaceRequestHandler. The handling is the same as for handlers of type ListenerInterfaceRequestHandler 
 		else if (requestHandler instanceof ListenerInterfaceRequestHandler || requestHandler instanceof BookmarkableListenerInterfaceRequestHandler) { 
-			RequestListenerInterface listenerInterface;
+			IRequestableComponent component;
 
 			if (requestHandler instanceof ListenerInterfaceRequestHandler) {
-				listenerInterface = ((ListenerInterfaceRequestHandler) requestHandler).getListenerInterface();
+				component = ((ListenerInterfaceRequestHandler) requestHandler).getComponent();
 			}
 			else {
-				listenerInterface = ((BookmarkableListenerInterfaceRequestHandler)requestHandler).getListenerInterface();
+				component = ((BookmarkableListenerInterfaceRequestHandler)requestHandler).getComponent();
 			}
 
-			Class<?> listenerClass = listenerInterface.getMethod().getDeclaringClass();
-			if ((IResourceListener.class.isAssignableFrom(listenerClass)) || (IBehaviorListener.class.isAssignableFrom(listenerClass))) {
+			if (component instanceof IRequestListener) {
 				url = encodeResourceUrl(url);
 			}
 			else {

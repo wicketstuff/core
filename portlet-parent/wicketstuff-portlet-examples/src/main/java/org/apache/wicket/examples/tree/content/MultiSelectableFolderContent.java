@@ -16,6 +16,8 @@
  */
 package org.apache.wicket.examples.tree.content;
 
+import java.util.Optional;
+
 import org.apache.wicket.Component;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.examples.tree.Foo;
@@ -51,7 +53,7 @@ public class MultiSelectableFolderContent extends Content
 		return selected.contains(foo);
 	}
 
-	protected void toggle(Foo foo, AbstractTree<Foo> tree, final AjaxRequestTarget target)
+	protected void toggle(Foo foo, AbstractTree<Foo> tree, final Optional<AjaxRequestTarget> target)
 	{
 		if (isSelected(foo))
 		{
@@ -82,9 +84,9 @@ public class MultiSelectableFolderContent extends Content
 			}
 
 			@Override
-			protected void onClick(AjaxRequestTarget target)
+			protected void onClick(Optional<AjaxRequestTarget> targetOptional)
 			{
-				MultiSelectableFolderContent.this.toggle(getModelObject(), tree, target);
+				MultiSelectableFolderContent.this.toggle(getModelObject(), tree, targetOptional);
 			}
 
 			@Override

@@ -102,13 +102,7 @@ public abstract class WicketAbstractChatPage extends WebPage
 			private static final long serialVersionUID = 1L;
 
 			@Override
-			protected void onError(final AjaxRequestTarget target, final Form<?> form)
-			{
-				// nothing
-			}
-
-			@Override
-			protected void onSubmit(final AjaxRequestTarget target, final Form<?> form)
+			protected void onSubmit(final AjaxRequestTarget target)
 			{
 				// send a message in the chat room
 				getChatService().getChatRoom(chatRoomName).sendAsync(user, message);
@@ -142,13 +136,7 @@ public abstract class WicketAbstractChatPage extends WebPage
 			private static final long serialVersionUID = 1L;
 
 			@Override
-			protected void onError(final AjaxRequestTarget target, final Form<?> form)
-			{
-				// nothing
-			}
-
-			@Override
-			protected void onSubmit(final AjaxRequestTarget target, final Form<?> form)
+			protected void onSubmit(final AjaxRequestTarget target)
 			{
 				pushServiceRef.get().uninstallNode(WicketAbstractChatPage.this, pushNode);
 				target.add(setEnabled(false));

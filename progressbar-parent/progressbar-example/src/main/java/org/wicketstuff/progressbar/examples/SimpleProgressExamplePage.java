@@ -90,7 +90,7 @@ public class SimpleProgressExamplePage extends PageSupport
 			private static final long serialVersionUID = 1L;
 
 			@Override
-			protected void onSubmit(AjaxRequestTarget target, Form<?> form)
+			protected void onSubmit(AjaxRequestTarget target)
 			{
 				// Start the progress bar, will set visibility to true
 				bar.start(target);
@@ -121,9 +121,8 @@ public class SimpleProgressExamplePage extends PageSupport
 			}
 
 			@Override
-			protected void onError(AjaxRequestTarget target, Form<?> form)
+			protected void onError(AjaxRequestTarget target)
 			{
-
 				target.prependJavaScript("alert('Failed to update progress');");
 			}
 

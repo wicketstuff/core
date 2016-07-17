@@ -29,14 +29,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import org.apache.wicket.IPageRendererProvider;
-import org.apache.wicket.IRequestCycleProvider;
-import org.apache.wicket.core.request.handler.RenderPageRequestHandler;
 import org.apache.wicket.protocol.http.WicketFilter;
 import org.apache.wicket.request.UrlRenderer;
 import org.apache.wicket.request.cycle.RequestCycle;
-import org.apache.wicket.request.cycle.RequestCycleContext;
-import org.apache.wicket.request.handler.render.PageRenderer;
 import org.apache.wicket.request.http.WebResponse;
 import org.apache.wicket.request.http.flow.AbortWithHttpErrorCodeException;
 import org.apache.wicket.settings.RequestCycleSettings.RenderStrategy;
@@ -68,22 +63,12 @@ public class PortletFilter extends WicketFilter {
 		getApplication().getMarkupSettings().setMarkupIdGenerator(new PortletMarkupIdGenerator());
 		getApplication().setRootRequestMapper(new PortletRequestMapper(getApplication()));
 		//Application must use the portlet specific page renderer provider.
-		getApplication().setPageRendererProvider(new IPageRendererProvider() {
-			@Override
-			public PageRenderer get(RenderPageRequestHandler handler) {
-				return new PortletPageRenderer(handler);
-			}
-		});
+		getApplication().setPageRendererProvider(PortletPageRenderer::new);
 		// fix for https://github.com/wicketstuff/core/issues/478 issue
-		getApplication().setRequestCycleProvider(new IRequestCycleProvider() {
+		getApplication().setRequestCycleProvider(context -> new RequestCycle(context) {
 			@Override
-			public RequestCycle get(RequestCycleContext context) {
-				return new RequestCycle(context) {
-					@Override
-					protected UrlRenderer newUrlRenderer() {
-						return new PortletUrlRenderer(getRequest());
-					}
-				};
+			protected UrlRenderer newUrlRenderer() {
+				return new PortletUrlRenderer(getRequest());
 			}
 		});
 	}
