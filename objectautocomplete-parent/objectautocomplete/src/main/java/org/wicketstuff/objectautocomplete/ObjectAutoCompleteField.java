@@ -45,6 +45,7 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.Set;
 
 /**
@@ -230,7 +231,7 @@ public class ObjectAutoCompleteField<O /* object */, I /* its id */extends Seria
 			private static final long serialVersionUID = 1L;
 
 			@Override
-			public void onClick(AjaxRequestTarget target)
+			public void onClick(Optional<AjaxRequestTarget> target)
 			{
 				changeToSearchMode(target);
 			}
@@ -258,14 +259,14 @@ public class ObjectAutoCompleteField<O /* object */, I /* its id */extends Seria
 		if (pBuilder.searchOnClick)
 		{
 			deleteLink.setVisible(false);
-			objectReadOnlyComponent.add(new AjaxEventBehavior("onclick")
+			objectReadOnlyComponent.add(new AjaxEventBehavior("click")
 			{
 				private static final long serialVersionUID = 1L;
 
 				@Override
 				protected void onEvent(AjaxRequestTarget target)
 				{
-					changeToSearchMode(target);
+					changeToSearchMode(Optional.of(target));
 				}
 			});
 		}
@@ -274,19 +275,18 @@ public class ObjectAutoCompleteField<O /* object */, I /* its id */extends Seria
 		add(wac);
 	}
 
-	private void changeToSearchMode(AjaxRequestTarget target)
+	private void changeToSearchMode(Optional<AjaxRequestTarget> targetOptional)
 	{
 		backupObjectId = selectedObjectId;
 		backupText = searchTextField.getModelObject();
 		selectedObjectId = null;
 		ObjectAutoCompleteField.this.setModelObject(null);
-		if (target != null)
-		{
+		targetOptional.ifPresent(target -> {
 			target.add(ObjectAutoCompleteField.this);
 			String id = searchTextField.getMarkupId();
 			target.appendJavaScript("Wicket.DOM.get('" + id + "').focus();" + "Wicket.DOM.get('" + id +
 				"').select();");
-		}
+		});
 	}
 
 	/**
