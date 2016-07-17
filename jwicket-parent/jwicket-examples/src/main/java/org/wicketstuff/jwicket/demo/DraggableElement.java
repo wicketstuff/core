@@ -2,7 +2,7 @@ package org.wicketstuff.jwicket.demo;
 
 
 import org.apache.wicket.ajax.AjaxRequestTarget;
-import org.apache.wicket.ajax.markup.html.AjaxFallbackLink;
+import org.apache.wicket.ajax.markup.html.AjaxLink;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
@@ -85,7 +85,7 @@ public class DraggableElement extends GenericPanel<String> {
     }
 
 
-    private class DraggableLink extends AjaxFallbackLink<String> implements IDraggable {
+    private class DraggableLink extends AjaxLink<String> implements IDraggable {
         private static final long serialVersionUID = 1L;
 
         private boolean ignoreClick = false;
