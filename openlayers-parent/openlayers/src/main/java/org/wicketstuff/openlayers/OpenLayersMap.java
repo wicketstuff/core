@@ -53,6 +53,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Optional;
 
 /**
  * Wicket component to embed <a href="http://www.openlayers.org/">Openlayers Maps</a> into your
@@ -413,18 +414,18 @@ public class OpenLayersMap extends Panel implements IOpenLayersMap
 
 		}
 
-		AjaxRequestTarget target = getRequestCycle().find(AjaxRequestTarget.class);
+		Optional<AjaxRequestTarget> target = getRequestCycle().find(AjaxRequestTarget.class);
 
-		if (target != null && findPage() != null)
+		if (target.isPresent() && findPage() != null)
 		{
-			target.appendJavaScript(control.getJSadd(OpenLayersMap.this));
+			target.get().appendJavaScript(control.getJSadd(OpenLayersMap.this));
 
 			if (jsReferences != null && jsReferences.length > 0)
 			{
 
 				for (JavaScriptResourceReference javascriptResourceReference : jsReferences)
 				{
-					target.getHeaderResponse().render(JavaScriptHeaderItem.forReference(
+					target.get().getHeaderResponse().render(JavaScriptHeaderItem.forReference(
 						javascriptResourceReference));
 				}
 			}
@@ -444,18 +445,14 @@ public class OpenLayersMap extends Panel implements IOpenLayersMap
 	public OpenLayersMap addOverlay(Overlay overlay)
 	{
 		overlays.add(overlay);
-		for (OverlayListenerBehavior behavior : overlay.getBehaviors())
-		{
-			add(behavior);
-		}
+		overlay.getBehaviors().forEach(this::add);
 
 		if (findPage() != null)
 		{
-			AjaxRequestTarget ajaxRequestTarget = getRequestCycle().find(AjaxRequestTarget.class);
-			if (ajaxRequestTarget != null) {
-			String jsToRun = getJsOverlay(overlay);
-			ajaxRequestTarget.appendJavaScript(jsToRun);
-			}
+			getRequestCycle().find(AjaxRequestTarget.class).ifPresent(target -> {
+				String jsToRun = getJsOverlay(overlay);
+				target.appendJavaScript(jsToRun);
+			});
 		}
 
 		return this;
@@ -479,10 +476,8 @@ public class OpenLayersMap extends Panel implements IOpenLayersMap
 
 		if (findPage() != null)
 		{
-			AjaxRequestTarget ajaxRequestTarget = getRequestCycle().find(AjaxRequestTarget.class);
-			if (ajaxRequestTarget != null) {
-				ajaxRequestTarget.appendJavaScript(getJSinvoke("clearOverlays()"));
-			}
+			getRequestCycle().find(AjaxRequestTarget.class).ifPresent(target ->
+					target.appendJavaScript(getJSinvoke("clearOverlays()")));
 		}
 		return this;
 	}
@@ -749,10 +744,8 @@ public class OpenLayersMap extends Panel implements IOpenLayersMap
 
 		if (findPage() != null)
 		{
-			AjaxRequestTarget ajaxRequestTarget = getRequestCycle().find(AjaxRequestTarget.class);
-			if (ajaxRequestTarget != null) {
-				ajaxRequestTarget.appendJavaScript(control.getJSremove(OpenLayersMap.this));
-			}
+			getRequestCycle().find(AjaxRequestTarget.class).ifPresent(target ->
+					target.appendJavaScript(control.getJSremove(OpenLayersMap.this)));
 		}
 
 		return this;
@@ -771,17 +764,12 @@ public class OpenLayersMap extends Panel implements IOpenLayersMap
 		{
 			overlays.remove(overlay);
 		}
-		for (OverlayListenerBehavior behavior : overlay.getBehaviors())
-		{
-			remove(behavior);
-		}
+		overlay.getBehaviors().forEach(this::remove);
 
 		if (findPage() != null)
 		{
-			AjaxRequestTarget ajaxRequestTarget = getRequestCycle().find(AjaxRequestTarget.class);
-			if (ajaxRequestTarget != null) {
-				ajaxRequestTarget.appendJavaScript(overlay.getJSremove(OpenLayersMap.this));
-			}
+			getRequestCycle().find(AjaxRequestTarget.class).ifPresent(target ->
+					target.appendJavaScript(overlay.getJSremove(OpenLayersMap.this)));
 		}
 
 		return this;
@@ -802,10 +790,8 @@ public class OpenLayersMap extends Panel implements IOpenLayersMap
 
 			if (findPage() != null)
 			{
-				AjaxRequestTarget ajaxRequestTarget = getRequestCycle().find(AjaxRequestTarget.class);
-				if (ajaxRequestTarget != null) {
-					ajaxRequestTarget.appendJavaScript(getJSsetCenter(center, zoom));
-				}
+				getRequestCycle().find(AjaxRequestTarget.class).ifPresent(target ->
+						target.appendJavaScript(getJSsetCenter(center, zoom)));
 			}
 		}
 	}
@@ -837,10 +823,8 @@ public class OpenLayersMap extends Panel implements IOpenLayersMap
 
 			if (findPage() != null)
 			{
-				AjaxRequestTarget ajaxRequestTarget = getRequestCycle().find(AjaxRequestTarget.class);
-				if (ajaxRequestTarget != null) {
-					ajaxRequestTarget.appendJavaScript(getJSsetZoom(zoom));
-				}
+				getRequestCycle().find(AjaxRequestTarget.class).ifPresent(target ->
+						target.appendJavaScript(getJSsetZoom(zoom)));
 			}
 		}
 	}
@@ -924,10 +908,8 @@ public class OpenLayersMap extends Panel implements IOpenLayersMap
 	public void setBusinessLogicProjection(String businessLogicProjection)
 	{
 		this.businessLogicProjection = businessLogicProjection;
-		AjaxRequestTarget ajaxRequestTarget = getRequestCycle().find(AjaxRequestTarget.class);
-		if (ajaxRequestTarget != null) {
-			ajaxRequestTarget.appendJavaScript(getJSSetBusinessLogicProjection());
-		}
+		getRequestCycle().find(AjaxRequestTarget.class).ifPresent(target ->
+				target.appendJavaScript(getJSSetBusinessLogicProjection()));
 	}
 
 	public String getBusinessLogicProjection()
