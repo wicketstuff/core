@@ -45,7 +45,7 @@ import org.apache.wicket.request.mapper.parameter.PageParameters;
  */
 public abstract class AsyncUrlFragmentAwarePage extends WebPage implements IBookmarkableComponent
 {
-
+	private static final long serialVersionUID = 1L;
 	private transient AjaxRequestTarget target = null;
 	protected UrlParametersReceivingBehavior urlParametersReceivingBehavior;
 
@@ -70,6 +70,8 @@ public abstract class AsyncUrlFragmentAwarePage extends WebPage implements IBook
 		super.onInitialize();
 		urlParametersReceivingBehavior = new UrlParametersReceivingBehavior(getOptions())
 		{
+			private static final long serialVersionUID = 1L;
+
 			@Override
 			protected void onParameterArrival(IRequestParameters requestParameters,
 				AjaxRequestTarget target)

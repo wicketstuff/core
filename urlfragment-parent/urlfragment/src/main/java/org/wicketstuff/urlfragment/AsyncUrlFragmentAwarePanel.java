@@ -44,7 +44,7 @@ import org.apache.wicket.request.IRequestParameters;
  */
 public abstract class AsyncUrlFragmentAwarePanel extends Panel implements IBookmarkableComponent
 {
-
+	private static final long serialVersionUID = 1L;
 	private transient AjaxRequestTarget target = null;
 
 	public AsyncUrlFragmentAwarePanel(String id)
@@ -64,6 +64,7 @@ public abstract class AsyncUrlFragmentAwarePanel extends Panel implements IBookm
 		this.setOutputMarkupId(true);
 		add(new UrlParametersReceivingBehavior(getOptions())
 		{
+			private static final long serialVersionUID = 1L;
 
 			@Override
 			protected void onParameterArrival(IRequestParameters requestParameters,
