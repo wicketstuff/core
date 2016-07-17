@@ -33,6 +33,7 @@ import org.apache.wicket.model.IModel;
  */
 public abstract class BookmarkableAjaxLink<T> extends AjaxLink<T> implements IBookmarkableComponent
 {
+	private static final long serialVersionUID = 1L;
 
 	private transient AjaxRequestTarget target = null;
 

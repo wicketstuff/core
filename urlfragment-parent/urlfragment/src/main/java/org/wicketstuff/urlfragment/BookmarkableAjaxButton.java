@@ -31,7 +31,7 @@ import org.apache.wicket.model.IModel;
  */
 public abstract class BookmarkableAjaxButton extends AjaxButton implements IBookmarkableComponent
 {
-
+	private static final long serialVersionUID = 1L;
 	private transient AjaxRequestTarget target = null;
 
 	public BookmarkableAjaxButton(String id)

@@ -24,6 +24,7 @@ import org.apache.wicket.request.mapper.parameter.PageParameters;
  */
 public abstract class CrawlableAsyncUrlFragmentAwarePage extends AsyncUrlFragmentAwarePage
 {
+	private static final long serialVersionUID = 1L;
 
 	@Override
 	protected void onInitialize()
