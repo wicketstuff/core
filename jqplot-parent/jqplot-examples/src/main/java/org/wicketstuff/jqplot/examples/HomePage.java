@@ -64,7 +64,7 @@ public class HomePage extends WebPage {
 
         Legend legend = new Legend();
         legend.setShow(true);
-        legend.setPlacment("outsite");
+        legend.setPlacement("outsite");
         legend.setRendererOptions(new LegendRenderer().setNumberRows(1));
         legend.setLocation(Location.s);
         legend.setMarginTop("15px");
@@ -135,7 +135,7 @@ public class HomePage extends WebPage {
 
         Legend legend = new Legend();
         legend.setShow(true);
-        legend.setPlacment("outsideGrid");
+        legend.setPlacement("outsideGrid");
         areaChart.setLegend(legend);
 
         TickOptions tickOptions = new TickOptions();
@@ -156,7 +156,7 @@ public class HomePage extends WebPage {
 
         Legend legend = new Legend();
         legend.setShow(true);
-        legend.setPlacment("outsite");
+        legend.setPlacement("outsite");
         legend.setRendererOptions(new LegendRenderer().setNumberRows(1));
         legend.setLocation(Location.s);
         legend.setMarginTop("15px");
@@ -270,7 +270,7 @@ public class HomePage extends WebPage {
         BarChart<Integer> barChart1 = new BarChart<Integer>("Bar Chart");
         Legend legend = new Legend();
         legend.setShow(true);
-        legend.setPlacment("outsideGrid");
+        legend.setPlacement("outsideGrid");
         barChart1.setLegend(legend);
         barChart1
                 .getChartConfiguration()

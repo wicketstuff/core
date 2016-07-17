@@ -48,10 +48,6 @@
         </developer>
     </developers>
 
-    <properties>
-        <jetty.ver>6.1.26</jetty.ver>
-    </properties>
-
     <dependencies>
         <!-- LOGGING DEPENDENCIES - LOG4J -->
         <!--suppress MavenDuplicateDependenciesInspection -->
@@ -71,25 +67,6 @@
             <artifactId>junit</artifactId>
         </dependency>
 
-        <!--  JETTY DEPENDENCIES FOR TESTING  -->
-        <dependency>
-            <groupId>org.eclipse.jetty</groupId>
-            <artifactId>jetty</artifactId>
-            <scope>provided</scope>
-            <version>${jetty.ver}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.eclipse.jetty</groupId>
-            <artifactId>jetty-util</artifactId>
-            <scope>provided</scope>
-            <version>${jetty.ver}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.eclipse.jetty</groupId>
-            <artifactId>jetty-management</artifactId>
-            <scope>provided</scope>
-            <version>${jetty.ver}</version>
-        </dependency>
     </dependencies>
 
     <modules>
