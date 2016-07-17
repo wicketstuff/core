@@ -21,12 +21,12 @@ import java.io.Serializable;
 import java.io.StringWriter;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.Optional;
 import java.util.TreeSet;
 
 import javax.management.MBeanAttributeInfo;
@@ -136,7 +136,7 @@ public class MBeansPanel extends Panel
 				}
 
 				@Override
-				protected void onClick(AjaxRequestTarget target)
+				protected void onClick(Optional<AjaxRequestTarget> target)
 				{
 					if (selected != null) {
 						updateNode(selected, target);
@@ -147,7 +147,7 @@ public class MBeansPanel extends Panel
 					Component newView = getModelObject().newView(VIEW_PANEL_ID);
 					newView.setOutputMarkupId(true);
 					MBeansPanel.this.replace(newView);
-					target.add(newView);
+					target.ifPresent(t -> t.add(newView));
 				}
 			};
 		}
@@ -291,7 +291,7 @@ public class MBeansPanel extends Panel
 		}
 
 		/**
-		 * @see https://blogs.oracle.com/lmalventosa/entry/jconsole_mbeans_tab_mbean_tree
+		 * @see < a href="https://blogs.oracle.com/lmalventosa/entry/jconsole_mbeans_tab_mbean_tree">JConsole MBean tree</>
 		 */
 		private List<MbeanNode> createKeyNodes(String query, List<KeyPath> paths) throws Exception
 		{
