@@ -59,7 +59,7 @@ public class ModalFormPanel extends ModalContentPanel
 			private static final long serialVersionUID = 1L;
 
 			@Override
-			public void onSubmit(AjaxRequestTarget target, Form<?> form)
+			public void onSubmit(AjaxRequestTarget target)
 			{
 				modalResult = MR_OK;
 				target.add(feedbackPanel);
@@ -68,7 +68,7 @@ public class ModalFormPanel extends ModalContentPanel
 			}
 
 			@Override
-			public void onError(AjaxRequestTarget target, Form<?> form)
+			public void onError(AjaxRequestTarget target)
 			{
 				target.add(feedbackPanel);
 			}
@@ -80,14 +80,14 @@ public class ModalFormPanel extends ModalContentPanel
 			private static final long serialVersionUID = 1L;
 
 			@Override
-			protected void onSubmit(AjaxRequestTarget target, Form<?> form)
+			protected void onSubmit(AjaxRequestTarget target)
 			{
 				modalResult = MR_CANCEL;
 				onCancel(target);
 			}
 
 			@Override
-			protected void onError(AjaxRequestTarget target, Form<?> form)
+			protected void onError(AjaxRequestTarget target)
 			{
 				target.add(feedbackPanel);
 			}
