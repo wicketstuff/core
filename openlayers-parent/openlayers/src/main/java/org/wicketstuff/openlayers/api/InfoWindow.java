@@ -64,11 +64,10 @@ public class InfoWindow extends WebMarkupContainer
 		this.latLng = latLng;
 		marker = null;
 
-		AjaxRequestTarget ajaxRequestTarget = getRequestCycle().find(AjaxRequestTarget.class);
-		if (ajaxRequestTarget != null) {
-			ajaxRequestTarget.appendJavaScript(getJSopen(latLng));
-			ajaxRequestTarget.add(this);
-		}
+		getRequestCycle().find(AjaxRequestTarget.class).ifPresent(target -> {
+			target.appendJavaScript(getJSopen(latLng));
+			target.add(this);
+		});
 
 		return this;
 	}
@@ -79,11 +78,10 @@ public class InfoWindow extends WebMarkupContainer
 		latLng = null;
 		this.marker = marker;
 
-		AjaxRequestTarget ajaxRequestTarget = getRequestCycle().find(AjaxRequestTarget.class);
-		if (ajaxRequestTarget != null) {
-			ajaxRequestTarget.appendJavaScript(getJSopen(marker));
-			ajaxRequestTarget.add(this);
-		}
+		getRequestCycle().find(AjaxRequestTarget.class).ifPresent(target -> {
+			target.appendJavaScript(getJSopen(marker));
+			target.add(this);
+		});
 
 		return this;
 	}
@@ -98,11 +96,10 @@ public class InfoWindow extends WebMarkupContainer
 		marker = null;
 		latLng = null;
 
-		AjaxRequestTarget ajaxRequestTarget = getRequestCycle().find(AjaxRequestTarget.class);
-		if (ajaxRequestTarget != null) {
-			ajaxRequestTarget.appendJavaScript(getJSclose());
-			ajaxRequestTarget.add(this);
-		}
+		getRequestCycle().find(AjaxRequestTarget.class).ifPresent(target -> {
+			target.appendJavaScript(getJSclose());
+			target.add(this);
+		});
 	}
 
 	private String getJSopen(LonLat latLng)

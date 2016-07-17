@@ -93,13 +93,15 @@
 					<plugin>
 						<groupId>org.apache.maven.plugins</groupId>
 						<artifactId>maven-javadoc-plugin</artifactId>
-						<version>2.10.3</version>
+						<version>2.10.4</version>
 						<configuration>
 							<detectOfflineLinks>false</detectOfflineLinks>
 							<minmemory>128m</minmemory>
 							<maxmemory>256m</maxmemory>
 							<notimestamp>true</notimestamp>
 							<quiet>true</quiet>
+							<failOnError>false</failOnError>
+							<additionalparam>-Xdoclint:none</additionalparam>
 							<links>
 								<link>http://docs.oracle.com/javase/7/docs/api</link>
 								<link>http://docs.oracle.com/javaee/7/api</link>
@@ -853,7 +855,7 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-javadoc-plugin</artifactId>
-				<version>2.10.3</version>
+				<version>2.10.4</version>
 				<configuration>
 					<detectOfflineLinks>false</detectOfflineLinks>
 					<minmemory>128m</minmemory>
@@ -867,6 +869,8 @@
 						<link>http://docs.spring.io/spring/docs/3.0.x/javadoc-api</link>
 						<link>http://logback.qos.ch/apidocs</link>
 					</links>
+					<failOnError>false</failOnError>
+					<additionalparam>-Xdoclint:none</additionalparam>
 					<skip>${javadoc.disabled}</skip>
 				</configuration>
 				<executions>
@@ -1047,7 +1051,7 @@
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-compiler-plugin</artifactId>
-					<version>3.3</version>
+					<version>3.5.1</version>
 					<configuration>
 						<source>${maven.compiler.source}</source>
 						<target>${maven.compiler.target}</target>
