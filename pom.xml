@@ -259,21 +259,21 @@
 		<sources.disabled>false</sources.disabled>
 
 		<hibernate.version>4.3.11.Final</hibernate.version>
-		<javassist.version>3.18.2-GA</javassist.version>
-		<jetty.version>8.1.16.v20140903</jetty.version>
+		<javassist.version>3.20.0-GA</javassist.version>
+		<jetty.version>9.3.10.v20160621</jetty.version>
 		<sf-jung.version>2.0.1</sf-jung.version>
-		<shiro.version>1.2.3</shiro.version>
-		<slf4j.version>1.7.12</slf4j.version>
-		<logback.version>1.1.3</logback.version>
+		<shiro.version>1.2.6</shiro.version>
+		<slf4j.version>1.7.21</slf4j.version>
+		<logback.version>1.1.7</logback.version>
 		<log4j.version>1.2.17</log4j.version>
-		<spring.version>4.1.6.RELEASE</spring.version>
-		<cglib.version>3.1</cglib.version>
-		<objenesis.version>2.1</objenesis.version>
-		<scala.version>2.11.8</scala.version>
+		<spring.version>4.3.1.RELEASE</spring.version>
+		<cglib.version>3.2.4</cglib.version>
+		<objenesis.version>2.4</objenesis.version>
+		<scala.version>2.12.0-M5</scala.version>
 	</properties>
 
 	<prerequisites>
-		<maven>3.0.4</maven>
+		<maven>3.3.9</maven>
 	</prerequisites>
 
 	<modules>
@@ -1290,7 +1290,7 @@
 				<configuration>
 					<linkXRef>true</linkXRef>
 					<sourceEncoding>utf-8</sourceEncoding>
-					<targetJdk>1.7</targetJdk>
+					<targetJdk>1.8</targetJdk>
 					<minimumTokens>100</minimumTokens>
 				</configuration>
 			</plugin>

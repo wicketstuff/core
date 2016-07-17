@@ -18,6 +18,7 @@ package org.apache.wicket.examples.ajax.builtin;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.markup.html.AjaxFallbackLink;
@@ -165,7 +166,7 @@ public class TodoList extends BasePage
 		private boolean linkVisible = true;
 
 		/** Link for displaying the AddTodo form. */
-		private final class AddTodoLink extends AjaxFallbackLink
+		private final class AddTodoLink extends AjaxFallbackLink<Void>
 		{
 			/** Constructor. */
 			private AddTodoLink(String id)
@@ -180,9 +181,9 @@ public class TodoList extends BasePage
 			 *            the request target.
 			 */
 			@Override
-			public void onClick(AjaxRequestTarget target)
+			public void onClick(Optional<AjaxRequestTarget> target)
 			{
-				onShowForm(target);
+				onShowForm(target.get());
 			}
 
 			/**
@@ -201,7 +202,7 @@ public class TodoList extends BasePage
 		 * Link for removing all completed todos from the list, this link follows the same
 		 * visibility rules as the add link.
 		 */
-		private final class RemoveCompletedTodosLink extends AjaxFallbackLink
+		private final class RemoveCompletedTodosLink extends AjaxFallbackLink<Void>
 		{
 			/**
 			 * Constructor.
@@ -214,13 +215,10 @@ public class TodoList extends BasePage
 				super(id);
 			}
 
-			/**
-			 * @see AjaxFallbackLink#onClick(org.apache.wicket.ajax.AjaxRequestTarget)
-			 */
 			@Override
-			public void onClick(AjaxRequestTarget target)
+			public void onClick(Optional<AjaxRequestTarget> target)
 			{
-				onRemoveCompletedTodos(target);
+				onRemoveCompletedTodos(target.get());
 			}
 
 			/**
@@ -256,7 +254,7 @@ public class TodoList extends BasePage
 				add(new AjaxButton("add", this)
 				{
 					@Override
-					protected void onSubmit(AjaxRequestTarget target, Form<?> form)
+					protected void onSubmit(AjaxRequestTarget target)
 					{
 						// retrieve the todo item
 						TodoItem item = (TodoItem)getParent().getDefaultModelObject();
@@ -264,24 +262,14 @@ public class TodoList extends BasePage
 						// add the item
 						onAdd(item, target);
 					}
-
-					@Override
-					protected void onError(AjaxRequestTarget target, Form<?> form)
-					{
-					}
 				});
 
 				add(new AjaxButton("cancel", this)
 				{
 					@Override
-					public void onSubmit(AjaxRequestTarget target, Form<?> form)
+					public void onSubmit(AjaxRequestTarget target)
 					{
 						onCancelTodo(target);
-					}
-
-					@Override
-					protected void onError(AjaxRequestTarget target, Form<?> form)
-					{
 					}
 				});
 			}
@@ -413,11 +401,8 @@ public class TodoList extends BasePage
 
 		add(new AjaxFallbackLink<Void>("ajaxback")
 		{
-			/**
-			 * @see org.apache.wicket.ajax.markup.html.AjaxFallbackLink#onClick(org.apache.wicket.ajax.AjaxRequestTarget)
-			 */
 			@Override
-			public void onClick(AjaxRequestTarget target)
+			public void onClick(Optional<AjaxRequestTarget> target)
 			{
 				setResponsePage(getPage());
 			}

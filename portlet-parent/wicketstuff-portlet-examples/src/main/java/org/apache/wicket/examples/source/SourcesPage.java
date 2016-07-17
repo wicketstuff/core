@@ -29,9 +29,12 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Enumeration;
 import java.util.List;
+import java.util.Optional;
 import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
 
+import com.uwyn.jhighlight.renderer.Renderer;
+import com.uwyn.jhighlight.renderer.XhtmlRendererFactory;
 import org.apache.wicket.Component;
 import org.apache.wicket.Page;
 import org.apache.wicket.WicketRuntimeException;
@@ -57,9 +60,6 @@ import org.apache.wicket.util.string.StringValue;
 import org.apache.wicket.util.string.Strings;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import com.uwyn.jhighlight.renderer.Renderer;
-import com.uwyn.jhighlight.renderer.XhtmlRendererFactory;
 
 /**
  * Displays the resources in a packages directory in a browsable format.
@@ -293,15 +293,14 @@ public class SourcesPage extends WebPage
 						item.getModel())
 					{
 						@Override
-						public void onClick(AjaxRequestTarget target)
+						public void onClick(Optional<AjaxRequestTarget> targetOptional)
 						{
 							setName(getDefaultModelObjectAsString());
 
-							if (target != null)
-							{
+							targetOptional.ifPresent(target -> {
 								target.add(codePanel);
 								target.add(filename);
-							}
+							});
 						}
 
 						@Override

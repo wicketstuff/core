@@ -37,13 +37,6 @@ public class MultiLineLabelContent extends Content
 	public Component newContentComponent(String id, final AbstractTree<Foo> tree,
 		final IModel<Foo> model)
 	{
-		return new MultiLineLabel(id, new AbstractReadOnlyModel<String>()
-		{
-			@Override
-			public String getObject()
-			{
-				return model.getObject().getId() + " " + LOREM_IPSUM;
-			}
-		});
+		return new MultiLineLabel(id, () -> model.getObject().getId() + " " + LOREM_IPSUM);
 	}
 }

@@ -100,10 +100,10 @@ public class ChoicePage extends BasePage
 		add(form);
 
 		final DropDownChoice<String> makes = new DropDownChoice<>("makes",
-			new PropertyModel<String>(this, "selectedMake"), makeChoices);
+			new PropertyModel<>(this, "selectedMake"), makeChoices);
 
 		final DropDownChoice<String> models = new DropDownChoice<>("models",
-			new Model<String>(), modelChoices);
+			new Model<>(), modelChoices);
 		models.setOutputMarkupId(true);
 
 		form.add(makes);
@@ -116,9 +116,9 @@ public class ChoicePage extends BasePage
 		form.add(new AjaxButton("go")
 		{
 			@Override
-			protected void onAfterSubmit(AjaxRequestTarget target, Form<?> form)
+			protected void onAfterSubmit(AjaxRequestTarget target)
 			{
-				super.onAfterSubmit(target, form);
+				super.onAfterSubmit(target);
 				info("You have selected: " + makes.getModelObject() + " " + models.getModelObject());
 				target.add(feedback);
 			}
