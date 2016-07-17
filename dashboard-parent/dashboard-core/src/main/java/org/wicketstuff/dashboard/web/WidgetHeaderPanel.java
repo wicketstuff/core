@@ -20,7 +20,6 @@ import org.apache.wicket.markup.head.OnDomReadyHeaderItem;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.image.Image;
 import org.apache.wicket.markup.html.panel.GenericPanel;
-import org.apache.wicket.model.AbstractReadOnlyModel;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.PropertyModel;
 import org.apache.wicket.request.resource.PackageResourceReference;
@@ -43,8 +42,9 @@ public class WidgetHeaderPanel extends GenericPanel<Widget> implements Dashboard
         setMarkupId("header-" + getModelObject().getId());
 
         final Image toggle = new Image("toggle", "") {
+			private static final long serialVersionUID = 1L;
 
-            @Override
+			@Override
             protected ResourceReference getImageResourceReference() {
                 String name = getWidget().isCollapsed() ? "res/up.png" : "res/down.png";
 
@@ -78,8 +78,7 @@ public class WidgetHeaderPanel extends GenericPanel<Widget> implements Dashboard
 			}
 
 		});
-        toggle.add(new AttributeModifier("title", new AbstractReadOnlyModel<String>() {
-
+        toggle.add(new AttributeModifier("title", new IModel<String>() {
             private static final long serialVersionUID = 1L;
 
 			@Override
@@ -90,7 +89,7 @@ public class WidgetHeaderPanel extends GenericPanel<Widget> implements Dashboard
         }));
 		add(toggle);
 
-		add(new Label("title", new PropertyModel(model, "title")));
+		add(new Label("title", new PropertyModel<Widget>(model, "title")));
 
 		WidgetActionsPanel actionsPanel = new WidgetActionsPanel("actions", model);
 		add(actionsPanel);

@@ -17,8 +17,6 @@ import java.util.List;
 import org.wicketstuff.dashboard.DefaultWidgetActionsFactory;
 import org.wicketstuff.dashboard.Widget;
 import org.wicketstuff.dashboard.WidgetAction;
-import org.wicketstuff.dashboard.web.AbstractWidgetAction;
-import org.wicketstuff.dashboard.web.DefaultWidgetActions;
 
 /**
  * @author Decebal Suiu

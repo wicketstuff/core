@@ -12,12 +12,14 @@
  */
 package org.wicketstuff.dashboard.web;
 
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import org.apache.wicket.AttributeModifier;
 import org.apache.wicket.Component;
+import org.apache.wicket.WicketRuntimeException;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.event.Broadcast;
 import org.apache.wicket.markup.head.IHeaderResponse;
@@ -122,10 +124,12 @@ class DashboardColumnPanel extends GenericPanel<Dashboard> {
         vars.put("component", get("columnContainer").getMarkupId());
         vars.put("stopBehavior", script.toString());
 
-        PackageTextTemplate template = new PackageTextTemplate(DashboardColumnPanel.class, "res/sort-behavior.template.js");
-        template.interpolate(vars);
-
-        response.render(OnDomReadyHeaderItem.forScript(template.getString()));
+        try (PackageTextTemplate template = new PackageTextTemplate(DashboardColumnPanel.class, "res/sort-behavior.template.js");) {
+	        template.interpolate(vars);
+	        response.render(OnDomReadyHeaderItem.forScript(template.getString()));
+        } catch (IOException e) {
+			throw new WicketRuntimeException(e);
+		}
     }
     
 	/*

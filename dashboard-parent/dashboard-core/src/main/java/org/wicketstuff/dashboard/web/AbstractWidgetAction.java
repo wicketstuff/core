@@ -24,10 +24,10 @@ import org.wicketstuff.dashboard.WidgetAction;
  * @author Decebal Suiu
  */
 public abstract class AbstractWidgetAction implements WidgetAction {
-
-    protected Widget widget;
+	private static final long serialVersionUID = 1L;
+	protected Widget widget;
     protected IModel<String> tooltip;
-    private Class imageScope;
+    private Class<?> imageScope;
     private String imageName;
 
     public AbstractWidgetAction(Widget widget) {
@@ -53,7 +53,7 @@ public abstract class AbstractWidgetAction implements WidgetAction {
      * @param scope
      * @param name
      */
-    public void setImage(Class scope, String name) {
+    public void setImage(Class<?> scope, String name) {
         imageScope = scope;
         imageName = name;
     }
