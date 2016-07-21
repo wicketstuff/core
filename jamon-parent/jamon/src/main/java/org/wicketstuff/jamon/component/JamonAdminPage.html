@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html xmlns:wicket="http://wicket.apache.org/">
+<head>
+	<title>Welcome to the JAMon Administrator Page</title>
+	<link rel="Stylesheet" type="text/css" href="css/jamon.css"/>
+</head>
+<body>
+<div>
+	<div wicket:id="adminPanel">
+	</div>
+
+	<table wicket:id="jamonStatistics" class="jamonDetailTable">
+		<thead>
+			<tr>
+				<td>Monitor</td><td>Average (ms)</td>
+			</tr>
+		</thead>
+		<tbody>
+			<tr>
+				<td>HomePage</td><td>51</td>
+			</tr>
+			<tr>
+				<td>SearchPage</td><td>51</td>
+			</tr>
+		</tbody>
+	</table>
+	<p/><p/>
+	<span id="monitorDetails" wicket:id="monitorDetails">
+	</span>
+</div>
+</body>
+</html>

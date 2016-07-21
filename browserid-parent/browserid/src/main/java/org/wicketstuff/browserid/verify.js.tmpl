@@ -1,0 +1,31 @@
+(function(w) {
+
+    w.Event.add(window, "domready", function(event) {
+
+        var gotVerifiedEmail
+            , signInButton
+            , callbackUrl = "${callbackUrl}";
+
+        gotVerifiedEmail = function (assertion) {
+
+            if (assertion) {
+                if (callbackUrl.indexOf('?') > -1) {
+                    callbackUrl += '&';
+                } else {
+                    callbackUrl += '?';
+                }
+                callbackUrl += "assertion="+assertion;
+                callbackUrl += "&audience="+window.location.host;
+                wicketAjaxGet(callbackUrl, null, null, function() {return true});
+            }
+        };
+
+        signInButton = w.$("${componentId}");
+        signInButton.style.cursor = "pointer";
+
+        w.Event.add(signInButton, "click", function(event) {
+            navigator.id.getVerifiedEmail(gotVerifiedEmail);
+        });
+    });
+
+})(Wicket);

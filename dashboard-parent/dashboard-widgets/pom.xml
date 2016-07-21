@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+	<modelVersion>4.0.0</modelVersion>
+
+	<parent>
+		<groupId>org.wicketstuff</groupId>
+		<artifactId>wicketstuff-dashboard-parent</artifactId>
+		<version>8.0.0-SNAPSHOT</version>
+	</parent>
+
+	<artifactId>wicketstuff-dashboard-widgets</artifactId>
+	<packaging>pom</packaging>
+	<name>Wicketstuff Dashboard Widgets</name>
+
+	<properties>
+		<jofc2.version>1.0.1</jofc2.version>
+		<jqPlot.version>${project.version}</jqPlot.version>
+		<loremipsum.version>1.0</loremipsum.version>
+		<justGage.version>1.0.1</justGage.version>
+		<wickedCharts.version>1.5.0</wickedCharts.version>
+	</properties>
+
+	<dependencies>
+		<dependency>
+			<groupId>org.wicketstuff</groupId>
+			<artifactId>wicketstuff-dashboard-core</artifactId>
+			<version>${project.version}</version>
+			<scope>provided</scope>
+		</dependency>
+	</dependencies>
+
+	<modules>
+		<module>dashboard-widgets-ofchart</module>
+		<module>dashboard-widgets-jqplot</module>
+		<module>dashboard-widgets-loremipsum</module>
+		<module>dashboard-widgets-justgage</module>
+		<module>dashboard-widgets-charts</module>
+	</modules>
+</project>

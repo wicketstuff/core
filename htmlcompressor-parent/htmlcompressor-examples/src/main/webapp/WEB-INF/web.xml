@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns="http://java.sun.com/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
+	version="2.5" metadata-complete="true">
+
+	<display-name>WicketStuff Html Compressor - Example Web Application</display-name>
+
+	<context-param>
+		<param-name>wicket.configuration</param-name>
+		<param-value>deployment</param-value>
+	</context-param>
+
+	<!-- first app not using any compression and url "/nocompressor" -->
+	<filter>
+		<filter-name>nocompressorWicketApp</filter-name>
+		<filter-class>org.apache.wicket.protocol.http.WicketFilter</filter-class>
+		<init-param>
+			<param-name>applicationClassName</param-name>
+			<param-value>org.wicketstuff.htmlcompressor.examples.NoCompressorApp</param-value>
+		</init-param>
+	</filter>
+
+	<!-- second app using htmlcompressor and url "/htmlcompressor" -->
+	<filter>
+		<filter-name>htmlcompressorWicketApp</filter-name>
+		<filter-class>org.apache.wicket.protocol.http.WicketFilter</filter-class>
+		<init-param>
+			<param-name>applicationClassName</param-name>
+			<param-value>org.wicketstuff.htmlcompressor.examples.HtmlCompressorApp</param-value>
+		</init-param>
+	</filter>
+
+	<filter-mapping>
+		<filter-name>nocompressorWicketApp</filter-name>
+		<url-pattern>/nocompressor/*</url-pattern>
+	</filter-mapping>
+
+	<filter-mapping>
+		<filter-name>htmlcompressorWicketApp</filter-name>
+		<url-pattern>/htmlcompressor/*</url-pattern>
+	</filter-mapping>
+
+	<session-config>
+		<session-timeout>30</session-timeout>
+	</session-config>
+</web-app>
+

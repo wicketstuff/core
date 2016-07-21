@@ -1,0 +1,36 @@
+<html xmlns:wicket="http://wicket.apache.org">
+	<head>
+		<title>OfflineModePage</title>
+	</head>
+	<body>
+		<div style="width:500px">
+		This is a page which is going to be cached via ServiceWorker.<br>
+		If you shutdown the server this page will continue to be available if the user has accessed it before with a browser which supports ServiceWorker. 
+		It might behaves a bit strange but if you want to update the cache you have to:
+		<ol>
+			<li>Close all tabs that accesses the web application</li>
+			<li>Stop the server and change the unique cache identifier in the Application</li>
+		</ol>
+		This behavior is wanted because you don't want to pull the rug out from under the browsers feet and to prevent inconsistent results, because a renewed javascript file might not fit to the actual page.
+		You have to close all tabs because this stops the old ServiceWorker and if you access the page again the new one is load.<br/><br/>
+		To test the cache here are server side generated ids:
+		</div>
+		<br/><br/>
+		<div style="font-weight:bold;">
+		This is a span with a generated UUID (on server side) <span wicket:id="id"></span><br/>
+		This is a span with a generated UUID set via javascript - id is generated server side <span id="scriptId"></span><br/><br/>
+		</div>
+		<div style="width:500px">
+		It is important that you think about the browser cache! So if a javascript file is cached from the browser it might not be requested, 
+		even if your application is reachable and the unique cache name has been changed. 
+		The cache for this application has been disabled so that you always get a server response.<br/><br/>
+		
+		You are able to access the service worker in crome via chrome://serviceworker-internals/<br/><br/>
+		
+		If you leave your browser open during the restart a second request has to be made, 
+		because even if you switch between the windows on your desktop device, 
+		chrome for example makes a fresh request to update thumbs.
+		
+		</div>
+	</body>
+</html>

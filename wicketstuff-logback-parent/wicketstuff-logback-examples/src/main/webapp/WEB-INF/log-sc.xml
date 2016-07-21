@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration>
+<configuration>
+	<conversionRule conversionWord="web"
+		converterClass="org.wicketstuff.logback.WicketWebFormattingConverter" />
+
+	<appender name="appender-${contextPath}" class="ch.qos.logback.core.ConsoleAppender">
+		<encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+			<charset>UTF-8</charset>
+			<pattern>%d|%p|%t|%c{36}|%r|%web%n\t%replace(%caller{1}){'Caller\+\d+\s+at\s+', ''}\t%m%n%xEx</pattern>
+		</encoder>
+		<filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+			<level>debug</level>
+		</filter>
+	</appender>
+
+	<logger name="ch" level="warn" />
+
+	<logger name="com" level="warn" />
+
+	<logger name="eu" level="warn" />
+
+	<logger name="net" level="warn" />
+
+	<logger name="org" level="warn" />
+
+	<logger name="org.wicketstuff.logback" level="info" />
+
+	<root level="debug">
+		<appender-ref ref="appender-${contextPath}" />
+	</root>
+</configuration>

@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html xmlns:wicket="http://wicket.apache.org">
+<head>
+<meta charset="utf-8" />
+<title>wicket-foundation</title>
+</head>
+<body>
+    <wicket:extend>
+
+        <div class="row">
+            <h1 id="inline-lists">Inline Lists</h1>
+            <h3 class="subheader">This simple construct creates a
+                horizontal list of links, like in a footer. Use it when
+                you want more control than spaces between links.</h3>
+
+            <hr>
+            <h2>Basic</h2>
+
+            <p>You can create an inline list using minimal markup.</p>
+            <div>
+                    <h4>HTML</h4>
+
+<pre><code class="language-html"><div class="code-container"><span class="tag">&lt;<span class="title">div</span> <span class="attribute">wicket:id</span>=<span class="value">&quot;basic&quot;</span>&gt;</span><span class="tag">&lt;<span class="title">/div</span>&gt;</span>
+</div></code>
+</pre>
+
+                    <h4>Java</h4>
+
+<pre><code class="language-html"><div class="code-container">List&lt;String&gt; titles = Arrays.asList(&quot;Link 1&quot;, &quot;Link 2&quot;, &quot;Link 3&quot;, &quot;Link 4&quot;, &quot;Link 5&quot;);
+FoundationInlineList inlineList = new FoundationInlineList(&quot;basic&quot;, titles) {
+    @Override
+    public AbstractLink createLink(String id, int idx) {
+        return new AjaxLink&lt;Void&gt;(id) {
+
+            @Override
+            public void onClick(AjaxRequestTarget target) {
+            }
+            
+        };
+    }
+};
+add(inlineList);
+</div></code>
+</pre>
+                <div>
+                    <h4>Rendered HTML</h4>
+                    <div wicket:id="basic"></div>
+                </div>
+            </div>
+        </div>
+
+    </wicket:extend>
+</body>
+</html>

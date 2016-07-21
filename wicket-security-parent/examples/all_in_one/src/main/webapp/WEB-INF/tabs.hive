@@ -1,0 +1,21 @@
+grant
+{
+	permission ${ComponentPermission} "org.apache.wicket.security.examples.tabs.pages.MasterPage", "render, enable";
+	//because the menubuttons are a secure link they won't show up without having the following rights
+	permission ${ComponentPermission} "org.apache.wicket.security.examples.tabs.pages.MasterPage:buttoncontainer", "inherit, render, enable";
+	//This is just another way of saying the same as above
+	//permission ${ComponentPermission} "org.apache.wicket.security.examples.tabs.pages.MasterPage", "inherit, render, enable";
+	permission ${ComponentPermission} "org.apache.wicket.security.examples.tabs.pages.MasterPageHiddenContents", "render, enable";
+	permission ${ComponentPermission} "org.apache.wicket.security.examples.tabs.pages.MasterPageHiddenContents:buttoncontainer", "inherit, render, enable";
+	permission ${ComponentPermission} "org.apache.wicket.security.examples.tabs.pages.MasterPageHiddenTabs", "render, enable";
+	permission ${ComponentPermission} "org.apache.wicket.security.examples.tabs.pages.MasterPageHiddenTabs:buttoncontainer", "inherit, render, enable";
+};
+grant principal org.apache.wicket.security.examples.authorization.MyPrincipal "basic"
+{
+	permission ${ComponentPermission} "org.apache.wicket.security.examples.tabs.panels.Gifkikker", "render, enable";
+};
+grant principal org.apache.wicket.security.examples.authorization.MyPrincipal "super"
+{
+	permission ${ComponentPermission} "org.apache.wicket.security.examples.tabs.panels.Heineken", "render, enable";
+	permission ${ComponentPermission} "org.apache.wicket.security.examples.tabs.panels.Grolsch", "render, enable";
+};

@@ -1,0 +1,43 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+<head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+<title>Swarm Examples</title>
+
+<!-- STYLESHEETS -->
+<link rel="stylesheet" href="css/reset-fonts-grids.css" type="text/css"
+	media="all" />
+<link rel="stylesheet" href="css/style.css" type="text/css" media="all" />
+
+<!-- STYLESHEET FOR BUGGY BROWSERS -->
+<!--[if IE]>
+		<link rel="stylesheet" href="css/ie.css" type="text/css" media="all" />
+	<![endif]-->
+</head>
+<body>
+<div id="loginBox">
+<div class="loginTitle">Choose your example</div>
+<div class="loginFormBox">
+<table style="width:100%;height:100%;">
+<tr><td>
+<ul>
+	<li><a href="multilogin">Multi login example</a></li>
+	<li><a href="customactions">Custom actions example</a></li>
+	<li><a href="tabs">Panel replacement example</a></li>
+	<li><a href="basichttp">Basic http logon example</a></li>
+<!-- Don't use digest logon yet, it contains a seriuous bug -->	<!-- <li><a href="digesthttp">Digest http logon example</a></li>	-->
+	<li><a href="denial">Tabs in denial</a> *</li>
+	<li><a href="acegi">Custom actions example using Acegi</a></li>
+	<li>More examples to come</li>
+</ul></td><td> &nbsp;</td>
+<tr><td>&nbsp;</td><td><a href="about.html">About</a></td></tr></table>
+</div>
+<div class="loginFooter">Stylesheet by Vincent van den Noort</div>
+</div>
+<div>
+<ul>
+<li>* = although this looks like the panel replacement example, it actually uses a denial strategy underwater to reverse the rights of the 2 users.<br/>Please look at the source for the differences.</li>
+</ul>
+</div>
+</body>
+</html>

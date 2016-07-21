@@ -1,0 +1,35 @@
+<?xml version="1.0"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+	<modelVersion>4.0.0</modelVersion>
+
+	<parent>
+		<groupId>org.wicketstuff</groupId>
+		<artifactId>wicketstuff-dashboard-parent</artifactId>
+		<version>8.0.0-SNAPSHOT</version>
+	</parent>
+
+	<artifactId>wicketstuff-dashboard-core</artifactId>
+	<packaging>jar</packaging>
+	<name>Wicketstuff Dashboard Core</name>
+
+	<properties>
+		<xstream.version>1.4.9</xstream.version>
+	</properties>
+
+	<dependencies>
+		<!-- Gson (json for java) -->
+		<dependency>
+			<groupId>com.google.code.gson</groupId>
+			<artifactId>gson</artifactId>
+		</dependency>
+
+		<!-- Xstream -->
+		<dependency>
+			<groupId>com.thoughtworks.xstream</groupId>
+			<artifactId>xstream</artifactId>
+			<version>${xstream.version}</version>
+		</dependency>
+	</dependencies>
+</project>

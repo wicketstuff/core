@@ -1,0 +1,20 @@
+<web-app xmlns="http://java.sun.com/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee 
+	      http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"
+	version="3.0">
+
+	<!-- Wicket -->
+	<filter>
+		<filter-name>selectize</filter-name>
+		<filter-class>org.apache.wicket.protocol.http.WicketFilter</filter-class>
+		<init-param>
+			<param-name>applicationClassName</param-name>
+			<param-value>org.wicketstuff.selectize.TestApplication</param-value>
+		</init-param>
+	</filter>
+
+	<filter-mapping>
+		<filter-name>selectize</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
+</web-app>

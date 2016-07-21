@@ -1,0 +1,2070 @@
+a {	cursor :			pointer;
+	}
+
+
+a img {
+	cursor :			pointer;
+	}
+
+
+a span {
+	cursor :			pointer;
+	}
+
+a:hover {	cursor :			pointer;
+	}
+
+
+
+
+
+.testversion {
+	font-size:130%;
+	color: red;
+	font-weight: bold;
+	padding-right: 15px;
+	}
+
+
+
+embed {
+z-index:-9999;
+display:inline;
+background-color :	rgb(232,240,255);
+}
+
+
+/*******************************************************************/
+/*******************************************************************/
+/**                                                               **/
+/**  Visiomedic                                                   **/
+/**                                                               **/
+/*******************************************************************/
+/*******************************************************************/
+.kleiner {
+font-size: smaller;
+}
+
+
+html {		height:100%;
+	width:100%;
+	padding :			0;
+					border :		0;
+						margin :			0;
+						border-width:0;
+						}
+
+body {					font-family :		verdana;
+					font-size : 0.863em;
+
+												color : 			rgb(41,41,41);
+						background-color :	rgb(232,240,255);
+						padding :			0;
+						border :		0;
+						margin :			0;
+						height :			100%;
+						width :				100%;
+						border-width:0;
+						}
+
+
+
+
+
+.linkWithImage {		font-style :		italic;
+						font-weight :		bold;
+						font-family :		verdana;
+						color :				rgb(41,41,41);
+						text-decoration :	none;
+						border-width :		0px;
+						border-color :		rgb(34,69,104);
+						border-style :		groove;
+}
+
+
+
+
+/* VisioPAD */
+.fallbackLink {			font-style :		italic;
+						font-weight :		bold;
+						font-family :		verdana;
+						color :				rgb(41,41,41);
+						text-decoration :	none;
+						background-color :	rgb(152,186,225);
+						border-width :		2px;
+						border-color :		rgb(34,69,104);
+						border-style :		groove;
+}
+
+
+/* VisioPAD */
+a.navigationUndInfo {	width : 			100%;
+						font-style :		italic;
+						font-weight :		bold;
+						font-family :		verdana;
+						color :				rgb(41,41,41);
+						text-decoration :	none;
+						text-align :		left;
+						background-color :	rgb(152,186,225);
+						border-width :		2px;
+						border-color :		rgb(34,69,104);
+						border-style :		groove;
+						white-space :		nowrap;
+						/* margin :			1em; */
+						padding-left :		1em;
+						padding-right :		1em;
+						padding-top :		0.4em;
+						padding-bottom :	0.4em;
+						margin-bottom :		1em;
+						font-size :			larger;
+}
+
+/* VisioPAD */
+.visiopadkopfzeile {	color :				rgb(240,240,240);
+						background-color :	rgb(34,69,104); /* rgb(70,55,120); */
+						font-weight :		bold;
+						padding-top :		5px;
+						padding-bottom :	10px;
+						padding-left :		5px;
+						font-variant :		small-caps;
+						font-size :			12.7pt;
+						}
+
+
+
+
+
+td { font-size: 1.2em;
+}
+
+
+
+th { font-size: 1.2em;
+}
+
+select {
+font-family :		verdana;
+}
+
+
+
+
+table select {
+font-family: verdana;
+font-size:1.2em;
+}
+
+
+
+input {
+font-family :		verdana;
+}
+
+
+textarea {
+font-family :		verdana;
+}
+
+
+
+
+
+.requiredFormInput {
+background-color: rgb(232,240,255);
+}
+
+.formInput{
+background-color: rgb(230,230,230);
+}
+
+
+
+
+
+
+
+.missingFormInput {
+background-color: rgb(255,213,170);
+}
+
+.formTextInput {
+	
+}
+
+
+.formButton {			font-family :		verdana;
+						
+						font-style : 		italic;
+						font-weight :		bold;
+						color : 			rgb(41,41,41);
+						background-color :	rgb(152,186,225);
+
+						border-width :		2px;
+						border-color :		rgb(34,69,104);
+						border-style :		groove;
+						margin-top : 		15pt;
+						font-size: 1.15em;
+						}
+
+
+
+.button {				font-family :		verdana;
+						
+						font-style : 		italic;
+						font-weight :		bold;
+						color : 			rgb(41,41,41);
+						background-color :	rgb(152,186,225);
+
+						border-width :		2px;
+						border-color :		rgb(34,69,104);
+						border-style :		groove;
+						font-size: 1.15em;
+						}
+
+
+
+.formImageButton {		font-family :		verdana;
+						
+						font-style : 		italic;
+						font-weight :		bold;
+						color : 			rgb(41,41,41);
+						background-color:	rgb(184,205,235);
+
+
+						border-width :		0px;
+						border: 0 0 0 0;
+						margin: 0 0 0 0;
+						padding: 0 0 0 0;
+						}
+
+
+
+.visioPadButton {		font-family :		verdana;
+						font-style : 		italic;
+						font-weight :		bold;
+						color : 			rgb(41,41,41);
+						background-color :	rgb(152,186,225);
+						border-width :		2px;
+						border-color :		rgb(34,69,104);
+						border-style :		groove;
+						margin-top : 		15pt;
+						font-size: 1.15em;
+						padding :			10px;
+						font-size :			120%;
+						}
+
+
+table.matrix {			border :			rgb(34,69,104) 1px solid;
+						}
+
+table.matrix td.topbar {
+						font-family :		verdana;
+						font-weight :		bold;
+						text-align :		right;
+						text-align :		center;
+						}
+
+table.matrix td.leftbar {
+						font-family :		verdana;
+						font-weight :		bold;
+						text-align :		right;
+						}
+
+
+
+.visioPadMatrixButton {	font-family :		verdana;
+						font-style : 		italic;
+						font-weight :		bold;
+						color : 			rgb(41,41,41);
+						background-color :	rgb(152,186,225);
+						border-width :		2px;
+						border-color :		rgb(34,69,104);
+						border-style :		groove;
+						width :				100%;
+						height :			100%;
+						}
+
+
+.gesamtseite {
+	width:100%;
+	height:100%;
+	border :0;
+		padding :0;
+	margin :0;
+}
+
+.kopfzeile {border :0;
+	padding :0;
+	margin :0;;
+}
+
+
+
+
+.seitenkoerperZentriert {
+}
+
+.seitenkoerperZentriert td#links {
+	width:50%;
+	height:100%;
+}
+.seitenkoerperZentriert td#rechts {
+	width:50%;
+	height:100%;
+}
+
+.seitenkoerperBreit {
+	border :0;
+	height:100%;
+	padding :0;
+	margin :0;;
+}
+
+.seitenkoerperBreit td#mitte {
+	width:100%;
+	height:100%;
+	vertical-align:top;
+	padding-top:5px;
+	}
+
+
+
+.seitenkoerperLinksOben {
+border :0;
+	padding :0;
+	margin :0;;
+	vertical-align: top;
+}
+
+.seitenkoerperLinksOben td#links {
+	
+	}
+
+.seitenkoerperLinksOben td#rechts {
+	width:100%;
+	height:100%;
+	
+	}
+
+
+
+
+.fusszeile {			background-color :	rgb(152,186,225);
+						border-width :		0;
+						border-top :		2px rgb(34,69,104);
+						border-top-style :	double;
+						margin :			0 0 0 0;
+						white-space :		nowrap;
+						vertical-align :	middle;
+						width:100%;
+						}
+
+.fusszeileLinks {		text-align :		left;
+}
+
+.fusszeileRechts {		text-align :		right;
+						}
+
+
+
+
+
+.fusszeile a {
+	text-decoration: none;
+}
+
+.fusszeile a:link {
+	color: rgb(41,41,41);
+}
+
+.fusszeile a:visited {
+	color: rgb(41,41,41);
+}
+
+.fusszeile a:active {
+	color: rgb(41,41,41);
+}
+
+.fusszeile a:hover {
+	text-decoration: underline;
+}
+
+
+.neutralForm {			padding-top : 0px;
+						padding-bottom : 0px;
+						background-color :	rgb(232,240,255);
+						border :			0 0 0 0;
+						margin : 0 0 0 0;
+						
+						}
+.neutralForm label {	font-weight : normal;
+						}
+
+.neutralForm table td {	padding :			0 0 0 0;
+						border :			0 0 0 0;
+						margin : 0 0 0 0;
+
+						}
+
+.neutralFormImageButton {font-family :		verdana;
+						font-style : 		italic;
+						font-weight :		bold;
+						color : 			rgb(41,41,41);
+						background-color :	rgb(232,240,255);
+
+						border-width :		0px;
+						border: 0 0 0 0;
+						margin: 0 0 0 0;
+						padding: 0 0 0 0;
+						}
+
+
+.fehler {				color :				red;
+						font-weight : 		bold;
+						}
+
+.rightAligned {			text-align :		right;
+white-space : nowrap;
+						}
+
+/* Labels innerhalb von Formularen sind fett und rechtsb�ndig */
+form table td {			padding :			5px;
+						}
+
+form label {			font-weight : 		bold;
+						}
+
+table.pseudoform label {font-weight : 		bold;
+						}
+
+.pseudolabel {			font-weight : 		bold;
+						}
+
+
+form {					margin:0px;
+						background-color:	rgb(184,205,235);
+						/* background-color :	rgb(220,232,255); */
+						border :			2px;
+						border-style :		ridge;
+						border-color :		white; /* rgb(34,69,104);*/
+						}
+
+.pseudoform {			margin:0px;
+						background-color:	rgb(184,205,235);
+						/* background-color :	rgb(220,232,255); */
+						border :			2px;
+						border-style :		ridge;
+						border-color :		white; /* rgb(34,69,104);*/
+						}
+
+fieldset legend {		/*font-size :			smaller;*/
+						font-weight : 		bold;
+						font-variant : 		small-caps;
+						border-color :		white;
+						}
+
+fieldset {				padding-left :		5px;
+						padding-right :		5px;
+						padding-bottom :	8px;
+						font-size: bigger;
+						}
+
+
+
+
+
+
+
+/* Autocompletion dropdown men� */
+div.wicket-aa {			font-style : 		italic;
+						background-color :	rgb(232,240,255);
+						border-width :		2px;
+						border-color :		rgb(34,69,104);
+						border-style :		solid;
+						padding :			2px;
+						margin :			1px 0 0 0;
+						text-align :		left;
+						cursor :	default;
+}
+div.wicket-aa ul { 		list-style :		none;
+						padding :			2px;
+						margin :			0;
+						background-color :	rgb(232,240,255);
+						text-align :		left;
+						cursor :	default;
+}
+/* Der Firefox kann die breite nicht korrekt anpassen, daher wird umgebrochen.*/
+/* Der iE kanns, daher steht in den IE-Spezial-CSS-Versionen ein "white-space : nowrap;" */
+
+div.wicket-aa ul li { 	list-style :		none;
+						padding :			2px;
+						margin :			0;
+						background-color :	rgb(232,240,255);
+						text-align :		left;
+						cursor :	default;
+						width :		100%;
+}
+div.wicket-aa ul li.selected {
+						background-color: rgb(184,205,235);
+						padding :			2px;
+						margin :			0;
+						font-weight : bold;
+						cursor :	default;
+						}
+
+
+
+
+
+
+/*******************************************************************/
+ /*******************************************************************/
+ /**                                                               **/
+ /**  Wicket inh�rent                                              **/
+ /**                                                               **/
+ /*******************************************************************/
+ /*******************************************************************/
+
+
+.feedbackPanelERROR {
+	color: red;
+	list-style: circle;
+	font-weight: bold;
+}
+
+.feedbackPanelINFO {
+	color: green;
+	list-style: circle;
+	font-weight: bold;
+}
+
+
+
+
+
+
+
+/*******************************************************************/
+/*******************************************************************/
+/**                                                               **/
+/**  Tabpanel                                                     **/
+/**                                                               **/
+/*******************************************************************/
+/*******************************************************************/
+
+/* Selektierter TAB */
+/*
+.selected {
+    background-color: rgb(34,69,104);
+    color: red;
+}
+*/
+
+div.tabpanel4 {
+  width:100%;
+}
+
+
+div.tabpanel4 div.tab-row {
+  float:left;
+  width:100%;
+  }
+
+
+/* Die Panelzeile als solches */
+
+div.tabpanel4 div.tab-row ul {
+	height: 20px;
+    margin: 0;
+    padding-left: 10px;
+    border-bottom: 2px solid rgb(34,69,104);
+  height: 1.5em;
+    
+}
+
+
+/* Grundstil für die einzelnen Tabs */
+div.tabpanel4 div.tab-row li {
+    margin: 0;
+    padding: 0;
+    display: inline;
+    list-style-type: none;
+    font-size: 1em;
+}
+
+
+/* Nicht selektierter TAB */
+div.tabpanel4 div.tab-row a:link, div.tabpanel4 div.tab-row a:visited  {
+    float: left;
+    background: rgb(152,186,225);
+    line-height: 14px;
+    font-weight: bold;
+    padding: 2px 10px 2px 10px;
+    margin-right: 4px;
+    border-left: 2px solid rgb(34,69,104);
+    border-top: 2px solid rgb(34,69,104);
+    border-right: 2px solid rgb(34,69,104);
+    text-decoration: none;
+    color : 			rgb(41,41,41);
+    font-size: 0.8em;
+}
+
+
+/* Selektierter TAB */
+
+div.tabpanel4 div.tab-row li.selected a:link, div.tabpanel4 div.tab-row li.selected a:visited {
+    background :	rgb(34,69,104);
+    color :		white;
+    font-size: 0.8em;
+}
+
+
+/* Drüberfahren über Tab-Link */
+div.tabpanel4 div.tab-row a:hover {
+    background :	rgb(34,69,104);
+    color :		white;
+}
+
+
+/* Der Panelinhalt von Tabs, die wiederum in einem Tab sind (also tab in tab) */
+/*
+div.tabpanel4 div.tabpanel4 div.tab-panel {
+    width :	1%;
+}
+*/
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* TabPanel in SPAN */
+span.tabpanel4 {
+  width:100%;
+}
+
+
+span.tabpanel4 div.tab-row {
+  float:left;
+  width:100%;
+  }
+
+
+/* Die Panelzeile als solches */
+
+span.tabpanel4 div.tab-row ul {
+	height: 20px;
+    margin: 0;
+    padding-left: 10px;
+    border-bottom: 2px solid rgb(34,69,104);
+	height: 1.5em;
+}
+
+
+/* Grundstil für die einzelnen Tabs */
+span.tabpanel4 div.tab-row li {
+    margin: 0;
+    padding: 0;
+    display: inline;
+    list-style-type: none;
+}
+
+
+/* Nicht selektierter TAB */
+span.tabpanel4 div.tab-row a:link, div.tabpanel4 div.tab-row a:visited  {
+    float: left;
+    background: rgb(152,186,225);
+    line-height: 14px;
+    font-weight: bold;
+    padding: 2px 10px 2px 10px;
+    margin-right: 4px;
+    border-left: 2px solid rgb(34,69,104);
+    border-top: 2px solid rgb(34,69,104);
+    border-right: 2px solid rgb(34,69,104);
+    text-decoration: none;
+    color : 			rgb(41,41,41);
+  height: 1.2em;
+}
+
+
+/* Selektierter TAB */
+
+span.tabpanel4 div.tab-row li.selected a:link, div.tabpanel4 div.tab-row li.selected a:visited {
+    background :	rgb(34,69,104);
+    color :		white;
+}
+
+
+/* Drüberfahren über Tab-Link */
+span.tabpanel4 div.tab-row a:hover {
+    background :	rgb(34,69,104);
+    color :		white;
+}
+
+
+/* Der Panelinhalt von Tabs, die wiederum in einem Tab sind (also tab in tab) */
+/*
+div.tabpanel4 div.tabpanel4 div.tab-panel {
+    width :	1%;
+}
+*/
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+div.bigtabpanel4 {
+  width:100%;
+}
+
+
+div.bigtabpanel4 div.tab-row {
+  float:left;
+  width:100%;
+  }
+
+
+/* Die Panelzeile als solches */
+
+div.bigtabpanel4 div.tab-row ul {
+	height: 30px;
+    margin: 0;
+    padding-left: 10px;
+    border-bottom: 2px solid rgb(34,69,104);
+	height: 1.5em;
+	font-size:130%;
+    
+}
+
+
+/* Grundstil f�r die einzelnen Tabs */
+div.bigtabpanel4 div.tab-row li {
+    margin: 0;
+    padding: 0;
+    display: inline;
+    list-style-type: none;
+}
+
+
+/* Nicht selektierter TAB */
+div.bigtabpanel4 div.tab-row a:link, div.tabpanel4 div.tab-row a:visited  {
+    float: left;
+    background: rgb(152,186,225);
+    line-height: 24px;
+    font-weight: bold;
+    padding: 2px 10px 2px 10px;
+    margin-right: 4px;
+    border-left: 2px solid rgb(34,69,104);
+    border-top: 2px solid rgb(34,69,104);
+    border-right: 2px solid rgb(34,69,104);
+    text-decoration: none;
+    color : 			rgb(41,41,41);
+  height: 1.2em;
+}
+
+
+/* Selektierter TAB */
+
+div.bigtabpanel4 div.tab-row li.selected a:link, div.tabpanel4 div.tab-row li.selected a:visited {
+    background :	rgb(34,69,104);
+    color :		white;
+}
+
+
+/* Dr�berfahren �ber Tab-Link */
+div.bigtabpanel4 div.tab-row a:hover {
+    background :	rgb(34,69,104);
+    color :		white;
+}
+
+
+
+
+/*******************************************************************/
+ /*******************************************************************/
+ /**                                                               **/
+ /**  Men�zeile                                                    **/
+ /**                                                               **/
+ /*******************************************************************/
+ /*******************************************************************/
+/*
+#content {
+	padding: 3px 0;
+	voice-family: "\"}\""; 
+	voice-family:inherit;
+}
+
+html>body #content {
+	width: 32em;
+} 
+*/
+
+.menubar h1 {
+	text-align: center;
+	padding: 0 0 0.25em 0;
+	margin: 0;
+	z-index: 999;
+}
+
+.menubar ul {
+	list-style: none;
+	padding: 0;
+	margin: 0;
+	z-index: 999;
+}
+
+#nav a {
+	font-weight: bold;
+	color: rgb(15,15,15);
+	text-align: left;
+	text-decoration: none;
+	text-align: left;
+}
+
+/* Die Men�eintr�ge-Texte */
+#nav li li a {
+	font-weight: bold;
+	text-align: left;
+	display: block;
+	color: rgb(41,41,41);
+	padding : 0.2em 10px;
+	white-space : nowrap;
+	z-index: 999;
+}
+
+
+/* Die Men�eintr�ge-Texte */
+#nav li li.disabled {
+	font-weight: bold;
+	text-align: left;
+	display: block;
+	padding : 0.2em 10px; 
+	white-space : nowrap;
+	z-index: 999;
+}
+
+/* Die seitlichen cursor-Balken im Men� */
+#nav li li a:hover {
+	padding: 0.2em 5px;
+	border: 1px solid rgb(34,69,104);
+	border-width: 0 5px;
+	text-align: left;
+}
+
+/* Die Umrandung der Men�zeile */
+.menubar li {
+	float: left;
+	position: relative;
+	text-align: center;
+	cursor: default;
+	background-color: rgb(152,186,225);
+	border: 1px solid rgb(34,69,104);
+	border-width: 1px 0;
+	text-align: left;
+	z-index: 999;
+}
+
+.menubar li#singleMenu {
+	padding-left: 0.95em;
+	padding-right: 0.95em;
+	border-left-width: 2px;
+	border-right-width: 2px;
+	margin-right: 2px;
+	white-space : nowrap;
+}
+
+.menubar li#firstMenu {
+	padding-left: 0.95em;
+	padding-right: 0.95em;
+	border-left-width: 2px;
+	border-right-width: 2px;
+	margin-right: 2px;
+	white-space : nowrap;
+}
+
+.menubar li#middleMenu {
+	padding-left: 0.95em;
+	padding-right: 0.95em;
+	border-left-width: 2px;
+	border-right-width: 2px;
+	margin-right: 2px;
+	white-space : nowrap;
+}
+
+.menubar li#lastMenu {
+	padding-left: 0.95em;
+	padding-right: 0.95em;
+	border-left-width: 2px;
+	border-right-width: 2px;
+	white-space : nowrap;
+}
+
+/* Ein komplettes Men�, also der Block der runterklappt */
+.menubar li ul {
+	display: none;
+	position: absolute;
+	top: 100%;
+	left: 0;
+	font-weight: normal;
+	background-color: rgb(152,186,225);
+	padding: 0.5em 0;
+	border-right: ridge 1px rgb(125,125,125);
+	border-left: ridge 1px rgb(125,125,125);
+	border-bottom: ridge 1px rgb(125,125,125);
+	text-align: left;
+	z-index:99999;
+}
+
+.menubar li>ul {
+	top: auto;
+	left: auto;
+}
+
+.menubar li li {
+	display: block;
+	float: none;
+	background-color: rgb(152,186,225);
+	border: 0;
+	color: rgb(41,41,41);
+}
+
+.menubar li li.disabled {
+	display: block;
+	float: none;
+	background-color: rgb(152,186,225);
+	border: 0;
+	color: rgb(123,123,123);
+}
+
+.menubar li:hover ul, li.over ul {
+	display: block;
+}
+
+/* Was soll beim �berfahren eines Men�eintrags passieren? */
+/* Leider zeigt der IE6 nur den ge�nderten Hintergrund an, die Textfarbe ist nicht zu beeinflussen */
+.menubar li ul li a:hover {
+	/* background-color: rgb(34,69,104); */
+	/* color :	rgb(232,240,255); */
+	
+	background-color: white;
+	color red;
+}
+
+.menubar hr {
+	display: none;
+}
+
+.menubar p {
+	clear: left;
+	background: url(images/remora.gif) center left no-repeat;
+	padding: 0.95em 0.95em 0 0.95em;
+	margin: 0;
+}
+
+.menubar p.image {
+	float: right;
+	text-align: center;
+	color: #7d6340;
+	padding: 1.25em 1.25em 0.25em 0.25em;
+}
+
+.menubar  p.image img {
+	display: block;
+	border: 1px solid #7d6340;
+}
+
+
+
+
+
+
+
+/*******************************************************************/
+/*******************************************************************/
+/**                                                               **/
+/**  dataview aus Wicket Examples                                 **/
+/**                                                               **/
+/*******************************************************************/
+/*******************************************************************/
+table.dataview {
+	margin-bottom: 10px;
+	border-bottom: 1px double rgb(34,69,104);
+	font-family: verdana;
+	width : 100%;
+	font-weight :		normal;
+	font-variant : normal
+}
+
+table.dataview caption { text-align: left; }
+table.dataview tr { padding-top: 2px; padding-bottom: 2px; }
+table.dataview tr.even { background-color: rgb(232,240,255); color : rgb(41,41,41);
+}
+table.dataview tr.odd td { background-color: rgb(246,246,246); color : rgb(41,41,41);
+}
+table.dataview tr.highlighted td { background-color: rgb(255,255,204); color : rgb(41,41,41);
+}
+
+
+table.dataview tr td { padding-left: 8px; padding-right: 8px; vertical-align: top; height:100%; }
+
+table.dataview tr th { color: rgb(41,41,41); padding-top: 3px; padding-bottom: 3px; padding-left: 8px; padding-right: 24px; background-color: rgb(152,186,225); border-bottom: 1px solid rgb(34,69,104); border-top: 1px solid rgb(34,69,104); text-align: center; white-space: nowrap; vertical-align: middle; font-weight: bold;}
+
+table.dataview tr th {
+background-position: right; background-repeat:no-repeat;
+}
+
+
+
+
+table.dataview td.topbar { color: rgb(41,41,41);
+		padding-top: 3px;
+		padding-bottom: 3px;
+		background-color: rgb(152,186,225);
+		text-align: center;
+		white-space: nowrap; vertical-align: middle; font-weight: bold;}
+table.dataview td.leftbar { color: rgb(41,41,41);
+		padding-top: 3px;
+		padding-bottom: 3px;
+		background-color: rgb(152,186,225);
+		text-align: right;
+		white-space: nowrap; vertical-align: middle; font-weight: bold;}
+table.dataview td.greengrid {
+		text-align:center;
+		background-color: rgb(204,255,204);
+		}
+table.dataview td.yellowgrid {
+		text-align:center;
+		background-color: rgb(255,255,204);
+		}
+table.dataview td.redgrid {
+		text-align:center;
+		background-color: rgb(255,214,151);
+		}
+
+
+
+
+table.dataview tr th.wicket_orderDown {color:white;
+	background-color: rgb(34,69,104);	 background-image: url(images/arrow_down.png); }
+table.dataview tr th.wicket_orderUp {color:white;
+	background-color: rgb(34,69,104);	 background-image: url(images/arrow_up.png); }
+table.dataview tr th.wicket_orderNone {
+	color:white;
+	background-image: url(images/arrow_off.png);
+	text-align: center; 
+}
+
+
+
+
+table.dataview td a { color : rgb(41,41,41);	text-decoration: underline;
+}
+
+
+table.dataview tbody td a {
+				 width:100%; height:100%;
+				 display: block;
+				 text-align:left;
+				 text-decoration:none;
+				 color : rgb(41,41,41);
+}
+
+
+table.dataview tr th a:link { color : rgb(41,41,41); }
+table.dataview tr th a:visited { color : rgb(41,41,41); }
+table.dataview tr th a:focus { color : red; }
+table.dataview tr th a:hover { color : white; }
+table.dataview tr th a:active { color : white; }
+
+
+table.dataview tr th.wicket_orderDown a { color:white;}
+table.dataview tr th.wicket_orderDown a:link { color:white;}
+table.dataview tr th.wicket_orderDown a:visited { color:white;}
+table.dataview tr th.wicket_orderDown a:focus { color:white;}
+table.dataview tr th.wicket_orderDown a:hover { color:white;}
+table.dataview tr th.wicket_orderDown a:active { color:white;}
+
+
+table.dataview tr th.wicket_orderUp a { color:white;}
+table.dataview tr th.wicket_orderUp a:link { color:white;}
+table.dataview tr th.wicket_orderUp a:visited { color:white;}
+table.dataview tr th.wicket_orderUp a:focus { color:white;}
+table.dataview tr th.wicket_orderUp a:hover { color:white;}
+table.dataview tr th.wicket_orderUp a:active { color:white;}
+
+
+table.dataview #message { padding-left: 3px; }
+table.dataview caption { padding-bottom: 2px; }
+
+
+
+.dataview td#left { border-left: 1px solid rgb(34,69,104);
+}
+.dataview td#right { border-right: 1px solid rgb(34,69,104);
+	border-left: 2px solid white;
+}
+.dataview td#middle {
+	border-left: 2px solid white;
+}
+
+.dataview td#single { border-left: 1px solid rgb(34,69,104);
+border-right: 1px solid rgb(34,69,104);
+}
+
+
+
+.dataview th#left { border-left: 1px solid rgb(34,69,104);
+}
+.dataview th#right { border-right: 1px solid rgb(34,69,104);
+	border-left: 2px solid white;
+}
+.dataview th#middle {
+	border-left: 2px solid white;
+}
+
+.dataview th#single { border-left: 1px solid rgb(34,69,104);
+border-right: 1px solid rgb(34,69,104);
+}
+
+
+
+/*******************************************************************/
+/*******************************************************************/
+/**                                                               **/
+/**  Displaytag                                                   **/
+/**                                                               **/
+/*******************************************************************/
+/*******************************************************************/
+
+table.displaytag th.sorted a, th.sortable a {
+    background-position: right;
+    display: block;
+}
+
+table.displaytag th.sortable a {
+    background-image: url(images/arrow_off.png);
+}
+
+table.dataview tr.even { background-color: rgb(232,240,255); color : rgb(41,41,41);
+}
+
+table.dataview tr.odd { background-color: white; color : rgb(41,41,41);
+}
+
+
+
+
+table.displaytag {
+	margin-bottom: 10px;
+	border-bottom: 1px double rgb(34,69,104);
+	font-family: verdana;
+	/* width : 100%; */
+	}
+
+table.displaytag caption { text-align: left; }
+table.displaytag tr { padding-top: 2px; padding-bottom: 2px; }
+table.displaytag tr.even { background-color: rgb(232,240,255); color : rgb(41,41,41);
+}
+table.displaytag tr.odd { background-color: white; color : rgb(41,41,41);
+}
+
+
+table.displaytag tr td { padding-left: 8px; padding-right: 30px;}
+table.displaytag tr th { color: red; padding-top: 3px; padding-bottom: 3px; padding-left: 8px; padding-right: 24px; background-color: rgb(152,186,225); border-bottom: 1px solid rgb(34,69,104); border-top: 1px solid rgb(34,69,104); text-align: left; white-space: nowrap; vertical-align: middle; font-weight: bold;}
+
+table.displaytag tr th {
+background-position: right; background-repeat:no-repeat;
+
+}
+
+table.displaytag tr th.order1 {color:white;
+	background-color: rgb(34,69,104);	 background-image: url(images/arrow_down.png); }
+table.displaytag tr th.order2 {color:white;
+	background-color: rgb(34,69,104);	 background-image: url(images/arrow_up.png); }
+table.displaytag tr th.sortable {
+	color:green;
+	background-image: url(images/arrow_off.png);
+}
+
+
+
+table.displaytag td a { color : rgb(41,41,41);	text-decoration: underline;
+}
+
+
+
+
+
+
+
+table.displaytag tr th a:link { color : rgb(41,41,41); }
+table.displaytag tr th a:visited { color : rgb(41,41,41); }
+table.displaytag tr th a:focus { color : red; }
+table.displaytag tr th a:hover { color : white; }
+table.displaytag tr th a:active { color : white; }
+
+
+table.displaytag tr th.wicket_orderDown a { color:white;}
+table.displaytag tr th.wicket_orderDown a:link { color:white;}
+table.displaytag tr th.wicket_orderDown a:visited { color:white;}
+table.displaytag tr th.wicket_orderDown a:focus { color:white;}
+table.displaytag tr th.wicket_orderDown a:hover { color:white;}
+table.displaytag tr th.wicket_orderDown a:active { color:white;}
+
+
+table.displaytag tr th.wicket_orderUp a { color:white;}
+table.displaytag tr th.wicket_orderUp a:link { color:white;}
+table.displaytag tr th.wicket_orderUp a:visited { color:white;}
+table.displaytag tr th.wicket_orderUp a:focus { color:white;}
+table.displaytag tr th.wicket_orderUp a:hover { color:white;}
+table.displaytag tr th.wicket_orderUp a:active { color:white;}
+
+
+table.displaytag #message { padding-left: 3px; }
+table.displaytag caption { padding-bottom: 2px; }
+
+
+
+
+
+
+
+
+
+
+
+
+/* Schmerzwert-Auswahl-*/
+
+
+
+table.valuebar td {
+	border: 0;
+	padding: 0;
+	margin: 0;
+}
+
+table.valuebar td a {
+				 width:100%; height:100%;
+				 display: block;
+				 text-align:center;
+				 text-decoration:none;
+				  color : rgb(41,41,41);
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* Behandlungsabschnittstabelle */
+
+
+
+
+			table.baview a.vollstaendig {
+				background-color: rgb(227,255,227);
+			}
+
+			table.baview a.unvollstaendig {
+				background-color: rgb(255,255,189);
+			}
+			table.baview a.fehlend {
+				background-color: rgb(255,214,151);
+			}
+
+
+table.baview {
+	margin-bottom: 10px;
+	border-bottom: 1px double rgb(34,69,104);
+	font-family: verdana;
+	font-weight :		normal;
+	font-variant : normal;
+}
+
+
+table.baview tr.even { background-color: rgb(232,240,255); color : rgb(41,41,41);
+}
+table.baview tr.odd td { background-color: rgb(246,246,246); color : rgb(41,41,41);
+}
+
+
+table.baview tr th { color: rgb(41,41,41); padding-top: 2px; padding-bottom: 2px; padding-left: 5px; padding-right: 5px; background-color: rgb(152,186,225); border-bottom: 1px solid rgb(34,69,104); border-top: 1px solid rgb(34,69,104); text-align: center; white-space: nowrap; vertical-align: middle; font-weight: bold;}
+
+table.baview tr td { color: rgb(41,41,41); padding-top: 1px; padding-bottom: 1px; margin-left: 0px; margin-right: 0px;}
+
+
+table.baview td a {
+				 width:100%; height:100%;
+				 display: block;
+				 text-align:center;
+				 text-decoration:none;
+				  color : rgb(41,41,41);
+}
+
+
+
+table.baview td#left { border-left: 1px solid rgb(34,69,104);
+}
+table.baview td#right { border-right: 1px solid rgb(34,69,104);
+	border-left: 2px solid white;
+}
+table.baview td#middle {
+	border-left: 2px solid white;
+}
+
+table.baview th#left { border-left: 1px solid rgb(34,69,104);
+}
+table.baview th#right { border-right: 1px solid rgb(34,69,104);
+	border-left: 2px solid white;
+}
+table.baview th#middle {
+	border-left: 2px solid white;
+}
+
+
+
+
+
+
+
+ 
+ .selectedMedikamentenverfahren {
+		padding:0.35em;
+		border:2px solid rgb(34,69,104);
+		background-color:rgb(152,186,225);
+ }
+
+
+ .unselectedMedikamentenverfahren {
+		padding:0.35em;
+		border:3px solid rgb(152,186,225);
+ }
+
+
+
+
+
+
+
+
+ 
+ .selectedMedikamentenverfahren {
+		padding:0.35em;
+		border:2px solid rgb(34,69,104);
+		background-color:rgb(152,186,225);
+ }
+
+
+ .unselectedMedikamentenverfahren {
+		padding:0.35em;
+		border:3px solid rgb(152,186,225);
+ }
+
+
+
+
+
+
+
+
+.unselectedDigit {
+			font-weight:bold;
+			border: 2px solid rgb(152,186,225);
+			background-color : rgb(232,240,255);
+			font-size:15px ;
+			color : rgb(41,41,41);
+			text-decoration:	none;
+			text-align:center;
+			vertical-align:middle;
+}
+
+
+
+.selectedDigit {
+			font-weight:bold;
+			border: 2px solid rgb(34,69,104);
+			background-color : rgb(152,186,225);
+			font-size:15px ;
+			color : rgb(41,41,41);
+			text-decoration:	none;
+			text-align:center;
+			vertical-align:middle;
+}
+
+
+
+
+
+
+
+
+
+
+.unselectedVCheckbox {
+			font-weight:bold;
+			width : 1.2em;
+			height : 1.2em;
+			border: 2px solid rgb(152,186,225);
+			background-color : rgb(232,240,255);
+			margin-left:0px;
+			margin-top:0px;
+			margin-right:0px;
+			margin-bottom:0px;
+			padding-left : 0px;
+			padding-top:0px;
+			padding-right:0px;
+			padding-bottom:0px;
+			font-size:2em;
+			/* color : rgb(232,240,255); */
+			color : rgb(232,240,255);
+			text-decoration:	none;
+			text-align:center;
+			vertical-align:middle;
+}
+
+
+
+.selectedVCheckbox {
+			font-weight:bold;
+			width : 1.2em;
+			height :1.2em;
+			border: 2px solid rgb(152,186,225);
+			background-color : rgb(232,240,255);
+			margin-left:0px;
+			margin-top:0px;
+			margin-right:0px;
+			margin-bottom:0px;
+			padding-left : 0px;
+			padding-top:0px;
+			padding-right:0px;
+			padding-bottom:0px;
+			font-size:2em;
+			color : rgb(41,41,41);
+			text-decoration:	none;
+			text-align:center;
+			vertical-align:middle;
+}
+
+
+
+
+
+
+
+
+
+.bigger td { font-size:100%;
+}
+
+.bigger tr.headers  th { font-size:100%;
+text-decoration :	none;
+}
+
+
+.bigger tr.headers  th a {
+text-decoration :	none;
+}
+
+
+
+
+
+
+ /* Wir verwenden manchmal Buttons als ersat f�r radio-Buttone, wenn es besser aussieht oder
+    praktischer ist. Die k�nnen in 3 Zust�nden sein
+    sichtbar, aber nicht aktivierbar
+    sichtbar aber nciht ausgew�hlt
+    sichtbar und ausgew�hlt
+ */
+ 
+
+
+.disabledChoiceButton {
+			font-weight:bold;
+			border: 2px solid rgb(152,186,225);
+			background-color : rgb(232,240,255);
+			font-size:15px ;
+			color : rgb(41,41,41);
+			text-decoration:	none;
+			text-align:center;
+			vertical-align:middle;
+			disabled:disabled;
+}
+
+.unselectedChoiceButton {
+			font-weight:bold;
+			border: 2px solid rgb(152,186,225);
+			background-color : rgb(232,240,255);
+			font-size:15px ;
+			color : rgb(41,41,41);
+			text-decoration:	none;
+			text-align:center;
+			vertical-align:middle;
+}
+
+.selectedChoiceButton {
+			font-weight:bold;
+			border: 2px solid rgb(34,69,104);
+			background-color : rgb(152,186,225);
+			font-size:15px ;
+			color : rgb(41,41,41);
+			text-decoration:	none;
+			text-align:center;
+			vertical-align:middle;
+}
+
+
+
+
+
+
+img {
+	display: block;
+	border: 0px;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*
+ * Licensed to the Apache Software Foundation (ASF) under one or more
+ * contributor license agreements.  See the NOTICE file distributed with
+ * this work for additional information regarding copyright ownership.
+ * The ASF licenses this file to You under the Apache License, Version 2.0
+ * (the "License"); you may not use this file except in compliance with
+ * the License.  You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+/*>>	width: 20em;
+*/
+div.my-tree div.wicket-tree {
+	white-space: nowrap;
+	/* border: 1px solid #ccc; */
+	border:0px;
+	/*overflow: scroll;*/
+	/* margin: 10px; */
+	margin:0px;
+	padding:0px;
+	line-height: 1.5em;
+	width:16em;
+}
+
+/*>>*/
+div.my-tree div.wicket-tree a {
+	text-decoration: none;
+	color:black;
+	/*color: #3311aa;*/
+	float: left;	
+}
+
+div.my-tree div.wicket-tree div.row {
+	height: 1.5em;
+	/*overflow:hidden;	*/
+	width: 100%;
+	padding: 0px; margin: 0px; border:0px;
+}
+div.my-tree div.wicket-tree div.row-selected {
+	height: 1.5em;
+	/*overflow:hidden;	*/
+	width: 100%;
+	padding: 0px; margin: 0px; border:0px;
+	font-weight:bold;
+	background-color:	rgb(184,205,235);
+}
+	
+div.my-tree div.wicket-tree div.a_ {
+	/* prevent hiding text */
+	/* padding-left: 1em; margin: 0px;  */
+	/* width: 2000px; */
+	padding-left:1px;
+	margin:0px;
+	border:0px;
+}
+
+div.my-tree div.wicket-tree span.junction,
+div.my-tree div.wicket-tree span.junction-last,
+div.my-tree div.wicket-tree span.plus,
+div.my-tree div.wicket-tree span.minus,
+div.my-tree div.wicket-tree span.corner,
+div.my-tree div.wicket-tree span.indent-line,
+div.my-tree div.wicket-tree span.icon {
+	float: left;
+	width: 18px;
+	height: 1.5em;	
+	min-height: 18px;
+}
+
+div.my-tree div.wicket-tree span.junction,
+div.my-tree div.wicket-tree span.junction-last {
+	_margin-left: 3px; /* ie 3px bug fix*/
+	cursor: pointer;
+}
+
+
+/*
+div.my-tree div.wicket-tree span.junction {
+	background-image: url("tree-images.png");	
+	background-position: -36px 0px;
+	background-repeat: repeat-y;	
+}
+
+div.my-tree div.wicket-tree span.junction-last {
+	background-image: url("tree-images.png");	
+	background-position: -72px 0px;
+	background-repeat: no-repeat;
+}
+
+div.my-tree div.wicket-tree span.plus,
+div.my-tree div.wicket-tree span.minus,
+div.my-tree div.wicket-tree span.corner {
+	background-repeat: no-repeat;
+}
+
+div.my-tree div.wicket-tree span.plus {
+	background-image: url("tree-images.png");	
+	background-position: 0px center;
+}
+
+div.my-tree div.wicket-tree span.minus {
+	background-image: url("tree-images.png");	
+	background-position: -18px center;
+}
+
+div.my-tree div.wicket-tree span.corner {
+	background-image: url("tree-images.png");	
+	background-position: -54px center;
+}
+div.my-tree div.wicket-tree span.indent {
+	clear: left;
+	float: left;
+}
+*/
+
+/*>>*/
+div.my-tree div.wicket-tree a:hover {
+	font-weight:bold;
+	text-decoration: none;
+}
+
+
+/*
+div.my-tree div.wicket-tree span.icon {
+	background-repeat: no-repeat;
+	background-position: 50% 50%;
+	margin-left: 2px;
+	margin-top: -1px;
+}
+
+div.my-tree div.wicket-tree a {
+	-moz-outline: none;
+}
+
+div.my-tree div.wicket-tree span.indent-blank {
+	width: 18px;
+	height: 1em;
+	float: left;	 
+}
+
+div.my-tree div.wicket-tree span.indent-line {
+	_margin-left: 3px;
+	overflow: hidden;
+	background-image: url("tree-images.png");	
+	background-position: -36px 0px;
+	background-repeat: repeat-y;
+}
+
+div.my-tree div.wicket-tree div.row,
+div.my-tree div.wicket-tree div.row-selected {
+	/*overflow: hidden;*/
+	clear: both;
+}
+*/
+
+div.my-tree div.wicket-tree div.row-selected {
+	/*
+	background-color :	rgb(232,240,255);
+	*/
+	/*
+	background-color:	rgb(184,205,235);
+	*/
+	font-weight: bold;	
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* tree-table.css
+ *
+ * Licensed to the Apache Software Foundation (ASF) under one or more
+ * contributor license agreements.  See the NOTICE file distributed with
+ * this work for additional information regarding copyright ownership.
+ * The ASF licenses this file to You under the Apache License, Version 2.0
+ * (the "License"); you may not use this file except in compliance with
+ * the License.  You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+ 
+/**
+ * a_   columns
+ * b_   column
+ * c_   column-inner
+ * d_   column-inner-first
+ */
+
+div.my-tree div.wicket-tree-table {
+	font-family: verdana;
+	white-space: nowrap;	
+	border: 5px solid #ddd;
+	overflow: auto;
+	margin: 10px;
+	background-color: blue;
+	line-height: 1.6em;
+}
+
+
+div.wicket-tree-table {
+	white-space: nowrap;	
+	border: 10px solid #bbb;
+	overflow: auto;
+	margin: 10px;
+	background-color: red;
+	line-height: 1.6em;
+}
+
+div.my-tree div.wicket-tree-table a {
+	text-decoration: none;
+	color: #3311aa;
+	float: left;
+}
+
+div.my-tree div.wicket-tree-table span.junction,
+div.my-tree div.wicket-tree-table span.junction-last,
+div.my-tree div.wicket-tree-table span.plus,
+div.my-tree div.wicket-tree-table span.minus,
+div.my-tree div.wicket-tree-table span.corner,
+div.my-tree div.wicket-tree-table span.icon,
+div.my-tree div.wicket-tree-table span.indent-line {
+	width: 18px;
+	float: left;
+}
+
+div.my-tree div.wicket-tree-table span.junction,
+div.my-tree div.wicket-tree-table span.junction-last,
+div.my-tree div.wicket-tree-table span.plus,
+div.my-tree div.wicket-tree-table span.minus,
+div.my-tree div.wicket-tree-table span.corner,
+div.my-tree div.wicket-tree-table span.indent-line,
+div.my-tree div.wicket-tree-table span.icon,
+div.my-tree div.wicket-tree-table div.row,
+div.my-tree div.wicket-tree-table div.row-selected,
+div.my-tree div.wicket-tree-table div.a_,	
+div.my-tree div.wicket-tree-table span.b_,
+div.my-tree div.wicket-tree-table span.b_ span.c_ {
+	height: 1.6em;	
+	min-height: 18px;
+}
+
+div.my-tree div.wicket-tree-table span.icon {
+	background-repeat: no-repeat;
+	background-position: 50% 50%;
+	margin-left: 2px;
+	margin-top: -1px;
+}
+
+div.my-tree div.wicket-tree-table div.row,
+div.my-tree div.wicket-tree-table div.row-selected {
+	/* explorer line-hiding fix */
+	_background-position: 0em 1.44em;
+}
+
+
+div.my-tree div.wicket-tree-table span.junction,
+div.my-tree div.wicket-tree-table span.junction-last {
+	_margin-left: 3px; /* ie 3px bug fix*/
+	cursor: pointer;
+}
+
+/*
+div.wicket-tree-table span.junction {
+	background-image: url("tree-images.png");	
+	background-position: -36px 0px;
+	background-repeat: repeat-y;	
+}
+
+div.wicket-tree-table span.junction-last {
+	background-image: url("tree-images.png");	
+	background-position: -72px 0px;
+	background-repeat: no-repeat;
+}
+
+div.wicket-tree-table span.plus,
+div.wicket-tree-table span.minus,
+div.wicket-tree-table span.corner {
+	background-repeat: no-repeat;	
+}
+
+div.wicket-tree-table span.plus {
+	background-image: url("tree-images.png");	
+	background-position: 0px center;
+}
+
+div.wicket-tree-table span.minus {
+	background-image: url("tree-images.png");	
+	background-position: -18px center;
+}
+
+div.wicket-tree-table span.corner {
+	background-image: url("tree-images.png");	
+	background-position: -54px center;
+}
+*/
+
+div.my-tree div.wicket-tree-table span.indent {
+	clear: left;
+	float: left;
+}
+
+div.my-tree div.wicket-tree-table a:hover {
+	text-decoration: underline;
+}
+
+div.my-tree div.wicket-tree-table span.indent-blank {
+	width: 18px;
+	height: 1em;
+	float: left;	 
+}
+
+/*
+div.my-tree div.wicket-tree-table span.indent-line {
+	_margin-left: 3px;	/* ie 3px bug fix*/
+	overflow: hidden;
+	background-image: url("tree-images.png");	
+	background-position: -36px 0px;
+	background-repeat: repeat-y;
+}
+*/
+
+
+div.my-tree div.wicket-tree-table div.row,
+div.my-tree div.wicket-tree-table div.row-selected {
+	overflow: hidden;
+	_width: 100%; /* ie float container height bug */
+}
+
+div.my-tree div.wicket-tree-table div.row,
+div.my-tree div.wicket-tree-table div.row-selected,
+div.my-tree div.wicket-tree-table div.a_,	
+div.my-tree div.wicket-tree-table span.b_,
+div.my-tree div.wicket-tree-table span.b_ span.c_ {
+	overflow: hidden;
+	width: auto;
+}
+
+
+div.my-tree div.wicket-tree-table div.row-selected  {
+	background-color: #E0E8FF;
+}
+
+div.my-tree div.wicket-tree-table a {
+	-moz-outline: none;
+}
+
+div.my-tree div.wicket-tree-table div.row a.node-link:active,
+div.my-tree div.wicket-tree-table div.row-selected a.node-link:active {
+
+}
+
+div.my-tree div.wicket-tree-table a.node-link span {
+	cursor: pointer;
+}
+
+div.my-tree div.wicket-tree-table div.row-selected a.node-link span {
+	font-weight: bold;
+}
+
+div.my-tree div.wicket-tree-table div.row , 
+div.my-tree div.wicket-tree-table div.row-selected
+/* div.wicket-tree-table div.row-selected span.b_ */ {
+	/*background-image: url("dotted-line.png");*/
+	background-repeat: repeat-x;
+	background-position: bottom;
+}
+
+div.my-tree div.wicket-tree-table span.b_ {
+	float: left;
+}
+
+div.my-tree div.wicket-tree-table span.b_ span.c_ {
+	border-left: 1px solid #ddd;	
+	padding-left: 6px;
+	margin-left: 6px;
+	display: block;
+}
+
+/*
+div.my-tree div.wicket-tree-table span.c_,
+div.wicket-tree-table span.d_ {
+	width: 2000px !important;
+}
+*/
+
+div.my-tree div.wicket-tree-table span.b_ span.d_ {
+	padding-left: 6px;
+	margin-left: 6px;
+	display: block;
+}
+
+div.my-tree div.wicket-tree-table div.row,
+div.my-tree div.wicket-tree-table div.row-selected,
+div.my-tree div.wicket-tree-table div.header {
+	padding-right: 6px;
+}
+
+
+div.my-tree div.wicket-tree-table div.row-selected span.b_ {
+	font-weight: normal;
+}
+
+div.my-tree div.wicket-tree-table div.header {
+	border-bottom: 1px solid #ddd;
+	height: 1.6em;
+	overflow: hidden;
+	margin-bottom: 0.1em;
+	font-weight: bold;
+	background-color: #eee;
+}
+
+/*
+div.my-tree div.wicket-tree-table div.wicket-tree-table-body {
+	background-color: red;
+}
+*/
+
+
+
+
+
+
+
+/* wicket-ajax-indicator */
+
+span.wicket-ajax-indicator img {
+		margin:0;
+		padding:0;
+		padding-left: 2px;
+		display: inline;
+		white-space: nowrap;
+		}
+
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+.highlighted {
+		background-color: rgb(255,255,204);
+		}
+
+.warned {
+		background-color: rgb(255,204,129);
+		}

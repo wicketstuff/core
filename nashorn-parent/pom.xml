@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>org.wicketstuff</groupId>
+		<artifactId>wicketstuff-core</artifactId>
+		<version>8.0.0-SNAPSHOT</version>
+	</parent>
+
+	<artifactId>wicketstuff-nashorn-parent</artifactId>
+	<packaging>pom</packaging>
+	<name>Wicketstuff Nashorn Parent</name>
+
+	<description>
+    	Parent project of all components using the nashorn engine
+    </description>
+    
+	<developers>
+		<developer>
+			<id>klopfdreh</id>
+			<name>Tobias Soloschenko</name>
+			<email>tsoloschenko [at] apache [dot] org</email>
+		</developer>
+	</developers>
+
+	<modules>
+		<module>nashorn</module>
+		<module>nashorn-examples</module>
+	</modules>
+
+	<properties>
+		<maven.compiler.target>1.8</maven.compiler.target>
+		<maven.compiler.source>1.8</maven.compiler.source>
+	</properties>
+
+	<build>
+		<pluginManagement>
+			<plugins>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-javadoc-plugin</artifactId>
+					<configuration>
+						<failOnError>false</failOnError>
+						<additionalparam>-Xdoclint:none</additionalparam>
+					</configuration>
+				</plugin>
+			</plugins>
+		</pluginManagement>
+	</build>
+</project>

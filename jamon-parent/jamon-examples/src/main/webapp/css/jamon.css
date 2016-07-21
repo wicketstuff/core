@@ -1,0 +1,56 @@
+.jamonTable {
+	background-color: #03487f;
+	border-width: 2px;
+	border-style: solid;
+	border-color: white;
+	font-weight: bold;
+}
+
+.jamonAdminTable {
+	background-color: #03487f;
+	border-width: 2px;
+	border-style: solid;
+	border-color: white;
+	font-weight: bold;
+}
+
+.jamonDetailTable {
+	background-color: #03487f;
+	border-width: 2px;
+	border-style: solid;
+	border-color: white;
+	font-weight: bold;
+}
+
+.jamonLinkToDetailPanel {
+	color: white; 
+	font-weight: bold;
+}
+
+.jamonDetailTitle {
+	font-weight: bold;
+	font-size: 18px;
+	color: #03487f;
+	text-decoration: underline;
+}
+
+.headers a {
+	color: white; 
+	font-weight: bold;
+}
+.headers {
+	color: white; 
+	font-weight: bold;
+}
+
+.odd {
+	background-color: #3b6588;
+}
+
+.even {
+	background-color: #c5d4e4;
+}
+
+.selected {
+	background-color: #03487f;
+}

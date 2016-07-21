@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html xmlns:wicket="http://wicket.apache.org">
+<head>
+<meta charset="utf-8" />
+<title>wicket-foundation</title>
+</head>
+<body>
+    <wicket:extend>
+
+        <div class="row">
+            <h1 id="alerts">Alerts</h1>
+            <h3 class="subheader">Alerts are handy elements you can
+                drop into a form or inline on a page to communicate
+                success, warnings, failure or just information.
+                They&#39;ll conform to 100% of the container width you
+                put them in.</h3>
+
+            <hr>
+            <h3>Basic</h3>
+
+            <p>You can create an alert box using minimal markup.</p>
+            <div>
+                <div>
+
+                    <h4>HTML</h4>
+
+<pre><code class="language-html"><div class="code-container"><span class="tag">&lt;<span class="title">div</span> <span class="attribute">wicket:id</span>=<span class="value">&quot;basic&quot;</span>&gt;</span><span class="tag">&lt;<span class="title">/div</span>&gt;</span>
+</div></code>
+</pre>
+
+                    <h4>Java</h4>
+
+<pre><code class="language-html"><div class="code-container">add(new FoundationAlert(&quot;basic&quot;, Model.of(&quot;This is standard alert.&quot;)));
+</div></code>
+</pre>
+
+                </div>
+                <div>
+                    <h4>Rendered HTML</h4>
+
+                    <div wicket:id="basic"></div>
+
+                    <p>
+                </div>
+            </div>
+
+            <h3>Advanced</h3>
+
+            <p>You can add more classes to your alert box to change
+                its appearance.</p>
+            <div>
+                <div>
+                
+                    <h4>HTML</h4>
+
+<pre><code class="language-html"><div class="code-container"><span class="tag">&lt;<span class="title">div</span> <span class="attribute">wicket:id</span>=<span class="value">&quot;successRadius&quot;</span>&gt;</span><span class="tag">&lt;<span class="title">/div</span>&gt;</span>
+<span class="tag">&lt;<span class="title">div</span> <span class="attribute">wicket:id</span>=<span class="value">&quot;warningRound&quot;</span>&gt;</span><span class="tag">&lt;<span class="title">/div</span>&gt;</span>
+<span class="tag">&lt;<span class="title">div</span> <span class="attribute">wicket:id</span>=<span class="value">&quot;infoRadius&quot;</span>&gt;</span><span class="tag">&lt;<span class="title">/div</span>&gt;</span>
+<span class="tag">&lt;<span class="title">div</span> <span class="attribute">wicket:id</span>=<span class="value">&quot;alertRound&quot;</span>&gt;</span><span class="tag">&lt;<span class="title">/div</span>&gt;</span>
+<span class="tag">&lt;<span class="title">div</span> <span class="attribute">wicket:id</span>=<span class="value">&quot;secondary&quot;</span>&gt;</span><span class="tag">&lt;<span class="title">/div</span>&gt;</span>
+</div></code>
+</pre>
+
+                    <h4>Java</h4>
+
+<pre><code class="language-html"><div class="code-container">add(new FoundationAlert(&quot;successRadius&quot;, Model.of(&quot;This is a success alert with a radius. &quot;),
+        new AlertOptions(FoundationButtonColor.SUCCESS, FoundationButtonRadius.RADIUS)));
+add(new FoundationAlert(&quot;warningRound&quot;, Model.of(&quot;This is a warning alert that is rounded. &quot;),
+        new AlertOptions(FoundationButtonColor.WARNING, FoundationButtonRadius.ROUND)));
+add(new FoundationAlert(&quot;infoRadius&quot;, Model.of(&quot;This is an info alert with a radius. &quot;),
+        new AlertOptions(FoundationButtonColor.INFO, FoundationButtonRadius.RADIUS)));
+add(new FoundationAlert(&quot;alertRound&quot;, Model.of(&quot;This is an alert - alert that is rounded. &quot;),
+        new AlertOptions(FoundationButtonColor.ALERT, FoundationButtonRadius.ROUND)));
+add(new FoundationAlert(&quot;secondary&quot;, Model.of(&quot;This is a secondary alert. &quot;),
+        new AlertOptions(FoundationButtonColor.SECONDARY)));
+</div></code>
+</pre>
+                </div>
+                <div>
+                    <h4>Rendered HTML</h4>
+
+                    <div wicket:id="successRadius"></div>
+
+                    <div wicket:id="warningRound"></div>
+
+                    <div wicket:id="infoRadius"></div>
+
+                    <div wicket:id="alertRound"></div>
+
+                    <div wicket:id="secondary"></div>
+
+                    <p>
+                </div>
+            </div>
+        </div>
+
+    </wicket:extend>
+</body>
+</html>

@@ -1,0 +1,414 @@
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed, 
+figure, figcaption, footer, header, hgroup, 
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    font-size: 100%;
+    font: inherit;
+    vertical-align: baseline;
+}
+/* HTML5 display-role reset for older browsers */
+article, aside, details, figcaption, figure, 
+footer, header, hgroup, menu, nav, section {
+    display: block;
+}
+body {
+    line-height: 1;
+}
+ol, ul {
+    list-style: none;
+}
+blockquote, q {
+    quotes: none;
+}
+blockquote:before, blockquote:after,
+q:before, q:after {
+    content: '';
+    content: none;
+}
+table {
+    border-collapse: collapse;
+    border-spacing: 0;
+}
+
+/* body
+***********************************/
+
+body
+{
+    background-color: #900;
+    font: 14px/20px 'Helvetica Neue', Arial, sans-serif;
+    color: #f99;
+    text-shadow: 0 1px 0 #700, 0 2px 0 #700, 0 3px 0 #700;
+    text-rendering: optimizeLegibility;
+}
+
+a
+{
+    color: #EFBD5E;
+    text-shadow: none;
+}
+
+pre
+{
+    border: 1px dotted #200;
+    text-shadow: 0 1px 0 #200;
+    padding: 5px;
+    text-shadow: none;
+    background-color: #300;
+    overflow: auto;
+    font: 12px/16px monospace;
+}
+
+p
+{
+    margin: 20px 0;
+}
+
+strong
+{  
+    font-weight: 900;
+    color: #fcc;
+}
+
+em
+{
+    font-style: italic;
+}
+
+h2
+{
+    color: #fff;
+    font: 80px/100px Garamond, 'Hoefler Text', Times New Roman, Times, serif;
+    margin-bottom: 20px;
+    text-shadow: 0 1px 0 #600, 0 2px 0 #600, 0 3px 0 #600, 0 4px 0 #600, 0 5px 0 #600, 0 6px 0 #000;
+}
+
+h3
+{
+    color: #F8E3BB;
+    font: italic 30px/40px Garamond, 'Hoefler Text', Times New Roman, Times, serif;
+    margin: 40px 0 20px;
+    text-shadow: 0 0 3px #500, 0 2px 0 #500, 0 3px 0 #500, 0 4px 0 #500, 0 5px 0 #500;
+}
+
+h4
+{
+    margin: 20px 0;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.styled
+{
+    width: 100%;
+    border: 1px dashed #600;
+}
+
+.styled th,
+.styled td
+{
+    padding: 10px;
+}
+
+.styled th
+{
+    background-color: #700;
+    text-align: left;
+    font-weight: bold;
+}
+
+.styled tr
+{
+    border-bottom: 1px dashed #600;
+}
+
+.styled tr:last-child
+{
+    border-bottom-width: 0;
+}
+
+.styled .odd
+{
+    background-color: #8f0000;
+}
+
+.styled .even
+{
+    background-color: #800;
+}
+
+#container
+{
+    padding: 0 0 20px;
+    width: 950px;
+    margin: 0 auto;
+}
+
+#header
+{
+    background-color: #800;
+    background: -moz-linear-gradient(top, #900 0%, #700 100%); /* FF3.6+ */
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#900), color-stop(100%,#700)); /* Chrome,Safari4+ */
+    background: -webkit-linear-gradient(top, #900 0%, #700 100%); /* Chrome10+,Safari5.1+ */
+    background: -o-linear-gradient(top, #900 0%, #700 100%); /* Opera11.10+ */
+    background: -ms-linear-gradient(top, #900 0%, #700 100%); /* IE10+ */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#990000', endColorstr='#770000',GradientType=0 ); /* IE6-9 */
+    background: linear-gradient(top, #900 0%, #700 100%); /* W3C */
+    position: relative;
+    margin-bottom: 20px;
+    border-bottom: 1px solid #700;
+    border-left: 1px solid #700;
+    border-right: 1px solid #700;
+    padding: 10px;
+    -moz-border-radius-bottomleft: 10px;
+    -moz-border-radius-bottomright: 10px;
+    -webkit-border-bottom-left-radius: 10px;
+    -webkit-border-bottom-right-radius: 10px;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+}
+
+#footer
+{
+    background-color: #800;
+    background: -moz-linear-gradient(top, #700 0%, #900 100%); /* FF3.6+ */
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#700), color-stop(100%,#900)); /* Chrome,Safari4+ */
+    background: -webkit-linear-gradient(top, #700 0%, #900 100%); /* Chrome10+,Safari5.1+ */
+    background: -o-linear-gradient(top, #700 0%, #900 100%); /* Opera11.10+ */
+    background: -ms-linear-gradient(top, #700 0%, #900 100%); /* IE10+ */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#770000', endColorstr='#990000',GradientType=0 ); /* IE6-9 */
+    background: linear-gradient(top, #700 0%, #900 100%); /* W3C */
+    position: relative;
+    margin-top: 20px;
+    border-top: 1px solid #700;
+    border-left: 1px solid #700;
+    border-right: 1px solid #700;
+    padding: 10px;
+    -moz-border-radius-topleft: 10px;
+    -moz-border-radius-topright: 10px;
+    -webkit-border-top-left-radius: 10px;
+    -webkit-border-top-right-radius: 10px;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+}
+
+#header h1 a,
+#footer h1 a
+{
+    color: #F8E3BB;
+    font-size: 40px;
+    line-height: 40px;
+    text-decoration: none;
+    text-shadow: none;
+    font-weight: 100;
+    text-shadow: 0 1px 0 #700;
+}
+
+
+#header h1 span,
+#footer h1 span
+{
+    font-weight: 900;
+}
+
+.menu 
+{
+    position: absolute;
+    top: 10px;
+    right: 10px;
+}
+
+.menu li
+{
+    font-size: 20px;
+    line-height: 40px;
+    list-style: none;
+    float: left;
+    padding-left: 20px;
+}
+
+.menu li a
+{
+    text-decoration: none;
+}
+
+.menu li.current a
+{
+    font-weight: bold;
+    color: #fff;
+    text-decoration: none;
+}
+
+
+#content
+{
+}
+
+
+#intro,
+#next
+{
+    font-size: 24px;
+    line-height: 40px;
+}
+
+#next
+{
+    text-align: center;
+}
+
+#samples
+{
+    font-size: 24px;
+    line-height: 40px;
+    margin: 20px 0;
+    overflow: hidden;
+}
+
+#samples li
+{
+    -moz-border-radius: 10px;
+    -webkit-border-radius: 10px;
+    border-radius: 10px;
+    float: left;
+    margin-right: 20px;
+    background-color: #700;
+    padding: 0 5px;
+    cursor: pointer;
+}
+
+#samples #sample_label
+{
+    cursor: default;
+    font-style: italic;
+    padding: 0;
+    background-color: transparent;
+    color: #000;
+    text-shadow: none;
+} 
+
+.bubbletooltip_tip
+{
+    padding: 10px;
+    color: #fff;
+    background-color: #222;
+    -moz-box-shadow: inset 0 0 10px #000;
+    -webkit-box-shadow: inset 0 0 10px #000;
+    box-shadow: inset 0 0 10px #000;
+    text-shadow: 0 0 3px #000;
+    -moz-border-radius: 10px;
+    -webkit-border-radius: 10px;
+    border-radius: 10px;
+    position: relative;
+}
+
+.bubbletooltip_tip:after
+{
+    content: '';
+    position: absolute;
+    border: 10px solid transparent;
+    border-left-color: #000;
+    top: -10px;
+    right: 40px;
+    z-index: -1;
+}
+
+#steps
+{
+    margin-top: 30px;
+    width: 100%;
+    overflow: hidden;
+}
+
+#steps > div
+{
+    background-color: #700;
+    -moz-border-radius: 10px;
+    -webkit-border-radius: 10px;
+    border-radius: 10px;
+    float: left;
+    width: 303px;
+    margin-right: 20px;
+    overflow: hidden;
+}
+
+#steps > div > div
+{
+    padding: 20px;
+}
+
+#steps > div#step3
+{
+    margin-right: 0;
+}
+
+#steps h3
+{
+    text-align: center;
+    margin-top: 0;
+}
+
+#settings tr td
+{
+    white-space: nowrap;
+}
+
+#settings tr td:last-child
+{
+    white-space: normal;
+}
+
+.sample
+{
+    overflow: hidden;
+    margin: 20px 0;
+    width: 100%;
+}
+
+.sample .code
+{
+    float: left;
+    width: 618px;
+    margin-right: 20px;
+    min-height: 32px;
+}
+
+.sample .hover
+{
+    float: left;
+    width: 300px;
+}
+
+.sample .hover span
+{
+    -moz-border-radius: 10px;
+    -webkit-border-radius: 10px;
+    border-radius: 10px;
+    display: block;
+    width: 100px;
+    margin: 0 auto;
+    background-color: #700;
+    padding: 11px 10px 12px;
+    cursor: pointer;
+    text-align: center;
+    font-size: 20px;
+}
+
+.weak
+{
+    text-shadow: none;
+    font-style: italic;
+    color: #c66;
+}

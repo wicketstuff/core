@@ -1,0 +1,63 @@
+<html xmlns:wicket="http://wicket.apache.org">
+<head>
+  <wicket:head>
+    <title>Demo of Block UI</title>
+    <style type="text/css">
+      div.blockMe { padding: 30px; margin: 30px; border: 10px solid #ccc; background-color: #ffd }
+    </style>
+  </wicket:head>
+</head>
+<body>
+  <wicket:extend>
+     
+    <div wicket:id="demo">
+      <a wicket:id="ajaxlink" href="#">block page</a><br/>
+      <br/>
+      <a wicket:id="block2" href="#">block element</a><br/>
+      <br/>
+      <a wicket:id="block3" href="#">block with slow fade</a><br/>
+      <br/>
+      <br/>
+      
+      <div class="blockMe">
+          <a href="#" class="test">Test link - click me!</a>
+          <p />
+    
+          <select><option>Option 1</option><option>Option 2</option></select>
+          lorem ipsum dolor sit amet
+          consectetuer adipiscing elit
+          sed lorem leo
+          lorem leo consectetuer adipiscing elit
+          sed lorem leo
+          rhoncus sit amet
+          <select><option>Option 1</option><option>Option 2</option></select>
+    
+          lorem ipsum dolor sit amet
+          consectetuer adipiscing elit
+          sed lorem leo
+          <a href="#" class="test">Test link - click me!</a>
+          lorem leo consectetuer adipiscing elit
+          sed lorem leo
+          rhoncus sit amet<br />
+    
+          <textarea rows="2" cols="20">test textarea</textarea>
+    
+      </div>
+      <div>
+          This text will not be blocked.
+          <a href="#" class="test">Test link - click me!</a>
+      </div>
+
+      
+    </div>
+    
+
+    <script type="text/javascript">
+      $('a.test').click(function() {
+        alert('link clicked');
+        return false;
+      });
+    </script>
+  </wicket:extend>
+</body>
+</html>

@@ -1,0 +1,32 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>org.wicketstuff</groupId>
+		<artifactId>wicketstuff-core</artifactId>
+		<version>8.0.0-SNAPSHOT</version>
+	</parent>
+	<artifactId>wicketstuff-jamon-parent</artifactId>
+	<packaging>pom</packaging>
+	<name>Jamon Parent</name>
+	<description>Parent project for Wicketstuff Jamon</description>
+	<modules>
+		<module>jamon</module>
+		<module>jamon-examples</module>
+	</modules>
+
+	<properties>
+		<jamon.version>2.81</jamon.version>
+	</properties>
+
+	<dependencyManagement>
+		<dependencies>
+			<dependency>
+				<groupId>com.jamonapi</groupId>
+				<artifactId>jamon</artifactId>
+				<version>${jamon.version}</version>
+				<scope>compile</scope>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
+</project>

@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html xmlns:wicket="http://wicket.apache.org">
+<head>
+<meta charset="utf-8" />
+<title>wicket-foundation</title>
+</head>
+<body>
+<wicket:extend>
+
+  <div class="row">
+
+    <h1 id="panels">Panels</h1>
+    <h3 class="subheader">A panel is a simple, helpful Foundation
+      component that enables you to outline sections of your page
+      easily. This allows you to view your page sections as you add
+      content to them, or add emphasis to a section. The width is
+      controlled by the grid columns you put them inside.</h3>
+
+    <hr>
+    <h3>Basic</h3>
+
+    <p>You can create a panel using minimal markup.</p>
+    <div>
+
+      <h4>HTML</h4>
+
+<pre><code class="language-html"><div class="code-container"><span class="tag">&lt;<span class="title">div</span> <span class="attribute">wicket:id</span>=<span class="value">&quot;regular&quot;</span>&gt;</span>
+  <span class="tag">&lt;<span class="title">h5</span>&gt;</span>This is a regular panel.<span class="tag">&lt;/<span class="title">h5</span>&gt;</span>
+  <span class="tag">&lt;<span class="title">p</span>&gt;</span>It has an easy to override visual style, and is appropriately subdued.<span class="tag">&lt;/<span class="title">p</span>&gt;</span>
+<span class="tag">&lt;/<span class="title">div</span>&gt;</span>
+</div></code>
+</pre>
+
+      <h4>Java</h4>
+
+<pre><code class="language-html"><div class="code-container">
+add(new FoundationPanelBorder("regular", Model.of(FoundationPanelType.NORMAL)));
+</div></code>
+</pre>
+
+      <h4>Rendered HTML</h4>
+      <div wicket:id="regular">
+        <h5>This is a regular panel.</h5>
+        <p>It has an easy to override visual style, and is
+          appropriately subdued.</p>
+      </div>
+
+      <p>
+    </div>
+    <hr>
+    <h3>Advanced</h3>
+
+    <p>Additional classes can be added to your panels.</p>
+    <div>
+      <h4>HTML</h4>
+
+<pre><code class="language-html"><div class="code-container"><span class="tag">&lt;<span class="title">div</span> <span class="attribute">wicket:id</span>=<span class="value">&quot;callout&quot;</span>&gt;</span>
+  <span class="tag">&lt;<span class="title">h5</span>&gt;</span>This is a callout panel.<span class="tag">&lt;/<span class="title">h5</span>&gt;</span>
+  <span class="tag">&lt;<span class="title">p</span>&gt;</span>It&#39;s a little ostentatious, but useful for important content.<span class="tag">&lt;/<span class="title">p</span>&gt;</span>
+<span class="tag">&lt;/<span class="title">div</span>&gt;</span>
+</div></code>
+</pre>
+
+      <h4>Java</h4>
+
+<pre><code class="language-html"><div class="code-container">
+add(new FoundationPanelBorder("callout", Model.of(FoundationPanelType.CALLOUT)));
+</div></code>
+</pre>
+
+      <h4>Rendered HTML</h4>
+      <div wicket:id="callout">
+        <h5>This is a callout panel.</h5>
+        <p>It&#39;s a little ostentatious, but useful for important
+          content.</p>
+      </div>
+    </div>
+  </div>
+
+</wicket:extend>
+</body>
+</html>

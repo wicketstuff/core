@@ -1,0 +1,22 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="de" lang="de" xmlns:wicket="http://wicket.sourceforge.net/">
+
+	<body>
+
+		<wicket:panel>
+
+			<div wicket:id="accordion">
+				<div wicket:id="repeater">
+					<h3 wicket:id="headerAnchor"><a href="#" class="header"><span wicket:id="header" class="header"/></a></h3>
+					<div wicket:id="jQueryContentAnchor"> <!-- Anchor for jQuery, this div is decorated with classes and actions -->
+						<div wicket:id="contentAnchor"> <!-- internal use for AJAX redrawing -->
+							<div wicket:id="content" class="content"></div> <!-- the user provided content -->
+						</div>
+					</div>
+				</div>
+			</div>
+
+		</wicket:panel>
+
+	</body>
+
+</html>

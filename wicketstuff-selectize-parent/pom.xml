@@ -1,0 +1,35 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+
+	<modelVersion>4.0.0</modelVersion>
+
+	<parent>
+		<groupId>org.wicketstuff</groupId>
+		<artifactId>wicketstuff-core</artifactId>
+		<version>8.0.0-SNAPSHOT</version>
+	</parent>
+
+	<artifactId>wicketstuff-selectize-parent</artifactId>
+	<packaging>pom</packaging>
+
+	<name>Wicket Selectize - Parent</name>
+	<description>
+		Use wicketstuff-selectize to implement awesome selections to your wicket page (parent project)
+	</description>
+
+	<modules>
+		<module>wicketstuff-selectize</module>
+		<module>wicketstuff-selectize-examples</module>
+	</modules>
+
+	<developers>
+		<developer>
+			<id>tsoloschenko</id>
+			<name>Tobias Soloschenko</name>
+			<email>tobias [dot] soloschenko [at] googlemail [dot] com</email>
+		</developer>
+	</developers>
+
+	<dependencies>
+	</dependencies>
+</project>

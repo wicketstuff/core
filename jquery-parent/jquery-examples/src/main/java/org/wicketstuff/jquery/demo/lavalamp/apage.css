@@ -1,0 +1,192 @@
+
+.lavalamp {
+	width: 500px;
+	padding-left: 20px;
+	margin: 10px 0;
+	height: 50px;
+	overflow: hidden;
+	background: url("eg1_bg.jpg") bottom no-repeat;
+	padding-bottom: 30px;
+	padding-left: 100px;
+}
+
+.lavalamp a {
+}
+
+.lavalamp li {
+	float: left;
+	list-style: none;
+}
+
+.lavalamp li.back {
+	width: 9px;
+	height: 50px;
+	background: url("eg1_slider.png") bottom center no-repeat;
+	z-index: 8;
+	position: absolute;
+}
+
+.lavalamp li a {
+	text-decoration: none;
+	outline: none;
+	text-align: center;
+	top: 7px;
+	letter-spacing: 0;
+	z-index: 10;
+	display: block;
+	position: relative;
+	overflow: hidden;
+	color: #FF0066;
+
+	float: left;
+	padding: 10px 20px;
+}
+
+/*--------------------------*/ /*EG2*/
+#eg2 {
+	width: 544px !important;
+	margin: 10px 0;
+	height: 64px;
+	overflow: hidden;
+	background-color: #B6B0A4;
+}
+
+#eg2 li {
+	float: left;
+	list-style: none;
+}
+
+#eg2 li.back {
+	width: 9px;
+	height: 64px;
+	background-color: #ff0000;
+	z-index: 8;
+	position: absolute;
+}
+
+#eg2 li a {
+	text-decoration: none;
+	outline: none;
+	text-align: center;
+	letter-spacing: 0;
+	z-index: 10;
+	display: block;
+	position: relative;
+	overflow: hidden;
+	width: 116px;
+	height: 64px;
+	padding: 0;
+}
+
+#eg2 li a span {
+	position: absolute;
+	left: -2000px;
+}
+
+.pad {
+	background-color: #fff;
+	width: 40px;
+	height: 64px;
+	z-index: 1000 !important;
+	position: relative;
+}
+
+.link1 {
+	background: url(../images/eg2_link1.png);
+}
+
+.link2 {
+	background: url(../images/eg2_link2.png);
+}
+
+.link3 {
+	background: url(../images/eg2_link3.png);
+}
+
+.link4 {
+	background: url(../images/eg2_link4.png);
+}
+
+/*--------------------------*/ /*EG3*/
+#eg3 {
+	width: 544px !important;
+	margin: 10px 0;
+	height: 64px;
+	overflow: hidden;
+	background-color: #333;
+}
+
+#eg3 li {
+	float: left;
+	list-style: none;
+}
+
+#eg3 li.back {
+	width: 9px;
+	height: 64px;
+	background: url(../images/eg2_link_bg.png) no-repeat;
+	z-index: 8;
+	position: absolute;
+}
+
+#eg3 li a {
+	text-decoration: none;
+	outline: none;
+	text-align: center;
+	letter-spacing: 0;
+	z-index: 10;
+	display: block;
+	position: relative;
+	overflow: hidden;
+	width: 116px;
+	height: 64px;
+	padding: 0;
+}
+
+#eg3 li a span {
+	position: absolute;
+	left: -2000px;
+}
+
+.pad {
+	background-color: #fff;
+	width: 40px;
+	height: 64px;
+	z-index: 1000 !important;
+	position: relative;
+}
+
+.link1 {
+	background: url(../images/eg2_link1.png);
+}
+
+.link2 {
+	background: url(../images/eg2_link2.png);
+}
+
+.link3 {
+	background: url(../images/eg2_link3.png);
+}
+
+.link4 {
+	background: url(../images/eg2_link4.png);
+}
+
+/*--------------------------*/ /*CLASSES*/
+.example {
+	margin-bottom: 15px;
+	clear: left;
+	position: relative;
+}
+
+.example a {
+	display: block;
+	float: left;
+	padding: 10px 20px;
+}
+
+/*--------------------------*/ /*IMAGE REPLACEMENT*/
+.ifr {
+	position: absolute;
+	left: -2000px;
+}

@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="de" lang="de">
+
+<head>
+    <title>Demo page for jQueryUi tooltip integration with Apache Wicket</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <meta http-equiv="Pragma" content="no-cache"/>
+    <meta http-equiv="Cache-Control" content="no-store, no-cache, max-age=0, must-revalidate"/>
+    <meta http-equiv="Cache-Control" content="post-check=1, pre-check=2"/>
+    <meta http-equiv="Expires" content="-1"/>
+    
+    <style type="text/css">
+        .text {
+            background-color: #eee;
+            width: 500px;
+            margin: 100px auto 100px auto;
+        }
+    </style>
+    
+</head>
+
+<body>
+    <p wicket:id="individualTooltip" class="text">
+        this text has an individual jQuery UI tooltip configuration
+    </p>
+    
+    <p wicket:id="tooltipFromTitle" class="text textWithTooltip" title="tooltip content from title attribute">
+        text with a jQuery Ui tooltip with content from title attribute
+    </p>
+
+    <p wicket:id="tooltipFromDataTooltip" class="text textWithTooltip" data-tooltip="tooltip content from data-tooltip attribute">
+        text with a jQuery Ui tooltip with content from data-tooltip attribute
+    </p>
+    
+    <p wicket:id="tooltipWithMarkup" class="text textWithTooltip">
+        text with a jQuery Ui tooltip with content from String that even contains markup
+    </p>
+    
+    <p wicket:id="tooltipFromComponent" class="text textWithTooltip">
+        text with a jQuery Ui tooltip with content from another component
+    </p>
+    <div wicket:id="tooltipContent" style="display:none;"></div>
+</body>
+</html>

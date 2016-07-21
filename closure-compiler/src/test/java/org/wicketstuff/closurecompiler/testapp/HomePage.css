@@ -1,0 +1,31 @@
+form {
+  max-width: 1024px;
+}
+
+label {
+  display: block;
+  font-weight: bold;
+}
+
+textarea {
+  width: 100%;
+  height: 300px;
+  max-height: 400px;
+}
+
+div.compressed {
+  margin-top: 20px;
+}
+
+.compressed textarea {
+  background-color: #f0f0ff;
+}
+
+.feedbackPanelERROR {
+  color: red;
+}
+
+.feedbackPanelSUCCESS {
+  color: green;
+}
+

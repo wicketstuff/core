@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html xmlns:wicket="http://wicket.apache.org">
+<head>
+<meta charset="utf-8" />
+<title>wicket-foundation</title>
+</head>
+<body>
+	<wicket:extend>
+
+		<div class="row">
+			<h1 id="progress-bars">Progress Bars</h1>
+			<h3 class="subheader">A simple way to add progress bars to your
+				layouts. You only need two HTML elements to make them and
+				they&#39;re easy to customize.</h3>
+
+			<hr>
+			<h2>Basic</h2>
+
+			<p>You can create a progress bar using minimal markup.</p>
+			<div>
+				<div>
+				
+          <h4>HTML</h4>
+<pre><code class="language-html"><div class="code-container"><span class="tag">&lt;<span class="title">div</span> <span class="attribute">wicket:id</span>=<span class="value">&quot;basic&quot;</span>&gt;</span><span class="tag">&lt;/<span class="title">div</span>&gt;</span>
+</div></code>
+</pre>
+
+          <h4>Java</h4>
+<pre><code class="language-html"><div class="code-container">add(new FoundationProgressBarPanel("basic", 100));
+</div></code>
+</pre>
+
+				</div>
+				<div>
+					<h4>Rendered HTML</h4>
+					<div wicket:id="basic"></div>
+				</div>
+			</div>
+
+			<hr>
+			<h2>Advanced</h2>
+
+			<p>Additional classes can be added to your progress bar to change
+				its appearance.</p>
+			<div>
+				<div>
+				
+				
+          <h4>HTML</h4>
+<pre><code class="language-html"><div class="code-container"><span class="tag">&lt;<span class="title">div</span> <span class="attribute">wicket:id</span>=<span class="value">&quot;advanced&quot;</span>&gt;</span><span class="tag">&lt;/<span class="title">div</span>&gt;</span>
+</div></code>
+</pre>
+
+          <h4>Java</h4>
+<pre><code class="language-html"><div class="code-container">ProgressBarOptions options = new ProgressBarOptions(ButtonColor.SUCCESS).setRadius(ButtonRadius.ROUND);
+add(new FoundationProgressBarPanel("advanced", options, 80));
+</div></code>
+</pre>
+
+				</div>
+				<div>
+					<h4>Rendered HTML</h4>
+					<div wicket:id="advanced"></div>
+				</div>
+			</div>
+		</div>
+	</wicket:extend>
+</body>
+</html>

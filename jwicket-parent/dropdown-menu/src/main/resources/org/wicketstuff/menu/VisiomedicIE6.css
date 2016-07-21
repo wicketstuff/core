@@ -1,0 +1,41 @@
+a {
+	cursor: auto;
+	}
+
+
+td {
+font-size: 0.92em;
+}
+
+th {
+font-size: 0.92em;
+}
+
+select {
+font-family :		verdana;
+font-size: 0.92em;}
+
+
+input {
+font-family :		verdana;
+font-size: 0.92em;}
+
+
+
+textarea {
+font-family :		verdana;
+font-size: 0.92em;}
+
+
+
+
+/* Der Internet-Explorer kann's richtig: wird nicht umgebrochen, wird das herunterklappmen� automiatsch richtig angepasst */
+div.wicket-aa ul li {
+						white-space : nowrap;
+}
+
+
+
+table.dataview tr th {
+font-size: 0.92em;
+}

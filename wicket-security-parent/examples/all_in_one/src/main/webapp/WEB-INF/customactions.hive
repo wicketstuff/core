@@ -1,0 +1,28 @@
+grant
+{
+	permission ${ComponentPermission} "org.apache.wicket.security.examples.customactions.pages.OverviewPage", "inherit, render";
+	permission ${ComponentPermission} "org.apache.wicket.security.examples.customactions.pages.OverviewPage", "enable";
+};
+grant principal org.apache.wicket.security.examples.authorization.MyPrincipal "organisation.rights"
+{
+	permission ${ComponentPermission} "org.apache.wicket.security.examples.customactions.pages.DepartmentsPage", "inherit, render";
+	permission ${ComponentPermission} "org.apache.wicket.security.examples.customactions.pages.DepartmentsPage", "enable";
+	permission ${DataPermission} "department", "inherit, render, organization";
+	//usually i would recommend against inheriting enable, but in this case it is ok
+	permission ${ComponentPermission} "org.apache.wicket.security.examples.customactions.pages.DepartmentPage", "inherit, render, enable, organization";
+};
+grant principal org.apache.wicket.security.examples.authorization.MyPrincipal "department.rights"
+{
+	permission ${ComponentPermission} "org.apache.wicket.security.examples.customactions.pages.DepartmentsPage", "inherit, render";
+	permission ${ComponentPermission} "org.apache.wicket.security.examples.customactions.pages.DepartmentsPage", "enable";
+	permission ${DataPermission} "department", "inherit, render, department";
+	//this will make sure that only non secure departments will show a details button
+	permission ${ComponentPermission} "org.apache.wicket.security.examples.customactions.pages.DepartmentPage", "inherit, render, department";
+	//in that case we will need to grant special rights to render the form
+	permission ${ComponentPermission} "org.apache.wicket.security.examples.customactions.pages.DepartmentPage:form", "render, organization";
+	
+	//this on the other hand will show all detail buttons and automatically takes care of the form on the departmentpage
+	//permission ${ComponentPermission} "org.apache.wicket.security.examples.customactions.pages.DepartmentPage", "inherit, render, organization";
+	//this will make sure only detail buttons for non secure departments will work
+	permission ${ComponentPermission} "org.apache.wicket.security.examples.customactions.pages.DepartmentPage", "enable, department";
+};

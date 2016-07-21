@@ -1,0 +1,88 @@
+.column {
+	/*
+	width: 49.5%;
+	*/
+	margin-right: .5%;
+	min-height: 320px;
+	float: left;
+}
+
+ul.column {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+
+.dragbox {
+	margin: 5px 2px 20px;
+	background: #fff;
+	position: relative;
+	border: 1px solid #ddd;
+	border-radius: 5px;
+}
+
+.dragbox-header {
+	margin: 0;
+	padding: 5px;
+	background: #f0f0f0;
+	color: #000;
+	border-bottom: 1px solid #eee;
+    cursor: move;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+}
+
+.dragbox-header img {
+    margin: 0;
+    padding: 0;
+}
+
+.dragbox-toggle {
+	display: inline;
+	margin-right: 3px;
+	cursor: pointer;
+}
+
+.dragbox-title {
+	display: inline;
+    font-weight: bold;
+}
+
+.dragbox-actions {
+	float: right;
+	margin: 0;
+	padding: 0;
+	display: none;
+}
+
+.dragbox-actions ul {
+    padding: 0;
+    margin: 0;
+}
+
+.dragbox-actions ul li {
+    display: inline;
+    margin: 0 1px 0 1px;
+}
+
+.dragbox-actions ul li a {
+    text-decoration: none;
+}
+
+.dragbox-actions ul li a img {
+	border: 0;
+	margin: 0;
+}
+
+.dragbox-content {
+	background: #fff;
+	min-height: 60px;
+	margin: 5px;
+	line-height: 1.5em;
+	overflow: auto;
+}
+
+.placeholder {
+	background: #f0f0f0;
+	border: 1px dashed #ddd;
+}

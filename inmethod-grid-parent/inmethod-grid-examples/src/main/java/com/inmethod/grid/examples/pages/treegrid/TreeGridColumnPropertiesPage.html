@@ -1,0 +1,20 @@
+<wicket:head xmlns:wicket="http://wicket.apache.org">
+	<style type="text/css">
+		td.property2 {
+			color: red;
+		}
+		td.property3 {
+			background-color: #eee;
+			font-weight: bold;
+		}
+	</style>
+</wicket:head>
+<wicket:extend xmlns:wicket="http://wicket.apache.org">
+	<div wicket:id="grid"></div>
+	<ul>
+		<li>Property 1 column is not reorderable, has colspan=6 for nodes with children and has custom initial, minimal and maximal size.</li>
+		<li>Property 2 is not resizable and has custom css class.</li>
+		<li>Property 3 has a header tooltip and custom css class.</li>
+		<li>Property 4 wraps when the text doesn't fit into the cell.</li>
+	</ul>
+</wicket:extend>
