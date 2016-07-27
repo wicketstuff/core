@@ -236,7 +236,7 @@
 	<!-- mocleiri: for distribution in to central repository sections in the main pom are not allowed -->
 
 	<properties>
-		<wicket.version>6.22.0</wicket.version>
+		<wicket.version>6.25.0-SNAPSHOT</wicket.version>
 
 		<maven.compiler.source>1.6</maven.compiler.source>
 		<maven.compiler.target>1.6</maven.compiler.target>
