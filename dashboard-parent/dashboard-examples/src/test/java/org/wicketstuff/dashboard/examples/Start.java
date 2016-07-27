@@ -12,8 +12,9 @@
  */
 package org.wicketstuff.dashboard.examples;
 
+import org.apache.wicket.util.file.File;
 import org.eclipse.jetty.server.Server;
-import org.eclipse.jetty.server.bio.SocketConnector;
+import org.eclipse.jetty.server.ServerConnector;
 import org.eclipse.jetty.webapp.WebAppContext;
 
 /**
@@ -25,20 +26,18 @@ public class Start {
 		System.setProperty("wicket.configuration", "development");
 
 		Server server = new Server();
-		SocketConnector connector = new SocketConnector();
+		ServerConnector http = new ServerConnector(server);
 
 		// Set some timeout options to make debugging easier.
-		connector.setMaxIdleTime(1000 * 60 * 60);
-		connector.setSoLingerTime(-1);
+		http.setIdleTimeout(1000 * 60 * 60);
+		http.setSoLingerTime(-1);
 		int port = Integer.parseInt(System.getProperty("jetty.port", "8081"));
-		connector.setPort(port);
-		server.addConnector(connector);
+		http.setPort(port);
+		server.addConnector(http);
 
 		WebAppContext webAppContext = new WebAppContext();
-		webAppContext.setServer(server);
 		webAppContext.setContextPath("/");
-		webAppContext.setWar("src/main/webapp");
-
+		webAppContext.setWar(new File("src/main/webapp").getAbsolutePath());
 		server.setHandler(webAppContext);
 
 		// START JMX SERVER
