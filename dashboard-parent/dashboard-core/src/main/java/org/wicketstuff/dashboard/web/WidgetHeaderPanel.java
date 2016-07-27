@@ -21,6 +21,7 @@ import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.image.Image;
 import org.apache.wicket.markup.html.panel.GenericPanel;
 import org.apache.wicket.model.IModel;
+import org.apache.wicket.model.AbstractReadOnlyModel;
 import org.apache.wicket.model.PropertyModel;
 import org.apache.wicket.request.resource.PackageResourceReference;
 import org.apache.wicket.request.resource.ResourceReference;
@@ -78,7 +79,7 @@ public class WidgetHeaderPanel extends GenericPanel<Widget> implements Dashboard
 			}
 
 		});
-        toggle.add(new AttributeModifier("title", new IModel<String>() {
+        toggle.add(new AttributeModifier("title", new AbstractReadOnlyModel<String>() {
             private static final long serialVersionUID = 1L;
 
 			@Override
