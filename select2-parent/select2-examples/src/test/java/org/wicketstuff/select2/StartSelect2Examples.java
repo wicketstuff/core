@@ -1,8 +1,9 @@
 package org.wicketstuff.select2;
 
+import org.apache.wicket.util.file.File;
 import org.apache.wicket.util.time.Duration;
 import org.eclipse.jetty.server.Server;
-import org.eclipse.jetty.server.bio.SocketConnector;
+import org.eclipse.jetty.server.ServerConnector;
 import org.eclipse.jetty.webapp.WebAppContext;
 
 public class StartSelect2Examples
@@ -12,18 +13,17 @@ public class StartSelect2Examples
 		int timeout = (int)Duration.ONE_HOUR.getMilliseconds();
 
 		Server server = new Server();
-		SocketConnector connector = new SocketConnector();
+		ServerConnector http = new ServerConnector(server);
 
 		// Set some timeout options to make debugging easier.
-		connector.setMaxIdleTime(timeout);
-		connector.setSoLingerTime(-1);
-		connector.setPort(8080);
-		server.addConnector(connector);
+		http.setIdleTimeout(timeout);
+		http.setSoLingerTime(-1);
+		http.setPort(8080);
+		server.addConnector(http);
 
 		WebAppContext bb = new WebAppContext();
-		bb.setServer(server);
 		bb.setContextPath("/");
-		bb.setWar("src/main/webapp");
+		bb.setWar(new File("src/main/webapp").getAbsolutePath());
 
 		server.setHandler(bb);
 
