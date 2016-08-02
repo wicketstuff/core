@@ -57,6 +57,14 @@ public interface IColumn extends IClusterable
 	int getWidth();
 
 	/**
+	 * The pixel screen width below which the column will be hidden.<br/>
+	 * The setting takes precedence over the hidden setting, so the two should not be used at the same time.
+	 * 
+	 * @return 0 by default
+	 */
+	int getMinScreenWidth();
+
+	/**
 	 * Provides a way to specify a custom editing UI for the column.
 	 * 
 	 * @return a {@code function} or {@code null} if it does not apply

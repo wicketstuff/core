@@ -16,12 +16,12 @@
  */
 package com.googlecode.wicket.kendo.ui.datatable.column;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
+import org.apache.wicket.util.lang.Generics;
 
 import com.googlecode.wicket.jquery.core.Options;
 import com.googlecode.wicket.jquery.core.utils.BuilderUtils;
@@ -152,6 +152,12 @@ public abstract class AbstractColumn implements IColumn
 	{
 		return this.width;
 	}
+	
+	@Override
+	public int getMinScreenWidth()
+	{
+		return 0;
+	}
 
 	public boolean isVisible()
 	{
@@ -207,7 +213,7 @@ public abstract class AbstractColumn implements IColumn
 	 */
 	protected final String getAggregatesAsString()
 	{
-		List<String> aggregates = new ArrayList<String>();
+		List<String> aggregates = Generics.newArrayList();
 
 		for (String aggregate : this.getAggregates())
 		{
@@ -231,11 +237,13 @@ public abstract class AbstractColumn implements IColumn
 
 	// schema model //
 
+	@Override
 	public Boolean isEditable()
 	{
 		return null;
 	}
 
+	@Override
 	public Boolean isNullable()
 	{
 		return null;
@@ -263,6 +271,12 @@ public abstract class AbstractColumn implements IColumn
 		{
 			builder.append(", ");
 			BuilderUtils.append(builder, "width", this.getWidth());
+		}
+
+		if (this.getMinScreenWidth() > 0)
+		{
+			builder.append(", ");
+			BuilderUtils.append(builder, "minScreenWidth", this.getMinScreenWidth());
 		}
 
 		// nullable options (string) //
