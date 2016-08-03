@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.googlecode.wicket.kendo.ui.repeater.dataview;
+package com.googlecode.wicket.kendo.ui.repeater;
 
 import java.util.Collections;
 import java.util.Iterator;
@@ -29,6 +29,7 @@ import org.apache.wicket.request.IRequestParameters;
 import org.apache.wicket.request.cycle.RequestCycle;
 import org.apache.wicket.request.http.WebResponse;
 
+import com.googlecode.wicket.jquery.core.Options;
 import com.googlecode.wicket.jquery.core.renderer.ITextRenderer;
 import com.googlecode.wicket.jquery.core.template.IJQueryTemplate;
 import com.googlecode.wicket.jquery.core.utils.BuilderUtils;
@@ -87,7 +88,7 @@ public class DataProviderBehavior<T> extends AbstractAjaxBehavior
 		final RequestCycle requestCycle = RequestCycle.get();
 		final IRequestParameters parameters = requestCycle.getRequest().getQueryParameters();
 		final int first = parameters.getParameterValue("skip").toInt(0);
-		final int count = parameters.getParameterValue("take").toInt(Integer.MAX_VALUE);
+		final int count = parameters.getParameterValue("take").toInt(Short.MAX_VALUE);
 
 		requestCycle.scheduleRequestHandlerAfterCurrent(this.newRequestHandler(first, count));
 	}
@@ -127,11 +128,16 @@ public class DataProviderBehavior<T> extends AbstractAjaxBehavior
 			response.setContentType("application/json; charset=" + encoding);
 			response.disableCaching();
 
-			// final long size = provider.size();
+			final long size = provider.size();
 			final Iterator<? extends T> iterator = provider.iterator(first, count);
 
 			// builds JSON result //
-			StringBuilder builder = new StringBuilder("[");
+			StringBuilder builder = new StringBuilder();
+			builder.append("{ ");
+			BuilderUtils.append(builder, "__count", size);
+			builder.append(", ");
+			builder.append(Options.QUOTE).append("results").append(Options.QUOTE).append(": ");
+			builder.append("[ ");
 
 			if (iterator != null)
 			{
@@ -162,7 +168,7 @@ public class DataProviderBehavior<T> extends AbstractAjaxBehavior
 				}
 			}
 
-			builder.append(" ]");
+			builder.append(" ] }");
 
 			response.write(builder);
 		}

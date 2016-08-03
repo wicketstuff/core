@@ -64,28 +64,30 @@ public abstract class ListViewBehavior extends KendoUIBehavior implements IJQuer
 	 *
 	 * @param selector the html selector (ie: "#myId")
 	 * @param listener the {@link IListViewListener}
+	 * @param dataSource the {@link KendoDataSource}
 	 */
-	public ListViewBehavior(String selector, IListViewListener listener)
+	public ListViewBehavior(String selector, KendoDataSource dataSource, IListViewListener listener)
 	{
-		this(selector, new Options(), listener);
+		this(selector, dataSource, listener, new Options());
 	}
 
 	/**
-	 * Constructor
+	 * Main Constructor
 	 *
 	 * @param selector the html selector (ie: "#myId")
-	 * @param options the {@link Options}
 	 * @param listener the {@link IListViewListener}
+	 * @param options the {@link Options}
+	 * @param dataSource the {@link KendoDataSource}
 	 */
-	public ListViewBehavior(String selector, Options options, IListViewListener listener)
+	public ListViewBehavior(String selector, KendoDataSource dataSource, IListViewListener listener, Options options)
 	{
 		super(selector, METHOD, options);
 
+		// listener //
 		this.listener = Args.notNull(listener, "listener");
 
-		// data source //
-		this.dataSource = new KendoDataSource("datasource" + selector);
-		this.add(this.dataSource);
+		// datasource //
+		this.dataSource = dataSource;
 	}
 
 	// Methods //
@@ -96,6 +98,9 @@ public abstract class ListViewBehavior extends KendoUIBehavior implements IJQuer
 		super.bind(component);
 
 		// data source //
+		this.add(this.dataSource);
+
+		// events //
 		this.onCreateAjaxBehavior = this.newOnCreateAjaxBehavior(this);
 		component.add(this.onCreateAjaxBehavior);
 
@@ -105,10 +110,9 @@ public abstract class ListViewBehavior extends KendoUIBehavior implements IJQuer
 		this.onDeleteAjaxBehavior = this.newOnDeleteAjaxBehavior(this);
 		component.add(this.onDeleteAjaxBehavior);
 
-		// events //
 		if (this.listener.isSelectable())
 		{
-			this.onChangeAjaxBehavior = this.newOnChangeAjaxBehavior(this, this.dataSource.getName());
+			this.onChangeAjaxBehavior = this.newOnChangeAjaxBehavior(this, this.getDataSourceName());
 			component.add(this.onChangeAjaxBehavior);
 		}
 	}
@@ -128,6 +132,16 @@ public abstract class ListViewBehavior extends KendoUIBehavior implements IJQuer
 	 * @return the data-provider behavior's url
 	 */
 	protected abstract CharSequence getProviderUrl();
+
+	/**
+	 * Gets the datasource name
+	 * 
+	 * @return the datasource name
+	 */
+	public String getDataSourceName()
+	{
+		return this.dataSource.getName();
+	}
 
 	/**
 	 * Indicates whether the read function should use cache
@@ -158,11 +172,18 @@ public abstract class ListViewBehavior extends KendoUIBehavior implements IJQuer
 	{
 		super.onConfigure(component);
 
+		// schema //
+		Options schema = new Options();
+		schema.set("data", Options.asString("results"));
+		schema.set("total", Options.asString("__count"));
+
 		// data-source //
 		this.onConfigure(this.dataSource);
-		this.setOption("dataSource", this.dataSource.getName());
+		this.setOption("dataSource", this.getDataSourceName());
 
+		this.dataSource.set("schema", schema);
 		this.dataSource.set("pageSize", this.getRowCount());
+		this.dataSource.set("serverPaging", true);
 		this.dataSource.setTransportRead(this.getReadCallbackFunction());
 		this.dataSource.setTransportCreate(this.onCreateAjaxBehavior.getCallbackFunction());
 		this.dataSource.setTransportUpdate(this.onUpdateAjaxBehavior.getCallbackFunction());
@@ -219,7 +240,7 @@ public abstract class ListViewBehavior extends KendoUIBehavior implements IJQuer
 	 */
 	protected JQueryAjaxBehavior newOnCreateAjaxBehavior(IJQueryAjaxAware source)
 	{
-		return new DataSourceAjaxBehavior(source) {
+		return new DataSourceAjaxBehavior(source) { // NOSONAR
 
 			private static final long serialVersionUID = 1L;
 
@@ -239,7 +260,7 @@ public abstract class ListViewBehavior extends KendoUIBehavior implements IJQuer
 	 */
 	protected JQueryAjaxBehavior newOnUpdateAjaxBehavior(IJQueryAjaxAware source)
 	{
-		return new DataSourceAjaxBehavior(source) {
+		return new DataSourceAjaxBehavior(source) { // NOSONAR
 
 			private static final long serialVersionUID = 1L;
 
@@ -259,7 +280,7 @@ public abstract class ListViewBehavior extends KendoUIBehavior implements IJQuer
 	 */
 	protected JQueryAjaxBehavior newOnDeleteAjaxBehavior(IJQueryAjaxAware source)
 	{
-		return new DataSourceAjaxBehavior(source) {
+		return new DataSourceAjaxBehavior(source) { // NOSONAR
 
 			private static final long serialVersionUID = 1L;
 

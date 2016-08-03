@@ -88,7 +88,7 @@ public class DataProviderBehavior<T> extends AbstractAjaxBehavior
 		final IRequestParameters parameters = requestCycle.getRequest().getQueryParameters();
 
 		final int first = parameters.getParameterValue("skip").toInt(0);
-		final int count = parameters.getParameterValue("take").toInt(0);
+		final int count = parameters.getParameterValue("take").toInt(Short.MAX_VALUE);
 
 		// ISortStateLocator //
 		if (this.provider instanceof ISortStateLocator<?>)

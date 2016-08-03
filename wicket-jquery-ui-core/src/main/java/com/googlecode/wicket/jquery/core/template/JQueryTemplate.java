@@ -51,6 +51,16 @@ public abstract class JQueryTemplate implements IJQueryTemplate
 		private final PackageTextTemplate template;
 		private transient Map<String, ?> variables = null;
 
+		public JQueryPackageTextTemplate(Class<?> clazz)
+		{
+			this(clazz, clazz.getSimpleName() + ".tmpl");
+		}
+		
+		public JQueryPackageTextTemplate(Class<?> clazz, Map<String, ?> variables)
+		{
+			this(clazz, clazz.getSimpleName() + ".tmpl", variables);
+		}
+
 		public JQueryPackageTextTemplate(Class<?> clazz, String fileName)
 		{
 			this.template = new PackageTextTemplate(clazz, fileName);

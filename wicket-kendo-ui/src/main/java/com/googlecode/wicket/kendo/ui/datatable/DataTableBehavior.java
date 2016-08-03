@@ -347,11 +347,11 @@ public abstract class DataTableBehavior extends KendoUIBehavior implements IJQue
 		this.onConfigure(this.dataSource);
 		this.setOption("dataSource", this.dataSource.getName());
 
+		this.dataSource.set("schema", schema);
 		this.dataSource.set("pageSize", this.getRowCount());
 		this.dataSource.set("serverPaging", true);
 		this.dataSource.set("serverSorting", true);
 		this.dataSource.set("serverFiltering", true);
-		this.dataSource.set("schema", schema);
 		this.dataSource.setTransportRead(this.getReadCallbackFunction());
 		this.dataSource.setTransportCreate(this.onCreateAjaxBehavior.getCallbackFunction());
 		this.dataSource.setTransportUpdate(this.onUpdateAjaxBehavior.getCallbackFunction());

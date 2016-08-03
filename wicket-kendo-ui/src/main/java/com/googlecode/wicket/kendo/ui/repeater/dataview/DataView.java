@@ -29,13 +29,15 @@ import com.googlecode.wicket.jquery.core.IJQueryWidget;
 import com.googlecode.wicket.jquery.core.JQueryBehavior;
 import com.googlecode.wicket.jquery.core.Options;
 import com.googlecode.wicket.jquery.core.renderer.ITextRenderer;
-import com.googlecode.wicket.jquery.core.renderer.TextRenderer;
+import com.googlecode.wicket.jquery.core.renderer.JsonRenderer;
 import com.googlecode.wicket.jquery.core.template.IJQueryTemplate;
+import com.googlecode.wicket.jquery.core.template.JQueryTemplate;
 import com.googlecode.wicket.kendo.ui.KendoBehaviorFactory;
 import com.googlecode.wicket.kendo.ui.KendoDataSource;
 import com.googlecode.wicket.kendo.ui.KendoTemplateBehavior;
 import com.googlecode.wicket.kendo.ui.KendoUIBehavior;
 import com.googlecode.wicket.kendo.ui.datatable.behavior.DataBoundBehavior;
+import com.googlecode.wicket.kendo.ui.repeater.DataProviderBehavior;
 import com.googlecode.wicket.kendo.ui.repeater.listview.IListViewListener;
 import com.googlecode.wicket.kendo.ui.repeater.listview.ListViewBehavior;
 
@@ -49,8 +51,10 @@ public class DataView<T> extends WebMarkupContainer implements IJQueryWidget, IL
 {
 	private static final long serialVersionUID = 1L;
 
+	/** default rows */
+	private static final long ROWS = Byte.MAX_VALUE;
+
 	private final Options options;
-	private final long rows;
 
 	/** the data-source provider */
 	private final IDataProvider<T> provider;
@@ -70,9 +74,9 @@ public class DataView<T> extends WebMarkupContainer implements IJQueryWidget, IL
 	 * @param provider the {@link IDataProvider}
 	 * @param rows the number of rows per page to be displayed
 	 */
-	public DataView(String id, final IDataProvider<T> provider, final long rows)
+	public DataView(String id, final IDataProvider<T> provider)
 	{
-		this(id, provider, rows, new TextRenderer<T>(), new Options());
+		this(id, provider, new JsonRenderer<T>(), new Options());
 	}
 
 	/**
@@ -83,9 +87,9 @@ public class DataView<T> extends WebMarkupContainer implements IJQueryWidget, IL
 	 * @param rows the number of rows per page to be displayed
 	 * @param options the {@link Options}
 	 */
-	public DataView(String id, final IDataProvider<T> provider, final long rows, Options options)
+	public DataView(String id, final IDataProvider<T> provider, Options options)
 	{
-		this(id, provider, rows, new TextRenderer<T>(), options);
+		this(id, provider, new JsonRenderer<T>(), options);
 	}
 
 	/**
@@ -96,9 +100,9 @@ public class DataView<T> extends WebMarkupContainer implements IJQueryWidget, IL
 	 * @param rows the number of rows per page to be displayed
 	 * @param renderer the {@link ITextRenderer}
 	 */
-	public DataView(String id, final IDataProvider<T> provider, final long rows, ITextRenderer<? super T> renderer)
+	public DataView(String id, final IDataProvider<T> provider, ITextRenderer<? super T> renderer)
 	{
-		this(id, provider, rows, renderer, new Options());
+		this(id, provider, renderer, new Options());
 	}
 
 	/**
@@ -110,11 +114,10 @@ public class DataView<T> extends WebMarkupContainer implements IJQueryWidget, IL
 	 * @param renderer the {@link ITextRenderer}
 	 * @param options the {@link Options}
 	 */
-	public DataView(String id, final IDataProvider<T> provider, final long rows, ITextRenderer<? super T> renderer, Options options)
+	public DataView(String id, final IDataProvider<T> provider, ITextRenderer<? super T> renderer, Options options)
 	{
 		super(id);
 
-		this.rows = rows;
 		this.options = options;
 
 		this.provider = provider;
@@ -194,11 +197,11 @@ public class DataView<T> extends WebMarkupContainer implements IJQueryWidget, IL
 	/**
 	 * Gets the number of rows per page to be displayed
 	 *
-	 * @return the number of rows per page to be displayed
+	 * @return {@value #ROWS} by default
 	 */
-	protected final long getRowCount()
+	protected long getRowCount()
 	{
-		return this.rows;
+		return ROWS;
 	}
 
 	/**
@@ -210,7 +213,7 @@ public class DataView<T> extends WebMarkupContainer implements IJQueryWidget, IL
 	{
 		return this.providerBehavior.getCallbackUrl();
 	}
-	
+
 	@Override
 	public boolean isSelectable()
 	{
@@ -301,7 +304,7 @@ public class DataView<T> extends WebMarkupContainer implements IJQueryWidget, IL
 	{
 		// noop
 	}
-	
+
 	@Override
 	public void onChange(AjaxRequestTarget target, List<JSONObject> objects)
 	{
@@ -313,7 +316,7 @@ public class DataView<T> extends WebMarkupContainer implements IJQueryWidget, IL
 	@Override
 	public JQueryBehavior newWidgetBehavior(String selector)
 	{
-		return new ListViewBehavior(selector, this.options, this) {
+		return new ListViewBehavior(selector, this.newDataSource(selector), this, this.options) {
 
 			private static final long serialVersionUID = 1L;
 
@@ -345,13 +348,27 @@ public class DataView<T> extends WebMarkupContainer implements IJQueryWidget, IL
 
 	/**
 	 * Gets a new {@link IJQueryTemplate} to customize the rendering<br/>
-	 * The properties used in the template text (ie: ${data.name}) should be of the prefixed by "data." and should be identified in the list returned by {@link IJQueryTemplate#getTextProperties()} (without "data.")
+	 * The properties used in the template text (ie: ${data.name}) should be of the prefixed by "data."<br/>
+	 * <br/>
+	 * <b>Note:</b> {@link DataView} uses a {@link JsonRenderer} by default, making {@link IJQueryTemplate#getTextProperties()} not required to override (see {@link JQueryTemplate})
 	 *
 	 * @return null by default
+	 * @see JQueryTemplate
 	 */
 	protected IJQueryTemplate newTemplate()
 	{
 		return null;
+	}
+
+	/**
+	 * Gets a new {@link KendoDataSource} to be used by the underlying {@link ListViewBehavior}
+	 * 
+	 * @param selector the html selector (ie: "#myId")
+	 * @return a new {@code KendoDataSource}
+	 */
+	protected KendoDataSource newDataSource(String selector)
+	{
+		return new KendoDataSource("datasource" + selector);
 	}
 
 	/**
