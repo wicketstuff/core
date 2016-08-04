@@ -33,6 +33,11 @@ import org.apache.wicket.IPageRendererProvider;
 import org.apache.wicket.IRequestCycleProvider;
 import org.apache.wicket.core.request.handler.RenderPageRequestHandler;
 import org.apache.wicket.protocol.http.WicketFilter;
+import org.apache.wicket.protocol.https.HttpsConfig;
+import org.apache.wicket.protocol.https.HttpsMapper;
+import org.apache.wicket.protocol.https.Scheme;
+import org.apache.wicket.request.IRequestHandler;
+import org.apache.wicket.request.Request;
 import org.apache.wicket.request.UrlRenderer;
 import org.apache.wicket.request.cycle.RequestCycle;
 import org.apache.wicket.request.cycle.RequestCycleContext;
@@ -62,11 +67,21 @@ public class PortletFilter extends WicketFilter {
 	public void init(boolean isServlet, FilterConfig filterConfig) throws ServletException {
 		super.init(isServlet, filterConfig);
 		this.filterConfig = filterConfig;
+		
 		getApplication().getRequestCycleSettings().setRenderStrategy(RenderStrategy.REDIRECT_TO_RENDER);
 		getApplication().getRequestCycleSettings().addResponseFilter(new PortletInvalidMarkupFilter());
 		//fix for https://github.com/wicketstuff/core/issues/487
 		getApplication().getMarkupSettings().setMarkupIdGenerator(new PortletMarkupIdGenerator());
-		getApplication().setRootRequestMapper(new PortletRequestMapper(getApplication()));
+
+		//make the wicket bridge schema (HTTPS/HTTP) aware
+		getApplication().setRootRequestMapper(new HttpsMapper(new PortletRequestMapper(getApplication()), new HttpsConfig()){
+			@Override
+			protected Scheme getDesiredSchemeFor(IRequestHandler handler) {
+				Request request = RequestCycle.get().getRequest();
+				return super.getSchemeOf(request);
+			}
+		});
+
 		//Application must use the portlet specific page renderer provider.
 		getApplication().setPageRendererProvider(new IPageRendererProvider() {
 			@Override
@@ -157,5 +172,14 @@ public class PortletFilter extends WicketFilter {
 			res = false;
 		}
 		return res;
+	}
+	
+	private void test() {
+		try {
+			super.init(null);
+		} catch (ServletException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 }
