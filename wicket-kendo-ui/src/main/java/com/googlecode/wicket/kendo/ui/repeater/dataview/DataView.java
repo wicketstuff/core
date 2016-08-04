@@ -64,7 +64,6 @@ public class DataView<T> extends WebMarkupContainer implements IJQueryWidget, IL
 	private final ITextRenderer<? super T> renderer;
 
 	/** the template */
-	private final IJQueryTemplate template;
 	private KendoTemplateBehavior templateBehavior = null;
 
 	/**
@@ -122,7 +121,6 @@ public class DataView<T> extends WebMarkupContainer implements IJQueryWidget, IL
 
 		this.provider = provider;
 		this.renderer = renderer;
-		this.template = this.newTemplate();
 	}
 
 	// Methods //
@@ -227,16 +225,18 @@ public class DataView<T> extends WebMarkupContainer implements IJQueryWidget, IL
 	{
 		super.onInitialize();
 
-		this.providerBehavior = this.newDataProviderBehavior(this.getDataProvider(), this.renderer, this.template);
+		final IJQueryTemplate template = this.newTemplate();
+
+		this.providerBehavior = this.newDataProviderBehavior(this.getDataProvider(), this.renderer, template);
 		this.add(this.providerBehavior);
 
-		this.add(JQueryWidget.newWidgetBehavior(this)); // cannot be in ctor as the markupId may be set manually afterward
-
-		if (this.template != null)
+		if (template != null)
 		{
-			this.templateBehavior = new KendoTemplateBehavior(this.template);
+			this.templateBehavior = new KendoTemplateBehavior(template);
 			this.add(this.templateBehavior);
 		}
+
+		this.add(JQueryWidget.newWidgetBehavior(this)); // cannot be in ctor as the markupId may be set manually afterward
 	}
 
 	@Override
