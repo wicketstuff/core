@@ -15,7 +15,7 @@ public <b>abstract</b> class MyFormDialog extends AbstractFormDialog&lt;MyBean&g
 	protected DialogButton getSubmitButton()
 	{
 		//should return one of the button returned by #getButtons()
-		return this.findButton(LBL_OK);
+		return this.findButton(OK);
 	}
 
 	@Override
