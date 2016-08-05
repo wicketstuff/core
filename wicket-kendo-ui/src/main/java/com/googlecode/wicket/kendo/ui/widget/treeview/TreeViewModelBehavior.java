@@ -18,14 +18,10 @@ package com.googlecode.wicket.kendo.ui.widget.treeview;
 
 import java.util.List;
 
-import org.apache.wicket.Application;
-import org.apache.wicket.behavior.AbstractAjaxBehavior;
-import org.apache.wicket.request.IRequestCycle;
-import org.apache.wicket.request.IRequestHandler;
 import org.apache.wicket.request.IRequestParameters;
-import org.apache.wicket.request.cycle.RequestCycle;
-import org.apache.wicket.request.http.WebResponse;
 import org.apache.wicket.util.lang.Args;
+
+import com.googlecode.wicket.jquery.core.behavior.AjaxCallbackBehavior;
 
 /**
  * Provides the behavior that loads {@link TreeNode}{@code s}
@@ -33,7 +29,7 @@ import org.apache.wicket.util.lang.Args;
  * @author Sebastien Briquet - sebfz1
  *
  */
-public class TreeViewModelBehavior extends AbstractAjaxBehavior
+public class TreeViewModelBehavior extends AjaxCallbackBehavior
 {
 	private static final long serialVersionUID = 1L;
 
@@ -64,76 +60,31 @@ public class TreeViewModelBehavior extends AbstractAjaxBehavior
 		return this.factory;
 	}
 
-	// Events //
-
 	@Override
-	public void onRequest()
+	protected String getResponse(IRequestParameters parameters)
 	{
-		final RequestCycle requestCycle = RequestCycle.get();
-		IRequestParameters parameters = requestCycle.getRequest().getQueryParameters();
+		int nodeId = parameters.getParameterValue(TreeNodeFactory.ID_FIELD).toInt(TreeNode.ROOT);
 
-		this.model.setNodeId(parameters.getParameterValue(TreeNodeFactory.ID_FIELD).toInt(TreeNode.ROOT));
+		StringBuilder builder = new StringBuilder("[ ");
 
-		requestCycle.scheduleRequestHandlerAfterCurrent(this.newRequestHandler());
-	}
-
-	// Factories //
-
-	/**
-	 * Gets the new {@link IRequestHandler} that will respond the list of {@link TreeNode}{@code s} in a JSON format
-	 *
-	 * @return the {@link IRequestHandler}
-	 */
-	protected IRequestHandler newRequestHandler()
-	{
-		return new TreeViewModelRequestHandler();
-	}
-
-	// Classes //
-
-	/**
-	 * Provides the {@link IRequestHandler}
-	 */
-	protected class TreeViewModelRequestHandler implements IRequestHandler
-	{
-		@Override
-		public void respond(final IRequestCycle requestCycle)
+		if (this.model != null)
 		{
-			WebResponse response = (WebResponse) requestCycle.getResponse();
+			this.model.setNodeId(nodeId);
+			List<? extends TreeNode<?>> objects = this.model.getObject(); // calls load()
 
-			final String encoding = Application.get().getRequestCycleSettings().getResponseRequestEncoding();
-			response.setContentType("text/json; charset=" + encoding);
-			response.disableCaching();
-
-			if (model != null)
+			for (int index = 0; index < objects.size(); index++)
 			{
-				List<? extends TreeNode<?>> objects = model.getObject(); // calls load()
+				TreeNode<?> object = objects.get(index);
 
-				if (objects != null)
+				if (index > 0)
 				{
-					StringBuilder builder = new StringBuilder("[ ");
-
-					for (int index = 0; index < objects.size(); index++)
-					{
-						TreeNode<?> object = objects.get(index);
-
-						if (index > 0)
-						{
-							builder.append(", ");
-						}
-
-						builder.append(factory.toJson(index, object));
-					}
-
-					response.write(builder.append(" ]"));
+					builder.append(", ");
 				}
+
+				builder.append(this.factory.toJson(index, object));
 			}
 		}
 
-		@Override
-		public void detach(final IRequestCycle requestCycle)
-		{
-			model.detach();
-		}
+		return builder.append(" ]").toString();
 	}
 }

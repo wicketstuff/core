@@ -20,28 +20,24 @@ import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
-import org.apache.wicket.Application;
-import org.apache.wicket.behavior.AbstractAjaxBehavior;
+import org.apache.wicket.Component;
 import org.apache.wicket.markup.repeater.data.IDataProvider;
-import org.apache.wicket.request.IRequestCycle;
-import org.apache.wicket.request.IRequestHandler;
 import org.apache.wicket.request.IRequestParameters;
-import org.apache.wicket.request.cycle.RequestCycle;
-import org.apache.wicket.request.http.WebResponse;
 
 import com.googlecode.wicket.jquery.core.Options;
+import com.googlecode.wicket.jquery.core.behavior.AjaxCallbackBehavior;
 import com.googlecode.wicket.jquery.core.renderer.ITextRenderer;
 import com.googlecode.wicket.jquery.core.template.IJQueryTemplate;
 import com.googlecode.wicket.jquery.core.utils.BuilderUtils;
 import com.googlecode.wicket.jquery.core.utils.ListUtils;
 
 /**
- * Provides the {@link IDataProvider} data source {@link AbstractAjaxBehavior}
+ * Provides the {@link IDataProvider} data source {@link AjaxCallbackBehavior}
  *
  * @param <T> the type of the model object
  * @author Sebastien Briquet - sebfz1
  */
-public class DataProviderBehavior<T> extends AbstractAjaxBehavior
+public class DataProviderBehavior<T> extends AjaxCallbackBehavior
 {
 	private static final long serialVersionUID = 1L;
 
@@ -83,100 +79,59 @@ public class DataProviderBehavior<T> extends AbstractAjaxBehavior
 	}
 
 	@Override
-	public void onRequest()
+	protected String getResponse(IRequestParameters parameters)
 	{
-		final RequestCycle requestCycle = RequestCycle.get();
-		final IRequestParameters parameters = requestCycle.getRequest().getQueryParameters();
 		final int first = parameters.getParameterValue("skip").toInt(0);
 		final int count = parameters.getParameterValue("take").toInt(Short.MAX_VALUE);
 
-		requestCycle.scheduleRequestHandlerAfterCurrent(this.newRequestHandler(first, count));
-	}
+		final long size = this.provider.size();
+		final Iterator<? extends T> iterator = this.provider.iterator(first, count);
 
-	/**
-	 * Gets the new {@link IRequestHandler} that will respond the data in a json format
-	 *
-	 * @param first the first row number
-	 * @param count the count of rows
-	 * @return a new {@code IRequestHandler}
-	 */
-	private IRequestHandler newRequestHandler(final int first, final int count)
-	{
-		return new DataProviderRequestHandler(first, count);
-	}
+		// builds JSON result //
+		StringBuilder builder = new StringBuilder();
+		builder.append("{ ");
+		BuilderUtils.append(builder, "__count", size);
+		builder.append(", ");
+		builder.append(Options.QUOTE).append("results").append(Options.QUOTE).append(": ");
+		builder.append("[ ");
 
-	/**
-	 * Provides the {@link IRequestHandler}
-	 */
-	protected class DataProviderRequestHandler implements IRequestHandler
-	{
-		private final int first;
-		private final int count;
-
-		public DataProviderRequestHandler(int first, int count)
+		if (iterator != null)
 		{
-			this.first = first;
-			this.count = count;
-		}
-
-		@Override
-		public void respond(final IRequestCycle requestCycle)
-		{
-			WebResponse response = (WebResponse) requestCycle.getResponse();
-
-			final String encoding = Application.get().getRequestCycleSettings().getResponseRequestEncoding();
-			response.setContentType("application/json; charset=" + encoding);
-			response.disableCaching();
-
-			final long size = provider.size();
-			final Iterator<? extends T> iterator = provider.iterator(first, count);
-
-			// builds JSON result //
-			StringBuilder builder = new StringBuilder();
-			builder.append("{ ");
-			BuilderUtils.append(builder, "__count", size);
-			builder.append(", ");
-			builder.append(Options.QUOTE).append("results").append(Options.QUOTE).append(": ");
-			builder.append("[ ");
-
-			if (iterator != null)
+			for (int index = 0; iterator.hasNext(); index++)
 			{
-				for (int index = 0; iterator.hasNext(); index++)
+				T object = iterator.next();
+
+				if (index > 0)
 				{
-					T object = iterator.next();
-
-					if (index > 0)
-					{
-						builder.append(", ");
-					}
-
-					builder.append("{ ");
-
-					// ITextRenderer //
-					builder.append(renderer.render(object));
-
-					// Additional properties (like template properties) //
-					List<String> properties = DataProviderBehavior.this.getProperties();
-
-					for (String property : properties)
-					{
-						builder.append(", ");
-						BuilderUtils.append(builder, property, renderer.getText(object, property));
-					}
-
-					builder.append(" }");
+					builder.append(", ");
 				}
+
+				builder.append("{ ");
+
+				// ITextRenderer //
+				builder.append(this.renderer.render(object));
+
+				// Additional properties (like template properties) //
+				for (String property : this.getProperties())
+				{
+					builder.append(", ");
+					BuilderUtils.append(builder, property, this.renderer.getText(object, property));
+				}
+
+				builder.append(" }");
 			}
-
-			builder.append(" ] }");
-
-			response.write(builder);
 		}
 
-		@Override
-		public void detach(final IRequestCycle requestCycle)
-		{
-			provider.detach();
-		}
+		builder.append(" ] }");
+
+		return builder.toString();
+	}
+
+	@Override
+	public void detach(Component component)
+	{
+		super.detach(component);
+
+		this.provider.detach();
 	}
 }

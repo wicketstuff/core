@@ -18,11 +18,8 @@ package com.googlecode.wicket.jquery.ui.form.autocomplete;
 
 import java.util.List;
 
-import org.apache.wicket.Application;
 import org.apache.wicket.behavior.AbstractAjaxBehavior;
-import org.apache.wicket.request.IRequestCycle;
-import org.apache.wicket.request.IRequestHandler;
-import org.apache.wicket.request.http.WebResponse;
+import org.apache.wicket.request.IRequestParameters;
 
 import com.googlecode.wicket.jquery.core.behavior.ChoiceModelBehavior;
 import com.googlecode.wicket.jquery.core.renderer.ITextRenderer;
@@ -50,68 +47,44 @@ abstract class AutoCompleteChoiceModelBehavior<T> extends ChoiceModelBehavior<T>
 	}
 
 	@Override
-	protected IRequestHandler newRequestHandler()
+	protected String getResponse(IRequestParameters parameters)
 	{
-		return new AutoCompleteChoiceModelRequestHandler();
-	}
+		StringBuilder builder = new StringBuilder("[ ");
 
-	/**
-	 * Provides the {@link IRequestHandler}
-	 */
-	protected class AutoCompleteChoiceModelRequestHandler implements IRequestHandler
-	{
-		@Override
-		public void respond(final IRequestCycle requestCycle)
+		List<T> choices = this.getChoices();
+
+		if (choices != null)
 		{
-			WebResponse response = (WebResponse) requestCycle.getResponse();
-
-			final String encoding = Application.get().getRequestCycleSettings().getResponseRequestEncoding();
-			response.setContentType("application/json; charset=" + encoding);
-			response.disableCaching();
-
-			List<T> choices = AutoCompleteChoiceModelBehavior.this.getChoices();
-
-			if (choices != null)
+			int index = 0;
+			for (T choice : choices)
 			{
-				StringBuilder builder = new StringBuilder("[ ");
-
-				int index = 0;
-				for (T choice : choices)
+				if (index++ > 0)
 				{
-					if (index++ > 0)
-					{
-						builder.append(", ");
-					}
-
-					builder.append("{ ");
-					BuilderUtils.append(builder, "id", Integer.toString(index)); /* 'id' is a reserved word */
 					builder.append(", ");
-					BuilderUtils.append(builder, "value", renderer.getText(choice)); /* 'value' is a reserved word */
-					builder.append(", ");
-
-					// ITextRenderer //
-					builder.append(renderer.render(choice)); // #198
-
-					// Additional properties (like template properties) //
-					List<String> properties = AutoCompleteChoiceModelBehavior.this.getProperties();
-
-					for (String property : properties)
-					{
-						builder.append(", ");
-						BuilderUtils.append(builder, property, renderer.getText(choice, property));
-					}
-
-					builder.append(" }");
 				}
 
-				response.write(builder.append(" ]"));
+				builder.append("{ ");
+				BuilderUtils.append(builder, "id", Integer.toString(index)); /* 'id' is a reserved word */
+				builder.append(", ");
+				BuilderUtils.append(builder, "value", this.renderer.getText(choice)); /* 'value' is a reserved word */
+				builder.append(", ");
+
+				// ITextRenderer //
+				builder.append(this.renderer.render(choice)); // #198
+
+				// Additional properties (like template properties) //
+				List<String> properties = AutoCompleteChoiceModelBehavior.this.getProperties();
+
+				for (String property : properties)
+				{
+					builder.append(", ");
+					BuilderUtils.append(builder, property, this.renderer.getText(choice, property));
+				}
+
+				builder.append(" }");
 			}
 		}
 
-		@Override
-		public void detach(final IRequestCycle requestCycle)
-		{
-			// noop
-		}
+		return builder.append(" ]").toString();
 	}
 }

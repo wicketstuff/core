@@ -19,12 +19,7 @@ package com.googlecode.wicket.jquery.core.behavior;
 import java.util.Collections;
 import java.util.List;
 
-import org.apache.wicket.Application;
-import org.apache.wicket.behavior.AbstractAjaxBehavior;
-import org.apache.wicket.request.IRequestCycle;
-import org.apache.wicket.request.IRequestHandler;
-import org.apache.wicket.request.cycle.RequestCycle;
-import org.apache.wicket.request.http.WebResponse;
+import org.apache.wicket.request.IRequestParameters;
 
 import com.googlecode.wicket.jquery.core.data.IChoiceProvider;
 import com.googlecode.wicket.jquery.core.renderer.ITextRenderer;
@@ -33,13 +28,13 @@ import com.googlecode.wicket.jquery.core.utils.BuilderUtils;
 import com.googlecode.wicket.jquery.core.utils.ListUtils;
 
 /**
- * Provides the choice ajax loading behavior
+ * Provides the choice {@link AjaxCallbackBehavior}
  *
  * @author Sebastien Briquet - sebfz1
  *
  * @param <T> the model object type
  */
-public abstract class ChoiceModelBehavior<T> extends AbstractAjaxBehavior implements IChoiceProvider<T>
+public abstract class ChoiceModelBehavior<T> extends AjaxCallbackBehavior implements IChoiceProvider<T>
 {
 	private static final long serialVersionUID = 1L;
 
@@ -86,83 +81,42 @@ public abstract class ChoiceModelBehavior<T> extends AbstractAjaxBehavior implem
 		return Collections.emptyList();
 	}
 
-	// Events //
-
 	@Override
-	public void onRequest()
+	protected String getResponse(IRequestParameters parameters)
 	{
-		// FIXME: called twice! (see LazyMultiSelectPage)
-		// TODO: test in wicket-6
-		RequestCycle.get().scheduleRequestHandlerAfterCurrent(this.newRequestHandler());
-	}
+		StringBuilder builder = new StringBuilder("[");
 
-	// Factories //
+		List<T> choices = this.getChoices();
 
-	/**
-	 * Gets a new {@link IRequestHandler} that will call {@link #getChoices()} and will build be JSON response
-	 *
-	 * @return a new {@code IRequestHandler}
-	 */
-	protected IRequestHandler newRequestHandler()
-	{
-		return new ChoiceModelRequestHandler();
-	}
-
-	// Classes //
-
-	/**
-	 * Provides the {@link IRequestHandler}
-	 */
-	protected class ChoiceModelRequestHandler implements IRequestHandler
-	{
-		@Override
-		public void respond(final IRequestCycle requestCycle)
+		if (choices != null)
 		{
-			WebResponse response = (WebResponse) requestCycle.getResponse();
+			int index = 0;
 
-			final String encoding = Application.get().getRequestCycleSettings().getResponseRequestEncoding();
-			response.setContentType("application/json; charset=" + encoding);
-			response.disableCaching();
-
-			List<T> choices = ChoiceModelBehavior.this.getChoices();
-
-			if (choices != null)
+			for (T choice : choices)
 			{
-				int index = 0;
-				StringBuilder builder = new StringBuilder("[");
-
-				for (T choice : choices)
+				if (index++ > 0)
 				{
-					if (index++ > 0)
-					{
-						builder.append(", ");
-					}
-
-					builder.append("{ ");
-
-					// ITextRenderer //
-					builder.append(renderer.render(choice));
-
-					// Additional properties (like template properties) //
-					List<String> properties = ChoiceModelBehavior.this.getProperties();
-
-					for (String property : properties)
-					{
-						builder.append(", ");
-						BuilderUtils.append(builder, property, renderer.getText(choice, property));
-					}
-
-					builder.append(" }");
+					builder.append(", ");
 				}
 
-				response.write(builder.append("]"));
+				builder.append("{ ");
+
+				// ITextRenderer //
+				builder.append(this.renderer.render(choice));
+
+				// Additional properties (like template properties) //
+				List<String> properties = this.getProperties();
+
+				for (String property : properties)
+				{
+					builder.append(", ");
+					BuilderUtils.append(builder, property, this.renderer.getText(choice, property));
+				}
+
+				builder.append(" }");
 			}
 		}
 
-		@Override
-		public void detach(final IRequestCycle requestCycle)
-		{
-			// noop
-		}
+		return builder.append("]").toString();
 	}
 }

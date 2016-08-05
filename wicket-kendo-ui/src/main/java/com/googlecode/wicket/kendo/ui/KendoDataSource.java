@@ -50,16 +50,16 @@ public class KendoDataSource extends Options implements IKendoDataSource
 	 * Constructor
 	 *
 	 * @param name the data-source name
-	 * @param type the response type (json, xml)
+	 * @param type the response data type (json, xml)
 	 */
 	public KendoDataSource(String name, String type)
 	{
 		this.name = Args.notNull(name, "name").replace('#', '_');
 		this.transport = new Options();
 
-		this.set("type", Options.asString(type));
 		this.set("sync", "function() { this.read(); }"); // will force holding component to call #refresh
 		this.set("error", DebugUtils.errorCallback);
+		this.set("dataType", Options.asString(type));
 	}
 
 	// Properties //
@@ -165,7 +165,6 @@ public class KendoDataSource extends Options implements IKendoDataSource
 				+ "		url: '" + url + "'," // lf
 				+ "		data: options.data," // lf
 				+ "		cache: " + useCache + "," // lf
-				+ "		dataType: 'json'," // lf
 				+ "		success: function(result) {" // lf
 				+ "			options.success(result);" // lf
 				+ "		}," // lf

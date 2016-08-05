@@ -19,13 +19,9 @@ package com.googlecode.wicket.jquery.ui.calendar;
 import java.time.LocalDate;
 import java.util.List;
 
-import org.apache.wicket.Application;
-import org.apache.wicket.behavior.AbstractAjaxBehavior;
-import org.apache.wicket.request.IRequestCycle;
-import org.apache.wicket.request.IRequestHandler;
 import org.apache.wicket.request.IRequestParameters;
-import org.apache.wicket.request.cycle.RequestCycle;
-import org.apache.wicket.request.http.WebResponse;
+
+import com.googlecode.wicket.jquery.core.behavior.AjaxCallbackBehavior;
 
 /**
  * Provides the behavior that loads {@link CalendarEvent}{@code s} according to {@link CalendarModel} start &amp; end dates
@@ -33,7 +29,7 @@ import org.apache.wicket.request.http.WebResponse;
  * @author Sebastien Briquet - sebfz1
  *
  */
-public class CalendarModelBehavior extends AbstractAjaxBehavior
+public class CalendarModelBehavior extends AjaxCallbackBehavior
 {
 	private static final long serialVersionUID = 1L;
 
@@ -47,24 +43,6 @@ public class CalendarModelBehavior extends AbstractAjaxBehavior
 	public CalendarModelBehavior(final CalendarModel model)
 	{
 		this.model = model;
-	}
-
-	@Override
-	public void onRequest()
-	{
-		final RequestCycle requestCycle = RequestCycle.get();
-		IRequestParameters parameters = requestCycle.getRequest().getQueryParameters();
-
-		final String start = parameters.getParameterValue("start").toString();
-		final String end = parameters.getParameterValue("end").toString();
-
-		if (this.model != null)
-		{
-			this.setStartDate(this.model, LocalDate.parse(start));
-			this.setEndDate(this.model, LocalDate.parse(end));
-		}
-
-		requestCycle.scheduleRequestHandlerAfterCurrent(this.newRequestHandler());
 	}
 
 	/**
@@ -91,65 +69,41 @@ public class CalendarModelBehavior extends AbstractAjaxBehavior
 		model.setEnd(date);
 	}
 
-	/**
-	 * Gets the new {@link IRequestHandler} that will respond the list of {@link CalendarEvent} in a json format
-	 *
-	 * @return the {@link IRequestHandler}
-	 */
-	protected IRequestHandler newRequestHandler()
+	@Override
+	protected String getResponse(IRequestParameters parameters)
 	{
-		return new CalendarModelRequestHandler();
-	}
-	
-	// Classes //
+		final String start = parameters.getParameterValue("start").toString();
+		final String end = parameters.getParameterValue("end").toString();
 
-	/**
-	 * Provides the {@link IRequestHandler}
-	 */
-	protected class CalendarModelRequestHandler implements IRequestHandler
-	{
-		@Override
-		public void respond(final IRequestCycle requestCycle)
+		StringBuilder builder = new StringBuilder("[ ");
+
+		if (this.model != null)
 		{
-			WebResponse response = (WebResponse) requestCycle.getResponse();
+			this.setStartDate(this.model, LocalDate.parse(start));
+			this.setEndDate(this.model, LocalDate.parse(end));
 
-			final String encoding = Application.get().getRequestCycleSettings().getResponseRequestEncoding();
-			response.setContentType("text/json; charset=" + encoding);
-			response.disableCaching();
+			List<? extends CalendarEvent> list = this.model.getObject(); // calls load()
 
-			if (model != null)
+			if (list != null)
 			{
-				List<? extends CalendarEvent> list = model.getObject(); // calls load()
-
-				if (list != null)
+				int count = 0;
+				for (CalendarEvent event : list)
 				{
-					StringBuilder builder = new StringBuilder("[ ");
-
-					int count = 0;
-					for (CalendarEvent event : list)
+					if (this.model instanceof ICalendarVisitor)
 					{
-						if (model instanceof ICalendarVisitor)
-						{
-							event.accept((ICalendarVisitor) model); // last chance to set options
-						}
-
-						if (count++ > 0)
-						{
-							builder.append(", ");
-						}
-
-						builder.append(event.toString());
+						event.accept((ICalendarVisitor) this.model); // last chance to set options
 					}
 
-					response.write(builder.append(" ]"));
+					if (count++ > 0)
+					{
+						builder.append(", ");
+					}
+
+					builder.append(event.toString());
 				}
 			}
 		}
 
-		@Override
-		public void detach(final IRequestCycle requestCycle)
-		{
-			// noop
-		}
+		return builder.append(" ]").toString();
 	}
 }

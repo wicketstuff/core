@@ -18,14 +18,10 @@ package com.googlecode.wicket.kendo.ui.scheduler;
 
 import java.util.List;
 
-import org.apache.wicket.Application;
-import org.apache.wicket.behavior.AbstractAjaxBehavior;
-import org.apache.wicket.request.IRequestCycle;
-import org.apache.wicket.request.IRequestHandler;
 import org.apache.wicket.request.IRequestParameters;
-import org.apache.wicket.request.cycle.RequestCycle;
-import org.apache.wicket.request.http.WebResponse;
 import org.apache.wicket.util.lang.Args;
+
+import com.googlecode.wicket.jquery.core.behavior.AjaxCallbackBehavior;
 
 /**
  * Provides the behavior that loads {@link SchedulerEvent}{@code s} according to {@link SchedulerModel} start &amp; end dates
@@ -33,7 +29,7 @@ import org.apache.wicket.util.lang.Args;
  * @author Sebastien Briquet - sebfz1
  *
  */
-public class SchedulerModelBehavior extends AbstractAjaxBehavior
+public class SchedulerModelBehavior extends AjaxCallbackBehavior
 {
 	private static final long serialVersionUID = 1L;
 
@@ -49,24 +45,6 @@ public class SchedulerModelBehavior extends AbstractAjaxBehavior
 	{
 		this.model = model;
 		this.factory = Args.notNull(factory, "factory");
-	}
-
-	@Override
-	public void onRequest()
-	{
-		final RequestCycle requestCycle = RequestCycle.get();
-		IRequestParameters parameters = requestCycle.getRequest().getQueryParameters();
-
-		final long start = parameters.getParameterValue("start").toLong(0);
-		final long end = parameters.getParameterValue("end").toLong(0);
-
-		if (this.model != null)
-		{
-			this.setStartDate(this.model, start);
-			this.setEndDate(this.model, end);
-		}
-
-		requestCycle.scheduleRequestHandlerAfterCurrent(this.newRequestHandler());
 	}
 
 	/**
@@ -93,66 +71,45 @@ public class SchedulerModelBehavior extends AbstractAjaxBehavior
 		model.setEnd(date);
 	}
 
-	/**
-	 * Gets the new {@link IRequestHandler} that will respond the list of {@link SchedulerEvent} in a JSON format
-	 *
-	 * @return the {@link IRequestHandler}
-	 */
-	protected IRequestHandler newRequestHandler()
+	@Override
+	protected String getResponse(IRequestParameters parameters)
 	{
-		return new SchedulerModelRequestHandler();
-	}
+		final long start = parameters.getParameterValue("start").toLong(0);
+		final long end = parameters.getParameterValue("end").toLong(0);
 
-	/**
-	 * Provides the {@link IRequestHandler}
-	 */
-	protected class SchedulerModelRequestHandler implements IRequestHandler
-	{
-		@Override
-		public void respond(final IRequestCycle requestCycle)
+		StringBuilder builder = new StringBuilder("[ ");
+
+		if (this.model != null)
 		{
-			WebResponse response = (WebResponse) requestCycle.getResponse();
+			this.setStartDate(this.model, start);
+			this.setEndDate(this.model, end);
 
-			final String encoding = Application.get().getRequestCycleSettings().getResponseRequestEncoding();
-			response.setContentType("text/json; charset=" + encoding);
-			response.disableCaching();
+			List<SchedulerEvent> list = this.model.getObject(); // calls load()
 
-			if (model != null)
+			if (list != null)
 			{
-				List<SchedulerEvent> list = model.getObject(); // calls load()
 
-				if (list != null)
+				int count = 0;
+				for (SchedulerEvent event : list)
 				{
-					StringBuilder builder = new StringBuilder("[ ");
-
-					int count = 0;
-					for (SchedulerEvent event : list)
+					if (this.model instanceof ISchedulerVisitor)
 					{
-						if (model instanceof ISchedulerVisitor)
-						{
-							event.accept((ISchedulerVisitor) model); // last chance to set options
-						}
-
-						if (event.isVisible())
-						{
-							if (count++ > 0)
-							{
-								builder.append(", ");
-							}
-
-							builder.append(factory.toJson(event));
-						}
+						event.accept((ISchedulerVisitor) this.model); // last chance to set options
 					}
 
-					response.write(builder.append(" ]"));
+					if (event.isVisible())
+					{
+						if (count++ > 0)
+						{
+							builder.append(", ");
+						}
+
+						builder.append(this.factory.toJson(event));
+					}
 				}
 			}
 		}
 
-		@Override
-		public void detach(final IRequestCycle requestCycle)
-		{
-			model.detach();
-		}
+		return builder.append(" ]").toString();
 	}
 }

@@ -20,10 +20,10 @@ import java.util.Iterator;
 import java.util.List;
 
 import org.apache.wicket.Application;
+import org.apache.wicket.Component;
 import org.apache.wicket.Session;
 import org.apache.wicket.ajax.json.JSONException;
 import org.apache.wicket.ajax.json.JSONObject;
-import org.apache.wicket.behavior.AbstractAjaxBehavior;
 import org.apache.wicket.core.util.lang.PropertyResolver;
 import org.apache.wicket.core.util.lang.PropertyResolverConverter;
 import org.apache.wicket.extensions.markup.html.repeater.data.sort.ISortStateLocator;
@@ -31,26 +31,23 @@ import org.apache.wicket.extensions.markup.html.repeater.data.sort.SortOrder;
 import org.apache.wicket.extensions.markup.html.repeater.data.table.filter.IFilterStateLocator;
 import org.apache.wicket.markup.repeater.data.IDataProvider;
 import org.apache.wicket.model.IModel;
-import org.apache.wicket.request.IRequestCycle;
-import org.apache.wicket.request.IRequestHandler;
 import org.apache.wicket.request.IRequestParameters;
-import org.apache.wicket.request.cycle.RequestCycle;
-import org.apache.wicket.request.http.WebResponse;
 import org.apache.wicket.util.convert.ConversionException;
 
 import com.googlecode.wicket.jquery.core.Options;
+import com.googlecode.wicket.jquery.core.behavior.AjaxCallbackBehavior;
 import com.googlecode.wicket.jquery.core.utils.BuilderUtils;
 import com.googlecode.wicket.kendo.ui.datatable.column.IColumn;
 import com.googlecode.wicket.kendo.ui.datatable.column.PropertyColumn;
 import com.googlecode.wicket.kendo.ui.utils.PropertyUtils;
 
 /**
- * Provides the {@link DataTable} data source {@link AbstractAjaxBehavior}
+ * Provides the {@link DataTable} data source {@link AjaxCallbackBehavior}
  *
  * @param <T> the type of the model object
  * @author Sebastien Briquet - sebfz1
  */
-public class DataProviderBehavior<T> extends AbstractAjaxBehavior
+public class DataProviderBehavior<T> extends AjaxCallbackBehavior
 {
 	private static final long serialVersionUID = 1L;
 	private static final String ASC = "asc";
@@ -73,6 +70,8 @@ public class DataProviderBehavior<T> extends AbstractAjaxBehavior
 		this.provider = provider;
 	}
 
+	// Methods //
+
 	@SuppressWarnings("unchecked")
 	protected void setSort(String property, SortOrder order)
 	{
@@ -82,11 +81,8 @@ public class DataProviderBehavior<T> extends AbstractAjaxBehavior
 	}
 
 	@Override
-	public void onRequest()
+	protected String getResponse(IRequestParameters parameters)
 	{
-		final RequestCycle requestCycle = RequestCycle.get();
-		final IRequestParameters parameters = requestCycle.getRequest().getQueryParameters();
-
 		final int first = parameters.getParameterValue("skip").toInt(0);
 		final int count = parameters.getParameterValue("take").toInt(Short.MAX_VALUE);
 
@@ -134,8 +130,45 @@ public class DataProviderBehavior<T> extends AbstractAjaxBehavior
 			}
 		}
 
-		requestCycle.scheduleRequestHandlerAfterCurrent(this.newRequestHandler(first, count));
+		// response //
+		final long size = this.provider.size();
+		final Iterator<? extends T> iterator = this.provider.iterator(first, count);
+
+		StringBuilder builder = new StringBuilder();
+
+		builder.append("{ ");
+		BuilderUtils.append(builder, "__count", size);
+		builder.append(", ");
+		builder.append(Options.QUOTE).append("results").append(Options.QUOTE).append(": ");
+		builder.append("[ ");
+
+		if (iterator != null)
+		{
+			for (int index = 0; iterator.hasNext(); index++)
+			{
+				if (index > 0)
+				{
+					builder.append(", ");
+				}
+
+				builder.append(this.newJsonRow(iterator.next()));
+			}
+		}
+
+		builder.append(" ] }");
+
+		return builder.toString();
 	}
+
+	@Override
+	public void detach(Component component)
+	{
+		super.detach(component);
+
+		this.provider.detach();
+	}
+
+	// Factories //
 
 	/**
 	 * Get a new {@link PropertyResolverConverter}
@@ -145,64 +178,6 @@ public class DataProviderBehavior<T> extends AbstractAjaxBehavior
 	protected PropertyResolverConverter newPropertyResolverConverter()
 	{
 		return new PropertyResolverConverter(Application.get().getConverterLocator(), Session.get().getLocale());
-	}
-
-	/**
-	 * Gets the new {@link IRequestHandler} that will respond the data in a json format
-	 *
-	 * @param first the first row number
-	 * @param count the count of rows
-	 * @return a new {@code IRequestHandler}
-	 */
-	private IRequestHandler newRequestHandler(final int first, final int count)
-	{
-		return new IRequestHandler() {
-
-			@Override
-			public void respond(final IRequestCycle requestCycle)
-			{
-				WebResponse response = (WebResponse) requestCycle.getResponse();
-
-				final String encoding = Application.get().getRequestCycleSettings().getResponseRequestEncoding();
-				response.setContentType("application/json; charset=" + encoding);
-				response.disableCaching();
-
-				final long size = provider.size();
-				final Iterator<? extends T> iterator = provider.iterator(first, count);
-
-				// builds JSON result //
-				StringBuilder builder = new StringBuilder();
-
-				builder.append("{ ");
-				BuilderUtils.append(builder, "__count", size);
-				builder.append(", ");
-				builder.append(Options.QUOTE).append("results").append(Options.QUOTE).append(": ");
-				builder.append("[ ");
-
-				if (iterator != null)
-				{
-					for (int index = 0; iterator.hasNext(); index++)
-					{
-						if (index > 0)
-						{
-							builder.append(", ");
-						}
-
-						builder.append(DataProviderBehavior.this.newJsonRow(iterator.next()));
-					}
-				}
-
-				builder.append(" ] }");
-
-				response.write(builder);
-			}
-
-			@Override
-			public void detach(final IRequestCycle requestCycle)
-			{
-				provider.detach();
-			}
-		};
 	}
 
 	/**

@@ -1,6 +1,5 @@
 package com.googlecode.wicket.jquery.ui.samples.jqueryui.autocomplete;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -8,6 +7,7 @@ import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.panel.FeedbackPanel;
 import org.apache.wicket.model.Model;
+import org.apache.wicket.util.lang.Generics;
 
 import com.googlecode.wicket.jquery.ui.form.autocomplete.AutoCompleteTextField;
 import com.googlecode.wicket.jquery.ui.panel.JQueryFeedbackPanel;
@@ -42,7 +42,7 @@ public class DefaultAutoCompletePage extends AbstractAutoCompletePage
 			@Override
 			protected List<String> getChoices(String input)
 			{
-				List<String> choices = new ArrayList<String>();
+				List<String> choices = Generics.newArrayList();
 				String inputLowerCase = input.toLowerCase();
 
 				int count = 0;
