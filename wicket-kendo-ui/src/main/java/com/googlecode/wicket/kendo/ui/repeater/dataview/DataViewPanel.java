@@ -107,7 +107,6 @@ public class DataViewPanel<T> extends GenericPanel<T> // NOSONAR
 	 * @param id the markup id
 	 * @param dataSource the {@link KendoDataSource}
 	 * @param provider the {@link IDataProvider}
-	 * @param rows the number of rows per page to be displayed
 	 * @param options the {@link Options}
 	 * @return a new {@code DataView}
 	 */

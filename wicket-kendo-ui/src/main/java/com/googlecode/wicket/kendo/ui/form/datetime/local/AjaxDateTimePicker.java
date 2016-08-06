@@ -103,9 +103,9 @@ public class AjaxDateTimePicker extends DateTimePicker implements IValueChangedL
 	 * @param id the markup id
 	 * @param model the date {@code IModel}
 	 */
-	public AjaxDateTimePicker(String id, IModel<LocalDateTime> date)
+	public AjaxDateTimePicker(String id, IModel<LocalDateTime> model)
 	{
-		super(id, date);
+		super(id, model);
 	}
 
 	/**
@@ -115,9 +115,9 @@ public class AjaxDateTimePicker extends DateTimePicker implements IValueChangedL
 	 * @param model the date {@code IModel}
 	 * @param locale the {@code LocalDate}
 	 */
-	public AjaxDateTimePicker(String id, IModel<LocalDateTime> date, Locale locale)
+	public AjaxDateTimePicker(String id, IModel<LocalDateTime> model, Locale locale)
 	{
-		super(id, date, locale);
+		super(id, model, locale);
 	}
 
 	/**
@@ -128,9 +128,9 @@ public class AjaxDateTimePicker extends DateTimePicker implements IValueChangedL
 	 * @param datePattern the SimpleDateFormat pattern for the date
 	 * @param timePattern the SimpleDateFormat pattern for the time
 	 */
-	public AjaxDateTimePicker(String id, IModel<LocalDateTime> date, String datePattern, String timePattern)
+	public AjaxDateTimePicker(String id, IModel<LocalDateTime> model, String datePattern, String timePattern)
 	{
-		super(id, date, datePattern, timePattern);
+		super(id, model, datePattern, timePattern);
 	}
 
 	/**
@@ -142,9 +142,9 @@ public class AjaxDateTimePicker extends DateTimePicker implements IValueChangedL
 	 * @param datePattern the SimpleDateFormat pattern for the date
 	 * @param timePattern the SimpleDateFormat pattern for the time
 	 */
-	public AjaxDateTimePicker(String id, IModel<LocalDateTime> date, Locale locale, String datePattern, String timePattern)
+	public AjaxDateTimePicker(String id, IModel<LocalDateTime> model, Locale locale, String datePattern, String timePattern)
 	{
-		super(id, date, locale, datePattern, timePattern);
+		super(id, model, locale, datePattern, timePattern);
 	}
 
 	// Methods //

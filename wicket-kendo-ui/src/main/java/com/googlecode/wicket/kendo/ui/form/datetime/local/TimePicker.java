@@ -88,7 +88,6 @@ public class TimePicker extends LocalTextField<LocalTime>
 	 * Constructor
 	 *
 	 * @param id the markup id
-	 * @param model the {@link IModel}
 	 * @param pattern a {@code SimpleDateFormat} pattern
 	 */
 	public TimePicker(String id, String pattern)
@@ -114,7 +113,6 @@ public class TimePicker extends LocalTextField<LocalTime>
 	 * @param id the markup id
 	 * @param locale the {@link Locale}
 	 * @param pattern a {@code SimpleDateFormat} pattern
-	 * @param options the {@link Options}
 	 */
 	public TimePicker(String id, final Locale locale, String pattern)
 	{
@@ -214,7 +212,6 @@ public class TimePicker extends LocalTextField<LocalTime>
 	 * @param model the {@link IModel}
 	 * @param locale the {@link Locale}
 	 * @param pattern a {@code SimpleDateFormat} pattern
-	 * @param options the {@link Options}
 	 */
 	public TimePicker(String id, IModel<LocalTime> model, final Locale locale, String pattern)
 	{

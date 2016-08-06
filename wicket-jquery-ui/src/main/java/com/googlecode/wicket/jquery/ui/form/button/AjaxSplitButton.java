@@ -50,7 +50,6 @@ public class AjaxSplitButton extends SplitButton
 	 * Triggered when the form is submitted, but the validation failed
 	 *
 	 * @param target the {@link AjaxRequestTarget}
-	 * @param form the {@link Form}
 	 */
 	protected void onError(AjaxRequestTarget target)
 	{

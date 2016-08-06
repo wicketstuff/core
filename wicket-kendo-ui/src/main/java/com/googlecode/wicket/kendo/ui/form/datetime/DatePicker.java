@@ -93,7 +93,6 @@ public class DatePicker extends DateTextField implements IJQueryWidget
 	 * Constructor
 	 *
 	 * @param id the markup id
-	 * @param model the {@link IModel}
 	 * @param pattern a {@code SimpleDateFormat} pattern
 	 */
 	public DatePicker(String id, String pattern)
@@ -119,7 +118,6 @@ public class DatePicker extends DateTextField implements IJQueryWidget
 	 * @param id the markup id
 	 * @param locale the {@link Locale}
 	 * @param pattern a {@code SimpleDateFormat} pattern
-	 * @param options the {@link Options}
 	 */
 	public DatePicker(String id, final Locale locale, String pattern)
 	{
@@ -219,7 +217,6 @@ public class DatePicker extends DateTextField implements IJQueryWidget
 	 * @param model the {@link IModel}
 	 * @param locale the {@link Locale}
 	 * @param pattern a {@code SimpleDateFormat} pattern
-	 * @param options the {@link Options}
 	 */
 	public DatePicker(String id, IModel<Date> model, final Locale locale, String pattern)
 	{

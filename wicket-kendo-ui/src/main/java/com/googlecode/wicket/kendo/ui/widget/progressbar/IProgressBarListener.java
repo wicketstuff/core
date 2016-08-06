@@ -28,7 +28,7 @@ import com.googlecode.wicket.jquery.core.event.IValueChangedListener;
 public interface IProgressBarListener extends IValueChangedListener
 {
 	/**
-	 * Triggers when the value has changed
+	 * Triggered when the value has changed
 	 * 
 	 * @param handler the {@link IPartialPageRequestHandler}
 	 */

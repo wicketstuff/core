@@ -100,9 +100,9 @@ public class DateTimePicker extends FormComponentPanel<Date> implements ITextFor
 	 * @param id the markup id
 	 * @param model the date {@code IModel}
 	 */
-	public DateTimePicker(String id, IModel<Date> date)
+	public DateTimePicker(String id, IModel<Date> model)
 	{
-		this(id, date, null, DateUtils.DATE_PATTERN, DateUtils.TIME_PATTERN);
+		this(id, model, null, DateUtils.DATE_PATTERN, DateUtils.TIME_PATTERN);
 	}
 
 	/**
@@ -112,9 +112,9 @@ public class DateTimePicker extends FormComponentPanel<Date> implements ITextFor
 	 * @param model the date {@code IModel}
 	 * @param locale the {@code LocalDate}
 	 */
-	public DateTimePicker(String id, IModel<Date> date, Locale locale)
+	public DateTimePicker(String id, IModel<Date> model, Locale locale)
 	{
-		this(id, date, locale, LocaleUtils.getLocaleDatePattern(locale, DateUtils.DATE_PATTERN), LocaleUtils.getLocaleTimePattern(locale, DateUtils.TIME_PATTERN));
+		this(id, model, locale, LocaleUtils.getLocaleDatePattern(locale, DateUtils.DATE_PATTERN), LocaleUtils.getLocaleTimePattern(locale, DateUtils.TIME_PATTERN));
 	}
 
 	/**
@@ -125,9 +125,9 @@ public class DateTimePicker extends FormComponentPanel<Date> implements ITextFor
 	 * @param datePattern the SimpleDateFormat pattern for the date
 	 * @param timePattern the SimpleDateFormat pattern for the time
 	 */
-	public DateTimePicker(String id, IModel<Date> date, String datePattern, String timePattern)
+	public DateTimePicker(String id, IModel<Date> model, String datePattern, String timePattern)
 	{
-		this(id, date, null, datePattern, timePattern);
+		this(id, model, null, datePattern, timePattern);
 	}
 
 	/**
@@ -139,9 +139,9 @@ public class DateTimePicker extends FormComponentPanel<Date> implements ITextFor
 	 * @param datePattern the SimpleDateFormat pattern for the date
 	 * @param timePattern the SimpleDateFormat pattern for the time
 	 */
-	public DateTimePicker(String id, IModel<Date> date, Locale locale, String datePattern, String timePattern)
+	public DateTimePicker(String id, IModel<Date> model, Locale locale, String datePattern, String timePattern)
 	{
-		super(id, date);
+		super(id, model);
 
 		this.locale = locale;
 		this.datePattern = datePattern;
@@ -292,7 +292,7 @@ public class DateTimePicker extends FormComponentPanel<Date> implements ITextFor
 	 *
 	 * @param id the markup id
 	 * @param model the {@link IModel}
-	 * @param locale2
+	 * @param locale the {@link Locale}
 	 * @param datePattern the date pattern to be used
 	 * @param options the {@code Options}
 	 * @return the {@link DatePicker}

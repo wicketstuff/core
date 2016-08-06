@@ -85,7 +85,6 @@ public class AjaxDatePicker extends DatePicker implements IValueChangedListener
 	 * Constructor
 	 *
 	 * @param id the markup id
-	 * @param model the {@link IModel}
 	 * @param pattern a {@code SimpleDateFormat} pattern
 	 */
 	public AjaxDatePicker(String id, String pattern)
@@ -111,7 +110,6 @@ public class AjaxDatePicker extends DatePicker implements IValueChangedListener
 	 * @param id the markup id
 	 * @param locale the {@link Locale}
 	 * @param pattern a {@code SimpleDateFormat} pattern
-	 * @param options the {@link Options}
 	 */
 	public AjaxDatePicker(String id, final Locale locale, String pattern)
 	{
@@ -211,7 +209,6 @@ public class AjaxDatePicker extends DatePicker implements IValueChangedListener
 	 * @param model the {@link IModel}
 	 * @param locale the {@link Locale}
 	 * @param pattern a {@code SimpleDateFormat} pattern
-	 * @param options the {@link Options}
 	 */
 	public AjaxDatePicker(String id, IModel<LocalDate> model, final Locale locale, String pattern)
 	{

@@ -27,7 +27,7 @@ import org.apache.wicket.util.io.IClusterable;
 public interface IValueChangedListener extends IClusterable
 {
 	/**
-	 * Triggers when the value has changed
+	 * Triggered when the value has changed
 	 * 
 	 * @param handler the {@link IPartialPageRequestHandler}
 	 */

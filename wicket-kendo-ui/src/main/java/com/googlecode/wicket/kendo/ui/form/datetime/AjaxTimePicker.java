@@ -84,7 +84,6 @@ public class AjaxTimePicker extends TimePicker implements IValueChangedListener
 	 * Constructor
 	 *
 	 * @param id the markup id
-	 * @param model the {@link IModel}
 	 * @param pattern a {@code SimpleDateFormat} pattern
 	 */
 	public AjaxTimePicker(String id, String pattern)
@@ -110,7 +109,6 @@ public class AjaxTimePicker extends TimePicker implements IValueChangedListener
 	 * @param id the markup id
 	 * @param locale the {@link Locale}
 	 * @param pattern a {@code SimpleDateFormat} pattern
-	 * @param options the {@link Options}
 	 */
 	public AjaxTimePicker(String id, final Locale locale, String pattern)
 	{
@@ -210,7 +208,6 @@ public class AjaxTimePicker extends TimePicker implements IValueChangedListener
 	 * @param model the {@link IModel}
 	 * @param locale the {@link Locale}
 	 * @param pattern a {@code SimpleDateFormat} pattern
-	 * @param options the {@link Options}
 	 */
 	public AjaxTimePicker(String id, IModel<Date> model, final Locale locale, String pattern)
 	{

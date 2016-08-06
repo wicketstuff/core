@@ -147,7 +147,7 @@ public class AjaxDropDownList<T> extends DropDownList<T> implements ISelectionCh
 	// Events //
 
 	/**
-	 * @see org.apache.wicket.markup.html.form.DropDownChoice#onSelectionChanged()
+	 * Triggered when the selection has changed
 	 */
 	public final void onSelectionChanged()
 	{

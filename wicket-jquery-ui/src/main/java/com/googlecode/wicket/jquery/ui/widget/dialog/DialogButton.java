@@ -246,7 +246,7 @@ public class DialogButton implements IClusterable
 	/**
 	 * Indicates whether the button has a busy indicator
 	 * 
-	 * @return {@link #getDefaultFormProcessing()} by default
+	 * @return {@code false} by default
 	 */
 	public boolean isIndicating()
 	{

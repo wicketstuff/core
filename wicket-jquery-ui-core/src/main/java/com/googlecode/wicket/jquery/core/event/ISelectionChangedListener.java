@@ -35,7 +35,7 @@ public interface ISelectionChangedListener extends IClusterable
 	boolean isSelectionChangedEventEnabled();
 
 	/**
-	 * Triggers when the selection has changed
+	 * Triggered when the selection has changed
 	 * 
 	 * @param target the {@link AjaxRequestTarget}
 	 */
