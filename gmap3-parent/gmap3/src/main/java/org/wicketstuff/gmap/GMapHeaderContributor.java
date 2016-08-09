@@ -94,7 +94,7 @@ public class GMapHeaderContributor extends Behavior
         String url = String.format(GMAP_API_URL, scheme);
         if (apiKey != null)
         {
-            url = url + "apiKey=" + apiKey;            
+            url = url + "key=" + apiKey;            
         }
         response.render(JavaScriptHeaderItem.forUrl(url));
     }
