@@ -67,12 +67,10 @@ public class PortletFilter extends WicketFilter {
 	public void init(boolean isServlet, FilterConfig filterConfig) throws ServletException {
 		super.init(isServlet, filterConfig);
 		this.filterConfig = filterConfig;
-		
 		getApplication().getRequestCycleSettings().setRenderStrategy(RenderStrategy.REDIRECT_TO_RENDER);
 		getApplication().getRequestCycleSettings().addResponseFilter(new PortletInvalidMarkupFilter());
 		//fix for https://github.com/wicketstuff/core/issues/487
 		getApplication().getMarkupSettings().setMarkupIdGenerator(new PortletMarkupIdGenerator());
-
 		//make the wicket bridge schema (HTTPS/HTTP) aware
 		getApplication().setRootRequestMapper(new HttpsMapper(new PortletRequestMapper(getApplication()), new HttpsConfig()){
 			@Override
@@ -81,7 +79,6 @@ public class PortletFilter extends WicketFilter {
 				return super.getSchemeOf(request);
 			}
 		});
-
 		//Application must use the portlet specific page renderer provider.
 		getApplication().setPageRendererProvider(new IPageRendererProvider() {
 			@Override
@@ -172,14 +169,5 @@ public class PortletFilter extends WicketFilter {
 			res = false;
 		}
 		return res;
-	}
-	
-	private void test() {
-		try {
-			super.init(null);
-		} catch (ServletException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
 	}
 }
