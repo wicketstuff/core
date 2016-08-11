@@ -92,6 +92,13 @@ public interface IColumn extends IClusterable
 	String getTemplate();
 
 	/**
+	 * HTML attributes of the table cell rendered for the column.
+	 * 
+	 * @return a JSON string object
+	 */
+	String getAttributes();
+
+	/**
 	 * The template which renders the footer table cell for the column.
 	 * 
 	 * @return the template or {@code null} if it does not apply

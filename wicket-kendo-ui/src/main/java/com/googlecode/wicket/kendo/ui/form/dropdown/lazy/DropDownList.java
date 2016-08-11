@@ -249,6 +249,7 @@ public class DropDownList<T> extends TextField<T> implements IJQueryWidget
 		if (this.templateBehavior != null)
 		{
 			behavior.setOption("template", String.format("jQuery('#%s').html()", this.templateBehavior.getToken()));
+			// TODO replace with kendo.template($('#%s').html()) - everywhere
 		}
 
 		// set list-width //

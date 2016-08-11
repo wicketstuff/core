@@ -59,7 +59,7 @@ public class KendoDataSource extends Options implements IKendoDataSource
 
 		this.set("sync", "function() { this.read(); }"); // will force holding component to call #refresh
 		this.set("error", DebugUtils.errorCallback);
-		this.set("dataType", Options.asString(type));
+		this.set("dataType", Options.asString(type)); // useless
 	}
 
 	// Properties //
