@@ -41,7 +41,7 @@ public class KendoEffectUtils
 	}
 
 	/**
-	 * Reload a {@link Component} using a default {@link KendoEffect}: {@value #effect}
+	 * Reloads a {@link Component} using a default {@link KendoEffect}: {@value #effect}
 	 *
 	 * @param target the {@link AjaxRequestTarget}
 	 * @param component the {@link Component}
@@ -52,16 +52,16 @@ public class KendoEffectUtils
 	}
 
 	/**
-	 * Reload a {@link Component} using a specified {@link KendoEffect}
+	 * Reloads a {@link Component} using a specified {@link KendoEffect}
 	 *
 	 * @param target the {@link AjaxRequestTarget}
 	 * @param component the {@link Component}
 	 */
 	public static void reload(AjaxRequestTarget target, Component component, KendoEffect effect)
 	{
-		String statement = String.format("kendo.fx(jQuery('%s')).%s.play();", JQueryWidget.getSelector(component), effect);
+		String selector = JQueryWidget.getSelector(component);
 
 		target.add(component);
-		target.appendJavaScript(statement);
+		target.appendJavaScript(String.format("kendo.fx(jQuery('%s')).%s.play();", selector, effect));
 	}
 }
