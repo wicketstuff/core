@@ -14,6 +14,13 @@ import org.apache.wicket.util.lang.Generics;
 public class JsonUtils
 {
 	/**
+	 * Utility class
+	 */
+	private JsonUtils()
+	{
+	}
+
+	/**
 	 * Converts an array of {@code String} to a {@link JSONArray} of (quoted) strings
 	 * 
 	 * @param values the array of strings
@@ -47,12 +54,5 @@ public class JsonUtils
 		}
 
 		return new JSONArray(list);
-	}
-
-	/**
-	 * Utility class
-	 */
-	private JsonUtils()
-	{
 	}
 }

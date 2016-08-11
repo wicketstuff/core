@@ -31,6 +31,13 @@ import org.apache.wicket.util.convert.IConverter;
 public class ConverterUtils
 {
 	/**
+	 * Utility class
+	 */
+	private ConverterUtils()
+	{
+	}
+
+	/**
 	 * Converts the object to its string representation using the appropriate converter, if defined.
 	 * 
 	 * @param object the object
@@ -53,12 +60,5 @@ public class ConverterUtils
 		}
 
 		return value;
-	}
-
-	/**
-	 * Utility class
-	 */
-	private ConverterUtils()
-	{
 	}
 }

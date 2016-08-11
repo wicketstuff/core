@@ -25,6 +25,13 @@ package com.googlecode.wicket.jquery.core.utils;
 public class JQueryUtils
 {
 	/**
+	 * Utility class
+	 */
+	private JQueryUtils()
+	{
+	}
+
+	/**
 	 * Wraps a js statement into a try-catch block
 	 * 
 	 * @param statement the js statement
@@ -45,12 +52,5 @@ public class JQueryUtils
 	public static String trycatch(String statement, boolean warn)
 	{
 		return "try { " + statement + " } catch (e) { " + (warn ? "if (console) { console.warn(e); }" : "") + " }";
-	}
-
-	/**
-	 * Utility class
-	 */
-	private JQueryUtils()
-	{
 	}
 }

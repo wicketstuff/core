@@ -30,6 +30,13 @@ import java.util.List;
 public class ListUtils
 {
 	/**
+	 * Utility class
+	 */
+	private ListUtils()
+	{
+	}
+
+	/**
 	 * Gets the list-item matching the given hash against the list
 	 *
 	 * @param hash the hashcode to match
@@ -207,12 +214,5 @@ public class ListUtils
 		}
 
 		return copy;
-	}
-
-	/**
-	 * Utility class
-	 */
-	private ListUtils()
-	{
 	}
 }

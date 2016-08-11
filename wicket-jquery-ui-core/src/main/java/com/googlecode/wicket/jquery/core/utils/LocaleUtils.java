@@ -33,6 +33,13 @@ public class LocaleUtils
 	public static final int DEFAULT_STYLE = DateFormat.SHORT;
 
 	/**
+	 * Utility class
+	 */
+	private LocaleUtils()
+	{
+	}
+
+	/**
 	 * Gets the language-code (eg: xx-XX) from a given {@link Locale}
 	 * @param locale the {@link Locale}
 	 * @return the language-code
@@ -148,12 +155,5 @@ public class LocaleUtils
 		}
 
 		return defaultPattern;
-	}
-
-	/**
-	 * Utility class
-	 */
-	private LocaleUtils()
-	{
 	}
 }

@@ -26,6 +26,13 @@ import org.apache.wicket.ajax.json.JSONObject;
 public class BuilderUtils
 {
 	/**
+	 * Utility class
+	 */
+	private BuilderUtils()
+	{
+	}
+
+	/**
 	 * Helper method that appends a key/value JSON pair to the specified builder<br/>
 	 * The value will *not* be quoted, except if the value is {@code null}, {@code "null"} will be returned.
 	 *
@@ -48,12 +55,5 @@ public class BuilderUtils
 	public static void append(StringBuilder builder, String key, String value)
 	{
 		builder.append(JSONObject.quote(key)).append(": ").append(JSONObject.quote(value));
-	}
-
-	/**
-	 * Utility class
-	 */
-	private BuilderUtils()
-	{
 	}
 }
