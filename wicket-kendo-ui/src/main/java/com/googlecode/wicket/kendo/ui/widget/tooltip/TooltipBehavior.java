@@ -52,7 +52,7 @@ public class TooltipBehavior extends KendoUIBehavior
 		};
 	}
 
-	private final IModel<String> tooltip;
+	private final IModel<String> model;
 
 	/**
 	 * Constructor<br/>
@@ -77,45 +77,45 @@ public class TooltipBehavior extends KendoUIBehavior
 	/**
 	 * Constructor
 	 *
-	 * @param tooltip a component that should be used as a tooltip
+	 * @param component a component that should be used as a tooltip
 	 */
-	public TooltipBehavior(final Component tooltip)
+	public TooltipBehavior(final Component component)
 	{
-		this(asModel(tooltip), new Options());
+		this(asModel(component), new Options());
 	}
 
 	/**
 	 * Constructor
 	 *
-	 * @param tooltip a component that should be used as a tooltip
+	 * @param component a component that should be used as a tooltip
 	 * @param options the {@link Options}
 	 */
-	public TooltipBehavior(final Component tooltip, Options options)
+	public TooltipBehavior(final Component component, Options options)
 	{
-		this(asModel(tooltip), options);
+		this(asModel(component), options);
 	}
 
 	/**
 	 * Constructor
 	 *
-	 * @param tooltip a model providing the text that should be used as a tooltip
+	 * @param model a model providing the text that should be used as a tooltip
 	 */
-	public TooltipBehavior(IModel<String> tooltip)
+	public TooltipBehavior(IModel<String> model)
 	{
-		this(tooltip, new Options());
+		this(model, new Options());
 	}
 
 	/**
 	 * Constructor
 	 *
-	 * @param tooltip a model providing the text that should be used as a tooltip
+	 * @param model a model providing the text that should be used as a tooltip
 	 * @param options the {@link Options}
 	 */
-	public TooltipBehavior(IModel<String> tooltip, Options options)
+	public TooltipBehavior(IModel<String> model, Options options)
 	{
 		super(null, METHOD, options);
 
-		this.tooltip = tooltip;
+		this.model = model;
 	}
 
 	@Override
@@ -132,7 +132,7 @@ public class TooltipBehavior extends KendoUIBehavior
 	{
 		super.onConfigure(component);
 
-		String content = this.tooltip.getObject();
+		String content = this.model.getObject();
 
 		if (content != null)
 		{
