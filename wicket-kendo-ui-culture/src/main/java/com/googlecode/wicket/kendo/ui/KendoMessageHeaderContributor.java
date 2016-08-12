@@ -1,5 +1,8 @@
 package com.googlecode.wicket.kendo.ui;
 
+import java.util.Locale;
+
+import org.apache.wicket.Session;
 import org.apache.wicket.markup.head.IHeaderResponse;
 import org.apache.wicket.markup.head.PriorityHeaderItem;
 import org.apache.wicket.markup.html.IHeaderContributor;
@@ -16,7 +19,7 @@ import org.apache.wicket.markup.html.IHeaderContributor;
  * 	{
  * 		super.init();
  * 		
- * 		this.getHeaderContributorListenerCollection().add(new KendoMessageHeaderContributor(KendoMessage.FR_FR));
+ * 		this.getHeaderContributorListeners().add(new KendoMessageHeaderContributor(KendoMessage.FR_FR));
  * 	}
  * }
  * </code>
@@ -30,6 +33,24 @@ public class KendoMessageHeaderContributor implements IHeaderContributor
 	private static final long serialVersionUID = 1L;
 
 	private final String language;
+
+	/**
+	 * Constructor that takes the current {@link Session#getLocale()}
+	 */
+	public KendoMessageHeaderContributor()
+	{
+		this.language = null;
+	}
+
+	/**
+	 * Constructor
+	 * 
+	 * @param locale the {@link Locale}, ie: Locale.FRENCH
+	 */
+	public KendoMessageHeaderContributor(Locale locale)
+	{
+		this(locale.toLanguageTag()); // java7
+	}
 
 	/**
 	 * Constructor
@@ -54,6 +75,13 @@ public class KendoMessageHeaderContributor implements IHeaderContributor
 	@Override
 	public void renderHead(IHeaderResponse response)
 	{
-		response.render(new PriorityHeaderItem(new KendoMessageHeaderItem(this.language)));
+		if (this.language != null)
+		{
+			response.render(new PriorityHeaderItem(new KendoMessageHeaderItem(this.language)));
+		}
+		else
+		{
+			response.render(new PriorityHeaderItem(new KendoMessageHeaderItem(Session.get().getLocale())));
+		}
 	}
 }
