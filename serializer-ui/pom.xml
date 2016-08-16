@@ -25,17 +25,17 @@
     <dependency>
 	    <groupId>org.wicketstuff</groupId>
 	    <artifactId>wicketstuff-serializer-common</artifactId>
-	    <version>${parent.version}</version>
+	    <version>${project.parent.version}</version>
     </dependency>
     <dependency>
 	    <groupId>org.wicketstuff</groupId>
 	    <artifactId>wicketstuff-serializer-kryo2</artifactId>
-	    <version>${parent.version}</version>
+	    <version>${project.parent.version}</version>
     </dependency>
     <dependency>
 	    <groupId>org.wicketstuff</groupId>
 	    <artifactId>wicketstuff-serializer-fast</artifactId>
-	    <version>${parent.version}</version>
+	    <version>${project.parent.version}</version>
     </dependency>
     <dependency>
       <groupId>org.eclipse.jetty.aggregate</groupId>
