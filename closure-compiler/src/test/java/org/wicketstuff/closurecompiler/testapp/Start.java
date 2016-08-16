@@ -1,4 +1,5 @@
 package org.wicketstuff.closurecompiler.testapp;
+
 import org.eclipse.jetty.server.HttpConfiguration;
 import org.eclipse.jetty.server.HttpConnectionFactory;
 import org.eclipse.jetty.server.Server;
