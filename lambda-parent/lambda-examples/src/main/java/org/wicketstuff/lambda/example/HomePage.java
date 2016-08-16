@@ -100,7 +100,7 @@ public class HomePage extends WebPage {
 		AjaxButton addButton = new AjaxButton("add") {
 
 			@Override
-			protected void onSubmit(AjaxRequestTarget target, Form<?> f) {
+			protected void onSubmit(AjaxRequestTarget target) {
 				people.add(newPersonModel.getObject());
 				newPersonModel.setObject(new Person());
 				/*
