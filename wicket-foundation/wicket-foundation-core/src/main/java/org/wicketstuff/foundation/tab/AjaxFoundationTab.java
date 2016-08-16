@@ -1,6 +1,7 @@
 package org.wicketstuff.foundation.tab;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.markup.html.AjaxFallbackLink;
@@ -57,12 +58,10 @@ public class AjaxFoundationTab<T extends ITab> extends FoundationTab<T> {
 			private static final long serialVersionUID = 1L;
 
 			@Override
-			public void onClick(final AjaxRequestTarget target) {
+			public void onClick(final Optional<AjaxRequestTarget> targetOptional) {
 				setSelectedTab(index);
-				if (target != null) {
-					target.add(AjaxFoundationTab.this);
-				}
-				onAjaxUpdate(target);
+				targetOptional.ifPresent(target -> target.add(AjaxFoundationTab.this));
+				onAjaxUpdate(targetOptional);
 			}
 		};
 	}
@@ -77,9 +76,9 @@ public class AjaxFoundationTab<T extends ITab> extends FoundationTab<T> {
 	 * client browser does not support ajax and the fallback mode is used. See
 	 * {@link AjaxFallbackLink} for details.
 	 * 
-	 * @param target
+	 * @param targetOptional
 	 *            ajax target used to update this component
 	 */
-	protected void onAjaxUpdate(final AjaxRequestTarget target) {
+	protected void onAjaxUpdate(final Optional<AjaxRequestTarget> targetOptional) {
 	}
 }
