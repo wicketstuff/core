@@ -1,5 +1,7 @@
 package org.wicketstuff.scala.markup.html.link
 
+import java.util.Optional
+
 import org.apache.wicket.ajax.AjaxRequestTarget
 import org.apache.wicket.ajax.markup.html.AjaxFallbackLink
 import org.apache.wicket.model.IModel
@@ -11,5 +13,5 @@ class ScalaAjaxFallbackLink[T](id:String, model: IModel[T] = null, f: (Option[Aj
 
   override val self: ScalaAjaxFallbackLink[T] = this
 
-  override final def onClick(target: AjaxRequestTarget): Unit = f(Option(target))
+  override final def onClick(optional: Optional[AjaxRequestTarget]): Unit = f(Option(optional.orElse(null)))
 }

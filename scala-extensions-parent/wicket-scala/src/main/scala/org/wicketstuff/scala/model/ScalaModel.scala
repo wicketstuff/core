@@ -1,6 +1,6 @@
 package org.wicketstuff.scala.model
 
-import org.apache.wicket.model.{Model, IModel, AbstractReadOnlyModel, CompoundPropertyModel, LoadableDetachableModel, PropertyModel}
+import org.apache.wicket.model.{Model, IModel, CompoundPropertyModel, LoadableDetachableModel, PropertyModel}
 
 import scala.concurrent.duration._
 
@@ -23,8 +23,8 @@ trait ScalaModel {
     fModel
   }
 
-  def aroM[T <: Serializable](f: => T): AbstractReadOnlyModel[T] = {
-    val arom = new AbstractReadOnlyModel[T] {
+  def aroM[T <: Serializable](f: => T): IModel[T] = {
+    val arom = new IModel[T] {
       override def getObject = f
     }
     arom
