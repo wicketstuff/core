@@ -65,7 +65,7 @@ public class StatelessAjaxComponentsBehaviorsTest {
 
         final HomePage page = (HomePage) tester.getLastRenderedPage();
         final StatelessAjaxFallbackLink<Object> l1 = (StatelessAjaxFallbackLink<Object>) page
-                .get(2);
+                .get("more");
 
         assertTrue(l1.isStateless());
 
