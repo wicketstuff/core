@@ -17,7 +17,7 @@
  */
 package org.wicketstuff.jasperreports;
 
-import org.apache.wicket.IResourceListener;
+import org.apache.wicket.IRequestListener;
 import org.apache.wicket.Page;
 import org.apache.wicket.markup.ComponentTag;
 import org.apache.wicket.markup.html.WebComponent;
@@ -32,14 +32,14 @@ import org.apache.wicket.request.resource.ResourceReference;
  * 
  * @author <a href="mailto:evanchooly@gmail.com">Justin Lee</a>
  */
-public final class EmbeddedJRReport extends WebComponent implements IResourceListener
+public final class EmbeddedJRReport extends WebComponent implements IRequestListener
 {
 	private static final long serialVersionUID = 1L;
 
 	private final JRResource resource;
 
 	/**
-	 * Construcxt.
+	 * Construct.
 	 * 
 	 * @param componentID
 	 *            component componentID
@@ -52,10 +52,8 @@ public final class EmbeddedJRReport extends WebComponent implements IResourceLis
 		this.resource = resource;
 	}
 
-	/**
-	 * @see org.apache.wicket.IResourceListener#onResourceRequested()
-	 */
-	public void onResourceRequested()
+	@Override
+	public void onRequest()
 	{
 		PageParameters pageParams = null;
 		final Page page = findPage();
@@ -83,7 +81,7 @@ public final class EmbeddedJRReport extends WebComponent implements IResourceLis
 				"Component " + getId() + " must be applied to a tag of type 'object' not " +
 					tag.toUserDebugString());
 		}
-		tag.put("data", getResponse().encodeURL(urlFor(IResourceListener.INTERFACE, null)));
+		tag.put("data", getResponse().encodeURL(urlForListener(null)));
 		tag.put("type", resource.getContentType());
 		super.onComponentTag(tag);
 	}
