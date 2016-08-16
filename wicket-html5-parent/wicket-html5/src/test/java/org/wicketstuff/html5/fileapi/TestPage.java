@@ -13,7 +13,7 @@ public class TestPage extends WebPage
 
 	public TestPage()
 	{
-		form = new Form<Void>("form");
+		form = new Form<>("form");
 		add(form);
 
 		field = new FileUploadField("field");

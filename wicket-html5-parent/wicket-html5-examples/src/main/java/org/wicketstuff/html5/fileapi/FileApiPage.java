@@ -56,7 +56,7 @@ public class FileApiPage extends BasePage
 			private static final long serialVersionUID = 468703108441902441L;
 
 			@Override
-			protected void onSubmit(AjaxRequestTarget target, Form<?> form)
+			protected void onSubmit(AjaxRequestTarget target)
 			{
 				info("Victory! " + uploadField.getFileUploads());
 
@@ -64,7 +64,7 @@ public class FileApiPage extends BasePage
 			}
 
 			@Override
-			protected void onError(AjaxRequestTarget target, Form<?> form)
+			protected void onError(AjaxRequestTarget target)
 			{
 				target.add(feedback);
 			}
