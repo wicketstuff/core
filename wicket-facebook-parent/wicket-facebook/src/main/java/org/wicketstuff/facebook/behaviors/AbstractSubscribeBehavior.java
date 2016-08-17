@@ -11,7 +11,6 @@ import org.apache.wicket.markup.head.JavaScriptHeaderItem;
 import org.apache.wicket.request.IRequestParameters;
 import org.apache.wicket.request.Request;
 import org.apache.wicket.request.cycle.RequestCycle;
-import org.apache.wicket.util.iterator.ComponentHierarchyIterator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.wicketstuff.facebook.FacebookRootProvider;
@@ -46,10 +45,8 @@ public abstract class AbstractSubscribeBehavior extends AbstractDefaultAjaxBehav
 	 */
 	private void checkFacebookRoot(final Component component)
 	{
-		final ComponentHierarchyIterator visitChildren = component.getPage().visitChildren(
-			FacebookRootProvider.class);
-		if (!visitChildren.hasNext())
-			throw new MissingFacebookRootException();
+		Boolean found = component.getPage().visitChildren(FacebookRootProvider.class, (object, visit) -> visit.stop(true));
+		if (found == null) throw new MissingFacebookRootException();
 	}
 
 	protected abstract void onEvent(AjaxRequestTarget target, IRequestParameters eventParameters,
