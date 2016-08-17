@@ -517,8 +517,10 @@ public class EditableDataTable<T, S> extends Panel implements IPageableItems, IC
 		{
 			@SuppressWarnings("unchecked")
 			Item<T> rowItem = ((Item<T>)event.getPayload());
-			this.datagrid.refreash(rowItem);
-			event.stop();
+			if (rowItem.findParent(EditableDataTable.class).equals(this)) {
+				this.datagrid.refreash(rowItem);
+				event.stop();
+			}
 		}
 		else if (event.getPayload() instanceof GridOperationData)
 		{
