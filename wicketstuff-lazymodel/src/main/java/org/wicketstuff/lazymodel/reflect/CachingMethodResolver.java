@@ -21,6 +21,9 @@ import java.lang.reflect.Method;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
+import org.apache.wicket.Application;
+import org.apache.wicket.util.lang.Generics;
+
 /**
  * A cache of a wrapped {@link IMethodResolver}.
  * 
@@ -28,50 +31,93 @@ import java.util.concurrent.ConcurrentHashMap;
  */
 public class CachingMethodResolver implements IMethodResolver {
 
+	private final ConcurrentHashMap<Object, IMethodResolver> scopes = Generics.newConcurrentHashMap(2);
+
 	private final IMethodResolver resolver;
-
-	private final Map<String, Method> methods = new ConcurrentHashMap<String, Method>();
-
-	private final Map<Method, Serializable> ids = new ConcurrentHashMap<Method, Serializable>();
-
-	private final Map<Method, Method> setters = new ConcurrentHashMap<Method, Method>();
 
 	public CachingMethodResolver(IMethodResolver resolver) {
 		this.resolver = resolver;
 	}
 
-	@Override
-	public Method getMethod(Class<?> owner, Serializable id) {
-		String key = owner.getName() + ":" + id;
-
-		Method method = methods.get(key);
-		if (method == null) {
-			method = resolver.getMethod(owner, id);
-			methods.put(key, method);
+	private IMethodResolver getResolver() {
+		Object key;
+		if (Application.exists()) {
+			key = Application.get();
+		} else {
+			key = CachingMethodResolver.class;
 		}
 
-		return method;
+		IMethodResolver result = scopes.get(key);
+		if (result == null) {
+			IMethodResolver tmpResult = scopes.putIfAbsent(key, result = new ApplicationScope());
+			if (tmpResult != null) {
+				result = tmpResult;
+			}
+		}
+
+		return result;
+	}
+
+	@Override
+	public Method getMethod(Class<?> owner, Serializable id) {
+		return getResolver().getMethod(owner, id);
 	}
 
 	@Override
 	public Serializable getId(Method method) {
-		Serializable id = ids.get(method);
-		if (id == null) {
-			id = resolver.getId(method);
-			ids.put(method, id);
-		}
-		return id;
+		return getResolver().getId(method);
 	}
 
 	@Override
 	public Method getSetter(Method getter) {
-		Method setter = setters.get(getter);
+		return getResolver().getSetter(getter);
+	}
 
-		if (setter == null) {
-			setter = resolver.getSetter(getter);
-			setters.put(getter, setter);
+	public void destroy(Application application) {
+		scopes.remove(application);
+	}
+
+	private class ApplicationScope implements IMethodResolver {
+
+		private final Map<String, Method> methods = new ConcurrentHashMap<String, Method>();
+
+		private final Map<Method, Serializable> ids = new ConcurrentHashMap<Method, Serializable>();
+
+		private final Map<Method, Method> setters = new ConcurrentHashMap<Method, Method>();
+
+		@Override
+		public Method getMethod(Class<?> owner, Serializable id) {
+			String key = owner.getName() + ":" + id;
+
+			Method method = methods.get(key);
+			if (method == null) {
+				method = resolver.getMethod(owner, id);
+				methods.put(key, method);
+			}
+
+			return method;
 		}
 
-		return setter;
+		@Override
+		public Serializable getId(Method method) {
+			Serializable id = ids.get(method);
+			if (id == null) {
+				id = resolver.getId(method);
+				ids.put(method, id);
+			}
+			return id;
+		}
+
+		@Override
+		public Method getSetter(Method getter) {
+			Method setter = setters.get(getter);
+
+			if (setter == null) {
+				setter = resolver.getSetter(getter);
+				setters.put(getter, setter);
+			}
+
+			return setter;
+		}
 	}
 }
