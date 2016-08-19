@@ -19,11 +19,17 @@ package org.wicketstuff.lazymodel.reflect;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
+import org.apache.wicket.Application;
+import org.apache.wicket.util.lang.Generics;
+
 /**
+ * A factory caching proxy classes.
+ * 
+ * @see #createClass(Class)
  */
 public class CachingProxyFactory implements IProxyFactory {
 
-	private final Map<Class<?>, Class<?>> proxyClasses = new ConcurrentHashMap<Class<?>, Class<?>>();
+	private final ConcurrentHashMap<Object, IProxyFactory> scopes = Generics.newConcurrentHashMap(2);
 
 	private final IProxyFactory factory;
 
@@ -33,31 +39,74 @@ public class CachingProxyFactory implements IProxyFactory {
 
 	@Override
 	public Class<?> createClass(Class<?> clazz) {
-		Class<?> proxyClazz = proxyClasses.get(clazz);
-		if (proxyClazz == null) {
-			proxyClazz = factory.createClass(clazz);
-			if (proxyClazz == null) {
-				proxyClazz = NOT_PROXYABLE.class;
-			}
-			proxyClasses.put(clazz, proxyClazz);
-		}
-
-		if (proxyClazz == NOT_PROXYABLE.class) {
-			proxyClazz = null;
-		}
-
-		return proxyClazz;
+		return getFactory().createClass(clazz);
 	}
 
 	@Override
-	public Object createInstance(final Class<?> proxyClass,
-			final Callback callback) {
-		return factory.createInstance(proxyClass, callback);
+	public Object createInstance(final Class<?> proxyClass, final Callback callback) {
+		return getFactory().createInstance(proxyClass, callback);
 	}
 
 	@Override
 	public Callback getCallback(Object proxy) {
-		return factory.getCallback(proxy);
+		return getFactory().getCallback(proxy);
+	}
+
+	private IProxyFactory getFactory() {
+		Object key;
+		if (Application.exists()) {
+			key = Application.get();
+		} else {
+			key = CachingProxyFactory.class;
+		}
+
+		IProxyFactory result = scopes.get(key);
+		if (result == null) {
+			IProxyFactory tmpResult = scopes.putIfAbsent(key, result = new ApplicationScope());
+			if (tmpResult != null) {
+				result = tmpResult;
+			}
+		}
+
+		return result;
+	}
+
+	public void destroy(Application application) {
+		scopes.remove(application);
+	}
+
+	private class ApplicationScope implements IProxyFactory {
+
+		private final Map<Class<?>, Class<?>> proxyClasses = new ConcurrentHashMap<Class<?>, Class<?>>();
+
+		@Override
+		public Class<?> createClass(Class<?> clazz) {
+			Class<?> proxyClazz = proxyClasses.get(clazz);
+			if (proxyClazz == null) {
+				proxyClazz = factory.createClass(clazz);
+				if (proxyClazz == null) {
+					proxyClazz = NOT_PROXYABLE.class;
+				}
+				proxyClasses.put(clazz, proxyClazz);
+			}
+
+			if (proxyClazz == NOT_PROXYABLE.class) {
+				proxyClazz = null;
+			}
+
+			return proxyClazz;
+		}
+
+		@Override
+		public Object createInstance(final Class<?> proxyClass,
+				final Callback callback) {
+			return factory.createInstance(proxyClass, callback);
+		}
+
+		@Override
+		public Callback getCallback(Object proxy) {
+			return factory.getCallback(proxy);
+		}
 	}
 
 	private class NOT_PROXYABLE {

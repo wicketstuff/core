@@ -19,7 +19,10 @@ package org.wicketstuff.lazymodel;
 import org.apache.wicket.Application;
 import org.apache.wicket.IInitializer;
 import org.wicketstuff.lazymodel.reflect.CachingMethodResolver;
+import org.wicketstuff.lazymodel.reflect.CachingProxyFactory;
+import org.wicketstuff.lazymodel.reflect.Evaluation;
 import org.wicketstuff.lazymodel.reflect.IMethodResolver;
+import org.wicketstuff.lazymodel.reflect.IProxyFactory;
 
 /**
  * Initializer.
@@ -37,6 +40,11 @@ public class Initializer implements IInitializer {
 		IMethodResolver resolver = LazyModel.methodResolver;
 		if (resolver instanceof CachingMethodResolver) {
 			((CachingMethodResolver) resolver).destroy(application);
+		}
+
+		IProxyFactory factory = Evaluation.proxyFactory;
+		if (factory instanceof CachingProxyFactory) {
+			((CachingProxyFactory) resolver).destroy(application);
 		}
 	}
 }
