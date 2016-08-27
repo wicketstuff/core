@@ -35,7 +35,7 @@ public class KendoMessageHeaderContributor implements IHeaderContributor
 	private final String language;
 
 	/**
-	 * Constructor that takes the current {@link Session#getLocale()}
+	 * Constructor that will take the current {@link Session#getLocale()}
 	 */
 	public KendoMessageHeaderContributor()
 	{
@@ -75,13 +75,6 @@ public class KendoMessageHeaderContributor implements IHeaderContributor
 	@Override
 	public void renderHead(IHeaderResponse response)
 	{
-		if (this.language != null)
-		{
-			response.render(new PriorityHeaderItem(new KendoMessageHeaderItem(this.language)));
-		}
-		else
-		{
-			response.render(new PriorityHeaderItem(new KendoMessageHeaderItem(Session.get().getLocale())));
-		}
+		response.render(new PriorityHeaderItem(new KendoMessageHeaderItem(this.language != null ? this.language : Session.get().getLocale().toLanguageTag())));
 	}
 }

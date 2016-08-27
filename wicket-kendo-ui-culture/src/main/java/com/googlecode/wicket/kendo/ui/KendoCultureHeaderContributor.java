@@ -35,7 +35,7 @@ public class KendoCultureHeaderContributor implements IHeaderContributor
 	private final String culture;
 
 	/**
-	 * Constructor that takes the current {@link Session#getLocale()}
+	 * Constructor that will take the current {@link Session#getLocale()}
 	 */
 	public KendoCultureHeaderContributor()
 	{
@@ -75,13 +75,6 @@ public class KendoCultureHeaderContributor implements IHeaderContributor
 	@Override
 	public void renderHead(IHeaderResponse response)
 	{
-		if (this.culture != null)
-		{
-			response.render(new PriorityHeaderItem(new KendoCultureHeaderItem(this.culture)));
-		}
-		else
-		{
-			response.render(new PriorityHeaderItem(new KendoCultureHeaderItem(Session.get().getLocale())));
-		}
+		response.render(new PriorityHeaderItem(new KendoCultureHeaderItem(this.culture != null ? this.culture : Session.get().getLocale().toLanguageTag())));
 	}
 }
