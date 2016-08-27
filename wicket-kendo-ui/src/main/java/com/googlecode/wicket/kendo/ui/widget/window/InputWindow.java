@@ -200,6 +200,26 @@ public abstract class InputWindow<T> extends Window<T>
 	}
 
 	/**
+	 * Gets the label model object
+	 * 
+	 * @return label the label
+	 */
+	public String getLabel()
+	{
+		return this.labelModel.getObject();
+	}
+
+	/**
+	 * Sets the label model object
+	 * 
+	 * @param label the label
+	 */
+	public void setLabel(String label)
+	{
+		this.labelModel.setObject(label);
+	}
+
+	/**
 	 * Indicates whether the {@link TextField}'s value is required
 	 *
 	 * @return true by default
