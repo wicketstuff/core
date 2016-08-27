@@ -83,11 +83,22 @@ public class KendoDataSource extends Options implements IKendoDataSource
 	/**
 	 * Sets the 'transport.read' callback function
 	 *
-	 * @param function the javascript function. The function can be replaced with a (quoted) url as long as read is the only callback used by the datasource
+	 * @param function the javascript function.
+	 * @see #setTransportReadUrl(String)
 	 */
 	public void setTransportRead(String function)
 	{
 		this.transport.set("read", function);
+	}
+
+	/**
+	 * Sets the 'transport.read' callback url
+	 *
+	 * @param url the callback url
+	 */
+	public void setTransportReadUrl(CharSequence url)
+	{
+		this.transport.set("read", Options.asString(url));
 	}
 
 	/**

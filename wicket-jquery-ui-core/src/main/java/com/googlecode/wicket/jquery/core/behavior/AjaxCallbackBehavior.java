@@ -91,7 +91,7 @@ public abstract class AjaxCallbackBehavior extends AbstractAjaxBehavior
 	/**
 	 * {@inheritDoc}<br/>
 	 * <br/>
-	 * <b>Warning:</b> Overriden methods should call {@code super.onRequest()}
+	 * <b>Warning:</b> Overridden methods should call {@code super.onRequest()}
 	 */
 	@Override
 	public void onRequest()
