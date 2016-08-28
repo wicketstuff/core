@@ -48,7 +48,6 @@ public class Scheduler extends JQueryContainer implements ISchedulerListener
 		horizontal, vertical
 	}
 
-	private final Options options;
 	private SchedulerEventFactory factory;
 	private SchedulerModelBehavior modelBehavior; // load events
 
@@ -59,6 +58,8 @@ public class Scheduler extends JQueryContainer implements ISchedulerListener
 	private IJQueryTemplate eventTemplate;
 	private KendoTemplateBehavior editTemplateBehavior = null;
 	private KendoTemplateBehavior eventTemplateBehavior = null;
+
+	protected final Options options;
 
 	/**
 	 * Constructor

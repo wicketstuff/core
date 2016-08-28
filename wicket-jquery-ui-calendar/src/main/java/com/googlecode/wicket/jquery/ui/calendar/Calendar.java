@@ -40,9 +40,10 @@ public class Calendar extends JQueryContainer implements ICalendarListener
 {
 	private static final long serialVersionUID = 1L;
 
-	private final Options options;
 	private List<EventSource> sources;
 	private CalendarModelBehavior modelBehavior; // events load
+
+	protected final Options options;
 
 	/**
 	 * Constructor

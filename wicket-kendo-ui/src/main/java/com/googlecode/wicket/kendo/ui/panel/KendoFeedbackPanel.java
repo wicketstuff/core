@@ -47,10 +47,10 @@ public class KendoFeedbackPanel extends WebMarkupContainer implements IJQueryWid
 {
 	private static final long serialVersionUID = 1L;
 
-	private final Options options;
 	private NotificationBehavior widgetBehavior;
-
 	private final IFeedbackMessageFilter filter;
+
+	protected final Options options;
 
 	/**
 	 * Constructor

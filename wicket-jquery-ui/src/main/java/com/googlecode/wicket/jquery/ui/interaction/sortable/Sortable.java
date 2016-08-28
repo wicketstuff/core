@@ -47,7 +47,7 @@ public abstract class Sortable<T> extends JQueryGenericContainer<List<T>> implem
 {
 	private static final long serialVersionUID = 1L;
 
-	private final Options options;
+	protected final Options options;
 
 	/**
 	 * The {@link Sortable} that requested to be connected to this {@link Sortable}<br/>

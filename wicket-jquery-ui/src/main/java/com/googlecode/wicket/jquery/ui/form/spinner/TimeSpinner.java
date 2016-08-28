@@ -43,7 +43,7 @@ public class TimeSpinner extends DateTextField implements IJQueryCultureWidget
 {
 	private static final long serialVersionUID = 1L;
 
-	private final Options options;
+	protected final Options options;
 
 	/**
 	 * Constructor

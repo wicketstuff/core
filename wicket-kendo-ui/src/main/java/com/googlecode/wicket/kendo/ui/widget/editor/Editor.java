@@ -38,7 +38,7 @@ public class Editor<T> extends TextArea<T> implements IJQueryWidget
 	private static final long serialVersionUID = 1L;
 	public static final String METHOD = "kendoEditor";
 
-	private final Options options;
+	protected final Options options;
 
 	/**
 	 * Constructor that provides a default {@link Options} that indicates the {@link Editor}

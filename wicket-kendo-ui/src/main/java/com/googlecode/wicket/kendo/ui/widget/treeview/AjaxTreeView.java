@@ -44,12 +44,13 @@ public class AjaxTreeView extends JQueryContainer implements ITreeViewListener
 {
 	private static final long serialVersionUID = 1L;
 
-	private final Options options;
 	private TreeViewModelBehavior modelBehavior; // load events
 
 	// templates //
 	private IJQueryTemplate template;
 	private KendoTemplateBehavior templateBehavior = null;
+
+	protected final Options options;
 
 	/**
 	 * Constructor

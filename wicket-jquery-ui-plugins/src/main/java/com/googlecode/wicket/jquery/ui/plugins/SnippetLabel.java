@@ -11,8 +11,10 @@ import com.googlecode.wicket.jquery.core.Options;
 public class SnippetLabel extends Label implements IJQueryWidget
 {
 	private static final long serialVersionUID = 1L;
+	
 	private final String language;
-	private final Options options;
+	
+	protected final Options options;
 
 	public SnippetLabel(String id, String language, IModel<String> model)
 	{

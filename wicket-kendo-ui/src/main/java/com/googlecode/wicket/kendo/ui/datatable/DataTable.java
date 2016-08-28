@@ -57,13 +57,12 @@ public class DataTable<T> extends WebComponent implements IGenericComponent<List
 {
 	private static final long serialVersionUID = 1L;
 
-	private final Options options;
 	private final long rows;
 
 	private final IDataProvider<T> provider;
-
-	/** The behavior that ajax-loads data */
 	private AbstractAjaxBehavior providerBehavior;
+
+	protected final Options options;
 
 	/**
 	 * Constructor

@@ -51,10 +51,11 @@ public class ButtonGroup<T extends Serializable> extends FormComponentPanel<T> i
 	private static final long serialVersionUID = 1L;
 
 	private IModel<? extends List<T>> choices;
-	private final Options options;
 
 	/** the input that will hold the value */
 	private FormComponent<Integer> input;
+
+	protected final Options options;
 
 	/**
 	 * Constructor

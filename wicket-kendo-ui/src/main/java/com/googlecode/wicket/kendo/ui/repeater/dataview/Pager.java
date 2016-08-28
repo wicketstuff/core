@@ -33,7 +33,7 @@ public class Pager extends JQueryContainer
 
 	public static final String METHOD = "kendoPager";
 
-	private final Options options;
+	protected final Options options;
 
 	/**
 	 * constructor

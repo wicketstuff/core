@@ -49,7 +49,7 @@ public abstract class LocalTextField<T> extends TextField<T> implements ITextFor
 	/** the converter for the TextField */
 	private final IConverter<T> converter;
 
-	final Options options;
+	protected final Options options;
 
 	/**
 	 * Main constructor

@@ -43,7 +43,7 @@ public class TimePicker extends DateTextField implements IJQueryWidget
 
 	private final Locale locale;
 
-	final Options options;
+	protected final Options options;
 
 	/**
 	 * Constructor

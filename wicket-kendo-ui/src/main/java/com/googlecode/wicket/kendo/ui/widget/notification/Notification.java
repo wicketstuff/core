@@ -41,8 +41,9 @@ public class Notification extends WebMarkupContainer implements IJQueryWidget
 	public static final String WARNING = "warning";
 	public static final String ERROR = "error";
 
-	private final Options options;
 	private NotificationBehavior widgetBehavior = null;
+
+	protected final Options options;
 
 	/**
 	 * Constructor

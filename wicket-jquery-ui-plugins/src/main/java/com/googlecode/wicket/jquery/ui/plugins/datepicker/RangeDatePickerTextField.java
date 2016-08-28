@@ -46,9 +46,10 @@ public class RangeDatePickerTextField extends FormComponentPanel<DateRange> impl
 	private static final long serialVersionUID = 1L;
 	private static final String SEPARATOR = " - ";
 
-	private final Options options;
 	private TextField<DateRange> input;
 	private RangeDatePicker datepicker;
+
+	protected final Options options;
 
 	/**
 	 * Constructor

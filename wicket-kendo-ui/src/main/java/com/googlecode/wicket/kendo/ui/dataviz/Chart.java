@@ -45,8 +45,8 @@ public class Chart<T> extends JQueryGenericContainer<List<T>> implements IChartL
 {
 	private static final long serialVersionUID = 1L;
 
-	private final Options options;
-	private final List<Series> series;
+	protected final Options options;
+	protected final List<Series> series;
 
 	/** The behavior that ajax-loads data */
 	private AjaxCallbackBehavior modelBehavior;

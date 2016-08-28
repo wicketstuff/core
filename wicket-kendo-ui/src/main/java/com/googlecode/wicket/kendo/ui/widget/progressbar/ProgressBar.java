@@ -38,10 +38,10 @@ public class ProgressBar extends JQueryGenericContainer<Integer> implements IPro
 	private static final int MIN = 0;
 	private static final int MAX = 100;
 
-	private final Options options;
-
 	/** Flag that indicates the value (model object) has changed */
 	private boolean valueChanged = false;
+
+	protected final Options options;
 
 	/**
 	 * Constructor

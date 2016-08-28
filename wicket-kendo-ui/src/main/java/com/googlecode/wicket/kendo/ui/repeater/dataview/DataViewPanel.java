@@ -35,13 +35,13 @@ public class DataViewPanel<T> extends GenericPanel<T> // NOSONAR
 {
 	private static final long serialVersionUID = 1L;
 
-	private final Options options;
-
 	/** the number of rows to display */
 	protected final long rows;
 
 	/** the data-source provider */
 	private final IDataProvider<T> provider;
+
+	protected final Options options;
 
 	/**
 	 * Constructor

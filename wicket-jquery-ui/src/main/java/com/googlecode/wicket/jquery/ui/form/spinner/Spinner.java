@@ -36,7 +36,7 @@ public class Spinner<T extends Number> extends TextField<T> implements IJQueryCu
 {
 	private static final long serialVersionUID = 1L;
 
-	final Options options;
+	protected final Options options;
 
 	/**
 	 * Constructor

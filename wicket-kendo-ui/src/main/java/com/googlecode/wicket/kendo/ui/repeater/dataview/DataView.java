@@ -54,8 +54,6 @@ public class DataView<T> extends WebMarkupContainer implements IJQueryWidget, IL
 	/** default rows */
 	private static final long ROWS = Byte.MAX_VALUE;
 
-	private final Options options;
-
 	/** the data-source provider */
 	private final IDataProvider<T> provider;
 	private AbstractAjaxBehavior providerBehavior;
@@ -65,6 +63,8 @@ public class DataView<T> extends WebMarkupContainer implements IJQueryWidget, IL
 
 	/** the template */
 	private KendoTemplateBehavior templateBehavior = null;
+
+	protected final Options options;
 
 	/**
 	 * Constructor
