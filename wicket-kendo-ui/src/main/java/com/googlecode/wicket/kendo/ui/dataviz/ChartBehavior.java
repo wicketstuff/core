@@ -144,7 +144,7 @@ public abstract class ChartBehavior extends KendoUIBehavior implements IJQueryAj
 		if (event instanceof SeriesClickEvent)
 		{
 			SeriesClickEvent e = (SeriesClickEvent) event;
-			this.listener.onSeriesClick(target, e.getCategory(), e.getSeriesField(), e.getSeriesName(), e.getValue());
+			this.listener.onSeriesClick(target, e.getSeriesField(), e.getSeriesName(), e.getCategory(), e.getValue());
 		}
 	}
 

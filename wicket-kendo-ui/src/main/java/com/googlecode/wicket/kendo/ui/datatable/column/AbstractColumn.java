@@ -41,8 +41,8 @@ public abstract class AbstractColumn implements IColumn
 	static final int WIDTH = -1;
 
 	private final String field;
-	private final IModel<String> title;
-	private Integer width;
+	private final Integer width;
+	private final IModel<String> titleModel;
 
 	// TODO: add locked & lockable
 
@@ -131,7 +131,7 @@ public abstract class AbstractColumn implements IColumn
 	 */
 	public AbstractColumn(IModel<String> title, String field, int width)
 	{
-		this.title = title;
+		this.titleModel = title;
 		this.field = field;
 		this.width = width;
 	}
@@ -139,7 +139,7 @@ public abstract class AbstractColumn implements IColumn
 	@Override
 	public String getTitle()
 	{
-		return this.title.getObject();
+		return this.titleModel.getObject();
 	}
 
 	@Override
