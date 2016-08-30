@@ -23,13 +23,11 @@ import org.apache.wicket.model.IModel;
 import org.apache.wicket.request.IRequestParameters;
 
 import com.googlecode.wicket.jquery.core.behavior.AjaxCallbackBehavior;
-import com.googlecode.wicket.kendo.ui.scheduler.SchedulerEvent;
 import com.googlecode.wicket.kendo.ui.scheduler.SchedulerModel;
 
 /**
- * TODO javadoc
- *
- * Provides the behavior that loads {@link SchedulerEvent}{@code s} according to {@link SchedulerModel} start &amp; end dates
+ * Provides the behavior that loads {@link Chart} objects/beans<br/>
+ * <b>Note: </b> the {@code List} of objects will be converted in JSON using {@code new JSONArray(list)}
  * 
  * @author Sebastien Briquet - sebfz1
  *

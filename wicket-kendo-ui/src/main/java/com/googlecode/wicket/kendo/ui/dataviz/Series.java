@@ -20,7 +20,7 @@ import java.io.Serializable;
 
 /**
  * Provides a chart series object.<br/>
- * <b>Note:</b> The field should correspond to a property of the {@link Chart}'s model object  
+ * <b>Note:</b> The field should correspond to a property of the {@link Chart}'s model object
  *
  * @author Sebastien Briquet - sebfz1
  *
@@ -28,12 +28,15 @@ import java.io.Serializable;
 public class Series implements Serializable
 {
 	private static final long serialVersionUID = 1L;
-	
+
 	private final String name;
 	private final String field;
 
 	/**
 	 * Constructor
+	 * 
+	 * @param name the series name
+	 * @param field the series field, it should correspond to a model object's property
 	 */
 	public Series(String name, String field)
 	{
@@ -41,11 +44,21 @@ public class Series implements Serializable
 		this.field = field;
 	}
 
+	/**
+	 * Gets the series name
+	 * 
+	 * @return the series name
+	 */
 	public String getName()
 	{
 		return this.name;
 	}
-	
+
+	/**
+	 * Gets the series field
+	 * 
+	 * @return the series field
+	 */
 	public String getField()
 	{
 		return this.field;

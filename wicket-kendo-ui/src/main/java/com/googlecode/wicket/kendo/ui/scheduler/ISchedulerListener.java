@@ -30,7 +30,7 @@ import com.googlecode.wicket.kendo.ui.scheduler.views.SchedulerViewType;
 public interface ISchedulerListener extends IClusterable
 {
 	/**
-	 * Indicates whether a edit-event is available.<br/>
+	 * Indicates whether a edit-event is enabled.<br/>
 	 * If true, the {@link #onEdit(AjaxRequestTarget, SchedulerEvent, SchedulerViewType)} event will be triggered by clicking an event or a free event slot.<br/>
 	 *
 	 * <p>

@@ -227,7 +227,7 @@ public class WindowButton implements IClusterable
 		return this.enabled;
 	}
 
-	// TODO: setEnabled(boolean enabled, IPartialPageRequestHandler handler)
+	// TODO: #setEnabled(boolean enabled, IPartialPageRequestHandler handler)
 
 	/**
 	 * Indicates whether the button is visible

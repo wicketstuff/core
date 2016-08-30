@@ -84,6 +84,7 @@ public abstract class ChartBehavior extends KendoUIBehavior implements IJQueryAj
 	}
 
 	// Methods //
+
 	@Override
 	public void bind(Component component)
 	{

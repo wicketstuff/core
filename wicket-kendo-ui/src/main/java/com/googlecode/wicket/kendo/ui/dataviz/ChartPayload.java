@@ -21,10 +21,10 @@ import org.apache.wicket.util.io.IClusterable;
 
 import com.googlecode.wicket.jquery.core.ajax.AjaxPayload;
 
-
 /**
- * Provides a convenient {@link AjaxPayload} that could be used to broadcast point information (i.e.: from {@link Chart#onSeriesClick(AjaxRequestTarget, String, String, String, long)}
+ * Provides a convenient {@link AjaxPayload} that can be used to broadcast a point information
  * 
+ * @see Chart#onSeriesClick(AjaxRequestTarget, String, String, String, long)
  * @author Sebastien Briquet - sebfz1
  *
  */
@@ -37,6 +37,15 @@ public class ChartPayload extends AjaxPayload implements IClusterable
 	private final String seriesName;
 	private final String seriesField;
 
+	/**
+	 * Constructor
+	 * 
+	 * @param target the {@link AjaxRequestTarget}
+	 * @param seriesName the series name
+	 * @param seriesField the series field
+	 * @param category the category
+	 * @param value the value of the point
+	 */
 	public ChartPayload(AjaxRequestTarget target, String seriesName, String seriesField, String category, long value)
 	{
 		super(target);
@@ -47,21 +56,41 @@ public class ChartPayload extends AjaxPayload implements IClusterable
 		this.seriesField = seriesField;
 	}
 
+	/**
+	 * Gets the value
+	 * 
+	 * @return the value
+	 */
 	public long getValue()
 	{
 		return this.value;
 	}
 
+	/**
+	 * Get the category
+	 * 
+	 * @return the category
+	 */
 	public String getCategory()
 	{
 		return this.category;
 	}
 
+	/**
+	 * Gets the series name
+	 * 
+	 * @return the series name
+	 */
 	public String getSeriesName()
 	{
 		return this.seriesName;
 	}
 
+	/**
+	 * Gets the series field
+	 * 
+	 * @return the series field
+	 */
 	public String getSeriesField()
 	{
 		return this.seriesField;
