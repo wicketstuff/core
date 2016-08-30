@@ -24,7 +24,6 @@ import org.apache.wicket.ajax.AbstractDefaultAjaxBehavior;
 import org.apache.wicket.core.util.string.ComponentRenderer;
 import org.apache.wicket.markup.head.IHeaderResponse;
 import org.apache.wicket.model.IModel;
-import org.apache.wicket.request.IRequestHandler;
 import org.apache.wicket.request.IRequestParameters;
 import org.apache.wicket.request.cycle.RequestCycle;
 import org.apache.wicket.request.handler.resource.ResourceReferenceRequestHandler;
@@ -172,7 +171,6 @@ public abstract class LazyPropertyColumn extends PropertyColumn
 	protected class AjaxTemplateBehavior extends AjaxCallbackBehavior
 	{
 		private static final long serialVersionUID = 1L;
-		private final IRequestHandler handler = new ResourceReferenceRequestHandler(AbstractDefaultAjaxBehavior.INDICATOR);
 
 		public AjaxTemplateBehavior()
 		{
@@ -186,7 +184,7 @@ public abstract class LazyPropertyColumn extends PropertyColumn
 
 			Map<String, Object> variables = Generics.newHashMap();
 			variables.put("field", LazyPropertyColumn.this.getField());
-			variables.put("imageUrl", RequestCycle.get().urlFor(this.handler));
+			variables.put("imageUrl", RequestCycle.get().urlFor(new ResourceReferenceRequestHandler(AbstractDefaultAjaxBehavior.INDICATOR)));
 			variables.put("callbackUrl", this.getCallbackUrl());
 
 			response.render(new JavaScriptPackageHeaderItem(LazyPropertyColumn.class, variables));
