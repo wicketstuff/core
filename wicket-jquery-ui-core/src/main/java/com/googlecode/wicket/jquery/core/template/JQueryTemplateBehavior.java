@@ -63,8 +63,8 @@ public class JQueryTemplateBehavior extends JQueryAbstractTemplateBehavior
 	}
 
 	@Override
-	protected JQueryResourceStream newResourceStream()
+	protected JQueryTemplateResourceStream newResourceStream()
 	{
-		return new JQueryResourceStream(this.template.getText(), this.getToken());
+		return new JQueryTemplateResourceStream(this.template.getText(), this.getToken());
 	}
 }

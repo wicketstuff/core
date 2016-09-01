@@ -33,8 +33,8 @@ import com.googlecode.wicket.jquery.core.renderer.TextRenderer;
 import com.googlecode.wicket.jquery.core.template.IJQueryTemplate;
 import com.googlecode.wicket.jquery.core.utils.RequestCycleUtils;
 import com.googlecode.wicket.kendo.ui.KendoDataSource;
-import com.googlecode.wicket.kendo.ui.KendoTemplateBehavior;
 import com.googlecode.wicket.kendo.ui.renderer.ChoiceRenderer;
+import com.googlecode.wicket.kendo.ui.template.KendoTemplateBehavior;
 
 /**
  * Provides the base class for a Kendo UI auto-complete widget.<br/>

@@ -42,7 +42,7 @@ public abstract class JQueryAbstractTemplateBehavior extends Behavior
 	public void renderHead(Component component, IHeaderResponse response)
 	{
 		super.renderHead(component, response);
-
+//TODO replace with JQueryTemplatePackageHeaderItem
 		response.render(StringHeaderItem.forString(this.newResourceStream().getString()));
 	}
 
@@ -55,9 +55,9 @@ public abstract class JQueryAbstractTemplateBehavior extends Behavior
 
 
 	/**
-	 * Gets a new {@link JQueryResourceStream} which contains the &lt;script /&gt; block.
+	 * Gets a new {@link JQueryTemplateResourceStream} which contains the &lt;script /&gt; block.
 	 *
-	 * @return the {@link JQueryResourceStream}
+	 * @return the {@link JQueryTemplateResourceStream}
 	 */
-	protected abstract JQueryResourceStream newResourceStream();
+	protected abstract JQueryTemplateResourceStream newResourceStream();
 }

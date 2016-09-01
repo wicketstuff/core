@@ -19,16 +19,16 @@ package com.googlecode.wicket.jquery.core.template;
 import org.apache.wicket.util.resource.AbstractStringResourceStream;
 
 /**
- * Provides the default resource stream for jQuery templates.
- * The {@link #getString()} method returns a script block like &lt;script id="jquery-template-123456" type="text/x-jquery-tmpl" /&gt;  
+ * Provides the default resource stream for jQuery templates.<br />
+ * The {@link #getString()} method returns a script block like &lt;script id="jquery-template-123456" type="text/x-jquery-tmpl" /&gt;
  * 
  * @author Sebastien Briquet - sebfz1
  *
  */
-public class JQueryResourceStream extends AbstractStringResourceStream
+public class JQueryTemplateResourceStream extends AbstractStringResourceStream
 {
 	private static final long serialVersionUID = 1L;
-	
+
 	private final String token;
 	private final String content;
 
@@ -36,16 +36,34 @@ public class JQueryResourceStream extends AbstractStringResourceStream
 	 * Constructor
 	 * 
 	 * @param content the content inside the &lt;script /&gt; block
-	 * @param token the unique resource-stream token that acts as the script id.
+	 * @param token the unique resource-stream token that will be the script-id.
 	 */
-	public JQueryResourceStream(final String content, final String token)
+	public JQueryTemplateResourceStream(final String content, final String token)
 	{
 		this.token = token;
 		this.content = content;
 	}
 
+	/**
+	 * Constructor
+	 * 
+	 * @param template the {@link IJQueryTemplate}
+	 * @param token the unique resource-stream token that will be the script-id.
+	 */
+	public JQueryTemplateResourceStream(final IJQueryTemplate template, final String token)
+	{
+		this.token = token;
+		this.content = template.getText();
+	}
+
 	@Override
-	public String getString()
+	public String getContentType()
+	{
+		return "text/x-jquery-tmpl";
+	}
+
+	@Override
+	protected String getString()
 	{
 		StringBuilder builder = new StringBuilder();
 		builder.append("<script id=\"").append(this.token).append("\" type=\"").append(this.getContentType()).append("\">");
@@ -56,8 +74,8 @@ public class JQueryResourceStream extends AbstractStringResourceStream
 	}
 
 	@Override
-	public String getContentType()
+	public String asString()
 	{
-		return "text/x-jquery-tmpl";
+		return this.getString();
 	}
 }

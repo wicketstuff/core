@@ -30,9 +30,9 @@ import com.googlecode.wicket.jquery.core.JQueryContainer;
 import com.googlecode.wicket.jquery.core.Options;
 import com.googlecode.wicket.jquery.core.template.IJQueryTemplate;
 import com.googlecode.wicket.jquery.core.utils.JQueryUtils;
-import com.googlecode.wicket.kendo.ui.KendoTemplateBehavior;
 import com.googlecode.wicket.kendo.ui.KendoUIBehavior;
 import com.googlecode.wicket.kendo.ui.scheduler.SchedulerEventFactory;
+import com.googlecode.wicket.kendo.ui.template.KendoTemplateBehavior;
 
 /**
  * Provides the Kendo UI TreeView

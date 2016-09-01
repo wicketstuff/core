@@ -521,7 +521,7 @@ public class SchedulerEvent implements Serializable
 	{
 		return this.title;
 	}
-	
+
 	// Static //
 
 	public static boolean isNew(SchedulerEvent event)

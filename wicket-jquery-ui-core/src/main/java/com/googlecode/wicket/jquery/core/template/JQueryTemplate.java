@@ -47,7 +47,7 @@ public abstract class JQueryTemplate implements IJQueryTemplate
 	public static class JQueryPackageTextTemplate extends JQueryTemplate
 	{
 		private static final long serialVersionUID = 1L;
-		
+
 		private final PackageTextTemplate template;
 		private transient Map<String, ?> variables = null;
 
@@ -55,7 +55,7 @@ public abstract class JQueryTemplate implements IJQueryTemplate
 		{
 			this(clazz, clazz.getSimpleName() + ".tmpl");
 		}
-		
+
 		public JQueryPackageTextTemplate(Class<?> clazz, Map<String, ?> variables)
 		{
 			this(clazz, clazz.getSimpleName() + ".tmpl", variables);

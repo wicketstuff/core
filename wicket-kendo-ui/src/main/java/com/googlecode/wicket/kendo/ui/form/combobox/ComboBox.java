@@ -28,8 +28,8 @@ import com.googlecode.wicket.jquery.core.Options;
 import com.googlecode.wicket.jquery.core.behavior.ChoiceModelBehavior;
 import com.googlecode.wicket.jquery.core.renderer.IChoiceRenderer;
 import com.googlecode.wicket.jquery.core.template.IJQueryTemplate;
-import com.googlecode.wicket.kendo.ui.KendoTemplateBehavior;
 import com.googlecode.wicket.kendo.ui.renderer.ChoiceRenderer;
+import com.googlecode.wicket.kendo.ui.template.KendoTemplateBehavior;
 
 /**
  * Provides a Kendo UI ComboBox widget.<br/>
