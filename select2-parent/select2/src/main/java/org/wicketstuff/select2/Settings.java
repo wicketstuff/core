@@ -22,6 +22,8 @@ import org.apache.wicket.ajax.json.JSONStringer;
 import org.apache.wicket.markup.head.IHeaderResponse;
 import org.wicketstuff.select2.json.Json;
 
+import static org.apache.wicket.util.string.Strings.defaultIfEmpty;
+
 /**
  * Select2 settings. Refer to the Select2 documentation for what these options mean.
  * 
@@ -42,10 +44,13 @@ public final class Settings implements Serializable
 		public static String ELEMENT = "element";
 	}
 
+	// language code (e.g. "en", "de", "fr", ...)
+	private String language;
+
 	private Integer minimumInputLength, minimumResultsForSearch;
 	private Integer maximumSelectionLength;
-	private Object placeholder;
-	private boolean allowClear;
+	private Object placeholder; // ok
+	private boolean allowClear; // ok
 	private boolean multiple;
 	private boolean closeOnSelect;
 	private String id, matcher, tokenizer;
@@ -120,9 +125,11 @@ public final class Settings implements Serializable
 			Json.writeFunction(writer, "data", data);
 			Json.writeObject(writer, "tags", tags);
 			Json.writeFunction(writer, "createTag", createTag);
-			writer.key("language").value(Session.get().getLocale().toLanguageTag());
-			writer.endObject();
 
+			// Set language
+			writer.key("language").value(getLanguage());
+
+			writer.endObject();
 			return writer.toString();
 		}
 		catch (JSONException e)
@@ -513,4 +520,14 @@ public final class Settings implements Serializable
 	{
 		this.mountPath = mountPath;
 	}
+
+	public String getLanguage() {
+		return defaultIfEmpty(language, Session.get().getLocale().getLanguage());
+	}
+
+	public Settings setLanguage(String language) {
+		this.language = language;
+		return this;
+	}
+
 }

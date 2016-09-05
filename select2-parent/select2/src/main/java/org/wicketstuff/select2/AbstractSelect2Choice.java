@@ -28,6 +28,7 @@ import org.apache.wicket.event.IEvent;
 import org.apache.wicket.markup.ComponentTag;
 import org.apache.wicket.markup.MarkupStream;
 import org.apache.wicket.markup.head.IHeaderResponse;
+import org.apache.wicket.markup.head.JavaScriptHeaderItem;
 import org.apache.wicket.markup.head.OnDomReadyHeaderItem;
 import org.apache.wicket.markup.html.form.AbstractTextComponent;
 import org.apache.wicket.markup.html.form.FormComponent;
@@ -118,11 +119,16 @@ public abstract class AbstractSelect2Choice<T, M> extends AbstractTextComponent<
 			public void renderHead(Component component, IHeaderResponse response)
 			{
 				super.renderHead(component, response);
+
 				// render theme related resources if any
 				if(settings.getTheme() != null)
 				{
 					settings.getTheme().renderHead(component, response);
 				}
+
+				// include i18n resource file
+				response.render(JavaScriptHeaderItem.forReference(
+						new Select2LanguageResourceReference(settings.getLanguage())));
 			}
 		});
 		setOutputMarkupId(true);
