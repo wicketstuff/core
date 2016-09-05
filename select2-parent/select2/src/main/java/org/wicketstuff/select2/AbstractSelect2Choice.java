@@ -287,7 +287,7 @@ public abstract class AbstractSelect2Choice<T, M> extends AbstractTextComponent<
 		}
 		else if (isAjax())
 		{
-			getSettings().getAjax().setUrl(urlForListener(null));
+			getSettings().getAjax(true).setUrl(urlForListener(null));
 		}
 	}
 
