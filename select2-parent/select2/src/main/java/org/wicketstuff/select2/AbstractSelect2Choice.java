@@ -49,7 +49,7 @@ import org.apache.wicket.util.string.Strings;
  *            type of model object
  * @author igor
  */
-abstract class AbstractSelect2Choice<T, M> extends AbstractTextComponent<M> implements IRequestListener
+public abstract class AbstractSelect2Choice<T, M> extends AbstractTextComponent<M> implements IRequestListener
 {
 	private static final long serialVersionUID = 1L;
 
