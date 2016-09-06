@@ -49,8 +49,8 @@ public final class Settings implements Serializable
 
 	private Integer minimumInputLength, minimumResultsForSearch;
 	private Integer maximumSelectionLength;
-	private Object placeholder; // ok
-	private boolean allowClear; // ok
+	private Object placeholder;
+	private boolean allowClear;
 	private boolean multiple;
 	private boolean closeOnSelect;
 	private String id, matcher, tokenizer;
