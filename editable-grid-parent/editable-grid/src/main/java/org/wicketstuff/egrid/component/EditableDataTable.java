@@ -517,7 +517,11 @@ public class EditableDataTable<T, S> extends Panel implements IPageableItems, IC
 		{
 			@SuppressWarnings("unchecked")
 			Item<T> rowItem = ((Item<T>)event.getPayload());
+<<<<<<< HEAD
 			if (rowItem.findParent(EditableDataTable.class).equals(this)) {
+=======
+			if (rowItem.findParent(org.wicketstuff.egrid.component.EditableDataTable.class).equals(this)) {
+>>>>>>> 9534ea7... Fix save action when there is more than one grid in the same page
 				this.datagrid.refreash(rowItem);
 				event.stop();
 			}
