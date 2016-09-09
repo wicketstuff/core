@@ -311,10 +311,7 @@ public class WicketPortlet extends GenericPortlet {
 	 */
 	@Override
 	public void init(final PortletConfig config) throws PortletException {
-		// enable action-scoped request attributes support (see JSR286 specification PLT.10.4.4)
-		config.getContainerRuntimeOptions().put("javax.portlet.actionScopedRequestAttributes",
-			new String[] { "true", "numberOfCachedScopes", "10" });
-		super.init(config);
+		super.init(new WicketPortletConfig(config));
 
 		wicketFilterPath = buildWicketFilterPath(config.getInitParameter(WICKET_FILTER_PATH_PARAM));
 		String responseBufferFolderPath = config.getInitParameter(RESPONSE_BUFFER_FOLDER_PARAM);
