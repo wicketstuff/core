@@ -49,7 +49,7 @@ public class TextAreaEditor implements IKendoEditor
 	public String toString()
 	{
 		return "function " + this.name + "(container, options) { " // lf
-				+ "$('<textarea class=\"k-textbox\" data-bind=\"value:' + options.field + '\"></textarea>')" // lf
+				+ "jQuery('<textarea class=\"k-textbox\" data-bind=\"value:' + options.field + '\"></textarea>')" // lf
 				+ ".appendTo(container); " // lf
 				+ "}";
 	}

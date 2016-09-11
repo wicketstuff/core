@@ -57,4 +57,15 @@ public class KendoTemplateHeaderItem extends JQueryTemplateHeaderItem
 	{
 		this(new JQueryPackageTextTemplate(clazz, filename), token);
 	}
+
+	/**
+	 * Gets the jQuery statement this Kendo template
+	 *
+	 * @param token the template script-id
+	 * @return the jQuery statement
+	 */
+	public static String $(final String token)
+	{
+		return String.format("kendo.template(jQuery('#%s').html()", token);
+	}
 }

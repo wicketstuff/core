@@ -79,7 +79,7 @@ public class DropDownListEditor implements IKendoEditor
 	public String toString()
 	{
 		return "function " + this.name + "(container, options) { " // lf
-				+ "$('<input required data-bind=\"value:' + options.field + '\"/>')" // lf
+				+ "jQuery('<input required data-bind=\"value:' + options.field + '\"/>')" // lf
 				+ ".appendTo(container)" // lf
 				+ ".kendoDropDownList({ " // lf
 				+ "  autoBind: false," // lf
