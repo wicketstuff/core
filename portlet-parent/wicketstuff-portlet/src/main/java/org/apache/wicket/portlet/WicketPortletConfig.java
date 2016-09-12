@@ -25,18 +25,15 @@ public class WicketPortletConfig implements PortletConfig {
 	
 	public WicketPortletConfig(PortletConfig config) {
 		delegate = config;
-		
-		Map<String, String[]> map = new HashMap<String, String[]>();
-		//config.getContainerRuntimeOptions() returns an immutable map (see JSR286 specification PLT.6.8 ).
-		for(Map.Entry<String, String[]> entry : config.getContainerRuntimeOptions().entrySet()) {
-			map.put(entry.getKey(), entry.getValue());
-		}
+		//transfer the immutable map that the config.getContainerRuntimeOptions() returns (see JSR286 specification PLT.6.8 ) 
+		//to a temporary modifiable map.
+		containerRuntimeOptions = new HashMap<String, String[]>(config.getContainerRuntimeOptions());
 		//enable action-scoped request attributes support (see JSR286 specification PLT.10.4.4)
-		map.put("javax.portlet.actionScopedRequestAttributes",
+		containerRuntimeOptions.put("javax.portlet.actionScopedRequestAttributes",
 				new String[] { "true", "numberOfCachedScopes", "10" });
 		
 		//make the containerRuntimeOptions map an immutable map as the specification requires (see JSR286 specification PLT.6.8 ).
-		containerRuntimeOptions = Collections.unmodifiableMap(map);
+		containerRuntimeOptions = Collections.unmodifiableMap(containerRuntimeOptions);
 	}
 
 	@Override
