@@ -57,14 +57,13 @@ public class ScoreMethodAndExtractPathVars implements ISegmentVisitor
 	private int score;
 	
 	/** Indicates if the last segment was valid for the current method URL. */
-	private boolean isSegmentValid = false;
+	private boolean isSegmentValid = true;
 	
 	public ScoreMethodAndExtractPathVars(MethodMappingInfo methodInfo, PageParameters pageParameters)
 	{
 		this.methodInfo = methodInfo;
 		this.pageParameters = pageParameters;
 		this.pathVariables = new LinkedHashMap<>();
-
 	}
 	
 	@Override

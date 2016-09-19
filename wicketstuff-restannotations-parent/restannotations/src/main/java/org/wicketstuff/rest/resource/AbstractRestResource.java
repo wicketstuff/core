@@ -430,8 +430,10 @@ public abstract class AbstractRestResource<T extends IWebSerialDeserial> impleme
 
 		// no method mapped
 		if (mappedMethodsCandidates == null || mappedMethodsCandidates.size() == 0)
+		{
 			return null;
-
+		}
+		
 		/**
 		 * To select the "best" method, a score is assigned to every mapped method. To calculate the
 		 * score method calculateScore is executed for every segment.
@@ -453,7 +455,8 @@ public abstract class AbstractRestResource<T extends IWebSerialDeserial> impleme
 				}
 			}
 
-			int methodScore = scoredMethod.getScore();
+			int methodScore = scoredMethod.isSegmentValid() ? 
+					scoredMethod.getScore() : -1;
 			
 			if (methodScore >= highestScore)
 			{
