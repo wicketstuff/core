@@ -219,12 +219,6 @@
 				</repository>
 			</repositories>
 		</profile>
-                <profile>
-		    <id>SKIP_MODULE_TESTS</id>
-		    <properties>
-			    <skip.module.tests>true</skip.module.tests>
-		     </properties>
-		 </profile>
 	</profiles>
 
 	<issueManagement>
@@ -274,8 +268,6 @@
 		<cglib.version>3.1</cglib.version>
 		<objenesis.version>2.1</objenesis.version>
 		<scala.version>2.11.8</scala.version>
-
-		<skip.module.tests>false</skip.module.tests>
 	</properties>
 
 	<prerequisites>
