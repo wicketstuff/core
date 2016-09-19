@@ -22,6 +22,9 @@
 		<module>progressbar-spring</module>
 		<module>progressbar-example</module>
 	</modules>
+	<properties>
+	    <skip.module.tests>false</skip.module.tests>
+	</properties>
 
 	<developers>
 		<developer>
@@ -29,7 +32,16 @@
 			<id>hlubek</id>
 			<email>hlubek at users.sf.net</email>
 		</developer>
-	</developers>	
+	</developers>
+	
+	<profiles>
+	    <profile>
+		<id>SKIP_MODULE_TESTS</id>
+		<properties>
+		    <skip.module.tests>true</skip.module.tests>
+		</properties>
+	    </profile>
+	</profiles>	
 
 	<dependencies>
 		<dependency>
