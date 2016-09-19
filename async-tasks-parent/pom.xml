@@ -67,15 +67,4 @@
             <artifactId>testng</artifactId>
         </dependency>
     </dependencies>
-    <build>
-        <plugins>
-	    <plugin>
-	        <groupId>org.apache.maven.plugins</groupId>
-	        <artifactId>maven-surefire-plugin</artifactId>
-	        <configuration>
-		    <skipTests>${skip.module.tests}</skipTests>
-	        </configuration>
-	    </plugin>
-        </plugins>
-    </build>
 </project>
