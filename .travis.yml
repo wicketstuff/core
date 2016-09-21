@@ -40,4 +40,4 @@ script:
   - '[ "${TRAVIS_PULL_REQUEST}" = "false" ] && DEPLOY_OR_TEST=deploy'
   - "echo DEPLOY_OR_TEST=$DEPLOY_OR_TEST"
   - "cp ./config/toolchains.xml $HOME/.m2"
-  - "mvn -s sonatype-settings.xml clean $DEPLOY_OR_TEST -P SKIP_MODULE_TESTS -Dsource.skip=true -B -V --quiet"
+  - "mvn -s sonatype-settings.xml clean $DEPLOY_OR_TEST -Dsource.skip=true -B -V --quiet"
