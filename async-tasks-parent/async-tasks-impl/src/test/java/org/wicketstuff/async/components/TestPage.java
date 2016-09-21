@@ -31,21 +31,25 @@ public class TestPage extends WebPage implements IRunnableFactory {
             @Override
             protected void onTaskStart(AjaxRequestTarget ajaxRequestTarget) {
                 taskStart = true;
+                countDownLatch();
             }
 
             @Override
             protected void onTaskSuccess(AjaxRequestTarget ajaxRequestTarget) {
                 taskSuccess = true;
+                countDownLatch();
             }
 
             @Override
             protected void onTaskCancel(AjaxRequestTarget ajaxRequestTarget) {
                 taskCancel = true;
+                countDownLatch();
             }
 
             @Override
             protected void onTaskError(AjaxRequestTarget ajaxRequestTarget) {
                 taskError = true;
+                countDownLatch();
             }
         };
 
