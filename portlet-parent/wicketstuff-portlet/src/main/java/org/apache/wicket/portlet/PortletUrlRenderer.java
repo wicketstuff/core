@@ -83,24 +83,25 @@ public class PortletUrlRenderer extends UrlRenderer
 	 */
 	public String renderUrl(final Url url)
 	{
-		String renderedUrl = super.renderUrl(url);
+		CharSequence renderedUrl = super.renderUrl(url);
 		
 		Url absoluteUrl = Url.parse(renderedUrl);
 		Url clientUrl = request.getClientUrl();
 		if (!shouldRedirectToExternalUrl(absoluteUrl, clientUrl)) {
 			if (absoluteUrl.getProtocol() != null) {
-				renderedUrl = renderedUrl.replace(absoluteUrl.getProtocol() + "://", "/");
+				renderedUrl = Strings.replaceAll(renderedUrl, absoluteUrl.getProtocol() + "://", "/");
 			}
 			if (absoluteUrl.getHost() != null) {
-				renderedUrl = renderedUrl.replace("/" + absoluteUrl.getHost(), "/");
+				renderedUrl = Strings.replaceAll(renderedUrl, "/" + absoluteUrl.getHost(), "/");
 			}
 			if (absoluteUrl.getPort() != null) {
-				renderedUrl = renderedUrl.replace("/:" + absoluteUrl.getPort(), "/");
+				renderedUrl = Strings.replaceAll(renderedUrl, "/:" + absoluteUrl.getPort(), "/");
+
 			}
-			renderedUrl = renderedUrl.replace("//", "/");
+			renderedUrl = Strings.replaceAll(renderedUrl, "//", "/");
 		}
 		
-		return renderedUrl;
+		return renderedUrl.toString();
 	}
 	
 	private boolean shouldRedirectToExternalUrl(Url url, Url clientUrl) 
