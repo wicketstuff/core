@@ -64,7 +64,6 @@ public class ProgressButtonTest {
             @Override
             public void run() {
                 result[0] = true;
-                page.countDownLatch();
             }
         });
 
@@ -72,7 +71,6 @@ public class ProgressButtonTest {
         tester.assertRenderedPage(TestPage.class);
 
         tester.executeAjaxEvent("form:button", "click");
-        page.waitForTaskToComplete();
         executeRefresh(500L);
 
         assertTrue(result[0]);
@@ -92,9 +90,7 @@ public class ProgressButtonTest {
 
         FormTester formTester = tester.newFormTester("form");
         formTester.submit("button");
-        
-        page.waitForTaskToComplete();
-        
+
         assertTrue(page.isTaskStart());
         assertFalse(page.isTaskCancel());
     }
@@ -108,7 +104,6 @@ public class ProgressButtonTest {
         tester.assertRenderedPage(TestPage.class);
 
         tester.executeAjaxEvent("form:button", "click");
-        page.waitForTaskToComplete();
         executeRefresh(500L);
 
         assertTrue(page.isTaskStart());
