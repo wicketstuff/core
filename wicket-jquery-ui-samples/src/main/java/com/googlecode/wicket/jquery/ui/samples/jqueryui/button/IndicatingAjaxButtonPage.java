@@ -2,7 +2,6 @@ package com.googlecode.wicket.jquery.ui.samples.jqueryui.button;
 
 import org.apache.wicket.Component;
 import org.apache.wicket.ajax.AjaxRequestTarget;
-import org.apache.wicket.markup.html.form.Button;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.panel.FeedbackPanel;
 import org.slf4j.Logger;

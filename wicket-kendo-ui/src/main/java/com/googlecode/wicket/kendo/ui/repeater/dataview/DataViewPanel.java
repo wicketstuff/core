@@ -75,11 +75,11 @@ public class DataViewPanel<T> extends GenericPanel<T> // NOSONAR
 	// Events //
 
 	@Override
-	protected void onInitialize()
+	protected void onConfigure()
 	{
-		super.onInitialize();
+		super.onConfigure();
 
-		final KendoDataSource dataSource = new KendoDataSource("datasource_" + this.getMarkupId());
+		final KendoDataSource dataSource = new KendoDataSource(this);
 
 		this.add(this.newDataView("listView", dataSource, this.provider, this.options));
 		this.add(this.newPager("pager", dataSource));

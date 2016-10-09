@@ -16,6 +16,8 @@
  */
 package com.googlecode.wicket.kendo.ui.widget.treeview;
 
+import org.apache.wicket.Component;
+
 import com.googlecode.wicket.kendo.ui.KendoDataSource;
 
 /**
@@ -40,12 +42,33 @@ public class TreeViewDataSource extends KendoDataSource
 	/**
 	 * Constructor
 	 *
+	 * @param component the hosting component (used to get the name)
+	 */
+	public TreeViewDataSource(Component component)
+	{
+		super(component);
+	}
+
+	/**
+	 * Constructor
+	 *
 	 * @param name the data-source name
 	 * @param type the response type (json, xml)
 	 */
 	public TreeViewDataSource(String name, String type)
 	{
 		super(name, type);
+	}
+
+	/**
+	 * Constructor
+	 *
+	 * @param component the hosting component (used to get the name)
+	 * @param type the response data type (json, xml)
+	 */
+	public TreeViewDataSource(Component component, String type)
+	{
+		super(component, type);
 	}
 
 	// Properties //

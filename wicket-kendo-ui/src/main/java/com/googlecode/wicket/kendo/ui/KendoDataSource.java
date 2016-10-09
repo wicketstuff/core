@@ -16,6 +16,8 @@
  */
 package com.googlecode.wicket.kendo.ui;
 
+import org.apache.wicket.Component;
+import org.apache.wicket.core.request.handler.IPartialPageRequestHandler;
 import org.apache.wicket.util.lang.Args;
 
 import com.googlecode.wicket.jquery.core.Options;
@@ -39,7 +41,7 @@ public class KendoDataSource extends Options implements IKendoDataSource
 	/**
 	 * Constructor
 	 *
-	 * @param name the data-source name
+	 * @param name the data-source name (caution: it should not contain invalid js-variable chars)
 	 */
 	public KendoDataSource(String name)
 	{
@@ -49,7 +51,17 @@ public class KendoDataSource extends Options implements IKendoDataSource
 	/**
 	 * Constructor
 	 *
-	 * @param name the data-source name
+	 * @param component the hosting component (used to get the name)
+	 */
+	public KendoDataSource(Component component)
+	{
+		this(nameOf(component), TYPE);
+	}
+
+	/**
+	 * Main Constructor
+	 *
+	 * @param name the data-source name (caution: it should not contain invalid js-variable chars)
 	 * @param type the response data type (json, xml)
 	 */
 	public KendoDataSource(String name, String type)
@@ -60,6 +72,17 @@ public class KendoDataSource extends Options implements IKendoDataSource
 		this.set("sync", "function() { this.read(); }"); // will force holding component to call #refresh
 		this.set("error", DebugUtils.errorCallback);
 		this.set("dataType", Options.asString(type)); // useless
+	}
+
+	/**
+	 * Constructor
+	 *
+	 * @param component the hosting component (used to get the name)
+	 * @param type the response data type (json, xml)
+	 */
+	public KendoDataSource(Component component, String type)
+	{
+		this(nameOf(component), type);
 	}
 
 	// Properties //
@@ -144,12 +167,29 @@ public class KendoDataSource extends Options implements IKendoDataSource
 	}
 
 	@Override
+	public void destroy(IPartialPageRequestHandler handler)
+	{
+		handler.prependJavaScript(String.format("var $w = jQuery('#%s'); if($w) { $w.detach(); }", this.getToken()));
+	}
+
+	@Override
 	public String toScript()
 	{
 		return String.format("jQuery(function() { %s = new kendo.data.DataSource(%s); });", this.getName(), this.build());
 	}
 
 	// Helpers //
+
+	/**
+	 * Gets the datasource name from the supplied {@link Component}
+	 * 
+	 * @param component the {@code Component}
+	 * @return the datasource name
+	 */
+	public static String nameOf(Component component)
+	{
+		return component.getMarkupId() + "_datasource";
+	}
 
 	/**
 	 * Gets the 'read' callback function from an url

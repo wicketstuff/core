@@ -78,7 +78,7 @@ public abstract class AutoCompleteBehavior extends KendoUIBehavior implements IJ
 		super.bind(component);
 
 		// data source //
-		this.dataSource = new KendoDataSource("datasource" + this.selector);
+		this.dataSource = new KendoDataSource(component);
 		this.dataSource.set("serverFiltering", true); // important
 		this.add(this.dataSource);
 

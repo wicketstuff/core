@@ -342,7 +342,7 @@ public class Scheduler extends JQueryContainer implements ISchedulerListener
 	}
 
 	@Override
-	public void onNavigate(AjaxRequestTarget target, SchedulerViewType view)
+	public void onNavigate(AjaxRequestTarget target, SchedulerViewType oldView, SchedulerViewType newView)
 	{
 		this.refresh(target);
 	}

@@ -27,6 +27,8 @@ import org.apache.wicket.util.visit.IVisit;
 import org.apache.wicket.util.visit.IVisitor;
 import org.apache.wicket.util.visit.Visits;
 
+import com.googlecode.wicket.kendo.ui.template.KendoTemplateBehavior;
+
 /**
  * INTERNAL USE<br/>
  * Provides an {@code IListener} for {@link KendoUIBehavior}{@code s} that destroys widgets about to be repainted.
@@ -73,10 +75,15 @@ public class KendoDestroyListener extends AbstractListener
 	{
 		return (Component component, IVisit<Object> visit) -> {
 
-			for (KendoUIBehavior behavior : component.getBehaviors(KendoUIBehavior.class))
-			{
-				behavior.destroy(target);
-			}
+				for (IDestroyable behavior : component.getBehaviors(KendoUIBehavior.class))
+				{
+					behavior.destroy(target);
+				}
+
+				for (IDestroyable behavior : component.getBehaviors(KendoTemplateBehavior.class))
+				{
+					behavior.destroy(target);
+				}
 		};
 	}
 }

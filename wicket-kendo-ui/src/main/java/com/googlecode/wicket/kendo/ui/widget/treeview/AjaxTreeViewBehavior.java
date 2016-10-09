@@ -41,7 +41,7 @@ public abstract class AjaxTreeViewBehavior extends KendoUIBehavior implements IJ
 	public static final String METHOD = "kendoTreeView";
 
 	private final ITreeViewListener listener;
-	private final TreeViewDataSource dataSource;
+	private TreeViewDataSource dataSource;
 
 	private JQueryAjaxBehavior onExpandAjaxBehavior = null;
 	private JQueryAjaxBehavior onSelectAjaxBehavior = null;
@@ -69,8 +69,6 @@ public abstract class AjaxTreeViewBehavior extends KendoUIBehavior implements IJ
 		super(selector, METHOD, options);
 
 		this.listener = Args.notNull(listener, "listener");
-		this.dataSource = new TreeViewDataSource("TreeViewDataSource");
-		this.add(this.dataSource);
 	}
 
 	// Methods //
@@ -79,6 +77,10 @@ public abstract class AjaxTreeViewBehavior extends KendoUIBehavior implements IJ
 	public void bind(Component component)
 	{
 		super.bind(component);
+
+		// data-source //
+		this.dataSource = new TreeViewDataSource(component);
+		this.add(this.dataSource);
 
 		// behaviors //
 

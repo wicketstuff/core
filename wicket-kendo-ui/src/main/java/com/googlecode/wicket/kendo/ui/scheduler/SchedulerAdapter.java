@@ -43,7 +43,7 @@ public class SchedulerAdapter implements ISchedulerListener
 	}
 
 	@Override
-	public void onNavigate(AjaxRequestTarget target, SchedulerViewType view)
+	public void onNavigate(AjaxRequestTarget target, SchedulerViewType oldView,  SchedulerViewType newView)
 	{
 		// noop
 	}

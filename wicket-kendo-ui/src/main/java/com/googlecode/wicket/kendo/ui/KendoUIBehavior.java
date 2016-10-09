@@ -185,6 +185,14 @@ public class KendoUIBehavior extends JQueryBehavior implements IDestroyable
 	@Override
 	public void destroy(IPartialPageRequestHandler handler)
 	{
+		if (this.datasources != null)
+		{
+			for (IKendoDataSource datasource : this.datasources)
+			{
+				datasource.destroy(handler);
+			}
+		}
+
 		handler.prependJavaScript(String.format("var $w = %s; if($w) { $w.destroy(); }", this.widget()));
 
 		this.onDestroy(handler);

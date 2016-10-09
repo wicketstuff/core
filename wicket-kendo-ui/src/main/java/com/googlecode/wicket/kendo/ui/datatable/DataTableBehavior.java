@@ -58,7 +58,8 @@ public abstract class DataTableBehavior extends KendoUIBehavior implements IJQue
 
 	private final IDataTableListener listener;
 	private final IModel<List<IColumn>> columns;
-	private final KendoDataSource dataSource;
+
+	private KendoDataSource dataSource;
 
 	// TODO: private JQueryAjaxBehavior onEditAjaxBehavior;
 	private JQueryAjaxBehavior onCancelAjaxBehavior;
@@ -92,10 +93,6 @@ public abstract class DataTableBehavior extends KendoUIBehavior implements IJQue
 
 		this.columns = columns;
 		this.listener = Args.notNull(listener, "listener");
-
-		// data source //
-		this.dataSource = new KendoDataSource("datasource" + selector);
-		this.add(this.dataSource);
 	}
 
 	// Methods //
@@ -104,6 +101,10 @@ public abstract class DataTableBehavior extends KendoUIBehavior implements IJQue
 	public void bind(Component component)
 	{
 		super.bind(component);
+
+		// data source //
+		this.dataSource = new KendoDataSource(component);
+		this.add(this.dataSource);
 
 		// grid events //
 		this.onCancelAjaxBehavior = this.newOnCancelAjaxBehavior(this);

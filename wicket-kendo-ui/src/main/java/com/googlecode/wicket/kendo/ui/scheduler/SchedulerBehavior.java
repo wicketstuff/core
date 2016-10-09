@@ -49,7 +49,7 @@ public abstract class SchedulerBehavior extends KendoUIBehavior implements IJQue
 
 	private final ISchedulerListener listener;
 	private final SchedulerEventFactory factory;
-	private final SchedulerDataSource dataSource;
+	private SchedulerDataSource dataSource;
 
 	private JQueryAjaxBehavior onEditAjaxBehavior = null;
 	private JQueryAjaxBehavior onNavigateAjaxBehavior;
@@ -84,8 +84,6 @@ public abstract class SchedulerBehavior extends KendoUIBehavior implements IJQue
 
 		this.factory = Args.notNull(factory, "factory");
 		this.listener = Args.notNull(listener, "listener");
-		this.dataSource = new SchedulerDataSource("schedulerDataSource");
-		this.add(this.dataSource);
 	}
 
 	// Methods //
@@ -95,6 +93,11 @@ public abstract class SchedulerBehavior extends KendoUIBehavior implements IJQue
 	{
 		super.bind(component);
 
+		// data-source //
+		this.dataSource = new SchedulerDataSource(component);
+		this.add(this.dataSource);
+
+		
 		// events //
 		if (this.listener.isEditEnabled())
 		{
@@ -213,7 +216,9 @@ public abstract class SchedulerBehavior extends KendoUIBehavior implements IJQue
 	{
 		if (event instanceof NavigateEvent)
 		{
-			this.listener.onNavigate(target, ((NavigateEvent) event).getView());
+			NavigateEvent navigateEvent = (NavigateEvent) event;
+
+			this.listener.onNavigate(target, navigateEvent.oldView, navigateEvent.newView);
 		}
 
 		if (event instanceof SchedulerPayload)
@@ -354,7 +359,8 @@ public abstract class SchedulerBehavior extends KendoUIBehavior implements IJQue
 		protected CallbackParameter[] getCallbackParameters()
 		{
 			return new CallbackParameter[] { CallbackParameter.context("e"), // lf
-					CallbackParameter.resolved("view", "e.sender.view().name") };
+					CallbackParameter.resolved("oldview", "e.sender.view().name"), // lf
+					CallbackParameter.resolved("newview", "e.view") };
 		}
 
 		@Override
@@ -441,21 +447,33 @@ public abstract class SchedulerBehavior extends KendoUIBehavior implements IJQue
 	 */
 	protected static class NavigateEvent extends JQueryEvent
 	{
-		private SchedulerViewType view = null;
+		private SchedulerViewType oldView = null;
+		private SchedulerViewType newView = null;
 
 		public NavigateEvent()
 		{
-			String view = RequestCycleUtils.getQueryParameterValue("view").toString();
+			String oldView = RequestCycleUtils.getQueryParameterValue("oldview").toString();
+			String newView = RequestCycleUtils.getQueryParameterValue("newview").toString();
 
-			if (view != null)
+			if (oldView != null)
 			{
-				this.view = SchedulerViewType.get(view);
+				this.oldView = SchedulerViewType.get(oldView);
+			}
+
+			if (newView != null)
+			{
+				this.newView = SchedulerViewType.get(newView);
 			}
 		}
 
-		public SchedulerViewType getView()
+		public SchedulerViewType getOldView()
 		{
-			return this.view;
+			return this.oldView;
+		}
+
+		public SchedulerViewType getNewView()
+		{
+			return this.newView;
 		}
 	}
 

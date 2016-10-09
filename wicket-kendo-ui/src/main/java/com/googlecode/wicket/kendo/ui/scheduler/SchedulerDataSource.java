@@ -16,6 +16,8 @@
  */
 package com.googlecode.wicket.kendo.ui.scheduler;
 
+import org.apache.wicket.Component;
+
 import com.googlecode.wicket.jquery.core.Options;
 import com.googlecode.wicket.kendo.ui.KendoDataSource;
 
@@ -41,12 +43,33 @@ public class SchedulerDataSource extends KendoDataSource
 	/**
 	 * Constructor
 	 *
+	 * @param component the hosting component (used to get the name)
+	 */
+	public SchedulerDataSource(Component component)
+	{
+		super(component);
+	}
+
+	/**
+	 * Constructor
+	 *
 	 * @param name the data-source name
 	 * @param type the response type (json, xml)
 	 */
 	public SchedulerDataSource(String name, String type)
 	{
 		super(name, type);
+	}
+
+	/**
+	 * Constructor
+	 *
+	 * @param component the hosting component (used to get the name)
+	 * @param type the response data type (json, xml)
+	 */
+	public SchedulerDataSource(Component component, String type)
+	{
+		super(component, type);
 	}
 
 	// Properties //

@@ -14,28 +14,33 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.googlecode.wicket.kendo.ui.template;
+package com.googlecode.wicket.jquery.ui.template;
 
 import org.apache.wicket.Component;
 import org.apache.wicket.core.request.handler.IPartialPageRequestHandler;
+import org.apache.wicket.markup.head.IHeaderResponse;
+import org.apache.wicket.markup.head.JavaScriptHeaderItem;
+import org.apache.wicket.markup.head.PriorityHeaderItem;
+import org.apache.wicket.request.resource.PackageResourceReference;
+import org.apache.wicket.resource.JQueryPluginResourceReference;
 
 import com.googlecode.wicket.jquery.core.template.IJQueryTemplate;
 import com.googlecode.wicket.jquery.core.template.JQueryAbstractTemplateBehavior;
 import com.googlecode.wicket.jquery.core.template.JQueryTemplateResourceStream;
-import com.googlecode.wicket.kendo.ui.KendoDestroyListener.IDestroyable;
+import com.googlecode.wicket.jquery.ui.JQueryDestroyListener.IDestroyable;
+
+
 
 /**
- * Provides the kendo-ui implementation of {@link JQueryAbstractTemplateBehavior} that works with a {@link IJQueryTemplate}.<br/>
- * The content of the &lt;script /&gt; block (the resource stream) is given by the {@link IJQueryTemplate#getText()}.<br/>
- * <br/>
- * This implementation is different from JQueryTemplateBehavior as the &lt;script /&gt; block will have the kendo-ui type ("text/x-kendo-template")
+ * Provides the default implementation of {@link JQueryAbstractTemplateBehavior} that works with a {@link IJQueryTemplate}.<br/>
+ * The content of the &lt;script /&gt; block (the resource stream) is given by the {@link IJQueryTemplate#getText()}
  * 
  * @author Sebastien Briquet - sebfz1
- *
  */
-public class KendoTemplateBehavior extends JQueryAbstractTemplateBehavior implements IDestroyable
+public class JQueryTemplateBehavior extends JQueryAbstractTemplateBehavior implements IDestroyable
 {
 	private static final long serialVersionUID = 1L;
+	public static final PackageResourceReference TMPL_JS = new JQueryPluginResourceReference(JQueryTemplateBehavior.class, "jquery.tmpl.min.js");
 
 	private String token = null;
 	private final IJQueryTemplate template;
@@ -45,19 +50,29 @@ public class KendoTemplateBehavior extends JQueryAbstractTemplateBehavior implem
 	 * 
 	 * @param template the {@link IJQueryTemplate} that this behavior should render via the resource stream
 	 */
-	public KendoTemplateBehavior(IJQueryTemplate template)
+	public JQueryTemplateBehavior(IJQueryTemplate template)
 	{
+		super();
+
 		this.template = template;
 	}
 
+	@Override
+	public void renderHead(Component component, IHeaderResponse response)
+	{
+		super.renderHead(component, response);
+
+		response.render(new PriorityHeaderItem(JavaScriptHeaderItem.forReference(JQueryTemplateBehavior.TMPL_JS)));
+	}
+
 	// Methods //
-	
+
 	@Override
 	public void bind(Component component)
 	{
 		super.bind(component);
-		
-		this.token = String.format("%s_template", component.getMarkupId());
+
+		this.token = String.format("%s-template", component.getMarkupId());
 	}
 
 	@Override
@@ -79,6 +94,6 @@ public class KendoTemplateBehavior extends JQueryAbstractTemplateBehavior implem
 	@Override
 	protected JQueryTemplateResourceStream newResourceStream()
 	{
-		return new KendoTemplateResourceStream(this.template.getText(), this.getToken());
+		return new JQueryTemplateResourceStream(this.template.getText(), this.getToken());
 	}
 }

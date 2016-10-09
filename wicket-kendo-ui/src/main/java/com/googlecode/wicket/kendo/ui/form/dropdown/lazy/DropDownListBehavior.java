@@ -61,13 +61,13 @@ public abstract class DropDownListBehavior extends KendoUIBehavior implements IJ
 	{
 		super.bind(component);
 
+		// data-source //
+		this.dataSource = new KendoDataSource(component);
+		this.add(this.dataSource);
+
 		// events //
 		this.onChangeAjaxBehavior = new OnChangeAjaxBehavior(this);
 		component.add(this.onChangeAjaxBehavior);
-
-		// data-source //
-		this.dataSource = new KendoDataSource("datasource" + this.selector);
-		this.add(this.dataSource);
 	}
 
 	// Properties //

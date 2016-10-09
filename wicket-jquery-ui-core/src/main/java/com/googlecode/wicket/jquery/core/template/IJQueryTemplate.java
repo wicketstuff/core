@@ -22,7 +22,7 @@ import org.apache.wicket.util.io.IClusterable;
 
 /**
  * Provides base interface for a jQuery template<br/>
- * Designed to be used in conjunction with {@link JQueryTemplateBehavior}
+ * Designed to be used in conjunction with {@code JQueryTemplateBehavior}
  *
  * @author Sebastien Briquet - sebfz1
  */
