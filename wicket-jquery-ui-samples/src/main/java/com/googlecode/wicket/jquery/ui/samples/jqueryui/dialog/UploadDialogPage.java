@@ -5,6 +5,8 @@ import org.apache.wicket.core.request.handler.IPartialPageRequestHandler;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.form.upload.FileUpload;
 import org.apache.wicket.markup.html.panel.FeedbackPanel;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.googlecode.wicket.jquery.ui.form.button.AjaxButton;
 import com.googlecode.wicket.jquery.ui.panel.JQueryFeedbackPanel;
@@ -14,6 +16,7 @@ import com.googlecode.wicket.jquery.ui.widget.dialog.DialogButton;
 public class UploadDialogPage extends AbstractDialogPage
 {
 	private static final long serialVersionUID = 1L;
+	private static final Logger LOG = LoggerFactory.getLogger(UploadDialogPage.class);
 
 	public UploadDialogPage()
 	{
@@ -34,6 +37,19 @@ public class UploadDialogPage extends AbstractDialogPage
 			{
 				super.onSubmit(target);
 
+				try
+				{
+					// simulates uploading...
+					Thread.sleep(1000);
+				}
+				catch (InterruptedException e)
+				{
+					if (LOG.isDebugEnabled())
+					{
+						LOG.debug(e.getMessage(), e);
+					}
+				}
+
 				FileUpload fu = this.getModelObject();
 
 				if (fu != null)
@@ -51,7 +67,7 @@ public class UploadDialogPage extends AbstractDialogPage
 			}
 		};
 
-		this.add(dialog); //the dialog is not within the form
+		this.add(dialog); // the dialog is not within the form
 
 		// Buttons //
 		form.add(new AjaxButton("open") {

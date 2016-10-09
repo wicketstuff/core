@@ -26,7 +26,7 @@ public class IndicatingButtonPage extends AbstractButtonPage
 		form.add(feedback.setOutputMarkupId(true));
 
 		// Buttons //
-		final Button button1 = new IndicatingButton("button1") {
+		form.add(new IndicatingButton("button1") {
 
 			private static final long serialVersionUID = 1L;
 
@@ -56,9 +56,7 @@ public class IndicatingButtonPage extends AbstractButtonPage
 
 				IndicatingButtonPage.this.info(this);
 			}
-		};
-
-		form.add(button1);
+		});
 
 		form.add(new IndicatingAjaxButton("button2") {
 

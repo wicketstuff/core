@@ -98,7 +98,7 @@ public class AjaxIndicatingButtonBehavior extends ButtonBehavior
 	public static HeaderItem newIndicatorCssHeaderItem()
 	{
 		IRequestHandler handler = new ResourceReferenceRequestHandler(AbstractDefaultAjaxBehavior.INDICATOR);
-		String css = String.format(".ui-icon.ui-icon-indicator { background-image: url(%s) !important; background-position: 0 0; }", RequestCycle.get().urlFor(handler));
+		String css = String.format(".ui-icon.%s { background-image: url(%s) !important; background-position: 0 0; }", CSS_INDICATOR, RequestCycle.get().urlFor(handler));
 
 		return CssHeaderItem.forCSS(css, "jquery-ui-icon-indicator");
 	}
@@ -112,7 +112,7 @@ public class AjaxIndicatingButtonBehavior extends ButtonBehavior
 	{
 		Options options = new Options();
 		options.set("icon", Options.asString(CSS_INDICATOR));
-		options.set("iconPosition", this.position == Position.LEFT ? "''" : "'end'");
+		options.set("iconPosition", this.position == Position.LEFT ? "'beginning'" : "'end'");
 
 		return options;
 	}
@@ -125,9 +125,13 @@ public class AjaxIndicatingButtonBehavior extends ButtonBehavior
 	protected Options newOnAjaxStopOptions()
 	{
 		Options options = new Options();
+		options.set("icon", JQueryIcon.isNone(this.icon) ? Options.asString(JQueryIcon.NONE) : Options.asString(this.icon));
 
-		options.set("icon", JQueryIcon.isNone(this.icon) ? Options.asString(JQueryIcon.BLANK) : Options.asString(this.icon));
-		options.set("iconPosition", this.position == Position.LEFT ? "''" : "'end'");
+		// TODO: open bug in jquery-ui: iconPosition = null still display an icon, even if icon = null
+		if (!JQueryIcon.isNone(this.icon))
+		{
+			options.set("iconPosition", this.position == Position.LEFT ? "'beginning'" : "'end'");
+		}
 
 		return options;
 	}

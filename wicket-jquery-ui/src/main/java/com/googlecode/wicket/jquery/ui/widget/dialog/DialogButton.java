@@ -22,6 +22,8 @@ import org.apache.wicket.model.Model;
 import org.apache.wicket.util.io.IClusterable;
 import org.apache.wicket.util.string.Strings;
 
+import com.googlecode.wicket.jquery.ui.JQueryIcon;
+
 /**
  * Provides the button object that can be used in dialogs
  *
@@ -57,7 +59,7 @@ public class DialogButton implements IClusterable
 	 */
 	public DialogButton(String name, String text)
 	{
-		this(name, Model.of(text), null, true);
+		this(name, Model.of(text), JQueryIcon.NONE, true);
 	}
 
 	/**
@@ -79,7 +81,7 @@ public class DialogButton implements IClusterable
 	 */
 	public DialogButton(String name, String text, boolean enabled)
 	{
-		this(name, Model.of(text), null, enabled);
+		this(name, Model.of(text), JQueryIcon.NONE, enabled);
 	}
 
 	/**
@@ -101,7 +103,7 @@ public class DialogButton implements IClusterable
 	 */
 	public DialogButton(String name, final IModel<String> model)
 	{
-		this(name, model, null, true);
+		this(name, model, JQueryIcon.NONE, true);
 	}
 
 	/**
@@ -123,7 +125,7 @@ public class DialogButton implements IClusterable
 	 */
 	public DialogButton(String name, final IModel<String> model, boolean enabled)
 	{
-		this(name, model, null, enabled);
+		this(name, model, JQueryIcon.NONE, enabled);
 	}
 
 	/**

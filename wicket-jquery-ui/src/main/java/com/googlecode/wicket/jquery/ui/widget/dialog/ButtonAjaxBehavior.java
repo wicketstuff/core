@@ -122,7 +122,7 @@ public class ButtonAjaxBehavior extends JQueryAjaxBehavior
 	{
 		Options options = new Options();
 		options.set("disabled", true);
-		options.set("icons", new Options("primary", Options.asString(AjaxIndicatingButtonBehavior.CSS_INDICATOR)));
+		options.set("icon", Options.asString(AjaxIndicatingButtonBehavior.CSS_INDICATOR));
 
 		return options;
 	}
@@ -138,7 +138,7 @@ public class ButtonAjaxBehavior extends JQueryAjaxBehavior
 
 		Options options = new Options();
 		options.set("disabled", !this.button.isEnabled());
-		options.set("icons", new Options("primary", JQueryIcon.isNone(icon) ? "null" : Options.asString(icon)));
+		options.set("icon", JQueryIcon.isNone(icon) ? Options.asString(JQueryIcon.NONE) : Options.asString(icon));
 
 		return options;
 	}

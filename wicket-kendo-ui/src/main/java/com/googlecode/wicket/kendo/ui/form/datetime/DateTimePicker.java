@@ -307,6 +307,7 @@ public class DateTimePicker extends FormComponentPanel<Date> implements ITextFor
 	 *
 	 * @param id the markup id
 	 * @param model the {@link IModel}
+	 * @param locale the {@link Locale}
 	 * @param timePattern the date pattern to be used
 	 * @param options the {@code Options}
 	 * @return the {@link TimePicker}

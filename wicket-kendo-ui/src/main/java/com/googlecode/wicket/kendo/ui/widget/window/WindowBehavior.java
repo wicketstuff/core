@@ -203,6 +203,9 @@ public class WindowBehavior extends KendoUIBehavior implements IJQueryAjaxAware
 			return new CallbackParameter[] { CallbackParameter.context("e"), // lf
 					CallbackParameter.resolved("action", "jQuery(e.target).attr('class').match(/k-i-(\\w+)/)[1]") // lf
 			};
+			
+			// FIXME TypeError: jQuery(...).attr(...).match(...) is null
+			// var params = [{"name":"action","value":jQuery(e.target).attr('class').match(/k-i...
 		}
 
 		@Override

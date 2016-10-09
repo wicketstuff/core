@@ -42,7 +42,7 @@ public abstract class JQueryAbstractTemplateBehavior extends Behavior
 	public void renderHead(Component component, IHeaderResponse response)
 	{
 		super.renderHead(component, response);
-//TODO replace with JQueryTemplatePackageHeaderItem
+		// TODO replace with JQueryTemplatePackageHeaderItem
 		response.render(StringHeaderItem.forString(this.newResourceStream().getString()));
 	}
 

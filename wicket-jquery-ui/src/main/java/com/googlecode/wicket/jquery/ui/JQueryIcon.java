@@ -16,6 +16,8 @@
  */
 package com.googlecode.wicket.jquery.ui;
 
+import org.apache.wicket.util.string.Strings;
+
 import com.googlecode.wicket.jquery.ui.form.button.Button;
 
 /**
@@ -218,6 +220,6 @@ public class JQueryIcon
 	 */
 	public static boolean isNone(String icon)
 	{
-		return JQueryIcon.NONE.equals(icon);
+		return Strings.isEmpty(icon);
 	}
 }
