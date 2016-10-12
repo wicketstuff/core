@@ -41,7 +41,7 @@ public class DropDownListBehavior extends KendoUIBehavior implements IJQueryAjax
 	public static final String METHOD = "kendoDropDownList";
 
 	private final ISelectionChangedListener listener;
-	private JQueryAjaxBehavior onChangeAjaxBehavior;
+	private JQueryAjaxBehavior onChangeAjaxBehavior = null;
 
 	public DropDownListBehavior(String selector, ISelectionChangedListener listener)
 	{
@@ -60,8 +60,11 @@ public class DropDownListBehavior extends KendoUIBehavior implements IJQueryAjax
 	{
 		super.bind(component);
 
-		this.onChangeAjaxBehavior = new OnChangeAjaxBehavior(this);
-		component.add(this.onChangeAjaxBehavior);
+		if (this.listener.isSelectionChangedEventEnabled())
+		{
+			this.onChangeAjaxBehavior = new OnChangeAjaxBehavior(this);
+			component.add(this.onChangeAjaxBehavior);
+		}
 	}
 
 	@Override
@@ -69,7 +72,10 @@ public class DropDownListBehavior extends KendoUIBehavior implements IJQueryAjax
 	{
 		super.onConfigure(component);
 
-		this.setOption("change", this.onChangeAjaxBehavior.getCallbackFunction());
+		if (this.onChangeAjaxBehavior != null)
+		{
+			this.setOption("change", this.onChangeAjaxBehavior.getCallbackFunction());
+		}
 	}
 
 	@Override

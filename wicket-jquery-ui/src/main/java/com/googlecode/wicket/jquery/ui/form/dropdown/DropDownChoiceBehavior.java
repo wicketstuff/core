@@ -39,7 +39,7 @@ public class DropDownChoiceBehavior extends JQueryUIBehavior implements IJQueryA
 	public static final String METHOD = "selectmenu";
 
 	private final ISelectionChangedListener listener;
-	private JQueryAjaxBehavior onChangeAjaxBehavior;
+	private JQueryAjaxBehavior onChangeAjaxBehavior = null;
 
 	public DropDownChoiceBehavior(String selector, ISelectionChangedListener listener)
 	{
@@ -58,8 +58,11 @@ public class DropDownChoiceBehavior extends JQueryUIBehavior implements IJQueryA
 	{
 		super.bind(component);
 
-		this.onChangeAjaxBehavior = new OnChangeAjaxBehavior(this);
-		component.add(this.onChangeAjaxBehavior);
+		if (this.listener.isSelectionChangedEventEnabled())
+		{
+			this.onChangeAjaxBehavior = new OnChangeAjaxBehavior(this);
+			component.add(this.onChangeAjaxBehavior);
+		}
 	}
 
 	@Override
@@ -67,7 +70,10 @@ public class DropDownChoiceBehavior extends JQueryUIBehavior implements IJQueryA
 	{
 		super.onConfigure(component);
 
-		this.setOption("change", this.onChangeAjaxBehavior.getCallbackFunction());
+		if (this.onChangeAjaxBehavior != null)
+		{
+			this.setOption("change", this.onChangeAjaxBehavior.getCallbackFunction());
+		}
 	}
 
 	@Override

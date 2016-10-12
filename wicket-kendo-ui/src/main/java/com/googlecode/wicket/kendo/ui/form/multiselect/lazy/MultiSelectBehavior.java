@@ -44,7 +44,7 @@ public abstract class MultiSelectBehavior extends KendoUIBehavior implements IJQ
 	private final ISelectionChangedListener listener;
 	private KendoDataSource dataSource;
 
-	private JQueryAjaxBehavior onChangeAjaxBehavior;
+	private JQueryAjaxBehavior onChangeAjaxBehavior = null;
 
 	public MultiSelectBehavior(String selector, ISelectionChangedListener listener)
 	{
@@ -65,8 +65,11 @@ public abstract class MultiSelectBehavior extends KendoUIBehavior implements IJQ
 		this.add(this.dataSource);
 
 		// events //
-		this.onChangeAjaxBehavior = new OnChangeAjaxBehavior(this);
-		component.add(this.onChangeAjaxBehavior);
+		if (this.listener.isSelectionChangedEventEnabled())
+		{
+			this.onChangeAjaxBehavior = new OnChangeAjaxBehavior(this);
+			component.add(this.onChangeAjaxBehavior);
+		}
 	}
 
 	// Properties //
@@ -89,7 +92,10 @@ public abstract class MultiSelectBehavior extends KendoUIBehavior implements IJQ
 		this.setOption("autoBind", true); // immutable
 
 		// events //
-		this.setOption("change", this.onChangeAjaxBehavior.getCallbackFunction());
+		if (this.onChangeAjaxBehavior != null)
+		{
+			this.setOption("change", this.onChangeAjaxBehavior.getCallbackFunction());
+		}
 
 		// data-source //
 		this.onConfigure(this.dataSource);
