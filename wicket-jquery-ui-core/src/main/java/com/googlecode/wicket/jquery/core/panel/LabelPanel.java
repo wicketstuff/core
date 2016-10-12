@@ -63,6 +63,9 @@ public class LabelPanel extends Panel
 	 */
 	protected Label newLabel(String id, IModel<?> model)
 	{
-		return new Label(id, model);
+		Label label = new Label(id, model);
+		label.setEscapeModelStrings(this.getEscapeModelStrings());
+
+		return label;
 	}
 }

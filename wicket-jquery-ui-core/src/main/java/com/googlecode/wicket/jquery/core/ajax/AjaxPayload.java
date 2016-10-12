@@ -28,7 +28,7 @@ import org.apache.wicket.ajax.AjaxRequestTarget;
 public class AjaxPayload
 {
 	private final AjaxRequestTarget target;
-
+	
 	/**
 	 * Constructor
 	 * 
