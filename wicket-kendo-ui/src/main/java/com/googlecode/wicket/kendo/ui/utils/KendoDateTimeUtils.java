@@ -87,7 +87,7 @@ public class KendoDateTimeUtils
 	}
 
 	/**
-	 * Converts a {@link LocalDate} to a compatible kendo-ui date-string format (with timezone)
+	 * Converts a {@link LocalDate} to a compatible kendo-ui date-string format (without timezone)
 	 *
 	 * @param date the date
 	 * @return the compatible kendo ui date string
@@ -98,13 +98,13 @@ public class KendoDateTimeUtils
 	}
 
 	/**
-	 * Converts a {@link LocalDateTime} to a compatible kendo-ui date-string format (with timezone)
+	 * Converts a {@link LocalDateTime} to a compatible kendo-ui date-string format (without timezone)
 	 *
 	 * @param date the date
 	 * @return the compatible kendo ui date string
 	 */
 	public static String toString(LocalDateTime date)
 	{
-		return date.format(DateTimeFormatter.ofPattern(PATTERN_TZ));
+		return date.format(DateTimeFormatter.ISO_LOCAL_DATE_TIME);
 	}
 }

@@ -110,7 +110,7 @@ public abstract class DataTableBehavior extends KendoUIBehavior implements IJQue
 		this.onCancelAjaxBehavior = this.newOnCancelAjaxBehavior(this);
 		component.add(this.onCancelAjaxBehavior);
 
-		// data source //
+		// events //
 		this.onCreateAjaxBehavior = this.newOnCreateAjaxBehavior(this);
 		component.add(this.onCreateAjaxBehavior);
 

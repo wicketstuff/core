@@ -42,7 +42,6 @@ public class DataSourceEvent extends JQueryEvent
 		return this.object;
 	}
 
-
 	/**
 	 * Provides an event object that will be broadcasted by the {@link DataSourceAjaxBehavior} 'create' callback
 	 */

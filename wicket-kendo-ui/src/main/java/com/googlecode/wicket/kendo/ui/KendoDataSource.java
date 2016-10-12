@@ -36,7 +36,8 @@ public class KendoDataSource extends Options implements IKendoDataSource
 	protected static final String TYPE = "json";
 
 	private final String name;
-	private final Options transport;
+
+	protected final Options transport;
 
 	/**
 	 * Constructor

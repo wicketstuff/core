@@ -23,9 +23,9 @@ import com.googlecode.wicket.jquery.core.ajax.JQueryAjaxBehavior;
 
 /**
  * Provides a {@link JQueryAjaxBehavior} for handling datasource operations
-  * 
+ * 
  * @author Sebastien Briquet - sebfz1
-*/
+ */
 public abstract class DataSourceAjaxBehavior extends JQueryAjaxBehavior
 {
 	private static final long serialVersionUID = 1L;
@@ -38,7 +38,10 @@ public abstract class DataSourceAjaxBehavior extends JQueryAjaxBehavior
 	@Override
 	protected CallbackParameter[] getCallbackParameters()
 	{
-		return new CallbackParameter[] { CallbackParameter.context("e"), CallbackParameter.resolved("data", "kendo.stringify(e.data)") };
+		return new CallbackParameter[] { // lf
+				CallbackParameter.context("e"), // lf
+				CallbackParameter.resolved("data", "kendo.stringify(e.data)"), // lf
+				CallbackParameter.resolved("timezoneOffset", "new Date().getTimezoneOffset()") };
 	}
 
 	@Override
