@@ -96,6 +96,29 @@ public class TabbedPanel extends JQueryGenericPanel<List<ITab>> implements ITabs
 	 * Constructor
 	 *
 	 * @param id the markup id
+	 * @param model the {@link TabListModel}
+	 */
+	public TabbedPanel(String id, TabListModel model)
+	{
+		this(id, model, new Options());
+	}
+
+	/**
+	 * Constructor
+	 *
+	 * @param id the markup id
+	 * @param model the {@link TabListModel}
+	 * @param options the {@link Options}
+	 */
+	public TabbedPanel(String id, TabListModel model, Options options)
+	{
+		super(id, model, options);
+	}
+
+	/**
+	 * Constructor
+	 *
+	 * @param id the markup id
 	 * @param model the list model of {@link ITab}{@code s}
 	 */
 	public TabbedPanel(String id, IModel<List<ITab>> model)

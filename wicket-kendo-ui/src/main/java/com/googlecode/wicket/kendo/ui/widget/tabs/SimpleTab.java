@@ -79,7 +79,7 @@ public class SimpleTab extends AbstractTab
 	 * @return the {@link LabelPanel}
 	 */
 	@Override
-	public final WebMarkupContainer getPanel(String panelId)
+	public WebMarkupContainer getPanel(String panelId)
 	{
 		return new LabelPanel(panelId, this.content);
 	}
