@@ -34,6 +34,7 @@ import com.googlecode.wicket.kendo.ui.KendoBehaviorFactory;
 import com.googlecode.wicket.kendo.ui.KendoDataSource;
 import com.googlecode.wicket.kendo.ui.KendoUIBehavior;
 import com.googlecode.wicket.kendo.ui.datatable.column.IColumn;
+import com.googlecode.wicket.kendo.ui.dataviz.series.Series;
 
 /**
  * Provides a Kendo UI chart
@@ -41,7 +42,7 @@ import com.googlecode.wicket.kendo.ui.datatable.column.IColumn;
  * @param <T> the model object type. It is recommended that the object type implements {@link JSONString}
  * @author Sebastien Briquet - sebfz1
  */
-public class Chart<T> extends JQueryGenericContainer<List<T>> implements IChartListener
+public class Chart<T> extends JQueryGenericContainer<List<T>> implements IChartListener // NOSONAR
 {
 	private static final long serialVersionUID = 1L;
 
@@ -243,7 +244,10 @@ public class Chart<T> extends JQueryGenericContainer<List<T>> implements IChartL
 	 */
 	protected void onConfigure(KendoDataSource dataSource)
 	{
-		// noop
+		// show loading indicator //
+		String selector = JQueryWidget.getSelector(this);
+		dataSource.set("requestStart", String.format("function () { kendo.ui.progress(jQuery('%s'), true); }", selector));
+		dataSource.set("requestEnd", String.format("function () { kendo.ui.progress(jQuery('%s'), false); }", selector));
 	}
 
 	@Override
@@ -271,7 +275,7 @@ public class Chart<T> extends JQueryGenericContainer<List<T>> implements IChartL
 	{
 		// noop
 	}
-	
+
 	@Override
 	public void onSeriesClick(AjaxRequestTarget target, String seriesName, String seriesField, String category, long value)
 	{
@@ -283,7 +287,7 @@ public class Chart<T> extends JQueryGenericContainer<List<T>> implements IChartL
 	@Override
 	public JQueryBehavior newWidgetBehavior(String selector)
 	{
-		return new ChartBehavior(selector, this.options, this.series, this) {
+		return new ChartBehavior(selector, this.options, this.series, this) { // NOSONAR
 
 			private static final long serialVersionUID = 1L;
 

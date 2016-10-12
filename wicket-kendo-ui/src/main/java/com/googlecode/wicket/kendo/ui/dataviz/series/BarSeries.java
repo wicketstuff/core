@@ -14,22 +14,19 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.googlecode.wicket.kendo.ui.dataviz;
-
-import java.io.Serializable;
+package com.googlecode.wicket.kendo.ui.dataviz.series;
 
 /**
- * Provides a chart series object.<br/>
- * <b>Note:</b> The field should correspond to a property of the {@link Chart}'s model object
+ * Provides a {@value TYPE} series object.
  *
  * @author Sebastien Briquet - sebfz1
  *
  */
-public class Series implements Serializable
+public class BarSeries extends Series
 {
 	private static final long serialVersionUID = 1L;
+	private static final String TYPE = "bar";
 
-	private final String name;
 	private final String field;
 
 	/**
@@ -38,20 +35,25 @@ public class Series implements Serializable
 	 * @param name the series name
 	 * @param field the series field, it should correspond to a model object's property
 	 */
-	public Series(String name, String field)
+	public BarSeries(String name, String field)
 	{
-		this.name = name;
+		super(name, TYPE);
+
 		this.field = field;
 	}
 
 	/**
-	 * Gets the series name
+	 * Constructor
 	 * 
-	 * @return the series name
+	 * @param name the series name
+	 * @param field the series field, it should correspond to a model object's property
+	 * @param axis the axis on which the series should be placed
 	 */
-	public String getName()
+	public BarSeries(String name, String field, String axis)
 	{
-		return this.name;
+		super(name, TYPE, axis);
+
+		this.field = field;
 	}
 
 	/**

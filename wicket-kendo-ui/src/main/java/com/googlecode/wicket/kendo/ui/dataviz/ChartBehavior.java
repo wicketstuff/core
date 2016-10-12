@@ -33,6 +33,7 @@ import com.googlecode.wicket.kendo.ui.KendoDataSource;
 import com.googlecode.wicket.kendo.ui.KendoUIBehavior;
 import com.googlecode.wicket.kendo.ui.datatable.IDataTableListener;
 import com.googlecode.wicket.kendo.ui.datatable.column.IColumn;
+import com.googlecode.wicket.kendo.ui.dataviz.series.Series;
 
 /**
  * Provides a {@value #METHOD} behavior<br/>
@@ -46,10 +47,10 @@ public abstract class ChartBehavior extends KendoUIBehavior implements IJQueryAj
 	public static final String METHOD = "kendoChart";
 
 	private final IChartListener listener;
-	private JQueryAjaxBehavior onSeriesClickAjaxBehavior = null;
+	private KendoDataSource dataSource;
 
+	private JQueryAjaxBehavior onSeriesClickAjaxBehavior = null;
 	private final List<Series> series;
-	private final KendoDataSource dataSource;
 
 	/**
 	 * Constructor
@@ -77,10 +78,6 @@ public abstract class ChartBehavior extends KendoUIBehavior implements IJQueryAj
 
 		this.series = series;
 		this.listener = Args.notNull(listener, "listener");
-
-		// data source //
-		this.dataSource = new KendoDataSource("datasource" + selector);
-		this.add(this.dataSource);
 	}
 
 	// Methods //
@@ -90,6 +87,11 @@ public abstract class ChartBehavior extends KendoUIBehavior implements IJQueryAj
 	{
 		super.bind(component);
 
+		// data source //
+		this.dataSource = new ChartDataSource(component);
+		this.add(this.dataSource);
+
+		// events //
 		if (this.listener.isSeriesClickEventEnabled())
 		{
 			this.onSeriesClickAjaxBehavior = this.newOnSeriesClickAjaxBehavior(this);
