@@ -293,10 +293,7 @@ public class WicketPortlet extends GenericPortlet {
 			// try to lookup the passed in wicket url parameter, suffixed with
 			// the portlet mode
 			String redirectUrlKey = WICKET_URL_PORTLET_PARAMETER + request.getPortletMode().toString();
-			String redirectUrl = request.getParameter(redirectUrlKey);
-			// if the wicket url is not in request parameters try to lookup into the action scoped
-			// attributes.
-			wicketURL = redirectUrl == null ? (String)request.getAttribute(redirectUrlKey) : redirectUrl;
+			wicketURL = request.getParameter(redirectUrlKey);
 		}
 
 		// if the wicketURL could not be retrieved, return the url for the
@@ -311,7 +308,7 @@ public class WicketPortlet extends GenericPortlet {
 	 */
 	@Override
 	public void init(final PortletConfig config) throws PortletException {
-		super.init(new WicketPortletConfig(config));
+		super.init(config);
 
 		wicketFilterPath = buildWicketFilterPath(config.getInitParameter(WICKET_FILTER_PATH_PARAM));
 		String responseBufferFolderPath = config.getInitParameter(RESPONSE_BUFFER_FOLDER_PARAM);
@@ -371,8 +368,8 @@ public class WicketPortlet extends GenericPortlet {
 			if (redirectLocationUrl.startsWith(wicketFilterPath)) {
 				final String portletMode = request.getPortletMode().toString();
 				final String redirectUrlKey = WICKET_URL_PORTLET_PARAMETER + portletMode;
-				// put the redirect location into the "_wuview" action scoped request attribute
-				request.setAttribute(redirectUrlKey, redirectLocationUrl);
+				// put the redirect location into the "_wuview" render parameter
+				response.setRenderParameter(redirectUrlKey, redirectLocationUrl);
 			}
 			else
 				response.sendRedirect(redirectLocationUrl);
