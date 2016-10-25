@@ -136,7 +136,7 @@ public class Evaluation<R> implements Callback {
 			return null;
 		}
 
-		return clazz.cast(proxyFactory.createInstance(proxyClass, this));
+		return proxyFactory.createInstance(proxyClass, this);
 	}
 
 	/**

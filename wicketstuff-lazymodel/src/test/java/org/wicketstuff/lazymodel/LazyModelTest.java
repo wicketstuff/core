@@ -18,6 +18,7 @@ package org.wicketstuff.lazymodel;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertSame;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 import static org.wicketstuff.lazymodel.LazyModel.from;
@@ -25,6 +26,9 @@ import static org.wicketstuff.lazymodel.LazyModel.model;
 import static org.wicketstuff.lazymodel.LazyModel.path;
 
 import java.io.Serializable;
+import java.lang.reflect.InvocationHandler;
+import java.lang.reflect.Method;
+import java.lang.reflect.Proxy;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -965,6 +969,23 @@ public class LazyModelTest {
 		assertNull(model.getPropertyField());
 		assertNull(model.getPropertyGetter());
 		assertNull(model.getPropertySetter());
+	}
+
+	@Test
+	public void fromProxy() throws Exception {
+		final List<String> list = new ArrayList<String>();
+
+		@SuppressWarnings("unchecked")
+		I<String> proxy = (I<String>) Proxy.newProxyInstance(getClass().getClassLoader(), new Class<?>[]{I.class}, new InvocationHandler() {
+			@Override
+			public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
+				return list;
+			}
+		});
+
+		LazyModel<List<String>> model = model(from(proxy).getTs());
+
+		assertSame(list, model.getObject());
 	}
 
 	public static class A implements Serializable {
