@@ -21,7 +21,6 @@ import java.util.Map;
 
 import org.apache.wicket.request.http.WebRequest;
 import org.apache.wicket.request.http.WebResponse;
-import org.wicketstuff.rest.contenthandling.IObjectSerialDeserial;
 import org.wicketstuff.rest.contenthandling.IWebSerialDeserial;
 
 /**
@@ -73,20 +72,5 @@ public class MultiFormatSerialDeserial implements IWebSerialDeserial
 	public boolean isMimeTypeSupported(String mimeType)
 	{
 		return serialsDeserials.get(mimeType) != null;
-	}
-
-	@Override
-	public IObjectSerialDeserial<?> getIObjectSerialDeserial(String mimeType) 
-	{
-		IWebSerialDeserial webSerialDeserial = serialsDeserials.get(mimeType);
-		
-		if(webSerialDeserial == null)
-		{
-		    return null;
-		}
-		
-		IObjectSerialDeserial<?> objectSerialDeserial = webSerialDeserial.getIObjectSerialDeserial(mimeType);
-		
-		return objectSerialDeserial;
 	}
 }

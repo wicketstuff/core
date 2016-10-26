@@ -18,8 +18,6 @@ package org.wicketstuff.rest.contenthandling.webserialdeserial;
 
 import java.io.IOException;
 
-import javax.servlet.ServletResponse;
-
 import org.apache.wicket.WicketRuntimeException;
 import org.apache.wicket.request.http.WebRequest;
 import org.apache.wicket.request.http.WebResponse;
@@ -27,6 +25,8 @@ import org.wicketstuff.rest.contenthandling.IObjectSerialDeserial;
 import org.wicketstuff.rest.contenthandling.IWebSerialDeserial;
 import org.wicketstuff.rest.contenthandling.mimetypes.RestMimeTypes;
 import org.wicketstuff.rest.utils.http.HttpUtils;
+
+import javax.servlet.ServletResponse;
 
 /**
  * Web serializer/deserailizer that works with a textual format.
@@ -93,17 +93,6 @@ public class TextualWebSerialDeserial implements IWebSerialDeserial
 	final public boolean isMimeTypeSupported(String mimeType)
 	{
 		return RestMimeTypes.TEXT_PLAIN.equals(mimeType) || this.mimeType.equals(mimeType);
-	}
-
-	@Override
-	public IObjectSerialDeserial<?> getIObjectSerialDeserial(String mimeType)
-	{
-		if (!isMimeTypeSupported(mimeType))
-		{
-			return null;
-		}
-
-		return objectSerialDeserial;
 	}
 
 	/**
