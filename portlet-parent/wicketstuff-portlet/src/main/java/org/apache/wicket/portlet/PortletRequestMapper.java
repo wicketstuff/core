@@ -57,6 +57,9 @@ import org.apache.wicket.util.crypt.Base64;
  * @author Konstantinos Karavitis
  */
 public class PortletRequestMapper extends AbstractComponentMapper {
+	
+	public static String PORTLET_URL = "portlet-url";
+	
 	private SystemMapper systemMapper;
 
 	public PortletRequestMapper(final Application application) {
@@ -183,7 +186,7 @@ public class PortletRequestMapper extends AbstractComponentMapper {
 			url = parseUrl(qualifiedPath);
 		}
 
-		return url;
+		return markAsPortletUrl(url);
 	}
 
 	private Url encodeSharedResourceUrl(Url url) {
@@ -227,7 +230,7 @@ public class PortletRequestMapper extends AbstractComponentMapper {
 			url = parseUrl(qualifiedPath);
 		}
 
-		return url;
+		return markAsPortletUrl(url);
 	}
 
 	private Url encodeRenderUrl(Url url, boolean forceRenderUrl) {
@@ -253,6 +256,11 @@ public class PortletRequestMapper extends AbstractComponentMapper {
 			url = parseUrl(qualifiedPath);
 		}
 
+		return markAsPortletUrl(url);
+	}
+	
+	private Url markAsPortletUrl(Url url) {
+		url.setQueryParameter(PORTLET_URL, PORTLET_URL);
 		return url;
 	}
 }
