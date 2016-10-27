@@ -415,7 +415,6 @@ public class WicketPortlet extends GenericPortlet {
 				String ajaxRedirectLocation = responseState.getAjaxRedirectLocation();
 				if (ajaxRedirectLocation != null) {
 					// Ajax redirect
-					ajaxRedirectLocation = fixWicketUrl(wicketURL, ajaxRedirectLocation, request.getScheme());
 					responseState.clear();
 					responseState.setDateHeader("Date", System.currentTimeMillis());
 					responseState.setDateHeader("Expires", 0);
