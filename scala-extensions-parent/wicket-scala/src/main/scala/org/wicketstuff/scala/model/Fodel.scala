@@ -40,8 +40,6 @@ class Fodel[T](getter: ⇒ T,
       throw new UnsupportedOperationException( "You cannot set the object on a readonly model.")
   	setter(value)
   }
-
-  def detach = ()
 }
 
 /**
