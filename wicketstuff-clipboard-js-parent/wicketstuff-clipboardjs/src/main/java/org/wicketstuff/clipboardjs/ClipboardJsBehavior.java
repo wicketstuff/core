@@ -6,27 +6,37 @@ import org.apache.wicket.markup.ComponentTag;
 import org.apache.wicket.markup.head.IHeaderResponse;
 import org.apache.wicket.markup.head.JavaScriptHeaderItem;
 import org.apache.wicket.markup.head.OnDomReadyHeaderItem;
+import org.apache.wicket.model.IModel;
 import org.apache.wicket.util.lang.Args;
 import org.apache.wicket.util.string.Strings;
 
-/**
- *
- */
 public class ClipboardJsBehavior extends Behavior {
 
-    enum Action {
+    public enum Action {
         COPY,
         CUT
     }
 
-    private Component button;
     private String target;
+    private IModel<String> textModel;
     private Action action = Action.COPY;
 
     public ClipboardJsBehavior setTarget(Component target) {
         Args.notNull(target, "target");
         target.setOutputMarkupId(true);
-        this.target = target.getMarkupId();
+        this.target = "#"+target.getMarkupId();
+        return this;
+    }
+
+    public ClipboardJsBehavior setTarget(String selector) {
+        Args.notNull(selector, "selector");
+        this.target = selector;
+        return this;
+    }
+
+    public ClipboardJsBehavior setText(IModel<String> textModel) {
+        Args.notNull(textModel, "textModel");
+        this.textModel = textModel;
         return this;
     }
 
@@ -38,11 +48,7 @@ public class ClipboardJsBehavior extends Behavior {
     @Override
     public void bind(final Component component) {
         super.bind(component);
-
-        if (button != null) {
-            throw new IllegalStateException(ClipboardJsBehavior.class.getName() + " can be assigned to only one button");
-        }
-        button = component.setOutputMarkupId(true);
+        component.setOutputMarkupId(true);
     }
 
     @Override
@@ -54,7 +60,14 @@ public class ClipboardJsBehavior extends Behavior {
         }
 
         if (!Strings.isEmpty(target)) {
-            tag.put("data-clipboard-target", "#" + target);
+            tag.put("data-clipboard-target", target);
+        }
+
+        if (textModel != null) {
+            final String text = textModel.getObject();
+            if (!Strings.isEmpty(text)) {
+                tag.put("data-clipboard-text", text);
+            }
         }
     }
 
@@ -63,6 +76,18 @@ public class ClipboardJsBehavior extends Behavior {
         super.renderHead(component, response);
 
         response.render(JavaScriptHeaderItem.forReference(ClipboardJsReference.INSTANCE));
-        response.render(OnDomReadyHeaderItem.forScript(String.format("new Clipboard('#%s')", button.getMarkupId())));
+        initializeClipboardJs(response, component);
+    }
+
+    protected void initializeClipboardJs(final IHeaderResponse response, final Component component) {
+        response.render(OnDomReadyHeaderItem.forScript(String.format("new Clipboard('#%s')", component.getMarkupId())));
+    }
+
+    @Override
+    public void detach(final Component component) {
+        super.detach(component);
+        if (textModel != null) {
+            textModel.detach();
+        }
     }
 }
