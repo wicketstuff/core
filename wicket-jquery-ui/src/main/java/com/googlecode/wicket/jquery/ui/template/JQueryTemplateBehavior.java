@@ -17,7 +17,6 @@
 package com.googlecode.wicket.jquery.ui.template;
 
 import org.apache.wicket.Component;
-import org.apache.wicket.core.request.handler.IPartialPageRequestHandler;
 import org.apache.wicket.markup.head.IHeaderResponse;
 import org.apache.wicket.markup.head.JavaScriptHeaderItem;
 import org.apache.wicket.markup.head.PriorityHeaderItem;
@@ -27,9 +26,6 @@ import org.apache.wicket.resource.JQueryPluginResourceReference;
 import com.googlecode.wicket.jquery.core.template.IJQueryTemplate;
 import com.googlecode.wicket.jquery.core.template.JQueryAbstractTemplateBehavior;
 import com.googlecode.wicket.jquery.core.template.JQueryTemplateResourceStream;
-import com.googlecode.wicket.jquery.ui.JQueryDestroyListener.IDestroyable;
-
-
 
 /**
  * Provides the default implementation of {@link JQueryAbstractTemplateBehavior} that works with a {@link IJQueryTemplate}.<br/>
@@ -37,7 +33,7 @@ import com.googlecode.wicket.jquery.ui.JQueryDestroyListener.IDestroyable;
  * 
  * @author Sebastien Briquet - sebfz1
  */
-public class JQueryTemplateBehavior extends JQueryAbstractTemplateBehavior implements IDestroyable
+public class JQueryTemplateBehavior extends JQueryAbstractTemplateBehavior
 {
 	private static final long serialVersionUID = 1L;
 	public static final PackageResourceReference TMPL_JS = new JQueryPluginResourceReference(JQueryTemplateBehavior.class, "jquery.tmpl.min.js");
@@ -73,12 +69,6 @@ public class JQueryTemplateBehavior extends JQueryAbstractTemplateBehavior imple
 		super.bind(component);
 
 		this.token = String.format("%s-template", component.getMarkupId());
-	}
-
-	@Override
-	public void destroy(IPartialPageRequestHandler handler)
-	{
-		handler.prependJavaScript(String.format("var $w = jQuery('#%s'); if($w) { $w.detach(); }", this.getToken()));
 	}
 
 	// Properties //

@@ -68,7 +68,7 @@ public class RequestCycleUtils
 	 */
 	public static Class<? extends IRequestablePage> getPageClass()
 	{
-		IPageClassRequestHandler handler = RequestCycle.get().find(IPageClassRequestHandler.class).get();
+		IPageClassRequestHandler handler = RequestCycle.get().find(IPageClassRequestHandler.class).orElse(null);
 
 		if (handler != null)
 		{

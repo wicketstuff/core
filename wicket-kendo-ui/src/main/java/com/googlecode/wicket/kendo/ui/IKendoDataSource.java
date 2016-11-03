@@ -16,8 +16,6 @@
  */
 package com.googlecode.wicket.kendo.ui;
 
-import org.apache.wicket.core.request.handler.IPartialPageRequestHandler;
-
 /**
  * Specifies a Kendo UI data-source
  *
@@ -26,13 +24,6 @@ import org.apache.wicket.core.request.handler.IPartialPageRequestHandler;
  */
 public interface IKendoDataSource
 {
-	/**
-	 * Detaches the {@link KendoDataSource} from the DOM
-	 * 
-	 * @param handler the {@link IPartialPageRequestHandler}
-	 */
-	void destroy(IPartialPageRequestHandler handler);
-
 	/**
 	 * Gets the unique token that acts as the script id.
 	 *

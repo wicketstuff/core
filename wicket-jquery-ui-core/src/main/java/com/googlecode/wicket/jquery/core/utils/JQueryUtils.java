@@ -53,4 +53,15 @@ public class JQueryUtils
 	{
 		return "try { " + statement + " } catch (e) { " + (warn ? "if (console) { console.warn(e); }" : "") + " }";
 	}
+
+	/**
+	 * Gets the 'detach' statement for the given token/html-id
+	 * 
+	 * @param token the token (or html-id)
+	 * @return the 'detach' statement
+	 */
+	public static String detach(String token)
+	{
+		return String.format("var $w = jQuery('#%s'); if($w) { $w.detach(); }", token);
+	}
 }

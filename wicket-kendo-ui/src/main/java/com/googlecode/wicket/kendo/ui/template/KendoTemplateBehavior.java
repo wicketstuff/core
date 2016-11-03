@@ -17,12 +17,10 @@
 package com.googlecode.wicket.kendo.ui.template;
 
 import org.apache.wicket.Component;
-import org.apache.wicket.core.request.handler.IPartialPageRequestHandler;
 
 import com.googlecode.wicket.jquery.core.template.IJQueryTemplate;
 import com.googlecode.wicket.jquery.core.template.JQueryAbstractTemplateBehavior;
 import com.googlecode.wicket.jquery.core.template.JQueryTemplateResourceStream;
-import com.googlecode.wicket.kendo.ui.KendoDestroyListener.IDestroyable;
 
 /**
  * Provides the kendo-ui implementation of {@link JQueryAbstractTemplateBehavior} that works with a {@link IJQueryTemplate}.<br/>
@@ -33,7 +31,7 @@ import com.googlecode.wicket.kendo.ui.KendoDestroyListener.IDestroyable;
  * @author Sebastien Briquet - sebfz1
  *
  */
-public class KendoTemplateBehavior extends JQueryAbstractTemplateBehavior implements IDestroyable
+public class KendoTemplateBehavior extends JQueryAbstractTemplateBehavior
 {
 	private static final long serialVersionUID = 1L;
 
@@ -58,12 +56,6 @@ public class KendoTemplateBehavior extends JQueryAbstractTemplateBehavior implem
 		super.bind(component);
 		
 		this.token = String.format("%s_template", component.getMarkupId());
-	}
-
-	@Override
-	public void destroy(IPartialPageRequestHandler handler)
-	{
-		handler.prependJavaScript(String.format("var $w = jQuery('#%s'); if($w) { $w.detach(); }", this.getToken()));
 	}
 
 	// Properties //
