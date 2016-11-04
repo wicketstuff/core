@@ -1,6 +1,5 @@
 package org.wicketstuff.async.components;
 
-import java.lang.reflect.Method;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -175,7 +174,9 @@ public class ProgressButton extends AjaxFallbackButton {
     private void concludeIfApplicable(Optional<AjaxRequestTarget> targetOptional) {
         if (!getTaskContainer().isRunning()) {
         	targetOptional.ifPresent(target -> {
-                refreshBehavior.stop(target);
+                if(refreshBehavior.isBinded()) {
+                	refreshBehavior.stop(target);
+                }
             });
             if (getTaskContainer().isFailed()) {
                 onTaskError(targetOptional);
@@ -200,7 +201,9 @@ public class ProgressButton extends AjaxFallbackButton {
     }
 
     private class RefreshBehavior extends AbstractAjaxTimerBehavior {
-        public RefreshBehavior(Duration updateInterval) {
+        private boolean binded = false;
+
+		public RefreshBehavior(Duration updateInterval) {
             super(updateInterval);
         }
 
@@ -220,6 +223,21 @@ public class ProgressButton extends AjaxFallbackButton {
             // Again, skip the check for the component being enabled
             return !isStopped() && getComponent().findParent(Page.class) != null;
         }
+        @Override
+        protected void onBind() {
+        	super.onBind();
+        	binded   = true;
+        }
+        
+        @Override
+        protected void onUnbind() {
+        	super.onUnbind();
+        	binded = false;
+        }
+        
+        public boolean isBinded() {
+			return binded;
+		}
     }
 
     /**
