@@ -174,9 +174,9 @@ public class ProgressButton extends AjaxFallbackButton {
 
     private void concludeIfApplicable(Optional<AjaxRequestTarget> targetOptional) {
         if (!getTaskContainer().isRunning()) {
-        	targetOptional.ifPresent(target -> {
-                refreshBehavior.stop(target);
-            });
+//        	targetOptional.ifPresent(target -> {
+//                refreshBehavior.stop(target);
+//            });
             if (getTaskContainer().isFailed()) {
                 onTaskError(targetOptional);
             } else if (!getTaskContainer().isCancelled()) {
