@@ -25,6 +25,8 @@ import org.apache.wicket.markup.head.IHeaderResponse;
 import org.apache.wicket.util.lang.Args;
 import org.apache.wicket.util.lang.Generics;
 
+import com.googlecode.wicket.jquery.core.utils.JQueryUtils;
+
 /**
  * Provides a default implementation of {@link JQueryAbstractBehavior}.
  *
@@ -34,19 +36,6 @@ import org.apache.wicket.util.lang.Generics;
 public class JQueryBehavior extends JQueryAbstractBehavior
 {
 	private static final long serialVersionUID = 1L;
-
-	/**
-	 * Gets the jQuery statement.
-	 *
-	 * @param selector the html selector (ie: "#myId")
-	 * @param method the jQuery method to invoke
-	 * @param options the options to be applied
-	 * @return the jQuery statement
-	 */
-	private static String $(String selector, String method, String options)
-	{
-		return String.format("jQuery('%s').%s(%s);", selector, method, options);
-	}
 
 	protected String selector = null;
 	protected final String method;
@@ -336,6 +325,19 @@ public class JQueryBehavior extends JQueryAbstractBehavior
 	public String $(String options)
 	{
 		return JQueryBehavior.$(this.selector, this.method, options);
+	}
+
+	/**
+	 * Gets the jQuery statement.
+	 *
+	 * @param selector the html selector (ie: "#myId")
+	 * @param method the jQuery method to invoke
+	 * @param options the options to be applied
+	 * @return the jQuery statement
+	 */
+	private static String $(String selector, String method, String options)
+	{
+		return String.format("jQuery('%s').%s(%s);", selector, method, options);
 	}
 
 	// Events //

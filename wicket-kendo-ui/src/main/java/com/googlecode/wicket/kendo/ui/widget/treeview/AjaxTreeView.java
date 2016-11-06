@@ -150,6 +150,21 @@ public class AjaxTreeView extends JQueryContainer implements ITreeViewListener
 		return this.modelBehavior.getCallbackUrl();
 	}
 
+	/**
+	 * Gets the template script token/id
+	 * 
+	 * @return the template script token/id
+	 */
+	public String getTemplateToken()
+	{
+		if (this.templateBehavior != null)
+		{
+			return this.templateBehavior.getToken();
+		}
+
+		return null;
+	}
+
 	@Override
 	public boolean isSelectEventEnabled()
 	{
@@ -194,7 +209,7 @@ public class AjaxTreeView extends JQueryContainer implements ITreeViewListener
 		// set templates (if any) //
 		if (this.templateBehavior != null)
 		{
-			behavior.setOption("template", String.format("jQuery('#%s').html()", this.templateBehavior.getToken()));
+			behavior.setOption("template", String.format("jQuery('#%s').html()", this.getTemplateToken()));
 		}
 	}
 

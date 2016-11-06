@@ -62,6 +62,36 @@ public abstract class ComboBoxBehavior extends KendoUIBehavior
 
 	protected abstract CharSequence getDataSourceUrl();
 
+	/**
+	 * Gets the datasource name
+	 * 
+	 * @return the datasource name
+	 */
+	public String getDataSourceName()
+	{
+		if (this.dataSource != null)
+		{
+			return this.dataSource.getName();
+		}
+
+		return null;
+	}
+
+	/**
+	 * Gets the datasource token
+	 * 
+	 * @return the datasource token
+	 */
+	public String getDataSourceToken()
+	{
+		if (this.dataSource != null)
+		{
+			return this.dataSource.getToken();
+		}
+
+		return null;
+	}
+
 	// Events //
 
 	@Override
@@ -70,7 +100,7 @@ public abstract class ComboBoxBehavior extends KendoUIBehavior
 		super.onConfigure(component);
 
 		this.setOption("autoBind", true); // immutable
-		this.setOption("dataSource", this.dataSource.getName());
+		this.setOption("dataSource", this.getDataSourceName());
 
 		// data source //
 		if (this.isEnabled(component))

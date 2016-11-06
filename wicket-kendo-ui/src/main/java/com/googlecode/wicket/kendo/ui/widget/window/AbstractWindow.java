@@ -52,7 +52,9 @@ public abstract class AbstractWindow<T> extends GenericPanel<T> implements IJQue
 
 	private IModel<String> titleModel;
 	private boolean modal;
-	private WindowBehavior widgetBehavior;
+	
+	/** widget behavior */
+	private WindowBehavior widgetBehavior = null;
 
 	/**
 	 * Constructor

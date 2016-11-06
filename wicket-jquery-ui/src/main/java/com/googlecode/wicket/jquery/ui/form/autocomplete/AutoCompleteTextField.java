@@ -206,6 +206,21 @@ public abstract class AutoCompleteTextField<T extends Serializable> extends Text
 		return super.getConverter(type);
 	}
 
+	/**
+	 * Gets the template script token/id
+	 * 
+	 * @return the template script token/id
+	 */
+	public String getTemplateToken()
+	{
+		if (this.templateBehavior != null)
+		{
+			return this.templateBehavior.getToken();
+		}
+
+		return null;
+	}
+
 	// Properties //
 
 	/**

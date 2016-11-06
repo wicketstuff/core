@@ -181,6 +181,21 @@ public class DropDownList<T> extends TextField<T> implements IJQueryWidget
 	}
 
 	/**
+	 * Gets the template script token/id
+	 * 
+	 * @return the template script token/id
+	 */
+	public String getTemplateToken()
+	{
+		if (this.templateBehavior != null)
+		{
+			return this.templateBehavior.getToken();
+		}
+
+		return null;
+	}
+
+	/**
 	 * Gets the (inner) list width.
 	 *
 	 * @return the list width
@@ -248,7 +263,7 @@ public class DropDownList<T> extends TextField<T> implements IJQueryWidget
 		// set template (if any) //
 		if (this.templateBehavior != null)
 		{
-			behavior.setOption("template", String.format("jQuery('#%s').html()", this.templateBehavior.getToken()));
+			behavior.setOption("template", String.format("jQuery('#%s').html()", this.getTemplateToken()));
 			// TODO replace with kendo.template(jQuery('#%s').html()) - everywhere
 		}
 

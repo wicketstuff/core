@@ -49,6 +49,7 @@ If the version you specified is *snapshot*, you might define this repository:
 <tr><th>wicket-jquery-ui</th><th>Wicket</th><th>jQuery UI</th></tr>
 <tr><td>8.0.0-M2</td><td>8.0.0-M2</td><td>1.12.0</td></tr>
 <tr><td>8.0.0-M1</td><td>8.0.0-M1</td><td>1.12.0</td></tr>
+<tr><td>7.5.0</td><td>7.5.0</td><td>1.12.0</td></tr>
 <tr><td>7.4.0</td><td>7.4.0</td><td>1.12.0</td></tr>
 <tr><td>7.3.1</td><td>7.3.0</td><td>1.12.0</td></tr>
 <tr><td>7.3.0</td><td>7.3.0</td><td>1.11.4</td></tr>
@@ -57,6 +58,7 @@ If the version you specified is *snapshot*, you might define this repository:
 <tr><td>7.0.0</td><td>7.0.0</td><td>1.11.4</td></tr>
 <tr><td>7.0.0-M6</td><td>7.0.0-M6</td><td>1.11.4</td></tr>
 <tr><td>7.0.0-M5</td><td>7.0.0-M5</td><td>1.11.2</td></tr>
+<tr><td>6.25.0</td><td>6.25.0</td><td>1.12.0</td></tr>
 <tr><td>6.24.0</td><td>6.24.0</td><td>1.12.0</td></tr>
 <tr><td>6.20.0</td><td>6.20.0</td><td>1.11.4</td></tr>
 <tr><td>6.19.0</td><td>6.19.0</td><td>1.11.2</td></tr>
@@ -82,6 +84,7 @@ If the version you specified is *snapshot*, you might define this repository:
 <tr><th>wicket-kendo-ui</th><th>Wicket</th><th>Kendo UI</th></tr>
 <tr><td>8.0.0-M2</td><td>8.0.0-M2</td><td>2016.3.1028 (ASFv2)</td></tr>
 <tr><td>8.0.0-M1</td><td>8.0.0-M1</td><td>2016.2.714 (ASFv2)</td></tr>
+<tr><td>7.5.0</td><td>7.5.0</td><td>2016.3.1028 (ASFv2)</td></tr>
 <tr><td>7.4.0</td><td>7.4.0</td><td>2016.2.714 (ASFv2)</td></tr>
 <tr><td>7.3.1</td><td>7.3.0</td><td>2016.2.714 (ASFv2)</td></tr>
 <tr><td>7.3.0</td><td>7.3.0</td><td>2016.1.112 (ASFv2)</td></tr>
@@ -90,6 +93,7 @@ If the version you specified is *snapshot*, you might define this repository:
 <tr><td>7.0.0</td><td>7.0.0</td><td>2015.2.624 (ASFv2)</td></tr>
 <tr><td>7.0.0-M6</td><td>7.0.0-M6</td><td>2015.1.318 (ASFv2)</td></tr>
 <tr><td>7.0.0-M5</td><td>7.0.0-M5</td><td>2014.3.1119 (ASFv2)</td></tr>
+<tr><td>6.25.0</td><td>6.25.0</td><td>2016.3.1028 (ASFv2)</td></tr>
 <tr><td>6.24.0</td><td>6.24.0</td><td>2016.2.714 (ASFv2)</td></tr>
 <tr><td>6.20.0</td><td>6.20.0</td><td>2015.1.318 (ASFv2)</td></tr>
 <tr><td>6.19.0</td><td>6.19.0</td><td>2014.3.1119 (ASFv2)</td></tr>

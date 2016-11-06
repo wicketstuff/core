@@ -19,7 +19,6 @@ package com.googlecode.wicket.jquery.core.template;
 import org.apache.wicket.Component;
 import org.apache.wicket.behavior.Behavior;
 import org.apache.wicket.markup.head.IHeaderResponse;
-import org.apache.wicket.markup.head.StringHeaderItem;
 
 /**
  * Provides the base class for jQuery template behavior.<br/>
@@ -42,8 +41,8 @@ public abstract class JQueryAbstractTemplateBehavior extends Behavior
 	public void renderHead(Component component, IHeaderResponse response)
 	{
 		super.renderHead(component, response);
-		// TODO replace with JQueryTemplatePackageHeaderItem
-		response.render(StringHeaderItem.forString(this.newResourceStream().getString()));
+
+		response.render(new JQueryTemplateHeaderItem(this.newResourceStream()));
 	}
 
 	/**
@@ -52,7 +51,6 @@ public abstract class JQueryAbstractTemplateBehavior extends Behavior
 	 * @return the token
 	 */
 	public abstract String getToken();
-
 
 	/**
 	 * Gets a new {@link JQueryTemplateResourceStream} which contains the &lt;script /&gt; block.

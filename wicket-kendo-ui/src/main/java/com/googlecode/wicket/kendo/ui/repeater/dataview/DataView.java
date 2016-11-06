@@ -208,6 +208,21 @@ public class DataView<T> extends WebMarkupContainer implements IJQueryWidget, IL
 		return this.providerBehavior.getCallbackUrl();
 	}
 
+	/**
+	 * Gets the template script token/id
+	 * 
+	 * @return the template script token/id
+	 */
+	public String getTemplateToken()
+	{
+		if (this.templateBehavior != null)
+		{
+			return this.templateBehavior.getToken();
+		}
+
+		return null;
+	}
+
 	@Override
 	public boolean isSelectable()
 	{
@@ -243,7 +258,7 @@ public class DataView<T> extends WebMarkupContainer implements IJQueryWidget, IL
 		// set template (if any) //
 		if (this.templateBehavior != null)
 		{
-			behavior.setOption("template", String.format("jQuery('#%s').html()", this.templateBehavior.getToken()));
+			behavior.setOption("template", String.format("jQuery('#%s').html()", this.getTemplateToken()));
 		}
 	}
 

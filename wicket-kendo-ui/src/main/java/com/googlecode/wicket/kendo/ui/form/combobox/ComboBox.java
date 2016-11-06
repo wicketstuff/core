@@ -43,6 +43,9 @@ public class ComboBox<T> extends TextField<String> implements IJQueryWidget
 {
 	private static final long serialVersionUID = 1L;
 
+	/** widget behavior */
+	private ComboBoxBehavior widgetBehavior = null;
+
 	/** cache of current choices, needed to retrieve the user selected object */
 	private final IModel<List<T>> choices;
 	private ChoiceModelBehavior<T> choiceModelBehavior;
@@ -174,6 +177,36 @@ public class ComboBox<T> extends TextField<String> implements IJQueryWidget
 	}
 
 	/**
+	 * Gets the template script token/id
+	 * 
+	 * @return the template script token/id
+	 */
+	public String getTemplateToken()
+	{
+		if (this.templateBehavior != null)
+		{
+			return this.templateBehavior.getToken();
+		}
+
+		return null;
+	}
+
+	/**
+	 * Gets the template script token/id
+	 * 
+	 * @return the template script token/id
+	 */
+	public String getDataSourceToken()
+	{
+		if (this.widgetBehavior != null)
+		{
+			return this.widgetBehavior.getDataSourceToken();
+		}
+
+		return null;
+	}
+
+	/**
 	 * Gets the (inner) list width.
 	 *
 	 * @return the list width
@@ -206,7 +239,8 @@ public class ComboBox<T> extends TextField<String> implements IJQueryWidget
 		this.choiceModelBehavior = this.newChoiceModelBehavior();
 		this.add(this.choiceModelBehavior);
 
-		this.add(JQueryWidget.newWidgetBehavior(this));
+		this.widgetBehavior = (ComboBoxBehavior) JQueryWidget.newWidgetBehavior(this);
+		this.add(this.widgetBehavior);
 
 		if (this.template != null)
 		{
@@ -224,7 +258,7 @@ public class ComboBox<T> extends TextField<String> implements IJQueryWidget
 		// set template (if any) //
 		if (this.templateBehavior != null)
 		{
-			behavior.setOption("template", String.format("jQuery('#%s').html()", this.templateBehavior.getToken()));
+			behavior.setOption("template", String.format("jQuery('#%s').html()", this.getTemplateToken()));
 		}
 
 		// set list-width //

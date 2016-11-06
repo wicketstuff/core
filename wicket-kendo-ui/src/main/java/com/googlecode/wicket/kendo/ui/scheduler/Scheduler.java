@@ -222,6 +222,36 @@ public class Scheduler extends JQueryContainer implements ISchedulerListener
 	}
 
 	/**
+	 * Gets the edit-template script token/id
+	 * 
+	 * @return the template script token/id
+	 */
+	public String getEditTemplateToken()
+	{
+		if (this.editTemplateBehavior != null)
+		{
+			return this.editTemplateBehavior.getToken();
+		}
+
+		return null;
+	}
+
+	/**
+	 * Gets the event-template script token/id
+	 * 
+	 * @return the template script token/id
+	 */
+	public String getEventTemplateToken()
+	{
+		if (this.eventTemplateBehavior != null)
+		{
+			return this.eventTemplateBehavior.getToken();
+		}
+
+		return null;
+	}
+
+	/**
 	 * Gets the {@link SchedulerEventFactory}
 	 * 
 	 * @return the {@code SchedulerEventFactory}
@@ -306,12 +336,12 @@ public class Scheduler extends JQueryContainer implements ISchedulerListener
 		// set templates (if any) //
 		if (this.editTemplateBehavior != null)
 		{
-			behavior.setOption("editable", String.format("{ template: jQuery('#%s').html() }", this.editTemplateBehavior.getToken()));
+			behavior.setOption("editable", String.format("{ template: jQuery('#%s').html() }", this.getEditTemplateToken()));
 		}
 
 		if (this.eventTemplateBehavior != null)
 		{
-			behavior.setOption("eventTemplate", String.format("jQuery('#%s').html()", this.eventTemplateBehavior.getToken()));
+			behavior.setOption("eventTemplate", String.format("jQuery('#%s').html()", this.getEventTemplateToken()));
 		}
 	}
 
