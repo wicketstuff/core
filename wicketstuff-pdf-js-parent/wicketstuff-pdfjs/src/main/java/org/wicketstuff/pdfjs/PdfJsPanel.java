@@ -6,14 +6,14 @@ import org.apache.wicket.markup.head.OnDomReadyHeaderItem;
 import org.apache.wicket.markup.html.WebComponent;
 import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.request.Url;
+import org.apache.wicket.util.lang.Args;
 
 /**
- * A panel for
+ * A panel for rendering PDF documents inline in the page
  */
 public class PdfJsPanel extends Panel {
 
     private final PdfJsConfig config;
-    private final WebComponent pdfJsCanvas;
 
     /**
      * Constructor.
@@ -23,15 +23,15 @@ public class PdfJsPanel extends Panel {
     public PdfJsPanel(String id, PdfJsConfig config) {
         super(id);
 
-        this.config = config;
+        this.config = Args.notNull(config, "config");
 
-        pdfJsCanvas = new WebComponent("pdfJsCanvas");
+        final WebComponent pdfJsCanvas = new WebComponent("pdfJsCanvas");
         pdfJsCanvas.setOutputMarkupId(true);
         config.withCanvasId(pdfJsCanvas.getMarkupId());
         add(pdfJsCanvas);
     }
 
-    public PdfJsConfig getConfig() {
+    public final PdfJsConfig getConfig() {
         return config;
     }
 
@@ -47,18 +47,6 @@ public class PdfJsPanel extends Panel {
         config.withWorkerUrl(createPdfJsWorkerUrl());
         response.render(JavaScriptHeaderItem.forReference(WicketStuffPdfJsReference.INSTANCE));
         response.render(OnDomReadyHeaderItem.forScript(String.format("Wicket.PDFJS.init(%s)", config.toJsonString())));
-//
-//        final PackageTextTemplate pdfSetupTemplate = new PackageTextTemplate(PdfJsReference.class, "res/wicketstuff-pdf.js");
-//        final Map<String, Object> variables = new HashMap<>();
-//        variables.put("pdfDocumentUrl", urlFor(pdfDocument, null));
-//        variables.put("pdfWorkerUrl", createPdfJsWorkerUrl());
-//        variables.put("pdfCanvasId", pdfJsCanvas.getMarkupId());
-//        variables.put("pdfWorkerDisabled", isPdfJsWorkerDisabled());
-//        response.render(OnDomReadyHeaderItem.forScript(pdfSetupTemplate.asString(variables)));
-    }
-
-    protected boolean isPdfJsWorkerDisabled() {
-        return false;
     }
 
     protected String createPdfJsWorkerUrl() {
