@@ -21,6 +21,7 @@ public class PdfJsPanel extends Panel {
     private final ResourceReference pdfDocument;
     private final WebComponent pdfJsCanvas;
     private int initialPageNumber = 1;
+    private double initialScale = 1.0d;
 
     /**
      * Constructor.
@@ -54,6 +55,7 @@ public class PdfJsPanel extends Panel {
         variables.put("pdfCanvasId", pdfJsCanvas.getMarkupId());
         variables.put("pdfWorkerDisabled", isPdfJsWorkerDisabled());
         variables.put("initialPage", getInitialPageNumber());
+        variables.put("initialScale", getInitialScale());
         response.render(OnDomReadyHeaderItem.forScript(pdfSetupTemplate.asString(variables)));
     }
 
@@ -78,5 +80,13 @@ public class PdfJsPanel extends Panel {
             initialPdfPage = 1;
         }
         this.initialPageNumber = initialPdfPage;
+    }
+
+    public double getInitialScale() {
+        return initialScale;
+    }
+
+    public void setInitialScale(final double initialScale) {
+        this.initialScale = initialScale;
     }
 }
