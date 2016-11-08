@@ -13,6 +13,11 @@
 
 	<dependencies>
 		<dependency>
+			<groupId>de.agilecoders.wicket</groupId>
+			<artifactId>jquery-selectors</artifactId>
+			<version>0.2.3</version>
+		</dependency>
+		<dependency>
 			<groupId>org.slf4j</groupId>
 			<artifactId>slf4j-log4j12</artifactId>
 		</dependency>

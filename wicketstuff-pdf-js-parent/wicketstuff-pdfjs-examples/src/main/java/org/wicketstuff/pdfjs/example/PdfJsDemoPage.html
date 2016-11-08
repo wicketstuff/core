@@ -18,15 +18,15 @@
 
 		<script type="text/javascript">
 			$(function () {
-				document.getElementById('prev').addEventListener('click', function () {
+				$('#prev').click(function () {
 					Wicket.Event.publish(Wicket.PDFJS.Topic.PREVIOUS_PAGE);
 				});
-				document.getElementById('next').addEventListener('click', function () {
+				$('#next').click(function () {
 					Wicket.Event.publish(Wicket.PDFJS.Topic.NEXT_PAGE);
 				});
 
 				Wicket.Event.subscribe(Wicket.PDFJS.Topic.TOTAL_PAGES, function (jqEvent, total) {
-					document.getElementById('page_count').textContent = total;
+					$('#page_count').text(total);
 				});
 			});
 		</script>

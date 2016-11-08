@@ -6,37 +6,33 @@ import org.apache.wicket.markup.head.OnDomReadyHeaderItem;
 import org.apache.wicket.markup.html.WebComponent;
 import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.request.Url;
-import org.apache.wicket.request.resource.ResourceReference;
-import org.apache.wicket.util.lang.Args;
-import org.apache.wicket.util.template.PackageTextTemplate;
-
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * A panel for
  */
 public class PdfJsPanel extends Panel {
 
-    private final ResourceReference pdfDocument;
+    private final PdfJsConfig config;
     private final WebComponent pdfJsCanvas;
-    private int initialPageNumber = 1;
-    private double initialScale = 1.0d;
 
     /**
      * Constructor.
      *
      * @param id The component id
      */
-    public PdfJsPanel(String id, ResourceReference pdfDocument) {
+    public PdfJsPanel(String id, PdfJsConfig config) {
         super(id);
 
-        Args.notNull(pdfDocument, "pdfDocument");
+        this.config = config;
 
         pdfJsCanvas = new WebComponent("pdfJsCanvas");
         pdfJsCanvas.setOutputMarkupId(true);
+        config.withCanvasId(pdfJsCanvas.getMarkupId());
         add(pdfJsCanvas);
-        this.pdfDocument = pdfDocument;
+    }
+
+    public PdfJsConfig getConfig() {
+        return config;
     }
 
     @Override
@@ -44,26 +40,28 @@ public class PdfJsPanel extends Panel {
         super.renderHead(response);
 
         response.render(JavaScriptHeaderItem.forReference(PdfJsReference.INSTANCE));
-        renderSetupJs(response);
+        renderWicketStuffPdfJs(response);
     }
 
-    protected void renderSetupJs(final IHeaderResponse response) {
-        final PackageTextTemplate pdfSetupTemplate = new PackageTextTemplate(PdfJsReference.class, "res/pdfJs.setup.tmpl.js");
-        final Map<String, Object> variables = new HashMap<>();
-        variables.put("pdfDocumentUrl", urlFor(pdfDocument, null));
-        variables.put("pdfWorkerUrl", createPdfJsWorkerUrl());
-        variables.put("pdfCanvasId", pdfJsCanvas.getMarkupId());
-        variables.put("pdfWorkerDisabled", isPdfJsWorkerDisabled());
-        variables.put("initialPage", getInitialPageNumber());
-        variables.put("initialScale", getInitialScale());
-        response.render(OnDomReadyHeaderItem.forScript(pdfSetupTemplate.asString(variables)));
+    protected void renderWicketStuffPdfJs(final IHeaderResponse response) {
+        config.withWorkerUrl(createPdfJsWorkerUrl());
+        response.render(JavaScriptHeaderItem.forReference(WicketStuffPdfJsReference.INSTANCE));
+        response.render(OnDomReadyHeaderItem.forScript(String.format("Wicket.PDFJS.init(%s)", config.toJsonString())));
+//
+//        final PackageTextTemplate pdfSetupTemplate = new PackageTextTemplate(PdfJsReference.class, "res/wicketstuff-pdf.js");
+//        final Map<String, Object> variables = new HashMap<>();
+//        variables.put("pdfDocumentUrl", urlFor(pdfDocument, null));
+//        variables.put("pdfWorkerUrl", createPdfJsWorkerUrl());
+//        variables.put("pdfCanvasId", pdfJsCanvas.getMarkupId());
+//        variables.put("pdfWorkerDisabled", isPdfJsWorkerDisabled());
+//        response.render(OnDomReadyHeaderItem.forScript(pdfSetupTemplate.asString(variables)));
     }
 
     protected boolean isPdfJsWorkerDisabled() {
         return false;
     }
 
-    protected CharSequence createPdfJsWorkerUrl() {
+    protected String createPdfJsWorkerUrl() {
         final CharSequence _pdfJsUrl = urlFor(PdfJsReference.INSTANCE, null);
         final Url pdfJsUrl = Url.parse(_pdfJsUrl);
         final Url pdfJsWorkerUrl = Url.parse("./pdf.worker.js");
@@ -71,22 +69,4 @@ public class PdfJsPanel extends Panel {
         return pdfJsUrl.toString();
     }
 
-    public int getInitialPageNumber() {
-        return initialPageNumber;
-    }
-
-    public void setInitialPageNumber(int initialPdfPage) {
-        if (initialPdfPage < 1) {
-            initialPdfPage = 1;
-        }
-        this.initialPageNumber = initialPdfPage;
-    }
-
-    public double getInitialScale() {
-        return initialScale;
-    }
-
-    public void setInitialScale(final double initialScale) {
-        this.initialScale = initialScale;
-    }
 }
