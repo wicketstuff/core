@@ -1,7 +1,8 @@
-package org.wicketstuff.clipboardjs.example;
+package org.wicketstuff.pdfjs.example;
 
 import org.apache.wicket.markup.html.WebPage;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
+import org.apache.wicket.request.resource.PackageResourceReference;
 import org.wicketstuff.pdfjs.PdfJsPanel;
 
 /**
@@ -13,6 +14,7 @@ public class PdfJsDemoPage extends WebPage {
 	public PdfJsDemoPage(final PageParameters parameters) {
 		super(parameters);
 
-		add(new PdfJsPanel("pdfJsPanel"));
+		final PackageResourceReference pdfDocument = new PackageResourceReference(PdfJsDemoPage.class, "DemoDocument.pdf");
+		add(new PdfJsPanel("pdfJsPanel", pdfDocument));
 	}
 }

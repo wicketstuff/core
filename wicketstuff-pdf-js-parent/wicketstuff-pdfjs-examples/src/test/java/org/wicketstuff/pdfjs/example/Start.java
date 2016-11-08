@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.wicketstuff.clipboardjs.example;
+package org.wicketstuff.pdfjs.example;
 
 import org.eclipse.jetty.server.Connector;
 import org.eclipse.jetty.server.Server;
