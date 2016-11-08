@@ -330,6 +330,7 @@
 		<module>wicket-html5-parent</module>
 		<module>wicket-servlet3-parent</module>
 		<module>wicketstuff-clipboard-js-parent</module>
+		<module>wicketstuff-pdf-js-parent</module>
 		<module>wicketstuff-springreference-parent</module>
 		<module>wicket-security-parent</module>
 
