@@ -7,21 +7,17 @@ var url = '${pdfDocumentUrl}';
 // Disable workers to avoid yet another cross-origin issue (workers need
 // the URL of the script to be loaded, and dynamically loading a cross-origin
 // script does not work).
-//
-// PDFJS.disableWorker = true;
-//
-// In cases when the pdf.worker.js is located at the different folder than the
-// pdf.js's one, or the pdf.js is executed via eval(), the workerSrc property
-// shall be specified.
-//
-//		PDFJS.workerSrc = './pdf.worker.js';
+PDFJS.disableWorker = ${pdfWorkerDisabled};
+PDFJS.workerSrc = '${pdfWorkerUrl}';
+
 var pdfDoc = null,
-    pageNum = 1,
+    pageNum = ${initialPage},
     pageRendering = false,
     pageNumPending = null,
     scale = 0.8,
     canvas = document.getElementById('${pdfCanvasId}'),
     ctx = canvas.getContext('2d');
+
 /**
  * Get page info from document, resize canvas accordingly, and render page.
  * @param num Page number.

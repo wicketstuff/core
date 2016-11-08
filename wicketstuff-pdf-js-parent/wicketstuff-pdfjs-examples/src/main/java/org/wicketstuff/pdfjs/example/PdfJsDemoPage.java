@@ -15,6 +15,8 @@ public class PdfJsDemoPage extends WebPage {
 		super(parameters);
 
 		final PackageResourceReference pdfDocument = new PackageResourceReference(PdfJsDemoPage.class, "DemoDocument.pdf");
-		add(new PdfJsPanel("pdfJsPanel", pdfDocument));
+		final PdfJsPanel pdfJsPanel = new PdfJsPanel("pdfJsPanel", pdfDocument);
+//		pdfJsPanel.setInitialPageNumber(2);
+		add(pdfJsPanel);
 	}
 }
