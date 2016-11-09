@@ -20,6 +20,7 @@ import java.util.Iterator;
 import java.util.Map;
 
 import javax.portlet.MimeResponse;
+import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
 import javax.portlet.PortletURL;
 import javax.portlet.ResourceURL;
@@ -56,6 +57,9 @@ import org.apache.wicket.util.crypt.Base64;
  * @author Konstantinos Karavitis
  */
 public class PortletRequestMapper extends AbstractComponentMapper {
+	
+	public static String PORTLET_URL = "portlet-url";
+	
 	private SystemMapper systemMapper;
 
 	public PortletRequestMapper(final Application application) {
@@ -80,7 +84,7 @@ public class PortletRequestMapper extends AbstractComponentMapper {
 		}
 
 		if (requestHandler instanceof RenderPageRequestHandler) {
-			if (ThreadPortletContext.isAjax()) {
+			if (PortletRequest.RESOURCE_PHASE.equals(ThreadPortletContext.getPortletRequest().getAttribute(PortletRequest.LIFECYCLE_PHASE))) {
 				url = encodeRenderUrl(url, true);
 			}
 		}
@@ -181,7 +185,7 @@ public class PortletRequestMapper extends AbstractComponentMapper {
 			url = parseUrl(qualifiedPath);
 		}
 
-		return url;
+		return markAsPortletUrl(url);
 	}
 
 	private Url encodeSharedResourceUrl(Url url) {
@@ -225,7 +229,7 @@ public class PortletRequestMapper extends AbstractComponentMapper {
 			url = parseUrl(qualifiedPath);
 		}
 
-		return url;
+		return markAsPortletUrl(url);
 	}
 
 	private Url encodeRenderUrl(Url url, boolean forceRenderUrl) {
@@ -251,6 +255,11 @@ public class PortletRequestMapper extends AbstractComponentMapper {
 			url = parseUrl(qualifiedPath);
 		}
 
+		return markAsPortletUrl(url);
+	}
+	
+	private Url markAsPortletUrl(Url url) {
+		url.setQueryParameter(PORTLET_URL, PORTLET_URL);
 		return url;
 	}
 }
