@@ -83,6 +83,12 @@ public class PortletUrlRenderer extends UrlRenderer
 	 */
 	public String renderUrl(final Url url)
 	{
+		
+		if (url.getQueryParameter(PortletRequestMapper.PORTLET_URL) != null) {
+			url.removeQueryParameters(PortletRequestMapper.PORTLET_URL);
+			return url.toString();
+		}
+		
 		CharSequence renderedUrl = super.renderUrl(url);
 		
 		Url absoluteUrl = Url.parse(renderedUrl);
