@@ -431,15 +431,13 @@ public class WicketPortlet extends GenericPortlet {
 				else if (redirectLocation != null) {
 					// TODO: check if its redirect to wicket page (find _wu or
 					// _wuPortletMode or resourceId parameter)
-
-					redirectLocation = fixWicketUrl(wicketURL, redirectLocation, request.getScheme());
-
+					
 					final boolean validWicketUrl = redirectLocation.startsWith(wicketFilterPath);
 					if (validWicketUrl) {
 						if (previousURL == null || previousURL != redirectLocation) {
 							previousURL = wicketURL;
 							wicketURL = redirectLocation;
-							((RenderResponse) response).reset();
+							response.reset();
 							responseState.clear();
 							continue;
 						}
