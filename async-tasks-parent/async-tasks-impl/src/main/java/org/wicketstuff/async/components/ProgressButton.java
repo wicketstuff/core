@@ -173,7 +173,7 @@ public class ProgressButton extends AjaxFallbackButton {
 
     private void concludeIfApplicable(AjaxRequestTarget target) {
         if (!getTaskContainer().isRunning()) {
-            if (target != null) {
+            if (target != null && refreshBehavior.isBinded()) {
                 refreshBehavior.stop(target);
             }
             if (getTaskContainer().isFailed()) {
@@ -199,6 +199,9 @@ public class ProgressButton extends AjaxFallbackButton {
     }
 
     private class RefreshBehavior extends AbstractAjaxTimerBehavior {
+    
+        private boolean bound = false;
+    
         public RefreshBehavior(Duration updateInterval) {
             super(updateInterval);
         }
@@ -218,6 +221,22 @@ public class ProgressButton extends AjaxFallbackButton {
         protected boolean shouldTrigger() {
             // Again, skip the check for the component being enabled
             return !isStopped() && getComponent().findParent(Page.class) != null;
+        }
+
+        @Override
+        protected void onBind() {
+            super.onBind();
+            bound = true;
+        }
+
+        @Override
+        protected void onUnbind() {
+            super.onUnbind();
+            bound = false;
+        }
+
+        public boolean isBinded() {
+            return bound;
         }
     }
 
