@@ -3,9 +3,11 @@ package org.apache.wicket.portlet;
 import javax.portlet.PortletRequest;
 
 import org.apache.wicket.request.Request;
+import org.apache.wicket.request.Url;
 import org.apache.wicket.request.UrlRenderer;
 import org.apache.wicket.util.lang.Args;
 import org.apache.wicket.util.string.PrependingStringBuffer;
+import org.apache.wicket.util.string.Strings;
 
 /**
  * <h1>{@link UrlRenderer} for Portlet Applications.</h1>
@@ -34,13 +36,17 @@ import org.apache.wicket.util.string.PrependingStringBuffer;
  */
 public class PortletUrlRenderer extends UrlRenderer
 {
-
+	
+	
+	private Request request;
+	
 	/**
 	 * @param request
 	 */
 	public PortletUrlRenderer(Request request)
 	{
 		super(request);
+		this.request = request;
 		
 		PortletRequest portletRequest = ThreadPortletContext.getPortletRequest();
 		String lifecyclePhase = (String) portletRequest.getAttribute(PortletRequest.LIFECYCLE_PHASE);
@@ -69,4 +75,57 @@ public class PortletUrlRenderer extends UrlRenderer
 		return buffer.toString();
 	}
 
+	
+	/**
+	 * Renders the Url
+	 * 
+	 * @param url
+	 * @return Url rendered as string
+	 */
+	public String renderUrl(final Url url)
+	{
+		
+		if (url.getQueryParameter(PortletRequestMapper.PORTLET_URL) != null) {
+			url.removeQueryParameters(PortletRequestMapper.PORTLET_URL);
+			return url.toString();
+		}
+		
+		CharSequence renderedUrl = super.renderUrl(url);
+		
+		Url absoluteUrl = Url.parse(renderedUrl);
+		Url clientUrl = request.getClientUrl();
+		if (!shouldRedirectToExternalUrl(absoluteUrl, clientUrl)) {
+			if (absoluteUrl.getProtocol() != null) {
+				renderedUrl = Strings.replaceAll(renderedUrl, absoluteUrl.getProtocol() + "://", "/");
+			}
+			if (absoluteUrl.getHost() != null) {
+				renderedUrl = Strings.replaceAll(renderedUrl, "/" + absoluteUrl.getHost(), "/");
+			}
+			if (absoluteUrl.getPort() != null) {
+				renderedUrl = Strings.replaceAll(renderedUrl, "/:" + absoluteUrl.getPort(), "/");
+
+			}
+			renderedUrl = Strings.replaceAll(renderedUrl, "//", "/");
+		}
+		
+		return renderedUrl.toString();
+	}
+	
+	private boolean shouldRedirectToExternalUrl(Url url, Url clientUrl) 
+	{
+		if (!Strings.isEmpty(url.getProtocol()) && !url.getProtocol().equals(clientUrl.getProtocol())) 
+		{
+			return true;
+		}
+		if (!Strings.isEmpty(url.getHost()) && !url.getHost().equals(clientUrl.getHost())) 
+		{
+			return true;
+		}
+		if ((url.getPort() != null) && !url.getPort().equals(clientUrl.getPort())) 
+		{
+			return true;
+		}
+		
+		return false;
+	}
 }

@@ -33,10 +33,17 @@ import org.apache.wicket.IPageRendererProvider;
 import org.apache.wicket.IRequestCycleProvider;
 import org.apache.wicket.core.request.handler.RenderPageRequestHandler;
 import org.apache.wicket.protocol.http.WicketFilter;
+import org.apache.wicket.protocol.https.HttpsConfig;
+import org.apache.wicket.protocol.https.HttpsMapper;
+import org.apache.wicket.protocol.https.Scheme;
+import org.apache.wicket.request.IRequestHandler;
+import org.apache.wicket.request.Request;
 import org.apache.wicket.request.UrlRenderer;
 import org.apache.wicket.request.cycle.RequestCycle;
 import org.apache.wicket.request.cycle.RequestCycleContext;
 import org.apache.wicket.request.handler.render.PageRenderer;
+import org.apache.wicket.request.http.WebResponse;
+import org.apache.wicket.request.http.flow.AbortWithHttpErrorCodeException;
 import org.apache.wicket.settings.IRequestCycleSettings.RenderStrategy;
 import org.apache.wicket.util.crypt.Base64;
 
@@ -51,7 +58,8 @@ import org.apache.wicket.util.crypt.Base64;
  */
 public class PortletFilter extends WicketFilter {
 	public static final String SHARED_RESOURCE_URL_PORTLET_WINDOW_ID_PREFIX = "/ps:";
-
+	
+	private static String NOT_MOUNTED_PATH = "notMountedPath";
 	private FilterConfig filterConfig;
 	
 	@Override
@@ -62,7 +70,14 @@ public class PortletFilter extends WicketFilter {
 		getApplication().getRequestCycleSettings().addResponseFilter(new PortletInvalidMarkupFilter());
 		//fix for https://github.com/wicketstuff/core/issues/487
 		getApplication().setMarkupIdGenerator(new PortletMarkupIdGenerator());
-		getApplication().setRootRequestMapper(new PortletRequestMapper(getApplication()));
+		//make the wicket bridge schema (HTTPS/HTTP) aware
+		getApplication().setRootRequestMapper(new HttpsMapper(new PortletRequestMapper(getApplication()), new HttpsConfig()){
+			@Override
+			protected Scheme getDesiredSchemeFor(IRequestHandler handler) {
+				Request request = RequestCycle.get().getRequest();
+				return super.getSchemeOf(request);
+			}
+		});
 		//Application must use the portlet specific page renderer provider.
 		getApplication().setPageRendererProvider(new IPageRendererProvider() {
 			@Override
@@ -132,5 +147,26 @@ public class PortletFilter extends WicketFilter {
 		}
 
 		super.doFilter(httpServletRequest, httpServletResponse, filterChain);
+	}
+	
+	protected boolean processRequestCycle(RequestCycle requestCycle, WebResponse webResponse,
+			HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, final FilterChain chain)
+			throws IOException, ServletException {
+		// Assume we are able to handle the request
+		boolean res = true;
+
+		if (requestCycle.processRequestAndDetach()) {
+			webResponse.flush();
+		} else if (httpServletRequest.getPathInfo() != null
+				&& httpServletRequest.getPathInfo().equals(httpServletRequest.getAttribute(NOT_MOUNTED_PATH))) {
+			throw new AbortWithHttpErrorCodeException(404, httpServletRequest.getPathInfo() + " is not mounted to any Page");
+		} else {
+			if (chain != null) {
+				httpServletRequest.setAttribute(NOT_MOUNTED_PATH, httpServletRequest.getPathInfo());
+				chain.doFilter(httpServletRequest, httpServletResponse);
+			}
+			res = false;
+		}
+		return res;
 	}
 }
