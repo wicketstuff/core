@@ -20,6 +20,7 @@ import java.util.Iterator;
 import java.util.Map;
 
 import javax.portlet.MimeResponse;
+import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
 import javax.portlet.PortletURL;
 import javax.portlet.ResourceURL;
@@ -84,7 +85,7 @@ public class PortletRequestMapper extends AbstractComponentMapper {
 		}
 
 		if (requestHandler instanceof RenderPageRequestHandler) {
-			if (ThreadPortletContext.isAjax()) {
+			if (PortletRequest.RESOURCE_PHASE.equals(ThreadPortletContext.getPortletRequest().getAttribute(PortletRequest.LIFECYCLE_PHASE))) {
 				url = encodeRenderUrl(url, true);
 			}
 		}
