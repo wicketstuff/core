@@ -44,7 +44,7 @@ public class Initializer implements IInitializer {
 
 		IProxyFactory factory = Evaluation.proxyFactory;
 		if (factory instanceof CachingProxyFactory) {
-			((CachingProxyFactory) resolver).destroy(application);
+			((CachingProxyFactory) factory).destroy(application);
 		}
 	}
 }
