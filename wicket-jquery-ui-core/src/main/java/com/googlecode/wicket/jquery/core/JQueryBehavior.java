@@ -25,8 +25,6 @@ import org.apache.wicket.markup.head.IHeaderResponse;
 import org.apache.wicket.util.lang.Args;
 import org.apache.wicket.util.lang.Generics;
 
-import com.googlecode.wicket.jquery.core.utils.JQueryUtils;
-
 /**
  * Provides a default implementation of {@link JQueryAbstractBehavior}.
  *
