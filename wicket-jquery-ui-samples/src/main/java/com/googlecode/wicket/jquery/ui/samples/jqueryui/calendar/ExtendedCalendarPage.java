@@ -93,6 +93,12 @@ public class ExtendedCalendarPage extends AbstractCalendarPage
 			{
 				return true;
 			}
+			
+			@Override
+			public boolean isViewRenderEnabled()
+			{
+				return true;
+			}
 
 			@Override
 			public void onDayClick(AjaxRequestTarget target, CalendarView view, LocalDateTime date, boolean allDay)

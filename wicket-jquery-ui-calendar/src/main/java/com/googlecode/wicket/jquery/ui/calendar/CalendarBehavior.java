@@ -807,8 +807,8 @@ public class CalendarBehavior extends JQueryBehavior implements IJQueryAjaxAware
 	 */
 	protected static class ViewRenderEvent extends JQueryEvent
 	{
-		private final LocalDateTime start;
-		private final LocalDateTime end;
+		private final LocalDate start;
+		private final LocalDate end;
 		private final String viewName;
 
 		/**
@@ -817,10 +817,10 @@ public class CalendarBehavior extends JQueryBehavior implements IJQueryAjaxAware
 		public ViewRenderEvent()
 		{
 			String start = RequestCycleUtils.getQueryParameterValue("startDate").toString();
-			this.start = LocalDateTime.parse(start);
+			this.start = LocalDate.parse(start);
 
 			String end = RequestCycleUtils.getQueryParameterValue("endDate").toString();
-			this.end = LocalDateTime.parse(end);
+			this.end = LocalDate.parse(end);
 
 			this.viewName = RequestCycleUtils.getQueryParameterValue("viewName").toString();
 		}
@@ -830,7 +830,7 @@ public class CalendarBehavior extends JQueryBehavior implements IJQueryAjaxAware
 		 *
 		 * @return the start date
 		 */
-		public LocalDateTime getStart()
+		public LocalDate getStart()
 		{
 			return this.start;
 		}
@@ -840,7 +840,7 @@ public class CalendarBehavior extends JQueryBehavior implements IJQueryAjaxAware
 		 *
 		 * @return the end date
 		 */
-		public LocalDateTime getEnd()
+		public LocalDate getEnd()
 		{
 			return this.end;
 		}

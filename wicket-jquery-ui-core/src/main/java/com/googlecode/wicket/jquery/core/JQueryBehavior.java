@@ -25,6 +25,8 @@ import org.apache.wicket.markup.head.IHeaderResponse;
 import org.apache.wicket.util.lang.Args;
 import org.apache.wicket.util.lang.Generics;
 
+import com.googlecode.wicket.jquery.core.utils.JQueryUtils;
+
 /**
  * Provides a default implementation of {@link JQueryAbstractBehavior}.
  *
@@ -107,7 +109,7 @@ public class JQueryBehavior extends JQueryAbstractBehavior
 	 */
 	public void detach(IPartialPageRequestHandler handler)
 	{
-		handler.prependJavaScript(String.format("jQuery('%s').detach();", this.selector));
+		handler.prependJavaScript(JQueryUtils.detach(this.selector));
 	}
 
 	/**
@@ -121,7 +123,7 @@ public class JQueryBehavior extends JQueryAbstractBehavior
 	 */
 	public void remove(IPartialPageRequestHandler handler)
 	{
-		handler.prependJavaScript(String.format("jQuery('%s').remove();", this.selector));
+		handler.prependJavaScript(JQueryUtils.remove(this.selector));
 	}
 
 	// Properties //
