@@ -2,11 +2,15 @@
 
     'use strict';
 
-    if (typeof(Wicket) === 'object' && typeof(Wicket.PDFJS) === 'object') {
+    if (typeof(WicketStuff) !== 'object') {
+        window.WicketStuff = {};
+    }
+
+    if (typeof(WicketStuff.PDFJS) === 'object') {
         return;
     }
 
-    Wicket.PDFJS = {
+    WicketStuff.PDFJS = {
         Topic: {
             CURRENT_PAGE: 'Wicket.PDFJS.CurrentPage',
             TOTAL_PAGES: 'Wicket.PDFJS.TotalPages',
@@ -61,7 +65,7 @@
                             pageNumPending = null;
                         }
                     });
-                    Wicket.Event.publish(Wicket.PDFJS.Topic.CURRENT_PAGE, pageNum, {"canvasId": config.canvasId});
+                    Wicket.Event.publish(WicketStuff.PDFJS.Topic.CURRENT_PAGE, pageNum, {"canvasId": config.canvasId});
                 });
             }
 
@@ -80,7 +84,7 @@
             /**
              * Displays previous page.
              */
-            Wicket.Event.subscribe(Wicket.PDFJS.Topic.PREVIOUS_PAGE, function (jqEvent, data) {
+            Wicket.Event.subscribe(WicketStuff.PDFJS.Topic.PREVIOUS_PAGE, function (jqEvent, data) {
                 if (config.canvasId !== data.canvasId || pageNum <= 1) {
                     return;
                 }
@@ -91,7 +95,7 @@
             /**
              * Displays next page.
              */
-            Wicket.Event.subscribe(Wicket.PDFJS.Topic.NEXT_PAGE, function (jqEvent, data) {
+            Wicket.Event.subscribe(WicketStuff.PDFJS.Topic.NEXT_PAGE, function (jqEvent, data) {
                 if (config.canvasId !== data.canvasId || pageNum >= pdfDoc.numPages) {
                     return;
                 }
@@ -104,7 +108,7 @@
              */
             PDFJS.getDocument(url).then(function (pdfDoc_) {
                 pdfDoc = pdfDoc_;
-                Wicket.Event.publish(Wicket.PDFJS.Topic.TOTAL_PAGES, pdfDoc.numPages, {"canvasId": config.canvasId});
+                Wicket.Event.publish(WicketStuff.PDFJS.Topic.TOTAL_PAGES, pdfDoc.numPages, {"canvasId": config.canvasId});
                 renderPage(pageNum);
             });
         }

@@ -46,7 +46,7 @@ public class PdfJsPanel extends Panel {
     protected void renderWicketStuffPdfJs(final IHeaderResponse response) {
         config.withWorkerUrl(createPdfJsWorkerUrl());
         response.render(JavaScriptHeaderItem.forReference(WicketStuffPdfJsReference.INSTANCE));
-        response.render(OnDomReadyHeaderItem.forScript(String.format("Wicket.PDFJS.init(%s)", config.toJsonString())));
+        response.render(OnDomReadyHeaderItem.forScript(String.format("WicketStuff.PDFJS.init(%s)", config.toJsonString())));
     }
 
     protected String createPdfJsWorkerUrl() {
