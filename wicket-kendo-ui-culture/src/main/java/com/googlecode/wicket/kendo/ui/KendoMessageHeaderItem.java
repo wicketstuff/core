@@ -56,10 +56,10 @@ public class KendoMessageHeaderItem extends JavaScriptReferenceHeaderItem
 	/**
 	 * Constructor
 	 * 
-	 * @param language the language, ie: 'fr-FR'
+	 * @param culture the culture, ie: 'fr-FR'
 	 */
-	public KendoMessageHeaderItem(String language)
+	public KendoMessageHeaderItem(String culture)
 	{
-		super(new KendoMessageResourceReference(language), null, "kendo-messages", false, null, null);
+		super(new KendoMessageResourceReference(culture), null, "kendo-messages", false, null, null);
 	}
 }

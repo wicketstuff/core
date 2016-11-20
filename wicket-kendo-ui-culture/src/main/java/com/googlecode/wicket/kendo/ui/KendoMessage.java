@@ -16,6 +16,8 @@
  */
 package com.googlecode.wicket.kendo.ui;
 
+import java.util.Locale;
+
 /**
  * Provides all Kendo UI message's culture identifiers
  * 
@@ -101,5 +103,58 @@ public enum KendoMessage
 	public String toString()
 	{
 		return this.culture;
+	}
+
+
+	/**
+	 * Indicates whether the specified {@link Locale} is currently supported
+	 * 
+	 * @param locale the {@code Locale}
+	 * @return {@code true} or {@code false}
+	 */
+	public static boolean exists(Locale locale)
+	{
+		return KendoMessage.exists(locale.toLanguageTag());
+	}
+
+	/**
+	 * Indicates whether the specified culture is currently supported
+	 * 
+	 * @param culture the culture
+	 * @return {@code true} or {@code false}
+	 */
+	public static boolean exists(String culture)
+	{
+		if (culture != null)
+		{
+			for (KendoMessage c : KendoMessage.values())
+			{
+				if (culture.equalsIgnoreCase(c.toString()))
+				{
+					return true;
+				}
+			}
+		}
+
+		return false;
+	}
+
+	/**
+	 * Gets the first supported culture in the specified array of cultures
+	 * 
+	 * @param cultures the array of cultures
+	 * @return the first supported culture, or {@code null}
+	 */
+	public static String get(String... cultures)
+	{
+		for (String culture : cultures)
+		{
+			if (KendoMessage.exists(culture))
+			{
+				return culture;
+			}
+		}
+
+		return null;
 	}
 }
