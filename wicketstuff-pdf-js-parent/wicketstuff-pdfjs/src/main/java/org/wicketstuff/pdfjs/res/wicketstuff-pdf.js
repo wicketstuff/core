@@ -8,6 +8,7 @@
 
     Wicket.PDFJS = {
         Topic: {
+            CURRENT_PAGE: 'Wicket.PDFJS.CurrentPage',
             TOTAL_PAGES: 'Wicket.PDFJS.TotalPages',
             NEXT_PAGE: 'Wicket.PDFJS.NextPage',
             PREVIOUS_PAGE: 'Wicket.PDFJS.PreviousPage'
@@ -60,10 +61,10 @@
                             pageNumPending = null;
                         }
                     });
+                    Wicket.Event.publish(Wicket.PDFJS.Topic.CURRENT_PAGE, pageNum, {"canvasId": config.canvasId});
                 });
-                // Update page counters
-                document.getElementById('page_num').textContent = pageNum;
             }
+
             /**
              * If another page rendering in progress, waits until the rendering is
              * finished. Otherwise, executes rendering immediately.
@@ -79,8 +80,8 @@
             /**
              * Displays previous page.
              */
-            Wicket.Event.subscribe(Wicket.PDFJS.Topic.PREVIOUS_PAGE, function () {
-                if (pageNum <= 1) {
+            Wicket.Event.subscribe(Wicket.PDFJS.Topic.PREVIOUS_PAGE, function (jqEvent, data) {
+                if (config.canvasId !== data.canvasId || pageNum <= 1) {
                     return;
                 }
                 pageNum--;
@@ -90,8 +91,8 @@
             /**
              * Displays next page.
              */
-            Wicket.Event.subscribe(Wicket.PDFJS.Topic.NEXT_PAGE, function () {
-                if (pageNum >= pdfDoc.numPages) {
+            Wicket.Event.subscribe(Wicket.PDFJS.Topic.NEXT_PAGE, function (jqEvent, data) {
+                if (config.canvasId !== data.canvasId || pageNum >= pdfDoc.numPages) {
                     return;
                 }
                 pageNum++;
@@ -103,9 +104,7 @@
              */
             PDFJS.getDocument(url).then(function (pdfDoc_) {
                 pdfDoc = pdfDoc_;
-                Wicket.Event.publish(Wicket.PDFJS.Topic.TOTAL_PAGES, pdfDoc.numPages);
-                // document.getElementById('page_count').textContent = pdfDoc.numPages;
-                // Initial/first page rendering
+                Wicket.Event.publish(Wicket.PDFJS.Topic.TOTAL_PAGES, pdfDoc.numPages, {"canvasId": config.canvasId});
                 renderPage(pageNum);
             });
         }

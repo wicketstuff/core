@@ -7,7 +7,7 @@
 
 	<body>
 
-		<div wicket:id="pdfJsPanel"></div>
+		<div wicket:id="pdfJsPanel" class="pdfPanel"></div>
 
 		<div>
 			<button id="prev">Previous</button>
@@ -18,15 +18,19 @@
 
 		<script type="text/javascript">
 			$(function () {
+			    var canvasId = $('.pdfPanel canvas').attr('id');
+
 				$('#prev').click(function () {
-					Wicket.Event.publish(Wicket.PDFJS.Topic.PREVIOUS_PAGE);
+					Wicket.Event.publish(Wicket.PDFJS.Topic.PREVIOUS_PAGE, {"canvasId": canvasId});
 				});
 				$('#next').click(function () {
-					Wicket.Event.publish(Wicket.PDFJS.Topic.NEXT_PAGE);
+					Wicket.Event.publish(Wicket.PDFJS.Topic.NEXT_PAGE, {"canvasId": canvasId});
 				});
-
-				Wicket.Event.subscribe(Wicket.PDFJS.Topic.TOTAL_PAGES, function (jqEvent, total) {
-					$('#page_count').text(total);
+                Wicket.Event.subscribe(Wicket.PDFJS.Topic.CURRENT_PAGE, function (jqEvent, pageNumber, data) {
+                    $('#'+data.canvasId).closest('.pdfPanel').siblings().find('#page_num').text(pageNumber);
+                });
+				Wicket.Event.subscribe(Wicket.PDFJS.Topic.TOTAL_PAGES, function (jqEvent, total, data) {
+					$('#'+data.canvasId).closest('.pdfPanel').siblings().find('#page_count').text(total);
 				});
 			});
 		</script>
