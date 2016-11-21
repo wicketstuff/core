@@ -9,7 +9,7 @@
 
   <artifactId>wicketstuff-rest-utils</artifactId>
 
-  <name>WicketStuff Rest Common</name>
+  <name>WicketStuff Rest Utils</name>
   <description>common rest functionality</description>
 
   <dependencies>
