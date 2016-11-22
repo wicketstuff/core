@@ -9,8 +9,8 @@ import org.apache.wicket.request.resource.JavaScriptResourceReference;
  * @author Tom Götz (tom@decoded.de)
  */
 class Select2LanguageResourceReference extends JavaScriptResourceReference {
-
-    private static final String resourceName = "res/js/i18n/%s.js";
+	private static final long serialVersionUID = 1L;
+	private static final String resourceName = "res/js/i18n/%s.js";
     private static final String defaultLanguage = "en";
 
     /**
@@ -38,5 +38,4 @@ class Select2LanguageResourceReference extends JavaScriptResourceReference {
         }
         return String.format(resourceName, defaultLanguage);
     }
-
 }
