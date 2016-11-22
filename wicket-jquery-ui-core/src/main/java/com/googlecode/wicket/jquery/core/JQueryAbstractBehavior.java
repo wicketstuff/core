@@ -111,7 +111,12 @@ public abstract class JQueryAbstractBehavior extends Behavior
 		}
 
 		// Adds the statement //
-		this.renderOnDomReadyScript(this.$(), response);
+		String statement = this.$();
+
+		if (statement != null)
+		{
+			this.renderOnDomReadyScript(statement, response);
+		}
 	}
 
 	/**

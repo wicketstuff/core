@@ -207,7 +207,7 @@ public class JQueryEffectBehavior extends JQueryUIBehavior implements IJQueryAja
 			return String.format("jQuery('%s').%s('%s', %s, %d, function() { %s });", selector, METHOD, effect, options, speed, callback);
 		}
 
-		return "";
+		return null;
 	}
 
 	// Factories //
