@@ -29,9 +29,7 @@ public class ContainerEffectPage extends AbstractEffectPage
 			}
 		};
 
-		this.add(container);
-
-		container.add(new JQueryUIBehavior("#tabs", "tabs"));
+		this.add(container.add(new JQueryUIBehavior("#tabs", "tabs")));
 
 		Form<Void> form = new Form<Void>("form");
 		this.add(form);
@@ -48,8 +46,8 @@ public class ContainerEffectPage extends AbstractEffectPage
 			@Override
 			protected void onSubmit(AjaxRequestTarget target)
 			{
-				container.play(target, dropdown.getModelObject()); //Effect enum available since core 1.1
-				//container.play(target, "fold"); //also available
+				container.play(target, dropdown.getModelObject()); // Effect enum available since core 1.1
+				// container.play(target, "fold"); //also available
 			}
 		});
 	}

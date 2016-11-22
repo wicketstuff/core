@@ -75,7 +75,7 @@ public class JQueryEffectBehavior extends JQueryUIBehavior implements IJQueryAja
 	 */
 	JQueryEffectBehavior(String selector, IEffectListener listener)
 	{
-		this(selector, "", new Options(), listener);
+		this(selector, null, new Options(), listener);
 	}
 
 	/**
@@ -130,7 +130,7 @@ public class JQueryEffectBehavior extends JQueryUIBehavior implements IJQueryAja
 		super(selector, METHOD + "-" + effect, options);
 
 		this.listener = Args.notNull(listener, "listener");
-		this.effect = effect;
+		this.effect = effect; // may be null
 		this.speed = speed;
 	}
 
@@ -202,7 +202,12 @@ public class JQueryEffectBehavior extends JQueryUIBehavior implements IJQueryAja
 	 */
 	private static String $(String selector, String effect, String options, int speed, String callback)
 	{
-		return String.format("jQuery('%s').%s('%s', %s, %d, function() { %s });", selector, METHOD, effect, options, speed, callback);
+		if (effect != null)
+		{
+			return String.format("jQuery('%s').%s('%s', %s, %d, function() { %s });", selector, METHOD, effect, options, speed, callback);
+		}
+
+		return "";
 	}
 
 	// Factories //
