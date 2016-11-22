@@ -32,6 +32,7 @@ import static org.apache.wicket.util.string.Strings.defaultIfEmpty;
 public final class Settings implements Serializable
 {
 	private static final long serialVersionUID = 1L;
+	public static final String DEFAULT_QUERY_PARAM = "q";
 
 	/**
 	 * Some predefined width option values
@@ -84,6 +85,11 @@ public final class Settings implements Serializable
 	 * Path to which JSON producing resource will be attached.
 	 */
 	private String mountPath;
+
+	/**
+	 * The name of the parameter being used for Ajax request.
+	 */
+	private String queryParam = DEFAULT_QUERY_PARAM;
 
 	public CharSequence toJson()
 	{
@@ -506,9 +512,10 @@ public final class Settings implements Serializable
 		return stateless;
 	}
 
-	public void setStateless(boolean stateless)
+	public Settings setStateless(boolean stateless)
 	{
 		this.stateless = stateless;
+		return this;
 	}
 
 	public String getMountPath()
@@ -516,9 +523,21 @@ public final class Settings implements Serializable
 		return mountPath;
 	}
 
-	public void setMountPath(String mountPath)
+	public Settings setMountPath(String mountPath)
 	{
 		this.mountPath = mountPath;
+		return this;
+	}
+
+	public String getQueryParam()
+	{
+		return queryParam;
+	}
+
+	public Settings setQueryParam(String queryParam)
+	{
+		this.queryParam = queryParam;
+		return this;
 	}
 
 	public String getLanguage() {

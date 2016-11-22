@@ -268,8 +268,8 @@ public abstract class AbstractSelect2Choice<T, M> extends AbstractTextComponent<
 		{
 			AjaxSettings ajax = getSettings().getAjax(true);
 			ajax.setData(String.format(
-					"function(params) { return { q: params.term, page: params.page, '%s':true, '%s':[window.location.protocol, '//', window.location.host, window.location.pathname].join('')}; }",
-					WebRequest.PARAM_AJAX, WebRequest.PARAM_AJAX_BASE_URL));
+					"function(params) { return { '%s': params.term, page: params.page, '%s':true, '%s':[window.location.protocol, '//', window.location.host, window.location.pathname].join('')}; }",
+					settings.getQueryParam(), WebRequest.PARAM_AJAX, WebRequest.PARAM_AJAX_BASE_URL));
 			ajax.setProcessResults("function(data, page) { return { results: data.items, pagination: { more: data.more } };  }");
 		}
 		else if (settings.isStateless()) //configure stateless mode
@@ -338,13 +338,25 @@ public abstract class AbstractSelect2Choice<T, M> extends AbstractTextComponent<
 	 */
 	public static <T> void generateJSON(ChoiceProvider<T> provider, OutputStream outputStream) 
 	{
+		generateJSON(Settings.DEFAULT_QUERY_PARAM, provider, outputStream);
+	}
+
+	/**
+	 * Utility method to generate JSON response.
+	 *
+	 * @param provider
+	 * @param outputStream
+	 * @param queryParam - parameter to be used as Ajax query param
+	 */
+	public static <T> void generateJSON(String queryParam, ChoiceProvider<T> provider, OutputStream outputStream) 
+	{
 		// this is the callback that retrieves matching choices used to populate the dropdown
 
 		Request request = RequestCycle.get().getRequest();
 		IRequestParameters params = request.getRequestParameters();
 
 		// retrieve choices matching the search term
-		String term = params.getParameterValue("q").toOptionalString();
+		String term = params.getParameterValue(queryParam).toOptionalString();
 
 		int page = params.getParameterValue("page").toInt(1);
 		// select2 uses 1-based paging, but in wicket world we are used to
@@ -401,7 +413,7 @@ public abstract class AbstractSelect2Choice<T, M> extends AbstractTextComponent<
 	{
 		WebResponse webResponse = (WebResponse) getRequestCycle().getResponse();
 		webResponse.setContentType("application/json");
-		generateJSON(provider, webResponse.getOutputStream());
+		generateJSON(settings.getQueryParam(), provider, webResponse.getOutputStream());
 	}
 
 	@Override
