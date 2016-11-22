@@ -6,6 +6,7 @@ import java.util.Locale;
 import org.apache.wicket.markup.head.HeaderItem;
 import org.apache.wicket.markup.head.JavaScriptContentHeaderItem;
 import org.apache.wicket.markup.head.JavaScriptHeaderItem;
+import org.apache.wicket.markup.head.PriorityHeaderItem;
 
 import com.googlecode.wicket.kendo.ui.resource.KendoCultureResourceReference;
 
@@ -79,5 +80,41 @@ public class KendoCultureHeaderItem extends JavaScriptContentHeaderItem
 		dependencies.add(JavaScriptHeaderItem.forReference(new KendoCultureResourceReference(this.culture)));
 
 		return dependencies;
+	}
+
+	// Helpers //
+
+	/**
+	 * Gets a new {@link KendoCultureHeaderItem} from a {@code Locale} culture, with a fallback to the {@code Locale} 's language
+	 * 
+	 * @param locale the {@code Locale}
+	 * @return a new {@link KendoCultureHeaderItem}
+	 */
+	public static HeaderItem of(Locale locale)
+	{
+		if (locale != null)
+		{
+			return KendoCultureHeaderItem.of(locale.toLanguageTag(), locale.getLanguage());
+		}
+
+		return null;
+	}
+
+	/**
+	 * Gets a new {@link KendoCultureHeaderItem} from the first valid specified culture
+	 * 
+	 * @param cultures the array of cultures
+	 * @return a new {@link KendoCultureHeaderItem}
+	 */
+	public static HeaderItem of(String... cultures)
+	{
+		String culture = KendoCulture.get(cultures);
+
+		if (culture != null)
+		{
+			return new PriorityHeaderItem(new KendoCultureHeaderItem(culture));
+		}
+
+		return null;
 	}
 }

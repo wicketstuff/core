@@ -3,8 +3,8 @@ package com.googlecode.wicket.kendo.ui;
 import java.util.Locale;
 
 import org.apache.wicket.Session;
+import org.apache.wicket.markup.head.HeaderItem;
 import org.apache.wicket.markup.head.IHeaderResponse;
-import org.apache.wicket.markup.head.PriorityHeaderItem;
 import org.apache.wicket.markup.html.IHeaderContributor;
 
 /**
@@ -81,11 +81,11 @@ public class KendoMessageHeaderContributor implements IHeaderContributor
 
 		if (locale != null)
 		{
-			String culture = KendoMessage.get(this.culture, locale.toLanguageTag());
+			HeaderItem item = KendoMessageHeaderItem.of(this.culture, locale.toLanguageTag());
 
-			if (culture != null)
+			if (item != null)
 			{
-				response.render(new PriorityHeaderItem(new KendoMessageHeaderItem(culture)));
+				response.render(item);
 			}
 		}
 	}
