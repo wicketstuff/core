@@ -189,16 +189,7 @@ public abstract class AjaxTreeViewBehavior extends KendoUIBehavior implements IJ
 	 */
 	protected JQueryAjaxBehavior newOnExpandAjaxBehavior(IJQueryAjaxAware source)
 	{
-		return new OnExpandAjaxBehavior(source) {
-
-			private static final long serialVersionUID = 1L;
-
-			@Override
-			protected JQueryEvent newEvent()
-			{
-				return new ExpandEvent();
-			}
-		};
+		return new OnExpandAjaxBehavior(source);
 	}
 
 	/**
@@ -209,16 +200,7 @@ public abstract class AjaxTreeViewBehavior extends KendoUIBehavior implements IJ
 	 */
 	protected JQueryAjaxBehavior newOnSelectAjaxBehavior(IJQueryAjaxAware source)
 	{
-		return new OnSelectAjaxBehavior(source) {
-
-			private static final long serialVersionUID = 1L;
-
-			@Override
-			protected JQueryEvent newEvent()
-			{
-				return new SelectEvent();
-			}
-		};
+		return new OnSelectAjaxBehavior(source);
 	}
 
 	/**
@@ -229,16 +211,7 @@ public abstract class AjaxTreeViewBehavior extends KendoUIBehavior implements IJ
 	 */
 	protected JQueryAjaxBehavior newOnDropAjaxBehavior(IJQueryAjaxAware source)
 	{
-		return new OnDropAjaxBehavior(source) {
-
-			private static final long serialVersionUID = 1L;
-
-			@Override
-			protected JQueryEvent newEvent()
-			{
-				return new DropEvent();
-			}
-		};
+		return new OnDropAjaxBehavior(source);
 	}
 
 	// Ajax classes //
