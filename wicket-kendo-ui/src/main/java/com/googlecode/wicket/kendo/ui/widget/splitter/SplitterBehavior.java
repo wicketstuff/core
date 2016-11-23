@@ -90,7 +90,7 @@ public class SplitterBehavior extends KendoUIBehavior implements IJQueryAjaxAwar
 	}
 
 	/**
-	 * Expands the specified pane<br/>
+	 * Expands the specified pane<br>
 	 * <b>Note: </b> Invoking the method will not trigger an expand event.
 	 *
 	 * @param handler the {@link IPartialPageRequestHandler}
@@ -102,7 +102,7 @@ public class SplitterBehavior extends KendoUIBehavior implements IJQueryAjaxAwar
 	}
 
 	/**
-	 * Collapses the specified pane<br/>
+	 * Collapses the specified pane<br>
 	 * <b>Note: </b> Invoking the method will not trigger a collapse event.
 	 *
 	 * @param handler the {@link IPartialPageRequestHandler}

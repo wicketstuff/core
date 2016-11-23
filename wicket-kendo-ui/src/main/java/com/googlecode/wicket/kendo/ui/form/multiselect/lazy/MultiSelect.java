@@ -38,7 +38,7 @@ import com.googlecode.wicket.kendo.ui.renderer.ChoiceRenderer;
 import com.googlecode.wicket.kendo.ui.template.KendoTemplateBehavior;
 
 /**
- * Provides a Kendo UI MultiSelect widget.<br/>
+ * Provides a Kendo UI MultiSelect widget.<br>
  * This lazy version loads the list of choices asynchronously
  *
  * @author Sebastien Briquet - sebfz1
@@ -167,7 +167,7 @@ public abstract class MultiSelect<T> extends FormComponent<Collection<T>> implem
 	// Methods //
 
 	/**
-	 * Call {@link #getChoices()} and cache the result<br/>
+	 * Call {@link #getChoices()} and cache the result<br>
 	 * Internal use only
 	 *
 	 * @return the list of choices
@@ -325,7 +325,7 @@ public abstract class MultiSelect<T> extends FormComponent<Collection<T>> implem
 	// Factories //
 
 	/**
-	 * Gets a new {@link IJQueryTemplate} to customize the rendering<br/>
+	 * Gets a new {@link IJQueryTemplate} to customize the rendering<br>
 	 * The properties used in the template text (ie: ${data.name}) should be of the prefixed by "data." and should be identified in the list returned by {@link IJQueryTemplate#getTextProperties()} (without "data.")
 	 *
 	 * @return null by default

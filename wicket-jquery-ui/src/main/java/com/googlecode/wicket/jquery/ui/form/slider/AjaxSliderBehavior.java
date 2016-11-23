@@ -29,7 +29,7 @@ import com.googlecode.wicket.jquery.core.ajax.JQueryAjaxPostBehavior;
 import com.googlecode.wicket.jquery.ui.form.slider.AbstractSlider.SliderBehavior;
 
 /**
- * Provides a jQuery ajax-slider {@link JQueryBehavior}<br/>
+ * Provides a jQuery ajax-slider {@link JQueryBehavior}<br>
  * {@link #onAjax(AjaxRequestTarget, JQueryEvent)} is delegated to AjaxSlider (need to validate AjaxSlider as a {@link FormComponent})
  *
  * @author Sebastien Briquet - sebfz1

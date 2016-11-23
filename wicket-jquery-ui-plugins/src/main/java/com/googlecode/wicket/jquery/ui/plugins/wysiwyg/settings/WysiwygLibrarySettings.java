@@ -28,7 +28,7 @@ import com.googlecode.wicket.jquery.ui.plugins.wysiwyg.resource.JQueryHotKeysJav
 import com.googlecode.wicket.jquery.ui.plugins.wysiwyg.resource.PrettifyJavaScriptResourceReference;
 
 /**
- * Provides library settings for Wysiwyg resource references<br/>
+ * Provides library settings for Wysiwyg resource references<br>
  *
  * @author Sebastien Briquet - sebfz1
  *

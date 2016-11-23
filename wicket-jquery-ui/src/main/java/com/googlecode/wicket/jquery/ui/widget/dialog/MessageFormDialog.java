@@ -29,7 +29,7 @@ import org.apache.wicket.model.Model;
 import org.apache.wicket.util.lang.Args;
 
 /**
- * Provides a modal dialog box that displays a specific message, with a predefined icon and a predefined button set.<br/>
+ * Provides a modal dialog box that displays a specific message, with a predefined icon and a predefined button set.<br>
  * <b>Note: </b> {@link MessageDialog} & {@link MessageFormDialog} are sharing the same code, they just does not extend the same class.
  *
  * @author Sebastien Briquet - sebfz1
@@ -196,7 +196,7 @@ public abstract class MessageFormDialog extends AbstractFormDialog<String>
 	// Factories //
 
 	/**
-	 * Gets a new {@link Component} that will be used as a label in the dialog.<br/>
+	 * Gets a new {@link Component} that will be used as a label in the dialog.<br>
 	 * Override this method when you need to show formatted label.
 	 *
 	 * @param id the markup id

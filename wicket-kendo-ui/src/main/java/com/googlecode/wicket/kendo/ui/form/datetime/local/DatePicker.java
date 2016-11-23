@@ -31,7 +31,7 @@ import com.googlecode.wicket.jquery.core.utils.LocaleUtils;
 import com.googlecode.wicket.kendo.ui.form.datetime.DatePickerBehavior;
 
 /**
- * Provides a Kendo UI date-picker based on a {@link LocalTextField}<br/>
+ * Provides a Kendo UI date-picker based on a {@link LocalTextField}<br>
  * The code is quite identical to the jQuery DatePicker
  *
  * @author Sebastien Briquet - sebfz1

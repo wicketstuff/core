@@ -23,7 +23,7 @@ import com.googlecode.wicket.jquery.core.Options;
 import com.googlecode.wicket.kendo.ui.utils.DebugUtils;
 
 /**
- * Provides a standard Kendo UI data-source<br/>
+ * Provides a standard Kendo UI data-source<br>
  *
  * @see <a href="http://docs.telerik.com/kendo-ui/api/framework/datasource">http://docs.telerik.com/kendo-ui/api/framework/datasource</a>
  * @author Sebastien Briquet - sebfz1

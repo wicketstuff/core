@@ -126,8 +126,8 @@ public class Slider extends AbstractSlider<Integer>
 	}
 
 	/**
-	 * Get the label pattern to be used to display the value. Should be overridden with care!<br/>
-	 * <b>Note: </b> the pattern is a javascript string, where the value is represented by "ui.value".<br/>
+	 * Get the label pattern to be used to display the value. Should be overridden with care!<br>
+	 * <b>Note: </b> the pattern is a javascript string, where the value is represented by "ui.value".<br>
 	 *
 	 * @return default to ui.value
 	 */
@@ -202,7 +202,7 @@ public class Slider extends AbstractSlider<Integer>
 	}
 
 	/**
-	 * Gets a new behavior that will handle the change event triggered on provided input.<br/>
+	 * Gets a new behavior that will handle the change event triggered on provided input.<br>
 	 * The behavior is added to the input that has been supplied in the constructor (means it is visible and the user can interact with)
 	 * @return a {@link JQueryAbstractBehavior}
 	 */

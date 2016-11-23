@@ -152,7 +152,7 @@ public class ColorPickerPage extends AbstractSliderPage
 		}
 
 		/**
-		 * Gets a new one-color-model based on the rdb-color-model<br/>
+		 * Gets a new one-color-model based on the rdb-color-model<br>
 		 * The code is not defensive (ie: no check on string length)
 		 */
 		private IModel<Integer> newColorModel(int index)

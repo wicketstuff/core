@@ -72,7 +72,7 @@ public abstract class ConsoleBehavior extends JQueryAbstractBehavior
 	protected abstract String format(Serializable message, boolean error);
 
 	/**
-	 * Gets the jQuery statement that logs the message<br/>
+	 * Gets the jQuery statement that logs the message<br>
 	 * <b>Warning: </b> This method is *not* called by the behavior directly (only {@link #$()} is).
 	 *
 	 * @param message the message to log

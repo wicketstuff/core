@@ -21,7 +21,7 @@ import java.io.Serializable;
 import com.googlecode.wicket.kendo.ui.dataviz.Chart;
 
 /**
- * Provides the base chart series object.<br/>
+ * Provides the base chart series object.<br>
  * <b>Note:</b> The field should correspond to a property of the {@link Chart}'s model object
  *
  * @author Sebastien Briquet - sebfz1
@@ -127,7 +127,7 @@ public abstract class Series implements Serializable
 	}
 
 	/**
-	 * Sets the series tooltip (as JSON string)<br/>
+	 * Sets the series tooltip (as JSON string)<br>
 	 * <b>caution: </b> FIXME does not seems to work
 	 * 
 	 * @param tooltip the series tooltip JSON object

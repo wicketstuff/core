@@ -36,7 +36,7 @@ import com.googlecode.wicket.jquery.core.utils.ListUtils;
 import com.googlecode.wicket.jquery.core.utils.RequestCycleUtils;
 
 /**
- * Provides a jQuery UI sortable {@link JQueryGenericContainer}.<br/>
+ * Provides a jQuery UI sortable {@link JQueryGenericContainer}.<br>
  * The {@code Sortable} is usually associated to an &lt;UL&gt; element.
  *
  * @param <T> the type of the model object
@@ -50,7 +50,7 @@ public abstract class Sortable<T> extends JQueryGenericContainer<List<T>> implem
 	protected final Options options;
 
 	/**
-	 * The {@link Sortable} that requested to be connected to this {@link Sortable}<br/>
+	 * The {@link Sortable} that requested to be connected to this {@link Sortable}<br>
 	 * In other words, the {@link Sortable} that called {@link #connectWith(Sortable)}
 	 */
 	private Sortable<T> connectedSortable = null;
@@ -174,7 +174,7 @@ public abstract class Sortable<T> extends JQueryGenericContainer<List<T>> implem
 	// Methods //
 
 	/**
-	 * Connects with another {@link Sortable}<br/>
+	 * Connects with another {@link Sortable}<br>
 	 * The specified {@link Sortable} will keep a reference to the caller ({@code this}).
 	 *
 	 * @param sortable the {@link Sortable} to connect with
@@ -203,7 +203,7 @@ public abstract class Sortable<T> extends JQueryGenericContainer<List<T>> implem
 	}
 
 	/**
-	 * Sets the connected {@link Sortable} reference.<br/>
+	 * Sets the connected {@link Sortable} reference.<br>
 	 * Supplying a non-null {@link Sortable} will activate {@link #isOnReceiveEnabled()}
 	 *
 	 * @param sortable the {@link Sortable}
@@ -215,7 +215,7 @@ public abstract class Sortable<T> extends JQueryGenericContainer<List<T>> implem
 	}
 
 	/**
-	 * Helper method to locate an item in a list by identifier.<br />
+	 * Helper method to locate an item in a list by identifier.<br>
 	 * By default, uses item's hashcode as identifier.
 	 *
 	 * @param id the item id

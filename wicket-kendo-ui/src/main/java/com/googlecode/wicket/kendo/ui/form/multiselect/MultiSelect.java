@@ -28,7 +28,7 @@ import com.googlecode.wicket.jquery.core.JQueryBehavior;
 import com.googlecode.wicket.kendo.ui.KendoUIBehavior;
 
 /**
- * Provides a Kendo UI MultiSelect widget. It extends built-in {@link ListMultipleChoice}<br/>
+ * Provides a Kendo UI MultiSelect widget. It extends built-in {@link ListMultipleChoice}<br>
  *
  * @author Sebastien Briquet - sebfz1
  *

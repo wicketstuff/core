@@ -19,8 +19,8 @@ package com.googlecode.wicket.kendo.ui.widget.splitter;
 import org.apache.wicket.MarkupContainer;
 
 /**
- * Helping interface which specifies that a Kendo UI border-layout will be applied on the underlying {@link MarkupContainer}.<br />
- * For instance:<br/>
+ * Helping interface which specifies that a Kendo UI border-layout will be applied on the underlying {@link MarkupContainer}.<br>
+ * For instance:<br>
  * <pre>
  * public class BorderLayoutPage extends WebPage implements IBorderLayout
  * {
@@ -46,8 +46,8 @@ import org.apache.wicket.MarkupContainer;
 public interface IBorderLayout
 {
 	/**
-	 * Method that is designed to create the BorderLayout.<br/>
-	 * A typical implementation is:<br/>
+	 * Method that is designed to create the BorderLayout.<br>
+	 * A typical implementation is:<br>
 	 * <pre>
 	 * container.add(new SplitterBehavior("#vertical").setOption("panes", this.getVerticalPanes()).setOption("orientation", "'vertical'"));
 	 * container.add(new SplitterBehavior("#horizontal").setOption("panes", this.getHorizontalPanes()));

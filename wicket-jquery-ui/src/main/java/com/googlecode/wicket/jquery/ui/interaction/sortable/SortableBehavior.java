@@ -79,7 +79,7 @@ public abstract class SortableBehavior<T> extends JQueryUIBehavior implements IJ
 	// Properties //
 
 	/**
-	 * Gets the reference list of all sortable items.<br/>
+	 * Gets the reference list of all sortable items.<br>
 	 * Usually the model object of the component on which this {@link SelectableBehavior} is bound to.
 	 *
 	 * @return the {@link List}
@@ -126,7 +126,7 @@ public abstract class SortableBehavior<T> extends JQueryUIBehavior implements IJ
 	}
 
 	/**
-	 * Helper method to locate an item in a list by identifier.<br />
+	 * Helper method to locate an item in a list by identifier.<br>
 	 * By default, uses item's hashcode as identifier.
 	 *
 	 * @param id the item id

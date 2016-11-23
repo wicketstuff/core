@@ -153,7 +153,7 @@ public class CSVDataExporter implements IDataExporter
 	// Methods //
 
 	/**
-	 * Quotes a value for export to CSV.<br/>
+	 * Quotes a value for export to CSV.<br>
 	 * According to RFC4180, this should just duplicate all occurrences of the quote character and wrap the result in the quote character.
 	 *
 	 * @param value The value to be quoted.

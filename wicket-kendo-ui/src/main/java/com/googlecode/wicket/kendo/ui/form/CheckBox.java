@@ -24,9 +24,9 @@ import org.apache.wicket.model.IModel;
 import com.googlecode.wicket.jquery.core.IJQueryWidget;
 
 /**
- * Provides a {@link org.apache.wicket.markup.html.form.CheckBox} with the Kendo-ui style<br/>
- * <br/>
- * <b>Note:</b> {@link CheckBox} is not a {@link IJQueryWidget} (no corresponding widget is supplied by Kendo UI)<br/>
+ * Provides a {@link org.apache.wicket.markup.html.form.CheckBox} with the Kendo-ui style<br>
+ * <br>
+ * <b>Note:</b> {@link CheckBox} is not a {@link IJQueryWidget} (no corresponding widget is supplied by Kendo UI)<br>
  * It means that required Kendo UI dependencies (javascript/stylesheet) are not automatically added.
  *
  * @author Sebastien Briquet - sebfz1
@@ -76,7 +76,7 @@ public class CheckBox extends org.apache.wicket.markup.html.form.CheckBox
 	}
 
 	/**
-	 * Provides the label for the {@link CheckBox}.<br/>
+	 * Provides the label for the {@link CheckBox}.<br>
 	 * It should be applied on a {@code label} tag
 	 */
 	public static class Label extends org.apache.wicket.markup.html.basic.Label

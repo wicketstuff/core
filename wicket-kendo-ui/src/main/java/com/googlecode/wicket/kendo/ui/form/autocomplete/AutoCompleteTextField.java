@@ -27,7 +27,7 @@ import com.googlecode.wicket.jquery.core.renderer.ITextRenderer;
 import com.googlecode.wicket.kendo.ui.renderer.ChoiceRenderer;
 
 /**
- * Provides a Kendo UI auto-complete widget.<br/>
+ * Provides a Kendo UI auto-complete widget.<br>
  *
  * @author Sebastien Briquet - sebfz1
  *
@@ -186,7 +186,7 @@ public abstract class AutoCompleteTextField<T> extends AbstractAutoCompleteTextF
 	// Factories //
 
 	/**
-	 * Gets a new {@link IConverter}.<br/>
+	 * Gets a new {@link IConverter}.<br>
 	 * Used when the form component is posted and the bean type has been supplied to the constructor.
 	 *
 	 * @return the {@link IConverter}

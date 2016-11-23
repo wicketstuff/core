@@ -23,8 +23,8 @@ import org.apache.wicket.util.io.IClusterable;
 import com.googlecode.wicket.kendo.ui.widget.tabs.AjaxTab;
 
 /**
- * Event listener shared by the {@link AccordionPanel} widget and the {@link AccordionBehavior}<br />
- * <br />
+ * Event listener shared by the {@link AccordionPanel} widget and the {@link AccordionBehavior}<br>
+ * <br>
  * <b>Warning: </b> At least one event should be enabled for the {@link AjaxTab} to load.
  * 
  * @author Sebastien Briquet - sebfz1
@@ -34,7 +34,7 @@ import com.googlecode.wicket.kendo.ui.widget.tabs.AjaxTab;
 public interface IAccordionListener extends IClusterable
 {
     /**
-	 * Indicates whether the 'select' event is enabled.<br />
+	 * Indicates whether the 'select' event is enabled.<br>
 	 * If true, the {@link #onSelect(AjaxRequestTarget, int, ITab)} event will be triggered.
 	 *
 	 * @return true by default
@@ -42,7 +42,7 @@ public interface IAccordionListener extends IClusterable
 	boolean isSelectEventEnabled();
 
 	/**
-	 * Indicates whether the 'activate' event is enabled.<br/>
+	 * Indicates whether the 'activate' event is enabled.<br>
 	 * If true, the {@link #onActivate(AjaxRequestTarget, int, ITab)} event will be triggered.
 	 *
 	 * @return false by default
@@ -50,7 +50,7 @@ public interface IAccordionListener extends IClusterable
 	boolean isActivateEventEnabled();
 
 	/**
-	 * Indicates whether the 'expand' event is enabled.<br />
+	 * Indicates whether the 'expand' event is enabled.<br>
 	 * If true, the {@link #onExpand(AjaxRequestTarget, int, ITab)} event will be triggered.
 	 *
 	 * @return false by default
@@ -58,7 +58,7 @@ public interface IAccordionListener extends IClusterable
 	boolean isExpandEventEnabled();
 
 	/**
-	 * Indicates whether the 'collapse' event is enabled.<br />
+	 * Indicates whether the 'collapse' event is enabled.<br>
 	 * If true, the {@link #onCollapse(AjaxRequestTarget, int, ITab)} event will be triggered.
 	 *
 	 * @return false by default

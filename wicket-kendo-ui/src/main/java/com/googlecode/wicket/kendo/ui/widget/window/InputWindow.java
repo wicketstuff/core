@@ -267,7 +267,7 @@ public abstract class InputWindow<T> extends Window<T>
 	}
 
 	/**
-	 * Gets a new {@link Component} that will be used as a label in the window.<br/>
+	 * Gets a new {@link Component} that will be used as a label in the window.<br>
 	 * Override this method when you need to show formatted label.
 	 *
 	 * @param id the markup-id
@@ -280,7 +280,7 @@ public abstract class InputWindow<T> extends Window<T>
 	}
 
 	/**
-	 * Gets a new {@link FormComponent} that will be used as an input.<br/>
+	 * Gets a new {@link FormComponent} that will be used as an input.<br>
 	 * Override this method when you need to use a {@code IValidator} or different input type, e.g. {@code NumberTextField} or {@code PasswordField}.
 	 * 
 	 * @param id the markup-id

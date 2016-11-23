@@ -167,7 +167,7 @@ public class Spinner<T extends Number> extends TextField<T> implements IJQueryCu
 	// Options //
 
 	/**
-	 * Sets the culture to use for parsing and formatting the value.<br/>
+	 * Sets the culture to use for parsing and formatting the value.<br>
 	 * <b>More:</b> https://github.com/jquery/globalize
 	 *
 	 * @param culture the culture to be used
@@ -215,8 +215,8 @@ public class Spinner<T extends Number> extends TextField<T> implements IJQueryCu
 	}
 
 	/**
-	 * Sets the min.<br/>
-	 * If Globalize is included, the min option can be passed as a string which will be parsed based on the numberFormat and culture options; otherwise it will fall back to the native parseFloat() method.<br/>
+	 * Sets the min.<br>
+	 * If Globalize is included, the min option can be passed as a string which will be parsed based on the numberFormat and culture options; otherwise it will fall back to the native parseFloat() method.<br>
 	 * <b>More:</b> https://github.com/jquery/globalize
 	 *
 	 * @param min the min
@@ -243,8 +243,8 @@ public class Spinner<T extends Number> extends TextField<T> implements IJQueryCu
 	}
 
 	/**
-	 * Sets the max.<br/>
-	 * If Globalize is included, the max option canbe passed as a string which will be parsed based on the numberFormat and culture options; otherwise it will fall back to the native parseFloat() method.<br/>
+	 * Sets the max.<br>
+	 * If Globalize is included, the max option canbe passed as a string which will be parsed based on the numberFormat and culture options; otherwise it will fall back to the native parseFloat() method.<br>
 	 * <b>More:</b> https://github.com/jquery/globalize
 	 *
 	 * @param max the max
@@ -259,7 +259,7 @@ public class Spinner<T extends Number> extends TextField<T> implements IJQueryCu
 
 	// Not activated for now, because of currency issue in Wicket (space before the currency symbol, WICKET-4988) and an issue in Java (space as thousand separator, in fr_FR for instance).
 	// /**
-	// * Format of numbers passed to Globalize, if available. Most common are "n" for a decimal number and "C" for a currency value. Also see the culture option.<br/>
+	// * Format of numbers passed to Globalize, if available. Most common are "n" for a decimal number and "C" for a currency value. Also see the culture option.<br>
 	// * <b>More: </b> https://github.com/jquery/globalize
 	// * <b>More: </b> http://api.jqueryui.com/spinner/#option-culture
 	// *

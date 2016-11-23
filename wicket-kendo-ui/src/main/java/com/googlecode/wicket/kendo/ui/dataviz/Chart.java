@@ -170,7 +170,7 @@ public class Chart<T> extends JQueryGenericContainer<List<T>> implements IChartL
 	}
 
 	/**
-	 * Reloads the {@link Chart}<br/>
+	 * Reloads the {@link Chart}<br>
 	 * Equivalent to {@code handler.add(table)}
 	 *
 	 * @param handler the {@link IPartialPageRequestHandler}

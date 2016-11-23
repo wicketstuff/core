@@ -86,7 +86,7 @@ public abstract class SelectableBehavior<T extends Serializable> extends JQueryU
 	protected abstract List<T> getItemList();
 
 	/**
-	 * Gets the selector that identifies the selectable item within a selectable item list<br/>
+	 * Gets the selector that identifies the selectable item within a selectable item list<br>
 	 * The selector should be the path from the selectable component to the item (for instance '#myUL LI', where '#myUL' is the selectable's selector)
 	 *
 	 * @return "li" by default

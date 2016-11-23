@@ -173,8 +173,8 @@ public class RangeDatePickerTextField extends FormComponentPanel<DateRange> impl
 	}
 
 	/**
-	 * Gets a new DateRange object<br/>
-	 * Called by the converter to get a new {@link DateRange} object from the input text.<br/>
+	 * Gets a new DateRange object<br>
+	 * Called by the converter to get a new {@link DateRange} object from the input text.<br>
 	 * 
 	 * @param start the start date
 	 * @param end the end date

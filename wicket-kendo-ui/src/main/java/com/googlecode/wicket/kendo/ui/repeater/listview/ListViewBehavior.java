@@ -155,7 +155,7 @@ public abstract class ListViewBehavior extends KendoUIBehavior implements IJQuer
 	}
 
 	/**
-	 * Gets the 'read' callback function<br/>
+	 * Gets the 'read' callback function<br>
 	 * As create, update and destroy need to be supplied as function, we should declare read as a function as well. Weird...
 	 *
 	 * @return the 'read' callback function

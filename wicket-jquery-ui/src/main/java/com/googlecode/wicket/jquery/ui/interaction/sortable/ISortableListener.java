@@ -28,7 +28,7 @@ import org.apache.wicket.util.io.IClusterable;
 public interface ISortableListener<T> extends IClusterable
 {
 	/**
-	 * Indicates whether the 'receive' event is enabled.<br />
+	 * Indicates whether the 'receive' event is enabled.<br>
 	 * If true, the {@link #onReceive(AjaxRequestTarget, Object, int)} event will be triggered.
 	 * 
 	 * @return false by default
@@ -36,7 +36,7 @@ public interface ISortableListener<T> extends IClusterable
 	boolean isOnReceiveEnabled();
 
 	/**
-	 * Indicates whether the 'remove' event is enabled.<br />
+	 * Indicates whether the 'remove' event is enabled.<br>
 	 * If true, the {@link #onRemove(AjaxRequestTarget, Object)} event will be triggered.
 	 * 
 	 * @return false by default

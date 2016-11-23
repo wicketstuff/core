@@ -28,7 +28,7 @@ import com.googlecode.wicket.jquery.core.template.JQueryAbstractTemplateBehavior
 import com.googlecode.wicket.jquery.core.template.JQueryTemplateResourceStream;
 
 /**
- * Provides the default implementation of {@link JQueryAbstractTemplateBehavior} that works with a {@link IJQueryTemplate}.<br/>
+ * Provides the default implementation of {@link JQueryAbstractTemplateBehavior} that works with a {@link IJQueryTemplate}.<br>
  * The content of the &lt;script /&gt; block (the resource stream) is given by the {@link IJQueryTemplate#getText()}
  * 
  * @author Sebastien Briquet - sebfz1

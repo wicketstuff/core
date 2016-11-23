@@ -208,7 +208,7 @@ public abstract class MessageWindow extends Window<String>
 	}
 
 	/**
-	 * Gets a new {@link Component} that will be used as a label in the window.<br/>
+	 * Gets a new {@link Component} that will be used as a label in the window.<br>
 	 * Override this method when you need to show formatted label.
 	 *
 	 * @param id the markup id

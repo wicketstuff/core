@@ -22,7 +22,7 @@ import com.googlecode.wicket.jquery.core.JQueryBehavior;
 import com.googlecode.wicket.jquery.core.JQueryEvent;
 
 /**
- * Specifies that the implementing class, usually a {@link JQueryBehavior}, is aware of ajax calls that may be made by a {@link JQueryAjaxBehavior}<br/>
+ * Specifies that the implementing class, usually a {@link JQueryBehavior}, is aware of ajax calls that may be made by a {@link JQueryAjaxBehavior}<br>
  * 
  * @author Sebastien Briquet - sebfz1
  * @see JQueryAjaxBehavior

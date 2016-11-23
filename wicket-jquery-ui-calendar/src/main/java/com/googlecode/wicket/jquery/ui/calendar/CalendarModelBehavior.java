@@ -46,7 +46,7 @@ public class CalendarModelBehavior extends AjaxCallbackBehavior
 	}
 
 	/**
-	 * Sets the start date to the model<br/>
+	 * Sets the start date to the model<br>
 	 * This can be overridden to perform additional operation on date before the assignment.
 	 *
 	 * @param model the {@link CalendarModel}
@@ -58,7 +58,7 @@ public class CalendarModelBehavior extends AjaxCallbackBehavior
 	}
 
 	/**
-	 * Sets the end date to the model<br/>
+	 * Sets the end date to the model<br>
 	 * This can be overridden to perform additional operation on date before the assignment.
 	 *
 	 * @param model the {@link CalendarModel}

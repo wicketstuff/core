@@ -139,7 +139,7 @@ public class AccordionPanel extends JQueryGenericPanel<List<ITab>> implements IA
 	}
 
 	/**
-	 * Activates the selected tab<br/>
+	 * Activates the selected tab<br>
 	 * <b>Warning: </b> invoking this method results to a dual client-server round-trip. Use this method if you cannot use {@link #setActiveTab(int)} followed by {@code target.add(myTabbedPannel)}
 	 *
 	 * @param index the tab's index to activate
@@ -185,8 +185,8 @@ public class AccordionPanel extends JQueryGenericPanel<List<ITab>> implements IA
 	// Methods //
 
 	/**
-	 * Reloads the {@link AccordionPanel}<br/>
-	 * <br/>
+	 * Reloads the {@link AccordionPanel}<br>
+	 * <br>
 	 * <b>Note:</b> This method should be used instead of {@code target.add(tabbedPanel)} if the underlying model is-a {@link TabListModel}
 	 * 
 	 * @param handler the {@link IPartialPageRequestHandler}

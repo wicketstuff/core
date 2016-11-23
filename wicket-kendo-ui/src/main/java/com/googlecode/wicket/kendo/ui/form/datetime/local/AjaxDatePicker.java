@@ -28,7 +28,7 @@ import com.googlecode.wicket.jquery.core.event.IValueChangedListener;
 import com.googlecode.wicket.kendo.ui.form.datetime.DatePickerBehavior;
 
 /**
- * Provides a Kendo UI ajax date-picker<br/>
+ * Provides a Kendo UI ajax date-picker<br>
  * {@code AjaxDatePicker} & {@code local.AjaxDatePicker} share the same code
  * 
  * @author Sebastien Briquet - sebfz1

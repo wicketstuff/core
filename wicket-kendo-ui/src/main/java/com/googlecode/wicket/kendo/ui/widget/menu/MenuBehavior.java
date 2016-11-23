@@ -96,7 +96,7 @@ public abstract class MenuBehavior extends KendoUIBehavior implements IJQueryAja
 	// Properties //
 
 	/**
-	 * Gets the reference map of hash/menu-item.<br/>
+	 * Gets the reference map of hash/menu-item.<br>
 	 *
 	 * @return the non-null {@link Map}
 	 */

@@ -93,11 +93,11 @@ public class DroppableBehavior extends KendoUIBehavior implements IJQueryAjaxAwa
 	}
 
 	/**
-	 * Gets the javascript statement that will we executed on 'dragenter' event<br/>
-	 * The event variable is {@code 'e'}<br />
-	 * e.target Element, The current Draggable element.<br />
-	 * e.draggable kendo.ui.Draggable, Reference to the Draggable instance that enters a drop target.<br />
-	 * e.dropTarget jQuery, The current DropTarget element in the area that initiated the event.<br />
+	 * Gets the javascript statement that will we executed on 'dragenter' event<br>
+	 * The event variable is {@code 'e'}<br>
+	 * e.target Element, The current Draggable element.<br>
+	 * e.draggable kendo.ui.Draggable, Reference to the Draggable instance that enters a drop target.<br>
+	 * e.dropTarget jQuery, The current DropTarget element in the area that initiated the event.<br>
 	 * 
 	 * @return the javascript statement
 	 */
@@ -107,11 +107,11 @@ public class DroppableBehavior extends KendoUIBehavior implements IJQueryAjaxAwa
 	}
 
 	/**
-	 * Gets the javascript statement that will we executed on 'dragleave' event<br/>
+	 * Gets the javascript statement that will we executed on 'dragleave' event<br>
 	 * The event variable is {@code 'e'}
-	 * e.target Element, The current Draggable element.<br />
-	 * e.draggable kendo.ui.Draggable, Reference to the Draggable instance that enters a drop target.<br />
-	 * e.dropTarget jQuery, The current DropTarget element in the area that initiated the event.<br />
+	 * e.target Element, The current Draggable element.<br>
+	 * e.draggable kendo.ui.Draggable, Reference to the Draggable instance that enters a drop target.<br>
+	 * e.dropTarget jQuery, The current DropTarget element in the area that initiated the event.<br>
 	 * 
 	 * @return the javascript statement
 	 */
@@ -121,11 +121,11 @@ public class DroppableBehavior extends KendoUIBehavior implements IJQueryAjaxAwa
 	}
 
 	/**
-	 * Gets the javascript statement that will we executed on 'drop' event<br/>
+	 * Gets the javascript statement that will we executed on 'drop' event<br>
 	 * The event variable is {@code 'e'}
-	 * e.target Element, The current Draggable element.<br />
-	 * e.draggable kendo.ui.Draggable, Reference to the Draggable instance that enters a drop target.<br />
-	 * e.dropTarget jQuery, The current DropTarget element in the area that initiated the event.<br />
+	 * e.target Element, The current Draggable element.<br>
+	 * e.draggable kendo.ui.Draggable, Reference to the Draggable instance that enters a drop target.<br>
+	 * e.dropTarget jQuery, The current DropTarget element in the area that initiated the event.<br>
 	 * 
 	 * @return the javascript statement
 	 */

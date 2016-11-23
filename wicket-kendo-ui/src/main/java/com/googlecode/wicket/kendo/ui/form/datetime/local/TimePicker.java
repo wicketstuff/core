@@ -31,7 +31,7 @@ import com.googlecode.wicket.jquery.core.utils.LocaleUtils;
 import com.googlecode.wicket.kendo.ui.form.datetime.TimePickerBehavior;
 
 /**
- * Provides a Kendo UI time-picker based on a {@link LocalTextField}<br/>
+ * Provides a Kendo UI time-picker based on a {@link LocalTextField}<br>
  * It should be created on a HTML &lt;input type="text" /&gt; element
  *
  * @author Sebastien Briquet - sebfz1

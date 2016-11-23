@@ -157,9 +157,9 @@ public class DialogButton implements IClusterable
 	}
 
 	/**
-	 * INTERNAL USE<br/>
-	 * Gets the model of the button's text<br/>
-	 * <br/>
+	 * INTERNAL USE<br>
+	 * Gets the model of the button's text<br>
+	 * <br>
 	 * <b>Warning: </b> It may throw an Exception if not wrapped to a component
 	 *
 	 * @return the {@link IModel}
@@ -256,7 +256,7 @@ public class DialogButton implements IClusterable
 	}
 
 	/**
-	 * Gets the markupId of the specified button.<br/>
+	 * Gets the markupId of the specified button.<br>
 	 * This can be used to enable/disable the button
 	 *
 	 * @return the markupId
@@ -326,7 +326,7 @@ public class DialogButton implements IClusterable
 	}
 
 	/**
-	 * Indicates whether this {@link DialogButton} is equal to another {@link DialogButton}.<br/>
+	 * Indicates whether this {@link DialogButton} is equal to another {@link DialogButton}.<br>
 	 * Are considered equals buttons having the same text representation, which is the text supplied to the constructor (if {@link #toString()} is not overridden).
 	 *
 	 * @param object the {@link DialogButton} to compare to

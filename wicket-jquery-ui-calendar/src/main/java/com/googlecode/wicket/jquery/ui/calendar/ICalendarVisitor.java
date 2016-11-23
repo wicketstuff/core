@@ -18,7 +18,7 @@ package com.googlecode.wicket.jquery.ui.calendar;
 
 
 /**
- * Provides the ability for a {@link CalendarEvent} to be visited by a {@link CalendarModel}, after events have been retrieved by the {@link CalendarModelBehavior} (after {@link CalendarModel#load()}) <br/>
+ * Provides the ability for a {@link CalendarEvent} to be visited by a {@link CalendarModel}, after events have been retrieved by the {@link CalendarModelBehavior} (after {@link CalendarModel#load()}) <br>
  * A typical use is to set the css class-name ({@link CalendarEvent#setClassName(String)}) depending on another property.
  *
  * @author Sebastien Briquet - sebfz1

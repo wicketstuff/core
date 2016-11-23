@@ -132,7 +132,7 @@ public class KendoFeedbackPanel extends WebMarkupContainer implements IJQueryWid
 	}
 
 	/**
-	 * Calls {@link Strings#escapeMarkup(CharSequence, boolean, boolean)} by default, if {@link #getEscapeModelStrings()} returns {@code true}<br />
+	 * Calls {@link Strings#escapeMarkup(CharSequence, boolean, boolean)} by default, if {@link #getEscapeModelStrings()} returns {@code true}<br>
 	 * This can be overridden to provide additional escaping
 	 * 
 	 * @param message the message to format

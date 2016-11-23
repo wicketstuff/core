@@ -67,7 +67,7 @@ public class InputWindowPage extends AbstractWindowPage
 	}
 
 	/**
-	 * This input window is an inner class to ease the l10n of button.<br/>
+	 * This input window is an inner class to ease the l10n of button.<br>
 	 * Therefore the new button value(s) are located in InputWindowPage$MyInputWindow.properties
 	 */
 	private abstract static class MyInputWindow extends InputWindow<String>

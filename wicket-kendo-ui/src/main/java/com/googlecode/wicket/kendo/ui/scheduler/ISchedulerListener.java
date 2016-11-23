@@ -30,15 +30,15 @@ import com.googlecode.wicket.kendo.ui.scheduler.views.SchedulerViewType;
 public interface ISchedulerListener extends IClusterable
 {
 	/**
-	 * Indicates whether a edit-event is enabled.<br/>
-	 * If true, the {@link #onEdit(AjaxRequestTarget, SchedulerEvent, SchedulerViewType)} event will be triggered by clicking an event or a free event slot.<br/>
+	 * Indicates whether a edit-event is enabled.<br>
+	 * If true, the {@link #onEdit(AjaxRequestTarget, SchedulerEvent, SchedulerViewType)} event will be triggered by clicking an event or a free event slot.<br>
 	 *
 	 * <p>
 	 * This can be useful to implement a custom dialog. If false the internal event handling will proceed and opens the Scheduler's dialog (see {@link #onUpdate(AjaxRequestTarget, SchedulerEvent)} to process the dialog results).
 	 * </p>
 	 *
 	 * <p>
-	 * <b>Note:</b> {@code true} will prevent the internal event handling (by using e.preventDefault()) to avoid conflicts with Scheduler's dialog.<br/>
+	 * <b>Note:</b> {@code true} will prevent the internal event handling (by using e.preventDefault()) to avoid conflicts with Scheduler's dialog.<br>
 	 * </p>
 	 *
 	 * @return false by default
@@ -46,7 +46,7 @@ public interface ISchedulerListener extends IClusterable
 	boolean isEditEnabled();
 
 	/**
-	 * Triggered when a {@link SchedulerEvent} should be edit.<br/>
+	 * Triggered when a {@link SchedulerEvent} should be edit.<br>
 	 * This occurs on clicking an event or clicking a free slot, as well. Use {@link SchedulerEvent#isNew(SchedulerEvent)} to determine the use-case.
 	 *
 	 * @param target the {@link AjaxRequestTarget}

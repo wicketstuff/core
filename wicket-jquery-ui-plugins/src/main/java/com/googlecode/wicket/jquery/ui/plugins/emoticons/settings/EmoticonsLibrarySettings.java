@@ -22,8 +22,8 @@ import com.googlecode.wicket.jquery.ui.plugins.emoticons.resource.EmoticonsJavaS
 import com.googlecode.wicket.jquery.ui.plugins.emoticons.resource.EmoticonsStyleSheetResourceReference;
 
 /**
- * Provides library settings for jQuery emoticons plugin resource references<br/>
- * <br/>
+ * Provides library settings for jQuery emoticons plugin resource references<br>
+ * <br>
  * Usage:
  *
  * <pre>

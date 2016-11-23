@@ -90,7 +90,7 @@ public class WindowBehavior extends KendoUIBehavior implements IJQueryAjaxAware
 	}
 
 	/**
-	 * Opens the window in ajax.<br/>
+	 * Opens the window in ajax.<br>
 	 *
 	 * @param handler the {@link IPartialPageRequestHandler}
 	 */
@@ -105,7 +105,7 @@ public class WindowBehavior extends KendoUIBehavior implements IJQueryAjaxAware
 	}
 
 	/**
-	 * Closes the window in ajax.<br/>
+	 * Closes the window in ajax.<br>
 	 *
 	 * @param handler the {@link IPartialPageRequestHandler}
 	 */

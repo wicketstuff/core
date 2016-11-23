@@ -22,7 +22,7 @@ import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.model.IModel;
 
 /**
- * Provides a {@link Panel} that just contains a {@link Label}<br/>
+ * Provides a {@link Panel} that just contains a {@link Label}<br>
  * This is used, for instance, when a {@link WebMarkupContainer} is expected but just a Label is needed.
  *
  * @author Sebastien Briquet - sebfz1

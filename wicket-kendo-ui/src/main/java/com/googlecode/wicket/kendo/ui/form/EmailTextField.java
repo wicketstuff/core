@@ -23,9 +23,9 @@ import org.apache.wicket.validation.IValidator;
 import com.googlecode.wicket.jquery.core.IJQueryWidget;
 
 /**
- * Provides a {@link org.apache.wicket.markup.html.form.EmailTextField} with the Kendo-ui style<br/>
- * <br/>
- * <b>Note:</b> {@link EmailTextField} is not a {@link IJQueryWidget} (no corresponding widget is supplied by Kendo UI)<br/>
+ * Provides a {@link org.apache.wicket.markup.html.form.EmailTextField} with the Kendo-ui style<br>
+ * <br>
+ * <b>Note:</b> {@link EmailTextField} is not a {@link IJQueryWidget} (no corresponding widget is supplied by Kendo UI)<br>
  * It means that required Kendo UI dependencies (javascript/stylesheet) are not automatically added.
  *
  * @author Sebastien Briquet - sebfz1

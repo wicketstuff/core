@@ -28,7 +28,7 @@ import org.apache.wicket.util.io.IClusterable;
 public interface IDatePickerListener extends IClusterable
 {
 	/**
-	 * Indicates whether the 'onSelect' event is enabled.<br/>
+	 * Indicates whether the 'onSelect' event is enabled.<br>
 	 * If true, the {@link #onSelect(AjaxRequestTarget, String)} event will be triggered
 	 *
 	 * @return false by default

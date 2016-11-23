@@ -28,7 +28,7 @@ import org.apache.wicket.util.io.IClusterable;
 public interface ITreeViewListener extends IClusterable
 {
 	/**
-	 * Indicates whether the 'expand' event is enabled.<br />
+	 * Indicates whether the 'expand' event is enabled.<br>
 	 * If true, the {@link #onExpand(AjaxRequestTarget, int)} event will be triggered
 	 *
 	 * @return false by default
@@ -36,7 +36,7 @@ public interface ITreeViewListener extends IClusterable
 	boolean isExpandEventEnabled();
 
 	/**
-	 * Indicates whether the 'select' event is enabled.<br />
+	 * Indicates whether the 'select' event is enabled.<br>
 	 * If true, the {@link #onSelect(AjaxRequestTarget, int, String)} event will be triggered
 	 *
 	 * @return false by default

@@ -21,7 +21,7 @@ import org.apache.wicket.resource.JQueryPluginResourceReference;
 import com.googlecode.wicket.jquery.core.settings.JQueryLibrarySettings;
 
 /**
- * The resource reference for the jQuery Globalize javascript library.<br/>
+ * The resource reference for the jQuery Globalize javascript library.<br>
  * This reference is not added by default. See {@link JQueryLibrarySettings}.
  *
  * @author Sebastien Briquet - sebfz1

@@ -22,8 +22,8 @@ import org.apache.wicket.markup.head.JavaScriptReferenceHeaderItem;
 import com.googlecode.wicket.jquery.core.settings.JQueryLibrarySettings;
 
 /**
- * {@link HeaderItem} in charge of adding the jQuery Globalize library<br/>
- * Usage:<br/>
+ * {@link HeaderItem} in charge of adding the jQuery Globalize library<br>
+ * Usage:<br>
  * <code>
  * <pre>
  * public void renderHead(IHeaderResponse response)

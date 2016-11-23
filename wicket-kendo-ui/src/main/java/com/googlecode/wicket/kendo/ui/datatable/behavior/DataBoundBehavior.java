@@ -24,7 +24,7 @@ import com.googlecode.wicket.kendo.ui.datatable.DataTable;
 import com.googlecode.wicket.kendo.ui.datatable.DataTableBehavior;
 
 /**
- * Provides a {@link DataTable} {@code Behavior} that allows to register a 'dataBound' callback.<br/>
+ * Provides a {@link DataTable} {@code Behavior} that allows to register a 'dataBound' callback.<br>
  * <b>Warning:</b> In order to work correctly, you should use {@code DataTable#refresh} in place of {@code AjaxRequestTarget#add(datatable)}
  * 
  * @author Sebastien Briquet - sebfz1

@@ -22,8 +22,8 @@ import com.googlecode.wicket.jquery.ui.plugins.sfmenu.resource.SuperfishStyleShe
 import com.googlecode.wicket.jquery.ui.plugins.sfmenu.resource.SuperfishVerticalStyleSheetResourceReference;
 
 /**
- * Provides library settings for superfish css resource references<br/>
- * <br/>
+ * Provides library settings for superfish css resource references<br>
+ * <br>
  * Usage:
  *
  * <pre>

@@ -28,7 +28,7 @@ import com.googlecode.wicket.jquery.core.event.SelectionChangedWrapper;
 import com.googlecode.wicket.kendo.ui.ajax.OnChangeAjaxBehavior;
 
 /**
- * Provides a Kendo UI DropDownList widget.<br/>
+ * Provides a Kendo UI DropDownList widget.<br>
  * This ajax version will post the component, using a {@link OnChangeAjaxBehavior}, when the 'change' javascript method is called.
  *
  * @author Sebastien Briquet - sebfz1

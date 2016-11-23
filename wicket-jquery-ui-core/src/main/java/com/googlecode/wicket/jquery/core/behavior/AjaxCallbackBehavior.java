@@ -24,8 +24,8 @@ import org.apache.wicket.request.handler.TextRequestHandler;
 import org.apache.wicket.settings.RequestCycleSettings;
 
 /**
- * Provides an ajax endpoint that sends a "text" response<br/>
- * The default content type is "application/json" <br/>
+ * Provides an ajax endpoint that sends a "text" response<br>
+ * The default content type is "application/json" <br>
  * The default encoding is the current {@code Application}'s {@link RequestCycleSettings} 
  * 
  * @author Sebastien Briquet - sebfz1
@@ -89,8 +89,8 @@ public abstract class AjaxCallbackBehavior extends AbstractAjaxBehavior
 	// Events //
 
 	/**
-	 * {@inheritDoc}<br/>
-	 * <br/>
+	 * {@inheritDoc}<br>
+	 * <br>
 	 * <b>Warning:</b> Overridden methods should call {@code super.onRequest()}
 	 */
 	@Override

@@ -25,9 +25,9 @@ import com.googlecode.wicket.kendo.ui.widget.menu.Menu;
 import com.googlecode.wicket.kendo.ui.widget.menu.item.IMenuItem;
 
 /**
- * A specialization of {@link Form} that could be used for menu items with form components.<br/>
- * Suppresses the JavaScript click event for the whole menu item but the underlying &lt;button&gt;s, so the 'select' event is still fired and {@link Menu#onClick(AjaxRequestTarget, IMenuItem)} triggered<br/>
- * <br/>
+ * A specialization of {@link Form} that could be used for menu items with form components.<br>
+ * Suppresses the JavaScript click event for the whole menu item but the underlying &lt;button&gt;s, so the 'select' event is still fired and {@link Menu#onClick(AjaxRequestTarget, IMenuItem)} triggered<br>
+ * <br>
  * It is recommended to use {@link MenuItemAjaxButton} for underlying buttons because bubbling is already handled
  * 
  * @author Martin Grigorov - martin-g

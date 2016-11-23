@@ -57,7 +57,7 @@ public interface IColumn extends IClusterable
 	int getWidth();
 
 	/**
-	 * The pixel screen width below which the column will be hidden.<br/>
+	 * The pixel screen width below which the column will be hidden.<br>
 	 * The setting takes precedence over the hidden setting, so the two should not be used at the same time.
 	 * 
 	 * @return 0 by default
@@ -83,8 +83,8 @@ public interface IColumn extends IClusterable
 	String getFormat();
 
 	/**
-	 * The template which renders the column content.<br/>
-	 * ie: {@code return "<a href='?id=#:data.id#'>#:data.id#</a>"}<br/>
+	 * The template which renders the column content.<br>
+	 * ie: {@code return "<a href='?id=#:data.id#'>#:data.id#</a>"}<br>
 	 * TODO: make it work for function(?)
 	 *
 	 * @return the template or {@code null} if it does not apply
@@ -107,8 +107,8 @@ public interface IColumn extends IClusterable
 	String getFooterTemplate();
 
 	/**
-	 * If set to true a filter menu will be displayed for this column when filtering is enabled.<br/>
-	 * If set to false the filter menu will not be displayed.<br/>
+	 * If set to true a filter menu will be displayed for this column when filtering is enabled.<br>
+	 * If set to false the filter menu will not be displayed.<br>
 	 * By default a filter menu is displayed for all columns when filtering is enabled via the filterable option.
 	 *
 	 * @return the {@code filterable} object; ie: {@code true} or <code>{ extra: false }</code>
@@ -165,7 +165,7 @@ public interface IColumn extends IClusterable
 	Boolean isNullable();
 
 	/**
-	 * Get the field's type<br/>
+	 * Get the field's type<br>
 	 * Available options are "string", "number", "boolean", "date".
 	 *
 	 * @return the the field's type

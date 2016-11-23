@@ -24,8 +24,8 @@ import com.googlecode.wicket.jquery.core.JQueryPanel;
 import com.googlecode.wicket.jquery.core.Options;
 
 /**
- * Provides a jQuery UI resizable {@link JQueryPanel}.<br/>
- * <br/>
+ * Provides a jQuery UI resizable {@link JQueryPanel}.<br>
+ * <br>
  * This class is marked as {@code abstract} because no markup is associated with this panel. It is up to the user to supply the corresponding markup.
  *
  * @author Sebastien Briquet - sebfz1

@@ -28,7 +28,7 @@ import com.googlecode.wicket.jquery.core.event.SelectionChangedWrapper;
 import com.googlecode.wicket.jquery.ui.ajax.OnChangeAjaxBehavior;
 
 /**
- * Provides a JQuery UI Selectmenu widget (DropDownChoice).<br/>
+ * Provides a JQuery UI Selectmenu widget (DropDownChoice).<br>
  * This ajax version will post the component, using a {@link OnChangeAjaxBehavior}, when the 'change' javascript method is called.
  *
  * @author Patrick Davids - Patrick1701

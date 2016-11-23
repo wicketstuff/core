@@ -36,7 +36,7 @@ import com.googlecode.wicket.jquery.ui.JQueryUIBehavior;
 import com.googlecode.wicket.jquery.ui.widget.tabs.AjaxTab;
 
 /**
- * Provides a jQuery accordion behavior.<br/>
+ * Provides a jQuery accordion behavior.<br>
  * Note, this class has almost the same code as TabsBehavior
  *
  * @author Sebastien Briquet - sebfz1
@@ -80,7 +80,7 @@ public abstract class AccordionBehavior extends JQueryUIBehavior implements IJQu
 	// Properties //
 
 	/**
-	 * Gets the reference {@link List} of {@link ITab}{@code s}.<br/>
+	 * Gets the reference {@link List} of {@link ITab}{@code s}.<br>
 	 * Usually the model object of the component on which this {@link AccordionBehavior} is bound to.
 	 *
 	 * @return a non-null {@link List}

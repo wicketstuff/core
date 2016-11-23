@@ -60,7 +60,7 @@ public class LoadingPanel extends Panel
 	}
 
 	/**
-	 * Gets the placeholder component (the label) that contains the loading indicator.<br/>
+	 * Gets the placeholder component (the label) that contains the loading indicator.<br>
 	 * This component is designed to be replaced by another component (like a lazy-loaded component)
 	 *
 	 * @return the {@link Component} being replaced

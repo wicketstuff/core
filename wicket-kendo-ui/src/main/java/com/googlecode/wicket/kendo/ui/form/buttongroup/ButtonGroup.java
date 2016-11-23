@@ -176,8 +176,8 @@ public class ButtonGroup<T extends Serializable> extends FormComponentPanel<T> i
 	// Properties //
 
 	/**
-	 * Indicates whether the 'select' event is enabled.<br />
-	 * If true, the {@link #onSelect(AjaxRequestTarget, int)} event will be triggered.<br />
+	 * Indicates whether the 'select' event is enabled.<br>
+	 * If true, the {@link #onSelect(AjaxRequestTarget, int)} event will be triggered.<br>
 	 * <b>Note:</b> this property is not part of the {@link IButtonGroupListener} as it is done usually, because it does not condition the {@link OnSelectAjaxBehavior} binding
 	 *
 	 * @return false by default

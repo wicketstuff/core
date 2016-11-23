@@ -195,7 +195,7 @@ public class DynamicWizardPage extends AbstractWizardPage
 		}
 
 		/**
-		 * Provides the 'Name and email' step<br/>
+		 * Provides the 'Name and email' step<br>
 		 * Associated markup file is DefaultWizardPage$UserWizard$Step1.html
 		 */
 		class Step1 extends DynamicWizardStep
@@ -224,7 +224,7 @@ public class DynamicWizardPage extends AbstractWizardPage
 		}
 
 		/**
-		 * Provides the 'Role' step<br/>
+		 * Provides the 'Role' step<br>
 		 * Associated markup file is DefaultWizardPage$UserWizard$Step2.html
 		 */
 		class Step2 extends DynamicWizardStep
@@ -253,7 +253,7 @@ public class DynamicWizardPage extends AbstractWizardPage
 		}
 
 		/**
-		 * Provides the 'avatar' step<br/>
+		 * Provides the 'avatar' step<br>
 		 * Associated markup file is DefaultWizardPage$UserWizard$Step3.html
 		 */
 		class Step3 extends DynamicWizardStep

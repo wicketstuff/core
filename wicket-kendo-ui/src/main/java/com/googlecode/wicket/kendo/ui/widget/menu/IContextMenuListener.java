@@ -27,7 +27,7 @@ import org.apache.wicket.ajax.AjaxRequestTarget;
 interface IContextMenuListener extends IMenuListener
 {
 	/**
-	 * Indicates whether the 'open' event is enabled.<br />
+	 * Indicates whether the 'open' event is enabled.<br>
 	 * If true, the {@link #onOpen(AjaxRequestTarget)} event will be triggered.
 	 *
 	 * @return false by default

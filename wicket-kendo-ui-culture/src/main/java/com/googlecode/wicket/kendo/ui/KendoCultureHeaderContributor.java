@@ -8,10 +8,10 @@ import org.apache.wicket.markup.head.IHeaderResponse;
 import org.apache.wicket.markup.html.IHeaderContributor;
 
 /**
- * {@link IHeaderContributor} to automatically add the {@link KendoCultureHeaderItem} to each rendered page, using the specified culture.<br/>
+ * {@link IHeaderContributor} to automatically add the {@link KendoCultureHeaderItem} to each rendered page, using the specified culture.<br>
  * If no culture is specified, the Session's Locale *culture* will be used. If that culture is invalid, the Session's Locale *language* will be used. If Session's Locale *language* is still invalid, the {@code IHeaderContributor} will not
- * be rendered, providing a natural fallback to default widget's culture/language.<br/>
- * <br/>
+ * be rendered, providing a natural fallback to default widget's culture/language.<br>
+ * <br>
  * Usage:
  * 
  * <pre>

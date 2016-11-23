@@ -212,7 +212,7 @@ public abstract class AbstractDialog<T extends Serializable> extends GenericPane
 	}
 
 	/**
-	 * Triggered when a button is clicked<br/>
+	 * Triggered when a button is clicked<br>
 	 * This method may be overridden to handle button behaviors, but the dialog will not been closed until {@code super.onClick(event)} or {@link #close(IPartialPageRequestHandler, DialogButton)} is called.
 	 */
 	@Override
@@ -222,7 +222,7 @@ public abstract class AbstractDialog<T extends Serializable> extends GenericPane
 	}
 
 	/**
-	 * Internal onClick method, fired by the behavior<br/>
+	 * Internal onClick method, fired by the behavior<br>
 	 * The purpose of this method is to prevent the behavior calling {@link #onClick(AjaxRequestTarget, DialogButton)} directly, as {@code onClick} is implemented by default
 	 * 
 	 * @param target the {@link AjaxRequestTarget}
@@ -244,8 +244,8 @@ public abstract class AbstractDialog<T extends Serializable> extends GenericPane
 	// Properties //
 
 	/**
-	 * Gets the dialog's buttons.<br/>
-	 * It is allowed to return a predefined list (ie: DialogButtons#OK_CANCEL#toList()) as long as the buttons state (enable and/or visible) are not modified<br/>
+	 * Gets the dialog's buttons.<br>
+	 * It is allowed to return a predefined list (ie: DialogButtons#OK_CANCEL#toList()) as long as the buttons state (enable and/or visible) are not modified<br>
 	 * <b>Warning: </b>It is not legal to create the buttons to be returned in this method.
 	 *
 	 * @return {@link #btnOk} by default
@@ -435,7 +435,7 @@ public abstract class AbstractDialog<T extends Serializable> extends GenericPane
 	// Factories //
 
 	/**
-	 * Gets a new {@link ButtonAjaxBehavior} that will be called by the corresponding {@link DialogButton}.<br/>
+	 * Gets a new {@link ButtonAjaxBehavior} that will be called by the corresponding {@link DialogButton}.<br>
 	 * This method may be overridden to provide additional behaviors
 	 *
 	 * @param source the {@link IJQueryAjaxAware} source

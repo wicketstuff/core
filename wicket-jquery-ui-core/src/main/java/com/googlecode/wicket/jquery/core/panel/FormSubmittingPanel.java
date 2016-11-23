@@ -73,8 +73,8 @@ public abstract class FormSubmittingPanel<T> extends GenericPanel<T> implements 
 	protected void submit(IPartialPageRequestHandler handler)
 	{
 		/**
-		 * As the Form is posted, Form#findSubmittingButton() expects to retrieve this component by the request parameter 'name'.<br/>
-		 * But this component (panel) is not an input, so it does not have a name attribute. <br/>
+		 * As the Form is posted, Form#findSubmittingButton() expects to retrieve this component by the request parameter 'name'.<br>
+		 * But this component (panel) is not an input, so it does not have a name attribute. <br>
 		 * The name should match the #getInputName() path
 		 */
 		String input = String.format("<input type=\"hidden\" name=\"%s\" value=\"\" />", this.getInputName());

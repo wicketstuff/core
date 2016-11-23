@@ -28,8 +28,8 @@ import com.googlecode.wicket.jquery.core.JQueryBehavior;
 import com.googlecode.wicket.jquery.core.JQueryEvent;
 
 /**
- * Base class for implementing AJAX GET calls to a {@link IJQueryAjaxAware} source, which is usually a {@link JQueryBehavior}<br />
- * <br />
+ * Base class for implementing AJAX GET calls to a {@link IJQueryAjaxAware} source, which is usually a {@link JQueryBehavior}<br>
+ * <br>
  * <b>Example</b>
  * 
  * <pre>
@@ -194,7 +194,7 @@ public abstract class JQueryAjaxBehavior extends AbstractDefaultAjaxBehavior
 	}
 
 	/**
-	 * Gets the {@link CallbackParameter}{@code s} that *may* be passed to {@link #getCallbackFunction(CallbackParameter...)}<br/>
+	 * Gets the {@link CallbackParameter}{@code s} that *may* be passed to {@link #getCallbackFunction(CallbackParameter...)}<br>
 	 * This is a convenience method that allows to define {@link CallbackParameter}{@code s} before the invocation of {@link #getCallbackFunction(CallbackParameter...)}.
 	 *
 	 * @return an array of {@link CallbackParameter}

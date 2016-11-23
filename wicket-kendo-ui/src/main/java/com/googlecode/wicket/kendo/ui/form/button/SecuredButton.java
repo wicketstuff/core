@@ -26,7 +26,7 @@ import com.googlecode.wicket.jquery.core.IJQuerySecurityProvider;
 import com.googlecode.wicket.kendo.ui.KendoIcon;
 
 /**
- * Provides a Kendo UI button based on the built-in Button, protected by roles. Roles are checked against an {@link IJQuerySecurityProvider}<br/>
+ * Provides a Kendo UI button based on the built-in Button, protected by roles. Roles are checked against an {@link IJQuerySecurityProvider}<br>
  * Assuming the {@link WebSession} is implementing {@link IJQuerySecurityProvider} if not provided.
  *
  * @author Sebastien Briquet - sebfz1

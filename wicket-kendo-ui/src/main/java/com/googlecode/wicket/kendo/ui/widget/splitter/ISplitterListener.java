@@ -28,7 +28,7 @@ import org.apache.wicket.util.io.IClusterable;
 public interface ISplitterListener extends IClusterable
 {
 	/**
-	 * Indicates whether the 'expand' event is enabled.<br />
+	 * Indicates whether the 'expand' event is enabled.<br>
 	 * If true, the {@link #onExpand(AjaxRequestTarget, String)} event will be triggered.
 	 *
 	 * @return false by default
@@ -36,7 +36,7 @@ public interface ISplitterListener extends IClusterable
 	boolean isExpandEventEnabled();
 
 	/**
-	 * Indicates whether the 'collapse' event is enabled.<br />
+	 * Indicates whether the 'collapse' event is enabled.<br>
 	 * If true, the {@link #onCollapse(AjaxRequestTarget, String)} event will be triggered.
 	 *
 	 * @return false by default

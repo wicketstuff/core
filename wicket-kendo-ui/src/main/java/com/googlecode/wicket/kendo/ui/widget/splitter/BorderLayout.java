@@ -24,11 +24,11 @@ import org.apache.wicket.markup.html.WebMarkupContainer;
 import com.googlecode.wicket.jquery.core.Options;
 
 /**
- * Provides a Border Layout {@link WebMarkupContainer} based on vertical and horizontal {@link SplitterBehavior}{@code s}<br/>
- * {@link #getVerticalPanes()} and {@link #getHorizontalPanes()} may be overridden to change the default layout<br/>
- * <br/>
- * <b>Note:</b> the {@link BorderLayout} IS a {@link WebMarkupContainer}. If you wish to apply a {@link BorderLayout} on an existing Page or an existing Panel, consider implementing the {@link IBorderLayout} interface.<br/>
- * <br/>
+ * Provides a Border Layout {@link WebMarkupContainer} based on vertical and horizontal {@link SplitterBehavior}{@code s}<br>
+ * {@link #getVerticalPanes()} and {@link #getHorizontalPanes()} may be overridden to change the default layout<br>
+ * <br>
+ * <b>Note:</b> the {@link BorderLayout} IS a {@link WebMarkupContainer}. If you wish to apply a {@link BorderLayout} on an existing Page or an existing Panel, consider implementing the {@link IBorderLayout} interface.<br>
+ * <br>
  * Alternatively, the HTML markup look like:
  *
  * <pre>
@@ -96,7 +96,7 @@ public class BorderLayout extends WebMarkupContainer implements IBorderLayout, I
 	}
 
 	/**
-	 * Expands the specified pane<br/>
+	 * Expands the specified pane<br>
 	 * <b>Note: </b> Invoking the method will not trigger an expand event.
 	 *
 	 * @param handler the {@link IPartialPageRequestHandler}
@@ -109,7 +109,7 @@ public class BorderLayout extends WebMarkupContainer implements IBorderLayout, I
 	}
 
 	/**
-	 * Collapses the specified pane<br/>
+	 * Collapses the specified pane<br>
 	 * <b>Note: </b> Invoking the method will not trigger a collapse event.
 	 *
 	 * @param handler the {@link IPartialPageRequestHandler}

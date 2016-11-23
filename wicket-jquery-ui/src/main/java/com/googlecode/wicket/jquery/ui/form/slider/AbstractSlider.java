@@ -82,7 +82,7 @@ public abstract class AbstractSlider<T> extends FormComponentPanel<T> implements
 	}
 
 	/**
-	 * Initialization, should be called *manually* by overridden classes, in their constructors.<br/>
+	 * Initialization, should be called *manually* by overridden classes, in their constructors.<br>
 	 * <b>Warning:</b> Options should not be set before this method has been called.
 	 */
 	void initialize()
@@ -99,11 +99,11 @@ public abstract class AbstractSlider<T> extends FormComponentPanel<T> implements
 	public abstract void convertInput();
 
 	/**
-	 * Adds a {@link RangeValidator} so slider value(s) are valid only if comprised between minimum and maximum.<br/>
-	 * <br/>
-	 * <b>Warning:</b> it does not define the minimum and maximum values the slider can slide on, but only valid ones.<br/>
-	 * To define the minimum and maximum values the slider can slide on, use {@link #setMin(Integer)} and {@link #setMax(Integer)}<br/>
-	 * <br/>
+	 * Adds a {@link RangeValidator} so slider value(s) are valid only if comprised between minimum and maximum.<br>
+	 * <br>
+	 * <b>Warning:</b> it does not define the minimum and maximum values the slider can slide on, but only valid ones.<br>
+	 * To define the minimum and maximum values the slider can slide on, use {@link #setMin(Integer)} and {@link #setMax(Integer)}<br>
+	 * <br>
 	 * <b>Dev note:</b> this method is masked abstract to make sure the developer that will add the validator to the right input(s) in {@link #onInitialize()}
 	 *
 	 * @param <W> the widget type
@@ -115,7 +115,7 @@ public abstract class AbstractSlider<T> extends FormComponentPanel<T> implements
 	// Properties //
 
 	/**
-	 * Sets the label's markupId on which the current slide value will be displayed.<br/>
+	 * Sets the label's markupId on which the current slide value will be displayed.<br>
 	 * <b>Warning:</b> It cannot be set/changed once the Component has been initialized.
 	 *
 	 * @param markupId the label's markupId
@@ -158,7 +158,7 @@ public abstract class AbstractSlider<T> extends FormComponentPanel<T> implements
 	// Factory //
 
 	/**
-	 * Gets a new {@link Fragment} containing the input<br/>
+	 * Gets a new {@link Fragment} containing the input<br>
 	 * Overridden methods should provide a {@link Fragment} containing input(s) when no input(s) has been specified in implementation constructors.
 	 *
 	 * @param id the markup id

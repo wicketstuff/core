@@ -26,9 +26,9 @@ import org.apache.wicket.model.Model;
 import org.apache.wicket.util.lang.Args;
 
 /**
- * Provides the base class for Kendo UI console widget<br/>
- * <b>Note about the capacity:</b> the capacity allows to define a maximum number of messages.<br/>
- * Elder messages will be automatically removed from the model object on insertion.<br/>
+ * Provides the base class for Kendo UI console widget<br>
+ * <b>Note about the capacity:</b> the capacity allows to define a maximum number of messages.<br>
+ * Elder messages will be automatically removed from the model object on insertion.<br>
  * However, this is only reflected when the component is (re-)rendered ({@link #onBeforeRender()} has to be invoked)
  *
  * @author Sebastien Briquet - sebfz1

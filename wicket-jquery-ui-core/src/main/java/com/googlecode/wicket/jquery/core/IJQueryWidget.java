@@ -19,9 +19,9 @@ package com.googlecode.wicket.jquery.core;
 import org.apache.wicket.Component;
 
 /**
- * Specifies that the implementing {@link Component} class will use a {@link JQueryBehavior}<br/>
- * This interface is for best practice purpose only. Adding the {@link JQueryBehavior} to the {@link Component} is still required but the use of {@code JQueryWidget#newWidgetBehavior(Component)} can be made.<br/>
- * For instance:<br/>
+ * Specifies that the implementing {@link Component} class will use a {@link JQueryBehavior}<br>
+ * This interface is for best practice purpose only. Adding the {@link JQueryBehavior} to the {@link Component} is still required but the use of {@code JQueryWidget#newWidgetBehavior(Component)} can be made.<br>
+ * For instance:<br>
  * 
  * <pre>
  * public JQueryBehavior newWidgetBehavior(String selector)
@@ -50,7 +50,7 @@ public interface IJQueryWidget
 	void onBeforeRender(JQueryBehavior behavior);
 
 	/**
-	 * Called immediately after the onConfigure method in a behavior. Since this is before the rendering<br />
+	 * Called immediately after the onConfigure method in a behavior. Since this is before the rendering<br>
 	 * cycle has begun, the behavior can modify the configuration of the component (i.e. {@link Options})
 	 *
 	 * @param behavior the {@link JQueryBehavior}

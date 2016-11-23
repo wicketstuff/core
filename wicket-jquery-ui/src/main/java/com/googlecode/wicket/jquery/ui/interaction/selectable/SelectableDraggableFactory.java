@@ -22,11 +22,11 @@ import com.googlecode.wicket.jquery.ui.interaction.draggable.Draggable;
 
 
 /**
- * Provides a default implementation of {@link AbstractDraggableFactory} related to a {@link Selectable} widget<br/>
- * <br/>
- * <br/>
- * Inspired from:<br/>
- * http://stackoverflow.com/questions/793559/grouping-draggable-objects-with-jquery-ui-draggable<br/>
+ * Provides a default implementation of {@link AbstractDraggableFactory} related to a {@link Selectable} widget<br>
+ * <br>
+ * <br>
+ * Inspired from:<br>
+ * http://stackoverflow.com/questions/793559/grouping-draggable-objects-with-jquery-ui-draggable<br>
  *
  * @author Sebastien Briquet - sebfz1
  */

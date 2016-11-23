@@ -63,7 +63,7 @@ public class DataProviderBehavior<T> extends AjaxCallbackBehavior
 	}
 
 	/**
-	 * Gets the property set that should be appended to the JSON response.<br/>
+	 * Gets the property set that should be appended to the JSON response.<br>
 	 * The value corresponding to the property is retrieved from the {@link ITextRenderer#getText(Object, String)}
 	 *
 	 * @return the property list

@@ -47,7 +47,7 @@ public class TabbedPanel extends JQueryGenericPanel<List<ITab>> implements ITabs
 	private TabsBehavior widgetBehavior;
 
 	/**
-	 * Constructor with empty list of Tabs.<br/>
+	 * Constructor with empty list of Tabs.<br>
 	 *
 	 * @param id the markup id
 	 * @see #add(ITab)
@@ -58,7 +58,7 @@ public class TabbedPanel extends JQueryGenericPanel<List<ITab>> implements ITabs
 	}
 
 	/**
-	 * Constructor with empty list of Tabs.<br/>
+	 * Constructor with empty list of Tabs.<br>
 	 *
 	 * @param id the markup id
 	 * @param options the {@link Options}
@@ -154,7 +154,7 @@ public class TabbedPanel extends JQueryGenericPanel<List<ITab>> implements ITabs
 	}
 
 	/**
-	 * Sets the current tab index<br/>
+	 * Sets the current tab index<br>
 	 * <b>Warning:</b> the index is relative to visible tabs only
 	 *
 	 * @param index the visible tab's index to activate
@@ -168,7 +168,7 @@ public class TabbedPanel extends JQueryGenericPanel<List<ITab>> implements ITabs
 	}
 
 	/**
-	 * Sets and activates the current tab index<br/>
+	 * Sets and activates the current tab index<br>
 	 * <b>Warning: </b> invoking this method results to a dual client-server round-trip.
 	 *
 	 * @param index the tab's index to activate

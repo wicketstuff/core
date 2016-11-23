@@ -87,7 +87,7 @@ public abstract class AccordionBehavior extends KendoUIBehavior implements IJQue
 	// Properties //
 
 	/**
-	 * Gets the reference {@link List} of {@link ITab}{@code s}.<br/>
+	 * Gets the reference {@link List} of {@link ITab}{@code s}.<br>
 	 * Usually the model object of the component on which this {@link AccordionBehavior} is bound to.
 	 *
 	 * @return a non-null {@link List}
@@ -170,7 +170,7 @@ public abstract class AccordionBehavior extends KendoUIBehavior implements IJQue
 	}
 
 	/**
-	 * Selects and expands a tab, identified by its index<br/>
+	 * Selects and expands a tab, identified by its index<br>
 	 * <b>Warning:</b> the index is related to visible tabs only
 	 *
 	 * @param handler the {@link IPartialPageRequestHandler}

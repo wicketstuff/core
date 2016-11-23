@@ -33,7 +33,7 @@ public class BuilderUtils
 	}
 
 	/**
-	 * Helper method that appends a key/value JSON pair to the specified builder<br/>
+	 * Helper method that appends a key/value JSON pair to the specified builder<br>
 	 * The value will *not* be quoted, except if the value is {@code null}, {@code "null"} will be returned.
 	 *
 	 * @param builder the {@link StringBuilder}

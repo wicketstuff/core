@@ -31,7 +31,7 @@ import com.googlecode.wicket.kendo.ui.interaction.draggable.DraggableBehavior;
 public interface IDroppableListener extends IClusterable
 {
 	/**
-	 * Indicates whether the 'enter' event is enabled.<br />
+	 * Indicates whether the 'enter' event is enabled.<br>
 	 * If true, the {@link #onDragEnter(AjaxRequestTarget, Component)} event will be triggered.
 	 * 
 	 * @return false by default
@@ -39,7 +39,7 @@ public interface IDroppableListener extends IClusterable
 	boolean isDragEnterEventEnabled();
 
 	/**
-	 * Indicates whether the 'leave' event is enabled.<br />
+	 * Indicates whether the 'leave' event is enabled.<br>
 	 * If true, the {@link #onDragLeave(AjaxRequestTarget, Component)} event will be triggered.
 	 * 
 	 * @return false by default

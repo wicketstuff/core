@@ -26,7 +26,7 @@ import com.googlecode.wicket.jquery.core.Options;
 import com.googlecode.wicket.kendo.ui.KendoUIBehavior;
 
 /**
- * Provides a Kendo UI Editor widget.<br/>
+ * Provides a Kendo UI Editor widget.<br>
  * It should be created on a HTML &lt;textarea /&gt; element
  *
  * @author Sebastien Briquet - sebfz1

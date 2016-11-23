@@ -250,7 +250,7 @@ public class TimeSpinner extends DateTextField implements IJQueryCultureWidget
 	// Options //
 
 	/**
-	 * Sets the culture to use for parsing and formatting the value.<br/>
+	 * Sets the culture to use for parsing and formatting the value.<br>
 	 * <b>More:</b> https://github.com/jquery/globalize
 	 *
 	 * @param culture the culture to be used

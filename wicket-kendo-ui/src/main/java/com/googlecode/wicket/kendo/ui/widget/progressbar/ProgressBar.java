@@ -196,8 +196,8 @@ public class ProgressBar extends JQueryGenericContainer<Integer> implements IPro
 	}
 
 	/**
-	 * Refreshes the ProgressBar.<br/>
-	 * This method needs to be called after the model object changes.<br/>
+	 * Refreshes the ProgressBar.<br>
+	 * This method needs to be called after the model object changes.<br>
 	 * But is not required to be called when calling forward or backward methods.
 	 *
 	 * @param handler the {@link IPartialPageRequestHandler}

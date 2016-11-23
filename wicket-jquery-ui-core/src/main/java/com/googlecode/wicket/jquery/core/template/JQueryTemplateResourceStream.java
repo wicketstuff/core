@@ -19,7 +19,7 @@ package com.googlecode.wicket.jquery.core.template;
 import org.apache.wicket.util.resource.AbstractStringResourceStream;
 
 /**
- * Provides the default resource stream for jQuery templates.<br />
+ * Provides the default resource stream for jQuery templates.<br>
  * The {@link #getString()} method returns a script block like &lt;script id="jquery-template-123456" type="text/x-jquery-tmpl" /&gt;
  * 
  * @author Sebastien Briquet - sebfz1

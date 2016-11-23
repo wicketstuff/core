@@ -111,7 +111,7 @@ public class PropertyColumn extends AbstractColumn implements IExportableColumn
 	}
 
 	/**
-	 * Gets the value of the supplied object.<br/>
+	 * Gets the value of the supplied object.<br>
 	 * Implementation may call {@link #getField()}
 	 *
 	 * @param object the model object

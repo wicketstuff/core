@@ -100,8 +100,8 @@ public class JQueryBehavior extends JQueryAbstractBehavior
 	}
 
 	/**
-	 * Removes the element matching the current selector from the DOM.<br/>
-	 * The {@code #detach} method is the same as {@code #remove}, except that {@code #detach} keeps all jQuery data associated with the removed elements.<br/>
+	 * Removes the element matching the current selector from the DOM.<br>
+	 * The {@code #detach} method is the same as {@code #remove}, except that {@code #detach} keeps all jQuery data associated with the removed elements.<br>
 	 * This method is useful when removed elements are to be reinserted into the DOM at a later time.
 	 * 
 	 * @param handler the {@link IPartialPageRequestHandler}
@@ -113,9 +113,9 @@ public class JQueryBehavior extends JQueryAbstractBehavior
 	}
 
 	/**
-	 * Removes the element matching the current selector from the DOM.<br/>
-	 * Use {@code #remove} when you want to remove the element itself, as well as everything inside it.<br/>
-	 * In addition to the elements themselves, all bound events and jQuery data associated with the elements are removed.<br/>
+	 * Removes the element matching the current selector from the DOM.<br>
+	 * Use {@code #remove} when you want to remove the element itself, as well as everything inside it.<br>
+	 * In addition to the elements themselves, all bound events and jQuery data associated with the elements are removed.<br>
 	 * To remove the elements without removing data and events, use {@code #detach} instead.
 	 * 
 	 * @param handler the {@link IPartialPageRequestHandler}
@@ -292,7 +292,7 @@ public class JQueryBehavior extends JQueryAbstractBehavior
 	}
 
 	/**
-	 * Gets the jQuery statement.<br/>
+	 * Gets the jQuery statement.<br>
 	 * <b>Warning: </b> This method is *not* called by the behavior directly (only {@link #$()} is).
 	 *
 	 * @param options the list of options to be supplied to the current method
@@ -304,7 +304,7 @@ public class JQueryBehavior extends JQueryAbstractBehavior
 	}
 
 	/**
-	 * Gets the jQuery statement.<br/>
+	 * Gets the jQuery statement.<br>
 	 * <b>Warning: </b> This method is *not* called by the behavior directly (only {@link #$()} is).
 	 *
 	 * @param options the {@link Options} to be supplied to the current method
@@ -316,7 +316,7 @@ public class JQueryBehavior extends JQueryAbstractBehavior
 	}
 
 	/**
-	 * Gets the jQuery statement.<br/>
+	 * Gets the jQuery statement.<br>
 	 * <b>Warning: </b> This method is *not* called by the behavior directly (only {@link #$()} is).
 	 *
 	 * @param options the options to be supplied to the current method
@@ -343,8 +343,8 @@ public class JQueryBehavior extends JQueryAbstractBehavior
 	// Events //
 
 	/**
-	 * {@inheritDoc} <br/>
-	 * Also, {@link #onConfigure(Component)} will call {@link IJQueryWidget#onConfigure(JQueryBehavior)} (if the component IS-A {@link IJQueryWidget})<br/>
+	 * {@inheritDoc} <br>
+	 * Also, {@link #onConfigure(Component)} will call {@link IJQueryWidget#onConfigure(JQueryBehavior)} (if the component IS-A {@link IJQueryWidget})<br>
 	 * If a property is set in {@link #onConfigure(Component)} and is needed in {@link IJQueryWidget#onConfigure(JQueryBehavior)}, {@code super.onConfigure(component)} should be the last statement.
 	 */
 	@Override
@@ -359,8 +359,8 @@ public class JQueryBehavior extends JQueryAbstractBehavior
 	}
 
 	/**
-	 * {@inheritDoc} <br/>
-	 * Also, {@link #beforeRender(Component)} will call {@link IJQueryWidget#onBeforeRender(JQueryBehavior)} (if the component IS-A {@link IJQueryWidget})<br/>
+	 * {@inheritDoc} <br>
+	 * Also, {@link #beforeRender(Component)} will call {@link IJQueryWidget#onBeforeRender(JQueryBehavior)} (if the component IS-A {@link IJQueryWidget})<br>
 	 * If a property is set in {@link #beforeRender(Component)} and is needed in {@link IJQueryWidget#onBeforeRender(JQueryBehavior)}, {@code super.beforeRender(component)} should be the last statement.
 	 */
 	@Override

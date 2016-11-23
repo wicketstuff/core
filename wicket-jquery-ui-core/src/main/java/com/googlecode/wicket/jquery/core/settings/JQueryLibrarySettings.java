@@ -20,8 +20,8 @@ import org.apache.wicket.request.resource.ResourceReference;
 import org.apache.wicket.settings.JavaScriptLibrarySettings;
 
 /**
- * Provides library settings for jQuery UI resource references<br/>
- * <br/>
+ * Provides library settings for jQuery UI resource references<br>
+ * <br>
  * Usage:
  *
  * <pre>

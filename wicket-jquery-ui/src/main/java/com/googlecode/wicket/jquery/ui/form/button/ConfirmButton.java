@@ -32,10 +32,10 @@ import com.googlecode.wicket.jquery.ui.widget.dialog.DialogIcon;
 import com.googlecode.wicket.jquery.ui.widget.dialog.MessageDialog;
 
 /**
- * Provides a {@link AjaxButton} which pop-ups an OK-Cancel confirmation dialog when clicked. In case of confirmation, the form is sent via a http submit.<br/>
- * <br/>
- * <b>Note:</b> this component is not a {@link Button} itself but a Panel, it should not be attached to a &lt;button /&gt; but on a &lt;div /&gt; or a &lt;span /&gt; for instance.<br/>
- * <br/>
+ * Provides a {@link AjaxButton} which pop-ups an OK-Cancel confirmation dialog when clicked. In case of confirmation, the form is sent via a http submit.<br>
+ * <br>
+ * <b>Note:</b> this component is not a {@link Button} itself but a Panel, it should not be attached to a &lt;button /&gt; but on a &lt;div /&gt; or a &lt;span /&gt; for instance.<br>
+ * <br>
  * <b>Warning:</b> it is not possible to get a form component value - that is going to be changed - to be displayed in the dialog box message. The reason is that in order to get a form component (updated) model object, the form component
  * should be validated. The dialog does not proceed to a (whole) form validation while being opened, because the form validation will occur when the user will confirm (by clicking on OK button). This the intended behavior.
  *
@@ -118,7 +118,7 @@ public abstract class ConfirmButton extends FormSubmittingPanel<String>
 	// Factories //
 
 	/**
-	 * Create the dialog instance<br/>
+	 * Create the dialog instance<br>
 	 * <b>Warning:</b> to be overridden with care!
 	 *
 	 * @param id the markupId

@@ -27,7 +27,7 @@ import com.googlecode.wicket.jquery.core.JQueryBehavior;
 import com.googlecode.wicket.jquery.core.event.SelectionChangedAdapter;
 
 /**
- * Provides a Kendo UI DropDownList widget. It extends built-in {@link DropDownChoice}<br/>
+ * Provides a Kendo UI DropDownList widget. It extends built-in {@link DropDownChoice}<br>
  *
  * @author Sebastien Briquet - sebfz1
  *

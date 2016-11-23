@@ -3,7 +3,7 @@ package com.googlecode.wicket.kendo.ui.scheduler.views;
 import com.googlecode.wicket.jquery.core.Options;
 
 /**
- * Defines the views displayed by the scheduler and their configuration.<br/>
+ * Defines the views displayed by the scheduler and their configuration.<br>
  * By default the Kendo UI Scheduler widget displays "day" and "week" view.
  *
  * @author Patrick Davids - Patrick1701
@@ -45,7 +45,7 @@ public abstract class SchedulerView extends Options
 	}
 
 	/**
-	 * Indicates whether the user would be able to create new scheduler events and modify or delete existing ones<br/>
+	 * Indicates whether the user would be able to create new scheduler events and modify or delete existing ones<br>
 	 * Overrides the editable option of the scheduler.
 	 *
 	 * @param editable true or false
@@ -59,7 +59,7 @@ public abstract class SchedulerView extends Options
 	}
 
 	/**
-	 * Indicates whether the view will be initially shown in business hours mode.<br/>
+	 * Indicates whether the view will be initially shown in business hours mode.<br>
 	 * By default view is displayed in full day mode.
 	 * @param show true or false
 	 * @return {@code this}, for chaining
@@ -72,7 +72,7 @@ public abstract class SchedulerView extends Options
 	}
 
 	/**
-	 * Sets the template pattern to be used to render the date header cells.<br/>
+	 * Sets the template pattern to be used to render the date header cells.<br>
 	 * {@link SchedulerView#setDateHeaderTemplatePattern(String)} is marked as protected by default because it is not available to all views.
 	 *
 	 * @param pattern the date pattern

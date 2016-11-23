@@ -21,7 +21,7 @@ import org.apache.wicket.behavior.Behavior;
 import org.apache.wicket.markup.head.IHeaderResponse;
 
 /**
- * Provides the base class for jQuery template behavior.<br/>
+ * Provides the base class for jQuery template behavior.<br>
  * A template behavior is designed to render a &lt;script id="jquery-template-123456" type="text/x-xxx" /&gt; block, coming from the JQueryResourceStream returned by {@link #newResourceStream()}
  *
  * @author Sebastien Briquet - sebfz1

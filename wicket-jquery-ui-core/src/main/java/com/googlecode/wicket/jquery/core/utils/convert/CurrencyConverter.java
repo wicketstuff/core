@@ -55,7 +55,7 @@ public abstract class CurrencyConverter<N extends Number> extends AbstractConver
 	}
 
 	/**
-	 * Parses a value as a String and returns a Number.<br/>
+	 * Parses a value as a String and returns a Number.<br>
 	 * @param value the string to parse
 	 * @param min the minimum allowed value
 	 * @param max the maximum allowed value

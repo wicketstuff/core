@@ -34,7 +34,7 @@ import com.googlecode.wicket.jquery.ui.ajax.OnChangeAjaxBehavior;
 import com.googlecode.wicket.jquery.ui.ajax.OnChangeAjaxBehavior.ChangeEvent;
 
 /**
- * Provides a jQuery slider based on a {@link FormComponentPanel}<br/>
+ * Provides a jQuery slider based on a {@link FormComponentPanel}<br>
  * This ajax version will post the {@link Component}, using a {@link OnChangeAjaxBehavior}, when the 'change' javascript method is called.
  *
  * @author Sebastien Briquet - sebfz1

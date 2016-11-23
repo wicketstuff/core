@@ -26,8 +26,8 @@ import org.apache.wicket.util.io.IClusterable;
 import com.googlecode.wicket.jquery.core.utils.DateUtils;
 
 /**
- * Provides the value type to be used as model object for {@link RangeDatePicker} and {@link RangeDatePickerTextField}<br/>
- * <br/>
+ * Provides the value type to be used as model object for {@link RangeDatePicker} and {@link RangeDatePickerTextField}<br>
+ * <br>
  * {@code start} and {@code end} dates are UTC based, the JSON array ({@link #toString()}) is timezone agnostic
  *
  * @author Sebastien Briquet - sebfz1
@@ -39,7 +39,7 @@ public class DateRange implements IClusterable
 	public static final String PATTERN = "yyyy-MM-dd'T'HH:mm:ss";
 
 	/**
-	 * Creates a new {@link DateRange}, UTC time, starting at 0:00:00.000 and ending at 23:59:59.999<br/>
+	 * Creates a new {@link DateRange}, UTC time, starting at 0:00:00.000 and ending at 23:59:59.999<br>
 	 * <b>Caution:</b> supplied dates should be local to the system (ie: {@code new Date()}).
 	 * 
 	 * @param start the local start date
@@ -52,7 +52,7 @@ public class DateRange implements IClusterable
 	}
 
 	/**
-	 * Creates a new {@link DateRange}, starting at 0:00:00.000 and ending at 23:59:59.999<br/>
+	 * Creates a new {@link DateRange}, starting at 0:00:00.000 and ending at 23:59:59.999<br>
 	 * <b>Caution:</b> supplied dates should be UTC.
 	 * 
 	 * @param start the UTC start date
@@ -138,7 +138,7 @@ public class DateRange implements IClusterable
 	}
 
 	/**
-	 * Sets the start date.<br/>
+	 * Sets the start date.<br>
 	 *
 	 * @param date the start date
 	 */
@@ -148,7 +148,7 @@ public class DateRange implements IClusterable
 	}
 
 	/**
-	 * Sets the start date.<br/>
+	 * Sets the start date.<br>
 	 *
 	 * @param date the start date
 	 */
@@ -168,7 +168,7 @@ public class DateRange implements IClusterable
 	}
 
 	/**
-	 * Sets the end date.<br/>
+	 * Sets the end date.<br>
 	 *
 	 * @param date the end date
 	 */
@@ -178,7 +178,7 @@ public class DateRange implements IClusterable
 	}
 
 	/**
-	 * Sets the end date.<br/>
+	 * Sets the end date.<br>
 	 *
 	 * @param date the end date
 	 */

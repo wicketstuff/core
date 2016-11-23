@@ -21,7 +21,7 @@ import org.apache.wicket.markup.head.JavaScriptReferenceHeaderItem;
 import org.apache.wicket.request.resource.CssResourceReference;
 
 /**
- * Provides a {@link JavaScriptReferenceHeaderItem} that will load a '.css' file corresponding to the supplied {@code Class}<br/>
+ * Provides a {@link JavaScriptReferenceHeaderItem} that will load a '.css' file corresponding to the supplied {@code Class}<br>
  * <b>i.e.:</b> {@code MyClass.css}
  * 
  * @author Sebastien Briquet - sebfz1

@@ -26,8 +26,8 @@ import java.util.List;
 public class WindowButtonUtils
 {
 	/**
-	 * Helper that applies #setDefaultFormProcessing to the list of {@link WindowButton}{@code s}<br/>
-	 * <br/>
+	 * Helper that applies #setDefaultFormProcessing to the list of {@link WindowButton}{@code s}<br>
+	 * <br>
 	 * <b>Warning:</b> the WindowButtons supplied in argument will be modified
 	 *
 	 * @param buttons the list of {@link WindowButton}
@@ -39,8 +39,8 @@ public class WindowButtonUtils
 	}
 
 	/**
-	 * Helper that applies #setDefaultFormProcessing to the list of {@link WindowButton}{@code s}<br/>
-	 * <br/>
+	 * Helper that applies #setDefaultFormProcessing to the list of {@link WindowButton}{@code s}<br>
+	 * <br>
 	 * <b>Warning:</b> the WindowButtons supplied in the list argument will be modified
 	 *
 	 * @param buttons the list of {@link WindowButton}

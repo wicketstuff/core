@@ -27,7 +27,7 @@ import com.googlecode.wicket.jquery.core.Options;
 import com.googlecode.wicket.jquery.core.event.IValueChangedListener;
 
 /**
- * Provides a jQuery integration of foxrunsoftware's (range) DatePicker<br/>
+ * Provides a jQuery integration of foxrunsoftware's (range) DatePicker<br>
  * https://github.com/foxrunsoftware/DatePicker/
  *
  * @author Sebastien Briquet - sebfz1

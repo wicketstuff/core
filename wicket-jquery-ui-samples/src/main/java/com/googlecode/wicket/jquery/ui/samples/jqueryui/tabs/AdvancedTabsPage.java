@@ -242,7 +242,7 @@ public class AdvancedTabsPage extends AbstractTabsPage
 	}
 
 	/**
-	 * Returning a TabListModel is not mandatory, unless the underlying the list of tabs is dynamic.<br/>
+	 * Returning a TabListModel is not mandatory, unless the underlying the list of tabs is dynamic.<br>
 	 * Do *not* use a LoadableDetachableModel if the model object contains AjaxTab(s)
 	 */
 	private IModel<List<ITab>> newTabModel()

@@ -11,8 +11,8 @@ import org.apache.wicket.markup.head.PriorityHeaderItem;
 import com.googlecode.wicket.kendo.ui.resource.KendoCultureResourceReference;
 
 /**
- * {@link HeaderItem} in charge of setting the {@code kendo.culture} and adding relevant dependencies <br/>
- * Usage:<br/>
+ * {@link HeaderItem} in charge of setting the {@code kendo.culture} and adding relevant dependencies <br>
+ * Usage:<br>
  * <code>
  * <pre>
  * public void renderHead(IHeaderResponse response)
@@ -21,7 +21,7 @@ import com.googlecode.wicket.kendo.ui.resource.KendoCultureResourceReference;
  * 	
  * 	response.render(new KendoCultureHeaderItem(KendoCulture.FR_FR));
  * }
- * <br/>
+ * <br>
  * This will results to:
  * <code>
  * <pre>

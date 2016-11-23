@@ -69,7 +69,7 @@ public class SchedulerEvent implements Serializable
 	}
 
 	/**
-	 * Constructor<br/>
+	 * Constructor<br>
 	 * The end date will be the start date + {@link #DEFAULT_RANGE} hour(s)
 	 *
 	 * @param id the event id
@@ -82,7 +82,7 @@ public class SchedulerEvent implements Serializable
 	}
 
 	/**
-	 * Constructor<br/>
+	 * Constructor<br>
 	 * The end date will be the start date + {@link #DEFAULT_RANGE} hour(s)
 	 *
 	 * @param id the event id
@@ -273,7 +273,7 @@ public class SchedulerEvent implements Serializable
 	}
 
 	/**
-	 * Indicates whether the event is visible<br/>
+	 * Indicates whether the event is visible<br>
 	 * If {@code false}, it will not be added to the JSON response
 	 * 
 	 * @return {@code true} or {@code false}

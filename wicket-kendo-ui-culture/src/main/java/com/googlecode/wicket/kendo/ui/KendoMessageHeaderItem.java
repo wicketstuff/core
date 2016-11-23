@@ -9,8 +9,8 @@ import org.apache.wicket.markup.head.PriorityHeaderItem;
 import com.googlecode.wicket.kendo.ui.resource.KendoMessageResourceReference;
 
 /**
- * {@link HeaderItem} in charge of adding the messages file corresponding to the supplied {@link KendoMessage}<br/>
- * Usage:<br/>
+ * {@link HeaderItem} in charge of adding the messages file corresponding to the supplied {@link KendoMessage}<br>
+ * Usage:<br>
  * <code>
  * <pre>
  * public void renderHead(IHeaderResponse response)
@@ -19,7 +19,7 @@ import com.googlecode.wicket.kendo.ui.resource.KendoMessageResourceReference;
  * 	
  * 	response.render(new KendoMessageHeaderItem(KendoMessage.FR_FR));
  * }
- * <br/>
+ * <br>
  * This will results to:
  * <code>
  * <pre>

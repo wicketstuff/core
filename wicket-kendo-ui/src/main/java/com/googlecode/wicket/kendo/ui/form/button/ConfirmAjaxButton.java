@@ -33,10 +33,10 @@ import com.googlecode.wicket.kendo.ui.widget.window.WindowButton;
 import com.googlecode.wicket.kendo.ui.widget.window.WindowButtons;
 
 /**
- * Provides a {@link AjaxButton} which pop-ups an OK-Cancel confirmation dialog when clicked. In case of confirmation, the form is sent via an ajax post.<br/>
- * <br/>
- * <b>Note: </b> this component is not a {@link AjaxButton} itself but a Panel, it should not be attached to a &lt;button /&gt;; it can be attached on a &lt;div /&gt; or a &lt;span /&gt; for instance.<br/>
- * <br/>
+ * Provides a {@link AjaxButton} which pop-ups an OK-Cancel confirmation dialog when clicked. In case of confirmation, the form is sent via an ajax post.<br>
+ * <br>
+ * <b>Note: </b> this component is not a {@link AjaxButton} itself but a Panel, it should not be attached to a &lt;button /&gt;; it can be attached on a &lt;div /&gt; or a &lt;span /&gt; for instance.<br>
+ * <br>
  * <b>Warning: </b> it is not possible to get a form component value - that is going to be changed - to be displayed in the dialog box message. The reason is that in order to get a form component (updated) model object, the form component
  * should be validated. The dialog does not proceed to a (whole) form validation while being opened, because the form validation will occur when the user will confirm (by clicking on OK button). This the intended behavior.
  *
@@ -155,7 +155,7 @@ public abstract class ConfirmAjaxButton extends GenericPanel<String>
 	// Factories //
 
 	/**
-	 * Create the window instance<br/>
+	 * Create the window instance<br>
 	 * <b>Warning:</b> to be overridden with care!
 	 *
 	 * @param id the markup id
@@ -202,9 +202,9 @@ public abstract class ConfirmAjaxButton extends GenericPanel<String>
 	}
 
 	/**
-	 * Gets the {@code List} of {@link WindowButton}{@code s}<br/>
-	 * This can be overridden to disable to default form processing of the OK button<br/>
-	 * <br/> 
+	 * Gets the {@code List} of {@link WindowButton}{@code s}<br>
+	 * This can be overridden to disable to default form processing of the OK button<br>
+	 * <br> 
 	 * <b>Caution:</b> button *names* should be OK and Cancel
 	 * 
 	 * @return {@link WindowButtons#OK_CANCEL} by default

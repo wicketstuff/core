@@ -32,7 +32,7 @@ import com.googlecode.wicket.kendo.ui.KendoUIBehavior;
 import com.googlecode.wicket.kendo.ui.utils.KendoDateTimeUtils;
 
 /**
- * Provides a Kendo UI date-picker based on a {@link DateTextField}<br/>
+ * Provides a Kendo UI date-picker based on a {@link DateTextField}<br>
  * The code is quite identical to the jQuery DatePicker
  *
  * @author Sebastien Briquet - sebfz1

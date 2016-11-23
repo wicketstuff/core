@@ -36,7 +36,7 @@ import com.googlecode.wicket.kendo.ui.datatable.column.IColumn;
 import com.googlecode.wicket.kendo.ui.dataviz.series.Series;
 
 /**
- * Provides a {@value #METHOD} behavior<br/>
+ * Provides a {@value #METHOD} behavior<br>
  * 
  * @author Sebastien Briquet - sebfz1
  */

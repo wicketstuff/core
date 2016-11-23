@@ -37,7 +37,7 @@ import com.googlecode.wicket.kendo.ui.renderer.ChoiceRenderer;
 import com.googlecode.wicket.kendo.ui.template.KendoTemplateBehavior;
 
 /**
- * Provides the base class for a Kendo UI auto-complete widget.<br/>
+ * Provides the base class for a Kendo UI auto-complete widget.<br>
  * <b>Caution:</b> in this base class, the model object is not set and there is no converter
  *
  * @author Sebastien Briquet - sebfz1
@@ -224,7 +224,7 @@ public abstract class AbstractAutoCompleteTextField<T, C> extends TextField<T> i
 	// Methods //
 
 	/**
-	 * Call {@link #getChoices()} and cache the result<br/>
+	 * Call {@link #getChoices()} and cache the result<br>
 	 * Internal use only
 	 *
 	 * @return the list of choices
@@ -363,7 +363,7 @@ public abstract class AbstractAutoCompleteTextField<T, C> extends TextField<T> i
 	// Factories //
 
 	/**
-	 * Gets a new {@link IJQueryTemplate} to customize the rendering<br/>
+	 * Gets a new {@link IJQueryTemplate} to customize the rendering<br>
 	 * The properties used in the template text (ie: ${data.name}) should be of the prefixed by "data." and should be identified in the list returned by {@link IJQueryTemplate#getTextProperties()} (without "data.")
 	 *
 	 * @return null by default

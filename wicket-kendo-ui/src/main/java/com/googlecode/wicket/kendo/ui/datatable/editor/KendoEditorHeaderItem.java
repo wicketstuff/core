@@ -19,8 +19,8 @@ package com.googlecode.wicket.kendo.ui.datatable.editor;
 import org.apache.wicket.markup.head.JavaScriptContentHeaderItem;
 
 /**
- * Provides a {@link JavaScriptContentHeaderItem} for an {@link IKendoEditor}<br/>
- * Usage:<br/>
+ * Provides a {@link JavaScriptContentHeaderItem} for an {@link IKendoEditor}<br>
+ * Usage:<br>
  * <code><pre>
  * new PropertyColumn("Status", "status") {
  * 

@@ -22,8 +22,8 @@ import com.googlecode.wicket.kendo.ui.resource.ConsoleJavaScriptResourceReferenc
 import com.googlecode.wicket.kendo.ui.resource.ConsoleStyleSheetResourceReference;
 
 /**
- * Provides library settings for Kendo UI Console resource references<br/>
- * <br/>
+ * Provides library settings for Kendo UI Console resource references<br>
+ * <br>
  * Usage:
  *
  * <pre>

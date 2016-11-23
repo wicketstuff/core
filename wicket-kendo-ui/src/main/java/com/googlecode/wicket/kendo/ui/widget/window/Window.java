@@ -26,7 +26,7 @@ import org.apache.wicket.util.lang.Args;
 
 /**
  * Default implementation for {@link AbstractWindow} that provides a set of {@link WindowButton}{@code s} and events such as {@link #onSubmit(AjaxRequestTarget, WindowButton)}, {@link #onError(AjaxRequestTarget, WindowButton)} and
- * {@link #onAfterSubmit(AjaxRequestTarget, WindowButton)}<br/>
+ * {@link #onAfterSubmit(AjaxRequestTarget, WindowButton)}<br>
  * The window is automatically closed {@link #onAfterSubmit(AjaxRequestTarget, WindowButton)}
  *
  * @param <T> the model object type
@@ -207,7 +207,7 @@ public abstract class Window<T> extends AbstractWindow<T>
 	}
 
 	/**
-	 * Triggered after the form is submitted, and the validation succeed<br />
+	 * Triggered after the form is submitted, and the validation succeed<br>
 	 * Closes the dialog by default
 	 *
 	 * @param target the {@link AjaxRequestTarget}

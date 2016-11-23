@@ -32,7 +32,7 @@ import com.googlecode.wicket.kendo.ui.repeater.dataview.DataView;
 public interface IListViewListener extends IClusterable
 {
 	/**
-	 * Indicates whether item(s) can be selected.<br/>
+	 * Indicates whether item(s) can be selected.<br>
 	 * If true, the {@link #onChange(AjaxRequestTarget, List)} event will be triggered
 	 *
 	 * @return false by default

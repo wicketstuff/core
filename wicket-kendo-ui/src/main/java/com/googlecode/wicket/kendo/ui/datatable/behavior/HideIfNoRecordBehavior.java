@@ -19,7 +19,7 @@ package com.googlecode.wicket.kendo.ui.datatable.behavior;
 import com.googlecode.wicket.kendo.ui.datatable.DataTable;
 
 /**
- * Provides a {@link DataTable} {@code Behavior} that will hide the datatable if datasource returns no row.<br/>
+ * Provides a {@link DataTable} {@code Behavior} that will hide the datatable if datasource returns no row.<br>
  * <b>Warning:</b> In order to work correctly, you should use {@code DataTable#refresh} in place of {@code AjaxRequestTarget#add(datatable)}
  *
  * @author Sebastien Briquet - sebfz1

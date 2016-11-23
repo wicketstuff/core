@@ -130,6 +130,7 @@
 						</links>
 						<additionalJOptions>
 							<additionalJOption>-J-Xmx256m</additionalJOption>
+							<!-- additionalJOption>-Xdoclint:none</additionalJOption> disables checking -->
 						</additionalJOptions>
 					</configuration>
 					<executions>

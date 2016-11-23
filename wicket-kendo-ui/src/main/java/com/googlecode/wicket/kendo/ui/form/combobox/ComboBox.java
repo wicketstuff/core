@@ -32,7 +32,7 @@ import com.googlecode.wicket.kendo.ui.renderer.ChoiceRenderer;
 import com.googlecode.wicket.kendo.ui.template.KendoTemplateBehavior;
 
 /**
- * Provides a Kendo UI ComboBox widget.<br/>
+ * Provides a Kendo UI ComboBox widget.<br>
  * It should be created on a HTML &lt;input type="text" /&gt; element
  *
  * @author Sebastien Briquet - sebfz1
@@ -294,7 +294,7 @@ public class ComboBox<T> extends TextField<String> implements IJQueryWidget
 	// Factories //
 
 	/**
-	 * Gets a new {@link IJQueryTemplate} to customize the rendering<br/>
+	 * Gets a new {@link IJQueryTemplate} to customize the rendering<br>
 	 * The properties used in the template text (ie: ${data.name}) should be of the prefixed by "data." and should be identified in the list returned by {@link IJQueryTemplate#getTextProperties()} (without "data.")
 	 *
 	 * @return null by default

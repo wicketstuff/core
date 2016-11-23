@@ -30,7 +30,7 @@ import com.googlecode.wicket.jquery.core.renderer.IChoiceRenderer;
 import com.googlecode.wicket.kendo.ui.renderer.ChoiceRenderer;
 
 /**
- * Provides a Kendo UI MultiSelect widget.<br/>
+ * Provides a Kendo UI MultiSelect widget.<br>
  * This ajax version will post the {@link Component}, using a {@link JQueryAjaxPostBehavior}, when the 'change' javascript method is called.
  * 
  * @author Sebastien Briquet - sebfz1

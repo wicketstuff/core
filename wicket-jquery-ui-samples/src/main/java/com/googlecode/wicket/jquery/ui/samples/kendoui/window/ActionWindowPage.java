@@ -60,7 +60,7 @@ public class ActionWindowPage extends AbstractWindowPage
 	}
 
 	/**
-	 * This window class is located here for convenience in this sample<br/>
+	 * This window class is located here for convenience in this sample<br>
 	 * Associated markup file is ActionWindowPage$MyWindow.html
 	 */
 	abstract static class MyWindow extends AbstractWindow<Void>

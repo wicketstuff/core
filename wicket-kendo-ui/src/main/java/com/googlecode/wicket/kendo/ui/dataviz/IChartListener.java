@@ -27,8 +27,8 @@ import org.apache.wicket.ajax.AjaxRequestTarget;
 public interface IChartListener
 {
 	/**
-	 * Indicates whether the 'seriesClick' event is enabled.<br/>
-	 * If true, the {@link #onSeriesClick(AjaxRequestTarget, String, String, String, long))} event will be triggered by clicking an event or a free event slot.<br/>
+	 * Indicates whether the 'seriesClick' event is enabled.<br>
+	 * If true, the {@link #onSeriesClick(AjaxRequestTarget, String, String, String, long))} event will be triggered by clicking an event or a free event slot.<br>
 	 * 
 	 * @return {@code false} by default
 	 */

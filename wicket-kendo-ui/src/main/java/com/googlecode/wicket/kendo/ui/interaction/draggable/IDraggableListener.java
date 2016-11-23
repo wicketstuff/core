@@ -28,7 +28,7 @@ import org.apache.wicket.util.io.IClusterable;
 public interface IDraggableListener extends IClusterable
 {
 	/**
-	 * Indicates whether the 'dragcancel' event is enabled.<br />
+	 * Indicates whether the 'dragcancel' event is enabled.<br>
 	 * If true, the {@link #onDragCancel(AjaxRequestTarget, int, int)} event will be triggered.
 	 *
 	 * @return false by default
@@ -36,7 +36,7 @@ public interface IDraggableListener extends IClusterable
 	boolean isCancelEventEnabled();
 
 	/**
-	 * Triggered when the drag starts<br/>
+	 * Triggered when the drag starts<br>
 	 * <b>Note:</b> {@code offsetTop} and {@code offsetLeft} are available as {@code RequestCycle} parameters
 	 *
 	 * @param target the {@link AjaxRequestTarget}
@@ -46,7 +46,7 @@ public interface IDraggableListener extends IClusterable
 	void onDragStart(AjaxRequestTarget target, int top, int left);
 
 	/**
-	 * Triggered when the drag stops<br/>
+	 * Triggered when the drag stops<br>
 	 * offsetTop and offsetLeft are available as {@code RequestCycle} parameters
 	 *
 	 * @param target the {@link AjaxRequestTarget}
@@ -56,7 +56,7 @@ public interface IDraggableListener extends IClusterable
 	void onDragStop(AjaxRequestTarget target, int top, int left);
 
 	/**
-	 * Triggered when the drag cancels<br/>
+	 * Triggered when the drag cancels<br>
 	 * offsetTop and offsetLeft are available as {@code RequestCycle} parameters
 	 *
 	 * @param target the {@link AjaxRequestTarget}

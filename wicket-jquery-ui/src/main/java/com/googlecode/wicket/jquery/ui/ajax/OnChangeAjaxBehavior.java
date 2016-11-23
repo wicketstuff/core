@@ -25,7 +25,7 @@ import com.googlecode.wicket.jquery.core.ajax.IJQueryAjaxAware;
 import com.googlecode.wicket.jquery.core.ajax.JQueryAjaxPostBehavior;
 
 /**
- * Provides a {@link JQueryAjaxPostBehavior} that aims to be wired to the 'change' event<br/>
+ * Provides a {@link JQueryAjaxPostBehavior} that aims to be wired to the 'change' event<br>
  * It will broadcast a {@link ChangeEvent} (by default)
  */
 public class OnChangeAjaxBehavior extends JQueryAjaxPostBehavior

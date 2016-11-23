@@ -26,7 +26,7 @@ import com.googlecode.wicket.jquery.core.behavior.AjaxCallbackBehavior;
 import com.googlecode.wicket.kendo.ui.scheduler.SchedulerModel;
 
 /**
- * Provides the behavior that loads {@link Chart} objects/beans<br/>
+ * Provides the behavior that loads {@link Chart} objects/beans<br>
  * <b>Note: </b> the {@code List} of objects will be converted in JSON using {@code new JSONArray(list)}
  * 
  * @author Sebastien Briquet - sebfz1

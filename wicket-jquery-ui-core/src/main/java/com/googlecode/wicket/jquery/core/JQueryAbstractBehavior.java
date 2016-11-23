@@ -131,8 +131,8 @@ public abstract class JQueryAbstractBehavior extends Behavior
 	}
 
 	/**
-	 * Renders the javascript 'on-dom-ready'<br/>
-	 * This can be overridden to provides a priority:<br/>
+	 * Renders the javascript 'on-dom-ready'<br>
+	 * This can be overridden to provides a priority:<br>
 	 * {@code response.render(new PriorityHeaderItem(script));}
 	 *
 	 * @param script the {@link JavaScriptHeaderItem}

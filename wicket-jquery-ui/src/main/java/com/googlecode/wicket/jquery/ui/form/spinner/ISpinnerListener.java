@@ -28,7 +28,7 @@ import org.apache.wicket.util.io.IClusterable;
 public interface ISpinnerListener extends IClusterable
 {
 	/**
-	 * Indicates whether the 'spin' event is enabled.<br/>
+	 * Indicates whether the 'spin' event is enabled.<br>
 	 * If true, the {@link #onSpin(AjaxRequestTarget, String)} event will be triggered
 	 *
 	 * @return false by default
@@ -36,7 +36,7 @@ public interface ISpinnerListener extends IClusterable
 	boolean isOnSpinEventEnabled();
 	
 	/**
-	 * Indicates whether the 'stop' event is enabled.<br/>
+	 * Indicates whether the 'stop' event is enabled.<br>
 	 * If true, the {@link #onStop(AjaxRequestTarget)} event will be triggered
 	 *
 	 * @return false by default

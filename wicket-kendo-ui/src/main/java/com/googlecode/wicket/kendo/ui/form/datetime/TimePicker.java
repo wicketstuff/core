@@ -32,7 +32,7 @@ import com.googlecode.wicket.kendo.ui.KendoUIBehavior;
 import com.googlecode.wicket.kendo.ui.utils.KendoDateTimeUtils;
 
 /**
- * Provides a Kendo UI time-picker<br/>
+ * Provides a Kendo UI time-picker<br>
  * It should be created on a HTML &lt;input type="text" /&gt; element
  *
  * @author Sebastien Briquet - sebfz1

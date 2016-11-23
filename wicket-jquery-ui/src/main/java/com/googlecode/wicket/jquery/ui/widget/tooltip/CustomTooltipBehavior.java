@@ -26,8 +26,8 @@ import com.googlecode.wicket.jquery.core.IJQueryWidget.JQueryWidget;
 import com.googlecode.wicket.jquery.core.Options;
 
 /**
- * Provides the jQuery tooltip behavior, with custom content.<br/>
- * <br/>
+ * Provides the jQuery tooltip behavior, with custom content.<br>
+ * <br>
  * <b>Warning:</b> there is no selector supplied to the constructor, but it does not means that this behavior will be applied to the <i>document</i>, like for the {@link TooltipBehavior}. The selector will be retrieved from the component
  * this behavior will be bound to, because this is a mandatory condition.
  *
@@ -94,7 +94,7 @@ public abstract class CustomTooltipBehavior extends TooltipBehavior
 	}
 
 	/**
-	 * Quotes (and escapes) the content<br/>
+	 * Quotes (and escapes) the content<br>
 	 * <b>Warning:</b> override with care
 	 *
 	 * @param content the content, likely html

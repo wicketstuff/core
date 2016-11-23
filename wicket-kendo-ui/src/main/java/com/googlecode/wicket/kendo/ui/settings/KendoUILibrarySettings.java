@@ -21,8 +21,8 @@ import org.apache.wicket.request.resource.ResourceReference;
 import com.googlecode.wicket.kendo.ui.resource.KendoUIJavaScriptResourceReference;
 
 /**
- * Provides library settings for Kendo UI resource references<br/>
- * <br/>
+ * Provides library settings for Kendo UI resource references<br>
+ * <br>
  * Usage:
  *
  * <pre>

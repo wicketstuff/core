@@ -27,8 +27,8 @@ import org.apache.wicket.util.io.IClusterable;
 public interface ISelectionChangedListener extends IClusterable
 {
 	/**
-	 * Indicates whether the 'change' event is enabled.<br/>
-	 * If true, the {@link #onSelectionChanged(AjaxRequestTarget)} event will be triggered<br/>
+	 * Indicates whether the 'change' event is enabled.<br>
+	 * If true, the {@link #onSelectionChanged(AjaxRequestTarget)} event will be triggered<br>
 	 *
 	 * @return false by default
 	 */

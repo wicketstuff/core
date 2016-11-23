@@ -109,7 +109,7 @@ public class DefaultWizardPage extends AbstractWizardPage
 		}
 
 		/**
-		 * Provides the 'Name and email' step<br/>
+		 * Provides the 'Name and email' step<br>
 		 * Associated markup file is DefaultWizardPage$UserWizard$Step1.html
 		 */
 		class Step1 extends WizardStep
@@ -126,7 +126,7 @@ public class DefaultWizardPage extends AbstractWizardPage
 		}
 
 		/**
-		 * Provides the 'Role' step<br/>
+		 * Provides the 'Role' step<br>
 		 * Associated markup file is DefaultWizardPage$UserWizard$Step2.html
 		 */
 		class Step2 extends WizardStep

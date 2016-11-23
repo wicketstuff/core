@@ -36,7 +36,7 @@ import com.googlecode.wicket.jquery.core.utils.RequestCycleUtils;
 import com.googlecode.wicket.kendo.ui.KendoUIBehavior;
 
 /**
- * Provides a {@value #METHOD} behavior<br/>
+ * Provides a {@value #METHOD} behavior<br>
  * Note, this class has almost the same code as AccordionBehavior
  *
  * @author Sebastien Briquet - sebfz1
@@ -84,7 +84,7 @@ public abstract class TabsBehavior extends KendoUIBehavior implements IJQueryAja
 	// Properties //
 
 	/**
-	 * Gets the reference {@link List} of {@link ITab}{@code s}.<br/>
+	 * Gets the reference {@link List} of {@link ITab}{@code s}.<br>
 	 * Usually the model object of the component on which this {@link TabsBehavior} is bound to.
 	 *
 	 * @return a non-null {@link List}

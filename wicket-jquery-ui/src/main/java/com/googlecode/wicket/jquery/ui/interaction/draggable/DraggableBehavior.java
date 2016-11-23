@@ -35,8 +35,8 @@ import com.googlecode.wicket.jquery.ui.JQueryUIBehavior;
 import com.googlecode.wicket.jquery.ui.interaction.droppable.DroppableBehavior;
 
 /**
- * Provides a jQuery draggable behavior<br/>
- * <br/>
+ * Provides a jQuery draggable behavior<br>
+ * <br>
  * <b>Warning:</b> not thread-safe: the instance of this behavior should only be used once
  *
  * @author Sebastien Briquet - sebfz1
@@ -169,7 +169,7 @@ public class DraggableBehavior extends JQueryUIBehavior implements IJQueryAjaxAw
 	// Factories //
 
 	/**
-	 * Gets a new {@link DroppableBehavior} visitor.<br/>
+	 * Gets a new {@link DroppableBehavior} visitor.<br>
 	 * This {@link IVisitor} is responsible for register the {@link DroppableBehavior} to this {@link DraggableBehavior}
 	 *
 	 * @return a {@link IVisitor}

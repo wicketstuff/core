@@ -33,8 +33,8 @@ import com.googlecode.wicket.jquery.ui.JQueryIcon;
 import com.googlecode.wicket.jquery.ui.interaction.draggable.Draggable;
 
 /**
- * Provides a jQuery UI selectable {@link JQueryGenericContainer}.<br/>
- * Children of that container can be selected using the mouse or by pressing ctrl+click<br/>
+ * Provides a jQuery UI selectable {@link JQueryGenericContainer}.<br>
+ * Children of that container can be selected using the mouse or by pressing ctrl+click<br>
  * Usage:
  *
  * <pre>
@@ -130,7 +130,7 @@ public class Selectable<T extends Serializable> extends JQueryGenericContainer<L
 	}
 
 	/**
-	 * Gets the selector that identifies the selectable item within a {@link Selectable}<br/>
+	 * Gets the selector that identifies the selectable item within a {@link Selectable}<br>
 	 * The selector should be the path from the {@link Selectable} to the item (for instance '#myUL LI', where '#myUL' is the {@link Selectable}'s selector)
 	 *
 	 * @return "li" by default
@@ -251,7 +251,7 @@ public class Selectable<T extends Serializable> extends JQueryGenericContainer<L
 	// DraggableFactory methods //
 
 	/**
-	 * Creates a {@link Draggable} object that is related to this {@link Selectable}.<br/>
+	 * Creates a {@link Draggable} object that is related to this {@link Selectable}.<br>
 	 * Uses a default factory that will create a {@link Draggable} with a {@code ui-icon-arrow-4-diag} icon
 	 *
 	 * @param id the markup id

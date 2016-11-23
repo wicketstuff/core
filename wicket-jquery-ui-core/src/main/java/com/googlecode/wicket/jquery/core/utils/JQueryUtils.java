@@ -55,8 +55,8 @@ public class JQueryUtils
 	}
 
 	/**
-	 * Gets the statement that detaches the element matching the current selector from the DOM.<br/>
-	 * The {@code #detach} method is the same as {@code #remove}, except that {@code #detach} keeps all jQuery data associated with the removed elements.<br/>
+	 * Gets the statement that detaches the element matching the current selector from the DOM.<br>
+	 * The {@code #detach} method is the same as {@code #remove}, except that {@code #detach} keeps all jQuery data associated with the removed elements.<br>
 	 * This method is useful when removed elements are to be reinserted into the DOM at a later time.
 	 * 
 	 * @param selector the jQuery selector
@@ -69,9 +69,9 @@ public class JQueryUtils
 	}
 
 	/**
-	 * Gets the statement that removes the element matching the current selector from the DOM.<br/>
-	 * Use {@code #remove} when you want to remove the element itself, as well as everything inside it.<br/>
-	 * In addition to the elements themselves, all bound events and jQuery data associated with the elements are removed.<br/>
+	 * Gets the statement that removes the element matching the current selector from the DOM.<br>
+	 * Use {@code #remove} when you want to remove the element itself, as well as everything inside it.<br>
+	 * In addition to the elements themselves, all bound events and jQuery data associated with the elements are removed.<br>
 	 * To remove the elements without removing data and events, use {@code #detach} instead.
 	 * 
 	 * @param selector the jQuery selector

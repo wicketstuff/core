@@ -21,10 +21,10 @@ import org.apache.wicket.util.io.IClusterable;
 import com.googlecode.wicket.jquery.ui.interaction.selectable.SelectableDraggableFactory;
 
 /**
- * Provides the ability to create a {@link Draggable} that is related to another component (defined by its selector).<br/>
- * <br/>
- * The common use case is to have the ability to drag multiple {@link Draggable} object.<br/>
- * To achieve this, the role of the jQuery helper is important (see {@link #getHelper(String)} implementation in {@link SelectableDraggableFactory})<br/>
+ * Provides the ability to create a {@link Draggable} that is related to another component (defined by its selector).<br>
+ * <br>
+ * The common use case is to have the ability to drag multiple {@link Draggable} object.<br>
+ * To achieve this, the role of the jQuery helper is important (see {@link #getHelper(String)} implementation in {@link SelectableDraggableFactory})<br>
  *
  * @author Sebastien Briquet - sebfz1
  *
@@ -34,7 +34,7 @@ public abstract class AbstractDraggableFactory implements IClusterable
 	private static final long serialVersionUID = 1L;
 
 	/**
-	 * Gets the helper that might be used by the {@link Draggable}.<br/>
+	 * Gets the helper that might be used by the {@link Draggable}.<br>
 	 * The returned value is supplied to the {@link #create(String, String, String)} method.
 	 * @param selector the selector
 	 * @return the helper
@@ -53,9 +53,9 @@ public abstract class AbstractDraggableFactory implements IClusterable
 	}
 
 	/**
-	 * Creates the new {@link Draggable} by using the selector and/or the helper.<br/>
-	 * <br/>
-	 * A typical implementation is:<br/>
+	 * Creates the new {@link Draggable} by using the selector and/or the helper.<br>
+	 * <br>
+	 * A typical implementation is:<br>
 	 * <pre>
 	 * return new Draggable<String>(id) {
 	 *

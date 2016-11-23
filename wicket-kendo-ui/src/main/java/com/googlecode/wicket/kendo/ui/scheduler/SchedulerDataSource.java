@@ -81,7 +81,7 @@ public class SchedulerDataSource extends KendoDataSource
 	}
 
 	/**
-	 * Gets default schema fields<br/>
+	 * Gets default schema fields<br>
 	 * This can be used for advanced usage/mapping
 	 * 
 	 * @return an {@link Options} of default schema fields

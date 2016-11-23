@@ -137,7 +137,7 @@ public abstract class AbstractFormDialog<T extends Serializable> extends Abstrac
 	// Properties //
 
 	/**
-	 * Gets the button that is in charge to submit the form.<br/>
+	 * Gets the button that is in charge to submit the form.<br>
 	 * It should be in the list of buttons returned by {@link #getButtons()}
 	 *
 	 * @return the submit button
@@ -156,7 +156,7 @@ public abstract class AbstractFormDialog<T extends Serializable> extends Abstrac
 	}
 
 	/**
-	 * Gets the form to be validated by this dialog.<br/>
+	 * Gets the form to be validated by this dialog.<br>
 	 * Warning, the onSubmit and the onError are being delegated to this dialog. However, it does not prevent the use of Form#onSubmit nor Form#onError
 	 *
 	 * @return the form
@@ -164,7 +164,7 @@ public abstract class AbstractFormDialog<T extends Serializable> extends Abstrac
 	public abstract Form<?> getForm();
 
 	/**
-	 * Gets the form associated to the button.<br/>
+	 * Gets the form associated to the button.<br>
 	 * It means that it will return the form if the button is the submit button and null otherwise. The callback script will differ depending on this.
 	 *
 	 * @param button the dialog's button
@@ -259,7 +259,7 @@ public abstract class AbstractFormDialog<T extends Serializable> extends Abstrac
 	}
 
 	/**
-	 * Provides the form-dialog {@link IFormSubmitter}<br/>
+	 * Provides the form-dialog {@link IFormSubmitter}<br>
 	 * This is basically the same technic used in AjaxButton class.
 	 */
 	protected class DialogFormSubmitter implements IFormSubmitter

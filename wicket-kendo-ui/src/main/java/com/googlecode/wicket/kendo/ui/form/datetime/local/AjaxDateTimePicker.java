@@ -41,7 +41,7 @@ import com.googlecode.wicket.kendo.ui.form.datetime.DatePickerBehavior;
 import com.googlecode.wicket.kendo.ui.form.datetime.TimePickerBehavior;
 
 /**
- * Provides a datetime-picker based on a {@link AjaxDatePicker} and a {@link AjaxTimePicker}<br/>
+ * Provides a datetime-picker based on a {@link AjaxDatePicker} and a {@link AjaxTimePicker}<br>
  * This ajax version will post both components, using a {@link JQueryAjaxPostBehavior}, when the 'change' javascript method is called.
  *
  * @author Sebastien Briquet - sebfz1
@@ -150,7 +150,7 @@ public class AjaxDateTimePicker extends DateTimePicker implements IValueChangedL
 	// Methods //
 
 	/**
-	 * Gets a formated value of input(s)<br/>
+	 * Gets a formated value of input(s)<br>
 	 * This method is designed to provide the 'value' argument of {@link IConverter#convertToObject(String, Locale)}
 	 *
 	 * @param dateInput the date input

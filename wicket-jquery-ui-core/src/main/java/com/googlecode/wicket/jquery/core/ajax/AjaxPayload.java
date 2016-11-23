@@ -42,7 +42,7 @@ public class AjaxPayload
 	// Methods //
 
 	/**
-	 * Helper method that reloads a component<br/>
+	 * Helper method that reloads a component<br>
 	 * Similar to {@link AjaxRequestTarget#add(Component...)}
 	 * 
 	 * @param components the {@link Component}{@code s} to add

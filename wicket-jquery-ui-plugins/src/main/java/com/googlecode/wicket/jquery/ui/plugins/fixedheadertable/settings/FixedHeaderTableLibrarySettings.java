@@ -22,8 +22,8 @@ import com.googlecode.wicket.jquery.ui.plugins.fixedheadertable.resource.FixedHe
 import com.googlecode.wicket.jquery.ui.plugins.fixedheadertable.resource.FixedHeaderTableStyleSheetResourceReference;
 
 /**
- * Provides library settings for the jQuery FixedHeaderTable plugin resource references<br/>
- * <br/>
+ * Provides library settings for the jQuery FixedHeaderTable plugin resource references<br>
+ * <br>
  * Usage:
  *
  * <pre>

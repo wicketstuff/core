@@ -21,8 +21,8 @@ import org.apache.wicket.extensions.markup.html.tabs.ITab;
 import org.apache.wicket.util.io.IClusterable;
 
 /**
- * Event listener shared by the {@link TabbedPanel} widget and the {@link TabsBehavior}<br />
- * <br />
+ * Event listener shared by the {@link TabbedPanel} widget and the {@link TabsBehavior}<br>
+ * <br>
  * <b>Warning: </b> At least one event should be enabled for the {@link AjaxTab} to load.
  *
  * @author Sebastien Briquet - sebfz1
@@ -31,7 +31,7 @@ import org.apache.wicket.util.io.IClusterable;
 public interface ITabsListener extends IClusterable
 {
 	/**
-	 * Indicates whether the 'create' event is enabled.<br/>
+	 * Indicates whether the 'create' event is enabled.<br>
 	 * If true, the {@link #onActivate(AjaxRequestTarget, int, ITab)} event will be triggered on 'create'
 	 *
 	 * @return true by default
@@ -39,7 +39,7 @@ public interface ITabsListener extends IClusterable
 	boolean isCreateEventEnabled();
 
 	/**
-	 * Indicates whether the 'activate' event is enabled.<br/>
+	 * Indicates whether the 'activate' event is enabled.<br>
 	 * If true, the {@link #onActivate(AjaxRequestTarget, int, ITab)} event will be triggered on 'activate'
 	 *
 	 * @return true by default
@@ -47,7 +47,7 @@ public interface ITabsListener extends IClusterable
 	boolean isActivateEventEnabled();
 
 	/**
-	 * Indicates whether the 'beforeActivate' event is enabled.<br />
+	 * Indicates whether the 'beforeActivate' event is enabled.<br>
 	 * If true, the {@link #onActivating(AjaxRequestTarget, int, ITab)} event will be triggered.
 	 *
 	 * @return false by default
@@ -55,7 +55,7 @@ public interface ITabsListener extends IClusterable
 	boolean isActivatingEventEnabled();
 
 	/**
-	 * Triggered when a tab has been activated ('create' and 'activate' event).<br/>
+	 * Triggered when a tab has been activated ('create' and 'activate' event).<br>
 	 *
 	 * @param target the {@link AjaxRequestTarget}
 	 * @param index the tab index that triggered this event
@@ -64,7 +64,7 @@ public interface ITabsListener extends IClusterable
 	void onActivate(AjaxRequestTarget target, int index, ITab tab);
 
 	/**
-	 * Triggered when a tab is being activated ('beforeActivate' event).<br/>
+	 * Triggered when a tab is being activated ('beforeActivate' event).<br>
 	 *
 	 * @param target the {@link AjaxRequestTarget}
 	 * @param index the previously selected tab index

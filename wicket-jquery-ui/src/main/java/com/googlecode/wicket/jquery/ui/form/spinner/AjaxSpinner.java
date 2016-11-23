@@ -26,7 +26,7 @@ import com.googlecode.wicket.jquery.core.Options;
 import com.googlecode.wicket.jquery.ui.JQueryUIBehavior;
 
 /**
- * Provides an ajax jQuery spinner based on a {@link TextField}<br/>
+ * Provides an ajax jQuery spinner based on a {@link TextField}<br>
  * The {@code type} ctor arg is mandatory due to the {@link #convertValue(String)} method
  *
  * @param <T> the type of the model object
@@ -125,7 +125,7 @@ public class AjaxSpinner<T extends Number> extends Spinner<T> implements ISpinne
 	// Events //
 
 	/**
-	 * {@inheritDoc}<br/>
+	 * {@inheritDoc}<br>
 	 * <b>Warning:</b> {@code onSpin} converts the input but does not process it (no validation, no model update)
 	 */
 	@Override

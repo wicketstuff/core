@@ -30,7 +30,7 @@ public class ComponentDragDropPage extends AbstractDragDropPage
 	}
 
 	/**
-	 * Gets a new Droppable.<br/>
+	 * Gets a new Droppable.<br>
 	 * By default 'drag-enter' and 'drag-leave' events are disabled to minimize client/server round-trips.
 	 */
 	private Droppable<String> newDroppable(String id, String color)

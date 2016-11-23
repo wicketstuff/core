@@ -78,7 +78,7 @@ public class ListUtils
 	}
 
 	/**
-	 * Utility method to move a list-item at a new position in the specified list<br/>
+	 * Utility method to move a list-item at a new position in the specified list<br>
 	 * This method will use the hashcode of the list-item to retrieve it against the list.
 	 *
 	 * @param list the {@link List}
@@ -96,7 +96,7 @@ public class ListUtils
 	private static final int MAX = 20;
 
 	/**
-	 * Returns a sub list of items of type T having their textual representation (toString()) containing the search criteria<br/>
+	 * Returns a sub list of items of type T having their textual representation (toString()) containing the search criteria<br>
 	 * The max size of the sub list is {@link #MAX}
 	 *
 	 * @param <T> the type
@@ -110,7 +110,7 @@ public class ListUtils
 	}
 
 	/**
-	 * Returns a sub list of items of type T having their textual representation (toString()) containing the search criteria<br/>
+	 * Returns a sub list of items of type T having their textual representation (toString()) containing the search criteria<br>
 	 *
 	 * @param <T> the type
 	 * @param search search criteria
@@ -141,7 +141,7 @@ public class ListUtils
 	}
 
 	/**
-	 * Returns a sub list of items of type T having their textual representation (toString()) starting with the search criteria<br/>
+	 * Returns a sub list of items of type T having their textual representation (toString()) starting with the search criteria<br>
 	 * The max size of the sub list is {@link #MAX}
 	 *
 	 * @param <T> the type
@@ -155,7 +155,7 @@ public class ListUtils
 	}
 
 	/**
-	 * Returns a sub list of items of type T having their textual representation (toString()) starting with the search criteria<br/>
+	 * Returns a sub list of items of type T having their textual representation (toString()) starting with the search criteria<br>
 	 *
 	 * @param <T> the type
 	 * @param search search criteria

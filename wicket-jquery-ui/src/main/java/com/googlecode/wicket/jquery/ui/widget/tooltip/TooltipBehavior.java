@@ -20,8 +20,8 @@ import com.googlecode.wicket.jquery.core.Options;
 import com.googlecode.wicket.jquery.ui.JQueryUIBehavior;
 
 /**
- * Provides the jQuery tooltip behavior.<br/>
- * The {@link TooltipBehavior} apply to a page and therefore needs to be added once:<br/>
+ * Provides the jQuery tooltip behavior.<br>
+ * The {@link TooltipBehavior} apply to a page and therefore needs to be added once:<br>
  *
  * <pre>
  * Java:
@@ -51,7 +51,7 @@ public class TooltipBehavior extends JQueryUIBehavior
 	public static final String METHOD = "tooltip";
 
 	/**
-	 * Default constructor<br/>
+	 * Default constructor<br>
 	 * {@link TooltipBehavior} will apply on <i>document</i>
 	 */
 	public TooltipBehavior()
@@ -60,7 +60,7 @@ public class TooltipBehavior extends JQueryUIBehavior
 	}
 
 	/**
-	 * Constructor<br/>
+	 * Constructor<br>
 	 * {@link TooltipBehavior} will apply on <i>document</i>
 	 *
 	 * @param options the {@link Options}

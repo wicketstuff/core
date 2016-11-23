@@ -28,7 +28,7 @@ import org.apache.wicket.util.io.IClusterable;
 public interface IEffectListener extends IClusterable
 {
 	/**
-	 * Indicates whether the callback should be triggered when the effect completes.<br />
+	 * Indicates whether the callback should be triggered when the effect completes.<br>
 	 * If true, the {@link #onEffectComplete(AjaxRequestTarget)} event will be triggered.
 	 *
 	 * @return false by default

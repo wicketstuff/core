@@ -28,7 +28,7 @@ import org.apache.wicket.util.io.IClusterable;
 public interface IResizableListener extends IClusterable
 {
 	/**
-	 * Indicates whether the 'start' event is enabled.<br />
+	 * Indicates whether the 'start' event is enabled.<br>
 	 * If true, the {@link #onResizeStart(AjaxRequestTarget, int, int, int, int)} event will be triggered.
 	 *
 	 * @return false by default
@@ -36,7 +36,7 @@ public interface IResizableListener extends IClusterable
 	boolean isResizeStartEventEnabled();
 
 	/**
-	 * Indicates whether the 'stop' event is enabled.<br />
+	 * Indicates whether the 'stop' event is enabled.<br>
 	 * If true, the {@link #onResizeStop(AjaxRequestTarget, int, int, int, int)} event will be triggered.
 	 *
 	 * @return false by default

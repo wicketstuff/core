@@ -30,7 +30,7 @@ import com.googlecode.wicket.jquery.core.JQueryBehavior;
 import com.googlecode.wicket.jquery.ui.plugins.wysiwyg.toolbar.IWysiwygToolbar;
 
 /**
- * Provides an implementation of bootstrap-wysiwyg<br/>
+ * Provides an implementation of bootstrap-wysiwyg<br>
  * {@link WysiwygEditor} should be contained in a {@link Form} in order to work properly
  *
  * @author sebfz1

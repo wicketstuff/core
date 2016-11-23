@@ -143,7 +143,7 @@ public abstract class SchedulerBehavior extends KendoUIBehavior implements IJQue
 	protected abstract ResourceListModel getResourceListModel();
 
 	/**
-	 * Gets the 'read' callback function<br/>
+	 * Gets the 'read' callback function<br>
 	 * As create, update and destroy need to be supplied, we should declare read as a function. Weird...
 	 *
 	 * @return the 'read' callback function

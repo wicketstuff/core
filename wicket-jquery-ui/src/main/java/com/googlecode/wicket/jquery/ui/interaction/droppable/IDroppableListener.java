@@ -31,14 +31,14 @@ import com.googlecode.wicket.jquery.ui.interaction.draggable.DraggableBehavior;
 public interface IDroppableListener extends IClusterable
 {
 	/**
-	 * Indicates whether the 'over' event is enabled.<br />
+	 * Indicates whether the 'over' event is enabled.<br>
 	 * If true, the {@link #onOver(AjaxRequestTarget, Component)} event will be triggered.
 	 * @return false by default
 	 */
 	boolean isOverEventEnabled();
 
 	/**
-	 * Indicates whether the 'exit' (or 'out') event is enabled.<br />
+	 * Indicates whether the 'exit' (or 'out') event is enabled.<br>
 	 * If true, the {@link #onExit(AjaxRequestTarget, Component)} event will be triggered.
 	 * @return false by default
 	 */

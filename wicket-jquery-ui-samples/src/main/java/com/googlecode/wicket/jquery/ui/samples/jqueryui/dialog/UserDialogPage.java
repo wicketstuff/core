@@ -120,7 +120,7 @@ public class UserDialogPage extends AbstractDialogPage
 	}
 
 	/**
-	 * This dialog class is located here for convenience in this sample<br/>
+	 * This dialog class is located here for convenience in this sample<br>
 	 * Associated markup file is UserDialogPage$UserDialog.html
 	 */
 	abstract static class UserDialog extends AbstractFormDialog<User>

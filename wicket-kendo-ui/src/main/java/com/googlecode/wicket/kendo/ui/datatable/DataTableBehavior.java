@@ -46,7 +46,7 @@ import com.googlecode.wicket.kendo.ui.datatable.column.IColumn;
 import com.googlecode.wicket.kendo.ui.datatable.column.IdPropertyColumn;
 
 /**
- * Provides a {@value #METHOD} behavior<br/>
+ * Provides a {@value #METHOD} behavior<br>
  * 
  * @author Sebastien Briquet - sebfz1
  */
@@ -177,7 +177,7 @@ public abstract class DataTableBehavior extends KendoUIBehavior implements IJQue
 	}
 
 	/**
-	 * Indicates whether toolbar buttons are supplied.<br/>
+	 * Indicates whether toolbar buttons are supplied.<br>
 	 * <b>Note:</b> if false, the {@code toolbar} option can be used (for built-in buttons only)
 	 * 
 	 * @return {@code true} or {@code false}
@@ -307,7 +307,7 @@ public abstract class DataTableBehavior extends KendoUIBehavior implements IJQue
 	}
 
 	/**
-	 * Gets the 'read' callback function<br/>
+	 * Gets the 'read' callback function<br>
 	 * As create, update and destroy need to be supplied as function, we should declare read as a function as well. Weird...
 	 *
 	 * @return the 'read' callback function

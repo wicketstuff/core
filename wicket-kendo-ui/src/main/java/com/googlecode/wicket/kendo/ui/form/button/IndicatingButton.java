@@ -60,8 +60,8 @@ public class IndicatingButton extends Button
 	// Properties //
 
 	/**
-	 * Indicates whether the button will be disabled on-click to prevent double submit<br/>
-	 * <br/>
+	 * Indicates whether the button will be disabled on-click to prevent double submit<br>
+	 * <br>
 	 * <b>Warning:</b> the button will not be send as part of the post because of its disabled state. Therefore {@link Button#onSubmit()} will not be reached, {@link Form#onSubmit()} should be used instead.
 	 *
 	 * @return false by default

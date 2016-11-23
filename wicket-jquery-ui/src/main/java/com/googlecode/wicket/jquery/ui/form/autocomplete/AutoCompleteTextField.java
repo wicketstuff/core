@@ -163,7 +163,7 @@ public abstract class AutoCompleteTextField<T extends Serializable> extends Text
 	// Methods //
 
 	/**
-	 * Call {@link #getChoices(String)} and cache the result<br/>
+	 * Call {@link #getChoices(String)} and cache the result<br>
 	 * Internal use only
 	 *
 	 * @param input String that represent the query
@@ -325,8 +325,8 @@ public abstract class AutoCompleteTextField<T extends Serializable> extends Text
 	// Factories //
 
 	/**
-	 * Gets a new {@link IJQueryTemplate} to customize the rendering<br/>
-	 * The {@link IJQueryTemplate#getText()} should return a template text of the form "&lt;a&gt;...&lt;/a&gt;".<br/>
+	 * Gets a new {@link IJQueryTemplate} to customize the rendering<br>
+	 * The {@link IJQueryTemplate#getText()} should return a template text of the form "&lt;a&gt;...&lt;/a&gt;".<br>
 	 * The properties used in the template text (ie: ${name}) should be identified in the list returned by {@link IJQueryTemplate#getTextProperties()}
 	 *
 	 * @return null by default
@@ -337,7 +337,7 @@ public abstract class AutoCompleteTextField<T extends Serializable> extends Text
 	}
 
 	/**
-	 * Gets a new {@link IConverter}.<br/>
+	 * Gets a new {@link IConverter}.<br>
 	 * Used when the form component is posted and the bean type has been supplied to the constructor.
 	 *
 	 * @return the {@link IConverter}

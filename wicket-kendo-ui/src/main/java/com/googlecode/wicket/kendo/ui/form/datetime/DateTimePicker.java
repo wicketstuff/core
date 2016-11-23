@@ -226,7 +226,7 @@ public class DateTimePicker extends FormComponentPanel<Date> implements ITextFor
 	}
 
 	/**
-	 * Indicates whether the time-picker is enabled.<br/>
+	 * Indicates whether the time-picker is enabled.<br>
 	 * This method is marked final because an override will not change the time-picker 'enable' flag
 	 *
 	 * @return the enabled flag

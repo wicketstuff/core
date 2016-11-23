@@ -66,7 +66,7 @@ public abstract class ChoiceModelBehavior<T> extends AjaxCallbackBehavior implem
 	}
 
 	/**
-	 * Gets the property list that should be appended to the JSON response.<br/>
+	 * Gets the property list that should be appended to the JSON response.<br>
 	 * The value corresponding to the property is retrieved from the {@link ITextRenderer#getText(Object, String)}
 	 *
 	 * @return the property list

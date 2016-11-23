@@ -30,7 +30,7 @@ import com.googlecode.wicket.jquery.core.ajax.IJQueryAjaxAware;
 import com.googlecode.wicket.jquery.core.ajax.JQueryAjaxBehavior;
 
 /**
- * Provides a jQuery context menu behavior.<br/>
+ * Provides a jQuery context menu behavior.<br>
  * A {@link ContextMenuBehavior} can be associated to <i>only one</i> {@link Component} (ie: The behavior cannot be reused).
  *
  * @author Sebastien Briquet - sebfz1

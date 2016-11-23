@@ -22,7 +22,7 @@ import org.apache.wicket.request.mapper.parameter.PageParameters;
 import org.apache.wicket.util.io.IClusterable;
 
 /**
- * Provides a node for the {@link AjaxTreeView}<br/>
+ * Provides a node for the {@link AjaxTreeView}<br>
  * The wrapped object can be of any type
  * 
  * @param <T> the model object

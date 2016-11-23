@@ -24,11 +24,11 @@ import java.util.Map.Entry;
 import com.googlecode.wicket.jquery.core.Options;
 
 /**
- * Defines a resource for the Kendo UI Scheduler<br/>
- * Kendo UI Scheduler supports assigning scheduler events to a set of predefined resources.<br/>
- * The scheduler widget supports more than one kind of resource.<br/>
- * Multiple instances of the same resource type can be assigned to a scheduler event.<br/>
- * The scheduler widget allows the user to assign resources via the scheduler event edit form.<br/>
+ * Defines a resource for the Kendo UI Scheduler<br>
+ * Kendo UI Scheduler supports assigning scheduler events to a set of predefined resources.<br>
+ * The scheduler widget supports more than one kind of resource.<br>
+ * Multiple instances of the same resource type can be assigned to a scheduler event.<br>
+ * The scheduler widget allows the user to assign resources via the scheduler event edit form.<br>
  *
  * @author Sebastien Briquet - sebfz1
  *
@@ -65,7 +65,7 @@ public class Resource implements Serializable
 	}
 
 	/**
-	 * Constructor<br/>
+	 * Constructor<br>
 	 * <b>Caution:</b> string-numbers as will be interpreted as integers
 	 *
 	 * @param id - the resource id
@@ -77,7 +77,7 @@ public class Resource implements Serializable
 	}
 
 	/**
-	 * Constructor<br/>
+	 * Constructor<br>
 	 * <b>Caution:</b> string-numbers as will be interpreted as integers
 	 *
 	 * @param id - the resource id

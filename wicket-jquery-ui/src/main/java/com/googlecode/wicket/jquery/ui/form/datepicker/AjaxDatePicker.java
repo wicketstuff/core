@@ -29,7 +29,7 @@ import com.googlecode.wicket.jquery.core.ajax.JQueryAjaxPostBehavior;
 import com.googlecode.wicket.jquery.core.event.IValueChangedListener;
 
 /**
- * Provides a jQuery date-picker based on a {@link DateTextField}<br/>
+ * Provides a jQuery date-picker based on a {@link DateTextField}<br>
  * This ajax version will post the {@link Component}, using a {@link JQueryAjaxPostBehavior}, when the 'onSelect' javascript method is called.
  *
  * @author Sebastien Briquet - sebfz1

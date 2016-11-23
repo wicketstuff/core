@@ -31,9 +31,9 @@ import com.googlecode.wicket.jquery.ui.widget.tabs.AjaxTab;
 public interface IAccordionListener extends IClusterable
 {
 	/**
-	 * Indicates whether the 'create' event is enabled.<br/>
-	 * If true, the {@link #onActivate(AjaxRequestTarget, int, ITab)} event will be triggered on 'create'<br/>
-	 * <br/>
+	 * Indicates whether the 'create' event is enabled.<br>
+	 * If true, the {@link #onActivate(AjaxRequestTarget, int, ITab)} event will be triggered on 'create'<br>
+	 * <br>
 	 * <b>Warning: </b> 'create' event is required to be enabled for the {@link AjaxTab} to load
 	 *
 	 * @return true by default
@@ -41,9 +41,9 @@ public interface IAccordionListener extends IClusterable
 	boolean isCreateEventEnabled();
 
 	/**
-	 * Indicates whether the 'activate' event is enabled.<br/>
-	 * If true, the {@link #onActivate(AjaxRequestTarget, int, ITab)} event will be triggered on 'activate'<br/>
-	 * <br/>
+	 * Indicates whether the 'activate' event is enabled.<br>
+	 * If true, the {@link #onActivate(AjaxRequestTarget, int, ITab)} event will be triggered on 'activate'<br>
+	 * <br>
 	 * <b>Warning: </b> 'activate' event is required to be enabled for the {@link AjaxTab} to load
 	 *
 	 * @return true by default
@@ -51,7 +51,7 @@ public interface IAccordionListener extends IClusterable
 	boolean isActivateEventEnabled();
 
 	/**
-	 * Triggered when an accordion tab has been activated (on 'create' and/or 'activate' event).<br/>
+	 * Triggered when an accordion tab has been activated (on 'create' and/or 'activate' event).<br>
 	 *
 	 * @param target the {@link AjaxRequestTarget}
 	 * @param index the accordion header that triggered this event

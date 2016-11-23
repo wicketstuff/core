@@ -126,7 +126,7 @@ public class AccordionPanel extends JQueryGenericPanel<List<ITab>> implements IA
 	}
 
 	/**
-	 * Sets the current tab index<br/>
+	 * Sets the current tab index<br>
 	 * <b>Warning:</b> the index is relative to visible tabs only
 	 *
 	 * @param index the visible tab's index to activate
@@ -140,8 +140,8 @@ public class AccordionPanel extends JQueryGenericPanel<List<ITab>> implements IA
 	}
 
 	/**
-	 * Sets (selects and activates) the current tab index<br/>
-	 * <b>Warning:</b> the index is related to visible tabs only<br/>
+	 * Sets (selects and activates) the current tab index<br>
+	 * <b>Warning:</b> the index is related to visible tabs only<br>
 	 * <b>Warning:</b> invoking this method results to a dual client-server round-trip.
 	 *
 	 * @param index the visible tab's index to activate

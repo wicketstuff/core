@@ -29,7 +29,7 @@ import org.apache.wicket.util.io.IClusterable;
 public interface IWindowListener extends IClusterable
 {
 	/**
-	 * Indicates whether the action events are enabled.<br/>
+	 * Indicates whether the action events are enabled.<br>
 	 * If true, the {@link #onAction(AjaxRequestTarget, String)} event will be triggered
 	 *
 	 * @return false by default
@@ -37,7 +37,7 @@ public interface IWindowListener extends IClusterable
 	boolean isActionEventEnabled();
 
 	/**
-	 * Indicates whether the close event is enabled. Both 'X' icon and 'escape' key fire this event.<br/>
+	 * Indicates whether the close event is enabled. Both 'X' icon and 'escape' key fire this event.<br>
 	 * If true, the {@link #onClose(IPartialPageRequestHandler)} event will be triggered
 	 *
 	 * @return false by default

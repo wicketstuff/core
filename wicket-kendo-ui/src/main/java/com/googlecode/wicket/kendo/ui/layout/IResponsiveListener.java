@@ -29,7 +29,7 @@ import org.apache.wicket.util.io.IClusterable;
 public interface IResponsiveListener extends IClusterable
 {
 	/**
-	 * Indicates whether the 'open' event is enabled.<br />
+	 * Indicates whether the 'open' event is enabled.<br>
 	 * If true, the {@link #onOpen(AjaxRequestTarget)} event will be triggered.
 	 *
 	 * @return false by default
@@ -37,7 +37,7 @@ public interface IResponsiveListener extends IClusterable
 	boolean isOpenEventEnabled();
 
 	/**
-	 * Indicates whether the 'close' event is enabled.<br/>
+	 * Indicates whether the 'close' event is enabled.<br>
 	 * If true, the {@link #onClose(AjaxRequestTarget)} event will be triggered.
 	 *
 	 * @return false by default

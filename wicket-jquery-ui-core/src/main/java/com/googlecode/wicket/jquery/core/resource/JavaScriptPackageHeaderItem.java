@@ -24,7 +24,7 @@ import org.apache.wicket.request.resource.JavaScriptResourceReference;
 import org.apache.wicket.resource.TextTemplateResourceReference;
 
 /**
- * Provides a {@link JavaScriptReferenceHeaderItem} that will load a '.js' file corresponding to the supplied {@code Class}<br/>
+ * Provides a {@link JavaScriptReferenceHeaderItem} that will load a '.js' file corresponding to the supplied {@code Class}<br>
  * <b>i.e.:</b> {@code MyClass.js}
  * 
  * @author Sebastien Briquet - sebfz1

@@ -185,9 +185,9 @@ public class WindowButton implements IClusterable
 	}
 
 	/**
-	 * INTERNAL USE<br/>
-	 * Gets the model of the button's text<br/>
-	 * <br/>
+	 * INTERNAL USE<br>
+	 * Gets the model of the button's text<br>
+	 * <br>
 	 * <b>Warning:</b> it may throw an Exception if not wrapped to a component
 	 *
 	 * @return the {@link IModel}
@@ -278,7 +278,7 @@ public class WindowButton implements IClusterable
 	// Methods //
 
 	/**
-	 * Indicates whether this {@link WindowButton} is equal to another {@link WindowButton}.<br/>
+	 * Indicates whether this {@link WindowButton} is equal to another {@link WindowButton}.<br>
 	 * Are considered equals buttons having the same text representation, which is the text supplied to the constructor (if {@link #toString()} is not overridden).
 	 *
 	 * @param object the {@link WindowButton} to compare to

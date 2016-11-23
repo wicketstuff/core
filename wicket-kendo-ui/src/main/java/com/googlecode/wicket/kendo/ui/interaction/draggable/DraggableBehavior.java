@@ -35,8 +35,8 @@ import com.googlecode.wicket.kendo.ui.KendoUIBehavior;
 import com.googlecode.wicket.kendo.ui.interaction.droppable.DroppableBehavior;
 
 /**
- * Provides a {@value #METHOD} behavior<br/>
- * <b>Note:</b> This behavior should be attached directly to the component to be dragged. Therefore the 'filter' option will not work here.<br/>
+ * Provides a {@value #METHOD} behavior<br>
+ * <b>Note:</b> This behavior should be attached directly to the component to be dragged. Therefore the 'filter' option will not work here.<br>
  * <b>Warning:</b> not thread-safe: the instance of this behavior should only be used once
  *
  * @author Sebastien Briquet - sebfz1
@@ -193,7 +193,7 @@ public class DraggableBehavior extends KendoUIBehavior implements IJQueryAjaxAwa
 	// Factories //
 
 	/**
-	 * Gets a new {@link DroppableBehavior} visitor.<br/>
+	 * Gets a new {@link DroppableBehavior} visitor.<br>
 	 * This {@link IVisitor} is responsible for register the {@link DroppableBehavior} to this {@link DraggableBehavior}
 	 *
 	 * @return a {@link IVisitor}

@@ -33,7 +33,7 @@ import com.googlecode.wicket.jquery.core.utils.BuilderUtils;
 import com.googlecode.wicket.jquery.core.utils.DateUtils;
 
 /**
- * Provides a wrapper on a {@link Map} that will contains jQuery behavior options (key/value).<br/>
+ * Provides a wrapper on a {@link Map} that will contains jQuery behavior options (key/value).<br>
  * the {@link #toString()} methods returns the JSON representation of the options.
  *
  * @author Sebastien Briquet - sebfz1
@@ -46,7 +46,7 @@ public class Options implements IClusterable
 	public static final String QUOTE = "\"";
 
 	/**
-	 * Converts an object to its javascript representation. ie: "myvalue" (with the double quotes)<br/>
+	 * Converts an object to its javascript representation. ie: "myvalue" (with the double quotes)<br>
 	 * If the supplied value is null, "null" is returned
 	 *
 	 * @param value the object
@@ -212,7 +212,7 @@ public class Options implements IClusterable
 	}
 
 	/**
-	 * Adds or replace an option defined by a key/value pair.<br/>
+	 * Adds or replace an option defined by a key/value pair.<br>
 	 * If for a given key, the value is null, then the pair is removed.
 	 *
 	 * @param key - key with which the specified value is to be associated

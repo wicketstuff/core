@@ -149,8 +149,8 @@ public class RangeSlider extends AbstractSlider<RangeValue>
 	}
 
 	/**
-	 * Get the label pattern to be used to display the value. Should be overridden with care!<br/>
-	 * <b>Note: </b> the pattern is a javascript string, where lower value is represented by "ui.values[0]", upper value by "ui.values[1]".<br/>
+	 * Get the label pattern to be used to display the value. Should be overridden with care!<br>
+	 * <b>Note: </b> the pattern is a javascript string, where lower value is represented by "ui.values[0]", upper value by "ui.values[1]".<br>
 	 *
 	 * @return default to '[' + ui.values[0] + ', ' +  ui.values[1] + ']'
 	 */
@@ -228,7 +228,7 @@ public class RangeSlider extends AbstractSlider<RangeValue>
 	}
 
 	/**
-	 * Gets a new behavior that will handle the change event triggered on provided lower-input.<br/>
+	 * Gets a new behavior that will handle the change event triggered on provided lower-input.<br>
 	 * The behavior is added to the input that has been provided in the constructor (means it is visible and to user can interact with)
 	 * @return a {@link JQueryAbstractBehavior}
 	 */
@@ -253,7 +253,7 @@ public class RangeSlider extends AbstractSlider<RangeValue>
 	}
 
 	/**
-	 * Gets a new behavior that will handle the change event triggered on provided upper-input.<br/>
+	 * Gets a new behavior that will handle the change event triggered on provided upper-input.<br>
 	 * The behavior is added to the input that has been provided in the constructor (means it is visible and to user can interact with)
 	 * @return a {@link JQueryAbstractBehavior}
 	 */

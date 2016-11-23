@@ -21,8 +21,8 @@ import org.apache.wicket.request.resource.ResourceReference;
 import com.googlecode.wicket.jquery.ui.resource.JQueryUIResourceReference;
 
 /**
- * Provides library settings for jQuery UI resource references<br/>
- * <br/>
+ * Provides library settings for jQuery UI resource references<br>
+ * <br>
  * Usage:
  *
  * <pre>

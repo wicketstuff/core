@@ -23,8 +23,8 @@ import com.googlecode.wicket.jquery.ui.calendar.resource.CalendarStyleSheetResou
 import com.googlecode.wicket.jquery.ui.calendar.resource.GCalJavaScriptResourceReference;
 
 /**
- * Provides library settings for FullCalendar resource references<br/>
- * <br/>
+ * Provides library settings for FullCalendar resource references<br>
+ * <br>
  * Usage:
  *
  * <pre>

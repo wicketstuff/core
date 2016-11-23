@@ -25,10 +25,10 @@ import org.apache.wicket.feedback.IFeedback;
 import org.apache.wicket.feedback.IFeedbackMessageFilter;
 
 /**
- * Provides a Kendo UI feedback console widget<br/>
- * <br/>
- * <b>Note about the capacity:</b> the capacity allows to define a maximum number of messages.<br/>
- * Elder messages will be automatically removed from the model object on insertion.<br/>
+ * Provides a Kendo UI feedback console widget<br>
+ * <br>
+ * <b>Note about the capacity:</b> the capacity allows to define a maximum number of messages.<br>
+ * Elder messages will be automatically removed from the model object on insertion.<br>
  * However, this is only reflected when the component is (re-)rendered ({@link #onBeforeRender()} has to be invoked)
  *
  * @author Sebastien Briquet - sebfz1
@@ -164,7 +164,7 @@ public class FeedbackConsole extends AbstractConsole implements IFeedback
 	// Factories //
 
 	/**
-	 * Gets a new instance of the FeedbackMessagesModel to use.<br/>
+	 * Gets a new instance of the FeedbackMessagesModel to use.<br>
 	 * This method can be overridden to provide a {@link IFeedbackMessageFilter}
 	 *
 	 * @return a new {@code FeedbackMessagesModel}

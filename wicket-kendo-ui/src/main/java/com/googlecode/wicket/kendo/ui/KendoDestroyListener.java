@@ -28,7 +28,7 @@ import org.apache.wicket.util.visit.IVisitor;
 import org.apache.wicket.util.visit.Visits;
 
 /**
- * INTERNAL USE<br/>
+ * INTERNAL USE<br>
  * Provides an {@code IListener} for {@link KendoUIBehavior}{@code s} that destroys widgets about to be repainted.
  * 
  * @author Sebastien Briquet - sebfz1
@@ -41,9 +41,9 @@ public class KendoDestroyListener extends AbstractListener
 	public interface IDestroyable
 	{
 		/**
-		 * Prepares the widget for safe removal from the DOM.<br/>
-		 * Detaches all event handlers and removes jQuery.data attributes to avoid memory leaks.<br/>
-		 * Calls destroy method of any child Kendo widgets.<br/>
+		 * Prepares the widget for safe removal from the DOM.<br>
+		 * Detaches all event handlers and removes jQuery.data attributes to avoid memory leaks.<br>
+		 * Calls destroy method of any child Kendo widgets.<br>
 		 * This method is automatically called on ajax request. In case of web socket requests, this may be called manually.
 		 * 
 		 * @param handler the {@link IPartialPageRequestHandler}

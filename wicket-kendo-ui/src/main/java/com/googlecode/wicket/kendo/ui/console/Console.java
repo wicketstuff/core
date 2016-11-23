@@ -22,10 +22,10 @@ import org.apache.wicket.core.request.handler.IPartialPageRequestHandler;
 import org.apache.wicket.model.IModel;
 
 /**
- * Provides a Kendo UI console widget<br/>
- * <br/>
- * <b>Note about the capacity:</b> the capacity allows to define a maximum number of messages.<br/>
- * Elder messages will be automatically removed from the model object on insertion.<br/>
+ * Provides a Kendo UI console widget<br>
+ * <br>
+ * <b>Note about the capacity:</b> the capacity allows to define a maximum number of messages.<br>
+ * Elder messages will be automatically removed from the model object on insertion.<br>
  * However, this is only reflected when the component is (re-)rendered ({@link #onBeforeRender()} has to be invoked)
  *
  * @author Sebastien Briquet - sebfz1
