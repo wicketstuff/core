@@ -45,6 +45,7 @@ public abstract class AjaxTreeViewBehavior extends KendoUIBehavior implements IJ
 
 	private JQueryAjaxBehavior onExpandAjaxBehavior = null;
 	private JQueryAjaxBehavior onSelectAjaxBehavior = null;
+	private JQueryAjaxBehavior onDropAjaxBehavior = null;
 
 	/**
 	 * Constructor
@@ -95,6 +96,12 @@ public abstract class AjaxTreeViewBehavior extends KendoUIBehavior implements IJ
 			this.onSelectAjaxBehavior = this.newOnSelectAjaxBehavior(this);
 			component.add(this.onSelectAjaxBehavior);
 		}
+
+		if (this.listener.isDropEventEnabled())
+		{
+			this.onDropAjaxBehavior = this.newOnDropAjaxBehavior(this);
+			component.add(this.onDropAjaxBehavior);
+		}
 	}
 
 	// Properties //
@@ -129,6 +136,12 @@ public abstract class AjaxTreeViewBehavior extends KendoUIBehavior implements IJ
 			this.setOption("change", this.onSelectAjaxBehavior.getCallbackFunction());
 		}
 
+		if (this.onDropAjaxBehavior != null)
+		{
+			this.setOption("dragAndDrop", true);
+			this.setOption("drop", this.onDropAjaxBehavior.getCallbackFunction());
+		}
+
 		// data-source //
 		this.onConfigure(this.dataSource);
 		this.setOption("dataSource", this.dataSource.getName());
@@ -157,6 +170,12 @@ public abstract class AjaxTreeViewBehavior extends KendoUIBehavior implements IJ
 		{
 			SelectEvent payload = (SelectEvent) event;
 			this.listener.onSelect(target, payload.getNodeId(), payload.getNodePath());
+		}
+
+		if (event instanceof DropEvent)
+		{
+			DropEvent payload = (DropEvent) event;
+			this.listener.onDrop(target, payload.getNodeId(), payload.getParentId(), payload.getPosition());
 		}
 	}
 
@@ -198,6 +217,26 @@ public abstract class AjaxTreeViewBehavior extends KendoUIBehavior implements IJ
 			protected JQueryEvent newEvent()
 			{
 				return new SelectEvent();
+			}
+		};
+	}
+
+	/**
+	 * Gets a new {@link JQueryAjaxBehavior} that will be wired to the 'drop' event, triggered when a node is selected
+	 *
+	 * @param source the {@link IJQueryAjaxAware}
+	 * @return a new {@code JQueryAjaxBehavior} by default
+	 */
+	protected JQueryAjaxBehavior newOnDropAjaxBehavior(IJQueryAjaxAware source)
+	{
+		return new OnDropAjaxBehavior(source) {
+
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			protected JQueryEvent newEvent()
+			{
+				return new DropEvent();
 			}
 		};
 	}
@@ -253,7 +292,7 @@ public abstract class AjaxTreeViewBehavior extends KendoUIBehavior implements IJ
 		@Override
 		public CharSequence getCallbackFunctionBody(CallbackParameter... parameters)
 		{
-			// computes the node path 
+			// computes the node path
 			// from http://jsfiddle.net/bZXnR/1/
 			StringBuilder builder = new StringBuilder();
 			builder.append("var $treeview = this;");
@@ -272,6 +311,35 @@ public abstract class AjaxTreeViewBehavior extends KendoUIBehavior implements IJ
 		protected JQueryEvent newEvent()
 		{
 			return new SelectEvent();
+		}
+	}
+
+	/**
+	 * Provides a {@link JQueryAjaxBehavior} that aims to be wired to the 'drop' event
+	 */
+	protected static class OnDropAjaxBehavior extends JQueryAjaxBehavior
+	{
+		private static final long serialVersionUID = 1L;
+
+		public OnDropAjaxBehavior(IJQueryAjaxAware source)
+		{
+			super(source);
+		}
+
+		@Override
+		protected CallbackParameter[] getCallbackParameters()
+		{
+			return new CallbackParameter[] { CallbackParameter.context("e"), // lf
+					CallbackParameter.resolved("nodeId", String.format("this.dataItem(e.sourceNode).%s", TreeNodeFactory.ID_FIELD)), // lf
+					CallbackParameter.resolved("parentId", String.format("this.dataItem(e.destinationNode).%s", TreeNodeFactory.ID_FIELD)), // lf
+					CallbackParameter.resolved("dropPosition", "e.dropPosition") // lf
+			};
+		}
+
+		@Override
+		protected JQueryEvent newEvent()
+		{
+			return new DropEvent();
 		}
 	}
 
@@ -317,6 +385,38 @@ public abstract class AjaxTreeViewBehavior extends KendoUIBehavior implements IJ
 		public String getNodePath()
 		{
 			return this.nodePath;
+		}
+	}
+
+	/**
+	 * Provides an event object that will be broadcasted by the {@link OnDropAjaxBehavior} callback
+	 */
+	protected static class DropEvent extends JQueryEvent
+	{
+		private final int nodeId;
+		private final int parentId;
+		private final String position;
+
+		public DropEvent()
+		{
+			this.nodeId = RequestCycleUtils.getQueryParameterValue("nodeId").toInt(0);
+			this.parentId = RequestCycleUtils.getQueryParameterValue("parentId").toInt(0);
+			this.position = RequestCycleUtils.getQueryParameterValue("dropPosition").toString();
+		}
+
+		public int getNodeId()
+		{
+			return this.nodeId;
+		}
+
+		public int getParentId()
+		{
+			return this.parentId;
+		}
+		
+		public String getPosition()
+		{
+			return this.position;
 		}
 	}
 }
