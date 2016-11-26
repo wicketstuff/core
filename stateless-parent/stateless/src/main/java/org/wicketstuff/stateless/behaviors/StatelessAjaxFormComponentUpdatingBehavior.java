@@ -25,6 +25,8 @@ import org.wicketstuff.stateless.StatelessEncoder;
 /**
  * Stateless version of AjaxFormComponentUpdatingBehavior.
  * 
+ * @deprecated Statelss components and behaviors are now supported since
+ *  version 7.4.0, so this module will be dropped in version 8 
  * @author jfk
  * 
  */

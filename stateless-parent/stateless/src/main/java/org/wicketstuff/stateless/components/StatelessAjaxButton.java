@@ -32,6 +32,9 @@ import org.wicketstuff.stateless.behaviors.StatelessAjaxFormSubmitBehavior;
  * 
  * @since 1.3
  * 
+ * @deprecated Statelss components and behaviors are now supported since
+ *  version 7.4.0, so this module will be dropped in version 8
+ *  
  * @author Igor Vaynberg (ivaynberg)
  */
 public abstract class StatelessAjaxButton extends Button

@@ -26,6 +26,9 @@ import org.apache.wicket.request.mapper.parameter.PageParameters;
 
 /**
  * Stateless version of AjaxFormSubmitBehavior.
+ * 
+ * @deprecated Statelss components and behaviors are now supported since
+ *  version 7.4.0, so this module will be dropped in version 8
  */
 public class StatelessAjaxFormSubmitBehavior extends StatelessAjaxEventBehavior
 {

@@ -32,6 +32,9 @@ import org.apache.wicket.markup.html.form.TextField;
  * 'change' event is used.
  * </p>
  * 
+ * @deprecated Statelss components and behaviors are now supported since
+ *  version 7.4.0, so this module will be dropped in version 8
+ *  
  * @author Andrea Del Bene
  *
  */

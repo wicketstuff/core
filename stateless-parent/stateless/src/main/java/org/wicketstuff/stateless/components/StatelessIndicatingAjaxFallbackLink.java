@@ -20,7 +20,11 @@ import org.apache.wicket.Component;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.IAjaxIndicatorAware;
 import org.apache.wicket.extensions.ajax.markup.html.AjaxIndicatorAppender;
-
+/**
+ * 
+ * @deprecated Statelss components and behaviors are now supported since
+ *  version 7.4.0, so this module will be dropped in version 8 
+ */
 public class StatelessIndicatingAjaxFallbackLink<T> extends StatelessAjaxFallbackLink<T> implements IAjaxIndicatorAware
 {
 	private static final long serialVersionUID = 1L;

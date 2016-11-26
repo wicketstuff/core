@@ -5,7 +5,12 @@ import org.apache.wicket.ajax.IAjaxIndicatorAware;
 import org.apache.wicket.extensions.ajax.markup.html.AjaxIndicatorAppender;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.model.IModel;
-
+/**
+ * 
+ * @deprecated Statelss components and behaviors are now supported since
+ *  version 7.4.0, so this module will be dropped in version 8
+ *
+ */
 public class StatelessIndicatingAjaxButton extends StatelessAjaxButton implements IAjaxIndicatorAware
 {
 	private static final long serialVersionUID = 1L;
