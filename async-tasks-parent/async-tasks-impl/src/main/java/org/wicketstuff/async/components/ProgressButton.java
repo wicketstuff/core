@@ -201,9 +201,9 @@ public class ProgressButton extends AjaxFallbackButton {
     }
 
     private class RefreshBehavior extends AbstractAjaxTimerBehavior {
-        private boolean bound = false;
+        private boolean binded = false;
 
-        public RefreshBehavior(Duration updateInterval) {
+		public RefreshBehavior(Duration updateInterval) {
             super(updateInterval);
         }
 
@@ -223,22 +223,21 @@ public class ProgressButton extends AjaxFallbackButton {
             // Again, skip the check for the component being enabled
             return !isStopped() && getComponent().findParent(Page.class) != null;
         }
-
         @Override
         protected void onBind() {
-            super.onBind();
-            bound = true;
+        	super.onBind();
+        	binded   = true;
         }
-
+        
         @Override
         protected void onUnbind() {
-            super.onUnbind();
-            bound = false;
+        	super.onUnbind();
+        	binded = false;
         }
-
+        
         public boolean isBinded() {
-            return bound;
-        }
+			return binded;
+		}
     }
 
     /**
