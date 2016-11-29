@@ -49,7 +49,7 @@ public class ExtendedCalendarPage extends AbstractCalendarPage
 					CalendarDAO.addEvent(event);
 				}
 
-				calendar.refresh(target); //use calendar.refresh(target) instead of target.add(calendar)
+				calendar.refresh(target); // use calendar.refresh(target) instead of target.add(calendar)
 			}
 		};
 
@@ -93,7 +93,7 @@ public class ExtendedCalendarPage extends AbstractCalendarPage
 			{
 				return true;
 			}
-			
+
 			@Override
 			public boolean isViewRenderEnabled()
 			{
@@ -138,8 +138,8 @@ public class ExtendedCalendarPage extends AbstractCalendarPage
 
 				if (event != null)
 				{
-					event.setStart(event.getStart() != null ? event.getStart().plus(delta, ChronoUnit.MILLIS) : null);	//recompute start date
-					event.setEnd(event.getEnd() != null ? event.getEnd().plus(delta, ChronoUnit.MILLIS) : null);	// recompute end date
+					event.setStart(event.getStart() != null ? event.getStart().plus(delta, ChronoUnit.MILLIS) : null); // recompute start date
+					event.setEnd(event.getEnd() != null ? event.getEnd().plus(delta, ChronoUnit.MILLIS) : null); // recompute end date
 					event.setAllDay(allDay);
 
 					this.info(String.format("%s changed to %s", event.getTitle(), event.getStart()));
