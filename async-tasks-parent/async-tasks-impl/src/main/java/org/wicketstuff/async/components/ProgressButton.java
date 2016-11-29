@@ -1,12 +1,5 @@
 package org.wicketstuff.async.components;
 
-import java.lang.reflect.Method;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Optional;
-
 import org.apache.wicket.Component;
 import org.apache.wicket.Page;
 import org.apache.wicket.ajax.AbstractAjaxTimerBehavior;
@@ -19,6 +12,12 @@ import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.util.time.Duration;
 import org.wicketstuff.async.task.AbstractTaskContainer;
+
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Optional;
 
 /**
  * A progress button which allows to control a {@link Runnable}. Each such button will refresh itself as given by
@@ -151,11 +150,7 @@ public class ProgressButton extends AjaxFallbackButton {
     }
 
     private void activateRefresh(AjaxRequestTarget target) {
-        if (!getTaskContainer().isRunning()) {
-            if (getBehaviors(RefreshBehavior.class).size() > 0) {
-                refreshBehavior.stop(target);
-            }
-        } else if (getBehaviors(RefreshBehavior.class).size() == 0) {
+        if (getBehaviors(RefreshBehavior.class).size() == 0) {
             add(refreshBehavior);
         } else {
             refreshBehavior.restart(target);
