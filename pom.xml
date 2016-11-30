@@ -326,7 +326,6 @@
 		<module>serializer-fast</module>
 		<module>serializer-fast2</module>
 		<module>serializer-ui</module>
-		<module>stateless-parent</module>
 		<module>shiro-security</module>
 		<module>wicket-facebook-parent</module>
 		<module>wicket-html5-parent</module>
