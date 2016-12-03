@@ -13,24 +13,22 @@ import com.googlecode.wicket.kendo.ui.resource.KendoCultureResourceReference;
 /**
  * {@link HeaderItem} in charge of setting the {@code kendo.culture} and adding relevant dependencies <br>
  * Usage:<br>
- * <code>
- * <pre>
+ * <pre><code>
  * public void renderHead(IHeaderResponse response)
  * {
  * 	super.renderHead(response);
  * 	
  * 	response.render(new KendoCultureHeaderItem(KendoCulture.FR_FR));
  * }
+ * </code></pre>
  * <br>
  * This will results to:
- * <code>
- * <pre>
+ * <pre><code>
  * &lt;script type="text/javascript" src="./resource/com.googlecode.wicket.kendo.ui.resource.KendoCultureResourceReference/cultures/kendo.culture.fr-FR.js"&gt;&lt;/script&gt;
  * &lt;script type="text/javascript" id="kendo-culture"&gt;
  * 	kendo.culture('fr-FR');
  * &lt;/script&gt;
- * </pre>
- * </code>
+ * </code></pre>
  * 
  * @author Patrick Davids - Patrick1701
  *

@@ -174,8 +174,8 @@ public abstract class AbstractSlider<T> extends FormComponentPanel<T> implements
 	 * Sets the min value
 	 *
 	 * @param <W> the widget type
-	 * @param min
-	 * @return this
+	 * @param min the min value
+	 * @return this, for chaining
 	 */
 	@SuppressWarnings("unchecked")
 	public <W extends AbstractSlider<T>> W setMin(Integer min)
@@ -188,8 +188,8 @@ public abstract class AbstractSlider<T> extends FormComponentPanel<T> implements
 	 * Sets the max value
 	 *
 	 * @param <W> the widget type
-	 * @param max
-	 * @return this
+	 * @param max the max value
+	 * @return this, for chaining
 	 */
 	@SuppressWarnings("unchecked")
 	public <W extends AbstractSlider<T>> W setMax(Integer max)
@@ -202,8 +202,8 @@ public abstract class AbstractSlider<T> extends FormComponentPanel<T> implements
 	 * Sets the step value
 	 *
 	 * @param <W> the widget type
-	 * @param step
-	 * @return this
+	 * @param step the step value
+	 * @return this, for chaining
 	 */
 	@SuppressWarnings("unchecked")
 	public <W extends AbstractSlider<T>> W setStep(Integer step)
@@ -216,8 +216,8 @@ public abstract class AbstractSlider<T> extends FormComponentPanel<T> implements
 	 * Sets the {@link Orientation}
 	 *
 	 * @param <W> the widget type
-	 * @param orientation
-	 * @return this
+	 * @param orientation the {@code Orientation}
+	 * @return this, for chaining
 	 */
 	@SuppressWarnings("unchecked")
 	public <W extends AbstractSlider<T>> W setOrientation(Orientation orientation)

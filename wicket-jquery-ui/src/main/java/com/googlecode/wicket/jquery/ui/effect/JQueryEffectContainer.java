@@ -137,7 +137,7 @@ public class JQueryEffectContainer extends WebMarkupContainer implements IEffect
 	/**
 	 * Gets a new {@link JQueryEffectBehavior}
 	 * 
-	 * @param selector
+	 * @param selector the html selector (ie: '#myId')
 	 * @return the widget behavior
 	 */
 	protected JQueryEffectBehavior newEffectBehavior(String selector)

@@ -80,7 +80,7 @@ public interface ICalendarListener extends IClusterable
 	boolean isEventResizeEnabled();
 
 	/**
-	 * Indicates whether the {@link #onViewRender(AjaxRequestTarget, CalendarView, LocalDateTime, LocalDateTime)} event will be triggered
+	 * Indicates whether the {@link #onViewRender(AjaxRequestTarget, CalendarView, LocalDate, LocalDate)} event will be triggered
 	 *
 	 * @return false by default
 	 */

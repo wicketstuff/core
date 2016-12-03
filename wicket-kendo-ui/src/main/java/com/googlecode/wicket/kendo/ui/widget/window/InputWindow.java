@@ -259,6 +259,7 @@ public abstract class InputWindow<T> extends Window<T>
 	/**
 	 * Gets a new {@link KendoFeedbackPanel}
 	 * 
+	 * @param id the markup-id
 	 * @return a new {@code KendoFeedbackPanel}
 	 */
 	protected KendoFeedbackPanel newFeedbackPanel(String id)

@@ -40,6 +40,7 @@ public class SchedulerModelBehavior extends AjaxCallbackBehavior
 	 * Constructor
 	 *
 	 * @param model the {@link SchedulerModel}
+	 * @param factory the {@link SchedulerEventFactory}
 	 */
 	public SchedulerModelBehavior(final SchedulerModel model, SchedulerEventFactory factory)
 	{

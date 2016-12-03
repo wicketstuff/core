@@ -47,6 +47,7 @@ public class RangeSlider extends AbstractSlider<RangeValue>
 
 	/**
 	 * Constructor
+	 * 
 	 * @param id the markup id
 	 */
 	public RangeSlider(String id)
@@ -57,6 +58,7 @@ public class RangeSlider extends AbstractSlider<RangeValue>
 
 	/**
 	 * Constructor
+	 * 
 	 * @param id the markup id
 	 * @param model the {@link IModel}
 	 */
@@ -68,6 +70,7 @@ public class RangeSlider extends AbstractSlider<RangeValue>
 
 	/**
 	 * Constructor
+	 * 
 	 * @param id the markup id
 	 * @param model the {@link IModel}
 	 * @param label {@link Label} on which the current slide value will be displayed
@@ -80,22 +83,23 @@ public class RangeSlider extends AbstractSlider<RangeValue>
 
 	/**
 	 * Constructor
+	 * 
 	 * @param id the markup id
 	 * @param model the {@link IModel}
-	 * @param lower
-	 * @param upper
+	 * @param lower the lower {@code TextField}
+	 * @param upper the upper {@code TextField}
 	 */
 	public RangeSlider(String id, IModel<RangeValue> model, TextField<Integer> lower, TextField<Integer> upper)
 	{
 		super(id, model);
 
 		this.lower = lower;
-		this.lower.setRequired(true); //prevent null model object in case of no value is supplied.
+		this.lower.setRequired(true); // prevent null model object in case of no value is supplied.
 		this.lower.setOutputMarkupId(true);
 		this.lower.add(this.newLowerBehavior());
 
 		this.upper = upper;
-		this.upper.setRequired(true); //prevent null model object in case of no value is supplied.
+		this.upper.setRequired(true); // prevent null model object in case of no value is supplied.
 		this.upper.setOutputMarkupId(true);
 		this.upper.add(this.newUpperBehavior());
 
@@ -115,7 +119,7 @@ public class RangeSlider extends AbstractSlider<RangeValue>
 
 	@Override
 	public void convertInput()
- 	{
+	{
 		Integer lower = this.lower.getConvertedInput();
 		Integer upper = this.upper.getConvertedInput();
 
@@ -130,14 +134,14 @@ public class RangeSlider extends AbstractSlider<RangeValue>
 			else
 			{
 				ValidationError error = new ValidationError();
-				error.addKey("RangeSlider.ConversionError"); //wicket6
+				error.addKey("RangeSlider.ConversionError"); // wicket6
 				error.setVariable("lower", value.getLower());
 				error.setVariable("upper", value.getUpper());
 
 				this.error(error);
 			}
 		}
- 	}
+	}
 
 	@Override
 	@SuppressWarnings("unchecked")
@@ -152,7 +156,7 @@ public class RangeSlider extends AbstractSlider<RangeValue>
 	 * Get the label pattern to be used to display the value. Should be overridden with care!<br>
 	 * <b>Note: </b> the pattern is a javascript string, where lower value is represented by "ui.values[0]", upper value by "ui.values[1]".<br>
 	 *
-	 * @return default to '[' + ui.values[0] + ', ' +  ui.values[1] + ']'
+	 * @return default to '[' + ui.values[0] + ', ' + ui.values[1] + ']'
 	 */
 	protected String getLabelPattern()
 	{
@@ -167,8 +171,8 @@ public class RangeSlider extends AbstractSlider<RangeValue>
 
 		if (this.rangeValidator != null)
 		{
-			this.lower.add(this.rangeValidator); //let throw a NPE if no input is defined.
-			this.upper.add(this.rangeValidator); //let throw a NPE if no input is defined.
+			this.lower.add(this.rangeValidator); // let throw a NPE if no input is defined.
+			this.upper.add(this.rangeValidator); // let throw a NPE if no input is defined.
 		}
 	}
 
@@ -194,6 +198,7 @@ public class RangeSlider extends AbstractSlider<RangeValue>
 	// Options //
 	/**
 	 * Sets the Range
+	 * 
 	 * @param range
 	 * @return {@link RangeSlider} (this)
 	 */
@@ -221,7 +226,7 @@ public class RangeSlider extends AbstractSlider<RangeValue>
 		}
 		else
 		{
-			fragment = super.newInputFragment(id); //return empty fragment
+			fragment = super.newInputFragment(id); // return empty fragment
 		}
 
 		return fragment;
@@ -230,6 +235,7 @@ public class RangeSlider extends AbstractSlider<RangeValue>
 	/**
 	 * Gets a new behavior that will handle the change event triggered on provided lower-input.<br>
 	 * The behavior is added to the input that has been provided in the constructor (means it is visible and to user can interact with)
+	 * 
 	 * @return a {@link JQueryAbstractBehavior}
 	 */
 	private JQueryAbstractBehavior newLowerBehavior()
@@ -239,12 +245,13 @@ public class RangeSlider extends AbstractSlider<RangeValue>
 			private static final long serialVersionUID = 1L;
 
 			@Override
-			protected String $() {
+			protected String $()
+			{
 
 				StringBuilder statements = new StringBuilder();
 
 				statements.append("jQuery('#").append(lower.getMarkupId()).append("').on('change', function() { ");
-				statements.append("		jQuery('#").append(label.getMarkupId()).append("').slider('values', 0, jQuery(this).val()); "); //change the slider value (+slide)
+				statements.append("		jQuery('#").append(label.getMarkupId()).append("').slider('values', 0, jQuery(this).val()); "); // change the slider value (+slide)
 				statements.append("});");
 
 				return statements.toString();
@@ -255,6 +262,7 @@ public class RangeSlider extends AbstractSlider<RangeValue>
 	/**
 	 * Gets a new behavior that will handle the change event triggered on provided upper-input.<br>
 	 * The behavior is added to the input that has been provided in the constructor (means it is visible and to user can interact with)
+	 * 
 	 * @return a {@link JQueryAbstractBehavior}
 	 */
 	private JQueryAbstractBehavior newUpperBehavior()
@@ -264,12 +272,13 @@ public class RangeSlider extends AbstractSlider<RangeValue>
 			private static final long serialVersionUID = 1L;
 
 			@Override
-			protected String $() {
+			protected String $()
+			{
 
 				StringBuilder statements = new StringBuilder();
 
 				statements.append("jQuery('#").append(upper.getMarkupId()).append("').on('change', function() { ");
-				statements.append("		jQuery('#").append(label.getMarkupId()).append("').slider('values', 1, jQuery(this).val()); "); //change the slider value (+slide)
+				statements.append("		jQuery('#").append(label.getMarkupId()).append("').slider('values', 1, jQuery(this).val()); "); // change the slider value (+slide)
 				statements.append("});");
 
 				return statements.toString();

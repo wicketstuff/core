@@ -71,6 +71,9 @@ public interface ITextRenderer<T> extends IClusterable
 
 	/**
 	 * Renders the object. This typically returns a JSON body (without brackets)
+	 * 
+	 * @param object the object to render
+	 * @return the rendered object
 	 */
 	String render(T object);
 }

@@ -22,7 +22,6 @@ import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.json.JSONString;
 import org.apache.wicket.behavior.AbstractAjaxBehavior;
 import org.apache.wicket.core.request.handler.IPartialPageRequestHandler;
-import org.apache.wicket.markup.repeater.data.IDataProvider;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
 
@@ -33,8 +32,8 @@ import com.googlecode.wicket.jquery.core.behavior.AjaxCallbackBehavior;
 import com.googlecode.wicket.kendo.ui.KendoBehaviorFactory;
 import com.googlecode.wicket.kendo.ui.KendoDataSource;
 import com.googlecode.wicket.kendo.ui.KendoUIBehavior;
-import com.googlecode.wicket.kendo.ui.datatable.column.IColumn;
 import com.googlecode.wicket.kendo.ui.dataviz.series.Series;
+import com.googlecode.wicket.kendo.ui.scheduler.SchedulerModel;
 
 /**
  * Provides a Kendo UI chart
@@ -56,7 +55,7 @@ public class Chart<T> extends JQueryGenericContainer<List<T>> implements IChartL
 	 * Constructor
 	 *
 	 * @param id the markup id
-	 * @param provider the {@link IDataProvider}
+	 * @param series the {@code List} of {@link Series}
 	 */
 	public Chart(String id, final List<Series> series)
 	{
@@ -67,7 +66,7 @@ public class Chart<T> extends JQueryGenericContainer<List<T>> implements IChartL
 	 * Main constructor
 	 *
 	 * @param id the markup id
-	 * @param provider the {@link IDataProvider}
+	 * @param series the {@code List} of {@link Series}
 	 * @param options the {@link Options}
 	 */
 	public Chart(String id, final List<Series> series, Options options)
@@ -82,8 +81,8 @@ public class Chart<T> extends JQueryGenericContainer<List<T>> implements IChartL
 	 * Constructor
 	 *
 	 * @param id the markup id
-	 * @param columns the list of {@link IColumn}
-	 * @param provider the {@link IDataProvider}
+	 * @param data the list of data
+	 * @param series the {@code List} of {@link Series}
 	 */
 	public Chart(String id, List<T> data, final List<Series> series)
 	{
@@ -94,8 +93,8 @@ public class Chart<T> extends JQueryGenericContainer<List<T>> implements IChartL
 	 * constructor
 	 *
 	 * @param id the markup id
-	 * @param columns the list of {@link IColumn}
-	 * @param provider the {@link IDataProvider}
+	 * @param data the list of data
+	 * @param series the {@code List} of {@link Series}
 	 * @param options the {@link Options}
 	 */
 	public Chart(String id, List<T> data, final List<Series> series, Options options)
@@ -107,9 +106,8 @@ public class Chart<T> extends JQueryGenericContainer<List<T>> implements IChartL
 	 * Constructor
 	 *
 	 * @param id the markup id
-	 * @param columns the list of {@link IColumn}
-	 * @param provider the {@link IDataProvider}
-	 * @param rows the number of rows per page to be displayed
+	 * @param model the list model of data
+	 * @param series the {@code List} of {@link Series}
 	 */
 	public Chart(String id, final IModel<List<T>> model, final List<Series> series)
 	{
@@ -120,9 +118,8 @@ public class Chart<T> extends JQueryGenericContainer<List<T>> implements IChartL
 	 * Main constructor
 	 *
 	 * @param id the markup id
-	 * @param columns the list of {@link IColumn}
-	 * @param provider the {@link IDataProvider}
-	 * @param rows the number of rows per page to be displayed
+	 * @param model the list model of data
+	 * @param series the {@code List} of {@link Series}
 	 * @param options the {@link Options}
 	 */
 	public Chart(String id, final IModel<List<T>> model, final List<Series> series, Options options)
@@ -314,9 +311,8 @@ public class Chart<T> extends JQueryGenericContainer<List<T>> implements IChartL
 	/**
 	 * Gets a new {@link ChartModelBehavior}
 	 *
-	 * @param columns the list of {@link IColumn}
-	 * @param provider the {@link IDataProvider}
-	 * @return the {@link AbstractAjaxBehavior}
+	 * @param model the {@link SchedulerModel}
+	 * @return a new {@link AbstractAjaxBehavior}
 	 */
 	protected AjaxCallbackBehavior newChartModelBehavior(final IModel<List<T>> model)
 	{

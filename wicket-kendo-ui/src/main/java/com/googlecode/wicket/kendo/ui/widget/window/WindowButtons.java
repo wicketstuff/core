@@ -51,7 +51,7 @@ public enum WindowButtons
 	/**
 	 * Gets the list of buttons
 	 *
-	 * @return the {@link List} of {@link WindowButton}</code>s</code>
+	 * @return the {@link List} of {@link WindowButton}{@code s}
 	 */
 	public List<WindowButton> toList()
 	{

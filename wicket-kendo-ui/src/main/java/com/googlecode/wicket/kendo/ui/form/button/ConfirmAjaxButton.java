@@ -161,6 +161,7 @@ public abstract class ConfirmAjaxButton extends GenericPanel<String>
 	 * @param id the markup id
 	 * @param title the title of the dialog
 	 * @param message the message to be displayed
+	 * @param buttons the {@code List} of {@link WindowButton}
 	 * @return the dialog instance
 	 */
 	protected Window<?> newWindow(String id, IModel<String> title, IModel<String> message, List<WindowButton> buttons)

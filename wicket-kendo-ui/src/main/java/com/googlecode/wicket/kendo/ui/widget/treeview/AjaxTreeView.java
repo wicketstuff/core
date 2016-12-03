@@ -313,6 +313,7 @@ public class AjaxTreeView extends JQueryContainer implements ITreeViewListener
 	 * Gets a new {@link TreeViewModelBehavior}
 	 *
 	 * @param model the {@link TreeViewModel}
+	 * @param factory the {@link TreeNodeFactory}
 	 * @return the {@link TreeViewModelBehavior}
 	 */
 	protected TreeViewModelBehavior newTreeViewModelBehavior(final TreeViewModel model, final TreeNodeFactory factory)

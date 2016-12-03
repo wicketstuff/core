@@ -158,7 +158,7 @@ public abstract class AbstractSfMenuItem implements ISfMenuItem
 	/**
 	 * Set whether the menu-item is enabled
 	 *
-	 * @param enabled
+	 * @param enabled {@code true} or {@code false}
 	 */
 	public void setEnabled(boolean enabled)
 	{
@@ -168,7 +168,7 @@ public abstract class AbstractSfMenuItem implements ISfMenuItem
 	/**
 	 * Set whether a page is opened in a new window
 	 *
-	 * @param openInNewWindow
+	 * @param openInNewWindow {@code true} or {@code false}
 	 */
 	public void setOpenInNewWindow(boolean openInNewWindow)
 	{

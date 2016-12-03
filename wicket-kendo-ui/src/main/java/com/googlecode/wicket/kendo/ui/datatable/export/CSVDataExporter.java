@@ -230,10 +230,11 @@ public class CSVDataExporter implements IDataExporter
 	/**
 	 * Exports all data provided by the {@link IDataProvider} to the {@link OutputStream}.
 	 *
+	 * @param <T> the object type
 	 * @param provider the {@link IDataProvider}
 	 * @param columns the list of {@link IColumn}
 	 * @param output the {@link OutputStream}
-	 * @throws IOException
+	 * @throws IOException if this could not write the file out
 	 */
 	@Override
 	public <T> void exportData(IDataProvider<T> provider, List<IExportableColumn> columns, OutputStream output) throws IOException
@@ -244,12 +245,13 @@ public class CSVDataExporter implements IDataExporter
 	/**
 	 * Exports the data provided by the {@link IDataProvider} to the {@link OutputStream}.
 	 *
+	 * @param <T> the object type
 	 * @param provider the {@link IDataProvider}
 	 * @param columns the list of {@link IColumn}
 	 * @param output the {@link OutputStream}
 	 * @param first the first row of datacount
 	 * @param count the number of elements to retrieve
-	 * @throws IOException
+	 * @throws IOException if this could not write the file out
 	 */
 	public <T> void exportData(IDataProvider<T> provider, List<IExportableColumn> columns, OutputStream output, long first, long count) throws IOException
 	{

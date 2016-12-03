@@ -41,7 +41,7 @@ public class KendoEffectUtils
 	}
 
 	/**
-	 * Reloads a {@link Component} using a default {@link KendoEffect}: {@value #effect}
+	 * Reloads a {@link Component} using a default {@link KendoEffect}
 	 *
 	 * @param target the {@link AjaxRequestTarget}
 	 * @param component the {@link Component}
@@ -56,6 +56,7 @@ public class KendoEffectUtils
 	 *
 	 * @param target the {@link AjaxRequestTarget}
 	 * @param component the {@link Component}
+	 * @param effect the {@link KendoEffect}
 	 */
 	public static void reload(AjaxRequestTarget target, Component component, KendoEffect effect)
 	{

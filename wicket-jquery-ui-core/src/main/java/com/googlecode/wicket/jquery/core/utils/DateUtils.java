@@ -99,7 +99,7 @@ public class DateUtils
 	 * 
 	 * @param date the date to convert
 	 * @return the UTC date
-	 * @throws ParseException
+	 * @throws ParseException if the string cannot be parsed
 	 */
 	public static long utc(String date) throws ParseException
 	{
@@ -109,8 +109,7 @@ public class DateUtils
 	/**
 	 * Gets the current timezone offset
 	 * 
-	 * @param time
-	 * 
+	 * @param time the timestamp
 	 * @return the timezone offset
 	 * @see TimeZone#getRawOffset()
 	 */
@@ -124,7 +123,7 @@ public class DateUtils
 	 *
 	 * @param date ISO8601 string date
 	 * @return the {@code Date}
-	 * @throws ParseException
+	 * @throws ParseException if the string cannot be parsed
 	 */
 	public static Date parse(String date) throws ParseException
 	{
@@ -203,7 +202,7 @@ public class DateUtils
 	}
 
 	/**
-	 * Gets a new {@link Date} according to the supplied {@link LocalDate} & {@link LocalTime}
+	 * Gets a new {@link Date} according to the supplied {@link LocalDate} &#38; {@link LocalTime}
 	 * 
 	 * @param date the {@code LocalDate}
 	 * @param time the {@code LocalTime}
@@ -286,7 +285,7 @@ public class DateUtils
 		{
 			return DateUtils.toLocalTime(time.getTime());
 		}
-		
+
 		return null;
 	}
 

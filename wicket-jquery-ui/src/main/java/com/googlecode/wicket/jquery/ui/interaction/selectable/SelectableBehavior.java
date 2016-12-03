@@ -39,7 +39,7 @@ import com.googlecode.wicket.jquery.ui.JQueryUIBehavior;
  * Provides a jQuery selectable behavior
  *
  * @author Sebastien Briquet - sebfz1
- * @param <T>
+ * @param <T> the object type
  */
 public abstract class SelectableBehavior<T extends Serializable> extends JQueryUIBehavior implements IJQueryAjaxAware
 {
@@ -189,7 +189,7 @@ public abstract class SelectableBehavior<T extends Serializable> extends JQueryU
 	// Event objects //
 
 	/**
-	 * Provides an event object that will be broadcasted by the {@link OnStopAjaxBehavior} callback
+	 * Provides an event object that will be broadcasted by the {@code OnStopAjaxBehavior} callback
 	 */
 	protected static class StopEvent extends JQueryEvent
 	{

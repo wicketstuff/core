@@ -61,7 +61,7 @@ public abstract class CurrencyConverter<N extends Number> extends AbstractConver
 	 * @param max the maximum allowed value
 	 * @param locale the {@link Locale}
 	 * @return the converted number
-	 * @throws ConversionException
+	 * @throws ConversionException if value is unparsable or out of range
 	 */
 	// code from AbstractNumberConverter#parse(Object, double, double, Locale)
 	protected N parse(String value, final double min, final double max, Locale locale) throws ConversionException

@@ -73,7 +73,8 @@ public class JQueryBehavior extends JQueryAbstractBehavior
 	 */
 	public JQueryBehavior(String selector, String method, Options options)
 	{
-		this.method = Args.notNull(method, "method");;
+		this.method = Args.notNull(method, "method");
+		;
 		this.options = Args.notNull(options, "options");
 		this.selector = selector;
 	}
@@ -160,9 +161,10 @@ public class JQueryBehavior extends JQueryAbstractBehavior
 
 	/**
 	 * Gets a behavior option, referenced by its key
-	 *
+	 * 
+	 * @param <T> the object type
 	 * @param key the option key
-	 * @return null if the key does not exists
+	 * @return {@code null} if the key does not exists
 	 */
 	public <T> T getOption(String key)
 	{

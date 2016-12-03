@@ -33,7 +33,7 @@ import com.googlecode.wicket.kendo.ui.ajax.OnChangeAjaxBehavior;
  *
  * @author Sebastien Briquet - sebfz1
  *
- * @param <T>
+ * @param <T> the object type
  */
 public class AjaxDropDownList<T> extends DropDownList<T> implements ISelectionChangedListener
 {

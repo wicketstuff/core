@@ -39,6 +39,7 @@ public class ListUtils
 	/**
 	 * Gets the list-item matching the given hash against the list
 	 *
+	 * @param <T> the object type
 	 * @param hash the hashcode to match
 	 * @param list the {@link List} to search in
 	 * @return the list-item or {@code null} if not found
@@ -81,6 +82,7 @@ public class ListUtils
 	 * Utility method to move a list-item at a new position in the specified list<br>
 	 * This method will use the hashcode of the list-item to retrieve it against the list.
 	 *
+	 * @param <T> the object type
 	 * @param list the {@link List}
 	 * @param item the item
 	 * @param index the position to move to

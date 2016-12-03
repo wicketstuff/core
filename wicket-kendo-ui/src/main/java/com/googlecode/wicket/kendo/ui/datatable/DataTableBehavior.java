@@ -421,7 +421,8 @@ public abstract class DataTableBehavior extends KendoUIBehavior implements IJQue
 
 	/**
 	 * Get the JSON model of the datasource's schema
-	 *
+	 * 
+	 * @param columns the {@code List} of {@link IColumn}{@code s}
 	 * @return the model, as JSON object
 	 */
 	protected Options newSchemaModelOptions(List<IColumn> columns)

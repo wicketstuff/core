@@ -40,9 +40,9 @@ public abstract class SecuredButton extends Button
 	private final IJQuerySecurityProvider provider;
 	private String[] roles;
 
-
 	/**
 	 * Constructor
+	 * 
 	 * @param id the markup id
 	 * @param roles list of roles allowed to enable the button
 	 */
@@ -53,6 +53,7 @@ public abstract class SecuredButton extends Button
 
 	/**
 	 * Constructor
+	 * 
 	 * @param id the markup id
 	 * @param provider the {@link IJQuerySecurityProvider} that will check roles
 	 * @param roles list of roles allowed to enable the button
@@ -67,6 +68,7 @@ public abstract class SecuredButton extends Button
 
 	/**
 	 * Constructor
+	 * 
 	 * @param id the markup id
 	 * @param model the {@link IModel}
 	 * @param roles list of roles allowed to enable the button
@@ -78,6 +80,7 @@ public abstract class SecuredButton extends Button
 
 	/**
 	 * Constructor
+	 * 
 	 * @param id the markup id
 	 * @param model the {@link IModel}
 	 * @param provider the {@link IJQuerySecurityProvider}
@@ -91,10 +94,10 @@ public abstract class SecuredButton extends Button
 		this.provider = provider;
 	}
 
-
 	/**
 	 * Sets the roles allowed to enable the button
-	 * @param roles
+	 * 
+	 * @param roles list of roles allowed to enable the button
 	 */
 	public void setRoles(String[] roles)
 	{
@@ -103,6 +106,7 @@ public abstract class SecuredButton extends Button
 
 	/**
 	 * Indicates whether the button is locked.
+	 * 
 	 * @return the result of {@link IJQuerySecurityProvider#hasRole(String...)}
 	 */
 	public final boolean isLocked()
@@ -124,7 +128,6 @@ public abstract class SecuredButton extends Button
 
 		this.setEnabled(!this.isLocked());
 	}
-
 
 	@Override
 	protected void onComponentTag(ComponentTag tag)

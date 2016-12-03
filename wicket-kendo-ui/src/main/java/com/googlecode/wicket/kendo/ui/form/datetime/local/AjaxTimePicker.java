@@ -29,7 +29,7 @@ import com.googlecode.wicket.kendo.ui.form.datetime.TimePickerBehavior;
 
 /**
  * Provides a Kendo UI ajax date-picker<br>
- * {@code AjaxTimePicker} & {@code local.AjaxTimePicker} share the same code
+ * {@code AjaxTimePicker} &#38; {@code local.AjaxTimePicker} share the same code
  *
  * @author Sebastien Briquet - sebfz1
  */

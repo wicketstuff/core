@@ -228,6 +228,7 @@ public class TreeNode<T> implements IClusterable
 	/**
 	 * Helper method that construct a new root {@link TreeNode}
 	 * 
+	 * @param <T> the object type
 	 * @param object the wrapped object
 	 * @return a new {@code TreeNode}
 	 */
@@ -239,6 +240,7 @@ public class TreeNode<T> implements IClusterable
 	/**
 	 * Helper method that construct a new child {@link TreeNode}
 	 * 
+	 * @param <T> the object type
 	 * @param object the wrapped object
 	 * @param parentId the node parent id
 	 * @return a new {@code TreeNode}

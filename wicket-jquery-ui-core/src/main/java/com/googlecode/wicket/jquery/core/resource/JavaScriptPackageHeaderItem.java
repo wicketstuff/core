@@ -48,7 +48,7 @@ public class JavaScriptPackageHeaderItem extends JavaScriptReferenceHeaderItem
 	 * Constructor
 	 * 
 	 * @param scope the scope
-	 * @param the function, i.e.: the name of the '.js' file without the extension
+	 * @param function the function, i.e.: the name of the '.js' file without the extension
 	 */
 	public JavaScriptPackageHeaderItem(Class<?> scope, String function)
 	{
@@ -70,7 +70,7 @@ public class JavaScriptPackageHeaderItem extends JavaScriptReferenceHeaderItem
 	 * Constructor
 	 * 
 	 * @param scope the scope
-	 * @param the function, i.e.: the name of the '.js' file without the extension
+	 * @param function the function, i.e.: the name of the '.js' file without the extension
 	 * @param variables the variable {@code Map} to supply to the file
 	 */
 	public JavaScriptPackageHeaderItem(Class<?> scope, String function, Map<String, Object> variables)

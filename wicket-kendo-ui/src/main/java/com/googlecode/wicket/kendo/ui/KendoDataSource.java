@@ -107,7 +107,7 @@ public class KendoDataSource extends Options implements IKendoDataSource
 	 * Sets the 'transport.read' callback function
 	 *
 	 * @param function the javascript function.
-	 * @see #setTransportReadUrl(String)
+	 * @see #setTransportReadUrl(CharSequence)
 	 */
 	public void setTransportRead(String function)
 	{

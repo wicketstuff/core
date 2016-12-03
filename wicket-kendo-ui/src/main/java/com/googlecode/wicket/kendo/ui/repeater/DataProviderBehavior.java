@@ -49,12 +49,20 @@ public class DataProviderBehavior<T> extends AjaxCallbackBehavior
 	 * Constructor
 	 *
 	 * @param provider the {@link IDataProvider}
+	 * @param renderer the {@link ITextRenderer}
 	 */
 	public DataProviderBehavior(final IDataProvider<T> provider, ITextRenderer<? super T> renderer)
 	{
 		this(provider, renderer, null);
 	}
 
+	/**
+	 * Constructor
+	 *
+	 * @param provider the {@link IDataProvider}
+	 * @param renderer the {@link ITextRenderer}
+	 * @param template the {@link IJQueryTemplate}
+	 */
 	public DataProviderBehavior(final IDataProvider<T> provider, ITextRenderer<? super T> renderer, IJQueryTemplate template)
 	{
 		this.provider = provider;

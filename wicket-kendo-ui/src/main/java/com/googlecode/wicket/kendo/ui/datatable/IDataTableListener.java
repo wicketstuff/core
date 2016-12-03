@@ -53,7 +53,7 @@ public interface IDataTableListener extends IClusterable
 	/**
 	 * Triggered when an editing is cancelled
 	 * 
-	 * @param target
+	 * @param target the {@link AjaxRequestTarget}
 	 */
 	void onCancel(AjaxRequestTarget target);
 

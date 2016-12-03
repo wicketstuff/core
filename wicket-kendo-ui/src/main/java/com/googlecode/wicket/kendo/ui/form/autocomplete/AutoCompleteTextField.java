@@ -24,7 +24,6 @@ import org.apache.wicket.model.IModel;
 import org.apache.wicket.util.convert.IConverter;
 
 import com.googlecode.wicket.jquery.core.renderer.ITextRenderer;
-import com.googlecode.wicket.kendo.ui.renderer.ChoiceRenderer;
 
 /**
  * Provides a Kendo UI auto-complete widget.<br>
@@ -55,7 +54,7 @@ public abstract class AutoCompleteTextField<T> extends AbstractAutoCompleteTextF
 	 * Constructor
 	 *
 	 * @param id the markup id
-	 * @param renderer the {@link ChoiceRenderer}
+	 * @param renderer the {@link ITextRenderer}
 	 */
 	public AutoCompleteTextField(String id, ITextRenderer<? super T> renderer)
 	{
@@ -81,7 +80,7 @@ public abstract class AutoCompleteTextField<T> extends AbstractAutoCompleteTextF
 	 * Constructor
 	 *
 	 * @param id the markup id
-	 * @param renderer the {@link ChoiceRenderer}
+	 * @param renderer the {@link ITextRenderer}
 	 * @param type type for field validation
 	 */
 	public AutoCompleteTextField(String id, ITextRenderer<? super T> renderer, Class<T> type)
@@ -109,7 +108,7 @@ public abstract class AutoCompleteTextField<T> extends AbstractAutoCompleteTextF
 	 *
 	 * @param id the markup id
 	 * @param model the {@link IModel}
-	 * @param renderer the {@link ChoiceRenderer}
+	 * @param renderer the {@link ITextRenderer}
 	 */
 	public AutoCompleteTextField(String id, IModel<T> model, ITextRenderer<? super T> renderer)
 	{
@@ -123,6 +122,7 @@ public abstract class AutoCompleteTextField<T> extends AbstractAutoCompleteTextF
 	 *
 	 * @param id the markup id
 	 * @param model the {@link IModel}
+	 * @param type the type of the bean. This parameter should be supplied for the internal converter ({@link #getConverter(Class)}) to be used.
 	 */
 	public AutoCompleteTextField(String id, IModel<T> model, Class<T> type)
 	{
@@ -136,6 +136,8 @@ public abstract class AutoCompleteTextField<T> extends AbstractAutoCompleteTextF
 	 *
 	 * @param id the markup id
 	 * @param model the {@link IModel}
+	 * @param renderer the {@link ITextRenderer}
+	 * @param type the type of the bean. This parameter should be supplied for the internal converter ({@link #getConverter(Class)}) to be used.
 	 */
 	public AutoCompleteTextField(String id, IModel<T> model, ITextRenderer<? super T> renderer, Class<T> type)
 	{

@@ -65,6 +65,7 @@ public class JQueryDestroyListener extends AbstractListener
 	/**
 	 * Gets a new {@link IVisitor} that will be used by {@link #onBeforeRespond(Map, AjaxRequestTarget)}
 	 *
+	 * @param target the {@link AjaxRequestTarget}
 	 * @return the new {@code IVisitor}
 	 */
 	protected static IVisitor<Component, Object> newBeforeRespondVisitor(final AjaxRequestTarget target)

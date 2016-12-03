@@ -55,6 +55,7 @@ public class DialogButton implements IClusterable
 	/**
 	 * Constructor
 	 *
+	 * @param name the button's name
 	 * @param text the button's text
 	 */
 	public DialogButton(String name, String text)
@@ -65,6 +66,7 @@ public class DialogButton implements IClusterable
 	/**
 	 * Constructor
 	 *
+	 * @param name the button's name
 	 * @param text the button's text
 	 * @param icon the button's icon
 	 */
@@ -76,6 +78,7 @@ public class DialogButton implements IClusterable
 	/**
 	 * Constructor
 	 *
+	 * @param name the button's name
 	 * @param text the button's text
 	 * @param enabled indicates whether the button is enabled
 	 */
@@ -87,6 +90,7 @@ public class DialogButton implements IClusterable
 	/**
 	 * Constructor
 	 *
+	 * @param name the button's name
 	 * @param text the button's text
 	 * @param icon the button's icon
 	 * @param enabled indicates whether the button is enabled
@@ -99,6 +103,7 @@ public class DialogButton implements IClusterable
 	/**
 	 * Constructor
 	 *
+	 * @param name the button's name
 	 * @param model the button's text model
 	 */
 	public DialogButton(String name, final IModel<String> model)
@@ -109,6 +114,7 @@ public class DialogButton implements IClusterable
 	/**
 	 * Constructor
 	 *
+	 * @param name the button's name
 	 * @param model the button's text model
 	 * @param icon the button's icon
 	 */
@@ -120,6 +126,7 @@ public class DialogButton implements IClusterable
 	/**
 	 * Constructor
 	 *
+	 * @param name the button's name
 	 * @param model the button's text model
 	 * @param enabled indicates whether the button is enabled
 	 */
@@ -131,6 +138,7 @@ public class DialogButton implements IClusterable
 	/**
 	 * Constructor
 	 *
+	 * @param name the button's name
 	 * @param model the button's text model
 	 * @param icon the button's icon
 	 * @param enabled indicates whether the button is enabled

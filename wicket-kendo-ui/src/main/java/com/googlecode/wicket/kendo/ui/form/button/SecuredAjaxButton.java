@@ -97,7 +97,7 @@ public abstract class SecuredAjaxButton extends AjaxButton
 	/**
 	 * Sets the roles allowed to enable the button
 	 * 
-	 * @param roles
+	 * @param roles list of roles allowed to enable the button
 	 */
 	public void setRoles(String[] roles)
 	{

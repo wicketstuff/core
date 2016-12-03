@@ -194,7 +194,8 @@ public class Options implements IClusterable
 
 	/**
 	 * Returns the value to which the specified key is mapped, or null if this map contains no mapping for the key.
-	 *
+	 * 
+	 * @param <T> the object type
 	 * @param key the key whose associated value is to be returned
 	 * @return the value to which the specified key is mapped, or null if this map contains no mapping for the key
 	 */
@@ -234,12 +235,10 @@ public class Options implements IClusterable
 	}
 
 	/**
-	 * In addition to {@link #set(String, Object)} this enables to build trees of Options.
-	 *
-	 * <p>
+	 * In addition to {@link #set(String, Object)} this enables to build trees of Options.<br>
+	 * <br>
 	 * Example:
-	 *
-	 * <pre>
+	 * <pre><code>
 	 * Options o = new Options();
 	 * o.set("foo", new Options("foo1", "value1"), new Options("foo2", Options.asString("value2")));
 	 * 
@@ -249,9 +248,7 @@ public class Options implements IClusterable
 	 *            { "foo2": "value2" }
 	 *          ]
 	 * }
-	 * </pre>
-	 *
-	 * </p>
+	 * </code></pre>
 	 *
 	 * @param key - key with which the specified value is to be associated
 	 * @param values - values to be associated with the specified key
@@ -263,12 +260,10 @@ public class Options implements IClusterable
 	}
 
 	/**
-	 * In addition to {@link #set(String, Object)} this enables to build trees of Options.
-	 *
-	 * <p>
+	 * In addition to {@link #set(String, Object)} this enables to build trees of Options.<br>
+	 * <br>
 	 * Example:
-	 *
-	 * <pre>
+	 * <pre><code>
 	 * Options o = new Options();
 	 * o.set("foo", new Options("foo1", "value1"), new Options("foo2", Options.asString("value2")));
 	 * 
@@ -278,9 +273,7 @@ public class Options implements IClusterable
 	 *            { "foo2": "value2" }
 	 *          ]
 	 * }
-	 * </pre>
-	 *
-	 * </p>
+	 * </code></pre>
 	 *
 	 * @param key - key with which the specified value is to be associated
 	 * @param values - values to be associated with the specified key

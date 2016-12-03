@@ -117,8 +117,9 @@ public class Id<T> implements IClusterable
 	}
 
 	/**
-	 * Converts an id of type I to its corresponding {@link Id} type
+	 * Converts an id of type {@code I} to its corresponding {@link Id} type
 	 *
+	 * @param <I> the object type
 	 * @param id the id-value
 	 * @return a new {@code Id}
 	 */
@@ -148,8 +149,9 @@ public class Id<T> implements IClusterable
 	}
 
 	/**
-	 * Converts a list of ids of type I to its corresponding {@code List} of {@link Id}
+	 * Converts a list of ids of type {@code I} to its corresponding {@code List} of {@link Id}
 	 *
+	 * @param <I> the object type
 	 * @param ids the id-values
 	 * @return a new {@code Id}
 	 */

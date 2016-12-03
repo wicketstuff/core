@@ -89,6 +89,7 @@ public class CheckBox extends org.apache.wicket.markup.html.form.CheckBox
 		 * Constructor
 		 * 
 		 * @param id the markup id
+		 * @param checkbox the {@link CheckBox}
 		 */
 		public Label(String id, CheckBox checkbox)
 		{
@@ -102,6 +103,7 @@ public class CheckBox extends org.apache.wicket.markup.html.form.CheckBox
 		 * 
 		 * @param id the markup id
 		 * @param label the label
+		 * @param checkbox the {@link CheckBox}
 		 */
 		public Label(String id, Serializable label, CheckBox checkbox)
 		{
@@ -115,6 +117,7 @@ public class CheckBox extends org.apache.wicket.markup.html.form.CheckBox
 		 * 
 		 * @param id the markup id
 		 * @param model the label model
+		 * @param checkbox the {@link CheckBox}
 		 */
 		public Label(String id, IModel<?> model, CheckBox checkbox)
 		{

@@ -56,6 +56,7 @@ public abstract class LocalTextField<T> extends TextField<T> implements ITextFor
 	 *
 	 * @param id the markup id
 	 * @param model the {@link IModel}
+	 * @param locale the {@link Locale}
 	 * @param pattern a {@code SimpleDateFormat} pattern
 	 * @param options the {@link Options}
 	 * @param type the class type

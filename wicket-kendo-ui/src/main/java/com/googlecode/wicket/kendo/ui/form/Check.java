@@ -114,6 +114,7 @@ public class Check<T> extends org.apache.wicket.markup.html.form.Check<T>
 		 * Constructor
 		 * 
 		 * @param id the markup id
+		 * @param check the {@link Check}
 		 */
 		public Label(String id, Check<?> check)
 		{
@@ -127,6 +128,7 @@ public class Check<T> extends org.apache.wicket.markup.html.form.Check<T>
 		 * 
 		 * @param id the markup id
 		 * @param label the label
+		 * @param check the {@link Check}
 		 */
 		public Label(String id, Serializable label, Check<?> check)
 		{
@@ -140,6 +142,7 @@ public class Check<T> extends org.apache.wicket.markup.html.form.Check<T>
 		 * 
 		 * @param id the markup id
 		 * @param model the label model
+		 * @param check the {@link Check}
 		 */
 		public Label(String id, IModel<?> model, Check<?> check)
 		{

@@ -170,8 +170,8 @@ public class Slider extends AbstractSlider<Integer>
 	// Options //
 	/**
 	 * Sets the {@link Range}
-	 * @param range
-	 * @return {@link Slider} (this)
+	 * @param range the {@code Range}
+	 * @return this, for chaining
 	 */
 	public Slider setRange(Range range)
 	{

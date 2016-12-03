@@ -17,7 +17,7 @@
 package com.googlecode.wicket.kendo.ui.dataviz.series;
 
 /**
- * Provides a {@value TYPE} series object.
+ * Provides a <i>candlestick</i> series object.
  *
  * @author Sebastien Briquet - sebfz1
  *

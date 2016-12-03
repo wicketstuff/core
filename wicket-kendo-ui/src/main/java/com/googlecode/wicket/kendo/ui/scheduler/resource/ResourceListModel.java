@@ -43,6 +43,8 @@ public class ResourceListModel extends ListModel<ResourceList>
 
 	/**
 	 * Constructor
+	 * 
+	 * @param list the {@link ResourceList}
 	 */
 	public ResourceListModel(ResourceList list)
 	{

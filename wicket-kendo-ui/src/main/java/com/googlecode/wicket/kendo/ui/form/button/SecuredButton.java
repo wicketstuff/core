@@ -97,7 +97,7 @@ public abstract class SecuredButton extends Button
 	/**
 	 * Sets the roles allowed to enable the button
 	 * 
-	 * @param roles
+	 * @param roles list of roles allowed to enable the button
 	 */
 	public void setRoles(String[] roles)
 	{

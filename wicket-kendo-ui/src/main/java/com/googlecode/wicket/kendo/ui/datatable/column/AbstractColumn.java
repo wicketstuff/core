@@ -214,9 +214,9 @@ public abstract class AbstractColumn implements IColumn
 	}
 
 	/**
-	 * Gets the list of <tt>aggregates<tt> as json array
+	 * Gets the list of {@code aggregates} as json array
 	 *
-	 * @return the list of <tt>aggregates<tt> as json array
+	 * @return the list of {@code aggregates} as json array
 	 */
 	protected final String getAggregatesAsString()
 	{

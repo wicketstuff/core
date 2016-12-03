@@ -21,7 +21,7 @@ import org.apache.wicket.markup.head.JavaScriptContentHeaderItem;
 /**
  * Provides a {@link JavaScriptContentHeaderItem} for an {@link IKendoEditor}<br>
  * Usage:<br>
- * <code><pre>
+ * <pre><code>
  * new PropertyColumn("Status", "status") {
  * 
  * 	public String getEditor()
@@ -39,7 +39,7 @@ import org.apache.wicket.markup.head.JavaScriptContentHeaderItem;
  * 		response.render(new KendoEditorHeaderItem(new DropDownListEditor(EDITOR_NAME, MyEnum.values()), EDITOR_NAME));
  * 	}
  * }
- * </pre></code>
+ * </code></pre>
  * 
  * @author Sebastien Briquet - sebfz1
  *

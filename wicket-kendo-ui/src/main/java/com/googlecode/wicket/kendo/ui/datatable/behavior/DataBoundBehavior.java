@@ -49,6 +49,8 @@ public abstract class DataBoundBehavior extends JQueryAbstractBehavior
 
 	/**
 	 * Gets the Kendo UI widget
+	 * 
+	 * @return the Kendo UI widget
 	 */
 	protected String widget()
 	{

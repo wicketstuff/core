@@ -114,6 +114,7 @@ public class Radio<T> extends org.apache.wicket.markup.html.form.Radio<T>
 		 * Constructor
 		 * 
 		 * @param id the markup id
+		 * @param radio the {@link Radio}
 		 */
 		public Label(String id, Radio<?> radio)
 		{
@@ -127,6 +128,7 @@ public class Radio<T> extends org.apache.wicket.markup.html.form.Radio<T>
 		 * 
 		 * @param id the markup id
 		 * @param label the label
+		 * @param radio the {@link Radio}
 		 */
 		public Label(String id, Serializable label, Radio<?> radio)
 		{
@@ -140,6 +142,7 @@ public class Radio<T> extends org.apache.wicket.markup.html.form.Radio<T>
 		 * 
 		 * @param id the markup id
 		 * @param model the label model
+		 * @param radio the {@link Radio}
 		 */
 		public Label(String id, IModel<?> model, Radio<?> radio)
 		{

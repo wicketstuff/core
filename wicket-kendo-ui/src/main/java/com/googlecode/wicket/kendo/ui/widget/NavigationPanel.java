@@ -24,7 +24,7 @@ import com.googlecode.wicket.kendo.ui.KendoIcon;
 import com.googlecode.wicket.kendo.ui.form.button.AjaxButton;
 
 /**
- * Provides a simple navigation panel, having 'backward' & 'forward' buttons
+ * Provides a simple navigation panel, having 'backward' &#38; 'forward' buttons
  *
  * @author Sebastien Briquet - sebfz1
  */

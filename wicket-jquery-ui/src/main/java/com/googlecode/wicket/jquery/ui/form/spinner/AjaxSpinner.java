@@ -104,7 +104,8 @@ public class AjaxSpinner<T extends Number> extends Spinner<T> implements ISpinne
 	/**
 	 * Converts the supplied value using the type converter
 	 * 
-	 * @param value
+	 * @param value the string value to convert
+	 * @return the converted value
 	 */
 	public T convertValue(String value)
 	{

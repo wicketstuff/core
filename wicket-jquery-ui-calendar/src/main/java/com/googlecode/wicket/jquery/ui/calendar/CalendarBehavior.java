@@ -338,9 +338,10 @@ public class CalendarBehavior extends JQueryBehavior implements IJQueryAjaxAware
 	}
 
 	/**
-	 * Gets a new {@link JQueryAjaxBehavior} that will be wired to the 'eventDrop' event, triggered when the user moves (drag & drop) an event
+	 * Gets a new {@link JQueryAjaxBehavior} that will be wired to the 'eventDrop' event, triggered when the user moves (drag &#38; drop) an event
 	 *
 	 * @param source the {@link IJQueryAjaxAware}
+	 * @param precondition the JavaScript precondition
 	 * @return a new {@code OnEventDropAjaxBehavior} by default
 	 */
 	protected JQueryAjaxBehavior newOnEventDropAjaxBehavior(IJQueryAjaxAware source, CharSequence precondition)
@@ -352,6 +353,7 @@ public class CalendarBehavior extends JQueryBehavior implements IJQueryAjaxAware
 	 * Gets a new {@link JQueryAjaxBehavior} that will be wired to the 'eventResize' event, triggered when the user resizes an event
 	 *
 	 * @param source the {@link IJQueryAjaxAware}
+	 * @param precondition the JavaScript precondition
 	 * @return a new {@code OnEventResizeAjaxBehavior} by default
 	 */
 	protected JQueryAjaxBehavior newOnEventResizeAjaxBehavior(IJQueryAjaxAware source, CharSequence precondition)

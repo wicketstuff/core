@@ -61,7 +61,7 @@ public class JQueryUtils
 	 * 
 	 * @param selector the jQuery selector
 	 * @return the statement
-	 * @see #remove(AjaxRequestTarget)
+	 * @see #remove(String)
 	 */
 	public static String detach(String selector)
 	{
@@ -76,7 +76,7 @@ public class JQueryUtils
 	 * 
 	 * @param selector the jQuery selector
 	 * @return the statement
-	 * @see #detach(AjaxRequestTarget)
+	 * @see #detach(String)
 	 */
 	public static String remove(String selector)
 	{

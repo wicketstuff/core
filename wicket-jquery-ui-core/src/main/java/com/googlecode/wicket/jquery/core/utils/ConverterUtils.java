@@ -40,6 +40,7 @@ public class ConverterUtils
 	/**
 	 * Converts the object to its string representation using the appropriate converter, if defined.
 	 * 
+	 * @param <T> the object type
 	 * @param object the object
 	 * @return the string representation using the appropriate converter, if defined. #toString() otherwise.
 	 */

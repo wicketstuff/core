@@ -56,8 +56,8 @@ public abstract class AbstractDraggableFactory implements IClusterable
 	 * Creates the new {@link Draggable} by using the selector and/or the helper.<br>
 	 * <br>
 	 * A typical implementation is:<br>
-	 * <pre>
-	 * return new Draggable<String>(id) {
+	 * <pre><code>
+	 * return new Draggable&lt;String&gt;(id) {
 	 *
 	 * 	protected void onConfigure(JQueryBehavior behavior)
 	 * 	{
@@ -66,7 +66,7 @@ public abstract class AbstractDraggableFactory implements IClusterable
 	 * 		behavior.setOption("helper", helper);
 	 * 	}
 	 * };
-	 * </pre>
+	 * </code></pre>
 	 *
 	 * @param id the markup id
 	 * @param selector the related component's selector

@@ -291,7 +291,7 @@ public class CalendarEvent implements Serializable
 	/**
 	 * Visitor accept method
 	 * 
-	 * @param visitor
+	 * @param visitor the {@link ICalendarVisitor}
 	 */
 	public final void accept(ICalendarVisitor visitor)
 	{

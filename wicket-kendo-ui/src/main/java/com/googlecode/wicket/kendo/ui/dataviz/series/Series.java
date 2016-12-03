@@ -42,6 +42,7 @@ public abstract class Series implements Serializable
 	 * Constructor
 	 * 
 	 * @param name the series name
+	 * @param type the series type (line, column, etc)
 	 */
 	public Series(String name, String type)
 	{
@@ -119,7 +120,7 @@ public abstract class Series implements Serializable
 	 * Sets the series tooltip (as JSON string)
 	 * 
 	 * @return the series tooltip
-	 * @see http://docs.telerik.com/kendo-ui/api/javascript/dataviz/ui/chart#configuration-series.tooltip.format
+	 * @see <a href="http://docs.telerik.com/kendo-ui/api/javascript/dataviz/ui/chart#configuration-series.tooltip.format">http://docs.telerik.com/kendo-ui/api/javascript/dataviz/ui/chart#configuration-series.tooltip.format</a>
 	 */
 	public String getTooltip()
 	{

@@ -41,6 +41,7 @@ public class BookmarkablePageLink<T> extends org.apache.wicket.markup.html.link.
 	/**
 	 * Constructor
 	 *
+	 * @param <C> the type of {@link Page}
 	 * @param id the markup id
 	 * @param pageClass the class of page to link to
 	 */
@@ -52,6 +53,7 @@ public class BookmarkablePageLink<T> extends org.apache.wicket.markup.html.link.
 	/**
 	 * Constructor
 	 *
+	 * @param <C> the type of {@link Page}
 	 * @param id the markup id
 	 * @param pageClass the class of page to link to
 	 * @param icon either a {@link JQueryIcon} constant or a 'ui-icon-xxx' css class
@@ -66,6 +68,7 @@ public class BookmarkablePageLink<T> extends org.apache.wicket.markup.html.link.
 	/**
 	 * Constructor
 	 *
+	 * @param <C> the type of {@link Page}
 	 * @param id the markup id
 	 * @param pageClass the class of page to link to
 	 * @param parameters the parameters to pass to the new page when the link is clicked
@@ -78,6 +81,7 @@ public class BookmarkablePageLink<T> extends org.apache.wicket.markup.html.link.
 	/**
 	 * Constructor
 	 *
+	 * @param <C> the type of {@link Page}
 	 * @param id the markup id
 	 * @param pageClass the class of page to link to
 	 * @param parameters the parameters to pass to the new page when the link is clicked

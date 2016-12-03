@@ -131,6 +131,7 @@ public class Resource implements Serializable
 	/**
 	 * Gets the resource id
 	 *
+	 * @param <T> the object type
 	 * @return the resource id
 	 */
 	@SuppressWarnings("unchecked")

@@ -11,21 +11,19 @@ import com.googlecode.wicket.kendo.ui.resource.KendoMessageResourceReference;
 /**
  * {@link HeaderItem} in charge of adding the messages file corresponding to the supplied {@link KendoMessage}<br>
  * Usage:<br>
- * <code>
- * <pre>
+ * <pre><code>
  * public void renderHead(IHeaderResponse response)
  * {
  * 	super.renderHead(response);
  * 	
  * 	response.render(new KendoMessageHeaderItem(KendoMessage.FR_FR));
  * }
+ * </code></pre>
  * <br>
  * This will results to:
- * <code>
- * <pre>
+ * <pre><code>
  * &lt;script type="text/javascript" src="./resource/com.googlecode.wicket.kendo.ui.resource.KendoMessageResourceReference/messages/kendo.messages.fr-FR.js"&gt;&lt;/script&gt;
- * </pre>
- * </code>
+ * </code></pre>
  * 
  * @author Sebastien Briquet - sebfz1
  *
