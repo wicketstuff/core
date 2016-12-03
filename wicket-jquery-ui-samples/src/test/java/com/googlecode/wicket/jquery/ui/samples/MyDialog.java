@@ -1,3 +1,4 @@
+package com.googlecode.wicket.jquery.ui.samples;
 
 import com.googlecode.wicket.jquery.ui.widget.dialog.AbstractDialog;
 import com.googlecode.wicket.jquery.ui.widget.dialog.DialogButton;

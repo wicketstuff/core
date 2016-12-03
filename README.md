@@ -1,6 +1,6 @@
 # wicket-jquery-ui
-**jQuery UI integration in Wicket 1.5.x, Wicket 6.x &amp; Wicket7.x**  
-[![Build Status](https://buildhive.cloudbees.com/job/sebfz1/job/wicket-jquery-ui/badge/icon)](https://buildhive.cloudbees.com/job/sebfz1/job/wicket-jquery-ui/)
+**jQuery UI integration in Wicket Wicket 6.x, Wicket 7.x &amp; Wicket8.x**  
+[![TravisCI](https://travis-ci.org/sebfz1/wicket-jquery-ui.svg?branch=wicket8.x)](https://travis-ci.org/sebfz1/wicket-jquery-ui)
 
 ## Artifacts
 - jQuery UI `wicket-jquery-ui`
@@ -58,6 +58,7 @@ If the version you specified is *snapshot*, you might define this repository:
 <tr><td>7.0.0</td><td>7.0.0</td><td>1.11.4</td></tr>
 <tr><td>7.0.0-M6</td><td>7.0.0-M6</td><td>1.11.4</td></tr>
 <tr><td>7.0.0-M5</td><td>7.0.0-M5</td><td>1.11.2</td></tr>
+<tr><td>6.25.1</td><td>6.25.0</td><td>1.12.0</td></tr>
 <tr><td>6.25.0</td><td>6.25.0</td><td>1.12.0</td></tr>
 <tr><td>6.24.0</td><td>6.24.0</td><td>1.12.0</td></tr>
 <tr><td>6.20.0</td><td>6.20.0</td><td>1.11.4</td></tr>
@@ -93,6 +94,7 @@ If the version you specified is *snapshot*, you might define this repository:
 <tr><td>7.0.0</td><td>7.0.0</td><td>2015.2.624 (ASFv2)</td></tr>
 <tr><td>7.0.0-M6</td><td>7.0.0-M6</td><td>2015.1.318 (ASFv2)</td></tr>
 <tr><td>7.0.0-M5</td><td>7.0.0-M5</td><td>2014.3.1119 (ASFv2)</td></tr>
+<tr><td>6.25.1</td><td>6.25.0</td><td>2016.3.1028 (ASFv2)</td></tr>
 <tr><td>6.25.0</td><td>6.25.0</td><td>2016.3.1028 (ASFv2)</td></tr>
 <tr><td>6.24.0</td><td>6.24.0</td><td>2016.2.714 (ASFv2)</td></tr>
 <tr><td>6.20.0</td><td>6.20.0</td><td>2015.1.318 (ASFv2)</td></tr>
