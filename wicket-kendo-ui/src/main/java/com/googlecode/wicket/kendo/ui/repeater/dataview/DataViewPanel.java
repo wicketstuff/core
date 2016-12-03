@@ -133,7 +133,7 @@ public class DataViewPanel<T> extends GenericPanel<T> // NOSONAR
 			}
 
 			@Override
-			protected KendoDataSource newDataSource(String selector)
+			protected KendoDataSource newDataSource()
 			{
 				return dataSource;
 			}

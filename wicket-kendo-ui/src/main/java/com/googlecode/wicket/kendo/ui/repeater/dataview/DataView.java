@@ -327,7 +327,7 @@ public class DataView<T> extends WebMarkupContainer implements IJQueryWidget, IL
 	@Override
 	public JQueryBehavior newWidgetBehavior(String selector)
 	{
-		return new ListViewBehavior(selector, this.newDataSource(selector), this, this.options) {
+		return new ListViewBehavior(selector, this.newDataSource(), this, this.options) {
 
 			private static final long serialVersionUID = 1L;
 
@@ -374,10 +374,9 @@ public class DataView<T> extends WebMarkupContainer implements IJQueryWidget, IL
 	/**
 	 * Gets a new {@link KendoDataSource} to be used by the underlying {@link ListViewBehavior}
 	 * 
-	 * @param selector the html selector (ie: "#myId")
 	 * @return a new {@code KendoDataSource}
 	 */
-	protected KendoDataSource newDataSource(String selector)
+	protected KendoDataSource newDataSource()
 	{
 		return new KendoDataSource(this);
 	}
