@@ -2,10 +2,7 @@ language: java
 jdk: oraclejdk8
 
 branches:
-  only:
-  - master
-  - wicket8.x
-  - wicket6.x
+  only: wicket8.x
 
 script: mvn clean install -q
  
