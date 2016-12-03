@@ -47,7 +47,7 @@ public class WysiwygEditor extends FormComponentPanel<String> implements IJQuery
 	/**
 	 * Constructor
 	 *
-	 * @param id the markup-id
+	 * @param id the markup id
 	 */
 	public WysiwygEditor(String id)
 	{
@@ -57,7 +57,7 @@ public class WysiwygEditor extends FormComponentPanel<String> implements IJQuery
 	/**
 	 * Constructor
 	 *
-	 * @param id the markup-id
+	 * @param id the markup id
 	 * @param toolbar the {@link IWysiwygToolbar}
 	 */
 	public WysiwygEditor(String id, IWysiwygToolbar toolbar)
@@ -68,7 +68,7 @@ public class WysiwygEditor extends FormComponentPanel<String> implements IJQuery
 	/**
 	 * Constructor
 	 *
-	 * @param id the markup-id
+	 * @param id the markup id
 	 * @param model the {@link IModel}
 	 */
 	public WysiwygEditor(String id, IModel<String> model)
@@ -79,7 +79,7 @@ public class WysiwygEditor extends FormComponentPanel<String> implements IJQuery
 	/**
 	 * Constructor
 	 *
-	 * @param id the markup-id
+	 * @param id the markup id
 	 * @param model the {@link IModel}
 	 * @param toolbar the {@link IWysiwygToolbar}
 	 */

@@ -156,7 +156,7 @@ public class RangeSlider extends AbstractSlider<RangeValue>
 	 * Get the label pattern to be used to display the value. Should be overridden with care!<br>
 	 * <b>Note: </b> the pattern is a javascript string, where lower value is represented by "ui.values[0]", upper value by "ui.values[1]".<br>
 	 *
-	 * @return default to '[' + ui.values[0] + ', ' + ui.values[1] + ']'
+	 * @return default to '[' + ui.values[0] + ', ' +  ui.values[1] + ']'
 	 */
 	protected String getLabelPattern()
 	{

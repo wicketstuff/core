@@ -160,7 +160,7 @@ public abstract class LazyPropertyColumn extends PropertyColumn
 	/**
 	 * Gets the {@link Component} that will be lazy loaded
 	 * 
-	 * @param id the markup-id
+	 * @param id the markup id
 	 * @param value the value corresponding to the column's field
 	 * @return the new {@code Component}
 	 */

@@ -190,7 +190,7 @@ public abstract class MessageWindow extends Window<String>
 	/**
 	 * Gets a new {@link Form}
 	 *
-	 * @param id the markup-id
+	 * @param id the markup id
 	 * @return the new form
 	 */
 	private static Form<Void> newForm(String id)

@@ -40,7 +40,7 @@ public class MenuItemForm<T> extends Form<T>
 	/**
 	 * Constructor
 	 *
-	 * @param id the markup-id
+	 * @param id the markup id
 	 */
 	public MenuItemForm(String id)
 	{
