@@ -20,6 +20,7 @@ import org.apache.wicket.WicketRuntimeException;
 import org.apache.wicket.ajax.json.JSONException;
 import org.apache.wicket.ajax.json.JSONStringer;
 import org.apache.wicket.markup.head.IHeaderResponse;
+import org.apache.wicket.util.string.Strings;
 import org.wicketstuff.select2.json.Json;
 
 import static org.apache.wicket.util.string.Strings.defaultIfEmpty;
@@ -61,6 +62,7 @@ public final class Settings implements Serializable
 	private String query;
 	private String width;
 	private String containerCss, dropdownCss, containerCssClass, dropdownCssClass; //TODO deprecated
+	private String dropdownParent;
 
 	private AjaxSettings ajax;
 	private String data;
@@ -123,6 +125,9 @@ public final class Settings implements Serializable
 			Json.writeObject(writer, "tokenSeparators", tokenSeparators);
 			Json.writeObject(writer, "selectOnClose", selectOnClose);
 			Json.writeObject(writer, "dropdownAutoWidth", dropdownAutoWidth);
+			if (!Strings.isEmpty(dropdownParent)) {
+				Json.writeFunction(writer, "dropdownParent", String.format("$('#%s')", dropdownParent));
+			}
 			if (ajax != null)
 			{
 				writer.key("ajax");
@@ -460,6 +465,15 @@ public final class Settings implements Serializable
 	public Settings setDropdownCssClass(String dropdownCssClass)
 	{
 		this.dropdownCssClass = dropdownCssClass;
+		return this;
+	}
+
+	public String getDropdownParent() {
+		return dropdownParent;
+	}
+
+	public Settings setDropdownParent(String dropdownParent) {
+		this.dropdownParent = dropdownParent;
 		return this;
 	}
 
