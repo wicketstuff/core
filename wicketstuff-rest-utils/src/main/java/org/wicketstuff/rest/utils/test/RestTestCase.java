@@ -16,10 +16,8 @@
  */
 package org.wicketstuff.rest.utils.test;
 
-import java.util.Locale;
-
-import org.apache.wicket.protocol.http.WebApplication;
 import org.apache.wicket.util.tester.WicketTestCase;
+import org.wicketstuff.rest.utils.http.HttpMethod;
 
 /**
  * 
@@ -30,17 +28,12 @@ import org.apache.wicket.util.tester.WicketTestCase;
  */
 public class RestTestCase extends WicketTestCase 
 {
-	
-	@Override
-	protected RestWicketTester newWicketTester(WebApplication app) 
+	protected void assertUrlResponse(final String url, final HttpMethod httpMethod, 
+			final String expectedResponse) 
 	{
-		return new RestWicketTester(app) 
-		{
-			@Override
-			protected Locale servletRequestLocale() 
-			{
-				return Locale.US;
-			}
-		};
+		tester.getRequest().setMethod(httpMethod.getMethod());
+		tester.executeUrl(url);
+		
+		assertEquals(expectedResponse, tester.getLastResponseAsString());
 	}
 }
