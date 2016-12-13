@@ -66,6 +66,6 @@ public class KendoTemplateHeaderItem extends JQueryTemplateHeaderItem
 	 */
 	public static String $(final String token)
 	{
-		return String.format("kendo.template(jQuery('#%s').html()", token);
+		return String.format("kendo.template(jQuery('#%s').html())", token);
 	}
 }

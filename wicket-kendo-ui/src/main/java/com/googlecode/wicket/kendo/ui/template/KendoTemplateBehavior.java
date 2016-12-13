@@ -37,6 +37,7 @@ public class KendoTemplateBehavior extends JQueryAbstractTemplateBehavior
 
 	private String token = null;
 	private final IJQueryTemplate template;
+	private final String suffix;
 
 	/**
 	 * Constructor
@@ -45,9 +46,22 @@ public class KendoTemplateBehavior extends JQueryAbstractTemplateBehavior
 	 */
 	public KendoTemplateBehavior(IJQueryTemplate template)
 	{
-		this.template = template;
+		this(template, "template");
 	}
-
+	
+	/**
+	 * Constructor
+	 * 
+	 * @param template the {@link IJQueryTemplate} that this behavior should render via the resource stream
+	 * @param suffix the token suffix
+	 */
+	// TODO rename suffix ?
+	public KendoTemplateBehavior(IJQueryTemplate template, String suffix)
+	{
+		this.template = template;
+		this.suffix = suffix;
+	}
+	
 	// Methods //
 	
 	@Override
@@ -55,7 +69,7 @@ public class KendoTemplateBehavior extends JQueryAbstractTemplateBehavior
 	{
 		super.bind(component);
 		
-		this.token = String.format("%s_template", component.getMarkupId());
+		this.token = String.format("%s_%s", component.getMarkupId(), this.suffix);
 	}
 
 	// Properties //

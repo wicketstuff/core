@@ -302,7 +302,7 @@ public class Scheduler extends JQueryContainer implements ISchedulerListener
 
 		if (this.editTemplate != null)
 		{
-			this.editTemplateBehavior = new KendoTemplateBehavior(this.editTemplate);
+			this.editTemplateBehavior = new KendoTemplateBehavior(this.editTemplate, "edit-template");
 			this.add(this.editTemplateBehavior);
 		}
 
@@ -310,7 +310,7 @@ public class Scheduler extends JQueryContainer implements ISchedulerListener
 
 		if (this.eventTemplate != null)
 		{
-			this.eventTemplateBehavior = new KendoTemplateBehavior(this.eventTemplate);
+			this.eventTemplateBehavior = new KendoTemplateBehavior(this.eventTemplate, "event-template");
 			this.add(this.eventTemplateBehavior);
 		}
 	}
