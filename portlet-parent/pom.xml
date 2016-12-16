@@ -32,6 +32,11 @@
 
 	<developers>
 		<developer>
+			<id>kkaravitis</id>
+			<name>Konstantinos Karavitis</name>
+			<email>kkaravitis@gmail.com</email>
+		</developer>
+		<developer>
 			<name>Peter Pastrnak</name>
 		</developer>
 	</developers>
