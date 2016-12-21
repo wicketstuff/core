@@ -44,7 +44,7 @@ public abstract class AjaxTreeViewBehavior extends KendoUIBehavior implements IJ
 	private TreeViewDataSource dataSource;
 
 	private JQueryAjaxBehavior onExpandAjaxBehavior = null;
-	private JQueryAjaxBehavior onSelectAjaxBehavior = null;
+	private JQueryAjaxBehavior onChangeAjaxBehavior = null;
 	private JQueryAjaxBehavior onDropAjaxBehavior = null;
 
 	/**
@@ -85,16 +85,16 @@ public abstract class AjaxTreeViewBehavior extends KendoUIBehavior implements IJ
 
 		// behaviors //
 
+		if (this.listener.isChangeEventEnabled())
+		{
+			this.onChangeAjaxBehavior = this.newOnChangeAjaxBehavior(this);
+			component.add(this.onChangeAjaxBehavior);
+		}
+
 		if (this.listener.isExpandEventEnabled())
 		{
 			this.onExpandAjaxBehavior = this.newOnExpandAjaxBehavior(this);
 			component.add(this.onExpandAjaxBehavior);
-		}
-
-		if (this.listener.isSelectEventEnabled())
-		{
-			this.onSelectAjaxBehavior = this.newOnSelectAjaxBehavior(this);
-			component.add(this.onSelectAjaxBehavior);
 		}
 
 		if (this.listener.isDropEventEnabled())
@@ -131,9 +131,9 @@ public abstract class AjaxTreeViewBehavior extends KendoUIBehavior implements IJ
 			this.setOption("expand", this.onExpandAjaxBehavior.getCallbackFunction());
 		}
 
-		if (this.onSelectAjaxBehavior != null)
+		if (this.onChangeAjaxBehavior != null)
 		{
-			this.setOption("change", this.onSelectAjaxBehavior.getCallbackFunction());
+			this.setOption("change", this.onChangeAjaxBehavior.getCallbackFunction());
 		}
 
 		if (this.onDropAjaxBehavior != null)
@@ -169,7 +169,7 @@ public abstract class AjaxTreeViewBehavior extends KendoUIBehavior implements IJ
 		if (event instanceof SelectEvent)
 		{
 			SelectEvent payload = (SelectEvent) event;
-			this.listener.onSelect(target, payload.getNodeId(), payload.getNodePath());
+			this.listener.onChange(target, payload.getNodeId(), payload.getNodePath());
 		}
 
 		if (event instanceof DropEvent)
@@ -182,6 +182,17 @@ public abstract class AjaxTreeViewBehavior extends KendoUIBehavior implements IJ
 	// Factories //
 
 	/**
+	 * Gets a new {@link JQueryAjaxBehavior} that will be wired to the 'change' event, triggered when a node is selected
+	 *
+	 * @param source the {@link IJQueryAjaxAware}
+	 * @return a new {@code JQueryAjaxBehavior} by default
+	 */
+	protected JQueryAjaxBehavior newOnChangeAjaxBehavior(IJQueryAjaxAware source)
+	{
+		return new OnChangeAjaxBehavior(source);
+	}
+
+	/**
 	 * Gets a new {@link JQueryAjaxBehavior} that will be wired to the 'expand' event, triggered when a node is expanded
 	 *
 	 * @param source the {@link IJQueryAjaxAware}
@@ -190,17 +201,6 @@ public abstract class AjaxTreeViewBehavior extends KendoUIBehavior implements IJ
 	protected JQueryAjaxBehavior newOnExpandAjaxBehavior(IJQueryAjaxAware source)
 	{
 		return new OnExpandAjaxBehavior(source);
-	}
-
-	/**
-	 * Gets a new {@link JQueryAjaxBehavior} that will be wired to the 'change' event, triggered when a node is selected
-	 *
-	 * @param source the {@link IJQueryAjaxAware}
-	 * @return a new {@code JQueryAjaxBehavior} by default
-	 */
-	protected JQueryAjaxBehavior newOnSelectAjaxBehavior(IJQueryAjaxAware source)
-	{
-		return new OnSelectAjaxBehavior(source);
 	}
 
 	/**
@@ -217,39 +217,13 @@ public abstract class AjaxTreeViewBehavior extends KendoUIBehavior implements IJ
 	// Ajax classes //
 
 	/**
-	 * Provides a {@link JQueryAjaxBehavior} that aims to be wired to the 'expand' event
+	 * Provides a {@link JQueryAjaxBehavior} that aims to be wired to the 'change' event
 	 */
-	protected static class OnExpandAjaxBehavior extends JQueryAjaxBehavior
+	protected static class OnChangeAjaxBehavior extends JQueryAjaxBehavior
 	{
 		private static final long serialVersionUID = 1L;
 
-		public OnExpandAjaxBehavior(IJQueryAjaxAware source)
-		{
-			super(source);
-		}
-
-		@Override
-		protected CallbackParameter[] getCallbackParameters()
-		{
-			return new CallbackParameter[] { CallbackParameter.context("e"), // lf
-					CallbackParameter.resolved("nodeId", String.format("this.dataItem(e.node).%s", TreeNodeFactory.ID_FIELD)) };
-		}
-
-		@Override
-		protected JQueryEvent newEvent()
-		{
-			return new ExpandEvent();
-		}
-	}
-
-	/**
-	 * Provides a {@link JQueryAjaxBehavior} that aims to be wired to the 'select' event
-	 */
-	protected static class OnSelectAjaxBehavior extends JQueryAjaxBehavior
-	{
-		private static final long serialVersionUID = 1L;
-
-		public OnSelectAjaxBehavior(IJQueryAjaxAware source)
+		public OnChangeAjaxBehavior(IJQueryAjaxAware source)
 		{
 			super(source);
 		}
@@ -284,6 +258,32 @@ public abstract class AjaxTreeViewBehavior extends KendoUIBehavior implements IJ
 		protected JQueryEvent newEvent()
 		{
 			return new SelectEvent();
+		}
+	}
+
+	/**
+	 * Provides a {@link JQueryAjaxBehavior} that aims to be wired to the 'expand' event
+	 */
+	protected static class OnExpandAjaxBehavior extends JQueryAjaxBehavior
+	{
+		private static final long serialVersionUID = 1L;
+
+		public OnExpandAjaxBehavior(IJQueryAjaxAware source)
+		{
+			super(source);
+		}
+
+		@Override
+		protected CallbackParameter[] getCallbackParameters()
+		{
+			return new CallbackParameter[] { CallbackParameter.context("e"), // lf
+					CallbackParameter.resolved("nodeId", String.format("this.dataItem(e.node).%s", TreeNodeFactory.ID_FIELD)) };
+		}
+
+		@Override
+		protected JQueryEvent newEvent()
+		{
+			return new ExpandEvent();
 		}
 	}
 
@@ -337,7 +337,7 @@ public abstract class AjaxTreeViewBehavior extends KendoUIBehavior implements IJ
 	}
 
 	/**
-	 * Provides an event object that will be broadcasted by the {@link OnSelectAjaxBehavior} callback
+	 * Provides an event object that will be broadcasted by the {@link OnChangeAjaxBehavior} callback
 	 */
 	protected static class SelectEvent extends JQueryEvent
 	{

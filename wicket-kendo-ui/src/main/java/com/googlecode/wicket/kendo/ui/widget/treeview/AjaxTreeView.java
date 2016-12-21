@@ -166,7 +166,7 @@ public class AjaxTreeView extends JQueryContainer implements ITreeViewListener
 	}
 
 	@Override
-	public boolean isSelectEventEnabled()
+	public boolean isChangeEventEnabled()
 	{
 		return false;
 	}
@@ -246,7 +246,7 @@ public class AjaxTreeView extends JQueryContainer implements ITreeViewListener
 	}
 
 	@Override
-	public void onSelect(AjaxRequestTarget target, int nodeId, String nodePath)
+	public void onChange(AjaxRequestTarget target, int nodeId, String nodePath)
 	{
 		// noop
 	}
