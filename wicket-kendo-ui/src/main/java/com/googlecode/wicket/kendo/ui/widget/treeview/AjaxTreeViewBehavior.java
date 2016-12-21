@@ -43,8 +43,8 @@ public abstract class AjaxTreeViewBehavior extends KendoUIBehavior implements IJ
 	private final ITreeViewListener listener;
 	private TreeViewDataSource dataSource;
 
-	private JQueryAjaxBehavior onExpandAjaxBehavior = null;
 	private JQueryAjaxBehavior onChangeAjaxBehavior = null;
+	private JQueryAjaxBehavior onExpandAjaxBehavior = null;
 	private JQueryAjaxBehavior onDropAjaxBehavior = null;
 
 	/**
@@ -166,9 +166,9 @@ public abstract class AjaxTreeViewBehavior extends KendoUIBehavior implements IJ
 			this.listener.onExpand(target, ((ExpandEvent) event).getNodeId());
 		}
 
-		if (event instanceof SelectEvent)
+		if (event instanceof ChangeEvent)
 		{
-			SelectEvent payload = (SelectEvent) event;
+			ChangeEvent payload = (ChangeEvent) event;
 			this.listener.onChange(target, payload.getNodeId(), payload.getNodePath());
 		}
 
@@ -257,7 +257,7 @@ public abstract class AjaxTreeViewBehavior extends KendoUIBehavior implements IJ
 		@Override
 		protected JQueryEvent newEvent()
 		{
-			return new SelectEvent();
+			return new ChangeEvent();
 		}
 	}
 
@@ -339,12 +339,12 @@ public abstract class AjaxTreeViewBehavior extends KendoUIBehavior implements IJ
 	/**
 	 * Provides an event object that will be broadcasted by the {@link OnChangeAjaxBehavior} callback
 	 */
-	protected static class SelectEvent extends JQueryEvent
+	protected static class ChangeEvent extends JQueryEvent
 	{
 		private final int nodeId;
 		private final String nodePath;
 
-		public SelectEvent()
+		public ChangeEvent()
 		{
 			this.nodeId = RequestCycleUtils.getQueryParameterValue("nodeId").toInt(0);
 			this.nodePath = RequestCycleUtils.getQueryParameterValue("nodePath").toString();
