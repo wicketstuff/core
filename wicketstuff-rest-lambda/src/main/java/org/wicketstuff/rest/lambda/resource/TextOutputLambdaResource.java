@@ -18,10 +18,10 @@ package org.wicketstuff.rest.lambda.resource;
 
 import java.util.Optional;
 import java.util.function.Consumer;
+import java.util.function.Function;
 
 import org.apache.wicket.request.http.WebResponse;
 import org.apache.wicket.request.resource.IResource;
-import org.danekja.java.util.function.serializable.SerializableFunction;
 import org.wicketstuff.rest.utils.wicket.AttributesWrapper;
 
 /**
@@ -41,9 +41,9 @@ public class TextOutputLambdaResource implements IResource
 	 */
 	private static final long serialVersionUID = 2761454069675861246L;
 
-	final private SerializableFunction<AttributesWrapper, Object> respondFunction; 
+	final private Function<AttributesWrapper, Object> respondFunction; 
 
-	final private SerializableFunction<Object, String> outputTextFunction; 
+	final private Function<Object, String> outputTextFunction; 
 	
 	/**
 	 * Build a new resource using the two provided functions.
@@ -53,8 +53,8 @@ public class TextOutputLambdaResource implements IResource
 	 * @param outputTextFunction
 	 * 				the function used to convert the respond result to text.
 	 */
-	public TextOutputLambdaResource(SerializableFunction<AttributesWrapper, Object> respondFunction,
-			SerializableFunction<Object, String> outputTextFunction) 
+	public TextOutputLambdaResource(Function<AttributesWrapper, Object> respondFunction,
+			Function<Object, String> outputTextFunction) 
 	{
 		this.respondFunction = respondFunction;
 		this.outputTextFunction = outputTextFunction;

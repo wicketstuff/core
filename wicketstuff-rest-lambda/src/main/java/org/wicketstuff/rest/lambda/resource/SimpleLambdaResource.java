@@ -16,8 +16,9 @@
  */
 package org.wicketstuff.rest.lambda.resource;
 
+import java.util.function.Consumer;
+
 import org.apache.wicket.request.resource.IResource;
-import org.danekja.java.util.function.serializable.SerializableConsumer;
 import org.wicketstuff.rest.utils.wicket.AttributesWrapper;
 
 /**
@@ -34,7 +35,7 @@ public class SimpleLambdaResource implements IResource {
 	 */
 	private static final long serialVersionUID = -4514142899864801685L;
 	
-	protected final SerializableConsumer<AttributesWrapper> respondConsumer;
+	protected final Consumer<AttributesWrapper> respondConsumer;
 
 	/**
 	 * Build a new resource providing the {@link java.util.function.Consumer}
@@ -43,7 +44,7 @@ public class SimpleLambdaResource implements IResource {
 	 * @param respondConsumer
 	 * 			the cosnumer.
 	 */
-	public SimpleLambdaResource(SerializableConsumer<AttributesWrapper> respondConsumer) 
+	public SimpleLambdaResource(Consumer<AttributesWrapper> respondConsumer) 
 	{
 		this.respondConsumer = respondConsumer;
 	}

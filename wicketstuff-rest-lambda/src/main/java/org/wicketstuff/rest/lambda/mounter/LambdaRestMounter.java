@@ -16,12 +16,13 @@
  */
 package org.wicketstuff.rest.lambda.mounter;
 
+import java.util.function.Consumer;
+import java.util.function.Function;
+
 import org.apache.wicket.core.request.mapper.ResourceMapper;
 import org.apache.wicket.protocol.http.WebApplication;
 import org.apache.wicket.request.resource.IResource;
 import org.apache.wicket.request.resource.ResourceReference;
-import org.danekja.java.util.function.serializable.SerializableConsumer;
-import org.danekja.java.util.function.serializable.SerializableFunction;
 import org.wicketstuff.rest.lambda.request.mapper.RestResourceMapper;
 import org.wicketstuff.rest.lambda.resource.SimpleLambdaResource;
 import org.wicketstuff.rest.lambda.resource.TextOutputLambdaResource;
@@ -62,8 +63,8 @@ public class LambdaRestMounter
 	 * @param respondFunction the respond function
 	 * @param outputFunction the output function
 	 */
-	public void post(final String path, final SerializableFunction<AttributesWrapper, Object> respondFunction,
-			final SerializableFunction<Object, String> outputFunction) 
+	public void post(final String path, final Function<AttributesWrapper, Object> respondFunction,
+			final Function<Object, String> outputFunction) 
 	{		
 		mountRestResource(HttpMethod.POST, path, respondFunction, outputFunction);
 	}
@@ -75,7 +76,7 @@ public class LambdaRestMounter
 	 * @param path the mounting path
 	 * @param respondConsumer the respond consumer
 	 */
-	public void post(final String path, final SerializableConsumer<AttributesWrapper> respondConsumer) 
+	public void post(final String path, final Consumer<AttributesWrapper> respondConsumer) 
 	{		
 		mountRestResource(HttpMethod.POST, path, respondConsumer);
 	}
@@ -88,8 +89,8 @@ public class LambdaRestMounter
 	 * @param respondFunction the respond function
 	 * @param outputFunction the output function
 	 */
-	public void get(final String path, final SerializableFunction<AttributesWrapper, Object> respondFunction,
-			final SerializableFunction<Object, String> outputFunction) 
+	public void get(final String path, final Function<AttributesWrapper, Object> respondFunction,
+			final Function<Object, String> outputFunction) 
 	{		
 		mountRestResource(HttpMethod.GET, path, respondFunction, outputFunction);
 	}
@@ -101,7 +102,7 @@ public class LambdaRestMounter
 	 * @param path the mounting path
 	 * @param respondConsumer the respond consumer
 	 */
-	public void get(final String path, final SerializableConsumer<AttributesWrapper> respondConsumer) 
+	public void get(final String path, final Consumer<AttributesWrapper> respondConsumer) 
 	{		
 		mountRestResource(HttpMethod.GET, path, respondConsumer);
 	}
@@ -113,7 +114,7 @@ public class LambdaRestMounter
 	 * @param path the mounting path
 	 * @param respondConsumer the respond consumer
 	 */
-	public void put(final String path, final SerializableConsumer<AttributesWrapper> respondConsumer)
+	public void put(final String path, final Consumer<AttributesWrapper> respondConsumer)
 	{
 		mountRestResource(HttpMethod.PUT, path, respondConsumer);
 	}
@@ -126,8 +127,8 @@ public class LambdaRestMounter
 	 * @param respondFunction the respond function
 	 * @param outputFunction the output function
 	 */
-	public void put(final String path, final SerializableFunction<AttributesWrapper, Object> respondFunction,
-			final SerializableFunction<Object, String> outputFunction) 
+	public void put(final String path, final Function<AttributesWrapper, Object> respondFunction,
+			final Function<Object, String> outputFunction) 
 	{		
 		mountRestResource(HttpMethod.PUT, path, respondFunction, outputFunction);
 	}
@@ -139,7 +140,7 @@ public class LambdaRestMounter
 	 * @param path the mounting path
 	 * @param respondConsumer the respond consumer
 	 */
-	public void delete(final String path, final SerializableConsumer<AttributesWrapper> respondConsumer)
+	public void delete(final String path, final Consumer<AttributesWrapper> respondConsumer)
 	{
 		mountRestResource(HttpMethod.DELETE, path, respondConsumer);
 	}
@@ -152,8 +153,8 @@ public class LambdaRestMounter
 	 * @param respondFunction the respond function
 	 * @param outputFunction the output function
 	 */
-	public void delete(final String path, final SerializableFunction<AttributesWrapper, Object> respondFunction,
-			final SerializableFunction<Object, String> outputFunction) 
+	public void delete(final String path, final Function<AttributesWrapper, Object> respondFunction,
+			final Function<Object, String> outputFunction) 
 	{		
 		mountRestResource(HttpMethod.DELETE, path, respondFunction, outputFunction);
 	}
@@ -165,7 +166,7 @@ public class LambdaRestMounter
 	 * @param path the mounting path
 	 * @param respondConsumer the respond consumer
 	 */
-	public void options(final String path, final SerializableConsumer<AttributesWrapper> respondConsumer)
+	public void options(final String path, final Consumer<AttributesWrapper> respondConsumer)
 	{
 		mountRestResource(HttpMethod.OPTIONS, path, respondConsumer);
 	}
@@ -178,8 +179,8 @@ public class LambdaRestMounter
 	 * @param respondFunction the respond function
 	 * @param outputFunction the output function
 	 */
-	public void options(final String path, final SerializableFunction<AttributesWrapper, Object> respondFunction,
-			final SerializableFunction<Object, String> outputFunction) 
+	public void options(final String path, final Function<AttributesWrapper, Object> respondFunction,
+			final Function<Object, String> outputFunction) 
 	{		
 		mountRestResource(HttpMethod.OPTIONS, path, respondFunction, outputFunction);
 	}
@@ -191,7 +192,7 @@ public class LambdaRestMounter
 	 * @param path the mounting path
 	 * @param respondConsumer the respond consumer
 	 */
-	public void patch(final String path, final SerializableConsumer<AttributesWrapper> respondConsumer)
+	public void patch(final String path, final Consumer<AttributesWrapper> respondConsumer)
 	{
 		mountRestResource(HttpMethod.PATCH, path, respondConsumer);
 	}
@@ -204,8 +205,8 @@ public class LambdaRestMounter
 	 * @param respondFunction the respond function
 	 * @param outputFunction the output function
 	 */
-	public void patch(final String path, final SerializableFunction<AttributesWrapper, Object> respondFunction,
-			final SerializableFunction<Object, String> outputFunction) 
+	public void patch(final String path, final Function<AttributesWrapper, Object> respondFunction,
+			final Function<Object, String> outputFunction) 
 	{		
 		mountRestResource(HttpMethod.PATCH, path, respondFunction, outputFunction);
 	}
@@ -217,7 +218,7 @@ public class LambdaRestMounter
 	 * @param path the mounting path
 	 * @param respondConsumer the respond consumer
 	 */
-	public void head(final String path, final SerializableConsumer<AttributesWrapper> respondConsumer)
+	public void head(final String path, final Consumer<AttributesWrapper> respondConsumer)
 	{
 		mountRestResource(HttpMethod.HEAD, path, respondConsumer);
 	}
@@ -230,8 +231,8 @@ public class LambdaRestMounter
 	 * @param respondFunction the respond function
 	 * @param outputFunction the output function
 	 */
-	public void head(final String path, final SerializableFunction<AttributesWrapper, Object> respondFunction,
-			final SerializableFunction<Object, String> outputFunction) 
+	public void head(final String path, final Function<AttributesWrapper, Object> respondFunction,
+			final Function<Object, String> outputFunction) 
 	{		
 		mountRestResource(HttpMethod.HEAD, path, respondFunction, outputFunction);
 	}
@@ -243,7 +244,7 @@ public class LambdaRestMounter
 	 * @param path the mounting path
 	 * @param respondConsumer the respond consumer
 	 */
-	public void trace(final String path, final SerializableConsumer<AttributesWrapper> respondConsumer)
+	public void trace(final String path, final Consumer<AttributesWrapper> respondConsumer)
 	{
 		mountRestResource(HttpMethod.TRACE, path, respondConsumer);
 	}
@@ -256,8 +257,8 @@ public class LambdaRestMounter
 	 * @param respondFunction the respond function
 	 * @param outputFunction the output function
 	 */
-	public void trace(final String path, final SerializableFunction<AttributesWrapper, Object> respondFunction,
-			final SerializableFunction<Object, String> outputFunction) 
+	public void trace(final String path, final Function<AttributesWrapper, Object> respondFunction,
+			final Function<Object, String> outputFunction) 
 	{		
 		mountRestResource(HttpMethod.TRACE, path, respondFunction, outputFunction);
 	}
@@ -272,8 +273,8 @@ public class LambdaRestMounter
 	 * @return the resource mapper
 	 */
 	public ResourceMapper mountRestResource(final HttpMethod httpMethod, final String path, 
-											final SerializableFunction<AttributesWrapper, Object> respondFunction,
-											final SerializableFunction<Object, String> outputFunction)
+											final Function<AttributesWrapper, Object> respondFunction,
+											final Function<Object, String> outputFunction)
 	{
 		TextOutputLambdaResource resource = new TextOutputLambdaResource(respondFunction, outputFunction);
 		return mountRestResource(httpMethod, path, resource);
@@ -288,7 +289,7 @@ public class LambdaRestMounter
 	 * @return the resource mapper
 	 */
 	public ResourceMapper mountRestResource(final HttpMethod httpMethod, final String path, 
-			final SerializableConsumer<AttributesWrapper> respondConsumer)
+			final Consumer<AttributesWrapper> respondConsumer)
 	{
 		SimpleLambdaResource resource = new SimpleLambdaResource(respondConsumer);
 		return mountRestResource(httpMethod, path, resource);
