@@ -16,8 +16,8 @@
  */
 package org.wicketstuff.whiteboard.elements;
 
-import org.apache.wicket.ajax.json.JSONException;
-import org.apache.wicket.ajax.json.JSONObject;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 /**
  * This class represent a line element on Whiteboard which is represented by two coordinate and drawn using pencil tool

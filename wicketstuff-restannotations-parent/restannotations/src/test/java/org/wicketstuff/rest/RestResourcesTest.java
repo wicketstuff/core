@@ -23,11 +23,15 @@ import java.io.StringReader;
 import java.io.StringWriter;
 import java.util.Collections;
 
+import javax.servlet.http.Cookie;
+import javax.xml.bind.JAXB;
+import javax.xml.transform.stream.StreamResult;
+
 import org.apache.wicket.Session;
 import org.apache.wicket.WicketRuntimeException;
-import org.apache.wicket.ajax.json.JSONObject;
 import org.apache.wicket.authroles.authorization.strategies.role.Roles;
 import org.apache.wicket.util.tester.WicketTester;
+import org.json.JSONObject;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -41,10 +45,6 @@ import org.wicketstuff.rest.resource.AbstractRestResource;
 import org.wicketstuff.rest.resource.RestResourceFullAnnotated;
 import org.wicketstuff.rest.utils.test.BufferedMockRequest;
 import org.wicketstuff.rest.utils.wicket.bundle.DefaultBundleResolver;
-
-import javax.servlet.http.Cookie;
-import javax.xml.bind.JAXB;
-import javax.xml.transform.stream.StreamResult;
 
 
 /**
