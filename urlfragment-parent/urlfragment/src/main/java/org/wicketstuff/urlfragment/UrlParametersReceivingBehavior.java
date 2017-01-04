@@ -21,9 +21,6 @@ import org.apache.wicket.Component;
 import org.apache.wicket.ajax.AbstractDefaultAjaxBehavior;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.attributes.AjaxRequestAttributes;
-import org.apache.wicket.ajax.json.JSONException;
-import org.apache.wicket.ajax.json.JSONStringer;
-import org.apache.wicket.ajax.json.JSONWriter;
 import org.apache.wicket.behavior.Behavior;
 import org.apache.wicket.markup.head.HeaderItem;
 import org.apache.wicket.markup.head.IHeaderResponse;
@@ -32,6 +29,8 @@ import org.apache.wicket.markup.head.OnDomReadyHeaderItem;
 import org.apache.wicket.request.IRequestParameters;
 import org.apache.wicket.request.cycle.RequestCycle;
 import org.apache.wicket.request.resource.PackageResourceReference;
+import org.json.JSONException;
+import org.json.JSONStringer;
 
 /**
  * Reads URL fragment parameters. This {@link Behavior} will execute an AJAX call to itself with the
@@ -98,7 +97,7 @@ public abstract class UrlParametersReceivingBehavior extends AbstractDefaultAjax
 		String optionsJsonString = "";
 		try
 		{
-			JSONWriter writer = new JSONStringer().object();
+			JSONStringer writer = new JSONStringer().object();
 			for (String key : options.keySet())
 			{
 				writer.key(key).value(options.get(key));

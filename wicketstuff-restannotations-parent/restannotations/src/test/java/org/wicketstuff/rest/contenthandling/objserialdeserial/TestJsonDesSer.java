@@ -16,12 +16,16 @@
  */
 package org.wicketstuff.rest.contenthandling.objserialdeserial;
 
-import org.apache.wicket.ajax.json.JSONObject;
 import org.wicketstuff.rest.contenthandling.IObjectSerialDeserial;
 import org.wicketstuff.rest.resource.RestResourceFullAnnotated;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 public class TestJsonDesSer implements IObjectSerialDeserial<String>
 {
+	final ObjectMapper mapper = new ObjectMapper();
+	
 	static public Object getObject()
 	{
 		return RestResourceFullAnnotated.createTestPerson();
@@ -35,9 +39,14 @@ public class TestJsonDesSer implements IObjectSerialDeserial<String>
 	@Override
 	public String serializeObject(Object targetObject, String mimeType)
 	{	
-		JSONObject jsonObject = new JSONObject(targetObject);
-		
-		return jsonObject.toString();
+		try
+		{
+			return mapper.writeValueAsString(targetObject);
+		}
+		catch (JsonProcessingException e)
+		{
+			throw new RuntimeException(e);
+		}
 	}
 
 	@Override

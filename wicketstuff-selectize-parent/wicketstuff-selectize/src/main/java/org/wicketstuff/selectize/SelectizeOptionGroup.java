@@ -22,7 +22,7 @@ import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.util.Iterator;
 
-import org.apache.wicket.ajax.json.JSONObject;
+import org.json.JSONObject;
 
 /**
  * Used to provide the model for the groups to the selectize component. If the groupId of this model

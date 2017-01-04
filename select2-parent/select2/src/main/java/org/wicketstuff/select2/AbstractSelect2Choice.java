@@ -22,8 +22,6 @@ import java.util.List;
 import org.apache.wicket.Component;
 import org.apache.wicket.IRequestListener;
 import org.apache.wicket.ajax.AjaxRequestTarget;
-import org.apache.wicket.ajax.json.JSONException;
-import org.apache.wicket.ajax.json.JSONWriter;
 import org.apache.wicket.event.IEvent;
 import org.apache.wicket.markup.ComponentTag;
 import org.apache.wicket.markup.MarkupStream;
@@ -40,6 +38,8 @@ import org.apache.wicket.request.http.WebRequest;
 import org.apache.wicket.request.http.WebResponse;
 import org.apache.wicket.util.string.AppendingStringBuffer;
 import org.apache.wicket.util.string.Strings;
+import org.json.JSONException;
+import org.json.JSONStringer;
 
 /**
  * Base class for Select2 components
@@ -369,7 +369,7 @@ public abstract class AbstractSelect2Choice<T, M> extends AbstractTextComponent<
 		// jsonize and write out the choices to the response
 
 		OutputStreamWriter out = new OutputStreamWriter(outputStream, request.getCharset());
-		JSONWriter json = new JSONWriter(out);
+		JSONStringer json = new JSONStringer();
 
 		try
 		{
@@ -383,8 +383,10 @@ public abstract class AbstractSelect2Choice<T, M> extends AbstractTextComponent<
 			}
 			json.endArray();
 			json.key("more").value(response.getHasMore()).endObject();
+			
+			out.write(json.toString());
 		}
-		catch (JSONException e) 
+		catch (JSONException | IOException e) 
 		{
 			throw new RuntimeException("Could not write Json response", e);
 		}
