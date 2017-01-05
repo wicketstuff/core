@@ -16,6 +16,7 @@
  */
 package org.wicketstuff.rest.lambda.mounter;
 
+import org.apache.wicket.ajax.json.JSONObject;
 import org.apache.wicket.protocol.http.WebApplication;
 import org.junit.Test;
 import org.wicketstuff.rest.utils.http.HttpMethod;
@@ -34,7 +35,7 @@ public class LambdaRestApplicationTest extends RestTestCase
 	{
 		assertUrlResponse("./testget", HttpMethod.POST, "");
 		assertUrlResponse("./testget", HttpMethod.GET, "hello!");
-		assertUrlResponse("./testjson", HttpMethod.POST, TestApplication.toJson(TestApplication.map));
+		assertUrlResponse("./testjson", HttpMethod.POST, JSONObject.valueToString(TestApplication.map));
 		assertUrlResponse("./testparam/45", HttpMethod.OPTIONS, "45");
 		assertUrlResponse("./deleteit", HttpMethod.DELETE, "deleted");
 	}

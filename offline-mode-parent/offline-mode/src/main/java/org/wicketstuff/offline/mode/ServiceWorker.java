@@ -21,8 +21,8 @@ import java.util.List;
 
 import org.apache.wicket.Page;
 import org.apache.wicket.WicketRuntimeException;
-import org.json.JSONArray;
-import org.json.JSONObject;
+import org.apache.wicket.ajax.json.JSONArray;
+import org.apache.wicket.ajax.json.JSONObject;
 import org.apache.wicket.markup.head.HeaderItem;
 import org.apache.wicket.markup.head.JavaScriptHeaderItem;
 import org.apache.wicket.request.IRequestHandler;

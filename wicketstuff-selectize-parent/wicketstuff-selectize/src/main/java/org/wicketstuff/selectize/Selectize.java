@@ -23,12 +23,11 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.wicket.Component;
-import org.apache.wicket.MarkupContainer;
 import org.apache.wicket.WicketRuntimeException;
 import org.apache.wicket.ajax.AbstractDefaultAjaxBehavior;
 import org.apache.wicket.ajax.AjaxRequestTarget;
-import org.json.JSONArray;
-import org.json.JSONObject;
+import org.apache.wicket.ajax.json.JSONArray;
+import org.apache.wicket.ajax.json.JSONObject;
 import org.apache.wicket.core.util.string.ComponentRenderer;
 import org.apache.wicket.markup.ComponentTag;
 import org.apache.wicket.markup.head.CssHeaderItem;
@@ -405,11 +404,5 @@ public class Selectize extends FormComponent
 	public void setCreateAvailable(boolean createAvailable)
 	{
 		this.createAvailable = createAvailable;
-	}
-
-	@Override
-	public MarkupContainer setDefaultModel(IModel model) {
-		super.setDefaultModel(model);
-		return this;
 	}
 }

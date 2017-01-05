@@ -16,34 +16,14 @@
  */
 package org.wicketstuff.whiteboard;
 
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-import java.util.TreeMap;
-import java.util.concurrent.BlockingDeque;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.LinkedBlockingDeque;
-
-import javax.servlet.ServletContext;
-import javax.servlet.http.HttpServletRequest;
-
 import org.apache.wicket.Application;
 import org.apache.wicket.Component;
 import org.apache.wicket.ajax.AbstractDefaultAjaxBehavior;
 import org.apache.wicket.ajax.AjaxRequestTarget;
-import org.apache.wicket.markup.head.CssHeaderItem;
-import org.apache.wicket.markup.head.IHeaderResponse;
-import org.apache.wicket.markup.head.JavaScriptHeaderItem;
-import org.apache.wicket.markup.head.OnDomReadyHeaderItem;
-import org.apache.wicket.markup.head.PriorityHeaderItem;
+import org.apache.wicket.ajax.json.JSONArray;
+import org.apache.wicket.ajax.json.JSONException;
+import org.apache.wicket.ajax.json.JSONObject;
+import org.apache.wicket.markup.head.*;
 import org.apache.wicket.protocol.http.WebApplication;
 import org.apache.wicket.protocol.ws.WebSocketSettings;
 import org.apache.wicket.protocol.ws.api.IWebSocketConnection;
@@ -51,40 +31,25 @@ import org.apache.wicket.protocol.ws.api.registry.IWebSocketConnectionRegistry;
 import org.apache.wicket.request.Url;
 import org.apache.wicket.request.cycle.RequestCycle;
 import org.apache.wicket.request.http.WebRequest;
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.wicketstuff.whiteboard.elements.CircleGeneral;
-import org.wicketstuff.whiteboard.elements.Circle_3p;
-import org.wicketstuff.whiteboard.elements.ClipArt;
-import org.wicketstuff.whiteboard.elements.Element;
+import org.wicketstuff.whiteboard.elements.*;
 import org.wicketstuff.whiteboard.elements.Element.Type;
-import org.wicketstuff.whiteboard.elements.LineGeneral;
-import org.wicketstuff.whiteboard.elements.Line_2p;
-import org.wicketstuff.whiteboard.elements.PencilArrow;
-import org.wicketstuff.whiteboard.elements.PencilCircle;
-import org.wicketstuff.whiteboard.elements.PencilCurve;
-import org.wicketstuff.whiteboard.elements.PencilFreeLine;
-import org.wicketstuff.whiteboard.elements.PencilPointAtRect;
-import org.wicketstuff.whiteboard.elements.PencilPointer;
-import org.wicketstuff.whiteboard.elements.PencilRect;
-import org.wicketstuff.whiteboard.elements.PencilUnderline;
-import org.wicketstuff.whiteboard.elements.PointAtCircle;
-import org.wicketstuff.whiteboard.elements.PointAtLine;
-import org.wicketstuff.whiteboard.elements.PointFree;
-import org.wicketstuff.whiteboard.elements.Point_2c;
-import org.wicketstuff.whiteboard.elements.Point_2l;
-import org.wicketstuff.whiteboard.elements.Point_lc;
-import org.wicketstuff.whiteboard.elements.Segment;
-import org.wicketstuff.whiteboard.elements.Text;
-import org.wicketstuff.whiteboard.resource.GoogStyleSheetResourceReference;
-import org.wicketstuff.whiteboard.resource.TranslateJavaScriptResourceReference;
-import org.wicketstuff.whiteboard.resource.WhiteboardHelperJavaScriptResourceReference;
-import org.wicketstuff.whiteboard.resource.WhiteboardJavaScriptResourceReference;
-import org.wicketstuff.whiteboard.resource.WhiteboardStyleSheetResourceReference;
+import org.wicketstuff.whiteboard.resource.*;
 import org.wicketstuff.whiteboard.settings.WhiteboardLibrarySettings;
+
+import javax.servlet.ServletContext;
+import javax.servlet.http.HttpServletRequest;
+
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.*;
+import java.util.concurrent.BlockingDeque;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.LinkedBlockingDeque;
 
 /**
  * This class is the behaviour handler of the whiteboard. All the server-side functionality of whiteboard is handled
@@ -952,7 +917,7 @@ public class WhiteboardBehavior extends AbstractDefaultAjaxBehavior {
 	 * @return
 	 */
 	private boolean isEqual(JSONObject element1, JSONObject element2) {
-		for (String key : element1.keySet()) {
+		for (String key : JSONObject.getNames(element1)) {
 			Object value = null;
 			try {
 				value = element2.get(key);

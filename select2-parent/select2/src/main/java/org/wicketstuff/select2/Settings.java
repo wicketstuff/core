@@ -12,18 +12,18 @@
  */
 package org.wicketstuff.select2;
 
-import static org.apache.wicket.util.string.Strings.defaultIfEmpty;
-
 import java.io.Serializable;
 
 import org.apache.wicket.Component;
 import org.apache.wicket.Session;
 import org.apache.wicket.WicketRuntimeException;
+import org.apache.wicket.ajax.json.JSONException;
+import org.apache.wicket.ajax.json.JSONStringer;
 import org.apache.wicket.markup.head.IHeaderResponse;
 import org.apache.wicket.util.string.Strings;
-import org.json.JSONException;
-import org.json.JSONStringer;
 import org.wicketstuff.select2.json.Json;
+
+import static org.apache.wicket.util.string.Strings.defaultIfEmpty;
 
 /**
  * Select2 settings. Refer to the Select2 documentation for what these options mean.

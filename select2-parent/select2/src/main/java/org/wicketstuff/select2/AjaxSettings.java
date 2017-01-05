@@ -14,8 +14,8 @@ package org.wicketstuff.select2;
 
 import java.io.Serializable;
 
-import org.json.JSONException;
-import org.json.JSONStringer;
+import org.apache.wicket.ajax.json.JSONException;
+import org.apache.wicket.ajax.json.JSONWriter;
 import org.wicketstuff.select2.json.Json;
 
 /**
@@ -34,16 +34,16 @@ public final class AjaxSettings implements Serializable
 	/** whether or not to use traditional parameter encoding. */
 	private boolean cache;
 
-	public void toJson(JSONStringer stringer) throws JSONException
+	public void toJson(JSONWriter writer) throws JSONException
 	{
-		stringer.object();
-		Json.writeFunction(stringer, "data", data);
-		Json.writeObject(stringer, "dataType", dataType);
-		Json.writeObject(stringer, "delay", delay);
-		Json.writeFunction(stringer, "processResults", processResults);
-		Json.writeObject(stringer, "url", url);
-		Json.writeObject(stringer, "cache", cache);
-		stringer.endObject();
+		writer.object();
+		Json.writeFunction(writer, "data", data);
+		Json.writeObject(writer, "dataType", dataType);
+		Json.writeObject(writer, "delay", delay);
+		Json.writeFunction(writer, "processResults", processResults);
+		Json.writeObject(writer, "url", url);
+		Json.writeObject(writer, "cache", cache);
+		writer.endObject();
 	}
 
 	public void setUrl(CharSequence url)

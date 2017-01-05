@@ -16,15 +16,13 @@
  */
 package org.wicketstuff.rest.lambda.mounter;
 
-import java.beans.IntrospectionException;
-import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
 import java.util.Map;
 
 import org.apache.wicket.Page;
+import org.apache.wicket.ajax.json.JSONObject;
 import org.apache.wicket.protocol.http.WebApplication;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
-import org.json.JSONObject;
 
 public class TestApplication extends WebApplication 
 {
@@ -49,7 +47,7 @@ public class TestApplication extends WebApplication
 		LambdaRestMounter restMounter = new LambdaRestMounter(this);
 		
 		restMounter.get("/testget", (attributes) -> "hello!", Object::toString);
-		restMounter.post("/testjson", (attributes) -> TestApplication.map, TestApplication::toJson);
+		restMounter.post("/testjson", (attributes) -> TestApplication.map, JSONObject::valueToString);
 
 		restMounter.options("/testparam/${id}", (attributes) -> {
 			PageParameters pageParameters = attributes.getPageParameters();
@@ -59,14 +57,5 @@ public class TestApplication extends WebApplication
 		
 		restMounter.delete("/deleteit", (attributes) -> 
 			attributes.getWebResponse().write("deleted"));
-	}
-	
-	public static String toJson(Object object) 
-	{
-		try {
-			return new JSONObject(object).toString();
-		} catch (InvocationTargetException | IllegalAccessException | IntrospectionException e) {
-			throw new RuntimeException(e);
-		}
 	}
 }
