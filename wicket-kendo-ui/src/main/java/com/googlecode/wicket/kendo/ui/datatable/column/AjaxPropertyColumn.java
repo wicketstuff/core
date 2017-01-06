@@ -35,15 +35,13 @@ import com.googlecode.wicket.jquery.core.utils.RequestCycleUtils;
 import com.googlecode.wicket.kendo.ui.datatable.DataTable;
 
 /**
- * Provides an property column for a {@link DataTable} which content will be lazy loaded.
+ * Provides an property column for a {@link DataTable} which content will be ajax/lazy loaded.
  *
  * @author Sebastien Briquet - sebfz1
  */
-public abstract class LazyPropertyColumn extends PropertyColumn
+public abstract class AjaxPropertyColumn extends PropertyColumn
 {
 	private static final long serialVersionUID = 1L;
-
-	private AjaxTemplateBehavior templateBehavior;
 
 	/**
 	 * Constructor
@@ -51,7 +49,7 @@ public abstract class LazyPropertyColumn extends PropertyColumn
 	 * @param title the text of the column header
 	 * @param datatable the holding {@link DataTable}
 	 */
-	public LazyPropertyColumn(String title, DataTable<?> datatable)
+	public AjaxPropertyColumn(String title, DataTable<?> datatable)
 	{
 		super(title);
 
@@ -65,7 +63,7 @@ public abstract class LazyPropertyColumn extends PropertyColumn
 	 * @param property the object property name
 	 * @param datatable the holding {@link DataTable}
 	 */
-	public LazyPropertyColumn(String title, String property, DataTable<?> datatable)
+	public AjaxPropertyColumn(String title, String property, DataTable<?> datatable)
 	{
 		super(title, property);
 
@@ -79,7 +77,7 @@ public abstract class LazyPropertyColumn extends PropertyColumn
 	 * @param width the desired width of the column
 	 * @param datatable the holding {@link DataTable}
 	 */
-	public LazyPropertyColumn(String title, int width, DataTable<?> datatable)
+	public AjaxPropertyColumn(String title, int width, DataTable<?> datatable)
 	{
 		super(title, width);
 
@@ -94,7 +92,7 @@ public abstract class LazyPropertyColumn extends PropertyColumn
 	 * @param width the desired width of the column
 	 * @param datatable the holding {@link DataTable}
 	 */
-	public LazyPropertyColumn(String title, String property, int width, DataTable<?> datatable)
+	public AjaxPropertyColumn(String title, String property, int width, DataTable<?> datatable)
 	{
 		super(title, property, width);
 
@@ -108,7 +106,7 @@ public abstract class LazyPropertyColumn extends PropertyColumn
 	 * @param property the object property name
 	 * @param datatable the holding {@link DataTable}
 	 */
-	public LazyPropertyColumn(IModel<String> title, String property, DataTable<?> datatable)
+	public AjaxPropertyColumn(IModel<String> title, String property, DataTable<?> datatable)
 	{
 		super(title, property);
 
@@ -123,7 +121,7 @@ public abstract class LazyPropertyColumn extends PropertyColumn
 	 * @param width the desired width of the column
 	 * @param datatable the holding {@link DataTable}
 	 */
-	public LazyPropertyColumn(IModel<String> title, String property, int width, DataTable<?> datatable)
+	public AjaxPropertyColumn(IModel<String> title, String property, int width, DataTable<?> datatable)
 	{
 		super(title, property, width);
 
@@ -139,8 +137,7 @@ public abstract class LazyPropertyColumn extends PropertyColumn
 	 */
 	private final void bind(Component component)
 	{
-		this.templateBehavior = new AjaxTemplateBehavior();
-		component.add(this.templateBehavior);
+		component.add(new AjaxTemplateBehavior());
 	}
 
 	@Override
@@ -164,7 +161,7 @@ public abstract class LazyPropertyColumn extends PropertyColumn
 	 * @param value the value corresponding to the column's field
 	 * @return the new {@code Component}
 	 */
-	protected abstract Component newLazyComponent(String id, String value);
+	protected abstract Component getLazyComponent(String id, String value);
 
 	// Classes //
 
@@ -183,18 +180,18 @@ public abstract class LazyPropertyColumn extends PropertyColumn
 			super.renderHead(component, response);
 
 			Map<String, Object> variables = Generics.newHashMap();
-			variables.put("field", LazyPropertyColumn.this.getField());
+			variables.put("field", AjaxPropertyColumn.this.getField());
 			variables.put("imageUrl", RequestCycle.get().urlFor(new ResourceReferenceRequestHandler(AbstractDefaultAjaxBehavior.INDICATOR)));
 			variables.put("callbackUrl", this.getCallbackUrl());
 
-			response.render(new JavaScriptPackageHeaderItem(LazyPropertyColumn.class, variables));
+			response.render(new JavaScriptPackageHeaderItem(AjaxPropertyColumn.class, variables));
 		}
 
 		@Override
 		protected String getResponse(IRequestParameters parameters)
 		{
 			final String value = RequestCycleUtils.getQueryParameterValue("id").toString();
-			final Component component = LazyPropertyColumn.this.newLazyComponent(this.newMarkupId(), value);
+			final Component component = AjaxPropertyColumn.this.getLazyComponent(this.newMarkupId(), value);
 			final CharSequence response = ComponentRenderer.renderComponent(component);
 
 			return response != null ? response.toString() : "";

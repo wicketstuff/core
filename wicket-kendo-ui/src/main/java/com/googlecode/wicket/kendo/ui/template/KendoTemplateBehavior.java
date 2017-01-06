@@ -55,13 +55,12 @@ public class KendoTemplateBehavior extends JQueryAbstractTemplateBehavior
 	 * @param template the {@link IJQueryTemplate} that this behavior should render via the resource stream
 	 * @param suffix the token suffix
 	 */
-	// TODO rename suffix ?
 	public KendoTemplateBehavior(IJQueryTemplate template, String suffix)
 	{
 		this.template = template;
 		this.suffix = suffix;
 	}
-	
+
 	// Methods //
 	
 	@Override

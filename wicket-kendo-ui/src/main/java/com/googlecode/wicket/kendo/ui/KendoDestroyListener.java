@@ -21,7 +21,7 @@ import java.util.Map.Entry;
 
 import org.apache.wicket.Component;
 import org.apache.wicket.ajax.AjaxRequestTarget;
-import org.apache.wicket.ajax.AjaxRequestTarget.AbstractListener;
+import org.apache.wicket.ajax.AjaxRequestTarget.IListener;
 import org.apache.wicket.core.request.handler.IPartialPageRequestHandler;
 import org.apache.wicket.util.visit.IVisit;
 import org.apache.wicket.util.visit.IVisitor;
@@ -33,7 +33,7 @@ import org.apache.wicket.util.visit.Visits;
  * 
  * @author Sebastien Briquet - sebfz1
  */
-public class KendoDestroyListener extends AbstractListener
+public class KendoDestroyListener implements IListener
 {
 	/**
 	 * Specifies that a widgets can be automatically destroyed
