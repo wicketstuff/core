@@ -98,6 +98,16 @@ public class CommandButton extends AbstractButton
 
 		return false;
 	}
+	
+	/**
+	 * Indicates whether this button is enabled
+	 * 
+	 * @return {@code false} by default
+	 */
+	public boolean isEnabled()
+	{
+		return false;
+	}
 
 	/**
 	 * Gets the CSS class to be applied on the button
@@ -106,7 +116,7 @@ public class CommandButton extends AbstractButton
 	 */
 	public String getCSSClass()
 	{
-		return "";
+		return this.isEnabled() ? "" : "k-state-disabled" ;
 	}
 
 	public String toString(JQueryAjaxBehavior behavior)
@@ -126,7 +136,7 @@ public class CommandButton extends AbstractButton
 			BuilderUtils.append(builder, "className", css);
 		}
 
-		if (behavior != null)
+		if (behavior != null && this.isEnabled())
 		{
 			builder.append(", ");
 			builder.append("'click': ").append(behavior.getCallbackFunction());
