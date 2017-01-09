@@ -89,16 +89,16 @@ public class CommandButton extends AbstractButton
 	{
 		switch (this.getName())
 		{
-		case EDIT:
-		case DESTROY:
-			return true;
-		default:
-			break;
+			case EDIT:
+			case DESTROY:
+				return true;
+			default:
+				break;
 		}
 
 		return false;
 	}
-	
+
 	/**
 	 * Indicates whether this button is enabled
 	 * 
@@ -110,13 +110,14 @@ public class CommandButton extends AbstractButton
 	}
 
 	/**
-	 * Gets the CSS class to be applied on the button
+	 * Gets the CSS class to be applied on the button<br/>
+	 * <b>Caution:</b> {@code super.getCSSClass()} should be called when overridden
 	 *
 	 * @return the CSS class
 	 */
 	public String getCSSClass()
 	{
-		return this.isEnabled() ? "" : "k-state-disabled" ;
+		return this.isEnabled() ? "" : "k-state-disabled";
 	}
 
 	public String toString(JQueryAjaxBehavior behavior)
@@ -124,11 +125,14 @@ public class CommandButton extends AbstractButton
 		StringBuilder builder = new StringBuilder();
 
 		builder.append("{ ");
-		BuilderUtils.append(builder, "name", this.getName());
+
+		String name = this.isEnabled() ? this.getName() : "_" + this.getName(); // prevent firing click for builtin buttons TODO WIP
+		String css = this.getCSSClass();
+
+		BuilderUtils.append(builder, "name", name);
+
 		builder.append(", ");
 		BuilderUtils.append(builder, "text", this.getText().getObject());
-
-		String css = this.getCSSClass();
 
 		if (!Strings.isEmpty(css)) /* important */
 		{
@@ -136,7 +140,7 @@ public class CommandButton extends AbstractButton
 			BuilderUtils.append(builder, "className", css);
 		}
 
-		if (behavior != null && this.isEnabled())
+		if (this.isEnabled() && behavior != null)
 		{
 			builder.append(", ");
 			builder.append("'click': ").append(behavior.getCallbackFunction());
