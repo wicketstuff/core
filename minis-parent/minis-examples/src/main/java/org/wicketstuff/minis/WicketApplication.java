@@ -35,15 +35,5 @@ public class WicketApplication extends WebApplication
 	protected void init() 
 	{
 	    super.init();
-
-	    getComponentInstantiationListeners().add(new IComponentInstantiationListener() {
-			@Override
-			public void onInstantiation(Component component) {
-				if (component instanceof WebPage) {
-					component.add(DocumentCompatibilityBehavior.ieEdge());
-					component.add(PersistedCacheBehavior.prevent());
-				}
-			}
-		});
 	}
 }
