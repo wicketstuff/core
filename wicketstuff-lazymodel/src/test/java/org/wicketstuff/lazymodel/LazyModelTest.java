@@ -38,6 +38,7 @@ import org.apache.wicket.WicketRuntimeException;
 import org.apache.wicket.model.AbstractReadOnlyModel;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.IObjectClassAwareModel;
+import org.apache.wicket.model.LoadableDetachableModel;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.model.PropertyModel;
 import org.junit.Test;
@@ -749,6 +750,31 @@ public class LazyModelTest {
 		assertEquals(a.b.cs.get(0), model.getObject());
 	}
 
+	/**
+	 * issue #569
+	 * <p>
+	 * {@link LoadableDetachableModel#getObject()}'s type is a type variable.
+	 */
+	@Test
+	public void getObjectFromLoadableModel() {
+		final A a = new A();
+		a.b = new B();
+
+		IModel<A> target = new LoadableDetachableModel<A>() {
+			@Override
+			protected A load() {
+				return a;
+			}
+		};
+
+		LazyModel<B> model = model(from(target).getB());
+
+		assertEquals(B.class, model.getObjectClass());
+		assertEquals("b", model.getPath());
+
+		assertEquals(a.b, model.getObject());
+	}
+	
 	@Test
 	public void getFromPrivateConstructor() {
 		final A a = new A();
@@ -903,6 +929,7 @@ public class LazyModelTest {
 		a.b = new B();
 
 		Model target = new Model(a);
+		
 		LazyModel<B> model = model(from(target, A.class).getB());
 
 		assertEquals(B.class, model.getObjectClass());
