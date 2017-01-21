@@ -16,6 +16,9 @@
  */
 package com.googlecode.wicket.kendo.ui.datatable.button;
 
+import java.util.List;
+
+import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.model.IModel;
 
 import com.googlecode.wicket.kendo.ui.datatable.DataTable;
@@ -37,7 +40,7 @@ public class ToolbarButton extends AbstractButton
 	// The "pdf" command exports the grid data in PDF format.
 
 	/**
-	 * Constructor for built-in commands (no property supplied)
+	 * Constructor for built-in commands
 	 *
 	 * @param name the button's name
 	 */
@@ -47,7 +50,7 @@ public class ToolbarButton extends AbstractButton
 	}
 
 	/**
-	 * Constructor for built-in commands (no property supplied)
+	 * Constructor for built-in commands
 	 *
 	 * @param name the button's name
 	 * @param text the button's text
@@ -87,14 +90,14 @@ public class ToolbarButton extends AbstractButton
 	{
 		switch (this.getName())
 		{
-		case EDIT:
-		case SAVE:
-		case CREATE:
-		case CANCEL:
-		case DESTROY:
-			return true;
-		default:
-			break;
+			case EDIT:
+			case SAVE:
+			case CREATE:
+			case CANCEL:
+			case DESTROY:
+				return true;
+			default:
+				break;
 		}
 
 		return false;
@@ -106,5 +109,18 @@ public class ToolbarButton extends AbstractButton
 	public String toString()
 	{
 		return String.format("{ name: '%s', text: '%s' } ", this.getName(), this.getText().getObject());
+	}
+
+	// Events //
+
+	/**
+	 * Triggered when the toolbar-button is clicked
+	 * 
+	 * @param target the {@link AjaxRequestTarget}
+	 * @param values the rows object value
+	 */
+	public void onClick(AjaxRequestTarget target, List<String> values)
+	{
+		// noop
 	}
 }

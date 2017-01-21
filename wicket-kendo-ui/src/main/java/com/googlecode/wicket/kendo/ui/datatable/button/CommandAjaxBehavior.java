@@ -37,7 +37,7 @@ public class CommandAjaxBehavior extends JQueryAjaxBehavior
 	 * Constructor
 	 *
 	 * @param source the {@link IJQueryAjaxAware}
-	 * @param button the {@link CommandButton} to attach to the {@link ClickEvent}
+	 * @param button the {@link CommandButton} to attach to the {@link CommandClickEvent}
 	 */
 	public CommandAjaxBehavior(IJQueryAjaxAware source, CommandButton button)
 	{
@@ -61,25 +61,21 @@ public class CommandAjaxBehavior extends JQueryAjaxBehavior
 	{
 		return new CallbackParameter[] { // lf
 				CallbackParameter.context("e"), // lf
-				CallbackParameter.resolved("value", String.format("this.dataItem(jQuery(e.target).closest('tr'))['%s']", this.button.getProperty())) // lf
+				CallbackParameter.resolved("value", String.format("this.dataItem($tr)['%s']", this.button.getProperty())) // lf
 		};
 	}
-	
-	@Override
-	public String getCallbackFunction()
-	{
-		if (this.button.isBuiltIn())
-		{
-			return null;
-		}
 
-		return super.getCallbackFunction();
+	@Override
+	public CharSequence getCallbackFunctionBody(CallbackParameter... parameters)
+	{
+		String statement = "var $tr = jQuery(e.target).closest('tr');\n";
+		return statement + super.getCallbackFunctionBody(parameters);
 	}
 
 	@Override
 	protected JQueryEvent newEvent()
 	{
-		return new ClickEvent(this.button);
+		return new CommandClickEvent(this.button);
 	}
 
 	// Event objects //
@@ -87,12 +83,12 @@ public class CommandAjaxBehavior extends JQueryAjaxBehavior
 	/**
 	 * Provides a click event that will be transmitted to the {@link DataTable}
 	 */
-	public static class ClickEvent extends JQueryEvent
+	public static class CommandClickEvent extends JQueryEvent
 	{
 		private final CommandButton button;
 		private final String value;
 
-		public ClickEvent(CommandButton button)
+		public CommandClickEvent(CommandButton button)
 		{
 			super();
 

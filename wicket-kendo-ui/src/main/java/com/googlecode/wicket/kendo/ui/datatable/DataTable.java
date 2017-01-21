@@ -42,7 +42,7 @@ import com.googlecode.wicket.kendo.ui.KendoDataSource;
 import com.googlecode.wicket.kendo.ui.KendoUIBehavior;
 import com.googlecode.wicket.kendo.ui.datatable.behavior.DataBoundBehavior;
 import com.googlecode.wicket.kendo.ui.datatable.button.CommandAjaxBehavior;
-import com.googlecode.wicket.kendo.ui.datatable.button.CommandAjaxBehavior.ClickEvent;
+import com.googlecode.wicket.kendo.ui.datatable.button.CommandAjaxBehavior.CommandClickEvent;
 import com.googlecode.wicket.kendo.ui.datatable.button.CommandButton;
 import com.googlecode.wicket.kendo.ui.datatable.button.ToolbarButton;
 import com.googlecode.wicket.kendo.ui.datatable.column.IColumn;
@@ -357,13 +357,13 @@ public class DataTable<T> extends WebComponent implements IGenericComponent<List
 	}
 
 	@Override
-	public void onClick(AjaxRequestTarget target, CommandButton button, String value)
+	public void onClick(AjaxRequestTarget target, ToolbarButton button, List<String> values)
 	{
 		// noop
 	}
 
 	@Override
-	public void onClick(AjaxRequestTarget target, ToolbarButton button, List<String> values)
+	public void onClick(AjaxRequestTarget target, CommandButton button, String value)
 	{
 		// noop
 	}
@@ -458,7 +458,7 @@ public class DataTable<T> extends WebComponent implements IGenericComponent<List
 	 * This method may be overridden to provide additional behaviors
 	 *
 	 * @param source the {@link IJQueryAjaxAware}
-	 * @param button the button that is passed to the behavior so it can be retrieved via the {@link ClickEvent}
+	 * @param button the button that is passed to the behavior so it can be retrieved via the {@link CommandClickEvent}
 	 * @return the {@link JQueryAjaxBehavior}
 	 */
 	protected JQueryAjaxBehavior newCommandAjaxBehavior(IJQueryAjaxAware source, CommandButton button)

@@ -36,7 +36,7 @@ import com.googlecode.wicket.kendo.ui.datatable.DataSourceEvent.CreateEvent;
 import com.googlecode.wicket.kendo.ui.datatable.DataSourceEvent.DeleteEvent;
 import com.googlecode.wicket.kendo.ui.datatable.DataSourceEvent.UpdateEvent;
 import com.googlecode.wicket.kendo.ui.datatable.button.CommandAjaxBehavior;
-import com.googlecode.wicket.kendo.ui.datatable.button.CommandAjaxBehavior.ClickEvent;
+import com.googlecode.wicket.kendo.ui.datatable.button.CommandAjaxBehavior.CommandClickEvent;
 import com.googlecode.wicket.kendo.ui.datatable.button.CommandButton;
 import com.googlecode.wicket.kendo.ui.datatable.button.ToolbarAjaxBehavior;
 import com.googlecode.wicket.kendo.ui.datatable.button.ToolbarAjaxBehavior.ToolbarClickEvent;
@@ -121,7 +121,7 @@ public abstract class DataTableBehavior extends KendoUIBehavior implements IJQue
 		component.add(this.onDeleteAjaxBehavior);
 
 		// toolbar buttons //
-		for (ToolbarButton button : this.getToolbarButtons())
+		for (ToolbarButton button : this.getVisibleToolbarButtons())
 		{
 			if (!button.isBuiltIn())
 			{
@@ -130,7 +130,7 @@ public abstract class DataTableBehavior extends KendoUIBehavior implements IJQue
 		}
 
 		// column buttons //
-		for (CommandButton button : this.getCommandButtons())
+		for (CommandButton button : this.getVisibleCommandButtons())
 		{
 			if (!button.isBuiltIn())
 			{
@@ -177,17 +177,6 @@ public abstract class DataTableBehavior extends KendoUIBehavior implements IJQue
 	}
 
 	/**
-	 * Indicates whether toolbar buttons are supplied.<br>
-	 * <b>Note:</b> if false, the {@code toolbar} option can be used (for built-in buttons only)
-	 * 
-	 * @return {@code true} or {@code false}
-	 */
-	private boolean hasVisibleToolbarButtons()
-	{
-		return !this.getToolbarButtons().isEmpty();
-	}
-
-	/**
 	 * Gets the {@code List} of visible {@link ToolbarButton}{@code s}
 	 * 
 	 * @return the {@code List} of visible {@code ToolbarButton}{@code s}
@@ -208,21 +197,54 @@ public abstract class DataTableBehavior extends KendoUIBehavior implements IJQue
 	}
 
 	/**
-	 * Gets the read-only {@link List} of {@link CommandButton}
+	 * Indicates whether toolbar buttons are supplied.<br>
+	 * <b>Note:</b> if false, the {@code toolbar} option can be used (for built-in buttons only)
+	 * 
+	 * @return {@code true} or {@code false}
+	 */
+	protected boolean hasVisibleToolbarButtons()
+	{
+		return !this.getVisibleToolbarButtons().isEmpty();
+	}
+
+	/**
+	 * Gets the {@link List} of {@link CommandButton}
 	 *
 	 * @return the {@link List} of {@link CommandButton}
 	 */
-	private List<CommandButton> getCommandButtons()
+	protected List<CommandButton> getCommandButtons()
 	{
+		List<CommandButton> buttons = Generics.newArrayList();
+
 		for (IColumn column : this.columns.getObject())
 		{
 			if (column instanceof CommandColumn)
 			{
-				return ((CommandColumn) column).getButtons();
+				buttons.addAll(((CommandColumn) column).getButtons());
 			}
 		}
 
-		return Collections.emptyList();
+		return buttons;
+	}
+
+	/**
+	 * Gets the {@code List} of visible {@link CommandButton}{@code s}
+	 * 
+	 * @return the {@code List} of visible {@code CommandButton}{@code s}
+	 */
+	protected List<CommandButton> getVisibleCommandButtons()
+	{
+		List<CommandButton> buttons = Generics.newArrayList();
+
+		for (CommandButton button : this.getCommandButtons())
+		{
+			if (button.isVisible())
+			{
+				buttons.add(button);
+			}
+		}
+
+		return buttons;
 	}
 
 	/**
@@ -254,7 +276,7 @@ public abstract class DataTableBehavior extends KendoUIBehavior implements IJQue
 	 * 
 	 * @param behaviors the {@code List} of {@code CommandAjaxBehavior}
 	 * @param button the {@code CommandButton}
-	 * @return {@code null} if no {@code CommandAjaxBehavior} if associated to the button
+	 * @return {@code null} if no {@code CommandAjaxBehavior} is associated to the button
 	 */
 	private JQueryAjaxBehavior getCommandAjaxBehavior(CommandButton button, List<CommandAjaxBehavior> behaviors)
 	{
@@ -273,7 +295,7 @@ public abstract class DataTableBehavior extends KendoUIBehavior implements IJQue
 	 * Gets the {@code List} of {@link IColumn}{@code s} as json string
 	 * 
 	 * @param columns the {@code List} of {@link IColumn}{@code s}
-	 * @param behaviors the the {@code List} of {@link CommandAjaxBehavior}{@code s} associated to {@link CommandButton}{@code s}
+	 * @param behaviors the {@code List} of {@link CommandAjaxBehavior}{@code s} associated to {@link CommandButton}{@code s}
 	 * @return the JSON string
 	 */
 	private String getColumnsAsString(List<IColumn> columns, List<CommandAjaxBehavior> behaviors)
@@ -335,7 +357,7 @@ public abstract class DataTableBehavior extends KendoUIBehavior implements IJQue
 			this.setOption("toolbar", this.getVisibleToolbarButtons());
 		}
 
-		// columns //
+		// columns (+ column buttons) //
 		this.setOption("columns", this.getColumnsAsString(columns, component.getBehaviors(CommandAjaxBehavior.class)));
 
 		// schema //
@@ -381,19 +403,20 @@ public abstract class DataTableBehavior extends KendoUIBehavior implements IJQue
 	@Override
 	public void onAjax(AjaxRequestTarget target, JQueryEvent event)
 	{
-		if (event instanceof ClickEvent)
-		{
-			ClickEvent e = (ClickEvent) event;
-
-			e.getButton().onClick(target, e.getValue());
-			this.listener.onClick(target, e.getButton(), e.getValue());
-		}
-
 		if (event instanceof ToolbarClickEvent)
 		{
 			ToolbarClickEvent e = (ToolbarClickEvent) event;
-
+			
+			e.getButton().onClick(target, e.getValues());
 			this.listener.onClick(target, e.getButton(), e.getValues());
+		}
+
+		if (event instanceof CommandClickEvent)
+		{
+			CommandClickEvent e = (CommandClickEvent) event;
+
+			e.getButton().onClick(target, e.getValue());
+			this.listener.onClick(target, e.getButton(), e.getValue());
 		}
 
 		if (event instanceof CancelEvent)
@@ -567,7 +590,7 @@ public abstract class DataTableBehavior extends KendoUIBehavior implements IJQue
 	 * Gets a new {@link JQueryAjaxBehavior} that will be called by a table's button. This method may be overridden to provide additional behaviors
 	 *
 	 * @param source the {@link IJQueryAjaxAware}
-	 * @param button the button that is passed to the behavior so it can be retrieved via the {@link ClickEvent}
+	 * @param button the button that is passed to the behavior so it can be retrieved via the {@link CommandClickEvent}
 	 * @return the {@link JQueryAjaxBehavior}
 	 */
 	protected abstract JQueryAjaxBehavior newCommandAjaxBehavior(IJQueryAjaxAware source, CommandButton button);

@@ -74,35 +74,23 @@ public class ToolbarAjaxBehavior extends JQueryAjaxBehavior
 	@Override
 	protected CallbackParameter[] getCallbackParameters()
 	{
-		return new CallbackParameter[] { CallbackParameter.context("e"), // lf
-				CallbackParameter.resolved("values", getValuesFunction("jQuery(e.target).closest('.k-grid').data('kendoGrid')", this.button.getProperty())) // lf
-		};
+		return new CallbackParameter[] { CallbackParameter.context("e"), CallbackParameter.resolved("values", "values") };
 	}
 
-	/**
-	 * Gets the self executing function statement to retrieve selected values
-	 *
-	 * @param grid the kendoGrid object
-	 * @param property the property used to retrieve the row's object value
-	 *
-	 * @return the function statement
-	 */
-	public static String getValuesFunction(String grid, String property)
+	@Override
+	public CharSequence getCallbackFunctionBody(CallbackParameter... parameters)
 	{
+		String property = this.button.getProperty();
+		String statement = "var values = [];\n";
+
 		if (property != null)
 		{
-			return String.format("function() { " // lf
-					+ "var values = []; " // lf
-					+ "var $grid = %s; " // lf
-					+ "$grid.select().each(" // lf
-					+ "  function(index, row) { " // lf
-					+ "    values.push($grid.dataItem(row)['%s']); " // lf
-					+ "  } " // lf
-					+ "); " // lf
-					+ "return values; }()", grid, property);
+			statement += "var $grid = jQuery(e.target).closest('.k-grid').data('kendoGrid');\n"; // lf
+			statement += "jQuery.each($grid.select(), function(index, row) { values.push($grid.dataItem(row)['" + property + "']); }"; // lf
+			statement += ");\n";
 		}
 
-		return "[]";
+		return statement + super.getCallbackFunctionBody(parameters);
 	}
 
 	// Factories //

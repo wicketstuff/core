@@ -30,6 +30,7 @@ public class HideIfNoRecordBehavior extends DataBoundBehavior
 
 	public HideIfNoRecordBehavior()
 	{
+		// noop
 	}
 
 	@Override

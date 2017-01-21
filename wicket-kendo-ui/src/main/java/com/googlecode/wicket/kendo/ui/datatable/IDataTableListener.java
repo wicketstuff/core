@@ -33,15 +33,6 @@ import com.googlecode.wicket.kendo.ui.datatable.button.ToolbarButton;
 public interface IDataTableListener extends IClusterable
 {
 	/**
-	 * Triggered when a column button is clicked.
-	 *
-	 * @param target the {@link AjaxRequestTarget}
-	 * @param button the button being clicked
-	 * @param value value retrieved from the row, according to the property supplied to the {@link CommandButton} that fired the event
-	 */
-	void onClick(AjaxRequestTarget target, CommandButton button, String value);
-
-	/**
 	 * Triggered when a toolbar button is clicked.
 	 *
 	 * @param target the {@link AjaxRequestTarget}
@@ -49,6 +40,15 @@ public interface IDataTableListener extends IClusterable
 	 * @param values the list of retrieved values
 	 */
 	void onClick(AjaxRequestTarget target, ToolbarButton button, List<String> values);
+
+	/**
+	 * Triggered when a column button is clicked.
+	 *
+	 * @param target the {@link AjaxRequestTarget}
+	 * @param button the button being clicked
+	 * @param value value retrieved from the row, according to the property supplied to the {@link CommandButton} that fired the event
+	 */
+	void onClick(AjaxRequestTarget target, CommandButton button, String value);
 
 	/**
 	 * Triggered when an editing is cancelled

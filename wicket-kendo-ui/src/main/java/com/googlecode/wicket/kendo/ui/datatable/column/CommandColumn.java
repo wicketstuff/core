@@ -36,12 +36,30 @@ public abstract class CommandColumn extends AbstractColumn
 
 	/**
 	 * Constructor
+	 */
+	public CommandColumn()
+	{
+		super("");
+	}
+
+	/**
+	 * Constructor
 	 * 
 	 * @param title the text of the column header
 	 */
 	public CommandColumn(String title)
 	{
 		super(title);
+	}
+
+	/**
+	 * Constructor
+	 * 
+	 * @param width the desired width of the column
+	 */
+	public CommandColumn(int width)
+	{
+		super("", width);
 	}
 
 	/**

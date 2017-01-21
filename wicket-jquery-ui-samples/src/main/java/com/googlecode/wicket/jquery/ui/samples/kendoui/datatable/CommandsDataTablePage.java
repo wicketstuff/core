@@ -1,6 +1,5 @@
 package com.googlecode.wicket.jquery.ui.samples.kendoui.datatable;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -8,6 +7,7 @@ import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.repeater.data.IDataProvider;
 import org.apache.wicket.model.Model;
+import org.apache.wicket.util.lang.Generics;
 
 import com.googlecode.wicket.jquery.core.Options;
 import com.googlecode.wicket.jquery.ui.samples.data.bean.Product;
@@ -19,6 +19,7 @@ import com.googlecode.wicket.kendo.ui.datatable.button.ToolbarButton;
 import com.googlecode.wicket.kendo.ui.datatable.column.CommandColumn;
 import com.googlecode.wicket.kendo.ui.datatable.column.CurrencyPropertyColumn;
 import com.googlecode.wicket.kendo.ui.datatable.column.IColumn;
+import com.googlecode.wicket.kendo.ui.datatable.column.IdPropertyColumn;
 import com.googlecode.wicket.kendo.ui.datatable.column.PropertyColumn;
 import com.googlecode.wicket.kendo.ui.datatable.export.CSVDataExporter;
 import com.googlecode.wicket.kendo.ui.form.button.Button;
@@ -61,22 +62,22 @@ public class CommandsDataTablePage extends AbstractDataTablePage
 			// events //
 
 			/**
-			 * Triggered when a column button is clicked.
-			 */
-			@Override
-			public void onClick(AjaxRequestTarget target, CommandButton button, String value)
-			{
-				this.info(button.getText().getObject() + " #" + value);
-				target.add(feedback);
-			}
-
-			/**
 			 * Triggered when a toolbar button is clicked.
 			 */
 			@Override
 			public void onClick(AjaxRequestTarget target, ToolbarButton button, List<String> values)
 			{
 				this.info(button.getText().getObject() + " " + values);
+				target.add(feedback);
+			}
+
+			/**
+			 * Triggered when a column button is clicked.
+			 */
+			@Override
+			public void onClick(AjaxRequestTarget target, CommandButton button, String value)
+			{
+				this.info(button.getText().getObject() + " #" + value);
 				target.add(feedback);
 			}
 		};
@@ -112,21 +113,21 @@ public class CommandsDataTablePage extends AbstractDataTablePage
 
 	private static List<IColumn> newColumnList()
 	{
-		List<IColumn> columns = new ArrayList<IColumn>();
+		List<IColumn> columns = Generics.newArrayList();
 
-		columns.add(new PropertyColumn("ID", "id", 50));
+		columns.add(new IdPropertyColumn("ID", "id", 50)); /* Important, for being sent back to server */
 		columns.add(new PropertyColumn("Name", "name"));
 		columns.add(new PropertyColumn("Description", "description"));
 		columns.add(new CurrencyPropertyColumn("Price", "price", 70));
 
-		columns.add(new CommandColumn("", 100) {
+		columns.add(new CommandColumn(100) {
 
 			private static final long serialVersionUID = 1L;
 
 			@Override
 			public List<CommandButton> newButtons()
 			{
-				return Arrays.asList(new CommandButton("_edit", Model.of("Edit"), "id"));
+				return Arrays.asList(new CommandButton("_edit", Model.of("Edit")));
 				// 'edit' is a built-in command, that's why it is prefixed by '_'
 			}
 		});

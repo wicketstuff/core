@@ -100,7 +100,7 @@ public class InlineDataTablePage extends AbstractDataTablePage
 		columns.add(new DatePropertyColumn("Created", "date"));
 		columns.add(new CurrencyPropertyColumn("Price", "price", 100));
 
-		columns.add(new CommandColumn("", 170) {
+		columns.add(new CommandColumn(170) {
 
 			private static final long serialVersionUID = 1L;
 
@@ -108,8 +108,10 @@ public class InlineDataTablePage extends AbstractDataTablePage
 			public List<CommandButton> newButtons()
 			{
 				/*
-				 * 'edit' and 'destroy' are built-in buttons/commands, no property has to be to supply #onUpdate(AjaxRequestTarget target, JSONObject object) will be triggered #onDelete(AjaxRequestTarget target, JSONObject object) will be
-				 * triggered #onClick(AjaxRequestTarget, CommandButton, String) will not be triggered
+				 * 'edit' and 'destroy' are built-in buttons/commands, no property has to be to supply 
+				 * #onUpdate(AjaxRequestTarget target, JSONObject object) will be triggered 
+				 * #onDelete(AjaxRequestTarget target, JSONObject object) will be triggered 
+				 * #onClick(AjaxRequestTarget, CommandButton, String) will not be triggered
 				 */
 				return Arrays.asList(new CommandButton("edit", Model.of("Edit")), new CommandButton("destroy", Model.of("Delete")));
 			}

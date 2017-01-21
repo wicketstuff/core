@@ -55,13 +55,24 @@ public abstract class AbstractButton implements IClusterable
 	private final String property;
 
 	/**
-	 * Constructor for built-in commands (no property supplied)
+	 * Constructor with default property to {@code null})
 	 *
 	 * @param name the button's name
 	 */
 	public AbstractButton(String name)
 	{
 		this(name, Model.of(name), null);
+	}
+
+	/**
+	 * Constructor with default property to {@code null})
+	 *
+	 * @param name the button's name
+	 * @param text the button's text
+	 */
+	public AbstractButton(String name, IModel<String> text)
+	{
+		this(name, text, null);
 	}
 
 	/**
@@ -73,17 +84,6 @@ public abstract class AbstractButton implements IClusterable
 	public AbstractButton(String name, String property)
 	{
 		this(name, Model.of(name), property);
-	}
-
-	/**
-	 * Constructor for built-in commands (no property supplied)
-	 *
-	 * @param name the button's name
-	 * @param text the button's text
-	 */
-	public AbstractButton(String name, IModel<String> text)
-	{
-		this(name, text, null);
 	}
 
 	/**
