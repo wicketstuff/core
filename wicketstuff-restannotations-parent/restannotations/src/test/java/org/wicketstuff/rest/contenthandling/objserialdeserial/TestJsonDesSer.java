@@ -16,9 +16,6 @@
  */
 package org.wicketstuff.rest.contenthandling.objserialdeserial;
 
-import java.beans.IntrospectionException;
-import java.lang.reflect.InvocationTargetException;
-
 import org.apache.wicket.ajax.json.JSONObject;
 import org.wicketstuff.rest.contenthandling.IObjectSerialDeserial;
 import org.wicketstuff.rest.resource.RestResourceFullAnnotated;
@@ -39,11 +36,7 @@ public class TestJsonDesSer implements IObjectSerialDeserial<String>
 	public String serializeObject(Object targetObject, String mimeType)
 	{	
 		JSONObject jsonObject;
-		try {
-			jsonObject = new JSONObject(targetObject);
-		} catch (InvocationTargetException | IllegalAccessException | IntrospectionException e) {
-			throw new RuntimeException(e);
-		}
+		jsonObject = new JSONObject(targetObject);
 		
 		return jsonObject.toString();
 	}
