@@ -16,8 +16,6 @@
  */
 package org.wicketstuff.rest.lambda.mounter;
 
-import java.beans.IntrospectionException;
-import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -63,10 +61,6 @@ public class TestApplication extends WebApplication
 	
 	public static String toJson(Object object) 
 	{
-		try {
-			return new JSONObject(object).toString();
-		} catch (InvocationTargetException | IllegalAccessException | IntrospectionException e) {
-			throw new RuntimeException(e);
-		}
+		return new JSONObject(object).toString();
 	}
 }
