@@ -117,37 +117,6 @@ public class GMap extends Panel implements GOverlayContainer
     /**
      * Construct.
      *
-     * Default the header contributor of the component will added and the gmap
-     * will be initiated directly on rendering of the map.
-     *
-     * @param id wicket id
-     * @deprecated since 22th June 2016 Google Maps requires an API-key,
-     * therefore you should use
-     * {@link #GMap(java.lang.String, java.lang.String) } or {@link #GMap(java.lang.String, java.lang.String, java.lang.String)
-     * }
-     * instead of this constructor
-     * @see
-     * http://googlegeodevelopers.blogspot.de/2016/06/building-for-scale-updates-to-google.html
-     */
-    public GMap(final String id)
-    {
-        this(id, new GMapHeaderContributor());
-    }
-
-    /**
-     * @deprecated Since the sensor-parameter is no longer required from Google
-     * {@link #GMap(java.lang.String, java.lang.String) } or {@link #GMap(java.lang.String, java.lang.String, java.lang.String)
-     * }
-     * instead of this constructor
-     */
-    public GMap(final String id, final boolean sensor)
-    {
-        this(id, new GMapHeaderContributor(sensor));
-    }
-
-    /**
-     * Construct.
-     *
      * @param id
      * @param headerContrib
      */

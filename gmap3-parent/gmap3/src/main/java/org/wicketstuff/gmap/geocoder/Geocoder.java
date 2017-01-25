@@ -63,44 +63,30 @@ public class Geocoder implements Serializable
     /**
      * <b>Default Constructor.</b><br/>
      * Create an {@link ObjectMapper}.<br/>
-     * The {@link ObjectMapper} ignore unknown properties when mapping from JSON
+     * The {@link ObjectMapper} ignores unknown properties when mapping from JSON
      * to POJO.<br/>
-     * <b>Use</b> {@link #Geocoder(ObjectMapper)} to customize
-     *
-     * @deprecated since 22th June 2016 Google Maps requires an API-key,
-     * therefore you should use {@link #Geocoder(java.lang.String) } instead of
-     * this constructor
+     * <b>Use</b> {@link #Geocoder(com.fasterxml.jackson.databind.ObjectMapper, java.lang.String) } to customize
+     * 
+     * @param apiKey your Google Maps API-key
      */
-    public Geocoder()
+    public Geocoder(String apiKey)
     {
         objectMapper = new ObjectMapper();
         objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
-    }
-
-    public Geocoder(String apiKey)
-    {
-        this();
         this.apiKey = apiKey;
     }
 
     /**
      * <b>Configuration Constructor.</b><br/>
      * If you have to customize the default {@link ObjectMapper}
-     * 
-     * @see Geocoder#Geocoder()
      *
-     * @deprecated since 22th June 2016 Google Maps requires an API-key,
-     * therefore you should use {@link #Geocoder(com.fasterxml.jackson.databind.ObjectMapper, java.lang.String)
-     * } instead of this constructor
+     * @param mapper your customized ObjectMapper
+     * @param apiKey your Google Maps API-key
+     * @see Geocoder#Geocoder()
      */
-    public Geocoder(ObjectMapper mapper)
-    {
-        this.objectMapper = mapper;
-    }
-
     public Geocoder(ObjectMapper mapper, String apiKey)
     {
-        this(mapper);
+        this.objectMapper = mapper;
         this.apiKey = apiKey;
     }
 
