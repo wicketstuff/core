@@ -75,6 +75,7 @@ public class GMap extends Panel implements GOverlayContainer
     private GLatLngBounds bounds;
     private OverlayListener overlayListener = null;
     private List<GLatLng> markersToShow = new ArrayList<GLatLng>();
+    private boolean jsInitialized = false;
     
     /**
      * If set to true map loading will not produce any JavaScript errors in case
@@ -199,6 +200,7 @@ public class GMap extends Panel implements GOverlayContainer
     public void renderHead(IHeaderResponse response)
     {
         response.render(OnDomReadyHeaderItem.forScript(getJSinit()));
+        jsInitialized = true;
     }
 
     /**
@@ -216,7 +218,7 @@ public class GMap extends Panel implements GOverlayContainer
         overlay.setParent(this);
 
         AjaxRequestTarget target = getRequestCycle().find(AjaxRequestTarget.class);
-        if (target != null && findPage() != null)
+        if (target != null && findPage() != null && jsInitialized)
         {
             target.appendJavaScript(overlay.getJS());
         }
@@ -241,7 +243,7 @@ public class GMap extends Panel implements GOverlayContainer
         }
 
         AjaxRequestTarget target = RequestCycle.get().find(AjaxRequestTarget.class);
-        if (target != null && findPage() != null)
+        if (target != null && findPage() != null && jsInitialized)
         {
             target.appendJavaScript(overlay.getJSremove());
         }
@@ -266,7 +268,7 @@ public class GMap extends Panel implements GOverlayContainer
         }
         overlays.clear();
         AjaxRequestTarget target = getRequestCycle().find(AjaxRequestTarget.class);
-        if (target != null && findPage() != null)
+        if (target != null && findPage() != null && jsInitialized)
         {
             target.appendJavaScript(getJSinvoke("clearOverlays()"));
         }
@@ -320,7 +322,7 @@ public class GMap extends Panel implements GOverlayContainer
             draggingEnabled = enabled;
 
             AjaxRequestTarget target = getRequestCycle().find(AjaxRequestTarget.class);
-            if (target != null && findPage() != null)
+            if (target != null && findPage() != null && jsInitialized)
             {
                 target.appendJavaScript(getJSsetDraggingEnabled(enabled));
             }
@@ -348,7 +350,7 @@ public class GMap extends Panel implements GOverlayContainer
             doubleClickZoomEnabled = enabled;
 
             AjaxRequestTarget target = RequestCycle.get().find(AjaxRequestTarget.class);
-            if (target != null && findPage() != null)
+            if (target != null && findPage() != null && jsInitialized)
             {
                 target.appendJavaScript(getJSsetDoubleClickZoomEnabled(enabled));
             }
@@ -377,7 +379,7 @@ public class GMap extends Panel implements GOverlayContainer
             scrollWheelZoomEnabled = enabled;
 
             AjaxRequestTarget target = getRequestCycle().find(AjaxRequestTarget.class);
-            if (target != null && findPage() != null)
+            if (target != null && findPage() != null && jsInitialized)
             {
                 target.appendJavaScript(getJSsetScrollWheelZoomEnabled(enabled));
             }
@@ -417,7 +419,7 @@ public class GMap extends Panel implements GOverlayContainer
             streetViewControlEnabled = enabled;
 
             AjaxRequestTarget target = getRequestCycle().find(AjaxRequestTarget.class);
-            if (target != null && findPage() != null)
+            if (target != null && findPage() != null && jsInitialized)
             {
                 target.appendJavaScript(getJSsetStreetViewControlEnabled(enabled));
             }
@@ -446,7 +448,7 @@ public class GMap extends Panel implements GOverlayContainer
             this.zoomControlEnabled = enabled;
 
             AjaxRequestTarget target = getRequestCycle().find(AjaxRequestTarget.class);
-            if (target != null && findPage() != null)
+            if (target != null && findPage() != null && jsInitialized)
             {
                 target.appendJavaScript(getJSsetZoomControlEnabled(enabled));
             }
@@ -477,7 +479,7 @@ public class GMap extends Panel implements GOverlayContainer
             this.mapTypeControlEnabled = enabled;
 
             AjaxRequestTarget target = getRequestCycle().find(AjaxRequestTarget.class);
-            if (target != null && findPage() != null)
+            if (target != null && findPage() != null && jsInitialized)
             {
                 target.appendJavaScript(getJSsetMapTypeControlEnabled(enabled));
             }
@@ -506,7 +508,7 @@ public class GMap extends Panel implements GOverlayContainer
             this.scaleControlEnabled = enabled;
 
             AjaxRequestTarget target = getRequestCycle().find(AjaxRequestTarget.class);
-            if (target != null && findPage() != null)
+            if (target != null && findPage() != null && jsInitialized)
             {
                 target.appendJavaScript(getJSsetScaleControlEnabled(enabled));
             }
@@ -535,7 +537,7 @@ public class GMap extends Panel implements GOverlayContainer
             this.panControlEnabled = enabled;
 
             AjaxRequestTarget target = getRequestCycle().find(AjaxRequestTarget.class);
-            if (target != null && findPage() != null)
+            if (target != null && findPage() != null && jsInitialized)
             {
                 target.appendJavaScript(getJSsetPanControlEnabled(enabled));
             }
@@ -563,7 +565,7 @@ public class GMap extends Panel implements GOverlayContainer
             this.mapType = mapType;
 
             AjaxRequestTarget target = RequestCycle.get().find(AjaxRequestTarget.class);
-            if (target != null && findPage() != null)
+            if (target != null && findPage() != null && jsInitialized)
             {
                 target.appendJavaScript(mapType.getJSsetMapType(GMap.this));
             }
@@ -605,7 +607,7 @@ public class GMap extends Panel implements GOverlayContainer
             this.zoom = level;
 
             AjaxRequestTarget target = getRequestCycle().find(AjaxRequestTarget.class);
-            if (target != null && findPage() != null)
+            if (target != null && findPage() != null && jsInitialized)
             {
                 target.appendJavaScript(getJSsetZoom(zoom));
             }
@@ -623,7 +625,7 @@ public class GMap extends Panel implements GOverlayContainer
             this.minZoom = level >= 0 ? level : 0;
 
             AjaxRequestTarget target = getRequestCycle().find(AjaxRequestTarget.class);
-            if (target != null && findPage() != null)
+            if (target != null && findPage() != null && jsInitialized)
             {
                 target.appendJavaScript(getJSsetMinZoom(minZoom));
             }
@@ -641,7 +643,7 @@ public class GMap extends Panel implements GOverlayContainer
             this.maxZoom = level >= 0 ? level : 0;
 
             AjaxRequestTarget target = getRequestCycle().find(AjaxRequestTarget.class);
-            if (target != null && findPage() != null)
+            if (target != null && findPage() != null && jsInitialized)
             {
                 target.appendJavaScript(getJSsetMaxZoom(maxZoom));
             }
@@ -669,7 +671,7 @@ public class GMap extends Panel implements GOverlayContainer
             this.center = center;
 
             AjaxRequestTarget target = RequestCycle.get().find(AjaxRequestTarget.class);
-            if (target != null && findPage() != null)
+            if (target != null && findPage() != null && jsInitialized)
             {
                 target.appendJavaScript(getJSsetCenter(center));
             }
@@ -690,7 +692,7 @@ public class GMap extends Panel implements GOverlayContainer
             this.center = center;
 
             AjaxRequestTarget target = getRequestCycle().find(AjaxRequestTarget.class);
-            if (target != null && findPage() != null)
+            if (target != null && findPage() != null && jsInitialized)
             {
                 target.appendJavaScript(getJSpanTo(center));
             }
