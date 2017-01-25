@@ -104,7 +104,7 @@ public class HomePage extends WicketExamplePage
         add(map);
 
         lbInfoWindow = new Label("infoWindow", "openInfoWindow");
-        lbInfoWindow.add(new AjaxEventBehavior("onclick")
+        lbInfoWindow.add(new AjaxEventBehavior("click")
         {
             private static final long serialVersionUID = 1L;
 

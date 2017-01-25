@@ -112,7 +112,7 @@ public class HomePage extends WicketExamplePage
                 return map.getBehaviors().contains(moveEndBehavior);
             }
         });
-        enabledLabel.add(new AjaxEventBehavior("onclick")
+        enabledLabel.add(new AjaxEventBehavior("click")
         {
             private static final long serialVersionUID = 1L;
 

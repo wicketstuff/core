@@ -130,7 +130,7 @@ public class HomePage extends WicketExamplePage
                     return model.getObject().getListeners().containsKey(GEvent.dragend);
                 }
             });
-            dragendLabel.add(new AjaxEventBehavior("onclick")
+            dragendLabel.add(new AjaxEventBehavior("click")
             {
                 private static final long serialVersionUID = 1L;
 
