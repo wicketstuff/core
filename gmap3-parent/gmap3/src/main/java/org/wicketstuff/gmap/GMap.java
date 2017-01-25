@@ -76,7 +76,7 @@ public class GMap extends Panel implements GOverlayContainer
     private GLatLngBounds bounds;
     private OverlayListener overlayListener = null;
     private List<GLatLng> markersToShow = new ArrayList<GLatLng>();
-	private boolean jsInitialized = false;
+    private boolean jsInitialized = false;
     
     /**
      * If set to true map loading will not produce any JavaScript errors in case
@@ -201,7 +201,7 @@ public class GMap extends Panel implements GOverlayContainer
     public void renderHead(IHeaderResponse response)
     {
         response.render(OnDomReadyHeaderItem.forScript(getJSinit()));
-		jsInitialized = true;
+        jsInitialized = true;
     }
 
     /**
