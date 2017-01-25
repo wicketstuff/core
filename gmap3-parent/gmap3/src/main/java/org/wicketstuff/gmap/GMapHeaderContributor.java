@@ -80,7 +80,7 @@ public class GMapHeaderContributor extends Behavior
      * @param scheme http or https?
      * @param apiKey your Google Maps API-key
      */
-    public GMapHeaderContributor(final String scheme, final String apiKey)
+        public GMapHeaderContributor(final String scheme, final String apiKey)
     {
         this.scheme = scheme;
         this.apiKey = apiKey;
