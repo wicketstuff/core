@@ -21,25 +21,31 @@ import org.apache.wicket.util.string.Strings;
 
 /**
  * Base class for all example pages.
- * 
+ *
  * @author Jonathan Locke
  */
 public class WicketExamplePage extends WebPage
 {
-	/**
-	 * Constructor
-	 */
-	public WicketExamplePage()
-	{
-		final String packageName = getClass().getPackage().getName();
-		add(new WicketExampleHeader("mainNavigation", Strings.afterLast(packageName, '.'), this));
-		explain();
-	}
 
-	/**
-	 * Override base method to provide an explanation
-	 */
-	protected void explain()
-	{
-	}
+    /**
+     * Set here your own API key which is used across all examples.
+     */
+    public static String API_KEY = "YOUR_API_KEY";
+
+    /**
+     * Constructor
+     */
+    public WicketExamplePage()
+    {
+        final String packageName = getClass().getPackage().getName();
+        add(new WicketExampleHeader("mainNavigation", Strings.afterLast(packageName, '.'), this));
+        explain();
+    }
+
+    /**
+     * Override base method to provide an explanation
+     */
+    protected void explain()
+    {
+    }
 }

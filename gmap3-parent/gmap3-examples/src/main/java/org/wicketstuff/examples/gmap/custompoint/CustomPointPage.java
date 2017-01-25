@@ -19,7 +19,7 @@ public class CustomPointPage extends WicketExamplePage
 
     public CustomPointPage()
     {
-        GMap map = new GMap("map");
+        GMap map = new GMap("map", WicketExamplePage.API_KEY);
         map.setCenter(new GLatLng(52.37649, 4.888573));
         add(map);
 

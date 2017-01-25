@@ -28,7 +28,7 @@ public class RectanglesPage extends WicketExamplePage
 		add(feedback);
 		feedback.setOutputMarkupId(true);
 
-		GMap map = new GMap("topPanel");
+		GMap map = new GMap("topPanel", WicketExamplePage.API_KEY);
 		GRectangle rectangle = new GRectangle(new GLatLngBounds(new GLatLng(37.35, -121.9), new GLatLng(37.45, -121.8)), "#000000", 4, 0.7f, "#E9601A", 0.7f);
 		rectangle.setEditable(true);
 		rectangle.setDraggable(true);

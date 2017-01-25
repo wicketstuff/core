@@ -21,7 +21,7 @@ public class HomePage extends WicketExamplePage
 
     public HomePage()
     {
-        final GMap topMap = new GMap("topPanel");
+        final GMap topMap = new GMap("topPanel", WicketExamplePage.API_KEY);
         add(topMap);
 
         GMarkerOptions options = new GMarkerOptions(topMap, topMap.getCenter()).draggable(true);

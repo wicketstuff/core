@@ -15,7 +15,7 @@ public class HomePage extends WicketExamplePage
 
 	public HomePage()
 	{
-		final GMap map = new GMap("map");
+		final GMap map = new GMap("map", WicketExamplePage.API_KEY);
 		map.setOutputMarkupId( true );
 		add(map);
 

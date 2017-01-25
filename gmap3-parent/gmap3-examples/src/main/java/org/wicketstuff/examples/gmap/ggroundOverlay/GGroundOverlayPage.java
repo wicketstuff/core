@@ -32,7 +32,7 @@ public class GGroundOverlayPage extends WicketExamplePage
 
     public GGroundOverlayPage()
     {
-        map = new GMap("map");
+        map = new GMap("map", WicketExamplePage.API_KEY);
         map.setCenter(new GLatLng(40.740, -74.18));
         map.setZoom(12);
 

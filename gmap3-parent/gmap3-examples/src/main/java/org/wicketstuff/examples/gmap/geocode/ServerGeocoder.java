@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.net.URLConnection;
 import org.apache.wicket.util.io.Streams;
+import org.wicketstuff.examples.gmap.WicketExamplePage;
 import org.wicketstuff.gmap.api.GLatLng;
 import org.wicketstuff.gmap.geocoder.Geocoder;
 import org.wicketstuff.gmap.geocoder.GeocoderException;
@@ -18,7 +19,7 @@ public class ServerGeocoder
 
     public ServerGeocoder()
     {
-        this.geocoder = new Geocoder();
+        this.geocoder = new Geocoder(WicketExamplePage.API_KEY);
     }
 
     /**

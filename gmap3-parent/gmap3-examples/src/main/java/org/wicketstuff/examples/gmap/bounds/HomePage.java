@@ -19,7 +19,7 @@ public class HomePage extends WicketExamplePage
 
     public HomePage()
     {
-        final GMap map = new GMap("topPanel");
+        final GMap map = new GMap("topPanel", WicketExamplePage.API_KEY);
         add(map);
         
         List<GLatLng> markersToShow = new ArrayList<GLatLng>();
@@ -49,8 +49,8 @@ public class HomePage extends WicketExamplePage
         // ###############################################
         // e.g. to center and fit zoom of an address
         // ###############################################
-        final GMap mapCenterAddress = new GMap("mapCenterAddress");
-        Geocoder gecoder = new Geocoder();
+        final GMap mapCenterAddress = new GMap("mapCenterAddress", WicketExamplePage.API_KEY);
+        Geocoder gecoder = new Geocoder(WicketExamplePage.API_KEY);
         try
         {
             gecoder.centerAndFitZoomForAdress(mapCenterAddress, "Frankfurt am Main");

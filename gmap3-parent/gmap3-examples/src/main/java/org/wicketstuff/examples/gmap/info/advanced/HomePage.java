@@ -60,7 +60,7 @@ public class HomePage extends WicketExamplePage
             }
         };
 
-        map = new GMap("bottomPanel");
+        map = new GMap("bottomPanel", WicketExamplePage.API_KEY);
         map.setOutputMarkupId(true);
         map.setMapType(GMapType.SATELLITE);
         map.setScrollWheelZoomEnabled(true);

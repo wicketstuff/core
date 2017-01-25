@@ -20,7 +20,7 @@ public class HomePage extends WicketExamplePage
 
     public HomePage()
     {
-        final GMap map = new GMap("topPanel");
+        final GMap map = new GMap("topPanel", WicketExamplePage.API_KEY);
         add(map);
         map.add(new ClickListener()
         {

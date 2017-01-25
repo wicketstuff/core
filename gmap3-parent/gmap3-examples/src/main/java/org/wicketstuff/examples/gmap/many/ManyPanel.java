@@ -4,6 +4,7 @@ import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.markup.html.AjaxLink;
 import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.markup.html.panel.Panel;
+import org.wicketstuff.examples.gmap.WicketExamplePage;
 import org.wicketstuff.gmap.GMap;
 import org.wicketstuff.gmap.api.GMapType;
 
@@ -17,7 +18,7 @@ public abstract class ManyPanel extends Panel
     public ManyPanel(String id)
     {
         super(id);
-        gMap = new GMap("gMap");
+        gMap = new GMap("gMap", WicketExamplePage.API_KEY);
         gMap.setZoom(7);
         gMap.setOutputMarkupId(true);
         add(gMap);
