@@ -15,7 +15,8 @@
             CURRENT_PAGE: 'Wicket.PDFJS.CurrentPage',
             TOTAL_PAGES: 'Wicket.PDFJS.TotalPages',
             NEXT_PAGE: 'Wicket.PDFJS.NextPage',
-            PREVIOUS_PAGE: 'Wicket.PDFJS.PreviousPage'
+            PREVIOUS_PAGE: 'Wicket.PDFJS.PreviousPage',
+            GOTO_PAGE: 'Wicket.PDFJS.GoToPage'
         },
 
         init: function (config) {
@@ -100,6 +101,20 @@
                     return;
                 }
                 pageNum++;
+                queueRenderPage(pageNum);
+            });
+
+            /**
+             * Displays selected page
+             */
+            Wicket.Event.subscribe(WicketStuff.PDFJS.Topic.GOTO_PAGE, function (jqEvent, data) {
+                if (config.canvasId !== data.canvasId) {
+                    return;
+                }
+                if (data.page > pdfDoc.numPages || data.page < 1 || data.page === pageNum) {
+                    return;
+                }
+                pageNum = data.page;
                 queueRenderPage(pageNum);
             });
 
