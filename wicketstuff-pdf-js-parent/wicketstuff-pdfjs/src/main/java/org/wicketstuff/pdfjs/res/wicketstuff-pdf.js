@@ -15,7 +15,10 @@
             CURRENT_PAGE: 'Wicket.PDFJS.CurrentPage',
             TOTAL_PAGES: 'Wicket.PDFJS.TotalPages',
             NEXT_PAGE: 'Wicket.PDFJS.NextPage',
-            PREVIOUS_PAGE: 'Wicket.PDFJS.PreviousPage'
+            PREVIOUS_PAGE: 'Wicket.PDFJS.PreviousPage',
+            GOTO_PAGE: 'Wicket.PDFJS.GoToPage',
+            ZOOM_IN: 'Wicket.PDFJS.ZoomIn',
+            ZOOM_OUT: 'Wicket.PDFJS.ZoomOut',
         },
 
         init: function (config) {
@@ -38,6 +41,10 @@
                 scale = config.initialScale || 0.8,
                 canvas = document.getElementById(config.canvasId),
                 ctx = canvas.getContext('2d');
+
+            var MIN_SCALE = 0.25;
+            var MAX_SCALE = 10.0;
+            var DEFAULT_SCALE_DELTA = 1.1;
 
             /**
              * Get page info from document, resize canvas accordingly, and render page.
@@ -81,6 +88,27 @@
                 }
             }
 
+            function zoomInOnce() {
+                var newScale = (scale * DEFAULT_SCALE_DELTA).toFixed(2);
+                newScale = Math.ceil(newScale * 10) / 10;
+                newScale = Math.min(MAX_SCALE, newScale);
+                return newScale;
+            }
+
+            function zoomOutOnce() {
+                var newScale = (scale / DEFAULT_SCALE_DELTA).toFixed(2);
+                newScale = Math.floor(newScale * 10) / 10;
+                newScale = Math.max(MIN_SCALE, newScale);
+                return newScale;
+            }
+
+            function renderIfRescaled(newScale){
+                if (newScale !== scale){
+                    scale = newScale;
+                    queueRenderPage(pageNum);
+                }
+            }
+
             /**
              * Displays previous page.
              */
@@ -102,6 +130,40 @@
                 pageNum++;
                 queueRenderPage(pageNum);
             });
+
+            /**
+             * Displays selected page
+             */
+            Wicket.Event.subscribe(WicketStuff.PDFJS.Topic.GOTO_PAGE, function (jqEvent, data) {
+                if (config.canvasId !== data.canvasId) {
+                    return;
+                }
+                if (!data.page || data.page > pdfDoc.numPages || data.page < 1 || data.page === pageNum) {
+                    return;
+                }
+                pageNum = data.page;
+                queueRenderPage(pageNum);
+            });
+
+            /**
+              * Zoom in current page
+              */
+            Wicket.Event.subscribe(WicketStuff.PDFJS.Topic.ZOOM_IN, function (jqEvent, data) {
+                 if (config.canvasId !== data.canvasId) {
+                    return;
+                 }
+                 renderIfRescaled(zoomInOnce());
+            });
+
+             /**
+               * Zoom out current page
+               */
+             Wicket.Event.subscribe(WicketStuff.PDFJS.Topic.ZOOM_OUT, function (jqEvent, data) {
+                  if (config.canvasId !== data.canvasId) {
+                     return;
+                  }
+                  renderIfRescaled(zoomOutOnce());
+             });
 
             /**
              * Asynchronously downloads PDF.

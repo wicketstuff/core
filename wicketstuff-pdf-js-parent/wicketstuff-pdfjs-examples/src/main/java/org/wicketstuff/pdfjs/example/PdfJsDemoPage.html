@@ -12,8 +12,10 @@
 		<div>
 			<button id="prev">Previous</button>
 			<button id="next">Next</button>
+			<button id="zoomIn">Zoom In</button>
+			<button id="zoomOut">Zoom Out</button>
 			&nbsp; &nbsp;
-			<span>Page: <span id="page_num"></span> / <span id="page_count"></span></span>
+			<span>Page: <input id="page_num"></input> / <span id="page_count"></span></span>
 		</div>
 
 		<script type="text/javascript">
@@ -26,8 +28,18 @@
 				$('#next').click(function () {
 					Wicket.Event.publish(WicketStuff.PDFJS.Topic.NEXT_PAGE, {"canvasId": canvasId});
 				});
+				$('#zoomIn').click(function () {
+					Wicket.Event.publish(WicketStuff.PDFJS.Topic.ZOOM_IN, {"canvasId": canvasId});
+				});
+				$('#zoomOut').click(function () {
+					Wicket.Event.publish(WicketStuff.PDFJS.Topic.ZOOM_OUT, {"canvasId": canvasId});
+				});
+				 $('#page_num').change(function () {
+					var page = parseInt($(this).val());
+					Wicket.Event.publish(WicketStuff.PDFJS.Topic.GOTO_PAGE, {"canvasId": canvasId, "page" : page});
+				});
                 Wicket.Event.subscribe(WicketStuff.PDFJS.Topic.CURRENT_PAGE, function (jqEvent, pageNumber, data) {
-                    $('#'+data.canvasId).closest('.pdfPanel').siblings().find('#page_num').text(pageNumber);
+                    $('#'+data.canvasId).closest('.pdfPanel').siblings().find('#page_num').val(pageNumber);
                 });
 				Wicket.Event.subscribe(WicketStuff.PDFJS.Topic.TOTAL_PAGES, function (jqEvent, total, data) {
 					$('#'+data.canvasId).closest('.pdfPanel').siblings().find('#page_count').text(total);
