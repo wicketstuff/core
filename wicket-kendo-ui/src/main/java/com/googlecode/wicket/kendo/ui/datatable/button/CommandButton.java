@@ -113,7 +113,7 @@ public class CommandButton extends AbstractButton
 	}
 
 	/**
-	 * Gets the CSS class to be applied on the button<br/>
+	 * Gets the CSS class to be applied on the button<br>
 	 * <b>Caution:</b> {@code super.getCSSClass()} should be called when overridden
 	 *
 	 * @return the CSS class

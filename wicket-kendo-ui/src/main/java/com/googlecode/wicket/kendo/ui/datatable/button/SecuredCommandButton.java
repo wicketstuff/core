@@ -38,6 +38,7 @@ public class SecuredCommandButton extends CommandButton
 	 * Constructor for built-in commands (no property supplied)
 	 *
 	 * @param name the button's name
+	 * @param roles list of roles allowed to enable the button
 	 */
 	public SecuredCommandButton(String name, String... roles)
 	{
@@ -48,6 +49,8 @@ public class SecuredCommandButton extends CommandButton
 	 * Constructor for built-in commands (no property supplied)
 	 *
 	 * @param name the button's name
+	 * @param roles list of roles allowed to enable the button
+	 * @param provider the {@link IJQuerySecurityProvider}
 	 */
 	public SecuredCommandButton(String name, String[] roles, IJQuerySecurityProvider provider)
 	{
@@ -62,6 +65,7 @@ public class SecuredCommandButton extends CommandButton
 	 *
 	 * @param name the button's name
 	 * @param property the property used to retrieve the row's object value
+	 * @param roles list of roles allowed to enable the button
 	 */
 	public SecuredCommandButton(String name, String property, String[] roles)
 	{
@@ -73,6 +77,8 @@ public class SecuredCommandButton extends CommandButton
 	 *
 	 * @param name the button's name
 	 * @param property the property used to retrieve the row's object value
+	 * @param roles list of roles allowed to enable the button
+	 * @param provider the {@link IJQuerySecurityProvider}
 	 */
 	public SecuredCommandButton(String name, String property, String[] roles, IJQuerySecurityProvider provider)
 	{
@@ -87,6 +93,7 @@ public class SecuredCommandButton extends CommandButton
 	 *
 	 * @param name the button's name
 	 * @param text the button's text
+	 * @param roles list of roles allowed to enable the button
 	 */
 	public SecuredCommandButton(String name, IModel<String> text, String[] roles)
 	{
@@ -98,6 +105,8 @@ public class SecuredCommandButton extends CommandButton
 	 *
 	 * @param name the button's name
 	 * @param text the button's text
+	 * @param roles list of roles allowed to enable the button
+	 * @param provider the {@link IJQuerySecurityProvider}
 	 */
 	public SecuredCommandButton(String name, IModel<String> text, String[] roles, IJQuerySecurityProvider provider)
 	{
@@ -113,6 +122,7 @@ public class SecuredCommandButton extends CommandButton
 	 * @param name the button's name
 	 * @param text the button's text
 	 * @param property the property used to retrieve the row's object value
+	 * @param roles list of roles allowed to enable the button
 	 */
 	public SecuredCommandButton(String name, IModel<String> text, String property, String[] roles)
 	{
@@ -125,6 +135,8 @@ public class SecuredCommandButton extends CommandButton
 	 * @param name the button's name
 	 * @param text the button's text
 	 * @param property the property used to retrieve the row's object value
+	 * @param roles list of roles allowed to enable the button
+	 * @param provider the {@link IJQuerySecurityProvider}
 	 */
 	public SecuredCommandButton(String name, IModel<String> text, String property, String[] roles, IJQuerySecurityProvider provider)
 	{
