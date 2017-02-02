@@ -16,7 +16,7 @@
  */
 package com.googlecode.wicket.kendo.ui.datatable.editor;
 
-import org.apache.wicket.ajax.json.JSONArray;
+import org.json.JSONArray;
 
 import com.googlecode.wicket.jquery.core.utils.JsonUtils;
 

@@ -16,7 +16,7 @@
  */
 package com.googlecode.wicket.jquery.core.utils;
 
-import org.apache.wicket.ajax.json.JSONObject;
+import org.json.JSONObject;
 
 /**
  * Utility class for {@link StringBuilder}

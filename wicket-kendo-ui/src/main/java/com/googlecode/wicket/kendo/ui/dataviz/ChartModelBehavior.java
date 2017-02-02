@@ -18,9 +18,9 @@ package com.googlecode.wicket.kendo.ui.dataviz;
 
 import java.util.List;
 
-import org.apache.wicket.ajax.json.JSONArray;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.request.IRequestParameters;
+import org.json.JSONArray;
 
 import com.googlecode.wicket.jquery.core.behavior.AjaxCallbackBehavior;
 import com.googlecode.wicket.kendo.ui.scheduler.SchedulerModel;

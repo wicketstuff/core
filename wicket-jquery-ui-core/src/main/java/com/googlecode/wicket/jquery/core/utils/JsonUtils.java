@@ -2,8 +2,8 @@ package com.googlecode.wicket.jquery.core.utils;
 
 import java.util.List;
 
-import org.apache.wicket.ajax.json.JSONArray;
 import org.apache.wicket.util.lang.Generics;
+import org.json.JSONArray;
 
 /**
  * Utility class for json objects

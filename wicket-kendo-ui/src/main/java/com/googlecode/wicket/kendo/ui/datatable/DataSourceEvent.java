@@ -16,7 +16,7 @@
  */
 package com.googlecode.wicket.kendo.ui.datatable;
 
-import org.apache.wicket.ajax.json.JSONObject;
+import org.json.JSONObject;
 
 import com.googlecode.wicket.jquery.core.JQueryEvent;
 import com.googlecode.wicket.jquery.core.utils.RequestCycleUtils;
