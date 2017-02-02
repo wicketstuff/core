@@ -16,7 +16,7 @@
  */
 package com.googlecode.wicket.jquery.core.renderer;
 
-import org.apache.wicket.ajax.json.JSONObject;
+import org.json.JSONObject;
 
 /**
  * Provides a Json {@link TextRenderer}

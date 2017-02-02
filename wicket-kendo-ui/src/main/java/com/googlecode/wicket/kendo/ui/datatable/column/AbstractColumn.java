@@ -19,10 +19,10 @@ package com.googlecode.wicket.kendo.ui.datatable.column;
 import java.util.Collections;
 import java.util.List;
 
-import org.apache.wicket.ajax.json.JSONObject;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.util.lang.Generics;
+import org.json.JSONObject;
 
 import com.googlecode.wicket.jquery.core.Options;
 import com.googlecode.wicket.jquery.core.utils.BuilderUtils;

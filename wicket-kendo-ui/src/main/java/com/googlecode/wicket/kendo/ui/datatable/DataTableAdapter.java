@@ -19,7 +19,7 @@ package com.googlecode.wicket.kendo.ui.datatable;
 import java.util.List;
 
 import org.apache.wicket.ajax.AjaxRequestTarget;
-import org.apache.wicket.ajax.json.JSONObject;
+import org.json.JSONObject;
 
 import com.googlecode.wicket.kendo.ui.datatable.button.CommandButton;
 import com.googlecode.wicket.kendo.ui.datatable.button.ToolbarButton;

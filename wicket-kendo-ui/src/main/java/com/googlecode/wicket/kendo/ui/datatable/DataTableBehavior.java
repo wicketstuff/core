@@ -254,7 +254,7 @@ public abstract class DataTableBehavior extends KendoUIBehavior implements IJQue
 	 * @param behaviors the {@code List} of {@code CommandAjaxBehavior}{@code s} which may be bound to buttons
 	 * @return the {@code List} of visible {@code CommandButton} as json string
 	 */
-	private List<String> getCommandButtonsAsString(CommandColumn column, List<CommandAjaxBehavior> behaviors)
+	private static List<String> getCommandButtonsAsString(CommandColumn column, List<CommandAjaxBehavior> behaviors)
 	{
 		List<String> list = Generics.newArrayList();
 
@@ -262,7 +262,7 @@ public abstract class DataTableBehavior extends KendoUIBehavior implements IJQue
 		{
 			if (button.isVisible())
 			{
-				JQueryAjaxBehavior behavior = this.getCommandAjaxBehavior(button, behaviors);
+				JQueryAjaxBehavior behavior = getCommandAjaxBehavior(button, behaviors);
 
 				list.add(button.toString(behavior));
 			}
@@ -278,7 +278,7 @@ public abstract class DataTableBehavior extends KendoUIBehavior implements IJQue
 	 * @param button the {@code CommandButton}
 	 * @return {@code null} if no {@code CommandAjaxBehavior} is associated to the button
 	 */
-	private JQueryAjaxBehavior getCommandAjaxBehavior(CommandButton button, List<CommandAjaxBehavior> behaviors)
+	private static JQueryAjaxBehavior getCommandAjaxBehavior(CommandButton button, List<CommandAjaxBehavior> behaviors)
 	{
 		for (CommandAjaxBehavior behavior : behaviors)
 		{
@@ -298,7 +298,7 @@ public abstract class DataTableBehavior extends KendoUIBehavior implements IJQue
 	 * @param behaviors the {@code List} of {@link CommandAjaxBehavior}{@code s} associated to {@link CommandButton}{@code s}
 	 * @return the JSON string
 	 */
-	private String getColumnsAsString(List<IColumn> columns, List<CommandAjaxBehavior> behaviors)
+	private static String getColumnsAsString(List<IColumn> columns, List<CommandAjaxBehavior> behaviors)
 	{
 		StringBuilder builder = new StringBuilder("[ ");
 
@@ -319,7 +319,7 @@ public abstract class DataTableBehavior extends KendoUIBehavior implements IJQue
 				// buttons //
 				builder.append(", ");
 				builder.append(Options.QUOTE).append("command").append(Options.QUOTE).append(": ");
-				builder.append(this.getCommandButtonsAsString((CommandColumn) column, behaviors));
+				builder.append(getCommandButtonsAsString((CommandColumn) column, behaviors));
 			}
 
 			builder.append(" }");
@@ -358,7 +358,7 @@ public abstract class DataTableBehavior extends KendoUIBehavior implements IJQue
 		}
 
 		// columns (+ column buttons) //
-		this.setOption("columns", this.getColumnsAsString(columns, component.getBehaviors(CommandAjaxBehavior.class)));
+		this.setOption("columns", getColumnsAsString(columns, component.getBehaviors(CommandAjaxBehavior.class)));
 
 		// schema //
 		Options schema = new Options();
