@@ -1,0 +1,13 @@
+.pdfPanel {
+      width : 400px;
+      height : 600px;
+      position : relative;
+}
+
+body[pdf-js-printing] > :not(#pdf-js-print-container) {
+    display: none;
+}
+
+body[pdf-js-printing] > #pdf-js-print-container {
+    display: block;
+}
