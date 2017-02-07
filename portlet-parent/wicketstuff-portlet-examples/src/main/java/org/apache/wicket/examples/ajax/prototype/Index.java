@@ -24,7 +24,7 @@ import org.apache.wicket.request.IRequestHandler;
 import org.apache.wicket.request.Url;
 import org.apache.wicket.request.cycle.RequestCycle;
 import org.apache.wicket.core.request.handler.ComponentRenderingRequestHandler;
-import org.apache.wicket.core.request.handler.ListenerInterfaceRequestHandler;
+import org.apache.wicket.core.request.handler.ListenerRequestHandler;
 import org.apache.wicket.core.request.handler.PageAndComponentProvider;
 import org.apache.wicket.util.string.AppendingStringBuffer;
 
@@ -79,7 +79,7 @@ public class Index extends WicketExamplePage
 			@Override
 			protected String getOnClickScript(CharSequence url)
 			{
-				IRequestHandler handler = new ListenerInterfaceRequestHandler(
+				IRequestHandler handler = new ListenerRequestHandler(
 					new PageAndComponentProvider(getPage(), this));
 				Url componentUrl = RequestCycle.get().mapUrlFor(handler);
 				componentUrl.addQueryParameter("anticache", Math.random());

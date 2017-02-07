@@ -213,7 +213,7 @@ public class ProgressButton extends AjaxFallbackButton {
         }
 
         @Override
-        public boolean canCallListenerInterface(Component component) {
+        public boolean canCallListener(Component component) {
             // Skip check for the component being enabled
             return component.isVisibleInHierarchy();
         }

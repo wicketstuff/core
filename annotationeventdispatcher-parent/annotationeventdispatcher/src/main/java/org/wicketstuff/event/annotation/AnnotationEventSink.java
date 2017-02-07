@@ -184,7 +184,7 @@ class AnnotationEventSink
 		if (obj instanceof Component)
 		{
 			Component c = (Component) obj;
-			canCall = c.canCallListenerInterface();
+			canCall = c.canCallListener();
 		}
 		return canCall;
 	}

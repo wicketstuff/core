@@ -29,9 +29,9 @@ import javax.servlet.http.HttpServletRequest;
 import org.apache.wicket.Application;
 import org.apache.wicket.IRequestListener;
 import org.apache.wicket.SystemMapper;
-import org.apache.wicket.core.request.handler.BookmarkableListenerInterfaceRequestHandler;
+import org.apache.wicket.core.request.handler.BookmarkableListenerRequestHandler;
 import org.apache.wicket.core.request.handler.BookmarkablePageRequestHandler;
-import org.apache.wicket.core.request.handler.ListenerInterfaceRequestHandler;
+import org.apache.wicket.core.request.handler.ListenerRequestHandler;
 import org.apache.wicket.core.request.handler.RenderPageRequestHandler;
 import org.apache.wicket.core.request.mapper.AbstractComponentMapper;
 import org.apache.wicket.portlet.request.mapper.PortletSystemMapper;
@@ -105,15 +105,15 @@ public class PortletRequestMapper extends AbstractComponentMapper {
 		else if (requestHandler instanceof BookmarkablePageRequestHandler) {
 			url = encodeRenderUrl(url, true);
 		}
-		//added mapping for request handlers with type of BookmarkableListenerInterfaceRequestHandler. The handling is the same as for handlers of type ListenerInterfaceRequestHandler 
-		else if (requestHandler instanceof ListenerInterfaceRequestHandler || requestHandler instanceof BookmarkableListenerInterfaceRequestHandler) { 
+		//added mapping for request handlers with type of BookmarkableListenerRequestHandler. The handling is the same as for handlers of type ListenerRequestHandler 
+		else if (requestHandler instanceof ListenerRequestHandler || requestHandler instanceof BookmarkableListenerRequestHandler) { 
 			IRequestableComponent component;
 
-			if (requestHandler instanceof ListenerInterfaceRequestHandler) {
-				component = ((ListenerInterfaceRequestHandler) requestHandler).getComponent();
+			if (requestHandler instanceof ListenerRequestHandler) {
+				component = ((ListenerRequestHandler) requestHandler).getComponent();
 			}
 			else {
-				component = ((BookmarkableListenerInterfaceRequestHandler)requestHandler).getComponent();
+				component = ((BookmarkableListenerRequestHandler)requestHandler).getComponent();
 			}
 
 			if (component instanceof IRequestListener) {

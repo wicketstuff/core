@@ -40,7 +40,7 @@ public class GeocoderTest
 		Geocoder coder = new Geocoder(apiKey);
 		GLatLng result = coder.geocode("Salzburgerstraße 205, 4030 Linz, Österreich");
 		Assert.assertNotNull(result);
-		Assert.assertEquals(48.25763170, result.getLat(), 0.00001);
+		Assert.assertEquals(48.25728790, result.getLat(), 0.00001);
 		Assert.assertEquals(14.29231840, result.getLng(), 0.00001);
 	}
 

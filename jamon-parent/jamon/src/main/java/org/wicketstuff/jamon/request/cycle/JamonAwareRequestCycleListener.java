@@ -25,7 +25,7 @@ import org.apache.wicket.Application;
 import org.apache.wicket.core.request.handler.BookmarkablePageRequestHandler;
 import org.apache.wicket.core.request.handler.BufferedResponseRequestHandler;
 import org.apache.wicket.core.request.handler.IPageClassRequestHandler;
-import org.apache.wicket.core.request.handler.ListenerInterfaceRequestHandler;
+import org.apache.wicket.core.request.handler.ListenerRequestHandler;
 
 import com.jamonapi.Monitor;
 
@@ -45,7 +45,7 @@ import com.jamonapi.Monitor;
  * <p>
  * <b>Implementation limitations:</b> <br>
  * Only if the {@link RequestCycle} comes from an {@link BookmarkablePageRequestHandler} or an
- * {@link ListenerInterfaceRequestHandler} <i>and</i> the eventual target of the
+ * {@link ListenerRequestHandler} <i>and</i> the eventual target of the
  * {@link RequestCycle} is an {@link PageRequestHandler} or an
  * {@link BookmarkablePageRequestHandler} the Monitors are created. If you want to support more
  * types of targets you can extend this class and implement the methods
@@ -162,10 +162,10 @@ public class JamonAwareRequestCycleListener extends AbstractRequestCycleListener
 	private void resolveSourceLabel(IRequestHandler requestHandler, RequestCycle cycle)
 	{
 		JamonMonitoredRequestCycleContext context;
-		if (requestHandler instanceof ListenerInterfaceRequestHandler)
+		if (requestHandler instanceof ListenerRequestHandler)
 		{
 			context = getContextOf(cycle);
-			ListenerInterfaceRequestHandler handler = (ListenerInterfaceRequestHandler)requestHandler;
+			ListenerRequestHandler handler = (ListenerRequestHandler)requestHandler;
 			Class<? extends IRequestablePage> pageClass = handler.getPageClass();
 			context.comesFromPage(pageClass);
 			String source = addComponentNameToLabelIfNotRedirectPageRequestTarget(handler,
@@ -186,7 +186,7 @@ public class JamonAwareRequestCycleListener extends AbstractRequestCycleListener
 	}
 
 	private String addComponentNameToLabelIfNotRedirectPageRequestTarget(
-		ListenerInterfaceRequestHandler handler, String source)
+		ListenerRequestHandler handler, String source)
 	{
 		return source += "." + getRelativePath(handler);
 	}
@@ -195,7 +195,7 @@ public class JamonAwareRequestCycleListener extends AbstractRequestCycleListener
 	 * returns the relative path with a max of 3. This to prevent extremely long names. My guess is
 	 * that three is sufficient for determining which link was clicked.
 	 */
-	private String getRelativePath(ListenerInterfaceRequestHandler handler)
+	private String getRelativePath(ListenerRequestHandler handler)
 	{
 
 		String relativePath = handler.getComponentPath();
