@@ -71,14 +71,12 @@
 
 				    var zoomDropDown =  $('#'+data.canvasId).closest('.pdfPanel').siblings().find('#zoom');
 
-				    $("option.custom").each(function() {
-                        $(this).remove();
-                    });
+				    $("option.custom").remove();
 
 				    zoomDropDown.val(zoom);
 
 				    if (!zoomDropDown.val()) {
-
+						// no val set in dropdown therefore zoom not found as option. Add zoom as custom option.
 				        var title = Math.floor((zoom * 100)) + "%";
 				        var op = "<option selected='selected'  value='" + zoom + "' class='custom'>" + title + "</option>"
 				        zoomDropDown.append($(op));

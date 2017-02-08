@@ -52,7 +52,7 @@
             var DEFAULT_SCALE_DELTA = 1.1;
             var MAX_AUTO_SCALE = 1.25;
 
-            var container = $(".pdfPanel");
+            var container = $('#'+canvas.id).closest('.pdfPanel');
 
             canvas.height = container.height();
             canvas.width = container.width();
@@ -120,6 +120,7 @@
 
                 if (error) {
                     abortingPrinting = true;
+                    // temp alert - todo add event for error for caller to handle
                     window.alert("error printing!");
                 }
 
