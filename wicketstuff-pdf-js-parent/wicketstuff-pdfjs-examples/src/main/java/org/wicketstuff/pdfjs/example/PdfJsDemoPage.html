@@ -3,6 +3,7 @@
 
 	<head>
 		<title>PdfJs demo page</title>
+		<link rel="stylesheet" type="text/css" href="style.css">
 	</head>
 
 	<body>
@@ -16,6 +17,21 @@
 			<button id="zoomOut">Zoom Out</button>
 			&nbsp; &nbsp;
 			<span>Page: <input id="page_num"></input> / <span id="page_count"></span></span>
+            <select id="zoom" title="Zoom">
+                <option id="pageAutoOption" title="" value="auto" >Automatic Zoom</option>
+                <option id="pageActualOption" title="" value="page-actual" >Actual Size</option>
+                <option id="pageFitOption" title="" value="page-fit" >Page Fit</option>
+                <option id="pageWidthOption" title="" value="page-width">Page Width</option>
+                <option  value="0.5">50%</option>
+                <option  value="0.75">75%</option>
+                <option  value="1">100%</option>
+                <option  value="1.25">125%</option>
+                <option  value="1.5">150%</option>
+                <option  value="2">200%</option>
+                <option  value="3">300%</option>
+                <option  value="4">400%</option>
+            </select>
+			<button id="print">Print</button>
 		</div>
 
 		<script type="text/javascript">
@@ -34,9 +50,16 @@
 				$('#zoomOut').click(function () {
 					Wicket.Event.publish(WicketStuff.PDFJS.Topic.ZOOM_OUT, {"canvasId": canvasId});
 				});
-				 $('#page_num').change(function () {
+				$('#zoom').change(function () {
+					var scale = $(this).val();
+					Wicket.Event.publish(WicketStuff.PDFJS.Topic.ZOOM_TO, {"canvasId": canvasId, "scale" : scale});
+				});
+				$('#page_num').change(function () {
 					var page = parseInt($(this).val());
 					Wicket.Event.publish(WicketStuff.PDFJS.Topic.GOTO_PAGE, {"canvasId": canvasId, "page" : page});
+				});
+				$('#print').click(function () {
+					Wicket.Event.publish(WicketStuff.PDFJS.Topic.PRINT, {"canvasId": canvasId});
 				});
                 Wicket.Event.subscribe(WicketStuff.PDFJS.Topic.CURRENT_PAGE, function (jqEvent, pageNumber, data) {
                     $('#'+data.canvasId).closest('.pdfPanel').siblings().find('#page_num').val(pageNumber);
@@ -44,6 +67,21 @@
 				Wicket.Event.subscribe(WicketStuff.PDFJS.Topic.TOTAL_PAGES, function (jqEvent, total, data) {
 					$('#'+data.canvasId).closest('.pdfPanel').siblings().find('#page_count').text(total);
 				});
+				Wicket.Event.subscribe(WicketStuff.PDFJS.Topic.CURRENT_ZOOM, function (jqEvent, zoom, data) {
+
+				    var zoomDropDown =  $('#'+data.canvasId).closest('.pdfPanel').siblings().find('#zoom');
+
+				    $("option.custom").remove();
+
+				    zoomDropDown.val(zoom);
+
+				    if (!zoomDropDown.val()) {
+						// no val set in dropdown therefore zoom not found as option. Add zoom as custom option.
+				        var title = Math.floor((zoom * 100)) + "%";
+				        var op = "<option selected='selected'  value='" + zoom + "' class='custom'>" + title + "</option>"
+				        zoomDropDown.append($(op));
+				    }
+                });
 			});
 		</script>
 
