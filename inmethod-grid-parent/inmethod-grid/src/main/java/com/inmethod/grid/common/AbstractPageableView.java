@@ -198,8 +198,12 @@ public abstract class AbstractPageableView<T> extends RefreshingView<T>
 	 */
 	private transient QueryResult queryResult;
 
-  /** clears the queryResult so  the next use will be forced to re-initialize */
-  public void clearCache() { queryResult = null; }
+	/** clears the queryResult so  the next use will be forced to re-initialize */
+	public void clearCache()
+	{
+  		queryResult = null;
+  		realItemCount = UNKNOWN_COUNT;
+	}
 
 	/**
 	 * Allows to wrap created query.
@@ -461,7 +465,7 @@ public abstract class AbstractPageableView<T> extends RefreshingView<T>
 	protected void onDetach()
 	{
 		super.onDetach();
-		queryResult = null;
+		clearCache();
 	}
 
 	protected abstract IGridSortState getSortState();
@@ -494,7 +498,7 @@ public abstract class AbstractPageableView<T> extends RefreshingView<T>
 				maxFirstItemReached = currentItem;
 			}
 			currentPageFirstItem = currentItem;
-			queryResult = null;
+			clearCache();
 		}
 	}
 
