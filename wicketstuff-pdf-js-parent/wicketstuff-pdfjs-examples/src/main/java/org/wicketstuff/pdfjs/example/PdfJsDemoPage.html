@@ -32,6 +32,7 @@
                 <option  value="4">400%</option>
             </select>
 			<button id="print">Print</button>
+			<span>Preparing Page: <span id="page_print_num">0</span> of <span id="page_print_count"></span></span>
 		</div>
 
 		<script type="text/javascript">
@@ -66,7 +67,16 @@
                 });
 				Wicket.Event.subscribe(WicketStuff.PDFJS.Topic.TOTAL_PAGES, function (jqEvent, total, data) {
 					$('#'+data.canvasId).closest('.pdfPanel').siblings().find('#page_count').text(total);
+					$('#'+data.canvasId).closest('.pdfPanel').siblings().find('#page_print_count').text(total);
 				});
+				Wicket.Event.subscribe(WicketStuff.PDFJS.Topic.CURRENT_PRINT_PAGE, function (jqEvent, pageNumber, data) {
+					if (pageNumber === -1) {
+						window.alert("error printing");
+					}
+					else {
+                    	$('#'+data.canvasId).closest('.pdfPanel').siblings().find('#page_print_num').text(pageNumber);
+                    }
+                });
 				Wicket.Event.subscribe(WicketStuff.PDFJS.Topic.CURRENT_ZOOM, function (jqEvent, zoom, data) {
 
 				    var zoomDropDown =  $('#'+data.canvasId).closest('.pdfPanel').siblings().find('#zoom');

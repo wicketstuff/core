@@ -21,7 +21,8 @@
             ZOOM_OUT: 'Wicket.PDFJS.ZoomOut',
             ZOOM_TO: 'Wicket.PDFJS.ZoomTo',
             CURRENT_ZOOM : 'Wicket.PDFJS.CurrentZoom',
-            PRINT : 'Wicket.PDFJS.Print'
+            PRINT : 'Wicket.PDFJS.Print',
+            CURRENT_PRINT_PAGE : 'Wicket.PDFJS.CurrentPrintPage'
         },
 
         init: function (config) {
@@ -43,7 +44,7 @@
                 pageNumPending = null,
                 scale = config.initialScale || 0.8,
                 autoScale = "",
-                canvas = document.getElementById(config.canvasId),
+                canvas = $('#'+config.canvasId)[0],
                 ctx = canvas.getContext('2d'),
                 abortingPrinting = false;
 
@@ -68,7 +69,7 @@
 
                     var viewport = page.getViewport(1);
                     if (autoScale) {
-                        scale = calculateAutoScale(canvas, viewport)
+                        scale = calculateAutoScale(viewport)
                     }
 
                     viewport = page.getViewport(scale);
@@ -98,16 +99,13 @@
                 abortingPrinting = false;
                 var pages = pdfDoc.numPages;
 
-                var body = document.getElementsByTagName('body')[0];
-                body.setAttribute('pdf-js-printing', true);
-
-                var pc = document.createElement('div');
-                pc.id = 'pdf-js-print-container';
-                body.appendChild(pc);
+                var pc = $('<div/>');
+                pc.attr('id', 'pdf-js-print-container');
+                $('body').append(pc);
 
                 for (var i = 0; i < pages; i++){
-                   var wrapper = document.createElement('div');
-                   pc.appendChild(wrapper);
+                   var wrapper = $('<div/>');
+                   pc.append(wrapper);
                 }
 
                 for (var i = 1; i <= pages; i++){
@@ -120,15 +118,13 @@
 
                 if (error) {
                     abortingPrinting = true;
-                    // temp alert - todo add event for error for caller to handle
-                    window.alert("error printing!");
+                    var printError = -1; // use -1 to indicate error printing
+                    Wicket.Event.publish(WicketStuff.PDFJS.Topic.CURRENT_PRINT_PAGE, printError, {"canvasId": config.canvasId});
                 }
 
                 pageRendering = false;
-                var body = document.getElementsByTagName('body')[0];
-                body.removeAttribute('pdf-js-printing');
-                var pc = document.querySelector('#pdf-js-print-container');
-                body.removeChild(pc);
+                var body = $('body').removeAttr('pdf-js-printing');
+                $('#pdf-js-print-container').remove();
             }
 
 
@@ -139,7 +135,7 @@
                     if (abortingPrinting) { return; }
 
                     var viewport = page.getViewport(1);
-                    var offScreenCanvas = document.createElement('canvas');
+                    var offScreenCanvas = $('<canvas/>')[0];
                     offScreenCanvas.width = viewport.width;
                     offScreenCanvas.height = viewport.height;
                     var offScreenCanvasCtx = offScreenCanvas.getContext('2d');
@@ -153,26 +149,28 @@
                     var renderTask = page.render(renderContext);
                     // Wait for rendering to finish
                     renderTask.promise.then(function () {
-                        var body = document.getElementsByTagName('body')[0];
-                        var img = document.createElement('img');
-                        img.style.width = img.width = viewport.width;
-                        img.style.height = img.height = viewport.height;
+                        var img = $('<img/>')[0];
+                        $(img).width(viewport.width);
+                        $(img).height(viewport.height);
 
                         img.onload = function() {
-                             if (abortingPrinting) { return; }
+                            if (abortingPrinting) { return; }
 
                             // image loaded so append to appropriate div.
-                            var wrapper = document.querySelector('#pdf-js-print-container > div:nth-child(' + num + ')');
+                            var wrapper = $('#pdf-js-print-container > div:nth-child(' + num + ')');
                             var renderedPages = 0;
 
-                            if (wrapper) {
-                                wrapper.appendChild(img);
+                            if (wrapper.length) {
+                                wrapper.append(img);
                                 // get count of loaded images so that once all loaded we can print
-                                renderedPages = document.querySelectorAll('#pdf-js-print-container img').length;
+                                renderedPages = $('#pdf-js-print-container img').length;
+                                // publish for progress bar
+                                Wicket.Event.publish(WicketStuff.PDFJS.Topic.CURRENT_PRINT_PAGE, renderedPages, {"canvasId": config.canvasId});
                             }
 
                             if (renderedPages === total) {
                                 try {
+                                   $('body').attr('pdf-js-printing', true);
                                    print.call(window);
                                 }
                                 catch(e) {
@@ -238,7 +236,7 @@
                 }
             }
 
-            function calculateAutoScale(canvas, currentPage) {
+            function calculateAutoScale(currentPage) {
 
                 // todo may need to make more sohpisticated cf viewer
                 //var hPadding = this.isInPresentationMode || this.removePageBorders ? 0 : SCROLLBAR_PADDING;
