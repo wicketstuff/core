@@ -1,11 +1,5 @@
 package org.wicketstuff.async.components;
 
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Optional;
-
 import org.apache.wicket.Component;
 import org.apache.wicket.Page;
 import org.apache.wicket.ajax.AbstractAjaxTimerBehavior;
@@ -18,6 +12,12 @@ import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.util.time.Duration;
 import org.wicketstuff.async.task.AbstractTaskContainer;
+
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Optional;
 
 /**
  * A progress button which allows to control a {@link Runnable}. Each such button will refresh itself as given by
@@ -150,11 +150,7 @@ public class ProgressButton extends AjaxFallbackButton {
     }
 
     private void activateRefresh(AjaxRequestTarget target) {
-        if (!getTaskContainer().isRunning()) {
-            if (getBehaviors(RefreshBehavior.class).size() > 0) {
-                refreshBehavior.stop(target);
-            }
-        } else if (getBehaviors(RefreshBehavior.class).size() == 0) {
+        if (getBehaviors(RefreshBehavior.class).size() == 0) {
             add(refreshBehavior);
         } else {
             refreshBehavior.restart(target);
@@ -174,9 +170,7 @@ public class ProgressButton extends AjaxFallbackButton {
     private void concludeIfApplicable(Optional<AjaxRequestTarget> targetOptional) {
         if (!getTaskContainer().isRunning()) {
         	targetOptional.ifPresent(target -> {
-                if(refreshBehavior.isBinded()) {
-                	refreshBehavior.stop(target);
-                }
+                refreshBehavior.stop(target);
             });
             if (getTaskContainer().isFailed()) {
                 onTaskError(targetOptional);
@@ -201,8 +195,6 @@ public class ProgressButton extends AjaxFallbackButton {
     }
 
     private class RefreshBehavior extends AbstractAjaxTimerBehavior {
-        private boolean bound = false;
-
         public RefreshBehavior(Duration updateInterval) {
             super(updateInterval);
         }
@@ -222,22 +214,6 @@ public class ProgressButton extends AjaxFallbackButton {
         protected boolean shouldTrigger() {
             // Again, skip the check for the component being enabled
             return !isStopped() && getComponent().findParent(Page.class) != null;
-        }
-
-        @Override
-        protected void onBind() {
-            super.onBind();
-            bound = true;
-        }
-
-        @Override
-        protected void onUnbind() {
-            super.onUnbind();
-            bound = false;
-        }
-
-        public boolean isBinded() {
-            return bound;
         }
     }
 
