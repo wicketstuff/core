@@ -35,7 +35,6 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.wicket.WicketRuntimeException;
-import org.apache.wicket.model.AbstractReadOnlyModel;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.IObjectClassAwareModel;
 import org.apache.wicket.model.LoadableDetachableModel;
@@ -96,7 +95,7 @@ public class LazyModelTest {
 
 	@Test
 	public void improveTargetTypeWithTargetObjectClass() {
-		IModel<Serializable> target = new AbstractReadOnlyModel<Serializable>() {
+		IModel<Serializable> target = new IModel<Serializable>() {
 			@Override
 			public Serializable getObject() {
 				return new A();
@@ -112,7 +111,7 @@ public class LazyModelTest {
 	public void loadableDetachable() {
 		final int[] got = new int[1];
 
-		IModel<String> string = new AbstractReadOnlyModel<String>() {
+		IModel<String> string = new IModel<String>() {
 			private static final long serialVersionUID = 1L;
 
 			@Override
@@ -442,7 +441,7 @@ public class LazyModelTest {
 		C c = new C();
 		cs.add(c);
 
-		IModel<List<C>> target = new AbstractReadOnlyModel<List<C>>() {
+		IModel<List<C>> target = new IModel<List<C>>() {
 			@Override
 			public List<C> getObject() {
 				return cs;
@@ -462,7 +461,7 @@ public class LazyModelTest {
 		final List<C> cs = new ArrayList<C>();
 		cs.add(new C());
 
-		IModel<List<C>> target = new AbstractReadOnlyModel<List<C>>() {
+		IModel<List<C>> target = new IModel<List<C>>() {
 			@Override
 			public List<C> getObject() {
 				return cs;
@@ -735,7 +734,7 @@ public class LazyModelTest {
 		C c = new C();
 		a.b.cs.add(c);
 
-		IModel<A> target = new AbstractReadOnlyModel<A>() {
+		IModel<A> target = new IModel<A>() {
 			@Override
 			public A getObject() {
 				return a;
@@ -872,7 +871,7 @@ public class LazyModelTest {
 		a.b = new B();
 
 		LazyModel<B> model = model(from(A.class).getB()).bind(
-				new AbstractReadOnlyModel<A>() {
+				new IModel<A>() {
 					@Override
 					public A getObject() {
 						return a;
