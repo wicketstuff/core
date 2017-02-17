@@ -11,9 +11,12 @@ import java.util.Optional;
  *            - the type of the input to the function
  * @param <R>
  *            - the type of the result of the function
+ * @deprecated no direct replacement but use {@link org.apache.wicket.model.LambdaModel#of(org.apache.wicket.model.IModel, org.danekja.java.util.function.serializable.SerializableFunction, org.danekja.java.util.function.serializable.SerializableBiConsumer} instead           
  */
 public class OptionalFunction<T, R> implements SerializableFunction<T, R> {
 
+	private static final long serialVersionUID = 1L;
+	
 	private SerializableFunction<T, Optional<R>> opFunction;
 	private SerializableSupplier<R> defaultValueSupplier;
 
