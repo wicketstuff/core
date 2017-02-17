@@ -26,6 +26,8 @@ import org.wicketstuff.lambda.model.LambdaModel;
  */
 public class FunctionColumn<T, S, R> extends AbstractColumn<T, S> {
 
+	private static final long serialVersionUID = 1L;
+	
 	/*
 	 * Function that generates the model of the cell from the model of the row.
 	 */
