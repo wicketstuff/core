@@ -8,9 +8,12 @@ import org.wicketstuff.lambda.SerializableSupplier;
  *
  * @param <T>
  *            - type of the model object
+ * @deprecated Use {@link LambdaModel} or {@link LoadableDetachableModel#of(org.danekja.java.util.function.serializable.SerializableSupplier)} instead           
  */
 public class SupplierModel<T> extends LoadableDetachableModel<T> {
 
+	private static final long serialVersionUID = 1L;
+	
 	/*
 	 * Supplier that supplies the value of the model.
 	 */
