@@ -21,8 +21,11 @@ import org.wicketstuff.lambda.SerializableFunction;
  *            - type of the wrapped {@link IModel}
  * @param <R>
  *            - type of the {@link LambdaModel}
+ * @deprecated Use {@link org.apache.wicket.model.LambdaModel} and {@link LoadableDetachableModel#of(org.danekja.java.util.function.serializable.SerializableSupplier)} instead           
  */
 public class LambdaModel<T, R> extends LoadableDetachableModel<R> {
+	
+	private static final long serialVersionUID = 1L;
 	
 	private IModel<T> wrappedModel;
 	private SerializableFunction<T, R> loadHandler;

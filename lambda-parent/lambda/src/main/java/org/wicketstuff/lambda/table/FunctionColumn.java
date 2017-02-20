@@ -4,6 +4,7 @@ import java.util.function.Function;
 
 import org.apache.wicket.extensions.markup.html.repeater.data.grid.ICellPopulator;
 import org.apache.wicket.extensions.markup.html.repeater.data.table.AbstractColumn;
+import org.apache.wicket.extensions.markup.html.repeater.data.table.LambdaColumn;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.repeater.Item;
 import org.apache.wicket.model.IModel;
@@ -20,6 +21,8 @@ import org.wicketstuff.lambda.model.LambdaModel;
  *            - the type of the sort property
  * @param <R>
  *            - type type of the cell
+ *            
+ * @deprecated use {@link LambdaColumn} instead
  */
 public class FunctionColumn<T, S, R> extends AbstractColumn<T, S> {
 

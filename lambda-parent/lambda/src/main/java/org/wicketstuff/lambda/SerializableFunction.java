@@ -10,6 +10,7 @@ import java.util.function.Function;
  *            - the type of the input to the function
  * @param <R>
  *            - the type of the result of the function
+ * @deprecated Use {@link org.danekja.java.util.function.serializable.SerializableFunction} instead           
  */
 public interface SerializableFunction<T, R> extends Function<T, R>, Serializable {
 
