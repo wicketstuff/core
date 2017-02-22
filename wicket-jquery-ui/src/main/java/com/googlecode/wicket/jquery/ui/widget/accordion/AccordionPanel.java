@@ -39,7 +39,7 @@ import com.googlecode.wicket.jquery.ui.widget.tabs.TabListModel;
  * @since 1.2.3
  * @since 6.0.1
  */
-public class AccordionPanel extends JQueryGenericPanel<List<ITab>> implements IAccordionListener
+public class AccordionPanel extends JQueryGenericPanel<List<ITab>> implements IAccordionListener // NOSONAR
 {
 	private static final long serialVersionUID = 1L;
 
@@ -210,7 +210,7 @@ public class AccordionPanel extends JQueryGenericPanel<List<ITab>> implements IA
 	{
 		super.onInitialize();
 
-		this.add(new Loop("tabs", this.getCountModel()) {
+		this.add(new Loop("tabs", this.getCountModel()) { // NOSONAR
 
 			private static final long serialVersionUID = 1L;
 
@@ -265,7 +265,7 @@ public class AccordionPanel extends JQueryGenericPanel<List<ITab>> implements IA
 	@Override
 	public AccordionBehavior newWidgetBehavior(String selector)
 	{
-		return new AccordionBehavior(selector, this.options, this) {
+		return new AccordionBehavior(selector, this.options, this) { // NOSONAR
 
 			private static final long serialVersionUID = 1L;
 

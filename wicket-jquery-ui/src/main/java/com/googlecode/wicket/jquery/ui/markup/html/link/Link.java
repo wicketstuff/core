@@ -31,7 +31,7 @@ import com.googlecode.wicket.jquery.ui.form.button.ButtonBehavior;
  * @since 6.19.0
  * @since 7.0.0
  */
-public abstract class Link<T> extends org.apache.wicket.markup.html.link.Link<T> implements IJQueryWidget
+public abstract class Link<T> extends org.apache.wicket.markup.html.link.Link<T> implements IJQueryWidget // NOSONAR
 {
 	private static final long serialVersionUID = 1L;
 

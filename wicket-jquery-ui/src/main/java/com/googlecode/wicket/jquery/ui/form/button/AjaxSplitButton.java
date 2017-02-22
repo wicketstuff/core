@@ -17,7 +17,7 @@ import com.googlecode.wicket.jquery.ui.widget.menu.IMenuItem;
  * @author Sebastien Briquet - sebfz1
  * 
  */
-public class AjaxSplitButton extends SplitButton
+public class AjaxSplitButton extends SplitButton // NOSONAR
 {
 	private static final long serialVersionUID = 1L;
 
@@ -71,7 +71,7 @@ public class AjaxSplitButton extends SplitButton
 	@Override
 	protected AbstractLink newLink(String id)
 	{
-		return new AjaxSubmitLink(id) {
+		return new AjaxSubmitLink(id) { // NOSONAR
 
 			private static final long serialVersionUID = 1L;
 

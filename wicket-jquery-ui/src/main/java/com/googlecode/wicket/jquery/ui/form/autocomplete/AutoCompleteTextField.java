@@ -40,7 +40,7 @@ import com.googlecode.wicket.jquery.ui.template.JQueryTemplateBehavior;
  * @param <T> the type of the model object
  * @author Sebastien Briquet - sebfz1
  */
-public abstract class AutoCompleteTextField<T extends Serializable> extends TextField<T> implements IJQueryWidget, IAutoCompleteListener
+public abstract class AutoCompleteTextField<T extends Serializable> extends TextField<T> implements IJQueryWidget, IAutoCompleteListener // NOSONAR
 {
 	private static final long serialVersionUID = 1L;
 
@@ -297,7 +297,7 @@ public abstract class AutoCompleteTextField<T extends Serializable> extends Text
 	@Override
 	public JQueryBehavior newWidgetBehavior(String selector)
 	{
-		return new AutoCompleteBehavior(selector, this) {
+		return new AutoCompleteBehavior(selector, this) { // NOSONAR
 
 			private static final long serialVersionUID = 1L;
 
@@ -344,7 +344,7 @@ public abstract class AutoCompleteTextField<T extends Serializable> extends Text
 	 */
 	private IConverter<T> newConverter()
 	{
-		return new IConverter<T>() {
+		return new IConverter<T>() { // NOSONAR
 
 			private static final long serialVersionUID = 1L;
 
@@ -374,7 +374,7 @@ public abstract class AutoCompleteTextField<T extends Serializable> extends Text
 	 */
 	private AutoCompleteChoiceModelBehavior<T> newChoiceModelBehavior()
 	{
-		return new AutoCompleteChoiceModelBehavior<T>(this.renderer, this.template) {
+		return new AutoCompleteChoiceModelBehavior<T>(this.renderer, this.template) { // NOSONAR
 
 			private static final long serialVersionUID = 1L;
 			private static final String TERM = "term";

@@ -43,7 +43,7 @@ import com.googlecode.wicket.jquery.ui.widget.dialog.MessageFormDialog;
  * @author Sebastien Briquet - sebfz1
  *
  */
-public abstract class ConfirmAjaxButton extends GenericPanel<String>
+public abstract class ConfirmAjaxButton extends GenericPanel<String> // NOSONAR
 {
 	private static final long serialVersionUID = 1L;
 	
@@ -158,7 +158,7 @@ public abstract class ConfirmAjaxButton extends GenericPanel<String>
 	 */
 	protected AbstractFormDialog<?> newDialog(String id, IModel<String> title, IModel<String> message)
 	{
-		return new MessageFormDialog(id, title, message, Arrays.asList(BTN_OK, BTN_CANCEL), DialogIcon.WARN) {
+		return new MessageFormDialog(id, title, message, Arrays.asList(BTN_OK, BTN_CANCEL), DialogIcon.WARN) { // NOSONAR
 
 			private static final long serialVersionUID = 1L;
 
@@ -199,7 +199,7 @@ public abstract class ConfirmAjaxButton extends GenericPanel<String>
 	 */
 	protected AjaxButton newAjaxButton(String id, final AbstractDialog<?> dialog)
 	{
-		return new AjaxButton(id) {
+		return new AjaxButton(id) { // NOSONAR
 
 			private static final long serialVersionUID = 1L;
 

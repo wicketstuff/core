@@ -43,7 +43,7 @@ import com.googlecode.wicket.jquery.core.utils.RequestCycleUtils;
  * @author Sebastien Briquet - sebfz1
  *
  */
-public abstract class Sortable<T> extends JQueryGenericContainer<List<T>> implements ISortableListener<T>
+public abstract class Sortable<T> extends JQueryGenericContainer<List<T>> implements ISortableListener<T> // NOSONAR
 {
 	private static final long serialVersionUID = 1L;
 
@@ -233,7 +233,7 @@ public abstract class Sortable<T> extends JQueryGenericContainer<List<T>> implem
 	@Override
 	public JQueryBehavior newWidgetBehavior(String selector)
 	{
-		return new SortableBehavior<T>(selector, this.options, this) {
+		return new SortableBehavior<T>(selector, this.options, this) { // NOSONAR
 
 			private static final long serialVersionUID = 1L;
 
@@ -275,7 +275,7 @@ public abstract class Sortable<T> extends JQueryGenericContainer<List<T>> implem
 	 *
 	 * @param <T> the type of the model object
 	 */
-	public abstract static class HashListView<T> extends ListView<T>
+	public abstract static class HashListView<T> extends ListView<T> // NOSONAR
 	{
 		private static final long serialVersionUID = 1L;
 

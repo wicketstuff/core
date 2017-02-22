@@ -39,7 +39,7 @@ import com.googlecode.wicket.jquery.ui.JQueryUIBehavior;
  * @since 6.22.0
  * @since 7.1.2
  */
-public class TimeSpinner extends DateTextField implements IJQueryCultureWidget
+public class TimeSpinner extends DateTextField implements IJQueryCultureWidget // NOSONAR
 {
 	private static final long serialVersionUID = 1L;
 

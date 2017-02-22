@@ -31,7 +31,7 @@ import com.googlecode.wicket.jquery.ui.JQueryIcon;
  * @author Sebastien Briquet - sebfz1
  *
  */
-public abstract class AjaxButton extends org.apache.wicket.ajax.markup.html.form.AjaxButton implements IJQueryWidget
+public abstract class AjaxButton extends org.apache.wicket.ajax.markup.html.form.AjaxButton implements IJQueryWidget // NOSONAR
 {
 	private static final long serialVersionUID = 1L;
 

@@ -565,8 +565,6 @@ public class CalendarBehavior extends JQueryBehavior implements IJQueryAjaxAware
 		@Override
 		protected CallbackParameter[] getCallbackParameters()
 		{
-			// http://fullcalendar.io/docs/event_ui/eventResize/
-			// function(event, delta, revertFunc, jsEvent, ui, view) { }
 			return new CallbackParameter[] { CallbackParameter.context("event"), // lf
 					CallbackParameter.context("delta"), // lf
 					CallbackParameter.context("revertFunc"), // lf

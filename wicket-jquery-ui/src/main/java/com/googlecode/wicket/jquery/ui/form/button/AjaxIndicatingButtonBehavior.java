@@ -36,7 +36,7 @@ import com.googlecode.wicket.jquery.ui.form.button.IndicatingAjaxButton.Position
  * @author Sebastien Briquet - sebfz1
  *
  */
-public class AjaxIndicatingButtonBehavior extends ButtonBehavior
+public class AjaxIndicatingButtonBehavior extends ButtonBehavior // NOSONAR
 {
 	private static final long serialVersionUID = 1L;
 
