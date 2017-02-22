@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.apache.wicket.util.lang.Generics;
 import org.json.JSONArray;
+import org.json.JSONObject;
 
 /**
  * Utility class for json objects
@@ -54,5 +55,48 @@ public class JsonUtils
 		}
 
 		return new JSONArray(list);
+	}
+
+	/**
+	 * Converts a {@link JSONArray} to a {@link List} of {@code Objects}
+	 * 
+	 * @param values the {@link JSONArray}
+	 * @return a new {@link List}
+	 */
+	public static List<Object> toList(JSONArray values)
+	{
+		List<Object> list = Generics.newArrayList();
+
+		if (values != null)
+		{
+			for (int i = 0; i < values.length(); i++)
+			{
+				list.add(values.get(i));
+			}
+		}
+
+		return list;
+	}
+
+	/**
+	 * Converts a {@link List} to its JSON string representation
+	 * 
+	 * @param list the {@code List} to convert
+	 * @return a new JSON String
+	 */
+	public static String toString(List<?> list)
+	{
+		return new JSONArray(list).toString();
+	}
+
+	/**
+	 * Converts a {@link Object} to its JSON string representation
+	 * 
+	 * @param object the {@code Object} to convert
+	 * @return a new JSON String
+	 */
+	public static String toString(Object object)
+	{
+		return new JSONObject(object).toString();
 	}
 }

@@ -73,7 +73,7 @@ public class JQueryBehavior extends JQueryAbstractBehavior
 	 */
 	public JQueryBehavior(String selector, String method, Options options)
 	{
-		this.method = Args.notNull(method, "method");;
+		this.method = Args.notNull(method, "method");
 		this.options = Args.notNull(options, "options");
 		this.selector = selector;
 	}

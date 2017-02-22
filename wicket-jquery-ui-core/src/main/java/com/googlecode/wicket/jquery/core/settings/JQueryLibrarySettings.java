@@ -48,13 +48,6 @@ public class JQueryLibrarySettings extends JavaScriptLibrarySettings
 	private ResourceReference globalizeReference = null; // null by default, meaning the user has to set it explicitly
 
 	/**
-	 * Constructor
-	 */
-	public JQueryLibrarySettings()
-	{
-	}
-
-	/**
 	 * Gets the JQuery globalize javascript resource reference
 	 *
 	 * @return the {@link ResourceReference}

@@ -14,44 +14,32 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.googlecode.wicket.jquery.core.renderer;
+package com.googlecode.wicket.jquery.core.converter;
 
-import com.googlecode.wicket.jquery.core.utils.JsonUtils;
+import org.json.JSONObject;
 
 /**
- * Provides a Json {@link TextRenderer}
- *
- * @param <T> the model object type
+ * Provides a converter for building {@link T}{@code s} as {@link JSONObject}, and vice-versa
+ * 
+ * @param <T> the object type
  * @author Sebastien Briquet - sebfz1
+ *
  */
-public class JsonRenderer<T> extends TextRenderer<T>
+public interface IJsonConverter<T>
 {
-	private static final long serialVersionUID = 1L;
-
 	/**
-	 * Constructor
-	 */
-	public JsonRenderer()
-	{
-		super();
-	}
-
-	/**
-	 * Constructor
+	 * Converts a {@link T} object to a {@link JSONObject}
 	 *
-	 * @param expression the property expression that will be resolved for the bean supplied to {@link #getText(Object)}
+	 * @param object the {@link T} object
+	 * @return the {@link JSONObject}
 	 */
-	public JsonRenderer(String expression)
-	{
-		super(expression);
-	}
+	JSONObject toJson(T object);
 
-	// Methods //
-
-	@Override
-	public String render(T object)
-	{
-		String json = JsonUtils.toString(object);
-		return json.substring(1, json.length() - 1); // keep body only
-	}
+	/**
+	 * Converts a {@link JSONObject} to a {@link T} object
+	 *
+	 * @param object the {@code JSONObject}
+	 * @return the {@link T} object
+	 */
+	T toObject(JSONObject object);
 }
