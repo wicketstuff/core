@@ -18,7 +18,6 @@ package com.googlecode.wicket.kendo.ui.form.combobox;
 
 import org.apache.wicket.Component;
 
-import com.googlecode.wicket.jquery.core.Options;
 import com.googlecode.wicket.kendo.ui.KendoDataSource;
 import com.googlecode.wicket.kendo.ui.KendoUIBehavior;
 
@@ -105,7 +104,7 @@ public abstract class ComboBoxBehavior extends KendoUIBehavior
 		// data source //
 		if (this.isEnabled(component))
 		{
-			this.dataSource.setTransportRead(Options.asString(this.getDataSourceUrl()));
+			this.dataSource.setTransportReadUrl(this.getDataSourceUrl());
 		}
 	}
 }

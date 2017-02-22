@@ -145,7 +145,7 @@ public abstract class AjaxTreeViewBehavior extends KendoUIBehavior implements IJ
 		// data-source //
 		this.onConfigure(this.dataSource);
 		this.setOption("dataSource", this.dataSource.getName());
-		this.dataSource.setTransportRead(Options.asString(this.getDataSourceUrl()));
+		this.dataSource.setTransportReadUrl(this.getDataSourceUrl());
 	}
 
 	/**

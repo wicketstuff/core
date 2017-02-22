@@ -114,7 +114,7 @@ public abstract class AutoCompleteBehavior extends KendoUIBehavior implements IJ
 		// data source //
 		if (this.isEnabled(component))
 		{
-			this.dataSource.setTransportRead(Options.asString(this.getDataSourceUrl()));
+			this.dataSource.setTransportReadUrl(this.getDataSourceUrl());
 		}
 	}
 
