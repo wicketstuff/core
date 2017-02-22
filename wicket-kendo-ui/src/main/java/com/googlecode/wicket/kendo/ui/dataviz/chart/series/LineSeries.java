@@ -14,70 +14,55 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.googlecode.wicket.kendo.ui.dataviz.series;
+package com.googlecode.wicket.kendo.ui.dataviz.chart.series;
 
 /**
- * Provides a <i>rangeColumn</i> series object.
+ * Provides a <i>line</i> series object.
  *
  * @author Sebastien Briquet - sebfz1
  *
  */
-public class RangeSeries extends Series
+public class LineSeries extends Series
 {
 	private static final long serialVersionUID = 1L;
-	private static final String TYPE = "rangeColumn";
+	private static final String TYPE = "line";
 
-	private final String toField;
-	private final String fromField;
+	private final String field;
 
 	/**
 	 * Constructor
 	 * 
 	 * @param name the series name
-	 * @param fromField the series from-field
-	 * @param toField the series to-field
+	 * @param field the series field, it should correspond to a model object's property
 	 */
-	public RangeSeries(String name, String fromField, String toField)
+	public LineSeries(String name, String field)
 	{
 		super(name, TYPE);
 
-		this.fromField = fromField;
-		this.toField = toField;
+		this.field = field;
 	}
 
 	/**
 	 * Constructor
 	 * 
 	 * @param name the series name
-	 * @param fromField the series from-field
-	 * @param toField the series to-field
+	 * @param field the series field, it should correspond to a model object's property
 	 * @param axis the axis on which the series should be placed
 	 */
-	public RangeSeries(String name, String fromField, String toField, String axis)
+	public LineSeries(String name, String field, String axis)
 	{
 		super(name, TYPE, axis);
-
-		this.fromField = fromField;
-		this.toField = toField;
+		
+		this.field = field;
 	}
 
 	/**
-	 * Gets the series from-field
+	 * Gets the series field
 	 * 
-	 * @return the series from-field
+	 * @return the series field
 	 */
-	public String getFromField()
+	public String getField()
 	{
-		return this.fromField;
-	}
-
-	/**
-	 * Gets the series to-field
-	 * 
-	 * @return the series to-field
-	 */
-	public String getToField()
-	{
-		return this.toField;
+		return this.field;
 	}
 }

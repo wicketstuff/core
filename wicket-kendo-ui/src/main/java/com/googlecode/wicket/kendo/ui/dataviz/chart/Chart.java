@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.googlecode.wicket.kendo.ui.dataviz;
+package com.googlecode.wicket.kendo.ui.dataviz.chart;
 
 import java.util.List;
 
@@ -29,11 +29,11 @@ import com.googlecode.wicket.jquery.core.JQueryBehavior;
 import com.googlecode.wicket.jquery.core.JQueryGenericContainer;
 import com.googlecode.wicket.jquery.core.Options;
 import com.googlecode.wicket.jquery.core.behavior.AjaxCallbackBehavior;
+import com.googlecode.wicket.jquery.core.behavior.ListModelBehavior;
 import com.googlecode.wicket.kendo.ui.KendoBehaviorFactory;
 import com.googlecode.wicket.kendo.ui.KendoDataSource;
 import com.googlecode.wicket.kendo.ui.KendoUIBehavior;
-import com.googlecode.wicket.kendo.ui.dataviz.series.Series;
-import com.googlecode.wicket.kendo.ui.scheduler.SchedulerModel;
+import com.googlecode.wicket.kendo.ui.dataviz.chart.series.Series;
 
 /**
  * Provides a Kendo UI chart
@@ -222,7 +222,7 @@ public class Chart<T> extends JQueryGenericContainer<List<T>> implements IChartL
 	{
 		super.onInitialize();
 
-		this.modelBehavior = this.newChartModelBehavior(this.getModel());
+		this.modelBehavior = this.newListModelBehavior(this.getModel());
 		this.add(this.modelBehavior);
 
 		this.add(JQueryWidget.newWidgetBehavior(this)); // cannot be in ctor as the markupId may be set manually afterward
@@ -309,13 +309,13 @@ public class Chart<T> extends JQueryGenericContainer<List<T>> implements IChartL
 	// Factories //
 
 	/**
-	 * Gets a new {@link ChartModelBehavior}
+	 * Gets a new {@link AjaxCallbackBehavior}
 	 *
-	 * @param model the {@link SchedulerModel}
-	 * @return a new {@link AbstractAjaxBehavior}
+	 * @param model the @{@code List} {@link Model}
+	 * @return a new {@link ListModelBehavior}, by default
 	 */
-	protected AjaxCallbackBehavior newChartModelBehavior(final IModel<List<T>> model)
+	protected AjaxCallbackBehavior newListModelBehavior(final IModel<List<T>> model)
 	{
-		return new ChartModelBehavior<T>(model);
+		return new ListModelBehavior<T>(model);
 	}
 }

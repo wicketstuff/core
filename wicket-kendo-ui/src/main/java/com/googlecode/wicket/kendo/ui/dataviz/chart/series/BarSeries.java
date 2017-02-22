@@ -14,45 +14,55 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.googlecode.wicket.kendo.ui.dataviz;
-
-import java.util.List;
-
-import org.apache.wicket.model.IModel;
-import org.apache.wicket.request.IRequestParameters;
-import org.json.JSONArray;
-
-import com.googlecode.wicket.jquery.core.behavior.AjaxCallbackBehavior;
-import com.googlecode.wicket.kendo.ui.scheduler.SchedulerModel;
+package com.googlecode.wicket.kendo.ui.dataviz.chart.series;
 
 /**
- * Provides the behavior that loads {@link Chart} objects/beans<br>
- * <b>Note: </b> the {@code List} of objects will be converted in JSON using {@code new JSONArray(list)}
- * 
+ * Provides a <i>bar</i> series object.
+ *
  * @author Sebastien Briquet - sebfz1
  *
  */
-public class ChartModelBehavior<T> extends AjaxCallbackBehavior
+public class BarSeries extends Series
 {
 	private static final long serialVersionUID = 1L;
+	private static final String TYPE = "bar";
 
-	private final IModel<List<T>> model;
+	private final String field;
 
 	/**
 	 * Constructor
-	 *
-	 * @param model the {@link SchedulerModel}
+	 * 
+	 * @param name the series name
+	 * @param field the series field, it should correspond to a model object's property
 	 */
-	public ChartModelBehavior(final IModel<List<T>> model)
+	public BarSeries(String name, String field)
 	{
-		this.model = model;
+		super(name, TYPE);
+
+		this.field = field;
 	}
 
-	@Override
-	protected String getResponse(IRequestParameters parameters)
+	/**
+	 * Constructor
+	 * 
+	 * @param name the series name
+	 * @param field the series field, it should correspond to a model object's property
+	 * @param axis the axis on which the series should be placed
+	 */
+	public BarSeries(String name, String field, String axis)
 	{
-		List<T> list = this.model.getObject(); // calls #load
+		super(name, TYPE, axis);
 
-		return new JSONArray(list).toString();
+		this.field = field;
+	}
+
+	/**
+	 * Gets the series field
+	 * 
+	 * @return the series field
+	 */
+	public String getField()
+	{
+		return this.field;
 	}
 }

@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.googlecode.wicket.kendo.ui.dataviz.series;
+package com.googlecode.wicket.kendo.ui.dataviz.chart.series;
 
 /**
  * Provides a <i>candlestick</i> series object.

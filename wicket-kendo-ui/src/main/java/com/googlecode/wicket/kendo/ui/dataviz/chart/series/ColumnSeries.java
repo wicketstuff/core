@@ -14,20 +14,21 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.googlecode.wicket.kendo.ui.dataviz.series;
+package com.googlecode.wicket.kendo.ui.dataviz.chart.series;
 
 /**
- * Provides a <i>line</i> series object.
+ * Provides a <i>column</i> series object.
  *
  * @author Sebastien Briquet - sebfz1
  *
  */
-public class LineSeries extends Series
+public class ColumnSeries extends Series
 {
 	private static final long serialVersionUID = 1L;
-	private static final String TYPE = "line";
+	private static final String TYPE = "column";
 
 	private final String field;
+	private String stack = null;
 
 	/**
 	 * Constructor
@@ -35,7 +36,7 @@ public class LineSeries extends Series
 	 * @param name the series name
 	 * @param field the series field, it should correspond to a model object's property
 	 */
-	public LineSeries(String name, String field)
+	public ColumnSeries(String name, String field)
 	{
 		super(name, TYPE);
 
@@ -49,10 +50,10 @@ public class LineSeries extends Series
 	 * @param field the series field, it should correspond to a model object's property
 	 * @param axis the axis on which the series should be placed
 	 */
-	public LineSeries(String name, String field, String axis)
+	public ColumnSeries(String name, String field, String axis)
 	{
 		super(name, TYPE, axis);
-		
+
 		this.field = field;
 	}
 
@@ -64,5 +65,28 @@ public class LineSeries extends Series
 	public String getField()
 	{
 		return this.field;
+	}
+
+	/**
+	 * Gets the stack the series belongs to
+	 * 
+	 * @return the stack
+	 */
+	public String getStack()
+	{
+		return this.stack;
+	}
+
+	/**
+	 * Sets the stack the series belongs to
+	 * 
+	 * @param stack the stack
+	 * @return this, for chaining
+	 */
+	public ColumnSeries setStack(String stack)
+	{
+		this.stack = stack;
+
+		return this;
 	}
 }

@@ -14,79 +14,70 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.googlecode.wicket.kendo.ui.dataviz.series;
+package com.googlecode.wicket.kendo.ui.dataviz.chart.series;
 
 /**
- * Provides a <i>column</i> series object.
+ * Provides a <i>rangeColumn</i> series object.
  *
  * @author Sebastien Briquet - sebfz1
  *
  */
-public class ColumnSeries extends Series
+public class RangeSeries extends Series
 {
 	private static final long serialVersionUID = 1L;
-	private static final String TYPE = "column";
+	private static final String TYPE = "rangeColumn";
 
-	private final String field;
-	private String stack = null;
+	private final String toField;
+	private final String fromField;
 
 	/**
 	 * Constructor
 	 * 
 	 * @param name the series name
-	 * @param field the series field, it should correspond to a model object's property
+	 * @param fromField the series from-field
+	 * @param toField the series to-field
 	 */
-	public ColumnSeries(String name, String field)
+	public RangeSeries(String name, String fromField, String toField)
 	{
 		super(name, TYPE);
 
-		this.field = field;
+		this.fromField = fromField;
+		this.toField = toField;
 	}
 
 	/**
 	 * Constructor
 	 * 
 	 * @param name the series name
-	 * @param field the series field, it should correspond to a model object's property
+	 * @param fromField the series from-field
+	 * @param toField the series to-field
 	 * @param axis the axis on which the series should be placed
 	 */
-	public ColumnSeries(String name, String field, String axis)
+	public RangeSeries(String name, String fromField, String toField, String axis)
 	{
 		super(name, TYPE, axis);
 
-		this.field = field;
+		this.fromField = fromField;
+		this.toField = toField;
 	}
 
 	/**
-	 * Gets the series field
+	 * Gets the series from-field
 	 * 
-	 * @return the series field
+	 * @return the series from-field
 	 */
-	public String getField()
+	public String getFromField()
 	{
-		return this.field;
+		return this.fromField;
 	}
 
 	/**
-	 * Gets the stack the series belongs to
+	 * Gets the series to-field
 	 * 
-	 * @return the stack
+	 * @return the series to-field
 	 */
-	public String getStack()
+	public String getToField()
 	{
-		return this.stack;
-	}
-
-	/**
-	 * Sets the stack the series belongs to
-	 * 
-	 * @param stack the stack
-	 * @return this, for chaining
-	 */
-	public ColumnSeries setStack(String stack)
-	{
-		this.stack = stack;
-
-		return this;
+		return this.toField;
 	}
 }
