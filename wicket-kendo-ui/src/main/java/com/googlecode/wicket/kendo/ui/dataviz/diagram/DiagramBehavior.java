@@ -20,6 +20,7 @@ import org.apache.wicket.Component;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.attributes.CallbackParameter;
 import org.apache.wicket.util.lang.Args;
+import org.apache.wicket.util.string.Strings;
 import org.json.JSONObject;
 
 import com.googlecode.wicket.jquery.core.JQueryEvent;
@@ -186,13 +187,16 @@ public abstract class DiagramBehavior extends KendoUIBehavior implements IJQuery
 	 */
 	protected static class ClickEvent extends JQueryEvent
 	{
-		private JSONObject object;
+		private JSONObject object = null;
 
 		public ClickEvent()
 		{
 			String data = RequestCycleUtils.getQueryParameterValue("data").toString();
 
-			this.object = new JSONObject(data);
+			if (!Strings.isEmpty(data))
+			{
+				this.object = new JSONObject(data);
+			}
 		}
 
 		public JSONObject getObject()
