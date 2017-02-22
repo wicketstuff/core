@@ -12,7 +12,7 @@ import com.googlecode.wicket.jquery.ui.form.button.IndicatingAjaxButton;
 import com.googlecode.wicket.jquery.ui.form.button.IndicatingAjaxButton.Position;
 import com.googlecode.wicket.jquery.ui.panel.JQueryFeedbackPanel;
 
-public class IndicatingAjaxButtonPage extends AbstractButtonPage
+public class IndicatingAjaxButtonPage extends AbstractButtonPage // NOSONAR
 {
 	private static final long serialVersionUID = 1L;
 	private static final Logger LOG = LoggerFactory.getLogger(IndicatingAjaxButtonPage.class);
@@ -27,7 +27,7 @@ public class IndicatingAjaxButtonPage extends AbstractButtonPage
 		form.add(feedbackPanel.setOutputMarkupId(true));
 
 		// Buttons //
-		form.add(new IndicatingAjaxButton("button1") {
+		form.add(new IndicatingAjaxButton("button1") { // NOSONAR
 
 			private static final long serialVersionUID = 1L;
 
@@ -51,7 +51,7 @@ public class IndicatingAjaxButtonPage extends AbstractButtonPage
 			}
 		});
 
-		form.add(new IndicatingAjaxButton("button2") {
+		form.add(new IndicatingAjaxButton("button2") { // NOSONAR
 
 			private static final long serialVersionUID = 1L;
 

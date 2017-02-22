@@ -25,7 +25,7 @@ import com.googlecode.wicket.jquery.ui.widget.dialog.AbstractFormDialog;
 import com.googlecode.wicket.jquery.ui.widget.dialog.DialogButton;
 import com.googlecode.wicket.kendo.ui.form.datetime.local.DateTimePicker;
 
-public abstract class DemoCalendarDialog extends AbstractFormDialog<DemoCalendarEvent>
+public abstract class DemoCalendarDialog extends AbstractFormDialog<DemoCalendarEvent> // NOSONAR
 {
 	private static final long serialVersionUID = 1L;
 	protected final DialogButton btnSubmit = new DialogButton(SUBMIT, Model.of("Save"));
@@ -57,7 +57,7 @@ public abstract class DemoCalendarDialog extends AbstractFormDialog<DemoCalendar
 		this.form.add(endDateTimePicker);
 
 		// All-day checkbox //
-		CheckBox checkAllDay = new AjaxCheckBox("allDay") {
+		CheckBox checkAllDay = new AjaxCheckBox("allDay") { // NOSONAR
 
 			private static final long serialVersionUID = 1L;
 

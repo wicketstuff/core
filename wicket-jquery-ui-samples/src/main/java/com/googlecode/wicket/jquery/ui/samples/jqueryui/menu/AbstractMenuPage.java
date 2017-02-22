@@ -5,7 +5,7 @@ import java.util.List;
 
 import com.googlecode.wicket.jquery.ui.samples.JQuerySamplePage;
 
-abstract class AbstractMenuPage extends JQuerySamplePage
+abstract class AbstractMenuPage extends JQuerySamplePage // NOSONAR
 {
 	private static final long serialVersionUID = 1L;
 

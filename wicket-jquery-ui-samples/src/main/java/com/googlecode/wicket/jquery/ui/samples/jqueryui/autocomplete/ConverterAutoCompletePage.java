@@ -15,7 +15,7 @@ import com.googlecode.wicket.jquery.ui.panel.JQueryFeedbackPanel;
 import com.googlecode.wicket.jquery.ui.samples.data.bean.Genre;
 import com.googlecode.wicket.jquery.ui.samples.data.dao.GenresDAO;
 
-public class ConverterAutoCompletePage extends AbstractAutoCompletePage
+public class ConverterAutoCompletePage extends AbstractAutoCompletePage // NOSONAR
 {
 	private static final long serialVersionUID = 1L;
 
@@ -30,7 +30,7 @@ public class ConverterAutoCompletePage extends AbstractAutoCompletePage
 		form.add(feedback.setOutputMarkupId(true));
 
 		// Auto-complete //
-		final AutoCompleteTextField<Genre> autocomplete = new AutoCompleteTextField<Genre>("autocomplete", form.getModel(), new TextRenderer<Genre>("name"), Genre.class) {
+		final AutoCompleteTextField<Genre> autocomplete = new AutoCompleteTextField<Genre>("autocomplete", form.getModel(), new TextRenderer<Genre>("name"), Genre.class) { // NOSONAR
 
 			private static final long serialVersionUID = 1L;
 
@@ -62,7 +62,7 @@ public class ConverterAutoCompletePage extends AbstractAutoCompletePage
 		form.add(autocomplete.setRequired(true));
 
 		// Ajax button //
-		form.add(new AjaxButton("button") {
+		form.add(new AjaxButton("button") { // NOSONAR
 
 			private static final long serialVersionUID = 1L;
 

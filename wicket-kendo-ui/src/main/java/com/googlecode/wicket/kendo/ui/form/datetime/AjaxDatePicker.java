@@ -32,7 +32,7 @@ import com.googlecode.wicket.jquery.core.event.IValueChangedListener;
  *
  * @author Sebastien Briquet - sebfz1
  */
-public class AjaxDatePicker extends DatePicker implements IValueChangedListener
+public class AjaxDatePicker extends DatePicker implements IValueChangedListener // NOSONAR
 {
 	private static final long serialVersionUID = 1L;
 

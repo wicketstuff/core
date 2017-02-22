@@ -23,11 +23,11 @@ import com.googlecode.wicket.kendo.ui.scheduler.SchedulerModel;
 import com.googlecode.wicket.kendo.ui.scheduler.resource.Resource;
 import com.googlecode.wicket.kendo.ui.scheduler.resource.ResourceList;
 
-public class SingleResourceSchedulerPage extends AbstractSchedulerPage
+public class SingleResourceSchedulerPage extends AbstractSchedulerPage // NOSONAR
 {
 	private static final long serialVersionUID = 1L;
-	private static final String AGENDA_1 = "Sebastien";
-	private static final String AGENDA_2 = "Samantha";
+	private static final String AGENDA_NAME1 = "The Man";
+	private static final String AGENDA_NAME2 = "The Woman";
 
 	private List<String> agendas;
 	private ResourceList resources;
@@ -44,9 +44,9 @@ public class SingleResourceSchedulerPage extends AbstractSchedulerPage
 
 		// MultiSelect //
 		this.agendas = new ArrayList<String>();
-		this.agendas.add(AGENDA_1);
+		this.agendas.add(AGENDA_NAME1);
 
-		final MultiSelect<String> multiselect = new MultiSelect<String>("select", Model.ofList(this.agendas), Arrays.asList(AGENDA_1, AGENDA_2));
+		final MultiSelect<String> multiselect = new MultiSelect<String>("select", Model.ofList(this.agendas), Arrays.asList(AGENDA_NAME1, AGENDA_NAME2));
 		form.add(multiselect);
 
 		// Scheduler //
@@ -59,7 +59,7 @@ public class SingleResourceSchedulerPage extends AbstractSchedulerPage
 		options.set("workDayStart", "new Date('2014/1/1 08:00 AM')");
 		options.set("workDayEnd", "new Date('2014/1/1 6:00 PM')");
 
-		final Scheduler scheduler = new Scheduler("scheduler", newSchedulerModel(), this.resources, options) {
+		final Scheduler scheduler = new Scheduler("scheduler", newSchedulerModel(), this.resources, options) { // NOSONAR
 
 			private static final long serialVersionUID = 1L;
 
@@ -113,7 +113,7 @@ public class SingleResourceSchedulerPage extends AbstractSchedulerPage
 
 		// Buttons //
 
-		form.add(new AjaxButton("refresh") {
+		form.add(new AjaxButton("refresh") { // NOSONAR
 
 			private static final long serialVersionUID = 1L;
 
@@ -127,16 +127,19 @@ public class SingleResourceSchedulerPage extends AbstractSchedulerPage
 
 	// Properties //
 
-	protected boolean isAgendaSelected(Integer agendaId)
+	protected boolean isAgendaSelected(Object agendaId)
 	{
 		String agendaName = "";
 
-		for (Resource resource : this.resources)
+		if (agendaId != null)
 		{
-			if (agendaId.equals(resource.getId()))
+			for (Resource resource : this.resources)
 			{
-				agendaName = resource.getText();
-				break;
+				if (agendaId.equals(resource.getId())) // both are Strings
+				{
+					agendaName = resource.getText();
+					break;
+				}
 			}
 		}
 
@@ -154,12 +157,9 @@ public class SingleResourceSchedulerPage extends AbstractSchedulerPage
 			@Override
 			public void visit(SchedulerEvent event)
 			{
-				Integer agendaId = event.getValue(ResourceEventsDAO.AGENDA_ID, Integer.class);
+				Object agendaId = event.getValue(ResourceEventsDAO.AGENDA_ID);
 
-				if (agendaId != null)
-				{
-				    event.setVisible(isAgendaSelected(agendaId));
-				}
+				event.setVisible(isAgendaSelected(agendaId));
 			}
 		};
 	}
@@ -167,8 +167,8 @@ public class SingleResourceSchedulerPage extends AbstractSchedulerPage
 	static ResourceList newResourceList()
 	{
 		ResourceList list = new ResourceList("Agenda", ResourceEventsDAO.AGENDA_ID);
-		list.add(new Resource(1, AGENDA_1, "#6699cc"));
-		list.add(new Resource(2, AGENDA_2, "#cc6699"));
+		list.add(new Resource(ResourceEventsDAO.AGENDA_1, AGENDA_NAME1, "#6699cc")); // using string ids
+		list.add(new Resource(ResourceEventsDAO.AGENDA_2, AGENDA_NAME2, "#cc6699"));
 
 		return list;
 	}

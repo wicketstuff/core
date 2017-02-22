@@ -57,17 +57,18 @@ public class User implements IClusterable
 	}
 
 	// Bean //
+
 	public static class Avatar implements IClusterable
 	{
 		private static final long serialVersionUID = 1L;
 
 		private final int id;
-		private final String path;
+		private final String image;
 
-		public Avatar(final int id, final String path)
+		public Avatar(final int id, final String image)
 		{
 			this.id = id;
-			this.path = path;
+			this.image = image;
 		}
 
 		public int getId()
@@ -75,9 +76,14 @@ public class User implements IClusterable
 			return this.id;
 		}
 
+		public String getImage()
+		{
+			return this.image;
+		}
+
 		public String getImagePath()
 		{
-			return "images/avatars/" + this.path;
+			return "images/avatars/" + this.getImage();
 		}
 
 		@Override

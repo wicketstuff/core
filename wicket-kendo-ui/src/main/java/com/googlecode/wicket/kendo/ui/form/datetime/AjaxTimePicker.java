@@ -32,7 +32,7 @@ import com.googlecode.wicket.jquery.core.event.IValueChangedListener;
  *
  * @author Sebastien Briquet - sebfz1
  */
-public class AjaxTimePicker extends TimePicker implements IValueChangedListener
+public class AjaxTimePicker extends TimePicker implements IValueChangedListener // NOSONAR
 {
 	private static final long serialVersionUID = 1L;
 

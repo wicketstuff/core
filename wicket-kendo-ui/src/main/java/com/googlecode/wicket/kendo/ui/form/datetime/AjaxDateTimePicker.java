@@ -43,7 +43,7 @@ import com.googlecode.wicket.kendo.ui.ajax.OnChangeAjaxBehavior;
  *
  * @author Sebastien Briquet - sebfz1
  */
-public class AjaxDateTimePicker extends DateTimePicker implements IValueChangedListener
+public class AjaxDateTimePicker extends DateTimePicker implements IValueChangedListener // NOSONAR
 {
 	private static final long serialVersionUID = 1L;
 	private static final Logger LOG = LoggerFactory.getLogger(AjaxDateTimePicker.class);
@@ -240,7 +240,7 @@ public class AjaxDateTimePicker extends DateTimePicker implements IValueChangedL
 	@Override
 	protected DatePicker newDatePicker(String id, IModel<Date> model, Locale locale, String datePattern, Options options)
 	{
-		return new AjaxDatePicker(id, model, locale, datePattern, options) {
+		return new AjaxDatePicker(id, model, locale, datePattern, options) { // NOSONAR
 
 			private static final long serialVersionUID = 1L;
 
@@ -259,7 +259,7 @@ public class AjaxDateTimePicker extends DateTimePicker implements IValueChangedL
 					}
 				};
 
-				return new DatePickerBehavior(selector, this.options, listener) {
+				return new DatePickerBehavior(selector, this.options, listener) { // NOSONAR
 
 					private static final long serialVersionUID = 1L;
 
@@ -276,7 +276,7 @@ public class AjaxDateTimePicker extends DateTimePicker implements IValueChangedL
 	@Override
 	protected TimePicker newTimePicker(String id, IModel<Date> model, Locale locale, String timePattern, Options options)
 	{
-		return new AjaxTimePicker(id, model, locale, timePattern, options) {
+		return new AjaxTimePicker(id, model, locale, timePattern, options) { // NOSONAR
 
 			private static final long serialVersionUID = 1L;
 
@@ -295,7 +295,7 @@ public class AjaxDateTimePicker extends DateTimePicker implements IValueChangedL
 					}
 				};
 
-				return new TimePickerBehavior(selector, this.options, listener) {
+				return new TimePickerBehavior(selector, this.options, listener) { // NOSONAR
 
 					private static final long serialVersionUID = 1L;
 

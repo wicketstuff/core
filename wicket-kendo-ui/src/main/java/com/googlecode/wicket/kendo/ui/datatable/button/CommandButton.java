@@ -136,6 +136,7 @@ public class CommandButton extends AbstractButton
 		BuilderUtils.append(builder, "text", this.getText().getObject());
 
 		String css = this.getCSSClass();
+
 		if (!Strings.isEmpty(css)) /* important */
 		{
 			builder.append(", ");

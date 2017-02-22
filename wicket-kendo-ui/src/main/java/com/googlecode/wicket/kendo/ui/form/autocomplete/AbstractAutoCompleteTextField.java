@@ -45,7 +45,7 @@ import com.googlecode.wicket.kendo.ui.template.KendoTemplateBehavior;
  * @param <T> the model object type
  * @param <C> the model of choices
  */
-public abstract class AbstractAutoCompleteTextField<T, C> extends TextField<T> implements IJQueryWidget, IAutoCompleteListener
+public abstract class AbstractAutoCompleteTextField<T, C> extends TextField<T> implements IJQueryWidget, IAutoCompleteListener // NOSONAR
 {
 	private static final long serialVersionUID = 1L;
 
@@ -338,7 +338,7 @@ public abstract class AbstractAutoCompleteTextField<T, C> extends TextField<T> i
 	@Override
 	public JQueryBehavior newWidgetBehavior(String selector)
 	{
-		return new AutoCompleteBehavior(selector, this) {
+		return new AutoCompleteBehavior(selector, this) { // NOSONAR
 
 			private static final long serialVersionUID = 1L;
 

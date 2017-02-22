@@ -12,7 +12,7 @@ import com.googlecode.wicket.kendo.ui.form.button.Button;
 import com.googlecode.wicket.kendo.ui.form.combobox.ComboBox;
 import com.googlecode.wicket.kendo.ui.panel.KendoFeedbackPanel;
 
-public class DefaultComboBoxPage extends AbstractComboBoxPage
+public class DefaultComboBoxPage extends AbstractComboBoxPage // NOSONAR
 {
 	private static final long serialVersionUID = 1L;
 	private static final List<String> GENRES = Arrays.asList("Black Metal", "Death Metal", "Doom Metal", "Folk Metal", "Gothic Metal", "Heavy Metal", "Power Metal", "Symphonic Metal", "Trash Metal", "Vicking Metal");
@@ -31,7 +31,7 @@ public class DefaultComboBoxPage extends AbstractComboBoxPage
 		form.add(combobox); //.setRequired(true)
 
 		// Buttons //
-		form.add(new Button("submit") {
+		form.add(new Button("submit") { // NOSONAR
 
 			private static final long serialVersionUID = 1L;
 
@@ -42,7 +42,7 @@ public class DefaultComboBoxPage extends AbstractComboBoxPage
 			}
 		});
 
-		form.add(new AjaxButton("button") {
+		form.add(new AjaxButton("button") { // NOSONAR
 
 			private static final long serialVersionUID = 1L;
 

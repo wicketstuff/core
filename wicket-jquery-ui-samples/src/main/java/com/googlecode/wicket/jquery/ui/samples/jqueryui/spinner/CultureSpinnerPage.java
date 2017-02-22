@@ -18,7 +18,7 @@ import com.googlecode.wicket.jquery.ui.panel.JQueryFeedbackPanel;
 import com.googlecode.wicket.jquery.ui.samples.SampleApplication;
 import com.googlecode.wicket.kendo.ui.form.dropdown.AjaxDropDownList;
 
-public class CultureSpinnerPage extends AbstractSpinnerPage
+public class CultureSpinnerPage extends AbstractSpinnerPage // NOSONAR
 {
 	private static final long serialVersionUID = 1L;
 
@@ -43,7 +43,7 @@ public class CultureSpinnerPage extends AbstractSpinnerPage
 		form.add(this.spinner);
 
 		// Radio //
-		CultureDropDown dropdown = new CultureDropDown("dropdown") {
+		CultureDropDown dropdown = new CultureDropDown("dropdown") { // NOSONAR
 
 			private static final long serialVersionUID = 1L;
 
@@ -58,7 +58,7 @@ public class CultureSpinnerPage extends AbstractSpinnerPage
 		form.add(dropdown);
 
 		// Buttons //
-		form.add(new Button("submit") {
+		form.add(new Button("submit") { // NOSONAR
 
 			private static final long serialVersionUID = 1L;
 
@@ -69,7 +69,7 @@ public class CultureSpinnerPage extends AbstractSpinnerPage
 			}
 		});
 
-		form.add(new AjaxButton("button") {
+		form.add(new AjaxButton("button") { // NOSONAR
 
 			private static final long serialVersionUID = 1L;
 
@@ -94,7 +94,7 @@ public class CultureSpinnerPage extends AbstractSpinnerPage
 		this.info("The model object is: " + form.getModelObject());
 	}
 
-	static class CultureSpinner extends Spinner<Double>
+	static class CultureSpinner extends Spinner<Double> // NOSONAR
 	{
 		private static final long serialVersionUID = 1L;
 		static final String CULTURE = "fr-FR"; //default culture
@@ -118,7 +118,7 @@ public class CultureSpinnerPage extends AbstractSpinnerPage
 		}
 	}
 
-	class CultureDropDown extends AjaxDropDownList<String>
+	class CultureDropDown extends AjaxDropDownList<String> // NOSONAR
 	{
 		private static final long serialVersionUID = 1L;
 

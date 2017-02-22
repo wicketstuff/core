@@ -13,7 +13,7 @@ import com.googlecode.wicket.jquery.ui.panel.JQueryFeedbackPanel;
 import com.googlecode.wicket.jquery.ui.samples.component.UploadDialog;
 import com.googlecode.wicket.jquery.ui.widget.dialog.DialogButton;
 
-public class UploadDialogPage extends AbstractDialogPage
+public class UploadDialogPage extends AbstractDialogPage // NOSONAR
 {
 	private static final long serialVersionUID = 1L;
 	private static final Logger LOG = LoggerFactory.getLogger(UploadDialogPage.class);
@@ -28,7 +28,7 @@ public class UploadDialogPage extends AbstractDialogPage
 		form.add(feedback);
 
 		// Dialog //
-		final UploadDialog dialog = new UploadDialog("dialog", "Upload file") {
+		final UploadDialog dialog = new UploadDialog("dialog", "Upload file") { // NOSONAR
 
 			private static final long serialVersionUID = 1L;
 
@@ -70,7 +70,7 @@ public class UploadDialogPage extends AbstractDialogPage
 		this.add(dialog); // the dialog is not within the form
 
 		// Buttons //
-		form.add(new AjaxButton("open") {
+		form.add(new AjaxButton("open") { // NOSONAR
 
 			private static final long serialVersionUID = 1L;
 

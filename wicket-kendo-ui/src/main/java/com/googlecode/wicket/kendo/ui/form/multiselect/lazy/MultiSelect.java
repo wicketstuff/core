@@ -45,7 +45,7 @@ import com.googlecode.wicket.kendo.ui.template.KendoTemplateBehavior;
  *
  * @param <T> the model object type
  */
-public abstract class MultiSelect<T> extends FormComponent<Collection<T>> implements IJQueryWidget, IChoiceProvider<T>
+public abstract class MultiSelect<T> extends FormComponent<Collection<T>> implements IJQueryWidget, IChoiceProvider<T> // NOSONAR
 {
 	private static final long serialVersionUID = 1L;
 
@@ -300,7 +300,7 @@ public abstract class MultiSelect<T> extends FormComponent<Collection<T>> implem
 	@Override
 	public JQueryBehavior newWidgetBehavior(String selector)
 	{
-		return new MultiSelectBehavior(selector, new SelectionChangedAdapter()) {
+		return new MultiSelectBehavior(selector, new SelectionChangedAdapter()) { // NOSONAR
 
 			private static final long serialVersionUID = 1L;
 

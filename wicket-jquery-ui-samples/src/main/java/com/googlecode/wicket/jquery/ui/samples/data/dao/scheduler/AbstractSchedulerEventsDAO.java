@@ -3,37 +3,14 @@ package com.googlecode.wicket.jquery.ui.samples.data.dao.scheduler;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicInteger;
 
 import com.googlecode.wicket.kendo.ui.scheduler.SchedulerEvent;
 
 public abstract class AbstractSchedulerEventsDAO
 {
-	public static SchedulerEvent newEvent(Date date)
-	{
-		return new SchedulerEvent(SchedulerEvent.NEW_ID, "", date);
-	}
+	protected static AtomicInteger sequence = new AtomicInteger();
 
-	public static SchedulerEvent newEvent(Date start, Date end)
-	{
-		return new SchedulerEvent(SchedulerEvent.NEW_ID, "", start, end);
-	}
-
-	/**
-	 * Helper that indicates whether an event is in the given date range (between start date & end date)
-	 *
-	 * @param event
-	 * @param start
-	 * @param end
-	 * @return true or false
-	 */
-	public static boolean isInRange(SchedulerEvent event, Date start, Date end)
-	{
-		Date date = event.getStart();
-
-		return date != null && start.compareTo(date) <= 0 && end.compareTo(date) >= 0;
-	}
-
-	private int id = SchedulerEvent.NEW_ID;
 	protected final List<SchedulerEvent> list;
 
 	protected AbstractSchedulerEventsDAO()
@@ -41,16 +18,11 @@ public abstract class AbstractSchedulerEventsDAO
 		this.list = new ArrayList<SchedulerEvent>();
 	}
 
-	protected final int newId()
-	{
-		return ++this.id;
-	}
-
-	public SchedulerEvent getEvent(int eventId)
+	public SchedulerEvent getEvent(Integer eventId)
 	{
 		for (SchedulerEvent event : this.list)
 		{
-			if (event.getId() == eventId)
+			if (eventId.equals(event.getId(Integer.class)))
 			{
 				return event;
 			}
@@ -65,7 +37,7 @@ public abstract class AbstractSchedulerEventsDAO
 
 		for (SchedulerEvent task : this.list)
 		{
-			if (AbstractSchedulerEventsDAO.isInRange(task, start, end))
+			if (isInRange(task, start, end))
 			{
 				events.add(task);
 			}
@@ -78,7 +50,7 @@ public abstract class AbstractSchedulerEventsDAO
 	{
 		if (SchedulerEvent.isNew(event))
 		{
-			event.setId(this.newId());
+			event.setId(newId());
 			this.list.add(event);
 		}
 	}
@@ -91,7 +63,8 @@ public abstract class AbstractSchedulerEventsDAO
 	 */
 	public SchedulerEvent update(SchedulerEvent event)
 	{
-		SchedulerEvent e = this.getEvent(event.getId());
+		Integer eventId = event.getId(Integer.class);
+		SchedulerEvent e = this.getEvent(eventId);
 
 		if (e != null)
 		{
@@ -112,11 +85,34 @@ public abstract class AbstractSchedulerEventsDAO
 
 	public void delete(SchedulerEvent event)
 	{
-		SchedulerEvent e = this.getEvent(event.getId());
+		Integer eventId = event.getId(Integer.class);
+		SchedulerEvent e = this.getEvent(eventId);
 
 		if (e != null)
 		{
 			this.list.remove(e);
 		}
+	}
+
+	// static //
+
+	protected static synchronized int newId()
+	{
+		return sequence.incrementAndGet();
+	}
+
+	/**
+	 * Helper that indicates whether an event is in the given date range (between start date & end date)
+	 *
+	 * @param event
+	 * @param start
+	 * @param end
+	 * @return true or false
+	 */
+	public static boolean isInRange(SchedulerEvent event, Date start, Date end)
+	{
+		Date date = event.getStart();
+
+		return date != null && start.compareTo(date) <= 0 && end.compareTo(date) >= 0;
 	}
 }

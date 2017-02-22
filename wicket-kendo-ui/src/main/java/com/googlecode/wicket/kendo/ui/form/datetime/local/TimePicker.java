@@ -36,7 +36,7 @@ import com.googlecode.wicket.kendo.ui.form.datetime.TimePickerBehavior;
  *
  * @author Sebastien Briquet - sebfz1
  */
-public class TimePicker extends LocalTextField<LocalTime>
+public class TimePicker extends LocalTextField<LocalTime> // NOSONAR
 {
 	private static final long serialVersionUID = 1L;
 
@@ -256,7 +256,7 @@ public class TimePicker extends LocalTextField<LocalTime>
 	 */
 	private static IConverter<LocalTime> newConverter(final String pattern)
 	{
-		return new IConverter<LocalTime>() {
+		return new IConverter<LocalTime>() { // NOSONAR
 
 			private static final long serialVersionUID = 1L;
 

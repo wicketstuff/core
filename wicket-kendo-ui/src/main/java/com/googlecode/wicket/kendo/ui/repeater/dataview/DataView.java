@@ -327,7 +327,7 @@ public class DataView<T> extends WebMarkupContainer implements IJQueryWidget, IL
 	@Override
 	public JQueryBehavior newWidgetBehavior(String selector)
 	{
-		return new ListViewBehavior(selector, this.newDataSource(), this, this.options) {
+		return new ListViewBehavior(selector, this.newDataSource(), this, this.options) { // NOSONAR
 
 			private static final long serialVersionUID = 1L;
 

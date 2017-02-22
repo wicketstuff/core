@@ -21,6 +21,7 @@ import java.util.List;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.core.request.handler.IPartialPageRequestHandler;
 import org.apache.wicket.util.lang.Args;
+import org.json.JSONObject;
 
 import com.googlecode.wicket.jquery.core.JQueryBehavior;
 import com.googlecode.wicket.jquery.core.JQueryContainer;
@@ -48,7 +49,7 @@ public class Scheduler extends JQueryContainer implements ISchedulerListener
 		horizontal, vertical
 	}
 
-	private SchedulerEventFactory factory;
+	private ISchedulerConverter converter;
 	private SchedulerModelBehavior modelBehavior; // load events
 
 	private final ResourceListModel resourceListModel;
@@ -193,6 +194,17 @@ public class Scheduler extends JQueryContainer implements ISchedulerListener
 		this.onRefresh(handler);
 	}
 
+	/**
+	 * Utility method that converts a {@link JSONObject} event to a {@link SchedulerEvent}
+	 * 
+	 * @param object the {@link JSONObject}
+	 * @return a new {@link SchedulerEvent}
+	 */
+	protected SchedulerEvent eventOf(JSONObject object)
+	{
+		return this.getConverter().toObject(object, this.getResourceListModel().getObject());
+	}
+
 	// Properties //
 
 	@Override
@@ -252,18 +264,18 @@ public class Scheduler extends JQueryContainer implements ISchedulerListener
 	}
 
 	/**
-	 * Gets the {@link SchedulerEventFactory}
+	 * Gets the {@link ISchedulerConverter}
 	 * 
-	 * @return the {@code SchedulerEventFactory}
+	 * @return the {@link ISchedulerConverter}
 	 */
-	protected final SchedulerEventFactory getSchedulerEventFactory()
+	protected final ISchedulerConverter getConverter()
 	{
-		if (this.factory == null)
+		if (this.converter == null)
 		{
-			this.factory = this.newSchedulerEventFactory();
+			this.converter = this.newConverter();
 		}
 
-		return this.factory;
+		return this.converter;
 	}
 
 	/**
@@ -286,6 +298,16 @@ public class Scheduler extends JQueryContainer implements ISchedulerListener
 		return GroupOrientation.horizontal;
 	}
 
+	/**
+	 * Indicates whether the resources are grouped by date.
+	 *
+	 * @return {@code false} by default
+	 */
+	protected boolean isGroupedByDate()
+	{
+		return false;
+	}
+
 	// Events //
 
 	@Override
@@ -293,7 +315,7 @@ public class Scheduler extends JQueryContainer implements ISchedulerListener
 	{
 		super.onInitialize();
 
-		this.modelBehavior = this.newSchedulerModelBehavior(this.getModel(), this.getSchedulerEventFactory());
+		this.modelBehavior = this.newSchedulerModelBehavior(this.getModel(), this.getConverter());
 		this.add(this.modelBehavior);
 
 		// templates //
@@ -327,10 +349,12 @@ public class Scheduler extends JQueryContainer implements ISchedulerListener
 
 		if (!groups.isEmpty())
 		{
-			Options options = new Options();
-			options.set("resources", Options.asString(groups));
-			options.set("orientation", Options.asString(this.getGroupOrientation()));
-			behavior.setOption("group", options);
+			Options groupOptions = new Options();
+			groupOptions.set("date", this.isGroupedByDate());
+			groupOptions.set("resources", Options.asString(groups));
+			groupOptions.set("orientation", Options.asString(this.getGroupOrientation()));
+
+			behavior.setOption("group", groupOptions);
 		}
 
 		// set templates (if any) //
@@ -343,6 +367,9 @@ public class Scheduler extends JQueryContainer implements ISchedulerListener
 		{
 			behavior.setOption("eventTemplate", String.format("jQuery('#%s').html()", this.getEventTemplateToken()));
 		}
+
+		// resource //
+		behavior.setOption("resources", this.getResourceListModel());
 	}
 
 	/**
@@ -366,6 +393,18 @@ public class Scheduler extends JQueryContainer implements ISchedulerListener
 	}
 
 	@Override
+	public final void onEdit(AjaxRequestTarget target, JSONObject object, SchedulerViewType view)
+	{
+		this.onEdit(target, this.eventOf(object), view);
+	}
+
+	/**
+	 * Triggered when a {@link SchedulerEvent} is edited.
+	 * 
+	 * @param target the {@link AjaxRequestTarget}
+	 * @param event the {@link SchedulerEvent}
+	 * @param view the {@link SchedulerViewType}
+	 */
 	public void onEdit(AjaxRequestTarget target, SchedulerEvent event, SchedulerViewType view)
 	{
 		// noop
@@ -377,19 +416,64 @@ public class Scheduler extends JQueryContainer implements ISchedulerListener
 		this.refresh(target);
 	}
 
+	/**
+	 * {@inheritDoc}<br>
+	 * <b>Warning:</b> to be overridden with care!
+	 */
 	@Override
+	public void onCreate(AjaxRequestTarget target, JSONObject object)
+	{
+		this.onCreate(target, this.eventOf(object));
+	}
+
+	/**
+	 * Triggered when a {@link SchedulerEvent} is created.
+	 * 
+	 * @param target the {@link AjaxRequestTarget}
+	 * @param event the {@link SchedulerEvent}
+	 */
 	public void onCreate(AjaxRequestTarget target, SchedulerEvent event)
 	{
 		// noop
 	}
 
+	/**
+	 * {@inheritDoc}<br>
+	 * <b>Warning:</b> to be overridden with care!
+	 */
 	@Override
+	public void onUpdate(AjaxRequestTarget target, JSONObject object)
+	{
+		this.onUpdate(target, this.eventOf(object));
+	}
+
+	/**
+	 * Triggered when a {@link SchedulerEvent} is updated
+	 * 
+	 * @param target the {@link AjaxRequestTarget}
+	 * @param event the {@link SchedulerEvent}
+	 */
 	public void onUpdate(AjaxRequestTarget target, SchedulerEvent event)
 	{
 		// noop
 	}
 
+	/**
+	 * {@inheritDoc}<br>
+	 * <b>Warning:</b> to be overridden with care!
+	 */
 	@Override
+	public void onDelete(AjaxRequestTarget target, JSONObject object)
+	{
+		this.onDelete(target, this.eventOf(object));
+	}
+
+	/**
+	 * Triggered when a {@link SchedulerEvent} is deleted
+	 * 
+	 * @param target the {@link AjaxRequestTarget}
+	 * @param event the {@link SchedulerEvent}
+	 */
 	public void onDelete(AjaxRequestTarget target, SchedulerEvent event)
 	{
 		// noop
@@ -403,7 +487,7 @@ public class Scheduler extends JQueryContainer implements ISchedulerListener
 	@Override
 	public JQueryBehavior newWidgetBehavior(String selector)
 	{
-		return new SchedulerBehavior(selector, this.options, this.getSchedulerEventFactory(), this) {
+		return new SchedulerBehavior(selector, this.options, this) { // NOSONAR
 
 			private static final long serialVersionUID = 1L;
 
@@ -413,12 +497,6 @@ public class Scheduler extends JQueryContainer implements ISchedulerListener
 			protected CharSequence getDataSourceUrl()
 			{
 				return Scheduler.this.getCallbackUrl();
-			}
-
-			@Override
-			protected ResourceListModel getResourceListModel()
-			{
-				return Scheduler.this.resourceListModel;
 			}
 
 			// Events //
@@ -432,6 +510,16 @@ public class Scheduler extends JQueryContainer implements ISchedulerListener
 	}
 
 	// Factory methods //
+
+	/**
+	 * Gets a new {@link ISchedulerConverter}
+	 * 
+	 * @return a new {@code SchedulerConverter} by default
+	 */
+	protected ISchedulerConverter newConverter()
+	{
+		return new SchedulerConverter();
+	}
 
 	/**
 	 * Gets a new {@link IJQueryTemplate} to customize the built-in edit window
@@ -457,24 +545,14 @@ public class Scheduler extends JQueryContainer implements ISchedulerListener
 	}
 
 	/**
-	 * Gets a new {@link SchedulerEventFactory}
-	 * 
-	 * @return a new {@code SchedulerEventFactory}
-	 */
-	protected SchedulerEventFactory newSchedulerEventFactory()
-	{
-		return new SchedulerEventFactory();
-	}
-
-	/**
 	 * Gets a new {@link SchedulerModelBehavior}
 	 *
 	 * @param model the {@code SchedulerModel}
-	 * @param factory the {@code SchedulerEventFactory}
+	 * @param converter the {@code SchedulerEventFactory}
 	 * @return the {@code SchedulerModelBehavior}
 	 */
-	protected SchedulerModelBehavior newSchedulerModelBehavior(final SchedulerModel model, final SchedulerEventFactory factory)
+	protected SchedulerModelBehavior newSchedulerModelBehavior(final SchedulerModel model, final ISchedulerConverter converter)
 	{
-		return new SchedulerModelBehavior(model, factory);
+		return new SchedulerModelBehavior(model, converter);
 	}
 }

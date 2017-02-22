@@ -35,7 +35,7 @@ import com.googlecode.wicket.jquery.core.utils.LocaleUtils;
  *
  * @author Sebastien Briquet - sebfz1
  */
-public class DateTimePicker extends FormComponentPanel<Date> implements ITextFormatProvider
+public class DateTimePicker extends FormComponentPanel<Date> implements ITextFormatProvider // NOSONAR
 {
 	private static final long serialVersionUID = 1L;
 

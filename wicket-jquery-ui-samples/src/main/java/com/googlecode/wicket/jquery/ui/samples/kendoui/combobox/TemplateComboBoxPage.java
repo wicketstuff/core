@@ -15,7 +15,7 @@ import com.googlecode.wicket.kendo.ui.form.button.Button;
 import com.googlecode.wicket.kendo.ui.form.combobox.ComboBox;
 import com.googlecode.wicket.kendo.ui.panel.KendoFeedbackPanel;
 
-public class TemplateComboBoxPage extends AbstractComboBoxPage
+public class TemplateComboBoxPage extends AbstractComboBoxPage // NOSONAR
 {
 	private static final long serialVersionUID = 1L;
 
@@ -29,7 +29,7 @@ public class TemplateComboBoxPage extends AbstractComboBoxPage
 		form.add(feedback);
 
 		// ComboBox //
-		final ComboBox<Genre> combobox = new ComboBox<Genre>("combobox", new Model<String>(), GenresDAO.all()) {
+		final ComboBox<Genre> combobox = new ComboBox<Genre>("combobox", new Model<String>(), GenresDAO.all()) { // NOSONAR
 
 			private static final long serialVersionUID = 1L;
 
@@ -67,7 +67,7 @@ public class TemplateComboBoxPage extends AbstractComboBoxPage
 		form.add(combobox.setListWidth(200));
 
 		// Buttons //
-		form.add(new Button("submit") {
+		form.add(new Button("submit") { // NOSONAR
 
 			private static final long serialVersionUID = 1L;
 
@@ -78,7 +78,7 @@ public class TemplateComboBoxPage extends AbstractComboBoxPage
 			}
 		});
 
-		form.add(new AjaxButton("button") {
+		form.add(new AjaxButton("button") { // NOSONAR
 
 			private static final long serialVersionUID = 1L;
 

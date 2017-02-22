@@ -33,7 +33,7 @@ import com.googlecode.wicket.jquery.core.event.SelectionChangedAdapter;
  *
  * @param <T> the model object type
  */
-public class DropDownList<T> extends DropDownChoice<T> implements IJQueryWidget
+public class DropDownList<T> extends DropDownChoice<T> implements IJQueryWidget // NOSONAR
 {
 	private static final long serialVersionUID = 1L;
 

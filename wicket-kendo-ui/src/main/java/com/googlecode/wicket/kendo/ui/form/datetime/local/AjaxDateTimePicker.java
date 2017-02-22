@@ -228,7 +228,7 @@ public class AjaxDateTimePicker extends DateTimePicker implements IValueChangedL
 	 */
 	private static IConverter<LocalDateTime> newConverter(final String pattern)
 	{
-		return new IConverter<LocalDateTime>() {
+		return new IConverter<LocalDateTime>() { // NOSONAR
 
 			private static final long serialVersionUID = 1L;
 
@@ -256,7 +256,7 @@ public class AjaxDateTimePicker extends DateTimePicker implements IValueChangedL
 	@Override
 	protected DatePicker newDatePicker(String id, IModel<LocalDate> model, Locale locale, String datePattern, Options options)
 	{
-		return new AjaxDatePicker(id, model, locale, datePattern, options) {
+		return new AjaxDatePicker(id, model, locale, datePattern, options) { // NOSONAR
 
 			private static final long serialVersionUID = 1L;
 
@@ -275,7 +275,7 @@ public class AjaxDateTimePicker extends DateTimePicker implements IValueChangedL
 					}
 				};
 
-				return new DatePickerBehavior(selector, this.options, listener) {
+				return new DatePickerBehavior(selector, this.options, listener) { // NOSONAR
 
 					private static final long serialVersionUID = 1L;
 
@@ -292,7 +292,7 @@ public class AjaxDateTimePicker extends DateTimePicker implements IValueChangedL
 	@Override
 	protected TimePicker newTimePicker(String id, IModel<LocalTime> model, Locale locale, String timePattern, Options options)
 	{
-		return new AjaxTimePicker(id, model, locale, timePattern, options) {
+		return new AjaxTimePicker(id, model, locale, timePattern, options) { // NOSONAR
 
 			private static final long serialVersionUID = 1L;
 
@@ -311,7 +311,7 @@ public class AjaxDateTimePicker extends DateTimePicker implements IValueChangedL
 					}
 				};
 
-				return new TimePickerBehavior(selector, this.options, listener) {
+				return new TimePickerBehavior(selector, this.options, listener) { // NOSONAR
 
 					private static final long serialVersionUID = 1L;
 

@@ -21,7 +21,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
 
-import com.googlecode.wicket.jquery.core.Options;
+import org.json.JSONObject;
 
 /**
  * Defines a resource for the Kendo UI Scheduler<br>
@@ -37,10 +37,10 @@ public class Resource implements Serializable
 {
 	private static final long serialVersionUID = 1L;
 
-	private final Id<?> id;
+	private final Object id;
 	private String text;
 	private String color;
-	
+
 	/** optional fields */
 	private final Map<String, Object> fields = new HashMap<String, Object>();
 
@@ -51,7 +51,7 @@ public class Resource implements Serializable
 	 */
 	protected Resource(String id)
 	{
-		this(Id.valueOf(id), null, null);
+		this(id, null, null);
 	}
 
 	/**
@@ -59,26 +59,35 @@ public class Resource implements Serializable
 	 *
 	 * @param id - the resource id
 	 */
-	protected Resource(Integer id)
+	protected Resource(Object id)
 	{
-		this(Id.valueOf(id), null, null);
+		this(id, null, null);
 	}
 
 	/**
-	 * Constructor<br>
-	 * <b>Caution:</b> string-numbers as will be interpreted as integers
+	 * Constructor
 	 *
 	 * @param id - the resource id
 	 * @param text - the text (ie: the name of the resource)
 	 */
 	public Resource(String id, String text)
 	{
-		this(Id.valueOf(id), text, null);
+		this(id, text, null);
 	}
 
 	/**
-	 * Constructor<br>
-	 * <b>Caution:</b> string-numbers as will be interpreted as integers
+	 * Constructor
+	 *
+	 * @param id - the resource id
+	 * @param text - the text (ie: the name of the resource)
+	 */
+	public Resource(Object id, String text)
+	{
+		this(id, text, null);
+	}
+
+	/**
+	 * Constructor
 	 *
 	 * @param id - the resource id
 	 * @param text - the text (ie: the name of the resource)
@@ -86,18 +95,9 @@ public class Resource implements Serializable
 	 */
 	public Resource(String id, String text, String color)
 	{
-		this(Id.valueOf(id), text, color);
-	}
-
-	/**
-	 * Constructor
-	 *
-	 * @param id - the resource id
-	 * @param text - the text (ie: the name of the resource)
-	 */
-	public Resource(Number id, String text)
-	{
-		this(Id.valueOf(id), text, null);
+		this.id = id;
+		this.text = text;
+		this.color = color;
 	}
 
 	/**
@@ -107,19 +107,7 @@ public class Resource implements Serializable
 	 * @param text - the text (ie: the name of the resource)
 	 * @param color - the color (ie: #336699)
 	 */
-	public Resource(Integer id, String text, String color)
-	{
-		this(Id.valueOf(id), text, color);
-	}
-
-	/**
-	 * Constructor
-	 *
-	 * @param id - the resource id
-	 * @param text - the text (ie: the name of the resource)
-	 * @param color - the color (ie: #336699)
-	 */
-	Resource(Id<?> id, String text, String color)
+	public Resource(Object id, String text, String color)
 	{
 		this.id = id;
 		this.text = text;
@@ -129,7 +117,8 @@ public class Resource implements Serializable
 	// Properties //
 
 	/**
-	 * Gets the resource id
+	 * Gets the resource id<br>
+	 * <b>Caution:</b> not type-safe
 	 *
 	 * @param <T> the object type
 	 * @return the resource id
@@ -137,7 +126,7 @@ public class Resource implements Serializable
 	@SuppressWarnings("unchecked")
 	public <T> T getId()
 	{
-		return (T) this.id.get();
+		return (T) this.id;
 	}
 
 	/**
@@ -244,21 +233,17 @@ public class Resource implements Serializable
 	@Override
 	public String toString()
 	{
-		Options value = new Options();
+		JSONObject object = new JSONObject();
 
-		value.set("value", this.id.getValue());
-		value.set("text", Options.asString(this.text));
-
-		if (this.color != null)
-		{
-			value.set("color", Options.asString(this.color));
-		}
+		object.put("value", this.id);
+		object.put("text", this.text);
+		object.putOpt("color", this.color); // may be null
 
 		for (Entry<String, Object> entry : this.fields.entrySet())
 		{
-			value.set(entry.getKey(), Options.asString(entry.getValue()));
+			object.put(entry.getKey(), entry.getValue());
 		}
 
-		return value.toString();
+		return object.toString();
 	}
 }

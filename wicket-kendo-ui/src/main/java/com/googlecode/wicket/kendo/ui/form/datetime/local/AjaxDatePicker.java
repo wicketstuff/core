@@ -33,7 +33,7 @@ import com.googlecode.wicket.kendo.ui.form.datetime.DatePickerBehavior;
  * 
  * @author Sebastien Briquet - sebfz1
  */
-public class AjaxDatePicker extends DatePicker implements IValueChangedListener
+public class AjaxDatePicker extends DatePicker implements IValueChangedListener // NOSONAR
 {
 	private static final long serialVersionUID = 1L;
 

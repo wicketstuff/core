@@ -39,7 +39,7 @@ import com.googlecode.wicket.kendo.ui.template.KendoTemplateBehavior;
  *
  * @param <T> the type of the model object
  */
-public class ComboBox<T> extends TextField<String> implements IJQueryWidget
+public class ComboBox<T> extends TextField<String> implements IJQueryWidget // NOSONAR
 {
 	private static final long serialVersionUID = 1L;
 
@@ -279,7 +279,7 @@ public class ComboBox<T> extends TextField<String> implements IJQueryWidget
 	@Override
 	public JQueryBehavior newWidgetBehavior(String selector)
 	{
-		return new ComboBoxBehavior(selector) {
+		return new ComboBoxBehavior(selector) { // NOSONAR
 
 			private static final long serialVersionUID = 1L;
 

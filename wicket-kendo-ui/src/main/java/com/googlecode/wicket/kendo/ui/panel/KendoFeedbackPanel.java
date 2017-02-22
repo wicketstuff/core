@@ -215,7 +215,7 @@ public class KendoFeedbackPanel extends WebMarkupContainer implements IJQueryWid
 	@Override
 	public NotificationBehavior newWidgetBehavior(String selector)
 	{
-		return new NotificationBehavior(selector, this.options) {
+		return new NotificationBehavior(selector, this.options) { // NOSONAR
 
 			private static final long serialVersionUID = 1L;
 

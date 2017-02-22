@@ -11,7 +11,7 @@ import com.googlecode.wicket.kendo.ui.form.button.Button;
 import com.googlecode.wicket.kendo.ui.form.combobox.ComboBox;
 import com.googlecode.wicket.kendo.ui.panel.KendoFeedbackPanel;
 
-public class CustomComboBoxPage extends AbstractComboBoxPage
+public class CustomComboBoxPage extends AbstractComboBoxPage // NOSONAR
 {
 	private static final long serialVersionUID = 1L;
 
@@ -29,7 +29,7 @@ public class CustomComboBoxPage extends AbstractComboBoxPage
 		form.add(combobox); //.setRequired(true)
 
 		// Buttons //
-		form.add(new Button("submit") {
+		form.add(new Button("submit") { // NOSONAR
 
 			private static final long serialVersionUID = 1L;
 
@@ -40,7 +40,7 @@ public class CustomComboBoxPage extends AbstractComboBoxPage
 			}
 		});
 
-		form.add(new AjaxButton("button") {
+		form.add(new AjaxButton("button") { // NOSONAR
 
 			private static final long serialVersionUID = 1L;
 

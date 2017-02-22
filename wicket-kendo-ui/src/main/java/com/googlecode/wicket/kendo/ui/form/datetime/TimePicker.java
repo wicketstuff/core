@@ -37,7 +37,7 @@ import com.googlecode.wicket.kendo.ui.utils.KendoDateTimeUtils;
  *
  * @author Sebastien Briquet - sebfz1
  */
-public class TimePicker extends DateTextField implements IJQueryWidget
+public class TimePicker extends DateTextField implements IJQueryWidget // NOSONAR
 {
 	private static final long serialVersionUID = 1L;
 

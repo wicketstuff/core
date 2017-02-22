@@ -21,7 +21,7 @@ import com.googlecode.wicket.jquery.ui.form.spinner.TimeSpinner;
 import com.googlecode.wicket.jquery.ui.panel.JQueryFeedbackPanel;
 import com.googlecode.wicket.jquery.ui.samples.SampleApplication;
 
-public class TimeSpinnerPage extends AbstractSpinnerPage
+public class TimeSpinnerPage extends AbstractSpinnerPage // NOSONAR
 {
 	private static final long serialVersionUID = 1L;
 	private FeedbackPanel feedback;
@@ -39,7 +39,7 @@ public class TimeSpinnerPage extends AbstractSpinnerPage
 		form.add(this.feedback.setOutputMarkupId(true));
 
 		// Spinner //
-		final TimeSpinner spinner = new TimeSpinner("spinner", form.getModel(), Locale.FRENCH) {
+		final TimeSpinner spinner = new TimeSpinner("spinner", form.getModel(), Locale.FRENCH) { // NOSONAR
 
 			private static final long serialVersionUID = 1L;
 
@@ -55,7 +55,7 @@ public class TimeSpinnerPage extends AbstractSpinnerPage
 		form.add(spinner);
 
 		// Buttons //
-		form.add(new Button("submit") {
+		form.add(new Button("submit") { // NOSONAR
 
 			private static final long serialVersionUID = 1L;
 
@@ -66,7 +66,7 @@ public class TimeSpinnerPage extends AbstractSpinnerPage
 			}
 		});
 
-		form.add(new AjaxButton("button") {
+		form.add(new AjaxButton("button") { // NOSONAR
 
 			private static final long serialVersionUID = 1L;
 

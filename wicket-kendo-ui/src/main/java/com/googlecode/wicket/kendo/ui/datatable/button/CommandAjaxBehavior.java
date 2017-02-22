@@ -61,7 +61,7 @@ public class CommandAjaxBehavior extends JQueryAjaxBehavior
 	{
 		return new CallbackParameter[] { // lf
 				CallbackParameter.context("e"), // lf
-				CallbackParameter.resolved("value", String.format("this.dataItem($tr)['%s']", this.button.getProperty())) // lf
+				CallbackParameter.resolved("value", String.format("this.dataItem($tr).%s", this.button.getProperty())) // lf
 		};
 	}
 

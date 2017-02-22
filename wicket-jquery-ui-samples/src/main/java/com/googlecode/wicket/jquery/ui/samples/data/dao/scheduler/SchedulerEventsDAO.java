@@ -22,8 +22,6 @@ public class SchedulerEventsDAO extends AbstractSchedulerEventsDAO
 
 	protected SchedulerEventsDAO()
 	{
-		super();
-
 		// dates //
 		Calendar calendar = Calendar.getInstance(DateUtils.UTC);
 		calendar.setTime(new Date());
@@ -36,9 +34,9 @@ public class SchedulerEventsDAO extends AbstractSchedulerEventsDAO
 		Date date2 = calendar.getTime();
 
 		// events //
-		super.list.add(new SchedulerEvent(this.newId(), "An event", date1));
+		super.list.add(new SchedulerEvent(newId(), "An event", date1));
 
-		SchedulerEvent event = new SchedulerEvent(this.newId(), "Meeting", date2);
+		SchedulerEvent event = new SchedulerEvent(newId(), "Meeting", date2);
 		event.setRecurrenceRule("FREQ=WEEKLY;COUNT=10;BYDAY=MO;WKST=SU"); // rfc5545 specification
 		super.list.add(event);
 	}

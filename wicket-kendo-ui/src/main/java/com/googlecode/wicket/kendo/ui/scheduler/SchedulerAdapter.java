@@ -17,6 +17,7 @@
 package com.googlecode.wicket.kendo.ui.scheduler;
 
 import org.apache.wicket.ajax.AjaxRequestTarget;
+import org.json.JSONObject;
 
 import com.googlecode.wicket.kendo.ui.scheduler.views.SchedulerViewType;
 
@@ -37,7 +38,7 @@ public class SchedulerAdapter implements ISchedulerListener
 	}
 
 	@Override
-	public void onEdit(AjaxRequestTarget target, SchedulerEvent event, SchedulerViewType view)
+	public void onEdit(AjaxRequestTarget target, JSONObject object, SchedulerViewType view)
 	{
 		// noop
 	}
@@ -49,19 +50,19 @@ public class SchedulerAdapter implements ISchedulerListener
 	}
 
 	@Override
-	public void onCreate(AjaxRequestTarget target, SchedulerEvent event)
+	public void onCreate(AjaxRequestTarget target, JSONObject object)
 	{
 		// noop
 	}
 
 	@Override
-	public void onUpdate(AjaxRequestTarget target, SchedulerEvent event)
+	public void onUpdate(AjaxRequestTarget target, JSONObject object)
 	{
 		// noop
 	}
 
 	@Override
-	public void onDelete(AjaxRequestTarget target, SchedulerEvent event)
+	public void onDelete(AjaxRequestTarget target, JSONObject object)
 	{
 		// noop
 	}

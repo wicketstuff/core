@@ -10,7 +10,7 @@ import com.googlecode.wicket.kendo.ui.form.button.IndicatingAjaxButton;
 import com.googlecode.wicket.kendo.ui.form.button.IndicatingButton;
 import com.googlecode.wicket.kendo.ui.panel.KendoFeedbackPanel;
 
-public class IndicatingButtonPage extends AbstractButtonPage
+public class IndicatingButtonPage extends AbstractButtonPage // NOSONAR
 {
 	private static final long serialVersionUID = 1L;
 	private static final Logger LOG = LoggerFactory.getLogger(IndicatingButtonPage.class);
@@ -25,7 +25,7 @@ public class IndicatingButtonPage extends AbstractButtonPage
 		form.add(feedback.setOutputMarkupId(true));
 
 		// Buttons //
-		form.add(new IndicatingButton("button1") {
+		form.add(new IndicatingButton("button1") { // NOSONAR
 
 			private static final long serialVersionUID = 1L;
 
@@ -57,7 +57,7 @@ public class IndicatingButtonPage extends AbstractButtonPage
 			}
 		});
 
-		form.add(new IndicatingAjaxButton("button2") {
+		form.add(new IndicatingAjaxButton("button2") { // NOSONAR
 
 			private static final long serialVersionUID = 1L;
 

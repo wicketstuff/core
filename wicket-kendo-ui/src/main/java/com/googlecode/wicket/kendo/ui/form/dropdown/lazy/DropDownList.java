@@ -40,7 +40,7 @@ import com.googlecode.wicket.kendo.ui.template.KendoTemplateBehavior;
  *
  * @param <T> the type of the model object
  */
-public class DropDownList<T> extends TextField<T> implements IJQueryWidget
+public class DropDownList<T> extends TextField<T> implements IJQueryWidget // NOSONAR
 {
 	private static final long serialVersionUID = 1L;
 
@@ -285,7 +285,7 @@ public class DropDownList<T> extends TextField<T> implements IJQueryWidget
 	@Override
 	public JQueryBehavior newWidgetBehavior(String selector)
 	{
-		return new DropDownListBehavior(selector, new SelectionChangedAdapter()) {
+		return new DropDownListBehavior(selector, new SelectionChangedAdapter()) { // NOSONAR
 
 			private static final long serialVersionUID = 1L;
 

@@ -86,7 +86,7 @@ public class SchedulerDataSource extends KendoDataSource
 	 * 
 	 * @return an {@link Options} of default schema fields
 	 */
-	public static Options newDefaultFields()
+	public static Options newSchemaFields()
 	{
 		Options options = new Options();
 

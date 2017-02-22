@@ -36,7 +36,7 @@ import com.googlecode.wicket.kendo.ui.form.datetime.DatePickerBehavior;
  *
  * @author Sebastien Briquet - sebfz1
  */
-public class DatePicker extends LocalTextField<LocalDate>
+public class DatePicker extends LocalTextField<LocalDate> // NOSONAR
 {
 	private static final long serialVersionUID = 1L;
 
@@ -256,7 +256,7 @@ public class DatePicker extends LocalTextField<LocalDate>
 	 */
 	private static IConverter<LocalDate> newConverter(final String pattern)
 	{
-		return new IConverter<LocalDate>() {
+		return new IConverter<LocalDate>() { // NOSONAR
 
 			private static final long serialVersionUID = 1L;
 

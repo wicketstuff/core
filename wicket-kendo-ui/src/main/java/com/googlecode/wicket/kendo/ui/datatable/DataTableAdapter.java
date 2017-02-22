@@ -44,7 +44,7 @@ public class DataTableAdapter implements IDataTableListener
 	{
 		// noop
 	}
-	
+
 	@Override
 	public void onCancel(AjaxRequestTarget target)
 	{

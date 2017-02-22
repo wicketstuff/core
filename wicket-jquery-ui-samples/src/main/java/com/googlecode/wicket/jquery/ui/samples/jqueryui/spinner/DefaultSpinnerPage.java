@@ -11,7 +11,7 @@ import com.googlecode.wicket.jquery.ui.form.button.Button;
 import com.googlecode.wicket.jquery.ui.form.spinner.Spinner;
 import com.googlecode.wicket.jquery.ui.panel.JQueryFeedbackPanel;
 
-public class DefaultSpinnerPage extends AbstractSpinnerPage
+public class DefaultSpinnerPage extends AbstractSpinnerPage // NOSONAR
 {
 	private static final long serialVersionUID = 1L;
 	private FeedbackPanel feedback;
@@ -30,7 +30,7 @@ public class DefaultSpinnerPage extends AbstractSpinnerPage
 		form.add(spinner.setRequired(false));
 
 		// Buttons //
-		form.add(new Button("submit") {
+		form.add(new Button("submit") { // NOSONAR
 
 			private static final long serialVersionUID = 1L;
 
@@ -41,7 +41,7 @@ public class DefaultSpinnerPage extends AbstractSpinnerPage
 			}
 		});
 
-		form.add(new AjaxButton("button") {
+		form.add(new AjaxButton("button") { // NOSONAR
 
 			private static final long serialVersionUID = 1L;
 
@@ -59,7 +59,7 @@ public class DefaultSpinnerPage extends AbstractSpinnerPage
 			}
 		});
 
-		form.add(new AjaxButton("toggle") {
+		form.add(new AjaxButton("toggle") { // NOSONAR
 			private static final long serialVersionUID = 1L;
 
 			@Override

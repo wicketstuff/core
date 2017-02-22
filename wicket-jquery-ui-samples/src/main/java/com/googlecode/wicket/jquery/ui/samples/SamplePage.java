@@ -24,7 +24,7 @@ import org.apache.wicket.util.template.PackageTextTemplate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public abstract class SamplePage extends TemplatePage
+public abstract class SamplePage extends TemplatePage // NOSONAR
 {
 	private static final long serialVersionUID = 1L;
 	private static final Logger LOG = LoggerFactory.getLogger(SamplePage.class);
@@ -45,7 +45,7 @@ public abstract class SamplePage extends TemplatePage
 	{
 		super.onInitialize();
 
-		this.add(new ListView<DemoLink>("demo-list", Model.ofList(this.getDemoLinks())) {
+		this.add(new ListView<DemoLink>("demo-list", Model.ofList(this.getDemoLinks())) { // NOSONAR
 
 			private static final long serialVersionUID = 1L;
 

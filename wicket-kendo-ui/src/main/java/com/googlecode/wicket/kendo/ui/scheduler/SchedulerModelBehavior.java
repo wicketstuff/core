@@ -34,18 +34,18 @@ public class SchedulerModelBehavior extends AjaxCallbackBehavior
 	private static final long serialVersionUID = 1L;
 
 	private final SchedulerModel model;
-	private final SchedulerEventFactory factory;
+	private final ISchedulerConverter converter;
 
 	/**
 	 * Constructor
 	 *
 	 * @param model the {@link SchedulerModel}
-	 * @param factory the {@link SchedulerEventFactory}
+	 * @param converter the {@link SchedulerConverter}
 	 */
-	public SchedulerModelBehavior(final SchedulerModel model, SchedulerEventFactory factory)
+	public SchedulerModelBehavior(final SchedulerModel model, ISchedulerConverter converter)
 	{
 		this.model = model;
-		this.factory = Args.notNull(factory, "factory");
+		this.converter = Args.notNull(converter, "converter");
 	}
 
 	/**
@@ -105,7 +105,7 @@ public class SchedulerModelBehavior extends AjaxCallbackBehavior
 							builder.append(", ");
 						}
 
-						builder.append(this.factory.toJson(event));
+						builder.append(this.converter.toJson(event));
 					}
 				}
 			}

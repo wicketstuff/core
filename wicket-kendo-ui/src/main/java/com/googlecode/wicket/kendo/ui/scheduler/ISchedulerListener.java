@@ -18,6 +18,7 @@ package com.googlecode.wicket.kendo.ui.scheduler;
 
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.util.io.IClusterable;
+import org.json.JSONObject;
 
 import com.googlecode.wicket.kendo.ui.scheduler.views.SchedulerViewType;
 
@@ -31,10 +32,10 @@ public interface ISchedulerListener extends IClusterable
 {
 	/**
 	 * Indicates whether a edit-event is enabled.<br>
-	 * If true, the {@link #onEdit(AjaxRequestTarget, SchedulerEvent, SchedulerViewType)} event will be triggered by clicking an event or a free event slot.<br>
+	 * If true, the {@link #onEdit(AjaxRequestTarget, JSONObject, SchedulerViewType)} event will be triggered by clicking an event or a free event slot.<br>
 	 *
 	 * <p>
-	 * This can be useful to implement a custom dialog. If false the internal event handling will proceed and opens the Scheduler's dialog (see {@link #onUpdate(AjaxRequestTarget, SchedulerEvent)} to process the dialog results).
+	 * This can be useful to implement a custom dialog. If false the internal event handling will proceed and opens the Scheduler's dialog (see {@link #onUpdate(AjaxRequestTarget, JSONObject)} to process the dialog results).
 	 * </p>
 	 *
 	 * <p>
@@ -46,15 +47,15 @@ public interface ISchedulerListener extends IClusterable
 	boolean isEditEnabled();
 
 	/**
-	 * Triggered when a {@link SchedulerEvent} should be edit.<br>
+	 * Triggered when an event should be edited.<br>
 	 * This occurs on clicking an event or clicking a free slot, as well. Use {@link SchedulerEvent#isNew(SchedulerEvent)} to determine the use-case.
 	 *
 	 * @param target the {@link AjaxRequestTarget}
-	 * @param event the {@link SchedulerEvent}
+	 * @param object the {@link JSONObject} event
 	 * @param view the {@link SchedulerViewType}
 	 * @see SchedulerEvent#isNew(SchedulerEvent)
 	 */
-	void onEdit(AjaxRequestTarget target, SchedulerEvent event, SchedulerViewType view);
+	void onEdit(AjaxRequestTarget target, JSONObject object, SchedulerViewType view);
 
 	/**
 	 * Triggered when the user changes the selected date, or view of the scheduler
@@ -66,26 +67,26 @@ public interface ISchedulerListener extends IClusterable
 	void onNavigate(AjaxRequestTarget target, SchedulerViewType oldView, SchedulerViewType newView);
 
 	/**
-	 * Triggered when a {@link SchedulerEvent} is created (or modified) through the Scheduler's dialog
+	 * Triggered when an event is created through the Scheduler's dialog
 	 *
 	 * @param target the {@link AjaxRequestTarget}
-	 * @param event the {@link SchedulerEvent}
+	 * @param object the {@link JSONObject} event
 	 */
-	void onCreate(AjaxRequestTarget target, SchedulerEvent event);
+	void onCreate(AjaxRequestTarget target, JSONObject object);
 
 	/**
-	 * Triggered when a {@link SchedulerEvent} is updated through the Scheduler's (ie: drag &#38; drop)
+	 * Triggered when an event is updated through the Scheduler dialog or by drag &#38; drop
 	 *
 	 * @param target the {@link AjaxRequestTarget}
-	 * @param event the {@link SchedulerEvent}
+	 * @param object the {@link JSONObject} event
 	 */
-	void onUpdate(AjaxRequestTarget target, SchedulerEvent event);
+	void onUpdate(AjaxRequestTarget target, JSONObject object);
 
 	/**
-	 * Triggered when a {@link SchedulerEvent} is deleted, either through the Scheduler's dialog or the x-icon
+	 * Triggered when an event is deleted, either through the Scheduler's dialog or the x-icon
 	 *
 	 * @param target the {@link AjaxRequestTarget}
-	 * @param event the {@link SchedulerEvent}
+	 * @param object the {@link JSONObject} event
 	 */
-	void onDelete(AjaxRequestTarget target, SchedulerEvent event);
+	void onDelete(AjaxRequestTarget target, JSONObject object);
 }

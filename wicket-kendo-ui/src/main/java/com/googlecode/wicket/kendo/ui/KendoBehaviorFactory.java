@@ -31,6 +31,13 @@ import com.googlecode.wicket.jquery.core.JQueryBehavior;
 public final class KendoBehaviorFactory
 {
 	/**
+	 * Factory class
+	 */
+	private KendoBehaviorFactory()
+	{
+	}
+
+	/**
 	 * Shows the kendo-ui widget using its reference
 	 *
 	 * @param handler the {@link IPartialPageRequestHandler}
@@ -156,12 +163,5 @@ public final class KendoBehaviorFactory
 	public static String getHideStatement(String selector)
 	{
 		return String.format("jQuery('%s').closest('.k-widget').hide();", selector);
-	}
-
-	/**
-	 * Factory class
-	 */
-	private KendoBehaviorFactory()
-	{
 	}
 }

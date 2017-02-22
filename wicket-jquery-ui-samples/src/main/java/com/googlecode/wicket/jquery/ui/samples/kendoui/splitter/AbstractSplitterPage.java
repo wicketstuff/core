@@ -5,7 +5,7 @@ import java.util.List;
 
 import com.googlecode.wicket.jquery.ui.samples.KendoSamplePage;
 
-abstract class AbstractSplitterPage extends KendoSamplePage
+abstract class AbstractSplitterPage extends KendoSamplePage // NOSONAR
 {
 	private static final long serialVersionUID = 1L;
 

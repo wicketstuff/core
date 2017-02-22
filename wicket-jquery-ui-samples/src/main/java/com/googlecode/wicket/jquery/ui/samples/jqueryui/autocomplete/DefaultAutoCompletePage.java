@@ -12,7 +12,7 @@ import org.apache.wicket.util.lang.Generics;
 import com.googlecode.wicket.jquery.ui.form.autocomplete.AutoCompleteTextField;
 import com.googlecode.wicket.jquery.ui.panel.JQueryFeedbackPanel;
 
-public class DefaultAutoCompletePage extends AbstractAutoCompletePage
+public class DefaultAutoCompletePage extends AbstractAutoCompletePage // NOSONAR
 {
 	private static final long serialVersionUID = 1L;
 	private static final List<String> CHOICES = Arrays.asList("Acid rock", "Alternative metal", "Alternative rock", "Anarcho punk", "Art punk", "Art rock", "Beat music", "Black metal", "Blues-rock", "Britpop", "Canterbury scene",
@@ -35,7 +35,7 @@ public class DefaultAutoCompletePage extends AbstractAutoCompletePage
 		form.add(feedback.setOutputMarkupId(true));
 
 		// Auto-complete //
-		form.add(new AutoCompleteTextField<String>("autocomplete", new Model<String>()) {
+		form.add(new AutoCompleteTextField<String>("autocomplete", new Model<String>()) { // NOSONAR
 
 			private static final long serialVersionUID = 1L;
 

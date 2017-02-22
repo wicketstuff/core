@@ -303,7 +303,7 @@ public class SiteMapPage extends WebPage
 
 	public SiteMapPage()
 	{
-		this.add(new PropertyListView<SiteUrl>("urls", this.newListModel()) {
+		this.add(new PropertyListView<SiteUrl>("urls", this.newListModel()) { // NOSONAR
 
 			private static final long serialVersionUID = 1L;
 
@@ -318,7 +318,7 @@ public class SiteMapPage extends WebPage
 
 	private IModel<List<SiteUrl>> newListModel()
 	{
-		return new LoadableDetachableModel<List<SiteUrl>>() {
+		return new LoadableDetachableModel<List<SiteUrl>>() { // NOSONAR
 
 			private static final long serialVersionUID = 1L;
 

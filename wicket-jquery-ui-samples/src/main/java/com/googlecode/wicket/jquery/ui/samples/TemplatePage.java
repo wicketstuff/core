@@ -80,7 +80,7 @@ public abstract class TemplatePage extends WebPage
 
 	private Link<Void> newKendoButton(String id)
 	{
-		return new Link<Void>(id) {
+		return new Link<Void>(id) { // NOSONAR
 
 			private static final long serialVersionUID = 1L;
 
@@ -95,7 +95,7 @@ public abstract class TemplatePage extends WebPage
 
 	private Link<Void> newJQueryButton(String id)
 	{
-		return new Link<Void>(id) {
+		return new Link<Void>(id) { // NOSONAR
 
 			private static final long serialVersionUID = 1L;
 

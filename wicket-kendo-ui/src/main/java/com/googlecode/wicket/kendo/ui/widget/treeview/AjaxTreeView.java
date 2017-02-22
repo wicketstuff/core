@@ -30,8 +30,8 @@ import com.googlecode.wicket.jquery.core.JQueryContainer;
 import com.googlecode.wicket.jquery.core.Options;
 import com.googlecode.wicket.jquery.core.template.IJQueryTemplate;
 import com.googlecode.wicket.jquery.core.utils.JQueryUtils;
+import com.googlecode.wicket.kendo.ui.KendoDataSource.HierarchicalDataSource;
 import com.googlecode.wicket.kendo.ui.KendoUIBehavior;
-import com.googlecode.wicket.kendo.ui.scheduler.SchedulerEventFactory;
 import com.googlecode.wicket.kendo.ui.template.KendoTemplateBehavior;
 
 /**
@@ -220,11 +220,11 @@ public class AjaxTreeView extends JQueryContainer implements ITreeViewListener
 	}
 
 	/**
-	 * Configure the {@link TreeViewDataSource} with additional options
+	 * Configure the {@link HierarchicalDataSource} with additional options
 	 * 
-	 * @param dataSource the {@link TreeViewDataSource}
+	 * @param dataSource the {@link HierarchicalDataSource}
 	 */
-	protected void onConfigure(TreeViewDataSource dataSource)
+	protected void onConfigure(HierarchicalDataSource dataSource)
 	{
 		dataSource.set("schema", String.format("{ model: { id: '%s' } }", TreeNodeFactory.ID_FIELD));
 	}
@@ -265,7 +265,7 @@ public class AjaxTreeView extends JQueryContainer implements ITreeViewListener
 	@Override
 	public JQueryBehavior newWidgetBehavior(String selector)
 	{
-		return new AjaxTreeViewBehavior(selector, this.options, this) {
+		return new AjaxTreeViewBehavior(selector, this.options, this) { // NOSONAR
 
 			private static final long serialVersionUID = 1L;
 
@@ -280,7 +280,7 @@ public class AjaxTreeView extends JQueryContainer implements ITreeViewListener
 			// Events //
 
 			@Override
-			protected void onConfigure(TreeViewDataSource dataSource)
+			protected void onConfigure(HierarchicalDataSource dataSource)
 			{
 				AjaxTreeView.this.onConfigure(dataSource);
 			}
@@ -300,9 +300,9 @@ public class AjaxTreeView extends JQueryContainer implements ITreeViewListener
 	}
 
 	/**
-	 * Gets a new {@link SchedulerEventFactory}
+	 * Gets a new {@link TreeNodeFactory}
 	 * 
-	 * @return a new {@code SchedulerEventFactory}
+	 * @return a new {@code TreeNodeFactory}
 	 */
 	protected TreeNodeFactory newTreeNodeFactory()
 	{

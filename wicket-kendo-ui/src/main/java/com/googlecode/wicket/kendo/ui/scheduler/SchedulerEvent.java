@@ -17,19 +17,33 @@
 package com.googlecode.wicket.kendo.ui.scheduler;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
 import com.googlecode.wicket.jquery.core.utils.DateUtils;
-import com.googlecode.wicket.kendo.ui.scheduler.resource.Id;
 
 /**
- * Provides a base Bean that can be used with a {@link SchedulerModel}
+ * Provides a scheduler event that can be used with a {@link SchedulerModel}<br>
+ * If the IDs are not numbers, the datasource's schema need to reflect the type. ie:
+ * 
+ * <pre>
+ * <code>
+ * // Scheduler
+ * protected void onConfigure(SchedulerDataSource dataSource)
+ * {
+ * 	super.onConfigure(dataSource);
+ * 
+ * 	Options options = SchedulerDataSource.newSchemaFields();
+ * 	options.set("id", "{ type: 'string' }"); // override default type for event-id
+ * 
+ * 	dataSource.set("schema", String.format("{ model: { fields: %s } }", options));
+ * }
  *
+ * </code>
+ * </pre>
+ * 
  * @author Sebastien Briquet - sebfz1
  *
  */
@@ -39,20 +53,16 @@ public class SchedulerEvent implements Serializable
 
 	private static final int DEFAULT_RANGE = 1; // hour
 
-	/** new event id */
-	public static final int NEW_ID = 0;
-
-	private int id;
+	private Object id;
 	private String title;
-	private String description;
-
 	private long start;
 	private long end;
-	private boolean allDay;
 
-	private String recurrenceId;
-	private String recurrenceRule;
-	private String recurrenceException;
+	private boolean allDay = false;
+	private String description = null;
+	private String recurrenceId = null;
+	private String recurrenceRule = null;
+	private String recurrenceException = null;
 
 	/** server side */
 	private boolean visible = true;
@@ -65,8 +75,71 @@ public class SchedulerEvent implements Serializable
 	 */
 	public SchedulerEvent()
 	{
-		this(NEW_ID, "", new Date());
+		this((Object) null, "", new Date());
 	}
+
+	// Constructor (Object) //
+
+	/**
+	 * Constructor<br>
+	 * The end date will be the start date + {@link #DEFAULT_RANGE} hour(s)<br>
+	 * <b>Caution:</b> if the id is not a number, the datasource's schema need to reflect the type
+	 *
+	 * @param id the event id
+	 * @param title the event title
+	 * @param start the start date
+	 */
+	public SchedulerEvent(Object id, String title, Date start)
+	{
+		this(id, title, start.getTime());
+	}
+
+	/**
+	 * Constructor<br>
+	 * The end date will be the start date + {@link #DEFAULT_RANGE} hour(s)<br>
+	 * <b>Caution:</b> if the id is not a number, the datasource's schema need to reflect the type
+	 *
+	 * @param id the event id
+	 * @param title the event title
+	 * @param start the start date
+	 */
+	public SchedulerEvent(Object id, String title, long start)
+	{
+		this(id, title, start, DateUtils.addHours(start, DEFAULT_RANGE));
+	}
+
+	/**
+	 * Constructor<br>
+	 * <b>Caution:</b> if the id is not a number, the datasource's schema need to reflect the type
+	 *
+	 * @param id the event id
+	 * @param title the event title
+	 * @param start the start date
+	 * @param end the end date
+	 */
+	public SchedulerEvent(Object id, String title, Date start, Date end)
+	{
+		this(id, title, start.getTime(), end.getTime());
+	}
+
+	/**
+	 * Constructor<br>
+	 * <b>Caution:</b> if the id is not a number, the datasource's schema need to reflect the type
+	 *
+	 * @param id the event id
+	 * @param title the event title
+	 * @param start the start date
+	 * @param end the end date
+	 */
+	public SchedulerEvent(Object id, String title, long start, long end)
+	{
+		this.id = id;
+		this.title = title;
+		this.start = start;
+		this.end = end;
+	}
+
+	// Constructor (Number) //
 
 	/**
 	 * Constructor<br>
@@ -76,7 +149,7 @@ public class SchedulerEvent implements Serializable
 	 * @param title the event title
 	 * @param start the start date
 	 */
-	public SchedulerEvent(int id, String title, Date start)
+	public SchedulerEvent(Number id, String title, Date start)
 	{
 		this(id, title, start.getTime());
 	}
@@ -89,7 +162,7 @@ public class SchedulerEvent implements Serializable
 	 * @param title the event title
 	 * @param start the start date
 	 */
-	public SchedulerEvent(int id, String title, long start)
+	public SchedulerEvent(Number id, String title, long start)
 	{
 		this(id, title, start, DateUtils.addHours(start, DEFAULT_RANGE));
 	}
@@ -102,7 +175,7 @@ public class SchedulerEvent implements Serializable
 	 * @param start the start date
 	 * @param end the end date
 	 */
-	public SchedulerEvent(int id, String title, Date start, Date end)
+	public SchedulerEvent(Number id, String title, Date start, Date end)
 	{
 		this(id, title, start.getTime(), end.getTime());
 	}
@@ -115,19 +188,12 @@ public class SchedulerEvent implements Serializable
 	 * @param start the start date
 	 * @param end the end date
 	 */
-	public SchedulerEvent(int id, String title, long start, long end)
+	public SchedulerEvent(Number id, String title, long start, long end)
 	{
 		this.id = id;
 		this.title = title;
-		this.description = null;
-
 		this.start = start;
 		this.end = end;
-		this.allDay = false;
-
-		this.recurrenceId = null;
-		this.recurrenceRule = null;
-		this.recurrenceException = null;
 	}
 
 	// Properties //
@@ -137,9 +203,23 @@ public class SchedulerEvent implements Serializable
 	 *
 	 * @return the id
 	 */
-	public int getId()
+	public Object getId()
 	{
 		return this.id;
+	}
+
+	/**
+	 * Gets the unique identifier of the scheduler event<br>
+	 * <b>Caution:</b> not type-safe
+	 *
+	 * @param type the class type
+	 * @param <T> the type
+	 * @return the id, casted to the supplied type (unchecked)
+	 */
+	@SuppressWarnings("unchecked")
+	public <T> T getId(Class<T> type)
+	{
+		return (T) this.id;
 	}
 
 	/**
@@ -147,7 +227,7 @@ public class SchedulerEvent implements Serializable
 	 *
 	 * @param id the id
 	 */
-	public void setId(int id)
+	public void setId(Object id)
 	{
 		this.id = id;
 	}
@@ -371,73 +451,11 @@ public class SchedulerEvent implements Serializable
 	 * Gets a field value
 	 *
 	 * @param field the field (ie: 'resourceId')
-	 * @return the value, which is either a {@code String}, an {@code Integer}, a {@code List&lt;String&gt;} or a {@code List&lt;Integer&gt;}
+	 * @return the value, which is either a {@code String} (default) or an {@code Object}
 	 */
-	@SuppressWarnings("unchecked")
 	public final Object getValue(String field)
 	{
-		Object object = this.fields.get(field); // either an Object, an Id or a List<Id<?>>
-
-		if (object instanceof Id<?>)
-		{
-			return ((Id<?>) object).get();
-		}
-
-		if (object instanceof List<?>)
-		{
-			List<Object> list = new ArrayList<Object>();
-
-			for (Id<?> id : (List<Id<?>>) object)
-			{
-				list.add(id.get());
-			}
-
-			return list;
-		}
-
-		return object;
-	}
-
-	/**
-	 * Gets a field value
-	 *
-	 * @param <T> the object type
-	 * @param field the field (ie: 'resourceId')
-	 * @param type the return type
-	 * @return the typed value
-	 */
-	@SuppressWarnings("unchecked")
-	public final <T> T getValue(String field, Class<T> type)
-	{
-		Object object = this.getValue(field);
-
-		if (object != null)
-		{
-			return (T) object;
-		}
-
-		return null;
-	}
-
-	/**
-	 * Gets a field value
-	 *
-	 * @param <T> the object type
-	 * @param field the field (ie: 'resourceId')
-	 * @param type the return type
-	 * @param defaultValue the value to return if field's value is {@code null} or does not exist
-	 * @return the typed value
-	 */
-	public final <T> T getValue(String field, Class<T> type, T defaultValue)
-	{
-		T object = this.getValue(field, type);
-
-		if (object != null)
-		{
-			return object;
-		}
-
-		return defaultValue;
+		return this.fields.get(field);
 	}
 
 	/**
@@ -446,64 +464,9 @@ public class SchedulerEvent implements Serializable
 	 * @param field the field
 	 * @param value the value
 	 */
-	public final void setValue(String field, String value)
+	public final void setValue(String field, Object value)
 	{
 		this.fields.put(field, value);
-	}
-
-	/**
-	 * Sets a resource value
-	 *
-	 * @param field the field
-	 * @param value the value
-	 */
-	public final void setValue(String field, Number value)
-	{
-		this.fields.put(field, value);
-	}
-
-	/**
-	 * Sets a resource value
-	 *
-	 * @param field the field
-	 * @param value the values
-	 */
-	public final void setValue(String field, List<?> value)
-	{
-		this.fields.put(field, value);
-	}
-
-	/**
-	 * Sets a resource value
-	 *
-	 * @param field the field (ie: 'resourceId')
-	 * @param id the id-value
-	 */
-	public final void setResource(String field, String id)
-	{
-		this.fields.put(field, Id.valueOf(id));
-	}
-
-	/**
-	 * Sets a resource value
-	 *
-	 * @param field the resource field (ie: 'resourceId')
-	 * @param id the id-value
-	 */
-	public final void setResource(String field, Number id)
-	{
-		this.fields.put(field, Id.valueOf(id));
-	}
-
-	/**
-	 * Sets a resource value
-	 *
-	 * @param field the resource field (ie: 'resourceId')
-	 * @param ids the id-values
-	 */
-	public final void setResource(String field, List<?> ids)
-	{
-		this.fields.put(field, Id.valueOf(ids));
 	}
 
 	// Methods //
@@ -528,6 +491,6 @@ public class SchedulerEvent implements Serializable
 
 	public static boolean isNew(SchedulerEvent event)
 	{
-		return event != null && event.id == NEW_ID;
+		return event.id == null;
 	}
 }

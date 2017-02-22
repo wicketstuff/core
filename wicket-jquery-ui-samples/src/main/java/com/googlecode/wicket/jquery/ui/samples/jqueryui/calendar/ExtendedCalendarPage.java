@@ -17,7 +17,7 @@ import com.googlecode.wicket.jquery.ui.samples.data.DemoCalendarEvent;
 import com.googlecode.wicket.jquery.ui.samples.data.DemoCalendarModel;
 import com.googlecode.wicket.jquery.ui.samples.data.dao.CalendarDAO;
 
-public class ExtendedCalendarPage extends AbstractCalendarPage
+public class ExtendedCalendarPage extends AbstractCalendarPage // NOSONAR
 {
 	private static final long serialVersionUID = 1L;
 
@@ -34,7 +34,7 @@ public class ExtendedCalendarPage extends AbstractCalendarPage
 		form.add(feedback.setOutputMarkupId(true));
 
 		// Dialog //
-		final DemoCalendarDialog dialog = new DemoCalendarDialog("dialog", "Event details") {
+		final DemoCalendarDialog dialog = new DemoCalendarDialog("dialog", "Event details") { // NOSONAR
 
 			private static final long serialVersionUID = 1L;
 
@@ -60,7 +60,7 @@ public class ExtendedCalendarPage extends AbstractCalendarPage
 		options.set("theme", true);
 		options.set("header", "{ left: 'title', right: 'month,agendaWeek,agendaDay, today, prev,next' }");
 
-		this.calendar = new Calendar("calendar", new DemoCalendarModel(), options) {
+		this.calendar = new Calendar("calendar", new DemoCalendarModel(), options) { // NOSONAR
 
 			private static final long serialVersionUID = 1L;
 
