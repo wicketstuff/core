@@ -451,11 +451,30 @@ public class SchedulerEvent implements Serializable
 	 * Gets a field value
 	 *
 	 * @param field the field (ie: 'resourceId')
-	 * @return the value, which is either a {@code String} (default) or an {@code Object}
+	 * @return the value as {@code Object}
 	 */
 	public final Object getValue(String field)
 	{
 		return this.fields.get(field);
+	}
+
+	/**
+	 * Gets a field value
+	 *
+	 * @param field the field (ie: 'resourceId')
+	 * @param defaultValue the default value to return if the current one is {@code null}
+	 * @return the value as {@code Object}
+	 */
+	public final Object getValue(String field, Object defaultValue)
+	{
+		Object value = this.fields.get(field);
+
+		if (value != null)
+		{
+			return value;
+		}
+		
+		return defaultValue;
 	}
 
 	/**
