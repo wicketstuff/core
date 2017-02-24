@@ -29,7 +29,6 @@ import org.apache.wicket.model.IChainingModel;
 import org.apache.wicket.model.IDetachable;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.IObjectClassAwareModel;
-import org.apache.wicket.model.IPropertyReflectionAwareModel;
 import org.apache.wicket.model.LoadableDetachableModel;
 import org.apache.wicket.model.PropertyModel;
 import org.wicketstuff.lazymodel.reflect.CachingMethodResolver;
@@ -62,7 +61,7 @@ import org.wicketstuff.lazymodel.reflect.Reflection;
  */
 @SuppressWarnings("unchecked")
 public class LazyModel<T> implements IModel<T>, IObjectClassAwareModel<T>,
-		IObjectTypeAwareModel<T>, IPropertyReflectionAwareModel<T> {
+		IObjectTypeAwareModel<T>  {
 
 	private static final long serialVersionUID = 1L;
 
@@ -137,62 +136,6 @@ public class LazyModel<T> implements IModel<T>, IObjectClassAwareModel<T>,
 			}
 		}
 		return type;
-	}
-
-	/**
-	 * LazyModel does not support field access.
-	 * 
-	 * @return always {@code null}
-	 */
-	@Override
-	public Field getPropertyField() {
-		return null;
-	}
-
-	/**
-	 * Get the final getter of the evaluation.
-	 * 
-	 * @return method representing a JavaBeans getter or {@code null}
-	 */
-	@Override
-	public Method getPropertyGetter() {
-		checkBound();
-
-		Type type = getTargetType();
-		if (type != null) {
-			MethodIterator methodIterator = new MethodIterator();
-			while (methodIterator.hasNext()) {
-				methodIterator.next(Reflection.getClass(type));
-
-				type = Reflection.resultType(type, methodIterator.method.getGenericReturnType());
-				if (type == null) {
-					return null;
-				}
-			}
-
-			if (Reflection.isGetter(methodIterator.method)) {
-				return methodIterator.method;
-			}
-		}
-
-		return null;
-	}
-
-	/**
-	 * Get the final setter of the evaluation.
-	 * 
-	 * @return method representing a JavaBeans setter or {@code null}
-	 */
-	@Override
-	public Method getPropertySetter() {
-		checkBound();
-
-		Method getter = getPropertyGetter();
-		if (getter == null) {
-			return null;
-		}
-
-		return methodResolver.getSetter(getter);
 	}
 
 	@Override

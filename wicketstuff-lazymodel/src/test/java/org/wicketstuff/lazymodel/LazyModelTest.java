@@ -16,11 +16,6 @@
  */
 package org.wicketstuff.lazymodel;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertSame;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
 import static org.wicketstuff.lazymodel.LazyModel.from;
 import static org.wicketstuff.lazymodel.LazyModel.model;
 import static org.wicketstuff.lazymodel.LazyModel.path;
@@ -30,6 +25,7 @@ import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
 import java.lang.reflect.Proxy;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -40,6 +36,7 @@ import org.apache.wicket.model.IObjectClassAwareModel;
 import org.apache.wicket.model.LoadableDetachableModel;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.model.PropertyModel;
+import org.apache.wicket.util.tester.WicketTestCase;
 import org.junit.Test;
 import org.wicketstuff.lazymodel.reflect.Reflection;
 
@@ -49,7 +46,7 @@ import org.wicketstuff.lazymodel.reflect.Reflection;
  * @author svenmeier
  */
 @SuppressWarnings("serial")
-public class LazyModelTest {
+public class LazyModelTest extends WicketTestCase{
 
 	@Test
 	public void inheritedTypeVariable() {
@@ -929,7 +926,8 @@ public class LazyModelTest {
 
 		Model target = new Model(a);
 		
-		LazyModel<B> model = model(from(target, A.class).getB());
+		A aInTarget = from(target, A.class);
+		LazyModel<B> model = model(aInTarget.getB());
 
 		assertEquals(B.class, model.getObjectClass());
 		assertEquals("b", model.getPath());
@@ -972,32 +970,6 @@ public class LazyModelTest {
 	}
 
 	@Test
-	public void propertyReflectionAwareModel() throws Exception {
-		A a = new A();
-		a.b = new B();
-
-		LazyModel<Character> model = model(from(a).getB().getCharacter());
-
-		assertNull(model.getPropertyField());
-		assertEquals(B.class.getMethod("getCharacter"),
-				model.getPropertyGetter());
-		assertEquals(B.class.getMethod("setCharacter", Character.TYPE),
-				model.getPropertySetter());
-	}
-
-	@Test
-	public void propertyReflectionAwareModelNoProperty() throws Exception {
-		A a = new A();
-		a.b = new B();
-
-		LazyModel<C> model = model(from(a).getB().getC(0));
-
-		assertNull(model.getPropertyField());
-		assertNull(model.getPropertyGetter());
-		assertNull(model.getPropertySetter());
-	}
-
-	@Test
 	public void fromProxy() throws Exception {
 		final List<String> list = new ArrayList<String>();
 
@@ -1012,6 +984,35 @@ public class LazyModelTest {
 		LazyModel<List<String>> model = model(from(proxy).getTs());
 
 		assertSame(list, model.getObject());
+	}
+
+	@Test
+	public void wontGetPolymorphicAttributeType() {
+
+		TestBean b = new TestBean();
+		LazyModel<Object> model = model(from(b).getSubBeanList().get(0));
+
+		assertEquals(TestContainedBean.class, model.getObjectClass());
+		assertFalse(b.invoked);
+
+	}
+
+	public static class TestContainedBean {
+		String property;
+	}
+
+	public static class TestContainedBeanSubtype extends TestContainedBean{
+		String property;
+	}
+
+	public static class TestBean {
+		List<TestContainedBean> subBeanList = Arrays.asList(new TestContainedBeanSubtype());
+		boolean invoked;
+
+		public List<TestContainedBean> getSubBeanList() {
+			invoked = true;
+			return subBeanList;
+		}
 	}
 
 	public static class A implements Serializable {
