@@ -992,7 +992,7 @@ public class LazyModelTest extends WicketTestCase{
 		TestBean b = new TestBean();
 		LazyModel<Object> model = model(from(b).getSubBeanList().get(0));
 
-		assertEquals(TestContainedBean.class, model.getObjectClass());
+		assertNotEquals(TestContainedBeanSubtype.class, model.getObjectClass());
 		assertFalse(b.invoked);
 
 	}
