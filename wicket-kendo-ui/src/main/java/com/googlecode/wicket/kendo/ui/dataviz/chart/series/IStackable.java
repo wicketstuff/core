@@ -14,32 +14,20 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.googlecode.wicket.jquery.core.converter;
-
-
-import org.apache.wicket.util.io.IClusterable;
-import org.json.JSONObject;
+package com.googlecode.wicket.kendo.ui.dataviz.chart.series;
 
 /**
- * Provides a serializable converter for building {@link T}{@code s} as {@link JSONObject}, and vice-versa
- * 
- * @param <T> the object type
+ * Specifies that the series is stackable
+ *
  * @author Sebastien Briquet - sebfz1
  *
  */
-public class JsonConverter<T> implements IJsonConverter<T>, IClusterable
+public interface IStackable
 {
-	private static final long serialVersionUID = 1L;
-
-	 @Override
-	public JSONObject toJson(T object)
-	{
-		return new JSONObject(object);
-	}
-	 
-	 @Override
-	public T toObject(JSONObject object)
-	{
-		throw new UnsupportedOperationException("JsonConverter#toObject is not implemented");
-	}
+	/**
+	 * A boolean value indicating if the series should be stacked. A string value is interpreted as series.stack.group.
+	 * 
+	 * @return an {@link Object}
+	 */
+	Object getStack();
 }

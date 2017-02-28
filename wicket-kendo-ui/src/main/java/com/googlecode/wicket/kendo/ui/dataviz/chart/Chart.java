@@ -29,6 +29,8 @@ import com.googlecode.wicket.jquery.core.JQueryGenericContainer;
 import com.googlecode.wicket.jquery.core.Options;
 import com.googlecode.wicket.jquery.core.behavior.AjaxCallbackBehavior;
 import com.googlecode.wicket.jquery.core.behavior.ListModelBehavior;
+import com.googlecode.wicket.jquery.core.converter.IJsonConverter;
+import com.googlecode.wicket.jquery.core.converter.JsonConverter;
 import com.googlecode.wicket.kendo.ui.KendoBehaviorFactory;
 import com.googlecode.wicket.kendo.ui.KendoDataSource;
 import com.googlecode.wicket.kendo.ui.KendoUIBehavior;
@@ -47,8 +49,8 @@ public class Chart<T> extends JQueryGenericContainer<List<T>> implements IChartL
 	protected final Options options;
 	protected final List<Series> series;
 
-	/** The behavior that ajax-loads data */
-	private AjaxCallbackBehavior modelBehavior;
+	private final IJsonConverter<T> converter;
+	private AjaxCallbackBehavior modelBehavior; // loads data
 
 	/**
 	 * Constructor
@@ -58,7 +60,31 @@ public class Chart<T> extends JQueryGenericContainer<List<T>> implements IChartL
 	 */
 	public Chart(String id, final List<Series> series)
 	{
-		this(id, series, new Options());
+		this(id, series, new Options(), new JsonConverter<T>());
+	}
+
+	/**
+	 * Constructor
+	 *
+	 * @param id the markup id
+	 * @param series the {@code List} of {@link Series}
+	 * @param options the {@link Options}
+	 */
+	public Chart(String id, final List<Series> series, Options options)
+	{
+		this(id, series, options, new JsonConverter<T>());
+	}
+
+	/**
+	 * Constructor
+	 *
+	 * @param id the markup id
+	 * @param series the {@code List} of {@link Series}
+	 * @param converter the {@link IJsonConverter}
+	 */
+	public Chart(String id, final List<Series> series, IJsonConverter<T> converter)
+	{
+		this(id, series, new Options(), converter);
 	}
 
 	/**
@@ -67,13 +93,15 @@ public class Chart<T> extends JQueryGenericContainer<List<T>> implements IChartL
 	 * @param id the markup id
 	 * @param series the {@code List} of {@link Series}
 	 * @param options the {@link Options}
+	 * @param converter the {@link IJsonConverter}
 	 */
-	public Chart(String id, final List<Series> series, Options options)
+	public Chart(String id, final List<Series> series, Options options, IJsonConverter<T> converter)
 	{
 		super(id);
 
 		this.series = series;
 		this.options = options;
+		this.converter = converter;
 	}
 
 	/**
@@ -89,7 +117,7 @@ public class Chart<T> extends JQueryGenericContainer<List<T>> implements IChartL
 	}
 
 	/**
-	 * constructor
+	 * Constructor
 	 *
 	 * @param id the markup id
 	 * @param data the list of data
@@ -98,7 +126,34 @@ public class Chart<T> extends JQueryGenericContainer<List<T>> implements IChartL
 	 */
 	public Chart(String id, List<T> data, final List<Series> series, Options options)
 	{
-		this(id, Model.ofList(data), series, options);
+		this(id, Model.ofList(data), series, options, new JsonConverter<T>());
+	}
+
+	/**
+	 * Constructor
+	 *
+	 * @param id the markup id
+	 * @param data the list of data
+	 * @param series the {@code List} of {@link Series}
+	 * @param converter the {@link IJsonConverter}
+	 */
+	public Chart(String id, List<T> data, final List<Series> series, IJsonConverter<T> converter)
+	{
+		this(id, Model.ofList(data), series, new Options(), converter);
+	}
+
+	/**
+	 * Constructor
+	 *
+	 * @param id the markup id
+	 * @param data the list of data
+	 * @param series the {@code List} of {@link Series}
+	 * @param options the {@link Options}
+	 * @param converter the {@link IJsonConverter}
+	 */
+	public Chart(String id, List<T> data, final List<Series> series, Options options, IJsonConverter<T> converter)
+	{
+		this(id, Model.ofList(data), series, options, converter);
 	}
 
 	/**
@@ -110,7 +165,33 @@ public class Chart<T> extends JQueryGenericContainer<List<T>> implements IChartL
 	 */
 	public Chart(String id, final IModel<List<T>> model, final List<Series> series)
 	{
-		this(id, model, series, new Options());
+		this(id, model, series, new Options(), new JsonConverter<T>());
+	}
+
+	/**
+	 * Constructor
+	 *
+	 * @param id the markup id
+	 * @param model the list model of data
+	 * @param series the {@code List} of {@link Series}
+	 * @param options the {@link Options}
+	 */
+	public Chart(String id, final IModel<List<T>> model, final List<Series> series, Options options)
+	{
+		this(id, model, series, options, new JsonConverter<T>());
+	}
+
+	/**
+	 * Constructor
+	 *
+	 * @param id the markup id
+	 * @param model the list model of data
+	 * @param series the {@code List} of {@link Series}
+	 * @param converter the {@link IJsonConverter}
+	 */
+	public Chart(String id, final IModel<List<T>> model, final List<Series> series, IJsonConverter<T> converter)
+	{
+		this(id, model, series, new Options(), converter);
 	}
 
 	/**
@@ -120,13 +201,15 @@ public class Chart<T> extends JQueryGenericContainer<List<T>> implements IChartL
 	 * @param model the list model of data
 	 * @param series the {@code List} of {@link Series}
 	 * @param options the {@link Options}
+	 * @param converter the {@link IJsonConverter}
 	 */
-	public Chart(String id, final IModel<List<T>> model, final List<Series> series, Options options)
+	public Chart(String id, final IModel<List<T>> model, final List<Series> series, Options options, IJsonConverter<T> converter)
 	{
 		super(id, model);
 
 		this.series = series;
 		this.options = options;
+		this.converter = converter;
 	}
 
 	// Methods //
@@ -208,6 +291,16 @@ public class Chart<T> extends JQueryGenericContainer<List<T>> implements IChartL
 		return this.modelBehavior.getCallbackUrl();
 	}
 
+	/**
+	 * Gets the {@link IJsonConverter}
+	 * 
+	 * @return the {@link IJsonConverter}
+	 */
+	protected final IJsonConverter<T> getConverter()
+	{
+		return this.converter;
+	}
+
 	@Override
 	public boolean isSeriesClickEventEnabled()
 	{
@@ -221,7 +314,7 @@ public class Chart<T> extends JQueryGenericContainer<List<T>> implements IChartL
 	{
 		super.onInitialize();
 
-		this.modelBehavior = this.newListModelBehavior(this.getModel());
+		this.modelBehavior = this.newListModelBehavior(this.getModel(), this.getConverter());
 		this.add(this.modelBehavior);
 
 		this.add(JQueryWidget.newWidgetBehavior(this)); // cannot be in ctor as the markupId may be set manually afterward
@@ -311,10 +404,11 @@ public class Chart<T> extends JQueryGenericContainer<List<T>> implements IChartL
 	 * Gets a new {@link AjaxCallbackBehavior}
 	 *
 	 * @param model the @{@code List} {@link Model}
+	 * @param converter the {@link IJsonConverter}
 	 * @return a new {@link ListModelBehavior}, by default
 	 */
-	protected AjaxCallbackBehavior newListModelBehavior(final IModel<List<T>> model)
+	protected AjaxCallbackBehavior newListModelBehavior(final IModel<List<T>> model, IJsonConverter<T> converter)
 	{
-		return new ListModelBehavior<T>(model);
+		return new ListModelBehavior<T>(model, converter);
 	}
 }

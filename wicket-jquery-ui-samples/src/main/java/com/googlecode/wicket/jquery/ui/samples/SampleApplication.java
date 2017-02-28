@@ -34,6 +34,7 @@ import com.googlecode.wicket.jquery.ui.samples.jqueryui.wizard.DefaultWizardPage
 import com.googlecode.wicket.jquery.ui.samples.kendoui.accordion.KendoAccordionPage;
 import com.googlecode.wicket.jquery.ui.samples.kendoui.autocomplete.KendoAutoCompletePage;
 import com.googlecode.wicket.jquery.ui.samples.kendoui.button.KendoButtonPage;
+import com.googlecode.wicket.jquery.ui.samples.kendoui.chart.LineChartPage;
 import com.googlecode.wicket.jquery.ui.samples.kendoui.combobox.DefaultComboBoxPage;
 import com.googlecode.wicket.jquery.ui.samples.kendoui.console.DefaultConsolePage;
 import com.googlecode.wicket.jquery.ui.samples.kendoui.datatable.DefaultDataTablePage;
@@ -103,6 +104,7 @@ public class SampleApplication extends WebApplication
 		this.mountPackage("/kendo/accordion", KendoAccordionPage.class);
 		this.mountPackage("/kendo/autocomplete", KendoAutoCompletePage.class);
 		this.mountPackage("/kendo/button", KendoButtonPage.class);
+		this.mountPackage("/kendo/chart", LineChartPage.class);
 		this.mountPackage("/kendo/console", DefaultConsolePage.class);
 		this.mountPackage("/kendo/combobox", DefaultComboBoxPage.class);
 		this.mountPackage("/kendo/datatable", DefaultDataTablePage.class);

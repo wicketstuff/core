@@ -40,12 +40,12 @@ public class ListUtils
 	}
 
 	/**
-	 * Returns a pseudo-random {@code int} value between 0 and the specified bound (exclusive)
+	 * Returns a pseudo-random {@code int} value between 0 (inclusive) and the specified bound (exclusive)
 	 * 
 	 * @param bound the maximum bound (exclusive)
 	 * @return a pseudo-random {@code int}
 	 */
-	static int random(int bound)
+	public static int random(int bound)
 	{
 		return new Random((long) (Math.random() * 1000000L)).nextInt(bound);
 	}
@@ -82,6 +82,18 @@ public class ListUtils
 		}
 
 		return null;
+	}
+
+	/**
+	 * Returns a pseudo-random {@code double} value between the minimum (inclusive) and the maximum bound (exclusive)
+	 * 
+	 * @param min the minimum bound (inclusive)
+	 * @param max the maximum bound (exclusive)
+	 * @return a pseudo-random {@code double}
+	 */
+	public static double random(int min, int max)
+	{
+		return min + Math.random() * (max - min);
 	}
 
 	/**

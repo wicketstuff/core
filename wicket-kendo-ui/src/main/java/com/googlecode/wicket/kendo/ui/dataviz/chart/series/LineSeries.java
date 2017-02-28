@@ -17,17 +17,18 @@
 package com.googlecode.wicket.kendo.ui.dataviz.chart.series;
 
 /**
- * Provides a <i>line</i> series object.
+ * Provides a {@value #TYPE} series object
  *
  * @author Sebastien Briquet - sebfz1
  *
  */
-public class LineSeries extends Series
+public class LineSeries extends Series implements IStackable
 {
 	private static final long serialVersionUID = 1L;
 	private static final String TYPE = "line";
 
 	private final String field;
+	private Object stack = null;	
 
 	/**
 	 * Constructor
@@ -64,5 +65,30 @@ public class LineSeries extends Series
 	public String getField()
 	{
 		return this.field;
+	}
+
+
+	/**
+	 * Gets the stack the series belongs to
+	 * 
+	 * @return the stack
+	 */
+	@Override
+	public Object getStack()
+	{
+		return this.stack;
+	}
+
+	/**
+	 * Sets the stack the series belongs to
+	 * 
+	 * @param stack the stack
+	 * @return this, for chaining
+	 */
+	public LineSeries setStack(Object stack)
+	{
+		this.stack = stack;
+
+		return this;
 	}
 }

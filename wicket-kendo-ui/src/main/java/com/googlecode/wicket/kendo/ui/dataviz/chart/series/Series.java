@@ -16,7 +16,7 @@
  */
 package com.googlecode.wicket.kendo.ui.dataviz.chart.series;
 
-import java.io.Serializable;
+import org.apache.wicket.util.io.IClusterable;
 
 import com.googlecode.wicket.kendo.ui.dataviz.chart.Chart;
 
@@ -27,7 +27,7 @@ import com.googlecode.wicket.kendo.ui.dataviz.chart.Chart;
  * @author Sebastien Briquet - sebfz1
  *
  */
-public abstract class Series implements Serializable
+public abstract class Series implements IClusterable
 {
 	private static final long serialVersionUID = 1L;
 

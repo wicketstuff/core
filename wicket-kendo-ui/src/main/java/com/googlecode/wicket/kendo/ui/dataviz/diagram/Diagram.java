@@ -32,9 +32,9 @@ import com.googlecode.wicket.jquery.core.Options;
 import com.googlecode.wicket.jquery.core.behavior.AjaxCallbackBehavior;
 import com.googlecode.wicket.jquery.core.behavior.ListModelBehavior;
 import com.googlecode.wicket.jquery.core.converter.IJsonConverter;
+import com.googlecode.wicket.jquery.core.converter.JsonConverter;
 import com.googlecode.wicket.kendo.ui.KendoDataSource.HierarchicalDataSource;
 import com.googlecode.wicket.kendo.ui.KendoUIBehavior;
-import com.googlecode.wicket.kendo.ui.scheduler.ISchedulerConverter;
 
 /**
  * Provides a Kendo UI diagram
@@ -55,21 +55,42 @@ public class Diagram<T extends IDiagramNode<T>> extends JQueryGenericContainer<L
 	 * Constructor
 	 *
 	 * @param id the markup id
+	 */
+	public Diagram(String id)
+	{
+		this(id, new Options(), new JsonConverter<T>());
+	}
+
+	/**
+	 * Constructor
+	 *
+	 * @param id the markup id
+	 * @param options the {@link Options}
+	 */
+	public Diagram(String id, Options options)
+	{
+		this(id, options, new JsonConverter<T>());
+	}
+
+	/**
+	 * Constructor
+	 *
+	 * @param id the markup id
 	 * @param converter the {@link IJsonConverter}
 	 */
 	public Diagram(String id, IJsonConverter<T> converter)
 	{
-		this(id, converter, new Options());
+		this(id, new Options(), converter);
 	}
 
 	/**
 	 * Main constructor
 	 *
 	 * @param id the markup id
-	 * @param converter the {@link IJsonConverter}
 	 * @param options the {@link Options}
+	 * @param converter the {@link IJsonConverter}
 	 */
-	public Diagram(String id, IJsonConverter<T> converter, Options options)
+	public Diagram(String id, Options options, IJsonConverter<T> converter)
 	{
 		super(id);
 
@@ -82,11 +103,22 @@ public class Diagram<T extends IDiagramNode<T>> extends JQueryGenericContainer<L
 	 *
 	 * @param id the markup id
 	 * @param data the list of data
+	 */
+	public Diagram(String id, List<T> data)
+	{
+		this(id, new ListModel<T>(data), new Options(), new JsonConverter<T>());
+	}
+
+	/**
+	 * Constructor
+	 *
+	 * @param id the markup id
+	 * @param data the list of data
 	 * @param converter the {@link IJsonConverter}
 	 */
 	public Diagram(String id, List<T> data, IJsonConverter<T> converter)
 	{
-		this(id, new ListModel<T>(data), converter, new Options());
+		this(id, new ListModel<T>(data), new Options(), converter);
 	}
 
 	/**
@@ -94,12 +126,35 @@ public class Diagram<T extends IDiagramNode<T>> extends JQueryGenericContainer<L
 	 *
 	 * @param id the markup id
 	 * @param data the list of data
-	 * @param converter the {@link IJsonConverter}
 	 * @param options the {@link Options}
 	 */
-	public Diagram(String id, List<T> data, IJsonConverter<T> converter, Options options)
+	public Diagram(String id, List<T> data, Options options)
 	{
-		this(id, new ListModel<T>(data), converter, options);
+		this(id, new ListModel<T>(data), options, new JsonConverter<T>());
+	}
+
+	/**
+	 * constructor
+	 *
+	 * @param id the markup id
+	 * @param data the list of data
+	 * @param options the {@link Options}
+	 * @param converter the {@link IJsonConverter}
+	 */
+	public Diagram(String id, List<T> data, Options options, IJsonConverter<T> converter)
+	{
+		this(id, new ListModel<T>(data), options, converter);
+	}
+
+	/**
+	 * Constructor
+	 *
+	 * @param id the markup id
+	 * @param model the list model of data
+	 */
+	public Diagram(String id, final IModel<List<T>> model)
+	{
+		this(id, model, new Options(), new JsonConverter<T>());
 	}
 
 	/**
@@ -111,7 +166,7 @@ public class Diagram<T extends IDiagramNode<T>> extends JQueryGenericContainer<L
 	 */
 	public Diagram(String id, final IModel<List<T>> model, IJsonConverter<T> converter)
 	{
-		this(id, model, converter, new Options());
+		this(id, model, new Options(), converter);
 	}
 
 	/**
@@ -119,10 +174,22 @@ public class Diagram<T extends IDiagramNode<T>> extends JQueryGenericContainer<L
 	 *
 	 * @param id the markup id
 	 * @param model the list model of data
-	 * @param converter the {@link IJsonConverter}
 	 * @param options the {@link Options}
 	 */
-	public Diagram(String id, final IModel<List<T>> model, IJsonConverter<T> converter, Options options)
+	public Diagram(String id, final IModel<List<T>> model, Options options)
+	{
+		this(id, model, options, new JsonConverter<T>());
+	}
+
+	/**
+	 * Main constructor
+	 *
+	 * @param id the markup id
+	 * @param model the list model of data
+	 * @param options the {@link Options}
+	 * @param converter the {@link IJsonConverter}
+	 */
+	public Diagram(String id, final IModel<List<T>> model, Options options, IJsonConverter<T> converter)
 	{
 		super(id, model);
 
@@ -176,9 +243,9 @@ public class Diagram<T extends IDiagramNode<T>> extends JQueryGenericContainer<L
 	}
 
 	/**
-	 * Gets the {@link ISchedulerConverter}
+	 * Gets the {@link IJsonConverter}
 	 * 
-	 * @return the {@link ISchedulerConverter}
+	 * @return the {@link IJsonConverter}
 	 */
 	protected final IJsonConverter<T> getConverter()
 	{
