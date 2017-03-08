@@ -34,7 +34,6 @@ import org.apache.wicket.request.resource.JavaScriptResourceReference;
 import org.apache.wicket.request.resource.ResourceReference;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
 import wicket.contrib.tinymce4.TinyMceBehavior;
 
 /**
@@ -413,93 +412,93 @@ public class TinyMCESettings implements Serializable
 	 */
 	public enum Language
 	{
-        ar,
-        ar_SA,
-        az,
-        be,
-        bg_BG,
-        bn_BD,
-        bs,
-        ca,
-        cs,
-        cs_CZ,
-        cy,
-        da,
-        de,
-        de_AT,
-        dv,
-        el,
-        en_CA,
-        en_GB,
-        eo,
-        es,
-        es_MX,
-        et,
-        eu,
-        fa,
-        fa_IR,
-        fi,
-        fo,
-        fr_CH,
-        fr_FR,
-        ga,
-        gd,
-        gl,
-        he_IL,
-        hi_IN,
-        hr,
-        hu_HU,
-        hy,
-        id,
-        is_IS,
-        it,
-        ja,
-        ka_GE,
-        kab,
-        kk,
-        km_KH,
-        ko,
-        ko_KR,
-        ku,
-        ku_IQ,
-        lb,
-        lt,
-        lv,
-        mk_MK,
-        ml,
-        ml_IN,
-        mn_MN,
-        nb_NO,
-        nl,
-        pl,
-        pt_BR,
-        pt_PT,
-        ro,
-        ru,
-        ru_RU,
-        si_LK,
-        sk,
-        sl_SI,
-        sr,
-        sv_SE,
-        ta,
-        ta_IN,
-        tg,
-        th_TH,
-        tr,
-        tr_TR,
-        tt,
-        ug,
-        uk,
-        uk_UA,
-        vi,
-        vi_VN,
-        zh_CN,
-        zh_TW;
+		ar,
+		ar_SA,
+		az,
+		be,
+		bg_BG,
+		bn_BD,
+		bs,
+		ca,
+		cs,
+		cs_CZ,
+		cy,
+		da,
+		de,
+		de_AT,
+		dv,
+		el,
+		en_CA,
+		en_GB,
+		eo,
+		es,
+		es_MX,
+		et,
+		eu,
+		fa,
+		fa_IR,
+		fi,
+		fo,
+		fr_CH,
+		fr_FR,
+		ga,
+		gd,
+		gl,
+		he_IL,
+		hi_IN,
+		hr,
+		hu_HU,
+		hy,
+		id,
+		is_IS,
+		it,
+		ja,
+		ka_GE,
+		kab,
+		kk,
+		km_KH,
+		ko,
+		ko_KR,
+		ku,
+		ku_IQ,
+		lb,
+		lt,
+		lv,
+		mk_MK,
+		ml,
+		ml_IN,
+		mn_MN,
+		nb_NO,
+		nl,
+		pl,
+		pt_BR,
+		pt_PT,
+		ro,
+		ru,
+		ru_RU,
+		si_LK,
+		sk,
+		sl_SI,
+		sr,
+		sv_SE,
+		ta,
+		ta_IN,
+		tg,
+		th_TH,
+		tr,
+		tr_TR,
+		tt,
+		ug,
+		uk,
+		uk_UA,
+		vi,
+		vi_VN,
+		zh_CN,
+		zh_TW;
+		private static final Map<String, Language> unmappedLocales = new HashMap<>();
 
-        private static final Map<String, Language> unmappedLocales = new HashMap<>();
-
-        static {
+		static
+		{
 			unmappedLocales.put("bg", Language.bg_BG);
 			unmappedLocales.put("en", Language.en_GB);
 			unmappedLocales.put("fr", Language.fr_FR);
@@ -517,32 +516,37 @@ public class TinyMCESettings implements Serializable
 			unmappedLocales.put("zh", Language.zh_CN);
 		}
 
-        public static Language fromLocale(final Locale locale)
-        {
-            Language language = fromString(locale.getLanguage() + "_" + locale.getCountry());
-            if (language != null) {
-                return language;
-            }
-            language = fromString(locale.getLanguage());
-            if (language != null) {
-                return language;
-            }
-            language = fromString(locale.getISO3Language());
-			if (language != null) {
+		public static Language fromLocale(final Locale locale)
+		{
+			Language language = fromString(locale.getLanguage() + "_" + locale.getCountry());
+			if (language != null)
+			{
+				return language;
+			}
+			language = fromString(locale.getLanguage());
+			if (language != null)
+			{
+				return language;
+			}
+			language = fromString(locale.getISO3Language());
+			if (language != null)
+			{
 				return language;
 			}
 			return unmappedLocales.get(locale.getLanguage());
 		}
 
-        private static Language fromString(final String string)
-        {
-            try {
-                return Language.valueOf(string);
-            } catch (Exception e) {
-                return null;
-            }
-        }
-    }
+		private static Language fromString(final String string)
+		{
+			try
+			{
+				return Language.valueOf(string);
+			} catch (Exception e)
+			{
+				return null;
+			}
+		}
+	}
 
 	/**
 	 * This class enables you to specify what theme to use when rendering the TinyMCE WYSIWYG editor
