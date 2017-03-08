@@ -70,7 +70,7 @@ public class SelectableFolderContent extends Content
 	{
 		if (selected != null)
 		{
-			tree.updateNode(selected.getObject(), target);
+			tree.updateNode(selected.getObject(), target.get());
 
 			selected.detach();
 			selected = null;
@@ -78,7 +78,7 @@ public class SelectableFolderContent extends Content
 
 		selected = provider.model(foo);
 
-		tree.updateNode(foo, target);
+		tree.updateNode(foo, target.get());
 	}
 
 	@Override
