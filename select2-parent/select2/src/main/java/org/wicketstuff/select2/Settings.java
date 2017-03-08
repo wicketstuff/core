@@ -21,8 +21,8 @@ import org.apache.wicket.Session;
 import org.apache.wicket.WicketRuntimeException;
 import org.apache.wicket.markup.head.IHeaderResponse;
 import org.apache.wicket.util.string.Strings;
-import org.json.JSONException;
-import org.json.JSONStringer;
+import com.github.openjson.JSONException;
+import com.github.openjson.JSONStringer;
 import org.wicketstuff.select2.json.Json;
 
 /**

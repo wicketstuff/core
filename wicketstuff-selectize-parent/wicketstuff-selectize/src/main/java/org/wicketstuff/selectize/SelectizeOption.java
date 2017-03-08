@@ -22,7 +22,7 @@ import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.util.Iterator;
 
-import org.json.JSONObject;
+import com.github.openjson.JSONObject;
 
 /**
  * Provides the model of the selectize component and can be customize by invoking

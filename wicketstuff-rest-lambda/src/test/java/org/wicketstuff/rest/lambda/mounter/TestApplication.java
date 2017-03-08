@@ -22,7 +22,7 @@ import java.util.Map;
 import org.apache.wicket.Page;
 import org.apache.wicket.protocol.http.WebApplication;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
-import org.json.JSONObject;
+import com.github.openjson.JSONObject;
 
 public class TestApplication extends WebApplication 
 {

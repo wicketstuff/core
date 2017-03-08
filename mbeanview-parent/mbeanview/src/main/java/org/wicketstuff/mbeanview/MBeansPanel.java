@@ -139,10 +139,10 @@ public class MBeansPanel extends Panel
 				protected void onClick(Optional<AjaxRequestTarget> target)
 				{
 					if (selected != null) {
-						updateNode(selected, target);
+						updateNode(selected, target.get());
 					}
 					selected = getModelObject();
-					updateNode(selected, target);
+					updateNode(selected, target.get());
 						
 					Component newView = getModelObject().newView(VIEW_PANEL_ID);
 					newView.setOutputMarkupId(true);

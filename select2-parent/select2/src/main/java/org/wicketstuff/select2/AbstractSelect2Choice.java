@@ -38,8 +38,8 @@ import org.apache.wicket.request.http.WebRequest;
 import org.apache.wicket.request.http.WebResponse;
 import org.apache.wicket.util.string.AppendingStringBuffer;
 import org.apache.wicket.util.string.Strings;
-import org.json.JSONException;
-import org.json.JSONStringer;
+import com.github.openjson.JSONException;
+import com.github.openjson.JSONStringer;
 
 /**
  * Base class for Select2 components

@@ -16,8 +16,8 @@
  */
 package org.wicketstuff.whiteboard.elements;
 
-import org.json.JSONException;
-import org.json.JSONObject;
+import com.github.openjson.JSONException;
+import com.github.openjson.JSONObject;
 
 /**
  * This class rep Hold common fields for each element
