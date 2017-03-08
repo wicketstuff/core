@@ -22,8 +22,8 @@ import java.io.ObjectOutputStream;
 import java.util.Iterator;
 import java.util.List;
 
-import org.json.JSONArray;
-import org.json.JSONObject;
+import com.github.openjson.JSONArray;
+import com.github.openjson.JSONObject;
 
 /**
  * The SelectizeResponse is the actual model object for ajax requests of the selectize component.
