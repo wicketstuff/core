@@ -500,21 +500,21 @@ public class TinyMCESettings implements Serializable
         private static final Map<String, Language> unmappedLocales = new HashMap<>();
 
         static {
-        	unmappedLocales.put("bg", Language.bg_BG);
-        	unmappedLocales.put("en", Language.en_GB);
+			unmappedLocales.put("bg", Language.bg_BG);
+			unmappedLocales.put("en", Language.en_GB);
 			unmappedLocales.put("fr", Language.fr_FR);
 			unmappedLocales.put("hi", Language.hi_IN);
 			unmappedLocales.put("hu", Language.hu_HU);
 			unmappedLocales.put("is", Language.is_IS);
 			unmappedLocales.put("iw", Language.he_IL);
-        	unmappedLocales.put("mk", Language.mk_MK);
-        	unmappedLocales.put("nb", Language.nb_NO);
-        	unmappedLocales.put("no", Language.nb_NO);
-        	unmappedLocales.put("pt", Language.pt_PT);
-        	unmappedLocales.put("sl", Language.sl_SI);
-        	unmappedLocales.put("sv", Language.sv_SE);
-        	unmappedLocales.put("th", Language.th_TH);
-        	unmappedLocales.put("zh", Language.zh_CN);
+			unmappedLocales.put("mk", Language.mk_MK);
+			unmappedLocales.put("nb", Language.nb_NO);
+			unmappedLocales.put("no", Language.nb_NO);
+			unmappedLocales.put("pt", Language.pt_PT);
+			unmappedLocales.put("sl", Language.sl_SI);
+			unmappedLocales.put("sv", Language.sv_SE);
+			unmappedLocales.put("th", Language.th_TH);
+			unmappedLocales.put("zh", Language.zh_CN);
 		}
 
         public static Language fromLocale(final Locale locale)
@@ -528,11 +528,11 @@ public class TinyMCESettings implements Serializable
                 return language;
             }
             language = fromString(locale.getISO3Language());
-            if (language != null) {
-            	return language;
+			if (language != null) {
+				return language;
 			}
 			return unmappedLocales.get(locale.getLanguage());
-        }
+		}
 
         private static Language fromString(final String string)
         {
