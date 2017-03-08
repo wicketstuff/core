@@ -13,8 +13,8 @@
 package org.wicketstuff.select2.json;
 
 import org.apache.wicket.ajax.json.JSONFunction;
-import org.json.JSONException;
-import org.json.JSONStringer;
+import com.github.openjson.JSONException;
+import com.github.openjson.JSONStringer;
 
 /**
  * Json utilities

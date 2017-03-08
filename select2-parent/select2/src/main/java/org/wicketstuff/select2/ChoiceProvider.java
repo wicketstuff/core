@@ -15,8 +15,8 @@ package org.wicketstuff.select2;
 import java.util.Collection;
 
 import org.apache.wicket.model.IDetachable;
-import org.json.JSONException;
-import org.json.JSONStringer;
+import com.github.openjson.JSONException;
+import com.github.openjson.JSONStringer;
 
 /**
  * <p>
