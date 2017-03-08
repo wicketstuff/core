@@ -531,11 +531,7 @@ public class TinyMCESettings implements Serializable
             if (language != null) {
             	return language;
 			}
-			language = unmappedLocales.get(locale.getLanguage());
-			if (language != null) {
-				return language;
-			}
-            return null;
+			return unmappedLocales.get(locale.getLanguage());
         }
 
         private static Language fromString(final String string)
