@@ -31,7 +31,7 @@ import org.apache.wicket.Session;
 import org.apache.wicket.WicketRuntimeException;
 import org.apache.wicket.authroles.authorization.strategies.role.Roles;
 import org.apache.wicket.util.tester.WicketTester;
-import org.json.JSONObject;
+import com.github.openjson.JSONObject;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;

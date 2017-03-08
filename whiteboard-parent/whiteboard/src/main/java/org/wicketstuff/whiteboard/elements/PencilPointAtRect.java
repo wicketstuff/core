@@ -16,8 +16,8 @@
  */
 package org.wicketstuff.whiteboard.elements;
 
-import org.json.JSONException;
-import org.json.JSONObject;
+import com.github.openjson.JSONException;
+import com.github.openjson.JSONObject;
 
 /**
  * This class represent a point element on Whiteboard which is on a rectangle
