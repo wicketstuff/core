@@ -21,8 +21,11 @@ package wicket.contrib.tinymce4.settings;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Locale;
+import java.util.Map;
 
 import org.apache.wicket.Component;
 import org.apache.wicket.Session;
@@ -31,13 +34,12 @@ import org.apache.wicket.request.resource.JavaScriptResourceReference;
 import org.apache.wicket.request.resource.ResourceReference;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
 import wicket.contrib.tinymce4.TinyMceBehavior;
 
 /**
  * Settings class for TinyMCE editor. User can add/remove buttons, enable/disable resizing, change
  * positions, orientation, alignment and much more.
- * 
+ *
  * @author Iulian-Corneliu Costan (iulian.costan@gmail.com)
  * @author Frank Bille Jensen (fbille@avaleo.net)
  * @see Plugin
@@ -47,12 +49,12 @@ public class TinyMCESettings implements Serializable
 {
 	private static final long serialVersionUID = 3L;
 	private static final Logger LOG = LoggerFactory.getLogger(TinyMCESettings.class);
-	
+
 	public static final ResourceReference TINYMCE_JS_REF = new JavaScriptResourceReference(
 			TinyMceBehavior.class, "tinymce/tinymce.js");
 	public static final ResourceReference TINYMCE_JS_REF_MIN = new JavaScriptResourceReference(
 			TinyMceBehavior.class, "tinymce/tinymce.min.js");
-	
+
 	private Theme theme;
 	private Language language;
 	private Boolean resizing = false;
@@ -63,7 +65,7 @@ public class TinyMCESettings implements Serializable
 	private Boolean convertUrls = null;
 	private Boolean removeScriptHost = null;
 	private Boolean relativeUrls = null;
-	
+
 	private String blockFormats = null;
 	private ResourceReference contentCss = null;
 	private String documentBaseUrl;
@@ -71,7 +73,7 @@ public class TinyMCESettings implements Serializable
 	private final List<String> plugins;
 	private final List<String> customSettings;
 	private final List<Toolbar> toolbars;
-	
+
 	public TinyMCESettings()
 	{
 		this(Theme.modern);
@@ -93,14 +95,7 @@ public class TinyMCESettings implements Serializable
 
 	private static Language selectLang()
 	{
-		try
-		{
-			return Language.valueOf(Session.get().getLocale().getLanguage());
-		}
-		catch (IllegalArgumentException e)
-		{
-			return null;
-		}
+		return Language.fromLocale(Session.get().getLocale());
 	}
 
 	public Theme getTheme()
@@ -156,7 +151,7 @@ public class TinyMCESettings implements Serializable
 		this.blockFormats = blockFormats;
 		return this;
 	}
-        
+
 	public TinyMCESettings setReadOnly(boolean readOnly)
 	{
 		this.readOnly = readOnly;
@@ -186,7 +181,7 @@ public class TinyMCESettings implements Serializable
 	 * set this option to false it will try to keep these URLs intact. This option is set to true by
 	 * default that means URLs will be forced absolute or relative depending on the state of
 	 * relative_urls.
-	 * 
+	 *
 	 * @param convertUrls
 	 */
 	public TinyMCESettings setConvertUrls(boolean convertUrls)
@@ -204,10 +199,10 @@ public class TinyMCESettings implements Serializable
 	 * If this option is enabled the protocol and host part of the URLs returned from the
 	 * MCFileManager will be removed. This option is only used if the relative_urls option is set to
 	 * false. This option is set to true by default.
-	 * 
+	 *
 	 * URL:s will be returned in this format: "/somedir/somefile.htm" instead of the default mode:
 	 * "http://www.somesite.com/somedir/somefile.htm".
-	 * 
+	 *
 	 * @param removeScriptHost
 	 */
 	public TinyMCESettings setRemoveScriptHost(Boolean removeScriptHost)
@@ -225,7 +220,7 @@ public class TinyMCESettings implements Serializable
 	 * If this option is set to true, all URLs returned from the MCFileManager will be relative from
 	 * the specified document_base_url. If it's set to false all URLs will be converted to absolute
 	 * URLs. This option is set to true by default.
-	 * 
+	 *
 	 * @param relativeUrls
 	 */
 	public TinyMCESettings setRelativeUrls(Boolean relativeUrls)
@@ -250,21 +245,21 @@ public class TinyMCESettings implements Serializable
 		buffer.append("\n\t")
 			.append("mode").append(" : ").append('"')
 			.append(mode.getName()).append('"');
-		
+
 		if (Mode.exact.equals(mode))
 		{
 			addElements(components, buffer);
 		}
-		
+
 		// language
 		if (language != null)
 		{
 			appendSingleConfigElement(buffer, "language", language.toString(), true);
 		}
-		
+
 		// theme
 		appendSingleConfigElement(buffer, "theme", theme.getName(), true);
-		
+
 		// other settings
 		buffer.append(toJavaScript());
 
@@ -279,38 +274,38 @@ public class TinyMCESettings implements Serializable
 		{
 			appendSingleConfigElement(buffer, "convert_urls", Boolean.toString(convertUrls));
 		}
-		
+
 		if (relativeUrls != null)
 		{
 			appendSingleConfigElement(buffer, "relative_urls", Boolean.toString(relativeUrls));
 		}
-		
+
 		if (removeScriptHost != null)
 		{
 			appendSingleConfigElement(buffer, "remove_script_host", Boolean.toString(removeScriptHost));
 		}
-		
+
 		if (readOnly)
 		{
-			appendSingleConfigElement(buffer, "readonly", "true"); 
+			appendSingleConfigElement(buffer, "readonly", "true");
 		}
-		
+
 		if (contentCss != null)
 		{
 			String contentCssUrl = RequestCycle.get().urlFor(contentCss, null).toString();
 			appendSingleConfigElement(buffer, "content_css", contentCssUrl, true);
 		}
-		
+
 		if (documentBaseUrl != null)
 		{
 			appendSingleConfigElement(buffer, "document_base_url", documentBaseUrl, true);
 		}
-		
-		if (!menuBar) 
+
+		if (!menuBar)
 		{
 			appendSingleConfigElement(buffer, "menubar", "false");
 		}
-		
+
 		if (inLine)
 		{
 			appendSingleConfigElement(buffer, "inline", "true");
@@ -323,26 +318,26 @@ public class TinyMCESettings implements Serializable
 		return buffer.toString();
 	}
 
-	private void appendPluginsSettings(StringBuffer buffer) 
+	private void appendPluginsSettings(StringBuffer buffer)
 	{
 		if(plugins.size() < 1)
 		{
 			return;
 		}
-		
+
 		buffer.append(",\n\t").append("plugins: [\n\"");
-		
+
 		for (String plugin : plugins)
 		{
 			buffer.append(plugin).append(' ');
 		}
-		
+
 		buffer.append("\"\n]");
 	}
 
-	private void appendToolbarsSettings(StringBuffer buffer) 
+	private void appendToolbarsSettings(StringBuffer buffer)
 	{
-		for (Toolbar toolbar : toolbars) 
+		for (Toolbar toolbar : toolbars)
 		{
 			appendSingleConfigElement(buffer, toolbar.getId(), toolbar.toString(), true);
 		}
@@ -380,7 +375,7 @@ public class TinyMCESettings implements Serializable
 		plugins.add(pluginName);
 		return this;
 	}
-	
+
 	public TinyMCESettings addToolbar(Toolbar toolbar)
 	{
 		toolbars.add(toolbar);
@@ -415,9 +410,142 @@ public class TinyMCESettings implements Serializable
 	/**
 	 * Language enum
 	 */
-	public static enum Language
+	public enum Language
 	{
-		ar, bg, bs, ca, ch, cs, da, de, el, en, es, et, fa, fi, fr, gl, he, hr, hu, ia, ii, is, it, ja, ko, lt, lv, mk, ms, nb, nl, nn, pl, pt, ro, ru, sc, se, si, sk, sl, sr, sv, tr, tt, tw, uk, vi, zh
+		ar,
+		ar_SA,
+		az,
+		be,
+		bg_BG,
+		bn_BD,
+		bs,
+		ca,
+		cs,
+		cs_CZ,
+		cy,
+		da,
+		de,
+		de_AT,
+		dv,
+		el,
+		en_CA,
+		en_GB,
+		eo,
+		es,
+		es_MX,
+		et,
+		eu,
+		fa,
+		fa_IR,
+		fi,
+		fo,
+		fr_CH,
+		fr_FR,
+		ga,
+		gd,
+		gl,
+		he_IL,
+		hi_IN,
+		hr,
+		hu_HU,
+		hy,
+		id,
+		is_IS,
+		it,
+		ja,
+		ka_GE,
+		kab,
+		kk,
+		km_KH,
+		ko,
+		ko_KR,
+		ku,
+		ku_IQ,
+		lb,
+		lt,
+		lv,
+		mk_MK,
+		ml,
+		ml_IN,
+		mn_MN,
+		nb_NO,
+		nl,
+		pl,
+		pt_BR,
+		pt_PT,
+		ro,
+		ru,
+		ru_RU,
+		si_LK,
+		sk,
+		sl_SI,
+		sr,
+		sv_SE,
+		ta,
+		ta_IN,
+		tg,
+		th_TH,
+		tr,
+		tr_TR,
+		tt,
+		ug,
+		uk,
+		uk_UA,
+		vi,
+		vi_VN,
+		zh_CN,
+		zh_TW;
+		private static final Map<String, Language> unmappedLocales = new HashMap<>();
+
+		static
+		{
+			unmappedLocales.put("bg", Language.bg_BG);
+			unmappedLocales.put("en", Language.en_GB);
+			unmappedLocales.put("fr", Language.fr_FR);
+			unmappedLocales.put("hi", Language.hi_IN);
+			unmappedLocales.put("hu", Language.hu_HU);
+			unmappedLocales.put("is", Language.is_IS);
+			unmappedLocales.put("iw", Language.he_IL);
+			unmappedLocales.put("mk", Language.mk_MK);
+			unmappedLocales.put("nb", Language.nb_NO);
+			unmappedLocales.put("no", Language.nb_NO);
+			unmappedLocales.put("pt", Language.pt_PT);
+			unmappedLocales.put("sl", Language.sl_SI);
+			unmappedLocales.put("sv", Language.sv_SE);
+			unmappedLocales.put("th", Language.th_TH);
+			unmappedLocales.put("zh", Language.zh_CN);
+		}
+
+		public static Language fromLocale(final Locale locale)
+		{
+			Language language = fromString(locale.getLanguage() + "_" + locale.getCountry());
+			if (language != null)
+			{
+				return language;
+			}
+			language = fromString(locale.getLanguage());
+			if (language != null)
+			{
+				return language;
+			}
+			language = fromString(locale.getISO3Language());
+			if (language != null)
+			{
+				return language;
+			}
+			return unmappedLocales.get(locale.getLanguage());
+		}
+
+		private static Language fromString(final String string)
+		{
+			try
+			{
+				return Language.valueOf(string);
+			} catch (Exception e)
+			{
+				return null;
+			}
+		}
 	}
 
 	/**
@@ -431,7 +559,7 @@ public class TinyMCESettings implements Serializable
 	public static class Theme extends Enum
 	{
 		private static final long serialVersionUID = 1L;
-		public static final Theme modern = new Theme("modern");		
+		public static final Theme modern = new Theme("modern");
 
 		private Theme(String name)
 		{
@@ -448,17 +576,17 @@ public class TinyMCESettings implements Serializable
 		this.menuBar = menuBar;
 		return this;
 	}
-	
+
 	public static void appendSingleConfigElement(StringBuffer buffer, String name, String value)
 	{
 		appendSingleConfigElement(buffer, name, value, false);
 	}
-	
-	public static void appendSingleConfigElement(StringBuffer buffer, String name, String value, 
+
+	public static void appendSingleConfigElement(StringBuffer buffer, String name, String value,
 												   boolean wrapValueWithQuotes)
 	{
 		String quotes = wrapValueWithQuotes ? "\"" : "";
-		
+
 		buffer.append(",\n\t")
 		.append(name).append(" : ").append(quotes)
 		.append(value).append(quotes);
