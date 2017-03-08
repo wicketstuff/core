@@ -22,13 +22,16 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.wicket.AttributeModifier;
+import org.apache.wicket.Component;
 import org.apache.wicket.ajax.AjaxRequestTarget;
+import org.apache.wicket.markup.ComponentTag;
 import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.list.ListItem;
 import org.apache.wicket.markup.html.list.ListView;
 import org.apache.wicket.markup.html.panel.EmptyPanel;
 import org.apache.wicket.markup.html.panel.Fragment;
+import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.model.PropertyModel;
 import org.apache.wicket.util.lang.Args;
@@ -36,6 +39,7 @@ import org.apache.wicket.util.lang.Args;
 import com.googlecode.wicket.jquery.core.JQueryBehavior;
 import com.googlecode.wicket.jquery.core.JQueryPanel;
 import com.googlecode.wicket.jquery.core.Options;
+import com.googlecode.wicket.jquery.ui.JQueryIcon;
 
 /**
  * Provides the jQuery menu based on a {@link JQueryPanel}
@@ -227,7 +231,7 @@ public class Menu extends JQueryPanel implements IMenuListener
 		}
 		else
 		{
-			item.add(new EmptyPanel("menu"));					
+			item.add(new EmptyPanel("menu"));
 		}
 	}
 
@@ -253,8 +257,39 @@ public class Menu extends JQueryPanel implements IMenuListener
 		{
 			super(id, "item-fragment", Menu.this);
 
-			this.add(new EmptyPanel("icon").add(AttributeModifier.append("class", new PropertyModel<String>(item, "icon"))));
+			this.add(this.newIconContainer("icon", PropertyModel.of(item, "icon")));
 			this.add(new Label("title", item.getTitle()));
+		}
+
+		/**
+		 * Gets a new {@link WebMarkupContainer} for the icon
+		 * 
+		 * @param id the markup id
+		 * @param model the icon model
+		 * @return a new {@link WebMarkupContainer}
+		 */
+		private Component newIconContainer(String id, final IModel<String> model)
+		{
+			return new WebMarkupContainer(id) {
+
+				private static final long serialVersionUID = 1L;
+
+				@Override
+				protected void onConfigure()
+				{
+					super.onConfigure();
+
+					this.setVisible(!JQueryIcon.isNone(model.getObject()));
+				}
+
+				@Override
+				protected void onComponentTag(ComponentTag tag)
+				{
+					super.onComponentTag(tag);
+
+					tag.append("class", model.getObject(), " ");
+				}
+			};
 		}
 	}
 }

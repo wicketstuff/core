@@ -16,13 +16,13 @@
  */
 package com.googlecode.wicket.jquery.ui.widget.menu;
 
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
+import org.apache.wicket.util.lang.Generics;
 
 import com.googlecode.wicket.jquery.ui.JQueryIcon;
 
@@ -47,7 +47,7 @@ public class MenuItem extends AbstractMenuItem
 	 */
 	public MenuItem(String title)
 	{
-		this(Model.of(title), JQueryIcon.BLANK);
+		this(Model.of(title), JQueryIcon.NONE);
 	}
 
 	/**
@@ -68,7 +68,7 @@ public class MenuItem extends AbstractMenuItem
 	 */
 	public MenuItem(IModel<String> title)
 	{
-		this(title, JQueryIcon.BLANK);
+		this(title, JQueryIcon.NONE);
 	}
 
 	/**
@@ -81,7 +81,7 @@ public class MenuItem extends AbstractMenuItem
 	{
 		super(title, icon);
 
-		this.items = new ArrayList<IMenuItem>();
+		this.items = Generics.newArrayList();
 	}
 
 	/**
@@ -93,7 +93,7 @@ public class MenuItem extends AbstractMenuItem
 	 */
 	public MenuItem(String title, List<IMenuItem> items)
 	{
-		this(Model.of(title), JQueryIcon.BLANK, items);
+		this(Model.of(title), JQueryIcon.NONE, items);
 	}
 
 	/**
@@ -116,7 +116,7 @@ public class MenuItem extends AbstractMenuItem
 	 */
 	public MenuItem(IModel<String> title, List<IMenuItem> items)
 	{
-		this(title, JQueryIcon.BLANK, items);
+		this(title, JQueryIcon.NONE, items);
 	}
 
 	/**

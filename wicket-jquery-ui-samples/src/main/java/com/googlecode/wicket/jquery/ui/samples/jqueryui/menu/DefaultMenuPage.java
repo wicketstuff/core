@@ -1,11 +1,11 @@
 package com.googlecode.wicket.jquery.ui.samples.jqueryui.menu;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.markup.html.panel.FeedbackPanel;
 import org.apache.wicket.model.Model;
+import org.apache.wicket.util.lang.Generics;
 
 import com.googlecode.wicket.jquery.ui.JQueryIcon;
 import com.googlecode.wicket.jquery.ui.panel.JQueryFeedbackPanel;
@@ -19,7 +19,7 @@ public class DefaultMenuPage extends AbstractMenuPage
 
 	static List<IMenuItem> newMenuItemList()
 	{
-		List<IMenuItem> list = new ArrayList<IMenuItem>();
+		List<IMenuItem> list = Generics.newArrayList();
 
 		list.add(new MenuItem("Item with icon", JQueryIcon.FLAG));
 		list.add(new MenuItem("Change the title") {
@@ -50,7 +50,7 @@ public class DefaultMenuPage extends AbstractMenuPage
 
 	static List<IMenuItem> newSubMenuList()
 	{
-		List<IMenuItem> list = new ArrayList<IMenuItem>();
+		List<IMenuItem> list = Generics.newArrayList();
 
 		list.add(new MenuItem("Sub-menu #1"));
 		list.add(new MenuItem("Sub-menu #2"));
