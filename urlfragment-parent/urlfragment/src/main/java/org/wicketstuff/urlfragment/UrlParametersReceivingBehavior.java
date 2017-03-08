@@ -29,8 +29,8 @@ import org.apache.wicket.markup.head.OnDomReadyHeaderItem;
 import org.apache.wicket.request.IRequestParameters;
 import org.apache.wicket.request.cycle.RequestCycle;
 import org.apache.wicket.request.resource.PackageResourceReference;
-import org.json.JSONException;
-import org.json.JSONStringer;
+import com.github.openjson.JSONException;
+import com.github.openjson.JSONStringer;
 
 /**
  * Reads URL fragment parameters. This {@link Behavior} will execute an AJAX call to itself with the
