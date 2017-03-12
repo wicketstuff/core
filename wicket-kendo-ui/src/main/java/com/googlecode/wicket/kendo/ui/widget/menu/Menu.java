@@ -278,7 +278,6 @@ public class Menu extends JQueryPanel implements IMenuListener
 		{
 			super(id, "item-fragment", Menu.this);
 
-			System.out.println("icon: " + KendoIcon.getCssClass(item.getIcon())); // TODO remove
 			this.add(new EmptyPanel("icon").add(AttributeModifier.append("class", KendoIcon.getCssClass(item.getIcon()))));
 			this.add(new Label("title", item.getTitle()).setRenderBodyOnly(true));
 		}
@@ -294,7 +293,7 @@ public class Menu extends JQueryPanel implements IMenuListener
 		public LinkFragment(String id, UrlMenuItem item)
 		{
 			super(id, "link-fragment", Menu.this);
-			System.out.println("icon: " + KendoIcon.getCssClass(item.getIcon())); // TODO remove
+
 			WebMarkupContainer link = new WebMarkupContainer("link");
 			link.add(new EmptyPanel("icon").add(AttributeModifier.append("class", KendoIcon.getCssClass(item.getIcon()))));
 			link.add(new Label("title", item.getTitle()).setRenderBodyOnly(true));
