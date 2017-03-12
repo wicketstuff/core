@@ -149,7 +149,7 @@ public abstract class ConfirmAjaxButton extends GenericPanel<String>
 	 */
 	protected String getIcon()
 	{
-		return KendoIcon.NOTE;
+		return KendoIcon.WARNING;
 	}
 
 	// Factories //
@@ -166,7 +166,7 @@ public abstract class ConfirmAjaxButton extends GenericPanel<String>
 	 */
 	protected Window<?> newWindow(String id, IModel<String> title, IModel<String> message, List<WindowButton> buttons)
 	{
-		return new MessageWindow(id, title, message, buttons, KendoIcon.NOTE) {
+		return new MessageWindow(id, title, message, buttons, KendoIcon.QUESTION) {
 
 			private static final long serialVersionUID = 1L;
 

@@ -115,7 +115,7 @@ public class NavigationPanel extends Panel
 			@Override
 			protected String getIcon()
 			{
-				return KendoIcon.ARROW_W;
+				return KendoIcon.ARROW_60_LEFT;
 			}
 
 			@Override
@@ -140,7 +140,7 @@ public class NavigationPanel extends Panel
 			@Override
 			protected String getIcon()
 			{
-				return KendoIcon.ARROW_E;
+				return KendoIcon.ARROW_60_RIGHT;
 			}
 
 			@Override

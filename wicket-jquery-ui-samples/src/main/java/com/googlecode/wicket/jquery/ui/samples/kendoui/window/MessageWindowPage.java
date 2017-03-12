@@ -32,7 +32,7 @@ public class MessageWindowPage extends AbstractWindowPage
 		form.add(feedback.setOutputMarkupId(true));
 
 		// Window //
-		final MessageWindow window = new MessageWindow("window", "Information", "This is a sample message", BUTTONS, KendoIcon.NOTE) {
+		final MessageWindow window = new MessageWindow("window", "Information", "This is a sample message", BUTTONS, KendoIcon.QUESTION) {
 
 			private static final long serialVersionUID = 1L;
 
@@ -62,7 +62,7 @@ public class MessageWindowPage extends AbstractWindowPage
 			@Override
 			protected String getIcon()
 			{
-				return KendoIcon.MAXIMIZE;
+				return KendoIcon.WINDOW_MAXIMIZE;
 			}
 
 			@Override

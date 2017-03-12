@@ -28,8 +28,8 @@ import com.googlecode.wicket.kendo.ui.KendoIcon;
  */
 public enum WindowButtons
 {
-	OK(WindowButton.of(Window.OK, Window.LBL_OK, KendoIcon.TICK, true)), // lf
-	OK_CANCEL(WindowButton.of(Window.OK, Window.LBL_OK, KendoIcon.TICK, true), WindowButton.of(Window.CANCEL, Window.LBL_CANCEL, KendoIcon.CANCEL, false)), // lf
+	OK(WindowButton.of(Window.OK, Window.LBL_OK, KendoIcon.CHECK, true)), // lf
+	OK_CANCEL(WindowButton.of(Window.OK, Window.LBL_OK, KendoIcon.CHECK, true), WindowButton.of(Window.CANCEL, Window.LBL_CANCEL, KendoIcon.CANCEL, false)), // lf
 	YES_NO(WindowButton.of(Window.YES, Window.LBL_YES, true), WindowButton.of(Window.NO, Window.LBL_NO, true)), // lf
 	YES_NO_CANCEL(WindowButton.of(Window.YES, Window.LBL_YES, true), WindowButton.of(Window.NO, Window.LBL_NO, true), WindowButton.of(Window.CANCEL, Window.LBL_CANCEL, false));
 

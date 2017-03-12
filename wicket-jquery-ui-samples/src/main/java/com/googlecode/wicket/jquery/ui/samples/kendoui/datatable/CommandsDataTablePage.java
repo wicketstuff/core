@@ -95,7 +95,7 @@ public class CommandsDataTablePage extends AbstractDataTablePage
 			@Override
 			protected String getIcon()
 			{
-				return KendoIcon.TICK;
+				return KendoIcon.DOWNLOAD;
 			}
 
 			@Override

@@ -41,7 +41,7 @@ public class AjaxButtonGroupPage extends AbstractButtonPage
 			@Override
 			protected Component newLabel(String id, IModel<Boolean> model)
 			{
-				return new IconLabel(id, Model.of(""), model.getObject() ? KendoIcon.TICK : KendoIcon.CANCEL);
+				return new IconLabel(id, Model.of(""), model.getObject() ? KendoIcon.CHECK : KendoIcon.CANCEL);
 			}
 		});
 	}
