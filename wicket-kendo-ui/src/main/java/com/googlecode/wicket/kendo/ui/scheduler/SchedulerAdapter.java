@@ -17,7 +17,7 @@
 package com.googlecode.wicket.kendo.ui.scheduler;
 
 import org.apache.wicket.ajax.AjaxRequestTarget;
-import org.json.JSONObject;
+import com.github.openjson.JSONObject;
 
 import com.googlecode.wicket.kendo.ui.scheduler.views.SchedulerViewType;
 

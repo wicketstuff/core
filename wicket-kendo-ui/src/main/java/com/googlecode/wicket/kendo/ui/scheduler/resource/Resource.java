@@ -21,7 +21,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
 
-import org.json.JSONObject;
+import com.github.openjson.JSONObject;
 
 /**
  * Defines a resource for the Kendo UI Scheduler<br>

@@ -4,7 +4,7 @@ import java.text.ParseException;
 import java.util.Date;
 
 import org.apache.wicket.util.io.IClusterable;
-import org.json.JSONObject;
+import com.github.openjson.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

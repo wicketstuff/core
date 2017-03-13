@@ -20,7 +20,7 @@ import java.util.List;
 
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.util.io.IClusterable;
-import org.json.JSONObject;
+import com.github.openjson.JSONObject;
 
 import com.googlecode.wicket.kendo.ui.datatable.button.CommandButton;
 import com.googlecode.wicket.kendo.ui.datatable.button.ToolbarButton;

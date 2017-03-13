@@ -19,7 +19,7 @@ package com.googlecode.wicket.jquery.core.renderer;
 import java.util.Arrays;
 import java.util.List;
 
-import org.json.JSONObject;
+import com.github.openjson.JSONObject;
 import org.apache.wicket.core.util.lang.PropertyResolver;
 
 /**

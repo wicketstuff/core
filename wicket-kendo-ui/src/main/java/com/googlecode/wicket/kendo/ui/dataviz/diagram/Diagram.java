@@ -19,7 +19,7 @@ package com.googlecode.wicket.kendo.ui.dataviz.diagram;
 import java.util.List;
 
 import org.apache.wicket.ajax.AjaxRequestTarget;
-import org.json.JSONObject;
+import com.github.openjson.JSONObject;
 import org.apache.wicket.ajax.json.JSONString;
 import org.apache.wicket.behavior.AbstractAjaxBehavior;
 import org.apache.wicket.model.IModel;

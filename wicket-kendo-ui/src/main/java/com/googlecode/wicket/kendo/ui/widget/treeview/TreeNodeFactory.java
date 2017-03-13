@@ -17,7 +17,7 @@
 package com.googlecode.wicket.kendo.ui.widget.treeview;
 
 import org.apache.wicket.util.io.IClusterable;
-import org.json.JSONObject;
+import com.github.openjson.JSONObject;
 
 /**
  * Provides a factory for building {@link TreeNode}{@code s} as JSON

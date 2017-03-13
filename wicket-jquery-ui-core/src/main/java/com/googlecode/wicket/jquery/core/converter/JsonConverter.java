@@ -18,7 +18,7 @@ package com.googlecode.wicket.jquery.core.converter;
 
 
 import org.apache.wicket.util.io.IClusterable;
-import org.json.JSONObject;
+import com.github.openjson.JSONObject;
 
 /**
  * Provides a serializable converter for building {@link T}{@code s} as {@link JSONObject}, and vice-versa

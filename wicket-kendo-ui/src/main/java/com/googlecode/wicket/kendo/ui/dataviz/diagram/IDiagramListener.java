@@ -17,7 +17,7 @@
 package com.googlecode.wicket.kendo.ui.dataviz.diagram;
 
 import org.apache.wicket.ajax.AjaxRequestTarget;
-import org.json.JSONObject;
+import com.github.openjson.JSONObject;
 
 /**
  * Event listener shared by the {@link Diagram} widget and the {@link DiagramBehavior}

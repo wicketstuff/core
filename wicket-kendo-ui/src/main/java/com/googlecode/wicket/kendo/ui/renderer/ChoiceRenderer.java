@@ -20,7 +20,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import org.apache.wicket.core.util.lang.PropertyResolver;
-import org.json.JSONObject;
+import com.github.openjson.JSONObject;
 
 import com.googlecode.wicket.jquery.core.renderer.IChoiceRenderer;
 import com.googlecode.wicket.jquery.core.renderer.TextRenderer;

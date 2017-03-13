@@ -18,8 +18,8 @@ package com.googlecode.wicket.kendo.ui.scheduler;
 
 import java.util.List;
 
-import org.json.JSONArray;
-import org.json.JSONObject;
+import com.github.openjson.JSONArray;
+import com.github.openjson.JSONObject;
 
 import com.googlecode.wicket.jquery.core.utils.DateUtils;
 import com.googlecode.wicket.jquery.core.utils.JsonUtils;

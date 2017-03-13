@@ -21,7 +21,7 @@ import java.util.List;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.request.IRequestParameters;
 import org.apache.wicket.util.lang.Generics;
-import org.json.JSONObject;
+import com.github.openjson.JSONObject;
 
 import com.googlecode.wicket.jquery.core.converter.IJsonConverter;
 import com.googlecode.wicket.jquery.core.utils.JsonUtils;

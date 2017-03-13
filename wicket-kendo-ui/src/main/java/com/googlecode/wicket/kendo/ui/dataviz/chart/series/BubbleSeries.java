@@ -17,8 +17,8 @@
 package com.googlecode.wicket.kendo.ui.dataviz.chart.series;
 
 import org.apache.wicket.util.io.IClusterable;
-import org.json.JSONObject;
-import org.json.JSONString;
+import com.github.openjson.JSONObject;
+import com.github.openjson.JSONString;
 
 /**
  * Provides a {@value #TYPE} series object

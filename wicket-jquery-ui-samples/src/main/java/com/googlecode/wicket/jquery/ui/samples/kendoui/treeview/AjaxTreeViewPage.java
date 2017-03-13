@@ -2,7 +2,7 @@ package com.googlecode.wicket.jquery.ui.samples.kendoui.treeview;
 
 import java.util.List;
 
-import org.json.JSONObject;
+import com.github.openjson.JSONObject;
 
 import com.googlecode.wicket.jquery.core.Options;
 import com.googlecode.wicket.jquery.core.template.IJQueryTemplate;

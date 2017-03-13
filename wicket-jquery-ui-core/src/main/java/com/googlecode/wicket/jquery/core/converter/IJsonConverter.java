@@ -16,7 +16,7 @@
  */
 package com.googlecode.wicket.jquery.core.converter;
 
-import org.json.JSONObject;
+import com.github.openjson.JSONObject;
 
 /**
  * Provides a converter for building {@link T}{@code s} as {@link JSONObject}, and vice-versa

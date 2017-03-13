@@ -3,8 +3,8 @@ package com.googlecode.wicket.jquery.core.utils;
 import java.util.List;
 
 import org.apache.wicket.util.lang.Generics;
-import org.json.JSONArray;
-import org.json.JSONObject;
+import com.github.openjson.JSONArray;
+import com.github.openjson.JSONObject;
 
 /**
  * Utility class for json objects

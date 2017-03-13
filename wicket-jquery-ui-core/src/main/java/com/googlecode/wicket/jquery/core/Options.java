@@ -27,7 +27,7 @@ import java.util.Set;
 
 import org.apache.wicket.util.io.IClusterable;
 import org.apache.wicket.util.lang.Generics;
-import org.json.JSONObject;
+import com.github.openjson.JSONObject;
 
 import com.googlecode.wicket.jquery.core.utils.BuilderUtils;
 import com.googlecode.wicket.jquery.core.utils.DateUtils;
