@@ -21,7 +21,7 @@ import com.github.openjson.JSONObject;
 
 /**
  * This class represent a text element on Whiteboard
- * 
+ *
  * @author andunslg
  */
 public class Text extends Element {
@@ -33,7 +33,7 @@ public class Text extends Element {
 		this.r = r;
 	}
 
-	public Text(JSONObject object) throws JSONException {
+	public Text(JSONObject object) {
 		super(object);
 		this.type = Type.Text;
 		this.r = object.getInt("r");
@@ -41,11 +41,12 @@ public class Text extends Element {
 
 	/**
 	 * Return a JSON object which represent the Element
-	 * 
+	 *
 	 * @return JSON object with field values added
 	 * @throws JSONException
 	 */
-	public JSONObject getJSON() throws JSONException {
+	@Override
+	public JSONObject getJSON() {
 		JSONObject jsonObject = super.getJSON(new JSONObject());
 		jsonObject.put("r", r);
 

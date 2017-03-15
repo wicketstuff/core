@@ -21,7 +21,7 @@ import com.github.openjson.JSONObject;
 
 /**
  * This class represent a point element on Whiteboard which is on a line element
- * 
+ *
  * @author andunslg
  */
 public class PointAtLine extends Element {
@@ -35,7 +35,7 @@ public class PointAtLine extends Element {
 		this.obj = obj;
 	}
 
-	public PointAtLine(JSONObject object) throws JSONException {
+	public PointAtLine(JSONObject object) {
 		super(object);
 		this.type = Type.PointAtLine;
 		this.obj = object.getInt("obj");
@@ -44,11 +44,12 @@ public class PointAtLine extends Element {
 
 	/**
 	 * Return a JSON object which represent the Element
-	 * 
+	 *
 	 * @return JSON object with field values added
 	 * @throws JSONException
 	 */
-	public JSONObject getJSON() throws JSONException {
+	@Override
+	public JSONObject getJSON() {
 		JSONObject jsonObject = super.getJSON(new JSONObject());
 		jsonObject.put("obj", obj);
 		jsonObject.put("t", t);

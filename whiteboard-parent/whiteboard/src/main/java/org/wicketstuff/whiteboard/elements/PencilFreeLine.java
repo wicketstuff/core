@@ -22,7 +22,7 @@ import com.github.openjson.JSONObject;
 /**
  * This class represent a line element on Whiteboard which is represented by two coordinate and drawn using pencil tool
  * on whiteboard
- * 
+ *
  * @author andunslg
  */
 public class PencilFreeLine extends Element {
@@ -36,7 +36,7 @@ public class PencilFreeLine extends Element {
 		this.p2 = p2;
 	}
 
-	public PencilFreeLine(JSONObject object) throws JSONException {
+	public PencilFreeLine(JSONObject object) {
 		super(object);
 		this.type = Type.PencilFreeLine;
 		this.p1 = object.getInt("p1");
@@ -46,11 +46,12 @@ public class PencilFreeLine extends Element {
 
 	/**
 	 * Return a JSON object which represent the Element
-	 * 
+	 *
 	 * @return JSON object with field values added
 	 * @throws JSONException
 	 */
-	public JSONObject getJSON() throws JSONException {
+	@Override
+	public JSONObject getJSON() {
 		JSONObject jsonObject = super.getJSON(new JSONObject());
 		jsonObject.put("p1", p1);
 		jsonObject.put("p2", p2);

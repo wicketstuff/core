@@ -22,7 +22,7 @@ import com.github.openjson.JSONObject;
 /**
  * This class represent a underline element on Whiteboard which is represented by starting point of the underline ,
  * ending point of the underline nad the thickness of the underline.
- * 
+ *
  * @author andunslg
  */
 public class PencilUnderline extends Element {
@@ -39,7 +39,7 @@ public class PencilUnderline extends Element {
 		this.thick = thick;
 	}
 
-	public PencilUnderline(JSONObject object) throws JSONException {
+	public PencilUnderline(JSONObject object) {
 		super(object);
 		this.type = Type.PencilUnderline;
 		this.p1 = object.getInt("p1");
@@ -49,11 +49,12 @@ public class PencilUnderline extends Element {
 
 	/**
 	 * Return a JSON object which represent the Element
-	 * 
+	 *
 	 * @return JSON object with field values added
 	 * @throws JSONException
 	 */
-	public JSONObject getJSON() throws JSONException {
+	@Override
+	public JSONObject getJSON() {
 		JSONObject jsonObject = super.getJSON(new JSONObject());
 		jsonObject.put("p1", p1);
 		jsonObject.put("p2", p2);

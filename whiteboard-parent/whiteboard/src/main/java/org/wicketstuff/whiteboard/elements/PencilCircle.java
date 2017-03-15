@@ -22,7 +22,7 @@ import com.github.openjson.JSONObject;
 /**
  * This class represent a circle element on Whiteboard which is represented by center coordinate and a coordinate on
  * circumference
- * 
+ *
  * @author andunslg
  */
 public class PencilCircle extends Element {
@@ -36,7 +36,7 @@ public class PencilCircle extends Element {
 		this.p2 = p2;
 	}
 
-	public PencilCircle(JSONObject object) throws JSONException {
+	public PencilCircle(JSONObject object) {
 		super(object);
 		this.type = Type.PencilCircle;
 		this.p1 = object.getInt("p1");
@@ -45,11 +45,12 @@ public class PencilCircle extends Element {
 
 	/**
 	 * Return a JSON object which represent the Element
-	 * 
+	 *
 	 * @return JSON object with field values added
 	 * @throws JSONException
 	 */
-	public JSONObject getJSON() throws JSONException {
+	@Override
+	public JSONObject getJSON() {
 		JSONObject jsonObject = super.getJSON(new JSONObject());
 		jsonObject.put("p1", p1);
 		jsonObject.put("p2", p2);

@@ -21,7 +21,7 @@ import com.github.openjson.JSONObject;
 
 /**
  * This class represent a point element on Whiteboard
- * 
+ *
  * @author andunslg
  */
 public class Point_lc extends Element {
@@ -38,7 +38,7 @@ public class Point_lc extends Element {
 		this.num = num;
 	}
 
-	public Point_lc(JSONObject object) throws JSONException {
+	public Point_lc(JSONObject object) {
 		super(object);
 		this.type = Type.Point_lc;
 		this.obj1 = object.getInt("obj1");
@@ -48,11 +48,12 @@ public class Point_lc extends Element {
 
 	/**
 	 * Return a JSON object which represent the Element
-	 * 
+	 *
 	 * @return JSON object with field values added
 	 * @throws JSONException
 	 */
-	public JSONObject getJSON() throws JSONException {
+	@Override
+	public JSONObject getJSON() {
 		JSONObject jsonObject = super.getJSON(new JSONObject());
 		jsonObject.put("obj1", obj1);
 		jsonObject.put("obj2", obj2);

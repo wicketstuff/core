@@ -21,7 +21,7 @@ import com.github.openjson.JSONObject;
 
 /**
  * This class represent a point element on Whiteboard which is on a circle element
- * 
+ *
  * @author andunslg
  */
 public class PointAtCircle extends Element {
@@ -38,7 +38,7 @@ public class PointAtCircle extends Element {
 		this.obj = obj;
 	}
 
-	public PointAtCircle(JSONObject object) throws JSONException {
+	public PointAtCircle(JSONObject object) {
 		super(object);
 		this.type = Type.PointAtCircle;
 		this.obj = object.getInt("obj");
@@ -48,11 +48,12 @@ public class PointAtCircle extends Element {
 
 	/**
 	 * Return a JSON object which represent the Element
-	 * 
+	 *
 	 * @return JSON object with field values added
 	 * @throws JSONException
 	 */
-	public JSONObject getJSON() throws JSONException {
+	@Override
+	public JSONObject getJSON() {
 		JSONObject jsonObject = super.getJSON(new JSONObject());
 		jsonObject.put("obj", obj);
 		jsonObject.put("x", x);

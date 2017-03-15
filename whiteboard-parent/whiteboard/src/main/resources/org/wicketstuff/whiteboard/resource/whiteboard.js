@@ -1,3 +1,6 @@
+/**
+ * https://github.com/bay73/whiteboard
+ */
 var COMPILED = !0,
     goog = goog || {};
 goog.global = this;

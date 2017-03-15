@@ -16,16 +16,16 @@
  */
 package org.wicketstuff.whiteboard.sample;
 
+import java.io.BufferedReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+
 import org.apache.wicket.markup.html.WebPage;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.wicketstuff.whiteboard.Whiteboard;
 import org.wicketstuff.whiteboard.WhiteboardBehavior;
-
-import java.io.BufferedReader;
-import java.io.InputStream;
-import java.io.InputStreamReader;
 
 /**
  * Sample application which shows the features of the whiteboard
@@ -46,10 +46,7 @@ public class HomePage extends WebPage {
 		String content = "";
 		InputStream savedWhiteboard = this.getClass().getResourceAsStream("Whiteboard_Example.json");
 
-		BufferedReader reader = null;
-		try {
-			reader = new BufferedReader(new InputStreamReader(savedWhiteboard));
-
+		try (BufferedReader reader = new BufferedReader(new InputStreamReader(savedWhiteboard))) {
 			String line = reader.readLine();
 			while (line != null) {
 				content += line;
@@ -58,13 +55,6 @@ public class HomePage extends WebPage {
 		} catch (Exception e) {
 			log.error("Unexpected error: ", e);
 		} finally {
-			if (reader != null) {
-				try {
-					reader.close();
-				} catch (Exception e) {
-					// noop
-				}
-			}
 			Whiteboard whiteboard = new Whiteboard("whiteboard_example_1","whiteboardContainer", content, "ClipArts", "Documents");
 			this.add(whiteboard);
 		}
