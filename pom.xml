@@ -358,7 +358,8 @@
 		<module>dashboard-parent</module>
 		<module>jamon-parent</module>
                 <module>wicketstuff-rest-lambda</module>
-	</modules>
+    <module>wicketstuff-lambda-components</module>
+  </modules>
 
 	<dependencies>
 		<dependency>
