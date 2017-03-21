@@ -101,7 +101,7 @@ public abstract class ComboBoxBehavior extends KendoUIBehavior
 		this.setOption("autoBind", true); // immutable
 		this.setOption("dataSource", this.getDataSourceName());
 
-		// data source //
+		// data-source //
 		if (this.isEnabled(component))
 		{
 			this.dataSource.setTransportReadUrl(this.getDataSourceUrl());

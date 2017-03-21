@@ -367,7 +367,6 @@ public abstract class DataTableBehavior extends KendoUIBehavior implements IJQue
 		schema.set("model", this.newSchemaModelOptions(columns));
 
 		// data-source //
-		this.onConfigure(this.dataSource);
 		this.setOption("dataSource", this.dataSource.getName());
 
 		this.dataSource.set("schema", schema);
@@ -379,6 +378,8 @@ public abstract class DataTableBehavior extends KendoUIBehavior implements IJQue
 		this.dataSource.setTransportCreate(this.onCreateAjaxBehavior.getCallbackFunction());
 		this.dataSource.setTransportUpdate(this.onUpdateAjaxBehavior.getCallbackFunction());
 		this.dataSource.setTransportDelete(this.onDeleteAjaxBehavior.getCallbackFunction());
+
+		this.onConfigure(this.dataSource); // last chance to set options
 
 		// ajax //
 		for (ToolbarAjaxBehavior behavior : component.getBehaviors(ToolbarAjaxBehavior.class))

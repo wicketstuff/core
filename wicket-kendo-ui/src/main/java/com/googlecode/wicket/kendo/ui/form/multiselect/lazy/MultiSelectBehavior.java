@@ -97,13 +97,14 @@ public abstract class MultiSelectBehavior extends KendoUIBehavior implements IJQ
 		}
 
 		// data-source //
-		this.onConfigure(this.dataSource);
 		this.setOption("dataSource", this.dataSource.getName());
 
 		if (this.isEnabled(component))
 		{
 			this.dataSource.setTransportReadUrl(this.getDataSourceUrl());
 		}
+
+		this.onConfigure(this.dataSource); // last chance to set options
 	}
 
 	/**
