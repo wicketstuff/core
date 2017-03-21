@@ -109,7 +109,7 @@ public class RequestCycleUtils
 	/**
 	 * Gets the value of a post parameter
 	 *
-	 * @param name the name of the query parameter
+	 * @param name the name of the post parameter
 	 * @return a {@link StringValue}
 	 */
 	public static StringValue getPostParameterValue(String name)
@@ -123,13 +123,41 @@ public class RequestCycleUtils
 	/**
 	 * Gets the values of a post parameter
 	 *
-	 * @param name the name of the query parameter
+	 * @param name the name of the post parameter
 	 * @return a {@link List} of {@link StringValue}
 	 */
 	public static List<StringValue> getPostParameterValues(String name)
 	{
 		final RequestCycle requestCycle = RequestCycle.get();
 		final IRequestParameters parameters = requestCycle.getRequest().getPostParameters();
+
+		return parameters.getParameterValues(name);
+	}
+
+	/**
+	 * Gets the value of a request parameter
+	 *
+	 * @param name the name of the parameter
+	 * @return a {@link StringValue}
+	 */
+	public static StringValue getRequestParameterValue(String name)
+	{
+		final RequestCycle requestCycle = RequestCycle.get();
+		final IRequestParameters parameters = requestCycle.getRequest().getRequestParameters();
+
+		return parameters.getParameterValue(name);
+	}
+
+	/**
+	 * Gets the values of a request parameter
+	 *
+	 * @param name the name of the parameter
+	 * @return a {@link List} of {@link StringValue}
+	 */
+	public static List<StringValue> getRequestParameterValues(String name)
+	{
+		final RequestCycle requestCycle = RequestCycle.get();
+		final IRequestParameters parameters = requestCycle.getRequest().getRequestParameters();
 
 		return parameters.getParameterValues(name);
 	}

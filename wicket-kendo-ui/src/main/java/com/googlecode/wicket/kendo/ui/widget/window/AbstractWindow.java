@@ -378,7 +378,7 @@ public abstract class AbstractWindow<T> extends GenericPanel<T> implements IJQue
 	@Override
 	public WindowBehavior newWidgetBehavior(String selector)
 	{
-		return new WindowBehavior(selector, this) {
+		return new WindowBehavior(selector, this) { // NOSONAR
 
 			private static final long serialVersionUID = 1L;
 
