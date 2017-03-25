@@ -26,17 +26,19 @@ import org.apache.wicket.core.request.handler.IPartialPageRequestHandler;
 import org.apache.wicket.extensions.markup.html.repeater.data.sort.ISortStateLocator;
 import org.apache.wicket.markup.ComponentTag;
 import org.apache.wicket.markup.MarkupStream;
+import org.apache.wicket.markup.head.IHeaderResponse;
 import org.apache.wicket.markup.html.WebComponent;
 import org.apache.wicket.markup.repeater.data.IDataProvider;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
-import com.github.openjson.JSONObject;
 
+import com.github.openjson.JSONObject;
 import com.googlecode.wicket.jquery.core.IJQueryWidget;
 import com.googlecode.wicket.jquery.core.JQueryBehavior;
 import com.googlecode.wicket.jquery.core.Options;
 import com.googlecode.wicket.jquery.core.ajax.IJQueryAjaxAware;
 import com.googlecode.wicket.jquery.core.ajax.JQueryAjaxBehavior;
+import com.googlecode.wicket.jquery.core.resource.JavaScriptPackageHeaderItem;
 import com.googlecode.wicket.kendo.ui.KendoBehaviorFactory;
 import com.googlecode.wicket.kendo.ui.KendoDataSource;
 import com.googlecode.wicket.kendo.ui.KendoUIBehavior;
@@ -152,6 +154,14 @@ public class DataTable<T> extends WebComponent implements IGenericComponent<List
 	}
 
 	// Methods //
+	
+	@Override
+	public void renderHead(IHeaderResponse response)
+	{
+		super.renderHead(response);
+		
+		response.render(new JavaScriptPackageHeaderItem(DataTable.class)); // DataTable.js		
+	}
 
 	/**
 	 * Gets the Kendo UI widget
@@ -312,6 +322,7 @@ public class DataTable<T> extends WebComponent implements IGenericComponent<List
 	{
 		behavior.setOption("sortable", this.getDataProvider() instanceof ISortStateLocator<?>);
 		behavior.setOption("autoBind", this.getBehaviors(DataBoundBehavior.class).isEmpty()); // false if DataBoundBehavior is added
+		behavior.setOption("edit", "datatable_edit"); // DataTable.js
 	}
 
 	/**

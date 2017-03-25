@@ -151,14 +151,14 @@ public interface IColumn extends IClusterable
 	// schema model //
 
 	/**
-	 * Indicates whether the column is editable
+	 * Indicates whether the model field and the column is editable
 	 * 
 	 * @return {@code null} by default, meaning not specified
 	 */
 	Boolean isEditable();
 
 	/**
-	 * Indicates whether the column is nullable
+	 * Indicates whether the model field is nullable
 	 * 
 	 * @return {@code null} by default, meaning not specified
 	 */

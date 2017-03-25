@@ -153,13 +153,18 @@ public abstract class AbstractColumn implements IColumn
 	{
 		return this.width;
 	}
-	
+
 	@Override
 	public int getMinScreenWidth()
 	{
 		return 0;
 	}
 
+	/**
+	 * Indicates whether the column is visible
+	 * 
+	 * @return {@code true} by default
+	 */
 	public boolean isVisible()
 	{
 		return true;
@@ -262,6 +267,17 @@ public abstract class AbstractColumn implements IColumn
 		return null;
 	}
 
+	/**
+	 * Indicates whether the column/field is visible in popup-mode<br/>
+	 * <b>Warning:</b> the field should *still* be editable
+	 * 
+	 * @return {@code null} by default
+	 */
+	public Boolean isPopupVisible()
+	{
+		return null;
+	}
+
 	// Methods //
 
 	@Override
@@ -339,6 +355,18 @@ public abstract class AbstractColumn implements IColumn
 		}
 
 		// nullable options (object) //
+
+		if (this.isEditable() != null)
+		{
+			builder.append(", ");
+			BuilderUtils.append(builder, "editable", this.isEditable());
+		}
+
+		if (this.isPopupVisible() != null)
+		{
+			builder.append(", ");
+			BuilderUtils.append(builder, "popupVisible", this.isPopupVisible());
+		}
 
 		if (this.getMenu() != null)
 		{
