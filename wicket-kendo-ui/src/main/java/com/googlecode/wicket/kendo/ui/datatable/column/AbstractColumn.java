@@ -268,7 +268,7 @@ public abstract class AbstractColumn implements IColumn
 	}
 
 	/**
-	 * Indicates whether the column/field is visible in popup-mode<br/>
+	 * Indicates whether the column/field is visible in popup-mode<br>
 	 * <b>Warning:</b> the field should *still* be editable
 	 * 
 	 * @return {@code null} by default
