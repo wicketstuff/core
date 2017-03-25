@@ -281,8 +281,8 @@ public class DateTimePicker extends FormComponentPanel<LocalDateTime> implements
 	{
 		super.onInitialize();
 
-		this.datePicker = this.newDatePicker("datepicker", new PropertyModel<LocalDate>(this.getModel(), "date"), this.locale, this.datePattern, new Options());
-		this.timePicker = this.newTimePicker("timepicker", new PropertyModel<LocalTime>(this.getModel(), "time"), this.locale, this.timePattern, new Options());
+		this.datePicker = this.newDatePicker("datepicker", new PropertyModel<LocalDate>(this.getModel(), "date"), this.getLocale(), this.datePattern, new Options());
+		this.timePicker = this.newTimePicker("timepicker", new PropertyModel<LocalTime>(this.getModel(), "time"), this.getLocale(), this.timePattern, new Options());
 
 		this.add(this.datePicker.setConvertEmptyInputStringToNull(false)); // will force to use the converter (null bypasses)
 		this.add(this.timePicker.setConvertEmptyInputStringToNull(false)); // will force to use the converter (null bypasses)

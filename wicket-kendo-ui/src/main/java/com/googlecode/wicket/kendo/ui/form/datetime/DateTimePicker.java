@@ -278,8 +278,8 @@ public class DateTimePicker extends FormComponentPanel<Date> implements ITextFor
 	{
 		super.onInitialize();
 
-		this.datePicker = this.newDatePicker("datepicker", this.getModel(), this.locale, this.datePattern, new Options());
-		this.timePicker = this.newTimePicker("timepicker", this.getModel(), this.locale, this.timePattern, new Options());
+		this.datePicker = this.newDatePicker("datepicker", this.getModel(), this.getLocale(), this.datePattern, new Options());
+		this.timePicker = this.newTimePicker("timepicker", this.getModel(), this.getLocale(), this.timePattern, new Options());
 
 		this.add(this.datePicker.setConvertEmptyInputStringToNull(false)); // will force to use the converter (null bypasses)
 		this.add(this.timePicker.setConvertEmptyInputStringToNull(false)); // will force to use the converter (null bypasses)
