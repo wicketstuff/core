@@ -125,10 +125,9 @@ public abstract class ChartBehavior extends KendoUIBehavior implements IJQueryAj
 		this.setOption("series", JsonUtils.toString(this.series));
 
 		// data-source //
-		this.onConfigure(this.dataSource);
 		this.setOption("dataSource", this.dataSource.getName());
-
 		this.dataSource.setTransportReadUrl(this.getProviderUrl());
+		this.onConfigure(this.dataSource); // last chance to set options
 	}
 
 	/**

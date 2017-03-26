@@ -108,9 +108,9 @@ public abstract class AutoCompleteBehavior extends KendoUIBehavior implements IJ
 
 		// data-source //
 		this.setOption("dataSource", this.dataSource.getName());
-		this.setOption("select", this.onSelectAjaxBehavior.getCallbackFunction());
-
 		this.onConfigure(this.dataSource); // last chance to set options
+
+		this.setOption("select", this.onSelectAjaxBehavior.getCallbackFunction());
 
 		// data source //
 		if (this.isEnabled(component))

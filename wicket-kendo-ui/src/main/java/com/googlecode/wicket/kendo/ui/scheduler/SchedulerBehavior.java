@@ -139,13 +139,14 @@ public abstract class SchedulerBehavior extends KendoUIBehavior implements IJQue
 		}
 
 		// data-source //
-		this.onConfigure(this.dataSource);
 		this.setOption("dataSource", this.dataSource.getName());
 
 		this.dataSource.setTransportRead(this.getReadCallbackFunction());
 		this.dataSource.setTransportCreate(this.onCreateAjaxBehavior.getCallbackFunction());
 		this.dataSource.setTransportUpdate(this.onUpdateAjaxBehavior.getCallbackFunction());
 		this.dataSource.setTransportDelete(this.onDeleteAjaxBehavior.getCallbackFunction());
+
+		this.onConfigure(this.dataSource); // last chance to set options
 	}
 
 	/**

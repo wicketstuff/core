@@ -115,10 +115,9 @@ public abstract class DiagramBehavior extends KendoUIBehavior implements IJQuery
 		}
 
 		// data-source //
-		this.onConfigure(this.dataSource);
 		this.setOption("dataSource", this.dataSource.getName());
-
 		this.dataSource.setTransportReadUrl(this.getProviderUrl());
+		this.onConfigure(this.dataSource); // last chance to set options
 	}
 
 	/**
