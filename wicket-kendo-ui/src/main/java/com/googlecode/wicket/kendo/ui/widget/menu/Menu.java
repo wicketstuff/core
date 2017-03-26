@@ -295,9 +295,9 @@ public class Menu extends JQueryPanel implements IMenuListener
 			super(id, "link-fragment", Menu.this);
 
 			WebMarkupContainer link = new WebMarkupContainer("link");
+			link.add(AttributeModifier.replace("href", item.getUrl()));
 			link.add(new EmptyPanel("icon").add(AttributeModifier.append("class", KendoIcon.getCssClass(item.getIcon()))));
 			link.add(new Label("title", item.getTitle()).setRenderBodyOnly(true));
-			link.add(AttributeModifier.replace("href", item.getUrl()));
 
 			this.add(link);
 		}

@@ -22,6 +22,7 @@ import org.apache.wicket.util.string.Strings;
 
 import com.googlecode.wicket.jquery.core.ajax.JQueryAjaxBehavior;
 import com.googlecode.wicket.jquery.core.utils.BuilderUtils;
+import com.googlecode.wicket.kendo.ui.KendoIcon;
 import com.googlecode.wicket.kendo.ui.datatable.DataTable;
 
 /**
@@ -32,12 +33,12 @@ import com.googlecode.wicket.kendo.ui.datatable.DataTable;
 public class CommandButton extends AbstractButton
 {
 	private static final long serialVersionUID = 1L;
-	
+
 	/** default model property */
 	private static final String PROPERTY = "id";
 
 	/**
-	 * Constructor for either built-in commands or linked to 'id' property (default) 
+	 * Constructor for either built-in commands or linked to 'id' property (default)
 	 *
 	 * @param name the button's name
 	 */
@@ -123,11 +124,36 @@ public class CommandButton extends AbstractButton
 		return this.isEnabled() ? "" : "k-state-disabled";
 	}
 
+	/**
+	 * Gets the CSS icon class to be applied on the button
+	 *
+	 * @return the CSS class
+	 * @see #getIconClass()
+	 */
+	public String getIcon()
+	{
+		return null;
+	}
+
+	/**
+	 * Gets the CSS class for the icon
+	 * 
+	 * @return the CSS class for the icon
+	 * @see #getIcon()
+	 */
+	public String getIconClass()
+	{
+		if (this.getIcon() != null)
+		{
+			return KendoIcon.getCssClass(this.getIcon());
+		}
+
+		return ""; // allows to override & chain super()
+	}
+
 	public String toString(JQueryAjaxBehavior behavior)
 	{
-		StringBuilder builder = new StringBuilder();
-
-		builder.append("{ ");
+		StringBuilder builder = new StringBuilder("{ ");
 
 		String name = this.isEnabled() ? this.getName() : "disabled_" + this.getName(); // prevent firing 'click' for builtin buttons TODO WIP
 		BuilderUtils.append(builder, "name", name);
@@ -135,12 +161,19 @@ public class CommandButton extends AbstractButton
 		builder.append(", ");
 		BuilderUtils.append(builder, "text", this.getText().getObject());
 
-		String css = this.getCSSClass();
+		String cssClass = this.getCSSClass();
 
-		if (!Strings.isEmpty(css)) /* important */
+		if (!Strings.isEmpty(cssClass)) /* important */
 		{
-			builder.append(", ");
-			BuilderUtils.append(builder, "className", css);
+			BuilderUtils.append(builder.append(", "), "className", cssClass);
+		}
+
+		// icon //
+		String cssIcon = this.getIconClass();
+
+		if (!Strings.isEmpty(cssIcon)) /* important */
+		{
+			BuilderUtils.append(builder.append(", "), "imageClass", cssIcon);
 		}
 
 		if (this.isEnabled() && behavior != null)
@@ -149,9 +182,7 @@ public class CommandButton extends AbstractButton
 			builder.append("'click': ").append(behavior.getCallbackFunction());
 		}
 
-		builder.append(" }");
-
-		return builder.toString();
+		return builder.append(" }").toString();
 	}
 
 	// Events //

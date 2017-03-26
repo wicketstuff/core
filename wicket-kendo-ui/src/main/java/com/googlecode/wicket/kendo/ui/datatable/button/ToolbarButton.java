@@ -20,7 +20,10 @@ import java.util.List;
 
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.model.IModel;
+import org.apache.wicket.util.string.Strings;
 
+import com.googlecode.wicket.jquery.core.utils.BuilderUtils;
+import com.googlecode.wicket.kendo.ui.KendoIcon;
 import com.googlecode.wicket.kendo.ui.datatable.DataTable;
 
 /**
@@ -103,12 +106,55 @@ public class ToolbarButton extends AbstractButton
 		return false;
 	}
 
+	/**
+	 * Gets the CSS icon class to be applied on the button
+	 *
+	 * @return the CSS class
+	 * @see #getIconClass()
+	 */
+	public String getIcon()
+	{
+		return null;
+	}
+
+	/**
+	 * Gets the CSS class for the icon
+	 * 
+	 * @return the CSS class for the icon
+	 * @see #getIcon()
+	 */
+	public String getIconClass()
+	{
+		if (this.getIcon() != null)
+		{
+			return KendoIcon.getCssClass(this.getIcon());
+		}
+
+		return ""; // allows to override & chain super()
+	}
+
 	// Methods //
 
 	@Override
 	public String toString()
 	{
-		return String.format("{ name: '%s', text: '%s' } ", this.getName(), this.getText().getObject());
+		StringBuilder builder = new StringBuilder("{ ");
+
+		// name //
+		BuilderUtils.append(builder, "name", this.getName());
+
+		// text //
+		BuilderUtils.append(builder.append(", "), "text", this.getText().getObject());
+
+		// icon //
+		String cssIcon = this.getIconClass();
+
+		if (!Strings.isEmpty(cssIcon)) /* important */
+		{
+			BuilderUtils.append(builder.append(", "), "imageClass", cssIcon);
+		}
+
+		return builder.append(" }").toString();
 	}
 
 	// Events //
