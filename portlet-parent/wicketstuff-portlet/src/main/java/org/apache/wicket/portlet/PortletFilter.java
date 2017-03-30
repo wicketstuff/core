@@ -32,6 +32,7 @@ import javax.servlet.http.HttpSession;
 import org.apache.wicket.IPageRendererProvider;
 import org.apache.wicket.IRequestCycleProvider;
 import org.apache.wicket.core.request.handler.RenderPageRequestHandler;
+import org.apache.wicket.portlet.ajax.WicketPortletAjaxResourceReference;
 import org.apache.wicket.protocol.http.WicketFilter;
 import org.apache.wicket.protocol.https.HttpsConfig;
 import org.apache.wicket.protocol.https.HttpsMapper;
@@ -97,6 +98,8 @@ public class PortletFilter extends WicketFilter {
 				};
 			}
 		});
+		//fix for https://github.com/wicketstuff/core/issues/588 issue
+		getApplication().getJavaScriptLibrarySettings().setWicketAjaxReference(WicketPortletAjaxResourceReference.get());
 	}
 
 	@Override
