@@ -83,6 +83,8 @@ public class PortletFilter extends WicketFilter {
 				return new PortletUrlRenderer(getRequest());
 			}
 		});
+		//fix for https://github.com/wicketstuff/core/issues/588 issue
+		getApplication().getJavaScriptLibrarySettings().setWicketAjaxReference(WicketPortletAjaxResourceReference.get());
 	}
 
 	@Override
