@@ -25,7 +25,7 @@ public class RendererDropDownPage extends AbstractDropDownPage
 		final KendoFeedbackPanel feedback = new KendoFeedbackPanel("feedback");
 		form.add(feedback);
 
-		// ComboBox //
+		// DropDownList //
 		final DropDownList<Genre> combobox = new DropDownList<Genre>("select", new Model<Genre>(), GenresDAO.all(), new ChoiceRenderer<Genre>("name", "id"));
 		form.add(combobox.setListWidth(200));
 

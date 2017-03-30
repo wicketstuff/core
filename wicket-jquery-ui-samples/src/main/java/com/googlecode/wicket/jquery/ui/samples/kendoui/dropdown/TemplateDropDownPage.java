@@ -28,7 +28,7 @@ public class TemplateDropDownPage extends AbstractDropDownPage
 		final KendoFeedbackPanel feedback = new KendoFeedbackPanel("feedback");
 		form.add(feedback);
 
-		// ComboBox //
+		// DropDownList //
 		final DropDownList<Genre> combobox = new DropDownList<Genre>("select", new Model<Genre>(), GenresDAO.all()) {
 
 			private static final long serialVersionUID = 1L;
