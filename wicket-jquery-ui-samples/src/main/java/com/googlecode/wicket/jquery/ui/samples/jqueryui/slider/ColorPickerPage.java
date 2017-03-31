@@ -147,8 +147,11 @@ public class ColorPickerPage extends AbstractSliderPage
 					ColorPicker.this.changeColor(handler);
 				}
 			};
+			
+			slider.setMax(255);
+			slider.setRange(Range.MIN);
 
-			return slider.setRange(Range.MIN).setMax(255);
+			return slider;
 		}
 
 		/**
