@@ -144,12 +144,11 @@ public class RangeSlider extends AbstractSlider<RangeValue>
 	}
 
 	@Override
-	@SuppressWarnings("unchecked")
-	public <W extends AbstractSlider<RangeValue>> W setRangeValidator(RangeValidator<Integer> validator)
+	public AbstractSlider<RangeValue> setRangeValidator(RangeValidator<Integer> validator)
 	{
 		this.rangeValidator = validator;
 
-		return (W) this;
+		return this;
 	}
 
 	/**
