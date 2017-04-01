@@ -16,7 +16,6 @@
  */
 package com.googlecode.wicket.jquery.core.converter;
 
-
 import org.apache.wicket.util.io.IClusterable;
 import com.github.openjson.JSONObject;
 
@@ -31,13 +30,13 @@ public class JsonConverter<T> implements IJsonConverter<T>, IClusterable
 {
 	private static final long serialVersionUID = 1L;
 
-	 @Override
+	@Override
 	public JSONObject toJson(T object)
 	{
 		return new JSONObject(object);
 	}
-	 
-	 @Override
+
+	@Override
 	public T toObject(JSONObject object)
 	{
 		throw new UnsupportedOperationException("JsonConverter#toObject is not implemented");

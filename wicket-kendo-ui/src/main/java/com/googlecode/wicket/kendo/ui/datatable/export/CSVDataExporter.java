@@ -29,6 +29,7 @@ import org.apache.wicket.markup.repeater.data.IDataProvider;
 import org.apache.wicket.request.cycle.RequestCycle;
 import org.apache.wicket.request.handler.resource.ResourceStreamRequestHandler;
 import org.apache.wicket.util.resource.AbstractResourceStreamWriter;
+import org.apache.wicket.util.resource.IResourceStream;
 import org.apache.wicket.util.resource.IResourceStreamWriter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -92,12 +93,12 @@ public class CSVDataExporter implements IDataExporter
 	 */
 	public static void export(RequestCycle cycle, final IDataProvider<?> provider, final List<IExportableColumn> columns, String filename)
 	{
-		DataExporterResourceStreamWriter writer = new DataExporterResourceStreamWriter(new CSVDataExporter(), provider, columns);
-		cycle.scheduleRequestHandlerAfterCurrent(new ResourceStreamRequestHandler(writer, filename));
+		IResourceStream stream = new DataExporterResourceStreamWriter(new CSVDataExporter(), provider, columns);
+		cycle.scheduleRequestHandlerAfterCurrent(new ResourceStreamRequestHandler(stream, filename));
 
 		try
 		{
-			writer.close();
+			stream.close();
 		}
 		catch (IOException e)
 		{
