@@ -104,9 +104,8 @@ public abstract class AbstractSlider<T> extends FormComponentPanel<T> implements
 	 * <b>Warning:</b> it does not define the minimum and maximum values the slider can slide on, but only valid ones.<br>
 	 * To define the minimum and maximum values the slider can slide on, use {@link #setMin(Integer)} and {@link #setMax(Integer)}<br>
 	 * <br>
-	 * <b>Dev note:</b> this method is masked abstract to make sure the developer that will add the validator to the right input(s) in {@link #onInitialize()}
+	 * <b>Dev note:</b> this method is marked as abstract to make sure the developer that will add the validator to the right input(s) in {@link #onInitialize()}
 	 *
-	 * @param <W> the widget type
 	 * @param validator the {@link RangeValidator}
 	 * @return this
 	 */
@@ -173,7 +172,6 @@ public abstract class AbstractSlider<T> extends FormComponentPanel<T> implements
 	/**
 	 * Sets the min value
 	 *
-	 * @param <W> the widget type
 	 * @param min the min value
 	 * @return this, for chaining
 	 */
@@ -187,7 +185,6 @@ public abstract class AbstractSlider<T> extends FormComponentPanel<T> implements
 	/**
 	 * Sets the max value
 	 *
-	 * @param <W> the widget type
 	 * @param max the max value
 	 * @return this, for chaining
 	 */
@@ -201,7 +198,6 @@ public abstract class AbstractSlider<T> extends FormComponentPanel<T> implements
 	/**
 	 * Sets the step value
 	 *
-	 * @param <W> the widget type
 	 * @param step the step value
 	 * @return this, for chaining
 	 */
@@ -215,7 +211,6 @@ public abstract class AbstractSlider<T> extends FormComponentPanel<T> implements
 	/**
 	 * Sets the {@link Orientation}
 	 *
-	 * @param <W> the widget type
 	 * @param orientation the {@code Orientation}
 	 * @return this, for chaining
 	 */
