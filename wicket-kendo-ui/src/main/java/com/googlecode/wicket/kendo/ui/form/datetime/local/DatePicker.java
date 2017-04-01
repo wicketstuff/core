@@ -29,7 +29,6 @@ import com.googlecode.wicket.jquery.core.Options;
 import com.googlecode.wicket.jquery.core.utils.DateUtils;
 import com.googlecode.wicket.jquery.core.utils.LocaleUtils;
 import com.googlecode.wicket.kendo.ui.form.datetime.DatePickerBehavior;
-import com.googlecode.wicket.kendo.ui.utils.KendoDateTimeUtils;
 
 /**
  * Provides a Kendo UI date-picker based on a {@link LocalTextField}<br>
@@ -266,7 +265,7 @@ public class DatePicker extends LocalTextField<LocalDate> // NOSONAR
 			{
 				try
 				{
-					return LocalDate.parse(KendoDateTimeUtils.convert(value), DateTimeFormatter.ofPattern(pattern, locale));
+					return LocalDate.parse(value, DateTimeFormatter.ofPattern(pattern, locale));
 				}
 				catch (DateTimeParseException e)
 				{
