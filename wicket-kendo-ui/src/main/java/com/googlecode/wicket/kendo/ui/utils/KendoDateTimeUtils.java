@@ -45,6 +45,29 @@ public class KendoDateTimeUtils
 	}
 
 	/**
+	 * Converts the input value to handle discrepancies (like localized am/pm)
+	 * 
+	 * @param input the input value
+	 * @return the converted value
+	 */
+	public static String convert(String input)
+	{
+		String converted = input;
+
+		if (converted.contains("a. m."))
+		{
+			converted = converted.replace("a. m.", "AM");
+		}
+
+		if (converted.contains("p. m."))
+		{
+			converted = converted.replace("p. m.", "PM");
+		}
+
+		return converted;
+	}
+
+	/**
 	 * Converts a java datetime pattern to a kendo-ui datetime pattern
 	 *
 	 * @param pattern the java pattern

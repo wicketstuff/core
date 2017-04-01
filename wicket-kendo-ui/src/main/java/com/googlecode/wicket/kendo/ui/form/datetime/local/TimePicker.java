@@ -261,7 +261,7 @@ public class TimePicker extends LocalTextField<LocalTime> // NOSONAR
 			private static final long serialVersionUID = 1L;
 
 			@Override
-			public LocalTime convertToObject(String value, Locale locale) throws ConversionException
+			public LocalTime convertToObject(String value, Locale locale)
 			{
 				try
 				{

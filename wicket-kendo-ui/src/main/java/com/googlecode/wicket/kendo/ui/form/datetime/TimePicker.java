@@ -240,6 +240,36 @@ public class TimePicker extends DateTextField implements IJQueryWidget // NOSONA
 		this.options = options;
 	}
 
+	// Events //
+
+	@Override
+	protected void onInitialize()
+	{
+		super.onInitialize();
+
+		this.add(JQueryWidget.newWidgetBehavior(this)); // cannot be in ctor as the markupId may be set manually afterward
+	}
+
+	@Override
+	public void onConfigure(JQueryBehavior behavior)
+	{
+		if (behavior.getOption("culture") == null)
+		{
+			behavior.setOption("culture", Options.asString(LocaleUtils.getLangageCode(this.getLocale())));
+		}
+
+		if (behavior.getOption("format") == null)
+		{
+			behavior.setOption("format", Options.asString(KendoDateTimeUtils.toPattern(this.getTextFormat())));
+		}
+	}
+
+	@Override
+	public void onBeforeRender(JQueryBehavior behavior)
+	{
+		// noop
+	}
+
 	// Properties //
 
 	@Override
@@ -285,34 +315,12 @@ public class TimePicker extends DateTextField implements IJQueryWidget // NOSONA
 		return new String[] { "text", "time" };
 	}
 
-	// Events //
+	// Methods //
 
 	@Override
-	protected void onInitialize()
+	public String getInput()
 	{
-		super.onInitialize();
-
-		this.add(JQueryWidget.newWidgetBehavior(this)); // cannot be in ctor as the markupId may be set manually afterward
-	}
-
-	@Override
-	public void onConfigure(JQueryBehavior behavior)
-	{
-		if (behavior.getOption("culture") == null)
-		{
-			behavior.setOption("culture", Options.asString(LocaleUtils.getLangageCode(this.getLocale())));
-		}
-
-		if (behavior.getOption("format") == null)
-		{
-			behavior.setOption("format", Options.asString(KendoDateTimeUtils.toPattern(this.getTextFormat())));
-		}
-	}
-
-	@Override
-	public void onBeforeRender(JQueryBehavior behavior)
-	{
-		// noop
+		return KendoDateTimeUtils.convert(super.getInput());
 	}
 
 	// IJQueryWidget //
