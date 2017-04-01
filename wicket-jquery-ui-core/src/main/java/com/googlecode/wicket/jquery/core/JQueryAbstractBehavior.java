@@ -35,6 +35,7 @@ import org.apache.wicket.request.resource.ResourceReference;
 import org.apache.wicket.resource.JQueryPluginResourceReference;
 import org.apache.wicket.settings.JavaScriptLibrarySettings;
 
+import com.googlecode.wicket.jquery.core.resource.JQueryUrlResourceReference;
 import com.googlecode.wicket.jquery.core.settings.JQueryLibrarySettings;
 
 /**
@@ -105,6 +106,11 @@ public abstract class JQueryAbstractBehavior extends Behavior
 			}
 
 			if (reference instanceof JavaScriptResourceReference)
+			{
+				this.renderPriorityHeaderItem(JavaScriptHeaderItem.forReference(reference), response);
+			}
+
+			if (reference instanceof JQueryUrlResourceReference)
 			{
 				this.renderPriorityHeaderItem(JavaScriptHeaderItem.forReference(reference), response);
 			}

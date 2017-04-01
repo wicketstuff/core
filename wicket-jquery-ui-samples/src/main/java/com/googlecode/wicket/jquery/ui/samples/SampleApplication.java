@@ -55,6 +55,8 @@ import com.googlecode.wicket.jquery.ui.samples.kendoui.tabs.KendoTabsPage;
 import com.googlecode.wicket.jquery.ui.samples.kendoui.tooltip.DefaultKendoTooltipPage;
 import com.googlecode.wicket.jquery.ui.samples.kendoui.treeview.DefaultTreeViewPage;
 import com.googlecode.wicket.jquery.ui.samples.kendoui.window.DefaultWindowPage;
+import com.googlecode.wicket.jquery.ui.samples.resource.KendoAllResourceReference;
+import com.googlecode.wicket.kendo.ui.settings.KendoUILibrarySettings;
 
 public class SampleApplication extends WebApplication
 {
@@ -67,6 +69,10 @@ public class SampleApplication extends WebApplication
 		super.init();
 
 		this.getResourceSettings().setThrowExceptionOnMissingResource(false);
+
+		// Kendo UI //
+		KendoUILibrarySettings settings = KendoUILibrarySettings.get();
+		settings.setJavaScriptReference(KendoAllResourceReference.get()); // kendo.all.min.js
 
 		// SiteMap //
 		this.mountPage("/sitemap.xml", SiteMapPage.class);
