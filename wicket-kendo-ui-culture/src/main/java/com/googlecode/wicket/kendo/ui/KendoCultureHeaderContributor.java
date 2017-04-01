@@ -78,16 +78,12 @@ public class KendoCultureHeaderContributor implements IHeaderContributor
 	@Override
 	public void renderHead(IHeaderResponse response)
 	{
-		final Locale locale = Session.get().getLocale();
+		final Locale locale = Session.get().getLocale(); // locale cannot be null
+		HeaderItem item = KendoCultureHeaderItem.of(this.culture, locale.toLanguageTag(), locale.getLanguage());
 
-		if (locale != null)
+		if (item != null)
 		{
-			HeaderItem item = KendoCultureHeaderItem.of(this.culture, locale.toLanguageTag(), locale.getLanguage());
-
-			if (item != null)
-			{
-				response.render(item);
-			}
+			response.render(item);
 		}
 	}
 }
