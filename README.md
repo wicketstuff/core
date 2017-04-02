@@ -2,12 +2,6 @@
 **jQuery UI integration in Wicket Wicket 6.x, Wicket 7.x &amp; Wicket8.x**  
 [![TravisCI](https://travis-ci.org/sebfz1/wicket-jquery-ui.svg?branch=wicket8.x)](https://travis-ci.org/sebfz1/wicket-jquery-ui)
 
-## Artifacts
-- jQuery UI `wicket-jquery-ui`
-- Calendar `wicket-jquery-ui-calendar`
-- Plugins `wicket-jquery-ui-plugins`
-- Kendo UI `wicket-kendo-ui`
-
 ## Getting started
 In order to get started using this API, you may download appropriate jar(s) or set a maven dependency.
 
@@ -47,9 +41,12 @@ If the version you specified is *snapshot*, you might define this repository:
 
 <table>
 <tr><th>wicket-jquery-ui</th><th>Wicket</th><th>jQuery UI</th></tr>
+<tr><td>8.0.0-M5</td><td>8.0.0-M5</td><td>1.12.1</td></tr>
+<tr><td>8.0.0-M4</td><td>8.0.0-M4</td><td>1.12.1</td></tr>
 <tr><td>8.0.0-M3</td><td>8.0.0-M3</td><td>1.12.1</td></tr>
 <tr><td>8.0.0-M2</td><td>8.0.0-M2</td><td>1.12.0</td></tr>
 <tr><td>8.0.0-M1</td><td>8.0.0-M1</td><td>1.12.0</td></tr>
+<tr><td>7.7.0</td><td>7.7.0</td><td>1.12.1</td></tr>
 <tr><td>7.6.0</td><td>7.6.0</td><td>1.12.1</td></tr>
 <tr><td>7.5.0</td><td>7.5.0</td><td>1.12.0</td></tr>
 <tr><td>7.4.0</td><td>7.4.0</td><td>1.12.0</td></tr>
@@ -60,6 +57,7 @@ If the version you specified is *snapshot*, you might define this repository:
 <tr><td>7.0.0</td><td>7.0.0</td><td>1.11.4</td></tr>
 <tr><td>7.0.0-M6</td><td>7.0.0-M6</td><td>1.11.4</td></tr>
 <tr><td>7.0.0-M5</td><td>7.0.0-M5</td><td>1.11.2</td></tr>
+<tr><td>6.27.0</td><td>6.27.0</td><td>1.12.1</td></tr>
 <tr><td>6.26.0</td><td>6.26.0</td><td>1.12.1</td></tr>
 <tr><td>6.25.1</td><td>6.25.0</td><td>1.12.0</td></tr>
 <tr><td>6.25.0</td><td>6.25.0</td><td>1.12.0</td></tr>
@@ -86,9 +84,12 @@ If the version you specified is *snapshot*, you might define this repository:
 
 <table>
 <tr><th>wicket-kendo-ui</th><th>Wicket</th><th>Kendo UI</th></tr>
+<tr><td>8.0.0-M5</td><td>8.0.0-M5</td><td>2017.1.223 (ASFv2)</td></tr>
+<tr><td>8.0.0-M4</td><td>8.0.0-M4</td><td>2016.3.1118 (ASFv2)</td></tr>
 <tr><td>8.0.0-M3</td><td>8.0.0-M3</td><td>2016.3.1118 (ASFv2)</td></tr>
 <tr><td>8.0.0-M2</td><td>8.0.0-M2</td><td>2016.3.1028 (ASFv2)</td></tr>
 <tr><td>8.0.0-M1</td><td>8.0.0-M1</td><td>2016.2.714 (ASFv2)</td></tr>
+<tr><td>7.7.0</td><td>7.7.0</td><td>2017.1.223 (ASFv2)</td></tr>
 <tr><td>7.6.0</td><td>7.6.0</td><td>2016.3.1118 (ASFv2)</td></tr>
 <tr><td>7.5.0</td><td>7.5.0</td><td>2016.3.1028 (ASFv2)</td></tr>
 <tr><td>7.4.0</td><td>7.4.0</td><td>2016.2.714 (ASFv2)</td></tr>
@@ -99,6 +100,7 @@ If the version you specified is *snapshot*, you might define this repository:
 <tr><td>7.0.0</td><td>7.0.0</td><td>2015.2.624 (ASFv2)</td></tr>
 <tr><td>7.0.0-M6</td><td>7.0.0-M6</td><td>2015.1.318 (ASFv2)</td></tr>
 <tr><td>7.0.0-M5</td><td>7.0.0-M5</td><td>2014.3.1119 (ASFv2)</td></tr>
+<tr><td>6.27.0</td><td>6.27.0</td><td>2017.1.223 (ASFv2)</td></tr>
 <tr><td>6.26.0</td><td>6.26.0</td><td>2016.3.1118 (ASFv2)</td></tr>
 <tr><td>6.25.1</td><td>6.25.0</td><td>2016.3.1028 (ASFv2)</td></tr>
 <tr><td>6.25.0</td><td>6.25.0</td><td>2016.3.1028 (ASFv2)</td></tr>
