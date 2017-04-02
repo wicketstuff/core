@@ -169,6 +169,7 @@ public abstract class AbstractSlider<T> extends FormComponentPanel<T> implements
 	}
 
 	// Options //
+
 	/**
 	 * Sets the min value
 	 *
