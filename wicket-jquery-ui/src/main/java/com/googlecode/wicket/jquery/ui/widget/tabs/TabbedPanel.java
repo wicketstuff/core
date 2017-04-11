@@ -20,6 +20,7 @@ import java.util.Collections;
 import java.util.List;
 
 import org.apache.wicket.AttributeModifier;
+import org.apache.wicket.Component;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.core.request.handler.IPartialPageRequestHandler;
 import org.apache.wicket.extensions.markup.html.tabs.ITab;
@@ -287,7 +288,7 @@ public class TabbedPanel extends JQueryGenericPanel<List<ITab>> implements ITabs
 	 * @param title the tab's title model
 	 * @return a new {@code Label}
 	 */
-	protected Label newTitleLabel(String id, IModel<String> title)
+	protected Component newTitleLabel(String id, IModel<String> title)
 	{
 		return new Label(id, title);
 	}
@@ -307,7 +308,7 @@ public class TabbedPanel extends JQueryGenericPanel<List<ITab>> implements ITabs
 		WebMarkupContainer container = new Fragment(id, "tab-fragment", TabbedPanel.this);
 
 		// link //
-		Label link = TabbedPanel.this.newTitleLabel("link", tab.getTitle());
+		Component link = TabbedPanel.this.newTitleLabel("link", tab.getTitle());
 		link.add(AttributeModifier.replace("href", "#" + tabId));
 		container.add(link);
 
