@@ -56,7 +56,7 @@ public class JQueryUrlResourceReference extends UrlResourceReference
 		}
 		else
 		{
-			jQueryReference = DynamicJQueryResourceReference.get();
+			jQueryReference = DynamicJQueryResourceReference.getV2();
 		}
 
 		List<HeaderItem> dependencies = super.getDependencies();
