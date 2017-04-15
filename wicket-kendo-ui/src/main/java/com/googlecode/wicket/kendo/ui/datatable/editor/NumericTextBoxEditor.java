@@ -16,23 +16,33 @@
  */
 package com.googlecode.wicket.kendo.ui.datatable.editor;
 
+import com.googlecode.wicket.jquery.core.Options;
 
 /**
- * Provides a {@link IKendoEditor} editor, based on a textarea
+ * Provides a {@link IKendoEditor} editor, based on a {@code kendoNumericTextBox}
  * 
  * @author Sebastien Briquet - sebfz1
  * @see KendoEditorHeaderItem
  */
-public class TextAreaEditor implements IKendoEditor
+public class NumericTextBoxEditor implements IKendoEditor
 {
 	protected final String name;
+	protected final Options options;
 
 	/**
 	 * Constructor, for inline inclusion
 	 */
-	public TextAreaEditor()
+	public NumericTextBoxEditor()
 	{
-		this("");
+		this("", new Options());
+	}
+
+	/**
+	 * Constructor, for inline inclusion
+	 */
+	public NumericTextBoxEditor(Options options)
+	{
+		this("", options);
 	}
 
 	/**
@@ -40,17 +50,28 @@ public class TextAreaEditor implements IKendoEditor
 	 * 
 	 * @param name the name of the function
 	 */
-	public TextAreaEditor(String name)
+	public NumericTextBoxEditor(String name)
+	{
+		this(name, new Options());
+	}
+
+	/**
+	 * Constructor
+	 * 
+	 * @param name the name of the function
+	 */
+	public NumericTextBoxEditor(String name, Options options)
 	{
 		this.name = name;
+		this.options = options;
 	}
 
 	@Override
 	public String toString()
 	{
 		return "function " + this.name + "(container, options) { " // lf
-				+ "jQuery('<textarea class=\"k-textbox\" data-bind=\"value:' + options.field + '\"></textarea>')" // lf
-				+ ".appendTo(container); " // lf
+				+ "$('<input data-bind=\"value:' + options.field + '\"/>')" // lf
+				+ ".appendTo(container).kendoNumericTextBox(" + this.options + ");" // lf
 				+ "}";
 	}
 }

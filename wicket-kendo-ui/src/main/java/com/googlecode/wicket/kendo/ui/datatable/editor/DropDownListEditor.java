@@ -21,7 +21,7 @@ import com.github.openjson.JSONArray;
 import com.googlecode.wicket.jquery.core.utils.JsonUtils;
 
 /**
- * Provides a simple {@link IKendoEditor} editor, based on a list of string (not on json objects)
+ * Provides a {@link IKendoEditor} editor, based on a list of string (not on json objects)
  * 
  * @author Sebastien Briquet - sebfz1
  * @see KendoEditorHeaderItem
