@@ -75,9 +75,9 @@ public class DataViewPanel<T> extends GenericPanel<T> // NOSONAR
 	// Events //
 
 	@Override
-	protected void onConfigure()
+	protected void onInitialize()
 	{
-		super.onConfigure();
+		super.onInitialize();
 
 		final KendoDataSource dataSource = new KendoDataSource(this);
 
@@ -112,7 +112,7 @@ public class DataViewPanel<T> extends GenericPanel<T> // NOSONAR
 	 */
 	protected DataView<T> newDataView(String id, final KendoDataSource dataSource, IDataProvider<T> provider, Options options)
 	{
-		return new DataView<T>(id, provider, options) {
+		return new DataView<T>(id, provider, options) { // NOSONAR
 
 			private static final long serialVersionUID = 1L;
 
