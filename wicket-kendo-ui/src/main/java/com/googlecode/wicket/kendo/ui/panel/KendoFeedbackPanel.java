@@ -154,9 +154,14 @@ public class KendoFeedbackPanel extends WebMarkupContainer implements IJQueryWid
 	{
 		for (FeedbackMessage message : this.getModelObject())
 		{
-			this.widgetBehavior.show(handler, message.getMessage(), message.getLevelAsString());
-			message.markRendered();
+			if (!message.isRendered())
+			{
+				this.widgetBehavior.show(handler, message.getMessage(), message.getLevelAsString());
+				message.markRendered();
+			}
 		}
+
+		this.getModel().detach(); // forces the retrieval of next messages
 	}
 
 	/**
@@ -171,7 +176,7 @@ public class KendoFeedbackPanel extends WebMarkupContainer implements IJQueryWid
 		{
 			this.hide(handler);
 		}
-		
+
 		this.refresh(handler);
 	}
 
