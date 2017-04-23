@@ -23,7 +23,6 @@ import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.form.FormComponentPanel;
 import org.apache.wicket.markup.html.form.TextField;
 import org.apache.wicket.model.IModel;
-import org.apache.wicket.model.Model;
 
 import com.googlecode.wicket.jquery.core.JQueryBehavior;
 import com.googlecode.wicket.jquery.core.JQueryEvent;
@@ -83,7 +82,7 @@ public class AjaxSlider extends Slider implements IJQueryAjaxAware, IValueChange
 	 * @param model the {@link IModel}
 	 * @param input the {@link TextField} that will host the value
 	 */
-	public AjaxSlider(String id, Model<Integer> model, TextField<Integer> input)
+	public AjaxSlider(String id, IModel<Integer> model, TextField<Integer> input)
 	{
 		super(id, model, input);
 	}
