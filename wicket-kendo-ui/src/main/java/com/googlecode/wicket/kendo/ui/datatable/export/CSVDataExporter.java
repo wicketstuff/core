@@ -344,7 +344,6 @@ public class CSVDataExporter implements IDataExporter
 
 		public DataExporterResourceStreamWriter(IDataExporter exporter, final IDataProvider<?> provider, final List<IExportableColumn> columns)
 		{
-
 			this.exporter = exporter;
 			this.provider = provider;
 			this.columns = columns;
