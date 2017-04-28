@@ -31,6 +31,7 @@ import org.apache.wicket.markup.html.form.CheckGroup;
 import org.apache.wicket.markup.html.form.ChoiceRenderer;
 import org.apache.wicket.markup.html.form.DropDownChoice;
 import org.apache.wicket.markup.html.form.Form;
+import org.apache.wicket.markup.html.form.FormComponentUpdatingBehavior;
 import org.apache.wicket.markup.html.form.ListMultipleChoice;
 import org.apache.wicket.markup.html.form.Radio;
 import org.apache.wicket.markup.html.form.RadioChoice;
@@ -276,33 +277,30 @@ public class FormInput extends WicketExamplePage
 			// set the model that gets the current locale, and that is used for
 			// updating the current locale to property 'locale' of FormInput
 			setModel(new PropertyModel<Locale>(FormInput.this, "locale"));
+			
+			add(new FormComponentUpdatingBehavior() 
+			{
+				/**
+				 * 
+				 */
+				private static final long serialVersionUID = -4119309541369745858L;
+
+				@Override
+				protected void onUpdate() 
+				{
+					// note that we don't have to do anything here, as our property
+					// model allready calls FormInput.setLocale when the model is
+					// updated
+					
+					// force re-render by setting the page to render to the bookmarkable
+					// instance, so that the page will be rendered from scratch,
+					// re-evaluating the input patterns etc
+					setResponsePage(FormInput.class);
+				}
+			});
 		}
 
-		/**
-		 * @see org.apache.wicket.markup.html.form.DropDownChoice#onSelectionChanged(java.lang.Object)
-		 */
-		@Override
-		public void onSelectionChanged(Locale newSelection)
-		{
-			// note that we don't have to do anything here, as our property
-			// model allready calls FormInput.setLocale when the model is
-			// updated
 
-			// force re-render by setting the page to render to the bookmarkable
-			// instance, so that the page will be rendered from scratch,
-			// re-evaluating the input patterns etc
-			setResponsePage(FormInput.class);
-		}
-
-		/**
-		 * @see org.apache.wicket.markup.html.form.DropDownChoice#wantOnSelectionChangedNotifications()
-		 */
-		@Override
-		protected boolean wantOnSelectionChangedNotifications()
-		{
-			// we want roundtrips when a the user selects another item
-			return true;
-		}
 	}
 
 	/** available sites for the multiple select. */
