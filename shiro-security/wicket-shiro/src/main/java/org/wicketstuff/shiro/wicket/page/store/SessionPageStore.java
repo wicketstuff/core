@@ -258,6 +258,6 @@ public class SessionPageStore implements IPageStore
 	@Override
 	public boolean canBeAsynchronous() 
 	{
-		return true;
+		return false;
 	}
 }
