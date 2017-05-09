@@ -152,7 +152,7 @@ public class CheckBoxColumn<M, I, S> extends AbstractColumn<M, I, S>
 			checkbox.setOutputMarkupId(true);
 			add(checkbox);
 
-			checkbox.add(new AjaxFormSubmitBehavior(getGrid().getForm(), "onclick")
+			checkbox.add(new AjaxFormSubmitBehavior(getGrid().getForm(), "click")
 			{
 				private static final long serialVersionUID = 1L;
 
@@ -297,7 +297,7 @@ public class CheckBoxColumn<M, I, S> extends AbstractColumn<M, I, S>
 			};
 			add(checkbox);
 
-			checkbox.add(new AjaxFormSubmitBehavior(getGrid().getForm(), "onclick")
+			checkbox.add(new AjaxFormSubmitBehavior(getGrid().getForm(), "click")
 			{
 				private static final long serialVersionUID = 1L;
 
