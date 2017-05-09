@@ -32,6 +32,7 @@ public enum KendoMessage
 	DE_CH("de-CH"), // lf
 	DE_DE("de-DE"), // lf
 	DE_LI("de-LI"), // lf
+	EL_GR("el-GR"), // lf
 	EN_AU("en-AU"), // lf
 	EN_CA("en-CA"), // lf
 	EN_GB("en-GB"), // lf
@@ -55,6 +56,7 @@ public enum KendoMessage
 	ES_US("es-US"), // lf
 	ES_UY("es-UY"), // lf
 	ES_VE("es-VE"), // lf
+	FA_IR("fa-IR"), // lf
 	FR_BE("fr-BE"), // lf
 	FR_CA("fr-CA"), // lf
 	FR_CD("fr-CD"), // lf
@@ -69,6 +71,7 @@ public enum KendoMessage
 	FR_ML("fr-ML"), // lf
 	FR_SN("fr-SN"), // lf
 	HE_IL("he-IL"), // lf
+	HU_HU("hu-HU"), // lf
 	HY_AM("hy-AM"), // lf
 	IT_CH("it-CH"), // lf
 	IT_IT("it-IT"), // lf
