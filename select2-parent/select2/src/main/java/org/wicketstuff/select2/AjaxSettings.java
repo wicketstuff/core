@@ -1,11 +1,11 @@
 /*
  * Copyright 2012 Igor Vaynberg
- * 
+ *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this work except in compliance with
  * the License. You may obtain a copy of the License in the LICENSE file, or at:
- * 
+ *
  * http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on
  * an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the
  * specific language governing permissions and limitations under the License.
@@ -15,12 +15,12 @@ package org.wicketstuff.select2;
 import java.io.Serializable;
 
 import org.apache.wicket.ajax.json.JSONException;
-import org.apache.wicket.ajax.json.JSONWriter;
+import org.apache.wicket.ajax.json.JSONStringer;
 import org.wicketstuff.select2.json.Json;
 
 /**
  * Select2 Ajax settings. Refer to the Select2 documentation for what these options mean.
- * 
+ *
  * @author igor
  */
 public final class AjaxSettings implements Serializable
@@ -34,16 +34,16 @@ public final class AjaxSettings implements Serializable
 	/** whether or not to use traditional parameter encoding. */
 	private boolean cache;
 
-	public void toJson(JSONWriter writer) throws JSONException
+	public void toJson(JSONStringer stringer) throws JSONException
 	{
-		writer.object();
-		Json.writeFunction(writer, "data", data);
-		Json.writeObject(writer, "dataType", dataType);
-		Json.writeObject(writer, "delay", delay);
-		Json.writeFunction(writer, "processResults", processResults);
-		Json.writeObject(writer, "url", url);
-		Json.writeObject(writer, "cache", cache);
-		writer.endObject();
+		stringer.object();
+		Json.writeFunction(stringer, "data", data);
+		Json.writeObject(stringer, "dataType", dataType);
+		Json.writeObject(stringer, "delay", delay);
+		Json.writeFunction(stringer, "processResults", processResults);
+		Json.writeObject(stringer, "url", url);
+		Json.writeObject(stringer, "cache", cache);
+		stringer.endObject();
 	}
 
 	public void setUrl(CharSequence url)

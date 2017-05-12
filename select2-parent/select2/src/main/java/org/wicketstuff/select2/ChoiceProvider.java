@@ -1,11 +1,11 @@
 /*
  * Copyright 2012 Igor Vaynberg
- * 
+ *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this work except in compliance with
  * the License. You may obtain a copy of the License in the LICENSE file, or at:
- * 
+ *
  * http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on
  * an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the
  * specific language governing permissions and limitations under the License.
@@ -15,7 +15,7 @@ package org.wicketstuff.select2;
 import java.util.Collection;
 
 import org.apache.wicket.ajax.json.JSONException;
-import org.apache.wicket.ajax.json.JSONWriter;
+import org.apache.wicket.ajax.json.JSONStringer;
 import org.apache.wicket.model.IDetachable;
 
 /**
@@ -34,9 +34,9 @@ import org.apache.wicket.model.IDetachable;
  * For the most common usecase where each choice is rendered as a text string see
  * {@link TextChoiceProvider}.
  * </p>
- * 
+ *
  * @author igor
- * 
+ *
  * @param <T>
  *            type of choice object
  */
@@ -72,7 +72,7 @@ public abstract class ChoiceProvider<T> implements IDetachable
 	/**
 	 * Queries application for choices that match the search {@code term} and adds them to the
 	 * {@code response}
-	 * 
+	 *
 	 * @param term
 	 *            search term
 	 * @param page
@@ -84,40 +84,40 @@ public abstract class ChoiceProvider<T> implements IDetachable
 
 	/**
 	 * Converts the specified choice to Json.
-	 * 
+	 *
 	 * <p>
 	 * At the very least each choice should contain an {@code id} attribute. If no custom rendering
 	 * function is specified, the {@code text} attribute should also be provided
 	 * </p>
-	 * 
+	 *
 	 * <p>
 	 * Example: If mapping a User {Long id, String name} using default rendering the code should
 	 * look like this:
-	 * 
+	 *
 	 * <pre>
-	 * toJson(User choice, JSONWriter writer)
+	 * toJson(User choice, JSONStringer stringer)
 	 * {
 	 * 	writer.key(&quot;id&quot;).value(choice.getId()).key(&quot;text&quot;).value(choice.getName());
 	 * }
 	 * </pre>
-	 * 
+	 *
 	 * </p>
-	 * 
+	 *
 	 * @param choice
 	 *            choice to convert
-	 * @param writer
-	 *            Json writer that should be used to covnert the choice
+	 * @param stringer
+	 *            Json stringer that should be used to covnert the choice
 	 * @throws JSONException
 	 */
-	protected void toJson(T choice, JSONWriter writer) throws JSONException {
-		writer.key("id").value(getIdValue(choice)).key("text").value(getDisplayValue(choice));
+	protected void toJson(T choice, JSONStringer stringer) throws JSONException {
+		stringer.key("id").value(getIdValue(choice)).key("text").value(getDisplayValue(choice));
 	}
 
 	/**
 	 * Converts a list of choice ids back into application's choice objects. When the choice
 	 * provider is attached to a single-select component the {@code ids} collection will contain
 	 * exactly one id, and a collection containing exactly one choice should be returned.
-	 * 
+	 *
 	 * @param ids
 	 *            collection containing choice ids
 	 * @return collection containing application choice objects
