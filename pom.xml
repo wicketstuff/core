@@ -44,9 +44,9 @@
 	</scm>
 
 	<properties>
-		<wicket.version>8.0.0-SNAPSHOT</wicket.version>
+		<wicket.version>8.0.0-M6</wicket.version>
 		<junit.version>4.12</junit.version>
-		<jetty.version>8.1.16.v20140903</jetty.version>
+		<jetty.version>9.4.5.v20170502</jetty.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
 
@@ -60,7 +60,7 @@
 		</repository>
 		<repository>
 			<id>Wicket Nexus Staging</id>
-			<url>https://repository.apache.org/content/repositories/orgapachewicket-1084</url>
+			<url>https://repository.apache.org/content/repositories/orgapachewicket-1092</url>
 		</repository>
 	</repositories>
 
