@@ -10,7 +10,7 @@ import org.apache.wicket.resource.DynamicJQueryResourceReference;
 
 /**
  * Provides the {@link ResourceReference} for the {@code jquery-migrate-3.0.0.js} javascript library (CDN).<br>
- * <code><pre>
+ * <pre><code>
  * public class MyApplication extends WebApplication
  * {
  * 	public void init()
@@ -20,8 +20,7 @@ import org.apache.wicket.resource.DynamicJQueryResourceReference;
  * 		this.getJavaScriptLibrarySettings().setJQueryReference(JQueryMigrateResourceReference.get());
  * 	}
  * }
- * 
- * </pre></code>
+ * </code></pre>
  * 
  * @author Sebastien Briquet - sebfz1
  *
