@@ -17,7 +17,6 @@
 package com.googlecode.wicket.jquery.ui.widget.menu;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -35,6 +34,7 @@ import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.model.PropertyModel;
 import org.apache.wicket.util.lang.Args;
+import org.apache.wicket.util.lang.Generics;
 
 import com.googlecode.wicket.jquery.core.JQueryBehavior;
 import com.googlecode.wicket.jquery.core.JQueryPanel;
@@ -56,7 +56,7 @@ public class Menu extends JQueryPanel implements IMenuListener
 	private WebMarkupContainer root;
 
 	/** Keep a reference to the {@link MenuItem}{@code s} hash */
-	private Map<String, IMenuItem> map = new HashMap<String, IMenuItem>();
+	private Map<String, IMenuItem> map = Generics.newHashMap();
 
 	/**
 	 * Constructor

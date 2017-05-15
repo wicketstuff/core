@@ -146,7 +146,7 @@ public abstract class MenuBehavior extends JQueryUIBehavior implements IJQueryAj
 		protected CallbackParameter[] getCallbackParameters()
 		{
 			return new CallbackParameter[] { CallbackParameter.context("event"), CallbackParameter.context("ui"), // lf
-					CallbackParameter.resolved("hash", "ui.item.context.id") }; // lf
+					CallbackParameter.resolved("hash", "ui.item[0].id") }; // fixes #266
 		}
 
 		@Override
