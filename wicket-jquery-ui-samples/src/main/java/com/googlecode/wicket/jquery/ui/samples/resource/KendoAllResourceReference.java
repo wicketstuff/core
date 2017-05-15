@@ -29,7 +29,7 @@ public class KendoAllResourceReference extends JQueryUrlResourceReference
 	 *
 	 * @return the single instance of the resource reference
 	 */
-	public static KendoAllResourceReference get()
+	public static JQueryUrlResourceReference get()
 	{
 		return INSTANCE;
 	}
