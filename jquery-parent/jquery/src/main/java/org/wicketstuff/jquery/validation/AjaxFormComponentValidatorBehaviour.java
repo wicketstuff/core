@@ -156,6 +156,7 @@ public class AjaxFormComponentValidatorBehaviour extends AjaxFormComponentUpdati
 	public void renderHead(Component component, IHeaderResponse response)
 	{
 		super.renderHead(component, response);
-		response.render(JavaScriptHeaderItem.forReference(JQueryResourceReference.get()));
+		response.render(JavaScriptHeaderItem
+			.forReference(Application.get().getJavaScriptLibrarySettings().getJQueryReference()));
 	}
 }
