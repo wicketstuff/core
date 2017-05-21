@@ -39,6 +39,8 @@ public class NumericTextBoxEditor implements IKendoEditor
 
 	/**
 	 * Constructor, for inline inclusion
+	 * 
+	 * @param options the {@link Options}
 	 */
 	public NumericTextBoxEditor(Options options)
 	{
@@ -59,6 +61,7 @@ public class NumericTextBoxEditor implements IKendoEditor
 	 * Constructor
 	 * 
 	 * @param name the name of the function
+	 * @param options the {@link Options}
 	 */
 	public NumericTextBoxEditor(String name, Options options)
 	{
