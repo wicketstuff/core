@@ -12,7 +12,7 @@
  */
 package org.wicketstuff.select2.json;
 
-import org.apache.wicket.ajax.json.JSONWriter;
+import org.apache.wicket.ajax.json.JSONStringer;
 
 /**
  * A JSONWriter that writes and allows access to the underlying {@link StringBuilder}. One of the
@@ -21,35 +21,17 @@ import org.apache.wicket.ajax.json.JSONWriter;
  * {@link CharSequence} .
  * 
  * @author igor
- * 
+ * @deprecated Use {@link JSONStringer} instead
  */
-public class JsonBuilder extends JSONWriter
+@Deprecated
+public class JsonBuilder extends JSONStringer
 {
-
-	/**
-	 * Constructs a builder with a new {@link StringBuilder}.
-	 */
-	public JsonBuilder()
-	{
-		this(new StringBuilder());
-	}
-
-	/**
-	 * Constructs a builder with an existing {@link StringBuilder}.
-	 * 
-	 * @param builder
-	 */
-	public JsonBuilder(StringBuilder builder)
-	{
-		super(new StringBuilderWriter(builder));
-	}
-
 	/**
 	 * @return underlying {@link StringBuilder} as a {@link CharSequence}.
 	 */
 	public CharSequence toJson()
 	{
-		return ((StringBuilderWriter)writer).getBuilder();
+		return toString();
 	}
 
 }

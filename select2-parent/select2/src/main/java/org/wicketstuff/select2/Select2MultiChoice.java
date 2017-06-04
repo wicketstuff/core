@@ -12,16 +12,20 @@
  */
 package org.wicketstuff.select2;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
+
 import org.apache.wicket.ajax.json.JSONException;
+import org.apache.wicket.ajax.json.JSONStringer;
 import org.apache.wicket.markup.head.IHeaderResponse;
 import org.apache.wicket.markup.head.OnDomReadyHeaderItem;
 import org.apache.wicket.markup.html.form.FormComponent;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.util.convert.ConversionException;
 import org.apache.wicket.util.string.Strings;
-import org.wicketstuff.select2.json.JsonBuilder;
-
-import java.util.*;
 
 /**
  * Multi-select Select2 component. Should be attached to a {@code <input type='hidden'/>} element.
@@ -113,7 +117,7 @@ public class Select2MultiChoice<T> extends AbstractSelect2Choice<T, Collection<T
 		Collection<? extends T> choices = getCurrentValue();
 		if (choices != null && !choices.isEmpty())
 		{
-			JsonBuilder selection = new JsonBuilder();
+			JSONStringer selection = new JSONStringer();
 			try
 			{
 				selection.array();
@@ -130,7 +134,7 @@ public class Select2MultiChoice<T> extends AbstractSelect2Choice<T, Collection<T
 				throw new RuntimeException("Error converting model object to Json", e);
 			}
 			response.render(OnDomReadyHeaderItem.forScript(JQuery.execute(
-				"$('#%s').select2('data', %s);", getJquerySafeMarkupId(), selection.toJson())));
+				"$('#%s').select2('data', %s);", getJquerySafeMarkupId(), selection.toString())));
 		}
 	}
 

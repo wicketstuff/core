@@ -13,12 +13,12 @@
 package org.wicketstuff.select2;
 
 import org.apache.wicket.ajax.json.JSONException;
+import org.apache.wicket.ajax.json.JSONStringer;
 import org.apache.wicket.markup.head.IHeaderResponse;
 import org.apache.wicket.markup.head.OnDomReadyHeaderItem;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.util.convert.ConversionException;
 import org.apache.wicket.util.string.Strings;
-import org.wicketstuff.select2.json.JsonBuilder;
 
 import java.util.Collections;
 import java.util.Iterator;
@@ -70,7 +70,7 @@ public class Select2Choice<T> extends AbstractSelect2Choice<T, T>
 		T value = getCurrentValue();
 		if (value != null)
 		{
-			JsonBuilder selection = new JsonBuilder();
+			JSONStringer selection = new JSONStringer();
 			try
 			{
 				selection.object();
@@ -82,7 +82,7 @@ public class Select2Choice<T> extends AbstractSelect2Choice<T, T>
 				throw new RuntimeException("Error converting model object to Json", e);
 			}
 			response.render(OnDomReadyHeaderItem.forScript(JQuery.execute(
-				"$('#%s').select2('data', %s);", getJquerySafeMarkupId(), selection.toJson())));
+				"$('#%s').select2('data', %s);", getJquerySafeMarkupId(), selection.toString())));
 		}
 	}
 }
