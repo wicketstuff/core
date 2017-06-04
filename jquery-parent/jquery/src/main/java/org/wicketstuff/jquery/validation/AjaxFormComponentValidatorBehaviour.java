@@ -2,6 +2,7 @@ package org.wicketstuff.jquery.validation;
 
 import java.util.List;
 
+import org.apache.wicket.Application;
 import org.apache.wicket.Component;
 import org.apache.wicket.Session;
 import org.apache.wicket.ajax.AjaxRequestTarget;
