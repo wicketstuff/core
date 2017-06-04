@@ -35,7 +35,7 @@ import com.googlecode.wicket.jquery.core.utils.RequestCycleUtils;
 import com.googlecode.wicket.kendo.ui.datatable.DataTable;
 
 /**
- * Provides an property column for a {@link DataTable} which content will be ajax/lazy loaded.
+ * Provides a property column for a {@link DataTable} which content will be ajax/lazy loaded.
  *
  * @author Sebastien Briquet - sebfz1
  */

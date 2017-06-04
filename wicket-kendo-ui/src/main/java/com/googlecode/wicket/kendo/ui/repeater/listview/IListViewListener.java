@@ -65,6 +65,7 @@ public interface IListViewListener extends IClusterable
 
 	/**
 	 * Triggered when item(s) is/are selected
+	 * 
 	 * @param target the {@link AjaxRequestTarget}
 	 * @param objects the list of retrieved {@link JSONObject}{@code s}
 	 */

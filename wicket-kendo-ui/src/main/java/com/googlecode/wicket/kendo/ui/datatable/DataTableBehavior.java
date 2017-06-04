@@ -278,7 +278,7 @@ public abstract class DataTableBehavior extends KendoUIBehavior implements IJQue
 	 * @param button the {@code CommandButton}
 	 * @return {@code null} if no {@code CommandAjaxBehavior} is associated to the button
 	 */
-	private static JQueryAjaxBehavior getCommandAjaxBehavior(CommandButton button, List<CommandAjaxBehavior> behaviors)
+	public static JQueryAjaxBehavior getCommandAjaxBehavior(CommandButton button, List<CommandAjaxBehavior> behaviors)
 	{
 		for (CommandAjaxBehavior behavior : behaviors)
 		{
@@ -458,12 +458,12 @@ public abstract class DataTableBehavior extends KendoUIBehavior implements IJQue
 		{
 			if (column.getField() != null)
 			{
-				Options field = new Options();
-
 				if (column instanceof IdPropertyColumn)
 				{
 					model.set("id", Options.asString(column.getField()));
 				}
+
+				Options field = new Options();
 
 				if (column.isEditable() != null)
 				{
