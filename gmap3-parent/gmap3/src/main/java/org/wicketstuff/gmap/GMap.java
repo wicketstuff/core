@@ -792,24 +792,28 @@ public class GMap extends Panel implements GOverlayContainer
         }
     }
     
+    public String getJSFitMarkers(List<GLatLng> markers) {
+    	if (markers.isEmpty())
+    	{
+    		return "";
+    	}
+    	
+    	final StringBuilder buf = new StringBuilder();
+    	buf.append("var bounds = new google.maps.LatLngBounds();\n");
+    	// Ask google maps to keep extending the bounds to include each point
+    	for (final GLatLng point : markers)
+    	{
+    		buf.append("bounds.extend( ").append(point.getJSconstructor()).append(" );\n");
+    	}
+    	
+    	buf.append(getJSinvoke("fitBounds(bounds)"));
+    	buf.append(getJSinvoke("panToBounds(bounds)"));
+    	
+    	return buf.toString();
+    }
+    
     private String getJSFitMarkers() {
-        if (markersToShow.isEmpty())
-        {
-            return "";
-        }
-        
-        final StringBuilder buf = new StringBuilder();
-        buf.append("var bounds = new google.maps.LatLngBounds();\n");
-        // Ask google maps to keep extending the bounds to include each point
-        for (final GLatLng point : markersToShow)
-        {
-            buf.append("bounds.extend( ").append(point.getJSconstructor()).append(" );\n");
-        }
-        
-        buf.append(getJSinvoke("fitBounds(bounds)"));
-        buf.append(getJSinvoke("panToBounds(bounds)"));
-        
-        return buf.toString();
+    	return getJSFitMarkers(markersToShow);
     }
     
     private String getJSsetDraggingEnabled(final boolean enabled)
