@@ -5,14 +5,14 @@ import java.util.Collection;
 import java.util.List;
 
 import org.apache.wicket.ajax.json.JSONException;
-import org.apache.wicket.ajax.json.JSONWriter;
+import org.apache.wicket.ajax.json.JSONStringer;
 
 /**
  * @author lexx
  */
 public final class CountryChoiceProvider extends ChoiceProvider<Country>
 {
-
+	private static final long serialVersionUID = 1L;
 	private static final int PAGE_SIZE = 5;
 
 	@Override
@@ -23,7 +23,7 @@ public final class CountryChoiceProvider extends ChoiceProvider<Country>
 	}
 
 	@Override
-	public void toJson(Country choice, JSONWriter writer) throws JSONException
+	public void toJson(Country choice, JSONStringer writer) throws JSONException
 	{
 		writer.key("id").value(choice.name()).key("text").value(choice.getDisplayName());
 	}

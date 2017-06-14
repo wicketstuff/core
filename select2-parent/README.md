@@ -48,7 +48,7 @@ public abstract class ChoiceProvider<T> implements IDetachable {
     /**
      * Converts the specified choice to Json.
      */
-    public abstract void toJson(T choice, JSONWriter writer) throws JSONException;
+    public abstract void toJson(T choice, JSONStringer writer) throws JSONException;
 
     /**
      * Converts a list of choice ids back into application's choice objects. When the choice provider is attached to a

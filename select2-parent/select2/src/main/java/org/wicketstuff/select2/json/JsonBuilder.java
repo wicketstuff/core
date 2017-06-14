@@ -15,7 +15,7 @@ package org.wicketstuff.select2.json;
 import org.apache.wicket.ajax.json.JSONStringer;
 
 /**
- * A JSONWriter that writes and allows access to the underlying {@link StringBuilder}. One of the
+ * A JSONStringer that writes and allows access to the underlying {@link StringBuilder}. One of the
  * advantages of this class is that it can expose Json as a {@link CharSequence} instead of a
  * {@link String} so no extra memory allocations are necessary for code that can use a
  * {@link CharSequence} .

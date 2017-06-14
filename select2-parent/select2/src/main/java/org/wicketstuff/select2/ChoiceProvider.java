@@ -15,7 +15,7 @@ package org.wicketstuff.select2;
 import java.util.Collection;
 
 import org.apache.wicket.ajax.json.JSONException;
-import org.apache.wicket.ajax.json.JSONWriter;
+import org.apache.wicket.ajax.json.JSONStringer;
 import org.apache.wicket.model.IDetachable;
 
 /**
@@ -70,7 +70,7 @@ public abstract class ChoiceProvider<T> implements IDetachable
 	 * look like this:
 	 * 
 	 * <pre>
-	 * toJson(User choice, JSONWriter writer)
+	 * toJson(User choice, JSONStringer writer)
 	 * {
 	 * 	writer.key(&quot;id&quot;).value(choice.getId()).key(&quot;text&quot;).value(choice.getName());
 	 * }
@@ -84,7 +84,7 @@ public abstract class ChoiceProvider<T> implements IDetachable
 	 *            Json writer that should be used to covnert the choice
 	 * @throws JSONException
 	 */
-	public abstract void toJson(T choice, JSONWriter writer) throws JSONException;
+	public abstract void toJson(T choice, JSONStringer writer) throws JSONException;
 
 	/**
 	 * Converts a list of choice ids back into application's choice objects. When the choice

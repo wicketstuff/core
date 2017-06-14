@@ -12,10 +12,16 @@
  */
 package org.wicketstuff.select2;
 
+import java.io.IOException;
+import java.io.OutputStreamWriter;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
+
 import org.apache.wicket.IResourceListener;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.json.JSONException;
-import org.apache.wicket.ajax.json.JSONWriter;
+import org.apache.wicket.ajax.json.JSONStringer;
 import org.apache.wicket.event.IEvent;
 import org.apache.wicket.markup.head.IHeaderResponse;
 import org.apache.wicket.markup.head.OnDomReadyHeaderItem;
@@ -27,12 +33,6 @@ import org.apache.wicket.request.Request;
 import org.apache.wicket.request.http.WebRequest;
 import org.apache.wicket.request.http.WebResponse;
 import org.apache.wicket.util.string.Strings;
-
-import java.io.IOException;
-import java.io.OutputStreamWriter;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.List;
 
 /**
  * Base class for Select2 components
@@ -325,9 +325,8 @@ abstract class AbstractSelect2Choice<T, M> extends HiddenField<M> implements IRe
 		WebResponse webResponse = (WebResponse)getRequestCycle().getResponse();
 		webResponse.setContentType("application/json");
 
-		OutputStreamWriter out = new OutputStreamWriter(webResponse.getOutputStream(),
-				getRequest().getCharset());
-		JSONWriter json = new JSONWriter(out);
+		OutputStreamWriter out = new OutputStreamWriter(webResponse.getOutputStream(), getRequest().getCharset());
+		JSONStringer json = new JSONStringer();
 
 		try
 		{
@@ -349,6 +348,7 @@ abstract class AbstractSelect2Choice<T, M> extends HiddenField<M> implements IRe
 
 		try
 		{
+			out.write(json.toString());
 			out.flush();
 		}
 		catch (IOException e)

@@ -15,7 +15,7 @@ package org.wicketstuff.select2;
 import java.io.Serializable;
 
 import org.apache.wicket.ajax.json.JSONException;
-import org.apache.wicket.ajax.json.JSONWriter;
+import org.apache.wicket.ajax.json.JSONStringer;
 import org.wicketstuff.select2.json.Json;
 
 /**
@@ -34,7 +34,7 @@ public final class AjaxSettings implements Serializable
 	/** whether or not to use traditional parameter encoding. */
 	private Boolean traditional;
 
-	void toJson(JSONWriter writer) throws JSONException
+	void toJson(JSONStringer writer) throws JSONException
 	{
 		writer.object();
 		Json.writeFunction(writer, "data", data);
