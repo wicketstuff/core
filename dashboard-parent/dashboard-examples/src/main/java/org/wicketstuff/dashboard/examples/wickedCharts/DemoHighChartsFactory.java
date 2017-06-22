@@ -36,64 +36,64 @@ import com.googlecode.wickedcharts.highcharts.options.SeriesType;
  */
 public class DemoHighChartsFactory implements HighChartsFactory {
 
-    @Override
-    public Options createOptions(HighChartsWidget widget) {
-        Options options;
-        SeriesType seriesType = SeriesType.valueOf(widget.getSettings().get(Settings.seriesType.name()));
-        switch(seriesType) {
-            case AREA: {
-                options = new BasicAreaOptions();
-                break;
-            }
-            case AREASPLINE: {
-                options = new AreaSplineOptions();
-                break;
-            }
-            case BAR: {
-                options = new BasicBarOptions();
-                break;
-            }
-            case COLUMN: {
-                options = new StackedAndGroupedColumnOptions();
-                break;
-            }
-            case LINE: {
-                options = new BasicLineOptions();
-                break;
-            }
-            case PIE: {
-                options = new PieWithLegendOptions();
-                break;
-            }
-            case SCATTER: {
-                options = new ScatterPlotOptions();
-                break;
-            }
-            case SPLINE: {
-                options = new SplineUpdatingOptions();
-                break;
-            }
-            case GAUGE: {
-                options = new AngularGaugeOptions();
-                break;
-            }
-            case COLUMNRANGE: {
-                options = new ColumnRangeOptions();
-                break;
-            }
-            case AREARANGE: {
-                options = new AreaRangeOptions();
-                break;
-            }
-            case BUBBLE: {
-                options = new BubbleChart3DOptions();
-                break;
-            }
-            default: {
-                options = new Options();
-                break;
-            }
-        }
-        return options;
-    }
+	@Override
+	public Options createOptions(HighChartsWidget widget) {
+		Options options;
+		SeriesType seriesType = SeriesType.valueOf(widget.getSettings().get(Settings.seriesType.name()));
+		switch(seriesType) {
+			case AREA: {
+				options = new BasicAreaOptions();
+				break;
+			}
+			case AREASPLINE: {
+				options = new AreaSplineOptions();
+				break;
+			}
+			case BAR: {
+				options = new BasicBarOptions();
+				break;
+			}
+			case COLUMN: {
+				options = new StackedAndGroupedColumnOptions();
+				break;
+			}
+			case LINE: {
+				options = new BasicLineOptions();
+				break;
+			}
+			case PIE: {
+				options = new PieWithLegendOptions();
+				break;
+			}
+			case SCATTER: {
+				options = new ScatterPlotOptions();
+				break;
+			}
+			case SPLINE: {
+				options = new SplineUpdatingOptions();
+				break;
+			}
+			case GAUGE: {
+				options = new AngularGaugeOptions();
+				break;
+			}
+			case COLUMNRANGE: {
+				options = new ColumnRangeOptions();
+				break;
+			}
+			case AREARANGE: {
+				options = new AreaRangeOptions();
+				break;
+			}
+			case BUBBLE: {
+				options = new BubbleChart3DOptions();
+				break;
+			}
+			default: {
+				options = new Options();
+				break;
+			}
+		}
+		return options;
+	}
 }

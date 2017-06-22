@@ -28,15 +28,15 @@ public class DemoWidgetActionsFactory extends DefaultWidgetActionsFactory {
 		List<WidgetAction> widgetActions = super.createWidgetActions(widget);
 		widgetActions.add(0, new DetachWidgetAction(widget));
 
-        /*
-        for (WidgetAction action : widgetActions) {
-            if (action instanceof DefaultWidgetActions.Settings) {
-                // change the icon (relative to context)
-                ((AbstractWidgetAction) action).setImage("/images/edit.png");
-                break;
-            }
-        }
-        */
+		/*
+		for (WidgetAction action : widgetActions) {
+			if (action instanceof DefaultWidgetActions.Settings) {
+				// change the icon (relative to context)
+				((AbstractWidgetAction) action).setImage("/images/edit.png");
+				break;
+			}
+		}
+		*/
 
 		return widgetActions;
 	}

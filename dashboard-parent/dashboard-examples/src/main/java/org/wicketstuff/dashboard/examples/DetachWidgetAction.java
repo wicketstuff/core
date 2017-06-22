@@ -32,7 +32,7 @@ public class DetachWidgetAction extends AbstractWidgetAction {
 
 		tooltip = new ResourceModel("detach");
 
-        setImage(HomePage.class, "detach.png");
+		setImage(HomePage.class, "detach.png");
 	}
 
 	@Override
@@ -42,9 +42,9 @@ public class DetachWidgetAction extends AbstractWidgetAction {
 		BookmarkablePageLink<Void> link = new BookmarkablePageLink<Void>(id, WidgetPage.class, parameters);
 
 		PopupSettings popupSettings = new PopupSettings(widget.getTitle()).setHeight(320).setWidth(550);
-	    link.setPopupSettings(popupSettings);
+		link.setPopupSettings(popupSettings);
 
-	    return link;
+		return link;
 	}
 
 }

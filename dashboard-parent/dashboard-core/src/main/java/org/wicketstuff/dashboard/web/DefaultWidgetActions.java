@@ -33,119 +33,117 @@ import org.wicketstuff.dashboard.web.util.AjaxConfirmLink;
  */
 public class DefaultWidgetActions {
 
-    public static class Refresh extends AbstractWidgetAction {
+	public static class Refresh extends AbstractWidgetAction {
 
-        private static final long serialVersionUID = 1L;
+		private static final long serialVersionUID = 1L;
 
-        public Refresh(Widget widget) {
-            super(widget);
+		public Refresh(Widget widget) {
+			super(widget);
 
-            tooltip = new ResourceModel("refresh");
+			tooltip = new ResourceModel("refresh");
 
-            setImage(DefaultWidgetActions.class, "res/refresh.gif");
-        }
+			setImage(DefaultWidgetActions.class, "res/refresh.gif");
+		}
 
-        @Override
-        public AbstractLink getLink(String id) {
-            return new AjaxLink<Void>(id) {
+		@Override
+		public AbstractLink getLink(String id) {
+			return new AjaxLink<Void>(id) {
 
-                private static final long serialVersionUID = 1L;
+				private static final long serialVersionUID = 1L;
 
-                @Override
-                public void onClick(AjaxRequestTarget target) {
-                    WidgetView widgetView = findParent(WidgetPanel.class).getWidgetView();
-                    target.add(widgetView);
-                }
+				@Override
+				public void onClick(AjaxRequestTarget target) {
+					WidgetView widgetView = findParent(WidgetPanel.class).getWidgetView();
+					target.add(widgetView);
+				}
 
-            };
-        }
+			};
+		}
 
-    }
+	}
 
-    public static class Delete extends AbstractWidgetAction {
+	public static class Delete extends AbstractWidgetAction {
 
-        private static final long serialVersionUID = 1L;
+		private static final long serialVersionUID = 1L;
 
-        public Delete(Widget widget) {
-            super(widget);
+		public Delete(Widget widget) {
+			super(widget);
 
-            tooltip = new ResourceModel("delete");
+			tooltip = new ResourceModel("delete");
 
-            setImage(DefaultWidgetActions.class, "res/delete.gif");
-        }
+			setImage(DefaultWidgetActions.class, "res/delete.gif");
+		}
 
-        @Override
-        public AbstractLink getLink(String id) {
-            AjaxConfirmLink<Void> deleteLink = new AjaxConfirmLink<Void>(id) {
+		@Override
+		public AbstractLink getLink(String id) {
+			AjaxConfirmLink<Void> deleteLink = new AjaxConfirmLink<Void>(id) {
 
-                private static final long serialVersionUID = 1L;
+				private static final long serialVersionUID = 1L;
 
-                @Override
-                public void onClick(AjaxRequestTarget target) {
-                    send(getPage(), Broadcast.BREADTH, new DashboardEvent(target, DashboardEvent.EventType.WIDGET_REMOVED, widget));
-                    // the widget is removed from ui with javascript (with a IAjaxCallListener) -> see getAjaxCallListener()
-                }
+				@Override
+				public void onClick(AjaxRequestTarget target) {
+					send(getPage(), Broadcast.BREADTH, new DashboardEvent(target, DashboardEvent.EventType.WIDGET_REMOVED, widget));
+					// the widget is removed from ui with javascript (with a IAjaxCallListener) -> see getAjaxCallListener()
+				}
 
-                @Override
-                protected void updateAjaxAttributes(AjaxRequestAttributes attributes) {
-                    super.updateAjaxAttributes(attributes);
+				@Override
+				protected void updateAjaxAttributes(AjaxRequestAttributes attributes) {
+					super.updateAjaxAttributes(attributes);
 
-                    attributes.getAjaxCallListeners().add(new AjaxCallListener() {
+					attributes.getAjaxCallListeners().add(new AjaxCallListener() {
 
-                        private static final long serialVersionUID = 1L;
+						private static final long serialVersionUID = 1L;
 
-                        @Override
-                        public CharSequence getSuccessHandler(Component component) {
-                            return "$('#widget-" + widget.getId() + "').remove();";
-                        }
+						@Override
+						public CharSequence getSuccessHandler(Component component) {
+							return "$('#widget-" + widget.getId() + "').remove();";
+						}
 
-                    });
-                }
+					});
+				}
 
-                @Override
-                protected void onInitialize() {
-                	super.onInitialize();
-                    IModel<String> resourceModel = new StringResourceModel("deleteAsk", this, Model.of(widget.getTitle()));
-                    setConfirmMessage(resourceModel.getObject());
-                }
-            };
+				@Override
+				protected void onInitialize() {
+					super.onInitialize();
+					IModel<String> resourceModel = new StringResourceModel("deleteAsk", this, Model.of(widget.getTitle()));
+					setConfirmMessage(resourceModel.getObject());
+				}
+			};
 
-            return deleteLink;
-        }
+			return deleteLink;
+		}
 
-    }
+	}
 
-    public static class Settings extends AbstractWidgetAction {
+	public static class Settings extends AbstractWidgetAction {
 
-        private static final long serialVersionUID = 1L;
+		private static final long serialVersionUID = 1L;
 
-        public Settings(Widget widget) {
-            super(widget);
+		public Settings(Widget widget) {
+			super(widget);
 
-            tooltip = new ResourceModel("settings");
+			tooltip = new ResourceModel("settings");
 
-            setImage(DefaultWidgetActions.class, "res/edit.png");
-        }
+			setImage(DefaultWidgetActions.class, "res/edit.png");
+		}
 
-        @Override
-        public AbstractLink getLink(String id) {
-            return new AjaxLink<Void>(id) {
+		@Override
+		public AbstractLink getLink(String id) {
+			return new AjaxLink<Void>(id) {
 
-                private static final long serialVersionUID = 1L;
+				private static final long serialVersionUID = 1L;
 
-                @Override
-                public void onClick(AjaxRequestTarget target) {
-                    if (widget.hasSettings()) {
-                        WidgetPanel widgetPanel = findParent(WidgetPanel.class);
-                        Panel settingsPanel = widgetPanel.getSettingsPanel();
-                        settingsPanel.setVisible(true);
-                        target.add(settingsPanel);
-                    }
-                }
+				@Override
+				public void onClick(AjaxRequestTarget target) {
+					if (widget.hasSettings()) {
+						WidgetPanel widgetPanel = findParent(WidgetPanel.class);
+						Panel settingsPanel = widgetPanel.getSettingsPanel();
+						settingsPanel.setVisible(true);
+						target.add(settingsPanel);
+					}
+				}
 
-            };
-        }
-
-    }
-
+			};
+		}
+	}
 }

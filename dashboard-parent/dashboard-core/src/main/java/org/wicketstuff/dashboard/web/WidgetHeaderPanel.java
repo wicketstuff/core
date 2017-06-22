@@ -32,7 +32,6 @@ import org.wicketstuff.dashboard.Widget;
  * @author Decebal Suiu
  */
 public class WidgetHeaderPanel extends GenericPanel<Widget> implements DashboardContextAware {
-
 	private static final long serialVersionUID = 1L;
 
 	private transient DashboardContext dashboardContext;
@@ -40,22 +39,22 @@ public class WidgetHeaderPanel extends GenericPanel<Widget> implements Dashboard
 	public WidgetHeaderPanel(String id, IModel<Widget> model) {
 		super(id, model);
 
-        setMarkupId("header-" + getModelObject().getId());
+		setMarkupId("header-" + getModelObject().getId());
 
-        final Image toggle = new Image("toggle", "") {
+		final Image toggle = new Image("toggle", "") {
 			private static final long serialVersionUID = 1L;
 
 			@Override
-            protected ResourceReference getImageResourceReference() {
-                String name = getWidget().isCollapsed() ? "res/up.png" : "res/down.png";
+			protected ResourceReference getImageResourceReference() {
+				String name = getWidget().isCollapsed() ? "res/up.png" : "res/down.png";
 
-                return new PackageResourceReference(WidgetHeaderPanel.class, name);
-            }
+				return new PackageResourceReference(WidgetHeaderPanel.class, name);
+			}
 
-        };
+		};
 
-        toggle.setOutputMarkupId(true);
-        toggle.add(new AjaxEventBehavior("click") {
+		toggle.setOutputMarkupId(true);
+		toggle.add(new AjaxEventBehavior("click") {
 
 			private static final long serialVersionUID = 1L;
 
@@ -79,15 +78,15 @@ public class WidgetHeaderPanel extends GenericPanel<Widget> implements Dashboard
 			}
 
 		});
-        toggle.add(new AttributeModifier("title", new AbstractReadOnlyModel<String>() {
-            private static final long serialVersionUID = 1L;
+		toggle.add(new AttributeModifier("title", new AbstractReadOnlyModel<String>() {
+			private static final long serialVersionUID = 1L;
 
 			@Override
-            public String getObject() {
-                return getWidget().isCollapsed() ? getString("expand") : getString("collapse");
-            }
+			public String getObject() {
+				return getWidget().isCollapsed() ? getString("expand") : getString("collapse");
+			}
 
-        }));
+		}));
 		add(toggle);
 
 		add(new Label("title", new PropertyModel<Widget>(model, "title")));
@@ -105,17 +104,17 @@ public class WidgetHeaderPanel extends GenericPanel<Widget> implements Dashboard
 		this.dashboardContext = dashboardContext;
 	}
 
-    @Override
-    public void renderHead(IHeaderResponse response) {
-        super.renderHead(response);
+	@Override
+	public void renderHead(IHeaderResponse response) {
+		super.renderHead(response);
 
-        StringBuilder statement = new StringBuilder("$('#").append(getMarkupId()).append("').on('mouseover', function(ev) {");
-        statement.append(" $(this).find('.dragbox-actions').show();").
-                  append("}).on('mouseout', function(ev) {").
-                  append(" $(this).find('.dragbox-actions').hide();").
-                  append("});");
+		StringBuilder statement = new StringBuilder("$('#").append(getMarkupId()).append("').on('mouseover', function(ev) {");
+		statement.append(" $(this).find('.dragbox-actions').show();").
+				  append("}).on('mouseout', function(ev) {").
+				  append(" $(this).find('.dragbox-actions').hide();").
+				  append("});");
 
-        response.render(OnDomReadyHeaderItem.forScript(statement.toString()));
-    }
+		response.render(OnDomReadyHeaderItem.forScript(statement.toString()));
+	}
 
 }

@@ -30,35 +30,23 @@ public class DashboardSettings {
 			DashboardSettings.class, "res/dashboard.js");
 	private ResourceReference cssReference = new PackageResourceReference(
 			DashboardSettings.class, "res/dashboard.css");
-    private ResourceReference rtlCssReference = new PackageResourceReference(
-            DashboardSettings.class, "res/dashboard-rtl.css");
-	private ResourceReference jqueryReference = new PackageResourceReference(
-			DashboardSettings.class, "res/jquery-1.8.3.min.js");
+	private ResourceReference rtlCssReference = new PackageResourceReference(
+			DashboardSettings.class, "res/dashboard-rtl.css");
 	private ResourceReference jqueryUIReference = new PackageResourceReference(
 			DashboardSettings.class, "res/jquery-ui-1.9.2.min.js");
 	private ResourceReference jqueryJsonReference = new PackageResourceReference(
 			DashboardSettings.class, "res/jquery.json-2.2.min.js");
 
-	private boolean includeJQuery = false;
 	private boolean includeJQueryUI = true;
 	private boolean includeJQueryJson = true;
 	private boolean includeJavaScript = true;
 	private boolean includeCss = true;
-    private boolean rtl = false;
+	private boolean rtl = false;
 
 	/**
 	 * Private constructor, use {@link #get()} instead.
 	 */
 	private DashboardSettings() {
-	}
-
-	public boolean isIncludeJQuery() {
-		return includeJQuery;
-	}
-
-	public DashboardSettings setIncludeJQuery(boolean includeJQuery) {
-		this.includeJQuery = includeJQuery;
-		return this;
 	}
 
 	public boolean isIncludeJQueryUI() {
@@ -93,15 +81,6 @@ public class DashboardSettings {
 
 	public DashboardSettings setIncludeCss(boolean includeCss) {
 		this.includeCss = includeCss;
-		return this;
-	}
-
-	public ResourceReference getJQueryReference() {
-		return jqueryReference;
-	}
-
-	public DashboardSettings setJQueryReference(ResourceReference jqueryReference) {
-		this.jqueryReference = jqueryReference;
 		return this;
 	}
 
@@ -141,24 +120,24 @@ public class DashboardSettings {
 		return this;
 	}
 
-    public ResourceReference getRtlCssReference() {
-        return rtlCssReference;
-    }
+	public ResourceReference getRtlCssReference() {
+		return rtlCssReference;
+	}
 
-    public DashboardSettings setRtlCssReference(ResourceReference rtlCssReference) {
-        this.rtlCssReference = rtlCssReference;
-        return this;
-    }
+	public DashboardSettings setRtlCssReference(ResourceReference rtlCssReference) {
+		this.rtlCssReference = rtlCssReference;
+		return this;
+	}
 
-    public boolean isRtl() {
-        return rtl;
-    }
+	public boolean isRtl() {
+		return rtl;
+	}
 
-    public void setRtl(boolean rtl) {
-        this.rtl = rtl;
-    }
+	public void setRtl(boolean rtl) {
+		this.rtl = rtl;
+	}
 
-    /**
+	/**
 	 * Retrieves the instance of settings object.
 	 *
 	 * @return settings instance

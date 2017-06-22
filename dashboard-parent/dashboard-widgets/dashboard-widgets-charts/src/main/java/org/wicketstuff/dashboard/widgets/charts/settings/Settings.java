@@ -20,21 +20,21 @@ import java.util.Map;
  * @author <a href="http://www.GitHub.com/PaulBors">Paul Bors</a>
  */
 public enum Settings {
-    seriesType("seriesType");
+	seriesType("seriesType");
 
-    private String name;
+	private String name;
 
-    Settings(String name) {
-        this.name = name;
-    }
+	Settings(String name) {
+		this.name = name;
+	}
 
-    @Override
-    public String toString() {
-        return name;
-    }
+	@Override
+	public String toString() {
+		return name;
+	}
 
-    public static SeriesType toSeriesType(Map<String, String> settings) {
-        return SeriesType.valueOf(settings.get(seriesType.name()));
-    }
+	public static SeriesType toSeriesType(Map<String, String> settings) {
+		return SeriesType.valueOf(settings.get(seriesType.name()));
+	}
 
 }

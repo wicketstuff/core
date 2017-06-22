@@ -1,11 +1,11 @@
 /*
  * Copyright 2012 Decebal Suiu
- * 
+ *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this work except in compliance with
  * the License. You may obtain a copy of the License in the LICENSE file, or at:
- * 
+ *
  * http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on
  * an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the
  * specific language governing permissions and limitations under the License.
@@ -43,7 +43,7 @@ public class DemoChartFactory {
 		barChart.useAnimation(true);
 		barChart.addValues(1, 2, 3, 4, 5, 6, 7 , 8, 9, 8, 7, 6, 5, 4, 3);
 		barChart.setText("Tue Oct 14 2008");
-		
+
 		Chart chart = new Chart("Beers and bugs");
 		/*
 		Legend legend = new Legend();
@@ -51,8 +51,8 @@ public class DemoChartFactory {
 		chart.setLegend(legend);
 		*/
 		chart.setBackgroundColour("#FFFFFF");
-		chart.addElements(barChart);		
-		
+		chart.addElements(barChart);
+
 		return chart;
 	}
 
@@ -78,30 +78,30 @@ public class DemoChartFactory {
 
 		return chart;
 	}
-	
+
 	public static Chart createDemoLineChart() {
 		LineChart lineChart = new LineChart();
 		lineChart.setWidth(4);
 		lineChart.setColour("#DFC329");
 		lineChart.setDotSize(5);
-		
+
 		List<Number> values = new ArrayList<Number>();
 		Random random = new Random();
 		for (int i = 0; i < 15; i++) {
-		      values.add(1 + random.nextInt(5));
+			values.add(1 + random.nextInt(5));
 		}
 		lineChart.addValues(values);
 
 		Chart chart = new Chart("My life with my wife");
 		YAxis yAxis = new YAxis();
-		yAxis.setRange(0, 6, 1);		
+		yAxis.setRange(0, 6, 1);
 		chart.setYAxis(yAxis);
 		chart.addElements(lineChart);
 		chart.setBackgroundColour("#FFFFFF");
-		
+
 		return chart;
 	}
-	
+
 	public static Chart createDemoDotedLineChart() {
 		// TODO
 //		LineChart lineChart = new LineChart(LineChart.Style.DOT);
@@ -112,14 +112,14 @@ public class DemoChartFactory {
 
 		List<Number> values = new ArrayList<Number>();
 		for (int i = 0; i < 8; i += 0.2) {
-		      double value = Math.sin(i) + 1.5;
-		      if (value > 1.75) {
-		    	  lineChart.addDots(new LineChart.Dot(value, "#D02020"));
-		      } else {
-		    	  // TODO give me an out of memory
-//		    	  values.add(value);
-		      }
-	    }
+			double value = Math.sin(i) + 1.5;
+			if (value > 1.75) {
+				lineChart.addDots(new LineChart.Dot(value, "#D02020"));
+			} else {
+				// TODO give me an out of memory
+//				values.add(value);
+			}
+		}
 		lineChart.addValues(values);
 
 		Chart chart = new Chart(new Date().toString());
@@ -128,16 +128,16 @@ public class DemoChartFactory {
 		chart.setYAxis(yAxis);
 		chart.addElements(lineChart);
 		chart.setBackgroundColour("#FFFFFF");
-	    
+
 		return chart;
 	}
-	
+
 	public static Chart createDemoPieChart() {
 		PieChart pieChart = new PieChart();
 		pieChart.setAnimate(true);
 		pieChart.setStartAngle(35);
 		pieChart.setBorder(2);
-//		pieChart.setAlpha(0.6f);		
+//		pieChart.setAlpha(0.6f);
 		pieChart.addValues(2, 3, 3.5);
 		pieChart.addSlice(6.5f, "Romania (6.5)");
 		pieChart.setColours("#F78000", "#9AC836", "#D54192", "#E3001B");
@@ -146,31 +146,31 @@ public class DemoChartFactory {
 		Chart chart = new Chart("Downloads");
 		chart.addElements(pieChart);
 		chart.setBackgroundColour("#FFFFFF");
-		
+
 		return chart;
 	}
 
 	public static Chart createDemoScatterChart() {
 		ScatterChart scatterChart = new ScatterChart(ScatterChart.Style.LINE);
-		scatterChart.setColour("#FFD600");		
+		scatterChart.setColour("#FFD600");
 		scatterChart.setAlpha(0.6f);
 		scatterChart.useAnimation(true);
-		
+
 		for (int i = 0; i < 5; i++) {
 			scatterChart.addPoint(i, i + 1);
 		}
-   
+
 		Chart chart = new Chart(new Date().toString());
-	    YAxis yAxis = new YAxis();
-	    yAxis.setRange(0, 7, 1);
-	    chart.setYAxis(yAxis);
-	    XAxis xAxis = new XAxis();
-	    xAxis.setRange(0, 6, 1);
-	    chart.setXAxis(xAxis);
-	    chart.addElements(scatterChart);
+		YAxis yAxis = new YAxis();
+		yAxis.setRange(0, 7, 1);
+		chart.setYAxis(yAxis);
+		XAxis xAxis = new XAxis();
+		xAxis.setRange(0, 6, 1);
+		chart.setXAxis(xAxis);
+		chart.addElements(scatterChart);
 		chart.setBackgroundColour("#FFFFFF");
-	
-	    return chart;
+
+		return chart;
 	}
 
 }
