@@ -64,7 +64,7 @@ public class NashornResourceReferenceTest extends WicketTestCase
 		
 		wicketTester.setRequest(mockHttpServletRequest);
 		NashornResourceReference nashornResourceReference = new NashornResourceReference("nashorn",
-			10, 10, TimeUnit.SECONDS)
+			50, 50, TimeUnit.SECONDS)
 		{
 			private static final long serialVersionUID = 1L;
 
