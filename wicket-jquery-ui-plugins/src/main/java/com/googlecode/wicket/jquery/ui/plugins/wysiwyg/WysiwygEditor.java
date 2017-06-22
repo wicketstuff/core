@@ -123,7 +123,7 @@ public class WysiwygEditor extends FormComponentPanel<String> implements IJQuery
 	{
 		super.renderHead(response);
 
-		response.render(OnLoadHeaderItem.forScript(String.format("addTextAreaMapper('%s', '%s'); initToolbarBootstrapBindings();", this.container.getMarkupId(), this.textarea.getMarkupId())));
+		response.render(OnLoadHeaderItem.forScript(String.format("wysiwygAddTextAreaMapper('%s', '%s')", this.container.getMarkupId(), this.textarea.getMarkupId())));
 	}
 
 	// Events //

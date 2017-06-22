@@ -19,20 +19,19 @@ package com.googlecode.wicket.jquery.ui.plugins.wysiwyg.resource;
 import org.apache.wicket.request.resource.CssResourceReference;
 
 
-public class BootstrapResponsiveStyleSheetResourceReference extends CssResourceReference
+public class BootstrapCSSResourceReference extends CssResourceReference
 {
 	private static final long serialVersionUID = 1L;
 
-	private static final BootstrapResponsiveStyleSheetResourceReference INSTANCE = new BootstrapResponsiveStyleSheetResourceReference();
+	private static final BootstrapCSSResourceReference INSTANCE = new BootstrapCSSResourceReference();
 
-
-	public static BootstrapResponsiveStyleSheetResourceReference get()
+	public static BootstrapCSSResourceReference get()
 	{
 		return INSTANCE;
 	}
 
-	private BootstrapResponsiveStyleSheetResourceReference()
+	private BootstrapCSSResourceReference()
 	{
-		super(BootstrapResponsiveStyleSheetResourceReference.class, "css/bootstrap-responsive.min.css");
+		super(BootstrapCSSResourceReference.class, "css/bootstrap.css");
 	}
 }

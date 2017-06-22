@@ -18,9 +18,8 @@ package com.googlecode.wicket.jquery.ui.plugins.wysiwyg.settings;
 
 import org.apache.wicket.request.resource.ResourceReference;
 
-import com.googlecode.wicket.jquery.ui.plugins.wysiwyg.resource.BootstrapCombinedNoIconsStyleSheetResourceReference;
+import com.googlecode.wicket.jquery.ui.plugins.wysiwyg.resource.BootstrapCSSResourceReference;
 import com.googlecode.wicket.jquery.ui.plugins.wysiwyg.resource.BootstrapDropDownJavaScriptResourceReference;
-import com.googlecode.wicket.jquery.ui.plugins.wysiwyg.resource.BootstrapResponsiveStyleSheetResourceReference;
 import com.googlecode.wicket.jquery.ui.plugins.wysiwyg.resource.BootstrapWysiwygJavaScriptResourceReference;
 import com.googlecode.wicket.jquery.ui.plugins.wysiwyg.resource.EditorJavaScriptResourceReference;
 import com.googlecode.wicket.jquery.ui.plugins.wysiwyg.resource.EditorStyleSheetResourceReference;
@@ -37,8 +36,7 @@ public class WysiwygLibrarySettings
 {
 	private static WysiwygLibrarySettings instance = null;
 
-	private ResourceReference bootstrapCombinedNoIconsStyleSheetReference = BootstrapCombinedNoIconsStyleSheetResourceReference.get();
-	private ResourceReference bootstrapResponsiveStyleSheetReference = BootstrapResponsiveStyleSheetResourceReference.get();
+	private ResourceReference bootstrapCssReference = BootstrapCSSResourceReference.get();
 	private ResourceReference editorStyleSheetReference = EditorStyleSheetResourceReference.get();
 	private ResourceReference editorJavaScriptResourceReference = EditorJavaScriptResourceReference.get();
 
@@ -70,24 +68,14 @@ public class WysiwygLibrarySettings
 	}
 
 	// StyleSheets //
-	public ResourceReference getBootstrapCombinedNoIconsStyleSheetReference()
+	public ResourceReference getBootstrapCssReference()
 	{
-		return this.bootstrapCombinedNoIconsStyleSheetReference;
+		return this.bootstrapCssReference;
 	}
 
-	public void setBootstrapCombinedNoIconsStyleSheetReference(ResourceReference reference)
+	public void setBootstrapCssReference(ResourceReference reference)
 	{
-		this.bootstrapCombinedNoIconsStyleSheetReference = reference;
-	}
-
-	public ResourceReference getBootstrapResponsiveStyleSheetReference()
-	{
-		return this.bootstrapResponsiveStyleSheetReference;
-	}
-
-	public void setBootstrapResponsiveStyleSheetReference(ResourceReference reference)
-	{
-		this.bootstrapResponsiveStyleSheetReference = reference;
+		this.bootstrapCssReference = reference;
 	}
 
 	public ResourceReference getEditorStyleSheetReference()
