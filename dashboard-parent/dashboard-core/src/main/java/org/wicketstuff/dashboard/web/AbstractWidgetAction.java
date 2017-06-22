@@ -26,56 +26,55 @@ import org.wicketstuff.dashboard.WidgetAction;
 public abstract class AbstractWidgetAction implements WidgetAction {
 	private static final long serialVersionUID = 1L;
 	protected Widget widget;
-    protected IModel<String> tooltip;
-    private Class<?> imageScope;
-    private String imageName;
+	protected IModel<String> tooltip;
+	private Class<?> imageScope;
+	private String imageName;
 
-    public AbstractWidgetAction(Widget widget) {
-        this.widget = widget;
-    }
+	public AbstractWidgetAction(Widget widget) {
+		this.widget = widget;
+	}
 
-    public Widget getWidget() {
-        return widget;
-    }
+	public Widget getWidget() {
+		return widget;
+	}
 
-    @Override
-    public IModel<String> getTooltip() {
-        return tooltip;
-    }
+	@Override
+	public IModel<String> getTooltip() {
+		return tooltip;
+	}
 
-    public void setTooltip(IModel<String> tooltip) {
-        this.tooltip = tooltip;
-    }
+	public void setTooltip(IModel<String> tooltip) {
+		this.tooltip = tooltip;
+	}
 
-    /**
-     * If you use this method than the image name is relative to scope.
-     *
-     * @param scope
-     * @param name
-     */
-    public void setImage(Class<?> scope, String name) {
-        imageScope = scope;
-        imageName = name;
-    }
+	/**
+	 * If you use this method than the image name is relative to scope.
+	 *
+	 * @param scope
+	 * @param name
+	 */
+	public void setImage(Class<?> scope, String name) {
+		imageScope = scope;
+		imageName = name;
+	}
 
-    /**
-     * If you use this method than the image name is relative to context.
-     *
-     * @param name
-     */
-    public void setImage(String name) {
-        setImage(null, name);
-    }
+	/**
+	 * If you use this method than the image name is relative to context.
+	 *
+	 * @param name
+	 */
+	public void setImage(String name) {
+		setImage(null, name);
+	}
 
-    @Override
-    public Image getImage(String id) {
-        Args.notNull(imageName, "imageName");
+	@Override
+	public Image getImage(String id) {
+		Args.notNull(imageName, "imageName");
 
-        if (imageScope != null) {
-            return new Image(id, new PackageResourceReference(imageScope, imageName));
-        }
+		if (imageScope != null) {
+			return new Image(id, new PackageResourceReference(imageScope, imageName));
+		}
 
-        return new Image(id, new ContextRelativeResource(imageName));
-    }
-
+		return new Image(id, new ContextRelativeResource(imageName));
+	}
 }

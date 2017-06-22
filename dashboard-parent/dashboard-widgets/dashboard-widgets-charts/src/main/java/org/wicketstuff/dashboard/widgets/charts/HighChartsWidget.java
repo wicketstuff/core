@@ -30,58 +30,58 @@ import java.util.Map;
  * @author <a href="http://www.GitHub.com/PaulBors">Paul Bors</a>
  */
 public class HighChartsWidget extends AbstractWidget {
-    private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L;
 
-    private static HighChartsFactory highChartsFactory;
+	private static HighChartsFactory highChartsFactory;
 
-    private transient Chart chart;
+	private transient Chart chart;
 
-    public HighChartsWidget() {
-        super();
+	public HighChartsWidget() {
+		super();
 
-        setTitle("HighCharts");
+		setTitle("HighCharts");
 
-        Map<String, String> settings = getSettings();
-        settings.put(Settings.seriesType.name(), SeriesType.SPLINE.name());
-    }
+		Map<String, String> settings = getSettings();
+		settings.put(Settings.seriesType.name(), SeriesType.SPLINE.name());
+	}
 
-    public static HighChartsFactory getHighChartsFactory() {
-        if (highChartsFactory == null) {
-            throw new RuntimeException("HighChartsFactory cannot be null. Use HighChartsWidget.getHighChartsFactory(...)");
-        }
-        return highChartsFactory;
-    }
+	public static HighChartsFactory getHighChartsFactory() {
+		if (highChartsFactory == null) {
+			throw new RuntimeException("HighChartsFactory cannot be null. Use HighChartsWidget.getHighChartsFactory(...)");
+		}
+		return highChartsFactory;
+	}
 
-    public static void setHighChartsFactory(HighChartsFactory highChartsFactory) {
-        HighChartsWidget.highChartsFactory = highChartsFactory;
-    }
+	public static void setHighChartsFactory(HighChartsFactory highChartsFactory) {
+		HighChartsWidget.highChartsFactory = highChartsFactory;
+	}
 
-    public Options newOptions() {
-        return HighChartsWidget.getHighChartsFactory().createOptions(this);
-    }
+	public Options newOptions() {
+		return HighChartsWidget.getHighChartsFactory().createOptions(this);
+	}
 
-    public Chart getChart(String id) {
-        chart = new Chart(id, newOptions());
-        setTitle(((ShowcaseOptions)chart.getOptions()).getLabel());
-        return chart;
-    }
+	public Chart getChart(String id) {
+		chart = new Chart(id, newOptions());
+		setTitle(((ShowcaseOptions)chart.getOptions()).getLabel());
+		return chart;
+	}
 
-    public void updateChart() {
-        chart.setOptions(newOptions());
-        setTitle(((ShowcaseOptions)chart.getOptions()).getLabel());
-    }
+	public void updateChart() {
+		chart.setOptions(newOptions());
+		setTitle(((ShowcaseOptions)chart.getOptions()).getLabel());
+	}
 
-    @Override
-    public boolean hasSettings() {
-        return true;
-    }
+	@Override
+	public boolean hasSettings() {
+		return true;
+	}
 
-    @Override
-    public Panel createSettingsPanel(String settingsPanelId) {
-        return new HighChartsSettingsPanel(settingsPanelId, new Model<HighChartsWidget>(this));
-    }
+	@Override
+	public Panel createSettingsPanel(String settingsPanelId) {
+		return new HighChartsSettingsPanel(settingsPanelId, new Model<HighChartsWidget>(this));
+	}
 
-    public WidgetView createView(String viewId) {
-        return new HighChartsWidgetView(viewId, new Model<Widget>(this));
-    }
+	public WidgetView createView(String viewId) {
+		return new HighChartsWidgetView(viewId, new Model<Widget>(this));
+	}
 }

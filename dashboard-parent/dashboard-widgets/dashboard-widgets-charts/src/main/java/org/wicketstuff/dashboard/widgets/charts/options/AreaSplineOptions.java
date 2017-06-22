@@ -37,68 +37,68 @@ import java.util.Collections;
  * @author <a href="http://www.GitHub.com/PaulBors">Paul Bors</a>
  */
 public class AreaSplineOptions extends ShowcaseOptions {
-    private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L;
 
-    public AreaSplineOptions() {
-        setChart(new ChartOptions().setType(SeriesType.AREASPLINE));
+	public AreaSplineOptions() {
+		setChart(new ChartOptions().setType(SeriesType.AREASPLINE));
 
-        setTitle(new Title("Average fruit consumption during one week"));
+		setTitle(new Title("Average fruit consumption during one week"));
 
-        setLegend(new Legend()
-            .setLayout(LegendLayout.VERTICAL)
-            .setAlign(HorizontalAlignment.LEFT)
-            .setVerticalAlign(VerticalAlignment.TOP)
-            .setX(150)
-            .setY(100)
-            .setFloating(Boolean.TRUE)
-            .setBorderWidth(1)
-            .setBackgroundColor(new HexColor("#FFFFFF"))
-        );
+		setLegend(new Legend()
+			.setLayout(LegendLayout.VERTICAL)
+			.setAlign(HorizontalAlignment.LEFT)
+			.setVerticalAlign(VerticalAlignment.TOP)
+			.setX(150)
+			.setY(100)
+			.setFloating(Boolean.TRUE)
+			.setBorderWidth(1)
+			.setBackgroundColor(new HexColor("#FFFFFF"))
+		);
 
-        setxAxis(new Axis()
-            .setCategories(
-                Arrays.asList(new String[]{
-                    "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"
-                })
-            )
-            .setPlotBands(Collections.singletonList(new PlotBand()
-                .setFrom(4.5f)
-                .setTo(6.5f)
-                .setColor(new RgbaColor(68, 170, 213, .2f)))
-            )
-        );
+		setxAxis(new Axis()
+			.setCategories(
+				Arrays.asList(new String[]{
+					"Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"
+				})
+			)
+			.setPlotBands(Collections.singletonList(new PlotBand()
+				.setFrom(4.5f)
+				.setTo(6.5f)
+				.setColor(new RgbaColor(68, 170, 213, .2f)))
+			)
+		);
 
-        setyAxis(new Axis().setTitle(new Title("Fruit units")));
+		setyAxis(new Axis().setTitle(new Title("Fruit units")));
 
-        setTooltip(
-            new Tooltip().setFormatter(
-                new Function(" return ''+this.x +': '+ this.y +' units';")
-            )
-        );
+		setTooltip(
+			new Tooltip().setFormatter(
+				new Function(" return ''+this.x +': '+ this.y +' units';")
+			)
+		);
 
-        setCredits(new CreditOptions().setEnabled(Boolean.FALSE));
+		setCredits(new CreditOptions().setEnabled(Boolean.FALSE));
 
-        setPlotOptions(
-            new PlotOptionsChoice().setAreaspline(
-                new PlotOptions().setFillOpacity(0.5f)
-            )
-        );
+		setPlotOptions(
+			new PlotOptionsChoice().setAreaspline(
+				new PlotOptions().setFillOpacity(0.5f)
+			)
+		);
 
-        addSeries(
-            new SimpleSeries()
-                .setName("John")
-                .setData(Arrays.asList(new Number[] { 3, 4, 3, 5, 4, 10, 12 }))
-        );
+		addSeries(
+			new SimpleSeries()
+				.setName("John")
+				.setData(Arrays.asList(new Number[] { 3, 4, 3, 5, 4, 10, 12 }))
+		);
 
-        addSeries(
-            new SimpleSeries()
-                .setName("Jane")
-                .setData(Arrays.asList(new Number[] { 1, 3, 4, 3, 3,  5, 4 }))
-        );
-    }
+		addSeries(
+			new SimpleSeries()
+				.setName("Jane")
+				.setData(Arrays.asList(new Number[] { 1, 3, 4, 3, 3,  5, 4 }))
+		);
+	}
 
-    @Override
-    public String getLabel() {
-        return super.getLabel() + "Area spline";
-    }
+	@Override
+	public String getLabel() {
+		return super.getLabel() + "Area spline";
+	}
 }

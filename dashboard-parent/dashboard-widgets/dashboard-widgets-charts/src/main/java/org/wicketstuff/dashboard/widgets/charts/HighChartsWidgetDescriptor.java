@@ -18,30 +18,30 @@ import org.wicketstuff.dashboard.WidgetDescriptor;
  * @author <a href="http://www.GitHub.com/PaulBors">Paul Bors</a>
  */
 public class HighChartsWidgetDescriptor implements WidgetDescriptor {
-    private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L;
 
-    @Override
-    public String getDescription() {
-        return "A chart widget using HighCharts (commercial license) as integrated in Wicket via Wicked-Charts.";
-    }
+	@Override
+	public String getDescription() {
+		return "A chart widget using HighCharts (commercial license) as integrated in Wicket via Wicked-Charts.";
+	}
 
-    @Override
-    public String getName() {
-        return "HighCharts";
-    }
+	@Override
+	public String getName() {
+		return "HighCharts";
+	}
 
-    @Override
-    public String getProvider() {
-        return "Paul Bors";
-    }
+	@Override
+	public String getProvider() {
+		return "Paul Bors";
+	}
 
-    @Override
-    public String getWidgetClassName() {
-        return HighChartsWidget.class.getName();
-    }
+	@Override
+	public String getWidgetClassName() {
+		return HighChartsWidget.class.getName();
+	}
 
-    @Override
-    public String getTypeName() {
-        return "widget.highCharts";
-    }
+	@Override
+	public String getTypeName() {
+		return "widget.highCharts";
+	}
 }

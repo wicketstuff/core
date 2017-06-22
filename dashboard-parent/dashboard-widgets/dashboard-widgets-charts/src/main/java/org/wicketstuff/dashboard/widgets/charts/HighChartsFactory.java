@@ -18,5 +18,5 @@ import com.googlecode.wickedcharts.highcharts.options.Options;
  * @author <a href="http://www.GitHub.com/PaulBors">Paul Bors</a>
  */
 public interface HighChartsFactory {
-    public Options createOptions(HighChartsWidget widget);
+	public Options createOptions(HighChartsWidget widget);
 }

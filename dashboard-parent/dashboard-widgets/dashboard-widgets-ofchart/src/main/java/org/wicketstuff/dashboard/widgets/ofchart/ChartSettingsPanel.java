@@ -1,11 +1,11 @@
 /*
  * Copyright 2012 Decebal Suiu
- * 
+ *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this work except in compliance with
  * the License. You may obtain a copy of the License in the LICENSE file, or at:
- * 
+ *
  * http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on
  * an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the
  * specific language governing permissions and limitations under the License.
@@ -33,34 +33,34 @@ import org.wicketstuff.dashboard.web.WidgetPanel;
 public class ChartSettingsPanel extends GenericPanel<ChartWidget> implements DashboardContextAware {
 
 	private static final long serialVersionUID = 1L;
-	
+
 	private transient DashboardContext dashboardContext;
 	private String chartType;
-	
+
 	public ChartSettingsPanel(String id, IModel<ChartWidget> model) {
 		super(id, model);
-		
+
 		setOutputMarkupPlaceholderTag(true);
-		
+
 		Form<Widget> form = new Form<Widget>("form");
 		chartType = getModelObject().getSettings().get("chartType");
 //		chartType = ChartWidget.BAR_TYPE;
-        DropDownChoice<String> choice = new DropDownChoice<String>("chartType", 
-        		new PropertyModel<String>(this, "chartType"), ChartWidget.TYPES);
-        form.add(choice);
-        
-        form.add(new AjaxSubmitLink("submit") {
+		DropDownChoice<String> choice = new DropDownChoice<String>("chartType",
+				new PropertyModel<String>(this, "chartType"), ChartWidget.TYPES);
+		form.add(choice);
+
+		form.add(new AjaxSubmitLink("submit") {
 
 			private static final long serialVersionUID = 1L;
 
 			@Override
 			protected void onSubmit(AjaxRequestTarget target) {
-            	getModelObject().getSettings().put("chartType", chartType);
+				getModelObject().getSettings().put("chartType", chartType);
 				Dashboard dashboard = findParent(DashboardPanel.class).getDashboard();
 				dashboardContext.getDashboardPersister().save(dashboard);
 
-            	hideSettingPanel(target);
-            	// TODO
+				hideSettingPanel(target);
+				// TODO
 				WidgetPanel widgetPanel = findParent(WidgetPanel.class);
 				ChartWidgetView widgetView = (ChartWidgetView) widgetPanel.getWidgetView();
 				target.add(widgetView);
@@ -70,18 +70,18 @@ public class ChartSettingsPanel extends GenericPanel<ChartWidget> implements Das
 			protected void onError(AjaxRequestTarget target) {
 			}
 
-        });
-        form.add(new AjaxLink<Void>("cancel") {
+		});
+		form.add(new AjaxLink<Void>("cancel") {
 
-            private static final long serialVersionUID = 1L;
+			private static final long serialVersionUID = 1L;
 
 			@Override
-            public void onClick(AjaxRequestTarget target) {
-            	hideSettingPanel(target);
-            }
-            
-        });
-        
+			public void onClick(AjaxRequestTarget target) {
+				hideSettingPanel(target);
+			}
+
+		});
+
 		add(form);
 	}
 
@@ -97,10 +97,10 @@ public class ChartSettingsPanel extends GenericPanel<ChartWidget> implements Das
 	public void setDashboardContext(DashboardContext dashboardContext) {
 		this.dashboardContext = dashboardContext;
 	}
-	
+
 	private void hideSettingPanel(AjaxRequestTarget target) {
-    	setVisible(false);
-    	target.add(this);
+		setVisible(false);
+		target.add(this);
 	}
-	
+
 }

@@ -20,12 +20,12 @@ import com.googlecode.wickedcharts.highcharts.options.Options;
  * @author <a href="http://www.GitHub.com/PaulBors">Paul Bors</a>
  */
 public abstract class ShowcaseOptions extends Options {
-    private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L;
 
-    /**
-     * The label under which the Options class is shown in navigation.
-     */
-    public String getLabel() {
+	/**
+	 * The label under which the Options class is shown in navigation.
+	 */
+	public String getLabel() {
 		return "HighCharts: ";
 	}
 

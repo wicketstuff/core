@@ -32,92 +32,92 @@ import java.util.Random;
  * @author <a href="http://www.GitHub.com/PaulBors">Paul Bors</a>
  */
 public class StackedAndGroupedColumnOptions extends ShowcaseOptions {
-    private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L;
 
-    public StackedAndGroupedColumnOptions() {
-        ChartOptions chartOptions = new ChartOptions();
-        chartOptions.setType(SeriesType.COLUMN);
-        setChartOptions(chartOptions);
+	public StackedAndGroupedColumnOptions() {
+		ChartOptions chartOptions = new ChartOptions();
+		chartOptions.setType(SeriesType.COLUMN);
+		setChartOptions(chartOptions);
 
-        Title title = new Title("Total fruit consumption, grouped by gender");
-        setTitle(title);
+		Title title = new Title("Total fruit consumption, grouped by gender");
+		setTitle(title);
 
-        Axis xAxis = new Axis();
-        xAxis
-            .setCategories(Arrays
-                .asList(new String[]{"Apples", "Oranges", "Pears", "Grapes",
-                    "Bananas"}));
-        setxAxis(xAxis);
+		Axis xAxis = new Axis();
+		xAxis
+			.setCategories(Arrays
+				.asList(new String[]{"Apples", "Oranges", "Pears", "Grapes",
+					"Bananas"}));
+		setxAxis(xAxis);
 
-        Axis yAxis = new Axis();
-        yAxis.setAllowDecimals(Boolean.FALSE);
-        yAxis.setMin(0);
-        yAxis.setTitle(new Title("Number of fruits"));
-        setyAxis(yAxis);
+		Axis yAxis = new Axis();
+		yAxis.setAllowDecimals(Boolean.FALSE);
+		yAxis.setMin(0);
+		yAxis.setTitle(new Title("Number of fruits"));
+		setyAxis(yAxis);
 
-        setTooltip(new Tooltip());
+		setTooltip(new Tooltip());
 
-        PlotOptions plotOptions = new PlotOptions();
-        plotOptions.setStacking(Stacking.NORMAL);
-        PlotOptionsChoice choice = new PlotOptionsChoice();
-        choice.setColumn(plotOptions);
-        setPlotOptions(choice);
+		PlotOptions plotOptions = new PlotOptions();
+		plotOptions.setStacking(Stacking.NORMAL);
+		PlotOptionsChoice choice = new PlotOptionsChoice();
+		choice.setColumn(plotOptions);
+		setPlotOptions(choice);
 
-        // create data
-        Random r = new Random();
-        List<Number> sales = new ArrayList<Number>();
-        for (int i = 0; i <= 5; i++) {
-            sales
-                .add(r
-                    .nextInt(10));
-        }
-        List<Number> sales2 = new ArrayList<Number>();
-        for (int i = 0; i <= 5; i++) {
-            sales2
-                .add(r
-                    .nextInt(10));
-        }
-        List<Number> sales3 = new ArrayList<Number>();
-        for (int i = 0; i <= 5; i++) {
-            sales3
-                .add(r
-                    .nextInt(10));
-        }
-        List<Number> sales4 = new ArrayList<Number>();
-        for (int i = 0; i <= 5; i++) {
-            sales4
-                .add(r
-                    .nextInt(10));
-        }
+		// create data
+		Random r = new Random();
+		List<Number> sales = new ArrayList<Number>();
+		for (int i = 0; i <= 5; i++) {
+			sales
+				.add(r
+					.nextInt(10));
+		}
+		List<Number> sales2 = new ArrayList<Number>();
+		for (int i = 0; i <= 5; i++) {
+			sales2
+				.add(r
+					.nextInt(10));
+		}
+		List<Number> sales3 = new ArrayList<Number>();
+		for (int i = 0; i <= 5; i++) {
+			sales3
+				.add(r
+					.nextInt(10));
+		}
+		List<Number> sales4 = new ArrayList<Number>();
+		for (int i = 0; i <= 5; i++) {
+			sales4
+				.add(r
+					.nextInt(10));
+		}
 
-        // add data to the chart
-        Series<Number> series1 = new SimpleSeries();
-        series1.setData(sales);
-        series1.setStack("male");
-        series1.setName("John");
-        addSeries(series1);
+		// add data to the chart
+		Series<Number> series1 = new SimpleSeries();
+		series1.setData(sales);
+		series1.setStack("male");
+		series1.setName("John");
+		addSeries(series1);
 
-        Series<Number> series2 = new SimpleSeries();
-        series2.setData(sales2);
-        series2.setStack("male");
-        series2.setName("Joe");
-        addSeries(series2);
+		Series<Number> series2 = new SimpleSeries();
+		series2.setData(sales2);
+		series2.setStack("male");
+		series2.setName("Joe");
+		addSeries(series2);
 
-        Series<Number> series3 = new SimpleSeries();
-        series3.setData(sales3);
-        series3.setStack("female");
-        series3.setName("Jane");
-        addSeries(series3);
+		Series<Number> series3 = new SimpleSeries();
+		series3.setData(sales3);
+		series3.setStack("female");
+		series3.setName("Jane");
+		addSeries(series3);
 
-        Series<Number> series4 = new SimpleSeries();
-        series4.setData(sales4);
-        series4.setStack("female");
-        series4.setName("Janet");
-        addSeries(series4);
-    }
+		Series<Number> series4 = new SimpleSeries();
+		series4.setData(sales4);
+		series4.setStack("female");
+		series4.setName("Janet");
+		addSeries(series4);
+	}
 
-    @Override
-    public String getLabel() {
+	@Override
+	public String getLabel() {
 		return super.getLabel() + "Stacked and grouped column";
-    }
+	}
 }
