@@ -68,7 +68,7 @@ public class MultipleResourceSchedulerPage extends AbstractSchedulerPage // NOSO
 				}
 				else
 				{
-					this.warn("No room are selected");
+					this.warn("No room is selected");
 
 					AjaxRequestTarget target = RequestCycleUtils.getAjaxRequestTarget();
 
