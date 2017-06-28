@@ -32,9 +32,7 @@ import org.wicketstuff.dashboard.web.util.AjaxConfirmLink;
  * @author Decebal Suiu
  */
 public class DefaultWidgetActions {
-
 	public static class Refresh extends AbstractWidgetAction {
-
 		private static final long serialVersionUID = 1L;
 
 		public Refresh(Widget widget) {
@@ -42,7 +40,7 @@ public class DefaultWidgetActions {
 
 			tooltip = new ResourceModel("refresh");
 
-			setImage(DefaultWidgetActions.class, "res/refresh.gif");
+			setCssClass("icon refresh");
 		}
 
 		@Override
@@ -59,11 +57,9 @@ public class DefaultWidgetActions {
 
 			};
 		}
-
 	}
 
 	public static class Delete extends AbstractWidgetAction {
-
 		private static final long serialVersionUID = 1L;
 
 		public Delete(Widget widget) {
@@ -71,13 +67,12 @@ public class DefaultWidgetActions {
 
 			tooltip = new ResourceModel("delete");
 
-			setImage(DefaultWidgetActions.class, "res/delete.gif");
+			setCssClass("icon delete");
 		}
 
 		@Override
 		public AbstractLink getLink(String id) {
 			AjaxConfirmLink<Void> deleteLink = new AjaxConfirmLink<Void>(id) {
-
 				private static final long serialVersionUID = 1L;
 
 				@Override
@@ -112,11 +107,9 @@ public class DefaultWidgetActions {
 
 			return deleteLink;
 		}
-
 	}
 
 	public static class Settings extends AbstractWidgetAction {
-
 		private static final long serialVersionUID = 1L;
 
 		public Settings(Widget widget) {
@@ -124,7 +117,7 @@ public class DefaultWidgetActions {
 
 			tooltip = new ResourceModel("settings");
 
-			setImage(DefaultWidgetActions.class, "res/edit.png");
+			setCssClass("icon edit");
 		}
 
 		@Override
@@ -142,7 +135,6 @@ public class DefaultWidgetActions {
 						target.add(settingsPanel);
 					}
 				}
-
 			};
 		}
 	}

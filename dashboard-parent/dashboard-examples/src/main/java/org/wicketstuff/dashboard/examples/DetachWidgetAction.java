@@ -24,7 +24,6 @@ import org.wicketstuff.dashboard.web.AbstractWidgetAction;
  * @author Decebal Suiu
  */
 public class DetachWidgetAction extends AbstractWidgetAction {
-
 	private static final long serialVersionUID = 1L;
 
 	public DetachWidgetAction(Widget widget) {
@@ -32,7 +31,7 @@ public class DetachWidgetAction extends AbstractWidgetAction {
 
 		tooltip = new ResourceModel("detach");
 
-		setImage(HomePage.class, "detach.png");
+		setCssClass("icon detach");
 	}
 
 	@Override
@@ -46,5 +45,4 @@ public class DetachWidgetAction extends AbstractWidgetAction {
 
 		return link;
 	}
-
 }

@@ -1,11 +1,11 @@
 /*
  * Copyright 2012 Decebal Suiu
- * 
+ *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this work except in compliance with
  * the License. You may obtain a copy of the License in the LICENSE file, or at:
- * 
+ *
  * http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on
  * an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the
  * specific language governing permissions and limitations under the License.
@@ -19,27 +19,26 @@ import org.apache.wicket.model.IModel;
 import org.wicketstuff.dashboard.Widget;
 
 /**
- * Wicket {@link GenericPanel} to render a widget on a page 
+ * Wicket {@link GenericPanel} to render a widget on a page
  * @author Decebal Suiu
  */
 public class WidgetPanel extends GenericPanel<Widget> {
-
 	private static final long serialVersionUID = 1L;
-	
+
 	private WidgetHeaderPanel widgetHeaderPanel;
 	private WidgetView widgetView;
 	private Panel settingsPanel;
-	
+
 	public WidgetPanel(String id, IModel<Widget> model) {
 		super(id, model);
-		
-		Widget widget = model.getObject(); 
-			
+
+		Widget widget = model.getObject();
+
 		setOutputMarkupId(true);
-		
+
 		widgetHeaderPanel = new WidgetHeaderPanel("header", model);
 		add(widgetHeaderPanel);
-		
+
 		if (model.getObject().hasSettings()) {
 			settingsPanel = widget.createSettingsPanel("settings");
 		} else {
@@ -48,8 +47,8 @@ public class WidgetPanel extends GenericPanel<Widget> {
 		settingsPanel.setOutputMarkupPlaceholderTag(true);
 		settingsPanel.setVisible(false);
 		add(settingsPanel);
-			
-		widgetView = model.getObject().createView("content"); 
+
+		widgetView = model.getObject().createView("content");
 		add(widgetView);
 	}
 
@@ -60,9 +59,8 @@ public class WidgetPanel extends GenericPanel<Widget> {
 	public WidgetView getWidgetView() {
 		return widgetView;
 	}
-	
+
 	public Panel getSettingsPanel() {
 		return settingsPanel;
 	}
-	
 }

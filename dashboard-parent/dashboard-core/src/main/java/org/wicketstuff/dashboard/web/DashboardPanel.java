@@ -33,7 +33,6 @@ import org.wicketstuff.dashboard.Widget;
  * @author Decebal Suiu
  */
 public class DashboardPanel extends GenericPanel<Dashboard> implements DashboardContextAware {
-
 	private static final long serialVersionUID = 1L;
 
 	private transient DashboardContext dashboardContext;
@@ -126,7 +125,6 @@ public class DashboardPanel extends GenericPanel<Dashboard> implements Dashboard
 	private void addColumnsPanel() {
 		final int columnCount = getDashboard().getColumnCount();
 		Loop columnsView = new Loop("columns", columnCount) {
-
 			private static final long serialVersionUID = 1L;
 
 			@Override
