@@ -62,15 +62,9 @@ public class WysiwygBehavior extends JQueryBehavior
 		WysiwygLibrarySettings settings = WysiwygLibrarySettings.get();
 
 		// Bootstrap combined CSS
-		if (settings.getBootstrapCombinedNoIconsStyleSheetReference() != null)
+		if (settings.getBootstrapCssReference() != null)
 		{
-			this.add(settings.getBootstrapCombinedNoIconsStyleSheetReference());
-		}
-
-		// Bootstrap Responsive CSS
-		if (settings.getBootstrapResponsiveStyleSheetReference() != null)
-		{
-			this.add(settings.getBootstrapResponsiveStyleSheetReference());
+			this.add(settings.getBootstrapCssReference());
 		}
 
 		// Editor CSS

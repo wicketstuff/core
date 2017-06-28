@@ -11,9 +11,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  * ============================================================ */
-
-function initToolbarBootstrapBindings() {
-	$('.dropdown-menu input').click(function() {return false;})
-		.change(function () {$(this).parent('.dropdown-menu').siblings('.dropdown-toggle').dropdown('toggle');})
-		.keydown('esc', function () {this.value='';$(this).change();});
+function wysiwygAddTextAreaMapper(id, txtId) {
+	$('#' + id).html($('#' + txtId).val());
+	$('#' + id).on('change', function(e) {
+		$('#' + txtId).val($('#' + id).html());
+	});
 }

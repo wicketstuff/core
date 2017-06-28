@@ -39,7 +39,6 @@ public class WysiwygEditorPage extends JQuerySamplePage
 
 		// Buttons //
 		this.add(new AjaxButton("display", form) {
-
 			private static final long serialVersionUID = 1L;
 
 			@Override
@@ -57,14 +56,12 @@ public class WysiwygEditorPage extends JQuerySamplePage
 		});
 
 		this.add(new AjaxLink<Void>("disable") {
-
 			private static final long serialVersionUID = 1L;
 
 			@Override
 			protected void onInitialize()
 			{
 				super.onInitialize();
-
 				this.add(new ButtonBehavior(IJQueryWidget.JQueryWidget.getSelector(this)));
 			}
 
