@@ -71,7 +71,6 @@ public abstract class SortableAjaxBehavior extends AbstractDefaultAjaxBehavior {
 	}
 
 	static class Item {
-
 		public int column;
 		public String widget;
 		public int sortIndex;
@@ -87,7 +86,5 @@ public abstract class SortableAjaxBehavior extends AbstractDefaultAjaxBehavior {
 
 			return buffer.toString();
 		}
-
 	}
-
 }
