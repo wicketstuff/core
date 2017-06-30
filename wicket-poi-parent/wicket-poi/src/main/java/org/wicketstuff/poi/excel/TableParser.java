@@ -125,7 +125,7 @@ public class TableParser
 				else if ("td".equals(tagName) || "th".equals(tagName) )
 				{
 					int index = cell == null ? 0 : cell.getColumnIndex() + 1 + colsToSpan;
-					if (skipColumn(index))
+					while (skipColumn(index))
 					{
 						index += columnSpan.get(index);
 					}
