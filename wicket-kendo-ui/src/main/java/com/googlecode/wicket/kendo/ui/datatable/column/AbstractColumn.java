@@ -169,6 +169,12 @@ public abstract class AbstractColumn implements IColumn
 	{
 		return true;
 	}
+	
+	@Override
+	public Boolean isEncoded()
+	{
+		return null;
+	}
 
 	@Override
 	public IKendoEditor getEditor()
@@ -355,6 +361,12 @@ public abstract class AbstractColumn implements IColumn
 		}
 
 		// nullable options (object) //
+
+		if (this.isEncoded() != null)
+		{
+			builder.append(", ");
+			BuilderUtils.append(builder, "encoded", this.isEncoded());
+		}
 
 		if (this.isEditable() != null)
 		{

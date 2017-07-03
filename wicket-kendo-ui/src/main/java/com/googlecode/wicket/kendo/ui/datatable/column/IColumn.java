@@ -65,6 +65,15 @@ public interface IColumn extends IClusterable
 	int getMinScreenWidth();
 
 	/**
+	 * If set to {@code true} the column value will be HTML-encoded before it is displayed.<br>
+	 * If set to {@code false} the column value will be displayed as is.<br>
+	 * By default the column value is HTML-encoded.
+	 * 
+	 * @return {@code null} by default 
+	 */
+	Boolean isEncoded();
+	
+	/**
 	 * Provides a way to specify a custom editing UI for the column.
 	 * 
 	 * @return a {@code function} or {@code null} if it does not apply
