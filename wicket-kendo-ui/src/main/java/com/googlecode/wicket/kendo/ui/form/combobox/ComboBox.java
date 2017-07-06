@@ -26,6 +26,7 @@ import com.googlecode.wicket.jquery.core.IJQueryWidget;
 import com.googlecode.wicket.jquery.core.JQueryBehavior;
 import com.googlecode.wicket.jquery.core.Options;
 import com.googlecode.wicket.jquery.core.behavior.ChoiceModelBehavior;
+import com.googlecode.wicket.jquery.core.event.SelectionChangedAdapter;
 import com.googlecode.wicket.jquery.core.renderer.IChoiceRenderer;
 import com.googlecode.wicket.jquery.core.template.IJQueryTemplate;
 import com.googlecode.wicket.kendo.ui.renderer.ChoiceRenderer;
@@ -279,7 +280,7 @@ public class ComboBox<T> extends TextField<String> implements IJQueryWidget // N
 	@Override
 	public JQueryBehavior newWidgetBehavior(String selector)
 	{
-		return new ComboBoxBehavior(selector) { // NOSONAR
+		return new ComboBoxBehavior(selector, new SelectionChangedAdapter()) { // NOSONAR
 
 			private static final long serialVersionUID = 1L;
 

@@ -17,9 +17,17 @@
 package com.googlecode.wicket.kendo.ui.form.combobox;
 
 import org.apache.wicket.Component;
+import org.apache.wicket.ajax.AjaxRequestTarget;
+import org.apache.wicket.util.lang.Args;
 
+import com.googlecode.wicket.jquery.core.JQueryEvent;
+import com.googlecode.wicket.jquery.core.ajax.IJQueryAjaxAware;
+import com.googlecode.wicket.jquery.core.ajax.JQueryAjaxBehavior;
+import com.googlecode.wicket.jquery.core.event.ISelectionChangedListener;
 import com.googlecode.wicket.kendo.ui.KendoDataSource;
 import com.googlecode.wicket.kendo.ui.KendoUIBehavior;
+import com.googlecode.wicket.kendo.ui.ajax.OnChangeAjaxBehavior;
+import com.googlecode.wicket.kendo.ui.ajax.OnChangeAjaxBehavior.ChangeEvent;
 
 /**
  * Provides a {@value #METHOD} behavior
@@ -27,16 +35,21 @@ import com.googlecode.wicket.kendo.ui.KendoUIBehavior;
  * @author Sebastien Briquet - sebfz1
  *
  */
-public abstract class ComboBoxBehavior extends KendoUIBehavior
+public abstract class ComboBoxBehavior extends KendoUIBehavior implements IJQueryAjaxAware
 {
 	private static final long serialVersionUID = 1L;
 	public static final String METHOD = "kendoComboBox";
 
+	private final ISelectionChangedListener listener;
 	private KendoDataSource dataSource;
 
-	public ComboBoxBehavior(String selector)
+	private JQueryAjaxBehavior onChangeAjaxBehavior = null;
+
+	public ComboBoxBehavior(String selector, ISelectionChangedListener listener)
 	{
 		super(selector, METHOD);
+		
+		this.listener = Args.notNull(listener, "listener");		
 	}
 
 	// Methods //
@@ -49,6 +62,13 @@ public abstract class ComboBoxBehavior extends KendoUIBehavior
 		// data source //
 		this.dataSource = new KendoDataSource(component);
 		this.add(this.dataSource);
+
+		// events //
+		if (this.listener.isSelectionChangedEventEnabled())
+		{
+			this.onChangeAjaxBehavior = new OnChangeAjaxBehavior(this);
+			component.add(this.onChangeAjaxBehavior);
+		}
 	}
 
 	// Properties //
@@ -99,12 +119,29 @@ public abstract class ComboBoxBehavior extends KendoUIBehavior
 		super.onConfigure(component);
 
 		this.setOption("autoBind", true); // immutable
-		this.setOption("dataSource", this.getDataSourceName());
+
+		// events //
+		if (this.onChangeAjaxBehavior != null)
+		{
+			this.setOption("change", this.onChangeAjaxBehavior.getCallbackFunction());
+		}
 
 		// data-source //
+		// TODO onConfigure (see MultiSelectBehavior)
+		this.setOption("dataSource", this.getDataSourceName());
+
 		if (this.isEnabled(component))
 		{
 			this.dataSource.setTransportReadUrl(this.getDataSourceUrl());
+		}
+	}
+
+	@Override
+	public void onAjax(AjaxRequestTarget target, JQueryEvent event)
+	{
+		if (event instanceof ChangeEvent)
+		{
+			this.listener.onSelectionChanged(target);
 		}
 	}
 }

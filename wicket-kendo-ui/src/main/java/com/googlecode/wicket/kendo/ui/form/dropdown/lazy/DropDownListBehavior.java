@@ -82,6 +82,36 @@ public abstract class DropDownListBehavior extends KendoUIBehavior implements IJ
 
 	protected abstract CharSequence getDataSourceUrl();
 
+	/**
+	 * Gets the datasource name
+	 * 
+	 * @return the datasource name
+	 */
+	public String getDataSourceName()
+	{
+		if (this.dataSource != null)
+		{
+			return this.dataSource.getName();
+		}
+
+		return null;
+	}
+
+	/**
+	 * Gets the datasource token
+	 * 
+	 * @return the datasource token
+	 */
+	public String getDataSourceToken()
+	{
+		if (this.dataSource != null)
+		{
+			return this.dataSource.getToken();
+		}
+
+		return null;
+	}
+
 	// Events //
 
 	@Override
@@ -99,7 +129,7 @@ public abstract class DropDownListBehavior extends KendoUIBehavior implements IJ
 
 		// data-source //
 		// TODO onConfigure (see MultiSelectBehavior)
-		this.setOption("dataSource", this.dataSource.getName());
+		this.setOption("dataSource", this.getDataSourceName());
 
 		if (this.isEnabled(component))
 		{

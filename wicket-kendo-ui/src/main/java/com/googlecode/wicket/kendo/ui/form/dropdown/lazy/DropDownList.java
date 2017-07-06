@@ -44,6 +44,9 @@ public class DropDownList<T> extends TextField<T> implements IJQueryWidget // NO
 {
 	private static final long serialVersionUID = 1L;
 
+	/** widget behavior */
+	private DropDownListBehavior widgetBehavior = null;
+
 	/** cache of current choices, needed to retrieve the user selected object */
 	private final IModel<List<T>> choices;
 	private ChoiceModelBehavior<T> choiceModelBehavior;
@@ -196,6 +199,21 @@ public class DropDownList<T> extends TextField<T> implements IJQueryWidget // NO
 	}
 
 	/**
+	 * Gets the template script token/id
+	 * 
+	 * @return the template script token/id
+	 */
+	public String getDataSourceToken()
+	{
+		if (this.widgetBehavior != null)
+		{
+			return this.widgetBehavior.getDataSourceToken();
+		}
+
+		return null;
+	}
+
+	/**
 	 * Gets the (inner) list width.
 	 *
 	 * @return the list width
@@ -244,6 +262,9 @@ public class DropDownList<T> extends TextField<T> implements IJQueryWidget // NO
 
 		this.choiceModelBehavior = this.newChoiceModelBehavior();
 		this.add(this.choiceModelBehavior);
+
+		this.widgetBehavior = (DropDownListBehavior) JQueryWidget.newWidgetBehavior(this);
+		this.add(this.widgetBehavior);
 
 		this.add(JQueryWidget.newWidgetBehavior(this));
 

@@ -14,6 +14,7 @@ abstract class AbstractComboBoxPage extends KendoSamplePage
 	{
 		return Arrays.asList( // lf
 				new DemoLink(DefaultComboBoxPage.class, "ComboBox"), // lf
+				new DemoLink(AjaxComboBoxPage.class, "AjaxComboBox"), // lf
 				new DemoLink(CustomComboBoxPage.class, "ComboBox: custom beans"), // lf
 				new DemoLink(TemplateComboBoxPage.class, "ComboBox: custom template"), // lf
 				new DemoLink(RendererComboBoxPage.class, "ComboBox: custom renderer") // lf
