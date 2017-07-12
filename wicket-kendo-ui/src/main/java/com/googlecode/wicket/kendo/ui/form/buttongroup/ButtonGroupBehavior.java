@@ -87,9 +87,9 @@ public class ButtonGroupBehavior extends KendoUIBehavior implements IJQueryAjaxA
 	@Override
 	public void onConfigure(Component component)
 	{
-		super.onConfigure(component);
-
 		this.setOption("select", this.onSelectAjaxBehavior.getCallbackFunction());
+
+		super.onConfigure(component);
 	}
 
 	@Override

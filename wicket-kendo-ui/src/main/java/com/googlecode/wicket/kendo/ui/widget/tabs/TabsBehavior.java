@@ -164,8 +164,6 @@ public abstract class TabsBehavior extends KendoUIBehavior implements IJQueryAja
 	@Override
 	public void onConfigure(Component component)
 	{
-		super.onConfigure(component);
-
 		if (this.onSelectAjaxBehavior != null)
 		{
 			this.setOption("select", this.onSelectAjaxBehavior.getCallbackFunction());
@@ -180,6 +178,8 @@ public abstract class TabsBehavior extends KendoUIBehavior implements IJQueryAja
 		{
 			this.setOption("activate", this.onActivateAjaxBehavior.getCallbackFunction());
 		}
+
+		super.onConfigure(component);
 	}
 
 	@Override

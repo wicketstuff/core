@@ -170,8 +170,6 @@ public abstract class ListViewBehavior extends KendoUIBehavior implements IJQuer
 	@Override
 	public void onConfigure(Component component)
 	{
-		super.onConfigure(component);
-
 		// schema //
 		Options schema = new Options();
 		schema.set("data", Options.asString("results"));
@@ -195,6 +193,8 @@ public abstract class ListViewBehavior extends KendoUIBehavior implements IJQuer
 		{
 			this.setOption("change", this.onChangeAjaxBehavior.getCallbackFunction());
 		}
+
+		super.onConfigure(component);
 	}
 
 	/**

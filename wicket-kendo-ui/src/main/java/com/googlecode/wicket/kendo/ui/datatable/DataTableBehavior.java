@@ -344,8 +344,6 @@ public abstract class DataTableBehavior extends KendoUIBehavior implements IJQue
 	@Override
 	public void onConfigure(Component component)
 	{
-		super.onConfigure(component);
-
 		List<IColumn> columns = this.columns.getObject();
 
 		// this.setOption("edit", this.onEditAjaxBehavior.getCallbackFunction());
@@ -389,6 +387,8 @@ public abstract class DataTableBehavior extends KendoUIBehavior implements IJQue
 			this.off(selector, "click");
 			this.on(selector, "click", behavior.getCallbackFunction());
 		}
+		
+		super.onConfigure(component);		
 	}
 
 	/**

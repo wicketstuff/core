@@ -113,8 +113,6 @@ public abstract class ChartBehavior extends KendoUIBehavior implements IJQueryAj
 	@Override
 	public void onConfigure(Component component)
 	{
-		super.onConfigure(component);
-
 		// events //
 		if (this.onSeriesClickAjaxBehavior != null)
 		{
@@ -128,6 +126,8 @@ public abstract class ChartBehavior extends KendoUIBehavior implements IJQueryAj
 		this.setOption("dataSource", this.dataSource.getName());
 		this.dataSource.setTransportReadUrl(this.getProviderUrl());
 		this.onConfigure(this.dataSource); // last chance to set options
+
+		super.onConfigure(component);
 	}
 
 	/**

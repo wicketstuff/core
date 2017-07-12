@@ -109,10 +109,10 @@ public abstract class SelectableBehavior<T extends Serializable> extends JQueryU
 	@Override
 	public void onConfigure(Component component)
 	{
-		super.onConfigure(component);
-
 		this.setOption("stop", this.onStopAjaxBehavior.getCallbackFunction());
 		this.setOption("filter", Options.asString(this.getItemSelector()));
+
+		super.onConfigure(component);
 	}
 
 	@Override

@@ -75,10 +75,10 @@ public abstract class ProgressBarBehavior extends JQueryUIBehavior implements IJ
 	@Override
 	public void onConfigure(Component component)
 	{
-		super.onConfigure(component);
-
 		this.setOption("value", component.getDefaultModelObjectAsString()); // initial value
 		this.setOption("change", this.onChangeAjaxBehavior.getCallbackFunction());
+
+		super.onConfigure(component);
 	}
 
 	// Factories //

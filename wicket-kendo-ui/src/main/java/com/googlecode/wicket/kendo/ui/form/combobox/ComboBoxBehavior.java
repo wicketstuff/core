@@ -116,8 +116,6 @@ public abstract class ComboBoxBehavior extends KendoUIBehavior implements IJQuer
 	@Override
 	public void onConfigure(Component component)
 	{
-		super.onConfigure(component);
-
 		this.setOption("autoBind", true); // immutable
 
 		// events //
@@ -134,6 +132,8 @@ public abstract class ComboBoxBehavior extends KendoUIBehavior implements IJQuer
 		{
 			this.dataSource.setTransportReadUrl(this.getDataSourceUrl());
 		}
+
+		super.onConfigure(component);
 	}
 
 	@Override

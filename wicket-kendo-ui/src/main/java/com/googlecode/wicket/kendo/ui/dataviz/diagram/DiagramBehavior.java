@@ -106,8 +106,6 @@ public abstract class DiagramBehavior extends KendoUIBehavior implements IJQuery
 	@Override
 	public void onConfigure(Component component)
 	{
-		super.onConfigure(component);
-
 		// events //
 		if (this.onClickAjaxBehavior != null)
 		{
@@ -118,6 +116,8 @@ public abstract class DiagramBehavior extends KendoUIBehavior implements IJQuery
 		this.setOption("dataSource", this.dataSource.getName());
 		this.dataSource.setTransportReadUrl(this.getProviderUrl());
 		this.onConfigure(this.dataSource); // last chance to set options
+
+		super.onConfigure(component);
 	}
 
 	/**

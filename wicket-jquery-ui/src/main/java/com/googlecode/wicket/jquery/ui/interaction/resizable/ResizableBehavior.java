@@ -95,8 +95,6 @@ public class ResizableBehavior extends JQueryUIBehavior implements IJQueryAjaxAw
 	@Override
 	public void onConfigure(Component component)
 	{
-		super.onConfigure(component);
-
 		if (this.onResizeStartAjaxBehavior != null)
 		{
 			this.setOption("start", this.onResizeStartAjaxBehavior.getCallbackFunction());
@@ -106,6 +104,8 @@ public class ResizableBehavior extends JQueryUIBehavior implements IJQueryAjaxAw
 		{
 			this.setOption("stop", this.onResizeStopAjaxBehavior.getCallbackFunction());
 		}
+
+		super.onConfigure(component);
 	}
 
 	@Override

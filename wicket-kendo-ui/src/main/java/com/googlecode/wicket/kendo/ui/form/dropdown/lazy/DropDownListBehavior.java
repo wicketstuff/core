@@ -117,8 +117,6 @@ public abstract class DropDownListBehavior extends KendoUIBehavior implements IJ
 	@Override
 	public void onConfigure(Component component)
 	{
-		super.onConfigure(component);
-
 		this.setOption("autoBind", true); // immutable
 
 		// events //
@@ -135,6 +133,8 @@ public abstract class DropDownListBehavior extends KendoUIBehavior implements IJ
 		{
 			this.dataSource.setTransportReadUrl(this.getDataSourceUrl());
 		}
+
+		super.onConfigure(component);
 	}
 
 	@Override

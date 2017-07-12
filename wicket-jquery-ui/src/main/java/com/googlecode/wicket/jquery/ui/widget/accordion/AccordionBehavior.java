@@ -143,8 +143,6 @@ public abstract class AccordionBehavior extends JQueryUIBehavior implements IJQu
 	@Override
 	public void onConfigure(Component component)
 	{
-		super.onConfigure(component);
-
 		if (this.onCreateAjaxBehavior != null)
 		{
 			this.setOption("create", this.onCreateAjaxBehavior.getCallbackFunction());
@@ -154,6 +152,8 @@ public abstract class AccordionBehavior extends JQueryUIBehavior implements IJQu
 		{
 			this.setOption("activate", this.onActivateAjaxBehavior.getCallbackFunction());
 		}
+
+		super.onConfigure(component);
 	}
 
 	@Override

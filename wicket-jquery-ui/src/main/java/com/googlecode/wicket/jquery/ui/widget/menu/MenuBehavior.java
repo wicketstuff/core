@@ -95,9 +95,9 @@ public abstract class MenuBehavior extends JQueryUIBehavior implements IJQueryAj
 	@Override
 	public void onConfigure(Component component)
 	{
-		super.onConfigure(component);
-
 		this.setOption("select", this.onSelectAjaxBehavior.getCallbackFunction());
+
+		super.onConfigure(component);
 	}
 
 	@Override

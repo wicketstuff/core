@@ -171,8 +171,6 @@ public class DroppableBehavior extends KendoUIBehavior implements IJQueryAjaxAwa
 	@Override
 	public void onConfigure(Component component)
 	{
-		super.onConfigure(component);
-
 		this.setOption("drop", this.onDropAjaxBehavior.getCallbackFunction());
 
 		if (this.onDragEnterAjaxBehavior != null)
@@ -184,6 +182,8 @@ public class DroppableBehavior extends KendoUIBehavior implements IJQueryAjaxAwa
 		{
 			this.setOption("dragleave", this.onDragLeaveAjaxBehavior.getCallbackFunction());
 		}
+
+		super.onConfigure(component);
 	}
 
 	@Override

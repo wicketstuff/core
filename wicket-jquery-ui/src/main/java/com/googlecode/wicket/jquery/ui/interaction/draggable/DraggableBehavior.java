@@ -134,14 +134,14 @@ public class DraggableBehavior extends JQueryUIBehavior implements IJQueryAjaxAw
 	@Override
 	public void onConfigure(Component component)
 	{
-		super.onConfigure(component);
-
 		this.setOption("start", this.onDragStartAjaxBehavior.getCallbackFunction());
 
 		if (this.onDragStopAjaxBehavior != null)
 		{
 			this.setOption("stop", this.onDragStopAjaxBehavior.getCallbackFunction());
 		}
+
+		super.onConfigure(component);
 	}
 
 	@Override

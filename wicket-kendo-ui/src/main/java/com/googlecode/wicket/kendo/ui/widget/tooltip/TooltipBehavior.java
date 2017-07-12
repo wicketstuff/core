@@ -130,13 +130,13 @@ public class TooltipBehavior extends KendoUIBehavior
 	@Override
 	public void onConfigure(Component component)
 	{
-		super.onConfigure(component);
-
 		String content = this.model.getObject();
 
 		if (content != null)
 		{
 			this.setOption("content", Options.asString(content));
 		}
+
+		super.onConfigure(component);
 	}
 }

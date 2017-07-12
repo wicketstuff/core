@@ -73,9 +73,9 @@ public class RangeDatePickerBehavior extends JQueryBehavior implements IJQueryAj
 	@Override
 	public void onConfigure(Component component)
 	{
-		super.onConfigure(component);
-
 		this.setOption("onRangeChange", this.onRangeChangeAjaxBehavior.getCallbackFunction());
+
+		super.onConfigure(component);
 	}
 
 	@Override

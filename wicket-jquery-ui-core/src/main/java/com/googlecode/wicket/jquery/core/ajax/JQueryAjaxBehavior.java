@@ -93,9 +93,9 @@ import com.googlecode.wicket.jquery.core.JQueryEvent;
  * 		// Events //
  * 		public void onConfigure(Component component)
  * 		{
- * 			super.onConfigure(component);
- * 
  * 			this.setOption(&quot;jqueryevent&quot;, this.onMyEventAjaxBehavior.getCallbackFunction());
+ * 
+ * 			super.onConfigure(component);
  * 		}
  * 
  * 		public void onAjax(AjaxRequestTarget target, JQueryEvent event)

@@ -94,8 +94,6 @@ public class ResponsiveBehavior extends KendoUIBehavior implements IJQueryAjaxAw
 	@Override
 	public void onConfigure(Component component)
 	{
-		super.onConfigure(component);
-
 		if (this.onOpenAjaxBehavior != null)
 		{
 			this.setOption("open", this.onOpenAjaxBehavior.getCallbackFunction());
@@ -105,6 +103,8 @@ public class ResponsiveBehavior extends KendoUIBehavior implements IJQueryAjaxAw
 		{
 			this.setOption("close", this.onCloseAjaxBehavior.getCallbackFunction());
 		}
+
+		super.onConfigure(component);
 	}
 
 	@Override

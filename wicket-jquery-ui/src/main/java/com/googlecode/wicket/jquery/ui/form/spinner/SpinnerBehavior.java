@@ -162,8 +162,6 @@ public class SpinnerBehavior extends JQueryUIBehavior implements IJQueryAjaxAwar
 	@Override
 	public void onConfigure(Component component)
 	{
-		super.onConfigure(component);
-
 		if (this.onSpinAjaxBehavior != null)
 		{
 			this.setOption("spin", this.onSpinAjaxBehavior.getCallbackFunction());
@@ -173,6 +171,8 @@ public class SpinnerBehavior extends JQueryUIBehavior implements IJQueryAjaxAwar
 		{
 			this.setOption("stop", this.onStopAjaxBehavior.getCallbackFunction());
 		}
+
+		super.onConfigure(component);
 	}
 
 	@Override

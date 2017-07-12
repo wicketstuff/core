@@ -100,12 +100,12 @@ public abstract class DatePickerBehavior extends JQueryUIBehavior implements IJQ
 	@Override
 	public void onConfigure(Component component)
 	{
-		super.onConfigure(component);
-
 		if (this.onSelectAjaxBehavior != null)
 		{
 			this.setOption("onSelect", this.onSelectAjaxBehavior.getCallbackFunction());
 		}
+
+		super.onConfigure(component);
 	}
 
 	@Override

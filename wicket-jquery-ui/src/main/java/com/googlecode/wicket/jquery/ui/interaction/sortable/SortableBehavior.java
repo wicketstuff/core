@@ -144,8 +144,6 @@ public abstract class SortableBehavior<T> extends JQueryUIBehavior implements IJ
 	@Override
 	public void onConfigure(Component component)
 	{
-		super.onConfigure(component);
-
 		if (this.isEnabled(component))
 		{
 			this.setOption("update", this.onUpdateAjaxBehavior.getCallbackFunction());
@@ -160,6 +158,8 @@ public abstract class SortableBehavior<T> extends JQueryUIBehavior implements IJ
 				this.setOption("remove", this.onRemoveAjaxBehavior.getCallbackFunction());
 			}
 		}
+
+		super.onConfigure(component);
 	}
 
 	@Override

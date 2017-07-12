@@ -59,8 +59,8 @@ public class ProgressBarBehavior extends KendoUIBehavior
 	@Override
 	public void onConfigure(Component component)
 	{
-		super.onConfigure(component);
-
 		this.setOption("value", component.getDefaultModelObjectAsString()); // initial value
+
+		super.onConfigure(component);
 	}
 }

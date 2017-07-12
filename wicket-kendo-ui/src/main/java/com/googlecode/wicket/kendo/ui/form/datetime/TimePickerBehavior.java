@@ -85,12 +85,12 @@ public class TimePickerBehavior extends KendoUIBehavior implements IJQueryAjaxAw
 	@Override
 	public void onConfigure(Component component)
 	{
-		super.onConfigure(component);
-
 		if (this.onChangeAjaxBehavior != null)
 		{
 			this.setOption("change", this.onChangeAjaxBehavior.getCallbackFunction());
 		}
+
+		super.onConfigure(component);
 	}
 
 	@Override

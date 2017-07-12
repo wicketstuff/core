@@ -107,8 +107,6 @@ public class DroppableBehavior extends JQueryUIBehavior implements IJQueryAjaxAw
 	@Override
 	public void onConfigure(Component component)
 	{
-		super.onConfigure(component);
-
 		this.setOption("drop", this.onDropAjaxBehavior.getCallbackFunction());
 
 		if (this.onOverAjaxBehavior != null)
@@ -120,6 +118,8 @@ public class DroppableBehavior extends JQueryUIBehavior implements IJQueryAjaxAw
 		{
 			this.setOption("out", this.onExitAjaxBehavior.getCallbackFunction());
 		}
+
+		super.onConfigure(component);
 	}
 
 	@Override

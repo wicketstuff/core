@@ -79,12 +79,12 @@ public abstract class ContextMenuBehavior extends MenuBehavior
 	@Override
 	public void onConfigure(Component component)
 	{
-		super.onConfigure(component);
-
 		if (this.onOpenAjaxBehavior != null)
 		{
 			this.setOption("open", this.onOpenAjaxBehavior.getCallbackFunction());
 		}
+
+		super.onConfigure(component);
 	}
 
 	// Events //

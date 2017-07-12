@@ -143,8 +143,6 @@ public class DraggableBehavior extends KendoUIBehavior implements IJQueryAjaxAwa
 	@Override
 	public void onConfigure(Component component)
 	{
-		super.onConfigure(component);
-
 		// options //
 
 		if (this.getOption("hint") == null)
@@ -161,6 +159,8 @@ public class DraggableBehavior extends KendoUIBehavior implements IJQueryAjaxAwa
 		{
 			this.setOption("dragcancel", this.onDragCancelAjaxBehavior.getCallbackFunction());
 		}
+
+		super.onConfigure(component);
 	}
 
 	@Override

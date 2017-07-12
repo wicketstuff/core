@@ -86,8 +86,6 @@ public abstract class MultiSelectBehavior extends KendoUIBehavior implements IJQ
 	@Override
 	public void onConfigure(Component component)
 	{
-		super.onConfigure(component);
-
 		this.setOption("autoBind", true); // immutable
 
 		// events //
@@ -105,6 +103,7 @@ public abstract class MultiSelectBehavior extends KendoUIBehavior implements IJQ
 		}
 
 		this.onConfigure(this.dataSource); // last chance to set options
+		super.onConfigure(component);
 	}
 
 	/**

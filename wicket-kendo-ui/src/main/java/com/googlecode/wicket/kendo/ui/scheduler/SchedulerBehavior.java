@@ -125,8 +125,6 @@ public abstract class SchedulerBehavior extends KendoUIBehavior implements IJQue
 	@Override
 	public void onConfigure(Component component)
 	{
-		super.onConfigure(component);
-
 		// options //
 		this.setOption("autoBind", true);
 
@@ -147,6 +145,7 @@ public abstract class SchedulerBehavior extends KendoUIBehavior implements IJQue
 		this.dataSource.setTransportDelete(this.onDeleteAjaxBehavior.getCallbackFunction());
 
 		this.onConfigure(this.dataSource); // last chance to set options
+		super.onConfigure(component);
 	}
 
 	/**

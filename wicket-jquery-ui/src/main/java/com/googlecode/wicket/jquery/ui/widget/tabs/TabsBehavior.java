@@ -148,8 +148,6 @@ public abstract class TabsBehavior extends JQueryUIBehavior implements IJQueryAj
 	@Override
 	public void onConfigure(Component component)
 	{
-		super.onConfigure(component);
-
 		if (this.onCreateAjaxBehavior != null)
 		{
 			this.setOption("create", this.onCreateAjaxBehavior.getCallbackFunction());
@@ -164,6 +162,8 @@ public abstract class TabsBehavior extends JQueryUIBehavior implements IJQueryAj
 		{
 			this.setOption("beforeActivate", this.onActivatingAjaxBehavior.getCallbackFunction());
 		}
+
+		super.onConfigure(component);
 	}
 
 	@Override

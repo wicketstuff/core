@@ -131,8 +131,6 @@ public class WindowBehavior extends KendoUIBehavior implements IJQueryAjaxAware
 	@Override
 	public void onConfigure(Component component)
 	{
-		super.onConfigure(component);
-
 		if (this.onActionAjaxBehavior != null)
 		{
 			// TODO verify if registered multiple times
@@ -143,6 +141,8 @@ public class WindowBehavior extends KendoUIBehavior implements IJQueryAjaxAware
 		{
 			this.setOption("close", this.onCloseAjaxBehavior.getCallbackFunction());
 		}
+
+		super.onConfigure(component);
 	}
 
 	@Override
