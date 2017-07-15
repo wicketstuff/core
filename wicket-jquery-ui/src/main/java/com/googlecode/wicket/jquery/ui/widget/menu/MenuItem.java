@@ -134,6 +134,7 @@ public class MenuItem extends AbstractMenuItem
 	}
 
 	// Properties //
+
 	@Override
 	public List<IMenuItem> getItems()
 	{
@@ -141,8 +142,9 @@ public class MenuItem extends AbstractMenuItem
 	}
 
 	// Methods //
+
 	/**
-	 * Adds an menu-item as child of this menu-item
+	 * Adds a menu-item as child of this menu-item
 	 *
 	 * @param item the {@link IMenuItem}
 	 * @return true (as specified by {@link Collection#add(Object)})
@@ -153,6 +155,7 @@ public class MenuItem extends AbstractMenuItem
 	}
 
 	// Events //
+
 	@Override
 	public void onClick(AjaxRequestTarget target)
 	{

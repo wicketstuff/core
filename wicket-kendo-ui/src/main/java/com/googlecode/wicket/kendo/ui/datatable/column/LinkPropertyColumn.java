@@ -16,14 +16,11 @@
  */
 package com.googlecode.wicket.kendo.ui.datatable.column;
 
-import java.util.List;
+import java.util.regex.Pattern;
 
 import org.apache.wicket.model.IModel;
 
-import com.googlecode.wicket.jquery.core.ajax.JQueryAjaxBehavior;
 import com.googlecode.wicket.kendo.ui.datatable.DataTable;
-import com.googlecode.wicket.kendo.ui.datatable.DataTableBehavior;
-import com.googlecode.wicket.kendo.ui.datatable.button.CommandAjaxBehavior;
 import com.googlecode.wicket.kendo.ui.datatable.button.CommandButton;
 
 /**
@@ -31,26 +28,20 @@ import com.googlecode.wicket.kendo.ui.datatable.button.CommandButton;
  *
  * @author Sebastien Briquet - sebfz1
  */
-public class LinkPropertyColumn extends PropertyColumn
+public abstract class LinkPropertyColumn extends PropertyColumn
 {
 	private static final long serialVersionUID = 1L;
-
-	private final DataTable<?> datatable;
-	private final CommandButton button;
+	private static final Pattern DATA_PATTERN = Pattern.compile("%23:(?<data>.*?)%23");
+	private static final String DATA_REPLACE = "#:${data}#";
 
 	/**
 	 * Constructor
 	 *
 	 * @param title the text of the column header
-	 * @param datatable the holding {@link DataTable}
-	 * @param button the {@link CommandButton}
 	 */
-	public LinkPropertyColumn(String title, DataTable<?> datatable, CommandButton button)
+	public LinkPropertyColumn(String title)
 	{
 		super(title);
-
-		this.datatable = datatable;
-		this.button = button;
 	}
 
 	/**
@@ -58,15 +49,10 @@ public class LinkPropertyColumn extends PropertyColumn
 	 *
 	 * @param title the text of the column header
 	 * @param property the object property name
-	 * @param datatable the holding {@link DataTable}
-	 * @param button the {@link CommandButton}
 	 */
-	public LinkPropertyColumn(String title, String property, DataTable<?> datatable, CommandButton button)
+	public LinkPropertyColumn(String title, String property)
 	{
 		super(title, property);
-
-		this.datatable = datatable;
-		this.button = button;
 	}
 
 	/**
@@ -74,15 +60,10 @@ public class LinkPropertyColumn extends PropertyColumn
 	 *
 	 * @param title the text of the column header
 	 * @param width the desired width of the column
-	 * @param datatable the holding {@link DataTable}
-	 * @param button the {@link CommandButton}
 	 */
-	public LinkPropertyColumn(String title, int width, DataTable<?> datatable, CommandButton button)
+	public LinkPropertyColumn(String title, int width)
 	{
 		super(title, width);
-
-		this.datatable = datatable;
-		this.button = button;
 	}
 
 	/**
@@ -93,12 +74,21 @@ public class LinkPropertyColumn extends PropertyColumn
 	 * @param datatable the holding {@link DataTable}
 	 * @param button the {@link CommandButton}
 	 */
-	public LinkPropertyColumn(IModel<String> title, String property, DataTable<?> datatable, CommandButton button)
+	public LinkPropertyColumn(IModel<String> title, String property)
 	{
 		super(title, property);
+	}
 
-		this.datatable = datatable;
-		this.button = button;
+	/**
+	 * Constructor
+	 *
+	 * @param title the text of the column header
+	 * @param property the object property name
+	 * @param width the desired width of the column
+	 */
+	public LinkPropertyColumn(String title, String property, int width)
+	{
+		super(title, property, width);
 	}
 
 	/**
@@ -110,38 +100,19 @@ public class LinkPropertyColumn extends PropertyColumn
 	 * @param datatable the holding {@link DataTable}
 	 * @param button the {@link CommandButton}
 	 */
-	public LinkPropertyColumn(String title, String property, int width, DataTable<?> datatable, CommandButton button)
+	public LinkPropertyColumn(IModel<String> title, String property, int width)
 	{
 		super(title, property, width);
-
-		this.datatable = datatable;
-		this.button = button;
-	}
-
-	/**
-	 * Constructor
-	 *
-	 * @param title the text of the column header
-	 * @param property the object property name
-	 * @param width the desired width of the column
-	 * @param datatable the holding {@link DataTable}
-	 * @param button the {@link CommandButton}
-	 */
-	public LinkPropertyColumn(IModel<String> title, String property, int width, DataTable<?> datatable, CommandButton button)
-	{
-		super(title, property, width);
-
-		this.datatable = datatable;
-		this.button = button;
 	}
 
 	@Override
 	public String getTemplate()
 	{
-		StringBuilder builder = new StringBuilder();
+		final String url = DATA_PATTERN.matcher(this.getCallbackUrl()).replaceAll(DATA_REPLACE);
+		final StringBuilder builder = new StringBuilder();
 
 		builder.append("<div class='grid-cell' data-container-for='").append(this.getField()).append("'>");
-		builder.append("<a href='").append(this.getCallbackUrl()).append("&value=#: data.").append(this.button.getProperty()).append(" #'>");
+		builder.append("<a href='").append(url).append("'>");
 		builder.append("#: ").append(this.getField()).append(" #");
 		builder.append("</a>");
 		builder.append("</div>");
@@ -150,15 +121,10 @@ public class LinkPropertyColumn extends PropertyColumn
 	}
 
 	/**
-	 * Gets the {@link CommandButton}'s callback url
+	 * Gets the {@link CommandButton}'s callback url<br>
+	 * {@code #:data.myproperty#} is allowed (should not contain spaces)
 	 * 
 	 * @return the callback url
 	 */
-	private CharSequence getCallbackUrl()
-	{
-		List<CommandAjaxBehavior> behaviors = this.datatable.getBehaviors(CommandAjaxBehavior.class);
-		JQueryAjaxBehavior behavior = DataTableBehavior.getCommandAjaxBehavior(this.button, behaviors);
-
-		return behavior.getCallbackUrl();
-	}
+	protected abstract String getCallbackUrl();
 }

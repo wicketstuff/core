@@ -115,4 +115,133 @@ public abstract class CommandColumn extends AbstractColumn
 
 		return this.buttons;
 	}
+
+	// statics //
+
+	/**
+	 * Factory method
+	 * 
+	 * @param buttons the list of buttons
+	 * @see #newButtons()
+	 */
+	public static CommandColumn of(final List<CommandButton> buttons)
+	{
+		return new CommandColumn() {
+
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			protected List<CommandButton> newButtons()
+			{
+				return buttons;
+			}
+		};
+	}
+
+	/**
+	 * Factory method
+	 * 
+	 * @param title the text of the column header
+	 * @param buttons the list of buttons
+	 * @see #newButtons()
+	 */
+	public static CommandColumn of(String title, final List<CommandButton> buttons)
+	{
+		return new CommandColumn(title) {
+
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			protected List<CommandButton> newButtons()
+			{
+				return buttons;
+			}
+		};
+	}
+
+	/**
+	 * Factory method
+	 * 
+	 * @param width the desired width of the column
+	 * @param buttons the list of buttons
+	 * @see #newButtons()
+	 */
+	public static CommandColumn of(int width, final List<CommandButton> buttons)
+	{
+		return new CommandColumn(width) {
+
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			protected List<CommandButton> newButtons()
+			{
+				return buttons;
+			}
+		};
+	}
+
+	/**
+	 * Factory method
+	 * 
+	 * @param title the text of the column header
+	 * @param width the desired width of the column
+	 * @param buttons the list of buttons
+	 * @see #newButtons()
+	 */
+	public static CommandColumn of(String title, int width, final List<CommandButton> buttons)
+	{
+		return new CommandColumn(title, width) {
+
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			protected List<CommandButton> newButtons()
+			{
+				return buttons;
+			}
+		};
+	}
+
+	/**
+	 * Factory method
+	 * 
+	 * @param title the text of the column header
+	 * @param buttons the list of buttons
+	 * @see #newButtons()
+	 */
+	public static CommandColumn of(IModel<String> title, final List<CommandButton> buttons)
+	{
+		return new CommandColumn(title) {
+
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			protected List<CommandButton> newButtons()
+			{
+				return buttons;
+			}
+		};
+	}
+
+	/**
+	 * Factory method
+	 * 
+	 * @param title the text of the column header
+	 * @param width the desired width of the column
+	 * @param buttons the list of buttons
+	 * @see #newButtons()
+	 */
+	public static CommandColumn of(IModel<String> title, int width, final List<CommandButton> buttons)
+	{
+		return new CommandColumn(title, width) {
+
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			protected List<CommandButton> newButtons()
+			{
+				return buttons;
+			}
+		};
+	}
 }

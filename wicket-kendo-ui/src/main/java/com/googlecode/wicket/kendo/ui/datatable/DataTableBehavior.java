@@ -427,17 +427,17 @@ public abstract class DataTableBehavior extends KendoUIBehavior implements IJQue
 
 		if (event instanceof CreateEvent)
 		{
-			this.listener.onCreate(target, ((CreateEvent) event).getObject());
+			this.listener.onCreate(target, ((DataSourceEvent) event).getObject());
 		}
 
 		if (event instanceof UpdateEvent)
 		{
-			this.listener.onUpdate(target, ((UpdateEvent) event).getObject());
+			this.listener.onUpdate(target, ((DataSourceEvent) event).getObject());
 		}
 
 		if (event instanceof DeleteEvent)
 		{
-			this.listener.onDelete(target, ((DeleteEvent) event).getObject());
+			this.listener.onDelete(target, ((DataSourceEvent) event).getObject());
 		}
 	}
 
