@@ -29,7 +29,7 @@ public class TemplateDropDownPage extends AbstractDropDownPage
 		form.add(feedback);
 
 		// DropDownList //
-		final DropDownList<Genre> combobox = new DropDownList<Genre>("select", new Model<Genre>(), GenresDAO.all()) {
+		final DropDownList<Genre> dropdown = new DropDownList<Genre>("select", new Model<Genre>(), GenresDAO.all()) {
 
 			private static final long serialVersionUID = 1L;
 			
@@ -72,7 +72,7 @@ public class TemplateDropDownPage extends AbstractDropDownPage
 			}
 		};
 
-		form.add(combobox);
+		form.add(dropdown);
 
 		// Buttons //
 		form.add(new Button("submit") {
@@ -82,7 +82,7 @@ public class TemplateDropDownPage extends AbstractDropDownPage
 			@Override
 			public void onSubmit()
 			{
-				TemplateDropDownPage.this.info(combobox);
+				TemplateDropDownPage.this.info(dropdown);
 			}
 		});
 
@@ -93,7 +93,7 @@ public class TemplateDropDownPage extends AbstractDropDownPage
 			@Override
 			protected void onSubmit(AjaxRequestTarget target)
 			{
-				TemplateDropDownPage.this.info(combobox);
+				TemplateDropDownPage.this.info(dropdown);
 				target.add(feedback);
 			}
 		});

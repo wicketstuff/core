@@ -26,8 +26,8 @@ public class RendererDropDownPage extends AbstractDropDownPage
 		form.add(feedback);
 
 		// DropDownList //
-		final DropDownList<Genre> combobox = new DropDownList<Genre>("select", new Model<Genre>(), GenresDAO.all(), new ChoiceRenderer<Genre>("name", "id"));
-		form.add(combobox.setListWidth(200));
+		final DropDownList<Genre> dropdown = new DropDownList<Genre>("select", new Model<Genre>(), GenresDAO.all(), new ChoiceRenderer<Genre>("name", "id"));
+		form.add(dropdown.setListWidth(200));
 
 		// Buttons //
 		form.add(new Button("submit") {
@@ -37,7 +37,7 @@ public class RendererDropDownPage extends AbstractDropDownPage
 			@Override
 			public void onSubmit()
 			{
-				RendererDropDownPage.this.info(combobox);
+				RendererDropDownPage.this.info(dropdown);
 			}
 		});
 
@@ -48,7 +48,7 @@ public class RendererDropDownPage extends AbstractDropDownPage
 			@Override
 			protected void onSubmit(AjaxRequestTarget target)
 			{
-				RendererDropDownPage.this.info(combobox);
+				RendererDropDownPage.this.info(dropdown);
 				target.add(feedback);
 			}
 		});
