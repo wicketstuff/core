@@ -19,17 +19,22 @@
 	<head>
 		<wicket:head>
 			<style type="text/css">
-				.w-inputwindow-input {
-					width: 50%;
-					margin-bottom: 0.5em;
+				.w-inputwindow-buttons > BUTTON {
+					float: right;
+					margin-left: 4px;
 				}
 			</style>
 		</wicket:head>
 	</head>
 	<body>
-		<wicket:extend>
-			<div wicket:id="label" style="padding-bottom: 4px;">[label]</div>
-			<input wicket:id="input" type="text" class="w-inputwindow-input" />
-		</wicket:extend>
+		<wicket:panel>
+			<form wicket:id="form">
+				<div wicket:id="feedback"></div>
+				<br/>
+				<wicket:child />
+				<br/>
+				<div wicket:id="buttons" class="w-inputwindow-buttons"></div>
+			</form>
+		</wicket:panel>
 	</body>
 </html>
