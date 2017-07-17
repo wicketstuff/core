@@ -28,10 +28,13 @@ import com.googlecode.wicket.kendo.ui.panel.KendoFeedbackPanel;
  * Provides a Kendo UI base Window containing a {@link Form}, a {@link KendoFeedbackPanel}, a {@value Window#OK} and a {@value Window#CANCEL} button<br>
  * <br>
  * Implementation may look like:
- * <code><pre>
- * final Form<?> form = this.getForm();
- * form.add(new TextField("myId", this.getModel()));
- * </pre></code>
+ * 
+ * <pre>
+ *  <code>
+ *  final Form&lt;?&gt; form = this.getForm();
+ *  form.add(new TextField("myId", this.getModel()));
+ *  </code>
+ * </pre>
  *
  * @param <T> the type of the model object
  * @author Sebastien Briquet - sebfz1

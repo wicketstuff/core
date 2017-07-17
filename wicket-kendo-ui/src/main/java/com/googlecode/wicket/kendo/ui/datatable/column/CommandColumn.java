@@ -122,6 +122,7 @@ public abstract class CommandColumn extends AbstractColumn
 	 * Factory method
 	 * 
 	 * @param buttons the list of buttons
+	 * @return a new {@link CommandColumn}
 	 * @see #newButtons()
 	 */
 	public static CommandColumn of(final List<CommandButton> buttons)
@@ -143,6 +144,7 @@ public abstract class CommandColumn extends AbstractColumn
 	 * 
 	 * @param title the text of the column header
 	 * @param buttons the list of buttons
+	 * @return a new {@link CommandColumn}
 	 * @see #newButtons()
 	 */
 	public static CommandColumn of(String title, final List<CommandButton> buttons)
@@ -164,6 +166,7 @@ public abstract class CommandColumn extends AbstractColumn
 	 * 
 	 * @param width the desired width of the column
 	 * @param buttons the list of buttons
+	 * @return a new {@link CommandColumn}
 	 * @see #newButtons()
 	 */
 	public static CommandColumn of(int width, final List<CommandButton> buttons)
@@ -186,6 +189,7 @@ public abstract class CommandColumn extends AbstractColumn
 	 * @param title the text of the column header
 	 * @param width the desired width of the column
 	 * @param buttons the list of buttons
+	 * @return a new {@link CommandColumn}
 	 * @see #newButtons()
 	 */
 	public static CommandColumn of(String title, int width, final List<CommandButton> buttons)
@@ -207,6 +211,7 @@ public abstract class CommandColumn extends AbstractColumn
 	 * 
 	 * @param title the text of the column header
 	 * @param buttons the list of buttons
+	 * @return a new {@link CommandColumn}
 	 * @see #newButtons()
 	 */
 	public static CommandColumn of(IModel<String> title, final List<CommandButton> buttons)
@@ -229,6 +234,7 @@ public abstract class CommandColumn extends AbstractColumn
 	 * @param title the text of the column header
 	 * @param width the desired width of the column
 	 * @param buttons the list of buttons
+	 * @return a new {@link CommandColumn}
 	 * @see #newButtons()
 	 */
 	public static CommandColumn of(IModel<String> title, int width, final List<CommandButton> buttons)

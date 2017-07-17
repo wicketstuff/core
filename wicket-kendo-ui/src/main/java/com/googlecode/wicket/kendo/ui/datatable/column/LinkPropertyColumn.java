@@ -71,8 +71,6 @@ public abstract class LinkPropertyColumn extends PropertyColumn
 	 *
 	 * @param title the text of the column header
 	 * @param property the object property name
-	 * @param datatable the holding {@link DataTable}
-	 * @param button the {@link CommandButton}
 	 */
 	public LinkPropertyColumn(IModel<String> title, String property)
 	{
@@ -97,8 +95,6 @@ public abstract class LinkPropertyColumn extends PropertyColumn
 	 * @param title the text of the column header
 	 * @param property the object property name
 	 * @param width the desired width of the column
-	 * @param datatable the holding {@link DataTable}
-	 * @param button the {@link CommandButton}
 	 */
 	public LinkPropertyColumn(IModel<String> title, String property, int width)
 	{
