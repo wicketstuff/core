@@ -252,6 +252,7 @@ public class DataTable<T> extends WebComponent implements IGenericComponent<List
 	 *
 	 * @param handler the {@link IPartialPageRequestHandler}
 	 * @param reset whether to call reset or not
+	 * @see DataTable#reset(IPartialPageRequestHandler)
 	 */
 	public void refresh(IPartialPageRequestHandler handler, boolean reset)
 	{

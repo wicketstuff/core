@@ -38,7 +38,7 @@ import com.googlecode.wicket.kendo.ui.panel.KendoFeedbackPanel;
  *
  * @param <T> the type of the model object
  * @author Sebastien Briquet - sebfz1
- * @since 6.17.0
+ * @since 8.0.0
  */
 public abstract class FormWindow<T> extends Window<T> // NOSONAR
 {

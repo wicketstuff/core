@@ -66,7 +66,7 @@ public abstract class AjaxSliderBehavior extends SliderBehavior implements IJQue
 	public void onConfigure(Component component)
 	{
 		this.setOption("change", this.onChangeAjaxBehavior.getCallbackFunction());
-		
+
 		super.onConfigure(component);
 	}
 

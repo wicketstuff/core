@@ -98,7 +98,7 @@ public abstract class InputWindow<T> extends FormWindow<T> // NOSONAR
 	protected void onInitialize()
 	{
 		super.onInitialize();
-		
+
 		final Form<?> form = this.getForm();
 
 		// label //
