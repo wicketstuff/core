@@ -90,7 +90,7 @@ public abstract class UrlParametersReceivingBehavior extends AbstractDefaultAjax
 			.append("window.UrlUtil.sendUrlParameters();")
 			.append("}catch(e){}");
 		response.render(new OnDomReadyHeaderItem(sb.toString()));
-		response.render(getJS(getClass()));
+		response.render(getJS(UrlParametersReceivingBehavior.class));
 	}
 
 	private String optionsJsonString()
@@ -118,8 +118,8 @@ public abstract class UrlParametersReceivingBehavior extends AbstractDefaultAjax
 		onParameterArrival(RequestCycle.get().getRequest().getRequestParameters(), target);
 
 		if (this.components != null)
-			addComponentsToBeRendered(target);
-	}
+            addComponentsToBeRendered(target);
+        }
 
 	@Override
 	protected void updateAjaxAttributes(AjaxRequestAttributes attributes)
