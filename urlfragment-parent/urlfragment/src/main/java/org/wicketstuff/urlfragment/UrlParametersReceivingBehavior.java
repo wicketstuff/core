@@ -117,9 +117,10 @@ public abstract class UrlParametersReceivingBehavior extends AbstractDefaultAjax
 	{
 		onParameterArrival(RequestCycle.get().getRequest().getRequestParameters(), target);
 
-		if (this.components != null)
-            addComponentsToBeRendered(target);
-        }
+		if (this.components != null) {
+			addComponentsToBeRendered(target);
+		}
+	}
 
 	@Override
 	protected void updateAjaxAttributes(AjaxRequestAttributes attributes)
