@@ -16,7 +16,6 @@
  */
 package org.wicketstuff.datastores.common.app;
 
-import org.apache.wicket.util.time.Duration;
 import org.eclipse.jetty.server.HttpConfiguration;
 import org.eclipse.jetty.server.HttpConnectionFactory;
 import org.eclipse.jetty.server.Server;
@@ -24,9 +23,7 @@ import org.eclipse.jetty.server.ServerConnector;
 import org.eclipse.jetty.webapp.WebAppContext;
 
 public class Start {
-    public static void main(String[] args) throws Exception {
-        int timeout = (int) Duration.ONE_HOUR.getMilliseconds();
-
+    public static void main(String[] args) {
 	    Server server = new Server();
 
 	    HttpConfiguration http_config = new HttpConfiguration();
@@ -45,12 +42,6 @@ public class Start {
 	    bb.setContextPath("/");
 	    bb.setWar("src/main/webapp");
 
-
-	    // START JMX SERVER
-        // MBeanServer mBeanServer = ManagementFactory.getPlatformMBeanServer();
-        // MBeanContainer mBeanContainer = new MBeanContainer(mBeanServer);
-        // server.getContainer().addEventListener(mBeanContainer);
-        // mBeanContainer.start();
 
         server.setHandler(bb);
 

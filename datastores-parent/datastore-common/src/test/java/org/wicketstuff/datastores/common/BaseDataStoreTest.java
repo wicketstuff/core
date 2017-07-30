@@ -100,10 +100,10 @@ public abstract class BaseDataStoreTest extends Assert {
 		}
 	}
 
-	private final Map<String, AtomicInteger> sessionCounter = new ConcurrentHashMap<String, AtomicInteger>();
-	private final ConcurrentLinkedQueue<File> filesToSave = new ConcurrentLinkedQueue<File>();
-	private final ConcurrentLinkedQueue<File> filesToRead1 = new ConcurrentLinkedQueue<File>();
-	private final ConcurrentLinkedQueue<File> filesToRead2 = new ConcurrentLinkedQueue<File>();
+	private final Map<String, AtomicInteger> sessionCounter = new ConcurrentHashMap<>();
+	private final ConcurrentLinkedQueue<File> filesToSave = new ConcurrentLinkedQueue<>();
+	private final ConcurrentLinkedQueue<File> filesToRead1 = new ConcurrentLinkedQueue<>();
+	private final ConcurrentLinkedQueue<File> filesToRead2 = new ConcurrentLinkedQueue<>();
 
 	private final AtomicInteger read1Count = new AtomicInteger(0);
 	private final AtomicInteger read2Count = new AtomicInteger(0);
@@ -123,7 +123,7 @@ public abstract class BaseDataStoreTest extends Assert {
 	private volatile RuntimeException exceptionThrownByThread;
 
 	private String randomSessionId() {
-		List<String> s = new ArrayList<String>(sessionCounter.keySet());
+		List<String> s = new ArrayList<>(sessionCounter.keySet());
 		return s.get(random.nextInt(s.size()));
 	}
 

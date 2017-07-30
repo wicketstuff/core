@@ -22,7 +22,7 @@ public class SessionQuotaManagingDataStoreTest extends Assert {
 	private final byte[] pageData2 = new byte[] {5, 6, 7};
 
 	@Test
-	public void removeData() throws Exception {
+	public void removeData() {
 		SessionQuotaManagingDataStore manager = new SessionQuotaManagingDataStore(delegate, Bytes.bytes(100));
 
 		assertEquals(0, manager.pagesPerSession.size());
@@ -46,7 +46,7 @@ public class SessionQuotaManagingDataStoreTest extends Assert {
 	}
 
 	@Test
-	public void storeDataEnoughSpace() throws Exception {
+	public void storeDataEnoughSpace() {
 		Bytes maxSizePerSession = Bytes.bytes(pageData1.length + pageData2.length + 1);
 		SessionQuotaManagingDataStore manager = new SessionQuotaManagingDataStore(delegate, maxSizePerSession);
 
@@ -69,7 +69,7 @@ public class SessionQuotaManagingDataStoreTest extends Assert {
 	}
 
 	@Test
-	public void storeDataInsufficientSpaceForTwoPages() throws Exception {
+	public void storeDataInsufficientSpaceForTwoPages() {
 		Bytes maxSizePerSession = Bytes.bytes(pageData1.length);
 		SessionQuotaManagingDataStore manager = new SessionQuotaManagingDataStore(delegate, maxSizePerSession);
 
@@ -91,7 +91,7 @@ public class SessionQuotaManagingDataStoreTest extends Assert {
 	}
 
 	@Test
-	public void storeDataInsufficientSpaceForASinglePage() throws Exception {
+	public void storeDataInsufficientSpaceForASinglePage() {
 		Bytes maxSizePerSession = Bytes.bytes(pageData1.length - 1);
 		SessionQuotaManagingDataStore manager = new SessionQuotaManagingDataStore(delegate, maxSizePerSession);
 
@@ -119,7 +119,7 @@ public class SessionQuotaManagingDataStoreTest extends Assert {
 	 * @throws Exception
 	 */
 	@Test
-	public void storeDataSamePageTwice() throws Exception {
+	public void storeDataSamePageTwice() {
 		byte[] pageData1_2 = new byte[] { 1 };
 		Bytes maxSizePerSession = Bytes.bytes(pageData1.length + pageData1_2.length + 1);
 		SessionQuotaManagingDataStore manager = new SessionQuotaManagingDataStore(delegate, maxSizePerSession);
@@ -144,7 +144,7 @@ public class SessionQuotaManagingDataStoreTest extends Assert {
 	}
 
 	@Test
-	public void removePage() throws Exception {
+	public void removePage() {
 		Bytes maxSizePerSession = Bytes.bytes(pageData1.length + pageData2.length + 1);
 		SessionQuotaManagingDataStore manager = new SessionQuotaManagingDataStore(delegate, maxSizePerSession);
 
@@ -173,7 +173,7 @@ public class SessionQuotaManagingDataStoreTest extends Assert {
 	}
 
 	@Test
-	public void destroy() throws Exception {
+	public void destroy() {
 		Bytes maxSizePerSession = Bytes.bytes(pageData1.length + 1);
 		SessionQuotaManagingDataStore manager = new SessionQuotaManagingDataStore(delegate, maxSizePerSession);
 

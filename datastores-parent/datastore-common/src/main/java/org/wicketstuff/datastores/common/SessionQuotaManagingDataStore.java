@@ -27,8 +27,7 @@ public class SessionQuotaManagingDataStore implements IDataStore {
 	 * to delete all entries for a client when invalidated.
 	 */
 	/* package scoped for testing */
-	final ConcurrentMap<String, SessionData> pagesPerSession =
-			new ConcurrentHashMap<String, SessionData>();
+	final ConcurrentMap<String, SessionData> pagesPerSession = new ConcurrentHashMap<>();
 
 	/**
 	 * The maximum bytes a client can store (the quota).
