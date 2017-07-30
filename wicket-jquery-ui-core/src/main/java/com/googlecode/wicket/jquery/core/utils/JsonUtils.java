@@ -19,6 +19,7 @@ public class JsonUtils
 	 */
 	private JsonUtils()
 	{
+		// noop
 	}
 
 	/**

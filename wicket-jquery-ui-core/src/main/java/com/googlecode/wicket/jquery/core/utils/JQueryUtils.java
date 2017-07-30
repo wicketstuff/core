@@ -29,6 +29,7 @@ public class JQueryUtils
 	 */
 	private JQueryUtils()
 	{
+		// noop
 	}
 
 	/**

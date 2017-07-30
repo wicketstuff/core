@@ -30,6 +30,7 @@ public class BuilderUtils
 	 */
 	private BuilderUtils()
 	{
+		// noop
 	}
 
 	/**

@@ -16,21 +16,18 @@
  */
 package com.googlecode.wicket.jquery.core.utils;
 
-import java.io.Serializable;
-
 import org.apache.wicket.Component;
 import org.apache.wicket.ajax.AjaxRequestTarget;
+import org.apache.wicket.event.Broadcast;
 import org.apache.wicket.feedback.FeedbackMessage;
 import org.apache.wicket.markup.html.panel.FeedbackPanel;
 import org.apache.wicket.protocol.http.WebSession;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import com.googlecode.wicket.jquery.core.ajax.FeedbackPayload;
 
 /**
- * Utility class for handling feedback session messages and feedback ajax messages. The hosting page should implement a code like:<br>
- * 
+ * Utility class for handling feedback session messages and feedback ajax messages.<br>
+ * The hosting page should implement a code like:
  * <pre>
  * <code>
  * public void onEvent(IEvent&lt;?&gt; event)
@@ -56,23 +53,32 @@ import com.googlecode.wicket.jquery.core.ajax.FeedbackPayload;
  */
 public class FeedbackUtils
 {
-	private static final Logger LOG = LoggerFactory.getLogger(FeedbackUtils.class);
-
 	/**
 	 * Utility class
 	 */
 	private FeedbackUtils()
 	{
+		// noop
 	}
 
 	// Session based //
+
+	/**
+	 * Register a debug at session level so the message is available even if the page is redirected
+	 * 
+	 * @param message the message
+	 */
+	public static void debug(String message)
+	{
+		WebSession.get().debug(message);
+	}
 
 	/**
 	 * Register an info at session level so the message is available even if the page is redirected
 	 * 
 	 * @param message the message
 	 */
-	public static void info(Serializable message)
+	public static void info(String message)
 	{
 		WebSession.get().info(message);
 	}
@@ -90,6 +96,16 @@ public class FeedbackUtils
 	/**
 	 * Register a warn at session level so the message is available even if the page is redirected
 	 * 
+	 * @param e the {@link Exception}
+	 */
+	public static void warn(Exception e)
+	{
+		FeedbackUtils.warn(e.getMessage());
+	}
+
+	/**
+	 * Register a warn at session level so the message is available even if the page is redirected
+	 * 
 	 * @param message the message
 	 */
 	public static void warn(String message)
@@ -98,16 +114,13 @@ public class FeedbackUtils
 	}
 
 	/**
-	 * Register a warn at session level so the message is available even if the page is redirected
+	 * Register an error at session level so the message is available even if the page is redirected
 	 * 
 	 * @param e the {@link Exception}
 	 */
-	public static void warn(Exception e)
+	public static void error(Exception e)
 	{
-		String message = e.getMessage();
-
-		LOG.warn(message);
-		FeedbackUtils.warn(message);
+		FeedbackUtils.error(e.getMessage());
 	}
 
 	/**
@@ -121,16 +134,23 @@ public class FeedbackUtils
 	}
 
 	/**
-	 * Register an error at session level so the message is available even if the page is redirected
+	 * Register fatal at session level so the message is available even if the page is redirected
 	 * 
 	 * @param e the {@link Exception}
 	 */
-	public static void error(Exception e)
+	public static void fatal(Exception e)
 	{
-		String message = e.getMessage();
+		FeedbackUtils.error(e.getMessage());
+	}
 
-		LOG.error(message, e);
-		FeedbackUtils.error(message);
+	/**
+	 * Register a fatal at session level so the message is available even if the page is redirected
+	 * 
+	 * @param message the message
+	 */
+	public static void fatal(String message)
+	{
+		WebSession.get().fatal(message);
 	}
 
 	// Ajax based //
@@ -232,7 +252,8 @@ public class FeedbackUtils
 	}
 
 	/**
-	 * Aims the reload a {@link FeedbackPanel}. The hosting page should implement a code like:<br>
+	 * Aims the reload a {@link FeedbackPanel} using {@link Broadcast#BREADTH} mode.<br>
+	 * The hosting page should implement a code like:<br>
 	 * 
 	 * <pre>
 	 * <code>

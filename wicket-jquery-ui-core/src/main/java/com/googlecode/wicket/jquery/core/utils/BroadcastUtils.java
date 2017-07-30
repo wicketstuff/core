@@ -34,6 +34,7 @@ public class BroadcastUtils
 	 */
 	private BroadcastUtils()
 	{
+		// noop
 	}
 
 	/**

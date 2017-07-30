@@ -39,6 +39,7 @@ public class RequestCycleUtils
 	 */
 	private RequestCycleUtils()
 	{
+		// noop
 	}
 
 	/**
@@ -89,7 +90,7 @@ public class RequestCycleUtils
 		final RequestCycle requestCycle = RequestCycle.get();
 		final IRequestParameters parameters = requestCycle.getRequest().getQueryParameters();
 
-		return parameters.getParameterNames().stream().anyMatch(s -> name.equals(s));
+		return parameters.getParameterNames().stream().anyMatch(name::equals);
 	}
 
 	/**

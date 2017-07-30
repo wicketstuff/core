@@ -60,6 +60,7 @@ public class DateUtils
 	 */
 	private DateUtils()
 	{
+		// noop
 	}
 
 	/**
