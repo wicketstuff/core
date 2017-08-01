@@ -1,33 +1,34 @@
 /*
  * Copyright 2012 Igor Vaynberg
- * 
+ *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this work except in compliance with
  * the License. You may obtain a copy of the License in the LICENSE file, or at:
- * 
+ *
  * http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on
  * an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the
  * specific language governing permissions and limitations under the License.
  */
 package org.wicketstuff.select2;
 
+import static org.apache.wicket.util.string.Strings.defaultIfEmpty;
+
 import java.io.Serializable;
 
 import org.apache.wicket.Component;
 import org.apache.wicket.Session;
 import org.apache.wicket.WicketRuntimeException;
+import org.apache.wicket.ajax.json.JSONArray;
 import org.apache.wicket.ajax.json.JSONException;
 import org.apache.wicket.ajax.json.JSONStringer;
 import org.apache.wicket.markup.head.IHeaderResponse;
 import org.apache.wicket.util.string.Strings;
 import org.wicketstuff.select2.json.Json;
 
-import static org.apache.wicket.util.string.Strings.defaultIfEmpty;
-
 /**
  * Select2 settings. Refer to the Select2 documentation for what these options mean.
- * 
+ *
  * @author igor
  */
 public final class Settings implements Serializable
@@ -122,7 +123,9 @@ public final class Settings implements Serializable
 			Json.writeFunction(writer, "dropdownCss", dropdownCss);
 			Json.writeObject(writer, "dropdownCssClass", dropdownCssClass);
 			Json.writeObject(writer, "separator", separator);
-			Json.writeObject(writer, "tokenSeparators", tokenSeparators);
+			if (tokenSeparators != null) {
+				Json.writeObject(writer, "tokenSeparators", new JSONArray(tokenSeparators));
+			}
 			Json.writeObject(writer, "selectOnClose", selectOnClose);
 			Json.writeObject(writer, "dropdownAutoWidth", dropdownAutoWidth);
 			if (!Strings.isEmpty(dropdownParent)) {
@@ -562,5 +565,4 @@ public final class Settings implements Serializable
 		this.language = language;
 		return this;
 	}
-
 }
