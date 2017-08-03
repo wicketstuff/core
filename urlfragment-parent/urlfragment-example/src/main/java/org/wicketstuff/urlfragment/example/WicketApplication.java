@@ -6,7 +6,6 @@ import org.wicketstuff.urlfragment.example.asyncpanel.HomePage;
 
 public class WicketApplication extends WebApplication
 {
-
 	@Override
 	public Class<AsyncHomePage> getHomePage()
 	{

@@ -108,9 +108,9 @@ public class ContentPanel extends Panel
 		});
 
 		final Model<String> formModel = Model.of("something");
-		final Form<String> form = new StatelessForm<String>("form");
+		final Form<String> form = new StatelessForm<>("form");
 		form.setOutputMarkupId(true);
-		form.add(new TextField<String>("formParam", formModel));
+		form.add(new TextField<>("formParam", formModel));
 		form.add(new BookmarkableAjaxButton("submit")
 		{
 			private static final long serialVersionUID = 1L;

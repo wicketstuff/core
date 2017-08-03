@@ -1,11 +1,11 @@
 /* Copyright (c) 2013 Martin Knopf
- * 
+ *
  * Licensed under the MIT license;
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- * 
+ *
  *      http://opensource.org/licenses/MIT
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -26,7 +26,7 @@ import org.apache.wicket.model.IModel;
  * You can set or remove parameters using {@link #setFragmentParameter(String, Object)} or
  * {@link #removeFragmentParameter(String)} during your handling of the submit and error event.
  * </p>
- * 
+ *
  * @author Martin Knopf
  */
 public abstract class BookmarkableAjaxButton extends AjaxButton implements IBookmarkableComponent
@@ -72,14 +72,14 @@ public abstract class BookmarkableAjaxButton extends AjaxButton implements IBook
 
 	/**
 	 * Override to handle the submit event. You can use {@link #urlFragment()} inside this method.
-	 * 
+	 *
 	 * @param target {@link AjaxRequestTarget} can be used to perform update
 	 */
 	protected abstract void onBookmarkableSubmit(AjaxRequestTarget target);
 
 	/**
 	 * Override to handle the error event. You can use {@link #urlFragment()} inside this method.
-	 * 
+	 *
 	 * @param target {@link AjaxRequestTarget} can be used to perform update
 	 */
 	protected abstract void onBookmarkableError(AjaxRequestTarget target);
@@ -117,7 +117,7 @@ public abstract class BookmarkableAjaxButton extends AjaxButton implements IBook
 	/**
 	 * Returns a {@link UrlFragment} connected to the current {@link AjaxRequestTarget}. Use the
 	 * {@link UrlFragment} to update the URL fragment in the browser after the current AJAX event.
-	 * 
+	 *
 	 * @return created {@link UrlFragment} for chaining
 	 */
 	protected UrlFragment urlFragment()
@@ -131,5 +131,4 @@ public abstract class BookmarkableAjaxButton extends AjaxButton implements IBook
 		super.renderHead(response);
 		response.render(UrlParametersReceivingBehavior.getJS(BookmarkableAjaxButton.class));
 	}
-
 }

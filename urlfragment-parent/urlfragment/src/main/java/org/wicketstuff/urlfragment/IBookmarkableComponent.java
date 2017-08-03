@@ -1,11 +1,11 @@
 /* Copyright (c) 2013 Martin Knopf
- * 
+ *
  * Licensed under the MIT license;
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- * 
+ *
  *      http://opensource.org/licenses/MIT
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -18,14 +18,13 @@ import org.apache.wicket.ajax.AjaxRequestTarget;
 
 public interface IBookmarkableComponent
 {
-
 	/**
 	 * Sets the given URL fragment parameter by adding a JavaScript to the current
 	 * {@link AjaxRequestTarget}.
 	 * <p>
 	 * The parameter will be overwritten if it already exists.
 	 * </p>
-	 * 
+	 *
 	 * @param parameterName
 	 *            the name of your URL fragment parameter to set
 	 * @param parameterValue
@@ -47,7 +46,7 @@ public interface IBookmarkableComponent
 	 * <p>
 	 * The value will be appended with the specified delimiter if the parameter already exists.
 	 * </p>
-	 * 
+	 *
 	 * @param parameterName
 	 *            the name of your URL fragment parameter to set
 	 * @param parameterValue
@@ -66,11 +65,10 @@ public interface IBookmarkableComponent
 	 * </p>
 	 * Removes the given URL fragment parameter by adding a JavaScript to the current
 	 * {@link AjaxRequestTarget}.
-	 * 
+	 *
 	 * @param parameterName
 	 *            the name of your URL fragment parameter to set
 	 */
 	@Deprecated
 	void removeFragmentParameter(String parameterName);
-
 }
