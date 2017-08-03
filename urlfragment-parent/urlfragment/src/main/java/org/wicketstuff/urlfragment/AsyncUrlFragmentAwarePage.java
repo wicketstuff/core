@@ -160,6 +160,6 @@ public abstract class AsyncUrlFragmentAwarePage extends WebPage implements IBook
 	public void renderHead(IHeaderResponse response)
 	{
 		super.renderHead(response);
-		response.render(UrlParametersReceivingBehavior.getJS(AsyncUrlFragmentAwarePage.class));
+		response.render(UrlParametersReceivingBehavior.JS_REF);
 	}
 }

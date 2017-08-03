@@ -144,7 +144,7 @@ public abstract class AsyncUrlFragmentAwarePanel extends Panel implements IBookm
 	public void renderHead(IHeaderResponse response)
 	{
 		super.renderHead(response);
-		response.render(UrlParametersReceivingBehavior.getJS(AsyncUrlFragmentAwarePanel.class));
+		response.render(UrlParametersReceivingBehavior.JS_REF);
 	}
 
 	/**

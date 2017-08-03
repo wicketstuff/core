@@ -22,9 +22,8 @@ import org.apache.wicket.ajax.AbstractDefaultAjaxBehavior;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.attributes.AjaxRequestAttributes;
 import org.apache.wicket.ajax.json.JSONException;
-import org.apache.wicket.ajax.json.JSONStringer;
+import org.apache.wicket.ajax.json.JSONObject;
 import org.apache.wicket.behavior.Behavior;
-import org.apache.wicket.markup.head.HeaderItem;
 import org.apache.wicket.markup.head.IHeaderResponse;
 import org.apache.wicket.markup.head.JavaScriptHeaderItem;
 import org.apache.wicket.markup.head.OnDomReadyHeaderItem;
@@ -42,6 +41,9 @@ import org.apache.wicket.request.resource.PackageResourceReference;
 public abstract class UrlParametersReceivingBehavior extends AbstractDefaultAjaxBehavior
 {
 	private static final long serialVersionUID = 1L;
+	protected static final JavaScriptHeaderItem JS_REF
+			= JavaScriptHeaderItem.forReference(new PackageResourceReference(UrlParametersReceivingBehavior.class, "urlfragment.js"));
+
 	private final Component[] components;
 	private final Map<String, String> options;
 
@@ -81,15 +83,15 @@ public abstract class UrlParametersReceivingBehavior extends AbstractDefaultAjax
 		super.renderHead(component, response);
 
 		StringBuilder sb = new StringBuilder().append("try{")
-			.append("window.UrlUtil = newUrlUtil(")
+			.append("if (window.UrlUtil === undefined) {window.UrlUtil = newUrlUtil(")
 			.append(optionsJsonString())
 			.append(");")
 			.append("UrlUtil.setWicketAjaxCall(function(){" + getCallbackFunctionBody() + "});")
 			.append("$(window).bind('hashchange',window.UrlUtil.back);")
-			.append("window.UrlUtil.sendUrlParameters();")
+			.append("window.UrlUtil.sendUrlParameters();}")
 			.append("}catch(e){}");
 		response.render(new OnDomReadyHeaderItem(sb.toString()));
-		response.render(getJS(UrlParametersReceivingBehavior.class));
+		response.render(JS_REF);
 	}
 
 	private String optionsJsonString()
@@ -97,13 +99,7 @@ public abstract class UrlParametersReceivingBehavior extends AbstractDefaultAjax
 		String optionsJsonString = "";
 		try
 		{
-			JSONStringer writer = new JSONStringer().object();
-			for (String key : options.keySet())
-			{
-				writer.key(key).value(options.get(key));
-			}
-			writer.endObject();
-			optionsJsonString = writer.toString();
+			optionsJsonString = new JSONObject(options).toString();
 		}
 		catch (JSONException e)
 		{
@@ -143,18 +139,4 @@ public abstract class UrlParametersReceivingBehavior extends AbstractDefaultAjax
 	 */
 	protected abstract void onParameterArrival(IRequestParameters requestParameters,
 		AjaxRequestTarget target);
-
-	/**
-	 * Returns the {@link HeaderItem} representing the JavaScript library used to read and write URL
-	 * fragment parameters.
-	 *
-	 * @param scope
-	 *            the scope of the {@link PackageResourceReference}
-	 * @return
-	 */
-	protected static HeaderItem getJS(Class<?> scope)
-	{
-		PackageResourceReference ref = new PackageResourceReference(scope, "urlfragment.js");
-		return JavaScriptHeaderItem.forReference(ref, ref.getName());
-	}
 }

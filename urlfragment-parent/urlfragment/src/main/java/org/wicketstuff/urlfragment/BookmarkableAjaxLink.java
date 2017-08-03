@@ -159,6 +159,6 @@ public abstract class BookmarkableAjaxLink<T> extends AjaxLink<T> implements IBo
 	public void renderHead(IHeaderResponse response)
 	{
 		super.renderHead(response);
-		response.render(UrlParametersReceivingBehavior.getJS(BookmarkableAjaxLink.class));
+		response.render(UrlParametersReceivingBehavior.JS_REF);
 	}
 }
