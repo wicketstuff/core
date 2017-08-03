@@ -17,7 +17,7 @@
 /*
  * Wicket GMap3
  *
- * @author Tilman M�ller
+ * @author Tilman Mueller
  * @author Joachim F. Rohde
  */
 // Wicket Namespace

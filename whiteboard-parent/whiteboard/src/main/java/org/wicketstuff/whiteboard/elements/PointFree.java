@@ -16,12 +16,12 @@
  */
 package org.wicketstuff.whiteboard.elements;
 
-import org.apache.wicket.ajax.json.JSONException;
-import org.apache.wicket.ajax.json.JSONObject;
+import com.github.openjson.JSONException;
+import com.github.openjson.JSONObject;
 
 /**
  * This class represent a point element on Whiteboard
- * 
+ *
  * @author andunslg
  */
 public class PointFree extends Element {
@@ -35,7 +35,7 @@ public class PointFree extends Element {
 		this.y = y;
 	}
 
-	public PointFree(JSONObject object) throws JSONException {
+	public PointFree(JSONObject object) {
 		super(object);
 		this.type = Type.PointFree;
 		this.x = object.get("x") instanceof Double ? object.getDouble("x") : object.getInt("x");
@@ -44,11 +44,12 @@ public class PointFree extends Element {
 
 	/**
 	 * Return a JSON object which represent the Element
-	 * 
+	 *
 	 * @return JSON object with field values added
 	 * @throws JSONException
 	 */
-	public JSONObject getJSON() throws JSONException {
+	@Override
+	public JSONObject getJSON() {
 		JSONObject jsonObject = super.getJSON(new JSONObject());
 		jsonObject.put("x", x);
 		jsonObject.put("y", y);

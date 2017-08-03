@@ -12,11 +12,7 @@
  */
 package org.wicketstuff.dashboard.web;
 
-import org.apache.wicket.markup.html.image.Image;
 import org.apache.wicket.model.IModel;
-import org.apache.wicket.request.resource.ContextRelativeResource;
-import org.apache.wicket.request.resource.PackageResourceReference;
-import org.apache.wicket.util.lang.Args;
 import org.wicketstuff.dashboard.Widget;
 import org.wicketstuff.dashboard.WidgetAction;
 
@@ -24,58 +20,34 @@ import org.wicketstuff.dashboard.WidgetAction;
  * @author Decebal Suiu
  */
 public abstract class AbstractWidgetAction implements WidgetAction {
+	private static final long serialVersionUID = 1L;
+	protected Widget widget;
+	protected IModel<String> tooltip;
+	private String cssClass;
 
-    protected Widget widget;
-    protected IModel<String> tooltip;
-    private Class imageScope;
-    private String imageName;
+	public AbstractWidgetAction(Widget widget) {
+		this.widget = widget;
+	}
 
-    public AbstractWidgetAction(Widget widget) {
-        this.widget = widget;
-    }
+	public Widget getWidget() {
+		return widget;
+	}
 
-    public Widget getWidget() {
-        return widget;
-    }
+	@Override
+	public IModel<String> getTooltip() {
+		return tooltip;
+	}
 
-    @Override
-    public IModel<String> getTooltip() {
-        return tooltip;
-    }
+	public void setTooltip(IModel<String> tooltip) {
+		this.tooltip = tooltip;
+	}
 
-    public void setTooltip(IModel<String> tooltip) {
-        this.tooltip = tooltip;
-    }
+	public void setCssClass(String cssClass) {
+		this.cssClass = cssClass;
+	}
 
-    /**
-     * If you use this method than the image name is relative to scope.
-     *
-     * @param scope
-     * @param name
-     */
-    public void setImage(Class scope, String name) {
-        imageScope = scope;
-        imageName = name;
-    }
-
-    /**
-     * If you use this method than the image name is relative to context.
-     *
-     * @param name
-     */
-    public void setImage(String name) {
-        setImage(null, name);
-    }
-
-    @Override
-    public Image getImage(String id) {
-        Args.notNull(imageName, "imageName");
-
-        if (imageScope != null) {
-            return new Image(id, new PackageResourceReference(imageScope, imageName));
-        }
-
-        return new Image(id, new ContextRelativeResource(imageName));
-    }
-
+	@Override
+	public String getCssClass() {
+		return cssClass;
+	}
 }

@@ -12,7 +12,7 @@ import java.util.function.BiFunction;
  *            - the type of the second argument to the function
  * @param <R>
  *            - the type of the result of the function
- * 
+ * @deprecated Use {@link org.danekja.java.util.function.serializable.SerializableBiFunction} instead
  */
 public interface SerializableBiFunction<T, U, R> extends BiFunction<T, U, R>, Serializable {
 

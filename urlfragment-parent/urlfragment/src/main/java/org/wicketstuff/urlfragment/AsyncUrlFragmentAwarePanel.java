@@ -28,7 +28,7 @@ import org.apache.wicket.request.IRequestParameters;
  * after the initial request.
  * <p>
  * After the initial request this panel executes an AJAX call (through a behavior) which invokes
- * {@link #onParameterArrival(IRequestParameters, AjaxRequestTarget)}. This is a typical AJAX event
+ * {@link #onParameterIncome(IRequestParameters, AjaxRequestTarget)}. This is a typical AJAX event
  * handling method with the difference that you have the URL query and fragment parameters, your
  * site was requested with, available in it. This method serves as your entry point for components
  * depending on URL fragment parameters.
@@ -44,7 +44,7 @@ import org.apache.wicket.request.IRequestParameters;
  */
 public abstract class AsyncUrlFragmentAwarePanel extends Panel implements IBookmarkableComponent
 {
-
+	private static final long serialVersionUID = 1L;
 	private transient AjaxRequestTarget target = null;
 
 	public AsyncUrlFragmentAwarePanel(String id)
@@ -64,6 +64,7 @@ public abstract class AsyncUrlFragmentAwarePanel extends Panel implements IBookm
 		this.setOutputMarkupId(true);
 		add(new UrlParametersReceivingBehavior(getOptions())
 		{
+			private static final long serialVersionUID = 1L;
 
 			@Override
 			protected void onParameterArrival(IRequestParameters requestParameters,
@@ -83,16 +84,16 @@ public abstract class AsyncUrlFragmentAwarePanel extends Panel implements IBookm
 	 * the URL fragment.
 	 * <p>
 	 * Possible options are:
+	 * </p>
 	 * <ul>
 	 * <li>
 	 * 'fragmentIdentifierSuffix': String after the '#' (standard is '!')</li>
 	 * <li>
 	 * 'keyValueDelimiter': a String used to connect fragment parameters keys and values (standard
-	 * is '&')</li>
+	 * is '&amp;')</li>
 	 * </ul>
-	 * </p>
 	 * 
-	 * @return
+	 * @return options {@link Map} created
 	 */
 	protected Map<String, String> getOptions()
 	{
@@ -103,8 +104,8 @@ public abstract class AsyncUrlFragmentAwarePanel extends Panel implements IBookm
 	 * This is where you can grab the URL query and fragment parameters, your site was requested
 	 * with. You can use {@link #urlFragment()} inside this method.
 	 * 
-	 * @param requestParameters
-	 * @param target
+	 * @param requestParameters parameters set on this page
+	 * @param target {@link AjaxRequestTarget} can be used for page updating
 	 */
 	protected abstract void onParameterIncome(IRequestParameters requestParameters,
 		AjaxRequestTarget target);
@@ -150,7 +151,7 @@ public abstract class AsyncUrlFragmentAwarePanel extends Panel implements IBookm
 	 * Returns a {@link UrlFragment} connected to the current {@link AjaxRequestTarget}. Use the
 	 * {@link UrlFragment} to update the URL fragment in the browser after the current AJAX event.
 	 * 
-	 * @return
+	 * @return created {@link UrlFragment} for chaining
 	 */
 	protected UrlFragment urlFragment()
 	{

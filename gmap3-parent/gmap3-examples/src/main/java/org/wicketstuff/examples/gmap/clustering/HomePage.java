@@ -25,10 +25,10 @@ public class HomePage extends WicketExamplePage
     
     public HomePage()
     {
-        final GMap mapDefault = new GMap("mapPanelDefault");
+        final GMap mapDefault = new GMap("mapPanelDefault", WicketExamplePage.API_KEY);
         add(mapDefault);
         
-        final GMap map = new GMap("mapPanel");
+        final GMap map = new GMap("mapPanel", WicketExamplePage.API_KEY);
         add(map);
         
         List<GLatLng> markersToShow = new ArrayList<GLatLng>();

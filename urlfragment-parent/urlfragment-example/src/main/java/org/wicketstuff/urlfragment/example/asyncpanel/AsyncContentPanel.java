@@ -10,7 +10,7 @@ import org.wicketstuff.urlfragment.BookmarkableAjaxLink;
 
 public class AsyncContentPanel extends AsyncUrlFragmentAwarePanel
 {
-
+	private static final long serialVersionUID = 1L;
 	private final IModel<String> sortingModel;
 	private final Label sortingLabel;
 
@@ -26,6 +26,7 @@ public class AsyncContentPanel extends AsyncUrlFragmentAwarePanel
 
 		add(new BookmarkableAjaxLink<Void>("zins_asc", "sorting", "zins_asc")
 		{
+			private static final long serialVersionUID = 1L;
 
 			@Override
 			public void onBookmarkableClick(AjaxRequestTarget target)
@@ -38,6 +39,7 @@ public class AsyncContentPanel extends AsyncUrlFragmentAwarePanel
 
 		add(new BookmarkableAjaxLink<Void>("zins_desc", "sorting", "zins_desc")
 		{
+			private static final long serialVersionUID = 1L;
 
 			@Override
 			public void onBookmarkableClick(AjaxRequestTarget target)

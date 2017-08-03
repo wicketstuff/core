@@ -107,7 +107,7 @@ add(new BookmarkableAjaxLink<Void>("link") {
 ```java
 add(new BookmarkableAjaxButton<Void>("submit") {
   @Override
-  public void onBookmarkableSubmit(AjaxRequestTarget target, Form<?> form) {
+  public void onBookmarkableSubmit(AjaxRequestTarget target) {
     // handle submit event
     
     urlFragment().set("new window.location.hash");
@@ -118,7 +118,7 @@ add(new BookmarkableAjaxButton<Void>("submit") {
   }
       
   @Override
-  public void onBookmarkableError(AjaxRequestTarget target, Form<?> form) {
+  public void onBookmarkableError(AjaxRequestTarget target) {
     // handle error event
     
     urlFragment().set("new window.location.hash");

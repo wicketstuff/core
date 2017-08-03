@@ -6,6 +6,6 @@ public class StartHibernateNativeExample
 {
 	public static void main(String[] args) throws Exception
 	{
-		ExampleRunner.run();
+		ExampleRunner.main(args);
 	}
 }

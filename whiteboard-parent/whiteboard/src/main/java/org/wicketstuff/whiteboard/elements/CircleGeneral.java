@@ -16,12 +16,12 @@
  */
 package org.wicketstuff.whiteboard.elements;
 
-import org.apache.wicket.ajax.json.JSONException;
-import org.apache.wicket.ajax.json.JSONObject;
+import com.github.openjson.JSONException;
+import com.github.openjson.JSONObject;
 
 /**
  * This class represent a line element on Whiteboard which is represented by three coordinates
- * 
+ *
  * @author andunslg
  */
 public class CircleGeneral extends Element {
@@ -38,7 +38,7 @@ public class CircleGeneral extends Element {
 		this.c = c;
 	}
 
-	public CircleGeneral(JSONObject object) throws JSONException {
+	public CircleGeneral(JSONObject object) {
 		super(object);
 		this.type = Type.CircleGeneral;
 		this.a = object.getInt("a");
@@ -49,11 +49,12 @@ public class CircleGeneral extends Element {
 
 	/**
 	 * Return a JSON object which represent the Element
-	 * 
+	 *
 	 * @return JSON object with field values added
 	 * @throws JSONException
 	 */
-	public JSONObject getJSON() throws JSONException {
+	@Override
+	public JSONObject getJSON() {
 		JSONObject jsonObject = super.getJSON(new JSONObject());
 		jsonObject.put("a", a);
 		jsonObject.put("b", b);

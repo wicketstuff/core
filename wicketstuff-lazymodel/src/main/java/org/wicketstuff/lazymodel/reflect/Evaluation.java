@@ -51,7 +51,7 @@ public class Evaluation<R> implements Callback {
 	/**
 	 * The factory for proxies.
 	 */
-	private static IProxyFactory proxyFactory = new CachingProxyFactory(
+	public static IProxyFactory proxyFactory = new CachingProxyFactory(
 			new DefaultProxyFactory());
 
 	/**
@@ -136,7 +136,7 @@ public class Evaluation<R> implements Callback {
 			return null;
 		}
 
-		return clazz.cast(proxyFactory.createInstance(proxyClass, this));
+		return proxyFactory.createInstance(proxyClass, this);
 	}
 
 	/**

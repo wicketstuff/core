@@ -5,7 +5,7 @@
     <parent>
         <groupId>org.wicketstuff</groupId>
         <artifactId>jquery-parent</artifactId>
-        <version>7.4.0-SNAPSHOT</version>
+        <version>8.0.0-SNAPSHOT</version>
     </parent>
 
     <artifactId>jquery-examples</artifactId>
@@ -69,23 +69,18 @@
 		</dependency>
 		<dependency>
 			<groupId>org.eclipse.jetty.aggregate</groupId>
-			<artifactId>jetty-all-server</artifactId>
+			<artifactId>jetty-all</artifactId>
+            <classifier>uber</classifier>
 		</dependency>
     </dependencies>
     <build>
         <plugins>
             <plugin>
-                <groupId>org.mortbay.jetty</groupId>
+                <groupId>org.eclipse.jetty</groupId>
                 <artifactId>jetty-maven-plugin</artifactId>
                 <configuration>
                     <scanIntervalSeconds>60</scanIntervalSeconds>
                     <webAppSourceDirectory>src/main/webapp</webAppSourceDirectory>
-                    <connectors>
-                        <connector implementation="org.mortbay.jetty.nio.SelectChannelConnector">
-                            <port>8080</port>
-                            <maxIdleTime>60000</maxIdleTime>
-                        </connector>
-                    </connectors>
                 </configuration>
             </plugin>
         </plugins>

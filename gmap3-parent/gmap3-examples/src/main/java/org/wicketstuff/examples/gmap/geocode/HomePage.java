@@ -29,7 +29,7 @@ public class HomePage extends WicketExamplePage
         feedback.setOutputMarkupId(true);
         add(feedback);
 
-        final GMap bottomMap = new GMap("bottomPanel");
+        final GMap bottomMap = new GMap("bottomPanel", WicketExamplePage.API_KEY);
         bottomMap.setOutputMarkupId(true);
         bottomMap.setMapType(GMapType.SATELLITE);
         add(bottomMap);
@@ -43,7 +43,7 @@ public class HomePage extends WicketExamplePage
         Button button = new Button("client");
         // Using GClientGeocoder the geocoding request
         // is performed on the client using JavaScript
-        button.add(new GClientGeocoder("click", addressTextField, Duration.seconds(2))
+        button.add(new GClientGeocoder("click", addressTextField, Duration.seconds(2), "http", WicketExamplePage.API_KEY)
         {
             private static final long serialVersionUID = 1L;
 
@@ -72,7 +72,7 @@ public class HomePage extends WicketExamplePage
             private static final long serialVersionUID = 1L;
 
             @Override
-            protected void onSubmit(AjaxRequestTarget target, Form<?> form)
+            protected void onSubmit(AjaxRequestTarget target)
             {
                 try
                 {

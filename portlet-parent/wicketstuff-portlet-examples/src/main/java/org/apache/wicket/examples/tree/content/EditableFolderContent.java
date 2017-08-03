@@ -16,6 +16,8 @@
  */
 package org.apache.wicket.examples.tree.content;
 
+import java.util.Optional;
+
 import org.apache.wicket.Component;
 import org.apache.wicket.MarkupContainer;
 import org.apache.wicket.ajax.AjaxRequestTarget;
@@ -72,7 +74,7 @@ public class EditableFolderContent extends Content
 			@Override
 			protected Component newLabelComponent(String id, final IModel<Foo> model)
 			{
-				return new AjaxEditableLabel<String>(id, new PropertyModel<String>(model, "bar"))
+				return new AjaxEditableLabel<String>(id, new PropertyModel<>(model, "bar"))
 				{
 					@Override
 					protected void onSubmit(AjaxRequestTarget target)

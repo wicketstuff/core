@@ -16,7 +16,7 @@ import org.wicketstuff.urlfragment.BookmarkableAjaxLink;
 
 public class ContentPanel extends Panel
 {
-
+	private static final long serialVersionUID = 1L;
 	private final StringValue linkParam;
 
 	public ContentPanel(String id, IRequestParameters requestParameters)
@@ -44,6 +44,7 @@ public class ContentPanel extends Panel
 
 		add(new BookmarkableAjaxLink<Void>("setFragment")
 		{
+			private static final long serialVersionUID = 1L;
 
 			@Override
 			public void onBookmarkableClick(AjaxRequestTarget target)
@@ -56,6 +57,7 @@ public class ContentPanel extends Panel
 
 		add(new BookmarkableAjaxLink<Void>("setFragmentParameter")
 		{
+			private static final long serialVersionUID = 1L;
 
 			@Override
 			public void onBookmarkableClick(AjaxRequestTarget target)
@@ -68,6 +70,7 @@ public class ContentPanel extends Panel
 
 		add(new BookmarkableAjaxLink<Void>("appendParam")
 		{
+			private static final long serialVersionUID = 1L;
 
 			@Override
 			public void onBookmarkableClick(AjaxRequestTarget target)
@@ -80,6 +83,7 @@ public class ContentPanel extends Panel
 
 		add(new BookmarkableAjaxLink<Void>("putParam")
 		{
+			private static final long serialVersionUID = 1L;
 
 			@Override
 			public void onBookmarkableClick(AjaxRequestTarget target)
@@ -92,6 +96,7 @@ public class ContentPanel extends Panel
 
 		add(new BookmarkableAjaxLink<Void>("removeParam")
 		{
+			private static final long serialVersionUID = 1L;
 
 			@Override
 			public void onBookmarkableClick(AjaxRequestTarget target)
@@ -108,16 +113,17 @@ public class ContentPanel extends Panel
 		form.add(new TextField<String>("formParam", formModel));
 		form.add(new BookmarkableAjaxButton("submit")
 		{
+			private static final long serialVersionUID = 1L;
 
 			@Override
-			protected void onBookmarkableSubmit(AjaxRequestTarget target, Form<?> form)
+			protected void onBookmarkableSubmit(AjaxRequestTarget target)
 			{
 				urlFragment().putParameter("formParam", formModel.getObject());
 				target.add(form);
 			}
 
 			@Override
-			protected void onBookmarkableError(AjaxRequestTarget target, Form<?> form)
+			protected void onBookmarkableError(AjaxRequestTarget target)
 			{
 			}
 		});

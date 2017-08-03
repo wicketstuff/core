@@ -1,17 +1,23 @@
 package org.apache.wicket.portlet.request.mapper;
 
+import java.util.Iterator;
+import java.util.function.Supplier;
+
 import org.apache.wicket.Application;
+import org.apache.wicket.Page;
 import org.apache.wicket.SystemMapper;
 import org.apache.wicket.core.request.mapper.BookmarkableMapper;
+import org.apache.wicket.core.request.mapper.HomePageMapper;
+import org.apache.wicket.core.request.mapper.MountedMapper;
+import org.apache.wicket.protocol.http.WebApplication;
 import org.apache.wicket.request.IRequestHandler;
 import org.apache.wicket.request.IRequestMapper;
 import org.apache.wicket.request.Url;
-import org.apache.wicket.core.request.mapper.HomePageMapper;
 import org.apache.wicket.request.component.IRequestablePage;
+import org.apache.wicket.request.mapper.CompoundRequestMapper;
 import org.apache.wicket.request.mapper.info.PageInfo;
 import org.apache.wicket.request.mapper.parameter.IPageParametersEncoder;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
-import org.apache.wicket.util.IProvider;
 
 /**
  * <p>
@@ -26,12 +32,59 @@ public class PortletSystemMapper extends SystemMapper
 
 	private MapperDelegate delegate = new MapperDelegate();
 
+	
+	/**
+	 * Mounts a page class of the application to the given path.
+	 * @param <T>
+	 * 
+	 * @param <T>
+	 *            type of page
+	 * 
+	 * @param application
+	 * 			
+	 * @param path
+	 *            the path to mount the page class on
+	 * @param pageClass
+	 *            the page class to be mounted
+	 */
+	public static <T extends Page> MountedMapper mountPage(final WebApplication application, final String path, final Class<T> pageClass)
+	{
+		MountedMapper mapper = new MountedMapper(path, pageClass) {
+			private MapperDelegate delegate = new MapperDelegate();
+			
+			@Override
+			protected IRequestHandler processHybrid(PageInfo pageInfo,
+					Class<? extends IRequestablePage> pageClass,
+					PageParameters pageParameters, Integer renderCount) {
+				
+				return delegate.processHybrid(pageInfo, pageClass, pageParameters, renderCount);
+			}
+		};
+		application.mount(mapper);
+		
+		return mapper;
+	}
+	
 	/**
 	 * @param application
 	 */
 	public PortletSystemMapper(Application application)
 	{
 		super(application);
+		addMountedMappers(application);
+	}
+	
+	protected void addMountedMappers(Application application) {
+		IRequestMapper rootMapper = application.getRootRequestMapper();
+		if (rootMapper instanceof CompoundRequestMapper) {
+			Iterator<IRequestMapper> iterator = ((CompoundRequestMapper)rootMapper).iterator();
+			while (iterator.hasNext()) {
+				IRequestMapper requestMapper = iterator.next();
+				if (requestMapper instanceof MountedMapper && !(requestMapper instanceof HomePageMapper)) {
+					add(requestMapper);
+				}
+			}
+		}
 	}
 
 	/**
@@ -42,11 +95,6 @@ public class PortletSystemMapper extends SystemMapper
 	{
 		return new BookmarkableMapper()
 		{
-			/**
-			 * @see org.apache.wicket.core.request.mapper.AbstractBookmarkableMapper#processHybrid(org.apache.wicket.request.mapper.info.PageInfo,
-			 *      java.lang.Class, org.apache.wicket.request.mapper.parameter.PageParameters,
-			 *      java.lang.Integer)
-			 */
 			@Override
 			protected IRequestHandler processHybrid(PageInfo pageInfo,
 				Class<? extends IRequestablePage> pageClass, PageParameters pageParameters,
@@ -55,11 +103,6 @@ public class PortletSystemMapper extends SystemMapper
 				return delegate.processHybrid(pageInfo, pageClass, pageParameters, renderCount);
 			}
 
-			/**
-			 * @see org.apache.wicket.request.mapper.AbstractMapper#encodePageParameters(org.apache.wicket.request.Url,
-			 *      org.apache.wicket.request.mapper.parameter.PageParameters,
-			 *      org.apache.wicket.request.mapper.parameter.IPageParametersEncoder)
-			 */
 			@Override
 			protected Url encodePageParameters(Url url, PageParameters pageParameters,
 				IPageParametersEncoder encoder)
@@ -70,20 +113,13 @@ public class PortletSystemMapper extends SystemMapper
 	}
 
 	/**
-	 * @see org.apache.wicket.SystemMapper#newHomePageMapper(org.apache.wicket.util.IProvider)
+	 * @see org.apache.wicket.SystemMapper#newHomePageMapper(Supplier)
 	 */
 	@Override
-	protected IRequestMapper newHomePageMapper(
-		IProvider<Class<? extends IRequestablePage>> homePageProvider)
+	protected IRequestMapper newHomePageMapper(Supplier<Class<? extends IRequestablePage>> homePageProvider)
 	{
-
 		return new HomePageMapper(homePageProvider)
 		{
-			/**
-			 * @see org.apache.wicket.core.request.mapper.AbstractBookmarkableMapper#processHybrid(org.apache.wicket.request.mapper.info.PageInfo,
-			 *      java.lang.Class, org.apache.wicket.request.mapper.parameter.PageParameters,
-			 *      java.lang.Integer)
-			 */
 			@Override
 			protected IRequestHandler processHybrid(PageInfo pageInfo,
 				Class<? extends IRequestablePage> pageClass, PageParameters pageParameters,
@@ -92,11 +128,6 @@ public class PortletSystemMapper extends SystemMapper
 				return delegate.processHybrid(pageInfo, pageClass, pageParameters, renderCount);
 			}
 
-			/**
-			 * @see org.apache.wicket.request.mapper.AbstractMapper#encodePageParameters(org.apache.wicket.request.Url,
-			 *      org.apache.wicket.request.mapper.parameter.PageParameters,
-			 *      org.apache.wicket.request.mapper.parameter.IPageParametersEncoder)
-			 */
 			@Override
 			protected Url encodePageParameters(Url url, PageParameters pageParameters,
 				IPageParametersEncoder encoder)

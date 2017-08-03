@@ -19,7 +19,7 @@ import org.apache.wicket.markup.head.IHeaderResponse;
 import org.apache.wicket.markup.head.JavaScriptHeaderItem;
 
 /**
- * Provides required resources (JS, CSS) in a head. 
+ * Provides required resources (JS, CSS) in a head.
  * Should be attached to a component which require these resources
  * @author Decebal Suiu
  */
@@ -32,10 +32,6 @@ public class DashboardResourcesBehavior extends Behavior {
 		super.renderHead(component, response);
 
 		DashboardSettings settings = DashboardSettings.get();
-
-		if (settings.isIncludeJQuery()) {
-			response.render(JavaScriptHeaderItem.forReference(settings.getJQueryReference()));
-		}
 
 		if (settings.isIncludeJQueryUI()) {
 			response.render(JavaScriptHeaderItem.forReference(settings.getJQueryUIReference()));
@@ -51,9 +47,9 @@ public class DashboardResourcesBehavior extends Behavior {
 
 		if (settings.isIncludeCss()) {
 			response.render(CssHeaderItem.forReference(settings.getCssReference()));
-            if (settings.isRtl()) {
-                response.render(CssHeaderItem.forReference(settings.getRtlCssReference()));
-            }
+			if (settings.isRtl()) {
+				response.render(CssHeaderItem.forReference(settings.getRtlCssReference()));
+			}
 		}
 	}
 

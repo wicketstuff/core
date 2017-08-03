@@ -22,7 +22,7 @@ public class HomePage extends WicketExamplePage
 
     public HomePage()
     {
-        map = new GMap("panel");
+        map = new GMap("panel", WicketExamplePage.API_KEY);
         add(map);
         map.add(new MapTypeChangedListener()
         {

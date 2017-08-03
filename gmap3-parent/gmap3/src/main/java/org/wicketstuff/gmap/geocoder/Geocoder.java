@@ -22,7 +22,7 @@ import java.io.UnsupportedEncodingException;
 import java.net.URL;
 import java.net.URLEncoder;
 
-import org.apache.wicket.ajax.json.JSONException;
+import com.github.openjson.JSONException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.wicketstuff.gmap.GMap;
@@ -57,29 +57,37 @@ public class Geocoder implements Serializable
      */
     private GeocoderResult geocoderResult;
     private ObjectMapper objectMapper;
+    private String apiKey = null;
 
 
     /**
      * <b>Default Constructor.</b><br/>
      * Create an {@link ObjectMapper}.<br/>
-     * The {@link ObjectMapper} ignore unknown properties when mapping from JSON to POJO.<br/>
-     * <b>Use</b> {@link #Geocoder(ObjectMapper)} to customize
+     * The {@link ObjectMapper} ignores unknown properties when mapping from JSON
+     * to POJO.<br/>
+     * <b>Use</b> {@link #Geocoder(com.fasterxml.jackson.databind.ObjectMapper, java.lang.String) } to customize
+     * 
+     * @param apiKey your Google Maps API-key
      */
-    public Geocoder()
+    public Geocoder(String apiKey)
     {
         objectMapper = new ObjectMapper();
         objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+        this.apiKey = apiKey;
     }
 
     /**
      * <b>Configuration Constructor.</b><br/>
      * If you have to customize the default {@link ObjectMapper}
-     * 
+     *
+     * @param mapper your customized ObjectMapper
+     * @param apiKey your Google Maps API-key
      * @see Geocoder#Geocoder()
      */
-    public Geocoder(ObjectMapper mapper)
+    public Geocoder(ObjectMapper mapper, String apiKey)
     {
         this.objectMapper = mapper;
+        this.apiKey = apiKey;
     }
 
     /**
@@ -142,6 +150,12 @@ public class Geocoder implements Serializable
         StringBuilder sb = new StringBuilder("http://maps.googleapis.com/maps/api/geocode/");
         sb.append(output);
         sb.append("?");
+        if (apiKey != null)
+        {
+            sb.append("apiKey=");
+            sb.append(apiKey);
+            sb.append("&");
+        }
         sb.append("address=").append(urlEncode(address));
         return sb.toString();
     }

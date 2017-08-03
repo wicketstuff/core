@@ -14,9 +14,9 @@ package org.wicketstuff.select2;
 
 import java.util.Collection;
 
-import org.apache.wicket.ajax.json.JSONException;
-import org.apache.wicket.ajax.json.JSONWriter;
 import org.apache.wicket.model.IDetachable;
+import com.github.openjson.JSONException;
+import com.github.openjson.JSONStringer;
 
 /**
  * <p>
@@ -105,12 +105,12 @@ public abstract class ChoiceProvider<T> implements IDetachable
 	 * 
 	 * @param choice
 	 *            choice to convert
-	 * @param writer
+	 * @param stringer
 	 *            Json writer that should be used to covnert the choice
 	 * @throws JSONException
 	 */
-	protected void toJson(T choice, JSONWriter writer) throws JSONException {
-		writer.key("id").value(getIdValue(choice)).key("text").value(getDisplayValue(choice));
+	protected void toJson(T choice, JSONStringer stringer) throws JSONException {
+		stringer.key("id").value(getIdValue(choice)).key("text").value(getDisplayValue(choice));
 	}
 
 	/**

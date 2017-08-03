@@ -28,6 +28,8 @@ public class Page2 extends WebPage {
 		super(parameters);
 
 		add(new AjaxLink<Void>("link") {
+			private static final long serialVersionUID = 1L;
+
 			@Override
 			public void onClick(AjaxRequestTarget target)
 			{

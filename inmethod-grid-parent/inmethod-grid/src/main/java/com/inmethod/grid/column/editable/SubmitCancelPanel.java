@@ -100,7 +100,7 @@ abstract class SubmitCancelPanel<M, I> extends Panel
 		}
 
 		@Override
-		protected void onSubmit(AjaxRequestTarget target, Form<?> form)
+		protected void onSubmit(AjaxRequestTarget target)
 		{
 			WebMarkupContainer gridRow = getGrid().findParentRow(SubmitCancelPanel.this);
 			final Boolean[] error = { false };
@@ -167,15 +167,6 @@ abstract class SubmitCancelPanel<M, I> extends Panel
 			{
 				SubmitCancelPanel.this.onError(target);
 			}
-
-
-		}
-
-		@Override
-		protected void onError(AjaxRequestTarget target, Form<?> form)
-		{
-			// TODO Auto-generated method stub
-
 		}
 	};
 

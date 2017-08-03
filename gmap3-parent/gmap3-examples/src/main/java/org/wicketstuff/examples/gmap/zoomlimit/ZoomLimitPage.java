@@ -13,7 +13,7 @@ public class ZoomLimitPage extends WicketExamplePage
 
     public ZoomLimitPage()
     {
-        GMap map = new GMap("map");
+        GMap map = new GMap("map", API_KEY);
         map.setStreetViewControlEnabled(false);
         map.setScaleControlEnabled(true);
         map.setScrollWheelZoomEnabled(true);

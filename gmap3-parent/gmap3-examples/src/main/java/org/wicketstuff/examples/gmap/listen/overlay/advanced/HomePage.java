@@ -29,7 +29,7 @@ public class HomePage extends WicketExamplePage
 
     public HomePage()
     {
-        final GMap map = new GMap("map");
+        final GMap map = new GMap("map", WicketExamplePage.API_KEY);
         add(map);
         final WebMarkupContainer repeaterParent = new WebMarkupContainer("repeaterParent");
         repeaterParent.setOutputMarkupId(true);
@@ -130,7 +130,7 @@ public class HomePage extends WicketExamplePage
                     return model.getObject().getListeners().containsKey(GEvent.dragend);
                 }
             });
-            dragendLabel.add(new AjaxEventBehavior("onclick")
+            dragendLabel.add(new AjaxEventBehavior("click")
             {
                 private static final long serialVersionUID = 1L;
 

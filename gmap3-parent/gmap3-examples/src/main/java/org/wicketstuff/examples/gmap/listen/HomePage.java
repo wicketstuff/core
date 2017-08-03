@@ -28,7 +28,7 @@ public class HomePage extends WicketExamplePage
 
     public HomePage()
     {
-        final GMap map = new GMap("map");
+        final GMap map = new GMap("map", WicketExamplePage.API_KEY);
         add(map);
         moveEndBehavior = new MyDragEndListener();
         map.add(moveEndBehavior);
@@ -112,7 +112,7 @@ public class HomePage extends WicketExamplePage
                 return map.getBehaviors().contains(moveEndBehavior);
             }
         });
-        enabledLabel.add(new AjaxEventBehavior("onclick")
+        enabledLabel.add(new AjaxEventBehavior("click")
         {
             private static final long serialVersionUID = 1L;
 

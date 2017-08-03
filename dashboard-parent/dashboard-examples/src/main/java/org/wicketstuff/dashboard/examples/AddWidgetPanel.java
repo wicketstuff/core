@@ -1,11 +1,11 @@
 /*
  * Copyright 2012 Decebal Suiu
- * 
+ *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this work except in compliance with
  * the License. You may obtain a copy of the License in the LICENSE file, or at:
- * 
+ *
  * http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on
  * an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the
  * specific language governing permissions and limitations under the License.
@@ -38,17 +38,17 @@ import org.wicketstuff.dashboard.web.DashboardEvent;
 public class AddWidgetPanel extends GenericPanel<Dashboard> implements DashboardContextAware {
 
 	private static final long serialVersionUID = 1L;
-	
+
 	private transient DashboardContext dashboardContext;
-	
+
 	public AddWidgetPanel(String id, IModel<Dashboard> model) {
-		super(id, model);		
-		
-    	add(new BookmarkablePageLink<Void>("backDashboard", getApplication().getHomePage()));
-    	
+		super(id, model);
+
+		add(new BookmarkablePageLink<Void>("backDashboard", getApplication().getHomePage()));
+
 		List<WidgetDescriptor> widgetDescriptors = dashboardContext.getWidgetRegistry().getWidgetDescriptors();
 		ListView<WidgetDescriptor> listView = new ListView<WidgetDescriptor>("widgetList", widgetDescriptors) {
-			 
+
 			private static final long serialVersionUID = 1L;
 
 			@Override
@@ -60,42 +60,42 @@ public class AddWidgetPanel extends GenericPanel<Dashboard> implements Dashboard
 		listView.setRenderBodyOnly(true);
 		add(listView);
 	}
-	
+
 	public Dashboard getDashboard() {
 		return getModelObject();
-		
+
 	}
 	@Override
 	public void setDashboardContext(DashboardContext dashboardContext) {
 		this.dashboardContext = dashboardContext;
 	}
-	
+
 	private String getUniqueWidgetTitle(String title, int count) {
 		String uniqueTitle = title;
 		if (count > 0) {
 			uniqueTitle = title + " " + count;
 		}
-		
+
 		List<Widget> widgets = getDashboard().getWidgets();
 		for (Widget widget : widgets) {
 			if (widget.getTitle().equals(uniqueTitle)) {
 				uniqueTitle = getUniqueWidgetTitle(title, count + 1);
 			}
 		}
-		 
+
 		return uniqueTitle;
 	}
 
 	private class WidgetDescriptorPanel extends GenericPanel<WidgetDescriptor> {
 
 		private static final long serialVersionUID = 1L;
-		
+
 		private String message = "";
 		private int count;
-		
+
 		public WidgetDescriptorPanel(String id, final IModel<WidgetDescriptor> model) {
 			super(id, model);
-			
+
 			add(new Label("name", model.getObject().getName()));
 			add(new Label("provider", model.getObject().getProvider()));
 			add(new Label("description", model.getObject().getDescription()));
@@ -108,10 +108,10 @@ public class AddWidgetPanel extends GenericPanel<Dashboard> implements Dashboard
 					if (count == 1) {
 						return message;
 					}
-					
+
 					return message + " (" + count + ")";
 				}
-				
+
 			});
 			label.setOutputMarkupId(true);
 			label.setOutputMarkupPlaceholderTag(true);
@@ -137,11 +137,11 @@ public class AddWidgetPanel extends GenericPanel<Dashboard> implements Dashboard
 					target.add(label);
 					count++;
 				}
-				
+
 			};
 			add(addLink);
 		}
-		
+
 	}
-	
+
 }

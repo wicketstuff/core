@@ -197,9 +197,9 @@ public class OperationsPanel extends Panel
 		}
 
 		@Override
-		protected void onSubmit(AjaxRequestTarget target, Form<?> form)
+		protected void onSubmit(AjaxRequestTarget target)
 		{
-			Object returnObj = null;
+			Object returnObj;
 			try
 			{
 				returnObj = server.getObject().invoke(objectName, info.getName(),

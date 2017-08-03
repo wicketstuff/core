@@ -157,11 +157,8 @@ public class AjaxOpenLayersMap extends WebMarkupContainer implements IOpenLayers
 	public void setCenter(LonLat center)
 	{
 		this.center = center;
-		
-		AjaxRequestTarget ajaxRequestTarget = getRequestCycle().find(AjaxRequestTarget.class);
-		if (ajaxRequestTarget != null) {
-			ajaxRequestTarget.appendJavaScript(getJSSetCenter());
-		}
+
+		getRequestCycle().find(AjaxRequestTarget.class).ifPresent(target -> target.appendJavaScript(getJSSetCenter()));
 	}
 
 	public LonLat getCenter()
@@ -172,10 +169,7 @@ public class AjaxOpenLayersMap extends WebMarkupContainer implements IOpenLayers
 	public void setZoom(Integer zoom)
 	{
 		this.zoom = zoom;
-		AjaxRequestTarget ajaxRequestTarget = getRequestCycle().find(AjaxRequestTarget.class);
-		if (ajaxRequestTarget != null) {
-			ajaxRequestTarget.appendJavaScript(getJSSetCenter());
-		}
+		getRequestCycle().find(AjaxRequestTarget.class).ifPresent(target -> target.appendJavaScript(getJSSetCenter()));
 	}
 
 	public Integer getZoom()
@@ -187,10 +181,7 @@ public class AjaxOpenLayersMap extends WebMarkupContainer implements IOpenLayers
 	{
 		this.center = center;
 		this.zoom = zoom;
-		AjaxRequestTarget ajaxRequestTarget = getRequestCycle().find(AjaxRequestTarget.class);
-		if (ajaxRequestTarget != null) {
-			ajaxRequestTarget.appendJavaScript(getJSSetCenter());
-		}
+		getRequestCycle().find(AjaxRequestTarget.class).ifPresent(target -> target.appendJavaScript(getJSSetCenter()));
 	}
 
 	private String getJSSetCenter()
@@ -234,10 +225,7 @@ public class AjaxOpenLayersMap extends WebMarkupContainer implements IOpenLayers
 	public IOpenLayersMap addControl(IJavascriptComponent control)
 	{
 		controls.add(control);
-		AjaxRequestTarget ajaxRequestTarget = getRequestCycle().find(AjaxRequestTarget.class);
-		if (ajaxRequestTarget != null) {
-			ajaxRequestTarget.appendJavaScript(control.getJSadd(this));
-		}
+		getRequestCycle().find(AjaxRequestTarget.class).ifPresent(target -> target.appendJavaScript(control.getJSadd(this)));
 		return this;
 	}
 
@@ -259,10 +247,8 @@ public class AjaxOpenLayersMap extends WebMarkupContainer implements IOpenLayers
 		{
 			add(behavior);
 		}
-		AjaxRequestTarget ajaxRequestTarget = getRequestCycle().find(AjaxRequestTarget.class);
-		if (ajaxRequestTarget != null) {
-			ajaxRequestTarget.appendJavaScript(getJsOverlay(overlay));
-		}
+		getRequestCycle().find(AjaxRequestTarget.class).ifPresent(target ->
+				target.appendJavaScript(getJsOverlay(overlay)));
 		return this;
 	}
 
@@ -276,10 +262,7 @@ public class AjaxOpenLayersMap extends WebMarkupContainer implements IOpenLayers
 	public IOpenLayersMap addLayer(Layer layer)
 	{
 		layers.add(layer);
-		AjaxRequestTarget ajaxRequestTarget = getRequestCycle().find(AjaxRequestTarget.class);
-		if (ajaxRequestTarget != null) {
-			ajaxRequestTarget.appendJavaScript(layer.getJSAddLayer(this));
-		}
+		getRequestCycle().find(AjaxRequestTarget.class).ifPresent(target -> target.appendJavaScript(layer.getJSAddLayer(this)));
 		return this;
 	}
 
@@ -294,11 +277,8 @@ public class AjaxOpenLayersMap extends WebMarkupContainer implements IOpenLayers
 	{
 		features.add(feature);
 		feature.setMap(this);
-		AjaxRequestTarget ajaxRequestTarget = getRequestCycle().find(AjaxRequestTarget.class);
-		if (ajaxRequestTarget != null) {
-			ajaxRequestTarget.appendJavaScript(
-				feature.getJSAddFeature(this, getFeatureVector(feature.getDisplayInLayer())));
-		}
+		getRequestCycle().find(AjaxRequestTarget.class).ifPresent(target ->
+				target.appendJavaScript(feature.getJSAddFeature(this, getFeatureVector(feature.getDisplayInLayer()))));
 		return this;
 	}
 
@@ -312,10 +292,8 @@ public class AjaxOpenLayersMap extends WebMarkupContainer implements IOpenLayers
 	public IOpenLayersMap addFeatureStyle(FeatureStyle featureStyle)
 	{
 		featureStyles.add(featureStyle);
-		AjaxRequestTarget ajaxRequestTarget = getRequestCycle().find(AjaxRequestTarget.class);
-		if (ajaxRequestTarget != null) {
-			ajaxRequestTarget.appendJavaScript(featureStyle.getJSAddStyle(this));
-		}
+		getRequestCycle().find(AjaxRequestTarget.class).ifPresent(target ->
+				target.appendJavaScript(featureStyle.getJSAddStyle(this)));
 		return this;
 	}
 
@@ -325,10 +303,8 @@ public class AjaxOpenLayersMap extends WebMarkupContainer implements IOpenLayers
 		{
 			featureStyles.remove(featureStyle);
 		}
-		AjaxRequestTarget ajaxRequestTarget = getRequestCycle().find(AjaxRequestTarget.class);
-		if (ajaxRequestTarget != null) {
-			ajaxRequestTarget.appendJavaScript(featureStyle.getJSRemoveStyle(this));
-		}
+		getRequestCycle().find(AjaxRequestTarget.class).ifPresent(target ->
+				target.appendJavaScript(featureStyle.getJSRemoveStyle(this)));
 		return this;
 	}
 
@@ -347,10 +323,8 @@ public class AjaxOpenLayersMap extends WebMarkupContainer implements IOpenLayers
 			}
 		}
 		overlays.clear();
-		AjaxRequestTarget ajaxRequestTarget = getRequestCycle().find(AjaxRequestTarget.class);
-		if (ajaxRequestTarget != null) {
-			ajaxRequestTarget.appendJavaScript(getJSinvoke("clearOverlays()"));
-		}
+		getRequestCycle().find(AjaxRequestTarget.class).ifPresent(target ->
+				target.appendJavaScript(getJSinvoke("clearOverlays()")));
 		return this;
 	}
 
@@ -481,10 +455,8 @@ public class AjaxOpenLayersMap extends WebMarkupContainer implements IOpenLayers
 	public IOpenLayersMap removeControl(IJavascriptComponent control)
 	{
 		controls.remove(control);
-		AjaxRequestTarget ajaxRequestTarget = getRequestCycle().find(AjaxRequestTarget.class);
-		if (ajaxRequestTarget != null) {
-			ajaxRequestTarget.appendJavaScript(control.getJSremove(this));
-		}
+		getRequestCycle().find(AjaxRequestTarget.class).ifPresent(target ->
+				target.appendJavaScript(control.getJSremove(this)));
 		return this;
 	}
 
@@ -505,10 +477,8 @@ public class AjaxOpenLayersMap extends WebMarkupContainer implements IOpenLayers
 		{
 			remove(behavior);
 		}
-		AjaxRequestTarget ajaxRequestTarget = getRequestCycle().find(AjaxRequestTarget.class);
-		if (ajaxRequestTarget != null) {
-			ajaxRequestTarget.appendJavaScript(overlay.getJSremove(this));
-		}
+		getRequestCycle().find(AjaxRequestTarget.class).ifPresent(target ->
+				target.appendJavaScript(overlay.getJSremove(this)));
 		return this;
 	}
 
@@ -525,11 +495,8 @@ public class AjaxOpenLayersMap extends WebMarkupContainer implements IOpenLayers
 		{
 			features.remove(feature);
 		}
-		AjaxRequestTarget ajaxRequestTarget = getRequestCycle().find(AjaxRequestTarget.class);
-		if (ajaxRequestTarget != null) {
-			ajaxRequestTarget.appendJavaScript(
-				feature.getJSRemoveFeature(this, getFeatureVector(feature.getDisplayInLayer())));
-		}
+		getRequestCycle().find(AjaxRequestTarget.class).ifPresent(target -> target.appendJavaScript(
+				feature.getJSRemoveFeature(this, getFeatureVector(feature.getDisplayInLayer()))));
 		return this;
 	}
 
@@ -589,10 +556,8 @@ public class AjaxOpenLayersMap extends WebMarkupContainer implements IOpenLayers
 	public void setBusinessLogicProjection(String businessLogicProjection)
 	{
 		this.businessLogicProjection = businessLogicProjection;
-		AjaxRequestTarget ajaxRequestTarget = getRequestCycle().find(AjaxRequestTarget.class);
-		if (ajaxRequestTarget != null) {
-			ajaxRequestTarget.appendJavaScript(getJSSetBusinessLogicProjection());
-		}
+		getRequestCycle().find(AjaxRequestTarget.class).ifPresent(target ->
+				target.appendJavaScript(getJSSetBusinessLogicProjection()));
 	}
 
 	public String getBusinessLogicProjection()
@@ -624,9 +589,8 @@ public class AjaxOpenLayersMap extends WebMarkupContainer implements IOpenLayers
 
 	public void setVisibleOnlyLayers(String... names)
 	{
-		AjaxRequestTarget ajaxRequestTarget = getRequestCycle().find(AjaxRequestTarget.class);
-		if (ajaxRequestTarget != null) {
-			List<String> invisibleNames = new ArrayList<String>();
+		getRequestCycle().find(AjaxRequestTarget.class).ifPresent(target -> {
+			List<String> invisibleNames = new ArrayList<>();
 			invisibleNames.add(markersLayerName);
 			invisibleNames.addAll(featureVectors.keySet());
 			StringBuffer visibleLayers = new StringBuffer();
@@ -653,10 +617,10 @@ public class AjaxOpenLayersMap extends WebMarkupContainer implements IOpenLayers
 					invisibleLayers.append(layerId);
 				}
 			}
-			ajaxRequestTarget.appendJavaScript(
+			target.appendJavaScript(
 				getJSinvoke("setLayersVisibility([" + visibleLayers.toString() + "], [" +
 					invisibleLayers.toString() + "])"));
-		}
+		});
 	}
 
 	public void toggleLayer(String name)
@@ -664,10 +628,8 @@ public class AjaxOpenLayersMap extends WebMarkupContainer implements IOpenLayers
 		String layerId = findLayerId(name);
 		if (layerId != null)
 		{
-			AjaxRequestTarget ajaxRequestTarget = getRequestCycle().find(AjaxRequestTarget.class);
-			if (ajaxRequestTarget != null) {
-				ajaxRequestTarget.appendJavaScript(getJSinvoke("toggleLayer(" + layerId + ")"));
-			}
+			getRequestCycle().find(AjaxRequestTarget.class).ifPresent(target ->
+					target.appendJavaScript(getJSinvoke("toggleLayer(" + layerId + ")")));
 		}
 	}
 

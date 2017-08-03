@@ -1,76 +1,58 @@
 package org.wicketstuff.foundation;
 
-import org.apache.wicket.util.time.Duration;
+import org.eclipse.jetty.server.HttpConfiguration;
+import org.eclipse.jetty.server.HttpConnectionFactory;
 import org.eclipse.jetty.server.Server;
-import org.eclipse.jetty.server.bio.SocketConnector;
-import org.eclipse.jetty.server.ssl.SslSocketConnector;
-import org.eclipse.jetty.util.resource.Resource;
-import org.eclipse.jetty.util.ssl.SslContextFactory;
+import org.eclipse.jetty.server.ServerConnector;
 import org.eclipse.jetty.webapp.WebAppContext;
 
-public class Start {
-    public static void main(String[] args) throws Exception {
-        int timeout = (int) Duration.ONE_HOUR.getMilliseconds();
+public class Start
+{
 
-        Server server = new Server();
-        SocketConnector connector = new SocketConnector();
+	public static void main(String[] args) throws Exception
+	{
+		Server server = new Server();
 
-        // Set some timeout options to make debugging easier.
-        connector.setMaxIdleTime(timeout);
-        connector.setSoLingerTime(-1);
-        connector.setPort(8080);
-        server.addConnector(connector);
+		HttpConfiguration http_config = new HttpConfiguration();
+		http_config.setSecureScheme("https");
+		http_config.setSecurePort(8443);
+		http_config.setOutputBufferSize(32768);
 
-        Resource keystore = Resource.newClassPathResource("/keystore");
-        if (keystore != null && keystore.exists()) {
-            // if a keystore for a SSL certificate is available, start a SSL
-            // connector on port 8443.
-            // By default, the quickstart comes with a Apache Wicket Quickstart
-            // Certificate that expires about half way september 2021. Do not
-            // use this certificate anywhere important as the passwords are
-            // available in the source.
+		ServerConnector http = new ServerConnector(server, new HttpConnectionFactory(http_config));
+		http.setPort(8080);
+		http.setIdleTimeout(1000 * 60 * 60);
 
-            connector.setConfidentialPort(8443);
+		server.addConnector(http);
 
-            SslContextFactory factory = new SslContextFactory();
-            factory.setKeyStoreResource(keystore);
-            factory.setKeyStorePassword("wicket");
-            factory.setTrustStoreResource(keystore);
-            factory.setKeyManagerPassword("wicket");
-            SslSocketConnector sslConnector = new SslSocketConnector(factory);
-            sslConnector.setMaxIdleTime(timeout);
-            sslConnector.setPort(8443);
-            sslConnector.setAcceptors(4);
-            server.addConnector(sslConnector);
+		WebAppContext bb = new WebAppContext();
+		bb.setServer(server);
+		bb.setContextPath("/");
+		bb.setWar("src/main/webapp");
 
-            System.out.println("SSL access to the quickstart has been enabled on port 8443");
-            System.out.println("You can access the application using SSL on https://localhost:8443");
-            System.out.println();
-        }
+		// START JMX SERVER
+		// MBeanServer mBeanServer = ManagementFactory.getPlatformMBeanServer();
+		// MBeanContainer mBeanContainer = new MBeanContainer(mBeanServer);
+		// server.getContainer().addEventListener(mBeanContainer);
+		// mBeanContainer.start();
 
-        WebAppContext bb = new WebAppContext();
-        bb.setServer(server);
-        bb.setContextPath("/");
-        bb.setWar("src/main/webapp");
+		server.setHandler(bb);
 
-        // START JMX SERVER
-        // MBeanServer mBeanServer = ManagementFactory.getPlatformMBeanServer();
-        // MBeanContainer mBeanContainer = new MBeanContainer(mBeanServer);
-        // server.getContainer().addEventListener(mBeanContainer);
-        // mBeanContainer.start();
-
-        server.setHandler(bb);
-
-        try {
-            System.out.println(">>> STARTING EMBEDDED JETTY SERVER, PRESS ANY KEY TO STOP");
-            server.start();
-            System.in.read();
-            System.out.println(">>> STOPPING EMBEDDED JETTY SERVER");
-            server.stop();
-            server.join();
-        } catch (Exception e) {
-            e.printStackTrace();
-            System.exit(1);
-        }
-    }
+		try
+		{
+			System.out.println(">>> STARTING EMBEDDED JETTY SERVER, PRESS ANY KEY TO STOP");
+			server.start();
+			System.in.read();
+			System.out.println(">>> STOPPING EMBEDDED JETTY SERVER");
+			// while (System.in.available() == 0) {
+			// Thread.sleep(5000);
+			// }
+			server.stop();
+			server.join();
+		}
+		catch (Exception e)
+		{
+			e.printStackTrace();
+			System.exit(100);
+		}
+	}
 }

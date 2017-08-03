@@ -4,7 +4,7 @@
 	<parent>
 		<groupId>org.wicketstuff</groupId>
 		<artifactId>wicketstuff-portlet-parent</artifactId>
-		<version>7.4.0-SNAPSHOT</version>
+		<version>8.0.0-SNAPSHOT</version>
 	</parent>
 
 	<artifactId>wicketstuff-portlet-examples</artifactId>
@@ -28,8 +28,7 @@
 		<!-- JEE DEPENDECIES -->
 		<dependency>
 			<groupId>javax.servlet</groupId>
-			<artifactId>servlet-api</artifactId>
-			<version>2.5</version>
+			<artifactId>javax.servlet-api</artifactId>
 			<scope>provided</scope>
 		</dependency>
 		<dependency>
@@ -46,7 +45,6 @@
 		<dependency>
 			<groupId>org.apache.wicket</groupId>
 			<artifactId>wicket-core</artifactId>
-			<version>${wicket.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.apache.wicket</groupId>
@@ -56,7 +54,6 @@
 		<dependency>
 			<groupId>org.apache.wicket</groupId>
 			<artifactId>wicket-auth-roles</artifactId>
-			<version>${wicket.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.apache.wicket</groupId>
@@ -71,37 +68,30 @@
 		<dependency>
 			<groupId>org.apache.wicket</groupId>
 			<artifactId>wicket-datetime</artifactId>
-			<version>${wicket.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.apache.wicket</groupId>
 			<artifactId>wicket-devutils</artifactId>
-			<version>${wicket.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.apache.wicket</groupId>
 			<artifactId>wicket-extensions</artifactId>
-			<version>${wicket.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.apache.wicket</groupId>
 			<artifactId>wicket-guice</artifactId>
-			<version>${wicket.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.apache.wicket</groupId>
 			<artifactId>wicket-jmx</artifactId>
-			<version>${wicket.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.apache.wicket</groupId>
 			<artifactId>wicket-spring</artifactId>
-			<version>${wicket.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.apache.wicket</groupId>
 			<artifactId>wicket-velocity</artifactId>
-			<version>${wicket.version}</version>
 		</dependency>
 
 		<!-- LOGGING DEPENDENCIES - LOG4J -->
@@ -120,7 +110,6 @@
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
-			<version>${junit.version}</version>
 			<scope>test</scope>
 		</dependency>
 
@@ -149,18 +138,16 @@
 		<dependency>
 			<groupId>javax.validation</groupId>
 			<artifactId>validation-api</artifactId>
-			<version>1.1.0.Final</version>
 			<scope>compile</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.eclipse.jetty.aggregate</groupId>
-			<artifactId>jetty-all-server</artifactId>
+			<artifactId>jetty-all</artifactId>
 			<version>8.1.18.v20150929</version>
 		</dependency>
 		<dependency>
 			<groupId>org.hibernate</groupId>
 			<artifactId>hibernate-validator</artifactId>
-			<version>5.2.3.Final</version>
 			<scope>compile</scope>
 		</dependency>
 		<dependency>
@@ -178,8 +165,7 @@
 		<dependency>
 			<groupId>org.eclipse.jetty.aggregate</groupId>
 			<artifactId>jetty-all</artifactId>
-			<version>${jetty9.version}</version>
-			<scope>test</scope>
+            <classifier>uber</classifier>
 		</dependency>
 
 		<dependency>
@@ -244,22 +230,8 @@
 				</executions>
 			</plugin>
 			<plugin>
-				<inherited>true</inherited>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-compiler-plugin</artifactId>
-				<version>3.1</version>
-				<configuration>
-					<source>1.7</source>
-					<target>1.7</target>
-					<encoding>UTF-8</encoding>
-					<showWarnings>true</showWarnings>
-					<showDeprecation>true</showDeprecation>
-				</configuration>
-			</plugin>
-			<plugin>
 				<groupId>org.eclipse.jetty</groupId>
 				<artifactId>jetty-maven-plugin</artifactId>
-				<version>${jetty9.version}</version>
 				<configuration>
 					<systemProperties>
 						<systemProperty>
@@ -273,7 +245,6 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-eclipse-plugin</artifactId>
-				<version>2.9</version>
 				<configuration>
 					<downloadSources>true</downloadSources>
 					<wtpversion>${wtp.version}</wtpversion>
@@ -292,7 +263,6 @@
 				<dependency>
 					<groupId>javax.servlet</groupId>
 					<artifactId>javax.servlet-api</artifactId>
-					<version>3.0.1</version>
 					<scope>provided</scope>
 				</dependency>
 			</dependencies>

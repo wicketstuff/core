@@ -23,7 +23,7 @@
 	<parent>
 		<groupId>org.wicketstuff</groupId>
 		<artifactId>wicketstuff-urlfragment-parent</artifactId>
-		<version>7.4.0-SNAPSHOT</version>
+		<version>8.0.0-SNAPSHOT</version>
 	</parent>
 
 	<artifactId>wicketstuff-urlfragment-examples</artifactId>
@@ -48,7 +48,6 @@
 		<dependency>
 			<groupId>org.apache.wicket</groupId>
 			<artifactId>wicket-core</artifactId>
-			<version>${wicket.version}</version>
 		</dependency>
 
 		<!-- LOGGING DEPENDENCIES - LOG4J -->
@@ -82,9 +81,8 @@
 		</dependency>
 		<dependency>
 			<groupId>org.eclipse.jetty.aggregate</groupId>
-			<artifactId>jetty-all-server</artifactId>
-			<version>${jetty.version}</version>
-			<scope>provided</scope>
+			<artifactId>jetty-all</artifactId>
+            <classifier>uber</classifier>
 		</dependency>
 
     </dependencies>

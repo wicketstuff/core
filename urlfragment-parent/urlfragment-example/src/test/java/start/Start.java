@@ -1,9 +1,11 @@
 package start;
 
+import org.apache.wicket.util.file.File;
 import org.apache.wicket.util.time.Duration;
+import org.eclipse.jetty.http.HttpVersion;
 import org.eclipse.jetty.server.Server;
-import org.eclipse.jetty.server.bio.SocketConnector;
-import org.eclipse.jetty.server.ssl.SslSocketConnector;
+import org.eclipse.jetty.server.ServerConnector;
+import org.eclipse.jetty.server.SslConnectionFactory;
 import org.eclipse.jetty.util.resource.Resource;
 import org.eclipse.jetty.util.ssl.SslContextFactory;
 import org.eclipse.jetty.webapp.WebAppContext;
@@ -13,13 +15,13 @@ public class Start {
         int timeout = (int) Duration.ONE_HOUR.getMilliseconds();
 
         Server server = new Server();
-        SocketConnector connector = new SocketConnector();
+        ServerConnector http = new ServerConnector(server);
 
         // Set some timeout options to make debugging easier.
-        connector.setMaxIdleTime(timeout);
-        connector.setSoLingerTime(-1);
-        connector.setPort(8080);
-        server.addConnector(connector);
+        http.setIdleTimeout(timeout);
+        http.setSoLingerTime(-1);
+        http.setPort(8080);
+        server.addConnector(http);
 
         Resource keystore = Resource.newClassPathResource("/keystore");
         if (keystore != null && keystore.exists()) {
@@ -29,18 +31,16 @@ public class Start {
             // Certificate that expires about half way september 2021. Do not
             // use this certificate anywhere important as the passwords are
             // available in the source.
-
-            connector.setConfidentialPort(8443);
-
             SslContextFactory factory = new SslContextFactory();
             factory.setKeyStoreResource(keystore);
             factory.setKeyStorePassword("wicket");
             factory.setTrustStoreResource(keystore);
             factory.setKeyManagerPassword("wicket");
-            SslSocketConnector sslConnector = new SslSocketConnector(factory);
-            sslConnector.setMaxIdleTime(timeout);
+
+            ServerConnector sslConnector = new ServerConnector(server, new SslConnectionFactory(factory, HttpVersion.HTTP_1_1.asString()));
+            sslConnector.setIdleTimeout(timeout);
             sslConnector.setPort(8443);
-            sslConnector.setAcceptors(4);
+            sslConnector.setAcceptQueueSize(4);
             server.addConnector(sslConnector);
 
             System.out.println("SSL access to the quickstart has been enabled on port 8443");
@@ -49,9 +49,8 @@ public class Start {
         }
 
         WebAppContext bb = new WebAppContext();
-        bb.setServer(server);
         bb.setContextPath("/");
-        bb.setWar("src/main/webapp");
+        bb.setWar(new File("src/main/webapp").getAbsolutePath());
 
         // START JMX SERVER
         // MBeanServer mBeanServer = ManagementFactory.getPlatformMBeanServer();

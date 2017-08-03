@@ -3,7 +3,6 @@ package org.wicketstuff.egrid.component;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.markup.html.form.AjaxSubmitLink;
 import org.apache.wicket.markup.html.WebMarkupContainer;
-import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.form.FormComponent;
 import org.apache.wicket.util.visit.IVisit;
 import org.apache.wicket.util.visit.IVisitor;
@@ -28,7 +27,7 @@ public abstract class EditableGridSubmitLink extends AjaxSubmitLink
 	}
 
 	@Override
-	protected final void onSubmit(AjaxRequestTarget target, Form<?> form)
+	protected final void onSubmit(AjaxRequestTarget target)
 	{
 
 		if (isFormComponentsValid())
@@ -91,15 +90,9 @@ public abstract class EditableGridSubmitLink extends AjaxSubmitLink
 						visit.dontGoDeeper();
 					}
 				}
-				visit.dontGoDeeper();					
+				visit.dontGoDeeper();
 			}
 		});
-	}
-
-	@Override
-	protected final void onError(AjaxRequestTarget target, Form<?> form)
-	{
-		EditableGridSubmitLink.this.onError(target);
 	}
 
 	private boolean formComponentActive(FormComponent<?> formComponent)

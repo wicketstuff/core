@@ -12,6 +12,9 @@
  */
 package org.wicketstuff.dashboard.web;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.apache.wicket.AttributeModifier;
 import org.apache.wicket.event.IEvent;
 import org.apache.wicket.markup.head.CssHeaderItem;
@@ -25,21 +28,17 @@ import org.wicketstuff.dashboard.Dashboard;
 import org.wicketstuff.dashboard.DashboardUtils;
 import org.wicketstuff.dashboard.Widget;
 
-import java.util.ArrayList;
-import java.util.List;
-
 /**
  * Wicket {@link Panel} which should be used on a page to render a {@link Dashboard}
  * @author Decebal Suiu
  */
 public class DashboardPanel extends GenericPanel<Dashboard> implements DashboardContextAware {
-
 	private static final long serialVersionUID = 1L;
 
 	private transient DashboardContext dashboardContext;
 
 	private List<DashboardColumnPanel> columnPanels;
-    private IModel<Boolean> rtlModel;
+	private IModel<Boolean> rtlModel;
 
 	public DashboardPanel(String id, IModel<Dashboard> model) {
 		super(id, model);
@@ -82,24 +81,24 @@ public class DashboardPanel extends GenericPanel<Dashboard> implements Dashboard
 		}
 	}
 
-    /**
-     * Use this method if you want to add RightToLeft support.
-     *
-     * @param rtlModel
-     */
-    public DashboardPanel setRtlModel(IModel<Boolean> rtlModel) {
-        this.rtlModel = rtlModel;
-        return this;
-    }
+	/**
+	 * Use this method if you want to add RightToLeft support.
+	 *
+	 * @param rtlModel
+	 */
+	public DashboardPanel setRtlModel(IModel<Boolean> rtlModel) {
+		this.rtlModel = rtlModel;
+		return this;
+	}
 
-    @Override
-    public void renderHead(IHeaderResponse response) {
-        super.renderHead(response);
+	@Override
+	public void renderHead(IHeaderResponse response) {
+		super.renderHead(response);
 
-        if ((rtlModel != null) && (rtlModel.getObject() == Boolean.TRUE)) {
-            response.render(CssHeaderItem.forReference(DashboardSettings.get().getRtlCssReference()));
-        }
-    }
+		if ((rtlModel != null) && (rtlModel.getObject() == Boolean.TRUE)) {
+			response.render(CssHeaderItem.forReference(DashboardSettings.get().getRtlCssReference()));
+		}
+	}
 
 	private void onWidgetAdded(DashboardEvent dashboardEvent) {
 		Widget addedWidget = (Widget) dashboardEvent.getDetail();
@@ -126,7 +125,6 @@ public class DashboardPanel extends GenericPanel<Dashboard> implements Dashboard
 	private void addColumnsPanel() {
 		final int columnCount = getDashboard().getColumnCount();
 		Loop columnsView = new Loop("columns", columnCount) {
-
 			private static final long serialVersionUID = 1L;
 
 			@Override
@@ -140,17 +138,15 @@ public class DashboardPanel extends GenericPanel<Dashboard> implements Dashboard
 
 			@Override
 			protected void populateItem(LoopItem item) {
-			    float columnPanelWidth = 100f / columnCount;
-		    	DashboardColumnPanel columnPanel = new DashboardColumnPanel("column", getModel(), item.getIndex());
-		    	columnPanel.setRenderBodyOnly(true);
-		    	columnPanel.getColumnContainer().add(AttributeModifier.replace("style", "width: " + columnPanelWidth + "%;"));
-		    	item.add(columnPanel);
+				float columnPanelWidth = 100f / columnCount;
+				DashboardColumnPanel columnPanel = new DashboardColumnPanel("column", getModel(), item.getIndex());
+				columnPanel.setRenderBodyOnly(true);
+				columnPanel.getColumnContainer().add(AttributeModifier.replace("style", "width: " + columnPanelWidth + "%;"));
+				item.add(columnPanel);
 
-		    	columnPanels.add(columnPanel);
+				columnPanels.add(columnPanel);
 			}
-
 		};
 		add(columnsView);
 	}
-
 }

@@ -4,7 +4,7 @@
 	<parent>
 		<groupId>org.wicketstuff</groupId>
 		<artifactId>wicketstuff-nashorn-parent</artifactId>
-		<version>7.4.0-SNAPSHOT</version>
+		<version>8.0.0-SNAPSHOT</version>
 	</parent>
 
 	<artifactId>wicketstuff-nashorn-examples</artifactId>
@@ -25,7 +25,6 @@
 
 	<properties>
 		<servlet.jsp.api.version>3.1.0</servlet.jsp.api.version>
-		<jetty.version>9.1.6.v20160112</jetty.version>
 		<javadoc.disabled>true</javadoc.disabled>
 		<deployment.disabled>true</deployment.disabled>
 		<sources.disabled>true</sources.disabled>
@@ -50,8 +49,7 @@
 		<dependency>
 			<groupId>org.eclipse.jetty.aggregate</groupId>
 			<artifactId>jetty-all</artifactId>
-			<version>${jetty.version}</version>
-			<scope>test</scope>
+            <classifier>uber</classifier>
 		</dependency>
 		<dependency>
 			<groupId>javax.servlet</groupId>

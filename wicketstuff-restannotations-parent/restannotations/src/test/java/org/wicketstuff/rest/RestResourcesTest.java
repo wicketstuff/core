@@ -29,9 +29,9 @@ import javax.xml.transform.stream.StreamResult;
 
 import org.apache.wicket.Session;
 import org.apache.wicket.WicketRuntimeException;
-import org.apache.wicket.ajax.json.JSONObject;
 import org.apache.wicket.authroles.authorization.strategies.role.Roles;
 import org.apache.wicket.util.tester.WicketTester;
+import com.github.openjson.JSONObject;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -170,6 +170,7 @@ public class RestResourcesTest
 	@Test
 	public void testMethodNotFound() throws Exception
 	{
+		tester.getRequest().setMethod("GET");
 		tester.executeUrl("./api2/foo");
 		String response = tester.getLastResponseAsString();
 

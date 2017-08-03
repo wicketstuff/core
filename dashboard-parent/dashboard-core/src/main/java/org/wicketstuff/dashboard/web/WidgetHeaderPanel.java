@@ -17,14 +17,11 @@ import org.apache.wicket.ajax.AjaxEventBehavior;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.markup.head.IHeaderResponse;
 import org.apache.wicket.markup.head.OnDomReadyHeaderItem;
+import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.markup.html.basic.Label;
-import org.apache.wicket.markup.html.image.Image;
 import org.apache.wicket.markup.html.panel.GenericPanel;
-import org.apache.wicket.model.AbstractReadOnlyModel;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.PropertyModel;
-import org.apache.wicket.request.resource.PackageResourceReference;
-import org.apache.wicket.request.resource.ResourceReference;
 import org.wicketstuff.dashboard.Dashboard;
 import org.wicketstuff.dashboard.Widget;
 
@@ -32,7 +29,6 @@ import org.wicketstuff.dashboard.Widget;
  * @author Decebal Suiu
  */
 public class WidgetHeaderPanel extends GenericPanel<Widget> implements DashboardContextAware {
-
 	private static final long serialVersionUID = 1L;
 
 	private transient DashboardContext dashboardContext;
@@ -40,22 +36,12 @@ public class WidgetHeaderPanel extends GenericPanel<Widget> implements Dashboard
 	public WidgetHeaderPanel(String id, IModel<Widget> model) {
 		super(id, model);
 
-        setMarkupId("header-" + getModelObject().getId());
+		setMarkupId("header-" + getModelObject().getId());
 
-        final Image toggle = new Image("toggle", "") {
+		final WebMarkupContainer toggle = new WebMarkupContainer("toggle");
 
-            @Override
-            protected ResourceReference getImageResourceReference() {
-                String name = getWidget().isCollapsed() ? "res/up.png" : "res/down.png";
-
-                return new PackageResourceReference(WidgetHeaderPanel.class, name);
-            }
-
-        };
-
-        toggle.setOutputMarkupId(true);
-        toggle.add(new AjaxEventBehavior("click") {
-
+		toggle.setOutputMarkupId(true).add(AttributeModifier.replace("class", getCssClass()));
+		toggle.add(new AjaxEventBehavior("click") {
 			private static final long serialVersionUID = 1L;
 
 			@Override
@@ -70,30 +56,31 @@ public class WidgetHeaderPanel extends GenericPanel<Widget> implements Dashboard
 				dashboardContext.getDashboardPersister().save(dashboard);
 
 				// change toggle's image
-				target.add(toggle);
+				target.add(toggle.add(AttributeModifier.replace("class", getCssClass())));
 
 				// hide/show the widget's view
 				WidgetView widgetView = findParent(WidgetPanel.class).getWidgetView();
 				target.add(widgetView);
 			}
-
 		});
-        toggle.add(new AttributeModifier("title", new AbstractReadOnlyModel<String>() {
-
-            private static final long serialVersionUID = 1L;
+		toggle.add(new AttributeModifier("title", new IModel<String>() {
+			private static final long serialVersionUID = 1L;
 
 			@Override
-            public String getObject() {
-                return getWidget().isCollapsed() ? getString("expand") : getString("collapse");
-            }
-
-        }));
+			public String getObject() {
+				return getWidget().isCollapsed() ? getString("expand") : getString("collapse");
+			}
+		}));
 		add(toggle);
 
-		add(new Label("title", new PropertyModel(model, "title")));
+		add(new Label("title", new PropertyModel<Widget>(model, "title")));
 
 		WidgetActionsPanel actionsPanel = new WidgetActionsPanel("actions", model);
 		add(actionsPanel);
+	}
+
+	private String getCssClass() {
+		return String.format("dragbox-toggle %s", getWidget().isCollapsed() ? "collapsed" : "expanded");
 	}
 
 	public Widget getWidget() {
@@ -105,17 +92,16 @@ public class WidgetHeaderPanel extends GenericPanel<Widget> implements Dashboard
 		this.dashboardContext = dashboardContext;
 	}
 
-    @Override
-    public void renderHead(IHeaderResponse response) {
-        super.renderHead(response);
+	@Override
+	public void renderHead(IHeaderResponse response) {
+		super.renderHead(response);
 
-        StringBuilder statement = new StringBuilder("$('#").append(getMarkupId()).append("').on('mouseover', function(ev) {");
-        statement.append(" $(this).find('.dragbox-actions').show();").
-                  append("}).on('mouseout', function(ev) {").
-                  append(" $(this).find('.dragbox-actions').hide();").
-                  append("});");
+		StringBuilder statement = new StringBuilder("$('#").append(getMarkupId()).append("').on('mouseover', function(ev) {");
+		statement.append(" $(this).find('.dragbox-actions').show();").
+				append("}).on('mouseout', function(ev) {").
+				append(" $(this).find('.dragbox-actions').hide();").
+				append("});");
 
-        response.render(OnDomReadyHeaderItem.forScript(statement.toString()));
-    }
-
+		response.render(OnDomReadyHeaderItem.forScript(statement.toString()));
+	}
 }

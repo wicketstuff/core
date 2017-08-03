@@ -29,7 +29,7 @@ public class RefreshPointPage extends WicketExamplePage
 
     public RefreshPointPage()
     {
-        map = new GMap("map");
+        map = new GMap("map", WicketExamplePage.API_KEY);
         add(map);
 
         GOverlay overlay = createOverlay("Amsterdam", new GLatLng(52.37649, 4.888573), "pin.gif");

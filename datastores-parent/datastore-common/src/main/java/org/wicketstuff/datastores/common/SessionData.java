@@ -32,7 +32,7 @@ class SessionData {
 	 */
 	SessionData(String sessionId) {
 		this.sessionId = Args.notNull(sessionId, "sessionId");
-		this.pages = new ConcurrentLinkedQueue<PageData>();
+		this.pages = new ConcurrentLinkedQueue<>();
 	}
 
 	/**

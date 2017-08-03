@@ -43,6 +43,7 @@ import org.apache.wicket.markup.html.form.Button;
 import org.apache.wicket.markup.html.form.ChoiceRenderer;
 import org.apache.wicket.markup.html.form.DropDownChoice;
 import org.apache.wicket.markup.html.form.Form;
+import org.apache.wicket.markup.html.form.FormComponentUpdatingBehavior;
 import org.apache.wicket.markup.html.link.Link;
 import org.apache.wicket.model.AbstractReadOnlyModel;
 import org.apache.wicket.model.IModel;
@@ -103,24 +104,16 @@ public abstract class AdvancedTreePage extends AbstractTreePage
 		{
 			private static final long serialVersionUID = 1L;
 
-			@Override
-			protected boolean wantOnSelectionChangedNotifications()
-			{
-				return true;
-			}
-		});
+			
+		}.add(new FormComponentUpdatingBehavior()));
 
 		form.add(new DropDownChoice<Behavior>("theme", new PropertyModel<Behavior>(this, "theme"),
 			initThemes(), new ChoiceRenderer<Behavior>("class.simpleName"))
 		{
 			private static final long serialVersionUID = 1L;
 
-			@Override
-			protected boolean wantOnSelectionChangedNotifications()
-			{
-				return true;
-			}
-		});
+			
+		}.add(new FormComponentUpdatingBehavior()));
 
 		form.add(new Link<Void>("expandAll")
 		{

@@ -33,19 +33,19 @@ public abstract class GClientGeocoder extends AjaxEventBehavior
      *
      * @param event
      */
-    public GClientGeocoder(String event, TextField<?> addressField)
+    public GClientGeocoder(String event, TextField<?> addressField, final String scheme, final String apiKey)
     {
-        this(event, addressField, Duration.milliseconds(500));
+        this(event, addressField, Duration.milliseconds(500), scheme, apiKey);
     }
 
-    public GClientGeocoder(String event, TextField<?> addressField, Duration timeout)
+    public GClientGeocoder(String event, TextField<?> addressField, Duration timeout, final String scheme, final String apiKey)
     {
         super(event);
 
         addressField.setOutputMarkupId(true);
         this.addressFieldMarkupId = addressField.getMarkupId();
 
-        this.headerContrib = new GMapHeaderContributor();
+        this.headerContrib = new GMapHeaderContributor(scheme, apiKey);
         this.timeout = timeout;
     }
 

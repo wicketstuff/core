@@ -404,7 +404,7 @@ public class TimerPushService extends AbstractPushService
 			if (behavior == null)
 				return;
 			if (behavior.removeNode(node) == 0)
-				behavior.stop(RequestCycle.get().find(AjaxRequestTarget.class));
+				behavior.stop(RequestCycle.get().find(AjaxRequestTarget.class).get());
 		}
 		else
 			LOG.warn("Unsupported push node type {}", node);

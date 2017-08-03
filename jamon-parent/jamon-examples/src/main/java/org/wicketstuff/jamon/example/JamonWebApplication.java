@@ -18,7 +18,6 @@ package org.wicketstuff.jamon.example;
 
 import org.apache.wicket.markup.html.WebPage;
 import org.apache.wicket.protocol.http.WebApplication;
-import org.wicketstuff.jamon.request.cycle.JamonAwareRequestCycleListener;
 
 /**
  * WebApplication so Jamon Monitoring can be tested.
@@ -33,13 +32,5 @@ public class JamonWebApplication extends WebApplication
 	public Class<? extends WebPage> getHomePage()
 	{
 		return HomePage.class;
-	}
-
-	@Override
-	protected void init()
-	{
-		super.init();
-
-		getRequestCycleListeners().add(new JamonAwareRequestCycleListener(this, true));
 	}
 }

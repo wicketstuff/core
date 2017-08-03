@@ -1,29 +1,38 @@
 package org.wicketstuff.selectize.examples;
 
-import org.apache.wicket.util.time.Duration;
+import org.eclipse.jetty.server.HttpConfiguration;
+import org.eclipse.jetty.server.HttpConnectionFactory;
 import org.eclipse.jetty.server.Server;
-import org.eclipse.jetty.server.bio.SocketConnector;
+import org.eclipse.jetty.server.ServerConnector;
 import org.eclipse.jetty.webapp.WebAppContext;
 
 public class StartExamples
 {
 	public static void main(String[] args) throws Exception
 	{
-		int timeout = (int)Duration.ONE_HOUR.getMilliseconds();
-
 		Server server = new Server();
-		SocketConnector connector = new SocketConnector();
 
-		// Set some timeout options to make debugging easier.
-		connector.setMaxIdleTime(timeout);
-		connector.setSoLingerTime(-1);
-		connector.setPort(8080);
-		server.addConnector(connector);
+		HttpConfiguration http_config = new HttpConfiguration();
+		http_config.setSecureScheme("https");
+		http_config.setSecurePort(8443);
+		http_config.setOutputBufferSize(32768);
+
+		ServerConnector http = new ServerConnector(server, new HttpConnectionFactory(http_config));
+		http.setPort(8080);
+		http.setIdleTimeout(1000 * 60 * 60);
+
+		server.addConnector(http);
 
 		WebAppContext bb = new WebAppContext();
 		bb.setServer(server);
 		bb.setContextPath("/");
 		bb.setWar("src/main/webapp");
+
+		// START JMX SERVER
+		// MBeanServer mBeanServer = ManagementFactory.getPlatformMBeanServer();
+		// MBeanContainer mBeanContainer = new MBeanContainer(mBeanServer);
+		// server.getContainer().addEventListener(mBeanContainer);
+		// mBeanContainer.start();
 
 		server.setHandler(bb);
 
@@ -33,13 +42,16 @@ public class StartExamples
 			server.start();
 			System.in.read();
 			System.out.println(">>> STOPPING EMBEDDED JETTY SERVER");
+			// while (System.in.available() == 0) {
+			// Thread.sleep(5000);
+			// }
 			server.stop();
 			server.join();
 		}
 		catch (Exception e)
 		{
 			e.printStackTrace();
-			System.exit(1);
+			System.exit(100);
 		}
 	}
 }

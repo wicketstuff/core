@@ -21,9 +21,6 @@ import org.apache.wicket.Component;
 import org.apache.wicket.ajax.AbstractDefaultAjaxBehavior;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.attributes.AjaxRequestAttributes;
-import org.apache.wicket.ajax.json.JSONException;
-import org.apache.wicket.ajax.json.JSONStringer;
-import org.apache.wicket.ajax.json.JSONWriter;
 import org.apache.wicket.behavior.Behavior;
 import org.apache.wicket.markup.head.HeaderItem;
 import org.apache.wicket.markup.head.IHeaderResponse;
@@ -32,6 +29,8 @@ import org.apache.wicket.markup.head.OnDomReadyHeaderItem;
 import org.apache.wicket.request.IRequestParameters;
 import org.apache.wicket.request.cycle.RequestCycle;
 import org.apache.wicket.request.resource.PackageResourceReference;
+import com.github.openjson.JSONException;
+import com.github.openjson.JSONStringer;
 
 /**
  * Reads URL fragment parameters. This {@link Behavior} will execute an AJAX call to itself with the
@@ -42,7 +41,7 @@ import org.apache.wicket.request.resource.PackageResourceReference;
  */
 public abstract class UrlParametersReceivingBehavior extends AbstractDefaultAjaxBehavior
 {
-
+	private static final long serialVersionUID = 1L;
 	private final Component[] components;
 	private final Map<String, String> options;
 
@@ -90,7 +89,7 @@ public abstract class UrlParametersReceivingBehavior extends AbstractDefaultAjax
 			.append("window.UrlUtil.sendUrlParameters();")
 			.append("}catch(e){}");
 		response.render(new OnDomReadyHeaderItem(sb.toString()));
-		response.render(getJS(getClass()));
+		response.render(getJS(UrlParametersReceivingBehavior.class));
 	}
 
 	private String optionsJsonString()
@@ -98,7 +97,7 @@ public abstract class UrlParametersReceivingBehavior extends AbstractDefaultAjax
 		String optionsJsonString = "";
 		try
 		{
-			JSONWriter writer = new JSONStringer().object();
+			JSONStringer writer = new JSONStringer().object();
 			for (String key : options.keySet())
 			{
 				writer.key(key).value(options.get(key));
@@ -117,8 +116,9 @@ public abstract class UrlParametersReceivingBehavior extends AbstractDefaultAjax
 	{
 		onParameterArrival(RequestCycle.get().getRequest().getRequestParameters(), target);
 
-		if (this.components != null)
+		if (this.components != null) {
 			addComponentsToBeRendered(target);
+		}
 	}
 
 	@Override
@@ -150,7 +150,7 @@ public abstract class UrlParametersReceivingBehavior extends AbstractDefaultAjax
 	 * 
 	 * @param scope
 	 *            the scope of the {@link PackageResourceReference}
-	 * @return
+	 * @return {@link HeaderItem} for chaining
 	 */
 	protected static HeaderItem getJS(Class<?> scope)
 	{

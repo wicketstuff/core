@@ -1,7 +1,7 @@
 wicketstuff-select2
 ==============
 
-This project provides [Apache Wicket](http://wicket.apache.org) components that leverage [Select2](http://ivaynberg.github.com/select2) JavaScript library to build select boxes that provide Ajax choice filtering, custom rendering, etc.
+This project provides [Apache Wicket](http://wicket.apache.org) components that leverage [Select2](https://select2.github.io/) JavaScript library to build select boxes that provide Ajax choice filtering, custom rendering, etc.
 
 Installation
 ------------
@@ -24,7 +24,7 @@ Configuration
 
 wicketstuff-select2 provides the `Select2ApplicationSettings` class that can be used to configure application-global settings such as:
 
-* Whether or not internal version of JQuery library will be included any time a wicketstuff-select2 components is used
+* Whether or not additional Select2 features should be supported any time a wicketstuff-select2 component is used
 * Whether or not default CSS resource will be included any time a wicketstuff-select2 component is used
 * And other similar options
 
@@ -35,7 +35,7 @@ Example:
 public class MyApplication extends WebApplication {
     public void init() {
 		super.init();
-		ApplicationSettings.get().setIncludeJquery(false);
+		ApplicationSettings.get().setCssReference(CUSTOM_CSS_REFERENCE);
     }
 }
 ```
@@ -45,15 +45,36 @@ Integration
 The main interface between your application and wicketstuff-select2 components is the `ChoiceProvider`:
 ```java
 public abstract class ChoiceProvider<T> implements IDetachable {
+
+	/**
+	 * Get the value for displaying to an end user.
+	 *
+	 * @param object
+	 *            the actual object
+	 * @return the value meant for displaying to an end user
+	 */
+	public abstract String getDisplayValue(T object);
+
+	/**
+	 * This method is called to get the id value of an object (used as the value attribute of a
+	 * choice element) The id can be extracted from the object like a primary key, or if the list is
+	 * stable you could just return a toString of the index.
+	 * <p>
+	 * Note that the given index can be {@code -1} if the object in question is not contained in the
+	 * available choices.
+	 *
+	 * @param object
+	 *            The object for which the id should be generated
+	 * @param index
+	 *            The index of the object in the choices list.
+	 * @return String
+	 */
+	public abstract String getIdValue(T object);
+
     /**
      * Queries application for choices that match the search {@code term} and adds them to the {@code response}
      */
     public abstract void query(String term, int page, Response<T> response);
-
-    /**
-     * Converts the specified choice to Json.
-     */
-    public abstract void toJson(T choice, JSONWriter writer) throws JSONException;
 
     /**
      * Converts a list of choice ids back into application's choice objects. When the choice provider is attached to a
@@ -61,7 +82,7 @@ public abstract class ChoiceProvider<T> implements IDetachable {
     public abstract Collection<T> toChoices(Collection<String> ids);
 }
 ```
-Once you implement this interface your application can communicate with the Select2 components. Then its simply a matter of adding any one of the provided components to your page and configuring various Select2 options through the component. For example a single-select component can be added and configured like this:
+Once you implement a custom subclass your application can communicate with the Select2 components. Then its simply a matter of adding any one of the provided components to your page and configuring various Select2 options through the component. For example a single-select component can be added and configured like this:
 
 Java
 ```java

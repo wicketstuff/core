@@ -13,7 +13,7 @@ public class SimplePage extends WicketExamplePage
 
     public SimplePage()
     {
-        GMap map = new GMap("map");
+        GMap map = new GMap("map", WicketExamplePage.API_KEY);
         map.setStreetViewControlEnabled(false);
         map.setScaleControlEnabled(true);
         map.setScrollWheelZoomEnabled(true);

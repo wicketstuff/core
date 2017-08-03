@@ -17,7 +17,7 @@
 	<parent>
 		<artifactId>wicketstuff-restannotations-parent</artifactId>
 		<groupId>org.wicketstuff</groupId>
-		<version>7.4.0-SNAPSHOT</version>
+		<version>8.0.0-SNAPSHOT</version>
 	</parent>
 
 	<artifactId>wicketstuff-restannotations</artifactId>
@@ -46,36 +46,28 @@
 			<artifactId>wicket-auth-roles</artifactId>
 		</dependency>
 		<dependency>
+            <groupId>org.wicketstuff</groupId>
+            <artifactId>wicketstuff-rest-utils</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
 		</dependency>
-
-		<dependency>
-			<groupId>org.slf4j</groupId>
-			<artifactId>slf4j-api</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.slf4j</groupId>
-			<artifactId>slf4j-log4j12</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>log4j</groupId>
-			<artifactId>log4j</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.eclipse.jetty</groupId>
-			<artifactId>test-jetty-servlet</artifactId>
-		</dependency>
+        <dependency>
+                <groupId>com.fasterxml.jackson.core</groupId>
+                <artifactId>jackson-databind</artifactId>
+                <scope>test</scope>
+         </dependency>
+<!-- 		<dependency> -->
+<!-- 			<groupId>org.slf4j</groupId> -->
+<!-- 			<artifactId>slf4j-api</artifactId> -->
+<!-- 		</dependency> -->
+		
+		
 		<dependency>
 			<groupId>javax.servlet</groupId>
 			<artifactId>javax.servlet-api</artifactId>
-			<version>3.0.1</version>
 		</dependency>
-		<dependency>
-			<groupId>org.mockito</groupId>
-			<artifactId>mockito-core</artifactId>
-			<version>1.10.19</version>
-		</dependency>
-
 	</dependencies>
 </project>

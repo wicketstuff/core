@@ -35,7 +35,7 @@
 	<build>
 		<plugins>
 			<plugin>
-				<groupId>org.mortbay.jetty</groupId>
+				<groupId>org.eclipse.jetty</groupId>
 				<artifactId>maven-jetty-plugin</artifactId>
 			</plugin>
 		</plugins>
@@ -167,17 +167,17 @@
 		<!--  JETTY DEPENDENCIES FOR TESTING  -->
 
 		<dependency>
-			<groupId>org.mortbay.jetty</groupId>
+			<groupId>org.eclipse.jetty</groupId>
 			<artifactId>jetty</artifactId>
 			<version>${jetty.version}</version>
 		</dependency>
 		<dependency>
-			<groupId>org.mortbay.jetty</groupId>
+			<groupId>org.eclipse.jetty</groupId>
 			<artifactId>jetty-util</artifactId>
 			<version>${jetty.version}</version>
 		</dependency>
 		<dependency>
-			<groupId>org.mortbay.jetty</groupId>
+			<groupId>org.eclipse.jetty</groupId>
 			<artifactId>jetty-management</artifactId>
 			<version>${jetty.version}</version>
 		</dependency>

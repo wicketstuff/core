@@ -20,25 +20,25 @@ import java.util.Iterator;
 import java.util.Map;
 
 import javax.portlet.MimeResponse;
+import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
 import javax.portlet.PortletURL;
 import javax.portlet.ResourceURL;
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.wicket.Application;
-import org.apache.wicket.IResourceListener;
-import org.apache.wicket.RequestListenerInterface;
+import org.apache.wicket.IRequestListener;
 import org.apache.wicket.SystemMapper;
-import org.apache.wicket.behavior.IBehaviorListener;
-import org.apache.wicket.core.request.handler.BookmarkableListenerInterfaceRequestHandler;
+import org.apache.wicket.core.request.handler.BookmarkableListenerRequestHandler;
 import org.apache.wicket.core.request.handler.BookmarkablePageRequestHandler;
-import org.apache.wicket.core.request.handler.ListenerInterfaceRequestHandler;
+import org.apache.wicket.core.request.handler.ListenerRequestHandler;
 import org.apache.wicket.core.request.handler.RenderPageRequestHandler;
 import org.apache.wicket.core.request.mapper.AbstractComponentMapper;
 import org.apache.wicket.portlet.request.mapper.PortletSystemMapper;
 import org.apache.wicket.request.IRequestHandler;
 import org.apache.wicket.request.Request;
 import org.apache.wicket.request.Url;
+import org.apache.wicket.request.component.IRequestableComponent;
 import org.apache.wicket.request.cycle.RequestCycle;
 import org.apache.wicket.request.handler.resource.ResourceReferenceRequestHandler;
 import org.apache.wicket.request.resource.IResource;
@@ -57,6 +57,9 @@ import org.apache.wicket.util.crypt.Base64;
  * @author Konstantinos Karavitis
  */
 public class PortletRequestMapper extends AbstractComponentMapper {
+	
+	public static String PORTLET_URL = "portlet-url";
+	
 	private SystemMapper systemMapper;
 
 	public PortletRequestMapper(final Application application) {
@@ -81,7 +84,7 @@ public class PortletRequestMapper extends AbstractComponentMapper {
 		}
 
 		if (requestHandler instanceof RenderPageRequestHandler) {
-			if (ThreadPortletContext.isAjax()) {
+			if (PortletRequest.RESOURCE_PHASE.equals(ThreadPortletContext.getPortletRequest().getAttribute(PortletRequest.LIFECYCLE_PHASE))) {
 				url = encodeRenderUrl(url, true);
 			}
 		}
@@ -102,19 +105,18 @@ public class PortletRequestMapper extends AbstractComponentMapper {
 		else if (requestHandler instanceof BookmarkablePageRequestHandler) {
 			url = encodeRenderUrl(url, true);
 		}
-		//added mapping for request handlers with type of BookmarkableListenerInterfaceRequestHandler. The handling is the same as for handlers of type ListenerInterfaceRequestHandler 
-		else if (requestHandler instanceof ListenerInterfaceRequestHandler || requestHandler instanceof BookmarkableListenerInterfaceRequestHandler) { 
-			RequestListenerInterface listenerInterface;
+		//added mapping for request handlers with type of BookmarkableListenerRequestHandler. The handling is the same as for handlers of type ListenerRequestHandler 
+		else if (requestHandler instanceof ListenerRequestHandler || requestHandler instanceof BookmarkableListenerRequestHandler) { 
+			IRequestableComponent component;
 
-			if (requestHandler instanceof ListenerInterfaceRequestHandler) {
-				listenerInterface = ((ListenerInterfaceRequestHandler) requestHandler).getListenerInterface();
+			if (requestHandler instanceof ListenerRequestHandler) {
+				component = ((ListenerRequestHandler) requestHandler).getComponent();
 			}
 			else {
-				listenerInterface = ((BookmarkableListenerInterfaceRequestHandler)requestHandler).getListenerInterface();
+				component = ((BookmarkableListenerRequestHandler)requestHandler).getComponent();
 			}
 
-			Class<?> listenerClass = listenerInterface.getMethod().getDeclaringClass();
-			if ((IResourceListener.class.isAssignableFrom(listenerClass)) || (IBehaviorListener.class.isAssignableFrom(listenerClass))) {
+			if (component instanceof IRequestListener) {
 				url = encodeResourceUrl(url);
 			}
 			else {
@@ -183,7 +185,7 @@ public class PortletRequestMapper extends AbstractComponentMapper {
 			url = parseUrl(qualifiedPath);
 		}
 
-		return url;
+		return markAsPortletUrl(url);
 	}
 
 	private Url encodeSharedResourceUrl(Url url) {
@@ -227,7 +229,7 @@ public class PortletRequestMapper extends AbstractComponentMapper {
 			url = parseUrl(qualifiedPath);
 		}
 
-		return url;
+		return markAsPortletUrl(url);
 	}
 
 	private Url encodeRenderUrl(Url url, boolean forceRenderUrl) {
@@ -253,6 +255,11 @@ public class PortletRequestMapper extends AbstractComponentMapper {
 			url = parseUrl(qualifiedPath);
 		}
 
+		return markAsPortletUrl(url);
+	}
+	
+	private Url markAsPortletUrl(Url url) {
+		url.setQueryParameter(PORTLET_URL, PORTLET_URL);
 		return url;
 	}
 }

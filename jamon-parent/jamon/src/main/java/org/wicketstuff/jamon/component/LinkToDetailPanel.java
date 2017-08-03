@@ -18,6 +18,8 @@ package org.wicketstuff.jamon.component;
 
 import static org.wicketstuff.jamon.component.JamonAdminPage.PATH_TO_MONITOR_DETAILS;
 
+import java.util.Optional;
+
 import org.apache.wicket.AttributeModifier;
 import org.apache.wicket.Component;
 import org.apache.wicket.ajax.AjaxRequestTarget;
@@ -55,13 +57,15 @@ public class LinkToDetailPanel extends Panel
 		}
 
 		@Override
-		public void onClick(AjaxRequestTarget target)
+		public void onClick(Optional<AjaxRequestTarget> targetOptional)
 		{
-			Component componentToBeReplaced = target.getPage().get(PATH_TO_MONITOR_DETAILS);
-			JamonMonitorDetailsPanel replacement = new JamonMonitorDetailsPanel(
-				PATH_TO_MONITOR_DETAILS, monitorLabel);
-			componentToBeReplaced.replaceWith(replacement);
-			target.add(replacement);
+			targetOptional.ifPresent(target -> {
+				Component componentToBeReplaced = target.getPage().get(PATH_TO_MONITOR_DETAILS);
+				JamonMonitorDetailsPanel replacement = new JamonMonitorDetailsPanel(
+					PATH_TO_MONITOR_DETAILS, monitorLabel);
+				componentToBeReplaced.replaceWith(replacement);
+				target.add(replacement);
+			});
 		}
 	}
 

@@ -27,7 +27,7 @@ import org.apache.wicket.markup.parser.XmlPullParser;
 import org.apache.wicket.markup.parser.XmlTag;
 
 /**
- * Fist try to get the most nested component in the table data tag, if not possible set the most
+ * First try to get the most nested component in the table data tag, if not possible set the most
  * nested value in markup as a {@link String}.
  *
  * @author Pedro Santos
@@ -129,6 +129,6 @@ public class GeneralPurposeExporter implements CellExporter
 	}
 
 	protected Component getLinkInnerComponent(Link<?> link) {
-		return link.get(0);
+		return link.iterator().next();
 	}
 }

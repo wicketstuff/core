@@ -1,38 +1,33 @@
 package wicket.contrib.examples.tinymce;
 
-import org.apache.wicket.util.time.Duration;
+import org.eclipse.jetty.server.HttpConfiguration;
+import org.eclipse.jetty.server.HttpConnectionFactory;
 import org.eclipse.jetty.server.Server;
-import org.eclipse.jetty.server.bio.SocketConnector;
+import org.eclipse.jetty.server.ServerConnector;
 import org.eclipse.jetty.webapp.WebAppContext;
 
 public class Start
 {
 	public static void main(String[] args) throws Exception
 	{
-//		System.setProperty("wicket.configuration", "development");
-
-		int timeout = (int)Duration.ONE_HOUR.getMilliseconds();
-
 		Server server = new Server();
-		SocketConnector connector = new SocketConnector();
 
-		// Set some timeout options to make debugging easier.
-		connector.setMaxIdleTime(timeout);
-		connector.setSoLingerTime(-1);
-		connector.setPort(8080);
-		server.addConnector(connector);
+		HttpConfiguration http_config = new HttpConfiguration();
+		http_config.setSecureScheme("https");
+		http_config.setSecurePort(8443);
+		http_config.setOutputBufferSize(32768);
 
-		// check if a keystore for a SSL certificate is available, and
-		// if so, start a SSL connector on port 8443. By default, the
-		// quickstart comes with a Apache Wicket Quickstart Certificate
-		// that expires about half way september 2021. Do not use this
-		// certificate anywhere important as the passwords are available
-		// in the source.
+		ServerConnector http = new ServerConnector(server, new HttpConnectionFactory(http_config));
+		http.setPort(8080);
+		http.setIdleTimeout(1000 * 60 * 60);
+
+		server.addConnector(http);
 
 		WebAppContext bb = new WebAppContext();
 		bb.setServer(server);
 		bb.setContextPath("/");
 		bb.setWar("src/main/webapp");
+
 
 		// START JMX SERVER
 		// MBeanServer mBeanServer = ManagementFactory.getPlatformMBeanServer();

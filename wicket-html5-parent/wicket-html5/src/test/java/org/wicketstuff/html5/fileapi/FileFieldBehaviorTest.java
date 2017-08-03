@@ -1,12 +1,7 @@
 package org.wicketstuff.html5.fileapi;
 
-import java.io.Serializable;
-import java.util.List;
-
 import org.apache.wicket.ajax.AjaxRequestTarget;
-import org.apache.wicket.feedback.ContainerFeedbackMessageFilter;
 import org.apache.wicket.feedback.FeedbackMessage;
-import org.apache.wicket.feedback.FeedbackMessages;
 import org.apache.wicket.mock.MockRequestParameters;
 import org.apache.wicket.util.lang.Bytes;
 import org.apache.wicket.util.tester.WicketTester;

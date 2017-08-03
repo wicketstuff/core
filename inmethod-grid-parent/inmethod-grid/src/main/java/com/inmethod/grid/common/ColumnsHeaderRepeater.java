@@ -172,7 +172,7 @@ public abstract class ColumnsHeaderRepeater<M, I, S> extends WebMarkupContainer
 			{
 				throw new IllegalStateException("Column ID has changed during rendering");
 			}
-			IMarkupFragment componentMarkup = getParent().getParent().getMarkup();
+			IMarkupFragment componentMarkup = component.getParent().getMarkup();
 			component.setMarkup(componentMarkup);
 			component.render();
 

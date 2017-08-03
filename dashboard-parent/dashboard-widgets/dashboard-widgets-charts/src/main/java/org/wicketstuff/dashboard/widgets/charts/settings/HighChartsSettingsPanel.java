@@ -36,72 +36,74 @@ import java.util.Arrays;
  * @author <a href="http://www.GitHub.com/PaulBors">Paul Bors</a>
  */
 public class HighChartsSettingsPanel extends GenericPanel<HighChartsWidget> implements DashboardContextAware {
-    private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L;
 
-    private transient DashboardContext dashboardContext;
-    private SeriesType seriesType;
+	private transient DashboardContext dashboardContext;
+	private SeriesType seriesType;
 
-    public HighChartsSettingsPanel(String id, IModel<HighChartsWidget> model) {
-        super(id, model);
+	public HighChartsSettingsPanel(String id, IModel<HighChartsWidget> model) {
+		super(id, model);
 
-        setOutputMarkupPlaceholderTag(true);
+		setOutputMarkupPlaceholderTag(true);
 
-        Form<Widget> form = new Form<Widget>("form");
-        add(form);
+		Form<Widget> form = new Form<Widget>("form");
+		add(form);
 
-        seriesType = SeriesType.valueOf(getModelObject().getSettings().get(Settings.seriesType.name()));
-        DropDownChoice<SeriesType> choice = new DropDownChoice<SeriesType>(Settings.seriesType.name(),
-                new PropertyModel<SeriesType>(this, Settings.seriesType.name()), Arrays.asList(SeriesType.values()));
-        form.add(choice);
+		seriesType = SeriesType.valueOf(getModelObject().getSettings().get(Settings.seriesType.name()));
+		DropDownChoice<SeriesType> choice = new DropDownChoice<SeriesType>(Settings.seriesType.name(),
+				new PropertyModel<SeriesType>(this, Settings.seriesType.name()), Arrays.asList(SeriesType.values()));
+		form.add(choice);
 
-        form.add(new AjaxSubmitLink("submit") {
-            private static final long serialVersionUID = 1L;
-            @Override
-            protected void onSubmit(AjaxRequestTarget target, Form<?> form) {
-                getModelObject().getSettings().put(Settings.seriesType.name(), seriesType.name());
-                getModelObject().updateChart();
+		form.add(new AjaxSubmitLink("submit") {
+			private static final long serialVersionUID = 1L;
+			@Override
+			protected void onSubmit(AjaxRequestTarget target) {
+				getModelObject().getSettings().put(Settings.seriesType.name(), seriesType.name());
+				getModelObject().updateChart();
 
-                Dashboard dashboard = findParent(DashboardPanel.class).getDashboard();
-                dashboardContext.getDashboardPersister().save(dashboard);
+				Dashboard dashboard = findParent(DashboardPanel.class).getDashboard();
+				dashboardContext.getDashboardPersister().save(dashboard);
 
-                hideSettingPanel(target);
+				hideSettingPanel(target);
 
-                WidgetPanel widgetPanel = findParent(WidgetPanel.class);
-                target.add(widgetPanel.getWidgetHeaderPanel());
+				WidgetPanel widgetPanel = findParent(WidgetPanel.class);
+				target.add(widgetPanel.getWidgetHeaderPanel());
 
-                HighChartsWidgetView widgetView = (HighChartsWidgetView) widgetPanel.getWidgetView();
-                target.add(widgetView);
-            }
-            @Override
-            protected void onError(AjaxRequestTarget target, Form<?> form) {
-            }
-        });
+				HighChartsWidgetView widgetView = (HighChartsWidgetView) widgetPanel.getWidgetView();
+				target.add(widgetView);
+			}
 
-        form.add(new AjaxLink<Void>("cancel") {
-            private static final long serialVersionUID = 1L;
-            @Override
-            public void onClick(AjaxRequestTarget target) {
-                hideSettingPanel(target);
-            }
-        });
+			@Override
+			protected void onError(AjaxRequestTarget target) {
+			}
+		});
 
-    }
+		form.add(new AjaxLink<Void>("cancel") {
+			private static final long serialVersionUID = 1L;
 
-    @Override
-    public void setDashboardContext(DashboardContext dashboardContext) {
-        this.dashboardContext = dashboardContext;
-    }
+			@Override
+			public void onClick(AjaxRequestTarget target) {
+				hideSettingPanel(target);
+			}
+		});
 
-    private void hideSettingPanel(AjaxRequestTarget target) {
-        setVisible(false);
-        target.add(this);
-    }
+	}
 
-    public SeriesType getSeriesType() {
-        return seriesType;
-    }
+	@Override
+	public void setDashboardContext(DashboardContext dashboardContext) {
+		this.dashboardContext = dashboardContext;
+	}
 
-    public void setSeriesType(SeriesType seriesType) {
-        this.seriesType = seriesType;
-    }
+	private void hideSettingPanel(AjaxRequestTarget target) {
+		setVisible(false);
+		target.add(this);
+	}
+
+	public SeriesType getSeriesType() {
+		return seriesType;
+	}
+
+	public void setSeriesType(SeriesType seriesType) {
+		this.seriesType = seriesType;
+	}
 }

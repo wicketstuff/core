@@ -1,35 +1,41 @@
 /*
  * Copyright 2012 Igor Vaynberg
- * 
+ *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this work except in compliance with
  * the License. You may obtain a copy of the License in the LICENSE file, or at:
- * 
+ *
  * http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on
  * an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the
  * specific language governing permissions and limitations under the License.
  */
 package org.wicketstuff.select2;
 
+import static org.apache.wicket.util.string.Strings.defaultIfEmpty;
+
 import java.io.Serializable;
 
 import org.apache.wicket.Component;
 import org.apache.wicket.Session;
 import org.apache.wicket.WicketRuntimeException;
-import org.apache.wicket.ajax.json.JSONException;
-import org.apache.wicket.ajax.json.JSONStringer;
 import org.apache.wicket.markup.head.IHeaderResponse;
+import org.apache.wicket.util.string.Strings;
 import org.wicketstuff.select2.json.Json;
+
+import com.github.openjson.JSONArray;
+import com.github.openjson.JSONException;
+import com.github.openjson.JSONStringer;
 
 /**
  * Select2 settings. Refer to the Select2 documentation for what these options mean.
- * 
+ *
  * @author igor
  */
 public final class Settings implements Serializable
 {
 	private static final long serialVersionUID = 1L;
+	public static final String DEFAULT_QUERY_PARAM = "q";
 
 	/**
 	 * Some predefined width option values
@@ -41,6 +47,9 @@ public final class Settings implements Serializable
 		public static String RESOLVE = "resolve";
 		public static String ELEMENT = "element";
 	}
+
+	// language code (e.g. "en", "de", "fr", ...)
+	private String language;
 
 	private Integer minimumInputLength, minimumResultsForSearch;
 	private Integer maximumSelectionLength;
@@ -55,6 +64,7 @@ public final class Settings implements Serializable
 	private String query;
 	private String width;
 	private String containerCss, dropdownCss, containerCssClass, dropdownCssClass; //TODO deprecated
+	private String dropdownParent;
 
 	private AjaxSettings ajax;
 	private String data;
@@ -79,6 +89,11 @@ public final class Settings implements Serializable
 	 * Path to which JSON producing resource will be attached.
 	 */
 	private String mountPath;
+
+	/**
+	 * The name of the parameter being used for Ajax request.
+	 */
+	private String queryParam = DEFAULT_QUERY_PARAM;
 
 	public CharSequence toJson()
 	{
@@ -109,9 +124,14 @@ public final class Settings implements Serializable
 			Json.writeFunction(writer, "dropdownCss", dropdownCss);
 			Json.writeObject(writer, "dropdownCssClass", dropdownCssClass);
 			Json.writeObject(writer, "separator", separator);
-			Json.writeObject(writer, "tokenSeparators", tokenSeparators);
+			if (tokenSeparators != null) {
+				Json.writeObject(writer, "tokenSeparators", new JSONArray(tokenSeparators));
+			}
 			Json.writeObject(writer, "selectOnClose", selectOnClose);
 			Json.writeObject(writer, "dropdownAutoWidth", dropdownAutoWidth);
+			if (!Strings.isEmpty(dropdownParent)) {
+				Json.writeFunction(writer, "dropdownParent", String.format("$('#%s')", dropdownParent));
+			}
 			if (ajax != null)
 			{
 				writer.key("ajax");
@@ -120,9 +140,11 @@ public final class Settings implements Serializable
 			Json.writeFunction(writer, "data", data);
 			Json.writeObject(writer, "tags", tags);
 			Json.writeFunction(writer, "createTag", createTag);
-			writer.key("language").value(Session.get().getLocale().toLanguageTag());
-			writer.endObject();
 
+			// Set language
+			writer.key("language").value(getLanguage());
+
+			writer.endObject();
 			return writer.toString();
 		}
 		catch (JSONException e)
@@ -450,6 +472,15 @@ public final class Settings implements Serializable
 		return this;
 	}
 
+	public String getDropdownParent() {
+		return dropdownParent;
+	}
+
+	public Settings setDropdownParent(String dropdownParent) {
+		this.dropdownParent = dropdownParent;
+		return this;
+	}
+
 	public String getSeparator()
 	{
 		return separator;
@@ -499,9 +530,10 @@ public final class Settings implements Serializable
 		return stateless;
 	}
 
-	public void setStateless(boolean stateless)
+	public Settings setStateless(boolean stateless)
 	{
 		this.stateless = stateless;
+		return this;
 	}
 
 	public String getMountPath()
@@ -509,8 +541,29 @@ public final class Settings implements Serializable
 		return mountPath;
 	}
 
-	public void setMountPath(String mountPath)
+	public Settings setMountPath(String mountPath)
 	{
 		this.mountPath = mountPath;
+		return this;
+	}
+
+	public String getQueryParam()
+	{
+		return queryParam;
+	}
+
+	public Settings setQueryParam(String queryParam)
+	{
+		this.queryParam = queryParam;
+		return this;
+	}
+
+	public String getLanguage() {
+		return defaultIfEmpty(language, Session.get().getLocale().getLanguage());
+	}
+
+	public Settings setLanguage(String language) {
+		this.language = language;
+		return this;
 	}
 }

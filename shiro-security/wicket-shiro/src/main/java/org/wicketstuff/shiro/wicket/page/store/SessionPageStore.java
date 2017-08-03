@@ -254,4 +254,10 @@ public class SessionPageStore implements IPageStore
 		final SerializedPageWrapper wrapper = new SerializedPageWrapper(serializedPages, pageId);
 		return wrapper;
 	}
+
+	@Override
+	public boolean canBeAsynchronous() 
+	{
+		return false;
+	}
 }

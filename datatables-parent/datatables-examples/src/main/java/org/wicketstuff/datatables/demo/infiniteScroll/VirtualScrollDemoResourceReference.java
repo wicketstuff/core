@@ -1,6 +1,6 @@
 package org.wicketstuff.datatables.demo.infiniteScroll;
 
-import org.apache.wicket.ajax.json.JSONObject;
+import com.github.openjson.JSONObject;
 import org.apache.wicket.markup.repeater.data.IDataProvider;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
 import org.wicketstuff.datatables.demo.PeopleDataProvider;

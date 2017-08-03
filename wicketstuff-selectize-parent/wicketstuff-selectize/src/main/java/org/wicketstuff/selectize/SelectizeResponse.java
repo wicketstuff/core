@@ -22,7 +22,8 @@ import java.io.ObjectOutputStream;
 import java.util.Iterator;
 import java.util.List;
 
-import org.apache.wicket.ajax.json.JSONObject;
+import com.github.openjson.JSONArray;
+import com.github.openjson.JSONObject;
 
 /**
  * The SelectizeResponse is the actual model object for ajax requests of the selectize component.
@@ -35,7 +36,7 @@ public class SelectizeResponse extends JSONObject
 
 	public SelectizeResponse(List<SelectizeOption> options)
 	{
-		put("options", options);
+		put("options", new JSONArray(options));
 	}
 
 	private void writeObject(ObjectOutputStream out) throws IOException

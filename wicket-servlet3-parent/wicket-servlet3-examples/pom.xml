@@ -7,7 +7,7 @@
 	<parent>
 		<groupId>org.wicketstuff</groupId>
 		<artifactId>wicketstuff-servlet3-parent</artifactId>
-		<version>7.4.0-SNAPSHOT</version>
+		<version>8.0.0-SNAPSHOT</version>
 	</parent>
 
 	<artifactId>wicketstuff-servlet3-examples</artifactId>
@@ -92,7 +92,7 @@
 				</configuration>
 			</plugin>
 			<plugin>
-				<groupId>org.mortbay.jetty</groupId>
+				<groupId>org.eclipse.jetty</groupId>
 				<artifactId>jetty-maven-plugin</artifactId>
 				<version>${jetty.version}</version><!--$NO-MVN-MAN-VER$-->
 				<configuration>

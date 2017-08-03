@@ -19,12 +19,13 @@ package org.wicketstuff.poi.excel;
 import java.io.IOException;
 import java.text.ParseException;
 
-import junit.framework.TestCase;
-
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.wicket.request.resource.ResourceStreamResource;
 import org.apache.wicket.util.resource.ResourceStreamNotFoundException;
 import org.apache.wicket.util.tester.WicketTester;
+
+import junit.framework.TestCase;
 
 /**
  * @author Pedro Santos
@@ -72,6 +73,33 @@ public class TableParserTest extends TestCase
 		// tester.startResource(new ResourceStreamResource(new
 		// XlsStream(sheet.getWorkbook())));
 		// PoiTestUtil.openFileInResponse(tester);
+
+	}
+
+	public void testTable2() throws IOException, ResourceStreamNotFoundException, ParseException
+	{
+		Sheet sheet = new HSSFWorkbook().createSheet();
+		TableParser tableParser = new TableParser(sheet, new GeneralPurposeExporter());
+		tableParser.parse(new Table2());
+
+		assertEquals(0, sheet.getMergedRegion(0).getFirstColumn());
+		assertEquals(0, sheet.getMergedRegion(0).getLastColumn());
+		assertEquals(0, sheet.getMergedRegion(0).getFirstRow());
+		assertEquals(1, sheet.getMergedRegion(0).getLastRow());
+
+		assertEquals(1, sheet.getMergedRegion(1).getFirstColumn());
+		assertEquals(1, sheet.getMergedRegion(1).getLastColumn());
+		assertEquals(0, sheet.getMergedRegion(1).getFirstRow());
+		assertEquals(1, sheet.getMergedRegion(1).getLastRow());
+
+		assertEquals(2, sheet.getMergedRegion(2).getFirstColumn());
+		assertEquals(4, sheet.getMergedRegion(2).getLastColumn());
+		assertEquals(0, sheet.getMergedRegion(2).getFirstRow());
+		assertEquals(0, sheet.getMergedRegion(2).getLastRow());
+
+		assertEquals("3-1", sheet.getRow(1).getCell(2).getStringCellValue());
+		assertEquals("3-2", sheet.getRow(1).getCell(3).getStringCellValue());
+		assertEquals("3-3", sheet.getRow(1).getCell(4).getStringCellValue());
 
 	}
 }

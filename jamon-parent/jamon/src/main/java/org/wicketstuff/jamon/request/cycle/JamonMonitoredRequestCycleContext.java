@@ -87,8 +87,6 @@ public class JamonMonitoredRequestCycleContext
 	/**
 	 * Construct.
 	 * 
-	 * @param requestCycleContext
-	 *            context for the request cycle.
 	 * @param includeSourceNameInMonitorLabel
 	 *            whether or not to include the name of the {@link #source} in the Monitors label.
 	 */

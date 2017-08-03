@@ -4,7 +4,7 @@
 	<parent>
 		<groupId>org.wicketstuff</groupId>
 		<artifactId>wicketstuff-jamon-parent</artifactId>
-		<version>7.4.0-SNAPSHOT</version>
+		<version>8.0.0-SNAPSHOT</version>
 	</parent>
 	<artifactId>jamon-examples</artifactId>
 	<name>Jamon examples</name>
@@ -24,7 +24,8 @@
 		</dependency>
 		<dependency>
 			<groupId>org.eclipse.jetty.aggregate</groupId>
-			<artifactId>jetty-all-server</artifactId>
+			<artifactId>jetty-all</artifactId>
+            <classifier>uber</classifier>
 		</dependency>
 
 		<!-- LOGGING -->
@@ -40,7 +41,7 @@
 	<build>
 		<plugins>
 			<plugin>
-				<groupId>org.mortbay.jetty</groupId>
+				<groupId>org.eclipse.jetty</groupId>
 				<artifactId>jetty-maven-plugin</artifactId>
 			</plugin>
 		</plugins>

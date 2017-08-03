@@ -16,14 +16,34 @@
  */
 package org.wicketstuff.whiteboard;
 
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Date;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.TreeMap;
+import java.util.concurrent.BlockingDeque;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.LinkedBlockingDeque;
+
+import javax.servlet.ServletContext;
+import javax.servlet.http.HttpServletRequest;
+
 import org.apache.wicket.Application;
 import org.apache.wicket.Component;
 import org.apache.wicket.ajax.AbstractDefaultAjaxBehavior;
 import org.apache.wicket.ajax.AjaxRequestTarget;
-import org.apache.wicket.ajax.json.JSONArray;
-import org.apache.wicket.ajax.json.JSONException;
-import org.apache.wicket.ajax.json.JSONObject;
-import org.apache.wicket.markup.head.*;
+import org.apache.wicket.markup.head.CssHeaderItem;
+import org.apache.wicket.markup.head.IHeaderResponse;
+import org.apache.wicket.markup.head.JavaScriptHeaderItem;
+import org.apache.wicket.markup.head.OnDomReadyHeaderItem;
+import org.apache.wicket.markup.head.PriorityHeaderItem;
 import org.apache.wicket.protocol.http.WebApplication;
 import org.apache.wicket.protocol.ws.WebSocketSettings;
 import org.apache.wicket.protocol.ws.api.IWebSocketConnection;
@@ -31,39 +51,56 @@ import org.apache.wicket.protocol.ws.api.registry.IWebSocketConnectionRegistry;
 import org.apache.wicket.request.Url;
 import org.apache.wicket.request.cycle.RequestCycle;
 import org.apache.wicket.request.http.WebRequest;
+import org.apache.wicket.util.string.Strings;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.wicketstuff.whiteboard.elements.*;
+import org.wicketstuff.whiteboard.elements.CircleGeneral;
+import org.wicketstuff.whiteboard.elements.Circle_3p;
+import org.wicketstuff.whiteboard.elements.ClipArt;
+import org.wicketstuff.whiteboard.elements.Element;
 import org.wicketstuff.whiteboard.elements.Element.Type;
-import org.wicketstuff.whiteboard.resource.*;
+import org.wicketstuff.whiteboard.elements.LineGeneral;
+import org.wicketstuff.whiteboard.elements.Line_2p;
+import org.wicketstuff.whiteboard.elements.PencilArrow;
+import org.wicketstuff.whiteboard.elements.PencilCircle;
+import org.wicketstuff.whiteboard.elements.PencilCurve;
+import org.wicketstuff.whiteboard.elements.PencilFreeLine;
+import org.wicketstuff.whiteboard.elements.PencilPointAtRect;
+import org.wicketstuff.whiteboard.elements.PencilPointer;
+import org.wicketstuff.whiteboard.elements.PencilRect;
+import org.wicketstuff.whiteboard.elements.PencilUnderline;
+import org.wicketstuff.whiteboard.elements.PointAtCircle;
+import org.wicketstuff.whiteboard.elements.PointAtLine;
+import org.wicketstuff.whiteboard.elements.PointFree;
+import org.wicketstuff.whiteboard.elements.Point_2c;
+import org.wicketstuff.whiteboard.elements.Point_2l;
+import org.wicketstuff.whiteboard.elements.Point_lc;
+import org.wicketstuff.whiteboard.elements.Segment;
+import org.wicketstuff.whiteboard.elements.Text;
+import org.wicketstuff.whiteboard.resource.GoogStyleSheetResourceReference;
+import org.wicketstuff.whiteboard.resource.TranslateJavaScriptResourceReference;
+import org.wicketstuff.whiteboard.resource.WhiteboardHelperJavaScriptResourceReference;
+import org.wicketstuff.whiteboard.resource.WhiteboardJavaScriptResourceReference;
+import org.wicketstuff.whiteboard.resource.WhiteboardStyleSheetResourceReference;
 import org.wicketstuff.whiteboard.settings.WhiteboardLibrarySettings;
 
-import javax.servlet.ServletContext;
-import javax.servlet.http.HttpServletRequest;
-
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.*;
-import java.util.concurrent.BlockingDeque;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.LinkedBlockingDeque;
+import com.github.openjson.JSONArray;
+import com.github.openjson.JSONException;
+import com.github.openjson.JSONObject;
 
 /**
  * This class is the behaviour handler of the whiteboard. All the server-side functionality of whiteboard is handled
  * here
- * 
+ *
  * @author andunslg
  */
 public class WhiteboardBehavior extends AbstractDefaultAjaxBehavior {
-	private static final Map<String, WhiteboardData> whiteboardMap = new ConcurrentHashMap<String, WhiteboardData>();
+	private static final Map<String, WhiteboardData> whiteboardMap = new ConcurrentHashMap<>();
 
 	private static final Logger log = LoggerFactory.getLogger(WhiteboardBehavior.class);
 	private static final long serialVersionUID = 1L;
-	private String whiteboardMarkupId;
-	private String whiteboardObjectId;
+	private String markupId;
+	private String whiteboardId;
 
 	private Map<Integer, Element> elementMap;
 	private Map<Integer, Element> loadedElementMap;
@@ -71,8 +108,8 @@ public class WhiteboardBehavior extends AbstractDefaultAjaxBehavior {
 	private BlockingDeque<List<Element>> undoSnapshots;
 	private BlockingDeque<List<Boolean>> undoSnapshotCreationList;
 
-	private List<Element> snapShot = null;
-	private List<Boolean> snapShotCreation = null;
+	private List<Element> snapShot = new ArrayList<>();
+	private List<Boolean> snapShotCreation = new ArrayList<>();
 
 	private DateFormat dateFormat = new SimpleDateFormat("yyyy_MM_dd_HH_mm_ss");
 
@@ -93,7 +130,7 @@ public class WhiteboardBehavior extends AbstractDefaultAjaxBehavior {
 
 	/**
 	 * Creating the behaviour using whiteboard's html element id
-	 * 
+	 *
 	 * @param whiteboardMarkupId
 	 */
 	public WhiteboardBehavior(String whiteboardObjectId, String whiteboardMarkupId) {
@@ -102,8 +139,8 @@ public class WhiteboardBehavior extends AbstractDefaultAjaxBehavior {
 
 	/**
 	 * This is the constructor which used to create a whiteboard behaviour with more features
-	 * 
-	 * @param whiteboardMarkupId
+	 *
+	 * @param markupId
 	 *            html element id which holds the whiteboard
 	 * @param whiteboardContent
 	 *            If loading from a saved whiteboard file, content should be provided as a string. Otherwise null
@@ -112,35 +149,34 @@ public class WhiteboardBehavior extends AbstractDefaultAjaxBehavior {
 	 * @param documentFolder
 	 *            Path of the folder which holds docs images which can be added to whiteboard. Relative to context root
 	 */
-	public WhiteboardBehavior(String whiteboardObjectId, String whiteboardMarkupId, String whiteboardContent,
-			String clipArtFolder, String documentFolder) {
+	public WhiteboardBehavior(String whiteboardId, String markupId, String whiteboardContent, String clipArtFolder, String documentFolder) {
 		super();
-		this.whiteboardObjectId = whiteboardObjectId;
-		this.whiteboardMarkupId = whiteboardMarkupId;
+		this.whiteboardId = whiteboardId;
+		this.markupId = markupId;
 
-		if (!whiteboardMap.containsKey(whiteboardObjectId)) {
-			elementMap = new ConcurrentHashMap<Integer, Element>();
-			loadedElementMap = new ConcurrentHashMap<Integer, Element>();
+		if (!whiteboardMap.containsKey(whiteboardId)) {
+			elementMap = new ConcurrentHashMap<>();
+			loadedElementMap = new ConcurrentHashMap<>();
 
-			undoSnapshots = new LinkedBlockingDeque<List<Element>>(20);
-			undoSnapshotCreationList = new LinkedBlockingDeque<List<Boolean>>(20);
+			undoSnapshots = new LinkedBlockingDeque<>(20);
+			undoSnapshotCreationList = new LinkedBlockingDeque<>(20);
 
-			undoSnapshots_Background = new LinkedBlockingDeque<Background>(20);
-			undoSnapshotCreationList_Background = new LinkedBlockingDeque<Boolean>(20);
+			undoSnapshots_Background = new LinkedBlockingDeque<>(20);
+			undoSnapshotCreationList_Background = new LinkedBlockingDeque<>(20);
 
-			isElementSnapshotList = new LinkedBlockingDeque<Boolean>(20);
+			isElementSnapshotList = new LinkedBlockingDeque<>(20);
 
-			clipArts = new ArrayList<String>();
-			docMap = new ConcurrentHashMap<String, ArrayList<String>>();
+			clipArts = new ArrayList<>();
+			docMap = new ConcurrentHashMap<>();
 
 			loadedContent = whiteboardContent;
 
 			WhiteboardData whiteboardData = new WhiteboardData(elementMap, loadedElementMap, undoSnapshots,
 					undoSnapshotCreationList, undoSnapshots_Background, undoSnapshotCreationList_Background,
 					isElementSnapshotList, clipArts, null, docMap, null, null, whiteboardContent);
-			whiteboardMap.put(whiteboardObjectId, whiteboardData);
+			whiteboardMap.put(whiteboardId, whiteboardData);
 		} else {
-			WhiteboardData whiteboardData = whiteboardMap.get(whiteboardObjectId);
+			WhiteboardData whiteboardData = whiteboardMap.get(whiteboardId);
 			elementMap = whiteboardData.getElementMap();
 			loadedElementMap = whiteboardData.getLoadedElementMap();
 
@@ -161,15 +197,15 @@ public class WhiteboardBehavior extends AbstractDefaultAjaxBehavior {
 			isElementSnapshotList = whiteboardData.getIsElementSnapshotList();
 		}
 
-		if (!"".equals(loadedContent)) {
-			whiteboardMap.get(whiteboardObjectId).setLoadedContent(loadedContent);
+		if (!Strings.isEmpty(loadedContent)) {
+			whiteboardMap.get(whiteboardId).setLoadedContent(loadedContent);
 			if (whiteboardContent != null && !whiteboardContent.equals("")) {
 				try {
 					JSONObject savedContent = new JSONObject(whiteboardContent);
 
-					JSONArray elementList = (JSONArray) savedContent.get("elements");
-					snapShot = new ArrayList<Element>();
-					snapShotCreation = new ArrayList<Boolean>();
+					JSONArray elementList = savedContent.getJSONArray("elements");
+					snapShot = new ArrayList<>();
+					snapShotCreation = new ArrayList<>();
 
 					for (int i = 0; i < elementList.length(); i++) {
 						JSONObject jElement = (JSONObject) elementList.get(i);
@@ -184,21 +220,21 @@ public class WhiteboardBehavior extends AbstractDefaultAjaxBehavior {
 						}
 					}
 					if (undoSnapshots.isEmpty()) {
-						undoSnapshots.addLast(snapShot);
-						undoSnapshotCreationList.addLast(snapShotCreation);
-						isElementSnapshotList.addLast(true);
+						addUndo(undoSnapshots, snapShot);
+						addUndo(undoSnapshotCreationList, snapShotCreation);
+						addUndo(isElementSnapshotList, true);
 					}
 
 					snapShot = null;
 					snapShotCreation = null;
 
 					if (savedContent.has("background")) {
-						JSONObject backgroundJSON = (JSONObject) savedContent.get("background");
+						JSONObject backgroundJSON = savedContent.getJSONObject("background");
 						background = new Background(backgroundJSON);
-						whiteboardMap.get(whiteboardObjectId).setBackground(background);
-						undoSnapshots_Background.addLast(new Background("Background", "", 0.0, 0.0, 0.0, 0.0));
-						undoSnapshotCreationList_Background.addLast(true);
-						isElementSnapshotList.addLast(false);
+						whiteboardMap.get(whiteboardId).setBackground(background);
+						addUndo(undoSnapshots_Background, new Background("Background", "", 0.0, 0.0, 0.0, 0.0));
+						addUndo(undoSnapshotCreationList_Background, true);
+						addUndo(isElementSnapshotList, false);
 					}
 
 				} catch (JSONException e) {
@@ -209,28 +245,25 @@ public class WhiteboardBehavior extends AbstractDefaultAjaxBehavior {
 
 		// Setting the path to clipArt folder
 		if (clipArtFolder != null && !clipArtFolder.equals("")) {
-
 			this.clipArtFolder = clipArtFolder;
-			whiteboardMap.get(whiteboardObjectId).setClipArtFolder(clipArtFolder);
+			whiteboardMap.get(whiteboardId).setClipArtFolder(clipArtFolder);
 			this.loadClipArts();
-
 		}
 
 		// Setting the path to documents folder
 		if (documentFolder != null && !documentFolder.equals("")) {
-
 			this.documentFolder = documentFolder;
-			whiteboardMap.get(whiteboardObjectId).setDocumentFolder(documentFolder);
+			whiteboardMap.get(whiteboardId).setDocumentFolder(documentFolder);
 			this.loadDocuments();
-
 		}
 	}
 
 	/**
 	 * This method handles all the Ajax calls coming from whiteboard
-	 * 
+	 *
 	 * @param target
 	 */
+	@Override
 	protected void respond(final AjaxRequestTarget target) {
 
 		RequestCycle cycle = RequestCycle.get();
@@ -260,7 +293,6 @@ public class WhiteboardBehavior extends AbstractDefaultAjaxBehavior {
 		// If addDocument button is clicked on whiteboard, message will be sent and this if clause handles that
 		else if (webRequest.getQueryParameters().getParameterNames().contains("docList")) {
 			handleDocs();
-			;
 		}
 		// If document page navigation buttons are clicked on whiteboard, message will be sent and this if clause
 		// handles that
@@ -277,7 +309,7 @@ public class WhiteboardBehavior extends AbstractDefaultAjaxBehavior {
 
 	/**
 	 * Mapping JSON String to Objects and Adding to the Element List
-	 * 
+	 *
 	 * @param editedElement
 	 * @return
 	 */
@@ -294,44 +326,39 @@ public class WhiteboardBehavior extends AbstractDefaultAjaxBehavior {
 
 			// If the edited element is not from file loaded content this clause executes
 			if (!isLoaded) {
-
 				// Adding the element creation/editing is add to the undo snapshots
 				if (snapShot == null && snapShotCreation == null) {
-					snapShot = new ArrayList<Element>();
-					snapShotCreation = new ArrayList<Boolean>();
+					snapShot = new ArrayList<>();
+					snapShotCreation = new ArrayList<>();
 				}
-
 				if (elementMap.containsKey(element.getId()) && !elementMap.isEmpty()) {
 					snapShot.add(elementMap.get(element.getId()));
 					snapShotCreation.add(false);
-
 				} else {
 					snapShot.add(element);
 					snapShotCreation.add(true);
 				}
-
 				if (Type.PointFree != element.getType()) {
 					if (undoSnapshots.size() == 20) {
 						undoSnapshots.pollFirst();
 						undoSnapshotCreationList.pollFirst();
 					}
-
 					if (Type.PencilCurve == element.getType()) {
 						List<Element> lastElementSnapshot = undoSnapshots.peekLast();
 						if (lastElementSnapshot != null) {
 							Element lastSnapshotElement = lastElementSnapshot.get(lastElementSnapshot.size() - 1);
-	
+
 							if ((lastSnapshotElement instanceof PencilCurve) && (lastSnapshotElement.getId() == element.getId())) {
 								List<Boolean> lastCreationSnapshot = undoSnapshotCreationList.getLast();
-	
+
 								for (int i = 0; i < snapShot.size(); i++) {
 									lastElementSnapshot.add(snapShot.get(i));
 									lastCreationSnapshot.add(snapShotCreation.get(i));
 								}
 							} else {
-								undoSnapshots.addLast(snapShot);
-								undoSnapshotCreationList.addLast(snapShotCreation);
-								isElementSnapshotList.addLast(true);
+								addUndo(undoSnapshots, snapShot);
+								addUndo(undoSnapshotCreationList, snapShotCreation);
+								addUndo(isElementSnapshotList, true);
 							}
 						}
 					} else if (Type.ClipArt == element.getType()) {
@@ -342,15 +369,13 @@ public class WhiteboardBehavior extends AbstractDefaultAjaxBehavior {
 							snapShot.add(snapShotTemp.get(i));
 							snapShotCreation.add(snapShotCreationTemp.get(i));
 						}
-						undoSnapshots.addLast(snapShot);
-						undoSnapshotCreationList.addLast(snapShotCreation);
-						isElementSnapshotList.addLast(true);
-
+						addUndo(undoSnapshots, snapShot);
+						addUndo(undoSnapshotCreationList, snapShotCreation);
+						addUndo(isElementSnapshotList, true);
 					} else {
-
-						undoSnapshots.addLast(snapShot);
-						undoSnapshotCreationList.addLast(snapShotCreation);
-						isElementSnapshotList.addLast(true);
+						addUndo(undoSnapshots, snapShot);
+						addUndo(undoSnapshotCreationList, snapShotCreation);
+						addUndo(isElementSnapshotList, true);
 					}
 
 					snapShot = null;
@@ -361,15 +386,8 @@ public class WhiteboardBehavior extends AbstractDefaultAjaxBehavior {
 				if (element != null) {
 					elementMap.put(element.getId(), element);
 
-					IWebSocketConnectionRegistry reg = WebSocketSettings.Holder.get(Application.get()).getConnectionRegistry();
-					for (IWebSocketConnection c : reg.getConnections(Application.get())) {
-						try {
-							JSONObject jsonObject = new JSONObject(editedElement);
-							c.sendMessage(getAddElementMessage(jsonObject).toString());
-						} catch (Exception e) {
-							log.error("Unexpected error while sending message through the web socket", e);
-						}
-					}
+					JSONObject jsonObject = new JSONObject(editedElement);
+					sendWb(getAddElementMessage(jsonObject));
 				}
 			}
 			return true;
@@ -381,7 +399,7 @@ public class WhiteboardBehavior extends AbstractDefaultAjaxBehavior {
 
 	/**
 	 * Synchronizing newly added/edited background between whiteboard clients
-	 * 
+	 *
 	 * @param backgroundString
 	 * @return
 	 */
@@ -392,40 +410,31 @@ public class WhiteboardBehavior extends AbstractDefaultAjaxBehavior {
 			background = backgroundObject;
 
 			Background previousBackground = new Background("Background", "", 0.0, 0.0, 0.0, 0.0);
-			if (whiteboardMap.get(whiteboardObjectId).getBackground() != null) {
-				previousBackground = whiteboardMap.get(whiteboardObjectId).getBackground();
+			if (whiteboardMap.get(whiteboardId).getBackground() != null) {
+				previousBackground = whiteboardMap.get(whiteboardId).getBackground();
 			}
-			whiteboardMap.get(whiteboardObjectId).setBackground(background);
+			whiteboardMap.get(whiteboardId).setBackground(background);
 
 			undoSnapshotCreationList_Background.addLast(previousBackground == null);
 			undoSnapshots_Background.addLast(previousBackground);
 			isElementSnapshotList.addLast(false);
 
-			IWebSocketConnectionRegistry reg = WebSocketSettings.Holder.get(Application.get()).getConnectionRegistry();
-			for (IWebSocketConnection c : reg.getConnections(Application.get())) {
-				try {
-					JSONObject jsonObject = new JSONObject(backgroundString);
-					c.sendMessage(getAddBackgroundMessage(jsonObject).toString());
-				} catch (Exception e) {
-					log.error("Unexpected error while sending message through the web socket", e);
-				}
-			}
-
+			JSONObject jsonObject = new JSONObject(backgroundString);
+			sendWb(getAddBackgroundMessage(jsonObject));
 			return true;
 		} catch (JSONException e) {
-			e.printStackTrace();
+			log.error("Unexpected error while handling background", e);
 		}
 		return false;
 	}
 
 	/**
 	 * Undo one step and synchronizing undo between whiteboard clients
-	 * 
+	 *
 	 * @return
 	 */
 	private boolean handleUndo() {
 		if (!isElementSnapshotList.isEmpty()) {
-
 			if (isElementSnapshotList.pollLast()) {
 				List<Boolean> undoCreationList = undoSnapshotCreationList.pollLast();
 				List<Element> undoElement = undoSnapshots.pollLast();
@@ -433,14 +442,12 @@ public class WhiteboardBehavior extends AbstractDefaultAjaxBehavior {
 				String deleteList = "";
 				JSONArray changeList = new JSONArray();
 
-				IWebSocketConnectionRegistry reg = WebSocketSettings.Holder.get(Application.get()).getConnectionRegistry();
-
 				for (int i = 0; i < undoElement.size(); i++) {
 					if (undoCreationList.get(i)) {
 						elementMap.remove(undoElement.get(i).getId());
 						if (loadedElementMap.containsKey(undoElement.get(i).getId())) {
 							loadedContent = "";
-							whiteboardMap.get(whiteboardObjectId).setLoadedContent("");
+							whiteboardMap.get(whiteboardId).setLoadedContent("");
 							loadedElementMap.remove(undoElement.get(i).getId());
 						}
 						if ("".equals(deleteList)) {
@@ -458,31 +465,13 @@ public class WhiteboardBehavior extends AbstractDefaultAjaxBehavior {
 					}
 				}
 
-				for (IWebSocketConnection c : reg.getConnections(Application.get())) {
-					try {
-						c.sendMessage(getUndoMessage(changeList, deleteList).toString());
-					} catch (Exception e) {
-						log.error("Unexpected error while sending message through the web socket", e);
-					}
-				}
+				sendWb(getUndoMessage(changeList, deleteList));
 			} else {
-				Background previousBackground = undoSnapshots_Background.pollLast();
-				background = previousBackground;
-				whiteboardMap.get(whiteboardObjectId).setBackground(previousBackground);
+				Background prevBg = undoSnapshots_Background.pollLast();
+				background = prevBg;
+				whiteboardMap.get(whiteboardId).setBackground(prevBg);
 
-				IWebSocketConnectionRegistry reg = WebSocketSettings.Holder.get(Application.get()).getConnectionRegistry();
-				for (IWebSocketConnection c : reg.getConnections(Application.get())) {
-					try {
-						if (previousBackground != null) {
-							c.sendMessage(getAddBackgroundMessage(previousBackground.getJSON()).toString());
-						} else {
-							c.sendMessage(getAddBackgroundMessage(new JSONObject()).toString());
-						}
-					} catch (Exception e) {
-						log.error("Unexpected error while sending message through the web socket", e);
-					}
-				}
-
+				sendWb(getAddBackgroundMessage(prevBg == null ? new JSONObject() : prevBg.getJSON()));
 			}
 			return true;
 		}
@@ -491,27 +480,18 @@ public class WhiteboardBehavior extends AbstractDefaultAjaxBehavior {
 
 	/**
 	 * Synchronizing eraseAll request between whiteboard clients
-	 * 
+	 *
 	 * @return
 	 */
 	private boolean handleEraseAll() {
 		elementMap.clear();
-		IWebSocketConnectionRegistry reg = WebSocketSettings.Holder.get(Application.get()).getConnectionRegistry();
-		for (IWebSocketConnection c : reg.getConnections(Application.get())) {
-			try {
-				JSONArray jsonArray = new JSONArray();
-				c.sendMessage(getEraseAllMessage(jsonArray).toString());
-				return true;
-			} catch (Exception e) {
-				log.error("Unexpected error while sending message through the web socket", e);
-			}
-		}
-		return false;
+		sendWb(getEraseAllMessage(new JSONArray()));
+		return true;
 	}
 
 	/**
 	 * Save the whiteboard content to a file
-	 * 
+	 *
 	 * @return
 	 */
 	private boolean handleSave() {
@@ -554,26 +534,14 @@ public class WhiteboardBehavior extends AbstractDefaultAjaxBehavior {
 
 		File whiteboardFile = new File(saveFolderPath + "/Whiteboard_" + dateFormat.format(new Date()) + ".json");
 
-		FileWriter writer = null;
-		try {
+		try (FileWriter writer = new FileWriter(whiteboardFile)) {
 			whiteboardFile.createNewFile();
 			log.debug("Going to dump WB to file: " + whiteboardFile.getAbsolutePath());
-			writer = new FileWriter(whiteboardFile);
 			writer.write(saveObject.toString());
 			writer.flush();
 			result = true;
 		} catch (IOException e) {
 			log.debug("Unexpected error during dumping WB to file ", e);
-		} finally {
-			if (writer != null) {
-				try {
-					writer.close();
-					log.debug("Dumped WB to file: " + whiteboardFile.getAbsolutePath());
-				} catch (IOException e) {
-					log.debug("Unexpected error during closing WB file ", e);
-					result = false;
-				}
-			}
 		}
 		return result;
 	}
@@ -583,18 +551,11 @@ public class WhiteboardBehavior extends AbstractDefaultAjaxBehavior {
 	 */
 	private void handleClipArts() {
 		loadClipArts();
-		IWebSocketConnectionRegistry reg = WebSocketSettings.Holder.get(Application.get()).getConnectionRegistry();
-		for (IWebSocketConnection c : reg.getConnections(Application.get())) {
-			try {
-				JSONArray jsonArray = new JSONArray();
-				for (String clipArtURL : clipArts) {
-					jsonArray.put(clipArtURL);
-				}
-				c.sendMessage(getClipArtListMessage(jsonArray).toString());
-			} catch (Exception e) {
-				log.error("Unexpected error while sending message through the web socket", e);
-			}
+		JSONArray jsonArray = new JSONArray();
+		for (String clipArtURL : clipArts) {
+			jsonArray.put(clipArtURL);
 		}
+		sendWb(getClipArtListMessage(jsonArray));
 	}
 
 	/**
@@ -602,52 +563,49 @@ public class WhiteboardBehavior extends AbstractDefaultAjaxBehavior {
 	 */
 	private void handleDocs() {
 		loadDocuments();
-		IWebSocketConnectionRegistry reg = WebSocketSettings.Holder.get(Application.get()).getConnectionRegistry();
-		for (IWebSocketConnection c : reg.getConnections(Application.get())) {
-			try {
-				JSONArray jsonArray = new JSONArray();
-				Set<String> keySet = docMap.keySet();
-				for (String key : keySet) {
-					jsonArray.put(docMap.get(key).get(0));
-				}
-				c.sendMessage(getDocumentListMessage(jsonArray).toString());
-			} catch (Exception e) {
-				log.error("Unexpected error while sending message through the web socket", e);
-			}
+		JSONArray jsonArray = new JSONArray();
+		Set<String> keySet = docMap.keySet();
+		for (String key : keySet) {
+			jsonArray.put(docMap.get(key).get(0));
 		}
+		sendWb(getDocumentListMessage(jsonArray));
 	}
 
 	/**
 	 * Load the components of a particular document from the documents folder and synchronizing the list between
 	 * whiteboard clients
-	 * 
+	 *
 	 * @param docBaseName
 	 */
 	private void handleDocComponents(String docBaseName) {
 		loadDocuments();
+		JSONArray jsonArray = new JSONArray();
+		for (String url : docMap.get(docBaseName)) {
+			jsonArray.put(url);
+		}
+		sendWb(getDocumentComponentListMessage(jsonArray));
+	}
+
+	private static void sendWb(JSONObject obj) {
 		IWebSocketConnectionRegistry reg = WebSocketSettings.Holder.get(Application.get()).getConnectionRegistry();
 		for (IWebSocketConnection c : reg.getConnections(Application.get())) {
 			try {
-				JSONArray jsonArray = new JSONArray();
-				for (String url : docMap.get(docBaseName)) {
-					jsonArray.put(url);
-				}
-				c.sendMessage(getDocumentComponentListMessage(jsonArray).toString());
+				c.sendMessage(obj.toString());
 			} catch (Exception e) {
 				log.error("Unexpected error while sending message through the web socket", e);
 			}
 		}
 	}
 
-	private JSONObject getAddElementMessage(JSONObject element) throws JSONException {
+	private static JSONObject getAddElementMessage(JSONObject element) throws JSONException {
 		return new JSONObject().put("type", "addElement").put("json", element);
 	}
 
-	private JSONObject getAddBackgroundMessage(JSONObject element) throws JSONException {
+	private static JSONObject getAddBackgroundMessage(JSONObject element) throws JSONException {
 		return new JSONObject().put("type", "addBackground").put("json", element);
 	}
 
-	private JSONObject getUndoMessage(JSONArray changeList, String deleteList) throws JSONException {
+	private static JSONObject getUndoMessage(JSONArray changeList, String deleteList) throws JSONException {
 		return new JSONObject().put("type", "undoList").put("changeList", changeList).put("deleteList", deleteList);
 	}
 
@@ -657,22 +615,23 @@ public class WhiteboardBehavior extends AbstractDefaultAjaxBehavior {
 	}
 	*/
 
-	private JSONObject getEraseAllMessage(JSONArray array) throws JSONException {
+	private static JSONObject getEraseAllMessage(JSONArray array) throws JSONException {
 		return new JSONObject().put("type", "eraseElements").put("json", array);
 	}
 
-	private JSONObject getClipArtListMessage(JSONArray array) throws JSONException {
+	private static JSONObject getClipArtListMessage(JSONArray array) throws JSONException {
 		return new JSONObject().put("type", "clipArtList").put("json", array);
 	}
 
-	private JSONObject getDocumentListMessage(JSONArray array) throws JSONException {
+	private static JSONObject getDocumentListMessage(JSONArray array) throws JSONException {
 		return new JSONObject().put("type", "documentList").put("json", array);
 	}
 
-	private JSONObject getDocumentComponentListMessage(JSONArray array) throws JSONException {
+	private static JSONObject getDocumentComponentListMessage(JSONArray array) throws JSONException {
 		return new JSONObject().put("type", "documentComponentList").put("json", array);
 	}
 
+	@Override
 	public void renderHead(Component component, IHeaderResponse response) {
 		super.renderHead(component, response);
 
@@ -682,14 +641,14 @@ public class WhiteboardBehavior extends AbstractDefaultAjaxBehavior {
 			// Synchronizing existing content between clients
 			JSONArray elements = null;
 			if (!elementMap.isEmpty()) {
-				Map<Integer, Element> sortedElementList = new TreeMap<Integer, Element>(elementMap);
+				Map<Integer, Element> sortedElementList = new TreeMap<>(elementMap);
 				elements = new JSONArray();
 				for (Element e : sortedElementList.values()) {
 						elements.put(e.getJSON());
 				}
 			}
-	
-			response.render(OnDomReadyHeaderItem.forScript(String.format("initWB('%s', '%s', %s, %s);", getCallbackUrl(), whiteboardMarkupId
+
+			response.render(OnDomReadyHeaderItem.forScript(String.format("initWB('%s', '%s', %s, %s);", getCallbackUrl(), markupId
 					, elements, background == null ? null : background.getJSON())));
 		} catch (JSONException e) {
 			log.error("Unexpected error while getting JSON", e);
@@ -698,10 +657,10 @@ public class WhiteboardBehavior extends AbstractDefaultAjaxBehavior {
 
 	/**
 	 * Loading default resources which need to whiteboard
-	 * 
+	 *
 	 * @param response
 	 */
-	private void initReferences(IHeaderResponse response) {
+	private static void initReferences(IHeaderResponse response) {
 		WhiteboardLibrarySettings settings = getLibrarySettings();
 
 		// Whiteboard.css
@@ -754,12 +713,12 @@ public class WhiteboardBehavior extends AbstractDefaultAjaxBehavior {
 
 	/**
 	 * Give a Element object for given JSON object which represent a element
-	 * 
+	 *
 	 * @param obj
 	 * @return
 	 * @throws JSONException
 	 */
-	private Element getElementObject(JSONObject obj) throws JSONException {
+	private static Element getElementObject(JSONObject obj) throws JSONException {
 		Element element = null;
 
 		Type type = Type.valueOf(obj.getString("type"));
@@ -894,7 +853,7 @@ public class WhiteboardBehavior extends AbstractDefaultAjaxBehavior {
 					String documentName = fileEntry.getName().substring(0, fileEntry.getName().lastIndexOf('.'));
 
 					if (-1 == documentName.lastIndexOf('_')) {
-						ArrayList<String> docList = new ArrayList<String>();
+						ArrayList<String> docList = new ArrayList<>();
 						docList.add(docURL);
 						docMap.put(documentName, docList);
 					} else {
@@ -911,13 +870,13 @@ public class WhiteboardBehavior extends AbstractDefaultAjaxBehavior {
 
 	/**
 	 * Check the equality of two elements on a whiteboard
-	 * 
+	 *
 	 * @param element1
 	 * @param element2
 	 * @return
 	 */
-	private boolean isEqual(JSONObject element1, JSONObject element2) {
-		for (String key : JSONObject.getNames(element1)) {
+	private static boolean isEqual(JSONObject element1, JSONObject element2) {
+		for (String key : element1.keySet()) {
 			Object value = null;
 			try {
 				value = element2.get(key);
@@ -943,11 +902,17 @@ public class WhiteboardBehavior extends AbstractDefaultAjaxBehavior {
 					}
 				}
 			} catch (JSONException e) {
-				e.printStackTrace();
+				log.error("Unexpected error while checking equal", e);
 				return false;
 			}
 
 		}
 		return true;
+	}
+
+	private static <T> void addUndo(BlockingDeque<T> deq, T e) {
+		while (!deq.offer(e)) {
+			deq.pop(); // TODO check if exception is possible here
+		}
 	}
 }

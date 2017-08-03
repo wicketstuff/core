@@ -1,9 +1,9 @@
 package org.wicketstuff.jquery.dnd;
 
 import org.apache.wicket.Component;
+import org.apache.wicket.IRequestListener;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.attributes.AjaxRequestAttributes;
-import org.apache.wicket.behavior.IBehaviorListener;
 import org.apache.wicket.markup.head.IHeaderResponse;
 import org.apache.wicket.markup.head.JavaScriptHeaderItem;
 import org.apache.wicket.request.Request;
@@ -16,7 +16,7 @@ import org.wicketstuff.jquery.Options;
  * This implementation is really too simple, only supporting one drop-container etc, but it is an ok
  * startingpoint to extend the functionality.
  */
-public class DnDBehaviour extends JQueryBehavior implements IBehaviorListener
+public class DnDBehaviour extends JQueryBehavior
 {
 	private static final long serialVersionUID = 1L;
 	private Options droppableOptions;

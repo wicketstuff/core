@@ -18,25 +18,34 @@
  */
 package org.wicketstuff.jwicket.examples;
 
-import org.mortbay.jetty.Connector;
-import org.mortbay.jetty.Server;
-import org.mortbay.jetty.bio.SocketConnector;
-import org.mortbay.jetty.webapp.WebAppContext;
-
+import org.eclipse.jetty.server.HttpConfiguration;
+import org.eclipse.jetty.server.HttpConnectionFactory;
+import org.eclipse.jetty.server.Server;
+import org.eclipse.jetty.server.ServerConnector;
+import org.eclipse.jetty.webapp.WebAppContext;
 
 public class StartJWicketExamples {
 	public static void main(String[] args) {
+
 		Server server = new Server();
-		SocketConnector connector = new SocketConnector();
-		connector.setPort(8080);
-		server.setConnectors(new Connector[] { connector });
 
-		WebAppContext context = new WebAppContext();
-		context.setServer(server);
-		context.setContextPath("/");
-		context.setWar("src/main/webapp");
+		HttpConfiguration http_config = new HttpConfiguration();
+		http_config.setSecureScheme("https");
+		http_config.setSecurePort(8443);
+		http_config.setOutputBufferSize(32768);
 
-		server.addHandler(context);
+		ServerConnector http = new ServerConnector(server, new HttpConnectionFactory(http_config));
+		http.setPort(8080);
+		http.setIdleTimeout(1000 * 60 * 60);
+
+		server.addConnector(http);
+
+		WebAppContext bb = new WebAppContext();
+		bb.setServer(server);
+		bb.setContextPath("/");
+		bb.setWar("src/main/webapp");
+
+		server.setHandler(bb);
 		try {
 			server.start();
 		} catch (Exception e) {

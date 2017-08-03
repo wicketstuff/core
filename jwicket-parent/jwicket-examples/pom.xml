@@ -5,7 +5,7 @@
     <parent>
         <groupId>org.wicketstuff</groupId>
         <artifactId>wicketstuff-jwicket-parent</artifactId>
-        <version>7.4.0-SNAPSHOT</version>
+        <version>8.0.0-SNAPSHOT</version>
     </parent>
 
     <artifactId>wicketstuff-jwicket-examples</artifactId>
@@ -41,7 +41,7 @@
     <build>
         <plugins>
             <plugin>
-                <groupId>org.mortbay.jetty</groupId>
+                <groupId>org.eclipse.jetty</groupId>
                 <artifactId>jetty-maven-plugin</artifactId>
             </plugin>
         </plugins>
@@ -99,6 +99,11 @@
             <groupId>${project.groupId}</groupId>
             <artifactId>wicketstuff-jwicket-ui-tooltip</artifactId>
             <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.eclipse.jetty.aggregate</groupId>
+            <artifactId>jetty-all</artifactId>
+            <classifier>uber</classifier>
         </dependency>
 
 

@@ -43,10 +43,8 @@ public class DynamicAjaxSelfUpdatingTimerBehavior extends AjaxSelfUpdatingTimerB
 	{
 		super.onBind();
 		// dynamically start the self update!
-		AjaxRequestTarget ajaxRequestTarget = RequestCycle.get().find(AjaxRequestTarget.class);
-		if (ajaxRequestTarget != null) {
-			ajaxRequestTarget.appendJavaScript(getJsTimeoutCall(getUpdateInterval()));
-		}
+		RequestCycle.get().find(AjaxRequestTarget.class).ifPresent(target -> 
+			target.appendJavaScript(getJsTimeoutCall(getUpdateInterval())));
 	}
 
 }

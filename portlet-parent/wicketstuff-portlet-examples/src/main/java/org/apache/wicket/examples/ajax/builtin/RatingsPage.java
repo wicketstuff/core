@@ -16,7 +16,8 @@
  */
 package org.apache.wicket.examples.ajax.builtin;
 
-import org.apache.wicket.util.io.IClusterable;
+import java.util.Optional;
+
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.extensions.rating.RatingPanel;
 import org.apache.wicket.markup.html.link.Link;
@@ -27,6 +28,7 @@ import org.apache.wicket.request.IRequestHandler;
 import org.apache.wicket.request.handler.resource.ResourceReferenceRequestHandler;
 import org.apache.wicket.request.resource.PackageResourceReference;
 import org.apache.wicket.request.resource.ResourceReference;
+import org.apache.wicket.util.io.IClusterable;
 
 
 /**
@@ -172,7 +174,7 @@ public class RatingsPage extends BasePage
 	public RatingsPage()
 	{
 		add(new RatingPanel("rating1", new PropertyModel<Integer>(rating1, "rating"), 5,
-			new PropertyModel<Integer>(rating1, "nrOfVotes"), true)
+			new PropertyModel<>(rating1, "nrOfVotes"), true)
 		{
 			@Override
 			public boolean onIsStarActive(int star)
@@ -181,15 +183,15 @@ public class RatingsPage extends BasePage
 			}
 
 			@Override
-			public void onRated(int rating, AjaxRequestTarget target)
+			public void onRated(int rating, Optional<AjaxRequestTarget> target)
 			{
 				RatingsPage.rating1.addRating(rating);
 			}
 		});
 
 		add(new RatingPanel("rating2", new PropertyModel<Integer>(rating2, "rating"),
-			new Model<Integer>(5), new PropertyModel<Integer>(rating2, "nrOfVotes"),
-			new PropertyModel<Boolean>(this, "hasVoted"), true)
+			new Model<>(5), new PropertyModel<>(rating2, "nrOfVotes"),
+			new PropertyModel<>(this, "hasVoted"), true)
 		{
 			@Override
 			protected String getActiveStarUrl(int iteration)
@@ -212,7 +214,7 @@ public class RatingsPage extends BasePage
 			}
 
 			@Override
-			public void onRated(int rating, AjaxRequestTarget target)
+			public void onRated(int rating, Optional<AjaxRequestTarget> target)
 			{
 				// make sure the user can't vote again
 				hasVoted = Boolean.TRUE;

@@ -7,7 +7,7 @@
     <parent>
         <artifactId>wicket-foundation-parent</artifactId>
         <groupId>org.wicketstuff.foundation</groupId>
-        <version>7.4.0-SNAPSHOT</version>
+        <version>8.0.0-SNAPSHOT</version>
     </parent>
 
     <artifactId>wicket-foundation-samples</artifactId>
@@ -29,7 +29,8 @@
         </dependency>
 		<dependency>
 			<groupId>org.eclipse.jetty.aggregate</groupId>
-			<artifactId>jetty-all-server</artifactId>
+			<artifactId>jetty-all</artifactId>
+            <classifier>uber</classifier>
 		</dependency>
     </dependencies>
 

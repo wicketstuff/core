@@ -581,7 +581,7 @@ public class LazyModel<T> implements IModel<T>, IObjectClassAwareModel<T>,
 		}
 
 		Type type = getType(target);
-		if (type instanceof TypeVariable<?>) {
+		if (type == null) {
 			throw new WicketRuntimeException("cannot detect target type");
 		}
 		Evaluation<T> evaluation = new BoundEvaluation<T>(type, target);
@@ -606,8 +606,11 @@ public class LazyModel<T> implements IModel<T>, IObjectClassAwareModel<T>,
 			try {
 				type = model.getClass().getMethod("getObject")
 						.getGenericReturnType();
-			} catch (Exception ex) {
-				throw new WicketRuntimeException(ex);
+			} catch (Exception fallThrough) {
+			}
+			
+			if (type instanceof TypeVariable) {
+				type = Reflection.resultType(model.getClass(), type);
 			}
 		}
 

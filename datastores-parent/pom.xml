@@ -6,7 +6,7 @@
 	<parent>
 		<groupId>org.wicketstuff</groupId>
 		<artifactId>wicketstuff-core</artifactId>
-		<version>7.4.0-SNAPSHOT</version>
+		<version>8.0.0-SNAPSHOT</version>
 	</parent>
 
 	<artifactId>datastores-parent</artifactId>
@@ -39,8 +39,9 @@
 
 		<dependency>
 			<groupId>org.eclipse.jetty.aggregate</groupId>
-			<artifactId>jetty-all-server</artifactId>
+			<artifactId>jetty-all</artifactId>
 			<scope>provided</scope>
+            <classifier>uber</classifier>
 		</dependency>
 		<dependency>
 			<groupId>org.slf4j</groupId>

@@ -22,7 +22,7 @@ public class CirclesPage extends WicketExamplePage
         add(feedback);
         feedback.setOutputMarkupId(true);
 
-        GMap map = new GMap("topPanel");
+        GMap map = new GMap("topPanel", WicketExamplePage.API_KEY);
         GCircle circle = new GCircle(new GLatLng(37.35, -121.9), 10000, "#000000", 4, 0.7f, "#E9601A", 0.7f);
         circle.setEditable(true);
         circle.setDraggable(true);

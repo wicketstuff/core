@@ -16,6 +16,8 @@
  */
 package org.wicketstuff.minis.behavior;
 
+import java.io.Serializable;
+
 import org.apache.wicket.behavior.AttributeAppender;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.util.string.Strings;
@@ -43,7 +45,7 @@ public class AttributeAppenderPlus extends AttributeAppender
 	 * {@inheritDoc}
 	 */
 	@Override
-	protected String newValue(final String currentValue, final String appendValue)
+	protected Serializable newValue(final String currentValue, final String appendValue)
 	{
 		return super.newValue(currentValue, Strings.isEmpty(appendValue) ? appendValue : prefix_ +
 			appendValue + suffix_);

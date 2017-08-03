@@ -12,11 +12,10 @@
  */
 package org.wicketstuff.dashboard;
 
-import org.apache.wicket.markup.html.image.Image;
+import java.io.Serializable;
+
 import org.apache.wicket.markup.html.link.AbstractLink;
 import org.apache.wicket.model.IModel;
-
-import java.io.Serializable;
 
 /**
  * Interface for actions that can be performed over a widget
@@ -26,8 +25,7 @@ public interface WidgetAction extends Serializable {
 
 	public AbstractLink getLink(String id);
 
-	public Image getImage(String id);
+	public String getCssClass();
 
 	public IModel<String> getTooltip();
-
 }

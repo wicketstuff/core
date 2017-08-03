@@ -1,7 +1,7 @@
 package org.wicketstuff.datatables.virtualscroll;
 
-import org.apache.wicket.ajax.json.JSONArray;
-import org.apache.wicket.ajax.json.JSONObject;
+import com.github.openjson.JSONArray;
+import com.github.openjson.JSONObject;
 import org.apache.wicket.markup.repeater.data.IDataProvider;
 import org.apache.wicket.request.http.WebResponse;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
@@ -16,7 +16,7 @@ import java.util.Locale;
  * An abstract resource reference that could be used as a base for custom implementations
  */
 public abstract class AbstractVirtualScrollResourceReference<T> extends ResourceReference {
-
+	private static final long serialVersionUID = 1L;
 	/*
 	 * The names of the request parameters sent by DataTables when "serverSide" option is enabled
 	 */
@@ -58,6 +58,8 @@ public abstract class AbstractVirtualScrollResourceReference<T> extends Resource
 	@Override
 	public IResource getResource() {
 		return new CharSequenceResource("application/json") {
+			private static final long serialVersionUID = 1L;
+
 			@Override
 			protected CharSequence getData(final Attributes attributes) {
 				PageParameters parameters = attributes.getParameters();

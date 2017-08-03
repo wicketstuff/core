@@ -14,7 +14,7 @@ public class SimplePage extends WicketExamplePage
 
   public SimplePage()
   {
-    add(new GMapHeaderContributor());
+    add(new GMapHeaderContributor("http", WicketExamplePage.API_KEY));
     final MapPanel p = new MapPanel("map");
     p.setVisible(false);
     p.setOutputMarkupId(true);

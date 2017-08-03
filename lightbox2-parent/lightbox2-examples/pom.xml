@@ -5,7 +5,7 @@
 	<parent>
 		<groupId>org.wicketstuff</groupId>
 		<artifactId>lightbox2-parent</artifactId>
-		<version>7.4.0-SNAPSHOT</version>
+		<version>8.0.0-SNAPSHOT</version>
 	</parent>
 
 	<artifactId>lightbox2-examples</artifactId>
@@ -48,13 +48,4 @@
 			<scope>runtime</scope>
 		</dependency>
 	</dependencies>
-	
-	<build>
-		<plugins>
-			<plugin>
-				<groupId>org.mortbay.jetty</groupId>
-				<artifactId>maven-jetty-plugin</artifactId>
-			</plugin>
-		</plugins>
-	</build>
 </project>

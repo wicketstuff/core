@@ -1,11 +1,11 @@
 /*
  * Copyright 2012 Decebal Suiu
- * 
+ *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this work except in compliance with
  * the License. You may obtain a copy of the License in the LICENSE file, or at:
- * 
+ *
  * http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on
  * an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the
  * specific language governing permissions and limitations under the License.
@@ -14,6 +14,7 @@ package org.wicketstuff.dashboard.widgets.ofchart;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 
 import org.apache.wicket.Component;
 import org.apache.wicket.ajax.AjaxRequestTarget;
@@ -46,7 +47,7 @@ public class SWFObject extends Behavior {
 	 * version can be a string in the format of
 	 * 'majorVersion.minorVersion.revision'. An example would be: "6.0.65". Or
 	 * you can just require the major version, such as "6".
-	 * 
+	 *
 	 * @param flashUrl
 	 *            The url of your swf file.
 	 * @param width
@@ -60,7 +61,7 @@ public class SWFObject extends Behavior {
 		if (flashUrl == null) {
 			throw new IllegalArgumentException("Argument [flashUrl] cannot be null");
 		}
-		
+
 		this.flashUrl = flashUrl;
 		this.width = width;
 		this.height = height;
@@ -77,11 +78,11 @@ public class SWFObject extends Behavior {
 				flashUrl, id, width, height, version, "expressInstall.swf", parObj, attObj);
 
 		 // see http://old.nabble.com/Re%3A-Graphs%2C-Charts-and-Wicket-p21987222.html
-		AjaxRequestTarget target = RequestCycle.get().find(AjaxRequestTarget.class);
-		if (target != null) {
-			target.appendJavaScript(javascript);
+		Optional<AjaxRequestTarget> target = RequestCycle.get().find(AjaxRequestTarget.class);
+		if (target.isPresent()) {
+			target.get().appendJavaScript(javascript);
 		}
-		
+
 		return javascript;
 	}
 
@@ -121,22 +122,22 @@ public class SWFObject extends Behavior {
 		String quote = "\"";
 		if ((data != null) && !data.isEmpty()) {
 			StringBuilder result = new StringBuilder();
-            int size = getParameters().entrySet().size();
-            int count = 0;
-            for (Map.Entry<String, String> e : getParameters().entrySet()) {
-                result.append("{");
-                result.append(quote).append(e.getKey()).append(quote).
-                       append(":").
-                       append(quote).append(e.getValue()).append(quote);
-                result.append("}");
-                if (count < size-1) {
-                    result.append(",");
-                }
-                count++;
-            }            
+			int size = getParameters().entrySet().size();
+			int count = 0;
+			for (Map.Entry<String, String> e : getParameters().entrySet()) {
+				result.append("{");
+				result.append(quote).append(e.getKey()).append(quote).
+					   append(":").
+					   append(quote).append(e.getValue()).append(quote);
+				result.append("}");
+				if (count < size-1) {
+					result.append(",");
+				}
+				count++;
+			}
 			return result.toString();
 		}
-		
+
 		return "{}";
 	}
 

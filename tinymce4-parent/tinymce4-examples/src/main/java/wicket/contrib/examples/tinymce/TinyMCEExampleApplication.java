@@ -13,7 +13,7 @@ public class TinyMCEExampleApplication extends WebApplication
 	}
 
 	/**
-	 * @see wicket.Application#getHomePage()
+	 * @see org.apache.wicket.Application#getHomePage()
 	 */
 	@Override
 	public Class getHomePage()

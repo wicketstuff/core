@@ -7,7 +7,7 @@
     <parent>
         <artifactId>wicketstuff-whiteboard-parent</artifactId>
         <groupId>org.wicketstuff</groupId>
-        <version>7.4.0-SNAPSHOT</version>
+        <version>8.0.0-SNAPSHOT</version>
     </parent>
 
     <artifactId>wicketstuff-whiteboard-examples</artifactId>
@@ -41,19 +41,14 @@
         </dependency>
         <dependency>
             <groupId>org.apache.wicket</groupId>
-            <artifactId>wicket-native-websocket-core</artifactId>
-            <version>${wicket.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.wicket</groupId>
-            <artifactId>wicket-native-websocket-jetty</artifactId>
+            <artifactId>wicket-native-websocket-javax</artifactId>
             <version>${wicket.version}</version>
         </dependency>
         <!--  JETTY DEPENDENCIES FOR TESTING  -->
         <dependency>
             <groupId>org.eclipse.jetty.aggregate</groupId>
-            <artifactId>jetty-all-server</artifactId>
-            <scope>provided</scope>
+            <artifactId>jetty-all</artifactId>
+            <classifier>uber</classifier>
         </dependency>
     </dependencies>
 
@@ -64,7 +59,7 @@
                 <artifactId>maven-war-plugin</artifactId>
             </plugin>
             <plugin>
-                <groupId>org.mortbay.jetty</groupId>
+                <groupId>org.eclipse.jetty</groupId>
                 <artifactId>jetty-maven-plugin</artifactId>
                 <configuration>
                     <connectors>

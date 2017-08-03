@@ -110,7 +110,7 @@ public class TaskServiceProgressExamplePage extends PageSupport
 			private static final long serialVersionUID = 1L;
 
 			@Override
-			protected void onSubmit(AjaxRequestTarget target, Form<?> form)
+			protected void onSubmit(AjaxRequestTarget target)
 			{
 				ITaskService taskService = getExampleApplication().getTaskService();
 				// Schedule and start a new task
@@ -125,11 +125,9 @@ public class TaskServiceProgressExamplePage extends PageSupport
 			}
 
 			@Override
-			protected void onError(AjaxRequestTarget target, Form<?> form)
+			protected void onError(AjaxRequestTarget target)
 			{
-
 				target.prependJavaScript("alert('Failed to schedule task.');");
-
 			}
 
 		});

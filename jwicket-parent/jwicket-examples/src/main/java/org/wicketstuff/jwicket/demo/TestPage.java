@@ -1,12 +1,17 @@
 package org.wicketstuff.jwicket.demo;
 
 
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.List;
+
 import org.apache.wicket.Application;
 import org.apache.wicket.AttributeModifier;
 import org.apache.wicket.Component;
 import org.apache.wicket.WicketRuntimeException;
 import org.apache.wicket.ajax.AjaxRequestTarget;
-import org.apache.wicket.ajax.markup.html.AjaxFallbackLink;
 import org.apache.wicket.ajax.markup.html.AjaxLink;
 import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.markup.html.WebPage;
@@ -24,19 +29,29 @@ import org.wicketstuff.jwicket.tooltip.WTooltip;
 import org.wicketstuff.jwicket.ui.datepicker.DatePicker;
 import org.wicketstuff.jwicket.ui.dragdrop.DraggableBehavior;
 import org.wicketstuff.jwicket.ui.dragdrop.DraggablesAcceptedByDroppable;
-import org.wicketstuff.jwicket.ui.effect.*;
+import org.wicketstuff.jwicket.ui.effect.AbstractJqueryUiEffect;
+import org.wicketstuff.jwicket.ui.effect.Blind;
+import org.wicketstuff.jwicket.ui.effect.Bounce;
 import org.wicketstuff.jwicket.ui.effect.Bounce.BounceMode;
+import org.wicketstuff.jwicket.ui.effect.Clip;
+import org.wicketstuff.jwicket.ui.effect.Drop;
+import org.wicketstuff.jwicket.ui.effect.EffectDirection;
+import org.wicketstuff.jwicket.ui.effect.EffectHorVerDirection;
+import org.wicketstuff.jwicket.ui.effect.EffectMode;
+import org.wicketstuff.jwicket.ui.effect.Explode;
+import org.wicketstuff.jwicket.ui.effect.Fold;
+import org.wicketstuff.jwicket.ui.effect.Highlight;
+import org.wicketstuff.jwicket.ui.effect.Puff;
+import org.wicketstuff.jwicket.ui.effect.Pulsate;
+import org.wicketstuff.jwicket.ui.effect.Scale;
 import org.wicketstuff.jwicket.ui.effect.Scale.ScaleDirection;
 import org.wicketstuff.jwicket.ui.effect.Scale.ScaleElement;
+import org.wicketstuff.jwicket.ui.effect.Shake;
+import org.wicketstuff.jwicket.ui.effect.Slide;
+import org.wicketstuff.jwicket.ui.effect.Transfer;
 import org.wicketstuff.menu.IMenuLink;
 import org.wicketstuff.menu.Menu;
 import org.wicketstuff.menu.MenuBarPanel;
-
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.List;
 
 
 public class TestPage extends WebPage {
@@ -138,12 +153,12 @@ public class TestPage extends WebPage {
         });
 
 
-        Menu menu1 = new Menu(new Model<String>("Pages"), itemsForMenu1);
+        Menu menu1 = new Menu(new Model<>("Pages"), itemsForMenu1);
         /* End of menu 1 */
 
 
         /* Menu 2 with some AJAX links for drag/drop and resize control */
-        final Menu menu2 = new Menu(new Model<String>("Ajax Control"));
+        final Menu menu2 = new Menu(new Model<>("Ajax Control"));
 
         // Enable/disable dragging
         menu2.addMenuItem(new IMenuLink() {
@@ -158,7 +173,7 @@ public class TestPage extends WebPage {
 
             @Override
             public AbstractLink getLink(String id) {
-                return new AjaxFallbackLink<Void>(id) {
+                return new AjaxLink<Void>(id) {
                     private static final long serialVersionUID = 1L;
 
                     @Override
@@ -202,7 +217,7 @@ public class TestPage extends WebPage {
 
             @Override
             public AbstractLink getLink(String id) {
-                return new AjaxFallbackLink<Void>(id) {
+                return new AjaxLink<Void>(id) {
                     private static final long serialVersionUID = 1L;
 
                     @Override
@@ -244,7 +259,7 @@ public class TestPage extends WebPage {
 
             @Override
             public AbstractLink getLink(String id) {
-                return new AjaxFallbackLink<Void>(id) {
+                return new AjaxLink<Void>(id) {
                     private static final long serialVersionUID = 1L;
 
                     @Override
@@ -281,7 +296,7 @@ public class TestPage extends WebPage {
 
             @Override
             public AbstractLink getLink(String id) {
-                return new AjaxFallbackLink<Void>(id) {
+                return new AjaxLink<Void>(id) {
                     private static final long serialVersionUID = 1L;
 
                     @Override

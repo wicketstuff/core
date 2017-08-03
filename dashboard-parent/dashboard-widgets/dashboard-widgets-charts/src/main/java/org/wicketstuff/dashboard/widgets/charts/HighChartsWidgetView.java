@@ -20,12 +20,12 @@ import org.wicketstuff.dashboard.web.WidgetView;
  * @author <a href="http://www.GitHub.com/PaulBors">Paul Bors</a>
  */
 public class HighChartsWidgetView extends WidgetView {
-    private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L;
 
-    public HighChartsWidgetView(String id, IModel<Widget> model) {
-        super(id, model);
+	public HighChartsWidgetView(String id, IModel<Widget> model) {
+		super(id, model);
 
-        final HighChartsWidget widget = (HighChartsWidget)model.getObject();
-        add(widget.getChart("chart"));
-    }
+		final HighChartsWidget widget = (HighChartsWidget)model.getObject();
+		add(widget.getChart("chart"));
+	}
 }

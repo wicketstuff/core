@@ -22,7 +22,7 @@ import org.apache.wicket.util.convert.ConversionException;
 import org.apache.wicket.util.string.Strings;
 
 /**
- * Single-select Select2 component. Should be attached to a {@code <input type='hidden'/>} element.
+ * Single-select Select2 component. Should be attached to a {@code <select />} element.
  *
  * @param <T>
  *            type of choice object

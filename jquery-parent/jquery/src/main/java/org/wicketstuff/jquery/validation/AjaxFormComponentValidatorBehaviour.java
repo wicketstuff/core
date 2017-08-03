@@ -2,6 +2,7 @@ package org.wicketstuff.jquery.validation;
 
 import java.util.List;
 
+import org.apache.wicket.Application;
 import org.apache.wicket.Component;
 import org.apache.wicket.Session;
 import org.apache.wicket.ajax.AjaxRequestTarget;
@@ -10,8 +11,6 @@ import org.apache.wicket.feedback.ComponentFeedbackMessageFilter;
 import org.apache.wicket.feedback.FeedbackMessage;
 import org.apache.wicket.markup.head.IHeaderResponse;
 import org.apache.wicket.markup.head.JavaScriptHeaderItem;
-import org.apache.wicket.resource.JQueryResourceReference;
-import org.wicketstuff.jquery.JQueryBehavior;
 
 /**
  * 
@@ -156,6 +155,7 @@ public class AjaxFormComponentValidatorBehaviour extends AjaxFormComponentUpdati
 	public void renderHead(Component component, IHeaderResponse response)
 	{
 		super.renderHead(component, response);
-		response.render(JavaScriptHeaderItem.forReference(JQueryResourceReference.get()));
+		response.render(JavaScriptHeaderItem
+			.forReference(Application.get().getJavaScriptLibrarySettings().getJQueryReference()));
 	}
 }

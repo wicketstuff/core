@@ -13,11 +13,11 @@ import org.apache.wicket.model.Model;
 import org.apache.wicket.util.time.Duration;
 import org.wicketstuff.async.task.AbstractTaskContainer;
 
-import java.lang.reflect.Method;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
+import java.util.Optional;
 
 /**
  * A progress button which allows to control a {@link Runnable}. Each such button will refresh itself as given by
@@ -34,7 +34,7 @@ public class ProgressButton extends AjaxFallbackButton {
     private final IRunnableFactory runnableFactory;
     private final RefreshBehavior refreshBehavior;
 
-    private IModel<? extends AbstractTaskContainer> taskContainerModel;
+    private volatile IModel<? extends AbstractTaskContainer> taskContainerModel;
 
     public ProgressButton(String id, Form<?> form, IModel<? extends AbstractTaskContainer> taskContainerModel, Duration duration) {
         this(id, null, form, taskContainerModel, null, duration);
@@ -129,32 +129,28 @@ public class ProgressButton extends AjaxFallbackButton {
     }
 
     @Override
-    protected void onSubmit(AjaxRequestTarget target, Form<?> form) {
-        super.onSubmit(target, form);
+    protected void onSubmit(Optional<AjaxRequestTarget> targetOptional) {
+        super.onSubmit(targetOptional);
 
         if (canStart() || canRestart()) {
             getTaskContainer().submit(runnableFactory.getRunnable());
-            onTaskStart(target);
+            onTaskStart(targetOptional);
         } else if (canInterrupt()) {
             getTaskContainer().cancel();
         } else {
             return;
         }
 
-        if (target != null) {
+	    targetOptional.ifPresent(target -> {
             activateRefresh(target);
             renderAll(target);
-        }
+        });
 
-        concludeIfApplicable(target);
+        concludeIfApplicable(targetOptional);
     }
 
     private void activateRefresh(AjaxRequestTarget target) {
-        if (!getTaskContainer().isRunning()) {
-            if (getBehaviors(RefreshBehavior.class).size() > 0) {
-                refreshBehavior.stop(target);
-            }
-        } else if (getBehaviors(RefreshBehavior.class).size() == 0) {
+        if (getBehaviors(RefreshBehavior.class).size() == 0) {
             add(refreshBehavior);
         } else {
             refreshBehavior.restart(target);
@@ -167,21 +163,21 @@ public class ProgressButton extends AjaxFallbackButton {
      * @param target The Ajax request target.
      */
     protected void refresh(AjaxRequestTarget target) {
-        concludeIfApplicable(target);
+        concludeIfApplicable(Optional.of(target));
         renderAll(target);
     }
 
-    private void concludeIfApplicable(AjaxRequestTarget target) {
+    private void concludeIfApplicable(Optional<AjaxRequestTarget> targetOptional) {
         if (!getTaskContainer().isRunning()) {
-            if (target != null) {
+        	targetOptional.ifPresent(target -> {
                 refreshBehavior.stop(target);
-            }
+            });
             if (getTaskContainer().isFailed()) {
-                onTaskError(target);
+                onTaskError(targetOptional);
             } else if (!getTaskContainer().isCancelled()) {
-                onTaskSuccess(target);
+                onTaskSuccess(targetOptional);
             } else {
-                onTaskCancel(target);
+                onTaskCancel(targetOptional);
             }
         }
     }
@@ -209,7 +205,7 @@ public class ProgressButton extends AjaxFallbackButton {
         }
 
         @Override
-        public boolean canCallListenerInterface(Component component, Method method) {
+        public boolean canCallListener(Component component) {
             // Skip check for the component being enabled
             return component.isVisibleInHierarchy();
         }
@@ -357,7 +353,7 @@ public class ProgressButton extends AjaxFallbackButton {
      *
      * @param ajaxRequestTarget The Ajax request target. Might be {@code null}.
      */
-    protected void onTaskStart(AjaxRequestTarget ajaxRequestTarget) {
+    protected void onTaskStart(Optional<AjaxRequestTarget> ajaxRequestTarget) {
     }
 
     /**
@@ -367,7 +363,7 @@ public class ProgressButton extends AjaxFallbackButton {
      *
      * @param ajaxRequestTarget The Ajax request target.
      */
-    protected void onTaskSuccess(AjaxRequestTarget ajaxRequestTarget) {
+    protected void onTaskSuccess(Optional<AjaxRequestTarget> ajaxRequestTarget) {
     }
 
     /**
@@ -377,7 +373,7 @@ public class ProgressButton extends AjaxFallbackButton {
      *
      * @param ajaxRequestTarget The Ajax request target. Might be {@code null}.
      */
-    protected void onTaskCancel(AjaxRequestTarget ajaxRequestTarget) {
+    protected void onTaskCancel(Optional<AjaxRequestTarget> ajaxRequestTarget) {
     }
 
     /**
@@ -387,6 +383,6 @@ public class ProgressButton extends AjaxFallbackButton {
      *
      * @param ajaxRequestTarget The Ajax request target.
      */
-    protected void onTaskError(AjaxRequestTarget ajaxRequestTarget) {
+    protected void onTaskError(Optional<AjaxRequestTarget> ajaxRequestTarget) {
     }
 }

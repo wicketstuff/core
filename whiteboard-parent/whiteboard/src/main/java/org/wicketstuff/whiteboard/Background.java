@@ -16,8 +16,8 @@
  */
 package org.wicketstuff.whiteboard;
 
-import org.apache.wicket.ajax.json.JSONException;
-import org.apache.wicket.ajax.json.JSONObject;
+import com.github.openjson.JSONException;
+import com.github.openjson.JSONObject;
 
 /**
  * This class represent the background image of the whiteboard

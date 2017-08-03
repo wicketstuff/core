@@ -12,6 +12,8 @@
  */
 package org.wicketstuff.dashboard.web;
 
+import java.util.List;
+
 import org.apache.wicket.AttributeModifier;
 import org.apache.wicket.markup.html.link.AbstractLink;
 import org.apache.wicket.markup.html.list.ListItem;
@@ -22,13 +24,10 @@ import org.apache.wicket.model.LoadableDetachableModel;
 import org.wicketstuff.dashboard.Widget;
 import org.wicketstuff.dashboard.WidgetAction;
 
-import java.util.List;
-
 /**
  * @author Decebal Suiu
  */
 public class WidgetActionsPanel extends GenericPanel<Widget> implements DashboardContextAware {
-
 	private static final long serialVersionUID = 1L;
 
 	private transient DashboardContext dashboardContext;
@@ -54,7 +53,7 @@ public class WidgetActionsPanel extends GenericPanel<Widget> implements Dashboar
 			protected void populateItem(ListItem<WidgetAction> item) {
 				WidgetAction action = item.getModelObject();
 				AbstractLink link = action.getLink("link");
-				link.add(action.getImage("image"));
+				link.add(AttributeModifier.replace("class", action.getCssClass()));
 				link.add(AttributeModifier.replace("title", action.getTooltip()));
 				item.add(link);
 			}
@@ -71,5 +70,4 @@ public class WidgetActionsPanel extends GenericPanel<Widget> implements Dashboar
 	private Widget getWidget() {
 		return getModelObject();
 	}
-
 }

@@ -45,7 +45,7 @@ import org.apache.wicket.request.mapper.parameter.PageParameters;
  */
 public abstract class AsyncUrlFragmentAwarePage extends WebPage implements IBookmarkableComponent
 {
-
+	private static final long serialVersionUID = 1L;
 	private transient AjaxRequestTarget target = null;
 	protected UrlParametersReceivingBehavior urlParametersReceivingBehavior;
 
@@ -70,6 +70,8 @@ public abstract class AsyncUrlFragmentAwarePage extends WebPage implements IBook
 		super.onInitialize();
 		urlParametersReceivingBehavior = new UrlParametersReceivingBehavior(getOptions())
 		{
+			private static final long serialVersionUID = 1L;
+
 			@Override
 			protected void onParameterArrival(IRequestParameters requestParameters,
 				AjaxRequestTarget target)
@@ -87,16 +89,16 @@ public abstract class AsyncUrlFragmentAwarePage extends WebPage implements IBook
 	 * the URL fragment.
 	 * <p>
 	 * Possible options are:
+	 * </p>
 	 * <ul>
 	 * <li>
 	 * fragmentIdentifierSuffix: String after the '#' (standard is '!')</li>
 	 * <li>
 	 * keyValueDelimiter: a String used to connect fragment parameters keys and values (standard is
-	 * '&')</li>
+	 * '&amp;')</li>
 	 * </ul>
-	 * </p>
 	 * 
-	 * @return
+	 * @return options {@link Map} created
 	 */
 	protected Map<String, String> getOptions()
 	{
@@ -107,8 +109,8 @@ public abstract class AsyncUrlFragmentAwarePage extends WebPage implements IBook
 	 * This is where you can grab the URL query and fragment parameters, your site was requested
 	 * with. You can use {@link #urlFragment()} inside this method.
 	 * 
-	 * @param requestParameters
-	 * @param target
+	 * @param requestParameters parameters set on this page
+	 * @param target {@link AjaxRequestTarget} can be used for page updating
 	 */
 	protected abstract void onParameterArrival(IRequestParameters requestParameters,
 		AjaxRequestTarget target);
@@ -147,7 +149,7 @@ public abstract class AsyncUrlFragmentAwarePage extends WebPage implements IBook
 	 * Returns a {@link UrlFragment} connected to the current {@link AjaxRequestTarget}. Use the
 	 * {@link UrlFragment} to update the URL fragment in the browser after the current AJAX event.
 	 * 
-	 * @return
+	 * @return created {@link UrlFragment} for chaining
 	 */
 	protected UrlFragment urlFragment()
 	{

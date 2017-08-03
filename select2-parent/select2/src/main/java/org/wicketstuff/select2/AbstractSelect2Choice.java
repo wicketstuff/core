@@ -20,14 +20,13 @@ import java.util.Collections;
 import java.util.List;
 
 import org.apache.wicket.Component;
-import org.apache.wicket.IResourceListener;
+import org.apache.wicket.IRequestListener;
 import org.apache.wicket.ajax.AjaxRequestTarget;
-import org.apache.wicket.ajax.json.JSONException;
-import org.apache.wicket.ajax.json.JSONWriter;
 import org.apache.wicket.event.IEvent;
 import org.apache.wicket.markup.ComponentTag;
 import org.apache.wicket.markup.MarkupStream;
 import org.apache.wicket.markup.head.IHeaderResponse;
+import org.apache.wicket.markup.head.JavaScriptHeaderItem;
 import org.apache.wicket.markup.head.OnDomReadyHeaderItem;
 import org.apache.wicket.markup.html.form.AbstractTextComponent;
 import org.apache.wicket.markup.html.form.FormComponent;
@@ -39,6 +38,8 @@ import org.apache.wicket.request.http.WebRequest;
 import org.apache.wicket.request.http.WebResponse;
 import org.apache.wicket.util.string.AppendingStringBuffer;
 import org.apache.wicket.util.string.Strings;
+import com.github.openjson.JSONException;
+import com.github.openjson.JSONStringer;
 
 /**
  * Base class for Select2 components
@@ -49,7 +50,7 @@ import org.apache.wicket.util.string.Strings;
  *            type of model object
  * @author igor
  */
-abstract class AbstractSelect2Choice<T, M> extends AbstractTextComponent<M> implements IResourceListener
+public abstract class AbstractSelect2Choice<T, M> extends AbstractTextComponent<M> implements IRequestListener
 {
 	private static final long serialVersionUID = 1L;
 
@@ -118,11 +119,16 @@ abstract class AbstractSelect2Choice<T, M> extends AbstractTextComponent<M> impl
 			public void renderHead(Component component, IHeaderResponse response)
 			{
 				super.renderHead(component, response);
+
 				// render theme related resources if any
 				if(settings.getTheme() != null)
 				{
 					settings.getTheme().renderHead(component, response);
 				}
+
+				// include i18n resource file
+				response.render(JavaScriptHeaderItem.forReference(
+						new Select2LanguageResourceReference(settings.getLanguage())));
 			}
 		});
 		setOutputMarkupId(true);
@@ -262,8 +268,8 @@ abstract class AbstractSelect2Choice<T, M> extends AbstractTextComponent<M> impl
 		{
 			AjaxSettings ajax = getSettings().getAjax(true);
 			ajax.setData(String.format(
-					"function(params) { return { q: params.term, page: params.page, '%s':true, '%s':[window.location.protocol, '//', window.location.host, window.location.pathname].join('')}; }",
-					WebRequest.PARAM_AJAX, WebRequest.PARAM_AJAX_BASE_URL));
+					"function(params) { return { '%s': params.term, page: params.page, '%s':true, '%s':[window.location.protocol, '//', window.location.host, window.location.pathname].join('')}; }",
+					settings.getQueryParam(), WebRequest.PARAM_AJAX, WebRequest.PARAM_AJAX_BASE_URL));
 			ajax.setProcessResults("function(data, page) { return { results: data.items, pagination: { more: data.more } };  }");
 		}
 		else if (settings.isStateless()) //configure stateless mode
@@ -287,7 +293,7 @@ abstract class AbstractSelect2Choice<T, M> extends AbstractTextComponent<M> impl
 		}
 		else if (isAjax())
 		{
-			getSettings().getAjax().setUrl(urlFor(IResourceListener.INTERFACE, null));
+			getSettings().getAjax(true).setUrl(urlForListener(null));
 		}
 	}
 
@@ -332,13 +338,25 @@ abstract class AbstractSelect2Choice<T, M> extends AbstractTextComponent<M> impl
 	 */
 	public static <T> void generateJSON(ChoiceProvider<T> provider, OutputStream outputStream) 
 	{
+		generateJSON(Settings.DEFAULT_QUERY_PARAM, provider, outputStream);
+	}
+
+	/**
+	 * Utility method to generate JSON response.
+	 *
+	 * @param provider
+	 * @param outputStream
+	 * @param queryParam - parameter to be used as Ajax query param
+	 */
+	public static <T> void generateJSON(String queryParam, ChoiceProvider<T> provider, OutputStream outputStream) 
+	{
 		// this is the callback that retrieves matching choices used to populate the dropdown
 
 		Request request = RequestCycle.get().getRequest();
 		IRequestParameters params = request.getRequestParameters();
 
 		// retrieve choices matching the search term
-		String term = params.getParameterValue("q").toOptionalString();
+		String term = params.getParameterValue(queryParam).toOptionalString();
 
 		int page = params.getParameterValue("page").toInt(1);
 		// select2 uses 1-based paging, but in wicket world we are used to
@@ -351,7 +369,7 @@ abstract class AbstractSelect2Choice<T, M> extends AbstractTextComponent<M> impl
 		// jsonize and write out the choices to the response
 
 		OutputStreamWriter out = new OutputStreamWriter(outputStream, request.getCharset());
-		JSONWriter json = new JSONWriter(out);
+		JSONStringer json = new JSONStringer();
 
 		try
 		{
@@ -365,8 +383,10 @@ abstract class AbstractSelect2Choice<T, M> extends AbstractTextComponent<M> impl
 			}
 			json.endArray();
 			json.key("more").value(response.getHasMore()).endObject();
+			
+			out.write(json.toString());
 		}
-		catch (JSONException e) 
+		catch (JSONException | IOException e) 
 		{
 			throw new RuntimeException("Could not write Json response", e);
 		}
@@ -391,11 +411,11 @@ abstract class AbstractSelect2Choice<T, M> extends AbstractTextComponent<M> impl
 	}
 
 	@Override
-	public void onResourceRequested()
+	public void onRequest()
 	{
 		WebResponse webResponse = (WebResponse) getRequestCycle().getResponse();
 		webResponse.setContentType("application/json");
-		generateJSON(provider, webResponse.getOutputStream());
+		generateJSON(settings.getQueryParam(), provider, webResponse.getOutputStream());
 	}
 
 	@Override

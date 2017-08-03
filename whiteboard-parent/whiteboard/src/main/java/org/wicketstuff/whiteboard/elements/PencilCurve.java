@@ -16,15 +16,15 @@
  */
 package org.wicketstuff.whiteboard.elements;
 
-import org.apache.wicket.ajax.json.JSONException;
-import org.apache.wicket.ajax.json.JSONObject;
-
 import java.util.ArrayList;
 import java.util.List;
 
+import com.github.openjson.JSONException;
+import com.github.openjson.JSONObject;
+
 /**
  * This class represent a curve element on Whiteboard which is represented by list of coordinate points
- * 
+ *
  * @author andunslg
  */
 public class PencilCurve extends Element {
@@ -39,7 +39,7 @@ public class PencilCurve extends Element {
 		this.points = points;
 	}
 
-	public PencilCurve(JSONObject object) throws JSONException {
+	public PencilCurve(JSONObject object) {
 		super(object);
 		this.type = Type.PencilCurve;
 		this.p0 = object.getInt("p0");
@@ -55,7 +55,7 @@ public class PencilCurve extends Element {
 			}
 		}
 
-		this.points = new ArrayList<Double[][]>();
+		this.points = new ArrayList<>();
 
 		for (int i = 0; i < pointCount; i++) {
 			if (object.get("x" + i) instanceof Double) {
@@ -72,11 +72,12 @@ public class PencilCurve extends Element {
 
 	/**
 	 * Return a JSON object which represent the Element
-	 * 
+	 *
 	 * @return JSON object with field values added
 	 * @throws JSONException
 	 */
-	public JSONObject getJSON() throws JSONException {
+	@Override
+	public JSONObject getJSON() {
 		JSONObject jsonObject = super.getJSON(new JSONObject());
 		jsonObject.put("p0", p0);
 		for (int i = 0; i < points.size(); i++) {

@@ -19,6 +19,7 @@ import java.io.Serializable;
 import java.util.Collections;
 import java.util.EnumMap;
 import java.util.Map;
+import java.util.Optional;
 
 import org.apache.wicket.Page;
 import org.apache.wicket.Session;
@@ -149,10 +150,10 @@ public abstract class GOverlay implements Serializable
     {
         events.put(event, handler);
 
-        AjaxRequestTarget target = RequestCycle.get().find(AjaxRequestTarget.class);
-        if (target != null && getPage() != null)
+        Optional<AjaxRequestTarget> target = RequestCycle.get().find(AjaxRequestTarget.class);
+        if (target.isPresent() && getPage() != null)
         {
-            target.appendJavaScript(event.getJSadd(this));
+            target.get().appendJavaScript(event.getJSadd(this));
         }
 
         return this;
@@ -165,10 +166,10 @@ public abstract class GOverlay implements Serializable
     {
         functions.put(event, jsFunction);
 
-        AjaxRequestTarget target = RequestCycle.get().find(AjaxRequestTarget.class);
-        if (target != null && getPage() != null)
+        Optional<AjaxRequestTarget> target = RequestCycle.get().find(AjaxRequestTarget.class);
+        if (target.isPresent() && getPage() != null)
         {
-            target.appendJavaScript(event.getJSadd(this, functions.get(event)));
+            target.get().appendJavaScript(event.getJSadd(this, functions.get(event)));
         }
 
         return this;
@@ -205,11 +206,8 @@ public abstract class GOverlay implements Serializable
     {
         events.remove(event);
 
-        AjaxRequestTarget target = RequestCycle.get().find(AjaxRequestTarget.class);
-        if (target != null)
-        {
-            target.appendJavaScript(event.getJSclear(this));
-        }
+        Optional<AjaxRequestTarget> targetOptional = RequestCycle.get().find(AjaxRequestTarget.class);
+        targetOptional.ifPresent(target -> target.appendJavaScript(event.getJSclear(this)));
 
         return this;
     }

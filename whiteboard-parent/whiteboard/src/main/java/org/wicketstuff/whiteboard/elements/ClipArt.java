@@ -16,12 +16,12 @@
  */
 package org.wicketstuff.whiteboard.elements;
 
-import org.apache.wicket.ajax.json.JSONException;
-import org.apache.wicket.ajax.json.JSONObject;
+import com.github.openjson.JSONException;
+import com.github.openjson.JSONObject;
 
 /**
  * This class represent a clipArt picture element on Whiteboard
- * 
+ *
  * @author andunslg
  */
 public class ClipArt extends Element {
@@ -33,7 +33,7 @@ public class ClipArt extends Element {
 		this.r = r;
 	}
 
-	public ClipArt(JSONObject object) throws JSONException {
+	public ClipArt(JSONObject object) {
 		super(object);
 		this.type = Type.ClipArt;
 		this.r = object.getInt("r");
@@ -41,11 +41,12 @@ public class ClipArt extends Element {
 
 	/**
 	 * Return a JSON object which represent the Element
-	 * 
+	 *
 	 * @return JSON object with field values added
 	 * @throws JSONException
 	 */
-	public JSONObject getJSON() throws JSONException {
+	@Override
+	public JSONObject getJSON() {
 		JSONObject jsonObject = super.getJSON(new JSONObject());
 		jsonObject.put("r", r);
 

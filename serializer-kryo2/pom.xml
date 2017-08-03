@@ -5,7 +5,7 @@
   <parent>
     <groupId>org.wicketstuff</groupId>
     <artifactId>wicketstuff-core</artifactId>
-    <version>7.4.0-SNAPSHOT</version>
+    <version>8.0.0-SNAPSHOT</version>
   </parent>
 
   <artifactId>wicketstuff-serializer-kryo2</artifactId>
@@ -19,13 +19,9 @@
       <artifactId>junit</artifactId>
     </dependency>
     <dependency>
-      <groupId>org.slf4j</groupId>
-      <artifactId>slf4j-log4j12</artifactId>
-    </dependency>
-    <dependency>
 	    <groupId>org.wicketstuff</groupId>
 	    <artifactId>wicketstuff-serializer-common</artifactId>
-	    <version>${parent.version}</version>
+	    <version>${project.parent.version}</version>
     </dependency>
     <!--
 		<dependency>
@@ -41,7 +37,8 @@
     </dependency>
     <dependency>
       <groupId>org.eclipse.jetty.aggregate</groupId>
-      <artifactId>jetty-all-server</artifactId>
+      <artifactId>jetty-all</artifactId>
+      <classifier>uber</classifier>
     </dependency>
   </dependencies>
 

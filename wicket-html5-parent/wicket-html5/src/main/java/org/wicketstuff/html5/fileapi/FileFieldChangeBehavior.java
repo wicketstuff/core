@@ -67,7 +67,7 @@ public abstract class FileFieldChangeBehavior extends AjaxEventBehavior
 	 */
 	public FileFieldChangeBehavior(int maxNumOfFiles)
 	{
-		this("onchange", maxNumOfFiles);
+		this("change", maxNumOfFiles);
 	}
 
 	/**

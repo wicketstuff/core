@@ -20,6 +20,7 @@ import org.apache.wicket.authroles.authorization.strategies.role.IRoleCheckingSt
 import org.apache.wicket.util.lang.Args;
 import org.wicketstuff.rest.annotations.MethodMapping;
 import org.wicketstuff.rest.annotations.parameters.CookieParam;
+import org.wicketstuff.rest.contenthandling.mimetypes.RestMimeTypes;
 import org.wicketstuff.rest.contenthandling.webserialdeserial.JsonTestWebSerialDeserial;
 
 public class RegExpRestResource extends RestResourceFullAnnotated
@@ -45,4 +46,18 @@ public class RegExpRestResource extends RestResourceFullAnnotated
 		Args.notNull(year, "year");
 		Args.notNull(message, "message");
 	}
+	
+	/*Map two one-segment methods*/
+	@MethodMapping(value = "/oneget", produces = RestMimeTypes.TEXT_PLAIN)
+	public String oneGet() 
+	{
+		return "oneGet";
+	}
+
+	@MethodMapping(value = "/twoget", produces = RestMimeTypes.TEXT_PLAIN)
+	public String twoGet() 
+	{
+		return "twoGet";
+	}
+	/* END MAPPING */
 }

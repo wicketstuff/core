@@ -1,0 +1,61 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <parent>
+    <groupId>org.wicketstuff</groupId>
+    <artifactId>wicketstuff-core</artifactId>
+    <version>8.0.0-SNAPSHOT</version>
+  </parent>
+
+  <artifactId>wicketstuff-rest-lambda</artifactId>
+
+  <name>WicketStuff Rest Lambda</name>
+  <description>rest module based on lambda</description>
+
+  <dependencies>
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.slf4j</groupId>
+      <artifactId>slf4j-log4j12</artifactId>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.eclipse.jetty.aggregate</groupId>
+      <artifactId>jetty-all</artifactId>
+      <classifier>uber</classifier>
+    </dependency>
+    <dependency>
+        <groupId>org.mockito</groupId>
+        <artifactId>mockito-core</artifactId>
+       <scope>test</scope>
+    </dependency>
+    <dependency>
+	<groupId>org.wicketstuff</groupId>
+	<artifactId>wicketstuff-rest-utils</artifactId>
+	<version>${project.version}</version>
+    </dependency>
+  </dependencies>
+
+	<build>
+		<plugins>
+			<plugin>
+				<!-- USAGE: mvn license:check OR mvn license:format -->
+				<groupId>com.mycila.maven-license-plugin</groupId>
+				<artifactId>maven-license-plugin</artifactId>
+				<configuration>
+					<header>${header.location}</header>
+					<excludes>
+						<exclude>src/test/java/**.tree</exclude>
+					</excludes>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+
+	<properties>
+		<header.location>lic/header.txt</header.location>
+	</properties>
+</project>

@@ -1,12 +1,12 @@
 package org.wicketstuff.facebook.plugins;
 
+import java.util.Optional;
+
 import org.apache.wicket.AttributeModifier;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.markup.html.WebMarkupContainer;
-import org.apache.wicket.model.AbstractReadOnlyModel;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.PropertyModel;
-import org.apache.wicket.util.iterator.ComponentHierarchyIterator;
 import org.wicketstuff.facebook.FacebookRootProvider;
 import org.wicketstuff.facebook.MissingFacebookRootException;
 
@@ -20,7 +20,7 @@ import org.wicketstuff.facebook.MissingFacebookRootException;
  */
 public abstract class AbstractFacebookPlugin extends WebMarkupContainer
 {
-	protected class EnumModel extends AbstractReadOnlyModel<String>
+	protected class EnumModel implements IModel<String>
 	{
 		/**
 		 * 
@@ -123,25 +123,22 @@ public abstract class AbstractFacebookPlugin extends WebMarkupContainer
 	@Override
 	protected void onRender()
 	{
-		final ComponentHierarchyIterator visitChildren = getPage().visitChildren(
-			FacebookRootProvider.class);
-		if (!visitChildren.hasNext())
-			throw new MissingFacebookRootException();
+		Boolean found = getPage().visitChildren(FacebookRootProvider.class, (object, visit) -> visit.stop(Boolean.TRUE));
+		if (found == null) throw new MissingFacebookRootException();
 
 		if (findPage() != null)
 		{
-			AjaxRequestTarget target = getRequestCycle().find(AjaxRequestTarget.class);
-			if (target != null)
-			{
-			setOutputMarkupId(true);
+			Optional<AjaxRequestTarget> targetOptional = getRequestCycle().find(AjaxRequestTarget.class);
+			targetOptional.ifPresent(target -> {
+				setOutputMarkupId(true);
 
-			final StringBuilder js = new StringBuilder();
-			js.append("FB.XFBML.parse(document.getElementById('");
-			js.append(getMarkupId());
-			js.append("').parentNode);");
+				final StringBuilder js = new StringBuilder();
+				js.append("FB.XFBML.parse(document.getElementById('");
+				js.append(getMarkupId());
+				js.append("').parentNode);");
 
-			target.appendJavaScript(js.toString());
-			}
+				target.appendJavaScript(js.toString());
+			});
 		}
 
 		super.onRender();

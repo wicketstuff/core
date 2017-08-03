@@ -1,9 +1,5 @@
 package wicket.contrib.tinymce.settings;
 
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.regex.Pattern;
-
 import junit.framework.TestCase;
 import wicket.contrib.tinymce4.settings.TinyMCESettings;
 import wicket.contrib.tinymce4.settings.TinyMCESettings.Language;
@@ -21,7 +17,7 @@ public class TinyMCESettingsTest extends TestCase
 	@Override
 	protected void setUp() throws Exception
 	{
-		settings = new TinyMCESettings(Theme.modern, Language.en);
+		settings = new TinyMCESettings(Theme.modern, Language.en_GB);
 		buffer = new StringBuffer();
 	}
 

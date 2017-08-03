@@ -1,13 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>org.wicketstuff</groupId>
 	<artifactId>wicketstuff-core</artifactId>
 	<packaging>pom</packaging>
-	<version>7.4.0-SNAPSHOT</version>
+	<version>8.0.0-SNAPSHOT</version>
 	<name>WicketStuff Core Parent</name>
 	<description>
 		WicketStuff Core Parent is the parent project for all of the core WicketStuff projects.  It tries
@@ -93,13 +92,15 @@
 					<plugin>
 						<groupId>org.apache.maven.plugins</groupId>
 						<artifactId>maven-javadoc-plugin</artifactId>
-						<version>2.10.3</version>
+						<version>2.10.4</version>
 						<configuration>
 							<detectOfflineLinks>false</detectOfflineLinks>
 							<minmemory>128m</minmemory>
 							<maxmemory>256m</maxmemory>
 							<notimestamp>true</notimestamp>
 							<quiet>true</quiet>
+							<failOnError>false</failOnError>
+							<additionalparam>-Xdoclint:none</additionalparam>
 							<links>
 								<link>http://docs.oracle.com/javase/7/docs/api</link>
 								<link>http://docs.oracle.com/javaee/7/api</link>
@@ -244,10 +245,10 @@
 	<!-- mocleiri: for distribution in to central repository sections in the main pom are not allowed -->
 
 	<properties>
-		<wicket.version>7.4.0-SNAPSHOT</wicket.version>
+		<wicket.version>8.0.0-SNAPSHOT</wicket.version>
 
-		<maven.compiler.source>1.7</maven.compiler.source>
-		<maven.compiler.target>1.7</maven.compiler.target>
+		<maven.compiler.source>1.8</maven.compiler.source>
+		<maven.compiler.target>1.8</maven.compiler.target>
 
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
@@ -257,21 +258,22 @@
 		<sources.disabled>false</sources.disabled>
 
 		<hibernate.version>4.3.11.Final</hibernate.version>
-		<javassist.version>3.18.2-GA</javassist.version>
-		<jetty.version>8.1.16.v20140903</jetty.version>
+		<javassist.version>3.20.0-GA</javassist.version>
+		<jetty.version>9.3.10.v20160621</jetty.version>
 		<sf-jung.version>2.0.1</sf-jung.version>
-		<shiro.version>1.2.3</shiro.version>
-		<slf4j.version>1.7.12</slf4j.version>
-		<logback.version>1.1.3</logback.version>
+		<shiro.version>1.2.6</shiro.version>
+		<slf4j.version>1.7.22</slf4j.version>
+		<logback.version>1.1.10</logback.version>
 		<log4j.version>1.2.17</log4j.version>
-		<spring.version>4.1.6.RELEASE</spring.version>
-		<cglib.version>3.1</cglib.version>
-		<objenesis.version>2.1</objenesis.version>
-		<scala.version>2.11.8</scala.version>
+		<spring.version>4.3.1.RELEASE</spring.version>
+		<cglib.version>3.2.4</cglib.version>
+		<objenesis.version>2.5</objenesis.version>
+		<scala.version>2.12.1</scala.version>
+		<jackson.version>2.8.5</jackson.version>
 	</properties>
 
 	<prerequisites>
-		<maven>3.0.4</maven>
+		<maven>3.3.9</maven>
 	</prerequisites>
 
 	<modules>
@@ -283,7 +285,6 @@
 		<module>annotationeventdispatcher-parent</module>
 		<module>async-tasks-parent</module>
 		<module>autocomplete-tagit-parent</module>
-		<module>browserid-parent</module>
 		<module>datastores-parent</module>
 		<module>datatables-parent</module>
 		<module>flot-parent</module>
@@ -325,11 +326,11 @@
 		<module>serializer-fast</module>
 		<module>serializer-fast2</module>
 		<module>serializer-ui</module>
-		<module>stateless-parent</module>
 		<module>shiro-security</module>
 		<module>wicket-facebook-parent</module>
 		<module>wicket-html5-parent</module>
 		<module>wicket-servlet3-parent</module>
+		<module>wicketstuff-clipboard-js-parent</module>
 		<module>wicketstuff-springreference-parent</module>
 		<module>wicket-security-parent</module>
 
@@ -340,6 +341,7 @@
 		<module>wicketstuff-lazymodel</module>
 		<module>sitemap-xml-parent</module>
 		<module>urlfragment-parent</module>
+		<module>wicketstuff-rest-utils</module>
 		<module>wicketstuff-restannotations-parent</module>
 		<module>whiteboard-parent</module>
 		<module>wicket-mount-parent</module>
@@ -356,7 +358,9 @@
 		<module>wicket-foundation</module>
 		<module>dashboard-parent</module>
 		<module>jamon-parent</module>
-	</modules>
+                <module>wicketstuff-rest-lambda</module>
+    <module>wicketstuff-lambda-components</module>
+  </modules>
 
 	<dependencies>
 		<dependency>
@@ -510,20 +514,15 @@
 			<dependency>
 				<groupId>org.mockito</groupId>
 				<artifactId>mockito-core</artifactId>
-				<version>1.9.5</version>
-				<scope>test</scope>
-			</dependency>
-			<dependency>
-				<groupId>org.eclipse.jetty</groupId>
-				<artifactId>test-jetty-servlet</artifactId>
-				<version>${jetty.version}</version>
+				<version>2.2.22</version>
 				<scope>test</scope>
 			</dependency>
 			<dependency>
 				<groupId>org.eclipse.jetty.aggregate</groupId>
-				<artifactId>jetty-all-server</artifactId>
+				<artifactId>jetty-all</artifactId>
 				<version>${jetty.version}</version>
 				<scope>test</scope>
+				<classifier>uber</classifier>
 			</dependency>
 			<dependency>
 				<groupId>org.springframework</groupId>
@@ -700,7 +699,12 @@
 			<dependency>
 			  <groupId>com.google.code.gson</groupId>
 			  <artifactId>gson</artifactId>
-			  <version>2.2.4</version>
+			  <version>2.8.0</version>
+			</dependency>
+			<dependency>
+			  <groupId>com.fasterxml.jackson.core</groupId>
+			  <artifactId>jackson-databind</artifactId>
+                    	  <version>${jackson.version}</version>
 			</dependency>
 			<dependency>
 			  <groupId>de.agilecoders.wicket</groupId>
@@ -853,7 +857,7 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-javadoc-plugin</artifactId>
-				<version>2.10.3</version>
+				<version>2.10.4</version>
 				<configuration>
 					<detectOfflineLinks>false</detectOfflineLinks>
 					<minmemory>128m</minmemory>
@@ -867,6 +871,8 @@
 						<link>http://docs.spring.io/spring/docs/3.0.x/javadoc-api</link>
 						<link>http://logback.qos.ch/apidocs</link>
 					</links>
+					<failOnError>false</failOnError>
+					<additionalparam>-Xdoclint:none</additionalparam>
 					<skip>${javadoc.disabled}</skip>
 				</configuration>
 				<executions>
@@ -977,6 +983,7 @@
 				<plugin>
 					<groupId>com.mycila.maven-license-plugin</groupId>
 					<artifactId>maven-license-plugin</artifactId>
+                    <version>1.10.b1</version>
 					<configuration>
 						<header>${basedir}/license_header.txt</header>
 						<aggregate>true</aggregate>
@@ -1047,7 +1054,7 @@
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-compiler-plugin</artifactId>
-					<version>3.3</version>
+					<version>3.5.1</version>
 					<configuration>
 						<source>${maven.compiler.source}</source>
 						<target>${maven.compiler.target}</target>
@@ -1139,7 +1146,7 @@
 					</executions>
 				</plugin>
 				<plugin>
-					<groupId>org.mortbay.jetty</groupId>
+					<groupId>org.eclipse.jetty</groupId>
 					<artifactId>jetty-maven-plugin</artifactId>
 					<version>${jetty.version}</version>
 				</plugin>
@@ -1193,7 +1200,7 @@
 										</goals>
 									</pluginExecutionFilter>
 									<action>
-										<ignore></ignore>
+										<ignore/>
 									</action>
 								</pluginExecution>
 								<pluginExecution>
@@ -1214,7 +1221,7 @@
 										</goals>
 									</pluginExecutionFilter>
 									<action>
-										<ignore></ignore>
+										<ignore/>
 									</action>
 								</pluginExecution>
 								<pluginExecution>
@@ -1235,7 +1242,7 @@
 										</goals>
 									</pluginExecutionFilter>
 									<action>
-										<ignore></ignore>
+										<ignore/>
 									</action>
 								</pluginExecution>
 							</pluginExecutions>
@@ -1286,7 +1293,7 @@
 				<configuration>
 					<linkXRef>true</linkXRef>
 					<sourceEncoding>utf-8</sourceEncoding>
-					<targetJdk>1.7</targetJdk>
+					<targetJdk>1.8</targetJdk>
 					<minimumTokens>100</minimumTokens>
 				</configuration>
 			</plugin>

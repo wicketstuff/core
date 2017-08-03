@@ -47,7 +47,7 @@ public class JamonAdminForm extends Form<Void>
 	{
 		super(id);
 		final TextField<String> monitorLabel = new TextField<String>(ID_OF_MONITOR_LABEL,
-			new Model<String>());
+			new Model<>());
 		monitorLabel.add(new AjaxFormComponentUpdatingBehavior("keyup")
 		{
 			@Override
@@ -61,7 +61,7 @@ public class JamonAdminForm extends Form<Void>
 		add(new AjaxButton(ID_OF_RESET_BUTTON)
 		{
 			@Override
-			protected void onSubmit(AjaxRequestTarget target, Form<?> form)
+			protected void onSubmit(AjaxRequestTarget target)
 			{
 				JamonRepository.clear();
 				replaceJamonMonitorTable(monitorLabel, target,

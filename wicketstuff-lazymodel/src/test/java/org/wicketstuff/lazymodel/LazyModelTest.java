@@ -18,6 +18,7 @@ package org.wicketstuff.lazymodel;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertSame;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 import static org.wicketstuff.lazymodel.LazyModel.from;
@@ -25,15 +26,18 @@ import static org.wicketstuff.lazymodel.LazyModel.model;
 import static org.wicketstuff.lazymodel.LazyModel.path;
 
 import java.io.Serializable;
+import java.lang.reflect.InvocationHandler;
+import java.lang.reflect.Method;
+import java.lang.reflect.Proxy;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import org.apache.wicket.WicketRuntimeException;
-import org.apache.wicket.model.AbstractReadOnlyModel;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.IObjectClassAwareModel;
+import org.apache.wicket.model.LoadableDetachableModel;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.model.PropertyModel;
 import org.junit.Test;
@@ -91,7 +95,7 @@ public class LazyModelTest {
 
 	@Test
 	public void improveTargetTypeWithTargetObjectClass() {
-		IModel<Serializable> target = new AbstractReadOnlyModel<Serializable>() {
+		IModel<Serializable> target = new IModel<Serializable>() {
 			@Override
 			public Serializable getObject() {
 				return new A();
@@ -107,7 +111,7 @@ public class LazyModelTest {
 	public void loadableDetachable() {
 		final int[] got = new int[1];
 
-		IModel<String> string = new AbstractReadOnlyModel<String>() {
+		IModel<String> string = new IModel<String>() {
 			private static final long serialVersionUID = 1L;
 
 			@Override
@@ -437,7 +441,7 @@ public class LazyModelTest {
 		C c = new C();
 		cs.add(c);
 
-		IModel<List<C>> target = new AbstractReadOnlyModel<List<C>>() {
+		IModel<List<C>> target = new IModel<List<C>>() {
 			@Override
 			public List<C> getObject() {
 				return cs;
@@ -457,7 +461,7 @@ public class LazyModelTest {
 		final List<C> cs = new ArrayList<C>();
 		cs.add(new C());
 
-		IModel<List<C>> target = new AbstractReadOnlyModel<List<C>>() {
+		IModel<List<C>> target = new IModel<List<C>>() {
 			@Override
 			public List<C> getObject() {
 				return cs;
@@ -730,7 +734,7 @@ public class LazyModelTest {
 		C c = new C();
 		a.b.cs.add(c);
 
-		IModel<A> target = new AbstractReadOnlyModel<A>() {
+		IModel<A> target = new IModel<A>() {
 			@Override
 			public A getObject() {
 				return a;
@@ -745,6 +749,31 @@ public class LazyModelTest {
 		assertEquals(a.b.cs.get(0), model.getObject());
 	}
 
+	/**
+	 * issue #569
+	 * <p>
+	 * {@link LoadableDetachableModel#getObject()}'s type is a type variable.
+	 */
+	@Test
+	public void getObjectFromLoadableModel() {
+		final A a = new A();
+		a.b = new B();
+
+		IModel<A> target = new LoadableDetachableModel<A>() {
+			@Override
+			protected A load() {
+				return a;
+			}
+		};
+
+		LazyModel<B> model = model(from(target).getB());
+
+		assertEquals(B.class, model.getObjectClass());
+		assertEquals("b", model.getPath());
+
+		assertEquals(a.b, model.getObject());
+	}
+	
 	@Test
 	public void getFromPrivateConstructor() {
 		final A a = new A();
@@ -842,7 +871,7 @@ public class LazyModelTest {
 		a.b = new B();
 
 		LazyModel<B> model = model(from(A.class).getB()).bind(
-				new AbstractReadOnlyModel<A>() {
+				new IModel<A>() {
 					@Override
 					public A getObject() {
 						return a;
@@ -899,6 +928,7 @@ public class LazyModelTest {
 		a.b = new B();
 
 		Model target = new Model(a);
+		
 		LazyModel<B> model = model(from(target, A.class).getB());
 
 		assertEquals(B.class, model.getObjectClass());
@@ -965,6 +995,23 @@ public class LazyModelTest {
 		assertNull(model.getPropertyField());
 		assertNull(model.getPropertyGetter());
 		assertNull(model.getPropertySetter());
+	}
+
+	@Test
+	public void fromProxy() throws Exception {
+		final List<String> list = new ArrayList<String>();
+
+		@SuppressWarnings("unchecked")
+		I<String> proxy = (I<String>) Proxy.newProxyInstance(getClass().getClassLoader(), new Class<?>[]{I.class}, new InvocationHandler() {
+			@Override
+			public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
+				return list;
+			}
+		});
+
+		LazyModel<List<String>> model = model(from(proxy).getTs());
+
+		assertSame(list, model.getObject());
 	}
 
 	public static class A implements Serializable {

@@ -16,14 +16,14 @@
  */
 package org.wicketstuff.whiteboard.elements;
 
-import org.apache.wicket.ajax.json.JSONException;
-import org.apache.wicket.ajax.json.JSONObject;
-
 import java.io.Serializable;
+
+import com.github.openjson.JSONException;
+import com.github.openjson.JSONObject;
 
 /**
  * This class is the parent of all the geometric and textual elements in whiteboard Hold common fields for each element
- * 
+ *
  * @author andunslg
  */
 public abstract class Element implements Serializable {
@@ -68,7 +68,7 @@ public abstract class Element implements Serializable {
 		this.trace = trace;
 	}
 
-	public Element(JSONObject object) throws JSONException {
+	public Element(JSONObject object) {
 		this.id = object.optInt("id");
 		this.label = object.optString("label");
 		this.color = object.optString("color");
@@ -76,17 +76,17 @@ public abstract class Element implements Serializable {
 		this.hidden = object.optBoolean("hidden");
 	}
 
-	public abstract JSONObject getJSON() throws JSONException;
+	public abstract JSONObject getJSON();
 
 	/**
 	 * Return a JSON object which represent the Element
-	 * 
+	 *
 	 * @param obj
 	 *            JSON object which will will be used to add field values
 	 * @return JSON object with field values added
 	 * @throws JSONException
 	 */
-	public JSONObject getJSON(JSONObject obj) throws JSONException {
+	public JSONObject getJSON(JSONObject obj) {
 		obj.put("id", id);
 		obj.put("type", type);
 		if (label != null) {
@@ -151,5 +151,4 @@ public abstract class Element implements Serializable {
 	public void setType(Type type) {
 		this.type = type;
 	}
-
 }

@@ -253,7 +253,7 @@ public class TreeGrid<T extends TreeModel & Serializable, I extends TreeNode & S
 	@Override
 	public final void update()
 	{
-		getTree().updateTree(getRequestCycle().find(AjaxRequestTarget.class));
+		getTree().updateTree(getRequestCycle().find(AjaxRequestTarget.class).get());
 	};
 
 	/**
