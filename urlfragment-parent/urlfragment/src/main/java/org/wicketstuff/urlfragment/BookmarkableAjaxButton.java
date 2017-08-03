@@ -129,6 +129,6 @@ public abstract class BookmarkableAjaxButton extends AjaxButton implements IBook
 	public void renderHead(IHeaderResponse response)
 	{
 		super.renderHead(response);
-		response.render(UrlParametersReceivingBehavior.getJS(BookmarkableAjaxButton.class));
+		response.render(UrlParametersReceivingBehavior.JS_REF);
 	}
 }
