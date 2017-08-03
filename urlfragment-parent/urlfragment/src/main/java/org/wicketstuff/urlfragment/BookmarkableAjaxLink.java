@@ -1,11 +1,11 @@
 /* Copyright (c) 2013 Martin Knopf
- * 
+ *
  * Licensed under the MIT license;
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- * 
+ *
  *      http://opensource.org/licenses/MIT
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -26,9 +26,9 @@ import org.apache.wicket.model.IModel;
  * event handling. You can also set or remove parameters by yourself using
  * {@link #setFragmentParameter(String, String)} or {@link #removeFragmentParameter(String)}.
  * </p>
- * 
+ *
  * @author Martin Knopf
- * 
+ *
  * @param <T>
  */
 public abstract class BookmarkableAjaxLink<T> extends AjaxLink<T> implements IBookmarkableComponent
@@ -42,7 +42,7 @@ public abstract class BookmarkableAjaxLink<T> extends AjaxLink<T> implements IBo
 
 	/**
 	 * Constructor.
-	 * 
+	 *
 	 * @param id
 	 */
 	public BookmarkableAjaxLink(String id)
@@ -52,7 +52,7 @@ public abstract class BookmarkableAjaxLink<T> extends AjaxLink<T> implements IBo
 
 	/**
 	 * Constructor.
-	 * 
+	 *
 	 * @param id
 	 * @param model
 	 */
@@ -64,7 +64,7 @@ public abstract class BookmarkableAjaxLink<T> extends AjaxLink<T> implements IBo
 	/**
 	 * Constructor. Sets given URL fragment parameter in the browser during the click event. Be
 	 * aware that the given parameter name and value will not be set if they are empty.
-	 * 
+	 *
 	 * @param id
 	 * @param parameterName
 	 * @param parameterValue
@@ -80,7 +80,7 @@ public abstract class BookmarkableAjaxLink<T> extends AjaxLink<T> implements IBo
 	 * Constructor. Sets given default URL fragment parameter during the click event. Be aware that
 	 * the given parameter name and value will not be set if either one is empty and that the
 	 * parameter will be overwritten if it already exists.
-	 * 
+	 *
 	 * @param id
 	 * @param model
 	 * @param parameterName
@@ -109,7 +109,7 @@ public abstract class BookmarkableAjaxLink<T> extends AjaxLink<T> implements IBo
 	/**
 	 * Handles the click event. Your default URL fragment parameter was already set automatically if
 	 * it wasn't empty. You can use {@link #urlFragment()} inside this method.
-	 * 
+	 *
 	 * @param target
 	 */
 	public abstract void onBookmarkableClick(AjaxRequestTarget target);
@@ -147,7 +147,7 @@ public abstract class BookmarkableAjaxLink<T> extends AjaxLink<T> implements IBo
 	/**
 	 * Returns a {@link UrlFragment} connected to the current {@link AjaxRequestTarget}. Use the
 	 * {@link UrlFragment} to update the URL fragment in the browser after the current AJAX event.
-	 * 
+	 *
 	 * @return
 	 */
 	protected UrlFragment urlFragment()
@@ -161,5 +161,4 @@ public abstract class BookmarkableAjaxLink<T> extends AjaxLink<T> implements IBo
 		super.renderHead(response);
 		response.render(UrlParametersReceivingBehavior.getJS(BookmarkableAjaxLink.class));
 	}
-
 }

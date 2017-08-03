@@ -1,11 +1,11 @@
 /* Copyright (c) 2013 Martin Knopf
- * 
+ *
  * Licensed under the MIT license;
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- * 
+ *
  *      http://opensource.org/licenses/MIT
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -18,9 +18,9 @@ import org.apache.wicket.core.request.handler.IPartialPageRequestHandler;
 
 /**
  * Encapsulates the JavaScripts used to edit the URL fragment in the browser.
- * 
+ *
  * @author Martin Knopf
- * 
+ *
  */
 public class UrlFragment
 {
@@ -33,7 +33,7 @@ public class UrlFragment
 
 	/**
 	 * Sets the value of window.location.hash to the given String.
-	 * 
+	 *
 	 * @param urlFragment
 	 * @return
 	 */
@@ -47,7 +47,7 @@ public class UrlFragment
 
 	/**
 	 * Sets the value of window.location.hash to the given key-value-pair.
-	 * 
+	 *
 	 * @param parameterName
 	 * @param parameterValue
 	 * @return
@@ -62,7 +62,7 @@ public class UrlFragment
 
 	/**
 	 * Puts the given key-value-pair into window.location.hash.
-	 * 
+	 *
 	 * @param parameterName
 	 * @param parameterValue
 	 * @return
@@ -78,7 +78,7 @@ public class UrlFragment
 	/**
 	 * Puts the given key-value-pair into window.location.hash. If the key already exists the value
 	 * will be appended to the existing value with the given delimiter.
-	 * 
+	 *
 	 * @param parameterName
 	 * @param parameterValue
 	 * @param valueDelimiter
@@ -96,7 +96,7 @@ public class UrlFragment
 	/**
 	 * Removes the key-value-pair from window.location.hash that is identified by the given
 	 * parameter name.
-	 * 
+	 *
 	 * @param parameterName
 	 * @return
 	 */
@@ -115,5 +115,4 @@ public class UrlFragment
 			this.handler.prependJavaScript(js);
 		}
 	}
-
 }

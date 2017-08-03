@@ -1,11 +1,11 @@
 /* Copyright (c) 2013 Martin Knopf
- * 
+ *
  * Licensed under the MIT license;
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- * 
+ *
  *      http://opensource.org/licenses/MIT
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -39,9 +39,9 @@ import org.apache.wicket.request.mapper.parameter.PageParameters;
  * call. This means, that, before the fragment parameters arrive, your implementation has to have
  * initial state (models) and content and cannot be invisible.</strong>
  * </p>
- * 
+ *
  * @author Martin Knopf
- * 
+ *
  */
 public abstract class AsyncUrlFragmentAwarePage extends WebPage implements IBookmarkableComponent
 {
@@ -97,18 +97,18 @@ public abstract class AsyncUrlFragmentAwarePage extends WebPage implements IBook
 	 * '&')</li>
 	 * </ul>
 	 * </p>
-	 * 
+	 *
 	 * @return
 	 */
 	protected Map<String, String> getOptions()
 	{
-		return new HashMap<String, String>();
+		return new HashMap<>();
 	}
 
 	/**
 	 * This is where you can grab the URL query and fragment parameters, your site was requested
 	 * with. You can use {@link #urlFragment()} inside this method.
-	 * 
+	 *
 	 * @param requestParameters
 	 * @param target
 	 */
@@ -148,7 +148,7 @@ public abstract class AsyncUrlFragmentAwarePage extends WebPage implements IBook
 	/**
 	 * Returns a {@link UrlFragment} connected to the current {@link AjaxRequestTarget}. Use the
 	 * {@link UrlFragment} to update the URL fragment in the browser after the current AJAX event.
-	 * 
+	 *
 	 * @return
 	 */
 	protected UrlFragment urlFragment()

@@ -1,11 +1,11 @@
 /* Copyright (c) 2013 Martin Knopf
- * 
+ *
  * Licensed under the MIT license;
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- * 
+ *
  *      http://opensource.org/licenses/MIT
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -23,7 +23,6 @@ import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.attributes.AjaxRequestAttributes;
 import org.apache.wicket.ajax.json.JSONException;
 import org.apache.wicket.ajax.json.JSONStringer;
-import org.apache.wicket.ajax.json.JSONWriter;
 import org.apache.wicket.behavior.Behavior;
 import org.apache.wicket.markup.head.HeaderItem;
 import org.apache.wicket.markup.head.IHeaderResponse;
@@ -36,9 +35,9 @@ import org.apache.wicket.request.resource.PackageResourceReference;
 /**
  * Reads URL fragment parameters. This {@link Behavior} will execute an AJAX call to itself with the
  * URL query and fragment parameters.
- * 
+ *
  * @author Martin Knopf
- * 
+ *
  */
 public abstract class UrlParametersReceivingBehavior extends AbstractDefaultAjaxBehavior
 {
@@ -49,7 +48,7 @@ public abstract class UrlParametersReceivingBehavior extends AbstractDefaultAjax
 	/**
 	 * Constructor that takes an array of {@link Component}s which will be added to the
 	 * {@link AjaxRequestTarget} for you when the URL parameters come in.
-	 * 
+	 *
 	 * @param components
 	 *            the components you wish to add to the request target when the income of the URL
 	 *            fragment parameters is handled
@@ -62,7 +61,7 @@ public abstract class UrlParametersReceivingBehavior extends AbstractDefaultAjax
 	/**
 	 * Constructor that takes an array of {@link Component}s which will be added to the
 	 * {@link AjaxRequestTarget} for you when the URL parameters come in.
-	 * 
+	 *
 	 * @param options
 	 *            JS options to customize the behavior
 	 * @param components
@@ -98,7 +97,7 @@ public abstract class UrlParametersReceivingBehavior extends AbstractDefaultAjax
 		String optionsJsonString = "";
 		try
 		{
-			JSONWriter writer = new JSONStringer().object();
+			JSONStringer writer = new JSONStringer().object();
 			for (String key : options.keySet())
 			{
 				writer.key(key).value(options.get(key));
@@ -136,7 +135,7 @@ public abstract class UrlParametersReceivingBehavior extends AbstractDefaultAjax
 
 	/**
 	 * Hook for evaluating the request parameters when they come in.
-	 * 
+	 *
 	 * @param requestParameters
 	 *            use this to obtain the values of your URL fragment parameters
 	 * @param target
@@ -148,7 +147,7 @@ public abstract class UrlParametersReceivingBehavior extends AbstractDefaultAjax
 	/**
 	 * Returns the {@link HeaderItem} representing the JavaScript library used to read and write URL
 	 * fragment parameters.
-	 * 
+	 *
 	 * @param scope
 	 *            the scope of the {@link PackageResourceReference}
 	 * @return
