@@ -18,7 +18,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.apache.wicket.ajax.AjaxRequestTarget;
-import org.apache.wicket.markup.head.IHeaderResponse;
 import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.request.IRequestParameters;
@@ -42,7 +41,7 @@ import org.apache.wicket.request.IRequestParameters;
  * @author Martin Knopf
  *
  */
-public abstract class AsyncUrlFragmentAwarePanel extends Panel implements IBookmarkableComponent
+public abstract class AsyncUrlFragmentAwarePanel extends Panel
 {
 	private static final long serialVersionUID = 1L;
 	private transient AjaxRequestTarget target = null;
@@ -109,43 +108,6 @@ public abstract class AsyncUrlFragmentAwarePanel extends Panel implements IBookm
 	 */
 	protected abstract void onParameterIncome(IRequestParameters requestParameters,
 		AjaxRequestTarget target);
-
-	@Override
-	@Deprecated
-	public void setFragmentParameter(String parameterName, Object parameterValue)
-	{
-		if (this.target != null && parameterName != "" && parameterValue != "")
-		{
-			urlFragment().putParameter(parameterName, parameterValue);
-		}
-	}
-
-	@Override
-	@Deprecated
-	public void addFragmentParameter(String parameterName, Object parameterValue, String delimiter)
-	{
-		if (this.target != null && parameterName != "" && parameterValue != "")
-		{
-			urlFragment().putParameter(parameterName, parameterValue, delimiter);
-		}
-	}
-
-	@Override
-	@Deprecated
-	public void removeFragmentParameter(String parameterName)
-	{
-		if (this.target != null && parameterName != "")
-		{
-			urlFragment().removeParameter(parameterName);
-		}
-	}
-
-	@Override
-	public void renderHead(IHeaderResponse response)
-	{
-		super.renderHead(response);
-		response.render(UrlParametersReceivingBehavior.JS_REF);
-	}
 
 	/**
 	 * Returns a {@link UrlFragment} connected to the current {@link AjaxRequestTarget}. Use the

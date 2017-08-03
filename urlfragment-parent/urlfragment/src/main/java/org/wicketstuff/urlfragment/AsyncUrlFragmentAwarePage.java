@@ -43,7 +43,7 @@ import org.apache.wicket.request.mapper.parameter.PageParameters;
  * @author Martin Knopf
  *
  */
-public abstract class AsyncUrlFragmentAwarePage extends WebPage implements IBookmarkableComponent
+public abstract class AsyncUrlFragmentAwarePage extends WebPage
 {
 	private static final long serialVersionUID = 1L;
 	private transient AjaxRequestTarget target = null;
@@ -114,36 +114,6 @@ public abstract class AsyncUrlFragmentAwarePage extends WebPage implements IBook
 	 */
 	protected abstract void onParameterArrival(IRequestParameters requestParameters,
 		AjaxRequestTarget target);
-
-	@Override
-	@Deprecated
-	public void setFragmentParameter(String parameterName, Object parameterValue)
-	{
-		if (this.target != null && parameterName != "" && parameterValue != "")
-		{
-			urlFragment().putParameter(parameterName, parameterValue);
-		}
-	}
-
-	@Override
-	@Deprecated
-	public void addFragmentParameter(String parameterName, Object parameterValue, String delimiter)
-	{
-		if (this.target != null && parameterName != "" && parameterValue != "")
-		{
-			urlFragment().putParameter(parameterName, parameterValue, delimiter);
-		}
-	}
-
-	@Override
-	@Deprecated
-	public void removeFragmentParameter(String parameterName)
-	{
-		if (this.target != null && parameterName != "")
-		{
-			urlFragment().removeParameter(parameterName);
-		}
-	}
 
 	/**
 	 * Returns a {@link UrlFragment} connected to the current {@link AjaxRequestTarget}. Use the

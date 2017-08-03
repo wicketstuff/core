@@ -31,7 +31,7 @@ import org.apache.wicket.model.IModel;
  *
  * @param <T> the type of Model object
  */
-public abstract class BookmarkableAjaxLink<T> extends AjaxLink<T> implements IBookmarkableComponent
+public abstract class BookmarkableAjaxLink<T> extends AjaxLink<T>
 {
 	private static final long serialVersionUID = 1L;
 
@@ -113,36 +113,6 @@ public abstract class BookmarkableAjaxLink<T> extends AjaxLink<T> implements IBo
 	 * @param target {@link AjaxRequestTarget} can be used to perform update
 	 */
 	public abstract void onBookmarkableClick(AjaxRequestTarget target);
-
-	@Override
-	@Deprecated
-	public void setFragmentParameter(String parameterName, Object parameterValue)
-	{
-		if (this.target != null && parameterName != "" && parameterValue != "")
-		{
-			urlFragment().putParameter(parameterName, parameterValue);
-		}
-	}
-
-	@Override
-	@Deprecated
-	public void addFragmentParameter(String parameterName, Object parameterValue, String delimiter)
-	{
-		if (this.target != null && parameterName != "" && parameterValue != "")
-		{
-			urlFragment().putParameter(parameterName, parameterValue, delimiter);
-		}
-	}
-
-	@Override
-	@Deprecated
-	public void removeFragmentParameter(String parameterName)
-	{
-		if (this.target != null && parameterName != "")
-		{
-			urlFragment().removeParameter(parameterName);
-		}
-	}
 
 	/**
 	 * Returns a {@link UrlFragment} connected to the current {@link AjaxRequestTarget}. Use the
