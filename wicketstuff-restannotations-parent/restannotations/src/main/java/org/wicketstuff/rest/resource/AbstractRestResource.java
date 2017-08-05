@@ -646,8 +646,11 @@ public abstract class AbstractRestResource<T extends IWebSerialDeserial> impleme
 	 */
 	protected void handleException(WebResponse response, Exception exception)
 	{
+		String exceptionMsg = "General server error.";
+
 		response.setStatus(500);
-		response.write("General server error.");
+		response.write(exceptionMsg);
+		log.error(exceptionMsg, exception);
 	}
 
 	/**
