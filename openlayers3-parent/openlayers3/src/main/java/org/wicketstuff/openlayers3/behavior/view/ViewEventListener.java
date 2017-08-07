@@ -1,19 +1,19 @@
 package org.wicketstuff.openlayers3.behavior.view;
 
-import com.google.gson.JsonElement;
-import com.google.gson.JsonNull;
-import com.google.gson.JsonParser;
+import java.util.HashMap;
+import java.util.Map;
+
 import org.apache.wicket.Component;
 import org.apache.wicket.ajax.AbstractDefaultAjaxBehavior;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.markup.head.IHeaderResponse;
-import org.apache.wicket.markup.head.OnDomReadyHeaderItem;
 import org.apache.wicket.request.IRequestParameters;
 import org.apache.wicket.request.cycle.RequestCycle;
-import org.apache.wicket.util.template.PackageTextTemplate;
+import org.wicketstuff.openlayers3.api.util.HeaderUtils;
 
-import java.util.HashMap;
-import java.util.Map;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonNull;
+import com.google.gson.JsonParser;
 
 /**
  * Provides a behavior that invokes a callback event whenever the map view changes. Specifically, this behavior will
@@ -109,7 +109,7 @@ public abstract class ViewEventListener extends AbstractDefaultAjaxBehavior {
     }
 
     @Override
-    public void renderHead(Component component, IHeaderResponse response) {
+    public void renderHead(final Component component, final IHeaderResponse response) {
         super.renderHead(component, response);
 
         final Map<String, CharSequence> params = new HashMap<String, CharSequence>();
@@ -118,8 +118,7 @@ public abstract class ViewEventListener extends AbstractDefaultAjaxBehavior {
         params.put("componentId", component.getMarkupId());
         params.put("projection", projection != null ? projection : "NULL");
 
-        PackageTextTemplate template = new PackageTextTemplate(ViewEventListener.class,
-                "ViewEventListener.js");
-        response.render(OnDomReadyHeaderItem.forScript(template.asString(params)));
+        HeaderUtils.renderOnDomReady(response, ViewEventListener.class,
+                "ViewEventListener.js", params);
     }
 }

@@ -1,13 +1,12 @@
 package org.wicketstuff.openlayers3.examples;
 
-import com.google.gson.JsonObject;
+import java.util.Arrays;
+
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.LoadableDetachableModel;
 import org.apache.wicket.model.Model;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.wicketstuff.annotation.mount.MountPath;
 import org.wicketstuff.openlayers3.DefaultOpenLayersMap;
 import org.wicketstuff.openlayers3.OpenLayersMap;
@@ -28,23 +27,15 @@ import org.wicketstuff.openlayers3.api.style.Icon;
 import org.wicketstuff.openlayers3.api.style.Style;
 import org.wicketstuff.openlayers3.api.util.CorsPolicy;
 import org.wicketstuff.openlayers3.behavior.FeatureChangeListener;
-import org.wicketstuff.openlayers3.component.Marker;
 import org.wicketstuff.openlayers3.examples.base.BasePage;
 
-import java.util.Arrays;
+import com.google.gson.JsonObject;
 
 /**
  * Provides a page with a mpa that includes a marker.
  */
 @MountPath("/modify")
 public class ModifyPage extends BasePage {
-
-    private final static Logger logger = LoggerFactory.getLogger(MarkerPage.class);
-
-    /**
-     * Marker over Miles' office.
-     */
-    private Marker marker;
 
     /**
      * Map in view.

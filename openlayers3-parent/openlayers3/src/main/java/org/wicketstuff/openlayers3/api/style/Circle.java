@@ -19,11 +19,6 @@ public class Circle extends Style {
     private boolean snapToPixel;
 
     /**
-     * The stroke used when drawing the circle.
-     */
-    private Stroke stroke;
-
-    /**
      * Creates a new instance.
      *
      * @param fill The fill for the circle
@@ -43,10 +38,9 @@ public class Circle extends Style {
      * @param stroke The stroke for the circle
      */
     public Circle(Fill fill, Number radius, boolean snapToPixel, Stroke stroke) {
-        super(fill);
+        super(fill, stroke);
         this.radius = radius;
         this.snapToPixel = snapToPixel;
-        this.stroke = stroke;
     }
 
     @Override

@@ -1,31 +1,27 @@
 package org.wicketstuff.openlayers3.behavior;
 
-import com.google.gson.JsonElement;
-import com.google.gson.JsonNull;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
+import java.util.HashMap;
+import java.util.Map;
+
 import org.apache.wicket.Component;
 import org.apache.wicket.ajax.AbstractDefaultAjaxBehavior;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.markup.head.IHeaderResponse;
-import org.apache.wicket.markup.head.OnDomReadyHeaderItem;
 import org.apache.wicket.request.IRequestParameters;
 import org.apache.wicket.request.cycle.RequestCycle;
 import org.apache.wicket.util.string.Strings;
-import org.apache.wicket.util.template.PackageTextTemplate;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.wicketstuff.openlayers3.api.coordinate.LongLat;
+import org.wicketstuff.openlayers3.api.util.HeaderUtils;
 
-import java.util.HashMap;
-import java.util.Map;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonNull;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 
 /**
  * Provides a behavior that handles clicking on features on the map.
  */
 public abstract class ClickFeatureHandler extends AbstractDefaultAjaxBehavior {
-
-    private final static Logger logger = LoggerFactory.getLogger(ClickFeatureHandler.class);
 
     /**
      * Default projection.
@@ -112,16 +108,16 @@ public abstract class ClickFeatureHandler extends AbstractDefaultAjaxBehavior {
     }
 
     @Override
-    public void renderHead(Component component, IHeaderResponse response) {
+    public void renderHead(final Component component, final IHeaderResponse response) {
         super.renderHead(component, response);
-
+        
         final Map<String, CharSequence> params = new HashMap<String, CharSequence>();
         params.put("callbackUrl", getCallbackUrl());
         params.put("clickHandlerId", (counter++).toString());
         params.put("componentId", component.getMarkupId());
         params.put("projection", projection != null ? projection : "NULL");
 
-        PackageTextTemplate template = new PackageTextTemplate(ClickHandler.class, "ClickFeatureHandler.js");
-        response.render(OnDomReadyHeaderItem.forScript(template.asString(params)));
+        HeaderUtils.renderOnDomReady(response, ClickFeatureHandler.class,
+                "ClickFeatureHandler.js", params);
     }
 }

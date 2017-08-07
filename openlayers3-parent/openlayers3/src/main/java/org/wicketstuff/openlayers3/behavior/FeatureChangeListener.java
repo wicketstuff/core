@@ -1,32 +1,28 @@
 package org.wicketstuff.openlayers3.behavior;
 
-import com.google.gson.JsonElement;
-import com.google.gson.JsonNull;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
+import java.util.HashMap;
+import java.util.Map;
+
 import org.apache.wicket.Component;
 import org.apache.wicket.ajax.AbstractDefaultAjaxBehavior;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.markup.head.IHeaderResponse;
-import org.apache.wicket.markup.head.OnDomReadyHeaderItem;
 import org.apache.wicket.request.IRequestParameters;
 import org.apache.wicket.request.cycle.RequestCycle;
 import org.apache.wicket.util.string.Strings;
-import org.apache.wicket.util.template.PackageTextTemplate;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.wicketstuff.openlayers3.api.Feature;
 import org.wicketstuff.openlayers3.api.coordinate.LongLat;
+import org.wicketstuff.openlayers3.api.util.HeaderUtils;
 
-import java.util.HashMap;
-import java.util.Map;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonNull;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 
 /**
  * Provides a behavior that reports changes to a feature.
  */
 public abstract class FeatureChangeListener extends AbstractDefaultAjaxBehavior {
-
-    private final static Logger logger = LoggerFactory.getLogger(FeatureChangeListener.class);
 
     /**
      * Default projection.
@@ -108,7 +104,7 @@ public abstract class FeatureChangeListener extends AbstractDefaultAjaxBehavior 
         params.put("featureId", feature.getJsId());
         params.put("projection", projection != null ? projection : "NULL");
 
-        PackageTextTemplate template = new PackageTextTemplate(ClickHandler.class, "FeatureChangeListener.js");
-        response.render(OnDomReadyHeaderItem.forScript(template.asString(params)));
+        HeaderUtils.renderOnDomReady(response, FeatureChangeListener.class,
+                "FeatureChangeListener.js", params);
     }
 }

@@ -5,7 +5,16 @@
             <div class="col-md-12">
 
                 <p>Below is a map of the world. This map centered on the location of Miles' office and provides a
-                    helpful marker to ensure that you don't miss it.</p>
+                    helpful marker to ensure that you don't miss it. Use the layer drop-down to toggle between
+                    the street layer and the satellite layer.</p>
+
+                <div>
+	                <form wicket:id="form">
+	                    <div wicket:id="layer">
+	                        <select wicket:id="layerSelector"></select>
+	                    </div>
+	                </form>
+                </div>
 
                 <div wicket:id="marker">[MARKER]</div>
 

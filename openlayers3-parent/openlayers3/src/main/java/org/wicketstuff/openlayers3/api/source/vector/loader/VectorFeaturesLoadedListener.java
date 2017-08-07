@@ -1,17 +1,14 @@
 package org.wicketstuff.openlayers3.api.source.vector.loader;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.apache.wicket.Component;
 import org.apache.wicket.ajax.AbstractDefaultAjaxBehavior;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.markup.head.IHeaderResponse;
-import org.apache.wicket.markup.head.OnDomReadyHeaderItem;
-import org.apache.wicket.util.template.PackageTextTemplate;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.wicketstuff.openlayers3.api.layer.Vector;
-
-import java.util.HashMap;
-import java.util.Map;
+import org.wicketstuff.openlayers3.api.util.HeaderUtils;
 
 /**
  * Provides a behavior that invokes a callback after feature data has been loaded into the vector layer. This is used to
@@ -19,8 +16,6 @@ import java.util.Map;
  * which you are looking.
  */
 public abstract class VectorFeaturesLoadedListener extends AbstractDefaultAjaxBehavior {
-
-    private final static Logger logger = LoggerFactory.getLogger(VectorFeatureDataLoadedListener.class);
 
     /**
      * Counter for generating instance identifiers.
@@ -108,8 +103,7 @@ public abstract class VectorFeaturesLoadedListener extends AbstractDefaultAjaxBe
         params.put("componentId", vector.getJsId());
         params.put("dataLoaderId", getId());
 
-        PackageTextTemplate template = new PackageTextTemplate(VectorFeatureDataLoadedListener.class,
-                "VectorFeaturesLoadedListener.js");
-        response.render(OnDomReadyHeaderItem.forScript(template.asString(params)));
+        HeaderUtils.renderOnDomReady(response, VectorFeaturesLoadedListener.class,
+                "VectorFeaturesLoadedListener.js", params);
     }
 }

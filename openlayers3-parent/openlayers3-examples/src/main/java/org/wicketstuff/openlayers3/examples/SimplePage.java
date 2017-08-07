@@ -1,6 +1,7 @@
 package org.wicketstuff.openlayers3.examples;
 
-import com.google.common.collect.ImmutableMap;
+import java.util.Arrays;
+
 import org.apache.wicket.model.Model;
 import org.wicketstuff.annotation.mount.MountPath;
 import org.wicketstuff.openlayers3.DefaultOpenLayersMap;
@@ -10,10 +11,7 @@ import org.wicketstuff.openlayers3.api.coordinate.Coordinate;
 import org.wicketstuff.openlayers3.api.layer.Layer;
 import org.wicketstuff.openlayers3.api.layer.Tile;
 import org.wicketstuff.openlayers3.api.source.tile.Osm;
-import org.wicketstuff.openlayers3.api.source.tile.TileWms;
 import org.wicketstuff.openlayers3.examples.base.BasePage;
-
-import java.util.Arrays;
 
 /**
  * Provides a simple map with one layer.

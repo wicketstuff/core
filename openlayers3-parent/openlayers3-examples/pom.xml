@@ -45,6 +45,11 @@
             <artifactId>wicketstuff-annotation</artifactId>
             <version>${project.version}</version>
         </dependency>
+        <dependency>
+            <groupId>de.agilecoders.wicket</groupId>
+            <artifactId>wicket-bootstrap-extensions</artifactId>
+            <version>0.10.0</version>
+        </dependency>
 
         <!-- LOGGING DEPENDENCIES - LOG4J -->
         <dependency>
@@ -54,6 +59,10 @@
         <dependency>
             <groupId>log4j</groupId>
             <artifactId>log4j</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>commons-logging</groupId>
+            <artifactId>commons-logging</artifactId>
         </dependency>
 
         <!-- JUNIT DEPENDENCY FOR TESTING -->

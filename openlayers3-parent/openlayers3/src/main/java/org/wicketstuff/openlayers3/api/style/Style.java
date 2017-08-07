@@ -1,8 +1,8 @@
 package org.wicketstuff.openlayers3.api.style;
 
-import org.wicketstuff.openlayers3.api.JavascriptObject;
-
 import java.io.Serializable;
+
+import org.wicketstuff.openlayers3.api.JavascriptObject;
 
 /**
  * Provides an object that models a style for rendering vector features.
@@ -59,6 +59,18 @@ public class Style extends JavascriptObject implements Serializable {
      */
     public Style(final Fill fill) {
         this(fill, null, null, null, null);
+    }
+
+    /**
+     * Creates a new instance.
+     *
+     * @param fill
+     *         The fill for this style
+     * @param stroke
+     *         The stroke for this style
+     */
+    public Style(final Fill fill, final Stroke stroke) {
+        this(fill, null, stroke, null, null);
     }
 
     /**

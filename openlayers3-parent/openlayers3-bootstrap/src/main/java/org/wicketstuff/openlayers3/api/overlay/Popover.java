@@ -4,16 +4,12 @@ import org.apache.wicket.Component;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.util.string.Strings;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.wicketstuff.openlayers3.api.coordinate.LongLat;
 
 /**
  * Provides an object that models an overlay containing a popover.
  */
 public class Popover extends Overlay {
-
-    private final static Logger logger = LoggerFactory.getLogger(Popover.class);
 
     /**
      * The placement position of the popover relative to the overlay's position.
@@ -147,6 +143,7 @@ public class Popover extends Overlay {
      *         Coordinate for the overlay's position
      * @return This instance
      */
+    @Override
     public Popover position(LongLat position) {
         setPosition(position);
         return this;
@@ -159,6 +156,7 @@ public class Popover extends Overlay {
      *         New value
      * @return This instance
      */
+    @Override
     public Popover positioning(Positioning positioning) {
         setPositioning(positioning);
         return this;
@@ -171,6 +169,7 @@ public class Popover extends Overlay {
      *         Wicket component
      * @return This instance
      */
+    @Override
     public Popover element(Component element) {
         setElement(element);
         return this;
@@ -183,6 +182,7 @@ public class Popover extends Overlay {
      *         New value
      * @return this instance
      */
+    @Override
     public Popover stopEvent(Boolean stopEvent) {
         setStopEvent(stopEvent);
         return this;

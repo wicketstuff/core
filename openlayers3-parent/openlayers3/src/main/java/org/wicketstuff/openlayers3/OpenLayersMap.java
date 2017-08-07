@@ -6,8 +6,6 @@ import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.markup.head.IHeaderResponse;
 import org.apache.wicket.markup.html.panel.GenericPanel;
 import org.apache.wicket.model.IModel;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.wicketstuff.openlayers3.api.Extent;
 import org.wicketstuff.openlayers3.api.Feature;
 import org.wicketstuff.openlayers3.api.JavascriptObject;
@@ -30,32 +28,27 @@ import com.google.gson.JsonArray;
  */
 public abstract class OpenLayersMap extends GenericPanel<Map> {
 
-    private final static Logger logger = LoggerFactory.getLogger(OpenLayersMap.class);
+    /**
+     * Map of layers to the data loaded handler that notifies their listeners.
+     */
+    private java.util.Map<Layer, VectorFeatureDataLoadedListener> layerDataLoadedMap = new HashMap<Layer, VectorFeatureDataLoadedListener>();
 
     /**
      * Map of layers to the data loaded handler that notifies their listeners.
      */
-    private java.util.Map<Layer, VectorFeatureDataLoadedListener> layerDataLoadedMap =
-            new HashMap<Layer, VectorFeatureDataLoadedListener>();
-
-    /**
-     * Map of layers to the data loaded handler that notifies their listeners.
-     */
-    private java.util.Map<Layer, VectorFeaturesLoadedListener> layerLoadedMap =
-            new HashMap<Layer, VectorFeaturesLoadedListener>();
+    private java.util.Map<Layer, VectorFeaturesLoadedListener> layerLoadedMap = new HashMap<Layer, VectorFeaturesLoadedListener>();
 
     /**
      * Creates a new instance
      *
      * @param id
-     *         Wicket element ID
+     *            Wicket element ID
      * @param model
-     *         Backing modep for this map
+     *            Backing modep for this map
      */
     public OpenLayersMap(final String id, final IModel<Map> model) {
         super(id, model);
     }
-
 
     @Override
     protected void onConfigure() {
@@ -72,36 +65,37 @@ public abstract class OpenLayersMap extends GenericPanel<Map> {
 
                     final Vector vectorLayer = (Vector) layer;
 
-                    if(vectorLayer.getFeatureDataLoadedListeners() != null
+                    if (vectorLayer.getFeatureDataLoadedListeners() != null
                             && vectorLayer.getFeatureDataLoadedListeners().size() > 0) {
 
                         // add a behavior to be notified when new data is loaded
-                        VectorFeatureDataLoadedListener vectorFeatureDataLoadedListener =
-                                new VectorFeatureDataLoadedListener(vectorLayer) {
+                        VectorFeatureDataLoadedListener vectorFeatureDataLoadedListener = new VectorFeatureDataLoadedListener(
+                                vectorLayer) {
 
-                                    @Override
-                                    public void handleDataLoaded(AjaxRequestTarget target, JsonArray features) {
-                                        vectorLayer.notifyFeatureDataLoadedListeners(target, features);
-                                    }
-                                };
+                            @Override
+                            public void handleDataLoaded(AjaxRequestTarget target, JsonArray features) {
+                                vectorLayer.notifyFeatureDataLoadedListeners(target, features);
+                            }
+                        };
                         add(vectorFeatureDataLoadedListener);
 
                         // map the layer to the data loaded handler
                         layerDataLoadedMap.put(layer, vectorFeatureDataLoadedListener);
                     }
 
-                    if(vectorLayer.getFeaturesLoadedListeners() != null
+                    if (vectorLayer.getFeaturesLoadedListeners() != null
                             && vectorLayer.getFeaturesLoadedListeners().size() > 0) {
 
-                        // add a behavior to be notified when new features are loaded
-                        VectorFeaturesLoadedListener vectorFeatureLoadedListener =
-                                new VectorFeaturesLoadedListener(vectorLayer) {
+                        // add a behavior to be notified when new features are
+                        // loaded
+                        VectorFeaturesLoadedListener vectorFeatureLoadedListener = new VectorFeaturesLoadedListener(
+                                vectorLayer) {
 
-                                    @Override
-                                    public void handleDataLoaded(AjaxRequestTarget target) {
-                                        vectorLayer.notifyFeaturesLoadedListeners(target);
-                                    }
-                                };
+                            @Override
+                            public void handleDataLoaded(AjaxRequestTarget target) {
+                                vectorLayer.notifyFeaturesLoadedListeners(target);
+                            }
+                        };
                         add(vectorFeatureLoadedListener);
 
                         // map the layer to the data loaded handler
@@ -113,26 +107,28 @@ public abstract class OpenLayersMap extends GenericPanel<Map> {
     }
 
     /**
-     * Zooms the map to an extent that includes all of the features on the provided vector layer.
+     * Zooms the map to an extent that includes all of the features on the
+     * provided vector layer.
      *
      * @param target
-     *         Ajax request target
+     *            Ajax request target
      * @param vector
-     *         Vector layer containing features
+     *            Vector layer containing features
      */
     public void zoomToFeatureExtent(AjaxRequestTarget target, Vector vector) {
         this.zoomToFeatureExtent(target, vector, 0);
     }
 
     /**
-     * Zooms the map to an extent that includes all of the features on the provided vector layer.
+     * Zooms the map to an extent that includes all of the features on the
+     * provided vector layer.
      *
      * @param target
-     *         Ajax request target
+     *            Ajax request target
      * @param vector
-     *         Vector layer containing features
+     *            Vector layer containing features
      * @param buffer
-     *         Buffer around the calculated extent
+     *            Buffer around the calculated extent
      */
     public void zoomToFeatureExtent(AjaxRequestTarget target, Vector vector, Number buffer) {
         StringBuilder builder = new StringBuilder();
@@ -145,7 +141,7 @@ public abstract class OpenLayersMap extends GenericPanel<Map> {
         builder.append("extent = ol.extent.buffer(extent, parseFloat('" + buffer + "'));");
 
         String jsId = getModelObject().getJsId();
-        builder.append(jsId + ".getView().fitExtent(extent, " + jsId + ".getSize());");
+        builder.append(jsId + ".getView().fit(extent, " + jsId + ".getSize());");
 
         target.appendJavaScript(builder.toString());
     }
@@ -153,8 +149,10 @@ public abstract class OpenLayersMap extends GenericPanel<Map> {
     /**
      * Sets the center of the map's current view.
      *
-     * @param target Ajax request target
-     * @param point New center location for the map
+     * @param target
+     *            Ajax request target
+     * @param point
+     *            New center location for the map
      */
     public void setViewCenter(AjaxRequestTarget target, Point point) {
 
@@ -169,8 +167,10 @@ public abstract class OpenLayersMap extends GenericPanel<Map> {
     /**
      * Adds the provided interaction to the map.
      *
-     * @param target Ajax request target
-     * @param interaction Interaction to add
+     * @param target
+     *            Ajax request target
+     * @param interaction
+     *            Interaction to add
      */
     public void addInteraction(AjaxRequestTarget target, Interaction interaction) {
 
@@ -178,16 +178,18 @@ public abstract class OpenLayersMap extends GenericPanel<Map> {
         getModelObject().getInteractions().add(interaction);
 
         // update the map
-        target.appendJavaScript(interaction.getJsId() + " = new " + interaction.getJsType()
-                + "(" + interaction.renderJs() + ");"
-                + JavascriptObject.JS_GLOBAL + "['map_" + getMarkupId() + "'].addInteraction(" + interaction.getJsId() + ");");
+        target.appendJavaScript(interaction.getJsId() + " = new " + interaction.getJsType() + "("
+                + interaction.renderJs() + ");" + JavascriptObject.JS_GLOBAL + "['map_" + getMarkupId()
+                + "'].addInteraction(" + interaction.getJsId() + ");");
     }
 
     /**
      * Removes provided interaction from the map.
      *
-     * @param target Ajax request target
-     * @param interaction Interaction to add
+     * @param target
+     *            Ajax request target
+     * @param interaction
+     *            Interaction to add
      */
     public void removeInteraction(AjaxRequestTarget target, Interaction interaction) {
 
@@ -196,20 +198,22 @@ public abstract class OpenLayersMap extends GenericPanel<Map> {
 
         // update the map
         target.appendJavaScript(JavascriptObject.JS_GLOBAL + "['map_" + getMarkupId() + "'].removeInteraction("
-			+ interaction.getJsId() + ");");
+                + interaction.getJsId() + ");");
     }
 
-	/**
+    /**
      * Sets the extent for the map and zooms to that extent.
      *
-     * @param target Ajax request target
-     * @param extent Extent to which the map will be zoomed
+     * @param target
+     *            Ajax request target
+     * @param extent
+     *            Extent to which the map will be zoomed
      */
-	public void zoomToExtent(AjaxRequestTarget target, Extent extent) {
-		target.appendJavaScript(JavascriptObject.JS_GLOBAL + "['map_" + getMarkupId() + "'].getView().fitExtent("
-			+ getModelObject().getView().getExtent().renderJsForView(getModelObject().getView()) + ","
-			+ JavascriptObject.JS_GLOBAL + "['map_" + getMarkupId() + "']" + ".getSize());");
-	}
+    public void zoomToExtent(AjaxRequestTarget target, Extent extent) {
+        target.appendJavaScript(JavascriptObject.JS_GLOBAL + "['map_" + getMarkupId() + "'].getView().fit("
+                + getModelObject().getView().getExtent().renderJsForView(getModelObject().getView()) + ","
+                + JavascriptObject.JS_GLOBAL + "['map_" + getMarkupId() + "']" + ".getSize());");
+    }
 
     @Override
     public abstract void renderHead(final IHeaderResponse response);
@@ -223,9 +227,9 @@ public abstract class OpenLayersMap extends GenericPanel<Map> {
 
         StringBuilder builder = new StringBuilder();
 
-		// make sure our global variable exists
-		builder.append("if(typeof " + JavascriptObject.JS_GLOBAL + " === 'undefined') { "
-			+ JavascriptObject.JS_GLOBAL + " = []};\n\n");
+        // make sure our global variable exists
+        builder.append("if(typeof " + JavascriptObject.JS_GLOBAL + " === 'undefined') { " + JavascriptObject.JS_GLOBAL
+                + " = []};\n\n");
 
         Map map = getModelObject();
         if (map != null) {
@@ -239,9 +243,9 @@ public abstract class OpenLayersMap extends GenericPanel<Map> {
                     VectorSource vectorSource = vectorLayer.getSource();
 
                     // render any persistent features
-                    if(vectorSource.getFeatures() != null) {
-                        for(Feature feature : vectorSource.getFeatures()) {
-                            if(feature instanceof PersistentFeature) {
+                    if (vectorSource.getFeatures() != null) {
+                        for (Feature feature : vectorSource.getFeatures()) {
+                            if (feature instanceof PersistentFeature) {
                                 builder.append(feature.getJsId() + " = new " + feature.getJsType() + "("
                                         + feature.renderJs() + ");\n");
                             }
@@ -249,12 +253,12 @@ public abstract class OpenLayersMap extends GenericPanel<Map> {
                     }
 
                     // ensure our loader has a reference to our source
-                    if(vectorSource.getLoader() != null) {
+                    if (vectorSource.getLoader() != null) {
                         vectorSource.getLoader().setSource(vectorSource);
                     }
 
                     // render the source for the cluster source
-                    if(vectorSource instanceof Cluster) {
+                    if (vectorSource instanceof Cluster) {
                         Cluster source = (Cluster) vectorSource;
                         builder.append(renderServerVectorJs(source.getSource(), layer));
                     }
@@ -263,8 +267,7 @@ public abstract class OpenLayersMap extends GenericPanel<Map> {
                     builder.append(renderServerVectorJs(vectorSource, layer));
                 }
 
-                builder.append(layer.getJsId() + " = new " + layer.getJsType() + "(" + layer.renderJs()
-                        + ");\n");
+                builder.append(layer.getJsId() + " = new " + layer.getJsType() + "(" + layer.renderJs() + ");\n");
             }
         }
 
@@ -275,8 +278,8 @@ public abstract class OpenLayersMap extends GenericPanel<Map> {
 
         StringBuilder builder = new StringBuilder();
 
-        builder.append(vectorSource.getJsId() + " = new " + vectorSource.getJsType() + "("
-                + vectorSource.renderJs() + ");\n");
+        builder.append(
+                vectorSource.getJsId() + " = new " + vectorSource.getJsType() + "(" + vectorSource.renderJs() + ");\n");
 
         if (vectorSource.getLoader() instanceof DefaultGeoJsonLoader) {
             DefaultGeoJsonLoader loader = (DefaultGeoJsonLoader) vectorSource.getLoader();
@@ -284,13 +287,13 @@ public abstract class OpenLayersMap extends GenericPanel<Map> {
             if (layerDataLoadedMap.get(layer) != null) {
 
                 // add our listener for the feature data loading
-                loader.vectorFeatureDataLoadedListener(layerDataLoadedMap.get((Vector) layer));
+                loader.vectorFeatureDataLoadedListener(layerDataLoadedMap.get(layer));
             }
 
             if (layerLoadedMap.get(layer) != null) {
 
                 // add our listener for the feature loading
-                loader.vectorFeaturesLoadedListener(layerLoadedMap.get((Vector) layer));
+                loader.vectorFeaturesLoadedListener(layerLoadedMap.get(layer));
             }
             builder.append(loader.renderBeforeConstructorJs() + ";\n");
         }
@@ -299,7 +302,8 @@ public abstract class OpenLayersMap extends GenericPanel<Map> {
     }
 
     /**
-     * Renders the Javascript after the construction of our OL3 objects (but not the map).
+     * Renders the Javascript after the construction of our OL3 objects (but not
+     * the map).
      *
      * @return String with the rendered Javascript
      */
@@ -313,7 +317,7 @@ public abstract class OpenLayersMap extends GenericPanel<Map> {
 
             for (Layer layer : map.getLayers()) {
 
-                if(layer instanceof Vector) {
+                if (layer instanceof Vector) {
 
                     Vector vectorLayer = (Vector) layer;
                     VectorSource vectorSource = vectorLayer.getSource();
@@ -340,9 +344,9 @@ public abstract class OpenLayersMap extends GenericPanel<Map> {
 
         Map map = getModelObject();
 
-        if(map.getView().getExtent() != null) {
-            builder.append(map.getJsId() + ".getView().fitExtent(" + map.getView().getExtent().renderJsForView(map.getView()) + ","
-                    + map.getJsId() + ".getSize());");
+        if (map.getView().getExtent() != null) {
+            builder.append(map.getJsId() + ".getView().fit(" + map.getView().getExtent().renderJsForView(map.getView())
+                    + "," + map.getJsId() + ".getSize());");
         }
 
         return builder.toString();
@@ -355,7 +359,7 @@ public abstract class OpenLayersMap extends GenericPanel<Map> {
      */
     public String renderJs() {
 
-	Map map = getModelObject();
+        Map map = getModelObject();
 
         StringBuilder builder = new StringBuilder();
         builder.append(renderBeforeConstructorJs() + "\n\n");
@@ -366,4 +370,30 @@ public abstract class OpenLayersMap extends GenericPanel<Map> {
         builder.append(renderAfterMapConstructorJs());
         return builder.toString();
     }
+
+    /**
+     * Refreshes via ajax all of the maps layers.
+     *
+     * @param target
+     */
+    public void updateLayers(AjaxRequestTarget target) {
+        for (Layer layer : getModelObject().getLayers()) {
+            layer.onUpdate(target);
+        }
+    }
+
+    /**
+     * Calls detach on all of the layers in the map.
+     *
+     * @see org.apache.wicket.MarkupContainer#onDetach()
+     */
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        Map map = getModel().getObject();
+        for (Layer layer : map.getLayers()) {
+            layer.detach();
+        }
+    }
+
 }

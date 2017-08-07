@@ -1,12 +1,7 @@
 package org.wicketstuff.openlayers3.examples.base;
 
-import de.agilecoders.wicket.core.markup.html.bootstrap.behavior.BootstrapBaseBehavior;
-import de.agilecoders.wicket.core.markup.html.bootstrap.html.ChromeFrameMetaTag;
-import de.agilecoders.wicket.core.markup.html.bootstrap.html.HtmlTag;
-import de.agilecoders.wicket.core.markup.html.bootstrap.html.MetaTag;
-import de.agilecoders.wicket.core.markup.html.bootstrap.html.OptimizedMobileViewportMetaTag;
-import de.agilecoders.wicket.core.markup.html.bootstrap.navbar.Navbar;
-import org.apache.wicket.Component;
+import java.util.Locale;
+
 import org.apache.wicket.markup.head.CssHeaderItem;
 import org.apache.wicket.markup.head.IHeaderResponse;
 import org.apache.wicket.markup.html.WebPage;
@@ -17,7 +12,12 @@ import org.apache.wicket.model.ResourceModel;
 import org.apache.wicket.model.StringResourceModel;
 import org.apache.wicket.request.resource.CssResourceReference;
 
-import java.util.Locale;
+import de.agilecoders.wicket.core.markup.html.bootstrap.behavior.BootstrapBaseBehavior;
+import de.agilecoders.wicket.core.markup.html.bootstrap.html.HtmlTag;
+import de.agilecoders.wicket.core.markup.html.bootstrap.html.IeEdgeMetaTag;
+import de.agilecoders.wicket.core.markup.html.bootstrap.html.MetaTag;
+import de.agilecoders.wicket.core.markup.html.bootstrap.html.OptimizedMobileViewportMetaTag;
+import de.agilecoders.wicket.core.markup.html.bootstrap.navbar.Navbar;
 
 /**
  * Provides a basic web page that other application pages may extend.
@@ -51,11 +51,6 @@ public class BasePage extends WebPage {
     private static final String CID_PAGE_TITLE = "titleShort";
     private static final String CID_HEADER = "header";
 
-    /*
-     * Components.
-     */
-    private Component debugBar;
-
     @Override
     protected void onInitialize() {
         super.onInitialize();
@@ -66,7 +61,7 @@ public class BasePage extends WebPage {
         // add Bootstrap
         add(new BootstrapBaseBehavior());
         add(new OptimizedMobileViewportMetaTag("viewport"));
-        add(new ChromeFrameMetaTag("chrome-frame"));
+        add(new IeEdgeMetaTag("chrome-frame"));
         add(new MetaTag("description", Model.of("description"), getPageDescriptionModel()));
         add(new MetaTag("author", Model.of("author"), getPageAuthorModel()));
         add(new Label(CID_TITLE, getPageTitleModel()));
