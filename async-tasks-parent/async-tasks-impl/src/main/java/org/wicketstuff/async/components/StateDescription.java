@@ -3,7 +3,7 @@ package org.wicketstuff.async.components;
 import java.io.Serializable;
 
 class StateDescription implements Serializable {
-
+    private static final long serialVersionUID = 1L;
     private final TaskState taskState;
     private final InteractionState interactionState;
 

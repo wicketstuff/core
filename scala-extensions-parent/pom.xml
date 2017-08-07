@@ -114,7 +114,6 @@
                         <!--<useZincServer>true</useZincServer>-->
                         <jvmArgs>
                             <jvmArg>-Xmx512m</jvmArg>
-                            <jvmArg>-XX:MaxPermSize=128m</jvmArg>
                         </jvmArgs>
                         <args>
                             <arg>-target:jvm-1.8</arg>

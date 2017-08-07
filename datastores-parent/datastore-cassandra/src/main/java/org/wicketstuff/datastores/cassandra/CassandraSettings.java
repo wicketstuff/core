@@ -18,7 +18,7 @@ public class CassandraSettings implements ICassandraSettings
 
 	private Duration recordTtl = Duration.minutes(30);
 
-	private final List<String> contactPoints = new ArrayList<String>();
+	private final List<String> contactPoints = new ArrayList<>();
 
 	public CassandraSettings()
 	{

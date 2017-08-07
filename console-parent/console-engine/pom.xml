@@ -63,7 +63,6 @@
 					<!--<recompileMode>incremental</recompileMode>-->
 					<jvmArgs>
 						<jvmArg>-Xmx1024m</jvmArg>
-                        <jvmArg>-XX:MaxPermSize=256m</jvmArg>
 					</jvmArgs>
 					<args>
 						<arg>-target:jvm-1.5</arg>

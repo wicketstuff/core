@@ -9,7 +9,7 @@ import java.util.Observer;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.apache.commons.lang.StringEscapeUtils;
+import org.apache.commons.lang3.StringEscapeUtils;
 import org.apache.wicket.WicketRuntimeException;
 import org.apache.wicket.request.Request;
 import org.apache.wicket.request.cycle.RequestCycle;
@@ -54,6 +54,7 @@ public abstract class SiteMapIndex extends ResourceReference implements Observer
 		return domain;
 	}
 
+	@Override
 	public void update(Observable o, Object arg) {
 		// todo feedback loop to adjust block sizes
 		if (o instanceof SiteMapFeed) {
@@ -84,6 +85,7 @@ public abstract class SiteMapIndex extends ResourceReference implements Observer
 						if (index != null && sourceIndex != null) {
 
 							SiteMapFeed feed = new SiteMapFeed(new IOffsetSiteMapEntryIterable.SiteMapIterable() {
+								@Override
 								public IOffsetSiteMapEntryIterable.SiteMapIterator iterator() {
 									return getDataSources()[sourceIndex].getIterator(index);
 								}

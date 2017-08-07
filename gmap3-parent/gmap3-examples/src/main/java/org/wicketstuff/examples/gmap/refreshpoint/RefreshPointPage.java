@@ -1,6 +1,7 @@
 package org.wicketstuff.examples.gmap.refreshpoint;
 
 import java.util.Collections;
+
 import org.apache.wicket.ajax.AbstractAjaxTimerBehavior;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.markup.html.AjaxLink;
@@ -76,7 +77,7 @@ public class RefreshPointPage extends WicketExamplePage
             }
         };
 
-        AjaxLink toggleLink = new AjaxLink("toggleUpdateLink", caption)
+        AjaxLink toggleLink = new AjaxLink<String>("toggleUpdateLink", caption)
         {
             @Override
             public void onClick(AjaxRequestTarget target)

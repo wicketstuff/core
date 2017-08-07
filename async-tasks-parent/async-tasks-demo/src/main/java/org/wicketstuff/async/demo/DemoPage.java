@@ -1,18 +1,23 @@
 package org.wicketstuff.async.demo;
 
+import java.util.concurrent.TimeUnit;
+
 import org.apache.wicket.markup.html.WebPage;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.util.time.Duration;
-import org.wicketstuff.async.components.*;
+import org.wicketstuff.async.components.IRunnableFactory;
+import org.wicketstuff.async.components.InteractionState;
+import org.wicketstuff.async.components.ProgressBar;
+import org.wicketstuff.async.components.ProgressButton;
+import org.wicketstuff.async.components.TaskState;
 import org.wicketstuff.async.task.AbstractTaskContainer;
 import org.wicketstuff.async.task.DefaultTaskManager;
 
-import java.util.concurrent.TimeUnit;
-
 public class DemoPage extends WebPage implements IRunnableFactory {
+	private static final long serialVersionUID = 1L;
 
-    public DemoPage() {
+	public DemoPage() {
 
         // Create form
         Form<?> form = new Form<Void>("form");

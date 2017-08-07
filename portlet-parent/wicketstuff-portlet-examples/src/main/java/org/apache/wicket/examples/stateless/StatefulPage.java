@@ -28,13 +28,13 @@ import org.apache.wicket.model.PropertyModel;
 
 /**
  * Another page of the stateless example.
- * 
+ *
  * @author Eelco Hillenius
  */
 public class StatefulPage extends WicketExamplePage
 {
 	/**
-	 * 
+	 *
 	 */
 	private static final long serialVersionUID = 1L;
 
@@ -50,7 +50,7 @@ public class StatefulPage extends WicketExamplePage
 		add(new BookmarkablePageLink<>("indexLink", Index.class));
 
 		// Action link counts link clicks
-		final Link actionLink = new Link("actionLink")
+		final Link actionLink = new Link<String>("actionLink")
 		{
 			@Override
 			public void onClick()
@@ -83,7 +83,7 @@ public class StatefulPage extends WicketExamplePage
 
 	/**
 	 * Gets linkClickCount.
-	 * 
+	 *
 	 * @return linkClickCount
 	 */
 	public int getLinkClickCount()
@@ -93,7 +93,7 @@ public class StatefulPage extends WicketExamplePage
 
 	/**
 	 * Sets linkClickCount.
-	 * 
+	 *
 	 * @param linkClickCount
 	 *            linkClickCount
 	 */

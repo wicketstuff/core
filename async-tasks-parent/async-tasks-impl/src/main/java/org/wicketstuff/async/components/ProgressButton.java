@@ -1,5 +1,11 @@
 package org.wicketstuff.async.components;
 
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Optional;
+
 import org.apache.wicket.Component;
 import org.apache.wicket.Page;
 import org.apache.wicket.ajax.AbstractAjaxTimerBehavior;
@@ -7,17 +13,10 @@ import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.markup.html.form.AjaxFallbackButton;
 import org.apache.wicket.behavior.AttributeAppender;
 import org.apache.wicket.markup.html.form.Form;
-import org.apache.wicket.model.AbstractReadOnlyModel;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.util.time.Duration;
 import org.wicketstuff.async.task.AbstractTaskContainer;
-
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Optional;
 
 /**
  * A progress button which allows to control a {@link Runnable}. Each such button will refresh itself as given by
@@ -25,7 +24,7 @@ import java.util.Optional;
  * In order to create tasks, the button needs to be provided a {@link IRunnableFactory}.
  */
 public class ProgressButton extends AjaxFallbackButton {
-
+    private static final long serialVersionUID = 1L;
     private final Map<StateDescription, IModel<String>> stateTextModels;
     private final Map<StateDescription, IModel<String>> stateCssClasses;
 
@@ -54,24 +53,24 @@ public class ProgressButton extends AjaxFallbackButton {
         this.taskContainerModel = taskContainerModel;
         this.runnableFactory = runnableFactory;
 
-        this.refreshDependants = new HashSet<Component>();
+        this.refreshDependants = new HashSet<>();
 
         this.refreshBehavior = new RefreshBehavior(duration);
         if (getTaskContainer().isRunning()) {
             add(refreshBehavior);
         }
-        this.stateTextModels = new HashMap<StateDescription, IModel<String>>();
-        this.setModel(new StateDispatcherModel<String>(getDefaultTextModel(model), stateTextModels));
+        this.stateTextModels = new HashMap<>();
+        this.setModel(new StateDispatcherModel<>(getDefaultTextModel(model), stateTextModels));
 
-        this.stateCssClasses = new HashMap<StateDescription, IModel<String>>();
-        this.add(new AttributeAppender("class", new StateDispatcherModel<String>(new Model<String>(), stateCssClasses), " "));
+        this.stateCssClasses = new HashMap<>();
+        this.add(new AttributeAppender("class", new StateDispatcherModel<>(new Model<String>(), stateCssClasses), " "));
 
         this.setOutputMarkupId(true);
     }
 
-    private IModel<String> getDefaultTextModel(IModel<String> userModel) {
+    private static IModel<String> getDefaultTextModel(IModel<String> userModel) {
         if (userModel == null) {
-            return new Model<String>();
+            return new Model<>();
         } else {
             return userModel;
         }
@@ -169,7 +168,7 @@ public class ProgressButton extends AjaxFallbackButton {
 
     private void concludeIfApplicable(Optional<AjaxRequestTarget> targetOptional) {
         if (!getTaskContainer().isRunning()) {
-        	targetOptional.ifPresent(target -> {
+            targetOptional.ifPresent(target -> {
                 refreshBehavior.stop(target);
             });
             if (getTaskContainer().isFailed()) {
@@ -195,6 +194,8 @@ public class ProgressButton extends AjaxFallbackButton {
     }
 
     private class RefreshBehavior extends AbstractAjaxTimerBehavior {
+        private static final long serialVersionUID = 1L;
+
         public RefreshBehavior(Duration updateInterval) {
             super(updateInterval);
         }
@@ -299,7 +300,8 @@ public class ProgressButton extends AjaxFallbackButton {
         }
     }
 
-    class StateDispatcherModel<T> extends AbstractReadOnlyModel<T> {
+    class StateDispatcherModel<T> implements IModel<T> {
+        private static final long serialVersionUID = 1L;
 
         private final IModel<T> defaultValue;
 

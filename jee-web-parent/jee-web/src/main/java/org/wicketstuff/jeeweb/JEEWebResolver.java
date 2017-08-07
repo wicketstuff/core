@@ -28,6 +28,7 @@ import javax.servlet.ServletException;
 import javax.servlet.ServletOutputStream;
 import javax.servlet.ServletRegistration;
 import javax.servlet.ServletRequest;
+import javax.servlet.WriteListener;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpServletResponseWrapper;
@@ -68,9 +69,9 @@ import org.slf4j.LoggerFactory;
  * https://cwiki.apache.org/confluence/display/WICKET/Including+JSP+files+in+ HTML+templates<br>
  * http://apache-wicket.1842946.n4.nabble.com/Wicket-1-5-and-JSP-servlet- wrapping-td4407174.html<br>
  * <br>
- * 
+ *
  * @see org.apache.wicket.protocol.http.WebApplication.init()
- * 
+ *
  * @author Tobias Soloschenko
  */
 public class JEEWebResolver implements IComponentResolver
@@ -199,7 +200,7 @@ public class JEEWebResolver implements IComponentResolver
 
 		/**
 		 * Handles missing files.
-		 * 
+		 *
 		 * @param context
 		 *            the servlet context
 		 * @throws WicketRuntimeException
@@ -252,7 +253,7 @@ public class JEEWebResolver implements IComponentResolver
 		/**
 		 * This method throws an exception if wicket is configured to throw an exception for missing
 		 * resources, or gives a warning message through the logging mechanism.
-		 * 
+		 *
 		 * @param context
 		 *            the context to be printed.
 		 * @param type
@@ -277,7 +278,7 @@ public class JEEWebResolver implements IComponentResolver
 
 		/**
 		 * Checks if an exception should be thrown, if a resource file is missing.
-		 * 
+		 *
 		 * @return if an exception should be thrown
 		 */
 		private boolean shouldThrowExceptionForMissingFile()
@@ -302,6 +303,15 @@ public class JEEWebResolver implements IComponentResolver
 		public void write(int param) throws IOException
 		{
 			baos.write(param);
+		}
+
+		@Override
+		public boolean isReady() {
+			return true;
+		}
+
+		@Override
+		public void setWriteListener(WriteListener writeListener) {
 		}
 	}
 

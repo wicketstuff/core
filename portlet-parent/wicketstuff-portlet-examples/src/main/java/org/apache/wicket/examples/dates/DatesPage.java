@@ -76,7 +76,7 @@ public class DatesPage extends WicketExamplePage
 	{
 		/**
 		 * Construct.
-		 * 
+		 *
 		 * @param id
 		 *            component id
 		 */
@@ -135,7 +135,7 @@ public class DatesPage extends WicketExamplePage
 		selectedLocale = Session.get().getLocale();
 		Form<?> localeForm = new Form<>("localeForm");
 		localeForm.add(new LocaleDropDownChoice("localeSelect"));
-		localeForm.add(new Link("localeUSLink")
+		localeForm.add(new Link<String>("localeUSLink")
 		{
 			@Override
 			public void onClick()

@@ -25,7 +25,7 @@ import org.apache.wicket.model.PropertyModel;
 
 /**
  * Base page for component demo pages.
- * 
+ *
  * @author igor
  */
 public class BasePage extends ExamplePage
@@ -57,7 +57,7 @@ public class BasePage extends ExamplePage
 	}
 
 	/**
-	 * 
+	 *
 	 */
 	class ActionPanel extends Panel
 	{
@@ -70,7 +70,7 @@ public class BasePage extends ExamplePage
 		public ActionPanel(String id, IModel<Contact> model)
 		{
 			super(id, model);
-			add(new Link("select")
+			add(new Link<String>("select")
 			{
 				@Override
 				public void onClick()
@@ -91,7 +91,7 @@ public class BasePage extends ExamplePage
 
 	/**
 	 * sets selected contact
-	 * 
+	 *
 	 * @param selected
 	 */
 	public void setSelected(Contact selected)

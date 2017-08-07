@@ -31,8 +31,7 @@
 		<dependency>
 			<groupId>com.datastax.cassandra</groupId>
 			<artifactId>cassandra-driver-core</artifactId>
-			<!--<version>2.0.0-rc2</version>-->
-			<version>1.0.5</version>
+			<version>3.3.0</version>
 			<!--
 			 the application should provide the version of the driver
 			 for version of its Cassandra installation

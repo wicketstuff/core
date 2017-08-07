@@ -2,14 +2,14 @@
  * $Id: Calendar.java 5044 2006-03-20 16:46:35 -0800 (Mon, 20 Mar 2006)
  * jonathanlocke $ $Revision: 5159 $ $Date: 2006-03-20 16:46:35 -0800 (Mon, 20
  * Mar 2006) $
- * 
+ *
  * ==============================================================================
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
  * the License at
- * 
+ *
  * http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
  * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
@@ -17,6 +17,9 @@
  * the License.
  */
 package org.wicketstuff.yui.markup.html.calendar;
+
+import java.util.HashMap;
+import java.util.Map;
 
 import org.apache.wicket.AttributeModifier;
 import org.apache.wicket.markup.head.CssHeaderItem;
@@ -28,15 +31,13 @@ import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.form.FormComponent;
 import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.model.AbstractReadOnlyModel;
+import org.apache.wicket.model.IModel;
 import org.apache.wicket.request.cycle.RequestCycle;
 import org.apache.wicket.request.resource.CssResourceReference;
 import org.apache.wicket.request.resource.JavaScriptResourceReference;
 import org.apache.wicket.request.resource.PackageResourceReference;
 import org.apache.wicket.util.template.PackageTextTemplate;
 import org.wicketstuff.yui.markup.html.contributor.YuiHeaderContributor;
-
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * Calendar component based on the Calendar of Yahoo UI Library.
@@ -47,7 +48,7 @@ public class Calendar extends Panel implements IHeaderContributor {
     /**
      * The container/ receiver of the javascript component.
      */
-    private final class CalendarElement extends FormComponent {
+    private final class CalendarElement extends FormComponent<String> {
         private static final long serialVersionUID = 1L;
 
         /**
@@ -57,11 +58,11 @@ public class Calendar extends Panel implements IHeaderContributor {
          */
         public CalendarElement(String id) {
             super(id);
-            add(new AttributeModifier("id", new AbstractReadOnlyModel() {
+            add(new AttributeModifier("id", new IModel<String>() {
                 private static final long serialVersionUID = 1L;
 
                 @Override
-                public Object getObject() {
+                public String getObject() {
                     return elementId;
                 }
             }));
@@ -111,7 +112,8 @@ public class Calendar extends Panel implements IHeaderContributor {
         add(calendarElement = new CalendarElement("calendarContainer"));
     }
 
-    public void renderHead(IHeaderResponse response) {
+    @Override
+	public void renderHead(IHeaderResponse response) {
         response.render(OnLoadHeaderItem.forScript("init" + javaScriptId + "();"));
 
         YuiHeaderContributor.forModule("calendar").renderHead(response);

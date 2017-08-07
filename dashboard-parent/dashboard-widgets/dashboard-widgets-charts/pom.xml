@@ -25,8 +25,12 @@
 		<!-- HighCharts (integrated in Wicket by Wicked-Charts) -->
 		<dependency>
 			<groupId>com.googlecode.wicked-charts</groupId>
-			<artifactId>wicked-charts-wicket6</artifactId>
+			<artifactId>wicked-charts-wicket7</artifactId>
 			<version>${wickedCharts.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-databind</artifactId>
 		</dependency>
 	</dependencies>
 </project>

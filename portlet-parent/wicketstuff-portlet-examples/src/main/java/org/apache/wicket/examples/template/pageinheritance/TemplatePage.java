@@ -28,7 +28,7 @@ import org.apache.wicket.model.PropertyModel;
 /**
  * Base page that serves as a template for pages that inherit from it. Doesn't have to be abstract,
  * but was made abstract here to stress the fact that this page is not meant for direct use.
- * 
+ *
  * @author Eelco Hillenius
  */
 public abstract class TemplatePage extends WicketExamplePage
@@ -46,7 +46,7 @@ public abstract class TemplatePage extends WicketExamplePage
 	{
 		add(new Label("title", new PropertyModel<>(this, "pageTitle")));
 		add(currentBanner = new Banner1("ad"));
-		add(new Link("changeAdLink")
+		add(new Link<String>("changeAdLink")
 		{
 			/**
 			 * @see org.apache.wicket.markup.html.link.Link#onClick()
@@ -70,7 +70,7 @@ public abstract class TemplatePage extends WicketExamplePage
 
 	/**
 	 * Gets the title.
-	 * 
+	 *
 	 * @return title
 	 */
 	public final String getPageTitle()
@@ -80,7 +80,7 @@ public abstract class TemplatePage extends WicketExamplePage
 
 	/**
 	 * Sets the title.
-	 * 
+	 *
 	 * @param title
 	 *            title
 	 */

@@ -22,14 +22,14 @@ import org.apache.wicket.markup.html.link.Link;
 /**
  * Example page that cannot be bookmarked. A page is bookmarkable when it has a public default
  * constructor and/or a constructor with a {@link org.apache.wicket.request.mapper.parameter.PageParameters} argument.
- * 
+ *
  * @author Eelco Hillenius
  */
 public class NonBookmarkablePage extends WebPage
 {
 	/**
 	 * Constructor.
-	 * 
+	 *
 	 * @param referer
 	 *            the refering page
 	 */
@@ -45,7 +45,7 @@ public class NonBookmarkablePage extends WebPage
 		// constructor with the Page instance argument, because we allready have
 		// a page instance
 		// at our disposal
-		add(new Link("navigateBackLink")
+		add(new Link<String>("navigateBackLink")
 		{
 			@Override
 			public void onClick()

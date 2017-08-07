@@ -19,7 +19,7 @@
 		<jqPlot.version>${project.version}</jqPlot.version>
 		<loremipsum.version>1.0</loremipsum.version>
 		<justGage.version>1.0.1</justGage.version>
-		<wickedCharts.version>1.5.0</wickedCharts.version>
+		<wickedCharts.version>2.0.1</wickedCharts.version>
 	</properties>
 
 	<dependencies>

@@ -78,6 +78,7 @@ public class TestRenderers
 				super(id);
 			}
 
+			@Override
 			public IResourceStream getMarkupResourceStream(final MarkupContainer container,
 				final Class containerClass)
 			{
@@ -116,7 +117,7 @@ public class TestRenderers
 	@Test
 	public void testLink()
 	{
-		final Link link = new Link("link")
+		final Link link = new Link<String>("link")
 		{
 			private static final long serialVersionUID = 1L;
 

@@ -15,7 +15,6 @@
 	<description>Examples GMap3 component.</description>
 
 	<properties>
-		<jetty.version>9.2.2.v20140723</jetty.version>
 		<javadoc.disabled>true</javadoc.disabled>
 		<deployment.disabled>true</deployment.disabled>
 		<sources.disabled>true</sources.disabled>
@@ -68,7 +67,6 @@
 			<plugin>
 				<groupId>org.eclipse.jetty</groupId>
 				<artifactId>jetty-maven-plugin</artifactId>
-				<version>${jetty.version}</version>
 			</plugin>
 		</plugins>
 	</build>

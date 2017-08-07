@@ -32,7 +32,6 @@ import org.wicketstuff.wicket.mount.example.ui.urlparam.ParamTestPage;
 @MountPath("index.html")
 public class HomePage extends WebPage
 {
-
 	private static final long serialVersionUID = 1L;
 
 	public HomePage(final PageParameters parameters)
@@ -43,8 +42,9 @@ public class HomePage extends WebPage
 		add(new Label("message",
 				"The relative url should be set to " + mp));
 
-		add(new Link("pg1-bookmark")
+		add(new Link<String>("pg1-bookmark")
 		{
+			private static final long serialVersionUID = 1L;
 
 			@Override
 			public void onClick()
@@ -52,8 +52,9 @@ public class HomePage extends WebPage
 				setResponsePage(PackageMountPage1.class);
 			}
 		});
-		add(new Link("pg2-nonbookmark")
+		add(new Link<String>("pg2-nonbookmark")
 		{
+			private static final long serialVersionUID = 1L;
 
 			@Override
 			public void onClick()
@@ -63,8 +64,9 @@ public class HomePage extends WebPage
 		});
 
 		final String random = UUID.randomUUID().toString();
-		add(new Link("url-param")
+		add(new Link<String>("url-param")
 		{
+			private static final long serialVersionUID = 1L;
 
 			@Override
 			public void onClick()
@@ -72,6 +74,6 @@ public class HomePage extends WebPage
 				setResponsePage(ParamTestPage.class, new PageParameters().add("testParam", random));
 			}
 		}.add(new Label("randomParam", "Goto mounted page with pageparameter mounted as part of url. Parameter = " + random)));
-		
+
 	}
 }

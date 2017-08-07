@@ -42,7 +42,7 @@ public class CassandraDataStore implements IDataStore
 	 * The name of the column where the pages' bytes will be stored
 	 */
 	private static final String COLUMN_DATA = "data";
-	
+
 	/**
 	 * The Cassandra cluster
 	 */
@@ -194,12 +194,12 @@ public class CassandraDataStore implements IDataStore
 	{
 		if (session != null)
 		{
-			session.shutdown();
+			session.close();
 		}
 
 		if (cluster != null)
 		{
-			cluster.shutdown();
+			cluster.close();
 		}
 	}
 

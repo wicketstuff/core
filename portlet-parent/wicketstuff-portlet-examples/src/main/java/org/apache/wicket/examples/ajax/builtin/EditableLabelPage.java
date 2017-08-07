@@ -31,7 +31,7 @@ import org.apache.wicket.model.CompoundPropertyModel;
 
 /**
  * Page to demo the inplace edit label {@link AjaxEditableLabel}
- * 
+ *
  * @author Igor Vaynberg (ivaynberg)
  */
 public class EditableLabelPage extends BasePage
@@ -67,7 +67,7 @@ public class EditableLabelPage extends BasePage
 			}
 		}));
 
-		form.add(new Link("refresh-link")
+		form.add(new Link<String>("refresh-link")
 		{
 			@Override
 			public void onClick()

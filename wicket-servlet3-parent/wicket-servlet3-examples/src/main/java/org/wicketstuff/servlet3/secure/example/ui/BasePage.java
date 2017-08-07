@@ -31,6 +31,7 @@ import org.wicketstuff.servlet3.secure.example.ui.common.UserInfoPanel;
  */
 public class BasePage extends WebPage
 {
+	private static final long serialVersionUID = 1L;
 
 	public BasePage()
 	{
@@ -41,8 +42,9 @@ public class BasePage extends WebPage
 	{
 		super(parameters);
 		add(new UserInfoPanel("userInfo"));
-		add(new StatelessLink("home")
+		add(new StatelessLink<String>("home")
 		{
+			private static final long serialVersionUID = 1L;
 
 			@Override
 			public void onClick()
@@ -53,6 +55,7 @@ public class BasePage extends WebPage
 
 		add(new AdminLink("admin")
 		{
+			private static final long serialVersionUID = 1L;
 
 			@Override
 			public void onClick()
@@ -63,6 +66,7 @@ public class BasePage extends WebPage
 		}.setVisible(this.getClass() != AdminPage.class));
 		add(new SecureLink("invalidate")
 		{
+			private static final long serialVersionUID = 1L;
 
 			@Override
 			public void onClick()
@@ -73,6 +77,7 @@ public class BasePage extends WebPage
 		});
 		add(new SecureLink("logout")
 		{
+			private static final long serialVersionUID = 1L;
 
 			@Override
 			public void onClick()

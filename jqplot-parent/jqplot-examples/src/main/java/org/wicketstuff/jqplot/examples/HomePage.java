@@ -53,7 +53,7 @@ public class HomePage extends WebPage {
     }
 
     private void addChartWithImage() {
-        PieChart<Number> pieChart = new PieChart<Number>("Pizza Chart Custom Legend");
+        PieChart<Number> pieChart = new PieChart<>("Pizza Chart Custom Legend");
         pieChart.addValue("Drops", 10f);
         pieChart.addValue("Chocolate", 20f);
         pieChart.addValue("Jujuba", 5f);
@@ -98,7 +98,7 @@ public class HomePage extends WebPage {
 
     public AreaChart<Integer> areaChart1() {
 
-        AreaChart<Integer> areaChart = new AreaChart<Integer>("Area chart Example");
+        AreaChart<Integer> areaChart = new AreaChart<>("Area chart Example");
         areaChart.addValue(Arrays.<Integer>asList(11, 9, 5, 12, 14));
         areaChart.addValue(Arrays.<Integer>asList(4, 8, 5, 3, 6));
         areaChart.addValue(Arrays.<Integer>asList(12, 6, 13, 11, 2));
@@ -113,7 +113,7 @@ public class HomePage extends WebPage {
 
     public AreaChart<Integer> areaChart2() {
 
-        AreaChart<Integer> areaChart = new AreaChart<Integer>("Area chart Example");
+        AreaChart<Integer> areaChart = new AreaChart<>("Area chart Example");
         areaChart.addValue(Arrays.<Integer>asList(11, 9, 5, 12, 14, 8, 7, 9, 6, 11, 9, 3, 4));
         areaChart.addValue(Arrays.<Integer>asList(4, 8, 5, 3, 6, 5, 3, 2, 6, 7, 4, 3, 2));
         areaChart.addValue(Arrays.<Integer>asList(12, 6, 13, 11, 2, 3, 4, 2, 1, 5, 7, 4, 8));
@@ -122,7 +122,7 @@ public class HomePage extends WebPage {
                 .xAxisInstance()
                 .setTicks(new String[]{"Dec 10", "Jan 11", "Feb 11", "Mar 11", "Apr 11", "May 11", "Jun 11", "Jul 11", "Aug 11", "Sep 11", "Oct 11", "Nov 11", "Dec 11"});
 
-        Collection<Serie> series = new ArrayList<Serie>();
+        Collection<Serie> series = new ArrayList<>();
         series.add(new Serie("Beans"));
         series.add(new Serie("Orange"));
         series.add(new Serie("Crackers"));
@@ -144,8 +144,8 @@ public class HomePage extends WebPage {
         return areaChart;
     }
 
-    private PieChart<Number> pieChart2() {
-        PieChart<Number> pieChart = new PieChart<Number>("Pizza Chart Custom Legend");
+    private static PieChart<Number> pieChart2() {
+        PieChart<Number> pieChart = new PieChart<>("Pizza Chart Custom Legend");
         pieChart.addValue("Drops", 10f);
         pieChart.addValue("Chocolate", 20f);
         pieChart.addValue("Jujuba", 5f);
@@ -167,27 +167,27 @@ public class HomePage extends WebPage {
     }
 
     private void addTestLineChartWithTicks() {
-        List<LineSeriesItem<Double, Double>> cosPoints = new ArrayList<LineSeriesItem<Double, Double>>();
+        List<LineSeriesItem<Double, Double>> cosPoints = new ArrayList<>();
         for (double i = 0; i < 2 * Math.PI; i++) {
-            cosPoints.add(new LineSeriesItem<Double, Double>(i, Math.cos(i)));
+            cosPoints.add(new LineSeriesItem<>(i, Math.cos(i)));
         }
 
-        List<LineSeriesItem<Double, Double>> sinPoints = new ArrayList<LineSeriesItem<Double, Double>>();
+        List<LineSeriesItem<Double, Double>> sinPoints = new ArrayList<>();
         for (double i = 0; i < 2 * Math.PI; i += 0.4) {
-            sinPoints.add(new LineSeriesItem<Double, Double>(i, 2 * Math.sin(i - .8)));
+            sinPoints.add(new LineSeriesItem<>(i, 2 * Math.sin(i - .8)));
         }
 
-        List<LineSeriesItem<Double, Double>> powPoints1 = new ArrayList<LineSeriesItem<Double, Double>>();
+        List<LineSeriesItem<Double, Double>> powPoints1 = new ArrayList<>();
         for (double i = 0; i < 2 * Math.PI; i++) {
-            powPoints1.add(new LineSeriesItem<Double, Double>(i, 2.5 + Math.pow(i / 4, 2)));
+            powPoints1.add(new LineSeriesItem<>(i, 2.5 + Math.pow(i / 4, 2)));
         }
 
-        List<LineSeriesItem<Double, Double>> powPoints2 = new ArrayList<LineSeriesItem<Double, Double>>();
+        List<LineSeriesItem<Double, Double>> powPoints2 = new ArrayList<>();
         for (double i = 0; i < 2 * Math.PI; i++) {
-            powPoints2.add(new LineSeriesItem<Double, Double>(i, -2.5 - Math.pow(i / 4, 2)));
+            powPoints2.add(new LineSeriesItem<>(i, -2.5 - Math.pow(i / 4, 2)));
         }
 
-        LineSeriesChart<Double, Double> lineChart = new LineSeriesChart<Double, Double>(
+        LineSeriesChart<Double, Double> lineChart = new LineSeriesChart<>(
                 "Line Style Options");
         lineChart.addValue(cosPoints);
         lineChart.addValue(sinPoints);
@@ -210,28 +210,28 @@ public class HomePage extends WebPage {
 
     }
 
-    private LineSeriesChart<Double, Double> lineSeries() {
-        List<LineSeriesItem<Double, Double>> cosPoints = new ArrayList<LineSeriesItem<Double, Double>>();
+    private static LineSeriesChart<Double, Double> lineSeries() {
+        List<LineSeriesItem<Double, Double>> cosPoints = new ArrayList<>();
         for (double i = 0; i < 2 * Math.PI; i++) {
-            cosPoints.add(new LineSeriesItem<Double, Double>(i, Math.cos(i)));
+            cosPoints.add(new LineSeriesItem<>(i, Math.cos(i)));
         }
 
-        List<LineSeriesItem<Double, Double>> sinPoints = new ArrayList<LineSeriesItem<Double, Double>>();
+        List<LineSeriesItem<Double, Double>> sinPoints = new ArrayList<>();
         for (double i = 0; i < 2 * Math.PI; i += 0.4) {
-            sinPoints.add(new LineSeriesItem<Double, Double>(i, 2 * Math.sin(i - .8)));
+            sinPoints.add(new LineSeriesItem<>(i, 2 * Math.sin(i - .8)));
         }
 
-        List<LineSeriesItem<Double, Double>> powPoints1 = new ArrayList<LineSeriesItem<Double, Double>>();
+        List<LineSeriesItem<Double, Double>> powPoints1 = new ArrayList<>();
         for (double i = 0; i < 2 * Math.PI; i++) {
-            powPoints1.add(new LineSeriesItem<Double, Double>(i, 2.5 + Math.pow(i / 4, 2)));
+            powPoints1.add(new LineSeriesItem<>(i, 2.5 + Math.pow(i / 4, 2)));
         }
 
-        List<LineSeriesItem<Double, Double>> powPoints2 = new ArrayList<LineSeriesItem<Double, Double>>();
+        List<LineSeriesItem<Double, Double>> powPoints2 = new ArrayList<>();
         for (double i = 0; i < 2 * Math.PI; i++) {
-            powPoints2.add(new LineSeriesItem<Double, Double>(i, -2.5 - Math.pow(i / 4, 2)));
+            powPoints2.add(new LineSeriesItem<>(i, -2.5 - Math.pow(i / 4, 2)));
         }
 
-        LineSeriesChart<Double, Double> lineChart = new LineSeriesChart<Double, Double>(
+        LineSeriesChart<Double, Double> lineChart = new LineSeriesChart<>(
                 "Line Style Options");
         lineChart.addValue(cosPoints);
         lineChart.addValue(sinPoints);
@@ -253,8 +253,8 @@ public class HomePage extends WebPage {
         return lineChart;
     }
 
-    private BarChart<Integer> barChart2() {
-        BarChart<Integer> barChart2 = new BarChart<Integer>("Bar Chart with Custom Colors");
+    private static BarChart<Integer> barChart2() {
+        BarChart<Integer> barChart2 = new BarChart<>("Bar Chart with Custom Colors");
         barChart2
                 .getChartConfiguration()
                 .xAxisInstance()
@@ -266,8 +266,8 @@ public class HomePage extends WebPage {
         return barChart2;
     }
 
-    private BarChart<Integer> barChart1() {
-        BarChart<Integer> barChart1 = new BarChart<Integer>("Bar Chart");
+    private static BarChart<Integer> barChart1() {
+        BarChart<Integer> barChart1 = new BarChart<>("Bar Chart");
         Legend legend = new Legend();
         legend.setShow(true);
         legend.setPlacement("outsideGrid");
@@ -287,18 +287,18 @@ public class HomePage extends WebPage {
         return barChart1;
     }
 
-    private LabeledLineChart<Integer> lineChart2() {
-        LabeledLineChart<Integer> chart2 = new LabeledLineChart<Integer>("Labeled Line Charts",
+    private static LabeledLineChart<Integer> lineChart2() {
+        LabeledLineChart<Integer> chart2 = new LabeledLineChart<>("Labeled Line Charts",
                 "Incliment Occurrance", "Incliment Factor", 15);
-        chart2.addValue(new LabeledItem<Integer>("1/1/2008", 42));
-        chart2.addValue(new LabeledItem<Integer>("2/14/2008", 56));
-        chart2.addValue(new LabeledItem<Integer>("3/7/2008", 39));
-        chart2.addValue(new LabeledItem<Integer>("4/22/2008", 81));
+        chart2.addValue(new LabeledItem<>("1/1/2008", 42));
+        chart2.addValue(new LabeledItem<>("2/14/2008", 56));
+        chart2.addValue(new LabeledItem<>("3/7/2008", 39));
+        chart2.addValue(new LabeledItem<>("4/22/2008", 81));
         return chart2;
     }
 
-    private LineChart<Integer> lineChart1() {
-        LineChart<Integer> lineChart = new LineChart<Integer>("Line Charts");
+    private static LineChart<Integer> lineChart1() {
+        LineChart<Integer> lineChart = new LineChart<>("Line Charts");
         lineChart.addValue(1);
         lineChart.addValue(2);
         lineChart.addValue(3);
@@ -307,7 +307,7 @@ public class HomePage extends WebPage {
     }
 
     public PieChart<Number> pieChart1() {
-        PieChart<Number> pieChart1 = new PieChart<Number>("Pie Charts");
+        PieChart<Number> pieChart1 = new PieChart<>("Pie Charts");
         pieChart1.addValue("Banana", 10f);
         pieChart1.addValue("Chocolate", 20f);
         pieChart1.addValue("Peperone", 5f);

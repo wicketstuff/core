@@ -12,9 +12,8 @@
  */
 package org.wicketstuff.dashboard.widgets.charts;
 
-import com.googlecode.wickedcharts.highcharts.options.Options;
-import com.googlecode.wickedcharts.highcharts.options.SeriesType;
-import com.googlecode.wickedcharts.wicket6.highcharts.Chart;
+import java.util.Map;
+
 import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.model.Model;
 import org.wicketstuff.dashboard.AbstractWidget;
@@ -24,7 +23,9 @@ import org.wicketstuff.dashboard.widgets.charts.options.ShowcaseOptions;
 import org.wicketstuff.dashboard.widgets.charts.settings.HighChartsSettingsPanel;
 import org.wicketstuff.dashboard.widgets.charts.settings.Settings;
 
-import java.util.Map;
+import com.googlecode.wickedcharts.highcharts.options.Options;
+import com.googlecode.wickedcharts.highcharts.options.SeriesType;
+import com.googlecode.wickedcharts.wicket7.highcharts.Chart;
 
 /**
  * @author <a href="http://www.GitHub.com/PaulBors">Paul Bors</a>
@@ -78,9 +79,10 @@ public class HighChartsWidget extends AbstractWidget {
 
 	@Override
 	public Panel createSettingsPanel(String settingsPanelId) {
-		return new HighChartsSettingsPanel(settingsPanelId, new Model<HighChartsWidget>(this));
+		return new HighChartsSettingsPanel(settingsPanelId, new Model<>(this));
 	}
 
+	@Override
 	public WidgetView createView(String viewId) {
 		return new HighChartsWidgetView(viewId, new Model<Widget>(this));
 	}

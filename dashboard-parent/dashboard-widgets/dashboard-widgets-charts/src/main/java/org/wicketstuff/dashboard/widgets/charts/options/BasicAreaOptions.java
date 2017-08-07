@@ -12,6 +12,8 @@
  */
 package org.wicketstuff.dashboard.widgets.charts.options;
 
+import java.util.Arrays;
+
 import com.googlecode.wickedcharts.highcharts.options.Axis;
 import com.googlecode.wickedcharts.highcharts.options.ChartOptions;
 import com.googlecode.wickedcharts.highcharts.options.CssStyle;
@@ -19,16 +21,14 @@ import com.googlecode.wickedcharts.highcharts.options.Labels;
 import com.googlecode.wickedcharts.highcharts.options.Marker;
 import com.googlecode.wickedcharts.highcharts.options.PlotOptions;
 import com.googlecode.wickedcharts.highcharts.options.PlotOptionsChoice;
+import com.googlecode.wickedcharts.highcharts.options.PlotOptionsState;
+import com.googlecode.wickedcharts.highcharts.options.PlotOptionsStateChoice;
 import com.googlecode.wickedcharts.highcharts.options.SeriesType;
-import com.googlecode.wickedcharts.highcharts.options.State;
-import com.googlecode.wickedcharts.highcharts.options.StatesChoice;
 import com.googlecode.wickedcharts.highcharts.options.Symbol;
 import com.googlecode.wickedcharts.highcharts.options.Title;
 import com.googlecode.wickedcharts.highcharts.options.Tooltip;
 import com.googlecode.wickedcharts.highcharts.options.series.Series;
 import com.googlecode.wickedcharts.highcharts.options.series.SimpleSeries;
-
-import java.util.Arrays;
 
 /**
  * @author <a href="http://www.GitHub.com/PaulBors">Paul Bors</a>
@@ -63,10 +63,10 @@ public class BasicAreaOptions extends ShowcaseOptions {
 
 		setTooltip(new Tooltip());
 
-		State hoverState = new State();
+		PlotOptionsState hoverState = new PlotOptionsState();
 		hoverState.setEnabled(Boolean.TRUE);
 
-		StatesChoice statesChoice = new StatesChoice();
+		PlotOptionsStateChoice statesChoice = new PlotOptionsStateChoice();
 		statesChoice.setHover(hoverState);
 
 		Marker marker = new Marker();

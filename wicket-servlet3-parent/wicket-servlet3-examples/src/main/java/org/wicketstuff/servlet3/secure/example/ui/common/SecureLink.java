@@ -31,8 +31,9 @@ import org.apache.wicket.markup.html.link.StatelessLink;
 @AuthorizeActions(actions = {
 		@AuthorizeAction(action = Action.RENDER, roles = {"tomcat", "role1", "admin"})
 })
-public abstract class SecureLink extends StatelessLink
+public abstract class SecureLink extends StatelessLink<String>
 {
+	private static final long serialVersionUID = 1L;
 
 	public SecureLink(String id)
 	{

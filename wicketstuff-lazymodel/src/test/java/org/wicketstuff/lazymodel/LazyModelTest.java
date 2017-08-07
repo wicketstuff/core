@@ -45,7 +45,7 @@ import org.wicketstuff.lazymodel.reflect.Reflection;
 
 /**
  * Test for {@link LazyModel}.
- * 
+ *
  * @author svenmeier
  */
 @SuppressWarnings("serial")
@@ -773,7 +773,7 @@ public class LazyModelTest {
 
 		assertEquals(a.b, model.getObject());
 	}
-	
+
 	@Test
 	public void getFromPrivateConstructor() {
 		final A a = new A();
@@ -911,7 +911,7 @@ public class LazyModelTest {
 			public void setObject(T arg0) {
 			}
 		};
-		
+
 		try {
 			from(new GenericModel<A>());
 
@@ -927,8 +927,8 @@ public class LazyModelTest {
 		final A a = new A();
 		a.b = new B();
 
-		Model target = new Model(a);
-		
+		Model<A> target = new Model<>(a);
+
 		LazyModel<B> model = model(from(target, A.class).getB());
 
 		assertEquals(B.class, model.getObjectClass());
@@ -1186,7 +1186,7 @@ public class LazyModelTest {
 		/**
 		 * {@link Reflection} has to walk up the type hierarchy to resolve the
 		 * return type.
-		 * 
+		 *
 		 * @see LazyModelTest#inheritedTypeVariable()
 		 */
 		public T getT() {
@@ -1196,7 +1196,7 @@ public class LazyModelTest {
 		/**
 		 * {@link Reflection} has to backtrack from type variable {@code E} to
 		 * {@code T} to resolve the return type of {@link List#get(int)}
-		 * 
+		 *
 		 * @see LazyModelTest#backtrackedTypeVariable()
 		 */
 		@SuppressWarnings({ "rawtypes", "unchecked" })

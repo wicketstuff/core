@@ -41,7 +41,6 @@ import org.apache.wicket.model.AbstractReadOnlyModel;
 import org.apache.wicket.model.CompoundPropertyModel;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.model.PropertyModel;
-import org.apache.wicket.request.mapper.parameter.INamedParameters;
 import org.apache.wicket.request.resource.PackageResourceReference;
 import org.apache.wicket.request.resource.SharedResourceReference;
 import org.apache.wicket.util.file.Files;
@@ -50,7 +49,7 @@ import org.apache.wicket.util.time.Duration;
 
 /**
  * Demonstrates different flavors of hyperlinks.
- * 
+ *
  * @author Jonathan Locke
  */
 public class Home extends WicketExamplePage
@@ -67,7 +66,7 @@ public class Home extends WicketExamplePage
 	public Home()
 	{
 		// Action link counts link clicks
-		final Link actionLink = new Link("actionLink")
+		final Link actionLink = new Link<String>("actionLink")
 		{
 			@Override
 			public void onClick()
@@ -80,7 +79,7 @@ public class Home extends WicketExamplePage
 		add(actionLink);
 
 		// Action link counts link clicks on works with onclick handler
-		final Link actionOnClickLink = new Link("actionOnClickLink")
+		final Link actionOnClickLink = new Link<String>("actionOnClickLink")
 		{
 			@Override
 			public void onClick()
@@ -184,7 +183,7 @@ public class Home extends WicketExamplePage
 		add(feedbackPanel);
 		add(new RedirectForm("redirectForm"));
 
-		Link linkToAnchor = new Link("linkToAnchor")
+		Link linkToAnchor = new Link<String>("linkToAnchor")
 		{
 			@Override
 			public void onClick()
@@ -192,7 +191,7 @@ public class Home extends WicketExamplePage
 			}
 		};
 		add(linkToAnchor);
-		Link anotherlinkToAnchor = new Link("anotherlinkToAnchor")
+		Link anotherlinkToAnchor = new Link<String>("anotherlinkToAnchor")
 		{
 			@Override
 			public void onClick()
@@ -227,7 +226,7 @@ public class Home extends WicketExamplePage
 
 		/**
 		 * Construct.
-		 * 
+		 *
 		 * @param id
 		 *            component id
 		 */
@@ -249,7 +248,7 @@ public class Home extends WicketExamplePage
 
 		/**
 		 * Gets the redirectUrl.
-		 * 
+		 *
 		 * @return redirectUrl
 		 */
 		public String getRedirectUrl()
@@ -259,7 +258,7 @@ public class Home extends WicketExamplePage
 
 		/**
 		 * Sets the redirectUrl.
-		 * 
+		 *
 		 * @param redirectUrl
 		 *            redirectUrl
 		 */
@@ -288,7 +287,7 @@ public class Home extends WicketExamplePage
 
 	/**
 	 * Gets onClickLinkClickCount.
-	 * 
+	 *
 	 * @return onClickLinkClickCount
 	 */
 	public int getOnClickLinkClickCount()
@@ -298,7 +297,7 @@ public class Home extends WicketExamplePage
 
 	/**
 	 * Sets onClickLinkClickCount.
-	 * 
+	 *
 	 * @param onClickLinkClickCount
 	 *            onClickLinkClickCount
 	 */

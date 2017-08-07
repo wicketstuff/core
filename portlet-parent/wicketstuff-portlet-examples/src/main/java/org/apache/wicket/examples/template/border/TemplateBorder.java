@@ -25,7 +25,7 @@ import org.apache.wicket.markup.html.link.Link;
 
 /**
  * Border that holds layout elements that can be reused by pages.
- * 
+ *
  * @author Eelco Hillenius
  */
 public class TemplateBorder extends Border
@@ -35,14 +35,14 @@ public class TemplateBorder extends Border
 
 	/**
 	 * Constructor
-	 * 
+	 *
 	 * @param id
 	 */
 	public TemplateBorder(String id)
 	{
 		super(id);
 		addToBorder(currentBanner = new Banner1("ad"));
-		addToBorder(new Link("changeAdLink")
+		addToBorder(new Link<String>("changeAdLink")
 		{
 			/**
 			 * @see org.apache.wicket.markup.html.link.Link#onClick()

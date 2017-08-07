@@ -31,7 +31,7 @@ import org.apache.wicket.markup.html.link.StatelessLink;
 @AuthorizeActions(actions = {
 		@AuthorizeAction(action = Action.RENDER, roles = {"tomcat", "admin"})
 })
-public abstract class AdminLink extends StatelessLink
+public abstract class AdminLink extends StatelessLink<String>
 {
 
 	public AdminLink(String id)

@@ -1,22 +1,22 @@
 package org.wicketstuff.async.components;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.apache.wicket.Component;
 import org.apache.wicket.behavior.AttributeAppender;
 import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.panel.Panel;
-import org.apache.wicket.model.AbstractReadOnlyModel;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
 import org.wicketstuff.async.task.AbstractTaskContainer;
-
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * This component renders a progress bar to an existent task which is controlled by a progress button.
  */
 public class ProgressBar extends Panel {
+    private static final long serialVersionUID = 1L;
 
     private final ProgressButton progressButton;
 
@@ -34,8 +34,8 @@ public class ProgressBar extends Panel {
         wrapper.add(bar);
         wrapper.add(new Label("message", new TaskProgressMessageModel()));
 
-        stateCssClasses = new HashMap<StateDescription, IModel<String>>();
-        this.add(new AttributeAppender("class", progressButton.new StateDispatcherModel<String>(new Model<String>(), stateCssClasses), " "));
+        stateCssClasses = new HashMap<>();
+        this.add(new AttributeAppender("class", progressButton.new StateDispatcherModel<>(new Model<String>(), stateCssClasses), " "));
 
         progressButton.addRefreshDependant(this);
 
@@ -73,7 +73,9 @@ public class ProgressBar extends Panel {
         return 0d;
     }
 
-    private class TaskProgressMessageModel extends AbstractReadOnlyModel<String> {
+    private class TaskProgressMessageModel implements IModel<String> {
+        private static final long serialVersionUID = 1L;
+
         @Override
         public String getObject() {
             Double progress = getTaskContainer().getProgress();
@@ -91,7 +93,9 @@ public class ProgressBar extends Panel {
         }
     }
 
-    private class TaskProgressPercentageStyleModel extends AbstractReadOnlyModel<String> {
+    private class TaskProgressPercentageStyleModel implements IModel<String> {
+        private static final long serialVersionUID = 1L;
+
         @Override
         public String getObject() {
             int percentProgress = getPercentProgress();

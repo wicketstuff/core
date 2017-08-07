@@ -35,6 +35,7 @@ import org.wicketstuff.wicket.mount.core.annotation.MountPath;
 @MountPath("index.html")
 public class HomePage extends BasePage
 {
+	private static final long serialVersionUID = 1L;
 
 	public HomePage()
 	{
@@ -43,8 +44,9 @@ public class HomePage extends BasePage
 
 	public HomePage(PageParameters parameters)
 	{
-		add(new StatelessLink("next")
+		add(new StatelessLink<String>("next")
 		{
+			private static final long serialVersionUID = 1L;
 
 			@Override
 			public void onClick()
@@ -52,8 +54,9 @@ public class HomePage extends BasePage
 				setResponsePage(Page2.class); //Bookmarkable response
 			}
 		});
-		add(new StatelessLink("next2")
+		add(new StatelessLink<String>("next2")
 		{
+			private static final long serialVersionUID = 1L;
 
 			@Override
 			public void onClick()
@@ -61,8 +64,9 @@ public class HomePage extends BasePage
 				setResponsePage(new AdminPage()); //non-bookmarkable response
 			}
 		});
-		add(new StatelessLink("next3")
+		add(new StatelessLink<String>("next3")
 		{
+			private static final long serialVersionUID = 1L;
 
 			@Override
 			public void onClick()

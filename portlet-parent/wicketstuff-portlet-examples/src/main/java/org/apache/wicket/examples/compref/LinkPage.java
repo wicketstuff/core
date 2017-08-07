@@ -25,7 +25,7 @@ import org.apache.wicket.model.PropertyModel;
 
 /**
  * Page with examples on {@link org.apache.wicket.markup.html.link.Link}.
- * 
+ *
  * @author Eelco Hillenius
  */
 public class LinkPage extends WicketExamplePage
@@ -42,7 +42,7 @@ public class LinkPage extends WicketExamplePage
 
 		// add a link which, when clicked, increases our counter when a link is clicked, its onClick
 		// method is called
-		Link link1 = new Link("link1")
+		Link link1 = new Link<String>("link1")
 		{
 			@Override
 			public void onClick()
@@ -67,7 +67,7 @@ public class LinkPage extends WicketExamplePage
 		// because of this, and pressing the back button and clicking the link again would revert to
 		// the older value. The same thing could have been achieved by using setModelObject,
 		// which implicitly registers a state change (of type ComponentModelChange).
-		Link linkWithStateChange = new Link("linkWithStateChange")
+		Link linkWithStateChange = new Link<String>("linkWithStateChange")
 		{
 			@Override
 			public void onClick()
@@ -85,13 +85,13 @@ public class LinkPage extends WicketExamplePage
 
 		// it is of course possible to - instead of the above approach - hide as much of the
 		// component as possible within a class.
-		class CustomLink extends Link
+		class CustomLink extends Link<String>
 		{
 			final Count count2;
 
 			/**
 			 * Construct.
-			 * 
+			 *
 			 * @param id
 			 */
 			public CustomLink(String id)
@@ -111,13 +111,13 @@ public class LinkPage extends WicketExamplePage
 
 		// and if we know we are going to attach it to a <input type="button> tag, we shouldn't use
 		// a label, but an AttributeModifier instead.
-		class ButtonLink extends Link
+		class ButtonLink extends Link<String>
 		{
 			final Count count3;
 
 			/**
 			 * Construct.
-			 * 
+			 *
 			 * @param id
 			 */
 			public ButtonLink(String id)
@@ -152,7 +152,7 @@ public class LinkPage extends WicketExamplePage
 	{
 		/**
 		 * Construct.
-		 * 
+		 *
 		 * @param id
 		 *            component id
 		 * @param clickCount
@@ -176,7 +176,7 @@ public class LinkPage extends WicketExamplePage
 	// ----------
 
 	final Count count1 = new Count(); // simple counter object
-	Link link1 = new Link("link1")
+	Link link1 = new Link<String>("link1")
 	{
 		@Override
 		public void onClick()

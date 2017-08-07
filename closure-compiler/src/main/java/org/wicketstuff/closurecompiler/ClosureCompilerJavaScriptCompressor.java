@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import com.google.javascript.jscomp.SourceFile;
 import org.apache.wicket.javascript.IJavaScriptCompressor;
 import org.apache.wicket.util.lang.Args;
 import org.slf4j.Logger;
@@ -14,8 +13,8 @@ import com.google.javascript.jscomp.CommandLineRunner;
 import com.google.javascript.jscomp.CompilationLevel;
 import com.google.javascript.jscomp.Compiler;
 import com.google.javascript.jscomp.CompilerOptions;
-import com.google.javascript.jscomp.JSSourceFile;
 import com.google.javascript.jscomp.Result;
+import com.google.javascript.jscomp.SourceFile;
 
 /**
  * <p>
@@ -23,7 +22,7 @@ import com.google.javascript.jscomp.Result;
  * </p>
  * due to the amount of cpu used by closure compiler the generated javascript should definitely be
  * cached, e.g. using resource caching in wicket 1.5.
- * 
+ *
  * @author Peter Ertl
  */
 public class ClosureCompilerJavaScriptCompressor implements IJavaScriptCompressor
@@ -47,6 +46,7 @@ public class ClosureCompilerJavaScriptCompressor implements IJavaScriptCompresso
 		this.level = Args.notNull(level, "level");
 	}
 
+	@Override
 	public String compress(String uncompressed)
 	{
 		try
@@ -84,8 +84,8 @@ public class ClosureCompilerJavaScriptCompressor implements IJavaScriptCompresso
 		// TODO integrate logging into slf4j
 
 		// input sources
-		final List<JSSourceFile> inputs = new ArrayList<JSSourceFile>();
-		inputs.add(JSSourceFile.fromCode("custom", uncompressed));
+		final List<SourceFile> inputs = new ArrayList<>();
+		inputs.add(SourceFile.fromCode("custom", uncompressed));
 
 		// compile input
 		final Result result = compiler.compile(externs, inputs, options);

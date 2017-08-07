@@ -29,34 +29,34 @@ import wicket.contrib.tinymce.settings.TinyMCESettings;
 import wicket.contrib.tinymce.settings.TinyMCESettings.Theme;
 import wicket.contrib.tinymce.settings.WicketSavePlugin;
 
-public class InPlaceEditComponent extends AbstractTextComponent
+public class InPlaceEditComponent extends AbstractTextComponent<String>
 {
     private static final long serialVersionUID = 1L;
-    
+
     private InPlaceSaveBehavior inPlaceSaveBehavior;
     private InPlaceEditBehavior inPlaceEditBehavior;
-    
+
     private final Component triggerComponent;
     private final TinyMCESettings settings;
 
-    public InPlaceEditComponent(String id, IModel model)
+    public InPlaceEditComponent(String id, IModel<String> model)
     {
 	this(id, model, null, null);
     }
 
-    public InPlaceEditComponent(String id, IModel model,
+    public InPlaceEditComponent(String id, IModel<String> model,
 	    Component triggerComponent)
     {
 	this(id, model, triggerComponent, null);
     }
 
-    public InPlaceEditComponent(String id, IModel model,
+    public InPlaceEditComponent(String id, IModel<String> model,
 	    TinyMCESettings settings)
     {
 	this(id, model, null, settings);
     }
 
-    public InPlaceEditComponent(String id, IModel model,
+    public InPlaceEditComponent(String id, IModel<String> model,
 	    Component triggerComponent, TinyMCESettings settings)
     {
 	super(id, model);
@@ -66,24 +66,24 @@ public class InPlaceEditComponent extends AbstractTextComponent
 
     public InPlaceEditComponent(String id, String text)
     {
-	this(id, new Model(text));
+	this(id, new Model<>(text));
     }
 
     public InPlaceEditComponent(String id, String text,
 	    Component triggerComponent)
     {
-	this(id, new Model(text), triggerComponent, null);
+	this(id, new Model<>(text), triggerComponent, null);
     }
 
     public InPlaceEditComponent(String id, String text, TinyMCESettings settings)
     {
-	this(id, new Model(text), settings);
+	this(id, new Model<>(text), settings);
     }
 
     public InPlaceEditComponent(String id, String text,
 	    Component triggerComponent, TinyMCESettings settings)
     {
-	this(id, new Model(text), triggerComponent, settings);
+	this(id, new Model<>(text), triggerComponent, settings);
     }
 
     @Override

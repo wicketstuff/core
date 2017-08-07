@@ -47,13 +47,14 @@ import javax.portlet.PortletResponse;
 import javax.portlet.ResourceResponse;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletOutputStream;
+import javax.servlet.WriteListener;
 import javax.servlet.http.Cookie;
 
 /**
  * Temporarily holds the current state of a Wicket response when invoked from
  * WicketPortlet: buffer, headers, state and the redirect location to be
  * processed afterwards within WicketPortlet
- * 
+ *
  * @author Ate Douma
  * @author Peter Pastrnak
  */
@@ -94,10 +95,10 @@ public class ResponseState {
 
 	/**
 	 * FIXME javadoc
-	 * 
+	 *
 	 * Stores the effective wicket url which is used by {@link WicketPortlet} in
 	 * the view phase to request a render from wicket core.
-	 * 
+	 *
 	 * @see IRequestCycleSettings#REDIRECT_TO_RENDER
 	 * @see WicketFilterPortletHelper#initFilter
 	 */
@@ -160,7 +161,7 @@ public class ResponseState {
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see
 	 * javax.servlet.http.HttpServletResponseWrapper#addCookie(javax.servlet
 	 * .http.Cookie)
@@ -176,7 +177,7 @@ public class ResponseState {
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see
 	 * javax.servlet.http.HttpServletResponseWrapper#addDateHeader(java.lang
 	 * .String, long)
@@ -187,7 +188,7 @@ public class ResponseState {
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see
 	 * javax.servlet.http.HttpServletResponseWrapper#addHeader(java.lang.String,
 	 * java.lang.String)
@@ -201,7 +202,7 @@ public class ResponseState {
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see
 	 * javax.servlet.http.HttpServletResponseWrapper#addIntHeader(java.lang.
 	 * String, int)
@@ -212,7 +213,7 @@ public class ResponseState {
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see
 	 * javax.servlet.http.HttpServletResponseWrapper#containsHeader(java.lang
 	 * .String)
@@ -224,7 +225,7 @@ public class ResponseState {
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see javax.servlet.http.HttpServletResponseWrapper#sendError(int,
 	 * java.lang.String)
 	 */
@@ -237,7 +238,7 @@ public class ResponseState {
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see javax.servlet.http.HttpServletResponseWrapper#sendError(int)
 	 */
 	public void sendError(int errorCode) throws IOException {
@@ -246,7 +247,7 @@ public class ResponseState {
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see
 	 * javax.servlet.http.HttpServletResponseWrapper#sendRedirect(java.lang.
 	 * String)
@@ -271,7 +272,7 @@ public class ResponseState {
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see
 	 * javax.servlet.http.HttpServletResponseWrapper#setDateHeader(java.lang
 	 * .String, long)
@@ -282,7 +283,7 @@ public class ResponseState {
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see
 	 * javax.servlet.http.HttpServletResponseWrapper#setHeader(java.lang.String,
 	 * java.lang.String)
@@ -301,7 +302,7 @@ public class ResponseState {
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see
 	 * javax.servlet.http.HttpServletResponseWrapper#setIntHeader(java.lang.
 	 * String, int)
@@ -312,7 +313,7 @@ public class ResponseState {
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see javax.servlet.http.HttpServletResponseWrapper#setStatus(int,
 	 * java.lang.String)
 	 */
@@ -322,7 +323,7 @@ public class ResponseState {
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see javax.servlet.http.HttpServletResponseWrapper#setStatus(int)
 	 */
 	public void setStatus(int statusCode) {
@@ -335,7 +336,7 @@ public class ResponseState {
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see javax.servlet.ServletResponseWrapper#flushBuffer()
 	 */
 	public void flushBuffer() throws IOException {
@@ -346,7 +347,7 @@ public class ResponseState {
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see javax.servlet.ServletResponseWrapper#getBufferSize()
 	 */
 	public int getBufferSize() {
@@ -355,7 +356,7 @@ public class ResponseState {
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see javax.servlet.ServletResponseWrapper#getCharacterEncoding()
 	 */
 	public String getCharacterEncoding() {
@@ -364,7 +365,7 @@ public class ResponseState {
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see javax.servlet.ServletResponseWrapper#getContentType()
 	 */
 	public String getContentType() {
@@ -373,7 +374,7 @@ public class ResponseState {
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see javax.servlet.ServletResponseWrapper#getLocale()
 	 */
 	public Locale getLocale() {
@@ -382,7 +383,7 @@ public class ResponseState {
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see javax.servlet.ServletResponseWrapper#getOutputStream()
 	 */
 	public ServletOutputStream getOutputStream() throws IOException {
@@ -409,6 +410,15 @@ public class ResponseState {
 						}
 					}
 				}
+
+				@Override
+				public boolean isReady() {
+					return true;
+				}
+
+				@Override
+				public void setWriteListener(WriteListener writeListener) {
+				}
 			};
 		}
 		return outputStream;
@@ -416,7 +426,7 @@ public class ResponseState {
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see javax.servlet.ServletResponseWrapper#getWriter()
 	 */
 	public PrintWriter getWriter() throws IOException {
@@ -439,7 +449,7 @@ public class ResponseState {
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see javax.servlet.ServletResponseWrapper#isCommitted()
 	 */
 	public boolean isCommitted() {
@@ -448,7 +458,7 @@ public class ResponseState {
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see javax.servlet.ServletResponseWrapper#reset()
 	 */
 	public void reset() {
@@ -466,7 +476,7 @@ public class ResponseState {
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see javax.servlet.ServletResponseWrapper#resetBuffer()
 	 */
 	public void resetBuffer() {
@@ -487,7 +497,7 @@ public class ResponseState {
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see javax.servlet.ServletResponseWrapper#setBufferSize(int)
 	 */
 	public void setBufferSize(int size) {
@@ -495,7 +505,7 @@ public class ResponseState {
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see
 	 * javax.servlet.ServletResponseWrapper#setCharacterEncoding(java.lang.String
 	 * )
@@ -510,7 +520,7 @@ public class ResponseState {
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see javax.servlet.ServletResponseWrapper#setContentLength(int)
 	 */
 	public void setContentLength(int len) {
@@ -535,7 +545,7 @@ public class ResponseState {
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see
 	 * javax.servlet.ServletResponseWrapper#setContentType(java.lang.String)
 	 */
@@ -554,7 +564,7 @@ public class ResponseState {
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see javax.servlet.ServletResponseWrapper#setLocale(java.util.Locale)
 	 */
 	public void setLocale(Locale locale) {
@@ -851,7 +861,7 @@ public class ResponseState {
 				}
 			}
 		}
-		
+
 		@Override
 		protected void finalize() throws Throwable {
 			reset();
@@ -973,7 +983,7 @@ public class ResponseState {
 				}
 			}
 		}
-		
+
 		@Override
 		protected void finalize() throws Throwable {
 			reset();

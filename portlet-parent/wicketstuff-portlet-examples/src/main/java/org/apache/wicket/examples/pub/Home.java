@@ -31,7 +31,7 @@ import org.apache.wicket.util.value.ValueMap;
 
 /**
  * Demonstrates localization.
- * 
+ *
  * @author Jonathan Locke
  * @author Eelco Hillenius
  */
@@ -39,7 +39,7 @@ public final class Home extends WicketExamplePage
 {
 	/**
 	 * Constructor
-	 * 
+	 *
 	 * @param parameters
 	 *            Page parameters (ignored since this is the home page)
 	 */
@@ -66,7 +66,7 @@ public final class Home extends WicketExamplePage
 
 		// Add a couple of links to be able to play around with the session
 		// locale
-		add(new Link("goCanadian")
+		add(new Link<String>("goCanadian")
 		{
 			@Override
 			public void onClick()
@@ -74,7 +74,7 @@ public final class Home extends WicketExamplePage
 				getSession().setLocale(Locale.CANADA);
 			}
 		});
-		add(new Link("goUS")
+		add(new Link<String>("goUS")
 		{
 			@Override
 			public void onClick()
@@ -82,7 +82,7 @@ public final class Home extends WicketExamplePage
 				getSession().setLocale(Locale.US);
 			}
 		});
-		add(new Link("goDutch")
+		add(new Link<String>("goDutch")
 		{
 			@Override
 			public void onClick()
@@ -90,7 +90,7 @@ public final class Home extends WicketExamplePage
 				getSession().setLocale(new Locale("nl", "NL"));
 			}
 		});
-		add(new Link("goGerman")
+		add(new Link<String>("goGerman")
 		{
 			@Override
 			public void onClick()
@@ -98,7 +98,7 @@ public final class Home extends WicketExamplePage
 				getSession().setLocale(new Locale("de", "DE"));
 			}
 		});
-		add(new Link("goChinese")
+		add(new Link<String>("goChinese")
 		{
 			@Override
 			public void onClick()
@@ -106,7 +106,7 @@ public final class Home extends WicketExamplePage
 				getSession().setLocale(new Locale("zh", "CN"));
 			}
 		});
-		add(new Link("goDanish")
+		add(new Link<String>("goDanish")
 		{
 			@Override
 			public void onClick()
@@ -114,7 +114,7 @@ public final class Home extends WicketExamplePage
 				getSession().setLocale(new Locale("da", "DK"));
 			}
 		});
-		add(new Link("goKorean")
+		add(new Link<String>("goKorean")
 		{
 			@Override
 			public void onClick()
@@ -122,7 +122,7 @@ public final class Home extends WicketExamplePage
 				getSession().setLocale(new Locale("ko", "KR"));
 			}
 		});
-		add(new Link("goHungarian")
+		add(new Link<String>("goHungarian")
 		{
 			@Override
 			public void onClick()

@@ -30,7 +30,7 @@
 	<description>An implementation of Apache Wicket's IDataStore that uses Memcached as a backend</description>
 
 	<properties>
-		<spymemcached.version>2.10.3</spymemcached.version>
+		<spymemcached.version>2.12.3</spymemcached.version>
 	</properties>
 
 	<dependencies>
@@ -58,7 +58,7 @@
 		<dependency>
 			<groupId>com.google.guava</groupId>
 			<artifactId>guava</artifactId>
-			<version>15.0</version>
+			<version>23.0</version>
 			<optional>true</optional>
 		</dependency>
 

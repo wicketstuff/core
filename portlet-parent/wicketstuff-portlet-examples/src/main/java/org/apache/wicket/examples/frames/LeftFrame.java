@@ -28,7 +28,7 @@ import org.apache.wicket.markup.html.link.Link;
  * {@link org.apache.wicket.examples.frames.BodyFrame} and hold in the same page map as index. It
  * uses the frameTarget object as a shared model; this page updates that model, and as the Index
  * uses that to set the frame tag, any changes to it should be reflected with the next render.
- * 
+ *
  * @author Eelco Hillenius
  */
 public class LeftFrame extends WebPage
@@ -40,7 +40,7 @@ public class LeftFrame extends WebPage
 	 * Tags that use this link should have a <code>target="_parent"</code> attribute, so that the
 	 * top frame will be refreshed.
 	 */
-	private static final class ChangeFramePageLink extends Link
+	private static final class ChangeFramePageLink extends Link<String>
 	{
 		private static final long serialVersionUID = 1L;
 
@@ -52,9 +52,9 @@ public class LeftFrame extends WebPage
 
 		/**
 		 * Construct.
-		 * 
+		 *
 		 * @param <C>
-		 * 
+		 *
 		 * @param id
 		 * @param bodyFrame
 		 * @param pageClass
@@ -85,7 +85,7 @@ public class LeftFrame extends WebPage
 
 	/**
 	 * Constructor
-	 * 
+	 *
 	 * @param index
 	 *            parent frame class
 	 */
@@ -99,7 +99,7 @@ public class LeftFrame extends WebPage
 
 	/**
 	 * No need for versioning this frame.
-	 * 
+	 *
 	 * @see org.apache.wicket.Component#isVersioned()
 	 */
 	@Override

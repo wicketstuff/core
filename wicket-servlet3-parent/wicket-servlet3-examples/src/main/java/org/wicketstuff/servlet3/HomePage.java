@@ -27,15 +27,15 @@ public class HomePage extends WebPage
 		// Add the simplest type of label
 		add(new Label("message",
 				"If you see this message wicket is properly configured and running"));
-		add(new StatelessLink("secureExample")
+		add(new StatelessLink<String>("secureExample")
 		{
+			private static final long serialVersionUID = 1L;
 
 			@Override
 			public void onClick()
 			{
 				throw new RedirectToUrlException("/cms/index.html");
 			}
-
 		});
 
 	}

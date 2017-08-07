@@ -33,7 +33,7 @@ import org.apache.wicket.model.PropertyModel;
 
 /**
  * Home page for the roles example.
- * 
+ *
  * @author Eelco Hillenius
  */
 public class Index extends BasePage
@@ -50,7 +50,7 @@ public class Index extends BasePage
 			protected void populateItem(ListItem<User> item)
 			{
 				final User user = item.getModelObject();
-				item.add(new Link("selectUserLink")
+				item.add(new Link<String>("selectUserLink")
 				{
 					@Override
 					public void onClick()
@@ -64,7 +64,7 @@ public class Index extends BasePage
 
 		// pages that are protected using wicket meta data
 		add(new BookmarkablePageLink<>("adminBookmarkableLink", AdminBookmarkablePage.class));
-		add(new Link("adminInternalLink")
+		add(new Link<String>("adminInternalLink")
 		{
 			@Override
 			public void onClick()
@@ -77,7 +77,7 @@ public class Index extends BasePage
 		// pages that are protected using annotations
 		add(new BookmarkablePageLink<Void>("adminAnnotBookmarkableLink",
 			AdminAnnotationsBookmarkablePage.class));
-		add(new Link("adminAnnotInternalLink")
+		add(new Link<String>("adminAnnotInternalLink")
 		{
 			@Override
 			public void onClick()

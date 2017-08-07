@@ -41,10 +41,10 @@
 		var urlWithPrerenderedArgs = 
 			'${wicket:ajaxCallbackUrlWithQuery("param=value")}';
 			
-		setTimeout(function(){			
+		setTimeout(function(){
 		var url = '${wicket:ajaxCallbackUrl()}';
-	    	console.log(url);
-	    	var url = Wicket.Ajax.applyGetParameters(url,{"param":"This is the changed text."});
+			console.log(url);
+			var url = Wicket.Ajax.applyGetParameters(url,{"param":"This is the changed text."});
 			Wicket.Ajax.wrapget(url);
 		},3000);
 	}

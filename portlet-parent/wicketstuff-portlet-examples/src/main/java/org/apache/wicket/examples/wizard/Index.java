@@ -23,7 +23,7 @@ import org.apache.wicket.markup.html.link.Link;
 
 /**
  * Index page for the wizard example.
- * 
+ *
  * @author Eelco Hillenius
  */
 public class Index extends WicketExamplePage
@@ -36,15 +36,15 @@ public class Index extends WicketExamplePage
 	 * wizard, there is still the first access to the wizard. But if you link to the page that
 	 * renders it using and internal link, you'll circumvent that.
 	 */
-	private static final class WizardLink extends Link
+	private static final class WizardLink extends Link<String>
 	{
 		private final Class<? extends Wizard> wizardClass;
 
 		/**
 		 * Construct.
-		 * 
+		 *
 		 * @param <C>
-		 * 
+		 *
 		 * @param id
 		 *            Component id
 		 * @param wizardClass

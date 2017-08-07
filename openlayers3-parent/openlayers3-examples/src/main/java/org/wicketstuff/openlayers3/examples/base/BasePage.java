@@ -16,7 +16,7 @@ import de.agilecoders.wicket.core.markup.html.bootstrap.behavior.BootstrapBaseBe
 import de.agilecoders.wicket.core.markup.html.bootstrap.html.HtmlTag;
 import de.agilecoders.wicket.core.markup.html.bootstrap.html.IeEdgeMetaTag;
 import de.agilecoders.wicket.core.markup.html.bootstrap.html.MetaTag;
-import de.agilecoders.wicket.core.markup.html.bootstrap.html.OptimizedMobileViewportMetaTag;
+import de.agilecoders.wicket.core.markup.html.bootstrap.html.MobileViewportMetaTag;
 import de.agilecoders.wicket.core.markup.html.bootstrap.navbar.Navbar;
 
 /**
@@ -60,7 +60,7 @@ public class BasePage extends WebPage {
 
         // add Bootstrap
         add(new BootstrapBaseBehavior());
-        add(new OptimizedMobileViewportMetaTag("viewport"));
+        add(new MobileViewportMetaTag("viewport"));
         add(new IeEdgeMetaTag("chrome-frame"));
         add(new MetaTag("description", Model.of("description"), getPageDescriptionModel()));
         add(new MetaTag("author", Model.of("author"), getPageAuthorModel()));
