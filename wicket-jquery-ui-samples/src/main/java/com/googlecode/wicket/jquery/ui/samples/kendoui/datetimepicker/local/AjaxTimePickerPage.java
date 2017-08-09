@@ -2,12 +2,10 @@ package com.googlecode.wicket.jquery.ui.samples.kendoui.datetimepicker.local;
 
 import java.time.LocalTime;
 
-import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.core.request.handler.IPartialPageRequestHandler;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.model.Model;
 
-import com.googlecode.wicket.kendo.ui.form.button.AjaxButton;
 import com.googlecode.wicket.kendo.ui.form.button.Button;
 import com.googlecode.wicket.kendo.ui.form.datetime.local.AjaxTimePicker;
 import com.googlecode.wicket.kendo.ui.panel.KendoFeedbackPanel;
@@ -21,7 +19,7 @@ public class AjaxTimePickerPage extends AbstractTimePickerPage
 		Form<?> form = new Form<Void>("form");
 		this.add(form);
 
-		// FeedbackPanel //
+		// FeedbackPanel //	
 		final KendoFeedbackPanel feedback = new KendoFeedbackPanel("feedback");
 		form.add(feedback);
 
@@ -37,6 +35,12 @@ public class AjaxTimePickerPage extends AbstractTimePickerPage
 
 				handler.add(feedback);
 			}
+
+			@Override
+			protected void onError(IPartialPageRequestHandler target)
+			{
+				target.add(feedback);
+			}
 		};
 
 		form.add(timepicker);
@@ -50,24 +54,6 @@ public class AjaxTimePickerPage extends AbstractTimePickerPage
 			public void onSubmit()
 			{
 				this.info("Time: " + timepicker.getModelObject()); // warning, model object can be null
-			}
-		});
-
-		form.add(new AjaxButton("button") {
-
-			private static final long serialVersionUID = 1L;
-
-			@Override
-			protected void onSubmit(AjaxRequestTarget target)
-			{
-				this.info("Time: " + timepicker.getModelObject()); // warning, model object can be null
-				target.add(feedback);
-			}
-
-			@Override
-			protected void onError(AjaxRequestTarget target)
-			{
-				target.add(feedback);
 			}
 		});
 	}

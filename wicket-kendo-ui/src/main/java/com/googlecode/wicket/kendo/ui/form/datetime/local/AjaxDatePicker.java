@@ -231,6 +231,16 @@ public class AjaxDatePicker extends DatePicker implements IValueChangedListener 
 
 	// Events //
 
+	/**
+	 * Triggered when the validation failed (ie, not input provided)
+	 *
+	 * @param handler the {@link IPartialPageRequestHandler}
+	 */
+	protected void onError(IPartialPageRequestHandler handler)
+	{
+		// noop
+	}
+
 	@Override
 	public void onValueChanged(IPartialPageRequestHandler handler)
 	{
@@ -250,7 +260,15 @@ public class AjaxDatePicker extends DatePicker implements IValueChangedListener 
 			public void onValueChanged(IPartialPageRequestHandler handler)
 			{
 				AjaxDatePicker.this.processInput();
-				AjaxDatePicker.this.onValueChanged(handler);
+
+				if (AjaxDatePicker.this.hasErrorMessage())
+				{
+					AjaxDatePicker.this.onError(handler);
+				}
+				else
+				{
+					AjaxDatePicker.this.onValueChanged(handler);
+				}
 			}
 		};
 

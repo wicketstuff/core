@@ -3,14 +3,12 @@ package com.googlecode.wicket.jquery.ui.samples.kendoui.datetimepicker;
 import java.util.Date;
 import java.util.Locale;
 
-import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.core.request.handler.IPartialPageRequestHandler;
 import org.apache.wicket.markup.head.IHeaderResponse;
 import org.apache.wicket.markup.head.JavaScriptHeaderItem;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.model.Model;
 
-import com.googlecode.wicket.kendo.ui.form.button.AjaxButton;
 import com.googlecode.wicket.kendo.ui.form.button.Button;
 import com.googlecode.wicket.kendo.ui.form.datetime.AjaxTimePicker;
 import com.googlecode.wicket.kendo.ui.form.datetime.TimePicker;
@@ -42,6 +40,12 @@ public class LocaleAjaxTimePickerPage extends AbstractTimePickerPage
 
 				handler.add(feedback);
 			}
+
+			@Override
+			protected void onError(IPartialPageRequestHandler target)
+			{
+				target.add(feedback);
+			}
 		};
 
 		form.add(timepicker);
@@ -55,24 +59,6 @@ public class LocaleAjaxTimePickerPage extends AbstractTimePickerPage
 			public void onSubmit()
 			{
 				this.info("Time: " + timepicker.getModelObject());
-			}
-		});
-
-		form.add(new AjaxButton("button") {
-
-			private static final long serialVersionUID = 1L;
-
-			@Override
-			protected void onSubmit(AjaxRequestTarget target)
-			{
-				this.info("Time: " + timepicker.getModelObject());
-				target.add(feedback);
-			}
-
-			@Override
-			protected void onError(AjaxRequestTarget target)
-			{
-				target.add(feedback);
 			}
 		});
 	}

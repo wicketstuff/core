@@ -206,12 +206,12 @@ public class DateUtils
 	 * Gets a new {@link Date} according to the supplied {@link LocalDate} &#38; {@link LocalTime}
 	 * 
 	 * @param date the {@code LocalDate}
-	 * @param time the {@code LocalTime}
+	 * @param time the {@code LocalTime}. If {@code null}, {@link LocalTime#MIDNIGHT} is returned
 	 * @return a new {@code Date}
 	 */
 	public static Date toDate(LocalDate date, LocalTime time)
 	{
-		return DateUtils.toDate(LocalDateTime.of(date, time != null ? time : LocalTime.MIDNIGHT));
+		return DateUtils.toDate(DateUtils.toLocalDateTime(date, time));
 	}
 
 	/**
@@ -310,5 +310,17 @@ public class DateUtils
 	public static LocalTime toLocalTime(Instant instant)
 	{
 		return ZonedDateTime.ofInstant(instant, ZoneId.systemDefault()).toLocalTime();
+	}
+
+	/**
+	 * Gets a new {@link LocalDateTime} according to the supplied {@link LocalDate} &#38; {@link LocalTime}
+	 * 
+	 * @param date the {@code LocalDate}
+	 * @param time the {@code LocalTime}. If {@code null}, {@link LocalTime#MIDNIGHT} is returned
+	 * @return a new {@code LocalDateTime}
+	 */
+	public static LocalDateTime toLocalDateTime(LocalDate date, LocalTime time)
+	{
+		return LocalDateTime.of(date, time != null ? time : LocalTime.MIDNIGHT);
 	}
 }

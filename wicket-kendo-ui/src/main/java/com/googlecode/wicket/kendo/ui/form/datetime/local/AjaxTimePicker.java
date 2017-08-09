@@ -231,6 +231,16 @@ public class AjaxTimePicker extends TimePicker implements IValueChangedListener 
 
 	// Events //
 
+	/**
+	 * Triggered when the validation failed (ie, not input provided)
+	 *
+	 * @param handler the {@link IPartialPageRequestHandler}
+	 */
+	protected void onError(IPartialPageRequestHandler handler)
+	{
+		// noop
+	}
+
 	@Override
 	public void onValueChanged(IPartialPageRequestHandler handler)
 	{
@@ -250,7 +260,15 @@ public class AjaxTimePicker extends TimePicker implements IValueChangedListener 
 			public void onValueChanged(IPartialPageRequestHandler handler)
 			{
 				AjaxTimePicker.this.processInput();
-				AjaxTimePicker.this.onValueChanged(handler);
+
+				if (AjaxTimePicker.this.hasErrorMessage())
+				{
+					AjaxTimePicker.this.onError(handler);
+				}
+				else
+				{
+					AjaxTimePicker.this.onValueChanged(handler);
+				}
 			}
 		};
 
