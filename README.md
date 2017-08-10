@@ -92,7 +92,7 @@ If the version you specified is *snapshot*, you might define this repository:
 <tr><td>8.0.0-M3</td><td>8.0.0-M3</td><td>2016.3.1118 (ASFv2)</td></tr>
 <tr><td>8.0.0-M2</td><td>8.0.0-M2</td><td>2016.3.1028 (ASFv2)</td></tr>
 <tr><td>8.0.0-M1</td><td>8.0.0-M1</td><td>2016.2.714 (ASFv2)</td></tr>
-<tr><td>7.7.0</td><td>7.7.0</td><td>2017.2.621 (ASFv2)</td></tr>
+<tr><td>7.8.0</td><td>7.8.0</td><td>2017.2.621 (ASFv2)</td></tr>
 <tr><td>7.7.0</td><td>7.7.0</td><td>2017.1.223 (ASFv2)</td></tr>
 <tr><td>7.6.0</td><td>7.6.0</td><td>2016.3.1118 (ASFv2)</td></tr>
 <tr><td>7.5.0</td><td>7.5.0</td><td>2016.3.1028 (ASFv2)</td></tr>
