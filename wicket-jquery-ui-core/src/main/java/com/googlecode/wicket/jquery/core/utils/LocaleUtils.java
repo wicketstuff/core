@@ -62,7 +62,7 @@ public class LocaleUtils
 	 */
 	public static String getLocaleDatePattern(Locale locale)
 	{
-		return getLocaleDatePattern(locale, DEFAULT_STYLE, null);
+		return LocaleUtils.getLocaleDatePattern(locale, DEFAULT_STYLE, null);
 	}
 
 	/**
@@ -73,7 +73,7 @@ public class LocaleUtils
 	 */
 	public static String getLocaleDatePattern(Locale locale, int style)
 	{
-		return getLocaleDatePattern(locale, style, null);
+		return LocaleUtils.getLocaleDatePattern(locale, style, null);
 	}
 
 	/**
@@ -84,7 +84,7 @@ public class LocaleUtils
 	 */
 	public static String getLocaleDatePattern(Locale locale, String defaultPattern)
 	{
-		return getLocaleDatePattern(locale, DEFAULT_STYLE, defaultPattern);
+		return LocaleUtils.getLocaleDatePattern(locale, DEFAULT_STYLE, defaultPattern);
 	}
 
 	/**
@@ -114,7 +114,7 @@ public class LocaleUtils
 	 */
 	public static String getLocaleTimePattern(Locale locale)
 	{
-		return getLocaleTimePattern(locale, DEFAULT_STYLE, null);
+		return LocaleUtils.getLocaleTimePattern(locale, DEFAULT_STYLE, null);
 	}
 
 	/**
@@ -125,7 +125,7 @@ public class LocaleUtils
 	 */
 	public static String getLocaleTimePattern(Locale locale, int style)
 	{
-		return getLocaleTimePattern(locale, style, null);
+		return LocaleUtils.getLocaleTimePattern(locale, style, null);
 	}
 
 	/**
@@ -136,7 +136,7 @@ public class LocaleUtils
 	 */
 	public static String getLocaleTimePattern(Locale locale, String defaultPattern)
 	{
-		return getLocaleTimePattern(locale, DEFAULT_STYLE, defaultPattern);
+		return LocaleUtils.getLocaleTimePattern(locale, DEFAULT_STYLE, defaultPattern);
 	}
 
 	/**

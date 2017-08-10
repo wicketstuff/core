@@ -85,7 +85,7 @@ public class RequestCycleUtils
 	 * @param name the name of the query parameter
 	 * @return {@code true} if the parameter is found
 	 */
-	public static boolean hasQueryParameter(String name)
+	public static boolean hasQueryParameter(final String name)
 	{
 		final RequestCycle requestCycle = RequestCycle.get();
 		final IRequestParameters parameters = requestCycle.getRequest().getQueryParameters();

@@ -18,7 +18,7 @@ Once done, just include the jar(s) in your project's build path.
 <dependency>
     <groupId>com.googlecode.wicket-jquery-ui</groupId>
     <artifactId>wicket-jquery-ui</artifactId>
-    <version>8.0.0-M6</version>
+    <version>8.0.0-M7</version>
 </dependency>
 ```
 
@@ -136,7 +136,7 @@ To use wicket-jquery-ui with a standard theme, just add the corresponding theme 
 <dependency>
 	<groupId>com.googlecode.wicket-jquery-ui</groupId>
 	<artifactId>wicket-jquery-ui-theme-uilightness</artifactId>
-	<version>8.0.0-M6</version>
+	<version>8.0.0-M7</version>
 </dependency>
 ```
 
@@ -152,7 +152,7 @@ To use wicket-kendo-ui with a standard theme, just add the corresponding theme d
 <dependency>
 	<groupId>com.googlecode.wicket-jquery-ui</groupId>
 	<artifactId>wicket-kendo-ui-theme-default</artifactId>
-	<version>8.0.0-M6</version>
+	<version>8.0.0-M7</version>
 </dependency>
 ```
 

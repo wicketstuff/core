@@ -134,7 +134,7 @@ public class FeedbackUtils
 	}
 
 	/**
-	 * Register fatal at session level so the message is available even if the page is redirected
+	 * Register a fatal at session level so the message is available even if the page is redirected
 	 * 
 	 * @param e the {@link Exception}
 	 */
