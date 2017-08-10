@@ -189,7 +189,7 @@ public class AjaxDateTimePicker extends DateTimePicker implements IValueChangedL
 			@Override
 			public JQueryBehavior newWidgetBehavior(String selector)
 			{
-				IValueChangedListener listener = new IValueChangedListener() {
+				final IValueChangedListener listener = new IValueChangedListener() {
 
 					private static final long serialVersionUID = 1L;
 
@@ -253,7 +253,7 @@ public class AjaxDateTimePicker extends DateTimePicker implements IValueChangedL
 			@Override
 			public JQueryBehavior newWidgetBehavior(String selector)
 			{
-				IValueChangedListener listener = new IValueChangedListener() {
+				final IValueChangedListener listener = new IValueChangedListener() {
 
 					private static final long serialVersionUID = 1L;
 

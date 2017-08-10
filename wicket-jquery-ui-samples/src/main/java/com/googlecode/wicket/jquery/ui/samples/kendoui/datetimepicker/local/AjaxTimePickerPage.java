@@ -19,7 +19,7 @@ public class AjaxTimePickerPage extends AbstractTimePickerPage
 		Form<?> form = new Form<Void>("form");
 		this.add(form);
 
-		// FeedbackPanel //	
+		// FeedbackPanel //
 		final KendoFeedbackPanel feedback = new KendoFeedbackPanel("feedback");
 		form.add(feedback);
 
@@ -37,9 +37,9 @@ public class AjaxTimePickerPage extends AbstractTimePickerPage
 			}
 
 			@Override
-			protected void onError(IPartialPageRequestHandler target)
+			protected void onError(IPartialPageRequestHandler handler)
 			{
-				target.add(feedback);
+				handler.add(feedback);
 			}
 		};
 
@@ -53,7 +53,7 @@ public class AjaxTimePickerPage extends AbstractTimePickerPage
 			@Override
 			public void onSubmit()
 			{
-				this.info("Time: " + timepicker.getModelObject()); // warning, model object can be null
+				this.info("Submitted: " + timepicker.getModelObject()); // warning, model object can be null
 			}
 		});
 	}

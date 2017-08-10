@@ -277,7 +277,7 @@ public class DateTimePicker extends FormComponentPanel<LocalDateTime> implements
 	 * Sets the time-picker enabled flag
 	 *
 	 * @param enabled the enabled flag
-	 * @return
+	 * @return this, for chaining
 	 */
 	public final DateTimePicker setTimePickerEnabled(boolean enabled)
 	{

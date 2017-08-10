@@ -274,7 +274,7 @@ public class DateTimePicker extends FormComponentPanel<Date> implements ITextFor
 	 * Sets the time-picker enabled flag
 	 *
 	 * @param enabled the enabled flag
-	 * @return
+	 * @return this, for chaining
 	 */
 	public final DateTimePicker setTimePickerEnabled(boolean enabled)
 	{

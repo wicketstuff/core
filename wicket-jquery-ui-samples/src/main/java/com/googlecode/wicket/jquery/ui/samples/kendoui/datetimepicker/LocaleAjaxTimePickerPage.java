@@ -42,9 +42,9 @@ public class LocaleAjaxTimePickerPage extends AbstractTimePickerPage
 			}
 
 			@Override
-			protected void onError(IPartialPageRequestHandler target)
+			protected void onError(IPartialPageRequestHandler handler)
 			{
-				target.add(feedback);
+				handler.add(feedback);
 			}
 		};
 
@@ -58,7 +58,7 @@ public class LocaleAjaxTimePickerPage extends AbstractTimePickerPage
 			@Override
 			public void onSubmit()
 			{
-				this.info("Time: " + timepicker.getModelObject());
+				this.info("Submitted: " + timepicker.getModelObject());
 			}
 		});
 	}

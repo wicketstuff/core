@@ -36,7 +36,7 @@ public class LocalTimePickerPage extends AbstractTimePickerPage
 			@Override
 			public void onSubmit()
 			{
-				this.info("Time: " + timepicker.getModelObject());
+				this.info("Submitted: " + timepicker.getModelObject());
 			}
 		});
 
@@ -47,7 +47,7 @@ public class LocalTimePickerPage extends AbstractTimePickerPage
 			@Override
 			protected void onSubmit(AjaxRequestTarget target)
 			{
-				this.info("Time: " + timepicker.getModelObject());
+				this.info("Submitted: " + timepicker.getModelObject());
 				target.add(feedback);
 			}
 

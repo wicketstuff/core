@@ -36,7 +36,7 @@ public class PatternAjaxDateTimePickerPage extends AbstractTimePickerPage
 
 				handler.add(feedback);
 			}
-			
+
 			@Override
 			protected void onError(IPartialPageRequestHandler handler)
 			{
@@ -54,7 +54,7 @@ public class PatternAjaxDateTimePickerPage extends AbstractTimePickerPage
 			@Override
 			public void onSubmit()
 			{
-				this.info("Date & Time: " + datetimepicker.getModelObject());
+				this.info("Submitted: " + datetimepicker.getModelObject());
 			}
 		});
 	}

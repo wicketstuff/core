@@ -38,9 +38,9 @@ public class AjaxDatePickerPage extends AbstractTimePickerPage
 			}
 
 			@Override
-			protected void onError(IPartialPageRequestHandler target)
+			protected void onError(IPartialPageRequestHandler handler)
 			{
-				target.add(feedback);
+				handler.add(feedback);
 			}
 		};
 
@@ -54,7 +54,7 @@ public class AjaxDatePickerPage extends AbstractTimePickerPage
 			@Override
 			public void onSubmit()
 			{
-				this.info("Date: " + datepicker.getModelObject()); // warning, model object can be null
+				this.info("Submitted: " + datepicker.getModelObject()); // warning, model object can be null
 			}
 		});
 	}
