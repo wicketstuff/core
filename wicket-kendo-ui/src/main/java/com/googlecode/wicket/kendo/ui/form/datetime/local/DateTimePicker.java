@@ -362,7 +362,14 @@ public class DateTimePicker extends FormComponentPanel<LocalDateTime> implements
 			@Override
 			public LocalDate getObject()
 			{
-				return getModelObject().toLocalDate();
+				LocalDateTime datetime = getModelObject();
+
+				if (datetime != null)
+				{
+					return datetime.toLocalDate();
+				}
+
+				return null;
 			}
 		};
 	}
@@ -381,7 +388,14 @@ public class DateTimePicker extends FormComponentPanel<LocalDateTime> implements
 			@Override
 			public LocalTime getObject()
 			{
-				return getModelObject().toLocalTime();
+				LocalDateTime datetime = getModelObject();
+
+				if (datetime != null)
+				{
+					return datetime.toLocalTime();
+				}
+
+				return null;
 			}
 		};
 	}
