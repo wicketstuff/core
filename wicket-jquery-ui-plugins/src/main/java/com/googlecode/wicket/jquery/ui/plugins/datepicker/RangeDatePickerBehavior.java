@@ -31,7 +31,7 @@ import com.googlecode.wicket.jquery.core.ajax.JQueryAjaxBehavior;
 import com.googlecode.wicket.jquery.core.utils.RequestCycleUtils;
 
 /**
- * Provides the jQuery fullCalendar behavior
+ * Provides the jQuery DatePicker behavior
  *
  * @author Sebastien Briquet - sebfz1
  *
