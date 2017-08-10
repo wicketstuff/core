@@ -104,7 +104,7 @@ If the version you specified is *snapshot*, you might define this repository:
 <tr><td>7.0.0</td><td>7.0.0</td><td>2015.2.624 (ASFv2)</td></tr>
 <tr><td>7.0.0-M6</td><td>7.0.0-M6</td><td>2015.1.318 (ASFv2)</td></tr>
 <tr><td>7.0.0-M5</td><td>7.0.0-M5</td><td>2014.3.1119 (ASFv2)</td></tr>
-<tr><td>6.27.0</td><td>6.27.0</td><td>2017.1.223 (ASFv2)</td></tr>
+<tr><td>6.27.0</td><td>6.27.0</td><td>2017.2.621 (ASFv2)</td></tr>
 <tr><td>6.26.0</td><td>6.26.0</td><td>2016.3.1118 (ASFv2)</td></tr>
 <tr><td>6.25.1</td><td>6.25.0</td><td>2016.3.1028 (ASFv2)</td></tr>
 <tr><td>6.25.0</td><td>6.25.0</td><td>2016.3.1028 (ASFv2)</td></tr>
