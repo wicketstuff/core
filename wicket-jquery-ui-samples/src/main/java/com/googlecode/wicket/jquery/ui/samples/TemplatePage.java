@@ -6,7 +6,6 @@ import org.apache.wicket.Component;
 import org.apache.wicket.MetaDataKey;
 import org.apache.wicket.Session;
 import org.apache.wicket.behavior.Behavior;
-import org.apache.wicket.devutils.debugbar.DebugBar;
 import org.apache.wicket.markup.head.IHeaderResponse;
 import org.apache.wicket.markup.head.JavaScriptHeaderItem;
 import org.apache.wicket.markup.html.WebPage;
@@ -25,7 +24,6 @@ public abstract class TemplatePage extends WebPage
 	private static final long serialVersionUID = 1L;
 
 	protected static final String CSS_NONE = "";
-//	protected static final String CSS_HOME = "home";
 	protected static final String CSS_KENDO = "kendo";
 	protected static final String CSS_JQUERY = "jquery";
 
@@ -38,9 +36,6 @@ public abstract class TemplatePage extends WebPage
 		super();
 
 		TemplatePage.initTemplate();
-
-		// debug //
-		this.add(new DebugBar("debug", false));
 
 		// buttons //
 		this.add(this.newKendoButton("btnKendoUI"));
