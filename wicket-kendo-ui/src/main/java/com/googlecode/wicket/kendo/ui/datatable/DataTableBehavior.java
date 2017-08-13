@@ -63,9 +63,9 @@ public abstract class DataTableBehavior extends KendoUIBehavior implements IJQue
 
 	// TODO: private JQueryAjaxBehavior onEditAjaxBehavior;
 	private JQueryAjaxBehavior onCancelAjaxBehavior;
-	private JQueryAjaxBehavior onCreateAjaxBehavior;
-	private JQueryAjaxBehavior onUpdateAjaxBehavior;
-	private JQueryAjaxBehavior onDeleteAjaxBehavior;
+	private DataSourceAjaxBehavior onCreateAjaxBehavior;
+	private DataSourceAjaxBehavior onUpdateAjaxBehavior;
+	private DataSourceAjaxBehavior onDeleteAjaxBehavior;
 
 	/**
 	 * Constructor
@@ -387,8 +387,8 @@ public abstract class DataTableBehavior extends KendoUIBehavior implements IJQue
 			this.off(selector, "click");
 			this.on(selector, "click", behavior.getCallbackFunction());
 		}
-		
-		super.onConfigure(component);		
+
+		super.onConfigure(component);
 	}
 
 	/**
@@ -407,7 +407,7 @@ public abstract class DataTableBehavior extends KendoUIBehavior implements IJQue
 		if (event instanceof ToolbarClickEvent)
 		{
 			ToolbarClickEvent e = (ToolbarClickEvent) event;
-			
+
 			e.getButton().onClick(target, e.getValues());
 			this.listener.onClick(target, e.getButton(), e.getValues());
 		}
@@ -516,12 +516,12 @@ public abstract class DataTableBehavior extends KendoUIBehavior implements IJQue
 	}
 
 	/**
-	 * Gets a new {@link JQueryAjaxBehavior} that will be wired to the datasource's 'create' event
+	 * Gets a new {@link DataSourceAjaxBehavior} that will be wired to the datasource's 'create' event
 	 *
 	 * @param source the {@link IJQueryAjaxAware}
-	 * @return a new {@code DataSourceAjaxBehavior} by default
+	 * @return a new {@code DataSourceAjaxBehavior}
 	 */
-	protected JQueryAjaxBehavior newOnCreateAjaxBehavior(IJQueryAjaxAware source)
+	protected DataSourceAjaxBehavior newOnCreateAjaxBehavior(IJQueryAjaxAware source)
 	{
 		return new DataSourceAjaxBehavior(source) {
 
@@ -536,12 +536,12 @@ public abstract class DataTableBehavior extends KendoUIBehavior implements IJQue
 	}
 
 	/**
-	 * Gets a new {@link JQueryAjaxBehavior} that will be wired to the datasource's 'update' event
+	 * Gets a new {@link DataSourceAjaxBehavior} that will be wired to the datasource's 'update' event
 	 *
 	 * @param source the {@link IJQueryAjaxAware}
-	 * @return a new {@code DataSourceAjaxBehavior} by default
+	 * @return a new {@code DataSourceAjaxBehavior}
 	 */
-	protected JQueryAjaxBehavior newOnUpdateAjaxBehavior(IJQueryAjaxAware source)
+	protected DataSourceAjaxBehavior newOnUpdateAjaxBehavior(IJQueryAjaxAware source)
 	{
 		return new DataSourceAjaxBehavior(source) {
 
@@ -556,12 +556,12 @@ public abstract class DataTableBehavior extends KendoUIBehavior implements IJQue
 	}
 
 	/**
-	 * Gets a new {@link JQueryAjaxBehavior} that will be wired to the datasource's 'delete' event
+	 * Gets a new {@link DataSourceAjaxBehavior} that will be wired to the datasource's 'delete' event
 	 *
 	 * @param source the {@link IJQueryAjaxAware}
-	 * @return a new {@code DataSourceAjaxBehavior} by default
+	 * @return a new {@code DataSourceAjaxBehavior}
 	 */
-	protected JQueryAjaxBehavior newOnDeleteAjaxBehavior(IJQueryAjaxAware source)
+	protected DataSourceAjaxBehavior newOnDeleteAjaxBehavior(IJQueryAjaxAware source)
 	{
 		return new DataSourceAjaxBehavior(source) {
 

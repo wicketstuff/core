@@ -7,7 +7,7 @@ import com.github.openjson.JSONArray;
 import com.github.openjson.JSONObject;
 
 /**
- * Utility class for json objects
+ * Utility class for JSON objects
  * 
  * @author Sebastien Briquet - sebfz1
  *

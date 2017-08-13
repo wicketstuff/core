@@ -21,6 +21,7 @@ import org.apache.wicket.model.Model;
 import org.apache.wicket.util.io.IClusterable;
 import org.apache.wicket.util.string.Strings;
 
+import com.googlecode.wicket.jquery.core.IJsonFactory;
 import com.googlecode.wicket.kendo.ui.datatable.DataTable;
 
 /**
@@ -28,20 +29,10 @@ import com.googlecode.wicket.kendo.ui.datatable.DataTable;
  *
  * @author Sebastien Briquet - sebfz1
  */
-public abstract class AbstractButton implements IClusterable
+public abstract class AbstractButton implements IJsonFactory, IClusterable
 {
 	private static final long serialVersionUID = 1L;
 	private static short sequence = 0;
-
-	/**
-	 * Gets the next id-sequence. This is used to generate the markup id
-	 *
-	 * @return 0x0000 to 0x7FFF
-	 */
-	private static synchronized int nextSequence()
-	{
-		return AbstractButton.sequence++ % Short.MAX_VALUE;
-	}
 
 	public static final String EDIT = "edit";
 	public static final String SAVE = "save";
@@ -183,4 +174,16 @@ public abstract class AbstractButton implements IClusterable
 	{
 		return Strings.isEqual(name, this.name);
 	}
+	
+	// factories //
+
+	/**
+	 * Gets the next id-sequence. This is used to generate the markup id
+	 *
+	 * @return 0x0000 to 0x7FFF
+	 */
+	private static synchronized int nextSequence()
+	{
+		return AbstractButton.sequence++ % Short.MAX_VALUE;
+	}	
 }

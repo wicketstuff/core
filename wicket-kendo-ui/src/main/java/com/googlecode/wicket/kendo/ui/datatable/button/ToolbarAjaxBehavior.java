@@ -86,7 +86,7 @@ public class ToolbarAjaxBehavior extends JQueryAjaxBehavior
 		if (property != null)
 		{
 			statement += "var $grid = jQuery(e.target).closest('.k-grid').data('kendoGrid');\n"; // lf
-			statement += "jQuery.each($grid.select(), function(index, row) { values.push($grid.dataItem(row)." + property + "); }"; // lf
+			statement += "jQuery.each($grid.select(), function(index, row) { values.push($grid.dataItem(row)." + property + "); }\n"; // lf
 			statement += ");\n";
 		}
 

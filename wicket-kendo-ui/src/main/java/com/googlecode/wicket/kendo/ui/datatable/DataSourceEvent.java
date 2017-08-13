@@ -16,6 +16,8 @@
  */
 package com.googlecode.wicket.kendo.ui.datatable;
 
+import org.apache.wicket.request.cycle.RequestCycle;
+
 import com.github.openjson.JSONObject;
 
 import com.googlecode.wicket.jquery.core.JQueryEvent;
@@ -33,13 +35,24 @@ public class DataSourceEvent extends JQueryEvent
 
 	public DataSourceEvent()
 	{
-		String data = RequestCycleUtils.getQueryParameterValue("data").toString("{}");
-		this.object = new JSONObject(data);
+		this.object = DataSourceEvent.data();
 	}
 
 	public JSONObject getObject()
 	{
 		return this.object;
+	}
+
+	/**
+	 * Gets the json data from the {@link RequestCycle}
+	 * 
+	 * @return a {@link JSONObject}
+	 */
+	public static JSONObject data()
+	{
+		String data = RequestCycleUtils.getQueryParameterValue("data").toString("{}");
+
+		return new JSONObject(data);
 	}
 
 	/**

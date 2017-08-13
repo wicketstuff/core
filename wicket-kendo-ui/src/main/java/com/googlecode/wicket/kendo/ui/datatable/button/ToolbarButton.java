@@ -22,7 +22,7 @@ import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.util.string.Strings;
 
-import com.googlecode.wicket.jquery.core.utils.BuilderUtils;
+import com.github.openjson.JSONObject;
 import com.googlecode.wicket.kendo.ui.KendoIcon;
 import com.googlecode.wicket.kendo.ui.datatable.DataTable;
 
@@ -93,14 +93,14 @@ public class ToolbarButton extends AbstractButton
 	{
 		switch (this.getName())
 		{
-			case EDIT:
-			case SAVE:
-			case CREATE:
-			case CANCEL:
-			case DESTROY:
-				return true;
-			default:
-				break;
+		case EDIT:
+		case SAVE:
+		case CREATE:
+		case CANCEL:
+		case DESTROY:
+			return true;
+		default:
+			break;
 		}
 
 		return false;
@@ -138,23 +138,24 @@ public class ToolbarButton extends AbstractButton
 	@Override
 	public String toString()
 	{
-		StringBuilder builder = new StringBuilder("{ ");
+		return this.toJSONObject().toString();
+	}
 
-		// name //
-		BuilderUtils.append(builder, "name", this.getName());
-
-		// text //
-		BuilderUtils.append(builder.append(", "), "text", this.getText().getObject());
+	@Override
+	public JSONObject toJSONObject()
+	{
+		JSONObject object = new JSONObject();
+		
+		object.put("name", this.getName());
+		object.put("text", this.getText().getObject());
 
 		// icon //
-		String cssIcon = this.getIconClass();
-
-		if (!Strings.isEmpty(cssIcon)) /* important */
+		if (!Strings.isEmpty(this.getIconClass())) /* important */
 		{
-			BuilderUtils.append(builder.append(", "), "imageClass", cssIcon);
+			object.put("imageClass", this.getIconClass());
 		}
 
-		return builder.append(" }").toString();
+		return object;
 	}
 
 	// Events //
