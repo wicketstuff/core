@@ -100,9 +100,9 @@ public class IndicatingAjaxButton extends AjaxButton
 			private static final long serialVersionUID = 1L;
 
 			@Override
-			protected Options newOnClickOptions()
+			protected Options newAjaxStartOptions()
 			{
-				Options options = super.newOnClickOptions();
+				Options options = super.newAjaxStartOptions();
 
 				if (IndicatingAjaxButton.this.isDisabledOnClick())
 				{

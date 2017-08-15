@@ -72,8 +72,13 @@ public class AjaxIndicatingButtonBehavior extends ButtonBehavior
 		StringBuilder builder = new StringBuilder(super.$());
 
 		// busy indicator starts //
-		builder.append("jQuery('").append(this.selector).append("')").append(".click(function() { ");
+		// caution: in specific cases, #getSelector may return a different selector that this.selector
+		builder.append("jQuery('").append(this.getSelector()).append("')").append(".click(function() { ");
 		builder.append($(this.newOnClickOptions()));
+		builder.append(" }); ");
+
+		builder.append("jQuery(document).ajaxStart(function() { ");
+		builder.append($(this.newAjaxStartOptions())); //TODO WIP
 		builder.append(" }); ");
 
 		// busy indicator stops //
@@ -109,5 +114,15 @@ public class AjaxIndicatingButtonBehavior extends ButtonBehavior
 	protected Options newOnClickOptions()
 	{
 		return new Options("icon", Options.asString(CSS_INDICATOR));
+	}
+
+	/**
+	 * Gets the new {@link Button}'s {@link Options} to be used on ajax-start
+	 *
+	 * @return the {@link Options}
+	 */
+	protected Options newAjaxStartOptions()
+	{
+		return new Options();
 	}
 }

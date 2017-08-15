@@ -93,7 +93,7 @@ public class TabbedPanelNavigator extends NavigationPanel // NOSONAR
 		// broadcasted by the TabbedPanel
 		if (event.getPayload() instanceof RefreshPayload)
 		{
-			TabbedPanelNavigator.RefreshPayload payload = (TabbedPanelNavigator.RefreshPayload) event.getPayload();
+			RefreshPayload payload = (RefreshPayload) event.getPayload();
 
 			this.index = payload.getIndex();
 			payload.reload(this);

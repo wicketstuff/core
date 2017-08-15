@@ -60,9 +60,22 @@ public class KendoEffectUtils
 	 */
 	public static void reload(AjaxRequestTarget target, Component component, KendoEffect effect)
 	{
+		KendoEffectUtils.reload(target, component, effect, false);
+	}
+
+	/**
+	 * Reloads a {@link Component} using a specified {@link KendoEffect}
+	 *
+	 * @param target the {@link AjaxRequestTarget}
+	 * @param component the {@link Component}
+	 * @param effect the {@link KendoEffect}
+	 * @param reverse indicates whether the effect should be played or reverse-played
+	 */
+	public static void reload(AjaxRequestTarget target, Component component, KendoEffect effect, boolean reverse)
+	{
 		String selector = JQueryWidget.getSelector(component);
 
 		target.add(component);
-		target.appendJavaScript(String.format("kendo.fx(jQuery('%s')).%s.play();", selector, effect));
+		target.appendJavaScript(String.format("kendo.fx(jQuery('%s')).%s.%s();", selector, effect, !reverse ? "play" : "reverse"));
 	}
 }

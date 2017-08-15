@@ -73,7 +73,7 @@ public class AjaxIndicatingButtonBehavior extends ButtonBehavior // NOSONAR
 	@Override
 	protected String $()
 	{
-		// configure the busy indicator start & stop //
+		// busy indicator starts //
 		// caution: in specific cases, #getSelector may return a different selector that this.selector
 		StringBuilder builder = new StringBuilder(super.$());
 
@@ -81,6 +81,11 @@ public class AjaxIndicatingButtonBehavior extends ButtonBehavior // NOSONAR
 		builder.append($(this.newOnClickOptions()));
 		builder.append("}); ");
 
+		builder.append("jQuery(document).ajaxStart(function() { ");
+		builder.append($(this.newAjaxStartOptions()));
+		builder.append(" }); ");
+
+		// busy indicator stops //
 		builder.append("jQuery(document).ajaxStop(function() { ");
 		builder.append($(this.newOnAjaxStopOptions()));
 		builder.append("}); ");
@@ -118,7 +123,17 @@ public class AjaxIndicatingButtonBehavior extends ButtonBehavior // NOSONAR
 	}
 
 	/**
-	 * Gets the new {@link Button}'s {@link Options} to be used on when ajax stops
+	 * Gets the new {@link Button}'s {@link Options} to be used on ajax-start
+	 *
+	 * @return the {@link Options}
+	 */
+	protected Options newAjaxStartOptions()
+	{
+		return new Options();
+	}
+
+	/**
+	 * Gets the new {@link Button}'s {@link Options} to be used on when ajax-stop
 	 *
 	 * @return the {@link Options}
 	 */

@@ -28,8 +28,10 @@ public enum KendoEffect
 	SLIDEIN_LEFT("slideIn('left')"),
 	SLIDEIN_RIGHT("slideIn('right')"),
 	SLIDEIN_UP("slideIn('up')"),
-	SLIDEIN_DOWN("slideIn('down')");
-
+	SLIDEIN_DOWN("slideIn('down')"),
+	FLIP_HORIZONTAL("flipHorizontal()"),
+	EXPAND_VERTICAL("expand('vertical')");
+	
 	private final String method;
 
 	private KendoEffect(String method)

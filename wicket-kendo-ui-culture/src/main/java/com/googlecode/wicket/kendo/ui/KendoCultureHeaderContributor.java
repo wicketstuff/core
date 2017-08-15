@@ -48,6 +48,16 @@ public class KendoCultureHeaderContributor implements IHeaderContributor
 	/**
 	 * Constructor
 	 * 
+	 * @param culture the culture or language, ie: 'fr' or 'fr-FR'
+	 */
+	public KendoCultureHeaderContributor(String culture)
+	{
+		this.culture = culture;
+	}
+
+	/**
+	 * Constructor
+	 * 
 	 * @param locale the {@link Locale}, ie: Locale.FRENCH
 	 */
 	public KendoCultureHeaderContributor(Locale locale)
@@ -63,16 +73,6 @@ public class KendoCultureHeaderContributor implements IHeaderContributor
 	public KendoCultureHeaderContributor(KendoCulture culture)
 	{
 		this(culture.toString());
-	}
-
-	/**
-	 * Constructor
-	 * 
-	 * @param culture the culture or language, ie: 'fr' or 'fr-FR'
-	 */
-	public KendoCultureHeaderContributor(String culture)
-	{
-		this.culture = culture;
 	}
 
 	@Override
