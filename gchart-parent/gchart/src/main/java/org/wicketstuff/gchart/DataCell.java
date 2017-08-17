@@ -19,7 +19,6 @@ import java.text.DateFormat;
 import java.text.Format;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.Map;
 import org.apache.wicket.ajax.json.JSONObject;
@@ -75,27 +74,30 @@ public class DataCell implements IClusterable, Jsonable {
     }
 
     /**
-     * Format used for calculating the value to a String used for rendering of {@code f} in JavaScript.
+     * Format used for calculating the value to a String used for rendering of
+     * {@code f} in JavaScript.
      *
-     * @param format The format to applied if the formatted value of the instance is null.
-     * For Number this can be a DecimalFormat, for Dates for instance a SimpleDateFormat.
+     * @param format The format to applied if the formatted value of the
+     * instance is null. For Number this can be a DecimalFormat, for Dates for
+     * instance a SimpleDateFormat.
      */
     public void setFormat(Format format) {
         this.format = format;
     }
 
     /**
-     * Return the formatted value. If this is null, null is also returned and there should be no
-     * rendering of {@code f} in JavaScript. In this case format conversion is done by Google chart lib.
-     * See therefor {@link Chart#getLocale() }.
+     * Return the formatted value. If this is null, null is also returned and
+     * there should be no rendering of {@code f} in JavaScript. In this case
+     * format conversion is done by Google chart lib. See therefor {@link Chart#getLocale()
+     * }.
      *
-     * If {@link #getFormat() } is not null and the formatted field is null, the format is applied to the value.
-     * If formatted field is not null this is returned without change, so a single DataCell can be override
-     * the Formatter.
+     * If {@link #getFormat() } is not null and the formatted field is null, the
+     * format is applied to the value. If formatted field is not null this is
+     * returned without change, so a single DataCell can override the Formatter.
      *
-     * @return Field formatted if field format is null.
-     * If field format is not null and field formatted is null, the format is applied to the value
-     * and the result is returned.
+     * @return Field formatted if field format is null. If field format is not
+     * null and field formatted is null, the format is applied to the value and
+     * the result is returned.
      */
     public String getFormatted() {
         if (formatted == null && format != null) {
@@ -161,9 +163,7 @@ public class DataCell implements IClusterable, Jsonable {
             return ((Boolean) val).toString();
         }
         if (val instanceof Date) {
-            GregorianCalendar cal = new GregorianCalendar();
-            cal.setTime((Date) val);
-            return createJsDate(cal);
+            return createJsDate((Date) val);
         }
         if (val instanceof Calendar) {
             return createJsDate((Calendar) val);
@@ -177,13 +177,14 @@ public class DataCell implements IClusterable, Jsonable {
 
     /**
      * Convert a Calendar object to a JavaScript {@code Date()} call that
-     * generates the same value. Return as a JsonFunction for rendering in
-     * JSONObjects.
+     * generates the same value. Return as a human readable JsonFunction
+     * ({@code new Date(year, month[, day[, hour[, minutes[, seconds[, milliseconds]]]]])})
+     * for rendering in JSONObjects.
      *
      * @param cal Calender value to render.
      * @return JavaScript Date function for the value.
      */
-    public static JsonFunction createJsDate(Calendar cal) {
+    public static JsonFunction createExplicitJsDate(Calendar cal) {
         StringBuilder sb = new StringBuilder("new Date(");
         sb.append(cal.get(Calendar.YEAR));
         sb.append(", ").append(cal.get(Calendar.MONTH));
@@ -197,6 +198,38 @@ public class DataCell implements IClusterable, Jsonable {
         if (cal.isSet(Calendar.MILLISECOND) && cal.get(Calendar.MILLISECOND) != 0) {
             sb.append(", ").append(cal.get(Calendar.MILLISECOND));
         }
+        sb.append(")");
+        return new JsonFunction(sb.toString());
+    }
+
+    /**
+     * Convert a Calendar object to a JavaScript {@code Date()} call that
+     * generates the same value. Return as a
+     * JsonFunction({@code new Date(value);}) (milliseconds since epoch) for
+     * rendering in JSONObjects .
+     *
+     * @param cal Calender value to render.
+     * @return JavaScript Date function for the value.
+     */
+    public static JsonFunction createJsDate(Calendar cal) {
+        StringBuilder sb = new StringBuilder("new Date(");
+        sb.append(cal.getTimeInMillis());
+        sb.append(")");
+        return new JsonFunction(sb.toString());
+    }
+
+    /**
+     * Convert a Date object to a JavaScript {@code Date()} call that generates
+     * the same value. Return as a
+     * JsonFunction({@code new Date(value);})(milliseconds since epoch) for
+     * rendering in JSONObjects.
+     *
+     * @param date Date value to render.
+     * @return JavaScript Date function for the value.
+     */
+    public static JsonFunction createJsDate(Date date) {
+        StringBuilder sb = new StringBuilder("new Date(");
+        sb.append(date.getTime());
         sb.append(")");
         return new JsonFunction(sb.toString());
     }

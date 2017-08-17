@@ -46,13 +46,15 @@ public class DataCellTest {
 
         GregorianCalendar cal = new GregorianCalendar(2017, 6, 20, 10, 31, 20);
         instance = new DataCell(cal);
-        expResult = "{\"v\":new Date(2017, 6, 20, 10, 31, 20)}"; // {"v":new Date(2017, 6, 20, 10, 31, 20, 0)}
+        // expResult = "{\"v\":new Date(2017, 6, 20, 10, 31, 20)}"; // {"v":new Date(2017, 6, 20, 10, 31, 20, 0)}
+        expResult = "{\"v\":new Date(1500539480000)}";
         result = instance.toJSON().toString();
 //        System.out.println(result);
         assertEquals(expResult, result);
         
         instance = new DataCell(cal.getTime());
-        expResult = "{\"v\":new Date(2017, 6, 20, 10, 31, 20)}"; // {"v":new Date(2017, 6, 20, 10, 31, 20, 0)}
+//        expResult = "{\"v\":new Date(2017, 6, 20, 10, 31, 20)}"; // {"v":new Date(2017, 6, 20, 10, 31, 20, 0)}
+        expResult = "{\"v\":new Date(1500539480000)}";
         result = instance.toJSON().toString();
 //        System.out.println(result);
         assertEquals(expResult, result);

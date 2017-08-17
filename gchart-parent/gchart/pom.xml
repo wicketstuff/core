@@ -47,12 +47,6 @@
     </properties>
     
     <dependencies>
-        
-        <!-- wicket-->
-        <dependency>
-            <groupId>org.apache.wicket</groupId>
-            <artifactId>wicket-core</artifactId>
-        </dependency>
         <!-- Logging with http://logback.qos.ch/ -->
         <dependency>
             <groupId>org.slf4j</groupId>
