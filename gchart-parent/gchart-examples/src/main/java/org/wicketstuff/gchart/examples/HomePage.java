@@ -63,7 +63,7 @@ public class HomePage extends WebPage {
         super(parameters);
         chartLibLoader = new ChartLibLoaderBehavior();
         add(chartLibLoader);
-        // demonstrate two different charts on one page
+        // demonstrate different charts on one page
         add(createChartPie());
         add(createChartLine());
         add(createChartDualLine());
@@ -81,7 +81,6 @@ public class HomePage extends WebPage {
             protected void onUpdate(AjaxRequestTarget target) {
                 System.out.println(stackedPercent ? "True" : "False");
                 target.add(barContainer);
-//                target.appendJavaScript("alert('Hello World!');");
                 target.appendJavaScript(chartBar.getCallbackId() + "();");
             }
         };
@@ -261,13 +260,10 @@ public class HomePage extends WebPage {
     }
 
     /**
-     * More complicated example: Line chart with three series and two axes. Make
-     * use of OptionHelper and use labels from i18n resources. Make use of
-     * explicit formatting of cell values and axis labels Simple
-     * AbstractReadonlyModel could be used if no i18n from Resources is needed.
-     * Shows use of {@link OptionModifier} to demonstrate axis and series
-     * configuring. Resulting options:
-     * {@code var options = {"pointSize":5,"hAxis":{"format":"hh:mm a","title":"Ortszeit 19.07.2017","viewWindow":{"min":new Date(2017, 6, 19, 0, 0),"max":new Date(2017, 6, 20, 0, 0)},"gridlines":{"count":8}},"vAxes":{"0":{"title":"Temperatur (°C)","viewWindow":{"min":10,"max":30}},"1":{"format":"percent","title":"Rel. Luftfeuchte %","viewWindow":{"min":0.3,"max":0.6},"gridlines":{"count":8}}},"series":{"0":{"targetAxisIndex":0},"1":{"targetAxisIndex":0},"2":{"targetAxisIndex":1}},"title":"Metar Temperatur"};}
+     * Line chart with two series and two axes according to
+     * <a href="https://developers.google.com/chart/interactive/docs/gallery/linechart#dual-y-charts">Google's
+     * example</a>. Make use of OptionBuiler. Shows use of {@link OptionModifier}
+     * to demonstrate series configuring.
      *
      * @return Line chart ready to use on page.
      */

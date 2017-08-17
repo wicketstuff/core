@@ -41,23 +41,9 @@
         </license>
     </licenses>
     <properties>
-        <jetty9.version>9.2.19.v20160908</jetty9.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
     <dependencies>
-        <!--  WICKET DEPENDENCIES -->
-        <dependency>
-            <groupId>org.apache.wicket</groupId>
-            <artifactId>wicket-core</artifactId>
-            <version>${wicket.version}</version>
-        </dependency>
-        <!-- OPTIONAL DEPENDENCY
-        <dependency>
-                <groupId>org.apache.wicket</groupId>
-                <artifactId>wicket-extensions</artifactId>
-                <version>${wicket.version}</version>
-        </dependency>
-        -->
 
         <!-- LOGGING DEPENDENCIES -->
         <dependency>
@@ -76,7 +62,7 @@
         <dependency>
             <groupId>org.eclipse.jetty.aggregate</groupId>
             <artifactId>jetty-all</artifactId>
-            <version>${jetty9.version}</version>
+            <version>${jetty.version}</version>
             <scope>test</scope>
         </dependency>
         <dependency>
