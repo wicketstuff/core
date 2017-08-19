@@ -17,50 +17,50 @@
 package com.googlecode.wicket.jquery.core.ajax;
 
 import org.apache.wicket.Component;
-import org.apache.wicket.ajax.AjaxRequestTarget;
+import org.apache.wicket.core.request.handler.IPartialPageRequestHandler;
 
 /**
- * Payload object that supports {@link AjaxRequestTarget}
+ * Payload object that supports {@link IPartialPageRequestHandler}
  * 
  * @author Sebastien Briquet - sebfz1
  * @see Component#send(org.apache.wicket.event.IEventSink, org.apache.wicket.event.Broadcast, Object)
  */
-public class AjaxPayload
+public class HandlerPayload
 {
-	private final AjaxRequestTarget target;
+	private final IPartialPageRequestHandler handler;
 
 	/**
 	 * Constructor
 	 * 
-	 * @param target the {@link AjaxRequestTarget}
+	 * @param handler the {@link IPartialPageRequestHandler}
 	 */
-	public AjaxPayload(AjaxRequestTarget target)
+	public HandlerPayload(IPartialPageRequestHandler handler)
 	{
-		this.target = target;
+		this.handler = handler;
 	}
 
 	// Methods //
 
 	/**
 	 * Helper method that reloads a component<br>
-	 * Similar to {@link AjaxRequestTarget#add(Component...)}
+	 * Similar to {@link IPartialPageRequestHandler#add(Component...)}
 	 * 
 	 * @param components the {@link Component}{@code s} to add
 	 */
 	public void reload(Component... components)
 	{
-		this.getTarget().add(components);
+		this.getHandler().add(components);
 	}
 
 	// Properties //
 
 	/**
-	 * Gets the {@link AjaxRequestTarget}
+	 * Gets the {@link IPartialPageRequestHandler}
 	 * 
-	 * @return the {@code AjaxRequestTarget}
+	 * @return the {@code IPartialPageRequestHandler}
 	 */
-	public AjaxRequestTarget getTarget()
+	public IPartialPageRequestHandler getHandler()
 	{
-		return this.target;
+		return this.handler;
 	}
 }
