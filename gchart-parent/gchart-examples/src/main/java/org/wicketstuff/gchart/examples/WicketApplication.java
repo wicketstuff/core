@@ -1,6 +1,4 @@
 /* 
- * Copyright 2017 Dieter Tremel.
- *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
@@ -19,26 +17,12 @@ import org.apache.wicket.markup.html.WebPage;
 import org.apache.wicket.protocol.http.WebApplication;
 
 /**
- * Application object for your web application. If you want to run this
- * application without deploying, run the Start class.
+ * Application object for your web application.
  */
 public class WicketApplication extends WebApplication {
 
-    /**
-     * @see org.apache.wicket.Application#getHomePage()
-     */
     @Override
     public Class<? extends WebPage> getHomePage() {
         return HomePage.class;
-    }
-
-    /**
-     * @see org.apache.wicket.Application#init()
-     */
-    @Override
-    public void init() {
-        super.init();
-
-        // add your configuration here
     }
 }

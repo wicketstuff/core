@@ -1,14 +1,19 @@
-/*
- * Copyright 2017 Dieter Tremel.
- * http://www.tremel-computer.de
- * All rights, if not explicitly granted, reserved.
+/* 
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
  */
 package org.wicketstuff.gchart.gchart.options;
 
-import org.wicketstuff.gchart.gchart.options.ChartOptions;
 import org.wicketstuff.gchart.Chart;
-import org.wicketstuff.gchart.gchart.options.ClassicOptionHelper;
-import org.wicketstuff.gchart.gchart.options.OptionModifier;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -42,12 +47,11 @@ public class ClassicOptionHelperTest {
      */
     @Test
     public void testAddTitleOption() {
-        System.out.println("addTitleOption");
         ChartOptions parent = new ChartOptions();
         ClassicOptionHelper instance = new ClassicOptionHelper(chart);
         String expResult = "{\"title\":\"Chart Title\"}";
         ChartOptions result = instance.addTitle(parent, "Chart Title");
-        System.out.println(result.toJSON());
+//        System.out.println(result.toJSON());
         assertEquals(expResult, result.toJSON().toString());
     }
 
@@ -56,7 +60,6 @@ public class ClassicOptionHelperTest {
      */
     @Test
     public void testAddDualAxisOptions() {
-        System.out.println("addDualAxisOptions");
         ChartOptions parent = new ChartOptions();
         ClassicOptionHelper instance = new ClassicOptionHelper(chart);
         String[] axisNames = {"Temp", "Humidity"};
@@ -64,7 +67,7 @@ public class ClassicOptionHelperTest {
         String[] axisTitles = {"Temperatur", "Feuchtigkeit"};
         String expResult = "{\"vAxes\":{\"0\":{\"title\":\"Temperatur\"},\"1\":{\"title\":\"Feuchtigkeit\"}},\"series\":{\"0\":{\"targetAxisIndex\":0},\"1\":{\"targetAxisIndex\":0},\"2\":{\"targetAxisIndex\":1}}}";
         ChartOptions result = instance.addDualAxisOptions(parent, axisNames, seriesMapping, axisTitles);
-        System.out.println(result.toJSON());
+//        System.out.println(result.toJSON());
         assertEquals(expResult, result.toJSON().toString());
     }
 
@@ -73,7 +76,6 @@ public class ClassicOptionHelperTest {
      */
     @Test
     public void testAddDualAxisOptionsModifier() {
-        System.out.println("addDualAxisOptionsModifier");
         ChartOptions parent = new ChartOptions();
         ClassicOptionHelper instance = new ClassicOptionHelper(chart);
         String[] axisNames = {"Temp", "Humidity"};
@@ -95,7 +97,7 @@ public class ClassicOptionHelperTest {
         ChartOptions result = instance.addDualAxisOptions(parent,
                 axisNames, seriesMapping, axisTitles,
                 new OptionModifier[]{temperatureAxisModifier, null}, new OptionModifier[]{null, humiditySeriesModifier, null});
-        System.out.println(result.toJSON());
+//        System.out.println(result.toJSON());
         assertEquals(expResult, result.toJSON().toString());
     }
 

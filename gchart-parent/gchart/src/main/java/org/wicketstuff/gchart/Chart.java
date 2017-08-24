@@ -1,6 +1,4 @@
 /* 
- * Copyright 2017 Dieter Tremel.
- *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
@@ -30,7 +28,6 @@ import org.apache.wicket.markup.head.JavaScriptReferenceHeaderItem;
 import org.apache.wicket.markup.html.WebComponent;
 import org.apache.wicket.model.IComponentAssignedModel;
 import org.apache.wicket.model.IModel;
-import org.apache.wicket.util.io.IClusterable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.wicketstuff.gchart.gchart.options.ChartOptions;
@@ -41,7 +38,7 @@ import org.wicketstuff.gchart.gchart.options.ChartOptions;
  *
  * @author Dieter Tremel
  */
-public class Chart extends WebComponent implements IClusterable, JavaScriptable {
+public class Chart extends WebComponent implements JavaScriptable {
 
     private static final long serialVersionUID = 1L;
     private static final Logger log = LoggerFactory.getLogger(Chart.class);
@@ -73,16 +70,15 @@ public class Chart extends WebComponent implements IClusterable, JavaScriptable 
      * @param id Wicket id. Id is used in javascript, but at the moment not
      * escaped to JavaScript identifier rules. So use only characters allowed
      * for JavaScript declarations to avoid problems.
+     *
+     * This constructor is for use without {@link ChartLibLoader} (one chart per page).
+     *
      * @param typeModel Model of Type of chart.
      * @param optionModel Model of optionModel.
      * @param dataModel Model of data dataModel.
      */
     public Chart(String id, IModel<ChartType> typeModel, IModel<ChartOptions> optionModel, IModel<DataTable> dataModel) {
-        this(id);
-        this.typeModel = typeModel;
-        this.setDefaultModel(optionModel);
-        setDataModel(dataModel);
-//        add(new GoogleChartBehavior(this, getMarkupId()));
+        this(id, typeModel, optionModel, dataModel, null);
     }
 
     /**
@@ -91,6 +87,9 @@ public class Chart extends WebComponent implements IClusterable, JavaScriptable 
      * @param id Wicket id. Id is used in javascript, but at the moment not
      * escaped to JavaScript identifier rules. So use only characters allowed
      * for JavaScript declarations to avoid problems.
+     * 
+     * This constructor is for use with {@link ChartLibLoader} (multiple charts per page).
+     *
      * @param typeModel Model of Type of chart.
      * @param optionModel Model of optionModel.
      * @param dataModel Model of data dataModel.
@@ -103,17 +102,37 @@ public class Chart extends WebComponent implements IClusterable, JavaScriptable 
         setDataModel(dataModel);
 //        add(new GoogleChartBehavior(this, getMarkupId()));
         this.loader = loader;
-        loader.addChart(this);
+        if (loader != null) {
+            loader.addChart(this);
+        }
+    }
+
+    @Override
+    protected void onDetach() {
+        super.onDetach();
+        typeModel.detach();
+        dataModel.detach();
+    }
+
+    /**
+     * Get Google Loader URL. Can be overwritten, if Google changes URL in
+     * future.
+     *
+     * @return Returns {@link #LOADER_URL}.
+     */
+    public String getLoaderUrl() {
+        return LOADER_URL;
     }
 
     /**
      * Create the JavaScript for the Google loader.
-     * @return Header Item with Google 
+     *
+     * @return HeaderItem for Google loader url.
      */
-    public static JavaScriptHeaderItem cerateLoaderItem() {
-        return JavaScriptHeaderItem.forUrl(LOADER_URL);
+    public JavaScriptHeaderItem createLoaderItem() {
+        return JavaScriptHeaderItem.forUrl(getLoaderUrl());
     }
-    
+
     @Override
     public void renderHead(final IHeaderResponse response) {
         super.renderHead(response);
@@ -121,13 +140,15 @@ public class Chart extends WebComponent implements IClusterable, JavaScriptable 
 
         final List<HeaderItem> depItemList = new ArrayList<>();
         final JavaScriptContentHeaderItem chartScriptItem = new JavaScriptContentHeaderItem(toJavaScript(), getScriptId(), null) {
+            private static final long serialVersionUID = 1L;
+
             @Override
             public List<HeaderItem> getDependencies() {
                 return depItemList;
             }
         };
         if (loader == null) {
-            response.render(JavaScriptHeaderItem.forUrl(LOADER_URL));
+            response.render(createLoaderItem());
         } else {
             depItemList.add(loader.getHeaderItem());
         }
@@ -137,6 +158,8 @@ public class Chart extends WebComponent implements IClusterable, JavaScriptable 
                     getApplication().getJavaScriptLibrarySettings().getJQueryReference());
 //            response.render(jQueryHeaderItem);
             response.render(new JavaScriptContentHeaderItem(createRedrawJavaScript(), getRedrawScriptId(), null) {
+                private static final long serialVersionUID = 1L;
+
                 @Override
                 public List<HeaderItem> getDependencies() {
                     final List<HeaderItem> dependencies = super.getDependencies();
@@ -162,8 +185,8 @@ public class Chart extends WebComponent implements IClusterable, JavaScriptable 
 
     /**
      * Set this to true if some JavaScript should be added to make the Chart
-     * responsive. By default Google charts are not responsive, this is an extension by wicket-gchart.
-     * If true a script like
+     * responsive. By default Google charts are not responsive, this is an
+     * extension by wicket-gchart. If true a script like
      * <pre>
      * {@code $(window).resize(function(){
      *   drawChart1();
@@ -211,8 +234,9 @@ public class Chart extends WebComponent implements IClusterable, JavaScriptable 
     }
 
     /**
-     * Getter for Google Maps API key for geo- and map charts. In all other charts this value will be null.
-     * Getter should never find any usage except tests and logging.
+     * Getter for Google Maps API key for geo- and map charts. In all other
+     * charts this value will be null. Getter should never find any usage except
+     * tests and logging.
      *
      * @return Google Maps API key. Null except for Geo Charts.
      */
@@ -221,8 +245,9 @@ public class Chart extends WebComponent implements IClusterable, JavaScriptable 
     }
 
     /**
-     * Setter for Google Maps API key for geo- and map charts. In all other charts this has no use.
-     * For geo- and mapcharts add this key to be rendered in package deklaration:
+     * Setter for Google Maps API key for geo- and map charts. In all other
+     * charts this has no use. For geo- and mapcharts add this key to be
+     * rendered in package deklaration:
      * <pre> {@code
      * google.charts.load('current', {
      *  'packages':['geochart'],
@@ -265,8 +290,9 @@ public class Chart extends WebComponent implements IClusterable, JavaScriptable 
     }
 
     /**
-     * Create the load statement of the chart lib with package, language and Maps API key declaration
-     * as defined by the chart and its {@link ChartType}.
+     * Create the load statement of the chart lib with package, language and
+     * Maps API key declaration as defined by the chart and its
+     * {@link ChartType}.
      *
      * @return Onle line load statement to be included in a JavaScript.
      */
@@ -352,7 +378,8 @@ public class Chart extends WebComponent implements IClusterable, JavaScriptable 
     }
 
     /**
-     * Make a script id for redraw script from chart id. This is used if chart should be responsive.
+     * Make a script id for redraw script from chart id. This is used if chart
+     * should be responsive.
      *
      * @return Identifier(js) for chart redraw script..
      */
@@ -366,8 +393,8 @@ public class Chart extends WebComponent implements IClusterable, JavaScriptable 
 //  drawChart2();
 //});
     /**
-     * Create a a redraw script for responsive charts.
-     * The chart is redrawn on {@code (window).resize} events.
+     * Create a a redraw script for responsive charts. The chart is redrawn on
+     * {@code (window).resize} events.
      *
      * @return Complete redraw script.
      */

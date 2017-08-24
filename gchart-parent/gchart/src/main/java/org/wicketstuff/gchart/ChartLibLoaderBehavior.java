@@ -1,7 +1,15 @@
-/*
- * Copyright 2017 Dieter Tremel.
- * http://www.tremel-computer.de
- * All rights, if not explicitly granted, reserved.
+/* 
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
  */
 package org.wicketstuff.gchart;
 
@@ -26,22 +34,27 @@ import static org.wicketstuff.gchart.Chart.LOADER_URL;
 
 /**
  * Behavior to bundle the Google chart lib loading and package declaration for
- * multiple charts on one page. All needed packages are merged in a set,
- * so the loading is done only once as the
- * <a href="https://developers.google.com/chart/interactive/docs/basic_multiple_charts">docs request</a>.
+ * multiple charts on one page. All needed packages are merged in a set, so the
+ * loading is done only once as the
+ * <a href="https://developers.google.com/chart/interactive/docs/basic_multiple_charts">docs
+ * request</a>.
  *
- * To use add this behavior to the page (<em>not the chart</em>) and give the instance as
- * param to every constructor of a chart component of the page.
- * The Charts will register in the loader by {@link ChartLibLoader#addChart(org.wicketstuff.gchart.Chart)  }
+ * To use add this behavior to the page (<em>not the chart</em>) and give the
+ * instance as param to every constructor of a chart component of the page. The
+ * Charts will register in the loader by {@link ChartLibLoader#addChart(org.wicketstuff.gchart.Chart)
+ * }
  * and lib loading is done centralized.
+ *
+ * Use this behavior at page when you display multiple charts on the page (Since
+ * Google Charts version 45 this is mandatory, but still recommended.)
  *
  * @author Dieter Tremel
  */
 public class ChartLibLoaderBehavior extends Behavior implements JavaScriptable, ChartLibLoader {
 
     private static final Logger log = LoggerFactory.getLogger(ChartLibLoaderBehavior.class);
-    private static final long serialVersionUID = -3057525235753580423L;
     public static final String LOADER_SCRIPT_ID = ChartLibLoaderBehavior.class.getSimpleName();
+    private static final long serialVersionUID = 1L;
 
     private Locale locale = null;
     private boolean renderLocale = true;
@@ -50,7 +63,7 @@ public class ChartLibLoaderBehavior extends Behavior implements JavaScriptable, 
 
     @Override
     public void bind(Component component) {
-        if (!(component instanceof Page) && component instanceof Chart) {
+        if (!(component instanceof Page)) {
             throw new IllegalArgumentException("This behavior should be used at the page, not the chart!");
         }
         super.bind(component);
@@ -75,9 +88,8 @@ public class ChartLibLoaderBehavior extends Behavior implements JavaScriptable, 
      * {@code
      * // Load Google Charts for the Japanese locale.
      * google.charts.load('current', {'packages':['corechart'], 'language': 'ja'});
-     * }</pre>
-     * If this behavior is attached to the Page, Locale is set from the Page which normally
-     * is identical to {@link Session#getLocale() }. To
+     * }</pre> If this behavior is attached to the Page, Locale is set from the
+     * Page which normally is identical to {@link Session#getLocale() }. To
      * override use {@link #setLocale(java.util.Locale) }.
      *
      * @return Locale used for the package language option.
@@ -100,6 +112,16 @@ public class ChartLibLoaderBehavior extends Behavior implements JavaScriptable, 
 
     public void setRenderLocale(boolean renderLocale) {
         this.renderLocale = renderLocale;
+    }
+
+    /**
+     * Get Google loader URL. Can be overwritten, if Google changes URL in
+     * future.
+     *
+     * @return Returns {@link Chart#LOADER_URL}.
+     */
+    public String getLoaderUrl() {
+        return LOADER_URL;
     }
 
     @Override
@@ -138,7 +160,7 @@ public class ChartLibLoaderBehavior extends Behavior implements JavaScriptable, 
                 @Override
                 public List<HeaderItem> getDependencies() {
                     final List<HeaderItem> dependencies = super.getDependencies();
-                    dependencies.add(JavaScriptHeaderItem.forUrl(LOADER_URL));
+                    dependencies.add(JavaScriptHeaderItem.forUrl(getLoaderUrl()));
                     return dependencies;
                 }
             };

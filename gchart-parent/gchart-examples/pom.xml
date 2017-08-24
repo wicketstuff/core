@@ -31,7 +31,7 @@
     <packaging>war</packaging>
 
     <name>wicket-gchart-examples</name>
-    <description>Examples for use of gcharts.</description>
+    <description>Examples for use of Google Charts.</description>
     
     <licenses>
         <license>

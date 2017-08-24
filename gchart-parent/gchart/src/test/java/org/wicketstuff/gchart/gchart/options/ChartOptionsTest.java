@@ -1,7 +1,15 @@
-/*
- * Copyright 2017 Dieter Tremel.
- * http://www.tremel-computer.de
- * All rights, if not explicitly granted, reserved.
+/* 
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
  */
 package org.wicketstuff.gchart.gchart.options;
 
@@ -33,7 +41,6 @@ public class ChartOptionsTest {
      */
     @Test
     public void testGetName() {
-        System.out.println("getName");
         ChartOptions instance = new ChartOptions("fred");
         String expResult = "fred";
         String result = instance.getName();
@@ -45,7 +52,6 @@ public class ChartOptionsTest {
      */
     @Test
     public void testToJavaScript() {
-        System.out.println("toJavaScript");
         ChartOptions opts = new ChartOptions("options");
         opts.put("title", "How Much Pizza I Ate Last Night");
         opts.put("width", 400);
@@ -60,7 +66,6 @@ public class ChartOptionsTest {
      */
     @Test
     public void testFromJson_String() {
-        System.out.println("fromJson");
         String json = "{'title':'Header'}";
         ChartOptions expResult = new ChartOptions();
         expResult.put("title", "Header");
@@ -73,7 +78,6 @@ public class ChartOptionsTest {
      */
     @Test
     public void testFromJson_JSONObject() {
-        System.out.println("fromJson");
         JSONObject json = new JSONObject("{'title':'Header',hAxis: { ticks: [5,10,15,20] }}");
         ChartOptions result = ChartOptions.fromJson(json);
         assertEquals("[5,10,15,20]", ((ChartOptions) result.get("hAxis")).get("ticks").toString());
@@ -84,7 +88,6 @@ public class ChartOptionsTest {
      */
     @Test
     public void testSetName() {
-        System.out.println("setName");
         String name = "fred";
         ChartOptions instance = new ChartOptions();
         instance.setName(name);
@@ -96,7 +99,6 @@ public class ChartOptionsTest {
      */
     @Test
     public void testToJSON() {
-        System.out.println("toJSON");
         ChartOptions instance = new ChartOptions();
         instance.put("title", "Header");
         JSONObject expResult = new JSONObject("{'title':'Header'}");

@@ -1,6 +1,4 @@
 /* 
- * Copyright 2017 Dieter Tremel.
- *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
@@ -50,10 +48,14 @@ import org.apache.wicket.model.ComponentModel;
 import org.apache.wicket.model.IComponentAssignedModel;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.model.PropertyModel;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class HomePage extends WebPage {
 
     private static final long serialVersionUID = 1L;
+    private static final Logger log = LoggerFactory.getLogger(HomePage.class);
+    
     private ChartLibLoaderBehavior chartLibLoader;
     private Boolean stackedPercent = false;
     private WebMarkupContainer barContainer;
@@ -79,7 +81,7 @@ public class HomePage extends WebPage {
 
             @Override
             protected void onUpdate(AjaxRequestTarget target) {
-                System.out.println(stackedPercent ? "True" : "False");
+                log.trace("stackedPercent {}", stackedPercent ? "True" : "False");
                 target.add(barContainer);
                 target.appendJavaScript(chartBar.getCallbackId() + "();");
             }

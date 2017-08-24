@@ -3,7 +3,7 @@
 	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://www.oracle.com/webfolder/technetwork/jsc/xml/ns/javaee/web-app_3_0.xsd"
 	version="3.0">
 
-	<display-name>wicket-gcharttrial</display-name>
+    <display-name>wicket-gcharttrial</display-name>
 
 	<!--
 		There are three means to configure Wickets configuration mode and they 

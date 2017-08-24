@@ -1,7 +1,15 @@
-/*
- * Copyright 2017 Dieter Tremel.
- * http://www.tremel-computer.de
- * All rights, if not explicitly granted, reserved.
+/* 
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
  */
 package org.wicketstuff.gchart.gchart;
 
@@ -52,11 +60,10 @@ public class DataTableTest {
      */
     @Test
     public void testToJavaScript() {
-        System.out.println("toJavaScript");
         DataTable tbl = new DataTable("data", colDefs, rows);
         String expResult1 = "var data = new google.visualization.DataTable({\"cols\":[{\"label\":\"Topping\",\"type\":\"string\"},{\"label\":\"Slices\",\"type\":\"number\"}],\"rows\":[{\"c\":[{\"v\":\"Mushrooms\"},{\"v\":3}]},{\"c\":[{\"v\":\"Onions\"},{\"v\":1}]},{\"c\":[{\"v\":\"Olives\"},{\"v\":1}]},{\"c\":[{\"v\":\"Zucchini\"},{\"v\":1}]},{\"c\":[{\"v\":\"Pepperoni\"},{\"v\":2}]}]})\n";
         String result = tbl.toJavaScript();
-        System.out.println(result);
+//        System.out.println(result);
         assertEquals(expResult1, result);
     }
 
@@ -65,7 +72,6 @@ public class DataTableTest {
      */
     @Test
     public void testFromArray() {
-        System.out.println("fromArray");
         Object[][] data = new Object[][]{{"Zeile 1", 1},{"Zeile 2", 2, "Zusatz"}};
         List<DataRow> expResult = new ArrayList<>(2);
         DataRow row1 = new DataRow();

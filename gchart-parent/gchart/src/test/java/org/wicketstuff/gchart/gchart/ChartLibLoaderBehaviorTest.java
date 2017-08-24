@@ -1,7 +1,15 @@
-/*
- * Copyright 2017 Dieter Tremel.
- * http://www.tremel-computer.de
- * All rights, if not explicitly granted, reserved.
+/* 
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
  */
 package org.wicketstuff.gchart.gchart;
 
@@ -10,9 +18,6 @@ import org.wicketstuff.gchart.ChartType;
 import org.wicketstuff.gchart.ChartLibLoaderBehavior;
 import java.util.List;
 import java.util.Locale;
-import org.apache.wicket.Component;
-import org.apache.wicket.markup.head.HeaderItem;
-import org.apache.wicket.markup.head.IHeaderResponse;
 import org.apache.wicket.markup.html.WebPage;
 import org.apache.wicket.model.Model;
 import org.junit.Before;
@@ -48,7 +53,6 @@ public class ChartLibLoaderBehaviorTest {
      */
     @Test
     public void testAddChart() {
-        System.out.println("addChart");
         ChartLibLoaderBehavior loader = new ChartLibLoaderBehavior();
         assertTrue(loader.addChart(chart1));
         assertTrue(loader.addChart(chart2));
@@ -59,7 +63,6 @@ public class ChartLibLoaderBehaviorTest {
      */
     @Test
     public void testRemoveChart() {
-        System.out.println("removeChart");
         ChartLibLoaderBehavior loader = new ChartLibLoaderBehavior();
         assertTrue(loader.addChart(chart1));
 //        assertTrue(loader.addChart(chart2));
@@ -72,7 +75,6 @@ public class ChartLibLoaderBehaviorTest {
      */
     @Test
     public void testGetLocale() {
-        System.out.println("getLocale");
         ChartLibLoaderBehavior instance = new ChartLibLoaderBehavior();
         instance.bind(page);
         Locale expResult = Locale.getDefault();
@@ -85,7 +87,6 @@ public class ChartLibLoaderBehaviorTest {
      */
     @Test
     public void testSetLocale() {
-        System.out.println("setLocale");
         Locale locale = Locale.ITALIAN;
         ChartLibLoaderBehavior instance = new ChartLibLoaderBehavior();
         instance.setLocale(locale);
@@ -97,7 +98,6 @@ public class ChartLibLoaderBehaviorTest {
      */
     @Test
     public void testGetCharts() {
-        System.out.println("getCharts");
         ChartLibLoaderBehavior loader = new ChartLibLoaderBehavior();
         assertTrue(loader.addChart(chart1));
         assertTrue(loader.addChart(chart2));
@@ -110,15 +110,14 @@ public class ChartLibLoaderBehaviorTest {
      */
     @Test
     public void testToJavaScript() {
-        System.out.println("toJavaScript");
         ChartLibLoaderBehavior loader = new ChartLibLoaderBehavior();
         loader.bind(page);
         assertTrue(loader.addChart(chart1));
         assertTrue(loader.addChart(chart2));
         String expResult = "google.charts.load('current', {\"packages\":[\"calendar\",\"corechart\"],\"language\":\"de\"});\n";
         String result = loader.toJavaScript();
-        System.out.println(expResult);
-        System.out.println(result);
+//        System.out.println(expResult);
+//        System.out.println(result);
         assertEquals(expResult, result);
     }
 }
