@@ -1,7 +1,5 @@
-package de.tremel_computer.wicket.gchart.examples;
+package org.wicketstuff.gchart.examples;
 
-import org.wicketstuff.gchart.examples.WicketApplication;
-import org.wicketstuff.gchart.examples.HomePage;
 import org.apache.wicket.util.tester.WicketTester;
 import org.junit.Before;
 import org.junit.Test;
