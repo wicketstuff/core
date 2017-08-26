@@ -152,7 +152,7 @@ public class ToolbarButton extends AbstractButton
 		// icon //
 		if (!Strings.isEmpty(this.getIconClass())) /* important */
 		{
-			object.put("imageClass", this.getIconClass());
+			object.put("iconClass", this.getIconClass());
 		}
 
 		return object;
