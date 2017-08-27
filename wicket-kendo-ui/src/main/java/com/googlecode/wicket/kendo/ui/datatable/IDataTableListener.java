@@ -20,6 +20,8 @@ import java.util.List;
 
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.util.io.IClusterable;
+
+import com.github.openjson.JSONArray;
 import com.github.openjson.JSONObject;
 
 import com.googlecode.wicket.kendo.ui.datatable.button.CommandButton;
@@ -66,7 +68,8 @@ public interface IDataTableListener extends IClusterable
 	void onCreate(AjaxRequestTarget target, JSONObject object);
 
 	/**
-	 * Triggered when datasource 'update' function is raised
+	 * Triggered when datasource 'update' function is raised<br>
+	 * If {@code batch} mode is used, the {@code object} is a {@link JSONArray} that might be retrieved this way: {@code object.optJSONArray("models")} 
 	 * 
 	 * @param target the {@link AjaxRequestTarget}
 	 * @param object the {@link JSONObject} holding the row data
