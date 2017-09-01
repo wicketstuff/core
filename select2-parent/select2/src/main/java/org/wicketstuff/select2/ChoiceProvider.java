@@ -32,7 +32,7 @@ import com.github.openjson.JSONStringer;
  * </p>
  * <p>
  * For the most common usecase where each choice is rendered as a text string see
- * {@link TextChoiceProvider}.
+ * {@link StringTextChoiceProvider}.
  * </p>
  * 
  * @author igor
