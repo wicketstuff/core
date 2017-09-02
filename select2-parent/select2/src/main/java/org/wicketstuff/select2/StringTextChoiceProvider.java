@@ -3,7 +3,7 @@ package org.wicketstuff.select2;
 import java.util.Collection;
 
 /**
- * A simple {@code TextChoiceProvider} for Strings.
+ * A simple {@code StringTextChoiceProvider} for Strings.
  *
  * @author Tom Götz (tom@decoded.de)
  */

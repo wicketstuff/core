@@ -25,7 +25,7 @@ import org.apache.wicket.util.convert.ConversionException;
 import org.apache.wicket.util.string.StringValue;
 
 /**
- * Multi-select Select2 component. Should be attached to a {@code <input type='hidden'/>} element.
+ * Multi-select Select2 component. Should be attached to a {@code <select></select>} element.
  *
  * @param <T>
  *            type of choice object
