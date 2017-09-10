@@ -198,13 +198,9 @@ public abstract class MultiSelect<T> extends FormComponent<Collection<T>> implem
 					}
 				}
 			}
+		}
 
-			this.setConvertedInput(list);
-		}
-		else
-		{
-			this.setConvertedInput(Collections.emptyList());
-		}
+		this.setConvertedInput(list);
 	}
 
 	@Override
