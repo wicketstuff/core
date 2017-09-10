@@ -17,6 +17,7 @@
 package com.googlecode.wicket.kendo.ui.form.multiselect.lazy;
 
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 import org.apache.wicket.ajax.AjaxRequestTarget;
@@ -182,20 +183,28 @@ public abstract class MultiSelect<T> extends FormComponent<Collection<T>> implem
 	@Override
 	public void convertInput()
 	{
-		List<T> list = Generics.newArrayList();
+		final List<T> list = Generics.newArrayList();
+		final String[] values = this.getInputAsArray();
 
-		for (String value : this.getInputAsArray())
+		if (values != null)
 		{
-			for (T choice : this.choices)
+			for (String value : values)
 			{
-				if (this.renderer.getValue(choice).equals(value))
+				for (T choice : this.choices)
 				{
-					list.add(choice);
+					if (this.renderer.getValue(choice).equals(value))
+					{
+						list.add(choice);
+					}
 				}
 			}
-		}
 
-		this.setConvertedInput(list);
+			this.setConvertedInput(list);
+		}
+		else
+		{
+			this.setConvertedInput(Collections.emptyList());
+		}
 	}
 
 	@Override
