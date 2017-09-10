@@ -50,6 +50,12 @@ public class DataTableAdapter implements IDataTableListener
 	{
 		// noop		
 	}
+	
+	@Override
+	public void onColumnReorder(AjaxRequestTarget target, int oldIndex, int newIndex, JSONObject column)
+	{
+		// noop		
+	}
 
 	@Override
 	public void onCreate(AjaxRequestTarget target, JSONObject object)

@@ -7,6 +7,7 @@ import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.repeater.data.IDataProvider;
 
+import com.github.openjson.JSONObject;
 import com.googlecode.wicket.jquery.core.Options;
 import com.googlecode.wicket.jquery.ui.samples.data.bean.Product;
 import com.googlecode.wicket.jquery.ui.samples.data.provider.ProductDataProvider;
@@ -15,6 +16,7 @@ import com.googlecode.wicket.kendo.ui.datatable.column.CurrencyPropertyColumn;
 import com.googlecode.wicket.kendo.ui.datatable.column.IColumn;
 import com.googlecode.wicket.kendo.ui.datatable.column.PropertyColumn;
 import com.googlecode.wicket.kendo.ui.form.button.AjaxButton;
+import com.googlecode.wicket.kendo.ui.panel.KendoFeedbackPanel;
 
 public class DefaultDataTablePage extends AbstractDataTablePage
 {
@@ -22,6 +24,10 @@ public class DefaultDataTablePage extends AbstractDataTablePage
 
 	public DefaultDataTablePage()
 	{
+		// FeedbackPanel //
+		final KendoFeedbackPanel feedback = new KendoFeedbackPanel("feedback");
+		this.add(feedback);
+
 		// Form //
 		final Form<?> form = new Form<Void>("form");
 		this.add(form);
@@ -33,11 +39,25 @@ public class DefaultDataTablePage extends AbstractDataTablePage
 		// options.set("sortable", true); // already set, as provider IS-A ISortStateLocator
 		options.set("groupable", true);
 		options.set("columnMenu", true);
+		options.set("reorderable", true);
 
-		final DataTable<Product> table = new DataTable<Product>("datatable", newColumnList(), newDataProvider(), 25, options);
+		final DataTable<Product> table = new DataTable<Product>("datatable", newColumnList(), newDataProvider(), 25, options) {
+
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			public void onColumnReorder(AjaxRequestTarget target, int oldIndex, int newIndex, JSONObject column)
+			{
+				final String message = String.format("reordered: old-index=%d, new-index=%d, column=%s", oldIndex, newIndex, column.optString("field"));
+
+				feedback.info(message);
+				feedback.refresh(target);
+			}
+		};
+
 		form.add(table);
 
-		// Buttond //
+		// Buttons //
 		form.add(new AjaxButton("reload") {
 
 			private static final long serialVersionUID = 1L;

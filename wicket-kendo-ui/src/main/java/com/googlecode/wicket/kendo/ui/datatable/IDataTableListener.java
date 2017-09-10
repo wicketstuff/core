@@ -60,6 +60,16 @@ public interface IDataTableListener extends IClusterable
 	void onCancel(AjaxRequestTarget target);
 
 	/**
+	 * Triggered when the user changes the order of a column.
+	 * 
+	 * @param target the {@link AjaxRequestTarget}
+	 * @param oldIndex the old column index 
+	 * @param newIndex the new column index
+	 * @param column the column's {@link JSONObject} 
+	 */
+	void onColumnReorder(AjaxRequestTarget target, int oldIndex, int newIndex, JSONObject column);
+
+	/**
 	 * Triggered when datasource 'create' function is raised
 	 * 
 	 * @param target the {@link AjaxRequestTarget}
@@ -69,7 +79,7 @@ public interface IDataTableListener extends IClusterable
 
 	/**
 	 * Triggered when datasource 'update' function is raised<br>
-	 * If {@code batch} mode is used, the {@code object} is a {@link JSONArray} that might be retrieved this way: {@code object.optJSONArray("models")} 
+	 * If {@code batch} mode is used, the {@code object} is a {@link JSONArray} that might be retrieved this way: {@code object.optJSONArray("models")}
 	 * 
 	 * @param target the {@link AjaxRequestTarget}
 	 * @param object the {@link JSONObject} holding the row data
