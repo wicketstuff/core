@@ -79,9 +79,11 @@ public class Button extends org.apache.wicket.markup.html.form.Button  implement
 	@Override
 	public void onConfigure(JQueryBehavior behavior)
 	{
-		if (!KendoIcon.isNone(this.getIcon()))
+		final String icon = this.getIcon();
+
+		if (!KendoIcon.isNone(icon))
 		{
-			behavior.setOption("icon", Options.asString(this.getIcon()));
+			behavior.setOption("icon", Options.asString(icon));
 		}
 	}
 
