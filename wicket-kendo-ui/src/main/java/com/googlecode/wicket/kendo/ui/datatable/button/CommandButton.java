@@ -126,14 +126,14 @@ public class CommandButton extends AbstractButton
 	}
 
 	/**
-	 * Gets the CSS icon class to be applied on the button
+	 * Gets the icon being displayed in the button
 	 *
-	 * @return the CSS class
+	 * @return {@link KendoIcon#NONE} by default
 	 * @see #getIconClass()
 	 */
 	public String getIcon()
 	{
-		return null;
+		return KendoIcon.NONE;
 	}
 
 	/**
@@ -144,9 +144,11 @@ public class CommandButton extends AbstractButton
 	 */
 	public String getIconClass()
 	{
-		if (this.getIcon() != null)
+		final String icon = this.getIcon();
+
+		if (!KendoIcon.isNone(icon))
 		{
-			return KendoIcon.getCssClass(this.getIcon());
+			return KendoIcon.getCssClass(icon);
 		}
 
 		return ""; // allows to override & chain super()
