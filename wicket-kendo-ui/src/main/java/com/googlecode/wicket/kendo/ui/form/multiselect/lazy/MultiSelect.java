@@ -17,7 +17,6 @@
 package com.googlecode.wicket.kendo.ui.form.multiselect.lazy;
 
 import java.util.Collection;
-import java.util.Collections;
 import java.util.List;
 
 import org.apache.wicket.ajax.AjaxRequestTarget;

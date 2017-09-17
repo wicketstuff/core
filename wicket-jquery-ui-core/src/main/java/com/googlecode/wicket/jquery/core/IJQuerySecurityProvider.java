@@ -17,7 +17,7 @@
 package com.googlecode.wicket.jquery.core;
 
 /**
- * Specifies that the implementing class is able to provide a verification/approval on user roles
+ * Specifies that the implementing class is able to provide a verification/approval on user roles and/or permissions
  *
  * @author Sebastien Briquet - sebfz1
  *
@@ -25,10 +25,10 @@ package com.googlecode.wicket.jquery.core;
 public interface IJQuerySecurityProvider
 {
 	/**
-	 * Indicates whether provided roles matches user roles.<br>
-	 * Implementation is free to define the strategy. For instance, has the user one of the roles or should him have all roles?
+	 * Indicates whether the user has the required role and/or permissions.<br>
+	 * Implementation is free to define the strategy.
 	 * 
-	 * @param roles the roles to check
+	 * @param roles the roles and/or permissions to check
 	 * @return the strategy result
 	 */
 	boolean hasRole(String... roles);

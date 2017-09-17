@@ -28,7 +28,7 @@ import com.googlecode.wicket.kendo.ui.datatable.DataTable;
  *
  * @author Sebastien Briquet - sebfz1
  */
-public class SecuredCommandButton extends CommandButton
+public class SecuredToolbarButton extends ToolbarButton
 {
 	private static final long serialVersionUID = 1L;
 
@@ -41,7 +41,7 @@ public class SecuredCommandButton extends CommandButton
 	 * @param name the button's name
 	 * @param roles list of roles allowed to enable the button
 	 */
-	public SecuredCommandButton(String name, String[] roles)
+	public SecuredToolbarButton(String name, String[] roles)
 	{
 		this(name, roles, (IJQuerySecurityProvider) WebSession.get());
 	}
@@ -53,7 +53,7 @@ public class SecuredCommandButton extends CommandButton
 	 * @param roles list of roles allowed to enable the button
 	 * @param provider the {@link IJQuerySecurityProvider}
 	 */
-	public SecuredCommandButton(String name, String[] roles, IJQuerySecurityProvider provider)
+	public SecuredToolbarButton(String name, String[] roles, IJQuerySecurityProvider provider)
 	{
 		super(name);
 
@@ -68,7 +68,7 @@ public class SecuredCommandButton extends CommandButton
 	 * @param property the property used to retrieve the row's object value
 	 * @param roles list of roles allowed to enable the button
 	 */
-	public SecuredCommandButton(String name, String property, String[] roles)
+	public SecuredToolbarButton(String name, String property, String[] roles)
 	{
 		this(name, property, roles, (IJQuerySecurityProvider) WebSession.get());
 	}
@@ -81,7 +81,7 @@ public class SecuredCommandButton extends CommandButton
 	 * @param roles list of roles allowed to enable the button
 	 * @param provider the {@link IJQuerySecurityProvider}
 	 */
-	public SecuredCommandButton(String name, String property, String[] roles, IJQuerySecurityProvider provider)
+	public SecuredToolbarButton(String name, String property, String[] roles, IJQuerySecurityProvider provider)
 	{
 		super(name, property);
 
@@ -96,7 +96,7 @@ public class SecuredCommandButton extends CommandButton
 	 * @param text the button's text
 	 * @param roles list of roles allowed to enable the button
 	 */
-	public SecuredCommandButton(String name, IModel<String> text, String[] roles)
+	public SecuredToolbarButton(String name, IModel<String> text, String[] roles)
 	{
 		this(name, text, roles, (IJQuerySecurityProvider) WebSession.get());
 	}
@@ -109,7 +109,7 @@ public class SecuredCommandButton extends CommandButton
 	 * @param roles list of roles allowed to enable the button
 	 * @param provider the {@link IJQuerySecurityProvider}
 	 */
-	public SecuredCommandButton(String name, IModel<String> text, String[] roles, IJQuerySecurityProvider provider)
+	public SecuredToolbarButton(String name, IModel<String> text, String[] roles, IJQuerySecurityProvider provider)
 	{
 		super(name, text);
 
@@ -125,7 +125,7 @@ public class SecuredCommandButton extends CommandButton
 	 * @param property the property used to retrieve the row's object value
 	 * @param roles list of roles allowed to enable the button
 	 */
-	public SecuredCommandButton(String name, IModel<String> text, String property, String[] roles)
+	public SecuredToolbarButton(String name, IModel<String> text, String property, String[] roles)
 	{
 		this(name, text, property, roles, (IJQuerySecurityProvider) WebSession.get());
 	}
@@ -139,7 +139,7 @@ public class SecuredCommandButton extends CommandButton
 	 * @param roles list of roles allowed to enable the button
 	 * @param provider the {@link IJQuerySecurityProvider}
 	 */
-	public SecuredCommandButton(String name, IModel<String> text, String property, String[] roles, IJQuerySecurityProvider provider)
+	public SecuredToolbarButton(String name, IModel<String> text, String property, String[] roles, IJQuerySecurityProvider provider)
 	{
 		super(name, text, property);
 

@@ -107,6 +107,27 @@ public class ToolbarButton extends AbstractButton
 	}
 
 	/**
+	 * Indicates whether this button is enabled
+	 * 
+	 * @return {@code true} by default
+	 */
+	public boolean isEnabled()
+	{
+		return true;
+	}
+
+	/**
+	 * Gets the CSS class to be applied on the button<br>
+	 * <b>Caution:</b> {@code super.getCSSClass()} should be called when overridden
+	 *
+	 * @return the CSS class
+	 */
+	public String getCSSClass()
+	{
+		return this.isEnabled() ? "" : "k-state-disabled";
+	}
+
+	/**
 	 * Gets the CSS icon class to be applied on the button
 	 *
 	 * @return the CSS class
@@ -146,8 +167,14 @@ public class ToolbarButton extends AbstractButton
 	{
 		JSONObject object = new JSONObject();
 		
-		object.put("name", this.getName());
+		object.put("name", this.isEnabled() ? this.getName() : "disabled_" + this.getName());
 		object.put("text", this.getText().getObject());
+
+		// css //
+		if (!Strings.isEmpty(this.getCSSClass())) /* important */
+		{
+			object.put("className", this.getCSSClass());
+		}
 
 		// icon //
 		if (!Strings.isEmpty(this.getIconClass())) /* important */
