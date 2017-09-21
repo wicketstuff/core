@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html xmlns:wicket="http://wicket.apache.org">
+    <head>
+        <meta charset="utf-8" />
+        <title>Apache Wicket Google Charts Test</title>
+        <link href='http://fonts.googleapis.com/css?family=Yanone+Kaffeesatz:regular,bold' rel='stylesheet' type='text/css' />
+        <link rel="stylesheet" href="css/style.css" type="text/css" media="screen" title="Stylesheet" />
+    </head>
+    <body>
+        <h2>Test of Google Charts adaption</h2>
+        <p>
+            This demo uses wicket-gchart, a simple combination of wicket and Google Charts.
+        </p>
+
+        <div class="gchart" wicket:id="chartPie"></div>
+        <div class="gchart" wicket:id="chartLine"></div>
+        <div class="gchart" wicket:id="chartDualLine"></div>
+        <div class="checkDiv"><label><input type="checkbox" wicket:id="stackedPercent" />Stacked percent</label></div>
+        <div wicket:id="barContainer"><div class="gchart" wicket:id="chartBar"></div></div>
+
+        <p>
+            After the charts.
+        </p> 
+    </body>
+</html>
