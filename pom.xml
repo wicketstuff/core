@@ -290,6 +290,7 @@
 		<module>datatables-parent</module>
 		<module>flot-parent</module>
 		<module>gae-initializer-parent</module>
+		<module>gchart-parent</module>
 		<module>gmap3-parent</module>
 		<module>googlecharts-parent</module>
 		<module>htmlcompressor-parent</module>
