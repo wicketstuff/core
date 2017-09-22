@@ -362,7 +362,7 @@
 		<module>jamon-parent</module>
 			<module>wicketstuff-rest-lambda</module>
 		<module>wicketstuff-lambda-components</module>
-		<module>wicket-datetime</module>
+		<module>wicket-datetime-parent</module>
 	</modules>
 
 	<dependencies>
@@ -983,7 +983,7 @@
 				<plugin>
 					<groupId>com.mycila.maven-license-plugin</groupId>
 					<artifactId>maven-license-plugin</artifactId>
-                    <version>1.10.b1</version>
+					<version>1.10.b1</version>
 					<configuration>
 						<header>${basedir}/license_header.txt</header>
 						<aggregate>true</aggregate>
