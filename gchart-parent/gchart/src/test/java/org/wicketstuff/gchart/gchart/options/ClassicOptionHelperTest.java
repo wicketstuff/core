@@ -17,9 +17,9 @@ import org.wicketstuff.gchart.Chart;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import static org.junit.Assert.*;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
+import static net.javacrumbs.jsonunit.JsonAssert.*;
 
 /**
  *
@@ -51,8 +51,7 @@ public class ClassicOptionHelperTest {
         ClassicOptionHelper instance = new ClassicOptionHelper(chart);
         String expResult = "{\"title\":\"Chart Title\"}";
         ChartOptions result = instance.addTitle(parent, "Chart Title");
-//        System.out.println(result.toJSON());
-        assertEquals(expResult, result.toJSON().toString());
+        assertJsonEquals(expResult, result.toJSON().toString());
     }
 
     /**
@@ -67,8 +66,7 @@ public class ClassicOptionHelperTest {
         String[] axisTitles = {"Temperatur", "Feuchtigkeit"};
         String expResult = "{\"vAxes\":{\"0\":{\"title\":\"Temperatur\"},\"1\":{\"title\":\"Feuchtigkeit\"}},\"series\":{\"0\":{\"targetAxisIndex\":0},\"1\":{\"targetAxisIndex\":0},\"2\":{\"targetAxisIndex\":1}}}";
         ChartOptions result = instance.addDualAxisOptions(parent, axisNames, seriesMapping, axisTitles);
-//        System.out.println(result.toJSON());
-        assertEquals(expResult, result.toJSON().toString());
+        assertJsonEquals(expResult, result.toJSON().toString());
     }
 
     /**
@@ -97,8 +95,7 @@ public class ClassicOptionHelperTest {
         ChartOptions result = instance.addDualAxisOptions(parent,
                 axisNames, seriesMapping, axisTitles,
                 new OptionModifier[]{temperatureAxisModifier, null}, new OptionModifier[]{null, humiditySeriesModifier, null});
-//        System.out.println(result.toJSON());
-        assertEquals(expResult, result.toJSON().toString());
+        assertJsonEquals(expResult, result.toJSON().toString());
     }
 
 }

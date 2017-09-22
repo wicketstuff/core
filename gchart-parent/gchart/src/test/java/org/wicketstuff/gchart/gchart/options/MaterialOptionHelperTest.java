@@ -20,6 +20,7 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
+import static net.javacrumbs.jsonunit.JsonAssert.*;
 
 /**
  *
@@ -51,7 +52,6 @@ public class MaterialOptionHelperTest {
         MaterialOptionHelper instance = new MaterialOptionHelper(chart);
         String expResult = "{\"chart\":{\"title\":\"Chart Title\"}}";
         ChartOptions result = instance.addTitle(parent, "Chart Title");
-//        System.out.println(result.toJSON());
         assertEquals(expResult, result.toJSON().toString());
     }
 
@@ -67,8 +67,7 @@ public class MaterialOptionHelperTest {
         String[] axisTitles = {"Temperatur", "Feuchtigkeit"};
         String expResult = "{\"series\":{\"0\":{\"axis\":\"Temp\"},\"1\":{\"axis\":\"Temp\"},\"2\":{\"axis\":\"Humidity\"}},\"axes\":{\"y\":{\"Temp\":{\"label\":\"Temperatur\"},\"Humidity\":{\"label\":\"Feuchtigkeit\"}}}}";
         ChartOptions result = instance.addDualAxisOptions(parent, axisNames, seriesMapping, axisTitles);
-//        System.out.println(result.toJSON());
-        assertEquals(expResult, result.toJSON().toString());
+        assertJsonEquals(expResult, result.toJSON().toString());
     }
 
 }

@@ -21,6 +21,7 @@ import org.junit.Before;
 import org.junit.Test;
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;
+import static net.javacrumbs.jsonunit.JsonAssert.*;
 
 /**
  * Test of ClassicOptionBuilder.
@@ -68,7 +69,7 @@ public class ClassicOptionBuilderTest {
         ChartOptions result = builder.build();
 
         assertNotEquals(expResult, result);
-        assertEquals(expResult.toJSON().toString(), result.toJSON().toString());
+        assertJsonEquals(expResult.toJSON().toString(), result.toJSON().toString());
 
         // add axis and series
         builder.axis("TEMP", "Temps (Celsius)").axis("DAYLIGHT", "Daylight");
@@ -89,7 +90,7 @@ public class ClassicOptionBuilderTest {
         });
         result = builder.build();
 //        System.out.println(result.toJSON().toString());
-        assertEquals("{\"vAxes\":{\"0\":{\"textStyle\":{\"color\":\"red\"},\"title\":\"Temps (Celsius)\"},\"1\":{\"title\":\"Daylight\"}},\"series\":{\"0\":{\"targetAxisIndex\":0},\"1\":{\"color\":\"yellow\",\"targetAxisIndex\":1}},\"title\":\"My first Chart\"}",
+        assertJsonEquals("{\"vAxes\":{\"0\":{\"textStyle\":{\"color\":\"red\"},\"title\":\"Temps (Celsius)\"},\"1\":{\"title\":\"Daylight\"}},\"series\":{\"0\":{\"targetAxisIndex\":0},\"1\":{\"color\":\"yellow\",\"targetAxisIndex\":1}},\"title\":\"My first Chart\"}",
                 result.toJSON().toString());
 
     }

@@ -15,9 +15,13 @@ package org.wicketstuff.gchart.gchart;
 
 import org.wicketstuff.gchart.Chart;
 import org.wicketstuff.gchart.ChartType;
+
+import net.javacrumbs.jsonunit.JsonAssert;
+
 import org.wicketstuff.gchart.ChartLibLoaderBehavior;
 import java.util.List;
 import java.util.Locale;
+
 import org.apache.wicket.markup.html.WebPage;
 import org.apache.wicket.model.Model;
 import org.junit.Before;
@@ -25,7 +29,8 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
-
+import static net.javacrumbs.jsonunit.JsonAssert.*;
+import static net.javacrumbs.jsonunit.core.Option.*;
 /**
  *
  * @author Dieter Tremel
@@ -35,6 +40,9 @@ public class ChartLibLoaderBehaviorTest {
         private final Chart chart2;
         private final WebPage page;
 
+    private static String JSON_PREFIX = "google.charts.load('current', ";    
+    private static String JSON_SUFIX = ");\n";    
+        
     public ChartLibLoaderBehaviorTest() {
         page = mock(WebPage.class);
         when(page.getLocale()).thenReturn(Locale.getDefault());
@@ -114,10 +122,16 @@ public class ChartLibLoaderBehaviorTest {
         loader.bind(page);
         assertTrue(loader.addChart(chart1));
         assertTrue(loader.addChart(chart2));
-        String expResult = "google.charts.load('current', {\"packages\":[\"calendar\",\"corechart\"],\"language\":\"de\"});\n";
-        String result = loader.toJavaScript();
-//        System.out.println(expResult);
-//        System.out.println(result);
-        assertEquals(expResult, result);
+        
+        Locale currentLocale = Locale.getDefault();
+        String expResult = "{\"packages\":[\"corechart\",\"calendar\"],\"language\":\"" + currentLocale.getLanguage() +"\"}";
+        String resultJs = loader.toJavaScript();
+        
+        assertTrue(resultJs.startsWith(JSON_PREFIX));
+        assertTrue(resultJs.endsWith(JSON_SUFIX));
+        
+        String resJson = resultJs.substring(resultJs.indexOf('{'), resultJs.indexOf('}') + 1);
+       
+        assertJsonEquals(expResult, resJson, JsonAssert.when(IGNORING_ARRAY_ORDER));
     }
 }
