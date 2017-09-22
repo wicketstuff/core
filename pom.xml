@@ -362,6 +362,7 @@
 		<module>jamon-parent</module>
 			<module>wicketstuff-rest-lambda</module>
 		<module>wicketstuff-lambda-components</module>
+		<module>wicket-datetime</module>
 	</modules>
 
 	<dependencies>
