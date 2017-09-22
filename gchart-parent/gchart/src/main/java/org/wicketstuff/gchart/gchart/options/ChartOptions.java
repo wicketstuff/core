@@ -183,7 +183,7 @@ public class ChartOptions extends HashMap<String, Object> implements IClusterabl
      */
     public ChartOptions getModelObjects() {
         ChartOptions opts = new ChartOptions(name);
-        for (Entry<String, Object> e : entrySet()) {
+        for (Map.Entry<String, Object> e : entrySet()) {
             String key = e.getKey();
             Object value = e.getValue();
             if (value instanceof ChartOptions) {
