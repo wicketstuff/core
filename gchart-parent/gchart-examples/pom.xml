@@ -57,11 +57,10 @@
             <artifactId>junit</artifactId>
             <scope>test</scope>
         </dependency>
-
         <!--  JETTY DEPENDENCIES FOR TESTING  -->
         <dependency>
-            <groupId>org.eclipse.jetty.aggregate</groupId>
-            <artifactId>jetty-all</artifactId>
+            <groupId>org.eclipse.jetty</groupId>
+            <artifactId>jetty-server</artifactId>
             <version>${jetty.version}</version>
             <scope>test</scope>
         </dependency>

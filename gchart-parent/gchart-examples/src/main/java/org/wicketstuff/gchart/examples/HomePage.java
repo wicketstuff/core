@@ -27,6 +27,9 @@ import org.wicketstuff.gchart.gchart.options.ChartOptions;
 import org.wicketstuff.gchart.gchart.options.OptionHelper;
 import org.wicketstuff.gchart.gchart.options.OptionModifier;
 import org.wicketstuff.gchart.gchart.options.builder.OptionBuilder;
+
+import com.github.openjson.JSONArray;
+
 import java.text.DecimalFormat;
 import java.text.Format;
 import java.text.SimpleDateFormat;
@@ -37,8 +40,7 @@ import java.util.GregorianCalendar;
 import java.util.List;
 import org.apache.wicket.Component;
 import org.apache.wicket.ajax.AjaxRequestTarget;
-import org.apache.wicket.ajax.json.JSONArray;
-import org.apache.wicket.ajax.json.JsonFunction;
+import org.apache.wicket.ajax.json.JSONFunction;
 import org.apache.wicket.ajax.markup.html.form.AjaxCheckBox;
 import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
@@ -297,7 +299,7 @@ public class HomePage extends WebPage {
                 ChartOptions hAxisOpts = new ChartOptions();
                 JSONArray ticksJSON = new JSONArray();
                 for (int month = 0; month < 12; month++) {
-                    JsonFunction dateFun = new JsonFunction(String.format("new Date(2014, %d)", month));
+                    JSONFunction dateFun = new JSONFunction(String.format("new Date(2014, %d)", month));
                     ticksJSON.put(dateFun);
                 }
                 hAxisOpts.put("ticks", ticksJSON);
