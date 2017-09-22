@@ -18,6 +18,8 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import static org.junit.Assert.*;
+import static net.javacrumbs.jsonunit.JsonAssert.*;
+
 
 /**
  *
@@ -52,13 +54,19 @@ public class ChartOptionsTest {
      */
     @Test
     public void testToJavaScript() {
-        ChartOptions opts = new ChartOptions("options");
+        String varPrefix = "var options = ";
+        
+    	ChartOptions opts = new ChartOptions("options");
         opts.put("title", "How Much Pizza I Ate Last Night");
         opts.put("width", 400);
         opts.put("height", 300);
+        
         String expResult = "var options = {\"width\":400,\"title\":\"How Much Pizza I Ate Last Night\",\"height\":300};\n";
         String result = opts.toJavaScript();
-        assertEquals(expResult, result);
+        
+        assertTrue(result.startsWith(varPrefix));
+        assertJsonEquals(expResult.replace(varPrefix, "").replace(';', '\n'), 
+        				 result.replaceAll(varPrefix, "").replace(';', '\n'));
     }
 
     /**
