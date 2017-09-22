@@ -17,11 +17,12 @@ import org.wicketstuff.gchart.JavaScriptable;
 import org.wicketstuff.gchart.Jsonable;
 import org.wicketstuff.gchart.gchart.json.ModelAwareJSONObject;
 import org.wicketstuff.gchart.gchart.json.ModelAwareJSONStringer;
+
+import com.github.openjson.JSONObject;
+
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
-import org.apache.wicket.ajax.json.JSONObject;
-import org.apache.wicket.ajax.json.JSONStringer;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.util.io.IClusterable;
 import org.slf4j.Logger;

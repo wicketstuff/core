@@ -13,10 +13,12 @@
  */
 package org.wicketstuff.gchart.gchart.options;
 
-import org.apache.wicket.ajax.json.JSONObject;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+
+import com.github.openjson.JSONObject;
+
 import static org.junit.Assert.*;
 import static net.javacrumbs.jsonunit.JsonAssert.*;
 

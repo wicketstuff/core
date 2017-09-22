@@ -15,9 +15,10 @@ package org.wicketstuff.gchart;
 
 import java.util.HashMap;
 import java.util.Map;
-import org.apache.wicket.ajax.json.JSONObject;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
+
+import com.github.openjson.JSONObject;
 
 /**
  * Abstraction of a data column defintion. The more exotic fields like pattern,

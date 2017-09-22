@@ -19,9 +19,11 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
-import org.apache.wicket.ajax.json.JSONObject;
-import org.apache.wicket.ajax.json.JsonFunction;
+
+import org.apache.wicket.ajax.json.JSONFunction;
 import org.apache.wicket.util.io.IClusterable;
+
+import com.github.openjson.JSONObject;
 
 /**
  * Cell object for data values with more features.
@@ -182,7 +184,7 @@ public class DataCell implements IClusterable, Jsonable {
      * @param cal Calender value to render.
      * @return JavaScript Date function for the value.
      */
-    public static JsonFunction createExplicitJsDate(Calendar cal) {
+    public static JSONFunction createExplicitJsDate(Calendar cal) {
         StringBuilder sb = new StringBuilder("new Date(");
         sb.append(cal.get(Calendar.YEAR));
         sb.append(", ").append(cal.get(Calendar.MONTH));
@@ -197,7 +199,7 @@ public class DataCell implements IClusterable, Jsonable {
             sb.append(", ").append(cal.get(Calendar.MILLISECOND));
         }
         sb.append(")");
-        return new JsonFunction(sb.toString());
+        return new JSONFunction(sb.toString());
     }
 
     /**
@@ -209,11 +211,11 @@ public class DataCell implements IClusterable, Jsonable {
      * @param cal Calender value to render.
      * @return JavaScript Date function for the value.
      */
-    public static JsonFunction createJsDate(Calendar cal) {
+    public static JSONFunction createJsDate(Calendar cal) {
         StringBuilder sb = new StringBuilder("new Date(");
         sb.append(cal.getTimeInMillis());
         sb.append(")");
-        return new JsonFunction(sb.toString());
+        return new JSONFunction(sb.toString());
     }
 
     /**
@@ -225,11 +227,11 @@ public class DataCell implements IClusterable, Jsonable {
      * @param date Date value to render.
      * @return JavaScript Date function for the value.
      */
-    public static JsonFunction createJsDate(Date date) {
+    public static JSONFunction createJsDate(Date date) {
         StringBuilder sb = new StringBuilder("new Date(");
         sb.append(date.getTime());
         sb.append(")");
-        return new JsonFunction(sb.toString());
+        return new JSONFunction(sb.toString());
     }
 
 }

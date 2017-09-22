@@ -19,9 +19,10 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import org.apache.wicket.ajax.json.JSONArray;
-import org.apache.wicket.ajax.json.JSONObject;
 import org.apache.wicket.util.io.IClusterable;
+
+import com.github.openjson.JSONArray;
+import com.github.openjson.JSONObject;
 
 /**
  * Abstraction of a datatable.

@@ -16,7 +16,8 @@ package org.wicketstuff.gchart;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
-import org.apache.wicket.ajax.json.JSONArray;
+
+import com.github.openjson.JSONArray;
 
 /**
  * A time of day value as defined in Google charts.

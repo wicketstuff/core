@@ -13,9 +13,7 @@
  */
 package org.wicketstuff.gchart;
 
-import org.apache.wicket.ajax.json.JSONObject;
-
-
+import com.github.openjson.JSONObject;
 
 /**
  * Interface for object that can render a JSON representation of an instance.

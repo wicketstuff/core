@@ -15,9 +15,10 @@ package org.wicketstuff.gchart;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import org.apache.wicket.ajax.json.JSONArray;
-import org.apache.wicket.ajax.json.JSONObject;
 import org.apache.wicket.util.io.IClusterable;
+
+import com.github.openjson.JSONArray;
+import com.github.openjson.JSONObject;
 
 /**
  * Modelling one row of data as List. Elements can be basic objects (eg. String,

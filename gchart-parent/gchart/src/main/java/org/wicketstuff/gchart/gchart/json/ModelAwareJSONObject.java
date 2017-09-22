@@ -14,9 +14,10 @@
 package org.wicketstuff.gchart.gchart.json;
 
 import java.util.Map;
-import org.apache.wicket.ajax.json.JSONException;
-import org.apache.wicket.ajax.json.JSONObject;
-import org.apache.wicket.ajax.json.JSONTokener;
+
+import com.github.openjson.JSONException;
+import com.github.openjson.JSONObject;
+import com.github.openjson.JSONTokener;
 
 /**
  *

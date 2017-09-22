@@ -18,8 +18,6 @@ import java.util.List;
 import java.util.Locale;
 import org.apache.wicket.Component;
 import org.apache.wicket.Session;
-import org.apache.wicket.ajax.json.JSONArray;
-import org.apache.wicket.ajax.json.JSONObject;
 import org.apache.wicket.markup.head.HeaderItem;
 import org.apache.wicket.markup.head.IHeaderResponse;
 import org.apache.wicket.markup.head.JavaScriptContentHeaderItem;
@@ -31,6 +29,9 @@ import org.apache.wicket.model.IModel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.wicketstuff.gchart.gchart.options.ChartOptions;
+
+import com.github.openjson.JSONArray;
+import com.github.openjson.JSONObject;
 
 /**
  * Abstraction of Google charts for wicket. {@code OutputMarkupId} is set to

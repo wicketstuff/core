@@ -13,9 +13,11 @@
  */
 package org.wicketstuff.gchart.gchart.json;
 
-import org.apache.wicket.ajax.json.JSONException;
-import org.apache.wicket.ajax.json.JSONStringer;
 import org.wicketstuff.gchart.gchart.options.ChartOptions;
+
+import com.github.openjson.JSONException;
+import com.github.openjson.JSONStringer;
+
 import org.apache.wicket.model.IModel;
 
 /**
