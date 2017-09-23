@@ -69,8 +69,12 @@ public class CommandAjaxBehavior extends JQueryAjaxBehavior
 	@Override
 	public CharSequence getCallbackFunctionBody(CallbackParameter... parameters)
 	{
-		String statement = "var $tr = jQuery(e.target).closest('tr');\n";
-		return statement + super.getCallbackFunctionBody(parameters);
+		StringBuilder builder = new StringBuilder();
+		builder.append("e.preventDefault();\n"); // prevent page scroll position change
+		builder.append("var $tr = jQuery(e.target).closest('tr');\n");
+		builder.append(super.getCallbackFunctionBody(parameters));
+
+		return builder.toString();
 	}
 
 	@Override

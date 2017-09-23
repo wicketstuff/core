@@ -339,6 +339,7 @@ public class DataTable<T> extends WebComponent implements IGenericComponent<List
 	{
 		behavior.setOption("sortable", this.getDataProvider() instanceof ISortStateLocator<?>);
 		behavior.setOption("autoBind", this.getBehaviors(DataBoundBehavior.class).isEmpty()); // false if DataBoundBehavior is added
+		behavior.setOption("dataBound", "datatable_dataBound"); // DataTable.js
 		behavior.setOption("edit", "datatable_edit"); // DataTable.js
 	}
 

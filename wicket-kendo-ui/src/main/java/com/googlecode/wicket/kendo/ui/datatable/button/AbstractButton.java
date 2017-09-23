@@ -123,6 +123,16 @@ public abstract class AbstractButton implements IJsonFactory, IClusterable
 	}
 
 	/**
+	 * Indicates whether this button is enabled
+	 * 
+	 * @return {@code true} by default
+	 */
+	public boolean isEnabled()
+	{
+		return true;
+	}
+
+	/**
 	 * Indicates whether the button should be visible
 	 * 
 	 * @return {@code true} by default
@@ -174,7 +184,7 @@ public abstract class AbstractButton implements IJsonFactory, IClusterable
 	{
 		return Strings.isEqual(name, this.name);
 	}
-	
+
 	// factories //
 
 	/**
@@ -185,5 +195,5 @@ public abstract class AbstractButton implements IJsonFactory, IClusterable
 	private static synchronized int nextSequence()
 	{
 		return AbstractButton.sequence++ % Short.MAX_VALUE;
-	}	
+	}
 }

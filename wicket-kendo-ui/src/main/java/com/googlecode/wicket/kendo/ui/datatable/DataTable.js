@@ -1,3 +1,21 @@
+
+/**
+ * Disables .k-state-disabled links, this is needed for 'edit' and 'destroy' buttons.
+ */
+function datatable_dataBound(e) {
+	var $grid = e.sender;
+
+//	$grid.tbody.find("a.k-state-disabled").each(function () {
+//		$(this).attr("href", "javascript:;");
+//      $(this).off("click");
+//    });
+
+	// workaround until finding a way to disable links
+	$grid.tbody.find("a.k-state-disabled.k-grid-edit, a.k-state-disabled.k-grid-delete").each(function () {
+        $(this).hide();
+    });
+}
+
 /**
  * Removes elements related to non 'popupVisible' columns
  */

@@ -105,16 +105,6 @@ public class CommandButton extends AbstractButton
 	}
 
 	/**
-	 * Indicates whether this button is enabled
-	 * 
-	 * @return {@code true} by default
-	 */
-	public boolean isEnabled()
-	{
-		return true;
-	}
-
-	/**
 	 * Gets the CSS class to be applied on the button<br>
 	 * <b>Caution:</b> {@code super.getCSSClass()} should be called when overridden
 	 *
@@ -171,8 +161,7 @@ public class CommandButton extends AbstractButton
 	{
 		JSONObject object = new JSONObject();
 
-		// prevent firing 'click' for builtin buttons TODO WIP
-		object.put("name", this.isEnabled() ? this.getName() : "disabled_" + this.getName());
+		object.put("name", this.getName());
 		object.put("text", this.getText().getObject());
 
 		// css //

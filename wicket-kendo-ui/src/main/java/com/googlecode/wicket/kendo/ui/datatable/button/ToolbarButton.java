@@ -107,16 +107,6 @@ public class ToolbarButton extends AbstractButton
 	}
 
 	/**
-	 * Indicates whether this button is enabled
-	 * 
-	 * @return {@code true} by default
-	 */
-	public boolean isEnabled()
-	{
-		return true;
-	}
-
-	/**
 	 * Gets the CSS class to be applied on the button<br>
 	 * <b>Caution:</b> {@code super.getCSSClass()} should be called when overridden
 	 *
@@ -169,7 +159,7 @@ public class ToolbarButton extends AbstractButton
 	{
 		JSONObject object = new JSONObject();
 		
-		object.put("name", this.isEnabled() ? this.getName() : "disabled_" + this.getName());
+		object.put("name", this.isEnabled() ? this.getName() : "disabled");
 		object.put("text", this.getText().getObject());
 
 		// css //
