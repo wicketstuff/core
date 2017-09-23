@@ -61,23 +61,23 @@ public class EmailTextField extends org.apache.wicket.markup.html.form.EmailText
 	 * Constructor
 	 *
 	 * @param id the markup id
-	 * @param model the {@link IModel}
-	 */
-	public EmailTextField(String id, IModel<String> model)
-	{
-		super(id, model);
-	}
-
-	/**
-	 * Constructor
-	 *
-	 * @param id the markup id
 	 * @param validator the email validator that will check the correctness of the input value
 	 * @see RfcCompliantEmailAddressValidator
 	 */
 	public EmailTextField(String id, IValidator<String> validator)
 	{
 		super(id, validator);
+	}
+
+	/**
+	 * Constructor
+	 *
+	 * @param id the markup id
+	 * @param model the {@link IModel}
+	 */
+	public EmailTextField(String id, IModel<String> model)
+	{
+		super(id, model);
 	}
 
 	/**

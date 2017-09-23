@@ -19,7 +19,7 @@ package com.googlecode.wicket.jquery.core;
 import com.github.openjson.JSONObject;
 
 /**
- * Specifies that the type can be converted in {@link JSONObject}
+ * Specifies that the type can be converted to {@link JSONObject}
  *
  * @author Sebastien Briquet - sebfz1
  *

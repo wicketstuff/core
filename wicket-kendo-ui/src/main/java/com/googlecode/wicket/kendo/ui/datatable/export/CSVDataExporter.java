@@ -328,7 +328,7 @@ public class CSVDataExporter implements IDataExporter
 			}
 		};
 
-		return new AjaxDownload(resource.setFileName(filename).setContentDisposition(ContentDisposition.ATTACHMENT));
+		return new AjaxDownload(resource.setFileName(filename).setContentDisposition(ContentDisposition.ATTACHMENT)); // wicket8
 	}
 
 	/**
