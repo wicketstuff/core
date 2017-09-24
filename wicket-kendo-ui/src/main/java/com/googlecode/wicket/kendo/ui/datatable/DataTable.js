@@ -11,8 +11,12 @@ function datatable_dataBound(e) {
 //    });
 
 	// workaround until finding a way to disable links
-	$grid.tbody.find("a.k-state-disabled.k-grid-edit, a.k-state-disabled.k-grid-delete").each(function () {
-        $(this).hide();
+	$grid.tbody.find("a.k-state-disabled.k-grid-edit").each(function () {
+        $(this).remove();
+    });
+
+	$grid.tbody.find("a.k-state-disabled.k-grid-delete").each(function () {
+        $(this).remove();
     });
 }
 
