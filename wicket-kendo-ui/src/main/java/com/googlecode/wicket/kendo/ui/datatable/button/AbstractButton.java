@@ -22,10 +22,24 @@ import org.apache.wicket.util.io.IClusterable;
 import org.apache.wicket.util.string.Strings;
 
 import com.googlecode.wicket.jquery.core.IJsonFactory;
+import com.googlecode.wicket.kendo.ui.KendoIcon;
 import com.googlecode.wicket.kendo.ui.datatable.DataTable;
 
 /**
- * Provides a base button object that can be used in {@link DataTable}
+ * Provides a base button object that can be used in {@link DataTable}<br>
+ * The css content for {@link #CSS_ICON_ONLY} is not supplied.<br>
+ * It might be implemented like this:<br>
+ * 
+ * <pre><code>
+ * .k-button.w-icon-only {
+ * 		padding: .2em;	
+ * 		min-width: 0px !important;
+ * }
+ * 
+ * .k-button.w-icon-only &gt; .k-icon {
+ * 		margin: auto 2px;
+ * }
+ * </code></pre> 
  *
  * @author Sebastien Briquet - sebfz1
  */
@@ -33,6 +47,12 @@ public abstract class AbstractButton implements IJsonFactory, IClusterable
 {
 	private static final long serialVersionUID = 1L;
 	private static short sequence = 0;
+
+	/** css class for icon-only button */
+	public static final String CSS_ICON_ONLY = "w-icon-only";
+	
+	/** css class for disabled button state */
+	public static final String CSS_STATE_DISABLED = "k-state-disabled";
 
 	public static final String EDIT = "edit";
 	public static final String SAVE = "save";
@@ -42,7 +62,7 @@ public abstract class AbstractButton implements IJsonFactory, IClusterable
 
 	private final int id;
 	private final String name;
-	private final IModel<String> text;
+	private final IModel<String> textModel;
 	private final String property;
 
 	/**
@@ -88,7 +108,7 @@ public abstract class AbstractButton implements IJsonFactory, IClusterable
 	{
 		this.id = AbstractButton.nextSequence();
 		this.name = name;
-		this.text = text;
+		this.textModel = text;
 		this.property = property;
 	}
 
@@ -107,9 +127,9 @@ public abstract class AbstractButton implements IJsonFactory, IClusterable
 	 *
 	 * @return the button text
 	 */
-	public IModel<String> getText()
+	public IModel<String> getTextModel()
 	{
-		return this.text;
+		return this.textModel;
 	}
 
 	/**
@@ -140,6 +160,64 @@ public abstract class AbstractButton implements IJsonFactory, IClusterable
 	public boolean isVisible()
 	{
 		return true;
+	}
+
+	/**
+	 * Gets the CSS class to be applied on the button<br>
+	 * <b>Caution:</b> {@code super.getCSSClass()} should be called when overridden
+	 *
+	 * @return the CSS class
+	 */
+	public String getCSSClass()
+	{
+		final StringBuilder builder = new StringBuilder();
+		final String text = this.getTextModel().getObject();
+
+		if (!this.isEnabled())
+		{
+			builder.append(CSS_STATE_DISABLED);
+		}
+
+		if (Strings.isEmpty(text))
+		{
+			if (builder.length() > 0)
+			{
+				builder.append(" ");
+			}
+
+			builder.append(CSS_ICON_ONLY);
+		}
+
+		return builder.toString();
+	}
+
+	/**
+	 * Gets the icon being displayed in the button
+	 *
+	 * @return {@link KendoIcon#NONE} by default
+	 * @see #getIconClass()
+	 */
+	public String getIcon()
+	{
+		return KendoIcon.NONE;
+	}
+
+	/**
+	 * Gets the CSS class for the icon
+	 * 
+	 * @return the CSS class for the icon
+	 * @see #getIcon()
+	 */
+	public String getIconClass()
+	{
+		final String icon = this.getIcon();
+
+		if (!KendoIcon.isNone(icon))
+		{
+			return KendoIcon.getCssClass(icon);
+		}
+
+		return ""; // allows to override & chain super()
 	}
 
 	// Methods //

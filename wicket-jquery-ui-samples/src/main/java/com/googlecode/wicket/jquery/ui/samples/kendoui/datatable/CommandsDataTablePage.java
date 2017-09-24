@@ -66,7 +66,7 @@ public class CommandsDataTablePage extends AbstractDataTablePage
 			@Override
 			public void onClick(AjaxRequestTarget target, ToolbarButton button, List<String> values)
 			{
-				this.info(button.getText().getObject() + " " + values);
+				this.info(button.getTextModel().getObject() + " " + values);
 				target.add(feedback);
 			}
 
@@ -76,7 +76,7 @@ public class CommandsDataTablePage extends AbstractDataTablePage
 			@Override
 			public void onClick(AjaxRequestTarget target, CommandButton button, String value)
 			{
-				this.info(button.getText().getObject() + " #" + value);
+				this.info(button.getTextModel().getObject() + " #" + value);
 				target.add(feedback);
 			}
 		};

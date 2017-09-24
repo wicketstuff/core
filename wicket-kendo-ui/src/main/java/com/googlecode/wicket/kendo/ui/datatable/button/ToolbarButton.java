@@ -23,7 +23,6 @@ import org.apache.wicket.model.IModel;
 import org.apache.wicket.util.string.Strings;
 
 import com.github.openjson.JSONObject;
-import com.googlecode.wicket.kendo.ui.KendoIcon;
 import com.googlecode.wicket.kendo.ui.datatable.DataTable;
 
 /**
@@ -106,46 +105,6 @@ public class ToolbarButton extends AbstractButton
 		return false;
 	}
 
-	/**
-	 * Gets the CSS class to be applied on the button<br>
-	 * <b>Caution:</b> {@code super.getCSSClass()} should be called when overridden
-	 *
-	 * @return the CSS class
-	 */
-	public String getCSSClass()
-	{
-		return this.isEnabled() ? "" : "k-state-disabled";
-	}
-
-	/**
-	 * Gets the icon being displayed in the button
-	 *
-	 * @return {@link KendoIcon#NONE} by default
-	 * @see #getIconClass()
-	 */
-	public String getIcon()
-	{
-		return KendoIcon.NONE;
-	}
-
-	/**
-	 * Gets the CSS class for the icon
-	 * 
-	 * @return the CSS class for the icon
-	 * @see #getIcon()
-	 */
-	public String getIconClass()
-	{
-		final String icon = this.getIcon();
-
-		if (!KendoIcon.isNone(icon))
-		{
-			return KendoIcon.getCssClass(icon);
-		}
-
-		return ""; // allows to override & chain super()
-	}
-
 	// Methods //
 
 	@Override
@@ -160,7 +119,7 @@ public class ToolbarButton extends AbstractButton
 		JSONObject object = new JSONObject();
 		
 		object.put("name", this.isEnabled() ? this.getName() : "disabled");
-		object.put("text", this.getText().getObject());
+		object.put("text", this.getTextModel().getObject());
 
 		// css //
 		if (!Strings.isEmpty(this.getCSSClass())) /* important */
