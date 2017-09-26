@@ -221,7 +221,7 @@ public abstract class AbstractRestResource<T extends IWebSerialDeserial> impleme
 		}
 		catch (RuntimeException e)
 		{
-			setResponseStatusCode(400);
+                        handleException(response, e);
 			return;
 		}
 
