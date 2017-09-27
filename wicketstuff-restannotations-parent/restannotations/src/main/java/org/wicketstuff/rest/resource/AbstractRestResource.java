@@ -24,7 +24,6 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
 import org.apache.wicket.Application;
 import org.apache.wicket.Session;
 import org.apache.wicket.WicketRuntimeException;
@@ -631,7 +630,7 @@ public abstract class AbstractRestResource<T extends IWebSerialDeserial> impleme
 		catch (Exception exception)
 		{
 			handleException(response, exception);
-
+			response.setStatus(500);
 			log.debug("Error invoking method '" + method.getName() + "'");
 		}
 
@@ -639,8 +638,8 @@ public abstract class AbstractRestResource<T extends IWebSerialDeserial> impleme
 	}
 
 	/**
-	 * Handle Exception. Default: set response Status to 500. Override this method to implement
-	 * customized error handling
+	 * Handle Exception. Default: responds with a generic error message "General server error." and logging the exception. 
+	 * Override this method to implement customized error handling
 	 * @param exception The Exception
 	 * @param response Response-Object
 	 */
@@ -648,7 +647,6 @@ public abstract class AbstractRestResource<T extends IWebSerialDeserial> impleme
 	{
 		String exceptionMsg = "General server error.";
 
-		response.setStatus(500);
 		response.write(exceptionMsg);
 		log.error(exceptionMsg, exception);
 	}
