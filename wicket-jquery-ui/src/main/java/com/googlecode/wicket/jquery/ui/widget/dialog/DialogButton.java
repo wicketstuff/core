@@ -225,6 +225,8 @@ public class DialogButton implements IClusterable
 	 */
 	public void setEnabled(boolean enabled, IPartialPageRequestHandler handler)
 	{
+		this.setEnabled(enabled);
+
 		if (enabled)
 		{
 			this.enable(handler);
