@@ -25,12 +25,7 @@ import java.util.List;
 import java.util.Locale;
 
 import org.apache.wicket.Session;
-import org.apache.wicket.datetime.StyleDateConverter;
-import org.apache.wicket.datetime.markup.html.form.DateTextField;
 import org.apache.wicket.examples.WicketExamplePage;
-import org.apache.wicket.extensions.yui.calendar.DatePicker;
-import org.apache.wicket.extensions.yui.calendar.DateTimeField;
-import org.apache.wicket.extensions.yui.calendar.TimeField;
 import org.apache.wicket.markup.html.form.ChoiceRenderer;
 import org.apache.wicket.markup.html.form.DropDownChoice;
 import org.apache.wicket.markup.html.form.Form;
@@ -39,6 +34,11 @@ import org.apache.wicket.markup.html.link.Link;
 import org.apache.wicket.markup.html.panel.FeedbackPanel;
 import org.apache.wicket.model.AbstractReadOnlyModel;
 import org.apache.wicket.model.PropertyModel;
+import org.wicketstuff.datetime.StyleDateConverter;
+import org.wicketstuff.datetime.extensions.yui.calendar.DatePicker;
+import org.wicketstuff.datetime.extensions.yui.calendar.DateTimeField;
+import org.wicketstuff.datetime.extensions.yui.calendar.TimeField;
+import org.wicketstuff.datetime.markup.html.form.DateTextField;
 
 /**
  * Demonstrates components from the wicket-date project and a bunch of locale fiddling.

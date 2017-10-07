@@ -2,9 +2,9 @@ package com.inmethod.grid.column.editable;
 
 import java.util.Date;
 
-import org.apache.wicket.datetime.DateConverter;
 import org.apache.wicket.extensions.markup.html.repeater.data.sort.ISortState;
 import org.apache.wicket.model.IModel;
+import org.wicketstuff.datetime.DateConverter;
 
 /**
  * Property column that uses a {@link DateTextFieldPanel} as cell component

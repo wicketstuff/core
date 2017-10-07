@@ -17,7 +17,7 @@
 
   <dependencies>
     <dependency>
-      <groupId>org.apache.wicket</groupId>
+      <groupId>org.wicketstuff</groupId>
       <artifactId>wicket-datetime</artifactId>
     </dependency>
   </dependencies>

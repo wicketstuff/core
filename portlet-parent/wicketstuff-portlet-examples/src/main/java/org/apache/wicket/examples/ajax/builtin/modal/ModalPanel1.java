@@ -18,8 +18,8 @@ package org.apache.wicket.examples.ajax.builtin.modal;
 
 import java.util.Map;
 
-import org.apache.wicket.extensions.yui.calendar.DateTimeField;
 import org.apache.wicket.markup.html.panel.Panel;
+import org.wicketstuff.datetime.extensions.yui.calendar.DateTimeField;
 
 /**
  * @author Matej Knopp

@@ -19,8 +19,6 @@ package org.apache.wicket.examples.bean.validation;
 import java.util.Date;
 
 import org.apache.wicket.bean.validation.PropertyValidator;
-import org.apache.wicket.datetime.StyleDateConverter;
-import org.apache.wicket.datetime.markup.html.form.DateTextField;
 import org.apache.wicket.examples.WicketExamplePage;
 import org.apache.wicket.feedback.ExactLevelFeedbackMessageFilter;
 import org.apache.wicket.feedback.FeedbackMessage;
@@ -28,6 +26,8 @@ import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.form.TextField;
 import org.apache.wicket.markup.html.panel.FeedbackPanel;
 import org.apache.wicket.model.PropertyModel;
+import org.wicketstuff.datetime.StyleDateConverter;
+import org.wicketstuff.datetime.markup.html.form.DateTextField;
 
 public class BeanValidationPage extends WicketExamplePage
 {

@@ -5,7 +5,7 @@ import org.wicketstuff.scala.model.FodelString
 
 import scala.collection.JavaConversions.seqAsJavaList
 import org.apache.wicket.behavior.AttributeAppender
-import org.apache.wicket.datetime.markup.html.form.DateTextField
+import org.wicketstuff.datetime.markup.html.form.DateTextField
 import org.apache.wicket.extensions.validation.validator.RfcCompliantEmailAddressValidator
 import org.apache.wicket.markup.html.basic.{ MultiLineLabel, Label }
 import org.apache.wicket.markup.html.form.{ TextField, TextArea, SubmitLink, RadioGroup, Radio, PasswordTextField, FormComponent, Form, DropDownChoice, CheckGroup, Button }

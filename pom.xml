@@ -388,9 +388,9 @@
 				<version>${wicket.version}</version>
 			</dependency>
 			<dependency>
-				<groupId>org.apache.wicket</groupId>
+				<groupId>org.wicketstuff</groupId>
 				<artifactId>wicket-datetime</artifactId>
-				<version>${wicket.version}</version>
+				<version>${version}</version>
 			</dependency>
 			<dependency>
 				<groupId>org.apache.wicket</groupId>
