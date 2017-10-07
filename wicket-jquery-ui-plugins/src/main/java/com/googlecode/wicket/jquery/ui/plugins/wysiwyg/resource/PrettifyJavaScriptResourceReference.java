@@ -32,6 +32,6 @@ public class PrettifyJavaScriptResourceReference extends JQueryPluginResourceRef
 
 	private PrettifyJavaScriptResourceReference()
 	{
-		super(PrettifyJavaScriptResourceReference.class, "js/jquery.hotkeys.js");
+		super(PrettifyJavaScriptResourceReference.class, "js/prettify.js");
 	}
 }
