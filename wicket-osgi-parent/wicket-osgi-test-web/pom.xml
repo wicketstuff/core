@@ -4,7 +4,7 @@
 	<parent>
 		<artifactId>wicket-osgi-parent</artifactId>
 		<groupId>org.wicketstuff</groupId>
-		<version>6.0-SNAPSHOT</version>
+		<version>6.28.0</version>
 	</parent>
 	<artifactId>wicket-osgi-test-web</artifactId>
 	<packaging>bundle</packaging>
@@ -59,10 +59,10 @@
 				<configuration>
 					<noDependencies>true</noDependencies>
 					<deployURLs>
-						mvn:org.wicketstuff/wicket-osgi-test-service/1.5-SNAPSHOT,
-						mvn:org.wicketstuff/wicketstuff-osgi/1.5-SNAPSHOT,
-						mvn:org.wicketstuff/wicketstuff-bundle/1.5-SNAPSHOT,
-						mvn:org.wicketstuff/wicketstuff-ioc-bundle/1.5-SNAPSHOT,
+						mvn:org.wicketstuff/wicket-osgi-test-service/6.28.0,
+						mvn:org.wicketstuff/wicketstuff-osgi/6.28.0,
+						mvn:org.wicketstuff/wicketstuff-bundle/6.28.0,
+						mvn:org.wicketstuff/wicketstuff-ioc-bundle/6.28.0,
 						mvn:org.apache.aries.blueprint/org.apache.aries.blueprint.core/0.3,
 						mvn:org.apache.aries.blueprint/org.apache.aries.blueprint.api/0.3,
 						mvn:org.apache.aries/org.apache.aries.util/0.3,
