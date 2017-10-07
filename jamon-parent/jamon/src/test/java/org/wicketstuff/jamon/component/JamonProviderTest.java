@@ -23,10 +23,10 @@ import static org.wicketstuff.jamon.component.JamonTestUtil.startThisManyMonitor
 import java.util.Iterator;
 
 import org.apache.wicket.extensions.markup.html.repeater.data.sort.SortOrder;
+import org.apache.wicket.util.tester.WicketTester;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import org.wicketstuff.jamon.component.JamonProvider;
 import org.wicketstuff.jamon.monitor.AlwaysSatisfiedMonitorSpecification;
 
 import com.jamonapi.Monitor;
@@ -35,12 +35,13 @@ import com.jamonapi.MonitorFactory;
 
 public class JamonProviderTest
 {
-
+	private WicketTester tester;
 	private JamonProvider jamonProvider;
 
 	@Before
 	public void setup()
 	{
+		tester = new WicketTester();
 		jamonProvider = new JamonProvider(new AlwaysSatisfiedMonitorSpecification());
 	}
 
@@ -49,6 +50,11 @@ public class JamonProviderTest
 	public void reset()
 	{
 		MonitorFactory.getFactory().reset();
+	}
+
+	@After
+	public void tearDown() {
+		tester.destroy();
 	}
 
 	@Test
@@ -70,7 +76,6 @@ public class JamonProviderTest
 
 		iterator = jamonProvider.iterator(20, 5);
 		assertEquals(0, toList(iterator).size());
-
 	}
 
 	@Test
@@ -80,15 +85,15 @@ public class JamonProviderTest
 		jamonProvider.setSort("label", SortOrder.ASCENDING);
 
 		Iterator<Monitor> ascendingIterator = jamonProvider.iterator(0, 3);
-		assertEquals("mon0", ((Monitor)ascendingIterator.next()).getLabel());
-		assertEquals("mon1", ((Monitor)ascendingIterator.next()).getLabel());
-		assertEquals("mon2", ((Monitor)ascendingIterator.next()).getLabel());
+		assertEquals("mon0", ascendingIterator.next().getLabel());
+		assertEquals("mon1", ascendingIterator.next().getLabel());
+		assertEquals("mon2", ascendingIterator.next().getLabel());
 
 		jamonProvider.setSort("label", SortOrder.DESCENDING);
 
 		Iterator<Monitor> descendingIterator = jamonProvider.iterator(0, 3);
-		assertEquals("mon2", ((Monitor)descendingIterator.next()).getLabel());
-		assertEquals("mon1", ((Monitor)descendingIterator.next()).getLabel());
-		assertEquals("mon0", ((Monitor)descendingIterator.next()).getLabel());
+		assertEquals("mon2", descendingIterator.next().getLabel());
+		assertEquals("mon1", descendingIterator.next().getLabel());
+		assertEquals("mon0", descendingIterator.next().getLabel());
 	}
 }
