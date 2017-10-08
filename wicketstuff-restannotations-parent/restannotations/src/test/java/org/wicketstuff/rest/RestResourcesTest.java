@@ -130,7 +130,6 @@ public class RestResourcesTest
 	{
 		tester.getRequest().setMethod("GET");
 		tester.executeUrl("./api/wrongParamValue?intValue=AAA");
-		testIfResponseStringIsEqual("");
 		Assert.assertEquals(400, tester.getLastResponse().getStatus());
 	}
 

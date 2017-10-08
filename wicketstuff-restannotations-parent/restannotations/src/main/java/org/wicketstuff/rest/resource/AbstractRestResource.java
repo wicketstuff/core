@@ -221,6 +221,7 @@ public abstract class AbstractRestResource<T extends IWebSerialDeserial> impleme
 		catch (RuntimeException e)
 		{
 			setResponseStatusCode(400);
+			handleException(getCurrentWebResponse(), e);
 			return;
 		}
 
@@ -629,8 +630,8 @@ public abstract class AbstractRestResource<T extends IWebSerialDeserial> impleme
 		}
 		catch (Exception exception)
 		{
-			handleException(response, exception);
 			response.setStatus(500);
+			handleException(response, exception);
 			log.debug("Error invoking method '" + method.getName() + "'");
 		}
 
