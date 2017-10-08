@@ -16,8 +16,7 @@
  */
 package com.googlecode.wicket.jquery.core.utils;
 
-import org.apache.wicket.Component;
-import org.apache.wicket.ajax.AjaxRequestTarget;
+import org.apache.wicket.core.request.handler.IPartialPageRequestHandler;
 import org.apache.wicket.event.Broadcast;
 import org.apache.wicket.feedback.FeedbackMessage;
 import org.apache.wicket.markup.html.panel.FeedbackPanel;
@@ -28,6 +27,7 @@ import com.googlecode.wicket.jquery.core.ajax.FeedbackPayload;
 /**
  * Utility class for handling feedback session messages and feedback ajax messages.<br>
  * The hosting page should implement a code like:
+ * 
  * <pre>
  * <code>
  * public void onEvent(IEvent&lt;?&gt; event)
@@ -41,7 +41,7 @@ import com.googlecode.wicket.jquery.core.ajax.FeedbackPayload;
  *         if (payload.getLevel() == FeedbackMessage.INFO)
  *         {
  *             this.info(payload.getMessage());
- *             payload.getTarget().add(this.feedbackPanel);
+ *             payload.getHandler().add(this.feedbackPanel);
  *         }
  *     }
  * }
@@ -61,7 +61,35 @@ public class FeedbackUtils
 		// noop
 	}
 
-	// Session based //
+	/**
+	 * Aims the reload a {@link FeedbackPanel} using {@link Broadcast#BREADTH} mode.<br>
+	 * The hosting page should implement a code like:<br>
+	 * 
+	 * <pre>
+	 * <code>
+	 * public void onEvent(IEvent&lt;?&gt; event)
+	 * {
+	 *     super.onEvent(event);
+	 * 
+	 *     if (event.getPayload() instanceof FeedbackPayload)
+	 *     {
+	 *         FeedbackPayload payload = (FeedbackPayload) event.getPayload();
+	 * 
+	 *         if (payload.getLevel() == FeedbackMessage.UNDEFINED)
+	 *         {
+	 *             payload.getHandler().add(this.feedbackPanel);
+	 *         }
+	 *     }
+	 * }
+	 * </code>
+	 * </pre>
+	 * 
+	 * @param handler the {@link IPartialPageRequestHandler}
+	 */
+	public static void reload(IPartialPageRequestHandler handler)
+	{
+		BroadcastUtils.breadth(handler, new FeedbackPayload(handler));
+	}
 
 	/**
 	 * Register a debug at session level so the message is available even if the page is redirected
@@ -70,7 +98,27 @@ public class FeedbackUtils
 	 */
 	public static void debug(String message)
 	{
-		WebSession.get().debug(message);
+		IPartialPageRequestHandler handler = RequestCycleUtils.getRequestHandler();
+
+		if (handler != null)
+		{
+			FeedbackUtils.debug(handler, message);
+		}
+		else
+		{
+			WebSession.get().debug(message);
+		}
+	}
+
+	/**
+	 * Sends an ajax {@link FeedbackMessage#DEBUG} message to the hosting page
+	 * 
+	 * @param handler the {@link IPartialPageRequestHandler}
+	 * @param message the message
+	 */
+	public static void debug(IPartialPageRequestHandler handler, String message)
+	{
+		BroadcastUtils.breadth(handler, new FeedbackPayload(handler, FeedbackMessage.DEBUG, message));
 	}
 
 	/**
@@ -80,7 +128,27 @@ public class FeedbackUtils
 	 */
 	public static void info(String message)
 	{
-		WebSession.get().info(message);
+		IPartialPageRequestHandler handler = RequestCycleUtils.getRequestHandler();
+
+		if (handler != null)
+		{
+			FeedbackUtils.info(handler, message);
+		}
+		else
+		{
+			WebSession.get().info(message);
+		}
+	}
+
+	/**
+	 * Sends an ajax {@link FeedbackMessage#INFO} message to the hosting page
+	 * 
+	 * @param handler the {@link IPartialPageRequestHandler}
+	 * @param message the message
+	 */
+	public static void info(IPartialPageRequestHandler handler, String message)
+	{
+		BroadcastUtils.breadth(handler, new FeedbackPayload(handler, FeedbackMessage.INFO, message));
 	}
 
 	/**
@@ -90,7 +158,27 @@ public class FeedbackUtils
 	 */
 	public static void success(String message)
 	{
-		WebSession.get().success(message);
+		IPartialPageRequestHandler handler = RequestCycleUtils.getRequestHandler();
+
+		if (handler != null)
+		{
+			FeedbackUtils.success(handler, message);
+		}
+		else
+		{
+			WebSession.get().success(message);
+		}
+	}
+
+	/**
+	 * Sends an ajax {@link FeedbackMessage#SUCCESS} message to the hosting page
+	 * 
+	 * @param handler the {@link IPartialPageRequestHandler}
+	 * @param message the message
+	 */
+	public static void success(IPartialPageRequestHandler handler, String message)
+	{
+		BroadcastUtils.breadth(handler, new FeedbackPayload(handler, FeedbackMessage.SUCCESS, message));
 	}
 
 	/**
@@ -110,7 +198,27 @@ public class FeedbackUtils
 	 */
 	public static void warn(String message)
 	{
-		WebSession.get().warn(message);
+		IPartialPageRequestHandler handler = RequestCycleUtils.getRequestHandler();
+
+		if (handler != null)
+		{
+			FeedbackUtils.warn(handler, message);
+		}
+		else
+		{
+			WebSession.get().warn(message);
+		}
+	}
+
+	/**
+	 * Sends an ajax {@link FeedbackMessage#WARNING} message to the hosting page
+	 * 
+	 * @param handler the {@link IPartialPageRequestHandler}
+	 * @param message the message
+	 */
+	public static void warn(IPartialPageRequestHandler handler, String message)
+	{
+		BroadcastUtils.breadth(handler, new FeedbackPayload(handler, FeedbackMessage.WARNING, message));
 	}
 
 	/**
@@ -124,13 +232,44 @@ public class FeedbackUtils
 	}
 
 	/**
+	 * Sends an ajax {@link FeedbackMessage#ERROR} exception message to the hosting page
+	 * 
+	 * @param handler the {@link IPartialPageRequestHandler}
+	 * @param exception the {@link Exception}
+	 */
+	public static void error(IPartialPageRequestHandler handler, Exception exception)
+	{
+		FeedbackUtils.error(handler, exception.getMessage());
+	}
+
+	/**
 	 * Register an error at session level so the message is available even if the page is redirected
 	 * 
 	 * @param message the message
 	 */
 	public static void error(String message)
 	{
-		WebSession.get().error(message);
+		IPartialPageRequestHandler handler = RequestCycleUtils.getRequestHandler();
+
+		if (handler != null)
+		{
+			FeedbackUtils.error(handler, message);
+		}
+		else
+		{
+			WebSession.get().error(message);
+		}
+	}
+
+	/**
+	 * Sends an ajax {@link FeedbackMessage#ERROR} message to the hosting page
+	 * 
+	 * @param handler the {@link IPartialPageRequestHandler}
+	 * @param message the message
+	 */
+	public static void error(IPartialPageRequestHandler handler, String message)
+	{
+		BroadcastUtils.breadth(handler, new FeedbackPayload(handler, FeedbackMessage.ERROR, message));
 	}
 
 	/**
@@ -140,7 +279,18 @@ public class FeedbackUtils
 	 */
 	public static void fatal(Exception e)
 	{
-		FeedbackUtils.error(e.getMessage());
+		FeedbackUtils.fatal(e.getMessage());
+	}
+
+	/**
+	 * Sends an ajax {@link FeedbackMessage#FATAL} exception message to the hosting page
+	 * 
+	 * @param handler the {@link IPartialPageRequestHandler}
+	 * @param exception the {@link Exception}
+	 */
+	public static void fatal(IPartialPageRequestHandler handler, Exception exception)
+	{
+		FeedbackUtils.fatal(handler, exception.getMessage());
 	}
 
 	/**
@@ -150,135 +300,26 @@ public class FeedbackUtils
 	 */
 	public static void fatal(String message)
 	{
-		WebSession.get().fatal(message);
-	}
+		IPartialPageRequestHandler handler = RequestCycleUtils.getRequestHandler();
 
-	// Ajax based //
-
-	/**
-	 * Sends an ajax {@link FeedbackMessage#DEBUG} message to the hosting page
-	 * 
-	 * @param component the {@link Component} sending the event
-	 * @param target the {@link AjaxRequestTarget}
-	 * @param message the message
-	 */
-	public static void debug(Component component, AjaxRequestTarget target, String message)
-	{
-		BroadcastUtils.breadth(component.getPage(), new FeedbackPayload(target, FeedbackMessage.DEBUG, message));
-	}
-
-	/**
-	 * Sends an ajax {@link FeedbackMessage#INFO} message to the hosting page
-	 * 
-	 * @param component the {@link Component} sending the event
-	 * @param target the {@link AjaxRequestTarget}
-	 * @param message the message
-	 */
-	public static void info(Component component, AjaxRequestTarget target, String message)
-	{
-		BroadcastUtils.breadth(component.getPage(), new FeedbackPayload(target, FeedbackMessage.INFO, message));
-	}
-
-	/**
-	 * Sends an ajax {@link FeedbackMessage#SUCCESS} message to the hosting page
-	 * 
-	 * @param component the {@link Component} sending the event
-	 * @param target the {@link AjaxRequestTarget}
-	 * @param message the message
-	 */
-	public static void success(Component component, AjaxRequestTarget target, String message)
-	{
-		BroadcastUtils.breadth(component.getPage(), new FeedbackPayload(target, FeedbackMessage.SUCCESS, message));
-	}
-
-	/**
-	 * Sends an ajax {@link FeedbackMessage#WARNING} message to the hosting page
-	 * 
-	 * @param component the {@link Component} sending the event
-	 * @param target the {@link AjaxRequestTarget}
-	 * @param message the message
-	 */
-	public static void warn(Component component, AjaxRequestTarget target, String message)
-	{
-		BroadcastUtils.breadth(component.getPage(), new FeedbackPayload(target, FeedbackMessage.WARNING, message));
-	}
-
-	/**
-	 * Sends an ajax {@link FeedbackMessage#ERROR} exception message to the hosting page
-	 * 
-	 * @param component the {@link Component} sending the event
-	 * @param target the {@link AjaxRequestTarget}
-	 * @param exception the {@link Exception}
-	 */
-	public static void error(Component component, AjaxRequestTarget target, Exception exception)
-	{
-		FeedbackUtils.error(component, target, exception.getMessage());
-	}
-
-	/**
-	 * Sends an ajax {@link FeedbackMessage#ERROR} message to the hosting page
-	 * 
-	 * @param component the {@link Component} sending the event
-	 * @param target the {@link AjaxRequestTarget}
-	 * @param message the message
-	 */
-	public static void error(Component component, AjaxRequestTarget target, String message)
-	{
-		BroadcastUtils.breadth(component.getPage(), new FeedbackPayload(target, FeedbackMessage.ERROR, message));
-	}
-
-	/**
-	 * Sends an ajax {@link FeedbackMessage#FATAL} exception message to the hosting page
-	 * 
-	 * @param component the {@link Component} sending the event
-	 * @param target the {@link AjaxRequestTarget}
-	 * @param exception the {@link Exception}
-	 */
-	public static void fatal(Component component, AjaxRequestTarget target, Exception exception)
-	{
-		FeedbackUtils.fatal(component, target, exception.getMessage());
+		if (handler != null)
+		{
+			FeedbackUtils.fatal(handler, message);
+		}
+		else
+		{
+			WebSession.get().fatal(message);
+		}
 	}
 
 	/**
 	 * Sends an ajax {@link FeedbackMessage#FATAL} message to the hosting page
 	 * 
-	 * @param component the {@link Component} sending the event
-	 * @param target the {@link AjaxRequestTarget}
+	 * @param handler the {@link IPartialPageRequestHandler}
 	 * @param message the message
 	 */
-	public static void fatal(Component component, AjaxRequestTarget target, String message)
+	public static void fatal(IPartialPageRequestHandler handler, String message)
 	{
-		BroadcastUtils.breadth(component.getPage(), new FeedbackPayload(target, FeedbackMessage.FATAL, message));
-	}
-
-	/**
-	 * Aims the reload a {@link FeedbackPanel} using {@link Broadcast#BREADTH} mode.<br>
-	 * The hosting page should implement a code like:<br>
-	 * 
-	 * <pre>
-	 * <code>
-	 * public void onEvent(IEvent&lt;?&gt; event)
-	 * {
-	 *     super.onEvent(event);
-	 * 
-	 *     if (event.getPayload() instanceof FeedbackPayload)
-	 *     {
-	 *         FeedbackPayload payload = (FeedbackPayload) event.getPayload();
-	 * 
-	 *         if (payload.getLevel() == FeedbackMessage.UNDEFINED)
-	 *         {
-	 *             payload.getTarget().add(this.feedbackPanel);
-	 *         }
-	 *     }
-	 * }
-	 * </code>
-	 * </pre>
-	 * 
-	 * @param component the {@link Component} sending the event
-	 * @param target the {@link AjaxRequestTarget}
-	 */
-	public static void reload(Component component, AjaxRequestTarget target)
-	{
-		BroadcastUtils.breadth(component.getPage(), new FeedbackPayload(target));
+		BroadcastUtils.breadth(handler, new FeedbackPayload(handler, FeedbackMessage.FATAL, message));
 	}
 }

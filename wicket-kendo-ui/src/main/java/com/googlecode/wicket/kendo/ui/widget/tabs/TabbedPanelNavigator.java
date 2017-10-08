@@ -17,9 +17,11 @@
 package com.googlecode.wicket.kendo.ui.widget.tabs;
 
 import org.apache.wicket.ajax.AjaxRequestTarget;
+import org.apache.wicket.core.request.handler.IPartialPageRequestHandler;
 import org.apache.wicket.event.IEvent;
 
 import com.googlecode.wicket.jquery.core.ajax.AjaxPayload;
+import com.googlecode.wicket.jquery.core.ajax.HandlerPayload;
 import com.googlecode.wicket.kendo.ui.form.button.AjaxButton;
 import com.googlecode.wicket.kendo.ui.widget.NavigationPanel;
 
@@ -105,13 +107,13 @@ public class TabbedPanelNavigator extends NavigationPanel // NOSONAR
 	/**
 	 * Provides a {@link AjaxPayload} designed to reload the {@link TabbedPanelNavigator}
 	 */
-	public static class RefreshPayload extends AjaxPayload
+	public static class RefreshPayload extends HandlerPayload
 	{
 		private final int index;
 
-		public RefreshPayload(int index, AjaxRequestTarget target)
+		public RefreshPayload(int index, IPartialPageRequestHandler handler)
 		{
-			super(target);
+			super(handler);
 
 			this.index = index;
 		}

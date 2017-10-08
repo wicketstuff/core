@@ -17,18 +17,19 @@
 package com.googlecode.wicket.kendo.ui.dataviz.chart;
 
 import org.apache.wicket.ajax.AjaxRequestTarget;
+import org.apache.wicket.core.request.handler.IPartialPageRequestHandler;
 import org.apache.wicket.util.io.IClusterable;
 
-import com.googlecode.wicket.jquery.core.ajax.AjaxPayload;
+import com.googlecode.wicket.jquery.core.ajax.HandlerPayload;
 
 /**
- * Provides a convenient {@link AjaxPayload} that can be used to broadcast a point information
+ * Provides a convenient {@link HandlerPayload} that can be used to broadcast a point information
  * 
  * @see Chart#onSeriesClick(AjaxRequestTarget, String, String, String, long)
  * @author Sebastien Briquet - sebfz1
  *
  */
-public class ChartPayload extends AjaxPayload implements IClusterable
+public class ChartPayload extends HandlerPayload implements IClusterable // NOSONAR
 {
 	private static final long serialVersionUID = 1L;
 
@@ -40,15 +41,15 @@ public class ChartPayload extends AjaxPayload implements IClusterable
 	/**
 	 * Constructor
 	 * 
-	 * @param target the {@link AjaxRequestTarget}
+	 * @param handler the {@link IPartialPageRequestHandler}
 	 * @param seriesName the series name
 	 * @param seriesField the series field
 	 * @param category the category
 	 * @param value the value of the point
 	 */
-	public ChartPayload(AjaxRequestTarget target, String seriesName, String seriesField, String category, long value)
+	public ChartPayload(IPartialPageRequestHandler handler, String seriesName, String seriesField, String category, long value)
 	{
-		super(target);
+		super(handler);
 
 		this.value = value;
 		this.category = category;

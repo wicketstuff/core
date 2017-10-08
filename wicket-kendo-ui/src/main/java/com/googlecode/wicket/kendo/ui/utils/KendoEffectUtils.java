@@ -17,7 +17,7 @@
 package com.googlecode.wicket.kendo.ui.utils;
 
 import org.apache.wicket.Component;
-import org.apache.wicket.ajax.AjaxRequestTarget;
+import org.apache.wicket.core.request.handler.IPartialPageRequestHandler;
 
 import com.googlecode.wicket.jquery.core.IJQueryWidget.JQueryWidget;
 import com.googlecode.wicket.kendo.ui.effect.KendoEffect;
@@ -43,39 +43,39 @@ public class KendoEffectUtils
 	/**
 	 * Reloads a {@link Component} using a default {@link KendoEffect}
 	 *
-	 * @param target the {@link AjaxRequestTarget}
+	 * @param handler the {@link IPartialPageRequestHandler}
 	 * @param component the {@link Component}
 	 */
-	public static void reload(AjaxRequestTarget target, Component component)
+	public static void reload(IPartialPageRequestHandler handler, Component component)
 	{
-		KendoEffectUtils.reload(target, component, KendoEffectUtils.effect);
+		KendoEffectUtils.reload(handler, component, KendoEffectUtils.effect);
 	}
 
 	/**
 	 * Reloads a {@link Component} using a specified {@link KendoEffect}
 	 *
-	 * @param target the {@link AjaxRequestTarget}
+	 * @param handler the {@link IPartialPageRequestHandler}
 	 * @param component the {@link Component}
 	 * @param effect the {@link KendoEffect}
 	 */
-	public static void reload(AjaxRequestTarget target, Component component, KendoEffect effect)
+	public static void reload(IPartialPageRequestHandler handler, Component component, KendoEffect effect)
 	{
-		KendoEffectUtils.reload(target, component, effect, false);
+		KendoEffectUtils.reload(handler, component, effect, false);
 	}
 
 	/**
 	 * Reloads a {@link Component} using a specified {@link KendoEffect}
 	 *
-	 * @param target the {@link AjaxRequestTarget}
+	 * @param handler the {@link IPartialPageRequestHandler}
 	 * @param component the {@link Component}
 	 * @param effect the {@link KendoEffect}
 	 * @param reverse indicates whether the effect should be played or reverse-played
 	 */
-	public static void reload(AjaxRequestTarget target, Component component, KendoEffect effect, boolean reverse)
+	public static void reload(IPartialPageRequestHandler handler, Component component, KendoEffect effect, boolean reverse)
 	{
 		String selector = JQueryWidget.getSelector(component);
 
-		target.add(component);
-		target.appendJavaScript(String.format("kendo.fx(jQuery('%s')).%s.%s();", selector, effect, !reverse ? "play" : "reverse"));
+		handler.add(component);
+		handler.appendJavaScript(String.format("kendo.fx(jQuery('%s')).%s.%s();", selector, effect, !reverse ? "play" : "reverse"));
 	}
 }

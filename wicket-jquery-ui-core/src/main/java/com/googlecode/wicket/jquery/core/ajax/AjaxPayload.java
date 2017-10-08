@@ -24,7 +24,9 @@ import org.apache.wicket.ajax.AjaxRequestTarget;
  * 
  * @author Sebastien Briquet - sebfz1
  * @see Component#send(org.apache.wicket.event.IEventSink, org.apache.wicket.event.Broadcast, Object)
+ * @deprecated use {@link HandlerPayload} instead
  */
+@Deprecated
 public class AjaxPayload
 {
 	private final AjaxRequestTarget target;

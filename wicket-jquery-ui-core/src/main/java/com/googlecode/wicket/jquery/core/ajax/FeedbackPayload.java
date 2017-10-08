@@ -18,6 +18,7 @@ package com.googlecode.wicket.jquery.core.ajax;
 
 import org.apache.wicket.Component;
 import org.apache.wicket.ajax.AjaxRequestTarget;
+import org.apache.wicket.core.request.handler.IPartialPageRequestHandler;
 import org.apache.wicket.feedback.FeedbackMessage;
 
 /**
@@ -33,15 +34,15 @@ import org.apache.wicket.feedback.FeedbackMessage;
  * 	if (event.getPayload() instanceof FeedbackPayload)
  * 	{
  * 		FeedbackPayload payload = (FeedbackPayload) event.getPayload();
+ * 		IPartialPageRequestHandler handler = payload.getHandler();
  * 		String message = payload.getMessage();
- * 		AjaxRequestTarget target = payload.getTarget();
  *
  * 		if (payload.getLevel() == FeedbackMessage.DEBUG)
  * 		{
  * 			this.debug(message);
  * 		}
  *
- * 		target.add(feedback);
+ * 		handler.add(feedback);
  * 	}
  * }
  * </code>
@@ -51,7 +52,7 @@ import org.apache.wicket.feedback.FeedbackMessage;
  * @see Component#send(org.apache.wicket.event.IEventSink, org.apache.wicket.event.Broadcast, Object)
  *
  */
-public class FeedbackPayload extends AjaxPayload
+public class FeedbackPayload extends HandlerPayload
 {
 	private final String message;
 	private final int level;
@@ -59,23 +60,23 @@ public class FeedbackPayload extends AjaxPayload
 	/**
 	 * Constructor, designed to only refresh
 	 * 
-	 * @param target the {@link AjaxRequestTarget}
+	 * @param handler the {@link AjaxRequestTarget}
 	 */
-	public FeedbackPayload(AjaxRequestTarget target)
+	public FeedbackPayload(IPartialPageRequestHandler handler)
 	{
-		this(target, FeedbackMessage.UNDEFINED, null);
+		this(handler, FeedbackMessage.UNDEFINED, null);
 	}
 
 	/**
 	 * Constructor
 	 * 
-	 * @param target the {@link AjaxRequestTarget}
+	 * @param handler the {@link AjaxRequestTarget}
 	 * @param level the level (ie: {@link FeedbackMessage#INFO}, etc)
 	 * @param message the message
 	 */
-	public FeedbackPayload(AjaxRequestTarget target, int level, String message)
+	public FeedbackPayload(IPartialPageRequestHandler handler, int level, String message)
 	{
-		super(target);
+		super(handler);
 
 		this.level = level;
 		this.message = message;
