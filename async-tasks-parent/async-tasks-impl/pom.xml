@@ -15,7 +15,6 @@
     <description>The implementation of the asynchronous task micro-framework.</description>
 
     <properties>
-        <version.guava>14.0.1</version.guava>
         <version.glassfish>3.0</version.glassfish>
     </properties>
 
@@ -27,7 +26,7 @@
         <dependency>
             <groupId>com.google.guava</groupId>
             <artifactId>guava</artifactId>
-            <version>${version.guava}</version>
+            <version>${guava.version}</version>
         </dependency>
         <dependency>
             <groupId>org.glassfish</groupId>

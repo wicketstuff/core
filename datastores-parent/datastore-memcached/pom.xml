@@ -35,7 +35,7 @@
 
 	<dependencies>
 
-        <dependency>
+		<dependency>
 			<groupId>org.wicketstuff</groupId>
 			<artifactId>wicketstuff-datastore-common</artifactId>
 			<version>${project.version}</version>
@@ -58,7 +58,7 @@
 		<dependency>
 			<groupId>com.google.guava</groupId>
 			<artifactId>guava</artifactId>
-			<version>23.0</version>
+			<version>${guava.version}</version>
 			<optional>true</optional>
 		</dependency>
 

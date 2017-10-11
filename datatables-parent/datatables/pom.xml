@@ -31,7 +31,7 @@
 		<dependency>
 			<groupId>org.webjars.bower</groupId>
 			<artifactId>datatables</artifactId>
-			<version>1.10.15</version>
+			<version>1.10.16</version>
 		</dependency>
 		<dependency>
 			<groupId>org.webjars</groupId>
