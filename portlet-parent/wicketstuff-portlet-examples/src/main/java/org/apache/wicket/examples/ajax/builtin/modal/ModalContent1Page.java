@@ -16,13 +16,12 @@
  */
 package org.apache.wicket.examples.ajax.builtin.modal;
 
-import org.apache.wicket.Page;
 import org.apache.wicket.PageReference;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.markup.html.AjaxLink;
 import org.apache.wicket.extensions.ajax.markup.html.modal.ModalWindow;
+import org.apache.wicket.extensions.markup.html.form.datetime.LocalDateTimeField;
 import org.apache.wicket.markup.html.WebPage;
-import org.wicketstuff.datetime.extensions.yui.calendar.DateTimeField;
 
 
 /**
@@ -31,6 +30,7 @@ import org.wicketstuff.datetime.extensions.yui.calendar.DateTimeField;
  */
 public class ModalContent1Page extends WebPage
 {
+	private static final long serialVersionUID = 1L;
 
 	/**
 	 * 
@@ -41,6 +41,8 @@ public class ModalContent1Page extends WebPage
 	{
 		add(new AjaxLink<Void>("closeOK")
 		{
+			private static final long serialVersionUID = 1L;
+
 			@Override
 			public void onClick(AjaxRequestTarget target)
 			{
@@ -52,6 +54,8 @@ public class ModalContent1Page extends WebPage
 
 		add(new AjaxLink<Void>("closeCancel")
 		{
+			private static final long serialVersionUID = 1L;
+
 			@Override
 			public void onClick(AjaxRequestTarget target)
 			{
@@ -61,7 +65,7 @@ public class ModalContent1Page extends WebPage
 			}
 		});
 
-		add(new DateTimeField("dateTimeField"));
+		add(new LocalDateTimeField("dateTimeField"));
 
 		final ModalWindow modal;
 		add(modal = new ModalWindow("modal"));
@@ -76,28 +80,18 @@ public class ModalContent1Page extends WebPage
 
 		modal.setCssClassName(ModalWindow.CSS_CLASS_GRAY);
 
-		modal.setPageCreator(new ModalWindow.PageCreator()
-		{
-			@Override
-			public Page createPage()
-			{
-				return new ModalContent2Page(modal);
-			}
-		});
+		modal.setPageCreator(() -> new ModalContent2Page(modal));
 
-		modal.setCloseButtonCallback(new ModalWindow.CloseButtonCallback()
-		{
-			@Override
-			public boolean onCloseButtonClicked(AjaxRequestTarget target)
-			{
-				target.appendJavaScript("alert('You can\\'t close this modal window using close button."
-					+ " Use the link inside the window instead.');");
-				return false;
-			}
+		modal.setCloseButtonCallback(target -> {
+			target.appendJavaScript("alert('You can\\'t close this modal window using close button."
+				+ " Use the link inside the window instead.');");
+			return false;
 		});
 
 		add(new AjaxLink<Void>("open")
 		{
+			private static final long serialVersionUID = 1L;
+
 			@Override
 			public void onClick(AjaxRequestTarget target)
 			{

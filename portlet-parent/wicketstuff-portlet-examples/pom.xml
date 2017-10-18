@@ -66,10 +66,6 @@
 			<version>${wicket.version}</version>
 		</dependency>
 		<dependency>
-			<groupId>org.wicketstuff</groupId>
-			<artifactId>wicket-datetime</artifactId>
-		</dependency>
-		<dependency>
 			<groupId>org.apache.wicket</groupId>
 			<artifactId>wicket-devutils</artifactId>
 		</dependency>
@@ -165,7 +161,7 @@
 		<dependency>
 			<groupId>org.eclipse.jetty.aggregate</groupId>
 			<artifactId>jetty-all</artifactId>
-            <classifier>uber</classifier>
+			<classifier>uber</classifier>
 		</dependency>
 
 		<dependency>
@@ -239,7 +235,6 @@
 							<value>${project.build.directory}/test-classes</value>
 						</systemProperty>
 					</systemProperties>
-					<jettyXml>${project.basedir}/src/test/jetty/jetty.xml,${project.basedir}/src/test/jetty/jetty-ssl.xml,${project.basedir}/src/test/jetty/jetty-http.xml,${project.basedir}/src/test/jetty/jetty-https.xml</jettyXml>
 				</configuration>
 			</plugin>
 			<plugin>
@@ -274,7 +269,7 @@
 						<configuration>
 							<webXml>src/main/webapp/WEB-INF/liferay/web.xml</webXml>
 							<packagingExcludes>
-							    WEB-INF/liferay,
+								WEB-INF/liferay,
 								WEB-INF/liferay/web.xml,
 								WEB-INF/websphere,
 								WEB-INF/websphere/web.xml,
