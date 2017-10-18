@@ -5,7 +5,7 @@ import org.wicketstuff.scala.model.FodelString
 
 import scala.collection.JavaConversions.seqAsJavaList
 import org.apache.wicket.behavior.AttributeAppender
-import org.wicketstuff.datetime.markup.html.form.DateTextField
+import org.apache.wicket.extensions.markup.html.form.datetime.LocalDateTextField;
 import org.apache.wicket.extensions.validation.validator.RfcCompliantEmailAddressValidator
 import org.apache.wicket.markup.html.basic.{ MultiLineLabel, Label }
 import org.apache.wicket.markup.html.form.{ TextField, TextArea, SubmitLink, RadioGroup, Radio, PasswordTextField, FormComponent, Form, DropDownChoice, CheckGroup, Button }
@@ -65,8 +65,8 @@ trait DSLWicket {
   def textArea(id: String): STextArea = {
     val field = new TextArea[String](id) with STextArea; field.setType(classOf[String]); add(field); field
   }
-  def dateField(id: String, format: String = "dd/MM/yyyy"): DateTextField = {
-    val field = DateTextField.forDatePattern(id, format); add(field); field
+  def dateField(id: String, format: String = "dd/MM/yyyy"): LocalDateTextField = {
+    val field = new LocalDateTextField(id, format); add(field); field
   }
   def checkGroup[T](id: String): SCheckGroup[T] = { val cg = new CheckGroup[T](id) with SCheckGroup[T]; add(cg); cg; }
   def checkBox(id: String): CheckBox = { val c = new CheckBox(id); add(c); c; }
