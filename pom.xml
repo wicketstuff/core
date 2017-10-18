@@ -316,7 +316,6 @@
 		<module>urlfragment-parent</module>
 		<module>wicketstuff-rest-utils</module>
 		<module>wicketstuff-restannotations-parent</module>
-		<module>whiteboard-parent</module>
 		<module>wicket-mount-parent</module>
 		<module>select2-parent</module>
 		<module>wicketstuff-selectize-parent</module>
