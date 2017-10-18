@@ -16,7 +16,9 @@
  */
 package com.inmethod.grid.examples.contact;
 
+import java.time.LocalDate;
 import java.util.Collection;
+import java.util.Random;
 
 /**
  * generates random contacts
@@ -28,6 +30,7 @@ public class ContactGenerator
 {
 	private static ContactGenerator instance = new ContactGenerator();
 	private static long nextId = 1;
+	private static Random rnd = new Random();
 
 	/**
 	 * @return static instance of generator
@@ -70,6 +73,7 @@ public class ContactGenerator
 		contact.setId(generateId());
 		contact.setHomePhone(generatePhoneNumber());
 		contact.setCellPhone(generatePhoneNumber());
+		contact.setBirthday(LocalDate.of(1900 + rnd.nextInt(120), 1 + rnd.nextInt(12), 1 + rnd.nextInt(28)));
 		return contact;
 	}
 

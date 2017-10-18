@@ -1,5 +1,6 @@
 package com.inmethod.grid.examples.pages.datagrid;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -42,6 +43,8 @@ public class DataGridWithUnknownItemCount extends BaseExamplePage
 			new ResourceModel("homePhone"), "homePhone"));
 		columns.add(new PropertyColumn<ContactDataSourceWithUnknownItemCount, Contact, String, String>(
 			new ResourceModel("cellPhone"), "cellPhone"));
+		columns.add(new PropertyColumn<ContactDataSourceWithUnknownItemCount, Contact, LocalDate, String>(
+				new ResourceModel("birthday"), "birthday"));
 
 		DataGrid<ContactDataSourceWithUnknownItemCount, Contact, String> grid =
 				new DefaultDataGrid<ContactDataSourceWithUnknownItemCount, Contact, String>("grid", new ContactDataSourceWithUnknownItemCount(), columns);

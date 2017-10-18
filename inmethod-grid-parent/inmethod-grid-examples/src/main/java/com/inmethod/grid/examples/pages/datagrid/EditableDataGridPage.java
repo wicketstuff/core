@@ -1,5 +1,6 @@
 package com.inmethod.grid.examples.pages.datagrid;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -70,6 +71,8 @@ public class EditableDataGridPage extends BaseExamplePage
 			new ResourceModel("homePhone"), "homePhone"));
 		columns.add(new EditablePropertyColumn<IDataSource<Contact>, Contact, String, String>(
 			new ResourceModel("cellPhone"), "cellPhone"));
+		columns.add(new EditablePropertyColumn<IDataSource<Contact>, Contact, LocalDate, String>(
+			new ResourceModel("birthday"), "birthday"));
 		columns.add(new SubmitCancelColumn<IDataSource<Contact>, Contact, String>("esd", Model.of("Edit")));
 
 		DataGrid<IDataSource<Contact>, Contact, String> grid =

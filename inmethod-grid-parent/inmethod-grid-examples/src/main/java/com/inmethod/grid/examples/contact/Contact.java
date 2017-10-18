@@ -16,6 +16,8 @@
  */
 package com.inmethod.grid.examples.contact;
 
+import java.time.LocalDate;
+
 import org.apache.wicket.util.io.IClusterable;
 
 /**
@@ -37,6 +39,8 @@ public class Contact implements IClusterable
 	private String homePhone;
 
 	private String cellPhone;
+
+	private LocalDate birthday;
 
 	/**
 	 * Constructor
@@ -201,4 +205,11 @@ public class Contact implements IClusterable
 		this.lastName = lastName;
 	}
 
+	public LocalDate getBirthday() {
+		return birthday;
+	}
+
+	public void setBirthday(LocalDate birthday) {
+		this.birthday = birthday;
+	}
 }
