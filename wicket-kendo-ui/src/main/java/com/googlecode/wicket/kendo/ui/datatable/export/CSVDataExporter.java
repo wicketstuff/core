@@ -24,7 +24,7 @@ import java.nio.charset.Charset;
 import java.util.Iterator;
 import java.util.List;
 
-import org.apache.wicket.extensions.ajax.AjaxDownload;
+import org.apache.wicket.extensions.ajax.AjaxDownloadBehavior;
 import org.apache.wicket.markup.repeater.data.IDataProvider;
 import org.apache.wicket.request.cycle.RequestCycle;
 import org.apache.wicket.request.handler.resource.ResourceStreamRequestHandler;
@@ -286,13 +286,13 @@ public class CSVDataExporter implements IDataExporter
 	}
 
 	/**
-	 * Gets a new {@link AjaxDownload} that allows to export {@link DataTable} data to a CSV file 
+	 * Gets a new {@link AjaxDownloadBehavior} that allows to export {@link DataTable} data to a CSV file
 	 * 
 	 * @param table the {@link DataTable}
 	 * @param filename the file name of the output
-	 * @return a new {@link AjaxDownload}
+	 * @return a new {@link AjaxDownloadBehavior}
 	 */
-	public static AjaxDownload newAjaxDownload(DataTable<?> table, String filename)
+	public static AjaxDownloadBehavior newAjaxDownloadBehavior(DataTable<?> table, String filename)
 	{
 		List<IExportableColumn> columns = Generics.newArrayList();
 
@@ -304,23 +304,23 @@ public class CSVDataExporter implements IDataExporter
 			}
 		}
 
-		return CSVDataExporter.newAjaxDownload(table.getDataProvider(), columns, filename);
+		return CSVDataExporter.newAjaxDownloadBehavior(table.getDataProvider(), columns, filename);
 	}
 
 	/**
-	 * Gets a new {@link AjaxDownload} that allows to export {@link DataTable} data to a CSV file 
+	 * Gets a new {@link AjaxDownloadBehavior} that allows to export {@link DataTable} data to a CSV file
 	 * 
 	 * @param provider the {@link IDataProvider}
 	 * @param columns the list of {@link IExportableColumn}
 	 * @param filename the file name of the output
-	 * @return a new {@link AjaxDownload}
+	 * @return a new {@link AjaxDownloadBehavior}
 	 */
-	public static AjaxDownload newAjaxDownload(final IDataProvider<?> provider, final List<IExportableColumn> columns, final String filename)
+	public static AjaxDownloadBehavior newAjaxDownloadBehavior(final IDataProvider<?> provider, final List<IExportableColumn> columns, final String filename)
 	{
 		ResourceStreamResource resource = new ResourceStreamResource() {
 
 			private static final long serialVersionUID = 1L;
-			
+
 			protected IResourceStream getResourceStream(Attributes attributes)
 			{
 				// lazy
@@ -328,7 +328,10 @@ public class CSVDataExporter implements IDataExporter
 			}
 		};
 
-		return new AjaxDownload(resource.setFileName(filename).setContentDisposition(ContentDisposition.ATTACHMENT)); // wicket8
+		resource.setFileName(filename);
+		resource.setContentDisposition(ContentDisposition.ATTACHMENT);
+
+		return new AjaxDownloadBehavior(resource); // wicket8
 	}
 
 	/**

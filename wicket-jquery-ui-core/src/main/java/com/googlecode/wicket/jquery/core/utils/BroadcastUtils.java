@@ -165,7 +165,6 @@ public class BroadcastUtils
 		component.send(component, Broadcast.EXACT, payload);
 	}
 
-
 	/**
 	 * Sends an {@link HandlerPayload} in {@link Broadcast#EXACT} mode
 	 * 
