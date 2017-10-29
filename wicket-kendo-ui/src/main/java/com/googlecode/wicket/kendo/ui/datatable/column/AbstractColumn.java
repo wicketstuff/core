@@ -371,7 +371,7 @@ public abstract class AbstractColumn implements IColumn
 		if (this.isEditable() != null)
 		{
 			builder.append(", ");
-			BuilderUtils.append(builder, "editable", this.isEditable());
+			builder.append(Options.QUOTE).append("editable").append(Options.QUOTE).append(": function(dataItem) { return ").append(this.isEditable()).append("; }");
 		}
 
 		if (this.isPopupVisible() != null)
