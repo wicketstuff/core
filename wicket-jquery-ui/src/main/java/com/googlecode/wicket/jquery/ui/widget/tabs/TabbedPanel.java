@@ -135,6 +135,48 @@ public class TabbedPanel extends JQueryGenericPanel<List<ITab>> implements ITabs
 	}
 
 	/**
+	 * Enables all tabs
+	 *
+	 * @param handler the {@link IPartialPageRequestHandler}
+	 */
+	public void enable(IPartialPageRequestHandler handler)
+	{
+		this.widgetBehavior.enable(handler);
+	}
+
+	/**
+	 * Enables a tab, identified by its index
+	 *
+	 * @param index the tab's index to enable
+	 * @param handler the {@link IPartialPageRequestHandler}
+	 */
+	public void enable(int index, IPartialPageRequestHandler handler)
+	{
+		this.widgetBehavior.enable(index, handler);
+	}
+
+	/**
+	 * Disables all tabs
+	 *
+	 * @param handler the {@link IPartialPageRequestHandler}
+	 */
+	public void disable(IPartialPageRequestHandler handler)
+	{
+		this.widgetBehavior.disable(handler);
+	}
+
+	/**
+	 * Disables a tab, identified by its index. The selected tab cannot be disabled.
+	 *
+	 * @param index the tab's index to disable
+	 * @param handler the {@link IPartialPageRequestHandler}
+	 */
+	public void disable(int index, IPartialPageRequestHandler handler)
+	{
+		this.widgetBehavior.disable(index, handler);
+	}
+
+	/**
 	 * Gets the last <i>visible</i> tab index
 	 *
 	 * @return the tab index, or -1 if none
