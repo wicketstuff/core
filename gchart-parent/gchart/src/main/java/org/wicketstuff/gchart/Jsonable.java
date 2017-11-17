@@ -17,7 +17,7 @@ import com.github.openjson.JSONObject;
 
 /**
  * Interface for object that can render a JSON representation of an instance.
- * Makes use of Wicket JSON library, see package {@code org.apache.wicket.ajax.json}.
+ * Makes use of Wicket JSON library, see package {@code com.github.openjson}.
  *
  * @author Dieter Tremel
  */

@@ -124,7 +124,7 @@ public class ColumnDeclaration implements Jsonable {
      * Build an instance from a JSON string for instance as seen in tutorials.
      * For users, that find coding in JSON easier than building nested
      * ChartOptions, this my be an additional offer. Implemented as
-     * {@code fromJson(new JSONObject(json));}, see {@link #fromJSON(org.apache.wicket.ajax.json.JSONObject)
+     * {@code fromJson(new JSONObject(json));}, see {@link #fromJSON(com.github.openjson.JSONObject)
      * }.
      *
      * @param json JSON string like

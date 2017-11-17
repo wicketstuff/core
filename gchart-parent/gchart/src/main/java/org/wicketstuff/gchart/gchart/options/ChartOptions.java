@@ -60,7 +60,7 @@ import org.slf4j.LoggerFactory;
  * rendered to JavaScript by {@link #toJavaScript()},
  * {@code getObject()} will be applied automatically to the models to retreive
  * the value that goes to JavaScript. This is even possible if values are
- * JSONObjects with Models as values, since a subclass of {@link JSONStringer}
+ * JSONObjects with Models as values, since a subclass of {@code JSONStringer}
  * is used, that dereferences the models before rendering the value.
  *
  * @see ModelAwareJSONStringer
@@ -110,7 +110,7 @@ public class ChartOptions extends HashMap<String, Object> implements IClusterabl
      * Build an instance from a JSON string for instance as seen in tutorials.
      * For users, that find coding in JSON easier than building nested
      * ChartOptions, this my be an additional offer. Implemented as
-     * {@code fromJson(new JSONObject(json));}, see {@link #fromJson(org.apache.wicket.ajax.json.JSONObject)
+     * {@code fromJson(new JSONObject(json));}, see {@link #fromJson(com.github.openjson.JSONObject)
      * }.
      *
      * @param json JSON string like
