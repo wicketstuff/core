@@ -75,7 +75,7 @@ public class DataTable implements IClusterable, Jsonable {
         StringBuilder sb = new StringBuilder();
         sb.append("var ").append(name).append(" = new google.visualization.DataTable(");
         sb.append(toJSON().toString());
-        sb.append(")").append("\n");
+        sb.append(");").append("\n");
         return sb.toString();
     }
 

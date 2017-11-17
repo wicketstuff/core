@@ -61,7 +61,7 @@ public class DataTableTest {
     @Test
     public void testToJavaScript() {
         DataTable tbl = new DataTable("data", colDefs, rows);
-        String expResult1 = "var data = new google.visualization.DataTable({\"cols\":[{\"label\":\"Topping\",\"type\":\"string\"},{\"label\":\"Slices\",\"type\":\"number\"}],\"rows\":[{\"c\":[{\"v\":\"Mushrooms\"},{\"v\":3}]},{\"c\":[{\"v\":\"Onions\"},{\"v\":1}]},{\"c\":[{\"v\":\"Olives\"},{\"v\":1}]},{\"c\":[{\"v\":\"Zucchini\"},{\"v\":1}]},{\"c\":[{\"v\":\"Pepperoni\"},{\"v\":2}]}]})\n";
+        String expResult1 = "var data = new google.visualization.DataTable({\"cols\":[{\"label\":\"Topping\",\"type\":\"string\"},{\"label\":\"Slices\",\"type\":\"number\"}],\"rows\":[{\"c\":[{\"v\":\"Mushrooms\"},{\"v\":3}]},{\"c\":[{\"v\":\"Onions\"},{\"v\":1}]},{\"c\":[{\"v\":\"Olives\"},{\"v\":1}]},{\"c\":[{\"v\":\"Zucchini\"},{\"v\":1}]},{\"c\":[{\"v\":\"Pepperoni\"},{\"v\":2}]}]});\n";
         String result = tbl.toJavaScript();
 //        System.out.println(result);
         assertEquals(expResult1, result);
