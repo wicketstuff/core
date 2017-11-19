@@ -26,7 +26,7 @@
 		<dependency>
 			<groupId>de.agilecoders.wicket.webjars</groupId>
 			<artifactId>wicket-webjars</artifactId>
-			<version>2.0.3</version>
+			<version>${wicket-webjars.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.webjars.bower</groupId>
@@ -36,7 +36,7 @@
 		<dependency>
 			<groupId>org.webjars</groupId>
 			<artifactId>bootstrap</artifactId>
-			<version>3.3.7</version>
+			<version>${bootstrap.version}</version>
 			<optional>true</optional>
 		</dependency>
 		<dependency>

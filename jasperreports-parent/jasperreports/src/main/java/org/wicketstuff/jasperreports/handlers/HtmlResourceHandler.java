@@ -20,7 +20,7 @@ package org.wicketstuff.jasperreports.handlers;
 import java.io.Serializable;
 
 import net.sf.jasperreports.engine.JRAbstractExporter;
-import net.sf.jasperreports.engine.export.JRHtmlExporter;
+import net.sf.jasperreports.engine.export.HtmlExporter;
 
 /**
  * @author cdeal
@@ -34,7 +34,7 @@ public class HtmlResourceHandler implements IJRResourceHandler, Serializable
 	 */
 	public JRAbstractExporter newExporter()
 	{
-		return new JRHtmlExporter();
+		return new HtmlExporter();
 	}
 
 	/**
