@@ -39,7 +39,7 @@ import com.github.openjson.JSONObject;
  *
  * @author Dieter Tremel
  */
-public class Chart extends WebComponent implements JavaScriptable {
+public class Chart extends WebComponent implements JavaScriptable, Jsonable {
 
     private static final long serialVersionUID = 1L;
     private static final Logger log = LoggerFactory.getLogger(Chart.class);
@@ -72,7 +72,8 @@ public class Chart extends WebComponent implements JavaScriptable {
      * escaped to JavaScript identifier rules. So use only characters allowed
      * for JavaScript declarations to avoid problems.
      *
-     * This constructor is for use without {@link ChartLibLoader} (one chart per page).
+     * This constructor is for use without {@link ChartLibLoader} (one chart per
+     * page).
      *
      * @param typeModel Model of Type of chart.
      * @param optionModel Model of optionModel.
@@ -88,8 +89,9 @@ public class Chart extends WebComponent implements JavaScriptable {
      * @param id Wicket id. Id is used in javascript, but at the moment not
      * escaped to JavaScript identifier rules. So use only characters allowed
      * for JavaScript declarations to avoid problems.
-     * 
-     * This constructor is for use with {@link ChartLibLoader} (multiple charts per page).
+     *
+     * This constructor is for use with {@link ChartLibLoader} (multiple charts
+     * per page).
      *
      * @param typeModel Model of Type of chart.
      * @param optionModel Model of optionModel.
@@ -169,6 +171,14 @@ public class Chart extends WebComponent implements JavaScriptable {
                 }
             });
         }
+    }
+    
+    /**
+     * Create the Javascript HeaderItem for the chart without dependencies for ajax.
+     * @return Header item for chart draw script.
+     */
+    public JavaScriptContentHeaderItem getJavaScriptHeaderItem() {
+        return new JavaScriptContentHeaderItem(toJavaScript(), getScriptId(), null);
     }
 
     /**
@@ -314,25 +324,46 @@ public class Chart extends WebComponent implements JavaScriptable {
 
     @Override
     public String toJavaScript() {
-        StringBuilder sb = new StringBuilder();
+        return createJavaScriptBuilder().toString();
+    }
 
+    /**
+     * Create a StringBuilder for generating Javascript.
+     * If needed the builder contains altready the chart library loader statement.
+     * @return 
+     */
+    protected StringBuilder initLoaderBuilder() {
+        StringBuilder sb = new StringBuilder();
+        
         if (loader == null) {
             sb.append(createLoaderStatement());
         }
+        
+        return sb;
+    }
+    
+    
+    /**
+     * Create a builder containing the standard javascript without wrapper.
+     *
+     * @return Stringbuilder with already defined javascript.
+     */
+    protected StringBuilder createJavaScriptBuilder() {
+        StringBuilder sb = initLoaderBuilder();
 
         // Register a callback to run when the Google Visualization API is loaded.
-        sb.append("google.charts.setOnLoadCallback(").append(getCallbackId()).append(");").append("\n");
+        sb.append("google.charts.setOnLoadCallback(").append(getCallbackId()).append(");").append("\n\n");
 
         // define callback function
         sb.append("function ").append(getCallbackId()).append("() {").append("\n");
 
         // data table
         final DataTable datatable = dataModel.getObject();
-        sb.append(datatable.toJavaScript()).append("\n");
+        sb.append(datatable.toJavaScript(getDataTableId())).append("\n");
 
         // options
         final ChartOptions options = (ChartOptions) getDefaultModelObject();
-        sb.append(options.toJavaScript()).append("\n");
+        sb.append(options.toJavaScript(getOptionsId())).append("\n");
 
         // Instantiate and draw our chart, passing in the optionModel.
         // var chart = new google.visualization.PieChart(document.getElementById('chart_div'));
@@ -341,11 +372,54 @@ public class Chart extends WebComponent implements JavaScriptable {
         sb.append(")").append("\n");
 
         // chart.draw(data, optionModel);
-        sb.append(getChartId()).append(".draw(").append(datatable.getName()).append(", ").append(options.getName()).append(");").append("\n");
+        sb.append(getChartId()).append(".draw(").append(getDataTableId()).append(", ").append(getOptionsId()).append(");").append("\n");
 
         sb.append("}").append("\n"); // close callback function
 
-        return sb.toString();
+        return sb;
+    }
+
+    /**
+     * Create a builder containing the javascript with use of ChartWrapper. See
+     * <a href="https://developers.google.com/chart/interactive/docs/reference#chartwrapperobject">ChartWrapper
+     * Class</a>.
+     *
+     * @return Stringbuilder with already defined javascript.
+     */
+    protected StringBuilder createWrapperJavaScriptBuilder() {
+        StringBuilder sb = new StringBuilder();
+
+        if (loader == null) {
+            sb.append("google.charts.load('current');\n\n");
+        }
+
+        // Register a callback to run when the Google Visualization API is loaded.
+        sb.append("google.charts.setOnLoadCallback(").append(getCallbackId()).append(");").append("\n\n");
+
+        // define callback function
+        sb.append("function ").append(getCallbackId()).append("() {").append("\n");
+
+        // define wrapper
+        sb.append("var wrapper = new google.visualization.ChartWrapper(");
+        sb.append(toJSON());
+        sb.append(");\n");
+
+        // call draw
+        sb.append("wrapper.draw();\n");
+
+        sb.append("}").append("\n"); // close callback function
+
+        return sb;
+    }
+
+    @Override
+    public JSONObject toJSON() {
+        JSONObject wrapperJason = new JSONObject();
+        wrapperJason.put("chartType", typeModel.getObject().getChartClass());
+        wrapperJason.put("dataTable", dataModel.getObject().toJSON());
+        wrapperJason.put("options", ((ChartOptions) getDefaultModelObject()).toJSON());
+        wrapperJason.put("containerId", getMarkupId());
+        return wrapperJason;
     }
 
     /**
@@ -371,7 +445,7 @@ public class Chart extends WebComponent implements JavaScriptable {
     /**
      * Make a script id from chart id.
      *
-     * @return Identifier(js) for chart creation script..
+     * @return Identifier(js) for chart creation script.
      */
     public String getScriptId() {
         // TODO escape CSS ids in some way to avoid javascript id problems
@@ -379,10 +453,30 @@ public class Chart extends WebComponent implements JavaScriptable {
     }
 
     /**
+     * Make a data table id from chart id.
+     *
+     * @return Identifier(js) for datatable variable.
+     */
+    public String getDataTableId() {
+        // TODO escape CSS ids in some way to avoid javascript id problems
+        return getId() + "DataTable";
+    }
+
+    /**
+     * Make a options id from chart id.
+     *
+     * @return Identifier(js) for options variable.
+     */
+    public String getOptionsId() {
+        // TODO escape CSS ids in some way to avoid javascript id problems
+        return getId() + "Options";
+    }
+
+    /**
      * Make a script id for redraw script from chart id. This is used if chart
      * should be responsive.
      *
-     * @return Identifier(js) for chart redraw script..
+     * @return Identifier(js) for chart redraw script.
      */
     public String getRedrawScriptId() {
         // TODO escape CSS ids in some way to avoid javascript id problems
