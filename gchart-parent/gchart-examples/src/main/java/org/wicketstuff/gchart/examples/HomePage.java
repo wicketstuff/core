@@ -42,7 +42,7 @@ import org.apache.wicket.Component;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.json.JSONFunction;
 import org.apache.wicket.ajax.markup.html.form.AjaxCheckBox;
-import org.apache.wicket.markup.html.WebMarkupContainer;
+import org.apache.wicket.markup.head.OnDomReadyHeaderItem;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
 import org.apache.wicket.markup.html.WebPage;
 import org.apache.wicket.model.AbstractReadOnlyModel;
@@ -60,7 +60,6 @@ public class HomePage extends WebPage {
     
     private ChartLibLoaderBehavior chartLibLoader;
     private Boolean stackedPercent = false;
-    private WebMarkupContainer barContainer;
     private Chart chartBar;
 
     public HomePage(final PageParameters parameters) {
@@ -71,11 +70,9 @@ public class HomePage extends WebPage {
         add(createChartPie());
         add(createChartLine());
         add(createChartDualLine());
-        barContainer = new WebMarkupContainer("barContainer");
-        barContainer.setOutputMarkupId(true);
-        add(barContainer);
         chartBar = createChartBar();
-        barContainer.add(chartBar);
+        chartBar.setOutputMarkupId(true);
+        add(chartBar);
 
         final PropertyModel<Boolean> stackedPercentModel = new PropertyModel<>(HomePage.this, "stackedPercent");
         AjaxCheckBox ajaxCheckBox = new AjaxCheckBox("stackedPercent", stackedPercentModel) {
@@ -84,7 +81,7 @@ public class HomePage extends WebPage {
             @Override
             protected void onUpdate(AjaxRequestTarget target) {
                 log.trace("stackedPercent {}", stackedPercent ? "True" : "False");
-                target.add(barContainer);
+                target.getHeaderResponse().render(new OnDomReadyHeaderItem(chartBar.toJavaScript()));
                 target.appendJavaScript(chartBar.getCallbackId() + "();");
             }
         };

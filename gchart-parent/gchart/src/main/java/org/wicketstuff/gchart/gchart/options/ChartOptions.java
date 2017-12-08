@@ -200,10 +200,20 @@ public class ChartOptions extends HashMap<String, Object> implements IClusterabl
 
     @Override
     public String toJavaScript() {
-        if (name == null || name.isEmpty()) {
+        return toJavaScript(name);
+    }
+
+    /**
+     * Generate declaration js for options variable.
+     *
+     * @param varname Name of options variable identifier.
+     * @return Declaration js
+     */
+    public String toJavaScript(String varname) {
+        if (varname == null || varname.isEmpty()) {
             throw new IllegalArgumentException("Name must not be null or empty for Javascript generation of ChartOptions.");
         }
-        return "var " + name + " = " + toJSON() + ";\n";
+        return "var " + varname + " = " + toJSON() + ";\n";
     }
 
     @Override
