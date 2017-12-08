@@ -29,7 +29,7 @@ import com.github.openjson.JSONObject;
  *
  * @author Dieter Tremel
  */
-public class DataTable implements IClusterable, Jsonable {
+public class DataTable implements IClusterable, Jsonable, JavaScriptable {
 
     private static final long serialVersionUID = 1L;
 
@@ -71,9 +71,29 @@ public class DataTable implements IClusterable, Jsonable {
         return rows;
     }
 
+    /**
+     * Generate declaration js for datatable variable. Field {@code name} is used for variable
+     * identifier.
+     *
+     * @return Declaration js.
+     */
+    @Override
     public String toJavaScript() {
+        return toJavaScript(name);
+    }
+
+    /**
+     * Generate declaration js for datatable variable.
+     *
+     * @param varname Name of datatable variable identifier.
+     * @return Declaration js
+     */
+    public String toJavaScript(String varname) {
+        if (varname == null || varname.isEmpty()) {
+            throw new IllegalArgumentException("Name must not be null or empty for Javascript generation of chart datatable.");
+        }
         StringBuilder sb = new StringBuilder();
-        sb.append("var ").append(name).append(" = new google.visualization.DataTable(");
+        sb.append("var ").append(varname).append(" = new google.visualization.DataTable(");
         sb.append(toJSON().toString());
         sb.append(");").append("\n");
         return sb.toString();
