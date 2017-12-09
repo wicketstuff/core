@@ -81,8 +81,7 @@ public class HomePage extends WebPage {
             @Override
             protected void onUpdate(AjaxRequestTarget target) {
                 log.trace("stackedPercent {}", stackedPercent ? "True" : "False");
-                target.getHeaderResponse().render(new OnDomReadyHeaderItem(chartBar.toJavaScript()));
-                target.appendJavaScript(chartBar.getCallbackId() + "();");
+                chartBar.configureAjaxUpdate(target);
             }
         };
         add(ajaxCheckBox);

@@ -32,6 +32,8 @@ import org.wicketstuff.gchart.gchart.options.ChartOptions;
 
 import com.github.openjson.JSONArray;
 import com.github.openjson.JSONObject;
+import org.apache.wicket.ajax.AjaxRequestTarget;
+import org.apache.wicket.markup.head.OnDomReadyHeaderItem;
 
 /**
  * Abstraction of Google charts for wicket. {@code OutputMarkupId} is set to
@@ -172,9 +174,24 @@ public class Chart extends WebComponent implements JavaScriptable, Jsonable {
             });
         }
     }
-    
+
+    /**
+     * Configure an ajax response to redraw the chart.
+     * Use this call for instance in {@code AjaxCheckBox#onUpdate} or 
+     * {@code AjaxLink#onClick}.
+     * Can be used after data change or options change.
+     * See example page for usage example switching StackedPercent option on a bar chart.
+     * 
+     * @param target Request target to configure.
+     */
+    public void configureAjaxUpdate(AjaxRequestTarget target) {
+        target.getHeaderResponse().render(new OnDomReadyHeaderItem(toJavaScript()));
+        target.appendJavaScript(getCallbackId() + "();");
+    }
+
     /**
      * Create the Javascript HeaderItem for the chart without dependencies for ajax.
+     *
      * @return Header item for chart draw script.
      */
     public JavaScriptContentHeaderItem getJavaScriptHeaderItem() {
@@ -330,19 +347,19 @@ public class Chart extends WebComponent implements JavaScriptable, Jsonable {
     /**
      * Create a StringBuilder for generating Javascript.
      * If needed the builder contains altready the chart library loader statement.
-     * @return 
+     *
+     * @return Builder stub with loader statement.
      */
     protected StringBuilder initLoaderBuilder() {
         StringBuilder sb = new StringBuilder();
-        
+
         if (loader == null) {
             sb.append(createLoaderStatement());
         }
-        
+
         return sb;
     }
-    
-    
+
     /**
      * Create a builder containing the standard javascript without wrapper.
      *
