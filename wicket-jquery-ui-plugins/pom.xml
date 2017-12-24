@@ -13,8 +13,8 @@
 	<artifactId>wicket-jquery-ui-plugins</artifactId>
 	<packaging>bundle</packaging>
 
-    <properties>
-	    <bundle.namespace>com.googlecode.wicket.jquery.ui.plugins</bundle.namespace>
+	<properties>
+		<bundle.namespace>com.googlecode.wicket.jquery.ui.plugins</bundle.namespace>
 	</properties>
 
 	<dependencies>
@@ -39,6 +39,13 @@
 			<scope>provided</scope>
 		</dependency>
 
+		<!-- SANITIZER DEPENDENCIES -->
+		<dependency>
+			<groupId>com.googlecode.owasp-java-html-sanitizer</groupId>
+			<artifactId>owasp-java-html-sanitizer</artifactId>
+			<version>20171016.1</version>
+		</dependency>
+
 		<!-- JUNIT DEPENDENCY FOR TESTING -->
 		<dependency>
 			<groupId>junit</groupId>
@@ -48,13 +55,13 @@
 		</dependency>
 	</dependencies>
 
-    <build>
-        <plugins>
-            <plugin>
-                <groupId>org.apache.felix</groupId>
-                <artifactId>maven-bundle-plugin</artifactId>
-            </plugin>
-        </plugins>
-    </build>
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.felix</groupId>
+				<artifactId>maven-bundle-plugin</artifactId>
+			</plugin>
+		</plugins>
+	</build>
 
 </project>

@@ -24,6 +24,8 @@ import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.form.FormComponentPanel;
 import org.apache.wicket.markup.html.form.TextArea;
 import org.apache.wicket.model.IModel;
+import org.owasp.html.HtmlPolicyBuilder;
+import org.owasp.html.PolicyFactory;
 
 import com.googlecode.wicket.jquery.core.IJQueryWidget;
 import com.googlecode.wicket.jquery.core.JQueryBehavior;
@@ -112,10 +114,29 @@ public class WysiwygEditor extends FormComponentPanel<String> implements IJQuery
 
 	// Methods //
 
+	/**
+	 * Gets a new {@link PolicyFactory} to sanitize editor input
+	 * 
+	 * @return a new {@code PolicyFactory}
+	 */
+	protected PolicyFactory newPolicyFactory()
+	{
+		return new HtmlPolicyBuilder() // lf
+				.allowCommonInlineFormattingElements() // lf
+				.allowCommonBlockElements() // lf
+				.allowElements("a").allowAttributes("href", "target").onElements("a") // lf
+				.allowAttributes("size").onElements("font") // lf
+				.allowAttributes("class", "style").globally() // lf
+				.toFactory();
+	}
+
 	@Override
 	public void convertInput()
 	{
-		this.setConvertedInput(this.textarea.getConvertedInput());
+		final PolicyFactory policy = this.newPolicyFactory();
+		final String html = this.textarea.getConvertedInput();
+
+		this.setConvertedInput(policy.sanitize(html));
 	}
 
 	@Override
