@@ -45,6 +45,7 @@
 
 	<properties>
 		<wicket.version>8.0.0-M8</wicket.version>
+		<owasp-sanitizer.version>20171016.1</owasp-sanitizer.version>
 		<junit.version>4.12</junit.version>
 		<jetty.version>8.1.16.v20140903</jetty.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
