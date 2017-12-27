@@ -62,7 +62,7 @@ public class FeedbackUtils
 	}
 
 	/**
-	 * Aims the reload a {@link FeedbackPanel} using {@link Broadcast#BREADTH} mode.<br>
+	 * Aims to reload a {@link FeedbackPanel} using {@link Broadcast#BREADTH} mode.<br>
 	 * The hosting page should implement a code like:<br>
 	 * 
 	 * <pre>

@@ -95,7 +95,7 @@ public class Editor extends TextArea<String> implements IJQueryWidget
 	{
 		super.convertInput();
 
-		final PolicyFactory policy = newPolicyFactory();
+		final PolicyFactory policy = this.newPolicyFactory();
 		final String input = this.getConvertedInput();
 
 		this.setConvertedInput(policy.sanitize(input));
@@ -139,7 +139,7 @@ public class Editor extends TextArea<String> implements IJQueryWidget
 	 * 
 	 * @return a new {@code PolicyFactory}
 	 */
-	protected static PolicyFactory newPolicyFactory()
+	protected PolicyFactory newPolicyFactory()
 	{
 		return new HtmlPolicyBuilder() // lf
 				.allowCommonInlineFormattingElements() // lf

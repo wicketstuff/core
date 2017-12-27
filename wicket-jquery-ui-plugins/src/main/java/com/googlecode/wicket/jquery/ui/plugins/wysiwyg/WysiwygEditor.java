@@ -117,7 +117,7 @@ public class WysiwygEditor extends FormComponentPanel<String> implements IJQuery
 	@Override
 	public void convertInput()
 	{
-		final PolicyFactory policy = newPolicyFactory();
+		final PolicyFactory policy = this.newPolicyFactory();
 		final String input = this.textarea.getConvertedInput();
 
 		this.setConvertedInput(policy.sanitize(input));
@@ -191,7 +191,7 @@ public class WysiwygEditor extends FormComponentPanel<String> implements IJQuery
 	 * 
 	 * @return a new {@code PolicyFactory}
 	 */
-	protected static PolicyFactory newPolicyFactory()
+	protected PolicyFactory newPolicyFactory()
 	{
 		return new HtmlPolicyBuilder() // lf
 				.allowCommonInlineFormattingElements() // lf
