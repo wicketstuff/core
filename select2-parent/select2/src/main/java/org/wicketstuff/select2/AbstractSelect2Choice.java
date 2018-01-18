@@ -19,15 +19,11 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
-import org.apache.wicket.Component;
 import org.apache.wicket.IRequestListener;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.event.IEvent;
 import org.apache.wicket.markup.ComponentTag;
 import org.apache.wicket.markup.MarkupStream;
-import org.apache.wicket.markup.head.IHeaderResponse;
-import org.apache.wicket.markup.head.JavaScriptHeaderItem;
-import org.apache.wicket.markup.head.OnDomReadyHeaderItem;
 import org.apache.wicket.markup.html.form.AbstractTextComponent;
 import org.apache.wicket.markup.html.form.FormComponent;
 import org.apache.wicket.model.IModel;
@@ -38,6 +34,7 @@ import org.apache.wicket.request.http.WebRequest;
 import org.apache.wicket.request.http.WebResponse;
 import org.apache.wicket.util.string.AppendingStringBuffer;
 import org.apache.wicket.util.string.Strings;
+
 import com.github.openjson.JSONException;
 import com.github.openjson.JSONStringer;
 
@@ -54,7 +51,7 @@ public abstract class AbstractSelect2Choice<T, M> extends AbstractTextComponent<
 {
 	private static final long serialVersionUID = 1L;
 
-	private final Settings settings = new Settings();
+	private final Select2Behavior select2Behavior = new Select2Behavior();
 
 	private ChoiceProvider<T> provider;
 
@@ -111,26 +108,7 @@ public abstract class AbstractSelect2Choice<T, M> extends AbstractTextComponent<
 	{
 		super(id, model);
 		this.provider = provider;
-		add(new Select2ResourcesBehavior()
-		{
-			private static final long serialVersionUID = 1L;
-
-			@Override
-			public void renderHead(Component component, IHeaderResponse response)
-			{
-				super.renderHead(component, response);
-
-				// render theme related resources if any
-				if(settings.getTheme() != null)
-				{
-					settings.getTheme().renderHead(component, response);
-				}
-
-				// include i18n resource file
-				response.render(JavaScriptHeaderItem.forReference(
-						new Select2LanguageResourceReference(settings.getLanguage())));
-			}
-		});
+		add(select2Behavior);
 		setOutputMarkupId(true);
 	}
 
@@ -139,7 +117,7 @@ public abstract class AbstractSelect2Choice<T, M> extends AbstractTextComponent<
 	 */
 	public final Settings getSettings()
 	{
-		return settings;
+		return select2Behavior.getSettings();
 	}
 
 	/**
@@ -218,16 +196,6 @@ public abstract class AbstractSelect2Choice<T, M> extends AbstractTextComponent<
 		return Strings.replaceAll(value, "'", "\\'").toString();
 	}
 
-	@Override
-	public void renderHead(IHeaderResponse response)
-	{
-		super.renderHead(response);
-
-		// initialize select2
-		response.render(OnDomReadyHeaderItem.forScript(JQuery.execute("$('#%s').select2(%s);",
-				getJquerySafeMarkupId(), getSettings().toJson())));
-	}
-
 	/**
 	 * @return current value, suitable for rendering as selected value in select2 component
 	 */
@@ -264,15 +232,15 @@ public abstract class AbstractSelect2Choice<T, M> extends AbstractTextComponent<
 		super.onInitialize();
 
 		// configure the ajax callbacks
-		if (isAjax() && !settings.isStateless())
+		if (isAjax() && !getSettings().isStateless())
 		{
 			AjaxSettings ajax = getSettings().getAjax(true);
 			ajax.setData(String.format(
 					"function(params) { return { '%s': params.term, page: params.page, '%s':true, '%s':[window.location.protocol, '//', window.location.host, window.location.pathname].join('')}; }",
-					settings.getQueryParam(), WebRequest.PARAM_AJAX, WebRequest.PARAM_AJAX_BASE_URL));
+					getSettings().getQueryParam(), WebRequest.PARAM_AJAX, WebRequest.PARAM_AJAX_BASE_URL));
 			ajax.setProcessResults("function(data, page) { return { results: data.items, pagination: { more: data.more } };  }");
 		}
-		else if (settings.isStateless()) //configure stateless mode
+		else if (getSettings().isStateless()) //configure stateless mode
 		{
 			AjaxSettings ajax = getSettings().getAjax(true);
 			ajax.setProcessResults("function(data, page) { return { results: data.items, pagination: { more: data.more } };  }");
@@ -318,7 +286,7 @@ public abstract class AbstractSelect2Choice<T, M> extends AbstractTextComponent<
 	@Override
 	protected boolean getStatelessHint()
 	{
-		if(settings.isStateless())
+		if(getSettings().isStateless())
 		{
 			return true;
 		}
@@ -415,7 +383,7 @@ public abstract class AbstractSelect2Choice<T, M> extends AbstractTextComponent<
 	{
 		WebResponse webResponse = (WebResponse) getRequestCycle().getResponse();
 		webResponse.setContentType("application/json");
-		generateJSON(settings.getQueryParam(), provider, webResponse.getOutputStream());
+		generateJSON(getSettings().getQueryParam(), provider, webResponse.getOutputStream());
 	}
 
 	@Override

@@ -28,6 +28,7 @@ public class Select2BootstrapTheme implements  ISelect2Theme
 		this.useBootstrapWebJar = useBootstrapWebJar;
 	}
 
+	@Override
 	public void renderHead(final Component varComponent, final IHeaderResponse response)
 	{
 		if (useBootstrapWebJar)
