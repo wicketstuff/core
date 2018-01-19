@@ -22,8 +22,12 @@ import org.apache.wicket.ajax.form.AjaxFormComponentUpdatingBehavior;
 import org.apache.wicket.ajax.form.AjaxFormSubmitBehavior;
 import org.apache.wicket.markup.html.WebPage;
 import org.apache.wicket.markup.html.basic.Label;
+import org.apache.wicket.markup.html.form.ChoiceRenderer;
+import org.apache.wicket.markup.html.form.DropDownChoice;
 import org.apache.wicket.markup.html.form.Form;
+import org.apache.wicket.markup.html.form.ListMultipleChoice;
 import org.apache.wicket.model.PropertyModel;
+import org.apache.wicket.model.util.ListModel;
 
 /**
  * Example page.
@@ -40,11 +44,15 @@ public class HomePage extends WebPage
 	@SuppressWarnings("unused")
 	private Country country = Country.US;
 	@SuppressWarnings("unused")
+	private Country countryDropDownChoice = Country.US;
+	@SuppressWarnings("unused")
 	private List<Country> countries = new ArrayList<>(Arrays.asList(new Country[] { Country.US, Country.CA }));
 	@SuppressWarnings("unused")
 	private List<Country> ajaxcountries = new ArrayList<>(Arrays.asList(new Country[] { Country.US, Country.CA }));
 	@SuppressWarnings("unused")
 	private List<Country> ajaxcountriesns = new ArrayList<>(Arrays.asList(new Country[] { Country.US, Country.CA }));
+	@SuppressWarnings("unused")
+	private List<Country> countriesListMultipleChoice = new ArrayList<>(Arrays.asList(new Country[] { Country.US, Country.CA }));
 	@SuppressWarnings("unused")
 	private List<String> tags = new ArrayList<>(Arrays.asList("tag1", "tag2"));
 
@@ -66,6 +74,18 @@ public class HomePage extends WebPage
 			this, "country"), new CountriesProvider());
 		country.getSettings().setMinimumInputLength(1).setPlaceholder("Please select country").setAllowClear(true);
 		add(new Form<Void>("single").add(country));
+
+		// single-select drop down choice
+		add(new Label("countryDropDownChoice", new PropertyModel<>(this, "countryDropDownChoice")));
+
+		DropDownChoice<Country> countryDropDownChoice = new DropDownChoice<Country>("countryDropDownChoice",
+				new PropertyModel<Country>(this, "countryDropDownChoice"),
+				new ListModel<Country>(Arrays.asList(Country.values())),
+				new CountryRenderer());
+		Select2Behavior countryDropDownChoiceSelect2Behavior = Select2Behavior.forSingleChoice();
+		countryDropDownChoiceSelect2Behavior.getSettings().setPlaceholder("Please select country").setAllowClear(true);
+		countryDropDownChoice.add(countryDropDownChoiceSelect2Behavior);
+		add(new Form<Void>("singleDropDownChoice").add(countryDropDownChoice));
 
 		// multi-select example
 		add(new Label("countries", new PropertyModel<>(this, "countries")));
@@ -124,6 +144,17 @@ public class HomePage extends WebPage
 			}
 		});
 		add(new Form<Void>("multiajaxns").add(ajaxcountriesns.setOutputMarkupId(true)));
+
+		// multi-select example
+		add(new Label("countriesListMultipleChoice", new PropertyModel<>(this, "countriesListMultipleChoice")));
+
+		ListMultipleChoice<Country> countriesListMultipleChoice = new ListMultipleChoice<>("countriesListMultipleChoice",
+			new PropertyModel<Collection<Country>>(this, "countriesListMultipleChoice"),
+			new ListModel<Country>(Arrays.asList(Country.values())),
+			new CountryRenderer()
+		);
+		countriesListMultipleChoice.add(Select2Behavior.forMultiChoice());
+		add(new Form<Void>("listMultipleChoice").add(countriesListMultipleChoice));
 
 		// tags example
 		add(new Label("tagsLabel", new PropertyModel<>(this, "tags")));
@@ -269,4 +300,16 @@ public class HomePage extends WebPage
 			response.setHasMore(response.size() == PAGE_SIZE);
 		}
 	}
+
+	public static class CountryRenderer extends ChoiceRenderer<Country>
+	{
+
+		private static final long serialVersionUID = 1L;
+
+		public CountryRenderer() {
+			super("displayName", "name");
+		}
+
+	}
+
 }
