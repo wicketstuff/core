@@ -60,6 +60,24 @@
 		</section>
 		<section>
 			<div class="page-header">
+				<h1>Single-Select <small>Non-Ajax DropDownChoice. Select2Behavior.</small></h1>
+			</div>
+			<div class="row">
+				<div class="span12">
+					<p>
+						Country currently selected: <strong><span wicket:id="countryDropDownChoice"></span> </strong>
+					</p>
+					<form wicket:id="singleDropDownChoice">
+						<select wicket:id="countryDropDownChoice" style="width: 300px;" ></select>
+						<div class="form-actions">
+							<button type="submit" class="btn">Submit</button>
+						</div>
+					</form>
+				</div>
+			</div>
+		</section>
+		<section>
+			<div class="page-header">
 				<h1>Multi-Select <small>Ajax result loading. Paging with infinite scrolling. Minimum input length</small></h1>
 			</div>
 			<div class="row">
@@ -109,6 +127,24 @@
 		</section>
 		<section>
 			<div class="page-header">
+				<h1>Multi-Select <small>Non-Ajax ListMultipleChoice. Select2Behavior.</small></h1>
+			</div>
+			<div class="row">
+				<div class="span12">
+					<p>
+						Countries currently selected: <strong><span wicket:id="countriesListMultipleChoice"></span> </strong>
+					</p>
+					<form wicket:id="listMultipleChoice">
+						<select wicket:id="countriesListMultipleChoice" style="width: 300px;" ></select>
+						<div class="form-actions">
+							<button type="submit" class="btn">Submit</button>
+						</div>
+					</form>
+				</div>
+			</div>
+		</section>
+		<section>
+			<div class="page-header">
 				<h1>Multi-Select <small>Ajax result loading. Paging with infinite scrolling. Minimum input length. Close on select. Tags</small></h1>
 			</div>
 			<div class="row">
@@ -125,18 +161,18 @@
 				</div>
 			</div>
 		</section>
-        <section>
-            <div class="page-header">
-                <h1>Stateless</h1>
-            </div>
-            <div class="row">
-                <div class="span12">
-                    <form wicket:id="stateless">
-                        <select wicket:id="statelessCountries" style="width: 300px;" ></select>
-                    </form>
-                </div>
-            </div>
-        </section>
+		<section>
+			<div class="page-header">
+				<h1>Stateless</h1>
+			</div>
+			<div class="row">
+				<div class="span12">
+					<form wicket:id="stateless">
+						<select wicket:id="statelessCountries" style="width: 300px;" ></select>
+					</form>
+				</div>
+			</div>
+		</section>
 	</div>
 </body>
 </html>
