@@ -20,14 +20,12 @@ import java.io.IOException;
 import java.text.ParseException;
 import java.util.HashMap;
 import java.util.Map;
-
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.util.CellRangeAddress;
 import org.apache.wicket.Application;
 import org.apache.wicket.Component;
-import org.apache.wicket.Page;
 import org.apache.wicket.application.IComponentOnBeforeRenderListener;
 import org.apache.wicket.behavior.Behavior;
 import org.apache.wicket.markup.ComponentTag;
@@ -186,16 +184,12 @@ public class TableParser
 		BufferedWebResponse mockResponse = new BufferedWebResponse(null);
 		RequestCycle.get().setResponse(mockResponse);
 		Application.get().getComponentPreOnBeforeRenderListeners().add(PathSetupListener.INSTANCE);
-		Page page = tableComponent.getPage();
-		page.startComponentRender(tableComponent);
-		tableComponent.prepareForRender();
-		tableComponent.render();
+		tableComponent.renderPart();
 		return mockResponse;
 	}
 
 	private void afterParse(Component tableComponent)
 	{
-		tableComponent.getPage().endComponentRender(tableComponent);
 		Application.get()
 			.getComponentPreOnBeforeRenderListeners()
 			.remove(PathSetupListener.INSTANCE);
