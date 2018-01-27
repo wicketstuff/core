@@ -196,7 +196,8 @@ public class WysiwygEditor extends FormComponentPanel<String> implements IJQuery
 		return new HtmlPolicyBuilder() // lf
 				.allowCommonInlineFormattingElements() // lf
 				.allowCommonBlockElements() // lf
-				.allowElements("a").allowAttributes("href", "target").onElements("a") // lf
+				.allowElements("a").allowStandardUrlProtocols() // lf
+				.allowAttributes("href", "target").onElements("a") // lf
 				.allowAttributes("size").onElements("font") // lf
 				.allowAttributes("class", "style").globally() // lf
 				.toFactory();
