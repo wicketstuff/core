@@ -99,7 +99,7 @@ public class AbstractWidgetTest {
 	}
 	
 	@Test
-	public void can_expose_configuration() {
+	public void canExposeConfigurationAsString() {
 		Dashboard dashboard = Application.get().getMetaData(DASHBOARD_KEY);
 		browser.startComponentInPage(new DashboardPanel("dashboard", Model.<Dashboard> of(dashboard)), Markup.of(MARKUP));
 		browser.assertNoErrorMessage();
