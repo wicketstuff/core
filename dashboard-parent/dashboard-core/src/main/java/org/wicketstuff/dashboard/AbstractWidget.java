@@ -18,7 +18,9 @@ import java.util.Map;
 import org.apache.wicket.markup.html.panel.Panel;
 
 /**
- * Abstract stub implementation for {@link Widget} to simplify defining of actual widgets
+ * Abstract stub implementation for {@link Widget} to simplify defining of
+ * actual widgets
+ * 
  * @author Decebal Suiu
  */
 public abstract class AbstractWidget implements Widget {
@@ -31,7 +33,6 @@ public abstract class AbstractWidget implements Widget {
 	protected WidgetLocation location;
 
 	public AbstractWidget() {
-		this.title = "";
 		settings = new HashMap<String, String>();
 		location = new WidgetLocation();
 	}
@@ -64,7 +65,7 @@ public abstract class AbstractWidget implements Widget {
 	@Override
 	public void setCollapsed(boolean collapsed) {
 		this.collapsed = collapsed;
-//		getInternalSettings().put(COLLAPSED, Boolean.toString(collapsed));
+		// getInternalSettings().put(COLLAPSED, Boolean.toString(collapsed));
 	}
 
 	@Override
@@ -103,34 +104,33 @@ public abstract class AbstractWidget implements Widget {
 	}
 
 	@Override
-	public boolean equals(Object o) {
-		if (this == o) {
-			return true;
-		}
-
-		if (o == null || getClass() != o.getClass()) {
-			return false;
-		}
-
-		AbstractWidget widget = (AbstractWidget) o;
-
-		if (!title.equals(widget.title)) {
-			return false;
-		}
-
-		if (!id.equals(widget.id)) {
-			return false;
-		}
-
-		return true;
-	}
-
-	@Override
 	public int hashCode() {
-		int result;
-		result = id.hashCode();
-		result = 31 * result + title.hashCode();
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((id == null) ? 0 : id.hashCode());
+		result = prime * result + ((title == null) ? 0 : title.hashCode());
 		return result;
 	}
 
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		AbstractWidget other = (AbstractWidget) obj;
+		if (id == null) {
+			if (other.id != null)
+				return false;
+		} else if (!id.equals(other.id))
+			return false;
+		if (title == null) {
+			if (other.title != null)
+				return false;
+		} else if (!title.equals(other.title))
+			return false;
+		return true;
+	}
 }
