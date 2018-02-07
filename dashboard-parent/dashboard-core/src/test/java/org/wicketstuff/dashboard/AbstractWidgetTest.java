@@ -18,18 +18,19 @@ import org.wicketstuff.dashboard.web.DashboardPanel;
 import org.wicketstuff.dashboard.web.WidgetView;
 
 public class AbstractWidgetTest {
+	private static final String MARKUP = "<html><body><div wicket:id=\"dashboard\"></div></body></html>";
+	private WicketTester browser;
 
-	public static MetaDataKey<Dashboard> DASHBOARD_KEY = new MetaDataKey<Dashboard>() {};
-	
-	
+	public static MetaDataKey<Dashboard> DASHBOARD_KEY = new MetaDataKey<Dashboard>() {
+		private static final long serialVersionUID = 1L;
+	};
+
 	public static class WebApp extends WebApplication {
-		
-		
 		@Override
 		public Class<? extends Page> getHomePage() {
 			return DummyHomePage.class;
 		}
-		
+
 		@Override
 		protected void init() {
 			super.init();
@@ -52,6 +53,7 @@ public class AbstractWidgetTest {
 		}
 
 		public static class MyWidgetDescriptor implements WidgetDescriptor {
+			private static final long serialVersionUID = 1L;
 
 			@Override
 			public String getTypeName() {
@@ -78,26 +80,22 @@ public class AbstractWidgetTest {
 				return MyWidget.class.getName();
 			}
 		}
-		
+
 		public static class MyWidget extends AbstractWidget {
-			
+			private static final long serialVersionUID = 1L;
+
 			@Override
 			public WidgetView createView(String viewId) {
 				return new WidgetView(viewId, Model.<Widget> of(this));
 			}
 		}
 	}
-	
-	private static final String MARKUP = 
-			"<html><body><div wicket:id=\"dashboard\"></div></body></html>";
 
-	private WicketTester browser;
-	
 	@Before
 	public void setup() {
 		browser = new WicketTester(new WebApp());
 	}
-	
+
 	@Test
 	public void canExposeConfigurationAsString() {
 		Dashboard dashboard = Application.get().getMetaData(DASHBOARD_KEY);
@@ -107,6 +105,5 @@ public class AbstractWidgetTest {
 				browser.getComponentFromLastRenderedPage("dashboard:columns:0:column:columnContainer:widgetList:0:widget:content").getDefaultModelObjectAsString(),
 				is(not(nullValue()))
 		);
-				
 	}
 }
