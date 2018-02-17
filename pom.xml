@@ -227,7 +227,7 @@
 		<deployment.disabled>false</deployment.disabled>
 		<sources.disabled>false</sources.disabled>
 
-		<hibernate.version>5.2.12.Final</hibernate.version>
+		<hibernate.version>5.2.13.Final</hibernate.version>
 		<javassist.version>3.22.0-CR2</javassist.version>
 		<jetty.version>9.4.8.v20171121</jetty.version>
 		<sf-jung.version>2.1.1</sf-jung.version>
@@ -235,11 +235,11 @@
 		<slf4j.version>1.7.25</slf4j.version>
 		<logback.version>1.2.3</logback.version>
 		<log4j.version>1.2.17</log4j.version>
-		<spring.version>4.3.12.RELEASE</spring.version>
-		<cglib.version>3.2.5</cglib.version>
+		<spring.version>4.3.14.RELEASE</spring.version>
+		<cglib.version>3.2.6</cglib.version>
 		<objenesis.version>2.6</objenesis.version>
-		<scala.version>2.12.3</scala.version>
-		<jackson.version>2.9.3</jackson.version>
+		<scala.version>2.12.4</scala.version>
+		<jackson.version>2.9.4</jackson.version>
 		<poi.version>3.17</poi.version>
 		<guava.version>23.6-jre</guava.version>
 		<wicket-webjars.version>2.0.4</wicket-webjars.version>
@@ -659,7 +659,13 @@
 			<dependency>
 				<groupId>com.google.javascript</groupId>
 				<artifactId>closure-compiler</artifactId>
-				<version>v20171203</version>
+				<version>v20180204</version>
+				<exclusions>
+					<exclusion>
+						<groupId>com.google.code.gson</groupId>
+						<artifactId>gson</artifactId>
+					</exclusion>
+				</exclusions>
 			</dependency>
 			<dependency>
 				<groupId>com.ibatis</groupId>
