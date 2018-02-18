@@ -38,8 +38,7 @@ public class FormComponentTest {
 
 	@Test
 	public void targetObject() {
-		IModel<Long> model = LazyModel.model(LazyModel.from(new Target())
-				.getValue());
+		IModel<Long> model = LazyModel.model(LazyModel.from(new Target()).getValue());
 
 		TestPage<Long> page = tester.startPage(new TestPage<Long>(model));
 
@@ -54,7 +53,7 @@ public class FormComponentTest {
 	@Test
 	public void targetInTypedModel() {
 		IModel<Target> wrapper = new IObjectClassAwareModel<Target>() {
-
+			private static final long serialVersionUID = 1L;
 			private Target target = new Target();
 
 			@Override
@@ -129,6 +128,7 @@ public class FormComponentTest {
 	}
 
 	public static class Target implements Serializable {
+		private static final long serialVersionUID = 1L;
 		private Long value = Long.valueOf(0);
 
 		public Long getValue() {
