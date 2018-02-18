@@ -19,7 +19,8 @@ import java.io.IOException;
 
 public class GeocoderException extends IOException
 {
-    private final GeocoderStatus _status;
+	private static final long serialVersionUID = 1L;
+	private final GeocoderStatus _status;
 
     public GeocoderException(GeocoderStatus status) {
         super(status.toString());

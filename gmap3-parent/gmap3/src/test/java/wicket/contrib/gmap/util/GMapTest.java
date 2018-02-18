@@ -1,7 +1,10 @@
 package wicket.contrib.gmap.util;
 
+import static wicket.contrib.gmap.util.GeocoderTest.DEFAULT_API_KEY;
+
 import org.apache.wicket.util.tester.WicketTester;
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
@@ -17,12 +20,18 @@ import org.wicketstuff.gmap.api.GLatLngBounds;
 @RunWith(JUnit4.class)
 public class GMapTest
 {
-    private final String apiKey = "YOUR_API_KEY";
-    
-    /**
-     * Test if the JavaScript for fitBounds() isn't rendered,<br/>
-     * if >not< bounds set on the map
-     */
+	private String apiKey = DEFAULT_API_KEY;
+
+	@Before
+	public void setUp()
+	{
+		apiKey = System.getProperty("wicketstuff.gmap3.apiKey", DEFAULT_API_KEY);
+	}
+
+	/**
+	 * Test if the JavaScript for fitBounds() isn't rendered,<br/>
+	 * if >not< bounds set on the map
+	 */
 	@Test
 	public void testIfBoundJSIsntRenderedIfBoundsPropertyIsntSet()
 	{
@@ -35,10 +44,10 @@ public class GMapTest
 	}
 
 
-    /**
-     * Test if the JavaScript for fitBounds() is rendered,<br/>
-     * if bounds set on the map
-     */
+	/**
+	 * Test if the JavaScript for fitBounds() is rendered,<br/>
+	 * if bounds set on the map
+	 */
 	@Test
 	public void testIfBoundJSIsRenderedIfBoundsPropertyIsSet()
 	{
