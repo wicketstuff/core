@@ -49,6 +49,7 @@ public class EventSource implements IClusterable
 	 */
 	public EventSource()
 	{
+		// noop
 	}
 
 	// Properties //

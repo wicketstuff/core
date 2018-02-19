@@ -176,16 +176,12 @@ public class DraggableBehavior extends JQueryUIBehavior implements IJQueryAjaxAw
 	 */
 	private IVisitor<Component, ?> newDroppableBehaviorVisitor()
 	{
-		return new IVisitor<Component, Void>() {
+		return (Component c, IVisit<Void> v) -> {
 
-			@Override
-			public void component(Component component, IVisit<Void> visit)
+			for (DroppableBehavior behavior : c.getBehaviors(DroppableBehavior.class))
 			{
-				for (DroppableBehavior behavior : component.getBehaviors(DroppableBehavior.class))
-				{
-					behavior.setDraggable(DraggableBehavior.this.component);
-				}
-			}
+				behavior.setDraggable(DraggableBehavior.this.component);
+			}			
 		};
 	}
 

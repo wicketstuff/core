@@ -1,6 +1,5 @@
 package com.googlecode.wicket.jquery.ui.samples.jqueryui.droppable;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -16,6 +15,7 @@ import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.model.PropertyModel;
 import org.apache.wicket.util.io.IClusterable;
+import org.apache.wicket.util.lang.Generics;
 import org.apache.wicket.util.string.Strings;
 
 import com.googlecode.wicket.jquery.ui.form.button.AjaxButton;
@@ -40,7 +40,7 @@ public class ShoppingDroppablePage extends AbstractDroppablePage
 	public ShoppingDroppablePage()
 	{
 		this.books = newBookList();
-		this.orders = new ArrayList<Book>();
+		this.orders = Generics.newArrayList();
 
 		this.initialize();
 	}

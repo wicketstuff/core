@@ -119,7 +119,6 @@ public class RangeDatePickerBehavior extends JQueryBehavior implements IJQueryAj
 		@Override
 		protected CallbackParameter[] getCallbackParameters()
 		{
-			// function(dates, el) { ... }
 			return new CallbackParameter[] { // lf
 			CallbackParameter.context("dates"), // lf
 					CallbackParameter.context("el"), // lf

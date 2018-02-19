@@ -1,6 +1,5 @@
 package com.googlecode.wicket.jquery.ui.samples.kendoui.scheduler;
 
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 import java.util.List;
@@ -9,6 +8,7 @@ import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.markup.html.form.ChoiceRenderer;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.model.Model;
+import org.apache.wicket.util.lang.Generics;
 
 import com.googlecode.wicket.jquery.core.Options;
 import com.googlecode.wicket.jquery.core.utils.RequestCycleUtils;
@@ -152,7 +152,7 @@ public class MultipleResourceSchedulerPage extends AbstractSchedulerPage // NOSO
 
 	static ResourceList newRoomList()
 	{
-		List<Resource> list = new ArrayList<Resource>();
+		List<Resource> list = Generics.newArrayList();
 		list.add(new Resource(EmployeeEventsDAO.ROOM_1, "Room #1", "#6699cc")); // using integer ids
 		list.add(new Resource(EmployeeEventsDAO.ROOM_2, "Room #2", "#9966cc"));
 

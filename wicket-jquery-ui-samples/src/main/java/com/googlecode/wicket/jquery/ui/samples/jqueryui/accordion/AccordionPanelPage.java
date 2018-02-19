@@ -1,6 +1,5 @@
 package com.googlecode.wicket.jquery.ui.samples.jqueryui.accordion;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.wicket.ajax.AjaxRequestTarget;
@@ -12,6 +11,7 @@ import org.apache.wicket.markup.html.panel.FeedbackPanel;
 import org.apache.wicket.markup.html.panel.Fragment;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
+import org.apache.wicket.util.lang.Generics;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -93,7 +93,7 @@ public class AccordionPanelPage extends AbstractAccordionPage
 			@Override
 			protected List<ITab> load()
 			{
-				List<ITab> tabs = new ArrayList<ITab>();
+				List<ITab> tabs = Generics.newArrayList();
 
 				// tab #1, using SimpleTab //
 				tabs.add(new SimpleTab(Model.of("Simple Tab"), Model.of("my content")));

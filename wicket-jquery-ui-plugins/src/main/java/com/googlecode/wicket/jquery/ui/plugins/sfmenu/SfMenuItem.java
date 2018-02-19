@@ -16,7 +16,6 @@
  */
 package com.googlecode.wicket.jquery.ui.plugins.sfmenu;
 
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
@@ -24,6 +23,7 @@ import org.apache.wicket.Page;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
+import org.apache.wicket.util.lang.Generics;
 
 /**
  * Provides a standard menu-item that supports sub-menus, adapted for Superfish
@@ -58,7 +58,7 @@ public class SfMenuItem extends AbstractSfMenuItem
 	{
 		super(title);
 
-		this.items = new ArrayList<ISfMenuItem>();
+		this.items = Generics.newArrayList();
 	}
 
 	/**
@@ -82,7 +82,7 @@ public class SfMenuItem extends AbstractSfMenuItem
 	{
 		super(title, pageClass);
 
-		this.items = new ArrayList<ISfMenuItem>();
+		this.items = Generics.newArrayList();
 	}
 
 	/**
@@ -108,7 +108,7 @@ public class SfMenuItem extends AbstractSfMenuItem
 	{
 		super(title, pageClass, pageParameters);
 
-		this.items = new ArrayList<ISfMenuItem>();
+		this.items = Generics.newArrayList();
 	}
 
 	/**
@@ -207,7 +207,7 @@ public class SfMenuItem extends AbstractSfMenuItem
 	{
 		super(title, pageUrl, openInNewWindow);
 
-		this.items = new ArrayList<ISfMenuItem>();
+		this.items = Generics.newArrayList();
 	}
 
 	// Properties //

@@ -16,7 +16,6 @@
  */
 package com.googlecode.wicket.jquery.core;
 
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
@@ -34,6 +33,7 @@ import org.apache.wicket.request.resource.JavaScriptResourceReference;
 import org.apache.wicket.request.resource.ResourceReference;
 import org.apache.wicket.resource.JQueryPluginResourceReference;
 import org.apache.wicket.settings.JavaScriptLibrarySettings;
+import org.apache.wicket.util.lang.Generics;
 
 import com.googlecode.wicket.jquery.core.resource.JQueryUrlResourceReference;
 import com.googlecode.wicket.jquery.core.settings.JQueryLibrarySettings;
@@ -71,7 +71,7 @@ public abstract class JQueryAbstractBehavior extends Behavior
 	 */
 	public JQueryAbstractBehavior()
 	{
-		this.references = new ArrayList<ResourceReference>();
+		this.references = Generics.newArrayList();
 	}
 
 	/**

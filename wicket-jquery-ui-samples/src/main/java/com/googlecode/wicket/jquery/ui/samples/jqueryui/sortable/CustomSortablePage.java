@@ -1,6 +1,5 @@
 package com.googlecode.wicket.jquery.ui.samples.jqueryui.sortable;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.wicket.AttributeModifier;
@@ -12,6 +11,7 @@ import org.apache.wicket.markup.html.panel.FeedbackPanel;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.util.io.IClusterable;
 import org.apache.wicket.util.lang.Args;
+import org.apache.wicket.util.lang.Generics;
 import org.apache.wicket.util.string.Strings;
 
 import com.googlecode.wicket.jquery.ui.JQueryIcon;
@@ -84,7 +84,7 @@ public class CustomSortablePage extends AbstractSortablePage
 	 */
 	private static List<Item> newList(String... names)
 	{
-		List<Item> list = new ArrayList<Item>();
+		List<Item> list = Generics.newArrayList();
 
 		for (String name : names)
 		{

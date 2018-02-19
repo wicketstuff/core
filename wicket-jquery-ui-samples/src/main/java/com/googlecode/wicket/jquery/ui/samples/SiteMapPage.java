@@ -1,6 +1,5 @@
 package com.googlecode.wicket.jquery.ui.samples;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.regex.Pattern;
@@ -12,6 +11,7 @@ import org.apache.wicket.markup.html.list.ListItem;
 import org.apache.wicket.markup.html.list.PropertyListView;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.LoadableDetachableModel;
+import org.apache.wicket.util.lang.Generics;
 
 import com.googlecode.wicket.jquery.ui.samples.jqueryui.accordion.AccordionPanelPage;
 import com.googlecode.wicket.jquery.ui.samples.jqueryui.accordion.DefaultAccordionPage;
@@ -325,7 +325,7 @@ public class SiteMapPage extends WebPage
 			@Override
 			protected List<SiteUrl> load()
 			{
-				final List<SiteUrl> list = new ArrayList<SiteUrl>();
+				final List<SiteUrl> list = Generics.newArrayList();
 
 				for (Class<? extends WebPage> type : LIST)
 				{

@@ -62,6 +62,7 @@ public class DraggableBehavior extends KendoUIBehavior implements IJQueryAjaxAwa
 
 	/**
 	 * Constructor
+	 * 
 	 * @param listener the {@link IDraggableListener}
 	 */
 	public DraggableBehavior(IDraggableListener listener)
@@ -101,7 +102,7 @@ public class DraggableBehavior extends KendoUIBehavior implements IJQueryAjaxAwa
 	protected DraggableBehavior(String selector, Options options, IDraggableListener listener)
 	{
 		super(selector, METHOD, options);
-		
+
 		this.listener = Args.notNull(listener, "listener");
 	}
 
@@ -200,15 +201,11 @@ public class DraggableBehavior extends KendoUIBehavior implements IJQueryAjaxAwa
 	 */
 	private IVisitor<Component, ?> newDroppableBehaviorVisitor()
 	{
-		return new IVisitor<Component, Void>() {
+		return (Component c, IVisit<Void> v) -> {
 
-			@Override
-			public void component(Component component, IVisit<Void> visit)
+			for (DroppableBehavior behavior : c.getBehaviors(DroppableBehavior.class))
 			{
-				for (DroppableBehavior behavior : component.getBehaviors(DroppableBehavior.class))
-				{
-					behavior.setDraggable(DraggableBehavior.this.component);
-				}
+				behavior.setDraggable(DraggableBehavior.this.component);
 			}
 		};
 	}

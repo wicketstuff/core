@@ -17,7 +17,6 @@
 package com.googlecode.wicket.jquery.ui.interaction.selectable;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -26,6 +25,7 @@ import org.apache.wicket.Component;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.attributes.CallbackParameter;
 import org.apache.wicket.util.lang.Args;
+import org.apache.wicket.util.lang.Generics;
 import org.apache.wicket.util.string.StringValue;
 
 import com.googlecode.wicket.jquery.core.JQueryEvent;
@@ -120,7 +120,7 @@ public abstract class SelectableBehavior<T extends Serializable> extends JQueryU
 	{
 		if (event instanceof StopEvent)
 		{
-			List<T> items = new ArrayList<T>();
+			List<T> items = Generics.newArrayList();
 			List<T> list = this.getItemList();
 
 			for (int index : ((StopEvent) event).getIndexes())
@@ -197,7 +197,7 @@ public abstract class SelectableBehavior<T extends Serializable> extends JQueryU
 
 		public StopEvent()
 		{
-			this.indexes = new ArrayList<Integer>();
+			this.indexes = Generics.newArrayList();
 			StringValue values = RequestCycleUtils.getQueryParameterValue("indexes");
 
 			if (values != null)

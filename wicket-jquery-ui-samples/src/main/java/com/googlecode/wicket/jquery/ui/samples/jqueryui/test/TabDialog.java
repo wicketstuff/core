@@ -1,6 +1,5 @@
 package com.googlecode.wicket.jquery.ui.samples.jqueryui.test;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.wicket.extensions.markup.html.tabs.AbstractTab;
@@ -8,6 +7,7 @@ import org.apache.wicket.extensions.markup.html.tabs.ITab;
 import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.markup.html.panel.Fragment;
 import org.apache.wicket.model.Model;
+import org.apache.wicket.util.lang.Generics;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -43,7 +43,7 @@ public abstract class TabDialog extends AbstractDialog<String>
 
 	private List<ITab> newTabList()
 	{
-		List<ITab> tabs = new ArrayList<ITab>();
+		List<ITab> tabs = Generics.newArrayList();
 
 		// tab #1 //
 		tabs.add(new AbstractTab(Model.of("My Tab")) {

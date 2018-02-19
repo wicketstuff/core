@@ -16,7 +16,6 @@
  */
 package com.googlecode.wicket.jquery.ui.widget.accordion;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -26,6 +25,7 @@ import org.apache.wicket.ajax.attributes.CallbackParameter;
 import org.apache.wicket.core.request.handler.IPartialPageRequestHandler;
 import org.apache.wicket.extensions.markup.html.tabs.ITab;
 import org.apache.wicket.util.lang.Args;
+import org.apache.wicket.util.lang.Generics;
 
 import com.googlecode.wicket.jquery.core.JQueryEvent;
 import com.googlecode.wicket.jquery.core.Options;
@@ -94,7 +94,7 @@ public abstract class AccordionBehavior extends JQueryUIBehavior implements IJQu
 	 */
 	protected List<ITab> getVisibleTabs()
 	{
-		List<ITab> list = new ArrayList<ITab>();
+		List<ITab> list = Generics.newArrayList();
 
 		for (ITab tab : this.getTabs())
 		{

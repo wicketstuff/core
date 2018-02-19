@@ -16,7 +16,6 @@
  */
 package com.googlecode.wicket.kendo.ui;
 
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
@@ -25,6 +24,7 @@ import org.apache.wicket.Component;
 import org.apache.wicket.core.request.handler.IPartialPageRequestHandler;
 import org.apache.wicket.markup.head.IHeaderResponse;
 import org.apache.wicket.markup.head.JavaScriptHeaderItem;
+import org.apache.wicket.util.lang.Generics;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -116,7 +116,7 @@ public class KendoUIBehavior extends JQueryBehavior implements IDestroyable
 	{
 		if (this.datasources == null)
 		{
-			this.datasources = new ArrayList<IKendoDataSource>();
+			this.datasources = Generics.newArrayList();
 		}
 
 		return this.datasources.add(datasource);

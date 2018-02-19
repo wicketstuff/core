@@ -47,7 +47,6 @@ public class OnChangeAjaxBehavior extends JQueryAjaxPostBehavior
 	@Override
 	protected CallbackParameter[] getCallbackParameters()
 	{
-		// function() { ... }
 		return new CallbackParameter[] { // lf
 				CallbackParameter.context("e"), // lf
 				CallbackParameter.resolved("value", "this.value()") };

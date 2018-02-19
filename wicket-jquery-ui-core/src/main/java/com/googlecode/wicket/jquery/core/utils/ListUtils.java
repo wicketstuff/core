@@ -16,11 +16,12 @@
  */
 package com.googlecode.wicket.jquery.core.utils;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Random;
+
+import org.apache.wicket.util.lang.Generics;
 
 /**
  * Utility class for {@link List}({@code s})
@@ -197,7 +198,7 @@ public class ListUtils
 	 */
 	public static <T> List<T> contains(String search, List<T> list, int max)
 	{
-		List<T> choices = new ArrayList<T>();
+		List<T> choices = Generics.newArrayList();
 		String searchLowerCase = search.toLowerCase();
 
 		int count = 0;
@@ -242,7 +243,7 @@ public class ListUtils
 	 */
 	public static <T> List<T> startsWith(String search, List<T> list, int max)
 	{
-		List<T> choices = new ArrayList<T>();
+		List<T> choices = Generics.newArrayList();
 		String searchLowerCase = search.toLowerCase();
 
 		int count = 0;
@@ -283,7 +284,7 @@ public class ListUtils
 	 */
 	public static List<String> exclude(List<String> list, List<String> items)
 	{
-		List<String> copy = new ArrayList<String>(list);
+		List<String> copy = Generics.newArrayList();
 
 		for (String item : items)
 		{

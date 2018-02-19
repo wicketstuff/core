@@ -20,6 +20,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.wicket.model.util.ListModel;
+import org.apache.wicket.util.lang.Generics;
 
 import com.googlecode.wicket.jquery.core.utils.BuilderUtils;
 
@@ -77,7 +78,7 @@ public class ResourceListModel extends ListModel<ResourceList>
 	 */
 	public List<String> getFields()
 	{
-		List<String> fields = new ArrayList<String>();
+		List<String> fields = Generics.newArrayList();
 
 		for (ResourceList list : this.getObject())
 		{
@@ -94,7 +95,7 @@ public class ResourceListModel extends ListModel<ResourceList>
 	 */
 	public List<String> getGroups()
 	{
-		List<String> groups = new ArrayList<String>();
+		List<String> groups = Generics.newArrayList();
 
 		for (ResourceList list : this.getObject())
 		{

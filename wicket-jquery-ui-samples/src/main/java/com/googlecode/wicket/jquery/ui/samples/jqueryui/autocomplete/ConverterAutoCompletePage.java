@@ -1,12 +1,12 @@
 package com.googlecode.wicket.jquery.ui.samples.jqueryui.autocomplete;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.panel.FeedbackPanel;
 import org.apache.wicket.model.Model;
+import org.apache.wicket.util.lang.Generics;
 
 import com.googlecode.wicket.jquery.core.renderer.TextRenderer;
 import com.googlecode.wicket.jquery.ui.form.autocomplete.AutoCompleteTextField;
@@ -37,7 +37,7 @@ public class ConverterAutoCompletePage extends AbstractAutoCompletePage // NOSON
 			@Override
 			protected List<Genre> getChoices(String input)
 			{
-				List<Genre> choices = new ArrayList<Genre>();
+				List<Genre> choices = Generics.newArrayList();
 
 				int count = 0;
 				for (Genre genre : GenresDAO.all())

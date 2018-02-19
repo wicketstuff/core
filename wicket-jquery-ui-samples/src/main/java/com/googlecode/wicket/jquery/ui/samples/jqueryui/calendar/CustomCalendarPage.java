@@ -1,10 +1,10 @@
 package com.googlecode.wicket.jquery.ui.samples.jqueryui.calendar;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.wicket.markup.html.panel.FeedbackPanel;
+import org.apache.wicket.util.lang.Generics;
 
 import com.googlecode.wicket.jquery.core.Options;
 import com.googlecode.wicket.jquery.ui.calendar.Calendar;
@@ -20,7 +20,7 @@ public class CustomCalendarPage extends AbstractCalendarPage
 
 	public CustomCalendarPage()
 	{
-		this.events = new ArrayList<CalendarEvent>();
+		this.events = Generics.newArrayList();
 		this.events.add(new CalendarEvent(1, "Today's event", LocalDateTime.now()));
 		this.events.add(new CalendarEvent(2, "Another event", LocalDateTime.now()));
 

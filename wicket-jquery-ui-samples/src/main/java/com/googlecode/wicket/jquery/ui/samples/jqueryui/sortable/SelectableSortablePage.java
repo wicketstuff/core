@@ -1,6 +1,5 @@
 package com.googlecode.wicket.jquery.ui.samples.jqueryui.sortable;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.wicket.AttributeModifier;
@@ -10,6 +9,7 @@ import org.apache.wicket.markup.html.list.ListItem;
 import org.apache.wicket.markup.html.panel.EmptyPanel;
 import org.apache.wicket.markup.html.panel.FeedbackPanel;
 import org.apache.wicket.model.IModel;
+import org.apache.wicket.util.lang.Generics;
 
 import com.googlecode.wicket.jquery.core.Options;
 import com.googlecode.wicket.jquery.ui.JQueryIcon;
@@ -127,7 +127,7 @@ public class SelectableSortablePage extends AbstractSortablePage implements ISel
 	 */
 	private static List<String> newList(String... items)
 	{
-		List<String> list = new ArrayList<String>();
+		List<String> list = Generics.newArrayList();
 
 		for (String item : items)
 		{

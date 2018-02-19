@@ -16,13 +16,13 @@
  */
 package com.googlecode.wicket.kendo.ui.widget.menu.item;
 
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
+import org.apache.wicket.util.lang.Generics;
 
 import com.googlecode.wicket.kendo.ui.KendoIcon;
 
@@ -80,7 +80,7 @@ public class MenuItem extends AbstractMenuItem
 	{
 		super(title, icon);
 
-		this.items = new ArrayList<IMenuItem>();
+		this.items = Generics.newArrayList();
 	}
 
 	/**

@@ -16,12 +16,12 @@
  */
 package com.googlecode.wicket.jquery.ui.calendar.resource;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.wicket.markup.head.HeaderItem;
 import org.apache.wicket.markup.head.JavaScriptHeaderItem;
 import org.apache.wicket.resource.JQueryPluginResourceReference;
+import org.apache.wicket.util.lang.Generics;
 
 import com.googlecode.wicket.jquery.core.resource.JQueryMomentResourceReference;
 
@@ -58,7 +58,7 @@ public class CalendarJavaScriptResourceReference extends JQueryPluginResourceRef
 	@Override
 	public List<HeaderItem> getDependencies()
 	{
-		List<HeaderItem> dependencies = new ArrayList<HeaderItem>();
+		List<HeaderItem> dependencies = Generics.newArrayList();
 
 		for (HeaderItem item : super.getDependencies())
 		{

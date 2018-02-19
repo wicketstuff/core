@@ -370,14 +370,14 @@ public class AjaxTreeView extends JQueryContainer implements ITreeViewListener
 		 */
 		protected String getDataBoundCallback()
 		{
-			String statement = "";
+			StringBuilder builder = new StringBuilder();
 
 			for (String path : this.paths)
 			{
-				statement += String.format("this.expandPath(%s);", path);
+				builder.append(String.format("this.expandPath(%s);", path));
 			}
 
-			return statement;
+			return builder.toString();
 		}
 
 		@Override

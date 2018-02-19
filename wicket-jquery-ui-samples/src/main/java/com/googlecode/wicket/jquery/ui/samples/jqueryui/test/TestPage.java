@@ -29,10 +29,7 @@ public class TestPage extends JQuerySamplePage
 		super.onInitialize();
 
 		final Form<?> form = new Form<Void>("form");
-		// this.form.setMultiPart(true);
 		this.add(form);
-
-		// WebApplication.get().
 
 		// Ajax Button //
 		AjaxButton button = new AjaxButton("button") {
@@ -45,7 +42,6 @@ public class TestPage extends JQuerySamplePage
 				super.onConfigure();
 
 				LOG.info("Component#onConfigure()");
-				// this.setEnabled(false);
 
 				this.add(new JQueryBehavior(JQueryWidget.getSelector(this)) {
 

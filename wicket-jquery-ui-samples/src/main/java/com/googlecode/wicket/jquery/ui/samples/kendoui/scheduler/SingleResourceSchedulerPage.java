@@ -1,6 +1,5 @@
 package com.googlecode.wicket.jquery.ui.samples.kendoui.scheduler;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
@@ -8,6 +7,7 @@ import java.util.List;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.model.Model;
+import org.apache.wicket.util.lang.Generics;
 
 import com.googlecode.wicket.jquery.core.Options;
 import com.googlecode.wicket.jquery.core.template.IJQueryTemplate;
@@ -43,7 +43,7 @@ public class SingleResourceSchedulerPage extends AbstractSchedulerPage // NOSONA
 		form.add(feedback.setOutputMarkupId(true));
 
 		// MultiSelect //
-		this.agendas = new ArrayList<String>();
+		this.agendas = Generics.newArrayList();
 		this.agendas.add(AGENDA_NAME1);
 
 		final MultiSelect<String> multiselect = new MultiSelect<String>("select", Model.ofList(this.agendas), Arrays.asList(AGENDA_NAME1, AGENDA_NAME2));

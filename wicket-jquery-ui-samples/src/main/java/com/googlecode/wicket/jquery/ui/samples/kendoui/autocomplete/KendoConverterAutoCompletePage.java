@@ -1,6 +1,5 @@
 package com.googlecode.wicket.jquery.ui.samples.kendoui.autocomplete;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.wicket.ajax.AjaxRequestTarget;
@@ -8,6 +7,7 @@ import org.apache.wicket.markup.html.WebPage;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.model.CompoundPropertyModel;
 import org.apache.wicket.model.IModel;
+import org.apache.wicket.util.lang.Generics;
 
 import com.googlecode.wicket.jquery.core.renderer.TextRenderer;
 import com.googlecode.wicket.jquery.ui.samples.data.bean.Genre;
@@ -41,7 +41,7 @@ public class KendoConverterAutoCompletePage extends AbstractAutoCompletePage
 			@Override
 			protected List<Genre> getChoices(String input)
 			{
-				List<Genre> choices = new ArrayList<Genre>();
+				List<Genre> choices = Generics.newArrayList();
 
 				int count = 0;
 				for (Genre genre : GenresDAO.all())

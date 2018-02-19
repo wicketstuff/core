@@ -1,7 +1,8 @@
 package com.googlecode.wicket.jquery.ui.samples.data.dao;
 
-import java.util.ArrayList;
 import java.util.List;
+
+import org.apache.wicket.util.lang.Generics;
 
 import com.googlecode.wicket.jquery.ui.samples.data.bean.Genre;
 
@@ -38,7 +39,7 @@ public class GenresDAO
 
 	public GenresDAO()
 	{
-		this.list = new ArrayList<Genre>();
+		this.list = Generics.newArrayList();
 		this.list.add(new Genre(0, "Black Metal", "cover-black-metal.png"));
 		this.list.add(new Genre(1, "Death Metal", "cover-death-metal.png"));
 		this.list.add(new Genre(2, "Doom Metal", "cover-doom-metal.png"));

@@ -1,9 +1,9 @@
 package com.googlecode.wicket.jquery.ui.samples.jqueryui.plugins.sfmenu;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.wicket.markup.html.panel.FeedbackPanel;
+import org.apache.wicket.util.lang.Generics;
 
 import com.googlecode.wicket.jquery.ui.panel.JQueryFeedbackPanel;
 import com.googlecode.wicket.jquery.ui.plugins.sfmenu.ISfMenuItem;
@@ -21,7 +21,7 @@ public class VerticalSfMenuPage extends AbstractSfMenuPage
 
 	static List<ISfMenuItem> newSfMenuItemList()
 	{
-		List<ISfMenuItem> list = new ArrayList<ISfMenuItem>();
+		List<ISfMenuItem> list = Generics.newArrayList();
 
 		list.add(new SfMenuItem("Home", HomePage.class));
 		list.add(new SfMenuItem("Widgets", widgetSubMenuList()));
@@ -34,7 +34,7 @@ public class VerticalSfMenuPage extends AbstractSfMenuPage
 
 	static List<ISfMenuItem> newSubMenuList()
 	{
-		List<ISfMenuItem> list = new ArrayList<ISfMenuItem>();
+		List<ISfMenuItem> list = Generics.newArrayList();
 
 		list.add(new SfMenuItem("Sub-menu #1", HomePage.class));
 		list.add(new SfMenuItem("Sub-menu #2", HomePage.class));
@@ -45,7 +45,7 @@ public class VerticalSfMenuPage extends AbstractSfMenuPage
 
 	static List<ISfMenuItem> widgetSubMenuList()
 	{
-		List<ISfMenuItem> list = new ArrayList<ISfMenuItem>();
+		List<ISfMenuItem> list = Generics.newArrayList();
 
 		list.add(new SfMenuItem("Accordion", DefaultAccordionPage.class));
 		list.add(new SfMenuItem("Button", DefaultButtonPage.class));

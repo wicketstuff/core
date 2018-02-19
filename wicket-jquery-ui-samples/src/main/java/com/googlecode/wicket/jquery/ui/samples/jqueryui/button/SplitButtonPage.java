@@ -1,6 +1,5 @@
 package com.googlecode.wicket.jquery.ui.samples.jqueryui.button;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.wicket.ajax.AjaxRequestTarget;
@@ -8,6 +7,7 @@ import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.form.RequiredTextField;
 import org.apache.wicket.markup.html.panel.FeedbackPanel;
 import org.apache.wicket.model.Model;
+import org.apache.wicket.util.lang.Generics;
 
 import com.googlecode.wicket.jquery.ui.JQueryIcon;
 import com.googlecode.wicket.jquery.ui.form.button.SplitButton;
@@ -65,7 +65,7 @@ public class SplitButtonPage extends AbstractButtonPage
 
 	private List<IMenuItem> newMenuList()
 	{
-		List<IMenuItem> list = new ArrayList<IMenuItem>();
+		List<IMenuItem> list = Generics.newArrayList();
 
 		list.add(new MenuItem("View", JQueryIcon.SEARCH) {
 

@@ -1,7 +1,8 @@
 package com.googlecode.wicket.jquery.ui.samples.data.dao;
 
-import java.util.ArrayList;
 import java.util.List;
+
+import org.apache.wicket.util.lang.Generics;
 
 import com.googlecode.wicket.jquery.ui.samples.data.bean.Product;
 import com.googlecode.wicket.jquery.ui.samples.data.bean.Product.Vendor;
@@ -82,7 +83,7 @@ public class ProductsDAO
 
 	public ProductsDAO()
 	{
-		this.list = new ArrayList<Product>();
+		this.list = Generics.newArrayList();
 		this.list.add(new Product(1, "Chai", "10 boxes x 20 bags", 18.0000, new Vendor("vendor #1")));
 		this.list.add(new Product(2, "Chang", "24 - 12 oz bottles", 19.0000, new Vendor("vendor #2")));
 		this.list.add(new Product(3, "Aniseed Syrup", "12 - 550 ml bottles", 10.0000, new Vendor("vendor #3")));

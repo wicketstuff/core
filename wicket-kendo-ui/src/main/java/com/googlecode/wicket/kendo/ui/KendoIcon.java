@@ -220,7 +220,7 @@ public class KendoIcon
 	public static final String TEXTAREA = "textarea";
 	public static final String TEXTBOX = "textbox";
 	public static final String TEXTBOX_HIDDEN = "textbox-hidden";
-	public static final String PASSWORD = "password";
+	public static final String PASSWORD = "password"; // NOSONAR
 	public static final String PARAGRAPH_ADD = "paragraph-add";
 	public static final String EDIT_TOOLS = "edit-tools";
 	public static final String TEMPLATE_MANAGER = "template-manager";

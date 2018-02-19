@@ -1,6 +1,5 @@
 package com.googlecode.wicket.jquery.ui.samples.kendoui.menu;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.wicket.MarkupContainer;
@@ -11,6 +10,7 @@ import org.apache.wicket.markup.html.list.ListItem;
 import org.apache.wicket.markup.html.panel.Fragment;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.model.PropertyModel;
+import org.apache.wicket.util.lang.Generics;
 
 import com.googlecode.wicket.jquery.core.Options;
 import com.googlecode.wicket.kendo.ui.KendoIcon;
@@ -29,7 +29,7 @@ public class KendoMenuPage extends AbstractMenuPage
 
 	static List<IMenuItem> newMenuItemList()
 	{
-		List<IMenuItem> list = new ArrayList<IMenuItem>();
+		List<IMenuItem> list = Generics.newArrayList();
 
 		list.add(new MenuItem("Item with icon", KendoIcon.CLOCK));
 		list.add(new MenuItem("Change the title") {
@@ -60,7 +60,7 @@ public class KendoMenuPage extends AbstractMenuPage
 
 	static List<IMenuItem> newSubMenuList()
 	{
-		List<IMenuItem> list = new ArrayList<IMenuItem>();
+		List<IMenuItem> list = Generics.newArrayList();
 
 		list.add(new MenuItem("Sub-menu #1"));
 		list.add(new MenuItem("Sub-menu #2"));

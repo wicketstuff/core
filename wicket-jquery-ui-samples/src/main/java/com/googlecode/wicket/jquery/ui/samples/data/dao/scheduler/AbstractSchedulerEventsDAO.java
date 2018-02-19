@@ -1,9 +1,10 @@
 package com.googlecode.wicket.jquery.ui.samples.data.dao.scheduler;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
+
+import org.apache.wicket.util.lang.Generics;
 
 import com.googlecode.wicket.kendo.ui.scheduler.SchedulerEvent;
 
@@ -15,7 +16,7 @@ public abstract class AbstractSchedulerEventsDAO
 
 	protected AbstractSchedulerEventsDAO()
 	{
-		this.list = new ArrayList<SchedulerEvent>();
+		this.list = Generics.newArrayList();
 	}
 
 	public SchedulerEvent getEvent(Integer eventId)
@@ -33,7 +34,7 @@ public abstract class AbstractSchedulerEventsDAO
 
 	public List<SchedulerEvent> getEvents(Date start, Date end)
 	{
-		List<SchedulerEvent> events = new ArrayList<SchedulerEvent>();
+		List<SchedulerEvent> events = Generics.newArrayList();
 
 		for (SchedulerEvent task : this.list)
 		{

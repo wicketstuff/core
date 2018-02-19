@@ -2,8 +2,9 @@ package com.googlecode.wicket.jquery.ui.samples.data.dao;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
+
+import org.apache.wicket.util.lang.Generics;
 
 import com.googlecode.wicket.jquery.ui.samples.data.DemoCalendarEvent;
 import com.googlecode.wicket.jquery.ui.samples.data.DemoCalendarEvent.Category;
@@ -55,7 +56,7 @@ public class CalendarDAO
 
 	public static List<DemoCalendarEvent> getEvents(LocalDate start, LocalDate end)
 	{
-		List<DemoCalendarEvent> events = new ArrayList<DemoCalendarEvent>();
+		List<DemoCalendarEvent> events = Generics.newArrayList();
 
 		CalendarDAO dao = get();
 
@@ -88,7 +89,7 @@ public class CalendarDAO
 
 	public CalendarDAO()
 	{
-		this.list = new ArrayList<DemoCalendarEvent>();
+		this.list = Generics.newArrayList();
 		this.initList();
 	}
 

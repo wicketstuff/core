@@ -45,6 +45,7 @@ public class BroadcastUtils
 	 * 
 	 * @param component the sink {@link Component}, likely a page
 	 * @param payload the {@link AjaxPayload}
+	 * @deprecated use {@link #breadth(Component, HandlerPayload)} instead
 	 */
 	@Deprecated
 	public static void breadth(Component component, AjaxPayload payload)
@@ -79,6 +80,7 @@ public class BroadcastUtils
 	 * 
 	 * @param component the sink {@link Component}
 	 * @param payload the {@link AjaxPayload}
+	 * @deprecated use {@link #bubble(Component, HandlerPayload)} instead
 	 */
 	@Deprecated
 	public static void bubble(Component component, AjaxPayload payload)
@@ -113,6 +115,7 @@ public class BroadcastUtils
 	 * 
 	 * @param component the sink {@link Component}
 	 * @param payload the {@link AjaxPayload}
+	 * @deprecated use {@link #depth(Component, HandlerPayload)} instead
 	 */
 	@Deprecated
 	public static void depth(Component component, AjaxPayload payload)
@@ -147,6 +150,7 @@ public class BroadcastUtils
 	 * 
 	 * @param component the sink {@link Component}
 	 * @param payload the {@link AjaxPayload}
+	 * @deprecated use {@link #exact(Component, HandlerPayload)} instead
 	 */
 	@Deprecated
 	public static void exact(Component component, AjaxPayload payload)

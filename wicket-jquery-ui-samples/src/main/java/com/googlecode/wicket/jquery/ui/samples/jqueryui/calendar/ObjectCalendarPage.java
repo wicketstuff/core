@@ -1,13 +1,13 @@
 package com.googlecode.wicket.jquery.ui.samples.jqueryui.calendar;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.markup.html.panel.FeedbackPanel;
 import org.apache.wicket.markup.repeater.RepeatingView;
 import org.apache.wicket.util.io.IClusterable;
+import org.apache.wicket.util.lang.Generics;
 
 import com.googlecode.wicket.jquery.core.JQueryBehavior;
 import com.googlecode.wicket.jquery.core.Options;
@@ -26,9 +26,9 @@ public class ObjectCalendarPage extends AbstractCalendarPage
 
 	public ObjectCalendarPage()
 	{
-		this.events = new ArrayList<CalendarEvent>();
+		this.events = Generics.newArrayList();
 
-		this.objects = new ArrayList<MyEvent>();
+		this.objects = Generics.newArrayList();
 		this.objects.add(new MyEvent("event #1"));
 		this.objects.add(new MyEvent("event #2"));
 

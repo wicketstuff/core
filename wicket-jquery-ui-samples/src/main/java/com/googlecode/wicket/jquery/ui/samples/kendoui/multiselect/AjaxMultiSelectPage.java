@@ -1,12 +1,12 @@
 package com.googlecode.wicket.jquery.ui.samples.kendoui.multiselect;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.model.Model;
+import org.apache.wicket.util.lang.Generics;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -30,7 +30,7 @@ public class AjaxMultiSelectPage extends AbstractMultiSelectPage
 		form.add(feedback);
 
 		// MultiSelect //
-		List<String> selected = new ArrayList<String>();
+		List<String> selected = Generics.newArrayList();
 		selected.add("Heavy Metal");
 		selected.add("Trash Metal");
 

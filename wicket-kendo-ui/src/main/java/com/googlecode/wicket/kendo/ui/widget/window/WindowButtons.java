@@ -16,8 +16,9 @@
  */
 package com.googlecode.wicket.kendo.ui.widget.window;
 
-import java.util.ArrayList;
 import java.util.List;
+
+import org.apache.wicket.util.lang.Generics;
 
 import com.googlecode.wicket.kendo.ui.KendoIcon;
 
@@ -33,7 +34,7 @@ public enum WindowButtons
 	YES_NO(WindowButton.of(Window.YES, Window.LBL_YES, true), WindowButton.of(Window.NO, Window.LBL_NO, true)), // lf
 	YES_NO_CANCEL(WindowButton.of(Window.YES, Window.LBL_YES, true), WindowButton.of(Window.NO, Window.LBL_NO, true), WindowButton.of(Window.CANCEL, Window.LBL_CANCEL, false));
 
-	private final List<WindowButton> buttons = new ArrayList<WindowButton>();
+	private final List<WindowButton> buttons = Generics.newArrayList();
 
 	/**
 	 * Constructor
