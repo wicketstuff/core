@@ -73,7 +73,7 @@ public class SchedulerEvent implements Serializable
 	/**
 	 * Constructor
 	 */
-	public SchedulerEvent()
+	SchedulerEvent()
 	{
 		this((Object) null, "", new Date());
 	}
@@ -510,6 +510,8 @@ public class SchedulerEvent implements Serializable
 
 	public static boolean isNew(SchedulerEvent event)
 	{
-		return event.id == null;
+		final String id = String.valueOf(event.id);
+
+		return id.equals("null") || id.equals("0");
 	}
 }

@@ -38,8 +38,8 @@ public abstract class TemplatePage extends WebPage
 		TemplatePage.initTemplate();
 
 		// buttons //
-		this.add(this.newKendoButton("btnKendoUI"));
-		this.add(this.newJQueryButton("btnJQueryUI"));
+		this.add(newKendoButton("btnKendoUI"));
+		this.add(newJQueryButton("btnJQueryUI"));
 	}
 
 	@Override
@@ -47,7 +47,7 @@ public abstract class TemplatePage extends WebPage
 	{
 		super.onInitialize();
 
-		this.add(this.newHtmlClassBehavior());
+		this.add(newHtmlClassBehavior());
 		this.add(new GoogleAnalyticsBehavior(this));
 	}
 
@@ -73,7 +73,7 @@ public abstract class TemplatePage extends WebPage
 
 	// Factories //
 
-	private Link<Void> newKendoButton(String id)
+	private static Link<Void> newKendoButton(String id)
 	{
 		return new Link<Void>(id) { // NOSONAR
 
@@ -88,7 +88,7 @@ public abstract class TemplatePage extends WebPage
 		};
 	}
 
-	private Link<Void> newJQueryButton(String id)
+	private static Link<Void> newJQueryButton(String id)
 	{
 		return new Link<Void>(id) { // NOSONAR
 
@@ -103,7 +103,7 @@ public abstract class TemplatePage extends WebPage
 		};
 	}
 
-	private JQueryAbstractBehavior newHtmlClassBehavior()
+	private static JQueryAbstractBehavior newHtmlClassBehavior()
 	{
 		return new JQueryAbstractBehavior() {
 

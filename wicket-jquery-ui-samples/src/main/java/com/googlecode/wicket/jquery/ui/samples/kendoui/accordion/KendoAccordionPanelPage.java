@@ -37,6 +37,12 @@ public class KendoAccordionPanelPage extends AbstractAccordionPage
 		final AccordionPanel accordion = new AccordionPanel("accordion", this.newTabList()) {
 
 			private static final long serialVersionUID = 1L;
+			
+			@Override
+			public boolean isExpandEventEnabled()
+			{
+				return true;
+			}
 
 			@Override
 			public void onSelect(AjaxRequestTarget target, int index, ITab tab)
