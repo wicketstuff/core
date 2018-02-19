@@ -178,7 +178,14 @@ public abstract class LocalTextField<T> extends TextField<T> implements ITextFor
 	@Override
 	public String getInput()
 	{
-		return KendoDateTimeUtils.convert(super.getInput());
+		String input = super.getInput();
+		
+		if (input != null)
+		{
+			return KendoDateTimeUtils.convert(input);
+		}
+		
+		return null;
 	}
 
 	// IJQueryWidget //

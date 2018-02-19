@@ -42,6 +42,7 @@ public class KendoDateTimeUtils
 	 */
 	private KendoDateTimeUtils()
 	{
+		// noop
 	}
 
 	/**
