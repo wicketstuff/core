@@ -1,6 +1,7 @@
 package com.googlecode.wicket.jquery.ui.samples.data.provider;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
@@ -31,7 +32,7 @@ public class ProductDataProvider extends ListDataProvider<Product> implements IS
 	@Override
 	protected List<Product> getData()
 	{
-		List<Product> list = super.getData();
+		List<Product> list = new ArrayList<>(super.getData());
 		SortParam<String> param =  this.state.getSort();
 
 		if (param != null)

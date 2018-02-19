@@ -25,6 +25,8 @@ import org.apache.wicket.request.IRequestParameters;
 import org.apache.wicket.request.component.IRequestablePage;
 import org.apache.wicket.request.cycle.RequestCycle;
 import org.apache.wicket.util.string.StringValue;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Utility class for {@link RequestCycle}
@@ -34,6 +36,8 @@ import org.apache.wicket.util.string.StringValue;
  */
 public class RequestCycleUtils
 {
+	private static final Logger log = LoggerFactory.getLogger(RequestCycleUtils.class);
+
 	/**
 	 * Utility class
 	 */
@@ -175,5 +179,20 @@ public class RequestCycleUtils
 		final IRequestParameters parameters = requestCycle.getRequest().getRequestParameters();
 
 		return parameters.getParameterValues(name);
+	}
+
+	/**
+	 * Write {@link IRequestParameters} info to the {@link Logger}
+	 * 
+	 * @param parameters the {@code IRequestParameters}
+	 */
+	public static void log(IRequestParameters parameters)
+	{
+		log.info("--IRequestParameters--");
+
+		for (String name : parameters.getParameterNames())
+		{
+			log.info("{}: {}", name, parameters.getParameterValue(name));
+		}
 	}
 }

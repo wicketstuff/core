@@ -31,7 +31,12 @@ public class PropertyUtils
 	 */
 	public static String escape(String property)
 	{
-		return property.replace('.', '$');
+		if (property != null)
+		{
+			return property.replace('.', '$');
+		}
+
+		return null;
 	}
 
 	/**
@@ -42,7 +47,12 @@ public class PropertyUtils
 	 */
 	public static String unescape(String property)
 	{
-		return property.replace('$', '.');
+		if (property != null)
+		{
+			return property.replace('$', '.');
+		}
+
+		return null;
 	}
 
 	/**

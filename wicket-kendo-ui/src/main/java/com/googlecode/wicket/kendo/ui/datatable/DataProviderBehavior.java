@@ -24,19 +24,20 @@ import org.apache.wicket.Component;
 import org.apache.wicket.Session;
 import org.apache.wicket.core.util.lang.PropertyResolver;
 import org.apache.wicket.core.util.lang.PropertyResolverConverter;
+import org.apache.wicket.extensions.markup.html.repeater.data.sort.ISortState;
 import org.apache.wicket.extensions.markup.html.repeater.data.sort.ISortStateLocator;
 import org.apache.wicket.extensions.markup.html.repeater.data.sort.SortOrder;
 import org.apache.wicket.extensions.markup.html.repeater.data.table.filter.IFilterStateLocator;
+import org.apache.wicket.extensions.markup.html.repeater.util.SingleSortState;
 import org.apache.wicket.markup.repeater.data.IDataProvider;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.request.IRequestParameters;
 import org.apache.wicket.util.convert.ConversionException;
+
+import com.github.openjson.JSONArray;
 import com.github.openjson.JSONException;
 import com.github.openjson.JSONObject;
-
-import com.googlecode.wicket.jquery.core.Options;
 import com.googlecode.wicket.jquery.core.behavior.AjaxCallbackBehavior;
-import com.googlecode.wicket.jquery.core.utils.BuilderUtils;
 import com.googlecode.wicket.kendo.ui.datatable.column.IColumn;
 import com.googlecode.wicket.kendo.ui.datatable.column.PropertyColumn;
 import com.googlecode.wicket.kendo.ui.utils.PropertyUtils;
@@ -76,8 +77,16 @@ public class DataProviderBehavior<T> extends AjaxCallbackBehavior
 	protected void setSort(String property, SortOrder order)
 	{
 		ISortStateLocator<String> locator = (ISortStateLocator<String>) this.provider;
+		ISortState<String> sortState = locator.getSortState();
 
-		locator.getSortState().setPropertySortOrder(property, order);
+		if (property != null)
+		{
+			sortState.setPropertySortOrder(property, order);
+		}
+		else if (sortState instanceof SingleSortState<?>)
+		{
+			((SingleSortState<?>) sortState).setSort(null);
+		}
 	}
 
 	@Override
@@ -92,10 +101,7 @@ public class DataProviderBehavior<T> extends AjaxCallbackBehavior
 			String property = parameters.getParameterValue("sort[0][field]").toOptionalString();
 			String direction = parameters.getParameterValue("sort[0][dir]").toOptionalString();
 
-			if (property != null)
-			{
-				this.setSort(PropertyUtils.unescape(property), direction == null ? SortOrder.NONE : direction.equals(ASC) ? SortOrder.ASCENDING : SortOrder.DESCENDING);
-			}
+			this.setSort(PropertyUtils.unescape(property), direction == null ? SortOrder.NONE : ASC.equals(direction) ? SortOrder.ASCENDING : SortOrder.DESCENDING);
 		}
 
 		// IFilterStateLocator //
@@ -131,33 +137,22 @@ public class DataProviderBehavior<T> extends AjaxCallbackBehavior
 		}
 
 		// response //
-		final long size = this.provider.size();
+		final JSONArray results = new JSONArray();
 		final Iterator<? extends T> iterator = this.provider.iterator(first, count);
-
-		StringBuilder builder = new StringBuilder();
-
-		builder.append("{ ");
-		BuilderUtils.append(builder, "__count", size);
-		builder.append(", ");
-		builder.append(Options.QUOTE).append("results").append(Options.QUOTE).append(": ");
-		builder.append("[ ");
 
 		if (iterator != null)
 		{
-			for (int index = 0; iterator.hasNext(); index++)
+			while (iterator.hasNext())
 			{
-				if (index > 0)
-				{
-					builder.append(", ");
-				}
-
-				builder.append(this.newJsonRow(iterator.next()));
+				results.put(this.newJsonRow(iterator.next()));
 			}
 		}
 
-		builder.append(" ] }");
+		JSONObject object = new JSONObject();
+		object.put("results", results);
+		object.put("__count", this.provider.size());
 
-		return builder.toString();
+		return object.toString();
 	}
 
 	@Override
@@ -186,7 +181,7 @@ public class DataProviderBehavior<T> extends AjaxCallbackBehavior
 	 * @param bean T object
 	 * @return a new JSON object
 	 */
-	protected String newJsonRow(T bean)
+	protected JSONObject newJsonRow(T bean)
 	{
 		JSONObject object = new JSONObject();
 
@@ -206,6 +201,6 @@ public class DataProviderBehavior<T> extends AjaxCallbackBehavior
 			throw new ConversionException(e);
 		}
 
-		return object.toString();
+		return object;
 	}
 }
