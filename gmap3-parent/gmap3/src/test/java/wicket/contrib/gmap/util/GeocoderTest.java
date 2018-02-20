@@ -13,28 +13,29 @@ import org.wicketstuff.gmap.geocoder.Geocoder;
 @RunWith(JUnit4.class)
 public class GeocoderTest
 {
-	private Geocoder coder;
+	public static final String DEFAULT_API_KEY = "YOUR_API_KEY";
+	private String apiKey = DEFAULT_API_KEY;
 
 	@Before
 	public void setUp()
 	{
-		coder = new Geocoder();
-
+		apiKey = System.getProperty("wicketstuff.gmap3.apiKey", DEFAULT_API_KEY);
 	}
 
 	@Test
 	public void testEncode()
 	{
+		Geocoder coder = new Geocoder(apiKey);
 		String encode = coder.encode("Salzburgerstraße 205, 4030 Linz, Österreich");
-		Assert.assertEquals(
-			"http://maps.googleapis.com/maps/api/geocode/json?address=Salzburgerstra%C3%9Fe+205%2C+4030+Linz%2C+%C3%96sterreich",
-			encode);
+		Assert.assertEquals(new StringBuilder("http://maps.googleapis.com/maps/api/geocode/json?apiKey=")
+				.append(apiKey).append("&address=Salzburgerstra%C3%9Fe+205%2C+4030+Linz%2C+%C3%96sterreich").toString()
+			, encode);
 	}
 
 	@Test
 	public void testGeocoding() throws Exception
 	{
-		Geocoder coder = new Geocoder();
+		Geocoder coder = new Geocoder(apiKey);
 		GLatLng result = coder.geocode("Salzburgerstraße 205, 4030 Linz, Österreich");
 		Assert.assertNotNull(result);
 		Assert.assertEquals(48.2572879, result.getLat(), 0.00001);
@@ -52,9 +53,9 @@ public class GeocoderTest
 	public void testCenterAndFitZoomForAdress() throws Exception
 	{
 		WicketTester tester = new WicketTester();
-		GMap map = new GMap("gmap");
+		GMap map = new GMap("gmap", apiKey);
 		tester.startComponentInPage(map);
-		Geocoder gecoder = new Geocoder();
+		Geocoder gecoder = new Geocoder(apiKey);
 		gecoder.centerAndFitZoomForAdress(map, "Avignon, France");
 		Assert.assertEquals(43.9966409, map.getBounds().getNE().getLat(), 0.00001);
 		Assert.assertEquals(4.927226, map.getBounds().getNE().getLng(), 0.00001);
