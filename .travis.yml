@@ -33,7 +33,7 @@ cache:
 install: true
 
 before_script:
-  - echo "MAVEN_OPTS='-Xmx2g'" > ~/.mavenrc
+  - echo "export MAVEN_OPTS='-Xmx2g ${MAVEN_OPTS}'" > ~/.mavenrc
 
 script:
   - "DEPLOY_OR_TEST=install"
