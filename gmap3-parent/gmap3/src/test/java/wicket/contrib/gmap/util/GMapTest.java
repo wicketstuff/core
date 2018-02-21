@@ -25,7 +25,10 @@ public class GMapTest
 	@Before
 	public void setUp()
 	{
-		apiKey = System.getProperty("wicketstuff.gmap3.apiKey", DEFAULT_API_KEY);
+		if (System.getenv("wicketstuff.gmap3.apiKey") != null) 
+		{			
+			apiKey = System.getenv("wicketstuff.gmap3.apiKey");
+		}
 	}
 
 	/**
