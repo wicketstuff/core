@@ -16,6 +16,7 @@
  */
 package com.googlecode.wicket.jquery.core.utils;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
@@ -284,7 +285,7 @@ public class ListUtils
 	 */
 	public static List<String> exclude(List<String> list, List<String> items)
 	{
-		List<String> copy = Generics.newArrayList();
+		List<String> copy =  new ArrayList<>(list);
 
 		for (String item : items)
 		{
