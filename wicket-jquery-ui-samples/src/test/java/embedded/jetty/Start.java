@@ -34,7 +34,6 @@ public class Start
 
 		if (keystore != null && keystore.exists())
 		{
-			
 			SslContextFactory factory = new SslContextFactory();
 			factory.setKeyStoreResource(keystore);
 			factory.setKeyStorePassword("wicket");
