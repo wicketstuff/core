@@ -7,12 +7,12 @@ import org.apache.wicket.markup.html.panel.FeedbackPanel;
 import org.apache.wicket.model.PropertyModel;
 
 import com.googlecode.wicket.jquery.core.IJQueryWidget;
-import com.googlecode.wicket.jquery.ui.form.button.AjaxButton;
 import com.googlecode.wicket.jquery.ui.form.button.ButtonBehavior;
 import com.googlecode.wicket.jquery.ui.panel.JQueryFeedbackPanel;
 import com.googlecode.wicket.jquery.ui.plugins.wysiwyg.WysiwygEditor;
 import com.googlecode.wicket.jquery.ui.plugins.wysiwyg.toolbar.DefaultWysiwygToolbar;
 import com.googlecode.wicket.jquery.ui.samples.JQuerySamplePage;
+import com.googlecode.wicket.kendo.ui.form.button.Button;
 
 public class WysiwygEditorPage extends JQuerySamplePage
 {
@@ -38,12 +38,12 @@ public class WysiwygEditorPage extends JQuerySamplePage
 		form.add(feedback);
 
 		// Buttons //
-		this.add(new AjaxButton("display", form) {
+		form.add(new Button("display") {
 
 			private static final long serialVersionUID = 1L;
 
 			@Override
-			protected void onSubmit(AjaxRequestTarget target)
+			public void onSubmit()
 			{
 				String html = editor.getModelObject();
 
@@ -51,12 +51,10 @@ public class WysiwygEditorPage extends JQuerySamplePage
 				{
 					form.info(html);
 				}
-
-				target.add(feedback);
 			}
 		});
 
-		this.add(new AjaxLink<Void>("disable") {
+		form.add(new AjaxLink<Void>("disable") {
 
 			private static final long serialVersionUID = 1L;
 

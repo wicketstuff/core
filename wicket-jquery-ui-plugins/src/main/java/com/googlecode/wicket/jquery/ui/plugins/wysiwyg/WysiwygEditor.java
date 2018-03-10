@@ -145,8 +145,9 @@ public class WysiwygEditor extends FormComponentPanel<String> implements IJQuery
 		super.onInitialize();
 
 		this.textarea = new TextArea<String>("textarea", this.getModel());
+		this.textarea.setOutputMarkupId(true);
 		this.textarea.setEscapeModelStrings(false);
-		this.add(this.textarea.setOutputMarkupId(true));
+		this.add(this.textarea);
 
 		this.add(JQueryWidget.newWidgetBehavior(this, this.container));
 	}
