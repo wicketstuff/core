@@ -22,9 +22,8 @@ import org.apache.wicket.markup.head.OnLoadHeaderItem;
 import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.form.FormComponentPanel;
-import org.apache.wicket.markup.html.form.TextArea;
+import org.apache.wicket.markup.html.form.HiddenField;
 import org.apache.wicket.model.IModel;
-import org.apache.wicket.util.string.Strings;
 import org.owasp.html.HtmlPolicyBuilder;
 import org.owasp.html.PolicyFactory;
 
@@ -44,7 +43,7 @@ public class WysiwygEditor extends FormComponentPanel<String> implements IJQuery
 {
 	private static final long serialVersionUID = 1L;
 
-	private TextArea<String> textarea;
+	private HiddenField<String> textarea;
 	private final WebMarkupContainer container;
 
 	/**
@@ -120,13 +119,8 @@ public class WysiwygEditor extends FormComponentPanel<String> implements IJQuery
 	{
 		final PolicyFactory policy = this.newPolicyFactory();
 		final String input = this.textarea.getConvertedInput();
-		final String clean = policy.sanitize(input);
-		final String check = policy.sanitize(Strings.unescapeMarkup(clean).toString());
 
-		if (check.equals(clean))
-		{
-			this.setConvertedInput(clean);
-		}
+		this.setConvertedInput(policy.sanitize(input));
 	}
 
 	@Override
@@ -144,7 +138,7 @@ public class WysiwygEditor extends FormComponentPanel<String> implements IJQuery
 	{
 		super.onInitialize();
 
-		this.textarea = new TextArea<String>("textarea", this.getModel());
+		this.textarea = new HiddenField<String>("textarea", this.getModel());
 		this.textarea.setOutputMarkupId(true);
 		this.textarea.setEscapeModelStrings(false);
 		this.add(this.textarea);

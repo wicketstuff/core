@@ -16,15 +16,8 @@
    limitations under the License.
 -->
 <html xmlns:wicket="http://wicket.apache.org">
-<wicket:head>
-    <style type="text/css">
-        .wysiwyg-editor-textarea {
-            display: none;
-        }
-    </style>
-</wicket:head>
 <wicket:panel>
     <div wicket:id="container" class="wysiwyg-editor"></div>
-    <textarea wicket:id="textarea" class="wysiwyg-editor-textarea"></textarea>
+    <input type="hidden" wicket:id="textarea"/>
 </wicket:panel>
 </html>
