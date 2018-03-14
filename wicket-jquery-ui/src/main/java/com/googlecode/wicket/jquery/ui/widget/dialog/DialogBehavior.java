@@ -271,7 +271,7 @@ public abstract class DialogBehavior extends JQueryUIBehavior implements IJQuery
 		@Override
 		public String getCallbackFunction()
 		{
-			return "function(event, ui) { if (event.keyCode == $.ui.keyCode.ESCAPE) { " + this.getCallbackScript() + " } }";
+			return "function(event, ui) { if (event.keyCode == jQuery.ui.keyCode.ESCAPE) { " + this.getCallbackScript() + " } }";
 		}
 
 		@Override
