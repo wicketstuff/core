@@ -52,6 +52,7 @@
     	<module>jwicket-ui-sort</module>
     	<module>jwicket-ui-accordion</module>
     	<module>jwicket-ui-tooltip</module>
+        <module>jwicket-ui-menu</module>
     </modules>
 
 

@@ -1,8 +1,0 @@
-var ${menuName}
-
-var init${menuName} = function () {
-	${menuName} = new YAHOO.widget.${menuType}("${elementId}", { hidedelay: 750, lazyload:false});
-	${menuName}.render();
-};
-
-YAHOO.util.Event.onContentReady("${elementId}", init${menuName});

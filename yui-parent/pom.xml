@@ -20,11 +20,8 @@
     </description>
 
     <modules>
-        <!-- This module should be seperated into several pieces. -->
-        <!--<module>yui</module>-->
         <module>yui-common</module>
         <module>yui-calendar</module>
-        <!--<module>yui-examples</module>-->
     </modules>
 
 </project>

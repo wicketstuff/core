@@ -1,3 +1,0 @@
-var oMenu = new YAHOO.widget.ContextMenu("${elementId}", {trigger: ${triggerId}}); 
-
-oMenu.render(document.body); 

@@ -1,8 +1,0 @@
-YAHOO.util.Event.onDOMReady(function() {
-
-var oMenu = new YAHOO.widget.MenuBar("${elementId}", {visible:true,clicktohide:false,autosubmenudisplay: true, hidedelay: 750, lazyload: true}); 
-
-oMenu.render(); 
-
-
-} );

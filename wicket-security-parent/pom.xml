@@ -121,9 +121,5 @@
 	<modules>
 		<module>wasp-parent</module>
 		<module>swarm-parent</module>
-		<!--
-			<module>examples</module>
-			<module>archetypes/swarm-quickstart</module>
-		-->
 	</modules>
 </project>
