@@ -184,6 +184,7 @@ public class TableParser
 		BufferedWebResponse mockResponse = new BufferedWebResponse(null);
 		RequestCycle.get().setResponse(mockResponse);
 		Application.get().getComponentPreOnBeforeRenderListeners().add(PathSetupListener.INSTANCE);
+		tableComponent.beforeRender();
 		tableComponent.renderPart();
 		return mockResponse;
 	}
