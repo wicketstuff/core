@@ -24,6 +24,7 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.Set;
 
 import javax.swing.event.TreeModelEvent;
@@ -348,7 +349,7 @@ public abstract class AbstractTree extends Panel
 					@Override
 					public void visitItem(TreeItem item)
 					{
-						item.prepareForRender();
+						item.beforeRender();
 					}
 				});
 			}
@@ -366,7 +367,7 @@ public abstract class AbstractTree extends Panel
 					@Override
 					public void visitItem(TreeItem item)
 					{
-						item.afterRender();
+						item.onAfterRender();
 					}
 				});
 			}
@@ -1125,14 +1126,14 @@ public abstract class AbstractTree extends Panel
 	 */
 	public final void updateTree()
 	{
-		AjaxRequestTarget target = getRequestCycle().find(AjaxRequestTarget.class);
-		if (target == null)
+		Optional<AjaxRequestTarget> target = getRequestCycle().find(AjaxRequestTarget.class);
+		if (target.isPresent() == false)
 		{
 			throw new WicketRuntimeException(
 				"No AjaxRequestTarget available to execute updateTree(ART target)");
 		}
 
-		updateTree(target);
+		updateTree(target.get());
 	}
 
 	/**

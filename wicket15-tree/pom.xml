@@ -20,7 +20,7 @@
 	<groupId>org.wicketstuff</groupId>
 	<artifactId>wicket15-tree</artifactId>
 	<packaging>jar</packaging>
-	<version>7.1.0-SNAPSHOT</version>
+	<version>8.0.0-SNAPSHOT</version>
 	<name>Wicket 1.5 Tree component</name>
 	<description>A copy of the pre- Wicket-6.x Tree component from wicket-extensions</description>
 	<licenses>
@@ -39,12 +39,12 @@
 		<maven.compiler.source>1.7</maven.compiler.source>
 		<maven.compiler.target>1.7</maven.compiler.target>
 		<!-- allowed values: R7, 1.0, 1.5, 2.0 or none -->
-		<jetty9.version>9.2.11.v20150529</jetty9.version>
-		<log4j.version>1.2.17</log4j.version>
-		<servlet-api.version>3.0.1</servlet-api.version>
-		<slf4j.version>1.7.6</slf4j.version>
+		<jetty.version>9.4.7.v20170914</jetty.version>
+		<slf4j.version>1.7.25</slf4j.version>
+		<junit.version>4.12</junit.version>
+		<servlet-api.version>3.1.0</servlet-api.version>
 		<wtp.version>none</wtp.version>
-		<wicket.version>7.0.0</wicket.version>
+		<wicket.version>8.0.0-SNAPSHOT</wicket.version>
 	</properties>
 	<scm>
 		<connection>scm:git:git@github.com:wicketstuff/wicket1.5-tree.git</connection>
@@ -62,7 +62,7 @@
 			<dependency>
 				<groupId>junit</groupId>
 				<artifactId>junit</artifactId>
-				<version>4.12</version>
+				<version>${junit.version}</version>
 				<scope>test</scope>
 			</dependency>
 			<dependency>
@@ -75,37 +75,33 @@
 			<dependency>
 				<groupId>log4j</groupId>
 				<artifactId>log4j</artifactId>
-				<version>${log4j.version}</version>
-				<scope>test</scope>
-				<optional>true</optional>
-			</dependency>
-			<dependency>
-				<groupId>org.eclipse.jetty</groupId>
-				<artifactId>jetty-server</artifactId>
-				<version>${jetty9.version}</version>
+				<version>1.2.17</version>
 				<scope>test</scope>
 				<optional>true</optional>
 			</dependency>
 			<dependency>
 				<groupId>org.eclipse.jetty</groupId>
 				<artifactId>jetty-webapp</artifactId>
-				<version>${jetty9.version}</version>
+				<version>${jetty.version}</version>
 				<scope>test</scope>
-				<optional>true</optional>
 			</dependency>
 			<dependency>
 				<groupId>org.eclipse.jetty</groupId>
-				<artifactId>jetty-util</artifactId>
-				<version>${jetty9.version}</version>
+				<artifactId>jetty-server</artifactId>
+				<version>${jetty.version}</version>
 				<scope>test</scope>
-				<optional>true</optional>
+			</dependency>
+			<dependency>
+				<groupId>org.eclipse.jetty.websocket</groupId>
+				<artifactId>javax-websocket-server-impl</artifactId>
+				<version>${jetty.version}</version>
+				<scope>test</scope>
 			</dependency>
 			<dependency>
 				<groupId>org.eclipse.jetty</groupId>
 				<artifactId>jetty-jmx</artifactId>
-				<version>${jetty9.version}</version>
+				<version>${jetty.version}</version>
 				<scope>test</scope>
-				<optional>true</optional>
 			</dependency>
 		</dependencies>
 	</dependencyManagement>
@@ -128,19 +124,23 @@
 		</dependency>
 		<dependency>
 			<groupId>org.eclipse.jetty</groupId>
-			<artifactId>jetty-server</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.eclipse.jetty</groupId>
 			<artifactId>jetty-webapp</artifactId>
+			<scope>test</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.eclipse.jetty</groupId>
-			<artifactId>jetty-util</artifactId>
+			<artifactId>jetty-server</artifactId>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.eclipse.jetty.websocket</groupId>
+			<artifactId>javax-websocket-server-impl</artifactId>
+			<scope>test</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.eclipse.jetty</groupId>
 			<artifactId>jetty-jmx</artifactId>
+			<scope>test</scope>
 		</dependency>
 	</dependencies>
 	<build>

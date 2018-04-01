@@ -16,10 +16,11 @@
  */
 package org.apache.wicket.extensions.markup.html.tree;
 
+import java.util.Optional;
+
 import javax.swing.tree.TreeModel;
 
 import org.apache.wicket.Component;
-import org.apache.wicket.util.io.IClusterable;
 import org.apache.wicket.MarkupContainer;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.markup.html.AjaxFallbackLink;
@@ -35,6 +36,7 @@ import org.apache.wicket.model.IModel;
 import org.apache.wicket.request.Response;
 import org.apache.wicket.request.resource.CssResourceReference;
 import org.apache.wicket.request.resource.ResourceReference;
+import org.apache.wicket.util.io.IClusterable;
 import org.apache.wicket.util.string.Strings;
 
 /**
@@ -420,9 +422,9 @@ public abstract class BaseTree extends AbstractTree
 				 * @see AjaxFallbackLink#onClick(AjaxRequestTarget)
 				 */
 				@Override
-				public void onClick(AjaxRequestTarget target)
+				public void onClick(Optional<AjaxRequestTarget> target)
 				{
-					callback.onClick(target);
+					callback.onClick(target.orElse(null));
 				}
 			};
 		}

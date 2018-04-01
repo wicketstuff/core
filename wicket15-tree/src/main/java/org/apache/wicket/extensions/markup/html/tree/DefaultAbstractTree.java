@@ -16,6 +16,8 @@
  */
 package org.apache.wicket.extensions.markup.html.tree;
 
+import java.util.Optional;
+
 import javax.swing.tree.TreeModel;
 import javax.swing.tree.TreeNode;
 
@@ -455,9 +457,9 @@ public abstract class DefaultAbstractTree extends AbstractTree
 				 * {@inheritDoc}
 				 */
 				@Override
-				public void onClick(final AjaxRequestTarget target)
+				public void onClick(Optional<AjaxRequestTarget> target)
 				{
-					callback.onClick(target);
+					callback.onClick(target.orElse(null));
 				}
 			};
 		}
