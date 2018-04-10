@@ -39,10 +39,14 @@ import org.wicketstuff.wicket.mount.core.processor.AutoMountContext;
 		"org.wicketstuff.wicket.mount.annotation.AutoMount",
 		"org.wicketstuff.wicket.mount.core.annotation.MountPath"
 })
-@SupportedSourceVersion(SourceVersion.RELEASE_6)
 public class AutoMountAnnotationProcessor extends AbstractAutoMountAnnotationProcessor
 {
 
+	@Override
+	public SourceVersion getSupportedSourceVersion() {
+		return SourceVersion.latestSupported();
+	}
+	
 	@Override
 	public boolean process(Set<? extends TypeElement> annotations,
 	                       RoundEnvironment roundEnv)
