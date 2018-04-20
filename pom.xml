@@ -298,7 +298,6 @@
 		<module>serializer-common</module>
 		<module>serializer-kryo</module>
 		<module>serializer-kryo2</module>
-		<module>serializer-fast</module>
 		<module>serializer-fast2</module>
 		<module>serializer-ui</module>
 		<module>shiro-security</module>
