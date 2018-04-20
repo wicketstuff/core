@@ -296,7 +296,6 @@
 		<module>closure-compiler</module>
 		<module>scala-extensions-parent</module>
 		<module>serializer-common</module>
-		<module>serializer-kryo</module>
 		<module>serializer-kryo2</module>
 		<module>serializer-fast2</module>
 		<module>serializer-ui</module>
@@ -629,18 +628,6 @@
 				<groupId>net.sf.jung</groupId>
 				<artifactId>jung-visualization</artifactId>
 				<version>${sf-jung.version}</version>
-			</dependency>
-
-			<!-- KRYO -->
-			<dependency>
-				<groupId>com.googlecode</groupId>
-				<artifactId>kryo</artifactId>
-				<version>1.04</version>
-			</dependency>
-			<dependency>
-				<groupId>de.javakaffee</groupId>
-				<artifactId>kryo-serializers</artifactId>
-				<version>0.9</version>
 			</dependency>
 
 			<!-- OTHER -->
