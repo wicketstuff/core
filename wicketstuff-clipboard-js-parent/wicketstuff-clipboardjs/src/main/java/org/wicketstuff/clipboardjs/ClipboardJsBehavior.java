@@ -80,7 +80,7 @@ public class ClipboardJsBehavior extends Behavior {
     }
 
     protected void initializeClipboardJs(final IHeaderResponse response, final Component component) {
-        response.render(OnDomReadyHeaderItem.forScript(String.format("new Clipboard('#%s')", component.getMarkupId())));
+        response.render(OnDomReadyHeaderItem.forScript(String.format("new ClipboardJS('#%s')", component.getMarkupId())));
     }
 
     @Override
