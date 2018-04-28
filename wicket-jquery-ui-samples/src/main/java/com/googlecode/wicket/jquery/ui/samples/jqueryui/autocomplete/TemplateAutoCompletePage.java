@@ -68,10 +68,10 @@ public class TemplateAutoCompletePage extends AbstractAutoCompletePage
 						return	"<table style='width: 100%' cellspacing='0' cellpadding='0'>\n" +
 								" <tr>\n" +
 								"  <td>\n" +
-								"   <img src='${ coverUrl }' width='50px' />\n" +
+								"   <img src='#: data.coverUrl #' width='50px' />\n" +
 								"  </td>\n" +
 								"  <td>\n" +
-								"   ${ name }\n" +
+								"   #: data.name #\n" +
 								"  </td>\n" +
 								" </tr>\n" +
 								"</table>";

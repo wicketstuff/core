@@ -54,10 +54,10 @@ public class TemplateDropDownPage extends AbstractDropDownPage
 						return  "\n<table style='width: 100%'>" +
 							"\n <tr>" +
 							"\n  <td>" +
-							"\n   <img src='#:data.coverUrl#' width='50px' />" +
+							"\n   <img src='#: data.coverUrl #' width='50px' />" +
 							"\n  </td>" +
 							"\n  <td>" +
-							"\n   #:data.name#" +
+							"\n   #: data.name #" +
 							"\n  </td>" +
 							"\n </tr>" +
 							"\n</table>";
