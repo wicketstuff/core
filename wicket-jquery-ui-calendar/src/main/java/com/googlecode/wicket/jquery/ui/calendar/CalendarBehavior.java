@@ -125,6 +125,12 @@ public class CalendarBehavior extends JQueryBehavior implements IJQueryAjaxAware
 		{
 			this.add(settings.getGCalJavaScriptReference());
 		}
+
+		// locale-all.js //
+		if (settings.getLocalesJavaScriptReference() != null)
+		{
+			this.add(settings.getLocalesJavaScriptReference());
+		}
 	}
 
 	// Methods //
@@ -252,8 +258,8 @@ public class CalendarBehavior extends JQueryBehavior implements IJQueryAjaxAware
 		{
 			this.setOption("viewRender", this.onViewRenderAjaxBehavior.getCallbackFunction());
 		}
-		
-		super.onConfigure(component);		
+
+		super.onConfigure(component);
 	}
 
 	@Override

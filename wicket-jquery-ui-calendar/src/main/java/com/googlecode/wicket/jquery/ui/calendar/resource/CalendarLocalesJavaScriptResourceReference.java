@@ -16,14 +16,7 @@
  */
 package com.googlecode.wicket.jquery.ui.calendar.resource;
 
-import java.util.List;
-
-import org.apache.wicket.markup.head.HeaderItem;
-import org.apache.wicket.markup.head.JavaScriptHeaderItem;
 import org.apache.wicket.resource.JQueryPluginResourceReference;
-import org.apache.wicket.util.lang.Generics;
-
-import com.googlecode.wicket.jquery.core.resource.JQueryMomentResourceReference;
 
 /**
  * Provides the resource reference for the fullcalendar javascript library.
@@ -31,18 +24,18 @@ import com.googlecode.wicket.jquery.core.resource.JQueryMomentResourceReference;
  * @author Sebastien Briquet - sebfz1
  *
  */
-public class CalendarJavaScriptResourceReference extends JQueryPluginResourceReference
+public class CalendarLocalesJavaScriptResourceReference extends JQueryPluginResourceReference
 {
 	private static final long serialVersionUID = 1L;
 
-	private static final CalendarJavaScriptResourceReference INSTANCE = new CalendarJavaScriptResourceReference();
+	private static final CalendarLocalesJavaScriptResourceReference INSTANCE = new CalendarLocalesJavaScriptResourceReference();
 
 	/**
 	 * Gets the instance of the resource reference
 	 *
 	 * @return the single instance of the resource reference
 	 */
-	public static CalendarJavaScriptResourceReference get()
+	public static CalendarLocalesJavaScriptResourceReference get()
 	{
 		return INSTANCE;
 	}
@@ -50,17 +43,8 @@ public class CalendarJavaScriptResourceReference extends JQueryPluginResourceRef
 	/**
 	 * Private constructor
 	 */
-	private CalendarJavaScriptResourceReference()
+	private CalendarLocalesJavaScriptResourceReference()
 	{
-		super(CalendarJavaScriptResourceReference.class, "fullcalendar.js");
-	}
-
-	@Override
-	public List<HeaderItem> getDependencies()
-	{
-		List<HeaderItem> dependencies = Generics.newArrayList();
-		dependencies.addAll(super.getDependencies());
-		dependencies.add(JavaScriptHeaderItem.forReference(JQueryMomentResourceReference.get()));
-		return dependencies;
+		super(CalendarLocalesJavaScriptResourceReference.class, "locale-all.js");
 	}
 }
