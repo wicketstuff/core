@@ -27,8 +27,8 @@ import java.util.Set;
 
 import org.apache.wicket.util.io.IClusterable;
 import org.apache.wicket.util.lang.Generics;
-import com.github.openjson.JSONObject;
 
+import com.github.openjson.JSONObject;
 import com.googlecode.wicket.jquery.core.utils.BuilderUtils;
 import com.googlecode.wicket.jquery.core.utils.DateUtils;
 
@@ -138,7 +138,7 @@ public class Options implements IClusterable
 	 */
 	public Options()
 	{
-		this.map = new HashMap<String, Object>();
+		this.map = new HashMap<>();
 	}
 
 	/**
@@ -194,7 +194,7 @@ public class Options implements IClusterable
 
 	/**
 	 * Returns the value to which the specified key is mapped, or null if this map contains no mapping for the key.
-	 * 
+	 *
 	 * @param <T> the object type
 	 * @param key the key whose associated value is to be returned
 	 * @return the value to which the specified key is mapped, or null if this map contains no mapping for the key
@@ -241,7 +241,7 @@ public class Options implements IClusterable
 	 * <pre><code>
 	 * Options o = new Options();
 	 * o.set("foo", new Options("foo1", "value1"), new Options("foo2", Options.asString("value2")));
-	 * 
+	 *
 	 * results in json:
 	 * { "foo": [
 	 *            { "foo1": value1 },
@@ -266,7 +266,7 @@ public class Options implements IClusterable
 	 * <pre><code>
 	 * Options o = new Options();
 	 * o.set("foo", new Options("foo1", "value1"), new Options("foo2", Options.asString("value2")));
-	 * 
+	 *
 	 * results in json:
 	 * { "foo": [
 	 *            { "foo1": value1 },

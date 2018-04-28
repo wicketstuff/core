@@ -138,7 +138,7 @@ public class WysiwygEditor extends FormComponentPanel<String> implements IJQuery
 	{
 		super.onInitialize();
 
-		this.textarea = new HiddenField<String>("textarea", this.getModel());
+		this.textarea = new HiddenField<>("textarea", this.getModel());
 		this.textarea.setOutputMarkupId(true);
 		this.textarea.setEscapeModelStrings(false);
 		this.add(this.textarea);
@@ -189,7 +189,7 @@ public class WysiwygEditor extends FormComponentPanel<String> implements IJQuery
 
 	/**
 	 * Gets a new {@link PolicyFactory} to sanitize editor input
-	 * 
+	 *
 	 * @return a new {@code PolicyFactory}
 	 */
 	protected PolicyFactory newPolicyFactory()

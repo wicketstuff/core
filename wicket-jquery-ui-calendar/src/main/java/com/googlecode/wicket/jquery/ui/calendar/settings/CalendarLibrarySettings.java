@@ -19,6 +19,7 @@ package com.googlecode.wicket.jquery.ui.calendar.settings;
 import org.apache.wicket.request.resource.ResourceReference;
 
 import com.googlecode.wicket.jquery.ui.calendar.resource.CalendarJavaScriptResourceReference;
+import com.googlecode.wicket.jquery.ui.calendar.resource.CalendarLocalesJavaScriptResourceReference;
 import com.googlecode.wicket.jquery.ui.calendar.resource.CalendarStyleSheetResourceReference;
 import com.googlecode.wicket.jquery.ui.calendar.resource.GCalJavaScriptResourceReference;
 
@@ -55,6 +56,7 @@ public class CalendarLibrarySettings
 	private ResourceReference stylesheetReference = CalendarStyleSheetResourceReference.get();
 
 	private ResourceReference gcalReference = GCalJavaScriptResourceReference.get();
+	private ResourceReference localesReference = CalendarLocalesJavaScriptResourceReference.get();
 
 	/**
 	 * Gets the {@link CalendarLibrarySettings} instance
@@ -136,5 +138,25 @@ public class CalendarLibrarySettings
 	public void setGCalJavaScriptReference(ResourceReference reference)
 	{
 		this.gcalReference = reference;
+	}
+
+	/**
+	 * Gets the locale-all's javascript resource reference
+	 *
+	 * @return the {@link ResourceReference}
+	 */
+	public ResourceReference getLocalesJavaScriptReference()
+	{
+		return this.localesReference;
+	}
+
+	/**
+	 * Sets the locale-all's javascript resource reference
+	 *
+	 * @param reference the {@link ResourceReference}
+	 */
+	public void setLocalesJavaScriptReference(ResourceReference reference)
+	{
+		this.localesReference = reference;
 	}
 }
