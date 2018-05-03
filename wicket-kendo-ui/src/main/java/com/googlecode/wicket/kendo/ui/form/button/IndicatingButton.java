@@ -22,16 +22,13 @@ import org.apache.wicket.model.IModel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.googlecode.wicket.jquery.core.JQueryBehavior;
-import com.googlecode.wicket.jquery.core.Options;
-
 /**
  * Provides a Kendo UI button with an ajax indicator
  *
  * @author Sebastien Briquet - sebfz1
  *
  */
-public class IndicatingButton extends Button
+public class IndicatingButton extends Button implements IIndicatingButton
 {
 	private static final long serialVersionUID = 1L;
 	private static final Logger LOG = LoggerFactory.getLogger(IndicatingButton.class);
@@ -60,26 +57,17 @@ public class IndicatingButton extends Button
 	// Properties //
 
 	/**
-	 * Indicates whether the button will be disabled on-click to prevent double submit<br>
+	 * {@inheritDoc}<br>
 	 * <br>
 	 * <b>Warning:</b> the button will not be send as part of the post because of its disabled state. Therefore {@link Button#onSubmit()} will not be reached, {@link Form#onSubmit()} should be used instead.
-	 *
-	 * @return false by default
 	 */
-	protected boolean isDisabledOnClick()
+	@Override
+	public boolean isDisabledOnClick()
 	{
 		return false;
 	}
 
 	// Event //
-	
-	@Override
-	public void onConfigure(JQueryBehavior behavior)
-	{
-		super.onConfigure(behavior);
-
-		behavior.setOption("enable", this.isEnabledInHierarchy());
-	}
 
 	@Override
 	protected void onComponentTag(ComponentTag tag)
@@ -97,22 +85,6 @@ public class IndicatingButton extends Button
 	@Override
 	public ButtonBehavior newWidgetBehavior(String selector)
 	{
-		return new AjaxIndicatingButtonBehavior(selector) {
-
-			private static final long serialVersionUID = 1L;
-
-			@Override
-			protected Options newOnClickOptions()
-			{
-				Options options = super.newOnClickOptions();
-
-				if (IndicatingButton.this.isDisabledOnClick())
-				{
-					options.set("enable", false);
-				}
-
-				return options;
-			}
-		};
+		return new AjaxIndicatingButtonBehavior(selector);
 	}
 }

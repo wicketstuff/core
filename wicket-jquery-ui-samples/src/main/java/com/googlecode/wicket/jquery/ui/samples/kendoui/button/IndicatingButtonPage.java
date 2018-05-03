@@ -17,26 +17,9 @@ public class IndicatingButtonPage extends AbstractButtonPage // NOSONAR
 
 	public IndicatingButtonPage()
 	{
-		final Form<Void> form = new Form<Void>("form");
-		this.add(form);
-
-		// FeedbackPanel //
-		final KendoFeedbackPanel feedback = new KendoFeedbackPanel("feedback");
-		form.add(feedback.setOutputMarkupId(true));
-
-		// Buttons //
-		form.add(new IndicatingButton("button1") { // NOSONAR
+		final Form<Void> form = new Form<Void>("form") {
 
 			private static final long serialVersionUID = 1L;
-
-			@Override
-			protected boolean isDisabledOnClick()
-			{
-				/*
-				 * Warning: if true the button will not be send as part of the post because of its disabled state. Therefore Button.onSubmit() will not be reached, Form.onSubmit() should be used instead.
-				 */
-				return false; // default value
-			}
 
 			@Override
 			public void onSubmit()
@@ -55,6 +38,27 @@ public class IndicatingButtonPage extends AbstractButtonPage // NOSONAR
 
 				IndicatingButtonPage.this.info(this);
 			}
+		};
+
+		this.add(form);
+
+		// FeedbackPanel //
+		final KendoFeedbackPanel feedback = new KendoFeedbackPanel("feedback");
+		form.add(feedback.setOutputMarkupId(true));
+
+		// Buttons //
+		form.add(new IndicatingButton("button1") { // NOSONAR
+
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			public boolean isDisabledOnClick()
+			{
+				/*
+				 * Warning: if true the button will not be send as part of the post because of its disabled state. Therefore Button#onSubmit() will not be reached, Form#onSubmit() should be used instead.
+				 */
+				return true;
+			}
 		});
 
 		form.add(new IndicatingAjaxButton("button2") { // NOSONAR
@@ -62,7 +66,7 @@ public class IndicatingButtonPage extends AbstractButtonPage // NOSONAR
 			private static final long serialVersionUID = 1L;
 
 			@Override
-			protected boolean isDisabledOnClick()
+			public boolean isDisabledOnClick()
 			{
 				return true;
 			}
@@ -70,19 +74,6 @@ public class IndicatingButtonPage extends AbstractButtonPage // NOSONAR
 			@Override
 			protected void onSubmit(AjaxRequestTarget target)
 			{
-				try
-				{
-					Thread.sleep(2000);
-				}
-				catch (InterruptedException e)
-				{
-					if (LOG.isDebugEnabled())
-					{
-						LOG.debug(e.getMessage(), e);
-					}
-				}
-
-				IndicatingButtonPage.this.info(this);
 				target.add(feedback);
 			}
 		});
@@ -90,6 +81,6 @@ public class IndicatingButtonPage extends AbstractButtonPage // NOSONAR
 
 	private final void info(Component component)
 	{
-		this.info(component.getMarkupId() + " has been clicked");
+		this.info(component.getMarkupId() + " has been submitted");
 	}
 }

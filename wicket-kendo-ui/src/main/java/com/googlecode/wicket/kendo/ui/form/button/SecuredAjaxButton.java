@@ -32,7 +32,7 @@ import com.googlecode.wicket.kendo.ui.KendoIcon;
  * @author Sebastien Briquet - sebfz1
  *
  */
-public abstract class SecuredAjaxButton extends AjaxButton
+public abstract class SecuredAjaxButton extends AjaxButton implements IIndicatingButton
 {
 	private static final long serialVersionUID = 1L;
 	private static final Logger LOG = LoggerFactory.getLogger(SecuredAjaxButton.class);
@@ -112,6 +112,17 @@ public abstract class SecuredAjaxButton extends AjaxButton
 	public final boolean isLocked()
 	{
 		return !this.provider.hasRole(this.roles);
+	}
+	
+	/**
+	 * {@inheritDoc}<br>
+	 * <br>
+	 * <b>Warning:</b> effective only when used with a {@link AjaxIndicatingButtonBehavior}.
+	 */
+	@Override
+	public boolean isDisabledOnClick()
+	{
+		return false;
 	}
 
 	@Override

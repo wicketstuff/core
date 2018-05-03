@@ -41,6 +41,8 @@ public class AjaxIndicatingButtonBehavior extends ButtonBehavior
 
 	protected static final String CSS_INDICATOR = "indicator";
 
+	private IIndicatingButton button = null;
+
 	public AjaxIndicatingButtonBehavior(String selector)
 	{
 		super(selector);
@@ -67,6 +69,17 @@ public class AjaxIndicatingButtonBehavior extends ButtonBehavior
 	}
 
 	@Override
+	public void bind(Component component)
+	{
+		super.bind(component);
+
+		if (component instanceof IIndicatingButton)
+		{
+			this.button = (IIndicatingButton) component;
+		}
+	}
+
+	@Override
 	protected String $()
 	{
 		StringBuilder builder = new StringBuilder(super.$());
@@ -78,7 +91,7 @@ public class AjaxIndicatingButtonBehavior extends ButtonBehavior
 		builder.append(" }); ");
 
 		builder.append("jQuery(document).ajaxStart(function() { ");
-		builder.append($(this.newAjaxStartOptions())); //TODO WIP
+		builder.append($(this.newAjaxStartOptions()));
 		builder.append(" }); ");
 
 		// busy indicator stops //
@@ -89,6 +102,17 @@ public class AjaxIndicatingButtonBehavior extends ButtonBehavior
 		builder.append(" }); ");
 
 		return builder.toString();
+	}
+
+	// Events //
+
+	@Override
+	public void onConfigure(Component component)
+	{
+		super.onConfigure(component);
+
+		// explicitly sets the 'enable' flag to be able to restore the state after click if/when #isDisabledOnClick is true
+		this.options.set("enable", component.isEnabledInHierarchy());
 	}
 
 	// Factories //
@@ -113,7 +137,15 @@ public class AjaxIndicatingButtonBehavior extends ButtonBehavior
 	 */
 	protected Options newOnClickOptions()
 	{
-		return new Options("icon", Options.asString(CSS_INDICATOR));
+		Options options = new Options();
+		options.set("icon", Options.asString(CSS_INDICATOR));
+
+		if (this.button != null && this.button.isDisabledOnClick())
+		{
+			options.set("enable", false);
+		}
+
+		return options;		
 	}
 
 	/**
