@@ -54,12 +54,12 @@ import org.wicketstuff.datetime.markup.html.form.DateTextField;
  * <p>
  * <strong>Ajaxifying the DateTimeField</strong>: If you want to update a DateTimeField with an
  * {@link AjaxFormComponentUpdatingBehavior}, you have to attach it to the contained
- * {@link DateTextField} by overriding {@link #newDateTextField(String, PropertyModel)} and calling
+ * {@link DateTextField} by overriding {@link #newDateTextField(String, IModel)} and calling
  * {@link #processInput()}:
  * 
  * <pre>{@code
  *  DateTimeField dateTimeField = new DateTimeField(...) {
- *    protected DateTextField newDateTextField(String id, PropertyModel<Date> dateFieldModel)
+ *    protected DateTextField newDateTextField(String id, IModel<Date> dateFieldModel)
  *    {
  *      DateTextField dateField = super.newDateTextField(id, dateFieldModel);     
  *      dateField.add(new AjaxFormComponentUpdatingBehavior("change") {
@@ -165,7 +165,7 @@ public class DateTimeField extends FormComponentPanel<Date>
 		setType(Date.class);
 
 		// Create and add the date TextField
-		PropertyModel<Date> dateFieldModel = new PropertyModel<>(this, DATE);
+		IModel<Date> dateFieldModel = new PropertyModel<>(this, DATE);
 		add(dateField = newDateTextField(DATE, dateFieldModel));
 
 		// Add a date picker to the date TextField
@@ -476,7 +476,7 @@ public class DateTimeField extends FormComponentPanel<Date>
 	 *            model that should be used by the {@link DateTextField}
 	 * @return a new date text field instance
 	 */
-	protected DateTextField newDateTextField(String id, PropertyModel<Date> dateFieldModel)
+	protected DateTextField newDateTextField(String id, IModel<Date> dateFieldModel)
 	{
 		return DateTextField.forShortStyle(id, dateFieldModel, false);
 	}
