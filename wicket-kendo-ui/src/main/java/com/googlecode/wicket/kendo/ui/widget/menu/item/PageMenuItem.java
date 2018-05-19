@@ -139,6 +139,6 @@ public class PageMenuItem extends UrlMenuItem
 	@Override
 	public boolean isEnabled()
 	{
-		return !RequestCycleUtils.getPageClass().isAssignableFrom(this.pageReference.get());
+		return super.isEnabled() && !RequestCycleUtils.getPageClass().isAssignableFrom(this.pageReference.get());
 	}
 }
