@@ -31,7 +31,7 @@ public class CalendarEvent implements Serializable
 {
 	private static final long serialVersionUID = 1L;
 
-	private int id;
+	private String id;
 	private String title;
 
 	private LocalDateTime start;
@@ -49,12 +49,22 @@ public class CalendarEvent implements Serializable
 	private String borderColor = null;
 	private String textColor = null;
 
-	public CalendarEvent(int id, String title, LocalDateTime date)
+	public CalendarEvent(String title, LocalDateTime date)
+	{
+		this(null, title, date, null);
+	}
+
+	public CalendarEvent(String title, LocalDateTime start, LocalDateTime end)
+	{
+		this(null, title, start, end);
+	}
+
+	public CalendarEvent(String id, String title, LocalDateTime date)
 	{
 		this(id, title, date, null);
 	}
 
-	public CalendarEvent(int id, String title, LocalDateTime start, LocalDateTime end)
+	public CalendarEvent(String id, String title, LocalDateTime start, LocalDateTime end)
 	{
 		this.id = id;
 		this.title = title;
@@ -62,12 +72,12 @@ public class CalendarEvent implements Serializable
 		this.end = end;
 	}
 
-	public int getId()
+	public String getId()
 	{
 		return this.id;
 	}
 
-	public void setId(int id)
+	public void setId(String id)
 	{
 		this.id = id;
 	}

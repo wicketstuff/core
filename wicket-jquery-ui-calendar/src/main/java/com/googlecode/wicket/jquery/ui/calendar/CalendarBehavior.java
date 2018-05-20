@@ -775,7 +775,7 @@ public class CalendarBehavior extends JQueryBehavior implements IJQueryAjaxAware
 	 */
 	protected static class ClickEvent extends JQueryEvent
 	{
-		private final int eventId;
+		private final String eventId;
 		private final String viewName;
 
 		/**
@@ -783,7 +783,7 @@ public class CalendarBehavior extends JQueryBehavior implements IJQueryAjaxAware
 		 */
 		public ClickEvent()
 		{
-			this.eventId = RequestCycleUtils.getQueryParameterValue("eventId").toInt();
+			this.eventId = RequestCycleUtils.getQueryParameterValue("eventId").toString();
 			this.viewName = RequestCycleUtils.getQueryParameterValue("viewName").toString();
 		}
 
@@ -792,7 +792,7 @@ public class CalendarBehavior extends JQueryBehavior implements IJQueryAjaxAware
 		 *
 		 * @return the event's id
 		 */
-		public int getEventId()
+		public String getEventId()
 		{
 			return this.eventId;
 		}
@@ -867,16 +867,15 @@ public class CalendarBehavior extends JQueryBehavior implements IJQueryAjaxAware
 	 */
 	protected abstract static class DeltaEvent extends JQueryEvent
 	{
-		private final int eventId;
-		private long delta;
+		private final String eventId;
+		private final long delta;
 
 		/**
 		 * Constructor
 		 */
 		public DeltaEvent()
 		{
-			this.eventId = RequestCycleUtils.getQueryParameterValue("eventId").toInt();
-
+			this.eventId = RequestCycleUtils.getQueryParameterValue("eventId").toString();
 			this.delta = RequestCycleUtils.getQueryParameterValue("millisDelta").toLong();
 		}
 
@@ -885,7 +884,7 @@ public class CalendarBehavior extends JQueryBehavior implements IJQueryAjaxAware
 		 *
 		 * @return the event's id
 		 */
-		public int getEventId()
+		public String getEventId()
 		{
 			return this.eventId;
 		}

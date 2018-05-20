@@ -135,7 +135,7 @@ public interface ICalendarListener extends IClusterable
 	 * @param view the current calendar view
 	 * @param eventId the {@link CalendarEvent} id
 	 */
-	void onEventClick(AjaxRequestTarget target, CalendarView view, int eventId);
+	void onEventClick(AjaxRequestTarget target, CalendarView view, String eventId);
 
 	/**
 	 * Triggered when an event is dropped (after being dragged).<br>
@@ -146,7 +146,7 @@ public interface ICalendarListener extends IClusterable
 	 * @param delta the delta (time) with the original event date
 	 * @param allDay the event all-day property
 	 */
-	void onEventDrop(AjaxRequestTarget target, int eventId, long delta, boolean allDay);
+	void onEventDrop(AjaxRequestTarget target, String eventId, long delta, boolean allDay);
 
 	/**
 	 * Triggered when an event is dropped (after being dragged).<br>
@@ -156,7 +156,7 @@ public interface ICalendarListener extends IClusterable
 	 * @param eventId the {@link CalendarEvent} id
 	 * @param delta the delta (time) with the original event date
 	 */
-	void onEventResize(AjaxRequestTarget target, int eventId, long delta);
+	void onEventResize(AjaxRequestTarget target, String eventId, long delta);
 
 	/**
 	 * Triggered when an event-object is dropped.<br>

@@ -33,7 +33,7 @@ public abstract class DemoCalendarDialog extends AbstractFormDialog<DemoCalendar
 
 	static IModel<DemoCalendarEvent> emptyModel()
 	{
-		return Model.of(new DemoCalendarEvent(0, "", Category.PUBLIC, LocalDateTime.now()));
+		return Model.of(new DemoCalendarEvent("", Category.PUBLIC, LocalDateTime.now()));
 	}
 
 	private Form<?> form;

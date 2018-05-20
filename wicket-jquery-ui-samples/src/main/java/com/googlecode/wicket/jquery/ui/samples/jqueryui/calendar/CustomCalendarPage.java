@@ -21,8 +21,8 @@ public class CustomCalendarPage extends AbstractCalendarPage
 	public CustomCalendarPage()
 	{
 		this.events = Generics.newArrayList();
-		this.events.add(new CalendarEvent(1, "Today's event", LocalDateTime.now()));
-		this.events.add(new CalendarEvent(2, "Another event", LocalDateTime.now()));
+		this.events.add(new CalendarEvent("1", "Today's event", LocalDateTime.now()));
+		this.events.add(new CalendarEvent("2", "Another event", LocalDateTime.now()));
 
 		this.initialize();
 	}

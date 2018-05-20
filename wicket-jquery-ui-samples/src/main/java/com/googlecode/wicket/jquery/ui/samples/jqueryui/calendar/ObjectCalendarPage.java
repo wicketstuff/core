@@ -77,7 +77,7 @@ public class ObjectCalendarPage extends AbstractCalendarPage
 			@Override
 			public void onObjectDrop(AjaxRequestTarget target, String title, LocalDateTime date, boolean allDay)
 			{
-				CalendarEvent event = new CalendarEvent(0, title, date);
+				CalendarEvent event = new CalendarEvent(title, date);
 				event.setAllDay(allDay);
 
 				events.add(event); //adds to DAO

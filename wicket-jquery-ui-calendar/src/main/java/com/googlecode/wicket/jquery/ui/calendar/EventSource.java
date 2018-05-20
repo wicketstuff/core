@@ -68,10 +68,13 @@ public class EventSource implements IClusterable
 	 * Sets every Event Object's color for this source.
 	 * 
 	 * @param color any of the CSS color formats such #f00, #ff0000, rgb(255,0,0), or red.
+	 * @return this, for chaining
 	 */
-	public void setColor(String color)
+	public EventSource setColor(String color)
 	{
 		this.color = color;
+		
+		return this;
 	}
 
 	/**
@@ -88,10 +91,13 @@ public class EventSource implements IClusterable
 	 * Sets every Event Object's backgroundColor for this source.
 	 * 
 	 * @param color any of the CSS color formats such #f00, #ff0000, rgb(255,0,0), or red.
+	 * @return this, for chaining
 	 */
-	public void setBackgroundColor(String color)
+	public EventSource setBackgroundColor(String color)
 	{
 		this.backgroundColor = color;
+		
+		return this;
 	}
 
 	/**
@@ -108,10 +114,13 @@ public class EventSource implements IClusterable
 	 * Sets every Event Object's borderColor for this source.
 	 * 
 	 * @param color any of the CSS color formats such #f00, #ff0000, rgb(255,0,0), or red.
+	 * @return this, for chaining
 	 */
-	public void setBorderColor(String color)
+	public EventSource setBorderColor(String color)
 	{
 		this.borderColor = color;
+		
+		return this;
 	}
 
 	/**
@@ -128,10 +137,13 @@ public class EventSource implements IClusterable
 	 * Sets every Event Object's textColor for this source.
 	 * 
 	 * @param color any of the CSS color formats such #f00, #ff0000, rgb(255,0,0), or red.
+	 * @return this, for chaining
 	 */
-	public void setTextColor(String color)
+	public EventSource setTextColor(String color)
 	{
 		this.textColor = color;
+		
+		return this;
 	}
 
 	/**
@@ -148,10 +160,13 @@ public class EventSource implements IClusterable
 	 * Sets every Event Object's className for this source.
 	 * 
 	 * @param name the CSS class name, can be an array.
+	 * @return this, for chaining
 	 */
-	public void setClassName(String name)
+	public EventSource setClassName(String name)
 	{
 		this.className = name;
+		
+		return this;
 	}
 
 	/**
@@ -168,10 +183,13 @@ public class EventSource implements IClusterable
 	 * Sets every Event Object's editable for this source.
 	 * 
 	 * @param editable true or false
+	 * @return this, for chaining
 	 */
-	public void setEditable(Boolean editable)
+	public EventSource setEditable(Boolean editable)
 	{
 		this.editable = editable;
+		
+		return this;
 	}
 
 	/**
@@ -188,10 +206,13 @@ public class EventSource implements IClusterable
 	 * Sets every Event Object's startEditable for this source.
 	 * 
 	 * @param editable true or false
+	 * @return this, for chaining
 	 */
-	public void setStartEditable(Boolean editable)
+	public EventSource setStartEditable(Boolean editable)
 	{
 		this.startEditable = editable;
+		
+		return this;
 	}
 
 	/**
@@ -208,10 +229,13 @@ public class EventSource implements IClusterable
 	 * Sets every Event Object's durationEditable for this source.
 	 * 
 	 * @param editable true or false
+	 * @return this, for chaining
 	 */
-	public void setDurationEditable(Boolean editable)
+	public EventSource setDurationEditable(Boolean editable)
 	{
 		this.durationEditable = editable;
+		
+		return this;
 	}
 
 	/**
@@ -228,10 +252,13 @@ public class EventSource implements IClusterable
 	 * Sets every Event Object's rendering for this source.
 	 * 
 	 * @param rendering empty, "background", or "inverse-background"
+	 * @return this, for chaining
 	 */
-	public void setRendering(String rendering)
+	public EventSource setRendering(String rendering)
 	{
 		this.rendering = rendering;
+		
+		return this;
 	}
 
 	/**
@@ -248,10 +275,13 @@ public class EventSource implements IClusterable
 	 * Sets every Event Object's overlap for this source.
 	 * 
 	 * @param overlap true or false
+	 * @return this, for chaining
 	 */
-	public void setOverlap(Boolean overlap)
+	public EventSource setOverlap(Boolean overlap)
 	{
 		this.overlap = overlap;
+		
+		return this;
 	}
 
 	/**
@@ -268,10 +298,13 @@ public class EventSource implements IClusterable
 	 * Sets every Event Object's constraint for this source.
 	 * 
 	 * @param constraint an event ID, "businessHours", object.
+	 * @return this, for chaining
 	 */
-	public void setConstraint(String constraint)
+	public EventSource setConstraint(String constraint)
 	{
 		this.constraint = constraint;
+		
+		return this;
 	}
 
 	/**
@@ -288,10 +321,13 @@ public class EventSource implements IClusterable
 	 * Sets the allDayDefault option, but only for this source.
 	 * 
 	 * @param allDay true or false
+	 * @return this, for chaining
 	 */
-	public void setAllDayDefault(Boolean allDay)
+	public EventSource setAllDayDefault(Boolean allDay)
 	{
 		this.allDayDefault = allDay;
+		
+		return this;
 	}
 
 	/**
@@ -308,10 +344,13 @@ public class EventSource implements IClusterable
 	 * Sets the eventDataTransform callback, but only for this source.
 	 * 
 	 * @param function a function that must return a new object in the Event Object format.
+	 * @return this, for chaining
 	 */
-	public void setEventDataTransform(String function)
+	public EventSource setEventDataTransform(String function)
 	{
 		this.eventDataTransform = function;
+		
+		return this;
 	}
 
 	// Methods //
@@ -443,16 +482,7 @@ public class EventSource implements IClusterable
 			return this.googleCalendarId;
 		}
 
-		/**
-		 * Sets the calendar api key
-		 * 
-		 * @param apiKey the calendar api key
-		 */
-		public void setGoogleCalendarApiKey(String apiKey)
-		{
-			this.googleCalendarApiKey = apiKey;
-		}
-
+		
 		/**
 		 * Gets the calendar api key
 		 * 
@@ -461,6 +491,18 @@ public class EventSource implements IClusterable
 		public String getGoogleCalendarApiKey()
 		{
 			return this.googleCalendarApiKey;
+		}
+		/**
+		 * Sets the calendar api key
+		 * 
+		 * @param apiKey the calendar api key
+		 * @return this, for chaining
+		 */
+		public GoogleCalendar setGoogleCalendarApiKey(String apiKey)
+		{
+			this.googleCalendarApiKey = apiKey;
+			
+			return this;
 		}
 
 		/**
@@ -477,10 +519,13 @@ public class EventSource implements IClusterable
 		 * Sets the error callback
 		 * 
 		 * @param callback the callback, in case of error
+		 * @return this, for chaining
 		 */
-		public void setGoogleCalendarError(String callback)
+		public GoogleCalendar setGoogleCalendarError(String callback)
 		{
 			this.googleCalendarError = callback;
+			
+			return this;
 		}
 
 		// Methods //

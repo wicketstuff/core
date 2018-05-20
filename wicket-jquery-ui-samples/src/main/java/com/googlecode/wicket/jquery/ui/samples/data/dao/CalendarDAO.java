@@ -3,6 +3,7 @@ package com.googlecode.wicket.jquery.ui.samples.data.dao;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicInteger;
 
 import org.apache.wicket.util.lang.Generics;
 
@@ -12,9 +13,6 @@ import com.googlecode.wicket.jquery.ui.samples.data.DemoCalendarEvent.Category;
 public class CalendarDAO
 {
 	private static CalendarDAO instance = null;
-
-	/** new event id */
-	private static int ID = -1;
 
 	private static synchronized CalendarDAO get()
 	{
@@ -28,26 +26,29 @@ public class CalendarDAO
 
 	public static boolean isNew(DemoCalendarEvent event)
 	{
-		return event != null && event.getId() == ID;
+		return event != null && event.getId() == null;
 	}
 
 	public static DemoCalendarEvent newEvent(LocalDateTime date)
 	{
-		return new DemoCalendarEvent(ID, "", Category.PUBLIC, date);
+		return new DemoCalendarEvent("", Category.PUBLIC, date);
 	}
 
 	public static DemoCalendarEvent newEvent(LocalDateTime start, LocalDateTime end)
 	{
-		return new DemoCalendarEvent(ID, "", Category.PUBLIC, start, end);
+		return new DemoCalendarEvent("", Category.PUBLIC, start, end);
 	}
 
-	public static DemoCalendarEvent getEvent(int eventId)
+	public static DemoCalendarEvent getEvent(String eventId)
 	{
-		for (DemoCalendarEvent event : get().list)
+		if (eventId != null)
 		{
-			if (event.getId() == eventId)
+			for (DemoCalendarEvent event : get().list)
 			{
-				return event;
+				if (eventId.equals(event.getId())) // event.getId() may be null
+				{
+					return event;
+				}
 			}
 		}
 
@@ -85,7 +86,7 @@ public class CalendarDAO
 	}
 
 	private final List<DemoCalendarEvent> list;
-	private int id = 0;
+	private final AtomicInteger sequence = new AtomicInteger(0);
 
 	public CalendarDAO()
 	{
@@ -99,9 +100,9 @@ public class CalendarDAO
 		this.list.add(new DemoCalendarEvent(this.newId(), "Private event", Category.PRIVATE, LocalDateTime.now()));
 	}
 
-	protected final int newId()
+	protected final String newId()
 	{
-		return ++this.id;
+		return String.valueOf(this.sequence.incrementAndGet());
 	}
 
 	/**

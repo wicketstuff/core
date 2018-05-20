@@ -97,19 +97,19 @@ public class CalendarAdapter implements ICalendarListener
 	}
 
 	@Override
-	public void onEventClick(AjaxRequestTarget target, CalendarView view, int eventId)
+	public void onEventClick(AjaxRequestTarget target, CalendarView view, String eventId)
 	{
 		// noop
 	}
 
 	@Override
-	public void onEventDrop(AjaxRequestTarget target, int eventId, long delta, boolean allDay)
+	public void onEventDrop(AjaxRequestTarget target, String eventId, long delta, boolean allDay)
 	{
 		// noop
 	}
 
 	@Override
-	public void onEventResize(AjaxRequestTarget target, int eventId, long delta)
+	public void onEventResize(AjaxRequestTarget target, String eventId, long delta)
 	{
 		// noop
 	}

@@ -36,12 +36,28 @@ public class DemoCalendarEvent extends CalendarEvent
 
 	private Category category;
 
-	public DemoCalendarEvent(int id, String title, Category category, LocalDateTime date)
+	public DemoCalendarEvent(String title, Category category, LocalDateTime date)
 	{
-		this(id, title, category, date, null);
+		super(title, date);
+
+		this.setCategory(category);
 	}
 
-	public DemoCalendarEvent(int id, String title, Category category, LocalDateTime start, LocalDateTime end)
+	public DemoCalendarEvent(String title, Category category, LocalDateTime start, LocalDateTime end)
+	{
+		super(title, start, end);
+
+		this.setCategory(category);
+	}
+
+	public DemoCalendarEvent(String id, String title, Category category, LocalDateTime date)
+	{
+		super(id, title, date);
+
+		this.setCategory(category);
+	}
+
+	public DemoCalendarEvent(String id, String title, Category category, LocalDateTime start, LocalDateTime end)
 	{
 		super(id, title, start, end);
 
