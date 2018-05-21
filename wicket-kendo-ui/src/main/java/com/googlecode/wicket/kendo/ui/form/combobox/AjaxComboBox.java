@@ -23,7 +23,7 @@ import org.apache.wicket.model.IModel;
 
 import com.googlecode.wicket.jquery.core.JQueryBehavior;
 import com.googlecode.wicket.jquery.core.event.ISelectionChangedListener;
-import com.googlecode.wicket.jquery.core.event.SelectionChangedWrapper;
+import com.googlecode.wicket.jquery.core.event.SelectionChangedListenerWrapper;
 import com.googlecode.wicket.jquery.core.renderer.IChoiceRenderer;
 import com.googlecode.wicket.kendo.ui.ajax.OnChangeAjaxBehavior;
 
@@ -164,9 +164,29 @@ public class AjaxComboBox<T> extends ComboBox<T> implements ISelectionChangedLis
 	// Factories //
 
 	@Override
-	public final JQueryBehavior newWidgetBehavior(String selector)
+	public JQueryBehavior newWidgetBehavior(String selector)
 	{
-		final ISelectionChangedListener listener = new SelectionChangedWrapper(this) {
+		return new ComboBoxBehavior(selector, this.newSelectionChangedListenerWrapper()) {
+
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			protected CharSequence getDataSourceUrl()
+			{
+				return AjaxComboBox.this.getCallbackUrl();
+			}
+		};
+	}
+
+	/**
+	 * Gets a new {@link ISelectionChangedListener} that allow to call both {@link #onSelectionChanged()} and {@link #onSelectionChanged(AjaxRequestTarget)}
+	 * 
+	 * @return a new {@link SelectionChangedListenerWrapper} by default
+	 */
+
+	protected final ISelectionChangedListener newSelectionChangedListenerWrapper()
+	{
+		return new SelectionChangedListenerWrapper(this) {
 
 			private static final long serialVersionUID = 1L;
 
@@ -175,17 +195,6 @@ public class AjaxComboBox<T> extends ComboBox<T> implements ISelectionChangedLis
 			{
 				AjaxComboBox.this.onSelectionChanged(); // updates the model
 				AjaxComboBox.this.onSelectionChanged(target);
-			}
-		};
-
-		return new ComboBoxBehavior(selector, listener) {
-
-			private static final long serialVersionUID = 1L;
-
-			@Override
-			protected CharSequence getDataSourceUrl()
-			{
-				return AjaxComboBox.this.getCallbackUrl();
 			}
 		};
 	}

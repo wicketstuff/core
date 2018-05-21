@@ -24,7 +24,7 @@ import org.apache.wicket.model.IModel;
 
 import com.googlecode.wicket.jquery.core.JQueryBehavior;
 import com.googlecode.wicket.jquery.core.event.ISelectionChangedListener;
-import com.googlecode.wicket.jquery.core.event.SelectionChangedWrapper;
+import com.googlecode.wicket.jquery.core.event.SelectionChangedListenerWrapper;
 import com.googlecode.wicket.kendo.ui.ajax.OnChangeAjaxBehavior;
 
 /**
@@ -144,9 +144,9 @@ public class AjaxDropDownList<T> extends DropDownList<T> implements ISelectionCh
 	{
 		super(id, model, choices, renderer);
 	}
-	
+
 	// Properties //
-	
+
 	@Override
 	public boolean isSelectionChangedEventEnabled()
 	{
@@ -162,9 +162,19 @@ public class AjaxDropDownList<T> extends DropDownList<T> implements ISelectionCh
 	}
 
 	@Override
-	public final JQueryBehavior newWidgetBehavior(String selector)
+	public JQueryBehavior newWidgetBehavior(String selector)
 	{
-		return new DropDownListBehavior(selector, new SelectionChangedWrapper(this) {
+		return new DropDownListBehavior(selector, this.newSelectionChangedListenerWrapper());
+	}
+
+	/**
+	 * Gets a new {@link ISelectionChangedListener} that allow to call both {@link #convertInput()}, {@link #updateModel()} and {@link #onSelectionChanged(AjaxRequestTarget)}
+	 * 
+	 * @return a new {@link SelectionChangedListenerWrapper}
+	 */
+	protected final ISelectionChangedListener newSelectionChangedListenerWrapper()
+	{
+		return new SelectionChangedListenerWrapper(this) {
 
 			private static final long serialVersionUID = 1L;
 
@@ -172,9 +182,9 @@ public class AjaxDropDownList<T> extends DropDownList<T> implements ISelectionCh
 			public void onSelectionChanged(AjaxRequestTarget target)
 			{
 				AjaxDropDownList.this.convertInput();
-				AjaxDropDownList.this.updateModel();				
+				AjaxDropDownList.this.updateModel();
 				AjaxDropDownList.this.onSelectionChanged(target);
 			}
-		});
+		};
 	}
 }

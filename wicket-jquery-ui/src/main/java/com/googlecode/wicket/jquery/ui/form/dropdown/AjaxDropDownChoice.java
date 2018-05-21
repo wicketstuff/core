@@ -24,7 +24,7 @@ import org.apache.wicket.model.IModel;
 
 import com.googlecode.wicket.jquery.core.JQueryBehavior;
 import com.googlecode.wicket.jquery.core.event.ISelectionChangedListener;
-import com.googlecode.wicket.jquery.core.event.SelectionChangedWrapper;
+import com.googlecode.wicket.jquery.core.event.SelectionChangedListenerWrapper;
 import com.googlecode.wicket.jquery.ui.ajax.OnChangeAjaxBehavior;
 
 /**
@@ -164,9 +164,19 @@ public class AjaxDropDownChoice<T> extends DropDownChoice<T> implements ISelecti
 	// IJQueryWidget //
 
 	@Override
-	public final JQueryBehavior newWidgetBehavior(String selector)
+	public JQueryBehavior newWidgetBehavior(String selector)
 	{
-		return new DropDownChoiceBehavior(selector, new SelectionChangedWrapper(this) {
+		return new DropDownChoiceBehavior(selector, this.newSelectionChangedListenerWrapper());
+	}
+
+	/**
+	 * Gets a new {@link ISelectionChangedListener} that allow to call both {@link #convertInput()}, {@link #updateModel()} and {@link #onSelectionChanged(AjaxRequestTarget)}
+	 * 
+	 * @return a new {@link SelectionChangedListenerWrapper}
+	 */
+	protected ISelectionChangedListener newSelectionChangedListenerWrapper()
+	{
+		return new SelectionChangedListenerWrapper(this) {
 
 			private static final long serialVersionUID = 1L;
 
@@ -177,6 +187,6 @@ public class AjaxDropDownChoice<T> extends DropDownChoice<T> implements ISelecti
 				AjaxDropDownChoice.this.updateModel();				
 				AjaxDropDownChoice.this.onSelectionChanged(target);
 			}
-		});
+		};
 	}
 }

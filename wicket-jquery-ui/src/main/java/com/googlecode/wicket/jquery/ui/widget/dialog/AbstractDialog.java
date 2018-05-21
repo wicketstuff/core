@@ -401,20 +401,9 @@ public abstract class AbstractDialog<T extends Serializable> extends GenericPane
 	 * @see IJQueryWidget#newWidgetBehavior(String)
 	 */
 	@Override
-	public final DialogBehavior newWidgetBehavior(String selector)
+	public DialogBehavior newWidgetBehavior(String selector)
 	{
-		IDialogListener listener = new DialogListenerWrapper(this) {
-
-			private static final long serialVersionUID = 1L;
-
-			@Override
-			public void onClick(AjaxRequestTarget target, DialogButton button)
-			{
-				AbstractDialog.this.internalOnClick(target, button);
-			}
-		};
-
-		return new DialogBehavior(selector, listener) {
+		return new DialogBehavior(selector, this.newDialogListenerWrapper()) {
 
 			private static final long serialVersionUID = 1L;
 
@@ -433,6 +422,25 @@ public abstract class AbstractDialog<T extends Serializable> extends GenericPane
 	}
 
 	// Factories //
+
+	/**
+	 * Gets a new {@link IDialogListener} that allow to redirect {@link IDialogListener#onClick(AjaxRequestTarget, DialogButton)} to {@link #internalOnClick(AjaxRequestTarget, DialogButton)}
+	 * 
+	 * @return a new {@link DialogListenerWrapper}
+	 */
+	protected final IDialogListener newDialogListenerWrapper()
+	{
+		return new DialogListenerWrapper(this) {
+
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			public void onClick(AjaxRequestTarget target, DialogButton button)
+			{
+				AbstractDialog.this.internalOnClick(target, button);
+			}
+		};
+	}
 
 	/**
 	 * Gets a new {@link ButtonAjaxBehavior} that will be called by the corresponding {@link DialogButton}.<br>

@@ -23,7 +23,7 @@ import org.apache.wicket.model.IModel;
 
 import com.googlecode.wicket.jquery.core.JQueryBehavior;
 import com.googlecode.wicket.jquery.core.event.ISelectionChangedListener;
-import com.googlecode.wicket.jquery.core.event.SelectionChangedWrapper;
+import com.googlecode.wicket.jquery.core.event.SelectionChangedListenerWrapper;
 import com.googlecode.wicket.jquery.core.renderer.IChoiceRenderer;
 import com.googlecode.wicket.kendo.ui.ajax.OnChangeAjaxBehavior;
 
@@ -160,13 +160,32 @@ public class AjaxDropDownList<T> extends DropDownList<T> implements ISelectionCh
 	{
 		// noop
 	}
-	
+
 	// Factories //
 
 	@Override
-	public final JQueryBehavior newWidgetBehavior(String selector)
+	public JQueryBehavior newWidgetBehavior(String selector)
 	{
-		final ISelectionChangedListener listener = new SelectionChangedWrapper(this) {
+		return new DropDownListBehavior(selector, this.newSelectionChangedListenerWrapper()) {
+
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			protected CharSequence getDataSourceUrl()
+			{
+				return AjaxDropDownList.this.getCallbackUrl();
+			}
+		};
+	}
+
+	/**
+	 * Gets a new {@link ISelectionChangedListener} that allow to call both {@link #onSelectionChanged()} and {@link #onSelectionChanged(AjaxRequestTarget)}
+	 * 
+	 * @return a new {@link SelectionChangedListenerWrapper}
+	 */
+	protected final ISelectionChangedListener newSelectionChangedListenerWrapper()
+	{
+		return new SelectionChangedListenerWrapper(this) {
 
 			private static final long serialVersionUID = 1L;
 
@@ -175,17 +194,6 @@ public class AjaxDropDownList<T> extends DropDownList<T> implements ISelectionCh
 			{
 				AjaxDropDownList.this.onSelectionChanged(); // updates the model
 				AjaxDropDownList.this.onSelectionChanged(target);
-			}
-		};
-
-		return new DropDownListBehavior(selector, listener) {
-
-			private static final long serialVersionUID = 1L;
-
-			@Override
-			protected CharSequence getDataSourceUrl()
-			{
-				return AjaxDropDownList.this.getCallbackUrl();
 			}
 		};
 	}

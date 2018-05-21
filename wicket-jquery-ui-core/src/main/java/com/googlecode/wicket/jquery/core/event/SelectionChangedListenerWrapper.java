@@ -25,13 +25,13 @@ import org.apache.wicket.util.lang.Args;
  * @author Sebastien Briquet - sebfz1
  *
  */
-public class SelectionChangedWrapper implements ISelectionChangedListener
+public class SelectionChangedListenerWrapper implements ISelectionChangedListener
 {
 	private static final long serialVersionUID = 1L;
 
 	private final ISelectionChangedListener listener;
 
-	public SelectionChangedWrapper(ISelectionChangedListener listener)
+	public SelectionChangedListenerWrapper(ISelectionChangedListener listener)
 	{
 		this.listener = Args.notNull(listener, "listener");
 	}
