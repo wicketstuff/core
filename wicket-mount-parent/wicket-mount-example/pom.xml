@@ -33,8 +33,8 @@
             <artifactId>slf4j-log4j12</artifactId>
         </dependency>
         <dependency>
-            <groupId>log4j</groupId>
-            <artifactId>log4j</artifactId>
+			<groupId>org.apache.logging.log4j</groupId>
+			<artifactId>log4j-core</artifactId>
         </dependency>
 
         <!-- JUNIT DEPENDENCY FOR TESTING -->
@@ -50,6 +50,4 @@
             <classifier>uber</classifier>
         </dependency>
     </dependencies>
-
-
 </project>

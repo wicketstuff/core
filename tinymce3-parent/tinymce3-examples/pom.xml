@@ -48,13 +48,13 @@
 		<dependency>
 			<groupId>org.eclipse.jetty.aggregate</groupId>
 			<artifactId>jetty-all</artifactId>
-            <classifier>uber</classifier>
+			<classifier>uber</classifier>
 		</dependency>
 
 		<!-- Some logging-related dependencies to make 'mvn jetty:run' work -->
 		<dependency>
-			<groupId>log4j</groupId>
-			<artifactId>log4j</artifactId>
+			<groupId>org.apache.logging.log4j</groupId>
+			<artifactId>log4j-core</artifactId>
 			<scope>compile</scope>
 		</dependency>
 		<dependency>

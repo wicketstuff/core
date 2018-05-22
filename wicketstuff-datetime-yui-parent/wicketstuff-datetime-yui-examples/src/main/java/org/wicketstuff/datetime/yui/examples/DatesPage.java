@@ -17,6 +17,8 @@
 package org.wicketstuff.datetime.yui.examples;
 
 import org.apache.wicket.Session;
+import org.apache.wicket.ajax.AjaxRequestTarget;
+import org.apache.wicket.ajax.form.OnChangeAjaxBehavior;
 import org.apache.wicket.datetime.StyleDateConverter;
 import org.apache.wicket.datetime.markup.html.form.DateTextField;
 import org.apache.wicket.extensions.yui.calendar.DatePicker;
@@ -28,7 +30,7 @@ import org.apache.wicket.markup.html.form.DropDownChoice;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.link.Link;
 import org.apache.wicket.markup.html.panel.FeedbackPanel;
-import org.apache.wicket.model.AbstractReadOnlyModel;
+import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.PropertyModel;
 
 import java.util.ArrayList;
@@ -44,11 +46,13 @@ import java.util.Locale;
  */
 public class DatesPage extends WebPage
 {
+	private static final long serialVersionUID = 1L;
 	/**
 	 * Choice for a locale.
 	 */
 	private final class LocaleChoiceRenderer extends ChoiceRenderer<Locale>
 	{
+		private static final long serialVersionUID = 1L;
 		/**
 		 * Constructor.
 		 */
@@ -73,6 +77,7 @@ public class DatesPage extends WebPage
 	 */
 	private final class LocaleDropDownChoice extends DropDownChoice<Locale>
 	{
+		private static final long serialVersionUID = 1L;
 		/**
 		 * Construct.
 		 *
@@ -83,8 +88,10 @@ public class DatesPage extends WebPage
 		{
 			super(id);
 			// sort locales on strings of selected locale
-			setChoices(new AbstractReadOnlyModel<List<Locale>>()
+			setChoices(new IModel<List<Locale>>()
 			{
+				private static final long serialVersionUID = 1L;
+
 				@Override
 				public List<Locale> getObject()
 				{
@@ -102,24 +109,13 @@ public class DatesPage extends WebPage
 				}
 			});
 			setChoiceRenderer(new LocaleChoiceRenderer());
+			add(new OnChangeAjaxBehavior() {
+				private static final long serialVersionUID = 1L;
+				@Override
+				protected void onUpdate(AjaxRequestTarget target) {
+				}
+			});
 			setDefaultModel(new PropertyModel<>(DatesPage.this, "selectedLocale"));
-		}
-
-		/**
-		 * @see org.apache.wicket.markup.html.form.DropDownChoice#onSelectionChanged(Object)
-		 */
-		@Override
-		public void onSelectionChanged(Locale newSelection)
-		{
-		}
-
-		/**
-		 * @see org.apache.wicket.markup.html.form.DropDownChoice#wantOnSelectionChangedNotifications()
-		 */
-		@Override
-		protected boolean wantOnSelectionChangedNotifications()
-		{
-			return true;
 		}
 	}
 
@@ -150,8 +146,9 @@ public class DatesPage extends WebPage
 		selectedLocale = Session.get().getLocale();
 		Form<?> localeForm = new Form<>("localeForm");
 		localeForm.add(new LocaleDropDownChoice("localeSelect"));
-		localeForm.add(new Link("localeUSLink")
+		localeForm.add(new Link<String>("localeUSLink")
 		{
+			private static final long serialVersionUID = 1L;
 			@Override
 			public void onClick()
 			{
@@ -162,6 +159,7 @@ public class DatesPage extends WebPage
 		DateTextField dateTextField = new DateTextField("dateTextField", new PropertyModel<Date>(
 			this, "date"), new StyleDateConverter("S-", true))
 		{
+			private static final long serialVersionUID = 1L;
 			@Override
 			public Locale getLocale()
 			{
@@ -170,6 +168,7 @@ public class DatesPage extends WebPage
 		};
 		Form<?> form = new Form<Void>("form")
 		{
+			private static final long serialVersionUID = 1L;
 			@Override
 			protected void onSubmit()
 			{
@@ -181,6 +180,7 @@ public class DatesPage extends WebPage
 
 		DatePicker datePicker = new DatePicker()
 		{
+			private static final long serialVersionUID = 1L;
 			@Override
 			protected String getAdditionalJavaScript()
 			{
@@ -194,6 +194,7 @@ public class DatesPage extends WebPage
 
 		Form<?> form2 = new Form<Void>("form2")
 		{
+			private static final long serialVersionUID = 1L;
 			@Override
 			protected void onSubmit()
 			{
@@ -206,6 +207,7 @@ public class DatesPage extends WebPage
 
 		Form<?> form3 = new Form<Void>("form3")
 		{
+			private static final long serialVersionUID = 1L;
 			@Override
 			protected void onSubmit()
 			{

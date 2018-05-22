@@ -28,6 +28,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.Optional;
 
 import org.apache.wicket.Application;
 import org.apache.wicket.Component;
@@ -270,8 +271,8 @@ public class DatePicker extends Behavior
 
 		// remove previously generated markup (see onRendered) via javascript in
 		// ajax requests to not render the yui calendar multiple times
-		IPartialPageRequestHandler target = component.getRequestCycle().find(IPartialPageRequestHandler.class);
-		if (target != null)
+		Optional<IPartialPageRequestHandler> target = component.getRequestCycle().find(IPartialPageRequestHandler.class);
+		if (target.isPresent())
 		{
 			String escapedComponentMarkupId = getEscapedComponentMarkupId();
 			String javascript = "var e = Wicket.$('" + escapedComponentMarkupId + "Dp" +
@@ -281,7 +282,7 @@ public class DatePicker extends Behavior
 				escapedComponentMarkupId + "DpJs.destroy(); delete YAHOO.wicket." +
 				escapedComponentMarkupId + "DpJs;}";
 
-			target.prependJavaScript(javascript);
+			target.get().prependJavaScript(javascript);
 		}
 	}
 

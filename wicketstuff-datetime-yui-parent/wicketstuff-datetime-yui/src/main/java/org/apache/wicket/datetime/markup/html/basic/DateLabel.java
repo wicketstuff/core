@@ -51,7 +51,7 @@ import org.joda.time.format.DateTimeFormat;
  *
  * @author eelcohillenius
  */
-public class DateLabel extends Label implements IGenericComponent<Date>
+public class DateLabel extends Label implements IGenericComponent<Date, DateLabel>
 {
 	private static final long serialVersionUID = 1L;
 

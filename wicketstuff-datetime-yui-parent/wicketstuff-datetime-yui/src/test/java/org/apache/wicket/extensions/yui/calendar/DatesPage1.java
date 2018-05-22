@@ -25,6 +25,8 @@ import java.util.List;
 import java.util.Locale;
 
 import org.apache.wicket.Session;
+import org.apache.wicket.ajax.AjaxRequestTarget;
+import org.apache.wicket.ajax.form.OnChangeAjaxBehavior;
 import org.apache.wicket.datetime.StyleDateConverter;
 import org.apache.wicket.datetime.markup.html.form.DateTextField;
 import org.apache.wicket.markup.html.WebPage;
@@ -34,7 +36,9 @@ import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.link.Link;
 import org.apache.wicket.markup.html.panel.FeedbackPanel;
 import org.apache.wicket.model.AbstractReadOnlyModel;
+import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.PropertyModel;
+import org.apache.wicket.model.util.ListModel;
 
 /**
  * Demonstrates components from the wicket-date project and a bunch of locale fiddling.
@@ -86,12 +90,12 @@ public class DatesPage1 extends WebPage
 		{
 			super(id);
 			// sort locales on strings of selected locale
-			setChoices(new AbstractReadOnlyModel<List<Locale>>()
+			setChoices(new IModel<List<Locale>>()
 			{
 				private static final long serialVersionUID = 1L;
 
 				@Override
-				public List<Locale> getObject()
+				public java.util.List<Locale> getObject()
 				{
 					getSelectedLocale();
 					List<Locale> locales = new ArrayList<>(LOCALES);
@@ -108,30 +112,16 @@ public class DatesPage1 extends WebPage
 				}
 			});
 			setChoiceRenderer(new LocaleChoiceRenderer());
+			add(new OnChangeAjaxBehavior()
+			{
+				private static final long serialVersionUID = 1L;
+
+				@Override
+				protected void onUpdate(AjaxRequestTarget target)
+				{
+				}
+			});
 			setDefaultModel(new PropertyModel<>(DatesPage1.this, "selectedLocale"));
-		}
-
-		@Override
-		public String getModelValue()
-		{
-			return super.getModelValue();
-		}
-
-		/**
-		 * @see org.apache.wicket.markup.html.form.DropDownChoice#onSelectionChanged(java.lang.Object)
-		 */
-		@Override
-		public void onSelectionChanged(Locale newSelection)
-		{
-		}
-
-		/**
-		 * @see org.apache.wicket.markup.html.form.DropDownChoice#wantOnSelectionChangedNotifications()
-		 */
-		@Override
-		protected boolean wantOnSelectionChangedNotifications()
-		{
-			return true;
 		}
 	}
 

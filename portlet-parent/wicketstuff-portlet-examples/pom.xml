@@ -14,13 +14,12 @@
 
 	<properties>
 		<jetty9.version>9.2.13.v20150730</jetty9.version>
-		<log4j.version>2.10.0</log4j.version>
 		<junit.version>4.12</junit.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<!-- allowed values: R7, 1.0, 1.5, 2.0 or none -->
 		<wtp.version>2.0</wtp.version>
 		<javax.ws.rs-api.version>2.1</javax.ws.rs-api.version>
-		<jersey.version>2.26</jersey.version>
+		<jersey.version>2.27</jersey.version>
 	</properties>
 
 	<dependencies>

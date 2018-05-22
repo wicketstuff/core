@@ -13,12 +13,13 @@
  */
 package org.wicketstuff.modalx;
 
-import org.apache.log4j.Logger;
 import org.apache.wicket.Page;
 import org.apache.wicket.ajax.AjaxEventBehavior;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.markup.html.basic.MultiLineLabel;
 import org.apache.wicket.markup.html.form.Button;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 
 // -[Class]-
@@ -71,7 +72,7 @@ public class MessageBox extends ModalFormPanel
 // [Added by Code Injection Wizard: Log4J Logging Support]
 // Do not edit code injected by the wizard directly in the source file as
 // as it will be overwritten during subsequent updates.
-	private static Logger logger = Logger.getLogger(MessageBox.class);
+	private static Logger logger = LoggerFactory.getLogger(MessageBox.class);
 
 
 // -[Methods]-
