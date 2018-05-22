@@ -212,7 +212,7 @@ public abstract class AbstractFormDialog<T extends Serializable> extends Abstrac
 
 		if (form != null)
 		{
-			form.getRootForm().onFormSubmitted(new DialogFormSubmitter(target));
+			form.getRootForm().onFormSubmitted(new DialogFormSubmitter(target, button));
 
 			if (!form.hasError())
 			{
@@ -235,15 +235,17 @@ public abstract class AbstractFormDialog<T extends Serializable> extends Abstrac
 	 * Triggered when the form is submitted, but the validation failed
 	 *
 	 * @param target the {@link AjaxRequestTarget}
+	 * @param button the {@link DialogButton} that submitted the form
 	 */
-	protected abstract void onError(AjaxRequestTarget target);
+	protected abstract void onError(AjaxRequestTarget target, DialogButton button);
 
 	/**
 	 * Triggered when the form is submitted, and the validation succeed
 	 *
 	 * @param target the {@link AjaxRequestTarget}
+	 * @param button the {@link DialogButton} that submitted the form
 	 */
-	protected abstract void onSubmit(AjaxRequestTarget target);
+	protected abstract void onSubmit(AjaxRequestTarget target, DialogButton button);
 
 	// Factories //
 
@@ -265,15 +267,18 @@ public abstract class AbstractFormDialog<T extends Serializable> extends Abstrac
 	protected class DialogFormSubmitter implements IFormSubmitter
 	{
 		private final AjaxRequestTarget target;
+		private final DialogButton button;
 
 		/**
 		 * Constructor
 		 *
 		 * @param target the {@link AjaxRequestTarget}
+		 * @param button the {@link DialogButton}
 		 */
-		public DialogFormSubmitter(AjaxRequestTarget target)
+		public DialogFormSubmitter(AjaxRequestTarget target, DialogButton button)
 		{
 			this.target = target;
+			this.button = button;
 		}
 
 		@Override
@@ -291,13 +296,13 @@ public abstract class AbstractFormDialog<T extends Serializable> extends Abstrac
 		@Override
 		public void onSubmit()
 		{
-			AbstractFormDialog.this.onSubmit(this.target);
+			AbstractFormDialog.this.onSubmit(this.target, this.button);
 		}
 
 		@Override
 		public void onError()
 		{
-			AbstractFormDialog.this.onError(this.target);
+			AbstractFormDialog.this.onError(this.target, this.button);
 		}
 
 		@Override

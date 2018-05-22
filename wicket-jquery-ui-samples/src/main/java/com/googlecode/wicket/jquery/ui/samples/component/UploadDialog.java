@@ -72,7 +72,7 @@ public abstract class UploadDialog extends AbstractFormDialog<FileUpload>
 	}
 
 	@Override
-	protected void onSubmit(AjaxRequestTarget target)
+	protected void onSubmit(AjaxRequestTarget target, DialogButton button)
 	{
 		this.setModelObject(this.field.getFileUpload());
 	}
@@ -85,7 +85,7 @@ public abstract class UploadDialog extends AbstractFormDialog<FileUpload>
 	}
 
 	@Override
-	public void onError(AjaxRequestTarget target)
+	public void onError(AjaxRequestTarget target, DialogButton button)
 	{
 		target.add(this.feedback);
 	}

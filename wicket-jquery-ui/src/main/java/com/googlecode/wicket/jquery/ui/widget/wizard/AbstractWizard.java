@@ -363,7 +363,7 @@ public abstract class AbstractWizard<T extends Serializable> extends AbstractFor
 	}
 
 	@Override
-	protected void onSubmit(AjaxRequestTarget target)
+	protected void onSubmit(AjaxRequestTarget target, DialogButton button)
 	{
 		// If the clicked button was a form-submitter, calls step#applyState() //
 		IWizardModel wizardModel = this.getWizardModel();
@@ -371,7 +371,7 @@ public abstract class AbstractWizard<T extends Serializable> extends AbstractFor
 	}
 
 	@Override
-	protected final void onError(AjaxRequestTarget target)
+	protected final void onError(AjaxRequestTarget target, DialogButton button)
 	{
 		target.add(this.feedback);
 	}

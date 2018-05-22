@@ -52,7 +52,7 @@ public class UserDialogPage extends AbstractDialogPage
 			private static final long serialVersionUID = 1L;
 
 			@Override
-			public void onSubmit(AjaxRequestTarget target)
+			public void onSubmit(AjaxRequestTarget target, DialogButton button)
 			{
 				User user = this.getModelObject();
 
@@ -184,7 +184,7 @@ public class UserDialogPage extends AbstractDialogPage
 		}
 
 		@Override
-		public void onError(AjaxRequestTarget target)
+		public void onError(AjaxRequestTarget target, DialogButton button)
 		{
 			target.add(this.feedback);
 		}

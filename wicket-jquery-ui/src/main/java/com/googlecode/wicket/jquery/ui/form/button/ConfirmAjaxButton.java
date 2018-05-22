@@ -175,7 +175,7 @@ public abstract class ConfirmAjaxButton extends GenericPanel<String> // NOSONAR
 			}
 
 			@Override
-			protected void onError(AjaxRequestTarget target)
+			protected void onError(AjaxRequestTarget target, DialogButton button)
 			{
 				super.close(target, null); // closes the dialog on error.
 
@@ -183,7 +183,7 @@ public abstract class ConfirmAjaxButton extends GenericPanel<String> // NOSONAR
 			}
 
 			@Override
-			protected void onSubmit(AjaxRequestTarget target)
+			protected void onSubmit(AjaxRequestTarget target, DialogButton button)
 			{
 				ConfirmAjaxButton.this.onSubmit(target);
 			}

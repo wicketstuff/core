@@ -33,9 +33,9 @@ public class UploadDialogPage extends AbstractDialogPage // NOSONAR
 			private static final long serialVersionUID = 1L;
 
 			@Override
-			public void onSubmit(AjaxRequestTarget target)
+			public void onSubmit(AjaxRequestTarget target, DialogButton button)
 			{
-				super.onSubmit(target);
+				super.onSubmit(target, button);
 
 				try
 				{

@@ -131,7 +131,7 @@ public abstract class InputDialog<T extends Serializable> extends AbstractFormDi
 	}
 
 	@Override
-	public final void onError(AjaxRequestTarget target)
+	public final void onError(AjaxRequestTarget target, DialogButton button)
 	{
 		target.add(this.feedback);
 	}

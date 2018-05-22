@@ -27,6 +27,7 @@ import com.googlecode.wicket.jquery.ui.form.button.AjaxButton;
 import com.googlecode.wicket.jquery.ui.panel.JQueryFeedbackPanel;
 import com.googlecode.wicket.jquery.ui.samples.component.NavigationAjaxButton;
 import com.googlecode.wicket.jquery.ui.samples.component.TabDialog;
+import com.googlecode.wicket.jquery.ui.widget.dialog.DialogButton;
 import com.googlecode.wicket.jquery.ui.widget.tabs.AjaxTab;
 import com.googlecode.wicket.jquery.ui.widget.tabs.SimpleTab;
 import com.googlecode.wicket.jquery.ui.widget.tabs.TabListModel;
@@ -150,7 +151,7 @@ public class AdvancedTabsPage extends AbstractTabsPage
 			}
 
 			@Override
-			protected void onSubmit(AjaxRequestTarget target)
+			protected void onSubmit(AjaxRequestTarget target, DialogButton button)
 			{
 				// Adds the tab and re-attach the TabPanel //
 				TabItem item = this.getModelObject();

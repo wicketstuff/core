@@ -115,7 +115,7 @@ public abstract class DemoCalendarDialog extends AbstractFormDialog<DemoCalendar
 	}
 
 	@Override
-	public void onError(AjaxRequestTarget target)
+	public void onError(AjaxRequestTarget target, DialogButton button)
 	{
 		target.add(this.feedback);
 	}

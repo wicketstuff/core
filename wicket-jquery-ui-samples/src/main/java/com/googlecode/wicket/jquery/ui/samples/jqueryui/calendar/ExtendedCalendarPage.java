@@ -16,6 +16,7 @@ import com.googlecode.wicket.jquery.ui.samples.component.DemoCalendarDialog;
 import com.googlecode.wicket.jquery.ui.samples.data.DemoCalendarEvent;
 import com.googlecode.wicket.jquery.ui.samples.data.DemoCalendarModel;
 import com.googlecode.wicket.jquery.ui.samples.data.dao.CalendarDAO;
+import com.googlecode.wicket.jquery.ui.widget.dialog.DialogButton;
 
 public class ExtendedCalendarPage extends AbstractCalendarPage // NOSONAR
 {
@@ -39,7 +40,7 @@ public class ExtendedCalendarPage extends AbstractCalendarPage // NOSONAR
 			private static final long serialVersionUID = 1L;
 
 			@Override
-			public void onSubmit(AjaxRequestTarget target)
+			public void onSubmit(AjaxRequestTarget target, DialogButton button)
 			{
 				DemoCalendarEvent event = this.getModelObject();
 

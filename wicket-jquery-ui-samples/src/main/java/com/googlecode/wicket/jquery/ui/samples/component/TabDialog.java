@@ -72,7 +72,7 @@ public abstract class TabDialog extends AbstractFormDialog<TabItem>
 	}
 
 	@Override
-	public void onError(AjaxRequestTarget target)
+	public void onError(AjaxRequestTarget target, DialogButton button)
 	{
 		target.add(this.feedback);
 	}

@@ -28,7 +28,7 @@ public class InputDialogPage extends AbstractDialogPage
 			private static final long serialVersionUID = 1L;
 
 			@Override
-			public void onSubmit(AjaxRequestTarget target)
+			public void onSubmit(AjaxRequestTarget target, DialogButton button)
 			{
 				this.info("The form has been submitted");
 				this.info(String.format("The model object is: '%s'", this.getModelObject()));
