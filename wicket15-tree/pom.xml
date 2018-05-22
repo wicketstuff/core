@@ -36,15 +36,15 @@
 		<maven.compiler.optimize>true</maven.compiler.optimize>
 		<maven.compiler.showDeprecation>true</maven.compiler.showDeprecation>
 		<maven.compiler.showWarnings>true</maven.compiler.showWarnings>
-		<maven.compiler.source>1.7</maven.compiler.source>
-		<maven.compiler.target>1.7</maven.compiler.target>
+		<maven.compiler.source>1.8</maven.compiler.source>
+		<maven.compiler.target>1.8</maven.compiler.target>
 		<!-- allowed values: R7, 1.0, 1.5, 2.0 or none -->
 		<jetty.version>9.4.7.v20170914</jetty.version>
 		<slf4j.version>1.7.25</slf4j.version>
 		<junit.version>4.12</junit.version>
 		<servlet-api.version>3.1.0</servlet-api.version>
 		<wtp.version>none</wtp.version>
-		<wicket.version>8.0.0-SNAPSHOT</wicket.version>
+		<wicket.version>8.0.0</wicket.version>
 	</properties>
 	<scm>
 		<connection>scm:git:git@github.com:wicketstuff/wicket1.5-tree.git</connection>
@@ -234,7 +234,7 @@
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-javadoc-plugin</artifactId>
-					<version>2.10.3</version>
+					<version>2.10.4</version>
 					<configuration>
 						<quiet>true</quiet>
 					</configuration>
@@ -279,4 +279,20 @@
 			</plugins>
 		</pluginManagement>
 	</build>
+	<profiles>
+		<profile>
+			<id>Java 8</id>
+			<activation>
+				<jdk>1.8</jdk>
+			</activation>
+			<properties>
+				<!-- Disable javadoc linter when building with Java 8
+				http://mail-archives.apache.org/mod_mbox/maven-users/201403.mbox/%3CCANWgJS5xHWiGE+Lecey+mZVbj9Via4JUWsaBeZtQr2aQNebupA@mail.gmail.com%3E
+				http://blog.joda.org/2014/02/turning-off-doclint-in-jdk-8-javadoc.html
+				-->
+				<additionalparam>-Xdoclint:-html</additionalparam>
+			</properties>
+		</profile>
+    </profiles>
+
 </project>
