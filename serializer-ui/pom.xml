@@ -30,7 +30,7 @@
     </dependency>
     <dependency>
 	    <groupId>org.wicketstuff</groupId>
-	    <artifactId>wicketstuff-serializer-fast</artifactId>
+	    <artifactId>wicketstuff-serializer-fast2</artifactId>
 	    <version>${project.parent.version}</version>
     </dependency>
     <dependency>
