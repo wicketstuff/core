@@ -10,7 +10,7 @@
 	<name>Wicket-Scala Project</name>
 
 	<properties>
-		<version.wicketstuff>6.0-SNAPSHOT</version.wicketstuff>
+		<version.wicketstuff>8.0.0</version.wicketstuff>
 		<version.scalatest>2.0</version.scalatest>
 		<version.specs>1.6.8</version.specs>
 		<version.jetty>8.1.14.v20131031</version.jetty>
