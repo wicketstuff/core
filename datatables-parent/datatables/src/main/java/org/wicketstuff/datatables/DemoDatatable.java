@@ -40,11 +40,10 @@ public class DemoDatatable extends WebMarkupContainer
 
 	private void renderDemoCSS(IHeaderResponse response)
 	{
-		final Class<DemoDatatable> _ = DemoDatatable.class;
-		response.render(CssHeaderItem.forReference(new PackageResourceReference(_,
+		response.render(CssHeaderItem.forReference(new PackageResourceReference(DemoDatatable.class,
 			"media/css/demo_table_jui.css"), "screen"));
 
-		response.render(CssHeaderItem.forReference(new PackageResourceReference(_, "media/css/" +
+		response.render(CssHeaderItem.forReference(new PackageResourceReference(DemoDatatable.class, "media/css/" +
 			getJUITheme() + "/jquery-ui-1.8.10.custom.css"), "screen"));
 	}
 
@@ -55,12 +54,10 @@ public class DemoDatatable extends WebMarkupContainer
 
 	private void renderBasicJS(IHeaderResponse response)
 	{
-		final Class<DemoDatatable> _ = DemoDatatable.class;
-
-		response.render(JavaScriptHeaderItem.forReference(new PackageResourceReference(_, "media/js/jquery.js")));
-		response.render(JavaScriptHeaderItem.forReference(new PackageResourceReference(_,
+		response.render(JavaScriptHeaderItem.forReference(new PackageResourceReference(DemoDatatable.class, "media/js/jquery.js")));
+		response.render(JavaScriptHeaderItem.forReference(new PackageResourceReference(DemoDatatable.class,
 			"media/js/jquery.dataTables.min.js")));
-		response.render(JavaScriptHeaderItem.forReference(new PackageResourceReference(_,
+		response.render(JavaScriptHeaderItem.forReference(new PackageResourceReference(DemoDatatable.class,
 			"media/js/jquery-ui-1.8.10.custom.min.js")));
 	}
 }

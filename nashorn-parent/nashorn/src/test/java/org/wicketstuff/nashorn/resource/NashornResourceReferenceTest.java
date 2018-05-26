@@ -102,7 +102,7 @@ public class NashornResourceReferenceTest extends WicketTestCase
 			nashornResourceReference.getScheduledExecutorService().awaitTermination(10000,
 				TimeUnit.SECONDS);
 		}
-		Assert.assertEquals("4.0", wicketTester.getLastResponseAsString());
+		Assert.assertEquals("4", wicketTester.getLastResponseAsString());
 	}
 	private class MockInputStream extends ServletInputStream
 	{
