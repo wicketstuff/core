@@ -18,11 +18,6 @@
         WicketStuff Lambda is a collection of Java 8 functionality.
     </description>
 
-	<properties>
-		<maven.compiler.target>1.8</maven.compiler.target>
-		<maven.compiler.source>${maven.compiler.target}</maven.compiler.source>
-	</properties>
-
 	<modules>
 		<module>lambda</module>
 		<module>lambda-examples</module>
