@@ -16,6 +16,7 @@
  */
 package com.googlecode.wicket.kendo.ui.scheduler;
 
+import java.time.ZoneOffset;
 import java.util.List;
 
 import com.github.openjson.JSONArray;
@@ -35,6 +36,24 @@ public class SchedulerConverter implements ISchedulerConverter
 {
 	private static final long serialVersionUID = 1L;
 
+	private final ZoneOffset offset;
+
+	/**
+	 * Constructor
+	 * 
+	 * @param offset the offset (ie: {@link ZoneOffset#UTC}) to be used for converting {@link JSONObject} timestamps
+	 */
+	public SchedulerConverter(ZoneOffset offset)
+	{
+		this.offset = offset;
+	}
+
+	@Override
+	public ZoneOffset getOffset()
+	{
+		return offset;
+	}
+
 	@Override
 	public JSONObject toJson(SchedulerEvent event)
 	{
@@ -47,12 +66,12 @@ public class SchedulerConverter implements ISchedulerConverter
 
 		if (event.getStart() != null)
 		{
-			object.put("start", DateUtils.toUTCString(event.getStart()));
+			object.put("start", DateUtils.toString(event.getStart()));
 		}
 
-		if (event.getEnd() != null)
+		if (event.getUntil() != null)
 		{
-			object.put("end", DateUtils.toUTCString(event.getEnd()));
+			object.put("end", DateUtils.toString(event.getUntil()));
 		}
 
 		// recurrence //
@@ -78,8 +97,8 @@ public class SchedulerConverter implements ISchedulerConverter
 		event.setTitle(object.optString("title"));
 		event.setDescription(object.optString("description"));
 
-		event.setStart(object.getLong("start"));
-		event.setEnd(object.getLong("end"));
+		event.setStart(DateUtils.toZonedDateTime(object.getLong("start"), this.offset));
+		event.setUntil(DateUtils.toZonedDateTime(object.getLong("end"), this.offset));
 		event.setAllDay(object.getBoolean("isAllDay"));
 
 		event.setRecurrenceId(object.optString("recurrenceId"));

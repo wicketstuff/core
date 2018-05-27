@@ -16,12 +16,14 @@
  */
 package com.googlecode.wicket.kendo.ui.scheduler;
 
+import java.time.ZonedDateTime;
 import java.util.List;
 
 import org.apache.wicket.request.IRequestParameters;
 import org.apache.wicket.util.lang.Args;
 
 import com.googlecode.wicket.jquery.core.behavior.AjaxCallbackBehavior;
+import com.googlecode.wicket.jquery.core.utils.DateUtils;
 
 /**
  * Provides the behavior that loads {@link SchedulerEvent}{@code s} according to {@link SchedulerModel} start &amp; end dates
@@ -53,43 +55,42 @@ public class SchedulerModelBehavior extends AjaxCallbackBehavior
 	 * This can be overridden to perform additional operation on date before the assignment.
 	 *
 	 * @param model the {@link SchedulerModel}
-	 * @param date the timestamp
+	 * @param datetime the {@link ZonedDateTime}
 	 */
-	protected void setStartDate(SchedulerModel model, long date)
+	protected void setModelStartDate(SchedulerModel model, ZonedDateTime datetime)
 	{
-		model.setStart(date);
+		model.setStart(datetime);
 	}
 
 	/**
-	 * Sets the end date to the model<br>
+	 * Sets the until/end date to the model<br>
 	 * This can be overridden to perform additional operation on date before the assignment.
 	 *
 	 * @param model the {@link SchedulerModel}
-	 * @param date the timestamp
+	 * @param datetime the {@link ZonedDateTime}
 	 */
-	protected void setEndDate(SchedulerModel model, long date)
+	protected void setModelUntilDate(SchedulerModel model, ZonedDateTime datetime)
 	{
-		model.setEnd(date);
+		model.setUntil(datetime);
 	}
 
 	@Override
 	protected String getResponse(IRequestParameters parameters)
 	{
-		final long start = parameters.getParameterValue("start").toLong(0);
-		final long end = parameters.getParameterValue("end").toLong(0);
+		final long startTimestamp = parameters.getParameterValue("start").toLong(0);
+		final long untilTimestamp = parameters.getParameterValue("end").toLong(0);
 
 		StringBuilder builder = new StringBuilder("[ ");
 
 		if (this.model != null)
 		{
-			this.setStartDate(this.model, start);
-			this.setEndDate(this.model, end);
+			this.setModelStartDate(this.model, DateUtils.toZonedDateTime(startTimestamp, this.converter.getOffset()));
+			this.setModelUntilDate(this.model, DateUtils.toZonedDateTime(untilTimestamp, this.converter.getOffset()));
 
 			List<SchedulerEvent> list = this.model.getObject(); // calls load()
 
 			if (list != null)
 			{
-
 				int count = 0;
 				for (SchedulerEvent event : list)
 				{

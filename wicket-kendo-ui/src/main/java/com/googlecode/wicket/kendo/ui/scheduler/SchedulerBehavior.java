@@ -213,13 +213,13 @@ public abstract class SchedulerBehavior extends KendoUIBehavior implements IJQue
 	private String getReadCallbackFunction()
 	{
 		String widget = this.widget();
-		String start = widget + ".view().startDate().getTime()";
-		String end = String.format("calculateKendoSchedulerViewEndPeriod(%s.view().endDate()).getTime()", widget);
+		String start = String.format("%s.view().startDate().getTime()", widget);
+		String until = String.format("calculateKendoSchedulerViewEndPeriod(%s.view().endDate()).getTime()", widget);
 
 		return "function(options) { " // lf
 				+ "jQuery.ajax({" // lf
 				+ "		url: '" + this.getDataSourceUrl() + "'," // lf
-				+ "		data: { start: " + start + ", end: " + end + " }," // lf
+				+ "		data: { start: " + start + ", end: " + until + " }," // lf
 				+ "		cache: false," // lf
 				+ "		dataType: 'json'," // lf
 				+ "		success: function(result) { "// lf

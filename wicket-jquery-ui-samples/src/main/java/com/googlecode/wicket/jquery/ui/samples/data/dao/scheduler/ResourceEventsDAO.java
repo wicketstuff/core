@@ -1,6 +1,7 @@
 package com.googlecode.wicket.jquery.ui.samples.data.dao.scheduler;
 
-import java.util.Date;
+import java.time.ZoneOffset;
+import java.time.ZonedDateTime;
 
 import com.googlecode.wicket.kendo.ui.scheduler.SchedulerEvent;
 
@@ -24,11 +25,11 @@ public class ResourceEventsDAO extends AbstractSchedulerEventsDAO
 
 	protected ResourceEventsDAO()
 	{
-		SchedulerEvent event1 = new SchedulerEvent(newId(), "Event #1", new Date());
+		SchedulerEvent event1 = new SchedulerEvent(newId(), "Event #1", ZonedDateTime.now(ZoneOffset.UTC));
 		event1.setValue(AGENDA_ID, AGENDA_1);
 		this.list.add(event1);
 
-		SchedulerEvent event2 = new SchedulerEvent(newId(), "Event #2", new Date());
+		SchedulerEvent event2 = new SchedulerEvent(newId(), "Event #2", ZonedDateTime.now(ZoneOffset.UTC));
 		event2.setValue(AGENDA_ID, AGENDA_2);
 		this.list.add(event2);
 	}

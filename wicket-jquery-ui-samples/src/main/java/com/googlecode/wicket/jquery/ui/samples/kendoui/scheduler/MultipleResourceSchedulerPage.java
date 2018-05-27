@@ -1,5 +1,6 @@
 package com.googlecode.wicket.jquery.ui.samples.kendoui.scheduler;
 
+import java.time.ZonedDateTime;
 import java.util.Collection;
 import java.util.Date;
 import java.util.List;
@@ -133,9 +134,9 @@ public class MultipleResourceSchedulerPage extends AbstractSchedulerPage // NOSO
 			private static final long serialVersionUID = 1L;
 
 			@Override
-			protected List<SchedulerEvent> load()
+			public List<SchedulerEvent> load(ZonedDateTime start, ZonedDateTime until)
 			{
-				return EmployeeEventsDAO.get().getEvents(this.getStart(), this.getEnd());
+				return EmployeeEventsDAO.get().getEvents(start, until);
 			}
 		};
 	}

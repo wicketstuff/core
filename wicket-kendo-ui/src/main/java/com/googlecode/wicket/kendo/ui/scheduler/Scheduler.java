@@ -16,6 +16,7 @@
  */
 package com.googlecode.wicket.kendo.ui.scheduler;
 
+import java.time.ZoneOffset;
 import java.util.List;
 
 import org.apache.wicket.ajax.AjaxRequestTarget;
@@ -264,6 +265,16 @@ public class Scheduler extends JQueryContainer implements ISchedulerListener
 	}
 
 	/**
+	 * Gets the {@link ZoneOffset} to be used by the {@link ISchedulerConverter}
+	 * 
+	 * @return {@link ZoneOffset#UTC} by default
+	 */
+	protected ZoneOffset getZoneOffset()
+	{
+		return ZoneOffset.UTC;
+	}
+
+	/**
 	 * Gets the {@link ISchedulerConverter}
 	 * 
 	 * @return the {@link ISchedulerConverter}
@@ -272,7 +283,7 @@ public class Scheduler extends JQueryContainer implements ISchedulerListener
 	{
 		if (this.converter == null)
 		{
-			this.converter = this.newConverter();
+			this.converter = this.newConverter(this.getZoneOffset());
 		}
 
 		return this.converter;
@@ -514,11 +525,13 @@ public class Scheduler extends JQueryContainer implements ISchedulerListener
 	/**
 	 * Gets a new {@link ISchedulerConverter}
 	 * 
+	 * @param offset the {@link ZoneOffset}
+	 * 
 	 * @return a new {@code SchedulerConverter} by default
 	 */
-	protected ISchedulerConverter newConverter()
+	protected ISchedulerConverter newConverter(ZoneOffset offset)
 	{
-		return new SchedulerConverter();
+		return new SchedulerConverter(offset);
 	}
 
 	/**

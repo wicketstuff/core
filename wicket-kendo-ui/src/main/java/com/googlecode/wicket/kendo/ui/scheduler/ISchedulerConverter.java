@@ -16,11 +16,12 @@
  */
 package com.googlecode.wicket.kendo.ui.scheduler;
 
+import java.time.ZoneOffset;
 import java.util.List;
 
-import com.github.openjson.JSONObject;
 import org.apache.wicket.util.io.IClusterable;
 
+import com.github.openjson.JSONObject;
 import com.googlecode.wicket.kendo.ui.scheduler.resource.ResourceList;
 
 /**
@@ -31,6 +32,13 @@ import com.googlecode.wicket.kendo.ui.scheduler.resource.ResourceList;
  */
 public interface ISchedulerConverter extends IClusterable
 {
+	/**
+	 * Gets the offset (ie: {@link ZoneOffset#UTC}) to be used for converting {@link JSONObject} timestamps
+	 * 
+	 * @return the {@link ZoneOffset}
+	 */
+	ZoneOffset getOffset();
+
 	/**
 	 * Converts a {@link SchedulerEvent} to a {@link JSONObject}
 	 *
@@ -47,4 +55,5 @@ public interface ISchedulerConverter extends IClusterable
 	 * @return the {@code SchedulerEvent}
 	 */
 	SchedulerEvent toObject(JSONObject object, List<ResourceList> lists);
+
 }

@@ -1,5 +1,6 @@
 package com.googlecode.wicket.jquery.ui.samples.kendoui.scheduler;
 
+import java.time.ZonedDateTime;
 import java.util.Date;
 import java.util.List;
 
@@ -57,7 +58,7 @@ public class DefaultSchedulerPage extends AbstractSchedulerPage
 			{
 				SchedulerEventsDAO.get().create(event);
 
-				this.info(String.format("Created: %s, %s -%s", event, event.getStart(), event.getEnd()));
+				this.info(String.format("Created: %s, %s -%s", event, event.getStart(), event.getUntil()));
 				target.add(feedback);
 			}
 
@@ -66,7 +67,7 @@ public class DefaultSchedulerPage extends AbstractSchedulerPage
 			{
 				SchedulerEventsDAO.get().update(event);
 
-				this.info(String.format("Updated: %s, %s -%s", event, event.getStart(), event.getEnd()));
+				this.info(String.format("Updated: %s, %s -%s", event, event.getStart(), event.getUntil()));
 				target.add(feedback);
 			}
 
@@ -91,9 +92,9 @@ public class DefaultSchedulerPage extends AbstractSchedulerPage
 			private static final long serialVersionUID = 1L;
 
 			@Override
-			protected List<SchedulerEvent> load()
+			public List<SchedulerEvent> load(ZonedDateTime start, ZonedDateTime until)
 			{
-				return SchedulerEventsDAO.get().getEvents(this.getStart(), this.getEnd());
+				return SchedulerEventsDAO.get().getEvents(start, until);
 			}
 		};
 	}

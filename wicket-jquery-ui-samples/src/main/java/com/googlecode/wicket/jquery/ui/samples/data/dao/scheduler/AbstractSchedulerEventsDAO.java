@@ -1,6 +1,6 @@
 package com.googlecode.wicket.jquery.ui.samples.data.dao.scheduler;
 
-import java.util.Date;
+import java.time.ZonedDateTime;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -32,13 +32,13 @@ public abstract class AbstractSchedulerEventsDAO
 		return null;
 	}
 
-	public List<SchedulerEvent> getEvents(Date start, Date end)
+	public List<SchedulerEvent> getEvents(ZonedDateTime start, ZonedDateTime until)
 	{
 		List<SchedulerEvent> events = Generics.newArrayList();
 
 		for (SchedulerEvent task : this.list)
 		{
-			if (isInRange(task, start, end))
+			if (isInRange(task, start, until))
 			{
 				events.add(task);
 			}
@@ -73,7 +73,7 @@ public abstract class AbstractSchedulerEventsDAO
 			e.setDescription(event.getDescription());
 
 			e.setStart(event.getStart());
-			e.setEnd(event.getEnd());
+			e.setUntil(event.getUntil());
 			e.setAllDay(event.isAllDay());
 
 			e.setRecurrenceId(event.getRecurrenceId());
@@ -110,10 +110,10 @@ public abstract class AbstractSchedulerEventsDAO
 	 * @param end
 	 * @return true or false
 	 */
-	public static boolean isInRange(SchedulerEvent event, Date start, Date end)
+	public static boolean isInRange(SchedulerEvent event, ZonedDateTime start, ZonedDateTime until)
 	{
-		Date date = event.getStart();
+		ZonedDateTime date = event.getStart();
 
-		return date != null && start.compareTo(date) <= 0 && end.compareTo(date) >= 0;
+		return date != null && start.compareTo(date) <= 0 && until.compareTo(date) >= 0;
 	}
 }

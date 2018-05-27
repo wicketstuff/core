@@ -1,5 +1,6 @@
 package com.googlecode.wicket.jquery.ui.samples.kendoui.scheduler;
 
+import java.time.ZonedDateTime;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
@@ -45,6 +46,7 @@ public class SingleResourceSchedulerPage extends AbstractSchedulerPage // NOSONA
 		// MultiSelect //
 		this.agendas = Generics.newArrayList();
 		this.agendas.add(AGENDA_NAME1);
+		this.agendas.add(AGENDA_NAME2);
 
 		final MultiSelect<String> multiselect = new MultiSelect<String>("select", Model.ofList(this.agendas), Arrays.asList(AGENDA_NAME1, AGENDA_NAME2));
 		form.add(multiselect);
@@ -178,11 +180,11 @@ public class SingleResourceSchedulerPage extends AbstractSchedulerPage // NOSONA
 	abstract static class MySchedulerModel extends SchedulerModel implements ISchedulerVisitor
 	{
 		private static final long serialVersionUID = 1L;
-
+		
 		@Override
-		protected List<SchedulerEvent> load()
+		public List<SchedulerEvent> load(ZonedDateTime start, ZonedDateTime until)
 		{
-			return ResourceEventsDAO.get().getEvents(this.getStart(), this.getEnd());
+			return ResourceEventsDAO.get().getEvents(start, until);
 		}
 	}
 }

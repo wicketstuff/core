@@ -19,7 +19,7 @@ package com.googlecode.wicket.jquery.core.converter;
 import com.github.openjson.JSONObject;
 
 /**
- * Provides a converter for building {@link T}{@code s} as {@link JSONObject}, and vice-versa
+ * Provides a converter for building {@code T}{@code s} as {@link JSONObject}, and vice-versa
  * 
  * @param <T> the object type
  * @author Sebastien Briquet - sebfz1
@@ -28,18 +28,18 @@ import com.github.openjson.JSONObject;
 public interface IJsonConverter<T>
 {
 	/**
-	 * Converts a {@link T} object to a {@link JSONObject}
+	 * Converts a {@code T} object to a {@link JSONObject}
 	 *
-	 * @param object the {@link T} object
+	 * @param object the {@code T} object
 	 * @return the {@link JSONObject}
 	 */
 	JSONObject toJson(T object);
 
 	/**
-	 * Converts a {@link JSONObject} to a {@link T} object
+	 * Converts a {@link JSONObject} to a {code T} object
 	 *
 	 * @param object the {@code JSONObject}
-	 * @return the {@link T} object
+	 * @return the {code T} object
 	 */
 	T toObject(JSONObject object);
 }

@@ -17,10 +17,12 @@
 package com.googlecode.wicket.kendo.ui.scheduler;
 
 import java.io.Serializable;
-import java.util.Date;
-import java.util.HashMap;
+import java.time.ZoneOffset;
+import java.time.ZonedDateTime;
 import java.util.Map;
 import java.util.Set;
+
+import org.apache.wicket.util.lang.Generics;
 
 import com.googlecode.wicket.jquery.core.utils.DateUtils;
 
@@ -55,8 +57,8 @@ public class SchedulerEvent implements Serializable
 
 	private Object id;
 	private String title;
-	private long start;
-	private long end;
+	private ZonedDateTime start;
+	private ZonedDateTime until;
 
 	private boolean allDay = false;
 	private String description = null;
@@ -68,14 +70,14 @@ public class SchedulerEvent implements Serializable
 	private boolean visible = true;
 
 	/** fields map */
-	private final Map<String, Object> fields = new HashMap<String, Object>();
+	private final Map<String, Object> fields = Generics.newHashMap();
 
 	/**
 	 * Constructor
 	 */
 	SchedulerEvent()
 	{
-		this((Object) null, "", new Date());
+		this((Object) null, "", ZonedDateTime.now(ZoneOffset.UTC));
 	}
 
 	// Constructor (Object) //
@@ -89,23 +91,9 @@ public class SchedulerEvent implements Serializable
 	 * @param title the event title
 	 * @param start the start date
 	 */
-	public SchedulerEvent(Object id, String title, Date start)
+	public SchedulerEvent(Object id, String title, ZonedDateTime start)
 	{
-		this(id, title, start.getTime());
-	}
-
-	/**
-	 * Constructor<br>
-	 * The end date will be the start date + {@link #DEFAULT_RANGE} hour(s)<br>
-	 * <b>Caution:</b> if the id is not a number, the datasource's schema need to reflect the type
-	 *
-	 * @param id the event id
-	 * @param title the event title
-	 * @param start the start date
-	 */
-	public SchedulerEvent(Object id, String title, long start)
-	{
-		this(id, title, start, DateUtils.addHours(start, DEFAULT_RANGE));
+		this(id, title, start, start.plusHours(DEFAULT_RANGE));
 	}
 
 	/**
@@ -115,28 +103,14 @@ public class SchedulerEvent implements Serializable
 	 * @param id the event id
 	 * @param title the event title
 	 * @param start the start date
-	 * @param end the end date
+	 * @param until the until/end date
 	 */
-	public SchedulerEvent(Object id, String title, Date start, Date end)
-	{
-		this(id, title, start.getTime(), end.getTime());
-	}
-
-	/**
-	 * Constructor<br>
-	 * <b>Caution:</b> if the id is not a number, the datasource's schema need to reflect the type
-	 *
-	 * @param id the event id
-	 * @param title the event title
-	 * @param start the start date
-	 * @param end the end date
-	 */
-	public SchedulerEvent(Object id, String title, long start, long end)
+	public SchedulerEvent(Object id, String title, ZonedDateTime start, ZonedDateTime until)
 	{
 		this.id = id;
 		this.title = title;
 		this.start = start;
-		this.end = end;
+		this.until = until;
 	}
 
 	// Constructor (Number) //
@@ -149,22 +123,9 @@ public class SchedulerEvent implements Serializable
 	 * @param title the event title
 	 * @param start the start date
 	 */
-	public SchedulerEvent(Number id, String title, Date start)
+	public SchedulerEvent(Number id, String title, ZonedDateTime start)
 	{
-		this(id, title, start.getTime());
-	}
-
-	/**
-	 * Constructor<br>
-	 * The end date will be the start date + {@link #DEFAULT_RANGE} hour(s)
-	 *
-	 * @param id the event id
-	 * @param title the event title
-	 * @param start the start date
-	 */
-	public SchedulerEvent(Number id, String title, long start)
-	{
-		this(id, title, start, DateUtils.addHours(start, DEFAULT_RANGE));
+		this(id, title, start, start.plusHours(DEFAULT_RANGE));
 	}
 
 	/**
@@ -173,27 +134,14 @@ public class SchedulerEvent implements Serializable
 	 * @param id the event id
 	 * @param title the event title
 	 * @param start the start date
-	 * @param end the end date
+	 * @param until the until/end date
 	 */
-	public SchedulerEvent(Number id, String title, Date start, Date end)
-	{
-		this(id, title, start.getTime(), end.getTime());
-	}
-
-	/**
-	 * Constructor
-	 *
-	 * @param id the event id
-	 * @param title the event title
-	 * @param start the start date
-	 * @param end the end date
-	 */
-	public SchedulerEvent(Number id, String title, long start, long end)
+	public SchedulerEvent(Number id, String title, ZonedDateTime start, ZonedDateTime until)
 	{
 		this.id = id;
 		this.title = title;
 		this.start = start;
-		this.end = end;
+		this.until = until;
 	}
 
 	// Properties //
@@ -277,27 +225,18 @@ public class SchedulerEvent implements Serializable
 	 *
 	 * @return the start date
 	 */
-	public Date getStart()
+	public ZonedDateTime getStart()
 	{
-		return new Date(this.start);
+		return this.start;
 	}
 
 	/**
 	 * Sets the date at which the event starts
 	 *
 	 * @param date the start date
+	 * @see DateUtils#toZonedDateTime(long, ZoneOffset)
 	 */
-	public void setStart(Date date)
-	{
-		this.setStart(date.getTime());
-	}
-
-	/**
-	 * Sets the date at which the event starts
-	 *
-	 * @param date the start date
-	 */
-	public void setStart(long date)
+	public void setStart(ZonedDateTime date)
 	{
 		this.start = date;
 	}
@@ -307,29 +246,20 @@ public class SchedulerEvent implements Serializable
 	 *
 	 * @return the end date
 	 */
-	public Date getEnd()
+	public ZonedDateTime getUntil()
 	{
-		return new Date(this.end);
+		return this.until;
 	}
 
 	/**
 	 * Gets the date at which the event ends
 	 *
 	 * @param date the end date
+	 * @see DateUtils#toZonedDateTime(long, ZoneOffset)
 	 */
-	public void setEnd(Date date)
+	public void setUntil(ZonedDateTime date)
 	{
-		this.setEnd(date.getTime());
-	}
-
-	/**
-	 * Gets the date at which the event ends
-	 *
-	 * @param date the end date
-	 */
-	public void setEnd(long date)
-	{
-		this.end = date;
+		this.until = date;
 	}
 
 	/**
@@ -473,7 +403,7 @@ public class SchedulerEvent implements Serializable
 		{
 			return value;
 		}
-		
+
 		return defaultValue;
 	}
 

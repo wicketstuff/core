@@ -23,6 +23,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.ZoneId;
+import java.time.ZoneOffset;
 import java.time.ZonedDateTime;
 import java.util.Calendar;
 import java.util.Date;
@@ -140,6 +141,17 @@ public class DateUtils
 	public static String toString(Date date)
 	{
 		return new SimpleDateFormat(ISO8601_TZ).format(date);
+	}
+
+	/**
+	 * Converts a date to its ISO8601/javascript representation (with timezone). ie: 2009-11-05T13:15:00.000+0200
+	 *
+	 * @param date the date to convert
+	 * @return the ISO8601 date as string
+	 */
+	public static String toString(ZonedDateTime date)
+	{
+		return String.valueOf(date.toInstant());
 	}
 
 	/**
@@ -313,6 +325,29 @@ public class DateUtils
 	}
 
 	/**
+	 * Converts a timestamp to a {@link ZonedDateTime}
+	 * 
+	 * @param timestamp the timestamp in milliseconds
+	 * @param offset the {@link ZoneOffset}
+	 * @return a new {@code ZonedDateTime}
+	 */
+	public static ZonedDateTime toZonedDateTime(long timestamp, ZoneOffset offset)
+	{
+		return toZonedDateTime(Instant.ofEpochMilli(timestamp), offset);
+	}
+
+	/**
+	 * Converts an {@link Instant} to a {@link LocalTime}
+	 * 
+	 * @param instant the {@code Instant}
+	 * @return a new {@code ZonedDateTime}
+	 */
+	public static ZonedDateTime toZonedDateTime(Instant instant, ZoneOffset offset)
+	{
+		return ZonedDateTime.ofInstant(instant, offset);
+	}
+
+	/**
 	 * Gets a new {@link LocalDateTime} according to the supplied {@link LocalDate} &#38; {@link LocalTime}
 	 * 
 	 * @param date the {@code LocalDate}
@@ -322,5 +357,27 @@ public class DateUtils
 	public static LocalDateTime toLocalDateTime(LocalDate date, LocalTime time)
 	{
 		return LocalDateTime.of(date, time != null ? time : LocalTime.MIDNIGHT);
+	}
+
+	/**
+	 * Converts a timestamp to a {@link LocalTime}
+	 * 
+	 * @param timestamp the timestamp
+	 * @return a new {@code LocalTime}
+	 */
+	public static ZonedDateTime toUTCDateTime(long timestamp)
+	{
+		return DateUtils.toUTCDateTime(Instant.ofEpochMilli(timestamp));
+	}
+
+	/**
+	 * Converts an {@link Instant} to a {@link LocalTime}
+	 * 
+	 * @param instant the {@code Instant}
+	 * @return a new {@code LocalTime}
+	 */
+	public static ZonedDateTime toUTCDateTime(Instant instant)
+	{
+		return ZonedDateTime.ofInstant(instant, ZoneOffset.UTC);
 	}
 }

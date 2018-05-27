@@ -20,7 +20,7 @@ import org.apache.wicket.util.io.IClusterable;
 import com.github.openjson.JSONObject;
 
 /**
- * Provides a serializable converter for building {@link T}{@code s} as {@link JSONObject}, and vice-versa
+ * Provides a serializable converter for building {@code Ts} as {@link JSONObject}, and vice-versa
  * 
  * @param <T> the object type
  * @author Sebastien Briquet - sebfz1

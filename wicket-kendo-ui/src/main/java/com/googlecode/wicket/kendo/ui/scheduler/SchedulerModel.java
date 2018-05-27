@@ -16,14 +16,14 @@
  */
 package com.googlecode.wicket.kendo.ui.scheduler;
 
-import java.util.Date;
+import java.time.ZonedDateTime;
 import java.util.List;
 
 import org.apache.wicket.model.LoadableDetachableModel;
 
 /**
  * Model of {@link SchedulerEvent}{@code s} for the {@link Scheduler}<br>
- * The inheriting class should be able to {@link #load()} events depending on {@link #getStart()} and {@link #getEnd()} dates.
+ * The inheriting class should be able to {@link #load()} events depending on {@link #getStart()} and {@link #getUntil()} dates.
  *
  * @author Sebastien Briquet - sebfz1
  *
@@ -32,8 +32,8 @@ public abstract class SchedulerModel extends LoadableDetachableModel<List<Schedu
 {
 	private static final long serialVersionUID = 1L;
 
-	private long start;
-	private long end;
+	private ZonedDateTime start;
+	private ZonedDateTime until;
 
 	/**
 	 * Constructor
@@ -41,15 +41,34 @@ public abstract class SchedulerModel extends LoadableDetachableModel<List<Schedu
 	public SchedulerModel()
 	{
 	}
+	
+	// Methods //
+
+	@Override
+	protected final List<SchedulerEvent> load()
+	{
+		return this.load(this.getStart(), this.getUntil());
+	}
+	
+	/**
+	 * Loads the {@link SchedulerEvent}{@code s}
+	 * @param start the start date
+	 * @param until the until/end date
+	 * @return the {@link List} of {@link SchedulerEvent}{@code s}
+	 */
+	public abstract List<SchedulerEvent> load(ZonedDateTime start, ZonedDateTime until);
+
+	// Properties //
+
 
 	/**
-	 * Gets the start date, used to {@link #load()} {@link SchedulerEvent}{@code s}
+	 * Gets the start date, used to load {@link SchedulerEvent}{@code s}
 	 *
 	 * @return the start date
 	 */
-	public Date getStart()
+	public ZonedDateTime getStart()
 	{
-		return new Date(this.start);
+		return this.start;
 	}
 
 	/**
@@ -57,48 +76,28 @@ public abstract class SchedulerModel extends LoadableDetachableModel<List<Schedu
 	 *
 	 * @param date the start date
 	 */
-	public void setStart(Date date)
-	{
-		this.setStart(date.getTime());
-	}
-
-	/**
-	 * Sets the start date.
-	 *
-	 * @param date the start date
-	 */
-	public void setStart(long date)
+	public void setStart(ZonedDateTime date)
 	{
 		this.start = date;
 	}
 
 	/**
-	 * Gets the end date, used to {@link #load()} {@link SchedulerEvent}{@code s}
+	 * Gets the end date, used to load {@link SchedulerEvent}{@code s}
 	 *
 	 * @return the start date
 	 */
-	public Date getEnd()
+	public ZonedDateTime getUntil()
 	{
-		return new Date(this.end);
+		return this.until;
 	}
 
 	/**
-	 * Gets the end date.
+	 * Gets the until/end date.
 	 *
 	 * @param date the start date
 	 */
-	public void setEnd(Date date)
+	public void setUntil(ZonedDateTime date)
 	{
-		this.setEnd(date.getTime());
-	}
-
-	/**
-	 * Gets the end date.
-	 *
-	 * @param date the start date
-	 */
-	public void setEnd(long date)
-	{
-		this.end = date;
+		this.until = date;
 	}
 }
