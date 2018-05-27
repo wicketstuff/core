@@ -56,8 +56,6 @@ public class Scheduler extends JQueryContainer implements ISchedulerListener
 	private final ResourceListModel resourceListModel;
 
 	// templates //
-	private IJQueryTemplate editTemplate;
-	private IJQueryTemplate eventTemplate;
 	private KendoTemplateBehavior editTemplateBehavior = null;
 	private KendoTemplateBehavior eventTemplateBehavior = null;
 
@@ -331,19 +329,19 @@ public class Scheduler extends JQueryContainer implements ISchedulerListener
 
 		// templates //
 
-		this.editTemplate = this.newEditTemplate();
+		final IJQueryTemplate editTemplate = this.newEditTemplate();
 
-		if (this.editTemplate != null)
+		if (editTemplate != null)
 		{
-			this.editTemplateBehavior = new KendoTemplateBehavior(this.editTemplate, "edit-template");
+			this.editTemplateBehavior = new KendoTemplateBehavior(editTemplate, "edit-template");
 			this.add(this.editTemplateBehavior);
 		}
 
-		this.eventTemplate = this.newEventTemplate();
+		final IJQueryTemplate eventTemplate = this.newEventTemplate();
 
-		if (this.eventTemplate != null)
+		if (eventTemplate != null)
 		{
-			this.eventTemplateBehavior = new KendoTemplateBehavior(this.eventTemplate, "event-template");
+			this.eventTemplateBehavior = new KendoTemplateBehavior(eventTemplate, "event-template");
 			this.add(this.eventTemplateBehavior);
 		}
 	}

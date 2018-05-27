@@ -25,12 +25,11 @@ import java.time.LocalTime;
 import java.time.ZoneId;
 import java.time.ZoneOffset;
 import java.time.ZonedDateTime;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.TimeZone;
 
 /**
- * Utility class for {@link Date}({@code s})
+ * Utility class for dates
  *
  * @author Sebastien Briquet - sebfz1
  *
@@ -97,18 +96,6 @@ public class DateUtils
 	}
 
 	/**
-	 * Converts a ISO8601 string date to an {@code UTC} {@link Date}
-	 * 
-	 * @param date the date to convert
-	 * @return the UTC date
-	 * @throws ParseException if the string cannot be parsed
-	 */
-	public static long utc(String date) throws ParseException
-	{
-		return DateUtils.utc(DateUtils.parse(date).getTime());
-	}
-
-	/**
 	 * Gets the current timezone offset
 	 * 
 	 * @param time the timestamp
@@ -168,101 +155,7 @@ public class DateUtils
 		return formatter.format(date);
 	}
 
-	/**
-	 * Adds the specified amount of hours to a date
-	 *
-	 * @param date the actual date (UTC)
-	 * @param hours the amount of hours to add
-	 * @return a new date
-	 */
-	public static long addHours(long date, int hours)
-	{
-		Calendar calendar = Calendar.getInstance(UTC);
-		calendar.setTimeInMillis(date);
-		calendar.add(Calendar.HOUR, hours);
-
-		return calendar.getTimeInMillis();
-	}
-
-	/**
-	 * Adds the specified amount of hours to a date
-	 *
-	 * @param date the actual date (UTC)
-	 * @param hours the amount of hours to add
-	 * @return a new date
-	 */
-	public static Date addHours(Date date, int hours)
-	{
-		Calendar calendar = Calendar.getInstance(UTC);
-		calendar.setTime(date);
-		calendar.add(Calendar.HOUR, hours);
-
-		return calendar.getTime();
-	}
-
 	// java8 date handling & conversion //
-
-	/**
-	 * Gets a new {@link Date} according to the first date (which represents the date) and the second date (which represents the time)
-	 * 
-	 * @param date the date
-	 * @param time the time
-	 * @return a new {@code Date}
-	 */
-	public static Date dateOf(Date date, Date time)
-	{
-		return DateUtils.toDate(DateUtils.toLocalDate(date), DateUtils.toLocalTime(time));
-	}
-
-	/**
-	 * Gets a new {@link Date} according to the supplied {@link LocalDate} &#38; {@link LocalTime}
-	 * 
-	 * @param date the {@code LocalDate}
-	 * @param time the {@code LocalTime}. If {@code null}, {@link LocalTime#MIDNIGHT} is returned
-	 * @return a new {@code Date}
-	 */
-	public static Date toDate(LocalDate date, LocalTime time)
-	{
-		return DateUtils.toDate(DateUtils.toLocalDateTime(date, time));
-	}
-
-	/**
-	 * Gets a new {@link Date} according to the supplied {@link LocalDateTime}
-	 * 
-	 * @param datetime the {@code LocalDateTime}
-	 * @return a new {@code Date}
-	 */
-	public static Date toDate(LocalDateTime datetime)
-	{
-		return DateUtils.toDate(datetime.atZone(ZoneId.systemDefault()).toInstant());
-	}
-
-	/**
-	 * Gets a new {@link Date} according to the supplied {@link Instant}
-	 * 
-	 * @param instant the {@code Instant}
-	 * @return a new {@code Date}
-	 */
-	public static Date toDate(Instant instant)
-	{
-		return new Date(instant.toEpochMilli());
-	}
-
-	/**
-	 * Converts an {@link Date} to a {@link LocalDate}
-	 * 
-	 * @param date the {@code Date}
-	 * @return a new {@code LocalDate}
-	 */
-	public static LocalDate toLocalDate(Date date)
-	{
-		if (date != null)
-		{
-			return DateUtils.toLocalDate(date.getTime());
-		}
-
-		return null;
-	}
 
 	/**
 	 * Converts a timestamp to a {@link LocalDate}
@@ -325,29 +218,6 @@ public class DateUtils
 	}
 
 	/**
-	 * Converts a timestamp to a {@link ZonedDateTime}
-	 * 
-	 * @param timestamp the timestamp in milliseconds
-	 * @param offset the {@link ZoneOffset}
-	 * @return a new {@code ZonedDateTime}
-	 */
-	public static ZonedDateTime toZonedDateTime(long timestamp, ZoneOffset offset)
-	{
-		return toZonedDateTime(Instant.ofEpochMilli(timestamp), offset);
-	}
-
-	/**
-	 * Converts an {@link Instant} to a {@link LocalTime}
-	 * 
-	 * @param instant the {@code Instant}
-	 * @return a new {@code ZonedDateTime}
-	 */
-	public static ZonedDateTime toZonedDateTime(Instant instant, ZoneOffset offset)
-	{
-		return ZonedDateTime.ofInstant(instant, offset);
-	}
-
-	/**
 	 * Gets a new {@link LocalDateTime} according to the supplied {@link LocalDate} &#38; {@link LocalTime}
 	 * 
 	 * @param date the {@code LocalDate}
@@ -360,24 +230,47 @@ public class DateUtils
 	}
 
 	/**
-	 * Converts a timestamp to a {@link LocalTime}
+	 * Converts a timestamp to an UTC {@link ZonedDateTime}
 	 * 
 	 * @param timestamp the timestamp
-	 * @return a new {@code LocalTime}
+	 * @return a new {@code ZonedDateTime}
 	 */
-	public static ZonedDateTime toUTCDateTime(long timestamp)
+	public static ZonedDateTime toZuluDateTime(long timestamp)
 	{
-		return DateUtils.toUTCDateTime(Instant.ofEpochMilli(timestamp));
+		return DateUtils.toZuluDateTime(Instant.ofEpochMilli(timestamp));
 	}
 
 	/**
-	 * Converts an {@link Instant} to a {@link LocalTime}
+	 * Converts an {@link Instant} to an UTC {@link ZonedDateTime}
 	 * 
 	 * @param instant the {@code Instant}
-	 * @return a new {@code LocalTime}
+	 * @return a new {@code ZonedDateTime}
 	 */
-	public static ZonedDateTime toUTCDateTime(Instant instant)
+	public static ZonedDateTime toZuluDateTime(Instant instant)
 	{
-		return ZonedDateTime.ofInstant(instant, ZoneOffset.UTC);
+		return DateUtils.toZonedDateTime(instant, ZoneOffset.UTC);
+	}
+
+	/**
+	 * Converts a timestamp to a {@link ZonedDateTime}
+	 * 
+	 * @param timestamp the timestamp in milliseconds
+	 * @param offset the {@link ZoneOffset}
+	 * @return a new {@code ZonedDateTime}
+	 */
+	public static ZonedDateTime toZonedDateTime(long timestamp, ZoneOffset offset)
+	{
+		return toZonedDateTime(Instant.ofEpochMilli(timestamp), offset);
+	}
+
+	/**
+	 * Converts an {@link Instant} to a {@link ZonedDateTime}
+	 * 
+	 * @param instant the {@code Instant}
+	 * @return a new {@code ZonedDateTime}
+	 */
+	public static ZonedDateTime toZonedDateTime(Instant instant, ZoneOffset offset)
+	{
+		return ZonedDateTime.ofInstant(instant, offset);
 	}
 }
