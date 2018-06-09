@@ -16,20 +16,24 @@
  */
 package com.googlecode.wicket.kendo.ui.widget.editor;
 
+import org.apache.wicket.markup.html.form.TextArea;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.util.lang.Args;
+import org.owasp.html.HtmlPolicyBuilder;
 import org.owasp.html.PolicyFactory;
 
 import com.googlecode.wicket.jquery.core.IJQueryWidget;
+import com.googlecode.wicket.jquery.core.JQueryBehavior;
 import com.googlecode.wicket.jquery.core.Options;
+import com.googlecode.wicket.kendo.ui.KendoUIBehavior;
 
 /**
- * Provides a Kendo UI Editor widget.<br>
+ * Provides the Kendo UI Editor base widget.<br>
  * It should be created on a HTML &lt;textarea /&gt; element
  *
  * @author Sebastien Briquet - sebfz1
  */
-public class Editor extends AbstractEditor<String> implements IJQueryWidget // NOSONAR
+public abstract class AbstractEditor<T> extends TextArea<T> implements IJQueryWidget
 {
 	private static final long serialVersionUID = 1L;
 	public static final String METHOD = "kendoEditor";
@@ -37,11 +41,11 @@ public class Editor extends AbstractEditor<String> implements IJQueryWidget // N
 	protected final Options options;
 
 	/**
-	 * Constructor that provides a default {@link Options} that indicates the {@link Editor} should submit encoded HTML tags (<code>{ encoded: false }</code>)
+	 * Constructor that provides a default {@link Options} that indicates the {@link AbstractEditor} should submit encoded HTML tags (<code>{ encoded: false }</code>)
 	 *
 	 * @param id the markup id
 	 */
-	public Editor(String id)
+	public AbstractEditor(String id)
 	{
 		this(id, new Options("encoded", false));
 	}
@@ -52,7 +56,7 @@ public class Editor extends AbstractEditor<String> implements IJQueryWidget // N
 	 * @param id the markup id
 	 * @param options the {@link Options}
 	 */
-	public Editor(String id, Options options)
+	public AbstractEditor(String id, Options options)
 	{
 		super(id);
 
@@ -60,12 +64,12 @@ public class Editor extends AbstractEditor<String> implements IJQueryWidget // N
 	}
 
 	/**
-	 * Constructor that provides a default {@link Options} that indicates the {@link Editor} should submit encoded HTML tags (<code>{ encoded: false }</code>)
+	 * Constructor that provides a default {@link Options} that indicates the {@link AbstractEditor} should submit encoded HTML tags (<code>{ encoded: false }</code>)
 	 *
 	 * @param id the markup id
 	 * @param model the {@link IModel}
 	 */
-	public Editor(String id, IModel<String> model)
+	public AbstractEditor(String id, IModel<T> model)
 	{
 		this(id, model, new Options("encoded", false));
 	}
@@ -77,7 +81,7 @@ public class Editor extends AbstractEditor<String> implements IJQueryWidget // N
 	 * @param model the {@link IModel}
 	 * @param options the {@link Options}
 	 */
-	public Editor(String id, IModel<String> model, Options options)
+	public AbstractEditor(String id, IModel<T> model, Options options)
 	{
 		super(id, model);
 
@@ -86,14 +90,52 @@ public class Editor extends AbstractEditor<String> implements IJQueryWidget // N
 
 	// Methods //
 
+	// Events //
+
 	@Override
-	public void convertInput()
+	protected void onInitialize()
 	{
-		super.convertInput();
+		super.onInitialize();
 
-		final PolicyFactory policy = this.newPolicyFactory();
-		final String input = this.getConvertedInput();
+		this.setEscapeModelStrings(false);
+		this.add(JQueryWidget.newWidgetBehavior(this));
+	}
 
-		this.setConvertedInput(policy.sanitize(input));
+	@Override
+	public void onConfigure(JQueryBehavior behavior)
+	{
+		// noop
+	}
+
+	@Override
+	public void onBeforeRender(JQueryBehavior behavior)
+	{
+		// noop
+	}
+
+	// IJQueryWidget //
+
+	@Override
+	public JQueryBehavior newWidgetBehavior(String selector)
+	{
+		return new KendoUIBehavior(selector, AbstractEditor.METHOD, this.options);
+	}
+
+	// Factories //
+
+	/**
+	 * Gets a new {@link PolicyFactory} to sanitize editor input
+	 * 
+	 * @return a new {@code PolicyFactory}
+	 */
+	protected PolicyFactory newPolicyFactory()
+	{
+		return new HtmlPolicyBuilder() // lf
+				.allowCommonInlineFormattingElements() // lf
+				.allowCommonBlockElements() // lf
+				.allowElements("a").allowAttributes("href", "target").onElements("a") // lf
+				.allowAttributes("size").onElements("font") // lf
+				.allowAttributes("class", "style").globally() // lf
+				.toFactory();
 	}
 }
