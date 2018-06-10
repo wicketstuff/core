@@ -16,12 +16,11 @@
  */
 package com.googlecode.wicket.kendo.ui.datatable.column;
 
-import java.util.regex.Pattern;
-
 import org.apache.wicket.model.IModel;
 
 import com.googlecode.wicket.kendo.ui.datatable.DataTable;
 import com.googlecode.wicket.kendo.ui.datatable.button.CommandButton;
+import com.googlecode.wicket.kendo.ui.utils.KendoUrlUtils;
 
 /**
  * Provides a link property column for a {@link DataTable} bound to a {@link CommandButton} action/url
@@ -31,8 +30,6 @@ import com.googlecode.wicket.kendo.ui.datatable.button.CommandButton;
 public abstract class LinkPropertyColumn extends PropertyColumn
 {
 	private static final long serialVersionUID = 1L;
-	private static final Pattern DATA_PATTERN = Pattern.compile("%23:(?<data>.*?)%23");
-	private static final String DATA_REPLACE = "#:${data}#";
 
 	/**
 	 * Constructor
@@ -104,7 +101,7 @@ public abstract class LinkPropertyColumn extends PropertyColumn
 	@Override
 	public String getTemplate()
 	{
-		final String url = DATA_PATTERN.matcher(this.getCallbackUrl()).replaceAll(DATA_REPLACE);
+		final String url = KendoUrlUtils.unescape(this.getCallbackUrl());
 		final StringBuilder builder = new StringBuilder();
 
 		builder.append("<div class='grid-cell' data-container-for='").append(this.getField()).append("'>");

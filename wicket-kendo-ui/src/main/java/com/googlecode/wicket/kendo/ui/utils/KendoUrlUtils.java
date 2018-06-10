@@ -16,21 +16,34 @@
  */
 package com.googlecode.wicket.kendo.ui.utils;
 
+import java.util.regex.Pattern;
+
 /**
- * Utility class for Kendo UI debug within Wicket Debug Window
+ * Utility class for handling Url in Kendo UI templates
  *
  * @author Sebastien Briquet - sebfz1
  */
-public class DebugUtils
+public class KendoUrlUtils
 {
-	/** error callback */
-	public static final String errorCallback = "function (xhr, error) { var dw = Wicket.Ajax.DebugWindow; if (typeof dw !== 'undefined') { dw.logError(kendo.stringify(xhr)); } }";
+	private static final Pattern DATA_PATTERN = Pattern.compile("%23:(?<data>.*?)%23");
+	private static final String DATA_REPLACE = "#:${data}#";
 
 	/**
 	 * Utility class
 	 */
-	private DebugUtils()
+	private KendoUrlUtils()
 	{
 		// noop
+	}
+
+	/**
+	 * Unescapes the URL ({@code %23} will be replaced by {@code #}
+	 * 
+	 * @param url the url/text to unescape
+	 * @return the unescaped url
+	 */
+	public static String unescape(String url)
+	{
+		return DATA_PATTERN.matcher(url).replaceAll(DATA_REPLACE);
 	}
 }

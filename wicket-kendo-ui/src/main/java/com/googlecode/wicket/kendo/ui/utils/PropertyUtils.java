@@ -24,6 +24,14 @@ package com.googlecode.wicket.kendo.ui.utils;
 public class PropertyUtils
 {
 	/**
+	 * Utility class
+	 */
+	private PropertyUtils()
+	{
+		// noop
+	}
+
+	/**
 	 * Escapes the property name (for not being understood as JSON complex type)
 	 *
 	 * @param property the property name (ie: "mybean.myproperty")
@@ -53,12 +61,5 @@ public class PropertyUtils
 		}
 
 		return null;
-	}
-
-	/**
-	 * Utility class
-	 */
-	private PropertyUtils()
-	{
 	}
 }

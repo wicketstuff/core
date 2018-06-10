@@ -38,6 +38,7 @@ public class KendoEffectUtils
 	 */
 	private KendoEffectUtils()
 	{
+		// noop
 	}
 
 	/**
