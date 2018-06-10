@@ -17,7 +17,6 @@
 package com.googlecode.wicket.kendo.ui.widget.editor;
 
 import org.apache.wicket.model.IModel;
-import org.apache.wicket.util.lang.Args;
 import org.owasp.html.PolicyFactory;
 
 import com.googlecode.wicket.jquery.core.IJQueryWidget;
@@ -32,9 +31,6 @@ import com.googlecode.wicket.jquery.core.Options;
 public class Editor extends AbstractEditor<String> implements IJQueryWidget // NOSONAR
 {
 	private static final long serialVersionUID = 1L;
-	public static final String METHOD = "kendoEditor";
-
-	protected final Options options;
 
 	/**
 	 * Constructor that provides a default {@link Options} that indicates the {@link Editor} should submit encoded HTML tags (<code>{ encoded: false }</code>)
@@ -43,7 +39,7 @@ public class Editor extends AbstractEditor<String> implements IJQueryWidget // N
 	 */
 	public Editor(String id)
 	{
-		this(id, new Options("encoded", false));
+		super(id);
 	}
 
 	/**
@@ -54,9 +50,7 @@ public class Editor extends AbstractEditor<String> implements IJQueryWidget // N
 	 */
 	public Editor(String id, Options options)
 	{
-		super(id);
-
-		this.options = Args.notNull(options, "options");
+		super(id, options);
 	}
 
 	/**
@@ -67,7 +61,7 @@ public class Editor extends AbstractEditor<String> implements IJQueryWidget // N
 	 */
 	public Editor(String id, IModel<String> model)
 	{
-		this(id, model, new Options("encoded", false));
+		super(id, model);
 	}
 
 	/**
@@ -79,9 +73,7 @@ public class Editor extends AbstractEditor<String> implements IJQueryWidget // N
 	 */
 	public Editor(String id, IModel<String> model, Options options)
 	{
-		super(id, model);
-
-		this.options = Args.notNull(options, "options");
+		super(id, model, options);
 	}
 
 	// Methods //
