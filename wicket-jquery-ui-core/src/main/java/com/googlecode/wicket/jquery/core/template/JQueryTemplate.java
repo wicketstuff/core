@@ -49,7 +49,7 @@ public abstract class JQueryTemplate implements IJQueryTemplate
 		private static final long serialVersionUID = 1L;
 
 		private final PackageTextTemplate template;
-		private transient Map<String, ?> variables = null;
+		private final Map<String, ?> variables; // NOSONAR
 
 		public JQueryPackageTextTemplate(Class<?> clazz)
 		{
@@ -64,16 +64,19 @@ public abstract class JQueryTemplate implements IJQueryTemplate
 		public JQueryPackageTextTemplate(Class<?> clazz, String fileName)
 		{
 			this.template = new PackageTextTemplate(clazz, fileName);
+			this.variables = null;
 		}
 
 		public JQueryPackageTextTemplate(Class<?> clazz, String fileName, String contentType)
 		{
 			this.template = new PackageTextTemplate(clazz, fileName, contentType);
+			this.variables = null;
 		}
 
 		public JQueryPackageTextTemplate(Class<?> clazz, String fileName, String contentType, String encoding)
 		{
 			this.template = new PackageTextTemplate(clazz, fileName, contentType, encoding);
+			this.variables = null;
 		}
 
 		public JQueryPackageTextTemplate(Class<?> clazz, String fileName, Map<String, ?> variables)
