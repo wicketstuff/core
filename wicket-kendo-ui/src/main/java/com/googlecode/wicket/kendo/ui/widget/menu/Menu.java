@@ -17,7 +17,6 @@
 package com.googlecode.wicket.kendo.ui.widget.menu;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -32,6 +31,7 @@ import org.apache.wicket.markup.html.panel.EmptyPanel;
 import org.apache.wicket.markup.html.panel.Fragment;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.util.lang.Args;
+import org.apache.wicket.util.lang.Generics;
 
 import com.googlecode.wicket.jquery.core.JQueryPanel;
 import com.googlecode.wicket.jquery.core.Options;
@@ -54,7 +54,7 @@ public class Menu extends JQueryPanel implements IMenuListener
 	private WebMarkupContainer root;
 
 	/** Keep a reference to the {@link MenuItem}{@code s} hash */
-	private Map<String, IMenuItem> map = new HashMap<String, IMenuItem>();
+	private Map<String, IMenuItem> map = Generics.newHashMap();
 
 	/**
 	 * Constructor
@@ -222,6 +222,11 @@ public class Menu extends JQueryPanel implements IMenuListener
 					if (!menuItem.isEnabled())
 					{
 						item.add(AttributeModifier.append("disabled", Model.of("disabled")));
+					}
+
+					if (menuItem.isSelected())
+					{
+						item.add(AttributeModifier.append("class", Model.of("menu-item-selected")));
 					}
 				}
 			});

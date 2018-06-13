@@ -37,6 +37,7 @@ public abstract class AbstractMenuItem implements IMenuItem
 	private IModel<String> title;
 	private String icon;
 	private boolean enabled = true;
+    private boolean selected = false;
 
 	/**
 	 * Constructor
@@ -109,6 +110,26 @@ public abstract class AbstractMenuItem implements IMenuItem
 
 		return this;
 	}
+
+    @Override
+    public boolean isSelected() {
+
+        return this.selected;
+    }
+
+    /**
+     * Sets whether the menu-item is selected
+     * 
+     * @param selected
+     *            true or false
+     * @return this, for chaining
+     */
+    public AbstractMenuItem setSelected(boolean selected) {
+
+        this.selected = selected;
+
+        return this;
+    }
 
 	@Override
 	public List<IMenuItem> getItems()

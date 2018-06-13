@@ -36,36 +36,49 @@ public interface IMenuItem extends IClusterable
 {
 	/**
 	 * Gets the menu-item markup id
+	 * 
 	 * @return the menu-item markup id
 	 */
 	String getId();
 
 	/**
 	 * Gets the menu-item title
+	 * 
 	 * @return the menu-item title
 	 */
 	IModel<String> getTitle();
 
 	/**
 	 * Gets the icon being displayed in the {@link Menu}
+	 * 
 	 * @return the icon css class
 	 */
 	String getIcon();
 
 	/**
 	 * Indicates whether the menu-item is enabled
+	 * 
 	 * @return true or false
 	 */
 	boolean isEnabled();
 
 	/**
+	 * Indicates whether the menu-item is selected
+	 * 
+	 * @return true or false
+	 */
+	boolean isSelected();
+
+	/**
 	 * Gets the {@link List} of submenu-items
+	 * 
 	 * @return the {@link List} of submenu-items
 	 */
 	List<IMenuItem> getItems();
 
 	/**
 	 * Triggered when the menu-item is clicked
+	 * 
 	 * @param target the {@link AjaxRequestTarget}
 	 */
 	void onClick(AjaxRequestTarget target);

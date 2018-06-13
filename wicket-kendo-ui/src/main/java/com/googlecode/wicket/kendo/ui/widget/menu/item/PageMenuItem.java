@@ -141,4 +141,11 @@ public class PageMenuItem extends UrlMenuItem
 	{
 		return super.isEnabled() && !RequestCycleUtils.getPageClass().isAssignableFrom(this.pageReference.get());
 	}
+
+    @Override
+    public boolean isSelected() {
+
+        return RequestCycleUtils.getPageClass().isAssignableFrom(this.pageReference.get());
+    }
+
 }
