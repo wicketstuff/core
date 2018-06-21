@@ -1,10 +1,10 @@
 language: java
 jdk:
-- oraclejdk9
+- openjdk10
 addons:
   apt:
     packages:
-    - oracle-java9-installer
+    - openjdk-10-jdk
 sudo: false
 notifications:
   email:

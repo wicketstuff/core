@@ -4,10 +4,10 @@
 	<toolchain>
 		<type>jdk</type>
 		<provides>
-		  <version>1.9</version>
+			<version>10</version>
 		</provides>
 		<configuration>
-		  <jdkHome>/usr/lib/jvm/java-9-oracle</jdkHome>
+			<jdkHome>/usr/lib/jvm/java-10-openjdk-amd64</jdkHome>
 		</configuration>
 	</toolchain>
 </toolchains>
