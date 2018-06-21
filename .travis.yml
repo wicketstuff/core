@@ -1,10 +1,6 @@
 language: java
 jdk:
 - openjdk10
-addons:
-  apt:
-    packages:
-    - openjdk-10-jdk
 sudo: false
 notifications:
   email:
