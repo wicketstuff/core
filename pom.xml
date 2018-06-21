@@ -319,12 +319,11 @@
 		<module>wicket-mount-parent</module>
 		<module>select2-parent</module>
 		<module>wicketstuff-selectize-parent</module>
-		<module>lambda-parent</module>
 		<module>wicketstuff-glassfish4-integration</module>
 		<module>wicket-foundation</module>
 		<module>dashboard-parent</module>
 		<module>jamon-parent</module>
-			<module>wicketstuff-rest-lambda</module>
+		<module>wicketstuff-rest-lambda</module>
 		<module>wicketstuff-lambda-components</module>
 		<module>wicket-datetime-parent</module>
 		<module>wicketstuff-datetime-yui-parent</module>
