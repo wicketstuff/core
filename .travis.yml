@@ -23,6 +23,8 @@ cache:
 install: true
 before_script:
 - echo "export MAVEN_OPTS='-Xmx2g ${MAVEN_OPTS}'" > ~/.mavenrc
+- rm "${JAVA_HOME}/lib/security/cacerts"
+- ln -s /etc/ssl/certs/java/cacerts "${JAVA_HOME}/lib/security/cacerts"
 script:
 - DEPLOY_OR_TEST=install
 - '[ "${TRAVIS_PULL_REQUEST}" = "false" ] && DEPLOY_OR_TEST=deploy'
