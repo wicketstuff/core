@@ -25,7 +25,7 @@ import org.apache.wicket.authroles.authorization.strategies.role.metadata.MetaDa
 import org.apache.wicket.core.request.handler.IPageClassRequestHandler;
 import org.apache.wicket.markup.html.WebPage;
 import org.apache.wicket.request.IRequestHandler;
-import org.apache.wicket.request.cycle.AbstractRequestCycleListener;
+import org.apache.wicket.request.cycle.IRequestCycleListener;
 import org.apache.wicket.request.cycle.RequestCycle;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
 import org.slf4j.Logger;
@@ -115,8 +115,7 @@ public abstract class ServletContainerAuthenticatedWebApplication extends Authen
 	 * matched by a security-constraint then wicket will respond with
 	 * unauthorized access.
 	 */
-	private class ContainerSecurityInterceptorListener extends AbstractRequestCycleListener
-			implements IUnauthorizedComponentInstantiationListener
+	private class ContainerSecurityInterceptorListener implements IRequestCycleListener, IUnauthorizedComponentInstantiationListener
 	{
 
 		@Override

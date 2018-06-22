@@ -25,7 +25,6 @@ import java.lang.reflect.TypeVariable;
 import java.util.List;
 
 import org.apache.wicket.WicketRuntimeException;
-import org.apache.wicket.model.IChainingModel;
 import org.apache.wicket.model.IDetachable;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.IObjectClassAwareModel;
@@ -704,8 +703,8 @@ public class LazyModel<T> implements IModel<T>, IObjectClassAwareModel<T>,
 	 * @see LoadableDetachableModel
 	 */
 	private class LoadableDetachableWrapper extends LoadableDetachableModel<T>
-			implements IObjectClassAwareModel<T>, IObjectTypeAwareModel<T>,
-			IChainingModel<T> {
+			implements IObjectClassAwareModel<T>, IObjectTypeAwareModel<T>
+	{
 
 		private static final long serialVersionUID = 1L;
 
@@ -738,16 +737,6 @@ public class LazyModel<T> implements IModel<T>, IObjectClassAwareModel<T>,
 				type = LazyModel.this.getObjectType();
 			}
 			return type;
-		}
-
-		@Override
-		public IModel<?> getChainedModel() {
-			return LazyModel.this;
-		}
-
-		@Override
-		public void setChainedModel(IModel<?> model) {
-			throw new UnsupportedOperationException();
 		}
 
 		@Override

@@ -19,7 +19,7 @@ package org.wicketstuff.jamon.request.cycle;
 import org.apache.wicket.protocol.http.WebApplication;
 import org.apache.wicket.request.IRequestHandler;
 import org.apache.wicket.request.component.IRequestablePage;
-import org.apache.wicket.request.cycle.AbstractRequestCycleListener;
+import org.apache.wicket.request.cycle.IRequestCycleListener;
 import org.apache.wicket.request.cycle.RequestCycle;
 import org.apache.wicket.Application;
 import org.apache.wicket.core.request.handler.BookmarkablePageRequestHandler;
@@ -56,7 +56,7 @@ import com.jamonapi.Monitor;
  * @author lars
  * 
  */
-public class JamonAwareRequestCycleListener extends AbstractRequestCycleListener
+public class JamonAwareRequestCycleListener implements IRequestCycleListener
 {
 
 	private static final String DELIMETER = ":";
@@ -72,7 +72,6 @@ public class JamonAwareRequestCycleListener extends AbstractRequestCycleListener
 	{
 		JamonMonitoredRequestCycleContext.registerTo(cycle, includeSourceNameInMonitorLabel);
 		getContextOf(cycle).startTimeRequest();
-		super.onBeginRequest(cycle);
 	}
 
 	private JamonMonitoredRequestCycleContext getContextOf(RequestCycle cycle)
@@ -83,21 +82,18 @@ public class JamonAwareRequestCycleListener extends AbstractRequestCycleListener
 	@Override
 	public void onEndRequest(RequestCycle cycle)
 	{
-		super.onEndRequest(cycle);
 		getContextOf(cycle).stopTimeRequest();
 	}
 
 	@Override
 	public void onRequestHandlerResolved(RequestCycle cycle, IRequestHandler handler)
 	{
-		super.onRequestHandlerResolved(cycle, handler);
 		resolveSourceLabel(handler, cycle);
 	}
 
 	@Override
 	public void onRequestHandlerExecuted(RequestCycle cycle, IRequestHandler handler)
 	{
-		super.onRequestHandlerExecuted(cycle, handler);
 		// this is the last request target.
 		resolveTargetLabel(handler, cycle);
 	}
@@ -105,7 +101,6 @@ public class JamonAwareRequestCycleListener extends AbstractRequestCycleListener
 	@Override
 	public void onRequestHandlerScheduled(RequestCycle cycle, IRequestHandler handler)
 	{
-		super.onRequestHandlerScheduled(cycle, handler);
 		// this is the last request target.
 		resolveTargetLabel(handler, cycle);
 	}
