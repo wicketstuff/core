@@ -31,5 +31,5 @@ script:
 - DEPLOY_OR_TEST=install
 - '[ "${TRAVIS_PULL_REQUEST}" = "false" ] && DEPLOY_OR_TEST=deploy'
 - echo DEPLOY_OR_TEST=$DEPLOY_OR_TEST
-- [ -n `java -version 2>&1|grep OpenJDK` ] && cp ./config/toolchains.xml $HOME/.m2 || cp ./config/toolchains_oracle.xml $HOME/.m2/toolchains.xml
+- if [ -n "`java -version 2>&1|grep OpenJDK`" ] ; then cp ./config/toolchains.xml $HOME/.m2 ; else cp ./config/toolchains_oracle.xml $HOME/.m2/toolchains.xml ; fi
 - mvn -s sonatype-settings.xml clean $DEPLOY_OR_TEST -Dsource.skip=true -B -V --quiet
