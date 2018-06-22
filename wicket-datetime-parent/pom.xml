@@ -13,6 +13,6 @@
 
 	<modules>
 		<module>wicket-datetime</module>
-	<module>wicket-datetime-examples</module>
-  </modules>
+		<module>wicket-datetime-examples</module>
+	</modules>
 </project>
