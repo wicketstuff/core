@@ -13,6 +13,7 @@ sudo: false
 notifications:
   email:
     - mgrigorov@apache.org
+    - solomax@apache.org
   irc:
     channels:
       - "chat.freenode.net##wicket"
