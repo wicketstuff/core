@@ -22,7 +22,7 @@ import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.link.BookmarkablePageLink;
 import org.apache.wicket.markup.html.panel.Panel;
-import org.apache.wicket.model.AbstractReadOnlyModel;
+import org.apache.wicket.model.IModel;
 import org.apache.wicket.spring.injection.annot.SpringBean;
 import org.wicketstuff.shiro.example.sprhibnative.model.User;
 import org.wicketstuff.shiro.example.sprhibnative.service.UserService;
@@ -51,7 +51,7 @@ public class UserAuthHeader extends Panel
 				return SecurityUtils.getSubject().getPrincipal() != null;
 			}
 		};
-		welcome.add(new Label("name", new AbstractReadOnlyModel<String>()
+		welcome.add(new Label("name", new IModel<String>()
 		{
 			private static final long serialVersionUID = 1L;
 

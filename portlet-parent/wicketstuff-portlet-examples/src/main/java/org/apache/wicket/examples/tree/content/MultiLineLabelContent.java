@@ -20,7 +20,6 @@ import org.apache.wicket.Component;
 import org.apache.wicket.examples.tree.Foo;
 import org.apache.wicket.extensions.markup.html.repeater.tree.AbstractTree;
 import org.apache.wicket.markup.html.basic.MultiLineLabel;
-import org.apache.wicket.model.AbstractReadOnlyModel;
 import org.apache.wicket.model.IModel;
 
 /**

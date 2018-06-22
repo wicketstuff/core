@@ -26,7 +26,6 @@ import org.apache.wicket.markup.head.IHeaderResponse;
 import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.panel.Panel;
-import org.apache.wicket.model.AbstractReadOnlyModel;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.request.resource.PackageResourceReference;
 import org.apache.wicket.request.resource.ResourceReference;
@@ -152,11 +151,8 @@ public class ProgressBar extends Panel
 		add(new Label("label", getLabelModel(model)));
 		add(new Label("message", getMessageModel(model)));
 		add(new WebMarkupContainer("bar").add(new AttributeModifier("style",
-			new AbstractReadOnlyModel<String>()
+			new IModel<String>()
 			{
-				/**
-					 * 
-					 */
 				private static final long serialVersionUID = 1L;
 
 				@Override
@@ -183,13 +179,10 @@ public class ProgressBar extends Panel
 	 * 
 	 * @return A model for the bar label
 	 */
-	protected AbstractReadOnlyModel<String> getLabelModel(final ProgressionModel model)
+	protected IModel<String> getLabelModel(final ProgressionModel model)
 	{
-		return new AbstractReadOnlyModel<String>()
+		return new IModel<String>()
 		{
-			/**
-			 * 
-			 */
 			private static final long serialVersionUID = 1L;
 
 			@Override
@@ -213,11 +206,8 @@ public class ProgressBar extends Panel
 	 */
 	protected IModel<String> getMessageModel(final ProgressionModel model)
 	{
-		return new AbstractReadOnlyModel<String>()
+		return new IModel<String>()
 		{
-			/**
-			 * 
-			 */
 			private static final long serialVersionUID = 1L;
 
 			@Override

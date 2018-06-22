@@ -9,7 +9,7 @@ import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.repeater.RepeatingView;
-import org.apache.wicket.model.AbstractReadOnlyModel;
+import org.apache.wicket.model.IModel;
 import org.apache.wicket.util.time.Duration;
 import org.wicketstuff.jquery.sparkline.Sparkline;
 import org.wicketstuff.jquery.sparkline.SparklineOptions;
@@ -75,7 +75,7 @@ public class Page4Sparkline extends PageSupport
 		values.add(8);
 		values.add(5);
 		s = new Sparkline(SparklineWrapper.SPARKID,
-			new AbstractReadOnlyModel<Collection<Integer>>()
+			new IModel<Collection<Integer>>()
 			{
 				@Override
 				public Collection<Integer> getObject()

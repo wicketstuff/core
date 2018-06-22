@@ -29,7 +29,6 @@ import org.apache.wicket.ajax.markup.html.form.AjaxButton;
 import org.apache.wicket.markup.html.form.DropDownChoice;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.panel.FeedbackPanel;
-import org.apache.wicket.model.AbstractReadOnlyModel;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.model.PropertyModel;
@@ -41,6 +40,8 @@ import org.apache.wicket.model.PropertyModel;
  */
 public class ChoicePage extends BasePage
 {
+	private static final long serialVersionUID = 1L;
+
 	private String selectedMake;
 
 	private final Map<String, List<String>> modelsMap = new HashMap<>(); // map:company->model
@@ -71,8 +72,10 @@ public class ChoicePage extends BasePage
 		modelsMap.put("CADILLAC", Arrays.asList("CTS", "DTS", "ESCALADE", "SRX", "DEVILLE"));
 		modelsMap.put("FORD", Arrays.asList("CROWN", "ESCAPE", "EXPEDITION", "EXPLORER", "F-150"));
 
-		IModel<List<String>> makeChoices = new AbstractReadOnlyModel<List<String>>()
+		IModel<List<String>> makeChoices = new IModel<List<String>>()
 		{
+			private static final long serialVersionUID = 1L;
+
 			@Override
 			public List<String> getObject()
 			{
@@ -81,8 +84,10 @@ public class ChoicePage extends BasePage
 
 		};
 
-		IModel<List<String>> modelChoices = new AbstractReadOnlyModel<List<String>>()
+		IModel<List<String>> modelChoices = new IModel<List<String>>()
 		{
+			private static final long serialVersionUID = 1L;
+
 			@Override
 			public List<String> getObject()
 			{
@@ -96,7 +101,7 @@ public class ChoicePage extends BasePage
 
 		};
 
-		Form<?> form = new Form("form");
+		Form<?> form = new Form<>("form");
 		add(form);
 
 		final DropDownChoice<String> makes = new DropDownChoice<>("makes",
@@ -115,6 +120,8 @@ public class ChoicePage extends BasePage
 
 		form.add(new AjaxButton("go")
 		{
+			private static final long serialVersionUID = 1L;
+
 			@Override
 			protected void onAfterSubmit(AjaxRequestTarget target)
 			{
@@ -126,6 +133,8 @@ public class ChoicePage extends BasePage
 
 		makes.add(new AjaxFormComponentUpdatingBehavior("change")
 		{
+			private static final long serialVersionUID = 1L;
+
 			@Override
 			protected void onUpdate(AjaxRequestTarget target)
 			{

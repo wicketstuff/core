@@ -2,7 +2,7 @@ package org.wicketstuff.springreference.examples;
 
 import org.apache.wicket.markup.html.WebPage;
 import org.apache.wicket.markup.html.basic.Label;
-import org.apache.wicket.model.AbstractReadOnlyModel;
+import org.apache.wicket.model.IModel;
 import org.apache.wicket.spring.injection.annot.SpringBean;
 import org.wicketstuff.springreference.SpringReference;
 
@@ -28,7 +28,7 @@ public abstract class AbstractPrivatePage extends WebPage
 	 */
 	public AbstractPrivatePage()
 	{
-		add(new Label("message", new AbstractReadOnlyModel<String>()
+		add(new Label("message", new IModel<String>()
 		{
 			private static final long serialVersionUID = -4674815203779218869L;
 

@@ -2,7 +2,6 @@ package org.wicketstuff.twitter.intents;
 
 import org.apache.wicket.AttributeModifier;
 import org.apache.wicket.markup.html.WebMarkupContainer;
-import org.apache.wicket.model.AbstractReadOnlyModel;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.request.Url;
@@ -16,6 +15,7 @@ import org.apache.wicket.request.mapper.parameter.PageParametersEncoder;
  */
 public abstract class AbstractIntentLink extends WebMarkupContainer
 {
+	private static final long serialVersionUID = 1L;
 	private IModel<String> intentUrl;
 
 	public AbstractIntentLink(final String id, final String url)
@@ -24,8 +24,10 @@ public abstract class AbstractIntentLink extends WebMarkupContainer
 
 		intentUrl = Model.of(url);
 
-		add(new AttributeModifier("href", new AbstractReadOnlyModel<String>()
+		add(new AttributeModifier("href", new IModel<String>()
 		{
+			private static final long serialVersionUID = 1L;
+
 			@Override
 			public String getObject()
 			{

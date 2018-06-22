@@ -25,7 +25,7 @@ import org.apache.wicket.extensions.ajax.markup.html.AjaxEditableMultiLineLabel;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.link.Link;
-import org.apache.wicket.model.AbstractReadOnlyModel;
+import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.CompoundPropertyModel;
 
 
@@ -36,6 +36,7 @@ import org.apache.wicket.model.CompoundPropertyModel;
  */
 public class EditableLabelPage extends BasePage
 {
+	private static final long serialVersionUID = 1L;
 	/** available sites for the multiple select. */
 	private static final List<String> SITES = Arrays.asList("The Server Side", "Java Lobby",
 		"Java.Net");
@@ -58,8 +59,10 @@ public class EditableLabelPage extends BasePage
 		form.add(new AjaxEditableMultiLineLabel("text3"));
 		form.add(new AjaxEditableChoiceLabel("site", SITES));
 
-		form.add(new Label("refresh-counter", new AbstractReadOnlyModel<String>()
+		form.add(new Label("refresh-counter", new IModel<String>()
 		{
+			private static final long serialVersionUID = 1L;
+
 			@Override
 			public String getObject()
 			{
@@ -69,6 +72,8 @@ public class EditableLabelPage extends BasePage
 
 		form.add(new Link<String>("refresh-link")
 		{
+			private static final long serialVersionUID = 1L;
+
 			@Override
 			public void onClick()
 			{

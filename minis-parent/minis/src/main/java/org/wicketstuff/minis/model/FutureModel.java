@@ -20,7 +20,7 @@ import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
 
 import org.apache.wicket.WicketRuntimeException;
-import org.apache.wicket.model.AbstractReadOnlyModel;
+import org.apache.wicket.model.IModel;
 
 /**
  * A read-only model implementation that retrieves the model object from a {@link Future} object.
@@ -29,7 +29,7 @@ import org.apache.wicket.model.AbstractReadOnlyModel;
  * 
  * @author <a href="http://sebthom.de/">Sebastian Thomschke</a>
  */
-public class FutureModel<T> extends AbstractReadOnlyModel<T>
+public class FutureModel<T> implements IModel<T>
 {
 	private static final long serialVersionUID = 1L;
 
@@ -61,7 +61,6 @@ public class FutureModel<T> extends AbstractReadOnlyModel<T>
 			throw new WicketRuntimeException(ex);
 		}
 		future = null;
-		super.detach();
 	}
 
 	/**

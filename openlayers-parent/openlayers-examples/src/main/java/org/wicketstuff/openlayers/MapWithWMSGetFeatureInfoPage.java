@@ -21,7 +21,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 import org.apache.wicket.markup.html.WebPage;
-import org.apache.wicket.model.AbstractReadOnlyModel;
+import org.apache.wicket.model.IModel;
 import org.wicketstuff.openlayers.api.Control;
 import org.wicketstuff.openlayers.api.control.WMSGetFeatureInfo;
 import org.wicketstuff.openlayers.api.layer.Layer;
@@ -120,15 +120,14 @@ public class MapWithWMSGetFeatureInfoPage extends WebPage
 
 
 		WMSGetFeatureInfo getFeatureInfo = new WMSGetFeatureInfo(parameterMap,
-			new AbstractReadOnlyModel<String>()
+			new IModel<String>()
 			{
-
 				private static final long serialVersionUID = -1330688574990681527L;
 
 				/*
 				 * (non-Javadoc)
 				 * 
-				 * @see org.apache.wicket.model.AbstractReadOnlyModel#getObject()
+				 * @see org.apache.wicket.model.IModel#getObject()
 				 */
 				@Override
 				public String getObject()

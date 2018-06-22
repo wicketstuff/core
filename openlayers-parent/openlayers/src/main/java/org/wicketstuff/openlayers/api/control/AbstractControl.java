@@ -19,7 +19,6 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.wicket.model.AbstractReadOnlyModel;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.request.resource.JavaScriptResourceReference;
 import org.wicketstuff.openlayers.IOpenLayersMap;
@@ -242,17 +241,16 @@ public class AbstractControl implements IJavascriptComponent
 	{
 
 		// added through a model so that we can wait until the render phase before calculating the
-// callback urls if the event handling javascript contains
+		// callback urls if the event handling javascript contains
 		// wicket behaviours.
-		eventJavascript.add(new AbstractReadOnlyModel<String>()
+		eventJavascript.add(new IModel<String>()
 		{
-
 			private static final long serialVersionUID = 1L;
 
 			/*
 			 * (non-Javadoc)
 			 * 
-			 * @see org.apache.wicket.model.AbstractReadOnlyModel#getObject()
+			 * @see org.apache.wicket.model.IModel#getObject()
 			 */
 			@Override
 			public String getObject()

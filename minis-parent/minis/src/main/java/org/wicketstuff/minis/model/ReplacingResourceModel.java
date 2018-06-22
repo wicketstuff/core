@@ -21,7 +21,6 @@ import java.util.regex.Pattern;
 
 import org.apache.wicket.Application;
 import org.apache.wicket.Component;
-import org.apache.wicket.model.AbstractReadOnlyModel;
 import org.apache.wicket.model.IComponentAssignedModel;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.IWrapModel;
@@ -50,8 +49,7 @@ import org.apache.wicket.model.LoadableDetachableModel;
  * 
  * @author Tobias Soloschenko
  */
-public class ReplacingResourceModel extends AbstractReadOnlyModel<String> implements
-	IComponentAssignedModel<String>
+public class ReplacingResourceModel implements IComponentAssignedModel<String>
 {
 	private static final long serialVersionUID = 1L;
 
@@ -64,7 +62,7 @@ public class ReplacingResourceModel extends AbstractReadOnlyModel<String> implem
 	}
 
 	/**
-	 * @see org.apache.wicket.model.AbstractReadOnlyModel#getObject()
+	 * @see org.apache.wicket.model.IModel#getObject()
 	 */
 	@Override
 	public String getObject()

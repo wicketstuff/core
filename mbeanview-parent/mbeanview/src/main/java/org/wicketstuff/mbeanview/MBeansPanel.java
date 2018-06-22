@@ -47,7 +47,6 @@ import org.apache.wicket.markup.head.IHeaderResponse;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.panel.EmptyPanel;
 import org.apache.wicket.markup.html.panel.Panel;
-import org.apache.wicket.model.AbstractReadOnlyModel;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.request.resource.PackageResourceReference;
@@ -204,7 +203,7 @@ public class MBeansPanel extends Panel
 
 	private class FailureNode extends MbeanNode
 	{
-
+		private static final long serialVersionUID = 1L;
 		private Exception ex;
 
 		public FailureNode(Exception ex)
@@ -227,8 +226,10 @@ public class MBeansPanel extends Panel
 		@Override
 		public Component newView(String wicketId)
 		{
-			return new Label(wicketId, new AbstractReadOnlyModel<String>()
+			return new Label(wicketId, new IModel<String>()
 			{
+				private static final long serialVersionUID = 1L;
+
 				@Override
 				public String getObject()
 				{
@@ -245,7 +246,7 @@ public class MBeansPanel extends Panel
 
 	private class DomainNode extends MbeanNode
 	{
-
+		private static final long serialVersionUID = 1L;
 		private String name;
 
 		public DomainNode(String name)
@@ -339,6 +340,7 @@ public class MBeansPanel extends Panel
 
 	private class KeyPath extends TreeSet<Key>
 	{
+		private static final long serialVersionUID = 1L;
 
 		public Key head()
 		{
@@ -390,6 +392,7 @@ public class MBeansPanel extends Panel
 
 	private class Key implements Comparable<Key>, Serializable
 	{
+		private static final long serialVersionUID = 1L;
 		public final String name;
 		public final String value;
 
@@ -452,6 +455,7 @@ public class MBeansPanel extends Panel
 
 	private class KeyNode extends MbeanNode
 	{
+		private static final long serialVersionUID = 1L;
 
 		private Key key;
 
@@ -722,6 +726,7 @@ public class MBeansPanel extends Panel
 
 	private class MbeanTreeProvider implements ITreeProvider<MbeanNode>
 	{
+		private static final long serialVersionUID = 1L;
 
 		private IModel<MBeanServer> server;
 

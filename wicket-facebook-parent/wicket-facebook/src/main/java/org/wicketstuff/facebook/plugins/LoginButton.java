@@ -5,7 +5,7 @@ import java.util.Collections;
 import java.util.List;
 
 import org.apache.wicket.AttributeModifier;
-import org.apache.wicket.model.AbstractReadOnlyModel;
+import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.PropertyModel;
 import org.wicketstuff.facebook.FacebookPermission;
 
@@ -17,12 +17,8 @@ import org.wicketstuff.facebook.FacebookPermission;
  */
 public class LoginButton extends AbstractFacebookPlugin
 {
-	private class PermissionsModel extends AbstractReadOnlyModel<String>
+	private class PermissionsModel implements IModel<String>
 	{
-
-		/**
-		 * 
-		 */
 		private static final long serialVersionUID = 1L;
 
 		@Override
@@ -40,10 +36,6 @@ public class LoginButton extends AbstractFacebookPlugin
 		}
 
 	}
-
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 
 	private int maxRows = 1;

@@ -2,7 +2,6 @@ package org.wicketstuff.jquery.demo.lavalamp;
 
 import java.util.List;
 
-import org.apache.wicket.model.AbstractReadOnlyModel;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.request.resource.PackageResourceReference;
 import org.apache.wicket.request.resource.ResourceReference;
@@ -17,9 +16,8 @@ public final class Page4LavaLamp extends PageSupport
 	public Page4LavaLamp()
 	{
 		super();
-		IModel<List<MenuItem>> model = new AbstractReadOnlyModel<List<MenuItem>>()
+		IModel<List<MenuItem>> model = new IModel<List<MenuItem>>()
 		{
-
 			private static final long serialVersionUID = 1L;
 
 			@Override

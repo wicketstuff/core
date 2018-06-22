@@ -30,7 +30,6 @@ import org.apache.wicket.markup.html.IHeaderContributor;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.form.FormComponent;
 import org.apache.wicket.markup.html.panel.Panel;
-import org.apache.wicket.model.AbstractReadOnlyModel;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.request.cycle.RequestCycle;
 import org.apache.wicket.request.resource.CssResourceReference;
@@ -99,7 +98,7 @@ public class Calendar extends Panel implements IHeaderContributor {
     public Calendar(String id) {
         super(id);
 
-        Label initialization = new Label("initialization", new AbstractReadOnlyModel() {
+        Label initialization = new Label("initialization", new IModel() {
             private static final long serialVersionUID = 1L;
 
             @Override

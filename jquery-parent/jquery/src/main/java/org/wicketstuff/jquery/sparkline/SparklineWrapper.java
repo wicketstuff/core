@@ -2,7 +2,7 @@ package org.wicketstuff.jquery.sparkline;
 
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.panel.Panel;
-import org.apache.wicket.model.AbstractReadOnlyModel;
+import org.apache.wicket.model.IModel;
 
 
 public class SparklineWrapper extends Panel
@@ -21,7 +21,7 @@ public class SparklineWrapper extends Panel
 		line.setWriteJSOnReady(false);
 
 		this.add(line);
-		this.add(new Label("js", new AbstractReadOnlyModel<CharSequence>()
+		this.add(new Label("js", new IModel<CharSequence>()
 		{
 			private static final long serialVersionUID = 1L;
 

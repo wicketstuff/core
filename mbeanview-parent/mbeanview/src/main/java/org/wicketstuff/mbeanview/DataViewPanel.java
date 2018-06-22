@@ -24,7 +24,6 @@ import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.list.ListItem;
 import org.apache.wicket.markup.html.list.ListView;
 import org.apache.wicket.markup.html.panel.Panel;
-import org.apache.wicket.model.AbstractReadOnlyModel;
 import org.apache.wicket.model.IModel;
 
 /**
@@ -62,9 +61,9 @@ public class DataViewPanel extends Panel
 		add(contentsRepeater);
 	}
 
-	private static class ValueModel extends AbstractReadOnlyModel<List<Object>>
+	private static class ValueModel implements IModel<List<Object>>
 	{
-
+		private static final long serialVersionUID = 1L;
 		private IModel<?> value;
 
 		public ValueModel(IModel<?> value)
@@ -75,8 +74,6 @@ public class DataViewPanel extends Panel
 		@Override
 		public void detach()
 		{
-			super.detach();
-
 			this.value.detach();
 		}
 

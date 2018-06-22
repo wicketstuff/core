@@ -31,7 +31,7 @@ import org.apache.wicket.markup.html.form.TextField;
 import org.apache.wicket.markup.html.link.Link;
 import org.apache.wicket.markup.html.list.ListItem;
 import org.apache.wicket.markup.html.list.ListView;
-import org.apache.wicket.model.AbstractReadOnlyModel;
+import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.PropertyModel;
 import org.apache.wicket.request.IRequestHandler;
 import org.apache.wicket.request.cycle.RequestCycle;
@@ -97,7 +97,7 @@ public class ListViewFormComponentReuseManagerPage extends WebPage
 			{
 				final Row row = item.getModelObject();
 
-				item.add(new Label("index", new AbstractReadOnlyModel<Integer>()
+				item.add(new Label("index", new IModel<Integer>()
 				{
 					@Override
 					public Integer getObject()

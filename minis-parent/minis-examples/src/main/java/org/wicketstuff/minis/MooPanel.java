@@ -1,7 +1,7 @@
 package org.wicketstuff.minis;
 
 import org.apache.wicket.markup.html.basic.Label;
-import org.apache.wicket.model.AbstractReadOnlyModel;
+import org.apache.wicket.model.IModel;
 import org.wicketstuff.minis.behavior.mootip.MootipPanel;
 
 public class MooPanel extends MootipPanel
@@ -11,7 +11,7 @@ public class MooPanel extends MootipPanel
 	public MooPanel()
 	{
 		super();
-		add(new Label("counter", new AbstractReadOnlyModel<String>()
+		add(new Label("counter", new IModel<String>()
 		{
 			private static final long serialVersionUID = 1L;
 

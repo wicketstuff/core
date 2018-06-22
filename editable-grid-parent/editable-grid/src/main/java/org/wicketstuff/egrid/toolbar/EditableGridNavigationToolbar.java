@@ -5,7 +5,7 @@ import org.apache.wicket.extensions.markup.html.repeater.data.table.NavigatorLab
 import org.apache.wicket.markup.html.WebComponent;
 import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.markup.html.navigation.paging.PagingNavigator;
-import org.apache.wicket.model.AbstractReadOnlyModel;
+import org.apache.wicket.model.IModel;
 import org.wicketstuff.egrid.component.EditableDataTable;
 /**
  * 
@@ -21,7 +21,7 @@ public class EditableGridNavigationToolbar extends AbstractEditableGridToolbar {
 
 		WebMarkupContainer span = new WebMarkupContainer("span");
 		add(span);
-		span.add(AttributeModifier.replace("colspan", new AbstractReadOnlyModel<String>()
+		span.add(AttributeModifier.replace("colspan", new IModel<String>()
 		{
 			private static final long serialVersionUID = 1L;
 

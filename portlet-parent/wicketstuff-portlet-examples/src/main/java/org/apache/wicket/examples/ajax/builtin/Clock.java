@@ -21,7 +21,7 @@ import java.util.Date;
 import java.util.TimeZone;
 
 import org.apache.wicket.markup.html.basic.Label;
-import org.apache.wicket.model.AbstractReadOnlyModel;
+import org.apache.wicket.model.IModel;
 
 
 /**
@@ -31,6 +31,8 @@ import org.apache.wicket.model.AbstractReadOnlyModel;
  */
 public class Clock extends Label
 {
+	private static final long serialVersionUID = 1L;
+
 	/**
 	 * Constructor
 	 * 
@@ -50,8 +52,9 @@ public class Clock extends Label
 	 * 
 	 * @author Igor Vaynberg (ivaynberg)
 	 */
-	private static class ClockModel extends AbstractReadOnlyModel<String>
+	private static class ClockModel implements IModel<String>
 	{
+		private static final long serialVersionUID = 1L;
 		private final DateFormat df;
 
 		/**
@@ -64,7 +67,7 @@ public class Clock extends Label
 		}
 
 		/**
-		 * @see org.apache.wicket.model.AbstractReadOnlyModel#getObject()
+		 * @see org.apache.wicket.model.IModel#getObject()
 		 */
 		@Override
 		public String getObject()

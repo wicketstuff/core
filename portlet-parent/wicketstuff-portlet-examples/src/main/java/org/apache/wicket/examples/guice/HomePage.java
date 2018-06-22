@@ -21,7 +21,7 @@ import org.apache.wicket.examples.WicketExamplePage;
 import org.apache.wicket.examples.guice.service.IMyService;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.link.Link;
-import org.apache.wicket.model.AbstractReadOnlyModel;
+import org.apache.wicket.model.IModel;
 
 /**
  * Everybody's favorite example (Hello World), modified to use Guice.
@@ -30,6 +30,8 @@ import org.apache.wicket.model.AbstractReadOnlyModel;
  */
 public class HomePage extends WicketExamplePage
 {
+	private static final long serialVersionUID = 1L;
+
 	@Inject
 	private IMyService service;
 
@@ -42,6 +44,8 @@ public class HomePage extends WicketExamplePage
 	{
 		add(new Link<Void>("link")
 		{
+			private static final long serialVersionUID = 1L;
+
 			/**
 			 * @see org.apache.wicket.markup.html.link.Link#onClick()
 			 */
@@ -51,15 +55,15 @@ public class HomePage extends WicketExamplePage
 				labelValue = service.getHelloWorldText();
 			}
 		});
-		add(new Label("message", new AbstractReadOnlyModel<String>()
+		add(new Label("message", new IModel<String>()
 		{
+			private static final long serialVersionUID = 1L;
 
 			@Override
 			public String getObject()
 			{
 				return labelValue;
 			}
-
 		}));
 	}
 }

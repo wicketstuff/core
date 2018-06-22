@@ -5,7 +5,6 @@ import org.apache.wicket.markup.head.CssHeaderItem;
 import org.apache.wicket.markup.head.IHeaderResponse;
 import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.markup.html.panel.GenericPanel;
-import org.apache.wicket.model.AbstractReadOnlyModel;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.request.resource.CssResourceReference;
 import org.wicketstuff.openlayers3.api.util.Color;
@@ -14,8 +13,9 @@ import org.wicketstuff.openlayers3.api.util.Color;
  * Provides a marker that may be placed on a amp.
  */
 public class Marker extends GenericPanel<Color> {
+	private static final long serialVersionUID = 1L;
 
-    /**
+	/**
      * Creates a new instance.
      *
      * @param id
@@ -47,12 +47,13 @@ public class Marker extends GenericPanel<Color> {
      *
      * @return Model with the CSS marker color
      */
-    private IModel<String> getBackgroundColorModel() {
-	return new AbstractReadOnlyModel<String>() {
+	private IModel<String> getBackgroundColorModel() {
+		return new IModel<String>() {
+			private static final long serialVersionUID = 1L;
 
-	    public String getObject() {
-		return "background-color: " + getModelObject() + ";";
-	    }
-	};
-    }
+			public String getObject() {
+				return "background-color: " + getModelObject() + ";";
+			}
+		};
+	}
 }

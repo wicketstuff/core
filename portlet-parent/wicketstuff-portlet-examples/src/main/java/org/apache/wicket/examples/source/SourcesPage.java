@@ -49,7 +49,7 @@ import org.apache.wicket.markup.html.WebPage;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.list.ListItem;
 import org.apache.wicket.markup.html.list.ListView;
-import org.apache.wicket.model.AbstractReadOnlyModel;
+import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.LoadableDetachableModel;
 import org.apache.wicket.request.http.handler.ErrorCodeRequestHandler;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
@@ -68,13 +68,17 @@ import org.slf4j.LoggerFactory;
  */
 public class SourcesPage extends WebPage
 {
+	private static final long serialVersionUID = 1L;
+
 	private static final Logger log = LoggerFactory.getLogger(SourcesPage.class);
 
 	/**
 	 * Model for retrieving the source code from the classpath of a packaged resource.
 	 */
-	private class SourceModel extends AbstractReadOnlyModel<String>
+	private class SourceModel implements IModel<String>
 	{
+		private static final long serialVersionUID = 1L;
+
 		/**
 		 * Returns the contents of the file loaded from the classpath.
 		 * 
@@ -137,6 +141,8 @@ public class SourcesPage extends WebPage
 	 */
 	public class PackagedResourcesModel extends LoadableDetachableModel<List<String>>
 	{
+		private static final long serialVersionUID = 1L;
+
 		/**
 		 * Returns the list of resources found in the package of the page.
 		 * 
@@ -275,6 +281,8 @@ public class SourcesPage extends WebPage
 	 */
 	public class FilesBrowser extends WebMarkupContainer
 	{
+		private static final long serialVersionUID = 1L;
+
 		/**
 		 * Constructor.
 		 * 
@@ -286,12 +294,16 @@ public class SourcesPage extends WebPage
 			super(id);
 			ListView<String> lv = new ListView<String>("file", new PackagedResourcesModel())
 			{
+				private static final long serialVersionUID = 1L;
+
 				@Override
 				protected void populateItem(final ListItem<String> item)
 				{
-					AjaxFallbackLink<String> link = new AjaxFallbackLink<String>("link",
+					AjaxFallbackLink<String> link = new AjaxFallbackLink<>("link",
 						item.getModel())
 					{
+						private static final long serialVersionUID = 1L;
+
 						@Override
 						public void onClick(Optional<AjaxRequestTarget> targetOptional)
 						{
@@ -316,6 +328,8 @@ public class SourcesPage extends WebPage
 							super.updateAjaxAttributes(attributes);
 							AjaxCallListener ajaxCallListener = new AjaxCallListener()
 							{
+								private static final long serialVersionUID = 1L;
+
 								@Override
 								public CharSequence getFailureHandler(Component component)
 								{
@@ -340,6 +354,8 @@ public class SourcesPage extends WebPage
 	 */
 	public class CodePanel extends WebMarkupContainer
 	{
+		private static final long serialVersionUID = 1L;
+
 		/**
 		 * Constructor.
 		 * 
@@ -412,8 +428,9 @@ public class SourcesPage extends WebPage
 	{
 		super(params);
 
-		filename = new Label("filename", new AbstractReadOnlyModel<String>()
+		filename = new Label("filename", new IModel<String>()
 		{
+			private static final long serialVersionUID = 1L;
 
 			@Override
 			public String getObject()

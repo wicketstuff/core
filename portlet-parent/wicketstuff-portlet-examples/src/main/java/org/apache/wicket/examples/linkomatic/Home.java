@@ -37,7 +37,7 @@ import org.apache.wicket.markup.html.link.ResourceLink;
 import org.apache.wicket.markup.html.pages.RedirectPage;
 import org.apache.wicket.markup.html.panel.FeedbackPanel;
 import org.apache.wicket.markup.parser.filter.RelativePathPrefixHandler;
-import org.apache.wicket.model.AbstractReadOnlyModel;
+import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.CompoundPropertyModel;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.model.PropertyModel;
@@ -54,6 +54,8 @@ import org.apache.wicket.util.time.Duration;
  */
 public class Home extends WicketExamplePage
 {
+	private static final long serialVersionUID = 1L;
+
 	/** click count for Link. */
 	private int linkClickCount = 0;
 
@@ -66,8 +68,10 @@ public class Home extends WicketExamplePage
 	public Home()
 	{
 		// Action link counts link clicks
-		final Link actionLink = new Link<String>("actionLink")
+		final Link<String> actionLink = new Link<>("actionLink")
 		{
+			private static final long serialVersionUID = 1L;
+
 			@Override
 			public void onClick()
 			{
@@ -79,8 +83,10 @@ public class Home extends WicketExamplePage
 		add(actionLink);
 
 		// Action link counts link clicks on works with onclick handler
-		final Link actionOnClickLink = new Link<String>("actionOnClickLink")
+		final Link<String> actionOnClickLink = new Link<>("actionOnClickLink")
 		{
+			private static final long serialVersionUID = 1L;
+
 			@Override
 			public void onClick()
 			{
@@ -105,6 +111,8 @@ public class Home extends WicketExamplePage
 		// Link to BookDetails page
 		add(new Link<Void>("bookDetailsLink")
 		{
+			private static final long serialVersionUID = 1L;
+
 			@Override
 			public void onClick()
 			{
@@ -115,6 +123,8 @@ public class Home extends WicketExamplePage
 		// Delayed link to BookDetails page
 		add(new Link<Void>("bookDetailsLink2")
 		{
+			private static final long serialVersionUID = 1L;
+
 			@Override
 			public void onClick()
 			{
@@ -153,7 +163,7 @@ public class Home extends WicketExamplePage
 		// Shared resource link
 		add(new ResourceLink<>("cancelButtonLink", new SharedResourceReference("cancelButton")));
 
-		add(new DownloadLink("downloadLink", new AbstractReadOnlyModel<File>()
+		add(new DownloadLink("downloadLink", new IModel<File>()
 		{
 			private static final long serialVersionUID = 1L;
 
@@ -183,16 +193,20 @@ public class Home extends WicketExamplePage
 		add(feedbackPanel);
 		add(new RedirectForm("redirectForm"));
 
-		Link linkToAnchor = new Link<String>("linkToAnchor")
+		Link<String> linkToAnchor = new Link<>("linkToAnchor")
 		{
+			private static final long serialVersionUID = 1L;
+
 			@Override
 			public void onClick()
 			{
 			}
 		};
 		add(linkToAnchor);
-		Link anotherlinkToAnchor = new Link<String>("anotherlinkToAnchor")
+		Link<String> anotherlinkToAnchor = new Link<>("anotherlinkToAnchor")
 		{
+			private static final long serialVersionUID = 1L;
+
 			@Override
 			public void onClick()
 			{
@@ -204,8 +218,9 @@ public class Home extends WicketExamplePage
 		add(anchorLabel);
 		linkToAnchor.setAnchor(anchorLabel);
 
-		Link<Void> linkWithLabel = new Link<Void>("linkWithLabel")
+		Link<Void> linkWithLabel = new Link<>("linkWithLabel")
 		{
+			private static final long serialVersionUID = 1L;
 
 			@Override
 			public void onClick()
@@ -221,6 +236,7 @@ public class Home extends WicketExamplePage
 	 */
 	private final class RedirectForm extends Form<RedirectForm>
 	{
+		private static final long serialVersionUID = 1L;
 		/** receives form input. */
 		private String redirectUrl = "http://www.theserverside.com";
 

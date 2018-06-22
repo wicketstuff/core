@@ -26,7 +26,6 @@ import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.examples.WicketExamplePage;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.basic.MultiLineLabel;
-import org.apache.wicket.model.AbstractReadOnlyModel;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.protocol.http.ClientProperties;
 import org.apache.wicket.protocol.http.request.WebClientInfo;
@@ -38,13 +37,17 @@ import org.apache.wicket.settings.RequestCycleSettings;
  */
 public class AjaxHelloBrowser extends WicketExamplePage
 {
+	private static final long serialVersionUID = 1L;
+
 	/**
 	 * Constructor.
 	 */
 	public AjaxHelloBrowser()
 	{
-		final MultiLineLabel clientInfo = new MultiLineLabel("clientinfo", new AbstractReadOnlyModel<String>()
+		final MultiLineLabel clientInfo = new MultiLineLabel("clientinfo", new IModel<String>()
 		{
+			private static final long serialVersionUID = 1L;
+
 			@Override
 			public String getObject()
 			{
@@ -55,8 +58,10 @@ public class AjaxHelloBrowser extends WicketExamplePage
 		clientInfo.setOutputMarkupPlaceholderTag(true);
 		clientInfo.setVisible(false);
 
-		IModel<String> clientTimeModel = new AbstractReadOnlyModel<String>()
+		IModel<String> clientTimeModel = new IModel<String>()
 		{
+			private static final long serialVersionUID = 1L;
+
 			@Override
 			public String getObject()
 			{
@@ -85,6 +90,8 @@ public class AjaxHelloBrowser extends WicketExamplePage
 
 		add(new AjaxClientInfoBehavior()
 		{
+			private static final long serialVersionUID = 1L;
+
 			@Override
 			protected void onClientInfo(AjaxRequestTarget target, WebClientInfo info)
 			{

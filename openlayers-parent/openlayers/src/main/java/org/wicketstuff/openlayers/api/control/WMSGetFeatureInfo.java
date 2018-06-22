@@ -18,7 +18,7 @@ package org.wicketstuff.openlayers.api.control;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.apache.wicket.model.AbstractReadOnlyModel;
+import org.apache.wicket.model.IModel;
 import org.wicketstuff.openlayers.IOpenLayersMap;
 
 /**
@@ -34,7 +34,7 @@ public class WMSGetFeatureInfo extends AbstractControl
 
 	private static final long serialVersionUID = -4288329995840372517L;
 	private final Map<String, String> parameters;
-	private final AbstractReadOnlyModel<String> onEventJavascript;
+	private final IModel<String> onEventJavascript;
 
 	/**
 	 * @param parameters
@@ -48,8 +48,7 @@ public class WMSGetFeatureInfo extends AbstractControl
 	 *            any javascript to be called when the 'getfeatureinfo' event is fired (one
 	 *            parameter evt in scope).
 	 */
-	public WMSGetFeatureInfo(HashMap<String, String> parameters,
-		AbstractReadOnlyModel<String> onEventJavascript)
+	public WMSGetFeatureInfo(HashMap<String, String> parameters, IModel<String> onEventJavascript)
 	{
 		super("WMSGetFeatureInfo", false);
 		this.parameters = parameters;

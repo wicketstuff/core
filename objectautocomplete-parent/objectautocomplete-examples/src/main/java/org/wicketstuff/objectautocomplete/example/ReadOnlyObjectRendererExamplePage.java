@@ -21,7 +21,7 @@ import java.util.List;
 import org.apache.wicket.Component;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.panel.Fragment;
-import org.apache.wicket.model.AbstractReadOnlyModel;
+import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
 import org.wicketstuff.objectautocomplete.ObjectAutoCompleteBuilder;
@@ -61,7 +61,7 @@ public class ReadOnlyObjectRendererExamplePage extends BaseExamplePage<Car, Inte
 					ReadOnlyObjectRendererExamplePage.this);
 				frag.add(new Label("search", pSearchTextModel));
 				frag.add(new Label("id", pIModel));
-				frag.add(new Label("object", new AbstractReadOnlyModel<String>()
+				frag.add(new Label("object", new IModel<String>()
 				{
 					private static final long serialVersionUID = 1L;
 
@@ -100,7 +100,7 @@ public class ReadOnlyObjectRendererExamplePage extends BaseExamplePage<Car, Inte
 			+ "                        Fragment frag =  new Fragment(id,\"readOnlyView\");\n"
 			+ "                        frag.add(new Label(\"search\",pSearchTextModel));\n"
 			+ "                        frag.add(new Label(\"id\",pIModel));\n"
-			+ "                        frag.add(new Label(\"object\",new AbstractReadOnlyModel() {\n"
+			+ "                        frag.add(new Label(\"object\",new IModel() {\n"
 			+ "                              public Object getObject() {\n"
 			+ "                                  if (pIModel != null && pIModel.getObject() != null) {\n"
 			+ "                                       for (Car car : CarRepository.allCars()) {\n"

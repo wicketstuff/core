@@ -18,13 +18,12 @@ package org.wicketstuff.shiro;
 
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.subject.Subject;
-import org.apache.wicket.model.AbstractReadOnlyModel;
 import org.apache.wicket.model.IModel;
 
 /**
  * A simple wrapper for to access {@link SecurityUtils#getSubject()} as an {@link IModel}
  */
-public class ShiroSubjectModel extends AbstractReadOnlyModel<Subject>
+public class ShiroSubjectModel implements IModel<Subject>
 {
 	private static final long serialVersionUID = 1L;
 

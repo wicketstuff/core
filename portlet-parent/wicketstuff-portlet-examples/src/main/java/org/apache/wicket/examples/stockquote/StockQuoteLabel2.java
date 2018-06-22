@@ -17,7 +17,7 @@
 package org.apache.wicket.examples.stockquote;
 
 import org.apache.wicket.markup.html.basic.Label;
-import org.apache.wicket.model.AbstractReadOnlyModel;
+import org.apache.wicket.model.IModel;
 
 /**
  * StockQuote example provided by Jonathan Locke. This component shows you how to reuse existing
@@ -27,6 +27,8 @@ import org.apache.wicket.model.AbstractReadOnlyModel;
  */
 public class StockQuoteLabel2 extends Label
 {
+	private static final long serialVersionUID = 1L;
+
 	/**
 	 * Constructor taking the symbol directly.
 	 * 
@@ -37,8 +39,10 @@ public class StockQuoteLabel2 extends Label
 	 */
 	public StockQuoteLabel2(String id, final String symbol)
 	{
-		super(id, new AbstractReadOnlyModel<String>()
+		super(id, new IModel<String>()
 		{
+			private static final long serialVersionUID = 1L;
+
 			/**
 			 * Gets the stockquote for the given symbol.
 			 */
