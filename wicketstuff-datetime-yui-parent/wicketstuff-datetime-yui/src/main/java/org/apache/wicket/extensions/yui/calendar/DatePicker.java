@@ -623,7 +623,7 @@ public class DatePicker extends Behavior
 	  */
 	protected int getFirstDayOfWeek(Locale locale)
 	{
-		return Calendar.getInstance(locale).getFirstDayOfWeek() - 1;
+		return Calendar.getInstance(locale).getFirstDayOfWeek();
 	}
 
 	/**

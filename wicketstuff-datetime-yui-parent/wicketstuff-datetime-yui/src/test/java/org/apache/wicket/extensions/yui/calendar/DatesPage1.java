@@ -37,7 +37,6 @@ import org.apache.wicket.markup.html.link.Link;
 import org.apache.wicket.markup.html.panel.FeedbackPanel;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.PropertyModel;
-import org.apache.wicket.model.util.ListModel;
 
 /**
  * Demonstrates components from the wicket-date project and a bunch of locale fiddling.
@@ -146,6 +145,11 @@ public class DatesPage1 extends WebPage
 	public DatesPage1()
 	{
 		selectedLocale = Session.get().getLocale();
+	}
+
+	@Override
+	protected void onInitialize() {
+		super.onInitialize();
 		Form<?> localeForm = new Form<>("localeForm");
 		localeForm.add(new LocaleDropDownChoice("localeSelect"));
 		localeForm.add(new Link<Void>("localeUSLink")
