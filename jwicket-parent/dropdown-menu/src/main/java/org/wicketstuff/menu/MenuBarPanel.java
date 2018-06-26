@@ -8,7 +8,6 @@ import java.util.List;
 
 import org.apache.wicket.AttributeModifier;
 import org.apache.wicket.ajax.AjaxRequestTarget;
-import org.apache.wicket.core.request.ClientInfo;
 import org.apache.wicket.markup.head.CssHeaderItem;
 import org.apache.wicket.markup.head.IHeaderResponse;
 import org.apache.wicket.markup.html.WebMarkupContainer;
@@ -16,9 +15,6 @@ import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.list.Loop;
 import org.apache.wicket.markup.html.list.LoopItem;
 import org.apache.wicket.markup.html.panel.Panel;
-import org.apache.wicket.protocol.http.ClientProperties;
-import org.apache.wicket.protocol.http.WebSession;
-import org.apache.wicket.protocol.http.request.WebClientInfo;
 import org.wicketstuff.jwicket.IStyleResolver;
 import org.wicketstuff.jwicket.JQueryCssResourceReference;
 
@@ -248,9 +244,6 @@ public class MenuBarPanel extends Panel implements IStyleResolver {
 
     private final WebMarkupContainer menubar;
 
-    private boolean browserDetected = false;
-    private boolean browserIsIe56 = false;
-
     /**
      * Constructs a {@code MenuBarPanel}.
      *
@@ -269,26 +262,6 @@ public class MenuBarPanel extends Panel implements IStyleResolver {
 
     @Override
     protected void onBeforeRender() {
-        /* IE5/6 can't do li:hover, so we need some javascript, see below */
-
-        if (!this.browserDetected) {
-            ClientInfo ci = WebSession.get().getClientInfo();
-            if (ci instanceof WebClientInfo) {
-                ClientProperties properties = ((WebClientInfo) ci).getProperties();
-                if (properties.isBrowserInternetExplorer()) {
-                    if (properties.getBrowserVersionMajor() < 7) {
-                        this.browserIsIe56 = true;
-                    }
-                }
-            } else {
-                // perhaps it is IE, we don't know.
-                this.browserIsIe56 = true;
-            }
-
-            this.browserDetected = true;
-        }
-
-
         // add the loop used to generate each single menu
         this.menubar.addOrReplace(new Loop("menus", MenuBarPanel.this.menus.size()) {
             private static final long serialVersionUID = 1L;
