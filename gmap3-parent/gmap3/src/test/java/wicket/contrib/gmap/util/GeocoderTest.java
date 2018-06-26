@@ -56,6 +56,7 @@ public class GeocoderTest
 	 * @throws Exception
 	 */
 	@Test
+	@Ignore // Ignored for now due to too much OVER_QUERY_LIMIT errors
 	public void testCenterAndFitZoomForAdress() throws Exception
 	{
 		WicketTester tester = new WicketTester();
