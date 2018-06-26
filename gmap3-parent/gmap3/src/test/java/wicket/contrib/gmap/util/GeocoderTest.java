@@ -3,6 +3,7 @@ package wicket.contrib.gmap.util;
 import org.apache.wicket.util.tester.WicketTester;
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
@@ -37,6 +38,7 @@ public class GeocoderTest
 	}
 
 	@Test
+	@Ignore // Ignored for now due to too much OVER_QUERY_LIMIT errors
 	public void testGeocoding() throws Exception
 	{
 		Geocoder coder = new Geocoder(apiKey);
