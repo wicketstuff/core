@@ -237,7 +237,7 @@ public class DnDSortableBehavior extends JQueryBehavior
 // item = findByMarkupId(destContainer, itemId);
 // }
 		boolean updateContainers = onDnD(target, srcContainer, srcPos, destContainer, destPos);
-		if (updateContainers && (target != null))
+		if (updateContainers && target != null)
 		{
 			// target is null in testcase
 			// (optional) if you need to keep in sync component, markupId on serverside and client
