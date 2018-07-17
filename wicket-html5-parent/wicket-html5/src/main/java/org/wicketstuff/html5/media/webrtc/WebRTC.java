@@ -19,6 +19,7 @@ package org.wicketstuff.html5.media.webrtc;
 import java.io.IOException;
 
 import org.apache.commons.io.IOUtils;
+import org.apache.wicket.Application;
 import org.apache.wicket.Page;
 import org.apache.wicket.WicketRuntimeException;
 import org.apache.wicket.markup.head.CssReferenceHeaderItem;
@@ -78,7 +79,7 @@ public abstract class WebRTC extends WebMarkupContainer
 		try
 		{
 			Video localVideo = configureVideo();
-			response.render(JavaScriptHeaderItem.forReference(JQueryResourceReference.get()));
+			response.render(JavaScriptHeaderItem.forReference(Application.get().getJavaScriptLibrarySettings().getJQueryReference()));
 			response.render(JavaScriptHeaderItem.forReference(new PackageResourceReference(
 				WebRTC.class, debug != null && debug ? "simplewebrtc.bundle.js" : "latest.js")));
 			String initializejs = IOUtils.toString(WebRTC.class.getResourceAsStream("WebRTC.js"));

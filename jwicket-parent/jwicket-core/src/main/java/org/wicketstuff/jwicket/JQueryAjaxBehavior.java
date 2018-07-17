@@ -165,8 +165,6 @@ public abstract class JQueryAjaxBehavior extends AbstractDefaultAjaxBehavior {
     }
 
 
-    // protected int ieVersion = -1;
-
 	@Override
 	public void renderHead(Component component, IHeaderResponse response) {
 		super.renderHead(component, response);
@@ -204,12 +202,12 @@ public abstract class JQueryAjaxBehavior extends AbstractDefaultAjaxBehavior {
 
 		if (this.cssResources != null) {
 			for (JQueryCssResourceReference res : this.cssResources) {
-                addCssResourceReference(response, res);
+				addCssResourceReference(response, res);
 			}
 		}
 	}
 
-    private final List<JavaScriptResourceReference> userProvidedResourceReferences = new ArrayList<JavaScriptResourceReference>();
+	private final List<JavaScriptResourceReference> userProvidedResourceReferences = new ArrayList<JavaScriptResourceReference>();
 
 	public void addUserProvidedResourceReferences(final JavaScriptResourceReference... resources) {
 		userProvidedResourceReferences.addAll(Arrays.asList(resources));

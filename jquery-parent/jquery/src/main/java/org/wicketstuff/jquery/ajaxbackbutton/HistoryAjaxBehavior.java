@@ -1,5 +1,6 @@
 package org.wicketstuff.jquery.ajaxbackbutton;
 
+import org.apache.wicket.Application;
 import org.apache.wicket.Component;
 import org.apache.wicket.ajax.AbstractDefaultAjaxBehavior;
 import org.apache.wicket.ajax.AjaxRequestTarget;
@@ -8,9 +9,7 @@ import org.apache.wicket.markup.head.IHeaderResponse;
 import org.apache.wicket.markup.head.JavaScriptHeaderItem;
 import org.apache.wicket.request.cycle.RequestCycle;
 import org.apache.wicket.request.resource.PackageResourceReference;
-import org.apache.wicket.resource.JQueryResourceReference;
 import org.apache.wicket.util.string.StringValue;
-import org.wicketstuff.jquery.JQueryBehavior;
 
 /**
  * @author martin-g
@@ -34,7 +33,7 @@ public abstract class HistoryAjaxBehavior extends AbstractDefaultAjaxBehavior
 	{
 		response.render(CssHeaderItem.forReference(new PackageResourceReference(
 			HistoryAjaxBehavior.class, "res/history-manager-iframe.css")));
-		response.render(JavaScriptHeaderItem.forReference(JQueryResourceReference.get()));
+		response.render(JavaScriptHeaderItem.forReference(Application.get().getJavaScriptLibrarySettings().getJQueryReference()));
 		response.render(JavaScriptHeaderItem.forReference(new PackageResourceReference(
 			HistoryAjaxBehavior.class, "res/history-manager.js")));
 

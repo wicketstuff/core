@@ -1,5 +1,6 @@
 package org.wicketstuff.jquery.jgrowl;
 
+import org.apache.wicket.Application;
 import org.apache.wicket.Component;
 import org.apache.wicket.feedback.FeedbackMessage;
 import org.apache.wicket.feedback.IFeedbackMessageFilter;
@@ -9,7 +10,6 @@ import org.apache.wicket.markup.head.JavaScriptHeaderItem;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.panel.FeedbackPanel;
 import org.apache.wicket.request.resource.PackageResourceReference;
-import org.apache.wicket.resource.JQueryResourceReference;
 import org.wicketstuff.jquery.Options;
 
 /**
@@ -129,7 +129,7 @@ public class JGrowlFeedbackPanel extends FeedbackPanel {
 				.forReference(new PackageResourceReference(
 						JGrowlFeedbackPanel.class, "res/jquery.jgrowl.css")));
 		response.render(JavaScriptHeaderItem
-				.forReference(JQueryResourceReference.get()));
+				.forReference(Application.get().getJavaScriptLibrarySettings().getJQueryReference()));
 		response.render(JavaScriptHeaderItem
 				.forReference(new PackageResourceReference(
 						JGrowlFeedbackPanel.class, "res/jquery.jgrowl.js")));
