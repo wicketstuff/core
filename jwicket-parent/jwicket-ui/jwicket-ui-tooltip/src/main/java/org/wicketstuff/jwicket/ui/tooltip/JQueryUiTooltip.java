@@ -17,12 +17,14 @@ package org.wicketstuff.jwicket.ui.tooltip;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.wicket.Application;
 import org.apache.wicket.Component;
 import org.apache.wicket.Page;
 import org.apache.wicket.behavior.Behavior;
 import org.apache.wicket.markup.head.CssReferenceHeaderItem;
 import org.apache.wicket.markup.head.IHeaderResponse;
 import org.apache.wicket.request.resource.CssResourceReference;
+import org.apache.wicket.request.resource.JavaScriptResourceReference;
 import org.apache.wicket.request.resource.ResourceReference;
 import org.wicketstuff.jwicket.JQuery;
 import org.wicketstuff.jwicket.JQueryDurableAjaxBehavior;
@@ -53,6 +55,8 @@ import org.wicketstuff.jwicket.JsOption;
  */
 public class JQueryUiTooltip extends JQueryDurableAjaxBehavior
 {
+	private static final long serialVersionUID = 1L;
+
 	private static final String WIDGET_NAME = "tooltip";
 
 	public static final JQueryResourceReference uiTooltipJs_1_10_3 = JQuery.isDebug()
@@ -101,7 +105,7 @@ public class JQueryUiTooltip extends JQueryDurableAjaxBehavior
 		this.componentSelector = componentSelector;
 		this.widget = new JQueryUiWidget(WIDGET_NAME);
 		this.cssResourceReferences = new ArrayList<ResourceReference>();
-		addUserProvidedResourceReferences(org.apache.wicket.resource.JQueryResourceReference.get());
+		addUserProvidedResourceReferences((JavaScriptResourceReference)(Application.get().getJavaScriptLibrarySettings().getJQueryReference()));
 		setDefaultOptions();
 	}
 
@@ -116,7 +120,7 @@ public class JQueryUiTooltip extends JQueryDurableAjaxBehavior
 		this.componentSelector = "";
 		this.widget = widget;
 		this.cssResourceReferences = new ArrayList<ResourceReference>();
-		addUserProvidedResourceReferences(org.apache.wicket.resource.JQueryResourceReference.get());
+		addUserProvidedResourceReferences((JavaScriptResourceReference)(Application.get().getJavaScriptLibrarySettings().getJQueryReference()));
 		setDefaultOptions();
 	}
 

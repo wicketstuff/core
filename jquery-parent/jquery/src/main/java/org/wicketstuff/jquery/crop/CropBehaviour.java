@@ -1,5 +1,6 @@
 package org.wicketstuff.jquery.crop;
 
+import org.apache.wicket.Application;
 import org.apache.wicket.Component;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.attributes.AjaxRequestAttributes;
@@ -9,7 +10,6 @@ import org.apache.wicket.request.Request;
 import org.apache.wicket.request.cycle.RequestCycle;
 import org.apache.wicket.request.resource.PackageResourceReference;
 import org.apache.wicket.request.resource.ResourceReference;
-import org.apache.wicket.resource.JQueryResourceReference;
 import org.wicketstuff.jquery.FunctionString;
 import org.wicketstuff.jquery.JQueryBehavior;
 
@@ -87,7 +87,7 @@ public class CropBehaviour extends JQueryBehavior
 	public void renderHead(Component component, IHeaderResponse response)
 	{
 		super.renderHead(component, response);
-		response.render(JavaScriptHeaderItem.forReference(JQueryResourceReference.get()));
+		response.render(JavaScriptHeaderItem.forReference(Application.get().getJavaScriptLibrarySettings().getJQueryReference()));
 		response.render(JavaScriptHeaderItem.forReference(INTERFACE_JS));
 		response.render(JavaScriptHeaderItem.forReference(IRESIZABLE_JS));
 		response.render(JavaScriptHeaderItem.forReference(IUTIL_JS));

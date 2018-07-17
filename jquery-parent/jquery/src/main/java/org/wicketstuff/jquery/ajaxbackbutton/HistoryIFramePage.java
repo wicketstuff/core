@@ -1,10 +1,9 @@
 package org.wicketstuff.jquery.ajaxbackbutton;
 
+import org.apache.wicket.Application;
 import org.apache.wicket.markup.head.IHeaderResponse;
 import org.apache.wicket.markup.head.JavaScriptHeaderItem;
 import org.apache.wicket.markup.html.WebPage;
-import org.apache.wicket.resource.JQueryResourceReference;
-import org.wicketstuff.jquery.JQueryBehavior;
 
 /**
  * @author martin-g
@@ -21,7 +20,7 @@ public class HistoryIFramePage extends WebPage
 	@Override
 	public void renderHead(IHeaderResponse response)
 	{
-		response.render(JavaScriptHeaderItem.forReference(JQueryResourceReference.get()));
+		response.render(JavaScriptHeaderItem.forReference(Application.get().getJavaScriptLibrarySettings().getJQueryReference()));
 	}
 
 }

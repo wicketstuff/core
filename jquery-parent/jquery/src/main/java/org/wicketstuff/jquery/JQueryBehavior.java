@@ -27,7 +27,6 @@ import org.apache.wicket.markup.head.JavaScriptHeaderItem;
 import org.apache.wicket.markup.head.StringHeaderItem;
 import org.apache.wicket.request.resource.PackageResourceReference;
 import org.apache.wicket.request.resource.ResourceReference;
-import org.apache.wicket.resource.JQueryResourceReference;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -93,7 +92,7 @@ public class JQueryBehavior extends AbstractDefaultAjaxBehavior
 			super.renderHead(component, response);
 			if (getIncludeJQueryJS(response))
 			{
-				response.render(JavaScriptHeaderItem.forReference(JQueryResourceReference.get()));
+				response.render(JavaScriptHeaderItem.forReference(Application.get().getJavaScriptLibrarySettings().getJQueryReference()));
 				if (Application.get().usesDevelopmentConfig())
 				{
 					response.render(JavaScriptHeaderItem.forReference(JQUERY_DEBUG_JS));
