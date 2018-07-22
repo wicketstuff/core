@@ -14,7 +14,6 @@
         <developer>
             <id>aldaris88</id>
             <name>Peter Major</name>
-            <email>majorpetya [at] sch [dot] bme [dot] hu</email>
         </developer>
     </developers>
 
@@ -32,11 +31,6 @@
         <dependency>
             <groupId>org.testng</groupId>
             <artifactId>testng</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.easytesting</groupId>
-            <artifactId>fest-assert</artifactId>
-            <version>1.4</version>
         </dependency>
     </dependencies>
 </project>
