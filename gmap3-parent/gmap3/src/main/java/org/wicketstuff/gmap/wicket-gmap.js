@@ -84,8 +84,8 @@ function WicketMap(id, failSilently) {
         params['zoom'] = this.map.getZoom();
         params['currentMapType'] = this.getMapTypeString(this.map.getMapTypeId());
 
-        for ( var key in params) {
-            callBack = callBack + '&' + key + '=' + params[key];
+        for (var key in params) {
+            callBack = callBack + '&' + key + '=' + encodeURI(params[key]);
         }
 
         Wicket.Ajax.ajax({
