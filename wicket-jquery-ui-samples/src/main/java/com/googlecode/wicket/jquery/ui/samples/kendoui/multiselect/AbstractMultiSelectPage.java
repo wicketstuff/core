@@ -15,6 +15,7 @@ abstract class AbstractMultiSelectPage extends KendoSamplePage
 		return Arrays.asList( // lf
 				new DemoLink(DefaultMultiSelectPage.class, "MultiSelect"), // lf
 				new DemoLink(LazyMultiSelectPage.class, "MultiSelect: lazy load"), // lf
+				new DemoLink(RendererMultiSelectPage.class, "MultiSelect: lazy load & custom renderer"), // lf
 				new DemoLink(AjaxMultiSelectPage.class, "AjaxMultiSelect: lazy load") // lf
 		);
 	}
