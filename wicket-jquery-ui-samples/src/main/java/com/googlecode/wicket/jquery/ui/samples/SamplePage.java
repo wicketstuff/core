@@ -92,10 +92,7 @@ public abstract class SamplePage extends TemplatePage // NOSONAR
 		}
 		catch (IOException e)
 		{
-			if (LOG.isDebugEnabled())
-			{
-				LOG.debug(e.getMessage(), e);
-			}
+			LOG.error(e.getMessage(), e);
 		}
 
 		return "";
