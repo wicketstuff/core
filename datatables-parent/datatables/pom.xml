@@ -31,7 +31,7 @@
 		<dependency>
 			<groupId>org.webjars.bower</groupId>
 			<artifactId>datatables</artifactId>
-			<version>1.10.16</version>
+			<version>1.10.19</version>
 		</dependency>
 		<dependency>
 			<groupId>org.webjars</groupId>
@@ -42,7 +42,7 @@
 		<dependency>
 			<groupId>de.agilecoders.wicket</groupId>
 			<artifactId>jquery-selectors</artifactId>
-			<version>2.0.0-M4</version>
+			<version>2.0.0</version>
 		</dependency>
 	</dependencies>
 </project>

@@ -13,17 +13,26 @@ import org.wicketstuff.gmap.geocoder.Geocoder;
 @RunWith(JUnit4.class)
 public class GeocoderTest
 {
+	private static final String PROP_NAME = "wicketstuff.gmap3.apiKey";
 	public static final String DEFAULT_API_KEY = "YOUR_API_KEY";
 	private String apiKey = DEFAULT_API_KEY;
+
+	public static String getApiKey() {
+		String key = System.getenv(PROP_NAME);
+		if (key != null) {
+			return key;
+		}
+		key = System.getProperty(PROP_NAME);
+		if (key != null) {
+			return key;
+		}
+		return DEFAULT_API_KEY;
+	}
 
 	@Before
 	public void setUp()
 	{
-		if (System.getenv("wicketstuff.gmap3.apiKey") != null) 
-		{			
-			apiKey = System.getenv("wicketstuff.gmap3.apiKey");
-		}
-		
+		apiKey = getApiKey();
 	}
 
 	@Test
@@ -31,7 +40,7 @@ public class GeocoderTest
 	{
 		Geocoder coder = new Geocoder(apiKey);
 		String encode = coder.encode("Salzburgerstraße 205, 4030 Linz, Österreich");
-		Assert.assertEquals(new StringBuilder("http://maps.googleapis.com/maps/api/geocode/json?apiKey=")
+		Assert.assertEquals(new StringBuilder("https://maps.googleapis.com/maps/api/geocode/json?key=")
 				.append(apiKey).append("&address=Salzburgerstra%C3%9Fe+205%2C+4030+Linz%2C+%C3%96sterreich").toString()
 			, encode);
 	}
@@ -50,7 +59,7 @@ public class GeocoderTest
 	 * Integration test for loading geocoder information<br/>
 	 * from google geocoder service and center and fit the<br/>
 	 * zoom of the map
-	 * 
+	 *
 	 * @throws Exception
 	 */
 	@Test

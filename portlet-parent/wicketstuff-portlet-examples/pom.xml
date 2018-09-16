@@ -18,7 +18,7 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<!-- allowed values: R7, 1.0, 1.5, 2.0 or none -->
 		<wtp.version>2.0</wtp.version>
-		<javax.ws.rs-api.version>2.1</javax.ws.rs-api.version>
+		<javax.ws.rs-api.version>2.1.1</javax.ws.rs-api.version>
 		<jersey.version>2.27</jersey.version>
 	</properties>
 
