@@ -1,6 +1,7 @@
 package wicket.contrib.gmap.util;
 
 import static wicket.contrib.gmap.util.GeocoderTest.DEFAULT_API_KEY;
+import static wicket.contrib.gmap.util.GeocoderTest.getApiKey;
 
 import org.apache.wicket.util.tester.WicketTester;
 import org.junit.Assert;
@@ -14,7 +15,7 @@ import org.wicketstuff.gmap.api.GLatLngBounds;
 
 /**
  * Include test cases for the {@link GMap}
- * 
+ *
  * @author Mathias Born <a href="http://www.mathiasborn.de">GETTING CONTACT.</a>
  */
 @RunWith(JUnit4.class)
@@ -25,10 +26,7 @@ public class GMapTest
 	@Before
 	public void setUp()
 	{
-		if (System.getenv("wicketstuff.gmap3.apiKey") != null) 
-		{			
-			apiKey = System.getenv("wicketstuff.gmap3.apiKey");
-		}
+		apiKey = getApiKey();
 	}
 
 	/**

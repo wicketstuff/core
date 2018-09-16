@@ -9,7 +9,7 @@
 		<version>9.0.0-SNAPSHOT</version>
 	</parent>
 	<properties>
-		<bootstrap.version>4.1.0</bootstrap.version>
+		<bootstrap.version>4.1.3</bootstrap.version>
 	</properties>
 
 	<artifactId>datatables-parent</artifactId>

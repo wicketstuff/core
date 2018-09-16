@@ -10,7 +10,6 @@ import org.apache.wicket.request.resource.PackageResourceReference;
 
 public class DemoDatatable extends WebMarkupContainer
 {
-
 	private static final long serialVersionUID = -4387194295178034384L;
 
 	public DemoDatatable(String id)

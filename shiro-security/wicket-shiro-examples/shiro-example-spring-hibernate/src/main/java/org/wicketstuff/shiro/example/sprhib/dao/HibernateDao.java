@@ -21,7 +21,6 @@ package org.wicketstuff.shiro.example.sprhib.dao;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.orm.hibernate3.SessionFactoryUtils;
 
 /**
  * Convenience superclass for DAOs that contains annotations for injecting the session factory and
@@ -40,7 +39,7 @@ public abstract class HibernateDao
 
 	public Session getSession()
 	{
-		return SessionFactoryUtils.getSession(sessionFactory, true);
+		return sessionFactory.getCurrentSession();
 	}
 
 }
