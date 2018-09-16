@@ -24,7 +24,7 @@ import org.apache.wicket.markup.head.JavaScriptHeaderItem;
 import org.apache.wicket.request.Url;
 import org.apache.wicket.request.resource.ResourceReference;
 import org.apache.wicket.request.resource.UrlResourceReference;
-import org.apache.wicket.resource.DynamicJQueryResourceReference;
+import org.apache.wicket.resource.JQueryResourceReference;
 
 /**
  * The resource reference for a jQuery plugin CDN library.
@@ -56,7 +56,7 @@ public class JQueryUrlResourceReference extends UrlResourceReference
 		}
 		else
 		{
-			jQueryReference = DynamicJQueryResourceReference.getV2();
+			jQueryReference = JQueryResourceReference.getV2();
 		}
 
 		List<HeaderItem> dependencies = super.getDependencies();

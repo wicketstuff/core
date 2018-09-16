@@ -5,12 +5,14 @@ import java.util.List;
 import org.apache.wicket.markup.head.HeaderItem;
 import org.apache.wicket.markup.head.JavaScriptHeaderItem;
 import org.apache.wicket.request.resource.ResourceReference;
-import org.apache.wicket.resource.DynamicJQueryResourceReference;
+import org.apache.wicket.resource.JQueryResourceReference;
 import org.apache.wicket.util.lang.Generics;
 
 /**
  * Provides the {@link ResourceReference} for the {@code jquery-migrate-3.0.0.js} javascript library (CDN).<br>
- * <pre><code>
+ * 
+ * <pre>
+ * <code>
  * public class MyApplication extends WebApplication
  * {
  * 	public void init()
@@ -20,7 +22,8 @@ import org.apache.wicket.util.lang.Generics;
  * 		this.getJavaScriptLibrarySettings().setJQueryReference(JQueryMigrateResourceReference.get());
  * 	}
  * }
- * </code></pre>
+ * </code>
+ * </pre>
  * 
  * @author Sebastien Briquet - sebfz1
  *
@@ -53,7 +56,7 @@ public class JQueryMigrateResourceReference extends JQueryUrlResourceReference
 	public List<HeaderItem> getDependencies()
 	{
 		List<HeaderItem> dependencies = Generics.newArrayList();
-		dependencies.add(JavaScriptHeaderItem.forReference(DynamicJQueryResourceReference.getV3()));
+		dependencies.add(JavaScriptHeaderItem.forReference(JQueryResourceReference.getV3()));
 
 		return dependencies;
 	}

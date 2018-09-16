@@ -257,7 +257,6 @@ public abstract class MultiSelect<T> extends FormComponent<Collection<T>> implem
 
 		if (this.template != null)
 		{
-			// TODO: add sample for template
 			this.templateBehavior = new KendoTemplateBehavior(this.template);
 			this.add(this.templateBehavior);
 		}
