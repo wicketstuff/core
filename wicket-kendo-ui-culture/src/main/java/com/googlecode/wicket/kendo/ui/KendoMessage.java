@@ -76,6 +76,7 @@ public enum KendoMessage
 	IT_CH("it-CH"), // lf
 	IT_IT("it-IT"), // lf
 	JA_JP("ja-JP"), // lf
+	MK_MK("mk-MK"), // lf
 	NB_NO("nb-NO"), // lf
 	NL_BE("nl-BE"), // lf
 	NL_NL("nl-NL"), // lf
@@ -85,6 +86,8 @@ public enum KendoMessage
 	RO_RO("ro-RO"), // lf
 	RU_RU("ru-RU"), // lf
 	SK_SK("sk-SK"), // lf
+	SQ_AL("sq-AL"), // lf
+	SR_SR("sr-Latn-RS"), // lf
 	SV_SE("sv-SE"), // lf
 	TR_TR("tr-TR"), // lf
 	UK_UA("uk-UA"), // lf
@@ -107,7 +110,6 @@ public enum KendoMessage
 	{
 		return this.culture;
 	}
-
 
 	/**
 	 * Indicates whether the specified {@link Locale} is currently supported
