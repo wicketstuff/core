@@ -1,8 +1,8 @@
 package org.wicketstuff.jqplot.examples;
 
-import br.com.digilabs.jqplot.JqPlotResources;
-import br.com.digilabs.jqplot.chart.BarChart;
-import br.com.digilabs.jqplot.metadata.JqPlotPlugin;
+import org.wicketstuff.jqplot.lib.JqPlotResources;
+import org.wicketstuff.jqplot.lib.chart.BarChart;
+import org.wicketstuff.jqplot.lib.metadata.JqPlotPlugin;
 
 @JqPlotPlugin(values = {JqPlotResources.CanvasAxisTickRenderer})
 public class MyBarChart extends BarChart<Integer> {
@@ -13,5 +13,5 @@ public class MyBarChart extends BarChart<Integer> {
 		super(title);
 		getXAxis().setTickRenderer(JqPlotResources.CanvasAxisTickRenderer);
 	}
-	
+
 }
