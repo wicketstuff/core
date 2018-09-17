@@ -236,7 +236,7 @@
 		<logback.version>1.2.3</logback.version>
 		<log4j.version>2.11.1</log4j.version>
 		<spring.version>4.3.19.RELEASE</spring.version>
-		<cglib.version>3.2.5</cglib.version>
+		<cglib.version>3.2.8</cglib.version>
 		<objenesis.version>2.6</objenesis.version>
 		<scala.version>2.12.6</scala.version>
 		<jackson.version>2.9.6</jackson.version>
@@ -770,7 +770,7 @@
 			<dependency>
 				<groupId>org.ow2.asm</groupId>
 				<artifactId>asm-util</artifactId>
-				<version>5.0.3</version>
+				<version>6.2.1</version>
 			</dependency>
 			<dependency>
 				<groupId>org.hsqldb</groupId>
