@@ -15,19 +15,19 @@
  */
 package org.wicketstuff.jqplot.behavior;
 
-import br.com.digilabs.jqplot.Chart;
-import br.com.digilabs.jqplot.JqPlotUtils;
+import java.util.List;
+
 import org.apache.wicket.Component;
 import org.apache.wicket.behavior.Behavior;
 import org.apache.wicket.markup.head.CssHeaderItem;
 import org.apache.wicket.markup.head.IHeaderResponse;
 import org.apache.wicket.markup.head.JavaScriptHeaderItem;
 import org.apache.wicket.request.resource.JavaScriptResourceReference;
-
-import java.util.List;
+import org.wicketstuff.jqplot.lib.Chart;
+import org.wicketstuff.jqplot.lib.JqPlotUtils;
 
 /**
- * 
+ *
  * @author inaiat
  */
 public class JqPlotBehavior extends Behavior {

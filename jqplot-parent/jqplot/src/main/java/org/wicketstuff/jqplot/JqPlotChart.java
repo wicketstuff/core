@@ -17,12 +17,11 @@ package org.wicketstuff.jqplot;
 
 import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.wicketstuff.jqplot.behavior.JqPlotBehavior;
-
-import br.com.digilabs.jqplot.Chart;
+import org.wicketstuff.jqplot.lib.Chart;
 
 
 /**
- * 
+ *
  * @author inaiat
  */
 public class JqPlotChart extends WebMarkupContainer

@@ -11,25 +11,24 @@ import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.markup.html.WebPage;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
 import org.wicketstuff.jqplot.JqPlotChart;
-
-import br.com.digilabs.jqplot.chart.AreaChart;
-import br.com.digilabs.jqplot.chart.BarChart;
-import br.com.digilabs.jqplot.chart.LabeledLineChart;
-import br.com.digilabs.jqplot.chart.LineChart;
-import br.com.digilabs.jqplot.chart.LineSeriesChart;
-import br.com.digilabs.jqplot.chart.PieChart;
-import br.com.digilabs.jqplot.data.item.LabeledItem;
-import br.com.digilabs.jqplot.data.item.LineSeriesItem;
-import br.com.digilabs.jqplot.elements.GridPadding;
-import br.com.digilabs.jqplot.elements.Legend;
-import br.com.digilabs.jqplot.elements.LegendRenderer;
-import br.com.digilabs.jqplot.elements.Location;
-import br.com.digilabs.jqplot.elements.MarkerOptions;
-import br.com.digilabs.jqplot.elements.RendererOptions;
-import br.com.digilabs.jqplot.elements.Serie;
-import br.com.digilabs.jqplot.elements.SeriesDefaults;
-import br.com.digilabs.jqplot.elements.TickOptions;
-import br.com.digilabs.jqplot.elements.Trendline;
+import org.wicketstuff.jqplot.lib.chart.AreaChart;
+import org.wicketstuff.jqplot.lib.chart.BarChart;
+import org.wicketstuff.jqplot.lib.chart.LabeledLineChart;
+import org.wicketstuff.jqplot.lib.chart.LineChart;
+import org.wicketstuff.jqplot.lib.chart.LineSeriesChart;
+import org.wicketstuff.jqplot.lib.chart.PieChart;
+import org.wicketstuff.jqplot.lib.data.item.LabeledItem;
+import org.wicketstuff.jqplot.lib.data.item.LineSeriesItem;
+import org.wicketstuff.jqplot.lib.elements.GridPadding;
+import org.wicketstuff.jqplot.lib.elements.Legend;
+import org.wicketstuff.jqplot.lib.elements.LegendRenderer;
+import org.wicketstuff.jqplot.lib.elements.Location;
+import org.wicketstuff.jqplot.lib.elements.MarkerOptions;
+import org.wicketstuff.jqplot.lib.elements.RendererOptions;
+import org.wicketstuff.jqplot.lib.elements.Serie;
+import org.wicketstuff.jqplot.lib.elements.SeriesDefaults;
+import org.wicketstuff.jqplot.lib.elements.TickOptions;
+import org.wicketstuff.jqplot.lib.elements.Trendline;
 
 public class HomePage extends WebPage {
 
