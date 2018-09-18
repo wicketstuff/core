@@ -66,7 +66,7 @@ public class AreaChart<T extends Number> extends AbstractChart<AreaFillData<T>,S
     }
 
     /* (non-Javadoc)
-     * @see br.com.digilabs.jqplot.Chart#getChartData()
+     * @see org.wicketstuff.jqplot.lib.Chart#getChartData()
      */
     public AreaFillData<T> getChartData() {
         return data;

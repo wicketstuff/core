@@ -18,7 +18,7 @@ import org.apache.wicket.model.Model;
 import org.wicketstuff.dashboard.Widget;
 import org.wicketstuff.dashboard.web.WidgetView;
 
-import br.com.digilabs.jqplot.Chart;
+import org.wicketstuff.jqplot.lib.Chart;
 
 /**
  * @author Decebal Suiu

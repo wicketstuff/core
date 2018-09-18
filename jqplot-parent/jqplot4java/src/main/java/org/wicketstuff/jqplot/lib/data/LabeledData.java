@@ -1,12 +1,12 @@
 /*
  *  Copyright 2011 Inaiat H. Moraes.
- * 
+ *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
  *  You may obtain a copy of the License at
- * 
+ *
  *       http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  *  Unless required by applicable law or agreed to in writing, software
  *  distributed under the License is distributed on an "AS IS" BASIS,
  *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -54,10 +54,11 @@ public class LabeledData<T extends Number> extends AbstractCollectionData<Labele
     }
 
     /* (non-Javadoc)
-     * @see br.com.digilabs.jqplot.data.ChartData#toJsonString()
+     * @see org.wicketstuff.jqplot.lib.data.ChartData#toJsonString()
      */
-    public String toJsonString() {
-        JSONArray jsonArray = new JSONArray();        
+    @Override
+	public String toJsonString() {
+        JSONArray jsonArray = new JSONArray();
         for (LabeledItem<T> labeledItem : data) {
             JSONArray itemArray = new JSONArray();
             itemArray.put(labeledItem.getLabel());
@@ -70,9 +71,10 @@ public class LabeledData<T extends Number> extends AbstractCollectionData<Labele
     }
 
     /* (non-Javadoc)
-     * @see br.com.digilabs.jqplot.data.ChartData#getData()
+     * @see org.wicketstuff.jqplot.lib.data.ChartData#getData()
      */
-    public Collection<LabeledItem<T>> getData() {
+    @Override
+	public Collection<LabeledItem<T>> getData() {
         return data;
     }
 
@@ -81,7 +83,8 @@ public class LabeledData<T extends Number> extends AbstractCollectionData<Labele
      *
      * @return the data
      */
-    public int size()
+    @Override
+	public int size()
     {
         return data.size();
     }

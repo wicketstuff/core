@@ -2,8 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package br.com.digilabs.jqplot.test;
-
+package org.wicketstuff.jqplot.lib.test;
 
 import java.util.Arrays;
 
@@ -35,7 +34,7 @@ public class BarChartTest extends TestCase {
     }
 
     public void testLabeledLine() throws JSONException {
-        BarChart<Integer> chart = new BarChart<Integer>();
+        BarChart<Integer> chart = new BarChart<>();
         chart.addValue(Arrays.<Integer>asList(200, 600, 700, 1000));
         chart.addValue(Arrays.<Integer>asList(200, 600, 700, 1000));
         chart.addValue(Arrays.<Integer>asList(200, 600, 700, 1000));

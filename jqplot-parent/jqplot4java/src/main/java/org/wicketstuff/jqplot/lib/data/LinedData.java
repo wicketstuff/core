@@ -1,12 +1,12 @@
 /*
  *  Copyright 2011 Inaiat H. Moraes.
- * 
+ *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
  *  You may obtain a copy of the License at
- * 
+ *
  *       http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  *  Unless required by applicable law or agreed to in writing, software
  *  distributed under the License is distributed on an "AS IS" BASIS,
  *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -24,7 +24,7 @@ import com.github.openjson.JSONArray;
 
 /**
  * Data Helper to build Line Charts.
- * 
+ *
  * @param <T>
  *            Type of number. Ex.: Double, Integer, Float, etc.
  * @author inaiat
@@ -45,7 +45,7 @@ public class LinedData<T extends Number> extends AbstractCollectionData<T> {
 
     /**
      * Instantiates a new lined data.
-     * 
+     *
      * @param values
      *            the values
      */
@@ -55,10 +55,11 @@ public class LinedData<T extends Number> extends AbstractCollectionData<T> {
 
     /*
      * (non-Javadoc)
-     * 
-     * @see br.com.digilabs.jqplot.data.ChartData#getData()
+     *
+     * @see org.wicketstuff.jqplot.lib.data.ChartData#getData()
      */
-    public Collection<T> getData() {
+    @Override
+	public Collection<T> getData() {
 	return data;
     }
 
@@ -67,17 +68,19 @@ public class LinedData<T extends Number> extends AbstractCollectionData<T> {
      *
      * @return the data
      */
-    public int size()
+    @Override
+	public int size()
     {
         return data.size();
     }
 
     /*
      * (non-Javadoc)
-     * 
-     * @see br.com.digilabs.jqplot.data.ChartData#toJsonString()
+     *
+     * @see org.wicketstuff.jqplot.lib.data.ChartData#toJsonString()
      */
-    public String toJsonString() {
+    @Override
+	public String toJsonString() {
         JSONArray jsonArray = new JSONArray();
         jsonArray.put(data);
         return jsonArray.toString();
