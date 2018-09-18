@@ -980,7 +980,6 @@
 						<execution>
 							<phase>process-resources</phase>
 							<goals>
-								<!--goal>jslint</goal -->
 								<goal>compress</goal>
 							</goals>
 						</execution>

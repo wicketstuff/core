@@ -27,8 +27,8 @@ import org.apache.wicket.request.resource.JavaScriptResourceReference;
 import org.apache.wicket.resource.JQueryPluginResourceReference;
 import org.wicketstuff.jqplot.behavior.JqPlotBehavior;
 
-import br.com.digilabs.jqplot.Chart;
-import br.com.digilabs.jqplot.JqPlotUtils;
+import org.wicketstuff.jqplot.lib.Chart;
+import org.wicketstuff.jqplot.lib.JqPlotUtils;
 
 /**
  * @author Decebal Suiu

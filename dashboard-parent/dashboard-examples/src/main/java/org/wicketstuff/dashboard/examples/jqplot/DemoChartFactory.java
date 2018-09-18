@@ -18,12 +18,12 @@ import java.util.Map;
 import org.wicketstuff.dashboard.widgets.jqplot.ChartFactory;
 import org.wicketstuff.dashboard.widgets.jqplot.JqPlotWidget;
 
-import br.com.digilabs.jqplot.Chart;
-import br.com.digilabs.jqplot.chart.AreaChart;
-import br.com.digilabs.jqplot.chart.BarChart;
-import br.com.digilabs.jqplot.chart.LineChart;
-import br.com.digilabs.jqplot.chart.PieChart;
-import br.com.digilabs.jqplot.elements.Serie;
+import org.wicketstuff.jqplot.lib.Chart;
+import org.wicketstuff.jqplot.lib.chart.AreaChart;
+import org.wicketstuff.jqplot.lib.chart.BarChart;
+import org.wicketstuff.jqplot.lib.chart.LineChart;
+import org.wicketstuff.jqplot.lib.chart.PieChart;
+import org.wicketstuff.jqplot.lib.elements.Serie;
 
 /**
  * @author Decebal Suiu

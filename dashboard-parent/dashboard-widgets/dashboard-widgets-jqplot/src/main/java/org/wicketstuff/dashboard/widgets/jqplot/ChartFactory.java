@@ -12,7 +12,7 @@
  */
 package org.wicketstuff.dashboard.widgets.jqplot;
 
-import br.com.digilabs.jqplot.Chart;
+import org.wicketstuff.jqplot.lib.Chart;
 
 /**
  * @author Decebal Suiu

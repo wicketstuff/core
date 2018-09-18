@@ -2,8 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package br.com.digilabs.jqplot.test;
-
+package org.wicketstuff.jqplot.lib.test;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,20 +34,20 @@ public class PieDonutChartTest extends TestCase {
     }
 
     public void testLabeledLine() {
-    	PieDonutChart<Integer> chart = new PieDonutChart<Integer>();
-    	
-    	List<LabeledItem<Integer>> list = new ArrayList<LabeledItem<Integer>>();
-    	list.add(new LabeledItem<Integer>("a",1));
-    	list.add(new LabeledItem<Integer>("b",2));    	
+    	PieDonutChart<Integer> chart = new PieDonutChart<>();
 
-    	List<LabeledItem<Integer>> list2 = new ArrayList<LabeledItem<Integer>>();
-    	list2.add(new LabeledItem<Integer>("a",1));
-    	list2.add(new LabeledItem<Integer>("b",2));    	
-    	
-    	
+    	List<LabeledItem<Integer>> list = new ArrayList<>();
+    	list.add(new LabeledItem<>("a",1));
+    	list.add(new LabeledItem<>("b",2));
+
+    	List<LabeledItem<Integer>> list2 = new ArrayList<>();
+    	list2.add(new LabeledItem<>("a",1));
+    	list2.add(new LabeledItem<>("b",2));
+
+
     	chart.addValue(list);
-    	chart.addValue(list2);    	
-    	
-        System.out.println(JqPlotUtils.createJquery(chart, "chart"));        
+    	chart.addValue(list2);
+
+        System.out.println(JqPlotUtils.createJquery(chart, "chart"));
     }
 }

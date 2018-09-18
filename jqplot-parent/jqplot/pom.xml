@@ -50,4 +50,17 @@
 			<version>${project.version}</version>
 		</dependency>
 	</dependencies>
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>net.alchim31.maven</groupId>
+				<artifactId>yuicompressor-maven-plugin</artifactId>
+				<configuration>
+					<nosuffix>false</nosuffix>
+					<suffix>.min</suffix>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
 </project>
