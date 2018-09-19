@@ -253,7 +253,7 @@
 		<maven-resources-plugin.version>3.1.0</maven-resources-plugin.version>
 		<animal-sniffer-maven-plugin.version>1.17</animal-sniffer-maven-plugin.version>
 		<maven-pax-plugin.version>1.6.0</maven-pax-plugin.version>
-		<scala-maven-plugin.version>3.4.2</scala-maven-plugin.version>
+		<scala-maven-plugin.version>3.3.2</scala-maven-plugin.version>
 		<maven-clean-plugin.version>3.1.0</maven-clean-plugin.version>
 		<maven-deploy-plugin.version>2.8.2</maven-deploy-plugin.version>
 		<maven-install-plugin.version>2.5.2</maven-install-plugin.version>
