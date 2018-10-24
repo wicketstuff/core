@@ -1,4 +1,4 @@
-/* 
+/*
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
@@ -16,24 +16,23 @@ package org.wicketstuff.gchart;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
+
 import org.apache.wicket.Component;
 import org.apache.wicket.Session;
+import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.markup.head.HeaderItem;
 import org.apache.wicket.markup.head.IHeaderResponse;
 import org.apache.wicket.markup.head.JavaScriptContentHeaderItem;
 import org.apache.wicket.markup.head.JavaScriptHeaderItem;
 import org.apache.wicket.markup.head.JavaScriptReferenceHeaderItem;
+import org.apache.wicket.markup.head.OnDomReadyHeaderItem;
 import org.apache.wicket.markup.html.WebComponent;
 import org.apache.wicket.model.IComponentAssignedModel;
 import org.apache.wicket.model.IModel;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.wicketstuff.gchart.gchart.options.ChartOptions;
 
 import com.github.openjson.JSONArray;
 import com.github.openjson.JSONObject;
-import org.apache.wicket.ajax.AjaxRequestTarget;
-import org.apache.wicket.markup.head.OnDomReadyHeaderItem;
 
 /**
  * Abstraction of Google charts for wicket. {@code OutputMarkupId} is set to
@@ -44,7 +43,6 @@ import org.apache.wicket.markup.head.OnDomReadyHeaderItem;
 public class Chart extends WebComponent implements JavaScriptable, Jsonable {
 
     private static final long serialVersionUID = 1L;
-    private static final Logger log = LoggerFactory.getLogger(Chart.class);
     /** URL for Google lib loader */
     public static final String LOADER_URL = "https://www.gstatic.com/charts/loader.js";
 
@@ -177,11 +175,11 @@ public class Chart extends WebComponent implements JavaScriptable, Jsonable {
 
     /**
      * Configure an ajax response to redraw the chart.
-     * Use this call for instance in {@code AjaxCheckBox#onUpdate} or 
+     * Use this call for instance in {@code AjaxCheckBox#onUpdate} or
      * {@code AjaxLink#onClick}.
      * Can be used after data change or options change.
      * See example page for usage example switching StackedPercent option on a bar chart.
-     * 
+     *
      * @param target Request target to configure.
      */
     public void configureAjaxUpdate(AjaxRequestTarget target) {
@@ -299,8 +297,9 @@ public class Chart extends WebComponent implements JavaScriptable, Jsonable {
         this.typeModel = typeModel;
     }
 
+    @SuppressWarnings("unchecked")
     public IModel<ChartOptions> getOptionModel() {
-        return (IModel<ChartOptions>) getDefaultModelObject();
+        return (IModel<ChartOptions>) getDefaultModel();
     }
 
     public void setOptionModel(IModel<ChartOptions> optionModel) {
@@ -324,7 +323,7 @@ public class Chart extends WebComponent implements JavaScriptable, Jsonable {
      *
      * @return Onle line load statement to be included in a JavaScript.
      */
-    private String createLoaderStatement() {
+    protected String createLoaderStatement() {
         StringBuilder sb = new StringBuilder();
         // Load the Visualization API and the package.
         JSONObject packageDecl = new JSONObject();
@@ -517,4 +516,10 @@ public class Chart extends WebComponent implements JavaScriptable, Jsonable {
         return sb.toString();
     }
 
+    /**
+     * @return the loader
+     */
+    public ChartLibLoader getLoader() {
+        return loader;
+    }
 }
