@@ -28,8 +28,6 @@ import org.apache.wicket.markup.head.JavaScriptReferenceHeaderItem;
 import org.apache.wicket.markup.html.WebComponent;
 import org.apache.wicket.model.IComponentAssignedModel;
 import org.apache.wicket.model.IModel;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.wicketstuff.gchart.gchart.options.ChartOptions;
 
 /**
@@ -41,7 +39,6 @@ import org.wicketstuff.gchart.gchart.options.ChartOptions;
 public class Chart extends WebComponent implements JavaScriptable {
 
     private static final long serialVersionUID = 1L;
-    private static final Logger log = LoggerFactory.getLogger(Chart.class);
     /** URL for Google lib loader */
     public static final String LOADER_URL = "https://www.gstatic.com/charts/loader.js";
 
@@ -272,7 +269,7 @@ public class Chart extends WebComponent implements JavaScriptable {
     }
 
     public IModel<ChartOptions> getOptionModel() {
-        return (IModel<ChartOptions>) getDefaultModelObject();
+        return (IModel<ChartOptions>) getDefaultModel();
     }
 
     public void setOptionModel(IModel<ChartOptions> optionModel) {
