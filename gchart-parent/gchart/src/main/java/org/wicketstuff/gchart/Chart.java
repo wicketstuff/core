@@ -293,7 +293,7 @@ public class Chart extends WebComponent implements JavaScriptable {
      *
      * @return Onle line load statement to be included in a JavaScript.
      */
-    private String createLoaderStatement() {
+    protected String createLoaderStatement() {
         StringBuilder sb = new StringBuilder();
         // Load the Visualization API and the package.
         JSONObject packageDecl = new JSONObject();
@@ -402,4 +402,10 @@ public class Chart extends WebComponent implements JavaScriptable {
         return sb.toString();
     }
 
+    /**
+     * @return the loader
+     */
+    public ChartLibLoader getLoader() {
+        return loader;
+    }   
 }
