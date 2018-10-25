@@ -16,6 +16,11 @@
  */
 package org.apache.wicket.extensions.yui.calendar;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNotSame;
+import static org.junit.Assert.assertSame;
+
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.util.Calendar;

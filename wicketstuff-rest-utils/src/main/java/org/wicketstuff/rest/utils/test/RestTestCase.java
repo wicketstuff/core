@@ -16,24 +16,26 @@
  */
 package org.wicketstuff.rest.utils.test;
 
+import static org.junit.Assert.assertEquals;
+
 import org.apache.wicket.util.tester.WicketTestCase;
 import org.wicketstuff.rest.utils.http.HttpMethod;
 
 /**
- * 
+ *
  * Extension to {@link WicketTestCase} meant for REST testing
- * 
+ *
  * @author andrea
  *
  */
-public class RestTestCase extends WicketTestCase 
+public class RestTestCase extends WicketTestCase
 {
-	protected void assertUrlResponse(final String url, final HttpMethod httpMethod, 
-			final String expectedResponse) 
+	protected void assertUrlResponse(final String url, final HttpMethod httpMethod,
+			final String expectedResponse)
 	{
 		tester.getRequest().setMethod(httpMethod.getMethod());
 		tester.executeUrl(url);
-		
+
 		assertEquals(expectedResponse, tester.getLastResponseAsString());
 	}
 }

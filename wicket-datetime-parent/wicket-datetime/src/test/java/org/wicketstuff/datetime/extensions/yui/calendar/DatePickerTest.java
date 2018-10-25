@@ -16,6 +16,11 @@
  */
 package org.wicketstuff.datetime.extensions.yui.calendar;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNotSame;
+import static org.junit.Assert.assertSame;
+
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.util.Calendar;
@@ -42,7 +47,7 @@ import org.wicketstuff.datetime.StyleDateConverter;
 import org.wicketstuff.datetime.extensions.yui.calendar.DateTimeField.AM_PM;
 
 /**
- * 
+ *
  */
 public class DatePickerTest extends WicketTestCase
 {
@@ -65,7 +70,7 @@ public class DatePickerTest extends WicketTestCase
 	}
 
 	/**
-	 * 
+	 *
 	 * @throws Exception
 	 */
 	@Test
@@ -77,7 +82,7 @@ public class DatePickerTest extends WicketTestCase
 
 	/**
 	 * Tests conversion of input for DateTimeField and DateField.
-	 * 
+	 *
 	 * @throws Exception
 	 */
 	@Test
@@ -107,7 +112,7 @@ public class DatePickerTest extends WicketTestCase
 	/**
 	 * Tests conversion of input for DateTimeField and DateField when the client and server are in
 	 * different time zones.
-	 * 
+	 *
 	 * @throws Exception
 	 */
 	@Test
@@ -188,7 +193,7 @@ public class DatePickerTest extends WicketTestCase
 	/**
 	 * Test date conversion with the server's time zone having a different current date than the
 	 * client time zone.
-	 * 
+	 *
 	 * @throws ParseException
 	 */
 	@Test
@@ -328,7 +333,7 @@ public class DatePickerTest extends WicketTestCase
 	/**
 	 * Test StyleDateConverter with the server's time zone having a different current date than the
 	 * client time zone.
-	 * 
+	 *
 	 * @throws ParseException
 	 */
 	@Test
@@ -429,7 +434,7 @@ public class DatePickerTest extends WicketTestCase
 	}
 
 	/**
-	 * 
+	 *
 	 * @throws ParseException
 	 */
 	@Test
@@ -461,7 +466,7 @@ public class DatePickerTest extends WicketTestCase
 	}
 
 	/**
-	 * 
+	 *
 	 * @throws ParseException
 	 */
 	@Test
@@ -493,7 +498,7 @@ public class DatePickerTest extends WicketTestCase
 	}
 
 	/**
-	 * 
+	 *
 	 * @throws ParseException
 	 */
 	@Test
@@ -526,7 +531,7 @@ public class DatePickerTest extends WicketTestCase
 
 	/**
 	 * Simulate what DateTimeField does
-	 * 
+	 *
 	 * @param dateStr
 	 * @param hours
 	 * @param minutes
@@ -605,7 +610,7 @@ public class DatePickerTest extends WicketTestCase
 
 	/**
 	 * Simulate what DateTimeField does
-	 * 
+	 *
 	 * @param dateStr
 	 * @param hours
 	 * @param minutes
@@ -665,7 +670,7 @@ public class DatePickerTest extends WicketTestCase
 
 	/**
 	 * Simulate what DateTimeField does
-	 * 
+	 *
 	 * @param dateStr
 	 * @param hours
 	 * @param minutes
@@ -736,9 +741,9 @@ public class DatePickerTest extends WicketTestCase
 	/**
 	 * Use <code>-Dwicket.replace.expected.results=true</code> to automatically replace the expected
 	 * output file.
-	 * 
+	 *
 	 * @param <T>
-	 * 
+	 *
 	 * @param pageClass
 	 * @param filename
 	 * @throws Exception
