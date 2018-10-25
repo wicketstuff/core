@@ -4,10 +4,10 @@
 	<toolchain>
 		<type>jdk</type>
 		<provides>
-			<version>10</version>
+			<version>11</version>
 		</provides>
 		<configuration>
-			<jdkHome>/home/travis/openjdk10</jdkHome>
+			<jdkHome>/home/travis/openjdk11</jdkHome>
 		</configuration>
 	</toolchain>
 </toolchains>

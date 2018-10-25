@@ -4,10 +4,10 @@
 	<toolchain>
 		<type>jdk</type>
 		<provides>
-			<version>10</version>
+			<version>11</version>
 		</provides>
 		<configuration>
-			<jdkHome>/home/travis/oraclejdk10</jdkHome>
+			<jdkHome>/home/travis/oraclejdk11</jdkHome>
 		</configuration>
 	</toolchain>
 </toolchains>
