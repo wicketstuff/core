@@ -240,6 +240,7 @@
 		<guava.version>26.0-jre</guava.version>
 		<wicket-webjars.version>2.0.7</wicket-webjars.version>
 		<commons-io.version>2.6</commons-io.version>
+		<xstream.version>1.4.11.1</xstream.version>
 		<!-- plugins -->
 		<maven-surefire-plugin.version>2.22.1</maven-surefire-plugin.version>
 		<maven-javadoc-plugin.version>3.0.1</maven-javadoc-plugin.version>
