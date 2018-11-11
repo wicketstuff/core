@@ -21,7 +21,7 @@
 	</description>
 
 	<properties>
-		<xstream.version>1.4.10</xstream.version>
+		<xstream.version>1.4.11.1</xstream.version>
 	</properties>
 	<modules>
 		<module>jqplot4java</module>
