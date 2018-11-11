@@ -1,26 +1,26 @@
 package org.wicketstuff.progressbar.examples;
 
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.apache.wicket.Page;
 import org.apache.wicket.util.tester.WicketTester;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.wicketstuff.progressbar.ProgressBar;
 
 /**
  * Just trivial test cases to test that example pages render.
- * 
+ *
  * @author Christopher Hlubek
- * 
+ *
  */
 public class ExampleTests
 {
 
 	private WicketTester tester;
 
-	@Before
+	@BeforeEach
 	public void setUp()
 	{
 		tester = new WicketTester(new ExampleApplication());

@@ -18,32 +18,34 @@
  */
 package wicket.contrib.phonebook.web;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
+import java.util.ArrayList;
+import java.util.Iterator;
+
+import org.easymock.EasyMock;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+
 import wicket.contrib.phonebook.Contact;
 import wicket.contrib.phonebook.ContactDao;
 import wicket.contrib.phonebook.QueryParam;
 
-import java.util.ArrayList;
-import java.util.Iterator;
-import org.easymock.EasyMock;
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
-
 /**
  * @author Kare Nuorteva
  */
-public class ContactsDataProviderTest extends Assert
+public class ContactsDataProviderTest
 {
 	private ContactDao dao;
 
-	@Before
+	@BeforeEach
 	public void before() throws Exception
 	{
 		dao = EasyMock.createStrictMock(ContactDao.class);
 	}
 
-	@After
+	@AfterEach
 	public void tearDown() throws Exception
 	{
 		EasyMock.verify(dao);

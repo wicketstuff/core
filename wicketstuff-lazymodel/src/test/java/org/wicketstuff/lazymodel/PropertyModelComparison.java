@@ -16,7 +16,7 @@
  */
 package org.wicketstuff.lazymodel;
 
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.wicketstuff.lazymodel.LazyModel.from;
 import static org.wicketstuff.lazymodel.LazyModel.model;
 
@@ -26,18 +26,18 @@ import org.apache.wicket.model.PropertyModel;
 import org.apache.wicket.util.IProvider;
 import org.apache.wicket.util.time.Duration;
 import org.apache.wicket.util.time.Time;
-import org.junit.Ignore;
-import org.junit.Test;
+import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.Test;
 import org.wicketstuff.lazymodel.LazyModelTest.A;
 import org.wicketstuff.lazymodel.LazyModelTest.B;
 import org.wicketstuff.lazymodel.LazyModelTest.C;
 
 /**
  * Performance comparison between {@link LazyModel} and {@link PropertyModel}.
- * 
+ *
  * @author svenmeier
  */
-@Ignore
+@Disabled
 public class PropertyModelComparison {
 
 	private A a;
@@ -54,8 +54,7 @@ public class PropertyModelComparison {
 
 		long lazyModelSpace = measureSize(model(from(a).getB()));
 
-		assertTrue("LazyModel 2x bigger",
-				lazyModelSpace < propertyModelSpace * 2);
+		assertTrue(lazyModelSpace < propertyModelSpace * 2, "LazyModel 2x bigger");
 	}
 
 	private long measureSize(IModel<?> model) {
@@ -84,9 +83,8 @@ public class PropertyModelComparison {
 			}
 		});
 
-		assertTrue("LazyModel is 2 times slower",
-				lazyModelDuration.getMilliseconds() < propertyModelDuration
-						.getMilliseconds() * 2.1);
+		assertTrue(lazyModelDuration.getMilliseconds() < propertyModelDuration
+						.getMilliseconds() * 2.1, "LazyModel is 2 times slower");
 	}
 
 	@Test
@@ -107,9 +105,8 @@ public class PropertyModelComparison {
 			}
 		});
 
-		assertTrue("Cached LazyModel is slower",
-				lazyModelDuration.getMilliseconds() < propertyModelDuration
-						.getMilliseconds() * 1.1);
+		assertTrue(lazyModelDuration.getMilliseconds() < propertyModelDuration
+						.getMilliseconds() * 1.1, "Cached LazyModel is slower");
 	}
 
 	private Duration measureTime(IProvider<IModel<?>> provider) {

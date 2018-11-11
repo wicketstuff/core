@@ -21,8 +21,9 @@
 package org.wicketstuff.pageserializer.common.analyze;
 
 
-import org.junit.Assert;
-import org.junit.Test;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
+import org.junit.jupiter.api.Test;
 
 public class TestObjectTreeTracker
 {
@@ -51,7 +52,7 @@ public class TestObjectTreeTracker
 		tracker.closeItem(24, a);
 
 		ISerializedObjectTree tree = tracker.end(a);
-		Assert.assertEquals("size", 22, tree.size());
-		Assert.assertEquals("size", 2, tree.childSize());
+		assertEquals(22, tree.size(), "size");
+		assertEquals(2, tree.childSize(), "size");
 	}
 }

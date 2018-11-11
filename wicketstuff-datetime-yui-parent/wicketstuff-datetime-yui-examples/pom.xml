@@ -60,9 +60,8 @@
 
 		<!--  JUNIT DEPENDENCY FOR TESTING -->
 		<dependency>
-			<groupId>junit</groupId>
-			<artifactId>junit</artifactId>
-			<scope>test</scope>
+			<groupId>org.junit.jupiter</groupId>
+			<artifactId>junit-jupiter-api</artifactId>
 		</dependency>
 
 		<dependency>
@@ -75,7 +74,7 @@
 		<dependency>
 			<groupId>org.eclipse.jetty.aggregate</groupId>
 			<artifactId>jetty-all</artifactId>
-            <classifier>uber</classifier>
+			<classifier>uber</classifier>
 		</dependency>
 	</dependencies>
 	<build>

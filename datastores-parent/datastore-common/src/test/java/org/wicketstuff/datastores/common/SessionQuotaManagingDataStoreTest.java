@@ -1,14 +1,15 @@
 package org.wicketstuff.datastores.common;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 import org.apache.wicket.pageStore.IDataStore;
 import org.apache.wicket.util.lang.Bytes;
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 /**
  * Tests for SessionQuotaManagingDataStore
  */
-public class SessionQuotaManagingDataStoreTest extends Assert {
+public class SessionQuotaManagingDataStoreTest {
 
 	private final IDataStore delegate = new NoopDataStore();
 

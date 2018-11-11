@@ -32,8 +32,8 @@ import org.apache.wicket.markup.repeater.RepeatingView;
 import org.apache.wicket.util.resource.IResourceStream;
 import org.apache.wicket.util.resource.StringBufferResourceStream;
 import org.apache.wicket.util.tester.WicketTester;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 @SuppressWarnings({ "rawtypes", "serial" })
 public class TestRenderers
@@ -59,7 +59,7 @@ public class TestRenderers
 
 	private RenderersTestPage page;
 
-	@Before
+	@BeforeEach
 	public void setup()
 	{
 		tester = new WicketTester();

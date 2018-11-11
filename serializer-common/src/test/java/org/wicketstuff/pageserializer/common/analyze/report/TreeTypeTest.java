@@ -20,10 +20,13 @@
  */
 package org.wicketstuff.pageserializer.common.analyze.report;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import java.io.IOException;
 
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.wicketstuff.pageserializer.common.analyze.ISerializedObjectTree;
 
 
@@ -35,8 +38,8 @@ public class TreeTypeTest {
 		ISerializedObjectTree match= Trees.fromResource(getClass(), "notEqual-match");
 		TreeType sourceType=new TreeType(source);
 		TreeType matchType=new TreeType(match);
-		Assert.assertFalse(matchType.equals(sourceType));
-		Assert.assertFalse(matchType.compareTo(sourceType)==0);
+		assertFalse(matchType.equals(sourceType));
+		assertFalse(matchType.compareTo(sourceType)==0);
 	}
 
 	@Test
@@ -45,7 +48,7 @@ public class TreeTypeTest {
 		ISerializedObjectTree match= Trees.fromResource(getClass(), "equal-match");
 		TreeType sourceType=new TreeType(source);
 		TreeType matchType=new TreeType(match);
-		Assert.assertEquals(matchType,sourceType);
-		Assert.assertTrue(matchType.compareTo(sourceType)==0);
+		assertEquals(matchType,sourceType);
+		assertTrue(matchType.compareTo(sourceType)==0);
 	}
 }

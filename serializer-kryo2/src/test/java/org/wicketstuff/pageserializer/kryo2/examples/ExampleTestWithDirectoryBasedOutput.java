@@ -22,21 +22,21 @@ package org.wicketstuff.pageserializer.kryo2.examples;
 
 import org.apache.wicket.serialize.ISerializer;
 import org.apache.wicket.util.tester.WicketTester;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 public class ExampleTestWithDirectoryBasedOutput
 {
 	private WicketTester tester;
 
-	@Before
+	@BeforeEach
 	public void setUp()
 	{
 		tester = new WicketTester(new ApplicationWithDirectoryBasedOutput());
 	}
 
-	@After
+	@AfterEach
 	public void tearDown()
 	{
 		tester.destroy();
@@ -46,12 +46,12 @@ public class ExampleTestWithDirectoryBasedOutput
 	public void serializeSamplePage() {
 		// start and render the test page
 		SamplePage page = tester.startPage(SamplePage.class);
-	
+
 		// assert rendered page class
 		tester.assertRenderedPage(SamplePage.class);
-	
+
 		ISerializer pageSerializer = Application.get().getFrameworkSettings().getSerializer();
-		
+
 		pageSerializer.serialize(page);
 	}
 

@@ -16,15 +16,16 @@
  */
 package org.wicketstuff.html5.media.webvtt;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 import java.io.IOException;
 import java.io.InputStream;
 
 import org.apache.wicket.util.io.IOUtils;
 import org.apache.wicket.util.tester.WicketTester;
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.wicketstuff.html5.media.webvtt.VttCue.Alignment;
 import org.wicketstuff.html5.media.webvtt.VttCue.Vertical;
 import org.wicketstuff.html5.media.webvtt.VttRegion.Scroll;
@@ -34,13 +35,13 @@ public class WebVttTest
 
 	private WicketTester wicketTester;
 
-	@Before
+	@BeforeEach
 	public void setup()
 	{
 		wicketTester = new WicketTester();
 	}
 
-	@After
+	@AfterEach
 	public void tearDown()
 	{
 		wicketTester.destroy();
@@ -75,7 +76,7 @@ public class WebVttTest
 
 			predefinedVttDocument = WebVtt.class.getResourceAsStream("WebVttTest.vtt");
 			String string = IOUtils.toString(predefinedVttDocument);
-			Assert.assertEquals(string, webvtt.create());
+			assertEquals(string, webvtt.create());
 		}
 		finally
 		{

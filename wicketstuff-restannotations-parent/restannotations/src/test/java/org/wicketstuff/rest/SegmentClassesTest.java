@@ -16,18 +16,22 @@
  */
 package org.wicketstuff.rest;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import java.util.List;
 import java.util.Map;
 import java.util.regex.Matcher;
 
 import org.apache.wicket.util.parse.metapattern.MetaPattern;
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.wicketstuff.rest.resource.urlsegments.AbstractURLSegment;
 import org.wicketstuff.rest.resource.urlsegments.MultiParamSegment;
 import org.wicketstuff.rest.resource.urlsegments.ParamSegment;
 
-public class SegmentClassesTest extends Assert
+public class SegmentClassesTest
 {
 
 	@Test
@@ -137,7 +141,7 @@ public class SegmentClassesTest extends Assert
 
 		assertTrue(matcher.matches());
 
-		// testing segment parsing with regular expressions					
+		// testing segment parsing with regular expressions
 		assertEquals("gsaon", matcher.group(1));
 		assertEquals("1.2.3", matcher.group(2));
 		assertEquals(".zip", matcher.group(3));
@@ -146,7 +150,7 @@ public class SegmentClassesTest extends Assert
 		matcher = metaPattern.matcher("gsaon-1.2.3.zip");
 
 		assertFalse(matcher.matches());
-		
+
 
 
 	}

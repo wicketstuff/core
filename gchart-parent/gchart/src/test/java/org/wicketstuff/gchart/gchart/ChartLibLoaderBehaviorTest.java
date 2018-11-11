@@ -1,4 +1,4 @@
-/* 
+/*
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
@@ -13,24 +13,26 @@
  */
 package org.wicketstuff.gchart.gchart;
 
-import org.wicketstuff.gchart.Chart;
-import org.wicketstuff.gchart.ChartType;
+import static net.javacrumbs.jsonunit.JsonAssert.assertJsonEquals;
+import static net.javacrumbs.jsonunit.core.Option.IGNORING_ARRAY_ORDER;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
-import net.javacrumbs.jsonunit.JsonAssert;
-
-import org.wicketstuff.gchart.ChartLibLoaderBehavior;
 import java.util.List;
 import java.util.Locale;
 
 import org.apache.wicket.markup.html.WebPage;
 import org.apache.wicket.model.Model;
-import org.junit.Before;
-import org.junit.Test;
-import static org.junit.Assert.*;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
-import static net.javacrumbs.jsonunit.JsonAssert.*;
-import static net.javacrumbs.jsonunit.core.Option.*;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.wicketstuff.gchart.Chart;
+import org.wicketstuff.gchart.ChartLibLoaderBehavior;
+import org.wicketstuff.gchart.ChartType;
+
+import net.javacrumbs.jsonunit.JsonAssert;
 /**
  *
  * @author Dieter Tremel
@@ -40,9 +42,9 @@ public class ChartLibLoaderBehaviorTest {
         private final Chart chart2;
         private final WebPage page;
 
-    private static String JSON_PREFIX = "google.charts.load('current', ";    
-    private static String JSON_SUFIX = ");\n";    
-        
+    private static String JSON_PREFIX = "google.charts.load('current', ";
+    private static String JSON_SUFIX = ");\n";
+
     public ChartLibLoaderBehaviorTest() {
         page = mock(WebPage.class);
         when(page.getLocale()).thenReturn(Locale.getDefault());
@@ -51,8 +53,8 @@ public class ChartLibLoaderBehaviorTest {
         chart2 = mock(Chart.class);
         when(chart2.getTypeModel()).thenReturn(Model.of(ChartType.CALENDAR));
     }
-    
-    @Before
+
+    @BeforeEach
     public void setUp() {
     }
 
@@ -122,16 +124,16 @@ public class ChartLibLoaderBehaviorTest {
         loader.bind(page);
         assertTrue(loader.addChart(chart1));
         assertTrue(loader.addChart(chart2));
-        
+
         Locale currentLocale = Locale.getDefault();
         String expResult = "{\"packages\":[\"corechart\",\"calendar\"],\"language\":\"" + currentLocale.getLanguage() +"\"}";
         String resultJs = loader.toJavaScript();
-        
+
         assertTrue(resultJs.startsWith(JSON_PREFIX));
         assertTrue(resultJs.endsWith(JSON_SUFIX));
-        
+
         String resJson = resultJs.substring(resultJs.indexOf('{'), resultJs.indexOf('}') + 1);
-       
+
         assertJsonEquals(expResult, resJson, JsonAssert.when(IGNORING_ARRAY_ORDER));
     }
 }

@@ -16,16 +16,17 @@
  */
 package org.wicketstuff.shiro.test;
 
-import junit.framework.TestCase;
-
 import org.apache.wicket.util.tester.WicketTester;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 /**
  * Test the annotations package of the auth-roles project.
- * 
+ *
  * @author Eelco Hillenius
  */
-public class AnnotationsRoleTest extends TestCase
+public class AnnotationsRoleTest
 {
 	WicketTester tester;
 
@@ -37,28 +38,19 @@ public class AnnotationsRoleTest extends TestCase
 		super();
 	}
 
-	/**
-	 * Construct.
-	 * 
-	 * @param arg0
-	 */
-	public AnnotationsRoleTest(String arg0)
-	{
-		super(arg0);
-	}
-
-	@Override
+	@BeforeEach
 	protected void setUp() throws Exception
 	{
 		tester = new WicketTester();
 	}
 
-	@Override
+	@AfterEach
 	protected void tearDown() throws Exception
 	{
 		tester.destroy();
 	}
 
+	@Test
 	public void testSomething()
 	{
 		// TODO -- actually test something!

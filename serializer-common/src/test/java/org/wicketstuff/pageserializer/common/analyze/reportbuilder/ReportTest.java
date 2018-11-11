@@ -20,8 +20,9 @@
  */
 package org.wicketstuff.pageserializer.common.analyze.reportbuilder;
 
-import org.junit.Assert;
-import org.junit.Test;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
+import org.junit.jupiter.api.Test;
 import org.wicketstuff.pageserializer.common.analyze.reportbuilder.Report.Row;
 
 public class ReportTest
@@ -34,9 +35,9 @@ public class ReportTest
 			.set(Column.FillAfter, '.')
 			.build());
 
-		Assert.assertEquals(Column.Align.Right, a.attributes().get(Column.Align.Left));
-		Assert.assertEquals(Character.valueOf('-'), a.attributes().get(Column.FillBefore, ' '));
-		Assert.assertEquals(Character.valueOf('.'), a.attributes().get(Column.FillAfter, '-'));
+		assertEquals(Column.Align.Right, a.attributes().get(Column.Align.Left));
+		assertEquals(Character.valueOf('-'), a.attributes().get(Column.FillBefore, ' '));
+		assertEquals(Character.valueOf('.'), a.attributes().get(Column.FillAfter, '-'));
 
 		Column b = new Column("B",new AttributeBuilder().set(Column.Align.Right).build());
 		Column c = new Column("C");
@@ -49,7 +50,7 @@ public class ReportTest
 
 		String textReport = report.export(a, c).asString();
 
-		Assert.assertEquals("--A,C,\nAAA,C,\n", textReport);
+		assertEquals("--A,C,\nAAA,C,\n", textReport);
 	}
 
 	@Test
@@ -66,10 +67,10 @@ public class ReportTest
 		row.set(first, 0, "banker").set(number, 0, "117,00");
 		row=report.newRow();
 		row.set(first, 0, "pilot").set(number, 0, "1,12");
-		
+
 		String textReport = report.export(emptyStart, first, number).asString();
 
-		Assert.assertEquals("|First |Number|\n|baker | 12,00|\n|banker|117,00|\n|pilot |  1,12|\n", textReport);
+		assertEquals("|First |Number|\n|baker | 12,00|\n|banker|117,00|\n|pilot |  1,12|\n", textReport);
 	}
 
 	@Test
@@ -88,9 +89,9 @@ public class ReportTest
 		row.set(first, 2, "Help").set(number, 0, "10");
 		row=report.newRow();
 		row.set(first, 1, "Start").set(number, 0, "20");
-		
+
 		String textReport = report.export(emptyStart, first, number).separateColumnNamesWith('-').asString();
 
-		Assert.assertEquals("|Comp......|Calls|\n------------------\n|Main......|  100|\n|--Login...|   80|\n|----Help..|   10|\n|--Start...|   20|\n", textReport);
+		assertEquals("|Comp......|Calls|\n------------------\n|Main......|  100|\n|--Login...|   80|\n|----Help..|   10|\n|--Start...|   20|\n", textReport);
 	}
 }

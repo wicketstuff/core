@@ -17,11 +17,12 @@
 package org.wicketstuff.html5.image;
 
 
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import org.apache.wicket.util.tester.WicketTester;
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 
 public class InlineImageTest
@@ -29,13 +30,13 @@ public class InlineImageTest
 
 	private WicketTester wicketTester;
 
-	@Before
+	@BeforeEach
 	public void setup()
 	{
 		wicketTester = new WicketTester();
 	}
 
-	@After
+	@AfterEach
 	public void tearDown()
 	{
 		wicketTester.destroy();
@@ -46,8 +47,9 @@ public class InlineImageTest
 	{
 		wicketTester.startPage(InlineImageTestPage.class);
 		String lastResponseAsString = wicketTester.getLastResponse().getDocument();
-		Assert.assertTrue(
-			"inline image is in html",
-			lastResponseAsString.contains("<img wicket:id=\"inlineimage\" src=\"data:image/gif;base64,R0lGODlhQAHwAPf8AAAAAAwMDAsNABUZABUXBRIS"));
+		assertTrue(
+				lastResponseAsString.contains("<img wicket:id=\"inlineimage\" src=\"data:image/gif;base64,R0lGODlhQAHwAPf8AAAAAAwMDAsNABUZABUXBRIS")
+				, "inline image is in html"
+				);
 	}
 }

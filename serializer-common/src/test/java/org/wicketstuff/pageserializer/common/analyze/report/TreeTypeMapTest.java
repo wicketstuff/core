@@ -20,11 +20,12 @@
  */
 package org.wicketstuff.pageserializer.common.analyze.report;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 import java.io.IOException;
 import java.util.ArrayList;
 
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.wicketstuff.pageserializer.common.analyze.ISerializedObjectTree;
 
 public class TreeTypeMapTest {
@@ -32,13 +33,13 @@ public class TreeTypeMapTest {
 	@Test
 	public void joinLabels() throws IOException {
 		ISerializedObjectTree source = Trees.fromResource(getClass(), "labels");
-		Assert.assertEquals("a|b|c", TreeTypeMap.allLables(source.children()));
+		assertEquals("a|b|c", TreeTypeMap.allLables(source.children()));
 	}
 	@Test
 	public void noLabels() throws IOException {
-		Assert.assertEquals(null, TreeTypeMap.allLables(new ArrayList<ISerializedObjectTree>()));
+		assertEquals(null, TreeTypeMap.allLables(new ArrayList<ISerializedObjectTree>()));
 	}
-	
+
 	@Test
 	public void compressNothing() throws IOException {
 		ISerializedObjectTree source = Trees.fromResource(getClass(), "compress");

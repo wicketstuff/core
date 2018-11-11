@@ -16,12 +16,22 @@
  */
 package org.wicketstuff.security.swarm.actions;
 
-import java.util.List;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNotSame;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertSame;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.fail;
 
-import junit.framework.TestCase;
+import java.util.List;
 
 import org.apache.wicket.Component;
 import org.apache.wicket.authorization.Action;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.wicketstuff.security.actions.Access;
@@ -36,10 +46,10 @@ import org.wicketstuff.security.actions.WaspAction;
 
 /**
  * Tests for the {@link SwarmActionFactory}.
- * 
+ *
  * @author marrink
  */
-public class SwarmActionFactoryTest extends TestCase
+public class SwarmActionFactoryTest
 {
 	private static final Logger log = LoggerFactory.getLogger(SwarmActionFactoryTest.class);
 
@@ -48,20 +58,9 @@ public class SwarmActionFactoryTest extends TestCase
 	private SwarmActionFactory factory;
 
 	/**
-	 * 
-	 * Construct.
-	 * 
-	 * @param name
-	 */
-	public SwarmActionFactoryTest(String name)
-	{
-		super(name);
-	}
-
-	/**
 	 * @see junit.framework.TestCase#setUp()
 	 */
-	@Override
+	@BeforeEach
 	protected void setUp()
 	{
 		factory = new SwarmActionFactory(KEY);
@@ -70,7 +69,7 @@ public class SwarmActionFactoryTest extends TestCase
 	/**
 	 * @see junit.framework.TestCase#tearDown()
 	 */
-	@Override
+	@AfterEach
 	protected void tearDown()
 	{
 		factory = null;
@@ -80,6 +79,7 @@ public class SwarmActionFactoryTest extends TestCase
 	/**
 	 * Test for {@link AllActions}.
 	 */
+	@Test
 	public void testAllActions()
 	{
 		WaspAction action = factory.getAction(AllActions.class);
@@ -109,6 +109,7 @@ public class SwarmActionFactoryTest extends TestCase
 	/**
 	 * @see SwarmActionFactory#getAction(Action)
 	 */
+	@Test
 	public void testGetActionAction()
 	{
 		WaspAction action = factory.getAction(Component.RENDER);
@@ -126,9 +127,10 @@ public class SwarmActionFactoryTest extends TestCase
 	}
 
 	/**
-	 * 
+	 *
 	 * @see SwarmActionFactory#getAction(String)
 	 */
+	@Test
 	public void testGetActionString()
 	{
 		WaspAction action = factory.getAction(Action.RENDER);
@@ -149,9 +151,10 @@ public class SwarmActionFactoryTest extends TestCase
 
 	/**
 	 * Test if defaults are correctly registered.
-	 * 
+	 *
 	 * @see SwarmActionFactory#getAction(int)
 	 */
+	@Test
 	public void testGetActionInt()
 	{
 		WaspAction action;
@@ -170,7 +173,7 @@ public class SwarmActionFactoryTest extends TestCase
 		for (int i = 0; i < 8; i++)
 		{
 			action = factory.getAction(i);
-			assertNotNull("action " + i + "was null", action);
+			assertNotNull(action, "action " + i + "was null");
 			assertEquals("iteration " + i, names[i], action.getName());
 		}
 		try
@@ -186,9 +189,10 @@ public class SwarmActionFactoryTest extends TestCase
 
 	/**
 	 * Test if defaults are correctly registered.
-	 * 
+	 *
 	 * @see SwarmActionFactory#getAction(Class)
 	 */
+	@Test
 	public void testGetActionClass()
 	{
 		assertNotNull(factory.getAction(Access.class));
@@ -203,9 +207,10 @@ public class SwarmActionFactoryTest extends TestCase
 
 	/**
 	 * Test registering a String.
-	 * 
+	 *
 	 * @see SwarmActionFactory#register(Class, String)
 	 */
+	@Test
 	public void testRegisterClassString()
 	{
 		assertEquals(4, factory.getNumberOfRegisteredClasses());
@@ -269,9 +274,10 @@ public class SwarmActionFactoryTest extends TestCase
 
 	/**
 	 * Test registration of actions.
-	 * 
+	 *
 	 * @see SwarmActionFactory#register(Class, SwarmAction)
 	 */
+	@Test
 	public void testRegisterClassSwarmAction()
 	{
 		try
@@ -283,8 +289,7 @@ public class SwarmActionFactoryTest extends TestCase
 			assertEquals(bugsy, factory.getAction(BugsBunny.class));
 			assertTrue(factory.nextPowerOf2() == Integer.MAX_VALUE);
 			// overflow happens here
-			assertTrue(Integer.MAX_VALUE + "!=" + bugsy.actions(),
-				Integer.MAX_VALUE == bugsy.actions());
+			assertTrue(Integer.MAX_VALUE == bugsy.actions(), Integer.MAX_VALUE + "!=" + bugsy.actions());
 			assertEquals(32, factory.getNumberOfRegisteredClasses());
 		}
 		catch (RegistrationException e)
@@ -445,7 +450,7 @@ public class SwarmActionFactoryTest extends TestCase
 
 		/**
 		 * Construct.
-		 * 
+		 *
 		 * @param actions
 		 * @param name
 		 * @param factory

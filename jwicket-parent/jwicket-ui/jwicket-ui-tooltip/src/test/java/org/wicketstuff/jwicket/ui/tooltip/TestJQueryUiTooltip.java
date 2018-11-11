@@ -1,11 +1,11 @@
 /* Copyright (c) 2013 Martin Knopf
- * 
+ *
  * Licensed under the MIT license;
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- * 
+ *
  *      http://opensource.org/licenses/MIT
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -14,6 +14,7 @@
  */
 package org.wicketstuff.jwicket.ui.tooltip;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.atLeastOnce;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.never;
@@ -31,17 +32,16 @@ import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.request.resource.CssResourceReference;
 import org.apache.wicket.request.resource.JavaScriptResourceReference;
 import org.apache.wicket.util.tester.WicketTester;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import org.wicketstuff.jwicket.JsOption;
 
 
 /**
- * 
+ *
  * @author Martin Knopf
- * 
+ *
  */
 public class TestJQueryUiTooltip
 {
@@ -50,7 +50,7 @@ public class TestJQueryUiTooltip
 	private JQueryUiWidget widget;
 	private WicketTester tester;
 
-	@Before
+	@BeforeEach
 	public void setUp() throws Exception
 	{
 		tester = new WicketTester();
@@ -70,7 +70,7 @@ public class TestJQueryUiTooltip
 		tooltip.renderHead(component, response);
 
 		verify(response, times(1)).render(
-			Mockito.eq(CssReferenceHeaderItem.forReference(tooltip.uiTooltipCss_1_10_3)));
+			Mockito.eq(CssReferenceHeaderItem.forReference(JQueryUiTooltip.uiTooltipCss_1_10_3)));
 	}
 
 	@Test
@@ -312,8 +312,8 @@ public class TestJQueryUiTooltip
 		JQueryUiTooltip tooltip2 = JQueryUiTooltip.tooltip_1_10_3();
 		List<JavaScriptResourceReference> resourceReferencesAfter2 = new ArrayList<>(
 				tooltip2.getUserProvidedResourceReferences());
-		
-		Assert.assertEquals(resourceReferencesAfter1, resourceReferencesAfter2);
+
+		assertEquals(resourceReferencesAfter1, resourceReferencesAfter2);
 	}
 
 }

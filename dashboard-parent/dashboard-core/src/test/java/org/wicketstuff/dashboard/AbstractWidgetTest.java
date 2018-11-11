@@ -1,6 +1,9 @@
 package org.wicketstuff.dashboard;
 
-import static org.hamcrest.CoreMatchers.*;
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.not;
+import static org.hamcrest.CoreMatchers.nullValue;
+import static org.hamcrest.MatcherAssert.assertThat;
 
 import org.apache.wicket.Application;
 import org.apache.wicket.MetaDataKey;
@@ -10,9 +13,8 @@ import org.apache.wicket.model.Model;
 import org.apache.wicket.protocol.http.WebApplication;
 import org.apache.wicket.util.tester.DummyHomePage;
 import org.apache.wicket.util.tester.WicketTester;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.wicketstuff.dashboard.web.DashboardContext;
 import org.wicketstuff.dashboard.web.DashboardPanel;
 import org.wicketstuff.dashboard.web.WidgetView;
@@ -91,7 +93,7 @@ public class AbstractWidgetTest {
 		}
 	}
 
-	@Before
+	@BeforeEach
 	public void setup() {
 		browser = new WicketTester(new WebApp());
 	}
@@ -101,7 +103,7 @@ public class AbstractWidgetTest {
 		Dashboard dashboard = Application.get().getMetaData(DASHBOARD_KEY);
 		browser.startComponentInPage(new DashboardPanel("dashboard", Model.<Dashboard> of(dashboard)), Markup.of(MARKUP));
 		browser.assertNoErrorMessage();
-		Assert.assertThat(
+		assertThat(
 				browser.getComponentFromLastRenderedPage("dashboard:columns:0:column:columnContainer:widgetList:0:widget:content").getDefaultModelObjectAsString(),
 				is(not(nullValue()))
 		);

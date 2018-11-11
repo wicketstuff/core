@@ -1,11 +1,15 @@
 package org.wicketstuff.select2;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import org.apache.wicket.feedback.FeedbackMessage;
 import org.apache.wicket.util.tester.FormTester;
 import org.apache.wicket.util.tester.WicketTester;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 /**
  * @author lexx
@@ -15,7 +19,7 @@ public class Select2ChoiceTest
 
 	private WicketTester wicketTester;
 
-	@Before
+	@BeforeEach
 	public void setUp() throws Exception
 	{
 		this.wicketTester = new WicketTester();
@@ -32,9 +36,9 @@ public class Select2ChoiceTest
 		formTester.setValue(page.city, city());
 		formTester.submit();
 
-		Assert.assertTrue(formTester.getForm().hasError());
-		Assert.assertTrue(page.country.getFeedbackMessages().hasMessage(FeedbackMessage.ERROR));
-		Assert.assertEquals("Please, choose country", page.country.getFeedbackMessages().first().getMessage().toString());
+		assertTrue(formTester.getForm().hasError());
+		assertTrue(page.country.getFeedbackMessages().hasMessage(FeedbackMessage.ERROR));
+		assertEquals("Please, choose country", page.country.getFeedbackMessages().first().getMessage().toString());
 	}
 
 	@Test
@@ -49,8 +53,8 @@ public class Select2ChoiceTest
 		formTester.setValue(page.city, city());
 		formTester.submit();
 
-		Assert.assertFalse(formTester.getForm().hasError());
-		Assert.assertNull(page.country.getModelObject());
+		assertFalse(formTester.getForm().hasError());
+		assertNull(page.country.getModelObject());
 	}
 
 	@Test
@@ -64,12 +68,12 @@ public class Select2ChoiceTest
 		formTester.setValue(page.country, country());
 		formTester.submit();
 
-		Assert.assertTrue(formTester.getForm().hasError());
-		Assert.assertTrue(page.country.isValid());
-		Assert.assertFalse(page.city.isValid());
+		assertTrue(formTester.getForm().hasError());
+		assertTrue(page.country.isValid());
+		assertFalse(page.city.isValid());
 
 		String responseAsString = this.wicketTester.getLastResponseAsString();
-		Assert.assertTrue(responseAsString.contains(expectedOption()));
+		assertTrue(responseAsString.contains(expectedOption()));
 	}
 
 	@Test
@@ -85,7 +89,7 @@ public class Select2ChoiceTest
 
 		this.wicketTester.startPage(this.wicketTester.getLastRenderedPage());
 		String responseAsString = this.wicketTester.getLastResponseAsString();
-		Assert.assertTrue(responseAsString.contains(expectedOption()));
+		assertTrue(responseAsString.contains(expectedOption()));
 	}
 
 	@Test
@@ -100,12 +104,12 @@ public class Select2ChoiceTest
 		formTester.setValue(page.city, city());
 		formTester.submit();
 
-		Assert.assertFalse(formTester.getForm().hasError());
-		Assert.assertEquals(Country.CA, page.country.getModelObject());
-		Assert.assertEquals(city(), page.city.getModelObject());
+		assertFalse(formTester.getForm().hasError());
+		assertEquals(Country.CA, page.country.getModelObject());
+		assertEquals(city(), page.city.getModelObject());
 
 		String responseAsString = this.wicketTester.getLastResponseAsString();
-		Assert.assertTrue(responseAsString.contains(expectedOption()));
+		assertTrue(responseAsString.contains(expectedOption()));
 	}
 
 	private static String city()

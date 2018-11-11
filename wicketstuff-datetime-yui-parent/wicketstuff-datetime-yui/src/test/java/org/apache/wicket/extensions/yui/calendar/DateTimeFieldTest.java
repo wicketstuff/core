@@ -16,14 +16,15 @@
  */
 package org.apache.wicket.extensions.yui.calendar;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 import java.util.TimeZone;
 
 import org.apache.wicket.model.Model;
 import org.apache.wicket.util.tester.WicketTestCase;
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeZone;
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 /**
  * Tests for DateTimeField
@@ -50,6 +51,8 @@ public class DateTimeFieldTest extends WicketTestCase
 
 			DateTimeField dateTimeField = new DateTimeField("foo", Model.of(jan01_10am.toDate()))
 			{
+				private static final long serialVersionUID = 1L;
+
 				@Override
 				protected TimeZone getClientTimeZone()
 				{
@@ -59,8 +62,8 @@ public class DateTimeFieldTest extends WicketTestCase
 
 			tester.startComponentInPage(dateTimeField);
 
-			Assert.assertEquals("The hour of day is incorrect!", jan01_10am.getHourOfDay(),
-				dateTimeField.getHours().intValue());
+			assertEquals(jan01_10am.getHourOfDay(),
+				dateTimeField.getHours().intValue(), "The hour of day is incorrect!");
 		}
 		finally
 		{

@@ -1,14 +1,17 @@
 package org.wicketstuff.select2;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import java.util.Arrays;
 import java.util.List;
 
 import org.apache.wicket.feedback.FeedbackMessage;
 import org.apache.wicket.util.tester.FormTester;
 import org.apache.wicket.util.tester.WicketTester;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 /**
  * @author lexx
@@ -18,7 +21,7 @@ public class Select2MultiChoiceTest
 
 	private WicketTester wicketTester;
 
-	@Before
+	@BeforeEach
 	public void setUp() throws Exception
 	{
 		this.wicketTester = new WicketTester();
@@ -35,9 +38,9 @@ public class Select2MultiChoiceTest
 		formTester.setValue(page.city, countriesAsString());
 		formTester.submit();
 
-		Assert.assertTrue(formTester.getForm().hasError());
-		Assert.assertTrue(page.country.getFeedbackMessages().hasMessage(FeedbackMessage.ERROR));
-		Assert.assertEquals("Please, choose at least one country",
+		assertTrue(formTester.getForm().hasError());
+		assertTrue(page.country.getFeedbackMessages().hasMessage(FeedbackMessage.ERROR));
+		assertEquals("Please, choose at least one country",
 				page.country.getFeedbackMessages().first().getMessage().toString());
 	}
 
@@ -53,8 +56,8 @@ public class Select2MultiChoiceTest
 		formTester.setValue(page.city, countriesAsString());
 		formTester.submit();
 
-		Assert.assertFalse(formTester.getForm().hasError());
-		Assert.assertTrue(page.country.getModelObject().isEmpty());
+		assertFalse(formTester.getForm().hasError());
+		assertTrue(page.country.getModelObject().isEmpty());
 	}
 
 	@Test
@@ -70,12 +73,12 @@ public class Select2MultiChoiceTest
 		}
 		formTester.submit();
 
-		Assert.assertTrue(formTester.getForm().hasError());
-		Assert.assertTrue(page.country.isValid());
-		Assert.assertFalse(page.city.isValid());
+		assertTrue(formTester.getForm().hasError());
+		assertTrue(page.country.isValid());
+		assertFalse(page.city.isValid());
 
 		String responseAsString = this.wicketTester.getLastResponseAsString();
-		Assert.assertTrue(responseAsString.contains(expectedOptions()));
+		assertTrue(responseAsString.contains(expectedOptions()));
 	}
 
 	@Test
@@ -92,12 +95,12 @@ public class Select2MultiChoiceTest
 		formTester.setValue(page.city, city());
 		formTester.submit();
 
-		Assert.assertFalse(formTester.getForm().hasError());
-		Assert.assertTrue(page.country.getModelObject().containsAll(countriesAsList()));
-		Assert.assertEquals(city(), page.city.getModelObject());
+		assertFalse(formTester.getForm().hasError());
+		assertTrue(page.country.getModelObject().containsAll(countriesAsList()));
+		assertEquals(city(), page.city.getModelObject());
 
 		String responseAsString = this.wicketTester.getLastResponseAsString();
-		Assert.assertTrue(responseAsString.contains(expectedOptions()));
+		assertTrue(responseAsString.contains(expectedOptions()));
 	}
 
 	private static String countriesAsString()

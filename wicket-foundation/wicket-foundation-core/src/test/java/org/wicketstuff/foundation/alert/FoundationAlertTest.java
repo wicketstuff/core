@@ -1,12 +1,12 @@
 package org.wicketstuff.foundation.alert;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.apache.wicket.model.Model;
 import org.apache.wicket.util.tester.TagTester;
 import org.apache.wicket.util.tester.WicketTester;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.wicketstuff.foundation.button.ButtonColor;
 import org.wicketstuff.foundation.button.ButtonRadius;
 import org.wicketstuff.foundation.util.StringUtil;

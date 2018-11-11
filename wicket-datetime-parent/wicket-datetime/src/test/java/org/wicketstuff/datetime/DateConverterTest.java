@@ -16,20 +16,18 @@
  */
 package org.wicketstuff.datetime;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 import java.util.Calendar;
 import java.util.Locale;
 
 import org.apache.wicket.util.convert.converter.CalendarConverter;
 import org.joda.time.format.DateTimeFormatter;
-import org.junit.Assert;
-import org.junit.Test;
-import org.wicketstuff.datetime.DateConverter;
-import org.wicketstuff.datetime.PatternDateConverter;
-import org.wicketstuff.datetime.StyleDateConverter;
+import org.junit.jupiter.api.Test;
 
 /**
  * Tests for {@link DateConverter} and subclasses.
- * 
+ *
  * @author akiraly
  */
 public class DateConverterTest
@@ -45,20 +43,20 @@ public class DateConverterTest
 		StyleDateConverter styleDateConverter = new StyleDateConverter("F-", false);
 		DateTimeFormatter styleFormatter = styleDateConverter.getFormat(locale);
 
-		Assert.assertEquals(locale, styleFormatter.getLocale());
+		assertEquals(locale, styleFormatter.getLocale());
 
 		PatternDateConverter patternDateConverter = new PatternDateConverter(
 			styleDateConverter.getDatePattern(locale), false);
 		DateTimeFormatter patternFormatter = patternDateConverter.getFormat(locale);
 
-		Assert.assertEquals(locale, patternFormatter.getLocale());
+		assertEquals(locale, patternFormatter.getLocale());
 
 		Calendar now = Calendar.getInstance();
 
 		String actual = styleDateConverter.convertToString(now.getTime(), locale);
 		String expected = patternDateConverter.convertToString(now.getTime(), locale);
 
-		Assert.assertEquals(expected, actual);
+		assertEquals(expected, actual);
 	}
 
 	/**
@@ -80,10 +78,10 @@ public class DateConverterTest
 		String expected = styleDateConverter.convertToString(input.getTime(), locale);
 		String actual = calendarConverter.convertToString(input, locale);
 
-		Assert.assertEquals(expected, actual);
+		assertEquals(expected, actual);
 
 		Calendar revert = calendarConverter.convertToObject(actual, locale);
 
-		Assert.assertEquals(input, revert);
+		assertEquals(input, revert);
 	}
 }

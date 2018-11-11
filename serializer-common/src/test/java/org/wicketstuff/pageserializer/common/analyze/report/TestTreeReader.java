@@ -20,12 +20,13 @@
  */
 package org.wicketstuff.pageserializer.common.analyze.report;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 import java.io.IOException;
 
 import org.apache.wicket.markup.html.list.ListView;
 import org.apache.wicket.model.util.ListModel;
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.wicketstuff.pageserializer.common.analyze.ISerializedObjectTree;
 import org.wicketstuff.pageserializer.common.components.ListViewPage;
 
@@ -36,31 +37,31 @@ public class TestTreeReader
 	{
 		String textLine = "org.wicketstuff.pageserializer.common.components.ListViewPage(0)         |   141";
 		TreeReader.Line line = new TreeReader.Line(textLine);
-		Assert.assertEquals(0, line.indent);
-		Assert.assertEquals(141, line.size);
-		Assert.assertEquals(ListViewPage.class, line.type);
-		Assert.assertEquals("0", line.label);
+		assertEquals(0, line.indent);
+		assertEquals(141, line.size);
+		assertEquals(ListViewPage.class, line.type);
+		assertEquals("0", line.label);
 
 		textLine = "  java.lang.Integer                                                |     9";
 		line = new TreeReader.Line(textLine);
-		Assert.assertEquals(1, line.indent);
-		Assert.assertEquals(9, line.size);
-		Assert.assertEquals(Integer.class, line.type);
-		Assert.assertEquals(null, line.label);
+		assertEquals(1, line.indent);
+		assertEquals(9, line.size);
+		assertEquals(Integer.class, line.type);
+		assertEquals(null, line.label);
 
 		textLine = "  [Ljava.lang.Object;                                              |     2";
 		line = new TreeReader.Line(textLine);
-		Assert.assertEquals(1, line.indent);
-		Assert.assertEquals(2, line.size);
-		Assert.assertEquals(Object[].class, line.type);
-		Assert.assertEquals(null, line.label);
+		assertEquals(1, line.indent);
+		assertEquals(2, line.size);
+		assertEquals(Object[].class, line.type);
+		assertEquals(null, line.label);
 
 		textLine = "    org.apache.wicket.markup.html.list.ListView(list)              |   114";
 		line = new TreeReader.Line(textLine);
-		Assert.assertEquals(2, line.indent);
-		Assert.assertEquals(114, line.size);
-		Assert.assertEquals(ListView.class, line.type);
-		Assert.assertEquals("list", line.label);
+		assertEquals(2, line.indent);
+		assertEquals(114, line.size);
+		assertEquals(ListView.class, line.type);
+		assertEquals("list", line.label);
 	}
 
 	@Test
@@ -80,11 +81,11 @@ public class TestTreeReader
 
 		ISerializedObjectTree sample = TreeReader.fromString(lines);
 
-		Assert.assertEquals("0", sample.label());
-		Assert.assertEquals(141, sample.size());
-		Assert.assertEquals(146, sample.childSize());
+		assertEquals("0", sample.label());
+		assertEquals(141, sample.size());
+		assertEquals(146, sample.childSize());
 
-		Assert.assertEquals(ListModel.class, sample.children()
+		assertEquals(ListModel.class, sample.children()
 			.get(1)
 			.children()
 			.get(0)

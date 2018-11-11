@@ -16,12 +16,12 @@
  */
 package org.wicketstuff.lazymodel;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.wicketstuff.lazymodel.LazyModel.from;
 
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.wicketstuff.lazymodel.LazyModelTest.A;
 import org.wicketstuff.lazymodel.LazyModelTest.B;
 

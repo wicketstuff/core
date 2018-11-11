@@ -5,7 +5,7 @@ import java.util.List;
 
 import org.apache.wicket.request.resource.PackageResourceReference;
 import org.apache.wicket.util.tester.WicketTester;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.wicketstuff.foundation.icon.IconType;
 
 public class FoundationIconBarTest {

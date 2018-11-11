@@ -16,6 +16,8 @@
  */
 package org.wicketstuff.nashorn.resource;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 import java.io.BufferedWriter;
 import java.io.IOException;
 import java.io.InputStream;
@@ -31,13 +33,12 @@ import org.apache.wicket.protocol.http.mock.MockHttpServletRequest;
 import org.apache.wicket.request.resource.IResource.Attributes;
 import org.apache.wicket.util.tester.WicketTestCase;
 import org.apache.wicket.util.tester.WicketTester;
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 
 /**
  * Tests java script remote invocation
- * 
+ *
  * @author Tobias Soloschenko
  *
  */
@@ -45,7 +46,7 @@ public class NashornResourceReferenceTest extends WicketTestCase
 {
 	/**
 	 * Tests remote invocation
-	 * 
+	 *
 	 * @throws InterruptedException
 	 */
 	@Test
@@ -61,7 +62,7 @@ public class NashornResourceReferenceTest extends WicketTestCase
 					.getResourceAsStream("NashornResourceReferenceTest.js"));
 			}
 		};
-		
+
 		wicketTester.setRequest(mockHttpServletRequest);
 		NashornResourceReference nashornResourceReference = new NashornResourceReference("nashorn",
 			50, 50, TimeUnit.SECONDS)
@@ -102,7 +103,7 @@ public class NashornResourceReferenceTest extends WicketTestCase
 			nashornResourceReference.getScheduledExecutorService().awaitTermination(10000,
 				TimeUnit.SECONDS);
 		}
-		Assert.assertEquals("4", wicketTester.getLastResponseAsString());
+		assertEquals("4", wicketTester.getLastResponseAsString());
 	}
 	private class MockInputStream extends ServletInputStream
 	{

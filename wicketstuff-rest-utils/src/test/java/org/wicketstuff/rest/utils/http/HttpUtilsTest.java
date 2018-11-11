@@ -16,6 +16,7 @@
  */
 package org.wicketstuff.rest.utils.http;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -23,8 +24,7 @@ import org.apache.wicket.mock.MockApplication;
 import org.apache.wicket.protocol.http.mock.MockHttpSession;
 import org.apache.wicket.protocol.http.mock.MockServletContext;
 import org.apache.wicket.request.http.WebRequest;
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.wicketstuff.rest.utils.test.BufferedMockRequest;
 
 public class HttpUtilsTest
@@ -39,18 +39,18 @@ public class HttpUtilsTest
 			+ "		</p>\n"
 			+ "	</body>\n"
 			+ "</html>";
-		
+
 		MockApplication mockApplication = new MockApplication();
 		MockServletContext servletContext = new MockServletContext(mockApplication, "/");
 		BufferedMockRequest mockedRequest = new BufferedMockRequest(mockApplication,
 			new MockHttpSession(servletContext), servletContext, "POST");
-		
+
 		mockedRequest.setTextAsRequestBody(xmlText);
-		
+
 		WebRequest webRequest = mock(WebRequest.class);
 		when(webRequest.getContainerRequest()).thenReturn(mockedRequest);
-		
+
 		String stringFromRequest = HttpUtils.readStringFromRequest(webRequest);
-		Assert.assertEquals(xmlText, stringFromRequest);
+		assertEquals(xmlText, stringFromRequest);
 	}
 }

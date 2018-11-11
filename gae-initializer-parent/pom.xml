@@ -49,13 +49,13 @@
 
 		<!--  JUNIT DEPENDENCY FOR TESTING -->
 		<dependency>
-			<groupId>junit</groupId>
-			<artifactId>junit</artifactId>
+			<groupId>org.junit.jupiter</groupId>
+			<artifactId>junit-jupiter-api</artifactId>
 		</dependency>
 	</dependencies>
-	
-  <modules>
-    <module>gae-initializer</module>
-    <module>gae-initializer-example</module>
-  </modules>
+
+	<modules>
+		<module>gae-initializer</module>
+		<module>gae-initializer-example</module>
+	</modules>
 </project>

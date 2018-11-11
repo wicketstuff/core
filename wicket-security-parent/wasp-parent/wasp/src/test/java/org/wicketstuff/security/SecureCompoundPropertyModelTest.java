@@ -16,19 +16,25 @@
  */
 package org.wicketstuff.security;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.fail;
+
 import java.util.HashMap;
 import java.util.Map;
 
 import org.apache.wicket.authorization.UnauthorizedActionException;
 import org.apache.wicket.util.tester.TagTester;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.wicketstuff.security.actions.WaspAction;
 import org.wicketstuff.security.models.SecureCompoundPropertyModel;
 import org.wicketstuff.security.pages.insecure.SecureModelPage;
 
 /**
  * Test links
- * 
+ *
  * @author marrink
  */
 public class SecureCompoundPropertyModelTest extends WaspAbstractTestBase
@@ -91,7 +97,7 @@ public class SecureCompoundPropertyModelTest extends WaspAbstractTestBase
 		login(authorized);
 		mock.startPage(SecureModelPage.class);
 		TagTester tag = mock.getTagByWicketId("input");
-		assertNotNull("input tag should be available", tag);
+		assertNotNull(tag, "input tag should be available");
 		assertFalse(tag.hasAttribute("disabled"));
 		String writings = "now we are getting somewhere";
 

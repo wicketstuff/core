@@ -1,11 +1,11 @@
 package org.wicketstuff.async.task;
 
-import org.testng.annotations.BeforeMethod;
-import org.testng.annotations.Test;
+import static org.testng.Assert.assertTrue;
 
 import java.util.concurrent.TimeUnit;
 
-import static org.testng.Assert.assertTrue;
+import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.Test;
 
 public class DefaultTaskManagerTest {
 
@@ -17,7 +17,9 @@ public class DefaultTaskManagerTest {
             @Override
             protected AbstractTaskContainer makeTaskContainer(final String id) {
                 return new AbstractTaskContainer(id) {
-                    @Override
+					private static final long serialVersionUID = 1L;
+
+					@Override
                     protected ITaskManagerHook load() {
                         return taskManager.makeTaskManagerHook(id);
                     }

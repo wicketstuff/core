@@ -16,11 +16,11 @@
  */
 package org.wicketstuff.progressbar.spring;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.List;
 import java.util.concurrent.Executor;
@@ -28,8 +28,8 @@ import java.util.concurrent.Executor;
 import org.apache.wicket.spring.injection.annot.SpringComponentInjector;
 import org.apache.wicket.spring.test.ApplicationContextMock;
 import org.apache.wicket.util.tester.WicketTester;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.wicketstuff.progressbar.ProgressBar;
 import org.wicketstuff.progressbar.Progression;
 import org.wicketstuff.progressbar.ProgressionModel;
@@ -42,7 +42,7 @@ public class SpringTaskTests
 
 	private TaskService taskService;
 
-	@Before
+	@BeforeEach
 	public void setUp() throws Exception
 	{
 		// setup dependencies
@@ -68,6 +68,7 @@ public class SpringTaskTests
 	private static class SynchronousExecutor implements Executor
 	{
 
+		@Override
 		public void execute(Runnable command)
 		{
 			command.run();
@@ -106,30 +107,30 @@ public class SpringTaskTests
 				}
 			}
 		};
-		assertEquals("Task progress initially 0", 0, task.getProgress());
+		assertEquals(0, task.getProgress(), "Task progress initially 0");
 		Long taskId = taskService.schedule(task);
-		assertEquals("Task can be found by ID", task, taskService.getTask(taskId));
+		assertEquals(task, taskService.getTask(taskId), "Task can be found by ID");
 		taskService.start(taskId);
-		assertEquals("Task was executed", 2, data[0]);
-		assertEquals("Task progress is 100", 100, task.getProgress());
-		assertTrue("Task is done after finish", task.isDone());
-		assertNotNull("Task NOT removed from service after done", taskService.getTask(taskId));
+		assertEquals(2, data[0], "Task was executed");
+		assertEquals(100, task.getProgress(), "Task progress is 100");
+		assertTrue(task.isDone(), "Task is done after finish");
+		assertNotNull(taskService.getTask(taskId), "Task NOT removed from service after done");
 		taskService.finish(taskId);
-		assertNull("Task removed from service with finish", taskService.getTask(taskId));
+		assertNull(taskService.getTask(taskId), "Task removed from service with finish");
 
 		data[0] = 0;
 		task.reset();
-		assertEquals("Task progress is 0 after reset", 0, task.getProgress());
+		assertEquals(0, task.getProgress(), "Task progress is 0 after reset");
 		// cancel should stop task at 50%
 		task.cancel();
 		Long newTaskId = taskService.scheduleAndStart(task);
-		assertFalse("Unique id generated", taskId.equals(newTaskId));
+		assertFalse(taskId.equals(newTaskId), "Unique id generated");
 
-		assertEquals("Cancelled after 50%", 1, data[0]);
-		assertTrue("Task was cancelled", task.isCancelled());
-		assertEquals("Progress is 50%", 50, task.getProgress());
+		assertEquals(1, data[0], "Cancelled after 50%");
+		assertTrue(task.isCancelled(), "Task was cancelled");
+		assertEquals(50, task.getProgress(), "Progress is 50%");
 		// done if cancelled?
-		assertTrue("Task is done", task.isDone());
+		assertTrue(task.isDone(), "Task is done");
 	}
 
 	// TODO Task with error / exception
@@ -213,6 +214,7 @@ public class SpringTaskTests
 		AsynchronousExecutor executor = new AsynchronousExecutor();
 		executor.execute(new Runnable()
 		{
+			@Override
 			public void run()
 			{
 				data[0] = true;

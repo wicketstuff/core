@@ -17,10 +17,9 @@
 package org.wicketstuff.jamon.monitor;
 
 import static org.hamcrest.CoreMatchers.is;
-import static org.junit.Assert.assertThat;
+import static org.hamcrest.MatcherAssert.assertThat;
 
-import org.junit.Test;
-import org.wicketstuff.jamon.monitor.MonitorLabelSpecification;
+import org.junit.jupiter.api.Test;
 
 
 public class MonitorLabelSpecificationTest

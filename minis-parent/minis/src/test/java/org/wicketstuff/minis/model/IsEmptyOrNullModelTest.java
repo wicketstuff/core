@@ -16,58 +16,63 @@
  */
 package org.wicketstuff.minis.model;
 
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import java.io.Serializable;
 import java.util.Arrays;
 import java.util.Collections;
 
 import org.apache.wicket.model.Model;
 import org.apache.wicket.model.util.ListModel;
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 public class IsEmptyOrNullModelTest
 {
 
-	@Test(expected = NullPointerException.class)
+	@Test
 	public void testNullDependentModelThrowsNPE()
 	{
-		new IsEmptyOrNullModel<>(null);
+		assertThrows(NullPointerException.class, () -> {
+			new IsEmptyOrNullModel<>(null);
+		});
 	}
 
 	@Test
 	public void testNullModelValueYieldsTrue()
 	{
-		Assert.assertTrue(new IsEmptyOrNullModel<>(Model.of((Serializable)null)).getObject());
+		assertTrue(new IsEmptyOrNullModel<>(Model.of((Serializable)null)).getObject());
 	}
 
 	@Test
 	public void testNotNullModelValueYieldsFalse()
 	{
-		Assert.assertFalse(new IsEmptyOrNullModel<>(Model.of(1)).getObject());
+		assertFalse(new IsEmptyOrNullModel<>(Model.of(1)).getObject());
 	}
 
 	@Test
 	public void testEmptyStringModelValueYieldsTrue()
 	{
-		Assert.assertTrue(new IsEmptyOrNullModel<>(Model.of("")).getObject());
+		assertTrue(new IsEmptyOrNullModel<>(Model.of("")).getObject());
 	}
 
 	@Test
 	public void testNonEmptyStringModelValueYielsFalse()
 	{
-		Assert.assertFalse(new IsEmptyOrNullModel<>(Model.of("test")).getObject());
+		assertFalse(new IsEmptyOrNullModel<>(Model.of("test")).getObject());
 	}
 
 	@Test
 	public void testEmptyCollectionModelValueYieldsTrie()
 	{
-		Assert.assertTrue(new IsEmptyOrNullModel<>(new ListModel<>(Collections.emptyList())).getObject());
+		assertTrue(new IsEmptyOrNullModel<>(new ListModel<>(Collections.emptyList())).getObject());
 	}
 
 	@Test
 	public void testComponentPresentOnNonEmptyCollectionModel()
 	{
-		Assert.assertFalse(new IsEmptyOrNullModel<>(new ListModel<>(Arrays.asList("test"))).getObject());
+		assertFalse(new IsEmptyOrNullModel<>(new ListModel<>(Arrays.asList("test"))).getObject());
 	}
 
 }

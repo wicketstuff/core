@@ -20,7 +20,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.apache.wicket.util.tester.FormTester;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.wicketstuff.security.actions.WaspAction;
 import org.wicketstuff.security.components.ISecurePage;
 import org.wicketstuff.security.components.SecureComponentHelper;

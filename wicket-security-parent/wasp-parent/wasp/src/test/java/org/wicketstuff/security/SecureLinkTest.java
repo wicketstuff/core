@@ -16,6 +16,11 @@
  */
 package org.wicketstuff.security;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertSame;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -23,7 +28,7 @@ import org.apache.wicket.Page;
 import org.apache.wicket.extensions.markup.html.tabs.ITab;
 import org.apache.wicket.util.tester.FormTester;
 import org.apache.wicket.util.tester.TagTester;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.wicketstuff.security.actions.WaspAction;
 import org.wicketstuff.security.checks.LinkSecurityCheck;
 import org.wicketstuff.security.components.ISecurePage;
@@ -35,7 +40,7 @@ import org.wicketstuff.security.pages.secure.PageA;
 
 /**
  * Test links
- * 
+ *
  * @author marrink
  */
 public class SecureLinkTest extends WaspAbstractTestBase

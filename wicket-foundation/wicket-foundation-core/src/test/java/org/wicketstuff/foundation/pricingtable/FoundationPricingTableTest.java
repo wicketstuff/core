@@ -1,5 +1,7 @@
 package org.wicketstuff.foundation.pricingtable;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -9,11 +11,10 @@ import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.model.util.ListModel;
 import org.apache.wicket.util.tester.WicketTester;
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 /**
- * 
+ *
  * Unit test for pricing table component.
  *
  */
@@ -44,12 +45,12 @@ public class FoundationPricingTableTest {
 					}
 				};
 			}
-			
+
 		};
 		tester.startComponentInPage(table);
 		tester.debugComponentTrees();
 		tester.dumpPage();
-		Assert.assertEquals("pricing-table", tester.getTagByWicketId("container").getAttribute("class"));
-		Assert.assertEquals(5, tester.getTagsByWicketId("item").size());
+		assertEquals("pricing-table", tester.getTagByWicketId("container").getAttribute("class"));
+		assertEquals(5, tester.getTagsByWicketId("item").size());
 	}
 }

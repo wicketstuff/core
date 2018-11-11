@@ -16,6 +16,9 @@
  */
 package org.wicketstuff.minis.behavior;
 
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
+
 import java.io.Serializable;
 import java.util.Arrays;
 import java.util.Collections;
@@ -25,9 +28,8 @@ import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.model.util.ListModel;
 import org.apache.wicket.util.tester.WicketTester;
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Test;
 
 public class HideWhenEmptyOrNullBehaviorTest
 {
@@ -37,7 +39,7 @@ public class HideWhenEmptyOrNullBehaviorTest
 
 	private final WicketTester tester = new WicketTester();
 
-	@After
+	@AfterEach
 	public void after()
 	{
 		tester.destroy();
@@ -49,7 +51,7 @@ public class HideWhenEmptyOrNullBehaviorTest
 		tester.startComponentInPage(
 			new Label(CID_LABEL, Model.of((Serializable)null)).add(HideWhenEmptyOrNullBehavior.get()),
 			Markup.of(MARKUP));
-		Assert.assertNull(tester.getTagByWicketId(CID_LABEL));
+		assertNull(tester.getTagByWicketId(CID_LABEL));
 	}
 
 	@Test
@@ -58,7 +60,7 @@ public class HideWhenEmptyOrNullBehaviorTest
 		tester.startComponentInPage(
 			new Label(CID_LABEL, Model.of(1)).add(HideWhenEmptyOrNullBehavior.get()),
 			Markup.of(MARKUP));
-		Assert.assertNotNull(tester.getTagByWicketId(CID_LABEL));
+		assertNotNull(tester.getTagByWicketId(CID_LABEL));
 	}
 
 	@Test
@@ -67,7 +69,7 @@ public class HideWhenEmptyOrNullBehaviorTest
 		tester.startComponentInPage(
 			new Label(CID_LABEL, Model.of("")).add(HideWhenEmptyOrNullBehavior.get()),
 			Markup.of(MARKUP));
-		Assert.assertNull(tester.getTagByWicketId(CID_LABEL));
+		assertNull(tester.getTagByWicketId(CID_LABEL));
 	}
 
 	@Test
@@ -76,7 +78,7 @@ public class HideWhenEmptyOrNullBehaviorTest
 		tester.startComponentInPage(
 			new Label(CID_LABEL, Model.of("test")).add(HideWhenEmptyOrNullBehavior.get()),
 			Markup.of(MARKUP));
-		Assert.assertNotNull(tester.getTagByWicketId(CID_LABEL));
+		assertNotNull(tester.getTagByWicketId(CID_LABEL));
 	}
 
 	@Test
@@ -85,7 +87,7 @@ public class HideWhenEmptyOrNullBehaviorTest
 		tester.startComponentInPage(
 			new Label(CID_LABEL, new ListModel<>(Collections.emptyList())).add(HideWhenEmptyOrNullBehavior.get()),
 			Markup.of(MARKUP));
-		Assert.assertNull(tester.getTagByWicketId(CID_LABEL));
+		assertNull(tester.getTagByWicketId(CID_LABEL));
 	}
 
 	@Test
@@ -94,7 +96,7 @@ public class HideWhenEmptyOrNullBehaviorTest
 		tester.startComponentInPage(
 			new Label(CID_LABEL, new ListModel<>(Arrays.asList("test"))).add(HideWhenEmptyOrNullBehavior.get()),
 			Markup.of(MARKUP));
-		Assert.assertNotNull(tester.getTagByWicketId(CID_LABEL));
+		assertNotNull(tester.getTagByWicketId(CID_LABEL));
 	}
 
 }

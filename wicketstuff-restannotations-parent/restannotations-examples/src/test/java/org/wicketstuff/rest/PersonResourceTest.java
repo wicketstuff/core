@@ -16,11 +16,13 @@
  */
 package org.wicketstuff.rest;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import org.apache.wicket.util.tester.WicketTester;
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.wicketstuff.rest.domain.PersonPojo;
 import org.wicketstuff.rest.utils.test.BufferedMockRequest;
 
@@ -29,15 +31,15 @@ import com.google.gson.Gson;
 /**
  * Simple test using the WicketTester
  */
-public class PersonResourceTest extends Assert
+public class PersonResourceTest
 {
     private WicketTester tester;
-    
+
     final private Gson gson = new Gson();
-    
+
     private BufferedMockRequest mockRequest;
 
-    @Before
+    @BeforeEach
     public void setUp()
     {
 	tester = new WicketTester(new WicketApplication());
@@ -45,7 +47,7 @@ public class PersonResourceTest extends Assert
 		tester.getHttpSession(), tester.getServletContext(), "POST");
     }
 
-    @After
+    @AfterEach
     public void tearDown()
     {
 	tester.destroy();

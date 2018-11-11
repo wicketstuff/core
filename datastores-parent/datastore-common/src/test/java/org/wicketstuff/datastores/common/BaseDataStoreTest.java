@@ -16,6 +16,8 @@
  */
 package org.wicketstuff.datastores.common;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -28,15 +30,14 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 import org.apache.wicket.pageStore.IDataStore;
 import org.apache.wicket.util.lang.Bytes;
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
  * Performance and stability test for IDataStore implementations
  */
-public abstract class BaseDataStoreTest extends Assert {
+public abstract class BaseDataStoreTest {
 	/** Log for reporting. */
 	private static final Logger log = LoggerFactory.getLogger("IDataStoreTest");
 

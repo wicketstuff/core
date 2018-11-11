@@ -2,19 +2,19 @@ package org.wicketstuff.minis.component;
 
 import org.apache.wicket.markup.html.panel.FeedbackPanel;
 import org.apache.wicket.util.tester.WicketTester;
-import org.junit.After;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Test;
 
 /**
  * Tests for {@link DefaultInvisibleFeedbackPanel}.
- * 
+ *
  * @author akiraly
  */
 public class DefaultInvisibleFeedbackPanelTest
 {
 	private final WicketTester tester = new WicketTester();
 
-	@After
+	@AfterEach
 	public void after()
 	{
 		tester.destroy();

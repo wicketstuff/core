@@ -16,6 +16,13 @@
  */
 package org.wicketstuff.security;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNotSame;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.fail;
+
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -28,11 +35,10 @@ import org.apache.wicket.ThreadContext;
 import org.apache.wicket.protocol.http.WebApplication;
 import org.apache.wicket.util.tester.FormTester;
 import org.apache.wicket.util.tester.WicketTester;
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Ignore;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.wicketstuff.security.hive.HiveMind;
@@ -50,7 +56,7 @@ import org.wicketstuff.security.swarm.SwarmWebApplication;
 /**
  * @author marrink
  */
-public class GeneralTest extends Assert
+public class GeneralTest
 {
 	private static final Logger log = LoggerFactory.getLogger(GeneralTest.class);
 
@@ -64,7 +70,7 @@ public class GeneralTest extends Assert
 	 */
 	protected WicketTester mock;
 
-	@Before
+	@BeforeEach
 	public void setUp()
 	{
 		mock = new WicketTester(application = new SwarmWebApplication()
@@ -102,6 +108,7 @@ public class GeneralTest extends Assert
 				return MockHomePage.class;
 			}
 
+			@Override
 			public Class<? extends Page> getLoginPage()
 			{
 				return MockLoginPage.class;
@@ -110,7 +117,7 @@ public class GeneralTest extends Assert
 		mock.setExposeExceptions(false);
 	}
 
-	@After
+	@AfterEach
 	public void tearDown()
 	{
 		mock.getSession().invalidate();
@@ -194,10 +201,10 @@ public class GeneralTest extends Assert
 
 	/**
 	 * Tests the serialization of the wicket session.
-	 * 
+	 *
 	 */
 	@Test
-	@Ignore("This seems to hack its way through WicketTester, which no longer works with 1.5")
+	@Disabled("This seems to hack its way through WicketTester, which no longer works with 1.5")
 	public void testSerialization()
 	{
 		// setup session
@@ -234,12 +241,7 @@ public class GeneralTest extends Assert
 			application.getSessionStore().bind(mock.getRequestCycle().getRequest(), session2);
 			mock.processRequest();
 		}
-		catch (IOException e)
-		{
-			log.error(e.getMessage(), e);
-			fail(e.getMessage());
-		}
-		catch (ClassNotFoundException e)
+		catch (IOException|ClassNotFoundException e)
 		{
 			log.error(e.getMessage(), e);
 			fail(e.getMessage());

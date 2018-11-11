@@ -16,14 +16,16 @@
  */
 package org.wicketstuff.minis.behavior.apanel;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
 import org.apache.wicket.Component;
 import org.apache.wicket.WicketRuntimeException;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.util.resource.StringBufferResourceStream;
 import org.apache.wicket.util.tester.WicketTester;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 @SuppressWarnings("serial")
 public class TestLayouts
@@ -60,7 +62,7 @@ public class TestLayouts
 
 	private WicketTester tester;
 
-	@Before
+	@BeforeEach
 	public void setup()
 	{
 		tester = new WicketTester();
@@ -108,7 +110,7 @@ public class TestLayouts
 		final StringBufferResourceStream resourceStream = (StringBufferResourceStream)aPanel.getMarkupResourceStream(
 			aPanel, APanel.class);
 
-		Assert.assertEquals(expected, resourceStream.asString());
+		assertEquals(expected, resourceStream.asString());
 	}
 
 	/**
@@ -154,29 +156,33 @@ public class TestLayouts
 			+ "</tr>" + "</table>" + "</wicket:panel>");
 	}
 
-	@Test(expected = WicketRuntimeException.class)
+	@Test
 	public void testGridLayoutIntersectingConstraintsException()
 	{
-		tester.startPage(new LayoutTestPage(new GridLayout(3, 3))
-		{
-			@Override
-			protected void addConstraints()
+		assertThrows(WicketRuntimeException.class, () -> {
+			tester.startPage(new LayoutTestPage(new GridLayout(3, 3))
 			{
-				label1.add(new GridLayoutConstraint(0, 0).setColSpan(2).setRowSpan(2));
-				label2.add(new GridLayoutConstraint(1, 1));
-			}
-		});
+				@Override
+				protected void addConstraints()
+				{
+					label1.add(new GridLayoutConstraint(0, 0).setColSpan(2).setRowSpan(2));
+					label2.add(new GridLayoutConstraint(1, 1));
+				}
+			});
 
-		final APanel aPanel = (APanel)tester.getComponentFromLastRenderedPage("aPanel");
-		final StringBufferResourceStream resourceStream = (StringBufferResourceStream)aPanel.getMarkupResourceStream(
-			aPanel, APanel.class);
-		System.out.println(resourceStream.asString());
+			final APanel aPanel = (APanel)tester.getComponentFromLastRenderedPage("aPanel");
+			final StringBufferResourceStream resourceStream = (StringBufferResourceStream)aPanel.getMarkupResourceStream(
+				aPanel, APanel.class);
+			System.out.println(resourceStream.asString());
+		});
 	}
 
-	@Test(expected = WicketRuntimeException.class)
+	@Test
 	public void testGridLayoutOutOfCellsException()
 	{
-		tester.startPage(new LayoutTestPage(new GridLayout(2, 1)));
+		assertThrows(WicketRuntimeException.class, () -> {
+			tester.startPage(new LayoutTestPage(new GridLayout(2, 1)));
+		});
 	}
 
 	/**

@@ -16,11 +16,16 @@
  */
 package org.wicketstuff.security;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import java.util.HashMap;
 import java.util.Map;
 
 import org.apache.wicket.Session;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.wicketstuff.security.actions.WaspAction;
 import org.wicketstuff.security.components.SecureComponentHelper;
 import org.wicketstuff.security.components.markup.html.form.SecureForm;
@@ -28,7 +33,7 @@ import org.wicketstuff.security.strategies.WaspAuthorizationStrategy;
 
 /**
  * Test session invalidation
- * 
+ *
  * @author marrink
  */
 public class SessionInvalidationTest extends WaspAbstractTestBase

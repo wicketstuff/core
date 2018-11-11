@@ -1,17 +1,18 @@
 package org.wicketstuff.htmlcompressor;
 
 
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import org.apache.wicket.RuntimeConfigurationType;
 import org.apache.wicket.mock.MockApplication;
 import org.apache.wicket.protocol.http.WebApplication;
 import org.apache.wicket.util.crypt.CharEncoding;
 import org.apache.wicket.util.tester.WicketTester;
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 /**
  * Tests for {@link HtmlCompressingMarkupFactory} and {@link HtmlCompressingXmlPullParser}.
- * 
+ *
  * @author akiraly
  */
 public class HtmlCompressingMarkupFactoryTest
@@ -60,14 +61,14 @@ public class HtmlCompressingMarkupFactoryTest
 			}
 		});
 
-		Assert.assertTrue("Length of compressed html (" + compressed.length() +
-                          ") should be smaller than not compressed one (" + notCompressed.length() + ").",
-                          notCompressed.length() > compressed.length());
+		assertTrue(notCompressed.length() > compressed.length(), "Length of compressed html (" + compressed.length() +
+                          ") should be smaller than not compressed one (" + notCompressed.length() + ")."
+                          );
 	}
 
 	/**
 	 * Renders test page does some tests on it and returns rendered response.
-	 * 
+	 *
 	 * @param application
 	 *            used or rendering, not null
 	 * @return last response as string, not null

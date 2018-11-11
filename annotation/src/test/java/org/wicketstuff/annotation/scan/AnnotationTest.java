@@ -16,23 +16,25 @@
  */
 package org.wicketstuff.annotation.scan;
 
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 import org.apache.wicket.Page;
 import org.apache.wicket.core.request.mapper.HomePageMapper;
 import org.apache.wicket.core.request.mapper.MountedMapper;
 import org.apache.wicket.request.IRequestMapper;
 import org.apache.wicket.request.component.IRequestablePage;
 import org.hamcrest.CoreMatchers;
-import static org.hamcrest.CoreMatchers.is;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.wicketstuff.annotation.mount.MountPath;
 
 /**
  * @author Doug Donohoe
  * @author Ronald Tetsuo Miura
  */
-public class AnnotationTest extends Assert
+public class AnnotationTest
 {
 	@MountPath
 	private static class DefaultMountPathPage extends Page
@@ -91,7 +93,7 @@ public class AnnotationTest extends Assert
 	private TestAnnotatedMountScanner testScanner = new TestAnnotatedMountScanner();
 	private final CustomAnnotatedMountScanner customScanner = new CustomAnnotatedMountScanner();
 
-	@Before
+	@BeforeEach
 	public void before() throws Exception
 	{
 		testScanner = new TestAnnotatedMountScanner();

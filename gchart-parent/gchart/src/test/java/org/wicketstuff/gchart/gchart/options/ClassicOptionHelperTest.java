@@ -1,4 +1,4 @@
-/* 
+/*
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
@@ -13,13 +13,14 @@
  */
 package org.wicketstuff.gchart.gchart.options;
 
-import org.wicketstuff.gchart.Chart;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
+import static net.javacrumbs.jsonunit.JsonAssert.assertJsonEquals;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
-import static net.javacrumbs.jsonunit.JsonAssert.*;
+
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.wicketstuff.gchart.Chart;
 
 /**
  *
@@ -34,11 +35,11 @@ public class ClassicOptionHelperTest {
         when(chart.getId()).thenReturn("myChart");
     }
 
-    @Before
+    @BeforeEach
     public void setUp() {
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
     }
 

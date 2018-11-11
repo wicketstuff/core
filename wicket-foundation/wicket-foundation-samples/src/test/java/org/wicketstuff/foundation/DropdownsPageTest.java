@@ -1,6 +1,6 @@
 package org.wicketstuff.foundation;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.wicketstuff.foundation.DropdownsPage;
 
 public class DropdownsPageTest extends AbstractPageTest {

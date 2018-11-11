@@ -1,18 +1,20 @@
 package org.wicketstuff.minis.behavior.validator;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+
 import org.apache.wicket.markup.IMarkupFragment;
 import org.apache.wicket.markup.Markup;
 import org.apache.wicket.markup.html.form.TextField;
 import org.apache.wicket.util.tester.TagTester;
 import org.apache.wicket.util.tester.WicketTester;
 import org.apache.wicket.validation.validator.StringValidator;
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Test;
 
 /**
  * Tests for {@link StringValidatorWithMaxLength}.
- * 
+ *
  * @author akiraly
  */
 public class StringValidatorWithMaxLengthTest
@@ -20,7 +22,7 @@ public class StringValidatorWithMaxLengthTest
 	private final WicketTester tester = new WicketTester();
 	private final int maxLength = 50;
 
-	@After
+	@AfterEach
 	public void after()
 	{
 		tester.destroy();
@@ -56,8 +58,8 @@ public class StringValidatorWithMaxLengthTest
 
 		TagTester tagTester = tester.getTagByWicketId(field.getId());
 
-		Assert.assertNotNull(tagTester);
-		Assert.assertEquals(Integer.toString(maxLength),
+		assertNotNull(tagTester);
+		assertEquals(Integer.toString(maxLength),
 			tagTester.getAttribute(StringValidatorWithMaxLength.MAX_LENGTH));
 	}
 }

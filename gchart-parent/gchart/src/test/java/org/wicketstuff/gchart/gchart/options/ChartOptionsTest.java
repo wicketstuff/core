@@ -1,4 +1,4 @@
-/* 
+/*
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
@@ -13,14 +13,15 @@
  */
 package org.wicketstuff.gchart.gchart.options;
 
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
+import static net.javacrumbs.jsonunit.JsonAssert.assertJsonEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import com.github.openjson.JSONObject;
-
-import static org.junit.Assert.*;
-import static net.javacrumbs.jsonunit.JsonAssert.*;
 
 
 /**
@@ -28,15 +29,15 @@ import static net.javacrumbs.jsonunit.JsonAssert.*;
  * @author Dieter Tremel
  */
 public class ChartOptionsTest {
-    
+
     public ChartOptionsTest() {
     }
-    
-    @Before
+
+    @BeforeEach
     public void setUp() {
     }
-    
-    @After
+
+    @AfterEach
     public void tearDown() {
     }
 
@@ -57,17 +58,17 @@ public class ChartOptionsTest {
     @Test
     public void testToJavaScript() {
         String varPrefix = "var options = ";
-        
+
     	ChartOptions opts = new ChartOptions("options");
         opts.put("title", "How Much Pizza I Ate Last Night");
         opts.put("width", 400);
         opts.put("height", 300);
-        
+
         String expResult = "var options = {\"width\":400,\"title\":\"How Much Pizza I Ate Last Night\",\"height\":300};\n";
         String result = opts.toJavaScript();
-        
+
         assertTrue(result.startsWith(varPrefix));
-        assertJsonEquals(expResult.replace(varPrefix, "").replace(';', '\n'), 
+        assertJsonEquals(expResult.replace(varPrefix, "").replace(';', '\n'),
         				 result.replaceAll(varPrefix, "").replace(';', '\n'));
     }
 
@@ -115,5 +116,5 @@ public class ChartOptionsTest {
         JSONObject result = instance.toJSON();
         assertEquals(expResult.toString(), result.toString());
     }
-    
+
 }

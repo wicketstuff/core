@@ -7,32 +7,17 @@ package org.wicketstuff.jqplot.lib.test;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.junit.jupiter.api.Test;
 import org.wicketstuff.jqplot.lib.JqPlotUtils;
 import org.wicketstuff.jqplot.lib.chart.PieDonutChart;
 import org.wicketstuff.jqplot.lib.data.item.LabeledItem;
-
-import junit.framework.TestCase;
 
 /**
  *
  * @author inaiat
  */
-public class PieDonutChartTest extends TestCase {
-
-    public PieDonutChartTest(String testName) {
-        super(testName);
-    }
-
-    @Override
-    protected void setUp() throws Exception {
-        super.setUp();
-    }
-
-    @Override
-    protected void tearDown() throws Exception {
-        super.tearDown();
-    }
-
+public class PieDonutChartTest {
+	@Test
     public void testLabeledLine() {
     	PieDonutChart<Integer> chart = new PieDonutChart<>();
 

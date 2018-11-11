@@ -16,10 +16,13 @@
  */
 package org.wicketstuff.config;
 
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.fail;
+
 import java.net.URL;
 
-import junit.framework.TestCase;
-
+import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.core.io.Resource;
@@ -27,10 +30,11 @@ import org.springframework.core.io.Resource;
 /**
  * @author Doug Donohoe
  */
-public class MatchingResourcesTest extends TestCase
+public class MatchingResourcesTest
 {
 	Logger logger = LoggerFactory.getLogger(MatchingResourcesTest.class);
 
+	@Test
 	public void testFindResources()
 	{
 		MatchingResources mr = new MatchingResources(
@@ -46,6 +50,7 @@ public class MatchingResourcesTest extends TestCase
 		assertTrue(none.length == 0);
 	}
 
+	@Test
 	public void testFindResource()
 	{
 		Resource thiz = new MatchingResources(
@@ -76,6 +81,7 @@ public class MatchingResourcesTest extends TestCase
 
 	}
 
+	@Test
 	public void testToString()
 	{
 		MatchingResources mr = new MatchingResources("classpath*:org/wicketstuff/config/*.class");

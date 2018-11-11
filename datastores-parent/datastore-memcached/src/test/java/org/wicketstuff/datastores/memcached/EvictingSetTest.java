@@ -1,20 +1,23 @@
 package org.wicketstuff.datastores.memcached;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
+
+import org.apache.wicket.util.time.Duration;
+import org.junit.jupiter.api.Test;
 
 import com.google.common.cache.Cache;
 import com.google.common.cache.CacheBuilder;
 import com.google.common.collect.Sets;
-import org.apache.wicket.util.time.Duration;
-import org.junit.Assert;
-import org.junit.Test;
 
 /**
  * A test that a Set created from the map view of the cache
  * has the same evicting capabilities as the Cache itself
  */
-public class EvictingSetTest extends Assert
+public class EvictingSetTest
 {
 	@Test
 	public void makeSureEntriesExpireEvenWhenUsingIndirectAccessToCache() {

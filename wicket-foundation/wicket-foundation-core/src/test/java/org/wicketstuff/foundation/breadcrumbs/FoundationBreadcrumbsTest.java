@@ -1,6 +1,6 @@
 package org.wicketstuff.foundation.breadcrumbs;
 
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -9,7 +9,7 @@ import org.apache.wicket.markup.html.link.AbstractLink;
 import org.apache.wicket.markup.html.link.Link;
 import org.apache.wicket.util.tester.TagTester;
 import org.apache.wicket.util.tester.WicketTester;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.wicketstuff.foundation.breadcrumbs.BreadcrumbsItem;
 import org.wicketstuff.foundation.breadcrumbs.FoundationBreadcrumbs;
 

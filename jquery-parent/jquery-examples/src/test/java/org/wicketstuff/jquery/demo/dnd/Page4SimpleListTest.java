@@ -6,10 +6,10 @@ import java.util.Iterator;
 import org.apache.wicket.Component;
 import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.util.tester.WicketTester;
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.wicketstuff.jquery.dnd.DnDSortableHandler;
 
 public class Page4SimpleListTest
@@ -17,13 +17,13 @@ public class Page4SimpleListTest
 
 	private WicketTester tester_;
 
-	@Before
+	@BeforeEach
 	public void setUp()
 	{
 		tester_ = new WicketTester();
 	}
 
-    @After
+    @AfterEach
     public void tearDown()
     {
         tester_.destroy();
@@ -89,8 +89,8 @@ public class Page4SimpleListTest
 	{
 		if (actual != expected)
 		{
-			Assert.assertEquals(actual.label, expected.label);
-			Assert.assertEquals(actual.description, expected.description);
+			Assertions.assertEquals(actual.label, expected.label);
+			Assertions.assertEquals(actual.description, expected.description);
 		}
 	}
 }

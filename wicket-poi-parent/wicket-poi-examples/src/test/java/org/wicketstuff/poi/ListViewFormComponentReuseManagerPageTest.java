@@ -16,21 +16,23 @@
  */
 package org.wicketstuff.poi;
 
-import java.io.IOException;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import junit.framework.TestCase;
+import java.io.IOException;
 
 import org.apache.wicket.IRequestListener;
 import org.apache.wicket.request.IRequestHandler;
 import org.apache.wicket.request.cycle.RequestCycle;
 import org.apache.wicket.util.tester.WicketTester;
+import org.junit.jupiter.api.Test;
 import org.wicketstuff.poi.excel.TableComponentAsXlsHandler;
 
 /**
  * @author Pedro Santos
  */
-public class ListViewFormComponentReuseManagerPageTest extends TestCase
+public class ListViewFormComponentReuseManagerPageTest
 {
+	@Test
 	public void testExportToExcel() throws IOException
 	{
 		WicketTester tester = new WicketTester(new WicketApplication());

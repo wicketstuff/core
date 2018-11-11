@@ -16,25 +16,27 @@
  */
 package org.wicketstuff.poi.excel;
 
-import junit.framework.TestCase;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.wicket.request.resource.ResourceStreamResource;
 import org.apache.wicket.util.tester.WicketTester;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
 
 
-public class XlsStreamTest extends TestCase
+public class XlsStreamTest
 {
 	private WicketTester tester;
 
-	@Override
+	@BeforeEach
 	protected void setUp() throws Exception
 	{
 		tester = new WicketTester();
 	}
 
-	@Override
+	@AfterEach
 	protected void tearDown() throws Exception
 	{
 		tester.destroy();

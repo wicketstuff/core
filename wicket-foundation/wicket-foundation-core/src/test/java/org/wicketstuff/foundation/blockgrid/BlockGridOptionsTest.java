@@ -1,6 +1,6 @@
 package org.wicketstuff.foundation.blockgrid;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.wicketstuff.foundation.blockgrid.BlockGridOptions;
 import org.wicketstuff.foundation.blockgrid.BlockGridType;
 

@@ -16,46 +16,30 @@
  */
 package wicket.contrib.input.events;
 
-import junit.framework.TestCase;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import org.apache.wicket.Component;
 import org.apache.wicket.behavior.AbstractAjaxBehavior;
 import org.apache.wicket.util.tester.WicketTester;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
 
 /**
  * Base class for tests which require comparing wicket response with a file.
  * <p>
  * To create/replace the expected result file with the new content, define the system property like
  * -Dwicket.replace.expected.results=true
- * 
+ *
  */
-public abstract class WicketTestCase extends TestCase
+public abstract class WicketTestCase
 {
 	/** */
 	public WicketTester tester;
 
 	/**
-	 * Constructor
-	 */
-	public WicketTestCase()
-	{
-	}
-
-	/**
-	 * Create the test.
-	 * 
-	 * @param name
-	 *            The test name
-	 */
-	public WicketTestCase(String name)
-	{
-		super(name);
-	}
-
-	/**
 	 * @see junit.framework.TestCase#setUp()
 	 */
-	@Override
+	@BeforeEach
 	protected void setUp() throws Exception
 	{
 		tester = new WicketTester();
@@ -64,7 +48,7 @@ public abstract class WicketTestCase extends TestCase
 	/**
 	 * @see junit.framework.TestCase#tearDown()
 	 */
-	@Override
+	@AfterEach
 	protected void tearDown() throws Exception
 	{
 		tester.destroy();
@@ -73,7 +57,7 @@ public abstract class WicketTestCase extends TestCase
 	/**
 	 * Use <code>-Dwicket.replace.expected.results=true</code> to automatically replace the expected
 	 * output file.
-	 * 
+	 *
 	 * @param pageClass
 	 * @param filename
 	 * @throws Exception
@@ -89,7 +73,7 @@ public abstract class WicketTestCase extends TestCase
 	}
 
 	/**
-	 * 
+	 *
 	 * @param clazz
 	 * @param component
 	 * @param filename
@@ -108,7 +92,7 @@ public abstract class WicketTestCase extends TestCase
 	}
 
 	/**
-	 * 
+	 *
 	 * @param clazz
 	 * @param behavior
 	 * @param filename

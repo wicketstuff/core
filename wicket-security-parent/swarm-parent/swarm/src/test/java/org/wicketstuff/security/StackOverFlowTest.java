@@ -16,6 +16,8 @@
  */
 package org.wicketstuff.security;
 
+import static org.junit.jupiter.api.Assertions.fail;
+
 import java.net.MalformedURLException;
 
 import org.apache.wicket.Page;
@@ -24,10 +26,9 @@ import org.apache.wicket.protocol.http.WebApplication;
 import org.apache.wicket.request.Request;
 import org.apache.wicket.request.Response;
 import org.apache.wicket.util.tester.WicketTester;
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.wicketstuff.security.authentication.LoginException;
@@ -42,7 +43,7 @@ import org.wicketstuff.security.swarm.SwarmWebApplication;
 /**
  * @author marrink
  */
-public class StackOverFlowTest extends Assert
+public class StackOverFlowTest
 {
 	private static final class MyWebApplication extends SwarmWebApplication
 	{
@@ -78,6 +79,7 @@ public class StackOverFlowTest extends Assert
 			return MockHomePage.class;
 		}
 
+		@Override
 		public Class<? extends Page> getLoginPage()
 		{
 			return MockLoginPage.class;
@@ -111,7 +113,7 @@ public class StackOverFlowTest extends Assert
 	 */
 	protected WicketTester mock;
 
-	@Before
+	@BeforeEach
 	public void setUp()
 	{
 		mock = new WicketTester(application = new MyWebApplication(), "src/test/java/" +
@@ -122,7 +124,7 @@ public class StackOverFlowTest extends Assert
 	/**
 	 * @see junit.framework.TestCase#tearDown()
 	 */
-	@After
+	@AfterEach
 	public void tearDown()
 	{
 		mock.getSession().invalidate();

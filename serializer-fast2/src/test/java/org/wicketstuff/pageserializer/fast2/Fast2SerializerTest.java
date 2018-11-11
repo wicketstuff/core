@@ -20,13 +20,17 @@
  */
 package org.wicketstuff.pageserializer.fast2;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import org.apache.wicket.request.mapper.parameter.PageParameters;
 import org.apache.wicket.serialize.ISerializer;
 import org.apache.wicket.util.tester.WicketTester;
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.wicketstuff.pageserializer.fast2.pages.NotSerializablePage;
 import org.wicketstuff.pageserializer.fast2.pages.SamplePage;
 
@@ -37,13 +41,13 @@ public class Fast2SerializerTest
 {
 	private WicketTester tester;
 
-	@Before
+	@BeforeEach
 	public void setUp()
 	{
 		tester = new WicketTester(new WicketApplication());
 	}
 
-	@After
+	@AfterEach
 	public void tearDown()
 	{
 		tester.destroy();
@@ -61,15 +65,16 @@ public class Fast2SerializerTest
 		ISerializer pageSerializer = getAndCheckSerializer();
 
 		byte[] data = pageSerializer.serialize(page);
-		Assert.assertNotNull("The produced data should not be null!", data);
+		assertNotNull(data, "The produced data should not be null!");
 
 		// data length can fluctuate based on the object field values
-		Assert.assertEquals("The produced data length is not correct!", 704, data.length);
+		assertEquals(704, data.length, "The produced data length is not correct!");
 
 		Object object = pageSerializer.deserialize(data);
-		Assert.assertTrue(
-				"The deserialized page must be of type HomePage. Type: " + object.getClass(),
-				object instanceof HomePage);
+		assertTrue(
+				object instanceof HomePage
+				, "The deserialized page must be of type HomePage. Type: " + object.getClass()
+				);
 
 	}
 
@@ -86,12 +91,13 @@ public class Fast2SerializerTest
 		ISerializer pageSerializer = getAndCheckSerializer();
 
 		byte[] data = pageSerializer.serialize(page);
-		Assert.assertNotNull("The produced data should not be null!", data);
+		assertNotNull(data, "The produced data should not be null!");
 
 		Object object = pageSerializer.deserialize(data);
-		Assert.assertTrue(
-				"The deserialized page must be of type HomePage. Type: " + object.getClass(),
-				object instanceof SamplePage);
+		assertTrue(
+				object instanceof SamplePage
+				, "The deserialized page must be of type HomePage. Type: " + object.getClass()
+				);
 
 		SamplePage samplePage = (SamplePage)object;
 
@@ -101,28 +107,30 @@ public class Fast2SerializerTest
 		tester.assertRenderedPage(SamplePage.class);
 	}
 
-	@Test(expected = Fast2WicketSerialException.class)
+	@Test
 	public void notSerializableComponentThrowsException()
 	{
+		assertThrows(Fast2WicketSerialException.class, () -> {
+			NotSerializablePage page = tester.startPage(NotSerializablePage.class,
+					new PageParameters().add("Test", "asString"));
 
-		NotSerializablePage page = tester.startPage(NotSerializablePage.class,
-				new PageParameters().add("Test", "asString"));
+			// assert rendered page class
+			tester.assertRenderedPage(NotSerializablePage.class);
 
-		// assert rendered page class
-		tester.assertRenderedPage(NotSerializablePage.class);
+			ISerializer pageSerializer = getAndCheckSerializer();
 
-		ISerializer pageSerializer = getAndCheckSerializer();
-
-		pageSerializer.serialize(page);
+			pageSerializer.serialize(page);
+		});
 	}
 
 	private ISerializer getAndCheckSerializer()
 	{
 		ISerializer pageSerializer = tester.getApplication().getFrameworkSettings().getSerializer();
-		Assert.assertTrue(
-				"The configured IObjectSerializer is not instance of Fast2Serializer! Type: "
-						+ pageSerializer.getClass(),
-				pageSerializer instanceof Fast2WicketSerializer);
+		assertTrue(
+				pageSerializer instanceof Fast2WicketSerializer
+				, "The configured IObjectSerializer is not instance of Fast2Serializer! Type: "
+						+ pageSerializer.getClass()
+				);
 		return pageSerializer;
 	}
 }

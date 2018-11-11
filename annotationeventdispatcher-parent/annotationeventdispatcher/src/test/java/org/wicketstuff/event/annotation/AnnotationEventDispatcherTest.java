@@ -16,17 +16,18 @@
  */
 package org.wicketstuff.event.annotation;
 
-import org.apache.wicket.Component;
-import org.apache.wicket.mock.MockApplication;
-import org.apache.wicket.util.tester.WicketTester;
-import org.junit.Before;
-import org.junit.Test;
-import org.mockito.Mockito;
-
 import static org.apache.wicket.event.Broadcast.BREADTH;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.reset;
 import static org.mockito.Mockito.verify;
+
+import org.apache.wicket.Component;
+import org.apache.wicket.mock.MockApplication;
+import org.apache.wicket.util.tester.WicketTester;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.mockito.Mockito;
 
 /**
  * Tests for AnnotationEventDispatcher
@@ -41,7 +42,7 @@ public class AnnotationEventDispatcherTest
 	/**
 	 * Create and initialize the dispatcher
 	 */
-	@Before
+	@BeforeEach
 	public void setup()
 	{
 		reset(mock);
@@ -75,19 +76,23 @@ public class AnnotationEventDispatcherTest
 	 * Verify that an exception is raised when the annotated method does not contain exactly one
 	 * parameter
 	 */
-	@Test(expected = RuntimeException.class)
+	@Test
 	public void componentCannotBeInstantiatedIfAnnotatedMethodDoesNotContainOneParameter()
 	{
-		tester.startComponentInPage(new IncorrectNumberOfParameters("id"));
+		assertThrows(RuntimeException.class, () -> {
+			tester.startComponentInPage(new IncorrectNumberOfParameters("id"));
+		});
 	}
 
 	/**
 	 * Verify that an exception is raised when the annotated method is not public
 	 */
-	@Test(expected = RuntimeException.class)
+	@Test
 	public void componentCannotBeInstantiatedIfAnnotatedMethodIsNotPublic()
 	{
-		tester.startComponentInPage(new IncorrectMethodVisibility("id"));
+		assertThrows(RuntimeException.class, () -> {
+			tester.startComponentInPage(new IncorrectMethodVisibility("id"));
+		});
 	}
 
 	/**

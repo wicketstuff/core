@@ -20,14 +20,16 @@
  */
 package org.wicketstuff.pageserializer.kryo2.inspecting;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 import org.apache.wicket.util.lang.Bytes;
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.wicketstuff.pageserializer.common.analyze.AnalyzingSerializationListener;
 import org.wicketstuff.pageserializer.common.analyze.IObjectLabelizer;
 import org.wicketstuff.pageserializer.common.analyze.ISerializedObjectTreeProcessor;
@@ -71,7 +73,7 @@ public class InspectingKryoTest
 				return null;
 			}
 		};
-		
+
 		IReportOutput reportOutput=new LoggerReportOutput();
 
 		ISerializedObjectTreeProcessor treeProcessor = TreeProcessors.listOf(new TypeSizeReport(reportOutput),
@@ -88,16 +90,17 @@ public class InspectingKryoTest
 
 		byte[] data = kryo.serialize(root);
 
-		Assert.assertNotNull(data);
+		assertNotNull(data);
 
 		List<Object> readBack = (List<Object>)kryo.deserialize(data);
 
-		Assert.assertNotNull(readBack);
-		Assert.assertEquals(root, readBack);
+		assertNotNull(readBack);
+		assertEquals(root, readBack);
 	}
 
 	static class Dummy implements Serializable
 	{
+		private static final long serialVersionUID = 1L;
 		String name = "Huauuauauaajjjajajjajj";
 
 		@Override
@@ -134,6 +137,7 @@ public class InspectingKryoTest
 
 	static class BiggerDummy implements Serializable
 	{
+		private static final long serialVersionUID = 1L;
 		Dummy first = new Dummy();
 		Dummy second = new Dummy();
 		String city = "lebunistan";
@@ -186,6 +190,7 @@ public class InspectingKryoTest
 
 	static class BiggestDummy implements Serializable
 	{
+		private static final long serialVersionUID = 1L;
 		Dummy first = new Dummy();
 		BiggerDummy bigger = new BiggerDummy();
 

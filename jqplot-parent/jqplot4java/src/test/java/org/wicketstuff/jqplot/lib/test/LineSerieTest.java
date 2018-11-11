@@ -7,6 +7,7 @@ package org.wicketstuff.jqplot.lib.test;
 import java.util.ArrayList;
 import java.util.Collection;
 
+import org.junit.jupiter.api.Test;
 import org.wicketstuff.jqplot.lib.JqPlotResources;
 import org.wicketstuff.jqplot.lib.JqPlotUtils;
 import org.wicketstuff.jqplot.lib.axis.Axis;
@@ -24,28 +25,12 @@ import org.wicketstuff.jqplot.lib.elements.MarkerOptions;
 import org.wicketstuff.jqplot.lib.elements.Serie;
 import org.wicketstuff.jqplot.lib.elements.TickOptions;
 
-import junit.framework.TestCase;
-
 /**
  *
  * @author vinicius
  */
-public class LineSerieTest extends TestCase {
-
-    public LineSerieTest(String testName) {
-        super(testName);
-    }
-
-    @Override
-    protected void setUp() throws Exception {
-        super.setUp();
-    }
-
-    @Override
-    protected void tearDown() throws Exception {
-        super.tearDown();
-    }
-
+public class LineSerieTest {
+	@Test
     public void testLineSeriesChart() {
         LineSeriesChart<Number, Number> chart = new LineSeriesChart<>("Curves","X", "Y");
 
@@ -178,6 +163,4 @@ public class LineSerieTest extends TestCase {
 
 		return s;
 	}
-
-
 }

@@ -1,5 +1,14 @@
 package org.wicketstuff.shiro.annotation;
 
+import static org.easymock.EasyMock.createNiceMock;
+import static org.easymock.EasyMock.expect;
+import static org.easymock.EasyMock.getCurrentArguments;
+import static org.easymock.EasyMock.isA;
+import static org.easymock.EasyMock.replay;
+import static org.easymock.EasyMock.reset;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import org.apache.shiro.subject.Subject;
 import org.apache.shiro.subject.support.SubjectThreadState;
 import org.apache.shiro.util.ThreadState;
@@ -9,17 +18,19 @@ import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.protocol.http.WebApplication;
 import org.apache.wicket.util.tester.WicketTester;
 import org.easymock.IAnswer;
-import org.junit.*;
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.wicketstuff.shiro.ShiroAction;
 import org.wicketstuff.shiro.ShiroConstraint;
-
-import static org.easymock.EasyMock.*;
 
 
 /**
  * Unit test for AnnotationsShiroAuthorizationStrategy. For more information about unit tests with shiro see
  * http://shiro.apache.org/testing.html
- * 
+ *
  * @author Martin Sturm
  */
 public class AnnotationsShiroAuthorizationStrategyTest{
@@ -41,7 +52,7 @@ public class AnnotationsShiroAuthorizationStrategyTest{
 
     private static WicketTester tester;
 
-    @BeforeClass
+    @BeforeAll
     public static void beforeClass() {
         // create a wicket tester since we need an application as ThreadLocal for instantiating components.
         tester = new WicketTester(new WebApplication() {
@@ -52,13 +63,13 @@ public class AnnotationsShiroAuthorizationStrategyTest{
         });
     }
 
-    @AfterClass
+    @AfterAll
     public static void afterClass() {
         // destroy wicket tester.
         tester.destroy();
     }
 
-    @Before
+    @BeforeEach
     public void setUp() {
         // reset values to default
         initDefaultValues();
@@ -70,7 +81,7 @@ public class AnnotationsShiroAuthorizationStrategyTest{
         threadSubject.bind();
     }
 
-    @After
+    @AfterEach
     public void clearThreadSubject() {
         reset(subject);
         // remove subject after test is finished
@@ -85,49 +96,49 @@ public class AnnotationsShiroAuthorizationStrategyTest{
     @Test
     public void checkInstantiationWhenLoggedIn() {
         isLoggedIn = true;
-        Assert.assertTrue(underTest.isInstantiationAuthorized(InstantiateWhen.LoggedInOnly.class));
+        assertTrue(underTest.isInstantiationAuthorized(InstantiateWhen.LoggedInOnly.class));
     }
 
     @Test
     public void checkInstantiationWhenNotLoggedIn() {
         isLoggedIn = false;
-        Assert.assertFalse(underTest.isInstantiationAuthorized(InstantiateWhen.LoggedInOnly.class));
+        assertFalse(underTest.isInstantiationAuthorized(InstantiateWhen.LoggedInOnly.class));
     }
 
     @Test
     public void checkInstantiationWhenAuthenticated() {
         isAuthenticated = true;
-        Assert.assertTrue(underTest.isInstantiationAuthorized(InstantiateWhen.AuthenticatedOnly.class));
+        assertTrue(underTest.isInstantiationAuthorized(InstantiateWhen.AuthenticatedOnly.class));
     }
 
     @Test
     public void checkInstantiationWhenNotAuthenticated() {
         isLoggedIn = false;
-        Assert.assertFalse(underTest.isInstantiationAuthorized(InstantiateWhen.AuthenticatedOnly.class));
+        assertFalse(underTest.isInstantiationAuthorized(InstantiateWhen.AuthenticatedOnly.class));
     }
 
     @Test
     public void checkInstantiationForRole() {
         role = "ADMIN";
-        Assert.assertTrue(underTest.isInstantiationAuthorized(InstantiateWhen.SubjectHasRole.class));
+        assertTrue(underTest.isInstantiationAuthorized(InstantiateWhen.SubjectHasRole.class));
     }
 
     @Test
     public void checkInstantiationForRoleNotPresent() {
         role = "USER";
-        Assert.assertFalse(underTest.isInstantiationAuthorized(InstantiateWhen.SubjectHasRole.class));
+        assertFalse(underTest.isInstantiationAuthorized(InstantiateWhen.SubjectHasRole.class));
     }
 
     @Test
     public void checkInstantiationForPermission() {
         persmission = "any:permission";
-        Assert.assertTrue(underTest.isInstantiationAuthorized(InstantiateWhen.SubjectHasPermission.class));
+        assertTrue(underTest.isInstantiationAuthorized(InstantiateWhen.SubjectHasPermission.class));
     }
 
     @Test
     public void checkInstantiationForPermissionNotPresent() {
         persmission = "no:permission";
-        Assert.assertFalse(underTest.isInstantiationAuthorized(InstantiateWhen.SubjectHasPermission.class));
+        assertFalse(underTest.isInstantiationAuthorized(InstantiateWhen.SubjectHasPermission.class));
     }
 
     // ======================= Tests for rendering
@@ -135,49 +146,49 @@ public class AnnotationsShiroAuthorizationStrategyTest{
     @Test
     public void checkRenderWhenLoggedIn() {
         isLoggedIn = true;
-        Assert.assertTrue(underTest.isActionAuthorized(new RenderWhen.LoggedInOnly(), RENDER));
+        assertTrue(underTest.isActionAuthorized(new RenderWhen.LoggedInOnly(), RENDER));
     }
 
     @Test
     public void checkRenderWhenNotLoggedIn() {
         isLoggedIn = false;
-        Assert.assertFalse(underTest.isActionAuthorized(new RenderWhen.LoggedInOnly(), RENDER));
+        assertFalse(underTest.isActionAuthorized(new RenderWhen.LoggedInOnly(), RENDER));
     }
 
     @Test
     public void checkRenderWhenAuthenticated() {
         isAuthenticated = true;
-        Assert.assertTrue(underTest.isActionAuthorized(new RenderWhen.AuthenticatedOnly(), RENDER));
+        assertTrue(underTest.isActionAuthorized(new RenderWhen.AuthenticatedOnly(), RENDER));
     }
 
     @Test
     public void checkRenderWhenNotAuthenticated() {
         isLoggedIn = false;
-        Assert.assertFalse(underTest.isActionAuthorized(new RenderWhen.AuthenticatedOnly(), RENDER));
+        assertFalse(underTest.isActionAuthorized(new RenderWhen.AuthenticatedOnly(), RENDER));
     }
 
     @Test
     public void checkRenderForRole() {
         role = "ADMIN";
-        Assert.assertTrue(underTest.isActionAuthorized(new RenderWhen.SubjectHasRole(), RENDER));
+        assertTrue(underTest.isActionAuthorized(new RenderWhen.SubjectHasRole(), RENDER));
     }
 
     @Test
     public void checkRenderForRoleNotPresent() {
         role = "USER";
-        Assert.assertFalse(underTest.isActionAuthorized(new RenderWhen.SubjectHasRole(), RENDER));
+        assertFalse(underTest.isActionAuthorized(new RenderWhen.SubjectHasRole(), RENDER));
     }
 
     @Test
     public void checkRenderForPermission() {
         persmission = "any:permission";
-        Assert.assertTrue(underTest.isActionAuthorized(new RenderWhen.SubjectHasPermission(), RENDER));
+        assertTrue(underTest.isActionAuthorized(new RenderWhen.SubjectHasPermission(), RENDER));
     }
 
     @Test
     public void checkRenderForPermissionNotPresent() {
         persmission = "no:permission";
-        Assert.assertFalse(underTest.isActionAuthorized(new RenderWhen.SubjectHasPermission(), RENDER));
+        assertFalse(underTest.isActionAuthorized(new RenderWhen.SubjectHasPermission(), RENDER));
     }
 
     // ======================= Tests for enabling
@@ -185,49 +196,49 @@ public class AnnotationsShiroAuthorizationStrategyTest{
     @Test
     public void checkEnableWhenLoggedIn() {
         isLoggedIn = true;
-        Assert.assertTrue(underTest.isActionAuthorized(new EnableWhen.LoggedInOnly(), ENABLE));
+        assertTrue(underTest.isActionAuthorized(new EnableWhen.LoggedInOnly(), ENABLE));
     }
 
     @Test
     public void checkEnableWhenNotLoggedIn() {
         isLoggedIn = false;
-        Assert.assertFalse(underTest.isActionAuthorized(new EnableWhen.LoggedInOnly(), ENABLE));
+        assertFalse(underTest.isActionAuthorized(new EnableWhen.LoggedInOnly(), ENABLE));
     }
 
     @Test
     public void checkEnableWhenAuthenticated() {
         isAuthenticated = true;
-        Assert.assertTrue(underTest.isActionAuthorized(new EnableWhen.AuthenticatedOnly(), ENABLE));
+        assertTrue(underTest.isActionAuthorized(new EnableWhen.AuthenticatedOnly(), ENABLE));
     }
 
     @Test
     public void checkEnableWhenNotAuthenticated() {
         isLoggedIn = false;
-        Assert.assertFalse(underTest.isActionAuthorized(new EnableWhen.AuthenticatedOnly(), ENABLE));
+        assertFalse(underTest.isActionAuthorized(new EnableWhen.AuthenticatedOnly(), ENABLE));
     }
 
     @Test
     public void checkEnableForRole() {
         role = "ADMIN";
-        Assert.assertTrue(underTest.isActionAuthorized(new EnableWhen.SubjectHasRole(), ENABLE));
+        assertTrue(underTest.isActionAuthorized(new EnableWhen.SubjectHasRole(), ENABLE));
     }
 
     @Test
     public void checkEnableForRoleNotPresent() {
         role = "USER";
-        Assert.assertFalse(underTest.isActionAuthorized(new EnableWhen.SubjectHasRole(), ENABLE));
+        assertFalse(underTest.isActionAuthorized(new EnableWhen.SubjectHasRole(), ENABLE));
     }
 
     @Test
     public void checkEnableForPermission() {
         persmission = "any:permission";
-        Assert.assertTrue(underTest.isActionAuthorized(new EnableWhen.SubjectHasPermission(), ENABLE));
+        assertTrue(underTest.isActionAuthorized(new EnableWhen.SubjectHasPermission(), ENABLE));
     }
 
     @Test
     public void checkEnableForPermissionNotPresent() {
         persmission = "no:permission";
-        Assert.assertFalse(underTest.isActionAuthorized(new EnableWhen.SubjectHasPermission(), ENABLE));
+        assertFalse(underTest.isActionAuthorized(new EnableWhen.SubjectHasPermission(), ENABLE));
     }
 
     private void initDefaultValues() {
@@ -280,28 +291,36 @@ public class AnnotationsShiroAuthorizationStrategyTest{
     private static class InstantiateWhen {
         @ShiroSecurityConstraint(action = ShiroAction.INSTANTIATE, constraint = ShiroConstraint.LoggedIn)
         private static class LoggedInOnly extends Panel {
-            private LoggedInOnly() {
+			private static final long serialVersionUID = 1L;
+
+			private LoggedInOnly() {
                 super("id");
             }
         }
 
         @ShiroSecurityConstraint(action = ShiroAction.INSTANTIATE, constraint = ShiroConstraint.IsAuthenticated)
         private static class AuthenticatedOnly extends Panel {
-            private AuthenticatedOnly() {
+			private static final long serialVersionUID = 1L;
+
+			private AuthenticatedOnly() {
                 super("id");
             }
         }
 
         @ShiroSecurityConstraint(action = ShiroAction.INSTANTIATE, constraint = ShiroConstraint.HasRole, value = "ADMIN")
         private static class SubjectHasRole extends Panel {
-            private SubjectHasRole() {
+			private static final long serialVersionUID = 1L;
+
+			private SubjectHasRole() {
                 super("id");
             }
         }
 
         @ShiroSecurityConstraint(action = ShiroAction.INSTANTIATE, constraint = ShiroConstraint.HasPermission, value = "any:permission")
         private static class SubjectHasPermission extends Panel {
-            private SubjectHasPermission() {
+			private static final long serialVersionUID = 1L;
+
+			private SubjectHasPermission() {
                 super("id");
             }
         }
@@ -310,28 +329,36 @@ public class AnnotationsShiroAuthorizationStrategyTest{
     private static class RenderWhen {
         @ShiroSecurityConstraint(action = ShiroAction.RENDER, constraint = ShiroConstraint.LoggedIn)
         private static class LoggedInOnly extends Panel {
-            private LoggedInOnly() {
+			private static final long serialVersionUID = 1L;
+
+			private LoggedInOnly() {
                 super("id");
             }
         }
 
         @ShiroSecurityConstraint(action = ShiroAction.RENDER, constraint = ShiroConstraint.IsAuthenticated)
         private static class AuthenticatedOnly extends Panel {
-            private AuthenticatedOnly() {
+			private static final long serialVersionUID = 1L;
+
+			private AuthenticatedOnly() {
                 super("id");
             }
         }
 
         @ShiroSecurityConstraint(action = ShiroAction.RENDER, constraint = ShiroConstraint.HasRole, value = "ADMIN")
         private static class SubjectHasRole extends Panel {
-            private SubjectHasRole() {
+			private static final long serialVersionUID = 1L;
+
+			private SubjectHasRole() {
                 super("id");
             }
         }
 
         @ShiroSecurityConstraint(action = ShiroAction.RENDER, constraint = ShiroConstraint.HasPermission, value = "any:permission")
         private static class SubjectHasPermission extends Panel {
-            private SubjectHasPermission() {
+			private static final long serialVersionUID = 1L;
+
+			private SubjectHasPermission() {
                 super("id");
             }
         }
@@ -340,28 +367,36 @@ public class AnnotationsShiroAuthorizationStrategyTest{
     private static class EnableWhen {
         @ShiroSecurityConstraint(action = ShiroAction.ENABLE, constraint = ShiroConstraint.LoggedIn)
         private static class LoggedInOnly extends Panel {
-            private LoggedInOnly() {
+			private static final long serialVersionUID = 1L;
+
+			private LoggedInOnly() {
                 super("id");
             }
         }
 
         @ShiroSecurityConstraint(action = ShiroAction.ENABLE, constraint = ShiroConstraint.IsAuthenticated)
         private static class AuthenticatedOnly extends Panel {
-            private AuthenticatedOnly() {
+			private static final long serialVersionUID = 1L;
+
+			private AuthenticatedOnly() {
                 super("id");
             }
         }
 
         @ShiroSecurityConstraint(action = ShiroAction.ENABLE, constraint = ShiroConstraint.HasRole, value = "ADMIN")
         private static class SubjectHasRole extends Panel {
-            private SubjectHasRole() {
+			private static final long serialVersionUID = 1L;
+
+			private SubjectHasRole() {
                 super("id");
             }
         }
 
         @ShiroSecurityConstraint(action = ShiroAction.ENABLE, constraint = ShiroConstraint.HasPermission, value = "any:permission")
         private static class SubjectHasPermission extends Panel {
-            private SubjectHasPermission() {
+			private static final long serialVersionUID = 1L;
+
+			private SubjectHasPermission() {
                 super("id");
             }
         }

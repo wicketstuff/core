@@ -16,16 +16,16 @@
  */
 package org.wicketstuff.jamon.monitor;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.wicketstuff.jamon.component.JamonTestUtil.MONITOR_PREFIX;
 import static org.wicketstuff.jamon.component.JamonTestUtil.startThisManyMonitors;
 
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
-import org.wicketstuff.jamon.monitor.JamonRepository;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import com.jamonapi.Monitor;
 import com.jamonapi.MonitorFactory;
@@ -35,14 +35,14 @@ public class JamonRepositoryTest
 {
 	private JamonRepository jamonRepository;
 
-	@Before
+	@BeforeEach
 	public void setup()
 	{
 		jamonRepository = new JamonRepository();
 		JamonRepository.clear();
 	}
 
-	@After
+	@AfterEach
 	public void clear()
 	{
 		MonitorFactory.getFactory().reset();
@@ -76,10 +76,12 @@ public class JamonRepositoryTest
 		assertNotNull(jamonRepository.findMonitorByLabel(MonitorFactory.EXCEPTIONS_LABEL));
 	}
 
-	@Test(expected = IllegalArgumentException.class)
+	@Test
 	public void shouldFailIfTryingToFindMonitorWithNullLabel()
 	{
-		jamonRepository.findMonitorByLabel(null);
+		assertThrows(IllegalArgumentException.class, () -> {
+			jamonRepository.findMonitorByLabel(null);
+		});
 	}
 
 	@Test

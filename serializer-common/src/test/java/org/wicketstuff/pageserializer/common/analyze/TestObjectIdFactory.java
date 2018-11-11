@@ -20,24 +20,26 @@
  */
 package org.wicketstuff.pageserializer.common.analyze;
 
-import org.junit.Assert;
-import org.junit.Test;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+
+import org.junit.jupiter.api.Test;
 
 public class TestObjectIdFactory
 {
 	@Test
 	public void validateIdFactory() {
 		ObjectIdFactory factory = new ObjectIdFactory();
-		
+
 		// jvm makes same strings from string const
 		ObjectId a=factory.idFor("HA");
 		ObjectId b=factory.idFor("HA");
-		
-		Assert.assertEquals(a, b);
-		
+
+		assertEquals(a, b);
+
 		a=factory.idFor(new String("HA"));
 		b=factory.idFor(new String("HA"));
-		
-		Assert.assertFalse(a.equals(b));
+
+		assertFalse(a.equals(b));
 	}
 }

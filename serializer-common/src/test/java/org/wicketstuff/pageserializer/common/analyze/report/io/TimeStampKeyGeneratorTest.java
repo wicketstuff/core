@@ -20,13 +20,13 @@
  */
 package org.wicketstuff.pageserializer.common.analyze.report.io;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.wicketstuff.pageserializer.common.analyze.report.io.TimeStampKeyGenerator;
 
 public class TimeStampKeyGeneratorTest {

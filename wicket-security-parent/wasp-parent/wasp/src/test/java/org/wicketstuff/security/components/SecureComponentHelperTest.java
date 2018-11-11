@@ -16,35 +16,35 @@
  */
 package org.wicketstuff.security.components;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import org.apache.wicket.MarkupContainer;
 import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.markup.html.WebPage;
 import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.util.tester.WicketTester;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.wicketstuff.security.components.markup.html.form.SecureTextField;
 
 /**
  * Tests for {@link SecureComponentHelper}.
- * 
+ *
  * @author marrink
  */
 public class SecureComponentHelperTest
 {
 	private WicketTester mock;
 
-	@Before
+	@BeforeEach
 	public void setUp()
 	{
 		// a wicket application is required to use the page
 		mock = new WicketTester();
 	}
 
-	@After
+	@AfterEach
 	public void tearDown()
 	{
 		mock.destroy();
@@ -185,7 +185,7 @@ public class SecureComponentHelperTest
 
 		/**
 		 * Construct.
-		 * 
+		 *
 		 * @param id
 		 */
 		public TestPanel(String id)

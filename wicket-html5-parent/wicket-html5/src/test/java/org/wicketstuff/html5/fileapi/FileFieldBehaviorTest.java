@@ -1,24 +1,26 @@
 package org.wicketstuff.html5.fileapi;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.feedback.FeedbackMessage;
 import org.apache.wicket.mock.MockRequestParameters;
 import org.apache.wicket.util.lang.Bytes;
 import org.apache.wicket.util.tester.WicketTester;
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Test;
 
 /**
  * Tests for {@link FileFieldChangeBehavior} and {@link FileFieldSizeCheckBehavior}.
- * 
+ *
  * @author akiraly
  */
 public class FileFieldBehaviorTest
 {
 	private final WicketTester tester = new WicketTester();
 
-	@After
+	@AfterEach
 	public void after()
 	{
 		tester.destroy();
@@ -36,15 +38,15 @@ public class FileFieldBehaviorTest
 			@Override
 			protected void onEvent(AjaxRequestTarget target, FileList fileList)
 			{
-				Assert.assertNotNull(fileList);
-				Assert.assertEquals(2, fileList.getNumOfFiles());
-				Assert.assertEquals(4096, fileList.getSize());
+				assertNotNull(fileList);
+				assertEquals(2, fileList.getNumOfFiles());
+				assertEquals(4096, fileList.getSize());
 				Html5File file = fileList.get(1);
-				Assert.assertEquals("test2.txt", file.getName());
-				Assert.assertEquals(2048, file.getSize());
-				Assert.assertEquals("text/plain", file.getType());
-				Assert.assertNotNull(file.getLastModifiedDate());
-				Assert.assertEquals(1302254582, file.getLastModifiedDate().getTimeInMillis());
+				assertEquals("test2.txt", file.getName());
+				assertEquals(2048, file.getSize());
+				assertEquals("text/plain", file.getType());
+				assertNotNull(file.getLastModifiedDate());
+				assertEquals(1302254582, file.getLastModifiedDate().getTimeInMillis());
 			}
 		};
 		page.getField().add(behavior);
@@ -89,7 +91,7 @@ public class FileFieldBehaviorTest
 		page.getForm().setMaxSize(Bytes.kilobytes(1));
 		tester.executeBehavior(behavior);
 		FeedbackMessage errorMessage = page.getField().getFeedbackMessages().first(FeedbackMessage.ERROR);
-		Assert.assertNotNull(errorMessage);
+		assertNotNull(errorMessage);
 	}
 
 	protected void addParams()

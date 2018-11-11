@@ -16,14 +16,17 @@
  */
 package org.wicketstuff.minis.behavior;
 
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
 import org.apache.wicket.markup.Markup;
 import org.apache.wicket.markup.html.form.TextField;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.util.tester.TagTester;
 import org.apache.wicket.util.tester.WicketTester;
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Test;
 
 public class EnabledModelBehaviorTest
 {
@@ -34,16 +37,18 @@ public class EnabledModelBehaviorTest
 
 	private final WicketTester tester = new WicketTester();
 
-	@After
+	@AfterEach
 	public void after()
 	{
 		tester.destroy();
 	}
 
-	@Test(expected = NullPointerException.class)
+	@Test
 	public void testNullDependentModelThrowsNPE()
 	{
-		new TextField<>("field").add(new EnabledModelBehavior(null));
+		assertThrows(NullPointerException.class, () -> {
+			new TextField<>("field").add(new EnabledModelBehavior(null));
+		});
 	}
 
 	@Test
@@ -53,7 +58,7 @@ public class EnabledModelBehaviorTest
 			new TextField<>(CID_FIELD).add(new EnabledModelBehavior(Model.of(false))),
 			Markup.of(MARKUP));
 		TagTester tagTester = tester.getTagByWicketId(CID_FIELD);
-		Assert.assertNotNull(tagTester.getAttribute(DISABLED_ATTR));
+		assertNotNull(tagTester.getAttribute(DISABLED_ATTR));
 	}
 
 	@Test
@@ -63,7 +68,7 @@ public class EnabledModelBehaviorTest
 			new TextField<>(CID_FIELD).add(new EnabledModelBehavior(Model.of(true))),
 			Markup.of(MARKUP));
 		TagTester tagTester = tester.getTagByWicketId(CID_FIELD);
-		Assert.assertNull(tagTester.getAttribute(DISABLED_ATTR));
+		assertNull(tagTester.getAttribute(DISABLED_ATTR));
 	}
 
 }

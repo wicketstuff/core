@@ -18,24 +18,26 @@
  */
 package wicket.contrib.phonebook.web.page;
 
-import wicket.contrib.phonebook.Contact;
-import wicket.contrib.phonebook.web.PhonebookApplicationForTesting;
-import wicket.contrib.phonebook.web.PhonebookFixture;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.apache.wicket.Page;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.link.Link;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.util.tester.WicketTester;
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+
+import wicket.contrib.phonebook.Contact;
+import wicket.contrib.phonebook.web.PhonebookApplicationForTesting;
+import wicket.contrib.phonebook.web.PhonebookFixture;
 
 /**
  * @author Kare Nuorteva
  */
-public class DeleteContactPageTest extends Assert
+public class DeleteContactPageTest
 {
 	private WicketTester wicket;
 	private PhonebookApplicationForTesting app;
@@ -50,7 +52,7 @@ public class DeleteContactPageTest extends Assert
 		return new DeleteContactPage(new ListContactsPage(), new Model<Contact>(contact));
 	}
 
-	@Before
+	@BeforeEach
 	public void before() throws Exception
 	{
 		app = new PhonebookApplicationForTesting();
@@ -60,7 +62,7 @@ public class DeleteContactPageTest extends Assert
 		wicket.startPage(getTestPage());
 	}
 
-	@After
+	@AfterEach
 	public void after() {
 		wicket.destroy();
 		wicket = null;

@@ -16,8 +16,15 @@
  */
 package org.wicketstuff.security.swarm.actions;
 
-import junit.framework.TestCase;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotSame;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.fail;
 
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.wicketstuff.security.actions.Access;
 import org.wicketstuff.security.actions.ActionFactory;
 import org.wicketstuff.security.actions.Actions;
@@ -28,26 +35,17 @@ import org.wicketstuff.security.actions.WaspAction;
 
 /**
  * Tests WaspAction class.
- * 
+ *
  * @author marrink
  */
-public class SwarmActionTest extends TestCase
+public class SwarmActionTest
 {
 	private static final String KEY = "ACTION_TEST";
 
 	/**
-	 * Constructor for WaspActionTest.
-	 * 
-	 * @param arg0
-	 */
-	public SwarmActionTest(String arg0)
-	{
-		super(arg0);
-	}
-
-	/**
 	 * Test method for {@link SwarmAction#hashCode()}
 	 */
+	@Test
 	public void testHashCode()
 	{
 		WaspAction action = new SwarmAction(5, "test", KEY);
@@ -65,18 +63,19 @@ public class SwarmActionTest extends TestCase
 	/**
 	 * Test method for {@link SwarmAction#implies(int)}
 	 */
+	@Test
 	public void testImpliesInt()
 	{
 		SwarmAction action = new SwarmAction(5, "test", KEY);
 		assertTrue(action.implies(5));
 		assertTrue(action.implies(1));
 		assertFalse(action.implies(6));
-
 	}
 
 	/**
 	 * Test method for {@link SwarmAction#implies(WaspAction)}
 	 */
+	@Test
 	public void testImpliesWaspAction()
 	{
 		ActionFactory factory = Actions.getActionFactory(KEY);
@@ -87,10 +86,10 @@ public class SwarmActionTest extends TestCase
 	}
 
 	/**
-	 * 
+	 *
 	 * @see junit.framework.TestCase#setUp()
 	 */
-	@Override
+	@BeforeEach
 	protected void setUp()
 	{
 		new SwarmActionFactory(KEY);
@@ -99,7 +98,7 @@ public class SwarmActionTest extends TestCase
 	/**
 	 * @see junit.framework.TestCase#tearDown()
 	 */
-	@Override
+	@AfterEach
 	protected void tearDown()
 	{
 		Actions.unregisterActionFactory(KEY);
@@ -108,6 +107,7 @@ public class SwarmActionTest extends TestCase
 	/**
 	 * Test method for {@link SwarmAction#equals(Object)}
 	 */
+	@Test
 	public void testEqualsObject()
 	{
 		WaspAction action = new SwarmAction(5, "test", KEY);
@@ -134,6 +134,7 @@ public class SwarmActionTest extends TestCase
 	/**
 	 * Test method for {@link SwarmAction#add(int)}
 	 */
+	@Test
 	public void testAddInt()
 	{
 		ActionFactory factory = Actions.getActionFactory(KEY);
@@ -152,6 +153,7 @@ public class SwarmActionTest extends TestCase
 	/**
 	 * Test method for {@link SwarmAction#add(WaspAction)}
 	 */
+	@Test
 	public void testAddWaspAction()
 	{
 		ActionFactory factory = Actions.getActionFactory(KEY);
@@ -170,6 +172,7 @@ public class SwarmActionTest extends TestCase
 	/**
 	 * Test various constructor scenarios.
 	 */
+	@Test
 	public void testConstructor()
 	{
 		try
@@ -196,7 +199,7 @@ public class SwarmActionTest extends TestCase
 	{
 		/**
 		 * Construct.
-		 * 
+		 *
 		 * @param action
 		 * @param name
 		 * @param key

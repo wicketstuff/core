@@ -1,8 +1,11 @@
 package wicket.contrib.tinymce.settings;
 
 
-import org.junit.Assert;
-import org.junit.Test;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
+import org.junit.jupiter.api.Test;
 
 import wicket.contrib.tinymce4.settings.Enum;
 
@@ -26,13 +29,13 @@ public class EnumTest
 
 			private static final long serialVersionUID = 1L;
 		};
-		Assert.assertEquals(enum1, enum1);
-		Assert.assertEquals(enum1, enum2);
-		Assert.assertEquals(enum2, enum1);
-		Assert.assertFalse(enum1.equals(enum3));
-		Assert.assertFalse(enum3.equals(enum1));
-		Assert.assertFalse(enum1.equals(null));
-		Assert.assertFalse(enum1.equals("enum1"));
+		assertEquals(enum1, enum1);
+		assertEquals(enum1, enum2);
+		assertEquals(enum2, enum1);
+		assertFalse(enum1.equals(enum3));
+		assertFalse(enum3.equals(enum1));
+		assertFalse(enum1.equals(null));
+		assertFalse(enum1.equals("enum1"));
 	}
 
 	@Test
@@ -53,18 +56,19 @@ public class EnumTest
 
 			private static final long serialVersionUID = 1L;
 		};
-		Assert.assertEquals(enum1.hashCode(), enum1.hashCode());
-		Assert.assertEquals(enum1.hashCode(), enum2.hashCode());
-		Assert.assertFalse(enum1.hashCode() == enum3.hashCode());
+		assertEquals(enum1.hashCode(), enum1.hashCode());
+		assertEquals(enum1.hashCode(), enum2.hashCode());
+		assertFalse(enum1.hashCode() == enum3.hashCode());
 	}
 
-	@Test(expected = IllegalArgumentException.class)
+	@Test
 	public void testNotNull()
 	{
-		new Enum(null)
-		{
-
-			private static final long serialVersionUID = 1L;
-		};
+		assertThrows(IllegalArgumentException.class, () -> {
+			new Enum(null)
+			{
+				private static final long serialVersionUID = 1L;
+			};
+		});
 	}
 }

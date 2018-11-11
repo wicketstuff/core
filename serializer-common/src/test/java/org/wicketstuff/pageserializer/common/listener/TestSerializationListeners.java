@@ -20,8 +20,9 @@
  */
 package org.wicketstuff.pageserializer.common.listener;
 
-import org.junit.Assert;
-import org.junit.Test;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
+import org.junit.jupiter.api.Test;
 
 public class TestSerializationListeners
 {
@@ -54,20 +55,20 @@ public class TestSerializationListeners
 		proxy.end("HA", new RuntimeException());
 		proxy.end(null, new RuntimeException());
 
-		Assert.assertEquals(first, second);
+		assertEquals(first, second);
 		checkCounter("begin",first.beginCounter, 1, 2);
 		checkCounter("before",first.beforeCounter, 1, 3);
 		checkCounter("after",first.afterCounter, 2, 2);
 		checkCounter("end",first.endCounter, 2, 3);
 		checkCounter("exception",first.exceptionCounter, 2, 3);
 
-		Assert.assertEquals("pos",new Counter(40), first.positionCounter);
+		assertEquals(new Counter(40), first.positionCounter, "pos");
 	}
 
 	private void checkCounter(String label,CounterPair counterPair, int withNullCount, int notNullCount)
 	{
-		Assert.assertEquals(label,new Counter(withNullCount), counterPair.withNull);
-		Assert.assertEquals(label,new Counter(notNullCount), counterPair.notNull);
+		assertEquals(new Counter(withNullCount), counterPair.withNull, label);
+		assertEquals(new Counter(notNullCount), counterPair.notNull, label);
 	}
 
 	static class CountingListener implements ISerializationListener
@@ -238,7 +239,7 @@ public class TestSerializationListeners
 				return false;
 			return true;
 		}
-		
+
 		@Override
 		public String toString()
 		{
@@ -287,7 +288,7 @@ public class TestSerializationListeners
 				return false;
 			return true;
 		}
-		
+
 		@Override
 		public String toString()
 		{

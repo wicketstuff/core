@@ -16,13 +16,16 @@
  */
 package org.wicketstuff.minis.behavior;
 
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
 import org.apache.wicket.markup.Markup;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.util.tester.WicketTester;
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Test;
 
 public class VisibleModelBehaviorTest
 {
@@ -32,16 +35,18 @@ public class VisibleModelBehaviorTest
 
 	private final WicketTester tester = new WicketTester();
 
-	@After
+	@AfterEach
 	public void after()
 	{
 		tester.destroy();
 	}
 
-	@Test(expected = NullPointerException.class)
+	@Test
 	public void testNullDependentModelThrowsNPE()
 	{
-		new Label(CID_LABEL).add(new VisibleModelBehavior(null));
+		assertThrows(NullPointerException.class, () -> {
+			new Label(CID_LABEL).add(new VisibleModelBehavior(null));
+		});
 	}
 
 	@Test
@@ -49,7 +54,7 @@ public class VisibleModelBehaviorTest
 	{
 		tester.startComponentInPage(
 			new Label(CID_LABEL).add(new VisibleModelBehavior(Model.of(false))), Markup.of(MARKUP));
-		Assert.assertNull(tester.getTagByWicketId(CID_LABEL));
+		assertNull(tester.getTagByWicketId(CID_LABEL));
 	}
 
 	@Test
@@ -57,7 +62,7 @@ public class VisibleModelBehaviorTest
 	{
 		tester.startComponentInPage(
 			new Label(CID_LABEL).add(new VisibleModelBehavior(Model.of(true))), Markup.of(MARKUP));
-		Assert.assertNotNull(tester.getTagByWicketId(CID_LABEL));
+		assertNotNull(tester.getTagByWicketId(CID_LABEL));
 	}
 
 

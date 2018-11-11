@@ -1,6 +1,6 @@
 package org.wicketstuff.foundation.dropdown;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.wicketstuff.foundation.button.ButtonColor;
 import org.wicketstuff.foundation.button.ButtonExpansion;
 import org.wicketstuff.foundation.button.ButtonRadius;

@@ -16,29 +16,26 @@
  */
 package org.wicketstuff.security.util;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import java.util.Set;
 
-import junit.framework.TestCase;
+import org.junit.jupiter.api.Test;
 
 /**
  * @author marrink
- * 
+ *
  */
-public class ManyToManyMapTest extends TestCase
+public class ManyToManyMapTest
 {
-
-	/**
-	 * @param name
-	 */
-	public ManyToManyMapTest(String name)
-	{
-		super(name);
-	}
-
 	/**
 	 * Test method for
 	 * {@link org.wicketstuff.security.util.ManyToManyMap#add(java.lang.Object, java.lang.Object)} .
 	 */
+	@Test
 	public void testAdd()
 	{
 		ManyToManyMap<String, String> map = new ManyToManyMap<String, String>();
@@ -76,6 +73,7 @@ public class ManyToManyMapTest extends TestCase
 	 * {@link org.wicketstuff.security.util.ManyToManyMap#remove(java.lang.Object, java.lang.Object)}
 	 * .
 	 */
+	@Test
 	public void testRemove()
 	{
 		ManyToManyMap<String, String> map = new ManyToManyMap<String, String>();
@@ -100,6 +98,7 @@ public class ManyToManyMapTest extends TestCase
 	 * {@link org.wicketstuff.security.util.ManyToManyMap#removeAllMappingsForLeft(Object)} and
 	 * right.
 	 */
+	@Test
 	public void testRemoveAllMappings()
 	{
 		ManyToManyMap<String, String> map = new ManyToManyMap<String, String>();
@@ -123,6 +122,7 @@ public class ManyToManyMapTest extends TestCase
 	 * Test method for {@link org.wicketstuff.security.util.ManyToManyMap#getLeft(java.lang.Object)}
 	 * .
 	 */
+	@Test
 	public void testGet()
 	{
 		ManyToManyMap<String, String> map = new ManyToManyMap<String, String>();
@@ -139,6 +139,7 @@ public class ManyToManyMapTest extends TestCase
 	/**
 	 * Test method for {@link org.wicketstuff.security.util.ManyToManyMap#size()}.
 	 */
+	@Test
 	public void testSize()
 	{
 		ManyToManyMap<String, String> map = new ManyToManyMap<String, String>();
@@ -153,6 +154,7 @@ public class ManyToManyMapTest extends TestCase
 	 * {@link org.wicketstuff.security.util.ManyToManyMap#numberOfmappingsForLeft(Object)} and
 	 * right.
 	 */
+	@Test
 	public void testNumberOfmappings()
 	{
 		ManyToManyMap<String, String> map = new ManyToManyMap<String, String>();
@@ -167,6 +169,7 @@ public class ManyToManyMapTest extends TestCase
 	 * Test method for {@link org.wicketstuff.security.util.ManyToManyMap#containsLeft(Object)} and
 	 * right.
 	 */
+	@Test
 	public void testContains()
 	{
 		ManyToManyMap<String, String> map = new ManyToManyMap<String, String>();
@@ -179,6 +182,7 @@ public class ManyToManyMapTest extends TestCase
 	/**
 	 * Test method for {@link org.wicketstuff.security.util.ManyToManyMap#isEmpty()}.
 	 */
+	@Test
 	public void testIsEmpty()
 	{
 		assertTrue(new ManyToManyMap<String, String>().isEmpty());
@@ -187,6 +191,7 @@ public class ManyToManyMapTest extends TestCase
 	/**
 	 * Test method for {@link org.wicketstuff.security.util.ManyToManyMap#clear()}.
 	 */
+	@Test
 	public void testClear()
 	{
 		ManyToManyMap<Integer, Integer> map = new ManyToManyMap<Integer, Integer>();

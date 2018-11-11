@@ -20,10 +20,12 @@
  */
 package org.wicketstuff.pageserializer.common.analyze.report;
 
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import java.io.IOException;
 
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.wicketstuff.pageserializer.common.analyze.ISerializedObjectTree;
 import org.wicketstuff.pageserializer.common.analyze.report.filter.ITreeFilter;
 
@@ -37,7 +39,7 @@ public class TestTreeTransformator
 		ISerializedObjectTree filtered = TreeTransformations.compact(tree, new AcceptAll());
 
 		Trees.assertEqualsTree(tree, filtered);
-		Assert.assertTrue(tree == filtered);
+		assertTrue(tree == filtered);
 	}
 
 	@Test
@@ -48,7 +50,7 @@ public class TestTreeTransformator
 		ISerializedObjectTree filtered = TreeTransformations.compact(tree, new MaxDepth(2));
 
 		ISerializedObjectTree expected = Trees.fromResource(getClass(), "treeOf3-maxDepth1");
-		
+
 		Trees.assertEqualsTree(expected, filtered);
 	}
 
@@ -60,7 +62,7 @@ public class TestTreeTransformator
 		ISerializedObjectTree filtered = TreeTransformations.strip(tree, new NotDepth(2));
 
 		ISerializedObjectTree expected = Trees.fromResource(getClass(), "treeOf3-noDepth2");
-		
+
 		Trees.assertEqualsTree(expected, filtered);
 	}
 
@@ -72,18 +74,20 @@ public class TestTreeTransformator
 		ISerializedObjectTree filtered = TreeTransformations.strip(tree, new NotDepth(3));
 
 		ISerializedObjectTree expected = Trees.fromResource(getClass(), "treeOf3-noDepth3");
-		
+
 		Trees.assertEqualsTree(expected, filtered);
 	}
-	
-	@Test(expected=IllegalArgumentException.class)
+
+	@Test
 	public void canNotRemoveANodes() throws IOException
 	{
-		ISerializedObjectTree tree = Trees.fromResource(getClass(), "treeOf3");
+		assertThrows(IllegalArgumentException.class, () -> {
+			ISerializedObjectTree tree = Trees.fromResource(getClass(), "treeOf3");
 
-		ISerializedObjectTree filtered = TreeTransformations.strip(tree, new NotDepth(0));
+			ISerializedObjectTree filtered = TreeTransformations.strip(tree, new NotDepth(0));
+		});
 	}
-	
+
 	private static class AcceptAll implements ITreeFilter
 	{
 		@Override
@@ -133,7 +137,7 @@ public class TestTreeTransformator
 	{
 
 	}
-	
+
 	static class A
 	{
 

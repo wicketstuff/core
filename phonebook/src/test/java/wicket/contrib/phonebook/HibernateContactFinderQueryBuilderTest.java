@@ -18,20 +18,23 @@
  */
 package wicket.contrib.phonebook;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.fail;
+
 import org.hibernate.type.StandardBasicTypes;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 /**
  * @author Kare Nuorteva
  */
-public class HibernateContactFinderQueryBuilderTest extends Assert
+public class HibernateContactFinderQueryBuilderTest
 {
 	private HibernateContactFinderQueryBuilder builder;
 	private Contact filter;
 
-	@Before
+	@BeforeEach
 	public void before() throws Exception
 	{
 		builder = new HibernateContactFinderQueryBuilder();

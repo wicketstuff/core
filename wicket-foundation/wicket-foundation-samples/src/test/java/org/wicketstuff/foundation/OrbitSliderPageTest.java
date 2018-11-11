@@ -1,6 +1,6 @@
 package org.wicketstuff.foundation;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.wicketstuff.foundation.OrbitSliderPage;
 
 public class OrbitSliderPageTest extends AbstractPageTest {

@@ -16,36 +16,40 @@
  */
 package org.wicketstuff.poi.excel;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
+
 import java.io.IOException;
 import java.text.ParseException;
 
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.Sheet;
-import org.apache.wicket.request.resource.ResourceStreamResource;
 import org.apache.wicket.util.resource.ResourceStreamNotFoundException;
 import org.apache.wicket.util.tester.WicketTester;
-
-import junit.framework.TestCase;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 /**
  * @author Pedro Santos
  */
-public class TableParserTest extends TestCase
+public class TableParserTest
 {
 	private WicketTester tester;
 
-	@Override
+	@BeforeEach
 	protected void setUp() throws Exception
 	{
 		tester = new WicketTester();
 	}
 
-	@Override
+	@AfterEach
 	protected void tearDown() throws Exception
 	{
 		tester.destroy();
 	}
 
+	@Test
 	public void testTable1() throws IOException, ResourceStreamNotFoundException, ParseException
 	{
 		Sheet sheet = new HSSFWorkbook().createSheet();
@@ -76,6 +80,7 @@ public class TableParserTest extends TestCase
 
 	}
 
+	@Test
 	public void testTable2() throws IOException, ResourceStreamNotFoundException, ParseException
 	{
 		Sheet sheet = new HSSFWorkbook().createSheet();

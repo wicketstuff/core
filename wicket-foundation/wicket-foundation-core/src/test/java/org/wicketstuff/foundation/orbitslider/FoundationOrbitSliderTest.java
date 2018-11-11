@@ -1,16 +1,18 @@
 package org.wicketstuff.foundation.orbitslider;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.wicket.model.util.ListModel;
 import org.apache.wicket.request.resource.PackageResourceReference;
 import org.apache.wicket.util.tester.WicketTester;
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 /**
- * 
+ *
  * Unit test for orbit slider component.
  *
  */
@@ -27,12 +29,12 @@ public class FoundationOrbitSliderTest {
 		tester.startComponentInPage(orbitSlider);
 		tester.debugComponentTrees();
 		tester.dumpPage();
-		Assert.assertTrue(tester.getTagByWicketId("container").hasAttribute("data-orbit"));
-		Assert.assertEquals(3, tester.getTagsByWicketId("img").size());
-		Assert.assertEquals(3, tester.getTagsByWicketId("captionContainer").size());
-		Assert.assertEquals(3, tester.getTagsByWicketId("caption").size());
+		assertTrue(tester.getTagByWicketId("container").hasAttribute("data-orbit"));
+		assertEquals(3, tester.getTagsByWicketId("img").size());
+		assertEquals(3, tester.getTagsByWicketId("captionContainer").size());
+		assertEquals(3, tester.getTagsByWicketId("caption").size());
 	}
-	
+
 	@Test
 	public void testFoundationOrbitContentSlider() {
 		WicketTester tester = new WicketTester();
@@ -44,8 +46,8 @@ public class FoundationOrbitSliderTest {
 		tester.startComponentInPage(orbitSlider);
 		tester.debugComponentTrees();
 		tester.dumpPage();
-		Assert.assertTrue(tester.getTagByWicketId("container").hasAttribute("data-orbit"));
-		Assert.assertEquals(3, tester.getTagsByWicketId("heading").size());
-		Assert.assertEquals(3, tester.getTagsByWicketId("subheading").size());
+		assertTrue(tester.getTagByWicketId("container").hasAttribute("data-orbit"));
+		assertEquals(3, tester.getTagsByWicketId("heading").size());
+		assertEquals(3, tester.getTagsByWicketId("subheading").size());
 	}
 }

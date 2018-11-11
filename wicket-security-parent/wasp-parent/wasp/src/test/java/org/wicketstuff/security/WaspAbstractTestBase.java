@@ -16,6 +16,9 @@
  */
 package org.wicketstuff.security;
 
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.fail;
+
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
@@ -25,9 +28,8 @@ import org.apache.wicket.Session;
 import org.apache.wicket.authorization.Action;
 import org.apache.wicket.util.tester.FormTester;
 import org.apache.wicket.util.tester.WicketTester;
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.wicketstuff.security.actions.RegistrationException;
@@ -42,11 +44,11 @@ import org.wicketstuff.security.strategies.WaspAuthorizationStrategy;
 
 /**
  * Base test helper for seperate test classes.
- * 
+ *
  * @author marrink
  * @author Olger Warnier
  */
-public abstract class WaspAbstractTestBase extends Assert
+public abstract class WaspAbstractTestBase
 {
 	protected static final Logger log = LoggerFactory.getLogger(GeneralTest.class);
 
@@ -60,7 +62,7 @@ public abstract class WaspAbstractTestBase extends Assert
 
 	private Class<? extends ISecureComponent> secureClass = ISecureComponent.class;
 
-	@Before
+	@BeforeEach
 	public void setUp()
 	{
 		mock = new WicketTester(application = new WaspWebApplication()
@@ -75,18 +77,20 @@ public abstract class WaspAbstractTestBase extends Assert
 				actionFactory = new WaspActionFactory()
 				{
 					/**
-					 * 
+					 *
 					 * @see WaspActionFactory#getAction(org.apache.wicket.authorization.Action)
 					 */
+					@Override
 					public WaspAction getAction(Action actions)
 					{
 						return new StringAction(convertActions(actions.getName()));
 					}
 
 					/**
-					 * 
+					 *
 					 * @see org.wicketstuff.security.actions.ActionFactory#getAction(String)
 					 */
+					@Override
 					public WaspAction getAction(String actions)
 					{
 						return new StringAction(convertActions(actions));
@@ -100,9 +104,10 @@ public abstract class WaspAbstractTestBase extends Assert
 					}
 
 					/**
-					 * 
+					 *
 					 * @see org.wicketstuff.security.actions.ActionFactory#getAction(Class)
 					 */
+					@Override
 					public WaspAction getAction(Class<? extends WaspAction> waspActionClass)
 					{
 						return new StringAction(waspActionClass.getName()
@@ -111,9 +116,10 @@ public abstract class WaspAbstractTestBase extends Assert
 					}
 
 					/**
-					 * 
+					 *
 					 * @see org.wicketstuff.security.actions.ActionFactory#register(Class, String)
 					 */
+					@Override
 					public WaspAction register(Class<? extends WaspAction> waspActionClass,
 						String name) throws RegistrationException
 					{
@@ -122,18 +128,20 @@ public abstract class WaspAbstractTestBase extends Assert
 					}
 
 					/**
-					 * 
+					 *
 					 * @see org.wicketstuff.security.actions.ActionFactory#getRegisteredActions()
 					 */
+					@Override
 					public List<WaspAction> getRegisteredActions()
 					{
 						return Collections.emptyList();
 					}
 
 					/**
-					 * 
+					 *
 					 * @see org.wicketstuff.security.actions.ActionFactory#destroy()
 					 */
+					@Override
 					public void destroy()
 					{
 						// noop
@@ -146,11 +154,13 @@ public abstract class WaspAbstractTestBase extends Assert
 			{
 				strategyFactory = new StrategyFactory()
 				{
+					@Override
 					public void destroy()
 					{
 						// noop
 					}
 
+					@Override
 					public WaspAuthorizationStrategy newStrategy()
 					{
 						return new TestStrategy(getSecureClass());
@@ -165,16 +175,19 @@ public abstract class WaspAbstractTestBase extends Assert
 				return WaspAbstractTestBase.this.getHomePage();
 			}
 
+			@Override
 			public WaspActionFactory getActionFactory()
 			{
 				return actionFactory;
 			}
 
+			@Override
 			public Class<? extends Page> getLoginPage()
 			{
 				return WaspAbstractTestBase.this.getLoginPage();
 			}
 
+			@Override
 			public StrategyFactory getStrategyFactory()
 			{
 				return strategyFactory;
@@ -183,7 +196,7 @@ public abstract class WaspAbstractTestBase extends Assert
 		mock.setExposeExceptions(false);
 	}
 
-	@After
+	@AfterEach
 	public void tearDown()
 	{
 		mock.getSession().invalidate();
@@ -267,7 +280,7 @@ public abstract class WaspAbstractTestBase extends Assert
 	 * login through the session bypassing the loginpage. Note that the login page automaticly
 	 * grants access to the homepage, here you must do it yourself. Note these rights are added to
 	 * any existing ones replacing only if the class was already added previously.
-	 * 
+	 *
 	 * @param authorized
 	 *            map containing classes and the actions the users has on them.
 	 */
@@ -287,7 +300,7 @@ public abstract class WaspAbstractTestBase extends Assert
 	/**
 	 * Logoff. If a map is specified only a partial logoff is performed removing only those rights
 	 * in the map.
-	 * 
+	 *
 	 * @param authorized
 	 */
 	protected void logoff(Map<String, WaspAction> authorized)

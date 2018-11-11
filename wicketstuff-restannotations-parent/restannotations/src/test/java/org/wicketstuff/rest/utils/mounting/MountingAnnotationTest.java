@@ -16,18 +16,19 @@
  */
 package org.wicketstuff.rest.utils.mounting;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 import org.apache.wicket.authroles.authorization.strategies.role.Roles;
 import org.apache.wicket.util.tester.WicketTester;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.wicketstuff.rest.WicketApplication;
 
 public class MountingAnnotationTest
 {
 	private WicketTester tester;
 
-	@Before
+	@BeforeEach
 	public void setUp()
 	{
 		tester = new WicketTester(new WicketApplication(new Roles())
@@ -46,7 +47,7 @@ public class MountingAnnotationTest
 	{
 		tester.getRequest().setMethod("GET");
 		tester.executeUrl("./mountedpath");
-		Assert.assertEquals(200, tester.getLastResponse().getStatus());
+		assertEquals(200, tester.getLastResponse().getStatus());
 	}
 
 }

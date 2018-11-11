@@ -18,17 +18,18 @@
  */
 package wicket.contrib.phonebook.web;
 
-import wicket.contrib.phonebook.Contact;
-import wicket.contrib.phonebook.ContactDao;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import org.easymock.EasyMock;
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
+
+import wicket.contrib.phonebook.Contact;
+import wicket.contrib.phonebook.ContactDao;
 
 /**
  * @author Kare Nuorteva
  */
-public class DetachableContactModelTest extends Assert
+public class DetachableContactModelTest
 {
     @Test
 	public void testLoad() throws Exception

@@ -16,6 +16,8 @@
  */
 package org.wicketstuff.security;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -23,7 +25,7 @@ import java.util.Map;
 import org.apache.wicket.markup.html.pages.AccessDeniedPage;
 import org.apache.wicket.util.tester.FormTester;
 import org.apache.wicket.util.tester.TagTester;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.wicketstuff.security.actions.WaspAction;
 import org.wicketstuff.security.components.SecureComponentHelper;
 import org.wicketstuff.security.components.markup.html.form.SecureForm;
@@ -31,7 +33,7 @@ import org.wicketstuff.security.pages.secure.FormPage;
 
 /**
  * Test links
- * 
+ *
  * @author marrink
  */
 public class SecureFormTest extends WaspAbstractTestBase

@@ -1,4 +1,4 @@
-/* 
+/*
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
@@ -13,14 +13,15 @@
  */
 package org.wicketstuff.gchart.gchart.options;
 
-import org.wicketstuff.gchart.Chart;
-import org.apache.wicket.model.IModel;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
+
+import org.apache.wicket.model.IModel;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.wicketstuff.gchart.Chart;
 
 /**
  *
@@ -28,17 +29,17 @@ import static org.mockito.Mockito.when;
  */
 public class AbstractOptionHelperTest {
     private Chart chart;
-    
+
     public AbstractOptionHelperTest() {
         chart = mock(Chart.class);
         when(chart.getId()).thenReturn("myChart");
     }
-    
-    @Before
+
+    @BeforeEach
     public void setUp() {
     }
-    
-    @After
+
+    @AfterEach
     public void tearDown() {
     }
 
@@ -114,5 +115,5 @@ public class AbstractOptionHelperTest {
         }
 
     }
-    
+
 }

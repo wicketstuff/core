@@ -16,6 +16,12 @@
  */
 package org.wicketstuff.security.hive.config;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.fail;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -27,8 +33,9 @@ import java.net.URL;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import junit.framework.TestCase;
-
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.wicketstuff.security.actions.Actions;
 import org.wicketstuff.security.hive.Hive;
 import org.wicketstuff.security.hive.authorization.EverybodyPrincipal;
@@ -39,25 +46,17 @@ import org.wicketstuff.security.hive.authorization.TestPermission;
 /**
  * @author marrink
  */
-public class PolicyFileHiveFactoryTest extends TestCase
+public class PolicyFileHiveFactoryTest
 {
 	private static final String KEY = "POLICY_TEST";
 
-	/**
-	 * @param name
-	 */
-	public PolicyFileHiveFactoryTest(String name)
-	{
-		super(name);
-	}
-
-	@Override
+	@BeforeEach
 	protected void setUp()
 	{
 		new TestActionFactory(KEY);
 	}
 
-	@Override
+	@AfterEach
 	protected void tearDown()
 	{
 		Actions.unregisterActionFactory(KEY);
@@ -68,6 +67,7 @@ public class PolicyFileHiveFactoryTest extends TestCase
 	 * {@link org.wicketstuff.security.hive.config.PolicyFileHiveFactory#addPolicyFile(java.net.URL)}
 	 * .
 	 */
+	@Test
 	public void testAddPolicyFile()
 	{
 		PolicyFileHiveFactory factory = new PolicyFileHiveFactory(Actions.getActionFactory(KEY));
@@ -87,6 +87,7 @@ public class PolicyFileHiveFactoryTest extends TestCase
 	 * Test method for
 	 * {@link org.wicketstuff.security.hive.config.PolicyFileHiveFactory#createHive()}. using url's
 	 */
+	@Test
 	public void testCreateHive()
 	{
 		PolicyFileHiveFactory factory = new PolicyFileHiveFactory(Actions.getActionFactory(KEY));
@@ -99,6 +100,7 @@ public class PolicyFileHiveFactoryTest extends TestCase
 	 * {@link org.wicketstuff.security.hive.config.PolicyFileHiveFactory#createHive()}. using
 	 * streams
 	 */
+	@Test
 	public void testCreateHive2()
 	{
 		PolicyFileHiveFactory factory = new PolicyFileHiveFactory(Actions.getActionFactory(KEY));
@@ -126,6 +128,7 @@ public class PolicyFileHiveFactoryTest extends TestCase
 	 * {@link org.wicketstuff.security.hive.config.PolicyFileHiveFactory#createHive()}. using
 	 * readers
 	 */
+	@Test
 	public void testCreateHive3()
 	{
 		PolicyFileHiveFactory factory = new PolicyFileHiveFactory(Actions.getActionFactory(KEY));
@@ -203,6 +206,7 @@ public class PolicyFileHiveFactoryTest extends TestCase
 	/**
 	 * Test if the regex used in the factory is OK.
 	 */
+	@Test
 	public void testRegExPrincipalPattern()
 	{
 		Pattern principalPattern = null;
@@ -255,6 +259,7 @@ public class PolicyFileHiveFactoryTest extends TestCase
 	/**
 	 * Test if the regex used in the factory is OK.
 	 */
+	@Test
 	public void testRegExPermissionPattern()
 	{
 		Pattern permissionPattern = null;
@@ -326,6 +331,7 @@ public class PolicyFileHiveFactoryTest extends TestCase
 	/**
 	 * Test if the regex used in the factory is OK.
 	 */
+	@Test
 	public void testRegExAliasPattern()
 	{
 		Pattern aliasPattern = null;
@@ -388,6 +394,7 @@ public class PolicyFileHiveFactoryTest extends TestCase
 	/**
 	 * test handling of nested aliases
 	 */
+	@Test
 	public void testResolveAliases()
 	{
 		try
@@ -432,6 +439,7 @@ public class PolicyFileHiveFactoryTest extends TestCase
 	/**
 	 * test handling of nested aliases
 	 */
+	@Test
 	public void testResolveAliases2()
 	{
 		try
@@ -476,6 +484,7 @@ public class PolicyFileHiveFactoryTest extends TestCase
 	/**
 	 * Test handling null urls, readers and streams.
 	 */
+	@Test
 	public void testAddNull()
 	{
 		PolicyFileHiveFactory factory = new PolicyFileHiveFactory(Actions.getActionFactory(KEY));

@@ -1,4 +1,4 @@
-/* 
+/*
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
@@ -13,17 +13,19 @@
  */
 package org.wicketstuff.gchart.gchart;
 
-import org.wicketstuff.gchart.DataTable;
-import org.wicketstuff.gchart.ColumnType;
-import org.wicketstuff.gchart.DataRow;
-import org.wicketstuff.gchart.ColumnDeclaration;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
-import static org.junit.Assert.*;
+
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.wicketstuff.gchart.ColumnDeclaration;
+import org.wicketstuff.gchart.ColumnType;
+import org.wicketstuff.gchart.DataRow;
+import org.wicketstuff.gchart.DataTable;
 
 /**
  *
@@ -37,7 +39,7 @@ public class DataTableTest {
     public DataTableTest() {
     }
 
-    @Before
+    @BeforeEach
     public void setUp() {
         colDefs = new ArrayList<>(2);
         colDefs.add(new ColumnDeclaration(ColumnType.STRING, "Topping"));
@@ -51,7 +53,7 @@ public class DataTableTest {
         rows.add(new DataRow(Arrays.asList(new Object[]{"Pepperoni", 2})));
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
     }
 

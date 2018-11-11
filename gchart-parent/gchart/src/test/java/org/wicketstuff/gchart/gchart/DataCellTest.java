@@ -1,4 +1,4 @@
-/* 
+/*
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
@@ -13,15 +13,16 @@
  */
 package org.wicketstuff.gchart.gchart;
 
-import org.wicketstuff.gchart.TimeOfDay;
-import org.wicketstuff.gchart.DataCell;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 import java.util.GregorianCalendar;
 import java.util.TimeZone;
 
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
-import static org.junit.Assert.*;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.wicketstuff.gchart.DataCell;
+import org.wicketstuff.gchart.TimeOfDay;
 
 /**
  *
@@ -32,11 +33,11 @@ public class DataCellTest {
     public DataCellTest() {
     }
 
-    @Before
+    @BeforeEach
     public void setUp() {
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
     }
 
@@ -57,17 +58,17 @@ public class DataCellTest {
         expResult = "{\"v\":new Date(1500539480000)}";
         result = instance.toJSON().toString();
         assertEquals(expResult, result);
-        
+
         instance = new DataCell(cal.getTime());
         expResult = "{\"v\":new Date(1500539480000)}";
         result = instance.toJSON().toString();
         assertEquals(expResult, result);
-        
+
         instance = new DataCell(true);
         expResult = "{\"v\":\"true\"}";
         result = instance.toJSON().toString();
         assertEquals(expResult, result);
-        
+
         instance = new DataCell(new TimeOfDay(20, 15, 14));
         expResult = "{\"v\":[20,15,14]}";
         result = instance.toJSON().toString();

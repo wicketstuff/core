@@ -22,7 +22,7 @@ import wicket.contrib.phonebook.web.PhonebookApplicationForTesting;
 
 import org.apache.wicket.markup.html.panel.FeedbackPanel;
 import org.apache.wicket.util.tester.WicketTester;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 /**
  * @author Kare Nuorteva

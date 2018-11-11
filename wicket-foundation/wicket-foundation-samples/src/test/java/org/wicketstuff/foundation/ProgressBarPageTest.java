@@ -1,6 +1,6 @@
 package org.wicketstuff.foundation;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.wicketstuff.foundation.ProgressBarPage;
 
 public class ProgressBarPageTest extends AbstractPageTest {

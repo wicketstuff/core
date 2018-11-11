@@ -1,9 +1,11 @@
 package org.wicketstuff.foundation.revealmodal;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import org.apache.wicket.model.Model;
 import org.apache.wicket.util.tester.WicketTester;
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 public class FoundationRevealModalTest {
 
@@ -16,8 +18,8 @@ public class FoundationRevealModalTest {
 		tester.dumpPage();
 		String dataRevealId = tester.getTagByWicketId("openLink").getAttribute("data-reveal-id");
 		String modalContentId = tester.getTagByWicketId("modalContent").getAttribute("id");
-		Assert.assertEquals(dataRevealId, modalContentId);
-		Assert.assertEquals("reveal-modal", tester.getTagByWicketId("modalContent").getAttribute("class"));
-		Assert.assertTrue(tester.getTagByWicketId("modalContent").hasAttribute("data-reveal"));
+		assertEquals(dataRevealId, modalContentId);
+		assertEquals("reveal-modal", tester.getTagByWicketId("modalContent").getAttribute("class"));
+		assertTrue(tester.getTagByWicketId("modalContent").hasAttribute("data-reveal"));
 	}
 }

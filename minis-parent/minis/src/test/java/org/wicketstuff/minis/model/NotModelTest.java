@@ -16,41 +16,46 @@
  */
 package org.wicketstuff.minis.model;
 
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import org.apache.wicket.model.Model;
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 public class NotModelTest
 {
 
-	@Test(expected = NullPointerException.class)
+	@Test
 	public void testNullDependentModelThrowsNPE()
 	{
-		new NotModel(null);
+		assertThrows(NullPointerException.class, () -> {
+			new NotModel(null);
+		});
 	}
 
 	@Test
 	public void testTrueDependentModelYieldsFalse()
 	{
-		Assert.assertFalse(new NotModel(Model.of(true)).getObject());
+		assertFalse(new NotModel(Model.of(true)).getObject());
 	}
 
 	@Test
 	public void testFalseDependentModelYieldsTrue()
 	{
-		Assert.assertTrue(new NotModel(Model.of(false)).getObject());
+		assertTrue(new NotModel(Model.of(false)).getObject());
 	}
-	
+
 	@Test
 	public void testNullDependentModelYieldsTrueByDefault()
 	{
-		Assert.assertTrue(new NotModel(Model.of((Boolean)null)).getObject());
+		assertTrue(new NotModel(Model.of((Boolean)null)).getObject());
 	}
 
 	@Test
 	public void testSpecifyNullDependentModelResult()
 	{
-		Assert.assertFalse(new NotModel(Model.of((Boolean)null), false).getObject());
+		assertFalse(new NotModel(Model.of((Boolean)null), false).getObject());
 	}
 
 }

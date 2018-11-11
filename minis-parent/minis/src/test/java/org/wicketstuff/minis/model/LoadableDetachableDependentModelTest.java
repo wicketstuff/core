@@ -16,13 +16,16 @@
  */
 package org.wicketstuff.minis.model;
 
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertSame;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
 import org.apache.wicket.markup.Markup;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.model.LoadableDetachableModel;
 import org.apache.wicket.util.tester.WicketTester;
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Test;
 
 public class LoadableDetachableDependentModelTest
 {
@@ -32,25 +35,27 @@ public class LoadableDetachableDependentModelTest
 
 	private final WicketTester tester = new WicketTester();
 
-	@After
+	@AfterEach
 	public void after()
 	{
 		tester.destroy();
 	}
 
-	@Test(expected = NullPointerException.class)
+	@Test
 	public void testNullDependentModelThrowsNPE()
 	{
-		new LoadableDetachableDependentModel<String, String>(null)
-		{
-
-			@Override
-			protected String load()
+		assertThrows(NullPointerException.class, () -> {
+			new LoadableDetachableDependentModel<String, String>(null)
 			{
-				return "test";
-			}
+				private static final long serialVersionUID = 1L;
 
-		};
+				@Override
+				protected String load()
+				{
+					return "test";
+				}
+			};
+		});
 	}
 
 	@Test
@@ -59,6 +64,7 @@ public class LoadableDetachableDependentModelTest
 
 		LoadableDetachableModel<String> dependentModel = new LoadableDetachableModel<String>()
 		{
+			private static final long serialVersionUID = 1L;
 
 			@Override
 			protected String load()
@@ -70,17 +76,18 @@ public class LoadableDetachableDependentModelTest
 		LoadableDetachableDependentModel<String, String> model = new LoadableDetachableDependentModel<String, String>(
 			dependentModel)
 		{
+			private static final long serialVersionUID = 1L;
 
 			@Override
 			protected String load()
 			{
 				return "test";
 			}
-			
+
 		};
-		Assert.assertSame(dependentModel, model.getDependentModel());
+		assertSame(dependentModel, model.getDependentModel());
 		tester.startComponentInPage(new Label(CID_LABEL, model), Markup.of(MARKUP));
-		Assert.assertFalse(dependentModel.isAttached());
+		assertFalse(dependentModel.isAttached());
 
 	}
 

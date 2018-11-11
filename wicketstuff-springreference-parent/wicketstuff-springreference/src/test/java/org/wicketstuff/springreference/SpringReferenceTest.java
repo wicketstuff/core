@@ -13,6 +13,11 @@
  */
 package org.wicketstuff.springreference;
 
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNotSame;
+
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -23,23 +28,22 @@ import org.apache.wicket.Application;
 import org.apache.wicket.ThreadContext;
 import org.apache.wicket.mock.MockApplication;
 import org.hamcrest.CoreMatchers;
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.NoSuchBeanDefinitionException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 /**
  * Tests for {@link SpringReference} and {@link SpringReferenceSupporter}.
- * 
+ *
  * @author akiraly
  */
-@RunWith(SpringJUnit4ClassRunner.class)
+@ExtendWith(SpringExtension.class)
 @ContextConfiguration
 public class SpringReferenceTest
 {
@@ -47,7 +51,7 @@ public class SpringReferenceTest
 	@Autowired
 	private ApplicationContext applicationContext;
 
-	@Before
+	@BeforeEach
 	public void before()
 	{
 		Application application = new MockApplication();
@@ -57,7 +61,7 @@ public class SpringReferenceTest
 			applicationContext));
 	}
 
-	@After
+	@AfterEach
 	public void after()
 	{
 		ThreadContext.detach();
@@ -148,36 +152,36 @@ public class SpringReferenceTest
 		SpringReference<ConstructorService> refClazzOnly2 = refClazzOnly.clone();
 		SpringReference<ConstructorService> refNamed2 = refNamed.clone();
 
-		Assert.assertNotSame(refClazzOnly, refClazzOnly2);
-		Assert.assertNotSame(refNamed, refNamed2);
+		assertNotSame(refClazzOnly, refClazzOnly2);
+		assertNotSame(refNamed, refNamed2);
 
 		refClazzOnly.get();
 
-		Assert.assertThat(refClazzOnly, CoreMatchers.not(CoreMatchers.equalTo(refNamed)));
+		assertThat(refClazzOnly, CoreMatchers.not(CoreMatchers.equalTo(refNamed)));
 
 		refNamed.get();
 
-		Assert.assertEquals(refClazzOnly.hashCode(), refClazzOnly2.hashCode());
-		Assert.assertEquals(refNamed.hashCode(), refNamed2.hashCode());
+		assertEquals(refClazzOnly.hashCode(), refClazzOnly2.hashCode());
+		assertEquals(refNamed.hashCode(), refNamed2.hashCode());
 
-		Assert.assertEquals(refClazzOnly, refClazzOnly2);
-		Assert.assertEquals(refNamed, refNamed2);
+		assertEquals(refClazzOnly, refClazzOnly2);
+		assertEquals(refNamed, refNamed2);
 	}
 
 	protected <T extends AService> void testReference(SpringReference<T> reference,
 		int expectedTreasure)
 	{
-		Assert.assertNotNull(reference);
+		assertNotNull(reference);
 		T service = reference.get();
-		Assert.assertNotNull(service);
+		assertNotNull(service);
 
 		reference = writeRead(reference);
 
-		Assert.assertNotNull(reference);
+		assertNotNull(reference);
 		service = reference.get();
-		Assert.assertNotNull(service);
+		assertNotNull(service);
 
-		Assert.assertEquals(expectedTreasure, service.doStuff());
+		assertEquals(expectedTreasure, service.doStuff());
 	}
 
 	/**
@@ -208,7 +212,7 @@ public class SpringReferenceTest
 				is = new ObjectInputStream(bais);
 				@SuppressWarnings("unchecked")
 				SpringReference<T> result = (SpringReference<T>)is.readObject();
-				Assert.assertNotSame(reference, result);
+				assertNotSame(reference, result);
 				return result;
 			}
 			finally

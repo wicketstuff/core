@@ -16,8 +16,10 @@
  */
 package org.wicketstuff.minis.behavior.apanel;
 
-import org.junit.Assert;
-import org.junit.Test;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
+import org.junit.jupiter.api.Test;
 
 public class TestGridLayoutConstraint
 {
@@ -32,11 +34,11 @@ public class TestGridLayoutConstraint
 			{
 				System.out.println("row = " + row);
 				System.out.println("col = " + col);
-				Assert.assertTrue(constraint.contains(col, row));
+				assertTrue(constraint.contains(col, row));
 			}
 		}
-		Assert.assertFalse(constraint.contains(0, 0));
-		Assert.assertFalse(constraint.contains(4, 4));
+		assertFalse(constraint.contains(0, 0));
+		assertFalse(constraint.contains(4, 4));
 	}
 
 	@Test
@@ -44,11 +46,11 @@ public class TestGridLayoutConstraint
 	{
 		final GridLayoutConstraint constraint = new GridLayoutConstraint(1, 1).setColSpan(3)
 			.setRowSpan(3);
-		Assert.assertFalse(constraint.intersectsWith(new GridLayoutConstraint(0, 0)));
-		Assert.assertTrue(constraint.intersectsWith(new GridLayoutConstraint(1, 1)));
-		Assert.assertTrue(constraint.intersectsWith(new GridLayoutConstraint(2, 2)));
-		Assert.assertTrue(constraint.intersectsWith(new GridLayoutConstraint(3, 3)));
-		Assert.assertFalse(constraint.intersectsWith(new GridLayoutConstraint(4, 4)));
+		assertFalse(constraint.intersectsWith(new GridLayoutConstraint(0, 0)));
+		assertTrue(constraint.intersectsWith(new GridLayoutConstraint(1, 1)));
+		assertTrue(constraint.intersectsWith(new GridLayoutConstraint(2, 2)));
+		assertTrue(constraint.intersectsWith(new GridLayoutConstraint(3, 3)));
+		assertFalse(constraint.intersectsWith(new GridLayoutConstraint(4, 4)));
 	}
 
 	@Test
@@ -58,9 +60,9 @@ public class TestGridLayoutConstraint
 		final GridLayoutConstraint constraint2 = new GridLayoutConstraint(0, 0);
 		final GridLayoutConstraint constraint3 = new GridLayoutConstraint(1, 1);
 
-		Assert.assertTrue(constraint1.compareTo(constraint2) == 0);
-		Assert.assertTrue(constraint1.equals(constraint2));
-		Assert.assertFalse(constraint2.compareTo(constraint3) == 0);
-		Assert.assertFalse(constraint2.equals(constraint3));
+		assertTrue(constraint1.compareTo(constraint2) == 0);
+		assertTrue(constraint1.equals(constraint2));
+		assertFalse(constraint2.compareTo(constraint3) == 0);
+		assertFalse(constraint2.equals(constraint3));
 	}
 }

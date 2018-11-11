@@ -4,34 +4,19 @@
  */
 package org.wicketstuff.jqplot.lib.test;
 
+import org.junit.jupiter.api.Test;
 import org.wicketstuff.jqplot.lib.JqPlotUtils;
 import org.wicketstuff.jqplot.lib.chart.LabeledLineChart;
 import org.wicketstuff.jqplot.lib.chart.LineChart;
 import org.wicketstuff.jqplot.lib.data.item.LabeledItem;
 
-import junit.framework.TestCase;
-
 /**
  *
  * @author inaiat
  */
-public class LineChartTest extends TestCase {
-
-    public LineChartTest(String testName) {
-        super(testName);
-    }
-
-    @Override
-    protected void setUp() throws Exception {
-        super.setUp();
-    }
-
-    @Override
-    protected void tearDown() throws Exception {
-        super.tearDown();
-    }
-
-    public void testAddValues() {
+public class LineChartTest {
+	@Test
+	public void testAddValues() {
 
         Integer[] values = {1, 2, 3, 4, 5};
         LineChart<Integer> instance = new LineChart<>();
@@ -39,6 +24,7 @@ public class LineChartTest extends TestCase {
         System.out.println(JqPlotUtils.createJquery(instance, "chart"));
     }
 
+	@Test
     public void testBarChart() {
         LabeledLineChart<Integer> chart = new LabeledLineChart<>("Test","Incliment Occurrance","Incliment Factor",15);
         chart.addValue(new LabeledItem<>("1/1/2008", 42));

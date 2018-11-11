@@ -18,15 +18,16 @@
  */
 package wicket.contrib.phonebook.web;
 
-import wicket.contrib.phonebook.web.page.ListContactsPage;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
+
+import wicket.contrib.phonebook.web.page.ListContactsPage;
 
 /**
  * @author Kare Nuorteva
  */
-public class BasePhonebookApplicationTest extends Assert
+public class BasePhonebookApplicationTest
 {
     @Test
 	public void testHomePageShouldListContacts() throws Exception

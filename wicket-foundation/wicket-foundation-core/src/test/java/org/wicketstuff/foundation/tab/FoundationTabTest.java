@@ -1,5 +1,8 @@
 package org.wicketstuff.foundation.tab;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,13 +19,12 @@ import org.apache.wicket.util.resource.IResourceStream;
 import org.apache.wicket.util.resource.StringResourceStream;
 import org.apache.wicket.util.tester.TagTester;
 import org.apache.wicket.util.tester.WicketTester;
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
-public class FoundationTabTest extends Assert {
-	
+public class FoundationTabTest {
+
 	public static final String THIRD_TAB_TEXT = "This is the third panel of the basic tab example. This is the third panel of the basic tab example.";
 	public static final String SECOND_TAB_TEXT = "This is the second panel of the basic tab example. This is the second panel of the basic tab example.";
 	public static final String FIRST_TAB_TEXT = "This is the first panel of the basic tab example. You can place all sorts of content here including a grid.";
@@ -30,12 +32,12 @@ public class FoundationTabTest extends Assert {
 
 	private WicketTester tester;
 
-	@Before
+	@BeforeEach
 	public void before() {
 		tester = new WicketTester();
 	}
 
-	@After
+	@AfterEach
 	public void after() {
 		tester.destroy();
 	}
@@ -44,6 +46,7 @@ public class FoundationTabTest extends Assert {
 		tabs = new ArrayList<>();
 
 		tabs.add(new AbstractTab(Model.of("title 1")) {
+			private static final long serialVersionUID = 1L;
 
 			@Override
 			public WebMarkupContainer getPanel(String panelId) {
@@ -52,14 +55,16 @@ public class FoundationTabTest extends Assert {
 		});
 
 		tabs.add(new AbstractTab(Model.of("title 2")) {
+			private static final long serialVersionUID = 1L;
 
 			@Override
 			public WebMarkupContainer getPanel(String panelId) {
 				return new TextualPanel(panelId, Model.of(SECOND_TAB_TEXT));
 			}
 		});
-		
+
 		tabs.add(new AbstractTab(Model.of("title 3")) {
+			private static final long serialVersionUID = 1L;
 
 			@Override
 			public WebMarkupContainer getPanel(String panelId) {
@@ -67,29 +72,29 @@ public class FoundationTabTest extends Assert {
 			}
 		});
 	}
-	
+
 	@Test
 	public void renderSimpleTab() throws Exception {
 		FoundationTab<ITab> tab = new FoundationTab<>("id", tabs);
-		
+
 		tester.startComponentInPage(tab);
-		
+
 		testRenderedTab();
-		
+
 		//render a vertical tab component
 		tab = new FoundationTab<>("id", tabs);
 		tester.startComponentInPage(tab.setVerticalTab(true));
 		TagTester tagByWicketId = tester.getTagByWicketId("tabs-container");
-		
+
 		assertTrue(tagByWicketId.getAttributeContains("class", "vertical"));
 	}
-	
+
 	@Test
 	public void renderAjaxTab() {
 		AjaxFoundationTab<ITab> tab = new AjaxFoundationTab<>("id", tabs);
-		
+
 		tester.startComponentInPage(tab);
-		
+
 		testRenderedTab();
 	}
 
@@ -97,23 +102,23 @@ public class FoundationTabTest extends Assert {
 		//must have a rendered title section for each tab.
 		List<TagTester> tagsByWicketId = tester.getTagsByWicketId("title");
 		assertEquals(tabs.size(), tagsByWicketId.size());
-		
+
 		for (TagTester tagTester : tagsByWicketId) {
 			assertTrue(tagTester.getValue().startsWith("title"));
 		}
-		
+
 		//the first tab must be rendered as default tab
 		tester.assertContains(FIRST_TAB_TEXT);
-		
+
 		//click on second link and check that the resulting content is ok
 		tester.clickLink("id:tabs-container:tabs:1:link");
 		tester.assertContains(SECOND_TAB_TEXT);
 	}
-	
+
 	class TextualPanel extends Panel implements IMarkupResourceStreamProvider, IMarkupCacheKeyProvider {
 
 		/**
-		 * 
+		 *
 		 */
 		private static final long serialVersionUID = 1L;
 

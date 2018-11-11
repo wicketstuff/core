@@ -17,7 +17,7 @@
 package org.wicketstuff.rest.lambda.mounter;
 
 import org.apache.wicket.protocol.http.WebApplication;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.wicketstuff.rest.utils.http.HttpMethod;
 import org.wicketstuff.rest.utils.test.RestTestCase;
 

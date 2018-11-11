@@ -16,7 +16,9 @@
  */
 package org.wicketstuff.rest;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.io.BufferedReader;
 import java.io.StringReader;
@@ -31,13 +33,9 @@ import org.apache.wicket.Session;
 import org.apache.wicket.WicketRuntimeException;
 import org.apache.wicket.authroles.authorization.strategies.role.Roles;
 import org.apache.wicket.util.tester.WicketTester;
-import com.github.openjson.JSONObject;
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.ExpectedException;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.wicketstuff.rest.contenthandling.mimetypes.RestMimeTypes;
 import org.wicketstuff.rest.contenthandling.objserialdeserial.TestJsonDesSer;
 import org.wicketstuff.rest.contenthandling.webserialdeserial.JsonTestWebSerialDeserial;
@@ -45,6 +43,8 @@ import org.wicketstuff.rest.resource.AbstractRestResource;
 import org.wicketstuff.rest.resource.RestResourceFullAnnotated;
 import org.wicketstuff.rest.utils.test.BufferedMockRequest;
 import org.wicketstuff.rest.utils.wicket.bundle.DefaultBundleResolver;
+
+import com.github.openjson.JSONObject;
 
 
 /**
@@ -55,20 +55,17 @@ public class RestResourcesTest
 	private WicketTester tester;
 	private final Roles roles = new Roles();
 
-	@Rule
-	public ExpectedException exception = ExpectedException.none();
-
-	@Before
+	@BeforeEach
 	public void setUp()
 	{
 		tester = new WicketTester(new WicketApplication(roles));
 	}
 
-	@After
+	@AfterEach
 	public void tearDown()
 	{
 		// session must remain temporary.
-		Assert.assertTrue(Session.get().isTemporary());
+		assertTrue(Session.get().isTemporary());
 		tester.destroy();
 	}
 
@@ -86,7 +83,7 @@ public class RestResourcesTest
 
 		tester.getRequest().setMethod("GET");
 		tester.executeUrl("./api/hjjzj");
-		Assert.assertEquals(400, tester.getLastResponse().getStatus());
+		assertEquals(400, tester.getLastResponse().getStatus());
 
 		tester.getRequest().setMethod("POST");
 		tester.executeUrl("./api/monoseg");
@@ -130,7 +127,7 @@ public class RestResourcesTest
 	{
 		tester.getRequest().setMethod("GET");
 		tester.executeUrl("./api/wrongParamValue?intValue=AAA");
-		Assert.assertEquals(400, tester.getLastResponse().getStatus());
+		assertEquals(400, tester.getLastResponse().getStatus());
 	}
 
 	@Test
@@ -161,9 +158,9 @@ public class RestResourcesTest
 		tester.executeUrl("./api");
 
 		JSONObject actual = new JSONObject(tester.getLastResponseAsString());
-		Assert.assertEquals("Smith", actual.getString("surname"));
-		Assert.assertEquals("Mary", actual.getString("name"));
-		Assert.assertEquals("m.smith@gmail.com", actual.getString("email"));
+		assertEquals("Smith", actual.getString("surname"));
+		assertEquals("Mary", actual.getString("name"));
+		assertEquals("m.smith@gmail.com", actual.getString("email"));
 	}
 
 	@Test
@@ -173,7 +170,7 @@ public class RestResourcesTest
 		tester.executeUrl("./api2/foo");
 		String response = tester.getLastResponseAsString();
 
-		Assert.assertTrue(response.contains(AbstractRestResource.NO_SUITABLE_METHOD_FOUND));
+		assertTrue(response.contains(AbstractRestResource.NO_SUITABLE_METHOD_FOUND));
 	}
 
 	@Test
@@ -183,14 +180,14 @@ public class RestResourcesTest
 		roles.clear();
 		tester.getRequest().setMethod("GET");
 		tester.executeUrl("./api/admin");
-		Assert.assertEquals(401, tester.getLastResponse().getStatus());
+		assertEquals(401, tester.getLastResponse().getStatus());
 		testIfResponseStringIsEqual(AbstractRestResource.USER_IS_NOT_ALLOWED);
 
 		// add the role to pass the test
 		roles.add("ROLE_ADMIN");
 		tester.getRequest().setMethod("GET");
 		tester.executeUrl("./api/admin");
-		Assert.assertEquals(200, tester.getLastResponse().getStatus());
+		assertEquals(200, tester.getLastResponse().getStatus());
 		testIfResponseStringIsEqual("testMethodAdminAuth");
 	}
 
@@ -216,7 +213,7 @@ public class RestResourcesTest
 		String response = tester.getLastResponseAsString();
 		DefaultBundleResolver resolver = new DefaultBundleResolver(RestResourceFullAnnotated.class);
 
-		assertEquals(resolver.getMessage("CustomValidator", Collections.EMPTY_MAP), response);
+		assertEquals(resolver.getMessage("CustomValidator", Collections.emptyMap()), response);
 	}
 
 	@Test
@@ -224,8 +221,9 @@ public class RestResourcesTest
 	{
 		// RestResourceFullAnnotated uses annotation AuthorizeInvocation
 		// hence it needs a roleCheckingStrategy to be built
-		exception.expect(WicketRuntimeException.class);
-		new RestResourceFullAnnotated(new JsonTestWebSerialDeserial());
+		assertThrows(WicketRuntimeException.class, () -> {
+			new RestResourceFullAnnotated(new JsonTestWebSerialDeserial());
+		});
 	}
 
 	@Test
@@ -245,13 +243,13 @@ public class RestResourcesTest
 		tester.getRequest().setCookies(new Cookie[] { new Cookie("credential", "bob") });
 		tester.executeUrl("./api2/recordlog/message/07-23-2007_success");
 
-		Assert.assertEquals(200, tester.getLastResponse().getStatus());
+		assertEquals(200, tester.getLastResponse().getStatus());
 
 		tester.getRequest().setMethod("GET");
 		tester.getRequest().setCookies(new Cookie[] { new Cookie("credential", "bob") });
 		tester.executeUrl("./api2/recordlog/message/34xxxxx");
 
-		Assert.assertEquals(400, tester.getLastResponse().getStatus());
+		assertEquals(400, tester.getLastResponse().getStatus());
 	}
 
 	@Test
@@ -272,6 +270,6 @@ public class RestResourcesTest
 
 	protected void testIfResponseStringIsEqual(String value)
 	{
-		Assert.assertEquals(value, tester.getLastResponseAsString());
+		assertEquals(value, tester.getLastResponseAsString());
 	}
 }

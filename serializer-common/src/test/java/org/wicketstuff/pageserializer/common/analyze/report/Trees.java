@@ -20,11 +20,12 @@
  */
 package org.wicketstuff.pageserializer.common.analyze.report;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.junit.Assert;
 import org.wicketstuff.pageserializer.common.analyze.ISerializedObjectTree;
 import org.wicketstuff.pageserializer.common.analyze.ImmutableTree;
 import org.wicketstuff.pageserializer.common.analyze.ObjectId;
@@ -35,7 +36,7 @@ public class Trees
 	{
 		// no instance
 	}
-	
+
 	/**
 	 * returns tree from text file
 	 * @param clazz package and base filename
@@ -46,15 +47,15 @@ public class Trees
 	public static ISerializedObjectTree fromResource(Class<?> clazz, String postFix) throws IOException {
 		return TreeReader.fromResource(clazz, postFix+".tree");
 	}
-	
+
 	public static void assertEqualsTree(ISerializedObjectTree expected, ISerializedObjectTree result)
 	{
-		Assert.assertEquals(expected+":id", expected.id(), result.id());
-		Assert.assertEquals(expected + ":type", expected.type(), result.type());
-		Assert.assertEquals(expected+":label", expected.label(), result.label());
-		Assert.assertEquals(expected+":size", expected.size(), result.size());
-		Assert.assertEquals(expected+":childSize", expected.childSize(), result.childSize());
-		Assert.assertEquals(expected+":children", expected.children().size(), result.children().size());
+		assertEquals(expected.id(), result.id(), expected+":id");
+		assertEquals(expected.type(), result.type(), expected + ":type");
+		assertEquals(expected.label(), result.label(), expected+":label");
+		assertEquals(expected.size(), result.size(), expected+":size");
+		assertEquals(expected.childSize(), result.childSize(), expected+":childSize");
+		assertEquals(expected.children().size(), result.children().size(), expected+":children");
 		for (int i = 0, s = expected.children().size(); i < s; i++)
 		{
 			assertEqualsTree(expected.children().get(i), result.children().get(i));

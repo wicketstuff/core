@@ -16,6 +16,8 @@
  */
 package org.wicketstuff.security;
 
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import java.net.MalformedURLException;
 
 import org.apache.wicket.Page;
@@ -23,10 +25,9 @@ import org.apache.wicket.protocol.http.WebApplication;
 import org.apache.wicket.util.tester.FormTester;
 import org.apache.wicket.util.tester.TagTester;
 import org.apache.wicket.util.tester.WicketTester;
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.wicketstuff.security.hive.HiveMind;
@@ -40,7 +41,7 @@ import org.wicketstuff.security.swarm.SwarmWebApplication;
 /**
  * @author marrink
  */
-public class ContainerTest extends Assert
+public class ContainerTest
 {
 	private static final Logger log = LoggerFactory.getLogger(ContainerTest.class);
 
@@ -54,7 +55,7 @@ public class ContainerTest extends Assert
 	 */
 	protected WicketTester mock;
 
-	@Before
+	@BeforeEach
 	public void setUp()
 	{
 		mock = new WicketTester(application = new SwarmWebApplication()
@@ -92,6 +93,7 @@ public class ContainerTest extends Assert
 				return ContainerHomePage.class;
 			}
 
+			@Override
 			public Class<? extends Page> getLoginPage()
 			{
 				return MockLoginPage.class;
@@ -100,7 +102,7 @@ public class ContainerTest extends Assert
 		mock.setExposeExceptions(false);
 	}
 
-	@After
+	@AfterEach
 	public void tearDown()
 	{
 		mock.getSession().invalidate();
@@ -216,7 +218,7 @@ public class ContainerTest extends Assert
 	}
 
 	/**
-	 * 
+	 *
 	 */
 	private void doContainerPermissionInheritance(String username)
 	{

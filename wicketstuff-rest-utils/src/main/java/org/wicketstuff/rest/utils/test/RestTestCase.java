@@ -16,7 +16,7 @@
  */
 package org.wicketstuff.rest.utils.test;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import org.apache.wicket.util.tester.WicketTestCase;
 import org.wicketstuff.rest.utils.http.HttpMethod;

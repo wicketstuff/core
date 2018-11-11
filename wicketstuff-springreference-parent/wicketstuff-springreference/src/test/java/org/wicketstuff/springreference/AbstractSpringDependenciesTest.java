@@ -13,6 +13,11 @@
  */
 package org.wicketstuff.springreference;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNotSame;
+import static org.junit.jupiter.api.Assertions.assertSame;
+
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -22,23 +27,22 @@ import java.io.ObjectOutputStream;
 import org.apache.wicket.Application;
 import org.apache.wicket.ThreadContext;
 import org.apache.wicket.mock.MockApplication;
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.ApplicationContext;
 import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 /**
  * Tests for {@link AbstractSpringDependencies}.
- * 
+ *
  * @author akiraly
  */
-@RunWith(SpringJUnit4ClassRunner.class)
+@ExtendWith(SpringExtension.class)
 @ContextConfiguration
 public class AbstractSpringDependenciesTest
 {
@@ -80,7 +84,7 @@ public class AbstractSpringDependenciesTest
 
 	private Deps deps;
 
-	@Before
+	@BeforeEach
 	public void before()
 	{
 		Application application = new MockApplication();
@@ -92,7 +96,7 @@ public class AbstractSpringDependenciesTest
 		deps = new Deps();
 	}
 
-	@After
+	@AfterEach
 	public void after()
 	{
 		ThreadContext.detach();
@@ -103,6 +107,7 @@ public class AbstractSpringDependenciesTest
 	{
 		testService(deps, new IGetter<ClassService>()
 		{
+			@Override
 			public ClassService get(Deps deps)
 			{
 				return deps.classService;
@@ -115,6 +120,7 @@ public class AbstractSpringDependenciesTest
 	{
 		testService(deps, new IGetter<PrimaryService>()
 		{
+			@Override
 			public PrimaryService get(Deps deps)
 			{
 				return deps.qualifiedPrimaryService;
@@ -127,6 +133,7 @@ public class AbstractSpringDependenciesTest
 	{
 		testService(deps, new IGetter<PrimaryService>()
 		{
+			@Override
 			public PrimaryService get(Deps deps)
 			{
 				return deps.primaryService;
@@ -139,6 +146,7 @@ public class AbstractSpringDependenciesTest
 	{
 		testService(deps, new IGetter<AutowireService>()
 		{
+			@Override
 			public AutowireService get(Deps deps)
 			{
 				return deps.autowireService;
@@ -151,6 +159,7 @@ public class AbstractSpringDependenciesTest
 	{
 		testService(deps, new IGetter<ConstructorService>()
 		{
+			@Override
 			public ConstructorService get(Deps deps)
 			{
 				return deps.constructorService;
@@ -163,6 +172,7 @@ public class AbstractSpringDependenciesTest
 	{
 		testService(deps, new IGetter<AService>()
 		{
+			@Override
 			public AService get(Deps deps)
 			{
 				return deps.qualifiedSubClassService;
@@ -175,6 +185,7 @@ public class AbstractSpringDependenciesTest
 	{
 		testService(deps, new IGetter<AService>()
 		{
+			@Override
 			public AService get(Deps deps)
 			{
 				return deps.subClassService;
@@ -185,25 +196,25 @@ public class AbstractSpringDependenciesTest
 	protected <T extends AService> void testService(Deps deps, IGetter<T> getter,
 		int expectedTreasure)
 	{
-		Assert.assertNotNull(deps);
+		assertNotNull(deps);
 
 		T service1 = getter.get(deps);
-		Assert.assertNotNull(service1);
-		Assert.assertEquals(expectedTreasure, service1.doStuff());
+		assertNotNull(service1);
+		assertEquals(expectedTreasure, service1.doStuff());
 
 		Deps deps2 = writeRead(deps);
-		Assert.assertNotNull(deps2);
-		Assert.assertNotSame(deps, deps2);
+		assertNotNull(deps2);
+		assertNotSame(deps, deps2);
 
 		T service2 = getter.get(deps2);
-		Assert.assertSame(service1, service2);
+		assertSame(service1, service2);
 
 		Deps deps3 = (Deps)deps.clone();
-		Assert.assertNotNull(deps3);
-		Assert.assertNotSame(deps, deps3);
+		assertNotNull(deps3);
+		assertNotSame(deps, deps3);
 
 		T service3 = getter.get(deps3);
-		Assert.assertSame(service1, service3);
+		assertSame(service1, service3);
 	}
 
 	/**

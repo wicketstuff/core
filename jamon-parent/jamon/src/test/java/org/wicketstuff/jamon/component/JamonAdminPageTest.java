@@ -16,12 +16,13 @@
  */
 package org.wicketstuff.jamon.component;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import org.apache.wicket.util.tester.WicketTester;
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
-import org.wicketstuff.jamon.component.JamonAdminPage;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.wicketstuff.jamon.monitor.JamonRepository;
 
 import com.jamonapi.MonitorFactory;
@@ -32,14 +33,14 @@ public class JamonAdminPageTest
 
 	private WicketTester wicketTester;
 
-	@Before
+	@BeforeEach
 	public void beforeEachTest()
 	{
 		wicketTester = new WicketTester(JamonAdminPage.class);
 		wicketTester.getApplication().setMetaData(MonitoringRepositoryKey.KEY, new JamonRepository());
 	}
 
-	@After
+	@AfterEach
 	public void after()
 	{
 		MonitorFactory.getFactory().reset();
@@ -51,8 +52,8 @@ public class JamonAdminPageTest
 		JamonTestUtil.startThisManyMonitors(1);
 		wicketTester.startPage(new JamonAdminPage());
 		wicketTester.assertRenderedPage(JamonAdminPage.class);
-		Assert.assertEquals(1, wicketTester.getTagsByWicketId("linkText").size());
-		Assert.assertTrue(
+		assertEquals(1, wicketTester.getTagsByWicketId("linkText").size());
+		assertTrue(
 			wicketTester.getTagsByWicketId("linkText").get(0).getValue().equals("mon0"));
 	}
 
@@ -62,10 +63,10 @@ public class JamonAdminPageTest
 		JamonTestUtil.startThisManyMonitors(2);
 		wicketTester.startPage(new JamonAdminPage());
 		wicketTester.assertRenderedPage(JamonAdminPage.class);
-		Assert.assertEquals(2, wicketTester.getTagsByWicketId("linkText").size());
-		Assert.assertTrue(
+		assertEquals(2, wicketTester.getTagsByWicketId("linkText").size());
+		assertTrue(
 			wicketTester.getTagsByWicketId("linkText").get(0).getValue().equals("mon0"));
-		Assert.assertTrue(
+		assertTrue(
 			wicketTester.getTagsByWicketId("linkText").get(1).getValue().equals("mon1"));
 	}
 }

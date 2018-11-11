@@ -16,23 +16,26 @@
  */
 package org.wicketstuff.jeeweb;
 
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import java.io.File;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.http.HttpServlet;
 
+import org.apache.wicket.WicketRuntimeException;
 import org.apache.wicket.protocol.http.mock.MockServletContext;
 import org.apache.wicket.util.tester.WicketTester;
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Test;
 
 public class JEEWebResolverTest
 {
 
 	private WicketTester wicketTester;
 
-	@After
+	@AfterEach
 	public void tearDown()
 	{
 		wicketTester.destroy();
@@ -53,37 +56,41 @@ public class JEEWebResolverTest
 		wicketTester = new WicketTester(testApplication, mockServletContext);
 		wicketTester.startPage(TestServletAndJSPPage.class);
 		String lastResponse = wicketTester.getLastResponseAsString();
-		Assert.assertTrue(lastResponse.contains("INCLUDE OF RESOURCE: /TestServlet"));
-		Assert.assertTrue(lastResponse.contains("INCLUDE OF RESOURCE: /TestJSP.jsp"));
+		assertTrue(lastResponse.contains("INCLUDE OF RESOURCE: /TestServlet"));
+		assertTrue(lastResponse.contains("INCLUDE OF RESOURCE: /TestJSP.jsp"));
 	}
 
-	@Test(expected = org.apache.wicket.WicketRuntimeException.class)
+	@Test
 	public void testJSPRequestIsFailingIfNotExist() throws Exception
 	{
-		TestApplication testApplication = new TestApplication();
-		MockServletContext mockServletContext = new MockServletContext(testApplication, new File(
-			"src/main/webapp").getCanonicalPath());
-		wicketTester = new WicketTester(testApplication, mockServletContext);
-		wicketTester.startPage(TestJSPFailPage.class);
+		assertThrows(WicketRuntimeException.class, () -> {
+			TestApplication testApplication = new TestApplication();
+			MockServletContext mockServletContext = new MockServletContext(testApplication, new File(
+				"src/main/webapp").getCanonicalPath());
+			wicketTester = new WicketTester(testApplication, mockServletContext);
+			wicketTester.startPage(TestJSPFailPage.class);
+		});
 	}
 
-	@Test(expected = org.apache.wicket.WicketRuntimeException.class)
+	@Test
 	public void testServletRequestIsFailingIfNoServletIsAvailable() throws Exception
 	{
-		TestApplication testApplication = new TestApplication();
-		MockServletContext mockServletContext = new MockServletContext(testApplication, new File(
-			"src/main/webapp").getCanonicalPath())
-		{
-
-			// The dispatcher is returned as null if the servlet is not found -
-			// so we have to do this here.
-			@Override
-			public RequestDispatcher getRequestDispatcher(String name)
+		assertThrows(WicketRuntimeException.class, () -> {
+			TestApplication testApplication = new TestApplication();
+			MockServletContext mockServletContext = new MockServletContext(testApplication, new File(
+				"src/main/webapp").getCanonicalPath())
 			{
-				return null;
-			}
-		};
-		wicketTester = new WicketTester(testApplication, mockServletContext);
-		wicketTester.startPage(TestServletFailPage.class);
+
+				// The dispatcher is returned as null if the servlet is not found -
+				// so we have to do this here.
+				@Override
+				public RequestDispatcher getRequestDispatcher(String name)
+				{
+					return null;
+				}
+			};
+			wicketTester = new WicketTester(testApplication, mockServletContext);
+			wicketTester.startPage(TestServletFailPage.class);
+		});
 	}
 }

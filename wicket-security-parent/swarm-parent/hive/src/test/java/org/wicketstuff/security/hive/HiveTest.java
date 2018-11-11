@@ -16,13 +16,18 @@
  */
 package org.wicketstuff.security.hive;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.fail;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 
-import junit.framework.TestCase;
-
+import org.junit.jupiter.api.Test;
 import org.wicketstuff.security.hive.authorization.EverybodyPrincipal;
 import org.wicketstuff.security.hive.authorization.Permission;
 import org.wicketstuff.security.hive.authorization.Principal;
@@ -31,26 +36,17 @@ import org.wicketstuff.security.hive.authorization.TestPermission;
 
 /**
  * Test hive operations.
- * 
+ *
  * @author marrink
  */
-public class HiveTest extends TestCase
+public class HiveTest
 {
-	/**
-	 * 
-	 * Construct.
-	 * 
-	 * @param name
-	 */
-	public HiveTest(String name)
-	{
-		super(name);
-	}
 
 	/**
 	 * @see BasicHive#addPrincipal(org.wicketstuff.security.hive.authorization.Principal,
 	 *      java.util.Collection)
 	 */
+	@Test
 	public void testAddPrincipal()
 	{
 		BasicHive hive = new BasicHive();
@@ -87,6 +83,7 @@ public class HiveTest extends TestCase
 	 * @see BasicHive#addPermission(org.wicketstuff.security.hive.authorization.Principal,
 	 *      org.wicketstuff.security.hive.authorization.Permission)
 	 */
+	@Test
 	public void testAddPermission()
 	{
 		BasicHive hive = new BasicHive();
@@ -119,6 +116,7 @@ public class HiveTest extends TestCase
 	 * @see BasicHive#hasPermission(org.wicketstuff.security.hive.authentication.Subject,
 	 *      org.wicketstuff.security.hive.authorization.Permission)
 	 */
+	@Test
 	public void testHasPermision()
 	{
 		BasicHive hive = new BasicHive();
@@ -136,6 +134,7 @@ public class HiveTest extends TestCase
 	/**
 	 * @see BasicHive#getPrincipals(org.wicketstuff.security.hive.authorization.Permission)
 	 */
+	@Test
 	public void testGetPrincipals()
 	{
 		BasicHive hive = new BasicHive();
@@ -156,6 +155,7 @@ public class HiveTest extends TestCase
 	/**
 	 * @see BasicHive#getPermissions(org.wicketstuff.security.hive.authorization.Principal)
 	 */
+	@Test
 	public void testGetPermissions()
 	{
 		BasicHive hive = new BasicHive();

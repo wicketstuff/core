@@ -16,6 +16,10 @@
  */
 package org.wicketstuff.rest.resource;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
@@ -24,7 +28,6 @@ import java.lang.annotation.Target;
 import org.apache.wicket.authroles.authorization.strategies.role.IRoleCheckingStrategy;
 import org.apache.wicket.util.lang.Args;
 import org.apache.wicket.validation.validator.EmailAddressValidator;
-import org.junit.Assert;
 import org.wicketstuff.rest.CustomValidator;
 import org.wicketstuff.rest.Person;
 import org.wicketstuff.rest.annotations.AuthorizeInvocation;
@@ -42,6 +45,8 @@ import org.wicketstuff.rest.utils.http.HttpMethod;
 
 public class RestResourceFullAnnotated extends AbstractRestResource<TextualWebSerialDeserial>
 {
+	private static final long serialVersionUID = 1L;
+
 	public RestResourceFullAnnotated(TextualWebSerialDeserial jsonSerialDeserial,
 		IRoleCheckingStrategy roleCheckingStrategy)
 	{
@@ -205,9 +210,9 @@ public class RestResourceFullAnnotated extends AbstractRestResource<TextualWebSe
 		@MatrixParam(parameterName = "matrixp", segmentIndex = 0, required = false, defaultValue = "0") int matrixp)
 	{
 
-		Assert.assertNull("request must be null!", request);
-		Assert.assertTrue("must be true!", cookie);
-		Assert.assertEquals(Float.parseFloat("12.6"), price, 0.01d);
+		assertNull("request must be null!", request);
+		assertTrue(cookie, "must be true!");
+		assertEquals(Float.parseFloat("12.6"), price, 0.01d);
 
 		return "testRequiredDefault";
 	}

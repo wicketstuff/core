@@ -20,18 +20,19 @@
  */
 package org.wicketstuff.pageserializer.common.analyze.report;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.wicketstuff.pageserializer.common.analyze.ISerializedObjectTree;
 import org.wicketstuff.pageserializer.common.analyze.ImmutableTree;
 import org.wicketstuff.pageserializer.common.analyze.ObjectId;
 
 public class SimilarNodeTreeTransformatorTest
-{	
+{
 	@Test
 	public void dontChangeAnything()
 	{
@@ -66,13 +67,13 @@ public class SimilarNodeTreeTransformatorTest
 
 		Trees.assertEqualsTree(expected, result);
 	}
-	
+
 	@Test
 	public void testCompression() throws IOException {
 		IReportOutput reportOutput=new LoggerReportOutput();
 
 		ISerializedObjectTree source = Trees.fromResource(getClass(), "sample1");
-		Assert.assertEquals("asSample", source.label());
+		assertEquals("asSample", source.label());
 		ISerializedObjectTree result = SimilarNodeTreeTransformator.transformTree(source);
 		new TreeSizeReport(reportOutput).process(result);
 		ISerializedObjectTree match = Trees.fromResource(getClass(), "sample1-match");
@@ -80,29 +81,29 @@ public class SimilarNodeTreeTransformatorTest
 
 		Trees.assertEqualsTree(match, result);
 	}
-	
+
 	@Test
 	public void secondNodeHasMoreChilds() throws IOException {
 		IReportOutput reportOutput=new LoggerReportOutput();
-		
+
 		ISerializedObjectTree source = Trees.fromResource(getClass(), "nodeChildSize");
-		Assert.assertEquals("asSample", source.label());
+		assertEquals("asSample", source.label());
 		new TreeSizeReport(reportOutput).process(source);
 		ISerializedObjectTree result = SimilarNodeTreeTransformator.transformTree(source);
 		new TreeSizeReport(reportOutput).process(result);
 		ISerializedObjectTree match = Trees.fromResource(getClass(), "nodeChildSize-match");
 		new TreeSizeReport(reportOutput).process(match);
-		
+
 		Trees.assertEqualsTree(match, result);
 	}
-	
+
 	@Test
 	public void testTreeType() throws IOException {
 		ISerializedObjectTree sourceA = Trees.fromResource(getClass(), "treeType-A");
 		ISerializedObjectTree sourceB = Trees.fromResource(getClass(), "treeType-B");
 		TreeType treeTypeA=new TreeType(sourceA);
 		TreeType treeTypeB=new TreeType(sourceB);
-		Assert.assertEquals(treeTypeA, treeTypeB);
+		assertEquals(treeTypeA, treeTypeB);
 	}
 
 	private List<? extends ISerializedObjectTree> sameChildren5Times()
@@ -154,7 +155,7 @@ public class SimilarNodeTreeTransformatorTest
 	{
 
 	}
-	
+
 	static class D
 	{
 

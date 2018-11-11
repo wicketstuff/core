@@ -16,10 +16,10 @@
  */
 package org.apache.wicket.extensions.yui.calendar;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNotSame;
-import static org.junit.Assert.assertSame;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNotSame;
+import static org.junit.jupiter.api.Assertions.assertSame;
 
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -41,8 +41,8 @@ import org.joda.time.DateTimeZone;
 import org.joda.time.MutableDateTime;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
-import org.junit.After;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -60,7 +60,7 @@ public class DatePickerTest extends WicketTestCase
 	 * @see org.apache.wicket.util.tester.WicketTestCase#tearDown()
 	 */
 	@Override
-	@After
+	@AfterEach
 	public void commonAfter()
 	{
 		TimeZone.setDefault(defaultTz);
