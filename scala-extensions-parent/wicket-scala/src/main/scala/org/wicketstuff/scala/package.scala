@@ -6,14 +6,11 @@ import org.apache.wicket.request.resource.{JavaScriptResourceReference, CssResou
 import org.apache.wicket.{Component, MarkupContainer}
 import org.wicketstuff.scala.model.Fodel
 
-import _root_.java.util.{List => JList, ArrayList => JArrayList}
+import java.util.{List => JList, ArrayList => JArrayList}
 import org.wicketstuff.scala.traits.{ScalaMarkupContainerT, ScalaComponentT}
 
 import _root_.scala.language.implicitConversions
 
-/**
- *
- */
 package object scala {
 
   implicit class ScalaComponentOps(val component: Component)
@@ -29,20 +26,6 @@ package object scala {
   }
 
   implicit def stringToMarkup(a: String): Markup = Markup.of(a)
-
-  /**
-   * Safe dereference operator. E.g. ?(a.b.c.null.dd)
-   */
-  def ?[A](block: ⇒ A) = {
-    try { block } catch {
-      // checks to see if the 3rd to last method called in the stack, is the ?() function,
-      // which means the null pointer exception was actually due to a null object,
-      // otherwise the ?() function would be further down the stack.
-      case e: NullPointerException if e.getStackTrace()(2).getMethodName == "$qmark" ⇒ null
-      // for any other NullPointerException, or otherwise, re-throw the exception.
-      case e: Exception => throw e
-    }
-  }
 
   /**
    * Converts a by name parameter into a Fodel.

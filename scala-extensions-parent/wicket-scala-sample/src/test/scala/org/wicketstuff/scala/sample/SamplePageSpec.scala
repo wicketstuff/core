@@ -1,11 +1,8 @@
 package org.wicketstuff.scala.sample
 
 import org.apache.wicket.util.tester.WicketTester
-import org.junit.runner.RunWith
-import org.scalatest.junit.JUnitRunner
 import org.scalatest.{MustMatchers, WordSpec}
 
-@RunWith(classOf[JUnitRunner])
 class SamplePageSpec
   extends WordSpec
   with MustMatchers {

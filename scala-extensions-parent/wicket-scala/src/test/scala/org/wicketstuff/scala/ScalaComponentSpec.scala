@@ -1,18 +1,15 @@
 package org.wicketstuff.scala
 
-import _root_.java.util.concurrent.atomic.AtomicBoolean
+import java.util.concurrent.atomic.AtomicBoolean
 
 import org.apache.wicket.markup.html.{WebMarkupContainer, WebComponent}
 import org.apache.wicket.model.Model
-import org.junit.runner.RunWith
-import org.scalatest.junit.JUnitRunner
 import org.wicketstuff.scala.markup.html.form.ScalaPasswordField
 import org.wicketstuff.scala.traits.ScalaComponentT
 
 /**
  * Tests for ScalaComponent
  */
-@RunWith(classOf[JUnitRunner])
 class ScalaComponentSpec
   extends WicketSpec {
 

@@ -234,7 +234,7 @@
 		<spring.version>5.1.2.RELEASE</spring.version>
 		<cglib.version>3.2.9</cglib.version>
 		<objenesis.version>3.0.1</objenesis.version>
-		<scala.version>2.12.6</scala.version>
+		<scala.version>2.12.7</scala.version>
 		<jackson.version>2.9.7</jackson.version>
 		<poi.version>4.0.0</poi.version>
 		<guava.version>26.0-jre</guava.version>

@@ -1,8 +1,6 @@
 package org.wicketstuff.scala.traits
 
 import org.apache.wicket.model.Model
-import org.junit.runner.RunWith
-import org.scalatest.junit.JUnitRunner
 import org.wicketstuff.scala._
 import org.wicketstuff.scala.markup.html.ScalaWebMarkupContainer
 import org.wicketstuff.scala.markup.html.basic.ScalaLabel
@@ -12,7 +10,6 @@ case class Person(name: String)
 /**
  * Tests for methods defined at LinkT trait
  */
-@RunWith(classOf[JUnitRunner])
 class BasicTSpec
   extends WicketSpec {
 

@@ -1,14 +1,11 @@
 package org.wicketstuff.scala
 
 import org.apache.wicket.markup.html.{WebComponent, WebMarkupContainer}
-import org.junit.runner.RunWith
-import org.scalatest.junit.JUnitRunner
 import org.wicketstuff.scala.traits.ScalaMarkupContainerT
 
 /**
  * Tests for ScalaMarkupContainer
  */
-@RunWith(classOf[JUnitRunner])
 class ScalaMarkupContainerSpec
   extends WicketSpec {
 

@@ -1,14 +1,12 @@
 package org.wicketstuff.scala
 
-import _root_.java.util.{ArrayList => JArrayList, List => JList}
+import java.util.{ArrayList => JArrayList, List => JList}
 
 import org.apache.wicket.markup.html.WebPage
 import org.apache.wicket.markup.html.basic.Label
 import org.apache.wicket.markup.html.list.ListItem
 import org.apache.wicket.util.tester.WicketTester
-import org.junit.runner.RunWith
 import org.scalatest.{MustMatchers, WordSpec}
-import org.scalatest.junit.JUnitRunner
 import org.wicketstuff.scala.markup.html.basic.ScalaLabel
 import org.wicketstuff.scala.markup.html.form.{ScalaForm, ScalaTextField}
 import org.wicketstuff.scala.markup.html.link.ScalaLink
@@ -20,7 +18,6 @@ import org.wicketstuff.scala.model.Fodel
  * 
  * @author Antony Stubbs
  */
-@RunWith(classOf[JUnitRunner])
 class ComponentSpec
   extends WordSpec
   with MustMatchers {

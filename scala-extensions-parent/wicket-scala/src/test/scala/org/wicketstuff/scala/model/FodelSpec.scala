@@ -1,13 +1,10 @@
 package org.wicketstuff.scala.model
 
-import org.junit.runner.RunWith
-import org.scalatest.junit.JUnitRunner
 import org.scalatest.{MustMatchers, WordSpec}
 
 /**
  * @author Antony Stubbs
  */
-@RunWith(classOf[JUnitRunner])
 class FodelSpec
   extends WordSpec
   with MustMatchers {

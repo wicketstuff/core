@@ -2,14 +2,11 @@ package org.wicketstuff.scala.markup.html.form
 
 import java.util.concurrent.atomic.AtomicBoolean
 
-import org.junit.runner.RunWith
-import org.scalatest.junit.JUnitRunner
 import org.wicketstuff.scala._
 
 /**
  * Tests for ScalaForm
  */
-@RunWith(classOf[JUnitRunner])
 class ScalaFormSpec
   extends WicketSpec {
 
