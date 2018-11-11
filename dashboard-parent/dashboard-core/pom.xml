@@ -14,10 +14,6 @@
 	<packaging>jar</packaging>
 	<name>Wicketstuff Dashboard Core</name>
 
-	<properties>
-		<xstream.version>1.4.10</xstream.version>
-	</properties>
-
 	<dependencies>
 		<!-- Gson (json for java) -->
 		<dependency>

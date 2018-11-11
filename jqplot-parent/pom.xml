@@ -20,9 +20,6 @@
 		is the parent for the actual project and the examples.
 	</description>
 
-	<properties>
-		<xstream.version>1.4.11.1</xstream.version>
-	</properties>
 	<modules>
 		<module>jqplot4java</module>
 		<module>jqplot</module>
