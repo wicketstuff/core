@@ -64,6 +64,13 @@
 			<artifactId>jackson-databind</artifactId>
 			<scope>test</scope>
 		</dependency>
+		<dependency>
+			<groupId>org.wicketstuff</groupId>
+			<artifactId>wicketstuff-rest-utils</artifactId>
+			<version>${project.version}</version>
+			<type>test-jar</type>
+			<scope>test</scope>
+		</dependency>
 
 		<dependency>
 			<groupId>javax.servlet</groupId>

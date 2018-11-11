@@ -1,43 +1,52 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
-  <modelVersion>4.0.0</modelVersion>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
 
-  <parent>
-    <groupId>org.wicketstuff</groupId>
-    <artifactId>wicketstuff-core</artifactId>
-    <version>9.0.0-SNAPSHOT</version>
-  </parent>
+	<parent>
+		<groupId>org.wicketstuff</groupId>
+		<artifactId>wicketstuff-core</artifactId>
+		<version>9.0.0-SNAPSHOT</version>
+	</parent>
 
-  <artifactId>wicketstuff-rest-lambda</artifactId>
+	<artifactId>wicketstuff-rest-lambda</artifactId>
 
-  <name>WicketStuff Rest Lambda</name>
-  <description>rest module based on lambda</description>
+	<name>WicketStuff Rest Lambda</name>
+	<description>rest module based on lambda</description>
 
-  <dependencies>
-    <dependency>
+	<dependencies>
+		<dependency>
 			<groupId>org.junit.jupiter</groupId>
 			<artifactId>junit-jupiter-api</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>org.slf4j</groupId>
-      <artifactId>slf4j-log4j12</artifactId>
-      <scope>test</scope>
-    </dependency>
-    <dependency>
-      <groupId>org.eclipse.jetty.aggregate</groupId>
-      <artifactId>jetty-all</artifactId>
-      <classifier>uber</classifier>
-    </dependency>
-    <dependency>
-        <groupId>org.mockito</groupId>
-        <artifactId>mockito-core</artifactId>
-       <scope>test</scope>
-    </dependency>
-    <dependency>
-	<groupId>org.wicketstuff</groupId>
-	<artifactId>wicketstuff-rest-utils</artifactId>
-	<version>${project.version}</version>
-    </dependency>
-  </dependencies>
+		</dependency>
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-log4j12</artifactId>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.eclipse.jetty.aggregate</groupId>
+			<artifactId>jetty-all</artifactId>
+			<classifier>uber</classifier>
+		</dependency>
+		<dependency>
+			<groupId>org.mockito</groupId>
+			<artifactId>mockito-core</artifactId>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.wicketstuff</groupId>
+			<artifactId>wicketstuff-rest-utils</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.wicketstuff</groupId>
+			<artifactId>wicketstuff-rest-utils</artifactId>
+			<version>${project.version}</version>
+			<type>test-jar</type>
+			<scope>test</scope>
+		</dependency>
+	</dependencies>
 
 	<build>
 		<plugins>
