@@ -25,6 +25,7 @@ import org.apache.wicket.protocol.http.WebApplication;
 import org.apache.wicket.request.Request;
 import org.apache.wicket.request.Response;
 import org.apache.wicket.util.tester.WicketTester;
+import org.junit.jupiter.api.BeforeEach;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.wicketstuff.security.actions.ActionFactory;
@@ -43,7 +44,7 @@ import org.wicketstuff.security.swarm.strategies.SwarmStrategyFactory;
  * Test if everything still works if we don't inherit from {@link SwarmWebApplication} but simply
  * implement all the required interfaces. This simply runs all the tests from {@link GeneralTest}
  * and if we don't get a {@link ClassCastException} or something like that everything works OK.
- * 
+ *
  * @author marrink
  */
 public class ExtendsTest extends GeneralTest
@@ -56,7 +57,7 @@ public class ExtendsTest extends GeneralTest
 		private StrategyFactory strategyFactory;
 
 		/**
-		 * 
+		 *
 		 */
 		public TestApplication()
 		{
@@ -64,7 +65,7 @@ public class ExtendsTest extends GeneralTest
 		}
 
 		/**
-		 * 
+		 *
 		 * @return a key to retrieve the hive for this application.
 		 */
 		protected Object getHiveKey()
@@ -98,6 +99,7 @@ public class ExtendsTest extends GeneralTest
 			return MockHomePage.class;
 		}
 
+		@Override
 		public Class<? extends Page> getLoginPage()
 		{
 			return MockLoginPage.class;
@@ -109,11 +111,13 @@ public class ExtendsTest extends GeneralTest
 			return new WaspSession(this, request);
 		}
 
+		@Override
 		public WaspActionFactory getActionFactory()
 		{
 			return actionFactory;
 		}
 
+		@Override
 		public StrategyFactory getStrategyFactory()
 		{
 			return strategyFactory;
@@ -121,25 +125,27 @@ public class ExtendsTest extends GeneralTest
 
 		protected void setupActionFactory()
 		{
-			if (actionFactory == null)
+			if (actionFactory == null) {
 				actionFactory = new SwarmActionFactory(getHiveKey());
-			else
+			} else {
 				throw new IllegalStateException("Can not initialize ActionFactory more then once");
+			}
 
 		}
 
 		protected void setupStrategyFactory()
 		{
-			if (strategyFactory == null)
+			if (strategyFactory == null) {
 				strategyFactory = new SwarmStrategyFactory(getHiveKey());
-			else
+			} else {
 				throw new IllegalStateException("Can not initialize StrategyFactory more then once");
+			}
 		}
 
 		/**
 		 * triggers the setup of the factories and the hive. Please remember to call super.init()
 		 * when you override this method.
-		 * 
+		 *
 		 * @see org.wicketstuff.security.WaspWebApplication#init()
 		 */
 		@Override
@@ -153,23 +159,26 @@ public class ExtendsTest extends GeneralTest
 		/**
 		 * Destroys the strategy factory and the action factory. In that order. If you override this
 		 * method you must call super.destroy().
-		 * 
+		 *
 		 * @see Application#onDestroy()
 		 */
 		@Override
 		protected void onDestroy()
 		{
 			StrategyFactory factory = getStrategyFactory();
-			if (factory != null)
+			if (factory != null) {
 				factory.destroy();
+			}
 			ActionFactory factory2 = getActionFactory();
-			if (factory2 != null)
+			if (factory2 != null) {
 				factory2.destroy();
+			}
 		}
 	}
 
 	private static final Logger log = LoggerFactory.getLogger(ExtendsTest.class);
 
+	@BeforeEach
 	@Override
 	public void setUp()
 	{

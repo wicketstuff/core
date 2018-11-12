@@ -210,7 +210,7 @@ public class RestResourceFullAnnotated extends AbstractRestResource<TextualWebSe
 		@MatrixParam(parameterName = "matrixp", segmentIndex = 0, required = false, defaultValue = "0") int matrixp)
 	{
 
-		assertNull("request must be null!", request);
+		assertNull(request, "request must be null!");
 		assertTrue(cookie, "must be true!");
 		assertEquals(Float.parseFloat("12.6"), price, 0.01d);
 

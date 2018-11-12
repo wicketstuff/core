@@ -174,7 +174,7 @@ public class SwarmActionFactoryTest
 		{
 			action = factory.getAction(i);
 			assertNotNull(action, "action " + i + "was null");
-			assertEquals("iteration " + i, names[i], action.getName());
+			assertEquals(names[i], action.getName(), "iteration " + i);
 		}
 		try
 		{

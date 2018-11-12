@@ -51,7 +51,7 @@ public class JamonMonitoredRequestCycleTest
 	{
 		wicketTester.startPage(HomePage.class);
 
-		assertEquals(1, MonitorFactory.getMonitor("HomePage", "ms.").getHits(), 0);
+		assertEquals(1, MonitorFactory.getMonitor("HomePage", "ms.").getHits(), 0.00001d);
 	}
 
 	@Test
@@ -59,18 +59,18 @@ public class JamonMonitoredRequestCycleTest
 	{
 		wicketTester.startPage(HomePage.class);
 		wicketTester.startPage(HomePage.class);
-		assertEquals(2, MonitorFactory.getMonitor("HomePage", "ms.").getHits(), 0);
+		assertEquals(2, MonitorFactory.getMonitor("HomePage", "ms.").getHits(), 0.00001d);
 	}
 
 	@Test
 	public void shouldNotMonitorJamonAdminPageItSelf()
 	{
 		wicketTester.startPage(JamonAdminPage.class);
-		assertEquals(0, MonitorFactory.getMonitor("JamonAdminPage", "ms.").getHits(), 0);
+		assertEquals(0, MonitorFactory.getMonitor("JamonAdminPage", "ms.").getHits(), 0.00001d);
 		FormTester formTester = wicketTester.newFormTester("adminPanel:adminForm");
 		formTester.setValue("monitorLabel", "J");
 		wicketTester.executeAjaxEvent("adminPanel:adminForm:monitorLabel", "keyup");
-		assertEquals(0, MonitorFactory.getMonitor("JamonAdminPage", "ms.").getHits(), 0);
+		assertEquals(0, MonitorFactory.getMonitor("JamonAdminPage", "ms.").getHits(), 0.00001d);
 	}
 
 	@Disabled// broken in Wicket 8.0. Needs debugging!
@@ -83,7 +83,7 @@ public class JamonMonitoredRequestCycleTest
 		wicketTester.clickLink("ajaxLink", true);
 
 		assertEquals(2, MonitorFactory.getMonitor("AjaxPage.ajaxLink -> AjaxPage", "ms.").getHits(),
-			0);
+				0.00001d);
 
 	}
 
@@ -95,7 +95,7 @@ public class JamonMonitoredRequestCycleTest
 		wicketTester.clickLink("ajaxLink");
 
 		assertEquals(1, MonitorFactory.getMonitor("AjaxPage.ajaxLink -> AjaxPage", "ms.").getHits(),
-			0);
+				0.00001d);
 	}
 
 	@Test
@@ -103,7 +103,7 @@ public class JamonMonitoredRequestCycleTest
 	{
 		wicketTester.startPage(HomePage.class);
 
-		assertEquals(1, MonitorFactory.getMonitor("HomePage", "ms.").getHits(), 0);
+		assertEquals(1, MonitorFactory.getMonitor("HomePage", "ms.").getHits(), 0.00001d);
 
 	}
 
@@ -112,6 +112,6 @@ public class JamonMonitoredRequestCycleTest
 	{
 		wicketTester.startPage(new HomePage());
 
-		assertEquals(1, MonitorFactory.getMonitor("HomePage", "ms.").getHits(), 0);
+		assertEquals(1, MonitorFactory.getMonitor("HomePage", "ms.").getHits(), 0.00001d);
 	}
 }
