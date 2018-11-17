@@ -14,7 +14,7 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-package org.wicketstuff.rest.utils.http;
+package org.wicketstuff.restutils.http;
 
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
@@ -26,6 +26,7 @@ import org.apache.wicket.request.http.WebRequest;
 import org.junit.Assert;
 import org.junit.Test;
 import org.wicketstuff.rest.utils.test.BufferedMockRequest;
+import org.wicketstuff.restutils.http.HttpUtils;
 
 public class HttpUtilsTest
 {

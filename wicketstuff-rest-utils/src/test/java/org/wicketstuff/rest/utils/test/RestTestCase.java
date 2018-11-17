@@ -17,7 +17,7 @@
 package org.wicketstuff.rest.utils.test;
 
 import org.apache.wicket.util.tester.WicketTestCase;
-import org.wicketstuff.rest.utils.http.HttpMethod;
+import org.wicketstuff.restutils.http.HttpMethod;
 
 /**
  * 

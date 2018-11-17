@@ -26,8 +26,8 @@ import org.apache.wicket.request.resource.ResourceReference;
 import org.wicketstuff.rest.lambda.request.mapper.RestResourceMapper;
 import org.wicketstuff.rest.lambda.resource.SimpleLambdaResource;
 import org.wicketstuff.rest.lambda.resource.TextOutputLambdaResource;
-import org.wicketstuff.rest.utils.http.HttpMethod;
 import org.wicketstuff.rest.utils.wicket.AttributesWrapper;
+import org.wicketstuff.restutils.http.HttpMethod;
 
 /**
  * REST resource mounter. The resources are built using the provided functions/consumers.

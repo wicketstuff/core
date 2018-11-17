@@ -20,8 +20,8 @@ import org.apache.wicket.core.request.mapper.ResourceMapper;
 import org.apache.wicket.request.IRequestHandler;
 import org.apache.wicket.request.Request;
 import org.apache.wicket.request.resource.ResourceReference;
-import org.wicketstuff.rest.utils.http.HttpMethod;
-import org.wicketstuff.rest.utils.http.HttpUtils;
+import org.wicketstuff.restutils.http.HttpMethod;
+import org.wicketstuff.restutils.http.HttpUtils;
 
 /**
  * 
