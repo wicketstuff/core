@@ -18,8 +18,9 @@ package org.wicketstuff.rest.lambda.mounter;
 
 import org.apache.wicket.protocol.http.WebApplication;
 import org.junit.jupiter.api.Test;
-import org.wicketstuff.rest.utils.http.HttpMethod;
-import org.wicketstuff.rest.utils.test.RestTestCase;
+
+import org.wicketstuff.restutils.http.HttpMethod;
+import org.wicketstuff.restutils.test.RestTestCase;
 
 public class LambdaRestApplicationTest extends RestTestCase 
 {	

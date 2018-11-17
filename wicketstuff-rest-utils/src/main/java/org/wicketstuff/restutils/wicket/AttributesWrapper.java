@@ -1,4 +1,4 @@
-package org.wicketstuff.rest.utils.wicket;
+package org.wicketstuff.restutils.wicket;
 /**
  *  Licensed to the Apache Software Foundation (ASF) under one or more
  *  contributor license agreements.  See the NOTICE file distributed with
@@ -21,8 +21,8 @@ import org.apache.wicket.request.http.WebRequest;
 import org.apache.wicket.request.http.WebResponse;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
 import org.apache.wicket.request.resource.IResource.Attributes;
-import org.wicketstuff.rest.utils.http.HttpMethod;
-import org.wicketstuff.rest.utils.http.HttpUtils;
+import org.wicketstuff.restutils.http.HttpMethod;
+import org.wicketstuff.restutils.http.HttpUtils;
 
 /**
  * Utility class to extract and handle the information from class IResource.Attributes

@@ -19,6 +19,7 @@ package org.wicketstuff.rest.utils.wicket;
 import java.util.Map;
 
 import org.wicketstuff.rest.contenthandling.IWebSerialDeserial;
+import org.wicketstuff.restutils.wicket.AttributesWrapper;
 
 /**
  * Context execution for a method parameter. It contains the current Attribute wrapper, the value for method parameters and the 

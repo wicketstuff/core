@@ -22,7 +22,7 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 import org.wicketstuff.rest.contenthandling.mimetypes.RestMimeTypes;
-import org.wicketstuff.rest.utils.http.HttpMethod;
+import org.wicketstuff.restutils.http.HttpMethod;
 
 /**
  * Annotation used to map a resource method to a given URL. The specified URL can contain parameter

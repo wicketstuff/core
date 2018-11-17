@@ -14,28 +14,33 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-package org.wicketstuff.rest.utils.test;
+package org.wicketstuff.restutils.http;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-
-import org.apache.wicket.util.tester.WicketTestCase;
-import org.wicketstuff.rest.utils.http.HttpMethod;
-
-/**
- *
- * Extension to {@link WicketTestCase} meant for REST testing
- *
- * @author andrea
- *
- */
-public class RestTestCase extends WicketTestCase
+public class HttpResult
 {
-	protected void assertUrlResponse(final String url, final HttpMethod httpMethod,
-			final String expectedResponse)
-	{
-		tester.getRequest().setMethod(httpMethod.getMethod());
-		tester.executeUrl(url);
+	private final int httpCode;
+	private final String message;
 
-		assertEquals(expectedResponse, tester.getLastResponseAsString());
+	public static final int HTTP_OK = 200;
+
+	public HttpResult(int httpCode, String message)
+	{
+		this.httpCode = httpCode;
+		this.message = message;
+	}
+
+	public int getHttpCode()
+	{
+		return httpCode;
+	}
+
+	public String getMessage()
+	{
+		return message;
+	}
+
+	public boolean isSuccessful()
+	{
+		return httpCode < 300;
 	}
 }

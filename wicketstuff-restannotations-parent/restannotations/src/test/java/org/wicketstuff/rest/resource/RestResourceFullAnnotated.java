@@ -41,7 +41,7 @@ import org.wicketstuff.rest.annotations.parameters.RequestParam;
 import org.wicketstuff.rest.annotations.parameters.ValidatorKey;
 import org.wicketstuff.rest.contenthandling.mimetypes.RestMimeTypes;
 import org.wicketstuff.rest.contenthandling.webserialdeserial.TextualWebSerialDeserial;
-import org.wicketstuff.rest.utils.http.HttpMethod;
+import org.wicketstuff.restutils.http.HttpMethod;
 
 public class RestResourceFullAnnotated extends AbstractRestResource<TextualWebSerialDeserial>
 {

@@ -14,7 +14,7 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-package org.wicketstuff.rest.utils.http;
+package org.wicketstuff.restutils.http;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.mock;
@@ -25,7 +25,9 @@ import org.apache.wicket.protocol.http.mock.MockHttpSession;
 import org.apache.wicket.protocol.http.mock.MockServletContext;
 import org.apache.wicket.request.http.WebRequest;
 import org.junit.jupiter.api.Test;
-import org.wicketstuff.rest.utils.test.BufferedMockRequest;
+
+import org.wicketstuff.restutils.http.HttpUtils;
+import org.wicketstuff.restutils.test.BufferedMockRequest;
 
 public class HttpUtilsTest
 {
@@ -39,17 +41,17 @@ public class HttpUtilsTest
 			+ "		</p>\n"
 			+ "	</body>\n"
 			+ "</html>";
-
+		
 		MockApplication mockApplication = new MockApplication();
 		MockServletContext servletContext = new MockServletContext(mockApplication, "/");
 		BufferedMockRequest mockedRequest = new BufferedMockRequest(mockApplication,
 			new MockHttpSession(servletContext), servletContext, "POST");
-
+		
 		mockedRequest.setTextAsRequestBody(xmlText);
-
+		
 		WebRequest webRequest = mock(WebRequest.class);
 		when(webRequest.getContainerRequest()).thenReturn(mockedRequest);
-
+		
 		String stringFromRequest = HttpUtils.readStringFromRequest(webRequest);
 		assertEquals(xmlText, stringFromRequest);
 	}

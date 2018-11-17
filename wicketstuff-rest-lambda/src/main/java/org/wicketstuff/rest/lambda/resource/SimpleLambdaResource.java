@@ -19,7 +19,7 @@ package org.wicketstuff.rest.lambda.resource;
 import java.util.function.Consumer;
 
 import org.apache.wicket.request.resource.IResource;
-import org.wicketstuff.rest.utils.wicket.AttributesWrapper;
+import org.wicketstuff.restutils.wicket.AttributesWrapper;
 
 /**
  * Basic {@link IResource} that uses a {@link java.util.function.Consumer} to serve
