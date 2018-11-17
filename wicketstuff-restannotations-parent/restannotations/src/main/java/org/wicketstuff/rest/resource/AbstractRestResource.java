@@ -54,11 +54,11 @@ import org.wicketstuff.rest.resource.urlsegments.visitor.ScoreMethodAndExtractPa
 import org.wicketstuff.rest.utils.collection.CollectionUtils;
 import org.wicketstuff.rest.utils.reflection.MethodParameter;
 import org.wicketstuff.rest.utils.reflection.ReflectionUtils;
-import org.wicketstuff.rest.utils.wicket.AttributesWrapper;
 import org.wicketstuff.rest.utils.wicket.MethodParameterContext;
 import org.wicketstuff.rest.utils.wicket.bundle.DefaultBundleResolver;
 import org.wicketstuff.restutils.http.HttpMethod;
 import org.wicketstuff.restutils.http.HttpUtils;
+import org.wicketstuff.restutils.wicket.AttributesWrapper;
 
 /**
  * Base class to build a resource that serves REST requests.

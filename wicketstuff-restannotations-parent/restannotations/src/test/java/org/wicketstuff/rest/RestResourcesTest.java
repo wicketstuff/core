@@ -43,8 +43,8 @@ import org.wicketstuff.rest.contenthandling.objserialdeserial.TestJsonDesSer;
 import org.wicketstuff.rest.contenthandling.webserialdeserial.JsonTestWebSerialDeserial;
 import org.wicketstuff.rest.resource.AbstractRestResource;
 import org.wicketstuff.rest.resource.RestResourceFullAnnotated;
-import org.wicketstuff.rest.utils.test.BufferedMockRequest;
 import org.wicketstuff.rest.utils.wicket.bundle.DefaultBundleResolver;
+import org.wicketstuff.restutils.test.BufferedMockRequest;
 
 
 /**

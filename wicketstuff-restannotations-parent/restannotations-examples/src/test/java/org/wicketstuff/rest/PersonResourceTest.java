@@ -22,7 +22,7 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.wicketstuff.rest.domain.PersonPojo;
-import org.wicketstuff.rest.utils.test.BufferedMockRequest;
+import org.wicketstuff.restutils.test.BufferedMockRequest;
 
 import com.google.gson.Gson;
 
