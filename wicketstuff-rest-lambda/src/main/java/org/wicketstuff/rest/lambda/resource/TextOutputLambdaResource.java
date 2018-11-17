@@ -22,7 +22,7 @@ import java.util.function.Function;
 
 import org.apache.wicket.request.http.WebResponse;
 import org.apache.wicket.request.resource.IResource;
-import org.wicketstuff.rest.utils.wicket.AttributesWrapper;
+import org.wicketstuff.restutils.wicket.AttributesWrapper;
 
 /**
  * {@link IResource} that uses a {@link java.util.function.Function} to serve
