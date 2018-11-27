@@ -1,16 +1,16 @@
 package org.wicketstuff.select2;
 
+import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.containsInAnyOrder;
-import static org.junit.Assert.assertThat;
 
 import java.util.Collection;
 
 import org.apache.wicket.model.util.CollectionModel;
 import org.apache.wicket.util.tester.WicketTester;
-import org.junit.AfterClass;
-import org.junit.Before;
-import org.junit.BeforeClass;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 public class Issue644Test {
 
@@ -18,17 +18,17 @@ public class Issue644Test {
 
 	private Collection<String> selection;
 
-	@BeforeClass
+	@BeforeAll
 	public static void beforeClass() {
 		tester = new WicketTester();
 	}
 
-	@AfterClass
+	@AfterAll
 	public static void afterClass() {
 		tester.destroy();
 	}
 
-	@Before
+	@BeforeEach
 	public void before() {
 		selection = null;
 	}
