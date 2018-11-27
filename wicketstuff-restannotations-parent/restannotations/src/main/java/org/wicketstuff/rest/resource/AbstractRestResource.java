@@ -135,7 +135,7 @@ public abstract class AbstractRestResource<T extends IWebSerialDeserial> impleme
 		this.roleCheckingStrategy = roleCheckingStrategy;
 		this.mappedMethods = loadAnnotatedMethods();
 		this.mappedMethodsInfo = loadAnnotatedMethodsInfo();
-		this.bundleResolver = new DefaultBundleResolver(loadBoundleClasses());
+		this.bundleResolver = new DefaultBundleResolver(loadBundleClasses());
 	}
 
 	/**
@@ -143,11 +143,9 @@ public abstract class AbstractRestResource<T extends IWebSerialDeserial> impleme
 	 * made of the classes of the validators registered with abstractResource
 	 * and of the class of the abstractResource.
 	 *
-	 * @param abstractResource
-	 *            the abstract REST resource that is using the validator
 	 * @return the list of the classes to use.
 	 */
-	private List<Class<?>> loadBoundleClasses()
+	private List<Class<?>> loadBundleClasses()
 	{
 		Collection<IValidator<?>> validators = declaredValidators.values();
 		List<Class<?>> validatorsClasses = ReflectionUtils.getElementsClasses(validators);
@@ -398,7 +396,7 @@ public abstract class AbstractRestResource<T extends IWebSerialDeserial> impleme
 	 *            The current response object.
 	 * @param result
 	 *            The object to write to response.
-	 * @param restMimeFormats
+	 * @param mimeType
 	 * 			  The MIME type to use to serialize data
 	 */
 	public void objectToResponse(Object result, WebResponse response, String mimeType)
@@ -472,7 +470,7 @@ public abstract class AbstractRestResource<T extends IWebSerialDeserial> impleme
 		{
 			// if we have more than one method with the highest score, throw
 			// ambiguous exception.
-			throwAmbiguousMethodsException(scoredMethods.getFirstValue(highestScore));
+			throwAmbiguousMethodsException(scoredMethods.get(highestScore));
 		}
 		
 		return scoredMethods.getFirstValue(highestScore);
@@ -482,10 +480,9 @@ public abstract class AbstractRestResource<T extends IWebSerialDeserial> impleme
 	 * Throw an exception if two o more methods have the same "score" for the current request. See
 	 * method selectMostSuitedMethod.
 	 *
-	 * @param list
-	 *            the list of ambiguous methods.
+	 * @param methods the list of ambiguous methods.
 	 */
-	private void throwAmbiguousMethodsException(ScoreMethodAndExtractPathVars... methods)
+	private void throwAmbiguousMethodsException(List<ScoreMethodAndExtractPathVars> methods)
 	{
 		WebRequest request = getCurrentWebRequest();
 		String methodsNames = "";
@@ -496,7 +493,9 @@ public abstract class AbstractRestResource<T extends IWebSerialDeserial> impleme
 				methodsNames += ", ";
 
 			MethodMappingInfo urlMappingInfo = method.getMethodInfo();
-			methodsNames += urlMappingInfo.getMethod().getName();
+			methodsNames += urlMappingInfo.getMethod().getReturnType().getSimpleName() + " " +
+							urlMappingInfo.getMethod().getDeclaringClass().getSimpleName() + "." +
+							urlMappingInfo.getMethod().getName();
 		}
 
 		throw new WicketRuntimeException("Ambiguous methods mapped for the current request: URL '" +
