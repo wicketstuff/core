@@ -116,7 +116,7 @@ public class Select2MultiChoice<T> extends AbstractSelect2Choice<T, Collection<T
 		{
 			return EMPTY_STRING;
 		}
-		StringBuffer sb = new StringBuffer();
+		StringBuilder sb = new StringBuilder();
 		for (T object : values) {
 			if (sb.length() > 0)
 			{
