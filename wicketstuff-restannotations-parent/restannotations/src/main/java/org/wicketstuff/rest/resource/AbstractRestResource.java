@@ -544,9 +544,9 @@ public abstract class AbstractRestResource<T extends IWebSerialDeserial> impleme
 					throw new WicketRuntimeException(
 						"Mapped methods use a MIME type not supported by obj serializer/deserializer!");
 
-				mappedMethods.addValue(
-					methodMappingInfo.getSegmentsCount() + "_" + httpMethod.getMethod(),
-					methodMappingInfo);
+				String key = methodMappingInfo.getSegmentsCount() + "_" + httpMethod.getMethod();
+				mappedMethods.addValue(key, methodMappingInfo);
+				log.debug("Added mapped method: " + method + " with key: " + key);
 			}
 		}
 		// if AuthorizeInvocation has been found but no role-checker has been
