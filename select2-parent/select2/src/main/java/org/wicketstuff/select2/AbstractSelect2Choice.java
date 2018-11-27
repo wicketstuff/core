@@ -1,11 +1,11 @@
 /*
  * Copyright 2012 Igor Vaynberg
- * 
+ *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this work except in compliance with
  * the License. You may obtain a copy of the License in the LICENSE file, or at:
- * 
+ *
  * http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on
  * an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the
  * specific language governing permissions and limitations under the License.
@@ -24,7 +24,6 @@ import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.event.IEvent;
 import org.apache.wicket.markup.ComponentTag;
 import org.apache.wicket.markup.MarkupStream;
-import org.apache.wicket.markup.html.form.AbstractTextComponent;
 import org.apache.wicket.markup.html.form.FormComponent;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.request.IRequestParameters;
@@ -47,7 +46,7 @@ import com.github.openjson.JSONStringer;
  *            type of model object
  * @author igor
  */
-public abstract class AbstractSelect2Choice<T, M> extends AbstractTextComponent<M> implements IRequestListener
+public abstract class AbstractSelect2Choice<T, M> extends FormComponent<M> implements IRequestListener
 {
 	private static final long serialVersionUID = 1L;
 
@@ -304,7 +303,7 @@ public abstract class AbstractSelect2Choice<T, M> extends AbstractTextComponent<
 	 * @param provider
 	 * @param outputStream
 	 */
-	public static <T> void generateJSON(ChoiceProvider<T> provider, OutputStream outputStream) 
+	public static <T> void generateJSON(ChoiceProvider<T> provider, OutputStream outputStream)
 	{
 		generateJSON(Settings.DEFAULT_QUERY_PARAM, provider, outputStream);
 	}
@@ -316,7 +315,7 @@ public abstract class AbstractSelect2Choice<T, M> extends AbstractTextComponent<
 	 * @param outputStream
 	 * @param queryParam - parameter to be used as Ajax query param
 	 */
-	public static <T> void generateJSON(String queryParam, ChoiceProvider<T> provider, OutputStream outputStream) 
+	public static <T> void generateJSON(String queryParam, ChoiceProvider<T> provider, OutputStream outputStream)
 	{
 		// this is the callback that retrieves matching choices used to populate the dropdown
 
@@ -343,7 +342,7 @@ public abstract class AbstractSelect2Choice<T, M> extends AbstractTextComponent<
 		{
 			json.object();
 			json.key("items").array();
-			for (T item : response) 
+			for (T item : response)
 			{
 				json.object();
 				provider.toJson(item, json);
@@ -351,19 +350,19 @@ public abstract class AbstractSelect2Choice<T, M> extends AbstractTextComponent<
 			}
 			json.endArray();
 			json.key("more").value(response.getHasMore()).endObject();
-			
+
 			out.write(json.toString());
 		}
-		catch (JSONException | IOException e) 
+		catch (JSONException | IOException e)
 		{
 			throw new RuntimeException("Could not write Json response", e);
 		}
 
-		try 
+		try
 		{
 			out.flush();
 		}
-		catch (IOException e) 
+		catch (IOException e)
 		{
 			throw new RuntimeException("Could not write Json to servlet response", e);
 		}
@@ -454,7 +453,7 @@ public abstract class AbstractSelect2Choice<T, M> extends AbstractTextComponent<
 		}
 		replaceComponentTagBody(markupStream, openTag, buffer);
 	}
-	
+
 	/**
 	 * Empty input is acceptable
 	 */
@@ -464,4 +463,3 @@ public abstract class AbstractSelect2Choice<T, M> extends AbstractTextComponent<
 		return true;
 	}
 }
-
