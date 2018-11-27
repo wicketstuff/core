@@ -534,7 +534,7 @@ public abstract class AbstractRestResource<T extends IWebSerialDeserial> impleme
 
 			isUsingAuthAnnot = isUsingAuthAnnot || authorizeInvocation != null;
 
-			if (methodMapped != null)
+			if (methodMapped != null && !method.isBridge())
 			{
 				HttpMethod httpMethod = methodMapped.httpMethod();
 				MethodMappingInfo methodMappingInfo = new MethodMappingInfo(methodMapped, method);
