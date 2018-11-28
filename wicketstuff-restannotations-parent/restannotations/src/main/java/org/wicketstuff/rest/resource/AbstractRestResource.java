@@ -485,17 +485,19 @@ public abstract class AbstractRestResource<T extends IWebSerialDeserial> impleme
 	private void throwAmbiguousMethodsException(List<ScoreMethodAndExtractPathVars> methods)
 	{
 		WebRequest request = getCurrentWebRequest();
-		String methodsNames = "";
+		StringBuilder methodsNames = new StringBuilder();
 
 		for (ScoreMethodAndExtractPathVars method : methods)
 		{
-			if (!methodsNames.isEmpty())
-				methodsNames += ", ";
+			if (methodsNames.length() != 0)
+				methodsNames.append(", ");
 
 			MethodMappingInfo urlMappingInfo = method.getMethodInfo();
-			methodsNames += urlMappingInfo.getMethod().getReturnType().getSimpleName() + " " +
-							urlMappingInfo.getMethod().getDeclaringClass().getSimpleName() + "." +
-							urlMappingInfo.getMethod().getName();
+			methodsNames.append(urlMappingInfo.getMethod().getReturnType().getSimpleName());
+			methodsNames.append(" ");
+			methodsNames.append(urlMappingInfo.getMethod().getDeclaringClass().getSimpleName());
+			methodsNames.append(".");
+			methodsNames.append(urlMappingInfo.getMethod().getName());
 		}
 
 		throw new WicketRuntimeException("Ambiguous methods mapped for the current request: URL '" +
@@ -546,7 +548,7 @@ public abstract class AbstractRestResource<T extends IWebSerialDeserial> impleme
 
 				String key = methodMappingInfo.getSegmentsCount() + "_" + httpMethod.getMethod();
 				mappedMethods.addValue(key, methodMappingInfo);
-				log.debug("Added mapped method: " + method + " with key: " + key);
+				log.debug("Added mapped method: {} with key: {}", method, key);
 			}
 		}
 		// if AuthorizeInvocation has been found but no role-checker has been
