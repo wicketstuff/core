@@ -135,7 +135,7 @@ public abstract class AbstractRestResource<T extends IWebSerialDeserial> impleme
 		this.roleCheckingStrategy = roleCheckingStrategy;
 		this.mappedMethods = loadAnnotatedMethods();
 		this.mappedMethodsInfo = loadAnnotatedMethodsInfo();
-		this.bundleResolver = new DefaultBundleResolver(loadBoundleClasses());
+		this.bundleResolver = new DefaultBundleResolver(loadBundleClasses());
 	}
 
 	/**
@@ -143,11 +143,9 @@ public abstract class AbstractRestResource<T extends IWebSerialDeserial> impleme
 	 * made of the classes of the validators registered with abstractResource
 	 * and of the class of the abstractResource.
 	 *
-	 * @param abstractResource
-	 *            the abstract REST resource that is using the validator
 	 * @return the list of the classes to use.
 	 */
-	private List<Class<?>> loadBoundleClasses()
+	private List<Class<?>> loadBundleClasses()
 	{
 		Collection<IValidator<?>> validators = declaredValidators.values();
 		List<Class<?>> validatorsClasses = ReflectionUtils.getElementsClasses(validators);
@@ -398,7 +396,7 @@ public abstract class AbstractRestResource<T extends IWebSerialDeserial> impleme
 	 *            The current response object.
 	 * @param result
 	 *            The object to write to response.
-	 * @param restMimeFormats
+	 * @param mimeType
 	 * 			  The MIME type to use to serialize data
 	 */
 	public void objectToResponse(Object result, WebResponse response, String mimeType)
@@ -472,7 +470,7 @@ public abstract class AbstractRestResource<T extends IWebSerialDeserial> impleme
 		{
 			// if we have more than one method with the highest score, throw
 			// ambiguous exception.
-			throwAmbiguousMethodsException(scoredMethods.getFirstValue(highestScore));
+			throwAmbiguousMethodsException(scoredMethods.get(highestScore));
 		}
 		
 		return scoredMethods.getFirstValue(highestScore);
@@ -482,21 +480,24 @@ public abstract class AbstractRestResource<T extends IWebSerialDeserial> impleme
 	 * Throw an exception if two o more methods have the same "score" for the current request. See
 	 * method selectMostSuitedMethod.
 	 *
-	 * @param list
-	 *            the list of ambiguous methods.
+	 * @param methods the list of ambiguous methods.
 	 */
-	private void throwAmbiguousMethodsException(ScoreMethodAndExtractPathVars... methods)
+	private void throwAmbiguousMethodsException(List<ScoreMethodAndExtractPathVars> methods)
 	{
 		WebRequest request = getCurrentWebRequest();
-		String methodsNames = "";
+		StringBuilder methodsNames = new StringBuilder();
 
 		for (ScoreMethodAndExtractPathVars method : methods)
 		{
-			if (!methodsNames.isEmpty())
-				methodsNames += ", ";
+			if (methodsNames.length() != 0)
+				methodsNames.append(", ");
 
 			MethodMappingInfo urlMappingInfo = method.getMethodInfo();
-			methodsNames += urlMappingInfo.getMethod().getName();
+			methodsNames.append(urlMappingInfo.getMethod().getReturnType().getSimpleName());
+			methodsNames.append(" ");
+			methodsNames.append(urlMappingInfo.getMethod().getDeclaringClass().getSimpleName());
+			methodsNames.append(".");
+			methodsNames.append(urlMappingInfo.getMethod().getName());
 		}
 
 		throw new WicketRuntimeException("Ambiguous methods mapped for the current request: URL '" +
@@ -535,7 +536,7 @@ public abstract class AbstractRestResource<T extends IWebSerialDeserial> impleme
 
 			isUsingAuthAnnot = isUsingAuthAnnot || authorizeInvocation != null;
 
-			if (methodMapped != null)
+			if (methodMapped != null && !method.isBridge())
 			{
 				HttpMethod httpMethod = methodMapped.httpMethod();
 				MethodMappingInfo methodMappingInfo = new MethodMappingInfo(methodMapped, method);
@@ -545,9 +546,9 @@ public abstract class AbstractRestResource<T extends IWebSerialDeserial> impleme
 					throw new WicketRuntimeException(
 						"Mapped methods use a MIME type not supported by obj serializer/deserializer!");
 
-				mappedMethods.addValue(
-					methodMappingInfo.getSegmentsCount() + "_" + httpMethod.getMethod(),
-					methodMappingInfo);
+				String key = methodMappingInfo.getSegmentsCount() + "_" + httpMethod.getMethod();
+				mappedMethods.addValue(key, methodMappingInfo);
+				log.debug("Added mapped method: {} with key: {}", method, key);
 			}
 		}
 		// if AuthorizeInvocation has been found but no role-checker has been

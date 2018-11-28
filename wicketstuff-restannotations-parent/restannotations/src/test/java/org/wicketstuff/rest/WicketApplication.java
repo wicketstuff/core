@@ -31,6 +31,7 @@ import org.wicketstuff.rest.contenthandling.mimetypes.RestMimeTypes;
 import org.wicketstuff.rest.contenthandling.webserialdeserial.JsonTestWebSerialDeserial;
 import org.wicketstuff.rest.contenthandling.webserialdeserial.MultiFormatSerialDeserial;
 import org.wicketstuff.rest.contenthandling.webserialdeserial.XmlTestWebSerialDeserial;
+import org.wicketstuff.rest.resource.ExtendsRestResource;
 import org.wicketstuff.rest.resource.MultiFormatRestResource;
 import org.wicketstuff.rest.resource.RegExpRestResource;
 import org.wicketstuff.rest.resource.RestResourceFullAnnotated;
@@ -110,6 +111,18 @@ public class WicketApplication extends WebApplication implements
 	    }
 
 	});
+
+		mountResource("/api4", new ResourceReference("restReference")
+		{
+
+			@Override
+			public IResource getResource()
+			{
+				return new ExtendsRestResource(
+						new JsonTestWebSerialDeserial(), WicketApplication.this);
+			}
+
+		});
     }
 
     @Override

@@ -270,6 +270,19 @@ public class RestResourcesTest
 		assertEquals(writer.toString(), tester.getLastResponseAsString());
 	}
 
+	@Test
+	public void testExtendsMethod() throws Exception
+	{
+		// test JSON response
+		tester.getRequest().setMethod("POST");
+		tester.executeUrl("./api4");
+
+		JSONObject actual = new JSONObject(tester.getLastResponseAsString());
+		Assert.assertEquals("Smith", actual.getString("surname"));
+		Assert.assertEquals("Mary", actual.getString("name"));
+		Assert.assertEquals("m.smith@gmail.com", actual.getString("email"));
+	}
+
 	protected void testIfResponseStringIsEqual(String value)
 	{
 		Assert.assertEquals(value, tester.getLastResponseAsString());
