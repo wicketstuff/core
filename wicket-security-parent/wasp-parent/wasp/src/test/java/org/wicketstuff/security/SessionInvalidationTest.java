@@ -33,7 +33,7 @@ import org.wicketstuff.security.strategies.WaspAuthorizationStrategy;
 
 /**
  * Test session invalidation
- * 
+ *
  * @author marrink
  */
 public class SessionInvalidationTest extends WaspAbstractTestBase
@@ -51,7 +51,7 @@ public class SessionInvalidationTest extends WaspAbstractTestBase
 		assertEquals(session, mock.getSession());
 		assertTrue(((WaspSession)mock.getSession()).logoff(null));
 		mock.processRequest();
-		assertTrue(session.isSessionInvalidated());
+		assertFalse(session.isSessionInvalidated());
 		assertFalse(((WaspAuthorizationStrategy)mock.getSession().getAuthorizationStrategy()).isUserAuthenticated());
 
 	}
@@ -82,7 +82,7 @@ public class SessionInvalidationTest extends WaspAbstractTestBase
 
 		((WaspSession)mock.getSession()).logoff(null);
 		mock.processRequest();
-		assertTrue(session.isSessionInvalidated());
+		assertFalse(session.isSessionInvalidated());
 		assertFalse(((WaspAuthorizationStrategy)mock.getSession().getAuthorizationStrategy()).isUserAuthenticated());
 
 	}
