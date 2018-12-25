@@ -24,7 +24,7 @@ re-render the whole repeater again in ajax use cases. it works well with AjaxIte
 
 
 
-read more about QuickView and QuickGridView at https://github.com/vineetsemwal/quickview/wiki
+read more about QuickView and QuickGridView at https://github.com/wicketstuff/core/wiki/quickview
 
 
 Please use simple examples which comes with the package .
