@@ -26,7 +26,7 @@ import org.apache.wicket.request.http.WebResponse;
 import org.wicketstuff.rest.contenthandling.IObjectSerialDeserial;
 import org.wicketstuff.rest.contenthandling.IWebSerialDeserial;
 import org.wicketstuff.rest.contenthandling.mimetypes.RestMimeTypes;
-import org.wicketstuff.rest.utils.http.HttpUtils;
+import org.wicketstuff.restutils.http.HttpUtils;
 
 /**
  * Web serializer/deserailizer that works with a textual format.

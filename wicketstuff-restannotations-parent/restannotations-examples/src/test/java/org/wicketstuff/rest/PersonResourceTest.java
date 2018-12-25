@@ -24,7 +24,7 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.wicketstuff.rest.domain.PersonPojo;
-import org.wicketstuff.rest.utils.test.BufferedMockRequest;
+import org.wicketstuff.restutils.test.BufferedMockRequest;
 
 import com.google.gson.Gson;
 
@@ -39,13 +39,13 @@ public class PersonResourceTest
 
     private BufferedMockRequest mockRequest;
 
-    @BeforeEach
-    public void setUp()
-    {
-	tester = new WicketTester(new WicketApplication());
-	mockRequest = new BufferedMockRequest(tester.getApplication(),
+	@BeforeEach
+	public void setUp()
+	{
+		tester = new WicketTester(new WicketApplication());
+		mockRequest = new BufferedMockRequest(tester.getApplication(),
 		tester.getHttpSession(), tester.getServletContext(), "POST");
-    }
+	}
 
     @AfterEach
     public void tearDown()

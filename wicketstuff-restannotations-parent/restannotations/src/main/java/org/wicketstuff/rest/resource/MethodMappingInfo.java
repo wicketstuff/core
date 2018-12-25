@@ -30,8 +30,8 @@ import org.wicketstuff.rest.annotations.MethodMapping;
 import org.wicketstuff.rest.contenthandling.mimetypes.IMimeTypeResolver;
 import org.wicketstuff.rest.resource.urlsegments.AbstractURLSegment;
 import org.wicketstuff.rest.utils.collection.CollectionUtils;
-import org.wicketstuff.rest.utils.http.HttpMethod;
 import org.wicketstuff.rest.utils.reflection.MethodParameter;
+import org.wicketstuff.restutils.http.HttpMethod;
 
 /**
  * This class contains the informations of a resource mapped method (i.e. a method annotated with
