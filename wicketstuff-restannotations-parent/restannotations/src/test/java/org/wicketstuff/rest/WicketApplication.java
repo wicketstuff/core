@@ -65,55 +65,59 @@ public class WicketApplication extends WebApplication implements
 	return roles.hasAnyRole(this.roles);
     }
 
-    @Override
-    public void init()
-    {
-	super.init();
-
-	mountResource("/api", new ResourceReference("restReference")
+	@Override
+	public void init()
 	{
+		super.init();
 
-	    @Override
-	    public IResource getResource()
-	    {
-		return new RestResourceFullAnnotated(
-			new JsonTestWebSerialDeserial(), WicketApplication.this);
-	    }
+		mountResource("/api", new ResourceReference("restReference")
+		{
+			private static final long serialVersionUID = 1L;
 
-	});
+			@Override
+		    public IResource getResource()
+		    {
+			return new RestResourceFullAnnotated(
+				new JsonTestWebSerialDeserial(), WicketApplication.this);
+		    }
 
-	mountResource("/api2", new ResourceReference("regExpRestResource")
-	{
+		});
 
-	    @Override
-	    public IResource getResource()
-	    {
-		return new RegExpRestResource(new JsonTestWebSerialDeserial(),
-			WicketApplication.this);
-	    }
+		mountResource("/api2", new ResourceReference("regExpRestResource")
+		{
+			private static final long serialVersionUID = 1L;
 
-	});
+			@Override
+		    public IResource getResource()
+		    {
+			return new RegExpRestResource(new JsonTestWebSerialDeserial(),
+				WicketApplication.this);
+		    }
 
-	mountResource("/api3", new ResourceReference("multiFormatRestResource")
-	{
+		});
 
-	    @Override
-	    public IResource getResource()
-	    {
-		MultiFormatSerialDeserial multiFormat = new MultiFormatSerialDeserial();
+		mountResource("/api3", new ResourceReference("multiFormatRestResource")
+		{
+			private static final long serialVersionUID = 1L;
 
-		multiFormat.registerSerDeser(new JsonTestWebSerialDeserial(),
-			RestMimeTypes.APPLICATION_JSON);
-		multiFormat.registerSerDeser(new XmlTestWebSerialDeserial(),
-			RestMimeTypes.APPLICATION_XML);
+			@Override
+		    public IResource getResource()
+		    {
+			MultiFormatSerialDeserial multiFormat = new MultiFormatSerialDeserial();
 
-		return new MultiFormatRestResource(multiFormat);
-	    }
+			multiFormat.registerSerDeser(new JsonTestWebSerialDeserial(),
+				RestMimeTypes.APPLICATION_JSON);
+			multiFormat.registerSerDeser(new XmlTestWebSerialDeserial(),
+				RestMimeTypes.APPLICATION_XML);
 
-	});
+			return new MultiFormatRestResource(multiFormat);
+		    }
+
+		});
 
 		mountResource("/api4", new ResourceReference("restReference")
 		{
+			private static final long serialVersionUID = 1L;
 
 			@Override
 			public IResource getResource()

@@ -25,14 +25,14 @@ import org.wicketstuff.rest.annotations.parameters.ValidatorKey;
 import org.wicketstuff.rest.contenthandling.json.objserialdeserial.GsonObjectSerialDeserial;
 import org.wicketstuff.rest.contenthandling.json.webserialdeserial.JsonWebSerialDeserial;
 import org.wicketstuff.rest.domain.PersonPojo;
-import org.wicketstuff.restutils.http.HttpMethod;
+import org.wicketstuff.rest.utils.http.HttpMethod;
 
 public class PersonsRestResource extends AbstractRestResource<JsonWebSerialDeserial> {
-    private final List<PersonPojo> persons = new ArrayList<PersonPojo>();
+    private final List<PersonPojo> persons = new ArrayList<>();
 
     public PersonsRestResource() {
 	super(new JsonWebSerialDeserial(new GsonObjectSerialDeserial()));
-	
+
         persons.add(new PersonPojo("Freddie Mercury", "fmercury@queen.com", "Eeehooo!"));
         persons.add(new PersonPojo("John Deacon", "jdeacon@queen.com", "bass"));
         persons.add(new PersonPojo("Brian May", "bmay@queen.com", "guitar"));

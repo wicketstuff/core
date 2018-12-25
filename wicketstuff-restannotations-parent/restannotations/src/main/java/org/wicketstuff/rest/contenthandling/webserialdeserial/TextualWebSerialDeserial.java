@@ -18,19 +18,19 @@ package org.wicketstuff.rest.contenthandling.webserialdeserial;
 
 import java.io.IOException;
 
+import javax.servlet.ServletResponse;
+
 import org.apache.wicket.WicketRuntimeException;
 import org.apache.wicket.request.http.WebRequest;
 import org.apache.wicket.request.http.WebResponse;
 import org.wicketstuff.rest.contenthandling.IObjectSerialDeserial;
 import org.wicketstuff.rest.contenthandling.IWebSerialDeserial;
 import org.wicketstuff.rest.contenthandling.mimetypes.RestMimeTypes;
-import org.wicketstuff.restutils.http.HttpUtils;
-
-import javax.servlet.ServletResponse;
+import org.wicketstuff.rest.utils.http.HttpUtils;
 
 /**
  * Web serializer/deserailizer that works with a textual format.
- * 
+ *
  * @author andrea del bene
  *
  */
@@ -97,7 +97,7 @@ public class TextualWebSerialDeserial implements IWebSerialDeserial
 
 	/**
 	 * Sets the charset for the current response.
-	 * 
+	 *
 	 * @param response
 	 *            the current response
 	 */

@@ -16,6 +16,8 @@
  */
 package org.wicketstuff.security.login.http;
 
+import java.util.Base64;
+
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.wicket.Application;
@@ -30,7 +32,6 @@ import org.apache.wicket.request.cycle.RequestCycle;
 import org.apache.wicket.request.http.WebRequest;
 import org.apache.wicket.request.http.WebResponse;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
-import org.apache.wicket.util.crypt.Base64;
 import org.apache.wicket.util.string.Strings;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -43,7 +44,7 @@ import org.wicketstuff.security.strategies.WaspAuthorizationStrategy;
  * authentication as defined in RFC 2616 section 14.47 HTTP 1.1. But the way it is setup it should
  * be able to support addition protocols like RFC 2617. Thanks go to Jesse Barnum and Johan
  * Compagner.
- * 
+ *
  * @author marrink
  * @see <a href="http://tools.ietf.org/html/rfc2616#section-14.47">rfc2616</a>
  */
@@ -57,7 +58,7 @@ public abstract class HttpAuthenticationLoginPage extends WebPage
 
 	/**
 	 * Basic constructor.
-	 * 
+	 *
 	 * @see WebPage#WebPage()
 	 */
 	public HttpAuthenticationLoginPage()
@@ -66,7 +67,7 @@ public abstract class HttpAuthenticationLoginPage extends WebPage
 
 	/**
 	 * Constructor.
-	 * 
+	 *
 	 * @param model
 	 * @see WebPage#WebPage(IModel)
 	 */
@@ -77,7 +78,7 @@ public abstract class HttpAuthenticationLoginPage extends WebPage
 
 	/**
 	 * Constructor.
-	 * 
+	 *
 	 * @param parameters
 	 * @see WebPage#WebPage(PageParameters)
 	 */
@@ -95,12 +96,16 @@ public abstract class HttpAuthenticationLoginPage extends WebPage
 			WebRequest request = (WebRequest)RequestCycle.get().getRequest();
 			String auth = request.getHeader("Authorization");
 			if (Strings.isEmpty(auth))
+			{
 				requestAuthentication(request, response);
+			}
 			else
 			{
 				int index = auth.indexOf(' ');
 				if (index < 1)
+				{
 					requestAuthentication(request, response);
+				}
 				String type = auth.substring(0, index);
 				try
 				{
@@ -137,7 +142,7 @@ public abstract class HttpAuthenticationLoginPage extends WebPage
 	 * Sets the statuscode of the response to 401. setting headers is delegated to
 	 * {@link #addBasicHeaders(WebRequest, WebResponse)}. Subclasses should override this method to
 	 * set their custom headers.
-	 * 
+	 *
 	 * @param request
 	 * @param response
 	 */
@@ -150,7 +155,7 @@ public abstract class HttpAuthenticationLoginPage extends WebPage
 
 	/**
 	 * Adds a "WWW-Authenticate" header for basic authentication to the response.
-	 * 
+	 *
 	 * @param request
 	 * @param response
 	 */
@@ -163,10 +168,10 @@ public abstract class HttpAuthenticationLoginPage extends WebPage
 	/**
 	 * The authentication realm. The realm is required by the authentication headers and will be
 	 * shown by the browser.
-	 * 
+	 *
 	 * @param request
 	 * @param response
-	 * 
+	 *
 	 * @return the realm
 	 */
 	public abstract String getRealm(WebRequest request, WebResponse response);
@@ -176,7 +181,7 @@ public abstract class HttpAuthenticationLoginPage extends WebPage
 	 * before letting super handle the call. Subclasses should either return a boolean value (see
 	 * {@link #handleBasicAuthentication(WebRequest, WebResponse, String, String)} ) if processing
 	 * should continue or throw an exception.
-	 * 
+	 *
 	 * @param request
 	 * @param response
 	 * @param scheme
@@ -192,7 +197,9 @@ public abstract class HttpAuthenticationLoginPage extends WebPage
 		String param) throws LoginException
 	{
 		if (!handleBasicAuthentication(request, response, scheme, param))
+		{
 			return;
+		}
 		log.error("Unsupported Http authentication type: " + scheme);
 		throw new RestartResponseAtInterceptPageException(Application.get()
 			.getApplicationSettings()
@@ -205,7 +212,7 @@ public abstract class HttpAuthenticationLoginPage extends WebPage
 	 * scheme should only proceed if the scheme was of the wrong type. False will generally be
 	 * returned when a) the user has been authenticated or b) the scheme is correct but another
 	 * problem arises, like missing additional headers.
-	 * 
+	 *
 	 * @param request
 	 * @param response
 	 * @param scheme
@@ -224,22 +231,28 @@ public abstract class HttpAuthenticationLoginPage extends WebPage
 		String scheme, String param) throws LoginException
 	{
 		if (!"Basic".equalsIgnoreCase(scheme))
+		{
 			return true;
+		}
 		if (param == null)
 		{
 			log.error("Username, password not supplied");
 			return false;
 		}
-		byte[] decoded = Base64.decodeBase64(param.getBytes());
+		byte[] decoded = Base64.getDecoder().decode(param.getBytes());
 		String[] split = new String(decoded).split(":");
 		if (split == null || split.length != 2)
+		{
 			throw new LoginException("Could not decrypt username / password");
+		}
 		Object loginContext = getBasicLoginContext(split[0], split[1]);
 		Session session = Session.get();
 		if (session instanceof WaspSession)
 		{
 			if (!isAuthenticated())
+			{
 				((WaspSession)session).login(loginContext);
+			}
 
 
 			continueToOriginalDestination();
@@ -247,14 +260,16 @@ public abstract class HttpAuthenticationLoginPage extends WebPage
 			throw new RestartResponseAtInterceptPageException(Application.get().getHomePage());
 		}
 		else
+		{
 			log.error("Unable to find WaspSession");
+		}
 		return false;
 	}
 
 	/**
 	 * Check if already someone is authenticated to prevent duplicate logins. By default this checks
 	 * if the home page is authenticated.
-	 * 
+	 *
 	 * @return true if the user is already authenticated, false otherwise
 	 */
 	protected boolean isAuthenticated()
@@ -267,7 +282,7 @@ public abstract class HttpAuthenticationLoginPage extends WebPage
 	/**
 	 * Delivers a context suitable for logging in with the specified username and password. Please
 	 * refer to your specific wasp implementation for a suitable context.
-	 * 
+	 *
 	 * @param username
 	 * @param password
 	 * @return the login context or null if none could be created

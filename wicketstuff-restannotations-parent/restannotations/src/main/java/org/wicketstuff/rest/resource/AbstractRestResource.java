@@ -24,6 +24,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
 import org.apache.wicket.Application;
 import org.apache.wicket.Session;
 import org.apache.wicket.WicketRuntimeException;
@@ -52,13 +53,13 @@ import org.wicketstuff.rest.contenthandling.IWebSerialDeserial;
 import org.wicketstuff.rest.resource.urlsegments.AbstractURLSegment;
 import org.wicketstuff.rest.resource.urlsegments.visitor.ScoreMethodAndExtractPathVars;
 import org.wicketstuff.rest.utils.collection.CollectionUtils;
+import org.wicketstuff.rest.utils.http.HttpMethod;
+import org.wicketstuff.rest.utils.http.HttpUtils;
 import org.wicketstuff.rest.utils.reflection.MethodParameter;
 import org.wicketstuff.rest.utils.reflection.ReflectionUtils;
+import org.wicketstuff.rest.utils.wicket.AttributesWrapper;
 import org.wicketstuff.rest.utils.wicket.MethodParameterContext;
 import org.wicketstuff.rest.utils.wicket.bundle.DefaultBundleResolver;
-import org.wicketstuff.restutils.http.HttpMethod;
-import org.wicketstuff.restutils.http.HttpUtils;
-import org.wicketstuff.restutils.wicket.AttributesWrapper;
 
 /**
  * Base class to build a resource that serves REST requests.
@@ -315,7 +316,7 @@ public abstract class AbstractRestResource<T extends IWebSerialDeserial> impleme
 		List<?> parametersValues)
 	{
 		List<MethodParameter<?>> methodParameters = mappedMethod.getMethodParameters();
-		List<IValidationError> errors = new ArrayList<IValidationError>();
+		List<IValidationError> errors = new ArrayList<>();
 
 		for (MethodParameter<?> methodParameter : methodParameters)
 		{
@@ -431,7 +432,7 @@ public abstract class AbstractRestResource<T extends IWebSerialDeserial> impleme
 		{
 			return null;
 		}
-		
+
 		/**
 		 * To select the "best" method, a score is assigned to every mapped method. To calculate the
 		 * score method calculateScore is executed for every segment.
@@ -453,9 +454,9 @@ public abstract class AbstractRestResource<T extends IWebSerialDeserial> impleme
 				}
 			}
 
-			int methodScore = scoredMethod.isSegmentValid() ? 
+			int methodScore = scoredMethod.isSegmentValid() ?
 					scoredMethod.getScore() : -1;
-			
+
 			if (methodScore >= highestScore)
 			{
 				highestScore = methodScore;
@@ -463,16 +464,16 @@ public abstract class AbstractRestResource<T extends IWebSerialDeserial> impleme
 			}
 		}
 
-		List<ScoreMethodAndExtractPathVars> methodsWithScore 
+		List<ScoreMethodAndExtractPathVars> methodsWithScore
 			= scoredMethods.get(highestScore);
-		
+
 		if(methodsWithScore != null && methodsWithScore.size() > 1)
 		{
 			// if we have more than one method with the highest score, throw
 			// ambiguous exception.
 			throwAmbiguousMethodsException(scoredMethods.get(highestScore));
 		}
-		
+
 		return scoredMethods.getFirstValue(highestScore);
 	}
 
@@ -489,8 +490,9 @@ public abstract class AbstractRestResource<T extends IWebSerialDeserial> impleme
 
 		for (ScoreMethodAndExtractPathVars method : methods)
 		{
-			if (methodsNames.length() != 0)
+			if (methodsNames.length() != 0) {
 				methodsNames.append(", ");
+			}
 
 			MethodMappingInfo urlMappingInfo = method.getMethodInfo();
 			methodsNames.append(urlMappingInfo.getMethod().getReturnType().getSimpleName());
@@ -525,7 +527,7 @@ public abstract class AbstractRestResource<T extends IWebSerialDeserial> impleme
 	private Map<String, List<MethodMappingInfo>> loadAnnotatedMethods()
 	{
 		Method[] methods = getClass().getDeclaredMethods();
-		MultiMap<String, MethodMappingInfo> mappedMethods = new MultiMap<String, MethodMappingInfo>();
+		MultiMap<String, MethodMappingInfo> mappedMethods = new MultiMap<>();
 		boolean isUsingAuthAnnot = false;
 
 		for (int i = 0; i < methods.length; i++)
@@ -542,9 +544,10 @@ public abstract class AbstractRestResource<T extends IWebSerialDeserial> impleme
 				MethodMappingInfo methodMappingInfo = new MethodMappingInfo(methodMapped, method);
 
 				if (!webSerialDeserial.isMimeTypeSupported(methodMappingInfo.getInputFormat()) ||
-					!webSerialDeserial.isMimeTypeSupported(methodMappingInfo.getOutputFormat()))
+					!webSerialDeserial.isMimeTypeSupported(methodMappingInfo.getOutputFormat())) {
 					throw new WicketRuntimeException(
 						"Mapped methods use a MIME type not supported by obj serializer/deserializer!");
+				}
 
 				String key = methodMappingInfo.getSegmentsCount() + "_" + httpMethod.getMethod();
 				mappedMethods.addValue(key, methodMappingInfo);
@@ -553,16 +556,17 @@ public abstract class AbstractRestResource<T extends IWebSerialDeserial> impleme
 		}
 		// if AuthorizeInvocation has been found but no role-checker has been
 		// configured, throw an exception
-		if (isUsingAuthAnnot && roleCheckingStrategy == null)
+		if (isUsingAuthAnnot && roleCheckingStrategy == null) {
 			throw new WicketRuntimeException(
 				"Annotation AuthorizeInvocation is used but no role-checking strategy has been set for the controller!");
+		}
 
 		return CollectionUtils.makeListMapImmutable(mappedMethods);
 	}
 
 	private Map<Method, MethodMappingInfo> loadAnnotatedMethodsInfo()
 	{
-		Map<Method, MethodMappingInfo> methodsInfo = new HashMap<Method, MethodMappingInfo>();
+		Map<Method, MethodMappingInfo> methodsInfo = new HashMap<>();
 
 		for (List<MethodMappingInfo> methodInfoList : mappedMethods.values())
 		{
@@ -640,7 +644,7 @@ public abstract class AbstractRestResource<T extends IWebSerialDeserial> impleme
 	}
 
 	/**
-	 * Handle Exception. Default: responds with a generic error message "General server error." and logging the exception. 
+	 * Handle Exception. Default: responds with a generic error message "General server error." and logging the exception.
 	 * Override this method to implement customized error handling
 	 * @param exception The Exception
 	 * @param response Response-Object

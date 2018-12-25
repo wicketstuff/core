@@ -24,7 +24,7 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.wicketstuff.rest.domain.PersonPojo;
-import org.wicketstuff.restutils.test.BufferedMockRequest;
+import org.wicketstuff.rest.utils.test.BufferedMockRequest;
 
 import com.google.gson.Gson;
 

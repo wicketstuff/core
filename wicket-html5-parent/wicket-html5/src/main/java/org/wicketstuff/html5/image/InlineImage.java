@@ -23,14 +23,13 @@ import org.apache.wicket.markup.ComponentTag;
 import org.apache.wicket.markup.html.WebComponent;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.request.resource.PackageResourceReference;
-import org.apache.wicket.util.crypt.Base64;
 import org.apache.wicket.util.resource.IResourceStream;
 
 /**
  * The inline image is used to embed the complete image content within a HTML document.
- * 
+ *
  * @author Tobias Soloschenko
- * 
+ *
  */
 public class InlineImage extends WebComponent
 {
@@ -41,7 +40,7 @@ public class InlineImage extends WebComponent
 
 	/**
 	 * Creates an inline image
-	 * 
+	 *
 	 * @param id
 	 *            the id
 	 * @param packageResourceStream
@@ -54,7 +53,7 @@ public class InlineImage extends WebComponent
 
 	/**
 	 * Creates an inline image
-	 * 
+	 *
 	 * @param id
 	 *            the id
 	 * @param model
@@ -91,7 +90,7 @@ public class InlineImage extends WebComponent
 				DataInputStream dataInputStream = new DataInputStream(
 					packageResourceStream.getInputStream());
 				dataInputStream.readFully(bytes);
-				builder.append(Base64.encodeBase64String(bytes));
+				builder.append(java.util.Base64.getEncoder().encodeToString(bytes));
 				tag.put("src", builder.toString());
 			}
 			catch (Exception e)

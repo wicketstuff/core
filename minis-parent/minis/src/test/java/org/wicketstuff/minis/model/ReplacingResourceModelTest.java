@@ -47,7 +47,7 @@ public class ReplacingResourceModelTest
 	{
 		wicketTester.startPage(ReplacingResourceModelPage.class);
 		String document = wicketTester.getLastResponse().getDocument();
-		TagTester createTagByAttribute = TagTester.createTagByAttribute(document, "span");
+		TagTester createTagByAttribute = TagTester.createTagByName(document, "span");
 		assertEquals(createTagByAttribute.getValue(), "Hello my friends Max and Ulli");
 	}
 }

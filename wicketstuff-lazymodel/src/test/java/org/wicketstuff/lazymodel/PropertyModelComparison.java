@@ -20,10 +20,11 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.wicketstuff.lazymodel.LazyModel.from;
 import static org.wicketstuff.lazymodel.LazyModel.model;
 
+import java.util.function.Supplier;
+
 import org.apache.wicket.core.util.lang.WicketObjects;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.PropertyModel;
-import org.apache.wicket.util.IProvider;
 import org.apache.wicket.util.time.Duration;
 import org.apache.wicket.util.time.Time;
 import org.junit.jupiter.api.Disabled;
@@ -69,19 +70,9 @@ public class PropertyModelComparison {
 
 	@Test
 	public void time() {
-		Duration propertyModelDuration = measureTime(new IProvider<IModel<?>>() {
-			@Override
-			public IModel<?> get() {
-				return new PropertyModel<C>(a, "b.cs[0].string");
-			}
-		});
+		Duration propertyModelDuration = measureTime(() -> new PropertyModel<C>(a, "b.cs[0].string"));
 
-		Duration lazyModelDuration = measureTime(new IProvider<IModel<?>>() {
-			@Override
-			public IModel<?> get() {
-				return model(from(a).getB().getCs().get(0).getString());
-			}
-		});
+		Duration lazyModelDuration = measureTime(() -> model(from(a).getB().getCs().get(0).getString()));
 
 		assertTrue(lazyModelDuration.getMilliseconds() < propertyModelDuration
 						.getMilliseconds() * 2.1, "LazyModel is 2 times slower");
@@ -89,27 +80,17 @@ public class PropertyModelComparison {
 
 	@Test
 	public void cachedTime() {
-		Duration propertyModelDuration = measureTime(new IProvider<IModel<?>>() {
-			@Override
-			public IModel<?> get() {
-				return new PropertyModel<C>(a, "b.cs[0].string");
-			}
-		});
+		Duration propertyModelDuration = measureTime(() -> new PropertyModel<C>(a, "b.cs[0].string"));
 
 		final LazyModel<String> C = model(from(a).getB().getCs().get(0)
 				.getString());
-		Duration lazyModelDuration = measureTime(new IProvider<IModel<?>>() {
-			@Override
-			public IModel<?> get() {
-				return C.bind(a);
-			}
-		});
+		Duration lazyModelDuration = measureTime(() -> C.bind(a));
 
 		assertTrue(lazyModelDuration.getMilliseconds() < propertyModelDuration
 						.getMilliseconds() * 1.1, "Cached LazyModel is slower");
 	}
 
-	private Duration measureTime(IProvider<IModel<?>> provider) {
+	private Duration measureTime(Supplier<IModel<?>> provider) {
 		Time start = Time.now();
 
 		for (int i = 0; i < 100000; i++) {

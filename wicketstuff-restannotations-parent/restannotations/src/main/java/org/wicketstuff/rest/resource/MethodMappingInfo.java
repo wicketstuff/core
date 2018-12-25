@@ -30,16 +30,16 @@ import org.wicketstuff.rest.annotations.MethodMapping;
 import org.wicketstuff.rest.contenthandling.mimetypes.IMimeTypeResolver;
 import org.wicketstuff.rest.resource.urlsegments.AbstractURLSegment;
 import org.wicketstuff.rest.utils.collection.CollectionUtils;
+import org.wicketstuff.rest.utils.http.HttpMethod;
 import org.wicketstuff.rest.utils.reflection.MethodParameter;
-import org.wicketstuff.restutils.http.HttpMethod;
 
 /**
  * This class contains the informations of a resource mapped method (i.e. a method annotated with
  * {@link MethodMapping}). These informations are used at runtime to select the most suited method
  * to serve the current request.
- * 
+ *
  * @author andrea del bene
- * 
+ *
  */
 public class MethodMappingInfo implements IMimeTypeResolver
 {
@@ -59,10 +59,10 @@ public class MethodMappingInfo implements IMimeTypeResolver
 	private final List<MethodParameter<?>> methodParameters;
 	/** Method parameters list */
 	private final Map<Class<? extends Annotation>, List<MethodParameter<?>>> annotatedMethodParameters;
-	
+
 	/**
 	 * Class constructor.
-	 * 
+	 *
 	 * @param methodMapped
 	 *            the method mapped
 	 * @param method
@@ -97,24 +97,24 @@ public class MethodMappingInfo implements IMimeTypeResolver
 	private Map<Class<? extends Annotation>, List<MethodParameter<?>>> loadAnnotatedMethodParameters()
 	{
 		MultiMap<Class<? extends Annotation>, MethodParameter<?>> result = new MultiMap<>();
-		
+
 		for (MethodParameter<?> methodParameter : methodParameters)
 		{
 			Annotation annotationParam = methodParameter.getAnnotationParam();
-			
+
 			if(annotationParam != null)
 			{
 				result.addValue(annotationParam.getClass(), methodParameter);
 			}
 		}
-		
+
 		return CollectionUtils.makeListMapImmutable(result);
 	}
 
 	/**
 	 * Loads the segment that compose the URL used to map the method. Segments are instances of
 	 * class {@link AbstractURLSegment}.
-	 * 
+	 *
 	 * @param urlPath
 	 *            the URL path of the method.
 	 * @return a list containing the segments that compose the URL in input
@@ -122,15 +122,16 @@ public class MethodMappingInfo implements IMimeTypeResolver
 	private List<AbstractURLSegment> loadSegments(String urlPath)
 	{
 		String[] segArray = urlPath.split("/");
-		ArrayList<AbstractURLSegment> segments = new ArrayList<AbstractURLSegment>();
+		ArrayList<AbstractURLSegment> segments = new ArrayList<>();
 
 		for (int i = 0; i < segArray.length; i++)
 		{
 			String segment = segArray[i];
 			AbstractURLSegment segmentValue;
 
-			if (segment.isEmpty())
+			if (segment.isEmpty()) {
 				continue;
+			}
 
 			segmentValue = AbstractURLSegment.newSegment(segment);
 			segments.add(segmentValue);
@@ -141,7 +142,7 @@ public class MethodMappingInfo implements IMimeTypeResolver
 
 	/**
 	 * Load the optional roles used to annotate the method with.
-	 * 
+	 *
 	 * @return the authorization roles for the method. {@link AuthorizeInvocation}
 	 */
 	private Roles loadRoles()
@@ -160,7 +161,7 @@ public class MethodMappingInfo implements IMimeTypeResolver
 
 	/**
 	 * Gets the segments of the mapped URL.
-	 * 
+	 *
 	 * @return the segments
 	 */
 	public List<AbstractURLSegment> getSegments()
@@ -170,7 +171,7 @@ public class MethodMappingInfo implements IMimeTypeResolver
 
 	/**
 	 * Gets the segments count.
-	 * 
+	 *
 	 * @return the segments count
 	 */
 	public int getSegmentsCount()
@@ -180,7 +181,7 @@ public class MethodMappingInfo implements IMimeTypeResolver
 
 	/**
 	 * Gets the HTTP method.
-	 * 
+	 *
 	 * @return the HTTP method
 	 */
 	public HttpMethod getHttpMethod()
@@ -190,7 +191,7 @@ public class MethodMappingInfo implements IMimeTypeResolver
 
 	/**
 	 * Gets the relative class method.
-	 * 
+	 *
 	 * @return the class method
 	 */
 	public Method getMethod()
@@ -200,7 +201,7 @@ public class MethodMappingInfo implements IMimeTypeResolver
 
 	/**
 	 * Gets the optional authorization roles for this method.
-	 * 
+	 *
 	 * @return the roles
 	 */
 	public Roles getRoles()
@@ -210,9 +211,10 @@ public class MethodMappingInfo implements IMimeTypeResolver
 
 	/**
 	 * Gets the mime input format.
-	 * 
+	 *
 	 * @return the mime input format
 	 */
+	@Override
 	public String getInputFormat()
 	{
 		return inputFormat;
@@ -220,9 +222,10 @@ public class MethodMappingInfo implements IMimeTypeResolver
 
 	/**
 	 * Gets the mime output format.
-	 * 
+	 *
 	 * @return the mime output format
 	 */
+	@Override
 	public String getOutputFormat()
 	{
 		return outputFormat;
