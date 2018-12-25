@@ -23,17 +23,19 @@ import org.wicketstuff.jamon.component.JamonAdminPage;
 
 /**
  * Dummy HomePage used by the {@link JamonWebApplication} in tests.
- * 
+ *
  * @author lars
  *
  */
-@SuppressWarnings("serial")
 public class HomePage extends WebPage
 {
+	private static final long serialVersionUID = 1L;
+
 	public HomePage()
 	{
 		add(new Link<Void>("toStatisticsPage")
 		{
+			private static final long serialVersionUID = 1L;
 
 			@Override
 			public void onClick()
@@ -44,6 +46,7 @@ public class HomePage extends WebPage
 		});
 		add(new Link<Void>("toAjaxPage")
 		{
+			private static final long serialVersionUID = 1L;
 
 			@Override
 			public void onClick()
