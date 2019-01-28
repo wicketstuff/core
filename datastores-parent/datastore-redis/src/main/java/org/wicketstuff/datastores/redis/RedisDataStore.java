@@ -1,24 +1,43 @@
 package org.wicketstuff.datastores.redis;
 
-import java.nio.charset.Charset;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
-import org.apache.wicket.pageStore.IDataStore;
+import org.apache.wicket.WicketRuntimeException;
+import org.apache.wicket.page.IManageablePage;
+import org.apache.wicket.pageStore.AbstractPersistentPageStore;
+import org.apache.wicket.pageStore.IPersistedPage;
+import org.apache.wicket.pageStore.IPersistentPageStore;
+import org.apache.wicket.pageStore.SerializedPage;
 import org.apache.wicket.util.lang.Args;
+import org.apache.wicket.util.lang.Bytes;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPool;
+import redis.clients.util.SafeEncoder;
 
 
 /**
  * An IDataStore that saves the pages' bytes in Redis
  */
-public class RedisDataStore implements IDataStore
-{
+public class RedisDataStore extends AbstractPersistentPageStore implements IPersistentPageStore {
+
 	private static final Logger LOGGER = LoggerFactory.getLogger(RedisDataStore.class);
 
+	private static final String ATTRIBUTES = "attributes";
+
+	private static final String ID = "id";
+	
+	private static final String TYPE = "type";
+
+	private static final String SIZE = "size";
+	
 	/**
 	 * A pool of connections to the cluster
 	 */
@@ -37,8 +56,8 @@ public class RedisDataStore implements IDataStore
 	 *
 	 * @param settings The various settings
 	 */
-	public RedisDataStore(IRedisSettings settings) {
-		this(createPool(settings), settings);
+	public RedisDataStore(String applicationname, IRedisSettings settings) {
+		this(applicationname, createPool(settings), settings);
 	}
 
 	private static JedisPool createPool(IRedisSettings settings) {
@@ -54,72 +73,82 @@ public class RedisDataStore implements IDataStore
 	 * @param pool     The pool with Jedis connections
 	 * @param settings The various settings
 	 */
-	public RedisDataStore(JedisPool pool, IRedisSettings settings)
+	public RedisDataStore(String applicationname, JedisPool pool, IRedisSettings settings)
 	{
+		super(applicationname);
+		
 		this.jedisPool = Args.notNull(pool, "pool");
 		this.settings = Args.notNull(settings, "settings");
 	}
-
+	
 	@Override
-	public byte[] getData(String sessionId, int pageId)
-	{
-		byte[] bytes = null;
-		Jedis resource = jedisPool.getResource();
-		try {
-			byte[] key = makeKey(sessionId, pageId);
-			bytes = resource.get(key);
+	public boolean supportsVersioning() {
+		return true;
+	}
+	
+	@Override
+	protected IManageablePage getPersistedPage(String sessionIdentifier, int id) {
+		try (Jedis resource = jedisPool.getResource()) {
+			String key = makeKey(sessionIdentifier, id);
+			byte[] bytes = resource.get(SafeEncoder.encode(key));
+			
+			String attributesKey = makeKey(sessionIdentifier, id, ATTRIBUTES);
+			String type = new String(resource.hmget(attributesKey, TYPE).get(0));
+			
 			LOGGER.debug("Got {} for session '{}' and page id '{}'",
-					new Object[] {bytes != null ? "data" : "'null'", sessionId, pageId});
-		} finally {
-			jedisPool.returnResource(resource);
+					new Object[] {bytes != null ? "data" : "'null'", sessionIdentifier, id});
+			
+			return new SerializedPage(id,  type,  bytes);
 		}
-		return bytes;
 	}
 
 	@Override
-	public void removeData(String sessionId, int pageId)
-	{
-		Jedis resource = jedisPool.getResource();
-		try {
-			byte[] key = makeKey(sessionId, pageId);
+	protected void removePersistedPage(String identifier, IManageablePage page) {
+		try (Jedis resource = jedisPool.getResource())
+		{
+			String key = makeKey(identifier, page.getPageId());
 			resource.del(key);
-		} finally {
-			jedisPool.returnResource(resource);
+
+			String attributesKey = makeKey(identifier, page.getPageId(), ATTRIBUTES);
+			resource.del(attributesKey);
 		}
 
-		LOGGER.debug("Deleted data for session '{}' and page with id '{}'", sessionId, pageId);
+		LOGGER.debug("Deleted data for session '{}' and page with id '{}'", identifier, page.getPageId());
 	}
 
 	@Override
-	public void removeData(String sessionId)
-	{
-		Jedis resource = jedisPool.getResource();
-		try {
-			byte[] glob = makeGlob(sessionId);
-			Set<byte[]> keys = resource.keys(glob);
-			for (byte[] key : keys) {
+	protected void removeAllPersistedPages(String identifier ) {
+		try (Jedis resource = jedisPool.getResource()) {
+			String glob = makeKey(identifier, "*");
+			Set<String> keys = resource.keys(glob);
+			for (String key : keys) {
 				resource.del(key);
 			}
-		} finally {
-			jedisPool.returnResource(resource);
 		}
-		LOGGER.debug("Deleted data for session '{}'", sessionId);
+		LOGGER.debug("Deleted data for session '{}'", identifier);
 	}
 
 	@Override
-	public void storeData(String sessionId, int pageId, byte[] data)
-	{
-		Jedis resource = jedisPool.getResource();
-		try {
-			byte[] key = makeKey(sessionId, pageId);
-			resource.set(key, data);
+	protected void addPersistedPage(String identifier, IManageablePage page) {
+		if (page instanceof SerializedPage == false)
+		{
+			throw new WicketRuntimeException("RedisDataStore works with serialized pages only");
+		}
+		SerializedPage serializedPage = (SerializedPage)page;
+		
+		try (Jedis resource = jedisPool.getResource()) {
+			String key = makeKey(identifier, serializedPage.getPageId());
+			resource.set(SafeEncoder.encode(key), serializedPage.getData());
+			
+			String attributesKey = makeKey(identifier, serializedPage.getPageId(), ATTRIBUTES);
+			resource.hmset(attributesKey, makeHm(serializedPage));
+			
 			if (settings.getRecordTtl() != null) {
 				resource.expire(key, (int) settings.getRecordTtl().seconds());
+				resource.expire(attributesKey, (int) settings.getRecordTtl().seconds());
 			}
-		} finally {
-			jedisPool.returnResource(resource);
 		}
-		LOGGER.debug("Inserted data for session '{}' and page id '{}'", sessionId, pageId);
+		LOGGER.debug("Inserted data for session '{}' and page id '{}'", identifier, page.getPageId());
 	}
 
 	@Override
@@ -132,18 +161,49 @@ public class RedisDataStore implements IDataStore
 	}
 
 	@Override
-	public boolean isReplicated()
+	public Set<String> getSessionIdentifiers()
 	{
-		return true;
+		Set<String> identifiers = new HashSet<>();
+		
+		try (Jedis resource = jedisPool.getResource())
+		{
+			String glob = makeKey("*");
+			Set<String> keys = resource.keys(glob);
+			for (String key : keys) {
+				if (key.indexOf(SEPARATOR, glob.length()) == -1) {
+					identifiers.add(key);
+				}
+			}
+		}
+		
+		return identifiers;
 	}
-
+	
 	@Override
-	public boolean canBeAsynchronous()
-	{
-		return true;
+	public List<IPersistedPage> getPersistedPages(String sessionIdentifier) {
+		List<IPersistedPage> pages = new ArrayList<>();
+		
+		try (Jedis resource = jedisPool.getResource())
+		{
+			String glob = makeKey(sessionIdentifier, "*");
+			Set<String> keys = resource.keys(glob);
+			for (String key : keys) {
+				if (key.endsWith(ATTRIBUTES)) {
+					PersistedPage page = parseHm(resource, key);
+
+					pages.add(page);
+				}
+			}
+		}
+		
+		return pages;
 	}
-
-
+	
+	@Override
+	public Bytes getTotalSize() {
+		return null;
+	}
+	
 	/**
 	 * A prefix for the keys to avoid duplication of entries
 	 * in Redis entered by another process and to make
@@ -157,31 +217,34 @@ public class RedisDataStore implements IDataStore
 	private static final String SEPARATOR = "|||";
 
 	/**
-	 * Creates a key that is used for the lookup in Redis.
-	 *
-	 * @param sessionId The id of the http session.
-	 * @param pageId    The id of the stored page
-	 * @return A key that is used for the lookup in Redis
+	 * Creates a key in Redis.
 	 */
-	private byte[] makeKey(String sessionId, int pageId) {
-		return makePrefix(sessionId)
-				.append(pageId)
-				.toString()
-				.getBytes(Charset.forName("UTF-8"));
+	private String  makeKey(Object... segments) {
+		StringBuilder string = new StringBuilder();
+		
+		string.append(KEY_PREFIX);
+		
+		for (Object segment : segments) {
+			string.append(SEPARATOR);
+			string.append(segment);
+		}
+		
+		return string.toString();
 	}
-
-	private byte[] makeGlob(String sessionId) {
-		return makePrefix(sessionId)
-				.append('*')
-				.toString()
-				.getBytes(Charset.forName("UTF-8"));
+	
+	private Map<String, String> makeHm(SerializedPage serializedPage) {
+		Map<String, String> hm = new HashMap<>();
+		
+		hm.put(ID, String.valueOf(serializedPage.getPageId()));
+		hm.put(TYPE, serializedPage.getPageType());
+		hm.put(SIZE, String.valueOf(serializedPage.getData().length));
+		
+		return hm;
 	}
-
-	private StringBuilder makePrefix(String sessionId) {
-		return new StringBuilder()
-				.append(KEY_PREFIX)
-				.append(SEPARATOR)
-				.append(sessionId)
-				.append(SEPARATOR);
+	
+	private PersistedPage parseHm(Jedis resource, String key) {
+		List<String> hm = resource.hmget(key, ID, TYPE, SIZE);
+		
+		return new PersistedPage(Integer.parseInt(hm.get(0)), hm.get(1), Integer.parseInt(hm.get(2)));
 	}
 }

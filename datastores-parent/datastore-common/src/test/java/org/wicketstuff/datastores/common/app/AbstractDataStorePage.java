@@ -14,35 +14,18 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.wicketstuff.shiro.wicket.page.store;
+package org.wicketstuff.datastores.common.app;
 
+import org.apache.wicket.devutils.debugbar.DebugBar;
+import org.apache.wicket.markup.html.WebPage;
+import org.apache.wicket.request.mapper.parameter.PageParameters;
 
-import org.apache.wicket.util.io.IClusterable;
-
-/**
- * @author Les Hazlewood
- * @since Feb 13, 2009 10:22:16 PM
- */
-public class SerializedPageWrapper implements IClusterable
-{
+public abstract class AbstractDataStorePage extends WebPage {
 	private static final long serialVersionUID = 1L;
 
-	private final byte[] page;
-	private final int pageId;
+	protected AbstractDataStorePage(final PageParameters parameters) {
+		super(parameters);
 
-	public SerializedPageWrapper(byte[] page, int pageId)
-	{
-		this.page = page;
-		this.pageId = pageId;
-	}
-
-	public byte[] getPage()
-	{
-		return page;
-	}
-
-	public int getPageId()
-	{
-		return pageId;
+		add(new DebugBar("debug"));
 	}
 }

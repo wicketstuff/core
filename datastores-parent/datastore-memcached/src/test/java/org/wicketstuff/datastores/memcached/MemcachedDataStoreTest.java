@@ -16,27 +16,23 @@
  */
 package org.wicketstuff.datastores.memcached;
 
-import net.spy.memcached.MemcachedClient;
-
-import org.apache.wicket.pageStore.IDataStore;
+import org.apache.wicket.pageStore.IPageStore;
+import org.junit.jupiter.api.Tag;
 import org.wicketstuff.datastores.common.BaseDataStoreTest;
 
+import net.spy.memcached.MemcachedClient;
+
 /**
- * Performance and stability test for MemcachedDataStore
+ * Performance and stability test for MemcachedDataStore, requires a running Memcached server.
  */
+@Tag("memcached")
 public class MemcachedDataStoreTest extends BaseDataStoreTest {
 
 	@Override
-	protected IDataStore createDataStore() throws Exception {
+	protected IPageStore createDataStore() throws Exception {
 		IMemcachedSettings settings = new MemcachedSettings();
 		// settings.setServerNames("");
 		MemcachedClient client = MemcachedDataStore.createClient(settings);
-		return new GuavaMemcachedDataStore(client, settings);
-	}
-
-	@Override
-	protected boolean isEnabled() {
-		// requires running Memcached server
-		return false;
+		return new MemcachedDataStore("test", client, settings);
 	}
 }

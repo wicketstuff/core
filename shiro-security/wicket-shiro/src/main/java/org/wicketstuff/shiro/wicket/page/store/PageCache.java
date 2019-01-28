@@ -25,6 +25,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
 
+import org.apache.wicket.pageStore.SerializedPage;
 import org.apache.wicket.util.io.IClusterable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -48,7 +49,7 @@ public class PageCache implements IClusterable
 	private final Lock read = rwl.readLock();
 	private final Lock write = rwl.writeLock();
 
-	private final LinkedHashMap<Integer, SerializedPageWrapper> pages = new LinkedHashMap<Integer, SerializedPageWrapper>();
+	private final LinkedHashMap<Integer, SerializedPage> pages = new LinkedHashMap<Integer, SerializedPage>();
 	private final TreeMap<Integer, Integer> pageKeys = new TreeMap<Integer, Integer>();
 
 	private final AtomicInteger id = new AtomicInteger(Integer.MIN_VALUE);
@@ -73,7 +74,7 @@ public class PageCache implements IClusterable
 		}
 	}
 
-	public SerializedPageWrapper getPage(final int pageId)
+	public SerializedPage getPage(final int pageId)
 	{
 		read.lock();
 		try
@@ -99,7 +100,7 @@ public class PageCache implements IClusterable
 		}
 	}
 
-	public void storePages(final SerializedPageWrapper wrapper)
+	public void storePages(final SerializedPage wrapper)
 	{
 		write.lock();
 		try
@@ -110,11 +111,10 @@ public class PageCache implements IClusterable
 				int numToRemove = pages.size() + 1 - MAX_SIZE;
 				if (numToRemove > 0)
 				{
-					final Iterator<Map.Entry<Integer, SerializedPageWrapper>> iter = pages.entrySet()
-						.iterator();
+					final Iterator<Map.Entry<Integer, SerializedPage>> iter = pages.entrySet().iterator();
 					while (iter.hasNext() && numToRemove > 0)
 					{
-						final Map.Entry<Integer, SerializedPageWrapper> entry = iter.next();
+						final Map.Entry<Integer, SerializedPage> entry = iter.next();
 						iter.remove();
 						pageKeys.remove(entry.getKey());
 						numToRemove--;
@@ -140,7 +140,7 @@ public class PageCache implements IClusterable
 	public String toString()
 	{
 		final StringBuilder sb = new StringBuilder();
-		for (final Entry<Integer, SerializedPageWrapper> entry : pages.entrySet())
+		for (final Entry<Integer, SerializedPage> entry : pages.entrySet())
 			sb.append("\t").append(entry.getKey().toString()).append("\n");
 		if (LOG.isTraceEnabled())
 			sb.append("\tPageKeys TreeSet: ").append(pageKeys.toString());

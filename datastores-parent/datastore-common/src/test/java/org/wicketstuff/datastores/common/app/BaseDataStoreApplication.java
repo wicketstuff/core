@@ -18,7 +18,8 @@ package org.wicketstuff.datastores.common.app;
 
 import org.apache.wicket.DefaultPageManagerProvider;
 import org.apache.wicket.markup.html.WebPage;
-import org.apache.wicket.pageStore.IDataStore;
+import org.apache.wicket.pageStore.IPageStore;
+import org.apache.wicket.pageStore.SerializingPageStore;
 import org.apache.wicket.protocol.http.WebApplication;
 
 /**
@@ -41,18 +42,15 @@ public abstract class BaseDataStoreApplication extends WebApplication
 		mountPage("page1", HomePage.class);
 		mountPage("page2", Page2.class);
 
-		// for testing IDataStore#getData().
-		getStoreSettings().setInmemoryCacheSize(1);
-
 		setPageManagerProvider(new DefaultPageManagerProvider(this)
 		{
 			@Override
-			protected IDataStore newDataStore()
+			protected IPageStore newPersistentStore()
 			{
-				return createDataStore();
+				return new SerializingPageStore(createDataStore(), getFrameworkSettings().getSerializer());
 			}
 		});
 	}
 	
-	protected abstract IDataStore createDataStore();
+	protected abstract IPageStore createDataStore();
 }

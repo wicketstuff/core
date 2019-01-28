@@ -1,132 +1,244 @@
 package org.wicketstuff.datastores.common;
 
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.ConcurrentMap;
+import java.io.Serializable;
+import java.util.Iterator;
+import java.util.concurrent.ConcurrentLinkedQueue;
+import java.util.function.Supplier;
 
-import org.apache.wicket.pageStore.IDataStore;
+import org.apache.wicket.MetaDataKey;
+import org.apache.wicket.WicketRuntimeException;
+import org.apache.wicket.page.IManageablePage;
+import org.apache.wicket.pageStore.DelegatingPageStore;
+import org.apache.wicket.pageStore.IPageContext;
+import org.apache.wicket.pageStore.IPageStore;
+import org.apache.wicket.pageStore.SerializedPage;
+import org.apache.wicket.pageStore.SerializingPageStore;
 import org.apache.wicket.util.lang.Args;
 import org.apache.wicket.util.lang.Bytes;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
- * An implementation of IDataStore that delegates the actual work to another
- * IDataStore.
- *
+ * A store implementation that delegates the actual work to another {@link IPageStore}.
+ * <p>
  * The extra logic that this class provides is to manage the quota per
  * client (http session). This way one client cannot add too much data
  * in the real/delegate data store and eventually drop another client's data.
  */
-public class SessionQuotaManagingDataStore implements IDataStore {
+public class SessionQuotaManagingDataStore extends DelegatingPageStore {
 
-	private static final Logger LOG = LoggerFactory.getLogger(SessionQuotaManagingDataStore.class);
+	private static final MetaDataKey<SessionData> KEY = new MetaDataKey<SessionData>()
+	{
+		private static final long serialVersionUID = 1L;
+	};
 
-	/**
-	 * Tracks the data per session.
-	 * Used to track the quota per client/session and
-	 * to delete all entries for a client when invalidated.
-	 */
-	/* package scoped for testing */
-	final ConcurrentMap<String, SessionData> pagesPerSession = new ConcurrentHashMap<>();
+	private final Supplier<SessionData> dataCreator;
 
 	/**
-	 * The maximum bytes a client can store (the quota).
-	 * @see org.apache.wicket.settings.IStoreSettings#getMaxSizePerSession()
+	 * Keep {@code maxPages} for each session.
+	 *    
+	 * @param maxPages
+	 *            max pages per session
 	 */
-	private final Bytes maxSizePerSession;
+	public SessionQuotaManagingDataStore(IPageStore delegate, int maxPages)
+	{
+		this(delegate, () -> new CountLimitedData(maxPages));
+	}
 
 	/**
-	 * The real IDataStore.
+	 * Keep page up to {@code maxBytes} for each session.
+	 * <p>
+	 * All pages added to this store <em>must</em> be {@code SerializedPage}s. You can achieve this by letting
+	 * a {@link SerializingPageStore} delegate to this store.
+	 * 
+	 * @param maxBytes
+	 *            maximum bytes to keep in session
 	 */
-	private final IDataStore delegate;
+	public SessionQuotaManagingDataStore(IPageStore delegate, Bytes maxBytes)
+	{
+		this(delegate, () -> new SizeLimitedData(maxBytes));
+	}
 
-	/**
-	 * Constructor.
-	 *
-	 * @param delegate  The real IDataStore
-	 * @param maxSizePerSession The quota
-	 */
-	public SessionQuotaManagingDataStore(IDataStore delegate, Bytes maxSizePerSession) {
-		this.delegate = Args.notNull(delegate, "delegate");
-		this.maxSizePerSession = Args.notNull(maxSizePerSession, "maxSizePerSession");
+	SessionQuotaManagingDataStore(IPageStore delegate, Supplier<SessionData> dataCreator)
+	{
+		super(delegate);
+		
+		this.dataCreator = dataCreator;
+	}
+
+	private SessionData getSessionData(IPageContext context, boolean create)
+	{
+		SessionData data = context.getSessionData(KEY);
+		if (data == null && create)
+		{
+			data = context.setSessionData(KEY, dataCreator.get());
+		}
+
+		return data;
 	}
 
 	@Override
-	public byte[] getData(String sessionId, int pageId) {
-		return delegate.getData(sessionId, pageId);
-	}
-
-	@Override
-	public void removeData(String sessionId) {
-		SessionData sessionData = pagesPerSession.get(sessionId);
+	public void removeAllPages(IPageContext context) {
+		SessionData sessionData = getSessionData(context, false);
 
 		if (sessionData != null) {
-			synchronized (sessionData) {
-				delegate.removeData(sessionId);
-				pagesPerSession.remove(sessionId);
-			}
+			sessionData.removeAllPages(context, getDelegate());
 		}
 	}
 
 	@Override
-	public void storeData(String sessionId, int pageId, byte[] data) {
-		SessionData sessionData = pagesPerSession.get(sessionId);
-
-		if (sessionData == null) {
-			sessionData = new SessionData(sessionId);
-			SessionData old = pagesPerSession.putIfAbsent(sessionId, sessionData);
-			if (old != null) {
-				sessionData = old;
-			}
+	public void addPage(IPageContext context, IManageablePage page) {
+		if (page instanceof SerializedPage == false)
+		{
+			throw new WicketRuntimeException("SessionQuotaDataStore works with serialized pages only");
 		}
+		SerializedPage serializedPage = (SerializedPage)page;
 
-		int pageSize = data.length;
+		SessionData sessionData = getSessionData(context, true);
 
-		Integer removedPageId;
-		while ((removedPageId = sessionData.removePageIfQuotaExceeded(pageSize, maxSizePerSession)) != null) {
-			LOG.debug("Removing page '{}' from session '{}' because the quota is reached.", removedPageId, sessionId);
-			delegate.removeData(sessionId, removedPageId);
-		}
-
-		synchronized (sessionData) {
-			delegate.storeData(sessionId, pageId, data);
-
-			PageData page = new PageData(pageId, pageSize);
-			sessionData.addPage(page);
-		}
+		sessionData.addPage(context, getDelegate(), serializedPage);
 	}
 
 	@Override
-	public void removeData(String sessionId, int pageId) {
+	public void removePage(IPageContext context, IManageablePage page) {
+		if (page instanceof SerializedPage == false)
+		{
+			throw new WicketRuntimeException("SessionQuotaDataStore works with serialized pages only");
+		}
+		SerializedPage serializedPage = (SerializedPage)page;
 
-		SessionData sessionData = pagesPerSession.get(sessionId);
+		SessionData sessionData = getSessionData(context, false);
 
 		if (sessionData != null) {
-			synchronized (sessionData) {
-				delegate.removeData(sessionId, pageId);
+			sessionData.removePage(context, getDelegate(), serializedPage);
+		}
+	}
+	
+	/**
+	 * Keeps the information about a session
+	 */
+	static abstract class SessionData implements Serializable {
 
-				sessionData.removePage(pageId);
+		/**
+		 * An ordered collection of delegated pages in this session
+		 */
+		final ConcurrentLinkedQueue<DelegatedPage> pages = new ConcurrentLinkedQueue<>();
 
-				if (sessionData.pages.isEmpty()) {
-					pagesPerSession.remove(sessionId);
+		/**
+		 * Appends a page to the collection of used pages in this session
+		 * @param page The page to append
+		 */
+		synchronized void addPage(IPageContext context, IPageStore delegate, SerializedPage page) {
+			Args.notNull(page, "page");
+
+			removePage(context, delegate, page);
+			
+			pages.add(new DelegatedPage(page.getPageId(), page.getData().length));
+			
+			delegate.addPage(context, page);
+		}
+
+		synchronized void removeAllPages(IPageContext context, IPageStore delegate) {
+			pages.clear();
+			
+			delegate.removeAllPages(context);
+		}
+		
+		/**
+		 * Removes a page by its identifier
+		 *
+		 * @param pageId The id of the page to remove
+		 * @return 
+		 */
+		synchronized DelegatedPage removePage(IPageContext context, IPageStore delegate, SerializedPage page) {
+			DelegatedPage delegatedPage = null;
+			
+			Iterator<DelegatedPage> pageIterator = pages.iterator();
+			while (pageIterator.hasNext()) {
+				DelegatedPage candidate = pageIterator.next();
+				if (candidate.pageId == page.getPageId()) {
+					pageIterator.remove();
+					
+					delegatedPage = candidate;
+					break;
 				}
 			}
+			
+			delegate.removePage(context, page);
+			
+			return delegatedPage;
 		}
 	}
+	
+	static class CountLimitedData extends SessionData {
 
-	@Override
-	public void destroy() {
-		pagesPerSession.clear();
-		delegate.destroy();
+		private final int maxPages;
+
+		public CountLimitedData(int maxPages) {
+			this.maxPages = maxPages;
+		}
+		
+		@Override
+		synchronized void addPage(IPageContext context, IPageStore delegate, SerializedPage page) {
+			super.addPage(context, delegate, page);
+			
+			while (pages.size() > maxPages) {
+				DelegatedPage polled = pages.poll();
+				
+				removePage(context, delegate, new SerializedPage(polled.pageId,  new byte[0]));
+			}
+		}
 	}
+	
+	static class SizeLimitedData extends SessionData {
 
-	@Override
-	public boolean isReplicated() {
-		return delegate.isReplicated();
+		private final Bytes maxBytes;
+		
+		private int size;
+
+		public SizeLimitedData(Bytes maxBytes) {
+			this.maxBytes = maxBytes;
+		}
+		
+		@Override
+		synchronized void addPage(IPageContext context, IPageStore delegate, SerializedPage page) {
+			super.addPage(context, delegate, page);
+			
+			size += page.getData().length;
+			
+			while (size > maxBytes.bytes()) {
+				DelegatedPage polled = pages.peek();
+				
+				removePage(context, delegate, new SerializedPage(polled.pageId, new byte[0]));
+			}
+		}
+		
+		@Override
+		synchronized void removeAllPages(IPageContext context, IPageStore delegate) {
+			super.removeAllPages(context, delegate);
+			
+			size = 0;
+		}
+		
+		@Override
+		synchronized DelegatedPage removePage(IPageContext context, IPageStore delegate, SerializedPage page) {
+			DelegatedPage removedPage = super.removePage(context, delegate, page);
+			if (removedPage != null) {
+				size -= removedPage.pageSize;
+			}
+			
+			return removedPage;
+		}
 	}
+	
+	static class DelegatedPage
+	{
+		public final int pageId;
 
-	@Override
-	public boolean canBeAsynchronous() {
-		return delegate.canBeAsynchronous();
+		public final long pageSize;
+
+		public DelegatedPage(int pageId, long pageSize)
+		{
+			this.pageId = pageId;
+			this.pageSize = pageSize;
+		}
 	}
 }

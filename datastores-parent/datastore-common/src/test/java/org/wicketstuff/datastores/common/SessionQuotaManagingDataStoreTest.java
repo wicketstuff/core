@@ -2,115 +2,55 @@ package org.wicketstuff.datastores.common;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-import org.apache.wicket.pageStore.IDataStore;
+import org.apache.wicket.mock.MockPageStore;
+import org.apache.wicket.pageStore.IPageContext;
+import org.apache.wicket.pageStore.IPageStore;
+import org.apache.wicket.pageStore.SerializedPage;
 import org.apache.wicket.util.lang.Bytes;
 import org.junit.jupiter.api.Test;
 
 /**
- * Tests for SessionQuotaManagingDataStore
+ * Tests for {@link SessionQuotaManagingDataStore}
  */
 public class SessionQuotaManagingDataStoreTest {
 
-	private final IDataStore delegate = new NoopDataStore();
+	private SerializedPage page1 = new SerializedPage(1, new byte[4]);
 
-	private final String sessionId = "abcd";
-	private final String sessionId2 = "efgh";
+	private SerializedPage page2 = new SerializedPage(2, new byte[3]);
 
-	private final int pageId1 = 1;
-	private final byte[] pageData1 = new byte[] {1, 2, 3, 4};
+	// smaller version of page1
+	private SerializedPage page1_ = new SerializedPage(1, new byte[2]);
+	
+	private SerializedPage page3 = new SerializedPage(3, new byte[4]);
 
-	private final int pageId2 = 2;
-	private final byte[] pageData2 = new byte[] {5, 6, 7};
-
-	@Test
-	public void removeData() {
-		SessionQuotaManagingDataStore manager = new SessionQuotaManagingDataStore(delegate, Bytes.bytes(100));
-
-		assertEquals(0, manager.pagesPerSession.size());
-		manager.removeData(sessionId);
-		assertEquals(0, manager.pagesPerSession.size());
-
-		manager.storeData(sessionId, pageId1, pageData1);
-		assertEquals(1, manager.pagesPerSession.size());
-
-		manager.storeData(sessionId, pageId2, pageData2);
-		assertEquals(1, manager.pagesPerSession.size());
-
-		manager.storeData(sessionId2, pageId2, pageData2);
-		assertEquals(2, manager.pagesPerSession.size());
-
-		manager.removeData(sessionId);
-		assertEquals(1, manager.pagesPerSession.size());
-
-		manager.removeData(sessionId2);
-		assertEquals(0, manager.pagesPerSession.size());
-	}
 
 	@Test
 	public void storeDataEnoughSpace() {
-		Bytes maxSizePerSession = Bytes.bytes(pageData1.length + pageData2.length + 1);
-		SessionQuotaManagingDataStore manager = new SessionQuotaManagingDataStore(delegate, maxSizePerSession);
+		MockPageStore delegate = new MockPageStore();
 
-		assertEquals(0, manager.pagesPerSession.size());
+		IPageContext context = new DummyPageContext();
 
-		manager.storeData(sessionId, pageId1, pageData1);
-		assertEquals(1, manager.pagesPerSession.size());
+		IPageStore quotaStore = new SessionQuotaManagingDataStore(delegate, Bytes.MAX);
+		quotaStore.addPage(context, page1);
+		quotaStore.addPage(context, page2);
 
-		manager.storeData(sessionId2, pageId2, pageData2);
-		assertEquals(2, manager.pagesPerSession.size());
-
-		SessionData sessionData = manager.pagesPerSession.get(sessionId);
-
-		assertEquals(1, sessionData.pages.size());
-
-		manager.storeData(sessionId, pageId2, pageData2);
-		assertEquals(2, manager.pagesPerSession.size());
-
-		assertEquals(2, sessionData.pages.size());
+		assertEquals(2, delegate.getPages().size());
+		assertEquals(page1, delegate.getPages().get(0));
+		assertEquals(page2, delegate.getPages().get(1));
 	}
 
 	@Test
-	public void storeDataInsufficientSpaceForTwoPages() {
-		Bytes maxSizePerSession = Bytes.bytes(pageData1.length);
-		SessionQuotaManagingDataStore manager = new SessionQuotaManagingDataStore(delegate, maxSizePerSession);
+	public void storeDataInsufficientSpace() {
+		MockPageStore delegate = new MockPageStore();
 
-		assertEquals(0, manager.pagesPerSession.size());
+		IPageContext context = new DummyPageContext();
 
-		manager.storeData(sessionId, pageId1, pageData1);
-		assertEquals(1, manager.pagesPerSession.size());
+		IPageStore quotaStore = new SessionQuotaManagingDataStore(delegate, Bytes.bytes(page1.getData().length + 1));
+		quotaStore.addPage(context, page1);
+		quotaStore.addPage(context, page2);
 
-		SessionData sessionData = manager.pagesPerSession.get(sessionId);
-
-		assertEquals(1, sessionData.pages.size());
-		assertEquals(pageId1, sessionData.pages.element().pageId);
-
-		manager.storeData(sessionId, pageId2, pageData2);
-		assertEquals(1, manager.pagesPerSession.size());
-
-		assertEquals(1, sessionData.pages.size());
-		assertEquals(pageId2, sessionData.pages.element().pageId);
-	}
-
-	@Test
-	public void storeDataInsufficientSpaceForASinglePage() {
-		Bytes maxSizePerSession = Bytes.bytes(pageData1.length - 1);
-		SessionQuotaManagingDataStore manager = new SessionQuotaManagingDataStore(delegate, maxSizePerSession);
-
-		assertEquals(0, manager.pagesPerSession.size());
-
-		manager.storeData(sessionId, pageId1, pageData1);
-		assertEquals(1, manager.pagesPerSession.size());
-
-		SessionData sessionData = manager.pagesPerSession.get(sessionId);
-
-		assertEquals(1, sessionData.pages.size());
-		assertEquals(pageId1, sessionData.pages.element().pageId);
-
-		manager.storeData(sessionId, pageId2, pageData2);
-		assertEquals(1, manager.pagesPerSession.size());
-
-		assertEquals(1, sessionData.pages.size());
-		assertEquals(pageId2, sessionData.pages.element().pageId);
+		assertEquals(1, delegate.getPages().size());
+		assertEquals(page2, delegate.getPages().get(0));
 	}
 
 	/**
@@ -121,103 +61,34 @@ public class SessionQuotaManagingDataStoreTest {
 	 */
 	@Test
 	public void storeDataSamePageTwice() {
-		byte[] pageData1_2 = new byte[] { 1 };
-		Bytes maxSizePerSession = Bytes.bytes(pageData1.length + pageData1_2.length + 1);
-		SessionQuotaManagingDataStore manager = new SessionQuotaManagingDataStore(delegate, maxSizePerSession);
+		MockPageStore delegate = new MockPageStore();
 
-		assertEquals(0, manager.pagesPerSession.size());
+		IPageContext context = new DummyPageContext();
 
-		manager.storeData(sessionId, pageId1, pageData1);
-		assertEquals(1, manager.pagesPerSession.size());
+		IPageStore quotaStore = new SessionQuotaManagingDataStore(delegate, Bytes.bytes(page1_.getData().length + page2.getData().length));
+		quotaStore.addPage(context, page1);
+		quotaStore.addPage(context, page1_);
+		quotaStore.addPage(context, page2);
 
-		SessionData sessionData = manager.pagesPerSession.get(sessionId);
-
-		assertEquals(1, sessionData.pages.size());
-		assertEquals(pageId1, sessionData.pages.element().pageId);
-		assertEquals(pageData1.length, sessionData.size);
-
-		manager.storeData(sessionId, pageId1, pageData1_2);
-		assertEquals(1, manager.pagesPerSession.size());
-
-		assertEquals(1, sessionData.pages.size());
-		assertEquals(pageId1, sessionData.pages.element().pageId);
-		assertEquals(pageData1_2.length, sessionData.size);
+		assertEquals(2, delegate.getPages().size());
+		assertEquals(page1_, delegate.getPages().get(0));
+		assertEquals(page2, delegate.getPages().get(1));
 	}
 
 	@Test
 	public void removePage() {
-		Bytes maxSizePerSession = Bytes.bytes(pageData1.length + pageData2.length + 1);
-		SessionQuotaManagingDataStore manager = new SessionQuotaManagingDataStore(delegate, maxSizePerSession);
+		MockPageStore delegate = new MockPageStore();
 
-		assertEquals(0, manager.pagesPerSession.size());
+		IPageContext context = new DummyPageContext();
 
-		manager.storeData(sessionId, pageId1, pageData1);
-		assertEquals(1, manager.pagesPerSession.size());
+		IPageStore quotaStore = new SessionQuotaManagingDataStore(delegate, Bytes.bytes(page1.getData().length + page3.getData().length));
+		quotaStore.addPage(context, page1);
+		quotaStore.addPage(context, page2);
+		quotaStore.removePage(context, page2);
+		quotaStore.addPage(context, page3);
 
-		SessionData sessionData = manager.pagesPerSession.get(sessionId);
-		assertEquals(1, sessionData.pages.size());
-		assertEquals(pageData1.length, sessionData.size);
-
-		manager.storeData(sessionId, pageId2, pageData2);
-		assertEquals(1, manager.pagesPerSession.size());
-		assertEquals(2, sessionData.pages.size());
-		assertEquals(pageData1.length + pageData2.length, sessionData.size);
-
-		manager.removeData(sessionId, pageId1);
-		assertEquals(1, manager.pagesPerSession.size());
-		assertEquals(1, sessionData.pages.size());
-		assertEquals(pageData2.length, sessionData.size);
-
-		manager.removeData(sessionId, pageId2);
-		// removing the last page should remove the session data too
-		assertEquals(0, manager.pagesPerSession.size());
-	}
-
-	@Test
-	public void destroy() {
-		Bytes maxSizePerSession = Bytes.bytes(pageData1.length + 1);
-		SessionQuotaManagingDataStore manager = new SessionQuotaManagingDataStore(delegate, maxSizePerSession);
-
-		assertEquals(0, manager.pagesPerSession.size());
-
-		manager.storeData(sessionId, pageId1, pageData1);
-		assertEquals(1, manager.pagesPerSession.size());
-
-		manager.destroy();
-
-		assertEquals(0, manager.pagesPerSession.size());
-	}
-
-	private static class NoopDataStore implements IDataStore {
-		@Override
-		public byte[] getData(String sessionId, int id) {
-			return new byte[0];
-		}
-
-		@Override
-		public void removeData(String sessionId, int id) {
-		}
-
-		@Override
-		public void removeData(String sessionId) {
-		}
-
-		@Override
-		public void storeData(String sessionId, int id, byte[] data) {
-		}
-
-		@Override
-		public void destroy() {
-		}
-
-		@Override
-		public boolean isReplicated() {
-			return false;
-		}
-
-		@Override
-		public boolean canBeAsynchronous() {
-			return false;
-		}
+		assertEquals(2, delegate.getPages().size());
+		assertEquals(page1, delegate.getPages().get(0));
+		assertEquals(page3, delegate.getPages().get(1));
 	}
 }

@@ -1,9 +1,6 @@
 package org.wicketstuff.gae;
 
-import org.apache.wicket.pageStore.memory.IDataStoreEvictionStrategy;
-import org.apache.wicket.pageStore.memory.MemorySizeEvictionStrategy;
 import org.apache.wicket.protocol.http.WebApplication;
-import org.apache.wicket.util.lang.Bytes;
 
 /**
  * Application object for your web application. If you want to run this application without
@@ -20,6 +17,12 @@ public class GaeWicketApplication extends WebApplication implements GaeApplicati
 	{
 	}
 
+	@Override
+	public int getMaxPages()
+	{
+		return 10;
+	}
+	
 	/**
 	 * @see org.apache.wicket.Application#getHomePage()
 	 */
@@ -28,13 +31,4 @@ public class GaeWicketApplication extends WebApplication implements GaeApplicati
 	{
 		return HomePage.class;
 	}
-
-	/**
-	 * Setup custom eviction strategy for this application
-	 */
-	public IDataStoreEvictionStrategy getEvictionStrategy()
-	{
-		return new MemorySizeEvictionStrategy(Bytes.megabytes(2));
-	}
-
 }

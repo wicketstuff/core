@@ -17,21 +17,19 @@
 package org.wicketstuff.datastores.ignite;
 
 import org.apache.ignite.Ignition;
-import org.apache.wicket.pageStore.IDataStore;
+import org.apache.wicket.pageStore.IPageStore;
+import org.junit.jupiter.api.Tag;
 import org.wicketstuff.datastores.common.BaseDataStoreTest;
 
+/**
+ * See {@link IgniteDataStore} on how to run on Java 9. 
+ */
+@Tag("ignite")
 public class IgniteDataStoreTest extends BaseDataStoreTest {
 	
 	@Override
-	protected IDataStore createDataStore() throws Exception
+	protected IPageStore createDataStore() throws Exception
 	{
-		return new IgniteDataStore(Ignition.start());
-	}
-
-	@Override
-	protected boolean isEnabled()
-	{
-		// disable to make the build faster
-		return false;
+		return new IgniteDataStore("test", Ignition.start());
 	}
 }

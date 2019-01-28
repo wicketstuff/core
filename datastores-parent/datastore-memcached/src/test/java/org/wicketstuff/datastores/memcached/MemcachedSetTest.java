@@ -14,21 +14,31 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.wicketstuff.datastores.redis;
+package org.wicketstuff.datastores.memcached;
 
-import org.apache.wicket.pageStore.IPageStore;
-import org.junit.jupiter.api.Tag;
-import org.wicketstuff.datastores.common.BaseDataStoreTest;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
+import java.util.Arrays;
+import java.util.HashSet;
+
+import org.junit.jupiter.api.Test;
 
 /**
- * Requires a running Redis server.
+ * Test for {@link MemcachedSet}.
  */
-@Tag("redis")
-public class RedisDataStoreTest extends BaseDataStoreTest {
-	
-	@Override
-	protected IPageStore createDataStore() throws Exception {
-		IRedisSettings settings = new RedisSettings();
-		return new RedisDataStore("test", settings);
+public class MemcachedSetTest {
+
+	@Test
+	public void encode() {
+		assertEquals("", MemcachedSet.encodeSet(new HashSet<>()));
+		assertEquals("+1 +2 +3", MemcachedSet.encodeSet(new HashSet<>(Arrays.asList("1", "2", "3"))));
+	}
+
+	@Test
+	public void decode() {
+		assertEquals(new HashSet<>(), MemcachedSet.decodeSet(null));
+		assertEquals(new HashSet<>(), MemcachedSet.decodeSet(""));
+		assertEquals(new HashSet<>(Arrays.asList("1", "2", "3")), MemcachedSet.decodeSet("+1 +2 +3"));
+		assertEquals(new HashSet<>(Arrays.asList("2", "3")), MemcachedSet.decodeSet("+1 +2 +3 -1 -4"));
 	}
 }
