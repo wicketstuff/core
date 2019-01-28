@@ -19,30 +19,34 @@ package org.wicketstuff.datastores.memcached;
 import java.io.IOException;
 import java.net.InetSocketAddress;
 import java.net.SocketAddress;
-import java.util.Collections;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.ConcurrentMap;
 import java.util.concurrent.TimeUnit;
 
-import net.spy.memcached.ConnectionObserver;
-import net.spy.memcached.MemcachedClient;
-
-import org.apache.wicket.pageStore.IDataStore;
+import org.apache.wicket.WicketRuntimeException;
+import org.apache.wicket.page.IManageablePage;
+import org.apache.wicket.pageStore.AbstractPersistentPageStore;
+import org.apache.wicket.pageStore.IPersistedPage;
+import org.apache.wicket.pageStore.IPersistentPageStore;
+import org.apache.wicket.pageStore.SerializedPage;
 import org.apache.wicket.util.lang.Args;
+import org.apache.wicket.util.lang.Bytes;
 import org.apache.wicket.util.lang.Checks;
 import org.apache.wicket.util.time.Duration;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import net.spy.memcached.ConnectionObserver;
+import net.spy.memcached.MemcachedClient;
+
 /**
- * {@link org.apache.wicket.pageStore.IDataStore} that stores the pages' bytes in Memcached
+ * Page store that stores the pages' bytes in <a href="http://memcached.org/">Memcached</a> server.
  *
  * A useful read about the way Memcached works can be found
  * <a href="http://returnfoo.com/2012/02/memcached-memory-allocation-and-optimization-2/">here</a>.
  */
-public class MemcachedDataStore implements IDataStore {
+public class MemcachedDataStore extends AbstractPersistentPageStore implements IPersistentPageStore {
 
 	private static final Logger LOG = LoggerFactory.getLogger(MemcachedDataStore.class);
 
@@ -57,6 +61,16 @@ public class MemcachedDataStore implements IDataStore {
 	 * A separator used for the key construction
 	 */
 	private static final String SEPARATOR = "|||";
+	
+	private static final String SESSIONS = "sessions";
+
+	private static final String SESSION_PAGES = "pages";
+
+	private static final String PAGE_TYPE = "type";
+
+	private static final String PAGE_SIZE = "size";
+
+	private static final String PAGE_DATA = "data";
 
 	/**
 	 * The connection to the Memcached server
@@ -69,16 +83,6 @@ public class MemcachedDataStore implements IDataStore {
 	private final IMemcachedSettings settings;
 
 	/**
-	 * Tracks the keys for all operations per session.
-	 * Used to delete all entries for a session when invalidated.
-	 *
-	 * The entries in Memcached have time-to-live so they will be
-	 * removed anyway at some point.
-	 */
-	private final ConcurrentMap<String, Set<String>> keysPerSession =
-			new ConcurrentHashMap<String, Set<String>>();
-
-	/**
 	 * Constructor.
 	 *
 	 * Creates a MemcachedClient from the provided settings
@@ -87,8 +91,8 @@ public class MemcachedDataStore implements IDataStore {
 	 * @throws java.io.IOException when cannot connect to any of the provided
 	 *         in IMemcachedSettings Memcached servers
 	 */
-	public MemcachedDataStore(IMemcachedSettings settings) throws IOException {
-		this(createClient(settings), settings);
+	public MemcachedDataStore(String applicationName, IMemcachedSettings settings) throws IOException {
+		this(applicationName, createClient(settings), settings);
 	}
 
 	/**
@@ -97,7 +101,9 @@ public class MemcachedDataStore implements IDataStore {
 	 * @param client   The connection to Memcached
 	 * @param settings The configuration for the client
 	 */
-	public MemcachedDataStore(MemcachedClient client, IMemcachedSettings settings) {
+	public MemcachedDataStore(String applicationName, MemcachedClient client, IMemcachedSettings settings) {
+		super(applicationName);
+		
 		this.client = Args.notNull(client, "client");
 		this.settings = Args.notNull(settings, "settings");
 
@@ -134,76 +140,99 @@ public class MemcachedDataStore implements IDataStore {
 		Checks.withinRangeShort(10000, 65535, port, "port");
 
 		List<String> hostnames = settings.getServerList();
-		int memcachedPort = settings.getPort();
 		InetSocketAddress[] addresses = new InetSocketAddress[hostnames.size()];
 		for (int i = 0; i < hostnames.size(); i++) {
 			String hostname = hostnames.get(i);
-			addresses[i] = new InetSocketAddress(hostname, memcachedPort);
+			addresses[i] = new InetSocketAddress(hostname, port);
 		}
 
 		return new MemcachedClient(addresses);
 	}
 
 	@Override
-	public byte[] getData(String sessionId, int pageId) {
-		String key = makeKey(sessionId, pageId);
-		byte[] bytes = (byte[]) client.get(key);
-
-		if (bytes == null) {
-			removeKey(sessionId, key);
+	public boolean supportsVersioning() {
+		return true;
+	}
+	
+	@Override
+	protected IManageablePage getPersistedPage(String sessionIdentifier, int id) {
+		byte[] data = (byte[]) client.get(makeKey(sessionIdentifier, id, PAGE_DATA));
+		
+		if (data != null) {
+			String type = (String) client.get(makeKey(sessionIdentifier, id, PAGE_TYPE));
+			
+			LOG.debug("Got page for session '{}' and page id '{}'", sessionIdentifier, id);
+			
+			return new SerializedPage(id, type, data);
 		}
-
-		if (LOG.isDebugEnabled()) {
-			LOG.debug("Got {} for session '{}' and page id '{}'",
-					new Object[] {bytes != null ? "data" : "'null'", sessionId, pageId});
-		}
-		return bytes;
+		
+		return null;
 	}
 
 	@Override
-	public void removeData(final String sessionId, final int pageId) {
-		final String key = makeKey(sessionId, pageId);
-		client.delete(key);
+	protected void removePersistedPage(String sessionIdentifier, IManageablePage page) {
+		// unregister page
+		new MemcachedSet(client, makeKey(sessionIdentifier, SESSION_PAGES), settings.getExpirationTime()).remove(String.valueOf(page.getPageId()));
 
-		removeKey(sessionId, key);
+		// delete page and its metadata
+		client.delete(makeKey(sessionIdentifier, page.getPageId(), PAGE_DATA));
+		client.delete(makeKey(sessionIdentifier, page.getPageId(), PAGE_TYPE));
+		client.delete(makeKey(sessionIdentifier, page.getPageId(), PAGE_SIZE));
 
-		LOG.debug("Removed the data for session '{}' and page id '{}'", sessionId, pageId);
+		LOG.debug("Removed the data for session '{}' and page id '{}'", sessionIdentifier, page.getPageId());
 	}
 
 	@Override
-	public void removeData(String sessionId) {
-		Set<String> keys = keysPerSession.get(sessionId);
-		if (keys != null) {
-			for (String key : keys) {
-				client.delete(key);
-			}
-			keysPerSession.remove(sessionId);
-			LOG.debug("Removed the data for session '{}'", sessionId);
+	protected void removeAllPersistedPages(String sessionIdentifier) {
+		MemcachedSet pages = new MemcachedSet(client, makeKey(sessionIdentifier, SESSION_PAGES), settings.getExpirationTime());
+
+		// delete all pages and their metadata
+		for (String id : pages) {
+			client.delete(makeKey(sessionIdentifier, id, PAGE_DATA));
+			client.delete(makeKey(sessionIdentifier, id, PAGE_TYPE));
+			client.delete(makeKey(sessionIdentifier, id, PAGE_SIZE));
 		}
+		
+		// unregister all pages
+		client.delete(makeKey(sessionIdentifier, SESSION_PAGES));
+
+		new MemcachedSet(client, makeKey(SESSIONS), settings.getExpirationTime()).remove(sessionIdentifier);
 	}
 
 	@Override
-	public void storeData(final String sessionId, final int pageId, byte[] data) {
-		final String key = makeKey(sessionId, pageId);
-		Set<String> keys = keysPerSession.get(sessionId);
-		if (keys == null) {
-			keys = Collections.newSetFromMap(new ConcurrentHashMap<String, Boolean>());
-			Set<String> old = keysPerSession.putIfAbsent(sessionId, keys);
-			if (old != null) {
-				keys = old;
-			}
+	protected void addPersistedPage(String sessionIdentifier, IManageablePage page) {
+		if (page instanceof SerializedPage == false)
+		{
+			throw new WicketRuntimeException("MemcachedDataStore works with serialized pages only");
 		}
+		SerializedPage serializedPage = (SerializedPage)page;
 
 		int expirationTime = settings.getExpirationTime();
 
-		client.set(key, expirationTime, data);
-		keys.add(key);
-		LOG.debug("Stored data for session '{}' and page id '{}'", sessionId, pageId);
+		// register the page id
+		MemcachedSet pages = new MemcachedSet(client, makeKey(sessionIdentifier, SESSION_PAGES), expirationTime);
+		if (pages.add(String.valueOf(page.getPageId()))) {
+			// ... and the session on the first page
+			MemcachedSet sessions = new MemcachedSet(client, makeKey(SESSIONS), settings.getExpirationTime());
+			sessions.add(sessionIdentifier);
+			sessions.compact();
+		}
+
+		// add the page and its metadata
+		client.set(makeKey(sessionIdentifier, serializedPage.getPageId(), PAGE_DATA), expirationTime, serializedPage.getData());
+		client.set(makeKey(sessionIdentifier, serializedPage.getPageId(), PAGE_SIZE), expirationTime, serializedPage.getData().length);
+		if (serializedPage.getPageType() != null) {
+			client.set(makeKey(sessionIdentifier, serializedPage.getPageId(), PAGE_TYPE), expirationTime, serializedPage.getPageType());
+		}
+
+		// finally try to compact the page ids - if this fails it will succeed one of the next times 
+		pages.compact(pageId -> client.get(makeKey(sessionIdentifier, pageId, PAGE_SIZE)) != null);
+
+		LOG.debug("Stored data for session '{}' and page id '{}'", sessionIdentifier, page.getPageId());
 	}
 
 	@Override
 	public void destroy() {
-		keysPerSession.clear();
 		if (client != null) {
 			Duration timeout = settings.getShutdownTimeout();
 			LOG.info("Shutting down gracefully for {}", timeout);
@@ -211,52 +240,54 @@ public class MemcachedDataStore implements IDataStore {
 		}
 	}
 
-	@Override
-	public boolean isReplicated() {
-		return true;
-	}
-
-	@Override
-	public boolean canBeAsynchronous() {
-		// no need to be asynchronous
-		// MemcachedClient is asynchronous itself
-		return false;
-	}
-
 	/**
 	 * Creates a key that is used for the lookup in Memcached.
-	 * The key starts with sessionId and the pageId so
-	 * {@linkplain #keysPerSession} can be sorted faster.
 	 *
-	 * @param sessionId The id of the http session.
-	 * @param pageId    The id of the stored page
-	 * @return A key that is used for the lookup in Memcached
+	 * @param segments key segments
+	 * @return A key that is used for the lookup
 	 */
-	private String makeKey(String sessionId, int pageId) {
-		return new StringBuilder()
-				.append(sessionId)
-				.append(SEPARATOR)
-				.append(pageId)
-				.append(SEPARATOR)
-				.append(KEY_SUFFIX)
-				.toString();
+	private String makeKey(Object... segments) {
+		StringBuilder key = new StringBuilder();
+		
+		for (Object segment : segments) {
+			if (key.length() > 0) {
+				key.append(SEPARATOR);
+			}
+			key.append(segment);
+		}
+		
+		key.append(SEPARATOR);
+		key.append(KEY_SUFFIX);
+				
+		return key.toString();
+	}
+	
+	@Override
+	public Set<String> getSessionIdentifiers() {
+		return MemcachedSet.decodeSet((String)client.get(makeKey(SESSIONS)));
+	}
+	
+	@Override
+	public List<IPersistedPage> getPersistedPages(String sessionIdentifier) {
+		List<IPersistedPage> pages = new ArrayList<>();
+		
+		for (String id : MemcachedSet.decodeSet((String)client.get(makeKey(sessionIdentifier, SESSION_PAGES)))) {
+			Integer pageSize = (Integer)client.get(makeKey(sessionIdentifier, id, PAGE_SIZE));
+			if (pageSize != null) {
+				String pageType = (String)client.get(makeKey(sessionIdentifier, id, PAGE_TYPE));
+				
+				pages.add(new PersistedPage(Integer.parseInt(id), pageType, pageSize));
+			}
+		}
+		
+		return pages;
 	}
 
 	/**
-	 * Removes a key from {@linkplain #keysPerSession}
-	 *
-	 * @param sessionId The id of the http session.
-	 * @param key       The key for Memcached lookup
+	 * Not supported.
 	 */
-	private void removeKey(String sessionId, String key) {
-		Set<String> keys = keysPerSession.get(sessionId);
-		if (keys != null) {
-			// maybe the entry has expired
-			keys.remove(key);
-
-			if (keys.isEmpty()) {
-				keysPerSession.remove(sessionId);
-			}
-		}
+	@Override
+	public Bytes getTotalSize() {
+		return null;
 	}
 }

@@ -8,7 +8,7 @@ import org.apache.wicket.util.time.Duration;
  */
 public class RedisSettings implements IRedisSettings {
 
-	private Duration recordTtl = Duration.minutes(30);
+	private Duration recordTtl = Duration.minutes(1);
 
 	private String hostname = "127.0.0.1";
 

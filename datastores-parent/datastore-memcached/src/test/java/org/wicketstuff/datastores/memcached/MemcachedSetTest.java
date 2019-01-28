@@ -16,27 +16,30 @@
  */
 package org.wicketstuff.datastores.memcached;
 
-import java.io.IOException;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
-import net.spy.memcached.MemcachedClient;
+import java.util.Arrays;
+import java.util.HashSet;
+
+import org.junit.jupiter.api.Test;
 
 /**
- * @deprecated user {@link MemcachedDataStore} instead.
+ * Test for {@link MemcachedSet}.
  */
-@Deprecated
-public class GuavaMemcachedDataStore extends MemcachedDataStore {
-	
-	public GuavaMemcachedDataStore(String applicationName, IMemcachedSettings settings) throws IOException {
-		super(applicationName, createClient(settings), settings);
+public class MemcachedSetTest {
+
+	@Test
+	public void encode() {
+		assertEquals("", MemcachedSet.encodeSet(new HashSet<>()));
+		assertEquals("+1 +2 +3", MemcachedSet.encodeSet(new HashSet<>(Arrays.asList("1", "2", "3"))));
 	}
 
-	/**
-	 * Constructor.
-	 *
-	 * @param client   The connection to Memcached
-	 * @param settings The configuration for the client
-	 */
-	public GuavaMemcachedDataStore(String applicationName, MemcachedClient client, IMemcachedSettings settings) {
-		super(applicationName, client, settings);
+	@Test
+	public void decode() {
+		assertEquals(new HashSet<>(), MemcachedSet.decodeSet(null));
+		assertEquals(new HashSet<>(), MemcachedSet.decodeSet(""));
+		assertEquals(new HashSet<>(Arrays.asList("1", "2", "3")), MemcachedSet.decodeSet("+1 +2 +3"));
+		assertEquals(new HashSet<>(Arrays.asList("2", "3")), MemcachedSet.decodeSet("+1 +2 +3 -1 -4"));
+		assertEquals(new HashSet<>(Arrays.asList("A", "B")), MemcachedSet.decodeSet("+A +A +B -B +B -C +C -C"));
 	}
 }

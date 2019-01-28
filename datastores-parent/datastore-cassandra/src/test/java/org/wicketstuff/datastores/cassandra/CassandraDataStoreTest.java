@@ -16,21 +16,17 @@
  */
 package org.wicketstuff.datastores.cassandra;
 
-import org.apache.wicket.pageStore.IDataStore;
+import org.apache.wicket.pageStore.IPageStore;
+import org.junit.jupiter.api.Tag;
 import org.wicketstuff.datastores.common.BaseDataStoreTest;
 
+@Tag("cassandra")
 public class CassandraDataStoreTest extends BaseDataStoreTest {
 
 	@Override
-	protected IDataStore createDataStore() throws Exception {
+	protected IPageStore createDataStore() throws Exception {
 		ICassandraSettings settings = new CassandraSettings();
 		settings.getContactPoints().add("127.0.0.1");
-		return new CassandraDataStore(settings);
-	}
-
-	@Override
-	protected boolean isEnabled() {
-		// requires running Cassandra server
-		return false;
+		return new CassandraDataStore("test", settings);
 	}
 }

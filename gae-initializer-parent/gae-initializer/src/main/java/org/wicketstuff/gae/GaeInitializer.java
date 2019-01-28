@@ -2,8 +2,6 @@ package org.wicketstuff.gae;
 
 import org.apache.wicket.Application;
 import org.apache.wicket.IInitializer;
-import org.apache.wicket.pageStore.memory.IDataStoreEvictionStrategy;
-import org.apache.wicket.pageStore.memory.PageNumberEvictionStrategy;
 import org.apache.wicket.serialize.ISerializer;
 
 /**
@@ -24,17 +22,11 @@ public class GaeInitializer implements IInitializer
 		application.getFrameworkSettings().setSerializer(serializer);
 
 		// save older version of pages in the HttpSession
-		final IDataStoreEvictionStrategy evictionStrategy;
-		if (application instanceof GaeApplication)
-		{
-			evictionStrategy = ((GaeApplication)application).getEvictionStrategy();
+		int maxPages = 10;
+		if (application instanceof GaeApplication) {
+			maxPages = ((GaeApplication)application).getMaxPages();
 		}
-		else
-		{
-			evictionStrategy = new PageNumberEvictionStrategy(10);
-		}
-
-		application.setPageManagerProvider(new GaePageManagerProvider(application, evictionStrategy));
+		application.setPageManagerProvider(new GaePageManagerProvider(application, maxPages));
 
 		// disable file cleaning because it starts a new thread
 		application.getResourceSettings().setFileCleaner(null);

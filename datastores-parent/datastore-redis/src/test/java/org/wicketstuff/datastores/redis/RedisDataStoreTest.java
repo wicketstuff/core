@@ -16,20 +16,19 @@
  */
 package org.wicketstuff.datastores.redis;
 
-import org.apache.wicket.pageStore.IDataStore;
+import org.apache.wicket.pageStore.IPageStore;
+import org.junit.jupiter.api.Tag;
 import org.wicketstuff.datastores.common.BaseDataStoreTest;
 
+/**
+ * Requires a running Redis server.
+ */
+@Tag("redis")
 public class RedisDataStoreTest extends BaseDataStoreTest {
 	
 	@Override
-	protected IDataStore createDataStore() throws Exception {
+	protected IPageStore createDataStore() throws Exception {
 		IRedisSettings settings = new RedisSettings();
-		return new RedisDataStore(settings);
-	}
-
-	@Override
-	protected boolean isEnabled() {
-		// requires running Redis server
-		return false;
+		return new RedisDataStore("test", settings);
 	}
 }

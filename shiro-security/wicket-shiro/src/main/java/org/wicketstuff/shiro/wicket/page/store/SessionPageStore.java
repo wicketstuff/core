@@ -16,17 +16,14 @@
  */
 package org.wicketstuff.shiro.wicket.page.store;
 
-import java.io.Serializable;
-
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.session.Session;
 import org.apache.shiro.subject.Subject;
-import org.apache.wicket.Application;
-import org.apache.wicket.Page;
 import org.apache.wicket.WicketRuntimeException;
 import org.apache.wicket.page.IManageablePage;
+import org.apache.wicket.pageStore.AbstractPersistentPageStore;
 import org.apache.wicket.pageStore.IPageStore;
-import org.apache.wicket.util.lang.Args;
+import org.apache.wicket.pageStore.SerializedPage;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -51,23 +48,25 @@ import org.slf4j.LoggerFactory;
  * @author Les Hazlewood
  * @author <a href="http://sebthom.de/">Sebastian Thomschke</a>
  */
-public class SessionPageStore implements IPageStore
+public class SessionPageStore extends AbstractPersistentPageStore
 {
 	private static final Logger LOG = LoggerFactory.getLogger(SessionPageStore.class);
-	private static final String PAGE_MAP_SESSION_KEY = SessionPageStore.class.getName() +
-		"_PAGE_CACHE_MANAGER_SESSION_KEY";
+	
+	private static final String PAGE_MAP_SESSION_KEY = SessionPageStore.class.getName() + "_PAGE_CACHE_MANAGER_SESSION_KEY";
 
 	protected static final int DEFAULT_MAX_PAGES = -1;
 
 	private final int MAX_PAGE_MAP_SIZE;
 
-	public SessionPageStore()
+	public SessionPageStore(String applicationName)
 	{
-		this(DEFAULT_MAX_PAGES);
+		this(applicationName, DEFAULT_MAX_PAGES);
 	}
 
-	public SessionPageStore(final int maxPageMapSize)
+	public SessionPageStore(String applicationName, final int maxPageMapSize)
 	{
+		super(applicationName);
+		
 		if (maxPageMapSize < -1)
 		{
 			MAX_PAGE_MAP_SIZE = DEFAULT_MAX_PAGES;
@@ -76,66 +75,74 @@ public class SessionPageStore implements IPageStore
 		else
 		{
 			MAX_PAGE_MAP_SIZE = maxPageMapSize;
-			LOG.info("Created SessionPageStore: [{}] maximum number of pages allowed.",
-				maxPageMapSize);
+			LOG.info("Created SessionPageStore: [{}] maximum number of pages allowed.", maxPageMapSize);
 		}
-	}
-
-	public boolean containsPage(final String sessionId, final int pageId)
-	{
-		return getPageCacheManager(sessionId).getPageCache().containsPage(pageId);
-	}
-
-    @Override
-	public IManageablePage convertToPage(final Object page)
-	{
-		if (page == null)
-			return null;
-
-		if (page instanceof IManageablePage)
-			return (IManageablePage)page;
-
-		if (page instanceof byte[])
-			return deserializePage((byte[])page);
-
-		throw new IllegalArgumentException("Unknown object type " + page.getClass().getName());
-
-	}
-
-	protected IManageablePage deserializePage(final byte data[])
-	{
-		// TODO: test this, Serializer replacing old
-		// WicketObjects.byteArrayToObject(data);
-		// call
-		return (IManageablePage)Application.get()
-			.getFrameworkSettings()
-			.getSerializer()
-			.deserialize(data);
-	}
-
-    @Override
-	public void destroy()
-	{
-		// do nothing - session timeout will cleanup automatically
 	}
 
 	public int getMaxPageMapSize()
 	{
 		return MAX_PAGE_MAP_SIZE;
 	}
-
-    @Override
-	public Page getPage(final String sessionId, final int pageId)
+	
+	@Override
+	public boolean supportsVersioning() {
+		return true;
+	}
+	
+	@Override
+	protected IManageablePage getPersistedPage(String sessionIdentifier, int pageId)
 	{
-		final SerializedPageWrapper wrapper = getPageCacheManager(sessionId).getPageCache()
-			.getPage(pageId);
-		final byte[] sPage = wrapper != null ? (byte[])wrapper.getPage() : null;
-		return (Page)(sPage != null ? deserializePage(sPage) : null);
+		Session session = getSession(sessionIdentifier, false);
+		if (session != null)
+		{
+			return getPageCacheManager(session).getPageCache().getPage(pageId);
+		}
+		
+		return null;
 	}
 
-	protected PageCacheManager getPageCacheManager(final String sessionId)
+	@Override
+	protected void removePersistedPage(String sessionIdentifier, IManageablePage page)
 	{
-		final Session session = getSessionForUpdate(sessionId);
+		LOG.debug("Removing page with id [{}]", page.getPageId());
+		
+		Session session = getSession(sessionIdentifier, false);
+		if (session != null)
+		{
+			getPageCacheManager(session).getPageCache().removePage(page.getPageId());
+		}
+	}
+
+	@Override
+	protected void addPersistedPage(String sessionIdentifier, IManageablePage page)
+	{
+		if (page instanceof SerializedPage == false)
+		{
+			throw new WicketRuntimeException("DiskPageStore works with serialized pages only");
+		}
+		SerializedPage serializedPage = (SerializedPage) page;
+
+		Session session = getSession(sessionIdentifier, true);
+		
+		getPageCacheManager(session).getPageCache().storePages(serializedPage);
+		
+		if (LOG.isDebugEnabled()) LOG.debug("storePage {}", serializedPage.toString());
+	}
+
+	@Override
+	protected void removeAllPersistedPages(String sessionIdentifier)
+	{
+		Session session = getSession(sessionIdentifier, false);
+		if (session != null)
+		{
+			final Object existing = session.removeAttribute(PAGE_MAP_SESSION_KEY);
+			if (existing != null)
+				LOG.debug("Removed PageMap [{}] from the Session (destroying)", existing);
+		}
+	}
+
+	protected PageCacheManager getPageCacheManager(final Session session)
+	{
 		PageCacheManager pcc = (PageCacheManager)session.getAttribute(PAGE_MAP_SESSION_KEY);
 		if (pcc == null)
 		{
@@ -145,22 +152,23 @@ public class SessionPageStore implements IPageStore
 		return pcc;
 	}
 
-	protected Session getSession(final String sessionId)
+	protected Session getSession(final String sessionIdentifier, boolean create)
 	{
 		Session session = null;
+		
 		final Subject currentSubject = SecurityUtils.getSubject();
 		if (currentSubject != null)
 		{
-			session = currentSubject.getSession(false);
+			session = currentSubject.getSession(create);
 			/*
 			 * guarantee we pulled the same session that Wicket expects us to pull. Because Shiro's
 			 * Subject acquisition in web apps is based on the incoming request, and so is Wicket's,
 			 * this should _always_ be the same. If not, something is seriously wrong:
 			 */
-			if (session != null && sessionId != null && !sessionId.equals(session.getId()))
+			if (session != null && sessionIdentifier != null && !sessionIdentifier.equals(session.getId()))
 				throw new WicketRuntimeException(
 					"The specified Wicket sessionId [" +
-						sessionId +
+						sessionIdentifier +
 						"] is not the same as Shiro's current Subject Session with id [" +
 						session.getId() +
 						"], indicating the Wicket request's session is not the same as Shiro's current Subject Session. " +
@@ -169,95 +177,7 @@ public class SessionPageStore implements IPageStore
 						" implementation. " +
 						"If you're seeing this exception, ensure you have configured Shiro to use Enterprise Sessions and not (the default) HTTP-only Sessions.");
 		}
+		
 		return session;
-	}
-
-	protected Session getSessionForUpdate(final String sessionId)
-	{
-		Session session = getSession(sessionId);
-		if (session == null)
-			session = SecurityUtils.getSubject().getSession();
-		return session;
-	}
-
-	public void pageAccessed(final String sessionId, final Page page)
-	{
-		// nothing to do
-	}
-
-    @Override
-	public Serializable prepareForSerialization(final String sessionId, final Serializable page)
-	{
-		return null;
-	}
-
-    @Override
-    public void removePage(final String sessionId, final int pageId)
-	{
-		if (pageId != -1)
-		{
-			LOG.debug("Removing page with id [{}]", pageId);
-			getPageCacheManager(sessionId).getPageCache().removePage(pageId);
-		}
-	}
-
-    @Override
-	public Object restoreAfterSerialization(final Serializable serializable)
-	{
-		return null;
-	}
-
-	protected SerializedPageWrapper serialize(final String sessionId, final IManageablePage page)
-	{
-		final byte[] serializedPage = serializePage(sessionId, page);
-		return wrap(serializedPage, page.getPageId());
-	}
-
-	protected byte[] serializePage(final String sessionId, final IManageablePage page)
-	{
-		Args.notNull(sessionId, "sessionId");
-		Args.notNull(page, "page");
-
-		// TODO: test this, Serializer replacing old
-		// WicketObjects.objectToByteArray(page, applicationName);
-		// call
-		final byte data[] = Application.get()
-			.getFrameworkSettings()
-			.getSerializer()
-			.serialize(page);
-		return data;
-	}
-
-    @Override
-	public void storePage(final String sessionId, final IManageablePage page)
-	{
-		final SerializedPageWrapper wrapper = serialize(sessionId, page);
-		getPageCacheManager(sessionId).getPageCache().storePages(wrapper);
-		if (LOG.isDebugEnabled())
-			LOG.debug("storePage {}", page.toString());
-	}
-
-    @Override
-	public void unbind(final String sessionId)
-	{
-		final Session active = getSession(sessionId);
-		if (active != null)
-		{
-			final Object existing = active.removeAttribute(PAGE_MAP_SESSION_KEY);
-			if (existing != null)
-				LOG.debug("Removed PageMap [{}] from the Session (destroying)", existing);
-		}
-	}
-
-	SerializedPageWrapper wrap(final byte[] serializedPages, final int pageId)
-	{
-		final SerializedPageWrapper wrapper = new SerializedPageWrapper(serializedPages, pageId);
-		return wrapper;
-	}
-
-	@Override
-	public boolean canBeAsynchronous() 
-	{
-		return false;
 	}
 }

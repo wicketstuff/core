@@ -18,7 +18,7 @@ package org.wicketstuff.datastores.memcached.app;
 
 import java.io.IOException;
 
-import org.apache.wicket.pageStore.IDataStore;
+import org.apache.wicket.pageStore.IPageStore;
 import org.wicketstuff.datastores.common.app.BaseDataStoreApplication;
 import org.wicketstuff.datastores.memcached.IMemcachedSettings;
 import org.wicketstuff.datastores.memcached.MemcachedDataStore;
@@ -31,12 +31,12 @@ import org.wicketstuff.datastores.memcached.MemcachedSettings;
 public class MemcachedApplication extends BaseDataStoreApplication {
 
 	@Override
-	protected IDataStore createDataStore()
+	protected IPageStore createDataStore()
 	{
 		IMemcachedSettings settings = new MemcachedSettings();
 		try
 		{
-			return new MemcachedDataStore(settings);
+			return new MemcachedDataStore(getName(), settings);
 		} catch (IOException iox)
 		{
 			throw new RuntimeException(iox);

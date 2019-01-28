@@ -28,18 +28,21 @@ import java.util.concurrent.ConcurrentLinkedQueue;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
 
-import org.apache.wicket.pageStore.IDataStore;
+import org.apache.wicket.mock.MockPageContext;
+import org.apache.wicket.pageStore.IPageContext;
+import org.apache.wicket.pageStore.IPageStore;
+import org.apache.wicket.pageStore.SerializedPage;
 import org.apache.wicket.util.lang.Bytes;
 import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Performance and stability test for IDataStore implementations
+ * Performance and stability test for IPageStore implementations
  */
 public abstract class BaseDataStoreTest {
 	/** Log for reporting. */
-	private static final Logger log = LoggerFactory.getLogger("IDataStoreTest");
+	private static final Logger log = LoggerFactory.getLogger("IPageStoreTest");
 
 	private static final Random random = new Random();
 	private static final int FILE_SIZE_MIN = 1024 * 200;
@@ -123,6 +126,16 @@ public abstract class BaseDataStoreTest {
 
 	private volatile RuntimeException exceptionThrownByThread;
 
+	private static final ConcurrentHashMap<String, IPageContext> contexts = new ConcurrentHashMap<>();
+
+	private static IPageContext getContext(String sessionId)
+	{
+		IPageContext context = new MockPageContext(sessionId);
+
+		IPageContext existing = contexts.putIfAbsent(sessionId, context);
+		return existing != null ? existing : context;
+	}
+
 	private String randomSessionId() {
 		List<String> s = new ArrayList<>(sessionCounter.keySet());
 		return s.get(random.nextInt(s.size()));
@@ -147,7 +160,7 @@ public abstract class BaseDataStoreTest {
 		}
 	}
 
-	private IDataStore dataStore;
+	private IPageStore dataStore;
 
 	/**
 	 * Stores RuntimeException into a field.
@@ -180,7 +193,9 @@ public abstract class BaseDataStoreTest {
 			while ((file = filesToSave.poll()) != null || saveCount.get() < FILES_COUNT) {
 				if (file != null) {
 					byte data[] = file.generateData();
-					dataStore.storeData(file.getSessionId(), file.getId(), data);
+					
+					IPageContext context = getContext(file.getSessionId());
+					dataStore.addPage(context, new SerializedPage(file.getId(), data));
 
 					if (saveCount.get() % READ_MODULO == 0) {
 						filesToRead1.add(file);
@@ -207,14 +222,16 @@ public abstract class BaseDataStoreTest {
 			File file;
 			while ((file = filesToRead1.poll()) != null || !saveDone.get()) {
 				if (file != null) {
-					byte bytes[] = dataStore.getData(file.getSessionId(), file.getId());
-					if (!file.checkData(bytes)) {
+					IPageContext context = getContext(file.getSessionId());
+					
+					SerializedPage page = (SerializedPage) dataStore.getPage(context, file.getId());
+					if (!file.checkData(page.getData())) {
 						failures.incrementAndGet();
 						log.error("Detected error number: " + failures.get());
 					}
 					filesToRead2.add(file);
 					read1Count.incrementAndGet();
-					bytesRead.addAndGet(bytes.length);
+					bytesRead.addAndGet(page.getData().length);
 				}
 
 				try {
@@ -234,13 +251,15 @@ public abstract class BaseDataStoreTest {
 			File file;
 			while ((file = filesToRead2.poll()) != null || !read1Done.get()) {
 				if (file != null) {
-					byte bytes[] = dataStore.getData(file.getSessionId(), file.getId());
-					if (!file.checkData(bytes)) {
+					IPageContext context = getContext(file.getSessionId());
+					
+					SerializedPage page = (SerializedPage) dataStore.getPage(context, file.getId());
+					if (!file.checkData(page.getData())) {
 						failures.incrementAndGet();
 						log.error("Detected error number: " + failures.get());
 					}
 					read2Count.incrementAndGet();
-					bytesRead.addAndGet(bytes.length);
+					bytesRead.addAndGet(page.getData().length);
 				}
 
 				try {
@@ -294,31 +313,29 @@ public abstract class BaseDataStoreTest {
 		assertEquals(0, failures.get());
 
 		for (String s : sessionCounter.keySet()) {
-			dataStore.removeData(s);
+			IPageContext context = getContext(s);
+			
+			dataStore.removeAllPages(context);
 		}
 	}
 
 	/**
-	 * Performance/load test for IDataStore implementations.
+	 * Performance/load test for IPageStore implementations.
 	 * Starts one thread that writes data and two that read.
 	 *
 	 * Slightly modified version of Wicket's DiskDataStoreTest
 	 */
 	@Test
 	public void load() throws Exception {
-		if (isEnabled()) {
-			generateFiles();
+		generateFiles();
 
-			dataStore = createDataStore();
-			dataStore = new SessionQuotaManagingDataStore(dataStore, Bytes.megabytes(100));
+		dataStore = createDataStore();
+		dataStore = new SessionQuotaManagingDataStore(dataStore, Bytes.megabytes(100));
 
-			doTestDataStore();
+		doTestDataStore();
 
-			dataStore.destroy();
-		}
+		dataStore.destroy();
 	}
 
-	protected abstract IDataStore createDataStore() throws Exception;
-
-	protected abstract boolean isEnabled();
+	protected abstract IPageStore createDataStore() throws Exception;
 }
