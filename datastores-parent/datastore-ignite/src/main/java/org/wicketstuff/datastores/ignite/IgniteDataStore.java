@@ -77,13 +77,17 @@ public class IgniteDataStore extends AbstractPersistentPageStore  implements IPe
 	 *
 	 * @param cacheName Cache name
 	 */
-	private IgniteCache<Integer, BinarylizableWrapper> getIgniteCache(String cacheName) {
-		return ignite.getOrCreateCache(cacheName);
+	private IgniteCache<Integer, BinarylizableWrapper> getIgniteCache(String cacheName, boolean create) {
+		if (create) {
+			return ignite.getOrCreateCache(cacheName);
+		} else {
+			return ignite.cache(cacheName);
+		}
 	}
 
 	@Override
 	protected IManageablePage getPersistedPage(String sessionIdentifier, int id) {
-		IgniteCache<Integer, BinarylizableWrapper> cache = getIgniteCache(sessionIdentifier);
+		IgniteCache<Integer, BinarylizableWrapper> cache = getIgniteCache(sessionIdentifier, false);
 		if (cache != null) {
 			BinarylizableWrapper wrapper = cache.get(id);
 
@@ -101,7 +105,7 @@ public class IgniteDataStore extends AbstractPersistentPageStore  implements IPe
 
 	@Override
 	protected void removePersistedPage(String sessionIdentifier, IManageablePage page) {
-		IgniteCache<Integer, BinarylizableWrapper> cache = getIgniteCache(sessionIdentifier);
+		IgniteCache<Integer, BinarylizableWrapper> cache = getIgniteCache(sessionIdentifier, false);
 		if (cache != null) {
 			cache.remove(page.getPageId());
 			LOGGER.debug("Deleted page for session '{}' and page with id '{}'", sessionIdentifier,
@@ -111,7 +115,7 @@ public class IgniteDataStore extends AbstractPersistentPageStore  implements IPe
 
 	@Override
 	protected void removeAllPersistedPages(String identifier) {
-		IgniteCache<Integer, BinarylizableWrapper> cache = getIgniteCache(identifier);
+		IgniteCache<Integer, BinarylizableWrapper> cache = getIgniteCache(identifier, false);
 		if (cache != null) {
 			cache.clear();
 			LOGGER.debug("Deleted page for session '{}'", identifier);
@@ -125,7 +129,7 @@ public class IgniteDataStore extends AbstractPersistentPageStore  implements IPe
 		}
 		SerializedPage serializedPage = (SerializedPage) page;
 
-		IgniteCache<Integer, BinarylizableWrapper> cache = getIgniteCache(identifier);
+		IgniteCache<Integer, BinarylizableWrapper> cache = getIgniteCache(identifier, true);
 		cache.put(page.getPageId(), new BinarylizableWrapper(serializedPage));
 		LOGGER.debug("Inserted page for session '{}' and page id '{}'", identifier, page.getPageId());
 	}
@@ -155,7 +159,7 @@ public class IgniteDataStore extends AbstractPersistentPageStore  implements IPe
 	public List<IPersistedPage> getPersistedPages(String contextIdentifier) {
 		List<IPersistedPage> pages = new ArrayList<>();
 
-		IgniteCache<Integer, BinarylizableWrapper> cache = getIgniteCache(contextIdentifier);
+		IgniteCache<Integer, BinarylizableWrapper> cache = getIgniteCache(contextIdentifier, false);
 		if (cache != null) {
 			cache.forEach(entry -> {
 				SerializedPage serializedPage = entry.getValue().page;
