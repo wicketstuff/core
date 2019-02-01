@@ -12,6 +12,9 @@
 	<name>Apache Wicket IDataStore Hazelcast </name>
 	<description>An implementation of Apache Wicket's IDataStore that uses Hazelcast as a backend</description>
 
+	<properties>
+		<hazelcast.version>3.11.1</hazelcast.version>
+	</properties>
 	<dependencies>
 
 		<dependency>
@@ -31,9 +34,7 @@
 		<dependency>
 			<groupId>com.hazelcast</groupId>
 			<artifactId>hazelcast</artifactId>
-			<version>3.11</version>
+			<version>${hazelcast.version}</version>
 		</dependency>
-
-    </dependencies>
-
+	</dependencies>
 </project>

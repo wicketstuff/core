@@ -12,6 +12,9 @@
 	<name>Apache Wicket IDataStore Ignite</name>
 	<description>An implementation of Apache Wicket's IDataStore that uses Apache Ignite as a backend</description>
 
+	<properties>
+		<ignite-core.version>2.7.0</ignite-core.version>
+	</properties>
 	<dependencies>
 
 		<dependency>
@@ -31,7 +34,7 @@
 		<dependency>
 			<groupId>org.apache.ignite</groupId>
 			<artifactId>ignite-core</artifactId>
-			<version>2.6.0</version>
+			<version>${ignite-core.version}</version>
 		</dependency>
 
 	</dependencies>
