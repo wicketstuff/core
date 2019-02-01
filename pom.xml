@@ -223,39 +223,62 @@
 		<deployment.disabled>false</deployment.disabled>
 		<sources.disabled>false</sources.disabled>
 
-		<hibernate.version>5.3.7.Final</hibernate.version>
-		<javassist.version>3.24.0-GA</javassist.version>
-		<jetty.version>9.4.12.v20180830</jetty.version>
+		<hibernate.version>5.4.1.Final</hibernate.version>
+		<javassist.version>3.24.1-GA</javassist.version>
+		<jetty.version>9.4.14.v20181114</jetty.version>
 		<sf-jung.version>2.1.1</sf-jung.version>
 		<shiro.version>1.4.0</shiro.version>
 		<slf4j.version>1.7.25</slf4j.version>
 		<logback.version>1.2.3</logback.version>
 		<log4j.version>2.11.1</log4j.version>
-		<spring.version>4.3.20.RELEASE</spring.version>
-		<cglib.version>3.2.9</cglib.version>
+		<spring.version>4.3.22.RELEASE</spring.version>
+		<cglib.version>3.2.10</cglib.version>
 		<objenesis.version>3.0.1</objenesis.version>
 		<scala.version>2.12.6</scala.version>
 		<jackson.version>2.9.8</jackson.version>
-		<poi.version>4.0.0</poi.version>
+		<poi.version>4.0.1</poi.version>
 		<guava.version>26.0-jre</guava.version>
 		<wicket-webjars.version>2.0.7</wicket-webjars.version>
 		<commons-io.version>2.6</commons-io.version>
 		<xstream.version>1.4.11.1</xstream.version>
 		<hamcrest.version>1.3</hamcrest.version>
+		<commons-logging.version>1.2</commons-logging.version>
+		<javax.servlet-api.version>3.1.0</javax.servlet-api.version>
+		<junit.version>4.12</junit.version>
+		<easymock.version>4.0.2</easymock.version>
+		<mockito.version>2.23.4</mockito.version>
+		<testng.version>6.14.3</testng.version>
+		<commons-beanutils.version>1.9.3</commons-beanutils.version>
+		<commons-collections4.version>4.2</commons-collections4.version>
+		<commons-digester3.version>3.2</commons-digester3.version>
+		<commons-lang3.version>3.8.1</commons-lang3.version>
+		<validation-api.version>2.0.1.Final</validation-api.version>
+		<jta.version>1.1</jta.version>
+		<hibernate-validator.version>6.0.14.Final</hibernate-validator.version>
+		<htmlcompressor.version>1.5.2</htmlcompressor.version>
+		<closure-compiler.version>v20190121</closure-compiler.version>
+		<ibatis2-sqlmap.version>2.1.7.597</ibatis2-sqlmap.version>
+		<jts.version>1.13</jts.version>
+		<gson.version>2.8.5</gson.version>
+		<wicket-bootstrap-core.version>0.10.18</wicket-bootstrap-core.version>
+		<jasperreports.version>6.7.0</jasperreports.version>
+		<joda-time.version>2.10.1</joda-time.version>
+		<ehcache.version>3.6.3</ehcache.version>
+		<commons-dbcp2.version>2.5.0</commons-dbcp2.version>
 		<!-- plugins -->
-		<maven-surefire-plugin.version>2.22.1</maven-surefire-plugin.version>
+		<maven-surefire-plugin.version>3.0.0-M1</maven-surefire-plugin.version>
 		<maven-javadoc-plugin.version>3.0.1</maven-javadoc-plugin.version>
 		<maven-source-plugin.version>3.0.1</maven-source-plugin.version>
 		<maven-bundle-plugin.version>4.1.0</maven-bundle-plugin.version>
 		<maven-assembly-plugin.version>3.1.0</maven-assembly-plugin.version>
 		<maven-compiler-plugin.version>3.8.0</maven-compiler-plugin.version>
 		<maven-eclipse-plugin.version>2.10</maven-eclipse-plugin.version>
-		<maven-help-plugin.version>3.1.0</maven-help-plugin.version>
+		<maven-help-plugin.version>3.1.1</maven-help-plugin.version>
 		<maven-jar-plugin.version>3.1.0</maven-jar-plugin.version>
 		<maven-resources-plugin.version>3.1.0</maven-resources-plugin.version>
 		<animal-sniffer-maven-plugin.version>1.17</animal-sniffer-maven-plugin.version>
 		<maven-pax-plugin.version>1.6.0</maven-pax-plugin.version>
-		<scala-maven-plugin.version>3.4.4</scala-maven-plugin.version>
+		<scala-maven-plugin.version>3.4.6</scala-maven-plugin.version>
 		<maven-clean-plugin.version>3.1.0</maven-clean-plugin.version>
 		<maven-deploy-plugin.version>3.0.0-M1</maven-deploy-plugin.version>
 		<maven-install-plugin.version>3.0.0-M1</maven-install-plugin.version>
@@ -305,7 +328,7 @@
 		<module>progressbar-parent</module>
 		<module>push-parent</module>
 		<module>quickview-parent</module>
-                <module>simile-timeline-parent</module>
+		<module>simile-timeline-parent</module>
 		<module>tinymce4-parent</module>
 		<module>tinymce3-parent</module>
 		<module>twitter-parent</module>
@@ -436,7 +459,7 @@
 			<dependency>
 				<groupId>commons-logging</groupId>
 				<artifactId>commons-logging</artifactId>
-				<version>1.2</version>
+				<version>${commons-logging.version}</version>
 				<optional>true</optional>
 				<scope>runtime</scope>
 			</dependency>
@@ -484,25 +507,25 @@
 			<dependency>
 				<groupId>javax.servlet</groupId>
 				<artifactId>javax.servlet-api</artifactId>
-				<version>3.1.0</version>
+				<version>${javax.servlet-api.version}</version>
 				<scope>provided</scope>
 			</dependency>
 			<dependency>
 				<groupId>junit</groupId>
 				<artifactId>junit</artifactId>
-				<version>4.12</version>
+				<version>${junit.version}</version>
 				<scope>test</scope>
 			</dependency>
 			<dependency>
 				<groupId>org.easymock</groupId>
 				<artifactId>easymock</artifactId>
-				<version>4.0.1</version>
+				<version>${easymock.version}</version>
 				<scope>test</scope>
 			</dependency>
 			<dependency>
 				<groupId>org.mockito</groupId>
 				<artifactId>mockito-core</artifactId>
-				<version>2.23.0</version>
+				<version>${mockito.version}</version>
 				<scope>test</scope>
 			</dependency>
 			<dependency>
@@ -521,7 +544,7 @@
 			<dependency>
 				<groupId>org.testng</groupId>
 				<artifactId>testng</artifactId>
-				<version>6.14.3</version>
+				<version>${testng.version}</version>
 				<scope>test</scope>
 			</dependency>
 
@@ -529,22 +552,27 @@
 			<dependency>
 				<groupId>commons-beanutils</groupId>
 				<artifactId>commons-beanutils</artifactId>
-				<version>1.9.3</version>
+				<version>${commons-beanutils.version}</version>
 			</dependency>
 			<dependency>
 				<groupId>org.apache.commons</groupId>
 				<artifactId>commons-collections4</artifactId>
-				<version>4.2</version>
+				<version>${commons-collections4.version}</version>
 			</dependency>
 			<dependency>
 				<groupId>org.apache.commons</groupId>
 				<artifactId>commons-digester3</artifactId>
-				<version>3.2</version>
+				<version>${commons-digester3.version}</version>
 			</dependency>
 			<dependency>
 				<groupId>org.apache.commons</groupId>
 				<artifactId>commons-lang3</artifactId>
-				<version>3.8.1</version>
+				<version>${commons-lang3.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.apache.commons</groupId>
+				<artifactId>commons-dbcp2</artifactId>
+				<version>${commons-dbcp2.version}</version>
 			</dependency>
 
 			<!-- SPRING -->
@@ -573,7 +601,7 @@
 			<dependency>
 				<groupId>javax.validation</groupId>
 				<artifactId>validation-api</artifactId>
-				<version>2.0.1.Final</version>
+				<version>${validation-api.version}</version>
 			</dependency>
 			<dependency>
 				<groupId>org.javassist</groupId>
@@ -584,7 +612,7 @@
 			<dependency>
 				<groupId>javax.transaction</groupId>
 				<artifactId>jta</artifactId>
-				<version>1.1</version>
+				<version>${jta.version}</version>
 			</dependency>
 			<dependency>
 				<groupId>org.hibernate</groupId>
@@ -598,8 +626,13 @@
 			</dependency>
 			<dependency>
 				<groupId>org.hibernate</groupId>
+				<artifactId>hibernate-ehcache</artifactId>
+				<version>${hibernate.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.hibernate</groupId>
 				<artifactId>hibernate-validator</artifactId>
-				<version>6.0.13.Final</version>
+				<version>${hibernate-validator.version}</version>
 			</dependency>
 
 			<!-- APACHE SHIRO -->
@@ -655,12 +688,12 @@
 			<dependency>
 				<groupId>com.googlecode.htmlcompressor</groupId>
 				<artifactId>htmlcompressor</artifactId>
-				<version>1.5.2</version>
+				<version>${htmlcompressor.version}</version>
 			</dependency>
 			<dependency>
 				<groupId>com.google.javascript</groupId>
 				<artifactId>closure-compiler</artifactId>
-				<version>v20181028</version>
+				<version>${closure-compiler.version}</version>
 				<exclusions>
 					<exclusion>
 						<groupId>com.google.code.gson</groupId>
@@ -671,17 +704,17 @@
 			<dependency>
 				<groupId>com.ibatis</groupId>
 				<artifactId>ibatis2-sqlmap</artifactId>
-				<version>2.1.7.597</version>
+				<version>${ibatis2-sqlmap.version}</version>
 			</dependency>
 			<dependency>
 				<groupId>com.vividsolutions</groupId>
 				<artifactId>jts</artifactId>
-				<version>1.13</version>
+				<version>${jts.version}</version>
 			</dependency>
 			<dependency>
 				<groupId>com.google.code.gson</groupId>
 				<artifactId>gson</artifactId>
-				<version>2.8.5</version>
+				<version>${gson.version}</version>
 			</dependency>
 			<dependency>
 				<groupId>com.fasterxml.jackson.core</groupId>
@@ -691,22 +724,22 @@
 			<dependency>
 				<groupId>de.agilecoders.wicket</groupId>
 				<artifactId>wicket-bootstrap-core</artifactId>
-				<version>0.10.16</version>
+				<version>${wicket-bootstrap-core.version}</version>
 			</dependency>
 			<dependency>
 				<groupId>net.sf.jasperreports</groupId>
 				<artifactId>jasperreports</artifactId>
-				<version>6.7.0</version>
+				<version>${jasperreports.version}</version>
 			</dependency>
 			<dependency>
 				<groupId>joda-time</groupId>
 				<artifactId>joda-time</artifactId>
-				<version>2.10.1</version>
+				<version>${joda-time.version}</version>
 			</dependency>
 			<dependency>
-				<groupId>net.sf.ehcache</groupId>
-				<artifactId>ehcache-core</artifactId>
-				<version>2.6.11</version>
+				<groupId>org.ehcache</groupId>
+				<artifactId>ehcache</artifactId>
+				<version>${ehcache.version}</version>
 			</dependency>
 			<dependency>
 				<groupId>net.sf.json-lib</groupId>

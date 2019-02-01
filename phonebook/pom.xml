@@ -70,8 +70,8 @@
 			<artifactId>hibernate-core</artifactId>
 		</dependency>
 		<dependency>
-			<groupId>net.sf.ehcache</groupId>
-			<artifactId>ehcache-core</artifactId>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-ehcache</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>org.javassist</groupId>
@@ -85,7 +85,7 @@
 			<groupId>org.eclipse.jetty.aggregate</groupId>
 			<artifactId>jetty-all</artifactId>
 			<scope>provided</scope>
-            <classifier>uber</classifier>
+			<classifier>uber</classifier>
 		</dependency>
 		<dependency>
 			<groupId>net.sf.shadesdb</groupId>
@@ -106,6 +106,14 @@
 		<dependency>
 			<groupId>org.slf4j</groupId>
 			<artifactId>slf4j-log4j12</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-dbcp2</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>commons-logging</groupId>
+			<artifactId>commons-logging</artifactId>
 		</dependency>
 	</dependencies>
 

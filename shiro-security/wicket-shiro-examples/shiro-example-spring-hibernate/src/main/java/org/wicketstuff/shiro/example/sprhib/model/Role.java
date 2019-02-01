@@ -26,18 +26,19 @@ import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.Index;
 import javax.persistence.JoinTable;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
-import org.hibernate.annotations.Index;
 
 /**
  * Model object that represents a security role.
  */
 @Entity
-@Table(name = "roles")
+@Table(name = "roles"
+	, indexes = {@Index(name = "idx_roles_name", columnList = "name")})
 @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 public class Role
 {
@@ -74,7 +75,6 @@ public class Role
 
 	@Basic(optional = false)
 	@Column(length = 100)
-	@Index(name = "idx_roles_name")
 	public String getName()
 	{
 		return name;

@@ -93,8 +93,8 @@
 			<artifactId>hibernate-entitymanager</artifactId>
 		</dependency>
 		<dependency>
-			<groupId>net.sf.ehcache</groupId>
-			<artifactId>ehcache-core</artifactId>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-ehcache</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>org.javassist</groupId>
