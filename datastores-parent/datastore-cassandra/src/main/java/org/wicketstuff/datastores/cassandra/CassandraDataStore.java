@@ -31,7 +31,7 @@ import com.datastax.driver.core.querybuilder.QueryBuilder;
 import com.datastax.driver.core.querybuilder.Select;
 
 /**
- * An store that saves the pages' bytes in Apache Cassandra
+ * A store that saves the pages' bytes in Apache Cassandra
  */
 public class CassandraDataStore extends AbstractPersistentPageStore implements IPersistentPageStore {
 

@@ -157,10 +157,11 @@ public class MemcachedDataStore extends AbstractPersistentPageStore implements I
 	
 	@Override
 	protected IManageablePage getPersistedPage(String sessionIdentifier, int id) {
-		String type = (String) client.get(makeKey(sessionIdentifier, id, PAGE_TYPE));
 		byte[] data = (byte[]) client.get(makeKey(sessionIdentifier, id, PAGE_DATA));
 		
 		if (data != null) {
+			String type = (String) client.get(makeKey(sessionIdentifier, id, PAGE_TYPE));
+			
 			if (LOG.isDebugEnabled()) {
 				LOG.debug("Got page for session '{}' and page id '{}'", sessionIdentifier, id);
 			}
@@ -208,7 +209,7 @@ public class MemcachedDataStore extends AbstractPersistentPageStore implements I
 		MemcachedSet pages = new MemcachedSet(client, makeKey(sessionIdentifier, SESSION_PAGES), settings.getExpirationTime());
 		if (pages.add(String.valueOf(page.getPageId()))) {
 			MemcachedSet sessions = new MemcachedSet(client, makeKey(SESSIONS), settings.getExpirationTime());
-			sessions.add(String.valueOf(sessionIdentifier));
+			sessions.add(sessionIdentifier);
 			sessions.compact();
 		}
 
