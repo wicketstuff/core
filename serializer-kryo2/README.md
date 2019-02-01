@@ -15,7 +15,7 @@ There is a Version for Wicket 6 starting with 6.2.1,but API changed since 6.9.x.
 	<dependency>
 		<groupId>org.wicketstuff</groupId>
 		<artifactId>wicketstuff-serializer-kryo2</artifactId>
-		<version>6.9.1</version>
+		<version>8.3.0</version>
 	</dependency>
 	
 ### Type and Tree Serialization Reports

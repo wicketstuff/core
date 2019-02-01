@@ -48,39 +48,27 @@
         <property name="username" value="sa"/>
     </bean>
 
-    <!-- Populates the sample database with sample users and roles. -->
-    <bean id="bootstrapDataPopulator" class="org.wicketstuff.shiro.example.sprhib.dao.BootstrapDataPopulator">
-        <property name="dataSource" ref="dataSource"/>
-    </bean>
-
     <!-- Hibernate SessionFactory -->
-    <bean id="sessionFactory" class="org.springframework.orm.hibernate3.annotation.AnnotationSessionFactoryBean">
+    <bean id="sessionFactory" class="org.springframework.orm.hibernate5.LocalSessionFactoryBean">
         <property name="dataSource" ref="dataSource"/>
-        <!-- Because we're using an in-memory database for demo purposes (which is lost every time the app
-             shuts down), we have to ensure that the HSQLDB DDL is run each time the app starts.  The
-             DDL is auto-generated based on the *.hbm.xml mapping definitions below. -->
-        <property name="schemaUpdate" value="true"/>
         <!-- Scan packages for JPA annotations -->
         <property name="packagesToScan" value="org.wicketstuff.shiro.example.sprhib.model"/>
         <property name="hibernateProperties">
             <props>
+                <!-- Because we're using an in-memory database for demo purposes (which is lost every time the app
+                     shuts down), we have to ensure that the HSQLDB DDL is run each time the app starts.  The
+                     DDL is auto-generated based on the *.hbm.xml mapping definitions below. -->
+                <prop key="hibernate.hbm2ddl.auto">update</prop>
                 <prop key="hibernate.dialect">org.hibernate.dialect.HSQLDialect</prop>
                 <prop key="hibernate.jdbc.fetch_size">100</prop>
-                <prop key="hibernate.cache.region.factory_class">net.sf.ehcache.hibernate.SingletonEhCacheRegionFactory</prop>
+                <prop key="hibernate.cache.region.factory_class">org.hibernate.cache.ehcache.EhCacheRegionFactory</prop>
                 <prop key="hibernate.cache.use_query_cache">true</prop>
             </props>
-        </property>
-        <property name="eventListeners">
-            <map>
-                <entry key="merge">
-                    <bean class="org.springframework.orm.hibernate3.support.IdTransferringMergeEventListener"/>
-                </entry>
-            </map>
         </property>
     </bean>
 
     <!-- Transaction support beans -->
-    <bean id="transactionManager" class="org.springframework.orm.hibernate3.HibernateTransactionManager">
+    <bean id="transactionManager" class="org.springframework.orm.hibernate5.HibernateTransactionManager">
         <property name="sessionFactory" ref="sessionFactory"/>
     </bean>
 

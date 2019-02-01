@@ -26,17 +26,17 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.Index;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
-import org.hibernate.annotations.Index;
 
 /**
  * Simple class that represents any User domain entity in any application.
- * 
+ *
  * <p>
  * Because this class performs its own Realm and Permission checks, and these can happen frequently
  * enough in a production application, it is highly recommended that the internal User
@@ -46,7 +46,9 @@ import org.hibernate.annotations.Index;
  * </p>
  */
 @Entity
-@Table(name = "users")
+@Table(name = "users"
+, indexes = {@Index(name = "idx_users_username", columnList = "username")
+		, @Index(name = "idx_users_email", columnList = "email")})
 @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 public class User
 {
@@ -72,12 +74,11 @@ public class User
 
 	/**
 	 * Returns the username associated with this user account;
-	 * 
+	 *
 	 * @return the username associated with this user account;
 	 */
 	@Basic(optional = false)
 	@Column(length = 100)
-	@Index(name = "idx_users_username")
 	public String getUsername()
 	{
 		return username;
@@ -89,7 +90,6 @@ public class User
 	}
 
 	@Basic(optional = false)
-	@Index(name = "idx_users_email")
 	public String getEmail()
 	{
 		return email;
@@ -102,7 +102,7 @@ public class User
 
 	/**
 	 * Returns the password for this user.
-	 * 
+	 *
 	 * @return this user's password
 	 */
 	@Basic(optional = false)
