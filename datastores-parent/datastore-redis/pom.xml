@@ -12,6 +12,9 @@
 	<name>Apache Wicket IDataStore Redis </name>
 	<description>An implementation of Apache Wicket's IDataStore that uses Redis as a backend</description>
 
+	<properties>
+		<jedis.version>3.0.1</jedis.version>
+	</properties>
 	<dependencies>
 
 		<dependency>
@@ -31,7 +34,7 @@
 		<dependency>
 			<groupId>redis.clients</groupId>
 			<artifactId>jedis</artifactId>
-			<version>2.9.0</version>
+			<version>${jedis.version}</version>
 			<type>jar</type>
 			<scope>compile</scope>
 		</dependency>

@@ -16,6 +16,9 @@
 		Advanced grid components for Apache Wicket
 	</description>
 
+	<properties>
+		<wicket15-tree.version>8.0.0</wicket15-tree.version>
+	</properties>
 	<modules>
 		<module>inmethod-grid</module>
 		<module>inmethod-grid-examples</module>
@@ -56,7 +59,7 @@
 		<dependency>
 			<groupId>org.wicketstuff</groupId>
 			<artifactId>wicket15-tree</artifactId>
-			<version>8.0.0</version>
+			<version>${wicket15-tree.version}</version>
 		</dependency>
 
 		<!-- LOGGING DEPENDENCIES - LOG4J -->

@@ -64,14 +64,11 @@ public class RedisDataStore implements IDataStore
 	public byte[] getData(String sessionId, int pageId)
 	{
 		byte[] bytes = null;
-		Jedis resource = jedisPool.getResource();
-		try {
+		try (Jedis resource = jedisPool.getResource();) {
 			byte[] key = makeKey(sessionId, pageId);
 			bytes = resource.get(key);
 			LOGGER.debug("Got {} for session '{}' and page id '{}'",
 					new Object[] {bytes != null ? "data" : "'null'", sessionId, pageId});
-		} finally {
-			jedisPool.returnResource(resource);
 		}
 		return bytes;
 	}
@@ -79,12 +76,9 @@ public class RedisDataStore implements IDataStore
 	@Override
 	public void removeData(String sessionId, int pageId)
 	{
-		Jedis resource = jedisPool.getResource();
-		try {
+		try (Jedis resource = jedisPool.getResource();) {
 			byte[] key = makeKey(sessionId, pageId);
 			resource.del(key);
-		} finally {
-			jedisPool.returnResource(resource);
 		}
 
 		LOGGER.debug("Deleted data for session '{}' and page with id '{}'", sessionId, pageId);
@@ -93,15 +87,12 @@ public class RedisDataStore implements IDataStore
 	@Override
 	public void removeData(String sessionId)
 	{
-		Jedis resource = jedisPool.getResource();
-		try {
+		try (Jedis resource = jedisPool.getResource();) {
 			byte[] glob = makeGlob(sessionId);
 			Set<byte[]> keys = resource.keys(glob);
 			for (byte[] key : keys) {
 				resource.del(key);
 			}
-		} finally {
-			jedisPool.returnResource(resource);
 		}
 		LOGGER.debug("Deleted data for session '{}'", sessionId);
 	}
@@ -109,15 +100,12 @@ public class RedisDataStore implements IDataStore
 	@Override
 	public void storeData(String sessionId, int pageId, byte[] data)
 	{
-		Jedis resource = jedisPool.getResource();
-		try {
+		try (Jedis resource = jedisPool.getResource();) {
 			byte[] key = makeKey(sessionId, pageId);
 			resource.set(key, data);
 			if (settings.getRecordTtl() != null) {
 				resource.expire(key, (int) settings.getRecordTtl().seconds());
 			}
-		} finally {
-			jedisPool.returnResource(resource);
 		}
 		LOGGER.debug("Inserted data for session '{}' and page id '{}'", sessionId, pageId);
 	}

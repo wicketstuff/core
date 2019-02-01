@@ -79,7 +79,7 @@ public class KryoSerializer implements ISerializer
 	private final Bytes bufferSize;
 
 	/**
-	 * Store a per thread Kryo instance (as Kryo is 
+	 * Store a per thread Kryo instance (as Kryo is
 	 * not thread safe).
 	 */
 	private ThreadLocal<Kryo> kryo =  new ThreadLocal<Kryo>();
@@ -94,7 +94,7 @@ public class KryoSerializer implements ISerializer
 
 	/**
 	 * Constructor.
-	 * 
+	 *
 	 * @param bufferSize The buffer size;
 	 */
 	public KryoSerializer(final Bytes bufferSize)
@@ -105,15 +105,15 @@ public class KryoSerializer implements ISerializer
 
 	/**
 	 * Factory method for Kryo serializers.
-	 * 
+	 *
 	 * @return
 	 */
 	protected Kryo createKryo()
 	{
 		return new KryoReflectionFactorySupport();
 	}
-	
-	
+
+
 	/**
 	 * @return the Kryo serializer for the current thread.
 	 */
@@ -130,8 +130,7 @@ public class KryoSerializer implements ISerializer
 	public byte[] serialize(final Object object)
 	{
 		LOG.debug("Going to serialize: '{}'", object);
-		Output buffer = getBuffer(object);
-		try {
+		try (Output buffer = getBuffer(object)) {
 			getKryo().writeClassAndObject(buffer, object);
 			byte[] data = buffer.toBytes();
 			if (data == null)
@@ -140,8 +139,7 @@ public class KryoSerializer implements ISerializer
 			}
 
 			// release the memory for the buffer
-			buffer.clear();
-			buffer = null;
+			buffer.reset();
 
 			return data;
 		} finally {
@@ -166,7 +164,7 @@ public class KryoSerializer implements ISerializer
 
 	/**
 	 * Creates the buffer that will be used to serialize the {@code target}
-	 * 
+	 *
 	 * @param target
 	 *            the object that will be serialized. Can be used to decide dynamically what size to
 	 *            use
@@ -180,7 +178,7 @@ public class KryoSerializer implements ISerializer
 	/**
 	 * Configures {@link Kryo} with some custom {@link Serializer}s and registers some known Wicket
 	 * classes which are known to be serialized sooner or later
-	 * 
+	 *
 	 * @param kryo
 	 *            the {@link Kryo} instance to configured
 	 */
@@ -220,7 +218,7 @@ public class KryoSerializer implements ISerializer
 
 	/**
 	 * A method which can be overridden by users to do more configuration
-	 * 
+	 *
 	 * @param kryo
 	 *            the {@link Kryo} instance to configure
 	 */

@@ -266,6 +266,11 @@
 		<joda-time.version>2.10.1</joda-time.version>
 		<ehcache.version>3.6.3</ehcache.version>
 		<commons-dbcp2.version>2.5.0</commons-dbcp2.version>
+		<javaee-api.version>6.0</javaee-api.version>
+		<clojure.version>1.10.0</clojure.version>
+		<groovy.version>2.4.16</groovy.version>
+		<asm-util.version>7.0</asm-util.version>
+		<hsqldb.version>2.4.1</hsqldb.version>
 		<!-- plugins -->
 		<maven-surefire-plugin.version>3.0.0-M3</maven-surefire-plugin.version>
 		<maven-javadoc-plugin.version>3.0.1</maven-javadoc-plugin.version>
@@ -782,12 +787,12 @@
 			<dependency>
 				<groupId>org.clojure</groupId>
 				<artifactId>clojure</artifactId>
-				<version>1.9.0</version>
+				<version>${clojure.version}</version>
 			</dependency>
 			<dependency>
 				<groupId>org.codehaus.groovy</groupId>
 				<artifactId>groovy</artifactId>
-				<version>2.4.15</version>
+				<version>${groovy.version}</version>
 			</dependency>
 			<dependency>
 				<groupId>org.osgi</groupId>
@@ -836,12 +841,12 @@
 			<dependency>
 				<groupId>org.ow2.asm</groupId>
 				<artifactId>asm-util</artifactId>
-				<version>7.0</version>
+				<version>${asm-util.version}</version>
 			</dependency>
 			<dependency>
 				<groupId>org.hsqldb</groupId>
 				<artifactId>hsqldb</artifactId>
-				<version>2.4.1</version>
+				<version>${hsqldb.version}</version>
 				<scope>runtime</scope>
 			</dependency>
 			<dependency>
