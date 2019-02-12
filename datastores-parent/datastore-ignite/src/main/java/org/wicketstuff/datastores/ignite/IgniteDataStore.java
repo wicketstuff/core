@@ -114,24 +114,24 @@ public class IgniteDataStore extends AbstractPersistentPageStore  implements IPe
 	}
 
 	@Override
-	protected void removeAllPersistedPages(String identifier) {
-		IgniteCache<Integer, BinarylizableWrapper> cache = getIgniteCache(identifier, false);
+	protected void removeAllPersistedPages(String sessionIdentifier) {
+		IgniteCache<Integer, BinarylizableWrapper> cache = getIgniteCache(sessionIdentifier, false);
 		if (cache != null) {
 			cache.clear();
-			LOGGER.debug("Deleted page for session '{}'", identifier);
+			LOGGER.debug("Deleted page for session '{}'", sessionIdentifier);
 		}
 	}
 
 	@Override
-	protected void addPersistedPage(String identifier, IManageablePage page) {
+	protected void addPersistedPage(String sessionIdentifier, IManageablePage page) {
 		if (page instanceof SerializedPage == false) {
 			throw new WicketRuntimeException("CassandraDataStore works with serialized pages only");
 		}
 		SerializedPage serializedPage = (SerializedPage) page;
 
-		IgniteCache<Integer, BinarylizableWrapper> cache = getIgniteCache(identifier, true);
+		IgniteCache<Integer, BinarylizableWrapper> cache = getIgniteCache(sessionIdentifier, true);
 		cache.put(page.getPageId(), new BinarylizableWrapper(serializedPage));
-		LOGGER.debug("Inserted page for session '{}' and page id '{}'", identifier, page.getPageId());
+		LOGGER.debug("Inserted page for session '{}' and page id '{}'", sessionIdentifier, page.getPageId());
 	}
 
 	@Override

@@ -152,7 +152,7 @@ public class SessionPageStore extends AbstractPersistentPageStore
 		return pcc;
 	}
 
-	protected Session getSession(final String sessionId, boolean create)
+	protected Session getSession(final String sessionIdentifier, boolean create)
 	{
 		Session session = null;
 		
@@ -165,10 +165,10 @@ public class SessionPageStore extends AbstractPersistentPageStore
 			 * Subject acquisition in web apps is based on the incoming request, and so is Wicket's,
 			 * this should _always_ be the same. If not, something is seriously wrong:
 			 */
-			if (session != null && sessionId != null && !sessionId.equals(session.getId()))
+			if (session != null && sessionIdentifier != null && !sessionIdentifier.equals(session.getId()))
 				throw new WicketRuntimeException(
 					"The specified Wicket sessionId [" +
-						sessionId +
+						sessionIdentifier +
 						"] is not the same as Shiro's current Subject Session with id [" +
 						session.getId() +
 						"], indicating the Wicket request's session is not the same as Shiro's current Subject Session. " +

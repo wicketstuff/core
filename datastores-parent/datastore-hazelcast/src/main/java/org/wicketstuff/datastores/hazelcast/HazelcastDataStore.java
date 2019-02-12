@@ -109,26 +109,26 @@ public class HazelcastDataStore extends AbstractPersistentPageStore implements I
 	}
 
 	@Override
-	protected void removeAllPersistedPages(String identifier) {
-		IMap<Integer, SerializedPage> map = hazelcast.getMap(identifier);
+	protected void removeAllPersistedPages(String sessionIdentifier) {
+		IMap<Integer, SerializedPage> map = hazelcast.getMap(sessionIdentifier);
 		if (map != null)
 		{
 			map.clear();
-			LOGGER.debug("Deleted page for session '{}'", identifier);
+			LOGGER.debug("Deleted page for session '{}'", sessionIdentifier);
 		}
 	}
 
 	@Override
-	protected void addPersistedPage(String identifier, IManageablePage page) {
+	protected void addPersistedPage(String sessionIdentifier, IManageablePage page) {
 		if (page instanceof SerializedPage == false)
 		{
 			throw new WicketRuntimeException("CassandraDataStore works with serialized pages only");
 		}
 		SerializedPage serializedPage = (SerializedPage)page;
 
-		IMap<Integer, SerializedPage> map = hazelcast.getMap(identifier);
+		IMap<Integer, SerializedPage> map = hazelcast.getMap(sessionIdentifier);
 		map.put(page.getPageId(), serializedPage);
-		LOGGER.debug("Inserted page for session '{}' and page id '{}'", identifier, page.getPageId());
+		LOGGER.debug("Inserted page for session '{}' and page id '{}'", sessionIdentifier, page.getPageId());
 	}
 
 	@Override

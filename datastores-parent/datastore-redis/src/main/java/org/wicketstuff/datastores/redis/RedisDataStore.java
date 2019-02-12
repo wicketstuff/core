@@ -103,33 +103,33 @@ public class RedisDataStore extends AbstractPersistentPageStore implements IPers
 	}
 
 	@Override
-	protected void removePersistedPage(String identifier, IManageablePage page) {
+	protected void removePersistedPage(String sessionIdentifier, IManageablePage page) {
 		try (Jedis resource = jedisPool.getResource())
 		{
-			String key = makeKey(identifier, page.getPageId());
+			String key = makeKey(sessionIdentifier, page.getPageId());
 			resource.del(key);
 
-			String attributesKey = makeKey(identifier, page.getPageId(), ATTRIBUTES);
+			String attributesKey = makeKey(sessionIdentifier, page.getPageId(), ATTRIBUTES);
 			resource.del(attributesKey);
 		}
 
-		LOGGER.debug("Deleted data for session '{}' and page with id '{}'", identifier, page.getPageId());
+		LOGGER.debug("Deleted data for session '{}' and page with id '{}'", sessionIdentifier, page.getPageId());
 	}
 
 	@Override
-	protected void removeAllPersistedPages(String identifier ) {
+	protected void removeAllPersistedPages(String sessionIdentifier) {
 		try (Jedis resource = jedisPool.getResource()) {
-			String glob = makeKey(identifier, "*");
+			String glob = makeKey(sessionIdentifier, "*");
 			Set<String> keys = resource.keys(glob);
 			for (String key : keys) {
 				resource.del(key);
 			}
 		}
-		LOGGER.debug("Deleted data for session '{}'", identifier);
+		LOGGER.debug("Deleted data for session '{}'", sessionIdentifier);
 	}
 
 	@Override
-	protected void addPersistedPage(String identifier, IManageablePage page) {
+	protected void addPersistedPage(String sessionIdentifier, IManageablePage page) {
 		if (page instanceof SerializedPage == false)
 		{
 			throw new WicketRuntimeException("RedisDataStore works with serialized pages only");
@@ -137,10 +137,10 @@ public class RedisDataStore extends AbstractPersistentPageStore implements IPers
 		SerializedPage serializedPage = (SerializedPage)page;
 		
 		try (Jedis resource = jedisPool.getResource()) {
-			String key = makeKey(identifier, serializedPage.getPageId());
+			String key = makeKey(sessionIdentifier, serializedPage.getPageId());
 			resource.set(SafeEncoder.encode(key), serializedPage.getData());
 			
-			String attributesKey = makeKey(identifier, serializedPage.getPageId(), ATTRIBUTES);
+			String attributesKey = makeKey(sessionIdentifier, serializedPage.getPageId(), ATTRIBUTES);
 			resource.hmset(attributesKey, makeHm(serializedPage));
 			
 			if (settings.getRecordTtl() != null) {
@@ -148,7 +148,7 @@ public class RedisDataStore extends AbstractPersistentPageStore implements IPers
 				resource.expire(attributesKey, (int) settings.getRecordTtl().seconds());
 			}
 		}
-		LOGGER.debug("Inserted data for session '{}' and page id '{}'", identifier, page.getPageId());
+		LOGGER.debug("Inserted data for session '{}' and page id '{}'", sessionIdentifier, page.getPageId());
 	}
 
 	@Override
@@ -163,7 +163,7 @@ public class RedisDataStore extends AbstractPersistentPageStore implements IPers
 	@Override
 	public Set<String> getSessionIdentifiers()
 	{
-		Set<String> identifiers = new HashSet<>();
+		Set<String> sessionIdentifiers = new HashSet<>();
 		
 		try (Jedis resource = jedisPool.getResource())
 		{
@@ -171,12 +171,12 @@ public class RedisDataStore extends AbstractPersistentPageStore implements IPers
 			Set<String> keys = resource.keys(glob);
 			for (String key : keys) {
 				if (key.indexOf(SEPARATOR, glob.length()) == -1) {
-					identifiers.add(key);
+					sessionIdentifiers.add(key);
 				}
 			}
 		}
 		
-		return identifiers;
+		return sessionIdentifiers;
 	}
 	
 	@Override

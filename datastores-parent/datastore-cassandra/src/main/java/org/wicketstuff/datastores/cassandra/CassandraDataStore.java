@@ -149,11 +149,11 @@ public class CassandraDataStore extends AbstractPersistentPageStore implements I
 	}
 
 	@Override
-	protected IManageablePage getPersistedPage(String identifier, int pageId) {
+	protected IManageablePage getPersistedPage(String sessionIdentifier, int pageId) {
 		Select.Where dataSelect = QueryBuilder
 			.select(COLUMN_PAGE_TYPE, COLUMN_DATA)
 			.from(settings.getKeyspaceName(), settings.getTableName())
-			.where(QueryBuilder.eq(COLUMN_SESSION_ID, identifier))
+			.where(QueryBuilder.eq(COLUMN_SESSION_ID, sessionIdentifier))
 			.and(QueryBuilder.eq(COLUMN_PAGE_ID, pageId));
 		
 		ResultSet rows = session.execute(dataSelect);
@@ -166,7 +166,7 @@ public class CassandraDataStore extends AbstractPersistentPageStore implements I
 			byte[] bytes = new byte[data.remaining()];
 			data.get(bytes);
 			
-			LOGGER.debug("Got data for session '{}' and page id '{}'", identifier, pageId);
+			LOGGER.debug("Got data for session '{}' and page id '{}'", sessionIdentifier, pageId);
 
 			return new SerializedPage(pageId, pageType, bytes);
 		}

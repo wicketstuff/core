@@ -184,18 +184,18 @@ public class MemcachedDataStore extends AbstractPersistentPageStore implements I
 	}
 
 	@Override
-	protected void removeAllPersistedPages(String identifier) {
-		MemcachedSet pages = new MemcachedSet(client, makeKey(identifier, SESSION_PAGES), settings.getExpirationTime());
+	protected void removeAllPersistedPages(String sessionIdentifier) {
+		MemcachedSet pages = new MemcachedSet(client, makeKey(sessionIdentifier, SESSION_PAGES), settings.getExpirationTime());
 
 		for (String id : pages) {
-			client.delete(makeKey(identifier, id, PAGE_DATA));
-			client.delete(makeKey(identifier, id, PAGE_TYPE));
-			client.delete(makeKey(identifier, id, PAGE_SIZE));
+			client.delete(makeKey(sessionIdentifier, id, PAGE_DATA));
+			client.delete(makeKey(sessionIdentifier, id, PAGE_TYPE));
+			client.delete(makeKey(sessionIdentifier, id, PAGE_SIZE));
 		}
 		
-		client.delete(makeKey(identifier, SESSION_PAGES));
+		client.delete(makeKey(sessionIdentifier, SESSION_PAGES));
 
-		new MemcachedSet(client, makeKey(SESSIONS), settings.getExpirationTime()).remove(identifier);
+		new MemcachedSet(client, makeKey(SESSIONS), settings.getExpirationTime()).remove(sessionIdentifier);
 	}
 
 	@Override
