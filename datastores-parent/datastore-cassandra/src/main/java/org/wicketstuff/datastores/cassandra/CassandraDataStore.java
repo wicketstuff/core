@@ -194,9 +194,9 @@ public class CassandraDataStore extends AbstractPersistentPageStore implements I
 				.all()
 				.from(settings.getKeyspaceName(), settings.getTableName())
 				.where(QueryBuilder.eq(COLUMN_SESSION_ID, identifier));
-			session.execute(delete);
+		session.execute(delete);
 
-			LOGGER.debug("Deleted data for session '{}'", identifier);
+		LOGGER.debug("Deleted data for session '{}'", identifier);
 	}
 
 	@Override

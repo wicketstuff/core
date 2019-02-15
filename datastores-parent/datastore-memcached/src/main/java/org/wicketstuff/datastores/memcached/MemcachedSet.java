@@ -19,6 +19,7 @@ package org.wicketstuff.datastores.memcached;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
+import java.util.concurrent.ExecutionException;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
@@ -26,11 +27,13 @@ import org.apache.wicket.util.string.Strings;
 
 import net.spy.memcached.CASValue;
 import net.spy.memcached.MemcachedClient;
-import net.spy.memcached.internal.OperationFuture;
 
 /**
  * A set maintained in Memcached, see
  * <a href="http://dustin.sallings.org/2011/02/17/memcached-set.html">maintain a set in memcached</a>.
+ * <p>
+ * Elements removed from this set are marked for removal only, they are not actually removed until {@link #compact()}
+ * is invoked.   
  */
 public class MemcachedSet implements Iterable<String> {
 	
@@ -51,41 +54,60 @@ public class MemcachedSet implements Iterable<String> {
 		return decodeSet((String)client.get(key)).iterator();
 	}
 	
+	/**
+	 * Add a value to this set.
+	 *
+	 * @param value value to add
+	 * @return whether the set was created
+	 */
 	public boolean add(String value)
 	{
-		return update(PLUS, value);
+		return modify(PLUS + value);
 	}
-	
+
+	/**
+	 * Remove a value from this set.
+	 *
+	 * @param value value to remove
+	 * @return whether the set was created
+	 */
 	public boolean remove(String value)
 	{
-		return update(MINUS, value);
+		return modify(MINUS + value);
 	}
-	
-	private boolean update(String plusOrMinus, String value)
+
+	private boolean modify(String modification)
 	{
-		boolean created = false;
+		if (modification.indexOf(' ') != -1) {
+			throw new IllegalArgumentException(String.format("value '%s' may not contain a space", modification.substring(1)));
+		}
 		
-		OperationFuture<Boolean> result;
+		boolean created = false;
+
+		// repeat until successful
 		while (true) {
-			result = client.append(key, " " + plusOrMinus + value);
-			
 			try {
-				if (result.get() == true) {
+				// try appending to an existing key
+				if (client.append(key, " " + modification).get() == true) {
+					// prolong expiration time, since append does not
 					client.touch(key, expirationTime);
+
+					// success
 					break;
 				}
-			} catch (Exception e) {
-			}
-			
-			result = client.add(key, expirationTime, "");
-			try {
-				if (result.get() == true) {
+
+				// try adding a new key
+				if (client.add(key, expirationTime, modification).get() == true) {
+					// key is new
 					created = true;
+
+					// success
+					break;
 				}
-			} catch (Exception e) {
+			} catch (InterruptedException | ExecutionException retry) {
 			}
 		}
-
+		
 		return created;
 	}
 	
@@ -107,11 +129,20 @@ public class MemcachedSet implements Iterable<String> {
 		
 		set = set.stream().filter(predicate).collect(Collectors.toSet());
 
-		// ignore failure - the CAS value may be stale and setting it be ignored,
-		// but on of the following tries will succeed 
+		// the CAS value may be stale and setting it ignored,
+		// but on following invocations it will succeed eventually 
 		client.asyncCAS(key, cas.getCas(), encodeSet(set));
 	}
 	
+	/**
+	 * Encode a set, e.g.
+	 * <pre>
+	 * [A, B, C, D] -> "+A +B +C +D"
+	 * </pre>
+	 *
+	 * @param value encoded set
+	 * @return decoded set
+	 */
 	static String encodeSet(Set<String> pageIds)
 	{
 		if (pageIds.isEmpty()) {
@@ -121,7 +152,16 @@ public class MemcachedSet implements Iterable<String> {
 		}
 	}
 
-	static Set<String> decodeSet(String value)
+	/**
+	 * Decode a set, e.g.
+	 * <pre>
+	 * "+A +A +B -B +B -C +C -C" -> [A, B]
+	 * </pre>
+	 *
+	 * @param value encoded set
+	 * @return decoded set
+	 */
+ 	static Set<String> decodeSet(String value)
 	{
 		Set<String> pageIds = new HashSet<>();
 		

@@ -85,10 +85,7 @@ public class HazelcastDataStore extends AbstractPersistentPageStore implements I
 		{
 			SerializedPage page = map.get(id);
 			
-			if (LOGGER.isDebugEnabled())
-			{
-				LOGGER.debug("Got {} for session '{}' and page id '{}'", page, sessionIdentifier, id);
-			}
+			LOGGER.debug("Got {} for session '{}' and page id '{}'", page, sessionIdentifier, id);
 			
 			if (page != null) {
 				return page;

@@ -41,7 +41,7 @@ import net.spy.memcached.ConnectionObserver;
 import net.spy.memcached.MemcachedClient;
 
 /**
- * Page store that stores the pages' bytes in Memcached server.
+ * Page store that stores the pages' bytes in <a href="http://memcached.org/">Memcached</a> server.
  *
  * A useful read about the way Memcached works can be found
  * <a href="http://returnfoo.com/2012/02/memcached-memory-allocation-and-optimization-2/">here</a>.
@@ -140,11 +140,10 @@ public class MemcachedDataStore extends AbstractPersistentPageStore implements I
 		Checks.withinRangeShort(10000, 65535, port, "port");
 
 		List<String> hostnames = settings.getServerList();
-		int memcachedPort = settings.getPort();
 		InetSocketAddress[] addresses = new InetSocketAddress[hostnames.size()];
 		for (int i = 0; i < hostnames.size(); i++) {
 			String hostname = hostnames.get(i);
-			addresses[i] = new InetSocketAddress(hostname, memcachedPort);
+			addresses[i] = new InetSocketAddress(hostname, port);
 		}
 
 		return new MemcachedClient(addresses);
@@ -162,9 +161,7 @@ public class MemcachedDataStore extends AbstractPersistentPageStore implements I
 		if (data != null) {
 			String type = (String) client.get(makeKey(sessionIdentifier, id, PAGE_TYPE));
 			
-			if (LOG.isDebugEnabled()) {
-				LOG.debug("Got page for session '{}' and page id '{}'", sessionIdentifier, id);
-			}
+			LOG.debug("Got page for session '{}' and page id '{}'", sessionIdentifier, id);
 			
 			return new SerializedPage(id, type, data);
 		}
@@ -174,8 +171,10 @@ public class MemcachedDataStore extends AbstractPersistentPageStore implements I
 
 	@Override
 	protected void removePersistedPage(String sessionIdentifier, IManageablePage page) {
+		// unregister page
 		new MemcachedSet(client, makeKey(sessionIdentifier, SESSION_PAGES), settings.getExpirationTime()).remove(String.valueOf(page.getPageId()));
 
+		// delete page and its metadata
 		client.delete(makeKey(sessionIdentifier, page.getPageId(), PAGE_DATA));
 		client.delete(makeKey(sessionIdentifier, page.getPageId(), PAGE_TYPE));
 		client.delete(makeKey(sessionIdentifier, page.getPageId(), PAGE_SIZE));
@@ -187,12 +186,14 @@ public class MemcachedDataStore extends AbstractPersistentPageStore implements I
 	protected void removeAllPersistedPages(String sessionIdentifier) {
 		MemcachedSet pages = new MemcachedSet(client, makeKey(sessionIdentifier, SESSION_PAGES), settings.getExpirationTime());
 
+		// delete all pages and their metadata
 		for (String id : pages) {
 			client.delete(makeKey(sessionIdentifier, id, PAGE_DATA));
 			client.delete(makeKey(sessionIdentifier, id, PAGE_TYPE));
 			client.delete(makeKey(sessionIdentifier, id, PAGE_SIZE));
 		}
 		
+		// unregister all pages
 		client.delete(makeKey(sessionIdentifier, SESSION_PAGES));
 
 		new MemcachedSet(client, makeKey(SESSIONS), settings.getExpirationTime()).remove(sessionIdentifier);
@@ -205,22 +206,26 @@ public class MemcachedDataStore extends AbstractPersistentPageStore implements I
 			throw new WicketRuntimeException("MemcachedDataStore works with serialized pages only");
 		}
 		SerializedPage serializedPage = (SerializedPage)page;
-		
-		MemcachedSet pages = new MemcachedSet(client, makeKey(sessionIdentifier, SESSION_PAGES), settings.getExpirationTime());
+
+		int expirationTime = settings.getExpirationTime();
+
+		// register the page id
+		MemcachedSet pages = new MemcachedSet(client, makeKey(sessionIdentifier, SESSION_PAGES), expirationTime);
 		if (pages.add(String.valueOf(page.getPageId()))) {
+			// ... and the session on the first page
 			MemcachedSet sessions = new MemcachedSet(client, makeKey(SESSIONS), settings.getExpirationTime());
 			sessions.add(sessionIdentifier);
 			sessions.compact();
 		}
 
-		int expirationTime = settings.getExpirationTime();
+		// add the page and its metadata
 		client.set(makeKey(sessionIdentifier, serializedPage.getPageId(), PAGE_DATA), expirationTime, serializedPage.getData());
 		client.set(makeKey(sessionIdentifier, serializedPage.getPageId(), PAGE_SIZE), expirationTime, serializedPage.getData().length);
 		if (serializedPage.getPageType() != null) {
 			client.set(makeKey(sessionIdentifier, serializedPage.getPageId(), PAGE_TYPE), expirationTime, serializedPage.getPageType());
 		}
 
-		// now try to compact
+		// finally try to compact the page ids - if this fails it will succeed one of the next times 
 		pages.compact(pageId -> client.get(makeKey(sessionIdentifier, pageId, PAGE_SIZE)) != null);
 
 		LOG.debug("Stored data for session '{}' and page id '{}'", sessionIdentifier, page.getPageId());
@@ -238,9 +243,8 @@ public class MemcachedDataStore extends AbstractPersistentPageStore implements I
 	/**
 	 * Creates a key that is used for the lookup in Memcached.
 	 *
-	 * @param sessionId The id of the http session.
-	 * @param pageId    The id of the stored page
-	 * @return A key that is used for the lookup in Memcached
+	 * @param segments key segments
+	 * @return A key that is used for the lookup
 	 */
 	private String makeKey(Object... segments) {
 		StringBuilder key = new StringBuilder();

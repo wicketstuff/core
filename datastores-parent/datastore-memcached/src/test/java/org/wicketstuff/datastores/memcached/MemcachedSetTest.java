@@ -40,5 +40,6 @@ public class MemcachedSetTest {
 		assertEquals(new HashSet<>(), MemcachedSet.decodeSet(""));
 		assertEquals(new HashSet<>(Arrays.asList("1", "2", "3")), MemcachedSet.decodeSet("+1 +2 +3"));
 		assertEquals(new HashSet<>(Arrays.asList("2", "3")), MemcachedSet.decodeSet("+1 +2 +3 -1 -4"));
+		assertEquals(new HashSet<>(Arrays.asList("A", "B")), MemcachedSet.decodeSet("+A +A +B -B +B -C +C -C"));
 	}
 }
