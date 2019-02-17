@@ -3,7 +3,7 @@
 	<parent>
 		<groupId>org.wicketstuff</groupId>
 		<artifactId>wicketstuff-pdfjs-parent</artifactId>
-		<version>7.0-SNAPSHOT</version>
+		<version>7.12.0</version>
 	</parent>
 
 	<artifactId>wicketstuff-pdfjs-examples</artifactId>

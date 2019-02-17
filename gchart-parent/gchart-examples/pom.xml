@@ -25,7 +25,7 @@
     <parent>
         <artifactId>wicket-gchart-parent</artifactId>
         <groupId>org.wicketstuff</groupId>
-        <version>7.0-SNAPSHOT</version>
+        <version>7.12.0</version>
     </parent>
     <artifactId>wicket-gchart-examples</artifactId>
     <packaging>war</packaging>
