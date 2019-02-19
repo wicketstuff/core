@@ -45,4 +45,8 @@ public class DashboardContextInitializer implements IInitializer {
 	public void destroy(Application application) {
 		// does noting
 	}
+
+	public static DashboardContext getDashboardContext() {
+		return Application.get().getMetaData(DASHBOARD_CONTEXT_KEY);
+	}
 }

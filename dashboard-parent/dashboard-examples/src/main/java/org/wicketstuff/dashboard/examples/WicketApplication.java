@@ -12,10 +12,11 @@
  */
 package org.wicketstuff.dashboard.examples;
 
+import static org.wicketstuff.dashboard.DashboardContextInitializer.getDashboardContext;
+
 import org.apache.wicket.Page;
 import org.apache.wicket.protocol.http.WebApplication;
 import org.wicketstuff.dashboard.Dashboard;
-import org.wicketstuff.dashboard.DashboardContextInitializer;
 import org.wicketstuff.dashboard.DefaultDashboard;
 import org.wicketstuff.dashboard.examples.jqplot.DemoChartFactory;
 import org.wicketstuff.dashboard.examples.justgage.DemoJustGageFactory;
@@ -36,8 +37,6 @@ import org.wicketstuff.dashboard.widgets.ofchart.ChartWidgetDescriptor;
  * @author Decebal Suiu
  */
 public class WicketApplication extends WebApplication {
-
-	private Dashboard dashboard;
 
 	public static WicketApplication get() {
 		return (WicketApplication) WebApplication.get();
@@ -78,9 +77,6 @@ public class WicketApplication extends WebApplication {
 		JustGageWidget.setJustGageFactory(new DemoJustGageFactory());
 		HighChartsWidget.setHighChartsFactory(new DemoHighChartsFactory());
 
-		// init dashboard from context
-		initDashboard();
-
 		// <<< end dashboard settings
 	}
 
@@ -101,18 +97,11 @@ public class WicketApplication extends WebApplication {
 	*/
 
 	public Dashboard getDashboard() {
-		return dashboard;
-	}
-
-	private DashboardContext getDashboardContext() {
-		return getMetaData(DashboardContextInitializer.DASHBOARD_CONTEXT_KEY);
-	}
-
-	private void initDashboard() {
-		dashboard = getDashboardContext().getDashboardPersister().load();
+		Dashboard dashboard = getDashboardContext().getDashboardPersister().load();
 		if (dashboard == null) {
 			dashboard = new DefaultDashboard("default", "Default");
 		}
+		return dashboard;
 	}
 
 }

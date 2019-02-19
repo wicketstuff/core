@@ -12,6 +12,8 @@
  */
 package org.wicketstuff.dashboard.web;
 
+import static org.wicketstuff.dashboard.DashboardContextInitializer.getDashboardContext;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -32,10 +34,8 @@ import org.wicketstuff.dashboard.Widget;
  * Wicket {@link Panel} which should be used on a page to render a {@link Dashboard}
  * @author Decebal Suiu
  */
-public class DashboardPanel extends GenericPanel<Dashboard> implements DashboardContextAware {
+public class DashboardPanel extends GenericPanel<Dashboard> {
 	private static final long serialVersionUID = 1L;
-
-	private transient DashboardContext dashboardContext;
 
 	private List<DashboardColumnPanel> columnPanels;
 	private IModel<Boolean> rtlModel;
@@ -50,18 +50,6 @@ public class DashboardPanel extends GenericPanel<Dashboard> implements Dashboard
 
 	public Dashboard getDashboard() {
 		return getModelObject();
-	}
-
-	@Override
-	public void setDashboardContext(DashboardContext dashboardContext) {
-		this.dashboardContext = dashboardContext;
-	}
-
-	/**
-	 * Used by children.
-	 */
-	public DashboardContext getDashboardContext() {
-		return dashboardContext;
 	}
 
 	@Override
@@ -105,7 +93,7 @@ public class DashboardPanel extends GenericPanel<Dashboard> implements Dashboard
 		Dashboard dashboard = getDashboard();
 		DashboardUtils.updateWidgetLocations(dashboard, dashboardEvent);
 		dashboard.addWidget(addedWidget);
-		dashboardContext.getDashboardPersister().save(dashboard);
+		getDashboardContext().getDashboardPersister().save(dashboard);
 	}
 
 	private void onWidgetRemoved(DashboardEvent dashboardEvent) {
@@ -113,13 +101,13 @@ public class DashboardPanel extends GenericPanel<Dashboard> implements Dashboard
 		Dashboard dashboard = getDashboard();
 		DashboardUtils.updateWidgetLocations(dashboard, dashboardEvent);
 		dashboard.deleteWidget(removedWidget.getId());
-		dashboardContext.getDashboardPersister().save(dashboard);
+		getDashboardContext().getDashboardPersister().save(dashboard);
 	}
 
 	protected void onWidgetsSorted(DashboardEvent dashboardEvent) {
 		Dashboard dashboard = getDashboard();
 		DashboardUtils.updateWidgetLocations(dashboard, dashboardEvent);
-		dashboardContext.getDashboardPersister().save(dashboard);
+		getDashboardContext().getDashboardPersister().save(dashboard);
 	}
 
 	private void addColumnsPanel() {
@@ -130,7 +118,7 @@ public class DashboardPanel extends GenericPanel<Dashboard> implements Dashboard
 			@Override
 			protected void onBeforeRender() {
 				if (!hasBeenRendered()) {
-					columnPanels = new ArrayList<DashboardColumnPanel>();
+					columnPanels = new ArrayList<>();
 				}
 
 				super.onBeforeRender();

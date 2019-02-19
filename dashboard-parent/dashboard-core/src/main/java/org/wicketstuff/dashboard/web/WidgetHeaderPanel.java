@@ -12,6 +12,8 @@
  */
 package org.wicketstuff.dashboard.web;
 
+import static org.wicketstuff.dashboard.DashboardContextInitializer.getDashboardContext;
+
 import org.apache.wicket.AttributeModifier;
 import org.apache.wicket.ajax.AjaxEventBehavior;
 import org.apache.wicket.ajax.AjaxRequestTarget;
@@ -29,10 +31,8 @@ import org.wicketstuff.dashboard.Widget;
 /**
  * @author Decebal Suiu
  */
-public class WidgetHeaderPanel extends GenericPanel<Widget> implements DashboardContextAware {
+public class WidgetHeaderPanel extends GenericPanel<Widget> {
 	private static final long serialVersionUID = 1L;
-
-	private transient DashboardContext dashboardContext;
 
 	public WidgetHeaderPanel(String id, IModel<Widget> model) {
 		super(id, model);
@@ -54,7 +54,7 @@ public class WidgetHeaderPanel extends GenericPanel<Widget> implements Dashboard
 
 				// save the new state of widget/dashboard
 				Dashboard dashboard = findParent(DashboardPanel.class).getDashboard();
-				dashboardContext.getDashboardPersister().save(dashboard);
+				getDashboardContext().getDashboardPersister().save(dashboard);
 
 				// change toggle's image
 				target.add(toggle.add(AttributeModifier.replace("class", getCssClass())));
@@ -81,16 +81,11 @@ public class WidgetHeaderPanel extends GenericPanel<Widget> implements Dashboard
 	}
 
 	private String getCssClass() {
-		return String.format("dragbox-toggle %s", getWidget().isCollapsed() ? "collapsed" : "expanded");
+		return "dragbox-toggle " + (getWidget().isCollapsed() ? "collapsed" : "expanded");
 	}
 
 	public Widget getWidget() {
 		return getModelObject();
-	}
-
-	@Override
-	public void setDashboardContext(DashboardContext dashboardContext) {
-		this.dashboardContext = dashboardContext;
 	}
 
 	@Override
