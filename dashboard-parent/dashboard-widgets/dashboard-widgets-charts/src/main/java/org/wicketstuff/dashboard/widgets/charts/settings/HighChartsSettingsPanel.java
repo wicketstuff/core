@@ -12,7 +12,10 @@
  */
 package org.wicketstuff.dashboard.widgets.charts.settings;
 
-import com.googlecode.wickedcharts.highcharts.options.SeriesType;
+import static org.wicketstuff.dashboard.DashboardContextInitializer.getDashboardContext;
+
+import java.util.Arrays;
+
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.markup.html.AjaxLink;
 import org.apache.wicket.ajax.markup.html.form.AjaxSubmitLink;
@@ -23,22 +26,19 @@ import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.PropertyModel;
 import org.wicketstuff.dashboard.Dashboard;
 import org.wicketstuff.dashboard.Widget;
-import org.wicketstuff.dashboard.web.DashboardContext;
-import org.wicketstuff.dashboard.web.DashboardContextAware;
 import org.wicketstuff.dashboard.web.DashboardPanel;
 import org.wicketstuff.dashboard.web.WidgetPanel;
 import org.wicketstuff.dashboard.widgets.charts.HighChartsWidget;
 import org.wicketstuff.dashboard.widgets.charts.HighChartsWidgetView;
 
-import java.util.Arrays;
+import com.googlecode.wickedcharts.highcharts.options.SeriesType;
 
 /**
  * @author <a href="http://www.GitHub.com/PaulBors">Paul Bors</a>
  */
-public class HighChartsSettingsPanel extends GenericPanel<HighChartsWidget> implements DashboardContextAware {
+public class HighChartsSettingsPanel extends GenericPanel<HighChartsWidget> {
 	private static final long serialVersionUID = 1L;
 
-	private transient DashboardContext dashboardContext;
 	private SeriesType seriesType;
 
 	public HighChartsSettingsPanel(String id, IModel<HighChartsWidget> model) {
@@ -46,23 +46,24 @@ public class HighChartsSettingsPanel extends GenericPanel<HighChartsWidget> impl
 
 		setOutputMarkupPlaceholderTag(true);
 
-		Form<Widget> form = new Form<Widget>("form");
+		Form<Widget> form = new Form<>("form");
 		add(form);
 
 		seriesType = SeriesType.valueOf(getModelObject().getSettings().get(Settings.seriesType.name()));
-		DropDownChoice<SeriesType> choice = new DropDownChoice<SeriesType>(Settings.seriesType.name(),
+		DropDownChoice<SeriesType> choice = new DropDownChoice<>(Settings.seriesType.name(),
 				new PropertyModel<SeriesType>(this, Settings.seriesType.name()), Arrays.asList(SeriesType.values()));
 		form.add(choice);
 
 		form.add(new AjaxSubmitLink("submit") {
 			private static final long serialVersionUID = 1L;
+
 			@Override
 			protected void onSubmit(AjaxRequestTarget target) {
 				getModelObject().getSettings().put(Settings.seriesType.name(), seriesType.name());
 				getModelObject().updateChart();
 
 				Dashboard dashboard = findParent(DashboardPanel.class).getDashboard();
-				dashboardContext.getDashboardPersister().save(dashboard);
+				getDashboardContext().getDashboardPersister().save(dashboard);
 
 				hideSettingPanel(target);
 
@@ -87,11 +88,6 @@ public class HighChartsSettingsPanel extends GenericPanel<HighChartsWidget> impl
 			}
 		});
 
-	}
-
-	@Override
-	public void setDashboardContext(DashboardContext dashboardContext) {
-		this.dashboardContext = dashboardContext;
 	}
 
 	private void hideSettingPanel(AjaxRequestTarget target) {

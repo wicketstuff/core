@@ -20,12 +20,10 @@ import org.wicketstuff.dashboard.Dashboard;
  * @author Decebal Suiu
  */
 public class AddWidgetPage extends WebPage {
-
 	private static final long serialVersionUID = 1L;
 
 	public AddWidgetPage() {
 		Dashboard dashboard = WicketApplication.get().getDashboard();
-		add(new AddWidgetPanel("addWidgetPanel", new Model<Dashboard>(dashboard)));
+		add(new AddWidgetPanel("addWidgetPanel", new Model<>(dashboard)));
 	}
-
 }
