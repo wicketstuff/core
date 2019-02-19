@@ -80,7 +80,7 @@ public class WidgetHeaderPanel extends GenericPanel<Widget> {
 	}
 
 	private String getCssClass() {
-		return String.format("dragbox-toggle %s", getWidget().isCollapsed() ? "collapsed" : "expanded");
+		return "dragbox-toggle " + (getWidget().isCollapsed() ? "collapsed" : "expanded");
 	}
 
 	public Widget getWidget() {

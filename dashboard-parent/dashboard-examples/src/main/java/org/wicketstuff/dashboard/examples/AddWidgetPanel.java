@@ -68,7 +68,7 @@ public class AddWidgetPanel extends GenericPanel<Dashboard> {
 	private String getUniqueWidgetTitle(String title, int count) {
 		String uniqueTitle = title;
 		if (count > 0) {
-			uniqueTitle = String.format("%s %s", title, count);
+			uniqueTitle = title + " " + count;
 		}
 		for (Widget widget : getDashboard().getWidgets()) {
 			if (widget.getTitle().equals(uniqueTitle)) {
@@ -98,7 +98,7 @@ public class AddWidgetPanel extends GenericPanel<Dashboard> {
 					if (count == 1) {
 						return message;
 					}
-					return String.format("%s (%s)", message, count);
+					return message + " (" + count + ")";
 				}
 			});
 			label.setOutputMarkupId(true);
