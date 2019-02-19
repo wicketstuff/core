@@ -36,7 +36,7 @@ public class LabeledData<T extends Number> extends AbstractCollectionData<Labele
 	private static final long serialVersionUID = -1202233319043142424L;
 
 	/** The data. */
-	private List<LabeledItem<T>> data = new ArrayList<LabeledItem<T>>();
+	private List<LabeledItem<T>> data = new ArrayList<>();
 
     /**
      * Instantiates a new labeled data.
@@ -49,7 +49,7 @@ public class LabeledData<T extends Number> extends AbstractCollectionData<Labele
      *
      * @param values the values
      */
-    public LabeledData(LabeledItem<T>... values) {
+    public LabeledData(@SuppressWarnings("unchecked") LabeledItem<T>... values) {
         addValues(values);
     }
 

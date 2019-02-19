@@ -1,12 +1,12 @@
 /*
  *  Copyright 2011 Inaiat H. Moraes.
- * 
+ *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
  *  You may obtain a copy of the License at
- * 
+ *
  *       http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  *  Unless required by applicable law or agreed to in writing, software
  *  distributed under the License is distributed on an "AS IS" BASIS,
  *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -35,13 +35,13 @@ import org.wicketstuff.jqplot.lib.elements.SeriesDefaults;
 import org.wicketstuff.jqplot.lib.elements.Title;
 
 /**
- * 
+ *
  * Base configuration of JqPlot Chart. See jqplot documention
  * http://www.jqplot.com/docs/files/usage-txt.html
- * 
+ *
  * @param <T>
  *            Type of {@link Axis}
- * 
+ *
  * @author inaiat
  */
 public class ChartConfiguration<T extends Serializable> implements Serializable {
@@ -99,7 +99,7 @@ public class ChartConfiguration<T extends Serializable> implements Serializable 
 
 	/**
 	 * Checks if is capture right click.
-	 * 
+	 *
 	 * @return the boolean
 	 */
 	public Boolean isCaptureRightClick() {
@@ -108,7 +108,7 @@ public class ChartConfiguration<T extends Serializable> implements Serializable 
 
 	/**
 	 * Sets the capture right click.
-	 * 
+	 *
 	 * @param captureRightClick
 	 *            the new capture right click
 	 * @return ChartConfiguration
@@ -120,7 +120,7 @@ public class ChartConfiguration<T extends Serializable> implements Serializable 
 
 	/**
 	 * Gets the legend.
-	 * 
+	 *
 	 * @return the legend
 	 */
 	public Legend getLegend() {
@@ -129,7 +129,7 @@ public class ChartConfiguration<T extends Serializable> implements Serializable 
 
 	/**
 	 * Sets the legend.
-	 * 
+	 *
 	 * @param legend
 	 *            the new legend
 	 * @return ChartConfiguration
@@ -141,7 +141,7 @@ public class ChartConfiguration<T extends Serializable> implements Serializable 
 
 	/**
 	 * Sets the simple title.
-	 * 
+	 *
 	 * @param title
 	 *            the new simple title
 	 * @return ChartConfiguration
@@ -157,7 +157,7 @@ public class ChartConfiguration<T extends Serializable> implements Serializable 
 
 	/**
 	 * Instantiates the cursor.
-	 * 
+	 *
 	 * @return the cursor
 	 */
 	public Cursor cursorInstance() {
@@ -169,36 +169,36 @@ public class ChartConfiguration<T extends Serializable> implements Serializable 
 
 	/**
 	 * Instantiates the grid.
-	 * 
+	 *
 	 * @return the grid
 	 */
 	public Grid<T> gridInstance() {
 		if (grid == null) {
-			grid = new Grid<T>();
+			grid = new Grid<>();
 		}
 		return grid;
 	}
 
 	/**
 	 * Instantiates the axes.
-	 * 
+	 *
 	 * @return the axes
 	 */
 	public Axes<T> axesInstance() {
 		if (axes == null) {
-			this.axes = new Axes<T>();
+			this.axes = new Axes<>();
 		}
 		return this.axes;
 	}
 
 	/**
 	 * Instantiates the axes defaults.
-	 * 
+	 *
 	 * @return the axis
 	 */
 	public Axis<T> axesDefaultsInstance() {
 		if (axesDefaults == null) {
-			axesDefaults = new Axis<T>();
+			axesDefaults = new Axis<>();
 		}
 		return axesDefaults;
 	}
@@ -213,7 +213,7 @@ public class ChartConfiguration<T extends Serializable> implements Serializable 
 
 	public Collection<Serie> seriesInstance() {
 		if (series == null) {
-			series = new ArrayList<Serie>();
+			series = new ArrayList<>();
 		}
 		return series;
 	}
@@ -227,7 +227,7 @@ public class ChartConfiguration<T extends Serializable> implements Serializable 
 
 	public Collection<String> seriesColorsInstance() {
 		if (this.seriesColors == null) {
-			this.seriesColors = new ArrayList<String>();
+			this.seriesColors = new ArrayList<>();
 		}
 		return seriesColors;
 	}
@@ -240,73 +240,8 @@ public class ChartConfiguration<T extends Serializable> implements Serializable 
 	}
 
 	/**
-	 * Creates the cursor.
-	 * 
-	 * @return the cursor
-	 * 
-	 * @deprecated use withCursor()
-	 */
-	@Deprecated
-	public Cursor createCursor() {
-		return cursorInstance();
-	}
-
-	/**
-	 * Creates the grid.
-	 * 
-	 * @return the grid
-	 * @deprecated use withGrid
-	 */
-	@Deprecated
-	public Grid<T> createGrid() {
-		return gridInstance();
-	}
-
-	/**
-	 * Creates the axes.
-	 * 
-	 * @return the axes
-	 * 
-	 * @deprecated use withAxes()
-	 */
-	@Deprecated
-	public Axes<T> createAxes() {
-		return axesInstance();
-	}
-
-	/**
-	 * Creates the x axis.
-	 * 
-	 * @return the x axis
-	 */
-	@Deprecated
-	public XAxis<T> createXAxis() {
-		return xAxisInstance();
-	}
-
-	/**
-	 * Creates the y axis.
-	 * 
-	 * @return the y axis
-	 */
-	@Deprecated
-	public YAxis<T> createYAxis() {
-		return yAxisInstance();
-	}
-
-	/**
-	 * Creates the axes defaults.
-	 * 
-	 * @return the axis
-	 */
-	@Deprecated
-	public Axis<T> createAxesDefaults() {
-		return axesDefaultsInstance();
-	}
-
-	/**
 	 * Sets the label x.
-	 * 
+	 *
 	 * @param label
 	 *            the new label x
 	 * @return ChartConfiguration
@@ -320,7 +255,7 @@ public class ChartConfiguration<T extends Serializable> implements Serializable 
 
 	/**
 	 * Sets the label y.
-	 * 
+	 *
 	 * @param label
 	 *            the new label y
 	 * @return ChartConfiguration
@@ -333,18 +268,8 @@ public class ChartConfiguration<T extends Serializable> implements Serializable 
 	}
 
 	/**
-	 * Creates the series.
-	 * 
-	 * @return the collection
-	 */
-	@Deprecated
-	public Collection<Serie> createSeries() {
-		return seriesInstance();
-	}
-
-	/**
 	 * Gets the series.
-	 * 
+	 *
 	 * @return the series
 	 */
 	public Collection<Serie> getSeries() {
@@ -353,7 +278,7 @@ public class ChartConfiguration<T extends Serializable> implements Serializable 
 
 	/**
 	 * Sets the series.
-	 * 
+	 *
 	 * @param series
 	 *            the series to set
 	 * @return ChartConfiguration
@@ -365,7 +290,7 @@ public class ChartConfiguration<T extends Serializable> implements Serializable 
 
 	/**
 	 * Adds the series.
-	 * 
+	 *
 	 * @param serie
 	 *            the serie
 	 * @return ChartConfiguration
@@ -377,7 +302,7 @@ public class ChartConfiguration<T extends Serializable> implements Serializable 
 
 	/**
 	 * Gets the title.
-	 * 
+	 *
 	 * @return the title
 	 */
 	public Title getTitle() {
@@ -386,7 +311,7 @@ public class ChartConfiguration<T extends Serializable> implements Serializable 
 
 	/**
 	 * Sets the title.
-	 * 
+	 *
 	 * @param title
 	 *            the title to set
 	 * @return ChartConfiguration
@@ -398,7 +323,7 @@ public class ChartConfiguration<T extends Serializable> implements Serializable 
 
 	/**
 	 * Gets the axes defaults.
-	 * 
+	 *
 	 * @return the axesDefaults
 	 */
 	public Axis<T> getAxesDefaults() {
@@ -407,7 +332,7 @@ public class ChartConfiguration<T extends Serializable> implements Serializable 
 
 	/**
 	 * Sets the axes defaults.
-	 * 
+	 *
 	 * @param axesDefaults
 	 *            the axesDefaults to set
 	 * @return ChartConfiguration
@@ -419,7 +344,7 @@ public class ChartConfiguration<T extends Serializable> implements Serializable 
 
 	/**
 	 * Gets the axes.
-	 * 
+	 *
 	 * @return the axes
 	 */
 	public Axes<T> getAxes() {
@@ -428,7 +353,7 @@ public class ChartConfiguration<T extends Serializable> implements Serializable 
 
 	/**
 	 * Sets the axes.
-	 * 
+	 *
 	 * @param axes
 	 *            the axes to set
 	 * @return ChartConfiguration
@@ -439,18 +364,8 @@ public class ChartConfiguration<T extends Serializable> implements Serializable 
 	}
 
 	/**
-	 * Creates the series defaults.
-	 * 
-	 * @return the series defaults
-	 */
-	@Deprecated
-	public SeriesDefaults createSeriesDefaults() {
-		return seriesDefaultsInstance();
-	}
-
-	/**
 	 * Gets the series defaults.
-	 * 
+	 *
 	 * @return the seriesDefaults
 	 */
 	public SeriesDefaults getSeriesDefaults() {
@@ -459,7 +374,7 @@ public class ChartConfiguration<T extends Serializable> implements Serializable 
 
 	/**
 	 * Sets the series defaults.
-	 * 
+	 *
 	 * @param seriesDefaults
 	 *            the seriesDefaults to set
 	 * @return ChartConfiguration
@@ -471,7 +386,7 @@ public class ChartConfiguration<T extends Serializable> implements Serializable 
 
 	/**
 	 * Gets the stack series.
-	 * 
+	 *
 	 * @return the stackSeries
 	 */
 	public Boolean getStackSeries() {
@@ -480,7 +395,7 @@ public class ChartConfiguration<T extends Serializable> implements Serializable 
 
 	/**
 	 * Sets the stack series.
-	 * 
+	 *
 	 * @param stackSeries
 	 *            the stackSeries to set
 	 * @return ChartConfiguration
@@ -492,7 +407,7 @@ public class ChartConfiguration<T extends Serializable> implements Serializable 
 
 	/**
 	 * Gets the show marker.
-	 * 
+	 *
 	 * @return the showMarker
 	 */
 	public Boolean getShowMarker() {
@@ -501,7 +416,7 @@ public class ChartConfiguration<T extends Serializable> implements Serializable 
 
 	/**
 	 * Sets the show marker.
-	 * 
+	 *
 	 * @param showMarker
 	 *            the showMarker to set
 	 * @return ChartConfiguration
@@ -512,18 +427,8 @@ public class ChartConfiguration<T extends Serializable> implements Serializable 
 	}
 
 	/**
-	 * Creates the series colors.
-	 * 
-	 * @return the collection
-	 */
-	@Deprecated
-	public Collection<String> createSeriesColors() {
-		return seriesColorsInstance();
-	}
-
-	/**
 	 * Gets the series colors.
-	 * 
+	 *
 	 * @return the series colors
 	 */
 	public Collection<String> getSeriesColors() {
@@ -532,7 +437,7 @@ public class ChartConfiguration<T extends Serializable> implements Serializable 
 
 	/**
 	 * Sets the series colors.
-	 * 
+	 *
 	 * @param seriesColor
 	 *            the new series colors
 	 * @return ChartConfiguration
@@ -544,7 +449,7 @@ public class ChartConfiguration<T extends Serializable> implements Serializable 
 
 	/**
 	 * Gets the animate.
-	 * 
+	 *
 	 * @return animate property
 	 */
 	public Boolean getAnimate() {
@@ -553,7 +458,7 @@ public class ChartConfiguration<T extends Serializable> implements Serializable 
 
 	/**
 	 * Turns on animation for all series in this plot.
-	 * 
+	 *
 	 * @param animate
 	 *            true, false
 	 * @return ChartConfiguration
@@ -564,18 +469,8 @@ public class ChartConfiguration<T extends Serializable> implements Serializable 
 	}
 
 	/**
-	 * Creates the highlighter.
-	 * 
-	 * @return the highlighter
-	 */
-	@Deprecated
-	public Highlighter createHighlighter() {
-		return highlighterInstance();
-	}
-
-	/**
 	 * Gets the highlighter.
-	 * 
+	 *
 	 * @return hightLighter
 	 */
 	public Highlighter getHighlighter() {
@@ -584,7 +479,7 @@ public class ChartConfiguration<T extends Serializable> implements Serializable 
 
 	/**
 	 * set the highlighter.
-	 * 
+	 *
 	 * @param highlighter
 	 *            property
 	 * @return ChartConfiguration
@@ -596,7 +491,7 @@ public class ChartConfiguration<T extends Serializable> implements Serializable 
 
 	/**
 	 * Gets the grid.
-	 * 
+	 *
 	 * @return the grid
 	 */
 	public Grid<T> getGrid() {
@@ -605,7 +500,7 @@ public class ChartConfiguration<T extends Serializable> implements Serializable 
 
 	/**
 	 * Sets the grid.
-	 * 
+	 *
 	 * @param grid
 	 *            the new grid
 	 * @return ChartConfiguration
@@ -617,7 +512,7 @@ public class ChartConfiguration<T extends Serializable> implements Serializable 
 
 	/**
 	 * Gets the cursor.
-	 * 
+	 *
 	 * @return the cursor
 	 */
 	public Cursor getCursor() {
@@ -626,7 +521,7 @@ public class ChartConfiguration<T extends Serializable> implements Serializable 
 
 	/**
 	 * Sets the cursor.
-	 * 
+	 *
 	 * @param cursor
 	 *            the new cursor
 	 * @return ChartConfiguration
@@ -638,7 +533,7 @@ public class ChartConfiguration<T extends Serializable> implements Serializable 
 
 	/**
 	 * Gets gridPadding
-	 * 
+	 *
 	 * @return GridPadding
 	 */
 	public GridPadding getGridPadding() {
@@ -647,7 +542,7 @@ public class ChartConfiguration<T extends Serializable> implements Serializable 
 
 	/**
 	 * Sets the gridPadding
-	 * 
+	 *
 	 * @param gridPadding
 	 *            the new gridPadding
 	 * @return ChartConfiguration
@@ -670,7 +565,7 @@ public class ChartConfiguration<T extends Serializable> implements Serializable 
 
 	/**
 	 * Instantiates the canvas overlay.
-	 * 
+	 *
 	 * @return the canvas overlay
 	 */
 	public CanvasOverlay canvasOverlayInstance() {
@@ -682,7 +577,7 @@ public class ChartConfiguration<T extends Serializable> implements Serializable 
 
 	/**
 	 * Gets the canvas overlay.
-	 * 
+	 *
 	 * @return the canvas overlay
 	 */
 	public CanvasOverlay getCanvasOverlay() {
@@ -691,7 +586,7 @@ public class ChartConfiguration<T extends Serializable> implements Serializable 
 
 	/**
 	 * Sets the canvas overlay.
-	 * 
+	 *
 	 * @param canvasOverlay
 	 *            the canvasOverlay to set
 	 * @return ChartConfiguration

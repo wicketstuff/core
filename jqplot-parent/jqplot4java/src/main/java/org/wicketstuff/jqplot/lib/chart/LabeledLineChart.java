@@ -1,12 +1,12 @@
 /*
  *  Copyright 2011 Inaiat H. Moraes.
- * 
+ *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
  *  You may obtain a copy of the License at
- * 
+ *
  *       http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  *  Unless required by applicable law or agreed to in writing, software
  *  distributed under the License is distributed on an "AS IS" BASIS,
  *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -25,9 +25,9 @@ import org.wicketstuff.jqplot.lib.elements.Title;
 import org.wicketstuff.jqplot.lib.metadata.JqPlotPlugin;
 
 /**
- * 
+ *
  * Simple implementation of Labeled Line Chart. This class can/should be extended.
- * 
+ *
  * @author inaiat
  */
 @JqPlotPlugin(values = {
@@ -41,10 +41,10 @@ import org.wicketstuff.jqplot.lib.metadata.JqPlotPlugin;
 public class LabeledLineChart<T extends Number> extends AbstractChart<LabeledData<T>,String> {
 
 	private static final long serialVersionUID = -6833884146696085085L;
-	
+
 	private final ChartConfiguration<String> chartConfig;
 
-	private LabeledData<T> labeledData = new LabeledData<T>();
+	private LabeledData<T> labeledData = new LabeledData<>();
 
     /**
      * Construtor
@@ -73,12 +73,12 @@ public class LabeledLineChart<T extends Number> extends AbstractChart<LabeledDat
      */
     public LabeledLineChart(String title, String labelX, String labelY,
             Integer tickAngle) {
-    	this.chartConfig = new ChartConfiguration<String>();
-    	
+    	this.chartConfig = new ChartConfiguration<>();
+
     	chartConfig
     		.setTitle(new Title(title))
     		.setLabelX(labelX)
-    		.setLabelY(labelY)    		
+    		.setLabelY(labelY)
     		.axesInstance()
     		.xAxisInstance()
     		.setRenderer(JqPlotResources.DateAxisRenderer)
@@ -103,7 +103,7 @@ public class LabeledLineChart<T extends Number> extends AbstractChart<LabeledDat
 	 * Add a value
 	 * @param values value Add a {@link LabeledItem}
 	 */
-    public void addValues(LabeledItem<T>... values) {
+    public void addValues(@SuppressWarnings("unchecked") LabeledItem<T>... values) {
         labeledData.addValues(values);
     }
 
@@ -111,7 +111,8 @@ public class LabeledLineChart<T extends Number> extends AbstractChart<LabeledDat
      *
      * @return LabeledData
      */
-    public LabeledData<T> getChartData() {
+    @Override
+	public LabeledData<T> getChartData() {
         return labeledData;
     }
 

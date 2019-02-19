@@ -1,12 +1,12 @@
 /*
  *  Copyright 2011 Inaiat H. Moraes.
- * 
+ *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
  *  You may obtain a copy of the License at
- * 
+ *
  *       http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  *  Unless required by applicable law or agreed to in writing, software
  *  distributed under the License is distributed on an "AS IS" BASIS,
  *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -37,12 +37,12 @@ import org.wicketstuff.jqplot.lib.elements.Title;
 
 /**
  * Abstract class to help build charts.
- * 
+ *
  * @author inaiat
- * 
+ *
  * @param <S>
  *            Type of {@link Axis}
- * 
+ *
  */
 public abstract class AbstractChart<T extends ChartData<?>, S extends Serializable>
 		implements Chart<T> {
@@ -72,14 +72,14 @@ public abstract class AbstractChart<T extends ChartData<?>, S extends Serializab
 
 	/**
 	 * Adiciona uma serie
-	 * 
+	 *
 	 * @param serie Add serie of chart
 	 * @return AbstractChart
 	 */
 	public AbstractChart<T, S> addSerie(Serie serie) {
 		Collection<Serie> series = getSeries();
 		if (series == null) {
-			series = new ArrayList<Serie>();
+			series = new ArrayList<>();
 		}
 		series.add(serie);
 		return this;
@@ -87,14 +87,14 @@ public abstract class AbstractChart<T extends ChartData<?>, S extends Serializab
 
 	/**
 	 * Add a collection of series
-	 * 
+	 *
 	 * @param series Add series of chart
 	 * @return AbstractChart
 	 */
 	public AbstractChart<T, S> addSeries(Serie... series) {
 		Collection<Serie> chartSeries = getSeries();
 		if (chartSeries == null) {
-			chartSeries = new ArrayList<Serie>();
+			chartSeries = new ArrayList<>();
 		}
 		for (int i = series.length - 1; i >= 0; i--) {
 			chartSeries.add(series[i]);
@@ -104,13 +104,14 @@ public abstract class AbstractChart<T extends ChartData<?>, S extends Serializab
 	}
 
 	/**
-	 * 
+	 *
 	 * @return chartConfiguration
 	 */
+	@Override
 	public abstract ChartConfiguration<S> getChartConfiguration();
 
 	/**
-	 * 
+	 *
 	 * @param title Set title of chart
 	 * @return AbstractChart
 	 */
@@ -120,43 +121,7 @@ public abstract class AbstractChart<T extends ChartData<?>, S extends Serializab
 	}
 
 	/**
-	 * 
-	 * @return Axes
-	 */
-	@Deprecated
-	public Axes<S> createAxes() {
-		return getChartConfiguration().createAxes();
-	}
-
-	/**
-	 * 
-	 * @return xAxis
-	 */
-	@Deprecated
-	public XAxis<S> createXAxis() {
-		return getChartConfiguration().createXAxis();
-	}
-
-	/**
-	 * 
-	 * @return yAxis
-	 */
-	@Deprecated
-	public YAxis<S> createYAxis() {
-		return getChartConfiguration().createYAxis();
-	}
-
-	/**
-	 * 
-	 * @return axis
-	 */
-	@Deprecated
-	public Axis<S> createAxesDefaults() {
-		return getChartConfiguration().createAxesDefaults();
-	}
-
-	/**
-	 * 
+	 *
 	 * @param label Set label for axis X
 	 * @return AbstractChart
 	 */
@@ -166,7 +131,7 @@ public abstract class AbstractChart<T extends ChartData<?>, S extends Serializab
 	}
 
 	/**
-	 * 
+	 *
 	 * @param label Set label for axis Y
 	 * @return AbstractChart
 	 */
@@ -245,7 +210,7 @@ public abstract class AbstractChart<T extends ChartData<?>, S extends Serializab
 	}
 
 	/**
-	 * 
+	 *
 	 * @param values Set values for interval colors
 	 * @return AbstractChart
 	 */
@@ -256,7 +221,7 @@ public abstract class AbstractChart<T extends ChartData<?>, S extends Serializab
 	}
 
 	/**
-	 * 
+	 *
 	 * @param values Set interval values
 	 * @return AbstractChart
 	 */
@@ -267,7 +232,7 @@ public abstract class AbstractChart<T extends ChartData<?>, S extends Serializab
 	}
 
 	/**
-	 * 
+	 *
 	 * @param stackSeries Enable/Disable stackSeries
 	 * @return AbstractChart
 	 */
@@ -277,7 +242,7 @@ public abstract class AbstractChart<T extends ChartData<?>, S extends Serializab
 	}
 
 	/**
-	 * 
+	 *
 	 * @param captureRightClick Enable/Disable captureRightClick
 	 * @return AbstractChart
 	 */
@@ -287,7 +252,7 @@ public abstract class AbstractChart<T extends ChartData<?>, S extends Serializab
 	}
 
 	/**
-	 * 
+	 *
 	 * @param highlightMouseDown Enable/Disable  highlighMouseDown
 	 * @return AbstractChart
 	 */
@@ -298,7 +263,7 @@ public abstract class AbstractChart<T extends ChartData<?>, S extends Serializab
 	}
 
 	/**
-	 * 
+	 *
 	 * @param margin Set value of margin
 	 * @return AbstractChart
 	 */
@@ -309,7 +274,7 @@ public abstract class AbstractChart<T extends ChartData<?>, S extends Serializab
 	}
 
 	/**
-	 * 
+	 *
 	 * @param margin Set value o slice margin
 	 * @return AbstractChart
 	 */
@@ -320,7 +285,7 @@ public abstract class AbstractChart<T extends ChartData<?>, S extends Serializab
 	}
 
 	/**
-	 * 
+	 *
 	 * @param dataLabels Set data labels
 	 * @return AbstractChart
 	 */
@@ -331,7 +296,7 @@ public abstract class AbstractChart<T extends ChartData<?>, S extends Serializab
 	}
 
 	/**
-	 * 
+	 *
 	 * @param width Set line width
 	 * @return AbstractChart
 	 */
@@ -342,7 +307,7 @@ public abstract class AbstractChart<T extends ChartData<?>, S extends Serializab
 	}
 
 	/**
-	 * 
+	 *
 	 * @param showDataLabels Enable/Disable show data labels
 	 * @return AbstractChart
 	 */
@@ -353,7 +318,7 @@ public abstract class AbstractChart<T extends ChartData<?>, S extends Serializab
 	}
 
 	/**
-	 * 
+	 *
 	 * @param fill Enable/Disable  fill
 	 * @return AbstractChart
 	 */
@@ -364,7 +329,7 @@ public abstract class AbstractChart<T extends ChartData<?>, S extends Serializab
 	}
 
 	/**
-	 * 
+	 *
 	 * @param alpha Set value for bubble alpha
 	 * @return AbstractChart
 	 */
@@ -375,7 +340,7 @@ public abstract class AbstractChart<T extends ChartData<?>, S extends Serializab
 	}
 
 	/**
-	 * 
+	 *
 	 * @param alpha Set value for highlight alpha
 	 * @return AbstractChart
 	 */
@@ -386,7 +351,7 @@ public abstract class AbstractChart<T extends ChartData<?>, S extends Serializab
 	}
 
 	/**
-	 * 
+	 *
 	 * @param showLabels Enable/Disable show labels
 	 * @return AbstractChart
 	 */
@@ -408,7 +373,7 @@ public abstract class AbstractChart<T extends ChartData<?>, S extends Serializab
 	}
 
 	/**
-	 * 
+	 *
 	 * @param fillZero Enable/Disable fill zeros
 	 * @return AbstractChart
 	 */
@@ -419,7 +384,7 @@ public abstract class AbstractChart<T extends ChartData<?>, S extends Serializab
 	}
 
 	/**
-	 * 
+	 *
 	 * @param shadow Enable/Disable  shadow
 	 * @return AbstractChart
 	 */
@@ -429,7 +394,7 @@ public abstract class AbstractChart<T extends ChartData<?>, S extends Serializab
 	}
 
 	/**
-	 * 
+	 *
 	 * @param legend Set {@link Legend} object
 	 * @return AbstractChart
 	 */
@@ -475,24 +440,6 @@ public abstract class AbstractChart<T extends ChartData<?>, S extends Serializab
 
 	public YAxis<S> getYAxis() {
 		return getChartConfiguration().yAxisInstance();
-	}
-
-	/**
-	 * 
-	 * @param ticks Set values for ticks
-	 */
-	@Deprecated
-	public void setTicks(String... ticks) {
-		getChartConfiguration().xAxisInstance().setTicks(ticks);
-	}
-
-	/**
-	 * 
-	 * @param padMin Set value for padMin
-	 */
-	@Deprecated
-	public void setPadMin(Float padMin) {
-		getChartConfiguration().yAxisInstance().setPadMin(1.05f);
 	}
 
 	/**

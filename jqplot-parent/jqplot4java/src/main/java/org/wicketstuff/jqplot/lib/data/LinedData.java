@@ -35,7 +35,7 @@ public class LinedData<T extends Number> extends AbstractCollectionData<T> {
     private static final long serialVersionUID = -550315213084815871L;
 
     /** The data. */
-    private List<T> data = new ArrayList<T>();
+    private List<T> data = new ArrayList<>();
 
     /**
      * Instantiates a new lined data.
@@ -49,8 +49,8 @@ public class LinedData<T extends Number> extends AbstractCollectionData<T> {
      * @param values
      *            the values
      */
-    public LinedData(T... values) {
-	addValues(values);
+    public LinedData(@SuppressWarnings("unchecked") T... values) {
+		addValues(values);
     }
 
     /*

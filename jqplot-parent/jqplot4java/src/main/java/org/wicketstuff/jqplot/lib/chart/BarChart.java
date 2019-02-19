@@ -1,12 +1,12 @@
 /*
  *  Copyright 2011 Inaiat H. Moraes.
- * 
+ *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
  *  You may obtain a copy of the License at
- * 
+ *
  *       http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  *  Unless required by applicable law or agreed to in writing, software
  *  distributed under the License is distributed on an "AS IS" BASIS,
  *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -27,17 +27,17 @@ import org.wicketstuff.jqplot.lib.metadata.JqPlotPlugin;
 
 /**
  * Simple implementation of Bar Chart. This class can/should be extended.
- * 
+ *
  * @author inaiat
  */
 @JqPlotPlugin(values = {JqPlotResources.CategoryAxisRenderer, JqPlotResources.BarRenderer, JqPlotResources.PointLabels})
 public class BarChart<T extends Number> extends AbstractChart<BarData<T>, Long> {
 
 	private static final long serialVersionUID = 3650210485517566138L;
-	
+
 	private final ChartConfiguration<Long> chartConfig;
 
-	private BarData<T> barData = new BarData<T>();
+	private BarData<T> barData = new BarData<>();
 
     /**
      * Construtor
@@ -56,33 +56,33 @@ public class BarChart<T extends Number> extends AbstractChart<BarData<T>, Long> 
 
     /**
      * Construtor
-     * 
+     *
      * @param title Tilte
      * @param labelX Label for axis x
      * @param labelY Label for axis y
      */
     public BarChart(String title, String labelX, String labelY) {
-    	this.chartConfig = new ChartConfiguration<Long>();
-    	
+    	this.chartConfig = new ChartConfiguration<>();
+
     	chartConfig
     		.setTitle(new Title(title))
         	.seriesDefaultsInstance()
         	.pointLabelsInstance();
-        	
+
     	chartConfig
         	.setLabelX(labelX)
         	.setLabelY(labelY)
         	.seriesDefaultsInstance()
         	.setRenderer(JqPlotResources.BarRenderer)
         	.setFill(true);
-        
+
     	chartConfig
         	.axesInstance()
         	.xAxisInstance()
         	.setRenderer(JqPlotResources.CategoryAxisRenderer)
 			.rendererOptionsInstance();
     }
-    
+
     /**
      * Add a value for bar chart
      * @param value  Set collection of values
@@ -95,25 +95,26 @@ public class BarChart<T extends Number> extends AbstractChart<BarData<T>, Long> 
 	 * Add a value for bar chart
 	 * @param value  Set collection of values
 	 */
-    public void addValues(Collection<T>... value) {
+    public void addValues(@SuppressWarnings("unchecked") Collection<T>... value) {
         barData.addValues(value);
     }
-    
-	@SuppressWarnings("unchecked")
+
 	/**
 	 * Add a value for bar chart
 	 * @param value  Set values
 	 */
+	@SuppressWarnings("unchecked")
 	public void addValues(T... values) {
         barData.addValues(Arrays.<T>asList(values));
     }
 
 
     /**
-     * 
+     *
      * @return charData
      */
-    public BarData<T> getChartData() {
+    @Override
+	public BarData<T> getChartData() {
         return barData;
     }
 

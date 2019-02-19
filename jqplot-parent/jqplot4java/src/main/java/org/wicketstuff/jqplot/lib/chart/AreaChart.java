@@ -1,12 +1,12 @@
 /*
  *  Copyright 2011 Inaiat H. Moraes.
- * 
+ *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
  *  You may obtain a copy of the License at
- * 
+ *
  *       http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  *  Unless required by applicable law or agreed to in writing, software
  *  distributed under the License is distributed on an "AS IS" BASIS,
  *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -33,12 +33,12 @@ public class AreaChart<T extends Number> extends AbstractChart<AreaFillData<T>,S
 
 	/** The Constant serialVersionUID. */
 	private static final long serialVersionUID = 6050878600406620553L;
-	
+
 	private final ChartConfiguration<String> chartConfig;
 
 	/** The data. */
-	private AreaFillData<T> data = new AreaFillData<T>();
-    
+	private AreaFillData<T> data = new AreaFillData<>();
+
     /**
      * Instantiates a new area chart.
      */
@@ -52,7 +52,7 @@ public class AreaChart<T extends Number> extends AbstractChart<AreaFillData<T>,S
      * @param title the title
      */
     public AreaChart(String title) {
-    	chartConfig= new ChartConfiguration<String>();
+    	chartConfig= new ChartConfiguration<>();
     	chartConfig
         	.setTitle(new Title(title))
         	.setStackSeries(true)
@@ -68,7 +68,8 @@ public class AreaChart<T extends Number> extends AbstractChart<AreaFillData<T>,S
     /* (non-Javadoc)
      * @see org.wicketstuff.jqplot.lib.Chart#getChartData()
      */
-    public AreaFillData<T> getChartData() {
+    @Override
+	public AreaFillData<T> getChartData() {
         return data;
     }
 
@@ -86,7 +87,7 @@ public class AreaChart<T extends Number> extends AbstractChart<AreaFillData<T>,S
      *
      * @param value the value
      */
-    public void addValues(List<T>... value) {
+    public void addValues(@SuppressWarnings("unchecked") List<T>... value) {
         data.addValues(value);
     }
 

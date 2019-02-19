@@ -1,12 +1,12 @@
 /*
  *  Copyright 2011 Inaiat H. Moraes.
- * 
+ *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
  *  You may obtain a copy of the License at
- * 
+ *
  *       http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  *  Unless required by applicable law or agreed to in writing, software
  *  distributed under the License is distributed on an "AS IS" BASIS,
  *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -24,7 +24,7 @@ import org.wicketstuff.jqplot.lib.metadata.JqPlotPlugin;
 
 /**
  * Simple implementation of Line Chart. This class can/should be extended.
- * 
+ *
  * @author inaiat
  */
 @JqPlotPlugin(values = { JqPlotResources.CanvasTextRenderer,
@@ -36,7 +36,7 @@ public class LineChart<T extends Number> extends
 
 	private final ChartConfiguration<String> chartConfig;
 
-	private LinedData<T> linedData = new LinedData<T>();
+	private LinedData<T> linedData = new LinedData<>();
 
 	/**
 	 * Line chart construcotr
@@ -47,7 +47,7 @@ public class LineChart<T extends Number> extends
 
 	/**
 	 * Construtor
-	 * 
+	 *
 	 * @param title Title of chart
 	 */
 	public LineChart(String title) {
@@ -56,13 +56,13 @@ public class LineChart<T extends Number> extends
 
 	/**
 	 * Construtor
-	 * 
+	 *
 	 * @param title title
 	 * @param labelX labelX
 	 * @param labelY labelY
  	 */
 	public LineChart(String title, String labelX, String labelY) {
-		this.chartConfig = new ChartConfiguration<String>();
+		this.chartConfig = new ChartConfiguration<>();
 		chartConfig
 				.setTitle(new Title(title))
 				.setLabelX(labelX)
@@ -85,7 +85,7 @@ public class LineChart<T extends Number> extends
 	 * Add a value
 	 * @param values value Add values
 	 */
-	public void addValues(T... values) {
+	public void addValues(@SuppressWarnings("unchecked") T... values) {
 		linedData.addValues(values);
 	}
 
@@ -93,6 +93,7 @@ public class LineChart<T extends Number> extends
 	 * Get Chart Data
 	 * @return LinedData
 	 */
+	@Override
 	public LinedData<T> getChartData() {
 		return linedData;
 	}

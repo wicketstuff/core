@@ -37,7 +37,7 @@ public class AreaFillData<T extends Number> extends
     private static final long serialVersionUID = -2456625545492808162L;
 
     /** The data. */
-    private List<List<T>> data = new ArrayList<List<T>>();
+    private List<List<T>> data = new ArrayList<>();
 
     /**
      * Instantiates a new area fill data.
@@ -51,11 +51,11 @@ public class AreaFillData<T extends Number> extends
      * @param values
      *            the values
      */
-    public AreaFillData(List<T>... values) {
-	for (int i = 0; i < values.length; i++) {
-	    List<T> list = values[i];
-	    addValue(list);
-	}
+    public AreaFillData(@SuppressWarnings("unchecked") List<T>... values) {
+		for (int i = 0; i < values.length; i++) {
+			List<T> list = values[i];
+			addValue(list);
+		}
     }
 
     /*
@@ -65,7 +65,7 @@ public class AreaFillData<T extends Number> extends
      */
     @Override
 	public Collection<List<T>> getData() {
-	return data;
+		return data;
     }
 
     /**

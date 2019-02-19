@@ -34,7 +34,7 @@ public class BarData<T extends Number> extends AbstractCollectionData<Collection
 	private static final long serialVersionUID = -2087356275172825289L;
 
 	/** The data. */
-	private Collection<Collection<T>> data = new ArrayList<Collection<T>>();
+	private Collection<Collection<T>> data = new ArrayList<>();
 
     /**
      * Instantiates a new bar data.
@@ -47,7 +47,7 @@ public class BarData<T extends Number> extends AbstractCollectionData<Collection
      *
      * @param values the values
      */
-    public BarData(Collection<T>... values) {
+    public BarData(@SuppressWarnings("unchecked") Collection<T>... values) {
         addValues(values);
     }
 
@@ -70,8 +70,9 @@ public class BarData<T extends Number> extends AbstractCollectionData<Collection
         int ret = 0;
         for(Collection<T> series : data)
         {
-            if(series.size() > 0)
-                ++ret;
+            if(series.size() > 0) {
+				++ret;
+			}
         }
         return ret;
 
