@@ -12,6 +12,8 @@
  */
 package org.wicketstuff.dashboard.web;
 
+import static org.wicketstuff.dashboard.DashboardContextInitializer.getDashboardContext;
+
 import java.util.List;
 
 import org.apache.wicket.AttributeModifier;
@@ -27,26 +29,21 @@ import org.wicketstuff.dashboard.WidgetAction;
 /**
  * @author Decebal Suiu
  */
-public class WidgetActionsPanel extends GenericPanel<Widget> implements DashboardContextAware {
+public class WidgetActionsPanel extends GenericPanel<Widget> {
 	private static final long serialVersionUID = 1L;
-
-	private transient DashboardContext dashboardContext;
 
 	public WidgetActionsPanel(String id, IModel<Widget> model) {
 		super(id, model);
 
 		IModel<List<WidgetAction>> actionsModel = new LoadableDetachableModel<List<WidgetAction>>() {
-
 			private static final long serialVersionUID = 1L;
 
 			@Override
 			protected List<WidgetAction> load() {
-				return dashboardContext.getWidgetActionsFactory().createWidgetActions(getWidget());
+				return getDashboardContext().getWidgetActionsFactory().createWidgetActions(getWidget());
 			}
-
 		};
 		ListView<WidgetAction> actionsView = new ListView<WidgetAction>("action", actionsModel) {
-
 			private static final long serialVersionUID = 1L;
 
 			@Override
@@ -57,14 +54,8 @@ public class WidgetActionsPanel extends GenericPanel<Widget> implements Dashboar
 				link.add(AttributeModifier.replace("title", action.getTooltip()));
 				item.add(link);
 			}
-
 		};
 		add(actionsView);
-	}
-
-	@Override
-	public void setDashboardContext(DashboardContext dashboardContext) {
-		this.dashboardContext = dashboardContext;
 	}
 
 	private Widget getWidget() {

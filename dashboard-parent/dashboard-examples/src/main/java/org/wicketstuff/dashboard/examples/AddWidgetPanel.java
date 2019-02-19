@@ -12,6 +12,8 @@
  */
 package org.wicketstuff.dashboard.examples;
 
+import static org.wicketstuff.dashboard.DashboardContextInitializer.getDashboardContext;
+
 import java.util.List;
 
 import org.apache.wicket.ajax.AjaxRequestTarget;
@@ -28,66 +30,55 @@ import org.wicketstuff.dashboard.DashboardUtils;
 import org.wicketstuff.dashboard.Widget;
 import org.wicketstuff.dashboard.WidgetDescriptor;
 import org.wicketstuff.dashboard.WidgetFactory;
-import org.wicketstuff.dashboard.web.DashboardContext;
-import org.wicketstuff.dashboard.web.DashboardContextAware;
 import org.wicketstuff.dashboard.web.DashboardEvent;
 
 /**
  * @author Decebal Suiu
  */
-public class AddWidgetPanel extends GenericPanel<Dashboard> implements DashboardContextAware {
-
+public class AddWidgetPanel extends GenericPanel<Dashboard> {
 	private static final long serialVersionUID = 1L;
-
-	private transient DashboardContext dashboardContext;
 
 	public AddWidgetPanel(String id, IModel<Dashboard> model) {
 		super(id, model);
 
 		add(new BookmarkablePageLink<Void>("backDashboard", getApplication().getHomePage()));
 
-		List<WidgetDescriptor> widgetDescriptors = dashboardContext.getWidgetRegistry().getWidgetDescriptors();
+		List<WidgetDescriptor> widgetDescriptors = getDashboardContext().getWidgetRegistry().getWidgetDescriptors();
 		ListView<WidgetDescriptor> listView = new ListView<WidgetDescriptor>("widgetList", widgetDescriptors) {
-
 			private static final long serialVersionUID = 1L;
 
 			@Override
 			protected void populateItem(ListItem<WidgetDescriptor> item) {
 				item.add(new WidgetDescriptorPanel("widget", item.getModel()));
 			}
-
 		};
 		listView.setRenderBodyOnly(true);
 		add(listView);
 	}
 
 	public Dashboard getDashboard() {
+		Dashboard dashboard = getDashboardContext().getDashboardPersister().load();
+		if (dashboard != null) {
+			// might be updated
+			setModelObject(dashboard);
+		}
 		return getModelObject();
-
-	}
-	@Override
-	public void setDashboardContext(DashboardContext dashboardContext) {
-		this.dashboardContext = dashboardContext;
 	}
 
 	private String getUniqueWidgetTitle(String title, int count) {
 		String uniqueTitle = title;
 		if (count > 0) {
-			uniqueTitle = title + " " + count;
+			uniqueTitle = String.format("%s %s", title, count);
 		}
-
-		List<Widget> widgets = getDashboard().getWidgets();
-		for (Widget widget : widgets) {
+		for (Widget widget : getDashboard().getWidgets()) {
 			if (widget.getTitle().equals(uniqueTitle)) {
 				uniqueTitle = getUniqueWidgetTitle(title, count + 1);
 			}
 		}
-
 		return uniqueTitle;
 	}
 
 	private class WidgetDescriptorPanel extends GenericPanel<WidgetDescriptor> {
-
 		private static final long serialVersionUID = 1L;
 
 		private String message = "";
@@ -100,7 +91,6 @@ public class AddWidgetPanel extends GenericPanel<Dashboard> implements Dashboard
 			add(new Label("provider", model.getObject().getProvider()));
 			add(new Label("description", model.getObject().getDescription()));
 			final Label label = new Label("message", new LoadableDetachableModel<String>() {
-
 				private static final long serialVersionUID = 1L;
 
 				@Override
@@ -108,22 +98,19 @@ public class AddWidgetPanel extends GenericPanel<Dashboard> implements Dashboard
 					if (count == 1) {
 						return message;
 					}
-
-					return message + " (" + count + ")";
+					return String.format("%s (%s)", message, count);
 				}
-
 			});
 			label.setOutputMarkupId(true);
 			label.setOutputMarkupPlaceholderTag(true);
 			label.setVisible(false);
 			add(label);
 			AjaxLink<WidgetDescriptor> addLink = new AjaxLink<WidgetDescriptor>("addWidget") {
-
 				private static final long serialVersionUID = 1L;
 
 				@Override
 				public void onClick(AjaxRequestTarget target) {
-					WidgetFactory widgetFactory = dashboardContext.getWidgetFactory();
+					WidgetFactory widgetFactory = getDashboardContext().getWidgetFactory();
 					Widget widget = widgetFactory.createWidget(model.getObject());
 					widget.setTitle(getUniqueWidgetTitle(widget.getTitle(), count));
 					// DashboardPanel is on other page
@@ -131,17 +118,14 @@ public class AddWidgetPanel extends GenericPanel<Dashboard> implements Dashboard
 					Dashboard dashboard = getDashboard();
 					DashboardUtils.updateWidgetLocations(dashboard, new DashboardEvent(target, DashboardEvent.EventType.WIDGET_ADDED, widget));
 					dashboard.addWidget(widget);
-					dashboardContext.getDashboardPersister().save(dashboard);
+					getDashboardContext().getDashboardPersister().save(dashboard);
 					message = "added";
 					label.setVisible(true);
 					target.add(label);
 					count++;
 				}
-
 			};
 			add(addLink);
 		}
-
 	}
-
 }
