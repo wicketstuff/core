@@ -45,6 +45,10 @@ public class Select2MultiChoice<T> extends AbstractSelect2Choice<T, Collection<T
 		super(id);
 	}
 
+	/**
+	 * @param id The component id
+	 * @param model The model to use when this component is not {@link Settings#isStateless() stateless}
+	 */
 	public Select2MultiChoice(String id, IModel<Collection<T>> model)
 	{
 		super(id, model);

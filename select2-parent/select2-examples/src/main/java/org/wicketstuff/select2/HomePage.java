@@ -159,7 +159,7 @@ public class HomePage extends WebPage
 		// tags example
 		add(new Label("tagsLabel", new PropertyModel<>(this, "tags")));
 		Select2MultiChoice<String> tags = new Select2MultiChoice<>("tagsSelect",
-				new PropertyModel<Collection<String>>(this, "tags"), new TagProvider());
+				new PropertyModel<>(this, "tags"), new TagProvider());
 		tags.getSettings().setMinimumInputLength(1);
 		tags.getSettings().setCloseOnSelect(true);
 		tags.getSettings().setTags(true);

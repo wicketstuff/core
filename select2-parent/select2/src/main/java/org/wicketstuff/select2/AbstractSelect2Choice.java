@@ -430,28 +430,27 @@ public abstract class AbstractSelect2Choice<T, M> extends FormComponent<M> imple
 	@Override
 	public void onComponentTagBody(final MarkupStream markupStream, final ComponentTag openTag)
 	{
-		final AppendingStringBuffer buffer = new AppendingStringBuffer();
+		if (getSettings().isStateless()) {
+			super.onComponentTagBody(markupStream, openTag);
+		} else {
+			final AppendingStringBuffer buffer = new AppendingStringBuffer();
 
-		M currentValue = getCurrentValue();
-		if (currentValue instanceof Collection)
-		{
-			@SuppressWarnings("unchecked")
-			Collection<T> choices = (Collection<T>)currentValue;
-			for (T choice : choices)
-			{
-				addOption(choice, buffer);
-			}
-		}
-		else
-		{
-			if (currentValue != null)
-			{
+			M currentValue = getCurrentValue();
+			if (currentValue instanceof Collection) {
 				@SuppressWarnings("unchecked")
-				T choice = (T)currentValue;
-				addOption(choice, buffer);
+				Collection<T> choices = (Collection<T>) currentValue;
+				for (T choice : choices) {
+					addOption(choice, buffer);
+				}
+			} else {
+				if (currentValue != null) {
+					@SuppressWarnings("unchecked")
+					T choice = (T) currentValue;
+					addOption(choice, buffer);
+				}
 			}
+			replaceComponentTagBody(markupStream, openTag, buffer);
 		}
-		replaceComponentTagBody(markupStream, openTag, buffer);
 	}
 
 	/**
