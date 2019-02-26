@@ -2,6 +2,7 @@ package org.wicketstuff.datastores.common;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+import org.apache.wicket.mock.MockPageContext;
 import org.apache.wicket.mock.MockPageStore;
 import org.apache.wicket.pageStore.IPageContext;
 import org.apache.wicket.pageStore.IPageStore;
@@ -28,7 +29,7 @@ public class SessionQuotaManagingDataStoreTest {
 	public void storeDataEnoughSpace() {
 		MockPageStore delegate = new MockPageStore();
 
-		IPageContext context = new DummyPageContext();
+		IPageContext context = new MockPageContext();
 
 		IPageStore quotaStore = new SessionQuotaManagingDataStore(delegate, Bytes.MAX);
 		quotaStore.addPage(context, page1);
@@ -43,7 +44,7 @@ public class SessionQuotaManagingDataStoreTest {
 	public void storeDataInsufficientSpace() {
 		MockPageStore delegate = new MockPageStore();
 
-		IPageContext context = new DummyPageContext();
+		IPageContext context = new MockPageContext();
 
 		IPageStore quotaStore = new SessionQuotaManagingDataStore(delegate, Bytes.bytes(page1.getData().length + 1));
 		quotaStore.addPage(context, page1);
@@ -63,7 +64,7 @@ public class SessionQuotaManagingDataStoreTest {
 	public void storeDataSamePageTwice() {
 		MockPageStore delegate = new MockPageStore();
 
-		IPageContext context = new DummyPageContext();
+		IPageContext context = new MockPageContext();
 
 		IPageStore quotaStore = new SessionQuotaManagingDataStore(delegate, Bytes.bytes(page1_.getData().length + page2.getData().length));
 		quotaStore.addPage(context, page1);
@@ -79,7 +80,7 @@ public class SessionQuotaManagingDataStoreTest {
 	public void removePage() {
 		MockPageStore delegate = new MockPageStore();
 
-		IPageContext context = new DummyPageContext();
+		IPageContext context = new MockPageContext();
 
 		IPageStore quotaStore = new SessionQuotaManagingDataStore(delegate, Bytes.bytes(page1.getData().length + page3.getData().length));
 		quotaStore.addPage(context, page1);

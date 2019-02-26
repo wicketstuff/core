@@ -28,6 +28,7 @@ import java.util.concurrent.ConcurrentLinkedQueue;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
 
+import org.apache.wicket.mock.MockPageContext;
 import org.apache.wicket.pageStore.IPageContext;
 import org.apache.wicket.pageStore.IPageStore;
 import org.apache.wicket.pageStore.SerializedPage;
@@ -129,7 +130,7 @@ public abstract class BaseDataStoreTest {
 
 	private static IPageContext getContext(String sessionId)
 	{
-		IPageContext context = new DummyPageContext(sessionId);
+		IPageContext context = new MockPageContext(sessionId);
 
 		IPageContext existing = contexts.putIfAbsent(sessionId, context);
 		return existing != null ? existing : context;

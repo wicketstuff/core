@@ -66,13 +66,14 @@ public class SessionQuotaManagingDataStore extends DelegatingPageStore {
 
 	private SessionData getSessionData(IPageContext context, boolean create)
 	{
-		SessionData data = context.getSessionData(KEY);
-		if (data == null && create)
-		{
-			data = context.setSessionData(KEY, dataCreator.get());
-		}
-
-		return data;
+		return context.getSessionData(KEY, () -> {
+			if (create)
+			{
+				return dataCreator.get();
+			}
+			
+			return null;
+		});
 	}
 
 	@Override
