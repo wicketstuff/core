@@ -251,7 +251,7 @@ public class Selectize extends FormComponent
 			}
 
 			Map<String, String> variablesMap = new HashMap<>();
-			variablesMap.put("selectizeConfig", selectizeConfig.toString());
+			variablesMap.put("selectizeConfig", extendConfig(selectizeConfig).toString());
 			response.render(OnDomReadyHeaderItem.forScript(packageTextTemplate.asString(variablesMap)));
 		}
 		catch (Exception e)
@@ -268,6 +268,11 @@ public class Selectize extends FormComponent
 		response.render(JavaScriptHeaderItem.forScript("Wicket.Ajax.baseUrl=\"" + ajaxBaseUrl +
 			"\";", "wicket-ajax-base-url"));
 
+	}
+
+	protected JSONObject extendConfig(JSONObject config)
+	{
+		return config;
 	}
 
 	@Override
