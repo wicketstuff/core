@@ -315,6 +315,13 @@ public abstract class TabsBehavior extends JQueryUIBehavior implements IJQueryAj
 		}
 
 		@Override
+		protected CallbackParameter[] getCallbackParameters()
+		{
+			return new CallbackParameter[] { CallbackParameter.context("event"), CallbackParameter.context("ui"), // lf
+					CallbackParameter.resolved("index", "+ui.newPanel.attr('id').split('-').pop() - 1") };
+		}
+
+		@Override
 		protected JQueryEvent newEvent()
 		{
 			return new ActivatingEvent();
@@ -361,7 +368,7 @@ public abstract class TabsBehavior extends JQueryUIBehavior implements IJQueryAj
 	/**
 	 * Provides an event object that will be broadcasted by the {@link OnActivatingAjaxBehavior} callback
 	 */
-	protected static class ActivatingEvent extends TabEvent
+	protected static class ActivatingEvent extends ActivateEvent
 	{
 	}
 }
