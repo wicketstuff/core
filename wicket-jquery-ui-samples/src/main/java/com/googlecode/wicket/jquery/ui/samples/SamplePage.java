@@ -90,9 +90,9 @@ public abstract class SamplePage extends TemplatePage // NOSONAR
 		{
 			return ResourceUtil.readString(stream);
 		}
-		catch (IOException e)
+		catch (IllegalArgumentException | IOException e)
 		{
-			LOG.error(e.getMessage(), e);
+			LOG.error(e.getMessage());
 		}
 
 		return "";
