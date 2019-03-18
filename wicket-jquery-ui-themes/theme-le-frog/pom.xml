@@ -7,7 +7,7 @@
 	<parent>
 		<groupId>com.googlecode.wicket-jquery-ui</groupId>
 		<artifactId>wicket-jquery-ui-themes</artifactId>
-		<version>8.3.1-SNAPSHOT</version>
+		<version>8.1.1-SNAPSHOT</version>
 	</parent>
 
 	<artifactId>wicket-jquery-ui-theme-lefrog</artifactId>
