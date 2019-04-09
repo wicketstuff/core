@@ -35,6 +35,7 @@ public class VirtualScrollDemoResourceReference extends AbstractVirtualScrollRes
 
 	@Override
 	protected IDataProvider<Person> getDataProvider(PageParameters parameters) {
-		return new PeopleDataProvider();
+		final String searchFilter = parameters.get(SEARCH_VALUE_PARAMETER).toString();
+		return new PeopleDataProvider(searchFilter);
 	}
 }
