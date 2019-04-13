@@ -1,7 +1,6 @@
 package org.wicketstuff.closurecompiler;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import org.apache.wicket.javascript.IJavaScriptCompressor;
@@ -63,7 +62,7 @@ public class ClosureCompilerJavaScriptCompressor implements IJavaScriptCompresso
 	public final String compressSource(String uncompressed) throws Exception
 	{
 		// environment for compilation
-		final List<SourceFile> externs = CommandLineRunner.getDefaultExterns();
+		final List<SourceFile> externs = CommandLineRunner.getBuiltinExterns(CompilerOptions.Environment.BROWSER);
 
 		// create compiler + options
 		final Compiler compiler = new Compiler();
@@ -92,7 +91,7 @@ public class ClosureCompilerJavaScriptCompressor implements IJavaScriptCompresso
 
 		if (result.success == false)
 		{
-			throw new ClosureCompilationException(Arrays.asList(result.errors));
+			throw new ClosureCompilationException(result.errors);
 		}
 		return compiler.toSource();
 	}

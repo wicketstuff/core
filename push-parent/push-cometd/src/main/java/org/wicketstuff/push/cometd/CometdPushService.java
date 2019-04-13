@@ -28,12 +28,14 @@ import java.util.concurrent.ConcurrentMap;
 import org.apache.wicket.Component;
 import org.apache.wicket.behavior.Behavior;
 import org.apache.wicket.protocol.http.WebApplication;
+import org.cometd.bayeux.Promise;
 import org.cometd.bayeux.server.BayeuxServer;
 import org.cometd.bayeux.server.BayeuxServer.ChannelListener;
 import org.cometd.bayeux.server.BayeuxServer.SessionListener;
 import org.cometd.bayeux.server.BayeuxServer.SubscriptionListener;
 import org.cometd.bayeux.server.ConfigurableServerChannel;
 import org.cometd.bayeux.server.ServerChannel;
+import org.cometd.bayeux.server.ServerMessage;
 import org.cometd.bayeux.server.ServerSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -56,7 +58,7 @@ import org.wicketstuff.push.PushChannel;
  * <p>
  * This mean that each time an event is published, a new connection is made to the server to get the
  * actual page update performed by the {@link IPushEventHandler}.
- * 
+ *
  * @author Xavier Hanin
  * @author Rodolfo Hansen
  * @author <a href="http://sebthom.de/">Sebastian Thomschke</a>
@@ -154,7 +156,7 @@ public class CometdPushService extends AbstractPushService
 		_getBayeuxServer().addListener(new SessionListener()
 		{
 			@Override
-			public void sessionAdded(final ServerSession session)
+			public void sessionAdded(final ServerSession session, ServerMessage msg)
 			{
 				LOG.debug("Cometd server session added. session={}", session);
 			}
@@ -169,13 +171,13 @@ public class CometdPushService extends AbstractPushService
 		_getBayeuxServer().addListener(new SubscriptionListener()
 		{
 			@Override
-			public void subscribed(final ServerSession session, final ServerChannel channel)
+			public void subscribed(final ServerSession session, final ServerChannel channel, ServerMessage msg)
 			{
 				LOG.debug("Cometd channel subscribe. session={} channel={}", session, channel);
 			}
 
 			@Override
-			public void unsubscribed(final ServerSession session, final ServerChannel channel)
+			public void unsubscribed(final ServerSession session, final ServerChannel channel, ServerMessage msg)
 			{
 				LOG.debug("Cometd channel unsubscribe. session={}, channel={}", session, channel);
 
@@ -347,7 +349,7 @@ public class CometdPushService extends AbstractPushService
 				{
 					state.queuedEvents.add(ctx);
 				}
-				cchannel.publish(null, "pollEvents", state.node.getCometdChannelEventId());
+				cchannel.publish(null, "pollEvents", Promise.<Boolean>noop());
 			}
 		}
 	}
@@ -374,7 +376,7 @@ public class CometdPushService extends AbstractPushService
 						state.queuedEvents.add(new CometdPushEventContext<EventType>(event, null,
 							this));
 					}
-					cchannel.publish(null, "pollEvents", state.node.getCometdChannelEventId());
+					cchannel.publish(null, "pollEvents", Promise.<Boolean>noop());
 				}
 			}
 		}
@@ -393,7 +395,7 @@ public class CometdPushService extends AbstractPushService
 		if (channel == null)
 			LOG.warn("No cometd channel found for {}", node);
 		else
-			channel.publish(null, "javascript:" + javascript, node.getCometdChannelEventId());
+			channel.publish(null, "javascript:" + javascript, Promise.<Boolean>noop());
 	}
 
 	/**

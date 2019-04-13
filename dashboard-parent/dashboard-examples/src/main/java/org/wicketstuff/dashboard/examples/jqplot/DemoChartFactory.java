@@ -17,7 +17,6 @@ import java.util.Map;
 
 import org.wicketstuff.dashboard.widgets.jqplot.ChartFactory;
 import org.wicketstuff.dashboard.widgets.jqplot.JqPlotWidget;
-
 import org.wicketstuff.jqplot.lib.Chart;
 import org.wicketstuff.jqplot.lib.chart.AreaChart;
 import org.wicketstuff.jqplot.lib.chart.BarChart;
@@ -54,7 +53,7 @@ public class DemoChartFactory implements ChartFactory {
 
 	public static Chart<?> lineChart() {
 		LineChart<Integer> lineChart;
-		lineChart = new LineChart<Integer>("Line Chart");
+		lineChart = new LineChart<>("Line Chart");
 		lineChart.addValues(1, 2, 3, 4, 5);
 
 		return lineChart;
@@ -62,7 +61,7 @@ public class DemoChartFactory implements ChartFactory {
 
 	public static Chart<?> areaChart() {
 		AreaChart<Integer> areaChart;
-		areaChart = new AreaChart<Integer>("Area Char");
+		areaChart = new AreaChart<>("Area Char");
 		areaChart.addValue(Arrays.<Integer>asList(11, 9, 5, 12, 14));
 		areaChart.addValue(Arrays.<Integer>asList(4, 8, 5, 3, 6));
 		areaChart.addValue(Arrays.<Integer>asList(12, 6, 13, 11, 2));
@@ -70,18 +69,17 @@ public class DemoChartFactory implements ChartFactory {
 		return areaChart;
 	}
 
-	@SuppressWarnings("deprecation")
 	public static Chart<?> barChart() {
 		BarChart<Integer> barChart;
-		barChart = new BarChart<Integer>("Bar Chart");
+		barChart = new BarChart<>("Bar Chart");
 
-		barChart.setPadMin(1.05f);
+		barChart.getChartConfiguration().yAxisInstance().setPadMin(1.05f);
 		barChart.setStackSeries(true);
 		barChart.setCaptureRightClick(true);
 		barChart.setHighlightMouseDown(true);
 
 		barChart.setBarMargin(30);
-		barChart.setTicks("A", "B", "C", "D");
+		barChart.getChartConfiguration().xAxisInstance().setTicks("A", "B", "C", "D");
 		barChart.addValue(Arrays.<Integer>asList(200, 600, 700, 1000));
 		barChart.addValue(Arrays.<Integer>asList(200, 600, 700, 1000));
 		barChart.addValue(Arrays.<Integer>asList(200, 600, 700, 1000));
@@ -93,7 +91,7 @@ public class DemoChartFactory implements ChartFactory {
 	}
 
 	public static Chart<?> pieChart() {
-		PieChart<Number> pizzaChart = new PieChart<Number>("Pizza Chart");
+		PieChart<Number> pizzaChart = new PieChart<>("Pizza Chart");
 		pizzaChart.addValue("Drops", 10f);
 		pizzaChart.addValue("Chocolate", 20f);
 		pizzaChart.addValue("Jujuba", 5f);

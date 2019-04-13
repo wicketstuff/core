@@ -20,7 +20,6 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import org.apache.commons.lang.StringUtils;
 import org.apache.wicket.examples.WicketExamplePage;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.basic.MultiLineLabel;
@@ -30,20 +29,22 @@ import org.apache.wicket.markup.html.form.TextField;
 import org.apache.wicket.markup.html.list.ListItem;
 import org.apache.wicket.markup.html.list.PropertyListView;
 import org.apache.wicket.model.CompoundPropertyModel;
+import org.apache.wicket.util.string.Strings;
 import org.apache.wicket.util.value.ValueMap;
 
 
 /**
  * A simple "guest book" example that allows visitors to the page to add a comment and see the
  * comments others have added.
- * 
+ *
  * For unit testing, added a parameter to clear the commentList.
- * 
+ *
  * @author Jonathan Locke
  * @author Martijn Dashorst
  */
 public final class GuestBook extends WicketExamplePage
 {
+	private static final long serialVersionUID = 1L;
 	/** A global list of all comments from all users across all sessions */
 	private static final List<Comment> commentList = new ArrayList<>();
 
@@ -56,8 +57,10 @@ public final class GuestBook extends WicketExamplePage
 		add(new CommentForm("commentForm"));
 
 		// Add commentListView of existing comments
-		add(new PropertyListView<Comment>("comments", commentList)
+		add(new PropertyListView<>("comments", commentList)
 		{
+			private static final long serialVersionUID = 1L;
+
 			@Override
 			public void populateItem(final ListItem<Comment> listItem)
 			{
@@ -69,14 +72,16 @@ public final class GuestBook extends WicketExamplePage
 
 	/**
 	 * A form that allows a user to add a comment.
-	 * 
+	 *
 	 * @author Jonathan Locke
 	 */
 	public final class CommentForm extends Form<ValueMap>
 	{
+		private static final long serialVersionUID = 1L;
+
 		/**
 		 * Constructor
-		 * 
+		 *
 		 * @param id
 		 *            The name of this component
 		 */
@@ -104,7 +109,7 @@ public final class GuestBook extends WicketExamplePage
 			ValueMap values = getModelObject();
 
 			// check if the honey pot is filled
-			if (StringUtils.isNotBlank((String)values.get("comment")))
+			if (!Strings.isEmpty((String)values.get("comment")))
 			{
 				error("Caught a spammer!!!");
 				return;

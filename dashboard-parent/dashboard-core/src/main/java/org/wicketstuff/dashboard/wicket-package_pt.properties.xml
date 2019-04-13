@@ -7,6 +7,6 @@
 	<!-- widget actions -->
 	<entry key="refresh"><![CDATA[Atualizar]]></entry>
 	<entry key="delete"><![CDATA[Deletar]]></entry>
-	<entry key="settings"><![CDATA[Configurações]]></entry>
+	<entry key="settings"><![CDATA[DefiniÃ§Ãµes]]></entry>
 	<entry key="deleteAsk"><![CDATA[Deletar a ferramenta "${}"?]]></entry>
 </properties>

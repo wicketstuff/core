@@ -20,10 +20,11 @@ import java.util.Base64;
 import java.util.Iterator;
 import java.util.Map;
 
+import javax.portlet.ActionURL;
 import javax.portlet.MimeResponse;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
-import javax.portlet.PortletURL;
+import javax.portlet.RenderURL;
 import javax.portlet.ResourceURL;
 import javax.servlet.http.HttpServletRequest;
 
@@ -217,8 +218,8 @@ public class PortletRequestMapper extends AbstractComponentMapper {
 			PortletResponse portletResponse = ThreadPortletContext.getPortletResponse();
 			if ((portletResponse != null) && (portletResponse instanceof MimeResponse)) {
 				try {
-					PortletURL portletUrl = ((MimeResponse) portletResponse).createActionURL();
-					portletUrl.setParameter(WicketPortlet.WICKET_URL_PORTLET_PARAMETER, qualifiedPath);
+					ActionURL portletUrl = ((MimeResponse) portletResponse).createActionURL();
+					portletUrl.getActionParameters().setValue(WicketPortlet.WICKET_URL_PORTLET_PARAMETER, qualifiedPath);
 					qualifiedPath = portletUrl.toString();
 				}
 				catch (Exception e) {
@@ -243,8 +244,8 @@ public class PortletRequestMapper extends AbstractComponentMapper {
 			PortletResponse portletResponse = ThreadPortletContext.getPortletResponse();
 			if ((portletResponse != null) && (portletResponse instanceof MimeResponse)) {
 				try {
-					PortletURL portletUrl = ((MimeResponse) portletResponse).createRenderURL();
-					portletUrl.setParameter(WicketPortlet.WICKET_URL_PORTLET_PARAMETER + ThreadPortletContext.getPortletMode().toString(), qualifiedPath);
+					RenderURL portletUrl = ((MimeResponse) portletResponse).createRenderURL();
+					portletUrl.getRenderParameters().setValue(WicketPortlet.WICKET_URL_PORTLET_PARAMETER + ThreadPortletContext.getPortletMode().toString(), qualifiedPath);
 					qualifiedPath = portletUrl.toString();
 				}
 				catch (Exception e) {
