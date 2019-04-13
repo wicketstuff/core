@@ -17,7 +17,10 @@ public class PeopleDataProvider extends SortableDataProvider<Person, String> {
     private static final String[] FIRST_NAMES = {"John", "Jane", "Johnny", "Peter", "Nicolas", "Mary"};
     private static final String[] LAST_NAMES = {"Doe", "Smith", "Brown", "Anderson", "O'Tool", "Popins"};
 
-    public PeopleDataProvider() {
+    private final String searchFilter;
+
+    public PeopleDataProvider(String searchFilter) {
+        this.searchFilter = searchFilter != null ? searchFilter.toLowerCase() : null;
     }
 
     @Override
@@ -25,11 +28,16 @@ public class PeopleDataProvider extends SortableDataProvider<Person, String> {
         List<Person> people = new ArrayList<>();
         Random random = new Random(123);
 
-        for (int i = 0; i < count; i++) {
+        for (int i = 0; i < count;) {
             int randomFirst = random.nextInt(FIRST_NAMES.length);
             int randomLast = random.nextInt(LAST_NAMES.length);
             int randomAge = random.nextInt(99);
-            people.add(new Person(FIRST_NAMES[randomFirst], LAST_NAMES[randomLast], randomAge, first + i));
+            final String firstName = FIRST_NAMES[randomFirst];
+            final String lastName = LAST_NAMES[randomLast];
+            if (searchFilter != null && (firstName.toLowerCase().contains(searchFilter) || lastName.toLowerCase().contains(searchFilter) )) {
+                people.add(new Person(firstName, lastName, randomAge, first + i));
+                i++;
+            }
         }
         return people.iterator();
     }

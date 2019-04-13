@@ -31,8 +31,8 @@ public class NewPage extends WebPage {
         super(parameters);
 
         List<IColumn<Person, String>> columns = new ArrayList<>();
-        columns.add(new PropertyColumn<Person, String>(Model.of("First"), "firstName", "firstName"));
-        columns.add(new PropertyColumn<Person, String>(Model.of("Last"), "lastName", "lastName"));
+        columns.add(new PropertyColumn<>(Model.of("First"), "firstName", "firstName"));
+        columns.add(new PropertyColumn<>(Model.of("Last"), "lastName", "lastName"));
         columns.add(new SpanPropertyColumn<Person, String>(Model.of("Age"), "age", "age") {
             @Override
             public int getRowspan() {
@@ -40,7 +40,7 @@ public class NewPage extends WebPage {
             }
         });
 
-        PeopleDataProvider dataProvider = new PeopleDataProvider();
+        PeopleDataProvider dataProvider = new PeopleDataProvider(null);
 
         final DataTables<Person, String> table = new DataTables<Person, String>("table", columns, dataProvider, 10) {
             @Override
