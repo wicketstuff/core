@@ -25,6 +25,8 @@ import org.apache.wicket.markup.head.JavaScriptHeaderItem;
 import org.apache.wicket.request.cycle.RequestCycle;
 import org.apache.wicket.request.resource.PackageResourceReference;
 
+import com.github.openjson.JSONObject;
+
 /**
  * http://cwiki.apache.org/WICKET/open-flash-chart-and-wicket.html
  */
@@ -32,8 +34,8 @@ public class SWFObject extends Behavior {
 
 	private static final long serialVersionUID = 1L;
 
-	private Map<String, String> parameters = new HashMap<String, String>();
-	private Map<String, String> attributes = new HashMap<String, String>();
+	private Map<String, String> parameters = new HashMap<>();
+	private Map<String, String> attributes = new HashMap<>();
 
 	private String version;
 	private String flashUrl;
@@ -119,26 +121,7 @@ public class SWFObject extends Behavior {
 	}
 
 	private String buildDataObject(Map<String, String> data) {
-		String quote = "\"";
-		if ((data != null) && !data.isEmpty()) {
-			StringBuilder result = new StringBuilder();
-			int size = getParameters().entrySet().size();
-			int count = 0;
-			for (Map.Entry<String, String> e : getParameters().entrySet()) {
-				result.append("{");
-				result.append(quote).append(e.getKey()).append(quote).
-					   append(":").
-					   append(quote).append(e.getValue()).append(quote);
-				result.append("}");
-				if (count < size-1) {
-					result.append(",");
-				}
-				count++;
-			}
-			return result.toString();
-		}
-
-		return "{}";
+		JSONObject obj = data == null ? new JSONObject() : new JSONObject(data);
+		return obj.toString();
 	}
-
 }

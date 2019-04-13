@@ -25,7 +25,7 @@
 		</dependency>
 		<dependency>
 			<groupId>org.scalatest</groupId>
-			<artifactId>scalatest_2.12.0-M5</artifactId>
+			<artifactId>scalatest_2.12</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>junit</groupId>

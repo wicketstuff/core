@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<portlet-app xmlns="http://java.sun.com/xml/ns/portlet/portlet-app_2_0.xsd"
-	version="2.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://java.sun.com/xml/ns/portlet/portlet-app_2_0.xsd http://java.sun.com/xml/ns/portlet/portlet-app_2_0.xsd"
-	id="wicketstuff-portlet-examples">
+<portlet-app xmlns="http://xmlns.jcp.org/xml/ns/portlet"
+			xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+			xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/portlet http://xmlns.jcp.org/xml/ns/portlet/portlet-app_3_0.xsd"
+			version="3.0" id="wicketstuff-portlet-examples">
 
 	<portlet>
 		<portlet-name>wicket7echoPortlet</portlet-name>
@@ -49,8 +49,13 @@
 		<security-role-ref>
 			<role-name>user</role-name>
 		</security-role-ref>
+      <dependency>
+         <name>PortletHub</name>
+         <scope>javax.portlet</scope>
+         <version>3.0.0</version>
+      </dependency>
 	</portlet>
-	
+
 	<portlet>
 		<portlet-name>wicket7formInputPortlet</portlet-name>
 		<display-name>WICKET 7 FORM INPUT PORTLET</display-name>

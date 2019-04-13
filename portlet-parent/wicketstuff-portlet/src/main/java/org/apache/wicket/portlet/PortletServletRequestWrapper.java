@@ -30,9 +30,9 @@ import javax.servlet.http.HttpSession;
  * overriding the {@link HttpServletRequestWrapper} retrieval of the context
  * path, path info, request URI etc... to return the portal specific
  * translations.
- * 
+ *
  * FIXME javadoc
- * 
+ *
  * @author Ate Douma
  * @author <a href="http://sebthom.de/">Sebastian Thomschke</a>
  * @author Peter Pastrnak
@@ -42,7 +42,7 @@ public class PortletServletRequestWrapper extends HttpServletRequestWrapper {
 	/**
 	 * Converts from a filterPath (path with a trailing slash), to a servletPath
 	 * (path with a leading slash).
-	 * 
+	 *
 	 * @param filterPath
 	 * @return the filterPath prefixed with a leading slash and with the
 	 *         trailing slash removed
@@ -83,11 +83,11 @@ public class PortletServletRequestWrapper extends HttpServletRequestWrapper {
 
 	/**
 	 * FIXME javadoc
-	 * 
+	 *
 	 * <p>
 	 * Public constructor which internally builds the path info from request
 	 * URI, instead of deriving it.
-	 * 
+	 *
 	 * @param context
 	 * @param request
 	 * @param proxiedSession
@@ -104,12 +104,12 @@ public class PortletServletRequestWrapper extends HttpServletRequestWrapper {
 
 	/**
 	 * FIXME javadoc
-	 * 
+	 *
 	 * <p>
 	 * Public constructor called when not running in a portlet environment,
 	 * which is passed in the path info instead of deriving it. It overrides the
 	 * generated request URI from the internal constructor.
-	 * 
+	 *
 	 * @param context
 	 * @param request
 	 * @param proxiedSession
@@ -130,13 +130,12 @@ public class PortletServletRequestWrapper extends HttpServletRequestWrapper {
 	 * Package private constructor which is called from either of the two public
 	 * constructors - sets up the various portlet specific versions of the
 	 * context path, servlet path, request URI etc...
-	 * 
+	 *
 	 * @param context
 	 * @param proxiedSession
 	 * @param request
 	 * @param filterPath
 	 */
-	@SuppressWarnings("unchecked")
 	protected PortletServletRequestWrapper(final ServletContext context, final HttpSession proxiedSession, final HttpServletRequest request, final String filterPath) {
 		super(request);
 
@@ -167,11 +166,11 @@ public class PortletServletRequestWrapper extends HttpServletRequestWrapper {
 			queryString = request.getQueryString();
 		}
 	}
-	
+
 	private String mergeQueryString(Map<String, String[]> requestParameterMap, String requestQueryString, String wicketQueryString) {
 		// Many Javascript based components append parameters directly to the URL, so they are not part of the '_wu' or 'resourceId' parameter.
 		// Wicket can access these parameters, but they are not present in the querystring, so Wicket identifies them as POST parameters.
-		// As a workaround, we add all parameters from the original request to the query string. 
+		// As a workaround, we add all parameters from the original request to the query string.
 		Map<String, String[]> parameterMap = Utils.parseQueryString(requestQueryString);
 		parameterMap.putAll(requestParameterMap);
 		parameterMap.putAll(Utils.parseQueryString(wicketQueryString));
@@ -252,7 +251,6 @@ public class PortletServletRequestWrapper extends HttpServletRequestWrapper {
 			// GateIn: SimpleMultiValuedPropertyMap does not
 			// load values with equalsIgnoreCase like MimeHeaders do
 			// in Request
-			@SuppressWarnings("unchecked")
 			Enumeration<String> headerNames = this.getHeaderNames();
 			while (headerNames.hasMoreElements()) {
 				String headerName = headerNames.nextElement();
@@ -267,11 +265,11 @@ public class PortletServletRequestWrapper extends HttpServletRequestWrapper {
 
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	@Override
-	public Enumeration getHeaders(String name) {		
+	public Enumeration getHeaders(String name) {
 		Enumeration headers = super.getHeaders(name);
 		if (!headers.hasMoreElements()) {
-			// GateIn: SimpleMultiValuedPropertyMap does not 
-			// load values with equalsIgnoreCase like MimeHeaders do 
+			// GateIn: SimpleMultiValuedPropertyMap does not
+			// load values with equalsIgnoreCase like MimeHeaders do
 			// in Request
 			Enumeration<String> headerNames = this.getHeaderNames();
 			while (headerNames.hasMoreElements()) {

@@ -19,11 +19,6 @@ Copyright 2012 Vineet Semwal
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 
 
-     <properties>
-     <jetty9.version>9.4.14.v20181114</jetty9.version>
-        
-</properties>
-
     <parent>
         <groupId>org.wicketstuff</groupId>
         <artifactId>quickview-parent</artifactId>

@@ -3,7 +3,6 @@ package org.apache.wicket.portlet.request.mapper;
 import org.apache.wicket.Application;
 import org.apache.wicket.core.request.handler.PageProvider;
 import org.apache.wicket.core.request.handler.RenderPageRequestHandler;
-import org.apache.wicket.core.request.mapper.IPageSource;
 import org.apache.wicket.protocol.http.PageExpiredException;
 import org.apache.wicket.request.IRequestHandler;
 import org.apache.wicket.request.Url;
@@ -23,7 +22,7 @@ import org.apache.wicket.util.lang.Args;
  * See also {@link PortletSystemMapper#newBookmarkableMapper()} and
  * {@link PortletSystemMapper#newHomePageMapper(org.apache.wicket.util.IProvider)}
  * </p>
- * 
+ *
  * @author Konstantinos Karavitis
  */
 public class MapperDelegate
@@ -33,7 +32,7 @@ public class MapperDelegate
 	 * Creates a {@code IRequestHandler} that processes a hybrid request. When the page identified
 	 * by {@code pageInfo} was not available, the request should be treated as a bookmarkable
 	 * request.
-	 * 
+	 *
 	 * @param pageInfo
 	 * @param pageClass
 	 * @param pageParameters
@@ -47,8 +46,8 @@ public class MapperDelegate
 		PageProvider provider = new PageProvider(pageInfo.getPageId(), pageClass, pageParameters,
 			renderCount);
 		Application application = Application.get();
-		provider.setPageSource((IPageSource)application.getMapperContext());
-		if (provider.isNewPageInstance() &&
+		provider.setPageSource(application.getMapperContext());
+		if (!provider.hasPageInstance() &&
 			!application.getPageSettings().getRecreateBookmarkablePagesAfterExpiry())
 		{
 			throw new PageExpiredException(String.format(
@@ -72,7 +71,7 @@ public class MapperDelegate
 	/**
 	 * Encodes the given {@link PageParameters} to the URL using the given
 	 * {@link IPageParametersEncoder}. The original URL object is unchanged.
-	 * 
+	 *
 	 * @param url
 	 * @param pageParameters
 	 * @param encoder

@@ -16,13 +16,15 @@
  */
 package org.apache.wicket.portlet;
 
+import java.util.Base64;
 import java.util.Iterator;
 import java.util.Map;
 
+import javax.portlet.ActionURL;
 import javax.portlet.MimeResponse;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
-import javax.portlet.PortletURL;
+import javax.portlet.RenderURL;
 import javax.portlet.ResourceURL;
 import javax.servlet.http.HttpServletRequest;
 
@@ -44,7 +46,6 @@ import org.apache.wicket.request.handler.resource.ResourceReferenceRequestHandle
 import org.apache.wicket.request.resource.IResource;
 import org.apache.wicket.request.resource.PackageResource;
 import org.apache.wicket.request.resource.SharedResourceReference;
-import org.apache.wicket.util.crypt.Base64;
 
 /**
  * This class is the default request mapper for portlets. It modifies the
@@ -52,14 +53,14 @@ import org.apache.wicket.util.crypt.Base64;
  * the type of the used request handler. Its purpose is to implement all portlet
  * related functionality from WebRequestCodingStrategy, that was used in Wicket
  * 1.4.
- * 
+ *
  * @author Peter Pastrnak
  * @author Konstantinos Karavitis
  */
 public class PortletRequestMapper extends AbstractComponentMapper {
-	
+
 	public static String PORTLET_URL = "portlet-url";
-	
+
 	private SystemMapper systemMapper;
 
 	public PortletRequestMapper(final Application application) {
@@ -105,8 +106,8 @@ public class PortletRequestMapper extends AbstractComponentMapper {
 		else if (requestHandler instanceof BookmarkablePageRequestHandler) {
 			url = encodeRenderUrl(url, true);
 		}
-		//added mapping for request handlers with type of BookmarkableListenerRequestHandler. The handling is the same as for handlers of type ListenerRequestHandler 
-		else if (requestHandler instanceof ListenerRequestHandler || requestHandler instanceof BookmarkableListenerRequestHandler) { 
+		//added mapping for request handlers with type of BookmarkableListenerRequestHandler. The handling is the same as for handlers of type ListenerRequestHandler
+		else if (requestHandler instanceof ListenerRequestHandler || requestHandler instanceof BookmarkableListenerRequestHandler) {
 			IRequestableComponent component;
 
 			if (requestHandler instanceof ListenerRequestHandler) {
@@ -196,7 +197,7 @@ public class PortletRequestMapper extends AbstractComponentMapper {
 			urlBuilder.append(request.getContextPath());
 			urlBuilder.append(request.getFilterPath());
 			urlBuilder.append(PortletFilter.SHARED_RESOURCE_URL_PORTLET_WINDOW_ID_PREFIX);
-			urlBuilder.append(Base64.encodeBase64URLSafeString(ThreadPortletContext.getWindowID().getBytes()));
+			urlBuilder.append(Base64.getUrlEncoder().encode(ThreadPortletContext.getWindowID().getBytes()));
 			urlBuilder.append('/');
 			urlBuilder.append(url.toString());
 
@@ -217,8 +218,8 @@ public class PortletRequestMapper extends AbstractComponentMapper {
 			PortletResponse portletResponse = ThreadPortletContext.getPortletResponse();
 			if ((portletResponse != null) && (portletResponse instanceof MimeResponse)) {
 				try {
-					PortletURL portletUrl = ((MimeResponse) portletResponse).createActionURL();
-					portletUrl.setParameter(WicketPortlet.WICKET_URL_PORTLET_PARAMETER, qualifiedPath);
+					ActionURL portletUrl = ((MimeResponse) portletResponse).createActionURL();
+					portletUrl.getActionParameters().setValue(WicketPortlet.WICKET_URL_PORTLET_PARAMETER, qualifiedPath);
 					qualifiedPath = portletUrl.toString();
 				}
 				catch (Exception e) {
@@ -243,8 +244,8 @@ public class PortletRequestMapper extends AbstractComponentMapper {
 			PortletResponse portletResponse = ThreadPortletContext.getPortletResponse();
 			if ((portletResponse != null) && (portletResponse instanceof MimeResponse)) {
 				try {
-					PortletURL portletUrl = ((MimeResponse) portletResponse).createRenderURL();
-					portletUrl.setParameter(WicketPortlet.WICKET_URL_PORTLET_PARAMETER + ThreadPortletContext.getPortletMode().toString(), qualifiedPath);
+					RenderURL portletUrl = ((MimeResponse) portletResponse).createRenderURL();
+					portletUrl.getRenderParameters().setValue(WicketPortlet.WICKET_URL_PORTLET_PARAMETER + ThreadPortletContext.getPortletMode().toString(), qualifiedPath);
 					qualifiedPath = portletUrl.toString();
 				}
 				catch (Exception e) {
@@ -257,7 +258,7 @@ public class PortletRequestMapper extends AbstractComponentMapper {
 
 		return markAsPortletUrl(url);
 	}
-	
+
 	private Url markAsPortletUrl(Url url) {
 		url.setQueryParameter(PORTLET_URL, PORTLET_URL);
 		return url;

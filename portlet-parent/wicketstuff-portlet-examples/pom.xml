@@ -13,8 +13,6 @@
 	<description />
 
 	<properties>
-		<jetty9.version>9.2.13.v20150730</jetty9.version>
-		<junit.version>4.12</junit.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<!-- allowed values: R7, 1.0, 1.5, 2.0 or none -->
 		<wtp.version>2.0</wtp.version>
@@ -98,7 +96,6 @@
 		<dependency>
 			<groupId>org.apache.logging.log4j</groupId>
 			<artifactId>log4j-core</artifactId>
-			<version>${log4j.version}</version>
 		</dependency>
 
 		<!-- JUNIT DEPENDENCY FOR TESTING -->
@@ -134,11 +131,6 @@
 			<groupId>javax.validation</groupId>
 			<artifactId>validation-api</artifactId>
 			<scope>compile</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.eclipse.jetty.aggregate</groupId>
-			<artifactId>jetty-all</artifactId>
-			<version>8.1.18.v20150929</version>
 		</dependency>
 		<dependency>
 			<groupId>org.hibernate</groupId>

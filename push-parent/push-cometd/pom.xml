@@ -39,10 +39,9 @@
 			<artifactId>cometd-java-server</artifactId>
 			<version>${cometd.version}</version>
 		</dependency>
-
 		<dependency>
 			<groupId>org.cometd.java</groupId>
-			<artifactId>cometd-websocket-jetty</artifactId>
+			<artifactId>cometd-java-websocket-javax-server</artifactId>
 			<version>${cometd.version}</version>
 		</dependency>
 	</dependencies>

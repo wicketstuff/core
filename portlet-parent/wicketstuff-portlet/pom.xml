@@ -13,7 +13,7 @@
 	<description />
 
 	<properties>
-		<portlet-api.version>2.0</portlet-api.version>
+		<portlet-api.version>3.0.1</portlet-api.version>
 	</properties>
 
 	<dependencies>

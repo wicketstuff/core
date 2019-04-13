@@ -47,15 +47,10 @@
 			<groupId>org.slf4j</groupId>
 			<artifactId>slf4j-log4j12</artifactId>
 		</dependency>
-
-		<!-- JETTY DEPENDENCIES FOR TESTING -->
 		<dependency>
-			<groupId>org.eclipse.jetty</groupId>
-			<artifactId>jetty-webapp</artifactId>
-			<scope>test</scope>
-			<!-- must match be the version supported by the underlying cometd version -->
-			<version>7.5.3.v20111011</version>
+			<groupId>org.eclipse.jetty.aggregate</groupId>
+			<artifactId>jetty-all</artifactId>
+			<classifier>uber</classifier>
 		</dependency>
 	</dependencies>
-
 </project>

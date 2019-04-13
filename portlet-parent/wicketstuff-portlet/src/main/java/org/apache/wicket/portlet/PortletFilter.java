@@ -17,6 +17,7 @@
 package org.apache.wicket.portlet;
 
 import java.io.IOException;
+import java.util.Base64;
 
 import javax.portlet.PortletConfig;
 import javax.portlet.PortletRequest;
@@ -41,24 +42,23 @@ import org.apache.wicket.request.cycle.RequestCycle;
 import org.apache.wicket.request.http.WebResponse;
 import org.apache.wicket.request.http.flow.AbortWithHttpErrorCodeException;
 import org.apache.wicket.settings.RequestCycleSettings.RenderStrategy;
-import org.apache.wicket.util.crypt.Base64;
 
 /**
  * This class subclasses the original WicketFilter to add the necessary porlet
  * functionality. It is responsible for the initialization of all portlet
  * specific settings of the WebApplication and wraps the portlet request and
  * portlet response objects by an http servlet request / response wrapper.
- * 
+ *
  * @author Peter Pastrnak
  * @author Konstantinos Karavitis
  */
 public class PortletFilter extends WicketFilter {
 	public static final String SHARED_RESOURCE_URL_PORTLET_WINDOW_ID_PREFIX = "/ps:";
-	
+
 	private static String NOT_MOUNTED_PATH = "notMountedPath";
 
 	private FilterConfig filterConfig;
-	
+
 	@Override
 	public void init(boolean isServlet, FilterConfig filterConfig) throws ServletException {
 		super.init(isServlet, filterConfig);
@@ -108,7 +108,7 @@ public class PortletFilter extends WicketFilter {
 				HttpSession proxiedSession = PortletHttpSessionWrapper.createProxy(
 					httpServletRequest, portletRequest.getWindowID(), getApplication()
 						.getSessionAttributePrefix(null, filterConfig.getFilterName()));
-				
+
 				httpServletRequest = new PortletServletRequestWrapper(filterConfig.getServletContext(), httpServletRequest, proxiedSession, filterPath);
 				httpServletResponse = new PortletServletResponseWrapper(httpServletResponse, responseState);
 			}
@@ -121,14 +121,14 @@ public class PortletFilter extends WicketFilter {
 
 				int nextSeparator = pathInfo.indexOf('/', 1);
 				if (nextSeparator > 0) {
-					String windowId = new String(Base64.decodeBase64(pathInfo.substring(SHARED_RESOURCE_URL_PORTLET_WINDOW_ID_PREFIX.length(), nextSeparator)));
-					
+					String windowId = new String(Base64.getDecoder().decode(pathInfo.substring(SHARED_RESOURCE_URL_PORTLET_WINDOW_ID_PREFIX.length(), nextSeparator)));
+
 					HttpSession proxiedSession = PortletHttpSessionWrapper.createProxy(
 						httpServletRequest,
 						windowId,
 						getApplication().getSessionAttributePrefix(null,
 							filterConfig.getFilterName()));
-					
+
 					pathInfo = pathInfo.substring(nextSeparator);
 					httpServletRequest = new PortletServletRequestWrapper(filterConfig.getServletContext(), httpServletRequest, proxiedSession, filterPath, pathInfo);
 				}
@@ -137,7 +137,8 @@ public class PortletFilter extends WicketFilter {
 
 		super.doFilter(httpServletRequest, httpServletResponse, filterChain);
 	}
-	
+
+	@Override
 	protected boolean processRequestCycle(RequestCycle requestCycle, WebResponse webResponse,
 			HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, final FilterChain chain)
 			throws IOException, ServletException {

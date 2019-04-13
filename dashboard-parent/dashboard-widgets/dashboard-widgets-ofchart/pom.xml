@@ -14,12 +14,4 @@
 	<packaging>jar</packaging>
 	<name>Wicketstuff OpenFlashChart Widget</name>
 
-	<dependencies>
-		<!-- JOFC2 (open flash chart for java) -->
-		<dependency>
-			<groupId>ro.nextreports</groupId>
-			<artifactId>jofc2</artifactId>
-			<version>${jofc2.version}</version>
-		</dependency>
-	</dependencies>
 </project>
