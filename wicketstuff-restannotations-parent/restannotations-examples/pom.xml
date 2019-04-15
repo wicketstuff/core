@@ -63,6 +63,10 @@
 			<artifactId>junit-jupiter-api</artifactId>
 		</dependency>
 		<dependency>
+			<groupId>org.junit.jupiter</groupId>
+			<artifactId>junit-jupiter-engine</artifactId>
+		</dependency>
+		<dependency>
 			<groupId>org.wicketstuff</groupId>
 			<artifactId>wicketstuff-rest-utils</artifactId>
 			<version>${project.version}</version>
