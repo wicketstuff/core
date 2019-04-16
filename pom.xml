@@ -1005,11 +1005,11 @@
 						<failOnError>false</failOnError>
 						<doclint>none</doclint>
 						<links>
-							<link>http://docs.oracle.com/javase/8/docs/api</link>
-							<link>http://docs.oracle.com/javaee/7/api</link>
-							<link>http://ci.apache.org/projects/wicket/apidocs/8.x</link>
-							<link>http://docs.spring.io/spring/docs/4.3.x/javadoc-api</link>
-							<link>http://logback.qos.ch/apidocs</link>
+							<link>https://docs.oracle.com/en/java/javase/11/docs/api/</link>
+							<link>https://docs.oracle.com/javaee/7/api/</link>
+							<link>https://ci.apache.org/projects/wicket/apidocs/9.x</link>
+							<link>https://docs.spring.io/spring/docs/5.1.x/javadoc-api</link>
+							<link>https://logback.qos.ch/apidocs</link>
 						</links>
 						<skip>${javadoc.disabled}</skip>
 					</configuration>
