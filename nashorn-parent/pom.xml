@@ -4,7 +4,7 @@
 	<parent>
 		<groupId>org.wicketstuff</groupId>
 		<artifactId>wicketstuff-core</artifactId>
-		<version>7.0-SNAPSHOT</version>
+		<version>7.13.0</version>
 	</parent>
 
 	<artifactId>wicketstuff-nashorn-parent</artifactId>
@@ -41,7 +41,6 @@
 					<artifactId>maven-javadoc-plugin</artifactId>
 					<configuration>
 						<failOnError>false</failOnError>
-						<additionalparam>-Xdoclint:none</additionalparam>
 					</configuration>
 				</plugin>
 			</plugins>
