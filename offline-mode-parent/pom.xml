@@ -34,7 +34,6 @@
 					<artifactId>maven-javadoc-plugin</artifactId>
 					<configuration>
 						<failOnError>false</failOnError>
-						<additionalparam>-Xdoclint:none</additionalparam>
 					</configuration>
 				</plugin>
 			</plugins>
