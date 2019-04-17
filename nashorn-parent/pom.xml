@@ -4,7 +4,7 @@
 	<parent>
 		<groupId>org.wicketstuff</groupId>
 		<artifactId>wicketstuff-core</artifactId>
-		<version>9.0.0-SNAPSHOT</version>
+		<version>9.0.0-M1-SNAPSHOT</version>
 	</parent>
 
 	<artifactId>wicketstuff-nashorn-parent</artifactId>
@@ -14,7 +14,7 @@
 	<description>
     	Parent project of all components using the nashorn engine
     </description>
-    
+
 	<developers>
 		<developer>
 			<id>klopfdreh</id>
@@ -27,19 +27,4 @@
 		<module>nashorn</module>
 		<module>nashorn-examples</module>
 	</modules>
-
-	<build>
-		<pluginManagement>
-			<plugins>
-				<plugin>
-					<groupId>org.apache.maven.plugins</groupId>
-					<artifactId>maven-javadoc-plugin</artifactId>
-					<configuration>
-						<failOnError>false</failOnError>
-						<additionalparam>-Xdoclint:none</additionalparam>
-					</configuration>
-				</plugin>
-			</plugins>
-		</pluginManagement>
-	</build>
 </project>
