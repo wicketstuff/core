@@ -20,6 +20,7 @@ import static org.junit.Assert.assertEquals;
 
 import org.apache.wicket.util.tester.FormTester;
 import org.apache.wicket.util.tester.WicketTester;
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
@@ -43,6 +44,10 @@ public class JamonMonitoredRequestCycleTest
 	{
 		jamonWebApplication = new JamonWebApplication();
 		wicketTester = new WicketTester(jamonWebApplication);
+	}
+
+	@After
+	public void after() {
 		MonitorFactory.getFactory().reset();
 	}
 
