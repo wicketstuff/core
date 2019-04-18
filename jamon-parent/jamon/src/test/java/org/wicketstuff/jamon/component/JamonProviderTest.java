@@ -34,7 +34,7 @@ import com.jamonapi.Monitor;
 import com.jamonapi.MonitorFactory;
 
 
-public class JamonProviderTest
+class JamonProviderTest
 {
 
 	private JamonProvider jamonProvider;
@@ -42,7 +42,7 @@ public class JamonProviderTest
 	private WicketTester wicketTester;
 
 	@BeforeEach
-	public void setup()
+	void setup()
 	{
 		wicketTester = new WicketTester(JamonAdminPage.class);
 		wicketTester.getApplication().setMetaData(MonitoringRepositoryKey.KEY, new JamonRepository());
@@ -51,14 +51,14 @@ public class JamonProviderTest
 	}
 
 	@AfterEach
-	@BeforeEach
-	public void reset()
+	void reset()
 	{
+		wicketTester.destroy();
 		MonitorFactory.getFactory().reset();
 	}
 
 	@Test
-	public void shouldSupportPaging()
+	void shouldSupportPaging()
 	{
 		startThisManyMonitors(15);
 
@@ -80,7 +80,7 @@ public class JamonProviderTest
 	}
 
 	@Test
-	public void shouldSupportSortingOfProperties()
+	void shouldSupportSortingOfProperties()
 	{
 		startThisManyMonitors(3);
 		jamonProvider.setSort("label", SortOrder.ASCENDING);

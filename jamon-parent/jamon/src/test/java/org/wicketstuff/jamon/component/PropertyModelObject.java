@@ -16,13 +16,15 @@
  */
 package org.wicketstuff.jamon.component;
 
+import java.io.Serializable;
+
 /**
  * Class used in {@link PropertyModelObjectComparatorTest}. Just to wrap a property.
  * 
  * @author lars
  *
  */
-class PropertyModelObject
+class PropertyModelObject implements Serializable
 {
 
 	private final String name;

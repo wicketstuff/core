@@ -5,6 +5,7 @@
 		<groupId>org.wicketstuff</groupId>
 		<artifactId>wicketstuff-jamon-parent</artifactId>
 		<version>9.0.0-M1-SNAPSHOT</version>
+		<relativePath>../pom.xml</relativePath>
 	</parent>
 	<artifactId>wicketstuff-jamon</artifactId>
 	<name>Jamon</name>

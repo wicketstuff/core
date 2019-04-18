@@ -28,29 +28,30 @@ import org.wicketstuff.jamon.monitor.JamonRepository;
 import com.jamonapi.MonitorFactory;
 
 
-public class JamonAdminPageTest
+class JamonAdminPageTest
 {
 
 	private WicketTester wicketTester;
 
 	@BeforeEach
-	public void beforeEachTest()
+	void beforeEachTest()
 	{
 		wicketTester = new WicketTester(JamonAdminPage.class);
 		wicketTester.getApplication().setMetaData(MonitoringRepositoryKey.KEY, new JamonRepository());
 	}
 
 	@AfterEach
-	public void after()
+	void after()
 	{
+		wicketTester.destroy();
 		MonitorFactory.getFactory().reset();
 	}
 
 	@Test
-	public void shouldRenderStatisticsPageWithOneMonitor()
+	void shouldRenderStatisticsPageWithOneMonitor()
 	{
 		JamonTestUtil.startThisManyMonitors(1);
-		wicketTester.startPage(new JamonAdminPage());
+		wicketTester.startPage(JamonAdminPage.class);
 		wicketTester.assertRenderedPage(JamonAdminPage.class);
 		assertEquals(1, wicketTester.getTagsByWicketId("linkText").size());
 		assertTrue(
@@ -58,7 +59,7 @@ public class JamonAdminPageTest
 	}
 
 	@Test
-	public void shouldRenderStatisticsPageWithTwoMonitors()
+	void shouldRenderStatisticsPageWithTwoMonitors()
 	{
 		JamonTestUtil.startThisManyMonitors(2);
 		wicketTester.startPage(new JamonAdminPage());

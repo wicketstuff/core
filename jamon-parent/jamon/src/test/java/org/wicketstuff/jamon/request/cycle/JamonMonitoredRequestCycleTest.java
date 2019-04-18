@@ -20,6 +20,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import org.apache.wicket.util.tester.FormTester;
 import org.apache.wicket.util.tester.WicketTester;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
@@ -39,15 +40,20 @@ public class JamonMonitoredRequestCycleTest
 
 
 	@BeforeEach
-	public void setup()
+	void setup()
 	{
 		jamonWebApplication = new JamonWebApplication();
 		wicketTester = new WicketTester(jamonWebApplication);
+	}
+
+	@AfterEach
+	void afterEach() {
+		wicketTester.destroy();
 		MonitorFactory.getFactory().reset();
 	}
 
 	@Test
-	public void shouldCreateMonitorForPagesThatAreNavigatedTo()
+	void shouldCreateMonitorForPagesThatAreNavigatedTo()
 	{
 		wicketTester.startPage(HomePage.class);
 
@@ -55,7 +61,7 @@ public class JamonMonitoredRequestCycleTest
 	}
 
 	@Test
-	public void shouldCreateTwoMonitorsForPagesThatAreNavigatedToTwice()
+	void shouldCreateTwoMonitorsForPagesThatAreNavigatedToTwice()
 	{
 		wicketTester.startPage(HomePage.class);
 		wicketTester.startPage(HomePage.class);
@@ -63,7 +69,7 @@ public class JamonMonitoredRequestCycleTest
 	}
 
 	@Test
-	public void shouldNotMonitorJamonAdminPageItSelf()
+	void shouldNotMonitorJamonAdminPageItSelf()
 	{
 		wicketTester.startPage(JamonAdminPage.class);
 		assertEquals(0, MonitorFactory.getMonitor("JamonAdminPage", "ms.").getHits(), 0.00001d);
@@ -75,7 +81,7 @@ public class JamonMonitoredRequestCycleTest
 
 	@Disabled// broken in Wicket 8.0. Needs debugging!
 	@Test
-	public void shouldCreateMonitorIfAjaxLinkIsClickedOnPage()
+	void shouldCreateMonitorIfAjaxLinkIsClickedOnPage()
 	{
 		wicketTester.startPage(AjaxPage.class);
 
@@ -89,7 +95,7 @@ public class JamonMonitoredRequestCycleTest
 
 	@Disabled// broken in Wicket 8.0. Needs debugging!
 	@Test
-	public void shouldCreateMonitorIfAjaxLinkIsClickedOnPageStartedWithClass()
+	void shouldCreateMonitorIfAjaxLinkIsClickedOnPageStartedWithClass()
 	{
 		wicketTester.startPage(AjaxPage.class);
 		wicketTester.clickLink("ajaxLink");
@@ -99,7 +105,7 @@ public class JamonMonitoredRequestCycleTest
 	}
 
 	@Test
-	public void shouldCreateMonitorForPagesWithClassThatAreNavigatedTo()
+	void shouldCreateMonitorForPagesWithClassThatAreNavigatedTo()
 	{
 		wicketTester.startPage(HomePage.class);
 
@@ -108,7 +114,7 @@ public class JamonMonitoredRequestCycleTest
 	}
 
 	@Test
-	public void shouldCreateMonitorForPageInstanceThatAreNavigatedTo()
+	void shouldCreateMonitorForPageInstanceThatAreNavigatedTo()
 	{
 		wicketTester.startPage(new HomePage());
 
