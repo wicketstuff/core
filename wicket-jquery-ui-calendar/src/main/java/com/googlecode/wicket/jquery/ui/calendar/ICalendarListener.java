@@ -50,7 +50,7 @@ public interface ICalendarListener extends IClusterable
 
 	/**
 	 * Indicates whether an event can be clicked.<br>
-	 * If true, the {@link #onEventClick(AjaxRequestTarget, CalendarView, int)} event will be triggered<br>
+	 * If true, the {@link #onEventClick(AjaxRequestTarget, CalendarView, String)} event will be triggered<br>
 	 * <b>Note:</b> {@code true} will enable the global 'editable' option to {@code true}.
 	 *
 	 * @return false by default
@@ -66,14 +66,14 @@ public interface ICalendarListener extends IClusterable
 	boolean isObjectDropEnabled();
 
 	/**
-	 * Indicates whether the event can be dragged &#38; dropped. If true, the {@link #onEventDrop(AjaxRequestTarget, int, long, boolean)} event will be triggered
+	 * Indicates whether the event can be dragged &#38; dropped. If true, the {@link #onEventDrop(AjaxRequestTarget, String, long, boolean)} event will be triggered
 	 *
 	 * @return false by default
 	 */
 	boolean isEventDropEnabled();
 
 	/**
-	 * Indicates whether the event can be resized. If true, the {@link #onEventResize(AjaxRequestTarget, int, long)} event will be triggered
+	 * Indicates whether the event can be resized. If true, the {@link #onEventResize(AjaxRequestTarget, String, long)} event will be triggered
 	 *
 	 * @return false by default
 	 */
@@ -87,7 +87,7 @@ public interface ICalendarListener extends IClusterable
 	boolean isViewRenderEnabled();
 
 	/**
-	 * Gets the javascript statement which will be executed before {@link #onEventDrop(AjaxRequestTarget, int, long, boolean)} event is triggered<br>
+	 * Gets the javascript statement which will be executed before {@link #onEventDrop(AjaxRequestTarget, String, long, boolean)} event is triggered<br>
 	 * A common use case is to call the {@code revertFunc} callback to cancel the event.
 	 *
 	 * @return the javascript statement, empty string by default
@@ -96,7 +96,7 @@ public interface ICalendarListener extends IClusterable
 	CharSequence getEventDropPrecondition();
 
 	/**
-	 * Gets the javascript statement which will be executed before {@link #onEventResize(AjaxRequestTarget, int, long)} event is triggered<br>
+	 * Gets the javascript statement which will be executed before {@link #onEventResize(AjaxRequestTarget, String, long)} event is triggered<br>
 	 * A common use case is to call the {@code revertFunc} callback to cancel the event.
 	 *
 	 * @return the javascript statement, empty string by default
