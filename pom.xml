@@ -12,7 +12,7 @@
 
 	<groupId>com.googlecode.wicket-jquery-ui</groupId>
 	<artifactId>wicket-jquery-ui-parent</artifactId>
-	<version>8.3.1-SNAPSHOT</version>
+	<version>9.0.0-SNAPSHOT</version>
 	<packaging>pom</packaging>
 
 	<licenses>
@@ -44,10 +44,11 @@
 	</scm>
 
 	<properties>
-		<wicket.version>8.3.0</wicket.version>
+		<wicket.version>9.0.0-M1</wicket.version>
 		<owasp-sanitizer.version>20171016.1</owasp-sanitizer.version>
 		<junit.version>4.12</junit.version>
-		<jetty.version>8.1.16.v20140903</jetty.version>
+<!-- 		<jetty.version>8.1.16.v20140903</jetty.version>-->
+		<jetty.version>9.4.16.v20190411</jetty.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
 
@@ -83,7 +84,7 @@
 					<groupId>org.apache.felix</groupId>
 					<artifactId>maven-bundle-plugin</artifactId>
 					<extensions>true</extensions>
-					<version>2.5.3</version>
+					<version>4.2.0</version>
 					<executions>
 						<execution>
 							<id>bundle-manifest</id>
@@ -106,7 +107,7 @@
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-source-plugin</artifactId>
-					<version>2.4</version>
+					<version>3.0.1</version>
 					<executions>
 						<execution>
 							<id>attach-sources</id>
@@ -121,7 +122,7 @@
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-javadoc-plugin</artifactId>
-					<version>2.10.3</version>
+					<version>3.1.0</version>
 					<configuration>
 						<quiet>true</quiet>
 						<links>
@@ -147,7 +148,7 @@
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-deploy-plugin</artifactId>
-					<version>2.8.2</version>
+					<version>3.0.0-M1</version>
 				</plugin>
 
 				<plugin>
@@ -214,18 +215,38 @@
 		<plugins>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-enforcer-plugin</artifactId>
+				<version>3.0.0-M2</version>
+				<executions>
+					<execution>
+						<id>enforce-maven</id>
+						<goals>
+							<goal>enforce</goal>
+						</goals>
+						<configuration>
+							<rules>
+								<requireMavenVersion>
+									<version>3.5</version>
+								</requireMavenVersion>
+							</rules>    
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
-				<version>3.3</version>
+				<version>3.8.0</version>
 				<configuration>
-					<source>1.8</source>
-					<target>1.8</target>
+					<release>11</release>
 				</configuration>
 			</plugin>
 
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-release-plugin</artifactId>
-				<version>2.5.2</version>
+				<version>2.5.3</version>
 				<configuration>
 					<autoVersionSubmodules>true</autoVersionSubmodules>
 					<releaseProfiles>release</releaseProfiles>
@@ -236,7 +257,7 @@
 			<plugin>
 				<groupId>org.sonatype.plugins</groupId>
 				<artifactId>nexus-staging-maven-plugin</artifactId>
-				<version>1.6.5</version>
+				<version>1.6.8</version>
 				<extensions>true</extensions>
 				<configuration>
 					<serverId>ossrh</serverId>
@@ -334,6 +355,6 @@
 		<module>wicket-kendo-ui</module>
 		<module>wicket-kendo-ui-culture</module>
 		<module>wicket-kendo-ui-themes</module>
-		<!--module>wicket-jquery-ui-samples</module-->
+		<module>wicket-jquery-ui-samples</module>
 	</modules>
 </project>

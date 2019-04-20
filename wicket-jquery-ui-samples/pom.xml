@@ -1,4 +1,6 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
 	<name>wicket-jquery-ui-samples</name>
@@ -7,7 +9,7 @@
 	<parent>
 		<groupId>com.googlecode.wicket-jquery-ui</groupId>
 		<artifactId>wicket-jquery-ui-parent</artifactId>
-		<version>8.1.1-SNAPSHOT</version>
+		<version>9.0.0-SNAPSHOT</version>
 	</parent>
 
 	<artifactId>wicket-jquery-ui-samples</artifactId>
@@ -19,39 +21,39 @@
 		<dependency>
 			<groupId>com.googlecode.wicket-jquery-ui</groupId>
 			<artifactId>wicket-jquery-ui</artifactId>
-			<version>8.1.1-SNAPSHOT</version>
+			<version>9.0.0-SNAPSHOT</version>
 		</dependency>
 		<dependency>
 			<groupId>com.googlecode.wicket-jquery-ui</groupId>
 			<artifactId>wicket-jquery-ui-theme-base</artifactId>
-			<version>8.1.1-SNAPSHOT</version>
+			<version>9.0.0-SNAPSHOT</version>
 		</dependency>
 		<dependency>
 			<groupId>com.googlecode.wicket-jquery-ui</groupId>
 			<artifactId>wicket-jquery-ui-calendar</artifactId>
-			<version>8.1.1-SNAPSHOT</version>
+			<version>9.0.0-SNAPSHOT</version>
 		</dependency>
 		<dependency>
 			<groupId>com.googlecode.wicket-jquery-ui</groupId>
 			<artifactId>wicket-jquery-ui-plugins</artifactId>
-			<version>8.1.1-SNAPSHOT</version>
+			<version>9.0.0-SNAPSHOT</version>
 		</dependency>
 
 		<!-- KENDO-UI DEPENDENCIES -->
 		<dependency>
 			<groupId>com.googlecode.wicket-jquery-ui</groupId>
 			<artifactId>wicket-kendo-ui</artifactId>
-			<version>8.1.1-SNAPSHOT</version>
+			<version>9.0.0-SNAPSHOT</version>
 		</dependency>
 		<dependency>
 			<groupId>com.googlecode.wicket-jquery-ui</groupId>
 			<artifactId>wicket-kendo-ui-culture</artifactId>
-			<version>8.1.1-SNAPSHOT</version>
+			<version>9.0.0-SNAPSHOT</version>
 		</dependency>
 		<dependency>
 			<groupId>com.googlecode.wicket-jquery-ui</groupId>
 			<artifactId>wicket-kendo-ui-theme-silver</artifactId>
-			<version>8.1.1-SNAPSHOT</version>
+			<version>9.0.0-SNAPSHOT</version>
 		</dependency>
 
 		<!-- WICKET DEPENDENCIES -->
@@ -75,12 +77,12 @@
 		<dependency>
 			<groupId>org.slf4j</groupId>
 			<artifactId>slf4j-log4j12</artifactId>
-			<version>1.6.2</version>
+			<version>1.8.0-beta4</version>
 		</dependency>
 		<dependency>
 			<groupId>log4j</groupId>
 			<artifactId>log4j</artifactId>
-			<version>1.2.16</version>
+			<version>1.2.17</version>
 		</dependency>
 
 		<!-- JUNIT DEPENDENCY FOR TESTING -->
@@ -126,7 +128,7 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-source-plugin</artifactId>
-				<configuration>				
+				<configuration>
 					<skipSource>true</skipSource>
 				</configuration>
 			</plugin>
@@ -152,7 +154,7 @@
 				</configuration>
 			</plugin>
 			<plugin>
-				<groupId>org.mortbay.jetty</groupId>
+				<groupId>org.eclipse.jetty</groupId>
 				<artifactId>jetty-maven-plugin</artifactId>
 				<version>${jetty.version}</version>
 				<configuration>

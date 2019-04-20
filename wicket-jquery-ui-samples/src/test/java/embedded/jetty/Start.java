@@ -2,14 +2,11 @@ package embedded.jetty;
 
 import org.apache.wicket.util.time.Duration;
 import org.eclipse.jetty.server.Server;
-import org.eclipse.jetty.server.bio.SocketConnector;
-import org.eclipse.jetty.server.ssl.SslSocketConnector;
+import org.eclipse.jetty.server.ServerConnector;
 import org.eclipse.jetty.util.resource.Resource;
-import org.eclipse.jetty.util.ssl.SslContextFactory;
 import org.eclipse.jetty.webapp.WebAppContext;
 
-public class Start
-{
+public class Start {
 	/**
 	 * The context path is hard-coded in TemplatePage.html
 	 */
@@ -17,35 +14,33 @@ public class Start
 	private static final int PORT = 8080;
 	private static final int TIMEOUT = (int) Duration.ONE_HOUR.getMilliseconds();
 
-	public static void main(String[] args) throws Exception
-	{
+	public static void main(String[] args) throws Exception {
 		System.setProperty("wicket.configuration", "development");
 
-		SocketConnector connector = new SocketConnector();
-		connector.setPort(PORT);
-		connector.setSoLingerTime(-1);
-		connector.setMaxIdleTime(TIMEOUT);
-		connector.setConfidentialPort(8443);
-
 		Server server = new Server();
-		server.addConnector(connector);		
-		
+		ServerConnector connector = new ServerConnector(server);
+		connector.setPort(PORT);
+		connector.setIdleTimeout(TIMEOUT);
+		server.addConnector(connector);
+
 		Resource keystore = Resource.newClassPathResource("/keystore");
 
-		if (keystore != null && keystore.exists())
-		{
-			SslContextFactory factory = new SslContextFactory();
-			factory.setKeyStoreResource(keystore);
-			factory.setKeyStorePassword("wicket");
-			factory.setTrustStore("/keystore");
-			factory.setKeyManagerPassword("wicket");
+		if (keystore != null && keystore.exists()) {
+//			SslContextFactory factory = new SslContextFactory();
+//			SslConnectionFactory factory = new SslConnectionFactory();
+//			factory.
 
-			SslSocketConnector sslConnector = new SslSocketConnector(factory);
-			sslConnector.setMaxIdleTime(TIMEOUT);
-			sslConnector.setPort(8443);
-			sslConnector.setAcceptors(4);
-
-			server.addConnector(sslConnector);			
+//			factory.setKeyStoreResource(keystore);
+//			factory.setKeyStorePassword("wicket");
+//			factory.setTrustStorePath("/keystore");
+//			factory.setKeyManagerPassword("wicket");
+//
+//			SslSocketConnector sslConnector = new SslSocketConnector(factory);
+//			sslConnector.setMaxIdleTime(TIMEOUT);
+//			sslConnector.setPort(8443);
+//			sslConnector.setAcceptors(4);
+//
+//			server.addConnector(sslConnector);			
 		}
 
 		WebAppContext context = new WebAppContext();
@@ -55,14 +50,11 @@ public class Start
 
 		server.setHandler(context);
 
-		try
-		{
+		try {
 			System.out.println(String.format(">>> http://localhost:%d%s", PORT, CONTEXT_PATH));
 			server.start();
 			server.join();
-		}
-		catch (Exception e)
-		{
+		} catch (Exception e) {
 			e.printStackTrace();
 			System.exit(100);
 		}
