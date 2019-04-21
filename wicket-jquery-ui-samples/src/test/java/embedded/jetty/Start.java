@@ -6,7 +6,8 @@ import org.eclipse.jetty.server.ServerConnector;
 import org.eclipse.jetty.util.resource.Resource;
 import org.eclipse.jetty.webapp.WebAppContext;
 
-public class Start {
+public class Start
+{
 	/**
 	 * The context path is hard-coded in TemplatePage.html
 	 */
@@ -14,7 +15,8 @@ public class Start {
 	private static final int PORT = 8080;
 	private static final int TIMEOUT = (int) Duration.ONE_HOUR.getMilliseconds();
 
-	public static void main(String[] args) throws Exception {
+	public static void main(String[] args) throws Exception
+	{
 		System.setProperty("wicket.configuration", "development");
 
 		Server server = new Server();
@@ -25,7 +27,8 @@ public class Start {
 
 		Resource keystore = Resource.newClassPathResource("/keystore");
 
-		if (keystore != null && keystore.exists()) {
+		if (keystore != null && keystore.exists())
+		{
 //			SslContextFactory factory = new SslContextFactory();
 //			SslConnectionFactory factory = new SslConnectionFactory();
 //			factory.
@@ -50,11 +53,14 @@ public class Start {
 
 		server.setHandler(context);
 
-		try {
+		try
+		{
 			System.out.println(String.format(">>> http://localhost:%d%s", PORT, CONTEXT_PATH));
 			server.start();
 			server.join();
-		} catch (Exception e) {
+		}
+		catch (Exception e)
+		{
 			e.printStackTrace();
 			System.exit(100);
 		}
