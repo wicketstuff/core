@@ -1,8 +1,8 @@
 language: java
-jdk: oraclejdk8
+jdk: oraclejdk11
 
 branches:
-  only: wicket8.x
+  only: wicket9.x
 
 script: mvn clean install -q
  
