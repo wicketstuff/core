@@ -46,11 +46,11 @@ import org.slf4j.LoggerFactory;
  * Ignite is not compatible with Java 9 - the following JVM parameters must be used:
  * <pre>
  * --add-exports=java.base/jdk.internal.misc=ALL-UNNAMED
- * --add-exports=java.base/sun.nio.ch=ALL-UNNAMED 
+ * --add-exports=java.base/sun.nio.ch=ALL-UNNAMED
  * </pre>
- * 
+ *
  * @see https://stackoverflow.com/questions/50639471/using-ignite-on-jdk-9
- * 
+ *
  * @author Alexey Prudnikov
  */
 public class IgniteDataStore extends AbstractPersistentPageStore  implements IPersistentPageStore {
@@ -125,7 +125,7 @@ public class IgniteDataStore extends AbstractPersistentPageStore  implements IPe
 	@Override
 	protected void addPersistedPage(String sessionIdentifier, IManageablePage page) {
 		if (page instanceof SerializedPage == false) {
-			throw new WicketRuntimeException("CassandraDataStore works with serialized pages only");
+			throw new WicketRuntimeException("IgniteDataStore works with serialized pages only");
 		}
 		SerializedPage serializedPage = (SerializedPage) page;
 
@@ -178,14 +178,14 @@ public class IgniteDataStore extends AbstractPersistentPageStore  implements IPe
 		for (DataRegionMetrics metrics : ignite.dataRegionMetrics()) {
 			bytes += metrics.getTotalAllocatedSize();
 		}
-		
+
 		return Bytes.bytes(bytes);
 	}
 
 	/**
 	 * A wrapper around a {@link SerializedPage} that implements Ignite's
 	 * {@link Binarylizable} for performance.
-	 * 
+	 *
 	 * @author sven
 	 */
 	private static final class BinarylizableWrapper implements Binarylizable {

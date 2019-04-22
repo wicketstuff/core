@@ -44,7 +44,7 @@ import com.hazelcast.nio.serialization.StreamSerializer;
  * An IPageStore that saves serialized pages in Hazelcast.
  */
 public class HazelcastDataStore extends AbstractPersistentPageStore implements IPersistentPageStore {
-	
+
 	private static final Logger LOGGER = LoggerFactory.getLogger(HazelcastDataStore.class);
 
 	/**
@@ -60,9 +60,9 @@ public class HazelcastDataStore extends AbstractPersistentPageStore implements I
 	public HazelcastDataStore(String applicationName, HazelcastInstance hazelcast)
 	{
 		super(applicationName);
-		
+
 		this.hazelcast = Args.notNull(hazelcast, "hazelcast");
-		
+
 		SerializerConfig config = new SerializerConfig().
 		        setImplementation(new SerializedPageSerializer()).
 		        setTypeClass(SerializedPage.class);
@@ -84,14 +84,14 @@ public class HazelcastDataStore extends AbstractPersistentPageStore implements I
 		if (map != null)
 		{
 			SerializedPage page = map.get(id);
-			
+
 			LOGGER.debug("Got {} for session '{}' and page id '{}'", page, sessionIdentifier, id);
-			
+
 			if (page != null) {
 				return page;
 			}
 		}
-		
+
 		return null;
 	}
 
@@ -119,7 +119,7 @@ public class HazelcastDataStore extends AbstractPersistentPageStore implements I
 	protected void addPersistedPage(String sessionIdentifier, IManageablePage page) {
 		if (page instanceof SerializedPage == false)
 		{
-			throw new WicketRuntimeException("CassandraDataStore works with serialized pages only");
+			throw new WicketRuntimeException("HazelcastDataStore works with serialized pages only");
 		}
 		SerializedPage serializedPage = (SerializedPage)page;
 
@@ -136,13 +136,13 @@ public class HazelcastDataStore extends AbstractPersistentPageStore implements I
 			hazelcast.shutdown();
 		}
 	}
-	
+
 	@Override
 	public Set<String> getSessionIdentifiers()
 	{
 		return hazelcast.getConfig().getMapConfigs().keySet();
 	}
-	
+
 	@Override
 	public Bytes getTotalSize()
 	{
@@ -150,29 +150,29 @@ public class HazelcastDataStore extends AbstractPersistentPageStore implements I
 		for (DistributedObject object : hazelcast.getDistributedObjects())
 		{
 			IMap<Integer, SerializedPage> map = hazelcast.getMap(object.getName());
-			
+
 			bytes += map.getLocalMapStats().getHeapCost();
 		}
 		return Bytes.bytes(bytes);
 	}
-	
-	
-	
+
+
+
 	@Override
 	public List<IPersistedPage> getPersistedPages(String contextIdentifier)
 	{
 		List<IPersistedPage> pages = new ArrayList<>();
-		
+
 		IMap<Integer, SerializedPage> map = hazelcast.getMap(contextIdentifier);
 		if (map != null) {
 			for (SerializedPage page : map.values()) {
 				pages.add(new PersistedPage(page.getPageId(), page.getPageType(), page.getData().length));
 			}
 		}
-		
+
 		return pages;
 	}
-	
+
 	private static final class SerializedPageSerializer implements StreamSerializer<SerializedPage>
 	{
 
