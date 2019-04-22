@@ -3,14 +3,14 @@
 	<parent>
 		<groupId>org.wicketstuff</groupId>
 		<artifactId>datastores-parent</artifactId>
-		<version>9.0.0-M1-SNAPSHOT</version>
+		<version>9.0.0-M2-SNAPSHOT</version>
 	</parent>
 
 	<modelVersion>4.0.0</modelVersion>
 	<artifactId>wicketstuff-datastore-cassandra</artifactId>
 	<packaging>jar</packaging>
-	<name>Apache Wicket IDataStore Cassandra </name>
-	<description>An implementation of Apache Wicket's IDataStore that uses Apache Cassandra as a backend</description>
+	<name>Apache Wicket IPageStore Cassandra </name>
+	<description>An implementation of Apache Wicket's IPageStore that uses Apache Cassandra as a backend</description>
 
 	<properties>
 		<cassandra-driver-core.version>3.6.0</cassandra-driver-core.version>

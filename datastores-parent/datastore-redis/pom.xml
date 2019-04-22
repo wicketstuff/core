@@ -3,14 +3,14 @@
 	<parent>
 		<groupId>org.wicketstuff</groupId>
 		<artifactId>datastores-parent</artifactId>
-		<version>9.0.0-M1-SNAPSHOT</version>
+		<version>9.0.0-M2-SNAPSHOT</version>
 	</parent>
 
 	<modelVersion>4.0.0</modelVersion>
 	<artifactId>wicketstuff-datastore-redis</artifactId>
 	<packaging>jar</packaging>
-	<name>Apache Wicket IDataStore Redis </name>
-	<description>An implementation of Apache Wicket's IDataStore that uses Redis as a backend</description>
+	<name>Apache Wicket IPageStore Redis </name>
+	<description>An implementation of Apache Wicket's IPageStore that uses Redis as a backend</description>
 
 	<properties>
 		<jedis.version>3.0.1</jedis.version>

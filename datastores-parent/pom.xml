@@ -6,15 +6,15 @@
 	<parent>
 		<groupId>org.wicketstuff</groupId>
 		<artifactId>wicketstuff-core</artifactId>
-		<version>9.0.0-M1-SNAPSHOT</version>
+		<version>9.0.0-M2-SNAPSHOT</version>
 	</parent>
 
 	<artifactId>datastores-parent</artifactId>
 
 	<packaging>pom</packaging>
 
-	<name>Apache Wicket IDataStore Parent</name>
-	<description>Parent project for WicketStuff IDataStore implementations</description>
+	<name>Apache Wicket IPageStore Parent</name>
+	<description>Parent project for WicketStuff IPageStore implementations</description>
 
 	<modules>
 		<module>datastore-common</module>

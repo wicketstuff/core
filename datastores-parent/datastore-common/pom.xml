@@ -20,14 +20,14 @@
 	<parent>
 		<groupId>org.wicketstuff</groupId>
 		<artifactId>datastores-parent</artifactId>
-		<version>9.0.0-M1-SNAPSHOT</version>
+		<version>9.0.0-M2-SNAPSHOT</version>
 	</parent>
 
 	<modelVersion>4.0.0</modelVersion>
 	<artifactId>wicketstuff-datastore-common</artifactId>
 	<packaging>jar</packaging>
-	<name>Apache Wicket IDataStore Common</name>
-	<description>Helper classes for Apache Wicket's IDataStore implementation</description>
+	<name>Apache Wicket IPageStore Common</name>
+	<description>Helper classes for Apache Wicket's IPageStore implementation</description>
 
    <build>
       <plugins>

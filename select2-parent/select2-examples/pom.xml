@@ -4,7 +4,7 @@
 	<parent>
 		<artifactId>wicketstuff-select2-parent</artifactId>
 		<groupId>org.wicketstuff</groupId>
-		<version>9.0.0-M1-SNAPSHOT</version>
+		<version>9.0.0-M2-SNAPSHOT</version>
 	</parent>
 	<artifactId>wicketstuff-select2-examples</artifactId>
 	<packaging>war</packaging>
