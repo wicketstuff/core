@@ -2,25 +2,47 @@ package org.wicketstuff.gae;
 
 import org.apache.wicket.Application;
 import org.apache.wicket.DefaultPageManagerProvider;
+import org.apache.wicket.page.IPageManager;
 import org.apache.wicket.pageStore.IPageStore;
 import org.apache.wicket.pageStore.InSessionPageStore;
 import org.apache.wicket.pageStore.NoopPageStore;
 
-public class GaePageManagerProvider extends DefaultPageManagerProvider
-{
+/**
+ * Provider of a {@link IPageManager} suitable for GAE.  
+ * 
+ * @author svenmeier
+ */
+public class GaePageManagerProvider extends DefaultPageManagerProvider {
 
 	private int maxPages;
 
-	public GaePageManagerProvider(Application application, int maxPages)
-	{
+	/**
+	 * Constructor.
+	 * 
+	 * @param application application
+	 * @param maxPages maximum number of pages to hold in session
+	 */
+	public GaePageManagerProvider(Application application, int maxPages) {
 		super(application);
 
 		this.maxPages = maxPages;
 	}
 
+	/**
+	 * Overridden to skip storing the last page in the session.
+	 * 
+	 * @see #newPersistentStore()
+	 */
 	@Override
-	protected IPageStore newPersistentStore()
-	{
+	protected IPageStore newSessionStore(IPageStore pageStore) {
+		return pageStore;
+	}
+
+	/**
+	 * Store maximum number of pages in the session.
+	 */
+	@Override
+	protected IPageStore newPersistentStore() {
 		return new InSessionPageStore(new NoopPageStore(), maxPages, getSerializer());
 	}
 }
