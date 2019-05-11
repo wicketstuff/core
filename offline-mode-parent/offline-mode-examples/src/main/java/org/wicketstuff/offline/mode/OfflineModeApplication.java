@@ -1,12 +1,12 @@
 package org.wicketstuff.offline.mode;
 
+import java.time.Duration;
 import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.wicket.Page;
 import org.apache.wicket.protocol.http.WebApplication;
 import org.apache.wicket.request.resource.caching.NoOpResourceCachingStrategy;
-import org.apache.wicket.util.time.Duration;
 
 public class OfflineModeApplication extends WebApplication
 {
@@ -24,7 +24,7 @@ public class OfflineModeApplication extends WebApplication
 
 		// disable cache
 		getResourceSettings().setCachingStrategy(NoOpResourceCachingStrategy.INSTANCE);
-		getResourceSettings().setDefaultCacheDuration(Duration.NONE);
+		getResourceSettings().setDefaultCacheDuration(Duration.ZERO);
 
 		// Register all resources / pages which should be available in the offline state
 		List<OfflineCacheEntry> offlineCacheEntries = new ArrayList<>();

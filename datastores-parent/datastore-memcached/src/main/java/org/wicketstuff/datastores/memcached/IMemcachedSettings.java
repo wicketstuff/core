@@ -16,7 +16,7 @@
  */
 package org.wicketstuff.datastores.memcached;
 
-import org.apache.wicket.util.time.Duration;
+import java.time.Duration;
 
 import java.util.List;
 

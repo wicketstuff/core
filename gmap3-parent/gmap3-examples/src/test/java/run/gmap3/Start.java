@@ -1,6 +1,7 @@
 package run.gmap3;
 
-import org.apache.wicket.util.time.Duration;
+import java.time.Duration;
+
 import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.server.ServerConnector;
 import org.eclipse.jetty.util.resource.Resource;
@@ -11,7 +12,7 @@ public class Start {
 
 	public static void main(String[] args) throws Exception {
 
-		int timeout = (int) Duration.ONE_HOUR.getMilliseconds();
+		int timeout = (int) Duration.ofHours(1).toMillis();
 
 		Server server = new Server();
 		ServerConnector connector = new ServerConnector( server );

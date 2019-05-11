@@ -1,11 +1,12 @@
 package org.wicketstuff.html5.markup.html;
 
+import java.time.Duration;
+
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.AjaxSelfUpdatingTimerBehavior;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.model.PropertyModel;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
-import org.apache.wicket.util.time.Duration;
 import org.wicketstuff.html5.BasePage;
 
 public class ProgressDemo extends BasePage
@@ -26,7 +27,7 @@ public class ProgressDemo extends BasePage
 		add(progress);
 		progress.setOutputMarkupId(true);
 
-		progress.add(new AjaxSelfUpdatingTimerBehavior(Duration.seconds(1))
+		progress.add(new AjaxSelfUpdatingTimerBehavior(Duration.ofSeconds(1))
 		{
 
 			private static final long serialVersionUID = 1L;

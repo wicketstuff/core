@@ -18,6 +18,8 @@ package org.wicketstuff.push.timer;
 
 import static java.util.Collections.EMPTY_LIST;
 
+import java.time.Duration;
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
@@ -33,8 +35,6 @@ import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.behavior.Behavior;
 import org.apache.wicket.request.cycle.RequestCycle;
 import org.apache.wicket.util.lang.Args;
-import org.apache.wicket.util.time.Duration;
-import org.apache.wicket.util.time.Time;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.wicketstuff.push.AbstractPushService;
@@ -57,7 +57,7 @@ public class TimerPushService extends AbstractPushService
 	private final class PushNodeState<EventType>
 	{
 		final TimerPushNode<EventType> node;
-		Time lastPolledAt = Time.now();
+		Instant lastPolledAt = Instant.now();
 		List<TimerPushEventContext<EventType>> queuedEvents = new ArrayList<TimerPushEventContext<EventType>>(
 			2);
 
@@ -68,7 +68,7 @@ public class TimerPushService extends AbstractPushService
 
 		boolean isTimedOut()
 		{
-			return Time.now().subtract(lastPolledAt).greaterThan(_maxTimeLag);
+			return Duration.between(lastPolledAt, Instant.now()).compareTo(_maxTimeLag) > 0;
 		}
 	}
 
@@ -108,7 +108,7 @@ public class TimerPushService extends AbstractPushService
 				 * If this is the first instance of this service for the given application, then
 				 * schedule the cleanup task.
 				 */
-				service.setCleanupInterval(Duration.seconds(60));
+				service.setCleanupInterval(Duration.ofSeconds(60));
 			else
 				// If it is not the first instance, throw it away.
 				service = existingInstance;
@@ -141,9 +141,9 @@ public class TimerPushService extends AbstractPushService
 		}
 	}
 
-	private Duration _defaultPollingInterval = Duration.seconds(2);
+	private Duration _defaultPollingInterval = Duration.ofSeconds(2);
 
-	private Duration _maxTimeLag = Duration.seconds(10);
+	private Duration _maxTimeLag = Duration.ofSeconds(10);
 
 	private final ConcurrentMap<TimerPushNode<?>, PushNodeState<?>> _nodeStates = new ConcurrentHashMap<TimerPushNode<?>, PushNodeState<?>>();
 	private final ScheduledThreadPoolExecutor _cleanupExecutor = new ScheduledThreadPoolExecutor(1);
@@ -289,7 +289,7 @@ public class TimerPushService extends AbstractPushService
 
 		synchronized (state)
 		{
-			state.lastPolledAt = Time.now();
+			state.lastPolledAt = Instant.now();
 
 			if (state.queuedEvents.size() == 0)
 				return EMPTY_LIST;
@@ -372,7 +372,7 @@ public class TimerPushService extends AbstractPushService
 				_cleanupFuture.cancel(false);
 			if (!_cleanupExecutor.isShutdown())
 				_cleanupFuture = _cleanupExecutor.scheduleAtFixedRate(_cleanupTask,
-					interval.getMilliseconds(), interval.getMilliseconds(), TimeUnit.MILLISECONDS);
+					interval.toMillis(), interval.toMillis(), TimeUnit.MILLISECONDS);
 		}
 	}
 

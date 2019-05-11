@@ -1,11 +1,11 @@
 package org.wicketstuff.datastores.cassandra;
 
+import java.time.Duration;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
 import org.apache.wicket.util.lang.Args;
-import org.apache.wicket.util.time.Duration;
 
 /**
  * @see org.wicketstuff.datastores.cassandra.ICassandraSettings
@@ -16,7 +16,7 @@ public class CassandraSettings implements ICassandraSettings
 
 	private String tableName = "pagestore";
 
-	private Duration recordTtl = Duration.minutes(30);
+	private Duration recordTtl = Duration.ofMinutes(30);
 
 	private final List<String> contactPoints = new ArrayList<>();
 

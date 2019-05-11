@@ -1,5 +1,7 @@
 package org.wicketstuff.html5.markup.html.form;
 
+import java.time.Duration;
+
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.attributes.AjaxRequestAttributes;
 import org.apache.wicket.ajax.attributes.ThrottlingSettings;
@@ -8,7 +10,6 @@ import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.form.RangeTextField;
 import org.apache.wicket.model.Model;
-import org.apache.wicket.util.time.Duration;
 import org.wicketstuff.html5.BasePage;
 
 public class RangeTextFieldDemo extends BasePage
@@ -49,7 +50,7 @@ public class RangeTextFieldDemo extends BasePage
 			{
 				super.updateAjaxAttributes(attributes);
 
-				ThrottlingSettings throttleSettings = new ThrottlingSettings("rangeTextFieldDemoId", Duration.milliseconds(500));
+				ThrottlingSettings throttleSettings = new ThrottlingSettings("rangeTextFieldDemoId", Duration.ofMillis(500));
 				attributes.setThrottlingSettings(throttleSettings);
 			}
 		});

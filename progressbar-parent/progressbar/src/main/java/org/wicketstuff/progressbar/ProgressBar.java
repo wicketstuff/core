@@ -16,6 +16,8 @@
  */
 package org.wicketstuff.progressbar;
 
+import java.time.Duration;
+
 import org.apache.wicket.AttributeModifier;
 import org.apache.wicket.Component;
 import org.apache.wicket.ajax.AjaxRequestTarget;
@@ -29,7 +31,6 @@ import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.request.resource.PackageResourceReference;
 import org.apache.wicket.request.resource.ResourceReference;
-import org.apache.wicket.util.time.Duration;
 
 
 /**
@@ -228,7 +229,7 @@ public class ProgressBar extends Panel
 	public void start(AjaxRequestTarget target)
 	{
 		setVisible(true);
-		add(new AjaxSelfUpdatingTimerBehavior(Duration.ONE_SECOND)
+		add(new AjaxSelfUpdatingTimerBehavior(Duration.ofSeconds(1))
 		{
 			/**
 					 * 

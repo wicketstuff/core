@@ -16,9 +16,9 @@
  */
 package org.wicketstuff.push.timer;
 
+import java.time.Duration;
 import java.util.UUID;
 
-import org.apache.wicket.util.time.Duration;
 import org.wicketstuff.push.IPushNode;
 
 /**

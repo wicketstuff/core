@@ -20,13 +20,13 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.wicketstuff.lazymodel.LazyModel.from;
 import static org.wicketstuff.lazymodel.LazyModel.model;
 
+import java.time.Duration;
+import java.time.Instant;
 import java.util.function.Supplier;
 
 import org.apache.wicket.core.util.lang.WicketObjects;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.PropertyModel;
-import org.apache.wicket.util.time.Duration;
-import org.apache.wicket.util.time.Time;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.wicketstuff.lazymodel.LazyModelTest.A;
@@ -74,8 +74,8 @@ public class PropertyModelComparison {
 
 		Duration lazyModelDuration = measureTime(() -> model(from(a).getB().getCs().get(0).getString()));
 
-		assertTrue(lazyModelDuration.getMilliseconds() < propertyModelDuration
-						.getMilliseconds() * 2.1, "LazyModel is 2 times slower");
+		assertTrue(lazyModelDuration.toMillis() < propertyModelDuration
+						.toMillis() * 2.1, "LazyModel is 2 times slower");
 	}
 
 	@Test
@@ -86,12 +86,12 @@ public class PropertyModelComparison {
 				.getString());
 		Duration lazyModelDuration = measureTime(() -> C.bind(a));
 
-		assertTrue(lazyModelDuration.getMilliseconds() < propertyModelDuration
-						.getMilliseconds() * 1.1, "Cached LazyModel is slower");
+		assertTrue(lazyModelDuration.toMillis() < propertyModelDuration
+						.toMillis() * 1.1, "Cached LazyModel is slower");
 	}
 
 	private Duration measureTime(Supplier<IModel<?>> provider) {
-		Time start = Time.now();
+		Instant start = Instant.now();
 
 		for (int i = 0; i < 100000; i++) {
 			final IModel<?> m = provider.get();
@@ -100,11 +100,11 @@ public class PropertyModelComparison {
 			}
 		}
 
-		Duration duration = Time.now().subtract(start);
+		Duration duration = Duration.between(start, Instant.now());
 
 		System.out.println(String.format(
 				"PropertyModelComparison %s: %s seconds", provider.get()
-						.getClass(), duration.seconds()));
+						.getClass(), duration.toSeconds()));
 
 		return duration;
 	}

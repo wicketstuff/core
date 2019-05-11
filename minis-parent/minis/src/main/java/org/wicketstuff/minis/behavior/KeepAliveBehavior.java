@@ -16,9 +16,10 @@
  */
 package org.wicketstuff.minis.behavior;
 
+import java.time.Duration;
+
 import org.apache.wicket.ajax.AbstractAjaxTimerBehavior;
 import org.apache.wicket.ajax.AjaxRequestTarget;
-import org.apache.wicket.util.time.Duration;
 
 public class KeepAliveBehavior extends AbstractAjaxTimerBehavior
 {
@@ -26,7 +27,7 @@ public class KeepAliveBehavior extends AbstractAjaxTimerBehavior
 
 	public KeepAliveBehavior()
 	{
-		super(Duration.minutes(10));
+		super(Duration.ofMinutes(10));
 	}
 
 	@Override

@@ -17,9 +17,10 @@
  */
 package org.wicketstuff.jasperreports.examples;
 
+import java.time.Duration;
+
 import org.apache.wicket.Page;
 import org.apache.wicket.protocol.http.WebApplication;
-import org.apache.wicket.util.time.Duration;
 
 /**
  * Wicket application class for jasper reports example.
@@ -41,7 +42,7 @@ public class JasperReportsApplication extends WebApplication
 	@Override
 	protected void init()
 	{
-		getResourceSettings().setResourcePollFrequency(Duration.ONE_SECOND);
+		getResourceSettings().setResourcePollFrequency(Duration.ofSeconds(1));
 	}
 
 	/**

@@ -19,6 +19,7 @@ package org.wicketstuff.html5.eventsource;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.nio.charset.Charset;
+import java.time.Duration;
 
 import javax.servlet.http.HttpServletResponse;
 
@@ -27,7 +28,6 @@ import org.apache.wicket.request.Response;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
 import org.apache.wicket.request.resource.IResource;
 import org.apache.wicket.util.lang.Args;
-import org.apache.wicket.util.time.Duration;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -145,9 +145,9 @@ public abstract class EventSourceResource implements IResource
 		public EventSource retry(final Duration retryTimeout)
 		{
 			Args.notNull(retryTimeout, "retryTimeout");
-			if (retryTimeout.equals(Duration.NONE) == false)
+			if (retryTimeout.equals(Duration.ZERO) == false)
 			{
-				write("retry: " + retryTimeout.getMilliseconds());
+				write("retry: " + retryTimeout.toMillis());
 				end();
 			}
 			return this;

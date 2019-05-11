@@ -19,6 +19,7 @@ package org.wicketstuff.datastores.memcached;
 import java.io.IOException;
 import java.net.InetSocketAddress;
 import java.net.SocketAddress;
+import java.time.Duration;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
@@ -33,7 +34,6 @@ import org.apache.wicket.pageStore.SerializedPage;
 import org.apache.wicket.util.lang.Args;
 import org.apache.wicket.util.lang.Bytes;
 import org.apache.wicket.util.lang.Checks;
-import org.apache.wicket.util.time.Duration;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -236,7 +236,7 @@ public class MemcachedDataStore extends AbstractPersistentPageStore implements I
 		if (client != null) {
 			Duration timeout = settings.getShutdownTimeout();
 			LOG.info("Shutting down gracefully for {}", timeout);
-			client.shutdown(timeout.getMilliseconds(), TimeUnit.MILLISECONDS);
+			client.shutdown(timeout.toMillis(), TimeUnit.MILLISECONDS);
 		}
 	}
 

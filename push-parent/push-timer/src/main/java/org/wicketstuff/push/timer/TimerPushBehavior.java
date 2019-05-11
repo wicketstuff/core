@@ -16,6 +16,7 @@
  */
 package org.wicketstuff.push.timer;
 
+import java.time.Duration;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -29,7 +30,6 @@ import org.apache.wicket.markup.head.JavaScriptHeaderItem;
 import org.apache.wicket.markup.head.OnEventHeaderItem;
 import org.apache.wicket.request.cycle.RequestCycle;
 import org.apache.wicket.request.http.WebRequest;
-import org.apache.wicket.util.time.Duration;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.wicketstuff.push.IPushEventContext;
@@ -57,7 +57,7 @@ public class TimerPushBehavior extends AbstractAjaxTimerBehavior
 	<EventType> TimerPushNode<EventType> addNode(
 		final IPushEventHandler<EventType> pushEventHandler, final Duration pollingInterval)
 	{
-		if (pollingInterval.lessThan(getUpdateInterval()))
+		if (pollingInterval.compareTo(getUpdateInterval()) < 0)
 			setUpdateInterval(pollingInterval);
 
 		final TimerPushNode<EventType> node = new TimerPushNode<EventType>(pollingInterval);
@@ -111,9 +111,9 @@ public class TimerPushBehavior extends AbstractAjaxTimerBehavior
 		handlers.remove(node);
 
 		// adjust the polling interval based on the fastest remaining node
-		Duration newPollingInterval = Duration.MAXIMUM;
+		Duration newPollingInterval = Duration.ofSeconds(Long.MAX_VALUE, 999_999_999);
 		for (final TimerPushNode n : handlers.keySet())
-			if (n.getPollingInterval().lessThan(newPollingInterval))
+			if (n.getPollingInterval().compareTo(newPollingInterval) < 0)
 				newPollingInterval = n.getPollingInterval();
 		setUpdateInterval(newPollingInterval);
 

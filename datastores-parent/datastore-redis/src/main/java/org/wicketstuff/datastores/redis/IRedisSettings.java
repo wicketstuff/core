@@ -1,6 +1,6 @@
 package org.wicketstuff.datastores.redis;
 
-import org.apache.wicket.util.time.Duration;
+import java.time.Duration;
 
 /**
  * Settings for RedisDataStore

@@ -16,12 +16,12 @@
  */
 package org.apache.wicket.examples.ajax.builtin;
 
+import java.time.Duration;
 import java.util.TimeZone;
 
 import org.apache.wicket.ajax.AbstractAjaxTimerBehavior;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.markup.html.AjaxLink;
-import org.apache.wicket.util.time.Duration;
 
 
 /**
@@ -60,7 +60,7 @@ public class WorldClockPage extends BasePage
 
 		// add the timer behavior to the page and make it update all
 		// other components as well
-		final AbstractAjaxTimerBehavior timer = new AbstractAjaxTimerBehavior(Duration.seconds(1))
+		final AbstractAjaxTimerBehavior timer = new AbstractAjaxTimerBehavior(Duration.ofSeconds(1))
 		{
 			/**
 			 * @see org.apache.wicket.ajax.AbstractAjaxTimerBehavior#onTimer(org.apache.wicket.ajax.AjaxRequestTarget)

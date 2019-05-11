@@ -2,7 +2,7 @@ package org.wicketstuff.datastores.cassandra;
 
 import java.util.List;
 
-import org.apache.wicket.util.time.Duration;
+import java.time.Duration;
 
 /**
  * Settings for CassandraDataStore

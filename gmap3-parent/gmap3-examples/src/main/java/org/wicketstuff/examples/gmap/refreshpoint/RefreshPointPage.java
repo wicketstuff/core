@@ -1,5 +1,6 @@
 package org.wicketstuff.examples.gmap.refreshpoint;
 
+import java.time.Duration;
 import java.util.Collections;
 
 import org.apache.wicket.ajax.AbstractAjaxTimerBehavior;
@@ -7,7 +8,6 @@ import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.markup.html.AjaxLink;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.model.Model;
-import org.apache.wicket.util.time.Duration;
 import org.wicketstuff.examples.gmap.WicketExamplePage;
 import org.wicketstuff.gmap.GMap;
 import org.wicketstuff.gmap.api.GIcon;
@@ -37,7 +37,7 @@ public class RefreshPointPage extends WicketExamplePage
 
         map.addOverlay(overlay);
 
-        map.add(new AbstractAjaxTimerBehavior(Duration.seconds(5))
+        map.add(new AbstractAjaxTimerBehavior(Duration.ofSeconds(5))
         {
             private static final long serialVersionUID = 1L;
             private int i = 1;

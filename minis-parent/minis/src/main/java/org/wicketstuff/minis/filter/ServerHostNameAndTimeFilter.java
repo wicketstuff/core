@@ -21,13 +21,13 @@ import static org.apache.wicket.core.util.string.JavaScriptUtils.SCRIPT_OPEN_TAG
 
 import java.net.InetAddress;
 import java.net.UnknownHostException;
+import java.time.Duration;
 
 import org.apache.wicket.WicketRuntimeException;
 import org.apache.wicket.request.cycle.RequestCycle;
 import org.apache.wicket.response.filter.IResponseFilter;
 import org.apache.wicket.util.string.AppendingStringBuffer;
 import org.apache.wicket.util.string.Strings;
-import org.apache.wicket.util.time.Duration;
 
 /**
  * Displays an server identifier (combination of host name, IP address and unique id) and the time
@@ -83,7 +83,7 @@ public class ServerHostNameAndTimeFilter implements IResponseFilter
 		sb.append("Host: ")
 			.append(host)
 			.append(", handled in: ")
-			.append(Duration.milliseconds(timeTaken));
+			.append(Duration.ofMillis(timeTaken));
 	}
 
 	/**

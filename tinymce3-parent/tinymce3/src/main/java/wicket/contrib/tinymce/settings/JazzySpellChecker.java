@@ -22,6 +22,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.time.Instant;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
@@ -30,19 +31,18 @@ import java.util.Set;
 import javax.servlet.ServletInputStream;
 import javax.servlet.http.HttpServletRequest;
 
-import com.github.openjson.JSONArray;
-import com.github.openjson.JSONException;
-import com.github.openjson.JSONObject;
-import com.github.openjson.JSONTokener;
 import org.apache.wicket.protocol.http.servlet.ServletWebRequest;
 import org.apache.wicket.request.cycle.RequestCycle;
 import org.apache.wicket.request.http.WebResponse;
 import org.apache.wicket.request.resource.AbstractResource;
 import org.apache.wicket.util.resource.StringBufferResourceStream;
-import org.apache.wicket.util.time.Time;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.github.openjson.JSONArray;
+import com.github.openjson.JSONException;
+import com.github.openjson.JSONObject;
+import com.github.openjson.JSONTokener;
 import com.swabunga.spell.engine.SpellDictionary;
 import com.swabunga.spell.engine.SpellDictionaryHashMap;
 import com.swabunga.spell.event.SpellCheckEvent;
@@ -271,7 +271,7 @@ class JazzySpellChecker extends AbstractResource
 	{
 		resourceStream.clear();
 		resourceStream.append(response);
-		resourceStream.setLastModified(Time.now());
+		resourceStream.setLastModified(Instant.now());
 	}
 
 	// Simple method of returning a user-visible error message to TinyMCE

@@ -1,5 +1,7 @@
 package org.wicketstuff.examples.gmap.geocode;
 
+import java.time.Duration;
+
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.markup.html.form.AjaxButton;
 import org.apache.wicket.markup.html.form.Button;
@@ -7,7 +9,6 @@ import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.form.TextField;
 import org.apache.wicket.markup.html.panel.FeedbackPanel;
 import org.apache.wicket.model.Model;
-import org.apache.wicket.util.time.Duration;
 import org.wicketstuff.examples.gmap.WicketExamplePage;
 import org.wicketstuff.gmap.GMap;
 import org.wicketstuff.gmap.api.GClientGeocoder;
@@ -43,7 +44,7 @@ public class HomePage extends WicketExamplePage
         Button button = new Button("client");
         // Using GClientGeocoder the geocoding request
         // is performed on the client using JavaScript
-        button.add(new GClientGeocoder("click", addressTextField, Duration.seconds(2), "http", WicketExamplePage.API_KEY)
+        button.add(new GClientGeocoder("click", addressTextField, Duration.ofSeconds(2), "http", WicketExamplePage.API_KEY)
         {
             private static final long serialVersionUID = 1L;
 

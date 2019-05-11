@@ -20,11 +20,11 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.time.Instant;
 
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.wicket.util.resource.AbstractResourceStream;
 import org.apache.wicket.util.resource.ResourceStreamNotFoundException;
-import org.apache.wicket.util.time.Time;
 
 /**
  * The XLS file resource for the specified {@link Workbook}
@@ -78,8 +78,8 @@ public class XlsStream extends AbstractResourceStream
 	}
 
 	@Override
-	public Time lastModifiedTime()
+	public Instant lastModifiedTime()
 	{
-		return Time.now();
+		return Instant.now();
 	}
 }

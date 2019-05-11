@@ -143,8 +143,8 @@ public class RedisDataStore extends AbstractPersistentPageStore implements IPers
 			resource.hmset(attributesKey, makeHm(serializedPage));
 			
 			if (settings.getRecordTtl() != null) {
-				resource.expire(key, (int) settings.getRecordTtl().seconds());
-				resource.expire(attributesKey, (int) settings.getRecordTtl().seconds());
+				resource.expire(key, (int) settings.getRecordTtl().toSeconds());
+				resource.expire(attributesKey, (int) settings.getRecordTtl().toSeconds());
 			}
 		}
 		LOGGER.debug("Inserted data for session '{}' and page id '{}'", sessionIdentifier, page.getPageId());

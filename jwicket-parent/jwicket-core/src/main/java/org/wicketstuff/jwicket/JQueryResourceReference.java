@@ -1,9 +1,10 @@
 package org.wicketstuff.jwicket;
 
 
+import java.time.Instant;
+
 import org.apache.wicket.WicketRuntimeException;
 import org.apache.wicket.request.resource.JavaScriptResourceReference;
-import org.apache.wicket.util.time.Time;
 import org.apache.wicket.util.watch.IModifiable;
 
 
@@ -78,7 +79,7 @@ public class JQueryResourceReference extends JavaScriptResourceReference impleme
     }
 
     @Override
-    public Time lastModifiedTime() {
-        return Time.millis(0L);
+    public Instant lastModifiedTime() {
+        return Instant.ofEpochMilli(0L);
     }
 }

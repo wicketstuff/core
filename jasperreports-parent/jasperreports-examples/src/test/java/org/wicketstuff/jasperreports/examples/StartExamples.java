@@ -18,8 +18,9 @@
  */
 package org.wicketstuff.jasperreports.examples;
 
+import java.time.Duration;
+
 import org.apache.wicket.util.file.File;
-import org.apache.wicket.util.time.Duration;
 import org.eclipse.jetty.http.HttpVersion;
 import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.server.ServerConnector;
@@ -30,7 +31,7 @@ import org.eclipse.jetty.webapp.WebAppContext;
 
 public class StartExamples {
 	public static void main(String[] args) throws Exception {
-		int timeout = (int) Duration.ONE_HOUR.getMilliseconds();
+		int timeout = (int) Duration.ofHours(1).toMillis();
 
 		Server server = new Server();
 		ServerConnector http = new ServerConnector(server);

@@ -16,9 +16,10 @@
  */
 package org.wicketstuff.html5.eventsource;
 
+import java.util.concurrent.TimeUnit;
+
 import org.apache.wicket.request.resource.IResource;
 import org.apache.wicket.request.resource.ResourceReference;
-import org.apache.wicket.util.time.Duration;
 
 /**
  * A reference to a custom implementation of EventSourceResource.
@@ -46,7 +47,14 @@ public class EventSourceResourceReference extends ResourceReference
 				{
 					eventSource.data("{\"counter\": "+i+"}").end();
 					i--;
-					Duration.milliseconds(2000).sleep();
+					try
+					{
+						TimeUnit.MILLISECONDS.sleep(2000);
+					}
+					catch (InterruptedException e)
+					{
+						throw new RuntimeException(e);
+					}
 				}
 				eventSource.close();
 			}

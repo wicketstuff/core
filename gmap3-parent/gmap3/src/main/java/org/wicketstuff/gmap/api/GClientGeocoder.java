@@ -1,5 +1,7 @@
 package org.wicketstuff.gmap.api;
 
+import java.time.Duration;
+
 import org.apache.wicket.Component;
 import org.apache.wicket.ajax.AjaxEventBehavior;
 import org.apache.wicket.ajax.AjaxRequestTarget;
@@ -8,7 +10,6 @@ import org.apache.wicket.markup.html.form.TextField;
 import org.apache.wicket.request.IRequestParameters;
 import org.apache.wicket.request.Request;
 import org.apache.wicket.request.cycle.RequestCycle;
-import org.apache.wicket.util.time.Duration;
 import org.wicketstuff.gmap.GMapHeaderContributor;
 import org.wicketstuff.gmap.geocoder.GeocoderStatus;
 
@@ -35,7 +36,7 @@ public abstract class GClientGeocoder extends AjaxEventBehavior
      */
     public GClientGeocoder(String event, TextField<?> addressField, final String scheme, final String apiKey)
     {
-        this(event, addressField, Duration.milliseconds(500), scheme, apiKey);
+        this(event, addressField, Duration.ofMillis(500), scheme, apiKey);
     }
 
     public GClientGeocoder(String event, TextField<?> addressField, Duration timeout, final String scheme, final String apiKey)
@@ -72,7 +73,7 @@ public abstract class GClientGeocoder extends AjaxEventBehavior
             js.append("setTimeout(function() {")
             .append(getCallbackScript())
             .append("}, ")
-            .append(timeout.getMilliseconds())
+            .append(timeout.toMillis())
             .append(");");
              target.appendJavaScript(js);
         }

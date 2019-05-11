@@ -1,14 +1,15 @@
 package org.wicketstuff.datastores.redis;
 
+import java.time.Duration;
+
 import org.apache.wicket.util.lang.Args;
-import org.apache.wicket.util.time.Duration;
 
 /**
  * @see org.wicketstuff.datastores.redis.IRedisSettings
  */
 public class RedisSettings implements IRedisSettings {
 
-	private Duration recordTtl = Duration.minutes(1);
+	private Duration recordTtl = Duration.ofMinutes(1);
 
 	private String hostname = "127.0.0.1";
 

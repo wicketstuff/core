@@ -16,12 +16,12 @@
  */
 package org.wicketstuff.datastores.memcached;
 
+import java.time.Duration;
 import java.util.List;
 
 import org.apache.wicket.util.lang.Args;
 import org.apache.wicket.util.lang.Generics;
 import org.apache.wicket.util.string.Strings;
-import org.apache.wicket.util.time.Duration;
 
 /**
  * Default implementation of IMemcachedSettings
@@ -35,7 +35,7 @@ public class MemcachedSettings implements IMemcachedSettings {
 	// default is 30 minutes (in seconds)
 	private int expirationTime = 30 * 60;
 
-	private Duration shutdownTimeout = Duration.seconds(10);
+	private Duration shutdownTimeout = Duration.ofSeconds(10);
 
 	/**
 	 * Constructor.

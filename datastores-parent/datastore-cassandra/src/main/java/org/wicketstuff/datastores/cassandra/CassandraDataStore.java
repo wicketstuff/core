@@ -209,7 +209,7 @@ public class CassandraDataStore extends AbstractPersistentPageStore implements I
 		
 		Insert insert = QueryBuilder
 				.insertInto(settings.getKeyspaceName(), settings.getTableName())
-				.using(QueryBuilder.ttl((int) settings.getRecordTtl().seconds()))
+				.using(QueryBuilder.ttl((int) settings.getRecordTtl().toSeconds()))
 				.values(new String[]{COLUMN_SESSION_ID, COLUMN_PAGE_ID, COLUMN_PAGE_SIZE, COLUMN_PAGE_TYPE, COLUMN_DATA},
 						new Object[]{identifier, serializedPage.getPageId(), serializedPage.getData().length, serializedPage.getPageType(), ByteBuffer.wrap(serializedPage.getData())});
 		session.execute(insert);
