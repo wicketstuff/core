@@ -21,7 +21,9 @@ import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
+import java.util.function.Supplier;
 
 import org.apache.wicket.authroles.authorization.strategies.role.Roles;
 import org.apache.wicket.util.collections.MultiMap;
@@ -59,6 +61,9 @@ public class MethodMappingInfo implements IMimeTypeResolver
 	private final List<MethodParameter<?>> methodParameters;
 	/** Method parameters list */
 	private final Map<Class<? extends Annotation>, List<MethodParameter<?>>> annotatedMethodParameters;
+	/** Supplier used to retrieve the Locale*/	
+	private final Supplier<Locale> localeSupplier;
+	
 
 	/**
 	 * Class constructor.
@@ -68,8 +73,9 @@ public class MethodMappingInfo implements IMimeTypeResolver
 	 * @param method
 	 *            the resource's method mapped.
 	 */
-	public MethodMappingInfo(MethodMapping methodMapped, Method method)
+	public MethodMappingInfo(MethodMapping methodMapped, Method method, Supplier<Locale> localeSupplier)
 	{
+		this.localeSupplier = localeSupplier;
 		this.httpMethod = methodMapped.httpMethod();
 		this.method = method;
 		this.segments = Collections.unmodifiableList(loadSegments(methodMapped.value()));
@@ -77,18 +83,18 @@ public class MethodMappingInfo implements IMimeTypeResolver
 
 		this.inputFormat = methodMapped.consumes();
 		this.outputFormat = methodMapped.produces();
-		this.methodParameters = loadMethodParameters(method);
+		this.methodParameters = loadMethodParameters(method, localeSupplier);
 		this.annotatedMethodParameters = loadAnnotatedMethodParameters();
 	}
 
-	private List<MethodParameter<?>> loadMethodParameters(Method method)
+	private List<MethodParameter<?>> loadMethodParameters(Method method, Supplier<Locale> localeSupplier)
 	{
 		Class<?>[] paramsTypes = method.getParameterTypes();
 		List<MethodParameter<?>> methodParameters = new ArrayList<>();
 
 		for (int i = 0; i < paramsTypes.length; i++)
 		{
-			methodParameters.add(new MethodParameter<>(paramsTypes[i], this, i));
+			methodParameters.add(new MethodParameter<>(paramsTypes[i], this, i, localeSupplier));
 		}
 
 		return Collections.unmodifiableList(methodParameters);
@@ -249,5 +255,14 @@ public class MethodMappingInfo implements IMimeTypeResolver
 	public Map<Class<? extends Annotation>, List<MethodParameter<?>>> getAnnotatedMethodParameters()
 	{
 		return annotatedMethodParameters;
+	}
+
+	/**
+	 * Gets the Supplier used to retrieve the Locale
+	 * @return the Supplier used to retrieve the Locale
+	 */
+	public Supplier<Locale> getLocaleSupplier()
+	{
+		return localeSupplier;
 	}
 }

@@ -19,7 +19,9 @@ package org.wicketstuff.rest.utils.reflection;
 import java.lang.annotation.Annotation;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
+import java.util.function.Supplier;
 
 import org.apache.wicket.request.http.WebRequest;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
@@ -67,6 +69,9 @@ public class MethodParameter<T>
 
 	/** The annotation used to indicate how the value of the parameter must be retrieved. */
 	private final Annotation annotationParam;
+	
+	/** Supplier used to retrieve the Locale*/
+	private final Supplier<Locale> supplier;
 
 	/**
 	 * Instantiates a new method parameter.
@@ -78,14 +83,17 @@ public class MethodParameter<T>
 	 * @param paramIndex
 	 *            the index of the parameter in the array of method's parameters.
 	 */
-	public MethodParameter(Class<? extends T> type, MethodMappingInfo ownerMethod, int paramIndex)
+	public MethodParameter(Class<? extends T> type, MethodMappingInfo ownerMethod, int paramIndex, 
+		Supplier<Locale> supplier)
 	{
 		Args.notNull(type, "type");
 		Args.notNull(ownerMethod, "ownerMethod");
+		Args.notNull(supplier, "supplier");
 
 		this.parameterClass = type;
 		this.ownerMethod = ownerMethod;
 		this.paramIndex = paramIndex;
+		this.supplier = supplier;
 
 		this.annotationParam = ReflectionUtils.getAnnotationParam(paramIndex, ownerMethod.getMethod());
 
@@ -116,7 +124,7 @@ public class MethodParameter<T>
 
 		// try to use the default value
 		if (paramValue == null && !deaultValue.isEmpty())
-			paramValue = AbstractRestResource.toObject(parameterClass, deaultValue);
+			paramValue = AbstractRestResource.toObject(parameterClass, deaultValue, supplier);
 
 		return paramValue;
 	}
@@ -145,7 +153,7 @@ public class MethodParameter<T>
 
 		if(paramIterator.hasNext())
 		{
-			return AbstractRestResource.toObject(parameterClass, paramIterator.next());
+			return AbstractRestResource.toObject(parameterClass, paramIterator.next(), supplier);
 		}
 
 		return null;
@@ -173,7 +181,7 @@ public class MethodParameter<T>
 		else if (annotationParam instanceof PathParam)
 		{
 			paramValue = AbstractRestResource.toObject(parameterClass,
-				context.getPathParameters().get(((PathParam)annotationParam).value()));
+				context.getPathParameters().get(((PathParam)annotationParam).value()), supplier);
 		}
 		else if (annotationParam instanceof RequestParam)
 		{
@@ -214,7 +222,7 @@ public class MethodParameter<T>
 		if (matrixParameters.get(variableName) == null)
 			return null;
 
-		return AbstractRestResource.toObject(parameterClass, matrixParameters.get(variableName));
+		return AbstractRestResource.toObject(parameterClass, matrixParameters.get(variableName), supplier);
 	}
 
 	/**
@@ -228,7 +236,7 @@ public class MethodParameter<T>
 		String value = headerParam.value();
 		WebRequest webRequest = AbstractRestResource.getCurrentWebRequest();
 
-		return AbstractRestResource.toObject(parameterClass, webRequest.getHeader(value));
+		return AbstractRestResource.toObject(parameterClass, webRequest.getHeader(value), supplier);
 	}
 
 	/**
@@ -246,7 +254,7 @@ public class MethodParameter<T>
 		if (pageParameters.get(value) == null)
 			return null;
 
-		return AbstractRestResource.toObject(parameterClass, pageParameters.get(value).toString());
+		return AbstractRestResource.toObject(parameterClass, pageParameters.get(value).toString(), supplier);
 	}
 
 	/**
@@ -263,7 +271,7 @@ public class MethodParameter<T>
 		if (webRequest.getCookie(value) == null)
 			return null;
 
-		return AbstractRestResource.toObject(parameterClass, webRequest.getCookie(value).getValue());
+		return AbstractRestResource.toObject(parameterClass, webRequest.getCookie(value).getValue(), supplier);
 	}
 
 	/**

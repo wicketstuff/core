@@ -23,7 +23,9 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
+import java.util.function.Supplier;
 
 import org.apache.wicket.Application;
 import org.apache.wicket.Session;
@@ -69,6 +71,8 @@ import org.wicketstuff.restutils.wicket.AttributesWrapper;
  */
 public abstract class AbstractRestResource<T extends IWebSerialDeserial> implements IResource
 {
+	private static final Supplier<Locale> DEFAULT_LOCALE_SUPPLIER = () -> Session.get().getLocale();
+
 	private static final long serialVersionUID = 1L;
 
 	public static final String NO_SUITABLE_METHOD_FOUND = "No suitable method found.";
@@ -106,6 +110,8 @@ public abstract class AbstractRestResource<T extends IWebSerialDeserial> impleme
 	/** Bundle resolver */
 	private final IErrorMessageSource bundleResolver;
 
+	private final Supplier<Locale> localSupplier;
+
 	/**
 	 * Constructor with no role-checker (i.e we don't use annotation {@link AuthorizeInvocation}).
 	 *
@@ -116,9 +122,9 @@ public abstract class AbstractRestResource<T extends IWebSerialDeserial> impleme
 	{
 		this(serialDeserial, null);
 	}
-
+	
 	/**
-	 * Main constructor that takes in input the object serializer/deserializer and the role-checking
+	 * Constructor that takes in input the object serializer/deserializer and the role-checking
 	 * strategy to use.
 	 *
 	 * @param serialDeserial
@@ -128,10 +134,28 @@ public abstract class AbstractRestResource<T extends IWebSerialDeserial> impleme
 	 */
 	public AbstractRestResource(T serialDeserial, IRoleCheckingStrategy roleCheckingStrategy)
 	{
+		this(serialDeserial, roleCheckingStrategy, DEFAULT_LOCALE_SUPPLIER);
+	}
+	
+	/**
+	 * Main constructor that takes in input the object serializer/deserializer and the role-checking
+	 * strategy to use.
+	 *
+	 * @param serialDeserial
+	 *            General class that is used to serialize/desiarilze objects to string
+	 * @param roleCheckingStrategy
+	 *            the role-checking strategy.
+	 * @param localeSupplier
+	 * 			  the Supplier used to retrieve the Locale.
+	 */
+	public AbstractRestResource(T serialDeserial, IRoleCheckingStrategy roleCheckingStrategy, 
+		Supplier<Locale> localeSupplier)
+	{
 		Args.notNull(serialDeserial, "serialDeserial");
 
 		onInitialize(serialDeserial);
 
+		this.localSupplier = localeSupplier;
 		this.webSerialDeserial = serialDeserial;
 		this.roleCheckingStrategy = roleCheckingStrategy;
 		this.mappedMethods = loadAnnotatedMethods();
@@ -541,7 +565,7 @@ public abstract class AbstractRestResource<T extends IWebSerialDeserial> impleme
 			if (methodMapped != null && !method.isBridge())
 			{
 				HttpMethod httpMethod = methodMapped.httpMethod();
-				MethodMappingInfo methodMappingInfo = new MethodMappingInfo(methodMapped, method);
+				MethodMappingInfo methodMappingInfo = new MethodMappingInfo(methodMapped, method, localSupplier);
 
 				if (!webSerialDeserial.isMimeTypeSupported(methodMappingInfo.getInputFormat()) ||
 					!webSerialDeserial.isMimeTypeSupported(methodMappingInfo.getOutputFormat())) {
@@ -708,7 +732,7 @@ public abstract class AbstractRestResource<T extends IWebSerialDeserial> impleme
 	 * @return the object corresponding to the converted string value, or null if value parameter is
 	 *         null
 	 */
-	public static Object toObject(Class<?> clazz, String value) throws RuntimeException
+	public static Object toObject(Class<?> clazz, String value, Supplier<Locale> supplier) throws RuntimeException
 	{
 		if (value == null)
 		{
@@ -730,7 +754,7 @@ public abstract class AbstractRestResource<T extends IWebSerialDeserial> impleme
 
 		try
 		{
-			return converter.convertToObject(value, Session.get().getLocale());
+			return converter.convertToObject(value, supplier.get());
 		}
 		catch (ConversionException exception)
 		{
@@ -832,5 +856,14 @@ public abstract class AbstractRestResource<T extends IWebSerialDeserial> impleme
 	public MethodMappingInfo getMethodInfo(Method method)
 	{
 		return mappedMethodsInfo.get(method);
+	}
+
+	/**
+	 * Gets the Supplier used to retrieve the Locale
+	 * @return the Supplier used to retrieve the Locale
+	 */
+	public Supplier<Locale> getLocalSupplier()
+	{
+		return localSupplier;
 	}
 }
