@@ -110,7 +110,7 @@ public abstract class AbstractRestResource<T extends IWebSerialDeserial> impleme
 	/** Bundle resolver */
 	private final IErrorMessageSource bundleResolver;
 
-	private final Supplier<Locale> localSupplier;
+	private final Supplier<Locale> localeSupplier;
 
 	/**
 	 * Constructor with no role-checker (i.e we don't use annotation {@link AuthorizeInvocation}).
@@ -155,7 +155,7 @@ public abstract class AbstractRestResource<T extends IWebSerialDeserial> impleme
 
 		onInitialize(serialDeserial);
 
-		this.localSupplier = localeSupplier;
+		this.localeSupplier = localeSupplier;
 		this.webSerialDeserial = serialDeserial;
 		this.roleCheckingStrategy = roleCheckingStrategy;
 		this.mappedMethods = loadAnnotatedMethods();
@@ -565,7 +565,7 @@ public abstract class AbstractRestResource<T extends IWebSerialDeserial> impleme
 			if (methodMapped != null && !method.isBridge())
 			{
 				HttpMethod httpMethod = methodMapped.httpMethod();
-				MethodMappingInfo methodMappingInfo = new MethodMappingInfo(methodMapped, method, localSupplier);
+				MethodMappingInfo methodMappingInfo = new MethodMappingInfo(methodMapped, method, localeSupplier);
 
 				if (!webSerialDeserial.isMimeTypeSupported(methodMappingInfo.getInputFormat()) ||
 					!webSerialDeserial.isMimeTypeSupported(methodMappingInfo.getOutputFormat())) {
@@ -862,8 +862,8 @@ public abstract class AbstractRestResource<T extends IWebSerialDeserial> impleme
 	 * Gets the Supplier used to retrieve the Locale
 	 * @return the Supplier used to retrieve the Locale
 	 */
-	public Supplier<Locale> getLocalSupplier()
+	public Supplier<Locale> getLocaleSupplier()
 	{
-		return localSupplier;
+		return localeSupplier;
 	}
 }
