@@ -732,7 +732,7 @@ public abstract class AbstractRestResource<T extends IWebSerialDeserial> impleme
 	 * @return the object corresponding to the converted string value, or null if value parameter is
 	 *         null
 	 */
-	public static Object toObject(Class<?> clazz, String value, Supplier<Locale> supplier) throws RuntimeException
+	public static Object toObject(Class<?> clazz, String value, Supplier<Locale> localeSupplier) throws RuntimeException
 	{
 		if (value == null)
 		{
@@ -754,7 +754,7 @@ public abstract class AbstractRestResource<T extends IWebSerialDeserial> impleme
 
 		try
 		{
-			return converter.convertToObject(value, supplier.get());
+			return converter.convertToObject(value, localeSupplier.get());
 		}
 		catch (ConversionException exception)
 		{
