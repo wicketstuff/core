@@ -89,9 +89,11 @@ public class WicketPortlet extends GenericPortlet {
 		VIEW("viewPage");
 
 		public static PageType getByInitParameterName(final String initParameterName) {
-			for (final PageType p : PageType.values())
-				if (p.initParameterName.equals(initParameterName))
+			for (final PageType p : PageType.values()) {
+				if (p.initParameterName.equals(initParameterName)) {
 					return p;
+				}
+			}
 			return null;
 		}
 
@@ -163,18 +165,22 @@ public class WicketPortlet extends GenericPortlet {
 	 * A collection of the default URL's for the different view modes of the
 	 * portlet - e.g. VIEW, EDIT, HELP etc...
 	 */
-	private final HashMap<PageType, String> defaultPages = new HashMap<PageType, String>();
+	private final HashMap<PageType, String> defaultPages = new HashMap<>();
 
 	protected String buildWicketFilterPath(String filterPath) {
-		if (filterPath == null || filterPath.length() == 0)
+		if (Strings.isEmpty(filterPath)) {
 			return "/";
+		}
 
-		if (!filterPath.startsWith("/"))
+		if (!filterPath.startsWith("/")) {
 			filterPath = "/" + filterPath;
-		if (filterPath.endsWith("*"))
+		}
+		if (filterPath.endsWith("*")) {
 			filterPath = filterPath.substring(0, filterPath.length() - 1);
-		if (!filterPath.endsWith("/"))
+		}
+		if (!filterPath.endsWith("/")) {
 			filterPath += "/";
+		}
 
 		return filterPath;
 	}
@@ -244,16 +250,16 @@ public class WicketPortlet extends GenericPortlet {
 	 *             if loading the properties fails
 	 */
 	protected Properties getWicketPortletProperties(Properties properties) throws PortletException {
-		if (properties == null)
+		if (properties == null) {
 			properties = new Properties();
-		final InputStream is = Thread.currentThread().getContextClassLoader().getResourceAsStream(WICKET_PORTLET_PROPERTIES);
-		if (is != null)
-			try {
+		}
+		try (final InputStream is = Thread.currentThread().getContextClassLoader().getResourceAsStream(WICKET_PORTLET_PROPERTIES)) {
+			if (is != null) {
 				properties.load(is);
 			}
-			catch (final IOException e) {
-				throw new PortletException("Failed to load WicketPortlet.properties from classpath", e);
-			}
+		} catch (IOException e) {
+			throw new PortletException("Failed to load WicketPortlet.properties from classpath", e);
+		}
 		return properties;
 	}
 
@@ -285,12 +291,12 @@ public class WicketPortlet extends GenericPortlet {
 	 */
 	protected String getWicketURL(final PortletRequest request, final PageType pageType, final String defaultPage) {
 		String wicketURL = null;
-		if (request instanceof ActionRequest)
+		if (request instanceof ActionRequest) {
 			// try to lookup the passed in wicket url parameter
 			wicketURL = request.getRenderParameters().getValue(WICKET_URL_PORTLET_PARAMETER);
-		else if (request instanceof ResourceRequest)
+		} else if (request instanceof ResourceRequest) {
 			wicketURL = ((ResourceRequest) request).getResourceID();
-		else {
+		} else {
 			// try to lookup the passed in wicket url parameter, suffixed with
 			// the portlet mode
 			String redirectUrlKey = WICKET_URL_PORTLET_PARAMETER + request.getPortletMode().toString();
@@ -299,8 +305,9 @@ public class WicketPortlet extends GenericPortlet {
 
 		// if the wicketURL could not be retrieved, return the url for the
 		// default page
-		if (wicketURL == null)
+		if (wicketURL == null) {
 			wicketURL = defaultPage;
+		}
 		return wicketURL;
 	}
 
@@ -362,8 +369,9 @@ public class WicketPortlet extends GenericPortlet {
 		// write out Cookies to ActionResponse
 		responseState.flushAndClose();
 		String redirectLocationUrl = responseState.getRedirectLocation();
-		if (LOG.isDebugEnabled())
-			LOG.debug("redirectURL after include:" + redirectLocationUrl);
+		if (LOG.isDebugEnabled()) {
+			LOG.debug("redirectURL after include: {}", redirectLocationUrl);
+		}
 		if (redirectLocationUrl != null && !redirectLocationUrl.isEmpty()) {
 			redirectLocationUrl = fixWicketUrl(wicketURL, redirectLocationUrl, request.getScheme());
 			if (redirectLocationUrl.startsWith(wicketFilterPath)) {
@@ -371,9 +379,9 @@ public class WicketPortlet extends GenericPortlet {
 				final String redirectUrlKey = WICKET_URL_PORTLET_PARAMETER + portletMode;
 				// put the redirect location into the "_wuview" render parameter
 				response.getRenderParameters().setValue(redirectUrlKey, redirectLocationUrl);
-			}
-			else
+			} else {
 				response.sendRedirect(redirectLocationUrl);
+			}
 		}
 	}
 
@@ -418,7 +426,7 @@ public class WicketPortlet extends GenericPortlet {
 					// _wuPortletMode or resourceId parameter)
 					final boolean validWicketUrl = redirectLocation.startsWith(wicketFilterPath);
 					if (validWicketUrl) {
-						if (previousURL == null || previousURL != redirectLocation) {
+						if (!redirectLocation.equals(previousURL)) {
 							previousURL = wicketURL;
 							wicketURL = redirectLocation;
 							response.reset();
@@ -522,8 +530,9 @@ public class WicketPortlet extends GenericPortlet {
 		// core for processing
 		wicketURL = getWicketURL(request, pageType, getDefaultPage(pageType));
 
-		if (LOG.isDebugEnabled())
-			LOG.debug("Portlet \"" + request.getAttribute(PortletRequest.LIFECYCLE_PHASE) + "\" for wicket url:" + wicketURL);
+		if (LOG.isDebugEnabled()) {
+			LOG.debug("Portlet \"{}\" for wicket url: {}", request.getAttribute(PortletRequest.LIFECYCLE_PHASE), wicketURL);
+		}
 
 		// store the response state and request type in the request object, so
 		// they can be looked up
@@ -553,13 +562,14 @@ public class WicketPortlet extends GenericPortlet {
 				// no-op for now
 			}
 		}
-		else if (responseState.isMimeResponse())
+		else if (responseState.isMimeResponse()) {
 			processMimeResponseRequest(wicketURL, request, (MimeResponse) response, responseState);
-		else
+		} else {
 			LOG.warn("Unsupported Portlet lifecycle: {}", request.getAttribute(PortletRequest.LIFECYCLE_PHASE));
+		}
 		if (LOG.isDebugEnabled()) {
 			wicketURL = getWicketURL(request, pageType, getDefaultPage(pageType));
-			LOG.debug("end of request, wicket url: " + wicketURL);
+			LOG.debug("end of request, wicket url: {}", wicketURL);
 		}
 	}
 
@@ -592,8 +602,9 @@ public class WicketPortlet extends GenericPortlet {
 	 * @return the corrected URL
 	 */
 	protected String fixWicketUrl(final String url) {
-		if (url == null)
+		if (url == null) {
 			return wicketFilterPath;
+		}
 
 		if (!url.startsWith(wicketFilterPath)) {
 			if (url.startsWith("..?")) {
@@ -660,33 +671,33 @@ public class WicketPortlet extends GenericPortlet {
 		defaultPages.put(PageType.VIEW, viewPage.startsWith(wicketFilterPath) ? viewPage : wicketFilterPath);
 
 		String defaultPage = defaultPages.get(PageType.ACTION);
-		if (defaultPage == null)
+		if (defaultPage == null) {
 			defaultPages.put(PageType.ACTION, viewPage);
-		else {
+		} else {
 			defaultPage = fixWicketUrl(defaultPage);
 			defaultPages.put(PageType.ACTION, defaultPage.startsWith(wicketFilterPath) ? defaultPage : viewPage);
 		}
 
 		defaultPage = defaultPages.get(PageType.CUSTOM);
-		if (defaultPage == null)
+		if (defaultPage == null) {
 			defaultPages.put(PageType.CUSTOM, viewPage);
-		else {
+		} else {
 			defaultPage = fixWicketUrl(defaultPage);
 			defaultPages.put(PageType.CUSTOM, defaultPage.startsWith(wicketFilterPath) ? defaultPage : viewPage);
 		}
 
 		defaultPage = defaultPages.get(PageType.HELP);
-		if (defaultPage == null)
+		if (defaultPage == null) {
 			defaultPages.put(PageType.HELP, viewPage);
-		else {
+		} else {
 			defaultPage = fixWicketUrl(defaultPage);
 			defaultPages.put(PageType.HELP, defaultPage.startsWith(wicketFilterPath) ? defaultPage : viewPage);
 		}
 
 		defaultPage = defaultPages.get(PageType.EDIT);
-		if (defaultPage == null)
+		if (defaultPage == null) {
 			defaultPages.put(PageType.EDIT, viewPage);
-		else {
+		} else {
 			defaultPage = fixWicketUrl(defaultPage);
 			defaultPages.put(PageType.EDIT, defaultPage.startsWith(wicketFilterPath) ? defaultPage : viewPage);
 		}
