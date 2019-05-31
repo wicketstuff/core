@@ -23,7 +23,7 @@
 		<module>jee-web-examples</module>
 	</modules>
 	<properties>
-		<jsf.version>2.2.18</jsf.version>
+		<jsf.version>2.2.19</jsf.version>
 	</properties>
 	<build>
 		<pluginManagement>
