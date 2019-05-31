@@ -1,5 +1,7 @@
 package com.googlecode.wicket.jquery.ui.samples.kendoui.progressbar;
 
+import java.time.Duration;
+
 import org.apache.wicket.ajax.AbstractAjaxTimerBehavior;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.IAjaxIndicatorAware;
@@ -8,7 +10,6 @@ import org.apache.wicket.extensions.ajax.markup.html.AjaxIndicatorAppender;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.panel.EmptyPanel;
 import org.apache.wicket.model.Model;
-import org.apache.wicket.util.time.Duration;
 
 import com.googlecode.wicket.jquery.core.Options;
 import com.googlecode.wicket.kendo.ui.panel.KendoFeedbackPanel;
@@ -31,7 +32,7 @@ public class KendoProgressBarPage extends AbstractProgressBarPage implements IAj
 		form.add(feedback.setOutputMarkupId(true));
 
 		// Timer //
-		final AbstractAjaxTimerBehavior timer = new AbstractAjaxTimerBehavior(Duration.ONE_SECOND) {
+		final AbstractAjaxTimerBehavior timer = new AbstractAjaxTimerBehavior(Duration.ofSeconds(1)) {
 
 			private static final long serialVersionUID = 1L;
 

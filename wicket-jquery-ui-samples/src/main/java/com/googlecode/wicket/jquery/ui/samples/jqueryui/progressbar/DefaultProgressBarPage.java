@@ -1,5 +1,7 @@
 package com.googlecode.wicket.jquery.ui.samples.jqueryui.progressbar;
 
+import java.time.Duration;
+
 import org.apache.wicket.ajax.AbstractAjaxTimerBehavior;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.IAjaxIndicatorAware;
@@ -9,7 +11,6 @@ import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.panel.EmptyPanel;
 import org.apache.wicket.markup.html.panel.FeedbackPanel;
 import org.apache.wicket.model.Model;
-import org.apache.wicket.util.time.Duration;
 
 import com.googlecode.wicket.jquery.ui.panel.JQueryFeedbackPanel;
 import com.googlecode.wicket.jquery.ui.widget.progressbar.ProgressBar;
@@ -31,7 +32,7 @@ public class DefaultProgressBarPage extends AbstractProgressBarPage implements I
 		form.add(feedback.setOutputMarkupId(true));
 
 		// Timer //
-		final AbstractAjaxTimerBehavior timer = new AbstractAjaxTimerBehavior(Duration.ONE_SECOND) {
+		final AbstractAjaxTimerBehavior timer = new AbstractAjaxTimerBehavior(Duration.ofSeconds(1)) {
 
 			private static final long serialVersionUID = 1L;
 

@@ -1,6 +1,7 @@
 package embedded.jetty;
 
-import org.apache.wicket.util.time.Duration;
+import java.time.Duration;
+
 import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.server.ServerConnector;
 import org.eclipse.jetty.util.resource.Resource;
@@ -13,7 +14,7 @@ public class Start
 	 */
 	private static final String CONTEXT_PATH = "/wicket-jquery-ui";
 	private static final int PORT = 8080;
-	private static final int TIMEOUT = (int) Duration.ONE_HOUR.getMilliseconds();
+	private static final int TIMEOUT = (int) Duration.ofHours(1).toMillis();
 
 	public static void main(String[] args) throws Exception
 	{

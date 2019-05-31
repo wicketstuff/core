@@ -2,13 +2,13 @@ package com.googlecode.wicket.jquery.ui.samples.jqueryui.plugins.datepicker;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.time.Duration;
 import java.util.Date;
 
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.panel.FeedbackPanel;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
-import org.apache.wicket.util.time.Duration;
 
 import com.googlecode.wicket.jquery.core.utils.DateUtils;
 import com.googlecode.wicket.jquery.ui.form.button.Button;
@@ -31,7 +31,7 @@ public class RangeDatePickerTextFieldPage extends AbstractRangeDatePickerPage
 		form.add(feedback.setOutputMarkupId(true));
 
 		// RangeDatePicker //
-		long threeDays = Duration.ONE_DAY.getMilliseconds() * 3;
+		long threeDays = Duration.ofDays(3).toMillis();
 		long threeDaysAgo = new Date().getTime() - threeDays;
 		final IModel<DateRange> model = Model.of(DateRange.of(new Date(threeDaysAgo), new Date()));
 

@@ -44,7 +44,7 @@
 	</scm>
 
 	<properties>
-		<wicket.version>9.0.0-M1</wicket.version>
+		<wicket.version>9.0.0-M2</wicket.version>
 		<owasp-sanitizer.version>20190325.1</owasp-sanitizer.version>
 		<junit.version>4.12</junit.version>
 		<jetty.version>9.4.16.v20190411</jetty.version>
@@ -61,7 +61,7 @@
 		</repository>
 		<repository>
 			<id>Wicket Nexus Staging</id>
-			<url>https://repository.apache.org/content/repositories/orgapachewicket-1110</url>
+			<url>https://repository.apache.org/content/repositories/orgapachewicket-1126</url>
 		</repository>
 	</repositories>
 

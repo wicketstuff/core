@@ -16,13 +16,14 @@
  */
 package com.googlecode.wicket.jquery.core.ajax;
 
+import java.time.Duration;
+
 import org.apache.wicket.ajax.AbstractDefaultAjaxBehavior;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.attributes.AjaxRequestAttributes;
 import org.apache.wicket.ajax.attributes.CallbackParameter;
 import org.apache.wicket.ajax.attributes.ThrottlingSettings;
 import org.apache.wicket.behavior.Behavior;
-import org.apache.wicket.util.time.Duration;
 
 import com.googlecode.wicket.jquery.core.JQueryBehavior;
 import com.googlecode.wicket.jquery.core.JQueryEvent;
@@ -150,7 +151,7 @@ public abstract class JQueryAjaxBehavior extends AbstractDefaultAjaxBehavior
 	 */
 	public JQueryAjaxBehavior(IJQueryAjaxAware source)
 	{
-		this(source, Duration.NONE);
+		this(source, Duration.ZERO);
 	}
 
 	/**
@@ -187,7 +188,7 @@ public abstract class JQueryAjaxBehavior extends AbstractDefaultAjaxBehavior
 	{
 		super.updateAjaxAttributes(attributes);
 
-		if (this.duration.compareTo(Duration.NONE) > 0)
+		if (this.duration.compareTo(Duration.ZERO) > 0)
 		{
 			attributes.setThrottlingSettings(new ThrottlingSettings("jquery-throttle", this.duration));
 		}
