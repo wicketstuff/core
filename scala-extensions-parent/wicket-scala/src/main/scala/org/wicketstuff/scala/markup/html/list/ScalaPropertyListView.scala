@@ -13,18 +13,18 @@ import org.wicketstuff.scala.traits.ScalaMarkupContainerT
  */
 class ScalaPropertyListView[T](id:String,
                              model:Fodel[_ <: java.util.List[T]],
-                             populateItemFunc:(ListItem[T]) ⇒ Unit)
+                             populateItemFunc:(ListItem[T]) => Unit)
   extends PropertyListView[T](id, model)
   with ScalaMarkupContainerT {
 
   override val self: ScalaPropertyListView[T] = this
 
-    //class SPropertyListView[T](id:String, list: ⇒ java.util.List[_ <: T], populateItemFunc:(ListItem[T]) ⇒ Unit) extends PropertyListView[T](id, new Fodel[java.util.List[_ <: T]](list)) with ScalaWicket {
-    //class SPropertyListView[T](id:String, list: ⇒ java.util.List[_ <: T], populateItemFunc:(ListItem[T]) ⇒ Unit) extends PropertyListView[T](id, model) with ScalaWicket {
+    //class SPropertyListView[T](id:String, list: => java.util.List[_ <: T], populateItemFunc:(ListItem[T]) => Unit) extends PropertyListView[T](id, new Fodel[java.util.List[_ <: T]](list)) with ScalaWicket {
+    //class SPropertyListView[T](id:String, list: => java.util.List[_ <: T], populateItemFunc:(ListItem[T]) => Unit) extends PropertyListView[T](id, model) with ScalaWicket {
 
-    // disabled extra constructor, in order to avoid ambiguous constructor calls (type coercion to () ⇒ Unit), so you can do :
+    // disabled extra constructor, in order to avoid ambiguous constructor calls (type coercion to () => Unit), so you can do :
     // add(new SPropertyListView[String](new java.lang.String("presentations"), list, _.add(new SLabel("name", "asdp name"))))
-    // def this(id:String, model:Fodel[_ <: java.util.List[_ <: T]], populateItemFunc:(ListItem[T]) ⇒ Unit) extends PropertyListView[T](id, model) with ScalaWicket {
+    // def this(id:String, model:Fodel[_ <: java.util.List[_ <: T]], populateItemFunc:(ListItem[T]) => Unit) extends PropertyListView[T](id, model) with ScalaWicket {
 
     override def populateItem(li:ListItem[T]) = populateItemFunc(li)
 

@@ -18,13 +18,13 @@ trait ListViewT
     case _ => null
   }
 
-  def listView[T](id:String, list: IModel[JList[T]], populateItemFunc:(ListItem[T]) ⇒ Unit): ScalaListView[T] = {
+  def listView[T](id:String, list: IModel[JList[T]], populateItemFunc:(ListItem[T]) => Unit): ScalaListView[T] = {
     val listView = new ScalaListView[T](id, list, populateItemFunc)
     self.add(listView)
     listView
   }
 
-  def listView[T](id:String, list: JList[T], populateItemFunc:(ListItem[T]) ⇒ Unit): ScalaListView[T] = {
+  def listView[T](id:String, list: JList[T], populateItemFunc:(ListItem[T]) => Unit): ScalaListView[T] = {
     val listView = new ScalaListView[T](id, list, populateItemFunc)
     self.add(listView)
     listView
