@@ -243,7 +243,7 @@ public abstract class AbstractRestResource<T extends IWebSerialDeserial> impleme
 		}
 		catch (RuntimeException e)
 		{
-			setResponseStatusCode(400);
+			setResponseStatusCode(resolveExceptionStatusCode(e, 400));
 			handleException(getCurrentWebResponse(), e);
 			return;
 		}
@@ -255,10 +255,8 @@ public abstract class AbstractRestResource<T extends IWebSerialDeserial> impleme
 		if (validationErrors.size() > 0)
 		{
 			IValidationError error = validationErrors.get(0);
-			Serializable message = error.getErrorMessage(bundleResolver);
-
-			webSerialDeserial.objectToResponse(message, response, outputFormat);
-			response.setStatus(400);
+			handleValidationError(response, outputFormat, error);
+			response.setStatus(resolveValidationErrorStatusCode(error, 400));
 
 			return;
 		}
@@ -278,7 +276,6 @@ public abstract class AbstractRestResource<T extends IWebSerialDeserial> impleme
 		}
 
 	}
-
 
 	/**
 	 * Check if user is allowed to run a method annotated with {@link AuthorizeInvocation}
@@ -659,7 +656,7 @@ public abstract class AbstractRestResource<T extends IWebSerialDeserial> impleme
 		}
 		catch (Exception exception)
 		{
-			response.setStatus(500);
+			response.setStatus(resolveExceptionStatusCode(exception, 500));
 			handleException(response, exception);
 			log.debug("Error invoking method '" + method.getName() + "'");
 		}
@@ -679,6 +676,49 @@ public abstract class AbstractRestResource<T extends IWebSerialDeserial> impleme
 
 		response.write(exceptionMsg);
 		log.error(exceptionMsg, exception);
+	}
+
+	/**
+	 * Resolve {@link WebResponse} status code for Exception. Override this method to implement
+	 * customized status code resolution for exceptions
+	 *
+	 * @param e
+	 *            The Exception
+	 * @param defaultStatusCode
+	 *            default status code returned in this situation by {@link AbstractRestResource}
+	 */
+	protected int resolveExceptionStatusCode(Exception e, int defaultStatusCode)
+	{
+		return defaultStatusCode;
+	}
+
+	/**
+	 * Resolve {@link WebResponse} status code for {@link IValidationError}. Override this method to
+	 * implement customized status code resolution for validation errors
+	 *
+	 * @param error
+	 *            The Validation Error
+	 * @param defaultStatusCode
+	 *            default status code returned in this situation by {@link AbstractRestResource}
+	 */
+	protected int resolveValidationErrorStatusCode(IValidationError error, int defaultStatusCode)
+	{
+		return defaultStatusCode;
+	}
+
+	/**
+	 * Handle Validation exception. Override this method to implement customized validation error
+	 * handling
+	 *
+	 * @param response
+	 * @param outputFormat
+	 * @param error
+	 */
+	protected void handleValidationError(WebResponse response, String outputFormat,
+		IValidationError error)
+	{
+		Serializable message = error.getErrorMessage(bundleResolver);
+		webSerialDeserial.objectToResponse(message, response, outputFormat);
 	}
 
 	/**
@@ -761,7 +801,7 @@ public abstract class AbstractRestResource<T extends IWebSerialDeserial> impleme
 			String exMsg = String.format("Value '%s' can not be converted to type '%s'",
 				value, clazz.getName());
 
-			log.debug(exMsg);
+			log.debug(exMsg, exception);
 
 			throw new WicketRuntimeException(exMsg, exception);
 		}
