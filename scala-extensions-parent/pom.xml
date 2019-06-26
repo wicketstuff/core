@@ -116,7 +116,6 @@
                     </executions>
                     <configuration>
                         <scala.compat.version>2.13</scala.compat.version>
-                        <recompileMode>all</recompileMode>
                         <scalaVersion>${scala.version}</scalaVersion>
                         <sendJavaToScalac>false</sendJavaToScalac>
                         <jvmArgs>
