@@ -38,7 +38,6 @@
 		<dependency>
 			<groupId>com.thoughtworks.xstream</groupId>
 			<artifactId>xstream</artifactId>
-			<version>${xstream.version}</version>
 			<exclusions>
 				<exclusion>
 					<artifactId>xpp3_min</artifactId>
