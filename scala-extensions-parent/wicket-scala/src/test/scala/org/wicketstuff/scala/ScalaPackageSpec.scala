@@ -48,7 +48,7 @@ class ScalaPackageSpec
       import org.apache.wicket.markup.html.list._
       val tester = new WicketTester
       val lv = new ListView[Int]("myListView", Model.ofList(List(1,2,3))) {
-        override def populateItem(li:ListItem[Int]) {
+        override def populateItem(li:ListItem[Int]): Unit = {
           println("o Hi!")
         }
       }

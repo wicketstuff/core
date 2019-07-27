@@ -11,7 +11,7 @@ trait ScalaModel {
 
   type Serializable = java.io.Serializable
 
-  def ldM[T](loadF: ⇒ T): LoadableDetachableModel[T] = {
+  def ldM[T](loadF: => T): LoadableDetachableModel[T] = {
     val ldm = new LoadableDetachableModel[T] {
       override def load(): T = loadF
     }

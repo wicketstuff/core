@@ -30,9 +30,9 @@ class HomePage
   val form: ScalaForm[Unit] = form[Unit]("form1")
 
   // create an anonymous function and have it implicitly converted into a fodel
-  val nf: IModel[String] = () ⇒ { println ("nff1"); name }
+  val nf: IModel[String] = () => { println ("nff1"); name }
   form.label("helloworld1", nf)
-  val getter: IModel[String] = () ⇒ { println ("label gtr"); name }
+  val getter: IModel[String] = () => { println ("label gtr"); name }
   form.label("helloworld3", getter)
 
   // explicit fodel with debug lines
@@ -68,7 +68,7 @@ class HomePage
   presentationForm.text("author")
 
 
-  add(new ScalaPropertyListView[Presentation]("presentations", Presentation.stub, (li:ListItem[Presentation]) ⇒ { // list gets passed in by name
+  add(new ScalaPropertyListView[Presentation]("presentations", Presentation.stub, (li:ListItem[Presentation]) => { // list gets passed in by name
     val p = li.getModelObject
     li.label("name", p name)
     li.label("author", p author)

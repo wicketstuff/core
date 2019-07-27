@@ -14,5 +14,5 @@ class ScalaPasswordField(id: String, model: IModel[String])
 
   override val self: ScalaPasswordField = this
 
-  def this(id:String, getter: ⇒ String, setter:(String) ⇒ Unit) = this(id, new Fodel[String](getter, setter))
+  def this(id:String, getter: => String, setter:(String) => Unit) = this(id, new Fodel[String](getter, setter))
 }

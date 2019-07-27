@@ -14,5 +14,5 @@ class ScalaTextArea[T](id: String, model: IModel[T])
 
   override val self: ScalaTextArea[T] = this
 
-  def this(id:String, getter: ⇒ T, setter:(T) ⇒ Unit) = this(id, new Fodel[T](getter, setter))
+  def this(id:String, getter: => T, setter:(T) => Unit) = this(id, new Fodel[T](getter, setter))
 }

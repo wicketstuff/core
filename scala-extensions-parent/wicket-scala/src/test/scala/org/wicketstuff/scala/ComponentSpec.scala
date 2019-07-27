@@ -32,7 +32,7 @@ class ComponentSpec
    * Checks that the passed in function updates the clickCount by 
    * 1, every time it is called.
    */
-  def clickCountUpdatingFunction(fx: => Unit){
+  def clickCountUpdatingFunction(fx: => Unit): Unit = {
     clickCount = 0
     clickCount += 1     
     clickCount mustBe 1
@@ -121,7 +121,7 @@ class ComponentSpec
   "SListView component" should {
     "take a closure for the #populateItem method" in {
       val tester = new WicketTester()
-      def fx(item:ListItem[String]) {
+      def fx(item:ListItem[String]): Unit = {
         item mustBe null
         clickCount += 1
       }
@@ -144,7 +144,7 @@ class ComponentSpec
     }
     "take a partially applied function for the #populateItem method" in {
       val tester = new WicketTester()
-      def fx(item:ListItem[String]) {
+      def fx(item:ListItem[String]): Unit = {
         item mustBe null
         clickCount += 1
       }
