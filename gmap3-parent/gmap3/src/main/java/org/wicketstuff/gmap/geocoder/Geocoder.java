@@ -161,7 +161,7 @@ public class Geocoder implements Serializable
      */
     public String encode(final String address)
     {
-        StringBuilder sb = new StringBuilder("http://maps.googleapis.com/maps/api/geocode/");
+        StringBuilder sb = new StringBuilder("https://maps.googleapis.com/maps/api/geocode/");
         sb.append(output);
         sb.append("?");
         if (apiKey != null)
