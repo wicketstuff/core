@@ -421,7 +421,22 @@ public class WicketPortlet extends GenericPortlet {
 				// processing the request
 
 				String redirectLocation = responseState.getRedirectLocation();
-				if (redirectLocation != null) {
+        String ajaxRedirectLocation = responseState.getAjaxRedirectLocation();
+				if (ajaxRedirectLocation != null) {
+					// Ajax redirect
+					responseState.clear();
+					responseState.setDateHeader("Date", System.currentTimeMillis());
+					responseState.setDateHeader("Expires", 0);
+					responseState.setHeader("Pragma", "no-cache");
+					responseState.setHeader("Cache-Control", "no-cache, no-store");
+					//client side javascript needs the Ajax-Location header see wicket-ajax-jquery.js line 771
+					responseState.setHeader("Ajax-Location", ajaxRedirectLocation);//
+					responseState.setContentType("text/xml;charset=UTF-8");
+					responseState.getWriter().write(
+						"<ajax-response><redirect><![CDATA[" + ajaxRedirectLocation +
+							"]]></redirect></ajax-response>");
+					responseState.flushAndClose();
+				} else if (redirectLocation != null) {
 					// TODO: check if its redirect to wicket page (find _wu or
 					// _wuPortletMode or resourceId parameter)
 					final boolean validWicketUrl = redirectLocation.startsWith(wicketFilterPath);
