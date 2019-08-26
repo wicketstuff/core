@@ -25,6 +25,8 @@ public class WicketApplication extends WebApplication
 	protected void init() {
 		super.init();
 
+		mountPage("bootstrap", HomeBootstrapPage.class);
+
 		// mount a countries resource
 		mountResource(COUNTRIES_MOUNT_PATH, new JsonResourceReference<Country>("countries")
 		{

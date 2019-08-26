@@ -26,6 +26,7 @@ import org.apache.wicket.markup.html.form.ChoiceRenderer;
 import org.apache.wicket.markup.html.form.DropDownChoice;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.form.ListMultipleChoice;
+import org.apache.wicket.markup.html.link.BookmarkablePageLink;
 import org.apache.wicket.model.PropertyModel;
 import org.apache.wicket.model.util.ListModel;
 
@@ -58,12 +59,16 @@ public class HomePage extends WebPage
 
 	public HomePage()
 	{
+		add(new BookmarkablePageLink<>("homeBootstrapPageLink", HomeBootstrapPage.class));
+
 		// single-select no minimum example
 		add(new Label("country0", new PropertyModel<>(this, "country0")));
 
 		Select2Choice<Country> country0 = new Select2Choice<>("country0", new PropertyModel<Country>(
 			this, "country0"), new CountriesProvider());
-		country0.getSettings().setPlaceholder("Please select country").setAllowClear(true);
+		defaultSelect2Settings(country0.getSettings())
+				.setPlaceholder("Please select country")
+				.setAllowClear(true);
 		add(new Form<Void>("single0").add(country0));
 
 		// single-select example
@@ -72,7 +77,10 @@ public class HomePage extends WebPage
 
 		Select2Choice<Country> country = new Select2Choice<>("country", new PropertyModel<Country>(
 			this, "country"), new CountriesProvider());
-		country.getSettings().setMinimumInputLength(1).setPlaceholder("Please select country").setAllowClear(true);
+		defaultSelect2Settings(country.getSettings())
+				.setMinimumInputLength(1)
+				.setPlaceholder("Please select country")
+				.setAllowClear(true);
 		add(new Form<Void>("single").add(country));
 
 		// single-select drop down choice
@@ -83,7 +91,9 @@ public class HomePage extends WebPage
 				new ListModel<Country>(Arrays.asList(Country.values())),
 				new CountryRenderer());
 		Select2Behavior countryDropDownChoiceSelect2Behavior = Select2Behavior.forSingleChoice();
-		countryDropDownChoiceSelect2Behavior.getSettings().setPlaceholder("Please select country").setAllowClear(true);
+		defaultSelect2Settings(countryDropDownChoiceSelect2Behavior.getSettings())
+				.setPlaceholder("Please select country")
+				.setAllowClear(true);
 		countryDropDownChoice.add(countryDropDownChoiceSelect2Behavior);
 		add(new Form<Void>("singleDropDownChoice").add(countryDropDownChoice));
 
@@ -92,7 +102,8 @@ public class HomePage extends WebPage
 
 		Select2MultiChoice<Country> countries = new Select2MultiChoice<>("countries",
 			new PropertyModel<Collection<Country>>(this, "countries"), new CountriesProvider());
-		countries.getSettings().setMinimumInputLength(1);
+		defaultSelect2Settings(countries.getSettings())
+				.setMinimumInputLength(1);
 		add(new Form<Void>("multi").add(countries));
 		
 		// ajax multi-select example
@@ -101,7 +112,8 @@ public class HomePage extends WebPage
 
 		Select2MultiChoice<Country> ajaxcountries = new Select2MultiChoice<>("ajaxcountries",
 				new PropertyModel<Collection<Country>>(this, "ajaxcountries"), new CountriesProvider());
-		countries.getSettings().setMinimumInputLength(2);
+		defaultSelect2Settings(ajaxcountries.getSettings())
+				.setMinimumInputLength(2);
 		ajaxcountries.add(new AjaxFormComponentUpdatingBehavior("change") {
 			private static final long serialVersionUID = 1L;
 
@@ -129,7 +141,8 @@ public class HomePage extends WebPage
 		final Label currentValue = new Label("ajaxcountriesns", new PropertyModel<Collection<String>>(ajaxcountriesns, "current"));
 		add(currentValue.setOutputMarkupId(true));
 
-		countries.getSettings().setMinimumInputLength(2);
+		defaultSelect2Settings(ajaxcountriesns.getSettings())
+				.setMinimumInputLength(2);
 		ajaxcountriesns.add(new AjaxFormSubmitBehavior("change") {
 			private static final long serialVersionUID = 1L;
 
@@ -153,16 +166,19 @@ public class HomePage extends WebPage
 			new ListModel<Country>(Arrays.asList(Country.values())),
 			new CountryRenderer()
 		);
-		countriesListMultipleChoice.add(Select2Behavior.forMultiChoice());
+		Select2Behavior countriesListMultipleChoiceSelect2Behavior = Select2Behavior.forMultiChoice();
+		defaultSelect2Settings(countriesListMultipleChoiceSelect2Behavior.getSettings());
+		countriesListMultipleChoice.add(countriesListMultipleChoiceSelect2Behavior);
 		add(new Form<Void>("listMultipleChoice").add(countriesListMultipleChoice));
 
 		// tags example
 		add(new Label("tagsLabel", new PropertyModel<>(this, "tags")));
 		Select2MultiChoice<String> tags = new Select2MultiChoice<>("tagsSelect",
 				new PropertyModel<>(this, "tags"), new TagProvider());
-		tags.getSettings().setMinimumInputLength(1);
-		tags.getSettings().setCloseOnSelect(true);
-		tags.getSettings().setTags(true);
+		defaultSelect2Settings(tags.getSettings())
+				.setMinimumInputLength(1)
+				.setCloseOnSelect(true)
+				.setTags(true);
 
 		// append "(new)" next to new tags (source http://stackoverflow.com/a/30021059)
 		String tagNew = getString("tag.new");
@@ -198,9 +214,15 @@ public class HomePage extends WebPage
 				return getCurrentValue();
 			}
 		};
-		statelessCountries.getSettings().setStateless(true);
-		statelessCountries.getSettings().setMountPath(WicketApplication.COUNTRIES_MOUNT_PATH);
+		defaultSelect2Settings(statelessCountries.getSettings())
+				.setStateless(true)
+				.setMountPath(WicketApplication.COUNTRIES_MOUNT_PATH);
 		stateless.add(statelessCountries);
+	}
+
+	protected Settings defaultSelect2Settings(Settings settings) {
+		return settings
+				.setWidth("100%");
 	}
 
 	/**
