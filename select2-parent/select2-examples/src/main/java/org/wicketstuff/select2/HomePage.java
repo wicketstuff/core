@@ -55,6 +55,8 @@ public class HomePage extends WebPage
 	private List<Country> countriesListMultipleChoice = new ArrayList<>(Arrays.asList(new Country[] { Country.US, Country.CA }));
 	@SuppressWarnings("unused")
 	private List<String> tags = new ArrayList<>(Arrays.asList("tag1", "tag2"));
+	@SuppressWarnings("unused")
+	private List<Country> countriesStateless = new ArrayList<>(Arrays.asList(new Country[] { Country.US, Country.CA }));
 
 	public HomePage()
 	{
@@ -189,7 +191,8 @@ public class HomePage extends WebPage
 		Form<Void> stateless = new Form<>("stateless");
 		add(stateless);
 
-		final Select2MultiChoice<Country> statelessCountries = new Select2MultiChoice<Country>("statelessCountries")
+		final Select2MultiChoice<Country> statelessCountries = new Select2MultiChoice<Country>("statelessCountries",
+			new PropertyModel<Collection<Country>>(this, "countriesStateless"), new CountriesProvider())
 		{
 			private static final long serialVersionUID = 1L;
 

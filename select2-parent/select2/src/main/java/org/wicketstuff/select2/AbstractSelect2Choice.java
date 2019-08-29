@@ -430,7 +430,7 @@ public abstract class AbstractSelect2Choice<T, M> extends FormComponent<M> imple
 	@Override
 	public void onComponentTagBody(final MarkupStream markupStream, final ComponentTag openTag)
 	{
-		if (getSettings().isStateless()) {
+		if (provider == null) {
 			super.onComponentTagBody(markupStream, openTag);
 		} else {
 			final AppendingStringBuffer buffer = new AppendingStringBuffer();
