@@ -1,6 +1,7 @@
 .metadata
 .settings
 .project
+.factorypath
 target/
 .classpath
 *.i[mpw][lrs]
