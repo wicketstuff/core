@@ -28,7 +28,7 @@ public class GeocoderTest
 	{
 		Geocoder coder = new Geocoder(apiKey);
 		String encode = coder.encode("Salzburgerstraße 205, 4030 Linz, Österreich");
-		Assert.assertEquals(new StringBuilder("http://maps.googleapis.com/maps/api/geocode/json?apiKey=")
+		Assert.assertEquals(new StringBuilder("https://maps.googleapis.com/maps/api/geocode/json?apiKey=")
 				.append(apiKey).append("&address=Salzburgerstra%C3%9Fe+205%2C+4030+Linz%2C+%C3%96sterreich").toString()
 			, encode);
 	}
