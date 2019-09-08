@@ -56,7 +56,7 @@ public class JQueryUrlResourceReference extends UrlResourceReference
 		}
 		else
 		{
-			jQueryReference = JQueryResourceReference.getV2();
+			jQueryReference = JQueryResourceReference.getV3();
 		}
 
 		List<HeaderItem> dependencies = super.getDependencies();
