@@ -16,8 +16,9 @@
  */
 package org.wicketstuff.rest.injection;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 import org.apache.wicket.Application;
 import org.apache.wicket.Session;
@@ -25,24 +26,24 @@ import org.apache.wicket.authroles.authorization.strategies.role.Roles;
 import org.apache.wicket.request.resource.ResourceReference;
 import org.apache.wicket.request.resource.ResourceReferenceRegistry;
 import org.apache.wicket.util.tester.WicketTester;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
 import org.wicketstuff.rest.resource.MountedResource;
 
-class InjectResourceTest 
+public class InjectResourceTest 
 {
 
     private WicketTester tester;
     private final Roles roles = new Roles();
 
-    @BeforeEach
+    @Before
     public void setUp()
     {
         tester = new WicketTester(new SpringApplication(roles));
     }
 
-    @AfterEach
+    @After
     public void tearDown()
     {
         // session must remain temporary.

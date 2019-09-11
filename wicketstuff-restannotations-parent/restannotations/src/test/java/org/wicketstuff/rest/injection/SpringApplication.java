@@ -18,6 +18,8 @@ package org.wicketstuff.rest.injection;
 
 import org.apache.wicket.authroles.authorization.strategies.role.Roles;
 import org.apache.wicket.spring.injection.annot.SpringComponentInjector;
+import org.springframework.beans.factory.config.ConstructorArgumentValues;
+import org.springframework.beans.factory.support.GenericBeanDefinition;
 import org.springframework.context.support.StaticApplicationContext;
 import org.wicketstuff.rest.WicketApplication;
 import org.wicketstuff.rest.utils.mounting.PackageScanner;
@@ -38,7 +40,12 @@ public class SpringApplication extends WicketApplication
         super.init();
         
         StaticApplicationContext ctx = new StaticApplicationContext();
-        ctx.registerBean(INJECTED_VALUE, String.class, () -> INJECTED_VALUE);
+        GenericBeanDefinition gbd = new GenericBeanDefinition();
+        gbd.setBeanClass(String.class);
+        ConstructorArgumentValues constructorArgumentValues = new ConstructorArgumentValues();
+        constructorArgumentValues.addGenericArgumentValue(INJECTED_VALUE);
+        gbd.setConstructorArgumentValues(constructorArgumentValues);
+        ctx.registerBeanDefinition(INJECTED_VALUE, gbd);
         ctx.refresh();
 
         getComponentInstantiationListeners().add(new SpringComponentInjector(this, ctx));
