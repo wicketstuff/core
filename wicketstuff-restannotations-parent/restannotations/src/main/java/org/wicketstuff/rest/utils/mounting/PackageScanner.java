@@ -18,6 +18,7 @@ package org.wicketstuff.rest.utils.mounting;
 
 import java.io.File;
 import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
 import java.net.URL;
 import java.net.URLDecoder;
 import java.util.ArrayList;
@@ -28,6 +29,7 @@ import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
 
 import org.apache.wicket.WicketRuntimeException;
+import org.apache.wicket.injection.Injector;
 import org.apache.wicket.protocol.http.WebApplication;
 import org.apache.wicket.request.resource.IResource;
 import org.apache.wicket.request.resource.ResourceReference;
@@ -79,7 +81,7 @@ public class PackageScanner
 	}
 
 	private static void mountAnnotatedResource(WebApplication application, Class<?> clazz)
-			throws InstantiationException, IllegalAccessException
+			throws InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException, NoSuchMethodException, SecurityException
 	{
 		ResourcePath mountAnnotation = clazz.getAnnotation(ResourcePath.class);
 
@@ -89,9 +91,14 @@ public class PackageScanner
 		}
 
 		String path = mountAnnotation.value();
-		final IResource resourceInstance = (IResource) clazz.newInstance();
+		final IResource resourceInstance = (IResource) clazz.getDeclaredConstructor().newInstance();
 
-		application.mountResource(path, new ResourceReference(clazz.getSimpleName())
+		//apply injection if we are in a container
+		if (Injector.get() != null) {            
+		    Injector.get().inject(resourceInstance);
+        }
+		
+	    application.mountResource(path, new ResourceReference(clazz.getSimpleName())
 		{
 			/**
         	* 

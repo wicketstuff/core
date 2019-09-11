@@ -16,6 +16,7 @@
  */
 package org.wicketstuff.rest.resource;
 
+import org.apache.wicket.spring.injection.annot.SpringBean;
 import org.wicketstuff.rest.annotations.MethodMapping;
 import org.wicketstuff.rest.annotations.ResourcePath;
 import org.wicketstuff.rest.contenthandling.webserialdeserial.JsonTestWebSerialDeserial;
@@ -23,7 +24,14 @@ import org.wicketstuff.rest.contenthandling.webserialdeserial.JsonTestWebSerialD
 @ResourcePath("/mountedpath")
 public class MountedResource extends AbstractRestResource<JsonTestWebSerialDeserial>
 {
-
+    /**
+     * 
+     */
+    private static final long serialVersionUID = 1L;
+    
+    @SpringBean
+    private String injectedValue;
+    
 	public MountedResource()
 	{
 		super(new JsonTestWebSerialDeserial());
@@ -39,4 +47,8 @@ public class MountedResource extends AbstractRestResource<JsonTestWebSerialDeser
 	{
 		return "I'm dummy!";
 	}
+
+    public String getInjectedValue() {
+        return injectedValue;
+    }
 }
