@@ -4,7 +4,7 @@
 	<parent>
 		<groupId>org.wicketstuff</groupId>
 		<artifactId>wicketstuff-core</artifactId>
-		<version>8.6.0-SNAPSHOT</version>
+		<version>8.7.0-SNAPSHOT</version>
 	</parent>
 	<artifactId>jee-web-parent</artifactId>
 	<packaging>pom</packaging>
@@ -23,7 +23,7 @@
 		<module>jee-web-examples</module>
 	</modules>
 	<properties>
-		<jsf.version>2.2.19</jsf.version>
+		<jsf.version>2.2.20</jsf.version>
 	</properties>
 	<build>
 		<pluginManagement>
