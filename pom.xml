@@ -243,7 +243,7 @@
 	<!-- mocleiri: for distribution in to central repository sections in the main pom are not allowed -->
 
 	<properties>
-		<wicket.version>7.15.0-SNAPSHOT</wicket.version>
+		<wicket.version>7.16.0-SNAPSHOT</wicket.version>
 
 		<maven.compiler.source>1.7</maven.compiler.source>
 		<maven.compiler.target>1.7</maven.compiler.target>
