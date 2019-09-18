@@ -223,7 +223,7 @@
 		<deployment.disabled>false</deployment.disabled>
 		<sources.disabled>false</sources.disabled>
 
-		<hibernate.version>5.4.4.Final</hibernate.version>
+		<hibernate.version>5.4.5.Final</hibernate.version>
 		<javassist.version>3.25.0-GA</javassist.version>
 		<jetty.version>9.4.20.v20190813</jetty.version>
 		<sf-jung.version>2.1.1</sf-jung.version>
@@ -234,7 +234,7 @@
 		<spring.version>5.1.9.RELEASE</spring.version>
 		<cglib.version>3.3.0</cglib.version>
 		<objenesis.version>3.0.1</objenesis.version>
-		<scala.version>2.13.0</scala.version>
+		<scala.version>2.13.1</scala.version>
 		<jackson.version>2.9.9.3</jackson.version>
 		<poi.version>4.1.0</poi.version>
 		<guava.version>28.1-jre</guava.version>
