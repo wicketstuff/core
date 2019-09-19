@@ -6,7 +6,7 @@
     <parent>
         <groupId>org.wicketstuff</groupId>
         <artifactId>openlayers3-parent</artifactId>
-        <version>9.0.0-M3-SNAPSHOT</version>
+        <version>9.0.0-M3</version>
     </parent>
 
     <artifactId>openlayers3-examples</artifactId>
