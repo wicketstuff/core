@@ -6,7 +6,7 @@
 	<parent>
 		<groupId>org.wicketstuff</groupId>
 		<artifactId>wicketstuff-core</artifactId>
-		<version>9.0.0-M3-SNAPSHOT</version>
+		<version>9.0.0-M4-SNAPSHOT</version>
 	</parent>
 	<artifactId>wicketstuff-clipboardjs-parent</artifactId>
 	<name>WicketStuff Clipboard JS Parent</name>
