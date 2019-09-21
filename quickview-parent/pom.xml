@@ -23,7 +23,7 @@ Copyright 2012 Vineet Semwal
     <parent>
         <groupId>org.wicketstuff</groupId>
         <artifactId>wicketstuff-core</artifactId>
-        <version>9.0.0-M3</version>
+        <version>9.0.1-M3</version>
     </parent>
 
     <groupId>org.wicketstuff</groupId>
