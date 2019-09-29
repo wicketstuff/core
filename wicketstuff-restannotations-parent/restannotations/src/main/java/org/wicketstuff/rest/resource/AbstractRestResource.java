@@ -201,14 +201,17 @@ public abstract class AbstractRestResource<T extends IWebSerialDeserial> impleme
 		Attributes attributes = attributesWrapper.getOriginalAttributes();
 		String outputFormat = methodInfo.getOutputFormat();
 
-		// 1-check if user is authorized to invoke the method
+		// 1-set response content type
+		response.setContentType(outputFormat);
+
+		// 2-check if user is authorized to invoke the method
 		if (!isUserAuthorized(methodInfo.getRoles()))
 		{
 			unauthorizedMethodAccess(response, methodInfo);
 			return;
 		}
 
-		// 2-extract method parameters
+		// 3-extract method parameters
 		List<?> parametersValues = null;
 
 		try
@@ -222,7 +225,7 @@ public abstract class AbstractRestResource<T extends IWebSerialDeserial> impleme
 			return;
 		}
 
-		// 3-validate method parameters
+		// 4-validate method parameters
 		List<IValidationError> validationErrors = validateMethodParameters(methodInfo,
 			parametersValues);
 
@@ -235,13 +238,11 @@ public abstract class AbstractRestResource<T extends IWebSerialDeserial> impleme
 			return;
 		}
 
-		// 4-invoke method triggering the before-after hooks
+		// 5-invoke method triggering the before-after hooks
 		onBeforeMethodInvoked(methodInfo, attributes);
 		Object result = invokeMappedMethod(methodInfo.getMethod(), parametersValues, response);
 		onAfterMethodInvoked(methodInfo, attributes, result);
 
-		// 5-set response content type
-		response.setContentType(outputFormat);
 
 		// 6-if the invoked method returns a value, it is written to response
 		if (result != null)
