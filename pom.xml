@@ -1179,7 +1179,6 @@
 						<includes>
 							<include>**/*Test.java</include>
 						</includes>
-						<reuseForks>false</reuseForks>
 						<testFailureIgnore>false</testFailureIgnore>
 						<argLine>-Xmx1G --add-opens java.base/jdk.internal.loader=ALL-UNNAMED --add-modules=ALL-SYSTEM</argLine>
 					</configuration>
