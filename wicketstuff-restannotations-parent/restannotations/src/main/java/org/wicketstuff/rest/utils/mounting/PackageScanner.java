@@ -19,6 +19,7 @@ package org.wicketstuff.rest.utils.mounting;
 import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
+import java.net.URISyntaxException;
 import java.net.URL;
 import java.net.URLDecoder;
 import java.util.ArrayList;
@@ -94,14 +95,14 @@ public class PackageScanner
 		final IResource resourceInstance = (IResource) clazz.getDeclaredConstructor().newInstance();
 
 		//apply injection if we are in a container
-		if (Injector.get() != null) {            
+		if (Injector.get() != null) {
 		    Injector.get().inject(resourceInstance);
         }
-		
+
 	    application.mountResource(path, new ResourceReference(clazz.getSimpleName())
 		{
 			/**
-        	* 
+        	*
     		*/
     		private static final long serialVersionUID = 1L;
 
@@ -119,57 +120,58 @@ public class PackageScanner
 	/**
 	 * Scans all classes accessible from the context class loader which belong
 	 * to the given package and subpackages.
-	 * 
+	 *
 	 * Credits: http://www.dzone.com/snippets/get-all-classes-within-package
-	 * 
+	 *
 	 * @param packageName
 	 *            The base package
 	 * @return The classes
 	 * @throws ClassNotFoundException
 	 * @throws IOException
+	 * @throws URISyntaxException
 	 */
 	private static Class<?>[] getClasses(String packageName) throws ClassNotFoundException,
-			IOException
+			IOException, URISyntaxException
 	{
 		ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
-		
+
 		Args.notNull(classLoader, "classLoader");
-		
+
 		String path = packageName.replace('.', '/');
 		Enumeration<URL> resources = classLoader.getResources(path);
 		List<File> dirs = new ArrayList<>();
 		List<JarFile> jars = new ArrayList<>();
-		
+
 		while (resources.hasMoreElements())
 		{
 			URL resource = resources.nextElement();
 			String protocol = resource.getProtocol();
-			
-			if("jar".equals(protocol) || "wsjar".equals(protocol)) 
+
+			if("jar".equals(protocol) || "wsjar".equals(protocol))
 			{
 				String jarFileName = URLDecoder.decode(resource.getFile(), "UTF-8");
-		        jarFileName = jarFileName.substring(5,jarFileName.indexOf("!"));
-		        
-		        jars.add(new JarFile(jarFileName));
+				jarFileName = jarFileName.substring(5,jarFileName.indexOf("!"));
+
+				jars.add(new JarFile(jarFileName));
 			}
 			else
 			{
-				dirs.add(new File(resource.getFile()));
+				dirs.add(new File(resource.toURI()));
 			}
 		}
-		
+
 		ArrayList<Class<?>> classes = new ArrayList<Class<?>>();
-		
+
 		for (File directory : dirs)
 		{
 			classes.addAll(findClasses(directory, packageName));
 		}
-		
+
 		for (JarFile jarFile : jars)
 		{
 			classes.addAll(findClasses(jarFile, path));
 		}
-		
+
 		return classes.toArray(new Class[classes.size()]);
 	}
 
@@ -177,9 +179,9 @@ public class PackageScanner
 	/**
 	 * Recursive method used to find all classes in a given directory and
 	 * subdirs.
-	 * 
+	 *
 	 * Credits: http://www.dzone.com/snippets/get-all-classes-within-package
-	 * 
+	 *
 	 * @param directory
 	 *            The base directory
 	 * @param packageName
@@ -191,14 +193,14 @@ public class PackageScanner
 			throws ClassNotFoundException
 	{
 		List<Class<?>> classes = new ArrayList<Class<?>>();
-		
+
 		if (!directory.exists())
 		{
 			return classes;
 		}
-		
+
 		File[] files = directory.listFiles();
-		
+
 		for (File file : files)
 		{
 			if (file.isDirectory())
@@ -210,15 +212,15 @@ public class PackageScanner
 						+ file.getName().substring(0, file.getName().length() - 6)));
 			}
 		}
-		
+
 		return classes;
 	}
-	
+
 	/**
 	 * Search for classes in a given jar file and package name
-	 * 
+	 *
 	 * Credits: http://www.dzone.com/snippets/get-all-classes-within-package
-	 * 
+	 *
 	 * @param jarFile
 	 *            The target jar arcive
 	 * @param path
@@ -226,18 +228,18 @@ public class PackageScanner
 	 * @return The classes
 	 * @throws ClassNotFoundException
 	 */
-	private static Collection<? extends Class<?>> findClasses(JarFile jarFile, String path) 
+	private static Collection<? extends Class<?>> findClasses(JarFile jarFile, String path)
 		throws ClassNotFoundException
 	{
 		List<Class<?>> classes = new ArrayList<Class<?>>();
 		Enumeration<JarEntry> jarEntries = jarFile.entries();
-		
+
 		while (jarEntries.hasMoreElements())
 		{
 			JarEntry jarEntry = jarEntries.nextElement();
 			String entryName = jarEntry.getName();
 			int classExtensionIndex = entryName.indexOf(".class");
-			
+
 			if(entryName.startsWith(path) && classExtensionIndex >= 0)
 			{
                 entryName = entryName.substring(0, classExtensionIndex);
@@ -245,7 +247,7 @@ public class PackageScanner
                 classes.add(Class.forName(entryName));
             }
 		}
-		
+
 		return classes;
 	}
 }
