@@ -10,6 +10,22 @@
 	<name>Jamon</name>
 	<description>An integration of Jamon API with Apache Wicket</description>
 
+	<build>
+		<pluginManagement>
+			<plugins>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-surefire-plugin</artifactId>
+					<version>${maven-surefire-plugin.version}</version>
+					<configuration>
+						<!-- https://github.com/wicketstuff/core/issues/676 -->
+						<reuseForks>false</reuseForks>
+					</configuration>
+				</plugin>
+			</plugins>
+		</pluginManagement>
+	</build>
+
 	<dependencies>
 		<!-- WICKET -->
 		<dependency>
