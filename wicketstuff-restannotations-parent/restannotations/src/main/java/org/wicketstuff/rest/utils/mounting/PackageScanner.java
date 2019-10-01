@@ -19,6 +19,7 @@ package org.wicketstuff.rest.utils.mounting;
 import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
+import java.net.URISyntaxException;
 import java.net.URL;
 import java.net.URLDecoder;
 import java.util.ArrayList;
@@ -127,9 +128,10 @@ public class PackageScanner
 	 * @return The classes
 	 * @throws ClassNotFoundException
 	 * @throws IOException
+	 * @throws URISyntaxException
 	 */
 	private static Class<?>[] getClasses(String packageName) throws ClassNotFoundException,
-			IOException
+			IOException, URISyntaxException
 	{
 		ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
 
@@ -154,7 +156,7 @@ public class PackageScanner
 			}
 			else
 			{
-				dirs.add(new File(resource.getFile()));
+				dirs.add(new File(resource.toURI()));
 			}
 		}
 
