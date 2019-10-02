@@ -3,6 +3,7 @@ package org.wicketstuff.event.annotation;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
+import org.apache.wicket.Application;
 import org.apache.wicket.Component;
 import org.apache.wicket.Page;
 import org.apache.wicket.RestartResponseException;
@@ -122,7 +123,26 @@ public class TypedAnnotationEventDispatcherTest
 		assertEquals(1, container.widgetsHandled);
 		assertEquals(0, container.personsHandled);
 	}
-
+	
+	@Test
+	public void eventSentToNonVisibleComponentWhenConfigured()
+	{		
+		Application.get().getMetaData(Initializer.ANNOTATION_EVENT_DISPATCHER_CONFIG_CONTEXT_KEY).setDispatchToNonVisibleComponents(true);
+		
+		ComponentOne one = new ComponentOne("id1");
+		ComponentTwo two = new ComponentTwo("id2");
+		TestContainer container = new TestContainer("container");
+		container.add(one, two);
+		two.setVisible(false);
+		tester.startComponentInPage(container);
+		one.send(container.getApplication(), Broadcast.BREADTH, new SaveEvent<>(null, new Widget()));
+		assertEquals(0, one.personsHandled);
+		assertEquals(1, one.widgetsHandled);
+		assertEquals(1, two.savesHandled);
+		assertEquals(1, container.widgetsHandled);
+		assertEquals(0, container.personsHandled);
+	}
+	
 	@Test
 	public void exceptionWhenGenericDoesNotAgreeWithTypes()
 	{
