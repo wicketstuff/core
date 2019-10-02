@@ -135,30 +135,27 @@ class AnnotationEventSink
 		{
 			for (Method method : onEventMethods)
 			{
-				if (canCallListenerInterface(sink))
+				OnEvent onEvent = method.getAnnotation(OnEvent.class);
+				if (isPayloadApplicableToHandler(onEvent, payload))
 				{
-					OnEvent onEvent = method.getAnnotation(OnEvent.class);
-					if (isPayloadApplicableToHandler(onEvent, payload))
+					Object result = method.invoke(sink, payload);
+					if (result instanceof Visit<?>)
 					{
-						Object result = method.invoke(sink, payload);
-						if (result instanceof Visit<?>)
+						Visit<?> visit = (Visit<?>) result;
+						if (visit.isDontGoDeeper())
 						{
-							Visit<?> visit = (Visit<?>) result;
-							if (visit.isDontGoDeeper())
-							{
-								event.dontBroadcastDeeper();
-							}
-							else if (visit.isStopped())
-							{
-								event.stop();
-								break;
-							}
+							event.dontBroadcastDeeper();
 						}
-						else if (onEvent.stop())
+						else if (visit.isStopped())
 						{
 							event.stop();
 							break;
 						}
+					}
+					else if (onEvent.stop())
+					{
+						event.stop();
+						break;
 					}
 				}
 			}

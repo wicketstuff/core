@@ -76,15 +76,14 @@ public class AnnotationEventDispatcher implements IEventDispatcher, IComponentIn
 	public void dispatchEvent(final Object sink, final IEvent<?> event, final Component component)
 	{
 		AnnotationEventSink eventSink = eventSinkByClass.get(sink.getClass());
-		AnnotationEventDispatcherConfig config = Application.get().getMetaData(
+		if (eventSink != null&& eventSink != EMPTY_SINK) {
+			AnnotationEventDispatcherConfig config = Application.get().getMetaData(
 				Initializer.ANNOTATION_EVENT_DISPATCHER_CONFIG_CONTEXT_KEY);
-		if (eventSink != null
-				&& eventSink != EMPTY_SINK
-				&& (config.getEventFilter() == null || config.getEventFilter().isAssignableFrom(
-						event.getPayload().getClass())))
-		{
-			eventSink.onEvent(sink, event);
+			
+			if (config.allowDispatch(sink, event))
+			{
+				eventSink.onEvent(sink, event);
+			}
 		}
 	}
-
 }
