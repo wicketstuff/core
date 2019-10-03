@@ -20,7 +20,7 @@
 					<version>${maven-surefire-plugin.version}</version>
 					<configuration>
 						<!-- https://github.com/wicketstuff/core/issues/676 -->
-						<reuseForks>false</reuseForks>
+						<forkedProcessExitTimeoutInSeconds>200</forkedProcessExitTimeoutInSeconds>
 					</configuration>
 				</plugin>
 			</plugins>
