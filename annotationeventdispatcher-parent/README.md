@@ -28,13 +28,12 @@ The library uses a Wicket `IInitializer` to install itself into an application s
 
 Configuration
 -------------
-The configuration object for the library, `AnnotationEventDispatcherConfig`, can be accessed via an application's metadata: `Application.get().getMetaData(Initializer.ANNOTATION_EVENT_DISPATCHER_CONFIG_CONTEXT_KEY)`.
+The configuration object for the library, `AnnotationEventDispatcherConfig`, can be accessed via: `AnnotationEventDispatcherConfig.get(Application.get())`.
 
-Currently, there is just one configuration parameter:
+Currently, there are just two configuration parameters:
 
 * class filter that events must implement in order to be handled by the annotation dispatcher; by default, there is no filter
-
-Whether an event is dispatched to a given event handler method is controlled by the Component#canCallListenerInterface(Method) method.  By default, this method returns false if the component is either disabled or not visible.
+* whether event should be dispatched to invisible/disabled components, default is false
 
 Usage
 -----

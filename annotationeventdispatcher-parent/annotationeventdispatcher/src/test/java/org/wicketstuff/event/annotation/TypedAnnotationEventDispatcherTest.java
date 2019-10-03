@@ -1,6 +1,5 @@
 package org.wicketstuff.event.annotation;
 
-import org.apache.wicket.Application;
 import org.apache.wicket.Component;
 import org.apache.wicket.Page;
 import org.apache.wicket.RestartResponseException;
@@ -125,7 +124,7 @@ public class TypedAnnotationEventDispatcherTest
 	@Test
 	public void eventSentToNonVisibleComponentWhenConfigured()
 	{		
-		Application.get().getMetaData(Initializer.ANNOTATION_EVENT_DISPATCHER_CONFIG_CONTEXT_KEY).setDispatchToNonVisibleComponents(true);
+		AnnotationEventDispatcherConfig.get(tester.getApplication()).dispatchToNonVisibleComponents(true);
 		
 		ComponentOne one = new ComponentOne("id1");
 		ComponentTwo two = new ComponentTwo("id2");
