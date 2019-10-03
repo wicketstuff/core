@@ -1,5 +1,6 @@
 package org.wicketstuff.event.annotation;
 
+import org.apache.wicket.Application;
 import org.apache.wicket.Component;
 import org.apache.wicket.event.IEvent;
 
@@ -50,5 +51,15 @@ public class AnnotationEventDispatcherConfig {
 	{
 		return (eventFilter == null || eventFilter.isAssignableFrom(event.getPayload().getClass()))
 			&& (dispatchToNonVisibleComponents || (sink instanceof Component && ((Component)sink).canCallListener()));
+	}
+	
+	/**
+	 * Get the configuration.
+	 * 
+	 * @param application
+	 * @return configuration
+	 */
+	public static AnnotationEventDispatcherConfig get(Application application) {
+		return application.getMetaData(Initializer.ANNOTATION_EVENT_DISPATCHER_CONFIG_CONTEXT_KEY);
 	}
 }

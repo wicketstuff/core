@@ -3,14 +3,12 @@ package org.wicketstuff.event.annotation;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-import org.apache.wicket.Application;
 import org.apache.wicket.Component;
 import org.apache.wicket.Page;
 import org.apache.wicket.RestartResponseException;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.event.Broadcast;
 import org.apache.wicket.markup.html.panel.Panel;
-import org.apache.wicket.mock.MockApplication;
 import org.apache.wicket.util.tester.WicketTester;
 import org.apache.wicket.util.visit.IVisit;
 import org.apache.wicket.util.visit.Visit;
@@ -19,8 +17,7 @@ import org.junit.jupiter.api.Test;
 
 public class TypedAnnotationEventDispatcherTest
 {
-	private final MockApplication testApp = new MockApplication();
-	private final WicketTester tester = new WicketTester(testApp);
+	private final WicketTester tester = new WicketTester();
 
 	@AfterEach
 	public void cleanup() {
@@ -127,7 +124,7 @@ public class TypedAnnotationEventDispatcherTest
 	@Test
 	public void eventSentToNonVisibleComponentWhenConfigured()
 	{		
-		Application.get().getMetaData(Initializer.ANNOTATION_EVENT_DISPATCHER_CONFIG_CONTEXT_KEY).setDispatchToNonVisibleComponents(true);
+		AnnotationEventDispatcherConfig.get(tester.getApplication()).dispatchToNonVisibleComponents(true);
 		
 		ComponentOne one = new ComponentOne("id1");
 		ComponentTwo two = new ComponentTwo("id2");
