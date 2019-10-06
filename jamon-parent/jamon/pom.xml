@@ -19,7 +19,7 @@
 					<version>${maven-surefire-plugin.version}</version>
 					<configuration>
 						<!-- https://github.com/wicketstuff/core/issues/676 -->
-						<reuseForks>false</reuseForks>
+						<reuseForks>true</reuseForks>
 					</configuration>
 				</plugin>
 			</plugins>
