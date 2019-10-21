@@ -241,7 +241,7 @@
 		<wicket-webjars.version>2.0.13</wicket-webjars.version>
 		<commons-io.version>2.6</commons-io.version>
 		<xstream.version>1.4.11.1</xstream.version>
-		<hamcrest.version>2.1</hamcrest.version>
+		<hamcrest.version>2.2</hamcrest.version>
 		<commons-logging.version>1.2</commons-logging.version>
 		<javax.servlet-api.version>3.1.0</javax.servlet-api.version>
 		<junit.version>5.5.2</junit.version>
