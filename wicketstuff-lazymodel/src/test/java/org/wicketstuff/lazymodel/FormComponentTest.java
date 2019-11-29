@@ -45,7 +45,7 @@ public class FormComponentTest {
 		assertEquals(Long.class, page.text.getType());
 		assertEquals("0", page.text.getDefaultModelObjectAsString());
 
-		tester.getRequest().setParameter("text", "42");
+		tester.getRequest().getPostParameters().addParameterValue("text", "42");
 		tester.submitForm(page.form);
 		assertEquals(42l, page.text.getDefaultModelObject());
 	}
@@ -84,7 +84,7 @@ public class FormComponentTest {
 		assertEquals(Long.class, page.text.getType());
 		assertEquals("0", page.text.getDefaultModelObjectAsString());
 
-		tester.getRequest().setParameter("text", "42");
+		tester.getRequest().getPostParameters().addParameterValue("text", "42");
 		tester.submitForm(page.form);
 		assertEquals(42l, page.text.getDefaultModelObject());
 	}
@@ -101,7 +101,7 @@ public class FormComponentTest {
 		assertEquals(Long.class, page.text.getType());
 		assertEquals("0", page.text.getDefaultModelObjectAsString());
 
-		tester.getRequest().setParameter("text", "42");
+		tester.getRequest().getPostParameters().addParameterValue("text", "42");
 		tester.submitForm(page.form);
 		assertEquals(42l, page.text.getDefaultModelObject());
 	}
@@ -118,7 +118,7 @@ public class FormComponentTest {
 		assertEquals(null, page.text.getType());
 		assertEquals("", page.text.getDefaultModelObjectAsString());
 
-		tester.getRequest().setParameter("text", "42");
+		tester.getRequest().getPostParameters().addParameterValue("text", "42");
 		try {
 			tester.submitForm(page.form);
 
