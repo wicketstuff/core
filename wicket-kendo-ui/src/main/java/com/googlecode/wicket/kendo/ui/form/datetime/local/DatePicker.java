@@ -256,6 +256,8 @@ public class DatePicker extends LocalTextField<LocalDate> // NOSONAR
 	 */
 	private static IConverter<LocalDate> newConverter(final String pattern)
 	{
+		final String corrected = correctPattern(pattern);
+
 		return new IConverter<LocalDate>() { // NOSONAR
 
 			private static final long serialVersionUID = 1L;
@@ -265,7 +267,7 @@ public class DatePicker extends LocalTextField<LocalDate> // NOSONAR
 			{
 				try
 				{
-					return LocalDate.parse(value, DateTimeFormatter.ofPattern(pattern, locale));
+					return LocalDate.parse(value, DateTimeFormatter.ofPattern(corrected, locale));
 				}
 				catch (DateTimeParseException e)
 				{
@@ -276,8 +278,26 @@ public class DatePicker extends LocalTextField<LocalDate> // NOSONAR
 			@Override
 			public String convertToString(LocalDate date, Locale locale)
 			{
-				return date != null ? date.format(DateTimeFormatter.ofPattern(pattern, locale)) : null;
+				return date != null ? date.format(DateTimeFormatter.ofPattern(corrected, locale)) : null;
 			}
 		};
+	}
+
+	/**
+	 * Correct the supplied pattern<br>
+	 * Single 'y' is allowed in Java11, leads to a bad string conversion with {@link DateTimeFormatter}.<br>
+	 * ie: LocalDate.parse(dateStr, DateTimeFormatter.ofPattern(pattern)) returns 0019-11-29
+	 * 
+	 * @param pattern the java date pattern
+	 * @return the corrected pattern
+	 */
+	static String correctPattern(final String pattern) {
+		String corrected = pattern;
+
+		if (corrected.contains("y") && !corrected.contains("yy")) {
+			corrected = corrected.replace("y", "yy");
+		}
+
+		return corrected;
 	}
 }

@@ -323,6 +323,8 @@ public class DateTimePicker extends FormComponentPanel<LocalDateTime> implements
 	 */
 	private static IConverter<LocalDateTime> newConverter(final String pattern)
 	{
+		final String corrected = DatePicker.correctPattern(pattern);
+
 		return new IConverter<LocalDateTime>() { // NOSONAR
 
 			private static final long serialVersionUID = 1L;
@@ -332,7 +334,7 @@ public class DateTimePicker extends FormComponentPanel<LocalDateTime> implements
 			{
 				try
 				{
-					return LocalDateTime.parse(value, DateTimeFormatter.ofPattern(pattern, locale));
+					return LocalDateTime.parse(value, DateTimeFormatter.ofPattern(corrected, locale));
 				}
 				catch (DateTimeParseException e)
 				{
@@ -343,7 +345,7 @@ public class DateTimePicker extends FormComponentPanel<LocalDateTime> implements
 			@Override
 			public String convertToString(LocalDateTime datetime, Locale locale)
 			{
-				return datetime != null ? datetime.format(DateTimeFormatter.ofPattern(pattern, locale)) : null;
+				return datetime != null ? datetime.format(DateTimeFormatter.ofPattern(corrected, locale)) : null;
 			}
 		};
 	}
