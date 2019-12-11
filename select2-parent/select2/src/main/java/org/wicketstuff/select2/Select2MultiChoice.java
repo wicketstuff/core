@@ -12,16 +12,14 @@
  */
 package org.wicketstuff.select2;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
+import java.util.stream.Stream;
 
 import org.apache.wicket.markup.ComponentTag;
 import org.apache.wicket.markup.html.form.FormComponent;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.util.convert.ConversionException;
+import org.apache.wicket.util.string.AppendingStringBuffer;
 import org.apache.wicket.util.string.StringValue;
 
 /**
@@ -136,4 +134,15 @@ public class Select2MultiChoice<T> extends AbstractSelect2Choice<T, Collection<T
 		super.onComponentTag(tag);
 		tag.put("multiple", "multiple");
 	}
+
+    @Override
+    protected CharSequence createOptionsHtml(Collection<T> currentValue) {
+        final AppendingStringBuffer buffer = new AppendingStringBuffer();
+
+        Optional.ofNullable(currentValue)
+                .map(Collection::stream)
+                .orElseGet(Stream::empty).forEach(value -> appendOptionHtml(buffer, value));
+
+        return buffer;
+    }
 }
