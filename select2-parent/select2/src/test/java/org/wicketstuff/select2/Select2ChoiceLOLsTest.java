@@ -40,8 +40,7 @@ public class Select2ChoiceLOLsTest {
         assertTrue(page.listOfListsSelect.getModelObject().equals(ELOLsState.LIST_1));
 
         wicketTester.getRequest().setParameter("selectState", "2");
-        wicketTester.submitForm(page.form.getPageRelativePath());
-        System.out.println(page.listOfListsSelect.getModelObject());
+        wicketTester.submitForm(page.form);
         assertTrue(page.listOfListsSelect.getModelObject().equals(ELOLsState.LIST_3));
     }
 }
