@@ -436,7 +436,8 @@ public abstract class AbstractSelect2Choice<T, M> extends FormComponent<M> imple
 			final AppendingStringBuffer buffer = new AppendingStringBuffer();
 
 			M currentValue = getCurrentValue();
-			if (currentValue instanceof Collection) {
+			// The currentValues should only be flatted if a Select2MultiChoice is used.
+			if (currentValue instanceof Collection && this instanceof Select2MultiChoice) {
 				@SuppressWarnings("unchecked")
 				Collection<T> choices = (Collection<T>) currentValue;
 				for (T choice : choices) {
