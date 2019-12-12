@@ -12,13 +12,8 @@
  */
 package org.wicketstuff.select2;
 
-import java.io.IOException;
-import java.io.OutputStream;
-import java.io.OutputStreamWriter;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.List;
-
+import com.github.openjson.JSONException;
+import com.github.openjson.JSONStringer;
 import org.apache.wicket.IRequestListener;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.event.IEvent;
@@ -34,8 +29,12 @@ import org.apache.wicket.request.http.WebResponse;
 import org.apache.wicket.util.string.AppendingStringBuffer;
 import org.apache.wicket.util.string.Strings;
 
-import com.github.openjson.JSONException;
-import com.github.openjson.JSONStringer;
+import java.io.IOException;
+import java.io.OutputStream;
+import java.io.OutputStreamWriter;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
 
 /**
  * Base class for Select2 components
@@ -396,7 +395,7 @@ public abstract class AbstractSelect2Choice<T, M> extends FormComponent<M> imple
 		super.onDetach();
 	}
 
-	private void addOption(T choice, final AppendingStringBuffer buffer)
+	protected void addOption(T choice, final AppendingStringBuffer buffer)
 	{
 		buffer.append("<option selected=\"selected\" value=\"")
 			.append(Strings.escapeMarkup(getProvider().getIdValue(choice))).append("\">")
@@ -433,26 +432,20 @@ public abstract class AbstractSelect2Choice<T, M> extends FormComponent<M> imple
 		if (provider == null) {
 			super.onComponentTagBody(markupStream, openTag);
 		} else {
-			final AppendingStringBuffer buffer = new AppendingStringBuffer();
-
 			M currentValue = getCurrentValue();
-			// The currentValues should only be flatted if a Select2MultiChoice is used.
-			if (currentValue instanceof Collection && this instanceof Select2MultiChoice) {
-				@SuppressWarnings("unchecked")
-				Collection<T> choices = (Collection<T>) currentValue;
-				for (T choice : choices) {
-					addOption(choice, buffer);
-				}
-			} else {
-				if (currentValue != null) {
-					@SuppressWarnings("unchecked")
-					T choice = (T) currentValue;
-					addOption(choice, buffer);
-				}
-			}
-			replaceComponentTagBody(markupStream, openTag, buffer);
+			replaceComponentTagBody(markupStream, openTag, createOptions(currentValue));
 		}
 	}
+
+	/**
+	 * Creates the HTML code for an option.
+	 * @param currentValue
+	 * 			The option represented in java.
+	 * @return
+	 * 			The HTML markup for that option.
+	 */
+	protected abstract CharSequence createOptions(M currentValue);
+
 
 	/**
 	 * Empty input is acceptable

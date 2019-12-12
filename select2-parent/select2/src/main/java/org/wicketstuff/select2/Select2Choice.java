@@ -12,14 +12,15 @@
  */
 package org.wicketstuff.select2;
 
+import org.apache.wicket.model.IModel;
+import org.apache.wicket.util.convert.ConversionException;
+import org.apache.wicket.util.string.AppendingStringBuffer;
+import org.apache.wicket.util.string.Strings;
+
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
-
-import org.apache.wicket.model.IModel;
-import org.apache.wicket.util.convert.ConversionException;
-import org.apache.wicket.util.string.Strings;
 
 /**
  * Single-select Select2 component. Should be attached to a {@code <select></select>} element.
@@ -64,6 +65,17 @@ public class Select2Choice<T> extends AbstractSelect2Choice<T, T>
 	public Select2Choice(String id, IModel<T> model, ChoiceProvider<T> provider)
 	{
 		super(id, model, provider);
+	}
+
+	@Override
+	protected CharSequence createOptions(T currentValue) {
+		final AppendingStringBuffer buffer = new AppendingStringBuffer();
+
+		if (currentValue != null) {
+			addOption(currentValue, buffer);
+		}
+
+		return buffer;
 	}
 
 	/**
