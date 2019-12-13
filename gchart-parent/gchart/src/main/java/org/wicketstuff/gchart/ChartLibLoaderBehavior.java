@@ -26,8 +26,6 @@ import org.apache.wicket.markup.head.HeaderItem;
 import org.apache.wicket.markup.head.IHeaderResponse;
 import org.apache.wicket.markup.head.JavaScriptContentHeaderItem;
 import org.apache.wicket.markup.head.JavaScriptHeaderItem;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import com.github.openjson.JSONArray;
 import com.github.openjson.JSONObject;
@@ -53,8 +51,6 @@ import static org.wicketstuff.gchart.Chart.LOADER_URL;
  * @author Dieter Tremel
  */
 public class ChartLibLoaderBehavior extends Behavior implements JavaScriptable, ChartLibLoader {
-
-    private static final Logger log = LoggerFactory.getLogger(ChartLibLoaderBehavior.class);
     public static final String LOADER_SCRIPT_ID = ChartLibLoaderBehavior.class.getSimpleName();
     private static final long serialVersionUID = 1L;
 
@@ -158,7 +154,9 @@ public class ChartLibLoaderBehavior extends Behavior implements JavaScriptable, 
     @Override
     public HeaderItem getHeaderItem() {
         if (headerItem == null) {
-            headerItem = new JavaScriptContentHeaderItem(toJavaScript(), LOADER_SCRIPT_ID, null) {
+            headerItem = new JavaScriptContentHeaderItem(toJavaScript(), LOADER_SCRIPT_ID) {
+                private static final long serialVersionUID = 1L;
+
                 @Override
                 public List<HeaderItem> getDependencies() {
                     final List<HeaderItem> dependencies = super.getDependencies();

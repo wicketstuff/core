@@ -142,7 +142,7 @@ public class Chart extends WebComponent implements JavaScriptable, Jsonable {
         // TODO ist this rendering sufficient for refreshing chart by AJAX?
 
         final List<HeaderItem> depItemList = new ArrayList<>();
-        final JavaScriptContentHeaderItem chartScriptItem = new JavaScriptContentHeaderItem(toJavaScript(), getScriptId(), null) {
+        final JavaScriptContentHeaderItem chartScriptItem = new JavaScriptContentHeaderItem(toJavaScript(), getScriptId()) {
             private static final long serialVersionUID = 1L;
 
             @Override
@@ -160,7 +160,7 @@ public class Chart extends WebComponent implements JavaScriptable, Jsonable {
             final JavaScriptReferenceHeaderItem jQueryHeaderItem = JavaScriptHeaderItem.forReference(
                     getApplication().getJavaScriptLibrarySettings().getJQueryReference());
 //            response.render(jQueryHeaderItem);
-            response.render(new JavaScriptContentHeaderItem(createRedrawJavaScript(), getRedrawScriptId(), null) {
+            response.render(new JavaScriptContentHeaderItem(createRedrawJavaScript(), getRedrawScriptId()) {
                 private static final long serialVersionUID = 1L;
 
                 @Override
@@ -193,7 +193,7 @@ public class Chart extends WebComponent implements JavaScriptable, Jsonable {
      * @return Header item for chart draw script.
      */
     public JavaScriptContentHeaderItem getJavaScriptHeaderItem() {
-        return new JavaScriptContentHeaderItem(toJavaScript(), getScriptId(), null);
+        return new JavaScriptContentHeaderItem(toJavaScript(), getScriptId());
     }
 
     /**
