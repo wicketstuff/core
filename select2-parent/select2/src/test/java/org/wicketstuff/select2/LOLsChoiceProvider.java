@@ -1,7 +1,9 @@
 package org.wicketstuff.select2;
 
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
+import java.util.NoSuchElementException;
 
 /**
  * @author cdjost
@@ -46,8 +48,8 @@ public class LOLsChoiceProvider extends ChoiceProvider<List<ELOLsState>> {
 
     @Override
     public Collection<List<ELOLsState>> toChoices(Collection<String> collection) {
-        final String id = collection.stream().findFirst().orElseThrow();
+        final String id = collection.stream().findFirst().orElseThrow(NoSuchElementException::new);
         final int index = Integer.parseInt(id);
-        return List.of(selectableStates.get(index));
+        return Arrays.asList(selectableStates.get(index));
     }
 }
