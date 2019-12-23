@@ -121,7 +121,7 @@ Once we have annotated our resources with @ResourcePath, we must use utility cla
 Method `scanPackage` requires an instance of class WebApplication in order to mount resources. If no one is provided it will use the current one (i.e. WebApplication.get()).
 
 #### DI support
-`PackageScanner.scanPackage` is able to detect if we a container context is available and if so, we ca use DI annotations like @SpringBean. For example in the following resource field `injectedValue` will be set with a compatible value taken from Spring context:
+`PackageScanner.scanPackage` is able to detect if a container context is available and if so, we ca use DI annotations like @SpringBean. For example in the following resource field `injectedValue` will be set with a compatible value taken from Spring context:
 
 ````java
 @ResourcePath("/mountedpath")
