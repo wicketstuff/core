@@ -136,12 +136,6 @@ public class MountedResource extends AbstractRestResource<...>
     private String injectedValue;
     ...    
 	
-    @MethodMapping("/")
-    public String dummyMethod()
-    {
-	return "I'm dummy!";
-    }
-
     public String getInjectedValue() 
     {
         return injectedValue;
