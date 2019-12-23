@@ -120,6 +120,36 @@ Once we have annotated our resources with @ResourcePath, we must use utility cla
 
 Method `scanPackage` requires an instance of class WebApplication in order to mount resources. If no one is provided it will use the current one (i.e. WebApplication.get()).
 
+#### DI support
+`PackageScanner.scanPackage` is able to detect if we a container context is available and if so, we ca use DI annotations like @SpringBean. For example in the following resource field `injectedValue` will be set with a compatible value taken from Spring context:
+
+````java
+@ResourcePath("/mountedpath")
+public class MountedResource extends AbstractRestResource<...>
+{
+    /**
+     * 
+     */
+    private static final long serialVersionUID = 1L;
+    
+    @SpringBean
+    private String injectedValue;
+    ...    
+	
+    @MethodMapping("/")
+    public String dummyMethod()
+    {
+	return "I'm dummy!";
+    }
+
+    public String getInjectedValue() 
+    {
+        return injectedValue;
+    }
+}
+````
+
+
 Use multiple data format
 ---------
 Annotation `@MethodMapping` has two optional attributes, _consumes_ and _produces_, that can be used to specify which MIME type must be expected in the request and which one must be used to serialize data to response. Their default value is "application/json". 
