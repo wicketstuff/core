@@ -20,7 +20,6 @@ import org.apache.wicket.pageStore.IPageStore;
 import org.junit.jupiter.api.Tag;
 import org.wicketstuff.datastores.common.BaseDataStoreTest;
 
-import com.hazelcast.config.Config;
 import com.hazelcast.core.Hazelcast;
 import com.hazelcast.core.HazelcastInstance;
 
@@ -29,7 +28,7 @@ public class HazelcastDataStoreTest extends BaseDataStoreTest {
 
 	@Override
 	protected IPageStore createDataStore() throws Exception {
-		HazelcastInstance instance = Hazelcast.newHazelcastInstance(HazelcastDataStore.prepareHazelcast(new Config()));
+		HazelcastInstance instance = Hazelcast.newHazelcastInstance();
 		return new HazelcastDataStore("test", instance);
 	}
 }

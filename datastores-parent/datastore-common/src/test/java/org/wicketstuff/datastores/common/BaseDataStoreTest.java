@@ -193,7 +193,7 @@ public abstract class BaseDataStoreTest {
 			while ((file = filesToSave.poll()) != null || saveCount.get() < FILES_COUNT) {
 				if (file != null) {
 					byte data[] = file.generateData();
-					
+
 					IPageContext context = getContext(file.getSessionId());
 					dataStore.addPage(context, new SerializedPage(file.getId(), data));
 
@@ -223,11 +223,11 @@ public abstract class BaseDataStoreTest {
 			while ((file = filesToRead1.poll()) != null || !saveDone.get()) {
 				if (file != null) {
 					IPageContext context = getContext(file.getSessionId());
-					
+
 					SerializedPage page = (SerializedPage) dataStore.getPage(context, file.getId());
 					if (!file.checkData(page.getData())) {
 						failures.incrementAndGet();
-						log.error("Detected error number: " + failures.get());
+						log.error("Detected error number: {}", failures.get());
 					}
 					filesToRead2.add(file);
 					read1Count.incrementAndGet();
@@ -252,11 +252,11 @@ public abstract class BaseDataStoreTest {
 			while ((file = filesToRead2.poll()) != null || !read1Done.get()) {
 				if (file != null) {
 					IPageContext context = getContext(file.getSessionId());
-					
+
 					SerializedPage page = (SerializedPage) dataStore.getPage(context, file.getId());
 					if (!file.checkData(page.getData())) {
 						failures.incrementAndGet();
-						log.error("Detected error number: " + failures.get());
+						log.error("Detected error number: {}", failures.get());
 					}
 					read2Count.incrementAndGet();
 					bytesRead.addAndGet(page.getData().length);
@@ -303,18 +303,17 @@ public abstract class BaseDataStoreTest {
 
 		long duration = System.currentTimeMillis() - start;
 
-		log.info("Took: " + duration + " ms");
-		log.info("Save: " + saveCount.intValue() + " files, " + bytesWritten.get() + " bytes");
-		log.info("Read: " + (read1Count.get() + read2Count.get()) + " files, " + bytesRead.get() +
-				" bytes");
+		log.info("Took: {} ms", duration);
+		log.info("Save: {} files,  bytes", saveCount.intValue(), bytesWritten.get());
+		log.info("Read: {} files, {} bytes", (read1Count.get() + read2Count.get()), bytesRead.get());
 
-		log.info("Average save time (ns): " + (double)saveTime.get() / (double)saveCount.get());
+		log.info("Average save time (ns): {}", (double)saveTime.get() / (double)saveCount.get());
 
 		assertEquals(0, failures.get());
 
 		for (String s : sessionCounter.keySet()) {
 			IPageContext context = getContext(s);
-			
+
 			dataStore.removeAllPages(context);
 		}
 	}

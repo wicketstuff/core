@@ -32,14 +32,15 @@ import org.apache.wicket.util.lang.Bytes;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.hazelcast.config.Config;
-import com.hazelcast.config.SerializerConfig;
 import com.hazelcast.core.DistributedObject;
 import com.hazelcast.core.HazelcastInstance;
 import com.hazelcast.core.IMap;
+import com.hazelcast.internal.serialization.impl.AbstractSerializationService;
 import com.hazelcast.nio.ObjectDataInput;
 import com.hazelcast.nio.ObjectDataOutput;
 import com.hazelcast.nio.serialization.StreamSerializer;
+import com.hazelcast.spi.impl.SerializationServiceSupport;
+import com.hazelcast.spi.serialization.SerializationService;
 
 /**
  * An IPageStore that saves serialized pages in Hazelcast.
@@ -63,6 +64,15 @@ public class HazelcastDataStore extends AbstractPersistentPageStore implements I
 		super(applicationName);
 
 		this.hazelcast = Args.notNull(hazelcast, "hazelcast");
+		if (hazelcast instanceof SerializationServiceSupport)
+		{
+			SerializationService serializationService = ((SerializationServiceSupport) hazelcast).getSerializationService();
+
+			if (serializationService instanceof AbstractSerializationService)
+			{
+				((AbstractSerializationService) serializationService).register(SerializedPage.class, new SerializedPageSerializer());
+			}
+		}
 	}
 
 	/**
@@ -165,16 +175,6 @@ public class HazelcastDataStore extends AbstractPersistentPageStore implements I
 		}
 
 		return pages;
-	}
-
-	public static Config prepareHazelcast(Config cfg)
-	{
-		// all serialization configuration needs to be set prior to starting the hazelcast instance
-		SerializerConfig config = new SerializerConfig().
-				setImplementation(new SerializedPageSerializer()).
-				setTypeClass(SerializedPage.class);
-		cfg.getSerializationConfig().addSerializerConfig(config);
-		return cfg;
 	}
 
 	private static final class SerializedPageSerializer implements StreamSerializer<SerializedPage>
