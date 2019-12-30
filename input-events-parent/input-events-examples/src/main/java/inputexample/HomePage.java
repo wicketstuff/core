@@ -78,7 +78,7 @@ public class HomePage extends WebPage
 		form.add(new InputBehavior(new KeyType[] { KeyType.Ctrl, KeyType.a }, EventType.submit));
 		form.add(button);
 		Button button2 = new Button("button2").setDefaultFormProcessing(false);
-		button2.add(new AjaxEventBehavior("onClick")
+		button2.add(new AjaxEventBehavior("click")
 		{
 			/**
 			 * 

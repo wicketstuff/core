@@ -105,7 +105,7 @@ public class MessageBox extends ModalFormPanel
 		if (buttonConfig == MB_OK || buttonConfig == MB_OK_CANCEL)
 		{
 			Button button = new Button("ok");
-			button.add(new AjaxEventBehavior("onclick")
+			button.add(new AjaxEventBehavior("click")
 			{
 				private static final long serialVersionUID = 1L;
 
@@ -131,7 +131,7 @@ public class MessageBox extends ModalFormPanel
 		if (buttonConfig == MB_YES_NO || buttonConfig == MB_YES_NO_CANCEL)
 		{
 			Button button = new Button("yes");
-			button.add(new AjaxEventBehavior("onclick")
+			button.add(new AjaxEventBehavior("click")
 			{
 				private static final long serialVersionUID = 1L;
 
@@ -147,7 +147,7 @@ public class MessageBox extends ModalFormPanel
 			form.add(button);
 
 			button = new Button("no");
-			button.add(new AjaxEventBehavior("onclick")
+			button.add(new AjaxEventBehavior("click")
 			{
 				private static final long serialVersionUID = 1L;
 
@@ -177,7 +177,7 @@ public class MessageBox extends ModalFormPanel
 		if (buttonConfig == MB_OK_CANCEL || buttonConfig == MB_YES_NO_CANCEL)
 		{
 			Button button = new Button("cancel");
-			button.add(new AjaxEventBehavior("onclick")
+			button.add(new AjaxEventBehavior("click")
 			{
 				private static final long serialVersionUID = 1L;
 

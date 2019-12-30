@@ -52,7 +52,7 @@ public class Page extends WebPage
 				warn("you clicked me!");
 			}
 		};
-		button.add(new AjaxEventBehavior("onClick")
+		button.add(new AjaxEventBehavior("click")
 		{
 			private static final long serialVersionUID = 1L;
 
@@ -79,7 +79,7 @@ public class Page extends WebPage
 				warn("you clicked me!");
 			}
 		};
-		button2.add(new AjaxEventBehavior("onClick")
+		button2.add(new AjaxEventBehavior("click")
 		{
 			private static final long serialVersionUID = 1L;
 
