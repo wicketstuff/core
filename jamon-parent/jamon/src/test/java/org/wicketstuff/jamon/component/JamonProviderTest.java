@@ -38,22 +38,22 @@ public class JamonProviderTest
 {
 
 	private JamonProvider jamonProvider;
-	
+
 	private WicketTester wicketTester;
-	
+
 	@Before
 	public void setup()
 	{
 		wicketTester = new WicketTester(JamonAdminPage.class);
 		wicketTester.getApplication().setMetaData(MonitoringRepositoryKey.KEY, new JamonRepository());
-		
+
 		jamonProvider = new JamonProvider(new AlwaysSatisfiedMonitorSpecification());
 	}
 
 	@After
-	@Before
 	public void reset()
 	{
+		wicketTester.destroy();
 		MonitorFactory.getFactory().reset();
 	}
 
@@ -86,15 +86,15 @@ public class JamonProviderTest
 		jamonProvider.setSort("label", SortOrder.ASCENDING);
 
 		Iterator<Monitor> ascendingIterator = jamonProvider.iterator(0, 3);
-		assertEquals("mon0", ((Monitor)ascendingIterator.next()).getLabel());
-		assertEquals("mon1", ((Monitor)ascendingIterator.next()).getLabel());
-		assertEquals("mon2", ((Monitor)ascendingIterator.next()).getLabel());
+		assertEquals("mon0", ascendingIterator.next().getLabel());
+		assertEquals("mon1", ascendingIterator.next().getLabel());
+		assertEquals("mon2", ascendingIterator.next().getLabel());
 
 		jamonProvider.setSort("label", SortOrder.DESCENDING);
 
 		Iterator<Monitor> descendingIterator = jamonProvider.iterator(0, 3);
-		assertEquals("mon2", ((Monitor)descendingIterator.next()).getLabel());
-		assertEquals("mon1", ((Monitor)descendingIterator.next()).getLabel());
-		assertEquals("mon0", ((Monitor)descendingIterator.next()).getLabel());
+		assertEquals("mon2", descendingIterator.next().getLabel());
+		assertEquals("mon1", descendingIterator.next().getLabel());
+		assertEquals("mon0", descendingIterator.next().getLabel());
 	}
 }

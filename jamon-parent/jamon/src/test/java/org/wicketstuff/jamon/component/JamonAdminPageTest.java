@@ -21,7 +21,6 @@ import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import org.wicketstuff.jamon.component.JamonAdminPage;
 import org.wicketstuff.jamon.monitor.JamonRepository;
 
 import com.jamonapi.MonitorFactory;
@@ -42,6 +41,7 @@ public class JamonAdminPageTest
 	@After
 	public void after()
 	{
+		wicketTester.destroy();
 		MonitorFactory.getFactory().reset();
 	}
 
@@ -49,7 +49,7 @@ public class JamonAdminPageTest
 	public void shouldRenderStatisticsPageWithOneMonitor()
 	{
 		JamonTestUtil.startThisManyMonitors(1);
-		wicketTester.startPage(new JamonAdminPage());
+		wicketTester.startPage(JamonAdminPage.class);
 		wicketTester.assertRenderedPage(JamonAdminPage.class);
 		Assert.assertEquals(1, wicketTester.getTagsByWicketId("linkText").size());
 		Assert.assertTrue(
