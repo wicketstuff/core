@@ -5,6 +5,7 @@
 		<groupId>org.wicketstuff</groupId>
 		<artifactId>wicketstuff-core</artifactId>
 		<version>7.0-SNAPSHOT</version>
+		<relativePath>../pom.xml</relativePath>
 	</parent>
 	<artifactId>wicketstuff-jamon-parent</artifactId>
 	<packaging>pom</packaging>
