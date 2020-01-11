@@ -30,7 +30,7 @@
 
 	<modules>
 		<module>wicket-servlet3-examples</module>
-		<module>wicket-servlet3-auth</module>                
+		<module>wicket-servlet3-auth</module>
 	</modules>
 
 	<dependencyManagement>

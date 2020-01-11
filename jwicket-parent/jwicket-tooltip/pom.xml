@@ -25,10 +25,10 @@
         <version>9.0.0-M4-SNAPSHOT</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
-	
+
     <artifactId>wicketstuff-jwicket-tooltip</artifactId>
 	<packaging>pom</packaging>
-	
+
     <name>jWicket: jQuery Wicket integration - tooltips</name>
     <description>
         WicketJQuery by Stefan Lindner has been renamed to jWicket, mavenized, and migrated

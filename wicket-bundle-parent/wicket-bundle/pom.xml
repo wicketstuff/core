@@ -11,7 +11,7 @@
   <name>Wicket Bundle</name>
 
   <packaging>bundle</packaging>
-  
+
   <description>
 	A module that creates a .jar from the classes in wicket, wicket-util and wicket-request modules in order
   to create a valid OSGi bundle of the wicket framework.

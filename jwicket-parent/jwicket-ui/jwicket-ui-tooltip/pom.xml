@@ -11,7 +11,7 @@
           <timezone>+2</timezone>
       </developer>
   </developers>
-  
+
   <parent>
     <artifactId>wicketstuff-jwicket-ui</artifactId>
     <groupId>org.wicketstuff</groupId>

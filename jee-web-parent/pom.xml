@@ -17,7 +17,7 @@
 			<email>tobias [dot] soloschenko [at] googlemail [dot] com</email>
 		</developer>
 	</developers>
-	
+
 	<modules>
 		<module>jee-web</module>
 		<module>jee-web-examples</module>

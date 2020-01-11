@@ -2,7 +2,7 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
-    
+
     <parent>
         <artifactId>wicket-gchart-parent</artifactId>
         <groupId>org.wicketstuff</groupId>
@@ -11,7 +11,7 @@
 
     <artifactId>wicket-gchart</artifactId>
     <packaging>jar</packaging>
-    
+
     <name>Google Charts component for wicket</name>
     <description>Integrate Google Charts API (v45) with wicket.
         The API tries not to hide all details of the Google API,
@@ -28,16 +28,16 @@
             </properties>
         </developer>
     </developers>
-    
+
     <url>http://www.tremel-computer.de</url>
-    
+
     <dependencies>
         <!-- Logging with http://logback.qos.ch/ -->
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-api</artifactId>
         </dependency>
-        
+
         <!-- Test dependencies-->
         <dependency>
 			<groupId>org.junit.jupiter</groupId>

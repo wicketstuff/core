@@ -9,7 +9,7 @@
   </parent>
   <artifactId>wicketstuff-lambda-components</artifactId>
   <name>Wicketstuff Lambda Components</name>
- 
+
  <dependencies>
     <dependency>
       <groupId>org.apache.wicket</groupId>

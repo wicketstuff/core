@@ -54,7 +54,7 @@
 			<artifactId>jetty-all</artifactId>
             <classifier>uber</classifier>
 		</dependency>
-		
+
     </dependencies>
 
 </project>

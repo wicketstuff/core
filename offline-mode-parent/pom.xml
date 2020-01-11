@@ -12,7 +12,7 @@
 	<name>Wicketstuff Offline Mode Parent</name>
 
 	<description>Parent project of Wicket's Offline Mode</description>
-    
+
 	<developers>
 		<developer>
 			<id>klopfdreh</id>

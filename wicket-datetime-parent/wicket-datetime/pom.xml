@@ -65,7 +65,7 @@
 						<configuration>
 							<instructions>
 								<Export-Package>
-									!org.wicketstuff.datetime.extensions.yui.yahoo-dom-event,* 
+									!org.wicketstuff.datetime.extensions.yui.yahoo-dom-event,*
 								</Export-Package>
 							</instructions>
 						</configuration>

@@ -10,11 +10,11 @@
   </parent>
 
   <artifactId>gae-initializer-example</artifactId>
-  <packaging>war</packaging>	
+  <packaging>war</packaging>
 
   <name>GAE Initializer example</name>
   <description>Wicket1.5 on Google AppEngine</description>
-	
+
   <properties>
     <!--
       Specify AppEngine version for your project. It should match SDK version pointed to
@@ -64,7 +64,7 @@
       </plugin>
     </plugins>
   </build>
-  
+
   <dependencies>
     <dependency>
 		<groupId>${project.groupId}</groupId>
@@ -112,6 +112,6 @@
       <groupId>ch.qos.logback</groupId>
       <artifactId>logback-classic</artifactId>
     </dependency>
-    
+
   </dependencies>
 </project>

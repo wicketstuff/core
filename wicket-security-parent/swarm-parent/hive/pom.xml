@@ -27,7 +27,7 @@
 	<name>Hive</name>
 	<inceptionYear>2006</inceptionYear>
 	<description>
-		Basic ACL security implementation 
+		Basic ACL security implementation
 	</description>
 	<dependencies>
 		<dependency>

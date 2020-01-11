@@ -8,11 +8,11 @@
 		<version>9.0.0-M4-SNAPSHOT</version>
 	</parent>
 
-	<packaging>maven-archetype</packaging>	
+	<packaging>maven-archetype</packaging>
 	<artifactId>wicketstuff-scala-archetype</artifactId>
 	<name>Wicket-Scala Archetype</name>
-	<description>Basic setup for a project that combines Scala and Wicket, 
-		depending on the Wicket-Scala project. Includes an example Specs 
+	<description>Basic setup for a project that combines Scala and Wicket,
+		depending on the Wicket-Scala project. Includes an example Specs
 		test.</description>
 
 	<developers>

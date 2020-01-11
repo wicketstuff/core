@@ -32,7 +32,7 @@
 
     <name>wicket-gchart-examples</name>
     <description>Examples for use of Google Charts.</description>
-    
+
     <licenses>
         <license>
             <name>The Apache Software License, Version 2.0</name>

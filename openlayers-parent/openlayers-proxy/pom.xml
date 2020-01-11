@@ -27,7 +27,7 @@
 	<packaging>jar</packaging>
 
 	<name>Openlayers - Proxy</name>
-	<description>For Web Feature Service Requests a Proxy needs to be used.  The need for a proxy is due to browser cross site scripting restrictions.  
+	<description>For Web Feature Service Requests a Proxy needs to be used.  The need for a proxy is due to browser cross site scripting restrictions.
 	It is separated from the main package due to its dependency on commons-httpclient and because it is only needed for WFS or WMSGetFeatureInfo requests.
 	</description>
 

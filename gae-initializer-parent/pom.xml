@@ -23,16 +23,16 @@
         <artifactId>wicketstuff-core</artifactId>
         <version>9.0.0-M4-SNAPSHOT</version>
     </parent>
-	
+
     <artifactId>gae-initializer-parent</artifactId>
 	<packaging>pom</packaging>
-	
+
     <name>GAE Initializer Parent</name>
     <description>
         A Wicket IInitializer which automatically setups Wicket application
         to be runable at Google AppEngine
     </description>
-	
+
 	<developers>
 		<developer>
 			<name>Martin Grigorov</name>

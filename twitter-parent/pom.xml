@@ -13,8 +13,8 @@
 	<packaging>pom</packaging>
 
 	<name>Twitter - Parent</name>
-	
-	
+
+
 	<developers>
 		<developer>
 			<name>Till Freier</name>

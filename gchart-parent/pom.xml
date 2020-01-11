@@ -8,7 +8,7 @@
         <artifactId>wicketstuff-core</artifactId>
         <version>9.0.0-M4-SNAPSHOT</version>
     </parent>
-    
+
     <artifactId>wicket-gchart-parent</artifactId>
     <packaging>pom</packaging>
 

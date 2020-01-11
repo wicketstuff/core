@@ -12,12 +12,12 @@
   <artifactId>wicket-bundle-parent</artifactId>
 
   <packaging>pom</packaging>
-  
+
   <name>wicket-bundle-parent</name>
 
   <modules>
     <module>wicket-bundle</module>
     <module>wicket-ioc-bundle</module>
   </modules>
-  
+
 </project>

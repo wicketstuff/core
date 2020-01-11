@@ -24,10 +24,10 @@
         <artifactId>wicketstuff-jwicket-parent</artifactId>
         <version>9.0.0-M4-SNAPSHOT</version>
     </parent>
-	
+
     <artifactId>wicketstuff-jwicket-ui</artifactId>
 	<packaging>pom</packaging>
-	
+
     <name>jWicket: jQuery Wicket integration - ui</name>
     <description>
         WicketJQuery by Stefan Lindner has been renamed to jWicket, mavenized, and migrated

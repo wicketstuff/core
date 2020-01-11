@@ -48,7 +48,7 @@
 					<includes>
 						<include>**/*DoNotRunAnyTests.java</include>
 					</includes>
-					<!-- jthomerson: I changed the line above so that no 
+					<!-- jthomerson: I changed the line above so that no
 							tests would run.  This was to get TeamCity
 							running where it would still fail if other projects
 							had a test failure - we don't want all test failures

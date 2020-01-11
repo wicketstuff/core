@@ -16,7 +16,7 @@
     <description>
         Implementation of jQuery's Datepicker for Apache Wicket.
     </description>
-	
+
 	<developers>
 		<developer>
 			<name>Stefan Lindner</name>

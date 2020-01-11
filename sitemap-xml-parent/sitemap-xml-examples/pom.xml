@@ -6,7 +6,7 @@
         <artifactId>sitemap-xml-parent</artifactId>
         <version>9.0.0-M4-SNAPSHOT</version>
     </parent>
-    <name>sitemap-xml-examples</name>  
+    <name>sitemap-xml-examples</name>
     <artifactId>wicketstuff-sitemap-xml-examples</artifactId>
 
     <properties>

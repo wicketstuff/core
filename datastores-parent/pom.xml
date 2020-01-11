@@ -111,7 +111,7 @@
 						</configuration>
 					</plugin>
 				</plugins>
-			</build>			
+			</build>
 		</profile>
 		<profile>
 			<id>cassandra</id>
