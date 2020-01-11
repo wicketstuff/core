@@ -4,7 +4,7 @@
 	<parent>
 		<groupId>org.wicketstuff</groupId>
 		<artifactId>wicketstuff-jamon-parent</artifactId>
-		<version>9.0.0-M4-SNAPSHOT</version>
+		<version>9.0.0-M4</version>
 	</parent>
 	<artifactId>wicketstuff-jamon-examples</artifactId>
 	<packaging>war</packaging>
