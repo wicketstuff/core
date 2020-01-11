@@ -3,7 +3,7 @@
 	<parent>
 		<groupId>org.wicketstuff</groupId>
 		<artifactId>jee-web-parent</artifactId>
-		<version>9.0.0-M4-SNAPSHOT</version>
+		<version>9.0.0-M5-SNAPSHOT</version>
 	</parent>
 	<artifactId>wicketstuff-jee-web-examples</artifactId>
 	<packaging>war</packaging>
