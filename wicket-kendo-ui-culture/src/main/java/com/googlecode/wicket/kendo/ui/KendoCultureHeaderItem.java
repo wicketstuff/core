@@ -17,7 +17,7 @@ import com.googlecode.wicket.kendo.ui.resource.KendoCultureResourceReference;
  * public void renderHead(IHeaderResponse response)
  * {
  * 	super.renderHead(response);
- * 	
+ *
  * 	response.render(new KendoCultureHeaderItem(KendoCulture.FR_FR));
  * }
  * </code></pre>
@@ -29,7 +29,7 @@ import com.googlecode.wicket.kendo.ui.resource.KendoCultureResourceReference;
  * 	kendo.culture('fr-FR');
  * &lt;/script&gt;
  * </code></pre>
- * 
+ *
  * @author Patrick Davids - Patrick1701
  *
  */
@@ -41,7 +41,7 @@ public class KendoCultureHeaderItem extends JavaScriptContentHeaderItem
 
 	/**
 	 * Constructor
-	 * 
+	 *
 	 * @param locale the {@link Locale}, ie: Locale.FRENCH
 	 */
 	public KendoCultureHeaderItem(Locale locale)
@@ -51,7 +51,7 @@ public class KendoCultureHeaderItem extends JavaScriptContentHeaderItem
 
 	/**
 	 * Constructor
-	 * 
+	 *
 	 * @param culture the {@link KendoCulture}
 	 */
 	public KendoCultureHeaderItem(KendoCulture culture)
@@ -61,12 +61,12 @@ public class KendoCultureHeaderItem extends JavaScriptContentHeaderItem
 
 	/**
 	 * Constructor
-	 * 
+	 *
 	 * @param culture the culture, ie: 'fr' or 'fr-FR'
 	 */
 	public KendoCultureHeaderItem(String culture)
 	{
-		super(String.format("kendo.culture('%s');", culture), "kendo-culture", null);
+		super(String.format("kendo.culture('%s');", culture), "kendo-culture");
 
 		this.culture = culture;
 	}
@@ -84,7 +84,7 @@ public class KendoCultureHeaderItem extends JavaScriptContentHeaderItem
 
 	/**
 	 * Gets a new {@link KendoCultureHeaderItem} from a {@code Locale} culture, with a fallback to the {@code Locale} 's language
-	 * 
+	 *
 	 * @param locale the {@code Locale}
 	 * @return a new {@link KendoCultureHeaderItem}
 	 */
@@ -100,7 +100,7 @@ public class KendoCultureHeaderItem extends JavaScriptContentHeaderItem
 
 	/**
 	 * Gets a new {@link KendoCultureHeaderItem} from the first valid specified culture
-	 * 
+	 *
 	 * @param cultures the array of cultures
 	 * @return a new {@link KendoCultureHeaderItem}
 	 */

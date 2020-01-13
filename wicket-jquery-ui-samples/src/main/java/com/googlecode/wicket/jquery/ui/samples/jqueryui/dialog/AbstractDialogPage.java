@@ -18,7 +18,6 @@ abstract class AbstractDialogPage extends JQuerySamplePage
 				new DemoLink(FragmentDialogPage.class, "Fragment Dialog"), // lf
 				new DemoLink(InputDialogPage.class, "Input Dialog"), // lf
 				new DemoLink(FormDialogPage.class, "Form Dialog (Slider sample)"), // lf
-				new DemoLink(UploadDialogPage.class, "Form Dialog (Upload sample)"), // lf
 				new DemoLink(UserDialogPage.class, "<b>Demo:</b> User Accounts") // lf
 		);
 	}

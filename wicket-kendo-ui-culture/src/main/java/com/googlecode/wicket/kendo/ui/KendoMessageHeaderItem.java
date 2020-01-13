@@ -15,7 +15,7 @@ import com.googlecode.wicket.kendo.ui.resource.KendoMessageResourceReference;
  * public void renderHead(IHeaderResponse response)
  * {
  * 	super.renderHead(response);
- * 	
+ *
  * 	response.render(new KendoMessageHeaderItem(KendoMessage.FR_FR));
  * }
  * </code></pre>
@@ -24,7 +24,7 @@ import com.googlecode.wicket.kendo.ui.resource.KendoMessageResourceReference;
  * <pre><code>
  * &lt;script type="text/javascript" src="./resource/com.googlecode.wicket.kendo.ui.resource.KendoMessageResourceReference/messages/kendo.messages.fr-FR.js"&gt;&lt;/script&gt;
  * </code></pre>
- * 
+ *
  * @author Sebastien Briquet - sebfz1
  *
  */
@@ -34,7 +34,7 @@ public class KendoMessageHeaderItem extends JavaScriptReferenceHeaderItem
 
 	/**
 	 * Constructor
-	 * 
+	 *
 	 * @param locale the {@link Locale}, ie: Locale.FRENCH
 	 */
 	public KendoMessageHeaderItem(Locale locale)
@@ -44,7 +44,7 @@ public class KendoMessageHeaderItem extends JavaScriptReferenceHeaderItem
 
 	/**
 	 * Constructor
-	 * 
+	 *
 	 * @param message the {@link KendoMessage}
 	 */
 	public KendoMessageHeaderItem(KendoMessage message)
@@ -54,19 +54,19 @@ public class KendoMessageHeaderItem extends JavaScriptReferenceHeaderItem
 
 	/**
 	 * Constructor
-	 * 
+	 *
 	 * @param culture the culture, ie: 'fr-FR'
 	 */
 	public KendoMessageHeaderItem(String culture)
 	{
-		super(new KendoMessageResourceReference(culture), null, "kendo-messages", false, null, null);
+		super(new KendoMessageResourceReference(culture), null, "kendo-messages");
 	}
 
 	// Helpers //
 
 	/**
 	 * Gets a new {@link KendoMessageHeaderItem} from a {@link Locale} culture
-	 * 
+	 *
 	 * @param locale the {@code Locale}
 	 * @return a new {@link KendoMessageHeaderItem}
 	 */
@@ -82,7 +82,7 @@ public class KendoMessageHeaderItem extends JavaScriptReferenceHeaderItem
 
 	/**
 	 * Gets a new {@link KendoMessageHeaderItem} from the first valid specified culture
-	 * 
+	 *
 	 * @param cultures the array of cultures
 	 * @return a new {@link KendoMessageHeaderItem}
 	 */

@@ -27,7 +27,7 @@ public class CultureSpinnerPage extends AbstractSpinnerPage // NOSONAR
 
 	public CultureSpinnerPage()
 	{
-		final Form<Double> form = new Form<Double>("form", Model.of(new Double(1.5)));
+		final Form<Double> form = new Form<Double>("form", Model.of(Double.valueOf(1.5)));
 		this.add(form);
 
 		// FeedbackPanel //

@@ -26,7 +26,7 @@ import org.apache.wicket.resource.TextTemplateResourceReference;
 /**
  * Provides a {@link JavaScriptReferenceHeaderItem} that will load a '.js' file corresponding to the supplied {@code Class}<br>
  * <b>i.e.:</b> {@code MyClass.js}
- * 
+ *
  * @author Sebastien Briquet - sebfz1
  *
  */
@@ -36,7 +36,7 @@ public class JavaScriptPackageHeaderItem extends JavaScriptReferenceHeaderItem
 
 	/**
 	 * Constructor
-	 * 
+	 *
 	 * @param scope the scope
 	 */
 	public JavaScriptPackageHeaderItem(Class<?> scope)
@@ -46,18 +46,18 @@ public class JavaScriptPackageHeaderItem extends JavaScriptReferenceHeaderItem
 
 	/**
 	 * Constructor
-	 * 
+	 *
 	 * @param scope the scope
 	 * @param function the function, i.e.: the name of the '.js' file without the extension
 	 */
 	public JavaScriptPackageHeaderItem(Class<?> scope, String function)
 	{
-		super(new JavaScriptResourceReference(scope, function + ".js"), null, function, false, null, null);
+		super(new JavaScriptResourceReference(scope, function + ".js"), null, function);
 	}
 
 	/**
 	 * Constructor
-	 * 
+	 *
 	 * @param scope the scope
 	 * @param variables the variable {@code Map} to supply to the file
 	 */
@@ -68,13 +68,13 @@ public class JavaScriptPackageHeaderItem extends JavaScriptReferenceHeaderItem
 
 	/**
 	 * Constructor
-	 * 
+	 *
 	 * @param scope the scope
 	 * @param function the function, i.e.: the name of the '.js' file without the extension
 	 * @param variables the variable {@code Map} to supply to the file
 	 */
 	public JavaScriptPackageHeaderItem(Class<?> scope, String function, Map<String, Object> variables)
 	{
-		super(new TextTemplateResourceReference(scope, function + ".js", Model.ofMap(variables)), null, function, false, null, null);
+		super(new TextTemplateResourceReference(scope, function + ".js", Model.ofMap(variables)), null, function);
 	}
 }

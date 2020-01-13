@@ -41,7 +41,6 @@ import com.googlecode.wicket.jquery.ui.samples.jqueryui.dialog.FormDialogPage;
 import com.googlecode.wicket.jquery.ui.samples.jqueryui.dialog.FragmentDialogPage;
 import com.googlecode.wicket.jquery.ui.samples.jqueryui.dialog.InputDialogPage;
 import com.googlecode.wicket.jquery.ui.samples.jqueryui.dialog.MessageDialogPage;
-import com.googlecode.wicket.jquery.ui.samples.jqueryui.dialog.UploadDialogPage;
 import com.googlecode.wicket.jquery.ui.samples.jqueryui.dialog.UserDialogPage;
 import com.googlecode.wicket.jquery.ui.samples.jqueryui.draggable.BehaviorOptionDraggablePage;
 import com.googlecode.wicket.jquery.ui.samples.jqueryui.draggable.ComponentDraggablePage;
@@ -93,7 +92,6 @@ import com.googlecode.wicket.jquery.ui.samples.jqueryui.tabs.DefaultTabsPage;
 import com.googlecode.wicket.jquery.ui.samples.jqueryui.tabs.TabbedPanelPage;
 import com.googlecode.wicket.jquery.ui.samples.jqueryui.test.PalettePage;
 import com.googlecode.wicket.jquery.ui.samples.jqueryui.test.TestPage;
-import com.googlecode.wicket.jquery.ui.samples.jqueryui.test.editor.EditorPage;
 import com.googlecode.wicket.jquery.ui.samples.jqueryui.tooltip.CustomTooltipPage;
 import com.googlecode.wicket.jquery.ui.samples.jqueryui.tooltip.DefaultTooltipPage;
 import com.googlecode.wicket.jquery.ui.samples.jqueryui.wizard.DefaultWizardPage;
@@ -231,7 +229,6 @@ public class SiteMapPage extends WebPage
 			DraggableSelectablePage.class,
 			DynamicEffectPage.class,
 			DynamicWizardPage.class,
-			EditorPage.class,
 			EmoticonsPage.class,
 			ExtendedCalendarPage.class,
 			FeedbackConsolePage.class,
@@ -294,7 +291,6 @@ public class SiteMapPage extends WebPage
 			TemplateAutoCompletePage.class,
 			TemplateComboBoxPage.class,
 			TestPage.class,
-			UploadDialogPage.class,
 			UserDialogPage.class,
 			VerticalSfMenuPage.class,
 			WidgetSnippetPage.class,

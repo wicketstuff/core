@@ -44,8 +44,8 @@
 	</scm>
 
 	<properties>
-		<wicket.version>9.0.0-M3</wicket.version>
-		<owasp-sanitizer.version>20190325.1</owasp-sanitizer.version>
+		<wicket.version>9.0.0-M4</wicket.version>
+		<owasp-sanitizer.version>20191001.1</owasp-sanitizer.version>
 		<junit.version>5.5.2</junit.version>
 		<jetty.version>9.4.16.v20190411</jetty.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
