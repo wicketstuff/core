@@ -20,13 +20,10 @@ import java.util.Map;
 import java.util.UUID;
 
 import org.apache.wicket.Component;
-import org.apache.wicket.ajax.AbstractDefaultAjaxBehavior;
 import org.apache.wicket.core.util.string.ComponentRenderer;
 import org.apache.wicket.markup.head.IHeaderResponse;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.request.IRequestParameters;
-import org.apache.wicket.request.cycle.RequestCycle;
-import org.apache.wicket.request.handler.resource.ResourceReferenceRequestHandler;
 import org.apache.wicket.util.lang.Generics;
 
 import com.googlecode.wicket.jquery.core.behavior.AjaxCallbackBehavior;
@@ -181,7 +178,7 @@ public abstract class AjaxPropertyColumn extends PropertyColumn
 
 			Map<String, Object> variables = Generics.newHashMap();
 			variables.put("field", AjaxPropertyColumn.this.getField());
-			variables.put("imageUrl", RequestCycle.get().urlFor(new ResourceReferenceRequestHandler(AbstractDefaultAjaxBehavior.INDICATOR)));
+			variables.put("imageUrl", RequestCycleUtils.getAjaxIndicatorUrl());
 			variables.put("callbackUrl", this.getCallbackUrl());
 
 			response.render(new JavaScriptPackageHeaderItem(AjaxPropertyColumn.class, variables));

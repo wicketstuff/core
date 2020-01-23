@@ -18,12 +18,14 @@ package com.googlecode.wicket.jquery.core.utils;
 
 import java.util.List;
 
+import org.apache.wicket.ajax.AbstractDefaultAjaxBehavior;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.core.request.handler.IPageClassRequestHandler;
 import org.apache.wicket.core.request.handler.IPartialPageRequestHandler;
 import org.apache.wicket.request.IRequestParameters;
 import org.apache.wicket.request.component.IRequestablePage;
 import org.apache.wicket.request.cycle.RequestCycle;
+import org.apache.wicket.request.handler.resource.ResourceReferenceRequestHandler;
 import org.apache.wicket.util.string.StringValue;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -66,6 +68,16 @@ public class RequestCycleUtils
 		return RequestCycle.get().find(IPartialPageRequestHandler.class).orElse(null);
 	}
 
+	/**
+	 * Gets the AbstractDefaultAjaxBehavior#INDICATOR url
+	 * 
+	 * @return the AbstractDefaultAjaxBehavior#INDICATOR url
+	 */
+	public static CharSequence getAjaxIndicatorUrl()
+	{
+		return RequestCycle.get().urlFor(new ResourceReferenceRequestHandler(AbstractDefaultAjaxBehavior.INDICATOR));
+	}
+	
 	/**
 	 * Gets the page class of the current request cycle
 	 * 

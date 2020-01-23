@@ -17,16 +17,13 @@
 package com.googlecode.wicket.jquery.ui.form.button;
 
 import org.apache.wicket.Component;
-import org.apache.wicket.ajax.AbstractDefaultAjaxBehavior;
 import org.apache.wicket.markup.head.CssHeaderItem;
 import org.apache.wicket.markup.head.HeaderItem;
 import org.apache.wicket.markup.head.IHeaderResponse;
-import org.apache.wicket.request.IRequestHandler;
-import org.apache.wicket.request.cycle.RequestCycle;
-import org.apache.wicket.request.handler.resource.ResourceReferenceRequestHandler;
 
 import com.googlecode.wicket.jquery.core.JQueryBehavior;
 import com.googlecode.wicket.jquery.core.Options;
+import com.googlecode.wicket.jquery.core.utils.RequestCycleUtils;
 import com.googlecode.wicket.jquery.ui.JQueryIcon;
 import com.googlecode.wicket.jquery.ui.form.button.IndicatingAjaxButton.Position;
 
@@ -102,8 +99,7 @@ public class AjaxIndicatingButtonBehavior extends ButtonBehavior // NOSONAR
 	 */
 	public static HeaderItem newIndicatorCssHeaderItem()
 	{
-		IRequestHandler handler = new ResourceReferenceRequestHandler(AbstractDefaultAjaxBehavior.INDICATOR);
-		String css = String.format(".ui-icon.%s { background-image: url(%s) !important; background-position: 0 0; }", CSS_INDICATOR, RequestCycle.get().urlFor(handler));
+		String css = String.format(".ui-icon.%s { background-image: url(%s) !important; background-position: 0 0; }", CSS_INDICATOR, RequestCycleUtils.getAjaxIndicatorUrl());
 
 		return CssHeaderItem.forCSS(css, "jquery-ui-icon-indicator");
 	}

@@ -17,12 +17,10 @@
 package com.googlecode.wicket.jquery.core.panel;
 
 import org.apache.wicket.Component;
-import org.apache.wicket.ajax.AbstractDefaultAjaxBehavior;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.panel.Panel;
-import org.apache.wicket.request.IRequestHandler;
-import org.apache.wicket.request.cycle.RequestCycle;
-import org.apache.wicket.request.handler.resource.ResourceReferenceRequestHandler;
+
+import com.googlecode.wicket.jquery.core.utils.RequestCycleUtils;
 
 /**
  * Provides a {@link Panel} containing a loading indicator {@link Component}, which can be accessed (to be replaced for instance) by {@link #getPlaceholderComponent()}
@@ -50,9 +48,7 @@ public class LoadingPanel extends Panel
 	{
 		super(id);
 
-		IRequestHandler handler = new ResourceReferenceRequestHandler(AbstractDefaultAjaxBehavior.INDICATOR);
-
-		this.label = new Label(LAZY_LOAD_COMPONENT_ID, String.format("<img alt=\"Loading...\" src=\"%s\"/>", RequestCycle.get().urlFor(handler)));
+		this.label = new Label(LAZY_LOAD_COMPONENT_ID, String.format("<img alt=\"Loading...\" src=\"%s\"/>", RequestCycleUtils.getAjaxIndicatorUrl()));
 		this.label.setEscapeModelStrings(false);
 		this.label.setOutputMarkupId(true);
 

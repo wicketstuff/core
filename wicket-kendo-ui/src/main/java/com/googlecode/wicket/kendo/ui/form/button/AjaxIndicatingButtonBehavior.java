@@ -17,16 +17,13 @@
 package com.googlecode.wicket.kendo.ui.form.button;
 
 import org.apache.wicket.Component;
-import org.apache.wicket.ajax.AbstractDefaultAjaxBehavior;
 import org.apache.wicket.markup.head.CssHeaderItem;
 import org.apache.wicket.markup.head.HeaderItem;
 import org.apache.wicket.markup.head.IHeaderResponse;
-import org.apache.wicket.request.IRequestHandler;
-import org.apache.wicket.request.cycle.RequestCycle;
-import org.apache.wicket.request.handler.resource.ResourceReferenceRequestHandler;
 
 import com.googlecode.wicket.jquery.core.JQueryBehavior;
 import com.googlecode.wicket.jquery.core.Options;
+import com.googlecode.wicket.jquery.core.utils.RequestCycleUtils;
 import com.googlecode.wicket.kendo.ui.KendoIcon;
 
 /**
@@ -124,8 +121,7 @@ public class AjaxIndicatingButtonBehavior extends ButtonBehavior
 	 */
 	private static HeaderItem newIndicatorCssHeaderItem()
 	{
-		IRequestHandler handler = new ResourceReferenceRequestHandler(AbstractDefaultAjaxBehavior.INDICATOR);
-		String css = String.format(".k-i-%s { background-image: url(%s); background-position: 0 0; }", CSS_INDICATOR, RequestCycle.get().urlFor(handler));
+		String css = String.format(".k-i-%s { background-image: url(%s); background-position: 0 0; }", CSS_INDICATOR, RequestCycleUtils.getAjaxIndicatorUrl());
 
 		return CssHeaderItem.forCSS(css, "kendo-ui-icon-indicator");
 	}
