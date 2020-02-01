@@ -1,4 +1,4 @@
-Wicket rest annotaions
+Wicket rest annotations
 ----------
 
 REST-based API are becoming more and more popular around the web and the number of services based on this architecture is constantly increasing.
