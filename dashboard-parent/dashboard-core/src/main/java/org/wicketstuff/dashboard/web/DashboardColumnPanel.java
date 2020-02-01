@@ -17,7 +17,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.wicket.AttributeModifier;
 import org.apache.wicket.Component;
 import org.apache.wicket.WicketRuntimeException;
 import org.apache.wicket.ajax.AjaxRequestTarget;
@@ -75,10 +74,6 @@ class DashboardColumnPanel extends GenericPanel<Dashboard> {
 
 		columnContainer.add(listView);
 		add(columnContainer);
-
-		if (columnIndex == 0) {
-			add(new AttributeModifier("style", "margin-left: 0px"));
-		}
 	}
 
 	public WebMarkupContainer getColumnContainer() {

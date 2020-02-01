@@ -17,7 +17,6 @@ import static org.wicketstuff.dashboard.DashboardContextInitializer.getDashboard
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.wicket.AttributeModifier;
 import org.apache.wicket.event.IEvent;
 import org.apache.wicket.markup.head.CssHeaderItem;
 import org.apache.wicket.markup.head.IHeaderResponse;
@@ -125,11 +124,16 @@ public class DashboardPanel extends GenericPanel<Dashboard> {
 			}
 
 			@Override
-			protected void populateItem(LoopItem item) {
+			public void renderHead(IHeaderResponse response) {
 				float columnPanelWidth = 100f / columnCount;
+				response.render(CssHeaderItem.forCSS(".dashboard .column {width: " + columnPanelWidth + "%;}", "dashboard-column-width"));
+				super.renderHead(response);
+			}
+
+			@Override
+			protected void populateItem(LoopItem item) {
 				DashboardColumnPanel columnPanel = new DashboardColumnPanel("column", getModel(), item.getIndex());
 				columnPanel.setRenderBodyOnly(true);
-				columnPanel.getColumnContainer().add(AttributeModifier.replace("style", "width: " + columnPanelWidth + "%;"));
 				item.add(columnPanel);
 
 				columnPanels.add(columnPanel);
