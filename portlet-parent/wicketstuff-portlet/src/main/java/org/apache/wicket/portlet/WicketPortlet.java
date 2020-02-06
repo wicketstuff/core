@@ -421,7 +421,7 @@ public class WicketPortlet extends GenericPortlet {
 				// processing the request
 
 				String redirectLocation = responseState.getRedirectLocation();
-        String ajaxRedirectLocation = responseState.getAjaxRedirectLocation();
+				String ajaxRedirectLocation = responseState.getAjaxRedirectLocation();
 				if (ajaxRedirectLocation != null) {
 					// Ajax redirect
 					responseState.clear();

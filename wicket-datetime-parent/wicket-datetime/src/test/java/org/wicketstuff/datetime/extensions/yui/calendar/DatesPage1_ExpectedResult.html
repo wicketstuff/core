@@ -1,8 +1,8 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml">
-<head><script type="text/javascript" src="../resource/org.wicketstuff.datetime.extensions.yui.YuiLib/yuiloader/yuiloader.js"></script>
-<script type="text/javascript" src="../resource/org.apache.wicket.resource.JQueryResourceReference/jquery/jquery-3.4.1.js"></script>
+<head><script type="text/javascript" src="../resource/org.apache.wicket.resource.JQueryResourceReference/jquery/jquery-3.4.1.js"></script>
 <script type="text/javascript" src="../resource/org.apache.wicket.ajax.AbstractDefaultAjaxBehavior/res/js/wicket-ajax-jquery.js"></script>
+<script type="text/javascript" src="../resource/org.wicketstuff.datetime.extensions.yui.YuiLib/yuiloader/yuiloader.js"></script>
 
 <title>Wicket Examples - dates</title>
 <link rel="stylesheet" type="text/css" href="../../style.css"/>
@@ -15,9 +15,10 @@ th {
 
 /*]]>*/
 </style>
-<script type="text/javascript" >
+<script type="text/javascript">
 /*<![CDATA[*/
 Wicket.Event.add(window, "domready", function(event) { 
+Wicket.Event.add('localeSelect2', 'change', function(event) { if (event.target.name !== 'localeSelect') return; var f = document.getElementById('localeForm1');f.action='./org.wicketstuff.datetime.extensions.yui.calendar.DatesPage1?0-1.0-localeForm-localeSelect';f.submit();;});;
 /*
  * Licensed to the Apache Software Foundation (ASF) under one or more
  * contributor license agreements.  See the NOTICE file distributed with
@@ -94,7 +95,7 @@ Wicket.DateTimeInit.CalendarI18n["it"]={MONTHS_SHORT:["gen","feb","mar","apr","m
  * limitations under the License.
  */
 Wicket.DateTimeInit.CalendarAdd(function() {
-	Wicket.DateTime.init2("dateTextField1", "dateTextField1", {close:true,selected:"xx/xx/xxxx",pagedate:"xx/xxxx"}, "dd/MM/yy",
+	Wicket.DateTime.init2("dateTextField3", "dateTextField3", {close:true,selected:"xx/xx/xxxx",pagedate:"xx/xxxx"}, "dd/MM/yy",
 			true, true, true, false, Wicket.DateTimeInit.CalendarI18n["it"], false, "");
 	
 });
@@ -105,8 +106,8 @@ Wicket.Event.publish(Wicket.Event.Topic.AJAX_HANDLERS_BOUND);
 </script>
 </head>
 <body>
-<form wicket:id="localeForm" id="localeForm2" method="post" action="./org.wicketstuff.datetime.extensions.yui.calendar.DatesPage1?0-1.-localeForm">
-<p><select wicket:id="localeSelect" name="localeSelect" onchange="if (event.target.name !== &#039;localeSelect&#039;) return; var f = document.getElementById(&#039;localeForm2&#039;);f.action=&#039;./org.wicketstuff.datetime.extensions.yui.calendar.DatesPage1?0-1.0-localeForm-localeSelect&#039;;f.submit();">
+<form wicket:id="localeForm" id="localeForm1" method="post" action="./org.wicketstuff.datetime.extensions.yui.calendar.DatesPage1?0-1.-localeForm">
+<p><select wicket:id="localeSelect" name="localeSelect" id="localeSelect2">
 <option value="0">cinese (Cina) (Chinese (China))</option>
 <option value="1">cinese (Cina) (Chinese (China))</option>
 <option value="2">cinese (Cina) (Chinese (China))</option>
@@ -130,8 +131,8 @@ Wicket.Event.publish(Wicket.Event.Topic.AJAX_HANDLERS_BOUND);
 </select> [<a href="./org.wicketstuff.datetime.extensions.yui.calendar.DatesPage1?0-1.-localeForm-localeUSLink" wicket:id="localeUSLink">set to english</a>]</p>
 </form>
 <p>
-<form wicket:id="form" id="form3" method="post" action="./org.wicketstuff.datetime.extensions.yui.calendar.DatesPage1?0-1.-form"><input type="text" wicket:id="dateTextField" value="xx/xx/xx" name="dateTextField" id="dateTextField1"/>
-<span class="yui-skin-sam">&nbsp;<span style="display:none;position:absolute;z-index: 99999;" id="dateTextField1Dp"></span><img style="cursor: pointer; border: none;" id="dateTextField1Icon" src="../resource/org.wicketstuff.datetime.extensions.yui.calendar.DatePicker/icon1.gif" alt="" title=""/></span> <input type="submit" value="submit" /></form>
+<form wicket:id="form" id="form4" method="post" action="./org.wicketstuff.datetime.extensions.yui.calendar.DatesPage1?0-1.-form"><input type="text" wicket:id="dateTextField" value="xx/xx/xx" name="dateTextField" id="dateTextField3"/>
+<span class="yui-skin-sam">&nbsp;<span style="display:none;position:absolute;z-index: 99999;" id="dateTextField3Dp"></span><img style="cursor: pointer; border: none;" id="dateTextField3Icon" src="../resource/org.wicketstuff.datetime.extensions.yui.calendar.DatePicker/icon1.gif" alt="" title=""/></span> <input type="submit" value="submit" /></form>
 </p>
 <p>
 	<div wicket:id="feedback"><wicket:panel>
