@@ -18,7 +18,7 @@ th {
 <script type="text/javascript">
 /*<![CDATA[*/
 Wicket.Event.add(window, "domready", function(event) { 
-Wicket.Event.add('localeSelect2', 'change', function(event) { if (event.target.name !== 'localeSelect') return; var f = document.getElementById('localeForm1');f.action='./org.wicketstuff.datetime.extensions.yui.calendar.DatesPage1?0-1.0-localeForm-localeSelect';f.submit();;});;
+Wicket.Event.add('localeSelect2', 'change', function(event) { if (event.target.name !== 'localeSelect') return; var f = document.getElementById('localeForm1');f.action='./org.wicketstuff.datetime.extensions.yui.calendar.DatesPage1?0-1.0-localeForm-localeSelect';Wicket.Event.fire(f, 'submit');;});;
 /*
  * Licensed to the Apache Software Foundation (ASF) under one or more
  * contributor license agreements.  See the NOTICE file distributed with
