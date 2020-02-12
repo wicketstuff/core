@@ -16,6 +16,7 @@
  */
 package org.apache.wicket.portlet;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.PrintWriter;
@@ -43,7 +44,6 @@ import javax.servlet.RequestDispatcher;
 
 import org.apache.commons.fileupload.portlet.PortletRequestContext;
 import org.apache.wicket.protocol.http.WicketFilter;
-import org.apache.wicket.util.file.File;
 import org.apache.wicket.util.string.Strings;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -421,7 +421,7 @@ public class WicketPortlet extends GenericPortlet {
 				// processing the request
 
 				String redirectLocation = responseState.getRedirectLocation();
-        String ajaxRedirectLocation = responseState.getAjaxRedirectLocation();
+				String ajaxRedirectLocation = responseState.getAjaxRedirectLocation();
 				if (ajaxRedirectLocation != null) {
 					// Ajax redirect
 					responseState.clear();

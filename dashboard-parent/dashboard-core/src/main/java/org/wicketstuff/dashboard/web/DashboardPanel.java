@@ -126,7 +126,7 @@ public class DashboardPanel extends GenericPanel<Dashboard> {
 			@Override
 			public void renderHead(IHeaderResponse response) {
 				float columnPanelWidth = 100f / columnCount;
-				response.render(CssHeaderItem.forCSS(".dashboard .column {width: " + columnPanelWidth + "%;}", "dashboard-column-width"));
+				response.render(CssHeaderItem.forCSS(".dashboard .column {width: " + columnPanelWidth + "%;}", "dashboard-column-width-" + columnPanelWidth));
 				super.renderHead(response);
 			}
 
