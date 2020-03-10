@@ -28,7 +28,8 @@ import com.github.openjson.JSONException;
 import com.github.openjson.JSONStringer;
 
 /**
- * Select2 settings. Refer to the Select2 documentation for what these options mean.
+ * <p>Select2 settings. Refer to the Select2 documentation for what these options mean.</p>
+ * <p>Does deviate from the default settings as documented on https://select2.org/configuration/options-api in the settings for width, closeOnSelect and escapeMarkup</p>
  *
  * @author igor
  */
@@ -60,8 +61,8 @@ public final class Settings implements Serializable
 	private String id, matcher, tokenizer;
 	private String sorter;
 	private String templateSelection, templateResult, escapeMarkup;
-	private String initSelection;  //TODO Deprecated in Select2 4.0
-	private String query;
+	private String initSelection;  //TODO Deprecated in Select2 4.0, will be removed in 4.1
+	private String query; //TODO Deprecated in Select2 4.0, will be removed in 4.1
 	private String width;
 	private String containerCss, dropdownCss, containerCssClass, dropdownCssClass; //TODO deprecated
 	private String dropdownParent;
