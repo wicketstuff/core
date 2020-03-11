@@ -111,7 +111,15 @@ public abstract class AbstractSelect2Choice<T, M> extends FormComponent<M> imple
 	}
 
 	/**
-	 * @return Select2 settings for this component
+	 * Returns the {@link Settings}. The settings
+	 * <code><br/>
+	 * closeOnSelect = true<br/>
+	 * escapeMarkup = "Utils.escapeMarkup"<br/>
+	 * width = {@link Settings.Widths#RESOLVE};
+	 * </code><br/>
+	 * are the the Select2 default as documented on https://select2.org/configuration/options-api, which are different from the default in {@link Settings}
+	 *
+	 * @return Select2 settings for this component.
 	 */
 	public final Settings getSettings()
 	{
