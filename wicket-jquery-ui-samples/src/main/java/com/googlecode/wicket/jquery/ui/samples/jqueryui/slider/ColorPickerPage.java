@@ -4,6 +4,7 @@ import org.apache.wicket.AttributeModifier;
 import org.apache.wicket.Component;
 import org.apache.wicket.behavior.Behavior;
 import org.apache.wicket.core.request.handler.IPartialPageRequestHandler;
+import org.apache.wicket.markup.head.IHeaderResponse;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.panel.EmptyPanel;
 import org.apache.wicket.markup.html.panel.FeedbackPanel;
@@ -11,6 +12,7 @@ import org.apache.wicket.markup.html.panel.Fragment;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
 
+import com.googlecode.wicket.jquery.core.resource.StyleSheetPackageHeaderItem;
 import com.googlecode.wicket.jquery.ui.form.slider.AjaxSlider;
 import com.googlecode.wicket.jquery.ui.form.slider.Slider.Range;
 import com.googlecode.wicket.jquery.ui.panel.JQueryFeedbackPanel;
@@ -27,6 +29,8 @@ public class ColorPickerPage extends AbstractSliderPage
 		this.model = Model.of("#336699");
 		this.initialize();
 	}
+
+	// Methods //
 
 	private void initialize()
 	{
@@ -60,9 +64,14 @@ public class ColorPickerPage extends AbstractSliderPage
 		});
 	}
 
-	private Behavior newBackgroundAttributeModifier()
+	// Methods //
+
+	@Override
+	public void renderHead(IHeaderResponse response)
 	{
-		return AttributeModifier.replace("style", "background-color: " + this.model.getObject());
+		super.renderHead(response);
+
+		response.render(new StyleSheetPackageHeaderItem(ColorPickerPage.class));
 	}
 
 	private void info(Component component)
@@ -70,6 +79,15 @@ public class ColorPickerPage extends AbstractSliderPage
 		this.info(component.getMarkupId() + " has been clicked");
 		this.info("The model object is: " + this.model.getObject());
 	}
+
+	// Factories //
+
+	private Behavior newBackgroundAttributeModifier()
+	{
+		return AttributeModifier.replace("style", "background-color: " + this.model.getObject());
+	}
+
+	// Classes //
 
 	/**
 	 * A FormComponentFragment would have been perfect here, but... it does not exists :s
@@ -147,7 +165,7 @@ public class ColorPickerPage extends AbstractSliderPage
 					ColorPicker.this.changeColor(handler);
 				}
 			};
-			
+
 			slider.setMax(255);
 			slider.setRange(Range.MIN);
 

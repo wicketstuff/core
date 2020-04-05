@@ -2,11 +2,13 @@ package com.googlecode.wicket.jquery.ui.samples.jqueryui.plugins.wysiwyg;
 
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.markup.html.AjaxLink;
+import org.apache.wicket.markup.head.IHeaderResponse;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.panel.FeedbackPanel;
 import org.apache.wicket.model.PropertyModel;
 
 import com.googlecode.wicket.jquery.core.IJQueryWidget;
+import com.googlecode.wicket.jquery.core.resource.StyleSheetPackageHeaderItem;
 import com.googlecode.wicket.jquery.ui.form.button.ButtonBehavior;
 import com.googlecode.wicket.jquery.ui.panel.JQueryFeedbackPanel;
 import com.googlecode.wicket.jquery.ui.plugins.wysiwyg.WysiwygEditor;
@@ -72,5 +74,15 @@ public class WysiwygEditorPage extends JQuerySamplePage
 				target.add(form.setEnabled(!form.isEnabled()));
 			}
 		});
+	}
+
+	// Methods //
+
+	@Override
+	public void renderHead(IHeaderResponse response)
+	{
+		super.renderHead(response);
+
+		response.render(new StyleSheetPackageHeaderItem(WysiwygEditorPage.class));
 	}
 }

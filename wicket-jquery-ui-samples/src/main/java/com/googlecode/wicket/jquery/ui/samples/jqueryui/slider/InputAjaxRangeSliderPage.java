@@ -3,6 +3,7 @@ package com.googlecode.wicket.jquery.ui.samples.jqueryui.slider;
 import org.apache.wicket.Component;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.core.request.handler.IPartialPageRequestHandler;
+import org.apache.wicket.markup.head.IHeaderResponse;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.form.TextField;
 import org.apache.wicket.markup.html.panel.FeedbackPanel;
@@ -10,6 +11,7 @@ import org.apache.wicket.model.Model;
 import org.apache.wicket.model.PropertyModel;
 import org.apache.wicket.validation.validator.RangeValidator;
 
+import com.googlecode.wicket.jquery.core.resource.StyleSheetPackageHeaderItem;
 import com.googlecode.wicket.jquery.ui.form.slider.AjaxRangeSlider;
 import com.googlecode.wicket.jquery.ui.form.slider.RangeValue;
 import com.googlecode.wicket.jquery.ui.panel.JQueryFeedbackPanel;
@@ -41,7 +43,7 @@ public class InputAjaxRangeSliderPage extends AbstractSliderPage
 			@Override
 			protected void onError(AjaxRequestTarget target)
 			{
-				target.add(feedback); //do never add 'this' or the form here!
+				target.add(feedback); // do never add 'this' or the form here!
 			}
 
 			@Override
@@ -54,10 +56,19 @@ public class InputAjaxRangeSliderPage extends AbstractSliderPage
 
 		form.add(slider.setRangeValidator(new RangeValidator<Integer>(0, 100)));
 	}
+	// Methods //
+
+	@Override
+	public void renderHead(IHeaderResponse response)
+	{
+		super.renderHead(response);
+
+		response.render(new StyleSheetPackageHeaderItem(InputAjaxRangeSliderPage.class));
+	}
 
 	private void info(Component component, Form<?> form)
 	{
-		RangeValue value = (RangeValue) form.getModelObject(); //need to cast because 'form' argument is generic with ?
+		RangeValue value = (RangeValue) form.getModelObject(); // need to cast because 'form' argument is generic with ?
 
 		this.info(component.getMarkupId() + " has been slided");
 		this.info(String.format("lower value is %d and upper value is %d", value.getLower(), value.getUpper()));

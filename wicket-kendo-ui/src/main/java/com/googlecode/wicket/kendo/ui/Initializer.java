@@ -18,6 +18,8 @@ package com.googlecode.wicket.kendo.ui;
 
 import org.apache.wicket.Application;
 import org.apache.wicket.IInitializer;
+import org.apache.wicket.csp.CSPDirective;
+import org.apache.wicket.csp.CSPDirectiveSrcValue;
 import org.apache.wicket.protocol.http.WebApplication;
 
 /**
@@ -34,6 +36,7 @@ public class Initializer implements IInitializer
 		{
 			WebApplication webApplication = (WebApplication) application;
 			webApplication.getAjaxRequestTargetListeners().add(new KendoDestroyListener());
+			webApplication.getCspSettings().blocking().add(CSPDirective.SCRIPT_SRC, CSPDirectiveSrcValue.UNSAFE_EVAL);
 		}
 	}
 

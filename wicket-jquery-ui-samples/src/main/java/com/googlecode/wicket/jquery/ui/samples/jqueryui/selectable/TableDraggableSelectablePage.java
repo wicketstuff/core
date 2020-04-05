@@ -2,6 +2,7 @@ package com.googlecode.wicket.jquery.ui.samples.jqueryui.selectable;
 
 import org.apache.wicket.Component;
 import org.apache.wicket.ajax.AjaxRequestTarget;
+import org.apache.wicket.markup.head.IHeaderResponse;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.image.ContextImage;
 import org.apache.wicket.markup.html.list.ListItem;
@@ -9,6 +10,7 @@ import org.apache.wicket.markup.html.list.ListView;
 import org.apache.wicket.markup.html.panel.FeedbackPanel;
 import org.apache.wicket.model.PropertyModel;
 
+import com.googlecode.wicket.jquery.core.resource.StyleSheetPackageHeaderItem;
 import com.googlecode.wicket.jquery.ui.interaction.draggable.Draggable;
 import com.googlecode.wicket.jquery.ui.interaction.droppable.Droppable;
 import com.googlecode.wicket.jquery.ui.interaction.selectable.Selectable;
@@ -37,7 +39,7 @@ public class TableDraggableSelectablePage extends AbstractSelectablePage
 			@Override
 			protected String getItemSelector()
 			{
-				return "TR"; //Gets the selector that identifies the selectable item within the Selectable component
+				return "TR"; // Gets the selector that identifies the selectable item within the Selectable component
 			}
 
 			@Override
@@ -49,7 +51,6 @@ public class TableDraggableSelectablePage extends AbstractSelectablePage
 		};
 
 		this.add(this.selectable);
-
 
 		// Selectable ListView, with the default "empty" (ie: with no default icon) selectable-draggable factory //
 		final SelectableDraggableFactory factory = new SelectableDraggableFactory();
@@ -90,9 +91,20 @@ public class TableDraggableSelectablePage extends AbstractSelectablePage
 		});
 	}
 
+	// Methods //
+
+	@Override
+	public void renderHead(IHeaderResponse response)
+	{
+		super.renderHead(response);
+
+		response.render(new StyleSheetPackageHeaderItem(TableDraggableSelectablePage.class));
+	}
+
+	// Factories //
+
 	/**
-	 * Gets a new Droppable.
-	 * By default 'over' and 'exit' ('out') events are disabled to minimize client/server round-trips.
+	 * Gets a new Droppable. By default 'over' and 'exit' ('out') events are disabled to minimize client/server round-trips.
 	 */
 	private Droppable<Genre> newDroppable(String id)
 	{
@@ -106,7 +118,7 @@ public class TableDraggableSelectablePage extends AbstractSelectablePage
 				info(String.format("Dropped %s", selectable.getModelObject()));
 
 				target.add(feedback);
-				target.add(this); //refresh the listview
+				target.add(this); // refresh the listview
 			}
 		};
 	}

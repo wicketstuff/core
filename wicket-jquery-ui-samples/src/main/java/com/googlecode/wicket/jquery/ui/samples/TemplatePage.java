@@ -6,6 +6,7 @@ import org.apache.wicket.Component;
 import org.apache.wicket.MetaDataKey;
 import org.apache.wicket.Session;
 import org.apache.wicket.behavior.Behavior;
+import org.apache.wicket.markup.head.CssHeaderItem;
 import org.apache.wicket.markup.head.IHeaderResponse;
 import org.apache.wicket.markup.head.JavaScriptHeaderItem;
 import org.apache.wicket.markup.html.WebPage;
@@ -13,11 +14,15 @@ import org.apache.wicket.markup.html.link.Link;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.request.Url;
+import org.apache.wicket.request.resource.CssResourceReference;
+import org.apache.wicket.request.resource.JavaScriptResourceReference;
 import org.apache.wicket.request.resource.ResourceReference;
+import org.apache.wicket.resource.JQueryPluginResourceReference;
 import org.apache.wicket.resource.TextTemplateResourceReference;
 import org.apache.wicket.util.lang.Generics;
 
 import com.googlecode.wicket.jquery.core.JQueryAbstractBehavior;
+import com.googlecode.wicket.jquery.core.resource.JavaScriptPackageHeaderItem;
 
 public abstract class TemplatePage extends WebPage
 {
@@ -52,6 +57,21 @@ public abstract class TemplatePage extends WebPage
 	}
 
 	// Methods //
+
+	@Override
+	public void renderHead(IHeaderResponse response)
+	{
+		super.renderHead(response);
+
+		response.render(CssHeaderItem.forReference(new CssResourceReference(TemplatePage.class, "normalize.css")));
+		response.render(CssHeaderItem.forReference(new CssResourceReference(TemplatePage.class, "main.css")));
+
+		response.render(JavaScriptHeaderItem.forReference(new JavaScriptResourceReference(TemplatePage.class, "modernizr-custom.js")));
+		response.render(JavaScriptHeaderItem.forReference(new JQueryPluginResourceReference(TemplatePage.class, "jquery.collapse.js")));
+		response.render(JavaScriptHeaderItem.forReference(new JQueryPluginResourceReference(TemplatePage.class, "jquery.collapse_storage.js")));
+
+		response.render(new JavaScriptPackageHeaderItem(TemplatePage.class));
+	}
 
 	private static void initTemplate()
 	{
@@ -140,7 +160,7 @@ public abstract class TemplatePage extends WebPage
 
 		private ResourceReference newResourceReference()
 		{
-			return new TextTemplateResourceReference(GoogleAnalyticsBehavior.class, "gaq.js", this.newResourceModel());
+			return new TextTemplateResourceReference(GoogleAnalyticsBehavior.class, "gaq.js", "text/javascript", this.newResourceModel());
 		}
 
 		@Override

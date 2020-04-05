@@ -5,6 +5,7 @@ import java.util.List;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.extensions.markup.html.tabs.AbstractTab;
 import org.apache.wicket.extensions.markup.html.tabs.ITab;
+import org.apache.wicket.markup.head.IHeaderResponse;
 import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.panel.Fragment;
@@ -13,6 +14,7 @@ import org.apache.wicket.util.lang.Generics;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.googlecode.wicket.jquery.core.resource.StyleSheetPackageHeaderItem;
 import com.googlecode.wicket.kendo.ui.form.button.AjaxButton;
 import com.googlecode.wicket.kendo.ui.panel.KendoFeedbackPanel;
 import com.googlecode.wicket.kendo.ui.widget.accordion.AccordionPanel;
@@ -65,6 +67,14 @@ public class KendoAccordionPanelPage extends AbstractAccordionPage
 				accordion.setTabIndex(accordion.getLastTabIndex(), target);
 			}
 		});
+	}
+
+	@Override
+	public void renderHead(IHeaderResponse response)
+	{
+		super.renderHead(response);
+
+		response.render(new StyleSheetPackageHeaderItem(KendoAccordionPanelPage.class));
 	}
 
 	private List<ITab> newTabList()

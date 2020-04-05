@@ -2,10 +2,12 @@ package com.googlecode.wicket.jquery.ui.samples.jqueryui.slider;
 
 import org.apache.wicket.Component;
 import org.apache.wicket.ajax.AjaxRequestTarget;
+import org.apache.wicket.markup.head.IHeaderResponse;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.model.Model;
 
+import com.googlecode.wicket.jquery.core.resource.StyleSheetPackageHeaderItem;
 import com.googlecode.wicket.jquery.ui.form.button.AjaxButton;
 import com.googlecode.wicket.jquery.ui.form.button.Button;
 import com.googlecode.wicket.jquery.ui.form.slider.Slider;
@@ -24,10 +26,10 @@ public class DefaultSliderPage extends AbstractSliderPage
 		form.add(new JQueryFeedbackPanel("feedback"));
 
 		// Sliders //
-		final Label label = new Label("label", form.getModel()); //the supplied model allows the initial display
+		final Label label = new Label("label", form.getModel()); // the supplied model allows the initial display
 		form.add(label);
 
-		form.add(new Slider("slider", form.getModel(), label)); //will use the html markupId
+		form.add(new Slider("slider", form.getModel(), label)); // will use the html markupId
 
 		// Buttons //
 		form.add(new Button("submit") {
@@ -52,6 +54,16 @@ public class DefaultSliderPage extends AbstractSliderPage
 				target.add(form);
 			}
 		});
+	}
+
+	// Methods //
+
+	@Override
+	public void renderHead(IHeaderResponse response)
+	{
+		super.renderHead(response);
+
+		response.render(new StyleSheetPackageHeaderItem(DefaultSliderPage.class));
 	}
 
 	private void info(Component component, Form<?> form)

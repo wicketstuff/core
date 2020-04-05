@@ -17,6 +17,7 @@
 package com.googlecode.wicket.kendo.ui.widget.window;
 
 import org.apache.wicket.Component;
+import org.apache.wicket.markup.head.IHeaderResponse;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.form.FormComponent;
@@ -24,6 +25,7 @@ import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
 
 import com.googlecode.wicket.jquery.core.JQueryAbstractBehavior;
+import com.googlecode.wicket.jquery.core.resource.StyleSheetPackageHeaderItem;
 import com.googlecode.wicket.kendo.ui.form.TextField;
 
 /**
@@ -92,6 +94,27 @@ public abstract class InputWindow<T> extends FormWindow<T> // NOSONAR
 		this.labelModel = label;
 	}
 
+	// Methods //
+
+	@Override
+	public void renderHead(IHeaderResponse response)
+	{
+		super.renderHead(response);
+
+		response.render(new StyleSheetPackageHeaderItem(InputWindow.class));
+	}
+
+	@Override
+	public void detachModels()
+	{
+		super.detachModels();
+
+		if (this.labelModel != null)
+		{
+			this.labelModel.detach();
+		}
+	}
+
 	// Events //
 
 	@Override
@@ -109,19 +132,6 @@ public abstract class InputWindow<T> extends FormWindow<T> // NOSONAR
 		this.textField.setOutputMarkupId(true);
 		this.textField.setRequired(this.isRequired());
 		form.add(this.textField);
-	}
-
-	// Methods //
-
-	@Override
-	public void detachModels()
-	{
-		super.detachModels();
-
-		if (this.labelModel != null)
-		{
-			this.labelModel.detach();
-		}
 	}
 
 	// Properties //

@@ -18,10 +18,12 @@ package com.googlecode.wicket.kendo.ui.widget.window;
 
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.core.request.handler.IPartialPageRequestHandler;
+import org.apache.wicket.markup.head.IHeaderResponse;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
 
+import com.googlecode.wicket.jquery.core.resource.StyleSheetPackageHeaderItem;
 import com.googlecode.wicket.kendo.ui.panel.KendoFeedbackPanel;
 
 /**
@@ -95,6 +97,16 @@ public abstract class FormWindow<T> extends Window<T> // NOSONAR
 		// form //
 		this.form = FormWindow.newForm("form");
 		this.add(this.form);
+	}
+
+	// Methods //
+
+	@Override
+	public void renderHead(IHeaderResponse response)
+	{
+		super.renderHead(response);
+
+		response.render(new StyleSheetPackageHeaderItem(FormWindow.class));
 	}
 
 	// Events //

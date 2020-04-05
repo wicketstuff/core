@@ -3,6 +3,7 @@ package com.googlecode.wicket.jquery.ui.samples.kendoui.autocomplete;
 import java.util.List;
 
 import org.apache.wicket.ajax.AjaxRequestTarget;
+import org.apache.wicket.markup.head.IHeaderResponse;
 import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.form.Form;
@@ -11,6 +12,7 @@ import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.model.PropertyModel;
 
+import com.googlecode.wicket.jquery.core.resource.StyleSheetPackageHeaderItem;
 import com.googlecode.wicket.jquery.core.utils.ListUtils;
 import com.googlecode.wicket.jquery.ui.samples.data.bean.Genre;
 import com.googlecode.wicket.jquery.ui.samples.data.dao.GenresDAO;
@@ -43,7 +45,7 @@ public class KendoCustomAutoCompletePage extends AbstractAutoCompletePage
 		container.add(new Label("name", new PropertyModel<String>(model, "name")));
 
 		// Auto-complete //
-		final AutoCompleteTextField<Genre> autocomplete = new AutoCompleteTextField< Genre>("autocomplete", model) {
+		final AutoCompleteTextField<Genre> autocomplete = new AutoCompleteTextField<Genre>("autocomplete", model) {
 
 			private static final long serialVersionUID = 1L;
 
@@ -56,7 +58,7 @@ public class KendoCustomAutoCompletePage extends AbstractAutoCompletePage
 			@Override
 			protected void onSelected(AjaxRequestTarget target)
 			{
-				target.add(container); //the model has already been updated
+				target.add(container); // the model has already been updated
 			}
 		};
 
@@ -75,9 +77,19 @@ public class KendoCustomAutoCompletePage extends AbstractAutoCompletePage
 		});
 	}
 
+	// Methods //
+
+	@Override
+	public void renderHead(IHeaderResponse response)
+	{
+		super.renderHead(response);
+
+		response.render(new StyleSheetPackageHeaderItem(KendoCustomAutoCompletePage.class));
+	}
+
 	private void info(AutoCompleteTextField<?> autocomplete)
 	{
-		Object choice =  autocomplete.getModelObject();
+		Object choice = autocomplete.getModelObject();
 
 		this.info(choice != null ? choice.toString() : "no choice");
 	}

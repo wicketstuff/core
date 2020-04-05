@@ -4,6 +4,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 import org.apache.wicket.ajax.AjaxRequestTarget;
+import org.apache.wicket.markup.head.IHeaderResponse;
 import org.apache.wicket.markup.html.panel.FeedbackPanel;
 import org.apache.wicket.markup.repeater.RepeatingView;
 import org.apache.wicket.util.io.IClusterable;
@@ -11,6 +12,7 @@ import org.apache.wicket.util.lang.Generics;
 
 import com.googlecode.wicket.jquery.core.JQueryBehavior;
 import com.googlecode.wicket.jquery.core.Options;
+import com.googlecode.wicket.jquery.core.resource.StyleSheetPackageHeaderItem;
 import com.googlecode.wicket.jquery.ui.calendar.Calendar;
 import com.googlecode.wicket.jquery.ui.calendar.CalendarEvent;
 import com.googlecode.wicket.jquery.ui.calendar.CalendarModel;
@@ -34,6 +36,8 @@ public class ObjectCalendarPage extends AbstractCalendarPage
 
 		this.initialize();
 	}
+
+	// Methods //
 
 	private void initialize()
 	{
@@ -80,7 +84,7 @@ public class ObjectCalendarPage extends AbstractCalendarPage
 				CalendarEvent event = new CalendarEvent(title, date);
 				event.setAllDay(allDay);
 
-				events.add(event); //adds to DAO
+				events.add(event); // adds to DAO
 				this.refresh(target);
 
 				this.info(String.format("Added %s on %s", event.getTitle(), event.getStart()));
@@ -88,6 +92,16 @@ public class ObjectCalendarPage extends AbstractCalendarPage
 			}
 		});
 	}
+
+	@Override
+	public void renderHead(IHeaderResponse response)
+	{
+		super.renderHead(response);
+
+		response.render(new StyleSheetPackageHeaderItem(ObjectCalendarPage.class));
+	}
+
+	// Factories //
 
 	private CalendarModel newCalendarModel()
 	{
@@ -102,6 +116,8 @@ public class ObjectCalendarPage extends AbstractCalendarPage
 			}
 		};
 	}
+
+	// Classes //
 
 	/**
 	 * Event object

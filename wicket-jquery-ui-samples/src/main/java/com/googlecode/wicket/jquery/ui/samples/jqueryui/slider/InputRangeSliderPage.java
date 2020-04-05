@@ -2,12 +2,14 @@ package com.googlecode.wicket.jquery.ui.samples.jqueryui.slider;
 
 import org.apache.wicket.Component;
 import org.apache.wicket.ajax.AjaxRequestTarget;
+import org.apache.wicket.markup.head.IHeaderResponse;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.form.TextField;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.model.PropertyModel;
 import org.apache.wicket.validation.validator.RangeValidator;
 
+import com.googlecode.wicket.jquery.core.resource.StyleSheetPackageHeaderItem;
 import com.googlecode.wicket.jquery.ui.form.button.AjaxButton;
 import com.googlecode.wicket.jquery.ui.form.button.Button;
 import com.googlecode.wicket.jquery.ui.form.slider.RangeSlider;
@@ -71,9 +73,19 @@ public class InputRangeSliderPage extends AbstractSliderPage
 		});
 	}
 
+	// Methods //
+
+	@Override
+	public void renderHead(IHeaderResponse response)
+	{
+		super.renderHead(response);
+
+		response.render(new StyleSheetPackageHeaderItem(InputRangeSliderPage.class));
+	}
+
 	private void info(Component component, Form<?> form)
 	{
-		RangeValue value = (RangeValue) form.getModelObject(); //need to cast because 'form' argument is generic with ?
+		RangeValue value = (RangeValue) form.getModelObject(); // need to cast because 'form' argument is generic with ?
 
 		this.info(component.getMarkupId() + " has been clicked");
 		this.info(String.format("lower value is %d and upper value is %d", value.getLower(), value.getUpper()));

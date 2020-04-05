@@ -2,9 +2,11 @@ package com.googlecode.wicket.jquery.ui.samples.jqueryui.menu;
 
 import org.apache.wicket.Component;
 import org.apache.wicket.ajax.AjaxRequestTarget;
+import org.apache.wicket.markup.head.IHeaderResponse;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.panel.FeedbackPanel;
 
+import com.googlecode.wicket.jquery.core.resource.StyleSheetPackageHeaderItem;
 import com.googlecode.wicket.jquery.ui.panel.JQueryFeedbackPanel;
 import com.googlecode.wicket.jquery.ui.widget.menu.ContextMenu;
 import com.googlecode.wicket.jquery.ui.widget.menu.ContextMenuBehavior;
@@ -28,8 +30,8 @@ public class ContextMenuPage extends AbstractMenuPage
 			@Override
 			protected void onContextMenu(AjaxRequestTarget target, Component component)
 			{
-				//the menu-item list can be modified here
-				//this.getItemList().add(new MenuItem("my new item"));
+				// the menu-item list can be modified here
+				// this.getItemList().add(new MenuItem("my new item"));
 			}
 
 			@Override
@@ -52,5 +54,15 @@ public class ContextMenuPage extends AbstractMenuPage
 		final Label label2 = new Label("label2", "my label 2");
 		label2.add(new ContextMenuBehavior(menu));
 		this.add(label2);
+	}
+
+	// Methods //
+
+	@Override
+	public void renderHead(IHeaderResponse response)
+	{
+		super.renderHead(response);
+
+		response.render(new StyleSheetPackageHeaderItem(ContextMenuPage.class));
 	}
 }

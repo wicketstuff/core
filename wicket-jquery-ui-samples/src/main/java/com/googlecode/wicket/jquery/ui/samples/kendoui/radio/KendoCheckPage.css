@@ -1,0 +1,7 @@
+.checkUL {
+	list-style: none;
+}
+
+.checkUL li {
+	line-height: 25px;
+}

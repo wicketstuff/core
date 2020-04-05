@@ -3,10 +3,12 @@ package com.googlecode.wicket.jquery.ui.samples.jqueryui.menu;
 import java.util.List;
 
 import org.apache.wicket.ajax.AjaxRequestTarget;
+import org.apache.wicket.markup.head.IHeaderResponse;
 import org.apache.wicket.markup.html.panel.FeedbackPanel;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.util.lang.Generics;
 
+import com.googlecode.wicket.jquery.core.resource.StyleSheetPackageHeaderItem;
 import com.googlecode.wicket.jquery.ui.JQueryIcon;
 import com.googlecode.wicket.jquery.ui.panel.JQueryFeedbackPanel;
 import com.googlecode.wicket.jquery.ui.widget.menu.IMenuItem;
@@ -59,7 +61,6 @@ public class DefaultMenuPage extends AbstractMenuPage
 		return list;
 	}
 
-
 	public DefaultMenuPage()
 	{
 		// FeedbackPanel //
@@ -80,5 +81,15 @@ public class DefaultMenuPage extends AbstractMenuPage
 				target.add(feedback);
 			}
 		});
+	}
+
+	// Methods //
+
+	@Override
+	public void renderHead(IHeaderResponse response)
+	{
+		super.renderHead(response);
+
+		response.render(new StyleSheetPackageHeaderItem(DefaultMenuPage.class));
 	}
 }

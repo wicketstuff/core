@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.core.request.handler.IPartialPageRequestHandler;
+import org.apache.wicket.markup.head.IHeaderResponse;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.panel.FeedbackPanel;
@@ -12,6 +13,7 @@ import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.validation.validator.RangeValidator;
 
+import com.googlecode.wicket.jquery.core.resource.StyleSheetPackageHeaderItem;
 import com.googlecode.wicket.jquery.ui.form.slider.Slider;
 import com.googlecode.wicket.jquery.ui.panel.JQueryFeedbackPanel;
 import com.googlecode.wicket.jquery.ui.widget.dialog.AbstractFormDialog;
@@ -48,6 +50,18 @@ public abstract class SliderDialog extends AbstractFormDialog<Integer>
 		this.form.add(this.feedback);
 	}
 
+	// Methods //
+
+	@Override
+	public void renderHead(IHeaderResponse response)
+	{
+		super.renderHead(response);
+
+		response.render(new StyleSheetPackageHeaderItem(SliderDialog.class));
+	}
+
+	// Properties //
+
 	@Override
 	protected List<DialogButton> getButtons()
 	{
@@ -66,10 +80,12 @@ public abstract class SliderDialog extends AbstractFormDialog<Integer>
 		return this.form;
 	}
 
+	// Events //
+
 	@Override
 	protected void onOpen(IPartialPageRequestHandler handler)
 	{
-		//re-attach the feedback panel to clear previously displayed error message(s)
+		// re-attach the feedback panel to clear previously displayed error message(s)
 		handler.add(this.feedback);
 	}
 

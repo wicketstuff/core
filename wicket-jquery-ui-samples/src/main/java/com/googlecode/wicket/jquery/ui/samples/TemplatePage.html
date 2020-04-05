@@ -7,29 +7,7 @@
 	<meta name="description" content="Wicket jQuery UI integration" />
 	<meta name="keywords" content="wicket jquery, wicket jquery ui, autocomplete, dialog, draggable, droppable, progress bar, wizard, kendo ui, border layout, calendar" />
 
-	<link rel="stylesheet" href="css/normalize.css">
-	<link rel="stylesheet" href="css/main.css">
-
 	<wicket:header-items/>
-
-	<script src="js/modernizr-custom.js"></script>
-	<script src="js/jquery.collapse.js"></script>
-	<script src="js/jquery.collapse_storage.js"></script>
-
-	<script type="text/javascript">
-		$(function() {
-			$(".linkZone").collapse({
-				persist : true,
-				query : 'h2.tButton',
-				open : function() {
-					this.slideDown(200);
-				},
-				close : function() {
-					this.slideUp(200);
-				}
-			});
-		});
-	</script>
 </head>
 <body>
 	<!--[if lt IE 8]>

@@ -4,8 +4,10 @@ import java.util.Arrays;
 
 import org.apache.wicket.Component;
 import org.apache.wicket.ajax.AjaxRequestTarget;
+import org.apache.wicket.markup.head.IHeaderResponse;
 import org.apache.wicket.markup.html.panel.FeedbackPanel;
 
+import com.googlecode.wicket.jquery.core.resource.StyleSheetPackageHeaderItem;
 import com.googlecode.wicket.jquery.ui.interaction.draggable.Draggable;
 import com.googlecode.wicket.jquery.ui.interaction.draggable.Draggable.Containment;
 import com.googlecode.wicket.jquery.ui.panel.JQueryFeedbackPanel;
@@ -75,6 +77,16 @@ public class ComponentOptionDraggablePage extends AbstractDraggablePage
 		};
 
 		this.add(draggable2.setContainment("#container"));
+	}
+
+	// Methods //
+
+	@Override
+	public void renderHead(IHeaderResponse response)
+	{
+		super.renderHead(response);
+
+		response.render(new StyleSheetPackageHeaderItem(ComponentOptionDraggablePage.class));
 	}
 
 	private void info(Component component, String event)

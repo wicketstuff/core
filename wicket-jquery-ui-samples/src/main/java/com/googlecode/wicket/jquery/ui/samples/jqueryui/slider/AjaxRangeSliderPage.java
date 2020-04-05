@@ -2,11 +2,13 @@ package com.googlecode.wicket.jquery.ui.samples.jqueryui.slider;
 
 import org.apache.wicket.Component;
 import org.apache.wicket.core.request.handler.IPartialPageRequestHandler;
+import org.apache.wicket.markup.head.IHeaderResponse;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.panel.FeedbackPanel;
 import org.apache.wicket.model.Model;
 
+import com.googlecode.wicket.jquery.core.resource.StyleSheetPackageHeaderItem;
 import com.googlecode.wicket.jquery.ui.form.slider.AjaxRangeSlider;
 import com.googlecode.wicket.jquery.ui.form.slider.RangeValue;
 import com.googlecode.wicket.jquery.ui.panel.JQueryFeedbackPanel;
@@ -19,6 +21,8 @@ public class AjaxRangeSliderPage extends AbstractSliderPage
 	{
 		this.initialize();
 	}
+
+	// Methods //
 
 	private void initialize()
 	{
@@ -44,6 +48,14 @@ public class AjaxRangeSliderPage extends AbstractSliderPage
 				handler.add(feedback); // do never add 'this' or the form here!
 			}
 		});
+	}
+
+	@Override
+	public void renderHead(IHeaderResponse response)
+	{
+		super.renderHead(response);
+
+		response.render(new StyleSheetPackageHeaderItem(AjaxRangeSliderPage.class));
 	}
 
 	private void info(Component component, Form<?> form)

@@ -1,5 +1,6 @@
 package com.googlecode.wicket.jquery.ui.samples.jqueryui.tooltip;
 
+import org.apache.wicket.markup.head.IHeaderResponse;
 import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.image.ContextImage;
@@ -9,6 +10,7 @@ import org.apache.wicket.markup.html.panel.Fragment;
 import org.apache.wicket.model.Model;
 
 import com.googlecode.wicket.jquery.core.Options;
+import com.googlecode.wicket.jquery.core.resource.StyleSheetPackageHeaderItem;
 import com.googlecode.wicket.jquery.ui.samples.data.bean.Genre;
 import com.googlecode.wicket.jquery.ui.samples.data.dao.GenresDAO;
 import com.googlecode.wicket.jquery.ui.widget.tooltip.CustomTooltipBehavior;
@@ -44,6 +46,18 @@ public class CustomTooltipPage extends AbstractTooltipPage
 			}
 		});
 	}
+
+	// Methods //
+
+	@Override
+	public void renderHead(IHeaderResponse response)
+	{
+		super.renderHead(response);
+
+		response.render(new StyleSheetPackageHeaderItem(CustomTooltipPage.class));
+	}
+
+	// Classes //
 
 	class CoverTooltipBehavior extends CustomTooltipBehavior
 	{

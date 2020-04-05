@@ -1,0 +1,18 @@
+.w-messagewindow {
+	padding: 4px;
+}
+
+.w-messagewindow-icon {
+	display: inline-block;
+	margin-right: 0.1em;
+	vertical-align: middle;
+}
+
+.w-messagewindow-text {
+	vertical-align: middle;
+}
+
+.w-messagewindow-buttons>BUTTON {
+	float: right;
+	margin-left: 4px;
+}

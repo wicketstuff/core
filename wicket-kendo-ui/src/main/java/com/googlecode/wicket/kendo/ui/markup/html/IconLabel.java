@@ -17,11 +17,13 @@
 package com.googlecode.wicket.kendo.ui.markup.html;
 
 import org.apache.wicket.AttributeModifier;
+import org.apache.wicket.markup.head.IHeaderResponse;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.panel.EmptyPanel;
 import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.model.IModel;
 
+import com.googlecode.wicket.jquery.core.resource.StyleSheetPackageHeaderItem;
 import com.googlecode.wicket.kendo.ui.KendoIcon;
 
 /**
@@ -83,6 +85,16 @@ public class IconLabel extends Panel
 		super(id, model);
 
 		this.icon = icon;
+	}
+
+	// Methods //
+
+	@Override
+	public void renderHead(IHeaderResponse response)
+	{
+		super.renderHead(response);
+
+		response.render(new StyleSheetPackageHeaderItem(IconLabel.class));
 	}
 
 	// Events //

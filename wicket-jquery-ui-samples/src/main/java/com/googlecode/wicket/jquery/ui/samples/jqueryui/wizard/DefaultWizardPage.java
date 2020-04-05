@@ -6,6 +6,8 @@ import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.extensions.wizard.StaticContentStep;
 import org.apache.wicket.extensions.wizard.WizardModel;
 import org.apache.wicket.extensions.wizard.WizardStep;
+import org.apache.wicket.markup.head.CssReferenceHeaderItem;
+import org.apache.wicket.markup.head.IHeaderResponse;
 import org.apache.wicket.markup.html.form.EmailTextField;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.form.RequiredTextField;
@@ -13,6 +15,7 @@ import org.apache.wicket.markup.html.panel.FeedbackPanel;
 import org.apache.wicket.model.CompoundPropertyModel;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
+import org.apache.wicket.request.resource.CssResourceReference;
 
 import com.googlecode.wicket.jquery.ui.JQueryIcon;
 import com.googlecode.wicket.jquery.ui.form.RadioChoice;
@@ -122,6 +125,14 @@ public class DefaultWizardPage extends AbstractWizardPage
 
 				this.add(new RequiredTextField<String>("name"));
 				this.add(new EmailTextField("mail"));
+			}
+
+			@Override
+			public void renderHead(IHeaderResponse response)
+			{
+				super.renderHead(response);
+
+				response.render(CssReferenceHeaderItem.forReference(new CssResourceReference(DefaultWizardPage.class, "DefaultWizardPage$UserWizard$Step1.css")));
 			}
 		}
 

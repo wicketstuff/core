@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.apache.wicket.AttributeModifier;
 import org.apache.wicket.ajax.AjaxRequestTarget;
+import org.apache.wicket.markup.head.IHeaderResponse;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.list.ListItem;
 import org.apache.wicket.markup.html.panel.EmptyPanel;
@@ -11,6 +12,7 @@ import org.apache.wicket.markup.html.panel.FeedbackPanel;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.util.lang.Generics;
 
+import com.googlecode.wicket.jquery.core.resource.StyleSheetPackageHeaderItem;
 import com.googlecode.wicket.jquery.ui.JQueryIcon;
 import com.googlecode.wicket.jquery.ui.interaction.sortable.Sortable;
 import com.googlecode.wicket.jquery.ui.interaction.sortable.Sortable.HashListView;
@@ -55,6 +57,18 @@ public class DefaultSortablePage extends AbstractSortablePage
 
 		this.add(sortable);
 	}
+
+	// Methods //
+
+	@Override
+	public void renderHead(IHeaderResponse response)
+	{
+		super.renderHead(response);
+
+		response.render(new StyleSheetPackageHeaderItem(DefaultSortablePage.class));
+	}
+
+	// Factories //
 
 	protected static HashListView<String> newListView(String id, IModel<List<String>> model)
 	{

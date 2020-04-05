@@ -1,6 +1,7 @@
 package com.googlecode.wicket.jquery.ui.samples;
 
 import org.apache.wicket.Session;
+import org.apache.wicket.csp.CSPDirective;
 import org.apache.wicket.markup.html.WebPage;
 import org.apache.wicket.protocol.http.WebApplication;
 import org.apache.wicket.request.Request;
@@ -69,9 +70,14 @@ public class SampleApplication extends WebApplication
 		super.init();
 
 		this.getResourceSettings().setThrowExceptionOnMissingResource(false);
-		
+
 		// jQuery //
 		// this.getJavaScriptLibrarySettings().setJQueryReference(JQueryMigrateResourceReference.get());
+		// this.getCspSettings().blocking().disabled(); // TODO REMOVE
+
+		this.getCspSettings().blocking() //
+				.add(CSPDirective.IMG_SRC, "data:")
+				.add(CSPDirective.IMG_SRC, "http://www.google-analytics.com/__utm.gif");
 
 		// Kendo UI //
 		KendoUILibrarySettings settings = KendoUILibrarySettings.get();

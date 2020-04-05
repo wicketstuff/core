@@ -5,22 +5,23 @@ import java.util.List;
 
 import org.apache.wicket.Component;
 import org.apache.wicket.ajax.AjaxRequestTarget;
+import org.apache.wicket.markup.head.IHeaderResponse;
 import org.apache.wicket.markup.html.form.CheckGroup;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
 
+import com.googlecode.wicket.jquery.core.resource.StyleSheetPackageHeaderItem;
 import com.googlecode.wicket.kendo.ui.form.Check;
 import com.googlecode.wicket.kendo.ui.form.Check.Label;
 import com.googlecode.wicket.kendo.ui.form.button.AjaxButton;
 import com.googlecode.wicket.kendo.ui.form.button.Button;
 import com.googlecode.wicket.kendo.ui.panel.KendoFeedbackPanel;
 
-
 public class KendoCheckPage extends AbstractRadioPage
 {
 	private static final long serialVersionUID = 1L;
-	
+
 	private final Form<List<String>> form;
 
 	public KendoCheckPage()
@@ -53,11 +54,23 @@ public class KendoCheckPage extends AbstractRadioPage
 		this.form.add(this.newAjaxButton("button"));
 	}
 
+	// Methods //
+
+	@Override
+	public void renderHead(IHeaderResponse response)
+	{
+		super.renderHead(response);
+
+		response.render(new StyleSheetPackageHeaderItem(KendoCheckPage.class));
+	}
+
 	private void info(Component component, IModel<List<String>> model)
 	{
 		this.info(component.getMarkupId() + " has been clicked");
 		this.info("The model object is: " + model.getObject());
 	}
+
+	// Factoties //
 
 	private Button newSubmitButton(String id)
 	{

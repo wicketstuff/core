@@ -1,0 +1,16 @@
+table {
+	width: 400px;
+	border-spacing: 0;
+	border-collapse: collapse;
+}
+
+th, td {
+	padding: 5px;
+}
+
+.ui-autocomplete {
+	max-height: 200px;
+	overflow-y: auto;
+	overflow-x: hidden;
+	padding-right: 20px;
+}

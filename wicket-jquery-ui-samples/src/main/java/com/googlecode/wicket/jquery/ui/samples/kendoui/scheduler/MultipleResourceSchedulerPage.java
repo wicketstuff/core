@@ -6,12 +6,14 @@ import java.util.Date;
 import java.util.List;
 
 import org.apache.wicket.ajax.AjaxRequestTarget;
+import org.apache.wicket.markup.head.IHeaderResponse;
 import org.apache.wicket.markup.html.form.ChoiceRenderer;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.util.lang.Generics;
 
 import com.googlecode.wicket.jquery.core.Options;
+import com.googlecode.wicket.jquery.core.resource.StyleSheetPackageHeaderItem;
 import com.googlecode.wicket.jquery.core.utils.RequestCycleUtils;
 import com.googlecode.wicket.jquery.ui.samples.data.dao.scheduler.EmployeeEventsDAO;
 import com.googlecode.wicket.kendo.ui.form.button.AjaxButton;
@@ -122,6 +124,16 @@ public class MultipleResourceSchedulerPage extends AbstractSchedulerPage // NOSO
 				target.add(scheduler);
 			}
 		});
+	}
+
+	// Methods //
+
+	@Override
+	public void renderHead(IHeaderResponse response)
+	{
+		super.renderHead(response);
+
+		response.render(new StyleSheetPackageHeaderItem(MultipleResourceSchedulerPage.class));
 	}
 
 	// Factories //

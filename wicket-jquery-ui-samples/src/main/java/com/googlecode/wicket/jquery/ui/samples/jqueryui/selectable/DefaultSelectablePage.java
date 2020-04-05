@@ -4,12 +4,14 @@ import java.util.Arrays;
 import java.util.List;
 
 import org.apache.wicket.ajax.AjaxRequestTarget;
+import org.apache.wicket.markup.head.IHeaderResponse;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.list.ListItem;
 import org.apache.wicket.markup.html.list.ListView;
 import org.apache.wicket.markup.html.panel.FeedbackPanel;
 import org.apache.wicket.model.Model;
 
+import com.googlecode.wicket.jquery.core.resource.StyleSheetPackageHeaderItem;
 import com.googlecode.wicket.jquery.ui.interaction.selectable.Selectable;
 import com.googlecode.wicket.jquery.ui.panel.JQueryFeedbackPanel;
 
@@ -52,5 +54,15 @@ public class DefaultSelectablePage extends AbstractSelectablePage
 				item.add(new Label("item", item.getModelObject()));
 			}
 		});
+	}
+
+	// Methods //
+
+	@Override
+	public void renderHead(IHeaderResponse response)
+	{
+		super.renderHead(response);
+
+		response.render(new StyleSheetPackageHeaderItem(DefaultSelectablePage.class));
 	}
 }

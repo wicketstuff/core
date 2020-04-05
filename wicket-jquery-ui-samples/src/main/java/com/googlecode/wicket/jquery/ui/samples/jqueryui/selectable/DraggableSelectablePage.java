@@ -6,11 +6,13 @@ import java.util.List;
 import org.apache.wicket.AttributeModifier;
 import org.apache.wicket.Component;
 import org.apache.wicket.ajax.AjaxRequestTarget;
+import org.apache.wicket.markup.head.IHeaderResponse;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.list.ListItem;
 import org.apache.wicket.markup.html.list.ListView;
 import org.apache.wicket.markup.html.panel.FeedbackPanel;
 
+import com.googlecode.wicket.jquery.core.resource.StyleSheetPackageHeaderItem;
 import com.googlecode.wicket.jquery.ui.interaction.draggable.Draggable;
 import com.googlecode.wicket.jquery.ui.interaction.droppable.Droppable;
 import com.googlecode.wicket.jquery.ui.interaction.selectable.Selectable;
@@ -81,9 +83,20 @@ public class DraggableSelectablePage extends AbstractSelectablePage
 		});
 	}
 
+	// Methods //
+
+	@Override
+	public void renderHead(IHeaderResponse response)
+	{
+		super.renderHead(response);
+
+		response.render(new StyleSheetPackageHeaderItem(DraggableSelectablePage.class));
+	}
+
+	// Factories //
+
 	/**
-	 * Gets a new Droppable.
-	 * By default 'over' and 'exit' ('out') events are disabled to minimize client/server round-trips.
+	 * Gets a new Droppable. By default 'over' and 'exit' ('out') events are disabled to minimize client/server round-trips.
 	 */
 	private Droppable<?> newDroppable(String id)
 	{
@@ -97,7 +110,7 @@ public class DraggableSelectablePage extends AbstractSelectablePage
 				info(String.format("Dropped %s", selectable.getModelObject()));
 
 				target.add(feedback);
-				target.add(this); //refresh the listview
+				target.add(this); // refresh the listview
 			}
 		};
 	}

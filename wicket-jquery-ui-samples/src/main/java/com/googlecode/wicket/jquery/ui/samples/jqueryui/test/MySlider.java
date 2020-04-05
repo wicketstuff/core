@@ -2,12 +2,14 @@ package com.googlecode.wicket.jquery.ui.samples.jqueryui.test;
 
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.core.request.handler.IPartialPageRequestHandler;
+import org.apache.wicket.markup.head.IHeaderResponse;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.form.FormComponentPanel;
 import org.apache.wicket.markup.html.form.TextField;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.PropertyModel;
 
+import com.googlecode.wicket.jquery.core.resource.StyleSheetPackageHeaderItem;
 import com.googlecode.wicket.jquery.ui.form.slider.AjaxRangeSlider;
 import com.googlecode.wicket.jquery.ui.form.slider.RangeValue;
 
@@ -25,6 +27,8 @@ public class MySlider extends FormComponentPanel<RangeValue>
 		this.label = label;
 		this.initialize();
 	}
+
+	// Methods //
 
 	private final void initialize()
 	{
@@ -56,6 +60,16 @@ public class MySlider extends FormComponentPanel<RangeValue>
 		this.add(this.slider);
 	}
 
+	// Methods //
+
+	@Override
+	public void renderHead(IHeaderResponse response)
+	{
+		super.renderHead(response);
+
+		response.render(new StyleSheetPackageHeaderItem(MySlider.class));
+	}
+
 	@Override
 	public void convertInput()
 	{
@@ -63,6 +77,7 @@ public class MySlider extends FormComponentPanel<RangeValue>
 	}
 
 	// Events //
+
 	/**
 	 * @param target
 	 */

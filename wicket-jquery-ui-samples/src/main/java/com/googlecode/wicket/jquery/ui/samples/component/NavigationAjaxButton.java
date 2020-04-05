@@ -1,8 +1,10 @@
 package com.googlecode.wicket.jquery.ui.samples.component;
 
 import org.apache.wicket.ajax.AjaxRequestTarget;
+import org.apache.wicket.markup.head.IHeaderResponse;
 import org.apache.wicket.markup.html.panel.Panel;
 
+import com.googlecode.wicket.jquery.core.resource.StyleSheetPackageHeaderItem;
 import com.googlecode.wicket.jquery.ui.JQueryIcon;
 import com.googlecode.wicket.jquery.ui.form.button.AjaxButton;
 
@@ -25,7 +27,18 @@ public class NavigationAjaxButton extends Panel
 		this.setOutputMarkupId(true);
 	}
 
+	// Methods //
+
+	@Override
+	public void renderHead(IHeaderResponse response)
+	{
+		super.renderHead(response);
+
+		response.render(new StyleSheetPackageHeaderItem(NavigationAjaxButton.class));
+	}
+
 	// Properties //
+
 	public final AjaxButton getBackwardButton()
 	{
 		return this.backwardButton;
@@ -37,6 +50,7 @@ public class NavigationAjaxButton extends Panel
 	}
 
 	// Factories //
+
 	private final AjaxButton newBackwardButton()
 	{
 		return new AjaxButton("backward") {

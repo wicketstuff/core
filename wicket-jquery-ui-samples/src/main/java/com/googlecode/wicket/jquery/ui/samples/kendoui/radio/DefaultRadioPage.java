@@ -2,11 +2,13 @@ package com.googlecode.wicket.jquery.ui.samples.kendoui.radio;
 
 import org.apache.wicket.Component;
 import org.apache.wicket.ajax.AjaxRequestTarget;
+import org.apache.wicket.markup.head.IHeaderResponse;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.form.RadioGroup;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
 
+import com.googlecode.wicket.jquery.core.resource.StyleSheetPackageHeaderItem;
 import com.googlecode.wicket.kendo.ui.form.Radio;
 import com.googlecode.wicket.kendo.ui.form.Radio.Label;
 import com.googlecode.wicket.kendo.ui.form.button.AjaxButton;
@@ -67,6 +69,15 @@ public class DefaultRadioPage extends AbstractRadioPage
 				target.add(form);
 			}
 		});
+	}
+	// Methods //
+
+	@Override
+	public void renderHead(IHeaderResponse response)
+	{
+		super.renderHead(response);
+
+		response.render(new StyleSheetPackageHeaderItem(DefaultRadioPage.class));
 	}
 
 	private void info(Component component, IModel<String> model)

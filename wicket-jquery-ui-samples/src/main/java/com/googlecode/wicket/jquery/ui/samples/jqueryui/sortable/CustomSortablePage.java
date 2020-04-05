@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.apache.wicket.AttributeModifier;
 import org.apache.wicket.ajax.AjaxRequestTarget;
+import org.apache.wicket.markup.head.IHeaderResponse;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.list.ListItem;
 import org.apache.wicket.markup.html.panel.EmptyPanel;
@@ -14,6 +15,7 @@ import org.apache.wicket.util.lang.Args;
 import org.apache.wicket.util.lang.Generics;
 import org.apache.wicket.util.string.Strings;
 
+import com.googlecode.wicket.jquery.core.resource.StyleSheetPackageHeaderItem;
 import com.googlecode.wicket.jquery.ui.JQueryIcon;
 import com.googlecode.wicket.jquery.ui.interaction.sortable.Sortable;
 import com.googlecode.wicket.jquery.ui.interaction.sortable.Sortable.HashListView;
@@ -62,6 +64,18 @@ public class CustomSortablePage extends AbstractSortablePage
 		this.add(sortable);
 	}
 
+	// Methods //
+
+	@Override
+	public void renderHead(IHeaderResponse response)
+	{
+		super.renderHead(response);
+
+		response.render(new StyleSheetPackageHeaderItem(CustomSortablePage.class));
+	}
+
+	// Factories //
+
 	protected static HashListView<Item> newListView(String id, IModel<List<Item>> model)
 	{
 		return new HashListView<Item>(id, model) {
@@ -77,7 +91,6 @@ public class CustomSortablePage extends AbstractSortablePage
 			}
 		};
 	}
-
 
 	/**
 	 * Gets a new <i>modifiable</i> list
@@ -125,7 +138,7 @@ public class CustomSortablePage extends AbstractSortablePage
 		@Override
 		public int hashCode()
 		{
-			return this.name.hashCode(); //String#hashCode() is deterministic
+			return this.name.hashCode(); // String#hashCode() is deterministic
 		}
 
 		@Override

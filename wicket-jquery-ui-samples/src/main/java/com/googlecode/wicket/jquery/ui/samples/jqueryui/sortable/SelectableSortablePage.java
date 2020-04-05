@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.apache.wicket.AttributeModifier;
 import org.apache.wicket.ajax.AjaxRequestTarget;
+import org.apache.wicket.markup.head.IHeaderResponse;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.list.ListItem;
 import org.apache.wicket.markup.html.panel.EmptyPanel;
@@ -12,6 +13,7 @@ import org.apache.wicket.model.IModel;
 import org.apache.wicket.util.lang.Generics;
 
 import com.googlecode.wicket.jquery.core.Options;
+import com.googlecode.wicket.jquery.core.resource.StyleSheetPackageHeaderItem;
 import com.googlecode.wicket.jquery.ui.JQueryIcon;
 import com.googlecode.wicket.jquery.ui.interaction.selectable.ISelectableListener;
 import com.googlecode.wicket.jquery.ui.interaction.selectable.SelectableBehavior;
@@ -21,7 +23,7 @@ import com.googlecode.wicket.jquery.ui.panel.JQueryFeedbackPanel;
 
 public class SelectableSortablePage extends AbstractSortablePage implements ISelectableListener<String>
 {
-	private static final long serialVersionUID = 1L;	
+	private static final long serialVersionUID = 1L;
 	private static final String HANDLE = Options.asString(".handle");
 
 	private final FeedbackPanel feedback;
@@ -68,6 +70,16 @@ public class SelectableSortablePage extends AbstractSortablePage implements ISel
 		};
 
 		this.add(sortable);
+	}
+
+	// Methods //
+
+	@Override
+	public void renderHead(IHeaderResponse response)
+	{
+		super.renderHead(response);
+
+		response.render(new StyleSheetPackageHeaderItem(SelectableSortablePage.class));
 	}
 
 	// ISelectableListener //

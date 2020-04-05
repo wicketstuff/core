@@ -6,11 +6,13 @@ import java.util.Date;
 import java.util.List;
 
 import org.apache.wicket.ajax.AjaxRequestTarget;
+import org.apache.wicket.markup.head.IHeaderResponse;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.util.lang.Generics;
 
 import com.googlecode.wicket.jquery.core.Options;
+import com.googlecode.wicket.jquery.core.resource.StyleSheetPackageHeaderItem;
 import com.googlecode.wicket.jquery.core.template.IJQueryTemplate;
 import com.googlecode.wicket.jquery.core.template.JQueryTemplate;
 import com.googlecode.wicket.jquery.ui.samples.data.dao.scheduler.ResourceEventsDAO;
@@ -127,6 +129,16 @@ public class SingleResourceSchedulerPage extends AbstractSchedulerPage // NOSONA
 		});
 	}
 
+	// Methods //
+
+	@Override
+	public void renderHead(IHeaderResponse response)
+	{
+		super.renderHead(response);
+
+		response.render(new StyleSheetPackageHeaderItem(SingleResourceSchedulerPage.class));
+	}
+
 	// Properties //
 
 	protected boolean isAgendaSelected(Object agendaId)
@@ -180,7 +192,7 @@ public class SingleResourceSchedulerPage extends AbstractSchedulerPage // NOSONA
 	abstract static class MySchedulerModel extends SchedulerModel implements ISchedulerVisitor
 	{
 		private static final long serialVersionUID = 1L;
-		
+
 		@Override
 		public List<SchedulerEvent> load(ZonedDateTime start, ZonedDateTime until)
 		{

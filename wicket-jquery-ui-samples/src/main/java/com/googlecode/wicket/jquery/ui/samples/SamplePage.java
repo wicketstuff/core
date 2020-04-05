@@ -7,6 +7,7 @@ import java.util.List;
 import org.apache.wicket.MarkupContainer;
 import org.apache.wicket.extensions.markup.html.tabs.AbstractTab;
 import org.apache.wicket.extensions.markup.html.tabs.ITab;
+import org.apache.wicket.markup.head.IHeaderResponse;
 import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.link.BookmarkablePageLink;
@@ -24,6 +25,9 @@ import org.apache.wicket.util.template.PackageTextTemplate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.googlecode.wicket.jquery.core.resource.JavaScriptPackageHeaderItem;
+import com.googlecode.wicket.jquery.core.resource.StyleSheetPackageHeaderItem;
+
 public abstract class SamplePage extends TemplatePage // NOSONAR
 {
 	private static final long serialVersionUID = 1L;
@@ -38,6 +42,15 @@ public abstract class SamplePage extends TemplatePage // NOSONAR
 	{
 		this.add(new Label("title", this.getResourceString("title")));
 		this.add(new Label("source-desc", this.getSource(Source.TEXT)).setEscapeModelStrings(false));
+	}
+
+	@Override
+	public void renderHead(IHeaderResponse response)
+	{
+		super.renderHead(response);
+
+		response.render(new StyleSheetPackageHeaderItem(SamplePage.class));
+		response.render(new JavaScriptPackageHeaderItem(SamplePage.class));
 	}
 
 	@Override

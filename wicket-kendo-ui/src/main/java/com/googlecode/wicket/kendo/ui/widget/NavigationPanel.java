@@ -17,9 +17,11 @@
 package com.googlecode.wicket.kendo.ui.widget;
 
 import org.apache.wicket.ajax.AjaxRequestTarget;
+import org.apache.wicket.markup.head.IHeaderResponse;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.panel.Panel;
 
+import com.googlecode.wicket.jquery.core.resource.StyleSheetPackageHeaderItem;
 import com.googlecode.wicket.kendo.ui.KendoIcon;
 import com.googlecode.wicket.kendo.ui.form.button.AjaxButton;
 
@@ -55,6 +57,16 @@ public class NavigationPanel extends Panel
 
 		this.forwardButton = this.newForwardButton();
 		form.add(this.forwardButton);
+	}
+
+	// methods //
+
+	@Override
+	public void renderHead(IHeaderResponse response)
+	{
+		super.renderHead(response);
+
+		response.render(new StyleSheetPackageHeaderItem(NavigationPanel.class));
 	}
 
 	// properties //

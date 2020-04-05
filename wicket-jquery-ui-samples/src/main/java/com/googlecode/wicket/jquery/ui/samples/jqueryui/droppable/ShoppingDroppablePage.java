@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.apache.wicket.Component;
 import org.apache.wicket.ajax.AjaxRequestTarget;
+import org.apache.wicket.markup.head.IHeaderResponse;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.image.ContextImage;
@@ -18,6 +19,7 @@ import org.apache.wicket.util.io.IClusterable;
 import org.apache.wicket.util.lang.Generics;
 import org.apache.wicket.util.string.Strings;
 
+import com.googlecode.wicket.jquery.core.resource.StyleSheetPackageHeaderItem;
 import com.googlecode.wicket.jquery.ui.form.button.AjaxButton;
 import com.googlecode.wicket.jquery.ui.interaction.draggable.Draggable;
 import com.googlecode.wicket.jquery.ui.interaction.droppable.Droppable;
@@ -44,6 +46,8 @@ public class ShoppingDroppablePage extends AbstractDroppablePage
 
 		this.initialize();
 	}
+
+	// Methods //
 
 	private void initialize()
 	{
@@ -138,7 +142,16 @@ public class ShoppingDroppablePage extends AbstractDroppablePage
 		});
 	}
 
+	@Override
+	public void renderHead(IHeaderResponse response)
+	{
+		super.renderHead(response);
+
+		response.render(new StyleSheetPackageHeaderItem(ShoppingDroppablePage.class));
+	}
+
 	// Book fragment //
+
 	class BookFragment extends Fragment
 	{
 		private static final long serialVersionUID = 1L;

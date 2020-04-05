@@ -9,6 +9,8 @@ import org.apache.wicket.extensions.wizard.IWizardModel;
 import org.apache.wicket.extensions.wizard.dynamic.DynamicWizardModel;
 import org.apache.wicket.extensions.wizard.dynamic.DynamicWizardStep;
 import org.apache.wicket.extensions.wizard.dynamic.IDynamicWizardStep;
+import org.apache.wicket.markup.head.CssReferenceHeaderItem;
+import org.apache.wicket.markup.head.IHeaderResponse;
 import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.form.ChoiceRenderer;
@@ -22,6 +24,7 @@ import org.apache.wicket.markup.html.panel.FeedbackPanel;
 import org.apache.wicket.model.CompoundPropertyModel;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
+import org.apache.wicket.request.resource.CssResourceReference;
 
 import com.googlecode.wicket.jquery.core.JQueryAbstractBehavior;
 import com.googlecode.wicket.jquery.ui.JQueryIcon;
@@ -211,6 +214,14 @@ public class DynamicWizardPage extends AbstractWizardPage
 			}
 
 			@Override
+			public void renderHead(IHeaderResponse response)
+			{
+				super.renderHead(response);
+
+				response.render(CssReferenceHeaderItem.forReference(new CssResourceReference(DynamicWizardPage.class, "DynamicWizardPage$UserWizard$Step1.css")));
+			}
+
+			@Override
 			public boolean isLastStep()
 			{
 				return false;
@@ -309,6 +320,14 @@ public class DynamicWizardPage extends AbstractWizardPage
 			}
 
 			@Override
+			public void renderHead(IHeaderResponse response)
+			{
+				super.renderHead(response);
+
+				response.render(CssReferenceHeaderItem.forReference(new CssResourceReference(DynamicWizardPage.class, "DynamicWizardPage$UserWizard$Step3.css")));
+			}
+
+			@Override
 			public boolean isLastStep()
 			{
 				return false;
@@ -336,6 +355,14 @@ public class DynamicWizardPage extends AbstractWizardPage
 				this.add(new Label("mail"));
 				this.add(new Label("role"));
 				this.add(new Label("avatar"));
+			}
+
+			@Override
+			public void renderHead(IHeaderResponse response)
+			{
+				super.renderHead(response);
+
+				response.render(CssReferenceHeaderItem.forReference(new CssResourceReference(DynamicWizardPage.class, "DynamicWizardPage$UserWizard$Step4.css")));
 			}
 
 			@Override

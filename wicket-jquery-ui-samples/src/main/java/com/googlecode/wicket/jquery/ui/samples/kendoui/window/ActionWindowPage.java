@@ -2,7 +2,10 @@ package com.googlecode.wicket.jquery.ui.samples.kendoui.window;
 
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.core.request.handler.IPartialPageRequestHandler;
+import org.apache.wicket.markup.head.CssReferenceHeaderItem;
+import org.apache.wicket.markup.head.IHeaderResponse;
 import org.apache.wicket.markup.html.form.Form;
+import org.apache.wicket.request.resource.CssResourceReference;
 
 import com.googlecode.wicket.jquery.core.JQueryBehavior;
 import com.googlecode.wicket.kendo.ui.form.button.AjaxButton;
@@ -59,6 +62,8 @@ public class ActionWindowPage extends AbstractWindowPage
 		});
 	}
 
+	// Classes //
+
 	/**
 	 * This window class is located here for convenience in this sample<br>
 	 * Associated markup file is ActionWindowPage$MyWindow.html
@@ -94,6 +99,32 @@ public class ActionWindowPage extends AbstractWindowPage
 			});
 		}
 
+		// Methods //
+
+		@Override
+		public void renderHead(IHeaderResponse response)
+		{
+			super.renderHead(response);
+
+			response.render(CssReferenceHeaderItem.forReference(new CssResourceReference(ActionWindowPage.class, "ActionWindowPage$MyWindow.css")));
+		}
+
+		// Properties //
+
+		@Override
+		public boolean isCloseEventEnabled()
+		{
+			return true;
+		}
+
+		@Override
+		public boolean isActionEventEnabled()
+		{
+			return true;
+		}
+
+		// Events //
+
 		@Override
 		public void onConfigure(JQueryBehavior behavior)
 		{
@@ -119,18 +150,6 @@ public class ActionWindowPage extends AbstractWindowPage
 			}
 
 			target.add(this.feedback);
-		}
-
-		@Override
-		public boolean isCloseEventEnabled()
-		{
-			return true;
-		}
-
-		@Override
-		public boolean isActionEventEnabled()
-		{
-			return true;
 		}
 	}
 }

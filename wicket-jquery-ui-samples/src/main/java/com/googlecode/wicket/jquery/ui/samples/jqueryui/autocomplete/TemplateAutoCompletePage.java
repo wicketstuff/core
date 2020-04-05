@@ -4,11 +4,13 @@ import java.util.Arrays;
 import java.util.List;
 
 import org.apache.wicket.ajax.AjaxRequestTarget;
+import org.apache.wicket.markup.head.IHeaderResponse;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.panel.FeedbackPanel;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
 
+import com.googlecode.wicket.jquery.core.resource.StyleSheetPackageHeaderItem;
 import com.googlecode.wicket.jquery.core.template.IJQueryTemplate;
 import com.googlecode.wicket.jquery.core.utils.ListUtils;
 import com.googlecode.wicket.jquery.ui.form.autocomplete.AutoCompleteTextField;
@@ -59,22 +61,13 @@ public class TemplateAutoCompletePage extends AbstractAutoCompletePage
 					private static final long serialVersionUID = 1L;
 
 					/**
-					 * The template text will be enclosed in a <script type="text/x-jquery-tmpl" />.
-					 * You can use the "\n" character to properly format the template.
+					 * The template text will be enclosed in a <script type="text/x-jquery-tmpl" />. You can use the "\n" character to properly format the template.
 					 */
 					@Override
 					public String getText()
 					{
-						return	"<table style='width: 100%' cellspacing='0' cellpadding='0'>\n" +
-								" <tr>\n" +
-								"  <td>\n" +
-								"   <img src='#: data.coverUrl #' width='50px' />\n" +
-								"  </td>\n" +
-								"  <td>\n" +
-								"   #: data.name #\n" +
-								"  </td>\n" +
-								" </tr>\n" +
-								"</table>";
+						return "<table style='width: 100%' cellspacing='0' cellpadding='0'>\n" + " <tr>\n" + "  <td>\n" + "   <img src='#: data.coverUrl #' width='50px' />\n" + "  </td>\n" + "  <td>\n" + "   #: data.name #\n" + "  </td>\n"
+								+ " </tr>\n" + "</table>";
 					}
 
 					@Override
@@ -86,5 +79,15 @@ public class TemplateAutoCompletePage extends AbstractAutoCompletePage
 				};
 			}
 		});
+	}
+
+	// Methods //
+
+	@Override
+	public void renderHead(IHeaderResponse response)
+	{
+		super.renderHead(response);
+
+		response.render(new StyleSheetPackageHeaderItem(TemplateAutoCompletePage.class));
 	}
 }

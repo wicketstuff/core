@@ -2,8 +2,10 @@ package com.googlecode.wicket.jquery.ui.samples.kendoui.dragdrop;
 
 import org.apache.wicket.Component;
 import org.apache.wicket.ajax.AjaxRequestTarget;
+import org.apache.wicket.markup.head.IHeaderResponse;
 import org.apache.wicket.markup.html.WebMarkupContainer;
 
+import com.googlecode.wicket.jquery.core.resource.StyleSheetPackageHeaderItem;
 import com.googlecode.wicket.kendo.ui.console.Console;
 import com.googlecode.wicket.kendo.ui.interaction.draggable.DraggableBehavior;
 import com.googlecode.wicket.kendo.ui.interaction.draggable.IDraggableListener;
@@ -33,6 +35,14 @@ public class BehaviorDragDropPage extends AbstractDragDropPage implements IDragg
 	}
 
 	// Methods //
+
+	@Override
+	public void renderHead(IHeaderResponse response)
+	{
+		super.renderHead(response);
+
+		response.render(new StyleSheetPackageHeaderItem(BehaviorDragDropPage.class));
+	}
 
 	protected void info(AjaxRequestTarget target, String message)
 	{
@@ -78,7 +88,7 @@ public class BehaviorDragDropPage extends AbstractDragDropPage implements IDragg
 		return new DroppableAdaper() {
 
 			private static final long serialVersionUID = 1L;
-			
+
 			@Override
 			public void onDrop(AjaxRequestTarget target, Component component)
 			{

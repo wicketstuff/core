@@ -27,6 +27,7 @@ import org.apache.wicket.extensions.wizard.IWizardModel;
 import org.apache.wicket.extensions.wizard.IWizardModelListener;
 import org.apache.wicket.extensions.wizard.IWizardStep;
 import org.apache.wicket.extensions.wizard.Wizard;
+import org.apache.wicket.markup.head.IHeaderResponse;
 import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.panel.EmptyPanel;
@@ -35,6 +36,7 @@ import org.apache.wicket.model.IModel;
 import org.apache.wicket.util.lang.Args;
 
 import com.googlecode.wicket.jquery.core.JQueryBehavior;
+import com.googlecode.wicket.jquery.core.resource.StyleSheetPackageHeaderItem;
 import com.googlecode.wicket.jquery.ui.panel.JQueryFeedbackPanel;
 import com.googlecode.wicket.jquery.ui.widget.dialog.AbstractDialog;
 import com.googlecode.wicket.jquery.ui.widget.dialog.AbstractFormDialog;
@@ -186,6 +188,8 @@ public abstract class AbstractWizard<T extends Serializable> extends AbstractFor
 		super(id, title, model);
 	}
 
+	// Methods //
+
 	/**
 	 * Initialization
 	 *
@@ -208,6 +212,14 @@ public abstract class AbstractWizard<T extends Serializable> extends AbstractFor
 		// dummy view to be replaced //
 		this.form.add(new EmptyPanel(Wizard.VIEW_ID));
 		// this.form.add(newOverviewBar(Wizard.OVERVIEW_ID)); //OverviewBar not handled
+	}
+
+	@Override
+	public void renderHead(IHeaderResponse response)
+	{
+		super.renderHead(response);
+
+		response.render(new StyleSheetPackageHeaderItem(AbstractWizard.class));
 	}
 
 	/**
@@ -264,7 +276,7 @@ public abstract class AbstractWizard<T extends Serializable> extends AbstractFor
 		// Feedback //
 		this.feedback = this.newFeedbackPanel(Wizard.FEEDBACK_ID);
 		this.form.add(this.feedback);
-		
+
 		// buttons (located in #onInitialize() for #getString() to work properly, without warnings)
 		this.btnPrev = new DialogButton("PREV", this.getString("wizard.button.prev"));
 		this.btnNext = new DialogButton("NEXT", this.getString("wizard.button.next"));

@@ -1,8 +1,10 @@
 package com.googlecode.wicket.jquery.ui.samples.jqueryui.draggable;
 
 import org.apache.wicket.ajax.AjaxRequestTarget;
+import org.apache.wicket.markup.head.IHeaderResponse;
 import org.apache.wicket.markup.html.panel.FeedbackPanel;
 
+import com.googlecode.wicket.jquery.core.resource.StyleSheetPackageHeaderItem;
 import com.googlecode.wicket.jquery.core.utils.RequestCycleUtils;
 import com.googlecode.wicket.jquery.ui.interaction.draggable.Draggable;
 import com.googlecode.wicket.jquery.ui.panel.JQueryFeedbackPanel;
@@ -47,5 +49,15 @@ public class ComponentDraggablePage extends AbstractDraggablePage
 				target.add(feedback);
 			}
 		});
+	}
+
+	// Methods //
+
+	@Override
+	public void renderHead(IHeaderResponse response)
+	{
+		super.renderHead(response);
+
+		response.render(new StyleSheetPackageHeaderItem(ComponentDraggablePage.class));
 	}
 }

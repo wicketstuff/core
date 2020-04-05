@@ -19,10 +19,12 @@ package com.googlecode.wicket.jquery.ui.form.palette;
 import java.util.Collection;
 
 import org.apache.wicket.Component;
+import org.apache.wicket.markup.head.IHeaderResponse;
 import org.apache.wicket.markup.html.form.IChoiceRenderer;
 import org.apache.wicket.model.IModel;
 
 import com.googlecode.wicket.jquery.core.IJQueryWidget.JQueryWidget;
+import com.googlecode.wicket.jquery.core.resource.StyleSheetPackageHeaderItem;
 import com.googlecode.wicket.jquery.ui.JQueryIcon;
 import com.googlecode.wicket.jquery.ui.form.button.ButtonBehavior;
 
@@ -60,6 +62,18 @@ public class Palette<T> extends org.apache.wicket.extensions.markup.html.form.pa
 	{
 		super(id, model, choicesModel, choiceRenderer, rows, allowOrder);
 	}
+
+	// Methods //
+
+	@Override
+	public void renderHead(IHeaderResponse response)
+	{
+		super.renderHead(response);
+
+		response.render(new StyleSheetPackageHeaderItem(Palette.class));
+	}
+
+	// Factories //
 
 	@Override
 	protected Component newAddComponent()

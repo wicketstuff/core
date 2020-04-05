@@ -5,6 +5,8 @@ import java.util.List;
 
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.core.request.handler.IPartialPageRequestHandler;
+import org.apache.wicket.markup.head.CssReferenceHeaderItem;
+import org.apache.wicket.markup.head.IHeaderResponse;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.form.EmailTextField;
 import org.apache.wicket.markup.html.form.Form;
@@ -15,8 +17,10 @@ import org.apache.wicket.markup.html.panel.FeedbackPanel;
 import org.apache.wicket.model.CompoundPropertyModel;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
+import org.apache.wicket.request.resource.CssResourceReference;
 import org.apache.wicket.util.lang.Generics;
 
+import com.googlecode.wicket.jquery.core.resource.StyleSheetPackageHeaderItem;
 import com.googlecode.wicket.jquery.ui.JQueryIcon;
 import com.googlecode.wicket.jquery.ui.form.RadioChoice;
 import com.googlecode.wicket.jquery.ui.form.button.AjaxButton;
@@ -37,6 +41,8 @@ public class UserDialogPage extends AbstractDialogPage
 
 		this.initialize();
 	}
+
+	// Methods //
 
 	private void initialize()
 	{
@@ -119,6 +125,16 @@ public class UserDialogPage extends AbstractDialogPage
 		});
 	}
 
+	@Override
+	public void renderHead(IHeaderResponse response)
+	{
+		super.renderHead(response);
+
+		response.render(new StyleSheetPackageHeaderItem(UserDialogPage.class));
+	}
+
+	// Classes //
+
 	/**
 	 * This dialog class is located here for convenience in this sample<br>
 	 * Associated markup file is UserDialogPage$UserDialog.html
@@ -148,11 +164,22 @@ public class UserDialogPage extends AbstractDialogPage
 			this.feedback = new JQueryFeedbackPanel("feedback");
 			this.form.add(this.feedback);
 		}
+		
+		// Methods //
 
 		@Override
 		protected IModel<?> initModel()
 		{
 			return new Model<User>();
+		}
+		
+
+		@Override
+		public void renderHead(IHeaderResponse response)
+		{
+			super.renderHead(response);
+
+			response.render(CssReferenceHeaderItem.forReference(new CssResourceReference(UserDialogPage.class, "UserDialogPage$UserDialog.css")));
 		}
 
 		// AbstractFormDialog //

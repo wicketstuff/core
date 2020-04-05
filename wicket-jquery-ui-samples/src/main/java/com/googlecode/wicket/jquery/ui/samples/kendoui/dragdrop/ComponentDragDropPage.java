@@ -2,8 +2,10 @@ package com.googlecode.wicket.jquery.ui.samples.kendoui.dragdrop;
 
 import org.apache.wicket.Component;
 import org.apache.wicket.ajax.AjaxRequestTarget;
+import org.apache.wicket.markup.head.IHeaderResponse;
 import org.apache.wicket.model.Model;
 
+import com.googlecode.wicket.jquery.core.resource.StyleSheetPackageHeaderItem;
 import com.googlecode.wicket.kendo.ui.console.Console;
 import com.googlecode.wicket.kendo.ui.interaction.draggable.Draggable;
 import com.googlecode.wicket.kendo.ui.interaction.droppable.Droppable;
@@ -28,6 +30,18 @@ public class ComponentDragDropPage extends AbstractDragDropPage
 		this.add(this.newDroppable("droppable1", "green area"));
 		this.add(this.newDroppable("droppable2", "blue area"));
 	}
+
+	// Methods //
+
+	@Override
+	public void renderHead(IHeaderResponse response)
+	{
+		super.renderHead(response);
+
+		response.render(new StyleSheetPackageHeaderItem(ComponentDragDropPage.class));
+	}
+
+	// Factories //
 
 	/**
 	 * Gets a new Droppable.<br>
