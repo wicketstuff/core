@@ -73,10 +73,10 @@ public class SampleApplication extends WebApplication
 
 		// jQuery //
 		// this.getJavaScriptLibrarySettings().setJQueryReference(JQueryMigrateResourceReference.get());
-		// this.getCspSettings().blocking().disabled(); // TODO REMOVE
 
+		// CSP //
 		this.getCspSettings().blocking() //
-				.add(CSPDirective.IMG_SRC, "data:")
+//				.add(CSPDirective.IMG_SRC, "data:")
 				.add(CSPDirective.IMG_SRC, "http://www.google-analytics.com/__utm.gif");
 
 		// Kendo UI //

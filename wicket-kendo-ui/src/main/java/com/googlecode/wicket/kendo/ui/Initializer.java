@@ -36,7 +36,9 @@ public class Initializer implements IInitializer
 		{
 			WebApplication webApplication = (WebApplication) application;
 			webApplication.getAjaxRequestTargetListeners().add(new KendoDestroyListener());
-			webApplication.getCspSettings().blocking().add(CSPDirective.SCRIPT_SRC, CSPDirectiveSrcValue.UNSAFE_EVAL);
+			webApplication.getCspSettings().blocking() // lf
+					.add(CSPDirective.STYLE_SRC, CSPDirectiveSrcValue.UNSAFE_INLINE) // lf
+					.add(CSPDirective.SCRIPT_SRC, CSPDirectiveSrcValue.UNSAFE_EVAL);
 		}
 	}
 
