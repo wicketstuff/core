@@ -19,16 +19,15 @@
 package org.wicketstuff.examples.gmap.simple.ajax;
 
 import org.apache.wicket.Page;
-import org.apache.wicket.protocol.http.WebApplication;
+import org.wicketstuff.examples.gmap.CommonGmapApplication;
 
-public class SimpleGMapApplication extends WebApplication
+public class SimpleGMapApplication extends CommonGmapApplication
 {
-  
 
     @Override
     public Class<? extends Page> getHomePage()
     {
         return SimplePage.class;
     }
-   
+
 }

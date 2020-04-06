@@ -1,9 +1,9 @@
 package org.wicketstuff.examples.gmap.trigger;
 
 import org.apache.wicket.Page;
-import org.apache.wicket.protocol.http.WebApplication;
+import org.wicketstuff.examples.gmap.CommonGmapApplication;
 
-public class TriggerGMapApplication extends WebApplication
+public class TriggerGMapApplication extends CommonGmapApplication
 {
 
     @Override

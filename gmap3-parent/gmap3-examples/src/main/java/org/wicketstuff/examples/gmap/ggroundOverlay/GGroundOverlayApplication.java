@@ -19,9 +19,9 @@
 package org.wicketstuff.examples.gmap.ggroundOverlay;
 
 import org.apache.wicket.Page;
-import org.apache.wicket.protocol.http.WebApplication;
+import org.wicketstuff.examples.gmap.CommonGmapApplication;
 
-public class GGroundOverlayApplication extends WebApplication
+public class GGroundOverlayApplication extends CommonGmapApplication
 {
 
     @Override

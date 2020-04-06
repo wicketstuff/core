@@ -1,9 +1,9 @@
 package org.wicketstuff.examples.gmap.clustering;
 
 import org.apache.wicket.Page;
-import org.apache.wicket.protocol.http.WebApplication;
+import org.wicketstuff.examples.gmap.CommonGmapApplication;
 
-public class ClusteringGMapApplication extends WebApplication
+public class ClusteringGMapApplication extends CommonGmapApplication
 {
 
     @Override

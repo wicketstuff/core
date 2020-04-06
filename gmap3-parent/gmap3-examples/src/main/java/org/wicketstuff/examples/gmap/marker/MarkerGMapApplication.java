@@ -1,9 +1,9 @@
 package org.wicketstuff.examples.gmap.marker;
 
 import org.apache.wicket.Page;
-import org.apache.wicket.protocol.http.WebApplication;
+import org.wicketstuff.examples.gmap.CommonGmapApplication;
 
-public class MarkerGMapApplication extends WebApplication
+public class MarkerGMapApplication extends CommonGmapApplication
 {
 
     @Override

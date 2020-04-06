@@ -5,6 +5,11 @@ import org.apache.wicket.protocol.http.WebApplication;
 
 public class TagItApplication extends WebApplication
 {
+	@Override
+	protected void init() {
+		getCspSettings().blocking().disabled();
+		super.init();
+	}
 
 	@Override
 	public Class<? extends Page> getHomePage()

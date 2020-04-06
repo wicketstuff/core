@@ -1,9 +1,9 @@
 package org.wicketstuff.examples.gmap.bounds;
 
 import org.apache.wicket.Page;
-import org.apache.wicket.protocol.http.WebApplication;
+import org.wicketstuff.examples.gmap.CommonGmapApplication;
 
-public class BoundsGMapApplication extends WebApplication
+public class BoundsGMapApplication extends CommonGmapApplication
 {
 
     @Override

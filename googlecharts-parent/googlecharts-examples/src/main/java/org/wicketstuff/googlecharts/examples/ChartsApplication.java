@@ -11,6 +11,11 @@ import org.apache.wicket.protocol.http.WebApplication;
  */
 public class ChartsApplication extends WebApplication
 {
+	@Override
+	protected void init() {
+		getCspSettings().blocking().disabled();
+		super.init();
+	}
 
 	@Override
 	public Class<? extends WebPage> getHomePage()

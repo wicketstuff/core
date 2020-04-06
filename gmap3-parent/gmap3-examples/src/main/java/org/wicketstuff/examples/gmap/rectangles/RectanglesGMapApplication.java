@@ -14,9 +14,9 @@
 package org.wicketstuff.examples.gmap.rectangles;
 
 import org.apache.wicket.Page;
-import org.apache.wicket.protocol.http.WebApplication;
+import org.wicketstuff.examples.gmap.CommonGmapApplication;
 
-public class RectanglesGMapApplication extends WebApplication
+public class RectanglesGMapApplication extends CommonGmapApplication
 {
 
 	@Override

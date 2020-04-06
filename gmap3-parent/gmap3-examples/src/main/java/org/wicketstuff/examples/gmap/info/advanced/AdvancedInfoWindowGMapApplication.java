@@ -1,9 +1,9 @@
 package org.wicketstuff.examples.gmap.info.advanced;
 
 import org.apache.wicket.Page;
-import org.apache.wicket.protocol.http.WebApplication;
+import org.wicketstuff.examples.gmap.CommonGmapApplication;
 
-public class AdvancedInfoWindowGMapApplication extends WebApplication
+public class AdvancedInfoWindowGMapApplication extends CommonGmapApplication
 {
 
     @Override

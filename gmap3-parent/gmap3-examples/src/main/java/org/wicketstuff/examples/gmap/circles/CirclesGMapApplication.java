@@ -19,10 +19,10 @@
 package org.wicketstuff.examples.gmap.circles;
 
 import org.apache.wicket.Page;
-import org.apache.wicket.protocol.http.WebApplication;
+import org.wicketstuff.examples.gmap.CommonGmapApplication;
 
 
-public class CirclesGMapApplication extends WebApplication
+public class CirclesGMapApplication extends CommonGmapApplication
 {
 
     @Override

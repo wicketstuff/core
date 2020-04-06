@@ -1,4 +1,4 @@
-/* 
+/*
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
@@ -20,6 +20,11 @@ import org.apache.wicket.protocol.http.WebApplication;
  * Application object for your web application.
  */
 public class WicketApplication extends WebApplication {
+	@Override
+	protected void init() {
+		getCspSettings().blocking().disabled();
+		super.init();
+	}
 
     @Override
     public Class<? extends WebPage> getHomePage() {

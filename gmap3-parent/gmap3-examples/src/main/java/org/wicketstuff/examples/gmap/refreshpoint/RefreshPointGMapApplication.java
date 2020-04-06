@@ -19,9 +19,9 @@
 package org.wicketstuff.examples.gmap.refreshpoint;
 
 import org.apache.wicket.Page;
-import org.apache.wicket.protocol.http.WebApplication;
+import org.wicketstuff.examples.gmap.CommonGmapApplication;
 
-public class RefreshPointGMapApplication extends WebApplication
+public class RefreshPointGMapApplication extends CommonGmapApplication
 {
 
     @Override

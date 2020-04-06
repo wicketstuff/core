@@ -19,9 +19,9 @@
 package org.wicketstuff.examples.gmap.zoomlimit;
 
 import org.apache.wicket.Page;
-import org.apache.wicket.protocol.http.WebApplication;
+import org.wicketstuff.examples.gmap.CommonGmapApplication;
 
-public class ZoomLimitGMapApplication extends WebApplication
+public class ZoomLimitGMapApplication extends CommonGmapApplication
 {
 
     @Override

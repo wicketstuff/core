@@ -19,10 +19,10 @@
 package org.wicketstuff.examples.gmap.polygones;
 
 import org.apache.wicket.Page;
-import org.apache.wicket.protocol.http.WebApplication;
+import org.wicketstuff.examples.gmap.CommonGmapApplication;
 
 
-public class PolygonesGMapApplication extends WebApplication
+public class PolygonesGMapApplication extends CommonGmapApplication
 {
 
     @Override

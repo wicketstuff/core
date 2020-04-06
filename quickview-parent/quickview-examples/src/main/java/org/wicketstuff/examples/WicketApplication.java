@@ -15,6 +15,11 @@
  */
 package org.wicketstuff.examples;
 
+import java.util.HashSet;
+import java.util.Set;
+import java.util.concurrent.Executors;
+import java.util.concurrent.TimeUnit;
+
 import org.apache.wicket.Application;
 import org.apache.wicket.RuntimeConfigurationType;
 import org.apache.wicket.protocol.http.WebApplication;
@@ -22,11 +27,6 @@ import org.apache.wicket.protocol.ws.WebSocketSettings;
 import org.apache.wicket.protocol.ws.api.IWebSocketConnection;
 import org.apache.wicket.protocol.ws.api.message.ConnectedMessage;
 import org.apache.wicket.protocol.ws.api.registry.IWebSocketConnectionRegistry;
-
-import java.util.HashSet;
-import java.util.Set;
-import java.util.concurrent.Executors;
-import java.util.concurrent.TimeUnit;
 
 public class WicketApplication extends WebApplication {
     /**
@@ -47,6 +47,7 @@ public class WicketApplication extends WebApplication {
      */
     @Override
     public void init() {
+        getCspSettings().blocking().disabled();
         super.init();
 
 

@@ -1,9 +1,9 @@
 package org.wicketstuff.examples.gmap.listen;
 
 import org.apache.wicket.Page;
-import org.apache.wicket.protocol.http.WebApplication;
+import org.wicketstuff.examples.gmap.CommonGmapApplication;
 
-public class ListenGMapApplication extends WebApplication
+public class ListenGMapApplication extends CommonGmapApplication
 {
 
     @Override
