@@ -211,7 +211,7 @@
 	<!-- mocleiri: for distribution in to central repository sections in the main pom are not allowed -->
 
 	<properties>
-		<wicket.version>9.0.0-M5-SNAPSHOT</wicket.version>
+		<wicket.version>9.0.0-M5</wicket.version>
 
 		<maven.compiler.source>11</maven.compiler.source>
 		<maven.compiler.target>11</maven.compiler.target>
@@ -224,75 +224,75 @@
 		<sources.disabled>false</sources.disabled>
 
 		<hibernate.version>5.4.10.Final</hibernate.version>
-		<javassist.version>3.26.0-GA</javassist.version>
-		<jetty.version>9.4.25.v20191220</jetty.version>
+		<javassist.version>3.27.0-GA</javassist.version>
+		<jetty.version>9.4.27.v20200227</jetty.version>
 		<sf-jung.version>2.1.1</sf-jung.version>
-		<shiro.version>1.4.2</shiro.version>
+		<shiro.version>1.5.2</shiro.version>
 		<slf4j.version>1.7.29</slf4j.version>
 		<logback.version>1.2.3</logback.version>
-		<log4j.version>2.13.0</log4j.version>
-		<spring.version>5.2.2.RELEASE</spring.version>
+		<log4j.version>2.13.1</log4j.version>
+		<spring.version>5.2.5.RELEASE</spring.version>
 		<cglib.version>3.3.0</cglib.version>
 		<objenesis.version>3.1</objenesis.version>
 		<scala.version>2.13.1</scala.version>
-		<jackson.version>2.10.2</jackson.version>
-		<poi.version>4.1.1</poi.version>
+		<jackson.version>2.10.3</jackson.version>
+		<poi.version>4.1.2</poi.version>
 		<guava.version>28.2-jre</guava.version>
-		<wicket-webjars.version>2.0.13</wicket-webjars.version>
+		<wicket-webjars.version>3.0.0-M4</wicket-webjars.version>
 		<commons-io.version>2.6</commons-io.version>
 		<xstream.version>1.4.11.1</xstream.version>
 		<hamcrest.version>2.2</hamcrest.version>
 		<commons-logging.version>1.2</commons-logging.version>
 		<javax.servlet-api.version>3.1.0</javax.servlet-api.version>
-		<junit.version>5.5.2</junit.version>
-		<easymock.version>4.1</easymock.version>
-		<mockito.version>3.2.4</mockito.version>
+		<junit.version>5.6.1</junit.version>
+		<easymock.version>4.2</easymock.version>
+		<mockito.version>3.3.3</mockito.version>
 		<testng.version>7.1.0</testng.version>
 		<commons-beanutils.version>1.9.4</commons-beanutils.version>
 		<commons-collections4.version>4.4</commons-collections4.version>
 		<commons-digester3.version>3.2</commons-digester3.version>
-		<commons-lang3.version>3.9</commons-lang3.version>
+		<commons-lang3.version>3.10</commons-lang3.version>
 		<validation-api.version>2.0.1.Final</validation-api.version>
 		<jta.version>1.1</jta.version>
 		<hibernate-validator.version>6.1.0.Final</hibernate-validator.version>
 		<htmlcompressor.version>1.5.2</htmlcompressor.version>
-		<closure-compiler.version>v20200101</closure-compiler.version>
+		<closure-compiler.version>v20200315</closure-compiler.version>
 		<ibatis2-sqlmap.version>2.1.7.597</ibatis2-sqlmap.version>
 		<jts.version>1.13</jts.version>
 		<gson.version>2.8.6</gson.version>
-		<wicket-bootstrap-core.version>2.0.8</wicket-bootstrap-core.version>
-		<jasperreports.version>6.11.0</jasperreports.version>
+		<wicket-bootstrap-core.version>5.0.0-M1</wicket-bootstrap-core.version>
+		<jasperreports.version>6.12.2</jasperreports.version>
 		<bcprov.version>1.64</bcprov.version>
 		<joda-time.version>2.10.5</joda-time.version>
 		<ehcache.version>3.8.1</ehcache.version>
 		<commons-dbcp2.version>2.7.0</commons-dbcp2.version>
 		<javaee-api.version>7.0</javaee-api.version>
 		<clojure.version>1.10.1</clojure.version>
-		<groovy.version>2.5.6</groovy.version>
-		<asm-util.version>7.2</asm-util.version>
+		<groovy.version>3.0.2</groovy.version>
+		<asm-util.version>8.0.1</asm-util.version>
 		<hsqldb.version>2.5.0</hsqldb.version>
 		<!-- plugins -->
-		<maven-surefire-plugin.version>3.0.0-M3</maven-surefire-plugin.version>
-		<maven-javadoc-plugin.version>3.1.0</maven-javadoc-plugin.version>
-		<maven-source-plugin.version>3.0.1</maven-source-plugin.version>
+		<maven-surefire-plugin.version>3.0.0-M4</maven-surefire-plugin.version>
+		<maven-javadoc-plugin.version>3.2.0</maven-javadoc-plugin.version>
+		<maven-source-plugin.version>3.2.1</maven-source-plugin.version>
 		<maven-bundle-plugin.version>4.2.1</maven-bundle-plugin.version>
-		<maven-assembly-plugin.version>3.1.1</maven-assembly-plugin.version>
-		<maven-compiler-plugin.version>3.8.0</maven-compiler-plugin.version>
+		<maven-assembly-plugin.version>3.2.0</maven-assembly-plugin.version>
+		<maven-compiler-plugin.version>3.8.1</maven-compiler-plugin.version>
 		<maven-eclipse-plugin.version>2.10</maven-eclipse-plugin.version>
-		<maven-help-plugin.version>3.1.1</maven-help-plugin.version>
-		<maven-jar-plugin.version>3.1.1</maven-jar-plugin.version>
+		<maven-help-plugin.version>3.2.0</maven-help-plugin.version>
+		<maven-jar-plugin.version>3.2.0</maven-jar-plugin.version>
 		<maven-resources-plugin.version>3.1.0</maven-resources-plugin.version>
-		<animal-sniffer-maven-plugin.version>1.17</animal-sniffer-maven-plugin.version>
+		<animal-sniffer-maven-plugin.version>1.18</animal-sniffer-maven-plugin.version>
 		<maven-pax-plugin.version>1.6.0</maven-pax-plugin.version>
-		<scala-maven-plugin.version>4.2.4</scala-maven-plugin.version>
+		<scala-maven-plugin.version>4.3.1</scala-maven-plugin.version>
 		<maven-clean-plugin.version>3.1.0</maven-clean-plugin.version>
 		<maven-deploy-plugin.version>3.0.0-M1</maven-deploy-plugin.version>
 		<maven-install-plugin.version>3.0.0-M1</maven-install-plugin.version>
-		<maven-site-plugin.version>3.7.1</maven-site-plugin.version>
-		<maven-war-plugin.version>3.2.2</maven-war-plugin.version>
-		<maven-release-plugin.version>2.5.3</maven-release-plugin.version>
+		<maven-site-plugin.version>3.9.0</maven-site-plugin.version>
+		<maven-war-plugin.version>3.2.3</maven-war-plugin.version>
+		<maven-release-plugin.version>3.0.0-M1</maven-release-plugin.version>
 		<maven-gpg-plugin.version>1.6</maven-gpg-plugin.version>
-		<maven-pmd-plugin.version>3.11.0</maven-pmd-plugin.version>
+		<maven-pmd-plugin.version>3.13.0</maven-pmd-plugin.version>
 	</properties>
 
 	<prerequisites>
@@ -819,7 +819,7 @@
 			<dependency>
 				<groupId>org.python</groupId>
 				<artifactId>jython-standalone</artifactId>
-				<version>2.7.1</version>
+				<version>2.7.2</version>
 			</dependency>
 			<dependency>
 				<groupId>org.scala-lang</groupId>
