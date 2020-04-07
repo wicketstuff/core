@@ -360,7 +360,7 @@
             
         // pre-draw so can get its dimensions.
         if (this.label) {
-            this._labelElem = $('<div class="jqplot-meterGauge-label" style="position:absolute;">'+this.label+'</div>');
+            this._labelElem = $('<div class="jqplot-meterGauge-label jq-pos-absolute">'+this.label+'</div>');
             this.canvas._elem.after(this._labelElem);
         }
         
@@ -711,7 +711,7 @@
                 var elem, l, t, ew, eh, dim, maxdim=0;
                 var tp = this.tickPadding * (1 - 1/(this.diameter/80+1));
                 for (i=0; i<this.ticks.length; i++) {
-                    elem = $('<div class="jqplot-meterGauge-tick" style="position:absolute;">'+this.ticks[i][1]+'</div>');
+                    elem = $('<div class="jqplot-meterGauge-tick jq-pos-absolute">'+this.ticks[i][1]+'</div>');
                     this.canvas._elem.after(elem);
                     ew = elem.outerWidth(true);
                     eh = elem.outerHeight(true);
@@ -729,8 +729,6 @@
                 var l = this._center[0] + this.canvas._offsets.left;
                 var tp = this.tickPadding * (1 - 1/(this.diameter/80+1));
                 var t = 0.5*(this._center[1] + this.canvas._offsets.top - this.hubRadius) + 0.5*(this._center[1] + this.canvas._offsets.top - this.tickOuterRadius + this.tickLength + tp) + this.labelHeightAdjust;
-                // this._labelElem = $('<div class="jqplot-meterGauge-label" style="position:absolute;">'+this.label+'</div>');
-                // this.canvas._elem.after(this._labelElem);
                 l -= this._labelElem.outerWidth(true)/2;
                 t -= this._labelElem.outerHeight(true)/2;
                 this._labelElem.css({left:l, top:t});
@@ -874,7 +872,7 @@
     $.jqplot.MeterGaugeLegendRenderer.prototype.draw = function() {
         if (this.show) {
             var series = this._series;
-            var ss = 'position:absolute;';
+            var ss = '';
             ss += (this.background) ? 'background:'+this.background+';' : '';
             ss += (this.border) ? 'border:'+this.border+';' : '';
             ss += (this.fontSize) ? 'font-size:'+this.fontSize+';' : '';
@@ -884,7 +882,7 @@
             ss += (this.marginBottom != null) ? 'margin-bottom:'+this.marginBottom+';' : '';
             ss += (this.marginLeft != null) ? 'margin-left:'+this.marginLeft+';' : '';
             ss += (this.marginRight != null) ? 'margin-right:'+this.marginRight+';' : '';
-            this._elem = $('<table class="jqplot-table-legend" style="'+ss+'"></table>');
+            this._elem = $('<table class="jqplot-table-legend jq-pos-absolute" style="'+ss+'"></table>');
             // MeterGauge charts legends don't go by number of series, but by number of data points
             // in the series.  Refactor things here for that.
             
@@ -946,7 +944,7 @@
                             }
                             rs = (pad) ? this.rowSpacing : '0';
                 
-                            td1 = $('<td class="jqplot-table-legend" style="text-align:center;padding-top:'+rs+';">'+
+                            td1 = $('<td class="jqplot-table-legend jq-txt-centered" style="padding-top:'+rs+';">'+
                                 '<div><div class="jqplot-table-legend-swatch" style="border-color:'+color+';"></div>'+
                                 '</div></td>');
                             td2 = $('<td class="jqplot-table-legend" style="padding-top:'+rs+';"></td>');

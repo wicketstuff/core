@@ -481,7 +481,7 @@
                 var x = (v[0][0] + v[1][0])/2 + this.canvas._offsets.left;
                 var y = (v[1][1] + v[2][1])/2 + this.canvas._offsets.top;
                 
-                var labelelem = $('<span class="jqplot-funnel-series jqplot-data-label" style="position:absolute;">' + label + '</span>').insertBefore(plot.eventCanvas._elem);
+                var labelelem = $('<span class="jqplot-funnel-series jqplot-data-label jq-pos-absolute">' + label + '</span>').insertBefore(plot.eventCanvas._elem);
                 x -= labelelem.width()/2;
                 y -= labelelem.height()/2;
                 x = Math.round(x);
@@ -553,7 +553,7 @@
         var legend = this;
         if (this.show) {
             var series = this._series;
-            var ss = 'position:absolute;';
+            var ss = '';
             ss += (this.background) ? 'background:'+this.background+';' : '';
             ss += (this.border) ? 'border:'+this.border+';' : '';
             ss += (this.fontSize) ? 'font-size:'+this.fontSize+';' : '';
@@ -563,7 +563,7 @@
             ss += (this.marginBottom != null) ? 'margin-bottom:'+this.marginBottom+';' : '';
             ss += (this.marginLeft != null) ? 'margin-left:'+this.marginLeft+';' : '';
             ss += (this.marginRight != null) ? 'margin-right:'+this.marginRight+';' : '';
-            this._elem = $('<table class="jqplot-table-legend" style="'+ss+'"></table>');
+            this._elem = $('<table class="jqplot-table-legend jq-pos-absolute" style="'+ss+'"></table>');
             // Funnel charts legends don't go by number of series, but by number of data points
             // in the series.  Refactor things here for that.
             
@@ -625,7 +625,7 @@
                             }
                             rs = (pad) ? this.rowSpacing : '0';
                 
-                            td1 = $('<td class="jqplot-table-legend" style="text-align:center;padding-top:'+rs+';">'+
+                            td1 = $('<td class="jqplot-table-legend jq-txt-centered" style="padding-top:'+rs+';">'+
                                 '<div><div class="jqplot-table-legend-swatch" style="border-color:'+color+';"></div>'+
                                 '</div></td>');
                             td2 = $('<td class="jqplot-table-legend" style="padding-top:'+rs+';"></td>');

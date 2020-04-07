@@ -1322,7 +1322,7 @@ if (!document.createElement('canvas').getContext) {
 
   contextPrototype.measureText = function(text) {
     if (!this.textMeasureEl_) {
-      var s = '<span style="position:absolute;' +
+      var s = '<span class="jq-pos-absolute" style="' +
           'top:-20000px;left:0;padding:0;margin:0;border:none;' +
           'white-space:pre;"></span>';
       this.element_.insertAdjacentHTML('beforeEnd', s);

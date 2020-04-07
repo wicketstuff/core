@@ -12,6 +12,8 @@
  */
 package org.wicketstuff.dashboard.examples;
 
+import org.apache.wicket.markup.head.CssHeaderItem;
+import org.apache.wicket.markup.head.IHeaderResponse;
 import org.apache.wicket.markup.html.WebPage;
 import org.apache.wicket.model.Model;
 import org.wicketstuff.dashboard.Dashboard;
@@ -25,5 +27,11 @@ public class AddWidgetPage extends WebPage {
 	public AddWidgetPage() {
 		Dashboard dashboard = WicketApplication.get().getDashboard();
 		add(new AddWidgetPanel("addWidgetPanel", new Model<>(dashboard)));
+	}
+
+	@Override
+	public void renderHead(IHeaderResponse response) {
+		super.renderHead(response);
+		response.render(CssHeaderItem.forUrl("css/style.css"));
 	}
 }

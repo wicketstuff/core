@@ -257,3 +257,16 @@ div.jqplot-noData-container {
     text-align: center;
     background-color: rgba(96%, 96%, 96%, 0.3);
 }
+.jq-pos-absolute {
+	position: absolute;
+}
+.jq-pos-relative {
+	position: relative;
+}
+.jq-txt-centered {
+	text-align: center;
+}
+.jq-centered {
+	margin-left: auto;
+	margin-right: auto;
+}

@@ -348,7 +348,7 @@
             
             // now draw label.
             if (t && this.showLabels) {
-                tel = $('<div style="position:absolute;" class="jqplot-bubble-label"></div>');
+                tel = $('<div class="jq-pos-absolute jqplot-bubble-label"></div>');
                 if (this.escapeHtml) {
                     tel.text(t);
                 }
@@ -713,7 +713,7 @@
         this.plugins.bubbleRenderer = {highlightedSeriesIndex:null};
         this.plugins.bubbleRenderer.highlightCanvas = new $.jqplot.GenericCanvas();
         this.plugins.bubbleRenderer.highlightLabel = null;
-        this.plugins.bubbleRenderer.highlightLabelCanvas = $('<div style="position:absolute;"></div>');
+        this.plugins.bubbleRenderer.highlightLabelCanvas = $('<div class="jq-pos-absolute"></div>');
         var top = this._gridPadding.top;
         var left = this._gridPadding.left;
         var width = this._plotDimensions.width - this._gridPadding.left - this._gridPadding.right;

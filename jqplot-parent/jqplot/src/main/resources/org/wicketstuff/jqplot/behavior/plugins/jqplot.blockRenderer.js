@@ -161,7 +161,7 @@
             }
             css = $.extend(true, {}, this.css, css);
             // create a div
-            el = $('<div style="position:absolute;margin-left:auto;margin-right:auto;"></div>');
+            el = $('<div class="jq-pos-absolute jq-centered"></div>');
             this.canvas._elem.append(el);
             // set text
             this.escapeHtml ? el.text(t) : el.html(t);

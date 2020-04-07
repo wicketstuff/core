@@ -1,11 +1,11 @@
 /*
  * Copyright 2012 Igor Vaynberg
- * 
+ *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this work except in compliance with
  * the License. You may obtain a copy of the License in the LICENSE file, or at:
- * 
+ *
  * http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on
  * an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the
  * specific language governing permissions and limitations under the License.
@@ -20,6 +20,8 @@ import java.util.List;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.form.AjaxFormComponentUpdatingBehavior;
 import org.apache.wicket.ajax.form.AjaxFormSubmitBehavior;
+import org.apache.wicket.markup.head.CssHeaderItem;
+import org.apache.wicket.markup.head.IHeaderResponse;
 import org.apache.wicket.markup.html.WebPage;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.form.ChoiceRenderer;
@@ -29,6 +31,7 @@ import org.apache.wicket.markup.html.form.ListMultipleChoice;
 import org.apache.wicket.markup.html.link.BookmarkablePageLink;
 import org.apache.wicket.model.PropertyModel;
 import org.apache.wicket.model.util.ListModel;
+import org.apache.wicket.request.resource.CssResourceReference;
 
 /**
  * Example page.
@@ -59,8 +62,10 @@ public class HomePage extends WebPage
 	@SuppressWarnings("unused")
 	private List<Country> countriesStateless = new ArrayList<>(Arrays.asList(new Country[] { Country.US, Country.CA }));
 
-	public HomePage()
-	{
+	@Override
+	protected void onInitialize() {
+		super.onInitialize();
+
 		add(new BookmarkablePageLink<>("homeBootstrapPageLink", HomeBootstrapPage.class));
 
 		// single-select no minimum example
@@ -107,7 +112,7 @@ public class HomePage extends WebPage
 		defaultSelect2Settings(countries.getSettings())
 				.setMinimumInputLength(1);
 		add(new Form<Void>("multi").add(countries));
-		
+
 		// ajax multi-select example
 		final Label ajaxLbl = new Label("ajaxcountries", new PropertyModel<>(this, "ajaxcountries"));
 		add(ajaxLbl.setOutputMarkupId(true));
@@ -134,7 +139,7 @@ public class HomePage extends WebPage
 				new PropertyModel<Collection<Country>>(this, "ajaxcountriesns"), new CountriesProvider())
 		{
 			private static final long serialVersionUID = 1L;
-			
+
 			@SuppressWarnings("unused")
 			public Collection<Country> getCurrent() {
 				return getCurrentValue();
@@ -152,7 +157,7 @@ public class HomePage extends WebPage
 			protected void onSubmit(AjaxRequestTarget target) {
 				target.add(ajaxLblns, currentValue, ajaxcountriesns);
 			}
-			
+
 			@Override
 			public boolean getDefaultProcessing() {
 				return false;
@@ -223,9 +228,15 @@ public class HomePage extends WebPage
 		stateless.add(statelessCountries);
 	}
 
+	@Override
+	public void renderHead(IHeaderResponse response) {
+		super.renderHead(response);
+		response.render(CssHeaderItem.forReference(new CssResourceReference(HomePage.class, "bootstrap/css/bootstrap.css")));
+	}
+
+
 	protected Settings defaultSelect2Settings(Settings settings) {
-		return settings
-				.setWidth("100%");
+		return settings.setWidth("100%");
 	}
 
 	/**

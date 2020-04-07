@@ -2080,14 +2080,14 @@
                     this.postDrawHooks.add(function() {
                         var eh = this.eventCanvas.getHeight();
                         var ew = this.eventCanvas.getWidth();
-                        var temp = $('<div class="jqplot-noData-container" style="position:absolute;"></div>');
+                        var temp = $('<div class="jqplot-noData-container jq-pos-absolute"></div>');
                         this.target.append(temp);
                         temp.height(eh);
                         temp.width(ew);
                         temp.css('top', this.eventCanvas._offsets.top);
                         temp.css('left', this.eventCanvas._offsets.left);
                         
-                        var temp2 = $('<div class="jqplot-noData-contents" style="text-align:center; position:relative; margin-left:auto; margin-right:auto;"></div>');
+                        var temp2 = $('<div class="jqplot-noData-contents jq-centered jq-txt-centered jq-pos-relative"></div>');
                         temp.append(temp2);
                         temp2.html(this.noDataIndicator.indicator);
                         var th = temp2.height();
@@ -4179,7 +4179,7 @@
             this._elem = null;
         }
 
-        this._elem = $('<div style="position:absolute;" class="jqplot-'+this.axis+'-label"></div>');
+        this._elem = $('<div class="jq-pos-absolute jqplot-'+this.axis+'-label"></div>');
         
         if (Number(this.label)) {
             this._elem.css('white-space', 'nowrap');
@@ -4786,17 +4786,6 @@
             else {
                 this._elem.html(this.text);
             }
-
-
-            // styletext += (this._plotWidth) ? 'width:'+this._plotWidth+'px;' : '';
-            // styletext += (this.fontSize) ? 'font-size:'+this.fontSize+';' : '';
-            // styletext += (this.textAlign) ? 'text-align:'+this.textAlign+';' : 'text-align:center;';
-            // styletext += (color) ? 'color:'+color+';' : '';
-            // styletext += (this.paddingBottom) ? 'padding-bottom:'+this.paddingBottom+';' : '';
-            // this._elem = $('<div class="jqplot-title" style="'+styletext+'">'+this.text+'</div>');
-            // if (this.fontFamily) {
-            //     this._elem.css('font-family', this.fontFamily);
-            // }
         }
 
         elem = null;
@@ -7939,19 +7928,12 @@
             div1.css({backgroundColor: color, borderColor: color});
 
             tr.append(td.append(div0.append(div1)));
-
-            // $('<td class="jqplot-table-legend" style="text-align:center;padding-top:'+rs+';">'+
-            // '<div><div class="jqplot-table-legend-swatch" style="background-color:'+color+';border-color:'+color+';"></div>'+
-            // '</div></td>').appendTo(tr);
         }
         if (this.showLabels) {
             td = $(document.createElement('td'));
             td.addClass('jqplot-table-legend jqplot-table-legend-label');
             td.css('paddingTop', rs);
             tr.append(td);
-
-            // elem = $('<td class="jqplot-table-legend" style="padding-top:'+rs+';"></td>');
-            // elem.appendTo(tr);
             if (this.escapeHtml) {
                 td.text(label);
             }

@@ -12,6 +12,8 @@
  */
 package org.wicketstuff.dashboard.examples;
 
+import org.apache.wicket.markup.head.CssHeaderItem;
+import org.apache.wicket.markup.head.IHeaderResponse;
 import org.apache.wicket.markup.html.WebPage;
 import org.apache.wicket.markup.html.link.BookmarkablePageLink;
 import org.apache.wicket.model.Model;
@@ -32,4 +34,9 @@ public class HomePage extends WebPage {
 		add(new DashboardPanel("dashboard", new Model<Dashboard>(dashboard)));
 	}
 
+	@Override
+	public void renderHead(IHeaderResponse response) {
+		super.renderHead(response);
+		response.render(CssHeaderItem.forUrl("css/style.css"));
+	}
 }

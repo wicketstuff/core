@@ -321,7 +321,7 @@
                 this._elem.emptyForce();
             }
 
-            this._elem = this._elem || $('<div class="jqplot-axis jqplot-'+this.name+'" style="position:absolute;"></div>');
+            this._elem = this._elem || $('<div class="jqplot-axis jq-pos-absolute jqplot-'+this.name+'"></div>');
             
             if (this.name == 'xaxis' || this.name == 'x2axis') {
                 this._elem.width(this._plotDimensions.width);
@@ -351,7 +351,7 @@
             // now make group labels
             for (var i=0; i<this.groupLabels.length; i++)
             {
-                var elem = $('<div style="position:absolute;" class="jqplot-'+this.name+'-groupLabel"></div>');
+                var elem = $('<div class="jq-pos-absolute jqplot-'+this.name+'-groupLabel"></div>');
                 elem.html(this.groupLabels[i]);
                 this._groupLabels.push(elem);
                 elem.appendTo(this._elem);

@@ -505,7 +505,7 @@
                     var x = this._center[0] + Math.cos(avgang) * fact + this.canvas._offsets.left;
                     var y = this._center[1] + Math.sin(avgang) * fact + this.canvas._offsets.top;
                 
-                    var labelelem = $('<div class="jqplot-pie-series jqplot-data-label" style="position:absolute;">' + label + '</div>').insertBefore(plot.eventCanvas._elem);
+                    var labelelem = $('<div class="jqplot-pie-series jqplot-data-label jq-pos-absolute">' + label + '</div>').insertBefore(plot.eventCanvas._elem);
                     if (this.dataLabelCenterOn) {
                         x -= labelelem.width()/2;
                         y -= labelelem.height()/2;

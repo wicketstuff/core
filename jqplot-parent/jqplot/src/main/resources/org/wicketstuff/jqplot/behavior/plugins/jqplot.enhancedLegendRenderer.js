@@ -74,7 +74,7 @@
         if (this.show) {
             var series = this._series;
             var s;
-            var ss = 'position:absolute;';
+            var ss = '';
             ss += (this.background) ? 'background:'+this.background+';' : '';
             ss += (this.border) ? 'border:'+this.border+';' : '';
             ss += (this.fontSize) ? 'font-size:'+this.fontSize+';' : '';
@@ -84,7 +84,7 @@
             ss += (this.marginBottom != null) ? 'margin-bottom:'+this.marginBottom+';' : '';
             ss += (this.marginLeft != null) ? 'margin-left:'+this.marginLeft+';' : '';
             ss += (this.marginRight != null) ? 'margin-right:'+this.marginRight+';' : '';
-            this._elem = $('<table class="jqplot-table-legend" style="'+ss+'"></table>');
+            this._elem = $('<table class="jqplot-table-legend jq-pos-absolute" style="'+ss+'"></table>');
             if (this.seriesToggle) {
                 this._elem.css('z-index', '3');
             }

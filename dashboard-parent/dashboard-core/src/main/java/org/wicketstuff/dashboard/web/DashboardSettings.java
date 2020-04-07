@@ -33,7 +33,7 @@ public class DashboardSettings {
 	private ResourceReference rtlCssReference = new PackageResourceReference(
 			DashboardSettings.class, "res/dashboard-rtl.css");
 	private ResourceReference jqueryUIReference = new PackageResourceReference(
-			DashboardSettings.class, "res/jquery-ui-1.9.2.min.js");
+			DashboardSettings.class, "res/jquery-ui-1.12.1.min.js");
 	private ResourceReference jqueryJsonReference = new PackageResourceReference(
 			DashboardSettings.class, "res/jquery.json-2.2.min.js");
 

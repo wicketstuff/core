@@ -196,13 +196,13 @@
         var legend = this;
         if (this.show) {
             var series = this._series;
-            var ss = 'position:absolute;';
+            var ss = '';
             ss += (this.background) ? 'background:'+this.background+';' : '';
             ss += (this.border) ? 'border:'+this.border+';' : '';
             ss += (this.fontSize) ? 'font-size:'+this.fontSize+';' : '';
             ss += (this.fontFamily) ? 'font-family:'+this.fontFamily+';' : '';
             ss += (this.textColor) ? 'color:'+this.textColor+';' : '';
-            this._elem = $('<table class="jqplot-table-legend" style="'+ss+'"></table>');
+            this._elem = $('<table class="jqplot-table-legend jq-pos-absolute" style="'+ss+'"></table>');
             // Mekko charts  legends don't go by number of series, but by number of data points
             // in the series.  Refactor things here for that.
             
@@ -264,7 +264,7 @@
                             }
                             rs = (pad) ? this.rowSpacing : '0';
                 
-                            td1 = $('<td class="jqplot-table-legend" style="text-align:center;padding-top:'+rs+';">'+
+                            td1 = $('<td class="jqplot-table-legend jq-txt-centered" style="padding-top:'+rs+';">'+
                                 '<div><div class="jqplot-table-legend-swatch" style="border-color:'+color+';"></div>'+
                                 '</div></td>');
                             td2 = $('<td class="jqplot-table-legend" style="padding-top:'+rs+';"></td>');

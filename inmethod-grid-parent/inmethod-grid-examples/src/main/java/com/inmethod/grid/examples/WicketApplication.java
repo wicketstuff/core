@@ -1,11 +1,11 @@
 package com.inmethod.grid.examples;
 
 import org.apache.wicket.Page;
+import org.apache.wicket.core.request.mapper.MountedMapper;
 import org.apache.wicket.markup.html.WebPage;
 import org.apache.wicket.protocol.http.WebApplication;
 import org.apache.wicket.request.Request;
 import org.apache.wicket.request.Response;
-import org.apache.wicket.core.request.mapper.MountedMapper;
 
 import com.inmethod.grid.examples.pages.datagrid.DataGridColumnPropertiesPage;
 import com.inmethod.grid.examples.pages.datagrid.DataGridSelectionPage;
@@ -25,16 +25,10 @@ import com.inmethod.grid.examples.pages.treegrid.VerticalScrollingTreeGridPage;
  */
 public class WicketApplication extends WebApplication
 {
-	/**
-	 * Constructor
-	 */
-	public WicketApplication()
-	{
-	}
-
 	@Override
 	protected void init()
 	{
+		getCspSettings().blocking().disabled();
 		mount("/data-grid/simple", SimpleDataGridPage.class);
 		mount("/data-grid/vertical-scrolling", VerticalScrollingDataGridPage.class);
 		mount("/data-grid/item-selection", DataGridSelectionPage.class);

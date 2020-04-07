@@ -25,10 +25,10 @@ import org.wicketstuff.progressbar.spring.TaskService;
 /**
  * Wicket application for progess bar examples. For illustration purposes, the task service is
  * stored in the application, this should certainly be done with a spring context.
- * 
- * 
+ *
+ *
  * @author Christopher Hlubek (hlubek)
- * 
+ *
  */
 public class ExampleApplication extends WebApplication
 {
@@ -41,6 +41,12 @@ public class ExampleApplication extends WebApplication
 	public ExampleApplication()
 	{
 		taskService = new TaskService(new AsynchronousExecutor());
+	}
+
+	@Override
+	protected void init() {
+		getCspSettings().blocking().disabled();
+		super.init();
 	}
 
 	@Override
