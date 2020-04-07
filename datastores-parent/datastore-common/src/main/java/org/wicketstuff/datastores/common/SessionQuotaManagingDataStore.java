@@ -77,6 +77,13 @@ public class SessionQuotaManagingDataStore extends DelegatingPageStore {
 	}
 
 	@Override
+	public boolean canBeAsynchronous(IPageContext context) {
+		getSessionData(context, true);
+		
+		return getDelegate().canBeAsynchronous(context);
+	}
+	
+	@Override
 	public void removeAllPages(IPageContext context) {
 		SessionData sessionData = getSessionData(context, false);
 
@@ -230,7 +237,7 @@ public class SessionQuotaManagingDataStore extends DelegatingPageStore {
 		}
 	}
 	
-	static class DelegatedPage
+	static class DelegatedPage implements Serializable
 	{
 		public final int pageId;
 
