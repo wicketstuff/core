@@ -230,7 +230,7 @@ public class SessionQuotaManagingDataStore extends DelegatingPageStore {
 		}
 	}
 	
-	static class DelegatedPage
+	static class DelegatedPage implements Serializable
 	{
 		public final int pageId;
 
