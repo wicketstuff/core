@@ -3,7 +3,7 @@
 	<parent>
 		<artifactId>wicket-osgi-parent</artifactId>
 		<groupId>org.wicketstuff</groupId>
-		<version>9.0.0-M5-SNAPSHOT</version>
+		<version>9.0.0-M5</version>
 	</parent>
 	<artifactId>wicket-osgi-test-web</artifactId>
 	<packaging>bundle</packaging>

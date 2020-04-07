@@ -6,7 +6,7 @@
 	<groupId>org.wicketstuff</groupId>
 	<artifactId>wicketstuff-core</artifactId>
 	<packaging>pom</packaging>
-	<version>9.0.0-M5-SNAPSHOT</version>
+	<version>9.0.0-M5</version>
 	<name>WicketStuff Core Parent</name>
 	<description>
 		WicketStuff Core Parent is the parent project for all of the core WicketStuff projects.  It tries
@@ -204,7 +204,7 @@
 	</mailingLists>
 
 	<scm>
-		<url>https://github.com/wicketstuff/core</url>
+		<url>https://github.com/wicketstuff/core/tree/wicketstuff-core-9.0.0-M5</url>
 		<connection>scm:git:ssh://git@github.com:wicketstuff/core.git</connection>
 	</scm>
 
