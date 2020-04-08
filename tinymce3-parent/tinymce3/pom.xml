@@ -16,7 +16,7 @@
 	<parent>
 		<groupId>org.wicketstuff</groupId>
 		<artifactId>tinymce3-parent</artifactId>
-		<version>9.0.0-M5-SNAPSHOT</version>
+		<version>9.0.0-M5.1</version>
 	</parent>
 
 	<artifactId>wicketstuff-tinymce3</artifactId>
