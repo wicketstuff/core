@@ -104,7 +104,8 @@ public class TableDraggableSelectablePage extends AbstractSelectablePage
 	// Factories //
 
 	/**
-	 * Gets a new Droppable. By default 'over' and 'exit' ('out') events are disabled to minimize client/server round-trips.
+	 * Gets a new Droppable.
+	 * By default 'over' and 'exit' ('out') events are disabled to minimize client/server round-trips.
 	 */
 	private Droppable<Genre> newDroppable(String id)
 	{

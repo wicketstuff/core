@@ -8,7 +8,7 @@ import com.googlecode.wicket.jquery.ui.samples.KendoSamplePage;
 abstract class AbstractAccordionPage extends KendoSamplePage
 {
 	private static final long serialVersionUID = 1L;
-	
+
 	@Override
 	protected List<DemoLink> getDemoLinks()
 	{

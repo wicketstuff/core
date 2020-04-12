@@ -61,13 +61,22 @@ public class TemplateAutoCompletePage extends AbstractAutoCompletePage
 					private static final long serialVersionUID = 1L;
 
 					/**
-					 * The template text will be enclosed in a <script type="text/x-jquery-tmpl" />. You can use the "\n" character to properly format the template.
+					 * The template text will be enclosed in a <script type="text/x-jquery-tmpl" />.
+					 * You can use the "\n" character to properly format the template.
 					 */
 					@Override
 					public String getText()
 					{
-						return "<table style='width: 100%' cellspacing='0' cellpadding='0'>\n" + " <tr>\n" + "  <td>\n" + "   <img src='#: data.coverUrl #' width='50px' />\n" + "  </td>\n" + "  <td>\n" + "   #: data.name #\n" + "  </td>\n"
-								+ " </tr>\n" + "</table>";
+						return	"<table style='width: 100%' cellspacing='0' cellpadding='0'>\n" +
+								" <tr>\n" +
+								"  <td>\n" +
+								"   <img src='#: data.coverUrl #' width='50px' />\n" +
+								"  </td>\n" +
+								"  <td>\n" +
+								"   #: data.name #\n" +
+								"  </td>\n" +
+								" </tr>\n" +
+								"</table>";
 					}
 
 					@Override

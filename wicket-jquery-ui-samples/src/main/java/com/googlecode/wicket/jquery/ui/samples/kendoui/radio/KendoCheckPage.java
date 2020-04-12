@@ -70,7 +70,7 @@ public class KendoCheckPage extends AbstractRadioPage
 		this.info("The model object is: " + model.getObject());
 	}
 
-	// Factoties //
+	// Factories //
 
 	private Button newSubmitButton(String id)
 	{

@@ -16,7 +16,8 @@ public class DefaultDroppablePage extends AbstractDroppablePage
 	private static final long serialVersionUID = 1L;
 
 	/**
-	 * Gets a new Draggable By default 'stop' event is disabled to minimize client/server round-trips.
+	 * Gets a new Draggable
+	 * By default 'stop' event is disabled to minimize client/server round-trips.
 	 */
 	private static Draggable<String> newDraggable(String id, String label)
 	{
@@ -51,7 +52,8 @@ public class DefaultDroppablePage extends AbstractDroppablePage
 	// Factories //
 
 	/**
-	 * Gets a new Droppable. By default 'over' and 'exit' ('out') events are disabled to minimize client/server round-trips.
+	 * Gets a new Droppable.
+	 * By default 'over' and 'exit' ('out') events are disabled to minimize client/server round-trips.
 	 */
 	private Droppable<String> newDroppable(String id, String color)
 	{

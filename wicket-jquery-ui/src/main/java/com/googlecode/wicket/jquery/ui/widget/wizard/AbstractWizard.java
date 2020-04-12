@@ -219,7 +219,7 @@ public abstract class AbstractWizard<T extends Serializable> extends AbstractFor
 	{
 		super.renderHead(response);
 
-		response.render(new StyleSheetPackageHeaderItem(AbstractWizard.class));
+		response.render(new StyleSheetPackageHeaderItem(AbstractWizard.class)); // AbstractWizard.css
 	}
 
 	/**

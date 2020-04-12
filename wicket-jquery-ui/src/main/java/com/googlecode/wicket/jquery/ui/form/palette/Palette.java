@@ -70,7 +70,7 @@ public class Palette<T> extends org.apache.wicket.extensions.markup.html.form.pa
 	{
 		super.renderHead(response);
 
-		response.render(new StyleSheetPackageHeaderItem(Palette.class));
+		response.render(new StyleSheetPackageHeaderItem(Palette.class)); // Palette.css
 	}
 
 	// Factories //
