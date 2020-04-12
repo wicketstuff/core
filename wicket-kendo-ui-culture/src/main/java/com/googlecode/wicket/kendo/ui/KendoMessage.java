@@ -91,6 +91,7 @@ public enum KendoMessage
 	SV_SE("sv-SE"), // lf
 	TR_TR("tr-TR"), // lf
 	UK_UA("uk-UA"), // lf
+	VI_VN("vi-VN"), // lf
 	ZH_CN("zh-CN"), // lf
 	ZH_HK("zh-HK"), // lf
 	ZH_TW("zh-TW");
