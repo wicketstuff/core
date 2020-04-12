@@ -3,21 +3,23 @@
 }
 
 .draggable {
+	float: left;
 	cursor: move;
-	width: 48px;
-	height: 48px;
+	width: 92px;
+	height: 64px;
 	margin: 1em;
-	padding: 2em;
-	border-radius: 1em;
+	padding: 1em;
+	border-radius: .5em;
 	background-color: orange;
 }
 
 .droppable {
 	float: right;
+	left: 300px;
 	width: 128px;
 	height: 128px;
 	margin: 1em;
-	padding: 3em;
+	padding: 1em;
 	border-radius: 1em;
 }
 

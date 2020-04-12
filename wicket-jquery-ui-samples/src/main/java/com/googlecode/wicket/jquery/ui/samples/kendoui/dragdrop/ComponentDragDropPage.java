@@ -23,8 +23,7 @@ public class ComponentDragDropPage extends AbstractDragDropPage
 		this.add(this.console);
 
 		// draggable //
-		this.add(new Draggable<String>("draggable1", Model.of("Draggable #1")));
-		this.add(new Draggable<String>("draggable2", Model.of("Draggable #2")));
+		this.add(new Draggable<String>("draggable", Model.of("Draggable")));
 
 		// droppable //
 		this.add(this.newDroppable("droppable1", "green area"));

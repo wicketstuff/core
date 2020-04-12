@@ -35,7 +35,7 @@ public abstract class SamplePage extends TemplatePage // NOSONAR
 
 	protected enum Source
 	{
-		HTML, JAVA, TEXT
+		HTML, JAVA, CSS, TEXT
 	}
 
 	public SamplePage()
@@ -117,6 +117,7 @@ public abstract class SamplePage extends TemplatePage // NOSONAR
 
 		tabs.add(this.newJavaAjaxTab());
 		tabs.add(this.newHtmlAjaxTab());
+		tabs.add(this.newStyleAjaxTab());
 
 		return tabs;
 	}
@@ -149,6 +150,20 @@ public abstract class SamplePage extends TemplatePage // NOSONAR
 		};
 	}
 
+	private ITab newStyleAjaxTab()
+	{
+		return new AbstractTab(Model.of("CSS")) {
+
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			public WebMarkupContainer getPanel(String panelId)
+			{
+				return new StyleFragment(panelId, SamplePage.this, getSource(Source.CSS));
+			}
+		};
+	}
+
 	// Classes //
 
 	protected static class JavaFragment extends Fragment
@@ -170,6 +185,18 @@ public abstract class SamplePage extends TemplatePage // NOSONAR
 		public HtmlFragment(String id, MarkupContainer provider, IModel<String> model)
 		{
 			super(id, "fragment-html", provider);
+
+			this.add(new Label("code", model));
+		}
+	}
+
+	protected static class StyleFragment extends Fragment
+	{
+		private static final long serialVersionUID = 1L;
+
+		public StyleFragment(String id, MarkupContainer provider, IModel<String> model)
+		{
+			super(id, "fragment-style", provider);
 
 			this.add(new Label("code", model));
 		}
