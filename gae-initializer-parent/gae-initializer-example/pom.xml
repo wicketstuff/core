@@ -21,7 +21,7 @@
       by ${gae.home} property (Typically, one used by your Eclipse plug-in)
     -->
     <gae.home>/home/martin/appengine/appengine-java-sdk-1.9.7</gae.home>
-    <gae.version>1.9.74</gae.version>
+    <gae.version>1.9.80</gae.version>
     <maven-gae-plugin.version>0.9.6</maven-gae-plugin.version>
 
     <!-- Upload to http://test.latest.<applicationName>.appspot.com by default -->
