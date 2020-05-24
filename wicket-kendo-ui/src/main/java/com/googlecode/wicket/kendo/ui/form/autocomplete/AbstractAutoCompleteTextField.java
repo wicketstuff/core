@@ -220,6 +220,12 @@ public abstract class AbstractAutoCompleteTextField<T, C> extends TextField<T> i
 	{
 		return this.renderer;
 	}
+	
+	@Override
+	public boolean isChangeEventEnabled()
+	{
+		return false;
+	}
 
 	// Methods //
 
@@ -311,6 +317,12 @@ public abstract class AbstractAutoCompleteTextField<T, C> extends TextField<T> i
 		super.onComponentTag(tag);
 
 		tag.put("autocomplete", "off"); // disable browser's autocomplete
+	}
+	
+	@Override
+	public void onChange(AjaxRequestTarget target, String value)
+	{
+		// noop
 	}
 
 	@Override

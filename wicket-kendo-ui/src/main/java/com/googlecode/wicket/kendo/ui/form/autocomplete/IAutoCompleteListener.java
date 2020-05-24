@@ -28,6 +28,22 @@ import org.apache.wicket.util.io.IClusterable;
 public interface IAutoCompleteListener extends IClusterable
 {
 	/**
+	 * Indicates whether the 'change' event is enabled.<br>
+	 * If true, the {@link #onChange(AjaxRequestTarget, String)} event will be triggered
+	 *
+	 * @return false by default
+	 */
+	boolean isChangeEventEnabled();
+
+	/**
+	 * Triggered when the value has changed
+	 *
+	 * @param target the {@link AjaxRequestTarget}
+	 * @param value the 
+	 */
+	void onChange(AjaxRequestTarget target, String value);
+
+	/**
 	 * Triggered when a selection has been made
 	 *
 	 * @param target the {@link AjaxRequestTarget}

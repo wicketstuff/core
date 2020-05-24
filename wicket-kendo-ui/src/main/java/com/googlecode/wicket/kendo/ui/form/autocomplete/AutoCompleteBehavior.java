@@ -28,6 +28,8 @@ import com.googlecode.wicket.jquery.core.ajax.JQueryAjaxBehavior;
 import com.googlecode.wicket.jquery.core.utils.RequestCycleUtils;
 import com.googlecode.wicket.kendo.ui.KendoDataSource;
 import com.googlecode.wicket.kendo.ui.KendoUIBehavior;
+import com.googlecode.wicket.kendo.ui.ajax.OnChangeAjaxBehavior;
+import com.googlecode.wicket.kendo.ui.ajax.OnChangeAjaxBehavior.ChangeEvent;
 
 /**
  * Provides a {@value #METHOD} behavior
@@ -41,7 +43,8 @@ public abstract class AutoCompleteBehavior extends KendoUIBehavior implements IJ
 	public static final String METHOD = "kendoAutoComplete";
 
 	private final IAutoCompleteListener listener;
-	private JQueryAjaxBehavior onSelectAjaxBehavior = null;
+	private JQueryAjaxBehavior onSelectAjaxBehavior;
+	private JQueryAjaxBehavior onChangeAjaxBehavior = null;
 
 	private KendoDataSource dataSource;
 
@@ -85,6 +88,12 @@ public abstract class AutoCompleteBehavior extends KendoUIBehavior implements IJ
 		// ajax behaviors //
 		this.onSelectAjaxBehavior = this.newOnSelectAjaxBehavior(this);
 		component.add(this.onSelectAjaxBehavior);
+
+		if (this.listener.isChangeEventEnabled())
+		{
+			this.onChangeAjaxBehavior = new OnChangeAjaxBehavior(this);
+			component.add(this.onChangeAjaxBehavior);
+		}
 	}
 
 	// Properties //
@@ -105,6 +114,11 @@ public abstract class AutoCompleteBehavior extends KendoUIBehavior implements IJ
 		this.setOption("autoBind", true); // immutable
 
 		this.setOption("select", this.onSelectAjaxBehavior.getCallbackFunction());
+
+		if (this.onChangeAjaxBehavior != null)
+		{
+			this.setOption("change", this.onChangeAjaxBehavior.getCallbackFunction());
+		}
 
 		// data source //
 		this.setOption("dataSource", this.dataSource.getName());
@@ -131,6 +145,11 @@ public abstract class AutoCompleteBehavior extends KendoUIBehavior implements IJ
 	@Override
 	public void onAjax(AjaxRequestTarget target, JQueryEvent event)
 	{
+		if (event instanceof ChangeEvent)
+		{
+			this.listener.onChange(target, ((ChangeEvent) event).getValue());
+		}
+
 		if (event instanceof SelectEvent)
 		{
 			this.listener.onSelect(target, ((SelectEvent) event).getIndex());

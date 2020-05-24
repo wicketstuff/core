@@ -41,9 +41,9 @@ public abstract class ComboBoxBehavior extends KendoUIBehavior implements IJQuer
 	public static final String METHOD = "kendoComboBox";
 
 	private final ISelectionChangedListener listener;
-	private KendoDataSource dataSource;
-
 	private JQueryAjaxBehavior onChangeAjaxBehavior = null;
+
+	private KendoDataSource dataSource;
 
 	public ComboBoxBehavior(String selector, ISelectionChangedListener listener)
 	{
