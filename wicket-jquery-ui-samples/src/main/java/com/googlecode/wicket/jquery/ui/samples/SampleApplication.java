@@ -87,7 +87,6 @@ public class SampleApplication extends WebApplication
 
 		// Links //
 		this.mountPage("/howto", HowtoPage.class);
-		this.mountPage("/about", AboutPage.class);
 
 		// jQuery UI widgets //
 		this.mountPackage("/accordion", DefaultAccordionPage.class);
