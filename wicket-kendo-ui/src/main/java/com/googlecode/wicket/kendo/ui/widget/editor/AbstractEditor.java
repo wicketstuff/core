@@ -131,9 +131,11 @@ public abstract class AbstractEditor<T> extends TextArea<T> implements IJQueryWi
 	protected PolicyFactory newPolicyFactory()
 	{
 		return new HtmlPolicyBuilder() // lf
-				.allowCommonInlineFormattingElements() // lf
+				.allowStyling() // lf
 				.allowCommonBlockElements() // lf
+				.allowCommonInlineFormattingElements() // lf
 				.allowElements("a").allowAttributes("href", "target").onElements("a") // lf
+				.allowElements("table", "tbody", "thead", "th", "tr", "td") // lf
 				.allowAttributes("size").onElements("font") // lf
 				.allowAttributes("class", "style").globally() // lf
 				.toFactory();

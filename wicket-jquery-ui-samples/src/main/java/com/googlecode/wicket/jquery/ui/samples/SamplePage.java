@@ -105,7 +105,7 @@ public abstract class SamplePage extends TemplatePage // NOSONAR
 		}
 		catch (IllegalArgumentException | IOException e)
 		{
-			LOG.error(e.getMessage());
+			LOG.debug(e.getMessage());
 		}
 
 		return "";
