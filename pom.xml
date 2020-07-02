@@ -230,7 +230,7 @@
 		<shiro.version>1.5.2</shiro.version>
 		<slf4j.version>1.7.29</slf4j.version>
 		<logback.version>1.2.3</logback.version>
-		<log4j.version>2.13.1</log4j.version>
+		<log4j.version>2.13.3</log4j.version>
 		<spring.version>5.2.5.RELEASE</spring.version>
 		<cglib.version>3.3.0</cglib.version>
 		<objenesis.version>3.1</objenesis.version>
