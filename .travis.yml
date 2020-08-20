@@ -35,4 +35,4 @@ script:
 - '[ "${TRAVIS_PULL_REQUEST}" = "false" ] && DEPLOY_OR_TEST=deploy'
 - echo DEPLOY_OR_TEST=$DEPLOY_OR_TEST
 - if [ -n "`echo ${JAVA_HOME}|grep openjdk`" ] ; then cp ./config/toolchains.xml $HOME/.m2 ; else cp ./config/toolchains_oracle.xml $HOME/.m2/toolchains.xml ; fi
-- mvn -s sonatype-settings.xml clean $DEPLOY_OR_TEST -Dsource.skip=true -B -V
+- mvn -s sonatype-settings.xml clean $DEPLOY_OR_TEST -Dmaven.wagon.http.ssl.insecure=true -Dmaven.wagon.http.ssl.allowall=true -Dsource.skip=true -B -V
