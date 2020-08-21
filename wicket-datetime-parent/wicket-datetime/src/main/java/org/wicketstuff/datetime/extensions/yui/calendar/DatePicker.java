@@ -625,7 +625,8 @@ public class DatePicker extends Behavior
 	  */
 	protected int getFirstDayOfWeek(Locale locale)
 	{
-		return Calendar.getInstance(locale).getFirstDayOfWeek();
+		// YUI requires 'first day' to be zero based, so '1' should be subtructed
+		return Calendar.getInstance(locale).getFirstDayOfWeek() - 1;
 	}
 
 	/**
