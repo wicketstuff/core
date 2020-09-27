@@ -93,6 +93,13 @@ If the version you specified is *snapshot*, you might define this repository:
 
 <table>
 <tr><th>wicket-kendo-ui</th><th>Wicket</th><th>Kendo UI</th></tr>
+<tr><td>9.0.0</td><td>9.0.0</td><td>2020.3.915 (ASFv2)</td></tr>
+<tr><td>8.9.0</td><td>8.9.0</td><td>2020.3.915 (ASFv2)</td></tr>
+<tr><td>8.8.0</td><td>8.8.0</td><td>2019.2.619 (ASFv2)</td></tr>
+<tr><td>8.6.0</td><td>8.6.0</td><td>2019.2.619 (ASFv2)</td></tr>
+<tr><td>8.3.0</td><td>8.3.0</td><td>2019.1.220 (ASFv2)</td></tr>
+<tr><td>8.1.0</td><td>8.1.0</td><td>2018.1.117 (ASFv2)</td></tr>
+<tr><td>8.0.0</td><td>8.0.0</td><td>2018.1.117 (ASFv2)</td></tr>
 <tr><td>8.0.0-M9</td><td>8.0.0-M9</td><td>2018.1.117 (ASFv2)</td></tr>
 <tr><td>8.0.0-M8</td><td>8.0.0-M8</td><td>2017.3.913 (ASFv2)</td></tr>
 <tr><td>8.0.0-M7</td><td>8.0.0-M7</td><td>2017.2.621 (ASFv2)</td></tr>
