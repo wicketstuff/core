@@ -1,19 +1,23 @@
 package com.googlecode.wicket.jquery.ui.samples.kendoui.datatable;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.repeater.data.IDataProvider;
 import org.apache.wicket.util.lang.Generics;
 
+import com.github.openjson.JSONArray;
 import com.github.openjson.JSONObject;
 import com.googlecode.wicket.jquery.core.Options;
+import com.googlecode.wicket.jquery.core.utils.JsonUtils;
 import com.googlecode.wicket.jquery.ui.samples.data.bean.Product;
 import com.googlecode.wicket.jquery.ui.samples.data.provider.ProductDataProvider;
 import com.googlecode.wicket.kendo.ui.datatable.DataTable;
 import com.googlecode.wicket.kendo.ui.datatable.column.CurrencyPropertyColumn;
 import com.googlecode.wicket.kendo.ui.datatable.column.IColumn;
+import com.googlecode.wicket.kendo.ui.datatable.column.IdPropertyColumn;
 import com.googlecode.wicket.kendo.ui.datatable.column.PropertyColumn;
 import com.googlecode.wicket.kendo.ui.form.button.AjaxButton;
 import com.googlecode.wicket.kendo.ui.panel.KendoFeedbackPanel;
@@ -39,7 +43,7 @@ public class DefaultDataTablePage extends AbstractDataTablePage
 		// options.set("sortable", true); // already set, as provider IS-A ISortStateLocator
 		options.set("groupable", true);
 		options.set("columnMenu", true);
-		options.set("reorderable", true);
+		options.set("selectable", true); // Options.asString("multiple, row"). Caution does not work for 'cell'
 
 		final DataTable<Product> table = new DataTable<Product>("datatable", newColumnList(), newDataProvider(), 25, options) {
 
@@ -49,6 +53,16 @@ public class DefaultDataTablePage extends AbstractDataTablePage
 			public void onColumnReorder(AjaxRequestTarget target, int oldIndex, int newIndex, JSONObject column)
 			{
 				final String message = String.format("reordered: old-index=%d, new-index=%d, column=%s", oldIndex, newIndex, column.optString("field"));
+
+				feedback.info(message);
+				feedback.refresh(target);
+			}
+
+			@Override
+			public void onChange(AjaxRequestTarget target, JSONArray items)
+			{
+				final List<Integer> ids = JsonUtils.toJSONList(items).stream().map(o -> o.getInt("id")).collect(Collectors.toList());
+				final String message = String.format("Selected: %s", ids);
 
 				feedback.info(message);
 				feedback.refresh(target);
@@ -90,7 +104,7 @@ public class DefaultDataTablePage extends AbstractDataTablePage
 	{
 		List<IColumn> columns = Generics.newArrayList();
 
-		columns.add(new PropertyColumn("ID", "id", 50));
+		columns.add(new IdPropertyColumn("ID", "id", 50));
 		columns.add(new PropertyColumn("Name", "name"));
 		columns.add(new PropertyColumn("Description", "description"));
 		columns.add(new CurrencyPropertyColumn("Price", "price", 70));

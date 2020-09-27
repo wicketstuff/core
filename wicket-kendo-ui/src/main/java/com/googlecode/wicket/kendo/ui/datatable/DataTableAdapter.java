@@ -19,6 +19,8 @@ package com.googlecode.wicket.kendo.ui.datatable;
 import java.util.List;
 
 import org.apache.wicket.ajax.AjaxRequestTarget;
+
+import com.github.openjson.JSONArray;
 import com.github.openjson.JSONObject;
 
 import com.googlecode.wicket.kendo.ui.datatable.button.CommandButton;
@@ -32,6 +34,12 @@ import com.googlecode.wicket.kendo.ui.datatable.button.ToolbarButton;
 public class DataTableAdapter implements IDataTableListener
 {
 	private static final long serialVersionUID = 1L;
+
+	@Override
+	public boolean isSelectable()
+	{
+		return false;
+	}
 
 	@Override
 	public void onClick(AjaxRequestTarget target, ToolbarButton button, List<String> values)
@@ -73,5 +81,11 @@ public class DataTableAdapter implements IDataTableListener
 	public void onDelete(AjaxRequestTarget target, JSONObject object)
 	{
 		// noop		
+	}
+
+	@Override
+	public void onChange(AjaxRequestTarget target, JSONArray items)
+	{
+		// noop
 	}
 }

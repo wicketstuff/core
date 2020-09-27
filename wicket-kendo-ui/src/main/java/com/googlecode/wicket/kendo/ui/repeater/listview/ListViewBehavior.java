@@ -16,28 +16,22 @@
  */
 package com.googlecode.wicket.kendo.ui.repeater.listview;
 
-import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
 import org.apache.wicket.Component;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.attributes.CallbackParameter;
 import org.apache.wicket.util.lang.Args;
-import org.apache.wicket.util.lang.Generics;
-import com.github.openjson.JSONObject;
 
 import com.googlecode.wicket.jquery.core.JQueryEvent;
 import com.googlecode.wicket.jquery.core.Options;
 import com.googlecode.wicket.jquery.core.ajax.IJQueryAjaxAware;
 import com.googlecode.wicket.jquery.core.ajax.JQueryAjaxBehavior;
-import com.googlecode.wicket.jquery.core.utils.RequestCycleUtils;
 import com.googlecode.wicket.kendo.ui.KendoDataSource;
 import com.googlecode.wicket.kendo.ui.KendoUIBehavior;
 import com.googlecode.wicket.kendo.ui.datatable.DataSourceAjaxBehavior;
 import com.googlecode.wicket.kendo.ui.datatable.DataSourceEvent.CreateEvent;
 import com.googlecode.wicket.kendo.ui.datatable.DataSourceEvent.DeleteEvent;
 import com.googlecode.wicket.kendo.ui.datatable.DataSourceEvent.UpdateEvent;
+import com.googlecode.wicket.kendo.ui.repeater.ChangeEvent;
 
 /**
  * Provides a {@value #METHOD} behavior
@@ -227,7 +221,7 @@ public abstract class ListViewBehavior extends KendoUIBehavior implements IJQuer
 
 		if (event instanceof ChangeEvent)
 		{
-			this.listener.onChange(target, ((ChangeEvent) event).getObjects());
+			this.listener.onChange(target, ((ChangeEvent) event).getItems());
 		}
 	}
 
@@ -332,48 +326,18 @@ public abstract class ListViewBehavior extends KendoUIBehavior implements IJQuer
 		@Override
 		public CharSequence getCallbackFunctionBody(CallbackParameter... parameters)
 		{
-			String variables = "";
-			variables += "var $view = " + this.datasource + ".view();";
-			variables += "var items = jQuery.map(this.select(), function(item) { var index = jQuery(item).index(); return kendo.stringify($view[index]); });";
+			String statement = "";
+			statement += "var $view = " + this.datasource + ".view();";
+			statement += "var _rows = jQuery.map(this.select(), function(item) { var index = jQuery(item).index(); return $view[index]; });";
+			statement += "var items = kendo.stringify(_rows);\n";
 
-			return variables + super.getCallbackFunctionBody(parameters);
+			return statement + super.getCallbackFunctionBody(parameters);
 		}
 
 		@Override
 		protected JQueryEvent newEvent()
 		{
 			return new ChangeEvent();
-		}
-	}
-
-	// Event objects //
-
-	/**
-	 * Provides an event object that will be broadcasted by the {@link OnChangeAjaxBehavior} callback
-	 */
-	protected static class ChangeEvent extends JQueryEvent
-	{
-		/** simple json object pattern */
-		private static final Pattern PATTERN = Pattern.compile("(\\{.*?\\})");
-
-		private final List<JSONObject> objects;
-
-		public ChangeEvent()
-		{
-			this.objects = Generics.newArrayList();
-
-			String input = RequestCycleUtils.getQueryParameterValue("items").toString();
-			Matcher matcher = PATTERN.matcher(input);
-
-			while (matcher.find())
-			{
-				this.objects.add(new JSONObject(matcher.group()));
-			}
-		}
-
-		public List<JSONObject> getObjects()
-		{
-			return this.objects;
 		}
 	}
 }

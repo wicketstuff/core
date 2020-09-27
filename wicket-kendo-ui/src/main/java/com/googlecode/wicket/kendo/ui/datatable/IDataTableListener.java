@@ -35,6 +35,14 @@ import com.googlecode.wicket.kendo.ui.datatable.button.ToolbarButton;
 public interface IDataTableListener extends IClusterable
 {
 	/**
+	 * Indicates whether item(s) can be selected.<br>
+	 * If true, the {@link #onChange(AjaxRequestTarget, JSONArray)} event will be triggered
+	 *
+	 * @return false by default
+	 */
+	boolean isSelectable();
+
+	/**
 	 * Triggered when a toolbar button is clicked.
 	 *
 	 * @param target the {@link AjaxRequestTarget}
@@ -60,12 +68,20 @@ public interface IDataTableListener extends IClusterable
 	void onCancel(AjaxRequestTarget target);
 
 	/**
+	 * Triggered when item(s) is/are selected
+	 * 
+	 * @param target the {@link AjaxRequestTarget}
+	 * @param items the {@link JSONArray} of retrieved {@link JSONObject}{@code s}
+	 */
+	void onChange(AjaxRequestTarget target, JSONArray items);
+
+	/**
 	 * Triggered when the user changes the order of a column.
 	 * 
 	 * @param target the {@link AjaxRequestTarget}
-	 * @param oldIndex the old column index 
+	 * @param oldIndex the old column index
 	 * @param newIndex the new column index
-	 * @param column the column's {@link JSONObject} 
+	 * @param column the column's {@link JSONObject}
 	 */
 	void onColumnReorder(AjaxRequestTarget target, int oldIndex, int newIndex, JSONObject column);
 

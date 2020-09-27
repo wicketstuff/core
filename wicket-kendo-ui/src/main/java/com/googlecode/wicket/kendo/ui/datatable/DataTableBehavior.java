@@ -46,6 +46,7 @@ import com.googlecode.wicket.kendo.ui.datatable.button.ToolbarButton;
 import com.googlecode.wicket.kendo.ui.datatable.column.CommandColumn;
 import com.googlecode.wicket.kendo.ui.datatable.column.IColumn;
 import com.googlecode.wicket.kendo.ui.datatable.column.IdPropertyColumn;
+import com.googlecode.wicket.kendo.ui.repeater.ChangeEvent;
 
 /**
  * Provides a {@value #METHOD} behavior<br>
@@ -65,6 +66,7 @@ public abstract class DataTableBehavior extends KendoUIBehavior implements IJQue
 
 	// TODO: private JQueryAjaxBehavior onEditAjaxBehavior;
 	private JQueryAjaxBehavior onCancelAjaxBehavior;
+	private JQueryAjaxBehavior onChangeAjaxBehavior = null;
 	private JQueryAjaxBehavior onColumnReorderAjaxBehavior = null;
 	private DataSourceAjaxBehavior onCreateAjaxBehavior;
 	private DataSourceAjaxBehavior onUpdateAjaxBehavior;
@@ -113,6 +115,12 @@ public abstract class DataTableBehavior extends KendoUIBehavior implements IJQue
 		this.onCancelAjaxBehavior = this.newOnCancelAjaxBehavior(this);
 		component.add(this.onCancelAjaxBehavior);
 
+		if (this.listener.isSelectable())
+		{
+			this.onChangeAjaxBehavior = this.newOnChangeAjaxBehavior(this);
+			component.add(this.onChangeAjaxBehavior);
+		}
+
 		if (this.isColumnReorderEnabled())
 		{
 			this.onColumnReorderAjaxBehavior = this.newColumnReorderAjaxBehavior(this);
@@ -148,6 +156,8 @@ public abstract class DataTableBehavior extends KendoUIBehavior implements IJQue
 		}
 	}
 
+	// Properties //
+
 	/**
 	 * Indicates whether the {@code reorderable} option is set
 	 * 
@@ -159,8 +169,6 @@ public abstract class DataTableBehavior extends KendoUIBehavior implements IJQue
 
 		return value != null && value;
 	}
-
-	// Properties //
 
 	/**
 	 * Gets the row count
@@ -370,6 +378,11 @@ public abstract class DataTableBehavior extends KendoUIBehavior implements IJQue
 		// this.setOption("edit", this.onEditAjaxBehavior.getCallbackFunction());
 		this.setOption("cancel", this.onCancelAjaxBehavior.getCallbackFunction());
 
+		if (this.onChangeAjaxBehavior != null)
+		{
+			this.setOption("change", this.onChangeAjaxBehavior.getCallbackFunction());
+		}
+
 		if (this.onColumnReorderAjaxBehavior != null)
 		{
 			this.setOption("columnReorder", this.onColumnReorderAjaxBehavior.getCallbackFunction());
@@ -449,6 +462,11 @@ public abstract class DataTableBehavior extends KendoUIBehavior implements IJQue
 		if (event instanceof CancelEvent)
 		{
 			this.listener.onCancel(target);
+		}
+
+		if (event instanceof ChangeEvent)
+		{
+			this.listener.onChange(target, ((ChangeEvent) event).getItems());
 		}
 
 		if (event instanceof ColumnReorderEvent)
@@ -545,6 +563,17 @@ public abstract class DataTableBehavior extends KendoUIBehavior implements IJQue
 				return new CancelEvent();
 			}
 		};
+	}
+
+	/**
+	 * Gets a new {@link JQueryAjaxBehavior} that will be wired to the 'select' event
+	 *
+	 * @param source the {@link IJQueryAjaxAware}
+	 * @return a new {@code OnChangeAjaxBehavior} by default
+	 */
+	protected JQueryAjaxBehavior newOnChangeAjaxBehavior(IJQueryAjaxAware source)
+	{
+		return new OnChangeAjaxBehavior(source);
 	}
 
 	/**
@@ -656,6 +685,44 @@ public abstract class DataTableBehavior extends KendoUIBehavior implements IJQue
 	 * @return the {@link JQueryAjaxBehavior}
 	 */
 	protected abstract JQueryAjaxBehavior newCommandAjaxBehavior(IJQueryAjaxAware source, CommandButton button);
+
+	// Ajax classes //
+
+	/**
+	 * Provides a {@link JQueryAjaxBehavior} that aims to be wired to the 'select' event
+	 */
+	protected static class OnChangeAjaxBehavior extends JQueryAjaxBehavior
+	{
+		private static final long serialVersionUID = 1L;
+
+		public OnChangeAjaxBehavior(IJQueryAjaxAware source)
+		{
+			super(source);
+		}
+
+		@Override
+		protected CallbackParameter[] getCallbackParameters()
+		{
+			return new CallbackParameter[] { CallbackParameter.context("e"), CallbackParameter.resolved("items", "items") };
+		}
+
+		@Override
+		public CharSequence getCallbackFunctionBody(CallbackParameter... parameters)
+		{
+			String statement = "";
+			statement += "var $grid = e.sender;\n";
+			statement += "var _rows = jQuery.map(this.select(), function(row) { return $grid.dataItem(row); });\n"; // TODO REMOVE
+			statement += "var items = kendo.stringify(_rows);\n";
+
+			return statement + super.getCallbackFunctionBody(parameters);
+		}
+
+		@Override
+		protected JQueryEvent newEvent()
+		{
+			return new ChangeEvent();
+		}
+	}
 
 	// Event object //
 

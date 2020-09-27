@@ -3,6 +3,7 @@ package com.googlecode.wicket.jquery.core.utils;
 import java.util.List;
 
 import org.apache.wicket.util.lang.Generics;
+
 import com.github.openjson.JSONArray;
 import com.github.openjson.JSONObject;
 
@@ -73,6 +74,27 @@ public class JsonUtils
 			for (int i = 0; i < values.length(); i++)
 			{
 				list.add(values.get(i));
+			}
+		}
+
+		return list;
+	}
+
+	/**
+	 * Converts a {@link JSONArray} to a {@link List} of {@link JSONObject}{@code s}
+	 * 
+	 * @param values the {@link JSONArray}
+	 * @return a new {@link List}
+	 */
+	public static List<JSONObject> toJSONList(JSONArray values)
+	{
+		List<JSONObject> list = Generics.newArrayList();
+
+		if (values != null)
+		{
+			for (int i = 0; i < values.length(); i++)
+			{
+				list.add(values.getJSONObject(i));
 			}
 		}
 

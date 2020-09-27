@@ -16,12 +16,11 @@
  */
 package com.googlecode.wicket.kendo.ui.repeater.listview;
 
-import java.util.List;
-
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.util.io.IClusterable;
-import com.github.openjson.JSONObject;
 
+import com.github.openjson.JSONArray;
+import com.github.openjson.JSONObject;
 import com.googlecode.wicket.kendo.ui.repeater.dataview.DataView;
 
 /**
@@ -33,7 +32,7 @@ public interface IListViewListener extends IClusterable
 {
 	/**
 	 * Indicates whether item(s) can be selected.<br>
-	 * If true, the {@link #onChange(AjaxRequestTarget, List)} event will be triggered
+	 * If true, the {@link #onChange(AjaxRequestTarget, JSONArray)} event will be triggered
 	 *
 	 * @return false by default
 	 */
@@ -67,7 +66,7 @@ public interface IListViewListener extends IClusterable
 	 * Triggered when item(s) is/are selected
 	 * 
 	 * @param target the {@link AjaxRequestTarget}
-	 * @param objects the list of retrieved {@link JSONObject}{@code s}
+	 * @param items the {@link JSONArray} of retrieved {@link JSONObject}{@code s}
 	 */
-	void onChange(AjaxRequestTarget target, List<JSONObject> objects);
+	void onChange(AjaxRequestTarget target, JSONArray items);
 }

@@ -32,6 +32,7 @@ import org.apache.wicket.markup.repeater.data.IDataProvider;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
 
+import com.github.openjson.JSONArray;
 import com.github.openjson.JSONObject;
 import com.googlecode.wicket.jquery.core.IJQueryWidget;
 import com.googlecode.wicket.jquery.core.JQueryBehavior;
@@ -320,6 +321,12 @@ public class DataTable<T> extends WebComponent implements IGenericComponent<List
 	{
 		return Collections.emptyList();
 	}
+	
+	@Override
+	public boolean isSelectable()
+	{
+		return this.options.get("selectable") != null;
+	}
 
 	// Events //
 
@@ -423,6 +430,12 @@ public class DataTable<T> extends WebComponent implements IGenericComponent<List
 
 	@Override
 	public void onDelete(AjaxRequestTarget target, JSONObject object)
+	{
+		// noop
+	}
+
+	@Override
+	public void onChange(AjaxRequestTarget target, JSONArray items)
 	{
 		// noop
 	}
