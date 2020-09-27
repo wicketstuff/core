@@ -29,8 +29,8 @@ public enum KendoCulture
 	AA_ER("aa-ER"), // lf
 	AA_ET("aa-ET"), // lf
 	AA("aa"), // lf
-	AF_ZA("af-ZA"), // lf
 	AF_NA("af-NA"), // lf
+	AF_ZA("af-ZA"), // lf
 	AF("af"), // lf
 	AGQ_CM("agq-CM"), // lf
 	AGQ("agq"), // lf
@@ -38,33 +38,33 @@ public enum KendoCulture
 	AK("ak"), // lf
 	AM_ET("am-ET"), // lf
 	AM("am"), // lf
+	AR_001("ar-001"), // lf
 	AR_AE("ar-AE"), // lf
 	AR_BH("ar-BH"), // lf
+	AR_DJ("ar-DJ"), // lf
 	AR_DZ("ar-DZ"), // lf
 	AR_EG("ar-EG"), // lf
+	AR_ER("ar-ER"), // lf
+	AR_IL("ar-IL"), // lf
 	AR_IQ("ar-IQ"), // lf
 	AR_JO("ar-JO"), // lf
+	AR_KM("ar-KM"), // lf
 	AR_KW("ar-KW"), // lf
 	AR_LB("ar-LB"), // lf
 	AR_LY("ar-LY"), // lf
 	AR_MA("ar-MA"), // lf
+	AR_MR("ar-MR"), // lf
 	AR_OM("ar-OM"), // lf
+	AR_PS("ar-PS"), // lf
 	AR_QA("ar-QA"), // lf
 	AR_SA("ar-SA"), // lf
-	AR_SY("ar-SY"), // lf
-	AR_TN("ar-TN"), // lf
-	AR_YE("ar-YE"), // lf
-	AR_001("ar-001"), // lf
-	AR_DJ("ar-DJ"), // lf
-	AR_ER("ar-ER"), // lf
-	AR_IL("ar-IL"), // lf
-	AR_KM("ar-KM"), // lf
-	AR_MR("ar-MR"), // lf
-	AR_PS("ar-PS"), // lf
 	AR_SD("ar-SD"), // lf
 	AR_SO("ar-SO"), // lf
 	AR_SS("ar-SS"), // lf
+	AR_SY("ar-SY"), // lf
 	AR_TD("ar-TD"), // lf
+	AR_TN("ar-TN"), // lf
+	AR_YE("ar-YE"), // lf
 	AR("ar"), // lf
 	ARN_CL("arn-CL"), // lf
 	ARN("arn"), // lf
@@ -113,9 +113,9 @@ public enum KendoCulture
 	BS("bs"), // lf
 	BYN_ER("byn-ER"), // lf
 	BYN("byn"), // lf
+	CA_AD("ca-AD"), // lf
 	CA_ES_VALENCIA("ca-ES-valencia"), // lf
 	CA_ES("ca-ES"), // lf
-	CA_AD("ca-AD"), // lf
 	CA_FR("ca-FR"), // lf
 	CA_IT("ca-IT"), // lf
 	CA("ca"), // lf
@@ -140,11 +140,12 @@ public enum KendoCulture
 	DAV_KE("dav-KE"), // lf
 	DAV("dav"), // lf
 	DE_AT("de-AT"), // lf
+	DE_BE("de-BE"), // lf
 	DE_CH("de-CH"), // lf
 	DE_DE("de-DE"), // lf
+	DE_IT("de-IT"), // lf
 	DE_LI("de-LI"), // lf
 	DE_LU("de-LU"), // lf
-	DE_BE("de-BE"), // lf
 	DE("de"), // lf
 	DJE_NE("dje-NE"), // lf
 	DJE("dje"), // lf
@@ -163,38 +164,25 @@ public enum KendoCulture
 	EE_GH("ee-GH"), // lf
 	EE_TG("ee-TG"), // lf
 	EE("ee"), // lf
-	EL_GR("el-GR"), // lf
 	EL_CY("el-CY"), // lf
+	EL_GR("el-GR"), // lf
 	EL("el"), // lf
-	EN_029("en-029"), // lf
-	EN_AU("en-AU"), // lf
-	EN_BZ("en-BZ"), // lf
-	EN_CA("en-CA"), // lf
-	EN_GB("en-GB"), // lf
-	EN_HK("en-HK"), // lf
-	EN_IE("en-IE"), // lf
-	EN_IN("en-IN"), // lf
-	EN_JM("en-JM"), // lf
-	EN_MY("en-MY"), // lf
-	EN_NZ("en-NZ"), // lf
-	EN_PH("en-PH"), // lf
-	EN_SG("en-SG"), // lf
-	EN_TT("en-TT"), // lf
-	EN_US("en-US"), // lf
-	EN_ZA("en-ZA"), // lf
-	EN_ZW("en-ZW"), // lf
 	EN_001("en-001"), // lf
+	EN_029("en-029"), // lf
 	EN_150("en-150"), // lf
 	EN_AG("en-AG"), // lf
 	EN_AI("en-AI"), // lf
 	EN_AS("en-AS"), // lf
 	EN_AT("en-AT"), // lf
+	EN_AU("en-AU"), // lf
 	EN_BB("en-BB"), // lf
 	EN_BE("en-BE"), // lf
 	EN_BI("en-BI"), // lf
 	EN_BM("en-BM"), // lf
 	EN_BS("en-BS"), // lf
 	EN_BW("en-BW"), // lf
+	EN_BZ("en-BZ"), // lf
+	EN_CA("en-CA"), // lf
 	EN_CC("en-CC"), // lf
 	EN_CH("en-CH"), // lf
 	EN_CK("en-CK"), // lf
@@ -209,6 +197,7 @@ public enum KendoCulture
 	EN_FJ("en-FJ"), // lf
 	EN_FK("en-FK"), // lf
 	EN_FM("en-FM"), // lf
+	EN_GB("en-GB"), // lf
 	EN_GD("en-GD"), // lf
 	EN_GG("en-GG"), // lf
 	EN_GH("en-GH"), // lf
@@ -216,11 +205,15 @@ public enum KendoCulture
 	EN_GM("en-GM"), // lf
 	EN_GU("en-GU"), // lf
 	EN_GY("en-GY"), // lf
+	EN_HK("en-HK"), // lf
 	EN_ID("en-ID"), // lf
+	EN_IE("en-IE"), // lf
 	EN_IL("en-IL"), // lf
 	EN_IM("en-IM"), // lf
+	EN_IN("en-IN"), // lf
 	EN_IO("en-IO"), // lf
 	EN_JE("en-JE"), // lf
+	EN_JM("en-JM"), // lf
 	EN_KE("en-KE"), // lf
 	EN_KI("en-KI"), // lf
 	EN_KN("en-KN"), // lf
@@ -236,13 +229,16 @@ public enum KendoCulture
 	EN_MT("en-MT"), // lf
 	EN_MU("en-MU"), // lf
 	EN_MW("en-MW"), // lf
+	EN_MY("en-MY"), // lf
 	EN_NA("en-NA"), // lf
 	EN_NF("en-NF"), // lf
 	EN_NG("en-NG"), // lf
 	EN_NL("en-NL"), // lf
 	EN_NR("en-NR"), // lf
 	EN_NU("en-NU"), // lf
+	EN_NZ("en-NZ"), // lf
 	EN_PG("en-PG"), // lf
+	EN_PH("en-PH"), // lf
 	EN_PK("en-PK"), // lf
 	EN_PN("en-PN"), // lf
 	EN_PR("en-PR"), // lf
@@ -252,6 +248,7 @@ public enum KendoCulture
 	EN_SC("en-SC"), // lf
 	EN_SD("en-SD"), // lf
 	EN_SE("en-SE"), // lf
+	EN_SG("en-SG"), // lf
 	EN_SH("en-SH"), // lf
 	EN_SI("en-SI"), // lf
 	EN_SL("en-SL"), // lf
@@ -261,43 +258,49 @@ public enum KendoCulture
 	EN_TC("en-TC"), // lf
 	EN_TK("en-TK"), // lf
 	EN_TO("en-TO"), // lf
+	EN_TT("en-TT"), // lf
 	EN_TV("en-TV"), // lf
 	EN_TZ("en-TZ"), // lf
 	EN_UG("en-UG"), // lf
 	EN_UM("en-UM"), // lf
+	EN_US("en-US"), // lf
 	EN_VC("en-VC"), // lf
 	EN_VG("en-VG"), // lf
 	EN_VI("en-VI"), // lf
 	EN_VU("en-VU"), // lf
 	EN_WS("en-WS"), // lf
+	EN_ZA("en-ZA"), // lf
 	EN_ZM("en-ZM"), // lf
+	EN_ZW("en-ZW"), // lf
 	EN("en"), // lf
 	EO_001("eo-001"), // lf
 	EO("eo"), // lf
 	ES_419("es-419"), // lf
 	ES_AR("es-AR"), // lf
 	ES_BO("es-BO"), // lf
+	ES_BR("es-BR"), // lf
+	ES_BZ("es-BZ"), // lf
 	ES_CL("es-CL"), // lf
 	ES_CO("es-CO"), // lf
 	ES_CR("es-CR"), // lf
+	ES_CU("es-CU"), // lf
 	ES_DO("es-DO"), // lf
 	ES_EC("es-EC"), // lf
 	ES_ES("es-ES"), // lf
+	ES_GQ("es-GQ"), // lf
 	ES_GT("es-GT"), // lf
 	ES_HN("es-HN"), // lf
 	ES_MX("es-MX"), // lf
 	ES_NI("es-NI"), // lf
 	ES_PA("es-PA"), // lf
 	ES_PE("es-PE"), // lf
+	ES_PH("es-PH"), // lf
 	ES_PR("es-PR"), // lf
 	ES_PY("es-PY"), // lf
 	ES_SV("es-SV"), // lf
 	ES_US("es-US"), // lf
 	ES_UY("es-UY"), // lf
 	ES_VE("es-VE"), // lf
-	ES_CU("es-CU"), // lf
-	ES_GQ("es-GQ"), // lf
-	ES_PH("es-PH"), // lf
 	ES("es"), // lf
 	ET_EE("et-EE"), // lf
 	ET("et"), // lf
@@ -307,10 +310,21 @@ public enum KendoCulture
 	EWO("ewo"), // lf
 	FA_IR("fa-IR"), // lf
 	FA("fa"), // lf
-	FF_LATN_SN("ff-Latn-SN"), // lf
-	FF_LATN("ff-Latn"), // lf
 	FF_CM("ff-CM"), // lf
 	FF_GN("ff-GN"), // lf
+	FF_LATN_BF("ff-Latn-BF"), // lf
+	FF_LATN_CM("ff-Latn-CM"), // lf
+	FF_LATN_GH("ff-Latn-GH"), // lf
+	FF_LATN_GM("ff-Latn-GM"), // lf
+	FF_LATN_GN("ff-Latn-GN"), // lf
+	FF_LATN_GW("ff-Latn-GW"), // lf
+	FF_LATN_LR("ff-Latn-LR"), // lf
+	FF_LATN_MR("ff-Latn-MR"), // lf
+	FF_LATN_NE("ff-Latn-NE"), // lf
+	FF_LATN_NG("ff-Latn-NG"), // lf
+	FF_LATN_SL("ff-Latn-SL"), // lf
+	FF_LATN_SN("ff-Latn-SN"), // lf
+	FF_LATN("ff-Latn"), // lf
 	FF_MR("ff-MR"), // lf
 	FF_NG("ff-NG"), // lf
 	FF("ff"), // lf
@@ -318,40 +332,38 @@ public enum KendoCulture
 	FI("fi"), // lf
 	FIL_PH("fil-PH"), // lf
 	FIL("fil"), // lf
-	FO_FO("fo-FO"), // lf
 	FO_DK("fo-DK"), // lf
+	FO_FO("fo-FO"), // lf
 	FO("fo"), // lf
-	FR_BE("fr-BE"), // lf
-	FR_CA("fr-CA"), // lf
-	FR_CD("fr-CD"), // lf
-	FR_CH("fr-CH"), // lf
-	FR_CI("fr-CI"), // lf
-	FR_CM("fr-CM"), // lf
-	FR_FR("fr-FR"), // lf
-	FR_HT("fr-HT"), // lf
-	FR_LU("fr-LU"), // lf
-	FR_MA("fr-MA"), // lf
-	FR_MC("fr-MC"), // lf
-	FR_ML("fr-ML"), // lf
-	FR_RE("fr-RE"), // lf
-	FR_SN("fr-SN"), // lf
 	FR_029("fr-029"), // lf
+	FR_BE("fr-BE"), // lf
 	FR_BF("fr-BF"), // lf
 	FR_BI("fr-BI"), // lf
 	FR_BJ("fr-BJ"), // lf
 	FR_BL("fr-BL"), // lf
+	FR_CA("fr-CA"), // lf
+	FR_CD("fr-CD"), // lf
 	FR_CF("fr-CF"), // lf
 	FR_CG("fr-CG"), // lf
+	FR_CH("fr-CH"), // lf
+	FR_CI("fr-CI"), // lf
+	FR_CM("fr-CM"), // lf
 	FR_DJ("fr-DJ"), // lf
 	FR_DZ("fr-DZ"), // lf
+	FR_FR("fr-FR"), // lf
 	FR_GA("fr-GA"), // lf
 	FR_GF("fr-GF"), // lf
 	FR_GN("fr-GN"), // lf
 	FR_GP("fr-GP"), // lf
 	FR_GQ("fr-GQ"), // lf
+	FR_HT("fr-HT"), // lf
 	FR_KM("fr-KM"), // lf
+	FR_LU("fr-LU"), // lf
+	FR_MA("fr-MA"), // lf
+	FR_MC("fr-MC"), // lf
 	FR_MF("fr-MF"), // lf
 	FR_MG("fr-MG"), // lf
+	FR_ML("fr-ML"), // lf
 	FR_MQ("fr-MQ"), // lf
 	FR_MR("fr-MR"), // lf
 	FR_MU("fr-MU"), // lf
@@ -359,8 +371,10 @@ public enum KendoCulture
 	FR_NE("fr-NE"), // lf
 	FR_PF("fr-PF"), // lf
 	FR_PM("fr-PM"), // lf
+	FR_RE("fr-RE"), // lf
 	FR_RW("fr-RW"), // lf
 	FR_SC("fr-SC"), // lf
+	FR_SN("fr-SN"), // lf
 	FR_SY("fr-SY"), // lf
 	FR_TD("fr-TD"), // lf
 	FR_TG("fr-TG"), // lf
@@ -381,8 +395,8 @@ public enum KendoCulture
 	GL("gl"), // lf
 	GN_PY("gn-PY"), // lf
 	GN("gn"), // lf
-	GSW_FR("gsw-FR"), // lf
 	GSW_CH("gsw-CH"), // lf
+	GSW_FR("gsw-FR"), // lf
 	GSW_LI("gsw-LI"), // lf
 	GSW("gsw"), // lf
 	GU_IN("gu-IN"), // lf
@@ -391,10 +405,10 @@ public enum KendoCulture
 	GUZ("guz"), // lf
 	GV_IM("gv-IM"), // lf
 	GV("gv"), // lf
-	HA_LATN_NG("ha-Latn-NG"), // lf
-	HA_LATN("ha-Latn"), // lf
 	HA_LATN_GH("ha-Latn-GH"), // lf
 	HA_LATN_NE("ha-Latn-NE"), // lf
+	HA_LATN_NG("ha-Latn-NG"), // lf
+	HA_LATN("ha-Latn"), // lf
 	HA("ha"), // lf
 	HAW_US("haw-US"), // lf
 	HAW("haw"), // lf
@@ -427,6 +441,7 @@ public enum KendoCulture
 	IT_CH("it-CH"), // lf
 	IT_IT("it-IT"), // lf
 	IT_SM("it-SM"), // lf
+	IT_VA("it-VA"), // lf
 	IT("it"), // lf
 	IU_CANS_CA("iu-Cans-CA"), // lf
 	IU_CANS("iu-Cans"), // lf
@@ -439,10 +454,10 @@ public enum KendoCulture
 	JGO("jgo"), // lf
 	JMC_TZ("jmc-TZ"), // lf
 	JMC("jmc"), // lf
-	JV_LATN_ID("jv-Latn-ID"), // lf
-	JV_LATN("jv-Latn"), // lf
 	JV_JAVA_ID("jv-Java-ID"), // lf
 	JV_JAVA("jv-Java"), // lf
+	JV_LATN_ID("jv-Latn-ID"), // lf
+	JV_LATN("jv-Latn"), // lf
 	JV("jv"), // lf
 	KA_GE("ka-GE"), // lf
 	KA("ka"), // lf
@@ -470,11 +485,13 @@ public enum KendoCulture
 	KM("km"), // lf
 	KN_IN("kn-IN"), // lf
 	KN("kn"), // lf
-	KO_KR("ko-KR"), // lf
 	KO_KP("ko-KP"), // lf
+	KO_KR("ko-KR"), // lf
 	KO("ko"), // lf
 	KOK_IN("kok-IN"), // lf
 	KOK("kok"), // lf
+	KR_LATN_NG("kr-Latn-NG"), // lf
+	KR_LATN("kr-Latn"), // lf
 	KR_NG("kr-NG"), // lf
 	KR("kr"), // lf
 	KS_ARAB_IN("ks-Arab-IN"), // lf
@@ -489,8 +506,8 @@ public enum KendoCulture
 	KSH_DE("ksh-DE"), // lf
 	KSH("ksh"), // lf
 	KU_ARAB_IQ("ku-Arab-IQ"), // lf
-	KU_ARAB("ku-Arab"), // lf
 	KU_ARAB_IR("ku-Arab-IR"), // lf
+	KU_ARAB("ku-Arab"), // lf
 	KU("ku"), // lf
 	KW_GB("kw-GB"), // lf
 	KW("kw"), // lf
@@ -576,14 +593,17 @@ public enum KendoCulture
 	NB("nb"), // lf
 	ND_ZW("nd-ZW"), // lf
 	ND("nd"), // lf
+	NDS_DE("nds-DE"), // lf
+	NDS_NL("nds-NL"), // lf
+	NDS("nds"), // lf
 	NE_IN("ne-IN"), // lf
 	NE_NP("ne-NP"), // lf
 	NE("ne"), // lf
-	NL_BE("nl-BE"), // lf
-	NL_NL("nl-NL"), // lf
 	NL_AW("nl-AW"), // lf
+	NL_BE("nl-BE"), // lf
 	NL_BQ("nl-BQ"), // lf
 	NL_CW("nl-CW"), // lf
+	NL_NL("nl-NL"), // lf
 	NL_SR("nl-SR"), // lf
 	NL_SX("nl-SX"), // lf
 	NL("nl"), // lf
@@ -616,6 +636,7 @@ public enum KendoCulture
 	OS("os"), // lf
 	PA_ARAB_PK("pa-Arab-PK"), // lf
 	PA_ARAB("pa-Arab"), // lf
+	PA_GURU("pa-Guru"), // lf
 	PA_IN("pa-IN"), // lf
 	PA("pa"), // lf
 	PAP_029("pap-029"), // lf
@@ -630,11 +651,14 @@ public enum KendoCulture
 	PS("ps"), // lf
 	PT_AO("pt-AO"), // lf
 	PT_BR("pt-BR"), // lf
-	PT_PT("pt-PT"), // lf
+	PT_CH("pt-CH"), // lf
 	PT_CV("pt-CV"), // lf
+	PT_GQ("pt-GQ"), // lf
 	PT_GW("pt-GW"), // lf
+	PT_LU("pt-LU"), // lf
 	PT_MO("pt-MO"), // lf
 	PT_MZ("pt-MZ"), // lf
+	PT_PT("pt-PT"), // lf
 	PT_ST("pt-ST"), // lf
 	PT_TL("pt-TL"), // lf
 	PT("pt"), // lf
@@ -656,12 +680,12 @@ public enum KendoCulture
 	RO("ro"), // lf
 	ROF_TZ("rof-TZ"), // lf
 	ROF("rof"), // lf
-	RU_RU("ru-RU"), // lf
-	RU_UA("ru-UA"), // lf
 	RU_BY("ru-BY"), // lf
 	RU_KG("ru-KG"), // lf
 	RU_KZ("ru-KZ"), // lf
 	RU_MD("ru-MD"), // lf
+	RU_RU("ru-RU"), // lf
+	RU_UA("ru-UA"), // lf
 	RU("ru"), // lf
 	RW_RW("rw-RW"), // lf
 	RW("rw"), // lf
@@ -714,10 +738,10 @@ public enum KendoCulture
 	SN_LATN_ZW("sn-Latn-ZW"), // lf
 	SN_LATN("sn-Latn"), // lf
 	SN("sn"), // lf
-	SO_SO("so-SO"), // lf
 	SO_DJ("so-DJ"), // lf
 	SO_ET("so-ET"), // lf
 	SO_KE("so-KE"), // lf
+	SO_SO("so-SO"), // lf
 	SO("so"), // lf
 	SQ_AL("sq-AL"), // lf
 	SQ_MK("sq-MK"), // lf
@@ -727,29 +751,29 @@ public enum KendoCulture
 	SR_CYRL_CS("sr-Cyrl-CS"), // lf
 	SR_CYRL_ME("sr-Cyrl-ME"), // lf
 	SR_CYRL_RS("sr-Cyrl-RS"), // lf
+	SR_CYRL_XK("sr-Cyrl-XK"), // lf
 	SR_CYRL("sr-Cyrl"), // lf
 	SR_LATN_BA("sr-Latn-BA"), // lf
 	SR_LATN_CS("sr-Latn-CS"), // lf
 	SR_LATN_ME("sr-Latn-ME"), // lf
 	SR_LATN_RS("sr-Latn-RS"), // lf
-	SR_LATN("sr-Latn"), // lf
-	SR_CYRL_XK("sr-Cyrl-XK"), // lf
 	SR_LATN_XK("sr-Latn-XK"), // lf
+	SR_LATN("sr-Latn"), // lf
 	SR("sr"), // lf
 	SS_SZ("ss-SZ"), // lf
 	SS_ZA("ss-ZA"), // lf
 	SS("ss"), // lf
 	SSY_ER("ssy-ER"), // lf
 	SSY("ssy"), // lf
-	ST_ZA("st-ZA"), // lf
 	ST_LS("st-LS"), // lf
+	ST_ZA("st-ZA"), // lf
 	ST("st"), // lf
+	SV_AX("sv-AX"), // lf
 	SV_FI("sv-FI"), // lf
 	SV_SE("sv-SE"), // lf
-	SV_AX("sv-AX"), // lf
 	SV("sv"), // lf
-	SW_KE("sw-KE"), // lf
 	SW_CD("sw-CD"), // lf
+	SW_KE("sw-KE"), // lf
 	SW_TZ("sw-TZ"), // lf
 	SW_UG("sw-UG"), // lf
 	SW("sw"), // lf
@@ -782,8 +806,8 @@ public enum KendoCulture
 	TN("tn"), // lf
 	TO_TO("to-TO"), // lf
 	TO("to"), // lf
-	TR_TR("tr-TR"), // lf
 	TR_CY("tr-CY"), // lf
+	TR_TR("tr-TR"), // lf
 	TR("tr"), // lf
 	TS_ZA("ts-ZA"), // lf
 	TS("ts"), // lf
@@ -791,13 +815,13 @@ public enum KendoCulture
 	TT("tt"), // lf
 	TWQ_NE("twq-NE"), // lf
 	TWQ("twq"), // lf
+	TZM_ARAB_MA("tzm-Arab-MA"), // lf
+	TZM_ARAB("tzm-Arab"), // lf
 	TZM_LATN_DZ("tzm-Latn-DZ"), // lf
+	TZM_LATN_MA("tzm-Latn-MA"), // lf
 	TZM_LATN("tzm-Latn"), // lf
 	TZM_TFNG_MA("tzm-Tfng-MA"), // lf
 	TZM_TFNG("tzm-Tfng"), // lf
-	TZM_ARAB_MA("tzm-Arab-MA"), // lf
-	TZM_ARAB("tzm-Arab"), // lf
-	TZM_LATN_MA("tzm-Latn-MA"), // lf
 	TZM("tzm"), // lf
 	UG_CN("ug-CN"), // lf
 	UG("ug"), // lf
@@ -806,12 +830,12 @@ public enum KendoCulture
 	UR_IN("ur-IN"), // lf
 	UR_PK("ur-PK"), // lf
 	UR("ur"), // lf
+	UZ_ARAB_AF("uz-Arab-AF"), // lf
+	UZ_ARAB("uz-Arab"), // lf
 	UZ_CYRL_UZ("uz-Cyrl-UZ"), // lf
 	UZ_CYRL("uz-Cyrl"), // lf
 	UZ_LATN_UZ("uz-Latn-UZ"), // lf
 	UZ_LATN("uz-Latn"), // lf
-	UZ_ARAB_AF("uz-Arab-AF"), // lf
-	UZ_ARAB("uz-Arab"), // lf
 	UZ("uz"), // lf
 	VAI_LATN_LR("vai-Latn-LR"), // lf
 	VAI_LATN("vai-Latn"), // lf
@@ -840,8 +864,8 @@ public enum KendoCulture
 	YAV("yav"), // lf
 	YI_001("yi-001"), // lf
 	YI("yi"), // lf
-	YO_NG("yo-NG"), // lf
 	YO_BJ("yo-BJ"), // lf
+	YO_NG("yo-NG"), // lf
 	YO("yo"), // lf
 	ZGH_TFNG_MA("zgh-Tfng-MA"), // lf
 	ZGH_TFNG("zgh-Tfng"), // lf
@@ -849,14 +873,14 @@ public enum KendoCulture
 	ZH_CHS("zh-CHS"), // lf
 	ZH_CHT("zh-CHT"), // lf
 	ZH_CN("zh-CN"), // lf
+	ZH_HANS_HK("zh-Hans-HK"), // lf
+	ZH_HANS_MO("zh-Hans-MO"), // lf
 	ZH_HANS("zh-Hans"), // lf
 	ZH_HANT("zh-Hant"), // lf
 	ZH_HK("zh-HK"), // lf
 	ZH_MO("zh-MO"), // lf
 	ZH_SG("zh-SG"), // lf
 	ZH_TW("zh-TW"), // lf
-	ZH_HANS_HK("zh-Hans-HK"), // lf
-	ZH_HANS_MO("zh-Hans-MO"), // lf
 	ZH("zh"), // lf
 	ZU_ZA("zu-ZA"), // lf
 	ZU("zu");
