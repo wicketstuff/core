@@ -5,7 +5,7 @@
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *      http://www.apache.org/licenses/LICENSE-2.0
+ *   http://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -32,7 +32,7 @@ import org.wicketstuff.jqplot.lib.JqPlotUtils;
  */
 public class JqPlotBehavior extends Behavior {
 
-	private static final long serialVersionUID = -8088313975214875631L;
+	private static final long serialVersionUID = 1L;
 
 	private final List<String> resources;
 
@@ -57,18 +57,18 @@ public class JqPlotBehavior extends Behavior {
 		response.render(JavaScriptHeaderItem.forScript(json, null));
 	}
 
-    // remove min.* from file name
-    private String removeMinified(String name_) {
-        String name = name_;
-        int idxOfExtension = name.lastIndexOf('.');
-        if (idxOfExtension > -1) {
-            String extension = name.substring(idxOfExtension);
-            name = name.substring(0, name.length() - extension.length() + 1);
-            if (name.endsWith(".min."))
-            {
-                name = name.substring(0, name.length() - 5) + extension;
-            }
-        }
-        return name;
-    }
+	// remove min.* from file name
+	private String removeMinified(String name_) {
+		String name = name_;
+		int idxOfExtension = name.lastIndexOf('.');
+		if (idxOfExtension > -1) {
+			String extension = name.substring(idxOfExtension);
+			name = name.substring(0, name.length() - extension.length() + 1);
+			if (name.endsWith(".min."))
+			{
+				name = name.substring(0, name.length() - 5) + extension;
+			}
+		}
+		return name;
+	}
 }

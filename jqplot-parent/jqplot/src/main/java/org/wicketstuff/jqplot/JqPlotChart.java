@@ -5,7 +5,7 @@
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *      http://www.apache.org/licenses/LICENSE-2.0
+ *   http://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -26,8 +26,7 @@ import org.wicketstuff.jqplot.lib.Chart;
  */
 public class JqPlotChart extends WebMarkupContainer
 {
-
-	private static final long serialVersionUID = -6349282016722298656L;
+	private static final long serialVersionUID = 1L;
 
 	public JqPlotChart(String id, Chart<?> chart)
 	{
@@ -35,6 +34,4 @@ public class JqPlotChart extends WebMarkupContainer
 		setOutputMarkupId(true);
 		add(new JqPlotBehavior(chart, getMarkupId()));
 	}
-
-
 }
