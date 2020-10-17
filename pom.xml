@@ -44,7 +44,7 @@
 	</scm>
 
 	<properties>
-		<wicket.version>9.0.0</wicket.version>
+		<wicket.version>9.1.0</wicket.version>
 		<owasp-sanitizer.version>20191001.1</owasp-sanitizer.version>
 		<junit.version>5.5.2</junit.version>
 		<jetty.version>9.4.16.v20190411</jetty.version>
@@ -353,6 +353,6 @@
 		<module>wicket-kendo-ui</module>
 		<module>wicket-kendo-ui-culture</module>
 		<module>wicket-kendo-ui-themes</module>
-		<module>wicket-jquery-ui-samples</module>
+		<!-- module>wicket-jquery-ui-samples</module -->
 	</modules>
 </project>
