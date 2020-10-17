@@ -7,7 +7,7 @@
 	<parent>
 		<groupId>com.googlecode.wicket-jquery-ui</groupId>
 		<artifactId>wicket-jquery-ui-themes</artifactId>
-		<version>9.0.1-SNAPSHOT</version>
+		<version>9.1.0</version>
 	</parent>
 
 	<artifactId>wicket-jquery-ui-theme-cupertino</artifactId>
