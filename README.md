@@ -18,7 +18,14 @@ Once done, just include the jar(s) in your project's build path.
 <dependency>
     <groupId>com.googlecode.wicket-jquery-ui</groupId>
     <artifactId>wicket-jquery-ui</artifactId>
-    <version>8.0.0</version>
+    <version>9.10.0</version>
+</dependency>
+```
+```xml
+<dependency>
+    <groupId>com.googlecode.wicket-jquery-ui</groupId>
+    <artifactId>wicket-kendo-ui</artifactId>
+    <version>9.10.0</version>
 </dependency>
 ```
 
@@ -95,6 +102,7 @@ If the version you specified is *snapshot*, you might define this repository:
 <tr><th>wicket-kendo-ui</th><th>Wicket</th><th>Kendo UI</th></tr>
 <tr><td>9.1.0</td><td>9.1.0</td><td>2020.3.915 (ASFv2)</td></tr>
 <tr><td>9.0.0</td><td>9.0.0</td><td>2020.3.915 (ASFv2)</td></tr>
+<tr><td>8.10.0</td><td>8.10.0</td><td>2020.3.915 (ASFv2)</td></tr>
 <tr><td>8.9.0</td><td>8.9.0</td><td>2020.3.915 (ASFv2)</td></tr>
 <tr><td>8.8.0</td><td>8.8.0</td><td>2019.2.619 (ASFv2)</td></tr>
 <tr><td>8.6.0</td><td>8.6.0</td><td>2019.2.619 (ASFv2)</td></tr>
@@ -160,7 +168,7 @@ To use wicket-jquery-ui with a standard theme, just add the corresponding theme 
 <dependency>
 	<groupId>com.googlecode.wicket-jquery-ui</groupId>
 	<artifactId>wicket-jquery-ui-theme-uilightness</artifactId>
-	<version>8.0.0</version>
+	<version>9.1.0</version>
 </dependency>
 ```
 
@@ -176,7 +184,7 @@ To use wicket-kendo-ui with a standard theme, just add the corresponding theme d
 <dependency>
 	<groupId>com.googlecode.wicket-jquery-ui</groupId>
 	<artifactId>wicket-kendo-ui-theme-default</artifactId>
-	<version>8.0.0</version>
+	<version>9.1.0</version>
 </dependency>
 ```
 
