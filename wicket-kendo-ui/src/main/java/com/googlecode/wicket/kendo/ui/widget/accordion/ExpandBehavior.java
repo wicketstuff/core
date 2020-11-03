@@ -18,7 +18,6 @@ package com.googlecode.wicket.kendo.ui.widget.accordion;
 
 import org.apache.wicket.Component;
 
-import com.googlecode.wicket.jquery.core.IJQueryWidget.JQueryWidget;
 import com.googlecode.wicket.kendo.ui.KendoUIBehavior;
 
 /**
@@ -42,9 +41,10 @@ public class ExpandBehavior extends KendoUIBehavior
 	private final String children;
 
 	/**
-	 * Constructor
+	 * Constructor<br>
+	 * <b>Caution:</b> this constructor is for advanced usage
 	 *
-	 * @param selector the html selector (ie: "#myId")
+	 * @param selector the html selector of the underlying UL (ie: "#myId > UL")
 	 */
 	public ExpandBehavior(String selector)
 	{
@@ -52,9 +52,10 @@ public class ExpandBehavior extends KendoUIBehavior
 	}
 
 	/**
-	 * Constructor
+	 * Constructor<br>
+	 * <b>Caution:</b> this constructor is for advanced usage
 	 *
-	 * @param selector the html selector (ie: "#myId")
+	 * @param selector the html selector of the underlying UL (ie: "#myId > UL")
 	 * @param children the children selector
 	 */
 	public ExpandBehavior(String selector, String children)
@@ -67,23 +68,23 @@ public class ExpandBehavior extends KendoUIBehavior
 	/**
 	 * Constructor
 	 *
-	 * @param component the {@link Component}
+	 * @param panel the {@link Component}
 	 */
-	public ExpandBehavior(Component component)
+	public ExpandBehavior(AccordionPanel panel)
 	{
-		this(component, ALL_CHILDREN);
+		this(panel, ALL_CHILDREN);
 	}
 
 	/**
 	 * Constructor
 	 *
-	 * @param component the {@link Component}
+	 * @param panel the {@link Component}
 	 * @param children the children selector
 	 */
-	public ExpandBehavior(Component component, String children)
+	public ExpandBehavior(AccordionPanel panel, String children)
 	{
-		super(JQueryWidget.getSelector(component), AccordionBehavior.METHOD);
-		
+		super(panel.getSelector(), AccordionBehavior.METHOD);
+
 		this.children = children;
 	}
 

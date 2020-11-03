@@ -96,6 +96,12 @@ public class TabbedPanel extends JQueryGenericPanel<List<ITab>> implements ITabs
 	// Properties //
 
 	@Override
+	public String getSelector()
+	{
+		return this.widgetBehavior.getSelector();
+	}
+
+	@Override
 	public List<ITab> getModelObject()
 	{
 		List<ITab> list = super.getModelObject();

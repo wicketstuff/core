@@ -95,6 +95,12 @@ public class AccordionPanel extends JQueryGenericPanel<List<ITab>> implements IA
 	// Properties //
 
 	@Override
+	public String getSelector()
+	{
+		return this.widgetBehavior.getSelector();
+	}
+
+	@Override
 	public List<ITab> getModelObject()
 	{
 		List<ITab> list = super.getModelObject();

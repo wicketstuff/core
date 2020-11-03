@@ -55,4 +55,13 @@ public abstract class JQueryGenericPanel<T> extends JQueryPanel implements IGene
 	{
 		super(id, model, options);
 	}
+
+	// Properties //
+
+	/**
+	 * Gets the underlying widget selector
+	 * 
+	 * @see JQueryBehavior#getSelector()
+	 */
+	public abstract String getSelector();
 }
