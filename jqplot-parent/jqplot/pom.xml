@@ -14,10 +14,6 @@
 	<name>JqPlot Plugin Integration</name>
 	<description>JqPlot Plugin Integration for Apache Wicket</description>
 
-	<properties>
-		<xstream.version>1.4.12</xstream.version>
-	</properties>
-
 	<developers>
 		<developer>
 			<id>inaiat</id>
