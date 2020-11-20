@@ -75,7 +75,6 @@ public class ClosureCompilerJavaScriptCompressor implements IJavaScriptCompresso
 		options.removeUnusedVars = false;
 		options.removeUnusedLocalVars = false;
 		options.removeUnusedPrototypeProperties = false;
-		options.removeUnusedPrototypePropertiesInExterns = false;
 
 		// custom configuration options
 		configure(compiler, options, externs);
