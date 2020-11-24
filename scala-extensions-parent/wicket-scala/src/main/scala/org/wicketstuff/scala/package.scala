@@ -11,9 +11,6 @@ import org.wicketstuff.scala.traits.{ScalaMarkupContainerT, ScalaComponentT}
 
 import _root_.scala.language.implicitConversions
 
-/**
- *
- */
 package object scala {
 
   implicit class ScalaComponentOps(val component: Component)
@@ -47,22 +44,22 @@ package object scala {
   /**
    * Converts a by name parameter into a Fodel.
    */
-  implicit def func2Fodel1[T](gtr: ⇒ T):Fodel[T] = new Fodel[T](gtr, null)
+  implicit def func2Fodel1[T](gtr: => T):Fodel[T] = new Fodel[T](gtr, null)
 
   /**
    * Converts an anonymous function of zero arguments into a Fodel.
    */
-  implicit def func2Fodel2[T](gtr: () ⇒ T):Fodel[T] = new Fodel[T](gtr(), null)
+  implicit def func2Fodel2[T](gtr: () => T):Fodel[T] = new Fodel[T](gtr(), null)
 
   /**
    * Converts an anonymous function, typed with a List of something, into a Fodel. Useful for ListViews etc.
    */
-  implicit def func2Fodel5[T](listFunc: () ⇒ List[T]):Fodel[JList[T]] = new Fodel[JList[T]](listFunc(), null)
+  implicit def func2Fodel5[T](listFunc: () => List[T]):Fodel[JList[T]] = new Fodel[JList[T]](listFunc(), null)
 
   /**
    * Converts an by name List parameter, into a java.util.List Fodel. Useful for ListViews etc.
    */
-  implicit def func2Fodel4[T](list: ⇒ List[T]):Fodel[JList[T]] = new Fodel[JList[T]](list, null)
+  implicit def func2Fodel4[T](list: => List[T]):Fodel[JList[T]] = new Fodel[JList[T]](list, null)
 
   /**
    * Automatically converts between Scala Sequences and Java's ArrayList. Used for
@@ -73,7 +70,7 @@ package object scala {
    */
   implicit def seqToJavaList[T](sequence: Seq[T]): JList[T] =
     sequence.foldLeft( new JArrayList[T]( sequence.size ) ) {
-      (arrayList, element) ⇒ arrayList.add(element)
+      (arrayList, element) => arrayList.add(element)
       arrayList
     }
 

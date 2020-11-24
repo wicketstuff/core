@@ -3,7 +3,7 @@ package org.wicketstuff.scala
 import org.wicketstuff.scala.markup.html.basic.ScalaLabel
 import org.wicketstuff.scala.model.FodelString
 
-import scala.collection.JavaConversions.seqAsJavaList
+import scala.jdk.CollectionConverters._
 import org.apache.wicket.behavior.AttributeAppender
 import org.apache.wicket.extensions.markup.html.form.datetime.LocalDateTextField;
 import org.apache.wicket.extensions.validation.validator.RfcCompliantEmailAddressValidator
@@ -30,17 +30,17 @@ import scala.language.implicitConversions
 
 @deprecated(message = "Use the fine grained traits instead, or the implicit conversion", since = "7.0.0")
 trait DSLWicket {
-  self: MarkupContainer ⇒
+  self: MarkupContainer =>
 
   def homeLink(id: String): BookmarkablePageLink[_] = blink(id, Application.get().getHomePage)
-  def logoutLink(id: String): Link[_] = link(id, () ⇒ { Session.get().invalidate() })
+  def logoutLink(id: String): Link[_] = link(id, () => { Session.get().invalidate() })
   def container(id: String): DSLMarkupContainer = { val c = new WebMarkupContainer(id) with DSLMarkupContainer; add(c); c }
   def hide() = setVisibilityAllowed(false)
   def show() = setVisibilityAllowed(true)
-  def hide(c: Component*) = c.foreach(x ⇒ x.setVisibilityAllowed(false))
-  def show(c: Component*) = c.foreach(x ⇒ x.setVisibilityAllowed(true))
+  def hide(c: Component*) = c.foreach(x => x.setVisibilityAllowed(false))
+  def show(c: Component*) = c.foreach(x => x.setVisibilityAllowed(true))
   def feedback(id: String = "feedback") = add(new FeedbackPanel(id))
-  def ldm[T](loadF: () ⇒ T): IModel[T] = {
+  def ldm[T](loadF: () => T): IModel[T] = {
     val ldm = new LoadableDetachableModel[T] { override def load(): T = loadF() }; ldm
   }
   // MultiLineLabel
@@ -48,7 +48,7 @@ trait DSLWicket {
   def multiLineLabel[T](id: String, value: String): MultiLineLabel = { val label = new MultiLineLabel(id, value); add(label); label }
   // Label
   def label[T](id: String, model: IModel[T] = null): Label = { val label = new Label(id, model); add(label); label }
-  def labelf[T](id: String, gtr: ⇒ String): Label = { val label = new ScalaLabel(id, new FodelString(gtr)); add(label); label }
+  def labelf[T](id: String, gtr: => String): Label = { val label = new ScalaLabel(id, new FodelString(gtr)); add(label); label }
   def label[T](id: String, value: String): Label = { val label = new Label(id, value); add(label); label }
 
   implicit def ser2model[S <: Serializable](ser: S): IModel[S] = Model.of(ser)
@@ -70,19 +70,19 @@ trait DSLWicket {
   }
   def checkGroup[T](id: String): SCheckGroup[T] = { val cg = new CheckGroup[T](id) with SCheckGroup[T]; add(cg); cg; }
   def checkBox(id: String): CheckBox = { val c = new CheckBox(id); add(c); c; }
-  def submitLink(id: String, submit: () ⇒ _): SubmitLink = {
+  def submitLink(id: String, submit: () => _): SubmitLink = {
     val sl = new SubmitLink(id) { override def onSubmit() = submit() }
     add(sl); sl
   }
-  def submitLink(id: String, submit: (SubmitLink) ⇒ _): SubmitLink = {
+  def submitLink(id: String, submit: (SubmitLink) => _): SubmitLink = {
     val sl = new SubmitLink(id) { override def onSubmit() = submit(this) }
     add(sl); sl
   }
-  def button(id: String, submit: () ⇒ _): Button = {
+  def button(id: String, submit: () => _): Button = {
     val button = new Button(id) { override def onSubmit() = submit() }
     add(button); button
   }
-  def cancelButton(id: String, submit: () ⇒ _): Button = {
+  def cancelButton(id: String, submit: () => _): Button = {
     val button = new Button(id) { override def onSubmit() = submit() }
     button.setDefaultFormProcessing(false)
     add(button); button
@@ -94,12 +94,12 @@ trait DSLWicket {
   def form[T](id: String): SForm[T] = {
     val form = new Form[T](id) with SForm[T]; add(form); form
   }
-  def form[T](id: String, onsubmit: () ⇒ _): SForm[T] = {
+  def form[T](id: String, onsubmit: () => _): SForm[T] = {
     val form = new Form[T](id) with SForm[T] {
       override def onSubmit() = onsubmit()
     }; add(form); form
   }
-  def button(id: String, submit: (Button) ⇒ _): Button = {
+  def button(id: String, submit: (Button) => _): Button = {
     val button = new Button(id) { override def onSubmit() = submit(this) }
     add(button); button
   }
@@ -108,41 +108,41 @@ trait DSLWicket {
   def cmodel[T](obj: T): IModel[T] = { new CompoundPropertyModel[T](obj); }
   def scmodel[T](obj: T): IModel[T] = { val cpm = cmodel[T](obj); setDefaultModel(cpm); cpm }
   def compound[T](obj: T): IModel[T] = { val m = new CompoundPropertyModel[T](obj); setDefaultModel(m); m }
-  def blink[T](id: String, clazz: Class[_ <: Page], params: PageParameters = null): BookmarkablePageLink[T] = {
+  def blink[T <: Page](id: String, clazz: Class[T], params: PageParameters = null): BookmarkablePageLink[T] = {
     val b = new BookmarkablePageLink[T](id, clazz, params); add(b); b
   }
-  def link[T](id: String, click: () ⇒ _): SLink[T] = {
+  def link[T](id: String, click: () => _): SLink[T] = {
     val l = new Link[T](id) with SLink[T] { override def onClick() = click() }
     add(l); l
   }
-  def link[T](id: String, click: (SLink[_]) ⇒ _): SLink[T] = {
+  def link[T](id: String, click: (SLink[_]) => _): SLink[T] = {
     val l = new Link[T](id) with SLink[T] { override def onClick() = click(this) }
     add(l); l
   }
-  def link[T](container: WebMarkupContainer, id: String, click: (SLink[_]) ⇒ _): SLink[T] = {
+  def link[T](container: WebMarkupContainer, id: String, click: (SLink[_]) => _): SLink[T] = {
     val l = new Link[T](id) with SLink[T] { override def onClick() = click(this) }
     container.add(l); l
   }
-  def listView[T](id: String, populate: (SListItem[T]) ⇒ _): ListView[T] = {
+  def listView[T](id: String, populate: (SListItem[T]) => _): ListView[T] = {
     val lv = new ListView[T](id) {
       override def populateItem(item: ListItem[T]) = populate(item.asInstanceOf[SListItem[T]])
       override def newItem(index: Int, itemModel: IModel[T]): ListItem[T] = new ListItem[T](index, itemModel) with SListItem[T]
     }
     add(lv); lv
   }
-  def listView[T](id: String, populate: (SListItem[T]) ⇒ _, m: IModel[_ <: java.util.List[_ <: T]]): ListView[T] = {
+  def listView[T](id: String, populate: (SListItem[T]) => _, m: IModel[_ <: java.util.List[_ <: T]]): ListView[T] = {
     val lv = listView[T](id, populate)
     lv.setDefaultModel(m)
     lv
   }
-  def pageableListView[T](id: String, populate: (SListItem[T]) ⇒ _, m: IModel[_ <: java.util.List[T]], pageSize: Int): DSLPageable[T] = {
+  def pageableListView[T](id: String, populate: (SListItem[T]) => _, m: IModel[_ <: java.util.List[T]], pageSize: Int): DSLPageable[T] = {
     val lv = new PageableListView[T](id, m, pageSize) with DSLPageable[T] { 
       override def populateItem(item: ListItem[T]) = populate(item.asInstanceOf[SListItem[T]])
       override def newItem(index: Int, itemModel: IModel[T]): ListItem[T] = new ListItem[T](index, itemModel) with SListItem[T]
     }
     add(lv); lv
   }
-  def pageableListView[T](id: String, populate: (SListItem[T]) ⇒ _, l: java.util.List[T], pageSize: Int): DSLPageable[T] = {
+  def pageableListView[T](id: String, populate: (SListItem[T]) => _, l: java.util.List[T], pageSize: Int): DSLPageable[T] = {
     val lv = new PageableListView[T](id, l, pageSize) with DSLPageable[T] {
       override def populateItem(item: ListItem[T]) = populate(item.asInstanceOf[SListItem[T]])
       override def newItem(index: Int, itemModel: IModel[T]): ListItem[T] = new ListItem[T](index, itemModel) with SListItem[T]
@@ -162,10 +162,10 @@ trait DSLWicket {
     add(el)
     el
   }
-  def emailLink(id: String, email: String) { emailLink(id, email, email) }
+  def emailLink(id: String, email: String): ExternalLink = { emailLink(id, email, email) }
   def select[T](id: String): DropDownChoice[T] = select[T](id, null)
   def select[T](id: String, elements: List[T]): DropDownChoice[T] = {
-    val ddc = new DropDownChoice[T](id, elements)
+    val ddc = new DropDownChoice[T](id, elements.asJava)
     add(ddc); ddc
   }
   def radioGroup[T](id: String, model: IModel[T] = null): DSLRadioGroup[T] = {
@@ -188,7 +188,7 @@ trait DSLWicket {
     def optional() = setRequired(false)
   }
   trait FunctionalValidatable[T] extends FormComponent[T] {
-    def validation(f: (IValidatable[T]) ⇒ Unit) = add(new IValidator[T] {
+    def validation(f: (IValidatable[T]) => Unit) = add(new IValidator[T] {
       def validate(validatable: IValidatable[T]) = f(validatable)
     })
   }

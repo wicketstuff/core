@@ -17,13 +17,13 @@ trait LinkT
     case _ => null
   }
 
-  def link[T](id: String, model: IModel[T] = null)(f: ⇒ Unit): ScalaLink[T] = {
+  def link[T](id: String, model: IModel[T] = null)(f: => Unit): ScalaLink[T] = {
     val link = new ScalaLink[T](id, model, f)
     self.add(link)
     link
   }
 
-  def statelessLink[T](id: String)(f: ⇒ Unit): ScalaStatelessLink[T] = {
+  def statelessLink[T](id: String)(f: => Unit): ScalaStatelessLink[T] = {
     val link = new ScalaStatelessLink[T](id, f)
     self.add(link)
     link
@@ -35,13 +35,13 @@ trait LinkT
     link
   }
 
-  def ajaxLink[T](id: String, model: IModel[T] = null)(f: (AjaxRequestTarget) ⇒ Unit): ScalaAjaxLink[T] = {
+  def ajaxLink[T](id: String, model: IModel[T] = null)(f: (AjaxRequestTarget) => Unit): ScalaAjaxLink[T] = {
     val link = new ScalaAjaxLink[T](id, model, f)
     self.add(link)
     link
   }
 
-  def fallbackLink[T](id: String, model: IModel[T] = null)(f: (Option[AjaxRequestTarget]) ⇒ Unit): ScalaAjaxFallbackLink[T] = {
+  def fallbackLink[T](id: String, model: IModel[T] = null)(f: (Option[AjaxRequestTarget]) => Unit): ScalaAjaxFallbackLink[T] = {
     val link = new ScalaAjaxFallbackLink[T](id, model, f)
     self.add(link)
     link
