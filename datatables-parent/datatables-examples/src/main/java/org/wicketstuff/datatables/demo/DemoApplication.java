@@ -47,6 +47,8 @@ public class DemoApplication extends WebApplication
         getMarkupSettings().setStripWicketTags(true);
 
 	    configureResourceGuard();
+	    
+	    getCspSettings().blocking().disabled();
     }
 
 	private void configureResourceGuard() {

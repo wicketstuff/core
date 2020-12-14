@@ -28,15 +28,17 @@ public class PeopleDataProvider extends SortableDataProvider<Person, String> {
         List<Person> people = new ArrayList<>();
         Random random = new Random(123);
 
-        for (int i = 0; i < count;) {
+        for (int i = 0; i < FIRST_NAMES.length * LAST_NAMES.length; i++) {
             int randomFirst = random.nextInt(FIRST_NAMES.length);
             int randomLast = random.nextInt(LAST_NAMES.length);
             int randomAge = random.nextInt(99);
             final String firstName = FIRST_NAMES[randomFirst];
             final String lastName = LAST_NAMES[randomLast];
-            if (searchFilter != null && (firstName.toLowerCase().contains(searchFilter) || lastName.toLowerCase().contains(searchFilter) )) {
+            if (searchFilter == null || (firstName.toLowerCase().contains(searchFilter) || lastName.toLowerCase().contains(searchFilter) )) {
                 people.add(new Person(firstName, lastName, randomAge, first + i));
-                i++;
+            }
+            if (people.size() >= count) {
+            	break;
             }
         }
         return people.iterator();
@@ -44,7 +46,7 @@ public class PeopleDataProvider extends SortableDataProvider<Person, String> {
 
     @Override
     public long size() {
-        return FIRST_NAMES.length;
+        return FIRST_NAMES.length * LAST_NAMES.length;
     }
 
     @Override
