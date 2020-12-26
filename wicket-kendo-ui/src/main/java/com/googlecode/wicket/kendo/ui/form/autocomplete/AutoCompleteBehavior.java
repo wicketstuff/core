@@ -187,8 +187,7 @@ public abstract class AutoCompleteBehavior extends KendoUIBehavior implements IJ
 		protected CallbackParameter[] getCallbackParameters()
 		{
 			return new CallbackParameter[] { CallbackParameter.context("e"), // lf
-					CallbackParameter.resolved("index", "e.item.index()"), // lf
-					CallbackParameter.resolved("value", "e.item.text") };
+					CallbackParameter.resolved("index", "e.item.index()") };
 		}
 
 		@Override
@@ -206,22 +205,15 @@ public abstract class AutoCompleteBehavior extends KendoUIBehavior implements IJ
 	protected static class SelectEvent extends JQueryEvent
 	{
 		private final int index;
-		private final String value;
 
 		public SelectEvent()
 		{
 			this.index = RequestCycleUtils.getQueryParameterValue("index").toInt(-1);
-			this.value = RequestCycleUtils.getQueryParameterValue("value").toString();
 		}
 
 		public int getIndex()
 		{
 			return this.index;
-		}
-
-		public String getValue()
-		{
-			return this.value;
 		}
 	}
 }
