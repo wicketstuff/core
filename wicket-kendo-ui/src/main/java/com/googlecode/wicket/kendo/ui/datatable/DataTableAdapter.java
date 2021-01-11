@@ -60,6 +60,17 @@ public class DataTableAdapter implements IDataTableListener
 	}
 	
 	@Override
+	public void onChange(AjaxRequestTarget target, JSONArray items)
+	{
+		// noop
+	}
+
+	@Override
+	public void onChecked(AjaxRequestTarget target, Object[] selectedKeys) {
+		// noop		
+	}
+	
+	@Override
 	public void onColumnReorder(AjaxRequestTarget target, int oldIndex, int newIndex, JSONObject column)
 	{
 		// noop		
@@ -81,11 +92,5 @@ public class DataTableAdapter implements IDataTableListener
 	public void onDelete(AjaxRequestTarget target, JSONObject object)
 	{
 		// noop		
-	}
-
-	@Override
-	public void onChange(AjaxRequestTarget target, JSONArray items)
-	{
-		// noop
 	}
 }

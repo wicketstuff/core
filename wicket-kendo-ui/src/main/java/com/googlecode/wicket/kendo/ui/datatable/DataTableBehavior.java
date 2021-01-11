@@ -22,6 +22,7 @@ import java.util.List;
 import org.apache.wicket.Component;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.attributes.CallbackParameter;
+import org.apache.wicket.behavior.Behavior;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.util.lang.Args;
 import org.apache.wicket.util.lang.Generics;
@@ -43,6 +44,7 @@ import com.googlecode.wicket.kendo.ui.datatable.button.CommandButton;
 import com.googlecode.wicket.kendo.ui.datatable.button.ToolbarAjaxBehavior;
 import com.googlecode.wicket.kendo.ui.datatable.button.ToolbarAjaxBehavior.ToolbarClickEvent;
 import com.googlecode.wicket.kendo.ui.datatable.button.ToolbarButton;
+import com.googlecode.wicket.kendo.ui.datatable.column.CheckboxColumn;
 import com.googlecode.wicket.kendo.ui.datatable.column.CommandColumn;
 import com.googlecode.wicket.kendo.ui.datatable.column.IColumn;
 import com.googlecode.wicket.kendo.ui.datatable.column.IdPropertyColumn;
@@ -115,11 +117,8 @@ public abstract class DataTableBehavior extends KendoUIBehavior implements IJQue
 		this.onCancelAjaxBehavior = this.newOnCancelAjaxBehavior(this);
 		component.add(this.onCancelAjaxBehavior);
 
-		if (this.listener.isSelectable())
-		{
-			this.onChangeAjaxBehavior = this.newOnChangeAjaxBehavior(this);
-			component.add(this.onChangeAjaxBehavior);
-		}
+		this.onChangeAjaxBehavior = this.newOnChangeAjaxBehavior(this);
+		component.add(this.onChangeAjaxBehavior);
 
 		if (this.isColumnReorderEnabled())
 		{
@@ -234,6 +233,17 @@ public abstract class DataTableBehavior extends KendoUIBehavior implements IJQue
 	protected boolean hasVisibleToolbarButtons()
 	{
 		return !this.getVisibleToolbarButtons().isEmpty();
+	}
+
+
+	/**
+	 * Indicates whether the columns {@link IModel} contains a {@link CheckboxColumn}
+	 * 
+	 * @return {@code true} if a {@link CheckboxColumn} is found
+	 */
+	protected boolean hasCheckboxColumn()
+	{
+		return this.columns.getObject().stream().anyMatch(column -> column instanceof CheckboxColumn);
 	}
 
 	/**
@@ -373,7 +383,7 @@ public abstract class DataTableBehavior extends KendoUIBehavior implements IJQue
 	@Override
 	public void onConfigure(Component component)
 	{
-		List<IColumn> columns = this.columns.getObject();
+		final List<IColumn> columns = this.columns.getObject();
 
 		// this.setOption("edit", this.onEditAjaxBehavior.getCallbackFunction());
 		this.setOption("cancel", this.onCancelAjaxBehavior.getCallbackFunction());
@@ -467,6 +477,10 @@ public abstract class DataTableBehavior extends KendoUIBehavior implements IJQue
 		if (event instanceof ChangeEvent)
 		{
 			this.listener.onChange(target, ((ChangeEvent) event).getItems());
+		}
+
+		if (event instanceof CheckboxEvent) {
+			this.listener.onChecked(target, ((CheckboxEvent) event).getSelectedKeys());
 		}
 
 		if (event instanceof ColumnReorderEvent)
@@ -566,14 +580,24 @@ public abstract class DataTableBehavior extends KendoUIBehavior implements IJQue
 	}
 
 	/**
-	 * Gets a new {@link JQueryAjaxBehavior} that will be wired to the 'select' event
+	 * Gets a new {@link JQueryAjaxBehavior} that will be wired to the 'change' event
 	 *
 	 * @param source the {@link IJQueryAjaxAware}
-	 * @return a new {@code OnChangeAjaxBehavior} by default
+	 * @return a new {@code OnChangeAjaxBehavior} or a new {@link OnCheckedAjaxBehavior}
 	 */
 	protected JQueryAjaxBehavior newOnChangeAjaxBehavior(IJQueryAjaxAware source)
 	{
-		return new OnChangeAjaxBehavior(source);
+		if (this.hasCheckboxColumn())
+		{
+			return new OnCheckedAjaxBehavior(source);
+		}
+
+		if (this.listener.isSelectable())
+		{	
+			return new OnChangeAjaxBehavior(source);			
+		}
+		
+		return null;
 	}
 
 	/**
@@ -689,7 +713,7 @@ public abstract class DataTableBehavior extends KendoUIBehavior implements IJQue
 	// Ajax classes //
 
 	/**
-	 * Provides a {@link JQueryAjaxBehavior} that aims to be wired to the 'select' event
+	 * Provides a {@link JQueryAjaxBehavior} that aims to be wired to the 'change' event
 	 */
 	protected static class OnChangeAjaxBehavior extends JQueryAjaxBehavior
 	{
@@ -724,6 +748,38 @@ public abstract class DataTableBehavior extends KendoUIBehavior implements IJQue
 		}
 	}
 
+	/**
+	 * Provides a {@link JQueryAjaxBehavior} that aims to be wired to the 'change' event (for checkboxes)
+	 */
+	protected static class OnCheckedAjaxBehavior extends JQueryAjaxBehavior 
+	{
+	    private static final long serialVersionUID = 1L;
+
+	    /**
+	     * Constructor
+	     *
+	     * @param source the {@link Behavior} that will broadcast the event.
+	     */
+	    public OnCheckedAjaxBehavior(final IJQueryAjaxAware source) 
+	    {
+	        super(source);
+	    }
+	    
+	    @Override
+	    protected CallbackParameter[] getCallbackParameters() 
+	    {
+	        return new CallbackParameter[] {
+	            CallbackParameter.context("e"),
+	            CallbackParameter.resolved("values", "this.selectedKeyNames()") };
+	    }
+
+	    @Override
+	    protected JQueryEvent newEvent() 
+	    {
+	        return new CheckboxEvent();
+	    }
+	}
+
 	// Event object //
 
 	/**
@@ -733,6 +789,24 @@ public abstract class DataTableBehavior extends KendoUIBehavior implements IJQue
 	{
 	}
 
+	/**
+	 * Provides an event object that will be broadcasted by the {@link OnCheckedAjaxBehavior} callback
+	 */
+	protected static class CheckboxEvent extends JQueryEvent {
+
+        private final Object[] selectedKeys;
+        
+        public CheckboxEvent()
+        {
+            this.selectedKeys = RequestCycleUtils.getQueryParameterValues("values").toArray();
+        }
+
+        public Object[] getSelectedKeys()
+        {
+            return selectedKeys;
+        }
+    }
+ 
 	/**
 	 * Provides an event object that will be broadcasted by the {@linkplain #newColumnReorderAjaxBehavior} callback
 	 */

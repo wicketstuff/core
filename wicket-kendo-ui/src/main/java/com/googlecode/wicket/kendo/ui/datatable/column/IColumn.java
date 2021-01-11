@@ -72,7 +72,14 @@ public interface IColumn extends IClusterable
 	 * @return {@code null} by default 
 	 */
 	Boolean isEncoded();
-	
+
+	/**
+	 * Indicates whether this {@link IColumn} is selectable
+	 * 
+	 * @return {@code null} by default, meaning not specified
+	 */
+	Boolean isSelectable();
+
 	/**
 	 * Provides a way to specify a custom editing UI for the column.
 	 * 

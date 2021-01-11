@@ -44,7 +44,7 @@ public class CollapseBehavior extends KendoUIBehavior
 	 * Constructor<br>
 	 * <b>Caution:</b> this constructor is for advanced usage
 	 *
-	 * @param selector the html selector of the underlying UL (ie: "#myId > UL")
+	 * @param selector the html selector of the underlying UL (ie: "#myId &gt; UL")
 	 */
 	public CollapseBehavior(String selector)
 	{
@@ -55,7 +55,7 @@ public class CollapseBehavior extends KendoUIBehavior
 	 * Constructor<br>
 	 * <b>Caution:</b> this constructor is for advanced usage
 	 *
-	 * @param selector the html selector of the underlying UL (ie: "#myId > UL")
+	 * @param selector the html selector of the underlying UL (ie: "#myId &gt; UL")
 	 * @param children the children selector
 	 */
 	public CollapseBehavior(String selector, String children)

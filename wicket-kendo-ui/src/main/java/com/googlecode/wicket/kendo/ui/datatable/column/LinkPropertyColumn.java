@@ -36,7 +36,7 @@ public abstract class LinkPropertyColumn extends PropertyColumn
 	 *
 	 * @param title the text of the column header
 	 */
-	public LinkPropertyColumn(String title)
+	protected LinkPropertyColumn(String title)
 	{
 		super(title);
 	}
@@ -47,7 +47,7 @@ public abstract class LinkPropertyColumn extends PropertyColumn
 	 * @param title the text of the column header
 	 * @param property the object property name
 	 */
-	public LinkPropertyColumn(String title, String property)
+	protected LinkPropertyColumn(String title, String property)
 	{
 		super(title, property);
 	}
@@ -58,7 +58,7 @@ public abstract class LinkPropertyColumn extends PropertyColumn
 	 * @param title the text of the column header
 	 * @param width the desired width of the column
 	 */
-	public LinkPropertyColumn(String title, int width)
+	protected LinkPropertyColumn(String title, int width)
 	{
 		super(title, width);
 	}
@@ -69,7 +69,7 @@ public abstract class LinkPropertyColumn extends PropertyColumn
 	 * @param title the text of the column header
 	 * @param property the object property name
 	 */
-	public LinkPropertyColumn(IModel<String> title, String property)
+	protected LinkPropertyColumn(IModel<String> title, String property)
 	{
 		super(title, property);
 	}
@@ -81,7 +81,7 @@ public abstract class LinkPropertyColumn extends PropertyColumn
 	 * @param property the object property name
 	 * @param width the desired width of the column
 	 */
-	public LinkPropertyColumn(String title, String property, int width)
+	protected LinkPropertyColumn(String title, String property, int width)
 	{
 		super(title, property, width);
 	}
@@ -93,7 +93,7 @@ public abstract class LinkPropertyColumn extends PropertyColumn
 	 * @param property the object property name
 	 * @param width the desired width of the column
 	 */
-	public LinkPropertyColumn(IModel<String> title, String property, int width)
+	protected LinkPropertyColumn(IModel<String> title, String property, int width)
 	{
 		super(title, property, width);
 	}

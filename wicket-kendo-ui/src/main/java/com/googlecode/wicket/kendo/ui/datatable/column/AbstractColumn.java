@@ -51,7 +51,7 @@ public abstract class AbstractColumn implements IColumn
 	 *
 	 * @param title the text of the column header
 	 */
-	public AbstractColumn(String title)
+	protected AbstractColumn(String title)
 	{
 		this(Model.of(title), null, WIDTH);
 	}
@@ -62,7 +62,7 @@ public abstract class AbstractColumn implements IColumn
 	 * @param title the text of the column header
 	 * @param width the desired width of the column
 	 */
-	public AbstractColumn(String title, int width)
+	protected AbstractColumn(String title, int width)
 	{
 		this(Model.of(title), null, width);
 	}
@@ -73,7 +73,7 @@ public abstract class AbstractColumn implements IColumn
 	 * @param title the text of the column header
 	 * @param field the object field name
 	 */
-	public AbstractColumn(String title, String field)
+	protected AbstractColumn(String title, String field)
 	{
 		this(Model.of(title), field, WIDTH);
 	}
@@ -85,7 +85,7 @@ public abstract class AbstractColumn implements IColumn
 	 * @param field the object field name
 	 * @param width the desired width of the column
 	 */
-	public AbstractColumn(String title, String field, int width)
+	protected AbstractColumn(String title, String field, int width)
 	{
 		this(Model.of(title), field, width);
 	}
@@ -95,7 +95,7 @@ public abstract class AbstractColumn implements IColumn
 	 *
 	 * @param title the text of the column header
 	 */
-	public AbstractColumn(IModel<String> title)
+	protected AbstractColumn(IModel<String> title)
 	{
 		this(title, null, WIDTH);
 	}
@@ -106,7 +106,7 @@ public abstract class AbstractColumn implements IColumn
 	 * @param title the text of the column header
 	 * @param width the desired width of the column
 	 */
-	public AbstractColumn(IModel<String> title, int width)
+	protected AbstractColumn(IModel<String> title, int width)
 	{
 		this(title, null, width);
 	}
@@ -117,7 +117,7 @@ public abstract class AbstractColumn implements IColumn
 	 * @param title the text of the column header
 	 * @param field the object field name
 	 */
-	public AbstractColumn(IModel<String> title, String field)
+	protected AbstractColumn(IModel<String> title, String field)
 	{
 		this(title, field, WIDTH);
 	}
@@ -129,7 +129,7 @@ public abstract class AbstractColumn implements IColumn
 	 * @param field the object field name
 	 * @param width the desired width of the column
 	 */
-	public AbstractColumn(IModel<String> title, String field, int width)
+	protected AbstractColumn(IModel<String> title, String field, int width)
 	{
 		this.titleModel = title;
 		this.field = field;
@@ -173,6 +173,11 @@ public abstract class AbstractColumn implements IColumn
 	@Override
 	public Boolean isEncoded()
 	{
+		return null;
+	}
+	
+	@Override
+	public Boolean isSelectable() {
 		return null;
 	}
 
@@ -372,6 +377,12 @@ public abstract class AbstractColumn implements IColumn
 		{
 			builder.append(", ");
 			builder.append(Options.QUOTE).append("editable").append(Options.QUOTE).append(": function(dataItem) { return ").append(this.isEditable()).append("; }");
+		}
+
+		if (this.isSelectable() != null)
+		{
+			builder.append(", ");
+			BuilderUtils.append(builder, "selectable", this.isSelectable());
 		}
 
 		if (this.isPopupVisible() != null)

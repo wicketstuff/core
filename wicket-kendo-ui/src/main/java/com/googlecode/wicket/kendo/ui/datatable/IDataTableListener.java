@@ -26,6 +26,7 @@ import com.github.openjson.JSONObject;
 
 import com.googlecode.wicket.kendo.ui.datatable.button.CommandButton;
 import com.googlecode.wicket.kendo.ui.datatable.button.ToolbarButton;
+import com.googlecode.wicket.kendo.ui.datatable.column.CheckboxColumn;
 
 /**
  * Event listener shared by the {@link DataTable} widget and the {@link DataTableBehavior}
@@ -36,7 +37,8 @@ public interface IDataTableListener extends IClusterable
 {
 	/**
 	 * Indicates whether item(s) can be selected.<br>
-	 * If true, the {@link #onChange(AjaxRequestTarget, JSONArray)} event will be triggered
+	 * If true, the {@link #onChange(AjaxRequestTarget, JSONArray)} event will be triggered.<br>
+	 * If a {@link CheckboxColumn} has been provided, {@link #onChecked(AjaxRequestTarget, Object[])} will be triggered instead.
 	 *
 	 * @return false by default
 	 */
@@ -75,6 +77,15 @@ public interface IDataTableListener extends IClusterable
 	 */
 	void onChange(AjaxRequestTarget target, JSONArray items);
 
+    /**
+     * Triggered when a checkbox is 'checked'.
+     * 
+     * @param target the {@link AjaxRequestTarget}
+     * @param selectedKeys the selected keys
+     * @see CheckboxColumn
+     */
+    void onChecked(AjaxRequestTarget target, Object[] selectedKeys);
+ 
 	/**
 	 * Triggered when the user changes the order of a column.
 	 * 

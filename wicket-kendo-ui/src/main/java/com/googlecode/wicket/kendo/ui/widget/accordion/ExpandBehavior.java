@@ -44,7 +44,7 @@ public class ExpandBehavior extends KendoUIBehavior
 	 * Constructor<br>
 	 * <b>Caution:</b> this constructor is for advanced usage
 	 *
-	 * @param selector the html selector of the underlying UL (ie: "#myId > UL")
+	 * @param selector the html selector of the underlying UL (ie: "#myId &gt; UL")
 	 */
 	public ExpandBehavior(String selector)
 	{
@@ -55,7 +55,7 @@ public class ExpandBehavior extends KendoUIBehavior
 	 * Constructor<br>
 	 * <b>Caution:</b> this constructor is for advanced usage
 	 *
-	 * @param selector the html selector of the underlying UL (ie: "#myId > UL")
+	 * @param selector the html selector of the underlying UL (ie: "#myId &gt; UL")
 	 * @param children the children selector
 	 */
 	public ExpandBehavior(String selector, String children)

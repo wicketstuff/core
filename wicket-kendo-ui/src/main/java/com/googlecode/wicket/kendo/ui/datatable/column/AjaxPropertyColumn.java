@@ -46,7 +46,7 @@ public abstract class AjaxPropertyColumn extends PropertyColumn
 	 * @param title the text of the column header
 	 * @param datatable the holding {@link DataTable}
 	 */
-	public AjaxPropertyColumn(String title, DataTable<?> datatable)
+	protected AjaxPropertyColumn(String title, DataTable<?> datatable)
 	{
 		super(title);
 
@@ -60,7 +60,7 @@ public abstract class AjaxPropertyColumn extends PropertyColumn
 	 * @param property the object property name
 	 * @param datatable the holding {@link DataTable}
 	 */
-	public AjaxPropertyColumn(String title, String property, DataTable<?> datatable)
+	protected AjaxPropertyColumn(String title, String property, DataTable<?> datatable)
 	{
 		super(title, property);
 
@@ -74,7 +74,7 @@ public abstract class AjaxPropertyColumn extends PropertyColumn
 	 * @param width the desired width of the column
 	 * @param datatable the holding {@link DataTable}
 	 */
-	public AjaxPropertyColumn(String title, int width, DataTable<?> datatable)
+	protected AjaxPropertyColumn(String title, int width, DataTable<?> datatable)
 	{
 		super(title, width);
 
@@ -89,7 +89,7 @@ public abstract class AjaxPropertyColumn extends PropertyColumn
 	 * @param width the desired width of the column
 	 * @param datatable the holding {@link DataTable}
 	 */
-	public AjaxPropertyColumn(String title, String property, int width, DataTable<?> datatable)
+	protected AjaxPropertyColumn(String title, String property, int width, DataTable<?> datatable)
 	{
 		super(title, property, width);
 
@@ -103,7 +103,7 @@ public abstract class AjaxPropertyColumn extends PropertyColumn
 	 * @param property the object property name
 	 * @param datatable the holding {@link DataTable}
 	 */
-	public AjaxPropertyColumn(IModel<String> title, String property, DataTable<?> datatable)
+	protected AjaxPropertyColumn(IModel<String> title, String property, DataTable<?> datatable)
 	{
 		super(title, property);
 
@@ -118,7 +118,7 @@ public abstract class AjaxPropertyColumn extends PropertyColumn
 	 * @param width the desired width of the column
 	 * @param datatable the holding {@link DataTable}
 	 */
-	public AjaxPropertyColumn(IModel<String> title, String property, int width, DataTable<?> datatable)
+	protected AjaxPropertyColumn(IModel<String> title, String property, int width, DataTable<?> datatable)
 	{
 		super(title, property, width);
 

@@ -37,7 +37,7 @@ public abstract class CommandColumn extends AbstractColumn
 	/**
 	 * Constructor
 	 */
-	public CommandColumn()
+	protected CommandColumn()
 	{
 		super("");
 	}
@@ -47,7 +47,7 @@ public abstract class CommandColumn extends AbstractColumn
 	 * 
 	 * @param title the text of the column header
 	 */
-	public CommandColumn(String title)
+	protected CommandColumn(String title)
 	{
 		super(title);
 	}
@@ -57,7 +57,7 @@ public abstract class CommandColumn extends AbstractColumn
 	 * 
 	 * @param width the desired width of the column
 	 */
-	public CommandColumn(int width)
+	protected CommandColumn(int width)
 	{
 		super("", width);
 	}
@@ -68,7 +68,7 @@ public abstract class CommandColumn extends AbstractColumn
 	 * @param title the text of the column header
 	 * @param width the desired width of the column
 	 */
-	public CommandColumn(String title, int width)
+	protected CommandColumn(String title, int width)
 	{
 		super(title, width);
 	}
@@ -78,7 +78,7 @@ public abstract class CommandColumn extends AbstractColumn
 	 * 
 	 * @param title the text of the column header
 	 */
-	public CommandColumn(IModel<String> title)
+	protected CommandColumn(IModel<String> title)
 	{
 		super(title);
 	}
@@ -89,7 +89,7 @@ public abstract class CommandColumn extends AbstractColumn
 	 * @param title the text of the column header
 	 * @param width the desired width of the column
 	 */
-	public CommandColumn(IModel<String> title, int width)
+	protected CommandColumn(IModel<String> title, int width)
 	{
 		super(title, width);
 	}

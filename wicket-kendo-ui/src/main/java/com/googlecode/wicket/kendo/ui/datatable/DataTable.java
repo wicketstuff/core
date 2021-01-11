@@ -409,7 +409,18 @@ public class DataTable<T> extends WebComponent implements IGenericComponent<List
 	{
 		// noop
 	}
-	
+
+	@Override
+	public void onChange(AjaxRequestTarget target, JSONArray items)
+	{
+		// noop
+	}
+
+	@Override
+	public void onChecked(AjaxRequestTarget target, Object[] selectedKeys) {
+		// noop
+	}
+
 	@Override
 	public void onColumnReorder(AjaxRequestTarget target, int oldIndex, int newIndex, JSONObject column)
 	{
@@ -430,12 +441,6 @@ public class DataTable<T> extends WebComponent implements IGenericComponent<List
 
 	@Override
 	public void onDelete(AjaxRequestTarget target, JSONObject object)
-	{
-		// noop
-	}
-
-	@Override
-	public void onChange(AjaxRequestTarget target, JSONArray items)
 	{
 		// noop
 	}
