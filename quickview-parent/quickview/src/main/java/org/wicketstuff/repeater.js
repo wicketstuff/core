@@ -99,7 +99,7 @@ var QuickView = {
         // offsetheight : element height	
         // scrolltop : height of scroll from top
         // scroll-height:height of the scroll view of an element
-        return ($(el).prop("offsetHeight") + $(el).scrollTop() >= $(el).prop("scrollHeight"));
+        return (Math.round($(el).prop("offsetHeight")) + Math.round($(el).scrollTop()) >= Math.round($(el).prop("scrollHeight")));
     },
     /**
      returns true if the scrollbar of the page is moved at the bottom else it returns false
