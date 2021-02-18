@@ -84,7 +84,7 @@ public interface IDataTableListener extends IClusterable
      * @param selectedKeys the selected keys
      * @see CheckboxColumn
      */
-    void onChecked(AjaxRequestTarget target, Object[] selectedKeys);
+    void onChecked(AjaxRequestTarget target, List<String> selectedKeys);
  
 	/**
 	 * Triggered when the user changes the order of a column.

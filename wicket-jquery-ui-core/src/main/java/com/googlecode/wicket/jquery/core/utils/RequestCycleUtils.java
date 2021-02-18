@@ -17,6 +17,7 @@
 package com.googlecode.wicket.jquery.core.utils;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.apache.wicket.ajax.AbstractDefaultAjaxBehavior;
 import org.apache.wicket.ajax.AjaxRequestTarget;
@@ -77,7 +78,7 @@ public class RequestCycleUtils
 	{
 		return RequestCycle.get().urlFor(new ResourceReferenceRequestHandler(AbstractDefaultAjaxBehavior.INDICATOR));
 	}
-	
+
 	/**
 	 * Gets the page class of the current request cycle
 	 * 
@@ -206,5 +207,16 @@ public class RequestCycleUtils
 		{
 			log.info("{}: {}", name, parameters.getParameterValue(name));
 		}
+	}
+
+	/**
+	 * Converts a list of {@link StringValue}{@code s} to a list of {@code String}
+	 * 
+	 * @param value the list of {@link StringValue}{@code s}
+	 * @return a list of {@code String}
+	 */
+	public static List<String> toStringList(List<StringValue> values)
+	{
+		return values.stream().map(StringValue::toString).collect(Collectors.toList());
 	}
 }

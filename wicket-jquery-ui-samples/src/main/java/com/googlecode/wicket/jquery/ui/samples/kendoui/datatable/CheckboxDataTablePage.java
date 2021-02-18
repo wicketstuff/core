@@ -1,6 +1,5 @@
 package com.googlecode.wicket.jquery.ui.samples.kendoui.datatable;
 
-import java.util.Arrays;
 import java.util.List;
 
 import org.apache.wicket.ajax.AjaxRequestTarget;
@@ -46,9 +45,9 @@ public class CheckboxDataTablePage extends AbstractDataTablePage
 			private static final long serialVersionUID = 1L;
 
 			@Override
-            public void onChecked(AjaxRequestTarget target, Object[] selectedKeys)
+            public void onChecked(AjaxRequestTarget target, List<String> selectedKeys)
             {
-                final String message = "Selected keys: " + Arrays.asList(selectedKeys);
+                final String message = "Selected keys: " + selectedKeys.toString();
 
                 feedback.info(message);
                 feedback.refresh(target);

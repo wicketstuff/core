@@ -26,6 +26,7 @@ import org.apache.wicket.behavior.Behavior;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.util.lang.Args;
 import org.apache.wicket.util.lang.Generics;
+import org.apache.wicket.util.string.StringValue;
 
 import com.github.openjson.JSONObject;
 import com.googlecode.wicket.jquery.core.JQueryEvent;
@@ -794,14 +795,14 @@ public abstract class DataTableBehavior extends KendoUIBehavior implements IJQue
 	 */
 	protected static class CheckboxEvent extends JQueryEvent {
 
-        private final Object[] selectedKeys;
+        private final List<String> selectedKeys;
         
         public CheckboxEvent()
         {
-            this.selectedKeys = RequestCycleUtils.getQueryParameterValues("values").toArray();
+            this.selectedKeys = RequestCycleUtils.toStringList(RequestCycleUtils.getQueryParameterValues("values"));
         }
 
-        public Object[] getSelectedKeys()
+        public List<String> getSelectedKeys()
         {
             return selectedKeys;
         }

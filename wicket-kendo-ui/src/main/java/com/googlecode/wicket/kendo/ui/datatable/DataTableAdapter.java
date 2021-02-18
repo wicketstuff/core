@@ -66,7 +66,7 @@ public class DataTableAdapter implements IDataTableListener
 	}
 
 	@Override
-	public void onChecked(AjaxRequestTarget target, Object[] selectedKeys) {
+	public void onChecked(AjaxRequestTarget target, List<String> selectedKeys) {
 		// noop		
 	}
 	

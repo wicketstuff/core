@@ -417,7 +417,7 @@ public class DataTable<T> extends WebComponent implements IGenericComponent<List
 	}
 
 	@Override
-	public void onChecked(AjaxRequestTarget target, Object[] selectedKeys) {
+	public void onChecked(AjaxRequestTarget target, List<String> selectedKeys) {
 		// noop
 	}
 
