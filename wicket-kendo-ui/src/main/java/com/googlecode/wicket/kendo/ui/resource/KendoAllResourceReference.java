@@ -24,7 +24,7 @@ public class KendoAllResourceReference extends JQueryUrlResourceReference
 	 */
 	private KendoAllResourceReference()
 	{
-		super("http://kendo.cdn.telerik.com/2020.3.915/js/kendo.all.min.js");
+		super("https://kendo.cdn.telerik.com/2021.1.119/js/kendo.all.min.js");
 	}
 
 	/**
