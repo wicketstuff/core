@@ -1,5 +1,5 @@
 # wicket-jquery-ui
-**jQuery UI integration in Wicket 6.x, Wicket 7.x, Wicket 8.x &amp; Wicket9.x**  
+**jQuery UI & Kendo UI integration in Wicket 7.x, Wicket 8.x &amp; Wicket9.x**  
 [![TravisCI](https://travis-ci.org/sebfz1/wicket-jquery-ui.svg?branch=wicket9.x)](https://travis-ci.org/sebfz1/wicket-jquery-ui)
 
 ## Getting started
@@ -18,14 +18,14 @@ Once done, just include the jar(s) in your project's build path.
 <dependency>
     <groupId>com.googlecode.wicket-jquery-ui</groupId>
     <artifactId>wicket-jquery-ui</artifactId>
-    <version>9.1.0</version>
+    <version>9.2.1</version>
 </dependency>
 ```
 ```xml
 <dependency>
     <groupId>com.googlecode.wicket-jquery-ui</groupId>
     <artifactId>wicket-kendo-ui</artifactId>
-    <version>9.1.0</version>
+    <version>9.2.1</version>
 </dependency>
 ```
 
@@ -48,7 +48,9 @@ If the version you specified is *snapshot*, you might define this repository:
 
 <table>
 <tr><th>wicket-jquery-ui</th><th>Wicket</th><th>jQuery UI</th></tr>
-<tr><td>9.2.0</td><td>9.1.0</td><td>1.12.1</td></tr>
+<tr><td>9.2.1</td><td>9.2.0</td><td>1.12.1</td></tr>
+<tr><td>9.2.0</td><td>9.2.0</td><td>1.12.1</td></tr>
+<tr><td>9.2.0</td><td>9.2.0</td><td>1.12.1</td></tr>
 <tr><td>9.1.0</td><td>9.1.0</td><td>1.12.1</td></tr>
 <tr><td>9.0.0</td><td>9.0.0</td><td>1.12.1</td></tr>
 </table>
@@ -70,7 +72,7 @@ To use wicket-jquery-ui with a standard theme, just add the corresponding theme 
 <dependency>
 	<groupId>com.googlecode.wicket-jquery-ui</groupId>
 	<artifactId>wicket-jquery-ui-theme-uilightness</artifactId>
-	<version>9.2.0</version>
+	<version>9.2.1</version>
 </dependency>
 ```
 
@@ -86,7 +88,7 @@ To use wicket-kendo-ui with a standard theme, just add the corresponding theme d
 <dependency>
 	<groupId>com.googlecode.wicket-jquery-ui</groupId>
 	<artifactId>wicket-kendo-ui-theme-default</artifactId>
-	<version>9.2.0</version>
+	<version>9.2.1</version>
 </dependency>
 ```
 
