@@ -26,7 +26,6 @@ import org.apache.wicket.behavior.Behavior;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.util.lang.Args;
 import org.apache.wicket.util.lang.Generics;
-import org.apache.wicket.util.string.StringValue;
 
 import com.github.openjson.JSONObject;
 import com.googlecode.wicket.jquery.core.JQueryEvent;
@@ -69,7 +68,8 @@ public abstract class DataTableBehavior extends KendoUIBehavior implements IJQue
 
 	// TODO: private JQueryAjaxBehavior onEditAjaxBehavior;
 	private JQueryAjaxBehavior onCancelAjaxBehavior;
-	private JQueryAjaxBehavior onChangeAjaxBehavior = null;
+	 private JQueryAjaxBehavior onChangeAjaxBehavior = null;
+	private JQueryAjaxBehavior onCheckedAjaxBehavior = null;
 	private JQueryAjaxBehavior onColumnReorderAjaxBehavior = null;
 	private DataSourceAjaxBehavior onCreateAjaxBehavior;
 	private DataSourceAjaxBehavior onUpdateAjaxBehavior;
@@ -118,8 +118,17 @@ public abstract class DataTableBehavior extends KendoUIBehavior implements IJQue
 		this.onCancelAjaxBehavior = this.newOnCancelAjaxBehavior(this);
 		component.add(this.onCancelAjaxBehavior);
 
-		this.onChangeAjaxBehavior = this.newOnChangeAjaxBehavior(this);
-		component.add(this.onChangeAjaxBehavior);
+		if (this.listener.isSelectable())
+		{
+			this.onChangeAjaxBehavior = this.newOnChangeAjaxBehavior(this);
+			component.add(this.onChangeAjaxBehavior);
+		}
+
+		if (this.hasCheckboxColumn())
+		{
+			this.onCheckedAjaxBehavior = this.newOnCheckedAjaxBehavior(this);
+			component.add(this.onCheckedAjaxBehavior);
+		}
 
 		if (this.isColumnReorderEnabled())
 		{
@@ -235,7 +244,6 @@ public abstract class DataTableBehavior extends KendoUIBehavior implements IJQue
 	{
 		return !this.getVisibleToolbarButtons().isEmpty();
 	}
-
 
 	/**
 	 * Indicates whether the columns {@link IModel} contains a {@link CheckboxColumn}
@@ -394,6 +402,11 @@ public abstract class DataTableBehavior extends KendoUIBehavior implements IJQue
 			this.setOption("change", this.onChangeAjaxBehavior.getCallbackFunction());
 		}
 
+		if (this.onCheckedAjaxBehavior != null)
+		{
+			this.setOption("change", this.onCheckedAjaxBehavior.getCallbackFunction());
+		}
+
 		if (this.onColumnReorderAjaxBehavior != null)
 		{
 			this.setOption("columnReorder", this.onColumnReorderAjaxBehavior.getCallbackFunction());
@@ -480,7 +493,8 @@ public abstract class DataTableBehavior extends KendoUIBehavior implements IJQue
 			this.listener.onChange(target, ((ChangeEvent) event).getItems());
 		}
 
-		if (event instanceof CheckboxEvent) {
+		if (event instanceof CheckboxEvent)
+		{
 			this.listener.onChecked(target, ((CheckboxEvent) event).getSelectedKeys());
 		}
 
@@ -584,21 +598,22 @@ public abstract class DataTableBehavior extends KendoUIBehavior implements IJQue
 	 * Gets a new {@link JQueryAjaxBehavior} that will be wired to the 'change' event
 	 *
 	 * @param source the {@link IJQueryAjaxAware}
-	 * @return a new {@code OnChangeAjaxBehavior} or a new {@link OnCheckedAjaxBehavior}
+	 * @return a new {@link OnChangeAjaxBehavior}
 	 */
 	protected JQueryAjaxBehavior newOnChangeAjaxBehavior(IJQueryAjaxAware source)
 	{
-		if (this.hasCheckboxColumn())
-		{
-			return new OnCheckedAjaxBehavior(source);
-		}
+		return new OnChangeAjaxBehavior(source);
+	}
 
-		if (this.listener.isSelectable())
-		{	
-			return new OnChangeAjaxBehavior(source);			
-		}
-		
-		return null;
+	/**
+	 * Gets a new {@link JQueryAjaxBehavior} that will be wired to the 'change' event
+	 *
+	 * @param source the {@link IJQueryAjaxAware}
+	 * @return a new {@link OnCheckedAjaxBehavior}
+	 */
+	protected JQueryAjaxBehavior newOnCheckedAjaxBehavior(IJQueryAjaxAware source)
+	{
+		return new OnCheckedAjaxBehavior(source);
 	}
 
 	/**
@@ -752,33 +767,31 @@ public abstract class DataTableBehavior extends KendoUIBehavior implements IJQue
 	/**
 	 * Provides a {@link JQueryAjaxBehavior} that aims to be wired to the 'change' event (for checkboxes)
 	 */
-	protected static class OnCheckedAjaxBehavior extends JQueryAjaxBehavior 
+	protected static class OnCheckedAjaxBehavior extends JQueryAjaxBehavior
 	{
-	    private static final long serialVersionUID = 1L;
+		private static final long serialVersionUID = 1L;
 
-	    /**
-	     * Constructor
-	     *
-	     * @param source the {@link Behavior} that will broadcast the event.
-	     */
-	    public OnCheckedAjaxBehavior(final IJQueryAjaxAware source) 
-	    {
-	        super(source);
-	    }
-	    
-	    @Override
-	    protected CallbackParameter[] getCallbackParameters() 
-	    {
-	        return new CallbackParameter[] {
-	            CallbackParameter.context("e"),
-	            CallbackParameter.resolved("values", "this.selectedKeyNames()") };
-	    }
+		/**
+		 * Constructor
+		 *
+		 * @param source the {@link Behavior} that will broadcast the event.
+		 */
+		public OnCheckedAjaxBehavior(final IJQueryAjaxAware source)
+		{
+			super(source);
+		}
 
-	    @Override
-	    protected JQueryEvent newEvent() 
-	    {
-	        return new CheckboxEvent();
-	    }
+		@Override
+		protected CallbackParameter[] getCallbackParameters()
+		{
+			return new CallbackParameter[] { CallbackParameter.context("e"), CallbackParameter.resolved("values", "this.selectedKeyNames()") };
+		}
+
+		@Override
+		protected JQueryEvent newEvent()
+		{
+			return new CheckboxEvent();
+		}
 	}
 
 	// Event object //
@@ -793,21 +806,22 @@ public abstract class DataTableBehavior extends KendoUIBehavior implements IJQue
 	/**
 	 * Provides an event object that will be broadcasted by the {@link OnCheckedAjaxBehavior} callback
 	 */
-	protected static class CheckboxEvent extends JQueryEvent {
+	protected static class CheckboxEvent extends JQueryEvent
+	{
 
-        private final List<String> selectedKeys;
-        
-        public CheckboxEvent()
-        {
-            this.selectedKeys = RequestCycleUtils.toStringList(RequestCycleUtils.getQueryParameterValues("values"));
-        }
+		private final List<String> selectedKeys;
 
-        public List<String> getSelectedKeys()
-        {
-            return selectedKeys;
-        }
-    }
- 
+		public CheckboxEvent()
+		{
+			this.selectedKeys = RequestCycleUtils.toStringList(RequestCycleUtils.getQueryParameterValues("values"));
+		}
+
+		public List<String> getSelectedKeys()
+		{
+			return selectedKeys;
+		}
+	}
+
 	/**
 	 * Provides an event object that will be broadcasted by the {@linkplain #newColumnReorderAjaxBehavior} callback
 	 */

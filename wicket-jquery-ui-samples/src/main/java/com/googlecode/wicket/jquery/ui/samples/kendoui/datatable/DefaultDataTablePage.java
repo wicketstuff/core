@@ -43,7 +43,7 @@ public class DefaultDataTablePage extends AbstractDataTablePage
 		// options.set("sortable", true); // already set, as provider IS-A ISortStateLocator
 		options.set("groupable", true);
 		options.set("columnMenu", true);
-		options.set("selectable", true); // Options.asString("multiple, row"). Caution does not work for 'cell'
+		options.set("selectable", false); // Options.asString("multiple, row"). Caution does not work for 'cell'
 
 		final DataTable<Product> table = new DataTable<Product>("datatable", newColumnList(), newDataProvider(), 25, options) {
 

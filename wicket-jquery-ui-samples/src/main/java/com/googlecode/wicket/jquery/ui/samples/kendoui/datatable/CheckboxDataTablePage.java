@@ -39,6 +39,7 @@ public class CheckboxDataTablePage extends AbstractDataTablePage
         options.set("pageable", "{ pageSizes: [ 25, 50, 100 ] }");
         options.set("columnMenu", true);
         options.set("persistSelection", true); // keep the selection when changing pages
+        options.set("selectable", false); // not recommended to have both 'selectable' option and a CheckboxColumn
 
         final DataTable<Product> table = new DataTable<Product>("datatable", newColumnList(), newDataProvider(), 25, options) {
 
