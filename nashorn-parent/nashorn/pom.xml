@@ -23,10 +23,6 @@
 		</developer>
 	</developers>
 
-	<properties>
-		<servlet.jsp.api.version>3.1.0</servlet.jsp.api.version>
-	</properties>
-
 	<dependencies>
 		<dependency>
 			<groupId>org.junit.jupiter</groupId>
@@ -49,7 +45,7 @@
 		<dependency>
 			<groupId>javax.servlet</groupId>
 			<artifactId>javax.servlet-api</artifactId>
-			<version>${servlet.jsp.api.version}</version><!--$NO-MVN-MAN-VER$ -->
+			<version>${javax.servlet-api.version}</version><!--$NO-MVN-MAN-VER$ -->
 			<scope>provided</scope>
 		</dependency>
 	</dependencies>

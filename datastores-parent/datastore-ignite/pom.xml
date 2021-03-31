@@ -13,7 +13,7 @@
 	<description>An implementation of Apache Wicket's IPageStore that uses Apache Ignite as a backend</description>
 
 	<properties>
-		<ignite-core.version>2.9.0</ignite-core.version>
+		<ignite-core.version>2.10.0</ignite-core.version>
 	</properties>
 	<dependencies>
 
