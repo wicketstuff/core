@@ -32,6 +32,7 @@ import com.googlecode.wicket.jquery.core.JQueryEvent;
 import com.googlecode.wicket.jquery.core.Options;
 import com.googlecode.wicket.jquery.core.ajax.IJQueryAjaxAware;
 import com.googlecode.wicket.jquery.core.ajax.JQueryAjaxBehavior;
+import com.googlecode.wicket.jquery.core.utils.ListUtils;
 import com.googlecode.wicket.jquery.core.utils.RequestCycleUtils;
 import com.googlecode.wicket.kendo.ui.KendoDataSource;
 import com.googlecode.wicket.kendo.ui.KendoUIBehavior;
@@ -813,7 +814,7 @@ public abstract class DataTableBehavior extends KendoUIBehavior implements IJQue
 
 		public CheckboxEvent()
 		{
-			this.selectedKeys = RequestCycleUtils.toStringList(RequestCycleUtils.getQueryParameterValues("values"));
+			this.selectedKeys = ListUtils.toStringList(RequestCycleUtils.getQueryParameterValue("values"));
 		}
 
 		public List<String> getSelectedKeys()

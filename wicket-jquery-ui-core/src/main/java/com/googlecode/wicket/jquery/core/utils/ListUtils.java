@@ -21,8 +21,10 @@ import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Random;
+import java.util.stream.Collectors;
 
 import org.apache.wicket.util.lang.Generics;
+import org.apache.wicket.util.string.StringValue;
 
 /**
  * Utility class for {@link List}({@code s})
@@ -33,6 +35,8 @@ import org.apache.wicket.util.lang.Generics;
 public class ListUtils
 {
 	private static final int MAX = 20;
+	private static final String EMPTY = "";
+	private static final String SEPARATOR = ",";
 
 	/**
 	 * Utility class
@@ -285,7 +289,7 @@ public class ListUtils
 	 */
 	public static List<String> exclude(List<String> list, List<String> items)
 	{
-		List<String> copy =  new ArrayList<>(list);
+		List<String> copy = new ArrayList<>(list);
 
 		for (String item : items)
 		{
@@ -293,5 +297,51 @@ public class ListUtils
 		}
 
 		return copy;
+	}
+
+	/**
+	 * Indicates whether the list is {@code null} or empty
+	 * 
+	 * @param list
+	 * @return {@code true} if the list is {@code null} or empty
+	 */
+	public static boolean isEmpty(List<StringValue> list)
+	{
+		return list == null || list.isEmpty();
+	}
+
+	/**
+	 * Converts a {@link StringValue} to a list of {@code String}
+	 * 
+	 * @param value the {@link StringValue}
+	 * @return a list of {@code String}
+	 */
+	public static List<String> toStringList(StringValue values)
+	{
+		if (values != null)
+		{
+			final String[] array = values.toString(EMPTY).split(SEPARATOR);
+
+			return Arrays.asList(array);
+
+		}
+
+		return new ArrayList<>();
+	}
+
+	/**
+	 * Converts a list of {@link StringValue}{@code s} to a list of {@code String}
+	 * 
+	 * @param value the list of {@link StringValue}{@code s}
+	 * @return a list of {@code String}
+	 */
+	public static List<String> toStringList(List<StringValue> values)
+	{
+		if (!isEmpty(values))
+		{
+			return values.stream().map(StringValue::toString).collect(Collectors.toList());
+		}
+
+		return new ArrayList<>();
 	}
 }
