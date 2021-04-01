@@ -203,7 +203,7 @@ public abstract class AbstractWizard<T extends Serializable> extends AbstractFor
 		this.wizardModel.addListener(this);
 
 		// form //
-		this.form = new Form<T>(Wizard.FORM_ID);
+		this.form = this.newForm(Wizard.FORM_ID);
 		this.add(this.form);
 
 		// header (title + summary )//
@@ -484,6 +484,18 @@ public abstract class AbstractWizard<T extends Serializable> extends AbstractFor
 	}
 
 	// Factories //
+
+	/**
+	 * Gets a new {@link Form}<br>
+	 * <b>Caution:</b> this method is called by ctors having the {@link IWizardModel} argument
+	 *
+	 * @param formId the form id
+	 * @return the form
+	 */
+	protected Form<T> newForm(String formId)
+	{
+		return new Form<>(formId);
+	}
 
 	/**
 	 * Gets a new {@code FeedbackPanel}
