@@ -16,7 +16,7 @@
 	</modules>
 
 	<properties>
-		<jamon.version>2.81</jamon.version>
+		<jamon.version>2.82</jamon.version>
 	</properties>
 
 	<dependencyManagement>

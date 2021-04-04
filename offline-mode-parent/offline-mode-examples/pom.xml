@@ -12,8 +12,8 @@
 	<name>Wicketstuff Offline Mode Examples</name>
 
 	<description>
-    	Examples of Wicket's Offline Mode
-    </description>
+		Examples of Wicket's Offline Mode
+	</description>
 
 	<developers>
 		<developer>
@@ -24,7 +24,6 @@
 	</developers>
 
 	<properties>
-		<servlet.jsp.api.version>3.1.0</servlet.jsp.api.version>
 		<javadoc.disabled>true</javadoc.disabled>
 		<deployment.disabled>true</deployment.disabled>
 		<sources.disabled>true</sources.disabled>
@@ -49,12 +48,12 @@
 		<dependency>
 			<groupId>org.eclipse.jetty.aggregate</groupId>
 			<artifactId>jetty-all</artifactId>
-            <classifier>uber</classifier>
+			<classifier>uber</classifier>
 		</dependency>
 		<dependency>
 			<groupId>javax.servlet</groupId>
 			<artifactId>javax.servlet-api</artifactId>
-			<version>${servlet.jsp.api.version}</version><!--$NO-MVN-MAN-VER$ -->
+			<version>${javax.servlet-api.version}</version><!--$NO-MVN-MAN-VER$ -->
 		</dependency>
 	</dependencies>
 

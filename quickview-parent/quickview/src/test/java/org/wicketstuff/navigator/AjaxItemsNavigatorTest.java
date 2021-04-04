@@ -16,153 +16,157 @@
  */
 package org.wicketstuff.navigator;
 
-import org.wicketstuff.*;
+import static org.mockito.Mockito.inOrder;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.spy;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.testng.Assert.assertEquals;
+import static org.testng.Assert.assertFalse;
+import static org.testng.Assert.assertTrue;
+
+import java.util.ArrayList;
+import java.util.List;
+
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.markup.repeater.Item;
 import org.apache.wicket.markup.repeater.data.IDataProvider;
-import org.apache.wicket.mock.MockApplication;
-import org.apache.wicket.protocol.http.WebApplication;
 import org.mockito.InOrder;
-import org.mockito.Mockito;
-import org.testng.Assert;
 import org.testng.annotations.Test;
-import java.util.List;
-
-import static org.mockito.Mockito.mock;
+import org.wicketstuff.IQuickView;
+import org.wicketstuff.IRepeaterUtil;
+import org.wicketstuff.ItemsNavigationStrategy;
+import org.wicketstuff.QuickView;
+import org.wicketstuff.QuickViewBase;
 
 /**
  *
  * @author Vineet Semwal
  *
  */
-public class AjaxItemsNavigatorTest {
+public class AjaxItemsNavigatorTest extends TesterBase {
+	@Test(groups = { "wicketTests" })
+	public void constructor_1() {
+		IQuickView repeater = mock(IQuickView.class);
+		final AjaxRequestTarget target = mock(AjaxRequestTarget.class);
+		final List<Item> items = mock(List.class);
+		AjaxItemsNavigator navigator = new AjaxItemsNavigator("nav", repeater);
+		assertEquals(navigator.getRepeater(), repeater);
+	}
 
-     private static WebApplication createMockApplication() {
-        WebApplication app = new MockApplication();
-        return app;
-    }
+	@Test(groups = { "wicketTests" }, expectedExceptions = RuntimeException.class)
+	public void constructor_2() {
+		IQuickView repeater = mock(IQuickView.class);
+		final AjaxRequestTarget target = mock(AjaxRequestTarget.class);
+		final List<Item> items = mock(List.class);
 
-    @Test(groups = {"wicketTests"})
-    public void constructor_1(){
-        IQuickView repeater=Mockito.mock(IQuickView.class);
-        final AjaxRequestTarget target=Mockito.mock(AjaxRequestTarget.class);
-        final List<Item> items=Mockito.mock(List.class);
-        AjaxItemsNavigator navigator=new AjaxItemsNavigator("nav",repeater);
-           Assert.assertEquals(navigator.getRepeater(),repeater);
-    }
+		boolean isException = false;
 
-    @Test(groups = {"wicketTests"},expectedExceptions = RuntimeException.class)
-    public void constructor_2(){
-        IQuickView repeater=Mockito.mock(IQuickView.class);
-        final AjaxRequestTarget target=Mockito.mock(AjaxRequestTarget.class);
-        final List<Item> items=Mockito.mock(List.class);
+		AjaxItemsNavigator navigator = new AjaxItemsNavigator("nav", null);
 
-        boolean isException=false;
+	}
 
-        AjaxItemsNavigator navigator=new AjaxItemsNavigator("nav",null);
+	/**
+	 * when current page< pages count
+	 */
 
-    }
+	@Test(groups = { "wicketTests" })
+	public void OnStatefulEvent_1() {
+		IQuickView quickView = mock(IQuickView.class);
+		final AjaxRequestTarget target = mock(AjaxRequestTarget.class);
+		final List<Item> items = new ArrayList<>();
+		AjaxItemsNavigator navigator = new AjaxItemsNavigator("nav", quickView) {
+			@Override
+			public AjaxRequestTarget getAjaxRequestTarget() {
+				return target;
+			}
+		};
+		AjaxItemsNavigator spy = spy(navigator);
+		List<Item> actual = spy.onStatefulEvent();
+		verify(target, times(1)).add(spy.getMore());
+		verify(quickView, times(1)).addItemsForNextPage();
+		assertEquals(actual, items);
+	}
 
-    /**
-     * when current page< pages count
-     */
+	/**
+	 * parent not null ,OutputMarkupPlaceholderTag set to true reuse stategy is
+	 * correct
+	 */
+	@Test(groups = { "wicketTests" })
+	public void onBeforeRender_1() {
+		WebMarkupContainer parent = new WebMarkupContainer("parent");
+		IDataProvider data = mock(IDataProvider.class);
+		QuickViewBase repeater = new QuickView("id", data, 10) {
+			@Override
+			protected void populate(Item item) {
+			}
+		};
+		repeater.setReuseStrategy(new ItemsNavigationStrategy());
+		parent.add(repeater);
+		parent.setOutputMarkupPlaceholderTag(true);
 
-   @Test(groups = {"wicketTests"})
-    public void OnStatefulEvent_1() {
-       IQuickView quickView=Mockito.mock(IQuickView.class);
-       final AjaxRequestTarget target=Mockito.mock(AjaxRequestTarget.class);
-       final List<Item> items=Mockito.mock(List.class);
-        AjaxItemsNavigator navigator=new AjaxItemsNavigator("nav",quickView){
-            @Override
-            public AjaxRequestTarget getAjaxRequestTarget() {
-             return target;
-            }
-        };
-       AjaxItemsNavigator spy=Mockito.spy(navigator);
-       List<Item>actual= spy.onStatefulEvent();
-       Mockito.verify(target,Mockito.times(1)).add(spy.getMore());
-       Mockito.verify(quickView,Mockito.times(1)).addItemsForNextPage();
-       Assert.assertEquals(actual,items);
-    }
+		AjaxItemsNavigator navigator = new AjaxItemsNavigator("id", repeater);
+		navigator.onBeforeRender();
+	}
 
-    /**
-     *  parent not null ,OutputMarkupPlaceholderTag set to true
-     * reuse stategy is correct
-     */
-    @Test(groups = {"wicketTests"})
-    public void onBeforeRender_1(){
-        WebMarkupContainer parent=new WebMarkupContainer("parent");
-        IDataProvider data=Mockito.mock(IDataProvider.class);
-        QuickViewBase repeater = new QuickView("id",data,10) {
-            @Override
-            protected void populate(Item item) { }
-        };
-        repeater.setReuseStrategy(new ItemsNavigationStrategy());
-        parent.add(repeater);
-        parent.setOutputMarkupPlaceholderTag(true);
+	@Test(groups = { "wicketTests" })
+	public void onBeforeRender_2() {
+		WebMarkupContainer parent = new WebMarkupContainer("parent");
+		IDataProvider data = mock(IDataProvider.class);
+		QuickViewBase repeater = new QuickView("id", data, 10) {
+			@Override
+			protected void populate(Item item) {
+			}
+		};
+		repeater.setReuseStrategy(new ItemsNavigationStrategy());
+		parent.add(repeater);
+		parent.setOutputMarkupId(true);
 
-        AjaxItemsNavigator navigator=new AjaxItemsNavigator("id",repeater);
-        navigator.onBeforeRender();
-    }
+		AjaxItemsNavigator navigator = new AjaxItemsNavigator("id", repeater);
+		assertFalse(navigator.isProperInitializationCheckDone());
+		navigator.onBeforeRender();
+		assertTrue(navigator.isProperInitializationCheckDone());
+	}
 
-    @Test(groups = {"wicketTests"})
-    public void onBeforeRender_2(){
-        WebMarkupContainer parent=new WebMarkupContainer("parent");
-        IDataProvider data=Mockito.mock(IDataProvider.class);
-        QuickViewBase repeater = new QuickView("id",data,10) {
-            @Override
-            protected void populate(Item item) { }
-        };
-        repeater.setReuseStrategy(new ItemsNavigationStrategy());
-        parent.add(repeater);
-        parent.setOutputMarkupId(true);
+	@Test(groups = { "wicketTests" })
+	public void repeaterNotProperlyInitializedForItemsNavigation() {
+		IQuickView quickView = mock(IQuickView.class);
+		final IRepeaterUtil util = mock(IRepeaterUtil.class);
+		AjaxItemsNavigator navigator = new AjaxItemsNavigator("id", quickView) {
+			@Override
+			public IRepeaterUtil getRepeaterUtil() {
+				return util;
+			}
+		};
 
-        AjaxItemsNavigator navigator=new AjaxItemsNavigator("id",repeater);
-        Assert.assertFalse(navigator.isProperInitializationCheckDone());
-        navigator.onBeforeRender();
-        Assert.assertTrue(navigator.isProperInitializationCheckDone());
-    }
+		AjaxItemsNavigator spy = spy(navigator);
+		spy.repeaterNotProperlyInitializedForItemsNavigation(quickView);
+		InOrder order = inOrder(spy, util);
+		order.verify(util, times(1)).reuseStategyNotSupportedForItemsNavigation(quickView);
+		order.verify(util, times(1)).parentNotSuitable(quickView);
+		order.verify(util, times(1)).outPutMarkupIdNotTrue(quickView);
+	}
 
-    @Test(groups = {"wicketTests"})
-    public void repeaterNotProperlyInitializedForItemsNavigation(){
-        IQuickView quickView=Mockito.mock(IQuickView.class);
-        final IRepeaterUtil util=Mockito.mock(IRepeaterUtil.class);
-         AjaxItemsNavigator navigator=new AjaxItemsNavigator("id",quickView){
-             @Override
-             public IRepeaterUtil getRepeaterUtil() {
-                 return util;
-             }
-         };
+	@Test(groups = { "wicketTests" })
+	public void doProperInitializationCheck() {
+		IQuickView quickView = mock(IQuickView.class);
+		final IRepeaterUtil util = mock(IRepeaterUtil.class);
+		AjaxItemsNavigator navigator = new AjaxItemsNavigator("id", quickView) {
+			@Override
+			public IRepeaterUtil getRepeaterUtil() {
+				return util;
+			}
 
-        AjaxItemsNavigator spy=Mockito.spy(navigator);
-        spy.repeaterNotProperlyInitializedForItemsNavigation(quickView);
-        InOrder order= Mockito.inOrder(spy,util);
-         order.verify(util,Mockito.times(1)).reuseStategyNotSupportedForItemsNavigation(quickView);
-        order.verify(util,Mockito.times(1)).parentNotSuitable(quickView);
-        order.verify(util,Mockito.times(1)).outPutMarkupIdNotTrue(quickView);
-    }
+			@Override
+			protected void repeaterNotProperlyInitializedForItemsNavigation(IQuickView quickView) {
+			}
+		};
 
-    @Test(groups = {"wicketTests"})
-    public void  doProperInitializationCheck(){
-        IQuickView quickView=Mockito.mock(IQuickView.class);
-        final IRepeaterUtil util=Mockito.mock(IRepeaterUtil.class);
-        AjaxItemsNavigator navigator=new AjaxItemsNavigator("id",quickView){
-            @Override
-            public IRepeaterUtil getRepeaterUtil() {
-                return util;
-            }
-
-            @Override
-            protected void repeaterNotProperlyInitializedForItemsNavigation(IQuickView quickView) {
-            }
-        };
-
-        AjaxItemsNavigator spy=Mockito.spy(navigator);
-       spy.doProperInitializationCheck();
-        Mockito.verify(spy,Mockito.times(1)).repeaterNotProperlyInitializedForItemsNavigation(quickView);
-        Assert.assertTrue(spy.isProperInitializationCheckDone());
-    }
-
+		AjaxItemsNavigator spy = spy(navigator);
+		spy.doProperInitializationCheck();
+		verify(spy, times(1)).repeaterNotProperlyInitializedForItemsNavigation(quickView);
+		assertTrue(spy.isProperInitializationCheckDone());
+	}
 
 }
