@@ -21,10 +21,11 @@ import java.util.List;
 import org.apache.wicket.behavior.AbstractAjaxBehavior;
 import org.apache.wicket.request.IRequestParameters;
 
+import com.github.openjson.JSONArray;
+import com.github.openjson.JSONObject;
 import com.googlecode.wicket.jquery.core.behavior.ChoiceModelBehavior;
 import com.googlecode.wicket.jquery.core.renderer.ITextRenderer;
 import com.googlecode.wicket.jquery.core.template.IJQueryTemplate;
-import com.googlecode.wicket.jquery.core.utils.BuilderUtils;
 
 /**
  * Provides the {@link AbstractAjaxBehavior} for the {@link AutoCompleteTextField}
@@ -49,42 +50,32 @@ abstract class AutoCompleteChoiceModelBehavior<T> extends ChoiceModelBehavior<T>
 	@Override
 	protected String getResponse(IRequestParameters parameters)
 	{
-		StringBuilder builder = new StringBuilder("[ ");
-
-		List<T> choices = this.getChoices();
+		final JSONArray payload = new JSONArray();
+		final List<T> choices = this.getChoices();
 
 		if (choices != null)
 		{
-			int index = 0;
-			for (T choice : choices)
+			for (int index = 0; index < choices.size(); ++index)
 			{
-				if (index++ > 0)
-				{
-					builder.append(", ");
-				}
-
-				builder.append("{ ");
-				BuilderUtils.append(builder, "id", Integer.toString(index)); /* 'id' is a reserved word */
-				builder.append(", ");
-				BuilderUtils.append(builder, "value", this.renderer.getText(choice)); /* 'value' is a reserved word */
-				builder.append(", ");
+				final T choice = choices.get(index);
 
 				// ITextRenderer //
-				builder.append(this.renderer.render(choice)); // #198
+				final JSONObject object = this.renderer.render(choice);
+				object.put("id", Integer.toString(index)); /* 'id' is a reserved word */
+				object.put("value", this.renderer.getText(choice)); /* 'value' is a reserved word */
 
 				// Additional properties (like template properties) //
 				List<String> properties = AutoCompleteChoiceModelBehavior.this.getProperties();
 
 				for (String property : properties)
 				{
-					builder.append(", ");
-					BuilderUtils.append(builder, property, this.renderer.getText(choice, property));
+					object.put(property, this.renderer.getText(choice, property));
 				}
 
-				builder.append(" }");
+				payload.put(object);
 			}
 		}
 
-		return builder.append(" ]").toString();
+		return payload.toString();
 	}
 }

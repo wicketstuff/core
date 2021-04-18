@@ -237,7 +237,7 @@ public abstract class MultiSelect<T> extends FormComponent<Collection<T>> implem
 
 		for (T value : this.getModelObject())
 		{
-			values.add(String.format("{ %s }", this.renderer.render(value)));
+			values.add(String.valueOf(this.renderer.render(value)));
 		}
 
 		return values.toString();

@@ -226,24 +226,39 @@ public class Resource implements Serializable
 
 		return true;
 	}
-
+	
 	/**
 	 * Gets the JSON representation of this {@link Resource}
 	 */
 	@Override
 	public String toString()
 	{
-		JSONObject object = new JSONObject();
+		return toJSONObject(this).toString();
+	}
+	
+	// statics //
+	
+	/**
+	 * Gets this {@link Resource} as {@link JSONObject}
+	 * 
+	 * @return a {@link JSONObject}
+	 */
+	public static JSONObject toJSONObject(Resource resource)
+	{
+		final JSONObject object = new JSONObject();
 
-		object.put("value", this.id);
-		object.put("text", this.text);
-		object.putOpt("color", this.color); // may be null
-
-		for (Entry<String, Object> entry : this.fields.entrySet())
+		if (resource != null)
 		{
-			object.put(entry.getKey(), entry.getValue());
+			object.put("value", resource.id);
+			object.put("text", resource.text);
+			object.putOpt("color", resource.color); // may be null
+	
+			for (Entry<String, Object> entry : resource.fields.entrySet())
+			{
+				object.put(entry.getKey(), entry.getValue());
+			}
 		}
 
-		return object.toString();
-	}
+		return object;
+	}	
 }

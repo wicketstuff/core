@@ -20,6 +20,8 @@ import java.util.List;
 
 import org.apache.wicket.util.io.IClusterable;
 
+import com.github.openjson.JSONObject;
+
 /**
  * Provides the ability to get a specific text (likely from a property) of a bean type, for rendering purpose
  *
@@ -75,5 +77,5 @@ public interface ITextRenderer<T> extends IClusterable
 	 * @param object the object to render
 	 * @return the rendered object
 	 */
-	String render(T object);
+	JSONObject render(T object);
 }

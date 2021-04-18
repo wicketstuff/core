@@ -112,8 +112,13 @@ public class ChoiceRenderer<T> extends TextRenderer<T> implements IChoiceRendere
 	// Methods //
 
 	@Override
-	public String render(T object)
+	public JSONObject render(T object)
 	{
-		return String.format("%s: %s, %s: %s", JSONObject.quote(this.getTextField()), JSONObject.quote(this.getText(object)), JSONObject.quote(this.getValueField()), JSONObject.quote(this.getValue(object)));
+		final JSONObject o = new JSONObject();
+		
+		o.put(this.getTextField(), this.getText(object));
+		o.put(this.getValueField(), this.getValue(object));
+
+		return o;
 	}
 }

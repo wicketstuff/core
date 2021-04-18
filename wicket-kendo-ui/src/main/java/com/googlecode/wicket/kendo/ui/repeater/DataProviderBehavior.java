@@ -24,11 +24,11 @@ import org.apache.wicket.Component;
 import org.apache.wicket.markup.repeater.data.IDataProvider;
 import org.apache.wicket.request.IRequestParameters;
 
-import com.googlecode.wicket.jquery.core.Options;
+import com.github.openjson.JSONArray;
+import com.github.openjson.JSONObject;
 import com.googlecode.wicket.jquery.core.behavior.AjaxCallbackBehavior;
 import com.googlecode.wicket.jquery.core.renderer.ITextRenderer;
 import com.googlecode.wicket.jquery.core.template.IJQueryTemplate;
-import com.googlecode.wicket.jquery.core.utils.BuilderUtils;
 import com.googlecode.wicket.jquery.core.utils.ListUtils;
 
 /**
@@ -96,43 +96,31 @@ public class DataProviderBehavior<T> extends AjaxCallbackBehavior
 		final Iterator<? extends T> iterator = this.provider.iterator(first, count);
 
 		// builds JSON result //
-		StringBuilder builder = new StringBuilder();
-		builder.append("{ ");
-		BuilderUtils.append(builder, "__count", size);
-		builder.append(", ");
-		builder.append(Options.QUOTE).append("results").append(Options.QUOTE).append(": ");
-		builder.append("[ ");
+		final JSONObject payload = new JSONObject();
+		payload.put("__count", size);
+
+		final JSONArray results = new JSONArray();
+		payload.put("results", results);
 
 		if (iterator != null)
 		{
-			for (int index = 0; iterator.hasNext(); index++)
+			while (iterator.hasNext())
 			{
-				T object = iterator.next();
-
-				if (index > 0)
-				{
-					builder.append(", ");
-				}
-
-				builder.append("{ ");
+				final T object = iterator.next();
 
 				// ITextRenderer //
-				builder.append(this.renderer.render(object));
+				final JSONObject result = this.renderer.render(object);
 
-				// Additional properties (like template properties) //
 				for (String property : this.getProperties())
 				{
-					builder.append(", ");
-					BuilderUtils.append(builder, property, this.renderer.getText(object, property));
+					result.put(property, this.renderer.getText(object, property));
 				}
 
-				builder.append(" }");
+				results.put(result);
 			}
 		}
 
-		builder.append(" ] }");
-
-		return builder.toString();
+		return payload.toString();
 	}
 
 	@Override

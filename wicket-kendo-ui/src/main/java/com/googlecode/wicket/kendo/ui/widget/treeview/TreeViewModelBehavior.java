@@ -21,6 +21,7 @@ import java.util.List;
 import org.apache.wicket.request.IRequestParameters;
 import org.apache.wicket.util.lang.Args;
 
+import com.github.openjson.JSONArray;
 import com.googlecode.wicket.jquery.core.behavior.AjaxCallbackBehavior;
 
 /**
@@ -65,26 +66,21 @@ public class TreeViewModelBehavior extends AjaxCallbackBehavior
 	{
 		int nodeId = parameters.getParameterValue(TreeNodeFactory.ID_FIELD).toInt(TreeNode.ROOT);
 
-		StringBuilder builder = new StringBuilder("[ ");
-
+		final JSONArray payload = new JSONArray();
+		
 		if (this.model != null)
 		{
 			this.model.setNodeId(nodeId);
 			List<? extends TreeNode<?>> objects = this.model.getObject(); // calls load()
-
+			
 			for (int index = 0; index < objects.size(); index++)
 			{
 				TreeNode<?> object = objects.get(index);
 
-				if (index > 0)
-				{
-					builder.append(", ");
-				}
-
-				builder.append(this.factory.toJson(index, object));
+				payload.put(this.factory.toJson(index, object));
 			}
 		}
 
-		return builder.append(" ]").toString();
+		return payload.toString();
 	}
 }

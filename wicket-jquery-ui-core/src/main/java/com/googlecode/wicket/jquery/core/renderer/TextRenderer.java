@@ -20,6 +20,8 @@ import java.util.Arrays;
 import java.util.List;
 
 import com.github.openjson.JSONObject;
+import com.googlecode.wicket.jquery.core.utils.JsonUtils;
+
 import org.apache.wicket.core.util.lang.PropertyResolver;
 
 /**
@@ -115,9 +117,9 @@ public class TextRenderer<T> implements ITextRenderer<T>
 	// Methods //
 
 	@Override
-	public String render(T object)
+	public JSONObject render(T object)
 	{
-		return String.format("%s: %s", JSONObject.quote(this.getTextField()), JSONObject.quote(this.getText(object)));
+		return JsonUtils.newJSONObject(this.getTextField(), this.getText(object));
 	}
 
 	@Override

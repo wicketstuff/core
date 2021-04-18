@@ -16,7 +16,7 @@
  */
 package com.googlecode.wicket.jquery.core.renderer;
 
-import com.googlecode.wicket.jquery.core.utils.JsonUtils;
+import com.github.openjson.JSONObject;
 
 /**
  * Provides a Json {@link TextRenderer}
@@ -49,9 +49,8 @@ public class JsonRenderer<T> extends TextRenderer<T>
 	// Methods //
 
 	@Override
-	public String render(T object)
+	public JSONObject render(T object)
 	{
-		String json = JsonUtils.toString(object);
-		return json.substring(1, json.length() - 1); // keep body only
+		return new JSONObject(object);
 	}
 }

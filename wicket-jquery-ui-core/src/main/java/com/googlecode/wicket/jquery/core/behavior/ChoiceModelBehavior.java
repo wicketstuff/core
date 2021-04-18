@@ -21,10 +21,11 @@ import java.util.List;
 
 import org.apache.wicket.request.IRequestParameters;
 
+import com.github.openjson.JSONArray;
+import com.github.openjson.JSONObject;
 import com.googlecode.wicket.jquery.core.data.IChoiceProvider;
 import com.googlecode.wicket.jquery.core.renderer.ITextRenderer;
 import com.googlecode.wicket.jquery.core.template.IJQueryTemplate;
-import com.googlecode.wicket.jquery.core.utils.BuilderUtils;
 import com.googlecode.wicket.jquery.core.utils.ListUtils;
 
 /**
@@ -84,39 +85,28 @@ public abstract class ChoiceModelBehavior<T> extends AjaxCallbackBehavior implem
 	@Override
 	protected String getResponse(IRequestParameters parameters)
 	{
-		StringBuilder builder = new StringBuilder("[");
-
-		List<T> choices = this.getChoices();
+		final JSONArray payload = new JSONArray();
+		final List<T> choices = this.getChoices();
 
 		if (choices != null)
 		{
-			int index = 0;
-
 			for (T choice : choices)
 			{
-				if (index++ > 0)
-				{
-					builder.append(", ");
-				}
-
-				builder.append("{ ");
-
 				// ITextRenderer //
-				builder.append(this.renderer.render(choice));
+				final JSONObject object = this.renderer.render(choice);				
 
 				// Additional properties (like template properties) //
 				List<String> properties = this.getProperties();
 
 				for (String property : properties)
 				{
-					builder.append(", ");
-					BuilderUtils.append(builder, property, this.renderer.getText(choice, property));
+					object.put(property, this.renderer.getText(choice, property));
 				}
 
-				builder.append(" }");
+				payload.put(object);
 			}
 		}
 
-		return builder.append("]").toString();
+		return payload.toString();
 	}
 }

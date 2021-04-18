@@ -22,6 +22,7 @@ import java.util.List;
 import org.apache.wicket.request.IRequestParameters;
 import org.apache.wicket.util.lang.Args;
 
+import com.github.openjson.JSONArray;
 import com.googlecode.wicket.jquery.core.behavior.AjaxCallbackBehavior;
 import com.googlecode.wicket.jquery.core.utils.DateUtils;
 
@@ -80,7 +81,7 @@ public class SchedulerModelBehavior extends AjaxCallbackBehavior
 		final long startTimestamp = parameters.getParameterValue("start").toLong(0);
 		final long untilTimestamp = parameters.getParameterValue("end").toLong(0);
 
-		StringBuilder builder = new StringBuilder("[ ");
+		final JSONArray payload = new JSONArray();
 
 		if (this.model != null)
 		{
@@ -91,7 +92,6 @@ public class SchedulerModelBehavior extends AjaxCallbackBehavior
 
 			if (list != null)
 			{
-				int count = 0;
 				for (SchedulerEvent event : list)
 				{
 					if (this.model instanceof ISchedulerVisitor)
@@ -101,17 +101,12 @@ public class SchedulerModelBehavior extends AjaxCallbackBehavior
 
 					if (event.isVisible())
 					{
-						if (count++ > 0)
-						{
-							builder.append(", ");
-						}
-
-						builder.append(this.converter.toJson(event));
+						payload.put(this.converter.toJson(event));
 					}
 				}
 			}
 		}
 
-		return builder.append(" ]").toString();
+		return payload.toString();
 	}
 }

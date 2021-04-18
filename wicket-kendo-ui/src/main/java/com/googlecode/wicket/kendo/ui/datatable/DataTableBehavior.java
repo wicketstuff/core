@@ -349,6 +349,7 @@ public abstract class DataTableBehavior extends KendoUIBehavior implements IJQue
 	 */
 	private static String getColumnsAsString(List<IColumn> columns, List<CommandAjaxBehavior> behaviors)
 	{
+		// TODO replace StringBuilder
 		StringBuilder builder = new StringBuilder("[ ");
 
 		for (int i = 0; i < columns.size(); i++)

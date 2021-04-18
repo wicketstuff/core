@@ -294,6 +294,7 @@ public abstract class AbstractColumn implements IColumn
 	@Override
 	public String toString()
 	{
+		// TODO replace StringBuilder
 		StringBuilder builder = new StringBuilder();
 
 		BuilderUtils.append(builder, "title", this.getTitle());

@@ -122,4 +122,21 @@ public class JsonUtils
 	{
 		return new JSONObject(object).toString();
 	}
+
+	// factories //
+
+	/**
+	 * Gets a new {@link JSONObject}
+	 * 
+	 * @param name the field name
+	 * @param value the field value
+	 * @return a new {@link JSONObject}
+	 */
+	public static JSONObject newJSONObject(String name, Object value)
+	{
+		final JSONObject object = new JSONObject();
+		object.put(name, value);
+
+		return object;
+	}
 }

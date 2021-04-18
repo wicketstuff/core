@@ -22,7 +22,8 @@ import java.util.List;
 import org.apache.wicket.model.util.ListModel;
 import org.apache.wicket.util.lang.Generics;
 
-import com.googlecode.wicket.jquery.core.utils.BuilderUtils;
+import com.github.openjson.JSONArray;
+import com.github.openjson.JSONObject;
 
 /**
  * Provides a {@link ListModel} of {@link ResourceList}{@code s} (a {@code List} of {@code List})
@@ -113,47 +114,32 @@ public class ResourceListModel extends ListModel<ResourceList>
 	@Override
 	public String toString()
 	{
-		StringBuilder builder = new StringBuilder("[ ");
+		final JSONArray array = new JSONArray();
 
-		int i = 0;
 		for (ResourceList list : this.getObject())
 		{
-			if (i++ > 0)
-			{
-				builder.append(", ");
-			}
+			final JSONObject object = new JSONObject();
+			array.put(object);
 
-			builder.append("{ ");
-			BuilderUtils.append(builder, "field", list.getField());
-			builder.append(", ");
+			object.put("field", list.getField());
 
 			if (list.getGroup() != null)
 			{
-				BuilderUtils.append(builder, "name", list.getGroup());
-				builder.append(", ");
+				object.put("name", list.getGroup());
 			}
 
-			BuilderUtils.append(builder, "title", list.getTitle());
-			builder.append(", ");
-			BuilderUtils.append(builder, "multiple", list.isMultiple());
-			builder.append(", ");
-			builder.append("dataSource: [ ");
+			object.put("title", list.getTitle());
+			object.put("multiple", list.isMultiple());
 
-			int j = 0;
+			final JSONArray resources = new JSONArray();
+			object.put("dataSource", resources);
+
 			for (Resource resource : list)
 			{
-				if (j++ > 0)
-				{
-					builder.append(", ");
-				}
-
-				builder.append(resource.toString());
+				resources.put(Resource.toJSONObject(resource));
 			}
-
-			builder.append(" ]");
-			builder.append(" }");
 		}
 
-		return builder.append(" ]").toString();
+		return array.toString();
 	}
 }
