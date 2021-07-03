@@ -2,6 +2,7 @@ package org.wicketstuff.gae;
 
 import org.apache.wicket.Application;
 import org.apache.wicket.DefaultPageManagerProvider;
+import org.apache.wicket.MetaDataKey;
 import org.apache.wicket.page.IPageManager;
 import org.apache.wicket.pageStore.IPageStore;
 import org.apache.wicket.pageStore.InSessionPageStore;
@@ -40,6 +41,19 @@ public class GaePageManagerProvider extends DefaultPageManagerProvider {
 	 */
 	@Override
 	protected IPageStore newPersistentStore() {
-		return new InSessionPageStore(maxPages);
+		return new InSessionPageStore(maxPages) {
+			
+			private MetaDataKey<SessionData> KEY = new MetaDataKey<InSessionPageStore.SessionData>() {
+			};
+
+			/**
+			 * Provide specific key so we do not interfere with the default InSessionPageStore used
+			 * as cache. 
+			 */
+			@Override
+			protected MetaDataKey<SessionData> getKey() {
+				return KEY;
+			}
+		};
 	}
 }
