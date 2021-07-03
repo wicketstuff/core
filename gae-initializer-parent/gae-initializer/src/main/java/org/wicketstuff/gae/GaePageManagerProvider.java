@@ -28,6 +28,14 @@ public class GaePageManagerProvider extends DefaultPageManagerProvider {
 	}
 
 	/**
+	 * InSessionPageStore does not support storing asynchronously.
+	 */
+	@Override
+	protected IPageStore newAsynchronousStore(IPageStore pageStore) {
+		return pageStore;
+	}
+	
+	/**
 	 * Store maximum number of pages in the session.
 	 */
 	@Override
