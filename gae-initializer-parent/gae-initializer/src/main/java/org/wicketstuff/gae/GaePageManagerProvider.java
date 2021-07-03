@@ -41,19 +41,25 @@ public class GaePageManagerProvider extends DefaultPageManagerProvider {
 	 */
 	@Override
 	protected IPageStore newPersistentStore() {
-		return new InSessionPageStore(maxPages) {
-			
-			private MetaDataKey<SessionData> KEY = new MetaDataKey<InSessionPageStore.SessionData>() {
-			};
-
-			/**
-			 * Provide specific key so we do not interfere with the default InSessionPageStore used
-			 * as cache. 
-			 */
-			@Override
-			protected MetaDataKey<SessionData> getKey() {
-				return KEY;
-			}
-		};
+		return new GaePersistentPageStore(maxPages);
 	}
+
+	private static class GaePersistentPageStore extends InSessionPageStore {
+		
+		private static MetaDataKey<SessionData> KEY = new MetaDataKey<InSessionPageStore.SessionData>() {
+		};
+
+		public GaePersistentPageStore(int maxPages) {
+			super(maxPages);
+		}
+
+		/**
+		 * Provide specific key so we do not interfere with the default InSessionPageStore used
+		 * as cache. 
+		 */
+		@Override
+		protected MetaDataKey<SessionData> getKey() {
+			return KEY;
+		}
+	};
 }
