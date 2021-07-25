@@ -68,7 +68,7 @@ public abstract class AbstractAutoCompleteTextField<T, C> extends TextField<T> i
 	 *
 	 * @param id the markup id
 	 */
-	public AbstractAutoCompleteTextField(String id)
+	protected AbstractAutoCompleteTextField(String id)
 	{
 		this(id, new TextRenderer<C>(), null);
 	}
@@ -79,7 +79,7 @@ public abstract class AbstractAutoCompleteTextField<T, C> extends TextField<T> i
 	 * @param id the markup id
 	 * @param renderer the {@link ChoiceRenderer}
 	 */
-	public AbstractAutoCompleteTextField(String id, ITextRenderer<? super C> renderer)
+	protected AbstractAutoCompleteTextField(String id, ITextRenderer<? super C> renderer)
 	{
 		this(id, renderer, null);
 	}
@@ -90,7 +90,7 @@ public abstract class AbstractAutoCompleteTextField<T, C> extends TextField<T> i
 	 * @param id the markup id
 	 * @param type type for field validation
 	 */
-	public AbstractAutoCompleteTextField(String id, Class<T> type)
+	protected AbstractAutoCompleteTextField(String id, Class<T> type)
 	{
 		this(id, new TextRenderer<C>(), type);
 	}
@@ -102,7 +102,7 @@ public abstract class AbstractAutoCompleteTextField<T, C> extends TextField<T> i
 	 * @param renderer the {@link ChoiceRenderer}
 	 * @param type type for field validation
 	 */
-	public AbstractAutoCompleteTextField(String id, ITextRenderer<? super C> renderer, Class<T> type)
+	protected AbstractAutoCompleteTextField(String id, ITextRenderer<? super C> renderer, Class<T> type)
 	{
 		super(id, type);
 
@@ -116,7 +116,7 @@ public abstract class AbstractAutoCompleteTextField<T, C> extends TextField<T> i
 	 * @param id the markup id
 	 * @param model the {@link IModel}
 	 */
-	public AbstractAutoCompleteTextField(String id, IModel<T> model)
+	protected AbstractAutoCompleteTextField(String id, IModel<T> model)
 	{
 		this(id, model, new TextRenderer<C>(), null);
 	}
@@ -128,7 +128,7 @@ public abstract class AbstractAutoCompleteTextField<T, C> extends TextField<T> i
 	 * @param model the {@link IModel}
 	 * @param renderer the {@link ChoiceRenderer}
 	 */
-	public AbstractAutoCompleteTextField(String id, IModel<T> model, ITextRenderer<? super C> renderer)
+	protected AbstractAutoCompleteTextField(String id, IModel<T> model, ITextRenderer<? super C> renderer)
 	{
 		this(id, model, renderer, null);
 	}
@@ -140,7 +140,7 @@ public abstract class AbstractAutoCompleteTextField<T, C> extends TextField<T> i
 	 * @param model the {@link IModel}
 	 * @param type type for field validation
 	 */
-	public AbstractAutoCompleteTextField(String id, IModel<T> model, Class<T> type)
+	protected AbstractAutoCompleteTextField(String id, IModel<T> model, Class<T> type)
 	{
 		this(id, model, new TextRenderer<C>(), type);
 	}
@@ -153,7 +153,7 @@ public abstract class AbstractAutoCompleteTextField<T, C> extends TextField<T> i
 	 * @param renderer the {@link ChoiceRenderer}
 	 * @param type type for field validation
 	 */
-	public AbstractAutoCompleteTextField(String id, IModel<T> model, ITextRenderer<? super C> renderer, Class<T> type)
+	protected AbstractAutoCompleteTextField(String id, IModel<T> model, ITextRenderer<? super C> renderer, Class<T> type)
 	{
 		super(id, model, type);
 
@@ -162,6 +162,21 @@ public abstract class AbstractAutoCompleteTextField<T, C> extends TextField<T> i
 	}
 
 	// Properties //
+
+	/**
+	 * Gets the current/cached list of choices
+	 * 
+	 * @return the list of choices
+	 */
+	public final List<C> getChoices()
+	{
+		if (this.choices != null)
+		{
+			return this.choices;
+		}
+
+		return Collections.emptyList();
+	}
 
 	/**
 	 * Gets the {@link ChoiceModelBehavior} callback url
@@ -220,7 +235,7 @@ public abstract class AbstractAutoCompleteTextField<T, C> extends TextField<T> i
 	{
 		return this.renderer;
 	}
-	
+
 	@Override
 	public boolean isChangeEventEnabled()
 	{
@@ -233,6 +248,7 @@ public abstract class AbstractAutoCompleteTextField<T, C> extends TextField<T> i
 	 * Call {@link #getChoices()} and cache the result<br>
 	 * Internal use only
 	 *
+	 * @param input the user input
 	 * @return the list of choices
 	 */
 	private List<C> internalGetChoices(String input)
@@ -242,16 +258,12 @@ public abstract class AbstractAutoCompleteTextField<T, C> extends TextField<T> i
 		return this.choices;
 	}
 
-	public List<C> getChoices()
-	{
-		if (this.choices != null)
-		{
-			return this.choices;
-		}
-
-		return Collections.emptyList();
-	}
-
+	/**
+	 * Get the list of choice according to the user-input
+	 * 
+	 * @param input the user-input.
+	 * @return list of choice
+	 */
 	protected abstract List<C> getChoices(String input);
 
 	// Events //
@@ -303,7 +315,7 @@ public abstract class AbstractAutoCompleteTextField<T, C> extends TextField<T> i
 	protected void onConfigure(KendoDataSource dataSource)
 	{
 		// noop
-	}	
+	}
 
 	@Override
 	public void onBeforeRender(JQueryBehavior behavior)
@@ -318,7 +330,7 @@ public abstract class AbstractAutoCompleteTextField<T, C> extends TextField<T> i
 
 		tag.put("autocomplete", "off"); // disable browser's autocomplete
 	}
-	
+
 	@Override
 	public void onChange(AjaxRequestTarget target, String value)
 	{
@@ -355,20 +367,20 @@ public abstract class AbstractAutoCompleteTextField<T, C> extends TextField<T> i
 			private static final long serialVersionUID = 1L;
 
 			// Properties //
-			
+
 			@Override
 			protected CharSequence getDataSourceUrl()
 			{
 				return AbstractAutoCompleteTextField.this.getCallbackUrl();
 			}
-			
+
 			// Events //
 
 			@Override
 			protected void onConfigure(KendoDataSource dataSource)
 			{
 				AbstractAutoCompleteTextField.this.onConfigure(dataSource);
-			}			
+			}
 		};
 	}
 
@@ -395,12 +407,11 @@ public abstract class AbstractAutoCompleteTextField<T, C> extends TextField<T> i
 		return new ChoiceModelBehavior<>(this.renderer, this.template) {
 
 			private static final long serialVersionUID = 1L;
-			private static final String TERM = "filter[filters][0][value]";
 
 			@Override
 			public List<C> getChoices()
 			{
-				final String input = RequestCycleUtils.getQueryParameterValue(TERM).toString("");
+				final String input = RequestCycleUtils.getQueryParameterValue(FILTER_VALUE).toString("");
 
 				return AbstractAutoCompleteTextField.this.internalGetChoices(input);
 			}

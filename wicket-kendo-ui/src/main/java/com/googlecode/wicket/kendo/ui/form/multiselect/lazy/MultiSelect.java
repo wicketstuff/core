@@ -17,6 +17,7 @@
 package com.googlecode.wicket.kendo.ui.form.multiselect.lazy;
 
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 import org.apache.wicket.ajax.AjaxRequestTarget;
@@ -28,10 +29,10 @@ import com.googlecode.wicket.jquery.core.IJQueryWidget;
 import com.googlecode.wicket.jquery.core.JQueryBehavior;
 import com.googlecode.wicket.jquery.core.Options;
 import com.googlecode.wicket.jquery.core.behavior.ChoiceModelBehavior;
-import com.googlecode.wicket.jquery.core.data.IChoiceProvider;
 import com.googlecode.wicket.jquery.core.event.SelectionChangedAdapter;
 import com.googlecode.wicket.jquery.core.renderer.IChoiceRenderer;
 import com.googlecode.wicket.jquery.core.template.IJQueryTemplate;
+import com.googlecode.wicket.jquery.core.utils.RequestCycleUtils;
 import com.googlecode.wicket.kendo.ui.KendoDataSource;
 import com.googlecode.wicket.kendo.ui.KendoUIBehavior;
 import com.googlecode.wicket.kendo.ui.renderer.ChoiceRenderer;
@@ -45,7 +46,7 @@ import com.googlecode.wicket.kendo.ui.template.KendoTemplateBehavior;
  *
  * @param <T> the model object type
  */
-public abstract class MultiSelect<T> extends FormComponent<Collection<T>> implements IJQueryWidget, IChoiceProvider<T> // NOSONAR
+public abstract class MultiSelect<T> extends FormComponent<Collection<T>> implements IJQueryWidget // NOSONAR
 {
 	private static final long serialVersionUID = 1L;
 
@@ -68,7 +69,7 @@ public abstract class MultiSelect<T> extends FormComponent<Collection<T>> implem
 	 *
 	 * @param id the markup id
 	 */
-	public MultiSelect(String id)
+	protected MultiSelect(String id)
 	{
 		this(id, new ChoiceRenderer<T>());
 	}
@@ -79,7 +80,7 @@ public abstract class MultiSelect<T> extends FormComponent<Collection<T>> implem
 	 * @param id the markup id
 	 * @param model the {@link IModel}
 	 */
-	public MultiSelect(String id, IModel<? extends Collection<T>> model)
+	protected MultiSelect(String id, IModel<? extends Collection<T>> model)
 	{
 		this(id, model, new ChoiceRenderer<T>());
 	}
@@ -90,7 +91,7 @@ public abstract class MultiSelect<T> extends FormComponent<Collection<T>> implem
 	 * @param id the markup id
 	 * @param renderer the {@link IChoiceRenderer}
 	 */
-	public MultiSelect(String id, IChoiceRenderer<? super T> renderer)
+	protected MultiSelect(String id, IChoiceRenderer<? super T> renderer)
 	{
 		super(id);
 
@@ -106,7 +107,7 @@ public abstract class MultiSelect<T> extends FormComponent<Collection<T>> implem
 	 * @param renderer the {@link ChoiceRenderer}
 	 */
 	@SuppressWarnings("unchecked")
-	public MultiSelect(String id, IModel<? extends Collection<T>> model, IChoiceRenderer<? super T> renderer)
+	protected MultiSelect(String id, IModel<? extends Collection<T>> model, IChoiceRenderer<? super T> renderer)
 	{
 		super(id, (IModel<Collection<T>>) model);
 
@@ -115,6 +116,21 @@ public abstract class MultiSelect<T> extends FormComponent<Collection<T>> implem
 	}
 
 	// Properties //
+
+	/**
+	 * Gets the current/cached list of choices
+	 * 
+	 * @return the list of choices
+	 */
+	public final List<T> getChoices()
+	{
+		if (this.choices != null)
+		{
+			return this.choices;
+		}
+
+		return Collections.emptyList();
+	}
 
 	/**
 	 * Gets the {@link ChoiceModelBehavior} callback url
@@ -170,14 +186,23 @@ public abstract class MultiSelect<T> extends FormComponent<Collection<T>> implem
 	 * Call {@link #getChoices()} and cache the result<br>
 	 * Internal use only
 	 *
+	 * @param input the user input
 	 * @return the list of choices
 	 */
-	private List<T> internalGetChoices()
+	private List<T> internalGetChoices(String input)
 	{
-		this.choices = this.getChoices();
+		this.choices = this.getChoices(input);
 
 		return this.choices;
 	}
+
+	/**
+	 * Get the list of choice according to the user-input
+	 * 
+	 * @param input the user-input. Empty if {@code serverFiltering} is set to {@code false}
+	 * @return list of choice
+	 */
+	protected abstract List<T> getChoices(String input);
 
 	@Override
 	public void convertInput()
@@ -352,7 +377,9 @@ public abstract class MultiSelect<T> extends FormComponent<Collection<T>> implem
 			@Override
 			public List<T> getChoices()
 			{
-				return MultiSelect.this.internalGetChoices();
+				final String input = RequestCycleUtils.getQueryParameterValue(FILTER_VALUE).toString("");
+
+				return MultiSelect.this.internalGetChoices(input);
 			}
 		};
 	}

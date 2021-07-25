@@ -54,7 +54,7 @@ public abstract class AutoCompleteBehavior extends KendoUIBehavior implements IJ
 	 * @param selector the html selector (ie: "#myId")
 	 * @param listener the {@link IAutoCompleteListener}
 	 */
-	public AutoCompleteBehavior(String selector, IAutoCompleteListener listener)
+	protected AutoCompleteBehavior(String selector, IAutoCompleteListener listener)
 	{
 		this(selector, new Options(), listener);
 	}
@@ -66,7 +66,7 @@ public abstract class AutoCompleteBehavior extends KendoUIBehavior implements IJ
 	 * @param options the {@link Options}
 	 * @param listener the {@link IAutoCompleteListener}
 	 */
-	public AutoCompleteBehavior(String selector, Options options, IAutoCompleteListener listener)
+	protected AutoCompleteBehavior(String selector, Options options, IAutoCompleteListener listener)
 	{
 		super(selector, METHOD, options);
 
@@ -82,7 +82,6 @@ public abstract class AutoCompleteBehavior extends KendoUIBehavior implements IJ
 
 		// data source //
 		this.dataSource = new KendoDataSource(component);
-		this.dataSource.set("serverFiltering", true); // important
 		this.add(this.dataSource);
 
 		// ajax behaviors //
@@ -125,6 +124,7 @@ public abstract class AutoCompleteBehavior extends KendoUIBehavior implements IJ
 
 		if (this.isEnabled(component))
 		{
+			this.dataSource.set("serverFiltering", true); // important
 			this.dataSource.setTransportReadUrl(this.getDataSourceUrl());
 		}
 

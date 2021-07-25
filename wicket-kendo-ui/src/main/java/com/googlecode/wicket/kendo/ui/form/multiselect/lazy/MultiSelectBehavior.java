@@ -45,7 +45,7 @@ public abstract class MultiSelectBehavior extends KendoUIBehavior implements IJQ
 
 	private JQueryAjaxBehavior onChangeAjaxBehavior = null;
 
-	public MultiSelectBehavior(String selector, ISelectionChangedListener listener)
+	protected MultiSelectBehavior(String selector, ISelectionChangedListener listener)
 	{
 		super(selector, METHOD);
 
@@ -99,6 +99,7 @@ public abstract class MultiSelectBehavior extends KendoUIBehavior implements IJQ
 
 		if (this.isEnabled(component))
 		{
+			this.dataSource.set("serverFiltering", true);
 			this.dataSource.setTransportReadUrl(this.getDataSourceUrl());
 		}
 

@@ -44,7 +44,7 @@ public abstract class AjaxMultiSelect<T> extends MultiSelect<T> implements ISele
 	 *
 	 * @param id the markup id
 	 */
-	public AjaxMultiSelect(String id)
+	protected AjaxMultiSelect(String id)
 	{
 		super(id);
 	}
@@ -55,7 +55,7 @@ public abstract class AjaxMultiSelect<T> extends MultiSelect<T> implements ISele
 	 * @param id the markup id
 	 * @param model the {@link IModel}
 	 */
-	public AjaxMultiSelect(String id, IModel<? extends Collection<T>> model)
+	protected AjaxMultiSelect(String id, IModel<? extends Collection<T>> model)
 	{
 		super(id, model);
 	}
@@ -66,7 +66,7 @@ public abstract class AjaxMultiSelect<T> extends MultiSelect<T> implements ISele
 	 * @param id the markup id
 	 * @param renderer the {@link ChoiceRenderer}
 	 */
-	public AjaxMultiSelect(String id, IChoiceRenderer<? super T> renderer)
+	protected AjaxMultiSelect(String id, IChoiceRenderer<? super T> renderer)
 	{
 		super(id, renderer);
 	}
@@ -78,7 +78,7 @@ public abstract class AjaxMultiSelect<T> extends MultiSelect<T> implements ISele
 	 * @param model the {@link IModel}
 	 * @param renderer the {@link ChoiceRenderer}
 	 */
-	public AjaxMultiSelect(String id, IModel<? extends Collection<T>> model, IChoiceRenderer<? super T> renderer)
+	protected AjaxMultiSelect(String id, IModel<? extends Collection<T>> model, IChoiceRenderer<? super T> renderer)
 	{
 		super(id, model, renderer);
 	}

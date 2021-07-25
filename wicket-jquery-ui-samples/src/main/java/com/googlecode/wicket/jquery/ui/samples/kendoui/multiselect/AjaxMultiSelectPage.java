@@ -39,7 +39,7 @@ public class AjaxMultiSelectPage extends AbstractMultiSelectPage
 			private static final long serialVersionUID = 1L;
 
 			@Override
-			public List<String> getChoices()
+			public List<String> getChoices(String input)
 			{
 				try
 				{

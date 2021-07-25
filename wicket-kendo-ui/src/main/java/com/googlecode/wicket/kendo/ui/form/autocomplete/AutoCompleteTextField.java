@@ -43,7 +43,7 @@ public abstract class AutoCompleteTextField<T> extends AbstractAutoCompleteTextF
 	 *
 	 * @param id the markup id
 	 */
-	public AutoCompleteTextField(String id)
+	protected AutoCompleteTextField(String id)
 	{
 		super(id);
 
@@ -56,7 +56,7 @@ public abstract class AutoCompleteTextField<T> extends AbstractAutoCompleteTextF
 	 * @param id the markup id
 	 * @param renderer the {@link ITextRenderer}
 	 */
-	public AutoCompleteTextField(String id, ITextRenderer<? super T> renderer)
+	protected AutoCompleteTextField(String id, ITextRenderer<? super T> renderer)
 	{
 		super(id, renderer);
 
@@ -69,7 +69,7 @@ public abstract class AutoCompleteTextField<T> extends AbstractAutoCompleteTextF
 	 * @param id the markup id
 	 * @param type type for field validation
 	 */
-	public AutoCompleteTextField(String id, Class<T> type)
+	protected AutoCompleteTextField(String id, Class<T> type)
 	{
 		super(id, type);
 
@@ -83,7 +83,7 @@ public abstract class AutoCompleteTextField<T> extends AbstractAutoCompleteTextF
 	 * @param renderer the {@link ITextRenderer}
 	 * @param type type for field validation
 	 */
-	public AutoCompleteTextField(String id, ITextRenderer<? super T> renderer, Class<T> type)
+	protected AutoCompleteTextField(String id, ITextRenderer<? super T> renderer, Class<T> type)
 	{
 		super(id, renderer, type);
 
@@ -96,7 +96,7 @@ public abstract class AutoCompleteTextField<T> extends AbstractAutoCompleteTextF
 	 * @param id the markup id
 	 * @param model the {@link IModel}
 	 */
-	public AutoCompleteTextField(String id, IModel<T> model)
+	protected AutoCompleteTextField(String id, IModel<T> model)
 	{
 		super(id, model);
 
@@ -110,7 +110,7 @@ public abstract class AutoCompleteTextField<T> extends AbstractAutoCompleteTextF
 	 * @param model the {@link IModel}
 	 * @param renderer the {@link ITextRenderer}
 	 */
-	public AutoCompleteTextField(String id, IModel<T> model, ITextRenderer<? super T> renderer)
+	protected AutoCompleteTextField(String id, IModel<T> model, ITextRenderer<? super T> renderer)
 	{
 		super(id, model, renderer);
 
@@ -124,7 +124,7 @@ public abstract class AutoCompleteTextField<T> extends AbstractAutoCompleteTextF
 	 * @param model the {@link IModel}
 	 * @param type the type of the bean. This parameter should be supplied for the internal converter ({@link #getConverter(Class)}) to be used.
 	 */
-	public AutoCompleteTextField(String id, IModel<T> model, Class<T> type)
+	protected AutoCompleteTextField(String id, IModel<T> model, Class<T> type)
 	{
 		super(id, model, type);
 
@@ -139,7 +139,7 @@ public abstract class AutoCompleteTextField<T> extends AbstractAutoCompleteTextF
 	 * @param renderer the {@link ITextRenderer}
 	 * @param type the type of the bean. This parameter should be supplied for the internal converter ({@link #getConverter(Class)}) to be used.
 	 */
-	public AutoCompleteTextField(String id, IModel<T> model, ITextRenderer<? super T> renderer, Class<T> type)
+	protected AutoCompleteTextField(String id, IModel<T> model, ITextRenderer<? super T> renderer, Class<T> type)
 	{
 		super(id, model, renderer, type);
 
