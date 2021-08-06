@@ -5,9 +5,6 @@ import java.util.Collection;
 import javax.swing.tree.TreeModel;
 import javax.swing.tree.TreeNode;
 
-import com.inmethod.grid.IGridColumn;
-import com.inmethod.grid.common.AbstractGridRow;
-import com.inmethod.grid.common.AttachPrelightBehavior;
 import org.apache.wicket.Component;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.behavior.Behavior;
@@ -15,6 +12,10 @@ import org.apache.wicket.extensions.markup.html.tree.AbstractTree;
 import org.apache.wicket.markup.ComponentTag;
 import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.model.IModel;
+
+import com.inmethod.grid.IGridColumn;
+import com.inmethod.grid.common.AbstractGridRow;
+import com.inmethod.grid.common.AttachPrelightBehavior;
 
 /**
  * Body of {@link TreeGrid}. Contains the rows for tree nodes.
@@ -73,7 +74,7 @@ public abstract class TreeGridBody<T extends TreeModel, I extends TreeNode, S> e
 			@Override
 			public void onComponentTag(Component component, ComponentTag tag)
 			{
-				CharSequence klass = "imxt-want-prelight imxt-grid-row";
+				CharSequence klass = "imxt-grid-row";
 				if (getTreeState().isNodeSelected(item.getDefaultModelObject()))
 				{
 					klass = klass + " imxt-selected";

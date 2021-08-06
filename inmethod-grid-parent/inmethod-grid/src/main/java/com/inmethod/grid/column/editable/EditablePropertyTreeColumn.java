@@ -171,11 +171,11 @@ public class EditablePropertyTreeColumn<T extends TreeModel & Serializable, I ex
 		{
 			if (getGrid().isItemEdited(rowModel))
 			{
-				return "imxt-want-prelight imxt-edited-cell";
+				return "imxt-edited-cell";
 			}
 			else
 			{
-				return "imxt-want-prelight";
+				return "";
 			}
 		}
 		else

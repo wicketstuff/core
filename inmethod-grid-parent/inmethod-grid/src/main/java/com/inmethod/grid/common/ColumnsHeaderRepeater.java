@@ -150,7 +150,7 @@ public abstract class ColumnsHeaderRepeater<M, I, S> extends WebMarkupContainer
 			response.write(column.getSizeUnit().getValue());
 
 			// render the css classes
-			response.write("\" class=\"imxt-want-prelight");
+			response.write("\" class=\"");
 			if (!Strings.isEmpty(column.getHeaderCssClass()))
 			{
 				response.write(" ");

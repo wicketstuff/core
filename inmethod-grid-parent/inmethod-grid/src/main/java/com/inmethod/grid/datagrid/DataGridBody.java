@@ -229,7 +229,7 @@ public abstract class DataGridBody<D extends IDataSource<T>, T, S> extends Panel
 					klass = klass + "imxt-odd";
 				}
 
-				klass = klass + " imxt-want-prelight imxt-grid-row";
+				klass = klass + " imxt-grid-row";
 
 				if (isItemSelected((IModel<T>)getDefaultModel()))
 				{

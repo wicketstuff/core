@@ -110,63 +110,6 @@ var purge = function()
 	}
 };
 
-/**
- * Prelight functionality
- */
-// map of elements with prelight
-var curPrelight = new Object();
- 
-var mouseIn = function(ev, instance) {
-	var e = this;	
-
-	// if the old and new prelight are not related in any way make sure that
-	// the prelight is disabled on the old ones	
-	for (property in curPrelight) {		
-		var id = curPrelight[property];
-		if (id) {
-			var c = Wicket.$(id);
-			if (c != null && !D.isAncestor(e, c) && !D.isAncestor(c, e))  {
-				Wicket.bind(mouseOut,c)(null, instance);
-			}
-		}
-	}
-	
-	var id = getElementId(e);
-	curPrelight[id] = id;	
-	e.imxtPrelight = true;					
-	instance.updatePrelight(e);	
-};
-	
-var mouseOut = function(ev, instance) {
-	var e = this;
-	curPrelight[getElementId(e)] = null;	
-	e.imxtPrelight = false;
-	instance.updatePrelight(e);	
-};
-
-var ignorePrelight = function(element)
-{
-	// We need to ignore prelight on table rows for all browsers but IE<=6.
-	// For all other browsers we use :hover, it's much faster in IE7
-	return !(element.tagName == "TR" && Wicket.Browser.isIELessThan7()) && hasClass(element, "imxt-grid-row");
-}
-
-var attachPrelight = function(elements, instance) {
-	
-	for (var i = 0; i < elements.length; ++i) {
-		var element = elements[i];
-					
-		if (element.imxtPrelightAttached != true && !ignorePrelight(element)) {
-			if (curPrelight != null && curPrelight[getElementId(element)] != null) {
-				Wicket.bind(mouseIn, element)(null, instance);
-			}			
-			addListener(element, "mouseover", mouseIn, instance, false);
-			addListener(element, "mouseout", mouseOut, instance, false);
-			element.imxtPrelightAttached = true;						
-		}			
-	}
-};
-
 window.setInterval(purgeInactiveListeners, 10000); 
 
 E.addListener(window, "unload", function() { elementsWithListeners = null; } );
@@ -360,22 +303,6 @@ InMethod.XTable.prototype = {
 		
 		this.columnsStateCallback = columnsStateCallback;
 		
-		// IE needs update called twice, otherwise the top right corner flashes or there is a horizontal 
-		// scrollbar where it shouldn't be
-		if (Wicket.Browser.isIE() && !Wicket.Browser.isIEQuirks()) {
-			var bodyContainer1 = this.getElement("div", "imxt-body-container1");
-			bodyContainer1.imxtOldOffsetWidth = null;
-			this.update();		
-		}
-						
-		if (Wicket.Browser.isIE()) {
-			addClass(Wicket.$(id), "imxt-ie");
-		} else if (Wicket.Browser.isGecko()) {
-			addClass(Wicket.$(id), "imxt-ff");
-		} else if (Wicket.Browser.isSafari()) {
-			addClass(Wicket.$(id), "imxt-safari");
-		}				
-		
 		this.updateSelectCheckBoxes();				
 		
 		this.initCells(this.getBodyTable());
@@ -562,12 +489,6 @@ InMethod.XTable.prototype = {
 								
 		var scroll;
 		 		
-		if (Wicket.Browser.isOpera()) {
-			// for some reason opera doesn't preserve the scroll offset
-			bodyContainer1 = this.getElement("div", "imxt-body-container1");
-			scroll = bodyContainer1.scrollLeft;
-		}
-
 		if (arrayEq(this.prevColumnWidths, widths) == false) {		
 
 			var header = this.getColumnsRow(); 				
@@ -584,55 +505,12 @@ InMethod.XTable.prototype = {
 			
 					var width = widths[i] + "px";							
 			
-					// opera fails to refresh the table properly, so we need to hide it and show
-					// after the width is set, that way it's refreshed properly
-					if (r.style.width != width) {
-						if (Wicket.Browser.isOpera())						
-							this.getBodyTable().style.display = "none";
-						
-						r.style.width = width;
-					}
-						
-					if (Wicket.Browser.isOpera()) {
-						this.getBodyTable().style.display = "";
-					}					
+					r.style.width = width;
 				}
 			}
 			
 			this.prevColumnWidths = widths;
-			
-			// When there is horizontal scrollbar present firefox flickers on ajax replacement.
-			// The reason is that when the table is rendered the data columns have zero size, thus the scrollbar is not visible.
-			// Only in updateColumnWidths the column sizes are set and the scrollbar is displayed. However, this is too late for
-			// firefox and in some cases in shifts the content after the table and immediately moves it back which results in nasty
-			// flicker. This fix creates a style rule for imxt-body-cotnainer2 that forces it to have width of body table, so the 
-			// scrollbar is immediately visible (if necessary) after ajax replacement.
-			if (Wicket.Browser.isGecko()) {
-				var c2 = this.getElement("div", "imxt-body-container2");
-				c2.style.width="auto"; // we want the stylesheet rule only applied on fresh replaced component
-				var x = document.styleSheets[0];
-				if (this.cssRulePos != null) {				
-					x.deleteRule(this.cssRulePos);
-				}	
-				this.cssRulePos = x.cssRules.length;			
-					
-				x.insertRule('div#' + this.id + ' div.imxt-body-container2 {width: ' + this.getBodyTable().offsetWidth + 'px}', this.cssRulePos)
-				
-				var c1 = this.getElement("div", "imxt-body-container1");
-				
-				// sometimes firefox displays "fake" horizontal scrollbar, this is a workaround
-				if (c1.scrollWidth <= c1.offsetWidth) {					
-					c1.style.overflowX = "hidden";
-				} else {
-					c1.style.overflowX = "scroll";
-				}
-			}			
 		} 
-		
-		if (Wicket.Browser.isOpera()) {
-			bodyContainer1 = this.getElement("div", "imxt-body-container1");
-			bodyContainer1.scrollLeft = scroll;
-		}
 	},
 	
 	/**
@@ -654,23 +532,10 @@ InMethod.XTable.prototype = {
   		var headContainer2 = this.getElement("div", "imxt-head-container2");
   		var bodyContainer1 = this.getElement("div", "imxt-body-container1");  				  		
 
-  		if (Wicket.Browser.isIE() || Wicket.Browser.isGecko()) {
-  			bodyContainer1.style.width = topContainer.offsetWidth + "px";
-  		}  		
-  		
 		var padding = (bodyContainer1.offsetWidth - bodyContainer1.clientWidth);
 
 		// count new header width
 		var newWidth = (body.offsetWidth + padding);
-		
-		// sometimes newWidth is negative in IE, we have to ignore it		
-		if (Wicket.Browser.isIE() && newWidth > 0 && head.style.width != newWidth)
-			head.style.width = newWidth + "px"; 
-		else if (Wicket.Browser.isSafari()) {			
-			var form = this.getElement("*", "imxt-form");			
-			var fieldset = this.getElement("fieldset", "imxt-fieldset", form);
-			fieldset.style.width = form.offsetWidth + "px";
-		}		
 		
 		if (padding > 0) {
 			// compensate for scrollbar
@@ -678,8 +543,6 @@ InMethod.XTable.prototype = {
 			e.style.width = padding + "px";			
 		}
  			 		 			 		
- 		this.updateHandles(force);
- 		 		 		
  		this.updateColumnWidths();
  		
 		this.updatePreservedScrollOffsets(); 				
@@ -691,7 +554,6 @@ InMethod.XTable.prototype = {
 		if (headContainer2.scrollLeft != scroll)
 			headContainer2.scrollLeft = scroll; 							
 
-		this.fixIEStd();				
 
 		// update ok
 		return true; 
@@ -723,55 +585,6 @@ InMethod.XTable.prototype = {
  			
  			bodyContainer1.imxtOldOffsetWidth = null; 			 			
  		}
-	},
-	
-	fixIEStd: function() {
-		if (Wicket.Browser.isIE() && !Wicket.Browser.isIEQuirks()) {			
-		
-			var bodyContainer1 = this.getElement("div", "imxt-body-container1");
-		      		 		      				      		 		      		
-		    // IE in standard compliance mode fails to display the scrollbars properly
-		    // so we need to manually change the overflow mode		      		 		      	
-			if (this.dragging || bodyContainer1.imxtOldOffsetWidth != bodyContainer1.offsetWidth) {							
-			
-				var body = this.getBodyTable();
-			
-				// this forces IE to recalculate the width. setting to 1px "hides" the scrollbar
-				// so that bodyContainer1 gives us real scrollWidth						 				     		 		      				      		 		      		 
-				body.style.width = "1px";
-				body.style.width = bodyContainer1.scrollWidth + "px";	
-				
-				bodyContainer1.imxtOldOffsetWidth = bodyContainer1.offsetWidth;
-			}
-		}
-	},
-	
-	/**
-	 * On IE 6 or IE7 quirks this sets the drag handles height same as parent (column) height 
-	 */
-	updateHandles: function(force) {
-		// this is slow on IE so we only do it on every tenth update
-		
-		if (Wicket.Browser.isIELessThan7() || Wicket.Browser.isIEQuirks()) {
-			var c = this.counter || 0;
-			if (force)
-				c = 0;
-			
-			if (c == 0) {		
-				var header = this.getColumnsRow();				
-				
-				var handles = this.getElements("a", "imxt-handle", header);
-				for (var i = 0; i < handles.length; ++i) {
-					var h = handles[i];
-					h.style.height = h.parentNode.offsetHeight + "px";
-				}			
-				
-			} else if (c == 10) {
-				c = -1;
-			}
-			++c;
-			this.counter = c;
-		}
 	},
 	
 	/**
@@ -817,9 +630,6 @@ InMethod.XTable.prototype = {
 		proxy.style.height = (bodyContainer.offsetHeight + bodyContainerPos[1] - headContainerPos[1]) + "px";
 		
 		var top = headContainerPos[1];
-		if (Wicket.Browser.isIE()) { // weird IE bug
-			top = top - 2;
-		}
 		proxy.style.top = top + "px";
 		
 		proxy.style.left = (columnPos[0] + column.imxtWidth - proxy.offsetWidth) + "px"; 			
@@ -869,17 +679,7 @@ InMethod.XTable.prototype = {
       		column = column.parentNode; 				
       	} while (column.tagName != "TH");
 
-      	// opera has weird redrawing problems, to get over it we hide the handle and show 
-      	// it after setting the width	
-      	if (Wicket.Browser.isOpera()) {
-			column.style.display = "none";
-		} 
-		
 		column.style.width = column.imxtWidth + "px";
-		
-		if (Wicket.Browser.isOpera()) {
-    		column.style.display = ""; 
-    	} 
 		
 		// remove the css classes
 		removeClass(column, "imxt-dragging");
@@ -888,12 +688,6 @@ InMethod.XTable.prototype = {
 		// fix for IE quirks mode (to force recalculating of table layout)
 		this.getElement("div", "imxt-body-container1").imxtOldOffsetWidth = null;
 		
-		// the prelight has not been updated during dragging, update it now
-		if (Wicket.Browser.isIE()) // flickers otherwise
-			window.setTimeout(Wicket.bind(this.updatePrelight, this), 100);
-		else
-			this.updatePrelight();
-			
 		this.updateInternal();
 		this.submitColumnState();
 	},
@@ -1011,9 +805,6 @@ InMethod.XTable.prototype = {
 				c.imxtAttached = true;
 			}
 		}
-		
-		// 4 prelights		
-		this.attachPrelight();
 	},
 	
 	/**
@@ -1080,7 +871,6 @@ InMethod.XTable.prototype = {
 	
 		this.hideArrows();
 		this.hideDragProxy();
-		this.updatePrelight();		
 		
 		if (submitState) {
 		 	this.submitColumnState();
@@ -1283,16 +1073,7 @@ InMethod.XTable.prototype = {
 		// otherwise the tables will not be refreshed afterwards
 		var bodyContainer1;
 		var scroll;
-		if (Wicket.Browser.isOpera()) {
-			bodyContainer1 = this.getElement("div", "imxt-body-container1");
-			scroll = bodyContainer1.scrollLeft;
-			this.getHeadTable().style.display="none";
-			this.getBodyTable().style.display="none";								
-		}
 								
-		// the column might not be prelight after reordering								
-		removeClass(column, "imxt-prelight");
-		
 		var header = this.getColumnsRow();		
 		var ths = getChildren(header, "TH");
 		
@@ -1361,76 +1142,11 @@ InMethod.XTable.prototype = {
 		updateRows(this.getHeadRows());
 		updateRows(this.getBodyRows(), fixSpans);
 				
-		// show the tables in opera
-		if (Wicket.Browser.isOpera()) {
-			this.getHeadTable().style.display="";
-			this.getBodyTable().style.display="";			
-			bodyContainer1.scrollLeft = scroll;			
-		}
-		
 		// we might have changed the layout
 		this.update(true);
 		
 	},
 		
-	/**
-	 * To get around IE not supporting :hover on all elements but links, we attach special
-	 * onmouseover and onmouseout handlers on elements with "imxt-want-prelight" class set
-	 * that add and remove the imxt-prelight css class on element when mouse hovers it.
-	 */
-	attachPrelight: function() {
-		var elements = this.getElements("*", "imxt-want-prelight");
-	
-		attachPrelight(elements, this);
-	},
-		
-	/**
-	 * When the mouseover/mouseout event handlers set a prelight flag, this method adds/removes
-	 * the actual css class depending on the flag. This behavior is intentionally supressed
-	 * during column resizing/reordering. 
-	 * If the specified element is undefined, the css class is updated on all elements with
-	 * "imxt-want-prelight" css class.
-	 */ 
-	updatePrelight: function(element) {		
-		if (this.dragging != true) {
-		 		
-		 	var update = Wicket.bind(function(e) {
-		 		
-		 		var scrollLeft;
-		 		
-				if (Wicket.Browser.isOpera()) {
-					// for some reason opera doesn't preserve the scroll offset when changing/removing style
-					bodyContainer1 = this.getElement("div", "imxt-body-container1");					
-					scrollLeft = bodyContainer1.scrollLeft;
-					//e.style.visibility = "hidden";
-				}		 		
-		 		
-				if (e.imxtPrelight == true) {
-					addClass(e, "imxt-prelight");
-				} else {
-					removeClass(e, "imxt-prelight");
-				}
-				
-				if (Wicket.Browser.isOpera()) {
-					//e.style.visibility = "";
-					bodyContainer1 = this.getElement("div", "imxt-body-container1");
-					bodyContainer1.scrollLeft = scrollLeft;
-				}
-				
-			}, this);
-		 	
-		 		
-			if (typeof(element) != "undefined") {				
-				update(element);
-			} else {
-				var elements = this.getElements("*", "imxt-want-prelight", this.getHeadTable());
-				for (var i = 0; i < elements.length; ++i) {
-					update(elements[i]);
-				}
-			}
-		}				
-	},
-	
 	/**
 	 * Returns the state of columns (order and widths) represented as string.
 	 */
@@ -1460,14 +1176,6 @@ InMethod.XTable.prototype = {
 	 * Needs to be called when a row was added or updated.
 	 */
 	rowUpdated: function(rowElement) {
-		var elements = this.getElements("*", "imxt-want-prelight", rowElement);
-		
-		if (hasClass(rowElement, "imxt-want-prelight")) {
-			elements.push(rowElement);
-		}		
-
-		attachPrelight(elements, this);
-		
 		this.updateSelectCheckBoxes();
 		this.initCells(rowElement);
 	},
@@ -1539,9 +1247,6 @@ InMethod.XTableManager.prototype = {
 
 	initialize: function() {
 		var interval = 100;
-		if (Wicket.Browser.isIELessThan7()) {
-			interval = 500;
-		}
 		window.setInterval(Wicket.bind(this.update, this), interval);
 	},
 	
@@ -1613,16 +1318,6 @@ onKeyEvent = function(element, event) {
 	
 	if (key == 13 || key == 27) {					
 		
-		if (key == 13 && Wicket.Browser.isSafari()) {
-			// somewhat ugly fix but this is the only thing preventing safari from submitting the form on enter
-			var form = findParent(element, "FORM");
-			if (form != null) {				
-				form.imxtOldOnSubmit = form.onsubmit;
-				form.onsubmit=function() { return false; };
-				window.setTimeout(function() { form.onsubmit = form.imxtOldOnSubmit; form.imxtOldOnSubmit = null;}, 100);
-			} 
-		}		
-		
 		var row = element;
 		
 		do {
@@ -1648,9 +1343,7 @@ onKeyEvent = function(element, event) {
 
 InMethod.editKeyUp = function(element, event) {
 		
-	if (!Wicket.Browser.isOpera() && !Wicket.Browser.isSafari()) {
-		onKeyEvent(element, event);
-	}
+	onKeyEvent(element, event);
 	
 	var e = Wicket.Event.fix(event)
 	var key = event.keyCode;
@@ -1663,10 +1356,6 @@ InMethod.editKeyUp = function(element, event) {
 };
 
 InMethod.editKeyPress = function(element, event) {
-	
-	if (Wicket.Browser.isOpera() || Wicket.Browser.isSafari()) {
-		return onKeyEvent(element, event);
-	}
 	
 	var e = Wicket.Event.fix(event)
 	var key = event.keyCode;

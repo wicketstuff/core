@@ -139,16 +139,15 @@ public class EditablePropertyColumn<M, I, P, S> extends PropertyColumn<M, I, P, 
 	@Override
 	public String getCellCssClass(IModel<I> rowModel, int rowNum)
 	{
-		String prelight = isClickToEdit() ? "imxt-want-prelight" : "";
 		// for selected items we don't want the default cell item padding because we need
 		// to put a textfield in it, so the special "imxt-no-padding-cell" CSS class is used.
 		if (getGrid().isItemEdited(rowModel))
 		{
-			return "imxt-no-padding-cell " + prelight + " imxt-edited-cell";
+			return "imxt-no-padding-cell imxt-edited-cell";
 		}
 		else
 		{
-			return prelight;
+			return "";
 		}
 	}
 

@@ -91,23 +91,6 @@ table.imxt-head th a.imxt-handle {
 	filter: alpha(opacity=0);	        
 }
 
-table.imxt-head tr.imxt-prelight a.imxt-handle {
-	opacity: 0.05; 
-	filter: alpha(opacity=5); 	
-	
-}
-table.imxt-head tr.imxt-prelight th.imxt-prelight a.imxt-handle {
-/*	opacity: 0.2; 
-	filter: alpha(opacity=20); */ 		
-}
-
-table.imxt-head tr.imxt-prelight th a.imxt-handle:hover, 
-table.imxt-head tr.imxt-prelight th.imxt-dragging a.imxt-handle {
-	opacity: 0.1; 
-	filter: alpha(opacity=10);	
-	
-}
-
 table.imxt-head tr.imxt-dragging * {
 	cursor: e-resize;
 }
@@ -295,14 +278,6 @@ table.imxt-body div.imxt-select-container {
 	padding-right: 0.2em;
 }
 
-div.imxt-ie table.imxt-head div.imxt-select-container1 {
-	margin-top: -0.2em;
-}
-
-div.imxt-ff table.imxt-head div.imxt-select-container1 {
-	margin-top: -0.1em;
-}
-
 .imxt-selectable table.imxt-body tr div {
 	cursor: default;
 }
@@ -453,20 +428,10 @@ div.imxt-vista table.imxt-head th a.imxt-sort-header {
 	color: black;
 }
 
-div.imxt-vista table.imxt-head th.imxt-prelight a.imxt-sort-header:hover {
-	color: blue;	
-}
-
 div.imxt-vista table.imxt-head th.imxt-sorted {
 	background-color: #F2F9FC;	
 	background-image: url("img/vista-bg-blue1.png");	
 }
-
-div.imxt-vista table.imxt-head th.imxt-prelight {
-	background-color: #E3F7FF;
-	background-image: url("img/vista-bg-blue2.png");
-}
-
 
 
 div.imxt-vista table.imxt-head th.imxt-padding div.imxt-a {
@@ -484,11 +449,6 @@ div.imxt-vista tr.imxt-even td.imxt-sorted {
 
 div.imxt-vista tr.imxt-odd td.imxt-sorted {
 	background-color: #f6f6f6;
-}
-
-div.imxt-vista tr.imxt-prelight td.imxt-cell,
-div.imxt-vista tr.imxt-prelight td.imxt-sorted {	
-	background-color: #EFFAFF
 }
 
 div.imxt-vista tr.imxt-grid-row:hover td.imxt-cell,
@@ -521,11 +481,6 @@ div.imxt-vista td.imxt-select {
 div.imxt-vista tr.imxt-odd, 
 div.imxt-vista tr.imxt-even {
 	
-}
-
-div.imxt-vista table.imxt-body td.imxt-prelight,
-div.imxt-vista table.imxt-body tr:hover td.imxt-prelight {
-	background-color: #BFE4FF;
 }
 
 div.imxt-vista table.imxt-body td.imxt-edited-cell {
