@@ -48,7 +48,7 @@
 	</modules>
 
 	<properties>
-		<cometd.version>4.0.6</cometd.version>
+		<cometd.version>4.0.9</cometd.version>
 
 		<wicketstuff.osgi.import.package>org.apache.wicket.*;version="[${project.version},${project.version}]",*</wicketstuff.osgi.import.package>
 		<wicketstuff.osgi.private.package />
