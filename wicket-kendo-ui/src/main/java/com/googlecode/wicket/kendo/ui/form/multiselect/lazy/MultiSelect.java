@@ -21,6 +21,7 @@ import java.util.Collections;
 import java.util.List;
 
 import org.apache.wicket.ajax.AjaxRequestTarget;
+import org.apache.wicket.markup.ComponentTag;
 import org.apache.wicket.markup.html.form.FormComponent;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.util.lang.Generics;
@@ -285,6 +286,14 @@ public abstract class MultiSelect<T> extends FormComponent<Collection<T>> implem
 			this.templateBehavior = new KendoTemplateBehavior(this.template);
 			this.add(this.templateBehavior);
 		}
+	}
+	
+	@Override
+	protected void onComponentTag(ComponentTag tag)
+	{
+		this.checkComponentTag(tag, "select"); // must be attached to a 'select' tag
+
+		super.onComponentTag(tag);
 	}
 
 	@Override
