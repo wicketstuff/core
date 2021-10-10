@@ -7,9 +7,8 @@ import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.util.lang.Generics;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
+import com.googlecode.wicket.kendo.ui.KendoDataSource;
 import com.googlecode.wicket.kendo.ui.form.multiselect.lazy.AjaxMultiSelect;
 import com.googlecode.wicket.kendo.ui.form.multiselect.lazy.MultiSelect;
 import com.googlecode.wicket.kendo.ui.panel.KendoFeedbackPanel;
@@ -17,7 +16,6 @@ import com.googlecode.wicket.kendo.ui.panel.KendoFeedbackPanel;
 public class AjaxMultiSelectPage extends AbstractMultiSelectPage
 {
 	private static final long serialVersionUID = 1L;
-	private static final Logger LOG = LoggerFactory.getLogger(AjaxMultiSelectPage.class);
 	private static final List<String> GENRES = Arrays.asList("Black Metal", "Death Metal", "Doom Metal", "Folk Metal", "Gothic Metal", "Heavy Metal", "Power Metal", "Symphonic Metal", "Trash Metal", "Vicking Metal");
 
 	public AjaxMultiSelectPage()
@@ -39,24 +37,20 @@ public class AjaxMultiSelectPage extends AbstractMultiSelectPage
 			private static final long serialVersionUID = 1L;
 
 			@Override
-			public List<String> getChoices(String input)
+			protected void onConfigure(KendoDataSource dataSource)
 			{
-				try
-				{
-					// simulate load duration //
-					Thread.sleep(500);
-				}
-				catch (InterruptedException e)
-				{
-					if (LOG.isDebugEnabled())
-					{
-						LOG.debug(e.getMessage(), e);
-					}
-				}
+				super.onConfigure(dataSource);
 
+				dataSource.set("serverFiltering", false); // default is true
+			}
+
+			@Override
+			protected List<String> getChoices(String input)
+			{
+				// note: 'input' is always empty when serverFiltering=false
 				return GENRES;
 			}
-			
+
 			@Override
 			public void onSelectionChanged(AjaxRequestTarget target)
 			{

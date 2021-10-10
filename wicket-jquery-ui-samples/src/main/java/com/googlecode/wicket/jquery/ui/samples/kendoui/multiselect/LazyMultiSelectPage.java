@@ -36,7 +36,7 @@ public class LazyMultiSelectPage extends AbstractMultiSelectPage
 		final MultiSelect<String> multiselect = new MultiSelect<String>("select", Model.ofList(selected)) {
 
 			private static final long serialVersionUID = 1L;
-			
+
 			@Override
 			protected void onConfigure(KendoDataSource dataSource)
 			{
